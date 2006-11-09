@@ -11,11 +11,13 @@
 //===================================================================
 #include <nitro.h>
 #include <nnsys.h>
+#include "gflib.h"
 
 
 void NitroMain(void)
 {
   // 初期化して…
+  InitSystem();
 
   // 必要なTCBとか登録して…
   

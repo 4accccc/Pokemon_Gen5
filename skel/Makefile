@@ -12,7 +12,7 @@
 
 # GF-Library
 GFLIB_DIR		=	../gflib
-LINCLUDES		= 	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
+LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS		=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
