@@ -3,15 +3,23 @@
  *
  *@file		heapsys.h
  *@brief	ヒープ領域管理
- *@author	taya
- *@data		2005.08.25
  *
  */
 //==============================================================================
 #ifndef __HEAPSYS_H__
 #define __HEAPSYS_H__
 
-#include <nnsys.h>
+//#define HEAP_DEBUG
+
+//----------------------------------------------------------------
+/**
+ *	定数
+ */
+//----------------------------------------------------------------
+#define DEFAULT_ALIGN					(4)		// メモリ確保時のアライメント値
+#define MEMBLOCK_FILENAME_AREASIZE		(12)	// デバッグ用ヘッダに格納するファイル名領域サイズ
+#define USER_HEAP_MAX					(24)	// 一度に作成可能なユーザーヒープの数
+
 
 //==============================================================
 /**
@@ -22,8 +30,6 @@ typedef struct {
 	u32        size;		///< ヒープサイズ
 	OSArenaId  arenaID;		///< 作成先アリーナID
 }HEAP_INIT_HEADER;
-
-
 
 //------------------------------------------------------------------
 /**
@@ -36,8 +42,8 @@ typedef struct {
  *
  */
 //------------------------------------------------------------------
-extern void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset);
-
+extern void sys_InitHeapSystem
+(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset);
 
 //------------------------------------------------------------------
 /**
@@ -51,7 +57,6 @@ extern void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, 
  */
 //------------------------------------------------------------------
 extern BOOL sys_CreateHeap( u32 parentHeapID, u32 childHeapID, u32 size );
-
 
 //------------------------------------------------------------------
 /**
@@ -76,7 +81,6 @@ extern BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size );
 //------------------------------------------------------------------
 extern void sys_DeleteHeap( u32 heapID );
 
-
 //------------------------------------------------------------------
 /*
  * 	メモリ確保
@@ -88,22 +92,18 @@ extern void sys_DeleteHeap( u32 heapID );
  *	sys_AllocMemoryLo で確保すれば領域の断片化が起こりづらくなるはず。
  */
 //------------------------------------------------------------------
-
-#ifndef PM_DEBUG
+#ifndef HEAP_DEBUG
 extern void* sys_AllocMemory( u32 heap, u32 size );
 extern void* sys_AllocMemoryLo( u32 heap, u32 size );
 #else
 
-
 // デバッグビルド時にはマクロでラップして呼び出しソース情報を渡している
-
 extern void* sys_AllocMemoryDebug( u32 heap, u32 size, const char* filename, u32 line_num );
 extern void* sys_AllocMemoryLoDebug( u32 heap, u32 size, const char* filename, u32 line_num );
 #define sys_AllocMemory(h,s)	sys_AllocMemoryDebug((h),(s),__FILE__,__LINE__);
 #define sys_AllocMemoryLo(h,s)	sys_AllocMemoryLoDebug((h),(s),__FILE__,__LINE__);
 
 #endif
-
 
 //------------------------------------------------------------------
 /*
@@ -119,7 +119,6 @@ extern void* sys_AllocMemoryLoDebug( u32 heap, u32 size, const char* filename, u
 extern void sys_FreeMemoryEz( void* memory );
 extern void sys_FreeMemory( u32 heap, void* memory );
 
-
 //------------------------------------------------------------------
 /*
  * 	ヒープ情報取得
@@ -134,7 +133,6 @@ extern u32 sys_GetHeapAllocatedSize( u32 heap );
  */
 //------------------------------------------------------------------
 extern void sys_InitAllocator( NNSFndAllocator* pAllocator, u32 heap, int alignment);
-
 
 //------------------------------------------------------------------
 /**
@@ -155,7 +153,6 @@ extern void sys_InitAllocator( NNSFndAllocator* pAllocator, u32 heap, int alignm
 //------------------------------------------------------------------
 extern void sys_CutMemoryBlockSize( void* memBlock, u32 newSize );
 
-
 //------------------------------------------------------------------
 /*
  * 	ヒープ情報取得（デバッグ時のみ有効）
@@ -163,7 +160,7 @@ extern void sys_CutMemoryBlockSize( void* memBlock, u32 newSize );
 //------------------------------------------------------------------
 extern BOOL sys_CheckHeapSafe( u32 heap );
 
-#ifdef PM_DEBUG
+#ifdef HEAP_DEBUG
 extern void sys_PrintHeapFreeSize( u32 heapID );
 extern void sys_PrintHeapExistMemoryInfo( u32 heapID );
 extern u64 sys_GetHeapState( u32 heapID );
@@ -187,7 +184,7 @@ extern void sys_CheckHeapFullReleased( u32 heapID );
 //------------------------------------------------------------------
 typedef struct _HEAP_STATE_STACK	HEAP_STATE_STACK;
 
-#ifdef PM_DEBUG
+#ifdef HEAP_DEBUG
 extern HEAP_STATE_STACK*  HSS_Create( u32 heapID, u32 stackNum );
 extern void HSS_Push( HEAP_STATE_STACK* hss );
 extern void HSS_Pop( HEAP_STATE_STACK* hss );
@@ -198,8 +195,6 @@ extern void HSS_Delete( HEAP_STATE_STACK* hss );
 #define HSS_Pop(p)			((void)0);
 #define HSS_Delete(p)		((void)0);
 #endif
-
-
 
 //------------------------------------------------------------------
 /*

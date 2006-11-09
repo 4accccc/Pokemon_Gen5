@@ -3,30 +3,15 @@
  *
  *@file		heapsys.c
  *@brief	ヒープ領域管理
- *@author	taya
- *@date		2005.08.25
  *
  */
 //==============================================================================
-#include "common.h"
-#include "system.h"
-#include "gflib\heapsys.h"
+#include "gflib.h"
 
-#ifdef PM_DEBUG
-#include  "system\heapdefine.h"
+#ifdef HEAP_DEBUG
+//#include  "system\heapdefine.h"
 //#define  ALLOCINFO_PRINT_HEAPID   HEAPID_BASE_APP	// このヒープＩＤに関してのみ詳細な情報を出力
 #endif
-
-
-
-//----------------------------------------------------------------
-/**
- *	定数
- */
-//----------------------------------------------------------------
-#define DEFAULT_ALIGN					(4)		// メモリ確保時のアライメント値
-#define MEMBLOCK_FILENAME_AREASIZE		(12)	// デバッグ用ヘッダに格納するファイル名領域サイズ
-#define USER_HEAP_MAX					(24)	// 一度に作成可能なユーザーヒープの数
 
 
 //----------------------------------------------------------------
@@ -53,7 +38,6 @@ typedef struct {
 	u16     baseHeapMax;
 	u16     usableHeapMax;
 	u16     invalidHandleIdx;
-
 
 }HEAP_SYS;
 
@@ -111,7 +95,7 @@ static void PrintUnreleasedMemoryInfo( u32 heapID );
 
 
 
-#ifdef PM_DEBUG
+#ifdef HEAP_DEBUG
 static void HeaderDebugParamSet( MEMORY_BLOCK_HEADER* header, const char* filename, u32 line_no );
 static void PrintExistMemoryBlocks( u32 heapID );
 static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param);
@@ -139,7 +123,8 @@ static void PrintUnreleasedMemoryInfo( u32 heapID );
  *
  */
 //------------------------------------------------------------------------------
-void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset)
+void sys_InitHeapSystem
+	(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset)
 {
 	void *mem;
 	u32  usableHeapMax, i;
@@ -172,7 +157,8 @@ void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 tot
 								+	totalHeapMax, DEFAULT_ALIGN);
 
 	HeapSys.parentHandle = HeapSys.handle + (usableHeapMax + 1);
-	HeapSys.heapMemBlock = (void**)((u8*)(HeapSys.parentHandle) + (sizeof(NNSFndHeapHandle) * usableHeapMax));
+	HeapSys.heapMemBlock = (void**)((u8*)(HeapSys.parentHandle) + 
+							(sizeof(NNSFndHeapHandle) * usableHeapMax));
 	HeapSys.count = (u16*)((u8*)(HeapSys.heapMemBlock) + (sizeof(void*) * usableHeapMax));
 	HeapSys.handleIdxTbl = (u8*)(HeapSys.count) + (sizeof(u16) * (totalHeapMax));
 
@@ -185,7 +171,8 @@ void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 tot
 	// 基本ヒープ＆インデックス作成
 	for(i = 0; i < baseHeapMax; i++)
 	{
-        OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
+        OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", 
+						(u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
 		switch( header[i].arenaID ){
 		case OS_ARENA_MAIN:
 		default:
@@ -223,8 +210,6 @@ void sys_InitHeapSystem(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 tot
 	{
 		HeapSys.count[i] = 0;
 	}
-
-
 }
 
 
@@ -250,6 +235,7 @@ static int SearchEmptyHandleIndex( void )
 	return -1;
 }
 
+
 //------------------------------------------------------------------
 /**
  * ヒープ作成
@@ -265,6 +251,7 @@ BOOL sys_CreateHeap( u32 parentHeapID, u32 childHeapID, u32 size )
 {
 	return CreateHeapCore( parentHeapID, childHeapID, size, DEFAULT_ALIGN );
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -282,6 +269,7 @@ BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size )
 	return CreateHeapCore( parentHeapID, childHeapID, size, -DEFAULT_ALIGN );
 }
 
+
 //------------------------------------------------------------------
 /**
  * ヒープ作成実処理
@@ -296,7 +284,8 @@ BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size )
 //------------------------------------------------------------------
 static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 align )
 {
-	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), "Create Heap:%d size:%d", childHeapID, size);
+	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), 
+					"Create Heap:%d size:%d", childHeapID, size);
 
 	if( HeapSys.handleIdxTbl[childHeapID] == HeapSys.invalidHandleIdx )
 	{
@@ -320,8 +309,10 @@ static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 ali
 						if( ALLOCINFO_PRINT_HEAPID == childHeapID )
 						{
 							u32 freeSize = NNS_FndGetTotalFreeSizeForExpHeap( HeapSys.handle[i] );
-							OS_TPrintf("[HEAP] CRE_C total:0x%05x, usable:0x%05x  parent's id=%d, rest=0x%05x\n",
-									size, freeSize, parentHeapID, NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
+							OS_TPrintf("[HEAP] CRE_C total:0x%05x, 
+										usable:0x%05x  parent's id=%d, rest=0x%05x\n",
+										size, freeSize, parentHeapID, 
+										NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
 						}
 						if( ALLOCINFO_PRINT_HEAPID == parentHeapID )
 						{
@@ -346,7 +337,8 @@ static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 ali
 			else
 			{
 				GF_ASSERT_Printf("Heap(%d) Create FAILED (size:%x bytes)\n", childHeapID, size);
-				GF_ASSERT_Printf("ParentHeap(%d) %x bytes\n", parentHeapID, NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
+				GF_ASSERT_Printf("ParentHeap(%d) %x bytes\n", 
+								parentHeapID, NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
 				GF_ASSERT(0);
 			}
 		}
@@ -386,7 +378,7 @@ void sys_DeleteHeap( u32 heapID )
 			void* heapMemBlock;
 
 		// デバッグ時は未解放メモリの情報を出力
-			#ifdef PM_DEBUG
+			#ifdef HEAP_DEBUG
 			if( HeapSys.count[heapID] )
 			{
 				PrintUnreleasedMemoryInfo( heapID );
@@ -469,25 +461,7 @@ static void* AllocMemoryCore( NNSFndHeapHandle heapHandle, u32 size, s32 alignme
 
 
 
-#ifndef PM_DEBUG
-
-#include "system\assert_warning_reset.h"
-#include "communication\comm_state.h"
-
-//------------------------------------------------------------------
-/**
- * 通信中にメモリ確保に失敗した場合、強制的にエラー画面へ飛ばす
- *
- */
-//------------------------------------------------------------------
-static void WarningResetCall(void)
-{
-	if( CommStateIsInitialize() )
-	{
-		AssertWarningResetCall();
-	}
-}
-
+#ifndef HEAP_DEBUG
 
 //------------------------------------------------------------------
 /**
@@ -512,10 +486,6 @@ void* sys_AllocMemory( u32 heapID, u32 size )
 	if( ret != NULL )
 	{
 		HeapSys.count[heapID]++;
-	}
-	else
-	{
-		WarningResetCall();
 	}
 
 	return ret;
@@ -544,14 +514,10 @@ void* sys_AllocMemoryLo( u32 heapID, u32 size )
 	{
 		HeapSys.count[heapID]++;
 	}
-	else
-	{
-		WarningResetCall();
-	}
 
 	return ret;
 }
-#else	// #ifndef PM_DEBUG
+#else	// #ifndef HEAP_DEBUG
 
 //------------------------------------------------------------------
 /**
@@ -635,7 +601,8 @@ void* sys_AllocMemoryDebug( u32 heapID, u32 size, const char* filename, u32 line
 			#ifdef ALLOCINFO_PRINT_HEAPID
 			if( ALLOCINFO_PRINT_HEAPID == heapID )
 			{
-				const MEMORY_BLOCK_HEADER* mh = (const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
+				const MEMORY_BLOCK_HEADER* mh = 
+					(const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
 				PrintAllocInfo( mh, h, size );
 				GF_ASSERT( sys_CheckHeapSafe( heapID ) );
 			}
@@ -685,7 +652,8 @@ void* sys_AllocMemoryLoDebug( u32 heapID, u32 size, const char* filename, u32 li
 			#ifdef ALLOCINFO_PRINT_HEAPID
 			if( ALLOCINFO_PRINT_HEAPID == heapID )
 			{
-				const MEMORY_BLOCK_HEADER* mh = (const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
+				const MEMORY_BLOCK_HEADER* mh = 
+					(const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
 				PrintAllocInfo( mh, h, size );
 				GF_ASSERT( sys_CheckHeapSafe( heapID ) );
 			}
@@ -751,7 +719,7 @@ static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 line
 	GF_ASSERT_Printf("these Memoryblocks haven't released\n");
 	PrintExistMemoryBlocks( heapID );
 }
-#endif	// #ifndef PM_DEBUG #else
+#endif	// #ifndef HEAP_DEBUG #else
 
 
 //------------------------------------------------------------------
@@ -764,7 +732,7 @@ static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 line
 //------------------------------------------------------------------
 void sys_FreeMemoryEz( void* memory )
 {
-	#ifdef PM_DEBUG
+	#ifdef HEAP_DEBUG
 	if( OS_GetProcMode() == OS_PROCMODE_IRQ )
 	{
 		char filename[MEMBLOCK_FILENAME_AREASIZE+1];
@@ -964,7 +932,7 @@ void sys_CutMemoryBlockSize( void* memBlock, u32 newSize )
 //------------------------------------------------------------------
 BOOL sys_CheckHeapSafe( u32 heapID )
 {
-	#ifdef PM_DEBUG
+	#ifdef HEAP_DEBUG
 	if( heapID < HeapSys.heapMax )
 	{
 		NNSFndHeapHandle h = GetHeapHandle(heapID);
@@ -984,7 +952,7 @@ BOOL sys_CheckHeapSafe( u32 heapID )
 	#endif
 }
 
-#ifdef PM_DEBUG
+#ifdef HEAP_DEBUG
 //------------------------------------------------------------------
 /**
  * 全メモリブロックを解放してあるかチェック（デバッグ用）
@@ -1149,7 +1117,7 @@ static void PrintUnreleasedMemoryInfo( u32 heapID )
 {
 	GF_ASSERT_Printf("these Memoryblocks haven't released\n");
 	GF_ASSERT_Printf("HeapID:%d  restcnt = %d .....\n", heapID, HeapSys.count[heapID]);
-	#ifdef PM_DEBUG
+	#ifdef HEAP_DEBUG
 	{
 		NNSFndHeapHandle  handle = GetHeapHandle(heapID);
 		u32  siz = NNS_FndGetTotalFreeSizeForExpHeap( handle );
@@ -1236,6 +1204,6 @@ void HSS_Delete( HEAP_STATE_STACK* hss )
 }
 
 
-#endif	// PM_DEBUG
+#endif	// HEAP_DEBUG
 
 
