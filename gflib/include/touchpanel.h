@@ -3,7 +3,7 @@
  *
  *@file		touchpanel.h
  *@brief	タッチパネルデータ処理
- *@author	tomoya takahashi
+ *@author	tomoya takahashi   >  katsumi ohno
  *@data		2005.03.16
  */
 //*****************************************************************************
@@ -23,12 +23,10 @@
  *					定数宣言
  */
 //-----------------------------------------------------------------------------
-#define		RECT_HIT_END	(0xff)			// 終了コード
-#define		RECT_HIT_NONE	(0xffffffff)	// あたったテーブルなし
 
-#define		TP_HIT_END		(0xff)			// あたったテーブルなし
+#define		TP_HIT_END		(0xff)			// テーブル終了コード
 #define		TP_USE_CIRCLE	(0xfe)			// 円形として使う
-#define		TP_HIT_NONE		(0xffffffff)	// あたったテーブルなし（RECT_HIT_NONEはいずれ消す）
+#define		TP_HIT_NONE		(-1)	// あたったテーブルなし
 
 //-----------------------------------------------------------------------------
 /**
@@ -69,25 +67,36 @@ typedef union{
  * 
  */
 
+//------------------------------------------------------------------
+/**
+ * @brief	TPSYS 型宣言
+ *
+ * TCBシステムワーク構造体の宣言。
+ * メイン処理用・VBlank用など、任意の箇所で実行される
+ * 複数のTCBシステムを作成することが出来る。
+ *
+ * 内容は隠蔽されており、直接のアクセスはできない。
+  */
+//------------------------------------------------------------------
+typedef struct _TPSYS		TPSYS;
+
 
 //----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
  */
 //----------------------------------------------------------------------------
-GLOBAL int GF_TP_RectHitCont( const RECT_HIT_TBL* pRectTbl );
-GLOBAL int GF_TP_RectHitTrg( const RECT_HIT_TBL *pRectTbl );
-GLOBAL int GF_TP_HitCont( const TP_HIT_TBL *tbl );
-GLOBAL int GF_TP_HitTrg( const TP_HIT_TBL *tbl );
-GLOBAL BOOL GF_TP_SingleHitCont( const TP_HIT_TBL *tbl );
-GLOBAL BOOL GF_TP_SingleHitTrg( const TP_HIT_TBL *tbl );
-GLOBAL BOOL GF_TP_GetCont( void );
-GLOBAL BOOL GF_TP_GetTrg( void );
-GLOBAL int GF_TP_RectHitContSelf( const RECT_HIT_TBL* pRectTbl, u32 x, u32 y );
+
+GLOBAL int GF_TP_HitCont( const TPSYS* tpsys, const TP_HIT_TBL *tbl );
+GLOBAL int GF_TP_HitTrg( const TPSYS* tpsys, const TP_HIT_TBL *tbl );
+
+GLOBAL BOOL GF_TP_GetCont( const TPSYS* tpsys );
+GLOBAL BOOL GF_TP_GetTrg( const TPSYS* tpsys );
+
 GLOBAL int GF_TP_HitSelf( const TP_HIT_TBL *tbl, u32 x, u32 y );
-GLOBAL BOOL GF_TP_SingleHitSelf( const TP_HIT_TBL *tbl, u32 x, u32 y );
-GLOBAL BOOL GF_TP_GetPointCont( u32* x, u32* y );
-GLOBAL BOOL GF_TP_GetPointTrg( u32* x, u32* y );
+
+GLOBAL BOOL GF_TP_GetPointCont( const TPSYS* tpsys, u32* x, u32* y );
+GLOBAL BOOL GF_TP_GetPointTrg( const TPSYS* tpsys, u32* x, u32* y );
 
 
 #undef	GLOBAL
