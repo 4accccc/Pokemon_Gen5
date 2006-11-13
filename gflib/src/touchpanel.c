@@ -3,55 +3,36 @@
  *
  *@file		touchpanel.c
  *@brief	矩形とタッチパネルシステム情報との当たり判定処理
- *@author	taya
+ *@author	taya  >  katsumi ohno
  *@data		2005.07.29
  *
  */
 //****************************************************************************
 
-#include "common.h"
+#include "gflib.h"
 
 #define __TOUCHPANEL_H_GLOBAL__
-#include "gflib/touchpanel.h"
+#include "touchpanel.h"
+
+//------------------------------------------------------------------
+/**
+ * @brief	TPSYS 型宣言
+ * タッチパネルの情報の保持
+  */
+//------------------------------------------------------------------
+struct _TPSYS {
+	u16		tp_x;			///< タッチパネルX座標
+	u16		tp_y;			///< タッチパネルY座標
+	u16		tp_trg;			///< タッチパネル接触判定トリガ
+	u16		tp_cont;		///< タッチパネル接触判定状態
+};	// 8bytes
 
 
 //==============================================================
 // Prototype
 //==============================================================
-static int recthit( const RECT_HIT_TBL* pTbl, u32 x, u32 y );
 static BOOL circle_hitcheck( const TP_HIT_TBL *tbl, u32 x, u32 y );
 static BOOL rect_hitcheck( const TP_HIT_TBL *tbl, u32 x, u32 y );
-
-
-//----------------------------------------------------------------------------
-/**
- *
- *@brief	矩形の当たり判定	
- *
- *@param	pTbl		当たり判定テーブル
- *@param	u32	x		タッチパネルx座標
- *@param	u32 y		タッチパネルy座標
- *
- *@return	int	ヒットしたテーブルのインデックスナンバー
- *				ヒットするデータが無いときはRECT_HIT_NONE
- *
- */
-//-----------------------------------------------------------------------------
-static int recthit( const RECT_HIT_TBL* pTbl, u32 x, u32 y )
-{
-	int c;
-
-	for(c = 0; pTbl[c].rect.top != RECT_HIT_END; c++)
-	{
-		if( ((u32)( x - pTbl[c].rect.left) < (u32)(pTbl[c].rect.right - pTbl[c].rect.left))
-		&	((u32)( y - pTbl[c].rect.top) < (u32)(pTbl[c].rect.bottom - pTbl[c].rect.top))
-		){
-			return c;
-		}
-	}
-
-	return RECT_HIT_NONE;
-}
 
 //------------------------------------------------------------------
 /**
@@ -99,63 +80,30 @@ static BOOL rect_hitcheck( const TP_HIT_TBL *tbl, u32 x, u32 y )
 
 //------------------------------------------------------------------
 /**
- * 矩形当たり判定（テーブル使用、ベタ入力）
- *
- * @param   pRectTbl		当たり判定テーブル（終端コードあり）
- *
- * @retval  int		テーブル中、ヒットした要素のインデックスナンバー
- *					ヒットがなければ RECT_HIT_NONE
- */
-//------------------------------------------------------------------
-int GF_TP_RectHitCont( const RECT_HIT_TBL* pRectTbl )
-{
-	if( sys.tp_cont ){
-		return recthit( pRectTbl, sys.tp_x, sys.tp_y );
-	}
-	return RECT_HIT_NONE;
-}
-//------------------------------------------------------------------
-/**
- * 矩形当たり判定（テーブル使用、トリガ入力）
- *
- * @param   pRectTbl		当たり判定テーブル（終端コードあり）
- *
- * @retval  int		テーブル中、ヒットした要素のインデックスナンバー
- *					ヒットがなければ RECT_HIT_NONE
- */
-//------------------------------------------------------------------
-int GF_TP_RectHitTrg( const RECT_HIT_TBL *pRectTbl )
-{
-	if( sys.tp_trg ){
-		return recthit( pRectTbl, sys.tp_x, sys.tp_y );
-	}
-	return RECT_HIT_NONE;
-}
-//------------------------------------------------------------------
-/**
  * 両タイプ（矩形・円形）を見ながら判定する（ベタ入力）
  *
+ * @param   tpsys	タッチパネルシステム
  * @param   tbl		当たり判定テーブル（終端コードあり）
  *
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GF_TP_HitCont( const TP_HIT_TBL *tbl )
+int GF_TP_HitCont( const TPSYS* tpsys, const TP_HIT_TBL *tbl )
 {
-	if( sys.tp_cont ){
+	if( tpsys->tp_cont ){
 		int i;
 
 		for(i = 0; i < tbl[i].circle.code != TP_HIT_END; i++)
 		{
 			if( tbl[i].circle.code == TP_USE_CIRCLE )
 			{
-				if( circle_hitcheck( &tbl[i], sys.tp_x, sys.tp_y ) ){
+				if( circle_hitcheck( &tbl[i], tpsys->tp_x, tpsys->tp_y ) ){
 					return i;
 				}
 			}
 			else
 			{
-				if( rect_hitcheck( &tbl[i], sys.tp_x, sys.tp_y ) ){
+				if( rect_hitcheck( &tbl[i], tpsys->tp_x, tpsys->tp_y ) ){
 					return i;
 				}
 			}
@@ -172,22 +120,22 @@ int GF_TP_HitCont( const TP_HIT_TBL *tbl )
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GF_TP_HitTrg( const TP_HIT_TBL *tbl )
+int GF_TP_HitTrg( const TPSYS* tpsys, const TP_HIT_TBL *tbl )
 {
-	if( sys.tp_trg ){
+	if( tpsys->tp_trg ){
 		int i;
 
 		for(i = 0; i < tbl[i].circle.code != TP_HIT_END; i++)
 		{
 			if( tbl[i].circle.code == TP_USE_CIRCLE )
 			{
-				if( circle_hitcheck( &tbl[i], sys.tp_x, sys.tp_y ) ){
+				if( circle_hitcheck( &tbl[i], tpsys->tp_x, tpsys->tp_y ) ){
 					return i;
 				}
 			}
 			else
 			{
-				if( rect_hitcheck( &tbl[i], sys.tp_x, sys.tp_y ) ){
+				if( rect_hitcheck( &tbl[i], tpsys->tp_x, tpsys->tp_y ) ){
 					return i;
 				}
 			}
@@ -195,54 +143,6 @@ int GF_TP_HitTrg( const TP_HIT_TBL *tbl )
 	}
 	return TP_HIT_NONE;
 }
-
-//------------------------------------------------------------------
-/**
- * 両タイプ（矩形・円形）を見ながら判定する（ベタ入力）
- *
- * @param   tbl		当たり判定テーブル（単発）
- *
- * @retval  BOOL	当たりならTRUE
- */
-//------------------------------------------------------------------
-BOOL GF_TP_SingleHitCont( const TP_HIT_TBL *tbl )
-{
-	if( sys.tp_cont ){
-		if( tbl->circle.code == TP_USE_CIRCLE )
-		{
-			return circle_hitcheck( tbl, sys.tp_x, sys.tp_y );
-		}
-		else
-		{
-			return rect_hitcheck( tbl, sys.tp_x, sys.tp_y );
-		}
-	}
-	return FALSE;
-}
-//------------------------------------------------------------------
-/**
- * 両タイプ（矩形・円形）を見ながら判定する（トリガ入力）
- *
- * @param   tbl		当たり判定テーブル（単発）
- *
- * @retval  BOOL	当たりならTRUE
- */
-//------------------------------------------------------------------
-BOOL GF_TP_SingleHitTrg( const TP_HIT_TBL *tbl )
-{
-	if( sys.tp_trg ){
-		if( tbl->circle.code == TP_USE_CIRCLE )
-		{
-			return circle_hitcheck( tbl, sys.tp_x, sys.tp_y );
-		}
-		else
-		{
-			return rect_hitcheck( tbl, sys.tp_x, sys.tp_y );
-		}
-	}
-	return FALSE;
-}
-
 
 //------------------------------------------------------------------
 /**
@@ -251,9 +151,9 @@ BOOL GF_TP_SingleHitTrg( const TP_HIT_TBL *tbl )
  * @retval  BOOL		TRUEで触れている
  */
 //------------------------------------------------------------------
-BOOL GF_TP_GetCont( void )
+BOOL GF_TP_GetCont( const TPSYS* tpsys )
 {
-	return sys.tp_cont;
+	return tpsys->tp_cont;
 }
 //------------------------------------------------------------------
 /**
@@ -262,9 +162,9 @@ BOOL GF_TP_GetCont( void )
  * @retval  BOOL		TRUEで触れた
  */
 //------------------------------------------------------------------
-BOOL GF_TP_GetTrg( void )
+BOOL GF_TP_GetTrg( const TPSYS* tpsys )
 {
-	return sys.tp_trg;
+	return tpsys->tp_trg;
 }
 
 //------------------------------------------------------------------
@@ -277,12 +177,12 @@ BOOL GF_TP_GetTrg( void )
  * @retval  BOOL	TRUEで触れている。FALSEが返った場合、引数には何もしない。
  */
 //------------------------------------------------------------------
-BOOL GF_TP_GetPointCont( u32* x, u32* y )
+BOOL GF_TP_GetPointCont( const TPSYS* tpsys, u32* x, u32* y )
 {
-	if( sys.tp_cont )
+	if( tpsys->tp_cont )
 	{
-		*x = sys.tp_x;
-		*y = sys.tp_y;
+		*x = tpsys->tp_x;
+		*y = tpsys->tp_y;
 		return TRUE;
 	}
 	return FALSE;
@@ -297,12 +197,12 @@ BOOL GF_TP_GetPointCont( u32* x, u32* y )
  * @retval  BOOL	TRUEで触れている。FALSEが返った場合、引数には何もしない。
  */
 //------------------------------------------------------------------
-BOOL GF_TP_GetPointTrg( u32* x, u32* y )
+BOOL GF_TP_GetPointTrg( const TPSYS* tpsys, u32* x, u32* y )
 {
-	if( sys.tp_trg )
+	if( tpsys->tp_trg )
 	{
-		*x = sys.tp_x;
-		*y = sys.tp_y;
+		*x = tpsys->tp_x;
+		*y = tpsys->tp_y;
 		return TRUE;
 	}
 	return FALSE;
@@ -342,34 +242,5 @@ int GF_TP_HitSelf( const TP_HIT_TBL *tbl, u32 x, u32 y )
 		}
 	}
 	return TP_HIT_NONE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *
- *	@brief	自分で指定した座標で当たり判定を行います。　単発
- *
- *	@param	tbl		当たり判定テーブル（単発）
- *	@param	x		当たり判定ｘ座標
- *	@param	y		当たり判定ｙ座標
- *
- *	@retval	TURE	あたった
- *	@retval	FALSE	あたらなかった
- *
- *
- */
-//-----------------------------------------------------------------------------
-BOOL GF_TP_SingleHitSelf( const TP_HIT_TBL *tbl, u32 x, u32 y )
-{
-	if( tbl->circle.code == TP_USE_CIRCLE )
-	{
-		return circle_hitcheck( tbl, x, y );
-	}
-	else
-	{
-		return rect_hitcheck( tbl, x, y );
-	}
-
-	return FALSE;
 }
 
