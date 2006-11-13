@@ -21,7 +21,8 @@ NITRO_NO_STD_PCHDR	=	True
 TARGET_LIB		=	gflib.a
 
 # ソースファイル
-SRCS			=	initialize.c filesystem.c heapsys.c tcb.c procsys.c
+SRCS			=	initialize.c filesystem.c heapsys.c tcb.c procsys.c \
+					touchpanel.c
 
 # MCS(Multiple Channel Stream)を有効にする時はUSE_MCSを定義
 ifdef USE_MCS
