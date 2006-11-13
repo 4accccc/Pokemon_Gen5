@@ -13,9 +13,10 @@
  */
 //=============================================================================================
 #include <nitro.h>
-#include "tcb.h"
-#include "heapsys.h"
-#include "assert.h"
+#include <nnsys.h>
+#include "include/gflib.h"
+#include "include/tcb.h"
+#include "include/heapsys.h"
 
 //=============================================================================================
 //	
@@ -29,7 +30,7 @@
 //=============================================================================================
 enum{
 	TCB_ENABLE = 0,
-	TCB_DISABLE = 1,
+	TCB_DISABLE = 1
 };
 
 //------------------------------------------------------------------
@@ -58,9 +59,9 @@ typedef struct _TCB {
 }TCB;	// 52 bytes
 
 
-typedef struct _TCBSYS {
-	u16			tcb_max;		///< 登録可能なTCBの最大数
-	u16			tcb_stack_ptr;	///< 自信が抱えているTCB用スタックのポインタ
+struct _TCBSYS {
+	u32			tcb_max;		///< 登録可能なTCBの最大数
+	u32			tcb_stack_ptr;	///< 自信が抱えているTCB用スタックのポインタ
 	TCB			tcb_first;		///< TCB先頭実体
 	TCB_PTR*	tcb_stack;		///< TCB用スタック
 	TCB*		tcb_table;		///< TCB実体テーブル
@@ -69,7 +70,7 @@ typedef struct _TCBSYS {
 
 	TCB_PTR		now_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
 	TCB_PTR		next_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
-}TCBSYS;	// 68 bytes
+};	// 68 bytes
 
 
 //==============================================================
@@ -78,7 +79,7 @@ typedef struct _TCBSYS {
 static void TCB_WorkClear( TCBSYS* tcbsys, TCB_PTR tcb);
 static void InitTCBStack( TCBSYS* tcbsys );
 static TCB * PopTCB( TCBSYS* tcbsys );
-static int PushTCB( TCBSYS* tcbsys, TCB * tcb );
+static void PushTCB( TCBSYS* tcbsys, TCB * tcb );
 static TCB_PTR AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri );
 
 
@@ -168,16 +169,15 @@ static TCB * PopTCB( TCBSYS* tcbsys )
 	@retval	FALSE	失敗（スタックがいっぱいの場合）
 */
 //------------------------------------------------------------------
-static int PushTCB( TCBSYS* tcbsys, TCB * tcb )
+static void PushTCB( TCBSYS* tcbsys, TCB * tcb )
 {
 	if(tcbsys->tcb_stack_ptr == 0)
 	{
-		return FALSE;
+		GF_ASSERT(0);
 	}
 	TCBWorkClear( tcbsys, tcb );	//値をクリアしてからスタックに積む
 	tcbsys->tcb_stack_ptr--;
 	tcbsys->tcb_stack[ tcbsys->tcb_stack_ptr ] = tcb;
-	return TRUE;
 }
 
 
