@@ -16,30 +16,33 @@
 #define GLOBAL extern
 #endif
 
+// 無効ビットマップインデックス値
+#define	GF_BMPWIN_FRM_NULL		(0xff)
 
 ///BMPWINデータ構造体
 typedef struct {
-	u32	heapID;
-	u8	frmnum;
-	u8	posx;
-	u8	posy;
-	u8	sizx;
-	u8	sizy;
-	u8	palnum;
-	u16	chrofs:15;
-	u16	bitmode:1;	
-	void * chrbuf;
+	GF_BGL_INI	*bgl;
+	u32			heapID;
+	u8			frmnum;
+	u8			posx;
+	u8			posy;
+	u8			sizx;
+	u8			sizy;
+	u8			palnum;
+	u16			chrofs:15;
+	u16			bitmode:1;	
+	void		*chrbuf;
 }GF_BMPWIN_DATA;
 
 ///BMPWIN設定データ構造体
 typedef struct{
-	u8	frm_num;	///<ウインドウ使用フレーム
-	u8	pos_x;		///<ウインドウ領域の左上のX座標（キャラ単位で指定）
-	u8	pos_y;		///<ウインドウ領域の左上のY座標（キャラ単位で指定）
-	u8	siz_x;		///<ウインドウ領域のXサイズ（キャラ単位で指定）
-	u8	siz_y;		///<ウインドウ領域のYサイズ（キャラ単位で指定）
-	u8	palnum;		///<ウインドウ領域のパレットナンバー
-	u16	chrnum;		///<ウインドウキャラ領域の開始キャラクタナンバー
+	u8			frm_num;	///<ウインドウ使用フレーム
+	u8			pos_x;		///<ウインドウ領域の左上のX座標（キャラ単位で指定）
+	u8			pos_y;		///<ウインドウ領域の左上のY座標（キャラ単位で指定）
+	u8			siz_x;		///<ウインドウ領域のXサイズ（キャラ単位で指定）
+	u8			siz_y;		///<ウインドウ領域のYサイズ（キャラ単位で指定）
+	u8			palnum;		///<ウインドウ領域のパレットナンバー
+	u16			chrnum;		///<ウインドウキャラ領域の開始キャラクタナンバー
 }BMPWIN_SET;
 
 
@@ -52,7 +55,7 @@ typedef struct{
 // BitmapWindowのビットモード
 enum {
 	GF_BMPWIN_BITMODE_4 = 0,
-	GF_BMPWIN_BITMODE_8 = 1,
+	GF_BMPWIN_BITMODE_8 = 1
 };
 
 

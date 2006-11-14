@@ -29,9 +29,6 @@ typedef struct{
 //ビットマップ書き込み用定義
 #define	GF_BMPPRT_NOTNUKI	( 0xffff )	// 抜き色指定なし
 
-// 無効ビットマップインデックス値
-#define	GF_BITMAP_NULL		(0xff)
-
 // BMP書き込みマクロ
 #if 0
 #define DPPCALC(adrs, pos_x, pos_y, size_x)		\

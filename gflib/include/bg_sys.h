@@ -16,6 +16,40 @@
 #define GLOBAL extern
 #endif
 
+#define GF_BGL_NTR_USE	(0)		//GF_BGL_NTR～系の関数の無効(0)/有効(1)
+
+//=============================================================================================
+//	inline関数を仮置き
+//=============================================================================================
+//==============================================================================
+/**
+ *	メモリフィル関数
+ * 
+ * @param   adrs	メモリフィルするアドレス
+ * @param   value	メモリフイルする値
+ * @param   size	メモリフィルするサイズ
+ *
+ */
+//==============================================================================
+inline void memset(void *adrs,u8 value,int size)
+{
+	MI_CpuFill8(adrs,value,size);
+}
+
+//==============================================================================
+/**
+ *	メモリコピー関数
+ * 
+ * @param   dest	メモリコピー先アドレス
+ * @param   src		メモリコピー元アドレス
+ * @param   size	メモリコピーするサイズ
+ *
+ */
+//==============================================================================
+inline void memcpy(void *dest,void *src,int size)
+{
+	MI_CpuCopy8(dest,src,size);
+}
 
 //=============================================================================================
 //	型宣言
@@ -78,7 +112,7 @@ enum {
 
 	GF_BGL_CENTER_Y_SET,	// 回転中心Y座標変更（指定した値をセット）
 	GF_BGL_CENTER_Y_INC,	// 回転中心Y座標変更（指定した値を＋）
-	GF_BGL_CENTER_Y_DEC,	// 回転中心Y座標変更（指定した値を－）
+	GF_BGL_CENTER_Y_DEC		// 回転中心Y座標変更（指定した値を－）
 };
 
 //ＢＧスクリーンデータ埋め尽くし用定義
@@ -135,7 +169,7 @@ typedef struct _GF_BGL_INI	GF_BGL_INI;
 enum {
 	BGL_RESET_COLOR = 0,	// BG再設定フラグ：カラーモード
 	BGL_RESET_SCRBASE,		// BG再設定フラグ：スクリーンベース
-	BGL_RESET_CHRBASE,		// BG再設定フラグ：キャラベース
+	BGL_RESET_CHRBASE		// BG再設定フラグ：キャラベース
 };
 
 
@@ -177,7 +211,7 @@ GLOBAL u32	GF_BGL_HeapIDGet( GF_BGL_INI * bgl );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_SysBglInit( u32 heapID );
+GLOBAL void GF_BGL_SysBglInit( GF_BGL_INI * bgl, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -220,7 +254,7 @@ GLOBAL void GF_BGL_InitBGDisp( const GF_BGL_SYS_HEADER * data, u8 flg );
  * @li	mode = GF_BGL_MODE_256X16	: アフィン拡張BG
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode );
+GLOBAL void GF_BGL_BGControlSet( GF_BGL_INI * bgl, u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -233,7 +267,7 @@ GLOBAL void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm );
+GLOBAL void GF_BGL_BGControlReset( GF_BGL_INI * bgl, u8 frm, u8 flg, u8 prm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -245,7 +279,7 @@ GLOBAL void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_BGControlExit( u8 frmnum );
+GLOBAL void GF_BGL_BGControlExit( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -291,7 +325,7 @@ GLOBAL void GF_BGL_VisibleSet( u8 frmnum, u8 visible );
  * @li	拡縮面が拡縮・回転する場合はGF_BGL_AffineScrollSet(...)を使用すること
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value );
+GLOBAL void GF_BGL_ScrollSet( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -302,7 +336,7 @@ GLOBAL void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value );
  * @return	int			スクロール値Ｘ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_ScrollGetX( u32 frmnum );
+GLOBAL int GF_BGL_ScrollGetX( GF_BGL_INI * bgl, u32 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -313,7 +347,7 @@ GLOBAL int GF_BGL_ScrollGetX( u32 frmnum );
  * @return	int			スクロール値Ｙ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_ScrollGetY( u32 frmnum );
+GLOBAL int GF_BGL_ScrollGetY( GF_BGL_INI * bgl, u32 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -329,7 +363,7 @@ GLOBAL int GF_BGL_ScrollGetY( u32 frmnum );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_AffineScrollSet(
+GLOBAL void GF_BGL_AffineScrollSet( GF_BGL_INI * bgl,
 		u8 frmnum, u8 mode, int value, const MtxFx22 * mtx, int cx, int cy );
 
 //--------------------------------------------------------------------------------------------
@@ -344,7 +378,7 @@ GLOBAL void GF_BGL_AffineScrollSet(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_AffineSet( u8 frmnum, const MtxFx22 * mtx, int cx, int cy );
+GLOBAL void GF_BGL_AffineSet( GF_BGL_INI * bgl, u8 frmnum, const MtxFx22 * mtx, int cx, int cy );
 
 
 //=============================================================================================
@@ -384,7 +418,7 @@ GLOBAL void GF_BGL_DataDecord( const void * src, void * dst, u32 datasiz );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadScreenReq( u8 frmnum );
+GLOBAL void GF_BGL_LoadScreenReq( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -404,8 +438,9 @@ GLOBAL void GF_BGL_LoadScreenReq( u8 frmnum );
  *	セットされないので、注意すること。
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs );
+GLOBAL void GF_BGL_LoadScreen( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
+#if GF_BGL_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * 指定データをスクリーンに転送（ファイル参照）
@@ -419,7 +454,8 @@ GLOBAL void GF_BGL_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 off
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadScreenFile( u8 frmnum, const char * path, u32 offs );
+GLOBAL void GF_BGL_LoadScreenFile( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs );
+#endif GF_BGL_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -432,7 +468,7 @@ GLOBAL void GF_BGL_LoadScreenFile( u8 frmnum, const char * path, u32 offs );
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScreenBufSet( u8 frmnum, const void * dat, u32 datasiz );
+GLOBAL void GF_BGL_ScreenBufSet( GF_BGL_INI * bgl, u8 frmnum, const void * dat, u32 datasiz );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -448,8 +484,9 @@ GLOBAL void GF_BGL_ScreenBufSet( u8 frmnum, const void * dat, u32 datasiz );
  * @li	datasiz = GF_BGL_DATA_LZH : 圧縮データ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs );
+GLOBAL void GF_BGL_LoadCharacter( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
+#if GF_BGL_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * キャラクター転送（ファイル参照）
@@ -464,7 +501,8 @@ GLOBAL void GF_BGL_LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadCharacterFile( u8 frmnum, const char * path, u32 offs );
+GLOBAL void GF_BGL_LoadCharacterFile( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs );
+#endif GF_BGL_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -491,7 +529,7 @@ GLOBAL void GF_BGL_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs );
+GLOBAL void GF_BGL_CharFill( GF_BGL_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -540,7 +578,7 @@ GLOBAL void GF_BGL_BackGroundColorSet( u8 frmnum, u16 col );
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrWrite( u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy );
+GLOBAL void GF_BGL_ScrWrite( GF_BGL_INI * bgl, u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -559,7 +597,7 @@ GLOBAL void GF_BGL_ScrWrite( u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrWriteExpand(
+GLOBAL void GF_BGL_ScrWriteExpand( GF_BGL_INI * bgl,
 				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
 
@@ -583,7 +621,7 @@ GLOBAL void GF_BGL_ScrWriteExpand(
  * @li	折り返し有り1x1～64x64キャラのフリーサイズスクリーンデータの矩形書き込み
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrWriteFree(
+GLOBAL void GF_BGL_ScrWriteFree( GF_BGL_INI * bgl,
 				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
 
@@ -606,7 +644,7 @@ GLOBAL void GF_BGL_ScrWriteFree(
  * @li	mode = 0 ～ 15 : パレット番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrFill( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode );
+GLOBAL void GF_BGL_ScrFill( GF_BGL_INI * bgl, u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -622,7 +660,7 @@ GLOBAL void GF_BGL_ScrFill( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 m
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrPalChange( u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
+GLOBAL void GF_BGL_ScrPalChange( GF_BGL_INI * bgl, u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -633,7 +671,7 @@ GLOBAL void GF_BGL_ScrPalChange( u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrClear( u8 frmnum );
+GLOBAL void GF_BGL_ScrClear( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -645,7 +683,7 @@ GLOBAL void GF_BGL_ScrClear( u8 frmnum );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrClearCode( u8 frmnum, u16 clear_code );
+GLOBAL void GF_BGL_ScrClearCode( GF_BGL_INI * bgl, u8 frmnum, u16 clear_code );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -659,7 +697,7 @@ GLOBAL void GF_BGL_ScrClearCode( u8 frmnum, u16 clear_code );
  * @li	転送はVBlankで
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrClearCodeVReq( u8 frmnum, u16 clear_code );
+GLOBAL void GF_BGL_ScrClearCodeVReq( GF_BGL_INI * bgl, u8 frmnum, u16 clear_code );
 
 
 //=============================================================================================
@@ -723,7 +761,7 @@ GLOBAL void * GF_BGL_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs
  * @return	スクリーンバッファアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void * GF_BGL_ScreenAdrsGet( u8 frmnum );
+GLOBAL void * GF_BGL_ScreenAdrsGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -734,7 +772,7 @@ GLOBAL void * GF_BGL_ScreenAdrsGet( u8 frmnum );
  * @return	スクリーンバッファサイズ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GF_BGL_ScreenSizGet( u8 frmnum );
+GLOBAL u32 GF_BGL_ScreenSizGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -745,7 +783,7 @@ GLOBAL u32 GF_BGL_ScreenSizGet( u8 frmnum );
  * @return	スクリーンバッファオフセット
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GF_BGL_ScreenOfsGet( u8 frmnum );
+GLOBAL u32 GF_BGL_ScreenOfsGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -756,7 +794,7 @@ GLOBAL u32 GF_BGL_ScreenOfsGet( u8 frmnum );
  * @return	GF_BGL_SCRSIZ_128x128 等
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GF_BGL_ScreenTypeGet( u8 frmnum );
+GLOBAL u32 GF_BGL_ScreenTypeGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -767,7 +805,7 @@ GLOBAL u32 GF_BGL_ScreenTypeGet( u8 frmnum );
  * @return	スクロールカウンタX
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_ScreenScrollXGet( u8 frmnum );
+GLOBAL int GF_BGL_ScreenScrollXGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -778,7 +816,7 @@ GLOBAL int GF_BGL_ScreenScrollXGet( u8 frmnum );
  * @return	スクロールカウンタY
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_ScreenScrollYGet( u8 frmnum );
+GLOBAL int GF_BGL_ScreenScrollYGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -789,7 +827,7 @@ GLOBAL int GF_BGL_ScreenScrollYGet( u8 frmnum );
  * @return	BGモード
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BGL_BgModeGet( u8 frmnum );
+GLOBAL u8 GF_BGL_BgModeGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -800,7 +838,7 @@ GLOBAL u8 GF_BGL_BgModeGet( u8 frmnum );
  * @return	カラーモード
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BGL_ScreenColorModeGet( u8 frmnum );
+GLOBAL u8 GF_BGL_ScreenColorModeGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -811,7 +849,7 @@ GLOBAL u8 GF_BGL_ScreenColorModeGet( u8 frmnum );
  * @return	キャラサイズ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BGL_BaseCharSizeGet( u8 frmnum );
+GLOBAL u8 GF_BGL_BaseCharSizeGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -822,7 +860,7 @@ GLOBAL u8 GF_BGL_BaseCharSizeGet( u8 frmnum );
  * @return	回転角度
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 GF_BGL_RadianGet( u8 frmnum );
+GLOBAL u16 GF_BGL_RadianGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -833,7 +871,7 @@ GLOBAL u16 GF_BGL_RadianGet( u8 frmnum );
  * @return	X方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL fx32 GF_BGL_ScaleXGet( u8 frmnum );
+GLOBAL fx32 GF_BGL_ScaleXGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -844,7 +882,7 @@ GLOBAL fx32 GF_BGL_ScaleXGet( u8 frmnum );
  * @return	Y方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL fx32 GF_BGL_ScaleYGet( u8 frmnum );
+GLOBAL fx32 GF_BGL_ScaleYGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -855,7 +893,7 @@ GLOBAL fx32 GF_BGL_ScaleYGet( u8 frmnum );
  * @return	回転中心X座標
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_CenterXGet( u8 frmnum );
+GLOBAL int GF_BGL_CenterXGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -866,7 +904,7 @@ GLOBAL int GF_BGL_CenterXGet( u8 frmnum );
  * @return	回転中心Y座標
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_BGL_CenterYGet( u8 frmnum );
+GLOBAL int GF_BGL_CenterYGet( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -877,7 +915,7 @@ GLOBAL int GF_BGL_CenterYGet( u8 frmnum );
  * @return	プライオリティ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BGL_PriorityGet( u8 frm );
+GLOBAL u8 GF_BGL_PriorityGet( GF_BGL_INI * bgl, u8 frm );
 
 
 
@@ -887,7 +925,7 @@ GLOBAL u8 GF_BGL_PriorityGet( u8 frm );
 //=============================================================================================
 //=============================================================================================
 
-GLOBAL void GF_BGL_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u32 size );
+GLOBAL void GF_BGL_NTRCHR_CharLoadEx( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs, u32 size );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -900,7 +938,7 @@ GLOBAL void GF_BGL_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u3
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_NTRCHR_CharLoad( u8 frmnum, const char * path, u32 offs );
+GLOBAL void GF_BGL_NTRCHR_CharLoad( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs );
 
 
 
@@ -945,7 +983,7 @@ GLOBAL NNSG2dPaletteData * GF_BGL_NTRCHR_PalLoad( void ** mem, int mode, const c
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs );
+GLOBAL void GF_BGL_NTRCHR_ScrnLoad( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs );
 
 
 //=============================================================================================
@@ -965,7 +1003,7 @@ GLOBAL void GF_BGL_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs );
  * @li	VBlank内で呼んで下さい
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_VBlankFunc(void);
+GLOBAL void GF_BGL_VBlankFunc(GF_BGL_INI * bgl);
 
 
 //--------------------------------------------------------------------------------------------
@@ -979,7 +1017,7 @@ GLOBAL void GF_BGL_VBlankFunc(void);
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_LoadScreenV_Req( u8 frmnum );
+GLOBAL void GF_BGL_LoadScreenV_Req( GF_BGL_INI * bgl, u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -994,7 +1032,7 @@ GLOBAL void GF_BGL_LoadScreenV_Req( u8 frmnum );
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScrollReq( u8 frmnum, u8 mode, int value );
+GLOBAL void GF_BGL_ScrollReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1009,7 +1047,7 @@ GLOBAL void GF_BGL_ScrollReq( u8 frmnum, u8 mode, int value );
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_RadianSetReq( u8 frmnum, u8 mode, u16 value );
+GLOBAL void GF_BGL_RadianSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, u16 value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1024,7 +1062,7 @@ GLOBAL void GF_BGL_RadianSetReq( u8 frmnum, u8 mode, u16 value );
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_ScaleSetReq( u8 frmnum, u8 mode, fx32 value );
+GLOBAL void GF_BGL_ScaleSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, fx32 value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1039,7 +1077,7 @@ GLOBAL void GF_BGL_ScaleSetReq( u8 frmnum, u8 mode, fx32 value );
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_RotateCenterSetReq( u8 frmnum, u8 mode, int value );
+GLOBAL void GF_BGL_RotateCenterSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value );
 
 
 //=============================================================================================
@@ -1069,7 +1107,7 @@ GLOBAL void GF_BGL_RotateCenterSetReq( u8 frmnum, u8 mode, int value );
  *				カラー88, 124, 223以外はFALSEが返る
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat );
+GLOBAL u8 GF_BGL_DotCheck( GF_BGL_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat );
 
 
 
