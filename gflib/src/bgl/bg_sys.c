@@ -11,19 +11,16 @@
  *		BMPWIN	->	bmp_win.c
  */
 //=============================================================================================
-#include "system.h"
-#include "standard.h"
-#include "calctool.h"
-#include "display.h"
-//#include "mmap_get.h"
-#include "gflib_os_print.h"
-#include "system\arc_tool.h"
+#include "gflib.h"
 
 #define	__BG_SYS_H_GLOBAL__
-#include "gflib/bg_sys.h"
+#include "bg_sys.h"
+#include "calctool.h"
+#include "display.h"
 
 
 #define DMA_USE (1)
+
 //=============================================================================================
 //	型宣言
 //=============================================================================================
@@ -47,6 +44,7 @@ typedef	struct	{
 	u8		base_char_size;
 
 	u16		rad;
+	u16		dummy;				//padding
 	fx32	scale_x;
 	fx32	scale_y;
 	int		cx;
@@ -66,15 +64,14 @@ struct _GF_BGL_INI {
 //------------------------------------------------------------------
 
 
-
 //=============================================================================================
 //	プロトタイプ宣言
 //=============================================================================================
 static u8 BgScreenSizeConv( u8 type, u8 mode );
 static void ScrollParamSet( GF_BGL_SYS_INI * ini, u8 mode, int value );
-static void AffineScrollSetMtxFix( u8 frmnum );
+static void AffineScrollSetMtxFix( GF_BGL_INI * bgl, u8 frmnum );
 static void GF_BGL_LoadScreenSub( u8 frmnum, void* src, u32 ofs, u32 siz );
-static void LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs );
+static void LoadCharacter( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
 static void GF_BGL_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz );
 static void GF_BGL_ScrWrite_Normal(
 					GF_BGL_SYS_INI * ini, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
@@ -87,7 +84,7 @@ static void GF_BGL_ScrFill_Normal(
 static void GF_BGL_ScrFill_Affine(
 					GF_BGL_SYS_INI * ini, u8 dat, u8 px, u8 py, u8 sx, u8 sy );
 
-static void CgxFlipCheck( u8 flip, u8 * buf );
+static void CgxFlipCheck( u8 flip, u8 * buf ,u32 headID);
 
 static void RadianParamSet( GF_BGL_SYS_INI * ini, u8 mode, u16 value );
 static void ScaleParamSet( GF_BGL_SYS_INI * ini, u8 mode, fx32 value );
@@ -159,9 +156,9 @@ u32	GF_BGL_HeapIDGet( GF_BGL_INI * bgl )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_SysBglInit( u32 heapID )
+void GF_BGL_SysBglInit( GF_BGL_INI * bgl, u32 heapID )
 {
-	BglInit( sys.bgl, heapID );
+	BglInit( bgl, heapID );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -224,7 +221,7 @@ void GF_BGL_InitBGDisp( const GF_BGL_SYS_HEADER * data, u8 flg )
  * @li	mode = GF_BGL_MODE_256X16	: アフィン拡張BG
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode )
+void GF_BGL_BGControlSet( GF_BGL_INI * bgl, u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode )
 {
 	u8	screen_size = BgScreenSizeConv( data->screenSize, mode );
 
@@ -398,14 +395,14 @@ void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode )
 		break;
 	}
 
-	sys.bgl->bgsys[frmnum].rad     = 0;
-	sys.bgl->bgsys[frmnum].scale_x = FX32_ONE;
-	sys.bgl->bgsys[frmnum].scale_y = FX32_ONE;
-	sys.bgl->bgsys[frmnum].cx      = 0;
-	sys.bgl->bgsys[frmnum].cy      = 0;
+	bgl->bgsys[frmnum].rad     = 0;
+	bgl->bgsys[frmnum].scale_x = FX32_ONE;
+	bgl->bgsys[frmnum].scale_y = FX32_ONE;
+	bgl->bgsys[frmnum].cx      = 0;
+	bgl->bgsys[frmnum].cy      = 0;
 
 	if( data->scrbufferSiz ){
-		sys.bgl->bgsys[frmnum].screen_buf = sys_AllocMemory( sys.bgl->heapID, data->scrbufferSiz );
+		bgl->bgsys[frmnum].screen_buf = sys_AllocMemory( bgl->heapID, data->scrbufferSiz );
 
 #ifdef	OSP_ERR_BGL_SCRBUF_GET		// スクリーンバッファ確保失敗
 		if( ini->bgsys[frmnum].screen_buf == NULL ){
@@ -413,29 +410,29 @@ void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode )
 		}
 #endif	// OSP_ERR_BGL_SCRBUF_GET
 
-		MI_CpuClear16( sys.bgl->bgsys[frmnum].screen_buf, data->scrbufferSiz );
-		sys.bgl->bgsys[frmnum].screen_buf_siz = data->scrbufferSiz;
-		sys.bgl->bgsys[frmnum].screen_buf_ofs = data->scrbufferOfs;
+		MI_CpuClear16( bgl->bgsys[frmnum].screen_buf, data->scrbufferSiz );
+		bgl->bgsys[frmnum].screen_buf_siz = data->scrbufferSiz;
+		bgl->bgsys[frmnum].screen_buf_ofs = data->scrbufferOfs;
 #ifdef	OSP_BGL_SCRBUF_GET_SIZ		// 確保したスクリーンバッファのサイズ
-		OS_Printf("ＳＣＲ領域=%x\n",sys.bgl->bgsys[frmnum].screen_buf);
+		OS_Printf("ＳＣＲ領域=%x\n",bgl->bgsys[frmnum].screen_buf);
 #endif	// OSP_BGL_SCRBUF_GET_SIZ
 	}else{
-		sys.bgl->bgsys[frmnum].screen_buf = NULL;
-		sys.bgl->bgsys[frmnum].screen_buf_siz = 0;
-		sys.bgl->bgsys[frmnum].screen_buf_ofs = 0;
+		bgl->bgsys[frmnum].screen_buf = NULL;
+		bgl->bgsys[frmnum].screen_buf_siz = 0;
+		bgl->bgsys[frmnum].screen_buf_ofs = 0;
 	}
-	sys.bgl->bgsys[frmnum].screen_siz = data->screenSize;
-	sys.bgl->bgsys[frmnum].mode = mode;
-	sys.bgl->bgsys[frmnum].col_mode = data->colorMode;
+	bgl->bgsys[frmnum].screen_siz = data->screenSize;
+	bgl->bgsys[frmnum].mode = mode;
+	bgl->bgsys[frmnum].col_mode = data->colorMode;
 
 	if( mode == GF_BGL_MODE_TEXT && data->colorMode == GX_BG_COLORMODE_16 ){
-		sys.bgl->bgsys[frmnum].base_char_size = GF_BGL_1CHRDATASIZ;
+		bgl->bgsys[frmnum].base_char_size = GF_BGL_1CHRDATASIZ;
 	}else{
-		sys.bgl->bgsys[frmnum].base_char_size = GF_BGL_8BITCHRSIZ;
+		bgl->bgsys[frmnum].base_char_size = GF_BGL_8BITCHRSIZ;
 	}
 
-	GF_BGL_ScrollSet( frmnum, GF_BGL_SCROLL_X_SET, data->scrollX );
-	GF_BGL_ScrollSet( frmnum, GF_BGL_SCROLL_Y_SET, data->scrollY );
+	GF_BGL_ScrollSet( bgl, frmnum, GF_BGL_SCROLL_X_SET, data->scrollX );
+	GF_BGL_ScrollSet( bgl, frmnum, GF_BGL_SCROLL_Y_SET, data->scrollY );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -449,10 +446,10 @@ void GF_BGL_BGControlSet( u8 frmnum, const GF_BGL_BGCNT_HEADER * data, u8 mode )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
+void GF_BGL_BGControlReset( GF_BGL_INI * bgl, u8 frm, u8 flg, u8 prm )
 {
 	if( flg == BGL_RESET_COLOR ){
-		sys.bgl->bgsys[frm].col_mode = prm;
+		bgl->bgsys[frm].col_mode = prm;
 	}
 
 	switch( frm ){
@@ -466,7 +463,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 			}
 			G2_SetBG0Control(
 				(GXBGScrSizeText)dat.screenSize, 
-				(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+				(GXBGColorMode)bgl->bgsys[frm].col_mode,
 				(GXBGScrBase)dat.screenBase,
 				(GXBGCharBase)dat.charBase,
 				(GXBGExtPltt)dat.bgExtPltt );
@@ -483,7 +480,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 			}
 			G2_SetBG1Control(
 				(GXBGScrSizeText)dat.screenSize, 
-				(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+				(GXBGColorMode)bgl->bgsys[frm].col_mode,
 				(GXBGScrBase)dat.screenBase,
 				(GXBGCharBase)dat.charBase,
 				(GXBGExtPltt)dat.bgExtPltt );
@@ -491,7 +488,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 		break;
 
 	case GF_BGL_FRAME2_M:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -503,7 +500,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 				}
 				G2_SetBG2ControlText(
 					(GXBGScrSizeText)dat.screenSize,
-					(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+					(GXBGColorMode)bgl->bgsys[frm].col_mode,
 					(GXBGScrBase)dat.screenBase,
 					(GXBGCharBase)dat.charBase );
 			}
@@ -542,7 +539,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 		break;
 
 	case GF_BGL_FRAME3_M:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -554,7 +551,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 				}
 				G2_SetBG3ControlText(
 					(GXBGScrSizeText)dat.screenSize,
-					(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+					(GXBGColorMode)bgl->bgsys[frm].col_mode,
 					(GXBGScrBase)dat.screenBase,
 					(GXBGCharBase)dat.charBase );
 			}
@@ -602,7 +599,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 			}
 			G2S_SetBG0Control(
 				(GXBGScrSizeText)dat.screenSize, 
-				(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+				(GXBGColorMode)bgl->bgsys[frm].col_mode,
 				(GXBGScrBase)dat.screenBase,
 				(GXBGCharBase)dat.charBase,
 				(GXBGExtPltt)dat.bgExtPltt );
@@ -619,7 +616,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 			}
 			G2S_SetBG1Control(
 				(GXBGScrSizeText)dat.screenSize, 
-				(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+				(GXBGColorMode)bgl->bgsys[frm].col_mode,
 				(GXBGScrBase)dat.screenBase,
 				(GXBGCharBase)dat.charBase,
 				(GXBGExtPltt)dat.bgExtPltt );
@@ -627,7 +624,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 		break;
 
 	case GF_BGL_FRAME2_S:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -639,7 +636,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 				}
 				G2S_SetBG2ControlText(
 					(GXBGScrSizeText)dat.screenSize,
-					(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+					(GXBGColorMode)bgl->bgsys[frm].col_mode,
 					(GXBGScrBase)dat.screenBase,
 					(GXBGCharBase)dat.charBase );
 			}
@@ -678,7 +675,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 		break;
 
 	case GF_BGL_FRAME3_S:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -690,7 +687,7 @@ void GF_BGL_BGControlReset( u8 frm, u8 flg, u8 prm )
 				}
 				G2S_SetBG3ControlText(
 					(GXBGScrSizeText)dat.screenSize,
-					(GXBGColorMode)sys.bgl->bgsys[frm].col_mode,
+					(GXBGColorMode)bgl->bgsys[frm].col_mode,
 					(GXBGScrBase)dat.screenBase,
 					(GXBGCharBase)dat.charBase );
 			}
@@ -816,13 +813,13 @@ static void BgScreenSizeGet( u8 type, u8 * x, u8 * y )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_BGControlExit( u8 frmnum )
+void GF_BGL_BGControlExit( GF_BGL_INI * bgl, u8 frmnum )
 {
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	sys_FreeMemoryEz( sys.bgl->bgsys[frmnum].screen_buf );
-	sys.bgl->bgsys[frmnum].screen_buf = NULL;
+	sys_FreeMemoryEz( bgl->bgsys[frmnum].screen_buf );
+	bgl->bgsys[frmnum].screen_buf = NULL;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -925,14 +922,14 @@ void GF_BGL_VisibleSet( u8 frmnum, u8 visible )
  * @li	拡縮面が拡縮・回転する場合はGF_BGL_AffineScrollSet(...)を使用すること
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value )
+void GF_BGL_ScrollSet( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value )
 {
 	int	scroll_x, scroll_y;
 
-	ScrollParamSet( &sys.bgl->bgsys[frmnum], mode, value );
+	ScrollParamSet( &bgl->bgsys[frmnum], mode, value );
 
-	scroll_x = sys.bgl->bgsys[frmnum].scroll_x;
-	scroll_y = sys.bgl->bgsys[frmnum].scroll_y;
+	scroll_x = bgl->bgsys[frmnum].scroll_x;
+	scroll_y = bgl->bgsys[frmnum].scroll_y;
 
 	switch( frmnum ){
 	case GF_BGL_FRAME0_M:
@@ -942,17 +939,17 @@ void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value )
 		G2_SetBG1Offset( scroll_x, scroll_y );
 		return;
 	case GF_BGL_FRAME2_M:
-		if( sys.bgl->bgsys[GF_BGL_FRAME2_M].mode == GF_BGL_MODE_TEXT ){
+		if( bgl->bgsys[GF_BGL_FRAME2_M].mode == GF_BGL_MODE_TEXT ){
 			G2_SetBG2Offset( scroll_x, scroll_y );
 		}else{
-			AffineScrollSetMtxFix( GF_BGL_FRAME2_M );
+			AffineScrollSetMtxFix( bgl, GF_BGL_FRAME2_M );
 		}
 		return;
 	case GF_BGL_FRAME3_M:
-		if( sys.bgl->bgsys[GF_BGL_FRAME3_M].mode == GF_BGL_MODE_TEXT ){
+		if( bgl->bgsys[GF_BGL_FRAME3_M].mode == GF_BGL_MODE_TEXT ){
 			G2_SetBG3Offset( scroll_x, scroll_y );
 		}else{
-			AffineScrollSetMtxFix( GF_BGL_FRAME3_M );
+			AffineScrollSetMtxFix( bgl, GF_BGL_FRAME3_M );
 		}
 		return;
 	case GF_BGL_FRAME0_S:
@@ -962,17 +959,17 @@ void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value )
 		G2S_SetBG1Offset( scroll_x, scroll_y );
 		return;
 	case GF_BGL_FRAME2_S:
-		if( sys.bgl->bgsys[GF_BGL_FRAME2_S].mode == GF_BGL_MODE_TEXT ){
+		if( bgl->bgsys[GF_BGL_FRAME2_S].mode == GF_BGL_MODE_TEXT ){
 			G2S_SetBG2Offset( scroll_x, scroll_y );
 		}else{
-			AffineScrollSetMtxFix( GF_BGL_FRAME2_S );
+			AffineScrollSetMtxFix( bgl, GF_BGL_FRAME2_S );
 		}
 		return;
 	case GF_BGL_FRAME3_S:
-		if( sys.bgl->bgsys[GF_BGL_FRAME3_S].mode == GF_BGL_MODE_TEXT ){
+		if( bgl->bgsys[GF_BGL_FRAME3_S].mode == GF_BGL_MODE_TEXT ){
 			G2S_SetBG3Offset( scroll_x, scroll_y );
 		}else{
-			AffineScrollSetMtxFix( GF_BGL_FRAME3_S );
+			AffineScrollSetMtxFix( bgl, GF_BGL_FRAME3_S );
 		}
 		return;
 	}
@@ -986,9 +983,9 @@ void GF_BGL_ScrollSet( u8 frmnum, u8 mode, int value )
  * @return	int			スクロール値Ｘ
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_ScrollGetX( u32 frmnum )
+int GF_BGL_ScrollGetX( GF_BGL_INI * bgl, u32 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scroll_x;
+	return bgl->bgsys[frmnum].scroll_x;
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -999,9 +996,9 @@ int GF_BGL_ScrollGetX( u32 frmnum )
  * @return	int			スクロール値Ｙ
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_ScrollGetY( u32 frmnum )
+int GF_BGL_ScrollGetY( GF_BGL_INI * bgl, u32 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scroll_y;
+	return bgl->bgsys[frmnum].scroll_y;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1018,11 +1015,11 @@ int GF_BGL_ScrollGetY( u32 frmnum )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_AffineScrollSet(
+void GF_BGL_AffineScrollSet( GF_BGL_INI * bgl,
 		u8 frmnum, u8 mode, int value, const MtxFx22 * mtx, int cx, int cy )
 {
-	ScrollParamSet( &sys.bgl->bgsys[frmnum], mode, value );
-	GF_BGL_AffineSet( frmnum, mtx, cx, cy );
+	ScrollParamSet( &bgl->bgsys[frmnum], mode, value );
+	GF_BGL_AffineSet( bgl, frmnum, mtx, cx, cy );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1072,24 +1069,24 @@ static void ScrollParamSet( GF_BGL_SYS_INI * ini, u8 mode, int value )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_AffineSet( u8 frmnum, const MtxFx22 * mtx, int cx, int cy )
+void GF_BGL_AffineSet( GF_BGL_INI * bgl, u8 frmnum, const MtxFx22 * mtx, int cx, int cy )
 {
 	switch( frmnum ){
 	case GF_BGL_FRAME2_M:
 		G2_SetBG2Affine(
-			mtx, cx, cy, sys.bgl->bgsys[frmnum].scroll_x, sys.bgl->bgsys[frmnum].scroll_y );
+			mtx, cx, cy, bgl->bgsys[frmnum].scroll_x, bgl->bgsys[frmnum].scroll_y );
 		return;
 	case GF_BGL_FRAME3_M:
 		G2_SetBG3Affine(
-			mtx, cx, cy, sys.bgl->bgsys[frmnum].scroll_x, sys.bgl->bgsys[frmnum].scroll_y );
+			mtx, cx, cy, bgl->bgsys[frmnum].scroll_x, bgl->bgsys[frmnum].scroll_y );
 		return;
 	case GF_BGL_FRAME2_S:
 		G2S_SetBG2Affine(
-			mtx, cx, cy, sys.bgl->bgsys[frmnum].scroll_x, sys.bgl->bgsys[frmnum].scroll_y );
+			mtx, cx, cy, bgl->bgsys[frmnum].scroll_x, bgl->bgsys[frmnum].scroll_y );
 		return;
 	case GF_BGL_FRAME3_S:
 		G2S_SetBG3Affine(
-			mtx, cx, cy, sys.bgl->bgsys[frmnum].scroll_x, sys.bgl->bgsys[frmnum].scroll_y );
+			mtx, cx, cy, bgl->bgsys[frmnum].scroll_x, bgl->bgsys[frmnum].scroll_y );
 		return;
 	}
 }
@@ -1103,7 +1100,7 @@ void GF_BGL_AffineSet( u8 frmnum, const MtxFx22 * mtx, int cx, int cy )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void AffineScrollSetMtxFix( u8 frmnum )
+static void AffineScrollSetMtxFix( GF_BGL_INI * bgl, u8 frmnum )
 {
 	MtxFx22	mtx;
 
@@ -1112,7 +1109,7 @@ static void AffineScrollSetMtxFix( u8 frmnum )
 #endif
 
 	AffineMtxMake_2D( &mtx, 0, FX32_ONE, FX32_ONE, AFFINE_MAX_NORMAL );
-	GF_BGL_AffineSet( frmnum, &mtx, 0, 0 );
+	GF_BGL_AffineSet( bgl, frmnum, &mtx, 0, 0 );
 }
 
 
@@ -1164,11 +1161,11 @@ void GF_BGL_DataDecord( const void * src, void * dst, u32 datasiz )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadScreenReq( u8 frmnum )
+void GF_BGL_LoadScreenReq( GF_BGL_INI * bgl, u8 frmnum )
 {
-	GF_BGL_LoadScreen(
-		frmnum, sys.bgl->bgsys[frmnum].screen_buf,
-		sys.bgl->bgsys[frmnum].screen_buf_siz, sys.bgl->bgsys[frmnum].screen_buf_ofs );
+	GF_BGL_LoadScreen( bgl,
+		frmnum, bgl->bgsys[frmnum].screen_buf,
+		bgl->bgsys[frmnum].screen_buf_siz, bgl->bgsys[frmnum].screen_buf_ofs );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1184,29 +1181,29 @@ void GF_BGL_LoadScreenReq( u8 frmnum )
  *
  * @li	datasiz = GF_BGL_DATA_LZH : 圧縮データ
  *
- *	圧縮されたデータは解凍場所にsys.bgl->bgsys[frmnum].screen_bufを使用するため
- *	sys.bgl->bgsys[frmnum].screen_bufにデータがセットされるが、非圧縮の場合は、
+ *	圧縮されたデータは解凍場所にbgl->bgsys[frmnum].screen_bufを使用するため
+ *	bgl->bgsys[frmnum].screen_bufにデータがセットされるが、非圧縮の場合は、
  *	セットされないので、注意すること。
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs )
+void GF_BGL_LoadScreen( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs )
 {
 	void * decode_buf;
 
 	if( datasiz == GF_BGL_DATA_LZH ){
-		if( sys.bgl->bgsys[frmnum].screen_buf != NULL ){
-			decode_buf = sys.bgl->bgsys[frmnum].screen_buf;
+		if( bgl->bgsys[frmnum].screen_buf != NULL ){
+			decode_buf = bgl->bgsys[frmnum].screen_buf;
 			GF_BGL_DataDecord( src, decode_buf, datasiz );
 
 			GF_BGL_LoadScreenSub(
 				frmnum, decode_buf, 
-				sys.bgl->bgsys[frmnum].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-				sys.bgl->bgsys[frmnum].screen_buf_siz );
+				bgl->bgsys[frmnum].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+				bgl->bgsys[frmnum].screen_buf_siz );
 		}else{
 			u32	alloc_siz;
 
 			alloc_siz	= ((*(u32*)src) >> 8);
-			decode_buf = sys_AllocMemoryLo( sys.bgl->heapID, alloc_siz );
+			decode_buf = sys_AllocMemoryLo( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 			if( decode_buf == NULL ){
@@ -1223,6 +1220,8 @@ void GF_BGL_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs )
 		GF_BGL_LoadScreenSub( frmnum, (void*)src, offs * GF_BGL_1SCRDATASIZ, datasiz );
 	}
 }
+
+#if GF_BGL_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * 指定データをスクリーンに転送（ファイル参照）
@@ -1236,20 +1235,21 @@ void GF_BGL_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs )
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadScreenFile( u8 frmnum, const char * path, u32 offs )
+void GF_BGL_LoadScreenFile( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs )
 {
 	void * mem;
 	u32	size;
 	u32	mode;
 
-	mem = sys_LoadFileEx( sys.bgl->heapID, path, &size );
+	mem = sys_LoadFileEx( bgl->heapID, path, &size );
 	if( mem == NULL ){
 		return;	//エラー
 	}
-	GF_BGL_ScreenBufSet( frmnum, mem, size );
-	GF_BGL_LoadScreen( frmnum, mem, size, offs );
-	sys_FreeMemory( sys.bgl->heapID, mem );
+	GF_BGL_ScreenBufSet( bgl, frmnum, mem, size );
+	GF_BGL_LoadScreen( bgl, frmnum, mem, size, offs );
+	sys_FreeMemory( bgl->heapID, mem );
 }
+#endif GF_BGL_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1335,9 +1335,9 @@ static void GF_BGL_LoadScreenSub( u8 frmnum, void* src, u32 ofs, u32 siz )
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScreenBufSet( u8 frmnum, const void * dat, u32 datasiz )
+void GF_BGL_ScreenBufSet( GF_BGL_INI * bgl, u8 frmnum, const void * dat, u32 datasiz )
 {
-	GF_BGL_DataDecord( dat, sys.bgl->bgsys[frmnum].screen_buf, datasiz );
+	GF_BGL_DataDecord( dat, bgl->bgsys[frmnum].screen_buf, datasiz );
 }
 
 
@@ -1355,15 +1355,16 @@ void GF_BGL_ScreenBufSet( u8 frmnum, const void * dat, u32 datasiz )
  * @li	datasiz = GF_BGL_DATA_LZH : 圧縮データ
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs )
+void GF_BGL_LoadCharacter( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs )
 {
-	if( sys.bgl->bgsys[frmnum].col_mode == GX_BG_COLORMODE_16 ){
-		LoadCharacter( frmnum, src, datasiz, offs * GF_BGL_1CHRDATASIZ );
+	if( bgl->bgsys[frmnum].col_mode == GX_BG_COLORMODE_16 ){
+		LoadCharacter( bgl, frmnum, src, datasiz, offs * GF_BGL_1CHRDATASIZ );
 	}else{
-		LoadCharacter( frmnum, src, datasiz, offs * GF_BGL_8BITCHRSIZ );
+		LoadCharacter( bgl, frmnum, src, datasiz, offs * GF_BGL_8BITCHRSIZ );
 	}
 }
 
+#if GF_BGL_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * キャラクター転送（ファイル参照）
@@ -1378,19 +1379,20 @@ void GF_BGL_LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs )
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadCharacterFile( u8 frmnum, const char * path, u32 offs )
+void GF_BGL_LoadCharacterFile( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs )
 {
 	void * mem;
 	u32	size;
 
-	mem = sys_LoadFileEx( sys.bgl->heapID, path, &size );
+	mem = sys_LoadFileEx( bgl->heapID, path, &size );
 	if(mem == NULL){
 		return;	//エラー
 	}
-	GF_BGL_LoadCharacter( frmnum, mem, size, offs );
-	sys_FreeMemory( sys.bgl->heapID, mem );
+	GF_BGL_LoadCharacter( bgl, frmnum, mem, size, offs );
+	sys_FreeMemory( bgl->heapID, mem );
 	return;
 }
+#endif GF_BGL_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1406,7 +1408,7 @@ void GF_BGL_LoadCharacterFile( u8 frmnum, const char * path, u32 offs )
  * @li	datasiz = GF_BGL_DATA_LZH : 圧縮データ
  */
 //--------------------------------------------------------------------------------------------
-static void LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs )
+static void LoadCharacter( GF_BGL_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs )
 {
 	void * decode_buf;
 
@@ -1414,7 +1416,7 @@ static void LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs )
 		u32	alloc_siz;
 
 		alloc_siz  = ((*(u32*)src) >> 8);
-		decode_buf = sys_AllocMemoryLo( sys.bgl->heapID, alloc_siz );
+		decode_buf = sys_AllocMemoryLo( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 		if( decode_buf == NULL ){
@@ -1538,15 +1540,15 @@ void GF_BGL_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs )
+void GF_BGL_CharFill( GF_BGL_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt, u32 offs )
 {
 	u32 * chr;
 	u32  size;
 
-	size = charcnt * sys.bgl->bgsys[frmnum].base_char_size;
-	chr = (u32 *)sys_AllocMemoryLo( sys.bgl->heapID,  size );
+	size = charcnt * bgl->bgsys[frmnum].base_char_size;
+	chr = (u32 *)sys_AllocMemoryLo( bgl->heapID,  size );
 
-	if( sys.bgl->bgsys[frmnum].base_char_size == GF_BGL_1CHRDATASIZ ){
+	if( bgl->bgsys[frmnum].base_char_size == GF_BGL_1CHRDATASIZ ){
 		clear_code = (clear_code<<12) | (clear_code<<8) | (clear_code<<4) | clear_code;
 		clear_code |= ( clear_code << 16 );
 	}else{
@@ -1556,7 +1558,7 @@ void GF_BGL_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs )
 	MI_CpuFillFast( chr, clear_code, size);
 
 	GF_BGL_LoadCharacterSub(
-		frmnum, (void*)chr, offs*sys.bgl->bgsys[frmnum].base_char_size, size );
+		frmnum, (void*)chr, offs*bgl->bgsys[frmnum].base_char_size, size );
 	sys_FreeMemoryEz( chr );
 }
 
@@ -1722,9 +1724,9 @@ static u16 GetScrBufferPos(u8 px,u8 py,u8 sx,u8 sy)
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrWrite( u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy )
+void GF_BGL_ScrWrite( GF_BGL_INI * bgl, u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy )
 {
-	GF_BGL_ScrWriteExpand( frmnum, px, py, sx, sy, buf, 0, 0, sx, sy );
+	GF_BGL_ScrWriteExpand( bgl, frmnum, px, py, sx, sy, buf, 0, 0, sx, sy );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1744,17 +1746,17 @@ void GF_BGL_ScrWrite( u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy )
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrWriteExpand(
+void GF_BGL_ScrWriteExpand( GF_BGL_INI * bgl,
 				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy )
 {
-	if( sys.bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
+	if( bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
 		GF_BGL_ScrWrite_Normal(
-			&sys.bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
+			&bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
 			(u16 *)buf, buf_px, buf_py, buf_sx, buf_sy , GF_BGL_MODE_1DBUF);
 	}else{
 		GF_BGL_ScrWrite_Affine(
-			&sys.bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
+			&bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
 			(u8 *)buf, buf_px, buf_py, buf_sx, buf_sy , GF_BGL_MODE_1DBUF);
 	}
 }
@@ -1779,17 +1781,17 @@ void GF_BGL_ScrWriteExpand(
  * @li	折り返し有り1x1～64x64キャラのフリーサイズスクリーンデータの矩形書き込み
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrWriteFree(
+void GF_BGL_ScrWriteFree( GF_BGL_INI * bgl,
 				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy )
 {
-	if( sys.bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
+	if( bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
 		GF_BGL_ScrWrite_Normal(
-			&sys.bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
+			&bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
 			(u16 *)buf, buf_px, buf_py, buf_sx, buf_sy, GF_BGL_MODE_2DBUF);
 	}else{
 		GF_BGL_ScrWrite_Affine(
-			&sys.bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
+			&bgl->bgsys[frmnum], write_px, write_py, write_sx, write_sy,
 			(u8 *)buf, buf_px, buf_py, buf_sx, buf_sy, GF_BGL_MODE_2DBUF);
 	}
 }
@@ -1913,12 +1915,12 @@ static void GF_BGL_ScrWrite_Affine(
  * @li	mode = 0 ～ 15 : パレット番号
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrFill( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
+void GF_BGL_ScrFill( GF_BGL_INI * bgl, u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
 {
-	if( sys.bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
-		GF_BGL_ScrFill_Normal( &sys.bgl->bgsys[frmnum], dat, px, py, sx, sy, mode );
+	if( bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
+		GF_BGL_ScrFill_Normal( &bgl->bgsys[frmnum], dat, px, py, sx, sy, mode );
 	}else{
-		GF_BGL_ScrFill_Affine( &sys.bgl->bgsys[frmnum], (u8)dat, px, py, sx, sy );
+		GF_BGL_ScrFill_Affine( &bgl->bgsys[frmnum], (u8)dat, px, py, sx, sy );
 	}
 }
 
@@ -2010,26 +2012,26 @@ static void GF_BGL_ScrFill_Affine(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrPalChange( u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
+void GF_BGL_ScrPalChange( GF_BGL_INI * bgl, u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
 {
 	u16 * scrn;
 	u8	scr_sx, scr_sy;
 	u8	i, j;
 
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
 
-	scrn = (u16 *)sys.bgl->bgsys[frmnum].screen_buf;
+	scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
 
-	BgScreenSizeGet( sys.bgl->bgsys[frmnum].screen_siz, &scr_sx, &scr_sy );
+	BgScreenSizeGet( bgl->bgsys[frmnum].screen_siz, &scr_sx, &scr_sy );
 
 	for( i=py; i<py+sy; i++ ){
 		if( i >= scr_sy ){ break; }
 		for( j=px; j<px+sx; j++ ){
 			if( j >= scr_sx ){ break; }
 			{
-				u16	scr_pos = GetScreenPos( j, i, sys.bgl->bgsys[frmnum].screen_siz );
+				u16	scr_pos = GetScreenPos( j, i, bgl->bgsys[frmnum].screen_siz );
 
 				scrn[scr_pos] = ( scrn[scr_pos] & 0xfff ) | ( pal << 12 );
 			}
@@ -2046,13 +2048,13 @@ void GF_BGL_ScrPalChange( u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrClear( u8 frmnum )
+void GF_BGL_ScrClear( GF_BGL_INI * bgl, u8 frmnum )
 {
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	MI_CpuClear16( sys.bgl->bgsys[frmnum].screen_buf, sys.bgl->bgsys[frmnum].screen_buf_siz );
-	GF_BGL_LoadScreenReq( frmnum );
+	MI_CpuClear16( bgl->bgsys[frmnum].screen_buf, bgl->bgsys[frmnum].screen_buf_siz );
+	GF_BGL_LoadScreenReq( bgl, frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2065,14 +2067,14 @@ void GF_BGL_ScrClear( u8 frmnum )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrClearCode( u8 frmnum, u16 clear_code )
+void GF_BGL_ScrClearCode( GF_BGL_INI * bgl, u8 frmnum, u16 clear_code )
 {
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
 	MI_CpuFill16(
-		sys.bgl->bgsys[frmnum].screen_buf, clear_code, sys.bgl->bgsys[frmnum].screen_buf_siz );
-	GF_BGL_LoadScreenReq( frmnum );
+		bgl->bgsys[frmnum].screen_buf, clear_code, bgl->bgsys[frmnum].screen_buf_siz );
+	GF_BGL_LoadScreenReq( bgl, frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2087,14 +2089,14 @@ void GF_BGL_ScrClearCode( u8 frmnum, u16 clear_code )
  * @li	転送はVBlankで
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrClearCodeVReq( u8 frmnum, u16 clear_code )
+void GF_BGL_ScrClearCodeVReq( GF_BGL_INI * bgl, u8 frmnum, u16 clear_code )
 {
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
 	MI_CpuFill16(
-		sys.bgl->bgsys[frmnum].screen_buf, clear_code, sys.bgl->bgsys[frmnum].screen_buf_siz );
-	GF_BGL_LoadScreenV_Req( frmnum );
+		bgl->bgsys[frmnum].screen_buf, clear_code, bgl->bgsys[frmnum].screen_buf_siz );
+	GF_BGL_LoadScreenV_Req( bgl, frmnum );
 }
 
 
@@ -2200,9 +2202,9 @@ void * GF_BGL_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, u32 h
  * @return	スクリーンバッファアドレス
  */
 //--------------------------------------------------------------------------------------------
-void * GF_BGL_ScreenAdrsGet( u8 frmnum )
+void * GF_BGL_ScreenAdrsGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].screen_buf;
+	return bgl->bgsys[frmnum].screen_buf;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2214,9 +2216,9 @@ void * GF_BGL_ScreenAdrsGet( u8 frmnum )
  * @return	スクリーンバッファサイズ
  */
 //--------------------------------------------------------------------------------------------
-u32 GF_BGL_ScreenSizGet( u8 frmnum )
+u32 GF_BGL_ScreenSizGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].screen_buf_siz;
+	return bgl->bgsys[frmnum].screen_buf_siz;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2228,9 +2230,9 @@ u32 GF_BGL_ScreenSizGet( u8 frmnum )
  * @return	スクリーンバッファオフセット
  */
 //--------------------------------------------------------------------------------------------
-u32 GF_BGL_ScreenOfsGet( u8 frmnum )
+u32 GF_BGL_ScreenOfsGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].screen_buf_ofs;
+	return bgl->bgsys[frmnum].screen_buf_ofs;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2242,9 +2244,9 @@ u32 GF_BGL_ScreenOfsGet( u8 frmnum )
  * @return	GF_BGL_SCRSIZ_128x128 等
  */
 //--------------------------------------------------------------------------------------------
-u32 GF_BGL_ScreenTypeGet( u8 frmnum )
+u32 GF_BGL_ScreenTypeGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].screen_siz;
+	return bgl->bgsys[frmnum].screen_siz;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2256,9 +2258,9 @@ u32 GF_BGL_ScreenTypeGet( u8 frmnum )
  * @return	スクロールカウンタX
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_ScreenScrollXGet( u8 frmnum )
+int GF_BGL_ScreenScrollXGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scroll_x;
+	return bgl->bgsys[frmnum].scroll_x;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2270,9 +2272,9 @@ int GF_BGL_ScreenScrollXGet( u8 frmnum )
  * @return	スクロールカウンタY
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_ScreenScrollYGet( u8 frmnum )
+int GF_BGL_ScreenScrollYGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scroll_y;
+	return bgl->bgsys[frmnum].scroll_y;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2284,9 +2286,9 @@ int GF_BGL_ScreenScrollYGet( u8 frmnum )
  * @return	BGモード
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BGL_BgModeGet( u8 frmnum )
+u8 GF_BGL_BgModeGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].mode;
+	return bgl->bgsys[frmnum].mode;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2298,9 +2300,9 @@ u8 GF_BGL_BgModeGet( u8 frmnum )
  * @return	カラーモード
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BGL_ScreenColorModeGet( u8 frmnum )
+u8 GF_BGL_ScreenColorModeGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].col_mode;
+	return bgl->bgsys[frmnum].col_mode;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2312,9 +2314,9 @@ u8 GF_BGL_ScreenColorModeGet( u8 frmnum )
  * @return	キャラサイズ
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BGL_BaseCharSizeGet( u8 frmnum )
+u8 GF_BGL_BaseCharSizeGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].base_char_size;
+	return bgl->bgsys[frmnum].base_char_size;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2326,9 +2328,9 @@ u8 GF_BGL_BaseCharSizeGet( u8 frmnum )
  * @return	回転角度
  */
 //--------------------------------------------------------------------------------------------
-u16 GF_BGL_RadianGet( u8 frmnum )
+u16 GF_BGL_RadianGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].rad;
+	return bgl->bgsys[frmnum].rad;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2340,9 +2342,9 @@ u16 GF_BGL_RadianGet( u8 frmnum )
  * @return	X方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-fx32 GF_BGL_ScaleXGet( u8 frmnum )
+fx32 GF_BGL_ScaleXGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scale_x;
+	return bgl->bgsys[frmnum].scale_x;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2354,9 +2356,9 @@ fx32 GF_BGL_ScaleXGet( u8 frmnum )
  * @return	Y方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-fx32 GF_BGL_ScaleYGet( u8 frmnum )
+fx32 GF_BGL_ScaleYGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].scale_y;
+	return bgl->bgsys[frmnum].scale_y;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2368,9 +2370,9 @@ fx32 GF_BGL_ScaleYGet( u8 frmnum )
  * @return	回転中心X座標
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_CenterXGet( u8 frmnum )
+int GF_BGL_CenterXGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].cx;
+	return bgl->bgsys[frmnum].cx;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2382,9 +2384,9 @@ int GF_BGL_CenterXGet( u8 frmnum )
  * @return	回転中心Y座標
  */
 //--------------------------------------------------------------------------------------------
-int GF_BGL_CenterYGet( u8 frmnum )
+int GF_BGL_CenterYGet( GF_BGL_INI * bgl, u8 frmnum )
 {
-	return sys.bgl->bgsys[frmnum].cy;
+	return bgl->bgsys[frmnum].cy;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2396,7 +2398,7 @@ int GF_BGL_CenterYGet( u8 frmnum )
  * @return	プライオリティ
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BGL_PriorityGet( u8 frm )
+u8 GF_BGL_PriorityGet( GF_BGL_INI * bgl, u8 frm )
 {
 	switch( frm ){
 	case GF_BGL_FRAME0_M:
@@ -2410,7 +2412,7 @@ u8 GF_BGL_PriorityGet( u8 frm )
 			return (u8)dat.priority;
 		}
 	case GF_BGL_FRAME2_M:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -2429,7 +2431,7 @@ u8 GF_BGL_PriorityGet( u8 frm )
 			}
 		}
 	case GF_BGL_FRAME3_M:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -2458,7 +2460,7 @@ u8 GF_BGL_PriorityGet( u8 frm )
 			return (u8)dat.priority;
 		}
 	case GF_BGL_FRAME2_S:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -2477,7 +2479,7 @@ u8 GF_BGL_PriorityGet( u8 frm )
 			}
 		}
 	case GF_BGL_FRAME3_S:
-		switch( sys.bgl->bgsys[frm].mode ){
+		switch( bgl->bgsys[frm].mode ){
 		default:
 		case GF_BGL_MODE_TEXT:
 			{
@@ -2503,18 +2505,19 @@ u8 GF_BGL_PriorityGet( u8 frm )
 
 
 
+#if GF_BGL_NTR_USE
 //=============================================================================================
 //=============================================================================================
 //	NITRO-CHARACTERデータ展開処理
 //=============================================================================================
 //=============================================================================================
 
-void GF_BGL_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u32 size )
+void GF_BGL_NTRCHR_CharLoadEx( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs, u32 size )
 {
 	void * buf;
 	NNSG2dCharacterData * dat;
 
-	buf = sys_LoadFile( sys.bgl->heapID, path );
+	buf = sys_LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2528,16 +2531,16 @@ void GF_BGL_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u32 size 
 #ifdef	OSP_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータサイズ
 			OS_Printf( "GF_GBL_NTRCHR_CharLoad -size %d\n", dat->szByte );
 #endif	// OSP_BGL_NTRCHR_LOAD
-			GF_BGL_LoadCharacter( frmnum, dat->pRawData, dat->szByte, offs );
+			GF_BGL_LoadCharacter( bgl, frmnum, dat->pRawData, dat->szByte, offs );
 		}else{
 #ifdef	OSP_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータサイズ
 			OS_Printf( "GF_GBL_NTRCHR_CharLoad -size %d\n", size );
 #endif	// OSP_BGL_NTRCHR_LOAD
-			GF_BGL_LoadCharacter( frmnum, dat->pRawData, size, offs );
+			GF_BGL_LoadCharacter( bgl, frmnum, dat->pRawData, size, offs );
 		}
 	}
 
-	sys_FreeMemory( sys.bgl->heapID, buf );
+	sys_FreeMemory( bgl->heapID, buf );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2551,12 +2554,12 @@ void GF_BGL_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u32 size 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_NTRCHR_CharLoad( u8 frmnum, const char * path, u32 offs )
+void GF_BGL_NTRCHR_CharLoad( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs )
 {
 	void * buf;
 	NNSG2dCharacterData * dat;
 
-	buf = sys_LoadFile( sys.bgl->heapID, path );
+	buf = sys_LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2569,10 +2572,10 @@ void GF_BGL_NTRCHR_CharLoad( u8 frmnum, const char * path, u32 offs )
 #ifdef	OSP_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータサイズ
 		OS_Printf( "GF_GBL_NTRCHR_CharLoad -size %d\n", dat->szByte );
 #endif	// OSP_BGL_NTRCHR_LOAD
-		GF_BGL_LoadCharacter( frmnum, dat->pRawData, dat->szByte, offs );
+		GF_BGL_LoadCharacter( bgl, frmnum, dat->pRawData, dat->szByte, offs );
 	}
 
-	sys_FreeMemory( sys.bgl->heapID, buf );
+	sys_FreeMemory( bgl->heapID, buf );
 }
 
 
@@ -2657,12 +2660,12 @@ NNSG2dPaletteData * GF_BGL_NTRCHR_PalLoad( void ** mem, int mode, const char * p
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs )
+void GF_BGL_NTRCHR_ScrnLoad( GF_BGL_INI * bgl, u8 frmnum, const char * path, u32 offs )
 {
 	void * buf;
 	NNSG2dScreenData * dat;
 
-	buf = sys_LoadFile( sys.bgl->heapID, path );
+	buf = sys_LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2675,12 +2678,13 @@ void GF_BGL_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs )
 #ifdef	OSP_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータサイズ
 		OS_Printf( "GF_GBL_NTRCHR_ScrnLoad -size %d\n", dat->szByte );
 #endif	// OSP_BGL_NTRCHR_LOAD
-		GF_BGL_ScreenBufSet( frmnum, dat->rawData, dat->szByte );
-		GF_BGL_LoadScreen( frmnum, dat->rawData, dat->szByte, offs );
+		GF_BGL_ScreenBufSet( bgl, frmnum, dat->rawData, dat->szByte );
+		GF_BGL_LoadScreen( bgl, frmnum, dat->rawData, dat->szByte, offs );
 	}
 
-	sys_FreeMemory( sys.bgl->heapID, buf );
+	sys_FreeMemory( bgl->heapID, buf );
 }
+#endif GF_BGL_NTR_USE
 
 
 //=============================================================================================
@@ -2697,8 +2701,8 @@ void GF_BGL_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs )
 #define	SCROLL_REQ_S2	( 64 )			// Bit Flag ( Sub Disp BG2 )
 #define	SCROLL_REQ_S3	( 128 )			// Bit Flag ( Sub Disp BG3 )
 
-static void VBlankScroll(void);
-static void VBlankLoadScreen(void);
+static void VBlankScroll( GF_BGL_INI * bgl );
+static void VBlankLoadScreen( GF_BGL_INI * bgl );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2711,13 +2715,13 @@ static void VBlankLoadScreen(void);
  * @li	VBlank内で呼んで下さい
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_VBlankFunc(void)
+void GF_BGL_VBlankFunc( GF_BGL_INI * bgl )
 {
-	VBlankScroll();		// スクロール
-	VBlankLoadScreen();	// スクリーン転送
+	VBlankScroll( bgl );		// スクロール
+	VBlankLoadScreen( bgl );	// スクリーン転送
 
-	sys.bgl->scroll_req = 0;
-	sys.bgl->loadscrn_req = 0;
+	bgl->scroll_req = 0;
+	bgl->loadscrn_req = 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2729,63 +2733,63 @@ void GF_BGL_VBlankFunc(void)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void VBlankLoadScreen(void)
+static void VBlankLoadScreen( GF_BGL_INI * bgl )
 {
 	// Main Disp BG0
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_M0 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_M0 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME0_M,
-			sys.bgl->bgsys[GF_BGL_FRAME0_M].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME0_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME0_M].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME0_M].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME0_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME0_M].screen_buf_siz );
 	}
 	// Main Disp BG1
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_M1 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_M1 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME1_M,
-			sys.bgl->bgsys[GF_BGL_FRAME1_M].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME1_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME1_M].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME1_M].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME1_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME1_M].screen_buf_siz );
 	}
 	// Main Disp BG2
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_M2 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_M2 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME2_M,
-			sys.bgl->bgsys[GF_BGL_FRAME2_M].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME2_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME2_M].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME2_M].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME2_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME2_M].screen_buf_siz );
 	}
 	// Main Disp BG3
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_M3 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_M3 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME3_M,
-			sys.bgl->bgsys[GF_BGL_FRAME3_M].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME3_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME3_M].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME3_M].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME3_M].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME3_M].screen_buf_siz );
 	}
 	// Sub Disp BG0
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_S0 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_S0 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME0_S,
-			sys.bgl->bgsys[GF_BGL_FRAME0_S].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME0_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME0_S].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME0_S].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME0_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME0_S].screen_buf_siz );
 	}
 	// Sub Disp BG1
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_S1 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_S1 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME1_S,
-			sys.bgl->bgsys[GF_BGL_FRAME1_S].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME1_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME1_S].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME1_S].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME1_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME1_S].screen_buf_siz );
 	}
 	// Sub Disp BG2
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_S2 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_S2 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME2_S,
-			sys.bgl->bgsys[GF_BGL_FRAME2_S].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME2_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME2_S].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME2_S].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME2_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME2_S].screen_buf_siz );
 	}
 	// Sub Disp BG3
-	if( ( sys.bgl->loadscrn_req & SCROLL_REQ_S3 ) != 0 ){
+	if( ( bgl->loadscrn_req & SCROLL_REQ_S3 ) != 0 ){
 		GF_BGL_LoadScreenSub(GF_BGL_FRAME3_S,
-			sys.bgl->bgsys[GF_BGL_FRAME3_S].screen_buf,
-			sys.bgl->bgsys[GF_BGL_FRAME3_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
-			sys.bgl->bgsys[GF_BGL_FRAME3_S].screen_buf_siz );
+			bgl->bgsys[GF_BGL_FRAME3_S].screen_buf,
+			bgl->bgsys[GF_BGL_FRAME3_S].screen_buf_ofs * GF_BGL_1SCRDATASIZ,
+			bgl->bgsys[GF_BGL_FRAME3_S].screen_buf_siz );
 	}
 }
 
@@ -2800,9 +2804,9 @@ static void VBlankLoadScreen(void)
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_LoadScreenV_Req( u8 frmnum )
+void GF_BGL_LoadScreenV_Req( GF_BGL_INI * bgl, u8 frmnum )
 {
-	sys.bgl->loadscrn_req |= ( 1 << frmnum );
+	bgl->loadscrn_req |= ( 1 << frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2814,120 +2818,120 @@ void GF_BGL_LoadScreenV_Req( u8 frmnum )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void VBlankScroll(void)
+static void VBlankScroll( GF_BGL_INI * bgl )
 {
 	// Main Disp BG0
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_M0 ) != 0 ){
+	if( ( bgl->scroll_req & SCROLL_REQ_M0 ) != 0 ){
 		G2_SetBG0Offset(
-			sys.bgl->bgsys[GF_BGL_FRAME0_M].scroll_x,
-			sys.bgl->bgsys[GF_BGL_FRAME0_M].scroll_y );
+			bgl->bgsys[GF_BGL_FRAME0_M].scroll_x,
+			bgl->bgsys[GF_BGL_FRAME0_M].scroll_y );
 	}
 	// Main Disp BG1
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_M1 ) != 0 ){
+	if( ( bgl->scroll_req & SCROLL_REQ_M1 ) != 0 ){
 		G2_SetBG1Offset(
-			sys.bgl->bgsys[GF_BGL_FRAME1_M].scroll_x,
-			sys.bgl->bgsys[GF_BGL_FRAME1_M].scroll_y );
+			bgl->bgsys[GF_BGL_FRAME1_M].scroll_x,
+			bgl->bgsys[GF_BGL_FRAME1_M].scroll_y );
 	}
 	// Main Disp BG2
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_M2 ) != 0 ){
-		if( sys.bgl->bgsys[GF_BGL_FRAME2_M].mode == GF_BGL_MODE_TEXT ){
+	if( ( bgl->scroll_req & SCROLL_REQ_M2 ) != 0 ){
+		if( bgl->bgsys[GF_BGL_FRAME2_M].mode == GF_BGL_MODE_TEXT ){
 			G2_SetBG2Offset(
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME2_M].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME2_M].scroll_y );
 		}else{
 			MtxFx22	mtx;
 
 			AffineMtxMake_2D(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].rad,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scale_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scale_y,
+				bgl->bgsys[GF_BGL_FRAME2_M].rad,
+				bgl->bgsys[GF_BGL_FRAME2_M].scale_x,
+				bgl->bgsys[GF_BGL_FRAME2_M].scale_y,
 				AFFINE_MAX_360 );
 			G2_SetBG2Affine(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].cx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].cy,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_M].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME2_M].cx,
+				bgl->bgsys[GF_BGL_FRAME2_M].cy,
+				bgl->bgsys[GF_BGL_FRAME2_M].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME2_M].scroll_y );
 		}
 	}
 	// Main Disp BG3
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_M3 ) != 0 ){
-		if( sys.bgl->bgsys[GF_BGL_FRAME3_M].mode == GF_BGL_MODE_TEXT ){
+	if( ( bgl->scroll_req & SCROLL_REQ_M3 ) != 0 ){
+		if( bgl->bgsys[GF_BGL_FRAME3_M].mode == GF_BGL_MODE_TEXT ){
 			G2_SetBG3Offset(
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME3_M].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME3_M].scroll_y );
 		}else{
 			MtxFx22	mtx;
 
 			AffineMtxMake_2D(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].rad,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scale_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scale_y,
+				bgl->bgsys[GF_BGL_FRAME3_M].rad,
+				bgl->bgsys[GF_BGL_FRAME3_M].scale_x,
+				bgl->bgsys[GF_BGL_FRAME3_M].scale_y,
 				AFFINE_MAX_360 );
 			G2_SetBG3Affine(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].cx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].cy,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_M].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME3_M].cx,
+				bgl->bgsys[GF_BGL_FRAME3_M].cy,
+				bgl->bgsys[GF_BGL_FRAME3_M].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME3_M].scroll_y );
 		}
 	}
 	// Sub Disp BG0
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_S0 ) != 0 ){
+	if( ( bgl->scroll_req & SCROLL_REQ_S0 ) != 0 ){
 		G2S_SetBG0Offset(
-			sys.bgl->bgsys[GF_BGL_FRAME0_S].scroll_x, sys.bgl->bgsys[GF_BGL_FRAME0_S].scroll_y );
+			bgl->bgsys[GF_BGL_FRAME0_S].scroll_x, bgl->bgsys[GF_BGL_FRAME0_S].scroll_y );
 	}
 	// Sub Disp BG1
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_S1 ) != 0 ){
+	if( ( bgl->scroll_req & SCROLL_REQ_S1 ) != 0 ){
 		G2S_SetBG1Offset(
-			sys.bgl->bgsys[GF_BGL_FRAME1_S].scroll_x, sys.bgl->bgsys[GF_BGL_FRAME1_S].scroll_y );
+			bgl->bgsys[GF_BGL_FRAME1_S].scroll_x, bgl->bgsys[GF_BGL_FRAME1_S].scroll_y );
 	}
 	// Sub Disp BG2
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_S2 ) != 0 ){
-		if( sys.bgl->bgsys[GF_BGL_FRAME2_S].mode == GF_BGL_MODE_TEXT ){
+	if( ( bgl->scroll_req & SCROLL_REQ_S2 ) != 0 ){
+		if( bgl->bgsys[GF_BGL_FRAME2_S].mode == GF_BGL_MODE_TEXT ){
 			G2S_SetBG2Offset(
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME2_S].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME2_S].scroll_y );
 		}else{
 			MtxFx22	mtx;
 
 			AffineMtxMake_2D(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].rad,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scale_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scale_y,
+				bgl->bgsys[GF_BGL_FRAME2_S].rad,
+				bgl->bgsys[GF_BGL_FRAME2_S].scale_x,
+				bgl->bgsys[GF_BGL_FRAME2_S].scale_y,
 				AFFINE_MAX_360 );
 			G2S_SetBG2Affine(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].cx,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].cy,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME2_S].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME2_S].cx,
+				bgl->bgsys[GF_BGL_FRAME2_S].cy,
+				bgl->bgsys[GF_BGL_FRAME2_S].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME2_S].scroll_y );
 		}
 	}
 	// Sub Disp BG3
-	if( ( sys.bgl->scroll_req & SCROLL_REQ_S3 ) != 0 ){
-		if( sys.bgl->bgsys[GF_BGL_FRAME3_S].mode == GF_BGL_MODE_TEXT ){
+	if( ( bgl->scroll_req & SCROLL_REQ_S3 ) != 0 ){
+		if( bgl->bgsys[GF_BGL_FRAME3_S].mode == GF_BGL_MODE_TEXT ){
 			G2S_SetBG3Offset(
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME3_S].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME3_S].scroll_y );
 		}else{
 			MtxFx22	mtx;
 
 			AffineMtxMake_2D(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].rad,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scale_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scale_y,
+				bgl->bgsys[GF_BGL_FRAME3_S].rad,
+				bgl->bgsys[GF_BGL_FRAME3_S].scale_x,
+				bgl->bgsys[GF_BGL_FRAME3_S].scale_y,
 				AFFINE_MAX_360 );
 			G2S_SetBG3Affine(
 				&mtx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].cx,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].cy,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scroll_x,
-				sys.bgl->bgsys[GF_BGL_FRAME3_S].scroll_y );
+				bgl->bgsys[GF_BGL_FRAME3_S].cx,
+				bgl->bgsys[GF_BGL_FRAME3_S].cy,
+				bgl->bgsys[GF_BGL_FRAME3_S].scroll_x,
+				bgl->bgsys[GF_BGL_FRAME3_S].scroll_y );
 		}
 	}
 }
@@ -2945,10 +2949,10 @@ static void VBlankScroll(void)
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScrollReq( u8 frmnum, u8 mode, int value )
+void GF_BGL_ScrollReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value )
 {
-	ScrollParamSet( &sys.bgl->bgsys[frmnum], mode, value );
-	sys.bgl->scroll_req |= ( 1 << frmnum );
+	ScrollParamSet( &bgl->bgsys[frmnum], mode, value );
+	bgl->scroll_req |= ( 1 << frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2964,10 +2968,10 @@ void GF_BGL_ScrollReq( u8 frmnum, u8 mode, int value )
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_RadianSetReq( u8 frmnum, u8 mode, u16 value )
+void GF_BGL_RadianSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, u16 value )
 {
-	RadianParamSet( &sys.bgl->bgsys[frmnum], mode, value );
-	sys.bgl->scroll_req |= ( 1 << frmnum );
+	RadianParamSet( &bgl->bgsys[frmnum], mode, value );
+	bgl->scroll_req |= ( 1 << frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3008,10 +3012,10 @@ static void RadianParamSet( GF_BGL_SYS_INI * ini, u8 mode, u16 value )
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_ScaleSetReq( u8 frmnum, u8 mode, fx32 value )
+void GF_BGL_ScaleSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, fx32 value )
 {
-	ScaleParamSet( &sys.bgl->bgsys[frmnum], mode, value );
-	sys.bgl->scroll_req |= ( 1 << frmnum );
+	ScaleParamSet( &bgl->bgsys[frmnum], mode, value );
+	bgl->scroll_req |= ( 1 << frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3061,10 +3065,10 @@ static void ScaleParamSet( GF_BGL_SYS_INI * ini, u8 mode, fx32 value )
  * @li	VBlank内でGF_BGL_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_RotateCenterSetReq( u8 frmnum, u8 mode, int value )
+void GF_BGL_RotateCenterSetReq( GF_BGL_INI * bgl, u8 frmnum, u8 mode, int value )
 {
-	CenterParamSet( &sys.bgl->bgsys[frmnum], mode, value );
-	sys.bgl->scroll_req |= ( 1 << frmnum );
+	CenterParamSet( &bgl->bgsys[frmnum], mode, value );
+	bgl->scroll_req |= ( 1 << frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3129,7 +3133,7 @@ static void CenterParamSet( GF_BGL_SYS_INI * ini, u8 mode, int value )
  *				カラー88, 124, 223以外はFALSEが返る
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
+u8 GF_BGL_DotCheck( GF_BGL_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 {
 	u8 * cgx;
 	u16	pos;
@@ -3137,23 +3141,23 @@ u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 	u8	dot;
 	u8	i;
 
-	if( sys.bgl->bgsys[frmnum].screen_buf == NULL ){
+	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return FALSE;
 	}
 
-	pos = GetScreenPos( (u8)(px>>3), (u8)(py>>3), sys.bgl->bgsys[frmnum].screen_siz );
+	pos = GetScreenPos( (u8)(px>>3), (u8)(py>>3), bgl->bgsys[frmnum].screen_siz );
 	cgx = (u8 *)GF_BGL_CgxGet( frmnum );
 
 	chr_x = (u8)(px&7);
 	chr_y = (u8)(py&7);
 
-	if( sys.bgl->bgsys[frmnum].col_mode == GX_BG_COLORMODE_16 ){
+	if( bgl->bgsys[frmnum].col_mode == GX_BG_COLORMODE_16 ){
 
 		u16 * scrn;
 		u8 * buf;
 
-		scrn = (u16 *)sys.bgl->bgsys[frmnum].screen_buf;
-		buf  = sys_AllocMemoryLo( sys.bgl->heapID, 64 );
+		scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
+		buf  = sys_AllocMemoryLo( bgl->heapID, 64 );
 
 		cgx += ( ( scrn[pos] & 0x3ff ) << 5 );
 		for( i=0; i<32; i++ ){
@@ -3161,7 +3165,7 @@ u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 			buf[ (i<<1)+1 ] = cgx[i] >> 4;
 		}
 
-		CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf );
+		CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 		dot = buf[ chr_x+(chr_y<<3) ];
 		sys_FreeMemoryEz( buf );
@@ -3171,22 +3175,22 @@ u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 		}
 
 	}else{
-		if( sys.bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
+		if( bgl->bgsys[ frmnum ].mode != GF_BGL_MODE_AFFINE ){
 
 			u16 * scrn;
 			u8 * buf;
 
-			scrn = (u16 *)sys.bgl->bgsys[frmnum].screen_buf;
-			buf  = sys_AllocMemoryLo( sys.bgl->heapID, 64 );
+			scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
+			buf  = sys_AllocMemoryLo( bgl->heapID, 64 );
 
 			memcpy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
-			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf );
+			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 			dot = buf[ chr_x+(chr_y<<3) ];
 			sys_FreeMemoryEz(  buf );
 
 		}else{
-			u8 * scrn = (u8 *)sys.bgl->bgsys[frmnum].screen_buf;
+			u8 * scrn = (u8 *)bgl->bgsys[frmnum].screen_buf;
 
 			dot = cgx[ (scrn[pos]<<6) + chr_x + (chr_y<<3) ];
 		}
@@ -3204,14 +3208,14 @@ u8 GF_BGL_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 	return FALSE;
 }
 
-static void CgxFlipCheck( u8 flip, u8 * buf )
+static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 {
 	u8 * tmp;
 	u8	i, j;
 
 	if( flip == 0 ){ return; }
 
-	tmp = sys_AllocMemoryLo( sys.bgl->heapID, 64 );
+	tmp = sys_AllocMemoryLo( heapID, 64 );
 
 	if( flip & 1 ){
 		for( i=0; i<8; i++ ){
