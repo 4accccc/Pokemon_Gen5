@@ -11,12 +11,10 @@
  *		BMPWIN	->	bmp_win.c
  */
 //=============================================================================================
-#include "system.h"
-#include "gflib/bg_sys.h"
-#include "gflib_os_print.h"
+#include "gflib.h"
 
 #define	__BMP_H_GLOBAL__
-#include "gflib/bmp.h"
+#include "bmp.h"
 
 
 //=============================================================================================

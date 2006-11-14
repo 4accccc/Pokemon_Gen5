@@ -11,18 +11,12 @@
  *		BMPWIN	->	bmp_win.c
  */
 //=============================================================================================
-#include "system.h"
-#include "standard.h"
-#include "gflib/bg_sys.h"
-#include "gflib/bmp.h"
-#include "gflib_os_print.h"
-#include "gflib/assert.h"
+#include "gflib.h"
+#include "bg_sys.h"
+#include "bmp.h"
 
 #define	__BMP_H_GLOBAL__
-#include "gflib/bmp_win.h"
-
-
-
+#include "bmp_win.h"
 
 static void BmpWinOn_Normal( GF_BMPWIN_DATA * win );
 static void BmpWinOnVReq_Normal( GF_BMPWIN_DATA * win );
@@ -136,7 +130,7 @@ GF_BMPWIN_DATA * GF_BMPWIN_AllocGet( u32 heapID, u8 num )
 void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID )
 {
 	wk->heapID = heapID;
-	wk->frmnum = GF_BITMAP_NULL;
+	wk->frmnum = GF_BMPWIN_FRM_NULL;
 	wk->posx   = 0;
 	wk->posy   = 0;
 	wk->sizx   = 0;
@@ -159,7 +153,7 @@ void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID )
 //--------------------------------------------------------------------------------------------
 u8 GF_BMPWIN_AddCheck( GF_BMPWIN_DATA * win )
 {
-	if( win->frmnum == GF_BITMAP_NULL || win->chrbuf == NULL ){
+	if( win->frmnum == GF_BMPWIN_FRM_NULL || win->chrbuf == NULL ){
 		return FALSE;
 	}
 	return TRUE;
@@ -190,7 +184,7 @@ void GF_BMPWIN_Add(
 	u32	chrvsiz;
 
 	// 使用フレーム状況の判定（スクリーンバッファ確保されているか）
-	if( GF_BGL_ScreenAdrsGet( frmnum ) == NULL ){
+	if( GF_BGL_ScreenAdrsGet( win->bgl, frmnum ) == NULL ){
 #ifdef	OSP_ERR_BGL_BMPADD		// BMP登録失敗
 		OS_Printf( "ＢＭＰ登録失敗\n" );
 #endif	// OSP_ERR_BGL_BMPADD
@@ -198,7 +192,7 @@ void GF_BMPWIN_Add(
 	}
 
 	// キャラクタバッファの確保
-	chrvsiz = sizx * sizy * GF_BGL_BaseCharSizeGet(frmnum);
+	chrvsiz = sizx * sizy * GF_BGL_BaseCharSizeGet( win->bgl, frmnum);
 	chrvbuf = sys_AllocMemory( heapID, chrvsiz );
 
 	if( chrvbuf == NULL ){
@@ -218,7 +212,7 @@ void GF_BMPWIN_Add(
 	win->palnum = palnum;
 	win->chrofs = chrofs;
 	win->chrbuf = chrvbuf;
-	win->bitmode = (GF_BGL_ScreenColorModeGet(frmnum) == GX_BG_COLORMODE_16)? GF_BMPWIN_BITMODE_4 : GF_BMPWIN_BITMODE_8;
+	win->bitmode = (GF_BGL_ScreenColorModeGet( win->bgl, frmnum) == GX_BG_COLORMODE_16)? GF_BMPWIN_BITMODE_4 : GF_BMPWIN_BITMODE_8;
 
 #ifdef	OSP_BGL_BMP_SIZ		// BMPサイズ
 	OS_Printf( "ＢＭＰＣＧＸ領域=%x\n", chrvbuf );
@@ -303,7 +297,7 @@ void GF_BMPWIN_Del( GF_BMPWIN_DATA * win )
 	// キャラクタバッファ割り当て開放
 	sys_FreeMemoryEz( win->chrbuf );
 
-	win->frmnum = GF_BITMAP_NULL;
+	win->frmnum = GF_BMPWIN_FRM_NULL;
 	win->posx   = 0;
 	win->posy   = 0;
 	win->sizx   = 0;
@@ -357,7 +351,7 @@ void GF_BMPWIN_On( GF_BMPWIN_DATA * win )
 	GF_ASSERT(win!=NULL);
 	GF_ASSERT(win->frmnum<8);
 
-	mode = GF_BGL_BgModeGet( win->frmnum );
+	mode = GF_BGL_BgModeGet( win->bgl, win->frmnum );
 
 	GF_ASSERT(mode < NELEMS(WinOnFunc));
 	WinOnFunc[ mode ]( win );
@@ -378,7 +372,7 @@ void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win )
 	GF_ASSERT(win!=NULL);
 	GF_ASSERT(win->frmnum<8);
 
-	mode = GF_BGL_BgModeGet( win->frmnum );
+	mode = GF_BGL_BgModeGet( win->bgl, win->frmnum );
 
 	GF_ASSERT(mode < NELEMS(WinOnVReqFunc));
 	WinOnVReqFunc[ mode ]( win );
@@ -393,7 +387,7 @@ void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win )
 //------------------------------------------------------------------
 void GF_BMPWIN_MakeScrn( GF_BMPWIN_DATA * win )
 {
-	WinScrnMakeFunc[ GF_BGL_BgModeGet(win->frmnum) ]( win );
+	WinScrnMakeFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 //------------------------------------------------------------------
 /**
@@ -415,7 +409,7 @@ void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height )
 	win->sizx = width;
 	win->sizy = height;
 
-	WinScrnMakeFunc[ GF_BGL_BgModeGet(win->frmnum) ]( win );
+	WinScrnMakeFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
 
 	win->sizx = x_save;
 	win->sizy = y_save;
@@ -431,7 +425,7 @@ void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height )
 //------------------------------------------------------------------
 void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win )
 {
-	WinScrnClearFunc[ GF_BGL_BgModeGet(win->frmnum) ]( win );
+	WinScrnClearFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum) ]( win );
 }
 
 //------------------------------------------------------------------
@@ -444,7 +438,7 @@ void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win )
 //------------------------------------------------------------------
 static void MakeWinScrnText( GF_BMPWIN_DATA * win )
 {
-	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->frmnum );
+	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		u32 x, y, x_max, y_max, chr, p, xelems;
@@ -475,12 +469,12 @@ static void MakeWinScrnText( GF_BMPWIN_DATA * win )
 //------------------------------------------------------------------
 static void MakeWinScrnAffine( GF_BMPWIN_DATA * win )
 {
-	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->frmnum );
+	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		int x, y, chr, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet(win->frmnum) ];
+		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum) ];
 
 		scrn = scrn + win->posy * xelems + win->posx;
 
@@ -504,12 +498,12 @@ static void MakeWinScrnAffine( GF_BMPWIN_DATA * win )
 //------------------------------------------------------------------
 static void ClearWinScrnText( GF_BMPWIN_DATA * win )
 {
-	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->frmnum );
+	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		u32 x, y, x_max, y_max, p, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet(win->frmnum) ];
+		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum ) ];
 
 		x_max = win->posx + win->sizx;
 		y_max = win->posy + win->sizy;
@@ -531,12 +525,12 @@ static void ClearWinScrnText( GF_BMPWIN_DATA * win )
 //------------------------------------------------------------------
 static void ClearWinScrnAffine( GF_BMPWIN_DATA * win )
 {
-	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->frmnum );
+	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		int x, y, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet(win->frmnum) ];
+		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum) ];
 
 		scrn = scrn + win->posy * xelems + win->posx;
 
@@ -563,10 +557,11 @@ static void BmpWinOn_Normal( GF_BMPWIN_DATA * win )
 	MakeWinScrnText( win );
 
 	GF_BGL_LoadScreen(
+		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet(win->frmnum),
-		GF_BGL_ScreenSizGet(win->frmnum),
-		GF_BGL_ScreenOfsGet(win->frmnum) );
+		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
 
 	GF_BMPWIN_CgxOn( win );
 }
@@ -583,7 +578,7 @@ static void BmpWinOnVReq_Normal( GF_BMPWIN_DATA * win )
 {
 	MakeWinScrnText( win );
 
-	GF_BGL_LoadScreenV_Req( win->frmnum );
+	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
 	GF_BMPWIN_CgxOn( win );
 }
 //--------------------------------------------------------------------------------------------
@@ -600,13 +595,14 @@ static void BmpWinOn_Affine( GF_BMPWIN_DATA * win )
 	MakeWinScrnAffine( win );
 
 	GF_BGL_LoadScreen(
+		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet(win->frmnum),
-		GF_BGL_ScreenSizGet(win->frmnum),
-		GF_BGL_ScreenOfsGet(win->frmnum) );
+		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
 
 	GF_BGL_LoadCharacter(
-		win->frmnum, win->chrbuf,
+		win->bgl, win->frmnum, win->chrbuf,
 		(u32)( win->sizx * win->sizy * GF_BGL_8BITCHRSIZ ), (u32)win->chrofs );
 }
 //--------------------------------------------------------------------------------------------
@@ -622,9 +618,9 @@ static void BmpWinOnVReq_Affine( GF_BMPWIN_DATA * win )
 {
 	MakeWinScrnAffine( win );
 
-	GF_BGL_LoadScreenV_Req( win->frmnum );
+	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
 	GF_BGL_LoadCharacter(
-		win->frmnum, win->chrbuf,
+		win->bgl, win->frmnum, win->chrbuf,
 		(u32)( win->sizx * win->sizy * GF_BGL_8BITCHRSIZ ), (u32)win->chrofs );
 }
 
@@ -639,9 +635,9 @@ static void BmpWinOnVReq_Affine( GF_BMPWIN_DATA * win )
 //--------------------------------------------------------------------------------------------
 void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win )
 {
-	u32 chrsize = win->sizx * win->sizy * GF_BGL_BaseCharSizeGet(win->frmnum);
+	u32 chrsize = win->sizx * win->sizy * GF_BGL_BaseCharSizeGet( win->bgl, win->frmnum );
 
-	GF_BGL_LoadCharacter( win->frmnum, win->chrbuf, chrsize, win->chrofs );
+	GF_BGL_LoadCharacter( win->bgl, win->frmnum, win->chrbuf, chrsize, win->chrofs );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -654,7 +650,7 @@ void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win )
 //--------------------------------------------------------------------------------------------
 void GF_BMPWIN_Off( GF_BMPWIN_DATA * win )
 {
-	WinOffFunc[ GF_BGL_BgModeGet(win->frmnum) ]( win );
+	WinOffFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -666,7 +662,7 @@ void GF_BMPWIN_Off( GF_BMPWIN_DATA * win )
 //--------------------------------------------------------------------------------------------
 void GF_BMPWIN_OffVReq( GF_BMPWIN_DATA * win )
 {
-	WinOffVReqFunc[ GF_BGL_BgModeGet(win->frmnum) ]( win );
+	WinOffVReqFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -681,10 +677,11 @@ static void BmpWinOff_Normal( GF_BMPWIN_DATA * win )
 {
 	ClearWinScrnText( win );
 	GF_BGL_LoadScreen(
+		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet(win->frmnum),
-		GF_BGL_ScreenSizGet(win->frmnum),
-		GF_BGL_ScreenOfsGet(win->frmnum) );
+		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -698,7 +695,7 @@ static void BmpWinOff_Normal( GF_BMPWIN_DATA * win )
 static void BmpWinOffVReq_Normal( GF_BMPWIN_DATA * win )
 {
 	ClearWinScrnText( win );
-	GF_BGL_LoadScreenV_Req( win->frmnum );
+	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -714,10 +711,11 @@ static void BmpWinOff_Affine( GF_BMPWIN_DATA * win )
 {
 	ClearWinScrnAffine( win );
 	GF_BGL_LoadScreen(
+		win->bgl, 
 		win->frmnum, 
-		GF_BGL_ScreenAdrsGet(win->frmnum),
-		GF_BGL_ScreenSizGet(win->frmnum),
-		GF_BGL_ScreenOfsGet(win->frmnum) );
+		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
+		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -732,7 +730,7 @@ static void BmpWinOff_Affine( GF_BMPWIN_DATA * win )
 static void BmpWinOffVReq_Affine( GF_BMPWIN_DATA * win )
 {
 	ClearWinScrnAffine( win );
-	GF_BGL_LoadScreenV_Req( win->frmnum );
+	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -751,7 +749,7 @@ void GF_BMPWIN_DataFill( GF_BMPWIN_DATA * win, u8 col )
 	u32 data;
 	u32	base_char_siz;
 
-	base_char_siz = GF_BGL_BaseCharSizeGet( win->frmnum );
+	base_char_siz = GF_BGL_BaseCharSizeGet( win->bgl, win->frmnum );
 
 	if( base_char_siz == GF_BGL_1CHRDATASIZ ){
 		col = (col<<4)|col;
@@ -831,7 +829,7 @@ void GF_BMPWIN_PrintEx(
 	dst_data.size_x = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
 	dst_data.size_y = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
 
-	if( GF_BGL_ScreenColorModeGet(win->frmnum) == GX_BG_COLORMODE_16 ){
+	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
 		GF_BMP_PrintMain(
 			&src_data, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
 	}else{
@@ -862,7 +860,7 @@ void GF_BMPWIN_Fill( GF_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 s
 	dst_data.size_x = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
 	dst_data.size_y = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
 
-	if( GF_BGL_ScreenColorModeGet(win->frmnum) == GX_BG_COLORMODE_16 ){
+	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
 		GF_BGL_BmpFill( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
 	}else{
 		GF_BGL_BmpFill256( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
@@ -1271,7 +1269,7 @@ void GF_BMPWIN_PrintMsgWide(
 //--------------------------------------------------------------------------------------------
 void GF_BMPWIN_Shift( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 {
-	if( GF_BGL_ScreenColorModeGet(win->frmnum) == GX_BG_COLORMODE_16 ){
+	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum) == GX_BG_COLORMODE_16 ){
 		BmpWinShift16( win, direct, offset, data );
 	}else{
 		BmpWinShift256( win, direct, offset, data );
