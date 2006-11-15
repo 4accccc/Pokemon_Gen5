@@ -10,25 +10,33 @@
 #define _NETWORK_H_
 
 // define 
-#define NET_NETID_ALLUSER (0xff)  // NetID:全員へ送信する場合
-#define NET_NETID_SERVER (0xfe)   // NetID:サーバーの場合これ 後は0からClientID
+#define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
+#define NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
 
 // typedef
-typedef struct u8 GameServiceID;  // ゲームサービスID  通信の種類
-typedef struct u8 ConnectID;      // 接続するためのID  0-16 まで
-typedef struct u8 NetID;          // 通信ID  0-200 まで
+typedef struct u8 GameServiceID;  ///< ゲームサービスID  通信の種類
+typedef struct u8 ConnectID;      ///< 接続するためのID  0-16 まで
+typedef struct u8 NetID;          ///< 通信ID  0-200 まで
 
-typedef struct _NetHandle NetHandle; // 通信管理構造体
+/// 通信管理構造体
+typedef struct _GFNetHandle GFNetHandle;
 
-typedef struct{             // 通信の初期化用構造体
-  GameServiceID gsid;       // ゲームサービスID  通信の種類
-  u32  allocNo;             // allocするための番号
-  NetRecvFuncTable *pRecvFuncTable;  //受信関数テーブル
-  NetBeaconGetFunc *pBeaconGetFunc;  //ビーコンデータ取得関数
-  u8 maxConnectNum;   //最大接続人数   終わりまで変更不可
-  u8 maxBeaconNum;    //最大ビーコン数 終わりまで変更不可
+/// 送信完了を受け取るコールバック型
+typedef CBSendEndFunc;
 
-} NetInitializeStruct;
+
+
+typedef struct{             ///< 通信の初期化用構造体
+  GameServiceID gsid;       ///< ゲームサービスID  通信の種類
+  u32  allocNo;             ///< allocするための番号
+  NetRecvFuncTable *pRecvFuncTable;  ///< 受信関数テーブル
+  NetBeaconGetFunc *pBeaconGetFunc;  ///< ビーコンデータ取得関数
+  NetConnectEndFunc *pConnectEndFunc;  ///< 通信切断時に呼ばれる関数
+  NetDSMPSwitchEndFunc *pSDMPSwitchEndFunc;  ///< DS<>MP切り替え完了時に呼ばれる
+  u8 maxConnectNum;   ///< 最大接続人数
+  u8 maxBeaconNum;    ///< 最大ビーコン収集数
+
+} GFNetInitializeStruct;
 
 //-------------------------------
 //  関数 ～外部公開関数は全てここに定義
@@ -37,41 +45,41 @@ typedef struct{             // 通信の初期化用構造体
 //==============================================================================
 /**
  * 通信初期化
- * @param   NetInitializeStruct   通信初期化構造体のポインタ
+ * @param[in]   NetInitializeStruct*  pNetInit  通信初期化構造体のポインタ
  * @retval  void
  */
 //==============================================================================
-extern void CommInitialize(NetInitializeStruct* pNetInit);
+extern void GF_NT_Initialize(const NetInitializeStruct* pNetInit);
 
 //==============================================================================
 /**
  * 通信終了
- * @param   NetHandle* pNet   通信ハンドルのポインタ
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
  * @retval  void
  */
 //==============================================================================
-extern void CommFinalize(NetHandle* pNet);
+extern void GF_NT_Finalize(NetHandle* pNet);
 
 //-----ビーコン・ともだち情報関連
 //==============================================================================
 /**
  * ビーコンを受け取るサービスを追加指定  （いくつかのサービスのビーコンを拾いたい時に）
- * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
  * @param   GameServiceID gsid  ゲームサービスID  通信の種類
  * @retval  none
  */
 //==============================================================================
-extern void CommAddBeaconServiceID(NetHandle* pNet, GameServiceID gsid);
+extern void GF_NT_AddBeaconServiceID(NetHandle* pNet, GameServiceID gsid);
 
 //==============================================================================
 /**
  * 受信ビーコンデータを得る
- * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
  * @param   GameServiceID gsid  ゲームサービスID  通信の種類
  * @retval  ビーコンデータの先頭ポインタ なければNULL
  */
 //==============================================================================
-extern void* CommGetBeaconData(NetHandle* pNet, ConnectID id);
+extern void* GF_NT_GetBeaconData(NetHandle* pNet, ConnectID id);
 
 
 //--------接続・切断
@@ -81,106 +89,169 @@ extern void* CommGetBeaconData(NetHandle* pNet, ConnectID id);
  * @retval  NetHandle* pNet     通信ハンドルのポインタ
  */
 //==============================================================================
-NetHandle* pNet = CommClientConnect(void);
+extern NetHandle* pNet = GF_NT_ClientConnect(void);
 
 //==============================================================================
 /**
  * 親機になり待ち受ける
- * @retval  NetHandle* pNet     通信ハンドルのポインタ
+ * @return  NetHandle* pNet     通信ハンドルのポインタ
  */
 //==============================================================================
-NetHandle* pNet = CommServerConnect(void);
+extern NetHandle* pNet = GF_NT_ServerConnect(void);
 
 //==============================================================================
 /**
  * 親子切り替え接続を行う
- * @retval  NetHandle* pNet     通信ハンドルのポインタ
+ * @return  NetHandle* pNet     通信ハンドルのポインタ
  */
 //==============================================================================
-NetHandle* pNet = CommSwitchConnect(void);
+extern NetHandle* pNet = GF_NT_SwitchConnect(void);
 
-//このハンドルの接続番号を得る
-NetID CommGetMyNetID(NetHandle* pNet);
+//==============================================================================
+/**
+ * このハンドルの通信番号を得る
+ * @param[in,out]  NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  NetID     通信ID
+ */
+//==============================================================================
+extern NetID GF_NT_GetMyNetID(NetHandle* pNet);
 
-//接続人数()
-CommGetConnectNum(NetHandle* pNet);
+//==============================================================================
+/**
+ * 現在の接続人数を得る
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  int  接続数
+ */
+//==============================================================================
+extern int GF_NT_GetConnectNum(NetHandle* pNet);
 
-//接続しているかどうかを返す( id )
-CommIsConnectMember(NetHandle* pNet,NetID id);
+//==============================================================================
+/**
+ * IDの通信と接続しているかどうかを返す
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
+ * @param   NetID id            ネットID
+ * @retval  BOOL  接続していたらTRUE
+ */
+//==============================================================================
+extern BOOL GF_NT_IsConnectMember(NetHandle* pNet,NetID id);
 
-//切断する
-CommDisconnect(NetHandle* pNet);
+//==============================================================================
+/**
+ * 通信切断する
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  none
+ */
+//==============================================================================
+//
+extern void GF_NT_Disconnect(NetHandle* pNet);
 
-//接続中かどうか()
-CommIsConnect(NetHandle* pNet);
-//接続数変更
-CommSetClientConnectNum(NetHandle* pNet,u8 num);
-//接続禁止&許可
-CommSetClientConnect(NetHandle* pNet,BOOL bEnable);
+//==============================================================================
+/**
+ * 接続中かどうか
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  none
+ */
+//==============================================================================
+extern BOOL GF_NT_IsConnect(NetHandle* pNet);
+
+//==============================================================================
+/**
+ * 接続数変更
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @param   u8 num     変更数
+ * @retval  none
+ */
+//==============================================================================
+extern void GF_NT_SetClientConnectNum(NetHandle* pNet,u8 num);
+
+//==============================================================================
+/**
+ * 新規接続禁止＆許可を設定
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @param   BOOL bEnable     TRUE=接続許可 FALSE=禁止
+ * @retval  none
+ */
+//==============================================================================
+extern void GF_NT_SetClientConnect(NetHandle* pNet,BOOL bEnable);
 
 
 //--------送信
 
-// 送信完了を受け取るコールバック型
-typedef CBSendEndFunc
-
 //==============================================================================
 /**
- * 送信開始    全員に無条件で送信  送信サイズは初期化時のテーブルから引き出す
- *             データは必ずコピーする
- * @param   NetHandle* pNet                通信ハンドル
- * @param   u16 sendCommand                送信するコマンド
- * @param   void* data                     送信データポインタ
- * @retval  成功したらTRUE 失敗の場合FALSE
+ * 送信開始
+ * @brief 全員に無条件で送信  送信サイズは初期化時のテーブルから引き出す
+ *        データは必ずコピーする
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param[in]   u16 sendCommand                送信するコマンド
+ * @param[in]   void* data                     送信データポインタ
+ * @retval  TRUE   成功した
+ * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL CommSendData(NetHandle* pNet,u16 sendCommand,void* data);
+extern BOOL GF_NT_SendData(NetHandle* pNet,const u16 sendCommand,const void* data);
 
 //==============================================================================
 /**
  * 送信開始
- * @param   NetHandle* pNet                通信ハンドル
- * @param   u16 sendCommand                送信するコマンド
- * @param   NetID sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
- * @param   CBSendEndFunc* pCBSendEndFunc  送信完了をつたえるコールバック関数の登録
- * @param   u32 size                       送信データサイズ
- * @param   void* data                     送信データポインタ
- * @param   BOOL bDataCopy                 データをコピーする場合TRUE
- * @retval  成功したらTRUE 失敗の場合FALSE
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param[in]   u16 sendCommand                送信するコマンド
+ * @param[in]   NetID sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
+ * @param[in]   CBSendEndFunc* pCBSendEndFunc  送信完了をつたえるコールバック関数の登録
+ * @param[in]   u32 size                       送信データサイズ
+ * @param[in]   void* data                     送信データポインタ
+ * @param[in]   BOOL bDataCopy                 データをコピーする場合TRUE
+ * @retval  TRUE   成功した
+ * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL CommSendData(NetHandle* pNet,NetID sendID,CBSendEndFunc* pCBSendEndFunc,u32 size,void* data, BOOL bDataCopy);
+extern BOOL GF_NT_SendData(NetHandle* pNet,const NetID sendID,
+                    const CBSendEndFunc* pCBSendEndFunc,const u32 size,
+                    const void* data, const BOOL bDataCopy);
 
 //==============================================================================
 /**
  * 送信データが無いかどうか
- * @param   NetHandle* pNet  通信ハンドル
- * @retval  無い場合にTRUE
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @retval  TRUE   無い場合
+ * @retval  FALSE  残っている場合
  */
 //==============================================================================
-BOOL CommIsEmptySendData(NetHandle* pNet);
+extern BOOL GF_NT_IsEmptySendData(NetHandle* pNet);
 
 //--------特殊
-// 同期通信に切り替える<-->親子通信に切り替える
+// 
+//==============================================================================
+/**
+ * 同期通信に切り替えたり親子通信に切り替えたりする
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param[in]   BOOL bDSSwitch  TRUE=DSに切り替える FALSE=MPに切り替える
+ * @return  none
+ */
+//==============================================================================
+extern void GF_NT_DSMPSwitch(NetHandle* pNet, const BOOL bDSSwitch);
 
 
 //--------その他、ツール類
 //==============================================================================
 /**
  * タイミングコマンドを発行する
- * @param   no   タイミング取りたい番号
- * @retval  none
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param[in]   u8 no   タイミング取りたい番号
+ * @return      none
  */
 //==============================================================================
-extern void CommTimingSyncStart(NetHandle* pNet, u8 no);
+extern void GF_NT_TimingSyncStart(NetHandle* pNet, const u8 no);
 //==============================================================================
 /**
  * タイミングコマンドが届いたかどうかを確認する
- * @param   no   届く番号
- * @retval  届いていたらTRUE
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param[in]   no   届く番号
+ * @retval  TRUE    タイミングが合致
+ * @retval  FALSE   タイミングがそろっていない
  */
 //==============================================================================
-extern BOOL CommIsTimingSync(NetHandle* pNet, u8 no);
+extern BOOL GF_NT_IsTimingSync(NetHandle* pNet, const u8 no);
 
 
 #endif //_NETWORK_H_
