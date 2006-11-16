@@ -1,9 +1,9 @@
 //==============================================================================
 /**
- * @file	pad.c
- * @brief	ユーザーインターフェイス パッドの管理
+ * @file	key.c
+ * @brief	ユーザーインターフェイス キーの管理
             デバイス＆アクセス関数
- * @author	GAME FREAK Inc.
+ * @author	k.ohno
  */
 //==============================================================================
 
@@ -23,6 +23,21 @@ static void _keyConvert(void);
 //
 //==============================================================================
 
+
+struct _UIKeySys {
+    UIKeyControlTbl* pControl;  //キーモードを設定するテーブル
+//	int key_control_mode;	// キー取得モード(0がdefault)
+	int cont_org;			// キー状態
+	int trg_org;			// キートリガ
+	int repeat_org;			// キーリピート
+	int cont;				// キー状態(ゲーム設定により変換処理が入る)
+	int trg;				// キートリガ(ゲーム設定により変換処理が入る)
+	int repeat;				// キーリピート(ゲーム設定により変換処理が入る)
+	int repeatWait_Count;	// キーリピートカウンタ
+	int repeatSpeed;		// キーリピートスピード
+	int repeatWait;			// キーリピートウェイト
+};
+
 //==============================================================================
 //
 //			関数
@@ -32,16 +47,16 @@ static void _keyConvert(void);
 //==============================================================================
 /**
  * パッド初期化
- * @param   UIHandle     ユーザーインターフェイスハンドルのポインタ
+ * @param[in,out]   UIPadHandle     ユーザーインターフェイスパッドハンドルのポインタ
  * @return  none
  */
 //==============================================================================
 
-void GFL_UI_Pad_sysInit(UIHandle* pUI)
+void GFL_UI_Pad_sysInit(UIPadHandle* pUI)
 {
 	TPCalibrateParam calibrate;
 
-	pUI->key_control_mode = 0;	//キー取得モード
+//	pUI->key_control_mode = 0;	//キー取得モード
 
 	pUI->cont_org	= 0;	// キー状態
 	pUI->trg_org		= 0;	// キートリガー
@@ -53,42 +68,17 @@ void GFL_UI_Pad_sysInit(UIHandle* pUI)
 	pUI->repeatSpeed	= 8;
 	pUI->repeatWait	= 15;
 
-
-	pUI->tp_x		 = 0;	// タッチパネルX座標
-	pUI->tp_y		 = 0;	// タッチパネルY座標
-	pUI->tp_trg		 = 0;	// タッチパネル接触判定トリガ
-	pUI->tp_cont		 = 0;	// タッチパネル接触判定状態
-	pUI->tp_auto_samp = 0;	// タッチパネルのオートサンプリングを行っているかのフラグ
-									
-	// タッチパネルの初期化とキャリブレーションをセット
-	TP_Init();
-
-	// マシンのキャリブレーション値を取得
-	if( TP_GetUserInfo( &calibrate ) == TRUE ){
-		// キャリブレーション値の設定
-		TP_SetCalibrateParam( &calibrate );
-		UI_PRINT("Get Calibration Parameter from NVRAM\n");
-	}
-	else{
-		// 取得に失敗したのでデフォルトのキャリブレーションの設定
-		calibrate.x0 = 0x02ae;
-		calibrate.y0 = 0x058c;
-		calibrate.xDotSize = 0x0e25;
-		calibrate.yDotSize = 0x1208;
-		TP_SetCalibrateParam( &calibrate );
-		UI_PRINT( "Warrning : TouchPanelInit( not found valid calibration data )\n" );
-	}
 }
 
 //==============================================================================
 /**
  * パッド読み取り処理
- * @param   UIHandle     ユーザーインターフェイスハンドルのポインタ
+ * @param[in,out]   UIPadHandle     ユーザーインターフェイスパッドハンドルのポインタ
  * @return  none
  */
 //==============================================================================
 
-void sys_MainKeyRead(UIHandle* pUI)
+void GFL_UI_Pad_sysMain(UIPadHandle* pUI)
 {
 	TPData	tpTemp;
 	TPData	tpDisp;
@@ -99,8 +89,6 @@ void sys_MainKeyRead(UIHandle* pUI)
 	  pUI->trg	= 0;
 	  pUI->cont	= 0;
 	  pUI->repeat	= 0;
-	  pUI->tp_trg	= 0;
-	  pUI->tp_cont	= 0;
 	  return;
 	}
 
@@ -128,58 +116,11 @@ void sys_MainKeyRead(UIHandle* pUI)
 	pUI->repeat	= pUI->repeat_org;
 
 	_keyConvert();
-
-	// タッチパネルデータを取得
-	if(pUI->tp_auto_samp == 0){
-		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
-	}else{
-		TP_GetLatestRawPointInAuto( &tpTemp );	// オートサンプリング中のデータを取得
-	}
-
-	TP_GetCalibratedPoint( &tpDisp, &tpTemp );	// 座標を画面座標（０～２５５）にする
-
-	
-	if( tpDisp.validity == TP_VALIDITY_VALID  ){		// 座標の有効性をチェック
-		// タッチパネル座標有効
-		pUI->tp_x = tpDisp.x;
-		pUI->tp_y = tpDisp.y;
-	}else{
-		// タッチパネル座標無効
-		// 1シンク前の座標が格納されているときのみ座標をそのまま受け継ぐ
-		if( pUI->tp_cont ){
-			switch(tpDisp.validity){
-			case TP_VALIDITY_INVALID_X:
-				pUI->tp_y = tpDisp.y;
-				break;
-			case TP_VALIDITY_INVALID_Y:
-				pUI->tp_x = tpDisp.x;
-				break;
-			case TP_VALIDITY_INVALID_XY:
-				break;
-			default:	// 正常
-				break;
-			}
-		}else{
-			// トリガのタイミングなら、
-			// タッチパネルを押していないことにする
-			tpDisp.touch = 0;
-		}
-	}
-	pUI->tp_trg	= (u16)(tpDisp.touch & (tpDisp.touch ^ pUI->tp_cont));	// トリガ 入力
-	pUI->tp_cont	= tpDisp.touch;										// ベタ 入力
-
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * キー情報の変換
- *
- * @param	none
- * @param	none
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
+//==============================================================================
+// キー情報の変換マクロ
+//==============================================================================
 #define KEYCONV( key, check_pat, set_pat )	{ if( key & check_pat ) key |= set_pat; }
 #define KEYCONV_RESET( key, check_pat, set_pat ) {	\
 	if( key & check_pat ){							\
@@ -202,7 +143,14 @@ void sys_MainKeyRead(UIHandle* pUI)
 	key &= ( reset_pat^0xffff );				\
 }
 
-static void _keyConvert(void)
+//==============================================================================
+/**
+ * キー情報の変換
+ * @param[in,out]   UIPadHandle     ユーザーインターフェイスパッドハンドルのポインタ
+ * @return  none
+ */
+//==============================================================================
+static void _keyConvert(UIPadHandle* pUI)
 {
 	switch( pUI->key_control_mode ){
 
@@ -237,17 +185,29 @@ static void _keyConvert(void)
 	}
 }
 
-//--------------------------------------------------------------------------------------------
+//==============================================================================
 /**
  * キーリピートの速度とウェイトをセット
- *
- * @param	speed	速度
- * @param	wait	ウェイト
- *
- * @return	none
+ * @param[in,out]   UIPadHandle     ユーザーインターフェイスパッドハンドルのポインタ
+ * @param[in]	speed	速度
+ * @param[in]	wait	ウェイト
+ * @return  none
  */
-//--------------------------------------------------------------------------------------------
-void sys_KeyRepeatSpeedSet( int speed, int wait )
+//==============================================================================
+void GFL_UI_KeyRepeatSpeedSet( int speed, int wait )
+{
+	pUI->repeatSpeed	= speed;
+	pUI->repeatWait	= wait;
+}
+
+//==============================================================================
+/**
+ * キートリガゲット
+ * @param[in,out]   UIPadHandle     ユーザーインターフェイスパッドハンドルのポインタ
+ * @return  キートリガ
+ */
+//==============================================================================
+void GFL_UI_KeyGetTrg( int speed, int wait )
 {
 	pUI->repeatSpeed	= speed;
 	pUI->repeatWait	= wait;
