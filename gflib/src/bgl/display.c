@@ -28,7 +28,7 @@ static	int				SubVisiblePlane;
  * @param	data	設定データ
  */
 //--------------------------------------------------------------------------------------------
-void	GF_Disp_SetBank( const GF_BGL_DISPVRAM* dispvram )
+void	GF_DISP_SetBank( const GF_BGL_DISPVRAM* dispvram )
 {
 	// VRAM設定リセット
 	GX_ResetBankForBG();			// メイン2DエンジンのBG
@@ -65,7 +65,7 @@ void	GF_Disp_SetBank( const GF_BGL_DISPVRAM* dispvram )
  * @param	
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GX_VisibleControlInit( void )
+void GF_DISP_GX_VisibleControlInit( void )
 {
 	MainVisiblePlane = 0;
 	//GX_SetVisiblePlane( MainVisiblePlane );
@@ -82,7 +82,7 @@ void GF_Disp_GX_VisibleControlInit( void )
  * @li	flg = VISIBLE_OFF	: 非表示
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GX_VisibleControl( u8 gxplanemask, u8 flg )
+void GF_DISP_GX_VisibleControl( u8 gxplanemask, u8 flg )
 {
 	if( flg == VISIBLE_ON ){
 		if( MainVisiblePlane & gxplanemask ){ return; }
@@ -102,7 +102,7 @@ void GF_Disp_GX_VisibleControl( u8 gxplanemask, u8 flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GX_VisibleControlDirect( int prm )
+void GF_DISP_GX_VisibleControlDirect( int prm )
 {
 	MainVisiblePlane = prm;
 	GX_SetVisiblePlane( MainVisiblePlane );
@@ -115,7 +115,7 @@ void GF_Disp_GX_VisibleControlDirect( int prm )
  * @param	
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GXS_VisibleControlInit( void )
+void GF_DISP_GXS_VisibleControlInit( void )
 {
 	SubVisiblePlane = 0;
 	//GXS_SetVisiblePlane( MainVisiblePlane );
@@ -132,7 +132,7 @@ void GF_Disp_GXS_VisibleControlInit( void )
  * @li	flg = VISIBLE_OFF	: 非表示
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GXS_VisibleControl( u8 gxplanemask, u8 flg )
+void GF_DISP_GXS_VisibleControl( u8 gxplanemask, u8 flg )
 {
 	if( flg == VISIBLE_ON ){
 		if( SubVisiblePlane & gxplanemask ){ return; }
@@ -152,7 +152,7 @@ void GF_Disp_GXS_VisibleControl( u8 gxplanemask, u8 flg )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_GXS_VisibleControlDirect( int prm )
+void GF_DISP_GXS_VisibleControlDirect( int prm )
 {
 	SubVisiblePlane = prm;
 	GXS_SetVisiblePlane( SubVisiblePlane );
@@ -166,7 +166,7 @@ void GF_Disp_GXS_VisibleControlDirect( int prm )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void	GF_Disp_DispOn( void )
+void	GF_DISP_DispOn( void )
 {
 	GX_DispOn();
 	GXS_DispOn();
@@ -180,7 +180,7 @@ void	GF_Disp_DispOn( void )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void	GF_Disp_DispOff( void )
+void	GF_DISP_DispOff( void )
 {
 	GX_DispOff();
 	GXS_DispOff();
@@ -194,7 +194,7 @@ void	GF_Disp_DispOff( void )
  * @param	value	上下どちらをメイン画面にするか（DISP_3D_TO_MAIN:上画面がメイン　DISP_3D_TO_SUB:下画面がメイン）
  */
 //--------------------------------------------------------------------------------------------
-void GF_Disp_DispSelect( int value )
+void GF_DISP_DispSelect( int value )
 {
 	GX_SetDispSelect(value);
 }
@@ -208,7 +208,7 @@ void GF_Disp_DispSelect( int value )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-int GF_Disp_MainVisibleGet(void)
+int GF_DISP_MainVisibleGet(void)
 {
 	return MainVisiblePlane;
 }
@@ -221,7 +221,7 @@ int GF_Disp_MainVisibleGet(void)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-int GF_Disp_SubVisibleGet(void)
+int GF_DISP_SubVisibleGet(void)
 {
 	return SubVisiblePlane;
 }
