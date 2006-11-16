@@ -84,7 +84,7 @@ typedef struct{
  * @li	ÇPÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMP_PrintMain(
+GLOBAL void GFL_BMP_PrintMain(
 			const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
 			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
@@ -108,7 +108,7 @@ GLOBAL void GF_BMP_PrintMain(
  * @li	ÇQÇTÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMP_PrintMain256(
+GLOBAL void GFL_BMP_PrintMain256(
 		const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
 		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col );
@@ -129,7 +129,7 @@ GLOBAL void GF_BMP_PrintMain256(
  * @li	ÇPÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_BmpFill(
+GLOBAL void GFL_BMP_Fill(
 		const BMPPRT_HEADER * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
@@ -149,7 +149,7 @@ GLOBAL void GF_BGL_BmpFill(
  * @li	ÇQÇTÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BGL_BmpFill256(
+GLOBAL void GFL_BMP_Fill256(
 		const BMPPRT_HEADER * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 

@@ -17,11 +17,11 @@
 #endif
 
 // 無効ビットマップインデックス値
-#define	GF_BMPWIN_FRM_NULL		(0xff)
+#define	GFL_BMPWIN_FRM_NULL		(0xff)
 
 ///BMPWINデータ構造体
 typedef struct {
-	GF_BGL_INI	*bgl;
+	GFL_BG_INI	*bgl;
 	u32			heapID;
 	u8			frmnum;
 	u8			posx;
@@ -32,7 +32,7 @@ typedef struct {
 	u16			chrofs:15;
 	u16			bitmode:1;	
 	void		*chrbuf;
-}GF_BMPWIN_DATA;
+}GFL_BMPWIN_DATA;
 
 ///BMPWIN設定データ構造体
 typedef struct{
@@ -47,15 +47,15 @@ typedef struct{
 
 
 //ビットマップシフト用定義
-#define	GF_BMPWIN_SHIFT_U		( 0 )
-#define	GF_BMPWIN_SHIFT_D		( 1 )
-#define	GF_BMPWIN_SHIFT_L		( 2 )		//未完成
-#define	GF_BMPWIN_SHIFT_R		( 3 )		//未完成
+#define	GFL_BMPWIN_SHIFT_U		( 0 )
+#define	GFL_BMPWIN_SHIFT_D		( 1 )
+#define	GFL_BMPWIN_SHIFT_L		( 2 )		//未完成
+#define	GFL_BMPWIN_SHIFT_R		( 3 )		//未完成
 
 // BitmapWindowのビットモード
 enum {
-	GF_BMPWIN_BITMODE_4 = 0,
-	GF_BMPWIN_BITMODE_8 = 1
+	GFL_BMPWIN_BITMODE_4 = 0,
+	GFL_BMPWIN_BITMODE_8 = 1
 };
 
 
@@ -71,7 +71,7 @@ enum {
  * @return	確保したデータのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL GF_BMPWIN_DATA * GF_BMPWIN_AllocGet( u32 heapID, u8 num );
+GLOBAL GFL_BMPWIN_DATA * GFL_BMPWIN_AllocGet( u32 heapID, u8 num );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -83,7 +83,7 @@ GLOBAL GF_BMPWIN_DATA * GF_BMPWIN_AllocGet( u32 heapID, u8 num );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID );
+GLOBAL void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -95,7 +95,7 @@ GLOBAL void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID );
  * @retval	"FALSE = 未登録"
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_AddCheck( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_AddCheck( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -114,8 +114,8 @@ GLOBAL u8 GF_BMPWIN_AddCheck( GF_BMPWIN_DATA * win );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Add(
-		GF_BMPWIN_DATA * win, u8 frmnum,
+GLOBAL void GFL_BMPWIN_Add(
+		GFL_BMPWIN_DATA * win, u8 frmnum,
 		u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u16 chrofs, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
@@ -132,8 +132,8 @@ GLOBAL void GF_BMPWIN_Add(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_AddChar(
-		GF_BMPWIN_DATA * win, u8 sizx, u8 sizy, u16 chrofs, u8 fill_color, u32 heapID );
+GLOBAL void GFL_BMPWIN_AddChar(
+		GFL_BMPWIN_DATA * win, u8 sizx, u8 sizy, u16 chrofs, u8 fill_color, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -146,7 +146,7 @@ GLOBAL void GF_BMPWIN_AddChar(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_AddEx( GF_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID );
+GLOBAL void GFL_BMPWIN_AddEx( GFL_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -157,7 +157,7 @@ GLOBAL void GF_BMPWIN_AddEx( GF_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 h
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Del( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_Del( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -168,11 +168,11 @@ GLOBAL void GF_BMPWIN_Del( GF_BMPWIN_DATA * win );
  *
  * @return	none
  *
- *	GF_BMPWIN_AllocGet()で確保した場合に使用して下さい
+ *	GFL_BMPWIN_AllocGet()で確保した場合に使用して下さい
  *	
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Free( GF_BMPWIN_DATA * win, u8 num );
+GLOBAL void GFL_BMPWIN_Free( GFL_BMPWIN_DATA * win, u8 num );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -183,7 +183,7 @@ GLOBAL void GF_BMPWIN_Free( GF_BMPWIN_DATA * win, u8 num );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_On( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_On( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -194,7 +194,7 @@ GLOBAL void GF_BMPWIN_On( GF_BMPWIN_DATA * win );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_OnVReq( GFL_BMPWIN_DATA * win );
 
 //------------------------------------------------------------------
 /**
@@ -204,7 +204,7 @@ GLOBAL void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win );
  *
  */
 //------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_MakeScrn( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_MakeScrn( GFL_BMPWIN_DATA * win );
 
 //------------------------------------------------------------------
 /**
@@ -217,7 +217,7 @@ GLOBAL void GF_BMPWIN_MakeScrn( GF_BMPWIN_DATA * win );
  *
  */
 //------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height );
+GLOBAL void GFL_BMPWIN_MakeScrnLimited( GFL_BMPWIN_DATA * win, u32 width, u32 height );
 
 //------------------------------------------------------------------
 /**
@@ -227,7 +227,7 @@ GLOBAL void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 heig
  *
  */
 //------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_ClearScrn( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -238,7 +238,7 @@ GLOBAL void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_CgxOn( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -248,7 +248,7 @@ GLOBAL void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win );
  *
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Off( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_Off( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -258,7 +258,7 @@ GLOBAL void GF_BMPWIN_Off( GF_BMPWIN_DATA * win );
  *
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_OffVReq( GF_BMPWIN_DATA * win );
+GLOBAL void GFL_BMPWIN_OffVReq( GFL_BMPWIN_DATA * win );
 
 
 //--------------------------------------------------------------------------------------------
@@ -271,7 +271,7 @@ GLOBAL void GF_BMPWIN_OffVReq( GF_BMPWIN_DATA * win );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_DataFill( GF_BMPWIN_DATA * win, u8 col );
+GLOBAL void GFL_BMPWIN_DataFill( GFL_BMPWIN_DATA * win, u8 col );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -294,8 +294,8 @@ GLOBAL void GF_BMPWIN_DataFill( GF_BMPWIN_DATA * win, u8 col );
  * ビットマップデータの切り取りを可能にしたもの
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Print(
-			GF_BMPWIN_DATA * win, void * src,
+GLOBAL void GFL_BMPWIN_Print(
+			GFL_BMPWIN_DATA * win, void * src,
 			u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
 			u16 win_x, u16 win_y, u16 win_dx, u16 win_dy );
 
@@ -321,8 +321,8 @@ GLOBAL void GF_BMPWIN_Print(
  * ビットマップデータの切り取りを可能にしたもの
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_PrintEx(
-		GF_BMPWIN_DATA * win, void * src,
+GLOBAL void GFL_BMPWIN_PrintEx(
+		GFL_BMPWIN_DATA * win, void * src,
 		u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
 		u16 win_x, u16 win_y, u16 win_dx, u16 win_dy, u16 nuki );
 
@@ -340,7 +340,7 @@ GLOBAL void GF_BMPWIN_PrintEx(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Fill( GF_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy );
+GLOBAL void GFL_BMPWIN_Fill( GFL_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy );
 
 //---------------------------------------------------------------------------------------------
 /**
@@ -356,10 +356,10 @@ GLOBAL void GF_BMPWIN_Fill( GF_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx
  * @return	none
  */
 //---------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_PrintMsg( GF_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy );
+GLOBAL void GFL_BMPWIN_PrintMsg( GFL_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy );
 
-GLOBAL void GF_BMPWIN_PrintMsgWide(
-		GF_BMPWIN_DATA * win, const u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy, u16 tbl );
+GLOBAL void GFL_BMPWIN_PrintMsgWide(
+		GFL_BMPWIN_DATA * win, const u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy, u16 tbl );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -375,7 +375,7 @@ GLOBAL void GF_BMPWIN_PrintMsgWide(
  * ビットマップデータ(全領域)のシフトを実行
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_Shift( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
+GLOBAL void GFL_BMPWIN_Shift( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
 
 
 //=============================================================================================
@@ -393,7 +393,7 @@ GLOBAL void GF_BMPWIN_Shift( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data
  * @return	win->frmnum
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_GetFrame( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_GetFrame( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -404,7 +404,7 @@ GLOBAL u8 GF_BMPWIN_GetFrame( GF_BMPWIN_DATA * win );
  * @return	win->sizx
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_GetSizeX( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_GetSizeX( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -415,7 +415,7 @@ GLOBAL u8 GF_BMPWIN_GetSizeX( GF_BMPWIN_DATA * win );
  * @return	win->sizy
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_GetSizeY( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_GetSizeY( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -427,7 +427,7 @@ GLOBAL u8 GF_BMPWIN_GetSizeY( GF_BMPWIN_DATA * win );
  * @return	win->posx
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_GetPosX( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_GetPosX( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -438,7 +438,7 @@ GLOBAL u8 GF_BMPWIN_GetPosX( GF_BMPWIN_DATA * win );
  * @return	win->posy
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GF_BMPWIN_GetPosY( GF_BMPWIN_DATA * win );
+GLOBAL u8 GFL_BMPWIN_GetPosY( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -449,7 +449,7 @@ GLOBAL u8 GF_BMPWIN_GetPosY( GF_BMPWIN_DATA * win );
  * @return	win->chrofs
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 GF_BMPWIN_GetChrofs( GF_BMPWIN_DATA * win );
+GLOBAL u16 GFL_BMPWIN_GetChrofs( GFL_BMPWIN_DATA * win );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -460,7 +460,7 @@ GLOBAL u16 GF_BMPWIN_GetChrofs( GF_BMPWIN_DATA * win );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_SetPosX( GF_BMPWIN_DATA * win, u8 px );
+GLOBAL void GFL_BMPWIN_SetPosX( GFL_BMPWIN_DATA * win, u8 px );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -471,7 +471,7 @@ GLOBAL void GF_BMPWIN_SetPosX( GF_BMPWIN_DATA * win, u8 px );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_SetPosY( GF_BMPWIN_DATA * win, u8 py );
+GLOBAL void GFL_BMPWIN_SetPosY( GFL_BMPWIN_DATA * win, u8 py );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -483,7 +483,7 @@ GLOBAL void GF_BMPWIN_SetPosY( GF_BMPWIN_DATA * win, u8 py );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_BMPWIN_SetPal( GF_BMPWIN_DATA * win, u8 palnum );
+GLOBAL void GFL_BMPWIN_SetPal( GFL_BMPWIN_DATA * win, u8 palnum );
 
 
 
