@@ -160,8 +160,8 @@ void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data )
 	GX_SetBGScrOffset( GX_BGSCROFFSET_0x00000 ); 
 	GX_SetBGCharOffset( GX_BGCHAROFFSET_0x00000 ); 
 
-	GF_DISP_GX_VisibleControlInit();
-	GF_DISP_GXS_VisibleControlInit();
+	GFL_DISP_GX_VisibleControlInit();
+	GFL_DISP_GXS_VisibleControlInit();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -181,10 +181,10 @@ void GFL_BG_InitBGDisp( const GFL_BG_SYS_HEADER * data, u8 flg )
 {
 	if( flg == GFL_BG_MAIN_DISP ){
 		GX_SetGraphicsMode( data->dispMode, data->bgMode, data->bg0_2Dor3D );
-		GF_DISP_GX_VisibleControlInit();
+		GFL_DISP_GX_VisibleControlInit();
 	}else{
 		GXS_SetGraphicsMode( data->bgModeSub );
-		GF_DISP_GXS_VisibleControlInit();
+		GFL_DISP_GXS_VisibleControlInit();
 	}
 }
 
@@ -209,7 +209,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 
 	switch( frmnum ){
 	case GFL_BG_FRAME0_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 		G2_SetBG0Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -221,7 +221,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME1_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		G2_SetBG1Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -233,7 +233,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME2_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -263,7 +263,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME3_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -293,7 +293,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME0_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 		G2S_SetBG0Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -305,7 +305,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME1_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		G2S_SetBG1Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -317,7 +317,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME2_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -347,7 +347,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 		break;
 
 	case GFL_BG_FRAME3_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -858,28 +858,28 @@ void GFL_BG_VisibleSet( u8 frmnum, u8 visible )
 {
 	switch( frmnum ){
 	case GFL_BG_FRAME0_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG0, visible );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG0, visible );
 		break;
 	case GFL_BG_FRAME1_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG1, visible );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG1, visible );
 		break;
 	case GFL_BG_FRAME2_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG2, visible );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG2, visible );
 		break;
 	case GFL_BG_FRAME3_M:
-		GF_DISP_GX_VisibleControl( GX_PLANEMASK_BG3, visible );
+		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG3, visible );
 		break;
 	case GFL_BG_FRAME0_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG0, visible );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG0, visible );
 		break;
 	case GFL_BG_FRAME1_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG1, visible );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG1, visible );
 		break;
 	case GFL_BG_FRAME2_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG2, visible );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG2, visible );
 		break;
 	case GFL_BG_FRAME3_S:
-		GF_DISP_GXS_VisibleControl( GX_PLANEMASK_BG3, visible );
+		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_BG3, visible );
 		break;
 	}
 }
