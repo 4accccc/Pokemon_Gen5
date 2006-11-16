@@ -22,7 +22,9 @@ TARGET_LIB		=	gflib.a
 
 # ソースファイル
 SRCS			=	initialize.c filesystem.c heapsys.c tcb.c procsys.c saveload_system.c \
-					touchpanel.c calctool.c \
+					ui/touchpanel.c calctool.c \
+					network/tool/comm_ring_buff.c \
+					network/tool/comm_queue.c \
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c
 
