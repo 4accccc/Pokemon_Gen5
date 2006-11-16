@@ -1,7 +1,7 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	network.h
- * @brief	é€šä¿¡ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®å¤–éƒ¨å…¬é–‹é–¢æ•°
+ * @brief	’ÊMƒ‰ƒCƒuƒ‰ƒŠ‚ÌŠO•”ŒöŠJŠÖ”
  * @author	k.ohno
  * @date    2006.11.4
  */
@@ -10,42 +10,44 @@
 #define _NETWORK_H_
 
 // define 
-#define NET_NETID_ALLUSER (0xff)  ///< NetID:å…¨å“¡ã¸é€ä¿¡ã™ã‚‹å ´åˆ
-#define NET_NETID_SERVER (0xfe)   ///< NetID:ã‚µãƒ¼ãƒãƒ¼ã®å ´åˆã“ã‚Œ å¾Œã¯0ã‹ã‚‰ClientID
+#define NET_NETID_ALLUSER (0xff)  ///< NetID:‘Sˆõ‚Ö‘—M‚·‚éê‡
+#define NET_NETID_SERVER (0xfe)   ///< NetID:ƒT[ƒo[‚Ìê‡‚±‚ê Œã‚Í0‚©‚çClientID
 
 // typedef
-typedef struct u8 GameServiceID;  ///< ã‚²ãƒ¼ãƒ ã‚µãƒ¼ãƒ“ã‚¹ID  é€šä¿¡ã®ç¨®é¡
-typedef struct u8 ConnectID;      ///< æ¥ç¶šã™ã‚‹ãŸã‚ã®ID  0-16 ã¾ã§
-typedef struct u8 NetID;          ///< é€šä¿¡ID  0-200 ã¾ã§
+typedef struct u8 GameServiceID;  ///< ƒQ[ƒ€ƒT[ƒrƒXID  ’ÊM‚Ìí—Ş
+typedef struct u8 ConnectID;      ///< Ú‘±‚·‚é‚½‚ß‚ÌID  0-16 ‚Ü‚Å
+typedef struct u8 NetID;          ///< ’ÊMID  0-200 ‚Ü‚Å
 
-/// é€šä¿¡ç®¡ç†æ§‹é€ ä½“
+/// ’ÊMŠÇ—\‘¢‘Ì
 typedef struct _GFNetHandle GFNetHandle;
 
-/// é€ä¿¡å®Œäº†ã‚’å—ã‘å–ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‹
+/// ‘—MŠ®—¹‚ğó‚¯æ‚éƒR[ƒ‹ƒoƒbƒNŒ^
 typedef CBSendEndFunc;
 
 
 
-typedef struct{             ///< é€šä¿¡ã®åˆæœŸåŒ–ç”¨æ§‹é€ ä½“
-  GameServiceID gsid;       ///< ã‚²ãƒ¼ãƒ ã‚µãƒ¼ãƒ“ã‚¹ID  é€šä¿¡ã®ç¨®é¡
-  u32  allocNo;             ///< allocã™ã‚‹ãŸã‚ã®ç•ªå·
-  NetRecvFuncTable *pRecvFuncTable;  ///< å—ä¿¡é–¢æ•°ãƒ†ãƒ¼ãƒ–ãƒ«
-  NetBeaconGetFunc *pBeaconGetFunc;  ///< ãƒ“ãƒ¼ã‚³ãƒ³ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°
-  NetConnectEndFunc *pConnectEndFunc;  ///< é€šä¿¡åˆ‡æ–­æ™‚ã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
-  NetDSMPSwitchEndFunc *pSDMPSwitchEndFunc;  ///< DS<>MPåˆ‡ã‚Šæ›¿ãˆå®Œäº†æ™‚ã«å‘¼ã°ã‚Œã‚‹
-  u8 maxConnectNum;   ///< æœ€å¤§æ¥ç¶šäººæ•°
-  u8 maxBeaconNum;    ///< æœ€å¤§ãƒ“ãƒ¼ã‚³ãƒ³åé›†æ•°
+typedef struct{             ///< ’ÊM‚Ì‰Šú‰»—p\‘¢‘Ì
+  GameServiceID gsid;       ///< ƒQ[ƒ€ƒT[ƒrƒXID  ’ÊM‚Ìí—Ş
+  u32  allocNo;             ///< alloc‚·‚é‚½‚ß‚Ì”Ô†
+  NetRecvFuncTable *pRecvFuncTable;  ///< óMŠÖ”ƒe[ƒuƒ‹
+  NetBeaconGetFunc *pBeaconGetFunc;  ///< ƒr[ƒRƒ“ƒf[ƒ^æ“¾ŠÖ”
+  NetErrorFunc *pErrorFunc;           ///< ’ÊM•s”\‚ÈƒGƒ‰[‚ª‹N‚±‚Á‚½ê‡ŒÄ‚Î‚ê‚é Ø’f‚·‚é‚µ‚©‚È‚¢
+  NetFatalErrorFunc *pFatalErrorFunc; ///< ‹Ù‹}’â~ƒGƒ‰[‚ª‹N‚±‚Á‚½ê‡ŒÄ‚Î‚ê‚é Ø’f‚·‚é‚µ‚©‚È‚¢
+  NetConnectEndFunc *pConnectEndFunc;  ///< ’ÊMØ’f‚ÉŒÄ‚Î‚ê‚éŠÖ”
+  NetDSMPSwitchEndFunc *pSDMPSwitchEndFunc;  ///< DS<>MPØ‚è‘Ö‚¦Š®—¹‚ÉŒÄ‚Î‚ê‚é
+  u8 maxConnectNum;   ///< Å‘åÚ‘±l”
+  u8 maxBeaconNum;    ///< Å‘åƒr[ƒRƒ“ûW”
 
 } GFNetInitializeStruct;
 
 //-------------------------------
-//  é–¢æ•° ï½å¤–éƒ¨å…¬é–‹é–¢æ•°ã¯å…¨ã¦ã“ã“ã«å®šç¾©
+//  ŠÖ” `ŠO•”ŒöŠJŠÖ”‚Í‘S‚Ä‚±‚±‚É’è‹`
 //-------------------------------
 
 //==============================================================================
 /**
- * é€šä¿¡åˆæœŸåŒ–
- * @param[in]   NetInitializeStruct*  pNetInit  é€šä¿¡åˆæœŸåŒ–æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿
+ * ’ÊM‰Šú‰»
+ * @param[in]   NetInitializeStruct*  pNetInit  ’ÊM‰Šú‰»\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^
  * @retval  void
  */
 //==============================================================================
@@ -53,19 +55,19 @@ extern void GF_NT_Initialize(const NetInitializeStruct* pNetInit);
 
 //==============================================================================
 /**
- * é€šä¿¡çµ‚äº†
- * @param[in,out]   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * ’ÊMI—¹
+ * @param[in,out]   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  * @retval  void
  */
 //==============================================================================
 extern void GF_NT_Finalize(NetHandle* pNet);
 
-//-----ãƒ“ãƒ¼ã‚³ãƒ³ãƒ»ã¨ã‚‚ã ã¡æƒ…å ±é–¢é€£
+//-----ƒr[ƒRƒ“E‚Æ‚à‚¾‚¿î•ñŠÖ˜A
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³ã‚’å—ã‘å–ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã‚’è¿½åŠ æŒ‡å®š  ï¼ˆã„ãã¤ã‹ã®ã‚µãƒ¼ãƒ“ã‚¹ã®ãƒ“ãƒ¼ã‚³ãƒ³ã‚’æ‹¾ã„ãŸã„æ™‚ã«ï¼‰
- * @param[in,out]   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   GameServiceID gsid  ã‚²ãƒ¼ãƒ ã‚µãƒ¼ãƒ“ã‚¹ID  é€šä¿¡ã®ç¨®é¡
+ * ƒr[ƒRƒ“‚ğó‚¯æ‚éƒT[ƒrƒX‚ğ’Ç‰Áw’è  i‚¢‚­‚Â‚©‚ÌƒT[ƒrƒX‚Ìƒr[ƒRƒ“‚ğE‚¢‚½‚¢‚Éj
+ * @param[in,out]   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @param   GameServiceID gsid  ƒQ[ƒ€ƒT[ƒrƒXID  ’ÊM‚Ìí—Ş
  * @retval  none
  */
 //==============================================================================
@@ -73,72 +75,72 @@ extern void GF_NT_AddBeaconServiceID(NetHandle* pNet, GameServiceID gsid);
 
 //==============================================================================
 /**
- * å—ä¿¡ãƒ“ãƒ¼ã‚³ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’å¾—ã‚‹
- * @param[in,out]   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   GameServiceID gsid  ã‚²ãƒ¼ãƒ ã‚µãƒ¼ãƒ“ã‚¹ID  é€šä¿¡ã®ç¨®é¡
- * @retval  ãƒ“ãƒ¼ã‚³ãƒ³ãƒ‡ãƒ¼ã‚¿ã®å…ˆé ­ãƒã‚¤ãƒ³ã‚¿ ãªã‘ã‚Œã°NULL
+ * óMƒr[ƒRƒ“ƒf[ƒ^‚ğ“¾‚é
+ * @param[in,out]   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @param   GameServiceID gsid  ƒQ[ƒ€ƒT[ƒrƒXID  ’ÊM‚Ìí—Ş
+ * @retval  ƒr[ƒRƒ“ƒf[ƒ^‚Ìæ“ªƒ|ƒCƒ“ƒ^ ‚È‚¯‚ê‚ÎNULL
  */
 //==============================================================================
 extern void* GF_NT_GetBeaconData(NetHandle* pNet, ConnectID id);
 
 
-//--------æ¥ç¶šãƒ»åˆ‡æ–­
+//--------Ú‘±EØ’f
 //==============================================================================
 /**
- * å­æ©Ÿã«ãªã‚Šæ¥ç¶šã™ã‚‹
- * @retval  NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * q‹@‚É‚È‚èÚ‘±‚·‚é
+ * @retval  NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  */
 //==============================================================================
 extern NetHandle* pNet = GF_NT_ClientConnect(void);
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã«ãªã‚Šå¾…ã¡å—ã‘ã‚‹
- * @return  NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * e‹@‚É‚È‚è‘Ò‚¿ó‚¯‚é
+ * @return  NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  */
 //==============================================================================
 extern NetHandle* pNet = GF_NT_ServerConnect(void);
 
 //==============================================================================
 /**
- * è¦ªå­åˆ‡ã‚Šæ›¿ãˆæ¥ç¶šã‚’è¡Œã†
- * @return  NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * eqØ‚è‘Ö‚¦Ú‘±‚ğs‚¤
+ * @return  NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  */
 //==============================================================================
 extern NetHandle* pNet = GF_NT_SwitchConnect(void);
 
 //==============================================================================
 /**
- * ã“ã®ãƒãƒ³ãƒ‰ãƒ«ã®é€šä¿¡ç•ªå·ã‚’å¾—ã‚‹
- * @param[in,out]  NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @retval  NetID     é€šä¿¡ID
+ * ‚±‚Ìƒnƒ“ƒhƒ‹‚Ì’ÊM”Ô†‚ğ“¾‚é
+ * @param[in,out]  NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @retval  NetID     ’ÊMID
  */
 //==============================================================================
 extern NetID GF_NT_GetMyNetID(NetHandle* pNet);
 
 //==============================================================================
 /**
- * ç¾åœ¨ã®æ¥ç¶šäººæ•°ã‚’å¾—ã‚‹
- * @param[in,out]   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @retval  int  æ¥ç¶šæ•°
+ * Œ»İ‚ÌÚ‘±l”‚ğ“¾‚é
+ * @param[in,out]   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @retval  int  Ú‘±”
  */
 //==============================================================================
 extern int GF_NT_GetConnectNum(NetHandle* pNet);
 
 //==============================================================================
 /**
- * IDã®é€šä¿¡ã¨æ¥ç¶šã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’è¿”ã™
- * @param[in,out]   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   NetID id            ãƒãƒƒãƒˆID
- * @retval  BOOL  æ¥ç¶šã—ã¦ã„ãŸã‚‰TRUE
+ * ID‚Ì’ÊM‚ÆÚ‘±‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ•Ô‚·
+ * @param[in,out]   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @param   NetID id            ƒlƒbƒgID
+ * @retval  BOOL  Ú‘±‚µ‚Ä‚¢‚½‚çTRUE
  */
 //==============================================================================
 extern BOOL GF_NT_IsConnectMember(NetHandle* pNet,NetID id);
 
 //==============================================================================
 /**
- * é€šä¿¡åˆ‡æ–­ã™ã‚‹
- * @param   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * ’ÊMØ’f‚·‚é
+ * @param   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  * @retval  none
  */
 //==============================================================================
@@ -147,8 +149,8 @@ extern void GF_NT_Disconnect(NetHandle* pNet);
 
 //==============================================================================
 /**
- * æ¥ç¶šä¸­ã‹ã©ã†ã‹
- * @param   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
+ * Ú‘±’†‚©‚Ç‚¤‚©
+ * @param   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
  * @retval  none
  */
 //==============================================================================
@@ -156,9 +158,9 @@ extern BOOL GF_NT_IsConnect(NetHandle* pNet);
 
 //==============================================================================
 /**
- * æ¥ç¶šæ•°å¤‰æ›´
- * @param   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   u8 num     å¤‰æ›´æ•°
+ * Ú‘±”•ÏX
+ * @param   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @param   u8 num     •ÏX”
  * @retval  none
  */
 //==============================================================================
@@ -166,43 +168,43 @@ extern void GF_NT_SetClientConnectNum(NetHandle* pNet,u8 num);
 
 //==============================================================================
 /**
- * æ–°è¦æ¥ç¶šç¦æ­¢ï¼†è¨±å¯ã‚’è¨­å®š
- * @param   NetHandle* pNet     é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   BOOL bEnable     TRUE=æ¥ç¶šè¨±å¯ FALSE=ç¦æ­¢
+ * V‹KÚ‘±‹Ö~•‹–‰Â‚ğİ’è
+ * @param   NetHandle* pNet     ’ÊMƒnƒ“ƒhƒ‹‚Ìƒ|ƒCƒ“ƒ^
+ * @param   BOOL bEnable     TRUE=Ú‘±‹–‰Â FALSE=‹Ö~
  * @retval  none
  */
 //==============================================================================
 extern void GF_NT_SetClientConnect(NetHandle* pNet,BOOL bEnable);
 
 
-//--------é€ä¿¡
+//--------‘—M
 
 //==============================================================================
 /**
- * é€ä¿¡é–‹å§‹
- * @brief å…¨å“¡ã«ç„¡æ¡ä»¶ã§é€ä¿¡  é€ä¿¡ã‚µã‚¤ã‚ºã¯åˆæœŸåŒ–æ™‚ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰å¼•ãå‡ºã™
- *        ãƒ‡ãƒ¼ã‚¿ã¯å¿…ãšã‚³ãƒ”ãƒ¼ã™ã‚‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @param[in]   u16 sendCommand                é€ä¿¡ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
- * @param[in]   void* data                     é€ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿
- * @retval  TRUE   æˆåŠŸã—ãŸ
- * @retval  FALSE  å¤±æ•—ã®å ´åˆ
+ * ‘—MŠJn
+ * @brief ‘Sˆõ‚É–³ğŒ‚Å‘—M  ‘—MƒTƒCƒY‚Í‰Šú‰»‚Ìƒe[ƒuƒ‹‚©‚çˆø‚«o‚·
+ *        ƒf[ƒ^‚Í•K‚¸ƒRƒs[‚·‚é
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @param[in]   u16 sendCommand                ‘—M‚·‚éƒRƒ}ƒ“ƒh
+ * @param[in]   void* data                     ‘—Mƒf[ƒ^ƒ|ƒCƒ“ƒ^
+ * @retval  TRUE   ¬Œ÷‚µ‚½
+ * @retval  FALSE  ¸”s‚Ìê‡
  */
 //==============================================================================
 extern BOOL GF_NT_SendData(NetHandle* pNet,const u16 sendCommand,const void* data);
 
 //==============================================================================
 /**
- * é€ä¿¡é–‹å§‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @param[in]   u16 sendCommand                é€ä¿¡ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
- * @param[in]   NetID sendID                     é€ä¿¡ç›¸æ‰‹ å…¨å“¡ã¸é€ä¿¡ã™ã‚‹å ´åˆ NET_SENDID_ALLUSER
- * @param[in]   CBSendEndFunc* pCBSendEndFunc  é€ä¿¡å®Œäº†ã‚’ã¤ãŸãˆã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®ç™»éŒ²
- * @param[in]   u32 size                       é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
- * @param[in]   void* data                     é€ä¿¡ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿
- * @param[in]   BOOL bDataCopy                 ãƒ‡ãƒ¼ã‚¿ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹å ´åˆTRUE
- * @retval  TRUE   æˆåŠŸã—ãŸ
- * @retval  FALSE  å¤±æ•—ã®å ´åˆ
+ * ‘—MŠJn
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @param[in]   u16 sendCommand                ‘—M‚·‚éƒRƒ}ƒ“ƒh
+ * @param[in]   NetID sendID                     ‘—M‘Šè ‘Sˆõ‚Ö‘—M‚·‚éê‡ NET_SENDID_ALLUSER
+ * @param[in]   CBSendEndFunc* pCBSendEndFunc  ‘—MŠ®—¹‚ğ‚Â‚½‚¦‚éƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì“o˜^
+ * @param[in]   u32 size                       ‘—Mƒf[ƒ^ƒTƒCƒY
+ * @param[in]   void* data                     ‘—Mƒf[ƒ^ƒ|ƒCƒ“ƒ^
+ * @param[in]   BOOL bDataCopy                 ƒf[ƒ^‚ğƒRƒs[‚·‚éê‡TRUE
+ * @retval  TRUE   ¬Œ÷‚µ‚½
+ * @retval  FALSE  ¸”s‚Ìê‡
  */
 //==============================================================================
 extern BOOL GF_NT_SendData(NetHandle* pNet,const NetID sendID,
@@ -211,44 +213,44 @@ extern BOOL GF_NT_SendData(NetHandle* pNet,const NetID sendID,
 
 //==============================================================================
 /**
- * é€ä¿¡ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã„ã‹ã©ã†ã‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @retval  TRUE   ç„¡ã„å ´åˆ
- * @retval  FALSE  æ®‹ã£ã¦ã„ã‚‹å ´åˆ
+ * ‘—Mƒf[ƒ^‚ª–³‚¢‚©‚Ç‚¤‚©
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @retval  TRUE   –³‚¢ê‡
+ * @retval  FALSE  c‚Á‚Ä‚¢‚éê‡
  */
 //==============================================================================
 extern BOOL GF_NT_IsEmptySendData(NetHandle* pNet);
 
-//--------ç‰¹æ®Š
+//--------“Áê
 // 
 //==============================================================================
 /**
- * åŒæœŸé€šä¿¡ã«åˆ‡ã‚Šæ›¿ãˆãŸã‚Šè¦ªå­é€šä¿¡ã«åˆ‡ã‚Šæ›¿ãˆãŸã‚Šã™ã‚‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @param[in]   BOOL bDSSwitch  TRUE=DSã«åˆ‡ã‚Šæ›¿ãˆã‚‹ FALSE=MPã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+ * “¯Šú’ÊM‚ÉØ‚è‘Ö‚¦‚½‚èeq’ÊM‚ÉØ‚è‘Ö‚¦‚½‚è‚·‚é
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @param[in]   BOOL bDSSwitch  TRUE=DS‚ÉØ‚è‘Ö‚¦‚é FALSE=MP‚ÉØ‚è‘Ö‚¦‚é
  * @return  none
  */
 //==============================================================================
 extern void GF_NT_DSMPSwitch(NetHandle* pNet, const BOOL bDSSwitch);
 
 
-//--------ãã®ä»–ã€ãƒ„ãƒ¼ãƒ«é¡
+//--------‚»‚Ì‘¼Aƒc[ƒ‹—Ş
 //==============================================================================
 /**
- * ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚³ãƒãƒ³ãƒ‰ã‚’ç™ºè¡Œã™ã‚‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @param[in]   u8 no   ã‚¿ã‚¤ãƒŸãƒ³ã‚°å–ã‚ŠãŸã„ç•ªå·
+ * ƒ^ƒCƒ~ƒ“ƒOƒRƒ}ƒ“ƒh‚ğ”­s‚·‚é
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @param[in]   u8 no   ƒ^ƒCƒ~ƒ“ƒOæ‚è‚½‚¢”Ô†
  * @return      none
  */
 //==============================================================================
 extern void GF_NT_TimingSyncStart(NetHandle* pNet, const u8 no);
 //==============================================================================
 /**
- * ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚³ãƒãƒ³ãƒ‰ãŒå±Šã„ãŸã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
- * @param[in,out]   NetHandle* pNet  é€šä¿¡ãƒãƒ³ãƒ‰ãƒ«
- * @param[in]   no   å±Šãç•ªå·
- * @retval  TRUE    ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãŒåˆè‡´
- * @retval  FALSE   ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãŒãã‚ã£ã¦ã„ãªã„
+ * ƒ^ƒCƒ~ƒ“ƒOƒRƒ}ƒ“ƒh‚ª“Í‚¢‚½‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
+ * @param[in,out]   NetHandle* pNet  ’ÊMƒnƒ“ƒhƒ‹
+ * @param[in]   no   “Í‚­”Ô†
+ * @retval  TRUE    ƒ^ƒCƒ~ƒ“ƒO‚ª‡’v
+ * @retval  FALSE   ƒ^ƒCƒ~ƒ“ƒO‚ª‚»‚ë‚Á‚Ä‚¢‚È‚¢
  */
 //==============================================================================
 extern BOOL GF_NT_IsTimingSync(NetHandle* pNet, const u8 no);
