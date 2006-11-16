@@ -1,7 +1,7 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	comm_ring_buff.h
- * @bfief	ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ä»•çµ„ã¿ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
+ * @brief	ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìd‘g‚İ‚ğŠÇ—‚·‚éŠÖ”
  * @author	katsumi ohno
  * @date	05/09/16
  */
@@ -11,7 +11,7 @@
 #ifndef __COMM_RING_BUFF_H__
 #define __COMM_RING_BUFF_H__
 
-// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡æ§‹é€ ä½“
+// ƒŠƒ“ƒOƒoƒbƒtƒ@\‘¢‘Ì
 typedef struct{
     u8* pWork;
     s16 startPos;
@@ -21,26 +21,26 @@ typedef struct{
     s16 size;
 } RingBuffWork;
 
-// ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
+// ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ì‰Šú‰»
 extern void CommRingInitialize(RingBuffWork* pRing, u8* pDataArea, int size);
-// ãƒªãƒ³ã‚°ã«ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
-extern void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size,int line);
-// ãƒªãƒ³ã‚°ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å¾—ã‚‹
+// ƒŠƒ“ƒO‚Éƒf[ƒ^‚ğ“ü‚ê‚é
+extern void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size);
+// ƒŠƒ“ƒO‚©‚çƒf[ƒ^‚ğ“¾‚é
 extern int CommRingGets(RingBuffWork* pRing, u8* pDataArea, int size);
-// ãƒªãƒ³ã‚°ã‹ã‚‰1byteãƒ‡ãƒ¼ã‚¿ã‚’å¾—ã‚‹
+// ƒŠƒ“ƒO‚©‚ç1byteƒf[ƒ^‚ğ“¾‚é
 extern u8 CommRingGetByte(RingBuffWork* pRing);
-// ãƒªãƒ³ã‚°ã«ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹ã‹å¼•ã£å¼µã‚Šå‡ºã™ ãƒã‚¤ãƒ³ã‚¿ã¯å¤‰ãˆãªã„
+// ƒŠƒ“ƒO‚Éƒf[ƒ^‚ª‚ ‚é‚©ˆø‚Á’£‚èo‚· ƒ|ƒCƒ“ƒ^‚Í•Ï‚¦‚È‚¢
 extern int CommRingChecks(RingBuffWork* pRing, u8* pDataArea, int size);
-// ãƒªãƒ³ã‚°ã‚µã‚¤ã‚ºã‚’å¾—ã‚‹
+// ƒŠƒ“ƒOƒTƒCƒY‚ğ“¾‚é
 extern int CommRingDataSize(RingBuffWork* pRing);
-// ãƒªãƒ³ã‚°ã®æ®‹ã‚Šã‚µã‚¤ã‚ºã‚’å¾—ã‚‹
+// ƒŠƒ“ƒO‚Ìc‚èƒTƒCƒY‚ğ“¾‚é
 extern int CommRingDataRestSize(RingBuffWork* pRing);
 
-// ã‚¹ã‚¿ãƒ¼ãƒˆã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‹ã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã‚’æˆ»ã™
+// ƒXƒ^[ƒg‚ÌƒoƒbƒNƒAƒbƒv‚©‚çƒXƒ^[ƒg‚ğ–ß‚·
 extern void CommRingStartPop(RingBuffWork* pRing);
-// ã‚¹ã‚¿ãƒ¼ãƒˆã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã¸ã‚¹ã‚¿ãƒ¼ãƒˆã‚’å…¥ã‚Œã‚‹
+// ƒXƒ^[ƒg‚ÌƒoƒbƒNƒAƒbƒv‚ÖƒXƒ^[ƒg‚ğ“ü‚ê‚é
 extern void CommRingStartPush(RingBuffWork* pRing);
-// Endå ´æ‰€ã‚’ã™ã‚Šã‹ãˆã‚‹
+// EndêŠ‚ğ‚·‚è‚©‚¦‚é
 extern void CommRingEndChange(RingBuffWork* pRing);
 
 #endif// __COMM_RING_BUFF_H__

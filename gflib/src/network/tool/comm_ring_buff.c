@@ -1,15 +1,13 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	comm_ring_buff.c
- * @bfief	ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ä»•çµ„ã¿ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
+ * @brief	ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìd‘g‚İ‚ğŠÇ—‚·‚éŠÖ”
  * @author	katsumi ohno
  * @date	05/09/16
  */
 //=============================================================================
 
-#include "common.h"
-#include "communication/communication.h"
-#include "comm_local.h"
+#include "gflib.h"
 #include "comm_ring_buff.h"
 
 
@@ -18,17 +16,17 @@ static int _ringPos(RingBuffWork* pRing,int i);
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†æ§‹é€ ä½“åˆæœŸåŒ–
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @param   pDataArea    ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªãƒ¼
- * @param   size         ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ãƒ¡ãƒ¢ãƒªãƒ¼ã‚µã‚¤ã‚º
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—\‘¢‘Ì‰Šú‰»
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @param   pDataArea    ƒŠƒ“ƒOƒoƒbƒtƒ@ƒƒ‚ƒŠ[
+ * @param   size         ƒŠƒ“ƒOƒoƒbƒtƒ@ƒƒ‚ƒŠ[ƒTƒCƒY
  * @retval  none
  */
 //==============================================================================
 void CommRingInitialize(RingBuffWork* pRing, u8* pDataArea, int size)
 {
     pRing->pWork = pDataArea;
-    pRing->size = size;
+    pRing->size = (s16)size;
     pRing->startPos = 0;
     pRing->endPos = 0;
     pRing->backupEndPos = 0;
@@ -37,29 +35,29 @@ void CommRingInitialize(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã«æ›¸ãè¾¼ã‚€
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @param   pDataArea    æ›¸ãè¾¼ã‚€ãƒ‡ãƒ¼ã‚¿
- * @param   size         æ›¸ãè¾¼ã¿ã‚µã‚¤ã‚º
- * @param   bUsed  ã“ã®ãƒªãƒ³ã‚°ã‚’ä½¿ç”¨ä¸­ã‚‰ã—ã„
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚É‘‚«‚Ş
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @param   pDataArea    ‘‚«‚Şƒf[ƒ^
+ * @param   size         ‘‚«‚İƒTƒCƒY
+ * @param   bUsed  ‚±‚ÌƒŠƒ“ƒO‚ğg—p’†‚ç‚µ‚¢
  * @retval  none
  */
 //==============================================================================
-void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size,int line)
+void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size)
 {
     int i,j;
 
-    // ã“ã“ã®ASSERTã«å¼•ã£ã‹ã‹ã‚‹ã¨ã„ã†ã“ã¨ã¯
-    // å‡¦ç†ãŒé…å»¶ã—ã¦ã„ã‚‹ã®ã«ã€é€šä¿¡ã¯æ¯syncãã‚‹ã®ã§
-    // ã‚¹ãƒˆãƒƒã‚¯ã™ã‚‹ãƒãƒƒãƒ•ã‚¡åˆ†ã¾ã§ã‚ãµã‚Œã‚‹ã¨ã€ã“ã“ã§æ­¢ã¾ã‚Šã¾ã™ã€‚
-    // é€šä¿¡ã®ãƒãƒƒãƒ•ã‚¡ã‚’å¢—ã‚„ã™ã‹ã€ä»Šã®éƒ¨åˆ†ã®å‡¦ç†ã‚’åˆ†æ–­ã™ã‚‹ã‹ã€å¯¾å‡¦ãŒå¿…è¦ã§ã™ã€‚
-    // æœ€çµ‚çš„ã«ã¯ã“ã®ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚‹ã¨é€šä¿¡ã‚’åˆ‡æ–­ã—ã¾ã™ã€‚
+    // ‚±‚±‚ÌASSERT‚Éˆø‚Á‚©‚©‚é‚Æ‚¢‚¤‚±‚Æ‚Í
+    // ˆ—‚ª’x‰„‚µ‚Ä‚¢‚é‚Ì‚ÉA’ÊM‚Í–ˆsync‚­‚é‚Ì‚Å
+    // ƒXƒgƒbƒN‚·‚éƒoƒbƒtƒ@•ª‚Ü‚Å‚ ‚Ó‚ê‚é‚ÆA‚±‚±‚Å~‚Ü‚è‚Ü‚·B
+    // ’ÊM‚Ìƒoƒbƒtƒ@‚ğ‘‚â‚·‚©A¡‚Ì•”•ª‚Ìˆ—‚ğ•ª’f‚·‚é‚©A‘Îˆ‚ª•K—v‚Å‚·B
+    // ÅI“I‚É‚Í‚±‚ÌƒGƒ‰[‚ª‚ ‚é‚Æ’ÊM‚ğØ’f‚µ‚Ü‚·B
     if(CommRingDataRestSize(pRing) <= size){
 #ifdef DEBUG_ONLY_FOR_ohno
         OHNO_PRINT("%d %d line %d \n",CommRingDataRestSize(pRing),size,line);
         GF_ASSERT_MSG(0,"CommRingOVER %d %d",CommRingDataRestSize(pRing),size);
 #endif
-        CommSetError();
+//        CommSetError();
         return;
     }
     j = 0;
@@ -67,50 +65,52 @@ void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size,int line)
         GF_ASSERT(pDataArea);
         pRing->pWork[_ringPos( pRing, i )] = pDataArea[j];
     }
-    pRing->backupEndPos = _ringPos( pRing, i );
+    pRing->backupEndPos = (s16)_ringPos( pRing, i );
 }
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å¾—ã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @param   pDataArea    èª­ã¿è¾¼ã¿ãƒãƒƒãƒ•ã‚¡
- * @param   size         èª­ã¿è¾¼ã¿ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
- * @retval  å®Ÿéš›ã«èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚çƒf[ƒ^‚ğ“¾‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @param   pDataArea    “Ç‚İ‚İƒoƒbƒtƒ@
+ * @param   size         “Ç‚İ‚İƒoƒbƒtƒ@ƒTƒCƒY
+ * @retval  ÀÛ‚É“Ç‚İ‚ñ‚¾ƒf[ƒ^
  */
 //==============================================================================
 int CommRingGets(RingBuffWork* pRing, u8* pDataArea, int size)
 {
-    int i,j;
+    int i;
 
     i = CommRingChecks(pRing, pDataArea, size);
-    pRing->startPos = _ringPos( pRing, pRing->startPos + i);
-//    OHNO_PRINT("++++++ ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ã ã—ãŸ %d %d  %d byte\n", pRing->startPos, pRing->endPos, i);
+    pRing->startPos = (s16)_ringPos( pRing, pRing->startPos + i);
+
     return i;
 }
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰1byteãƒ‡ãƒ¼ã‚¿ã‚’å¾—ã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @retval  1byteã®ãƒ‡ãƒ¼ã‚¿ ãƒªãƒ³ã‚°ã«ãƒ‡ãƒ¼ã‚¿ãŒãªã„ã¨ãã¯0(ä¸å®š)
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç1byteƒf[ƒ^‚ğ“¾‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @retval  1byte‚Ìƒf[ƒ^ ƒŠƒ“ƒO‚Éƒf[ƒ^‚ª‚È‚¢‚Æ‚«‚Í0
  */
 //==============================================================================
 u8 CommRingGetByte(RingBuffWork* pRing)
 {
     u8 byte;
 
-    CommRingGets(pRing, &byte, 1);
-    return byte;
+    if(1==CommRingGets(pRing, &byte, 1)){
+        return byte;
+    }
+    return 0;
 }
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿æ¤œæŸ»  èª­ã¿è¾¼ã‚€ã ã‘ã§ä½ç½®ã‚’é€²ã‚ãªã„
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @param   pDataArea    èª­ã¿è¾¼ã¿ãƒãƒƒãƒ•ã‚¡
- * @param   size         èª­ã¿è¾¼ã¿ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
- * @retval  å®Ÿéš›ã«èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìƒf[ƒ^ŒŸ¸  “Ç‚İ‚Ş‚¾‚¯‚ÅˆÊ’u‚ği‚ß‚È‚¢
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @param   pDataArea    “Ç‚İ‚İƒoƒbƒtƒ@
+ * @param   size         “Ç‚İ‚İƒoƒbƒtƒ@ƒTƒCƒY
+ * @retval  ÀÛ‚É“Ç‚İ‚ñ‚¾ƒf[ƒ^
  */
 //==============================================================================
 int CommRingChecks(RingBuffWork* pRing, u8* pDataArea, int size)
@@ -129,9 +129,9 @@ int CommRingChecks(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿ãŒã„ãã¤å…¥ã£ã¦ã„ã‚‹ã‹å¾—ã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @retval  ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìƒf[ƒ^‚ª‚¢‚­‚Â“ü‚Á‚Ä‚¢‚é‚©“¾‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @retval  ƒf[ƒ^ƒTƒCƒY
  */
 //==============================================================================
 int CommRingDataSize(RingBuffWork* pRing)
@@ -144,9 +144,9 @@ int CommRingDataSize(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ãƒ‡ãƒ¼ã‚¿ãŒã©ã®ãã‚‰ã„ã‚ã¾ã£ã¦ã„ã‚‹ã‹æ¤œæŸ»
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
- * @retval  å®Ÿéš›ã«èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿
+ * ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìƒf[ƒ^‚ª‚Ç‚Ì‚­‚ç‚¢‚ ‚Ü‚Á‚Ä‚¢‚é‚©ŒŸ¸
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
+ * @retval  ÀÛ‚É“Ç‚İ‚ñ‚¾ƒf[ƒ^
  */
 //==============================================================================
 int CommRingDataRestSize(RingBuffWork* pRing)
@@ -156,8 +156,8 @@ int CommRingDataRestSize(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã™ã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
+ * ƒJƒEƒ“ƒ^[‚ğƒoƒbƒNƒAƒbƒv‚·‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
  * @retval  nono
  */
 //==============================================================================
@@ -168,8 +168,8 @@ int CommRingDataRestSize(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã™ã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
+ * ƒJƒEƒ“ƒ^[‚ğƒoƒbƒNƒAƒbƒv‚·‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
  * @retval  nono
  */
 //==============================================================================
@@ -180,8 +180,8 @@ int CommRingDataRestSize(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * ringã‚µã‚¤ã‚ºã®å ´æ‰€
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
+ * ringƒTƒCƒY‚ÌêŠ
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
  * @retval  
  */
 //==============================================================================
@@ -193,8 +193,8 @@ int _ringPos(RingBuffWork* pRing,int i)
 
 //==============================================================================
 /**
- * ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼å ´æ‰€ã‚’ã™ã‚Šã‹ãˆã‚‹
- * @param   pRing        ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ç®¡ç†ãƒã‚¤ãƒ³ã‚¿
+ * ƒJƒEƒ“ƒ^[êŠ‚ğ‚·‚è‚©‚¦‚é
+ * @param   pRing        ƒŠƒ“ƒOƒoƒbƒtƒ@ŠÇ—ƒ|ƒCƒ“ƒ^
  * @retval  nono
  */
 //==============================================================================

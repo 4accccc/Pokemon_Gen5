@@ -1,7 +1,7 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	comm_queue.h
- * @bfief	ï¼ˆé€ä¿¡ï¼‰ã‚­ãƒ¥ãƒ¼ã®ä»•çµ„ã¿ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
+ * @brief	i‘—MjƒLƒ…[‚Ìd‘g‚İ‚ğŠÇ—‚·‚éŠÖ”
  * @author	katsumi ohno
  * @date	06/01/29
  */
@@ -14,15 +14,15 @@
 
 typedef struct _SEND_QUEUE SEND_QUEUE;
 
-// ã‚­ãƒ¥ãƒ¼æ§‹é€ ä½“
+// ƒLƒ…[\‘¢‘Ì
 struct _SEND_QUEUE{
-    u8* pData;     ///< ãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+    u8* pData;     ///< ƒf[ƒ^ƒAƒhƒŒƒX
     SEND_QUEUE* prev;      //
     SEND_QUEUE* next;
-    u16 size;       ///< ã‚µã‚¤ã‚º
-    u8 command;    ///< ã‚³ãƒãƒ³ãƒ‰
-    u8 bHeadSet:1;  ///< ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’é€ä¿¡ã—ãŸå ´åˆï¼‘ ã¾ã ã®å ´åˆï¼
-    u8 bRing:1;     ///< ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ä½¿ç”¨ã®å ´åˆï¼‘
+    u16 size;       ///< ƒTƒCƒY
+    u8 command;    ///< ƒRƒ}ƒ“ƒh
+    u8 bHeadSet:1;  ///< ƒwƒbƒ_[‚ğ‘—M‚µ‚½ê‡‚P ‚Ü‚¾‚Ìê‡‚O
+    u8 bRing:1;     ///< ƒŠƒ“ƒOƒoƒbƒtƒ@g—p‚Ìê‡‚P
 } ;
 
 typedef struct{
@@ -33,35 +33,35 @@ typedef struct{
 
 
 typedef struct{
-    SEND_QUEUE* pTop;     // é€ä¿¡ã‚­ãƒ¥ãƒ¼ã®åˆã‚
-    SEND_QUEUE* pLast;    // é€ä¿¡ã‚­ãƒ¥ãƒ¼ã®æœ€å¾Œ
+    SEND_QUEUE* pTop;     // ‘—MƒLƒ…[‚Ì‰‚ß
+    SEND_QUEUE* pLast;    // ‘—MƒLƒ…[‚ÌÅŒã
 } SEND_TERMINATOR;
 
 
 
 typedef struct{
-    SEND_TERMINATOR fast;     // ã™ãé€ã‚‹é€ä¿¡ã‚­ãƒ¥ãƒ¼
-    SEND_TERMINATOR stock;    // å¾Œã§é€ã‚Œã°ã„ã„ã‚­ãƒ¥ãƒ¼
-    SEND_QUEUE* pNow;   // ä»Šé€ã£ã¦ã„ã‚‹æœ€ä¸­ã®ã‚­ãƒ¥ãƒ¼
-    RingBuffWork* pSendRing;  // ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ãƒ¯ãƒ¼ã‚¯ãƒã‚¤ãƒ³ã‚¿
-    void* heapTop;   // ã‚­ãƒ¥ãƒ¼HEAP
-    int max;         // ã‚­ãƒ¥ãƒ¼ã®æ•°
+    SEND_TERMINATOR fast;     // ‚·‚®‘—‚é‘—MƒLƒ…[
+    SEND_TERMINATOR stock;    // Œã‚Å‘—‚ê‚Î‚¢‚¢ƒLƒ…[
+    SEND_QUEUE* pNow;   // ¡‘—‚Á‚Ä‚¢‚éÅ’†‚ÌƒLƒ…[
+    RingBuffWork* pSendRing;  // ƒŠƒ“ƒOƒoƒbƒtƒ@ƒ[ƒNƒ|ƒCƒ“ƒ^
+    void* heapTop;   // ƒLƒ…[HEAP
+    int max;         // ƒLƒ…[‚Ì”
 } SEND_QUEUE_MANAGER;
 
 
-// ã‚­ãƒ¥ãƒ¼ã«ä½•ã‹å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
+// ƒLƒ…[‚É‰½‚©“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
 extern BOOL CommQueueIsEmpty(SEND_QUEUE_MANAGER* pQueueMgr);
-// ã‚­ãƒ¥ãƒ¼MANAGERã®åˆæœŸåŒ–
-extern void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing);
-// ã‚­ãƒ¥ãƒ¼ã®ä¸­èº«ã‚’ãƒªã‚»ãƒƒãƒˆ
+// ƒLƒ…[MANAGER‚Ì‰Šú‰»
+extern void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing,int heapid);
+// ƒLƒ…[‚Ì’†g‚ğƒŠƒZƒbƒg
 extern void CommQueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr);
-// ã‚­ãƒ¥ãƒ¼MANAGERã®çµ‚äº†
+// ƒLƒ…[MANAGER‚ÌI—¹
 extern void CommQueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr);
-// ã‚­ãƒ¥ãƒ¼ã«ãƒ‡ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
+// ƒLƒ…[‚Éƒf[ƒ^‚ğ“ü‚ê‚é
 extern BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave);
-// ã‚­ãƒ¥ãƒ¼ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å¸ã„ä¸Šã’ã‚‹
+// ƒLƒ…[‚©‚çƒf[ƒ^‚ğ‹z‚¢ã‚°‚é
 extern BOOL CommQueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, BOOL bNextPlus);
-// ã‚³ãƒãƒ³ãƒ‰ãŒã‚ã‚‹ã‹ã©ã†ã‹èª¿ã¹ã‚‹
+// ƒRƒ}ƒ“ƒh‚ª‚ ‚é‚©‚Ç‚¤‚©’²‚×‚é
 extern BOOL CommQueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command);
 
 extern int CommQueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr);

@@ -349,12 +349,12 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
         _pComm->pMidRecvBufRing = sys_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする DS専用
         // キューの初期化
         if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing);
-            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing);
+            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, HEAPID_COMMUNICATION);
+            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing, HEAPID_COMMUNICATION);
         }
         else{
-            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_NORMAL, &_pComm->sendRing);
-            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_NORMAL, &_pComm->sendServerRing);
+            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_NORMAL, &_pComm->sendRing, HEAPID_COMMUNICATION);
+            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_NORMAL, &_pComm->sendServerRing, HEAPID_COMMUNICATION);
         }
 
 #ifdef PM_DEBUG

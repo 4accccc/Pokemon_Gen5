@@ -1,22 +1,23 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	comm_queue.c
- * @bfief	ï¼ˆé€ä¿¡ï¼‰ã‚­ãƒ¥ãƒ¼ã®ä»•çµ„ã¿ã‚’ç®¡ç†ã™ã‚‹é–¢æ•°
+ * @brief	i‘—MjƒLƒ…[‚Ìd‘g‚İ‚ğŠÇ—‚·‚éŠÖ”
  * @author	katsumi ohno
  * @date	06/01/29
  */
 //=============================================================================
 
-#include "common.h"
-#include "communication/communication.h"
-#include "comm_local.h"
+#include "gflib.h"
+#include "../comm_def.h"
+#include "../comm_command.h"
+#include "comm_ring_buff.h"
 #include "comm_queue.h"
 
 //==============================================================================
 /**
- * é–‹ã„ã¦ã„ã‚‹ã‚­ãƒ¥ãƒ¼ã‚’è¿”ã™
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   queueMax  ã‚­ãƒ¥ãƒ¼æ•°
+ * ŠJ‚¢‚Ä‚¢‚éƒLƒ…[‚ğ•Ô‚·
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   queueMax  ƒLƒ…[”
  * @retval  none
  */
 //==============================================================================
@@ -32,14 +33,14 @@ static SEND_QUEUE* _freeQueue(SEND_QUEUE_MANAGER* pQueueMgr)
         }
         pFree++;
     }
-    return NULL;   // ã‚³ãƒãƒ³ãƒ‰ãŒç„¡ã„
+    return NULL;   // ƒRƒ}ƒ“ƒh‚ª–³‚¢
 }
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã«ä½•ã‹å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã™ã‚‹
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @retval  ç©ºãªã‚‰ã°TRUE
+ * ƒLƒ…[‚É‰½‚©“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @retval  ‹ó‚È‚ç‚ÎTRUE
  */
 //==============================================================================
 
@@ -54,14 +55,14 @@ BOOL CommQueueIsEmpty(SEND_QUEUE_MANAGER* pQueueMgr)
         }
         pFree++;
     }
-    return TRUE;   // ã‚³ãƒãƒ³ãƒ‰ãŒç„¡ã„
+    return TRUE;   // ƒRƒ}ƒ“ƒh‚ª–³‚¢
 }
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã®æ•°ã‚’å¾—ã‚‹
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @retval  ç©ºãªã‚‰ã°TRUE
+ * ƒLƒ…[‚Ì”‚ğ“¾‚é
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @retval  ‹ó‚È‚ç‚ÎTRUE
  */
 //==============================================================================
 
@@ -81,10 +82,11 @@ int CommQueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã‚’æ¶ˆã™
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   queueMax  ã‚­ãƒ¥ãƒ¼æ•°
- * @retval  none
+ * ƒLƒ…[‚ğÁ‚·
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   queueMax  ƒLƒ…[”
+ * @retval  TRUE   Á‚µ‚½
+ * @retval  FALSE  Á‚·‚±‚Æ‚ª‚Å‚«‚È‚©‚Á‚½
  */
 //==============================================================================
 
@@ -106,30 +108,26 @@ static BOOL _deleteQueue(SEND_TERMINATOR* pTerm)
 
 //==============================================================================
 /**
- * é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨åˆ†ã‚’ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œã‚‹
- * @param   pSendBuff   é€ä¿¡ãƒãƒƒãƒ•ã‚¡ç®¡ç†æ§‹é€ ä½“ãƒã‚¤ãƒ³ã‚¿
- * @param   byte        ã‚»ãƒƒãƒˆã™ã‚‹ãƒ‡ãƒ¼ã‚¿
- * @retval  0ã«ãªã£ãŸã‚‰TRUE
+ * ‘—Mƒf[ƒ^‚Ìƒwƒbƒ_[•”•ª‚ğƒoƒbƒtƒ@‚É“ü‚ê‚é
+ * @param   pSendBuff   ‘—Mƒoƒbƒtƒ@ŠÇ—\‘¢‘Ìƒ|ƒCƒ“ƒ^
+ * @param   byte        ƒZƒbƒg‚·‚éƒf[ƒ^
+ * @return  none
  */
 //==============================================================================
 
-static BOOL _setSendData(SEND_BUFF_DATA* pSendBuff ,u8 byte)
+static void _setSendData(SEND_BUFF_DATA* pSendBuff ,u8 byte)
 {
     *pSendBuff->pData = byte;
     pSendBuff->pData++;
     pSendBuff->size--;
-    if(pSendBuff->size==0){
-        return TRUE;
-    }
-    return FALSE;
 }
 
 //==============================================================================
 /**
- * é€ä¿¡ãƒ‡ãƒ¼ã‚¿ã®ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨åˆ†ã‚’ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œã‚‹
- * @param   pQueue  ã‚­ãƒ¥ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   pSendBuff   é€ä¿¡ãƒãƒƒãƒ•ã‚¡ç®¡ç†æ§‹é€ ä½“ãƒã‚¤ãƒ³ã‚¿
- * @retval  è“„ãˆãŸã‚‰FALSE
+ * ‘—Mƒf[ƒ^‚Ìƒwƒbƒ_[•”•ª‚ğƒoƒbƒtƒ@‚É“ü‚ê‚é
+ * @param   pQueue  ƒLƒ…[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   pSendBuff   ‘—Mƒoƒbƒtƒ@ŠÇ—\‘¢‘Ìƒ|ƒCƒ“ƒ^
+ * @retval  ’~‚¦‚½‚çFALSE
  */
 //==============================================================================
 
@@ -151,11 +149,11 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
     }
     _setSendData(pSendBuff,pQueue->command);
     if(cs == COMM_VARIABLE_SIZE){
-        _setSendData(pSendBuff,(pQueue->size >> 8)  & 0xff);
-        _setSendData(pSendBuff,pQueue->size & 0xff);
+        _setSendData(pSendBuff,(u8)((pQueue->size >> 8)  & 0xff));
+        _setSendData(pSendBuff,(u8)(pQueue->size & 0xff));
     }
     else{
-        pQueue->size = cs;
+        pQueue->size = (u16)cs;
     }
     pQueue->bHeadSet = TRUE;
     return FALSE;
@@ -163,10 +161,10 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã‹ã‚‰é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«ç§»ã™
- * @param   pQueue  ã‚­ãƒ¥ãƒ¼
- * @param   pSendBuff   é€ä¿¡ãƒãƒƒãƒ•ã‚¡
- * @retval  ãƒ˜ãƒƒãƒ€ãƒ¼ãŒå…¥ã‚‰ãªã‹ã£ãŸå ´åˆTRUE
+ * ƒLƒ…[‚©‚ç‘—Mƒoƒbƒtƒ@‚ÉˆÚ‚·
+ * @param   pQueue  ƒLƒ…[
+ * @param   pSendBuff   ‘—Mƒoƒbƒtƒ@
+ * @retval  ƒwƒbƒ_[‚ª“ü‚ç‚È‚©‚Á‚½ê‡TRUE
  */
 //==============================================================================
 
@@ -181,7 +179,7 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
     else{
         size = 1;
     }
-    if((pSendBuff->size < (pQueue->size + size)) && (!bNextPlus)){  // ã‚­ãƒ¥ãƒ¼ã®ã»ã†ãŒã§ã‹ã„å ´åˆ
+    if((pSendBuff->size < (pQueue->size + size)) && (!bNextPlus)){  // ƒLƒ…[‚Ì‚Ù‚¤‚ª‚Å‚©‚¢ê‡
         return FALSE;
     }
     if(pQueue->bHeadSet != TRUE){
@@ -189,10 +187,10 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
             return FALSE;
         }
     }
-//    if((pSendBuff->size < pQueue->size) && (!bNextPlus)){  // ã‚­ãƒ¥ãƒ¼ã®ã»ã†ãŒã§ã‹ã„å ´åˆ
-//        return FALSE;  // å‰ã«ç§»å‹•
+//    if((pSendBuff->size < pQueue->size) && (!bNextPlus)){  // ƒLƒ…[‚Ì‚Ù‚¤‚ª‚Å‚©‚¢ê‡
+//        return FALSE;  // ‘O‚ÉˆÚ“®
 //    }
-    if(pSendBuff->size < pQueue->size){  // ã‚­ãƒ¥ãƒ¼ã®ã»ã†ãŒã§ã‹ã„å ´åˆ
+    if(pSendBuff->size < pQueue->size){  // ƒLƒ…[‚Ì‚Ù‚¤‚ª‚Å‚©‚¢ê‡
         if(pQueue->bRing){
             CommRingGets(pSendRing, pSendBuff->pData, pSendBuff->size);
         }
@@ -206,34 +204,34 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
         }
 //        OHNO_PRINT("-----%d-%d--\n",pQueue->command, pQueue->size);
         
-        pQueue->pData += pSendBuff->size;  // ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’é€²ã‚ã‚‹
-        pQueue->size -= pSendBuff->size;  // é€ä¿¡ã‚µã‚¤ã‚ºæ¸›ã‚‰ã™
-        pSendBuff->size = -1;  // æ®‹ã‚Šã‚’-1ã«ã™ã‚‹
+        pQueue->pData += pSendBuff->size;  // ƒAƒhƒŒƒX‚ği‚ß‚é
+        pQueue->size -= pSendBuff->size;  // ‘—MƒTƒCƒYŒ¸‚ç‚·
+        pSendBuff->size = -1;  // c‚è‚ğ-1‚É‚·‚é
         return TRUE;
     }
-    // åŒã˜ã‚‚ã—ãã¯å°ã•ã„å ´åˆ
+    // “¯‚¶‚à‚µ‚­‚Í¬‚³‚¢ê‡
     if(pQueue->bRing){
         CommRingGets(pSendRing, pSendBuff->pData, pQueue->size);
     }
     else{
         MI_CpuCopy8( pQueue->pData, pSendBuff->pData, pQueue->size);
     }
-    pSendBuff->pData += pQueue->size;  // ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’é€²ã‚ã‚‹
-    pSendBuff->size -= pQueue->size; // ã‚µã‚¤ã‚ºã¯æ¸›ã‚‰ã™
+    pSendBuff->pData += pQueue->size;  // ƒAƒhƒŒƒX‚ği‚ß‚é
+    pSendBuff->size -= pQueue->size; // ƒTƒCƒY‚ÍŒ¸‚ç‚·
     return TRUE;
 }
 
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã‚’è“„ãˆã‚‹
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   command   é€ä¿¡ã‚³ãƒãƒ³ãƒ‰
- * @param   pDataArea  é€ä¿¡ãƒ‡ãƒ¼ã‚¿
- * @param   size    ã‚µã‚¤ã‚º
- * @param   bFast  å„ªå…ˆåº¦ãŒé«˜ã„ãƒ‡ãƒ¼ã‚¿?
- * @param   bSave  ä¿å­˜ã™ã‚‹ã‹ã©ã†ã‹
- * @retval  è“„ãˆãŸã‚‰TRUE
+ * ƒLƒ…[‚ğ’~‚¦‚é
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   command   ‘—MƒRƒ}ƒ“ƒh
+ * @param   pDataArea  ‘—Mƒf[ƒ^
+ * @param   size    ƒTƒCƒY
+ * @param   bFast  —Dæ“x‚ª‚‚¢ƒf[ƒ^?
+ * @param   bSave  •Û‘¶‚·‚é‚©‚Ç‚¤‚©
+ * @retval  ’~‚¦‚½‚çTRUE
  */
 //==============================================================================
 
@@ -246,11 +244,11 @@ BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int 
 
     bFast = TRUE;
     if(pFree== NULL){
-        OHNO_SP_PRINT("---ã‚­ãƒ¥ãƒ¼ãŒç„¡ã„\n");
+        OHNO_PRINT("---ƒLƒ…[‚ª–³‚¢\n");
         return FALSE;
     }
     
-    GF_ASSERT(size < 65534 && "65534ä»¥ä¸Šã¯åˆ†å‰²");
+    GF_ASSERT(size < 65534 && "65534ˆÈã‚Í•ªŠ„");
     cSize = CommCommandGetPacketSize(command);
 
     if(COMM_VARIABLE_SIZE == cSize){
@@ -258,11 +256,11 @@ BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int 
     }
     if(bSave){
         int rest = CommRingDataRestSize(pQueueMgr->pSendRing);
-        if((cSize+3) >= rest){  // é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã—ã¾ã†
-            OHNO_PRINT("é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚ªãƒ¼ãƒãƒ¼ com = %d size = %d / %d\n", command, cSize, rest);
+        if((cSize+3) >= rest){  // ‘—Mƒoƒbƒtƒ@‚ğƒI[ƒo[‚µ‚Ä‚µ‚Ü‚¤
+            OHNO_PRINT("‘—Mƒoƒbƒtƒ@ƒI[ƒo[ com = %d size = %d / %d\n", command, cSize, rest);
             return FALSE;
         }
-        CommRingPuts(pQueueMgr->pSendRing, pDataArea, cSize, __LINE__);
+        CommRingPuts(pQueueMgr->pSendRing, pDataArea, cSize);
         CommRingEndChange(pQueueMgr->pSendRing);
         pFree->bRing = TRUE;
     }
@@ -289,8 +287,8 @@ BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int 
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã‚’å‡ºã™
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
+ * ƒLƒ…[‚ğo‚·
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
  * @param
  * @retval  none
  */
@@ -315,8 +313,8 @@ static SEND_QUEUE* _queueGet(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ã‚’ä¸€å€‹å‰Šã‚Šæ¬¡ã«é€²ã‚ã‚‹
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
+ * ƒLƒ…[‚ğˆêŒÂí‚èŸ‚Éi‚ß‚é
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
  * @param
  * @retval  none
  */
@@ -331,17 +329,18 @@ static void _queueNext(SEND_QUEUE_MANAGER* pQueueMgr)
     }
     else{
         if(!_deleteQueue( &pQueueMgr->fast )){
-            _deleteQueue( &pQueueMgr->stock );
+            BOOL ret = _deleteQueue( &pQueueMgr->stock );
+            GF_ASSERT(ret);
         }
     }
 }
 
 //==============================================================================
 /**
- * æŒ‡å®šãƒã‚¤ãƒˆåˆ†ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œã‚‹
- * @param   pQueueMgr  ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   pSendBuff  é€ä¿¡ãƒãƒƒãƒ•ã‚¡æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿
- * @retval  ç¶šããƒ‡ãƒ¼ã‚¿ãŒãªã„å ´åˆTRUE ãƒ‡ãƒ¼ã‚¿ãŒé€£ç¶šã—ã¦ã„ã‚‹å ´åˆFALSE
+ * w’èƒoƒCƒg•ªƒoƒbƒtƒ@‚É“ü‚ê‚é
+ * @param   pQueueMgr  ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   pSendBuff  ‘—Mƒoƒbƒtƒ@\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^
+ * @retval  ‘±‚«ƒf[ƒ^‚ª‚È‚¢ê‡TRUE ƒf[ƒ^‚ª˜A‘±‚µ‚Ä‚¢‚éê‡FALSE
  */
 //==============================================================================
 
@@ -357,17 +356,17 @@ BOOL CommQueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, 
             break;
         }
         _queueNext(pQueueMgr);
-        // ãƒ˜ãƒƒãƒ€ãƒ¼é€ä¿¡ã§ããªã„
+        // ƒwƒbƒ_[‘—M‚Å‚«‚È‚¢
         if(!_dataCopyQueue(pQueue, pSendBuff, pQueueMgr->pSendRing, bNextPlusFirst)){
-            pQueueMgr->pNow = pQueue;  // æ¬¡ã®æœ€åˆã§é€ä¿¡ã§ãã‚‹ã‚ˆã†ã«ã‚»ãƒƒãƒˆ
+            pQueueMgr->pNow = pQueue;  // Ÿ‚ÌÅ‰‚Å‘—M‚Å‚«‚é‚æ‚¤‚ÉƒZƒbƒg
             break;
         }
-        if( -1 == pSendBuff->size ){  // ãƒ‡ãƒ¼ã‚¿ãŒè©°ã¾ã£ã¦ã„ã‚‹å ´åˆ
-            pQueueMgr->pNow = pQueue;  // æ¬¡ã®æœ€åˆã§é€ä¿¡ã§ãã‚‹ã‚ˆã†ã«ã‚»ãƒƒãƒˆ
+        if( -1 == pSendBuff->size ){  // ƒf[ƒ^‚ª‹l‚Ü‚Á‚Ä‚¢‚éê‡
+            pQueueMgr->pNow = pQueue;  // Ÿ‚ÌÅ‰‚Å‘—M‚Å‚«‚é‚æ‚¤‚ÉƒZƒbƒg
             return FALSE;
         }
         else{
-            MI_CpuFill8(pQueue, 0, sizeof(SEND_QUEUE));  // ã‚­ãƒ¥ãƒ¼ã‚’æ¶ˆã™
+            MI_CpuFill8(pQueue, 0, sizeof(SEND_QUEUE));  // ƒLƒ…[‚ğÁ‚·
         }
         bNextPlusFirst = bNextPlus;
     }
@@ -382,18 +381,18 @@ BOOL CommQueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, 
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼MANAGERã®åˆæœŸåŒ–
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   queueMax  ã‚­ãƒ¥ãƒ¼æ•°
- * @param   RingBuffWork å®Ÿãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹å ´åˆã®ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ãƒ¯ãƒ¼ã‚¯
+ * ƒLƒ…[MANAGER‚Ì‰Šú‰»
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   queueMax  ƒLƒ…[”
+ * @param   RingBuffWork Àƒf[ƒ^‚ğ•Û‘¶‚·‚éê‡‚ÌƒŠƒ“ƒOƒoƒbƒtƒ@ƒ[ƒN
  * @retval  none
  */
 //==============================================================================
 
-void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing)
+void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing, int heapid)
 {
     MI_CpuFill8(pQueueMgr, 0 ,sizeof(SEND_QUEUE_MANAGER));
-    pQueueMgr->heapTop = sys_AllocMemory(HEAPID_COMMUNICATION,
+    pQueueMgr->heapTop = sys_AllocMemory(heapid,
                                          sizeof(SEND_QUEUE)*queueMax);
     MI_CpuFill8(pQueueMgr->heapTop, 0 ,sizeof(SEND_QUEUE)*queueMax);
     pQueueMgr->max = queueMax;
@@ -403,8 +402,8 @@ void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, Rin
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼MANAGERã®ãƒªã‚»ãƒƒãƒˆ
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
+ * ƒLƒ…[MANAGER‚ÌƒŠƒZƒbƒg
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
  * @retval  none
  */
 //==============================================================================
@@ -412,17 +411,17 @@ void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, Rin
 void CommQueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr)
 {
     MI_CpuFill8(pQueueMgr->heapTop, 0 ,sizeof(SEND_QUEUE) * pQueueMgr->max);
-    pQueueMgr->fast.pTop = NULL;     // ã™ãé€ã‚‹é€ä¿¡ã‚­ãƒ¥ãƒ¼
-    pQueueMgr->fast.pLast = NULL;     // ã™ãé€ã‚‹é€ä¿¡ã‚­ãƒ¥ãƒ¼
-    pQueueMgr->stock.pTop = NULL;    // å¾Œã§é€ã‚Œã°ã„ã„ã‚­ãƒ¥ãƒ¼
-    pQueueMgr->stock.pLast = NULL;    // å¾Œã§é€ã‚Œã°ã„ã„ã‚­ãƒ¥ãƒ¼
-    pQueueMgr->pNow = NULL;   // ä»Šé€ã£ã¦ã„ã‚‹æœ€ä¸­ã®ã‚­ãƒ¥ãƒ¼
+    pQueueMgr->fast.pTop = NULL;     // ‚·‚®‘—‚é‘—MƒLƒ…[
+    pQueueMgr->fast.pLast = NULL;     // ‚·‚®‘—‚é‘—MƒLƒ…[
+    pQueueMgr->stock.pTop = NULL;    // Œã‚Å‘—‚ê‚Î‚¢‚¢ƒLƒ…[
+    pQueueMgr->stock.pLast = NULL;    // Œã‚Å‘—‚ê‚Î‚¢‚¢ƒLƒ…[
+    pQueueMgr->pNow = NULL;   // ¡‘—‚Á‚Ä‚¢‚éÅ’†‚ÌƒLƒ…[
 }
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼MANAGERã®çµ‚äº†
- * @param   pQueueMgr ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
+ * ƒLƒ…[MANAGER‚ÌI—¹
+ * @param   pQueueMgr ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
  * @retval  none
  */
 //==============================================================================
@@ -435,10 +434,10 @@ void CommQueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹
- * @param   pQueueMgr  ã‚­ãƒ¥ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   command    èª¿ã¹ã‚‹ã‚³ãƒãƒ³ãƒ‰
- * @retval  ã‚ã£ãŸã‚‰TRUE
+ * ƒLƒ…[‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©
+ * @param   pQueueMgr  ƒLƒ…[ƒ}ƒl[ƒWƒƒ[‚Ìƒ|ƒCƒ“ƒ^
+ * @param   command    ’²‚×‚éƒRƒ}ƒ“ƒh
+ * @retval  ‚ ‚Á‚½‚çTRUE
  */
 //==============================================================================
 
@@ -459,7 +458,7 @@ BOOL CommQueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼MANAGERã®ãƒ†ã‚¹ãƒˆ
+ * ƒLƒ…[MANAGER‚ÌƒeƒXƒg
  * @param   none
  * @retval  none
  */
@@ -482,10 +481,10 @@ void CommQueueDebugTest(void)
     MI_CpuFill8(ringbuff,3,50);
     CommRingInitialize(&sendRing, ringbuff, 50);
 
-    // ï¼“æœ¬ã‚­ãƒ¥ãƒ¼ä½œæˆ
+    // ‚R–{ƒLƒ…[ì¬
     CommQueueManagerInitialize(&mgr,3,&sendRing);
 
-    // ----- ãƒ†ã‚¹ãƒˆï¼‘
+    // ----- ƒeƒXƒg‚P
     CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 30, TRUE, TRUE);
 
     for(i = 0; i < 50; i++){
@@ -562,7 +561,7 @@ void CommQueueDebugTest(void)
         }
     }
 
-    // ãƒ†ã‚¹ãƒˆï¼’
+    // ƒeƒXƒg‚Q
     GF_ASSERT(CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
@@ -582,7 +581,7 @@ void CommQueueDebugTest(void)
     GF_ASSERT(mgr.fast.pTop->next != NULL);
     GF_ASSERT(mgr.fast.pTop->next->next != NULL);
 
-    // ã“ã‚Œã¯ã‚­ãƒ¥ãƒ¼ã«å…¥ã‚‰ãªã„
+    // ‚±‚ê‚ÍƒLƒ…[‚É“ü‚ç‚È‚¢
 //    GF_ASSERT(!CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, TRUE));
 
 
@@ -643,7 +642,7 @@ void CommQueueDebugTest(void)
         }
     }
 
-    // ã‚ã–ã¨å°ã•ãèª­ã¿è¾¼ã‚€ã¨ã€ç¶šãã ã‘ãŒå…¥ã£ã¦ã„ã‚‹
+    // ‚í‚´‚Æ¬‚³‚­“Ç‚İ‚Ş‚ÆA‘±‚«‚¾‚¯‚ª“ü‚Á‚Ä‚¢‚é
     buffData.size = 4;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
@@ -666,7 +665,7 @@ void CommQueueDebugTest(void)
         }
     }
 
-    /// æœ€å¾Œã¯ï¼“ç•ªç›®ã®ã‚³ãƒãƒ³ãƒ‰ãŒé ­ã‹ã‚‰å…¥ã£ã¦ã„ã‚‹
+    /// ÅŒã‚Í‚R”Ô–Ú‚ÌƒRƒ}ƒ“ƒh‚ª“ª‚©‚ç“ü‚Á‚Ä‚¢‚é
     buffData.size = 4;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
@@ -696,7 +695,7 @@ void CommQueueDebugTest(void)
     }
     CommQueueManagerFinalize(&mgr);
 
-//   GF_ASSERT(0 && "ok");  //ãƒ†ã‚¹ãƒˆå®Œäº†
+//   GF_ASSERT(0 && "ok");  //ƒeƒXƒgŠ®—¹
 }
 
 #endif

@@ -3,17 +3,13 @@
  * @file	comm_tool.c
  * @brief	通信を使った汎用関数
  * @author	Katsumi Ohno
- * @date    2006.03.14
+ * @date    2006.11.15
  */
 //=============================================================================
 
-#include "common.h"
-#include "communication/communication.h"
-#include "system/snd_tool.h"
+#include "gflib.h"
 
 
-//汎用データの１パケット
-#define _TEMPDATA_SIZE (70)
 
 //==============================================================================
 // static宣言
@@ -28,109 +24,75 @@ typedef struct{
 }_ListResult;
 
 typedef struct _COMM_TOOL_WORK_t{
-    // リスト
-    _ListResult listNo[COMM_MACHINE_MAX];     // 同期コマンド用
-    u8 timingSync[COMM_MACHINE_MAX];     // 同期コマンド用
-    //------------------  tempデータ用バッファ
-    u8 tempWork[COMM_MACHINE_MAX][_TEMPDATA_SIZE];
-    u8 tempRecv[COMM_MACHINE_MAX];
-    //-------------------
-    u8 timingSyncEnd;     // 同期コマンド用
-    u8 timingSyncMy;  // 自分が送ったNO
-    u8 timingSend;
+    u8* timingSyncBuff;   ///< 通信相手の同期コマンド番号
+    u8 timingSyncEnd;     ///< 同期コマンド用
+    u8 timingSendE;       ///< 送ったかどうか
+    u8 timingSyncMy;      ///< 自分が送ったNO
+    u8 timingSendM;       ///< 送ったかどうか
 };
 
-static COMM_TOOL_WORK* _pCT = NULL;  ///<　ワーク構造体のポインタ
+//static COMM_TOOL_WORK* _pCT = NULL;  ///<　ワーク構造体のポインタ
 
 
 //==============================================================================
 /**
  * 初期化
- * @param   callback用引数
- * @retval  none
+ * @param[in]   int heapID      確保するHEAPID
+ * @param[in]   int num         通信人数
+ * @retval      COMM_TOOL_WORK  通信ツール構造体ポインタ
  */
 //==============================================================================
 
-void CommToolInitialize(int heapID)
+COMM_TOOL_WORK* CommToolInitialize(const int heapID, const int num)
 {
     int i;
-    
-    if(!_pCT){
-        _pCT = sys_AllocMemory(heapID,sizeof(COMM_TOOL_WORK));
-        MI_CpuFill8(_pCT,0,sizeof(COMM_TOOL_WORK));
-    }
+    COMM_TOOL_WORK* pCT;
 
-
-    for(i = 0; i< COMM_MACHINE_MAX;i++){
-        _pCT->timingSync[i]=0xff;     // 同期コマンド用
-    }
-    _pCT->timingSyncEnd = 0xff;     // 同期コマンド用
-    _pCT->timingSyncMy = 0xff;
-    _pCT->timingSend = FALSE;
+    pCT = sys_AllocMemory(heapID, sizeof(COMM_TOOL_WORK));
+    pCT->timingSync = sys_AllocMemory(heapID, num);
+    MI_CpuFill8(pCT->timingSync, 0xff , num);
+    pCT->timingSyncEnd = 0xff;
+    pCT->timingSyncMy = 0xff;
+    pCT->timingSend = FALSE;
+    return pCT;
 
 }
-
-//==============================================================================
-/**
- * 開放
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-
-void CommToolFinalize(void)
-{
-    sys_FreeMemoryEz(_pCT);
-    _pCT = NULL;
-}
-
-//==============================================================================
-/**
- * 確認
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-
-BOOL CommToolIsInitialize(void)
-{
-    if(_pCT){
-        return TRUE;
-    }
-    return FALSE;
-}
-
 
 //==============================================================================
 /**
  * タイミングコマンドを受信した   CS_TIMING_SYNC
- * @param   callback用引数
- * @retval  none
+ * @param[in]   int netID  通信発信者ID
+ * @param[in]   int size   受信データサイズ
+ * @param[in]   int pData  受信データポインタ
+ * @param[in,out]   void* pWork  使用者が必要なworkのポインタ
+ * @param[in,out]   GFNetHandle* pNet  通信ハンドルのポインタ
+ * @retval      none
  */
 //==============================================================================
 
-void CommRecvTimingSync(int netID, int size, void* pData, void* pWork)
+void CommRecvTimingSync(const int netID, const int size, const void* pData,
+                        void* pWork, GFNetHandle* pNet)
 {
     u8* pBuff = pData;
     u8 syncNo = pBuff[0];
     u8 sendBuff[2];
     int i;
 
-    if(CommGetCurrentID() == COMM_PARENT_ID){
+    if(CommGetCurrentID(pNet) == COMM_PARENT_ID){
         sendBuff[0] = netID;
         sendBuff[1] = syncNo;
         CommSendFixSizeData_ServerSide(CS_TIMING_SYNC_INFO, &sendBuff);
         OHNO_PRINT("同期受信 %d %d\n",netID,syncNo);
-        _pCT->timingSync[netID] = syncNo;     // 同期コマンド用
+        pNet->pCT->timingSync[netID] = syncNo;     // 同期コマンド用
         for(i = 0; i < COMM_MACHINE_MAX; i++){
-            if(CommIsConnect(i)){
-                if(syncNo != _pCT->timingSync[i]){
+            if(CommIsConnect(pNet, i)){
+                if(syncNo != pNet->pCT->timingSync[i]){
                     // 同期していない
                     return;
                 }
             }
         }
-        CommSendFixSizeData_ServerSide(CS_TIMING_SYNC_END, &syncNo);
+        GF_NT_SendData(pNet, CS_TIMING_SYNC_END, &syncNo);
     }
 }
 
@@ -199,47 +161,19 @@ static u8 _keytrg = 0;
 
 void CommTimingSyncSend(void)
 {
-    if(_pCT){
-        if(_pCT->timingSend){
+    if(pNet->pCT){
+        if(pNet->pCT->timingSendM){
             if(CommSendFixSizeData(CS_TIMING_SYNC, &_pCT->timingSyncMy)){
                 OHNO_PRINT("コマンド送信 %d \n",_pCT->timingSyncMy);
                 _pCT->timingSend = FALSE;
             }
         }
-
-#if 0
-//#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_tomoya_takahashi) | defined(DEBUG_ONLY_FOR_mituhara))
-//#ifdef PM_DEBUG
-        {
-            if((sys.trg == PAD_BUTTON_B) && (_keytrg==3)){
-                _keytrg = 4;
-                Snd_SePlay(SEQ_SE_DP_DECIDE);
-            }
-            else if((sys.trg == PAD_BUTTON_B) && (_keytrg==2)){
-                _keytrg = 3;
-            }
-            else if((sys.trg == PAD_BUTTON_R) && (_keytrg==1)){
-                _keytrg = 2;
-            }
-            else if((sys.trg == PAD_BUTTON_L) && (_keytrg==0)){
-                _keytrg = 1;
-            }
-            else if((sys.trg == PAD_BUTTON_START) && (_keytrg < 4)){
-                _keytrg = 0;
-            }
-
-            if((sys.trg == PAD_BUTTON_L) && (_keytrg==4)){
-                GF_ASSERT_MSG(0, "tim %d %d %d %d %d \n %d %d %d %d %d \n %d %d %d %d %d\n",_pCT->timingSyncMy,
-                              _pCT->timingSync[0],_pCT->timingSync[1],
-                              _pCT->timingSync[2],_pCT->timingSync[3],
-                              DebugCommGetNum(0),DebugCommGetNum(1),DebugCommGetNum(2),
-                              DebugCommGetNum(3),DebugCommGetNum(4),DebugCommGetNum(5),
-                              DebugCommGetNum(6),DebugCommGetNum(7),
-                              DebugCommGetNum(8),DebugCommGetNum(9),DebugCommGetNum(10));
-                _keytrg = 0;
+        if(pNet->pCT->timingSendE){
+            if(CommSendFixSizeData(CS_TIMING_SYNC, &_pCT->timingSyncMy)){
+                OHNO_PRINT("コマンド送信 %d \n",_pCT->timingSyncMy);
+                _pCT->timingSend = FALSE;
             }
         }
-#endif
     }
 
 }
