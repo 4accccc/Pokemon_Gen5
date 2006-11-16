@@ -42,7 +42,7 @@ typedef	struct	{
  * @param	data	設定データ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GF_Disp_SetBank( const GF_BGL_DISPVRAM* dispvram );
+GLOBAL void	GF_DISP_SetBank( const GF_BGL_DISPVRAM* dispvram );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン画面の各面の表示コントロール初期化
@@ -50,8 +50,8 @@ GLOBAL void	GF_Disp_SetBank( const GF_BGL_DISPVRAM* dispvram );
  * @param	
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_Disp_GX_VisibleControlInit( void );
-GLOBAL void GF_Disp_GXS_VisibleControlInit( void );
+GLOBAL void GF_DISP_GX_VisibleControlInit( void );
+GLOBAL void GF_DISP_GXS_VisibleControlInit( void );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン＆サブ画面の各面の表示コントロール
@@ -63,8 +63,8 @@ GLOBAL void GF_Disp_GXS_VisibleControlInit( void );
  * @li	flg = VISIBLE_OFF	: 非表示
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_Disp_GX_VisibleControl( u8 gxplanemask, u8 flg );
-GLOBAL void GF_Disp_GXS_VisibleControl( u8 gxplanemask, u8 flg );
+GLOBAL void GF_DISP_GX_VisibleControl( u8 gxplanemask, u8 flg );
+GLOBAL void GF_DISP_GXS_VisibleControl( u8 gxplanemask, u8 flg );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン＆サブ画面の各面の表示コントロール（復帰とか）
@@ -74,8 +74,8 @@ GLOBAL void GF_Disp_GXS_VisibleControl( u8 gxplanemask, u8 flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_Disp_GX_VisibleControlDirect( int prm );
-GLOBAL void GF_Disp_GXS_VisibleControlDirect( int prm );
+GLOBAL void GF_DISP_GX_VisibleControlDirect( int prm );
+GLOBAL void GF_DISP_GXS_VisibleControlDirect( int prm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -85,7 +85,7 @@ GLOBAL void GF_Disp_GXS_VisibleControlDirect( int prm );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GF_Disp_DispOn( void );
+GLOBAL void	GF_DISP_DispOn( void );
 //--------------------------------------------------------------------------------------------
 /**
  * 表示無効設定
@@ -94,7 +94,7 @@ GLOBAL void	GF_Disp_DispOn( void );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GF_Disp_DispOff( void );
+GLOBAL void	GF_DISP_DispOff( void );
 //--------------------------------------------------------------------------------------------
 /**
  * 画面の表示サイド設定
@@ -102,7 +102,7 @@ GLOBAL void	GF_Disp_DispOff( void );
  * @param	value	上下どちらをメイン画面にするか（DISP_3D_TO_MAIN:上画面がメイン　DISP_3D_TO_SUB:下画面がメイン）
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GF_Disp_DispSelect( int value );
+GLOBAL void GF_DISP_DispSelect( int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -112,7 +112,7 @@ GLOBAL void GF_Disp_DispSelect( int value );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_Disp_MainVisibleGet(void);
+GLOBAL int GF_DISP_MainVisibleGet(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -122,7 +122,7 @@ GLOBAL int GF_Disp_MainVisibleGet(void);
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GF_Disp_SubVisibleGet(void);
+GLOBAL int GF_DISP_SubVisibleGet(void);
 
 
 #undef GLOBAL
