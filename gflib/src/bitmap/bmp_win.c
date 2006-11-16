@@ -18,32 +18,32 @@
 #define	__BMP_H_GLOBAL__
 #include "bmp_win.h"
 
-static void BmpWinOn_Normal( GF_BMPWIN_DATA * win );
-static void BmpWinOnVReq_Normal( GF_BMPWIN_DATA * win );
-static void BmpWinOn_Affine( GF_BMPWIN_DATA * win );
-static void BmpWinOnVReq_Affine( GF_BMPWIN_DATA * win );
-static void BmpWinOff_Normal( GF_BMPWIN_DATA * win );
-static void BmpWinOffVReq_Normal( GF_BMPWIN_DATA * win );
-static void BmpWinOff_Affine( GF_BMPWIN_DATA * win );
-static void BmpWinOffVReq_Affine( GF_BMPWIN_DATA * win );
-static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
-static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
+static void BmpWinOn_Normal( GFL_BMPWIN_DATA * win );
+static void BmpWinOnVReq_Normal( GFL_BMPWIN_DATA * win );
+static void BmpWinOn_Affine( GFL_BMPWIN_DATA * win );
+static void BmpWinOnVReq_Affine( GFL_BMPWIN_DATA * win );
+static void BmpWinOff_Normal( GFL_BMPWIN_DATA * win );
+static void BmpWinOffVReq_Normal( GFL_BMPWIN_DATA * win );
+static void BmpWinOff_Affine( GFL_BMPWIN_DATA * win );
+static void BmpWinOffVReq_Affine( GFL_BMPWIN_DATA * win );
+static void BmpWinShift16( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
+static void BmpWinShift256( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
 
-static void MakeWinScrnText( GF_BMPWIN_DATA * win );
-static void MakeWinScrnAffine( GF_BMPWIN_DATA * win );
-static void ClearWinScrnText( GF_BMPWIN_DATA * win );
-static void ClearWinScrnAffine( GF_BMPWIN_DATA * win );
+static void MakeWinScrnText( GFL_BMPWIN_DATA * win );
+static void MakeWinScrnAffine( GFL_BMPWIN_DATA * win );
+static void ClearWinScrnText( GFL_BMPWIN_DATA * win );
+static void ClearWinScrnAffine( GFL_BMPWIN_DATA * win );
 
 
 //*------------------------------------------*/
 /**   ウィンドウデータ作成＆転送関数         */
 //*------------------------------------------*/
-static void (* const WinOnFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinOnFunc[])(GFL_BMPWIN_DATA*) = {
 	BmpWinOn_Normal,		// テキスト
 	BmpWinOn_Affine,		// アフィン
 	BmpWinOn_Normal,		// 拡張アフィン
 };
-static void (* const WinOnVReqFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinOnVReqFunc[])(GFL_BMPWIN_DATA*) = {
 	BmpWinOnVReq_Normal,		// テキスト
 	BmpWinOnVReq_Affine,		// アフィン
 	BmpWinOnVReq_Normal,		// 拡張アフィン
@@ -51,12 +51,12 @@ static void (* const WinOnVReqFunc[])(GF_BMPWIN_DATA*) = {
 //*------------------------------------------*/
 /**   ウィンドウ表示オフ＆転送関数           */
 //*------------------------------------------*/
-static void (* const WinOffFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinOffFunc[])(GFL_BMPWIN_DATA*) = {
 	BmpWinOff_Normal,
 	BmpWinOff_Affine,
 	BmpWinOff_Normal,
 };
-static void (* const WinOffVReqFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinOffVReqFunc[])(GFL_BMPWIN_DATA*) = {
 	BmpWinOffVReq_Normal,
 	BmpWinOffVReq_Affine,
 	BmpWinOffVReq_Normal,
@@ -65,7 +65,7 @@ static void (* const WinOffVReqFunc[])(GF_BMPWIN_DATA*) = {
 //*------------------------------------------*/
 /**   ウィンドウスクリーン作成関数テーブル   */
 //*------------------------------------------*/
-static void (* const WinScrnMakeFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinScrnMakeFunc[])(GFL_BMPWIN_DATA*) = {
 	MakeWinScrnText,		// テキスト
 	MakeWinScrnAffine,		// アフィン
 	MakeWinScrnText,		// 拡張アフィン
@@ -74,7 +74,7 @@ static void (* const WinScrnMakeFunc[])(GF_BMPWIN_DATA*) = {
 //*------------------------------------------*/
 /**   ウィンドウスクリーンクリア関数テーブル */
 //*------------------------------------------*/
-static void (* const WinScrnClearFunc[])(GF_BMPWIN_DATA*) = {
+static void (* const WinScrnClearFunc[])(GFL_BMPWIN_DATA*) = {
 	ClearWinScrnText,		// テキスト
 	ClearWinScrnAffine,		// アフィン
 	ClearWinScrnText,		// 拡張アフィン
@@ -82,12 +82,12 @@ static void (* const WinScrnClearFunc[])(GF_BMPWIN_DATA*) = {
 
 
 static const u8 ScreenXElems[] =  {
-	16,		// GF_BGL_SCRSIZ_128x128
-	32,		// GF_BGL_SCRSIZ_256x256
-	32,		// GF_BGL_SCRSIZ_256x512
-	32,		// GF_BGL_SCRSIZ_512x256
-	32,		// GF_BGL_SCRSIZ_512x512
-	32,		// GF_BGL_SCRSIZ_1024x1024
+	16,		// GFL_BG_SCRSIZ_128x128
+	32,		// GFL_BG_SCRSIZ_256x256
+	32,		// GFL_BG_SCRSIZ_256x512
+	32,		// GFL_BG_SCRSIZ_512x256
+	32,		// GFL_BG_SCRSIZ_512x512
+	32,		// GFL_BG_SCRSIZ_1024x1024
 };
 
 
@@ -103,15 +103,15 @@ static const u8 ScreenXElems[] =  {
  * @return	確保したデータのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GF_BMPWIN_DATA * GF_BMPWIN_AllocGet( u32 heapID, u8 num )
+GFL_BMPWIN_DATA * GFL_BMPWIN_AllocGet( u32 heapID, u8 num )
 {
-	GF_BMPWIN_DATA * wk;
+	GFL_BMPWIN_DATA * wk;
 	u16	i;
 
-	wk = (GF_BMPWIN_DATA *)sys_AllocMemory( heapID, sizeof(GF_BMPWIN_DATA) * num );
+	wk = (GFL_BMPWIN_DATA *)sys_AllocMemory( heapID, sizeof(GFL_BMPWIN_DATA) * num );
 
 	for( i=0; i<num; i++ ){
-		GF_BMPWIN_Init( &wk[i], heapID );
+		GFL_BMPWIN_Init( &wk[i], heapID );
 	}
 
 	return wk;
@@ -127,10 +127,10 @@ GF_BMPWIN_DATA * GF_BMPWIN_AllocGet( u32 heapID, u8 num )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID )
+void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID )
 {
 	wk->heapID = heapID;
-	wk->frmnum = GF_BMPWIN_FRM_NULL;
+	wk->frmnum = GFL_BMPWIN_FRM_NULL;
 	wk->posx   = 0;
 	wk->posy   = 0;
 	wk->sizx   = 0;
@@ -138,7 +138,7 @@ void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID )
 	wk->palnum = 0;
 	wk->chrofs = 0;
 	wk->chrbuf = NULL;
-	wk->bitmode = GF_BMPWIN_BITMODE_4;		// 念のため良く使う方で初期化しておく
+	wk->bitmode = GFL_BMPWIN_BITMODE_4;		// 念のため良く使う方で初期化しておく
 }
 
 //--------------------------------------------------------------------------------------------
@@ -151,9 +151,9 @@ void GF_BMPWIN_Init( GF_BMPWIN_DATA * wk, u32 heapID )
  * @retval	"FALSE = 未登録"
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_AddCheck( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_AddCheck( GFL_BMPWIN_DATA * win )
 {
-	if( win->frmnum == GF_BMPWIN_FRM_NULL || win->chrbuf == NULL ){
+	if( win->frmnum == GFL_BMPWIN_FRM_NULL || win->chrbuf == NULL ){
 		return FALSE;
 	}
 	return TRUE;
@@ -176,15 +176,15 @@ u8 GF_BMPWIN_AddCheck( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Add(
-		GF_BMPWIN_DATA * win, u8 frmnum,
+void GFL_BMPWIN_Add(
+		GFL_BMPWIN_DATA * win, u8 frmnum,
 		u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u16 chrofs, u32 heapID )
 {
 	void * chrvbuf;
 	u32	chrvsiz;
 
 	// 使用フレーム状況の判定（スクリーンバッファ確保されているか）
-	if( GF_BGL_ScreenAdrsGet( win->bgl, frmnum ) == NULL ){
+	if( GFL_BG_ScreenAdrsGet( win->bgl, frmnum ) == NULL ){
 #ifdef	OSP_ERR_BGL_BMPADD		// BMP登録失敗
 		OS_Printf( "ＢＭＰ登録失敗\n" );
 #endif	// OSP_ERR_BGL_BMPADD
@@ -192,7 +192,7 @@ void GF_BMPWIN_Add(
 	}
 
 	// キャラクタバッファの確保
-	chrvsiz = sizx * sizy * GF_BGL_BaseCharSizeGet( win->bgl, frmnum);
+	chrvsiz = sizx * sizy * GFL_BG_BaseCharSizeGet( win->bgl, frmnum);
 	chrvbuf = sys_AllocMemory( heapID, chrvsiz );
 
 	if( chrvbuf == NULL ){
@@ -212,7 +212,7 @@ void GF_BMPWIN_Add(
 	win->palnum = palnum;
 	win->chrofs = chrofs;
 	win->chrbuf = chrvbuf;
-	win->bitmode = (GF_BGL_ScreenColorModeGet( win->bgl, frmnum) == GX_BG_COLORMODE_16)? GF_BMPWIN_BITMODE_4 : GF_BMPWIN_BITMODE_8;
+	win->bitmode = (GFL_BG_ScreenColorModeGet( win->bgl, frmnum) == GX_BG_COLORMODE_16)? GFL_BMPWIN_BITMODE_4 : GFL_BMPWIN_BITMODE_8;
 
 #ifdef	OSP_BGL_BMP_SIZ		// BMPサイズ
 	OS_Printf( "ＢＭＰＣＧＸ領域=%x\n", chrvbuf );
@@ -233,13 +233,13 @@ void GF_BMPWIN_Add(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_AddChar(
-		GF_BMPWIN_DATA * win, u8 sizx, u8 sizy, u16 chrofs, u8 fill_color, u32 heapID )
+void GFL_BMPWIN_AddChar(
+		GFL_BMPWIN_DATA * win, u8 sizx, u8 sizy, u16 chrofs, u8 fill_color, u32 heapID )
 {
 	void * chrvbuf;
 	u32	chrvsiz;
 
-	chrvsiz	= (u32)( sizx * sizy * GF_BGL_1CHRDATASIZ );
+	chrvsiz	= (u32)( sizx * sizy * GFL_BG_1CHRDATASIZ );
 	chrvbuf = sys_AllocMemory( heapID, chrvsiz );
 
 	fill_color |= fill_color << 4;
@@ -258,7 +258,7 @@ void GF_BMPWIN_AddChar(
 	win->sizy   = sizy;
 	win->chrofs = chrofs;
 	win->chrbuf = chrvbuf;
-	win->bitmode = GF_BMPWIN_BITMODE_4;
+	win->bitmode = GFL_BMPWIN_BITMODE_4;
 
 #ifdef	OSP_BGL_BMP_SIZ		// BMPサイズ
 	OS_Printf( "BMPOBJCGX領域=%x\n", chrvbuf );
@@ -276,9 +276,9 @@ void GF_BMPWIN_AddChar(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_AddEx( GF_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID )
+void GFL_BMPWIN_AddEx( GFL_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID )
 {
-	GF_BMPWIN_Add(
+	GFL_BMPWIN_Add(
 		win, dat->frm_num, dat->pos_x, dat->pos_y,
 		dat->siz_x, dat->siz_y, dat->palnum, dat->chrnum, heapID );
 }
@@ -292,12 +292,12 @@ void GF_BMPWIN_AddEx( GF_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Del( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_Del( GFL_BMPWIN_DATA * win )
 {
 	// キャラクタバッファ割り当て開放
 	sys_FreeMemoryEz( win->chrbuf );
 
-	win->frmnum = GF_BMPWIN_FRM_NULL;
+	win->frmnum = GFL_BMPWIN_FRM_NULL;
 	win->posx   = 0;
 	win->posy   = 0;
 	win->sizx   = 0;
@@ -317,11 +317,11 @@ void GF_BMPWIN_Del( GF_BMPWIN_DATA * win )
  *
  * @return	none
  *
- *	GF_BMPWIN_AllocGet()で確保した場合に使用して下さい
+ *	GFL_BMPWIN_AllocGet()で確保した場合に使用して下さい
  *	
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Free( GF_BMPWIN_DATA * win, u8 num )
+void GFL_BMPWIN_Free( GFL_BMPWIN_DATA * win, u8 num )
 {
 	u16	i;
 
@@ -344,14 +344,14 @@ void GF_BMPWIN_Free( GF_BMPWIN_DATA * win, u8 num )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_On( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_On( GFL_BMPWIN_DATA * win )
 {
 	u8	mode;
 	
 	GF_ASSERT(win!=NULL);
 	GF_ASSERT(win->frmnum<8);
 
-	mode = GF_BGL_BgModeGet( win->bgl, win->frmnum );
+	mode = GFL_BG_BgModeGet( win->bgl, win->frmnum );
 
 	GF_ASSERT(mode < NELEMS(WinOnFunc));
 	WinOnFunc[ mode ]( win );
@@ -365,14 +365,14 @@ void GF_BMPWIN_On( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_OnVReq( GFL_BMPWIN_DATA * win )
 {
 	u8	mode;
 
 	GF_ASSERT(win!=NULL);
 	GF_ASSERT(win->frmnum<8);
 
-	mode = GF_BGL_BgModeGet( win->bgl, win->frmnum );
+	mode = GFL_BG_BgModeGet( win->bgl, win->frmnum );
 
 	GF_ASSERT(mode < NELEMS(WinOnVReqFunc));
 	WinOnVReqFunc[ mode ]( win );
@@ -385,9 +385,9 @@ void GF_BMPWIN_OnVReq( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-void GF_BMPWIN_MakeScrn( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_MakeScrn( GFL_BMPWIN_DATA * win )
 {
-	WinScrnMakeFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
+	WinScrnMakeFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 //------------------------------------------------------------------
 /**
@@ -400,7 +400,7 @@ void GF_BMPWIN_MakeScrn( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height )
+void GFL_BMPWIN_MakeScrnLimited( GFL_BMPWIN_DATA * win, u32 width, u32 height )
 {
 	u32  x_save, y_save;
 
@@ -409,7 +409,7 @@ void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height )
 	win->sizx = width;
 	win->sizy = height;
 
-	WinScrnMakeFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
+	WinScrnMakeFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
 
 	win->sizx = x_save;
 	win->sizy = y_save;
@@ -423,9 +423,9 @@ void GF_BMPWIN_MakeScrnLimited( GF_BMPWIN_DATA * win, u32 width, u32 height )
  *
  */
 //------------------------------------------------------------------
-void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_ClearScrn( GFL_BMPWIN_DATA * win )
 {
-	WinScrnClearFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum) ]( win );
+	WinScrnClearFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum) ]( win );
 }
 
 //------------------------------------------------------------------
@@ -436,14 +436,14 @@ void GF_BMPWIN_ClearScrn( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-static void MakeWinScrnText( GF_BMPWIN_DATA * win )
+static void MakeWinScrnText( GFL_BMPWIN_DATA * win )
 {
-	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
+	u16 * scrn = (u16 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		u32 x, y, x_max, y_max, chr, p, xelems;
 
-//		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet(win->frmnum) ];
+//		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet(win->frmnum) ];
 		xelems = 32;
 
 		chr = win->chrofs;
@@ -467,14 +467,14 @@ static void MakeWinScrnText( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-static void MakeWinScrnAffine( GF_BMPWIN_DATA * win )
+static void MakeWinScrnAffine( GFL_BMPWIN_DATA * win )
 {
-	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
+	u8 * scrn = (u8 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		int x, y, chr, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum) ];
+		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum) ];
 
 		scrn = scrn + win->posy * xelems + win->posx;
 
@@ -496,14 +496,14 @@ static void MakeWinScrnAffine( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-static void ClearWinScrnText( GF_BMPWIN_DATA * win )
+static void ClearWinScrnText( GFL_BMPWIN_DATA * win )
 {
-	u16 * scrn = (u16 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
+	u16 * scrn = (u16 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		u32 x, y, x_max, y_max, p, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum ) ];
+		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum ) ];
 
 		x_max = win->posx + win->sizx;
 		y_max = win->posy + win->sizy;
@@ -523,14 +523,14 @@ static void ClearWinScrnText( GF_BMPWIN_DATA * win )
  *
  */
 //------------------------------------------------------------------
-static void ClearWinScrnAffine( GF_BMPWIN_DATA * win )
+static void ClearWinScrnAffine( GFL_BMPWIN_DATA * win )
 {
-	u8 * scrn = (u8 *)GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum );
+	u8 * scrn = (u8 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
 
 	if( scrn != NULL ){
 		int x, y, xelems;
 
-		xelems = ScreenXElems[ GF_BGL_ScreenTypeGet( win->bgl, win->frmnum) ];
+		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum) ];
 
 		scrn = scrn + win->posy * xelems + win->posx;
 
@@ -552,18 +552,18 @@ static void ClearWinScrnAffine( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOn_Normal( GF_BMPWIN_DATA * win )
+static void BmpWinOn_Normal( GFL_BMPWIN_DATA * win )
 {
 	MakeWinScrnText( win );
 
-	GF_BGL_LoadScreen(
+	GFL_BG_LoadScreen(
 		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
+		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
 
-	GF_BMPWIN_CgxOn( win );
+	GFL_BMPWIN_CgxOn( win );
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -574,12 +574,12 @@ static void BmpWinOn_Normal( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOnVReq_Normal( GF_BMPWIN_DATA * win )
+static void BmpWinOnVReq_Normal( GFL_BMPWIN_DATA * win )
 {
 	MakeWinScrnText( win );
 
-	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
-	GF_BMPWIN_CgxOn( win );
+	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
+	GFL_BMPWIN_CgxOn( win );
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -590,20 +590,20 @@ static void BmpWinOnVReq_Normal( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOn_Affine( GF_BMPWIN_DATA * win )
+static void BmpWinOn_Affine( GFL_BMPWIN_DATA * win )
 {
 	MakeWinScrnAffine( win );
 
-	GF_BGL_LoadScreen(
+	GFL_BG_LoadScreen(
 		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
+		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
 
-	GF_BGL_LoadCharacter(
+	GFL_BG_LoadCharacter(
 		win->bgl, win->frmnum, win->chrbuf,
-		(u32)( win->sizx * win->sizy * GF_BGL_8BITCHRSIZ ), (u32)win->chrofs );
+		(u32)( win->sizx * win->sizy * GFL_BG_8BITCHRSIZ ), (u32)win->chrofs );
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -614,14 +614,14 @@ static void BmpWinOn_Affine( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOnVReq_Affine( GF_BMPWIN_DATA * win )
+static void BmpWinOnVReq_Affine( GFL_BMPWIN_DATA * win )
 {
 	MakeWinScrnAffine( win );
 
-	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
-	GF_BGL_LoadCharacter(
+	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
+	GFL_BG_LoadCharacter(
 		win->bgl, win->frmnum, win->chrbuf,
-		(u32)( win->sizx * win->sizy * GF_BGL_8BITCHRSIZ ), (u32)win->chrofs );
+		(u32)( win->sizx * win->sizy * GFL_BG_8BITCHRSIZ ), (u32)win->chrofs );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -633,11 +633,11 @@ static void BmpWinOnVReq_Affine( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_CgxOn( GFL_BMPWIN_DATA * win )
 {
-	u32 chrsize = win->sizx * win->sizy * GF_BGL_BaseCharSizeGet( win->bgl, win->frmnum );
+	u32 chrsize = win->sizx * win->sizy * GFL_BG_BaseCharSizeGet( win->bgl, win->frmnum );
 
-	GF_BGL_LoadCharacter( win->bgl, win->frmnum, win->chrbuf, chrsize, win->chrofs );
+	GFL_BG_LoadCharacter( win->bgl, win->frmnum, win->chrbuf, chrsize, win->chrofs );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -648,9 +648,9 @@ void GF_BMPWIN_CgxOn( GF_BMPWIN_DATA * win )
  *
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Off( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_Off( GFL_BMPWIN_DATA * win )
 {
-	WinOffFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
+	WinOffFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 //--------------------------------------------------------------------------------------------
 /**
@@ -660,9 +660,9 @@ void GF_BMPWIN_Off( GF_BMPWIN_DATA * win )
  *
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_OffVReq( GF_BMPWIN_DATA * win )
+void GFL_BMPWIN_OffVReq( GFL_BMPWIN_DATA * win )
 {
-	WinOffVReqFunc[ GF_BGL_BgModeGet( win->bgl, win->frmnum ) ]( win );
+	WinOffVReqFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -673,15 +673,15 @@ void GF_BMPWIN_OffVReq( GF_BMPWIN_DATA * win )
  *
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOff_Normal( GF_BMPWIN_DATA * win )
+static void BmpWinOff_Normal( GFL_BMPWIN_DATA * win )
 {
 	ClearWinScrnText( win );
-	GF_BGL_LoadScreen(
+	GFL_BG_LoadScreen(
 		win->bgl,
 		win->frmnum,
-		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
+		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -692,10 +692,10 @@ static void BmpWinOff_Normal( GF_BMPWIN_DATA * win )
  *
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOffVReq_Normal( GF_BMPWIN_DATA * win )
+static void BmpWinOffVReq_Normal( GFL_BMPWIN_DATA * win )
 {
 	ClearWinScrnText( win );
-	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
+	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -707,15 +707,15 @@ static void BmpWinOffVReq_Normal( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOff_Affine( GF_BMPWIN_DATA * win )
+static void BmpWinOff_Affine( GFL_BMPWIN_DATA * win )
 {
 	ClearWinScrnAffine( win );
-	GF_BGL_LoadScreen(
+	GFL_BG_LoadScreen(
 		win->bgl, 
 		win->frmnum, 
-		GF_BGL_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenSizGet( win->bgl, win->frmnum ),
-		GF_BGL_ScreenOfsGet( win->bgl, win->frmnum ) );
+		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
+		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -727,10 +727,10 @@ static void BmpWinOff_Affine( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinOffVReq_Affine( GF_BMPWIN_DATA * win )
+static void BmpWinOffVReq_Affine( GFL_BMPWIN_DATA * win )
 {
 	ClearWinScrnAffine( win );
-	GF_BGL_LoadScreenV_Req( win->bgl, win->frmnum );
+	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -743,15 +743,15 @@ static void BmpWinOffVReq_Affine( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_DataFill( GF_BMPWIN_DATA * win, u8 col )
+void GFL_BMPWIN_DataFill( GFL_BMPWIN_DATA * win, u8 col )
 {
 	u32	datasize;
 	u32 data;
 	u32	base_char_siz;
 
-	base_char_siz = GF_BGL_BaseCharSizeGet( win->bgl, win->frmnum );
+	base_char_siz = GFL_BG_BaseCharSizeGet( win->bgl, win->frmnum );
 
-	if( base_char_siz == GF_BGL_1CHRDATASIZ ){
+	if( base_char_siz == GFL_BG_1CHRDATASIZ ){
 		col = (col<<4)|col;
 	}
 	data = (col<<24)|(col<<16)|(col<<8)|col;
@@ -782,12 +782,12 @@ void GF_BMPWIN_DataFill( GF_BMPWIN_DATA * win, u8 col )
  * ビットマップデータの切り取りを可能にしたもの
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Print(
-			GF_BMPWIN_DATA * win, void * src,
+void GFL_BMPWIN_Print(
+			GFL_BMPWIN_DATA * win, void * src,
 			u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
 			u16 win_x, u16 win_y, u16 win_dx, u16 win_dy )
 {
-	GF_BMPWIN_PrintEx(
+	GFL_BMPWIN_PrintEx(
 		win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy, 0 );
 }
 
@@ -813,8 +813,8 @@ void GF_BMPWIN_Print(
  * ビットマップデータの切り取りを可能にしたもの
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_PrintEx(
-		GF_BMPWIN_DATA * win, void * src,
+void GFL_BMPWIN_PrintEx(
+		GFL_BMPWIN_DATA * win, void * src,
 		u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
 		u16 win_x, u16 win_y, u16 win_dx, u16 win_dy, u16 nuki )
 {
@@ -826,14 +826,14 @@ void GF_BMPWIN_PrintEx(
 	src_data.size_y = src_dy;
 
 	dst_data.adrs	= (u8 *)win->chrbuf;
-	dst_data.size_x = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
-	dst_data.size_y = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
+	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
+	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
 
-	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GF_BMP_PrintMain(
+	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
+		GFL_BMP_PrintMain(
 			&src_data, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
 	}else{
-		GF_BMP_PrintMain256(
+		GFL_BMP_PrintMain256(
 			&src_data, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
 	}
 }
@@ -852,18 +852,18 @@ void GF_BMPWIN_PrintEx(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Fill( GF_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy )
+void GFL_BMPWIN_Fill( GFL_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy )
 {
 	BMPPRT_HEADER	dst_data;
 
 	dst_data.adrs	= (u8 *)win->chrbuf;
-	dst_data.size_x = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
-	dst_data.size_y = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
+	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
+	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
 
-	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GF_BGL_BmpFill( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
+	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
+		GFL_BMP_Fill( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
 	}else{
-		GF_BGL_BmpFill256( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
+		GFL_BMP_Fill256( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
 	}
 }
 
@@ -949,7 +949,7 @@ void GF_BMPWIN_Fill( GF_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 s
 		}																\
 	}
 
-void GF_BMPWIN_PrintMsg( GF_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy )
+void GFL_BMPWIN_PrintMsg( GFL_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy )
 {
 	u8 * dst; 
 	u16	dsx, dsy;
@@ -957,8 +957,8 @@ void GF_BMPWIN_PrintMsg( GF_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 w
 	u8	print_pat;
 
 	dst	= (u8 *)win->chrbuf;
-	dsx = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
-	dsy = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
+	dsx = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
+	dsy = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
 
 	if((M_DST_SIZX - M_DST_POSX) < M_WRT_SIZX){
 		x_max = M_DST_SIZX - M_DST_POSX;
@@ -976,7 +976,7 @@ void GF_BMPWIN_PrintMsg( GF_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 w
 	if( x_max > 8 ){ print_pat |= 1; }
 	if( y_max > 8 ){ print_pat |= 2; }
 
-	if( win->bitmode == GF_BMPWIN_BITMODE_4 ){
+	if( win->bitmode == GFL_BMPWIN_BITMODE_4 ){
 		switch( print_pat ){
 		case 0:	//１キャラ(8x8)
 			DOT_PUT( 0, 0, x_max,	y_max,	 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
@@ -1177,8 +1177,8 @@ void GF_BMPWIN_PrintMsg( GF_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 w
 		}																\
 	}
 
-void GF_BMPWIN_PrintMsgWide(
-		GF_BMPWIN_DATA * win, const u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy, u16 tbl )
+void GFL_BMPWIN_PrintMsgWide(
+		GFL_BMPWIN_DATA * win, const u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy, u16 tbl )
 {
 	u8 * dst;
 	u16	dsx,dsy;
@@ -1186,8 +1186,8 @@ void GF_BMPWIN_PrintMsgWide(
 	u8	print_pat;
 
 	dst	= (u8 *)win->chrbuf;
-	dsx = (u16)(win->sizx * GF_BGL_1CHRDOTSIZ);
-	dsy = (u16)(win->sizy * GF_BGL_1CHRDOTSIZ);
+	dsx = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
+	dsy = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
 
 	if((M_DST_SIZX - M_DST_POSX) < M_WRT_SIZX){
 		x_max = M_DST_SIZX - M_DST_POSX;
@@ -1206,7 +1206,7 @@ void GF_BMPWIN_PrintMsgWide(
 	if( x_max > 8 ){ print_pat |= 1; }
 	if( y_max > 8 ){ print_pat |= 2; }
 
-	if( win->bitmode == GF_BMPWIN_BITMODE_4 ){
+	if( win->bitmode == GFL_BMPWIN_BITMODE_4 ){
 		switch( print_pat ){
 		case 0:	//１キャラ(8x8)
 			DOT_PUT_W( 0, 0, x_max,	y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
@@ -1227,7 +1227,7 @@ void GF_BMPWIN_PrintMsgWide(
 			return;
 		}
 	}else{
-		u8 * chg_src = GF_BGL_4BitCgxChange8Bit( src, ssx*4*ssy*8, win->palnum, win->heapID );
+		u8 * chg_src = GFL_BG_4BitCgxChange8Bit( src, ssx*4*ssy*8, win->palnum, win->heapID );
 
 		switch( print_pat ){
 		case 0:	//１キャラ(8x8)
@@ -1267,9 +1267,9 @@ void GF_BMPWIN_PrintMsgWide(
  * ビットマップデータ(全領域)のシフトを実行
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_Shift( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
+void GFL_BMPWIN_Shift( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 {
-	if( GF_BGL_ScreenColorModeGet( win->bgl, win->frmnum) == GX_BG_COLORMODE_16 ){
+	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum) == GX_BG_COLORMODE_16 ){
 		BmpWinShift16( win, direct, offset, data );
 	}else{
 		BmpWinShift256( win, direct, offset, data );
@@ -1288,7 +1288,7 @@ void GF_BMPWIN_Shift( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
+static void BmpWinShift16( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 {
 	u8 * cgxram;
 	int	chroffs, woffs, roffs;
@@ -1298,12 +1298,12 @@ static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 
 	cgxram		= (u8 *)win->chrbuf;
 	blanch_chr	= (data<<24) | (data<<16) | (data<<8) | (data<<0);
-	over_offs	= win->sizy * win->sizx * GF_BGL_1CHRDATASIZ;
+	over_offs	= win->sizy * win->sizx * GFL_BG_1CHRDATASIZ;
 	xsiz		= win->sizx;
 
 	switch( direct ){
-	case GF_BMPWIN_SHIFT_U:
-		for( chroffs=0; chroffs<over_offs; chroffs+=GF_BGL_1CHRDATASIZ ){
+	case GFL_BMPWIN_SHIFT_U:
+		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_1CHRDATASIZ ){
 			rline = offset;
 
 			for( i=0; i<8; i++ ){
@@ -1318,10 +1318,10 @@ static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 			}
 		}
 		break;
-	case GF_BMPWIN_SHIFT_D:
+	case GFL_BMPWIN_SHIFT_D:
 		cgxram += over_offs - 4;
 
-		for( chroffs=0; chroffs<over_offs; chroffs+=GF_BGL_1CHRDATASIZ ){
+		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_1CHRDATASIZ ){
 			rline = offset;
 
 			for( i=0; i<8; i++ ){
@@ -1336,9 +1336,9 @@ static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 			}
 		}
 		break;
-	case GF_BMPWIN_SHIFT_L:
+	case GFL_BMPWIN_SHIFT_L:
 		break;
-	case GF_BMPWIN_SHIFT_R:
+	case GFL_BMPWIN_SHIFT_R:
 		break;
 	}
 }
@@ -1355,7 +1355,7 @@ static void BmpWinShift16( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
+static void BmpWinShift256( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
 {
 	u8 * cgxram;
 	int	chroffs, woffs, roffs;
@@ -1365,12 +1365,12 @@ static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data 
 
 	cgxram		= (u8 *)win->chrbuf;
 	blanch_chr	= ( data << 24 ) | ( data << 16 ) | ( data << 8 ) | data;
-	over_offs	= win->sizy * win->sizx * GF_BGL_8BITCHRSIZ;
+	over_offs	= win->sizy * win->sizx * GFL_BG_8BITCHRSIZ;
 	xsiz		= win->sizx;
 
 	switch(direct){
-	case GF_BMPWIN_SHIFT_U:
-		for( chroffs=0; chroffs<over_offs; chroffs+=GF_BGL_8BITCHRSIZ ){
+	case GFL_BMPWIN_SHIFT_U:
+		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_8BITCHRSIZ ){
 			rline = offset;
 
 			for( i=0; i<8; i++ ){
@@ -1394,10 +1394,10 @@ static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data 
 			}
 		}
 		break;
-	case GF_BMPWIN_SHIFT_D:
+	case GFL_BMPWIN_SHIFT_D:
 		cgxram += ( over_offs - 8 );
 
-		for( chroffs=0; chroffs<over_offs; chroffs+=GF_BGL_8BITCHRSIZ ){
+		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_8BITCHRSIZ ){
 			rline = offset;
 
 			for( i=0; i<8; i++ ){
@@ -1421,9 +1421,9 @@ static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data 
 			}
 		}
 		break;
-	case GF_BMPWIN_SHIFT_L:
+	case GFL_BMPWIN_SHIFT_L:
 		break;
-	case GF_BMPWIN_SHIFT_R:
+	case GFL_BMPWIN_SHIFT_R:
 		break;
 	}
 }
@@ -1443,7 +1443,7 @@ static void BmpWinShift256( GF_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data 
  * @return	win->frmnum
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_GetFrame( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_GetFrame( GFL_BMPWIN_DATA * win )
 {
 	return win->frmnum;
 }
@@ -1457,7 +1457,7 @@ u8 GF_BMPWIN_GetFrame( GF_BMPWIN_DATA * win )
  * @return	win->sizx
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_GetSizeX( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_GetSizeX( GFL_BMPWIN_DATA * win )
 {
 	return win->sizx;
 }
@@ -1471,7 +1471,7 @@ u8 GF_BMPWIN_GetSizeX( GF_BMPWIN_DATA * win )
  * @return	win->sizy
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_GetSizeY( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_GetSizeY( GFL_BMPWIN_DATA * win )
 {
 	return win->sizy;
 }
@@ -1486,7 +1486,7 @@ u8 GF_BMPWIN_GetSizeY( GF_BMPWIN_DATA * win )
  * @return	win->posx
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_GetPosX( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_GetPosX( GFL_BMPWIN_DATA * win )
 {
 	return win->posx;
 }
@@ -1500,7 +1500,7 @@ u8 GF_BMPWIN_GetPosX( GF_BMPWIN_DATA * win )
  * @return	win->posy
  */
 //--------------------------------------------------------------------------------------------
-u8 GF_BMPWIN_GetPosY( GF_BMPWIN_DATA * win )
+u8 GFL_BMPWIN_GetPosY( GFL_BMPWIN_DATA * win )
 {
 	return win->posy;
 }
@@ -1514,7 +1514,7 @@ u8 GF_BMPWIN_GetPosY( GF_BMPWIN_DATA * win )
  * @return	win->chrofs
  */
 //--------------------------------------------------------------------------------------------
-u16 GF_BMPWIN_GetChrofs( GF_BMPWIN_DATA * win )
+u16 GFL_BMPWIN_GetChrofs( GFL_BMPWIN_DATA * win )
 {
 	return win->chrofs;
 }
@@ -1528,7 +1528,7 @@ u16 GF_BMPWIN_GetChrofs( GF_BMPWIN_DATA * win )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_SetPosX( GF_BMPWIN_DATA * win, u8 px )
+void GFL_BMPWIN_SetPosX( GFL_BMPWIN_DATA * win, u8 px )
 {
 	win->posx = px;
 }
@@ -1542,7 +1542,7 @@ void GF_BMPWIN_SetPosX( GF_BMPWIN_DATA * win, u8 px )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_SetPosY( GF_BMPWIN_DATA * win, u8 py )
+void GFL_BMPWIN_SetPosY( GFL_BMPWIN_DATA * win, u8 py )
 {
 	win->posy = py;
 }
@@ -1557,7 +1557,7 @@ void GF_BMPWIN_SetPosY( GF_BMPWIN_DATA * win, u8 py )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMPWIN_SetPal( GF_BMPWIN_DATA * win, u8 palnum )
+void GFL_BMPWIN_SetPal( GFL_BMPWIN_DATA * win, u8 palnum )
 {
 	win->palnum = palnum;
 }

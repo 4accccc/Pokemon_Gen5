@@ -96,7 +96,7 @@
 #endif
 
 
-void GF_BMP_PrintMain(
+void GFL_BMP_PrintMain(
 			const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
 			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
@@ -166,7 +166,7 @@ void GF_BMP_PrintMain(
  * @li	ÇQÇTÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-void GF_BMP_PrintMain256(
+void GFL_BMP_PrintMain256(
 		const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
 		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
@@ -226,7 +226,7 @@ void GF_BMP_PrintMain256(
  * @li	ÇPÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_BmpFill(
+void GFL_BMP_Fill(
 		const BMPPRT_HEADER * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
@@ -277,7 +277,7 @@ void GF_BGL_BmpFill(
  * @li	ÇQÇTÇUêFóp
  */
 //--------------------------------------------------------------------------------------------
-void GF_BGL_BmpFill256(
+void GFL_BMP_Fill256(
 		const BMPPRT_HEADER * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
