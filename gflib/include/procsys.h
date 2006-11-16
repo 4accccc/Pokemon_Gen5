@@ -58,25 +58,25 @@ typedef struct {
 
 //===========================================================================
 //===========================================================================
-extern PROC * PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id);
-extern PROC * PROC_CreateChild(	PROC * proc,
+extern PROC * GFL_PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id);
+extern PROC * GFL_PROC_CreateChild(	PROC * proc,
 								const PROC_DATA * data,
 								void * parent_work,
 								const u32 heap_id);
 
-extern void PROC_Delete(PROC * proc);
+extern void GFL_PROC_Delete(PROC * proc);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern BOOL ProcMain(PROC * proc);
+extern BOOL GFL_PROC_Main(PROC * proc);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void * PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id);
-extern void * PROC_GetWork(PROC * proc);
-extern void PROC_FreeWork(PROC * proc);
-extern void * PROC_GetParentWork(PROC * proc);
-extern void PROC_SetPause(PROC * proc, BOOL pause_flag);
+extern void * GFL_PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id);
+extern void * GFL_PROC_GetWork(PROC * proc);
+extern void GFL_PROC_FreeWork(PROC * proc);
+extern void * GFL_PROC_GetParentWork(PROC * proc);
+//extern void PROC_SetPause(PROC * proc, BOOL pause_flag);
 
 
 

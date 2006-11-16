@@ -60,7 +60,7 @@ struct _PROC{
  * @return	PROC		生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
-PROC * PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id)
+PROC * GFL_PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id)
 {
 	PROC * proc;
 	proc = sys_AllocMemory(heap_id, sizeof(PROC));
@@ -84,10 +84,10 @@ PROC * PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id
  * @return	PROC		生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
-PROC * PROC_CreateChild(PROC * proc, const PROC_DATA * data, void * parent_work, const u32 heap_id)
+PROC * GFL_PROC_CreateChild(PROC * proc, const PROC_DATA * data, void * parent_work, const u32 heap_id)
 {
 	PROC * child;
-	child = PROC_Create(data, parent_work, heap_id);
+	child = GFL_PROC_Create(data, parent_work, heap_id);
 	proc->child = child;
 	child->parent = proc;
 	return child;
@@ -98,7 +98,7 @@ PROC * PROC_CreateChild(PROC * proc, const PROC_DATA * data, void * parent_work,
  * @param	proc	プロセスへのポインタ
  */
 //------------------------------------------------------------------
-void PROC_Delete(PROC * proc)
+void GFL_PROC_Delete(PROC * proc)
 {
 	SDK_ASSERT(proc->work == NULL);
 	sys_FreeMemoryEz(proc);
@@ -113,7 +113,7 @@ void PROC_Delete(PROC * proc)
  * @return	void *	確保したプロセス内ワークへのポインタ
  */
 //------------------------------------------------------------------
-void * PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id)
+void * GFL_PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id)
 {
 	proc->work = sys_AllocMemory(heap_id, size);
 	return proc->work;
@@ -126,7 +126,7 @@ void * PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id)
  * @return	void *	プロセス内ワークへのポインタ
  */
 //------------------------------------------------------------------
-void * PROC_GetWork(PROC * proc)
+void * GFL_PROC_GetWork(PROC * proc)
 {
 	SDK_ASSERT(proc->work != NULL);
 	return proc->work;
@@ -138,7 +138,7 @@ void * PROC_GetWork(PROC * proc)
  * @param	proc	プロセスへのポインタ
  */
 //------------------------------------------------------------------
-void PROC_FreeWork(PROC * proc)
+void GFL_PROC_FreeWork(PROC * proc)
 {
 	SDK_ASSERT(proc->work != NULL);
 	sys_FreeMemoryEz(proc->work);
@@ -152,7 +152,7 @@ void PROC_FreeWork(PROC * proc)
  * @return	void *	上位ワークへのポインタ
  */
 //------------------------------------------------------------------
-void * PROC_GetParentWork(PROC * proc)
+void * GFL_PROC_GetParentWork(PROC * proc)
 {
 	SDK_ASSERT(proc->parent_work != NULL);
 	return proc->parent_work;
@@ -166,7 +166,7 @@ void * PROC_GetParentWork(PROC * proc)
  * @retval	FALSE	プロセス動作継続中
  */
 //------------------------------------------------------------------
-BOOL ProcMain(PROC * proc)
+BOOL GFL_PROC_Main(PROC * proc)
 {
 	PROC_RESULT result;
 
