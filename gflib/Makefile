@@ -10,6 +10,9 @@
 #
 #--------------------------------------- ----------------------------
 #
+
+.PHONY : doc
+
 # プリコンパイルをアプリケーション側へ開放するため、
 # gflibではその準備のみを行う構造とします
 #
@@ -53,3 +56,9 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 do-build:	$(TARGETS)
 
 #-----
+#  ドキュメントの確認を行う
+doc:
+	if ! [ -d "doc" ]; then \
+		mkdir doc; \
+	fi;
+	doxygen ./doxygen.conf
