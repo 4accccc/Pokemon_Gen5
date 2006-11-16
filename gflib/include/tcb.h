@@ -36,23 +36,24 @@ typedef struct _TCBSYS		TCBSYS;
 
 //------------------------------------------------------------------
 /**
- * @brief	TCBポインタ型
+ * @brief	TCB型
  *
  * TCBへはこのポインタ型経由でアクセスする。
  * TCB構造体を直接アクセスできないようになっている。
  */
 //------------------------------------------------------------------
-typedef	struct _TCB * TCB_PTR;
+//typedef	struct _TCB * TCB_PTR;
+typedef struct _TCB TCB;
 
 //------------------------------------------------------------------
 /**
  * @brief	TCB関数型
  *
  * TCBに登録する実行関数の型定義。
- * 引数としてTCB_PTRと、ワークへのポインタをとるようになっている
+ * 引数としてTCB *と、ワークへのポインタをとるようになっている
  */
 //------------------------------------------------------------------
-typedef void (*TCB_FUNC)( TCB_PTR, void * );
+typedef void (*TCB_FUNC)( TCB *, void * );
 
 /*====================================================================================*/
 /*  関数宣言                                                                          */
@@ -68,7 +69,7 @@ typedef void (*TCB_FUNC)( TCB_PTR, void * );
  * @retval  u32		メモリサイズ（バイト単位）
  */
 //------------------------------------------------------------------
-extern u32 TCBSYS_CalcSystemWorkSize( u32 task_max );
+extern u32 GFL_TCB_CalcSystemWorkSize( u32 task_max );
 
 //------------------------------------------------------------------
 /**
@@ -79,17 +80,10 @@ extern u32 TCBSYS_CalcSystemWorkSize( u32 task_max );
  *
  * @retval  TCBSYS*		作成されたTCBシステムポインタ
  *
- * work_area に必要なサイズは、TCBSYS_CalcSystemWorkSize で計算する。
+ * work_area に必要なサイズは、GFL_TCB_CalcSystemWorkSize で計算する。
  */
 //------------------------------------------------------------------
-extern TCBSYS*  TCBSYS_Create( u32 task_max, void* work_area );
-
-//------------------------------------------------------------------
-/**
- *	TCBシステム使用前の初期化
- */
-//------------------------------------------------------------------
-extern void TCBSYS_Init( TCBSYS* tcbsys );
+extern TCBSYS*  GFL_TCB_SysInit( u32 task_max, void* work_area );
 
 //------------------------------------------------------------------
 /**
@@ -101,7 +95,15 @@ extern void TCBSYS_Init( TCBSYS* tcbsys );
  *
  */
 //------------------------------------------------------------------
-extern void TCBSYS_Main( TCBSYS* tcbsys );
+extern void GFL_TCB_SysMain( TCBSYS* tcbsys );
+
+//------------------------------------------------------------------
+/**
+ *	@brief	TCBシステム終了
+ *  @param	tcbsys		TCBシステムワークポインタ
+ */
+//------------------------------------------------------------------
+extern void GFL_TCB_SysExit( TCBSYS* tcbsys );
 
 //------------------------------------------------------------------------------
 /**
@@ -111,10 +113,10 @@ extern void TCBSYS_Main( TCBSYS* tcbsys );
 	@param	work	void*:関連付けるワークエリアへのvoid型ポインタ
 	@param	pri		u32:タスクプライオリティ
 
-	@return	TCB_PTR	追加したTCBを示すポインタ
+	@return	TCB *	追加したTCBを示すポインタ
 */
 //------------------------------------------------------------------------------
-extern TCB_PTR TCBSYS_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri );
+extern TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri );
 
 
 //------------------------------------------------------------------------------
@@ -123,7 +125,7 @@ extern TCB_PTR TCBSYS_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pr
 	@param	tcb		TCBポインタ
 */
 //------------------------------------------------------------------------------
-extern void TCBSYS_DeleteTask( TCB_PTR tcb );
+extern void GFL_TCB_DeleteTask( TCB * tcb );
 
 
 //------------------------------------------------------------------
@@ -136,7 +138,7 @@ extern void TCBSYS_DeleteTask( TCB_PTR tcb );
  * @param	func	新しく切り替える動作関数
 */
 //------------------------------------------------------------------
-extern void TCB_ChangeFunc(TCB_PTR tcb, TCB_FUNC func);
+extern void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC func);
 
 //------------------------------------------------------------------
 /**
@@ -148,7 +150,7 @@ extern void TCB_ChangeFunc(TCB_PTR tcb, TCB_FUNC func);
  * @return	ワークへのポインタ
  */ 
 //------------------------------------------------------------------
-extern void * TCB_GetWork(TCB_PTR tcb);
+extern void * GFL_TCB_GetWork(TCB * tcb);
 
 //------------------------------------------------------------------
 /**
@@ -160,7 +162,7 @@ extern void * TCB_GetWork(TCB_PTR tcb);
  * @return	プライオリティの値
  */
 //------------------------------------------------------------------
-extern u32 TCB_GetPriority(TCB_PTR tcb);
+extern u32 GFL_TCB_GetPriority(const TCB * tcb);
 
 
 #endif /*__TCB_H__*/
