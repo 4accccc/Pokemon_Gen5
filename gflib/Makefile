@@ -35,6 +35,10 @@ endif
 INSTALL_DIR		=	./install/$(NITRO_BUILDTYPE)/
 INSTALL_TARGETS		=	$(LIBDIR)/$(TARGET_LIB)
 
+# コンパイル時の警告抑止
+CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
+				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+
 # make clean時に一緒に抹消したいファイル
 LDIRT_CLEAN		=	$(INSTALL_DIR)
 
