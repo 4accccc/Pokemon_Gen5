@@ -15,6 +15,7 @@
 
 #define	__BMP_H_GLOBAL__
 #include "bmp.h"
+#include "bg_sys.h"
 
 
 //=============================================================================================
@@ -22,6 +23,36 @@
 //	ビットマップ関連
 //=============================================================================================
 //=============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * BMP初期化
+ *
+ * @param	heapID	ヒープＩＤ
+ *
+ * @return	取得したメモリのアドレス
+ */
+//--------------------------------------------------------------------------------------------
+GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID )
+{
+	GFL_BMP_DATA * bmp = sys_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
+
+	memset( bmp, 0, sizeof(GFL_BMP_DATA) );
+
+	return bmp;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * システムワークエリア開放
+ *
+ * @param	bgl		システムワークエリアへのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
+{
+	sys_FreeMemoryEz(bmp);
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -97,7 +128,7 @@
 
 
 void GFL_BMP_PrintMain(
-			const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
+			const GFL_BMP_DATA * src, const GFL_BMP_DATA * dest,
 			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
@@ -167,7 +198,7 @@ void GFL_BMP_PrintMain(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_PrintMain256(
-		const BMPPRT_HEADER * src, const BMPPRT_HEADER * dest,
+		const GFL_BMP_DATA * src, const GFL_BMP_DATA * dest,
 		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
 {
@@ -227,7 +258,7 @@ void GFL_BMP_PrintMain256(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Fill(
-		const BMPPRT_HEADER * dest,
+		const GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
@@ -278,7 +309,7 @@ void GFL_BMP_Fill(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Fill256(
-		const BMPPRT_HEADER * dest,
+		const GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;

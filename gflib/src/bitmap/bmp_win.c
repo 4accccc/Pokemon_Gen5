@@ -103,7 +103,7 @@ static const u8 ScreenXElems[] =  {
  * @return	確保したデータのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMPWIN_DATA * GFL_BMPWIN_AllocGet( u32 heapID, u8 num )
+GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num )
 {
 	GFL_BMPWIN_DATA * wk;
 	u16	i;
@@ -139,6 +139,18 @@ void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID )
 	wk->chrofs = 0;
 	wk->chrbuf = NULL;
 	wk->bitmode = GFL_BMPWIN_BITMODE_4;		// 念のため良く使う方で初期化しておく
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * BMPWINデータ破棄
+ *
+ * @param	wk		BMPWINデータ
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_BMPWIN_sysExit( GFL_BMPWIN_DATA * wk )
+{
+	sys_FreeMemoryEz(wk);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -818,8 +830,8 @@ void GFL_BMPWIN_PrintEx(
 		u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
 		u16 win_x, u16 win_y, u16 win_dx, u16 win_dy, u16 nuki )
 {
-	BMPPRT_HEADER	src_data;
-	BMPPRT_HEADER	dst_data;
+	GFL_BMP_DATA	src_data;
+	GFL_BMP_DATA	dst_data;
 
 	src_data.adrs	= (u8 *)src;
 	src_data.size_x = src_dx;
@@ -854,16 +866,16 @@ void GFL_BMPWIN_PrintEx(
 //--------------------------------------------------------------------------------------------
 void GFL_BMPWIN_Fill( GFL_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy )
 {
-	BMPPRT_HEADER	dst_data;
+	GFL_BMP_DATA	dst_data;
 
 	dst_data.adrs	= (u8 *)win->chrbuf;
 	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
 	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
 
 	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GFL_BMP_Fill( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
+		GFL_BMP_Fill( (const GFL_BMP_DATA *)&dst_data, px, py, sx, sy, col );
 	}else{
-		GFL_BMP_Fill256( (const BMPPRT_HEADER *)&dst_data, px, py, sx, sy, col );
+		GFL_BMP_Fill256( (const GFL_BMP_DATA *)&dst_data, px, py, sx, sy, col );
 	}
 }
 
