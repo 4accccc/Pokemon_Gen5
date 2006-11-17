@@ -15,8 +15,8 @@
 
 //------------------------------------------------------------------
 /**
- * @struct	TPSYS 型宣言
- * タッチパネルの情報の保持
+ * @struct	_UI_TPSYS
+ * @brief タッチパネルの情報の保持
   */
 //------------------------------------------------------------------
 struct _UI_TPSYS {
@@ -24,7 +24,8 @@ struct _UI_TPSYS {
 	u16		tp_y;			///< タッチパネルY座標
 	u16		tp_trg;			///< タッチパネル接触判定トリガ
 	u16		tp_cont;		///< タッチパネル接触判定状態
-};	// 8bytes
+    u8 tp_auto_samp;        ///< AUTOサンプリングを行うかどうか
+};
 
 
 //==============================================================
@@ -33,6 +34,101 @@ struct _UI_TPSYS {
 static BOOL _circle_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
 static BOOL _rect_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
 static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y );
+
+
+//==============================================================================
+/**
+ * @brief  タッチパネル初期化
+ * @param   heapID    ヒープ確保を行うID
+ * @return  UI_TPSYS  タッチパネルシステムワーク
+ */
+//==============================================================================
+
+UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
+{
+	TPCalibrateParam calibrate;
+    UI_TPSYS* pTP = sys_AllocMemory(heapID, sizeof(UI_TPSYS));
+
+    MI_CpuClear8(pTP, sizeof(UI_TPSYS));
+	// タッチパネルの初期化とキャリブレーションをセット
+	TP_Init();
+
+	// マシンのキャリブレーション値を取得
+	if( TP_GetUserInfo( &calibrate ) == TRUE ){
+		// キャリブレーション値の設定
+		TP_SetCalibrateParam( &calibrate );
+		OS_Printf("Get Calibration Parameter from NVRAM\n");
+	}
+	else{
+		// 取得に失敗したのでデフォルトのキャリブレーションの設定
+		calibrate.x0 = 0x02ae;
+		calibrate.y0 = 0x058c;
+		calibrate.xDotSize = 0x0e25;
+		calibrate.yDotSize = 0x1208;
+		TP_SetCalibrateParam( &calibrate );
+		OS_Printf( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
+	}
+    return pTP;
+}
+
+//==============================================================================
+/**
+ * @brief タッチパネル読み取り処理
+ * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_TP_sysMain(UISYS* pUI)
+{
+	TPData	tpTemp;
+	TPData	tpDisp;
+    UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
+
+	// ふたが閉まっている場合は全ての入力をなしにする
+	if(PAD_DetectFold()){
+        MI_CpuClear8(pTP, sizeof(UI_TPSYS));
+    }
+
+	// タッチパネルデータを取得
+	if(pTP->tp_auto_samp == 0){
+		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
+	}else{
+		TP_GetLatestRawPointInAuto( &tpTemp );	// オートサンプリング中のデータを取得
+	}
+
+	TP_GetCalibratedPoint( &tpDisp, &tpTemp );	// 座標を画面座標（０～２５５）にする
+
+	
+	if( tpDisp.validity == TP_VALIDITY_VALID  ){		// 座標の有効性をチェック
+		// タッチパネル座標有効
+		pTP->tp_x = tpDisp.x;
+		pTP->tp_y = tpDisp.y;
+	}else{
+		// タッチパネル座標無効
+		// 1シンク前の座標が格納されているときのみ座標をそのまま受け継ぐ
+		if( pTP->tp_cont ){
+			switch(tpDisp.validity){
+			case TP_VALIDITY_INVALID_X:
+				pTP->tp_y = tpDisp.y;
+				break;
+			case TP_VALIDITY_INVALID_Y:
+				pTP->tp_x = tpDisp.x;
+				break;
+			case TP_VALIDITY_INVALID_XY:
+				break;
+			default:	// 正常
+				break;
+			}
+		}else{
+			// トリガのタイミングなら、
+			// タッチパネルを押していないことにする
+			tpDisp.touch = 0;
+		}
+	}
+	pTP->tp_trg	= (u16)(tpDisp.touch & (tpDisp.touch ^ pTP->tp_cont));	// トリガ 入力
+	pTP->tp_cont	= tpDisp.touch;										// ベタ 入力
+}
 
 //------------------------------------------------------------------
 /**
@@ -227,4 +323,36 @@ int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 {
     return _tblHitCheck(tbl, x, y);
 }
+
+//==============================================================================
+/**
+ * @brief オートサンプリングを行っているかどうかを得る
+ * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @retval  TRUE  オートサンプリングである
+ * @retval  FALSE  していない
+ */
+//==============================================================================
+int GFL_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
+{
+    const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
+	return pTP->tp_auto_samp;
+}
+
+//==============================================================================
+/**
+ * @brief オートサンプリング設定
+ * @param[out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]    bAuto   オートサンプリングするならTRUE
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
+{
+    UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
+	pTP->tp_auto_samp = bAuto;
+}
+
+
+
+
 

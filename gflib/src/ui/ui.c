@@ -8,6 +8,7 @@
 //==============================================================================
 
 #include "gflib.h" 
+#include "ui.h"
 #include "ui_def.h" 
 
 //==============================================================================
@@ -26,7 +27,6 @@
 struct _UI_SYS {
     UI_TPSYS* pTP;         ///< タッチパネル管理構造体
     UI_KEYSYS* pKey;       ///< キー管理構造体
-	u8 AgbCasetteVersion;  ///< 差し込まれているAgbカーットリッジのバージョン（GBAポケモンが差し込まれている時のみ）
 	u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
 	u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
 	u8 DS_Boot_Flag;       ///< 
@@ -41,107 +41,129 @@ struct _UI_SYS {
 
 //==============================================================================
 /**
- * UI初期化
+ * @brief UI初期化
  * @param   heapID    ヒープ確保を行うID
- * @return  UIHandle  workハンドル
+ * @return  UISYS  workハンドル
  */
 //==============================================================================
 
-//初期化
-UIHandle* GFL_UI_sysInit(int heapID)
+UISYS* GFL_UI_sysInit(const int heapID)
 {
+    UISYS* pUI = sys_AllocMemory(heapID, sizeof(UISYS));
 
+    MI_CpuClear8(pUI, sizeof(UISYS));
+    pUI->pKey = GFL_UI_Key_sysInit(heapID);
+    pUI->pTP = GFL_UI_TP_sysInit(heapID);
+    return pUI;
 }
 
 //==============================================================================
 /**
- * UI初期化
- * @param   heapID    ヒープ確保を行うID
- * @return  UIHandle  workハンドル
+ * @brief UIMain処理
+ * @param   pUI    UISYS
+ * @return  none
  */
 //==============================================================================
 
 //初期化
-UIHandle* GFL_UI_sysInit(int heapID)
+void GFL_UI_sysMain(UISYS* pUI)
 {
-
+    GFL_UI_Key_sysMain(pUI);
+    GFL_UI_TP_sysMain(pUI);
+    
 }
 
 //==============================================================================
 /**
- * UI初期化
- * @param   heapID    ヒープ確保を行うID
- * @return  UIHandle  workハンドル
+ * @brief   UI終了処理
+ * @param   pUI    UISYS
+ * @return  none
  */
 //==============================================================================
 
-//初期化
-UIHandle* GFL_UI_sysInit(int heapID)
+void GFL_UI_sysEnd(UISYS* pUI)
 {
-
+    sys_FreeMemoryEz(pUI->pKey);
+    sys_FreeMemoryEz(pUI->pTP);
+    sys_FreeMemoryEz(pUI);
 }
-
-
-
-
-
-
-
-/*---------------------------------------------------------------------------*
-  @brief	ＡＧＢカートリッジ初期化
- *---------------------------------------------------------------------------*/
-void sys_InitAgbCasetteVer(int version)
-{
-	sys.AgbCasetteVersion = version;
-}
-
-/*---------------------------------------------------------------------------*
-  @brief	スリープ状態を禁止する
- *---------------------------------------------------------------------------*/
-void sys_SleepNG(u8 sleepTypeBit)
-{
-	sys.DontSleep |= sleepTypeBit;
-}
-
-/*---------------------------------------------------------------------------*
-  @brief	スリープ状態を許可する
- *---------------------------------------------------------------------------*/
-void sys_SleepOK(u8 sleepTypeBit)
-{
-	sys.DontSleep &= ~(sleepTypeBit);
-}
-
-/*---------------------------------------------------------------------------*
-  @brief	ソフトウエアリセット状態を禁止する
- *---------------------------------------------------------------------------*/
-void sys_SoftResetNG(u8 softResetBit)
-{
-	sys.DontSoftReset |= softResetBit;
-}
-
-/*---------------------------------------------------------------------------*
-  @brief	ソフトウエアリセット状態を許可する
- *---------------------------------------------------------------------------*/
-void sys_SoftResetOK(u8 softResetBit)
-{
-	sys.DontSoftReset &= ~(softResetBit);
-}
-
 
 //------------------------------------------------------------------
 /**
- * @fn      タッチパネル管理構造体を引き出す グループ内関数
+ * @brief   スリープ状態を禁止する
  * @param   pUI		ユーザーインターフェイス管理構造体
- * @return  UI_TPSYS*		タッチパネル管理構造体
+ * @param   sleepTypeBit スリープ管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit)
+{
+	pUI->DontSleep |= sleepTypeBit;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ状態を許可する
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @param   sleepTypeBit スリープ管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit)
+{
+	pUI->DontSleep &= ~(sleepTypeBit);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ソフトウエアリセット状態を禁止する
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @param   softResetBit リセット管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit)
+{
+	pUI->DontSoftReset |= softResetBit;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ソフトウエアリセット状態を許可する
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @param   softResetBit リセット管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit)
+{
+	pUI->DontSoftReset &= ~(softResetBit);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief      タッチパネル管理構造体を引き出す グループ内関数
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @return  タッチパネル管理構造体
  */
 //------------------------------------------------------------------
 
-UI_TPSYS* _UI_GetTPSYS(UI_SYS* pUI)
+UI_TPSYS* _UI_GetTPSYS(const UISYS* pUI)
 {
+    return pUI->pTP;
 }
 
-pTP;         ///< タッチパネル管理構造体
-    UI_KEYSYS* pKey;       ///< キー管理構造体
+//------------------------------------------------------------------
+/**
+ * @brief   キー管理構造体を引き出す グループ内関数
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @return  キー管理構造体
+ */
+//------------------------------------------------------------------
 
+UI_KEYSYS* _UI_GetKEYSYS(const UISYS* pUI)
+{
+    return pUI->pKey;       ///< キー管理構造体
+}
 
 

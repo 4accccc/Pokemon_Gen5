@@ -25,7 +25,10 @@ TARGET_LIB		=	gflib.a
 
 # ソースファイル
 SRCS			=	initialize.c filesystem.c heapsys.c tcb.c procsys.c saveload_system.c \
-					ui/touchpanel.c calctool.c \
+					ui/ui.c \
+					ui/touchpanel.c \
+					ui/key.c \
+					calctool.c \
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c
 
