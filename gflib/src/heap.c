@@ -26,7 +26,6 @@
  */
 //----------------------------------------------------------------
 #define DEFAULT_ALIGN_MASK			(3)			// メモリ確保時のアライメント用マスク
-#define MEMBLOCK_FILENAME_AREASIZE	(12)		// デバッグ用ヘッダに格納するファイル名領域サイズ
 #define HEAP_MAX					(24)		// 一度に作成可能な子ヒープの数
 #define INVALID_HANDLE_IDX			(255)		// ヒープハンドル無効値
 //#define MAGICNUM					(6478)		// メモリ管理ヘッダマジックナンバー
@@ -64,9 +63,9 @@ typedef struct {
  */
 //----------------------------------------------------------------
 typedef struct {
-	u32		heapID;									///< u32
-//	u16		magicnum;								///< マジックナンバー
-	u8		userInfo[22];							///< 外部使用領域
+	u32		heapID;								///< u32
+//	u16		magicnum;							///< マジックナンバー
+	u8		userInfo[MEMHEADER_USERINFO_SIZE];	///< 外部使用領域
 }MEMBLOCK_HEADER;
 
 //----------------------------------------------------------------
