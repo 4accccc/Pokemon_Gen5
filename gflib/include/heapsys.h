@@ -17,11 +17,21 @@
  */
 //----------------------------------------------------------------
 
-//==============================================================
+//----------------------------------------------------------------
+/**
+ *	インライン関数
+ */
+//----------------------------------------------------------------
+static inline  u32 HeapGetLow( u32 heapID )	
+{
+	return (( heapID & 0x7fff )|( 0x8000 ));
+}
+
+//----------------------------------------------------------------
 /**
  *	基本ヒープ作成パラメータ構造体
  */
-//==============================================================
+//----------------------------------------------------------------
 typedef struct {
 	u32        size;		///< ヒープサイズ
 	OSArenaId  arenaID;		///< 作成先アリーナID
@@ -97,7 +107,11 @@ extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
 		( u32 heapID, u32 size );
 
-#define GFL_HEAP_AllocMemory( ID, siz )	GFL_HEAP_AllocMemoryblock( ID, siz )
+#define GFL_HEAP_AllocMemory( ID, siz )		\
+			GFL_HEAP_AllocMemoryblock( ID, siz )
+
+#define GFL_HEAP_AllocMemoryLow( ID, siz )	\
+			GFL_HEAP_AllocMemoryblock( HeapGetLow(ID), siz )
 
 #else
 
@@ -105,7 +119,11 @@ extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
 		( u32 heapID, u32 size, const char* filename, u32 linenum );
 
-#define GFL_HEAP_AllocMemory( ID, siz )	GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
+#define GFL_HEAP_AllocMemory( ID, siz )		\
+			GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
+
+#define GFL_HEAP_AllocMemoryLow( ID, siz )	\
+			GFL_HEAP_AllocMemoryblock( HeapGetLow(ID), siz, __FILE__, __LINE__)
 
 #endif
 
