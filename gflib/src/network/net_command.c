@@ -90,7 +90,7 @@ void CommCommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,voi
     int i;
     
     if(!_pCommandWork){
-        _pCommandWork = sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_COMMAND_WORK));
+        _pCommandWork = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_COMMAND_WORK));
     }
     _pCommandWork->pCommPacket = pCommPacketLocal;
     _pCommandWork->listNum = listNum;
@@ -116,7 +116,7 @@ void CommCommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,voi
 void CommCommandFinalize( void )
 {
     if(_pCommandWork){
-        sys_FreeMemoryEz(_pCommandWork);
+        GFL_HEAP_FreeMemory(_pCommandWork);
         _pCommandWork = NULL;
     }
 }

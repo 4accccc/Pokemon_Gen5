@@ -47,7 +47,7 @@ static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y )
 UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
 {
 	TPCalibrateParam calibrate;
-    UI_TPSYS* pTP = sys_AllocMemory(heapID, sizeof(UI_TPSYS));
+    UI_TPSYS* pTP = GFL_HEAP_AllocMemory(heapID, sizeof(UI_TPSYS));
 
     MI_CpuClear8(pTP, sizeof(UI_TPSYS));
 	// タッチパネルの初期化とキャリブレーションをセット

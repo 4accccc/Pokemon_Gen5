@@ -157,11 +157,11 @@ void CommMPInitialize(MYSTATUS* pMyStatus)
     if(_pCommMP!=NULL){  // すでに初期化している場合はreturn
         return;
     }
-    _pCommMP = (_COMM_WORK*)sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_WORK));
+    _pCommMP = (_COMM_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_WORK));
     MI_CpuClear8(_pCommMP, sizeof(_COMM_WORK));
-    _pCommMP->_pWHWork = sys_AllocMemory(HEAPID_COMMUNICATION, WH_GetHeapSize());
+    _pCommMP->_pWHWork = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, WH_GetHeapSize());
     MI_CpuClear8(_pCommMP->_pWHWork, WH_GetHeapSize());
-    _pCommMP->pRegulation = sys_AllocMemory(HEAPID_COMMUNICATION, Regulation_GetWorkSize());
+    _pCommMP->pRegulation = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, Regulation_GetWorkSize());
     MI_CpuClear8(_pCommMP->pRegulation, Regulation_GetWorkSize());
     _pCommMP->ggid = _DP_GGID;
     _pCommMP->pMyStatus = pMyStatus;
@@ -684,9 +684,9 @@ void CommMPStealth(BOOL bStalth)
 //==============================================================================
 static void _commEnd(void)
 {
-    sys_FreeMemoryEz(_pCommMP->pRegulation);
-    sys_FreeMemoryEz(_pCommMP->_pWHWork);
-    sys_FreeMemoryEz(_pCommMP);
+    GFL_HEAP_FreeMemory(_pCommMP->pRegulation);
+    GFL_HEAP_FreeMemory(_pCommMP->_pWHWork);
+    GFL_HEAP_FreeMemory(_pCommMP);
     _pCommMP = NULL;
 }
 

@@ -335,7 +335,7 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
         }
         CommToolInitialize(HEAPID_COMMUNICATION);
         OHNO_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
-        _pComm = (_COMM_WORK_SYSTEM*)sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_WORK_SYSTEM));
+        _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
         
         _pComm->packetSizeMax = packetSizeMax + 64;
@@ -343,10 +343,10 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
         _pComm->changeService = COMM_MODE_NONE;
 //        _pComm->bAlone = FALSE;
         
-        _pComm->pRecvBufRing = sys_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax*2); ///< 子機が受け取るバッファ
-        _pComm->pTmpBuff = sys_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax);  ///< 受信受け渡しのための一時バッファ
-        _pComm->pServerRecvBufRing = sys_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする
-        _pComm->pMidRecvBufRing = sys_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする DS専用
+        _pComm->pRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax*2); ///< 子機が受け取るバッファ
+        _pComm->pTmpBuff = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax);  ///< 受信受け渡しのための一時バッファ
+        _pComm->pServerRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする
+        _pComm->pMidRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする DS専用
         // キューの初期化
         if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
             CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, HEAPID_COMMUNICATION);
@@ -847,13 +847,13 @@ void CommFinalize(void)
         OHNO_PRINT("VBLANKタスクを切る\n");
         TCB_Delete(_pComm->pVBlankTCB);
         _pComm->pVBlankTCB = NULL;
-        sys_FreeMemoryEz(_pComm->pRecvBufRing);
-        sys_FreeMemoryEz(_pComm->pTmpBuff);
-        sys_FreeMemoryEz(_pComm->pServerRecvBufRing);
-        sys_FreeMemoryEz(_pComm->pMidRecvBufRing);
+        GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
+        GFL_HEAP_FreeMemory(_pComm->pTmpBuff);
+        GFL_HEAP_FreeMemory(_pComm->pServerRecvBufRing);
+        GFL_HEAP_FreeMemory(_pComm->pMidRecvBufRing);
         CommQueueManagerFinalize(&_pComm->sendQueueMgrServer);
         CommQueueManagerFinalize(&_pComm->sendQueueMgr);
-        sys_FreeMemoryEz(_pComm);
+        GFL_HEAP_FreeMemory(_pComm);
         _pComm = NULL;
     }
 }

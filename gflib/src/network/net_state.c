@@ -257,7 +257,7 @@ static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
     }
     CommVRAMDInitialize();
     // 初期化
-    _pCommState = (_COMM_STATE_WORK*)sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
+    _pCommState = (_COMM_STATE_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
     MI_CpuFill8(_pCommState, 0, sizeof(_COMM_STATE_WORK));
     _pCommState->timer = _START_TIME;
     _pCommState->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
@@ -294,15 +294,15 @@ static void _stateFinalize(void)
 //    TCB_Delete(_pCommState->pTcb);
     CommCommandFinalize();
     if(_pCommState->pWifiFriendStatus){
-        sys_FreeMemoryEz(_pCommState->pWifiFriendStatus);
+        GFL_HEAP_FreeMemory(_pCommState->pWifiFriendStatus);
     }
     if(_pCommState->serviceNo >= COMM_MODE_BATTLE_SINGLE_WIFI){
-        sys_DeleteHeap(HEAPID_WIFIMENU);
+        GFL_HEAP_DeleteHeap(HEAPID_WIFIMENU);
     }
     WirelessIconEasyEnd();
     CommVRAMDFinalize();
-    sys_FreeMemoryEz(_pCommState);
-    sys_DeleteHeap(HEAPID_COMMUNICATION);
+    GFL_HEAP_FreeMemory(_pCommState);
+    GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
     _pCommState = NULL;
 }
 
@@ -3277,7 +3277,7 @@ void CommStateWifiDPWStart(SAVEDATA* pSaveData)
 {
     if(!_pCommState){
         sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_DPW );
-        _pCommState = (_COMM_STATE_WORK*)sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
+        _pCommState = (_COMM_STATE_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
         MI_CpuFill8(_pCommState, 0, sizeof(_COMM_STATE_WORK));
         _pCommState->serviceNo = COMM_MODE_DPW_WIFI;
         _pCommState->bWorldWifi = TRUE;
@@ -3300,9 +3300,9 @@ void CommStateWifiDPWEnd(void)
     if(_pCommState){
         sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
         CommStateSetErrorCheck(FALSE,FALSE);
-        sys_FreeMemoryEz(_pCommState);
+        GFL_HEAP_FreeMemory(_pCommState);
         _pCommState = NULL;
-        sys_DeleteHeap(HEAPID_COMMUNICATION);
+        GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
     }
 }
 
@@ -3318,7 +3318,7 @@ void CommStateWifiFusigiStart(SAVEDATA* pSaveData)
 {
     if(!_pCommState){
         sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_DPW );
-        _pCommState = (_COMM_STATE_WORK*)sys_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
+        _pCommState = (_COMM_STATE_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
         MI_CpuFill8(_pCommState, 0, sizeof(_COMM_STATE_WORK));
         _pCommState->serviceNo = COMM_MODE_FUSIGI_WIFI;
         _pCommState->bWorldWifi = TRUE;
@@ -3341,9 +3341,9 @@ void CommStateWifiFusigiEnd(void)
     if(_pCommState){
         sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
         CommStateSetErrorCheck(FALSE,FALSE);
-        sys_FreeMemoryEz(_pCommState);
+        GFL_HEAP_FreeMemory(_pCommState);
         _pCommState = NULL;
-        sys_DeleteHeap(HEAPID_COMMUNICATION);
+        GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
     }
 }
 
@@ -3548,7 +3548,7 @@ void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
     sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,COMM_MODE_LOGIN_WIFI);
-    _pCommState->pWifiFriendStatus = sys_AllocMemory( HEAPID_COMMUNICATION, wifiFriendStatusSize );
+    _pCommState->pWifiFriendStatus = GFL_HEAP_AllocMemory( HEAPID_COMMUNICATION, wifiFriendStatusSize );
     MI_CpuFill8( _pCommState->pWifiFriendStatus, 0, wifiFriendStatusSize );
 //    _pCommState->serviceNo = COMM_MODE_LOGIN_WIFI;
     _pCommState->regulationNo = 0;

@@ -49,7 +49,7 @@ struct _UI_SYS {
 
 UISYS* GFL_UI_sysInit(const int heapID)
 {
-    UISYS* pUI = sys_AllocMemory(heapID, sizeof(UISYS));
+    UISYS* pUI = GFL_HEAP_AllocMemory(heapID, sizeof(UISYS));
 
     MI_CpuClear8(pUI, sizeof(UISYS));
     pUI->pKey = GFL_UI_Key_sysInit(heapID);
@@ -83,9 +83,9 @@ void GFL_UI_sysMain(UISYS* pUI)
 
 void GFL_UI_sysEnd(UISYS* pUI)
 {
-    sys_FreeMemoryEz(pUI->pKey);
-    sys_FreeMemoryEz(pUI->pTP);
-    sys_FreeMemoryEz(pUI);
+    GFL_HEAP_FreeMemory(pUI->pKey);
+    GFL_HEAP_FreeMemory(pUI->pTP);
+    GFL_HEAP_FreeMemory(pUI);
 }
 
 //------------------------------------------------------------------

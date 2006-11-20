@@ -390,7 +390,7 @@ BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBu
 void GFL_NET_QueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing, int heapid)
 {
     MI_CpuFill8(pQueueMgr, 0 ,sizeof(SEND_QUEUE_MANAGER));
-    pQueueMgr->heapTop = sys_AllocMemory(heapid,
+    pQueueMgr->heapTop = GFL_HEAP_AllocMemory(heapid,
                                          sizeof(SEND_QUEUE)*queueMax);
     MI_CpuFill8(pQueueMgr->heapTop, 0 ,sizeof(SEND_QUEUE)*queueMax);
     pQueueMgr->max = queueMax;
@@ -426,7 +426,7 @@ void GFL_NET_QueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr)
 
 void GFL_NET_QueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr)
 {
-    sys_FreeMemoryEz( pQueueMgr->heapTop );
+    GFL_HEAP_FreeMemory( pQueueMgr->heapTop );
 }
 
 //==============================================================================

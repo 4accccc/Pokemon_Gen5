@@ -44,8 +44,8 @@ NET_TOOLSYS* GFL_NET_TOOL_sysInit(const int heapID, const int num)
     int i;
     NET_TOOLSYS* pCT;
 
-    pCT = sys_AllocMemory(heapID, sizeof(NET_TOOLSYS));
-    pCT->timingSync = sys_AllocMemory(heapID, num);
+    pCT = GFL_HEAP_AllocMemory(heapID, sizeof(NET_TOOLSYS));
+    pCT->timingSync = GFL_HEAP_AllocMemory(heapID, num);
     MI_CpuFill8(pCT->timingSync, 0xff , num);
     pCT->timingSyncEnd = 0xff;
     pCT->timingSyncMy = 0xff;
@@ -63,8 +63,8 @@ NET_TOOLSYS* GFL_NET_TOOL_sysInit(const int heapID, const int num)
 
 NET_TOOLSYS* GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT)
 {
-    sys_FreeMemoryEz(pCT->timingSync);
-    sys_FreeMemoryEz(pCT);
+    GFL_HEAP_FreeMemory(pCT->timingSync);
+    GFL_HEAP_FreeMemory(pCT);
 }
 
 //==============================================================================

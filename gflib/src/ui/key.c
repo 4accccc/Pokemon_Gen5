@@ -57,7 +57,7 @@ struct _UI_KEYSYS {
 
 UI_KEYSYS* GFL_UI_Key_sysInit(const int heapID)
 {
-    UI_KEYSYS* pKey = sys_AllocMemory(heapID, sizeof(UI_KEYSYS));
+    UI_KEYSYS* pKey = GFL_HEAP_AllocMemory(heapID, sizeof(UI_KEYSYS));
 
     MI_CpuClear8(pKey, sizeof(UI_KEYSYS));
 	pKey->repeatSpeed = 8;
