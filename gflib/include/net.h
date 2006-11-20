@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	network.h
+ * @file	net.h
  * @brief	通信ライブラリの外部公開関数
  * @author	k.ohno
  * @date    2006.11.4
@@ -8,6 +8,33 @@
 //=============================================================================
 #ifndef _NETWORK_H_
 #define _NETWORK_H_
+
+
+#undef GLOBAL
+#ifdef __NET_SYS_H_GLOBAL__
+#define GLOBAL /*	*/
+#else
+#define GLOBAL extern
+#endif
+
+// デバッグ用決まり文句----------------------
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+
+#if defined(DEBUG_ONLY_FOR_ohno)
+#undef GFL_NETDEBUG
+#define GFL_NET_DEBUG   (1)
+#endif  //DEBUG_ONLY_FOR_ohno
+
+#ifndef GFL_NET_PRINT
+#if GFL_NET_DEBUG
+#define GFL_NET_PRINT(...) \
+  (void) ((OS_Printf(__VA_ARGS__)))
+#else   //GFL_NET_DEBUG
+#define GFL_NET_PRINT(...)           ((void) 0)
+#endif  // GFL_NET_DEBUG
+#endif  //GFL_NET_PRINT
+// デバッグ用決まり文句----------------------
+
 
 // define 
 #define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
@@ -18,8 +45,8 @@ typedef struct u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef struct u8 ConnectID;      ///< 接続するためのID  0-16 まで
 typedef struct u8 NetID;          ///< 通信ID  0-200 まで
 
-/// 通信管理構造体
-typedef struct _GFNetHandle GFNetHandle;
+/// @brief 通信管理構造体
+typedef struct _GFL_NETSYS GFL_NETSYS;
 
 /// 送信完了を受け取るコールバック型
 typedef CBSendEndFunc;
