@@ -7,78 +7,17 @@
  */
 //==============================================================================
 #include "gflib.h"
+#include "heap_inter.h"
 
 #ifdef HEAP_DEBUG
 //#include  "system\heapdefine.h"
 //#define  ALLOCINFO_PRINT_HEAPID   HEAPID_BASE_APP	// このヒープＩＤに関してのみ詳細な情報を出力
 #endif
 
-
-//----------------------------------------------------------------
-/**
- *	マクロ
- */
-//----------------------------------------------------------------
-#define ASSERT_IRQ_ENABLED()		GF_ASSERT(OS_GetProcMode() != OS_PROCMODE_IRQ)
-
-
-//----------------------------------------------------------------
-/**
- *	ワーク定義
- */
-//----------------------------------------------------------------
-typedef struct {
-	NNSFndHeapHandle*	handle;
-	NNSFndHeapHandle*	parentHandle;
-	void**              heapMemBlock;
-	u16*				count;
-	u8*					handleIdxTbl;
-
-	u16     heapMax;
-	u16     baseHeapMax;
-	u16     usableHeapMax;
-	u16     invalidHandleIdx;
-
-}HEAP_SYS;
-
-
-//----------------------------------------------------------------
-/**
- *	メモリブロックヘッダ定義
- */
-//----------------------------------------------------------------
-typedef struct {
-	char	filename[ MEMBLOCK_FILENAME_AREASIZE ];	///< 呼び出し先ソース名
-	u32		heapID  : 8;							///< u32
-	u32		lineNum : 24;							///< 呼び出しソース行番号
-}MEMORY_BLOCK_HEADER;
-
-
-//----------------------------------------------------------------
-/**
- *	グローバル
- */
-//----------------------------------------------------------------
-static HEAP_SYS  HeapSys = { 0 };
-
-
-//----------------------------------------------------------------
-/**
- *	ハンドル取得マクロ
- */
-//----------------------------------------------------------------
-#define GetHeapHandle(idx)			(HeapSys.handle[ HeapSys.handleIdxTbl[ (idx) ] ])
-#define GetParentHeapHandle(idx)	(HeapSys.parentHandle[ HeapSys.handleIdxTbl[ (idx) ] ])
-#define GetHeapMemBlock(idx)		(HeapSys.heapMemBlock[ HeapSys.handleIdxTbl[ (idx) ] ])
-
-#define SetHeapHandle(idx,h)		(HeapSys.handle[ HeapSys.handleIdxTbl[ (idx) ] ] = (h))
-#define SetParentHeapHandle(idx,h)	(HeapSys.parentHandle[ HeapSys.handleIdxTbl[ (idx) ] ] = (h))
-#define SetHeapMemBlock(idx,m)		(HeapSys.heapMemBlock[ HeapSys.handleIdxTbl[ (idx) ] ] = (m))
-
-
 //==============================================================
 // Prototype
 //==============================================================
+#if 0
 static int SearchEmptyHandleIndex( void );
 static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 align );
 static void* AllocMemoryCore( NNSFndHeapHandle heapHandle, u32 size, s32 alignment, u32 heapID );
@@ -102,137 +41,51 @@ static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle,
 static void CopyFileName( char* dst, const MEMORY_BLOCK_HEADER* header );
 static void PrintUnreleasedMemoryInfo( u32 heapID );
 #endif
+#endif
+
 
 //------------------------------------------------------------------------------
 /**
- * Description:  システムヒープとアプリケーションヒープを作成します。両ヒープ
- * 				にはNITRO-Systemの拡張ヒープを使用しています。
+ * システム初期化
  *
- * 				システムヒープ用のメモリとして、SYSTEM_HEAP_SIZE分をメインア
- * 				リーナから確保し、メインアリーナの残りを全てアプリケーション
- * 				ヒープ用のメモリに確保しています。
- *
- * 				システムヒープは、ゲームシステム等のシステムプログラムで使用
- * 				することを想定しています。アプリケーションヒープには、ゲーム
- * 				で使用するデータをロードする為に使用します。
- *
- * @param   header			初期化情報
- * @param   baseHeapMax		基本ヒープエリア数
- * @param   totalHeapMax	全ヒープエリア数
- * @param   startOffset		与えられたバイト数だけ全体の開始位置をずらす
- *
+ * @param   header			親ヒープ初期化構造体へのポインタ
+ * @param   baseHeapMax		親ヒープ総数
+ * @param   heapMax			親ヒープ・子ヒープ合計数
+ * @param   startOffset		ヒープ領域開始オフセット（要４バイトアライン）
  */
 //------------------------------------------------------------------------------
-void sys_InitHeapSystem
-	(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset)
+void
+	GFL_HEAP_sysInit
+		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset)
 {
-	void *mem;
-	u32  usableHeapMax, i;
+	BOOL result = GFI_HEAP_sysInit( header, parentHeapMax, totalHeapMax, startOffset );
+	u32	 remainsize = (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo());
 
-	usableHeapMax = baseHeapMax + USER_HEAP_MAX;
-	if( totalHeapMax < usableHeapMax )
+	OS_Printf( "remains of MainRAM = 0x%08x bytes.\n", remainsize ); 
+	if( result == FALSE )
 	{
-		totalHeapMax = usableHeapMax;
-	}
-
-	// ヒープアドレスをずらす
-	if( startOffset )
-	{
-		while( startOffset & 3 )
-		{
-			startOffset++;
-		}
-		OS_AllocFromMainArenaLo( startOffset, DEFAULT_ALIGN );
-	}
-
-	/*
-	 * ヒープハンドル領域は、作成可能ヒープ数＋１　作成。
-	 * 最後の１は無効値を入れておいて、未作成ヒープのインデックステーブルはそこを指すようにする。
-	 */
-	HeapSys.handle = OS_AllocFromMainArenaLo(
-									sizeof(NNSFndHeapHandle) * (usableHeapMax + 1)
-								+	sizeof(NNSFndHeapHandle) * (usableHeapMax)
-								+	sizeof(void*) * (usableHeapMax)
-								+   sizeof(u16) * (totalHeapMax)
-								+	totalHeapMax, DEFAULT_ALIGN);
-
-	HeapSys.parentHandle = HeapSys.handle + (usableHeapMax + 1);
-	HeapSys.heapMemBlock = (void**)((u8*)(HeapSys.parentHandle) + 
-							(sizeof(NNSFndHeapHandle) * usableHeapMax));
-	HeapSys.count = (u16*)((u8*)(HeapSys.heapMemBlock) + (sizeof(void*) * usableHeapMax));
-	HeapSys.handleIdxTbl = (u8*)(HeapSys.count) + (sizeof(u16) * (totalHeapMax));
-
-	HeapSys.heapMax = totalHeapMax;
-	HeapSys.baseHeapMax = baseHeapMax;
-	HeapSys.invalidHandleIdx = usableHeapMax;
-	HeapSys.usableHeapMax = usableHeapMax;
-
-
-	// 基本ヒープ＆インデックス作成
-	for(i = 0; i < baseHeapMax; i++)
-	{
-        OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", 
-						(u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
-		switch( header[i].arenaID ){
-		case OS_ARENA_MAIN:
-		default:
-			mem = OS_AllocFromMainArenaLo( header[i].size, DEFAULT_ALIGN );
-			break;
-		case OS_ARENA_MAINEX:
-			mem = OS_AllocFromMainExArenaHi( header[i].size, DEFAULT_ALIGN );
-			break;
-		}
-
-		if( mem != NULL )
-		{
-			HeapSys.handle[i] = NNS_FndCreateExpHeap( mem, header[i].size );
-			HeapSys.handleIdxTbl[i] = i;
-		}
-		else
-		{
-			GF_ASSERT_MSG(0, "%xが確保できなかった size=%x\n" ,header[i].size, mem);
-		}
-	}
-
-	// ユーザーヒープ領域は無効値でクリアしておく
-	for(i = baseHeapMax; i < (usableHeapMax + 1); i++ )
-	{
-		HeapSys.handle[i] = NNS_FND_HEAP_INVALID_HANDLE;
-		HeapSys.handleIdxTbl[i] = HeapSys.invalidHandleIdx;
-	}
-	while( i < totalHeapMax )
-	{
-		HeapSys.handleIdxTbl[i++] = HeapSys.invalidHandleIdx;
-	}
-
-	// Allocカウンタクリア
-	for(i = 0; i < totalHeapMax; i++)
-	{
-		HeapSys.count[i] = 0;
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		OS_Panic( "Create ParentHeap FAILED. ID = %d size = %x\n" , 
+					errorCode, header[errorCode].size );
 	}
 }
 
 
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * ハンドル領域の空きを検索
- *
- * @retval  int		空きがあればインデックスナンバー／なければ-1
+ * システム終了
  */
-//------------------------------------------------------------------
-static int SearchEmptyHandleIndex( void )
+//------------------------------------------------------------------------------
+void
+	GFL_HEAP_sysExit
+		( void )
 {
-	int i;
+	BOOL result = GFI_HEAP_sysExit();
 
-	// 基本ヒープは解放されないハズなので…
-	for( i = HeapSys.baseHeapMax; i < HeapSys.usableHeapMax; i++ )
+	if( result == FALSE )
 	{
-		if(HeapSys.handle[i] == NNS_FND_HEAP_INVALID_HANDLE)
-		{
-			return i;
-		}
+		OS_Panic( "Delete ParentHeap FAILED.\n" );
 	}
-	return -1;
 }
 
 
@@ -241,282 +94,315 @@ static int SearchEmptyHandleIndex( void )
  * ヒープ作成
  *
  * @param   parentHeapID		メモリ領域確保用ヒープＩＤ（既に有効である必要がある）
- * @param   childHeapID			新規に作成するヒープＩＤ
+ * @param   childHeapID			新規に作成するヒープＩＤ（最上位ビットは取得方向フラグ）
  * @param   size				ヒープサイズ
- *
- * @retval	BOOL				TRUEで作成成功／FALSEで失敗
  */
 //------------------------------------------------------------------
-BOOL sys_CreateHeap( u32 parentHeapID, u32 childHeapID, u32 size )
+void 
+	GFL_HEAP_CreateHeap
+		( u32 parentHeapID, u32 childHeapID, u32 size )
 {
-	return CreateHeapCore( parentHeapID, childHeapID, size, DEFAULT_ALIGN );
-}
+	BOOL result = GFI_HEAP_CreateHeap( parentHeapID, childHeapID, size );
 
-
-//------------------------------------------------------------------
-/**
- * ヒープ作成（メモリ後方から確保）
- *
- * @param   parentHeapID		メモリ領域確保用ヒープＩＤ（既に有効である必要がある）
- * @param   childHeapID			新規に作成するヒープＩＤ
- * @param   size				ヒープサイズ
- *
- * @retval	BOOL				TRUEで作成成功／FALSEで失敗
- */
-//------------------------------------------------------------------
-BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size )
-{
-	return CreateHeapCore( parentHeapID, childHeapID, size, -DEFAULT_ALIGN );
-}
-
-
-//------------------------------------------------------------------
-/**
- * ヒープ作成実処理
- *
- * @param   parentHeapID	メモリ領域確保用ヒープＩＤ（既に有効である必要がある）
- * @param   childHeapID		新規に作成するヒープＩＤ
- * @param   size			ヒープサイズ
- * @param   align			アライメント（マイナスならメモリ後方から確保）
- *
- * @retval  BOOL		TRUEで作成成功／FALSEで失敗
- */
-//------------------------------------------------------------------
-static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 align )
-{
-	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), 
-					"Create Heap:%d size:%d", childHeapID, size);
-
-	if( HeapSys.handleIdxTbl[childHeapID] == HeapSys.invalidHandleIdx )
+	if( result == FALSE )
 	{
-		NNSFndHeapHandle  parentHeap = GetHeapHandle(parentHeapID);
-		if( parentHeap != NNS_FND_HEAP_INVALID_HANDLE )
-		{
-			void* mem = NNS_FndAllocFromExpHeapEx( parentHeap, size, align );
-			if( mem != NULL )
-			{
-				int i = SearchEmptyHandleIndex();
-				if( i >= 0 )
-				{
-					HeapSys.handle[i] = NNS_FndCreateExpHeap( mem, size );
-					if( HeapSys.handle[i] != NNS_FND_HEAP_INVALID_HANDLE )
-					{
-						HeapSys.parentHandle[i] = parentHeap;
-						HeapSys.heapMemBlock[i] = mem;
-						HeapSys.handleIdxTbl[childHeapID] = i;
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-						#ifdef ALLOCINFO_PRINT_HEAPID
-						if( ALLOCINFO_PRINT_HEAPID == childHeapID )
-						{
-							u32 freeSize = NNS_FndGetTotalFreeSizeForExpHeap( HeapSys.handle[i] );
-							OS_TPrintf("[HEAP] CRE_C total:0x%05x, 
-										usable:0x%05x  parent's id=%d, rest=0x%05x\n",
-										size, freeSize, parentHeapID, 
-										NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
-						}
-						if( ALLOCINFO_PRINT_HEAPID == parentHeapID )
-						{
-							u32 freeSize = NNS_FndGetTotalFreeSizeForExpHeap( parentHeap );
-							OS_TPrintf("[HEAP] CRE_P parent:%d rest:%05x, child:%d size:0x%05x\n",
-									parentHeapID, freeSize, childHeapID, size );
-						}
-						#endif
-						return TRUE;
-					}
-					else
-					{
-						GF_ASSERT_MSG(0, "ヒープ作成に失敗");
-					}
+		OS_Printf( "Create ChildHeap FAILED. ID = %d size = %x\n", childHeapID, size );
 
-				}
-				else
-				{
-					GF_ASSERT_MSG(0, "ヒープ管理テーブルに空きが無い");
-				}
-			}
-			else
-			{
-				GF_ASSERT_Printf("Heap(%d) Create FAILED (size:%x bytes)\n", childHeapID, size);
-				GF_ASSERT_Printf("ParentHeap(%d) %x bytes\n", 
-								parentHeapID, NNS_FndGetTotalFreeSizeForExpHeap( parentHeap ) );
-				GF_ASSERT(0);
-			}
-		}
-		else
+		switch( errorCode )
 		{
-			GF_ASSERT_MSG(0, "作成元ヒープＩＤが無効");
+			case HEAP_CANNOT_CREATE_DOUBLE:
+				OS_Panic( "already exist.\n" );
+				break;
+			case HEAP_CANNOT_CREATE_NOPARENT:
+				OS_Panic( "ParentHeap not exist.\n" );
+				break;
+			case HEAP_CANNOT_CREATE_HEAP:
+				OS_Panic( "not enough memory. ParentHeap ID = %d remains = %x\n",
+							parentHeapID, GFI_HEAP_GetHeapFreeSize( parentHeapID ) );
+				break;
+			case HEAP_CANNOT_CREATE_HEAPTABLE:
+				OS_Panic( "no more create heap.\n" );
+				break;
+			case HEAP_CANNOT_CREATE_HEAPHANDLE:
+				OS_Panic( "make handle FAILED.\n" );
+				break;
 		}
+	} else {
+		OS_Printf( "Create ChildHeap. ID = %d size = %x\n", childHeapID, size );
 	}
-	else
-	{
-		GF_ASSERT_MSG(0, "ヒープが２重に作られようとした");
-	}
-	return FALSE;
 }
+
 
 //------------------------------------------------------------------
 /**
  * ヒープ破棄
  *
- * @param   heapID		ヒープID
- *
+ * @param   childHeapID			破棄するヒープＩＤ（最上位ビットは取得方向フラグ）
  */
 //------------------------------------------------------------------
-void sys_DeleteHeap( u32 heapID )
+void
+	GFL_HEAP_DeleteHeap
+		( u32 childHeapID )
 {
-	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), "Delete Heap:%d", heapID);
-
+#ifdef HEAPSYS_DEBUG
 	{
-		NNSFndHeapHandle  handle, parentHandle;
+		u16	restheap_count = GFI_HEAP_GetHeapCount( childHeapID );
 
-		handle = GetHeapHandle(heapID);
+		if( restheap_count ){
+			OS_Printf( "these Memoryblocks haven't released\n" );
+			OS_Printf( "HeapID = %d  restcnt = %d .....\n", childHeapID, restheap_count );
 
+			OS_Panic( "\n" );
+		}
+	}
+#endif
+	{
+		BOOL result = GFI_HEAP_DeleteHeap( childHeapID );
 
-		if(handle != NNS_FND_HEAP_INVALID_HANDLE)
+		if( result == FALSE )
 		{
-			NNSFndHeapHandle  parentHandle;
-			void* heapMemBlock;
-
-		// デバッグ時は未解放メモリの情報を出力
-			#ifdef HEAP_DEBUG
-			if( HeapSys.count[heapID] )
+			u32 errorCode = GFI_HEAP_ErrorCodeGet();
+	
+			OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID );
+	
+			switch( errorCode )
 			{
-				PrintUnreleasedMemoryInfo( heapID );
-				GF_ASSERT(0);
+				case HEAP_CANNOT_DELETE_DOUBLE:
+					OS_Panic( "not exist.\n" );
+					break;
+				case HEAP_CANNOT_DELETE_NOPARENT:
+					OS_Panic( "ParentHeap cannot search.\n" );
+					break;
 			}
-			#endif
-
-			NNS_FndDestroyExpHeap( handle );
-
-			parentHandle = GetParentHeapHandle(heapID);
-			heapMemBlock = GetHeapMemBlock(heapID);
-			if(	(parentHandle != NNS_FND_HEAP_INVALID_HANDLE)
-			&&	(heapMemBlock != NULL)
-			){
-				NNS_FndFreeToExpHeap( parentHandle, heapMemBlock );
-			}else{
-				GF_ASSERT(0);
-			}
-
-			SetHeapHandle(heapID, NNS_FND_HEAP_INVALID_HANDLE);
-			SetParentHeapHandle(heapID, NNS_FND_HEAP_INVALID_HANDLE);
-			SetHeapMemBlock(heapID, NULL);
-			HeapSys.handleIdxTbl[ heapID ] = HeapSys.invalidHandleIdx;
-
-			#ifdef ALLOCINFO_PRINT_HEAPID
-			if( heapID == ALLOCINFO_PRINT_HEAPID )
-			{
-				OS_TPrintf("[HEAP] DELETE Heap(%d), parent's rest=%05x\n",
-					heapID, NNS_FndGetTotalFreeSizeForExpHeap(parentHandle) );
-			}
-			else
-			{
-				u32 parentID;
-
-				for(parentID=0; parentID<HeapSys.usableHeapMax; parentID++)
-				{
-					if( HeapSys.handle[parentID] == parentHandle ){ break; }
-				}
-				if( parentID == ALLOCINFO_PRINT_HEAPID )
-				{
-					OS_TPrintf("[HEAP] DELETE Heap(%d), parentHeap(%d), parent's rest=%05x\n",
-						heapID, parentID, NNS_FndGetTotalFreeSizeForExpHeap(parentHandle) );
-				}
-			}
-			#endif
+		} else {
+			OS_Printf( "Delete ChildHeap. ID = %d\n", childHeapID );
 		}
 	}
 }
 
-//------------------------------------------------------------------
-/**
- * メモリアロケート本体（デバッグ版、製品版ともコイツを呼び出す）
- *
- * @param   heapHandle		拡張ヒープハンドル
- * @param   size			アロケートサイズ
- * @param   alignment		アライメント
- * @param   heapID			ヘッダに保存するヒープID
- *
- * @retval  void*			確保したメモリ（ヘッダ分は飛ばしてある）
- */
-//------------------------------------------------------------------
-static void* AllocMemoryCore( NNSFndHeapHandle heapHandle, u32 size, s32 alignment, u32 heapID )
-{
-	void* mem;
-    OSIntrMode old;
-
-	GF_ASSERT_MSG(heapHandle != NNS_FND_HEAP_INVALID_HANDLE, "heapID=%d", heapID);
-    old = OS_DisableInterrupts();
-	mem = NNS_FndAllocFromExpHeapEx( heapHandle, size + sizeof(MEMORY_BLOCK_HEADER), alignment );
-    OS_RestoreInterrupts( old );
-
-	if( mem != NULL )
-	{
-		((MEMORY_BLOCK_HEADER*)mem)->heapID = heapID;
-		(u8*)mem += sizeof(MEMORY_BLOCK_HEADER);
-	}
-
-	return mem;
-}
-
-
-
-#ifndef HEAP_DEBUG
 
 //------------------------------------------------------------------
 /**
  * ヒープからメモリを確保する
  *
- * @param   heapID		ヒープＩＤ
+ * @param   heapID		ヒープＩＤ（最上位ビットは取得方向フラグ）
  * @param   size		確保サイズ
  *
- * @retval  void*		確保した領域アドレス（失敗ならNULL）
+ * @retval  void*		確保した領域アドレス
  */
 //------------------------------------------------------------------
-void* sys_AllocMemory( u32 heapID, u32 size )
+#ifndef HEAPSYS_DEBUG
+void*
+	GFL_HEAP_AllocMemoryblock
+		( u32 heapID, u32 size )
+#else
+void*
+	GFL_HEAP_AllocMemoryblock
+		( u32 heapID, u32 size, const char* filename, u32 linenum )
+#endif
 {
-	void* ret = NULL;
+	void* memory = GFI_HEAP_AllocMemory( heapID, size );
 
-	if( heapID < HeapSys.heapMax )
+	if( memory == NULL )
 	{
-		NNSFndHeapHandle  h = GetHeapHandle( heapID );
-		ret = AllocMemoryCore( h, size, DEFAULT_ALIGN, heapID );
-	}
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-	if( ret != NULL )
-	{
-		HeapSys.count[heapID]++;
-	}
+		OS_Printf( "Alloc Memory FAILED. heapID = %d. allocsize = %x\n", heapID, size );
 
-	return ret;
+		switch( errorCode )
+		{
+			case HEAP_CANNOT_ALLOC_NOID:
+				OS_Panic( "heapID is not exist.\n" );
+				break;
+			case HEAP_CANNOT_ALLOC_NOHEAP:
+				OS_Panic( "heap is not exist.\n" );
+				break;
+			case HEAP_CANNOT_ALLOC_MEM:
+				OS_Panic( "not enough memory. heapID = %d remains = %x\n",
+							heapID,	GFI_HEAP_GetHeapFreeSize( heapID ));
+				break;
+		}
+	}
+	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
+	//OS_Printf( "Alloc Memory. Heap ID = %d. allocsize = %x\n", heapID, size );
+	return memory;
 }
+
+
 //------------------------------------------------------------------
 /**
- * ヒープ後方からメモリを確保する（テンポラリ領域用）
+ * ヒープからメモリを解放する
  *
- * @param   heapID		ヒープＩＤ
- * @param   size		確保サイズ
- *
- * @retval  void*		確保した領域アドレス（失敗ならNULL）
+ * @param   memory		確保したメモリアドレス
  */
 //------------------------------------------------------------------
-void* sys_AllocMemoryLo( u32 heapID, u32 size )
+void
+	GFL_HEAP_FreeMemoryblock
+		( void* memory )
 {
-	void* ret = NULL;
+	BOOL result = GFI_HEAP_FreeMemory( memory );
 
-	if( heapID < HeapSys.heapMax )
+	if( result == FALSE )
 	{
-		NNSFndHeapHandle  h = GetHeapHandle( heapID );
-		ret = AllocMemoryCore( h, size, -DEFAULT_ALIGN, heapID );
-	}
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-	if( ret != NULL )
-	{
-		HeapSys.count[heapID]++;
-	}
+		OS_Printf( "Free Memory FAILED. memory = %08x\n", memory );
 
-	return ret;
+		switch( errorCode )
+		{
+			case HEAP_CANNOT_FREE_NOBLOCK:
+				OS_Panic( "this pointer is not memory_block.\n" );
+				break;
+			case HEAP_CANNOT_FREE_NOID:
+				OS_Panic( "system_backup_heapID is not exist.\n" );
+				break;
+			case HEAP_CANNOT_FREE_NOHEAP:
+				OS_Panic( "system_backup_heap is not exist.\n" );
+				break;
+			case HEAP_CANNOT_FREE_NOMEM:
+				OS_Printf( "this memory_block is not exist\n" );
+				GFL_HEAP_CheckHeapSafe( GFI_HEAP_GetMemheaderHeapID( memory ));
+				break;
+		}
+	}
+	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
+	//OS_Printf( "Free Memory.\n", heapID, size );
 }
+
+
+//------------------------------------------------------------------
+/**
+ * NitroSystem ライブラリ系関数が要求するアロケータを作成する
+ *
+ * @param   pAllocator		NNSFndAllocator構造体のアドレス
+ * @param   heapID			ヒープＩＤ（最上位ビットは取得方向フラグ）
+ * @param   align			確保するメモリブロックに適用するアライメント（負の値は正の値に変換）
+ */
+//------------------------------------------------------------------
+void
+	GFL_HEAP_InitAllocator
+		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment )
+{
+	BOOL result = GFI_HEAP_InitAllocator( pAllocator, heapID, alignment );
+
+	if( result == FALSE )
+	{
+		OS_Printf( "InitAllocator FAILED.\n" );
+		OS_Panic( "heapID is not exist. ID = %d\n", heapID );
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
+ * 確保したメモリブロックのサイズを変更する。
+ *
+ * @param   memory		メモリブロックポインタ
+ * @param   newSize		変更後のサイズ（バイト単位）
+ */
+//------------------------------------------------------------------
+void
+	GFL_HEAP_MemoryResize
+		( void* memory, u32 newSize )
+{
+	BOOL result = GFI_HEAP_MemoryResize( memory, newSize );
+
+	if( result == FALSE )
+	{
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+
+		OS_Printf( "MemoryResize FAILED.\n" );
+
+		switch( errorCode )
+		{
+			case HEAP_CANNOT_MEMRESIZE_NOBLOCK:
+				OS_Panic( "this pointer is not memory_block.\n" );
+				break;
+			case HEAP_CANNOT_MEMRESIZE_NOID:
+				OS_Panic( "system_backup_heapID is crushed.\n" );
+				break;
+			case HEAP_CANNOT_MEMRESIZE_NOHEAP:
+				OS_Panic( "system_backup_heap is not exist.\n" );
+				break;
+			case HEAP_CANNOT_MEMRESIZE_LARGE:
+				OS_Printf( "cannot large\n" );
+				break;
+			case HEAP_CANNOT_MEMRESIZE_SMALL:
+				OS_Printf( "cannot small\n" );
+				break;
+		}
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
+ * ヒープの空き領域サイズを返す
+ *
+ * @param   heapID	ヒープＩＤ（最上位ビットは取得方向フラグ）
+ *
+ * @retval  u32		空き領域サイズ（バイト単位）
+ */
+//------------------------------------------------------------------
+u32
+	GFL_HEAP_GetHeapFreeSize
+		( u32 heapID )
+{
+	u32 result =  GFI_HEAP_GetHeapFreeSize( heapID );
+
+	if( result == 0 )
+	{
+		OS_Printf( "GetHeapFreeSize FAILED.\n" );
+		OS_Panic( "heapID is not exist. ID = %d\n", heapID );
+	}
+	return result;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * ヒープ領域が破壊されていないかチェック
+ *
+ * @param   heapID	ヒープID（最上位ビットは取得方向フラグ）
+ *
+ * @retval  BOOL	破壊されていなければTRUE
+ */
+//------------------------------------------------------------------
+void
+	GFL_HEAP_CheckHeapSafe
+		( u32 heapID )
+{
+	BOOL result = GFI_HEAP_CheckHeapSafe( heapID );
+
+	if( result == FALSE )
+	{
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+
+		OS_Printf( "Memory Check FAILED.\n" );
+
+		switch( errorCode )
+		{
+			case HEAP_CANNOT_CHECKHEAPSAFE_NOID:
+				OS_Printf( "heapID is not exist.\n" );
+				break;
+			case HEAP_CANNOT_CHECKHEAPSAFE_NOHEAP:
+				OS_Printf( "heap is not exist.\n" );
+				break;
+			case HEAP_CANNOT_CHECKHEAPSAFE_DESTROY:
+				OS_Panic( "memory is Crushed\n" );
+				break;
+		}
+	}
+}
+
+
+
+
+
+#if 0
+#ifndef HEAP_DEBUG
 #else	// #ifndef HEAP_DEBUG
 
 //------------------------------------------------------------------
@@ -536,7 +422,7 @@ static void PrintAllocInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle 
 	CopyFileName( filename, header );
 
 	OS_TPrintf("[HEAP] ALLOC count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
-				HeapSys.count[header->heapID], NNS_FndGetTotalFreeSizeForExpHeap(handle), 
+				GetHeapCount(header->heapID), NNS_FndGetTotalFreeSizeForExpHeap(handle), 
 				(u32)header, size+sizeof(MEMORY_BLOCK_HEADER), filename, header->lineNum );
 }
 
@@ -565,7 +451,7 @@ static void PrintFreeInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle h
 	restSize = NNS_FndGetTotalFreeSizeForExpHeap(handle) + blockSize;
 
 	OS_TPrintf("[HEAP] FREE  count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
-				HeapSys.count[header->heapID], restSize, (u32)header, blockSize,
+				GetHeapCount(header->heapID), restSize, (u32)header, blockSize,
 				filename, header->lineNum );
 }
 
@@ -596,7 +482,7 @@ void* sys_AllocMemoryDebug( u32 heapID, u32 size, const char* filename, u32 line
 		{
 			HeaderDebugParamSet((MEMORY_BLOCK_HEADER*)( (u8*)mem - sizeof(MEMORY_BLOCK_HEADER) ),
 									filename, line_num);
-			HeapSys.count[heapID]++;
+			GetHeapCount(heapID)++;
 
 			#ifdef ALLOCINFO_PRINT_HEAPID
 			if( ALLOCINFO_PRINT_HEAPID == heapID )
@@ -647,7 +533,7 @@ void* sys_AllocMemoryLoDebug( u32 heapID, u32 size, const char* filename, u32 li
 		{
 			HeaderDebugParamSet((MEMORY_BLOCK_HEADER*)( (u8*)mem - sizeof(MEMORY_BLOCK_HEADER) ),
 									filename, line_num);
-			HeapSys.count[heapID]++;
+			GetHeapCount(heapID)++;
 
 			#ifdef ALLOCINFO_PRINT_HEAPID
 			if( ALLOCINFO_PRINT_HEAPID == heapID )
@@ -753,16 +639,16 @@ void sys_FreeMemoryEz( void* memory )
 
 		if( heapID < HeapSys.heapMax )
 		{
-			NNSFndHeapHandle  h = HeapSys.handle[ HeapSys.handleIdxTbl[ heapID ] ];
+			NNSFndHeapHandle  h = GetHeapHandle(heapID);
 
 			GF_ASSERT(h != NNS_FND_HEAP_INVALID_HANDLE);
-			if( HeapSys.count[heapID] == 0 )
+			if( GetHeapCount(heapID) == 0 )
 			{
 				sys_CheckHeapSafe(heapID);
 			}
-			GF_ASSERT_MSG( HeapSys.count[heapID], "heapID = %d", heapID );
+			GF_ASSERT_MSG( GetHeapCount(heapID), "heapID = %d", heapID );
 
-			HeapSys.count[ heapID ]--;
+			GetHeapCount(heapID)--;
 
 			#ifdef ALLOCINFO_PRINT_HEAPID
 			if( ALLOCINFO_PRINT_HEAPID == heapID )
@@ -815,8 +701,8 @@ void sys_FreeMemory( u32 heapID, void* memory )
 		}
 		NNS_FndFreeToExpHeap( h, memory );
 
-		GF_ASSERT( HeapSys.count[ heapID ] );
-		HeapSys.count[ heapID ]--;
+		GF_ASSERT( GetHeapCount(heapID) );
+		GetHeapCount(heapID)--;
 
 		#ifdef ALLOCINFO_PRINT_HEAPID
 		if( ALLOCINFO_PRINT_HEAPID == heapID )
@@ -964,7 +850,7 @@ BOOL sys_CheckHeapSafe( u32 heapID )
 //------------------------------------------------------------------
 void sys_CheckHeapFullReleased( u32 heapID )
 {
-	if( HeapSys.count[heapID] )
+	if( GetHeapCount(heapID) )
 	{
 		PrintUnreleasedMemoryInfo( heapID );
 		GF_ASSERT(0);
@@ -1003,7 +889,7 @@ u64 sys_GetHeapState( u32 heapID )
 		NNSFndHeapHandle h;
 
 		h = GetHeapHandle(heapID);
-		ret = (HeapSys.count[heapID] << 32) | NNS_FndGetTotalFreeSizeForExpHeap(h);
+		ret = (GetHeapCount(heapID) << 32) | NNS_FndGetTotalFreeSizeForExpHeap(h);
 		return ret;
 	}
 	GF_ASSERT(0);
@@ -1116,7 +1002,7 @@ static void CopyFileName( char* dst, const MEMORY_BLOCK_HEADER* header )
 static void PrintUnreleasedMemoryInfo( u32 heapID )
 {
 	GF_ASSERT_Printf("these Memoryblocks haven't released\n");
-	GF_ASSERT_Printf("HeapID:%d  restcnt = %d .....\n", heapID, HeapSys.count[heapID]);
+	GF_ASSERT_Printf("HeapID:%d  restcnt = %d .....\n", heapID, GetHeapCount(heapID));
 	#ifdef HEAP_DEBUG
 	{
 		NNSFndHeapHandle  handle = GetHeapHandle(heapID);
@@ -1206,4 +1092,5 @@ void HSS_Delete( HEAP_STATE_STACK* hss )
 
 #endif	// HEAP_DEBUG
 
+#endif
 
