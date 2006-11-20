@@ -7,7 +7,6 @@
  */
 //==============================================================================
 #include "gflib.h"
-#include "heap_inter.h"
 
 #ifdef HEAP_DEBUG
 //#include  "system\heapdefine.h"
