@@ -9,17 +9,13 @@
 #ifndef __HEAPSYS_H__
 #define __HEAPSYS_H__
 
-//#define HEAP_DEBUG
+#define HEAPSYS_DEBUG
 
 //----------------------------------------------------------------
 /**
  *	定数
  */
 //----------------------------------------------------------------
-#define DEFAULT_ALIGN					(4)		// メモリ確保時のアライメント値
-#define MEMBLOCK_FILENAME_AREASIZE		(12)	// デバッグ用ヘッダに格納するファイル名領域サイズ
-#define USER_HEAP_MAX					(24)	// 一度に作成可能なユーザーヒープの数
-
 
 //==============================================================
 /**
@@ -31,135 +27,156 @@ typedef struct {
 	OSArenaId  arenaID;		///< 作成先アリーナID
 }HEAP_INIT_HEADER;
 
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /**
- * ヒープシステム初期化（プログラム起動時に１度だけ呼ばれる）
+ * システム初期化（プログラム起動時に１度だけ呼ばれる）
  *
- * @param   header			基本ヒープ初期化構造体へのポインタ
- * @param   baseHeapMax		基本ヒープ総数
- * @param   heapMax			基本ヒープ・ユーザーヒープ合計数
+ * @param   header			親ヒープ初期化構造体へのポインタ
+ * @param   baseHeapMax		親ヒープ総数
+ * @param   heapMax			親ヒープ・子ヒープ合計数
  * @param   startOffset		ヒープ領域開始オフセット（要４バイトアライン）
- *
  */
-//------------------------------------------------------------------
-extern void sys_InitHeapSystem
-(const HEAP_INIT_HEADER* header, u32 baseHeapMax, u32 totalHeapMax, u32 startOffset);
+//------------------------------------------------------------------------------
+extern void
+	GFL_HEAP_sysInit
+		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset);
+
+//------------------------------------------------------------------------------
+/**
+ * システム終了
+ */
+//------------------------------------------------------------------------------
+extern void
+	GFL_HEAP_sysExit
+		( void );
 
 //------------------------------------------------------------------
 /**
  * ヒープ作成
  *
  * @param   parentHeapID		メモリ領域確保用ヒープＩＤ（既に有効である必要がある）
- * @param   childHeapID			新規に作成するヒープＩＤ
+ * @param   childHeapID			新規に作成するヒープＩＤ（最上位ビットは取得方向フラグ）
  * @param   size				ヒープサイズ
- *
- * @retval	BOOL				TRUEで作成成功／FALSEで失敗
  */
 //------------------------------------------------------------------
-extern BOOL sys_CreateHeap( u32 parentHeapID, u32 childHeapID, u32 size );
+extern void 
+	GFL_HEAP_CreateHeap
+		( u32 parentHeapID, u32 childHeapID, u32 size );
 
-//------------------------------------------------------------------
-/**
- * ヒープ作成（メモリ後方から確保）
- *
- * @param   parentHeapID		メモリ領域確保用ヒープＩＤ（既に有効である必要がある）
- * @param   childHeapID			新規に作成するヒープＩＤ
- * @param   size				ヒープサイズ
- *
- * @retval	BOOL				TRUEで作成成功／FALSEで失敗
- */
-//------------------------------------------------------------------
 extern BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size );
 
 //------------------------------------------------------------------
 /**
  * ヒープ破棄
  *
- * @param   heapID		ヒープID
- *
+ * @param   childHeapID			破棄するヒープＩＤ（最上位ビットは取得方向フラグ）
  */
 //------------------------------------------------------------------
-extern void sys_DeleteHeap( u32 heapID );
+extern void
+	GFL_HEAP_DeleteHeap
+		( u32 childHeapID );
 
 //------------------------------------------------------------------
-/*
- * 	メモリ確保
+/**
+ * ヒープからメモリを確保する
  *
- *	sys_AllocMemory はヒープの先頭から空き領域を探してメモリを割り当てる。
- *	sys_AllocMemoryLo はヒープの後方から空き領域を探してメモリを割り当てる。
+ * @param   heapID		ヒープＩＤ（最上位ビットは取得方向フラグ）
+ * @param   size		確保サイズ
  *
- *	VRAM転送前のグラフィックデータ一時的読み込み領域など、すぐに解放する領域は
- *	sys_AllocMemoryLo で確保すれば領域の断片化が起こりづらくなるはず。
+ * @retval  void*		確保した領域アドレス
+ *
+ *	テンポラリ領域など、すぐに解放する領域は
+ *	後方取得マクロ（ヒープＩＤを加工）で確保すれば領域の断片化が起こりづらくなる。
+ *
+ *　※デバッグビルド時にはマクロでラップして呼び出しソース情報を渡している
  */
 //------------------------------------------------------------------
-#ifndef HEAP_DEBUG
-extern void* sys_AllocMemory( u32 heap, u32 size );
-extern void* sys_AllocMemoryLo( u32 heap, u32 size );
+#ifndef HEAPSYS_DEBUG
+
+extern void*
+	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
+		( u32 heapID, u32 size );
+
+#define GFL_HEAP_AllocMemory( ID, siz )	GFL_HEAP_AllocMemoryblock( ID, siz )
+
 #else
 
-// デバッグビルド時にはマクロでラップして呼び出しソース情報を渡している
-extern void* sys_AllocMemoryDebug( u32 heap, u32 size, const char* filename, u32 line_num );
-extern void* sys_AllocMemoryLoDebug( u32 heap, u32 size, const char* filename, u32 line_num );
-#define sys_AllocMemory(h,s)	sys_AllocMemoryDebug((h),(s),__FILE__,__LINE__);
-#define sys_AllocMemoryLo(h,s)	sys_AllocMemoryLoDebug((h),(s),__FILE__,__LINE__);
+extern void*
+	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
+		( u32 heapID, u32 size, const char* filename, u32 linenum );
+
+#define GFL_HEAP_AllocMemory( ID, siz )	GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
 
 #endif
 
 //------------------------------------------------------------------
-/*
- * 	メモリ解放
+/**
+ * ヒープからメモリを解放する
  *
- *  確保時にu32をヘッダに保存するため、解放時には不要。
- *  通常は sys_FreeMemoryEz を使えば問題ない。
- *
- *  sys_FreeMemory の方は、一応そのままのインターフェースで残してある
- *
+ * @param   memory		確保したメモリアドレス
  */
 //------------------------------------------------------------------
-extern void sys_FreeMemoryEz( void* memory );
-extern void sys_FreeMemory( u32 heap, void* memory );
+extern void
+	GFL_HEAP_FreeMemoryblock	//この関数を直接呼び出すのは禁止
+		( void* memory );
 
-//------------------------------------------------------------------
-/*
- * 	ヒープ情報取得
- */
-//------------------------------------------------------------------
-extern u32 sys_GetHeapFreeSize( u32 heap );
-extern u32 sys_GetHeapAllocatedSize( u32 heap );
-
-//------------------------------------------------------------------
-/*
- * 	アロケーター作成（NitroSystem ライブラリ系関数が要求する場合がある）
- */
-//------------------------------------------------------------------
-extern void sys_InitAllocator( NNSFndAllocator* pAllocator, u32 heap, int alignment);
+#define GFL_HEAP_FreeMemory( mem )	GFL_HEAP_FreeMemoryblock( mem )
 
 //------------------------------------------------------------------
 /**
- * 確保したメモリブロックのサイズを縮小する。
+ * NitroSystem ライブラリ系関数が要求するアロケータを作成する
  *
- * @param   memBlock		メモリブロックポインタ
- * @param   newSize			縮小後のサイズ（バイト単位）
- *
- *
- * 縮小は、メモリブロックの後ろ方向からメモリを解放することで行う。
- * 解放された分はシステムに返還され、新たなアロケート領域として使用できる。
- *
- * 例えば【ヘッダ＋実体】のような形式のグラフィックバイナリをＲＡＭに読み込み、
- * 実体部をVRAMに転送した後、ヘッダのみを残したいというケースなどで使用することを
- * 想定している。使用は慎重に。
- *
+ * @param   pAllocator		NNSFndAllocator構造体のアドレス
+ * @param   heapID			ヒープＩＤ（最上位ビットは取得方向フラグ）
+ * @param   align			確保するメモリブロックに適用するアライメント（負の値は正の値に変換）
  */
 //------------------------------------------------------------------
-extern void sys_CutMemoryBlockSize( void* memBlock, u32 newSize );
+extern void
+	GFL_HEAP_InitAllocator
+		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment );
 
 //------------------------------------------------------------------
-/*
- * 	ヒープ情報取得（デバッグ時のみ有効）
+/**
+ * 確保したメモリブロックのサイズを変更する。
+ *
+ * @param   memory		メモリブロックポインタ
+ * @param   newSize		変更後のサイズ（バイト単位）
  */
 //------------------------------------------------------------------
-extern BOOL sys_CheckHeapSafe( u32 heap );
+extern void
+	GFL_HEAP_MemoryResize
+		( void* memory, u32 newSize );
 
+//------------------------------------------------------------------
+/**
+ * ヒープの空き領域サイズを返す
+ *
+ * @param   heapID	ヒープＩＤ（最上位ビットは取得方向フラグ）
+ *
+ * @retval  u32		空き領域サイズ（バイト単位）エラー時は0
+ *					errorCode：失敗原因
+ */
+//------------------------------------------------------------------
+extern u32
+	GFL_HEAP_GetHeapFreeSize
+		( u32 heapID );
+
+//------------------------------------------------------------------
+/**
+ * ヒープ領域が破壊されていないかチェック
+ *
+ * @param   heapID	ヒープID（最上位ビットは取得方向フラグ）
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_HEAP_CheckHeapSafe
+		( u32 heapID );
+
+
+
+
+
+#if 0
 #ifdef HEAP_DEBUG
 extern void sys_PrintHeapFreeSize( u32 heapID );
 extern void sys_PrintHeapExistMemoryInfo( u32 heapID );
@@ -204,8 +221,7 @@ extern void HSS_Delete( HEAP_STATE_STACK* hss );
 #define HeapStatePush()		/* */
 #define HeapStatePop()		/* */
 #define HeapStateCheck(h)	/* */
-
-
+#endif
 
 
 #endif	// __HEAPSYS_H__
