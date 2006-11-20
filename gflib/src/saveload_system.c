@@ -207,7 +207,7 @@ SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
 	SAVEDATA * sv;
 
 
-	sv = sys_AllocMemory(heap_save_id, sizeof(SAVEDATA));
+	sv = GFL_HEAP_AllocMemory(heap_save_id, sizeof(SAVEDATA));
 	MI_CpuClearFast(sv, sizeof(SAVEDATA));
 	SvPointer = sv;
 	sv->heap_save_id = heap_save_id;
@@ -313,7 +313,7 @@ const void * SaveData_GetReadOnlyData(const SAVEDATA * sv, GMDATA_ID gmdataID)
 BOOL SaveData_Erase(SAVEDATA * sv)
 {
 	u32 i;
-	u8 * buf = sys_AllocMemoryLo(sv->heap_temp_id, SECTOR_SIZE);
+	u8 * buf = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE);
 	//sys_SleepNG(SLEEPTYPE_SAVELOAD);
 
 	//各ブロックのフッタ部分だけを先行して削除する
@@ -327,7 +327,7 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 		(void)PMSVLD_Save(SECTOR_SIZE * (i + FIRST_MIRROR_START), buf, SECTOR_SIZE);
 		(void)PMSVLD_Save(SECTOR_SIZE * (i + SECOND_MIRROR_START), buf, SECTOR_SIZE);
 	}
-	sys_FreeMemoryEz(buf);
+	GFL_HEAP_FreeMemory(buf);
 	SaveData_ClearData(sv);
 	sv->data_exists = FALSE;
 	//sys_SleepOK(SLEEPTYPE_SAVELOAD);
@@ -868,8 +868,8 @@ static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 	u32 nres, bres;
 	u32 n_main, b_main, n_sub, b_sub;
 
-	buffer1 = sys_AllocMemoryLo(sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
-	buffer2 = sys_AllocMemoryLo(sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
+	buffer1 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
+	buffer2 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
 
 	if(PMSVLD_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SECTOR_SIZE * SECTOR_MAX)) {
 		_checkBlockInfo(&ndata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_NORMAL);
@@ -886,8 +886,8 @@ static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 		_setDummyInfo(&bdata[MIRROR2ND]);
 	}
 
-	sys_FreeMemoryEz(buffer1);
-	sys_FreeMemoryEz(buffer2);
+	GFL_HEAP_FreeMemory(buffer1);
+	GFL_HEAP_FreeMemory(buffer2);
 
 	nres = _getNewerData(&ndata[MIRROR1ST], &ndata[MIRROR2ND], &n_main, &n_sub);
 	bres = _getNewerData(&bdata[MIRROR1ST], &bdata[MIRROR2ND], &b_main, &b_sub);
@@ -1557,7 +1557,7 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, u32 heap_id, EXDATA_ID id, LOAD_RE
 	extbl = &ExtraSaveDataTable[id];
 	GF_ASSERT(extbl->id == id);
 	data_size = extbl->get_size() + sizeof(CHECK_TAIL_DATA);
-	buf = sys_AllocMemory(heap_id, data_size);
+	buf = GFL_HEAP_AllocMemory(heap_id, data_size);
 
 	(void)PMSVLD_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 	res1 = IsCorrectExtraCheckData(sv, buf, id, extbl->get_size());
@@ -1724,7 +1724,7 @@ BOOL PMSVLD_Load(u32 src, void * dst, u32 len)
 
 #ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
 	if (!result) {
-		sys_FreeMemoryEz(SvPointer);
+		GFL_HEAP_FreeMemory(SvPointer);
 		GF_ASSERT(0);
 		//BackupErrorWarningCall(HEAPID_BASE_SAVE);
 	}
@@ -1814,7 +1814,7 @@ static void PMSVLD_SaveError(u16 lock_id, int error_msg_id)
 	OS_ReleaseLockID(lock_id);
 
 	//セーブ失敗画面でセーブヒープを使用できるように開放する
-	sys_FreeMemoryEz(SvPointer);
+	GFL_HEAP_FreeMemory(SvPointer);
 
 	//セーブ失敗画面呼び出し
 	GF_ASSERT(0);
