@@ -63,7 +63,7 @@ struct _PROC{
 PROC * GFL_PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id)
 {
 	PROC * proc;
-	proc = sys_AllocMemory(heap_id, sizeof(PROC));
+	proc = GFL_HEAP_AllocMemory(heap_id, sizeof(PROC));
 	proc->data = *data;
 	proc->proc_seq = 0;
 	proc->subseq = 0;
@@ -101,7 +101,7 @@ PROC * GFL_PROC_CreateChild(PROC * proc, const PROC_DATA * data, void * parent_w
 void GFL_PROC_Delete(PROC * proc)
 {
 	SDK_ASSERT(proc->work == NULL);
-	sys_FreeMemoryEz(proc);
+	GFL_HEAP_FreeMemory(proc);
 }
 
 //------------------------------------------------------------------
@@ -115,7 +115,7 @@ void GFL_PROC_Delete(PROC * proc)
 //------------------------------------------------------------------
 void * GFL_PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id)
 {
-	proc->work = sys_AllocMemory(heap_id, size);
+	proc->work = GFL_HEAP_AllocMemory(heap_id, size);
 	return proc->work;
 }
 
@@ -141,7 +141,7 @@ void * GFL_PROC_GetWork(PROC * proc)
 void GFL_PROC_FreeWork(PROC * proc)
 {
 	SDK_ASSERT(proc->work != NULL);
-	sys_FreeMemoryEz(proc->work);
+	GFL_HEAP_FreeMemory(proc->work);
 	proc->work = NULL;
 }
 
