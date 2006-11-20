@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	comm_queue.c
+ * @file	net_queue.c
  * @brief	（送信）キューの仕組みを管理する関数
  * @author	katsumi ohno
  * @date	06/01/29
@@ -8,17 +8,16 @@
 //=============================================================================
 
 #include "gflib.h"
-#include "../comm_def.h"
-#include "../comm_command.h"
-#include "comm_ring_buff.h"
-#include "comm_queue.h"
+#include "../net_def.h"
+#include "../net_command.h"
+#include "net_ring_buff.h"
+#include "net_queue.h"
 
 //==============================================================================
 /**
- * 開いているキューを返す
+ * @brief   空いているキューを返す
  * @param   pQueueMgr キューマネージャーのポインタ
- * @param   queueMax  キュー数
- * @retval  none
+ * @retval  SEND_QUEUE  キューCELL
  */
 //==============================================================================
 
@@ -38,35 +37,27 @@ static SEND_QUEUE* _freeQueue(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * キューに何か入っているかどうかを確認する
+ * @brief   キューに何か入っているかどうかを確認する
  * @param   pQueueMgr キューマネージャーのポインタ
- * @retval  空ならばTRUE
+ * @retval  TRUE   空
+ * @retval  FALSE  入っている
  */
 //==============================================================================
 
-BOOL CommQueueIsEmpty(SEND_QUEUE_MANAGER* pQueueMgr)
+BOOL GFL_NET_QueueIsEmpty(SEND_QUEUE_MANAGER* pQueueMgr)
 {
-    SEND_QUEUE* pFree = pQueueMgr->heapTop;
-    int i;
-
-    for(i = 0;i < pQueueMgr->max; i++){
-        if(pFree->command != CS_FREE){
-            return FALSE;
-        }
-        pFree++;
-    }
-    return TRUE;   // コマンドが無い
+    return (0 == GFL_NET_QueueGetNowNum(pQueueMgr));
 }
 
 //==============================================================================
 /**
- * キューの数を得る
+ * @brief   キューの数を得る
  * @param   pQueueMgr キューマネージャーのポインタ
- * @retval  空ならばTRUE
+ * @return  使用しているキューの数
  */
 //==============================================================================
 
-int CommQueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr)
+int GFL_NET_QueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr)
 {
     SEND_QUEUE* pFree = pQueueMgr->heapTop;
     int i,j = 0;
@@ -82,10 +73,9 @@ int CommQueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * キューを消す
- * @param   pQueueMgr キューマネージャーのポインタ
- * @param   queueMax  キュー数
- * @retval  TRUE   消した
+ * @brief   キューを消す
+ * @param   pTerm   送るキュー管理
+ * @retval  TRUE   消せた
  * @retval  FALSE  消すことができなかった
  */
 //==============================================================================
@@ -108,7 +98,7 @@ static BOOL _deleteQueue(SEND_TERMINATOR* pTerm)
 
 //==============================================================================
 /**
- * 送信データのヘッダー部分をバッファに入れる
+ * @brief   送信データの一バイトをバッファに入れる
  * @param   pSendBuff   送信バッファ管理構造体ポインタ
  * @param   byte        セットするデータ
  * @return  none
@@ -124,18 +114,19 @@ static void _setSendData(SEND_BUFF_DATA* pSendBuff ,u8 byte)
 
 //==============================================================================
 /**
- * 送信データのヘッダー部分をバッファに入れる
+ * @brief   送信データのヘッダー部分をバッファに入れる
  * @param   pQueue  キューのポインタ
  * @param   pSendBuff   送信バッファ管理構造体ポインタ
- * @retval  蓄えたらFALSE
+ * @retval  FALSE  蓄えた
+ * @retval  TRUE   入らなかった
  */
 //==============================================================================
 
 static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
 {
-    int cs = CommCommandGetPacketSize(pQueue->command);
+    int cs = GFL_NET_CommandGetPacketSize(pQueue->command);
 
-    if( cs == COMM_VARIABLE_SIZE){
+    if( cs == COMM_VARIABLE_SIZE ){
         if(pSendBuff->size < 3){
             pQueue->bHeadSet = FALSE;
             return TRUE;
@@ -161,18 +152,22 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
 
 //==============================================================================
 /**
- * キューから送信バッファに移す
+ * @brief   キューから送信バッファに移す
  * @param   pQueue  キュー
  * @param   pSendBuff   送信バッファ
- * @retval  ヘッダーが入らなかった場合TRUE
+ * @param   pSendRing   送信リングバッファ
+ * @param   bNextPlus   データ末尾にヘッダーだけを含めるかどうか
+ * @retval  FALSE ヘッダーが入らなかった場合
+ * @retval  TRUE  はいった
  */
 //==============================================================================
 
-static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBuffWork* pSendRing, BOOL bNextPlus)
+static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
+                           RingBuffWork* pSendRing, BOOL bNextPlus)
 {
     int i;
     int size;
-    int cs = CommCommandGetPacketSize(pQueue->command);
+    int cs = GFL_NET_CommandGetPacketSize(pQueue->command);
     if( cs == COMM_VARIABLE_SIZE){
         size = 3;
     }
@@ -192,7 +187,7 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
 //    }
     if(pSendBuff->size < pQueue->size){  // キューのほうがでかい場合
         if(pQueue->bRing){
-            CommRingGets(pSendRing, pSendBuff->pData, pSendBuff->size);
+            GFL_NET_RingGets(pSendRing, pSendBuff->pData, pSendBuff->size);
         }
         else{
           //  OHNO_PRINT("-----%x-%x--%d\n",(int)pQueue->pData, (int)pSendBuff->pData , pSendBuff->size);
@@ -211,7 +206,7 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
     }
     // 同じもしくは小さい場合
     if(pQueue->bRing){
-        CommRingGets(pSendRing, pSendBuff->pData, pQueue->size);
+        GFL_NET_RingGets(pSendRing, pSendBuff->pData, pQueue->size);
     }
     else{
         MI_CpuCopy8( pQueue->pData, pSendBuff->pData, pQueue->size);
@@ -224,18 +219,20 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff, RingBu
 
 //==============================================================================
 /**
- * キューを蓄える
+ * @brief   キューを蓄える
  * @param   pQueueMgr キューマネージャーのポインタ
  * @param   command   送信コマンド
  * @param   pDataArea  送信データ
  * @param   size    サイズ
  * @param   bFast  優先度が高いデータ?
  * @param   bSave  保存するかどうか
- * @retval  蓄えたらTRUE
+ * @retval  TRUE 蓄えた
+ * @retval  FALSE キューに入らなかった
  */
 //==============================================================================
 
-BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave)
+BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea,
+                      int size, BOOL bFast, BOOL bSave)
 {
     SEND_QUEUE* pLast;
     SEND_QUEUE* pFree = _freeQueue(pQueueMgr);
@@ -249,19 +246,19 @@ BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int 
     }
     
     GF_ASSERT(size < 65534 && "65534以上は分割");
-    cSize = CommCommandGetPacketSize(command);
+    cSize = GFL_NET_CommandGetPacketSize(command);
 
     if(COMM_VARIABLE_SIZE == cSize){
         cSize = size;
     }
     if(bSave){
-        int rest = CommRingDataRestSize(pQueueMgr->pSendRing);
+        int rest = GFL_NET_RingDataRestSize(pQueueMgr->pSendRing);
         if((cSize+3) >= rest){  // 送信バッファをオーバーしてしまう
             OHNO_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
             return FALSE;
         }
-        CommRingPuts(pQueueMgr->pSendRing, pDataArea, cSize);
-        CommRingEndChange(pQueueMgr->pSendRing);
+        GFL_NET_RingPuts(pQueueMgr->pSendRing, pDataArea, cSize);
+        GFL_NET_RingEndChange(pQueueMgr->pSendRing);
         pFree->bRing = TRUE;
     }
     pFree->size = cSize;
@@ -287,10 +284,9 @@ BOOL CommQueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int 
 
 //==============================================================================
 /**
- * キューを出す
+ * @brief   最新のキューを出す
  * @param   pQueueMgr キューマネージャーのポインタ
- * @param
- * @retval  none
+ * @retval  キュー
  */
 //==============================================================================
 
@@ -313,9 +309,8 @@ static SEND_QUEUE* _queueGet(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * キューを一個削り次に進める
+ * @brief   キューを一個削り次に進める
  * @param   pQueueMgr キューマネージャーのポインタ
- * @param
  * @retval  none
  */
 //==============================================================================
@@ -337,14 +332,16 @@ static void _queueNext(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * 指定バイト分バッファに入れる
+ * @brief   指定バイト分バッファに入れる
  * @param   pQueueMgr  キューマネージャーのポインタ
  * @param   pSendBuff  送信バッファ構造体のポインタ
- * @retval  続きデータがない場合TRUE データが連続している場合FALSE
+ * @param   bNextPlus   データ末尾にヘッダーだけを含めるかどうか
+ * @retval  TRUE  続きデータがない場合
+ * @retval  FALSE データが連続している場合
  */
 //==============================================================================
 
-BOOL CommQueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, BOOL bNextPlus)
+BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, BOOL bNextPlus)
 {
     int ret;
     int i;
@@ -381,15 +378,16 @@ BOOL CommQueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, 
 
 //==============================================================================
 /**
- * キューMANAGERの初期化
+ * @brief   キューMANAGERの初期化
  * @param   pQueueMgr キューマネージャーのポインタ
  * @param   queueMax  キュー数
- * @param   RingBuffWork 実データを保存する場合のリングバッファワーク
+ * @param   pSendRing 実データを保存する場合のリングバッファワーク
+ * @param   heapid    メモリー確保ID
  * @retval  none
  */
 //==============================================================================
 
-void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing, int heapid)
+void GFL_NET_QueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing, int heapid)
 {
     MI_CpuFill8(pQueueMgr, 0 ,sizeof(SEND_QUEUE_MANAGER));
     pQueueMgr->heapTop = sys_AllocMemory(heapid,
@@ -402,13 +400,13 @@ void CommQueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, Rin
 
 //==============================================================================
 /**
- * キューMANAGERのリセット
+ * @brief   キューMANAGERのリセット
  * @param   pQueueMgr キューマネージャーのポインタ
  * @retval  none
  */
 //==============================================================================
 
-void CommQueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr)
+void GFL_NET_QueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr)
 {
     MI_CpuFill8(pQueueMgr->heapTop, 0 ,sizeof(SEND_QUEUE) * pQueueMgr->max);
     pQueueMgr->fast.pTop = NULL;     // すぐ送る送信キュー
@@ -420,28 +418,28 @@ void CommQueueManagerReset(SEND_QUEUE_MANAGER* pQueueMgr)
 
 //==============================================================================
 /**
- * キューMANAGERの終了
+ * @brief   キューMANAGERの終了
  * @param   pQueueMgr キューマネージャーのポインタ
  * @retval  none
  */
 //==============================================================================
 
-void CommQueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr)
+void GFL_NET_QueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr)
 {
     sys_FreeMemoryEz( pQueueMgr->heapTop );
 }
 
-
 //==============================================================================
 /**
- * キューが存在するかどうか
+ * @brief   キューが存在するかどうか
  * @param   pQueueMgr  キューマネージャーのポインタ
  * @param   command    調べるコマンド
- * @retval  あったらTRUE
+ * @retval  TRUE ある
+ * @retval  FALSE ない
  */
 //==============================================================================
 
-BOOL CommQueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command)
+BOOL GFL_NET_QueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command)
 {
     int i;
     SEND_QUEUE* pNext = pQueueMgr->heapTop;
@@ -458,14 +456,14 @@ BOOL CommQueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command)
 
 //==============================================================================
 /**
- * キューMANAGERのテスト
+ * @brief   キューMANAGERのテスト
  * @param   none
  * @retval  none
  */
 //==============================================================================
 #ifdef PM_DEBUG
 
-void CommQueueDebugTest(void)
+void GFL_NET_QueueDebugTest(void)
 {
     SEND_QUEUE_MANAGER mgr;
     u8 data1[30];
@@ -479,13 +477,13 @@ void CommQueueDebugTest(void)
     MI_CpuFill8(data1,2,30);
     MI_CpuFill8(data2,4,22);
     MI_CpuFill8(ringbuff,3,50);
-    CommRingInitialize(&sendRing, ringbuff, 50);
+    GFL_NET_RingInitialize(&sendRing, ringbuff, 50);
 
     // ３本キュー作成
-    CommQueueManagerInitialize(&mgr,3,&sendRing);
+    GFL_NET_QueueManagerInitialize(&mgr,3,&sendRing);
 
     // ----- テスト１
-    CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 30, TRUE, TRUE);
+    GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 30, TRUE, TRUE);
 
     for(i = 0; i < 50; i++){
         if(i < 30){
@@ -503,7 +501,7 @@ void CommQueueDebugTest(void)
     buffData.size = 25;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(!CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(!GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size==-1);
     for(i = 0; i < 100; i++){
         if(i == 0){
@@ -525,7 +523,7 @@ void CommQueueDebugTest(void)
     buffData.size = 25;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == (25-8));
 
     GF_ASSERT(mgr.pNow == NULL);
@@ -546,7 +544,7 @@ void CommQueueDebugTest(void)
     buffData.size = 25;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == (25));
 
     GF_ASSERT(mgr.fast.pTop == NULL);
@@ -562,33 +560,33 @@ void CommQueueDebugTest(void)
     }
 
     // テスト２
-    GF_ASSERT(CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pLast != NULL);
     GF_ASSERT(mgr.fast.pLast == mgr.fast.pTop);
 
-    GF_ASSERT(CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data2, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data2, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pTop->next != NULL);
     GF_ASSERT(mgr.fast.pTop->next->next == NULL);
 
 
-    GF_ASSERT(CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pTop->next != NULL);
     GF_ASSERT(mgr.fast.pTop->next->next != NULL);
 
     // これはキューに入らない
-//    GF_ASSERT(!CommQueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, TRUE));
+//    GF_ASSERT(!GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, TRUE));
 
 
     buffData.size = 12;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(!CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(!GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == -1);
 
     GF_ASSERT(mgr.fast.pTop != NULL);
@@ -614,7 +612,7 @@ void CommQueueDebugTest(void)
     buffData.size = 12;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(!CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(!GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == -1);
 
     GF_ASSERT(mgr.pNow != NULL);
@@ -646,7 +644,7 @@ void CommQueueDebugTest(void)
     buffData.size = 4;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == 2);
 
     GF_ASSERT(mgr.pNow != NULL);
@@ -669,7 +667,7 @@ void CommQueueDebugTest(void)
     buffData.size = 4;
     buffData.pData = dummy;
     MI_CpuFill8(dummy, 0xff, 100);
-    GF_ASSERT(!CommQueueGetData(&mgr, &buffData, TRUE));
+    GF_ASSERT(!GFL_NET_QueueGetData(&mgr, &buffData, TRUE));
     GF_ASSERT(buffData.size == -1);
 
     GF_ASSERT(mgr.pNow != NULL);
@@ -693,7 +691,7 @@ void CommQueueDebugTest(void)
             GF_ASSERT(dummy[i] == 0xff);
         }
     }
-    CommQueueManagerFinalize(&mgr);
+    GFL_NET_QueueManagerFinalize(&mgr);
 
 //   GF_ASSERT(0 && "ok");  //テスト完了
 }

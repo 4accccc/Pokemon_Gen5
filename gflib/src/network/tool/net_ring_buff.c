@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	comm_ring_buff.c
+ * @file	net_ring_buff.c
  * @brief	リングバッファの仕組みを管理する関数
  * @author	katsumi ohno
  * @date	05/09/16
@@ -8,22 +8,22 @@
 //=============================================================================
 
 #include "gflib.h"
-#include "comm_ring_buff.h"
+#include "net_ring_buff.h"
 
 
 
-static int _ringPos(RingBuffWork* pRing,int i);
+static int _ringPos(const RingBuffWork* pRing,const int i);
 
 //==============================================================================
 /**
- * リングバッファ管理構造体初期化
+ * @brief   リングバッファ管理構造体初期化
  * @param   pRing        リングバッファ管理ポインタ
  * @param   pDataArea    リングバッファメモリー
  * @param   size         リングバッファメモリーサイズ
- * @retval  none
+ * @return  none
  */
 //==============================================================================
-void CommRingInitialize(RingBuffWork* pRing, u8* pDataArea, int size)
+void GFL_NET_RingInitialize(RingBuffWork* pRing, u8* pDataArea, const int size)
 {
     pRing->pWork = pDataArea;
     pRing->size = (s16)size;
@@ -35,15 +35,14 @@ void CommRingInitialize(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * リングバッファに書き込む
+ * @brief   リングバッファに書き込む
  * @param   pRing        リングバッファ管理ポインタ
  * @param   pDataArea    書き込むデータ
  * @param   size         書き込みサイズ
- * @param   bUsed  このリングを使用中らしい
  * @retval  none
  */
 //==============================================================================
-void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size)
+void GFL_NET_RingPuts(RingBuffWork* pRing, u8* pDataArea, const int size)
 {
     int i,j;
 
@@ -52,12 +51,12 @@ void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size)
     // ストックするバッファ分まであふれると、ここで止まります。
     // 通信のバッファを増やすか、今の部分の処理を分断するか、対処が必要です。
     // 最終的にはこのエラーがあると通信を切断します。
-    if(CommRingDataRestSize(pRing) <= size){
+    if(GFL_NET_RingDataRestSize(pRing) <= size){
 #ifdef DEBUG_ONLY_FOR_ohno
-        OHNO_PRINT("%d %d line %d \n",CommRingDataRestSize(pRing),size,line);
-        GF_ASSERT_MSG(0,"CommRingOVER %d %d",CommRingDataRestSize(pRing),size);
+        OHNO_PRINT("%d %d line %d \n",GFL_NET_RingDataRestSize(pRing),size,line);
+        GF_ASSERT_MSG(0,"GFL_NET_RingOVER %d %d",GFL_NET_RingDataRestSize(pRing),size);
 #endif
-//        CommSetError();
+//        GFL_NET_SetError();
         return;
     }
     j = 0;
@@ -70,18 +69,18 @@ void CommRingPuts(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * リングバッファからデータを得る
+ * @brief   リングバッファからデータを得る
  * @param   pRing        リングバッファ管理ポインタ
  * @param   pDataArea    読み込みバッファ
  * @param   size         読み込みバッファサイズ
- * @retval  実際に読み込んだデータ
+ * @return  実際に読み込んだデータ
  */
 //==============================================================================
-int CommRingGets(RingBuffWork* pRing, u8* pDataArea, int size)
+int GFL_NET_RingGets(RingBuffWork* pRing, u8* pDataArea, const int size)
 {
     int i;
 
-    i = CommRingChecks(pRing, pDataArea, size);
+    i = GFL_NET_RingChecks(pRing, pDataArea, size);
     pRing->startPos = (s16)_ringPos( pRing, pRing->startPos + i);
 
     return i;
@@ -89,16 +88,16 @@ int CommRingGets(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * リングバッファから1byteデータを得る
+ * @brief   リングバッファから1byteデータを得る
  * @param   pRing        リングバッファ管理ポインタ
- * @retval  1byteのデータ リングにデータがないときは0
+ * @return  1byteのデータ リングにデータがないときは0
  */
 //==============================================================================
-u8 CommRingGetByte(RingBuffWork* pRing)
+u8 GFL_NET_RingGetByte(RingBuffWork* pRing)
 {
     u8 byte;
 
-    if(1==CommRingGets(pRing, &byte, 1)){
+    if(1==GFL_NET_RingGets(pRing, &byte, 1)){
         return byte;
     }
     return 0;
@@ -106,14 +105,14 @@ u8 CommRingGetByte(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * リングバッファのデータ検査  読み込むだけで位置を進めない
+ * @brief   リングバッファのデータ検査  読み込むだけで位置を進めない
  * @param   pRing        リングバッファ管理ポインタ
  * @param   pDataArea    読み込みバッファ
  * @param   size         読み込みバッファサイズ
  * @retval  実際に読み込んだデータ
  */
 //==============================================================================
-int CommRingChecks(RingBuffWork* pRing, u8* pDataArea, int size)
+int GFL_NET_RingChecks(const RingBuffWork* pRing, u8* pDataArea, const int size)
 {
     int i,j;
 
@@ -129,12 +128,12 @@ int CommRingChecks(RingBuffWork* pRing, u8* pDataArea, int size)
 
 //==============================================================================
 /**
- * リングバッファのデータがいくつ入っているか得る
+ * @brief   リングバッファのデータがいくつ入っているか得る
  * @param   pRing        リングバッファ管理ポインタ
  * @retval  データサイズ
  */
 //==============================================================================
-int CommRingDataSize(RingBuffWork* pRing)
+int GFL_NET_RingDataSize(const RingBuffWork* pRing)
 {
     if(pRing->startPos > pRing->endPos){
         return (pRing->size + pRing->endPos - pRing->startPos);
@@ -144,61 +143,37 @@ int CommRingDataSize(RingBuffWork* pRing)
 
 //==============================================================================
 /**
- * リングバッファのデータがどのくらいあまっているか検査
+ * @brief   リングバッファのデータがどのくらいあまっているか検査
  * @param   pRing        リングバッファ管理ポインタ
  * @retval  実際に読み込んだデータ
  */
 //==============================================================================
-int CommRingDataRestSize(RingBuffWork* pRing)
+int GFL_NET_RingDataRestSize(const RingBuffWork* pRing)
 {
-    return (pRing->size - CommRingDataSize(pRing));
+    return (pRing->size - GFL_NET_RingDataSize(pRing));
 }
 
 //==============================================================================
 /**
- * カウンターをバックアップする
- * @param   pRing        リングバッファ管理ポインタ
- * @retval  nono
+ * @brief   ringサイズの場所を得る
+ * @param   pRing       リングバッファ管理ポインタ
+ * @param   i           バイト位置
+ * @return  補正したバイト位置
  */
 //==============================================================================
-//void CommRingStartPush(RingBuffWork* pRing)
-//{
-//    pRing->backupStartPos = pRing->startPos;
-//}
-
-//==============================================================================
-/**
- * カウンターをバックアップする
- * @param   pRing        リングバッファ管理ポインタ
- * @retval  nono
- */
-//==============================================================================
-//void CommRingStartPop(RingBuffWork* pRing)
-//{
-//    pRing->startPos = pRing->backupStartPos;
-//}
-
-//==============================================================================
-/**
- * ringサイズの場所
- * @param   pRing        リングバッファ管理ポインタ
- * @retval  
- */
-//==============================================================================
-int _ringPos(RingBuffWork* pRing,int i)
+static int _ringPos(const RingBuffWork* pRing, const int i)
 {
     return i % pRing->size;
-
 }
 
 //==============================================================================
 /**
- * カウンター場所をすりかえる
+ * @brief   カウンター場所をすりかえる
  * @param   pRing        リングバッファ管理ポインタ
- * @retval  nono
+ * @retval  none
  */
 //==============================================================================
-void CommRingEndChange(RingBuffWork* pRing)
+void GFL_NET_RingEndChange(RingBuffWork* pRing)
 {
     pRing->endPos = pRing->backupEndPos;
 }
