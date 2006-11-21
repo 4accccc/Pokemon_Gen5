@@ -108,7 +108,7 @@ GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num )
 	GFL_BMPWIN_DATA * wk;
 	u16	i;
 
-	wk = (GFL_BMPWIN_DATA *)sys_AllocMemory( heapID, sizeof(GFL_BMPWIN_DATA) * num );
+	wk = (GFL_BMPWIN_DATA *)GFI_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_DATA) * num );
 
 	for( i=0; i<num; i++ ){
 		GFL_BMPWIN_Init( &wk[i], heapID );
@@ -150,7 +150,7 @@ void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BMPWIN_sysExit( GFL_BMPWIN_DATA * wk )
 {
-	sys_FreeMemoryEz(wk);
+	GFI_HEAP_FreeMemory( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ void GFL_BMPWIN_Add(
 
 	// キャラクタバッファの確保
 	chrvsiz = sizx * sizy * GFL_BG_BaseCharSizeGet( win->bgl, frmnum);
-	chrvbuf = sys_AllocMemory( heapID, chrvsiz );
+	chrvbuf = GFI_HEAP_AllocMemory( heapID, chrvsiz );
 
 	if( chrvbuf == NULL ){
 #ifdef	OSP_ERR_BGL_BMPADD		// BMP登録失敗
@@ -252,7 +252,7 @@ void GFL_BMPWIN_AddChar(
 	u32	chrvsiz;
 
 	chrvsiz	= (u32)( sizx * sizy * GFL_BG_1CHRDATASIZ );
-	chrvbuf = sys_AllocMemory( heapID, chrvsiz );
+	chrvbuf = GFI_HEAP_AllocMemory( heapID, chrvsiz );
 
 	fill_color |= fill_color << 4;
 	memset( chrvbuf, fill_color, chrvsiz );
@@ -307,7 +307,7 @@ void GFL_BMPWIN_AddEx( GFL_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID
 void GFL_BMPWIN_Del( GFL_BMPWIN_DATA * win )
 {
 	// キャラクタバッファ割り当て開放
-	sys_FreeMemoryEz( win->chrbuf );
+	GFI_HEAP_FreeMemory( win->chrbuf );
 
 	win->frmnum = GFL_BMPWIN_FRM_NULL;
 	win->posx   = 0;
@@ -340,11 +340,11 @@ void GFL_BMPWIN_Free( GFL_BMPWIN_DATA * win, u8 num )
 	// キャラクタバッファ割り当て開放
 	for( i=0; i<num; i++ ){
 		if( win[i].chrbuf == NULL ){ continue; }
-		sys_FreeMemoryEz( win[i].chrbuf );
+		GFI_HEAP_FreeMemory( win[i].chrbuf );
 	}
 
 	// BMPデータ領域開放
-	sys_FreeMemoryEz( win );
+	GFI_HEAP_FreeMemory( win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1261,7 +1261,7 @@ void GFL_BMPWIN_PrintMsgWide(
 			break;
 		}
 
-		sys_FreeMemoryEz( chg_src );
+		GFI_HEAP_FreeMemory( chg_src );
 	}
 }
 

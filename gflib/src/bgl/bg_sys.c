@@ -107,7 +107,7 @@ static void CenterParamSet( GFL_BG_SYS * ini, u8 mode, int value );
 //--------------------------------------------------------------------------------------------
 GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 {
-	GFL_BG_INI * bgl = sys_AllocMemory( heapID, sizeof(GFL_BG_INI) );
+	GFL_BG_INI * bgl = GFI_HEAP_AllocMemory( heapID, sizeof(GFL_BG_INI) );
 
 	memset( bgl, 0, sizeof(GFL_BG_INI) );
 	bgl->heapID = heapID;
@@ -126,7 +126,7 @@ GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BG_sysExit( GFL_BG_INI *bgl )
 {
-	sys_FreeMemoryEz(bgl);
+	GFI_HEAP_FreeMemory( bgl );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -384,7 +384,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 	bgl->bgsys[frmnum].cy      = 0;
 
 	if( data->scrbufferSiz ){
-		bgl->bgsys[frmnum].screen_buf = sys_AllocMemory( bgl->heapID, data->scrbufferSiz );
+		bgl->bgsys[frmnum].screen_buf = GFI_HEAP_AllocMemory( bgl->heapID, data->scrbufferSiz );
 
 #ifdef	OSP_ERR_BGL_SCRBUF_GET		// スクリーンバッファ確保失敗
 		if( ini->bgsys[frmnum].screen_buf == NULL ){
@@ -800,7 +800,7 @@ void GFL_BG_BGControlExit( GFL_BG_INI * bgl, u8 frmnum )
 	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	sys_FreeMemoryEz( bgl->bgsys[frmnum].screen_buf );
+	GFI_HEAP_FreeMemory( bgl->bgsys[frmnum].screen_buf );
 	bgl->bgsys[frmnum].screen_buf = NULL;
 }
 
@@ -1185,7 +1185,7 @@ void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datas
 			u32	alloc_siz;
 
 			alloc_siz	= ((*(u32*)src) >> 8);
-			decode_buf = sys_AllocMemoryLo( bgl->heapID, alloc_siz );
+			decode_buf = GFI_HEAP_AllocMemory( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 			if( decode_buf == NULL ){
@@ -1196,7 +1196,7 @@ void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datas
 			GFL_BG_DataDecord( src, decode_buf, datasiz );
 
 			GFL_BG_LoadScreenSub( frmnum, decode_buf, offs * GFL_BG_1SCRDATASIZ, alloc_siz );
-			sys_FreeMemoryEz( decode_buf );
+			GFI_HEAP_FreeMemory( decode_buf );
 		}
 	}else{
 		GFL_BG_LoadScreenSub( frmnum, (void*)src, offs * GFL_BG_1SCRDATASIZ, datasiz );
@@ -1229,7 +1229,7 @@ void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 
 	}
 	GFL_BG_ScreenBufSet( bgl, frmnum, mem, size );
 	GFL_BG_LoadScreen( bgl, frmnum, mem, size, offs );
-	sys_FreeMemory( bgl->heapID, mem );
+	GFI_HEAP_FreeMemory( mem );
 }
 #endif GFL_BG_NTR_USE
 
@@ -1371,7 +1371,7 @@ void GFL_BG_LoadCharacterFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u
 		return;	//エラー
 	}
 	GFL_BG_LoadCharacter( bgl, frmnum, mem, size, offs );
-	sys_FreeMemory( bgl->heapID, mem );
+	GFI_HEAP_FreeMemory( mem );
 	return;
 }
 #endif GFL_BG_NTR_USE
@@ -1398,7 +1398,7 @@ static void LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 		u32	alloc_siz;
 
 		alloc_siz  = ((*(u32*)src) >> 8);
-		decode_buf = sys_AllocMemoryLo( bgl->heapID, alloc_siz );
+		decode_buf = GFI_HEAP_AllocMemory( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 		if( decode_buf == NULL ){
@@ -1410,7 +1410,7 @@ static void LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 
 		GFL_BG_LoadCharacterSub( frmnum, decode_buf, offs, alloc_siz );
 
-		sys_FreeMemoryEz( decode_buf );
+		GFI_HEAP_FreeMemory( decode_buf );
 	}else{
 		GFL_BG_LoadCharacterSub( frmnum, (void*)src, offs, datasiz );
 	}
@@ -1502,12 +1502,12 @@ static void GFL_BG_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz )
 //--------------------------------------------------------------------------------------------
 void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap )
 {
-	u32 * chr = (u32 *)sys_AllocMemoryLo( heap, datasiz );
+	u32 * chr = (u32 *)GFI_HEAP_AllocMemory( heap, datasiz );
 
 	memset( chr, 0, datasiz );
 
 	GFL_BG_LoadCharacterSub( frmnum, (void*)chr, offs, datasiz );
-	sys_FreeMemory( heap, chr );
+	GFI_HEAP_FreeMemory( chr );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1528,7 +1528,7 @@ void GFL_BG_CharFill( GFL_BG_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt,
 	u32  size;
 
 	size = charcnt * bgl->bgsys[frmnum].base_char_size;
-	chr = (u32 *)sys_AllocMemoryLo( bgl->heapID,  size );
+	chr = (u32 *)GFI_HEAP_AllocMemory( bgl->heapID,  size );
 
 	if( bgl->bgsys[frmnum].base_char_size == GFL_BG_1CHRDATASIZ ){
 		clear_code = (clear_code<<12) | (clear_code<<8) | (clear_code<<4) | clear_code;
@@ -1541,7 +1541,7 @@ void GFL_BG_CharFill( GFL_BG_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt,
 
 	GFL_BG_LoadCharacterSub(
 		frmnum, (void*)chr, offs*bgl->bgsys[frmnum].base_char_size, size );
-	sys_FreeMemoryEz( chr );
+	GFI_HEAP_FreeMemory( chr );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2163,7 +2163,7 @@ void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, u32 h
 {
 	void * buf;
 
-	buf = sys_AllocMemory( heap, chr_size * 2 );
+	buf = GFI_HEAP_AllocMemory( heap, chr_size * 2 );
 	GFL_BG_4BitCgxChange8BitMain( chr, chr_size, (u8 *)buf, pal_ofs );
 	return buf;
 }
@@ -2522,7 +2522,7 @@ void GFL_BG_NTRCHR_CharLoadEx( GFL_BG_INI * bgl, u8 frmnum, const char * path, u
 		}
 	}
 
-	sys_FreeMemory( bgl->heapID, buf );
+	GFI_HEAP_FreeMemory( buf );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2557,7 +2557,7 @@ void GFL_BG_NTRCHR_CharLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 		GFL_BG_LoadCharacter( bgl, frmnum, dat->pRawData, dat->szByte, offs );
 	}
 
-	sys_FreeMemory( bgl->heapID, buf );
+	GFI_HEAP_FreeMemory( buf );
 }
 
 
@@ -2664,7 +2664,7 @@ void GFL_BG_NTRCHR_ScrnLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 		GFL_BG_LoadScreen( bgl, frmnum, dat->rawData, dat->szByte, offs );
 	}
 
-	sys_FreeMemory( bgl->heapID, buf );
+	GFI_HEAP_FreeMemory( buf );
 }
 #endif GFL_BG_NTR_USE
 
@@ -3139,7 +3139,7 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 		u8 * buf;
 
 		scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-		buf  = sys_AllocMemoryLo( bgl->heapID, 64 );
+		buf  = GFI_HEAP_AllocMemory( bgl->heapID, 64 );
 
 		cgx += ( ( scrn[pos] & 0x3ff ) << 5 );
 		for( i=0; i<32; i++ ){
@@ -3150,7 +3150,7 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 		CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 		dot = buf[ chr_x+(chr_y<<3) ];
-		sys_FreeMemoryEz( buf );
+		GFI_HEAP_FreeMemory( buf );
 
 		if( ( pat[0] & (1<<dot) ) != 0 ){
 			return TRUE;
@@ -3163,13 +3163,13 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 			u8 * buf;
 
 			scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-			buf  = sys_AllocMemoryLo( bgl->heapID, 64 );
+			buf  = GFI_HEAP_AllocMemory( bgl->heapID, 64 );
 
 			memcpy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
 			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 			dot = buf[ chr_x+(chr_y<<3) ];
-			sys_FreeMemoryEz(  buf );
+			GFI_HEAP_FreeMemory(  buf );
 
 		}else{
 			u8 * scrn = (u8 *)bgl->bgsys[frmnum].screen_buf;
@@ -3197,7 +3197,7 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 
 	if( flip == 0 ){ return; }
 
-	tmp = sys_AllocMemoryLo( heapID, 64 );
+	tmp = GFI_HEAP_AllocMemory( heapID, 64 );
 
 	if( flip & 1 ){
 		for( i=0; i<8; i++ ){
@@ -3215,5 +3215,5 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 		memcpy( buf, tmp, 64 );
 	}
 
-	sys_FreeMemoryEz( tmp );
+	GFI_HEAP_FreeMemory( tmp );
 }
