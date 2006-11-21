@@ -9,7 +9,7 @@
 #ifndef __HEAPSYS_H__
 #define __HEAPSYS_H__
 
-#include "heap_inter.h"	//©‚±‚Ì’†‚ÌŠÖ”‚ğ’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹Ö~
+#include "heap.h"	//©‚±‚Ì’†‚ÌŠÖ”‚ğ’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹Ö~
 
 #define HEAPSYS_DEBUG
 
