@@ -66,24 +66,26 @@ enum {
  * BMPWINデータ確保
  *
  * @param	heapID	ヒープID
+ * @param	bgl		BGシステム構造体
  * @param	num		確保するBMPウィンドウの数
  *
  * @return	確保したデータのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num );
+GLOBAL GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, GFL_BG_INI *bgl, u8 num );
 
 //--------------------------------------------------------------------------------------------
 /**
  * BMPWINデータ初期化
  *
  * @param	wk		BMPWINデータ
+ * @param	bgl		BGシステム構造体
  * @param	heapID	ヒープID
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID );
+GLOBAL void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

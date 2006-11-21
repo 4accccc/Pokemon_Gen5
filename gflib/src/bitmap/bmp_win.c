@@ -98,12 +98,13 @@ static const u8 ScreenXElems[] =  {
  * BMPWINデータ確保
  *
  * @param	heapID	ヒープID
+ * @param	bgl		BGシステム構造体
  * @param	num		確保するBMPウィンドウの数
  *
  * @return	確保したデータのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num )
+GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, GFL_BG_INI *bgl, u8 num )
 {
 	GFL_BMPWIN_DATA * wk;
 	u16	i;
@@ -111,7 +112,7 @@ GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num )
 	wk = (GFL_BMPWIN_DATA *)GFI_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_DATA) * num );
 
 	for( i=0; i<num; i++ ){
-		GFL_BMPWIN_Init( &wk[i], heapID );
+		GFL_BMPWIN_Init( &wk[i], bgl, heapID );
 	}
 
 	return wk;
@@ -122,22 +123,24 @@ GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, u8 num )
  * BMPWINデータ初期化
  *
  * @param	wk		BMPWINデータ
+ * @param	bgl		BGシステム構造体
  * @param	heapID	ヒープID
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, u32 heapID )
+void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID )
 {
-	wk->heapID = heapID;
-	wk->frmnum = GFL_BMPWIN_FRM_NULL;
-	wk->posx   = 0;
-	wk->posy   = 0;
-	wk->sizx   = 0;
-	wk->sizy   = 0;
-	wk->palnum = 0;
-	wk->chrofs = 0;
-	wk->chrbuf = NULL;
+	wk->bgl		= bgl;
+	wk->heapID	= heapID;
+	wk->frmnum	= GFL_BMPWIN_FRM_NULL;
+	wk->posx	= 0;
+	wk->posy	= 0;
+	wk->sizx	= 0;
+	wk->sizy	= 0;
+	wk->palnum	= 0;
+	wk->chrofs	= 0;
+	wk->chrbuf	= NULL;
 	wk->bitmode = GFL_BMPWIN_BITMODE_4;		// 念のため良く使う方で初期化しておく
 }
 
