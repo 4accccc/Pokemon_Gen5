@@ -23,6 +23,10 @@ TARGET_BIN		=	main.bin
 # ソースファイル
 SRCS			=	main.c
 
+# コンパイル時の警告抑止
+CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
+				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+
 
 #--------------------------------------- ----------------------------
 # システム定義
