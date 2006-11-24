@@ -24,7 +24,7 @@ NITRO_NO_STD_PCHDR	=	True
 TARGET_LIB		=	gflib.a
 
 # ソースファイル
-SRCS			=	initialize.c filesystem.c heapsys.c tcb.c procsys.c saveload_system.c \
+SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_system.c \
 					ui/ui.c \
 					ui/touchpanel.c \
 					ui/key.c \
