@@ -7,14 +7,6 @@
 #ifndef _G3D_SYSTEM_H_
 #define _G3D_SYSTEM_H_
 
-#undef GLOBAL
-#ifdef __G3D_SYSTEM_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
-
-
 //=============================================================================================
 //	å^êÈåæ
 //=============================================================================================
@@ -82,10 +74,10 @@ typedef void (*GF_G3DSETUP_FUNC)( void );
  * @return	É}ÉlÅ[ÉWÉÉÉèÅ[ÉNÉ|ÉCÉìÉ^
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL GF_G3DMAN*  GF_G3DMAN_Init(	u32 heapID, 
-									GF_G3DMAN_MODE texmanMode, GF_G3DMAN_TEXSIZE texmanSize, 
-									GF_G3DMAN_MODE pltmanMode, GF_G3DMAN_PLTSIZE pltmanSize,
-									GF_G3DSETUP_FUNC setup );
+extern GF_G3DMAN*
+	GFL_G3D_sysInit
+		( u32 heapID, GF_G3DMAN_MODE texmanMode, GF_G3DMAN_TEXSIZE texmanSize, 
+			GF_G3DMAN_MODE pltmanMode, GF_G3DMAN_PLTSIZE pltmanSize, GF_G3DSETUP_FUNC setup );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -97,7 +89,9 @@ GLOBAL GF_G3DMAN*  GF_G3DMAN_Init(	u32 heapID,
  *
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GF_G3D_Exit( GF_G3DMAN*  man );
+extern void
+	GFL_G3D_sysExit
+		( GF_G3DMAN*  man );
 
 //------------------------------------------------------------------
 //  çÇë¨ÇRÇcÇaÇfï`âÊä÷êî
@@ -110,10 +104,8 @@ GLOBAL void	GF_G3D_Exit( GF_G3DMAN*  man );
 //  @return		none
 //  
 //------------------------------------------------------------------
-GLOBAL void GF_G3D_Draw_1mat1shape(	NNSG3dRenderObj* object_p,
-									VecFx32* trans_p,
-									MtxFx33* rot_p,
-									VecFx32* scale_p);
-#undef GLOBAL
+extern void
+	GFL_G3D_Draw1mat1shape
+		( NNSG3dRenderObj* object_p, VecFx32* trans_p, MtxFx33* rot_p, VecFx32* scale_p);
 #endif
 
