@@ -83,10 +83,10 @@ static HEAP_SYS  HeapSys = { 0 };
 //----------------------------------------------------------------
 #define HeapHandleIdxTbl( idx )			(HeapSys.handleIdxTbl[ idx ])
 
-#define HeapHandle( num )				(HeapSys.hhd[num].handle)
-#define ParentHeapHandle( num )			(HeapSys.hhd[num].parentHandle)
-#define HeapMemBlock( num )				(HeapSys.hhd[num].heapMemBlock)
-#define HeapCount( num )				(HeapSys.hhd[num].count)
+#define HeapHandle( num )				(HeapSys.hhd[ num ].handle)
+#define ParentHeapHandle( num )			(HeapSys.hhd[ num ].parentHandle)
+#define HeapMemBlock( num )				(HeapSys.hhd[ num ].heapMemBlock)
+#define HeapCount( num )				(HeapSys.hhd[ num ].count)
 
 #define GetHeapHandle( idx )			(HeapHandle( HeapHandleIdxTbl( idx ) ))
 #define GetParentHeapHandle( idx )		(ParentHeapHandle( HeapHandleIdxTbl( idx ) ))
