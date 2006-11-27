@@ -2,19 +2,26 @@
 /**
  * @file	strbuf.h
  * @brief	汎用文字列バッファ型オブジェクト
- * @author	taya
- * @date	2005.11.02
  */
 //=============================================================================================
 #ifndef __STRBUF_H__
 #define __STRBUF_H__
 
-#include "number_str.h"
-
-
-
+typedef	u16 STRCODE;
 typedef struct _STRBUF	STRBUF;
 
+//------------------------------------------------------------------
+/**
+ * 指定されたポインタがSTRBUFとして有効なものであるかチェック
+ *
+ * @param   ptr		ポインタ
+ *
+ * @retval  BOOL	TRUEで有効である
+ */
+//------------------------------------------------------------------
+extern BOOL
+	STRBUF_CheckValid
+		(const void* ptr);
 
 //------------------------------------------------------------------
 /**
@@ -26,8 +33,9 @@ typedef struct _STRBUF	STRBUF;
  * @retval  STRBUF*		オブジェクトへのポインタ
  */
 //------------------------------------------------------------------
-extern STRBUF* STRBUF_Create( u32 size, u32 heapID );
-
+extern STRBUF*
+	GFL_STR_BufferCreate
+		( u32 size, u32 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -37,8 +45,9 @@ extern STRBUF* STRBUF_Create( u32 size, u32 heapID );
  *
  */
 //------------------------------------------------------------------
-extern void STRBUF_Delete( STRBUF* strbuf );
-
+extern void
+	GFL_STR_BufferDelete
+		( STRBUF* strbuf );
 
 //------------------------------------------------------------------
 /**
@@ -49,8 +58,9 @@ extern void STRBUF_Delete( STRBUF* strbuf );
  *
  */
 //------------------------------------------------------------------
-extern void STRBUF_Clear( STRBUF* strbuf );
-
+extern void
+	GFL_STR_BufferClear
+		( STRBUF* strbuf );
 
 //------------------------------------------------------------------
 /**
@@ -61,7 +71,9 @@ extern void STRBUF_Clear( STRBUF* strbuf );
  *
  */
 //------------------------------------------------------------------
-extern void STRBUF_Copy( STRBUF* dst, const STRBUF* src );
+extern void
+	GFL_STR_BufferCopy
+		( STRBUF* dst, const STRBUF* src );
 
 //------------------------------------------------------------------
 /**
@@ -72,34 +84,9 @@ extern void STRBUF_Copy( STRBUF* dst, const STRBUF* src );
  * @retval  STRBUF*		複製されたバッファオブジェクト
  */
 //------------------------------------------------------------------
-extern STRBUF* STRBUF_CreateBufferCopy( const STRBUF* origin, u32 heapID );
-
-//------------------------------------------------------------------
-/**
- * 数値を文字列化してバッファにセットする
- *
- * @param   dst			オブジェクトへのポインタ
- * @param   number		数値
- * @param   keta		最大桁数
- * @param   dispType	表示タイプ
- * @param   codeType	文字コードタイプ
- *
- */
-//------------------------------------------------------------------
-extern void STRBUF_SetNumber( STRBUF* dst, int number, u32 keta, NUMBER_DISPTYPE dispType, NUMBER_CODETYPE codeType );
-
-//------------------------------------------------------------------
-/**
- * 文字数字を数字に変換する  18けた対応  この関数は文字コードに左右される
- *
- * @param   src			変換したい数字が入っているバッファ
- * @param   pNumber     変換し終わった数字
- * @return  成功した場合TRUE
- *
- */
-//------------------------------------------------------------------
-
-extern u64 STRBUF_GetNumber( const STRBUF* src, BOOL* pbFlag  );
+extern STRBUF*
+	GFL_STR_CreateBufferCopy
+		( const STRBUF* origin, u32 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -108,11 +95,12 @@ extern u64 STRBUF_GetNumber( const STRBUF* src, BOOL* pbFlag  );
  * @param   str1		文字列１
  * @param   str2		文字列２
  *
- * @retval  int			"0 = 一致"
- * @retval  int			"1 = 不一致"
+ * @retval  BOOL		TRUEで一致
  */
 //------------------------------------------------------------------
-extern int STRBUF_Compare( const STRBUF* str1, const STRBUF* str2 );
+extern BOOL
+	GFL_STR_BufferCompare
+		( const STRBUF* str1, const STRBUF* str2 );
 
 //------------------------------------------------------------------
 /**
@@ -123,59 +111,99 @@ extern int STRBUF_Compare( const STRBUF* str1, const STRBUF* str2 );
  * @retval  u32		文字数
  */
 //------------------------------------------------------------------
-extern u32 STRBUF_GetLen( const STRBUF* strbuf );
+extern u32
+	GFL_STR_GetBufferLength
+		( const STRBUF* str );
 
+
+//==============================================================================================
+// 生の文字配列を取り扱う関数群
+// これらを利用できるモジュールは出来る限り限定する
+//==============================================================================================
 //------------------------------------------------------------------
 /**
- * 格納されている文字列が何行あるかを調べる
+ * 生の文字列（EOM終端）をバッファオブジェクトにセットする
  *
- * @param   strbuf		文字列バッファオブジェクト
- *
- * @retval  u32		文字列の行数
- */
-//------------------------------------------------------------------
-extern u32 STRBUF_GetLines( const STRBUF* strbuf );
-
-//------------------------------------------------------------------
-/**
- * 文字列の、指定行のみを別バッファへコピーする
- *
- * @param   dst		コピー先バッファ
- * @param   src		コピー元バッファ
- * @param   line	行番号（0 origin）
+ * @param   strbuf		[out] バッファオブジェクトへのポインタ
+ * @param   sz			[in]  EOM で終わる文字配列
  *
  */
 //------------------------------------------------------------------
-extern void STRBUF_CopyLine( STRBUF* dst, const STRBUF* src, u32 line );
+extern void
+	GFL_STR_SetStringCode
+		( STRBUF* strbuf, const STRCODE* sz );
 
-
-
-//==========================================================================================
-// デバッグ用
-//==========================================================================================
-#ifdef PM_DEBUG
-extern BOOL STRBUF_CheckValid(const void* ptr);
-//--------------------------------------------------------------------------------------------
+//------------------------------------------------------------------
 /**
- * 数値を文字列に変換（１６進）デバッグ専用
+ * 生の文字列（長さ指定）をバッファオブジェクトにセットする
  *
- * @param   dst			[out] バッファオブジェクトへのポインタ
- * @param   number		数値
- * @param   keta		最大桁数
- * @param   dispType	表示タイプ
- * @param   codeType	文字コードタイプ
+ * @param   strbuf		[out] バッファオブジェクトへのポインタ
+ * @param   str			[in]  文字配列の先頭ポインタ
+ * @param   len			[in]  セットする文字数（EOMを含む）
  *
- * @return	none
- *
- * @li	type = NUMBER_DISPTYPE_LEFT		左詰
- * @li	type = NUMBER_DISPTYPE_SPACE	右詰、足りない部分は空白
- * @li	type = NUMBER_DISPTYPE_ZERO		右詰、足りない部分は数字のゼロ
  */
-//--------------------------------------------------------------------------------------------
-extern void STRBUF_SetHexNumber(STRBUF* dst, int num, u32 keta,
-								NUMBER_DISPTYPE dispType, NUMBER_CODETYPE codeType );
-#endif
+//------------------------------------------------------------------
+extern void
+	GFL_STR_SetStringCodeOrderLength
+		( STRBUF* strbuf, const STRCODE* str, u32 len );
+
+//------------------------------------------------------------------
+/**
+ * バッファから生の文字配列をコピーする
+ *
+ * @param   strbuf		[in]  バッファオブジェクトへのポインタ
+ * @param   ary			[out] コピー先配列
+ * @param   arysize		[in]  コピー先配列の要素数
+ *
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_STR_GetStringCode
+		( const STRBUF* strbuf, STRCODE* ary, u32 arysize );
+
+//------------------------------------------------------------------
+/**
+ * バッファオブジェクトが内包する文字配列のアドレスを返す
+ * ※この関数を呼び出す箇所は超限定。たぶん文字出力系のみ。
+ *
+ * @param   strbuf				[in] バッファオブジェクトへのポインタ
+ *
+ * @retval  const STRCODE*		文字配列のアドレス
+ */
+//------------------------------------------------------------------
+extern const STRCODE* 
+	GFL_STR_GetStringCodePointer
+		( const STRBUF* strbuf );
 
 
+//==============================================================================================
+// 文字列の連結操作を行う関数。【【 原則使用禁止 】】
+// 使って良いのはローカライズを考慮した文字列処理モジュールのみ。
+//==============================================================================================
+//------------------------------------------------------------------
+/**
+ * 文字列連結
+ *
+ * @param   dst		連結されるバッファオブジェクト
+ * @param   src		連結する文字列を持つバッファオブジェクト
+ *
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_STR_AddStr
+		( STRBUF* dst, const STRBUF* src );
+
+//------------------------------------------------------------------
+/**
+ * １文字連結
+ *
+ * @param   dst			連結されるバッファオブジェクト
+ * @param   code		連結する文字コード
+ *
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_STR_AddChar
+		( STRBUF* dst, STRCODE code );
 
 #endif
