@@ -32,7 +32,8 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_sys
                     network/tool/net_queue.c \
 					calctool.c \
 					bgl/bg_sys.c bgl/display.c \
-					bitmap/bmp.c bitmap/bmp_win.c
+					bitmap/bmp.c bitmap/bmp_win.c \
+					string/strbuf.c
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
 ifdef USE_MCS
