@@ -253,19 +253,6 @@ void GFL_PROC_FreeWork(GFL_PROC * proc)
 
 //------------------------------------------------------------------
 /**
- * @brief	上位ワークへのポインタ取得
- * @param	proc	プロセスへのポインタ
- * @return	void *	上位ワークへのポインタ
- */
-//------------------------------------------------------------------
-void * GFL_PROC_GetParentWork(GFL_PROC * proc)
-{
-	SDK_ASSERT(proc->parent_work != NULL);
-	return proc->parent_work;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	プロセス動作処理メイン
  * @param	proc	プロセスへのポインタ
  * @retval	TRUE	プロセス動作終了
@@ -287,22 +274,22 @@ BOOL GFL_PROC_Main(GFL_PROC * proc)
 		/* fallthru */
 			
 	case SEQ_INIT:
-		result = proc->data.init_func(proc, &proc->subseq);
-		if (result == PROC_RES_FINISH) {
+		result = proc->data.init_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		if (result == GFL_PROC_RES_FINISH) {
 			proc->proc_seq = SEQ_MAIN;
 			proc->subseq = 0;
 		}
 		break;
 	case SEQ_MAIN:
-		result = proc->data.main_func(proc, &proc->subseq);
-		if (result == PROC_RES_FINISH) {
+		result = proc->data.main_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		if (result == GFL_PROC_RES_FINISH) {
 			proc->proc_seq = SEQ_END;
 			proc->subseq = 0;
 		}
 		break;
 	case SEQ_END:
-		result = proc->data.end_func(proc, &proc->subseq);
-		if (result == PROC_RES_FINISH) {
+		result = proc->data.end_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		if (result == GFL_PROC_RES_FINISH) {
 			if(proc->overlay_id != NO_OVERLAY_ID){
 				//Overlay_UnloadID( proc->overlay_id );
 			}

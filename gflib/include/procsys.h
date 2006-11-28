@@ -17,8 +17,8 @@
  */
 //------------------------------------------------------------------
 typedef enum {
-	PROC_RES_CONTINUE = 0,		///<動作継続中
-	PROC_RES_FINISH				///<動作終了
+	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+	GFL_PROC_RES_FINISH				///<動作終了
 }GFL_PROC_RESULT;
 
 //------------------------------------------------------------------
@@ -43,7 +43,7 @@ typedef struct _GFL_PROCSYS GFL_PROCSYS;
  * フィールド、戦闘、メニューなどの動作関数は下記の形式で作成する
  */
 //------------------------------------------------------------------
-typedef GFL_PROC_RESULT (*GFL_PROC_FUNC)(GFL_PROC *, int *);
+typedef GFL_PROC_RESULT (*GFL_PROC_FUNC)(GFL_PROC *, int *, void *, void *);
 
 //------------------------------------------------------------------
 /**
@@ -66,6 +66,12 @@ extern GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id);
 extern void GFL_PROC_SysMain(GFL_PROCSYS * psys);
 extern void GFL_PROC_SysExit(GFL_PROCSYS * psys);
 
+extern void GFL_PROC_SysCallNextProc(GFL_PROCSYS * psys, GFL_PROC * proc);
+extern void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
+extern void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 extern GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
 extern GFL_PROC * GFL_PROC_CreateChild(	GFL_PROC * proc,
 								const GFL_PROC_DATA * data,
@@ -73,12 +79,7 @@ extern GFL_PROC * GFL_PROC_CreateChild(	GFL_PROC * proc,
 								const u32 heap_id);
 
 extern void GFL_PROC_Delete(GFL_PROC * proc);
-extern void GFL_PROC_SysCallNextProc(GFL_PROCSYS * psys, GFL_PROC * proc);
-extern void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
-extern void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 extern BOOL GFL_PROC_Main(GFL_PROC * proc);
 
 //------------------------------------------------------------------
@@ -86,7 +87,6 @@ extern BOOL GFL_PROC_Main(GFL_PROC * proc);
 extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id);
 extern void * GFL_PROC_GetWork(GFL_PROC * proc);
 extern void GFL_PROC_FreeWork(GFL_PROC * proc);
-extern void * GFL_PROC_GetParentWork(GFL_PROC * proc);
 //extern void PROC_SetPause(GFL_PROC * proc, BOOL pause_flag);
 
 
