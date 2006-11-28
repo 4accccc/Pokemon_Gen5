@@ -12,12 +12,19 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
+#include "main.h"
 
+static const HEAP_INIT_HEADER hih[]={
+	{ HEAPSIZE_SYSTEM,	OS_ARENA_MAIN },
+	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
+};
 
 void NitroMain(void)
 {
   // 初期化して…
   InitSystem();
+
+  GFL_HEAP_sysInit(&hih[0],HEAPID_BASE_MAX,4,0);
 
   // 必要なTCBとか登録して…
   
