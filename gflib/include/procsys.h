@@ -19,7 +19,7 @@
 typedef enum {
 	PROC_RES_CONTINUE = 0,		///<動作継続中
 	PROC_RES_FINISH				///<動作終了
-}PROC_RESULT;
+}GFL_PROC_RESULT;
 
 //------------------------------------------------------------------
 /**
@@ -28,7 +28,13 @@ typedef enum {
  * 構造体の実際の定義はprocsys.cに封じられている
  */
 //------------------------------------------------------------------
-typedef struct _PROC PROC;
+typedef struct _GFL_PROC GFL_PROC;
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+typedef struct _GFL_PROCSYS GFL_PROCSYS;
 
 //------------------------------------------------------------------
 /**
@@ -37,7 +43,7 @@ typedef struct _PROC PROC;
  * フィールド、戦闘、メニューなどの動作関数は下記の形式で作成する
  */
 //------------------------------------------------------------------
-typedef PROC_RESULT (*PROC_FUNC)(PROC *, int *);
+typedef GFL_PROC_RESULT (*GFL_PROC_FUNC)(GFL_PROC *, int *);
 
 //------------------------------------------------------------------
 /**
@@ -47,36 +53,41 @@ typedef PROC_RESULT (*PROC_FUNC)(PROC *, int *);
  * オーバーレイID指定は今のところダミー
  */
 //------------------------------------------------------------------
-#define	NO_OVERLAY_ID	(0xffffffff)
-
 typedef struct {
-	PROC_FUNC init_func;
-	PROC_FUNC main_func;
-	PROC_FUNC end_func;
-	const FSOverlayID overlay_id;
-}PROC_DATA;
+	GFL_PROC_FUNC init_func;
+	GFL_PROC_FUNC main_func;
+	GFL_PROC_FUNC end_func;
+}GFL_PROC_DATA;
 
+#define	NO_OVERLAY_ID	(0xffffffff)
 //===========================================================================
 //===========================================================================
-extern PROC * GFL_PROC_Create(const PROC_DATA * data, void * parent_work, const u32 heap_id);
-extern PROC * GFL_PROC_CreateChild(	PROC * proc,
-								const PROC_DATA * data,
+extern GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id);
+extern void GFL_PROC_SysMain(GFL_PROCSYS * psys);
+extern void GFL_PROC_SysExit(GFL_PROCSYS * psys);
+
+extern GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
+extern GFL_PROC * GFL_PROC_CreateChild(	GFL_PROC * proc,
+								const GFL_PROC_DATA * data,
 								void * parent_work,
 								const u32 heap_id);
 
-extern void GFL_PROC_Delete(PROC * proc);
+extern void GFL_PROC_Delete(GFL_PROC * proc);
+extern void GFL_PROC_SysCallNextProc(GFL_PROCSYS * psys, GFL_PROC * proc);
+extern void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
+extern void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern BOOL GFL_PROC_Main(PROC * proc);
+extern BOOL GFL_PROC_Main(GFL_PROC * proc);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void * GFL_PROC_AllocWork(PROC * proc, unsigned int size, u32 heap_id);
-extern void * GFL_PROC_GetWork(PROC * proc);
-extern void GFL_PROC_FreeWork(PROC * proc);
-extern void * GFL_PROC_GetParentWork(PROC * proc);
-//extern void PROC_SetPause(PROC * proc, BOOL pause_flag);
+extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id);
+extern void * GFL_PROC_GetWork(GFL_PROC * proc);
+extern void GFL_PROC_FreeWork(GFL_PROC * proc);
+extern void * GFL_PROC_GetParentWork(GFL_PROC * proc);
+//extern void PROC_SetPause(GFL_PROC * proc, BOOL pause_flag);
 
 
 
