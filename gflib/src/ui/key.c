@@ -28,8 +28,9 @@ static void _keyConvert(UI_KEYSYS* pKey);
   */
 //------------------------------------------------------------------
 struct _UI_KEYSYS {
-    const GFL_UI_KEY_CUSTOM_TBL** pControl;  ///< キーモードを設定するテーブル
-	int control_mode;	///< キー取得モード(0がdefault)
+    const GFL_UI_KEY_CUSTOM_TBL* pControl;  ///< キーモードを設定するテーブル
+	int control_mode;	///< キーコントロールモード
+    int control_tblno;  ///< コントロールテーブルの場所
 	int cont_org;			///< キー状態
 	int trg_org;			///< キートリガ
 	int repeat_org;			///< キーリピート
@@ -163,7 +164,7 @@ static void _keyConvert(UI_KEYSYS* pKey)
     if(pKey->pControl==NULL){
         return;
     }
-    pTbl = pKey->pControl[pKey->control_mode];
+    pTbl = &pKey->pControl[pKey->control_tblno];
 
     while(1){
         switch(pTbl->mode){
@@ -185,6 +186,7 @@ static void _keyConvert(UI_KEYSYS* pKey)
             KEY_RESET( pKey->repeat, pTbl->keySource );
             break;
         }
+        pTbl++;
     }
     
 #if 0
@@ -237,13 +239,13 @@ void GFL_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
 
 //==============================================================================
 /**
- * @brief キーリピートの速度とウェイトをセット
+ * @brief キーコンフィグテーブルを設定
  * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]	pTbl   コントロールテーブル配列のポインタ
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL** pTbl )
+void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	pKey->pControl = pTbl;
@@ -306,7 +308,36 @@ void GFL_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
 
 //==============================================================================
 /**
- * @brief キーリピートの速度とウェイトをゲット
+ * @brief   キーコンフィグのモードの値を設定する
+ * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]   mode    キーコンフィグモード
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_KeySetControlMode(UISYS* pUI,const int mode)
+{
+    const GFL_UI_KEY_CUSTOM_TBL* pTbl;
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
+    int n = mode,tblno = 0;
+
+    if(pKey->pControl==NULL){  // テーブルがない場合は設定できない
+        return;
+    }
+    pKey->control_mode = mode;
+    pTbl = pKey->pControl;
+    while(n){  // テーブルのコンフィグの先頭を検索
+        tblno++;
+        if(pTbl->mode == GFL_UI_KEY_END){
+            n--;
+        }
+        pTbl++;
+    }
+    pKey->control_tblno = tblno;
+}
+
+//==============================================================================
+/**
+ * @brief キーコンフィグのモードの値を得る
  * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @return  コントロールモード
  */

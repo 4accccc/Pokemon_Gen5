@@ -201,7 +201,7 @@ static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y )
 {
     int i;
 
-    for(i = 0; i < tbl[i].circle.code != GFL_UI_TP_HIT_END; i++)
+    for(i = 0; tbl[i].circle.code != GFL_UI_TP_HIT_END; i++)
     {
         if( tbl[i].circle.code == GFL_UI_TP_USE_CIRCLE )
         {
