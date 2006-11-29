@@ -64,7 +64,7 @@ typedef struct {
  */
 //----------------------------------------------------------------
 typedef struct {
-	u32		heapID;								///< u32
+	u16		heapID;								///< u32
 //	u16		magicnum;							///< マジックナンバー
 	u8		userInfo[MEMHEADER_USERINFO_SIZE];	///< 外部使用領域
 }MEMBLOCK_HEADER;
@@ -117,7 +117,7 @@ static HEAP_SYS  HeapSys = { 0 };
 //------------------------------------------------------------------------------
 BOOL
 	GFI_HEAP_sysInit
-		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset)
+		(const HEAP_INIT_HEADER* header, u16 parentHeapMax, u16 totalHeapMax, u32 startOffset)
 {
 	void *mem;
 	u32  usableHeapMax, i;
@@ -210,7 +210,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL 
 	GFI_HEAP_CreateHeap
-		( u32 parentHeapID, u32 childHeapID, u32 size )
+		( u16 parentHeapID, u16 childHeapID, u32 size )
 {
 	s32 align;
 
@@ -278,7 +278,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_DeleteHeap
-		( u32 childHeapID )
+		( u16 childHeapID )
 {
 	NNSFndHeapHandle  handle;
 
@@ -329,7 +329,7 @@ BOOL
 //------------------------------------------------------------------
 void*
 	GFI_HEAP_AllocMemory
-		( u32 heapID, u32 size )
+		( u16 heapID, u32 size )
 {
 	s32 align;
 
@@ -392,7 +392,7 @@ BOOL
 {
 	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
-	u32	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
+	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 	
 //	if( magicnum != MAGICNUM )
 //	{	//指定ポインタに間違いがある
@@ -441,7 +441,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment )
+		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment )
 {
 	s32 align;
 
@@ -488,7 +488,7 @@ BOOL
 {
 	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
-	u32	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
+	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 
 	newSize += sizeof(MEMBLOCK_HEADER);	// ヘッダ領域追加
 
@@ -544,7 +544,7 @@ BOOL
 //------------------------------------------------------------------
 u32
 	GFI_HEAP_GetHeapFreeSize
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -571,7 +571,7 @@ u32
 //------------------------------------------------------------------
 NNSFndHeapHandle
 	GFI_HEAP_GetHandle
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -598,7 +598,7 @@ NNSFndHeapHandle
 //------------------------------------------------------------------
 NNSFndHeapHandle
 	GFI_HEAP_GetParentHandle
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -625,7 +625,7 @@ NNSFndHeapHandle
 //------------------------------------------------------------------
 void*
 	GFI_HEAP_GetHeapMemBlock
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -652,7 +652,7 @@ void*
 //------------------------------------------------------------------
 u16
 	GFI_HEAP_GetHeapCount
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -663,7 +663,7 @@ u16
 		HeapSys.errorCode = 0;
 		return GetHeapCount( heapID );
 	}
-	return 0xff;
+	return 0xffff;
 }
 
 
@@ -677,7 +677,7 @@ u16
  *					errorCode：失敗原因
  */
 //------------------------------------------------------------------
-u32
+u16
 	GFI_HEAP_GetMemheaderHeapID
 		( void* memory )
 {
@@ -690,7 +690,7 @@ u32
 //	} else {
 		return memheader->heapID;
 //	}
-	return 0xff;
+	return 0xffff;
 }
 
 
@@ -732,7 +732,7 @@ void*
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_CheckHeapSafe
-		( u32 heapID )
+		( u16 heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
