@@ -331,13 +331,13 @@ GLOBAL void GFL_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait
 
 //==============================================================================
 /**
- * @brief キーリピートの速度とウェイトをセット
+ * @brief キーコンフィグテーブルを登録
  * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]	pTbl   コントロールテーブル配列のポインタ
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL** pTbl );
+GLOBAL void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl );
 
 //==============================================================================
 /**
@@ -379,7 +379,17 @@ GLOBAL void GFL_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait );
 
 //==============================================================================
 /**
- * @brief キーリピートの速度とウェイトをゲット
+ * @brief   キーコンフィグのモードの値を設定する
+ * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]   mode    キーコンフィグモード
+ * @return  none
+ */
+//==============================================================================
+GLOBAL void GFL_UI_KeySetControlMode(UISYS* pUI,const int mode);
+
+//==============================================================================
+/**
+ * @brief キーコンフィグのモードの値を得る
  * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @return  コントロールモード
  */
