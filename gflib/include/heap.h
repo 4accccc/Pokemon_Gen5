@@ -34,7 +34,7 @@ typedef struct {
  *	ƒCƒ“ƒ‰ƒCƒ“ŠÖ”
  */
 //----------------------------------------------------------------
-static inline  u32 HeapGetLow( u32 heapID )	
+inline  u32 HeapGetLow( u32 heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
