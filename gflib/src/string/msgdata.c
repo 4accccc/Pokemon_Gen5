@@ -173,8 +173,6 @@ void
  *
  */
 //------------------------------------------------------------------
-#define HEAPID_BASE_SYSTEM (0)
-
 void
 	GFL_MSG_GetStr
 		( const MSGDATA_HEADER* msgdat, u32 strID, STRBUF* dst )
