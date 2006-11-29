@@ -8,10 +8,10 @@
 
 #include <nitro.h>
 #include <nnsys.h>
-//#include "common.h"
-//#include "system\pm_overlay.h"
 
 #include "gflib.h"
+
+//#include "pm_overlay.h"
 
 #include "procsys.h"
 
@@ -38,7 +38,6 @@ enum {
  */
 //------------------------------------------------------------------
 struct _GFL_PROC{
-	GFL_PROCSYS * sys;
 	GFL_PROC_DATA data;				///<プロセス定義データへのポインタ
 	FSOverlayID overlay_id;
 	int proc_seq;				///<プロセス内部シーケンス
@@ -59,12 +58,19 @@ struct _GFL_PROCSYS{
 	FSOverlayID ov_id;			///<現在のメインプロセスのオーバーレイID（未使用）
 	GFL_PROC * proc;			///<現在のメインプロセスのポインタ
 
-	BOOL next_flag;				///<次のメインプロセスが存在するかどうかのデータ
-	GFL_PROC_DATA next_data;	///<次のメインプロセスの生成データ
-	void * next_param;			///<次のメインプロセスのワークへのポインタ
+	BOOL call_flag;				///<子プロセス呼び出しのリクエストフラグ
+	BOOL jump_flag;				///<次のメインプロセスが存在するかどうかのフラグ
 	FSOverlayID next_ov_id;		///<次のメインプロセスのオーバーレイID（未使用）
+	const GFL_PROC_DATA * next_data;	///<次のメインプロセスの生成データ
+	void * next_param;			///<次のメインプロセスのワークへのポインタ
 };
 
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
+extern void GFL_PROC_Delete(GFL_PROC * proc);
+extern BOOL GFL_PROC_Main(GFL_PROC * proc);
 
 //===========================================================================
 //
@@ -72,16 +78,31 @@ struct _GFL_PROCSYS{
 //
 //===========================================================================
 //------------------------------------------------------------------
+/**
+ * @brief	プロセス管理システム初期化
+ * @param	heap_id			使用するヒープのID
+ * @return	GFL_PROCSYS		制御ワークへのポインタ
+ */
 //------------------------------------------------------------------
 GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id)
 {
 	GFL_PROCSYS * psys = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROCSYS));
-	psys->proc = NULL;
 	psys->heap_id = heap_id;
+	psys->ov_id = NO_OVERLAY_ID;
+	psys->proc = NULL;
+	psys->call_flag = FALSE;
+	psys->jump_flag = FALSE;
+	psys->next_ov_id = NO_OVERLAY_ID;
+	psys->next_data = NULL;
+	psys->next_param = NULL;
 	return psys;
 }
 
 //------------------------------------------------------------------
+/**
+ * brief	プロセス管理システムメイン
+ * @param	psys
+ */
 //------------------------------------------------------------------
 void GFL_PROC_SysMain(GFL_PROCSYS * psys)
 {
@@ -93,22 +114,33 @@ void GFL_PROC_SysMain(GFL_PROCSYS * psys)
 
 	result = GFL_PROC_Main(psys->proc);
 
-	if (result == TRUE) {
-		if (psys->next_flag == FALSE) {
+	if (psys->call_flag) {
+		GFL_PROC * proc;
+		proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+		proc->parent = psys->proc;
+		psys->proc->child = proc;
+		psys->proc = proc;
+		psys->call_flag = FALSE;
+	} else if (result == TRUE) {
+		if (psys->jump_flag == FALSE) {
 			GFL_PROC * parent;
 			parent = psys->proc->parent;
 			GFL_PROC_Delete(psys->proc);
 			psys->proc = parent;
 			psys->proc->child = NULL;
 		} else {
-			psys->next_flag = FALSE;
+			psys->jump_flag = FALSE;
 			GFL_PROC_Delete(psys->proc);
-			psys->proc = GFL_PROC_Create(&psys->next_data, psys->next_param, psys->heap_id);
+			psys->proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
 		}
 	}
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	プロセス管理システム終了処理
+ * @param	psys
+ */
 //------------------------------------------------------------------
 void GFL_PROC_SysExit(GFL_PROCSYS * psys)
 {
@@ -119,50 +151,52 @@ void GFL_PROC_SysExit(GFL_PROCSYS * psys)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	プロセス切り替えリクエスト
+ * @param	psys
+ * @param	procdata
+ * @param	pwork
+ */
 //------------------------------------------------------------------
-void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param)
+void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id, 
+		const GFL_PROC_DATA * procdata, void * pwork)
 {
-	psys->next_flag = TRUE;
-	psys->next_data = *procdata;
-	psys->next_param = param;
+	psys->jump_flag = TRUE;
+	psys->next_data = procdata;
+	psys->next_param = pwork;
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	プロセス呼び出し
+ * @param	psys
+ * @param	procdata
+ * @param	pwork
+ */
 //------------------------------------------------------------------
-void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, const GFL_PROC_DATA * procdata, void * param)
+void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
+		const GFL_PROC_DATA * procdata, void * pwork)
 {
-	GFL_PROC * proc;
-	GFL_PROC * parent;
-	proc = GFL_PROC_Create(procdata, param, psys->heap_id);
-
 	if (psys->proc == NULL) {
 		//一番最初のプロセスの場合
+		GFL_PROC * proc;
+		proc = GFL_PROC_Create(procdata, pwork, psys->heap_id);
 		psys->proc = proc;
 	} else {
 		//サブプロセスの場合
-		proc->parent = psys->proc;
-		psys->proc->child = proc;
-		psys->proc = proc;
+		psys->call_flag = TRUE;
+		psys->next_data = procdata;
+		psys->next_param = pwork;
 	}
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void GFL_PROC_SysCallNextProc(GFL_PROCSYS * psys, GFL_PROC * proc)
-{
-	if (psys->proc) {
-		psys->proc->child = proc;
-	}
-	psys->proc = proc;
 }
 
 //------------------------------------------------------------------
 /**
  * @brief	プロセス生成処理
- * @param	func		プロセス動作関数
+ * @param	data		プロセス定義データへのポインタ
  * @param	parent_work	上位から引き渡すワークへのポインタ
- * @param	heap_id	使用するヒープ
- * @return	PROC		生成したプロセスへのポインタ
+ * @param	heap_id		使用するヒープ
+ * @return	GFL_PROC	生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
 GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id)
@@ -180,24 +214,6 @@ GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const
 	return proc;
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	子プロセスを生成する
- * @param	proc		現在の動作プロセスへのポインタ
- * @param	func		プロセス動作関数
- * @param	parent_work	上位から引き渡すワークへのポインタ
- * @param	heap_id	使用するヒープ
- * @return	PROC		生成したプロセスへのポインタ
- */
-//------------------------------------------------------------------
-GFL_PROC * GFL_PROC_CreateChild(GFL_PROC * proc, const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id)
-{
-	GFL_PROC * child;
-	child = GFL_PROC_Create(data, parent_work, heap_id);
-	proc->child = child;
-	child->parent = proc;
-	return child;
-}
 //------------------------------------------------------------------
 /**
  * @brief	プロセスを削除する
@@ -222,19 +238,6 @@ void GFL_PROC_Delete(GFL_PROC * proc)
 void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id)
 {
 	proc->work = GFL_HEAP_AllocMemory(heap_id, size);
-	return proc->work;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	プロセス内ワークのポインタ取得
- * @param	proc	プロセスへのポインタ
- * @return	void *	プロセス内ワークへのポインタ
- */
-//------------------------------------------------------------------
-void * GFL_PROC_GetWork(GFL_PROC * proc)
-{
-	SDK_ASSERT(proc->work != NULL);
 	return proc->work;
 }
 
