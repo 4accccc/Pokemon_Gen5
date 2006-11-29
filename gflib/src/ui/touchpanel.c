@@ -92,7 +92,7 @@ void GFL_UI_TP_sysMain(UISYS* pUI)
 
 	// タッチパネルデータを取得
 	if(pTP->tp_auto_samp == 0){
-		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
+//		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
 	}else{
 		TP_GetLatestRawPointInAuto( &tpTemp );	// オートサンプリング中のデータを取得
 	}
