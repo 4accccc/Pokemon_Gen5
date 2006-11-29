@@ -15,7 +15,7 @@
  */
 //----------------------------------------------------------------
 #define DEFAULT_ALIGN				(4)			// メモリ確保時のアライメント値
-#define MEMHEADER_USERINFO_SIZE		(28-4)		// メモリヘッダ上ユーザー情報領域サイズ
+#define MEMHEADER_USERINFO_SIZE		(28-2)		// メモリヘッダ上ユーザー情報領域サイズ
 #define HEAPID_MASK					(0x7fff)	// ヒープＩＤ取得マスク
 #define HEAPDIR_MASK				(0x8000)	// ヒープ確保方向取得マスク
 
@@ -34,7 +34,7 @@ typedef struct {
  *	インライン関数
  */
 //----------------------------------------------------------------
-inline  u32 HeapGetLow( u32 heapID )	
+inline  u16 HeapGetLow( u16 heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
@@ -54,7 +54,7 @@ inline  u32 HeapGetLow( u32 heapID )
 //------------------------------------------------------------------------------
 extern BOOL
 	GFI_HEAP_sysInit
-		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset);
+		(const HEAP_INIT_HEADER* header, u16 parentHeapMax, u16 totalHeapMax, u32 startOffset);
 
 //------------------------------------------------------------------------------
 /**
@@ -89,7 +89,7 @@ enum{
 
 extern BOOL 
 	GFI_HEAP_CreateHeap
-		( u32 parentHeapID, u32 childHeapID, u32 size );
+		( u16 parentHeapID, u16 childHeapID, u32 size );
 
 //------------------------------------------------------------------
 /**
@@ -108,7 +108,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_DeleteHeap
-		( u32 childHeapID );
+		( u16 childHeapID );
 
 //------------------------------------------------------------------
 /**
@@ -129,7 +129,7 @@ enum{
 
 extern void*
 	GFI_HEAP_AllocMemory
-		( u32 heapID, u32 size );
+		( u16 heapID, u32 size );
 
 //------------------------------------------------------------------
 /**
@@ -170,7 +170,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment );
+		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment );
 
 //------------------------------------------------------------------
 /**
@@ -218,7 +218,7 @@ enum{
 
 extern u32
 	GFI_HEAP_GetHeapFreeSize
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -236,7 +236,7 @@ enum{
 
 extern NNSFndHeapHandle
 	GFI_HEAP_GetHandle
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -254,7 +254,7 @@ enum{
 
 extern NNSFndHeapHandle
 	GFI_HEAP_GetParentHandle
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -272,7 +272,7 @@ enum{
 
 extern void*
 	GFI_HEAP_GetHeapMemBlock
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -280,7 +280,7 @@ extern void*
  *
  * @param   heapID	ヒープＩＤ（最上位ビットは取得方向フラグ）
  *
- * @retval  u16		該当するヒープでアロケートされている数（失敗なら0xff）
+ * @retval  u16		該当するヒープでアロケートされている数（失敗なら0xffff）
  *					errorCode：失敗原因
  */
 //------------------------------------------------------------------
@@ -290,7 +290,7 @@ enum{
 
 extern u16
 	GFI_HEAP_GetHeapCount
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -298,7 +298,7 @@ extern u16
  *
  * @param   memory	確保したメモリアドレス
  *
- * @retval  u32		ヒープＩＤ、取得失敗時は0xff
+ * @retval  u16		ヒープＩＤ、取得失敗時は0xffff
  *					errorCode：失敗原因
  */
 //------------------------------------------------------------------
@@ -306,7 +306,7 @@ enum{
 	HEAP_CANNOT_GETMEMHEADERHEAPID_NOBLOCK = 1,	//保存ＩＤヒープが異常
 };
 
-extern u32
+extern u16
 	GFI_HEAP_GetMemheaderHeapID
 		( void* memory );
 
@@ -316,7 +316,7 @@ extern u32
  *
  * @param   memory	確保したメモリアドレス
  *
- * @retval  u32		ユーザー情報ポインタ、取得失敗時はNULL
+ * @retval  void*	ユーザー情報ポインタ、取得失敗時はNULL
  *					errorCode：失敗原因
  */
 //------------------------------------------------------------------
@@ -345,7 +345,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_CheckHeapSafe
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
