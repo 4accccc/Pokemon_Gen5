@@ -83,8 +83,8 @@ void GFL_UI_sysMain(UISYS* pUI)
 
 void GFL_UI_sysEnd(UISYS* pUI)
 {
-    GFL_HEAP_FreeMemory(pUI->pKey);
-    GFL_HEAP_FreeMemory(pUI->pTP);
+    GFL_UI_Key_sysEnd(pUI);
+    GFL_UI_TP_sysEnd(pUI);
     GFL_HEAP_FreeMemory(pUI);
 }
 
