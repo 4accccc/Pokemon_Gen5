@@ -30,6 +30,8 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_sys
 					ui/key.c \
                     network/tool/net_ring_buff.c \
                     network/tool/net_queue.c \
+					network/device/wh.c \
+					standard/gf_standard.c \
 					calctool.c \
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c \
