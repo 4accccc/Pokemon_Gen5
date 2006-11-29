@@ -1,4 +1,4 @@
-﻿/*
+/*
   Project:  NitroSDK - wireless_shared - demos - wh
   File:     wh_config.h
 
@@ -15,36 +15,36 @@
   do-indent.
 
   Revision 1.1  2004/12/20 07:17:48  takano_makoto
-  アプリケーション毎の無線通信パラメータをwh_config.hとして分離
+  �A�v���P�[�V�������̖����ʐM�p�����[�^��wh_config.h�Ƃ��ĕ���
 
  */
 
 #ifndef __WH_CONFIG_H__
 #define __WH_CONFIG_H__
 
-#include "communication/comm_def.h"
+#include "../net_def.h"
 
 
-// 無線で使用するDMA番号
+// �����Ŏg�p����DMA�ԍ�
 #define WH_DMA_NO                 COMM_DMA_NO
 
-// 通常の MP 通信で使用するポート
+// �ʏ�� MP �ʐM�Ŏg�p����|�[�g
 #define WH_DATA_PORT              (4)  //14
 
-// 通常の MP 通信で使用する優先度
+// �ʏ�� MP �ʐM�Ŏg�p����D��x
 #define WH_DATA_PRIO              WM_PRIORITY_NORMAL
 
-// データシェアリングで使用するポート
+// �f�[�^�V�F�A�����O�Ŏg�p����|�[�g
 #define WH_DS_PORT                13
 
-// MP通信のみの場合のデータサイズ
+// MP�ʐM�݂̂̏ꍇ�̃f�[�^�T�C�Y
 #define WH_MP_PARENT_DATA_SIZE           (192)
 #define WH_MP_CHILD_DATA_SIZE           (12)
 
-// 子機送信量を増やす境目の子機＋親機数
+// �q�@���M�ʂ𑝂₷���ڂ̎q�@�{�e�@��
 #define COMM_WIDE_BYTE_SEND_CHILDNUM   (5) //
 
-#define WH_MP_4CHILD_DATA_SIZE         (38)  // 五人  //  (192/COMM_WIDE_BYTE_SEND_CHILDNUM) 
+#define WH_MP_4CHILD_DATA_SIZE         (38)  // �ܐl  //  (192/COMM_WIDE_BYTE_SEND_CHILDNUM) 
 
 
 #endif // __WH_CONFIGH_H__

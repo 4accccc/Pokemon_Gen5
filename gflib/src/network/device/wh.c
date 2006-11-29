@@ -145,7 +145,9 @@
 #include <nitro/cht.h>
 
 #include "wh.h"
-#include "communication/communication.h"
+#include "net.h"
+#include "calctool.h"
+#include "gf_standard.h"
 
 /*
   wh.c : Wireless Manager 関連 Wrapper
@@ -402,6 +404,10 @@ static u16 WH_GetConnectNum(void);
 #define WH_DS_DATA_SIZE           12
 
 
+// エラー処理を厳密にしたプログラム
+#define ERROR_CHECK (1)
+
+
 // 1回の通信で送れるデータの最大サイズ
 // データシェアリングに加えて通常の通信をする場合は、その分だけ
 // ここの値を増やしてください。その際は、複数パケット送信による追加の
@@ -477,31 +483,35 @@ typedef struct{
 // 接続許可判定用ユーザ関数
     WHJudgeAcceptFunc sJudgeAcceptFunc;
 
+#if 0
     //GGIDスキャンコールバック
     fGGIDCallBack sGGIDScanCallback;
+#endif
     
     WHdisconnectCallBack disconnectCallBack;
-#if T1657_060818_FIX
-    // 子機接続時のコールバック
+
+    /// 子機接続時のコールバック
     WHdisconnectCallBack connectCallBack;
-#endif
-// 自分の aid が入ります（子機は切断・再接続時に変化する可能性あり）
+    /// 接続時の検査コールバック
+    WHConnectCheckCallBack connectCheckCallBack;
+    /// エラー発生時のコールバック
+    WHErrorCallBack errorCallBack;
+    /// SSID取得関数 24byte
+    WHGetSSIDDataCallBack ssidData;
+    
+    /// 自分の aid が入ります（子機は切断・再接続時に変化する可能性あり）
     u16 sMyAid;
-
-// 接続状態を示す bitmap が格納されます
+    /// 接続状態を示す bitmap が格納されます
     u16 sConnectBitmap;
-
-// エラーコード格納用
+    /// エラーコード格納用
     int sErrCode;
-    // 接続人数
-    u8 maxEntry;   
-
-    // 子機として接続したらすぐきる
+    /// 接続人数
+    u8 maxEntry;
+    /// 子機として接続したらすぐきる
     u8 bDisconnectChild;
-    // 乱数用
+    /// 乱数用
     u32 sRand;
-
-/* 通信利用率測定用 (WH_StartMeasureChannel, WH_GetMeasureChannel で使用) */
+    /* 通信利用率測定用 (WH_StartMeasureChannel, WH_GetMeasureChannel で使用) */
     u16 sChannel;
     u16 sChannelBusyRatio;
     u16 sChannelBitmap;
@@ -1071,6 +1081,7 @@ static void WH_StateOutStartParent(void *arg)
 
     WMStartParentCallback *cb = (WMStartParentCallback *)arg;
     const u16 target_bitmap = (u16)(1 << cb->aid);
+    BOOL bConnect=TRUE;
 
     if (cb->errcode != WM_ERRCODE_SUCCESS)
     {
@@ -1097,13 +1108,24 @@ static void WH_StateOutStartParent(void *arg)
             // cb->ssid は子機が WM_StartConnect の ssid 引数にセットしたデータです。
             WH_TRACE("StartParent - new child (aid %x) connected\n", cb->aid);
 
-            OS_TPrintf("ssid my %d  child %d\n",CommStateGetServiceNo(),cb->ssid[0]);
-            
+//            OS_TPrintf("ssid my %d  child %d\n",CommStateGetServiceNo(),cb->ssid[0]);
+
+#if 1 // 改良 比較関数を渡す必要がある @@OO
+            if(_pWmInfo->connectCheckCallBack){
+                bConnect = _pWmInfo->connectCheckCallBack(cb->aid,&cb->ssid[0]);
+            }
+            if((_pWmInfo->bPauseConnectSystem == TRUE  ) ||
+               (_pWmInfo->bPauseConnect == TRUE) ||
+               (!bConnect) ){
+#endif
+#if 0
             if((_pWmInfo->bPauseConnectSystem == TRUE  ) ||
                 (_pWmInfo->bPauseConnect == TRUE) ||
                 (WH_GetConnectNum() >= _pWmInfo->maxEntry) ||
                (cb->ssid[0] != CommStateGetServiceNo()) ||
-               (0 != memcmp(SSID,&cb->ssid[1],sizeof(SSID)))){
+               (0 != GFL_STD_MemComp(SSID,&cb->ssid[1],sizeof(SSID)))){
+#endif
+                
                 WMErrCode result;
                 // 接続を切断します。
                 OS_TPrintf("切断 %d %d \n",_pWmInfo->maxEntry,WH_GetConnectNum());
@@ -1135,12 +1157,12 @@ static void WH_StateOutStartParent(void *arg)
             }
    */
             _pWmInfo->sConnectBitmap |= target_bitmap;
-#if T1657_060818_FIX
+
             // 子機接続時のコールバック
             if(_pWmInfo->connectCallBack){
                 _pWmInfo->connectCallBack(cb->aid);
             }
-#endif
+
         }
         break;
 
@@ -1527,8 +1549,8 @@ static BOOL WH_StateInStartScan(void)
         // 0x8000 が返ってきた場合は、無線が初期化されていないなど
         // 無線ライブラリの状態異常を表しているのでエラーにします。
         WH_REPORT_FAILURE(WM_ERRCODE_ILLEGAL_STATE);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return FALSE;
     }
@@ -1536,8 +1558,8 @@ static BOOL WH_StateInStartScan(void)
     {
         // 無線が使えない状態。
         WH_REPORT_FAILURE(WH_ERRCODE_NO_RADIO);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return FALSE;
     }
@@ -1591,9 +1613,9 @@ static void WH_StateOutStartScan(void *arg)
 
     if (_pWmInfo->sSysState != WH_SYSSTATE_SCANNING)
     {
-#if GFT0001_060816_FIX
+
         _pWmInfo->sAutoConnectFlag = FALSE; // 自動接続はキャンセル
-#endif //GFT0001_060816_FIX
+
         // 状態が変更されていればスキャン終了
         if (!WH_StateInEndScan())
         {
@@ -1626,12 +1648,13 @@ static void WH_StateOutStartScan(void *arg)
         // バッファに設定されたBssDescのキャッシュを破棄
         DC_InvalidateRange(&_pWmInfo->sBssDesc, sizeof(WMbssDesc));
 
+#if 0
         // GGIDコールバックが必要ならば呼び出し
         if (_pWmInfo->sGGIDScanCallback != NULL && cb->gameInfoLength >= 8) {
             _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)cb->gameInfo.userGameInfo;
             _pWmInfo->sGGIDScanCallback(cb->gameInfo.ggid, pGF->serviceNo);
         }
-
+#endif
         if (cb->gameInfoLength < 8 || cb->gameInfo.ggid != _pWmInfo->sParentParam.ggid)
         {
             // GGIDが違っていれば無視する
@@ -1791,6 +1814,7 @@ static void WH_StateOutSetChildWEPKey(void *arg)
 static BOOL WH_StateInStartChild(void)
 {
     u8 ssid_data[32];
+    u8* pSsidData = NULL;
     WMErrCode result;
     WH_TRACE_STATE;
 
@@ -1809,12 +1833,20 @@ static BOOL WH_StateInStartChild(void)
 //                               (u16)((_pWmInfo->sChildWEPKeyGenerator!=NULL) ? WM_AUTHMODE_SHARED_KEY : WM_AUTHMODE_OPEN_SYSTEM));
 
     //ssid送信
-    MI_CpuCopy8(SSID,&ssid_data[1],sizeof(SSID));
+#if 0
+    GFL_STD_MemCopy(SSID,&ssid_data[1],sizeof(SSID));
     ssid_data[0] = CommStateGetServiceNo();
     OS_TPrintf("ssid  %d %s %d\n",ssid_data[0],SSID,sizeof(SSID));
-
     result = WM_StartConnectEx(WH_StateOutStartChild, &_pWmInfo->sBssDesc,
                                ssid_data, TRUE, WM_AUTHMODE_OPEN_SYSTEM);
+#else
+    if(_pWmInfo->ssidData){
+        GFL_STD_MemCopy(_pWmInfo->ssidData(),ssid_data,WM_SIZE_CHILD_SSID );
+        pSsidData = ssid_data;
+    }
+    result = WM_StartConnectEx(WH_StateOutStartChild, &_pWmInfo->sBssDesc,
+                               pSsidData, TRUE, WM_AUTHMODE_OPEN_SYSTEM);
+#endif
     if (result != WM_ERRCODE_OPERATING)
     {
         WH_REPORT_FAILURE(result);
@@ -2020,10 +2052,10 @@ static void WH_StateOutStartChildMP(void *arg)
         }
 
         WH_REPORT_FAILURE(cb->errcode);
-#if T1657_060818_FIX
+
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-#else
-        WH_Reset();
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return;
     }
@@ -2745,8 +2777,8 @@ BOOL WH_StartMeasureChannel(void)
         // （本来はここで何か表示する必要があります）。
         WH_REPORT_FAILURE(WH_ERRCODE_NOMORE_CHANNEL);
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return FALSE;
     }
@@ -2783,8 +2815,8 @@ static u16 WH_StateInMeasureChannel(u16 channel)
         // 無線ライブラリの状態異常を表しているのでエラーにします。
         WH_REPORT_FAILURE(WM_ERRCODE_ILLEGAL_STATE);
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return WM_ERRCODE_ILLEGAL_STATE;
     }
@@ -2794,8 +2826,8 @@ static u16 WH_StateInMeasureChannel(u16 channel)
         // あるということなので、使用できるチャンネルがない事を返します。
         WH_REPORT_FAILURE(WH_ERRCODE_NO_RADIO);
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return WH_ERRCODE_NOMORE_CHANNEL;
     }
@@ -2839,8 +2871,8 @@ static void WH_StateOutMeasureChannel(void *arg)
         // 考えられるので、エラー状態にします。
         WH_REPORT_FAILURE(cb->errcode);
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return;
     }
@@ -3111,8 +3143,8 @@ static void WH_StateOutInitialize(void *arg)
     {
         WH_REPORT_FAILURE(cb->errcode);
         WH_ChangeSysState(WH_SYSSTATE_FATAL);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return;
     }
@@ -3122,8 +3154,8 @@ static void WH_StateOutInitialize(void *arg)
     {
         WH_REPORT_FAILURE(result);
         WH_ChangeSysState(WH_SYSSTATE_FATAL);
-#if T1657_060818_FIX
-        CommStateSetError(COMM_ERROR_RESET_SAVEPOINT);
+#if ERROR_CHECK
+        _pWmInfo->errorCallBack(0,GFL_NET_ERROR_RESET_SAVEPOINT);
 #endif
         return;
     }
@@ -3363,7 +3395,7 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
     case WH_CONNECTMODE_DS_CHILD:
         // 子機モードで接続開始。
         // 保存されていた親機のBssDescを使用してスキャン無しで接続する。
-        MI_CpuCopy8(bssDesc, &_pWmInfo->sBssDesc,  sizeof(_pWmInfo->sBssDesc));
+        GFL_STD_MemCopy(bssDesc, &_pWmInfo->sBssDesc,  sizeof(_pWmInfo->sBssDesc));
         DC_FlushRange(&_pWmInfo->sBssDesc, sizeof(_pWmInfo->sBssDesc));
         DC_WaitWriteBufferEmpty();
 #if 0
@@ -3874,11 +3906,12 @@ void WHSetLifeTime(BOOL bMinimum)
   Arguments:    コールバック
   Returns:      none
  *---------------------------------------------------------------------------*/
-
+#if 0
 void WHSetGGIDScanCallback(fGGIDCallBack callback)
 {
     _pWmInfo->sGGIDScanCallback = callback;
 }
+#endif
 
 /*---------------------------------------------------------------------------*
   Name:         HWSetDisconnectCallBack
