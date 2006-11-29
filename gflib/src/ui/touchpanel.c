@@ -57,7 +57,7 @@ UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
 	if( TP_GetUserInfo( &calibrate ) == TRUE ){
 		// キャリブレーション値の設定
 		TP_SetCalibrateParam( &calibrate );
-		OS_Printf("Get Calibration Parameter from NVRAM\n");
+		OS_TPrintf("Get Calibration Parameter from NVRAM\n");
 	}
 	else{
 		// 取得に失敗したのでデフォルトのキャリブレーションの設定
@@ -66,7 +66,7 @@ UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
 		calibrate.xDotSize = 0x0e25;
 		calibrate.yDotSize = 0x1208;
 		TP_SetCalibrateParam( &calibrate );
-		OS_Printf( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
+		OS_TPrintf( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
 	}
     return pTP;
 }
@@ -92,7 +92,7 @@ void GFL_UI_TP_sysMain(UISYS* pUI)
 
 	// タッチパネルデータを取得
 	if(pTP->tp_auto_samp == 0){
-//		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
+		while( TP_RequestRawSampling( &tpTemp ) != 0 ){};	//サンプリングに成功するまで待つ
 	}else{
 		TP_GetLatestRawPointInAuto( &tpTemp );	// オートサンプリング中のデータを取得
 	}
