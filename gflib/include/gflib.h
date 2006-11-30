@@ -19,7 +19,10 @@
 #include "initialize.h"
 #include "heapsys.h"
 #include "filesystem.h"
+#include "arc_tool.h"
+#include "bg_sys.h"
 
+#include "arc_util.h"
 #include "gf_macro.h"
 #include "gf_standard.h"
 /*  */
