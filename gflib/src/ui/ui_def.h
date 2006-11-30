@@ -17,6 +17,7 @@
 //------------------------------------------------------------------
 typedef struct _UI_TPSYS  UI_TPSYS;   ///< タッチパネル構造体定義
 typedef struct _UI_KEYSYS  UI_KEYSYS; ///< キー構造体定義
+typedef struct _UI_TPAUTOSYS UI_TPAUTOSYS;  ///< 
 
 //------------------------------------------------------------------
 /**
