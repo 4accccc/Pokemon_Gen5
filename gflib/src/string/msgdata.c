@@ -113,7 +113,7 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
 //------------------------------------------------------------------
 static inline void StrSet( STRCODE* dst, const STRCODE* src, const MSG_PARAM_BLOCK* param )
 {
-	MI_CpuCopy16( src, dst, param->len*sizeof(STRCODE) );
+	GFL_STD_MemCopy16( src, dst, param->len*sizeof(STRCODE) );
 }
 
 
@@ -190,7 +190,7 @@ void
 		str = GFL_HEAP_AllocMemory( HeapGetLow( GFL_HEAPID_SYSTEM ), size );
 		if( str )
 		{
-			MI_CpuCopy16( (((u8*)msgdat) + param.offset), str, size );
+			GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
 			DecodeStr( str, param.len, strID, msgdat->randValue );
 			GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
 			GFL_HEAP_FreeMemory( str );
@@ -234,7 +234,7 @@ STRBUF*
 		{
 			STRBUF *dst;
 
-			MI_CpuCopy16( (((u8*)msgdat) + param.offset), str, size );
+			GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
 			DecodeStr( str, param.len, strID, msgdat->randValue );
 
 			dst = GFL_STR_BufferCreate( param.len, heapID );

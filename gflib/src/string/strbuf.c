@@ -144,8 +144,8 @@ void
 
 	if( dst->size > src->strlen )
 	{
-		MI_CpuCopy8( dst->buffer, ( void* )src->buffer,
-					( src->strlen + EOM_CODESIZE ) * sizeof(STRCODE) );
+		GFL_STD_MemCopy( dst->buffer, ( void* )src->buffer,
+						( src->strlen + EOM_CODESIZE ) * sizeof(STRCODE) );
 		dst->strlen = src->strlen;
 		return;
 	}
@@ -283,7 +283,7 @@ void
 	{
 		u32 i;
 
-		MI_CpuCopy8( strbuf->buffer, ( void* )str, len*sizeof(STRCODE) );
+		GFL_STD_MemCopy( strbuf->buffer, ( void* )str, len*sizeof(STRCODE) );
 
 		for(i=0; i<len; i++)
 		{
@@ -323,8 +323,8 @@ void
 
 	if( ( strbuf->strlen + EOM_CODESIZE ) <= arysize )
 	{
-		MI_CpuCopy8( ary, ( void* )strbuf->buffer, 
-					( strbuf->strlen + EOM_CODESIZE ) * sizeof( STRCODE ) );
+		GFL_STD_MemCopy( ary, ( void* )strbuf->buffer, 
+						( strbuf->strlen + EOM_CODESIZE ) * sizeof( STRCODE ) );
 		return;
 	}
 
@@ -375,8 +375,8 @@ void
 	if( ( dst->strlen + src->strlen + EOM_CODESIZE ) <= dst->size )
 		
 	{
-		MI_CpuCopy8( &( dst->buffer[ dst->strlen ] ), ( void* )src->buffer, 
-						( src->strlen + EOM_CODESIZE ) * sizeof( STRCODE ) );
+		GFL_STD_MemCopy( &( dst->buffer[ dst->strlen ] ), ( void* )src->buffer, 
+							( src->strlen + EOM_CODESIZE ) * sizeof( STRCODE ) );
 		dst->strlen += src->strlen;
 		return;
 	}
