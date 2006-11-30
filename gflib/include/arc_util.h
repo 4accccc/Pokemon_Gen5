@@ -76,7 +76,7 @@ typedef enum {
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 ArcUtil_BgCharSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
+extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 
 //------------------------------------------------------------------
@@ -94,7 +94,7 @@ extern u32 ArcUtil_BgCharSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm,
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 ArcUtil_ObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID );
+extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID );
 
 
 //--------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ extern u32 ArcUtil_ObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 of
  *
  */
 //--------------------------------------------------------------------------------------------
-extern void ArcUtil_ScrnSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
+extern void GFL_ARC_UtilScrnSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 
 //------------------------------------------------------------------
@@ -129,7 +129,7 @@ extern void ArcUtil_ScrnSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, 
  *
  */
 //------------------------------------------------------------------
-extern void ArcUtil_PalSet( u32 arcFile, u32 dataIdx, PALTYPE palType, u32 offs, u32 transSize, u32 heapID );
+extern void GFL_ARC_UtilPalSet( u32 arcFile, u32 dataIdx, PALTYPE palType, u32 offs, u32 transSize, u32 heapID );
 
 
 //------------------------------------------------------------------
@@ -146,7 +146,7 @@ extern void ArcUtil_PalSet( u32 arcFile, u32 dataIdx, PALTYPE palType, u32 offs,
  *
  */
 //------------------------------------------------------------------
-extern void ArcUtil_PalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, u32 heapID );
+extern void GFL_ARC_UtilPalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, u32 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -167,7 +167,7 @@ extern void ArcUtil_PalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 src
  *
  */
 //------------------------------------------------------------------
-extern void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 offs, u32 heapID, NNSG2dImagePaletteProxy* proxy );
+extern void GFL_ARC_UtilPalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 offs, u32 heapID, NNSG2dImagePaletteProxy* proxy );
 
 //------------------------------------------------------------------
 /**
@@ -191,7 +191,7 @@ extern void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type
  *		MAP_TYPE_1D = 0,
  *		MAP_TYPE_2D = 1,
  *
- *	※ VRAM転送型は別関数 ArcUtil_TranCharSysLoad を使う
+ *	※ VRAM転送型は別関数 GFL_ARC_UtilTranCharSysLoad を使う
  *
  *	[ vramType ]
  *		NNS_G2D_VRAM_TYPE_3DMAIN = 0,
@@ -200,7 +200,7 @@ extern void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type
  *
  */
 //------------------------------------------------------------------
-extern u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
+extern u32 GFL_ARC_UtilCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
 	u32 transSize, NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy );
 
 
@@ -226,7 +226,7 @@ extern u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, C
  *		CHAR_MAP_1D = 0,
  *		CHAR_MAP_2D = 1,
  *
- *	※ VRAM転送型は別関数 ArcUtil_TranCharSysLoad を使う
+ *	※ VRAM転送型は別関数 GFL_ARC_UtilTranCharSysLoad を使う
  *
  *	[ vramType ]
  *		NNS_G2D_VRAM_TYPE_3DMAIN = 0,
@@ -235,7 +235,7 @@ extern u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, C
  *
  */
 //------------------------------------------------------------------
-extern void ArcUtil_CharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+extern void GFL_ARC_UtilCharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy );
 
 //------------------------------------------------------------------
@@ -264,7 +264,7 @@ extern void ArcUtil_CharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL
  *
  */
 //------------------------------------------------------------------
-extern const void* ArcUtil_TransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
+extern const void* GFL_ARC_UtilTransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
 
 
@@ -281,7 +281,7 @@ extern const void* ArcUtil_TransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL 
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* ArcUtil_CharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCharacterData** charData, u32 heapID );
+extern void* GFL_ARC_UtilCharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCharacterData** charData, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -296,7 +296,7 @@ extern void* ArcUtil_CharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag,
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* ArcUtil_ScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dScreenData** scrnData, u32 heapID);
+extern void* GFL_ARC_UtilScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dScreenData** scrnData, u32 heapID);
 
 //------------------------------------------------------------------
 /**
@@ -310,7 +310,7 @@ extern void* ArcUtil_ScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* ArcUtil_PalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData, u32 heapID );
+extern void* GFL_ARC_UtilPalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -325,7 +325,7 @@ extern void* ArcUtil_PalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** p
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* ArcUtil_CellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, u32 heapID );
+extern void* GFL_ARC_UtilCellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -340,7 +340,7 @@ extern void* ArcUtil_CellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFl
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* ArcUtil_AnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, u32 heapID);
+extern void* GFL_ARC_UtilAnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, u32 heapID);
 
 
 //------------------------------------------------------------------
@@ -354,7 +354,7 @@ extern void* ArcUtil_AnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFl
  * @retval  void*		解凍後のデータ保存先アドレス
  */
 //------------------------------------------------------------------
-extern void* ArcUtil_UnCompress(u32 fileIdx, u32 dataIdx, u32 heapID);
+extern void* GFL_ARC_UtilUnCompress(u32 fileIdx, u32 dataIdx, u32 heapID);
 
 
 //------------------------------------------------------------------
@@ -374,7 +374,7 @@ extern void* ArcUtil_UnCompress(u32 fileIdx, u32 dataIdx, u32 heapID);
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* ArcUtil_Load(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType);
+extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType);
 
 //------------------------------------------------------------------
 /**
@@ -394,7 +394,7 @@ extern void* ArcUtil_Load(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 hea
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* ArcUtil_LoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType, u32* pSize);
+extern void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType, u32* pSize);
 
 
 
