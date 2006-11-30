@@ -9,7 +9,6 @@
 #define __MSGDATA_H__
 
 #include "strbuf.h"
-//#include "arc_tool.h"
 
 /*==========================================================================================*/
 /*
@@ -194,7 +193,7 @@ MSGDATA_HEADER*
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_DatUnload
+	GFL_MSG_DataUnload
 		( MSGDATA_HEADER* msgdat );
 
 //------------------------------------------------------------------
@@ -207,8 +206,6 @@ void
  *
  */
 //------------------------------------------------------------------
-#define HEAPID_BASE_SYSTEM (0)
-
 void
 	GFL_MSG_GetStr
 		( const MSGDATA_HEADER* msgdat, u32 strID, STRBUF* dst );
@@ -257,11 +254,9 @@ void
  *
  */
 //------------------------------------------------------------------
-#if 0
 void
 	GFL_MSG_GetStrDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID, STRBUF* dst );
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -293,11 +288,9 @@ STRBUF*
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
  */
 //------------------------------------------------------------------
-#if 0
 STRBUF*
 	GFL_MSG_GetStrDirectAllocByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID );
-#endif
 
 //------------------------------------------------------------------
 /**
