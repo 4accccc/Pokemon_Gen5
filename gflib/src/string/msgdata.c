@@ -187,7 +187,7 @@ void
 		DecodeParam( &param, strID, msgdat->randValue );
 
 		size = param.len * sizeof(STRCODE);
-		str = GFL_HEAP_AllocMemory( HeapGetLow( HEAPID_BASE_SYSTEM ), size );
+		str = GFL_HEAP_AllocMemory( HeapGetLow( GFL_HEAPID_SYSTEM ), size );
 		if( str )
 		{
 			MI_CpuCopy16( (((u8*)msgdat) + param.offset), str, size );
