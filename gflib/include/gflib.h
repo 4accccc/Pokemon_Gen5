@@ -21,6 +21,7 @@
 #include "filesystem.h"
 
 #include "gf_macro.h"
+#include "gf_standard.h"
 /*  */
 
 #endif	/*	__GFLIB_H__ */
