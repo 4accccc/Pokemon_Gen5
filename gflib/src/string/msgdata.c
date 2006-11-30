@@ -101,22 +101,6 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
 }
 
 
-//------------------------------------------------------------------
-/**
- * コンバートされている文字列を指定のローカルバッファにコピー
- *
- * @param   dst			コピー先バッファ
- * @param   src			コピー元文字列
- * @param   param		コピー元文字列のパラメータ
- *
- */
-//------------------------------------------------------------------
-static inline void StrSet( STRCODE* dst, const STRCODE* src, const MSG_PARAM_BLOCK* param )
-{
-	GFL_STD_MemCopy16( src, dst, param->len*sizeof(STRCODE) );
-}
-
-
 /*============================================================================================*/
 /*                                                                                            */
 /*                                                                                            */
@@ -139,11 +123,7 @@ MSGDATA_HEADER*
 	GFL_MSG_DataLoad
 		( u32 arcID, u32 datID, u32 heapID )
 {
-#if 0
-//	return ArchiveDataLoadMalloc( arcID, datID, heapID );
-#else
-	return NULL;
-#endif
+	return GFL_ARC_DataLoadMalloc( arcID, datID, heapID );
 }
 
 
@@ -156,7 +136,7 @@ MSGDATA_HEADER*
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_DatUnload
+	GFL_MSG_DataUnload
 		( MSGDATA_HEADER* msgdat )
 {
 	GFL_HEAP_FreeMemory( msgdat );
@@ -188,13 +168,13 @@ void
 
 		size = param.len * sizeof(STRCODE);
 		str = GFL_HEAP_AllocMemory( HeapGetLow( GFL_HEAPID_SYSTEM ), size );
-		if( str )
-		{
-			GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
-			DecodeStr( str, param.len, strID, msgdat->randValue );
-			GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
-			GFL_HEAP_FreeMemory( str );
-		}
+
+		//コンバートされている文字列を指定のローカルバッファにコピー
+		GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
+
+		DecodeStr( str, param.len, strID, msgdat->randValue );
+		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
+		GFL_HEAP_FreeMemory( str );
 	}
 	else
 	{
@@ -224,34 +204,30 @@ STRBUF*
 	{
 		MSG_PARAM_BLOCK param;
 		STRCODE* str;
+		STRBUF* dst;
 		u32 size;
 
 		param = msgdat->params[strID];
 		DecodeParam( &param, strID, msgdat->randValue );
 		size = param.len * sizeof(STRCODE);
 		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID) , size );
-		if( str )
-		{
-			STRBUF *dst;
 
-			GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
-			DecodeStr( str, param.len, strID, msgdat->randValue );
+		//コンバートされている文字列を指定のローカルバッファにコピー
+		GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
 
-			dst = GFL_STR_BufferCreate( param.len, heapID );
-			if( dst )
-			{
-				GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
-			}
-			GFL_HEAP_FreeMemory( str );
-			return dst;
-		}
-		return NULL;
+		DecodeStr( str, param.len, strID, msgdat->randValue );
+
+		dst = GFL_STR_BufferCreate( param.len, heapID );
+		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
+
+		GFL_HEAP_FreeMemory( str );
+		return dst;
 	}
 	else
 	{
 		// 存在しないインデックスの要求が来たら空文字列を返している
 		GF_ASSERT_MSG(0, "strID:%d", strID);
-		return GFL_STR_BufferCreate( 4, heapID );
+		return NULL;
 	}
 }
 
@@ -272,16 +248,9 @@ void
 	GFL_MSG_GetStrDirect
 		( u32 arcID, u32 datID, u32 strID, u32 heapID, STRBUF* dst )
 {
-#if 0
-	ARCHANDLE*  arc;
-
-	arc = ArchiveDataHandleOpen(arcID, heapID);
-	if( arc )
-	{
-		MSGDAT_GetStrDirectByHandle( arc, datID, strID, heapID, dst );
-		ArchiveDataHandleClose( arc );
-	}
-#endif
+	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
+	GFL_MSG_GetStrDirectByHandle( arcHandle, datID, strID, heapID, dst );
+	GFL_ARC_DataHandleClose( arcHandle );
 }
 
 
@@ -297,7 +266,6 @@ void
  *
  */
 //------------------------------------------------------------------
-#if 0
 void
 	GFL_MSG_GetStrDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID, STRBUF* dst )
@@ -307,31 +275,27 @@ void
 	STRCODE*  str;
 	u32 size;
 
-	ArchiveDataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
 
 	if( strID < header.numMsgs )
 	{
-		ArchiveDataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
+		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
 									sizeof(MSG_PARAM_BLOCK), &param );
 		DecodeParam( &param, strID, header.randValue );
 
 		size = param.len * sizeof(STRCODE);
-		str = sys_AllocMemoryLo( heapID, size );
-		if( str )
-		{
-			ArchiveDataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
-			DecodeStr( str, param.len, strID, header.randValue );
-			STRBUF_SetStringCodeOrderLength( dst, str, param.len );
-			sys_FreeMemoryEz( str );
-		}
+		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), size );
+
+		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
+		DecodeStr( str, param.len, strID, header.randValue );
+		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
+		GFL_HEAP_FreeMemory( str );
 	}
 	else
 	{
 		GF_ASSERT_MSG(0, "datID:%d strID:%d", datID, strID);
-		STRBUF_Clear( dst );
 	}
 }
-#endif
 
 
 //------------------------------------------------------------------
@@ -351,24 +315,11 @@ STRBUF*
 	GFL_MSG_GetStrDirectAlloc
 		( u32 arcID, u32 datID, u32 strID, u32 heapID )
 {
-#if 0
-	ARCHANDLE*  arc;
-	STRBUF* ret;
+	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
+	STRBUF* ret = GFL_MSG_GetStrDirectAllocByHandle( arcHandle, datID, strID, heapID );
+	GFL_ARC_DataHandleClose( arcHandle );
 
-	arc = ArchiveDataHandleOpen(arcID, heapID);
-	if( arc )
-	{
-		ret = MSGDAT_GetStrDirectAllocByHandle( arc, datID, strID, heapID );
-		ArchiveDataHandleClose( arc );
-	}
-	else
-	{
-		ret = STRBUF_Create( 4, heapID );
-	}
 	return ret;
-#else
-	return NULL;
-#endif
 }
 
 
@@ -385,50 +336,41 @@ STRBUF*
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
  */
 //------------------------------------------------------------------
-#if 0
 STRBUF*
 	GFL_MSG_GetStrDirectAllocByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID )
 {
-	MSGDATA_HEADER   header;
+	MSGDATA_HEADER header;
+	STRCODE* str;
+	u32	size;
 
-	ArchiveDataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
 
 	if( strID < header.numMsgs )
 	{
 		MSG_PARAM_BLOCK  param;
 		STRBUF*   dst;
 
-		ArchiveDataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
+		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
 									sizeof(MSG_PARAM_BLOCK), &param );
 		DecodeParam( &param, strID, header.randValue );
 
-		dst = STRBUF_Create( param.len, heapID );
-		if( dst )
-		{
-			STRCODE*  str;
-			u32 size;
+		dst = GFL_STR_BufferCreate( param.len, heapID );
+		size = param.len * sizeof(STRCODE);
+		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), size );
 
-			size = param.len * sizeof(STRCODE);
-			str = sys_AllocMemoryLo( heapID, size );
-			if( str )
-			{
-				ArchiveDataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
-				DecodeStr( str, param.len, strID, header.randValue );
-				STRBUF_SetStringCodeOrderLength( dst, str, param.len );
-				sys_FreeMemoryEz( str );
-			}
-		}
+		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
+		DecodeStr( str, param.len, strID, header.randValue );
+		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
+		GFL_HEAP_FreeMemory( str );
 		return dst;
 	}
 	else
 	{
-		// 存在しないインデックスの要求が来たら空文字列を返している
 		GF_ASSERT_MSG(0, "datID:%d strID:%d", datID, strID);
-		return STRBUF_Create( 4, heapID );
+		return NULL;
 	}
 }
-#endif
 
 
 //------------------------------------------------------------------
@@ -462,19 +404,13 @@ u32
 	GFL_MSG_GetMessageCountDirect
 		( u32 arcID, u32 datID )
 {
-#if 0
 	MSGDATA_HEADER  header;
-	ArchiveDataLoadOfs( &header, arcID, datID, 0, sizeof(MSGDATA_HEADER) );
+	GFL_ARC_DataLoadOfs( &header, arcID, datID, 0, sizeof(MSGDATA_HEADER) );
+
 	return header.numMsgs;
-#else
-	return 0;
-#endif
 }
 
 
-
-
-#if 0
 /*============================================================================================*/
 /*                                                                                            */
 /*                                                                                            */
@@ -513,31 +449,27 @@ struct _MSGDATA_MANAGER {
  * @retval  MSGDATA_MANAGER*		作成したマネージャワークポインタ
  */
 //------------------------------------------------------------------
-MSGDATA_MANAGER*  MSGMAN_Create( MSGMAN_TYPE type, u32 arcID, u32 datID, u32 heapID )
+MSGDATA_MANAGER*
+	GFL_MSG_ManagerCreate
+		( MSGMAN_TYPE type, u32 arcID, u32 datID, u32 heapID )
 {
 	// マネージャ作成→文字列取得→マネージャ廃棄…の流れが思ったより多そうなので
 	// マネージャワークはメモリブロックの後方から取得する
-	MSGDATA_MANAGER* man = sys_AllocMemoryLo( heapID, sizeof(MSGDATA_MANAGER) );
-	if( man )
+	MSGDATA_MANAGER* man = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), sizeof(MSGDATA_MANAGER) );
+
+	if( type == MSGMAN_TYPE_NORMAL )
 	{
-		if( type == MSGMAN_TYPE_NORMAL )
-		{
-			man->msgData = MSGDAT_Load( arcID, datID, heapID );
-			if( man->msgData == NULL )
-			{
-				sys_FreeMemoryEz( man );
-				return NULL;
-			}
-		}
-		else
-		{
-			man->arcHandle = ArchiveDataHandleOpen(arcID, heapID);
-		}
-		man->type = type;
-		man->arcID = arcID;
-		man->datID = datID;
-		man->heapID = heapID;
+		man->msgData = GFL_MSG_DataLoad( arcID, datID, heapID );
 	}
+	else
+	{
+		man->arcHandle = GFL_ARC_DataHandleOpen(arcID, heapID);
+	}
+	man->type = type;
+	man->arcID = arcID;
+	man->datID = datID;
+	man->heapID = heapID;
+
 	return man;
 }
 
@@ -550,19 +482,21 @@ MSGDATA_MANAGER*  MSGMAN_Create( MSGMAN_TYPE type, u32 arcID, u32 datID, u32 hea
  *
  */
 //------------------------------------------------------------------
-void MSGMAN_Delete( MSGDATA_MANAGER* man )
+void
+	GFL_MSG_ManagerDelete
+		( MSGDATA_MANAGER* man )
 {
 	if( man )
 	{
 		switch( man->type ){
 		case MSGMAN_TYPE_NORMAL:
-			MSGDAT_Unload( man->msgData );
+			GFL_MSG_DataUnload( man->msgData );
 			break;
 		case MSGMAN_TYPE_DIRECT:
-			ArchiveDataHandleClose( man->arcHandle );
+			GFL_ARC_DataHandleClose( man->arcHandle );
 			break;
 		}
-		sys_FreeMemoryEz( man );
+		GFL_HEAP_FreeMemory( man );
 	}
 }
 
@@ -577,15 +511,17 @@ void MSGMAN_Delete( MSGDATA_MANAGER* man )
  *
  */
 //------------------------------------------------------------------
-void MSGMAN_GetString( const MSGDATA_MANAGER* man, u32 strID, STRBUF* dst )
+void
+	GFL_MSG_ManagerGetString
+		( const MSGDATA_MANAGER* man, u32 strID, STRBUF* dst )
 {
 	switch( man->type ){
 	case MSGMAN_TYPE_NORMAL:
-		MSGDAT_GetStr( man->msgData, strID, dst );
+		GFL_MSG_GetStr( man->msgData, strID, dst );
 		break;
 
 	case MSGMAN_TYPE_DIRECT:
-		MSGDAT_GetStrDirectByHandle( man->arcHandle, man->datID, strID, man->heapID, dst );
+		GFL_MSG_GetStrDirectByHandle( man->arcHandle, man->datID, strID, man->heapID, dst );
 		break;
 	}
 }
@@ -602,14 +538,16 @@ void MSGMAN_GetString( const MSGDATA_MANAGER* man, u32 strID, STRBUF* dst )
  * @retval  STRBUF*		コピー先バッファポインタ
  */
 //------------------------------------------------------------------
-STRBUF* MSGMAN_AllocString( const MSGDATA_MANAGER* man, u32 strID )
+STRBUF*
+	GFL_MSG_ManagerAllocString
+		( const MSGDATA_MANAGER* man, u32 strID )
 {
 	switch( man->type ){
 	case MSGMAN_TYPE_NORMAL:
-		return MSGDAT_GetStrAlloc( man->msgData, strID, man->heapID );
+		return GFL_MSG_GetStrAlloc( man->msgData, strID, man->heapID );
 
 	case MSGMAN_TYPE_DIRECT:
-		return MSGDAT_GetStrDirectAllocByHandle( man->arcHandle, man->datID, strID, man->heapID );
+		return GFL_MSG_GetStrDirectAllocByHandle( man->arcHandle, man->datID, strID, man->heapID );
 	}
 	return NULL;
 }
@@ -624,17 +562,18 @@ STRBUF* MSGMAN_AllocString( const MSGDATA_MANAGER* man, u32 strID )
  * @retval  u32		メッセージ数
  */
 //------------------------------------------------------------------
-u32 MSGMAN_GetMessageCount( const MSGDATA_MANAGER* man )
+u32
+	GFL_MSG_ManagerGetMessageCount
+		( const MSGDATA_MANAGER* man )
 {
 	switch( man->type ){
 	case MSGMAN_TYPE_NORMAL:
-		return MSGDAT_GetMessageCount( man->msgData );
+		return GFL_MSG_GetMessageCount( man->msgData );
 
 	case MSGMAN_TYPE_DIRECT:
-		return MSGDAT_GetMessageCountDirect( man->arcID, man->datID );
+		return GFL_MSG_GetMessageCountDirect( man->arcID, man->datID );
 	}
 	return 0;
 }
 
-#endif
 
