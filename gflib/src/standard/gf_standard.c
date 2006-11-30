@@ -14,7 +14,7 @@
  *	@brief	メモリ領域を比較する
  *	@param	s1	比較メモリー1
  *	@param	s2	比較メモリー2
- *	@param	n	比較サイズ
+ *	@param	size	比較サイズ
  *	@retval	０   同じ
  *	@retval	！０ 異なる
  */
