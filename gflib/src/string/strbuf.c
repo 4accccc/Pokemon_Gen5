@@ -74,13 +74,11 @@ STRBUF*
 
 	strbuf = GFL_HEAP_AllocMemory( heapID, STRBUF_HEADER_SIZE + sizeof(STRCODE)*size );
 
-	if( strbuf )
-	{
-		strbuf->magicNumber = STRBUF_MAGIC_NUMBER;
-		strbuf->size = size;
-		strbuf->strlen = 0;
-		strbuf->buffer[0] = EOM_;
-	}
+	strbuf->magicNumber = STRBUF_MAGIC_NUMBER;
+	strbuf->size = size;
+	strbuf->strlen = 0;
+	strbuf->buffer[0] = EOM_;
+
 	return strbuf;
 }
 
@@ -171,10 +169,8 @@ STRBUF*
 	GF_ASSERT( STRBUF_CheckValid( origin ) == TRUE );
 
 	copy = GFL_STR_BufferCreate( origin->strlen + EOM_CODESIZE, heapID );
-	if( copy )
-	{
-		GFL_STR_BufferCopy( copy, origin );
-	}
+	GFL_STR_BufferCopy( copy, origin );
+
 	return copy;
 }
 
@@ -193,21 +189,19 @@ BOOL
 	GFL_STR_BufferCompare
 		( const STRBUF* str1, const STRBUF* str2 )
 {
+	int i;
+
 	GF_ASSERT( STRBUF_CheckValid( str1 ) == TRUE );
 	GF_ASSERT( STRBUF_CheckValid( str2 ) == TRUE );
 
+	for(i=0; str1->buffer[i] == str2->buffer[i]; i++)
 	{
-		int i;
-
-		for(i=0; str1->buffer[i] == str2->buffer[i]; i++)
+		if( str1->buffer[i] == EOM_ )
 		{
-			if( str1->buffer[i] == EOM_ )
-			{
-				return TRUE;
-			}
+			return TRUE;
 		}
-		return FALSE;
 	}
+	return FALSE;
 }
 
 
