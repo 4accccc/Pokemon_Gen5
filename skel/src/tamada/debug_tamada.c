@@ -10,40 +10,45 @@
 
 #include "gflib.h"
 #include "procsys.h"
-
-#include "main.h"
-#include "tamada/debug_graphic.h"
-#include "tamada/debug_tamada.h"
 #include "ui.h"
 
+#include "main.h"
+#include "tamada/debug_tamada.h"
+#include "tamada/bg/debug_graphic.h"
+
+#include "tamada_internal.h"
 
 //============================================================================================
 //============================================================================================
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-typedef struct {
-	u32 debug_heap_id;
-	UISYS * uisys;
-	GFL_PROCSYS * psys;
-}DEBUG_TAMADA_CONTROL;
-
 
 static DEBUG_TAMADA_CONTROL * DebugTamadaControl;
 
 
 
 
-static const GFL_PROC_DATA DebugTamadaMainProcData1;
-static const GFL_PROC_DATA DebugTamadaSubProcData1;
-static const GFL_PROC_DATA DebugTamadaSubProcData2;
+static const GFL_PROC_DATA DebugTamadaMainProcData;
 
 
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_INTR_SetVblankFunc(GFL_INTR_FUNC func, void * work)
+{
+	DEBUG_TAMADA_CONTROL * ctrl = DebugTamadaControl;
+	ctrl->vblank_func = func;
+	ctrl->vblank_work = work;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void VBlankIntr(void)
 {
+	DEBUG_TAMADA_CONTROL * ctrl = DebugTamadaControl;
+	if (ctrl->vblank_func) {
+		ctrl->vblank_func(ctrl->vblank_work);
+	}
+
     //---- 割り込みチェックフラグ
     OS_SetIrqCheckFlag(OS_IE_V_BLANK);
 }
@@ -59,7 +64,7 @@ void DebugTamadaInit(u32 heap_id)
 	ctrl->debug_heap_id = heap_id;
 
 	ctrl->psys = GFL_PROC_SysInit(ctrl->debug_heap_id);
-	GFL_PROC_SysCallProc(ctrl->psys, &DebugTamadaMainProcData1, ctrl);
+	GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &DebugTamadaMainProcData, ctrl);
 	ctrl->uisys = GFL_UI_sysInit(ctrl->debug_heap_id);
 
     /* Vブランク割込設定 */
@@ -95,11 +100,9 @@ void DebugTamadaExit(void)
 /**
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaMainProcInit1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
+static GFL_PROC_RESULT DebugTamadaMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_TAMADA_CONTROL * ctrl = p_work;
-	Debug_GraphicInit();
-	Debug_GraphicPut(0);
+	DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -107,17 +110,35 @@ static GFL_PROC_RESULT DebugTamadaMainProcInit1(GFL_PROC * proc, int * seq, void
 /**
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaMainProcMain1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
+static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	GFL_PROC * subproc;
-	DEBUG_TAMADA_CONTROL * ctrl = p_work;
-	if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_A) {
-		GFL_PROC_SysCallProc(ctrl->psys, &DebugTamadaSubProcData1, ctrl);
-		return GFL_PROC_RES_CONTINUE;
-	} else if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_B){
-		GFL_PROC_SysCallProc(ctrl->psys, &DebugTamadaSubProcData2, ctrl);
-		return GFL_PROC_RES_CONTINUE;
+	DEBUG_TAMADA_CONTROL * ctrl = pwk;
+	int key = GFL_UI_KeyGetTrg(ctrl->uisys);
+
+	switch (*seq) {
+	case 0:
+		Debug_GraphicInit();
+		Debug_GraphicPut(0);
+		(*seq) ++;
+		break;
+	case 1:
+		if (key & PAD_BUTTON_A) {
+			GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &DebugTamadaSubProcData1, ctrl);
+			*seq = 0;
+			return GFL_PROC_RES_CONTINUE;
+		} else if (key & PAD_BUTTON_B){
+			GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &DebugTamadaSubProcData2, ctrl);
+			*seq = 0;
+			return GFL_PROC_RES_CONTINUE;
+		} else if (key & PAD_BUTTON_START) {
+			GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &OamKeyDemoProcData, ctrl);
+			*seq = 0;
+			return GFL_PROC_RES_CONTINUE;
+		}
+		break;
 	}
+
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -125,105 +146,16 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain1(GFL_PROC * proc, int * seq, void
 /**
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaMainProcEnd1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
+static GFL_PROC_RESULT DebugTamadaMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const GFL_PROC_DATA DebugTamadaMainProcData1 = {
-	DebugTamadaMainProcInit1,
-	DebugTamadaMainProcMain1,
-	DebugTamadaMainProcEnd1,
-};
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcInit1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	Debug_GraphicInit();
-	Debug_GraphicPut(1);
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcMain1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	DEBUG_TAMADA_CONTROL * ctrl = p_work;
-	if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_A) {
-		return GFL_PROC_RES_FINISH;
-	}
-	return GFL_PROC_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcEnd1(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	Debug_GraphicPut(0);
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const GFL_PROC_DATA DebugTamadaSubProcData1 = {
-	DebugTamadaSubProcInit1,
-	DebugTamadaSubProcMain1,
-	DebugTamadaSubProcEnd1,
-};
-
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcInit2(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	Debug_GraphicInit();
-	Debug_GraphicPut(2);
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcMain2(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	DEBUG_TAMADA_CONTROL * ctrl = p_work;
-	if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_A) {
-		return GFL_PROC_RES_FINISH;
-	}
-	return GFL_PROC_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-/**
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DebugTamadaSubProcEnd2(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
-{
-	Debug_GraphicPut(0);
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const GFL_PROC_DATA DebugTamadaSubProcData2 = {
-	DebugTamadaSubProcInit2,
-	DebugTamadaSubProcMain2,
-	DebugTamadaSubProcEnd2,
+static const GFL_PROC_DATA DebugTamadaMainProcData = {
+	DebugTamadaMainProcInit,
+	DebugTamadaMainProcMain,
+	DebugTamadaMainProcEnd,
 };
 
