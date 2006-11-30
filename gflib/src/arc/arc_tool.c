@@ -16,16 +16,17 @@
 static	void	ArchiveDataLoadIndex(void *data,const char *name,int index,int ofs,int ofs_size);
 static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size,int flag);
 
-void	ArchiveDataLoad(void *data,int file_kind,int index);
-void	*ArchiveDataLoadMalloc(int file_kind,int index,int heap_id);
-void	*ArchiveDataLoadMallocLo(int file_kind,int index,int heap_id);
-void	ArchiveDataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
-void	*ArchiveDataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
-void	*ArchiveDataLoadMallocOfsLo(int file_kind,int index,int heap_id,int ofs,int size);
-u16		ArchiveDataFileCntGet(int file_kind,int index);
-u32		ArchiveDataSizeGet(int file_kind,int index);
+void	GFL_ARC_sysInit(char *tbl,int tbl_max);
+void	GFL_ARC_sysExit(void);
 
-void	ArchiveDataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer );
+void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
+void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,int heap_id);
+void	*GFL_ARC_DataLoadMallocLow(int file_kind,int index,int heap_id);
+void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
+void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
+void	*GFL_ARC_DataLoadMallocOfsLow(int file_kind,int index,int heap_id,int ofs,int size);
+u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
+u32		GFL_ARC_DataSizeGet(int file_kind,int index);
 
 #define	ALLOC_HEAD	(0)		//領域を確保するとき先頭から確保
 #define	ALLOC_TAIL	(1)		//領域を確保するとき後ろから確保
@@ -35,6 +36,34 @@ void	ArchiveDataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer 
 //============================================================================================
 
 static	char	**ArchiveFileTable=NULL;
+static	int		ArchiveFileTableMax=0;
+
+//============================================================================================
+/**
+ *
+ *	アーカイブシステム初期化
+ *
+ * @param[in]	tbl		アーカイブデータテーブルのアドレス
+ * @param[in]	tbl_max	アーカイブデータテーブルの要素数のMAX
+ *
+ */
+//============================================================================================
+void	GFL_ARC_sysInit(char *tbl,int tbl_max)
+{
+	**ArchiveFileTable=*tbl;
+	ArchiveFileTableMax=tbl_max;
+}
+
+//============================================================================================
+/**
+ *
+ *	アーカイブシステム終了（現状は特になにもしない）
+ *
+ */
+//============================================================================================
+void	GFL_ARC_sysExit(void)
+{
+}
 
 //============================================================================================
 /**
@@ -170,7 +199,7 @@ static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,i
  * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
  */
 //============================================================================================
-void	ArchiveDataLoad(void *data, int arcID, int datID)
+void	GFL_ARC_DataLoad(void *data, int arcID, int datID)
 {
 	ArchiveDataLoadIndex(data, ArchiveFileTable[arcID], datID, OFS_NO_SET, SIZE_NO_SET);
 }
@@ -188,7 +217,7 @@ void	ArchiveDataLoad(void *data, int arcID, int datID)
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-void* ArchiveDataLoadMalloc(int arcID, int datID, int heapID)
+void* GFL_ARC_DataLoadMalloc(int arcID, int datID, int heapID)
 {
 	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
 }
@@ -206,7 +235,7 @@ void* ArchiveDataLoadMalloc(int arcID, int datID, int heapID)
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-void* ArchiveDataLoadMallocLo(int arcID, int datID, int heapID)
+void* GFL_ARC_DataLoadMallocLow(int arcID, int datID, int heapID)
 {
 	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID], datID, heapID, OFS_NO_SET, SIZE_NO_SET, ALLOC_TAIL);
 }
@@ -222,7 +251,7 @@ void* ArchiveDataLoadMallocLo(int arcID, int datID, int heapID)
  * @param[in]	size		読み込むデータサイズ
  */
 //============================================================================================
-void ArchiveDataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
+void GFL_ARC_DataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
 {
 	ArchiveDataLoadIndex(data, ArchiveFileTable[arcID], datID, ofs, size);
 }
@@ -242,7 +271,7 @@ void ArchiveDataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-void* ArchiveDataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int size)
+void* GFL_ARC_DataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int size)
 {
 	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_HEAD);
 }
@@ -262,7 +291,7 @@ void* ArchiveDataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int si
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-void	*ArchiveDataLoadMallocOfsLo(int arcID, int datID, int heapID, int ofs, int size)
+void	*GFL_ARC_DataLoadMallocOfsLow(int arcID, int datID, int heapID, int ofs, int size)
 {
 	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_TAIL);
 }
@@ -275,7 +304,7 @@ void	*ArchiveDataLoadMallocOfsLo(int arcID, int datID, int heapID, int ofs, int 
  * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
  */
 //============================================================================================
-u16		ArchiveDataFileCntGet(int arcID, int datID)
+u16		GFL_ARC_DataFileCntGet(int arcID, int datID)
 {
 	FSFile		p_file;
 	u32			size=0;
@@ -304,7 +333,7 @@ u16		ArchiveDataFileCntGet(int arcID, int datID)
  * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
  */
 //============================================================================================
-u32		ArchiveDataSizeGet(int arcID,int datID)
+u32		GFL_ARC_DataSizeGet(int arcID,int datID)
 {
 	FSFile		p_file;
 	u32			size=0;
@@ -367,7 +396,7 @@ struct _ARCHANDLE{
  * @retval  ARCHANDLE	オープンされたハンドルのポインタ（失敗ならNULL）
  */
 //------------------------------------------------------------------
-ARCHANDLE* ArchiveDataHandleOpen( u32 arcId, u32 heapId )
+ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, u32 heapId )
 {
 	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapId, sizeof(ARCHANDLE) );
 	if( handle )
@@ -401,7 +430,7 @@ ARCHANDLE* ArchiveDataHandleOpen( u32 arcId, u32 heapId )
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataHandleClose( ARCHANDLE* handle )
+void	GFL_ARC_DataHandleClose( ARCHANDLE* handle )
 {
 	FS_CloseFile( &(handle->file) );
 	GFL_HEAP_FreeMemory( handle );
@@ -418,7 +447,7 @@ void ArchiveDataHandleClose( ARCHANDLE* handle )
  * @retval  u32				データサイズ（バイト）
  */
 //------------------------------------------------------------------
-void* ArchiveDataLoadAllocByHandle( ARCHANDLE* handle, u32 datId, u32 heapID )
+void* GFL_ARC_DataLoadAllocByHandle( ARCHANDLE* handle, u32 datId, u32 heapID )
 {
 	u32 top, bottom;
 	void* buf;
@@ -449,7 +478,7 @@ void* ArchiveDataLoadAllocByHandle( ARCHANDLE* handle, u32 datId, u32 heapID )
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataLoadByHandle( ARCHANDLE* handle, u32 datId, void* buffer )
+void GFL_ARC_DataLoadByHandle( ARCHANDLE* handle, u32 datId, void* buffer )
 {
 	u32 top, bottom;
 	
@@ -473,7 +502,7 @@ void ArchiveDataLoadByHandle( ARCHANDLE* handle, u32 datId, void* buffer )
  *
  */
 //------------------------------------------------------------------
-u32 ArchiveDataSizeGetByHandle( ARCHANDLE* handle, u32 datId )
+u32 GFL_ARC_DataSizeGetByHandle( ARCHANDLE* handle, u32 datId )
 {
 	u32 top, bottom;
 	
@@ -498,7 +527,7 @@ u32 ArchiveDataSizeGetByHandle( ARCHANDLE* handle, u32 datId )
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, u32 size, void* buffer )
+void GFL_ARC_DataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, u32 size, void* buffer )
 {
 	u32 top;
 
@@ -521,7 +550,7 @@ void ArchiveDataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, u32 size
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataLoadImgofsByHandle( ARCHANDLE* handle, u32 datId, u32* offset )
+void GFL_ARC_DataLoadImgofsByHandle( ARCHANDLE* handle, u32 datId, u32* offset )
 {
 	u32 top;
 
@@ -543,7 +572,7 @@ void ArchiveDataLoadImgofsByHandle( ARCHANDLE* handle, u32 datId, u32* offset )
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer )
+void GFL_ARC_DataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer )
 {
 	FS_ReadFile( &(handle->file), buffer, size );
 }
@@ -557,7 +586,7 @@ void ArchiveDataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer 
  *
  */
 //------------------------------------------------------------------
-void ArchiveDataSeekByHandle( ARCHANDLE* handle, u32 size )
+void GFL_ARC_DataSeekByHandle( ARCHANDLE* handle, u32 size )
 {
 	FS_SeekFile( &(handle->file), size, FS_SEEK_SET );
 }
@@ -570,7 +599,7 @@ void ArchiveDataSeekByHandle( ARCHANDLE* handle, u32 size )
  * @retval	u16				ファイル数	
  */
 //============================================================================================
-u16		ArchiveDataFileCntGetByHandle(ARCHANDLE* handle)
+u16		GFL_ARC_DataFileCntGetByHandle(ARCHANDLE* handle)
 {
 	return	handle->file_cnt;
 }

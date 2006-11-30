@@ -34,9 +34,9 @@
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-u32 ArcUtil_BgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
+u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -71,9 +71,9 @@ u32 ArcUtil_BgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 of
  *
  */
 //--------------------------------------------------------------------------------------------
-void ArcUtil_ScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
+void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 
 	if( arcData != NULL )
 	{
@@ -108,9 +108,9 @@ void ArcUtil_ScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 off
  *
  */
 //------------------------------------------------------------------
-void ArcUtil_PalSet( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 offs, u32 transSize, u32 heapID )
+void GFL_ARC_UtilPalSet( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 offs, u32 transSize, u32 heapID )
 {
-	ArcUtil_PalSetEx( fileIdx, dataIdx, palType, 0, offs, transSize, heapID );
+	GFL_ARC_UtilPalSetEx( fileIdx, dataIdx, palType, 0, offs, transSize, heapID );
 }
 
 //------------------------------------------------------------------
@@ -127,7 +127,7 @@ void ArcUtil_PalSet( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 offs, u32 tr
  *
  */
 //------------------------------------------------------------------
-void ArcUtil_PalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, u32 heapID )
+void GFL_ARC_UtilPalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, u32 heapID )
 {
 		static void (* const load_func[])(const void*, u32, u32) = {
 		GX_LoadBGPltt,
@@ -140,7 +140,7 @@ void ArcUtil_PalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u3
 		GXS_LoadOBJExtPltt,
 	};
 
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, FALSE, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, FALSE, heapID, ALLOC_BOTTOM );
 
 	if( arcData != NULL )
 	{
@@ -205,14 +205,14 @@ void ArcUtil_PalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u3
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-u32 ArcUtil_ObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID )
+u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID )
 {
 	static void (* const load_func[])(const void*, u32, u32) = {
 		GX_LoadOBJ,
 		GXS_LoadOBJ,
 	};
 
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 
 	if( arcData != NULL )
 	{
@@ -252,9 +252,9 @@ u32 ArcUtil_ObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32
  *
  */
 //------------------------------------------------------------------
-void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 offs, u32 heapID, NNSG2dImagePaletteProxy* proxy )
+void GFL_ARC_UtilPalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 offs, u32 heapID, NNSG2dImagePaletteProxy* proxy )
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, FALSE, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, FALSE, heapID, ALLOC_BOTTOM );
 
 	if( arcData != NULL )
 	{
@@ -300,7 +300,7 @@ void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 o
  *		CHAR_MAP_1D = 0,
  *		CHAR_MAP_2D = 1,
  *
- *	※ VRAM転送型は別関数 ArcUtil_TranCharSysLoad を使う
+ *	※ VRAM転送型は別関数 GFL_ARC_UtilTranCharSysLoad を使う
  *
  *	[ vramType ]
  *		NNS_G2D_VRAM_TYPE_3DMAIN = 0,
@@ -309,7 +309,7 @@ void ArcUtil_PalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 o
  *
  */
 //------------------------------------------------------------------
-u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+u32 GFL_ARC_UtilCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy )
 {
 	static void (* const load_func[])(const NNSG2dCharacterData*, u32, NNS_G2D_VRAM_TYPE, NNSG2dImageProxy*) = {
@@ -317,7 +317,7 @@ u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAP
 		NNS_G2dLoadImage2DMapping,
 	};
 
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 	u32  transed_size = 0;
 
 	if( arcData != NULL )
@@ -360,7 +360,7 @@ u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAP
  *		CHAR_MAP_1D = 0,
  *		CHAR_MAP_2D = 1,
  *
- *	※ VRAM転送型は別関数 ArcUtil_TranCharSysLoad を使う
+ *	※ VRAM転送型は別関数 GFL_ARC_UtilTranCharSysLoad を使う
  *
  *	[ vramType ]
  *		NNS_G2D_VRAM_TYPE_3DMAIN = 0,
@@ -369,7 +369,7 @@ u32 ArcUtil_CharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAP
  *
  */
 //------------------------------------------------------------------
-void ArcUtil_CharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+void GFL_ARC_UtilCharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy )
 {
 	static void (* const load_func[])(const NNSG2dCharacterData*, u32, NNS_G2D_VRAM_TYPE, NNSG2dImageProxy*) = {
@@ -377,7 +377,7 @@ void ArcUtil_CharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compre
 		NNS_G2dLoadImage2DMapping,
 	};
 
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 
 	if( arcData != NULL )
 	{
@@ -430,10 +430,10 @@ void ArcUtil_CharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compre
  *
  */
 //------------------------------------------------------------------
-const void* ArcUtil_TransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
+const void* GFL_ARC_UtilTransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, u32 heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData )
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -460,9 +460,9 @@ const void* ArcUtil_TransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compres
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-void* ArcUtil_CharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCharacterData** charData, u32 heapID )
+void* GFL_ARC_UtilCharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCharacterData** charData, u32 heapID )
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -488,9 +488,9 @@ void* ArcUtil_CharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2d
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-void* ArcUtil_ScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dScreenData** scrnData, u32 heapID)
+void* GFL_ARC_UtilScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dScreenData** scrnData, u32 heapID)
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -514,9 +514,9 @@ void* ArcUtil_ScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dS
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-void* ArcUtil_PalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData, u32 heapID )
+void* GFL_ARC_UtilPalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData, u32 heapID )
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, FALSE, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, FALSE, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -542,11 +542,11 @@ void* ArcUtil_PalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData,
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-void* ArcUtil_CellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, u32 heapID )
+void* GFL_ARC_UtilCellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, u32 heapID )
 {
 	void* arcData;
 
-	arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -571,9 +571,9 @@ void* ArcUtil_CellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNS
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-void* ArcUtil_AnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, u32 heapID)
+void* GFL_ARC_UtilAnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, u32 heapID)
 {
-	void* arcData = ArcUtil_Load( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
 
 	if( arcData != NULL )
 	{
@@ -607,9 +607,9 @@ void* ArcUtil_AnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNS
  * @retval  void*		解凍後のデータ保存先アドレス
  */
 //------------------------------------------------------------------
-void* ArcUtil_UnCompress(u32 fileIdx, u32 dataIdx, u32 heapID)
+void* GFL_ARC_UtilUnCompress(u32 fileIdx, u32 dataIdx, u32 heapID)
 {
-	return ArcUtil_Load(fileIdx, dataIdx, TRUE, heapID, ALLOC_TOP);
+	return GFL_ARC_UtilLoad(fileIdx, dataIdx, TRUE, heapID, ALLOC_TOP);
 }
 
 //------------------------------------------------------------------
@@ -625,22 +625,22 @@ void* ArcUtil_UnCompress(u32 fileIdx, u32 dataIdx, u32 heapID)
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-void* ArcUtil_Load(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType)
+void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType)
 {
 	void* arcData;
 
 	if( compressedFlag || allocType == ALLOC_BOTTOM )
 	{
-		arcData = GFL_HEAP_AllocMemoryLow( heapID, ArchiveDataSizeGet(fileIdx, dataIdx) );
+		arcData = GFL_HEAP_AllocMemoryLow( heapID, GFL_ARC_DataSizeGet(fileIdx, dataIdx) );
 	}
 	else
 	{
-		arcData = GFL_HEAP_AllocMemory( heapID, ArchiveDataSizeGet(fileIdx, dataIdx) );
+		arcData = GFL_HEAP_AllocMemory( heapID, GFL_ARC_DataSizeGet(fileIdx, dataIdx) );
 	}
 
 	if( arcData != NULL )
 	{
-		ArchiveDataLoad(arcData, fileIdx, dataIdx);
+		GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
 		if( compressedFlag )
 		{
 			void* data;
@@ -678,11 +678,11 @@ void* ArcUtil_Load(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, AL
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-void* ArcUtil_LoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType, u32* pSize)
+void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType, u32* pSize)
 {
 	void* arcData;
 
-	*pSize = ArchiveDataSizeGet(fileIdx, dataIdx);
+	*pSize = GFL_ARC_DataSizeGet(fileIdx, dataIdx);
 
 	if( compressedFlag || allocType == ALLOC_BOTTOM )
 	{
@@ -695,7 +695,7 @@ void* ArcUtil_LoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, 
 
 	if( arcData != NULL )
 	{
-		ArchiveDataLoad(arcData, fileIdx, dataIdx);
+		GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
 		if( compressedFlag )
 		{
 			void* data;
