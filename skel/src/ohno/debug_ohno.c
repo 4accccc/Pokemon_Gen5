@@ -84,7 +84,7 @@ void DebugOhnoInit(u32 heap_id)
 	ctrl->debug_heap_id = heap_id;
 
 	ctrl->psys = GFL_PROC_SysInit(ctrl->debug_heap_id);
-	GFL_PROC_SysCallProc(ctrl->psys, &UITestProcTbl, ctrl);
+	GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &UITestProcTbl, ctrl);
 	ctrl->uisys = GFL_UI_sysInit(ctrl->debug_heap_id);
 
     /* Vƒuƒ‰ƒ“ƒNŠ„İ’è */
