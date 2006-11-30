@@ -36,7 +36,8 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_sys
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c \
 					string/strbuf.c string/msgdata.c \
-					g3d/g3d_system.c
+					g3d/g3d_system.c \
+					arc/arc_tool.c arc/arc_util.c
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
 ifdef USE_MCS
