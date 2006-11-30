@@ -18,7 +18,7 @@
  *	定数
  */
 //----------------------------------------------------------------
-#define HEAPID_BASE_SYSTEM	(0)	// 基本ヒープＩＤ（INDEX:0 は必ずシステム定義にすること）
+#define GFL_HEAPID_SYSTEM	(0)	// 基本ヒープＩＤ（INDEX:0 は必ずシステム定義にすること）
 
 #if 0	/* ↓heap_inter.h 内で外部でも使用する宣言 */
 //----------------------------------------------------------------
@@ -78,7 +78,8 @@ extern void
 	GFL_HEAP_CreateHeap
 		( u32 parentHeapID, u32 childHeapID, u32 size );
 
-extern BOOL sys_CreateHeapLo( u32 parentHeapID, u32 childHeapID, u32 size );
+#define	GFL_HEAP_CreateHeapLow( p_heapID, c_heapID, siz )	\
+			GFL_HEAP_CreateHeap( p_heapID, HeapGetLow(c_heapID), siz )
 
 //------------------------------------------------------------------
 /**
@@ -122,7 +123,7 @@ extern void*
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
-		( u32 heapID, u32 size, const char* filename, u32 linenum );
+		( u32 heapID, u32 size, const char* filename, u16 linenum );
 
 #define GFL_HEAP_AllocMemory( ID, siz )		\
 			GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
@@ -195,33 +196,46 @@ extern void
 	GFL_HEAP_CheckHeapSafe
 		( u32 heapID );
 
-
-
-
-
-#if 0
-#ifdef HEAP_DEBUG
-extern void sys_PrintHeapFreeSize( u32 heapID );
-extern void sys_PrintHeapExistMemoryInfo( u32 heapID );
-extern u64 sys_GetHeapState( u32 heapID );
-extern void sys_PrintHeapConflict( u32 heap, u32 assertionMemSize ); 
-extern u32 sys_GetMemoryBlockSize( const void* memBlock );
-extern void sys_CheckHeapFullReleased( u32 heapID );
-#else
-#define sys_PrintHeapFreeSize(h)		/* */
-#define sys_PrintHeapExistMemoryInfo(h)	/* */
-#define sys_GetHeapState(h)				/* */
-#define sys_PrintHeapConflict(h, s)		/* */
-#define sys_GetMemoryBlockSize(b)		/* */
-#define sys_CheckHeapFullReleased(h)	/* */
-#endif
-
-
+#ifdef HEAPSYS_DEBUG
+//------------------------------------------------------------------
 //------------------------------------------------------------------
 /*
  * 	ヒープ情報取得（デバッグ時のみ有効）
  */
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+/**
+ * 未解放メモリの状況をチェック
+ *
+ * @param   heapID		
+ * 未解放領域があればＣＰＵ停止
+ */
+//------------------------------------------------------------------
+extern void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck ( u16 heapID );
+//------------------------------------------------------------------
+/**
+ * 特定ヒープの全メモリブロック情報を表示
+ *
+ * @param   heapID				ヒープID
+ */
+//------------------------------------------------------------------
+extern void GFL_HEAP_DEBUG_PrintExistMemoryBlocks ( u16 heapID );
+//------------------------------------------------------------------
+/**
+ * ヒープから確保したメモリブロックの実サイズ取得（デバッグ用）
+ *
+ * @param   memBlock		
+ *
+ * @retval  u32		メモリブロックサイズ
+ */
+//------------------------------------------------------------------
+u32 GFL_HEAP_DEBUG_GetMemoryBlockSize ( const void* memory );
+
+#endif
+
+
+#if 0
 typedef struct _HEAP_STATE_STACK	HEAP_STATE_STACK;
 
 #ifdef HEAP_DEBUG
