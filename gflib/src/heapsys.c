@@ -13,34 +13,29 @@
 //#define  ALLOCINFO_PRINT_HEAPID   HEAPID_BASE_APP	// このヒープＩＤに関してのみ詳細な情報を出力
 #endif
 
-//==============================================================
-// Prototype
-//==============================================================
-#if 0
-static int SearchEmptyHandleIndex( void );
-static BOOL CreateHeapCore( u32 parentHeapID, u32 childHeapID, u32 size, s32 align );
-static void* AllocMemoryCore( NNSFndHeapHandle heapHandle, u32 size, s32 alignment, u32 heapID );
-static void PrintAllocInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle handle, u32 size );
-static void PrintFreeInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle handle);
-static void HeaderDebugParamSet( MEMORY_BLOCK_HEADER* header, const char* filename, u32 line_no );
-static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 line_num );
-static void PrintExistMemoryBlocks( u32 heapID );
-static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param);
-static void CopyFileName( char* dst, const MEMORY_BLOCK_HEADER* header );
-static void PrintUnreleasedMemoryInfo( u32 heapID );
-
-
-
-
-
-#ifdef HEAP_DEBUG
-static void HeaderDebugParamSet( MEMORY_BLOCK_HEADER* header, const char* filename, u32 line_no );
-static void PrintExistMemoryBlocks( u32 heapID );
-static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param);
-static void CopyFileName( char* dst, const MEMORY_BLOCK_HEADER* header );
-static void PrintUnreleasedMemoryInfo( u32 heapID );
+//----------------------------------------------------------------
+/**
+ *	プロトタイプ宣言
+ */
+//----------------------------------------------------------------
+#ifdef HEAPSYS_DEBUG
+static void HeaderDebugParamSet( void* memory, const char* filename, u16 lineNum );
+static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 linenum );
+static void PrintAllocInfo( void* memory, u32 size );
+static void PrintFreeInfo( void* memory );
 #endif
-#endif
+
+//----------------------------------------------------------------
+/**
+ *	ユーザーメモリブロックヘッダ定義（サイズ:MEMHEADER_USERINFO_SIZE = 26 ）
+ */
+//----------------------------------------------------------------
+#define MEMHEADER_SIZE	(28)
+#define FILENAME_LEN	(24/2)
+typedef struct {
+	char	filename[ FILENAME_LEN ];	///< 呼び出し先ソース名
+	u16		lineNum;
+}DEBUG_MEMHEADER;
 
 
 //------------------------------------------------------------------------------
@@ -145,39 +140,28 @@ void
 	GFL_HEAP_DeleteHeap
 		( u32 childHeapID )
 {
+	BOOL result = GFI_HEAP_DeleteHeap( childHeapID );
 #ifdef HEAPSYS_DEBUG
-	{
-		u16	restheap_count = GFI_HEAP_GetHeapCount( childHeapID );
-
-		if( restheap_count ){
-			OS_Printf( "these Memoryblocks haven't released\n" );
-			OS_Printf( "HeapID = %d  restcnt = %d .....\n", childHeapID, restheap_count );
-
-			OS_Panic( "\n" );
-		}
-	}
+	GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( childHeapID );
 #endif
-	{
-		BOOL result = GFI_HEAP_DeleteHeap( childHeapID );
 
-		if( result == FALSE )
+	if( result == FALSE )
+	{
+		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+
+		OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID );
+
+		switch( errorCode )
 		{
-			u32 errorCode = GFI_HEAP_ErrorCodeGet();
-	
-			OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID );
-	
-			switch( errorCode )
-			{
-				case HEAP_CANNOT_DELETE_DOUBLE:
-					OS_Panic( "not exist.\n" );
-					break;
-				case HEAP_CANNOT_DELETE_NOPARENT:
-					OS_Panic( "ParentHeap cannot search.\n" );
-					break;
-			}
-		} else {
-			OS_Printf( "Delete ChildHeap. ID = %d\n", childHeapID );
+			case HEAP_CANNOT_DELETE_DOUBLE:
+				OS_Panic( "not exist.\n" );
+				break;
+			case HEAP_CANNOT_DELETE_NOPARENT:
+				OS_Panic( "ParentHeap cannot search.\n" );
+				break;
 		}
+	} else {
+		OS_Printf( "Delete ChildHeap. ID = %d\n", childHeapID );
 	}
 }
 
@@ -199,7 +183,7 @@ void*
 #else
 void*
 	GFL_HEAP_AllocMemoryblock
-		( u32 heapID, u32 size, const char* filename, u32 linenum )
+		( u32 heapID, u32 size, const char* filename, u16 linenum )
 #endif
 {
 	void* memory = GFI_HEAP_AllocMemory( heapID, size );
@@ -213,16 +197,24 @@ void*
 		switch( errorCode )
 		{
 			case HEAP_CANNOT_ALLOC_NOID:
-				OS_Panic( "heapID is not exist.\n" );
+				OS_Printf( "heapID is not exist.\n" );
 				break;
 			case HEAP_CANNOT_ALLOC_NOHEAP:
-				OS_Panic( "heap is not exist.\n" );
+				OS_Printf( "heap is not exist.\n" );
 				break;
 			case HEAP_CANNOT_ALLOC_MEM:
-				OS_Panic( "not enough memory. heapID = %d remains = %x\n",
+				OS_Printf( "not enough memory. heapID = %d remains = %x\n",
 							heapID,	GFI_HEAP_GetHeapFreeSize( heapID ));
 				break;
 		}
+		#ifdef HEAPSYS_DEBUG
+		PrintShortHeap( heapID, size, filename, linenum );
+		#endif
+		OS_Panic( "....................................\n" );
+	} else {
+		#ifdef HEAPSYS_DEBUG
+		HeaderDebugParamSet( memory, filename, linenum );
+		#endif
 	}
 	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
 	//OS_Printf( "Alloc Memory. Heap ID = %d. allocsize = %x\n", heapID, size );
@@ -399,10 +391,79 @@ void
 
 
 
+#ifdef HEAPSYS_DEBUG
+//----------------------------------------------------------------
+/**
+ *	デバッグ用関数（ローカル）
+ */
+//----------------------------------------------------------------
+//------------------------------------------------------------------
+/**
+ * ブロックヘッダにデバッグ情報を書き込む
+ *
+ * @param   header		ヘッダアドレス
+ * @param   filename	ファイル名
+ * @param   line_no		行番号
+ */
+//------------------------------------------------------------------
+static void HeaderDebugParamSet( void* memory, const char* filename, u16 lineNum )
+{
+	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
 
-#if 0
-#ifndef HEAP_DEBUG
-#else	// #ifndef HEAP_DEBUG
+	int i;
+	for(i = 0; i < FILENAME_LEN; i++)
+	{
+		header->filename[i] = filename[i];
+		if( filename[i] == '\0' ){ break; }
+	}
+	header->lineNum = lineNum;
+}
+
+//------------------------------------------------------------------
+/**
+ * メモリブロックヘッダに保存されているファイル名をバッファにコピー
+ *
+ * @param   dst			コピー先バッファ
+ * @param   header		メモリブロックヘッダ
+ *
+ */
+//------------------------------------------------------------------
+static void GetFileName( char* dst, char* src )
+{
+	int i;
+
+	// 終端コードナシで領域めいっぱいファイル名に使ってるため、こういう処理が必要
+	for(i = 0; i < FILENAME_LEN; i++)
+	{
+		if( src[i] == '\0' ){ break; }
+		dst[i] = src[i];
+	}
+	dst[i] = '\0';
+}
+
+//------------------------------------------------------------------
+/**
+ * 残りメモリが不足して確保できないメッセージ取得
+ *
+ * @param   heapID		ヒープＩＤ
+ * @param   size		確保しようとしたサイズ
+ *
+ */
+//------------------------------------------------------------------
+static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 linenum )
+{
+	NNSFndHeapHandle handle = GFI_HEAP_GetHandle(heapID);
+	u32 freeAreaSize = NNS_FndGetTotalFreeSizeForExpHeap( handle );
+	u32 allocatableMaxSize = NNS_FndGetAllocatableSizeForExpHeapEx( handle, 4 );
+
+	OS_Printf("Can't alloc %ldbytes memory from Heap(%d)\n", size, heapID);
+	OS_Printf("This Heap have %ldbytes Free Area\n", freeAreaSize );
+	OS_Printf("and %ldbytes Allocatable Area\n", allocatableMaxSize );
+	OS_Printf("%s(%d)\n", filename, linenum);
+
+	OS_Printf("these Memoryblocks haven't released\n");
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( heapID );
+}
 
 //------------------------------------------------------------------
 /**
@@ -414,15 +475,18 @@ void
  *
  */
 //------------------------------------------------------------------
-static void PrintAllocInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle handle, u32 size )
+static void PrintAllocInfo( void* memory, u32 size )
 {
-	char filename[MEMBLOCK_FILENAME_AREASIZE+1];
+	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
+	u16		heapID = GFI_HEAP_GetMemheaderHeapID( memory );
+	u16		allocCount = GFI_HEAP_GetHeapCount( heapID );
+	char	filename[FILENAME_LEN+1];
 
-	CopyFileName( filename, header );
+	GetFileName( filename, header->filename );
 
-	OS_TPrintf("[HEAP] ALLOC count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
-				GetHeapCount(header->heapID), NNS_FndGetTotalFreeSizeForExpHeap(handle), 
-				(u32)header, size+sizeof(MEMORY_BLOCK_HEADER), filename, header->lineNum );
+	OS_Printf("[HEAP] ALLOC count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
+				allocCount, GFI_HEAP_GetHeapFreeSize( heapID ), (u32)memory - MEMHEADER_SIZE,
+				size + MEMHEADER_SIZE, filename, header->lineNum );
 }
 
 //------------------------------------------------------------------
@@ -437,424 +501,79 @@ static void PrintAllocInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle 
  *
  */
 //------------------------------------------------------------------
-static void PrintFreeInfo( const MEMORY_BLOCK_HEADER* header, NNSFndHeapHandle handle)
+static void PrintFreeInfo( void* memory )
 {
-	char filename[MEMBLOCK_FILENAME_AREASIZE+1];
-	u32  blockSize, restSize;
+	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
+	u16		heapID = GFI_HEAP_GetMemheaderHeapID( memory );
+	u16		allocCount = GFI_HEAP_GetHeapCount( heapID );
+	char	filename[FILENAME_LEN+1];
+	u32		blockSize, restSize;
 
-	CopyFileName( filename, header );
-
-	blockSize = NNS_FndGetSizeForMBlockExpHeap(header) + sizeof(NNSiFndExpHeapMBlockHead);
-
+	GetFileName( filename, header->filename );
+				
+	blockSize = NNS_FndGetSizeForMBlockExpHeap((void*)((u32)memory - MEMHEADER_SIZE))
+					+ sizeof(NNSiFndExpHeapMBlockHead);
 	// 残りサイズは現サイズ＋これから解放しようとするメモリブロックのサイズになるはず
-	restSize = NNS_FndGetTotalFreeSizeForExpHeap(handle) + blockSize;
-
-	OS_TPrintf("[HEAP] FREE  count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
-				GetHeapCount(header->heapID), restSize, (u32)header, blockSize,
+	restSize =  GFI_HEAP_GetHeapFreeSize( heapID ) + blockSize;
+				
+	OS_Printf("[HEAP] FREE  count=%3d rest=0x%08x adrs:0x%08x size:0x%05x %s(%d)\n",
+				allocCount, restSize, (u32)memory - MEMHEADER_SIZE, blockSize,
 				filename, header->lineNum );
 }
 
-
-
+//----------------------------------------------------------------
+/**
+ *	デバッグ用関数（グローバル）
+ */
+//----------------------------------------------------------------
 //------------------------------------------------------------------
 /**
- * sys_AllocMemoryのデバッグ用ラッパー関数
+ * 未解放メモリの情報をプリント
  *
- * @param   heapID			ヒープID
- * @param   size			確保サイズ
- * @param   filename		呼び出しソースのファイル名
- * @param   line_num		呼び出しソースの行番号
- *
- * @retval  void*			確保した領域アドレス（失敗ならNULL）
+ * @param   heapID		
+ * 未解放領域があればＣＰＵ停止
  */
 //------------------------------------------------------------------
-void* sys_AllocMemoryDebug( u32 heapID, u32 size, const char* filename, u32 line_num )
+void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( u16 heapID )
 {
-	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), "Alloc in IRQ\n %s(%d)", filename, line_num);
+	u16	restheap_count = GFI_HEAP_GetHeapCount( heapID );
 
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle  h = GetHeapHandle( heapID );
-		void* mem = AllocMemoryCore( h, size, DEFAULT_ALIGN, heapID );
+	if( restheap_count ){
+		OS_Printf( "these Memoryblocks haven't released\n" );
+		OS_Printf( "HeapID = %d  restcnt = %d .....\n", heapID, restheap_count );
+		OS_Printf( "freesize = 0x%x bytes \n", GFI_HEAP_GetHeapFreeSize(heapID) );
 
-		if( mem != NULL )
-		{
-			HeaderDebugParamSet((MEMORY_BLOCK_HEADER*)( (u8*)mem - sizeof(MEMORY_BLOCK_HEADER) ),
-									filename, line_num);
-			GetHeapCount(heapID)++;
-
-			#ifdef ALLOCINFO_PRINT_HEAPID
-			if( ALLOCINFO_PRINT_HEAPID == heapID )
-			{
-				const MEMORY_BLOCK_HEADER* mh = 
-					(const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
-				PrintAllocInfo( mh, h, size );
-				GF_ASSERT( sys_CheckHeapSafe( heapID ) );
-			}
-			#endif
-		}
-		else
-		{
-			PrintShortHeap( heapID, size, filename, line_num );
-			GF_ASSERT(0);
-		}
-
-		return mem;
-	}
-	else
-	{
-		GF_ASSERT_MSG(0, "heapID = %d\n", heapID);
-		return NULL;
-	}
-}
-//------------------------------------------------------------------
-/**
- * sys_AllocMemoryLoのデバッグ用ラッパー関数
- *
- * @param   heapID			ヒープID
- * @param   size			確保サイズ
- * @param   filename		呼び出しソースのファイル名
- * @param   line_num		呼び出しソースの行番号
- *
- * @retval  void*			確保した領域アドレス（失敗ならNULL）
- */
-//------------------------------------------------------------------
-void* sys_AllocMemoryLoDebug( u32 heapID, u32 size, const char* filename, u32 line_num )
-{
-	GF_ASSERT_MSG((OS_GetProcMode() != OS_PROCMODE_IRQ), "Alloc in IRQ\n %s(%d)", filename, line_num);
-
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle  h = GetHeapHandle( heapID );
-		void* mem = AllocMemoryCore( h, size, -DEFAULT_ALIGN, heapID );
-
-		if( mem != NULL )
-		{
-			HeaderDebugParamSet((MEMORY_BLOCK_HEADER*)( (u8*)mem - sizeof(MEMORY_BLOCK_HEADER) ),
-									filename, line_num);
-			GetHeapCount(heapID)++;
-
-			#ifdef ALLOCINFO_PRINT_HEAPID
-			if( ALLOCINFO_PRINT_HEAPID == heapID )
-			{
-				const MEMORY_BLOCK_HEADER* mh = 
-					(const MEMORY_BLOCK_HEADER*)((u8*)mem - sizeof(MEMORY_BLOCK_HEADER));
-				PrintAllocInfo( mh, h, size );
-				GF_ASSERT( sys_CheckHeapSafe( heapID ) );
-			}
-			#endif
-		}
-		else
-		{
-			PrintShortHeap( heapID, size, filename, line_num );
-			GF_ASSERT(0);
-		}
-		return mem;
-	}
-	else
-	{
-		GF_ASSERT(0);
-		return NULL;
-	}
-}
-//------------------------------------------------------------------
-/**
- * ブロックヘッダにデバッグ情報を書き込む
- *
- * @param   header		ヘッダアドレス
- * @param   filename	ファイル名
- * @param   line_no		行番号
- *
- */
-//------------------------------------------------------------------
-static void HeaderDebugParamSet( MEMORY_BLOCK_HEADER* header, const char* filename, u32 line_no )
-{
-	int i;
-	for(i = 0; i < MEMBLOCK_FILENAME_AREASIZE; i++)
-	{
-		header->filename[i] = filename[i];
-		if( filename[i] == '\0' ){ break; }
-	}
-	header->lineNum = line_no;
-}
-
-//------------------------------------------------------------------
-/**
- * 残りメモリが不足して確保できないメッセージ取得
- *
- * @param   heapID		ヒープＩＤ
- * @param   size		確保しようとしたサイズ
- *
- */
-//------------------------------------------------------------------
-static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 line_num )
-{
-	NNSFndHeapHandle h;
-	u32 freeAreaSize, allocatableMaxSize;
-
-	h = GetHeapHandle(heapID);
-	freeAreaSize = NNS_FndGetTotalFreeSizeForExpHeap( h );
-	allocatableMaxSize = NNS_FndGetAllocatableSizeForExpHeapEx( h, DEFAULT_ALIGN );
-
-	GF_ASSERT_Printf("Can't alloc %ldbytes memory from Heap(%d)\n", size, heapID);
-	GF_ASSERT_Printf("This Heap have %ldbytes Free Area\n", freeAreaSize );
-	GF_ASSERT_Printf("and %ldbytes Allocatable Area\n", allocatableMaxSize );
-	GF_ASSERT_Printf("%s(%d)\n", filename, line_num);
-
-	GF_ASSERT_Printf("these Memoryblocks haven't released\n");
-	PrintExistMemoryBlocks( heapID );
-}
-#endif	// #ifndef HEAP_DEBUG #else
-
-
-//------------------------------------------------------------------
-/**
- * ヒープから確保したメモリを解放する
- *
- * @param   memory		確保したメモリアドレス
- *
- */
-//------------------------------------------------------------------
-void sys_FreeMemoryEz( void* memory )
-{
-	#ifdef HEAP_DEBUG
-	if( OS_GetProcMode() == OS_PROCMODE_IRQ )
-	{
-		char filename[MEMBLOCK_FILENAME_AREASIZE+1];
-		MEMORY_BLOCK_HEADER* header;
-
-		header = (MEMORY_BLOCK_HEADER*)((u8*)memory - sizeof(MEMORY_BLOCK_HEADER));
-		CopyFileName( filename, header );
-		GF_ASSERT_MSG(0, "Free in IRQ\n %s(%d) siz:%x", filename, header->lineNum, 
-						NNS_FndGetSizeForMBlockExpHeap(header) );
-	}
-	#endif
-
-	{
-		u32 heapID;
-
-		(u8*)memory -= sizeof(MEMORY_BLOCK_HEADER);
-		heapID = ((MEMORY_BLOCK_HEADER*)memory)->heapID;
-
-		if( heapID < HeapSys.heapMax )
-		{
-			NNSFndHeapHandle  h = GetHeapHandle(heapID);
-
-			GF_ASSERT(h != NNS_FND_HEAP_INVALID_HANDLE);
-			if( GetHeapCount(heapID) == 0 )
-			{
-				sys_CheckHeapSafe(heapID);
-			}
-			GF_ASSERT_MSG( GetHeapCount(heapID), "heapID = %d", heapID );
-
-			GetHeapCount(heapID)--;
-
-			#ifdef ALLOCINFO_PRINT_HEAPID
-			if( ALLOCINFO_PRINT_HEAPID == heapID )
-			{
-				GF_ASSERT( sys_CheckHeapSafe(heapID) );
-				PrintFreeInfo( (const MEMORY_BLOCK_HEADER*)memory, h );
-			}
-			#endif
-
-			{
-				OSIntrMode old;
-				old = OS_DisableInterrupts();
-				NNS_FndFreeToExpHeap( h, memory );
-				OS_RestoreInterrupts( old );
-			}
-
-		}
-		else
-		{
-			GF_ASSERT_MSG(0, "heapID = %d\n", heapID);
-		}
-	}
-}
-//------------------------------------------------------------------
-/**
- * ヒープから確保したメモリを解放する（ヒープID指定版）
- *
- * ※もしかしたらヒープIDを指定する合理的な理由があるかもしれないので
- *   残しておく。普通は FreeMemoryEz を使えば問題ないはず。
- *
- * @param   heapID		ヒープID
- * @param   memory		確保したメモリポインタ
- *
- */
-//------------------------------------------------------------------
-void sys_FreeMemory( u32 heapID, void* memory )
-{
-	ASSERT_IRQ_ENABLED();
-
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle h = GetHeapHandle(heapID);
-
-		GF_ASSERT(h != NNS_FND_HEAP_INVALID_HANDLE);
-
-		(u8*)memory -= sizeof(MEMORY_BLOCK_HEADER);
-		if( ((MEMORY_BLOCK_HEADER*)memory)->heapID != heapID )
-		{
-			GF_ASSERT_MSG(0, "確保時と違うヒープIDで解放されようとしている\n");
-		}
-		NNS_FndFreeToExpHeap( h, memory );
-
-		GF_ASSERT( GetHeapCount(heapID) );
-		GetHeapCount(heapID)--;
-
-		#ifdef ALLOCINFO_PRINT_HEAPID
-		if( ALLOCINFO_PRINT_HEAPID == heapID )
-		{
-			GF_ASSERT( sys_CheckHeapSafe( heapID ) );
-			PrintFreeInfo( (const MEMORY_BLOCK_HEADER*)memory, h );
-		}
-		#endif
-
-	}
-	else
-	{
-		GF_ASSERT(0);
-	}
-}
-//------------------------------------------------------------------
-/**
- * ヒープの空き領域サイズを返す
- *
- * @param   heapID	ヒープID
- *
- * @retval  u32		空き領域サイズ（バイト単位）
- */
-//------------------------------------------------------------------
-u32 sys_GetHeapFreeSize( u32 heapID )
-{
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle h = GetHeapHandle(heapID);
-		return NNS_FndGetTotalFreeSizeForExpHeap( h );
-	}
-	GF_ASSERT(0);
-	return 0;
-}
-//------------------------------------------------------------------
-/**
- * NitroSystem ライブラリ系関数が要求するアロケータを作成する
- *
- * @param   pAllocator		NNSFndAllocator構造体のアドレス
- * @param   heapID			ヒープID
- * @param   alignment		確保するメモリブロックに適用するアライメント
- *
- */
-//------------------------------------------------------------------
-void sys_InitAllocator( NNSFndAllocator* pAllocator, u32 heapID, int alignment)
-{
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle h = GetHeapHandle(heapID);
-		NNS_FndInitAllocatorForExpHeap( pAllocator, h, alignment );
-	}
-	else
-	{
-		GF_ASSERT(0);
+		GFL_HEAP_DEBUG_PrintExistMemoryBlocks( heapID );
+		OS_Panic( "....................................\n" );
 	}
 }
 
 //------------------------------------------------------------------
 /**
- * 確保したメモリブロックのサイズを縮小する。
+ * 特定ヒープの全メモリブロック情報を表示
  *
- * @param   memBlock		メモリブロックポインタ
- * @param   newSize			縮小後のサイズ（バイト単位）
- *
- *
- * 縮小は、メモリブロックの後ろ方向からメモリを解放することで行う。
- * 解放された分はシステムに返還され、新たなアロケート領域として使用できる。
- *
- * 例えば【ヘッダ＋実体】のような形式のグラフィックバイナリをＲＡＭに読み込み、
- * 実体部をVRAMに転送した後、ヘッダのみを残したいというケースなどで使用することを
- * 想定している。使用は慎重に。
- *
+ * @param   heapID				ヒープID
  */
 //------------------------------------------------------------------
-void sys_CutMemoryBlockSize( void* memBlock, u32 newSize )
+static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param)
 {
-	ASSERT_IRQ_ENABLED();
+	void*	memory = (u8*)memBlock + MEMHEADER_SIZE;
+	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
+	char	filename[FILENAME_LEN+1];
 
-	{
-		u32 oldSize;
+	GetFileName( filename, header->filename );
 
-		(u8*)memBlock -= sizeof(MEMORY_BLOCK_HEADER);
-		oldSize = NNS_FndGetSizeForMBlockExpHeap( memBlock );
-		newSize += sizeof(MEMORY_BLOCK_HEADER);	// 呼び出し側はヘッダを意識していないので
-
-		if( oldSize >= newSize )
-		{
-			u32 heapID;
-			NNSFndHeapHandle handle;
-
-			heapID = ((MEMORY_BLOCK_HEADER*)memBlock)->heapID;
-			handle = GetHeapHandle(heapID);
-
-			NNS_FndResizeForMBlockExpHeap( handle, memBlock, newSize );
-		}
-		else
-		{
-			GF_ASSERT(0);
-		}
-	}
+	OS_Printf(filename);
+	OS_Printf(" (%d)  adr:%08x  siz:%05x\n", 
+			header->lineNum, (u32)memory, NNS_FndGetSizeForMBlockExpHeap(memBlock));
 }
 
-
-
-//------------------------------------------------------------------
-/**
- * ヒープ領域が破壊されていないかチェック（デバッグ用）
- *
- * @param   heapID		ヒープID
- *
- * @retval  BOOL		破壊されていなければTRUEが返る
- */
-//------------------------------------------------------------------
-BOOL sys_CheckHeapSafe( u32 heapID )
+void GFL_HEAP_DEBUG_PrintExistMemoryBlocks( u16 heapID )
 {
-	#ifdef HEAP_DEBUG
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle h = GetHeapHandle(heapID);
-		if( h != NNS_FND_HEAP_INVALID_HANDLE )
-		{
-			return NNS_FndCheckExpHeap( h, NNS_FND_HEAP_ERROR_PRINT );
-		}
-	}
-	return TRUE;
-	#else
-
-	// 本来製品版には存在しないはずの関数だが、
-	// GF_ASSERTを製品版でも有効にしたため、ASSERTチェック中に呼ばれることのある
-	// この関数を削除できなくなった。そのため、常にASSERTをスルーできるように
-	// TRUEを返す関数として残しておく。
-	return TRUE;
-	#endif
+	//拡張ヒープから確保したメモリブロック全て（Allocされたもの）に対し、指定した関数を呼ばせる
+	NNS_FndVisitAllocatedForExpHeap( GFI_HEAP_GetHandle(heapID), HeapConflictVisitorFunc, 0 );
 }
 
-#ifdef HEAP_DEBUG
-//------------------------------------------------------------------
-/**
- * 全メモリブロックを解放してあるかチェック（デバッグ用）
- *（※この関数が呼ばれた時にまだ使用メモリが残っているとASSERTで止まる）
- *
- * @param   heapID		ヒープＩＤ
- *
- */
-//------------------------------------------------------------------
-void sys_CheckHeapFullReleased( u32 heapID )
-{
-	if( GetHeapCount(heapID) )
-	{
-		PrintUnreleasedMemoryInfo( heapID );
-		GF_ASSERT(0);
-	}
-}
 //------------------------------------------------------------------
 /**
  * ヒープから確保したメモリブロックの実サイズ取得（デバッグ用）
@@ -864,153 +583,17 @@ void sys_CheckHeapFullReleased( u32 heapID )
  * @retval  u32		メモリブロックサイズ
  */
 //------------------------------------------------------------------
-u32 sys_GetMemoryBlockSize( const void* memBlock )
+u32 GFL_HEAP_DEBUG_GetMemoryBlockSize( const void* memory )
 {
-	((u8*)memBlock) -= sizeof(MEMORY_BLOCK_HEADER);
-	return NNS_FndGetSizeForMBlockExpHeap( memBlock );
+	((u8*)memory) -= MEMHEADER_SIZE;
+	return NNS_FndGetSizeForMBlockExpHeap( memory );
 }
 
-//------------------------------------------------------------------
-/**
- * 指定ヒープのメモリアロケート回数＆空き領域サイズを64bitにパックして返す
- *（ヒープ破棄時とは別にリークチェックを行うため）
- *
- * @param   heapID		ヒープID
- *
- * @retval  u64		
- */
-//------------------------------------------------------------------
-u64 sys_GetHeapState( u32 heapID )
-{
-	if( heapID < HeapSys.heapMax )
-	{
-		u64  ret;
-		NNSFndHeapHandle h;
+#endif
 
-		h = GetHeapHandle(heapID);
-		ret = (GetHeapCount(heapID) << 32) | NNS_FndGetTotalFreeSizeForExpHeap(h);
-		return ret;
-	}
-	GF_ASSERT(0);
-	return 0;
-}
 
-/*---------------------------------------------------------------------------*
- * @brief	デバッグ用メモリ状況表示
-*---------------------------------------------------------------------------*/
 
-//------------------------------------------------------------------
-/**
- * 特定ヒープのメモリ空き容量合計を表示
- *
- * @param   heapID		
- *
- */
-//------------------------------------------------------------------
-void sys_PrintHeapFreeSize( u32 heapID )
-{
-	if( heapID < HeapSys.heapMax )
-	{
-		NNSFndHeapHandle h = GetHeapHandle(heapID);
-		OS_TPrintf("HEAP(ID :%d) FreeArea = %ld bytes\n", heapID, NNS_FndGetTotalFreeSizeForExpHeap(h) );
-	}
-}
-//------------------------------------------------------------------
-/**
- * 特定ヒープの使用中メモリブロック情報を表示
- *
- * @param   heapID		
- *
- */
-//------------------------------------------------------------------
-void sys_PrintHeapExistMemoryInfo( u32 heapID )
-{
-	PrintExistMemoryBlocks( heapID );
-}
-//------------------------------------------------------------------
-/**
- * 特定ヒープの全メモリブロック情報を表示
- *
- * @param   heapID				ヒープID
- *
- */
-//------------------------------------------------------------------
-static void PrintExistMemoryBlocks( u32 heapID )
-{
-	NNSFndHeapHandle h = GetHeapHandle(heapID);
-	NNS_FndVisitAllocatedForExpHeap( h, HeapConflictVisitorFunc, 0 );
-}
-//------------------------------------------------------------------
-/**
- * sys_PrintHeapConflictのチェック結果がエラーなら、
- * 全メモリブロック情報を引数にしてこの関数が呼ばれる
- *
- * @param   memBlock		
- * @param   heapHandle		
- * @param   param		
- *
- */
-//------------------------------------------------------------------
-static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param)
-{
-	char  filename[MEMBLOCK_FILENAME_AREASIZE + 1];
-	int i;
-
-	MEMORY_BLOCK_HEADER* head = (MEMORY_BLOCK_HEADER*)memBlock;
-
-	CopyFileName( filename, head );
-
-	GF_ASSERT_Printf(filename);
-	GF_ASSERT_Printf(" (%d)", head->lineNum );
-	GF_ASSERT_Printf(" adr:%08x", (u8*)memBlock + sizeof(MEMORY_BLOCK_HEADER));
-	GF_ASSERT_Printf(" siz:%05x\n", NNS_FndGetSizeForMBlockExpHeap(head));
-}
-
-//------------------------------------------------------------------
-/**
- * メモリブロックヘッダに保存されているファイル名をバッファにコピー
- *
- * @param   dst			コピー先バッファ
- * @param   header		メモリブロックヘッダ
- *
- */
-//------------------------------------------------------------------
-static void CopyFileName( char* dst, const MEMORY_BLOCK_HEADER* header )
-{
-	int i;
-
-	// 終端コードナシで領域めいっぱいファイル名に使ってるため
-	// こういう処理が必要...
-	for(i = 0; i < MEMBLOCK_FILENAME_AREASIZE; i++)
-	{
-		if( header->filename[i] == '\0' ){ break; }
-		dst[i] = header->filename[i];
-	}
-	dst[i] = '\0';
-
-}
-
-//------------------------------------------------------------------
-/**
- * 未解放メモリの情報をプリント
- *
- * @param   heapID		
- *
- */
-//------------------------------------------------------------------
-static void PrintUnreleasedMemoryInfo( u32 heapID )
-{
-	GF_ASSERT_Printf("these Memoryblocks haven't released\n");
-	GF_ASSERT_Printf("HeapID:%d  restcnt = %d .....\n", heapID, GetHeapCount(heapID));
-	#ifdef HEAP_DEBUG
-	{
-		NNSFndHeapHandle  handle = GetHeapHandle(heapID);
-		u32  siz = NNS_FndGetTotalFreeSizeForExpHeap( handle );
-		GF_ASSERT_Printf(" ID %d  freesize = 0x%x bytes \n", heapID, siz );
-	}
-	#endif
-	PrintExistMemoryBlocks( heapID );
-}
+#if 0
 
 //==============================================================================================
 // デバッグ用ヒープ状態スタック
@@ -1087,9 +670,6 @@ void HSS_Delete( HEAP_STATE_STACK* hss )
 {
 	sys_FreeMemoryEz( hss );
 }
-
-
-#endif	// HEAP_DEBUG
 
 #endif
 

@@ -64,10 +64,10 @@ typedef struct {
  */
 //----------------------------------------------------------------
 typedef struct {
-	u16		heapID;								///< u32
-//	u16		magicnum;							///< マジックナンバー
-	u8		userInfo[MEMHEADER_USERINFO_SIZE];	///< 外部使用領域
-}MEMBLOCK_HEADER;
+	u16		heapID;						///< u32
+//	u16		magicnum;					///< マジックナンバー
+	u8		userInfo[MEMHEADER_SIZE];	///< 外部使用領域
+}MEMHEADER;
 
 //----------------------------------------------------------------
 /**
@@ -351,7 +351,7 @@ void*
 		{	//指定ＩＤヒープが登録されていない
 			HeapSys.errorCode = HEAP_CANNOT_ALLOC_NOHEAP;
 		} else {
-			u32			memsiz	= size + sizeof(MEMBLOCK_HEADER);	//メモリ管理ヘッダ追加
+			u32			memsiz	= size + sizeof(MEMHEADER);	//メモリ管理ヘッダ追加
 			OSIntrMode	irqold	= OS_DisableInterrupts();	//割り込みを禁止
 			void*		memory	= NNS_FndAllocFromExpHeapEx( handle, memsiz, align );//メモリ確保
 
@@ -359,11 +359,11 @@ void*
 			{	//メモリ不足
 				HeapSys.errorCode = HEAP_CANNOT_ALLOC_MEM;
 			} else {
-				MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)memory;
+				MEMHEADER* memheader = (MEMHEADER*)memory;
 
 //				memheader->magicnum = MAGICNUM;				//ヘッダにマジックナンバーを設定
 				memheader->heapID = heapID;					//ヘッダにヒープＩＤを保存
-				(u8*)memory += sizeof(MEMBLOCK_HEADER);		//実メモリ領域へポインタ移動
+				(u8*)memory += sizeof(MEMHEADER);			//実メモリ領域へポインタ移動
 				GetHeapCount(heapID)++;						//メモリ確保カウンタのインクリメント
 			} 
 			OS_RestoreInterrupts( irqold );	//割り込みを復帰
@@ -390,7 +390,7 @@ BOOL
 	GFI_HEAP_FreeMemory
 		( void* memory )
 {
-	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
+	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
 	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 	
@@ -486,11 +486,11 @@ BOOL
 	GFI_HEAP_MemoryResize
 		( void* memory, u32 newSize )
 {
-	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
+	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
 	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 
-	newSize += sizeof(MEMBLOCK_HEADER);	// ヘッダ領域追加
+	newSize += sizeof(MEMHEADER);	// ヘッダ領域追加
 
 //	if( magicnum != MAGICNUM )
 //	{	//指定ポインタに間違いがある
@@ -681,7 +681,7 @@ u16
 	GFI_HEAP_GetMemheaderHeapID
 		( void* memory )
 {
-	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
+	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
 	
 //	if( magicnum != MAGICNUM )
@@ -708,7 +708,7 @@ void*
 	GFI_HEAP_GetMemheaderUserinfo
 		( void* memory )
 {
-	MEMBLOCK_HEADER* memheader = (MEMBLOCK_HEADER*)((u8*)memory - sizeof(MEMBLOCK_HEADER));
+	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
 	
 //	if( magicnum != MAGICNUM )
