@@ -122,16 +122,22 @@ void GFL_PROC_SysMain(GFL_PROCSYS * psys)
 		psys->proc = proc;
 		psys->call_flag = FALSE;
 	} else if (result == TRUE) {
-		if (psys->jump_flag == FALSE) {
+		if (psys->jump_flag) {
+			//プロセスの分岐を行った場合
+			GFL_PROC * parent;
+			parent = psys->proc->parent;
+			GFL_PROC_Delete(psys->proc);
+			psys->proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+			parent->child = psys->proc;
+			psys->proc->parent = parent;
+			psys->jump_flag = FALSE;
+		} else {
+			//単に終了→上位プロセスに戻る場合
 			GFL_PROC * parent;
 			parent = psys->proc->parent;
 			GFL_PROC_Delete(psys->proc);
 			psys->proc = parent;
 			psys->proc->child = NULL;
-		} else {
-			psys->jump_flag = FALSE;
-			GFL_PROC_Delete(psys->proc);
-			psys->proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
 		}
 	}
 }
@@ -162,6 +168,7 @@ void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
 		const GFL_PROC_DATA * procdata, void * pwork)
 {
 	psys->jump_flag = TRUE;
+	psys->next_ov_id = ov_id;
 	psys->next_data = procdata;
 	psys->next_param = pwork;
 }
@@ -185,6 +192,7 @@ void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
 	} else {
 		//サブプロセスの場合
 		psys->call_flag = TRUE;
+		psys->next_ov_id = ov_id;
 		psys->next_data = procdata;
 		psys->next_param = pwork;
 	}
