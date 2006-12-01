@@ -741,7 +741,7 @@ BOOL
 		HeapSys.errorCode = HEAP_CANNOT_CHECKHEAPSAFE_NOID;
 	} else {
 		NNSFndHeapHandle handle = GetHeapHandle( heapID );
-		if( handle != NNS_FND_HEAP_INVALID_HANDLE )
+		if( handle == NNS_FND_HEAP_INVALID_HANDLE )
 		{	//æ“¾‚µ‚½ƒnƒ“ƒhƒ‹‚ª–¢“o˜^ó‘Ô
 			HeapSys.errorCode = HEAP_CANNOT_CHECKHEAPSAFE_NOHEAP;
 		} else {
