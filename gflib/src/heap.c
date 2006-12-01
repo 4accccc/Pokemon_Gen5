@@ -66,7 +66,7 @@ typedef struct {
 typedef struct {
 	u16		heapID;						///< u32
 //	u16		magicnum;					///< マジックナンバー
-	u8		userInfo[MEMHEADER_SIZE];	///< 外部使用領域
+	u8		userInfo[MEMHEADER_USERINFO_SIZE];	///< 外部使用領域
 }MEMHEADER;
 
 //----------------------------------------------------------------

@@ -30,7 +30,6 @@ static void PrintFreeInfo( void* memory );
  *	ユーザーメモリブロックヘッダ定義（サイズ:MEMHEADER_USERINFO_SIZE = 26 ）
  */
 //----------------------------------------------------------------
-#define MEMHEADER_SIZE	(28)
 #define FILENAME_LEN	(24/2)
 typedef struct {
 	char	filename[ FILENAME_LEN ];	///< 呼び出し先ソース名
