@@ -414,7 +414,7 @@ BOOL
 					OSIntrMode	irqold	= OS_DisableInterrupts();	//割り込みを禁止
 	
 					GetHeapCount(heapID)--;	//メモリ確保カウンタのデクリメント
-					NNS_FndFreeToExpHeap( handle, memory );	//メモリブロックの解放
+					NNS_FndFreeToExpHeap( handle, memheader );	//メモリブロックの解放
 					OS_RestoreInterrupts( irqold );	//割り込みを復帰
 
 					HeapSys.errorCode = 0;
