@@ -3,6 +3,8 @@
  * @file	procsys.h
  * @brief	プロセス管理ヘッダ
  * @date	2005.07.25
+ * 
+ * 2006.11.13	DPプロジェクトから移動、改変開始
  */
 //=============================================================================
 
@@ -62,9 +64,9 @@ typedef GFL_PROC_RESULT (*GFL_PROC_FUNC)(GFL_PROC *, int *, void *, void *);
  */
 //------------------------------------------------------------------
 typedef struct {
-	GFL_PROC_FUNC init_func;
-	GFL_PROC_FUNC main_func;
-	GFL_PROC_FUNC end_func;
+	GFL_PROC_FUNC init_func;		///<プロセス初期化関数
+	GFL_PROC_FUNC main_func;		///<プロセスメイン関数
+	GFL_PROC_FUNC end_func;			///<プロセス終了関数
 }GFL_PROC_DATA;
 
 //------------------------------------------------------------------
@@ -80,18 +82,70 @@ typedef struct {
 //		関数外部参照
 //
 //===========================================================================
-extern GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id);
-extern void GFL_PROC_SysMain(GFL_PROCSYS * psys);
-extern void GFL_PROC_SysExit(GFL_PROCSYS * psys);
-
-extern void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
-		const GFL_PROC_DATA * procdata, void * pwork);
-extern void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
-		const GFL_PROC_DATA * procdata, void * pwork);
+//------------------------------------------------------------------
+/**
+ * @brief	PROCシステムの初期化処理
+ * @param	heap_id		PROCシステムで使用するヒープID
+ */
+//------------------------------------------------------------------
+extern void GFL_PROC_SysInit(u32 heap_id);
 
 //------------------------------------------------------------------
+/**
+ * @brief	PROCシステムのメイン処理
+ */
+//------------------------------------------------------------------
+extern void GFL_PROC_SysMain(void);
+
+//------------------------------------------------------------------
+/**
+ * @brief	PROCシステムの終了処理
+ */
+//------------------------------------------------------------------
+extern void GFL_PROC_SysExit(void);
+
+//------------------------------------------------------------------
+/**
+ * @brief	PROCの呼び出し（下位コール）
+ * @param	ov_id		新しいプロセスが存在するオーバーレイID
+ * @param	procdata	新しいプロセスの定義データアドレス
+ * @param	pwork		パラメータワークへのポインタ
+ *
+ * この関数を呼び出した次のフレームから指定したプロセスが呼び出される。
+ * 呼び出されたプロセスが終了すると、現在のプロセスへと自動復帰する。
+ */
+//------------------------------------------------------------------
+extern void GFL_PROC_SysCallProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork);
+
+//------------------------------------------------------------------
+/**
+ * @brief	PROCの切り替え
+ * @param	ov_id		新しいプロセスが存在するオーバーレイID
+ * @param	procdata	新しいプロセスの定義データアドレス
+ * @param	pwork		パラメータワークへのポインタ
+ *
+ * 現在のプロセスが終了した後に、この関数で指定したプロセスへと制御が切り替わる。
+ */
+//------------------------------------------------------------------
+extern void GFL_PROC_SysSetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork);
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセス内ワークの確保
+ * @param	proc	プロセスへのポインタ
+ * @param	size	確保するワークサイズ
+ * @param	heap_id	使用するヒープ
+ * @return	void *	確保したプロセス内ワークへのポインタ
+ */
 //------------------------------------------------------------------
 extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id);
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセス内ワークの解放
+ * @param	proc	プロセスへのポインタ
+ */
+//------------------------------------------------------------------
 extern void GFL_PROC_FreeWork(GFL_PROC * proc);
 
 

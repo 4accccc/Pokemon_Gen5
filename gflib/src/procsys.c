@@ -1,10 +1,10 @@
-//=============================================================================
+//=============================================================================================
 /**
  * @file	procsys.c
  * @brief	プロセス管理システム
  * @date	2005.07.25
  */
-//=============================================================================
+//=============================================================================================
 
 #include <nitro.h>
 #include <nnsys.h>
@@ -67,16 +67,83 @@ struct _GFL_PROCSYS{
 
 
 //------------------------------------------------------------------
+//
+//		内部使用関数
+//		※外部公開していない
+//
 //------------------------------------------------------------------
-extern GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
-extern void GFL_PROC_Delete(GFL_PROC * proc);
-extern BOOL GFL_PROC_Main(GFL_PROC * proc);
+extern GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
+extern void GFI_PROC_Delete(GFL_PROC * proc);
+extern BOOL GFI_PROC_Main(GFL_PROC * proc);
 
-//===========================================================================
+extern GFL_PROCSYS * GFI_PROC_SysInit(u32 heap_id);
+extern void GFI_PROC_SysMain(GFL_PROCSYS * psys);
+extern void GFI_PROC_SysExit(GFL_PROCSYS * psys);
+
+extern void GFI_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
+		const GFL_PROC_DATA * procdata, void * pwork);
+extern void GFI_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
+		const GFL_PROC_DATA * procdata, void * pwork);
+
+//=============================================================================================
+//
+//
+//		外部公開関数
+//
+//		内部関数GFI_PROC_～のラッパーとして用意されている
+//
+//
+//=============================================================================================
+
+//------------------------------------------------------------------
+/**
+ * @brief	PROCシステム用ワーク保持ポインタ
+ * 
+ * PROCシステムはゲーム中にひとつしか存在しないと考えられるので
+ * 第一引数を内部変数として保持しておくように修正
+ */
+//------------------------------------------------------------------
+static GFL_PROCSYS * gfl_procsys;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_PROC_SysInit(u32 heap_id)
+{
+	gfl_procsys = GFI_PROC_SysInit(heap_id);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_PROC_SysMain(void)
+{
+	GFI_PROC_SysMain(gfl_procsys);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_PROC_SysExit(void)
+{
+	GFI_PROC_SysExit(gfl_procsys);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_PROC_SysCallProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork)
+{
+	GFI_PROC_SysCallProc(gfl_procsys, ov_id, procdata, pwork);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GFL_PROC_SysSetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork)
+{
+	GFI_PROC_SysSetNextProc(gfl_procsys, ov_id, procdata, pwork);
+}
+
+//=============================================================================================
 //
 //		関数
 //
-//===========================================================================
+//=============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	プロセス管理システム初期化
@@ -84,7 +151,7 @@ extern BOOL GFL_PROC_Main(GFL_PROC * proc);
  * @return	GFL_PROCSYS		制御ワークへのポインタ
  */
 //------------------------------------------------------------------
-GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id)
+GFL_PROCSYS * GFI_PROC_SysInit(u32 heap_id)
 {
 	GFL_PROCSYS * psys = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROCSYS));
 	psys->heap_id = heap_id;
@@ -104,19 +171,19 @@ GFL_PROCSYS * GFL_PROC_SysInit(u32 heap_id)
  * @param	psys
  */
 //------------------------------------------------------------------
-void GFL_PROC_SysMain(GFL_PROCSYS * psys)
+void GFI_PROC_SysMain(GFL_PROCSYS * psys)
 {
 	BOOL result;
 	if (psys->proc == NULL) {
-		OS_Halt();
+		//OS_Halt();
 		return;
 	}
 
-	result = GFL_PROC_Main(psys->proc);
+	result = GFI_PROC_Main(psys->proc);
 
 	if (psys->call_flag) {
 		GFL_PROC * proc;
-		proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+		proc = GFI_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
 		proc->parent = psys->proc;
 		psys->proc->child = proc;
 		psys->proc = proc;
@@ -126,8 +193,8 @@ void GFL_PROC_SysMain(GFL_PROCSYS * psys)
 			//プロセスの分岐を行った場合
 			GFL_PROC * parent;
 			parent = psys->proc->parent;
-			GFL_PROC_Delete(psys->proc);
-			psys->proc = GFL_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+			GFI_PROC_Delete(psys->proc);
+			psys->proc = GFI_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
 			parent->child = psys->proc;
 			psys->proc->parent = parent;
 			psys->jump_flag = FALSE;
@@ -135,7 +202,7 @@ void GFL_PROC_SysMain(GFL_PROCSYS * psys)
 			//単に終了→上位プロセスに戻る場合
 			GFL_PROC * parent;
 			parent = psys->proc->parent;
-			GFL_PROC_Delete(psys->proc);
+			GFI_PROC_Delete(psys->proc);
 			psys->proc = parent;
 			psys->proc->child = NULL;
 		}
@@ -148,7 +215,7 @@ void GFL_PROC_SysMain(GFL_PROCSYS * psys)
  * @param	psys
  */
 //------------------------------------------------------------------
-void GFL_PROC_SysExit(GFL_PROCSYS * psys)
+void GFI_PROC_SysExit(GFL_PROCSYS * psys)
 {
 	if (psys->proc != NULL) {
 		OS_Halt();
@@ -164,7 +231,7 @@ void GFL_PROC_SysExit(GFL_PROCSYS * psys)
  * @param	pwork
  */
 //------------------------------------------------------------------
-void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id, 
+void GFI_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id, 
 		const GFL_PROC_DATA * procdata, void * pwork)
 {
 	psys->jump_flag = TRUE;
@@ -181,13 +248,13 @@ void GFL_PROC_SysSetNextProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
  * @param	pwork
  */
 //------------------------------------------------------------------
-void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
+void GFI_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
 		const GFL_PROC_DATA * procdata, void * pwork)
 {
 	if (psys->proc == NULL) {
 		//一番最初のプロセスの場合
 		GFL_PROC * proc;
-		proc = GFL_PROC_Create(procdata, pwork, psys->heap_id);
+		proc = GFI_PROC_Create(procdata, pwork, psys->heap_id);
 		psys->proc = proc;
 	} else {
 		//サブプロセスの場合
@@ -207,7 +274,7 @@ void GFL_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
  * @return	GFL_PROC	生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
-GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id)
+GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id)
 {
 	GFL_PROC * proc;
 	proc = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROC));
@@ -228,7 +295,7 @@ GFL_PROC * GFL_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const
  * @param	proc	プロセスへのポインタ
  */
 //------------------------------------------------------------------
-void GFL_PROC_Delete(GFL_PROC * proc)
+void GFI_PROC_Delete(GFL_PROC * proc)
 {
 	SDK_ASSERT(proc->work == NULL);
 	GFL_HEAP_FreeMemory(proc);
@@ -270,7 +337,7 @@ void GFL_PROC_FreeWork(GFL_PROC * proc)
  * @retval	FALSE	プロセス動作継続中
  */
 //------------------------------------------------------------------
-BOOL GFL_PROC_Main(GFL_PROC * proc)
+BOOL GFI_PROC_Main(GFL_PROC * proc)
 {
 	GFL_PROC_RESULT result;
 
@@ -310,5 +377,4 @@ BOOL GFL_PROC_Main(GFL_PROC * proc)
 	}
 	return FALSE;
 }
-
 
