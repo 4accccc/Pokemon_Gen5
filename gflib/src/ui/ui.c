@@ -30,8 +30,9 @@ struct _UI_SYS {
 	u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
 	u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
 	u8 DS_Boot_Flag;       ///< 
-};
+} ;
 
+static UISYS* _pUI = NULL;   ///< 一個しか生成されないのでここでポインタ管理
 
 //==============================================================================
 //
@@ -54,6 +55,7 @@ UISYS* GFL_UI_sysInit(const int heapID)
     MI_CpuClear8(pUI, sizeof(UISYS));
     pUI->pKey = GFL_UI_Key_sysInit(heapID);
     pUI->pTP = GFL_UI_TP_sysInit(heapID);
+    _pUI = pUI;
     return pUI;
 }
 
@@ -65,12 +67,22 @@ UISYS* GFL_UI_sysInit(const int heapID)
  */
 //==============================================================================
 
-//初期化
-void GFL_UI_sysMain(UISYS* pUI)
+void GFI_UI_sysMain(UISYS* pUI)
 {
-    GFL_UI_Key_sysMain(pUI);
-    GFL_UI_TP_sysMain(pUI);
-    
+    GFL_UI_Key_sysMain();
+    GFL_UI_TP_sysMain();
+}
+
+//==============================================================================
+/**
+ * @brief UIMain処理
+ * @param   none
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_sysMain(void)
+{
+    GFI_UI_sysMain(_pUI);
 }
 
 //==============================================================================
@@ -81,11 +93,24 @@ void GFL_UI_sysMain(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_sysEnd(UISYS* pUI)
+void GFI_UI_sysEnd(UISYS* pUI)
 {
-    GFL_UI_Key_sysEnd(pUI);
-    GFL_UI_TP_sysEnd(pUI);
+    GFL_UI_Key_sysEnd();
+    GFL_UI_TP_sysEnd();
     GFL_HEAP_FreeMemory(pUI);
+}
+
+//==============================================================================
+/**
+ * @brief   UI終了処理
+ * @param   none
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_sysEnd(void)
+{
+    GFI_UI_sysEnd(_pUI);
 }
 
 //------------------------------------------------------------------
@@ -96,9 +121,21 @@ void GFL_UI_sysEnd(UISYS* pUI)
  * @return  none
  */
 //------------------------------------------------------------------
-void GFL_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit)
+void GFI_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit)
 {
 	pUI->DontSleep |= sleepTypeBit;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ状態を禁止する
+ * @param   sleepTypeBit スリープ管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SleepDisable(const u8 sleepTypeBit)
+{
+    GFI_UI_SleepDisable(_pUI, sleepTypeBit);
 }
 
 //------------------------------------------------------------------
@@ -109,9 +146,21 @@ void GFL_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit)
  * @return  none
  */
 //------------------------------------------------------------------
-void GFL_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit)
+void GFI_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit)
 {
 	pUI->DontSleep &= ~(sleepTypeBit);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ状態を許可する
+ * @param   sleepTypeBit スリープ管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SleepEnable(const u8 sleepTypeBit)
+{
+    GFI_UI_SleepEnable(_pUI, sleepTypeBit);
 }
 
 //------------------------------------------------------------------
@@ -122,9 +171,21 @@ void GFL_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit)
  * @return  none
  */
 //------------------------------------------------------------------
-void GFL_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit)
+void GFI_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit)
 {
 	pUI->DontSoftReset |= softResetBit;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ソフトウエアリセット状態を禁止する
+ * @param   softResetBit リセット管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SoftResetDisable(const u8 softResetBit)
+{
+    GFI_UI_SoftResetDisable(_pUI, softResetBit);
 }
 
 //------------------------------------------------------------------
@@ -135,9 +196,21 @@ void GFL_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit)
  * @return  none
  */
 //------------------------------------------------------------------
-void GFL_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit)
+void GFI_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit)
 {
 	pUI->DontSoftReset &= ~(softResetBit);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ソフトウエアリセット状態を許可する
+ * @param   softResetBit リセット管理BIT
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SoftResetEnable(const u8 softResetBit)
+{
+    GFI_UI_SoftResetEnable(_pUI, softResetBit);
 }
 
 //------------------------------------------------------------------
@@ -167,3 +240,14 @@ UI_KEYSYS* _UI_GetKEYSYS(const UISYS* pUI)
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   UI管理構造体を引き出す グループ内関数
+ * @param   none
+ * @return  ユーザーインターフェイス管理構造体
+ */
+//------------------------------------------------------------------
+UISYS* _UI_GetUISYS(void)
+{
+    return _pUI;
+}

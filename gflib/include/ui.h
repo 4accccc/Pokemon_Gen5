@@ -159,61 +159,55 @@ GLOBAL UISYS* GFL_UI_sysInit(const int heapID);
 //==============================================================================
 /**
  * @brief UIMain処理
- * @param   pUI    UISYS
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_sysMain(UISYS* pUI);
+GLOBAL void GFL_UI_sysMain(void);
 
 //==============================================================================
 /**
  * @brief   UI終了処理
- * @param   pUI    UISYS
  * @return  none
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_sysEnd(UISYS* pUI);
+GLOBAL void GFL_UI_sysEnd(void);
 
 //------------------------------------------------------------------
 /**
  * @brief   スリープ状態を禁止する
- * @param   pUI		ユーザーインターフェイス管理構造体
  * @param   sleepTypeBit スリープ管理BIT
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit);
+GLOBAL void GFL_UI_SleepDisable(const u8 sleepTypeBit);
 
 //------------------------------------------------------------------
 /**
  * @brief   スリープ状態を許可する
- * @param   pUI		ユーザーインターフェイス管理構造体
  * @param   sleepTypeBit スリープ管理BIT
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit);
+GLOBAL void GFL_UI_SleepEnable(const u8 sleepTypeBit);
 
 //------------------------------------------------------------------
 /**
  * @brief   ソフトウエアリセット状態を禁止する
- * @param   pUI		ユーザーインターフェイス管理構造体
  * @param   softResetBit リセット管理BIT
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit);
+GLOBAL void GFL_UI_SoftResetDisable(const u8 softResetBit);
 
 //------------------------------------------------------------------
 /**
  * @brief   ソフトウエアリセット状態を許可する
- * @param   pUI		ユーザーインターフェイス管理構造体
  * @param   softResetBit リセット管理BIT
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit);
+GLOBAL void GFL_UI_SoftResetEnable( const u8 softResetBit);
 
 
 //----------------------------------------------------------------------------
@@ -224,60 +218,57 @@ GLOBAL void GFL_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit);
 //==============================================================================
 /**
  * @brief オートサンプリングを行っているかどうかを得る
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param   none
  * @retval  TRUE  オートサンプリングである
  * @retval  FALSE  していない
  */
 //==============================================================================
-GLOBAL int GFL_UI_TPGetAutoSamplingFlg(const UISYS* pUI);
+GLOBAL int GFL_UI_TPGetAutoSamplingFlg(void);
 
 //==============================================================================
 /**
  * @brief オートサンプリング設定
- * @param[out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]    bAuto   オートサンプリングするならTRUE
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto);
+GLOBAL void GFL_UI_TPSetAutoSamplingFlg( const BOOL bAuto);
 
 //------------------------------------------------------------------
 /**
  * @brief 両タイプ（矩形・円形）を見ながら判定する（ベタ入力）
- * @param[in]   pUI	    ユーザーインターフェイスシステム
  * @param[in]   tbl		当たり判定テーブル（終端コードあり）
  * @return  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-GLOBAL int GFL_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
+GLOBAL int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
  * @brief 両タイプ（矩形・円形）を見ながら判定する（トリガ入力）
- * @param[in]   pUI	    ユーザーインターフェイスシステム
  * @param[in]   tbl		当たり判定テーブル（終端コードあり）
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-GLOBAL int GFL_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
+GLOBAL int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
  * @brief  タッチパネルに触れているか
- * @param[in]   pUI	    ユーザーインターフェイスシステム
+ * @param   none
  * @retval  BOOL		TRUEで触れている
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetCont( const UISYS* pUI );
+GLOBAL BOOL GFL_UI_TouchPanelGetCont( void );
 
 //------------------------------------------------------------------
 /**
  * @brief タッチパネルに触れているか（トリガ）
- * @param[in]   pUI	    ユーザーインターフェイスシステム
+ * @param   none
  * @retval  BOOL		TRUEで触れた
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetTrg( const UISYS* pUI );
+GLOBAL BOOL GFL_UI_TouchPanelGetTrg( void );
 
 //----------------------------------------------------------------------------
 /**
@@ -293,26 +284,24 @@ GLOBAL int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 //------------------------------------------------------------------
 /**
  * @brief タッチパネルに触れているならその座標取得（ベタ入力）
- * @param[in]   pUI	    ユーザーインターフェイスシステム
  * @param[out]   x		Ｘ座標受け取り変数アドレス
  * @param[out]   y		Ｙ座標受け取り変数アドレス
  * @retval  TRUE  触れている
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y );
+GLOBAL BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y );
 
 //------------------------------------------------------------------
 /**
  * @brief タッチパネルに触れているならその座標取得（トリガ入力）
- * @param[in]   pUI	    ユーザーインターフェイスシステム
  * @param[out]   x		Ｘ座標受け取り変数アドレス
  * @param[out]   y		Ｙ座標受け取り変数アドレス
  * @retval  TRUE  触れている
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y );
+GLOBAL BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y );
 
 //----------------------------------------------------------------------------
 //プロトタイプ宣言 key.c
@@ -321,80 +310,76 @@ GLOBAL BOOL GFL_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y );
 //==============================================================================
 /**
  * @brief キーリピートの速度とウェイトをセット
- * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]	speed	速度
  * @param[in]	wait	ウェイト
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait );
+GLOBAL void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait );
 
 //==============================================================================
 /**
  * @brief キーコンフィグテーブルを登録
- * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]	pTbl   コントロールテーブル配列のポインタ
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl );
+GLOBAL void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl );
 
 //==============================================================================
 /**
  * @brief キートリガゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param   none
  * @return  キートリガ
  */
 //==============================================================================
-GLOBAL GFL_UI_KeyGetTrg( const UISYS* pUI );
+GLOBAL GFL_UI_KeyGetTrg( void );
 
 //==============================================================================
 /**
  * @brief キーコントゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param   none
  * @return  キーコント
  */
 //==============================================================================
-GLOBAL GFL_UI_KeyGetCont( const UISYS* pUI );
+GLOBAL GFL_UI_KeyGetCont(void);
 
 //==============================================================================
 /**
  * @brief キーリピートゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param   none
  * @return  キーコント
  */
 //==============================================================================
-GLOBAL GFL_UI_KeyGetRepeat( const UISYS* pUI );
+GLOBAL GFL_UI_KeyGetRepeat( void );
 
 //==============================================================================
 /**
  * @brief キーリピートの速度とウェイトをゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[out]	speed	速度
  * @param[out]	wait	ウェイト
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait );
+GLOBAL void GFL_UI_KeyGetRepeatSpeed(int* speed, int* wait );
 
 //==============================================================================
 /**
  * @brief   キーコンフィグのモードの値を設定する
- * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[in]   mode    キーコンフィグモード
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetControlMode(UISYS* pUI,const int mode);
+GLOBAL void GFL_UI_KeySetControlMode(const int mode);
 
 //==============================================================================
 /**
  * @brief キーコンフィグのモードの値を得る
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param   none
  * @return  コントロールモード
  */
 //==============================================================================
-GLOBAL int GFL_UI_KeyGetControlMode(const UISYS* pUI);
+GLOBAL int GFL_UI_KeyGetControlMode( void );
 
 
 
@@ -436,33 +421,9 @@ enum{
 };
 // 今のバージョンではTP_BUFFERING_JUST,	TP_NO_LOOP_JUSTを使用したデータで内外判定はできない
 
-
-//-------------------------------------
-/// 絵のデータ作成フラグ
-enum{
-	TP_MAKE_PICT_NORMAL,		// 囲まれたエリアがいくつあってもよい
-	TP_MAKE_PICT_ONE_FAST,		// 余計な部分をなくす
-								// 一番最初にあった交点が作っている
-								// 図形のデータを作成
-
-	TP_MAKE_PICT_ONE_END		// 両線分の先から見て一番最後にあった交点
-								// が作っている図形のデータを作成
-								// このフラグをセットすると必ず図形は１つになる
-};
-
 /*-----------------------------------------------------------------------------
  *					構造体宣言
  ----------------------------------------------------------------------------*/
-//-------------------------------------
-#if 0
-/// タッチパネルの内外判定用図形データ構造体
-typedef struct
-{
-	u32	Size;					// TP_VECTOR_DATAの配列の要素数
-	Vec2DS32*	pPointData;		// 頂点データの配列
-} TP_PICTURE_DATA;
-#endif
-
 //-------------------------------------
 /// １フレームのタッチ情報格納構造体
 typedef struct
@@ -476,11 +437,9 @@ typedef struct
 /**
  *
  * @brief	サンプリング情報を管理し、今の状態を返す	
- * @param   pUI  UIワーク
  * @param	pData：このフレームの情報(initで指定したサンプリング回数分の情報)
  * @param	type：サンプリング種別の番号
  * @param	comp_num：バッファに格納するときに、comp_num位のさがあったら格納する
- *
  * @return	u32：サンプリング種別による変化
 					type：TP_BUFFERING		サンプリングされたバッファサイズ
 					type：TP_NO_LOOP		サンプリングされたバッファサイズ
@@ -490,30 +449,29 @@ typedef struct
 					type：TP_SAMP_NOT_START	サンプリング開始されていません
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 comp_num );
+GLOBAL u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num );
 
 //----------------------------------------------------------------------------
 /**
  * @brief	スリープ処理後の再開処理
- * @param   pUI             UIのワーク
+ * @param   none
  * @return	none
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_UI_TPAutoSamplingReStart( UISYS* pUI );
+GLOBAL void GFL_UI_TPAutoSamplingReStart( void );
 
 //----------------------------------------------------------------------------
 /**
  * @brief	スリープ処理前の停止処理
- * @param   pUI             UIのワーク
+ * @param   none
  * @return  none
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_UI_TPAutoSamplingStop( UISYS* pUI );
+GLOBAL void GFL_UI_TPAutoSamplingStop( void );
 
 //----------------------------------------------------------------------------
 /**
  * @brief	タッチパネルのAUTOサンプリング開始
- * @param	pUI： UIworkポインタ
  * @param	p_buff：サンプリングデータを入れるバッファ
  * @param	size：バッファのサイズ
  * @param	sync：１フレームに何回サンプリングするのか(MAX4)
@@ -522,32 +480,29 @@ GLOBAL void GFL_UI_TPAutoSamplingStop( UISYS* pUI );
  * @retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync);
+GLOBAL u32 GFL_UI_TPAutoStart( TPData* p_buff, u32 size, u32 sync);
 
 //----------------------------------------------------------------------------
 /**
  * @brief	タッチパネルのAUTOサンプリング開始	バッファリングなし
- * @param	pUI： UIworkポインタ
  * @param	sync：１フレームに何回サンプリングするのか(MAX4)
  * @retval	TP_OK：成功
  * @retval	TP_FIFO_ERR：転送失敗
  * @retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync);
+GLOBAL u32 GFL_UI_TPAutoStartNoBuff(u32 sync);
 
 //----------------------------------------------------------------------------
 /**
  *@brief	サンプリングを終了する
- *@param	pUI： UIworkポインタ
+ *@param	none
  *@retval	TP_OK：成功
- *@retval　	TP_FIFO_ERR：転送失敗
+ *@retval   TP_FIFO_ERR：転送失敗
  *@retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStop( UISYS* pUI );
-
-
+GLOBAL u32 GFL_UI_TPAutoStop( void );
 
 
 #undef GLOBAL

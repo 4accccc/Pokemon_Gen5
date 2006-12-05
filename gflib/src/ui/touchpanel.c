@@ -90,7 +90,7 @@ UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysMain(UISYS* pUI)
+static void GFI_UI_TP_sysMain(UISYS* pUI)
 {
 	TPData	tpTemp;
 	TPData	tpDisp;
@@ -142,6 +142,18 @@ void GFL_UI_TP_sysMain(UISYS* pUI)
 
 }
 
+//==============================================================================
+/**
+ * @brief タッチパネル読み取り処理
+ * @param   none
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_TP_sysMain(void)
+{
+    GFI_UI_TP_sysMain(_UI_GetUISYS());
+}
 
 //==============================================================================
 /**
@@ -151,10 +163,23 @@ void GFL_UI_TP_sysMain(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysEnd(UISYS* pUI)
+static void GFI_UI_TP_sysEnd(UISYS* pUI)
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     GFL_HEAP_FreeMemory(pTP);
+}
+
+//==============================================================================
+/**
+ * @brief タッチパネル終了処理
+ * @param   none
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_TP_sysEnd(void)
+{
+    GFI_UI_TP_sysEnd(_UI_GetUISYS());
 }
 
 //------------------------------------------------------------------
@@ -239,7 +264,7 @@ static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y )
  * @return  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GFL_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
+static int GFI_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     
@@ -248,6 +273,20 @@ int GFL_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 	}
 	return GFL_UI_TP_HIT_NONE;
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief 両タイプ（矩形・円形）を見ながら判定する（ベタ入力）
+ * @param[in]   tbl		当たり判定テーブル（終端コードあり）
+ * @return  int		当たりがあればその要素番号、なければ TP_HIT_NONE
+ */
+//------------------------------------------------------------------
+int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl )
+{
+    return GFI_UI_TouchPanelHitCont(_UI_GetUISYS(), tbl);
+}
+
 //------------------------------------------------------------------
 /**
  * @brief 両タイプ（矩形・円形）を見ながら判定する（トリガ入力）
@@ -256,7 +295,7 @@ int GFL_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GFL_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
+static int GFI_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -268,16 +307,41 @@ int GFL_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 
 //------------------------------------------------------------------
 /**
+ * @brief 両タイプ（矩形・円形）を見ながら判定する（トリガ入力）
+ * @param[in]   tbl		当たり判定テーブル（終端コードあり）
+ * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
+ */
+//------------------------------------------------------------------
+int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl )
+{
+    return GFI_UI_TouchPanelHitTrg(_UI_GetUISYS(), tbl);
+}
+
+//------------------------------------------------------------------
+/**
  * @brief  タッチパネルに触れているか
  * @param[in]   pUI	    ユーザーインターフェイスシステム
  * @retval  BOOL		TRUEで触れている
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetCont( const UISYS* pUI )
+static BOOL GFI_UI_TouchPanelGetCont( const UISYS* pUI )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     return pTP->tp_cont;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief  タッチパネルに触れているか
+ * @param   none
+ * @retval  BOOL		TRUEで触れている
+ */
+//------------------------------------------------------------------
+BOOL GFL_UI_TouchPanelGetCont( void )
+{
+    return GFI_UI_TouchPanelGetCont(_UI_GetUISYS());
+}
+
 //------------------------------------------------------------------
 /**
  * @brief タッチパネルに触れているか（トリガ）
@@ -285,10 +349,22 @@ BOOL GFL_UI_TouchPanelGetCont( const UISYS* pUI )
  * @retval  BOOL		TRUEで触れた
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetTrg( const UISYS* pUI )
+static BOOL GFI_UI_TouchPanelGetTrg( const UISYS* pUI )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	return pTP->tp_trg;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief タッチパネルに触れているか（トリガ）
+ * @param   none
+ * @retval  BOOL		TRUEで触れた
+ */
+//------------------------------------------------------------------
+BOOL GFL_UI_TouchPanelGetTrg( void )
+{
+    return GFI_UI_TouchPanelGetTrg(_UI_GetUISYS());
 }
 
 //------------------------------------------------------------------
@@ -301,7 +377,7 @@ BOOL GFL_UI_TouchPanelGetTrg( const UISYS* pUI )
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
+static BOOL GFI_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -313,6 +389,21 @@ BOOL GFL_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
 	}
 	return FALSE;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief タッチパネルに触れているならその座標取得（ベタ入力）
+ * @param[out]   x		Ｘ座標受け取り変数アドレス
+ * @param[out]   y		Ｙ座標受け取り変数アドレス
+ * @retval  TRUE  触れている
+ * @retval  FALSE 触れていない。引数には何もしない。
+ */
+//------------------------------------------------------------------
+BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y )
+{
+    return GFI_UI_TouchPanelGetPointCont( _UI_GetUISYS(), x, y );
+}
+
 //------------------------------------------------------------------
 /**
  * @brief   タッチパネルに触れているならその座標取得（トリガ入力）
@@ -323,7 +414,7 @@ BOOL GFL_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y )
+static BOOL GFI_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -334,6 +425,20 @@ BOOL GFL_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y )
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   タッチパネルに触れているならその座標取得（トリガ入力）
+ * @param[out]   x		Ｘ座標受け取り変数アドレス
+ * @param[out]   y		Ｙ座標受け取り変数アドレス
+ * @retval  TRUE  触れている
+ * @retval  FALSE 触れていない。引数には何もしない。
+ */
+//------------------------------------------------------------------
+BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y )
+{
+    return GFI_UI_TouchPanelGetPointTrg( _UI_GetUISYS(), x, y );
 }
 
 //----------------------------------------------------------------------------
@@ -358,10 +463,23 @@ int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
  * @retval  FALSE  していない
  */
 //==============================================================================
-int GFL_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
+static int GFI_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	return pTP->tp_auto_samp;
+}
+
+//==============================================================================
+/**
+ * @brief オートサンプリングを行っているかどうかを得る
+ * @param   none
+ * @retval  TRUE  オートサンプリングである
+ * @retval  FALSE  していない
+ */
+//==============================================================================
+int GFL_UI_TPGetAutoSamplingFlg(void)
+{
+    return GFI_UI_TPGetAutoSamplingFlg(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -372,16 +490,29 @@ int GFL_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
  * @return  none
  */
 //==============================================================================
-void GFL_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
+static void GFI_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	pTP->tp_auto_samp = bAuto;
 }
 
+//==============================================================================
+/**
+ * @brief オートサンプリング設定
+ * @param        none
+ * @param[in]    bAuto   オートサンプリングするならTRUE
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_TPSetAutoSamplingFlg(const BOOL bAuto)
+{
+    GFI_UI_TPSetAutoSamplingFlg(_UI_GetUISYS(), bAuto);
+}
+
 //----------------------------------------------------------------------------
 /**
  * @brief	サンプリング開始時のデータ設定
- * @param  pTP             ワーク
+ * @param   pTP             ワーク
  * @param	SampFlag		サンプリングフラグ
  * @param	auto_samp		AUTOサンプリングフラグ
  * @param	pBuff			バッファポインタ
@@ -685,7 +816,7 @@ static u32 modeBuff( UI_TPSYS* pTP, u32 type, u32 last_idx, u32 comp_num )
  * @retval  TP_SAMP_NOT_START	サンプリング開始されていません
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 comp_num )
+static u32 GFI_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 comp_num )
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	u32 ret = TP_SAMP_NOT_START;	// 戻り値
@@ -726,12 +857,32 @@ u32 GFL_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 com
 
 //----------------------------------------------------------------------------
 /**
+ *
+ * @brief	サンプリング情報を管理し、今の状態を返す	
+ * @param   pUI  UIワーク
+ * @param	pData このフレームの情報(initで指定したサンプリング回数分の情報)
+ * @param	type サンプリング種別の番号
+ * @param	comp_num バッファに格納するときに、comp_num位のさがあったら格納する
+ * @retval  TP_BUFFERING	サンプリングされたバッファサイズ
+ * @retval  TP_NO_LOOP		サンプリングされたバッファサイズ
+ *							バッファが一杯になったとき TP_END_BUFF
+ * @retval  TP_NO_BUFF		TP_OK
+ * @retval  TP_SAMP_NOT_START	サンプリング開始されていません
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num )
+{
+    return GFI_UI_TPAutoSamplingMain( _UI_GetUISYS(), pData, type, comp_num );
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief	スリープ処理後の再開処理
  * @param   pUI             UIのワーク
  * @return	none
  */
 //-----------------------------------------------------------------------------
-void GFL_UI_TPAutoSamplingReStart( UISYS* pUI )
+static void GFI_UI_TPAutoSamplingReStart( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -754,12 +905,24 @@ void GFL_UI_TPAutoSamplingReStart( UISYS* pUI )
 
 //----------------------------------------------------------------------------
 /**
+ * @brief	スリープ処理後の再開処理
+ * @param   pUI             UIのワーク
+ * @return	none
+ */
+//-----------------------------------------------------------------------------
+void GFL_UI_TPAutoSamplingReStart( void )
+{
+    GFI_UI_TPAutoSamplingReStart( _UI_GetUISYS() );
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief	スリープ処理前の停止処理
  * @param   pUI             UIのワーク
  * @return  none
  */
 //-----------------------------------------------------------------------------
-void GFL_UI_TPAutoSamplingStop( UISYS* pUI )
+static void GFI_UI_TPAutoSamplingStop( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -778,6 +941,18 @@ void GFL_UI_TPAutoSamplingStop( UISYS* pUI )
 	GF_ASSERT( result == TP_OK );
 
 	pTP->TouchPanelExStop = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	スリープ処理前の停止処理
+ * @param   none
+ * @return  none
+ */
+//-----------------------------------------------------------------------------
+void GFL_UI_TPAutoSamplingStop( void )
+{
+    GFI_UI_TPAutoSamplingStop( _UI_GetUISYS() );
 }
 
 //----------------------------------------------------------------------------
@@ -848,7 +1023,7 @@ static u32 _autoStart(UI_TPSYS* pTP, u32 sync)
  * @retval	TP_ERR 転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
+static u32 GFI_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
 {
 	u32	result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -868,6 +1043,22 @@ u32 GFL_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
 
 //----------------------------------------------------------------------------
 /**
+ * @brief	タッチパネルのAUTOサンプリング開始
+ * @param	p_buff サンプリングデータを入れるバッファ
+ * @param	size バッファのサイズ
+ * @param	sync １フレームに何回サンプリングするのか(MAX4)
+ * @retval	TP_OK 成功
+ * @retval	TP_FIFO_ERR 転送失敗
+ * @retval	TP_ERR 転送以外の失敗
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_UI_TPAutoStart(TPData* p_buff, u32 size, u32 sync)
+{
+    return GFI_UI_TPAutoStart(_UI_GetUISYS(), p_buff, size, sync);
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief	タッチパネルのAUTOサンプリング開始	バッファリングなし
  * @param	pUI  UIworkポインタ
  * @param	sync １フレームに何回サンプリングするのか(MAX4)
@@ -876,7 +1067,7 @@ u32 GFL_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
  * @retval	TP_ERR 転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
+static u32 GFI_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
 {
 	u32	result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -896,6 +1087,21 @@ u32 GFL_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
 
 //----------------------------------------------------------------------------
 /**
+ * @brief	タッチパネルのAUTOサンプリング開始	バッファリングなし
+ * @param	pUI  UIworkポインタ
+ * @param	sync １フレームに何回サンプリングするのか(MAX4)
+ * @retval	TP_OK 成功
+ * @retval	TP_FIFO_ERR 転送失敗
+ * @retval	TP_ERR 転送以外の失敗
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_UI_TPAutoStartNoBuff(u32 sync)
+{
+    return GFI_UI_TPAutoStartNoBuff(_UI_GetUISYS(), sync);
+}
+
+//----------------------------------------------------------------------------
+/**
  * @brief	サンプリングを終了する
  * @param	pUI UIworkポインタ
  * @retval	TP_OK：成功
@@ -903,7 +1109,7 @@ u32 GFL_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
  * @retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStop( UISYS* pUI )
+static u32 GFI_UI_TPAutoStop( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -919,5 +1125,18 @@ u32 GFL_UI_TPAutoStop( UISYS* pUI )
 		setStartBufferingParam( pTP, TP_SAMP_NONE, FALSE, NULL, 0, 0, 0 );
 	}
 	return result;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	サンプリングを終了する
+ * @retval	TP_OK：成功
+ * @retval	TP_FIFO_ERR：転送失敗
+ * @retval	TP_ERR：転送以外の失敗
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_UI_TPAutoStop( void )
+{
+    return GFI_UI_TPAutoStop( _UI_GetUISYS() );
 }
 

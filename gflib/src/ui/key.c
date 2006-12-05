@@ -74,7 +74,7 @@ UI_KEYSYS* GFL_UI_Key_sysInit(const int heapID)
  */
 //==============================================================================
 
-void GFL_UI_Key_sysMain(UISYS* pUI)
+static void GFI_UI_Key_sysMain(UISYS* pUI)
 {
 	TPData	tpTemp;
 	TPData	tpDisp;
@@ -114,16 +114,42 @@ void GFL_UI_Key_sysMain(UISYS* pUI)
 
 //==============================================================================
 /**
+ * @brief パッド読み取り処理
+ * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_Key_sysMain(void)
+{
+    GFI_UI_Key_sysMain(_UI_GetUISYS());
+}
+
+//==============================================================================
+/**
  * @brief パッド終了処理
  * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @return  none
  */
 //==============================================================================
 
-void GFL_UI_Key_sysEnd(UISYS* pUI)
+static void GFI_UI_Key_sysEnd(UISYS* pUI)
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
     GFL_HEAP_FreeMemory(pKey);
+}
+
+//==============================================================================
+/**
+ * @brief パッド終了処理
+ * @param[in,out]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_Key_sysEnd(void)
+{
+    GFI_UI_Key_sysEnd(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -230,11 +256,24 @@ static void _keyConvert(UI_KEYSYS* pKey)
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
+void GFI_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
     pKey->repeatSpeed	= speed;
 	pKey->repeatWait	= wait;
+}
+
+//==============================================================================
+/**
+ * @brief キーリピートの速度とウェイトをセット
+ * @param[in]	speed	速度
+ * @param[in]	wait	ウェイト
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait )
+{
+    GFI_UI_KeySetRepeatSpeed(_UI_GetUISYS(),speed,wait );
 }
 
 //==============================================================================
@@ -245,10 +284,22 @@ void GFL_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
+void GFI_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	pKey->pControl = pTbl;
+}
+
+//==============================================================================
+/**
+ * @brief キーコンフィグテーブルを設定
+ * @param[in]	pTbl   コントロールテーブル配列のポインタ
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl )
+{
+    GFI_UI_KeySetControlModeTbl(_UI_GetUISYS(),pTbl);
 }
 
 //==============================================================================
@@ -258,10 +309,22 @@ void GFL_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
  * @return  キートリガ
  */
 //==============================================================================
-int GFL_UI_KeyGetTrg( const UISYS* pUI )
+int GFI_UI_KeyGetTrg( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->trg;
+}
+
+//==============================================================================
+/**
+ * @brief キートリガゲット
+ * @param  none
+ * @return  キートリガ
+ */
+//==============================================================================
+int GFL_UI_KeyGetTrg( void )
+{
+    return GFI_UI_KeyGetTrg(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -271,10 +334,22 @@ int GFL_UI_KeyGetTrg( const UISYS* pUI )
  * @return  キーコント
  */
 //==============================================================================
-int GFL_UI_KeyGetCont( const UISYS* pUI )
+int GFI_UI_KeyGetCont( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->cont;
+}
+
+//==============================================================================
+/**
+ * @brief キーコントゲット
+ * @param   none
+ * @return  キーコント
+ */
+//==============================================================================
+int GFL_UI_KeyGetCont( void )
+{
+     return GFI_UI_KeyGetCont( _UI_GetUISYS() );
 }
 
 //==============================================================================
@@ -284,10 +359,22 @@ int GFL_UI_KeyGetCont( const UISYS* pUI )
  * @return  キーコント
  */
 //==============================================================================
-int GFL_UI_KeyGetRepeat( const UISYS* pUI )
+int GFI_UI_KeyGetRepeat( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->repeat;
+}
+
+//==============================================================================
+/**
+ * @brief キーリピートゲット
+ * @param none
+ * @return  キーコント
+ */
+//==============================================================================
+int GFL_UI_KeyGetRepeat(void )
+{
+    return GFI_UI_KeyGetRepeat( _UI_GetUISYS());
 }
 
 //==============================================================================
@@ -299,11 +386,24 @@ int GFL_UI_KeyGetRepeat( const UISYS* pUI )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
+void GFI_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	*speed = pKey->repeatSpeed;
 	*wait = pKey->repeatWait;
+}
+
+//==============================================================================
+/**
+ * @brief キーリピートの速度とウェイトをゲット
+ * @param[out]	speed	速度
+ * @param[out]	wait	ウェイト
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_KeyGetRepeatSpeed( int* speed, int* wait )
+{
+    GFI_UI_KeyGetRepeatSpeed(_UI_GetUISYS(), speed, wait);
 }
 
 //==============================================================================
@@ -314,7 +414,7 @@ void GFL_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetControlMode(UISYS* pUI,const int mode)
+void GFI_UI_KeySetControlMode(UISYS* pUI,const int mode)
 {
     const GFL_UI_KEY_CUSTOM_TBL* pTbl;
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
@@ -337,14 +437,37 @@ void GFL_UI_KeySetControlMode(UISYS* pUI,const int mode)
 
 //==============================================================================
 /**
+ * @brief   キーコンフィグのモードの値を設定する
+ * @param[in]   mode    キーコンフィグモード
+ * @return  none
+ */
+//==============================================================================
+void GFL_UI_KeySetControlMode(const int mode)
+{
+    GFI_UI_KeySetControlMode(_UI_GetUISYS(), mode);
+}
+
+//==============================================================================
+/**
  * @brief キーコンフィグのモードの値を得る
  * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @return  コントロールモード
  */
 //==============================================================================
-int GFL_UI_KeyGetControlMode(const UISYS* pUI)
+int GFI_UI_KeyGetControlMode(const UISYS* pUI)
 {
     const UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->control_mode;
 }
 
+//==============================================================================
+/**
+ * @brief キーコンフィグのモードの値を得る
+ * @param   none
+ * @return  コントロールモード
+ */
+//==============================================================================
+int GFL_UI_KeyGetControlMode(void)
+{
+    return GFI_UI_KeyGetControlMode(_UI_GetUISYS());
+}
