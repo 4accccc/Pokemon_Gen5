@@ -30,7 +30,9 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_sys
 					ui/key.c \
                     network/tool/net_ring_buff.c \
                     network/tool/net_queue.c \
+                    network/tool/net_tool.c \
 					network/device/wh.c \
+					network/device/net_ds.c \
 					standard/gf_standard.c \
 					calctool.c \
 					bgl/bg_sys.c bgl/display.c \
@@ -51,6 +53,11 @@ INSTALL_TARGETS		=	$(LIBDIR)/$(TARGET_LIB)
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+
+## xyzzyでエラージャンプを行う
+ifeq	($(USERNAME),ohno)
+CCFLAGS_MSGSTYLE	?= -msgstyle gcc
+endif
 
 # make clean時に一緒に抹消したいファイル
 LDIRT_CLEAN		=	$(INSTALL_DIR)

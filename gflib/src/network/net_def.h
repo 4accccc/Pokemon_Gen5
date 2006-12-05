@@ -10,6 +10,8 @@
 #ifndef __NET_DEF_H__
 #define	__NET_DEF_H__
 
+#include "net.h"
+
 //------------------------------------------------------------------
 /**
  * @brief	’è‹`
@@ -102,6 +104,10 @@ typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 
 #endif  // DEBUG_ONLY_FOR_ohno
 #endif  //OHNO_PRINT
+
+
+// pNetHandle‚©‚çToolsys‚ðŽó‚¯Žæ‚é
+extern NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pNetHandle);
 
 
 #endif

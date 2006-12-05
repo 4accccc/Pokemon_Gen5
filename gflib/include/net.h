@@ -6,8 +6,8 @@
  * @date    2006.11.4
  */
 //=============================================================================
-#ifndef _NETWORK_H_
-#define _NETWORK_H_
+#ifndef __NET_H__
+#define __NET_H__
 
 
 #undef GLOBAL
@@ -25,12 +25,12 @@
 #define GFL_NET_DEBUG   (1)
 #endif  //DEBUG_ONLY_FOR_ohno
 
-#ifndef GFL_NET_PRINT
+#ifndef NET_PRINT
 #if GFL_NET_DEBUG
-#define GFL_NET_PRINT(...) \
+#define NET_PRINT(...) \
   (void) ((OS_Printf(__VA_ARGS__)))
 #else   //GFL_NET_DEBUG
-#define GFL_NET_PRINT(...)           ((void) 0)
+#define NET_PRINT(...)           ((void) 0)
 #endif  // GFL_NET_DEBUG
 #endif  //GFL_NET_PRINT
 // デバッグ用決まり文句----------------------
@@ -39,6 +39,8 @@
 // define 
 #define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
+
+#define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
 
 
 typedef enum {
@@ -80,6 +82,8 @@ typedef struct {  ///< 受信関数テーブル
 
 
 typedef void* (*NetBeaconGetFunc)(void);    ///< ビーコンデータ取得関数
+typedef int (*NetBeaconGetSizeFunc)(void);    ///< ビーコンデータサイズ取得関数
+typedef BOOL (*NetBeaconCompFunc)(int GameServiceID1, int GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
@@ -93,6 +97,8 @@ typedef struct{
   u32  allocNo;             ///< allocするための番号
   NetRecvFuncTable recvFuncTable;  ///< 受信関数テーブル
   NetBeaconGetFunc beaconGetFunc;  ///< ビーコンデータ取得関数
+  NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
+  NetBeaconCompFunc beaconCompFunc; ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
   NetErrorFunc errorFunc;           ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
@@ -205,7 +211,7 @@ extern GFL_NETHANDLE* GFL_NET_SwitchConnect(GFL_NETSYS* pNetSYS);
  * @retval  NetID     通信ID
  */
 //==============================================================================
-extern NetID GFL_NET_GetMyNetID(GFL_NETHANDLE* pNet);
+extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNet);
 
 //==============================================================================
 /**
@@ -367,5 +373,5 @@ extern void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
 extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 
 
-#endif //_NETWORK_H_
+#endif // __NET_H__
 
