@@ -10,14 +10,17 @@
  */
 //===================================================================
 
-//ヒープ用宣言
+//親ヒープ用宣言
 enum{
-	HEAPID_BASE_SYSTEM=0,
-	HEAPID_BASE_APP,
-
-	HEAPID_BASE_MAX
+	GFL_HEAPID_APP = GFL_HEAPID_SYSTEM + 1,
+	GFL_HEAPID_MAX
 };
 
-#define	HEAPSIZE_SYSTEM	(0x8000)
-#define	HEAPSIZE_APP	(0x8000)
+//子ヒープ用宣言
+enum{
+	HEAPID_BG=GFL_HEAPID_MAX,
+};
+
+#define	HEAPSIZE_SYSTEM	(0x08000)
+#define	HEAPSIZE_APP	(0x80000)
 
