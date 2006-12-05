@@ -69,7 +69,7 @@ void GFLUser_Init(void)
   //GFL_ARC_SysInit(...);
 
   //UIシステム初期化
-  //GFL_UI_sysInit(HEAPID_BASE_SYSTEM);
+  GFL_UI_sysInit(HEAPID_BASE_SYSTEM);
 
   //PROCシステム初期化
   GFL_PROC_SysInit(HEAPID_BASE_SYSTEM);
@@ -84,7 +84,7 @@ void GFLUser_Init(void)
 //------------------------------------------------------------------
 void GFLUser_Main(void)
 {
-	//GFL_UI_SysMain();
+	GFL_UI_sysMain();
 	
 	GFL_PROC_SysMain();
 }
@@ -97,7 +97,7 @@ void GFLUser_Main(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	//GFL_UI_sysEnd();
+	GFL_UI_sysEnd();
 	GFL_PROC_SysExit();
 	GFL_HEAP_sysExit();
 }
