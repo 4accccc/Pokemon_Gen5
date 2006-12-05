@@ -33,7 +33,7 @@ typedef	struct	{
 	GXVRamSubOBJExtPltt	sub_obj_expltt;		//サブ2DエンジンのOBJ拡張パレットにに割り当て
 	GXVRamTex			teximage;			//テクスチャイメージスロットに割り当て
 	GXVRamTexPltt		texpltt;			//テクスチャパレットスロットに割り当て
-}GF_BGL_DISPVRAM;
+}GFL_BG_DISPVRAM;
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -42,7 +42,7 @@ typedef	struct	{
  * @param	data	設定データ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_DISP_SetBank( const GF_BGL_DISPVRAM* dispvram );
+GLOBAL void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン画面の各面の表示コントロール初期化

@@ -16,8 +16,6 @@
 #define GLOBAL extern
 #endif
 
-#define GFL_BG_NTR_USE	(0)		//GFL_BG_NTR～系の関数の無効(0)/有効(1)
-
 //=============================================================================================
 //	inline関数を仮置き
 //=============================================================================================
@@ -438,7 +436,6 @@ GLOBAL void GFL_BG_LoadScreenReq( GFL_BG_INI * bgl, u8 frmnum );
 //--------------------------------------------------------------------------------------------
 GLOBAL void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
-#if GFL_BG_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * 指定データをスクリーンに転送（ファイル参照）
@@ -453,7 +450,6 @@ GLOBAL void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u3
  */
 //--------------------------------------------------------------------------------------------
 GLOBAL void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
-#endif GFL_BG_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -484,7 +480,6 @@ GLOBAL void GFL_BG_ScreenBufSet( GFL_BG_INI * bgl, u8 frmnum, const void * dat, 
 //--------------------------------------------------------------------------------------------
 GLOBAL void GFL_BG_LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
-#if GFL_BG_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * キャラクター転送（ファイル参照）
@@ -500,7 +495,6 @@ GLOBAL void GFL_BG_LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src,
  */
 //--------------------------------------------------------------------------------------------
 GLOBAL void GFL_BG_LoadCharacterFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
-#endif GFL_BG_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
