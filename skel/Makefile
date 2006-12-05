@@ -27,13 +27,17 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c
+SRCS			=	main.c gfl_use.c
 
 
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
 
+FILE_TREE			=	graphic/samplegra.narc \
+						graphic/dummy.narc
+
+MAKEROM_ROMFILES	=	$(FILE_TREE)
 
 #--------------------------------------- ----------------------------
 # システム定義
