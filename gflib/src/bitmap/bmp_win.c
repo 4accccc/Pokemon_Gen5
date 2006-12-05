@@ -12,11 +12,14 @@
  */
 //=============================================================================================
 #include "gflib.h"
-#include "bg_sys.h"
-#include "bmp.h"
 
-#define	__BMP_H_GLOBAL__
-#include "bmp_win.h"
+#include "bmp_win_def.h"
+
+//*------------------------------------------*/
+/**   プロトタイプ宣言                       */
+//*------------------------------------------*/
+
+static	void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID );
 
 static void BmpWinOn_Normal( GFL_BMPWIN_DATA * win );
 static void BmpWinOnVReq_Normal( GFL_BMPWIN_DATA * win );
@@ -129,7 +132,7 @@ GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, GFL_BG_INI *bgl, u8 num )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID )
+static	void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID )
 {
 	wk->bgl		= bgl;
 	wk->heapID	= heapID;
