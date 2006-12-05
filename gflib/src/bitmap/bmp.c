@@ -35,7 +35,7 @@
 //--------------------------------------------------------------------------------------------
 GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID )
 {
-	GFL_BMP_DATA * bmp = GFI_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
+	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
 	memset( bmp, 0, sizeof(GFL_BMP_DATA) );
 
@@ -51,7 +51,7 @@ GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
 {
-	GFI_HEAP_FreeMemory( bmp );
+	GFL_HEAP_FreeMemory( bmp );
 }
 
 //--------------------------------------------------------------------------------------------
