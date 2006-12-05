@@ -14,9 +14,7 @@
 #include "gflib.h"
 
 #define	__BG_SYS_H_GLOBAL__
-#include "bg_sys.h"
 #include "calctool.h"
-#include "display.h"
 
 
 #define DMA_USE (1)
@@ -89,6 +87,8 @@ static void RadianParamSet( GFL_BG_SYS * ini, u8 mode, u16 value );
 static void ScaleParamSet( GFL_BG_SYS * ini, u8 mode, fx32 value );
 static void CenterParamSet( GFL_BG_SYS * ini, u8 mode, int value );
 
+static	void	*LoadFile(int heapID,const char *path);
+static	void	*LoadFileEx(int heapID,const char *path,u32 *size);
 
 //=============================================================================================
 //=============================================================================================
@@ -107,7 +107,7 @@ static void CenterParamSet( GFL_BG_SYS * ini, u8 mode, int value );
 //--------------------------------------------------------------------------------------------
 GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 {
-	GFL_BG_INI * bgl = GFI_HEAP_AllocMemory( heapID, sizeof(GFL_BG_INI) );
+	GFL_BG_INI * bgl = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BG_INI) );
 
 	memset( bgl, 0, sizeof(GFL_BG_INI) );
 	bgl->heapID = heapID;
@@ -126,7 +126,7 @@ GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BG_sysExit( GFL_BG_INI *bgl )
 {
-	GFI_HEAP_FreeMemory( bgl );
+	GFL_HEAP_FreeMemory( bgl );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -384,7 +384,7 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 	bgl->bgsys[frmnum].cy      = 0;
 
 	if( data->scrbufferSiz ){
-		bgl->bgsys[frmnum].screen_buf = GFI_HEAP_AllocMemory( bgl->heapID, data->scrbufferSiz );
+		bgl->bgsys[frmnum].screen_buf = GFL_HEAP_AllocMemory( bgl->heapID, data->scrbufferSiz );
 
 #ifdef	OSP_ERR_BGL_SCRBUF_GET		// スクリーンバッファ確保失敗
 		if( ini->bgsys[frmnum].screen_buf == NULL ){
@@ -800,7 +800,7 @@ void GFL_BG_BGControlExit( GFL_BG_INI * bgl, u8 frmnum )
 	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	GFI_HEAP_FreeMemory( bgl->bgsys[frmnum].screen_buf );
+	GFL_HEAP_FreeMemory( bgl->bgsys[frmnum].screen_buf );
 	bgl->bgsys[frmnum].screen_buf = NULL;
 }
 
@@ -1185,7 +1185,7 @@ void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datas
 			u32	alloc_siz;
 
 			alloc_siz	= ((*(u32*)src) >> 8);
-			decode_buf = GFI_HEAP_AllocMemory( bgl->heapID, alloc_siz );
+			decode_buf = GFL_HEAP_AllocMemoryLow( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 			if( decode_buf == NULL ){
@@ -1196,14 +1196,13 @@ void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datas
 			GFL_BG_DataDecord( src, decode_buf, datasiz );
 
 			GFL_BG_LoadScreenSub( frmnum, decode_buf, offs * GFL_BG_1SCRDATASIZ, alloc_siz );
-			GFI_HEAP_FreeMemory( decode_buf );
+			GFL_HEAP_FreeMemory( decode_buf );
 		}
 	}else{
 		GFL_BG_LoadScreenSub( frmnum, (void*)src, offs * GFL_BG_1SCRDATASIZ, datasiz );
 	}
 }
 
-#if GFL_BG_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * 指定データをスクリーンに転送（ファイル参照）
@@ -1223,15 +1222,14 @@ void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 
 	u32	size;
 	u32	mode;
 
-	mem = sys_LoadFileEx( bgl->heapID, path, &size );
+	mem = LoadFileEx( bgl->heapID, path, &size );
 	if( mem == NULL ){
 		return;	//エラー
 	}
 	GFL_BG_ScreenBufSet( bgl, frmnum, mem, size );
 	GFL_BG_LoadScreen( bgl, frmnum, mem, size, offs );
-	GFI_HEAP_FreeMemory( mem );
+	GFL_HEAP_FreeMemory( mem );
 }
-#endif GFL_BG_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1346,7 +1344,6 @@ void GFL_BG_LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 	}
 }
 
-#if GFL_BG_NTR_USE
 //--------------------------------------------------------------------------------------------
 /**
  * キャラクター転送（ファイル参照）
@@ -1366,15 +1363,14 @@ void GFL_BG_LoadCharacterFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u
 	void * mem;
 	u32	size;
 
-	mem = sys_LoadFileEx( bgl->heapID, path, &size );
+	mem = LoadFileEx( bgl->heapID, path, &size );
 	if(mem == NULL){
 		return;	//エラー
 	}
 	GFL_BG_LoadCharacter( bgl, frmnum, mem, size, offs );
-	GFI_HEAP_FreeMemory( mem );
+	GFL_HEAP_FreeMemory( mem );
 	return;
 }
-#endif GFL_BG_NTR_USE
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1398,7 +1394,7 @@ static void LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 		u32	alloc_siz;
 
 		alloc_siz  = ((*(u32*)src) >> 8);
-		decode_buf = GFI_HEAP_AllocMemory( bgl->heapID, alloc_siz );
+		decode_buf = GFL_HEAP_AllocMemoryLow( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// 展開領域確保失敗
 		if( decode_buf == NULL ){
@@ -1410,7 +1406,7 @@ static void LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 
 		GFL_BG_LoadCharacterSub( frmnum, decode_buf, offs, alloc_siz );
 
-		GFI_HEAP_FreeMemory( decode_buf );
+		GFL_HEAP_FreeMemory( decode_buf );
 	}else{
 		GFL_BG_LoadCharacterSub( frmnum, (void*)src, offs, datasiz );
 	}
@@ -1502,12 +1498,12 @@ static void GFL_BG_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz )
 //--------------------------------------------------------------------------------------------
 void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap )
 {
-	u32 * chr = (u32 *)GFI_HEAP_AllocMemory( heap, datasiz );
+	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLow( heap, datasiz );
 
 	memset( chr, 0, datasiz );
 
 	GFL_BG_LoadCharacterSub( frmnum, (void*)chr, offs, datasiz );
-	GFI_HEAP_FreeMemory( chr );
+	GFL_HEAP_FreeMemory( chr );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1528,7 +1524,7 @@ void GFL_BG_CharFill( GFL_BG_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt,
 	u32  size;
 
 	size = charcnt * bgl->bgsys[frmnum].base_char_size;
-	chr = (u32 *)GFI_HEAP_AllocMemory( bgl->heapID,  size );
+	chr = (u32 *)GFL_HEAP_AllocMemoryLow( bgl->heapID,  size );
 
 	if( bgl->bgsys[frmnum].base_char_size == GFL_BG_1CHRDATASIZ ){
 		clear_code = (clear_code<<12) | (clear_code<<8) | (clear_code<<4) | clear_code;
@@ -1541,7 +1537,7 @@ void GFL_BG_CharFill( GFL_BG_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt,
 
 	GFL_BG_LoadCharacterSub(
 		frmnum, (void*)chr, offs*bgl->bgsys[frmnum].base_char_size, size );
-	GFI_HEAP_FreeMemory( chr );
+	GFL_HEAP_FreeMemory( chr );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2163,7 +2159,7 @@ void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, u32 h
 {
 	void * buf;
 
-	buf = GFI_HEAP_AllocMemory( heap, chr_size * 2 );
+	buf = GFL_HEAP_AllocMemory( heap, chr_size * 2 );
 	GFL_BG_4BitCgxChange8BitMain( chr, chr_size, (u8 *)buf, pal_ofs );
 	return buf;
 }
@@ -2487,7 +2483,6 @@ u8 GFL_BG_PriorityGet( GFL_BG_INI * bgl, u8 frm )
 
 
 
-#if GFL_BG_NTR_USE
 //=============================================================================================
 //=============================================================================================
 //	NITRO-CHARACTERデータ展開処理
@@ -2499,7 +2494,7 @@ void GFL_BG_NTRCHR_CharLoadEx( GFL_BG_INI * bgl, u8 frmnum, const char * path, u
 	void * buf;
 	NNSG2dCharacterData * dat;
 
-	buf = sys_LoadFile( bgl->heapID, path );
+	buf = LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2522,7 +2517,7 @@ void GFL_BG_NTRCHR_CharLoadEx( GFL_BG_INI * bgl, u8 frmnum, const char * path, u
 		}
 	}
 
-	GFI_HEAP_FreeMemory( buf );
+	GFL_HEAP_FreeMemory( buf );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2541,7 +2536,7 @@ void GFL_BG_NTRCHR_CharLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 	void * buf;
 	NNSG2dCharacterData * dat;
 
-	buf = sys_LoadFile( bgl->heapID, path );
+	buf = LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2557,7 +2552,7 @@ void GFL_BG_NTRCHR_CharLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 		GFL_BG_LoadCharacter( bgl, frmnum, dat->pRawData, dat->szByte, offs );
 	}
 
-	GFI_HEAP_FreeMemory( buf );
+	GFL_HEAP_FreeMemory( buf );
 }
 
 
@@ -2578,7 +2573,7 @@ NNSG2dCharacterData * GFL_BG_NTRCHR_CharGet( void ** buf, int mode, const char *
 {
 	NNSG2dCharacterData * dat;
 
-	*buf = sys_LoadFile( mode, path );
+	*buf = LoadFile( mode, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2614,7 +2609,7 @@ NNSG2dPaletteData * GFL_BG_NTRCHR_PalLoad( void ** mem, int mode, const char * p
 {
 	NNSG2dPaletteData * pal;
 
-	*mem = sys_LoadFile( mode, path );
+	*mem = LoadFile( mode, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( mem == NULL ){
@@ -2647,7 +2642,7 @@ void GFL_BG_NTRCHR_ScrnLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 	void * buf;
 	NNSG2dScreenData * dat;
 
-	buf = sys_LoadFile( bgl->heapID, path );
+	buf = LoadFile( bgl->heapID, path );
 
 #ifdef	OSP_ERR_BGL_NTRCHR_LOAD		// NITRO-CHARACTERのデータ取得領域確保失敗
 	if( buf == NULL ){
@@ -2664,9 +2659,8 @@ void GFL_BG_NTRCHR_ScrnLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32
 		GFL_BG_LoadScreen( bgl, frmnum, dat->rawData, dat->szByte, offs );
 	}
 
-	GFI_HEAP_FreeMemory( buf );
+	GFL_HEAP_FreeMemory( buf );
 }
-#endif GFL_BG_NTR_USE
 
 
 //=============================================================================================
@@ -3139,7 +3133,7 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 		u8 * buf;
 
 		scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-		buf  = GFI_HEAP_AllocMemory( bgl->heapID, 64 );
+		buf  = GFL_HEAP_AllocMemoryLow( bgl->heapID, 64 );
 
 		cgx += ( ( scrn[pos] & 0x3ff ) << 5 );
 		for( i=0; i<32; i++ ){
@@ -3150,7 +3144,7 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 		CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 		dot = buf[ chr_x+(chr_y<<3) ];
-		GFI_HEAP_FreeMemory( buf );
+		GFL_HEAP_FreeMemory( buf );
 
 		if( ( pat[0] & (1<<dot) ) != 0 ){
 			return TRUE;
@@ -3163,13 +3157,13 @@ u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat )
 			u8 * buf;
 
 			scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-			buf  = GFI_HEAP_AllocMemory( bgl->heapID, 64 );
+			buf  = GFL_HEAP_AllocMemoryLow( bgl->heapID, 64 );
 
 			memcpy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
 			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 			dot = buf[ chr_x+(chr_y<<3) ];
-			GFI_HEAP_FreeMemory(  buf );
+			GFL_HEAP_FreeMemory(  buf );
 
 		}else{
 			u8 * scrn = (u8 *)bgl->bgsys[frmnum].screen_buf;
@@ -3197,7 +3191,7 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 
 	if( flip == 0 ){ return; }
 
-	tmp = GFI_HEAP_AllocMemory( heapID, 64 );
+	tmp = GFL_HEAP_AllocMemoryLow( heapID, 64 );
 
 	if( flip & 1 ){
 		for( i=0; i<8; i++ ){
@@ -3215,5 +3209,50 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 		memcpy( buf, tmp, 64 );
 	}
 
-	GFI_HEAP_FreeMemory( tmp );
+	GFL_HEAP_FreeMemory( tmp );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ファイルパスを指定してデータの読み込み
+ *
+ * @param	heapID	メモリ確保をするヒープID
+ * @param	path	ファイルパス
+ *
+ * @retval	データを読み込んだアドレス
+ */
+//--------------------------------------------------------------------------------------------
+static	void	*LoadFile(int heapID,const char *path)
+{
+	void	*buf;
+
+	buf=GFL_HEAP_AllocMemory(heapID,GF_GetFileSize((char *)path));
+
+	GF_ReadFile((char *)path,buf);
+
+	return buf;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ファイルパスを指定してデータの読み込み（データサイズ格納先も指定）
+ *
+ * @param	heapID	メモリ確保をするヒープID
+ * @param	path	ファイルパス
+ * @param	size	データサイズ格納先
+ *
+ * @retval	データを読み込んだアドレス
+ */
+//--------------------------------------------------------------------------------------------
+static	void	*LoadFileEx(int heapID,const char *path,u32 *size)
+{
+	void	*buf;
+
+	*size=GF_GetFileSize((char *)path);
+	buf=GFL_HEAP_AllocMemory(heapID,*size);
+
+	GF_ReadFile((char *)path,buf);
+
+	return buf;
+}
+
