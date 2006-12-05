@@ -3,7 +3,7 @@
  * @file	gfl_use.h
  * @author	GAME FREAK inc.
  * @date	2006.12.06
- * @brief
+ * @brief	GFライブラリ呼び出し部分
  */
 //=============================================================================================
 
@@ -17,6 +17,9 @@ extern void GFLUser_Init(void);
 
 //GFL関連Main呼び出し
 extern void GFLUser_Main(void);
+
+//GFL関連描画処理呼び出し
+extern void GFLUser_Display(void);
 
 //GFL関連終了処理
 extern void GFLUser_Exit(void);
