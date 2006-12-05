@@ -20,19 +20,7 @@
 #define	GFL_BMPWIN_FRM_NULL		(0xff)
 
 ///BMPWINデータ構造体
-typedef struct {
-	GFL_BG_INI	*bgl;
-	u32			heapID;
-	u8			frmnum;
-	u8			posx;
-	u8			posy;
-	u8			sizx;
-	u8			sizy;
-	u8			palnum;
-	u16			chrofs:15;
-	u16			bitmode:1;	
-	void		*chrbuf;
-}GFL_BMPWIN_DATA;
+typedef	struct	gfl_bmpwin_data	GFL_BMPWIN_DATA;
 
 ///BMPWIN設定データ構造体
 typedef struct{
@@ -73,19 +61,6 @@ enum {
  */
 //--------------------------------------------------------------------------------------------
 GLOBAL GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, GFL_BG_INI *bgl, u8 num );
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWINデータ初期化
- *
- * @param	wk		BMPWINデータ
- * @param	bgl		BGシステム構造体
- * @param	heapID	ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
