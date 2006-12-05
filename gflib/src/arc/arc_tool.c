@@ -16,7 +16,7 @@
 static	void	ArchiveDataLoadIndex(void *data,const char *name,int index,int ofs,int ofs_size);
 static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size,int flag);
 
-void	GFL_ARC_sysInit(const char **tbl,int tbl_max);
+void	GFL_ARC_sysInit(const char ***tbl,int tbl_max);
 void	GFL_ARC_sysExit(void);
 
 void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
@@ -35,7 +35,7 @@ u32		GFL_ARC_DataSizeGet(int file_kind,int index);
 //	アーカイブテーブル格納変数
 //============================================================================================
 
-static	char	**ArchiveFileTable=NULL;
+static	char	***ArchiveFileTable=NULL;
 static	int		ArchiveFileTableMax=0;
 
 //============================================================================================
@@ -48,15 +48,9 @@ static	int		ArchiveFileTableMax=0;
  *
  */
 //============================================================================================
-void	GFL_ARC_sysInit(const char **tbl,int tbl_max)
+void	GFL_ARC_sysInit(const char ***tbl,int tbl_max)
 {
-	int	i;
-
-	ArchiveFileTable=GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM,tbl_max*4);
-
-	for(i=0;i<tbl_max;i++){
-		ArchiveFileTable[i]=(char *)tbl[i];
-	}
+	ArchiveFileTable=(char ***)tbl;
 	ArchiveFileTableMax=tbl_max;
 }
 
@@ -69,7 +63,6 @@ void	GFL_ARC_sysInit(const char **tbl,int tbl_max)
 //============================================================================================
 void	GFL_ARC_sysExit(void)
 {
-	GFL_HEAP_FreeMemory(ArchiveFileTable);
 }
 
 //============================================================================================
@@ -208,7 +201,7 @@ static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,i
 //============================================================================================
 void	GFL_ARC_DataLoad(void *data, int arcID, int datID)
 {
-	ArchiveDataLoadIndex(data, ArchiveFileTable[arcID], datID, OFS_NO_SET, SIZE_NO_SET);
+	ArchiveDataLoadIndex(data, (char *)ArchiveFileTable[arcID], datID, OFS_NO_SET, SIZE_NO_SET);
 }
 
 //============================================================================================
@@ -226,7 +219,7 @@ void	GFL_ARC_DataLoad(void *data, int arcID, int datID)
 //============================================================================================
 void* GFL_ARC_DataLoadMalloc(int arcID, int datID, int heapID)
 {
-	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
 }
 
 //============================================================================================
@@ -244,7 +237,7 @@ void* GFL_ARC_DataLoadMalloc(int arcID, int datID, int heapID)
 //============================================================================================
 void* GFL_ARC_DataLoadMallocLow(int arcID, int datID, int heapID)
 {
-	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID], datID, heapID, OFS_NO_SET, SIZE_NO_SET, ALLOC_TAIL);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID], datID, heapID, OFS_NO_SET, SIZE_NO_SET, ALLOC_TAIL);
 }
 
 //============================================================================================
@@ -260,7 +253,7 @@ void* GFL_ARC_DataLoadMallocLow(int arcID, int datID, int heapID)
 //============================================================================================
 void GFL_ARC_DataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
 {
-	ArchiveDataLoadIndex(data, ArchiveFileTable[arcID], datID, ofs, size);
+	ArchiveDataLoadIndex(data, (char *)ArchiveFileTable[arcID], datID, ofs, size);
 }
 
 //============================================================================================
@@ -280,7 +273,7 @@ void GFL_ARC_DataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
 //============================================================================================
 void* GFL_ARC_DataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int size)
 {
-	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_HEAD);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_HEAD);
 }
 
 //============================================================================================
@@ -300,7 +293,7 @@ void* GFL_ARC_DataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int s
 //============================================================================================
 void	*GFL_ARC_DataLoadMallocOfsLow(int arcID, int datID, int heapID, int ofs, int size)
 {
-	return	ArchiveDataLoadIndexMalloc(ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_TAIL);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_TAIL);
 }
 
 //============================================================================================
@@ -319,7 +312,7 @@ u16		GFL_ARC_DataFileCntGet(int arcID, int datID)
 	u16			file_cnt=0;
 
 	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,ArchiveFileTable[arcID]);
+	FS_OpenFile(&p_file,(char *)ArchiveFileTable[arcID]);
 	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
 	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
 	fat_top=size;
@@ -353,7 +346,7 @@ u32		GFL_ARC_DataSizeGet(int arcID,int datID)
 	u16			file_cnt=0;
 
 	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,ArchiveFileTable[arcID]);
+	FS_OpenFile(&p_file,(char *)ArchiveFileTable[arcID]);
 	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
 	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
 	fat_top=size;
@@ -414,7 +407,7 @@ ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, u32 heapId )
 		handle->fat_top = 0;
 
 		FS_InitFile( &(handle->file) );
-		FS_OpenFile( &(handle->file), ArchiveFileTable[arcId] );
+		FS_OpenFile( &(handle->file), (char *)ArchiveFileTable[arcId] );
 		FS_SeekFile( &(handle->file), ARC_HEAD_SIZE_POS, FS_SEEK_SET );
 		FS_ReadFile( &(handle->file), &(handle->fat_top), 2 );
 		FS_SeekFile( &(handle->file), handle->fat_top+SIZE_OFFSET, FS_SEEK_SET );
