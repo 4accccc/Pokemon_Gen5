@@ -16,7 +16,14 @@
 #include "main.h"
 
 static	void	SkeltonVBlankFunc(void);
+static	void	GameInit(void);
+static	void	GameMain(void);
 
+//------------------------------------------------------------------
+/**
+ * @brief	メイン処理
+ */
+//------------------------------------------------------------------
 void NitroMain(void)
 {
 	// 初期化して…
@@ -31,16 +38,20 @@ void NitroMain(void)
 	(void)GX_VBlankIntr(TRUE);
 
 	// 必要なTCBとか登録して…
-  
+	GFLUser_Init();
+	GameInit();
+
 	while(TRUE){
 		// メイン処理して…
 		GFLUser_Main();
+		GameMain();
 
 		// 描画に必要な準備して…
+		GFLUser_Display();
 
 		// レンダリングエンジンが参照するデータ群をスワップ
 		// ※gflibに適切な関数が出来たら置き換えてください
-		G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
+		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
 		// VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
@@ -48,6 +59,11 @@ void NitroMain(void)
 	}
 }
 
+//------------------------------------------------------------------
+/**
+ * brief	VBlank割り込み処理
+ */
+//------------------------------------------------------------------
 static	void	SkeltonVBlankFunc(void)
 {
 	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
@@ -57,4 +73,28 @@ static	void	SkeltonVBlankFunc(void)
 	GFLUser_VIntr();
 }
 
-/*  */
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		ゲームごとの初期化処理
+ */
+//------------------------------------------------------------------
+static	void	GameInit(void)
+{
+	/* ユーザーレベルで必要な初期化をここに記述する */
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		ゲームごとのメイン処理
+ */
+//------------------------------------------------------------------
+static	void	GameMain(void)
+{
+	/* ユーザーレベルで必要なメイン処理をここに記述する */
+}
+
+
+
+
