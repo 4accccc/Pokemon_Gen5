@@ -34,11 +34,6 @@ SRCS			=	main.c gfl_use.c
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
 
-FILE_TREE			=	graphic/samplegra.narc \
-						graphic/dummy.narc
-
-MAKEROM_ROMFILES	=	$(FILE_TREE)
-
 #--------------------------------------- ----------------------------
 # システム定義
 #
