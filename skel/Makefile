@@ -10,18 +10,25 @@
 #
 #----------------------------------------------------------------------------
 
+.PHONY : gflib
+
 # GF-Library
 GFLIB_DIR		=	../gflib
 LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS		=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
+# 個人テスト用定義
+#ifeq	($(PM_DEBUG),yes)
+MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
+#endif
 
 # 最終的に出力されるファイル(lib/ARM9-xx/xxx/gflib.a)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
 SRCS			=	main.c
+
 
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
@@ -40,3 +47,8 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 do-build:		$(TARGETS)
 
 #-----
+#  gflibをmakeする
+gflib:
+	$(MAKE) -C $(GFLIB_DIR)
+
+
