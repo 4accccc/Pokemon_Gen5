@@ -12,37 +12,49 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
+#include "gfl_use.h"
 #include "main.h"
 
-static const HEAP_INIT_HEADER hih[]={
-	{ HEAPSIZE_SYSTEM,	OS_ARENA_MAIN },
-	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
-};
+static	void	SkeltonVBlankFunc(void);
 
 void NitroMain(void)
 {
-  // 初期化して…
-  InitSystem();
+	// 初期化して…
+	GFLUser_Init();
 
-  GFL_HEAP_sysInit(&hih[0],HEAPID_BASE_MAX,4,0);
+	//VBLANK割り込み許可
+	OS_SetIrqFunction(OS_IE_V_BLANK,SkeltonVBlankFunc);
 
-  // 必要なTCBとか登録して…
+	(void)OS_EnableIrqMask(OS_IE_V_BLANK);
+	(void)OS_EnableIrq();
+
+	(void)GX_VBlankIntr(TRUE);
+
+	// 必要なTCBとか登録して…
   
-  while(TRUE){
-    // キー入力して…
+	while(TRUE){
+		// メイン処理して…
+		GFLUser_Main();
 
-    // メイン処理して…
+		// 描画に必要な準備して…
 
-    // 描画に必要な準備して…
+		// レンダリングエンジンが参照するデータ群をスワップ
+		// ※gflibに適切な関数が出来たら置き換えてください
+		G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
-    // レンダリングエンジンが参照するデータ群をスワップ
-    // ※gflibに適切な関数が出来たら置き換えてください
-    G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
+		// VBLANK待ち
+		// ※gflibに適切な関数が出来たら置き換えてください
+		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+	}
+}
 
-    // VBLANK待ち
-    // ※gflibに適切な関数が出来たら置き換えてください
-    SVC_WaitVBlankIntr();
-  }
+static	void	SkeltonVBlankFunc(void)
+{
+	OS_SetIrqCheckFlag(OS_IE_V_BLANK);
+
+	MI_WaitDma(GX_DEFAULT_DMAID);
+
+	GFLUser_VIntr();
 }
 
 /*  */

@@ -63,16 +63,16 @@ void GFLUser_Init(void)
 #endif
 
   //ヒープシステム初期化
-  GFL_HEAP_sysInit(&hih[0],HEAPID_BASE_MAX,4,0);
+  GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,4,0);
 
   //アーカイブシステム初期化
   //GFL_ARC_SysInit(...);
 
   //UIシステム初期化
-  GFL_UI_sysInit(HEAPID_BASE_SYSTEM);
+  GFL_UI_sysInit(GFL_HEAPID_SYSTEM);
 
   //PROCシステム初期化
-  GFL_PROC_SysInit(HEAPID_BASE_SYSTEM);
+  GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
 
 }
 
