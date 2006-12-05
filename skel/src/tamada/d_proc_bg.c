@@ -34,7 +34,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit1(GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT DebugTamadaSubProcMain1(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_A) {
+	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;
@@ -80,7 +80,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit2(GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT DebugTamadaSubProcMain2(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	if (GFL_UI_KeyGetTrg(ctrl->uisys) & PAD_BUTTON_A) {
+	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;

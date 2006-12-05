@@ -63,9 +63,9 @@ void DebugTamadaInit(u32 heap_id)
 	DebugTamadaControl = ctrl;
 	ctrl->debug_heap_id = heap_id;
 
-	GFL_PROC_SysInit(ctrl->debug_heap_id);
+	//GFL_PROC_SysInit(ctrl->debug_heap_id);
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, ctrl);
-	ctrl->uisys = GFL_UI_sysInit(ctrl->debug_heap_id);
+	//ctrl->uisys = GFL_UI_sysInit(ctrl->debug_heap_id);
 
     /* Vƒuƒ‰ƒ“ƒNŠ„žÝ’è */
     (void)OS_SetIrqFunction(OS_IE_V_BLANK, VBlankIntr);
@@ -81,16 +81,16 @@ void DebugTamadaInit(u32 heap_id)
 //------------------------------------------------------------------
 void DebugTamadaMain(void)
 {
-	GFL_UI_sysMain(DebugTamadaControl->uisys);
-	GFL_PROC_SysMain();
+	//GFL_UI_sysMain();
+	//GFL_PROC_SysMain();
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void DebugTamadaExit(void)
 {
-	GFL_UI_sysEnd(DebugTamadaControl->uisys);
-	GFL_PROC_SysExit();
+	//GFL_UI_sysEnd();
+	//GFL_PROC_SysExit();
 	GFL_HEAP_FreeMemory(DebugTamadaControl);
 }
 
@@ -114,7 +114,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 {
 	GFL_PROC * subproc;
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	int key = GFL_UI_KeyGetTrg(ctrl->uisys);
+	int key = GFL_UI_KeyGetTrg();
 
 	switch (*seq) {
 	case 0:
