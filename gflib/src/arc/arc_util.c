@@ -16,7 +16,8 @@
 // Prototype
 //==============================================================
 
-
+vu32	*chr=NULL;
+vu32	*scr=NULL;
 
 //------------------------------------------------------------------
 /**
@@ -36,9 +37,10 @@
 //------------------------------------------------------------------
 u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
 {
-	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_TOP );
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 
-	if( arcData != NULL )
+	chr=arcData;
+
 	{
 		NNSG2dCharacterData* charData;
 
@@ -53,6 +55,7 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u3
 
 		GFL_HEAP_FreeMemory( arcData );
 	}
+
     return transSize;
 }
 //--------------------------------------------------------------------------------------------
@@ -75,7 +78,8 @@ void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32
 {
 	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID, ALLOC_BOTTOM );
 
-	if( arcData != NULL )
+	scr=arcData;
+
 	{
 		NNSG2dScreenData* scrnData;
 
@@ -638,29 +642,24 @@ void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID
 		arcData = GFL_HEAP_AllocMemory( heapID, GFL_ARC_DataSizeGet(fileIdx, dataIdx) );
 	}
 
-	if( arcData != NULL )
+	GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
+	if( compressedFlag )
 	{
-		GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
-		if( compressedFlag )
+		void* data;
+
+		if( allocType == ALLOC_TOP )
 		{
-			void* data;
-
-			if( allocType == ALLOC_TOP )
-			{
-				data = GFL_HEAP_AllocMemory( heapID, MI_GetUncompressedSize( arcData ) );
-			}
-			else
-			{
-				data = GFL_HEAP_AllocMemoryLow( heapID, MI_GetUncompressedSize( arcData ) );
-			}
-
-			if( data )
-			{
-				MI_UncompressLZ8( arcData, data );
-				GFL_HEAP_FreeMemory( arcData );
-			}
-			arcData = data;
+			data = GFL_HEAP_AllocMemory( heapID, MI_GetUncompressedSize( arcData ) );
 		}
+		else
+		{
+			data = GFL_HEAP_AllocMemoryLow( heapID, MI_GetUncompressedSize( arcData ) );
+		}
+
+		MI_UncompressLZ8( arcData, data );
+		GFL_HEAP_FreeMemory( arcData );
+
+		arcData = data;
 	}
 	return arcData;
 }
@@ -693,31 +692,26 @@ void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heap
 		arcData = GFL_HEAP_AllocMemory( heapID, *pSize );
 	}
 
-	if( arcData != NULL )
+	GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
+	if( compressedFlag )
 	{
-		GFL_ARC_DataLoad(arcData, fileIdx, dataIdx);
-		if( compressedFlag )
+		void* data;
+
+		*pSize = MI_GetUncompressedSize( arcData );
+
+		if( allocType == ALLOC_TOP )
 		{
-			void* data;
-
-			*pSize = MI_GetUncompressedSize( arcData );
-
-			if( allocType == ALLOC_TOP )
-			{
-				data = GFL_HEAP_AllocMemory( heapID, *pSize );
-			}
-			else
-			{
-				data = GFL_HEAP_AllocMemoryLow( heapID, *pSize );
-			}
-
-			if( data )
-			{
-				MI_UncompressLZ8( arcData, data );
-				GFL_HEAP_FreeMemory( arcData );
-			}
-			arcData = data;
+			data = GFL_HEAP_AllocMemory( heapID, *pSize );
 		}
+		else
+		{
+			data = GFL_HEAP_AllocMemoryLow( heapID, *pSize );
+		}
+
+		MI_UncompressLZ8( arcData, data );
+		GFL_HEAP_FreeMemory( arcData );
+
+		arcData = data;
 	}
 	return arcData;
 }

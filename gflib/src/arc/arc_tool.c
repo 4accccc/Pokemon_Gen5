@@ -16,7 +16,7 @@
 static	void	ArchiveDataLoadIndex(void *data,const char *name,int index,int ofs,int ofs_size);
 static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size,int flag);
 
-void	GFL_ARC_sysInit(char *tbl,int tbl_max);
+void	GFL_ARC_sysInit(const char **tbl,int tbl_max);
 void	GFL_ARC_sysExit(void);
 
 void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
@@ -48,21 +48,28 @@ static	int		ArchiveFileTableMax=0;
  *
  */
 //============================================================================================
-void	GFL_ARC_sysInit(char *tbl,int tbl_max)
+void	GFL_ARC_sysInit(const char **tbl,int tbl_max)
 {
-	**ArchiveFileTable=*tbl;
+	int	i;
+
+	ArchiveFileTable=GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM,tbl_max*4);
+
+	for(i=0;i<tbl_max;i++){
+		ArchiveFileTable[i]=(char *)tbl[i];
+	}
 	ArchiveFileTableMax=tbl_max;
 }
 
 //============================================================================================
 /**
  *
- *	アーカイブシステム終了（現状は特になにもしない）
+ *	アーカイブシステム終了
  *
  */
 //============================================================================================
 void	GFL_ARC_sysExit(void)
 {
+	GFL_HEAP_FreeMemory(ArchiveFileTable);
 }
 
 //============================================================================================
