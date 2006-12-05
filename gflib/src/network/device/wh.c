@@ -146,7 +146,6 @@
 
 #include "wh.h"
 #include "net.h"
-#include "calctool.h"
 #include "gf_standard.h"
 
 /*

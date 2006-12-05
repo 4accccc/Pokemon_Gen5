@@ -56,12 +56,12 @@ NET_TOOLSYS* GFL_NET_TOOL_sysInit(const int heapID, const int num)
 //==============================================================================
 /**
  * @brief   ネットワークツール終了
- * @param   heapID    ヒープ確保を行うID
- * @return  NET_TOOLSYS  ネットワークツールシステムワーク
+ * @param   pCT    ネットワークツールシステムワーク
+ * @return  none
  */
 //==============================================================================
 
-NET_TOOLSYS* GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT)
+void GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT)
 {
     GFL_HEAP_FreeMemory(pCT->timingSync);
     GFL_HEAP_FreeMemory(pCT);
@@ -70,11 +70,11 @@ NET_TOOLSYS* GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT)
 //==============================================================================
 /**
  * @brief  タイミングコマンドを受信した   CS_TIMING_SYNC
- * @param[in]   int netID  通信発信者ID
- * @param[in]   int size   受信データサイズ
- * @param[in]   int pData  受信データポインタ
- * @param[in,out]   void* pWork  使用者が必要なworkのポインタ
- * @param[in,out]   GFL_NETHandle* pNet  通信ハンドルのポインタ
+ * @param[in]   netID  通信発信者ID
+ * @param[in]   size   受信データサイズ
+ * @param[in]   pData  受信データポインタ
+ * @param[in,out]   pWork  使用者が必要なworkのポインタ
+ * @param[in,out]   pNet  通信ハンドルのポインタ
  * @retval      none
  */
 //==============================================================================
@@ -109,11 +109,11 @@ void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const void* pD
 //==============================================================================
 /**
  * タイミングコマンドENDを受信した   CS_TIMING_SYNC_END
- * @param[in]   int netID  通信発信者ID
- * @param[in]   int size   受信データサイズ
- * @param[in]   int pData  受信データポインタ
- * @param[in,out]   void* pWork  使用者が必要なworkのポインタ
- * @param[in,out]   GFL_NETHandle* pNet  通信ハンドルのポインタ
+ * @param[in]   netID  通信発信者ID
+ * @param[in]   size   受信データサイズ
+ * @param[in]   pData  受信データポインタ
+ * @param[in,out]   pWork  使用者が必要なworkのポインタ
+ * @param[in,out]   pNet  通信ハンドルのポインタ
  * @retval      none
  */
 //==============================================================================
@@ -132,7 +132,7 @@ void CommRecvTimingSyncEnd(const int netID, const int size, const void* pData,
 //==============================================================================
 /**
  * タイミングコマンドを発行する
- * @param[in,out]   GFL_NETHandle* pNet  通信ハンドルのポインタ
+ * @param[in,out]   pNet  通信ハンドルのポインタ
  * @param   no   タイミング取りたい番号
  * @retval  none
  */
@@ -161,8 +161,10 @@ extern int DebugCommGetNum(int id);
 static u8 _keytrg = 0;
 #endif
 
-void CommTimingSyncSend(void)
+void CommTimingSyncSend(GFL_NETHandle* pNet)
 {
+    NET_TOOLSYS* _pCT = _NET_GetTOOLSYS(pNet);
+
     if(pNet->pCT){
         if(pNet->pCT->timingSendM){
             if(CommSendFixSizeData(CS_TIMING_SYNC, &_pCT->timingSyncMy)){
@@ -190,8 +192,10 @@ void CommTimingSyncSend(void)
  */
 //==============================================================================
 
-BOOL CommIsTimingSync(u8 no)
+BOOL CommIsTimingSync(GFL_NETHandle* pNet, u8 no)
 {
+    NET_TOOLSYS* _pCT = _NET_GetTOOLSYS(pNet);
+
     if(_pCT==NULL){
         return TRUE;  // 通信してない場合同期しているとみなす
     }

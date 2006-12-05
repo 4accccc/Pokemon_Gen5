@@ -18,6 +18,10 @@
 
 typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
+/// @brief コールバック関数の書式 local解決用
+typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
+
+#define _SCAN_ALL_CHANNEL  (0)  ///< スキャンするチャンネルをランダムで行う場合０に設定する
 
 
 // 無線で使用するDMA番号
