@@ -18,7 +18,7 @@
 // キーコンフィグのテスト
 //------------------------------------------------------------------
 
-static void _keyConfigTest(UISYS* pUI)
+static void _keyConfigTest(void)
 {
     GFL_UI_KEY_CUSTOM_TBL key_data[] ={
         //0番目のコンフィグ
@@ -36,11 +36,11 @@ static void _keyConfigTest(UISYS* pUI)
     };
 
 
-	if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_X) {
+	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_X) {
 
-        GFL_UI_KeySetControlModeTbl(pUI,key_data);
-        GFL_UI_KeySetControlMode(pUI,1);
-        OS_TPrintf("keyconfig %d change\n",GFL_UI_KeyGetControlMode(pUI));
+        GFL_UI_KeySetControlModeTbl(key_data);
+        GFL_UI_KeySetControlMode(1);
+        OS_TPrintf("keyconfig %d change\n",GFL_UI_KeyGetControlMode());
     }
     
 
@@ -50,7 +50,7 @@ static void _keyConfigTest(UISYS* pUI)
 // タッチパネルのテスト
 //------------------------------------------------------------------
 
-static void _touchTableTest(UISYS* pUI)
+static void _touchTableTest(void)
 {
     int no;
     GFL_UI_TP_HITTBL tp_data[] ={
@@ -60,10 +60,10 @@ static void _touchTableTest(UISYS* pUI)
         {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
         };
 
-    no = GFL_UI_TouchPanelHitTrg(pUI, tp_data);
+    no = GFL_UI_TouchPanelHitTrg(tp_data);
     if(no != GFL_UI_TP_HIT_NONE){
         u32 x=0,y=0;
-        GFL_UI_TouchPanelGetPointCont(pUI,&x,&y);
+        GFL_UI_TouchPanelGetPointCont(&x,&y);
         OS_TPrintf("no %d %d %d\n",no,x,y);
     }
 
@@ -73,35 +73,35 @@ static void _touchTableTest(UISYS* pUI)
 // ＵＩのテスト
 //------------------------------------------------------------------
 
-void TEST_UI_Main(UISYS* pUI)
+void TEST_UI_Main(void)
 {
-	if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_A) {
+	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
         OS_TPrintf("a button\n");
 	}
-    else if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_B){
+    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_B){
         OS_TPrintf("b button\n");
 	}
-    else if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_R){
+    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_R){
         OS_TPrintf("r button\n");
 	}
-    else if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_L){
+    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_L){
         OS_TPrintf("l button\n");
 	}
-    else if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_START){
+    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_START){
         OS_TPrintf("start button\n");
 	}
-    else if (GFL_UI_KeyGetTrg(pUI) & PAD_BUTTON_SELECT){
+    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_SELECT){
         OS_TPrintf("sel button\n");
 	}
     {
         u32 x,y;
-        if(GFL_UI_TouchPanelGetPointTrg(pUI,&x,&y)){
+        if(GFL_UI_TouchPanelGetPointTrg(&x,&y)){
             OS_TPrintf("tx ty %d %d\n", x, y);
         }
     }
 
-    _touchTableTest(pUI);
-    _keyConfigTest(pUI);
+    _touchTableTest();
+    _keyConfigTest();
 
 }
 

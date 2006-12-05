@@ -11,7 +11,7 @@
 #ifndef __TEST_UI_H__
 #define __TEST_UI_H__
 
-extern void TEST_UI_Main(UISYS* pUI);
+extern void TEST_UI_Main(void);
 
 
 #endif //__TEST_UI_H__

@@ -18,7 +18,6 @@
 //------------------------------------------------------------------
 typedef struct {
 	u32 debug_heap_id;
-	UISYS * uisys;
 	GFL_PROCSYS * psys;
 }DEBUG_OHNO_CONTROL;
 
@@ -42,7 +41,7 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 	GFL_PROC * subproc;
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
-    TEST_UI_Main(ctrl->uisys);  //UI TEST
+    TEST_UI_Main();  //UI TEST
     
 
 	return GFL_PROC_RES_CONTINUE;
@@ -83,9 +82,9 @@ void DebugOhnoInit(u32 heap_id)
 	DebugOhnoControl = ctrl;
 	ctrl->debug_heap_id = heap_id;
 
-	ctrl->psys = GFL_PROC_SysInit(ctrl->debug_heap_id);
-	GFL_PROC_SysCallProc(ctrl->psys, NO_OVERLAY_ID, &UITestProcTbl, ctrl);
-	ctrl->uisys = GFL_UI_sysInit(ctrl->debug_heap_id);
+	GFL_PROC_SysInit(ctrl->debug_heap_id);
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
+	GFL_UI_sysInit(ctrl->debug_heap_id);
 
     /* Vƒuƒ‰ƒ“ƒNŠ„žÝ’è */
     (void)OS_SetIrqFunction(OS_IE_V_BLANK, VBlankIntr);
@@ -103,8 +102,8 @@ void DebugOhnoInit(u32 heap_id)
 void DebugOhnoMain(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_sysMain(ctrl->uisys);
-	GFL_PROC_SysMain(ctrl->psys);
+	GFL_UI_sysMain();
+	GFL_PROC_SysMain();
 }
 
 //------------------------------------------------------------------
@@ -112,8 +111,8 @@ void DebugOhnoMain(void)
 void DebugOhnoExit(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_sysEnd(ctrl->uisys);
-	GFL_PROC_SysExit(ctrl->psys);
+	GFL_UI_sysEnd();
+	GFL_PROC_SysExit();
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }
