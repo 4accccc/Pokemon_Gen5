@@ -22,6 +22,8 @@
 #include "arc_tool.h"
 #include "bg_sys.h"
 #include "display.h"
+#include "bmp.h"
+#include "bmp_win.h"
 
 #include "arc_util.h"
 #include "gf_macro.h"
