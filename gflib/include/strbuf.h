@@ -10,6 +10,14 @@
 typedef	u16 STRCODE;
 typedef struct _STRBUF	STRBUF;
 
+enum {
+	EOM_ = 0,
+	CR_,
+
+	STR_DEFAULT_CODE_MAX,
+};
+#define EOM_CODESIZE			(1)
+
 //------------------------------------------------------------------
 /**
  * 指定されたポインタがSTRBUFとして有効なものであるかチェック
