@@ -6,8 +6,6 @@
  */
 //============================================================================================
 #include "gflib.h"
-#include "strbuf.h"
-#include "msgdata.h"
 
 // このdefineを有効にすると、暗号化メッセージ対応
 #define  MSGDATA_CODED	
