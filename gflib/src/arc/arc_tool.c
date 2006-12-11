@@ -14,20 +14,18 @@
 #include "arc_tool_def.h"
 
 static	void	ArchiveDataLoadIndex(void *data,const char *name,int index,int ofs,int ofs_size);
-static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size,int flag);
+static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size);
 
 void	GFL_ARC_sysInit(const char ***tbl,int tbl_max);
 void	GFL_ARC_sysExit(void);
 
-void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
-void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,int heap_id);
-void	*GFL_ARC_DataLoadMallocLow(int file_kind,int index,int heap_id);
-void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
-void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
-void	*GFL_ARC_DataLoadMallocOfsLow(int file_kind,int index,int heap_id,int ofs,int size);
+void	GFL_ARC_DataLoad(void *data,int arcID,int datID);
+void	*GFL_ARC_DataLoadMalloc(int arcID,int datID,int heapID);
+void	GFL_ARC_DataLoadOfs(void *data,int arcID,int datID,int ofs,int size);
+void	*GFL_ARC_DataLoadMallocOfs(int arcID,int datID,int heapID,int ofs,int size);
 void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID);
-u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
-u32		GFL_ARC_DataSizeGet(int file_kind,int index);
+u16		GFL_ARC_DataFileCntGet(int arcID,int datID);
+u32		GFL_ARC_DataSizeGet(int arcID,int datID);
 
 #define	ALLOC_HEAD	(0)		//領域を確保するとき先頭から確保
 #define	ALLOC_TAIL	(1)		//領域を確保するとき後ろから確保
@@ -135,11 +133,10 @@ static	void	ArchiveDataLoadIndex(void *data,const char *name,int index,int ofs,i
  * @param[in]	heap_id		メモリを確保するヒープ領域のID
  * @param[in]	ofs			読み込むデータの先頭からのオフセット
  * @param[in]	ofs_size	読み込むデータサイズ
- * @param[in]	flag		領域の前後どちらから確保するかフラグ
  *
  */
 //============================================================================================
-static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size,int flag)
+static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,int ofs,int ofs_size)
 {
 	FSFile		p_file;
 	u32			size=0;
@@ -178,12 +175,9 @@ static	void	*ArchiveDataLoadIndexMalloc(const char *name,int index,int heap_id,i
 		size=bottom-top;
 	}
 	GF_ASSERT_MSG(size!=0,"ServerArchiveDataLoadIndex:ReadDataSize=0!");
-	if(flag==ALLOC_HEAD){
-		data=GFL_HEAP_AllocMemory(heap_id,size);
-	}
-	else{
-		data=GFL_HEAP_AllocMemoryLow(heap_id,size);
-	}
+
+	data=GFL_HEAP_AllocMemory(heap_id,size);
+
 	FS_ReadFile(&p_file,data,size);									///<データをロード
 
 	FS_CloseFile(&p_file);
@@ -220,25 +214,7 @@ void	GFL_ARC_DataLoad(void *data, int arcID, int datID)
 //============================================================================================
 void* GFL_ARC_DataLoadMalloc(int arcID, int datID, int heapID)
 {
-	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
-}
-
-//============================================================================================
-/**
- * アーカイブファイルデータロード（読み込んだデータを格納するワークを関数内で確保するバージョン（領域の後ろから確保））
- *
- * ※関数内でワークをAllocするので、自前で開放処理をする必要があります(sys_FreeMemoryEz(領域ポインタ)で開放）
- *
- * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー（arc_tool.hに記述）
- * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
- * @param[in]	heapID		メモリを確保するヒープ領域のID
- *
- * @retval	関数内で確保したデータ格納ワークのアドレス
- */
-//============================================================================================
-void* GFL_ARC_DataLoadMallocLow(int arcID, int datID, int heapID)
-{
-	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID], datID, heapID, OFS_NO_SET, SIZE_NO_SET, ALLOC_TAIL);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET);
 }
 
 //============================================================================================
@@ -274,27 +250,7 @@ void GFL_ARC_DataLoadOfs(void *data, int arcID, int datID, int ofs, int size)
 //============================================================================================
 void* GFL_ARC_DataLoadMallocOfs(int arcID, int datID, int heapID, int ofs, int size)
 {
-	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_HEAD);
-}
-
-//============================================================================================
-/**
- * アーカイブファイルデータロード（読み込んだデータを格納するワークを関数内で確保するバージョンとオフセット指定あり）
- *
- * ※関数内でワークをAllocするので、自前で開放処理をする必要があります(sys_FreeMemoryEz(領域ポインタ)で開放）
- *
- * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー（arc_tool.hに記述）
- * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
- * @param[in]	heapID		メモリを確保するヒープ領域のID
- * @param[in]	ofs			読み込むデータの先頭からのオフセット
- * @param[in]	size		読み込むデータサイズ
- *
- * @retval	関数内で確保したデータ格納ワークのアドレス
- */
-//============================================================================================
-void	*GFL_ARC_DataLoadMallocOfsLow(int arcID, int datID, int heapID, int ofs, int size)
-{
-	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_TAIL);
+	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size);
 }
 
 //============================================================================================
@@ -311,13 +267,8 @@ void	*GFL_ARC_DataLoadMallocOfsLow(int arcID, int datID, int heapID, int ofs, in
 //============================================================================================
 void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID)
 {
-	if( heapID & 0x8000 ){
-		return	ArchiveDataLoadIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_TAIL);
-	} else {
-		return	ArchiveDataLoadIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
-	}
+	return	ArchiveDataLoadIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET);
 }
-
 
 //============================================================================================
 /**
