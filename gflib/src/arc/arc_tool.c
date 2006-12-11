@@ -25,6 +25,7 @@ void	*GFL_ARC_DataLoadMallocLow(int file_kind,int index,int heap_id);
 void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
 void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
 void	*GFL_ARC_DataLoadMallocOfsLow(int file_kind,int index,int heap_id,int ofs,int size);
+void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID);
 u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
 u32		GFL_ARC_DataSizeGet(int file_kind,int index);
 
@@ -295,6 +296,28 @@ void	*GFL_ARC_DataLoadMallocOfsLow(int arcID, int datID, int heapID, int ofs, in
 {
 	return	ArchiveDataLoadIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size,ALLOC_TAIL);
 }
+
+//============================================================================================
+/**
+ *
+ *	nnsarcで作成したアーカイブファイルに対して直接ファイル名を指定して任意のデータを取り出す
+ *	読み込んだデータを格納するワークもこの関数内で確保して、ポインタを返す
+ *
+ * @param[in]	name		読み込むアーカイブファイル名
+ * @param[in]	index		読み込むデータのアーカイブ上のインデックスナンバー
+ * @param[in]	heap_id		メモリを確保するヒープ領域のID
+ *
+ */
+//============================================================================================
+void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID)
+{
+	if( heapID & 0x8000 ){
+		return	ArchiveDataLoadIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_TAIL);
+	} else {
+		return	ArchiveDataLoadIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET,ALLOC_HEAD);
+	}
+}
+
 
 //============================================================================================
 /**
