@@ -38,7 +38,6 @@ void NitroMain(void)
 	(void)GX_VBlankIntr(TRUE);
 
 	// •K—v‚ÈTCB‚Æ‚©“o˜^‚µ‚Äc
-	GFLUser_Init();
 	GameInit();
 
 	while(TRUE){
