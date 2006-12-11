@@ -41,10 +41,8 @@ extern	void	GFL_ARC_sysExit(void);
 
 extern	void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
 extern	void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,int heap_id);
-extern	void	*GFL_ARC_DataLoadMallocLo(int file_kind,int index,int heap_id);
 extern	void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
 extern	void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
-extern	void	*GFL_ARC_DataLoadMallocOfsLow(int file_kind,int index,int heap_id,int ofs,int size);
 extern	void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID);
 extern	u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
 extern	u32		GFL_ARC_DataSizeGet(int file_kind,int index);
