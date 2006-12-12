@@ -379,6 +379,57 @@ int GFL_UI_KeyGetRepeat(void )
 
 //==============================================================================
 /**
+ * @brief   渡されたキートリガが押されたか判定する
+ * @param   keyBit  キーBIT
+ * @return  渡されたものだけが押されていたらTRUE
+ */
+//==============================================================================
+BOOL GFL_UI_KeyCheckTrg( int keyBit )
+{
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+
+    if(pKey->trg == keyBit){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   渡されたキーコントが押されたか判定する
+ * @param   keyBit  キーBIT
+ * @return  渡されたものだけが押されていたらTRUE
+ */
+//==============================================================================
+BOOL GFL_UI_KeyCheckCont( int keyBit )
+{
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+
+    if(pKey->cont == keyBit){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   渡されたキーリピートが押されたか判定する
+ * @param   keyBit  キーBIT
+ * @return  渡されたものだけが押されていたらTRUE
+ */
+//==============================================================================
+BOOL GFL_UI_KeyCheckRepeat( int keyBit )
+{
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+
+    if(pKey->repeat == keyBit){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
  * @brief キーリピートの速度とウェイトをゲット
  * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
  * @param[out]	speed	速度
