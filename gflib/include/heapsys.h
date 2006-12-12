@@ -133,6 +133,24 @@ extern void*
 
 #endif
 
+inline  void*
+	GFL_HEAP_AllocMemoryClear
+		( u32 heapID, u32 size )
+{
+	void* memory = GFL_HEAP_AllocMemory( heapID, size );
+	GFL_STD_MemClear32( memory, size );
+	return memory;
+}
+
+inline  void*
+	GFL_HEAP_AllocMemoryLowClear
+		( u32 heapID, u32 size )
+{
+	void* memory = GFL_HEAP_AllocMemory( HeapGetLow(heapID), size );
+	GFL_STD_MemClear32( memory, size );
+	return memory;
+}
+
 //------------------------------------------------------------------
 /**
  * ÉqÅ[ÉvÇ©ÇÁÉÅÉÇÉäÇâï˙Ç∑ÇÈ
