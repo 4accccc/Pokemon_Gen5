@@ -31,7 +31,7 @@ inline void GFL_STD_MemCopy( const void* src, void* dest, u32 size ) { MI_CpuCop
  * @return  none
  */
 //--------------------------------------------------------------------
-inline void GFL_STD_MemCopy16( const void* src, void* dest, u32 size ) { MI_CpuCopy8(src,dest,size); }
+inline void GFL_STD_MemCopy16( const void* src, void* dest, u32 size ) { MI_CpuCopy16(src,dest,size); }
 
 //--------------------------------------------------------------------
 /**
@@ -42,7 +42,7 @@ inline void GFL_STD_MemCopy16( const void* src, void* dest, u32 size ) { MI_CpuC
  * @return  none
  */
 //--------------------------------------------------------------------
-inline void GFL_STD_MemCopy32( const void* src, void* dest, u32 size ) { MI_CpuCopy8(src,dest,size); }
+inline void GFL_STD_MemCopy32( const void* src, void* dest, u32 size ) { MI_CpuCopy32(src,dest,size); }
 
 //--------------------------------------------------------------------
 /**
@@ -106,9 +106,6 @@ inline void GFL_STD_MemClear16( void* dest, u32 size ) { MI_CpuClear16(dest,size
  */
 //--------------------------------------------------------------------
 inline void GFL_STD_MemClear32( void* dest, u32 size ) { MI_CpuClear32(dest,size); }
-
-
-
 
 //----------------------------------------------------------------------------
 /**
