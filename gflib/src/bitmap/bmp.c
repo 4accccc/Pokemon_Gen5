@@ -28,16 +28,21 @@
 /**
  * BMP初期化
  *
+ * @param	sizex	Xサイズ
+ * @param	sizey	Yサイズ
+ * @param	col		カラーモード（GFL_BMP_16_COLOR:16色　GFL_BMP_256_COLOR:256色）
  * @param	heapID	ヒープＩＤ
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID )
+GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, u32 heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
-	memset( bmp, 0, sizeof(GFL_BMP_DATA) );
+	bmp->size_x	=	sizex;
+	bmp->size_y	=	sizey;
+	bmp->adrs	=	GFL_HEAP_AllocMemoryClear( heapID, sizex * sizey * col );
 
 	return bmp;
 }
@@ -51,7 +56,42 @@ GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
 {
+	GFL_HEAP_FreeMemory( bmp->adrs );
 	GFL_HEAP_FreeMemory( bmp );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * BMPキャラロード（BMPデータの元データ作成）
+ *
+ * @param	arcID		キャラのアーカイブID
+ * @param	datID		キャラのアーカイブ内のデータインデックス
+ * @param	compflag	圧縮、非圧縮フラグ
+ * @param	heapID		ヒープＩＤ
+ *
+ * @return	取得したメモリのアドレス
+ */
+//--------------------------------------------------------------------------------------------
+GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, u32 heapID )
+{
+	GFL_BMP_DATA		*bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
+	void				*src;
+	NNSG2dCharacterData	*chr;
+
+	src=GFL_ARC_UtilLoad( arcID, datID, compflag, heapID );
+	if( NNS_G2dGetUnpackedBGCharacterData( src, &chr ) == FALSE){
+		OS_Panic("GFL_BMP_CharLoad:Faild\n");
+		return NULL;
+	}
+
+	bmp->size_x	=	chr->W*GFL_BG_1CHRDOTSIZ;
+	bmp->size_y	=	chr->H*GFL_BG_1CHRDOTSIZ;
+	bmp->adrs	=	GFL_HEAP_AllocMemory( heapID, chr->szByte );
+	GFL_STD_MemCopy32( chr->pRawData, bmp->adrs, chr->szByte );
+
+	GFL_HEAP_FreeMemory( src );
+
+	return bmp;
 }
 
 //--------------------------------------------------------------------------------------------
