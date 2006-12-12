@@ -12,17 +12,6 @@
 #include "bg_sys.h"
 #include "arc_tool.h"
 
-
-//------------------------------------------------------------------
-/**
- *  キャラデータマッピングタイプ
- */
-//------------------------------------------------------------------
-typedef enum {
-	ALLOC_TOP = 0,			///< ヒープの先頭から
-	ALLOC_BOTTOM = 1,		///< ヒープの終端から
-}ALLOC_TYPE;
-
 //------------------------------------------------------------------
 /**
  *  パレット転送先タイプ指定
@@ -367,14 +356,10 @@ extern void* GFL_ARC_UtilUnCompress(u32 fileIdx, u32 dataIdx, u32 heapID);
  * @param   heapID			メモリ確保に使うヒープＩＤ
  * @param   allocType		ヒープのどの位置からメモリ確保するか
  *
- * [allocType]
- *		ALLOC_TOP		ヒープ先頭から確保
- *		ALLOC_BOTTOM	ヒープ後方から確保
- *
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType);
+extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -387,14 +372,10 @@ extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32
  * @param   allocType		ヒープのどの位置からメモリ確保するか
  * @param   pSize			実データのバイトサイズを受け取る変数のポインタ
  *
- * [allocType]
- *		ALLOC_TOP		ヒープ先頭から確保
- *		ALLOC_BOTTOM	ヒープ後方から確保
- *
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, ALLOC_TYPE allocType, u32* pSize);
+extern void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, u32 heapID, u32* pSize);
 
 
 

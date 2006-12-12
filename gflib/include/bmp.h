@@ -20,11 +20,14 @@
 //--------------------------------------------------------------------
 //ビットマップ描画データ構造体
 typedef struct{
-	const u8 * adrs;	///<キャラクタデータの先頭アドレス
-	u16	size_x;			///<キャラクタデータのXサイズ
-	u16	size_y;			///<キャラクタデータのYサイズ
+	u8 * adrs;		///<キャラクタデータの先頭アドレス
+	u16	size_x;		///<キャラクタデータのXサイズ
+	u16	size_y;		///<キャラクタデータのYサイズ
 }GFL_BMP_DATA;
 
+
+#define	GFL_BMP_16_COLOR	(0x20)
+#define	GFL_BMP_256_COLOR	(0x40)
 
 //ビットマップ書き込み用定義
 #define	GF_BMPPRT_NOTNUKI	( 0xffff )	// 抜き色指定なし
@@ -68,12 +71,15 @@ typedef struct{
 /**
  * BMP初期化
  *
+ * @param	sizex	Xサイズ
+ * @param	sizey	Yサイズ
+ * @param	col		カラーモード
  * @param	heapID	ヒープＩＤ
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID );
+GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -83,6 +89,20 @@ GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( u32 heapID );
  */
 //--------------------------------------------------------------------------------------------
 GLOBAL	void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * BMPキャラロード（BMPデータの元データ作成）
+ *
+ * @param	arcID		キャラのアーカイブID
+ * @param	datID		キャラのアーカイブ内のデータインデックス
+ * @param	compflag	圧縮、非圧縮フラグ
+ * @param	heapID		ヒープＩＤ
+ *
+ * @return	取得したメモリのアドレス
+ */
+//--------------------------------------------------------------------------------------------
+GLOBAL	GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
