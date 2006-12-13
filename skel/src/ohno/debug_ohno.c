@@ -82,9 +82,8 @@ void DebugOhnoInit(u32 heap_id)
 	DebugOhnoControl = ctrl;
 	ctrl->debug_heap_id = heap_id;
 
-	GFL_PROC_SysInit(ctrl->debug_heap_id);
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
-	GFL_UI_sysInit(ctrl->debug_heap_id);
+	GFL_UI_TP_sysInit(ctrl->debug_heap_id);
 
     /* VÉuÉâÉìÉNäÑçûê›íË */
     (void)OS_SetIrqFunction(OS_IE_V_BLANK, VBlankIntr);
@@ -102,8 +101,7 @@ void DebugOhnoInit(u32 heap_id)
 void DebugOhnoMain(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_sysMain();
-	GFL_PROC_SysMain();
+	GFL_UI_TP_sysMain();
 }
 
 //------------------------------------------------------------------
@@ -111,8 +109,7 @@ void DebugOhnoMain(void)
 void DebugOhnoExit(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_sysEnd();
-	GFL_PROC_SysExit();
+	GFL_UI_TP_sysEnd();
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }
