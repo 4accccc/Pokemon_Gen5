@@ -15,7 +15,7 @@
 # GF-Library
 GFLIB_DIR		=	../gflib
 LINCLUDES		= 	$(GFLIB_DIR)/include
-LLIBRARY_DIRS		=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
+LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
 # 個人テスト用定義
@@ -27,12 +27,27 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c
+SRCS			=	main.c gfl_use.c \
+					tetsu/test.c
 
 
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
+
+
+#----------------------------------------------------------------------------
+#	ロムに含まれるファイルの指定
+#----------------------------------------------------------------------------
+GFLIBGRADIR	= src/gfl_graphic/
+
+FILE_TREE	= $(GFLIBGRADIR)gfl_font.dat
+
+#ロムファイルシステムのルートディレクトリ指定
+MAKEROM_ROMROOT  = ./src/
+
+MAKEROM_ROMFILES = $(subst src/,,$(FILE_TREE))
+
 
 #--------------------------------------- ----------------------------
 # システム定義
