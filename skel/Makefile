@@ -27,8 +27,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c \
-					tetsu/test.c
+SRCS			=	main.c gfl_use.c
 
 
 # コンパイル時の警告抑止
