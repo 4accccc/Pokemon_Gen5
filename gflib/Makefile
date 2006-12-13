@@ -24,7 +24,8 @@ NITRO_NO_STD_PCHDR	=	True
 TARGET_LIB		=	gflib.a
 
 # ソースファイル
-SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_system.c \
+SRCS			=	initialize.c filesystem.c heap.c heapsys.c \
+					tcb.c procsys.c saveload_system.c \
 					ui/ui.c \
 					ui/touchpanel.c \
 					ui/key.c \
@@ -37,10 +38,11 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c tcb.c procsys.c saveload_sys
 					calctool.c \
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c \
-					string/strbuf.c string/msgdata.c string/textprint.c \
+					string/strbuf.c string/msgdata.c string/systemfont.c \
 					g3d/g3d_system.c \
-					arc/arc_tool.c arc/arc_util.c  \
-					clact.c
+					arc/arc_tool.c arc/arc_util.c \
+					clact.c \
+					string/textprint.c
 
 # MCS(Multiple Channel Stream)を有効にする時はUSE_MCSを定義
 ifdef USE_MCS
