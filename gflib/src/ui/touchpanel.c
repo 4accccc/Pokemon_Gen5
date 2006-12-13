@@ -35,6 +35,7 @@ struct _UI_TPSYS {
     u8 tp_auto_samp;        ///< AUTOサンプリングを行うかどうか
 };
 
+static UI_TPSYS* _pUITP = NULL;   ///< 一個しか生成されないのでここでポインタ管理
 
 //==============================================================
 // Prototype
@@ -44,15 +45,32 @@ static BOOL _rect_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
 static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y );
 static u32 startSampling( UI_TPSYS* pTP, u32 sync );
 
+
 //==============================================================================
 /**
- * @brief  タッチパネル初期化
+ * @brief   タッチパネルワークを得る
  * @param   heapID    ヒープ確保を行うID
  * @return  UI_TPSYS  タッチパネルシステムワーク
  */
 //==============================================================================
 
-UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
+static UI_TPSYS* _UI_GetTPSYS(const UISYS* pUI)
+{
+    if(_pUITP==NULL){
+        OS_TPanic("no init");
+    }
+    return _pUITP;
+}
+
+//==============================================================================
+/**
+ * @brief  タッチパネル初期化
+ * @param   heapID    ヒープ確保を行うID
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_UI_TP_sysInit(const int heapID)
 {
 	TPCalibrateParam calibrate;
     UI_TPSYS* pTP = GFL_HEAP_AllocMemory(heapID, sizeof(UI_TPSYS));
@@ -79,7 +97,8 @@ UI_TPSYS* GFL_UI_TP_sysInit(const int heapID)
 		TP_SetCalibrateParam( &calibrate );
 		OS_TPrintf( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
 	}
-    return pTP;
+    _pUITP = pTP;
+//    return pTP;
 }
 
 //==============================================================================
@@ -110,7 +129,6 @@ static void GFI_UI_TP_sysMain(UISYS* pUI)
 
 	TP_GetCalibratedPoint( &tpDisp, &tpTemp );	// 座標を画面座標（０～２５５）にする
 
-	
 	if( tpDisp.validity == TP_VALIDITY_VALID  ){		// 座標の有効性をチェック
 		// タッチパネル座標有効
 		pTP->tp_x = tpDisp.x;
@@ -138,8 +156,7 @@ static void GFI_UI_TP_sysMain(UISYS* pUI)
 		}
 	}
 	pTP->tp_trg	= (u16)(tpDisp.touch & (tpDisp.touch ^ pTP->tp_cont));	// トリガ 入力
-	pTP->tp_cont	= tpDisp.touch;										// ベタ 入力
-
+	pTP->tp_cont = tpDisp.touch;										// ベタ 入力
 }
 
 //==============================================================================
@@ -180,6 +197,7 @@ static void GFI_UI_TP_sysEnd(UISYS* pUI)
 void GFL_UI_TP_sysEnd(void)
 {
     GFI_UI_TP_sysEnd(_UI_GetUISYS());
+    _pUITP = NULL;
 }
 
 //------------------------------------------------------------------
