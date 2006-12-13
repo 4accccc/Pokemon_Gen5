@@ -13,6 +13,7 @@ typedef struct _STRBUF	STRBUF;
 enum {
 	EOM_ = 0,
 	CR_,
+	spc_,
 
 	STR_DEFAULT_CODE_MAX,
 };
