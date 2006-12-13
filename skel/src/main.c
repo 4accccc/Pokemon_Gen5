@@ -72,8 +72,6 @@ static	void	SkeltonVBlankFunc(void)
 	GFLUser_VIntr();
 }
 
-extern void TetsuTestInit(void);
-extern void TetsuTestMain(void);
 //------------------------------------------------------------------
 /**
  * @brief		ゲームごとの初期化処理
@@ -82,7 +80,6 @@ extern void TetsuTestMain(void);
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
-	TetsuTestInit();
 }
 
 //------------------------------------------------------------------
@@ -93,7 +90,6 @@ static	void	GameInit(void)
 static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
-	TetsuTestMain();
 }
 
 
