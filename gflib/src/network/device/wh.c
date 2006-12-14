@@ -3043,7 +3043,7 @@ BOOL WH_Initialize(void* pHeap)
 
     // 接続子機のユーザ判定関数をNULL (multiboot)
     _pWmInfo->sJudgeAcceptFunc = NULL;
-    _pWmInfo->maxEntry = COMM_MACHINE_MAX;
+    _pWmInfo->maxEntry = GFL_NET_MACHINE_MAX;
     
     _pWmInfo->bDisconnectChild = FALSE;
     _pWmInfo->bPauseConnect = FALSE;

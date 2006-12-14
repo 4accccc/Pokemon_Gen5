@@ -152,29 +152,29 @@ typedef struct{
     RingBuffWork sendRing;
     RingBuffWork recvRing;                      ///< 子機の受信リングバッファ
 //    RingBuffWork recvRingUndo;                      ///< 子機の受信リングバッファ
-    RingBuffWork recvMidRing[COMM_MACHINE_MAX];
+    RingBuffWork recvMidRing[GFL_NET_MACHINE_MAX];
     RingBuffWork sendServerRing;
-    RingBuffWork recvServerRing[COMM_MACHINE_MAX];
-//    RingBuffWork recvServerRingUndo[COMM_MACHINE_MAX];
+    RingBuffWork recvServerRing[GFL_NET_MACHINE_MAX];
+//    RingBuffWork recvServerRingUndo[GFL_NET_MACHINE_MAX];
 //    TCB_PTR pVBlankTCB;
     ///---que関連
     SEND_QUEUE_MANAGER sendQueueMgr;
     SEND_QUEUE_MANAGER sendQueueMgrServer;
     ///---受信関連
-    _RECV_COMMAND_PACK recvCommServer[COMM_MACHINE_MAX];
+    _RECV_COMMAND_PACK recvCommServer[GFL_NET_MACHINE_MAX];
     _RECV_COMMAND_PACK recvCommClient;
     
     //---------  同期関連
     BOOL bWifiSendRecv;   // WIFIの場合同期を取る時ととらないときが必要なので 切り分ける
     volatile int countSendRecv;   // 送ったら＋受け取ったら－ 回数
-    volatile int countSendRecvServer[COMM_MACHINE_MAX];   // 送ったら＋受け取ったら－ 回数
+    volatile int countSendRecvServer[GFL_NET_MACHINE_MAX];   // 送ったら＋受け取ったら－ 回数
 
 #ifdef PM_DEBUG
 
     volatile int countSendNum;   // 送ったら＋
     volatile int countRecvNum;   // 受け取ったら＋ 回数
-    volatile int countSendNumServer[COMM_MACHINE_MAX];   // 送ったら＋ 回数
-    volatile int countRecvNumServer[COMM_MACHINE_MAX];   // 受け取ったら＋ 回数
+    volatile int countSendNumServer[GFL_NET_MACHINE_MAX];   // 送ったら＋ 回数
+    volatile int countRecvNumServer[GFL_NET_MACHINE_MAX];   // 受け取ったら＋ 回数
 #endif
     
     //-------
@@ -183,14 +183,15 @@ typedef struct{
     
     //-------------------
     NET_TOOLSYS* pTool;  ///< netTOOLのワーク
+    GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
     u8 device;   ///< デバイス切り替え
 
-//    u8 DSCountRecv[COMM_MACHINE_MAX];  // 順番確認用
+//    u8 DSCountRecv[GFL_NET_MACHINE_MAX];  // 順番確認用
     u8 DSCount; // 順番確認用
-    u8 recvDSCatchFlg[COMM_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
-    u8 bFirstCatch[COMM_MACHINE_MAX];  // コマンドをはじめてもらった時用
+    u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
+    u8 bFirstCatch[GFL_NET_MACHINE_MAX];  // コマンドをはじめてもらった時用
 
-    u8 bPSendNoneRecv[COMM_MACHINE_MAX];        // 最初のコールバックを無条件無視
+    u8 bPSendNoneRecv[GFL_NET_MACHINE_MAX];        // 最初のコールバックを無条件無視
 
 #ifdef PM_DEBUG
     u8 DebugAutoMove;
@@ -348,7 +349,7 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
         if(_pComm!=NULL){  // すでに初期化している場合はreturn
             return TRUE;
         }
-        _pComm->pTool = GFL_NET_TOOL_sysInit(heapID, machineMax);
+        _pComm->pTool = GFL_NET_Tool_sysInit(heapID, machineMax);
         OHNO_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
         _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
@@ -471,7 +472,7 @@ static void _commCommandInit(void)
 #ifdef PM_DEBUG
     _sendDataNext=FALSE;
 #endif
-    for(i = 0; i< COMM_MACHINE_MAX;i++){
+    for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
   //      _pComm->DSCountRecv[i] = 0xff;
         _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
@@ -571,7 +572,7 @@ static void _commCommandInitChange2(void)
 #ifdef PM_DEBUG
     _sendDataNext = FALSE;
 #endif
-    for(i = 0; i< COMM_MACHINE_MAX;i++){
+    for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
         _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
         _pComm->bPSendNoneRecv[i] = TRUE;
@@ -640,7 +641,7 @@ static void _connectFunc(void)
 {
     int i;
 
-    for(i = 1 ; i < COMM_MACHINE_MAX ; i++){
+    for(i = 1 ; i < GFL_NET_MACHINE_MAX ; i++){
         if((!GFL_NET_SystemIsConnect(i)) && !_pComm->bFirstCatch[i]){
             if(!GFL_NET_SystemGetAloneMode()){
                 OHNO_PRINT("非接続になった時に %d\n",i);
@@ -841,7 +842,7 @@ void GFL_NET_SystemFinalize(void)
     }
     if(bEnd){
         OHNO_PRINT("切断----開放処理--\n");
-        GFL_NET_TOOL_sysEnd(_pComm->pTool);
+        GFL_NET_Tool_sysEnd(_pComm->pTool);
         _pComm->pTool = NULL;
 //        CommInfoFinalize();
         // VBLANKタスクを切る
@@ -953,7 +954,7 @@ BOOL GFL_NET_SystemUpdateData(void)
     }
     //エラーの表示の仕組みができたら入れる  @@OO  2006.12.13
 //    CommErrorDispCheck(GFL_HEAPID_SYSTEM);
-    CommTimingSyncSend(_NETHANDLE_GetSYS());
+    GFL_NET_ToolTimingSyncSend(_NETHANDLE_GetSYS());
     return TRUE;
 }
 
@@ -1317,7 +1318,7 @@ static void _dataMpServerStep(void)
 //            OHNO_PRINT("二回うけとってない_sendCallBackServer\n");
             return;
         }
-        for(i = 1; i < COMM_MACHINE_MAX; i++){
+        for(i = 1; i < GFL_NET_MACHINE_MAX; i++){
             if(GFL_NET_SystemIsConnect(i)){
                 if(_pComm->countSendRecvServer[i] > _SENDRECV_LIMIT){ // 送信しすぎの場合
                     //OHNO_PRINT("送信しすぎ%d \n",i);
@@ -1344,8 +1345,8 @@ static void _dataMpServerStep(void)
 }
 
 #ifdef PM_DEBUG
-static u8 debugHeadData[COMM_MACHINE_MAX][100];
-static int debugCnt[COMM_MACHINE_MAX]={0,0,0,0,0,0,0,0};
+static u8 debugHeadData[GFL_NET_MACHINE_MAX][100];
+static int debugCnt[GFL_NET_MACHINE_MAX]={0,0,0,0,0,0,0,0};
 static u8 debugHeadDataC[5][100];
 static int debugCntC = 0;
 #endif
@@ -2212,7 +2213,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
             if(_pComm->bError){
                 return;
             }
-            if(COMM_VARIABLE_SIZE == size){
+            if(GFL_NET_COMMAND_SIZE_VARIABLE == size){
                 if( GFL_NET_RingDataSize(pRing) < 1 ){  // 残りデータが1以下だった
                     pRing->startPos = bkPos;
                     break;
@@ -2411,7 +2412,7 @@ int GFL_NET_SystemGetConnectNum(void)
 {
     int num = 0,i;
 
-    for(i = 0; i < COMM_MACHINE_MAX; i++){
+    for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
         if(GFL_NET_SystemIsConnect(i)){
             num++;
         }
@@ -2521,9 +2522,9 @@ static void _transmission(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemRecvDSMPChange(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
     if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
@@ -2542,9 +2543,9 @@ void GFL_NET_SystemRecvDSMPChange(int netID, int size, void* pData, void* pWork)
  */
 //==============================================================================
 
-void GFL_NET_SystemRecvDSMPChangeReq(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChangeReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
     if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
@@ -2563,9 +2564,9 @@ void GFL_NET_SystemRecvDSMPChangeReq(int netID, int size, void* pData, void* pWo
  */
 //==============================================================================
 
-void GFL_NET_SystemRecvDSMPChangeEnd(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
     if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
@@ -2769,7 +2770,7 @@ BOOL GFL_NET_SystemGetAloneMode(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemRecvAutoExit(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     u8 dummy;
 
@@ -3019,5 +3020,18 @@ void GFL_NET_SystemSystemRecvStop(BOOL bFlg)
     if(_pComm){
         _pComm->bNotRecvCheck = bFlg;
     }
+}
+
+//==============================================================================
+/**
+ * @brief   通信の受信を止めるフラグをセット
+ * @param   bFlg  TRUEで止める  FALSEで許可
+ * @retval  none
+ */
+//==============================================================================
+
+GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID)
+{
+    return _pComm->pNetHandle[NetID];
 }
 

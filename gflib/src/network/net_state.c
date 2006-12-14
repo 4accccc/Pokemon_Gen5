@@ -2403,7 +2403,7 @@ static void _pictureBoardChildConnecting(void)
  */
 //==============================================================================
 
-void CommRecvNegotiation(int netID, int size, void* pData, void* pWork)
+void CommRecvNegotiation(int netID, int size, void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     int i;
     u8* pMsg = pData;
@@ -2442,7 +2442,7 @@ void CommRecvNegotiation(int netID, int size, void* pData, void* pWork)
  */
 //==============================================================================
 
-void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork)
+void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     u8 id;
     int i;
@@ -3067,7 +3067,7 @@ static void _stateWifiMatchEnd(void)
  */
 //==============================================================================
 
-void CommRecvExit(int netID, int size, void* pData, void* pWork)
+void CommRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     OHNO_PRINT("EXITコマンド受信\n");
     if(CommGetCurrentID() == COMM_PARENT_ID){

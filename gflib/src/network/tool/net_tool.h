@@ -13,6 +13,7 @@
 typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
 
+// 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
  * @brief   ネットワークツール初期化
@@ -21,7 +22,7 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
  * @return  NET_TOOLSYS  ネットワークツールシステムワーク
  */
 //==============================================================================
-extern NET_TOOLSYS* GFL_NET_TOOL_sysInit(const int heapID, const int num);
+extern NET_TOOLSYS* GFL_NET_Tool_sysInit(const int heapID, const int num);
 //==============================================================================
 /**
  * @brief   ネットワークツール終了
@@ -29,10 +30,10 @@ extern NET_TOOLSYS* GFL_NET_TOOL_sysInit(const int heapID, const int num);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT);
+extern void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT);
 //==============================================================================
 /**
- * @brief  タイミングコマンドを受信した   CS_TIMING_SYNC
+ * @brief  タイミングコマンドを受信した   GFL_NET_CMD_TIMING_SYNC
  * @param[in]   netID  通信発信者ID
  * @param[in]   size   受信データサイズ
  * @param[in]   pData  受信データポインタ
@@ -41,11 +42,11 @@ extern void GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT);
  * @retval      none
  */
 //==============================================================================
-extern void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const void* pData,
-                                        void* pWork, GFL_NETHANDLE* pNet);
+extern void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pData,
+                                       void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
- * @brief   タイミングコマンドENDを受信した   CS_TIMING_SYNC_END
+ * @brief   タイミングコマンドENDを受信した   GFL_NET_CMD_TIMING_SYNC_END
  * @param[in]   netID  通信発信者ID
  * @param[in]   size   受信データサイズ
  * @param[in]   pData  受信データポインタ
@@ -54,8 +55,8 @@ extern void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const v
  * @retval      none
  */
 //==============================================================================
-extern void CommRecvTimingSyncEnd(const int netID, const int size, const void* pData,
-                                  void* pWork, GFL_NETHANDLE* pNet);
+extern void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const void* pData,
+                                          void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief   タイミングコマンドを発行する
@@ -64,7 +65,7 @@ extern void CommRecvTimingSyncEnd(const int netID, const int size, const void* p
  * @retval  none
  */
 //==============================================================================
-extern void CommTimingSyncStart(GFL_NETHANDLE* pNet, u8 no);
+extern void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドを送信
@@ -72,7 +73,17 @@ extern void CommTimingSyncStart(GFL_NETHANDLE* pNet, u8 no);
  * @retval  none
  */
 //==============================================================================
-extern void CommTimingSyncSend(GFL_NETHANDLE* pNet);
+extern void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet);
+//==============================================================================
+/**
+ * @brief   タイミングコマンドが届いたかどうかを確認する
+ * @param   pNet   ネットワークハンドル
+ * @param   no     検査する番号
+ * @retval  TRUE   届いていた
+ * @retval  FALSE  届いていない
+ */
+//==============================================================================
+extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドが届いたかどうかを確認する
@@ -80,16 +91,7 @@ extern void CommTimingSyncSend(GFL_NETHANDLE* pNet);
  * @retval  届いていたらTRUE
  */
 //==============================================================================
-extern BOOL CommIsTimingSync(GFL_NETHANDLE* pNet, u8 no);
-//==============================================================================
-/**
- * @brief   タイミングコマンドが届いたかどうかを確認する
- * @param   no   届く番号
- * @retval  届いていたらTRUE
- */
-//==============================================================================
-extern int CommGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
-
+extern int GFL_NET_ToolGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
 
 #endif //__NET_TOOL_H__
 

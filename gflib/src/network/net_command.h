@@ -19,21 +19,9 @@
 //==============================================================================
 //	型宣言
 //==============================================================================
-// コールバック関数の書式
-typedef void (*PTRCommRecvFunc)(int netID, int size, void* pData, void* pWork);
-// サイズが固定の場合サイズを関数で返す
-typedef int (*PTRCommRecvSizeFunc)(void);
-// 受信バッファを持っている場合そのポインタ
-typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
-
-
-typedef struct {
-    PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
-    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
-    PTRCommRecvBuffAddr getAddrFunc;
-} CommPacketTbl;
 
 #define   _SET(callfunc, getSize, name)       {callfunc,  getSize},
+
 
 /// 汎用通信コマンドの定義
 enum CommCommand_e {
@@ -42,9 +30,6 @@ enum CommCommand_e {
   GFL_NET_CMD_COMMAND_MIN = 1,             ///< 最小値
   GFL_NET_CMD_EXIT = GFL_NET_CMD_COMMAND_MIN,            ///< 終了
   GFL_NET_CMD_AUTO_EXIT,            ///< 自動終了
-  GFL_NET_CMD_COMM_INFO,       ///< info情報
-  GFL_NET_CMD_COMM_INFO_ARRAY,  ///< info情報を投げ返す
-  GFL_NET_CMD_COMM_INFO_END,   ///< info情報送信終了
   GFL_NET_CMD_COMM_NEGOTIATION,  ///< 初期化時のネゴシエーション
   GFL_NET_CMD_COMM_NEGOTIATION_RETURN,
   GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
@@ -55,16 +40,14 @@ enum CommCommand_e {
   GFL_NET_CMD_THROWOUT_END,   ///< コマンド破棄完了したことを通知-----
   GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド
   GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
-  GFL_NET_CMD_TIMING_SYNC_INFO,       ///< 同期の状況を子機に返すコマンド
   //------------------------------------------------ここまで----------
   GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください     21
 };
 
-#define COMM_VARIABLE_SIZE (0xffff)   ///< 可変データ送信であることを示している
 
 
 /// コマンドテーブルの初期化をする
-extern void GFL_NET_CommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,void* pWork);
+extern void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
 /// コマンドテーブルの開放処理
 extern void GFL_NET_CommandFinalize( void );
 /// データのサイズを得る
@@ -77,11 +60,6 @@ extern BOOL GFL_NET_CommandIsThrowOuted(void);
 extern void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData);
 /// プリント
 extern void GFL_NET_CommandDebugPrint(int command);
-
-// サイズ指定用簡易関数  容量削減の為extern宣言  06.03.29
-extern int _getVariable(void);
-extern int _getZero(void);
-extern int _getOne(void);
 
 extern void* GFL_NET_CommandCreateBuffStart(int command, int netID, int size);
 extern BOOL GFL_NET_CommandCreateBuffCheck(int command);

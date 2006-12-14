@@ -74,7 +74,7 @@ typedef struct{
     NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
     NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
     WMBssDesc sBssDesc[SCAN_PARENT_COUNT_MAX];  ///< 親機の情報を記憶している構造体
-    u8  backupBssid[COMM_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
+    u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
     u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
     u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
@@ -711,7 +711,7 @@ static int _getParentNum(int machNum)
 
     for (i = SCAN_PARENT_COUNT_MAX-1; i >= 0; i--) {
         num = CommMPGetParentConnectionNum(i);
-        if((num > machNum) && (num < COMM_MACHINE_MAX)){
+        if((num > machNum) && (num < GFL_NET_MACHINE_MAX)){
             return i;
         }
     }
@@ -737,7 +737,7 @@ int CommMPGetFastConnectIndex(void)
         if(_pCommMP->bconUnCatchTime[i] != 0){
             if(_isMachBackupMacAddress(&_pCommMP->sBssDesc[i].bssid[0])){  // 古いMACに合致
                 num = CommMPGetParentConnectionNum(i);
-                if(( num > 1) && (num < COMM_MACHINE_MAX)){      // 本親に該当した まだ参加可能
+                if(( num > 1) && (num < GFL_NET_MACHINE_MAX)){      // 本親に該当した まだ参加可能
                     return i;
                 }
             }
@@ -1056,7 +1056,7 @@ static int _connectNum(void)
 {
     int num = 0,i;
 
-    for(i = 0; i < COMM_MACHINE_MAX; i++){
+    for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
         if(_isConnect(i)){
             num++;
         }
@@ -1291,7 +1291,7 @@ void CommMPSetBackupMacAddress(u8* pMac, int netID)
     if(_pCommMP==NULL){
         OS_Panic("no mem");
     }
-    if(COMM_MACHINE_MAX > netID){
+    if(GFL_NET_MACHINE_MAX > netID){
         MI_CpuCopy8(pMac, _pCommMP->backupBssid[netID], WM_SIZE_BSSID);
     }
 }
@@ -1308,7 +1308,7 @@ static BOOL _isMachBackupMacAddress(u8* pMac)
 {
     int i;
     
-    for(i = 0; i < COMM_MACHINE_MAX; i++){
+    for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
         if(WM_IsBssidEqual(_pCommMP->backupBssid[i], pMac)){
             return TRUE;
         }

@@ -49,7 +49,7 @@ typedef void (*PTRSendDataCallback)(BOOL result);
 
 
 // 機最大数
-#define  COMM_MACHINE_MAX  (COMM_CHILD_MAX+1)
+#define  GFL_NET_MACHINE_MAX  (COMM_CHILD_MAX+1)
 
 // 扱えるコマンドの受信最大サイズ
 #define  COMM_COMMAND_RECV_SIZE_MAX  (256)

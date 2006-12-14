@@ -43,11 +43,42 @@ extern void CommDump_Debug(u8* adr, int length, char* pInfoStr);
 #endif
 
 
+/// @brief 通信管理構造体
+typedef struct _GFL_NETSYS GFL_NETSYS;
+/// @brief ネットワーク単体のハンドル
+typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
+
 // define 
 #define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
 
 #define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
+
+
+/// @brief  コマンド関連の定義
+
+/// コールバック関数の書式
+typedef void (*PTRCommRecvFunc)(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+/// サイズが固定の場合サイズを関数で返す
+typedef int (*PTRCommRecvSizeFunc)(void);
+/// 受信バッファを外部で持っている場合そのポインタ
+typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
+
+/// コマンドパケットテーブル定義
+typedef struct {
+    PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
+    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
+    PTRCommRecvBuffAddr getAddrFunc;
+} NetRecvFuncTable;
+
+/// 可変データ送信であることを示している
+#define   GFL_NET_COMMAND_SIZE_VARIABLE   (0x00ffffff)
+/// コマンドのサイズを関数か実数か判断する為の定義 (使用しないでください)
+#define   _GFL_NET_COMMAND_SIZE_H         (0xff000000)
+/// コマンドのサイズを定義する為のマクロ
+#define   GFL_NET_COMMAND_SIZE( num )     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
+/// コマンドのサイズを定義する為のマクロ
+#define   GFL_NET_COMMAND_VARIABLE     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
 
 
 typedef enum {
@@ -60,32 +91,13 @@ typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef u8 ConnectID;      ///< 接続するためのID  0-16 まで
 typedef u8 NetID;          ///< 通信ID  0-200 まで
 
-/// @brief 通信管理構造体
-typedef struct _GFL_NETSYS GFL_NETSYS;
-/// @brief ネットワーク単体のハンドル
-typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
-
 /// @brief 送信完了を受け取るコールバック型
 typedef void (*CBSendEndFunc)(u16 command);
-
-/// @brief コールバック関数の書式
-typedef void (*PTRCommRecvFunc)(int netID, int size, void* pData, void* pWork);
-/// @brief サイズが固定の場合サイズを関数で返す
-typedef int (*PTRCommRecvSizeFunc)(void);
-/// @brief 受信バッファを持っている場合そのポインタを返す
-typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
 
 /// @brief 常に送る送信データを得る
 typedef u8* (*CBGetEveryTimeData)(void);
 /// @brief 常に送られる受信データを得る 送られていないとpWorkにNULLが入る
 typedef void (*CBRecvEveryTimeData)(int netID, void* pWork, int size);
-
-
-typedef struct {  ///< 受信関数テーブル
-    PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
-    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
-    PTRCommRecvBuffAddr getAddrFunc; ///< 受信バッファを持っている場合そのポインタ
-} NetRecvFuncTable;
 
 
 typedef void* (*NetBeaconGetFunc)(void);    ///< ビーコンデータ取得関数

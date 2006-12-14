@@ -264,7 +264,7 @@ extern BOOL GFL_NET_SystemSetSendQueue(int command, const void* data, int size);
  * @retval  残り数
  */
 //==============================================================================
-extern void GFL_NET_SystemRecvDSMPChange(int netID, int size, void* pData, void* pWork);
+extern void GFL_NET_SystemRecvDSMPChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * DS通信MP通信の切り替え
@@ -272,7 +272,7 @@ extern void GFL_NET_SystemRecvDSMPChange(int netID, int size, void* pData, void*
  * @retval  残り数
  */
 //==============================================================================
-extern void GFL_NET_SystemRecvDSMPChangeReq(int netID, int size, void* pData, void* pWork);
+extern void GFL_NET_SystemRecvDSMPChangeReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * DS通信MP通信の切り替え 終了処理 GFL_NET_CMD_DSMP_CHANGE_END
@@ -280,7 +280,7 @@ extern void GFL_NET_SystemRecvDSMPChangeReq(int netID, int size, void* pData, vo
  * @retval  残り数
  */
 //==============================================================================
-extern void GFL_NET_SystemRecvDSMPChangeEnd(int netID, int size, void* pData, void* pWork);
+extern void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * 自分の機のIDを返す
@@ -373,7 +373,7 @@ extern BOOL GFL_NET_SystemGetAloneMode(void);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_SystemRecvAutoExit(int netID, int size, void* pData, void* pWork);
+extern void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * デバッグ用にダンプを表示する
@@ -489,6 +489,9 @@ extern void GFL_NET_SystemSystemResetQueue_Server(void);
  */
 //==============================================================================
 extern void GFL_NET_SystemSystemRecvStop(BOOL bFlg);
+
+extern GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID);
+
 
 #endif // _NET_SYSTEM_H_
 

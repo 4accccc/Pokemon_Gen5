@@ -12,17 +12,15 @@
 #include "net_def.h"
 #include "net_system.h"
 #include "net_command.h"
+#include "net_state.h"
+#include "tool/net_tool.h"
 
 //==============================================================================
 //  static定義
 //==============================================================================
-static void _commCommandRecvThrowOut(int netID, int size, void* pData, void* pWork);
-static void _commCommandRecvThrowOutReq(int netID, int size, void* pData, void* pWork);
-static void _commCommandRecvThrowOutEnd(int netID, int size, void* pData, void* pWork);
-static int _getTwo(void);
-
-// field/d_ohno.hにあるデバッグ用
-extern void CommDebugRecvHugeData(int netID, int size, void* pData, void* pWork);
+static void _commCommandRecvThrowOut(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
+static void _commCommandRecvThrowOutReq(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
+static void _commCommandRecvThrowOutEnd(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -32,34 +30,27 @@ extern void CommDebugRecvHugeData(int netID, int size, void* pData, void* pWork)
 //  コマンドのサイズを返す関数を書いてもらえると通信が軽くなります
 //  _getZeroはサイズなしを返します。_getVariableは可変データ使用時に使います
 //==============================================================================
-static const CommPacketTbl _CommPacketTbl[] = {
-    {NULL, _getZero, NULL},
-    {NULL, _getZero, NULL},
-    {CommRecvAutoExit, _getZero, NULL},
-    {CommInfoRecvPlayerData, CommInfoGetPlayerDataSize, NULL},
-    {CommInfoRecvArrayPlayerData, CommInfoGetPlayerDataSize, NULL},
-    {CommInfoRecvEnd, _getZero, NULL},
-    {CommRecvNegotiation, CommRecvGetNegotiationSize, NULL},
-    {CommRecvNegotiationReturn, CommRecvGetNegotiationSize, NULL},
-    {CommRecvDSMPChange, _getOne, NULL},
-    {CommRecvDSMPChangeReq, _getOne, NULL},
-    {CommRecvDSMPChangeEnd, _getOne, NULL},
-    {_commCommandRecvThrowOut, _getZero, NULL},
-    {_commCommandRecvThrowOutReq, _getZero, NULL},
-    {_commCommandRecvThrowOutEnd, _getZero, NULL},
-    {CommRecvTimingSync, _getOne, NULL},
-    {CommRecvTimingSyncEnd, _getOne, NULL},
-    {CommRecvTimingSyncInfo, _getTwo, NULL},
-    {CommRecvListNo, CommGetListNoSize, NULL},
-    {CommToolRecvTempData, CommToolGetTempDataSize, NULL},
-    {CommRecvExit, _getZero, NULL},
+static const NetRecvFuncTable _CommPacketTbl[] = {
+    {NULL,                        GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {CommRecvExit,                GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_SystemRecvAutoExit,            GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {CommRecvNegotiation,         CommRecvGetNegotiationSize, NULL},
+    {CommRecvNegotiationReturn,   CommRecvGetNegotiationSize, NULL},
+    {GFL_NET_SystemRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_SystemRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_SystemRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {_commCommandRecvThrowOut,    GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {_commCommandRecvThrowOutReq, GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {_commCommandRecvThrowOutEnd, GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_ToolRecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_ToolRecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
 };
 
 typedef struct{
-    const CommPacketTbl* pCommPacket;  ///< fieldやbattleのコマンドのテーブル
+    const NetRecvFuncTable* pCommPacket;  ///< fieldやbattleのコマンドのテーブル
     int listNum;                       ///< _pCommPacketのlist数
     void* pWork;                       ///< fieldやbattleのメインになるワーク
-    u8 bThrowOutReq[COMM_MACHINE_MAX];        ///< コマンドを交換したいフラグ
+    u8 bThrowOutReq[GFL_NET_MACHINE_MAX];        ///< コマンドを交換したいフラグ
     u8 bThrowOuted;    ///< コマンド入れ替えが終了したらTRUE
 } _COMM_COMMAND_WORK;
 
@@ -76,19 +67,19 @@ static _COMM_COMMAND_WORK* _pCommandWork = NULL;
  */
 //--------------------------------------------------------------
 
-void CommCommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,void* pWork)
+void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork)
 {
     int i;
     
     if(!_pCommandWork){
-        _pCommandWork = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_COMMAND_WORK));
+        _pCommandWork = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(_COMM_COMMAND_WORK));
     }
     _pCommandWork->pCommPacket = pCommPacketLocal;
     _pCommandWork->listNum = listNum;
     _pCommandWork->pWork = pWork;
 
 
-    for(i = 0 ; i < COMM_MACHINE_MAX; i++){
+    for(i = 0 ; i < GFL_NET_MACHINE_MAX; i++){
         _pCommandWork->bThrowOutReq[i] = FALSE;
     }
     _pCommandWork->bThrowOuted = FALSE;
@@ -104,7 +95,7 @@ void CommCommandInitialize(const CommPacketTbl* pCommPacketLocal,int listNum,voi
  */
 //--------------------------------------------------------------
 
-void CommCommandFinalize( void )
+void GFL_NET_CommandFinalize( void )
 {
     if(_pCommandWork){
         GFL_HEAP_FreeMemory(_pCommandWork);
@@ -123,31 +114,28 @@ void CommCommandFinalize( void )
  */
 //--------------------------------------------------------------
 
-void CommCommandCallBack(int netID, int command, int size, void* pData)
+void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
 {
     PTRCommRecvFunc func;
 
-    if( command < CS_COMMAND_MAX ){
+    if( command < GFL_NET_CMD_COMMAND_MAX ){
         func = _CommPacketTbl[command].callbackFunc;
     }
     else{
-        GF_ASSERT_RETURN(_pCommandWork,);
-        if(command > (_pCommandWork->listNum + CS_COMMAND_MAX)){
-#ifdef DEBUG_ONLY_FOR_ohno
+        if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
             OHNO_PRINT("command %d \n", command);
-            GF_ASSERT(0 && "存在しない通信コマンド");
-#endif
-            CommSetError();
+            OS_Panic("no command");
+            GFL_NET_SystemSetError();
             return;  // 本番ではコマンドなし扱い
         }
-        func = _pCommandWork->pCommPacket[command - CS_COMMAND_MAX].callbackFunc;
+        func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
     }
     if(func != NULL){
         if(_pCommandWork){
-            func(netID, size, pData, _pCommandWork->pWork);
+            func(netID, size, pData, _pCommandWork->pWork, GFL_NET_SystemGetHandle(netID));
         }
         else{
-            func(netID, size, pData, NULL);
+            func(netID, size, pData, NULL, GFL_NET_SystemGetHandle(netID));
         }
     }
 }
@@ -161,28 +149,23 @@ void CommCommandCallBack(int netID, int command, int size, void* pData)
  */
 //--------------------------------------------------------------
 
-int CommCommandGetPacketSize(int command)
+int GFL_NET_CommandGetPacketSize(int command)
 {
     int size = 0;
-    PTRCommRecvSizeFunc func;
+    PTRCommRecvSizeFunc func=NULL;
 
-    if( command < CS_COMMAND_MAX ){
+    if( command < GFL_NET_CMD_COMMAND_MAX ){
         func = _CommPacketTbl[command].getSizeFunc;
     }
     else{
-        GF_ASSERT(_pCommandWork);
-        if(_pCommandWork==NULL){
-            CommSetError();
-            return size;  // 本番ではエラー
+        if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
+            OHNO_PRINT("command %d \n", command);
+            OS_Panic("no command");
+            GFL_NET_SystemSetError();
         }
-        if(command > (_pCommandWork->listNum + CS_COMMAND_MAX)){
-#ifdef DEBUG_ONLY_FOR_ohno
-            GF_ASSERT_MSG(0,"command %d ",command);
-#endif
-            CommSetError();
-            return size;  // 本番ではエラー
+        else{
+            func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].getSizeFunc;
         }
-        func = _pCommandWork->pCommPacket[command - CS_COMMAND_MAX].getSizeFunc;
     }
     if(func != NULL){
         size = func();
@@ -198,12 +181,12 @@ int CommCommandGetPacketSize(int command)
  */
 //--------------------------------------------------------------
 
-BOOL CommCommandCreateBuffCheck(int command)
+BOOL GFL_NET_CommandCreateBuffCheck(int command)
 {
-    if( command < CS_COMMAND_MAX ){
+    if( command < GFL_NET_CMD_COMMAND_MAX ){
         return ( _CommPacketTbl[command].getAddrFunc != NULL);
     }
-    return (_pCommandWork->pCommPacket[command - CS_COMMAND_MAX].getAddrFunc != NULL);
+    return (_pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].getAddrFunc != NULL);
 }
 
 //--------------------------------------------------------------
@@ -214,49 +197,20 @@ BOOL CommCommandCreateBuffCheck(int command)
  */
 //--------------------------------------------------------------
 
-void* CommCommandCreateBuffStart(int command,int netID, int size)
+void* GFL_NET_CommandCreateBuffStart(int command,int netID, int size)
 {
     PTRCommRecvBuffAddr func;
 
-    if( command < CS_COMMAND_MAX ){
+    if( command < GFL_NET_CMD_COMMAND_MAX ){
         func = _CommPacketTbl[command].getAddrFunc;
         return func(netID, NULL, size);
     }
     else{
-        func = _pCommandWork->pCommPacket[command - CS_COMMAND_MAX].getAddrFunc;
+        func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].getAddrFunc;
         return func(netID, _pCommandWork->pWork, size);
     }
     return NULL;
 }
-
-
-//--------------------------------------------------------------
-/**
- * @brief   ３つともサイズを返します
- * @param   command         コマンド
- * @retval  サイズ   可変なら COMM_VARIABLE_SIZE Zeroは０を返す
- */
-//--------------------------------------------------------------
-int _getVariable(void)
-{
-    return COMM_VARIABLE_SIZE;
-}
-
-int _getZero(void)
-{
-    return 0;
-}
-
-int _getOne(void)
-{
-    return 1;
-}
-
-static int _getTwo(void)
-{
-    return 2;
-}
-
 
 //--------------------------------------------------------------
 /**
@@ -266,12 +220,13 @@ static int _getTwo(void)
  */
 //--------------------------------------------------------------
 
-BOOL CommCommandThrowOut(void)
+BOOL GFL_NET_CommandThrowOut(void)
 {
-    GF_ASSERT_RETURN(_pCommandWork, TRUE);
-
+    if(_pCommandWork==NULL){
+        OS_TPanic("no init");
+    }
     _pCommandWork->bThrowOuted = FALSE;
-    return CommSendFixData(CS_COMMAND_THROWOUT);
+    return GFL_NET_SystemSendFixData(GFL_NET_CMD_THROWOUT);
 }
 
 
@@ -283,26 +238,26 @@ BOOL CommCommandThrowOut(void)
  */
 //==============================================================================
 
-static void _commCommandRecvThrowOut(int netID, int size, void* pData, void* pWork)
+static void _commCommandRecvThrowOut(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
-    if(CommGetCurrentID() != COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
 //    OHNO_PRINT("CommRecvDSMPChange 受信\n");
     // 全員に切り替え信号を送る
     _pCommandWork->bThrowOutReq[netID] = TRUE;
-    for(i = 0 ; i < COMM_MACHINE_MAX; i++){
-        if(!CommIsConnect(i)){
+    for(i = 0 ; i < GFL_NET_MACHINE_MAX; i++){
+        if(!GFL_NET_SystemIsConnect(i)){
             continue;
         }
         if(!_pCommandWork->bThrowOutReq[i]){
             return;
         }
     }
-    CommSendData_ServerSide(CS_COMMAND_THROWOUT_REQ, NULL, 0);
+    GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_THROWOUT_REQ, NULL, 0);
 }
 
 //==============================================================================
@@ -313,9 +268,9 @@ static void _commCommandRecvThrowOut(int netID, int size, void* pData, void* pWo
  */
 //==============================================================================
 
-static void _commCommandRecvThrowOutReq(int netID, int size, void* pData, void* pWork)
+static void _commCommandRecvThrowOutReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
     _pCommandWork->pCommPacket = NULL;
@@ -323,7 +278,7 @@ static void _commCommandRecvThrowOutReq(int netID, int size, void* pData, void* 
     _pCommandWork->pWork = NULL;
     _pCommandWork->bThrowOuted = TRUE;
 
-    CommSendFixSizeData(CS_COMMAND_THROWOUT_END,pData);
+    GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_THROWOUT_END,pData);
 }
 
 //==============================================================================
@@ -334,12 +289,12 @@ static void _commCommandRecvThrowOutReq(int netID, int size, void* pData, void* 
  */
 //==============================================================================
 
-static void _commCommandRecvThrowOutEnd(int netID, int size, void* pData, void* pWork)
+static void _commCommandRecvThrowOutEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    u8* pBuff = pData;
+    const u8* pBuff = pData;
     int i;
 
-    if(CommGetCurrentID() != COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
     _pCommandWork->bThrowOutReq[netID] = FALSE;
@@ -348,12 +303,12 @@ static void _commCommandRecvThrowOutEnd(int netID, int size, void* pData, void* 
 //==============================================================================
 /**
  * コマンド交換できたかどうかを確認する
- * @param   none
- * @retval  交換完了したらTRUE
+ * @retval  TRUE 交換完了
+ * @retval  FALSE 完了していない
  */
 //==============================================================================
 
-BOOL CommCommandIsThrowOuted(void)
+BOOL GFL_NET_CommandIsThrowOuted(void)
 {
     if(_pCommandWork){
         return _pCommandWork->bThrowOuted;
