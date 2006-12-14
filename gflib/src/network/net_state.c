@@ -1,10 +1,10 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
  * @file	comm_state.c
- * @brief	é€šä¿¡çŠ¶æ…‹ã‚’ç®¡ç†ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹  é€šä¿¡ã®ä¸Šä½ã«ã‚ã‚‹
- *          ã‚¹ãƒ¬ãƒƒãƒ‰ã®ã²ã¨ã¤ã¨ã—ã¦åƒãã€è‡ªåˆ†ã®é€šä¿¡çŠ¶æ…‹ã‚„ä»–ã®æ©Ÿå™¨ã®
- *          é–‹å§‹ã‚„çµ‚äº†ã‚’ç®¡ç†ã™ã‚‹
- *          ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ç®¡ç†ã‚’ã—ãªã„éƒ¨åˆ†ã‚’ã‚‚ã†ä¸€å›ã“ã“ã«å¼•è¶Šã—...2006.01.12
+ * @brief	’ÊMó‘Ô‚ğŠÇ—‚·‚éƒT[ƒrƒX  ’ÊM‚ÌãˆÊ‚É‚ ‚é
+ *          ƒXƒŒƒbƒh‚Ì‚Ğ‚Æ‚Â‚Æ‚µ‚Ä“­‚«A©•ª‚Ì’ÊMó‘Ô‚â‘¼‚Ì‹@Ší‚Ì
+ *          ŠJn‚âI—¹‚ğŠÇ—‚·‚é
+ *          ƒtƒB[ƒ‹ƒhŠÇ—‚ğ‚µ‚È‚¢•”•ª‚ğ‚à‚¤ˆê‰ñ‚±‚±‚Éˆø‰z‚µ...2006.01.12
  * @author	k.ohno
  * @date    2006.01.12
  */
@@ -23,105 +23,105 @@
 #include  "communication/wm_icon.h"
 
 //==============================================================================
-//	å‹å®£è¨€
+//	Œ^éŒ¾
 //==============================================================================
-// ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ã®æ›¸å¼
+// ƒR[ƒ‹ƒoƒbƒNŠÖ”‚Ì‘®
 typedef void (*PTRStateFunc)(void);
 
 //==============================================================================
-// ãƒ¯ãƒ¼ã‚¯
+// ƒ[ƒN
 //==============================================================================
 
 typedef struct{
     void* pWifiFriendStatus;
     u8 select[6];
-    MATHRandContext32 sRand; ///< è¦ªå­æ©Ÿãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ä¹±æ•°ã‚­ãƒ¼
+    MATHRandContext32 sRand; ///< eq‹@ƒlƒSƒVƒG[ƒVƒ‡ƒ“—p—”ƒL[
     PTRStateFunc state;
     SAVEDATA* pSaveData;
     MYSTATUS* pMyStatus;
     const REGULATION* pReg;
     int errorCode;
-    u16 reConnectTime;  // å†æ¥ç¶šæ™‚ã«ä½¿ç”¨ã™ã‚‹ã‚¿ã‚¤ãƒãƒ¼
+    u16 reConnectTime;  // ÄÚ‘±‚Ég—p‚·‚éƒ^ƒCƒ}[
     u16 timer;
 #ifdef PM_DEBUG		// Debug ROM
     u16 debugTimer;
 #endif
-    u8 limitNum;      // å—ä»˜åˆ¶é™ã—ãŸã„å ´åˆã®LIMITæ•°
-    u8 negotiation;   // æ¥ç¶šèªå®š
-    u8 connectIndex;   // å­æ©ŸãŒæ¥ç¶šã™ã‚‹è¦ªæ©Ÿã®indexç•ªå·
-    u8 serviceNo;      // é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
-    u8 regulationNo;   // ã‚³ãƒ³ãƒ†ã‚¹ãƒˆç¨®åˆ¥ã‚’æ±ºã‚ã‚‹ç•ªå·
+    u8 limitNum;      // ó•t§ŒÀ‚µ‚½‚¢ê‡‚ÌLIMIT”
+    u8 negotiation;   // Ú‘±”F’è
+    u8 connectIndex;   // q‹@‚ªÚ‘±‚·‚ée‹@‚Ìindex”Ô†
+    u8 serviceNo;      // ’ÊMƒT[ƒrƒX”Ô†
+    u8 regulationNo;   // ƒRƒ“ƒeƒXƒgí•Ê‚ğŒˆ‚ß‚é”Ô†
 #ifdef PM_DEBUG		// Debug ROM
     u8 soloDebugNo;
     u8 bDebugStart;
 #endif
-    u8 disconnectIndex;  //wifiåˆ‡æ–­æ–¹å‘ è¦ªæ©Ÿå­æ©Ÿ
-    u8 wifiTargetNo;   // WIFIæ¥ç¶šã‚’è¡Œã†äººã®ç•ªå·
-    u8 bFirstParent;   // ç¹°ã‚Šè¿”ã—è¦ªå­åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†å ´åˆã®æœ€åˆã®è¦ªçŠ¶æ…‹
-    u8 bDisconnectError; // åˆ‡æ–­ã‚¨ãƒ©ãƒ¼ã‚’ã‚¨ãƒ©ãƒ¼ã«ã™ã‚‹ã¨ãTRUE
-    u8 bErrorAuto;     // è‡ªå‹•ã‚¨ãƒ©ãƒ¼æ¤œç´¢èµ·å‹•TRUE
-    u8 bWorldWifi;     // DPWãŒå‹•ã„ã¦ã„ã‚‹å ´åˆ
-    u8 ResetStateType;    // ã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã«å…¥ã‚Šã‚½ãƒ•ãƒˆã‚¦ã‚¨ã‚¢ãƒªã‚»ãƒƒãƒˆã‚’å¾…ã¤çŠ¶æ…‹
-    u8 bUnionPause;    // ãƒ¦ãƒ‹ã‚ªãƒ³ãƒ«ãƒ¼ãƒ ã§æ¥ç¶šã‚’é˜²ããŸã„å ´åˆ
-    u8 partyGameBit;   // ä»–ç¤¾ã®GGIDã‚’æ‹¾ã†
-    u8 bParentOnly;   // è¦ªæ©ŸçŠ¶æ…‹ã«ã—ã‹ãªã‚‰ãªã„
-    u8 bChildOnly;   // å­æ©ŸçŠ¶æ…‹ã«ã—ã‹ãªã‚‰ãªã„
-    u8 bNotConnect;   // é€šä¿¡çŠ¶æ…‹ã«é·ç§»ã—ãªã„
-    u8 bWifiDisconnect; //WIFIåˆ‡æ–­ç”¨ ã‚³ãƒãƒ³ãƒ‰å—ã‘å–ã£ãŸå ´åˆã«1
-    u8 stateError;         //ã‚¨ãƒ©ãƒ¼æ‰±ã„ã«ã™ã‚‹å ´åˆ1ä»¥ä¸Š
+    u8 disconnectIndex;  //wifiØ’f•ûŒü e‹@q‹@
+    u8 wifiTargetNo;   // WIFIÚ‘±‚ğs‚¤l‚Ì”Ô†
+    u8 bFirstParent;   // ŒJ‚è•Ô‚µeqØ‚è‘Ö‚¦‚ğs‚¤ê‡‚ÌÅ‰‚Ìeó‘Ô
+    u8 bDisconnectError; // Ø’fƒGƒ‰[‚ğƒGƒ‰[‚É‚·‚é‚Æ‚«TRUE
+    u8 bErrorAuto;     // ©“®ƒGƒ‰[ŒŸõ‹N“®TRUE
+    u8 bWorldWifi;     // DPW‚ª“®‚¢‚Ä‚¢‚éê‡
+    u8 ResetStateType;    // ƒGƒ‰[ó‘Ô‚É“ü‚èƒ\ƒtƒgƒEƒGƒAƒŠƒZƒbƒg‚ğ‘Ò‚Âó‘Ô
+    u8 bUnionPause;    // ƒ†ƒjƒIƒ“ƒ‹[ƒ€‚ÅÚ‘±‚ğ–h‚¬‚½‚¢ê‡
+    u8 partyGameBit;   // ‘¼Ğ‚ÌGGID‚ğE‚¤
+    u8 bParentOnly;   // e‹@ó‘Ô‚É‚µ‚©‚È‚ç‚È‚¢
+    u8 bChildOnly;   // q‹@ó‘Ô‚É‚µ‚©‚È‚ç‚È‚¢
+    u8 bNotConnect;   // ’ÊMó‘Ô‚É‘JˆÚ‚µ‚È‚¢
+    u8 bWifiDisconnect; //WIFIØ’f—p ƒRƒ}ƒ“ƒhó‚¯æ‚Á‚½ê‡‚É1
+    u8 stateError;         //ƒGƒ‰[ˆµ‚¢‚É‚·‚éê‡1ˆÈã
     u8 bPauseFlg;
 } _COMM_STATE_WORK;
 
-static _COMM_STATE_WORK* _pCommState = NULL;  ///<ã€€ãƒ¯ãƒ¼ã‚¯æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿
+static _COMM_STATE_WORK* _pCommState = NULL;  ///<@ƒ[ƒN\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^
 
 //==============================================================================
-// å®šç¾©
+// ’è‹`
 //==============================================================================
 
-#define _HEAPSIZE_BATTLE           (0x7080)  // ãƒãƒˆãƒ«æ©Ÿé ˜åŸŸ
-#define _HEAPSIZE_UNDERGROUND      (0xE000)  // åœ°ä¸‹é ˜åŸŸ
-#define _HEAPSIZE_UNION            (0x7080)  // ãƒ¦ãƒ‹ã‚ªãƒ³ãƒ«ãƒ¼ãƒ é ˜åŸŸ
-#define _HEAPSIZE_POKETCH          (0x7000)  // ã½ã‘ã£ã¡æ©Ÿé ˜åŸŸ
-#define _HEAPSIZE_PARTY            (0x7000)  // ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã‚µãƒ¼ãƒ
-#define _HEAPSIZE_WIFI            (0x2A000+0x7000)  //DWCRAP ãŒä½¿ç”¨ã™ã‚‹é ˜åŸŸ
-#define _HEAPSIZE_DPW              (0x100)   // ä¸–ç•Œäº¤æ›ã€€ã‚¿ãƒ¯ãƒ¼ç”¨
+#define _HEAPSIZE_BATTLE           (0x7080)  // ƒoƒgƒ‹‹@—Ìˆæ
+#define _HEAPSIZE_UNDERGROUND      (0xE000)  // ’n‰º—Ìˆæ
+#define _HEAPSIZE_UNION            (0x7080)  // ƒ†ƒjƒIƒ“ƒ‹[ƒ€—Ìˆæ
+#define _HEAPSIZE_POKETCH          (0x7000)  // ‚Û‚¯‚Á‚¿‹@—Ìˆæ
+#define _HEAPSIZE_PARTY            (0x7000)  // ƒp[ƒeƒB[ƒT[ƒ`
+#define _HEAPSIZE_WIFI            (0x2A000+0x7000)  //DWCRAP ‚ªg—p‚·‚é—Ìˆæ
+#define _HEAPSIZE_DPW              (0x100)   // ¢ŠEŒğŠ·@ƒ^ƒ[—p
 
-#define _PACKETSIZE_BATTLE         (512)//(1376)  // ãƒãƒˆãƒ«æ©Ÿé ˜åŸŸ
-#define _PACKETSIZE_UNDERGROUND     (500)  // åœ°ä¸‹é ˜åŸŸ
-#define _PACKETSIZE_UNION          (512)//(1280)  // ãƒ¦ãƒ‹ã‚ªãƒ³ãƒ«ãƒ¼ãƒ é ˜åŸŸ
-#define _PACKETSIZE_POKETCH          (32)  // ã½ã‘ã£ã¡é ˜åŸŸ
-#define _PACKETSIZE_PARTY         (32)  // ã½ã‘ã£ã¡é ˜åŸŸ
+#define _PACKETSIZE_BATTLE         (512)//(1376)  // ƒoƒgƒ‹‹@—Ìˆæ
+#define _PACKETSIZE_UNDERGROUND     (500)  // ’n‰º—Ìˆæ
+#define _PACKETSIZE_UNION          (512)//(1280)  // ƒ†ƒjƒIƒ“ƒ‹[ƒ€—Ìˆæ
+#define _PACKETSIZE_POKETCH          (32)  // ‚Û‚¯‚Á‚¿—Ìˆæ
+#define _PACKETSIZE_PARTY         (32)  // ‚Û‚¯‚Á‚¿—Ìˆæ
 
 
-#define _START_TIME (50)     // é–‹å§‹æ™‚é–“
-#define _CHILD_P_SEARCH_TIME (32) ///å­æ©Ÿã¨ã—ã¦è¦ªã‚’æ¢ã™æ™‚é–“
-#define _PARENT_WAIT_TIME (40) ///è¦ªã¨ã—ã¦ã®ã‚“ã³ã‚Šå¾…ã¤æ™‚é–“
+#define _START_TIME (50)     // ŠJnŠÔ
+#define _CHILD_P_SEARCH_TIME (32) ///q‹@‚Æ‚µ‚Äe‚ğ’T‚·ŠÔ
+#define _PARENT_WAIT_TIME (40) ///e‚Æ‚µ‚Ä‚Ì‚ñ‚Ñ‚è‘Ò‚ÂŠÔ
 #define _FINALIZE_TIME (2)
 #define _EXIT_SENDING_TIME (5)
 #define _EXIT_SENDING_TIME2 (15)
 #define _PARENT_END_TIME (2)
 #define _SEND_NAME_TIME (10)
-#define _PARENTSCAN_PA (3)  // è¦ªæ©Ÿã¨ã—ã¦æ¤œç´¢ã™ã‚‹ç¢ºç«‹ã¯1/3
+#define _PARENTSCAN_PA (3)  // e‹@‚Æ‚µ‚ÄŒŸõ‚·‚éŠm—§‚Í1/3
 
-#define _RETRY_COUNT_UNION  (3)  // ãƒ¦ãƒ‹ã‚ªãƒ³ãƒ«ãƒ¼ãƒ ã§å­æ©ŸãŒæ¥ç¶šã«è¦ã™ã‚‹å›æ•°
+#define _RETRY_COUNT_UNION  (3)  // ƒ†ƒjƒIƒ“ƒ‹[ƒ€‚Åq‹@‚ªÚ‘±‚É—v‚·‚é‰ñ”
 
-#define _TCB_COMMCHECK_PRT   (10)    ///< ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‚’æ­©ãé€šä¿¡ã®ç›£è¦–ãƒ«ãƒ¼ãƒãƒ³ã®PRI
+#define _TCB_COMMCHECK_PRT   (10)    ///< ƒtƒB[ƒ‹ƒh‚ğ•à‚­’ÊM‚ÌŠÄ‹ƒ‹[ƒ`ƒ“‚ÌPRI
 
 
-#define _NEGOTIATION_OK (1)      // æ¥ç¶šç¢ºèªå®Œäº†
-#define _NEGOTIATION_CHECK (0)   // æ¥ç¶šç¢ºèªä¸­
-#define _NEGOTIATION_NG (2)     // æ¥ç¶šå¤±æ•—
+#define _NEGOTIATION_OK (1)      // Ú‘±Šm”FŠ®—¹
+#define _NEGOTIATION_CHECK (0)   // Ú‘±Šm”F’†
+#define _NEGOTIATION_NG (2)     // Ú‘±¸”s
 
 
 
 //==============================================================================
-// staticå®£è¨€
+// staticéŒ¾
 //==============================================================================
 
-// ã‚¹ãƒ†ãƒ¼ãƒˆã®åˆæœŸåŒ–
+// ƒXƒe[ƒg‚Ì‰Šú‰»
 
-static void _changeStateDebug(PTRStateFunc state, int time, int line);  // ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
-static void _changeState(PTRStateFunc state, int time);  // ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›´ã™ã‚‹
+static void _changeStateDebug(PTRStateFunc state, int time, int line);  // ƒXƒe[ƒg‚ğ•ÏX‚·‚é
+static void _changeState(PTRStateFunc state, int time);  // ƒXƒe[ƒg‚ğ•ÏX‚·‚é
 
 #ifdef PM_DEBUG
 #if 1
@@ -134,48 +134,48 @@ static void _changeState(PTRStateFunc state, int time);  // ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å¤‰æ›
 #endif //PM_DEBUG
 
 
-// åœ°ä¸‹é–¢é€£ã‚¹ãƒ†ãƒ¼ãƒˆ
-static void _underStart(void);           // å­æ©Ÿã®åˆæœŸåŒ– + ã‚·ã‚¹ãƒ†ãƒ ã®åˆæœŸåŒ–
-static void _underChildPInit(void);      // å­æ©Ÿã®åˆæœŸåŒ–
+// ’n‰ºŠÖ˜AƒXƒe[ƒg
+static void _underStart(void);           // q‹@‚Ì‰Šú‰» + ƒVƒXƒeƒ€‚Ì‰Šú‰»
+static void _underChildPInit(void);      // q‹@‚Ì‰Šú‰»
 static void _underChildFInit(void);
-static void _underChildPSearching(void); // å­æ©ŸãŒè¦ªæ©Ÿã‚’æ¢ã—ã¦ã„ã‚‹
-static void _underChildForceConnect(void); // å­æ©ŸãŒè¦ªæ©Ÿã«å¼·å¼•ã«æ¥ç¶šä¸­
-static void _underChildConnecting(void);   // å­æ©ŸãŒè¦ªæ©Ÿã«æ¥ç¶šä¸­
-static void _underChildConnect(void);    // å­æ©Ÿã¨ã—ã¦æ¥ç¶šä¸­
+static void _underChildPSearching(void); // q‹@‚ªe‹@‚ğ’T‚µ‚Ä‚¢‚é
+static void _underChildForceConnect(void); // q‹@‚ªe‹@‚É‹­ˆø‚ÉÚ‘±’†
+static void _underChildConnecting(void);   // q‹@‚ªe‹@‚ÉÚ‘±’†
+static void _underChildConnect(void);    // q‹@‚Æ‚µ‚ÄÚ‘±’†
 static void _underChildReset(void);
-static void _underChildFinalize(void);   // å­æ©Ÿã«ãªã‚Œãªã‹ã£ãŸã®ã§çµ‚äº†å‡¦ç†ä¸­
-static void _underParentFinalize(void);  // è¦ªæ©Ÿã«ãªã‚Œãªã‹ã£ãŸã®ã§çµ‚äº†å‡¦ç†ä¸­
-static void _underParentInit(void);      // è¦ªæ©Ÿã¨ã—ã¦åˆæœŸåŒ–
-static void _underParentWait(void);      // è¦ªæ©Ÿã¨ã—ã¦å¾…æ©ŸçŠ¶æ…‹
-static void _underParentConnectInit(void); // æ¥ç¶šã—ãŸã®ã§åˆæœŸåŒ–ä¸­
-static void _underParentConnect(void);   // è¦ªæ©Ÿã¨ã—ã¦æ¥ç¶šä¸­
-static void _stateUnderGroundConnectEnd(void);  // åœ°ä¸‹åˆ‡æ–­
+static void _underChildFinalize(void);   // q‹@‚É‚È‚ê‚È‚©‚Á‚½‚Ì‚ÅI—¹ˆ—’†
+static void _underParentFinalize(void);  // e‹@‚É‚È‚ê‚È‚©‚Á‚½‚Ì‚ÅI—¹ˆ—’†
+static void _underParentInit(void);      // e‹@‚Æ‚µ‚Ä‰Šú‰»
+static void _underParentWait(void);      // e‹@‚Æ‚µ‚Ä‘Ò‹@ó‘Ô
+static void _underParentConnectInit(void); // Ú‘±‚µ‚½‚Ì‚Å‰Šú‰»’†
+static void _underParentConnect(void);   // e‹@‚Æ‚µ‚ÄÚ‘±’†
+static void _stateUnderGroundConnectEnd(void);  // ’n‰ºØ’f
 static void _underSBReset(void);
 
 
-// ãƒãƒˆãƒ«é–¢é€£ã‚¹ãƒ†ãƒ¼ãƒˆ
-static void _battleParentInit(void);     // æˆ¦é—˜ç”¨è¦ªæ©Ÿã¨ã—ã¦åˆæœŸåŒ–
-static void _battleParentWaiting(void);  // æˆ¦é—˜ç”¨è¦ªæ©Ÿã¨ã—ã¦å¾…æ©Ÿä¸­
-static void _battleParentMoveRoomEnter(void);  // æˆ¦é—˜å‰ã®éƒ¨å±‹ã«å…¥ã£ã¦å¾…æ©Ÿä¸­
-static void _battleParentMoveRoom(void);  // æˆ¦é—˜å‰ã®éƒ¨å±‹ã«å…¥ã£ã¦å¾…æ©Ÿä¸­
-static void _battleParentSendName(void);  // è‡ªåˆ†ã®åå‰ã‚’ã¿ã‚“ãªã«é€ä¿¡
-static void _battleParentReTry(void);   // æˆ¦é—˜ç”¨è¦ªæ©Ÿã‚’ä¸­æ–­
+// ƒoƒgƒ‹ŠÖ˜AƒXƒe[ƒg
+static void _battleParentInit(void);     // í“¬—pe‹@‚Æ‚µ‚Ä‰Šú‰»
+static void _battleParentWaiting(void);  // í“¬—pe‹@‚Æ‚µ‚Ä‘Ò‹@’†
+static void _battleParentMoveRoomEnter(void);  // í“¬‘O‚Ì•”‰®‚É“ü‚Á‚Ä‘Ò‹@’†
+static void _battleParentMoveRoom(void);  // í“¬‘O‚Ì•”‰®‚É“ü‚Á‚Ä‘Ò‹@’†
+static void _battleParentSendName(void);  // ©•ª‚Ì–¼‘O‚ğ‚İ‚ñ‚È‚É‘—M
+static void _battleParentReTry(void);   // í“¬—pe‹@‚ğ’†’f
 
-static void _battleChildInit(void);     // æˆ¦é—˜ç”¨å­æ©Ÿã¨ã—ã¦åˆæœŸåŒ–
-static void _battleChildBconScanning(void);  // æˆ¦é—˜ç”¨å­æ©Ÿã¨ã—ã¦è¦ªæ©Ÿé¸æŠä¸­
-static void _battleChildConnecting(void);  // æ¥ç¶šè¨±å¯ã‚‚ã‚‰ã„ä¸­
-static void _battleChildSendName(void);  // è‡ªåˆ†ã®åå‰ã‚’ã¿ã‚“ãªã«é€ä¿¡
-static void _battleChildWaiting(void);  // ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆç”¨å­æ©Ÿå¾…æ©Ÿä¸­
-static void _battleChildMoveRoomEnter(void); // æˆ¦é—˜å‰ã®éƒ¨å±‹ã«å…¥ã£ã¦å¾…æ©Ÿä¸­
-static void _battleChildMoveRoom(void); // æˆ¦é—˜å‰ã®éƒ¨å±‹ã«å…¥ã£ã¦å¾…æ©Ÿä¸­
-static void _battleChildReTry(void);   // å­æ©Ÿã‚’ä¸­æ–­
-static void _battleChildReInit(void);   // å­æ©Ÿã‚’å†èµ·å‹•
+static void _battleChildInit(void);     // í“¬—pq‹@‚Æ‚µ‚Ä‰Šú‰»
+static void _battleChildBconScanning(void);  // í“¬—pq‹@‚Æ‚µ‚Äe‹@‘I‘ğ’†
+static void _battleChildConnecting(void);  // Ú‘±‹–‰Â‚à‚ç‚¢’†
+static void _battleChildSendName(void);  // ©•ª‚Ì–¼‘O‚ğ‚İ‚ñ‚È‚É‘—M
+static void _battleChildWaiting(void);  // ƒ_ƒCƒŒƒNƒg—pq‹@‘Ò‹@’†
+static void _battleChildMoveRoomEnter(void); // í“¬‘O‚Ì•”‰®‚É“ü‚Á‚Ä‘Ò‹@’†
+static void _battleChildMoveRoom(void); // í“¬‘O‚Ì•”‰®‚É“ü‚Á‚Ä‘Ò‹@’†
+static void _battleChildReTry(void);   // q‹@‚ğ’†’f
+static void _battleChildReInit(void);   // q‹@‚ğÄ‹N“®
 static void _battleChildReset(void);
 static void _battleChildReConnect(void);
 static void _underChildOnline(void);
 
 
-// UNIONãƒ«ãƒ¼ãƒ é–¢é€£ã‚¹ãƒ†ãƒ¼ãƒˆ
+// UNIONƒ‹[ƒ€ŠÖ˜AƒXƒe[ƒg
 static void _unionStart(void);
 static void _unionChildSearching(void);
 static void _unionChildFinalize(void);
@@ -197,22 +197,22 @@ static void _unionParentPause(void);
 static void _mysteryParentInit(void);
 static void _mysteryChildInit(void);
 
-// ãã®ä»–ä¸€èˆ¬çš„ãªã‚¹ãƒ†ãƒ¼ãƒˆ
-static void _stateNone(void);            // ä½•ã‚‚ã—ãªã„
-static void _stateConnectError(void);    // æ¥ç¶šã‚¨ãƒ©ãƒ¼çŠ¶æ…‹
-static void _stateEnd(void);             // çµ‚äº†å‡¦ç†
-static void _stateConnectChildEndWait(void);   // å­æ©Ÿã®çµ‚äº†ã‚’å¾…ã£ã¦çµ‚ã‚ã‚‹
+// ‚»‚Ì‘¼ˆê”Ê“I‚ÈƒXƒe[ƒg
+static void _stateNone(void);            // ‰½‚à‚µ‚È‚¢
+static void _stateConnectError(void);    // Ú‘±ƒGƒ‰[ó‘Ô
+static void _stateEnd(void);             // I—¹ˆ—
+static void _stateConnectChildEndWait(void);   // q‹@‚ÌI—¹‚ğ‘Ò‚Á‚ÄI‚í‚é
 static void _stateConnectChildEnd(void);
-static void _stateConnectEnd(void);      // åˆ‡æ–­å‡¦ç†é–‹å§‹
-static void _stateConnectAutoEnd(void);  // è‡ªå‹•åˆ‡æ–­å‡¦ç†é–‹å§‹
+static void _stateConnectEnd(void);      // Ø’fˆ—ŠJn
+static void _stateConnectAutoEnd(void);  // ©“®Ø’fˆ—ŠJn
 
 
-// WIFIç”¨
+// WIFI—p
 static void _wifiBattleLogin(void);
 static void _stateWifiLogout(void);
 
 
-// ãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ç¢ºèªKEY
+// ƒlƒSƒVƒG[ƒVƒ‡ƒ“—pŠm”FKEY
 static u8 _negotiationMsg[]={"FREAK"};
 static u8 _negotiationMsgReturnOK[]={" GAME"};
 static u8 _negotiationMsgReturnNG[]={" FULL"};
@@ -242,7 +242,7 @@ void DebugOhnoCommDebugUnderChildOnly(int no)
 
 //==============================================================================
 /**
- * é€šä¿¡ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆã®åˆæœŸåŒ–å‡¦ç†
+ * ’ÊMŠÇ—ƒXƒe[ƒg‚Ì‰Šú‰»ˆ—
  * @param   MYSTATUS* pMyStatus
  * @retval  none
  */
@@ -252,18 +252,18 @@ static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
 {
     void* pWork;
 
-    if(_pCommState!=NULL){   // ã™ã§ã«å‹•ä½œä¸­ã®å ´åˆå¿…è¦ãªã„
+    if(_pCommState!=NULL){   // ‚·‚Å‚É“®ì’†‚Ìê‡•K—v‚È‚¢
         return;
     }
     CommVRAMDInitialize();
-    // åˆæœŸåŒ–
+    // ‰Šú‰»
     _pCommState = (_COMM_STATE_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
     MI_CpuFill8(_pCommState, 0, sizeof(_COMM_STATE_WORK));
     _pCommState->timer = _START_TIME;
-    _pCommState->bFirstParent = TRUE;  // è¦ªã®åˆã‚ã¦ã®èµ·å‹•ã®å ´åˆTRUE
+    _pCommState->bFirstParent = TRUE;  // e‚Ì‰‚ß‚Ä‚Ì‹N“®‚Ìê‡TRUE
     _pCommState->pSaveData = pSaveData;
     _pCommState->pMyStatus = SaveData_GetMyStatus(pSaveData);
-    _pCommState->limitNum = COMM_MODE_UNION_NUM_MIN + 1;   // ä¸€äººã¯æœ€ä½ã§ã‚‚æ¥ç¶šå¯èƒ½
+    _pCommState->limitNum = COMM_MODE_UNION_NUM_MIN + 1;   // ˆêl‚ÍÅ’á‚Å‚àÚ‘±‰Â”\
     _pCommState->negotiation = _NEGOTIATION_CHECK;
     _pCommState->bUnionPause = FALSE;
     _pCommState->serviceNo = serviceNo;
@@ -280,7 +280,7 @@ static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
 
 //==============================================================================
 /**
- * é€šä¿¡ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆã®çµ‚äº†å‡¦ç†
+ * ’ÊMŠÇ—ƒXƒe[ƒg‚ÌI—¹ˆ—
  * @param   none
  * @retval  none
  */
@@ -288,7 +288,7 @@ static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
 
 static void _stateFinalize(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
 //    TCB_Delete(_pCommState->pTcb);
@@ -308,9 +308,9 @@ static void _stateFinalize(void)
 
 //==============================================================================
 /**
- * åˆæœŸåŒ–ãŒã™ã‚“ã§ã„ã‚‹ã‹ã©ã†ã‹
+ * ‰Šú‰»‚ª‚·‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
  * @param   none
- * @retval  ã™ã‚“ã§ã„ã‚‹å ´åˆTRUE
+ * @retval  ‚·‚ñ‚Å‚¢‚éê‡TRUE
  */
 //==============================================================================
 
@@ -324,7 +324,7 @@ BOOL CommStateIsInitialize(void)
 
 //==============================================================================
 /**
- * åœ°ä¸‹ã«ã¯ã„ã£ãŸæ™‚ã®é€šä¿¡å‡¦ç†
+ * ’n‰º‚É‚Í‚¢‚Á‚½‚Ì’ÊMˆ—
  * @param   MYSTATUS* pMyStatus
  * @retval  none
  */
@@ -332,10 +332,10 @@ BOOL CommStateIsInitialize(void)
 
 void CommStateEnterUnderGround(SAVEDATA* pSaveData)
 {
-    if(_pCommState!=NULL){ // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+    if(_pCommState!=NULL){ // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
         return;
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_UNDERGROUND );
     _commStateInitialize(pSaveData,COMM_MODE_UNDERGROUND);
 //    _pCommState->serviceNo = COMM_MODE_UNDERGROUND;
@@ -345,13 +345,13 @@ void CommStateEnterUnderGround(SAVEDATA* pSaveData)
     _pCommState->bParentOnly = _debugParentOnly;
     _pCommState->bChildOnly = _debugChildOnly;
 #endif
-    // åœ°ä¸‹ã‚¹ãƒ†ãƒ¼ãƒˆã®é·ç§»ã®ãŸã‚åˆæœŸåŒ–
+    // ’n‰ºƒXƒe[ƒg‚Ì‘JˆÚ‚Ì‚½‚ß‰Šú‰»
     _CHANGE_STATE(_underStart, _START_TIME);
 }
 
 //==============================================================================
 /**
- * åœ°ä¸‹ã‚’å‡ºã‚‹å ´åˆã®é€šä¿¡å‡¦ç†
+ * ’n‰º‚ğo‚éê‡‚Ì’ÊMˆ—
  * @param   none
  * @retval  none
  */
@@ -359,17 +359,17 @@ void CommStateEnterUnderGround(SAVEDATA* pSaveData)
 
 void CommStateExitUnderGround(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    // åˆ‡æ–­ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œã™ã‚‹  ã™ãã«åˆ‡ã‚Œãªã„
+    // Ø’fƒXƒe[ƒg‚ÉˆÚs‚·‚é  ‚·‚®‚ÉØ‚ê‚È‚¢
     CommSystemShutdown();
     _CHANGE_STATE(_stateUnderGroundConnectEnd, 0);
 }
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’å†é–‹ã™ã‚‹
+ * ƒr[ƒRƒ“ûW‚ğÄŠJ‚·‚é
  * @param   MYSTATUS* pMyStatus
  * @retval  none
  */
@@ -377,15 +377,15 @@ void CommStateExitUnderGround(void)
 
 void CommStateUnderRestart(void)
 {
-    CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
-    // ãã‚‹ãã‚‹ã¾ã‚ã™
+    CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
+    // ‚®‚é‚®‚é‚Ü‚í‚·
     _pCommState->reConnectTime = CommGetCurrentID();
-    _CHANGE_STATE(_underChildReset, 0);  // ã‚¨ãƒ©ãƒ¼çµ‚äº†ã®å ´åˆRESETã™ã‚‹
+    _CHANGE_STATE(_underChildReset, 0);  // ƒGƒ‰[I—¹‚Ìê‡RESET‚·‚é
 }
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’åœæ­¢ã™ã‚‹
+ * ƒr[ƒRƒ“ûW‚ğ’â~‚·‚é
  * @param   none
  * @retval  none
  */
@@ -399,7 +399,7 @@ void CommStaetUnderPause(BOOL bFlg)
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’å†é–‹ã™ã‚‹ è¦ªæ©Ÿå´ã®ãƒªã‚¹ã‚¿ãƒ¼ã¨
+ * ƒr[ƒRƒ“ûW‚ğÄŠJ‚·‚é e‹@‘¤‚ÌƒŠƒXƒ^[‚Æ
  * @param   none
  * @retval  none
  */
@@ -411,7 +411,7 @@ static void _underQueueReset(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    CommSystemReset();         // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    CommSystemReset();         // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
     _CHANGE_STATE(_underChildFinalize, 0);
 
     /*
@@ -422,7 +422,7 @@ static void _underQueueReset(void)
     if(CommIsEmptyQueue_ServerSize()){
         CommSystemResetQueue_Server();
     }
-    OHNO_PRINT("é€ä¿¡ã‚­ãƒ¥ãƒ¼ã‘ã—\n");
+    OHNO_PRINT("‘—MƒLƒ…[‚¯‚µ\n");
        */
 //    _CHANGE_STATE(_underChildFinalize, _FINALIZE_TIME);
 }
@@ -437,9 +437,9 @@ void CommStateUnderParentRestart(void)
 
 //==============================================================================
 /**
- * åœ°ä¸‹ã«ãŠã„ã¦ãƒªã‚»ãƒƒãƒˆä¸­ãªã®ã‹ã©ã†ã‹è¿”ã™
+ * ’n‰º‚É‚¨‚¢‚ÄƒŠƒZƒbƒg’†‚È‚Ì‚©‚Ç‚¤‚©•Ô‚·
  * @param   none
- * @retval  RESETä¸­ãªã‚‰TRUE
+ * @retval  RESET’†‚È‚çTRUE
  */
 //==============================================================================
 
@@ -448,7 +448,7 @@ BOOL CommIsUnderResetState(void)
     int i;
     u32 stateAddr = (u32)_pCommState->state;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return FALSE;
     }
     if(stateAddr == (u32)_underQueueReset){
@@ -459,9 +459,9 @@ BOOL CommIsUnderResetState(void)
 
 //==============================================================================
 /**
- * åœ°ä¸‹ã«ãŠã„ã¦æ¥ç¶šä¸­STATEãªã®ã‹ã©ã†ã‹è¿”ã™
+ * ’n‰º‚É‚¨‚¢‚ÄÚ‘±’†STATE‚È‚Ì‚©‚Ç‚¤‚©•Ô‚·
  * @param   none
- * @retval  æ¥ç¶šä¸­ãªã‚‰TRUE
+ * @retval  Ú‘±’†‚È‚çTRUE
  */
 //==============================================================================
 
@@ -475,7 +475,7 @@ BOOL CommIsUnderGroundConnectingState(void)
     };
     u32 stateAddr = (u32)_pCommState->state;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return FALSE;
     }
     for(i = 0; funcTbl[i] != 0; i++ ){
@@ -488,7 +488,7 @@ BOOL CommIsUnderGroundConnectingState(void)
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’åˆ‡ã‚Šç§˜å¯†åŸºåœ°ã«ã¯ã„ã‚‹
+ * ’ÊM‚ğØ‚è”é–§Šî’n‚É‚Í‚¢‚é
  * @param   none
  * @retval  none
  */
@@ -496,13 +496,13 @@ BOOL CommIsUnderGroundConnectingState(void)
 
 void CommStateUnderGroundOfflineSecretBase(void)
 {
-    // åˆ‡æ–­ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œã™ã‚‹  ã™ãã«åˆ‡ã‚Œãªã„
-    _CHANGE_STATE(_underSBReset, 0);  // ã‚¨ãƒ©ãƒ¼çµ‚äº†ã®å ´åˆRESETã™ã‚‹
+    // Ø’fƒXƒe[ƒg‚ÉˆÚs‚·‚é  ‚·‚®‚ÉØ‚ê‚È‚¢
+    _CHANGE_STATE(_underSBReset, 0);  // ƒGƒ‰[I—¹‚Ìê‡RESET‚·‚é
 }
 
 //==============================================================================
 /**
- * ã¯ã˜ã‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
+ * ‚Í‚¶‚ß‚ÌƒCƒxƒ“ƒg
  * @param   none
  * @retval  none
  */
@@ -519,7 +519,7 @@ void CommStateSetFirstEvent(void)
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’ç¹‹ãç§˜å¯†åŸºåœ°ã‹ã‚‰æˆ»ã‚‹
+ * ’ÊM‚ğŒq‚¬”é–§Šî’n‚©‚ç–ß‚é
  * @param   none
  * @retval  none
  */
@@ -528,15 +528,15 @@ void CommStateSetFirstEvent(void)
 void CommStateUnderGroundOnlineSecretBase(void)
 {
     CommVRAMDInitialize();
-    _CHANGE_STATE(_underChildOnline, 0);  // ã‚¨ãƒ©ãƒ¼çµ‚äº†ã®å ´åˆRESETã™ã‚‹
+    _CHANGE_STATE(_underChildOnline, 0);  // ƒGƒ‰[I—¹‚Ìê‡RESET‚·‚é
 }
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®è¦ªã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
+ * ƒoƒgƒ‹‚Ìe‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
  * @param   pMyStatus  mystatus
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
- * @param   regulationNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
+ * @param   regulationNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -548,9 +548,9 @@ void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulati
 #endif
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
@@ -564,8 +564,8 @@ void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulati
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®å­ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * ƒoƒgƒ‹‚Ìq‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -577,9 +577,9 @@ void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulatio
 #endif
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
@@ -593,8 +593,8 @@ void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulatio
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®å­ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
- * @param   connectIndex æ¥ç¶šã™ã‚‹è¦ªæ©Ÿã®Index
+ * ƒoƒgƒ‹‚Ìq‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
+ * @param   connectIndex Ú‘±‚·‚ée‹@‚ÌIndex
  * @retval  none
  */
 //==============================================================================
@@ -607,7 +607,7 @@ void CommStateConnectBattleChild(int connectIndex)
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®å­ã¨ã—ã¦ã®é€šä¿¡å†èµ·å‹•å‡¦ç†
+ * ƒoƒgƒ‹‚Ìq‚Æ‚µ‚Ä‚Ì’ÊMÄ‹N“®ˆ—
  * @param   none
  * @retval  none
  */
@@ -621,7 +621,7 @@ void CommStateRebootBattleChild(void)
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®é€šä¿¡å‡¦ç†çµ‚äº†æ‰‹ç¶šã
+ * ƒoƒgƒ‹‚Ì’ÊMˆ—I—¹è‘±‚«
  * @param   none
  * @retval  none
  */
@@ -630,7 +630,7 @@ void CommStateRebootBattleChild(void)
 void CommStateExitBattle(void)
 {
     if(_pCommState==NULL){
-        return;      // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹å ´åˆã¯é™¤å¤–
+        return;      // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚éê‡‚ÍœŠO
     }
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
     //_CHANGE_STATE(_stateConnectAutoEnd, _EXIT_SENDING_TIME);
@@ -638,7 +638,7 @@ void CommStateExitBattle(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå—ä»˜ã§ãã‚‹ã‹ã©ã†ã‹
+ * q‹@ó•t‚Å‚«‚é‚©‚Ç‚¤‚©
  * @param   none
  * @retval  none
  */
@@ -652,9 +652,9 @@ void CommStateSetEntryChildEnable(BOOL bEntry)
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ¥ç¶šä¸­STATEãªã®ã‹ã©ã†ã‹è¿”ã™
+ * ƒoƒgƒ‹Ú‘±’†STATE‚È‚Ì‚©‚Ç‚¤‚©•Ô‚·
  * @param   none
- * @retval  æ¥ç¶šä¸­TRUE
+ * @retval  Ú‘±’†TRUE
  */
 //==============================================================================
 
@@ -668,7 +668,7 @@ BOOL CommIsBattleConnectingState(void)
     };
     u32 stateAddr = (u32)_pCommState->state;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return FALSE;
     }
     for(i = 0; funcTbl[i] != 0; i++ ){
@@ -681,7 +681,7 @@ BOOL CommIsBattleConnectingState(void)
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’é–‹å§‹ã™ã‚‹
+ * ƒr[ƒRƒ“ûW‚ğŠJn‚·‚é
  * @param   MYSTATUS* pMyStatus
  * @retval  none
  */
@@ -689,13 +689,13 @@ BOOL CommIsBattleConnectingState(void)
 
 void CommStateUnionBconCollection(SAVEDATA* pSaveData)
 {
-    if(_pCommState!=NULL){ // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+    if(_pCommState!=NULL){ // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
         return;
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     if(sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_UNION )==0){
-		// é€šä¿¡ãƒ’ãƒ¼ãƒ—ãŒä½œæˆã§ããªã‹ã£ãŸã€‚
-		// ç¶šè¡Œä¸å¯èƒ½(é›»æºåˆ‡ã‚Šã‚¨ãƒ©ãƒ¼ã¸ï¼‰
+		// ’ÊMƒq[ƒv‚ªì¬‚Å‚«‚È‚©‚Á‚½B
+		// ‘±s•s‰Â”\(“dŒ¹Ø‚èƒGƒ‰[‚Öj
 		CommFatalErrorFunc_NoNumber();
 
 	}
@@ -705,15 +705,15 @@ void CommStateUnionBconCollection(SAVEDATA* pSaveData)
 #ifdef PM_DEBUG
     _pCommState->soloDebugNo = SOLO_DEBUG_NO;
 #endif
-    // ã‚¹ãƒ†ãƒ¼ãƒˆã®é·ç§»ã®ãŸã‚åˆæœŸåŒ–
+    // ƒXƒe[ƒg‚Ì‘JˆÚ‚Ì‚½‚ß‰Šú‰»
     _CHANGE_STATE(_unionStart, 0);
 }
 
 
 //==============================================================================
 /**
- * ä¼šè©±ã‚’é–‹å§‹ã—ãŸã®ã§å­æ©Ÿæ¥ç¶š
- * @param   æ¥ç¶šã™ã‚‹è¦ªæ©Ÿindex
+ * ‰ï˜b‚ğŠJn‚µ‚½‚Ì‚Åq‹@Ú‘±
+ * @param   Ú‘±‚·‚ée‹@index
  * @retval  none
  */
 //==============================================================================
@@ -722,16 +722,16 @@ void CommStateUnionConnectStart(int index)
 {
     _pCommState->connectIndex = index;
     _pCommState->reConnectTime = _RETRY_COUNT_UNION;
-    WHParentConnectPause(TRUE);  // è¦ªæ©Ÿã«ã¯ãªã‚‰ãªã„
+    WHParentConnectPause(TRUE);  // e‹@‚É‚Í‚È‚ç‚È‚¢
     WirelessIconEasy();
     _CHANGE_STATE(_unionForceConnectStart, 0);
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿæ¥ç¶šã«æˆåŠŸã—ãŸã‹ã©ã†ã‹
+ * q‹@Ú‘±‚É¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
  * @param   none
- * @retval  æ¥ç¶šä¸­ï¼ï¼ã€€æˆåŠŸï¼ï¼‘ã€€å¤±æ•—ï¼ï¼ï¼‘
+ * @retval  Ú‘±’†‚O@¬Œ÷‚P@¸”s|‚P
  */
 //==============================================================================
 
@@ -739,7 +739,7 @@ int CommStateIsUnionConnectSuccess(void)
 {
     u32 stateAddr;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return -1;
     }
     stateAddr = (u32)_pCommState->state;
@@ -754,9 +754,9 @@ int CommStateIsUnionConnectSuccess(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿæ¥ç¶šã«æˆåŠŸã—ãŸã‹ã©ã†ã‹
+ * e‹@Ú‘±‚É¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
  * @param   none
- * @retval  æ¥ç¶šä¸­ãªã‚‰TRUE
+ * @retval  Ú‘±’†‚È‚çTRUE
  */
 //==============================================================================
 
@@ -764,7 +764,7 @@ BOOL CommStateIsUnionParentConnectSuccess(void)
 {
     u32 stateAddr;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹ ã‚‚ã—ãã¯åˆæœŸåŒ–ãŒã¾ã 
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é ‚à‚µ‚­‚Í‰Šú‰»‚ª‚Ü‚¾
         return FALSE;
     }
     stateAddr = (u32)_pCommState->state;
@@ -776,7 +776,7 @@ BOOL CommStateIsUnionParentConnectSuccess(void)
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’å†é–‹ã™ã‚‹
+ * ƒr[ƒRƒ“ûW‚ğÄŠJ‚·‚é
  * @param   none
  * @retval  none
  */
@@ -784,7 +784,7 @@ BOOL CommStateIsUnionParentConnectSuccess(void)
 
 void CommStateUnionBconCollectionRestart(void)
 {
-	OS_TPrintf( "ãƒªã‚¹ã‚¿ãƒ¼ãƒˆã—ã¾ã—ãŸï¼\n" );
+	OS_TPrintf( "ƒŠƒXƒ^[ƒg‚µ‚Ü‚µ‚½I\n" );
 
     WHParentConnectPause(FALSE);
 
@@ -795,7 +795,7 @@ void CommStateUnionBconCollectionRestart(void)
 
     WirelessIconEasyEnd();
     _pCommState->serviceNo = COMM_MODE_UNION;
-    OHNO_PRINT(">> UNIONãƒ“ãƒ¼ã‚³ãƒ³åé›†å†é–‹\n");
+    OHNO_PRINT(">> UNIONƒr[ƒRƒ“ûWÄŠJ\n");
     _pCommState->bUnionPause = FALSE;
     WH_SetMaxEntry(_pCommState->limitNum);
 
@@ -810,7 +810,7 @@ void CommStateUnionBconCollectionRestart(void)
 
 //==============================================================================
 /**
- * ãƒ“ãƒ¼ã‚³ãƒ³åé›†ã‚’å†é–‹ã‚’ç¢ºèªã™ã‚‹
+ * ƒr[ƒRƒ“ûW‚ğÄŠJ‚ğŠm”F‚·‚é
  * @param   none
  * @retval  none
  */
@@ -832,7 +832,7 @@ BOOL CommStateUnionIsRestartSuccess(void)
 
 //==============================================================================
 /**
- * UNIONROOMã‚’å‡ºã‚‹å ´åˆã®é€šä¿¡å‡¦ç†
+ * UNIONROOM‚ğo‚éê‡‚Ì’ÊMˆ—
  * @param   none
  * @retval  none
  */
@@ -840,18 +840,18 @@ BOOL CommStateUnionIsRestartSuccess(void)
 
 void CommStateExitUnion(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    OHNO_SP_PRINT(">> UNIONã„ã£ãŸã‚“åˆ‡æ–­\n");
-    // åˆ‡æ–­ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œã™ã‚‹  ã™ãã«åˆ‡ã‚Œãªã„
+    OHNO_SP_PRINT(">> UNION‚¢‚Á‚½‚ñØ’f\n");
+    // Ø’fƒXƒe[ƒg‚ÉˆÚs‚·‚é  ‚·‚®‚ÉØ‚ê‚È‚¢
     
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ã—ã¦ã¤ãªãŒã‚‹äºˆå®šãªã®ã§ã€è¦ªæ©Ÿã«ã¯ãªã‚‰ãªã„
+ * q‹@‚Æ‚µ‚Ä‚Â‚È‚ª‚é—\’è‚È‚Ì‚ÅAe‹@‚É‚Í‚È‚ç‚È‚¢
  * @param   none
  * @retval  none
  */
@@ -859,7 +859,7 @@ void CommStateExitUnion(void)
 
 void CommStateChildReserve(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
     _pCommState->bUnionPause = TRUE;
@@ -868,7 +868,7 @@ void CommStateChildReserve(void)
 
 //==============================================================================
 /**
- * UNIONROOMä¸€æ™‚åœæ­¢  å†é–‹ã¯ReStart
+ * UNIONROOMˆê’â~  ÄŠJ‚ÍReStart
  * @param   none
  * @retval  none
  */
@@ -876,10 +876,10 @@ void CommStateChildReserve(void)
 
 void CommStateUnionPause(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    OHNO_PRINT(">> UNIONROOMä¸€æ™‚åœæ­¢\n");
+    OHNO_PRINT(">> UNIONROOMˆê’â~\n");
     _pCommState->bUnionPause = TRUE;
     WHParentConnectPause(TRUE);
     _CHANGE_STATE(_unionParentPause, 0);
@@ -887,7 +887,7 @@ void CommStateUnionPause(void)
 
 //==============================================================================
 /**
- * UNIONROOMã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¹ã‚¿ãƒ¼ãƒˆ
+ * UNIONROOMƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -900,7 +900,7 @@ void CommStateUnionAppStart(void)
 
 //==============================================================================
 /**
- * UNIONROOMã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¨ãƒ³ãƒ‰
+ * UNIONROOMƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒGƒ“ƒh
  * @param   none
  * @retval  none
  */
@@ -913,10 +913,10 @@ void CommStateUnionAppEnd(void)
 
 //==============================================================================
 /**
- * ä¸æ€è­°é€šä¿¡ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
+ * •sv‹c’ÊM‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
  * @param   pMyStatus  mystatus
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
- * @param   regulationNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
+ * @param   regulationNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -924,9 +924,9 @@ void CommStateUnionAppEnd(void)
 void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
@@ -938,8 +938,8 @@ void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
 
 //==============================================================================
 /**
- * ä¸æ€è­°é€šä¿¡ã®å­ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * •sv‹c’ÊM‚Ìq‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -947,9 +947,9 @@ void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
 void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
@@ -962,7 +962,7 @@ void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
 
 //==============================================================================
 /**
- * é€šä¿¡ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆã®å‡¦ç†
+ * ’ÊMŠÇ—ƒXƒe[ƒg‚Ìˆ—
  * @param
  * @retval  none
  */
@@ -977,19 +977,13 @@ void CommStateCheckFunc(void)
             state();
         }
     }
-    if(CommStateIsWifiConnect()){
-        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
-    }
-    else if(CommMPIsInitialize()){
-        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - WM_GetLinkLevel());
-    }
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆã®å¤‰æ›´
- * @param   state  å¤‰ãˆã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆã®é–¢æ•°
- * @param   time   ã‚¹ãƒ†ãƒ¼ãƒˆä¿æŒæ™‚é–“
+ * ’ÊMŠÇ—ƒXƒe[ƒg‚Ì•ÏX
+ * @param   state  •Ï‚¦‚éƒXƒe[ƒg‚ÌŠÖ”
+ * @param   time   ƒXƒe[ƒg•ÛŠÔ
  * @retval  none
  */
 //==============================================================================
@@ -1002,9 +996,9 @@ static void _changeState(PTRStateFunc state, int time)
 
 //==============================================================================
 /**
- * é€šä¿¡ç®¡ç†ã‚¹ãƒ†ãƒ¼ãƒˆã®å¤‰æ›´
- * @param   state  å¤‰ãˆã‚‹ã‚¹ãƒ†ãƒ¼ãƒˆã®é–¢æ•°
- * @param   time   ã‚¹ãƒ†ãƒ¼ãƒˆä¿æŒæ™‚é–“
+ * ’ÊMŠÇ—ƒXƒe[ƒg‚Ì•ÏX
+ * @param   state  •Ï‚¦‚éƒXƒe[ƒg‚ÌŠÖ”
+ * @param   time   ƒXƒe[ƒg•ÛŠÔ
  * @retval  none
  */
 //==============================================================================
@@ -1018,7 +1012,7 @@ static void _changeStateDebug(PTRStateFunc state, int time, int line)
 
 //==============================================================================
 /**
- * åœ°ä¸‹ã‚¹ã‚¿ãƒ¼ãƒˆ
+ * ’n‰ºƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -1038,7 +1032,7 @@ static void _underStart(void)
     CommMPInitialize(_pCommState->pMyStatus);
     CommInfoInitialize(_pCommState->pSaveData, NULL);
     CommSetAloneMode(TRUE);
-    CommEnableSendMoveData(); //commsystemã«ãŠã„ã¦ã‚ã‚‹ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®é€ä¿¡ã‚’è¨±å¯
+    CommEnableSendMoveData(); //commsystem‚É‚¨‚¢‚Ä‚ ‚éƒL[ƒf[ƒ^‚Ì‘—M‚ğ‹–‰Â
 
     if(_pCommState->bParentOnly){
         if(CommParentModeInit(TRUE, _pCommState->bFirstParent, _PACKETSIZE_UNDERGROUND, TRUE))  {
@@ -1048,7 +1042,7 @@ static void _underStart(void)
         }
     }
     else{
-        // ã¾ãšå­æ©Ÿã«ãªã£ã¦ã¿ã¦ã€è¦ªæ©Ÿã‚’æ¢ã™  ç†ç”±ï¼šè¦ªæ©ŸãŒã„ãŸã‚‰ã™ã°ã‚„ãã¤ãªãŒã‚‹ã‹ã‚‰
+        // ‚Ü‚¸q‹@‚É‚È‚Á‚Ä‚İ‚ÄAe‹@‚ğ’T‚·  ——RFe‹@‚ª‚¢‚½‚ç‚·‚Î‚â‚­‚Â‚È‚ª‚é‚©‚ç
         if(CommChildModeInit(TRUE, TRUE, _PACKETSIZE_UNDERGROUND)){
             if(_pCommState->bNotConnect){
                 _CHANGE_STATE(_stateNone,0);
@@ -1062,7 +1056,7 @@ static void _underStart(void)
 
 //==============================================================================
 /**
- * ãƒªã‚»ãƒƒãƒˆå¾Œã®å†ã‚¹ã‚¿ãƒ¼ãƒˆ
+ * ƒŠƒZƒbƒgŒã‚ÌÄƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -1072,11 +1066,11 @@ static void _underChildFInit(void)
 {
     BOOL bSuccess;
 
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    CommSetAloneMode(TRUE);  // éæ¥ç¶šçŠ¶æ…‹
-    CommEnableSendMoveData(); //commsystemã«ãŠã„ã¦ã‚ã‚‹ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®é€ä¿¡ã‚’è¨±å¯
+    CommSetAloneMode(TRUE);  // ”ñÚ‘±ó‘Ô
+    CommEnableSendMoveData(); //commsystem‚É‚¨‚¢‚Ä‚ ‚éƒL[ƒf[ƒ^‚Ì‘—M‚ğ‹–‰Â
 
     if(_pCommState->bParentOnly){
         _CHANGE_STATE(_underParentInit, 0);
@@ -1086,8 +1080,8 @@ static void _underChildFInit(void)
         if(bSuccess){
             u32 rand = MATH_Rand32(&_pCommState->sRand, _CHILD_P_SEARCH_TIME*2);
             if(_pCommState->reConnectTime > 0){
-                //OHNO_PRINT("å†æ¥ç¶šæ™‚é–“è€ƒæ…® %d \n", _pCommState->reConnectTime);
-                // å†æ¥ç¶šæ™‚é–“è€ƒæ…®
+                //OHNO_PRINT("ÄÚ‘±ŠÔl—¶ %d \n", _pCommState->reConnectTime);
+                // ÄÚ‘±ŠÔl—¶
                 rand = 2 * _CHILD_P_SEARCH_TIME * _pCommState->reConnectTime;
                 _pCommState->reConnectTime = 0;
             }
@@ -1098,7 +1092,7 @@ static void _underChildFInit(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå†ã‚¹ã‚¿ãƒ¼ãƒˆ
+ * q‹@ÄƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -1108,7 +1102,7 @@ static void _underChildPInit(void)
 {
     BOOL bSuccess;
     
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
     bSuccess = CommChildModeInit(FALSE, FALSE, _PACKETSIZE_UNDERGROUND);
@@ -1120,7 +1114,7 @@ static void _underChildPInit(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦è¦ªæ©Ÿã‚’æ¢ã—ä¸­
+ * q‹@‚Æ‚È‚Á‚Äe‹@‚ğ’T‚µ’†
  * @param   none
  * @retval  none
  */
@@ -1130,39 +1124,39 @@ static void _underChildPSearching(void)
 {
     int realParent;
     
-    CommMPParentBconCheck();  // bconã®æ¤œæŸ»
+    CommMPParentBconCheck();  // bcon‚ÌŒŸ¸
 
     if(_pCommState->bPauseFlg || _pCommState->bChildOnly){
         return;
     }
     
-    realParent = CommMPGetFastConnectIndex();  //ã¤ãªãŒã£ãŸã“ã¨ãŒã‚ã‚‹äººãŒã„ãŸã‚‰
+    realParent = CommMPGetFastConnectIndex();  //‚Â‚È‚ª‚Á‚½‚±‚Æ‚ª‚ ‚él‚ª‚¢‚½‚ç
     if(realParent != -1){
-        _pCommState->connectIndex = realParent;  // è¨˜æ†¶
+        _pCommState->connectIndex = realParent;  // ‹L‰¯
         _CHANGE_STATE(_underChildForceConnect, _CHILD_P_SEARCH_TIME);
-        OHNO_PRINT("æœ¬è¦ªã«æ¥ç¶š\n");
+        OHNO_PRINT("–{e‚ÉÚ‘±\n");
         return;
     }
     if(_pCommState->timer != 0){
         _pCommState->timer--;
         return;
     }
-    realParent = CommMPGetNextConnectIndex();  //ã¤ãªãŒã£ãŸã“ã¨ãŒã‚ã‚‹äººãŒã„ãŸã‚‰
+    realParent = CommMPGetNextConnectIndex();  //‚Â‚È‚ª‚Á‚½‚±‚Æ‚ª‚ ‚él‚ª‚¢‚½‚ç
     if(realParent != -1){
-        _pCommState->connectIndex = realParent;  // è¨˜æ†¶
+        _pCommState->connectIndex = realParent;  // ‹L‰¯
         _CHANGE_STATE(_underChildForceConnect, _CHILD_P_SEARCH_TIME);
         return;
     }
 
 
-    // è¦ªãŒã„ãªã„å ´åˆ è‡ªåˆ†ãŒä»®è¦ªã«ãªã‚‹
+    // e‚ª‚¢‚È‚¢ê‡ ©•ª‚ª‰¼e‚É‚È‚é
     _CHANGE_STATE(_underChildFinalize, 0);
 }
 
 
 //==============================================================================
 /**
- * ç›®æ¨™ã¨ãªã‚‹è¦ªæ©Ÿã«å¯¾ã—ã¦æ¥ç¶šä¸­
+ * –Ú•W‚Æ‚È‚ée‹@‚É‘Î‚µ‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
@@ -1171,23 +1165,23 @@ static void _underChildPSearching(void)
 static void _underChildForceConnect(void)
 {
     //OHNO_PRINT("_underChildForceConnect...\n");
-    CommMPParentBconCheck();  // bconã®æ¤œæŸ»
-    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // è¦ªãŒè¦‹ã¤ã‹ã£ã¦ã„ã‚‹å ´åˆ
-        //OHNO_PRINT("å¼·åˆ¶æ¥ç¶šä¸­\n");
-        if(CommChildIndexConnect(_pCommState->connectIndex)){  // æ¥ç¶šã™ã‚‹ã¾ã§å‘¼ã³ç¶šã‘ã‚‹
+    CommMPParentBconCheck();  // bcon‚ÌŒŸ¸
+    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // e‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚éê‡
+        //OHNO_PRINT("‹­§Ú‘±’†\n");
+        if(CommChildIndexConnect(_pCommState->connectIndex)){  // Ú‘±‚·‚é‚Ü‚ÅŒÄ‚Ñ‘±‚¯‚é
             _CHANGE_STATE(_underChildConnecting, 100);
             return;
         }
     }
     if(CommIsError()){
-        //OHNO_PRINT("ã‚¨ãƒ©ãƒ¼ã®å ´åˆæˆ»ã‚‹\n");
+        //OHNO_PRINT("ƒGƒ‰[‚Ìê‡–ß‚é\n");
         _CHANGE_STATE(_underChildFinalize, 0);
     }
     else if(_pCommState->timer!=0){
         _pCommState->timer--;
     }
     else{
-        OHNO_PRINT("æ¥ç¶šæ™‚é–“åˆ‡ã‚Œã®å ´åˆã¾ãŸã‚‚ã©ã‚‹\n");
+        OHNO_PRINT("Ú‘±ŠÔØ‚ê‚Ìê‡‚Ü‚½‚à‚Ç‚é\n");
         _CHANGE_STATE(_underChildFinalize, 0);
     }
 }
@@ -1196,24 +1190,24 @@ static void _underChildForceConnect(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦æ¥ç¶šä¸­
+ * q‹@‚Æ‚È‚Á‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
 //==============================================================================
 static void _underChildConnecting(void)
 {
-    if(CommIsConnect(CommGetCurrentID())){   // è‡ªåˆ†è‡ªèº«ãŒæ¥ç¶šã—ã¦ã„ã‚‹ã“ã¨ãŒç¢ºèªã§ããŸã‚‰
-        CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    if(CommIsConnect(CommGetCurrentID())){   // ©•ª©g‚ªÚ‘±‚µ‚Ä‚¢‚é‚±‚Æ‚ªŠm”F‚Å‚«‚½‚ç
+        CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
         CommSetAloneMode(FALSE);
         CommEnableSendMoveData();
-        //OHNO_PRINT("å­æ©Ÿæ¥ç¶š\n");
+        //OHNO_PRINT("q‹@Ú‘±\n");
         _CHANGE_STATE(_underChildConnect, 0);
         return;
     }
     
     if(CommIsError()){
-        OHNO_PRINT("ã‚¨ãƒ©ãƒ¼ã®å ´åˆchangeã«ã—ã¦ã¿ã‚‹\n");
+        OHNO_PRINT("ƒGƒ‰[‚Ìê‡change‚É‚µ‚Ä‚İ‚é\n");
         _CHANGE_STATE(_underChildFinalize, 0);
         return;
     }
@@ -1221,13 +1215,13 @@ static void _underChildConnecting(void)
         _pCommState->timer--;
         return;
     }
-    // æ™‚é–“åˆ‡ã‚Œ
+    // ŠÔØ‚ê
     _CHANGE_STATE(_underChildFinalize, 0);
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿçµ‚äº† ä»®è¦ªã«å¤‰ã‚ã‚‹
+ * q‹@I—¹ ‰¼e‚É•Ï‚í‚é
  * @param   none
  * @retval  none
  */
@@ -1239,12 +1233,12 @@ static void _underChildFinalize(void)
         return;
     }
     _CHANGE_STATE(_underParentInit, 0);
-//    OHNO_PRINT("è¦ªæ©Ÿã«ãªã‚Šå¾…æ©Ÿ \n");
+//    OHNO_PRINT("e‹@‚É‚È‚è‘Ò‹@ \n");
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿçµ‚äº†ã€€ç¢ºç«‹ã§è¦ªæ©Ÿã«ãªã‚‹ã‹å­æ©Ÿã«ãªã‚‹ã‹æ±ºã‚ã‚‹
+ * e‹@I—¹@Šm—§‚Åe‹@‚É‚È‚é‚©q‹@‚É‚È‚é‚©Œˆ‚ß‚é
  * @param   none
  * @retval  none
  */
@@ -1256,12 +1250,12 @@ static void _underParentFinalize(void)
         return;
     }
     _CHANGE_STATE(_underChildPInit, 0);
-//    OHNO_PRINT("å­æ©Ÿã¨ãªã‚Šæ¤œç´¢ %d\n", rand);
+//    OHNO_PRINT("q‹@‚Æ‚È‚èŒŸõ %d\n", rand);
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿé–‹å§‹
+ * e‹@ŠJn
  * @param   none
  * @retval  none
  */
@@ -1271,10 +1265,10 @@ static void _underParentInit(void)
 {
     MYSTATUS* pMyStatus;
     
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    // è¦ªæ©Ÿã«ãªã£ã¦ã¿ã‚‹
+    // e‹@‚É‚È‚Á‚Ä‚İ‚é
     CommSetAloneMode(TRUE); // 
     if(CommParentModeInit(FALSE, _pCommState->bFirstParent, _PACKETSIZE_UNDERGROUND, TRUE))  {
         u32 rand = MATH_Rand32(&_pCommState->sRand, _PARENT_WAIT_TIME/2);
@@ -1285,7 +1279,7 @@ static void _underParentInit(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã«ãªã‚Šã€å­æ©ŸãŒæ¥ç¶šã—ã¦ãã‚‹ã®ã‚’å¾…ã¤
+ * e‹@‚É‚È‚èAq‹@‚ªÚ‘±‚µ‚Ä‚­‚é‚Ì‚ğ‘Ò‚Â
  * @param   none
  * @retval  none
  */
@@ -1293,9 +1287,9 @@ static void _underParentInit(void)
 
 static void _underParentWait(void)
 {
-   if(CommIsChildsConnecting()){   // è‡ªåˆ†ä»¥å¤–ãŒã¤ãªãŒã£ãŸã‚‰è¦ªæ©Ÿå›ºå®š
-       OHNO_PRINT("è‡ªåˆ†ä»¥å¤–ãŒã¤ãªãŒã£ãŸã‚‰è¦ªæ©Ÿå›ºå®š\n");
-        _pCommState->bFirstParent = TRUE;  // è¦ªæ©Ÿã¨ã—ã¦ç¹‹ãŒã£ãŸã®ã§ãƒ•ãƒ©ã‚°ã‚’æˆ»ã—ã¦ãŠã
+   if(CommIsChildsConnecting()){   // ©•ªˆÈŠO‚ª‚Â‚È‚ª‚Á‚½‚çe‹@ŒÅ’è
+       OHNO_PRINT("©•ªˆÈŠO‚ª‚Â‚È‚ª‚Á‚½‚çe‹@ŒÅ’è\n");
+        _pCommState->bFirstParent = TRUE;  // e‹@‚Æ‚µ‚ÄŒq‚ª‚Á‚½‚Ì‚Åƒtƒ‰ƒO‚ğ–ß‚µ‚Ä‚¨‚­
         _CHANGE_STATE(_underParentConnectInit, 0);
         return;
     }
@@ -1313,7 +1307,7 @@ static void _underParentWait(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦æ¥ç¶šå®Œäº†ã—ãŸã®ã§åˆæœŸåŒ–ã‚’è¡Œã†
+ * e‹@‚Æ‚µ‚ÄÚ‘±Š®—¹‚µ‚½‚Ì‚Å‰Šú‰»‚ğs‚¤
  * @param   none
  * @retval  none
  */
@@ -1322,7 +1316,7 @@ static void _underParentWait(void)
 static void _underParentConnectInit(void)
 {
     CommSetAloneMode(FALSE);
-    CommMPSetNoChildError(TRUE);  // å­æ©ŸãŒã„ãªããªã£ãŸã‚‰å†æ¤œç´¢ã™ã‚‹ãŸã‚ã«ERRæ‰±ã„ã«ã™ã‚‹
+    CommMPSetNoChildError(TRUE);  // q‹@‚ª‚¢‚È‚­‚È‚Á‚½‚çÄŒŸõ‚·‚é‚½‚ß‚ÉERRˆµ‚¢‚É‚·‚é
     CommEnableSendMoveData();
 
     _CHANGE_STATE(_underParentConnect, 0);
@@ -1330,7 +1324,7 @@ static void _underParentConnectInit(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦æ¥ç¶šä¸­
+ * e‹@‚Æ‚µ‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
@@ -1338,9 +1332,9 @@ static void _underParentConnectInit(void)
 
 static void _underParentConnect(void)
 {
-//    OHNO_PRINT("è¦ªæ©Ÿã¨ã—ã¦æ¥ç¶šä¸­\n");
+//    OHNO_PRINT("e‹@‚Æ‚µ‚ÄÚ‘±’†\n");
     //    if(CommIsError()){
-        // è¦ªå­æ¤œç´¢ã«æˆ»ã‚‹
+        // eqŒŸõ‚É–ß‚é
 //        CommMPSwitchParentChild();
 //        _CHANGE_STATE(_underChildFinalize, _FINALIZE_TIME);
 //    }
@@ -1348,7 +1342,7 @@ static void _underParentConnect(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ã—ã¦æ¥ç¶šå®Œäº†
+ * q‹@‚Æ‚µ‚ÄÚ‘±Š®—¹
  * @param   none
  * @retval  none
  */
@@ -1357,19 +1351,19 @@ static void _underParentConnect(void)
 static void _underChildConnect(void)
 {
     /*
-    // è¦ªæ©ŸãŒã„ãªããªã£ãŸã‚‰çµ‚äº†å‡¦ç†ã‚’ã—ã¦åˆ¥è¦ªã‚’æ¢ã—ã«ã„ã
+    // e‹@‚ª‚¢‚È‚­‚È‚Á‚½‚çI—¹ˆ—‚ğ‚µ‚Ä•Êe‚ğ’T‚µ‚É‚¢‚­
     if(CommMPParentDisconnect() || CommIsError()){
         if(CommMPParentDisconnect()){
-            OHNO_PRINT("è¦ªæ©Ÿåˆ‡æ–­ ??  \n");
+            OHNO_PRINT("e‹@Ø’f ??  \n");
         }
         else{
-            OHNO_PRINT("ã‚¨ãƒ©ãƒ¼åˆ‡æ–­   \n");
+            OHNO_PRINT("ƒGƒ‰[Ø’f   \n");
         }
 //        _stateUnderGroundConnectEnd();
-        CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
-        // ãã‚‹ãã‚‹ã¾ã‚ã™
+        CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
+        // ‚®‚é‚®‚é‚Ü‚í‚·
         _pCommState->reConnectTime = CommGetCurrentID();
-        _CHANGE_STATE(_underChildReset, 0);  // ã‚¨ãƒ©ãƒ¼çµ‚äº†ã®å ´åˆRESETã™ã‚‹
+        _CHANGE_STATE(_underChildReset, 0);  // ƒGƒ‰[I—¹‚Ìê‡RESET‚·‚é
     }
        */
 }
@@ -1377,15 +1371,15 @@ static void _underChildConnect(void)
 
 static void _underSBBoot(void)
 {
-    OHNO_PRINT("çµ‚äº†ã®ç¢ºèª \n");
+    OHNO_PRINT("I—¹‚ÌŠm”F \n");
     if(_pCommState->serviceNo < COMM_MODE_BATTLE_SINGLE_WIFI){
-        if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+        if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
             return;
         }
-        CommSetAloneMode(TRUE);  // éæ¥ç¶šçŠ¶æ…‹
-        CommEnableSendMoveData(); //commsystemã«ãŠã„ã¦ã‚ã‚‹ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®é€ä¿¡ã‚’è¨±å¯
-        CommMPStealth(TRUE);  // ç§˜å¯†è£ã«åˆ‡æ–­
-        OHNO_PRINT("é€šä¿¡åˆ‡ã‚ŒãŸã¯ãš \n");
+        CommSetAloneMode(TRUE);  // ”ñÚ‘±ó‘Ô
+        CommEnableSendMoveData(); //commsystem‚É‚¨‚¢‚Ä‚ ‚éƒL[ƒf[ƒ^‚Ì‘—M‚ğ‹–‰Â
+        CommMPStealth(TRUE);  // ”é–§— ‚ÉØ’f
+        OHNO_PRINT("’ÊMØ‚ê‚½‚Í‚¸ \n");
     }
     else{
     }
@@ -1394,7 +1388,7 @@ static void _underSBBoot(void)
 
 //==============================================================================
 /**
- * ç§˜å¯†åŸºåœ°OFFLINEç”¨ã«ãƒªã‚»ãƒƒãƒˆå‡¦ç†ã‚’è¡Œã†
+ * ”é–§Šî’nOFFLINE—p‚ÉƒŠƒZƒbƒgˆ—‚ğs‚¤
  * @param   none
  * @retval  none
  */
@@ -1405,15 +1399,15 @@ static void _underSBReset(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("å†èµ·å‹•    -- %d \n",CommGetCurrentID());
-    CommSystemReset();         // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    OHNO_PRINT("Ä‹N“®    -- %d \n",CommGetCurrentID());
+    CommSystemReset();         // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
     _CHANGE_STATE(_underSBBoot, 0);
 }
 
 
 //==============================================================================
 /**
- * ã‚¤ã‚¯ãƒ‹ãƒ¥ãƒ¼ãƒ¢ãƒ³åˆæœŸåŒ–å¾Œé€šä¿¡èµ·å‹•
+ * ƒCƒNƒjƒ…[ƒ‚ƒ“‰Šú‰»Œã’ÊM‹N“®
  * @param   none
  * @retval  none
  */
@@ -1426,15 +1420,15 @@ static void _underChildOnline(void)
     }
     CommMPStealth(FALSE);
 
-    CommSystemReset();         // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    CommSystemReset();         // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
 
-    OHNO_PRINT("å†èµ·å‹•    -- %d \n",CommGetCurrentID());
+    OHNO_PRINT("Ä‹N“®    -- %d \n",CommGetCurrentID());
     _CHANGE_STATE(_underChildFInit, 0);
 }
 
 //==============================================================================
 /**
- * ãƒªã‚»ãƒƒãƒˆå‡¦ç†ã‚’è¡Œã„ã€å­æ©Ÿã¨ã—ã¦å†èµ·å‹•
+ * ƒŠƒZƒbƒgˆ—‚ğs‚¢Aq‹@‚Æ‚µ‚ÄÄ‹N“®
  * @param   none
  * @retval  none
  */
@@ -1445,13 +1439,13 @@ static void _underChildReset(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("å†èµ·å‹•    -- %d \n",CommGetCurrentID());
+    OHNO_PRINT("Ä‹N“®    -- %d \n",CommGetCurrentID());
     _CHANGE_STATE(_underChildFInit, 0);
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦åˆæœŸåŒ–ã‚’è¡Œã†
+ * e‹@‚Æ‚µ‚Ä‰Šú‰»‚ğs‚¤
  * @param   none
  * @retval  none
  */
@@ -1476,7 +1470,7 @@ static void _battleParentInit(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿã‚’é¸æŠä¸­
+ * q‹@‘Ò‹@ó‘Ô  e‹@‚ğ‘I‘ğ’†
  * @param   none
  * @retval  none
  */
@@ -1492,7 +1486,7 @@ static void _battleParentSendName(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦å¾…æ©Ÿä¸­
+ * e‹@‚Æ‚µ‚Ä‘Ò‹@’†
  * @param   none
  * @retval  none
  */
@@ -1507,7 +1501,7 @@ static void _battleParentWaiting(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã®åˆæœŸåŒ–
+ * q‹@‚Ì‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -1529,7 +1523,7 @@ static void _battleChildInit(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿãƒ“ãƒ¼ã‚³ãƒ³åé›†ä¸­
+ * q‹@‘Ò‹@ó‘Ô  e‹@ƒr[ƒRƒ“ûW’†
  * @param   none
  * @retval  none
  */
@@ -1542,7 +1536,7 @@ static void _battleChildBconScanning(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿã«è¨±å¯ã‚‚ã‚‰ã„ä¸­
+ * q‹@‘Ò‹@ó‘Ô  e‹@‚É‹–‰Â‚à‚ç‚¢’†
  * @param   none
  * @retval  none
  */
@@ -1551,7 +1545,7 @@ static void _battleChildBconScanning(void)
 static void _battleChildConnecting(void)
 {
     CommMPParentBconCheck();
-    if(CommChildIndexConnect(_pCommState->connectIndex)){  // æ¥ç¶šå®Œäº†
+    if(CommChildIndexConnect(_pCommState->connectIndex)){  // Ú‘±Š®—¹
         _CHANGE_STATE(_battleChildSendName, _SEND_NAME_TIME);
     }
 
@@ -1559,7 +1553,7 @@ static void _battleChildConnecting(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿã«æƒ…å ±ã‚’é€ä¿¡
+ * q‹@‘Ò‹@ó‘Ô  e‹@‚Éî•ñ‚ğ‘—M
  * @param   none
  * @retval  none
  */
@@ -1569,7 +1563,7 @@ static void _battleChildSendName(void)
 {
 
     if(CommIsError()){
-        //OHNO_PRINT("ã‚¨ãƒ©ãƒ¼ã®å ´åˆæˆ»ã‚‹\n");
+        //OHNO_PRINT("ƒGƒ‰[‚Ìê‡–ß‚é\n");
         _CHANGE_STATE(_battleChildReset, 0);
     }
 
@@ -1581,7 +1575,7 @@ static void _battleChildSendName(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿãƒªã‚»ãƒƒãƒˆ   
+ * q‹@ƒŠƒZƒbƒg   
  * @param   none
  * @retval  none
  */
@@ -1595,7 +1589,7 @@ static void _battleChildReset(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã‚’ã„ã£ãŸã‚“çµ‚äº†ã—å†æ¥ç¶š
+ * q‹@‚ğ‚¢‚Á‚½‚ñI—¹‚µÄÚ‘±
  * @param   none
  * @retval  none
  */
@@ -1609,7 +1603,7 @@ static void _battleChildReConnect(void)
         _pCommState->timer--;
         return;
     }
-    if(!CommMPIsStateIdle()){  /// çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  /// I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
     if(CommChildModeInit(FALSE, TRUE, _PACKETSIZE_BATTLE)){
@@ -1621,7 +1615,7 @@ static void _battleChildReConnect(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹
+ * q‹@‘Ò‹@ó‘Ô
  * @param   none
  * @retval  none
  */
@@ -1636,7 +1630,7 @@ static void _battleChildWaiting(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã‚’ã„ã£ãŸã‚“çµ‚äº†
+ * q‹@‚ğ‚¢‚Á‚½‚ñI—¹
  * @param   none
  * @retval  none
  */
@@ -1650,7 +1644,7 @@ static void _battleChildReTry(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã‚’ã„ã£ãŸã‚“çµ‚äº†ã—å†èµ·å‹•ã‚’ã‹ã‘ã‚‹
+ * q‹@‚ğ‚¢‚Á‚½‚ñI—¹‚µÄ‹N“®‚ğ‚©‚¯‚é
  * @param   none
  * @retval  none
  */
@@ -1664,7 +1658,7 @@ static void _battleChildReInit(void)
         _pCommState->timer--;
         return;
     }
-    if(!CommMPIsStateIdle()){  /// çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  /// I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
     if(CommChildModeInit(FALSE, TRUE, _PACKETSIZE_BATTLE)){
@@ -1675,7 +1669,7 @@ static void _battleChildReInit(void)
 
 //==============================================================================
 /**
- * ä½•ã‚‚ã—ãªã„ã‚¹ãƒ†ãƒ¼ãƒˆ
+ * ‰½‚à‚µ‚È‚¢ƒXƒe[ƒg
  * @param   none
  * @retval  none
  */
@@ -1683,12 +1677,12 @@ static void _battleChildReInit(void)
 
 static void _stateNone(void)
 {
-    // ãªã«ã‚‚ã—ã¦ã„ãªã„
+    // ‚È‚É‚à‚µ‚Ä‚¢‚È‚¢
 }
 
 //==============================================================================
 /**
- * @brief ã‚¨ãƒ©ãƒ¼å‡¦ç†
+ * @brief ƒGƒ‰[ˆ—
  * @param   none
  * @retval  none
  */
@@ -1700,7 +1694,7 @@ static void _stateConnectError(void)
 
 //==============================================================================
 /**
- * @brief  çµ‚äº†å‡¦ç†ä¸­
+ * @brief  I—¹ˆ—’†
  * @param   none
  * @retval  none
  */
@@ -1716,7 +1710,7 @@ static void _stateEnd(void)
 
 //==============================================================================
 /**
- * @brief  åœ°ä¸‹é›¢è„±å‡¦ç†é–‹å§‹
+ * @brief  ’n‰º—£’Eˆ—ŠJn
  * @param   none
  * @retval  none
  */
@@ -1729,7 +1723,7 @@ static void _stateUnderGroundConnectEnd(void)
 
 //==============================================================================
 /**
- * @brief  è‡ªå‹•çµ‚äº†å‡¦ç†é–‹å§‹
+ * @brief  ©“®I—¹ˆ—ŠJn
  * @param   none
  * @retval  none
  */
@@ -1744,7 +1738,7 @@ static void _stateConnectAutoEnd(void)
 
 //==============================================================================
 /**
- * @brief   æ¥ç¶šåˆ‡ã‚Šæ›¿ãˆã®å‰ã«è¦ªæ©Ÿãªã‚‰ã°ç›¸æ‰‹ã®åˆ‡æ–­ã‚’ç¢ºèªã™ã‚‹
+ * @brief   Ú‘±Ø‚è‘Ö‚¦‚Ì‘O‚Ée‹@‚È‚ç‚Î‘Šè‚ÌØ’f‚ğŠm”F‚·‚é
  * @param   none
  * @retval  none
  */
@@ -1752,24 +1746,24 @@ static void _stateConnectAutoEnd(void)
 
 static void _stateConnectChildEndWait(void)
 {
-    if(CommGetConnectNum() <= 1){  // è‡ªåˆ†ã ã‘ã®æ¥ç¶šã«ãªã£ãŸã‚‰
+    if(CommGetConnectNum() <= 1){  // ©•ª‚¾‚¯‚ÌÚ‘±‚É‚È‚Á‚½‚ç
         WHParentConnectPauseSystem(FALSE);
-        CommSystemResetDS();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+        CommSystemResetDS();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
         _CHANGE_STATE(_unionChildFinalize, 0);
     }
     if(_pCommState->timer != 0){
         _pCommState->timer--;
         return;
     }
-    // å¼·åˆ¶
+    // ‹­§
     WHParentConnectPauseSystem(FALSE);
-    CommSystemResetDS();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    CommSystemResetDS();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
     _CHANGE_STATE(_unionChildFinalize, 0);
 }
 
 //==============================================================================
 /**
- * @brief   æ¥ç¶šåˆ‡ã‚Šæ›¿ãˆã®å‰ã«å­æ©Ÿãªã‚‰ã°åˆ‡ã‚ŒãŸæ™‚ã«åˆæœŸåŒ–
+ * @brief   Ú‘±Ø‚è‘Ö‚¦‚Ì‘O‚Éq‹@‚È‚ç‚ÎØ‚ê‚½‚É‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -1780,13 +1774,13 @@ static void _stateConnectChildEnd(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+    CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
     _CHANGE_STATE(_unionChildFinalize, 0);
 }
 
 //==============================================================================
 /**
- * @brief  çµ‚äº†å‡¦ç†é–‹å§‹
+ * @brief  I—¹ˆ—ŠJn
  * @param   none
  * @retval  none
  */
@@ -1803,7 +1797,7 @@ static void _stateConnectEnd(void)
     if(_pCommState->timer != 0){
         return;
     }
-    OHNO_PRINT("åˆ‡æ–­ã™ã‚‹");
+    OHNO_PRINT("Ø’f‚·‚é");
     CommFinalize();
     _CHANGE_STATE(_stateEnd, 0);
 }
@@ -1812,7 +1806,7 @@ static void _stateConnectEnd(void)
 
 //==============================================================================
 /**
- * UNIONã‚¹ã‚¿ãƒ¼ãƒˆ
+ * UNIONƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -1829,7 +1823,7 @@ static void _unionStart(void)
     WH_SetMaxEntry(_pCommState->limitNum);
     CommInfoInitialize(_pCommState->pSaveData, NULL);
     
-    // ã¾ãšå­æ©Ÿã«ãªã£ã¦ã¿ã¦ã€è¦ªæ©Ÿã‚’æ¢ã™   ãã‚‹ãã‚‹å›ã—ã¦bconã‚’ãŸã‚ã‚‹
+    // ‚Ü‚¸q‹@‚É‚È‚Á‚Ä‚İ‚ÄAe‹@‚ğ’T‚·   ‚®‚é‚®‚é‰ñ‚µ‚Äbcon‚ğ‚½‚ß‚é
     if(CommChildModeInit(TRUE, TRUE, _PACKETSIZE_UNION)){
         CommSetTransmissonTypeDS();
         _CHANGE_STATE(_unionChildSearching, _CHILD_P_SEARCH_TIME*2);
@@ -1838,7 +1832,7 @@ static void _unionStart(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦è¦ªæ©Ÿã‚’æ¢ã—ä¸­
+ * q‹@‚Æ‚È‚Á‚Äe‹@‚ğ’T‚µ’†
  * @param   none
  * @retval  none
  */
@@ -1848,7 +1842,7 @@ static void _unionChildSearching(void)
 {
     int realParent;
 
-    CommMPParentBconCheck();  // bconã®æ¤œæŸ»
+    CommMPParentBconCheck();  // bcon‚ÌŒŸ¸
     if(_pCommState->timer != 0){
         _pCommState->timer--;
         return;
@@ -1857,13 +1851,13 @@ static void _unionChildSearching(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("å­æ©ŸãŠã‚ã‚Š\n");
+    OHNO_PRINT("q‹@‚¨‚í‚è\n");
     _CHANGE_STATE(_unionParentInit, 0);
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿçµ‚äº† ä»®è¦ªã«å¤‰ã‚ã‚‹
+ * q‹@I—¹ ‰¼e‚É•Ï‚í‚é
  * @param   none
  * @retval  none
  */
@@ -1879,7 +1873,7 @@ static void _unionChildFinalize(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿé–‹å§‹
+ * e‹@ŠJn
  * @param   none
  * @retval  none
  */
@@ -1887,22 +1881,22 @@ static void _unionChildFinalize(void)
 
 static void _unionParentInit(void)
 {
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    // è¦ªæ©Ÿã«ãªã£ã¦ã¿ã‚‹
+    // e‹@‚É‚È‚Á‚Ä‚İ‚é
     if(CommParentModeInit(FALSE, _pCommState->bFirstParent, _PACKETSIZE_UNION,TRUE))  {
         u32 rand = MATH_Rand32(&_pCommState->sRand, _PARENT_WAIT_TIME*2);
         CommSetTransmissonTypeDS();
         _pCommState->bFirstParent = FALSE;
-        OHNO_PRINT("è¦ªæ©Ÿ\n");
+        OHNO_PRINT("e‹@\n");
         _CHANGE_STATE(_unionParentWait, 10000);
     }
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã«ãªã‚Šbconæ”¾å‡º
+ * e‹@‚É‚È‚èbcon•úo
  * @param   none
  * @retval  none
  */
@@ -1910,12 +1904,12 @@ static void _unionParentInit(void)
 
 static void _unionParentWait(void)
 {
-    if(CommMPIsParentBeaconSent()){  // ãƒ“ãƒ¼ã‚³ãƒ³ã‚’é€ã‚Šçµ‚ã‚ã£ãŸã‚‰å­æ©Ÿã«åˆ‡ã‚Šæ›¿ã‚ã‚‹
+    if(CommMPIsParentBeaconSent()){  // ƒr[ƒRƒ“‚ğ‘—‚èI‚í‚Á‚½‚çq‹@‚ÉØ‚è‘Ö‚í‚é
     }
     else{
-        if(CommIsChildsConnecting()){   // è‡ªåˆ†ä»¥å¤–ãŒã¤ãªãŒã£ãŸã‚‰è¦ªæ©Ÿå›ºå®š
-            OHNO_PRINT("è¦ªæ©Ÿ -- ã¤ãªãŒã‚Š\n");
-            _pCommState->bFirstParent = TRUE;  // è¦ªæ©Ÿã¨ã—ã¦ç¹‹ãŒã£ãŸã®ã§ãƒ•ãƒ©ã‚°ã‚’æˆ»ã—ã¦ãŠã
+        if(CommIsChildsConnecting()){   // ©•ªˆÈŠO‚ª‚Â‚È‚ª‚Á‚½‚çe‹@ŒÅ’è
+            OHNO_PRINT("e‹@ -- ‚Â‚È‚ª‚è\n");
+            _pCommState->bFirstParent = TRUE;  // e‹@‚Æ‚µ‚ÄŒq‚ª‚Á‚½‚Ì‚Åƒtƒ‰ƒO‚ğ–ß‚µ‚Ä‚¨‚­
             WirelessIconEasy();
             _CHANGE_STATE(_unionParentConnect, 0);
             return;
@@ -1925,7 +1919,7 @@ static void _unionParentWait(void)
             return;
         }
     }
-    OHNO_PRINT("è¦ªæ©ŸãŠã‚ã‚Š\n");
+    OHNO_PRINT("e‹@‚¨‚í‚è\n");
     if( CommMPSwitchParentChild() ){
         _CHANGE_STATE(_unionChildRestart, 0);
     }
@@ -1933,7 +1927,7 @@ static void _unionParentWait(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå†ã‚¹ã‚¿ãƒ¼ãƒˆ
+ * q‹@ÄƒXƒ^[ƒg
  * @param   none
  * @retval  none
  */
@@ -1943,21 +1937,21 @@ static void _unionChildRestart(void)
 {
     u32 rand;
     
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    // ä»Šåº¦ã¯ãƒ“ãƒ¼ã‚³ãƒ³ã‚’æ®‹ã—ãŸã¾ã¾
+    // ¡“x‚Íƒr[ƒRƒ“‚ğc‚µ‚½‚Ü‚Ü
     if(CommChildModeInit(FALSE, FALSE, _PACKETSIZE_UNION)){
         CommSetTransmissonTypeDS();
         rand = MATH_Rand32(&_pCommState->sRand, _CHILD_P_SEARCH_TIME);
-        OHNO_PRINT("å­æ©Ÿé–‹å§‹ %d \n",rand);
+        OHNO_PRINT("q‹@ŠJn %d \n",rand);
         _CHANGE_STATE(_unionChildSearching, rand);
     }
 }
 
 //==============================================================================
 /**
- * è©±ã—ã‹ã‘é–‹å§‹ã§ã€å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹ã«ãªã‚‹
+ * ˜b‚µ‚©‚¯ŠJn‚ÅAq‹@‘Ò‹@ó‘Ô‚É‚È‚é
  * @param   none
  * @retval  none
  */
@@ -1965,7 +1959,7 @@ static void _unionChildRestart(void)
 
 static void _unionForceConnectStart(void)
 {
-    if(!CommMPSwitchParentChild()){  // ä»Šã®çŠ¶æ…‹ã‚’çµ‚äº†
+    if(!CommMPSwitchParentChild()){  // ¡‚Ìó‘Ô‚ğI—¹
         return;
     }
     _CHANGE_STATE(_unionForceConnectStart2, 0);
@@ -1974,10 +1968,10 @@ static void _unionForceConnectStart(void)
 
 static void _unionForceConnectStart2(void)
 {
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    // å­æ©Ÿã«ãªã‚‹
+    // q‹@‚É‚È‚é
     if(CommChildModeInit(FALSE, FALSE, _PACKETSIZE_UNION)){
         CommSetTransmissonTypeDS();
         _CHANGE_STATE(_unionForceConnect, 100);
@@ -1986,7 +1980,7 @@ static void _unionForceConnectStart2(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦å¼·åˆ¶æ¥ç¶š
+ * q‹@‚Æ‚È‚Á‚Ä‹­§Ú‘±
  * @param   none
  * @retval  none
  */
@@ -1995,29 +1989,29 @@ static void _unionForceConnectStart2(void)
 static void _unionForceConnect(void)
 {
     OHNO_PRINT("_unionForceConnect...\n");
-    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // è¦ªãŒè¦‹ã¤ã‹ã£ã¦ã„ã‚‹å ´åˆ
-        OHNO_PRINT("å¼·åˆ¶æ¥ç¶šä¸­\n");
-        if(CommChildIndexConnect(_pCommState->connectIndex)){  // æ¥ç¶šã™ã‚‹ã¾ã§å‘¼ã³ç¶šã‘ã‚‹
+    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // e‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚éê‡
+        OHNO_PRINT("‹­§Ú‘±’†\n");
+        if(CommChildIndexConnect(_pCommState->connectIndex)){  // Ú‘±‚·‚é‚Ü‚ÅŒÄ‚Ñ‘±‚¯‚é
             _CHANGE_STATE(_unionChildConnecting, 100);
             return;
         }
     }
     if(CommIsError()){
-        OHNO_PRINT("ã‚¨ãƒ©ãƒ¼ã®å ´åˆå†åº¦ä»•åˆ‡ã‚ŠãªãŠã—\n");
+        OHNO_PRINT("ƒGƒ‰[‚Ìê‡Ä“xdØ‚è‚È‚¨‚µ\n");
         _CHANGE_STATE(_unionChildReset, 0);
     }
     else if(_pCommState->timer!=0){
         _pCommState->timer--;
     }
     else{
-        OHNO_PRINT("æ¥ç¶šæ™‚é–“åˆ‡ã‚Œã®å ´åˆã¾ãŸã‚‚ã©ã‚‹\n");
+        OHNO_PRINT("Ú‘±ŠÔØ‚ê‚Ìê‡‚Ü‚½‚à‚Ç‚é\n");
         _CHANGE_STATE(_unionChildReset, 0);
     }
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦æ¥ç¶šä¸­
+ * q‹@‚Æ‚È‚Á‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
@@ -2025,12 +2019,12 @@ static void _unionForceConnect(void)
 static void _unionChildConnecting(void)
 {
     if(CommIsError()){
-        OHNO_PRINT("------ã‚¨ãƒ©ãƒ¼ã®å ´åˆReset\n");
+        OHNO_PRINT("------ƒGƒ‰[‚Ìê‡Reset\n");
         _CHANGE_STATE(_unionChildReset, 0);
         return;
     }
-    if(CommIsConnect(CommGetCurrentID())){   // è‡ªåˆ†è‡ªèº«ãŒæ¥ç¶šã—ã¦ã„ã‚‹ã“ã¨ãŒç¢ºèªã§ããŸã‚‰
-        OHNO_PRINT("å­æ©Ÿæ¥ç¶š  èªè¨¼é€ä¿¡\n");
+    if(CommIsConnect(CommGetCurrentID())){   // ©•ª©g‚ªÚ‘±‚µ‚Ä‚¢‚é‚±‚Æ‚ªŠm”F‚Å‚«‚½‚ç
+        OHNO_PRINT("q‹@Ú‘±  ”FØ‘—M\n");
         _pCommState->negotiation = _NEGOTIATION_CHECK;
         CommSendFixSizeData(CS_COMM_NEGOTIATION, _negotiationMsg);
         _CHANGE_STATE(_unionChildNegotiation, 120);
@@ -2041,13 +2035,13 @@ static void _unionChildConnecting(void)
         _pCommState->timer--;
         return;
     }
-    // æ™‚é–“åˆ‡ã‚Œ
+    // ŠÔØ‚ê
     _CHANGE_STATE(_unionChildReset, 0);
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦æ¥ç¶šä¸­  è¦ªæ©Ÿèªè¨¼å¾…ã¡
+ * q‹@‚Æ‚È‚Á‚ÄÚ‘±’†  e‹@”FØ‘Ò‚¿
  * @param   none
  * @retval  none
  */
@@ -2055,17 +2049,17 @@ static void _unionChildConnecting(void)
 static void _unionChildNegotiation(void)
 {
     if(CommIsError()){
-        OHNO_PRINT("------ã‚¨ãƒ©ãƒ¼ã®å ´åˆReset\n");
+        OHNO_PRINT("------ƒGƒ‰[‚Ìê‡Reset\n");
         _CHANGE_STATE(_unionChildReset, 0);
         return;
     }
     if(_pCommState->negotiation == _NEGOTIATION_NG){
-        OHNO_PRINT("æ¥ç¶šå¤±æ•—-----------------------\n");
+        OHNO_PRINT("Ú‘±¸”s-----------------------\n");
         _CHANGE_STATE(_unionChildConnectFailed, 0);
         return;
     }
     if(_pCommState->negotiation == _NEGOTIATION_OK){
-        OHNO_PRINT("å­æ©Ÿæ¥ç¶š  èªè¨¼ãŠã‚ã‚Š\n");
+        OHNO_PRINT("q‹@Ú‘±  ”FØ‚¨‚í‚è\n");
         CommInfoSendPokeData();
         _CHANGE_STATE(_unionChildConnectSuccess, 0);
         return;
@@ -2075,7 +2069,7 @@ static void _unionChildNegotiation(void)
         _pCommState->timer--;
         return;
     }
-    OHNO_PRINT(" æ™‚é–“åˆ‡ã‚Œ \n");
+    OHNO_PRINT(" ŠÔØ‚ê \n");
     _CHANGE_STATE(_unionChildReset, 0);
 }
 
@@ -2104,14 +2098,14 @@ static void _unionChildReset(void)
         _pCommState->reConnectTime--;
         _CHANGE_STATE(_unionForceConnectStart2, 0);
     }
-    else{  // ã¤ãªãŒã‚‰ãªã‹ã£ãŸã®ã§å¤±æ•—ã‚¹ãƒ†ãƒ¼ãƒˆã¸
+    else{  // ‚Â‚È‚ª‚ç‚È‚©‚Á‚½‚Ì‚Å¸”sƒXƒe[ƒg‚Ö
         _CHANGE_STATE(_unionChildConnectFailed, 0);
     }
 }
 
 //==============================================================================
 /**
- * è¦ªã¨ã—ã¦æ¥ç¶šä¸­
+ * e‚Æ‚µ‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
@@ -2120,9 +2114,9 @@ static void _unionParentConnect(void)
 {
     OHNO_PRINT("commisConnect %d\n",CommIsConnect(1));
 
-    if(!CommIsChildsConnecting()){   // è‡ªåˆ†ä»¥å¤–ãŒã¤ãªãŒã£ã¦ãªã„ã°ã‚ã„ã‚‚ã†ä¸€å›
+    if(!CommIsChildsConnecting()){   // ©•ªˆÈŠO‚ª‚Â‚È‚ª‚Á‚Ä‚È‚¢‚Î‚ ‚¢‚à‚¤ˆê‰ñ
         if(!CommStateGetErrorCheck()){
-            OHNO_PRINT("è¦ªæ©Ÿã—ã£ã±ã„\n");
+            OHNO_PRINT("e‹@‚µ‚Á‚Ï‚¢\n");
             if( CommMPSwitchParentChild() ){
                 _CHANGE_STATE(_unionChildRestart, 0);
             }
@@ -2130,12 +2124,12 @@ static void _unionParentConnect(void)
     }
     else{
         if(CommGetCurrentID() == COMM_PARENT_ID){
-            CommInfoSendArray_ServerSide();  // å­æ©Ÿã‹ã‚‰å•ã„åˆã‚ã›ãŒã‚ã£ãŸã‚‰infoã‚’é€ä¿¡
+            CommInfoSendArray_ServerSide();  // q‹@‚©‚ç–â‚¢‡‚í‚¹‚ª‚ ‚Á‚½‚çinfo‚ğ‘—M
         }
     }
     if(CommIsError()){
         if(!CommStateGetErrorCheck()){
-            OHNO_PRINT("------ã‚¨ãƒ©ãƒ¼ã®å ´åˆReset\n");
+            OHNO_PRINT("------ƒGƒ‰[‚Ìê‡Reset\n");
             _CHANGE_STATE(_unionChildReset, 0);
             return;
         }
@@ -2144,7 +2138,7 @@ static void _unionParentConnect(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã®ã¾ã¾ä¸€æ™‚åœæ­¢
+ * e‹@‚Ì‚Ü‚Üˆê’â~
  * @param   none
  * @retval  none
  */
@@ -2154,10 +2148,10 @@ static void _unionParentPause(void)
 {
     u32 rand;
     
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    // ã¤ãªãŒã‚‰ãªã„è¦ªæ©Ÿã«ãªã‚‹
+    // ‚Â‚È‚ª‚ç‚È‚¢e‹@‚É‚È‚é
     if(CommParentModeInit(FALSE, _pCommState->bFirstParent, _PACKETSIZE_UNION, FALSE))  {
         CommSetTransmissonTypeDS();
         _CHANGE_STATE(_stateNone,0);
@@ -2178,7 +2172,7 @@ static void _pictureBoardChildConnecting(void);
 
 //==============================================================================
 /**
- * ãŠçµµã‹ããƒ¢ãƒ¼ãƒ‰ã«ç¹‹ããªãŠã™
+ * ‚¨ŠG‚©‚«ƒ‚[ƒh‚ÉŒq‚¬‚È‚¨‚·
  * @param   none
  * @retval  none
  */
@@ -2189,19 +2183,19 @@ void CommStateUnionPictureBoardChange(void)
     _pCommState->serviceNo = COMM_MODE_PICTURE;
     if(CommGetCurrentID() == COMM_PARENT_ID){
         u8 bDSMode = FALSE;
-        CommSendFixSizeData(CS_DSMP_CHANGE, &bDSMode);  //ç§»å‹•ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã™ã‚‹
+        CommSendFixSizeData(CS_DSMP_CHANGE, &bDSMode);  //ˆÚ“®ƒ‚[ƒh‚É•ÏX‚·‚é
 //        _pCommState->limitNum = COMM_MODE_PICTURE_NUM_MAX+1;
     }
     else{
         u8 bDSMode = FALSE;
-        CommSendFixSizeData(CS_DSMP_CHANGE, &bDSMode);  //ç§»å‹•ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã™ã‚‹
+        CommSendFixSizeData(CS_DSMP_CHANGE, &bDSMode);  //ˆÚ“®ƒ‚[ƒh‚É•ÏX‚·‚é
     }
 }
 
 //==============================================================================
 /**
- * ãŠçµµã‹ããƒ¢ãƒ¼ãƒ‰å­æ©Ÿã¨ã—ã¦ç¹‹ã
- * @param   æ¥ç¶šã™ã‚‹è¦ªæ©Ÿindex
+ * ‚¨ŠG‚©‚«ƒ‚[ƒhq‹@‚Æ‚µ‚ÄŒq‚®
+ * @param   Ú‘±‚·‚ée‹@index
  * @retval  none
  */
 //==============================================================================
@@ -2211,12 +2205,12 @@ void CommStateUnionPictureBoardChild(int index)
     _pCommState->connectIndex = index;
     _pCommState->reConnectTime = _RETRY_COUNT_UNION;
     _CHANGE_STATE(_pictureBoardChangeChild, 0);
-    OHNO_PRINT("ãŠçµµã‹ããƒœãƒ¼ãƒ‰å­æ©Ÿæ¥ç¶š\n");
+    OHNO_PRINT("‚¨ŠG‚©‚«ƒ{[ƒhq‹@Ú‘±\n");
 }
 
 //==============================================================================
 /**
- * ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚³ãƒ¼ãƒŠãƒ¼ã®çŠ¶æ…‹ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+ * ƒŒƒR[ƒhƒR[ƒi[‚Ìó‘Ô‚ÉØ‚è‘Ö‚¦‚é
  * @param   none
  * @retval  none
  */
@@ -2229,8 +2223,8 @@ void CommStateUnionRecordCornerChange(void)
 
 //==============================================================================
 /**
- * ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚³ãƒ¼ãƒŠãƒ¼å­æ©Ÿã¨ã—ã¦ç¹‹ã
- * @param   æ¥ç¶šã™ã‚‹è¦ªæ©Ÿindex
+ * ƒŒƒR[ƒhƒR[ƒi[q‹@‚Æ‚µ‚ÄŒq‚®
+ * @param   Ú‘±‚·‚ée‹@index
  * @retval  none
  */
 //==============================================================================
@@ -2246,9 +2240,9 @@ void CommStateUnionRecordCornerChild(int index)
 
 //==============================================================================
 /**
- * ãŠçµµã‹ãstateã«ç§»è¡Œã—ãŸã‹ã©ã†ã‹ã®ç¢ºèª
+ * ‚¨ŠG‚©‚«state‚ÉˆÚs‚µ‚½‚©‚Ç‚¤‚©‚ÌŠm”F
  * @param   none
- * @retval  ãŠçµµã‹ãstateã«ç§»è¡Œã—ãŸå ´åˆTRUE
+ * @retval  ‚¨ŠG‚©‚«state‚ÉˆÚs‚µ‚½ê‡TRUE
  */
 //==============================================================================
 
@@ -2278,10 +2272,10 @@ static void _pictureBoardChangeParent(void)
 
 static void _pictureBoardInitParent(void)
 {
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
-    OHNO_PRINT("ãŠçµµã‹ãè¦ªã«å¤‰æ›´\n");
+    OHNO_PRINT("‚¨ŠG‚©‚«e‚É•ÏX\n");
     _pCommState->serviceNo = COMM_MODE_PICTURE;
     if(CommParentModeInit(FALSE, FALSE, _PACKETSIZE_UNION,TRUE)) {
         CommSetTransmissonTypeMP();
@@ -2292,8 +2286,8 @@ static void _pictureBoardInitParent(void)
 
 static void _pictureBoardParentWait(void)
 {
-    if(CommIsChildsConnecting()){   // è‡ªåˆ†ä»¥å¤–ãŒã¤ãªãŒã£ãŸã‚‰è¦ªæ©Ÿå›ºå®š
-        _pCommState->bFirstParent = TRUE;  // è¦ªæ©Ÿã¨ã—ã¦ç¹‹ãŒã£ãŸã®ã§ãƒ•ãƒ©ã‚°ã‚’æˆ»ã—ã¦ãŠã
+    if(CommIsChildsConnecting()){   // ©•ªˆÈŠO‚ª‚Â‚È‚ª‚Á‚½‚çe‹@ŒÅ’è
+        _pCommState->bFirstParent = TRUE;  // e‹@‚Æ‚µ‚ÄŒq‚ª‚Á‚½‚Ì‚Åƒtƒ‰ƒO‚ğ–ß‚µ‚Ä‚¨‚­
         CommInfoSendPokeData();
         _CHANGE_STATE(_unionParentConnect, 0);
     }
@@ -2309,7 +2303,7 @@ static void _pictureBoardChangeChild(void)
 
 static void _pictureBoardInitChild(void)
 {
-    if(!CommMPIsStateIdle()){  // çµ‚äº†å‡¦ç†ãŒãã¡ã‚“ã¨çµ‚ã‚ã£ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèª
+    if(!CommMPIsStateIdle()){  // I—¹ˆ—‚ª‚«‚¿‚ñ‚ÆI‚í‚Á‚Ä‚¢‚é‚±‚Æ‚ğŠm”F
         return;
     }
     _pCommState->serviceNo = COMM_MODE_PICTURE;
@@ -2322,7 +2316,7 @@ static void _pictureBoardInitChild(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦å¼·åˆ¶æ¥ç¶š
+ * q‹@‚Æ‚È‚Á‚Ä‹­§Ú‘±
  * @param   none
  * @retval  none
  */
@@ -2331,9 +2325,9 @@ static void _pictureBoardInitChild(void)
 static void _pictureBoardForceConnect(void)
 {
     OHNO_PRINT("_pictureBoardForceConnect...\n");
-    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // è¦ªãŒè¦‹ã¤ã‹ã£ã¦ã„ã‚‹å ´åˆ
-        OHNO_PRINT("BOARDå¼·åˆ¶æ¥ç¶šä¸­\n");
-        if(CommChildIndexConnect(_pCommState->connectIndex)){  // æ¥ç¶šã™ã‚‹ã¾ã§å‘¼ã³ç¶šã‘ã‚‹
+    if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // e‚ªŒ©‚Â‚©‚Á‚Ä‚¢‚éê‡
+        OHNO_PRINT("BOARD‹­§Ú‘±’†\n");
+        if(CommChildIndexConnect(_pCommState->connectIndex)){  // Ú‘±‚·‚é‚Ü‚ÅŒÄ‚Ñ‘±‚¯‚é
             _CHANGE_STATE(_pictureBoardChildConnecting, 100);
             return;
         }
@@ -2341,7 +2335,7 @@ static void _pictureBoardForceConnect(void)
     if(CommIsError() || (_pCommState->timer == 0)){
         _pCommState->reConnectTime--;
         if(_pCommState->reConnectTime==0){
-            OHNO_PRINT("æ¥ç¶šå¤±æ•— %d \n",_pCommState->reConnectTime);
+            OHNO_PRINT("Ú‘±¸”s %d \n",_pCommState->reConnectTime);
             _CHANGE_STATE(_unionChildConnectFailed, 0);
         }
         else{
@@ -2355,7 +2349,7 @@ static void _pictureBoardForceConnect(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã¨ãªã£ã¦æ¥ç¶šä¸­
+ * q‹@‚Æ‚È‚Á‚ÄÚ‘±’†
  * @param   none
  * @retval  none
  */
@@ -2370,18 +2364,18 @@ static void _pictureBoardChildConnecting(void)
     if(CommIsError()){
         _pCommState->reConnectTime--;
         if(_pCommState->reConnectTime==0){
-            OHNO_PRINT("æ¥ç¶šå¤±æ•— %d \n",_pCommState->reConnectTime);
+            OHNO_PRINT("Ú‘±¸”s %d \n",_pCommState->reConnectTime);
             _CHANGE_STATE(_unionChildConnectFailed, 0);
         }
         else{
-            OHNO_PRINT("------ã‚¨ãƒ©ãƒ¼ã®å ´åˆReset\n");
+            OHNO_PRINT("------ƒGƒ‰[‚Ìê‡Reset\n");
             _CHANGE_STATE(_pictureBoardChangeChild, 0);
         }
         return;
     }
     
-    if(CommIsConnect(CommGetCurrentID())){   // è‡ªåˆ†è‡ªèº«ãŒæ¥ç¶šã—ã¦ã„ã‚‹ã“ã¨ãŒç¢ºèªã§ããŸã‚‰
-        OHNO_PRINT("å­æ©Ÿæ¥ç¶š\n");
+    if(CommIsConnect(CommGetCurrentID())){   // ©•ª©g‚ªÚ‘±‚µ‚Ä‚¢‚é‚±‚Æ‚ªŠm”F‚Å‚«‚½‚ç
+        OHNO_PRINT("q‹@Ú‘±\n");
         _CHANGE_STATE(_unionChildConnectSuccess, 0);
         return;
     }
@@ -2391,20 +2385,20 @@ static void _pictureBoardChildConnecting(void)
     }
 
     _pCommState->reConnectTime--;
-    OHNO_PRINT("æ¥ç¶šå¤±æ•— %d \n",_pCommState->reConnectTime);
+    OHNO_PRINT("Ú‘±¸”s %d \n",_pCommState->reConnectTime);
     if(_pCommState->reConnectTime==0){
         _CHANGE_STATE(_unionChildConnectFailed, 0);
     }
     else{
-        // æ™‚é–“åˆ‡ã‚Œ
+        // ŠÔØ‚ê
         _CHANGE_STATE(_pictureBoardChangeChild, 0);
     }
 }
 
 //==============================================================================
 /**
- * ãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ CS_COMM_NEGOTIATION
- * @param   callbackç”¨å¼•æ•°
+ * ƒlƒSƒVƒG[ƒVƒ‡ƒ“—pƒR[ƒ‹ƒoƒbƒN CS_COMM_NEGOTIATION
+ * @param   callback—pˆø”
  * @retval  none
  */
 //==============================================================================
@@ -2417,7 +2411,7 @@ void CommRecvNegotiation(int netID, int size, void* pData, void* pWork)
 
     OHNO_PRINT("------CommRecvNegotiation\n");
 
-    if(CommGetCurrentID() != COMM_PARENT_ID){  // è¦ªæ©Ÿã®ã¿åˆ¤æ–­å¯èƒ½
+    if(CommGetCurrentID() != COMM_PARENT_ID){  // e‹@‚Ì‚İ”»’f‰Â”\
         return;
     }
     bMatch = TRUE;
@@ -2427,23 +2421,23 @@ void CommRecvNegotiation(int netID, int size, void* pData, void* pWork)
             break;
         }
     }
-    if(bMatch  && (!_pCommState->bUnionPause)){   // å­æ©Ÿã‹ã‚‰æ¥ç¶šç¢ºèªãŒæ¥ãŸ
-//        if(CommGetConnectNum() <= _pCommState->limitNum){  // æŒ‡å®šæ¥ç¶šäººæ•°ã‚ˆã‚Šä¸‹å›ã‚‹ã“ã¨
-            OHNO_PRINT("------æˆåŠŸã‚’é€ä¿¡ \n");
+    if(bMatch  && (!_pCommState->bUnionPause)){   // q‹@‚©‚çÚ‘±Šm”F‚ª—ˆ‚½
+//        if(CommGetConnectNum() <= _pCommState->limitNum){  // w’èÚ‘±l”‚æ‚è‰º‰ñ‚é‚±‚Æ
+            OHNO_PRINT("------¬Œ÷‚ğ‘—M \n");
             _negotiationMsgReturnOK[0] = netID;
             CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnOK);
             return;
 //        }
     }
-    OHNO_PRINT("------å¤±æ•—ã‚’é€ä¿¡ %d %d\n",bMatch,_pCommState->bUnionPause);
+    OHNO_PRINT("------¸”s‚ğ‘—M %d %d\n",bMatch,_pCommState->bUnionPause);
     _negotiationMsgReturnNG[0] = netID;
     CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnNG);
 }
 
 //==============================================================================
 /**
- * ãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ CS_COMM_NEGOTIATION_RETURN
- * @param   callbackç”¨å¼•æ•°
+ * ƒlƒSƒVƒG[ƒVƒ‡ƒ“—pƒR[ƒ‹ƒoƒbƒN CS_COMM_NEGOTIATION_RETURN
+ * @param   callback—pˆø”
  * @retval  none
  */
 //==============================================================================
@@ -2461,7 +2455,7 @@ void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork)
             break;
         }
     }
-    if(bMatch){   // è¦ªæ©Ÿã‹ã‚‰æ¥ç¶šèªè¨¼ãŒæ¥ãŸ
+    if(bMatch){   // e‹@‚©‚çÚ‘±”FØ‚ª—ˆ‚½
         id = pMsg[0];
         if(id == CommGetCurrentID()){
             _pCommState->negotiation = _NEGOTIATION_OK;
@@ -2475,9 +2469,9 @@ void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork)
             break;
         }
     }
-    if(bMatch){   // è¦ªæ©Ÿã‹ã‚‰æ¥ç¶šå¦å®šãŒæ¥ãŸ
+    if(bMatch){   // e‹@‚©‚çÚ‘±”Û’è‚ª—ˆ‚½
         id = pMsg[0];
-        OHNO_PRINT("æ¥ç¶šæ‹’å¦ã‚³ãƒãƒ³ãƒ‰ã ã£ãŸ%d %d\n",id , CommGetCurrentID());
+        OHNO_PRINT("Ú‘±‹‘”ÛƒRƒ}ƒ“ƒh‚¾‚Á‚½%d %d\n",id , CommGetCurrentID());
         if(id == (u8)CommGetCurrentID()){
             _pCommState->negotiation = _NEGOTIATION_NG;
         }
@@ -2487,8 +2481,8 @@ void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork)
 
 //==============================================================================
 /**
- * ãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
- * @param   callbackç”¨å¼•æ•°
+ * ƒlƒSƒVƒG[ƒVƒ‡ƒ“—pƒR[ƒ‹ƒoƒbƒN
+ * @param   callback—pˆø”
  * @retval  none
  */
 //==============================================================================
@@ -2501,8 +2495,8 @@ int CommRecvGetNegotiationSize(void)
 
 //==============================================================================
 /**
- * å…¥ã£ã¦ãã‚‹äººæ•°ã‚’åˆ¶é™ã™ã‚‹
- * @param   äººæ•°
+ * “ü‚Á‚Ä‚­‚él”‚ğ§ŒÀ‚·‚é
+ * @param   l”
  * @retval  none
  */
 //==============================================================================
@@ -2518,7 +2512,7 @@ void CommStateSetLimitNum(int num)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿãƒ“ãƒ¼ã‚³ãƒ³åé›†ä¸­
+ * q‹@‘Ò‹@ó‘Ô  e‹@ƒr[ƒRƒ“ûW’†
  * @param   none
  * @retval  none
  */
@@ -2531,7 +2525,7 @@ static void _poketchBconScanning(void)
 
 //==============================================================================
 /**
- * ãƒã‚±ãƒƒãƒå­æ©Ÿã®åˆæœŸåŒ–
+ * ƒ|ƒPƒbƒ`q‹@‚Ì‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -2553,8 +2547,8 @@ static void _poketchChildInit(void)
 
 //==============================================================================
 /**
- * ã½ã‘ã£ã¡ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹ï¼ˆå­æ©ŸçŠ¶æ…‹ã®ã¿ï¼‰
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * ‚Û‚¯‚Á‚¿‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJniq‹@ó‘Ô‚Ì‚İj
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -2562,9 +2556,9 @@ static void _poketchChildInit(void)
 void CommStateEnterPockchChild(SAVEDATA* pSaveData)
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_POKETCH );
     _commStateInitialize(pSaveData,COMM_MODE_POKETCH);
 //    _pCommState->serviceNo = COMM_MODE_POKETCH;
@@ -2577,7 +2571,7 @@ void CommStateEnterPockchChild(SAVEDATA* pSaveData)
 
 //==============================================================================
 /**
- * ã½ã‘ã£ã¡ã¨ã—ã¦ã®çµ‚äº†å‡¦ç†
+ * ‚Û‚¯‚Á‚¿‚Æ‚µ‚Ä‚ÌI—¹ˆ—
  * @param   none
  * @retval  none
  */
@@ -2585,19 +2579,19 @@ void CommStateEnterPockchChild(SAVEDATA* pSaveData)
 
 void CommStateExitPoketch(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    OHNO_PRINT("ã„ã£ãŸã‚“åˆ‡æ–­\n");
-    // åˆ‡æ–­ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œã™ã‚‹  ã™ãã«åˆ‡ã‚Œãªã„
+    OHNO_PRINT("‚¢‚Á‚½‚ñØ’f\n");
+    // Ø’fƒXƒe[ƒg‚ÉˆÚs‚·‚é  ‚·‚®‚ÉØ‚ê‚È‚¢
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚µãƒ¼ãƒãƒ£ãƒ¼ã«ãŠã„ã¦æƒ…å ±åé›†STATEãªã®ã‹ã©ã†ã‹è¿”ã™
+ * ’ÊMƒT[ƒ`ƒƒ[‚É‚¨‚¢‚Äî•ñûWSTATE‚È‚Ì‚©‚Ç‚¤‚©•Ô‚·
  * @param   none
- * @retval  åé›†ä¸­ãªã‚‰TRUE
+ * @retval  ûW’†‚È‚çTRUE
  */
 //==============================================================================
 
@@ -2610,7 +2604,7 @@ BOOL CommIsPoketchSearchingState(void)
     };
     u32 stateAddr = (u32)_pCommState->state;
 
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return FALSE;
     }
     for(i = 0; funcTbl[i] != 0; i++ ){
@@ -2624,7 +2618,7 @@ BOOL CommIsPoketchSearchingState(void)
 
 //==============================================================================
 /**
- * PARTYã‚µãƒ¼ãƒcallback
+ * PARTYƒT[ƒ`callback
  * @param   ggid
  * @retval  none
  */
@@ -2652,7 +2646,7 @@ static void _callbackGGIDScan(u32 ggid,int serviceNo)
 
 //==============================================================================
 /**
- * PARTYã‚µãƒ¼ãƒå­æ©Ÿã®åˆæœŸåŒ–
+ * PARTYƒT[ƒ`q‹@‚Ì‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -2675,7 +2669,7 @@ static void _partySearchChildInit(void)
 
 //==============================================================================
 /**
- * ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã‚²ãƒ¼ãƒ æ¤œç´¢ã®é€šä¿¡å‡¦ç†é–‹å§‹ï¼ˆå­æ©ŸçŠ¶æ…‹ã®ã¿ï¼‰
+ * ƒp[ƒeƒB[ƒQ[ƒ€ŒŸõ‚Ì’ÊMˆ—ŠJniq‹@ó‘Ô‚Ì‚İj
  * @param   SAVEDATA  savedata
  * @retval  none
  */
@@ -2684,9 +2678,9 @@ static void _partySearchChildInit(void)
 void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
 {
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_PARTY );
     _commStateInitialize(pSaveData,COMM_MODE_PARTY);
     _pCommState->regulationNo = 0;
@@ -2698,7 +2692,7 @@ void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
 
 //==============================================================================
 /**
- * ãƒ‘ãƒ¼ãƒ†ã‚£ãƒ¼ã‚²ãƒ¼ãƒ ã‚µãƒ¼ãƒã®çµ‚äº†å‡¦ç†
+ * ƒp[ƒeƒB[ƒQ[ƒ€ƒT[ƒ`‚ÌI—¹ˆ—
  * @param   none
  * @retval  none
  */
@@ -2706,17 +2700,17 @@ void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
 
 void CommStateExitPartyGameScan(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    OHNO_PRINT("ã„ã£ãŸã‚“åˆ‡æ–­\n");
-    // åˆ‡æ–­ã‚¹ãƒ†ãƒ¼ãƒˆã«ç§»è¡Œã™ã‚‹  ã™ãã«åˆ‡ã‚Œãªã„
+    OHNO_PRINT("‚¢‚Á‚½‚ñØ’f\n");
+    // Ø’fƒXƒe[ƒg‚ÉˆÚs‚·‚é  ‚·‚®‚ÉØ‚ê‚È‚¢
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
 //==============================================================================
 /**
- * æ‹¾ã£ãŸãƒ“ãƒ¼ã‚³ãƒ³ã®BITã‚’è¿”ã™
+ * E‚Á‚½ƒr[ƒRƒ“‚ÌBIT‚ğ•Ô‚·
  * @param   none
  * @retval  none
  */
@@ -2729,7 +2723,7 @@ u8 CommStateGetPartyGameBit(void)
 
 //==============================================================================
 /**
- * ãƒªã‚»ãƒƒãƒˆçµ‚äº†å‡¦ç†
+ * ƒŠƒZƒbƒgI—¹ˆ—
  * @param   none
  * @retval  none
  */
@@ -2738,7 +2732,7 @@ u8 CommStateGetPartyGameBit(void)
 BOOL CommStateExitReset(void)
 {
     CommSystemShutdown();
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return TRUE;
     }
     if(_pCommState->serviceNo == COMM_MODE_DPW_WIFI || _pCommState->serviceNo == COMM_MODE_FUSIGI_WIFI){
@@ -2746,18 +2740,18 @@ BOOL CommStateExitReset(void)
         return TRUE;
     }
     else if(CommStateIsWifiConnect()){
-        OHNO_SP_PRINT(" ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†\n");
-        _CHANGE_STATE(_stateWifiLogout,0);  // ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
+        OHNO_SP_PRINT(" ƒƒOƒAƒEƒgˆ—\n");
+        _CHANGE_STATE(_stateWifiLogout,0);  // ƒƒOƒAƒEƒgˆ—
     }
     else{
-        _CHANGE_STATE(_underSBReset, 0);  // ã‚¨ãƒ©ãƒ¼çµ‚äº†ã®å ´åˆRESETã™ã‚‹
+        _CHANGE_STATE(_underSBReset, 0);  // ƒGƒ‰[I—¹‚Ìê‡RESET‚·‚é
     }
     return FALSE;
 }
 
 //==============================================================================
 /**
- * ä¸æ€è­°é€šä¿¡è¦ªæ©Ÿã¨ã—ã¦åˆæœŸåŒ–ã‚’è¡Œã†
+ * •sv‹c’ÊMe‹@‚Æ‚µ‚Ä‰Šú‰»‚ğs‚¤
  * @param   none
  * @retval  none
  */
@@ -2781,7 +2775,7 @@ static void _mysteryParentInit(void)
 
 //==============================================================================
 /**
- * ä¸æ€è­°é€šä¿¡å­æ©Ÿã®åˆæœŸåŒ–
+ * •sv‹c’ÊMq‹@‚Ì‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -2809,7 +2803,7 @@ static void _mysteryChildInit(void)
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸçŠ¶æ…‹
+ * ƒGƒ‰[‚ª”­¶‚µ‚½ó‘Ô
  * @param   none
  * @retval  none
  */
@@ -2823,7 +2817,7 @@ static void _wifiBattleTimeout(void)
     ret = mydwc_step();
 
 	if( ret < 0 ){
-        // ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚
+        // ƒGƒ‰[”­¶B
         _CHANGE_STATE(_wifiBattleError, 0);
     }		
 }
@@ -2839,7 +2833,7 @@ static int _wifiLinkLevel(void)
 
 //==============================================================================
 /**
- * æ¥ç¶šä¸­
+ * Ú‘±’†
  * @param   none
  * @retval  none
  */
@@ -2857,14 +2851,14 @@ static void _wifiBattleConnect(void)
         _CHANGE_STATE(_wifiBattleFailed, 0);
     }
     else if( ret < 0 ){
-        // ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚
+        // ƒGƒ‰[”­¶B
         _CHANGE_STATE(_wifiBattleError, 0);
     }		
-    else if( ret == 1 ) {     // ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆï¼ˆç›¸æ‰‹ã‹ã‚‰ï¼‘ï¼ç§’ä»¥ä¸Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒå±Šã‹ãªã„ï¼‰
+    else if( ret == 1 ) {     // ƒ^ƒCƒ€ƒAƒEƒgi‘Šè‚©‚ç‚P‚O•bˆÈãƒƒbƒZ[ƒW‚ª“Í‚©‚È‚¢j
         _CHANGE_STATE(_wifiBattleTimeout, 0);
     }
     else if(ret == 2){
-        OHNO_PRINT("åˆ‡æ–­ã‚¨ãƒ©ãƒ¼\n");
+        OHNO_PRINT("Ø’fƒGƒ‰[\n");
         if(_pCommState->bDisconnectError){
             _CHANGE_STATE(_wifiBattleError, 0);
         }
@@ -2876,7 +2870,7 @@ static void _wifiBattleConnect(void)
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚³ãƒ³ãƒãƒ¼ãƒˆ
+ * ƒGƒ‰[ƒR[ƒhƒRƒ“ƒo[ƒg
  * @param   none
  * @retval  none
  */
@@ -2884,7 +2878,7 @@ static void _wifiBattleConnect(void)
 
 static void _errcodeConvert(int ret)
 {
-    // ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚	
+    // ƒGƒ‰[”­¶B	
     int errorcode;
     if( (ret == ERRORCODE_HEAP) || (ret == ERRORCODE_0)){
         errorcode = ret;
@@ -2893,13 +2887,13 @@ static void _errcodeConvert(int ret)
         errorcode = -ret;
     }
     _pCommState->errorCode = errorcode;
-    OS_TPrintf("ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰(%d)\n", errorcode);
+    OS_TPrintf("ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BƒGƒ‰[ƒR[ƒh(%d)\n", errorcode);
 }
 
 
 //==============================================================================
 /**
- * å¯¾æˆ¦ç›¸æ‰‹ã‚’æ¢ã—ä¸­
+ * ‘Îí‘Šè‚ğ’T‚µ’†
  * @param   none
  * @retval  none
  */
@@ -2917,11 +2911,11 @@ static void _wifiBattleMaching(void)
         _CHANGE_STATE(_wifiBattleError, 0);
     }
     else if ( ret == STEPMATCH_SUCCESS )  {
-        OS_TPrintf("å¯¾æˆ¦ç›¸æ‰‹ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚\n");
+        OS_TPrintf("‘Îí‘Šè‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½B\n");
         _CHANGE_STATE(_wifiBattleConnect, 0);
     }
     else if ( ret == STEPMATCH_CANCEL ){
-        OS_TPrintf("ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã—ãŸã€‚\n");	
+        OS_TPrintf("ƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½B\n");	
         _CHANGE_STATE(_wifiBattleDisconnect, 0);
     }
     else if( ret == STEPMATCH_FAIL){
@@ -2934,7 +2928,7 @@ static void _wifiBattleMaching(void)
 
 //==============================================================================
 /**
- * ã‚­ãƒ£ãƒ³ã‚»ãƒ«ä¸­  è¦ªã‚’ã‚„ã‚ã‚‹æ™‚ã‚„åˆ‡ã‚Šæ›¿ãˆã‚‹æ™‚ã«ä½¿ç”¨
+ * ƒLƒƒƒ“ƒZƒ‹’†  e‚ğ‚â‚ß‚é‚âØ‚è‘Ö‚¦‚é‚Ég—p
  * @param   none
  * @retval  none
  */
@@ -2943,26 +2937,26 @@ static void _wifiBattleMaching(void)
 static void _wifiBattleCanceling(void)
 {
 
-    int ret = mydwc_stepmatch( 1 );  // ã‚­ãƒ£ãƒ³ã‚»ãƒ«ä¸­
+    int ret = mydwc_stepmatch( 1 );  // ƒLƒƒƒ“ƒZƒ‹’†
 				
     if( ret < 0 ){
-        // ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚
+        // ƒGƒ‰[”­¶B
         _errcodeConvert(ret);
         _CHANGE_STATE(_wifiBattleError, 0);
     }
     else{
         if( mydwc_startgame( _pCommState->wifiTargetNo ) ){
-            CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
+            CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
             if( _pCommState->wifiTargetNo < 0 ){
-                OS_TPrintf("ã‚²ãƒ¼ãƒ å‚åŠ è€…ã‚’å‹Ÿé›†ã—ã¾ã™ã€‚\n");
+                OS_TPrintf("ƒQ[ƒ€Q‰ÁÒ‚ğ•åW‚µ‚Ü‚·B\n");
             } else {
-                OS_TPrintf(" %dç•ªç›®ã®å‹é”ã«æ¥ç¶šã—ã¾ã™ã€‚\n", _pCommState->wifiTargetNo);	        
+                OS_TPrintf(" %d”Ô–Ú‚Ì—F’B‚ÉÚ‘±‚µ‚Ü‚·B\n", _pCommState->wifiTargetNo);	        
             }
             _CHANGE_STATE(_wifiBattleMaching, 0);
         }
         else{
-            OHNO_PRINT(" çŠ¶æ…‹ã‚’å¤‰æ›´ã§ããªã‹ã£ãŸ ã‚‚ã†ã„ã£ã‹ã„\n");
-//            _CHANGE_STATE(_wifiBattleLogin, 0);  // çŠ¶æ…‹ã‚’å¤‰æ›´ã§ããªã‹ã£ãŸ
+            OHNO_PRINT(" ó‘Ô‚ğ•ÏX‚Å‚«‚È‚©‚Á‚½ ‚à‚¤‚¢‚Á‚©‚¢\n");
+//            _CHANGE_STATE(_wifiBattleLogin, 0);  // ó‘Ô‚ğ•ÏX‚Å‚«‚È‚©‚Á‚½
         }
     }
 }
@@ -2971,9 +2965,9 @@ static void _wifiBattleCanceling(void)
 
 //==============================================================================
 /**
- * ã‚²ãƒ¼ãƒ ã‚’é–‹å§‹ã™ã‚‹ã€‚// 2006.4.13 å‰åŸè¿½åŠ 
- * @param   target: è² ãªã‚‰è¦ªã€ï¼ä»¥ä¸Šãªã‚‰ã¤ãªãã«ã„ãè¦ªæ©Ÿã®ç•ªå·
- * @retval  1. æˆåŠŸã€€ã€€0. å¤±æ•—
+ * ƒQ[ƒ€‚ğŠJn‚·‚éB// 2006.4.13 ‹gŒ´’Ç‰Á
+ * @param   target: •‰‚È‚çeA‚OˆÈã‚È‚ç‚Â‚È‚¬‚É‚¢‚­e‹@‚Ì”Ô†
+ * @retval  1. ¬Œ÷@@0. ¸”s
  */
 //==============================================================================
 int CommWifiBattleStart( int target )
@@ -2981,7 +2975,7 @@ int CommWifiBattleStart( int target )
 #if _VCT_TEST
 	mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
     _pCommState->wifiTargetNo = target;
-    _CHANGE_STATE(_wifiBattleCanceling,0);  // ä»Šã®çŠ¶æ…‹ã‚’ç ´æ£„
+    _CHANGE_STATE(_wifiBattleCanceling,0);  // ¡‚Ìó‘Ô‚ğ”jŠü
     return 1;
 #else
 
@@ -2991,9 +2985,9 @@ int CommWifiBattleStart( int target )
 	
     if( mydwc_startgame( target ) ){
 	    if( target < 0 ){
-	        OS_TPrintf("ã‚²ãƒ¼ãƒ å‚åŠ è€…ã‚’å‹Ÿé›†ã—ã¾ã™ã€‚\n");
+	        OS_TPrintf("ƒQ[ƒ€Q‰ÁÒ‚ğ•åW‚µ‚Ü‚·B\n");
         } else {
-	        OS_TPrintf("%dç•ªç›®ã®å‹é”ã«æ¥ç¶šã—ã¾ã™ã€‚\n", target);	        
+	        OS_TPrintf("%d”Ô–Ú‚Ì—F’B‚ÉÚ‘±‚µ‚Ü‚·B\n", target);	        
         }
         _CHANGE_STATE(_wifiBattleMaching, 0);
         return 1;
@@ -3004,9 +2998,9 @@ int CommWifiBattleStart( int target )
 
 //==============================================================================
 /**
- * ãƒãƒƒãƒãƒ³ã‚°ãŒå®Œäº†ã—ãŸã‹ã©ã†ã‹ã‚’åˆ¤å®š
- * @param   target: è² ãªã‚‰è¦ªã€ï¼ä»¥ä¸Šãªã‚‰ã¤ãªãã«ã„ãè¦ªæ©Ÿã®ç•ªå·
- * @retval  1. å®Œäº†ã€€ã€€0. æ¥ç¶šä¸­   2. ã‚¨ãƒ©ãƒ¼ã‚„ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã§ä¸­æ–­
+ * ƒ}ƒbƒ`ƒ“ƒO‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ”»’è
+ * @param   target: •‰‚È‚çeA‚OˆÈã‚È‚ç‚Â‚È‚¬‚É‚¢‚­e‹@‚Ì”Ô†
+ * @retval  1. Š®—¹@@0. Ú‘±’†   2. ƒGƒ‰[‚âƒLƒƒƒ“ƒZƒ‹‚Å’†’f
  */
 //==============================================================================
 int CommWifiIsMatched(void)
@@ -3022,7 +3016,7 @@ int CommWifiIsMatched(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦å¾…æ©Ÿä¸­
+ * e‹@‚Æ‚µ‚Ä‘Ò‹@’†
  * @param   none
  * @retval  none
  */
@@ -3031,17 +3025,17 @@ int CommWifiIsMatched(void)
 static void _wifiBattleLogin(void)
 {
     mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
-    if( mydwc_startgame( -1 ) ){   //æœ€åˆã¯VCTå¾…ã¡çŠ¶æ…‹ã«ãªã‚‹
+    if( mydwc_startgame( -1 ) ){   //Å‰‚ÍVCT‘Ò‚¿ó‘Ô‚É‚È‚é
         _pCommState->bWifiDisconnect = FALSE;
-        CommSystemReset();   // ä»Šã¾ã§ã®é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã«ã™ã‚‹
-        OS_TPrintf("VCTå‚åŠ è€…ã‚’å‹Ÿé›†ã—ã¾ã™ã€‚\n");
+        CommSystemReset();   // ¡‚Ü‚Å‚Ì’ÊMƒoƒbƒtƒ@‚ğƒNƒŠ[ƒ“‚É‚·‚é
+        OS_TPrintf("VCTQ‰ÁÒ‚ğ•åW‚µ‚Ü‚·B\n");
         _CHANGE_STATE(_wifiBattleMaching, 0);
     }
 }
 
 //==============================================================================
 /**
- * ãƒãƒƒãƒãƒ³ã‚°ã‚’çµ‚äº†ã™ã‚‹
+ * ƒ}ƒbƒ`ƒ“ƒO‚ğI—¹‚·‚é
  * @param   none
  * @retval  none
  */
@@ -3060,14 +3054,14 @@ static void _stateWifiMatchEnd(void)
     }
     ret = mydwc_step();
     if( ret < 0 ){
-        OHNO_PRINT(" ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚");
+        OHNO_PRINT(" ƒGƒ‰[”­¶B");
         _CHANGE_STATE(_wifiBattleError, 0);
     }
 }
 
 //==============================================================================
 /**
- * WIFIçµ‚äº†ã‚³ãƒãƒ³ãƒ‰   å­æ©ŸãŒè¦ªæ©Ÿã«ã‚„ã‚ã‚‹ã‚ˆã†ã«é€ä¿¡ ã¶ã£ã¤ã‚Šãã‚‹ CS_WIFI_EXIT
+ * WIFII—¹ƒRƒ}ƒ“ƒh   q‹@‚ªe‹@‚É‚â‚ß‚é‚æ‚¤‚É‘—M ‚Ô‚Á‚Â‚è‚«‚é CS_WIFI_EXIT
  * @param   none
  * @retval  none
  */
@@ -3075,7 +3069,7 @@ static void _stateWifiMatchEnd(void)
 
 void CommRecvExit(int netID, int size, void* pData, void* pWork)
 {
-    OHNO_PRINT("EXITã‚³ãƒãƒ³ãƒ‰å—ä¿¡\n");
+    OHNO_PRINT("EXITƒRƒ}ƒ“ƒhóM\n");
     if(CommGetCurrentID() == COMM_PARENT_ID){
         _pCommState->disconnectIndex = 0;
         _CHANGE_STATE(_stateWifiMatchEnd, 0);
@@ -3089,9 +3083,9 @@ void CommRecvExit(int netID, int size, void* pData, void* pWork)
 
 //==============================================================================
 /**
- * Wifiåˆ‡æ–­ã‚³ãƒãƒ³ãƒ‰ã‚’å—ã‘å–ã£ãŸå ´åˆTRUE
+ * WifiØ’fƒRƒ}ƒ“ƒh‚ğó‚¯æ‚Á‚½ê‡TRUE
  * @param   none
- * @retval  WifiLoginã«ç§»è¡Œã—ãŸå ´åˆTRUE
+ * @retval  WifiLogin‚ÉˆÚs‚µ‚½ê‡TRUE
  */
 //==============================================================================
 
@@ -3102,9 +3096,9 @@ BOOL CommStateIsWifiDisconnect(void)
 
 //==============================================================================
 /**
- * WifiLoginã«ç§»è¡Œã—ãŸã‹ã©ã†ã‹ã®ç¢ºèª
+ * WifiLogin‚ÉˆÚs‚µ‚½‚©‚Ç‚¤‚©‚ÌŠm”F
  * @param   none
- * @retval  WifiLoginã«ç§»è¡Œã—ãŸå ´åˆTRUE
+ * @retval  WifiLogin‚ÉˆÚs‚µ‚½ê‡TRUE
  */
 //==============================================================================
 
@@ -3134,9 +3128,9 @@ BOOL CommStateIsWifiLoginMatchState(void)
 
 //==============================================================================
 /**
- * WifiErrorã®å ´åˆãã®ç•ªå·ã‚’è¿”ã™  ã‚¨ãƒ©ãƒ¼ã«ãªã£ã¦ã‚‹ã‹ã©ã†ã‹ã‚’ç¢ºèªã—ã¦ã‹ã‚‰å¼•ãå‡ºã™ã“ã¨
+ * WifiError‚Ìê‡‚»‚Ì”Ô†‚ğ•Ô‚·  ƒGƒ‰[‚É‚È‚Á‚Ä‚é‚©‚Ç‚¤‚©‚ğŠm”F‚µ‚Ä‚©‚çˆø‚«o‚·‚±‚Æ
  * @param   none
- * @retval  Errorç•ªå·
+ * @retval  Error”Ô†
  */
 //==============================================================================
 
@@ -3149,7 +3143,7 @@ int CommStateGetWifiErrorNo(void)
 
 //==============================================================================
 /**
- * WIFIã§ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã‚’è¡Œã†å ´åˆã®å‡¦ç†
+ * WIFI‚ÅƒƒOƒAƒEƒg‚ğs‚¤ê‡‚Ìˆ—
  * @param   none
  * @retval  none
  */
@@ -3166,14 +3160,14 @@ static void _stateWifiLogout(void)
     }
     ret = mydwc_step();
     if( ret < 0 ){
-        // ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿã€‚
+        // ƒGƒ‰[”­¶B
         _CHANGE_STATE(_wifiBattleError, 0);
     }
 }
 
 //==============================================================================
 /**
- * WIFIã§ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã‚’è¡Œã†å ´åˆã®å‡¦
+ * WIFI‚ÅƒƒOƒAƒEƒg‚ğs‚¤ê‡‚Ìˆ
  * @param   none
  * @retval  none
  */
@@ -3181,17 +3175,17 @@ static void _stateWifiLogout(void)
 
 void CommStateWifiLogout(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
     sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
-    OHNO_SP_PRINT("ã„ã£ãŸã‚“åˆ‡æ–­\n");
+    OHNO_SP_PRINT("‚¢‚Á‚½‚ñØ’f\n");
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
 //==============================================================================
 /**
- * WIFIã§ãƒãƒƒãƒãƒ³ã‚°ã‚’åˆ‡ã‚‹å ´åˆã®å‡¦ç†
+ * WIFI‚Åƒ}ƒbƒ`ƒ“ƒO‚ğØ‚éê‡‚Ìˆ—
  * @param   none
  * @retval  none
  */
@@ -3199,7 +3193,7 @@ void CommStateWifiLogout(void)
 
 void CommStateWifiMatchEnd(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
     _pCommState->disconnectIndex = 0;
@@ -3208,7 +3202,7 @@ void CommStateWifiMatchEnd(void)
 
 //==============================================================================
 /**
- * WIFIã§ãƒãƒƒãƒãƒ³ã‚°ã‚’åˆ‡ã‚‹å ´åˆã®å‡¦ç† äº¤æ›å‡¦ç†
+ * WIFI‚Åƒ}ƒbƒ`ƒ“ƒO‚ğØ‚éê‡‚Ìˆ— ŒğŠ·ˆ—
  * @param   none
  * @retval  none
  */
@@ -3216,15 +3210,15 @@ void CommStateWifiMatchEnd(void)
 
 void CommStateWifiTradeMatchEnd(void)
 {
-    if(_pCommState==NULL){  // ã™ã§ã«çµ‚äº†ã—ã¦ã„ã‚‹
+    if(_pCommState==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
     if(CommGetCurrentID() == COMM_PARENT_ID){
-        OHNO_PRINT("è¦ªã¯è‡ªåˆ†ã§åˆ‡ã‚‹\n");
+        OHNO_PRINT("e‚Í©•ª‚ÅØ‚é\n");
         _pCommState->disconnectIndex = 0;
     }
     else{
-        OHNO_PRINT("å­ã¯å¾…æ©Ÿã™ã‚‹\n");
+        OHNO_PRINT("q‚Í‘Ò‹@‚·‚é\n");
         _pCommState->disconnectIndex = 1;
     }
     _CHANGE_STATE(_stateWifiMatchEnd, 0);
@@ -3245,7 +3239,7 @@ void CommStateWifiBattleMatchEnd(void)
 
 //==============================================================================
 /**
- * WifiErrorã‹ã©ã†ã‹
+ * WifiError‚©‚Ç‚¤‚©
  * @param   none
  * @retval  Error
  */
@@ -3267,7 +3261,7 @@ BOOL CommStateIsWifiError(void)
 
 //==============================================================================
 /**
- * ä¸–ç•Œäº¤æ›ã€ä¸–ç•Œãƒãƒˆãƒ«ã‚¿ãƒ¯ãƒ¼ã®é–‹å§‹  ã‚¨ãƒ©ãƒ¼ç®¡ç†ç”¨
+ * ¢ŠEŒğŠ·A¢ŠEƒoƒgƒ‹ƒ^ƒ[‚ÌŠJn  ƒGƒ‰[ŠÇ——p
  * @param   none
  * @retval  none
  */
@@ -3289,7 +3283,7 @@ void CommStateWifiDPWStart(SAVEDATA* pSaveData)
 
 //==============================================================================
 /**
- * ä¸–ç•Œäº¤æ›ã€ä¸–ç•Œãƒãƒˆãƒ«ã‚¿ãƒ¯ãƒ¼ã®çµ‚äº†
+ * ¢ŠEŒğŠ·A¢ŠEƒoƒgƒ‹ƒ^ƒ[‚ÌI—¹
  * @param   none
  * @retval  none
  */
@@ -3308,7 +3302,7 @@ void CommStateWifiDPWEnd(void)
 
 //==============================================================================
 /**
- * ä¸–ç•Œãµã—ãäº¤æ›  ã‚¨ãƒ©ãƒ¼ç®¡ç†ç”¨
+ * ¢ŠE‚Ó‚µ‚¬ŒğŠ·  ƒGƒ‰[ŠÇ——p
  * @param   none
  * @retval  none
  */
@@ -3330,7 +3324,7 @@ void CommStateWifiFusigiStart(SAVEDATA* pSaveData)
 
 //==============================================================================
 /**
- * ä¸–ç•Œäº¤æ›ã€ä¸–ç•Œãƒãƒˆãƒ«ã‚¿ãƒ¯ãƒ¼ã®çµ‚äº†
+ * ¢ŠEŒğŠ·A¢ŠEƒoƒgƒ‹ƒ^ƒ[‚ÌI—¹
  * @param   none
  * @retval  none
  */
@@ -3352,7 +3346,7 @@ void CommStateWifiFusigiEnd(void)
 
 //==============================================================================
 /**
- * ä¸–ç•Œäº¤æ›ã€ä¸–ç•Œãƒãƒˆãƒ«ã‚¿ãƒ¯ãƒ¼ã§ã‚¨ãƒ©ãƒ¼ã‹ã©ã†ã‹
+ * ¢ŠEŒğŠ·A¢ŠEƒoƒgƒ‹ƒ^ƒ[‚ÅƒGƒ‰[‚©‚Ç‚¤‚©
  * @param   none
  * @retval  none
  */
@@ -3377,7 +3371,7 @@ BOOL CommStateGetWifiDPWError(void)
         ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
         if(ret!=0){
 	  if(myErrorType == DWC_ETYPE_FATAL){
-	    OS_TPrintf("ã‚¨ãƒ©ãƒ¼ã‚’æ•ç²: %d, %d\n", errorCode, myErrorType);
+	    OS_TPrintf("ƒGƒ‰[‚ğ•ßŠl: %d, %d\n", errorCode, myErrorType);
             return TRUE;
 	  }
 	}
@@ -3388,7 +3382,7 @@ BOOL CommStateGetWifiDPWError(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿå¾…æ©ŸçŠ¶æ…‹  è¦ªæ©Ÿã‚’é¸æŠä¸­
+ * q‹@‘Ò‹@ó‘Ô  e‹@‚ğ‘I‘ğ’†
  * @param   none
  * @retval  none
  */
@@ -3396,7 +3390,7 @@ BOOL CommStateGetWifiDPWError(void)
 
 static void _wifiBattleConnecting(void)
 {
-    // æ¥ç¶šä¸­
+    // Ú‘±’†
     int ret = mydwc_connect();
 
     if( ret < 0 ){
@@ -3405,7 +3399,7 @@ static void _wifiBattleConnecting(void)
     }
     else if ( ret > 0 ) 
     {
-        OS_TPrintf("WiFiã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ã«æ¥ç¶šã—ã¾ã—ãŸã€‚\n	");
+        OS_TPrintf("WiFiƒRƒlƒNƒVƒ‡ƒ“‚ÉÚ‘±‚µ‚Ü‚µ‚½B\n	");
         _CHANGE_STATE(_wifiBattleLogin, 0);
     }
 }
@@ -3413,7 +3407,7 @@ static void _wifiBattleConnecting(void)
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿã¨ã—ã¦åˆæœŸåŒ–ã‚’è¡Œã†
+ * e‹@‚Æ‚µ‚Ä‰Šú‰»‚ğs‚¤
  * @param   none
  * @retval  none
  */
@@ -3441,7 +3435,7 @@ static void _wifiBattleParentInit(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿã®åˆæœŸåŒ–
+ * q‹@‚Ì‰Šú‰»
  * @param   none
  * @retval  none
  */
@@ -3466,8 +3460,8 @@ static void _wifiBattleChildInit(void)
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®å­ã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * ƒoƒgƒ‹‚Ìq‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -3480,10 +3474,10 @@ void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
     sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
@@ -3499,10 +3493,10 @@ void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
 
 //==============================================================================
 /**
- * ãƒãƒˆãƒ«æ™‚ã®è¦ªã¨ã—ã¦ã®é€šä¿¡å‡¦ç†é–‹å§‹
+ * ƒoƒgƒ‹‚Ìe‚Æ‚µ‚Ä‚Ì’ÊMˆ—ŠJn
  * @param   pMyStatus  mystatus
- * @param   serviceNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
- * @param   regulationNo  é€šä¿¡ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * @param   serviceNo  ’ÊMƒT[ƒrƒX”Ô†
+ * @param   regulationNo  ’ÊMƒT[ƒrƒX”Ô†
  * @retval  none
  */
 //==============================================================================
@@ -3515,9 +3509,9 @@ void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regu
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(CommIsInitialize()){
-        return;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
@@ -3532,7 +3526,7 @@ void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regu
 
 //==============================================================================
 /**
- * WIFIç’°å¢ƒã«ãƒ­ã‚°ã‚¤ãƒ³ã™ã‚‹ç‚ºã®é€šä¿¡é–‹å§‹
+ * WIFIŠÂ‹«‚ÉƒƒOƒCƒ“‚·‚éˆ×‚Ì’ÊMŠJn
  * @param   pSaveData
  * @retval  none
  */
@@ -3542,9 +3536,9 @@ void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(CommIsInitialize()){
-        return NULL;      // ã¤ãªãŒã£ã¦ã„ã‚‹å ´åˆä»Šã¯é™¤å¤–ã™ã‚‹
+        return NULL;      // ‚Â‚È‚ª‚Á‚Ä‚¢‚éê‡¡‚ÍœŠO‚·‚é
     }
-    // é€šä¿¡ãƒ’ãƒ¼ãƒ—ä½œæˆ
+    // ’ÊMƒq[ƒvì¬
     sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,COMM_MODE_LOGIN_WIFI);
@@ -3564,7 +3558,7 @@ void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
 
 //==============================================================================
 /**
- * WIFIãƒ•ãƒ¬ãƒ³ãƒ‰ç”¨WORKã‚’æ¸¡ã™
+ * WIFIƒtƒŒƒ“ƒh—pWORK‚ğ“n‚·
  * @param   pSaveData
  * @retval  none
  */
@@ -3577,9 +3571,9 @@ void* CommStateGetMatchWork(void)
 
 //==============================================================================
 /**
- * ã“ã“ã‹ã‚‰å…ˆã‚¨ãƒ©ãƒ¼ã®æ¤œæŸ»ã‚’é€šä¿¡ãŒå‡¦ç†ã™ã‚‹ã‹ã©ã†ã‹ã‚’è¨­å®š
- * @param   bFlg    åˆ‡æ–­=ã‚¨ãƒ©ãƒ¼ã«ã™ã‚‹
- * @param   bAuto  TRUEã§æ¤œæŸ»é–‹å§‹
+ * ‚±‚±‚©‚çæƒGƒ‰[‚ÌŒŸ¸‚ğ’ÊM‚ªˆ—‚·‚é‚©‚Ç‚¤‚©‚ğİ’è
+ * @param   bFlg    Ø’f=ƒGƒ‰[‚É‚·‚é
+ * @param   bAuto  TRUE‚ÅŒŸ¸ŠJn
  * @retval  none
  */
 //==============================================================================
@@ -3591,15 +3585,15 @@ void CommStateSetErrorCheck(BOOL bFlg,BOOL bAuto)
         _pCommState->bErrorAuto = bAuto;
         OHNO_PRINT("CommStateSetErrorCheck %d %d\n",_pCommState->bDisconnectError,_pCommState->bErrorAuto);
     }
-    CommMPSetNoChildError(bFlg);  // å­æ©ŸãŒã„ãªããªã£ãŸã‚‰å†æ¤œç´¢ã™ã‚‹ãŸã‚ã«ERRæ‰±ã„ã«ã™ã‚‹
+    CommMPSetNoChildError(bFlg);  // q‹@‚ª‚¢‚È‚­‚È‚Á‚½‚çÄŒŸõ‚·‚é‚½‚ß‚ÉERRˆµ‚¢‚É‚·‚é
     CommMPSetDisconnectOtherError(bFlg);
 }
 
 
 //==============================================================================
 /**
- * ã“ã“ã‹ã‚‰å…ˆã‚¨ãƒ©ãƒ¼ã®æ¤œæŸ»ã‚’é€šä¿¡ãŒå‡¦ç†ã™ã‚‹ã‹ã©ã†ã‹ã‚’è¨­å®š
- * @param   bFlg  TRUEã§æ¤œæŸ»é–‹å§‹
+ * ‚±‚±‚©‚çæƒGƒ‰[‚ÌŒŸ¸‚ğ’ÊM‚ªˆ—‚·‚é‚©‚Ç‚¤‚©‚ğİ’è
+ * @param   bFlg  TRUE‚ÅŒŸ¸ŠJn
  * @retval  none
  */
 //==============================================================================
@@ -3620,7 +3614,7 @@ BOOL CommStateGetErrorCheck(void)
 #ifdef PM_DEBUG
 //==============================================================================
 /**
- * ãƒ‡ãƒãƒƒã‚°ç”¨é€šä¿¡æ¥ç¶šé–‹å§‹
+ * ƒfƒoƒbƒO—p’ÊMÚ‘±ŠJn
  * @param   none
  * @retval  none
  */
@@ -3631,7 +3625,7 @@ void CommStateRecvDebugStart(int netID, int size, void* pData, void* pWork)
     if(_pCommState){
         _pCommState->bDebugStart = TRUE;
     }
-    OHNO_PRINT("ã‚³ãƒãƒ³ãƒ‰åˆ°ç€\n");
+    OHNO_PRINT("ƒRƒ}ƒ“ƒh“’…\n");
 }
 
 BOOL CommStateDBattleIsReady(void)
@@ -3648,8 +3642,8 @@ static void _commConnectChildDebug(TCB_PTR tcb, void* work)
         return;
     }
     if(CommMPGetGFBss(_pCommState->connectIndex)!=NULL){
-        OHNO_PRINT("ãƒ‡ãƒãƒƒã‚°å­æ©Ÿæ¥ç¶šé–‹å§‹\n");
-        CommStateConnectBattleChild(_pCommState->connectIndex);  // æ¥ç¶š
+        OHNO_PRINT("ƒfƒoƒbƒOq‹@Ú‘±ŠJn\n");
+        CommStateConnectBattleChild(_pCommState->connectIndex);  // Ú‘±
         TCB_Delete(tcb);
     }
 }
@@ -3660,8 +3654,8 @@ static void _commConnectParentDebug(TCB_PTR tcb, void* work)
         return;
     }
     if(CommGetConnectNum() == (CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1) ){
-        OHNO_PRINT("æ¥ç¶šäººæ•°ã«é”ã—ãŸ\n");
-        CommSendFixData(CS_DEBUG_START);  // å…¨å“¡ã«ã‚³ãƒãƒ³ãƒ‰é€ä¿¡
+        OHNO_PRINT("Ú‘±l”‚É’B‚µ‚½\n");
+        CommSendFixData(CS_DEBUG_START);  // ‘Sˆõ‚ÉƒRƒ}ƒ“ƒh‘—M
         TCB_Delete(tcb);
     }
 }
@@ -3670,7 +3664,7 @@ void CommStateDBattleConnect(BOOL bParent, int gameMode, SAVEDATA* pSaveData)
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(COMM_MODE_BATTLE_SINGLE_WIFI <= gameMode){
-/*  ä»Šã¯å°å°
+/*  ¡‚Í••ˆó
         DwcOverlayStart();
         if(!bParent){
             CommStateWifiEnterBattleChild(pSaveData, gameMode, 0, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
@@ -3743,9 +3737,9 @@ int CommStateGetSoloDebugNo(void)
 
 //==============================================================================
 /**
- * é€šä¿¡ãŒWIFIæ¥ç¶šã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’è¿”ã™
+ * ’ÊM‚ªWIFIÚ‘±‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ•Ô‚·
  * @param   none
- * @retval  æ¥ç¶šã—ã¦ã„ãŸã‚‰TRUE
+ * @retval  Ú‘±‚µ‚Ä‚¢‚½‚çTRUE
  */
 //==============================================================================
 
@@ -3760,7 +3754,7 @@ BOOL CommStateIsWifiConnect(void)
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã«å…¥ã‚‹
+ * ƒGƒ‰[ó‘Ô‚É“ü‚é
  * @param   none
  * @retval  none
  */
@@ -3775,9 +3769,9 @@ void CommSetErrorReset(u8 type)
 
 //==============================================================================
 /**
- * ãƒªã‚»ãƒƒãƒˆã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã«ãªã£ãŸã‹ã©ã†ã‹ç¢ºèªã™ã‚‹
+ * ƒŠƒZƒbƒgƒGƒ‰[ó‘Ô‚É‚È‚Á‚½‚©‚Ç‚¤‚©Šm”F‚·‚é
  * @param   none
- * @retval  ãƒªã‚»ãƒƒãƒˆã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ãªã‚‰TRUE
+ * @retval  ƒŠƒZƒbƒgƒGƒ‰[ó‘Ô‚È‚çTRUE
  */
 //==============================================================================
 
@@ -3791,8 +3785,8 @@ u8 CommIsResetError(void)
 
 //--------------------------------------------------------------
 /**
- * @brief   fatalã‚¨ãƒ©ãƒ¼ç”¨é–¢æ•°  ã“ã®é–¢æ•°å†…ã‹ã‚‰æŠœã‘ã‚‰ã‚Œãªã„
- * @param   no   ã‚¨ãƒ©ãƒ¼ç•ªå·
+ * @brief   fatalƒGƒ‰[—pŠÖ”  ‚±‚ÌŠÖ”“à‚©‚ç”²‚¯‚ç‚ê‚È‚¢
+ * @param   no   ƒGƒ‰[”Ô†
  * @retval  none
  */
 //--------------------------------------------------------------
@@ -3819,8 +3813,8 @@ void CommFatalErrorFunc_NoNumber( void )
 
 //--------------------------------------------------------------
 /**
- * @brief   ã‚¨ãƒ©ãƒ¼ã‚’æ„ŸçŸ¥ã—ã¦ é€šä¿¡ã‚¨ãƒ©ãƒ¼ç”¨ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚’å‡ºã™
- * @param   heapID    ãƒ¡ãƒ¢ãƒªãƒ¼ç¢ºä¿ã™ã‚‹HEAPID
+ * @brief   ƒGƒ‰[‚ğŠ´’m‚µ‚Ä ’ÊMƒGƒ‰[—pƒEƒCƒ“ƒhƒE‚ğo‚·
+ * @param   heapID    ƒƒ‚ƒŠ[Šm•Û‚·‚éHEAPID
  * @param   bgl       GF_BGL_INI
  * @retval  none
  */
@@ -3828,14 +3822,14 @@ void CommFatalErrorFunc_NoNumber( void )
 
 void CommErrorCheck(int heapID, GF_BGL_INI* bgl)
 {
-// ã“ã®é–¢æ•°ã§ã¯å‡¦ç†ã—ãªã„ã“ã¨ã«ãªã‚Šã¾ã—ãŸ
+// ‚±‚ÌŠÖ”‚Å‚Íˆ—‚µ‚È‚¢‚±‚Æ‚É‚È‚è‚Ü‚µ‚½
 }
 
 
 //--------------------------------------------------------------
 /**
- * @brief   ã‚¨ãƒ©ãƒ¼ã‚’æ„ŸçŸ¥ã—ã¦ é€šä¿¡ã‚¨ãƒ©ãƒ¼ç”¨ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚’å‡ºã™
- * @param   heapID    ãƒ¡ãƒ¢ãƒªãƒ¼ç¢ºä¿ã™ã‚‹HEAPID
+ * @brief   ƒGƒ‰[‚ğŠ´’m‚µ‚Ä ’ÊMƒGƒ‰[—pƒEƒCƒ“ƒhƒE‚ğo‚·
+ * @param   heapID    ƒƒ‚ƒŠ[Šm•Û‚·‚éHEAPID
  * @param   bgl       GF_BGL_INI
  * @retval  none
  */
@@ -3846,23 +3840,23 @@ void CommErrorDispCheck(int heapID)
     if(CommStateGetErrorCheck()){
         if(CommIsError() || CommStateIsWifiError() || CommStateGetWifiDPWError()
            || (_pCommState->stateError!=0)){
-            if(!CommIsResetError()){   // ãƒªã‚»ãƒƒãƒˆã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã§ç„¡ã„å ´åˆ
-                OHNO_PRINT("ã‚µã‚¦ãƒ³ãƒ‰ã‚¹ãƒˆãƒƒãƒ—\n");
+            if(!CommIsResetError()){   // ƒŠƒZƒbƒgƒGƒ‰[ó‘Ô‚Å–³‚¢ê‡
+                OHNO_PRINT("ƒTƒEƒ“ƒhƒXƒgƒbƒv\n");
                 Snd_Stop();
-                OHNO_PRINT("ã‚»ãƒ¼ãƒ–ã‚¹ãƒˆãƒƒãƒ—\n");
-                SaveData_DivSave_Cancel(_pCommState->pSaveData); // ã‚»ãƒ¼ãƒ–ã—ã¦ãŸã‚‰æ­¢ã‚ã‚‹
-                sys.tp_auto_samp = 1;  // ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã‚‚æ­¢ã‚ã‚‹
+                OHNO_PRINT("ƒZ[ƒuƒXƒgƒbƒv\n");
+                SaveData_DivSave_Cancel(_pCommState->pSaveData); // ƒZ[ƒu‚µ‚Ä‚½‚ç~‚ß‚é
+                sys.tp_auto_samp = 1;  // ƒTƒ“ƒvƒŠƒ“ƒO‚à~‚ß‚é
 
-                OHNO_PRINT("ã‚¨ãƒ©ãƒ¼è¡¨ç¤º\n");
+                OHNO_PRINT("ƒGƒ‰[•\¦\n");
                 if(_pCommState->stateError == COMM_ERROR_RESET_GTS){
-                    CommSetErrorReset(COMM_ERROR_RESET_GTS);  // ã‚¨ãƒ©ãƒ¼ãƒªã‚»ãƒƒãƒˆçŠ¶æ…‹ã«ãªã‚‹
+                    CommSetErrorReset(COMM_ERROR_RESET_GTS);  // ƒGƒ‰[ƒŠƒZƒbƒgó‘Ô‚É‚È‚é
                 }
                 else if((_pCommState->serviceNo == COMM_MODE_FUSIGI_WIFI)
                    || (_pCommState->serviceNo == COMM_MODE_MYSTERY)){
-                    CommSetErrorReset(COMM_ERROR_RESET_TITLE);  // ã‚¨ãƒ©ãƒ¼ãƒªã‚»ãƒƒãƒˆçŠ¶æ…‹ã«ãªã‚‹
+                    CommSetErrorReset(COMM_ERROR_RESET_TITLE);  // ƒGƒ‰[ƒŠƒZƒbƒgó‘Ô‚É‚È‚é
                 }
                 else{
-                    CommSetErrorReset(COMM_ERROR_RESET_SAVEPOINT);  // ã‚¨ãƒ©ãƒ¼ãƒªã‚»ãƒƒãƒˆçŠ¶æ…‹ã«ãªã‚‹
+                    CommSetErrorReset(COMM_ERROR_RESET_SAVEPOINT);  // ƒGƒ‰[ƒŠƒZƒbƒgó‘Ô‚É‚È‚é
                 }
             }
         }
@@ -3871,15 +3865,15 @@ void CommErrorDispCheck(int heapID)
 
 //--------------------------------------------------------------
 /**
- * @brief   ãƒªã‚»ãƒƒãƒˆã§ãã‚‹çŠ¶æ…‹ã‹ã©ã†ã‹
+ * @brief   ƒŠƒZƒbƒg‚Å‚«‚éó‘Ô‚©‚Ç‚¤‚©
  * @param   none
- * @retval  TRUE ãªã‚‰ãƒªã‚»ãƒƒãƒˆ
+ * @retval  TRUE ‚È‚çƒŠƒZƒbƒg
  */
 //--------------------------------------------------------------
 
 BOOL CommStateIsResetEnd(void)
 {
-    if(CommMPIsConnectStalth() || !CommStateIsInitialize()){ // é€šä¿¡çµ‚äº†
+    if(CommMPIsConnectStalth() || !CommStateIsInitialize()){ // ’ÊMI—¹
         return TRUE;
     }
     if(!CommMPIsConnect()){
@@ -3890,9 +3884,9 @@ BOOL CommStateIsResetEnd(void)
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼ã«ã™ã‚‹å ´åˆã“ã®é–¢æ•°ã‚’å‘¼ã¶ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚Šã¾ã™
- * @param   ã‚¨ãƒ©ãƒ¼ç¨®é¡
- * @retval  å—ã‘ä»˜ã‘ãŸå ´åˆTRUE
+ * ƒGƒ‰[‚É‚·‚éê‡‚±‚ÌŠÖ”‚ğŒÄ‚Ô‚ÆƒGƒ‰[‚É‚È‚è‚Ü‚·
+ * @param   ƒGƒ‰[í—Ş
+ * @retval  ó‚¯•t‚¯‚½ê‡TRUE
  */
 //==============================================================================
 

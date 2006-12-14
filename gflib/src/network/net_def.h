@@ -22,6 +22,9 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
 /// @brief コールバック関数の書式 local解決用
 typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
+/// @brief 送信完了コールバック
+typedef void (*PTRSendDataCallback)(BOOL result);
+
 
 #define _SCAN_ALL_CHANNEL  (0)  ///< スキャンするチャンネルをランダムで行う場合０に設定する
 
@@ -106,6 +109,8 @@ typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 #endif  //OHNO_PRINT
 
 
+// pNetHandleを受け取る
+extern GFL_NETHANDLE* _NETHANDLE_GetSYS(void);
 // pNetHandleからToolsysを受け取る
 extern NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pNetHandle);
 

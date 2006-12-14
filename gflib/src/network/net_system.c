@@ -1,242 +1,238 @@
-ï»¿//=============================================================================
+//=============================================================================
 /**
- * @file	comm_system.c
- * @brief	é€šä¿¡ã‚·ã‚¹ãƒ†ãƒ 
- * @author	Katsumi Ohno
- * @date    2005.09.08
+ * @file	net_system.c
+ * @brief	’ÊMƒVƒXƒeƒ€
+ * @author	GAME FREAK Inc.
+ * @date    2006.12.05
  */
 //=============================================================================
 
+#include "gflib.h"
 
-#include "common.h"
-#include "wh_config.h"
-#include "wh.h"
-#include "communication/communication.h"
-#include "comm_local.h"
+//#include "common.h"
+#include "device/wh_config.h"
+//#include "wh.h"
+//#include "communication/communication.h"
+//#include "comm_local.h"
 
-#include "system/pm_str.h"
-#include "system/gamedata.h"  //PERSON_NAME_SIZE
+#include "net.h"
+#include "net_def.h"
+#include "device/net_ds.h"
+#include "net_system.h"
+#include "net_command.h"
 
-#include "comm_ring_buff.h"
-#include "comm_queue.h"
-#include "system/savedata.h"
-#include "savedata/regulation.h"
-#include "system/pm_rtc.h"  //GF_RTC
+//#include "system/pm_str.h"
+//#include "system/gamedata.h"  //PERSON_NAME_SIZE
 
-#include "wifi/dwc_rap.h"   //WIFI
+#include "tool/net_ring_buff.h"
+#include "tool/net_queue.h"
+#include "tool/net_tool.h"
+//#include "system/savedata.h"
+//#include "savedata/regulation.h"
+//#include "system/pm_rtc.h"  //GF_RTC
+
+//#include "wifi/dwc_rap.h"   //WIFI
 
 #define FREEZE_SORCE (0)
-#define _SENDRECV_LIMIT  (3)  // é€ä¿¡ã¨å—ä¿¡ã®æ•°ãŒãšã‚ŒãŸå ´åˆé€ä¿¡ã‚’æŠ‘åˆ¶ã™ã‚‹
+#define _SENDRECV_LIMIT  (3)  // ‘—M‚ÆóM‚Ì”‚ª‚¸‚ê‚½ê‡‘—M‚ğ—}§‚·‚é
 
 //==============================================================================
-// externå®£è¨€
+// externéŒ¾
 //==============================================================================
 
-// ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã«ãƒ¯ãƒ¼ãƒ‹ãƒ³ã‚°ãŒå‡ºã‚‹ã®ã§å®šç¾©ã—ã¦ã‚ã‚‹
-#include "communication/comm_system.h"
 
 
 
 //==============================================================================
-// å®šç¾©
+// ’è‹`
 //==============================================================================
 
-// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé€ä¿¡ç”¨ã‚­ãƒ¥ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º    ç¾çŠ¶ã€ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®ç½ ã®æ•°ã‚ˆã‚Šå¤šãåˆ‡ã£ã¦ã„ã‚‹
+/// ƒNƒ‰ƒCƒAƒ“ƒg‘—M—pƒLƒ…[‚Ìƒoƒbƒtƒ@ƒTƒCƒY
 #define _SENDQUEUE_NUM_MAX  (100)
-#define _SENDQUEUE_NUM_NORMAL  (20)
-// ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ç”¨ã‚­ãƒ¥ãƒ¼ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º    ç¾çŠ¶ã€ç½ ã®æ•°ã‚ˆã‚Šå¤šãåˆ‡ã£ã¦ã„ã‚‹
-#define _SENDQUEUE_SERVER_NUM_MAX      (800)
-#define _SENDQUEUE_SERVER_NUM_NORMAL      (280)
+/// ƒT[ƒo[‘—M—pƒLƒ…[‚Ìƒoƒbƒtƒ@ƒTƒCƒY
+#define _SENDQUEUE_SERVER_NUM_MAX      (280)
 
-//å­æ©Ÿé€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º    ï¼‘ï¼–å°ã¤ãªãå ´åˆã®ä»»å¤©å ‚ã®æ¨å¥¨ãƒã‚¤ãƒˆæ•°
+//q‹@‘—Mƒoƒbƒtƒ@‚ÌƒTƒCƒY    ‚P‚U‘ä‚Â‚È‚®ê‡‚Ì”C“V“°‚Ì„§ƒoƒCƒg”
 #define _SEND_BUFF_SIZE_CHILD  WH_MP_CHILD_DATA_SIZE
-//å­æ©Ÿé€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º    ï¼”å°ä»¥ä¸‹æ¥ç¶šæ™‚ã®é€ä¿¡ãƒã‚¤ãƒˆæ•°
+//q‹@‘—Mƒoƒbƒtƒ@‚ÌƒTƒCƒY    ‚S‘äˆÈ‰ºÚ‘±‚Ì‘—MƒoƒCƒg”
 #define _SEND_BUFF_SIZE_4CHILD  WH_MP_4CHILD_DATA_SIZE
-// å­æ©ŸRINGé€ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
+// q‹@RING‘—Mƒoƒbƒtƒ@ƒTƒCƒY
 #define _SEND_RINGBUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_CHILD * 22)
-//è¦ªæ©Ÿé€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
+//e‹@‘—Mƒoƒbƒtƒ@‚ÌƒTƒCƒY
 #define _SEND_BUFF_SIZE_PARENT  WH_MP_PARENT_DATA_SIZE
-// è¦ªæ©ŸRINGé€ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
+// e‹@RING‘—Mƒoƒbƒtƒ@ƒTƒCƒY
 #define _SEND_RINGBUFF_SIZE_PARENT  (_SEND_BUFF_SIZE_PARENT * 2)
 
-// å­æ©Ÿå—ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
+// q‹@óMƒoƒbƒtƒ@‚ÌƒTƒCƒY
 #define _RECV_BUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_PARENT-1)
-// è¦ªæ©Ÿå—ä¿¡ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º
+// e‹@óMƒoƒbƒtƒ@ƒTƒCƒY
 #define _RECV_BUFF_SIZE_PARENT (_SEND_BUFF_SIZE_CHILD-1)
 
 
 
-// åˆæœŸåŒ–ã•ã‚Œã¦ã„ãªã„ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ãƒ¼ã®æ•°
+// ‰Šú‰»‚³‚ê‚Ä‚¢‚È‚¢ƒCƒeƒŒ[ƒ^[‚Ì”
 #define _NULL_ITERATE (-1)
-// ã‚ã‚Šãˆãªã„ID
+// ‚ ‚è‚¦‚È‚¢ID
 #define _INVALID_ID  (COMM_INVALID_ID)
-// ã‚ã‚Šãˆãªã„HEADER
+// ‚ ‚è‚¦‚È‚¢HEADER
 #define _INVALID_HEADER  (0xff)
-// é€ä¿¡ãƒ‡ãƒ¼ã‚¿ãŒã¾ã ã‚‚ã‚‰ãˆã¦ã„ãªã‹ã£ãŸ
+// ‘—Mƒf[ƒ^‚ª‚Ü‚¾‚à‚ç‚¦‚Ä‚¢‚È‚©‚Á‚½
 #define _NODATA_SEND  (0x0e)
 
-//VBlankå‡¦ç†ã®ã‚¿ã‚¹ã‚¯ã®ãƒ—ãƒ©ã‚¤ã‚ªãƒªãƒ†ã‚£ãƒ¼
+//VBlankˆ—‚Ìƒ^ƒXƒN‚Ìƒvƒ‰ƒCƒIƒŠƒeƒB[
 #define _PRIORITY_VBLANKFUNC (0)
 
-// é€šä¿¡å…ˆé ­ãƒã‚¤ãƒˆã®BITã®æ„å‘³
-#define _SEND_NONE  (0x00)  // ä¸€å›ã§é€ã‚Œã‚‹å ´åˆ
-#define _SEND_NEXT  (0x01)  // ä¸€å›ã§é€ã‚Œãªã„å ´åˆ
-#define _SEND_NO_DATA  (0x02)  // ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ãƒ¼ä»¥å¤–ã¯ç„¡ã„å ´åˆ MPå­æ©Ÿ
-#define _MP_DATA_HEADER (0x0b)  // è¦ªæ©ŸMPãƒ‡ãƒ¼ã‚¿ã®å ´åˆã®ç•ªå·  DSã®å ´åˆã¯ 0x00 or 0x01 or 0xfe or 0xff
+// ’ÊMæ“ªƒoƒCƒg‚ÌBIT‚ÌˆÓ–¡
+#define _SEND_NONE  (0x00)  // ˆê‰ñ‚Å‘—‚ê‚éê‡
+#define _SEND_NEXT  (0x01)  // ˆê‰ñ‚Å‘—‚ê‚È‚¢ê‡
+#define _SEND_NO_DATA  (0x02)  // ƒL[ƒf[ƒ^[ˆÈŠO‚Í–³‚¢ê‡ MPq‹@
+#define _MP_DATA_HEADER (0x0b)  // e‹@MPƒf[ƒ^‚Ìê‡‚Ì”Ô†  DS‚Ìê‡‚Í 0x00 or 0x01 or 0xfe or 0xff
 
-#define _ACTION_COUNT_MOVE  (8)  // ç§»å‹•ã‚­ãƒ¼ã‚’é€ã‚‰ãªã„æœŸé–“
+#define _ACTION_COUNT_MOVE  (8)  // ˆÚ“®ƒL[‚ğ‘—‚ç‚È‚¢ŠúŠÔ
 
-#define _PORT_DATA_RETRANSMISSION   (14)    // åˆ‡æ–­ã™ã‚‹ã¾ã§ç„¡é™å†é€ã‚’è¡Œã†  ã“ã¡ã‚‰ã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹
-#define _PORT_DATA_PARENT         _PORT_DATA_RETRANSMISSION
-#define _PORT_DATA_CHILD              _PORT_DATA_RETRANSMISSION
 
-typedef enum{   // é€ä¿¡çŠ¶æ…‹
-    _SEND_CB_NONE,           // ãªã«ã‚‚ã—ã¦ã„ãªã„
-    _SEND_CB_FIRST_SEND,     // æµã‚Œã®ä¸­ã§ã®æœ€åˆã®é€ä¿¡
-    _SEND_CB_FIRST_SENDEND,  // æœ€åˆã®é€ä¿¡ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãŒæ¥ãŸ
-    _SEND_CB_SECOND_SEND,    // å‰²ã‚Šè¾¼ã¿ã§ã®é€ä¿¡
-    _SEND_CB_SECOND_SENDEND  // å‰²ã‚Šè¾¼ã¿ã§ã®é€ä¿¡ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ãŒæ¥ãŸ
+typedef enum{   // ‘—Mó‘Ô
+    _SEND_CB_NONE,           // ‚È‚É‚à‚µ‚Ä‚¢‚È‚¢
+    _SEND_CB_FIRST_SEND,     // —¬‚ê‚Ì’†‚Å‚ÌÅ‰‚Ì‘—M
+    _SEND_CB_FIRST_SENDEND,  // Å‰‚Ì‘—M‚ÌƒR[ƒ‹ƒoƒbƒN‚ª—ˆ‚½
+    _SEND_CB_SECOND_SEND,    // Š„‚è‚İ‚Å‚Ì‘—M
+    _SEND_CB_SECOND_SENDEND  // Š„‚è‚İ‚Å‚Ì‘—MƒR[ƒ‹ƒoƒbƒN‚ª—ˆ‚½
 
-};
+} _sendCallbackCondition_e;
 
-typedef enum{   // é€ä¿¡å½¢æ…‹
-    _MP_MODE,    // è¦ªå­å‹
-    _DS_MODE,    // ä¸¦åˆ—å‹
-    _CHANGE_MODE_DSMP,  // DSã‹ã‚‰MPã«åˆ‡ã‚Šæ›¿ãˆä¸­
-    _CHANGE_MODE_MPDS,  // MPã‹ã‚‰DSã«åˆ‡ã‚Šæ›¿ãˆä¸­
-};
+typedef enum{   // ‘—MŒ`‘Ô
+    _MP_MODE,    // eqŒ^
+    _DS_MODE,    // •À—ñŒ^
+    _CHANGE_MODE_DSMP,  // DS‚©‚çMP‚ÉØ‚è‘Ö‚¦’†
+    _CHANGE_MODE_MPDS,  // MP‚©‚çDS‚ÉØ‚è‘Ö‚¦’†
+} _connectMode_e;
 
-typedef enum TrapKeyMode_e{
+typedef enum {
     _NONE_KEY,
     _RANDOM_KEY,
     _REVERSE_KEY,
-};
+} _trapKeyMode_e;
 
 
+typedef enum {
+    _DEVICE_WIRELESS,
+    _DEVICE_WIFI,
+} _deviceMode_e;
 
 //==============================================================================
-// ãƒ¯ãƒ¼ã‚¯
+// ƒ[ƒN
 //==============================================================================
 
 typedef struct{
-    u8* pData;     ///< ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ã‚¿
-    u16 size;       ///< ã‚µã‚¤ã‚º
-    u8 command;    ///< ã‚³ãƒãƒ³ãƒ‰
-    u8 priority;   ///< å„ªå…ˆé †ä½  ã‚‚ã—ãã¯é€ä¿¡ä¸­ã‹ã©ã†ã‹
+    u8* pData;     ///< ƒf[ƒ^ƒ|ƒCƒ“ƒ^
+    u16 size;       ///< ƒTƒCƒY
+    u8 command;    ///< ƒRƒ}ƒ“ƒh
+    u8 priority;   ///< —Dæ‡ˆÊ  ‚à‚µ‚­‚Í‘—M’†‚©‚Ç‚¤‚©
 } _SEND_QUEUE;
 
 typedef struct{
-    int dataPoint; // å—ä¿¡ãƒãƒƒãƒ•ã‚¡äºˆç´„ãŒã‚ã‚‹ã‚³ãƒãƒ³ãƒ‰ã®ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
-    u8* pRecvBuff; // å—ä¿¡ãƒãƒƒãƒ•ã‚¡äºˆç´„ãŒã‚ã‚‹ã‚³ãƒãƒ³ãƒ‰ã®ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®
+    int dataPoint; // óMƒoƒbƒtƒ@—\–ñ‚ª‚ ‚éƒRƒ}ƒ“ƒh‚ÌƒXƒ^[ƒgˆÊ’u
+    u8* pRecvBuff; // óMƒoƒbƒtƒ@—\–ñ‚ª‚ ‚éƒRƒ}ƒ“ƒh‚ÌƒXƒ^[ƒgˆÊ’u
     u16 valSize;
     u8 valCommand;
 } _RECV_COMMAND_PACK;
 
 
 typedef struct{
-    /// ----------------------------å­æ©Ÿç”¨ï¼†è¦ªæ©Ÿç”¨BUFF
-    u8 sSendBuf[2][_SEND_BUFF_SIZE_4CHILD];          ///<  å­æ©Ÿã®é€ä¿¡ç”¨ãƒãƒƒãƒ•ã‚¡
-    u8 sSendBufRing[_SEND_RINGBUFF_SIZE_CHILD];  ///<  å­æ©Ÿã®é€ä¿¡ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
-    u8 sSendServerBuf[2][_SEND_BUFF_SIZE_PARENT];          ///<  è¦ªæ©Ÿã®é€ä¿¡ç”¨ãƒãƒƒãƒ•ã‚¡
+    /// ----------------------------q‹@—p•e‹@—pBUFF
+    u8 sSendBuf[2][_SEND_BUFF_SIZE_4CHILD];          ///<  q‹@‚Ì‘—M—pƒoƒbƒtƒ@
+    u8 sSendBufRing[_SEND_RINGBUFF_SIZE_CHILD];  ///<  q‹@‚Ì‘—MƒŠƒ“ƒOƒoƒbƒtƒ@
+    u8 sSendServerBuf[2][_SEND_BUFF_SIZE_PARENT];          ///<  e‹@‚Ì‘—M—pƒoƒbƒtƒ@
     u8 sSendServerBufRing[_SEND_RINGBUFF_SIZE_PARENT];
-    u8* pMidRecvBufRing;          ///< å—ã‘å–ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã™ã‚‹ DSå°‚ç”¨
-    u8* pServerRecvBufRing;       ///< è¦ªæ©Ÿå´å—ä¿¡ãƒãƒƒãƒ•ã‚¡
-    u8* pRecvBufRing;             ///< å­æ©ŸãŒå—ã‘å–ã‚‹ãƒãƒƒãƒ•ã‚¡
-    u8* pTmpBuff;                 ///< å—ä¿¡å—ã‘æ¸¡ã—ã®ãŸã‚ã®ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡ãƒã‚¤ãƒ³ã‚¿
+    u8* pMidRecvBufRing;          ///< ó‚¯æ‚éƒoƒbƒtƒ@‚ğƒoƒbƒNƒAƒbƒv‚·‚é DSê—p
+    u8* pServerRecvBufRing;       ///< e‹@‘¤óMƒoƒbƒtƒ@
+    u8* pRecvBufRing;             ///< q‹@‚ªó‚¯æ‚éƒoƒbƒtƒ@
+    u8* pTmpBuff;                 ///< óMó‚¯“n‚µ‚Ì‚½‚ß‚Ìˆêƒoƒbƒtƒ@ƒ|ƒCƒ“ƒ^
     //----ring
     RingBuffWork sendRing;
-    RingBuffWork recvRing;                      ///< å­æ©Ÿã®å—ä¿¡ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
-//    RingBuffWork recvRingUndo;                      ///< å­æ©Ÿã®å—ä¿¡ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡
+    RingBuffWork recvRing;                      ///< q‹@‚ÌóMƒŠƒ“ƒOƒoƒbƒtƒ@
+//    RingBuffWork recvRingUndo;                      ///< q‹@‚ÌóMƒŠƒ“ƒOƒoƒbƒtƒ@
     RingBuffWork recvMidRing[COMM_MACHINE_MAX];
     RingBuffWork sendServerRing;
     RingBuffWork recvServerRing[COMM_MACHINE_MAX];
 //    RingBuffWork recvServerRingUndo[COMM_MACHINE_MAX];
-    TCB_PTR pVBlankTCB;
-    ///---queé–¢é€£
+//    TCB_PTR pVBlankTCB;
+    ///---queŠÖ˜A
     SEND_QUEUE_MANAGER sendQueueMgr;
     SEND_QUEUE_MANAGER sendQueueMgrServer;
-    ///---å—ä¿¡é–¢é€£
+    ///---óMŠÖ˜A
     _RECV_COMMAND_PACK recvCommServer[COMM_MACHINE_MAX];
     _RECV_COMMAND_PACK recvCommClient;
     
-    ///------  padé–¢é€£
-    MATHRandContext32 sRand;                    ///< ã‚­ãƒ¼ç”¨ä¹±æ•°ã‚­ãƒ¼
-    u16 cont[COMM_MACHINE_MAX];            ///< ç‹¬è‡ªã‚­ãƒ¼ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°
-    u8 speed[COMM_MACHINE_MAX];             ///< é€Ÿåº¦ã‚’æ¯å›é€ã‚‹
-    u16 sendCont;
-    u8 sendKeyStop;
-    u8 sendSpeed;
-    u8 randPadType;   ///< ä¹±æ•°ç§»å‹•ã«ä½¿ç”¨
-    s8 randPadStep;   ///< ä¹±æ•°ç§»å‹•ã«ä½¿ç”¨
-    u16 oldPad;        ///< ä¹±æ•°ç§»å‹•ã«ä½¿ç”¨
-    //---------  åŒæœŸé–¢é€£
-    BOOL bWifiSendRecv;   // WIFIã®å ´åˆåŒæœŸã‚’å–ã‚‹æ™‚ã¨ã¨ã‚‰ãªã„ã¨ããŒå¿…è¦ãªã®ã§ åˆ‡ã‚Šåˆ†ã‘ã‚‹
-    volatile int countSendRecv;   // é€ã£ãŸã‚‰ï¼‹å—ã‘å–ã£ãŸã‚‰ï¼ å›æ•°
-    volatile int countSendRecvServer[COMM_MACHINE_MAX];   // é€ã£ãŸã‚‰ï¼‹å—ã‘å–ã£ãŸã‚‰ï¼ å›æ•°
+    //---------  “¯ŠúŠÖ˜A
+    BOOL bWifiSendRecv;   // WIFI‚Ìê‡“¯Šú‚ğæ‚é‚Æ‚Æ‚ç‚È‚¢‚Æ‚«‚ª•K—v‚È‚Ì‚Å Ø‚è•ª‚¯‚é
+    volatile int countSendRecv;   // ‘—‚Á‚½‚ç{ó‚¯æ‚Á‚½‚ç| ‰ñ”
+    volatile int countSendRecvServer[COMM_MACHINE_MAX];   // ‘—‚Á‚½‚ç{ó‚¯æ‚Á‚½‚ç| ‰ñ”
 
 #ifdef PM_DEBUG
 
-    volatile int countSendNum;   // é€ã£ãŸã‚‰ï¼‹
-    volatile int countRecvNum;   // å—ã‘å–ã£ãŸã‚‰ï¼‹ å›æ•°
-    volatile int countSendNumServer[COMM_MACHINE_MAX];   // é€ã£ãŸã‚‰ï¼‹ å›æ•°
-    volatile int countRecvNumServer[COMM_MACHINE_MAX];   // å—ã‘å–ã£ãŸã‚‰ï¼‹ å›æ•°
+    volatile int countSendNum;   // ‘—‚Á‚½‚ç{
+    volatile int countRecvNum;   // ó‚¯æ‚Á‚½‚ç{ ‰ñ”
+    volatile int countSendNumServer[COMM_MACHINE_MAX];   // ‘—‚Á‚½‚ç{ ‰ñ”
+    volatile int countRecvNumServer[COMM_MACHINE_MAX];   // ó‚¯æ‚Á‚½‚ç{ ‰ñ”
 #endif
     
     //-------
     int packetSizeMax;
-    u16 bitmap;   // æ¥ç¶šã—ã¦ã„ã‚‹æ©Ÿå™¨ã‚’BITç®¡ç†
+    u16 bitmap;   // Ú‘±‚µ‚Ä‚¢‚é‹@Ší‚ğBITŠÇ—
     
     //-------------------
-//    u8 DSCountRecv[COMM_MACHINE_MAX];  // é †ç•ªç¢ºèªç”¨
-    u8 DSCount; // é †ç•ªç¢ºèªç”¨
-    u8 recvDSCatchFlg[COMM_MACHINE_MAX];  // é€šä¿¡ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ã‚’è¨˜æ†¶ DSåŒæœŸç”¨
-    u8 bFirstCatch[COMM_MACHINE_MAX];  // ã‚³ãƒãƒ³ãƒ‰ã‚’ã¯ã˜ã‚ã¦ã‚‚ã‚‰ã£ãŸæ™‚ç”¨
+    NET_TOOLSYS* pTool;  ///< netTOOL‚Ìƒ[ƒN
+    u8 device;   ///< ƒfƒoƒCƒXØ‚è‘Ö‚¦
 
-    u8 bPSendNoneRecv[COMM_MACHINE_MAX];        // æœ€åˆã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’ç„¡æ¡ä»¶ç„¡è¦–
+//    u8 DSCountRecv[COMM_MACHINE_MAX];  // ‡”ÔŠm”F—p
+    u8 DSCount; // ‡”ÔŠm”F—p
+    u8 recvDSCatchFlg[COMM_MACHINE_MAX];  // ’ÊM‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ğ‹L‰¯ DS“¯Šú—p
+    u8 bFirstCatch[COMM_MACHINE_MAX];  // ƒRƒ}ƒ“ƒh‚ğ‚Í‚¶‚ß‚Ä‚à‚ç‚Á‚½—p
+
+    u8 bPSendNoneRecv[COMM_MACHINE_MAX];        // Å‰‚ÌƒR[ƒ‹ƒoƒbƒN‚ğ–³ğŒ–³‹
 
 #ifdef PM_DEBUG
     u8 DebugAutoMove;
 #endif
-    u8 standNo[4];     // æˆ¦é—˜ã®ã¨ãã®ç«‹ã£ãŸä½ç½®
+    u8 standNo[4];     // í“¬‚Ì‚Æ‚«‚Ì—§‚Á‚½ˆÊ’u
    // u8 actionCount;
     u8 transmissionNum;
     u8 transmissionSend;
-    u8 transmissionType;  // é€šä¿¡å½¢æ…‹ DSã‹MPã‹ã®ç®¡ç†
-    u8 changeService;    // é€šä¿¡å½¢æ…‹ã®å¤‰æ›´
-    u8 sendSwitch;   // é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚¹ã‚¤ãƒƒãƒãƒ•ãƒ©ã‚°
-    u8 sendServerSwitch;   // é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã®ã‚¹ã‚¤ãƒƒãƒãƒ•ãƒ©ã‚°ï¼ˆã‚µãƒ¼ãƒç”¨ï¼‰
-    u8 timSendCond; // ã‚­ãƒ¼ã‚’é€ä¿¡ã—å ´åˆ å¯¾æˆ¦éƒ¨å±‹ã§MENUã‚’å‹•ã‹ãªãã™ã‚‹ç‚ºã«ã¤ã‹ã†
+    u8 transmissionType;  // ’ÊMŒ`‘Ô DS‚©MP‚©‚ÌŠÇ—
+  //  u8 changeService;    // ’ÊMŒ`‘Ô‚Ì•ÏX
+    u8 sendSwitch;   // ‘—Mƒoƒbƒtƒ@‚ÌƒXƒCƒbƒ`ƒtƒ‰ƒO
+    u8 sendServerSwitch;   // ‘—Mƒoƒbƒtƒ@‚ÌƒXƒCƒbƒ`ƒtƒ‰ƒOiƒT[ƒo—pj
     u8 bFirstCatchP2C;
-    u8 bSendNoneSend;        // ç„¡åŠ¹ã‚³ãƒãƒ³ãƒ‰ã‚’é€ã‚‹
+    u8 bSendNoneSend;        // –³ŒøƒRƒ}ƒ“ƒh‚ğ‘—‚é
     u8 bNextSendData;  ///
     u8 bNextSendDataServer;  ///
-    u8 bAlone;    // ä¸€äººã§é€šä¿¡ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ãƒ¢ãƒ¼ãƒ‰ã®æ™‚TRUE
-    u8 bWifiConnect; //WIFIé€šä¿¡å¯èƒ½ã«ãªã£ãŸã‚‰TRUE
+    u8 bAlone;    // ˆêl‚Å’ÊM‚Å‚«‚é‚æ‚¤‚É‚·‚éƒ‚[ƒh‚ÌTRUE
+    u8 bWifiConnect; //WIFI’ÊM‰Â”\‚É‚È‚Á‚½‚çTRUE
     u8 bResetState;
-    u8 bError;  // å¾©æ—§ä¸å¯èƒ½ãªæ™‚ã¯TRUE
+    u8 bError;  // •œ‹Œ•s‰Â”\‚È‚ÍTRUE
     u8 bShutDown;
     u8 bNotRecvCheck;
 } _COMM_WORK_SYSTEM;
 
-static _COMM_WORK_SYSTEM* _pComm = NULL;  ///<ã€€ãƒ¯ãƒ¼ã‚¯æ§‹é€ ä½“ã®ãƒã‚¤ãƒ³ã‚¿
-// è¦ªæ©Ÿã«ãªã‚‹å ´åˆã®TGID æ§‹é€ ä½“ã«å…¥ã‚Œã¦ã„ãªã„ã®ã¯
-// é€šä¿¡ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ¼ã‚’åˆ‡ã£ãŸã¨ã—ã¦ã‚‚ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ãŸã„ãŸã‚
+static _COMM_WORK_SYSTEM* _pComm = NULL;  ///<@ƒ[ƒN\‘¢‘Ì‚Ìƒ|ƒCƒ“ƒ^
+// e‹@‚É‚È‚éê‡‚ÌTGID \‘¢‘Ì‚É“ü‚ê‚Ä‚¢‚È‚¢‚Ì‚Í
+// ’ÊMƒ‰ƒCƒuƒ‰ƒŠ[‚ğØ‚Á‚½‚Æ‚µ‚Ä‚àƒCƒ“ƒNƒŠƒƒ“ƒg‚µ‚½‚¢‚½‚ß
 static u16 _sTgid = 0;
-// å‰²ã‚Šè¾¼ã¿ã§ãƒ‡ãƒ¼ã‚¿ã‚’å‡¦ç†ã™ã‚‹ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
+// Š„‚è‚İ‚Åƒf[ƒ^‚ğˆ—‚·‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
 static volatile u8 _bVSAccess = FALSE;
 
-// é€ä¿¡ã—ãŸã“ã¨ã‚’ç¢ºèªã™ã‚‹ãŸã‚ã®ãƒ•ãƒ©ã‚°
+// ‘—M‚µ‚½‚±‚Æ‚ğŠm”F‚·‚é‚½‚ß‚Ìƒtƒ‰ƒO
 static volatile u8 _sendCallBackServer = _SEND_CB_SECOND_SENDEND;
-// åŒä¸Š
+// “¯ã
 static volatile u8 _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
 
 //==============================================================================
-// staticå®£è¨€
+// staticéŒ¾
 //==============================================================================
 
 static void _commCommandInit(void);
-static void _commMpVBlankIntr(TCB_PTR pTCB, void* pWork);
 static void _dataMpStep(void);
 static void _updateMpDataServer(void);
 static void _dataMpServerStep(void);
@@ -245,16 +241,12 @@ static void _sendServerCallback(BOOL result);
 static void _commRecvCallback(u16 aid, u16 *data, u16 size);
 static void _commRecvParentCallback(u16 aid, u16 *data, u16 size);
 
-static void _keyRand(void);
 static void _updateMpData(void);
 
 static void _recvDataFunc(void);
 static void _recvDataServerFunc(void);
 static BOOL _setSendData(u8* pSendBuff);
 static void _setSendDataServer(u8* pSendBuff);
-
-static BOOL _padDataRecv(u8* pRecvBuff, int netID);
-static BOOL _padDataSend(u8* pSendBuff);
 
 static BOOL _setSendQueue(_SEND_QUEUE* pSendQueue,
                           int command, const void* data, int size);
@@ -266,10 +258,7 @@ static void _queueSetServer(int restSize);
 static void _spritDataSendFunc(void);
 
 static void _transmission(void);
-
-#ifdef PM_DEBUG
-static void _debugAutoMove(void);
-#endif
+static u16 _getUserMaxSendByte(void);
 
 
 
@@ -293,77 +282,98 @@ int DebugCommGetNum(int id)
       case 4:
         return _pComm->countSendRecvServer[3];
       case 5:
-        return _pComm->countSendNum;   // é€ã£ãŸã‚‰ï¼‹
+        return _pComm->countSendNum;   // ‘—‚Á‚½‚ç{
       case 6:
-        return _pComm->countRecvNum;   // å—ã‘å–ã£ãŸã‚‰ï¼‹ å›æ•°
+        return _pComm->countRecvNum;   // ó‚¯æ‚Á‚½‚ç{ ‰ñ”
       case 7:
-        return _pComm->countSendNumServer[0];   // é€ã£ãŸã‚‰ï¼‹ å›æ•°
+        return _pComm->countSendNumServer[0];   // ‘—‚Á‚½‚ç{ ‰ñ”
       case 8:
-        return _pComm->countSendNumServer[1];   // é€ã£ãŸã‚‰ï¼‹ å›æ•°
+        return _pComm->countSendNumServer[1];   // ‘—‚Á‚½‚ç{ ‰ñ”
       case 9:
-        return _pComm->countRecvNumServer[0];   // é€ã£ãŸã‚‰ï¼‹ å›æ•°
+        return _pComm->countRecvNumServer[0];   // ‘—‚Á‚½‚ç{ ‰ñ”
       case 10:
-        return _pComm->countRecvNumServer[1];   // é€ã£ãŸã‚‰ï¼‹ å›æ•°
+        return _pComm->countRecvNumServer[1];   // ‘—‚Á‚½‚ç{ ‰ñ”
     }
     return 0;
 }
 
 #endif
 
+
 //==============================================================================
 /**
- * è¦ªå­å…±é€šã€é€šä¿¡ã®åˆæœŸåŒ–ã‚’ã¾ã¨ã‚ãŸ
- * @param   bAlloc          ãƒ¡ãƒ¢ãƒªãƒ¼ç¢ºä¿ã™ã‚‹ã‹ã©ã†ã‹
- * @param   packetSizeMax   ç¢ºä¿ã—ãŸã„ãƒ‘ã‚±ãƒƒãƒˆã‚µã‚¤ã‚º
- * @retval  åˆæœŸåŒ–ã«æˆåŠŸã—ãŸã‚‰TRUE
+ * @brief   Å‘åÚ‘±l”‚ğ“¾‚é
+ * @return  Å‘åÚ‘±l”
  */
 //==============================================================================
 
-static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
+static int _getUserMaxNum(void)
+{
+    return 5;  // Å‘åÚ‘±l” @@OO ‰Šú‰»\‘¢‘Ì‚©‚ç“¾‚é
+}
+
+//==============================================================================
+/**
+ * @brief   Å¬Ú‘±l”‚ğ“¾‚é
+ * @return  Å‘åÚ‘±l”
+ */
+//==============================================================================
+
+static int _getUserMinNum(void)
+{
+    return 5;  // Å¬Ú‘±l” @@OO ‰Šú‰»\‘¢‘Ì‚©‚ç“¾‚é
+}
+
+//==============================================================================
+/**
+ * @brief   eq‹¤’ÊA’ÊM‚Ì‰Šú‰»‚ğ‚Ü‚Æ‚ß‚½
+ * @param   bAlloc          ƒƒ‚ƒŠ[Šm•Û‚·‚é‚©‚Ç‚¤‚©
+ * @param   packetSizeMax   Šm•Û‚µ‚½‚¢ƒpƒPƒbƒgƒTƒCƒY
+ * @param   heapID          Šm•Û‚µ‚Ä‚à‚¢‚¢heapID
+ * @retval  ‰Šú‰»‚É¬Œ÷‚µ‚½‚çTRUE
+ */
+//==============================================================================
+
+static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
 {
     void* pWork;
     int i;
-    // ã‚¤ã‚¯ãƒ‹ãƒ¥ãƒ¼ãƒ¢ãƒ³ç­‰ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®å†åˆæœŸåŒ–ãŒå¿…è¦ãªå ´åˆTRUE
+    // ƒCƒNƒjƒ…[ƒ‚ƒ““™ƒlƒbƒgƒ[ƒNƒ‰ƒCƒuƒ‰ƒŠ‚ÌÄ‰Šú‰»‚ª•K—v‚Èê‡TRUE
     BOOL bReInit = FALSE;
 
-    _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
+    _bVSAccess = FALSE;  // Š„‚è‚İ“à‚Å‚Ìˆ—‚ğ‹Ö~
 
     if(bAlloc){
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
-        if(_pComm!=NULL){  // ã™ã§ã«åˆæœŸåŒ–ã—ã¦ã„ã‚‹å ´åˆã¯return
+        int machineMax = _getUserMaxNum();
+        if(_pComm!=NULL){  // ‚·‚Å‚É‰Šú‰»‚µ‚Ä‚¢‚éê‡‚Íreturn
             return TRUE;
         }
-        CommToolInitialize(HEAPID_COMMUNICATION);
+        _pComm->pTool = GFL_NET_TOOL_sysInit(heapID, machineMax);
         OHNO_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
-        _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_WORK_SYSTEM));
+        _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
         
         _pComm->packetSizeMax = packetSizeMax + 64;
         _pComm->transmissionType = _MP_MODE;
-        _pComm->changeService = COMM_MODE_NONE;
+//        _pComm->changeService = COMM_MODE_NONE;
 //        _pComm->bAlone = FALSE;
         
-        _pComm->pRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax*2); ///< å­æ©ŸãŒå—ã‘å–ã‚‹ãƒãƒƒãƒ•ã‚¡
-        _pComm->pTmpBuff = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, _pComm->packetSizeMax);  ///< å—ä¿¡å—ã‘æ¸¡ã—ã®ãŸã‚ã®ä¸€æ™‚ãƒãƒƒãƒ•ã‚¡
-        _pComm->pServerRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< å—ã‘å–ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã™ã‚‹
-        _pComm->pMidRecvBufRing = GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, machineMax * _pComm->packetSizeMax);   ///< å—ã‘å–ã‚‹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã™ã‚‹ DSå°‚ç”¨
-        // ã‚­ãƒ¥ãƒ¼ã®åˆæœŸåŒ–
-        if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, HEAPID_COMMUNICATION);
-            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing, HEAPID_COMMUNICATION);
-        }
-        else{
-            CommQueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_NORMAL, &_pComm->sendRing, HEAPID_COMMUNICATION);
-            CommQueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_NORMAL, &_pComm->sendServerRing, HEAPID_COMMUNICATION);
-        }
+        _pComm->pRecvBufRing = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax*2); ///< q‹@‚ªó‚¯æ‚éƒoƒbƒtƒ@
+        _pComm->pTmpBuff = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax);  ///< óMó‚¯“n‚µ‚Ì‚½‚ß‚Ìˆêƒoƒbƒtƒ@
+        _pComm->pServerRecvBufRing = GFL_HEAP_AllocMemory(heapID, machineMax * _pComm->packetSizeMax);   ///< ó‚¯æ‚éƒoƒbƒtƒ@‚ğƒoƒbƒNƒAƒbƒv‚·‚é
+        _pComm->pMidRecvBufRing = GFL_HEAP_AllocMemory(heapID, machineMax * _pComm->packetSizeMax);   ///< ó‚¯æ‚éƒoƒbƒtƒ@‚ğƒoƒbƒNƒAƒbƒv‚·‚é DSê—p
+        // ƒLƒ…[‚Ì‰Šú‰»
+
+        GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, heapID);
+        GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing, heapID);
 
 #ifdef PM_DEBUG
-//        CommQueueDebugTest();  // ã‚­ãƒ¥ãƒ¼ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒ†ã‚¹ãƒˆ
+//        GFL_NET_QueueDebugTest();  // ƒLƒ…[‚ÌƒvƒƒOƒ‰ƒ€ƒeƒXƒg
 #endif
     }
     else{
         bReInit = TRUE;
-        GF_ASSERT((_pComm) && "åˆ‡ã‚Šæ›¿ãˆã®æ™‚ã¯ã™ã§ã«åˆæœŸåŒ–æ¸ˆã¿\n");
+        GF_ASSERT((_pComm) && "Ø‚è‘Ö‚¦‚Ì‚Í‚·‚Å‚É‰Šú‰»Ï‚İ\n");
     }
     
 #ifdef PM_DEBUG
@@ -374,18 +384,17 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax)
         _pComm->standNo[i] = 0xff;
     }
 
-    if(!bReInit){   // ã‚³ãƒãƒ³ãƒ‰ã®åˆæœŸåŒ–
+    if(!bReInit){   // ƒRƒ}ƒ“ƒh‚Ì‰Šú‰»
         _commCommandInit();
     }
-    CommRandSeedInitialize(&_pComm->sRand);
 
     //************************************
 
-    if(!bReInit){   // ãƒ—ãƒ­ã‚»ã‚¹ã‚¿ã‚¹ã‚¯ã®ä½œæˆ
+//    if(!bReInit){   // ƒvƒƒZƒXƒ^ƒXƒN‚Ìì¬
         // VBLANK
-        _pComm->pVBlankTCB = VIntrTCB_Add(_commMpVBlankIntr, NULL, _PRIORITY_VBLANKFUNC);
+  //      _pComm->pVBlankTCB = VIntrTCB_Add(_commMpVBlankIntr, NULL, _PRIORITY_VBLANKFUNC);
 
-    }
+    //}
     _pComm->bWifiConnect = FALSE;
     return TRUE;
 }
@@ -398,7 +407,7 @@ static u8 _sendDataNext=FALSE;
 
 //==============================================================================
 /**
- * è¦ªå­å…±é€šã€é€šä¿¡ã®ã‚³ãƒãƒ³ãƒ‰ç®¡ç†ã®åˆæœŸåŒ–ã‚’ã¾ã¨ã‚ãŸ
+ * @brief   eq‹¤’ÊA’ÊM‚ÌƒRƒ}ƒ“ƒhŠÇ—‚Ì‰Šú‰»‚ğ‚Ü‚Æ‚ß‚½
  * @param   none
  * @retval  none
  */
@@ -409,55 +418,53 @@ static void _commCommandInit(void)
     void* pWork;
     int i;
 
-    // ãƒ¯ãƒ¼ã‚¯ã®åˆæœŸåŒ–
-//    OHNO_PRINT("ã‚³ãƒãƒ³ãƒ‰å†åˆæœŸåŒ–\n");
+    // ƒ[ƒN‚Ì‰Šú‰»
+//    OHNO_PRINT("ƒRƒ}ƒ“ƒhÄ‰Šú‰»\n");
     
-    _pComm->randPadType = 0;
-    _pComm->randPadStep = 0;
     _pComm->sendSwitch = 0;
     _pComm->sendServerSwitch = 0;
     
-    // è¦ªæ©Ÿã®ã¿ã®é€å—ä¿¡
+    // e‹@‚Ì‚İ‚Ì‘—óM
     {
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+        int machineMax = _getUserMaxNum();
 
         OHNO_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
         MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
         for(i = 0; i< machineMax;i++){
-            CommRingInitialize(&_pComm->recvServerRing[i],
+            GFL_NET_RingInitialize(&_pComm->recvServerRing[i],
                                &_pComm->pServerRecvBufRing[i*_pComm->packetSizeMax],
                                _pComm->packetSizeMax);
-//            CommRingInitialize(&_pComm->recvServerRingUndo[i],
+//            GFL_NET_RingInitialize(&_pComm->recvServerRingUndo[i],
 //                               &_pComm->pServerRecvBufRing[i*_pComm->packetSizeMax],
 //                               _pComm->packetSizeMax);
         }
 
         MI_CpuFill8(_pComm->pMidRecvBufRing, 0, _pComm->packetSizeMax * machineMax );
         for(i = 0; i < machineMax; i++){
-            CommRingInitialize(&_pComm->recvMidRing[i],
+            GFL_NET_RingInitialize(&_pComm->recvMidRing[i],
                                &_pComm->pMidRecvBufRing[i * _pComm->packetSizeMax],
                                _pComm->packetSizeMax);
         }
     }
     MI_CpuFill8(_pComm->sSendServerBufRing, 0, _SEND_RINGBUFF_SIZE_PARENT);
-    CommRingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
+    GFL_NET_RingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
                        _SEND_RINGBUFF_SIZE_PARENT);
     for(i = 0; i < _SEND_BUFF_SIZE_PARENT; i++){
-        _pComm->sSendServerBuf[0][i] = CS_NONE;
-        _pComm->sSendServerBuf[1][i] = CS_NONE;
+        _pComm->sSendServerBuf[0][i] = GFL_NET_CMD_NONE;
+        _pComm->sSendServerBuf[1][i] = GFL_NET_CMD_NONE;
     }
-    // å­æ©Ÿã®é€å—ä¿¡
+    // q‹@‚Ì‘—óM
     MI_CpuFill8(_pComm->sSendBufRing, 0, _SEND_RINGBUFF_SIZE_CHILD);
-    CommRingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
+    GFL_NET_RingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
 
     _pComm->sSendBuf[0][0] = _INVALID_HEADER;
     _pComm->sSendBuf[1][0] = _INVALID_HEADER;
     for(i = 1;i < _SEND_BUFF_SIZE_4CHILD;i++){
-        _pComm->sSendBuf[0][i] = CS_NONE;
-        _pComm->sSendBuf[1][i] = CS_NONE;
+        _pComm->sSendBuf[0][i] = GFL_NET_CMD_NONE;
+        _pComm->sSendBuf[1][i] = GFL_NET_CMD_NONE;
     }
     MI_CpuFill8(_pComm->pRecvBufRing, 0, _pComm->packetSizeMax*2);
-    CommRingInitialize(&_pComm->recvRing, _pComm->pRecvBufRing, _pComm->packetSizeMax*2);
+    GFL_NET_RingInitialize(&_pComm->recvRing, _pComm->pRecvBufRing, _pComm->packetSizeMax*2);
 
     _pComm->bNextSendData = FALSE;
     _pComm->bNextSendDataServer = FALSE;
@@ -466,13 +473,10 @@ static void _commCommandInit(void)
 #endif
     for(i = 0; i< COMM_MACHINE_MAX;i++){
   //      _pComm->DSCountRecv[i] = 0xff;
-        _pComm->recvDSCatchFlg[i] = 0;  // é€šä¿¡ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ã‚’è¨˜æ†¶
+        _pComm->recvDSCatchFlg[i] = 0;  // ’ÊM‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ğ‹L‰¯
         _pComm->bFirstCatch[i] = TRUE;
         _pComm->bPSendNoneRecv[i] = TRUE;
-        _pComm->cont[i]=0;  ///< ç‹¬è‡ªã‚­ãƒ¼ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°
-        //_pComm->contOld[i]=0;  ///< ç‹¬è‡ªã‚­ãƒ¼ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°
-        //_pComm->trg[i]=0;   ///< ç‹¬è‡ªã‚­ãƒ¼ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°
-        _pComm->recvCommServer[i].valCommand = CS_NONE;
+        _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
         _pComm->recvCommServer[i].pRecvBuff = NULL;
         _pComm->recvCommServer[i].dataPoint = 0;
@@ -488,7 +492,7 @@ static void _commCommandInit(void)
     _pComm->countRecvNum = 0;
 #endif
     _pComm->bWifiSendRecv = TRUE;
-    _pComm->recvCommClient.valCommand = CS_NONE;
+    _pComm->recvCommClient.valCommand = GFL_NET_CMD_NONE;
     _pComm->recvCommClient.valSize = 0xffff;
     _pComm->recvCommClient.pRecvBuff = NULL;
     _pComm->recvCommClient.dataPoint = 0;
@@ -499,15 +503,15 @@ static void _commCommandInit(void)
     _sendCallBackServer = _SEND_CB_SECOND_SENDEND;
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
-        // ã‚­ãƒ¥ãƒ¼ã®ãƒªã‚»ãƒƒãƒˆ
-    CommQueueManagerReset(&_pComm->sendQueueMgr);
-    CommQueueManagerReset(&_pComm->sendQueueMgrServer);
+        // ƒLƒ…[‚ÌƒŠƒZƒbƒg
+    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgr);
+    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
     _pComm->bResetState = FALSE;
 }
 
 //==============================================================================
 /**
- * è¦ªå­å…±é€šã€DSMPã‚’äº¤æ›ã™ã‚‹å ´åˆã«å‘¼ã°ã‚Œã‚‹
+ * @brief   eq‹¤’ÊADSMP‚ğŒğŠ·‚·‚éê‡‚ÉŒÄ‚Î‚ê‚é
  * @param   none
  * @retval  none
  */
@@ -518,49 +522,49 @@ static void _commCommandInitChange2(void)
     void* pWork;
     int i;
 
-    _pComm->randPadType = 0;
-    _pComm->randPadStep = 0;
+//    _pComm->randPadType = 0;
+//    _pComm->randPadStep = 0;
 //    _pComm->sendSwitch = 0;
 //    _pComm->sendServerSwitch = 0;
     
-    // è¦ªæ©Ÿã®ã¿ã®é€å—ä¿¡
+    // e‹@‚Ì‚İ‚Ì‘—óM
     {
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+        int machineMax = _getUserMaxNum();
 
         OHNO_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
         MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
         for(i = 0; i< machineMax;i++){
-            CommRingInitialize(&_pComm->recvServerRing[i],
+            GFL_NET_RingInitialize(&_pComm->recvServerRing[i],
                                &_pComm->pServerRecvBufRing[i*_pComm->packetSizeMax],
                                _pComm->packetSizeMax);
         }
 
         MI_CpuFill8(_pComm->pMidRecvBufRing, 0, _pComm->packetSizeMax * machineMax );
         for(i = 0; i < machineMax; i++){
-            CommRingInitialize(&_pComm->recvMidRing[i],
+            GFL_NET_RingInitialize(&_pComm->recvMidRing[i],
                                &_pComm->pMidRecvBufRing[i * _pComm->packetSizeMax],
                                _pComm->packetSizeMax);
         }
     }
     MI_CpuFill8(_pComm->sSendServerBufRing, 0, _SEND_RINGBUFF_SIZE_PARENT);
-    CommRingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
+    GFL_NET_RingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
                        _SEND_RINGBUFF_SIZE_PARENT);
     for(i = 0; i < _SEND_BUFF_SIZE_PARENT; i++){
-        _pComm->sSendServerBuf[0][i] = CS_NONE;
-        _pComm->sSendServerBuf[1][i] = CS_NONE;
+        _pComm->sSendServerBuf[0][i] = GFL_NET_CMD_NONE;
+        _pComm->sSendServerBuf[1][i] = GFL_NET_CMD_NONE;
     }
-    // å­æ©Ÿã®é€å—ä¿¡
+    // q‹@‚Ì‘—óM
     MI_CpuFill8(_pComm->sSendBufRing, 0, _SEND_RINGBUFF_SIZE_CHILD);
-    CommRingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
+    GFL_NET_RingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
 
     _pComm->sSendBuf[0][0] = _INVALID_HEADER;
     _pComm->sSendBuf[1][0] = _INVALID_HEADER;
     for(i = 1;i < _SEND_BUFF_SIZE_4CHILD;i++){
-        _pComm->sSendBuf[0][i] = CS_NONE;
-        _pComm->sSendBuf[1][i] = CS_NONE;
+        _pComm->sSendBuf[0][i] = GFL_NET_CMD_NONE;
+        _pComm->sSendBuf[1][i] = GFL_NET_CMD_NONE;
     }
     MI_CpuFill8(_pComm->pRecvBufRing, 0, _pComm->packetSizeMax*2);
-    CommRingInitialize(&_pComm->recvRing, _pComm->pRecvBufRing, _pComm->packetSizeMax*2);
+    GFL_NET_RingInitialize(&_pComm->recvRing, _pComm->pRecvBufRing, _pComm->packetSizeMax*2);
 
     _pComm->bNextSendData = FALSE;
     _pComm->bNextSendDataServer = FALSE;
@@ -568,17 +572,16 @@ static void _commCommandInitChange2(void)
     _sendDataNext = FALSE;
 #endif
     for(i = 0; i< COMM_MACHINE_MAX;i++){
-        _pComm->recvDSCatchFlg[i] = 0;  // é€šä¿¡ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ã‚’è¨˜æ†¶
+        _pComm->recvDSCatchFlg[i] = 0;  // ’ÊM‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ğ‹L‰¯
         _pComm->bFirstCatch[i] = TRUE;
         _pComm->bPSendNoneRecv[i] = TRUE;
-        _pComm->cont[i]=0;  ///< ç‹¬è‡ªã‚­ãƒ¼ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°
-        _pComm->recvCommServer[i].valCommand = CS_NONE;
+        _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
         _pComm->recvCommServer[i].pRecvBuff = NULL;
         _pComm->recvCommServer[i].dataPoint = 0;
     }
     _pComm->bWifiSendRecv = TRUE;
-    _pComm->recvCommClient.valCommand = CS_NONE;
+    _pComm->recvCommClient.valCommand = GFL_NET_CMD_NONE;
     _pComm->recvCommClient.valSize = 0xffff;
     _pComm->recvCommClient.pRecvBuff = NULL;
     _pComm->recvCommClient.dataPoint = 0;
@@ -589,15 +592,15 @@ static void _commCommandInitChange2(void)
 //    _sendCallBackServer = _SEND_CB_SECOND_SENDEND;
 //    _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
-        // ã‚­ãƒ¥ãƒ¼ã®ãƒªã‚»ãƒƒãƒˆ
-    CommQueueManagerReset(&_pComm->sendQueueMgr);
-    CommQueueManagerReset(&_pComm->sendQueueMgrServer);
+        // ƒLƒ…[‚ÌƒŠƒZƒbƒg
+    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgr);
+    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
     _pComm->bResetState = FALSE;
 }
 
 //==============================================================================
 /**
- * æŒ‡å®šã•ã‚ŒãŸå­æ©Ÿã®é ˜åŸŸã‚’ã‚¯ãƒªã‚¢ãƒ¼ã™ã‚‹
+ * @brief   w’è‚³‚ê‚½q‹@‚Ì—Ìˆæ‚ğƒNƒŠƒA[‚·‚é
  * @param   none
  * @retval  none
  */
@@ -606,20 +609,20 @@ static void _commCommandInitChange2(void)
 static void _clearChildBuffers(int netID)
 {
 //    _pComm->DSCountRecv[netID] = 0xff;
-    _pComm->recvDSCatchFlg[netID] = 0;  // é€šä¿¡ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ã‚’è¨˜æ†¶ DSåŒæœŸç”¨
-    _pComm->bFirstCatch[netID] = TRUE;  // ã‚³ãƒãƒ³ãƒ‰ã‚’ã¯ã˜ã‚ã¦ã‚‚ã‚‰ã£ãŸæ™‚ç”¨
-    _pComm->countSendRecvServer[netID]=0;  //SERVERå—ä¿¡
-    _pComm->bPSendNoneRecv[netID] = TRUE;  // ä¸€å€‹ç„¡è¦–
+    _pComm->recvDSCatchFlg[netID] = 0;  // ’ÊM‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ğ‹L‰¯ DS“¯Šú—p
+    _pComm->bFirstCatch[netID] = TRUE;  // ƒRƒ}ƒ“ƒh‚ğ‚Í‚¶‚ß‚Ä‚à‚ç‚Á‚½—p
+    _pComm->countSendRecvServer[netID]=0;  //SERVERóM
+    _pComm->bPSendNoneRecv[netID] = TRUE;  // ˆêŒÂ–³‹
 
-    CommRingInitialize(&_pComm->recvMidRing[netID],
+    GFL_NET_RingInitialize(&_pComm->recvMidRing[netID],
                        &_pComm->pMidRecvBufRing[netID * _pComm->packetSizeMax],
                        _pComm->packetSizeMax);
 
-    CommRingInitialize(&_pComm->recvServerRing[netID],
+    GFL_NET_RingInitialize(&_pComm->recvServerRing[netID],
                        &_pComm->pServerRecvBufRing[netID * _pComm->packetSizeMax],
                        _pComm->packetSizeMax);
 
-    _pComm->recvCommServer[netID].valCommand = CS_NONE;
+    _pComm->recvCommServer[netID].valCommand = GFL_NET_CMD_NONE;
     _pComm->recvCommServer[netID].valSize = 0xffff;
     _pComm->recvCommServer[netID].pRecvBuff = NULL;
     _pComm->recvCommServer[netID].dataPoint = 0;
@@ -627,7 +630,7 @@ static void _clearChildBuffers(int netID)
 
 //==============================================================================
 /**
- * æŒ‡å®šã•ã‚ŒãŸå­æ©Ÿã®é ˜åŸŸã‚’ã‚¯ãƒªã‚¢ãƒ¼ã™ã‚‹
+ * @brief   w’è‚³‚ê‚½q‹@‚Ì—Ìˆæ‚ğƒNƒŠƒA[‚·‚é
  * @param   none
  * @retval  none
  */
@@ -638,68 +641,56 @@ static void _connectFunc(void)
     int i;
 
     for(i = 1 ; i < COMM_MACHINE_MAX ; i++){
-        if((!CommIsConnect(i)) && !_pComm->bFirstCatch[i]){
-            if(!CommGetAloneMode()){
-                OHNO_PRINT("éæ¥ç¶šã«ãªã£ãŸæ™‚ã« %d\n",i);
-                _clearChildBuffers(i);  // éæ¥ç¶šã«ãªã£ãŸæ™‚ã«
+        if((!GFL_NET_SystemIsConnect(i)) && !_pComm->bFirstCatch[i]){
+            if(!GFL_NET_SystemGetAloneMode()){
+                OHNO_PRINT("”ñÚ‘±‚É‚È‚Á‚½‚É %d\n",i);
+                _clearChildBuffers(i);  // ”ñÚ‘±‚É‚È‚Á‚½‚É
             }
         }
     }
 
 }
 
-#if T1657_060818_FIX
-static void _connectCallBack(int netID)
-{
-    _clearChildBuffers(netID);
-}
-#endif
-
 //==============================================================================
 /**
- * è¦ªæ©Ÿã®åˆæœŸåŒ–ã‚’è¡Œã†
- * @param   work_area ã€€ã‚·ã‚¹ãƒ†ãƒ ã§ä½¿ã†ãƒ¡ãƒ¢ãƒªãƒ¼é ˜åŸŸ
- *                      NULLã®å ´åˆã™ã§ã«åˆæœŸåŒ–æ¸ˆã¿ã¨ã—ã¦å‹•ä½œ
- * @param   regulationNo  ã‚²ãƒ¼ãƒ ã®ç¨®é¡
- * @param   bTGIDChange  æ–°è¦ã®ã‚²ãƒ¼ãƒ ã®åˆæœŸåŒ–ã®å ´åˆTRUE å¤ã„ãƒ“ãƒ¼ã‚³ãƒ³ã§ã®èª¤å‹•ä½œã‚’é˜²ããŸã‚ç”¨
- * @param   bEntry  å­æ©Ÿã‚’å—ã‘å…¥ã‚Œã‚‹ã‹ã©ã†ã‹
- * @retval  åˆæœŸåŒ–ã«æˆåŠŸã—ãŸã‚‰TRUE
+ * @brief   e‹@‚Ì‰Šú‰»‚ğs‚¤
+ * @param   work_area @ƒVƒXƒeƒ€‚Åg‚¤ƒƒ‚ƒŠ[—Ìˆæ
+ *                      NULL‚Ìê‡‚·‚Å‚É‰Šú‰»Ï‚İ‚Æ‚µ‚Ä“®ì
+ * @param   regulationNo  ƒQ[ƒ€‚Ìí—Ş
+ * @param   bTGIDChange  V‹K‚ÌƒQ[ƒ€‚Ì‰Šú‰»‚Ìê‡TRUE ŒÃ‚¢ƒr[ƒRƒ“‚Å‚ÌŒë“®ì‚ğ–h‚®‚½‚ß—p
+ * @param   bEntry  q‹@‚ğó‚¯“ü‚ê‚é‚©‚Ç‚¤‚©
+ * @retval  ‰Šú‰»‚É¬Œ÷‚µ‚½‚çTRUE
  */
 //==============================================================================
-BOOL CommParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeMax, BOOL bEntry)
+BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeMax, BOOL bEntry)
 {
     BOOL ret = TRUE;
-    if(CommStateGetServiceNo() < COMM_MODE_BATTLE_SINGLE_WIFI){
-        ret = CommMPParentInit(bAlloc, bTGIDChange, bEntry);
-#if T1657_060818_FIX
-        HWSetConnectCallBack(_connectCallBack);
-#endif
 
+    if( _pComm->device == _DEVICE_WIFI){
+        ret = CommMPParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
     }
-    _commInit(bAlloc, packetSizeMax);
+    _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM); //@@OOŒã‚ÅŠO•”‚Éo‚·
     return ret;
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿã®åˆæœŸåŒ–ã‚’è¡Œã†
- * @param   work_area ã€€ã‚·ã‚¹ãƒ†ãƒ ã§ä½¿ã†ãƒ¡ãƒ¢ãƒªãƒ¼é ˜åŸŸ
- *                      NULLã®å ´åˆã¯ã™ã§ã«åˆæœŸåŒ–æ¸ˆã¿ã¨ã—ã¦æ‰±ã†
- * @param   regulationNo  ã‚²ãƒ¼ãƒ ã®ç¨®é¡
- * @param   bBconInit  ãƒ“ãƒ¼ã‚³ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–ã™ã‚‹ã®ã‹ã©ã†ã‹
- * @retval  åˆæœŸåŒ–ã«æˆåŠŸã—ãŸã‚‰TRUE
+ * @brief   q‹@‚Ì‰Šú‰»‚ğs‚¤
+ * @param   work_area @ƒVƒXƒeƒ€‚Åg‚¤ƒƒ‚ƒŠ[—Ìˆæ
+ *                      NULL‚Ìê‡‚Í‚·‚Å‚É‰Šú‰»Ï‚İ‚Æ‚µ‚Äˆµ‚¤
+ * @param   regulationNo  ƒQ[ƒ€‚Ìí—Ş
+ * @param   bBconInit  ƒr[ƒRƒ“ƒf[ƒ^‚ğ‰Šú‰»‚·‚é‚Ì‚©‚Ç‚¤‚©
+ * @retval  ‰Šú‰»‚É¬Œ÷‚µ‚½‚çTRUE
  */
 //==============================================================================
-BOOL CommChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
+BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
 {
     BOOL ret = TRUE;
 
-    if(COMM_MODE_BATTLE_SINGLE_WIFI > CommStateGetServiceNo()){
+    if( _pComm->device == _DEVICE_WIFI){
         ret = CommMPChildInit(bAlloc, bBconInit);
     }
-    else{
-    }
-    _commInit(bAlloc, packetSizeMax);
+    _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM);
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
     return ret;
@@ -707,7 +698,7 @@ BOOL CommChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
 
 //==============================================================================
 /**
- * é€šä¿¡ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿
+ * @brief   ’ÊMƒ‚[ƒhØ‘Ö
  * @param   none
  * @retval  none
  */
@@ -718,8 +709,8 @@ static void _transmissonTypeChange(void)
     int i;
     BOOL bChange = FALSE;
 
-    // é…å»¶ã—ã¦ã‚‹æ™‚ã«å¤‰æ›´ã—ãªã„ã‚ˆã†ã«ã—ãŸ
-    if(CommGetCurrentID() == COMM_PARENT_ID){
+    // ’x‰„‚µ‚Ä‚é‚É•ÏX‚µ‚È‚¢‚æ‚¤‚É‚µ‚½
+    if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
         if(_sendCallBackServer != _SEND_CB_SECOND_SENDEND){
             return;
         }
@@ -733,15 +724,15 @@ static void _transmissonTypeChange(void)
     if(_pComm->transmissionType == _CHANGE_MODE_DSMP){
         _pComm->transmissionType = _MP_MODE;
         bChange=TRUE;
-        OHNO_PRINT("MPãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ\n");
+        OHNO_PRINT("MPƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½\n");
     }
     if(_pComm->transmissionType == _CHANGE_MODE_MPDS){
         _pComm->transmissionType = _DS_MODE;
         bChange=TRUE;
-        OHNO_PRINT("DSãƒ¢ãƒ¼ãƒ‰ã«ãªã‚Šã¾ã—ãŸ\n");
+        OHNO_PRINT("DSƒ‚[ƒh‚É‚È‚è‚Ü‚µ‚½\n");
     }
     if(bChange){
-        _commCommandInitChange2(); // ã‚³ãƒãƒ³ãƒ‰å…¨éƒ¨æ¶ˆã—
+        _commCommandInitChange2(); // ƒRƒ}ƒ“ƒh‘S•”Á‚µ
         OHNO_PRINT("send Recv %d %d %d \n",_pComm->countSendRecv,_pComm->countSendRecvServer[0],_pComm->countSendRecvServer[1]);
     }
 
@@ -751,12 +742,11 @@ static void _transmissonTypeChange(void)
 
 //==============================================================================
 /**
- * DSãƒ¢ãƒ¼ãƒ‰ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
- * @param   DSãƒ¢ãƒ¼ãƒ‰ã§å‹•ãå ´åˆ_DS_MODE MPã§å‹•ãå ´åˆ_MP_MODE
+ * @brief   DSƒ‚[ƒh‚ÉØ‚è‘Ö‚¦‚é
+ * @param   DSƒ‚[ƒh‚Å“®‚­ê‡_DS_MODE MP‚Å“®‚­ê‡_MP_MODE
  * @retval  none
  */
 //==============================================================================
-
 
 static void _commSetTransmissonType(int type)
 {
@@ -770,21 +760,33 @@ static void _commSetTransmissonType(int type)
     }
 }
 
-void CommSetTransmissonTypeDS(void)
+//==============================================================================
+/**
+ * @brief   DSƒ‚[ƒh‚ÉØ‚è‘Ö‚¦‚é
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_SystemSetTransmissonTypeDS(void)
 {
     _commSetTransmissonType(_DS_MODE);
 }
 
-void CommSetTransmissonTypeMP(void)
+//==============================================================================
+/**
+ * @brief   MPƒ‚[ƒh‚ÉØ‚è‘Ö‚¦‚é
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_SystemSetTransmissonTypeMP(void)
 {
     _commSetTransmissonType(_MP_MODE);
 }
 
 //==============================================================================
 /**
- * ç¾åœ¨ã®ãƒ¢ãƒ¼ãƒ‰ã®å–å¾—
+ * @brief   Œ»İ‚Ìƒ‚[ƒh‚Ìæ“¾
  * @param   none
- * @retval  _DS_MODEã‹_MP_MODE
+ * @retval  _DS_MODE‚©_MP_MODE
  */
 //==============================================================================
 
@@ -801,13 +803,13 @@ static int _transmissonType(void)
 
 //==============================================================================
 /**
- * ç¾åœ¨ DSãƒ¢ãƒ¼ãƒ‰ã‹ã©ã†ã‹
+ * @brief   Œ»İ DSƒ‚[ƒh‚©‚Ç‚¤‚©
  * @param   none
- * @retval  TRUEãªã‚‰DS
+ * @retval  TRUE‚È‚çDS
  */
 //==============================================================================
 
-BOOL CommIsTransmissonDSType(void)
+BOOL GFL_NET_SystemIsTransmissonDSType(void)
 {
     if(_DS_MODE == _transmissonType()){
         return TRUE;
@@ -817,19 +819,18 @@ BOOL CommIsTransmissonDSType(void)
 
 //==============================================================================
 /**
- * é€šä¿¡åˆ‡æ–­ã‚’è¡Œã†
+ * @brief   ’ÊMØ’f‚ğs‚¤
  * @param   none
  * @retval  none
  */
 //==============================================================================
-void CommFinalize(void)
+void GFL_NET_SystemFinalize(void)
 {
     BOOL bEnd = FALSE;
 
     if(_pComm){
-        if(COMM_MODE_BATTLE_SINGLE_WIFI <= CommStateGetServiceNo()){
-            OHNO_PRINT("åˆ‡æ–­------\n");
-            mydwc_Logout();  // åˆ‡æ–­
+        if( _pComm->device == _DEVICE_WIFI){
+            //mydwc_Logout();  // Ø’f
             bEnd = TRUE;
         }
         else{
@@ -839,20 +840,21 @@ void CommFinalize(void)
         }
     }
     if(bEnd){
-        OHNO_PRINT("åˆ‡æ–­----é–‹æ”¾å‡¦ç†--\n");
-        CommToolFinalize();
-        CommInfoFinalize();
-        // VBLANKã‚¿ã‚¹ã‚¯ã‚’åˆ‡ã‚‹
-        _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
-        OHNO_PRINT("VBLANKã‚¿ã‚¹ã‚¯ã‚’åˆ‡ã‚‹\n");
-        TCB_Delete(_pComm->pVBlankTCB);
-        _pComm->pVBlankTCB = NULL;
+        OHNO_PRINT("Ø’f----ŠJ•úˆ—--\n");
+        GFL_NET_TOOL_sysEnd(_pComm->pTool);
+        _pComm->pTool = NULL;
+//        CommInfoFinalize();
+        // VBLANKƒ^ƒXƒN‚ğØ‚é
+        _bVSAccess = FALSE;  // Š„‚è‚İ“à‚Å‚Ìˆ—‚ğ‹Ö~
+//        OHNO_PRINT("VBLANKƒ^ƒXƒN‚ğØ‚é\n");
+    //    TCB_Delete(_pComm->pVBlankTCB);
+  //      _pComm->pVBlankTCB = NULL;
         GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
         GFL_HEAP_FreeMemory(_pComm->pTmpBuff);
         GFL_HEAP_FreeMemory(_pComm->pServerRecvBufRing);
         GFL_HEAP_FreeMemory(_pComm->pMidRecvBufRing);
-        CommQueueManagerFinalize(&_pComm->sendQueueMgrServer);
-        CommQueueManagerFinalize(&_pComm->sendQueueMgr);
+        GFL_NET_QueueManagerFinalize(&_pComm->sendQueueMgrServer);
+        GFL_NET_QueueManagerFinalize(&_pComm->sendQueueMgr);
         GFL_HEAP_FreeMemory(_pComm);
         _pComm = NULL;
     }
@@ -860,54 +862,20 @@ void CommFinalize(void)
 
 //==============================================================================
 /**
- * å­æ©Ÿ åå‰ã¨IDã§æ¥ç¶š
- * @param   pNameBuf   ã¤ãªãã«è¡ŒããŸã„ãƒ¦ãƒ¼ã‚¶ãƒ¼å 
- * @param   pokeID     ã¤ãªãã«è¡ŒããŸã„ID
- * @retval  è¦ªæ©Ÿæƒ…å ±ãŒãªã„å ´åˆ  CC_NOT_FOUND_PARENT_INFO
- * @retval  é€šä¿¡ã®å†…éƒ¨çŠ¶æ…‹ãŒé·ç§»ä¸­ã§ã€æ¥ç¶šã«ã„ã‘ãªã„å ´åˆ  CC_BUSY_STATE
- * @retval  æ¥ç¶šé–¢æ•°ã‚’å‘¼ã³å‡ºã—ãŸã‚‰ CC_CONNECT_STARTING
+ * @brief   q‹@ indexÚ‘±
+ * @param   index   e‚ÌƒŠƒXƒg‚Ìindex
+ * @retval  q‹@Ú‘±‚ğe‹@‚É‘—‚Á‚½‚çTRUE
  */
 //==============================================================================
-//int CommChildNameAndIDConnect(STRBUF* pNameBuf,u32 pokeID)
-//{
-  //  return CommMPChildNameAndIDConnect(pNameBuf, pokeID);
-//}
-
-//==============================================================================
-/**
- * å­æ©Ÿ indexæ¥ç¶š
- * @param   index   è¦ªã®ãƒªã‚¹ãƒˆã®index
- * @retval  å­æ©Ÿæ¥ç¶šã‚’è¦ªæ©Ÿã«é€ã£ãŸã‚‰TRUE
- */
-//==============================================================================
-BOOL CommChildIndexConnect(u16 index)
+BOOL GFL_NET_SystemChildIndexConnect(u16 index)
 {
     return CommMPChildIndexConnect(index);
 }
 
-//==============================================================================
-/**
- * é€šä¿¡å‡¦ç†ã‚’å«ã‚ãŸVBLANKå‰²ã‚Šè¾¼ã¿å‡¦ç†
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commMpVBlankIntr(TCB_PTR pTCB, void* pWork)
-{
-    if(_bVSAccess){
-        _updateMpData();     // ãƒ‡ãƒ¼ã‚¿é€å—ä¿¡
-        if(((CommGetCurrentID() == COMM_PARENT_ID) && (CommIsConnect(COMM_PARENT_ID))) || CommGetAloneMode()){
-            _updateMpDataServer();   // MPé€šä¿¡ã‚µãƒ¼ãƒãƒ¼å´STEPå‡¦ç†
-        }
-        _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
-    }
-}
-
 
 //==============================================================================
 /**
- * çµ‚äº†ã‚³ãƒãƒ³ãƒ‰ã‚’å—ä¿¡ã—ãŸã‚‰ãƒ¢ãƒ¼ãƒ‰ã«å¿œã˜ã¦å‡¦ç†ã‚’è¡Œã„è‡ªå‹•åˆ‡æ–­ã™ã‚‹
+ * @brief   I—¹ƒRƒ}ƒ“ƒh‚ğóM‚µ‚½‚çƒ‚[ƒh‚É‰‚¶‚Äˆ—‚ğs‚¢©“®Ø’f‚·‚é
  * @param   none
  * @retval  none
  */
@@ -918,99 +886,92 @@ static void _autoExitSystemFunc(void)
     if(!CommMPIsAutoExit()){
         return;
     }
-    if(CommGetCurrentID() == COMM_PARENT_ID){   // è‡ªåˆ†ãŒè¦ªã®å ´åˆã¿ã‚“ãªã«é€†è¿”ä¿¡ã™ã‚‹
+    if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // ©•ª‚ªe‚Ìê‡‚İ‚ñ‚È‚É‹t•ÔM‚·‚é
         if(CommMPIsChildsConnecting()){
             return;
         }
-        CommFinalize();  // çµ‚äº†å‡¦ç†ã«å…¥ã‚‹
+        GFL_NET_SystemFinalize();  // I—¹ˆ—‚É“ü‚é
     }
-    else{   //å­æ©Ÿã®å ´åˆ
-        CommFinalize();  // çµ‚äº†å‡¦ç†ã«å…¥ã‚‹
+    else{   //q‹@‚Ìê‡
+        GFL_NET_SystemFinalize();  // I—¹ˆ—‚É“ü‚é
     }
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°å‡¦ç†  ãƒ‡ãƒ¼ã‚¿ã‚’åé›†
- *    main.c   ã‹ã‚‰  vblankå¾Œã«ã™ãã«å‘¼ã°ã‚Œã‚‹
+ * @brief   ’ÊMƒf[ƒ^‚ÌXVˆ—  ƒf[ƒ^‚ğûW
+ *    main.c   ‚©‚ç  vblankŒã‚É‚·‚®‚ÉŒÄ‚Î‚ê‚é
  * @param   none
- * @retval  ãƒ‡ãƒ¼ã‚¿ã‚·ã‚§ã‚¢ãƒªãƒ³ã‚°åŒæœŸãŒå–ã‚Œãªã‹ã£ãŸå ´åˆFALSE
+ * @retval  ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO“¯Šú‚ªæ‚ê‚È‚©‚Á‚½ê‡FALSE
  */
 //==============================================================================
 
 
-BOOL CommUpdateData(void)
+BOOL GFL_NET_SystemUpdateData(void)
 {
     int j;
 
-    CommStateCheckFunc(); //commstateã‚’ã‚¿ã‚¹ã‚¯å‡¦ç†ã—ãªã„ã“ã¨ã«ã—ãŸã®ã§ã“ã“ã«
+    //state‚Í‚¢‚ç‚È‚­‚È‚é‚Í‚¸
+//    CommStateCheckFunc(); //commstate‚ğƒ^ƒXƒNˆ—‚µ‚È‚¢‚±‚Æ‚É‚µ‚½‚Ì‚Å‚±‚±‚É
+
+#if 0 //’ÊMƒAƒCƒRƒ“‹@”\‚ª‚Å‚«‚½‚ço‚· @@OO 2006.12.13
+    if(CommStateIsWifiConnect()){
+        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
+    }
+    else if(CommMPIsInitialize()){
+        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - WM_GetLinkLevel());
+    }
+#endif
+
     if(_pComm != NULL){
         
-#if 0
-        if(CommGetCurrentID() != -1){
-            OHNO_PRINT("  RecvSend %d \n",_pComm->countSendRecv);
-            if((CommGetCurrentID() == 0) || CommGetAloneMode()){
-                for(j = 0;j < COMM_MACHINE_MAX;j++){
-                    if(CommIsConnect(j) || (j == 0)){
-                        OHNO_PRINT("  RecvSend %d  %d \n",j,_pComm->countSendRecvServer[j]);
-                    }
-                }
-            }
-        }
-#endif
         if(!_pComm->bShutDown){
 
-            _bVSAccess = FALSE;   // å®‰å…¨ã®ãŸã‚VBlankå‰²ã‚Šè¾¼ã¿ã§ã®ã‚¢ã‚¯ã‚»ã‚¹ç¦æ­¢å®£è¨€
-            _transmissonTypeChange();  //é€šä¿¡åˆ‡ã‚Šæ›¿ãˆ
-            _pComm->sendCont |= (sys.cont & 0x7fff);  // ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
-#ifdef PM_DEBUG
-            _debugAutoMove();
-#endif
-            _keyRand();
-
+            _bVSAccess = FALSE;   // ˆÀ‘S‚Ì‚½‚ßVBlankŠ„‚è‚İ‚Å‚ÌƒAƒNƒZƒX‹Ö~éŒ¾
+            _transmissonTypeChange();  //’ÊMØ‚è‘Ö‚¦
             _dataMpStep();
-            _pComm->sendCont &= 0x8000;
             if(_transmissonType() == _MP_MODE){
-                _recvDataFunc();    // å­æ©Ÿã¨ã—ã¦ã®å—ã‘å–ã‚Šå‡¦ç†
+                _recvDataFunc();    // q‹@‚Æ‚µ‚Ä‚Ìó‚¯æ‚èˆ—
             }
-            if((CommGetCurrentID() == COMM_PARENT_ID) && (CommIsConnect(COMM_PARENT_ID)) || CommGetAloneMode() ){
-                // ã‚µãƒ¼ãƒãƒ¼ã¨ã—ã¦ã®å‡¦ç†
+            if((GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID) && (GFL_NET_SystemIsConnect(COMM_PARENT_ID)) || GFL_NET_SystemGetAloneMode() ){
+                // ƒT[ƒo[‚Æ‚µ‚Ä‚Ìˆ—
                 _dataMpServerStep();
             }
-            if((CommGetCurrentID() == COMM_PARENT_ID) || (_transmissonType() == _DS_MODE) || CommGetAloneMode() ){
-                _recvDataServerFunc();  // ã‚µãƒ¼ãƒãƒ¼å´ã®å—ä¿¡å‡¦ç†
+            if((GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID) || (_transmissonType() == _DS_MODE) || GFL_NET_SystemGetAloneMode() ){
+                _recvDataServerFunc();  // ƒT[ƒo[‘¤‚ÌóMˆ—
             }
-            _bVSAccess = TRUE;  // æ¬¡ã®å‰²ã‚Šè¾¼ã¿æ™‚ã§ã®å‡¦ç†ã‚’è¨±å¯
+            _bVSAccess = TRUE;  // Ÿ‚ÌŠ„‚è‚İ‚Å‚Ìˆ—‚ğ‹–‰Â
         }
         CommMpProcess(_pComm->bitmap);
-        if(CommGetCurrentID() == COMM_PARENT_ID){
+        if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
             _connectFunc();
         }
-        _autoExitSystemFunc();  // è‡ªå‹•åˆ‡æ–­ _pComm=NULLã«ãªã‚‹ã®ã§æ³¨æ„
+        _autoExitSystemFunc();  // ©“®Ø’f _pComm=NULL‚É‚È‚é‚Ì‚Å’ˆÓ
     }
     else{
         CommMpProcess(0);
     }
-    CommErrorDispCheck(HEAPID_BASE_SYSTEM);
-    CommTimingSyncSend();
+    //ƒGƒ‰[‚Ì•\¦‚Ìd‘g‚İ‚ª‚Å‚«‚½‚ç“ü‚ê‚é  @@OO  2006.12.13
+//    CommErrorDispCheck(GFL_HEAPID_SYSTEM);
+    CommTimingSyncSend(_NETHANDLE_GetSYS());
     return TRUE;
 }
 
 
 //==============================================================================
 /**
- * é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ãƒ¼ã™ã‚‹
+ * @brief   ’ÊMƒoƒbƒtƒ@‚ğƒNƒŠƒA[‚·‚é
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemReset(void)
+void GFL_NET_SystemSystemReset(void)
 {
     BOOL bAcc = _bVSAccess;
 
     OHNO_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
+    _bVSAccess = FALSE;  // Š„‚è‚İ“à‚Å‚Ìˆ—‚ğ‹Ö~
     if(_pComm){
         _commCommandInit();
     }
@@ -1019,18 +980,18 @@ void CommSystemReset(void)
 
 //==============================================================================
 /**
- * DSãƒ¢ãƒ¼ãƒ‰ã§é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ãƒ¼ã™ã‚‹
+ * @brief   DSƒ‚[ƒh‚Å’ÊMƒoƒbƒtƒ@‚ğƒNƒŠƒA[‚·‚é
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemResetDS(void)
+void GFL_NET_SystemSystemResetDS(void)
 {
     BOOL bAcc = _bVSAccess;
 
     OHNO_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
+    _bVSAccess = FALSE;  // Š„‚è‚İ“à‚Å‚Ìˆ—‚ğ‹Ö~
     if(_pComm){
         _pComm->transmissionType = _DS_MODE;
         _commCommandInit();
@@ -1040,18 +1001,18 @@ void CommSystemResetDS(void)
 
 //==============================================================================
 /**
- * é€šä¿¡ãƒãƒƒãƒ•ã‚¡ã‚’ã‚¯ãƒªã‚¢ãƒ¼ã™ã‚‹+ãƒ“ãƒ¼ã‚³ãƒ³ã®åˆæœŸåŒ–ã‚’è¡Œã†
+ * @brief   ’ÊMƒoƒbƒtƒ@‚ğƒNƒŠƒA[‚·‚é+ƒr[ƒRƒ“‚Ì‰Šú‰»‚ğs‚¤
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemResetBattleChild(void)
+void GFL_NET_SystemSystemResetBattleChild(void)
 {
     BOOL bAcc = _bVSAccess;
 
     OHNO_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // å‰²ã‚Šè¾¼ã¿å†…ã§ã®å‡¦ç†ã‚’ç¦æ­¢
+    _bVSAccess = FALSE;  // Š„‚è‚İ“à‚Å‚Ìˆ—‚ğ‹Ö~
     if(_pComm){
         _commCommandInit();
         ChildBconDataInit();
@@ -1061,7 +1022,7 @@ void CommSystemResetBattleChild(void)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒ¼ã‚¿é€ä¿¡å‡¦ç†
+ * @brief   ƒf[ƒ^‘—Mˆ—
  * @param   none
  * @retval  none
  */
@@ -1071,17 +1032,19 @@ void CommSystemResetBattleChild(void)
 static void _dataMpStep(void)
 {
     if(_pComm->bSendNoneSend){
-        if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+        if( _pComm->device == _DEVICE_WIFI){
+#if 0        // wifi‚Í••ˆó
             if( _pComm->bWifiConnect ){
                 if( mydwc_sendToServer( _pComm->sSendBuf[0], _SEND_BUFF_SIZE_4CHILD )){
                     _pComm->bSendNoneSend = FALSE;
                 }
             }
+#endif
         }
-        else if(((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) &&
-                 (CommIsConnect(CommGetCurrentID()))) || CommGetAloneMode()){
+        else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()) &&
+                 (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
             _sendCallBack = _SEND_CB_NONE;
-            _updateMpData();     // ãƒ‡ãƒ¼ã‚¿é€å—ä¿¡
+            _updateMpData();     // ƒf[ƒ^‘—óM
             if(_sendCallBack != _SEND_CB_NONE){
                 _pComm->bSendNoneSend = FALSE;
             }
@@ -1090,27 +1053,28 @@ static void _dataMpStep(void)
     }
 
 
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+    if( _pComm->device == _DEVICE_WIFI){
+#if 0  //wifi••ˆó
         if( _pComm->bWifiConnect ){
-            if( _pComm->bWifiSendRecv ){  // åŒæœŸã‚’å–ã£ã¦ã„ã‚‹å ´åˆ
-                if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //é€ã‚Šã™ã
+            if( _pComm->bWifiSendRecv ){  // “¯Šú‚ğæ‚Á‚Ä‚¢‚éê‡
+                if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //‘—‚è‚·‚¬
                     return;
                 }
                 if(_sendCallBack == _SEND_CB_SECOND_SENDEND){
-                    _setSendData(_pComm->sSendBuf[0]);   // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
+                    _setSendData(_pComm->sSendBuf[0]);   // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
                     _sendCallBack = _SEND_CB_FIRST_SENDEND;
                 }
             }
             else{
                 if(_sendCallBack == _SEND_CB_SECOND_SENDEND){
-                    if(!_setSendData(_pComm->sSendBuf[0])){  // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
-                        return;  // æœ¬å½“ã«é€ã‚‹ã‚‚ã®ãŒä½•ã‚‚ç„¡ã„å ´åˆ
+                    if(!_setSendData(_pComm->sSendBuf[0])){  // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
+                        return;  // –{“–‚É‘—‚é‚à‚Ì‚ª‰½‚à–³‚¢ê‡
                     }
                     _sendCallBack = _SEND_CB_FIRST_SENDEND;
                 }
             }
             if( mydwc_sendToServer( _pComm->sSendBuf[0], _SEND_BUFF_SIZE_4CHILD )){
-//                if( !_pComm->bWifiSendRecv ){  // åŒæœŸã‚’å–ã£ã¦ãªã„å ´åˆ
+//                if( !_pComm->bWifiSendRecv ){  // “¯Šú‚ğæ‚Á‚Ä‚È‚¢ê‡
 //                    DEBUG_DUMP(&_pComm->sSendBuf[0][0], 16,"sp0");
 //                }
                 _sendCallBack = _SEND_CB_SECOND_SENDEND;
@@ -1122,27 +1086,28 @@ static void _dataMpStep(void)
             else{
             }
         }
+#endif //wifi••ˆó
     }
-    else if(((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) &&
-        (CommIsConnect(CommGetCurrentID()))) || CommGetAloneMode()){
-        if(_sendCallBack != _SEND_CB_SECOND_SENDEND){  // 2å€‹é€ã£ãŸãŒé€ä¿¡å®Œäº†ã—ã¦ã„ãªã„
-//            OHNO_PRINT("ã«ã‹ã„ã†ã‘ã¨ã£ã¦ãªã„ _sendCallBack\n");
+    else if(((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) &&
+        (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
+        if(_sendCallBack != _SEND_CB_SECOND_SENDEND){  // 2ŒÂ‘—‚Á‚½‚ª‘—MŠ®—¹‚µ‚Ä‚¢‚È‚¢
+//            OHNO_PRINT("‚É‚©‚¢‚¤‚¯‚Æ‚Á‚Ä‚È‚¢ _sendCallBack\n");
             return;
         }
-        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //é€ã‚Šã™ã
-//            OHNO_PRINT("å­æ©ŸãŒãƒ‡ãƒ¼ã‚¿é€ä¿¡ã‚’ã—ãªã„\n");
+        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //‘—‚è‚·‚¬
+//            OHNO_PRINT("q‹@‚ªƒf[ƒ^‘—M‚ğ‚µ‚È‚¢\n");
             return;
         }
-        _setSendData(_pComm->sSendBuf[_pComm->sendSwitch]);  // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
-        _setSendData(_pComm->sSendBuf[ 1 - _pComm->sendSwitch]);  // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
+        _setSendData(_pComm->sSendBuf[_pComm->sendSwitch]);  // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
+        _setSendData(_pComm->sSendBuf[ 1 - _pComm->sendSwitch]);  // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
         _sendCallBack = _SEND_CB_NONE;
-        _updateMpData();     // ãƒ‡ãƒ¼ã‚¿é€å—ä¿¡
+        _updateMpData();     // ƒf[ƒ^‘—óM
     }
 }
 
 //==============================================================================
 /**
- * ä¸­é–“RINGBUFFã‹ã‚‰å­æ©Ÿå…¨å“¡ã«é€†é€ä¿¡ã™ã‚‹ãŸã‚buffã«ã‚³ãƒ”ãƒ¼
+ * @brief   ’†ŠÔRINGBUFF‚©‚çq‹@‘Sˆõ‚É‹t‘—M‚·‚é‚½‚ßbuff‚ÉƒRƒs[
  * @param   none
  * @retval  none
  */
@@ -1154,17 +1119,17 @@ static BOOL _copyDSData(int switchNo)
     int machineMax;
     int i,num,nosend = 0;
 
-    mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-    machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+    mcSize = _getUserMaxSendByte();//CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
+    machineMax = _getUserMaxNum();
 /*
-    // åˆæœŸåŒ–
+    // ‰Šú‰»
     for(i = 0; i < machineMax; i++){
-        if(CommIsConnect(i) && (_pComm->recvDSCatchFlg[i] > 1) ){
-            // OHNO_PRINT("--------------è¿½ã„è¶Šã—ãŒç™ºç”Ÿ %d\n",i);
+        if(GFL_NET_SystemIsConnect(i) && (_pComm->recvDSCatchFlg[i] > 1) ){
+            // OHNO_PRINT("--------------’Ç‚¢‰z‚µ‚ª”­¶ %d\n",i);
             //                        _pComm->sSendServerBuf[_pComm->sendServerSwitch][i*mcSize] = _NODATA_SEND;
         }
-        if(CommIsConnect(i) && (_pComm->recvDSCatchFlg[i] == 0) ){
-            OHNO_PRINT("--------------è¿½ã„ã¬ããŒç™ºç”Ÿ %d\n",i);
+        if(GFL_NET_SystemIsConnect(i) && (_pComm->recvDSCatchFlg[i] == 0) ){
+            OHNO_PRINT("--------------’Ç‚¢‚Ê‚«‚ª”­¶ %d\n",i);
             _pComm->sSendServerBuf[switchNo][i * mcSize] = _NODATA_SEND;
             if(CommStateGetServiceNo() < COMM_MODE_BATTLE_SINGLE_WIFI){
                 _sendCallBackServer--;
@@ -1174,13 +1139,13 @@ static BOOL _copyDSData(int switchNo)
         _pComm->recvDSCatchFlg[i] = 0;
     }
    */
-    /// ä¸­é–“RINGBUFFã‹ã‚‰å­æ©Ÿå…¨å“¡ã«é€†é€ä¿¡ã™ã‚‹ãŸã‚buffã«ã‚³ãƒ”ãƒ¼
+    /// ’†ŠÔRINGBUFF‚©‚çq‹@‘Sˆõ‚É‹t‘—M‚·‚é‚½‚ßbuff‚ÉƒRƒs[
     for(i = 0; i < machineMax; i++){
-        CommRingEndChange(&_pComm->recvMidRing[i]);
-        if(CommIsConnect(i)){
+        GFL_NET_RingEndChange(&_pComm->recvMidRing[i]);
+        if(GFL_NET_SystemIsConnect(i)){
             _pComm->sSendServerBuf[switchNo][i * mcSize] = _NODATA_SEND;
         }
-        num = CommRingGets(&_pComm->recvMidRing[i] ,
+        num = GFL_NET_RingGets(&_pComm->recvMidRing[i] ,
                      &_pComm->sSendServerBuf[switchNo][i*mcSize],
                      mcSize);
         if(_pComm->sSendServerBuf[switchNo][i * mcSize] == _NODATA_SEND){
@@ -1195,7 +1160,7 @@ static BOOL _copyDSData(int switchNo)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒ¼ã‚¿é€ä¿¡å‡¦ç†  ã‚µãƒ¼ãƒãƒ¼å´
+ * @brief   ƒf[ƒ^‘—Mˆ—  ƒT[ƒo[‘¤
  * @param   none
  * @retval  none
  */
@@ -1210,12 +1175,12 @@ static void _updateMpDataServer(void)
     if(!_pComm){
         return;
     }
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+    if( _pComm->device == _DEVICE_WIFI){
         return;
     }
     
-    mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-    machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+    mcSize = _getUserMaxSendByte();
+    machineMax = _getUserMaxNum();
     if((_sendCallBackServer == _SEND_CB_FIRST_SENDEND) ||
        (_sendCallBackServer == _SEND_CB_NONE)){
         _sendCallBackServer++;
@@ -1223,40 +1188,40 @@ static void _updateMpDataServer(void)
         if(_transmissonType() == _DS_MODE){
             _copyDSData(_pComm->sendServerSwitch);
         }
-        if( (WH_GetSystemState() == WH_SYSSTATE_CONNECTED)  && !CommGetAloneMode()){
-            if(!WH_SendData(_pComm->sSendServerBuf[_pComm->sendServerSwitch],
+        if( (GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()))  && !GFL_NET_SystemGetAloneMode()){
+            if(!GFL_NET_WL_SendData(_pComm->sSendServerBuf[_pComm->sendServerSwitch],
                             _SEND_BUFF_SIZE_PARENT,
-                            _PORT_DATA_PARENT, _sendServerCallback)){
+                            _sendServerCallback)){
                 _sendCallBackServer--;
             }
         }
-        // é€ä¿¡å®Œäº†
+        // ‘—MŠ®—¹
         if((_sendCallBackServer == _SEND_CB_FIRST_SEND) || (_sendCallBackServer == _SEND_CB_SECOND_SEND) ){
 
             for(i = 0; i < machineMax; i++){
-                if(CommIsConnect(i)){
-                    _pComm->countSendRecvServer[i]++; // è¦ªMPé€ä¿¡
+                if(GFL_NET_SystemIsConnect(i)){
+                    _pComm->countSendRecvServer[i]++; // eMP‘—M
 #ifdef PM_DEBUG
                     _pComm->countSendNumServer[i]++;
 #endif
                 }
-                else if(CommGetAloneMode() && (i == 0)){
-                    _pComm->countSendRecvServer[i]++; // è¦ªMPé€ä¿¡
+                else if(GFL_NET_SystemGetAloneMode() && (i == 0)){
+                    _pComm->countSendRecvServer[i]++; // eMP‘—M
 #ifdef PM_DEBUG
                     _pComm->countSendNumServer[i]++;
 #endif
                 }
             }
 
-            // è¦ªæ©Ÿè‡ªèº«ã«å­æ©Ÿã®å‹•ãã‚’ã•ã›ã‚‹ãŸã‚ã“ã“ã§ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã¶
+            // e‹@©g‚Éq‹@‚Ì“®‚«‚ğ‚³‚¹‚é‚½‚ß‚±‚±‚ÅƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ô
             _commRecvCallback(COMM_PARENT_ID,
                               (u16*)_pComm->sSendServerBuf[ _pComm->sendServerSwitch ],
                               _SEND_BUFF_SIZE_PARENT);
             _pComm->sendServerSwitch = 1 - _pComm->sendServerSwitch;
         }
         for(i = 0; i < machineMax; i++){
-            if(!CommIsConnect(i)){
-                if(_transmissonType() == _DS_MODE){             // åˆæœŸåŒ–
+            if(!GFL_NET_SystemIsConnect(i)){
+                if(_transmissonType() == _DS_MODE){             // ‰Šú‰»
                     _pComm->sSendServerBuf[_pComm->sendServerSwitch][i*mcSize] = _INVALID_HEADER;
                 }
                 else{
@@ -1264,8 +1229,8 @@ static void _updateMpDataServer(void)
                 }
             }
         }
-        if( (WH_GetSystemState() != WH_SYSSTATE_CONNECTED)  || CommGetAloneMode() ){
-            // å‰²ã‚Šè¾¼ã¿ãŒç„¡ã„çŠ¶æ³ã§ã‚‚å‹•ã‹ã™ç‚ºã“ã“ã§ã‚«ã‚¦ãƒ³ãƒˆ
+        if( !(GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()))  || GFL_NET_SystemGetAloneMode() ){
+            // Š„‚è‚İ‚ª–³‚¢ó‹µ‚Å‚à“®‚©‚·ˆ×‚±‚±‚ÅƒJƒEƒ“ƒg
             _sendCallBackServer++;
         }
     }
@@ -1273,7 +1238,7 @@ static void _updateMpDataServer(void)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒ¼ã‚¿é€ä¿¡å‡¦ç†  ã‚µãƒ¼ãƒãƒ¼å´
+ * @brief   ƒf[ƒ^‘—Mˆ—  ƒT[ƒo[‘¤
  * @param   none
  * @retval  none
  */
@@ -1284,15 +1249,17 @@ static void _dataMpServerStep(void)
     int i;
 
     if(_pComm->bSendNoneSend){
-        if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
-            if( CommIsConnect(COMM_PARENT_ID) ){
+        if( _pComm->device == _DEVICE_WIFI){
+#if 0  //wifi lock
+            if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
                 if( mydwc_sendToClient( _pComm->sSendServerBuf[0], WH_MP_4CHILD_DATA_SIZE*2 )){
                     _pComm->bSendNoneSend = FALSE;
                     return;
                 }
             }
+#endif //wifi lock
         }
-        else if((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (CommGetAloneMode()) ){
+        else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) || (GFL_NET_SystemGetAloneMode()) ){
             _updateMpDataServer();
             if(_sendCallBackServer == _SEND_CB_FIRST_SENDEND){
                 _pComm->bSendNoneSend = FALSE;
@@ -1301,18 +1268,19 @@ static void _dataMpServerStep(void)
         }
     }
 
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
-        if( CommIsConnect(COMM_PARENT_ID) ){
-            if( _pComm->bWifiSendRecv ){  // åŒæœŸã‚’å–ã£ã¦ã„ã‚‹å ´åˆ
-                if(_pComm->countSendRecvServer[1] > _SENDRECV_LIMIT){ // é€ä¿¡ã—ã™ãã®å ´åˆ
+    if( _pComm->device == _DEVICE_WIFI){
+#if 0 //wifi••ˆó
+        if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
+            if( _pComm->bWifiSendRecv ){  // “¯Šú‚ğæ‚Á‚Ä‚¢‚éê‡
+                if(_pComm->countSendRecvServer[1] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
                     return;
                 }
-                if(_pComm->countSendRecvServer[0] > _SENDRECV_LIMIT){ // é€ä¿¡ã—ã™ãã®å ´åˆ
+                if(_pComm->countSendRecvServer[0] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
                     return;
                 }
                 if(_sendCallBackServer == _SEND_CB_SECOND_SENDEND){
                     if(_transmissonType() == _DS_MODE){
-                        _copyDSData(0);  //DSé€šä¿¡ãªã‚‰ã‚³ãƒ”ãƒ¼
+                        _copyDSData(0);  //DS’ÊM‚È‚çƒRƒs[
                     }
                     _sendCallBackServer = _SEND_CB_FIRST_SENDEND;
                 }
@@ -1320,7 +1288,7 @@ static void _dataMpServerStep(void)
             else{
                 if(_sendCallBackServer == _SEND_CB_SECOND_SENDEND){
                     if(_transmissonType() == _DS_MODE){
-                        if(!_copyDSData(0)){  //DSé€šä¿¡ãªã‚‰ã‚³ãƒ”ãƒ¼
+                        if(!_copyDSData(0)){  //DS’ÊM‚È‚çƒRƒs[
                             return;
                         }
                     }
@@ -1339,48 +1307,41 @@ static void _dataMpServerStep(void)
 #endif
             }
             else{
-                OHNO_PRINT("mydwc_sendToClientã«å¤±æ•—\n");
+                OHNO_PRINT("mydwc_sendToClient‚É¸”s\n");
             }
         }
+#endif  //wifi••ˆó
     }
-    else if((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (CommGetAloneMode()) ){
+    else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) || (GFL_NET_SystemGetAloneMode()) ){
         if(_sendCallBackServer != _SEND_CB_SECOND_SENDEND){
-//            OHNO_PRINT("äºŒå›ã†ã‘ã¨ã£ã¦ãªã„_sendCallBackServer\n");
+//            OHNO_PRINT("“ñ‰ñ‚¤‚¯‚Æ‚Á‚Ä‚È‚¢_sendCallBackServer\n");
             return;
         }
         for(i = 1; i < COMM_MACHINE_MAX; i++){
-            if(CommIsConnect(i)){
-                if(_pComm->countSendRecvServer[i] > _SENDRECV_LIMIT){ // é€ä¿¡ã—ã™ãã®å ´åˆ
-                    //OHNO_PRINT("é€ä¿¡ã—ã™ã%d \n",i);
+            if(GFL_NET_SystemIsConnect(i)){
+                if(_pComm->countSendRecvServer[i] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
+                    //OHNO_PRINT("‘—M‚µ‚·‚¬%d \n",i);
                     return;
                 }
             }
-            else if((i == 0) && CommGetAloneMode()){
-                if(_pComm->countSendRecvServer[0] > _SENDRECV_LIMIT){ // é€ä¿¡ã—ã™ãã®å ´åˆ
+            else if((i == 0) && GFL_NET_SystemGetAloneMode()){
+                if(_pComm->countSendRecvServer[0] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
                     return;
                 }
             }
         }
-//        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //é€ã‚Šã™ã
+//        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //‘—‚è‚·‚¬
   //          return;
     //    }
-        if(_transmissonType() == _MP_MODE){  // DSæ™‚ã«ã¯ã™ã§ã«sSendServerBufã«ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹
-            _setSendDataServer(_pComm->sSendServerBuf[ _pComm->sendServerSwitch ]);  // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
-            _setSendDataServer(_pComm->sSendServerBuf[ 1 - _pComm->sendServerSwitch ]);  // é€ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰å·®ã—æ›¿ãˆã‚‹
+        if(_transmissonType() == _MP_MODE){  // DS‚É‚Í‚·‚Å‚ÉsSendServerBuf‚Éƒf[ƒ^‚ª‚ ‚é
+            _setSendDataServer(_pComm->sSendServerBuf[ _pComm->sendServerSwitch ]);  // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
+            _setSendDataServer(_pComm->sSendServerBuf[ 1 - _pComm->sendServerSwitch ]);  // ‘—‚éƒf[ƒ^‚ğƒŠƒ“ƒOƒoƒbƒtƒ@‚©‚ç·‚µ‘Ö‚¦‚é
         }
         _sendCallBackServer = _SEND_CB_NONE;
-        // æœ€åˆã®é€ä¿¡å‡¦ç†
+        // Å‰‚Ì‘—Mˆ—
         _updateMpDataServer();
     }
 }
-
-//==============================================================================
-/**
- * é€šä¿¡ã‚’å—ä¿¡ã—ãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
- * @param   result  æˆåŠŸã‹å¤±æ•—
- * @retval  none
- */
-//==============================================================================
 
 #ifdef PM_DEBUG
 static u8 debugHeadData[COMM_MACHINE_MAX][100];
@@ -1389,12 +1350,17 @@ static u8 debugHeadDataC[5][100];
 static int debugCntC = 0;
 #endif
 
-
-
 //#define WIFI_DUMP_TEST
 
-// å—ä¿¡ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‹ å­æ©Ÿå´ã®å—ä¿¡ã¯ è¦ªæ©Ÿã®192byteã®ã¿ã®å—ä¿¡ã¨ãªã‚‹
-void CommRecvCallback(u16 aid, u16 *data, u16 size)
+//==============================================================================
+/**
+ * @brief   ’ÊM‚ğóM‚µ‚½‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+ * @param   result  ¬Œ÷‚©¸”s
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_SystemRecvCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
 
@@ -1408,7 +1374,7 @@ void CommRecvCallback(u16 aid, u16 *data, u16 size)
 #endif
 
     if(_pComm->bPSendNoneRecv[COMM_PARENT_ID]){
-        _pComm->countSendRecv--;  //å—ä¿¡
+        _pComm->countSendRecv--;  //óM
 #ifdef PM_DEBUG
         _pComm->countRecvNum++;
 #endif
@@ -1417,14 +1383,22 @@ void CommRecvCallback(u16 aid, u16 *data, u16 size)
     }
     _commRecvCallback(aid, data, size);
 }
-// ã“ã¡ã‚‰ãŒæœ¬ä½“ ä¸Šã®ã¯rapper
+
+
+//==============================================================================
+/**
+ * @brief   ’ÊM‚ğóM‚µ‚½‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN ‚±‚¿‚ç‚ª–{‘Ì ã‚Ì‚Írapper
+ * @param   result  ¬Œ÷‚©¸”s
+ * @retval  none
+ */
+//==============================================================================
 static void _commRecvCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
     int i;
     int recvSize = size;
 
-    _pComm->countSendRecv--;  //å—ä¿¡
+    _pComm->countSendRecv--;  //óM
 #ifdef PM_DEBUG
     _pComm->countRecvNum++;
 #endif
@@ -1445,25 +1419,25 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
 #endif
 
     
-//    if( !_pComm->bWifiSendRecv ){  // åŒæœŸã‚’å–ã£ã¦ãªã„
+//    if( !_pComm->bWifiSendRecv ){  // “¯Šú‚ğæ‚Á‚Ä‚È‚¢
     //DEBUG_DUMP(&adr[0], 16,"cr0");
     //DEBUG_DUMP(&adr[38], 16,"cr1");
 //    }
-    if(adr[0] == _MP_DATA_HEADER){   ///MPãƒ‡ãƒ¼ã‚¿ã®å ´åˆ
+    if(adr[0] == _MP_DATA_HEADER){   ///MPƒf[ƒ^‚Ìê‡
         if(_transmissonType() == _DS_MODE){
-            OHNO_PRINT("DSãªã®ã«MPãƒ‡ãƒ¼ã‚¿ãŒæ¥ãŸ \n");
+            OHNO_PRINT("DS‚È‚Ì‚ÉMPƒf[ƒ^‚ª—ˆ‚½ \n");
             return;
         }
         adr++;
         recvSize--;
     }
-    else if(_transmissonType() == _MP_MODE){  //DSãƒ‡ãƒ¼ã‚¿ã®å ´åˆ
-        OHNO_PRINT("MPãªã®ã«DEPãƒ‡ãƒ¼ã‚¿ãŒæ¥ãŸ \n");
+    else if(_transmissonType() == _MP_MODE){  //DSƒf[ƒ^‚Ìê‡
+        OHNO_PRINT("MP‚È‚Ì‚ÉDEPƒf[ƒ^‚ª—ˆ‚½ \n");
         return;
     }
     if((_pComm->bFirstCatchP2C) && (adr[0] & _SEND_NEXT)){
-        // ã¾ã ä¸€å›ã‚‚ãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ãŒãªã„çŠ¶æ…‹ãªã®ã«é€£ç¶šãƒ‡ãƒ¼ã‚¿ã ã£ãŸ
-        OHNO_PRINT("é€£ç¶šãƒ‡ãƒ¼ã‚¿ child %d \n",aid);
+        // ‚Ü‚¾ˆê‰ñ‚àƒf[ƒ^‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ª‚È‚¢ó‘Ô‚È‚Ì‚É˜A‘±ƒf[ƒ^‚¾‚Á‚½
+        OHNO_PRINT("˜A‘±ƒf[ƒ^ child %d \n",aid);
         DEBUG_DUMP((u8*)data,24,"cr");
         return;
     }
@@ -1473,8 +1447,8 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
     _pComm->bFirstCatchP2C = FALSE;
 
     if(_transmissonType() == _DS_MODE){
-        int mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+        int mcSize = _getUserMaxSendByte();
+        int machineMax = _getUserMaxNum();
 
         for(i = 0; i < machineMax; i++){
             if(adr[0] == _INVALID_HEADER){
@@ -1489,10 +1463,10 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
             }
             else if(adr[0] == _NODATA_SEND){
                 adr += mcSize;
-//                OHNO_PRINT("--------------ä»Šå›ãƒ‡ãƒ¼ã‚¿ãªã— %d\n",i);
+//                OHNO_PRINT("--------------¡‰ñƒf[ƒ^‚È‚µ %d\n",i);
             }
-            else if((_pComm->bFirstCatch[i]) && (adr[0] & _SEND_NEXT)){ // ã¾ã ä¸€å›ã‚‚ãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ãŒãªã„çŠ¶æ…‹ãªã®ã«é€£ç¶šãƒ‡ãƒ¼ã‚¿ã ã£ãŸ
-                OHNO_PRINT("é€£ç¶šãƒ‡ãƒ¼ã‚¿ parent %d \n",aid);
+            else if((_pComm->bFirstCatch[i]) && (adr[0] & _SEND_NEXT)){ // ‚Ü‚¾ˆê‰ñ‚àƒf[ƒ^‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ª‚È‚¢ó‘Ô‚È‚Ì‚É˜A‘±ƒf[ƒ^‚¾‚Á‚½
+                OHNO_PRINT("˜A‘±ƒf[ƒ^ parent %d \n",aid);
                 adr += mcSize;
             }
             else{
@@ -1501,15 +1475,15 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
                 if(_pComm->DSCountRecv[i] != 0xff){
                     if(cnt > _pComm->DSCountRecv[i]){
                         if((cnt-1)!=_pComm->DSCountRecv[i]){
-                            OHNO_PRINT("ã‚³ãƒãƒ³ãƒ‰ãšã‚Œ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
-                            DEBUG_DUMP((u8*)data,size,"ã‚³ãƒãƒ³ãƒ‰ãšã‚Œ");
+                            OHNO_PRINT("ƒRƒ}ƒ“ƒh‚¸‚ê  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
+                            DEBUG_DUMP((u8*)data,size,"ƒRƒ}ƒ“ƒh‚¸‚ê");
                             GF_ASSERT((cnt-1)==_pComm->DSCountRecv[i]);
                         }
                     }
                     else{
                         if((cnt!=0) || (_pComm->DSCountRecv[i]!=0xf)){
-                            OHNO_PRINT("ã‚³ãƒãƒ³ãƒ‰ãšã‚Œ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
-                            DEBUG_DUMP((u8*)data,size,"ã‚³ãƒãƒ³ãƒ‰ãšã‚Œ");
+                            OHNO_PRINT("ƒRƒ}ƒ“ƒh‚¸‚ê  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
+                            DEBUG_DUMP((u8*)data,size,"ƒRƒ}ƒ“ƒh‚¸‚ê");
                         }
                         GF_ASSERT((cnt==0) && (_pComm->DSCountRecv[i]==0xf));
                     }
@@ -1517,46 +1491,45 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
                 _pComm->DSCountRecv[i] = cnt;
 #endif
                 adr++;
-                CommRingPuts(&_pComm->recvServerRing[i], adr, mcSize-1, 1510);//__LINE__); // ãƒã‚¹ã‚¿ãƒ¼ã¨å·®ãŒå‡ºã‚‹ã®ã§æ•°å­—ã«ç½®ãæ›ãˆã¾ã—ãŸ 06.10.23
+                GFL_NET_RingPuts(&_pComm->recvServerRing[i], adr, mcSize-1);
                 adr += (mcSize-1);
                 _pComm->bFirstCatch[i]=FALSE;
             }
         }
     }
-    else{   //MPãƒ‡ãƒ¼ã‚¿
-#if _COMMAND_TEST
-        DEBUG_DUMP(adr,recvSize,"å­æ©Ÿãƒ‡ãƒ¼ã‚¿å—ä¿¡");
+    else{   //MPƒf[ƒ^
+#if 0
+        DEBUG_DUMP(adr,recvSize,"q‹@ƒf[ƒ^óM");
 #endif
-//        DEBUG_DUMP(adr,recvSize,"å­æ©Ÿãƒ‡ãƒ¼ã‚¿å—ä¿¡");
+//        DEBUG_DUMP(adr,recvSize,"q‹@ƒf[ƒ^óM");
         
-        adr++;      // ãƒ˜ãƒƒãƒ€ãƒ¼ï¼‘ãƒã‚¤ãƒˆèª­ã¿é£›ã°ã™
+        adr++;      // ƒwƒbƒ_[‚PƒoƒCƒg“Ç‚İ”ò‚Î‚·
         _pComm->bitmap = adr[0];
         _pComm->bitmap *= 256;
-        adr++;   // Bitmapã§ãƒ¼ãŸ
+        adr++;   // Bitmap‚Å[‚½
         _pComm->bitmap += adr[0];
-        adr++;   // Bitmapã§ãƒ¼ãŸ
+        adr++;   // Bitmap‚Å[‚½
         recvSize -= 3;
         //    OHNO_PRINT("bitmap %x\n",_pComm->bitmap);
         recvSize = adr[0]; 
         adr++;
-        //if(recvSize > CommRingDataRestSize(&_pComm->recvRing)){
-          //  GF_ASSERT_RETURN("Error:å—ä¿¡ã‚ªãƒ¼ãƒãƒ¼\n",);
+        //if(recvSize > GFL_NET_RingDataRestSize(&_pComm->recvRing)){
+          //  GF_ASSERT_RETURN("Error:óMƒI[ƒo[\n",);
         //}
-        CommRingPuts(&_pComm->recvRing , adr, recvSize, 1535);//__LINE__); // ãƒã‚¹ã‚¿ãƒ¼ã¨å·®ãŒå‡ºã‚‹ã®ã§æ•°å­—ã«ç½®ãæ›ãˆã¾ã—ãŸ 06.10.23
+        GFL_NET_RingPuts(&_pComm->recvRing , adr, recvSize);
     }
 }
 
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’å—ä¿¡ã—ãŸæ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
- * @param   result  æˆåŠŸã‹å¤±æ•—
+ * @brief   ’ÊM‚ğóM‚µ‚½‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+ * @param   result  ¬Œ÷‚©¸”s
  * @retval  none
  */
 //==============================================================================
 
-// å—ä¿¡ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å‹  è¦ªæ©Ÿç”¨
-void CommRecvParentCallback(u16 aid, u16 *data, u16 size)
+void GFL_NET_SystemRecvParentCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
 #ifdef WIFI_DUMP_TEST
@@ -1572,7 +1545,7 @@ void CommRecvParentCallback(u16 aid, u16 *data, u16 size)
 #endif
 
     if(_pComm->bPSendNoneRecv[aid]){
-        _pComm->countSendRecvServer[aid]--;  //SERVERå—ä¿¡
+        _pComm->countSendRecvServer[aid]--;  //SERVERóM
 #ifdef PM_DEBUG
         _pComm->countRecvNumServer[aid]++;
 #endif
@@ -1585,12 +1558,20 @@ void CommRecvParentCallback(u16 aid, u16 *data, u16 size)
 }
 
 
+//==============================================================================
+/**
+ * @brief   ’ÊM‚ğóM‚µ‚½‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+ * @param   result  ¬Œ÷‚©¸”s
+ * @retval  none
+ */
+//==============================================================================
+
 static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
     int i;
 
-    _pComm->countSendRecvServer[aid]--;  //SERVERå—ä¿¡
+    _pComm->countSendRecvServer[aid]--;  //SERVERóM
 #ifdef PM_DEBUG
     _pComm->countRecvNumServer[aid]++;
 #endif
@@ -1607,60 +1588,60 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
 #endif
     
     if((_pComm->bFirstCatch[aid]) && (adr[0] & _SEND_NEXT)){
-        // ã¾ã ä¸€å›ã‚‚ãƒ‡ãƒ¼ã‚¿ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ãŒãªã„çŠ¶æ…‹ãªã®ã«é€£ç¶šãƒ‡ãƒ¼ã‚¿ã ã£ãŸ
-        OHNO_PRINT("é€£ç¶šãƒ‡ãƒ¼ã‚¿ parent %d \n",aid);
+        // ‚Ü‚¾ˆê‰ñ‚àƒf[ƒ^‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ª‚È‚¢ó‘Ô‚È‚Ì‚É˜A‘±ƒf[ƒ^‚¾‚Á‚½
+        OHNO_PRINT("˜A‘±ƒf[ƒ^ parent %d \n",aid);
         i = 0;
-        DEBUG_DUMP(adr,12,"é€£ç¶šãƒ‡ãƒ¼ã‚¿");
+        DEBUG_DUMP(adr,12,"˜A‘±ƒf[ƒ^");
         return;
     }
     _pComm->bFirstCatch[aid] = FALSE;
 
     if(_transmissonType() == _DS_MODE){
-        int mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+        int mcSize = _getUserMaxSendByte();
+        int machineMax = _getUserMaxNum();
 #if 0
         if((aid == 1) && ((adr[0] & 0x0f)== _SEND_NEXT)){
            DEBUG_DUMP(&adr[1],mcSize-1,"poke");
         }
    //     if(aid == 0){
-   //         DEBUG_DUMP(adr,mcSize,"è¦ªæ©Ÿã®DS");
+   //         DEBUG_DUMP(adr,mcSize,"e‹@‚ÌDS");
   //      }
 #endif
 #if 0
         for(i = 1;i < mcSize; i++){
-            if(adr[i] != CS_NONE){  //ä½•ã‹ãŒé€ã‚‰ã‚Œã¦ãã¦ãŸã‚‰
-                CommRingPuts(&_pComm->recvMidRing[aid] , adr, mcSize, 1622);//__LINE__); // ãƒã‚¹ã‚¿ãƒ¼ã¨å·®ãŒå‡ºã‚‹ã®ã§æ•°å­—ã«ç½®ãæ›ãˆã¾ã—ãŸ 06.10.23
-                //OHNO_SP_PRINT("middle %d %d\n",CommRingDataSize(&_pComm->recvMidRing[aid]),aid);
-//                OHNO_PRINT(" ã¾ã‚‹ã¾ã¾ä¸­é–“ãƒªãƒ³ã‚°ã«å…¥ã‚Œã‚‹ %d %d \n", aid, CommRingDataSize(&_pComm->recvMidRing[aid]));
+            if(adr[i] != GFL_NET_CMD_NONE){  //‰½‚©‚ª‘—‚ç‚ê‚Ä‚«‚Ä‚½‚ç
+                GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
+                //OHNO_SP_PRINT("middle %d %d\n",GFL_NET_RingDataSize(&_pComm->recvMidRing[aid]),aid);
+//                OHNO_PRINT(" ‚Ü‚é‚Ü‚Ü’†ŠÔƒŠƒ“ƒO‚É“ü‚ê‚é %d %d \n", aid, GFL_NET_RingDataSize(&_pComm->recvMidRing[aid]));
                 break;
             }
         }
 #endif
         if(!(adr[0] & _SEND_NO_DATA)){
-            CommRingPuts(&_pComm->recvMidRing[aid] , adr, mcSize, 1630);//__LINE__); // ãƒã‚¹ã‚¿ãƒ¼ã¨å·®ãŒå‡ºã‚‹ã®ã§æ•°å­—ã«ç½®ãæ›ãˆã¾ã—ãŸ 06.10.23
-//            OHNO_PRINT("MidRingã®ã“ã‚Š%d\n",CommRingDataRestSize(&_pComm->recvMidRing[aid]));
+            GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
+//            OHNO_PRINT("MidRing‚Ì‚±‚è%d\n",GFL_NET_RingDataRestSize(&_pComm->recvMidRing[aid]));
         }
-        _pComm->recvDSCatchFlg[aid]++;  // é€šä¿¡ã‚’ã‚‚ã‚‰ã£ãŸã“ã¨ã‚’è¨˜æ†¶
-    }else{   // MPãƒ¢ãƒ¼ãƒ‰
-        _padDataRecv(adr, aid);
-        if(adr[0] & _SEND_NO_DATA){   // ãƒ‡ãƒ¼ã‚¿ãŒç©ºã£ã½ã®å ´åˆå—ã‘å–ã‚‰ãªã„
+        _pComm->recvDSCatchFlg[aid]++;  // ’ÊM‚ğ‚à‚ç‚Á‚½‚±‚Æ‚ğ‹L‰¯
+    }else{   // MPƒ‚[ƒh
+
+        if(adr[0] & _SEND_NO_DATA){   // ƒf[ƒ^‚ª‹ó‚Á‚Û‚Ìê‡ó‚¯æ‚ç‚È‚¢
             return;
         }
         adr++;
-        if(_RECV_BUFF_SIZE_PARENT > CommRingDataRestSize(&_pComm->recvServerRing[aid])){
-            OHNO_PRINT("Error Throw:å—ä¿¡ã‚ªãƒ¼ãƒãƒ¼\n");
+        if(_RECV_BUFF_SIZE_PARENT > GFL_NET_RingDataRestSize(&_pComm->recvServerRing[aid])){
+            OHNO_PRINT("Error Throw:óMƒI[ƒo[\n");
             return;
         }
 //        if(aid==0)
-//            DEBUG_DUMP(adr,_RECV_BUFF_SIZE_PARENT,"MP å—ã‘å–ã£ãŸ");
-        CommRingPuts(&_pComm->recvServerRing[aid] , adr, _RECV_BUFF_SIZE_PARENT, 1646);//__LINE__); // ãƒã‚¹ã‚¿ãƒ¼ã¨å·®ãŒå‡ºã‚‹ã®ã§æ•°å­—ã«ç½®ãæ›ãˆã¾ã—ãŸ 06.10.23
+//            DEBUG_DUMP(adr,_RECV_BUFF_SIZE_PARENT,"MP ó‚¯æ‚Á‚½");
+        GFL_NET_RingPuts(&_pComm->recvServerRing[aid] , adr, _RECV_BUFF_SIZE_PARENT);
     }
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’é€ä¿¡ã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
- * @param   result  æˆåŠŸã‹å¤±æ•—
+ * @brief   ’ÊM‚ğ‘—M‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN
+ * @param   result  ¬Œ÷‚©¸”s
  * @retval  none
  */
 //==============================================================================
@@ -1677,8 +1658,8 @@ static void _sendCallbackFunc(BOOL result)
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’é€ä¿¡ã—ãŸã¨ãã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ 
- * @param   result  æˆåŠŸã‹å¤±æ•—
+ * @brief   ’ÊM‚ğ‘—M‚µ‚½‚Æ‚«‚ÉŒÄ‚Î‚ê‚éƒR[ƒ‹ƒoƒbƒN 
+ * @param   result  ¬Œ÷‚©¸”s
  * @retval  none
  */
 //==============================================================================
@@ -1695,7 +1676,7 @@ static void _sendServerCallback(BOOL result)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒ¼ã‚¿ã®åé›†
+ * @brief   ƒf[ƒ^‚ÌûW
  * @param   none
  * @retval  none
  */
@@ -1709,59 +1690,59 @@ static void _updateMpData(void)
     if(!_pComm){
         return;
     }
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+    if( _pComm->device == _DEVICE_WIFI){
         return;
     }
     {
-        int mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-        int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
-        if(CommGetAloneMode()){   // aloneãƒ¢ãƒ¼ãƒ‰ã®å ´åˆ
+        int mcSize = _getUserMaxSendByte();
+        int machineMax = _getUserMaxNum();
+        if(GFL_NET_SystemGetAloneMode()){   // aloneƒ‚[ƒh‚Ìê‡
             if((_sendCallBack == _SEND_CB_FIRST_SENDEND) || (_sendCallBack == _SEND_CB_NONE)){
                 _sendCallBack++;
                 _sendCallbackFunc(TRUE);
-                // å­æ©Ÿã®ãµã‚Šã‚’ã™ã‚‹éƒ¨åˆ†          // è¦ªæ©Ÿã¯è‡ªåˆ†ã§ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã¶
+                // q‹@‚Ì‚Ó‚è‚ğ‚·‚é•”•ª          // e‹@‚Í©•ª‚ÅƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ô
                 _commRecvParentCallback(COMM_PARENT_ID, (u16*)_pComm->sSendBuf[_pComm->sendSwitch],
                                     mcSize);
                 _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                _pComm->countSendRecv++; // MPé€ä¿¡è¦ª
+                _pComm->countSendRecv++; // MP‘—Me
 #ifdef PM_DEBUG
                 _pComm->countSendNum++;
 #endif
                 return;
             }
         }
-        if(WH_GetSystemState() == WH_SYSSTATE_CONNECTED ){
-            if(!CommIsConnect(CommGetCurrentID())){
-                if(CommGetCurrentID()==1){
-                    OHNO_PRINT("è‡ªåˆ†è‡ªèº«ã®æ¥ç¶šãŒã¾ã \n");
+        if(GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())){
+            if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
+                if(GFL_NET_SystemGetCurrentID()==1){
+                    OHNO_PRINT("©•ª©g‚ÌÚ‘±‚ª‚Ü‚¾\n");
                 }
                 return;
             }
             if((_sendCallBack == _SEND_CB_FIRST_SENDEND) || (_sendCallBack == _SEND_CB_NONE)){
-                // å­æ©Ÿãƒ‡ãƒ¼ã‚¿é€ä¿¡
-                if(CommGetCurrentID() != COMM_PARENT_ID){
+                // q‹@ƒf[ƒ^‘—M
+                if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
                     _sendCallBack++;
-                    if(!WH_SendData(_pComm->sSendBuf[_pComm->sendSwitch],
-                                    mcSize, _PORT_DATA_CHILD, _sendCallbackFunc)){
+                    if(!GFL_NET_WL_SendData(_pComm->sSendBuf[_pComm->sendSwitch],
+                                    mcSize, _sendCallbackFunc)){
                         _sendCallBack--;
                         OHNO_PRINT("failed WH_SendData\n");
                     }
                     else{
                         _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                        _pComm->countSendRecv++; // MPé€ä¿¡
+                        _pComm->countSendRecv++; // MP‘—M
 #ifdef PM_DEBUG
                         _pComm->countSendNum++;
 #endif
                     }
                 }
-                else if(WH_GetBitmap() & 0xfffe){         // ã‚µãƒ¼ãƒãƒ¼ã¨ã—ã¦ã®å‡¦ç† è‡ªåˆ†ä»¥å¤–ã®èª°ã‹ã«ã¤ãªãŒã£ã¦ã„ã‚‹æ™‚
+                else if(CommMPIsChildsConnecting()){         // ƒT[ƒo[‚Æ‚µ‚Ä‚Ìˆ— ©•ªˆÈŠO‚Ì’N‚©‚É‚Â‚È‚ª‚Á‚Ä‚¢‚é
                     _sendCallBack++;
                     _sendCallbackFunc(TRUE);
-                    // å­æ©Ÿã®ãµã‚Šã‚’ã™ã‚‹éƒ¨åˆ†          // è¦ªæ©Ÿã¯è‡ªåˆ†ã§ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’å‘¼ã¶
+                    // q‹@‚Ì‚Ó‚è‚ğ‚·‚é•”•ª          // e‹@‚Í©•ª‚ÅƒR[ƒ‹ƒoƒbƒN‚ğŒÄ‚Ô
                     _commRecvParentCallback(COMM_PARENT_ID, (u16*)_pComm->sSendBuf[_pComm->sendSwitch],
                                         mcSize);
                     _pComm->sendSwitch = 1 - _pComm->sendSwitch;
-                    _pComm->countSendRecv++; // MPé€ä¿¡
+                    _pComm->countSendRecv++; // MP‘—M
 #ifdef PM_DEBUG
                     _pComm->countSendNum++;
 #endif
@@ -1776,241 +1757,20 @@ static void _updateMpData(void)
 
 //==============================================================================
 /**
- * ã‚­ãƒ¼ã®ä¹±æ•°ã‚’ç™ºç”Ÿã™ã‚‹ ã‚­ãƒ¼ãŒå…¥åŠ›ã•ã‚ŒãŸæ™‚ã ã‘å‹•ã
- * @param   none
- * @retval  ã‚¨ãƒ©ãƒ¼ã®æ™‚TRUE
- */
-//==============================================================================
-
-static void _keyRand(void)
-{
-    u16 pad = 0;
-
-    if(_pComm->randPadType == _NONE_KEY){
-        return;
-    }
-    if(!(_pComm->sendCont &
-         (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN))){
-        return;  // ã‚­ãƒ¼æŠ¼ã•ã‚Œã¦ãªã„å ´åˆã¯ã“ã“ã‚‚ä½¿ç”¨ã—ãªã„
-    }
-    if(_pComm->randPadType == _REVERSE_KEY){   // ãƒªãƒãƒ¼ã‚¹ãƒ¢ãƒ¼ãƒ‰
-        if(_pComm->sendCont & PAD_KEY_LEFT){
-            pad |= PAD_KEY_RIGHT;
-        }
-        if(_pComm->sendCont & PAD_KEY_RIGHT){
-            pad |= PAD_KEY_LEFT;
-        }
-        if(_pComm->sendCont & PAD_KEY_UP){
-            pad |= PAD_KEY_DOWN;
-        }
-        if(_pComm->sendCont & PAD_KEY_DOWN){
-            pad |= PAD_KEY_UP;
-        }
-    }
-    else{
-        if(_pComm->oldPad){   // ãƒ©ãƒ³ãƒ€ãƒ ãƒ¢ãƒ¼ãƒ‰
-            pad = _pComm->oldPad;
-            _pComm->randPadStep--;
-            if(_pComm->randPadStep < 0){
-                _pComm->oldPad = 0;
-            }
-        }
-        else{
-            switch(MATH_Rand32(&_pComm->sRand, 4)){
-              case 0:
-                pad = PAD_KEY_LEFT;
-                break;
-              case 1:
-                pad = PAD_KEY_RIGHT;
-                break;
-              case 2:
-                pad = PAD_KEY_UP;
-                break;
-              case 3:
-                pad = PAD_KEY_DOWN;
-                break;
-            }
-            _pComm->randPadStep = MATH_Rand32(&_pComm->sRand, 16);
-            _pComm->oldPad = pad;
-        }
-    }
-    _pComm->sendCont &= ~(PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN);
-    _pComm->sendCont += pad;
-}
-
-//==============================================================================
-/**
- * ã‚­ãƒ¼ã‚’ãƒ©ãƒ³ãƒ€ãƒ ãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹
- * @param   none
- * @retval  ã‚¨ãƒ©ãƒ¼ã®æ™‚TRUE
- */
-//==============================================================================
-
-void CommSetKeyRandMode(void)
-{
-    _pComm->randPadType = _RANDOM_KEY;
-}
-
-void CommSetKeyReverseMode(void)
-{
-    _pComm->randPadType = _REVERSE_KEY;
-}
-
-void CommResetKeyRandMode(void)
-{
-    _pComm->randPadType = _NONE_KEY;
-}
-
-
-#define _COMM_DIR_UP  (0x00)
-#define _COMM_DIR_DOWN  (0x04)
-#define _COMM_DIR_LEFT  (0x08)
-#define _COMM_DIR_RIGHT  (0x0C)
-#define _COMM_SEND_KEY   (0x10)
-
-
-//==============================================================================
-/**
- * @brief   sendBuff ï¼ã®ã‚ã¾ã‚ŠBITã‚’ä½¿ç”¨ã—ã¦ ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å—ä¿¡ã™ã‚‹
- *
- * @param   pRecvBuff  å—ã‘å–ã‚Šãƒãƒƒãƒ•ã‚¡
- * @param   netID      netID
- * @retval  ç¾åœ¨FALSEã®ã¿
- */
-//==============================================================================
-
-static BOOL _padDataRecv(u8* pRecvBuff, int netID)
-{
-    int i;
-    u8 keyBuff[2];
-
-    _pComm->cont[netID] = 0;
-    if(_COMM_SEND_KEY == (*pRecvBuff & _COMM_SEND_KEY)){
-        keyBuff[ 0 ] = *pRecvBuff & 0x0c;
-        if(keyBuff[ 0 ] == _COMM_DIR_UP){
-            _pComm->cont[netID] |= PAD_KEY_UP;
-        }
-        else if(keyBuff[ 0 ] == _COMM_DIR_DOWN){
-            _pComm->cont[netID] |= PAD_KEY_DOWN;
-        }
-        else if(keyBuff[ 0 ] == _COMM_DIR_LEFT){
-            _pComm->cont[netID] |= PAD_KEY_LEFT;
-        }
-        else if(keyBuff[ 0 ] == _COMM_DIR_RIGHT){
-            _pComm->cont[netID] |= PAD_KEY_RIGHT;
-        }
-        _pComm->speed[netID] = (*pRecvBuff >> 5) & 0x7;
-    }
-//    _pComm->trg[netID] = _pComm->contOld[netID] ^ _pComm->cont[netID];
-  //  _pComm->contOld[netID] = _pComm->cont[netID];
-    return TRUE;
-
-    
-#if 0
-    // 1/60ã®é€šä¿¡ã‹ã‚‰ padã¯1/30ã—ã‹å¿…è¦ãªã„ã®ã§é–“å¼•ãå‡¦ç†
-    _pComm->padGetSwitch[netID] = _pComm->padGetSwitch[netID] ? FALSE : TRUE;
-    if(_pComm->padGetSwitch[netID]){
-        return FALSE;
-    }
-    
-    _pComm->cont[netID] = 0;
-    keyBuff[0] = *pRecvBuff;
-
-    // BITæ ¼ç´
-    for( i = 0; i < sizeof(_sendPadBit)/sizeof(u16); i++ ){
-        if(keyBuff[ _sendPattern[i][0] ] & _sendPattern[i][1]){
-            _pComm->cont[netID] |= _sendPadBit[i];
-        }
-    }
-//    _pComm->trg[netID] = _pComm->contOld[netID] ^ _pComm->cont[netID];
-//    _pComm->contOld[netID] = _pComm->cont[netID];
-    return FALSE;
-#endif
-}
-
-//==============================================================================
-/**
- * @brief   å­æ©Ÿå´ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒè¡Œã‚ã‚ŒãŸã“ã¨ã‚’è¨­å®š
+ * @brief   q‹@‘¤‚ÌƒAƒNƒVƒ‡ƒ“‚ªs‚í‚ê‚½‚±‚Æ‚ğİ’è
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommActionCommandSet(void)
+void GFL_NET_SystemActionCommandSet(void)
 {
 //    _pComm->actionCount = _ACTION_COUNT_MOVE;
 }
 
 //==============================================================================
 /**
- * @brief   sendBuff ï¼ã®ã‚ã¾ã‚ŠBIT+1byteã‚’ä½¿ç”¨ã—ã¦ ã‚­ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
- *          ç§»å‹•ã«å¿…è¦ãªæ–¹å‘ã‚­ãƒ¼ + Y ã®ã¿é€ã£ã¦ã„ã‚‹  trg contã‚’é€ä¿¡ã™ã‚‹ã®ã§
- *          ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ã‚‹å ´åˆã«é€ä¿¡é‡ãŒ1byteå¤‰åŒ–ã™ã‚‹
- * @param   sendSwitch  é€ã‚‹ãƒãƒƒãƒ•ã‚¡ã®ã‚¹ã‚¤ãƒƒãƒ
- * @retval  1ãƒã‚¤ãƒˆå¤šãé€ä¿¡ã™ã‚‹å ´åˆ1
- */
-//==============================================================================
-
-static BOOL _padDataSend(u8* pSendBuff)
-{
-    int i,k;
-/*
-    if(_pComm->actionCount != 0 ){
-        _pComm->actionCount--;
-        return FALSE;
-    }
-   */
-#ifdef DEBUG_ONLY_FOR_ohno
-    if(sys.cont & PAD_BUTTON_START){
-        if(CommIsSendMoveData()==FALSE){
-            OHNO_PRINT("CommIsSendMoveData()==FALSE\n");
-        }
-        else{
-            OHNO_PRINT("CommIsSendMoveData()==TRUE\n");
-        }
-    }
-#endif
-    if(_pComm->sendKeyStop){
-        return FALSE;
-    }
-    
-    if(CommIsSendMoveData()==FALSE){
-        return FALSE;  // ä»Šå›ã¯ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿ã¯é€ä¿¡ã—ãªã„
-    }
-#if 0
-    // BITæ ¼ç´
-    for( i = 0; i < sizeof(_sendPadBit)/sizeof(u16); i++ ){
-        if(_pComm->sendCont & _sendPadBit[i]){
-            pSendBuff[ _sendPattern[i][0] ] |= _sendPattern[i][1];
-        }
-    }
-#endif
-    if(_pComm->timSendCond){
-        _pComm->timSendCond--;
-    }
-    if(_pComm->sendCont & PAD_KEY_UP){
-        pSendBuff[ 0 ] = pSendBuff[ 0 ] | _COMM_DIR_UP | _COMM_SEND_KEY;
-        _pComm->timSendCond = 8;
-    }
-    else if(_pComm->sendCont & PAD_KEY_DOWN){
-        pSendBuff[ 0 ] = pSendBuff[ 0 ] | _COMM_DIR_DOWN | _COMM_SEND_KEY;
-        _pComm->timSendCond = 8;
-    }
-    else if(_pComm->sendCont & PAD_KEY_LEFT){
-        pSendBuff[ 0 ] = pSendBuff[ 0 ] | _COMM_DIR_LEFT | _COMM_SEND_KEY;
-        _pComm->timSendCond = 8;
-    }
-    else if(_pComm->sendCont & PAD_KEY_RIGHT){
-        pSendBuff[ 0 ] = pSendBuff[ 0 ] | _COMM_DIR_RIGHT | _COMM_SEND_KEY;
-        _pComm->timSendCond = 8;
-    }
-    pSendBuff[ 0 ] |= (_pComm->sendSpeed << 5);
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«ã‚ã£ãŸã‚‚ã®ã‚’é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œã‚‹
+ * @brief   ‘—MƒLƒ…[‚É‚ ‚Á‚½‚à‚Ì‚ğ‘—Mƒoƒbƒtƒ@‚É“ü‚ê‚é
  * @param   none
  * @retval  none
  */
@@ -2019,44 +1779,41 @@ static BOOL _padDataSend(u8* pSendBuff)
 static BOOL _setSendData(u8* pSendBuff)
 {
     int i;
-    int mcSize = CommGetServiceMaxChildSendByte(CommStateGetServiceNo());
-    int machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
-    if(_pComm->bNextSendData == FALSE){  // ä¸€å›ã§é€ã‚Œã‚‹å ´åˆ
+    int mcSize = _getUserMaxSendByte();
+    int machineMax = _getUserMaxNum();
+    if(_pComm->bNextSendData == FALSE){  // ˆê‰ñ‚Å‘—‚ê‚éê‡
         pSendBuff[0] = _SEND_NONE;
     }
     else{
-        pSendBuff[0] = _SEND_NEXT;  // ä¸€å›ã§é€ã‚Œãªã„å ´åˆ
-    }
-    if(_transmissonType() == _MP_MODE){  // DSæ™‚ã¯ãƒ‘ãƒƒãƒˆã‚’é€ã‚‹BITãŒç„¡ã„ã®ã§é€ã‚‰ãªã„
-        _padDataSend(pSendBuff);  // ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
+        pSendBuff[0] = _SEND_NEXT;  // ˆê‰ñ‚Å‘—‚ê‚È‚¢ê‡
     }
     _pComm->bNextSendData = FALSE;
 #if 0
-    if(CommQueueIsEmpty(&_pComm->sendQueueMgr) && (_transmissonType() == _MP_MODE)){
-        pSendBuff[0] |= _SEND_NO_DATA;  // ç©ºã£ã½ãªã‚‰ä½•ã‚‚é€ã‚‰ãªã„
+    if(GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgr) && (_transmissonType() == _MP_MODE)){
+        pSendBuff[0] |= _SEND_NO_DATA;  // ‹ó‚Á‚Û‚È‚ç‰½‚à‘—‚ç‚È‚¢
     }
 #endif
-    if(CommQueueIsEmpty(&_pComm->sendQueueMgr)){
-        pSendBuff[0] |= _SEND_NO_DATA;  // ç©ºã£ã½ãªã‚‰ä½•ã‚‚é€ã‚‰ãªã„
+    if(GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgr)){
+        pSendBuff[0] |= _SEND_NO_DATA;  // ‹ó‚Á‚Û‚È‚ç‰½‚à‘—‚ç‚È‚¢
         if(pSendBuff[0] == _SEND_NO_DATA){
-            return FALSE;  // é€ã‚‹ã‚‚ã®ãŒä½•ã‚‚ç„¡ã„
+            return FALSE;  // ‘—‚é‚à‚Ì‚ª‰½‚à–³‚¢
         }
     }
     else{
         SEND_BUFF_DATA buffData;
         buffData.size = mcSize - 1;
         buffData.pData = &pSendBuff[1];
-        if(!CommQueueGetData(&_pComm->sendQueueMgr, &buffData, TRUE)){
+        if(!GFL_NET_QueueGetData(&_pComm->sendQueueMgr, &buffData, TRUE)){
             _pComm->bNextSendData = TRUE;
         }
         if(_transmissonType() == _DS_MODE){
             _pComm->DSCount++;
-//            OHNO_PRINT("DSãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ %d\n",_pComm->DSCount);
-            pSendBuff[0] |= ((_pComm->DSCount << 4) & 0xf0);  //DSé€šä¿¡é †ç•ªã‚«ã‚¦ãƒ³ã‚¿
+//            OHNO_PRINT("DSƒf[ƒ^ƒZƒbƒg %d\n",_pComm->DSCount);
+            pSendBuff[0] |= ((_pComm->DSCount << 4) & 0xf0);  //DS’ÊM‡”ÔƒJƒEƒ“ƒ^
         }
     }
 #if 0
-    if(CommGetCurrentID()==0){
+    if(GFL_NET_SystemGetCurrentID()==0){
         DEBUG_DUMP(pSendBuff,mcSize,"_setSendData");
     }
 #endif
@@ -2065,8 +1822,8 @@ static BOOL _setSendData(u8* pSendBuff)
 
 //==============================================================================
 /**
- * é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«ã‚ã£ãŸã‚‚ã®ã‚’é€ä¿¡ãƒãƒƒãƒ•ã‚¡ã«å…¥ã‚Œã‚‹ ã‚µãƒ¼ãƒãƒ¼MPé€šä¿¡ç”¨
- * @param   pSendBuff å…¥ã‚Œã‚‹é€ä¿¡ãƒãƒƒãƒ•ã‚¡
+ * @brief   ‘—MƒLƒ…[‚É‚ ‚Á‚½‚à‚Ì‚ğ‘—Mƒoƒbƒtƒ@‚É“ü‚ê‚é ƒT[ƒo[MP’ÊM—p
+ * @param   pSendBuff “ü‚ê‚é‘—Mƒoƒbƒtƒ@
  * @retval  none
  */
 //==============================================================================
@@ -2087,15 +1844,15 @@ static void _setSendDataServer(u8* pSendBuff)
     }
 #endif
 
-    if(_pComm->bNextSendDataServer == FALSE){  // ä¸€å›ã§é€ã‚Œã‚‹å ´åˆ
+    if(_pComm->bNextSendDataServer == FALSE){  // ˆê‰ñ‚Å‘—‚ê‚éê‡
         pSendBuff[1] = _SEND_NONE;
     }
     else{
-        pSendBuff[1] = _SEND_NEXT;  // ä¸€å›ã§é€ã‚Œãªã„å ´åˆ
+        pSendBuff[1] = _SEND_NEXT;  // ˆê‰ñ‚Å‘—‚ê‚È‚¢ê‡
     }
 
     {
-        u16 bitmap = WH_GetBitmap();
+        u16 bitmap = GFL_NET_WL_GetBitmap();
         pSendBuff[2] = bitmap >> 8;
         pSendBuff[3] = bitmap & 0xff;
 
@@ -2103,7 +1860,7 @@ static void _setSendDataServer(u8* pSendBuff)
             SEND_BUFF_DATA buffData;
             buffData.size = _SEND_BUFF_SIZE_PARENT - 5;
             buffData.pData = &pSendBuff[5];
-            if(CommQueueGetData(&_pComm->sendQueueMgrServer, &buffData, FALSE)){
+            if(GFL_NET_QueueGetData(&_pComm->sendQueueMgrServer, &buffData, FALSE)){
                 _pComm->bNextSendDataServer = FALSE;
                 pSendBuff[4] = (_SEND_BUFF_SIZE_PARENT - 5) - buffData.size;
             }
@@ -2125,279 +1882,287 @@ static void _setSendDataServer(u8* pSendBuff)
 
 //==============================================================================
 /**
- * å­æ©Ÿé€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  å¤§ãã„ã‚µã‚¤ã‚ºã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
- *     ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã—ãªã„ã®ã§ dataã®ä¸­èº«ã‚’æ›¸ãæ›ãˆã‚‹ã¨ã€
- *     æ›¸ãæ›ãˆãŸã‚‚ã®ã‚’é€ã£ã¦ã—ã¾ã†å¯èƒ½æ€§ãŒã‚ã‚‹
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   q‹@‘—Mƒƒ\ƒbƒh  ‘å‚«‚¢ƒTƒCƒY‚Ìƒf[ƒ^‚ğ‘—M‚·‚é
+ *     ƒoƒbƒNƒAƒbƒv‚µ‚È‚¢‚Ì‚Å data‚Ì’†g‚ğ‘‚«Š·‚¦‚é‚ÆA
+ *     ‘‚«Š·‚¦‚½‚à‚Ì‚ğ‘—‚Á‚Ä‚µ‚Ü‚¤‰Â”\«‚ª‚ ‚é
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendHugeData(int command, const void* data, int size)
+BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size)
 {
-    if(!CommIsConnect(CommGetCurrentID()) && !CommGetAloneMode()){
-        //        OHNO_PRINT("æ¥ç¶šã—ã¦ãªãã¦é€ã‚Œãªã‹ã£ãŸ\n");
-        return FALSE;   // é€šä¿¡çŠ¶æ…‹ãŒæ‚ªã„å ´åˆé€ã‚‰ãªã„
+    if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()) && !GFL_NET_SystemGetAloneMode()){
+        //        OHNO_PRINT("Ú‘±‚µ‚Ä‚È‚­‚Ä‘—‚ê‚È‚©‚Á‚½\n");
+        return FALSE;   // ’ÊMó‘Ô‚ªˆ«‚¢ê‡‘—‚ç‚È‚¢
     }
-    if(CommQueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE)){
+    if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE)){
 //        if(25 == command){
-            //OHNO_SP_PRINT("%d ",CommGetCurrentID());
+            //OHNO_SP_PRINT("%d ",GFL_NET_SystemGetCurrentID());
             //DEBUG_DUMP((u8*)data,size,"poke");
   //      }
-#if _COMMAND_TEST
-        OHNO_PRINT("<<<é€ä¿¡ NetId=%d -- size%d ",CommGetCurrentID(), size);
-        CommCommandDebugPrint(command);
+#if 0
+        OHNO_PRINT("<<<‘—M NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
+        GFL_NET_CommandDebugPrint(command);
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-ã‚­ãƒ¥- %d %d\n",CommGetCurrentID(),
-               CommQueueGetNowNum(&_pComm->sendQueueMgr));
+    OHNO_PRINT("-ƒLƒ…- %d %d\n",GFL_NET_SystemGetCurrentID(),
+               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
     GF_ASSERT(0);
 #endif
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        CommSetError();
-    }
+//    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
+        GFL_NET_SystemSetError();
+//    }
     return FALSE;
 }
 
 //==============================================================================
 /**
- * å­æ©Ÿé€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰
- * è¦ªæ©ŸãŒãƒ‡ãƒ¼ã‚¿ã‚’å­æ©Ÿå…¨å“¡ã«é€ä¿¡ã™ã‚‹ã®ã¯åˆ¥é–¢æ•°
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   q‹@‘—Mƒƒ\ƒbƒh
+ * e‹@‚ªƒf[ƒ^‚ğq‹@‘Sˆõ‚É‘—M‚·‚é‚Ì‚Í•ÊŠÖ”
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendData(int command, const void* data, int size)
+BOOL GFL_NET_SystemSendData(int command, const void* data, int size)
 {
-    OHNO_PRINT("< é€ä¿¡ %d %d\n", command,CommQueueGetNowNum(&_pComm->sendQueueMgr));
-//    GF_ASSERT_RETURN(size < 256 && "CommSendHugeDataã‚’ä½¿ã£ã¦ãã ã•ã„",FALSE);
-    if(!CommIsConnect(CommGetCurrentID()) && !CommGetAloneMode()){
-        OHNO_PRINT("æ¥ç¶šã—ã¦ãªãã¦é€ã‚Œãªã‹ã£ãŸ\n");
-        return FALSE;   // é€šä¿¡çŠ¶æ…‹ãŒæ‚ªã„å ´åˆé€ã‚‰ãªã„
+    OHNO_PRINT("< ‘—M %d %d\n", command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
+//    GF_ASSERT_RETURN(size < 256 && "CommSendHugeData‚ğg‚Á‚Ä‚­‚¾‚³‚¢",FALSE);
+    if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()) && !GFL_NET_SystemGetAloneMode()){
+        OHNO_PRINT("Ú‘±‚µ‚Ä‚È‚­‚Ä‘—‚ê‚È‚©‚Á‚½\n");
+        return FALSE;   // ’ÊMó‘Ô‚ªˆ«‚¢ê‡‘—‚ç‚È‚¢
     }
-    if(CommQueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, TRUE)){
-#if _COMMAND_TEST
-        OHNO_PRINT("<<<é€ä¿¡ NetId=%d -- size%d ",CommGetCurrentID(), size);
-        CommCommandDebugPrint(command);
+    if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, TRUE)){
+#if 0
+        OHNO_PRINT("<<<‘—M NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
+        GFL_NET_CommandDebugPrint(command);
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-ã‚­ãƒ¥ãƒ¼ç„¡ã„- %d %d\n",CommGetCurrentID(),
-               CommQueueGetNowNum(&_pComm->sendQueueMgr));
+    OHNO_PRINT("-ƒLƒ…[–³‚¢- %d %d\n",GFL_NET_SystemGetCurrentID(),
+               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
     GF_ASSERT(0);
 #endif
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        CommSetError();
-    }
+//    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
+        GFL_NET_SystemSetError();
+//    }
     return FALSE;
 }
 
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿå°‚ç”¨ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   e‹@ê—pƒT[ƒo[‘—Mƒƒ\ƒbƒh
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
 static BOOL _data_ServerSide(int command, const void* data, int size, BOOL bCopy)
 {
-    if(CommGetCurrentID() != COMM_PARENT_ID){  // è¦ªæ©Ÿä»¥å¤–ã¯ä½¿ãˆãªã„
-        GF_ASSERT(0 && "è¦ªä»¥å¤–ã¯ä½¿ç”¨ä¸å¯");
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){  // e‹@ˆÈŠO‚Íg‚¦‚È‚¢
+        GF_ASSERT(0 && "eˆÈŠO‚Íg—p•s‰Â");
         return FALSE;
     }
-    if(!CommIsConnect(COMM_PARENT_ID)  && !CommGetAloneMode()){
-//        OHNO_PRINT("æ¥ç¶šã—ã¦ãªãã¦é€ã‚Œãªã‹ã£ãŸ\n");
-        return FALSE;   // é€šä¿¡çŠ¶æ…‹ãŒæ‚ªã„å ´åˆé€ã‚‰ãªã„
+    if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
+//        OHNO_PRINT("Ú‘±‚µ‚Ä‚È‚­‚Ä‘—‚ê‚È‚©‚Á‚½\n");
+        return FALSE;   // ’ÊMó‘Ô‚ªˆ«‚¢ê‡‘—‚ç‚È‚¢
     }
     if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DSé€šä¿¡çŠ¶æ…‹ãªã®ã«ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãŒä½¿ã‚ã‚ŒãŸ\n");
-        return CommSendData(command, data, size);
+        OHNO_PRINT("WARRNING: DS’ÊMó‘Ô‚È‚Ì‚ÉƒT[ƒo[‘—M‚ªg‚í‚ê‚½\n");
+        return GFL_NET_SystemSendData(command, data, size);
     }
 
-    if(CommQueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, bCopy)){
-#if _COMMAND_TEST
-        OHNO_PRINT("<<Sé€ä¿¡ id=%d size=%d ",CommGetCurrentID(), size);
-        CommCommandDebugPrint(command);
-//        DEBUG_DUMP(pSend, size, "Sé€ä¿¡");
-#endif
-        return TRUE;
-    }
-#ifdef DEBUG_ONLY_FOR_ohno
-    GF_ASSERT(0);
-#endif
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        CommSetError();
-    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * è¦ªæ©Ÿé€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  å¤§ãã„ã‚µã‚¤ã‚ºã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹  ã‚µã‚¤ã‚ºå›ºå®š
- *     ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã—ãªã„ã®ã§ dataã®ä¸­èº«ã‚’æ›¸ãæ›ãˆã‚‹ã¨ã€
- *     æ›¸ãæ›ãˆãŸã‚‚ã®ã‚’é€ã£ã¦ã—ã¾ã†å¯èƒ½æ€§ãŒã‚ã‚‹
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
- */
-//==============================================================================
-
-BOOL CommSendFixHugeSizeData_ServerSide(int command, const void* data)
-{
-    return CommSendHugeData_ServerSide(command, data, 0);
-}
-
-//==============================================================================
-/**
- * è¦ªæ©Ÿé€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  å¤§ãã„ã‚µã‚¤ã‚ºã®ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹
- *     ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã—ãªã„ã®ã§ dataã®ä¸­èº«ã‚’æ›¸ãæ›ãˆã‚‹ã¨ã€
- *     æ›¸ãæ›ãˆãŸã‚‚ã®ã‚’é€ã£ã¦ã—ã¾ã†å¯èƒ½æ€§ãŒã‚ã‚‹
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
- */
-//==============================================================================
-
-BOOL CommSendHugeData_ServerSide(int command, const void* data, int size)
-{
-    if(CommGetCurrentID() != COMM_PARENT_ID){  // è¦ªæ©Ÿä»¥å¤–ã¯ä½¿ãˆãªã„
-        GF_ASSERT(0 && "è¦ªä»¥å¤–ã¯ä½¿ç”¨ä¸å¯");
-        return FALSE;
-    }
-    if(!CommIsConnect(COMM_PARENT_ID)  && !CommGetAloneMode()){
-//        OHNO_PRINT("æ¥ç¶šã—ã¦ãªãã¦é€ã‚Œãªã‹ã£ãŸ\n");
-        return FALSE;   // é€šä¿¡çŠ¶æ…‹ãŒæ‚ªã„å ´åˆé€ã‚‰ãªã„
-    }
-    if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DSé€šä¿¡çŠ¶æ…‹ãªã®ã«ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãŒä½¿ã‚ã‚ŒãŸ\n");
-        return CommSendHugeData(command, data, size);
-    }
-
-    if(CommQueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE)){
+    if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, bCopy)){
 #if 0
-        OHNO_PRINT("<<Sé€ä¿¡ id=%d size=%d ",CommGetCurrentID(), size);
-        CommCommandDebugPrint(command);
-//        DEBUG_DUMP(pSend, size, "Sé€ä¿¡");
+        OHNO_PRINT("<<S‘—M id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        GFL_NET_CommandDebugPrint(command);
+//        DEBUG_DUMP(pSend, size, "S‘—M");
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-ã‚­ãƒ¥ç„¡ã„- %d %d\n",CommGetCurrentID(),
-               CommQueueGetNowNum(&_pComm->sendQueueMgrServer));
     GF_ASSERT(0);
 #endif
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        CommSetError();
-    }
+    //if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
+        GFL_NET_SystemSetError();
+    //}
     return FALSE;
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿå°‚ç”¨ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   e‹@‘—Mƒƒ\ƒbƒh  ‘å‚«‚¢ƒTƒCƒY‚Ìƒf[ƒ^‚ğ‘—M‚·‚é  ƒTƒCƒYŒÅ’è
+ *     ƒoƒbƒNƒAƒbƒv‚µ‚È‚¢‚Ì‚Å data‚Ì’†g‚ğ‘‚«Š·‚¦‚é‚ÆA
+ *     ‘‚«Š·‚¦‚½‚à‚Ì‚ğ‘—‚Á‚Ä‚µ‚Ü‚¤‰Â”\«‚ª‚ ‚é
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendData_ServerSide(int command, const void* data, int size)
+BOOL GFL_NET_SystemSendFixHugeSizeData_ServerSide(int command, const void* data)
 {
-    if(CommGetCurrentID() != COMM_PARENT_ID){  // è¦ªæ©Ÿä»¥å¤–ã¯ä½¿ãˆãªã„
-        CommSetError();
-//        GF_ASSERT(0 && "è¦ªä»¥å¤–ã¯ä½¿ç”¨ä¸å¯");
+    return GFL_NET_SystemSendHugeData_ServerSide(command, data, 0);
+}
+
+//==============================================================================
+/**
+ * @brief   e‹@‘—Mƒƒ\ƒbƒh  ‘å‚«‚¢ƒTƒCƒY‚Ìƒf[ƒ^‚ğ‘—M‚·‚é
+ *     ƒoƒbƒNƒAƒbƒv‚µ‚È‚¢‚Ì‚Å data‚Ì’†g‚ğ‘‚«Š·‚¦‚é‚ÆA
+ *     ‘‚«Š·‚¦‚½‚à‚Ì‚ğ‘—‚Á‚Ä‚µ‚Ü‚¤‰Â”\«‚ª‚ ‚é
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
+ */
+//==============================================================================
+
+BOOL GFL_NET_SystemSendHugeData_ServerSide(int command, const void* data, int size)
+{
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){  // e‹@ˆÈŠO‚Íg‚¦‚È‚¢
+        GF_ASSERT(0 && "eˆÈŠO‚Íg—p•s‰Â");
         return FALSE;
     }
-    if(!CommIsConnect(COMM_PARENT_ID)  && !CommGetAloneMode()){
-        OHNO_PRINT("æ¥ç¶šã—ã¦ãªãã¦é€ã‚Œãªã‹ã£ãŸ\n");
-        return FALSE;   // é€šä¿¡çŠ¶æ…‹ãŒæ‚ªã„å ´åˆé€ã‚‰ãªã„
+    if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
+//        OHNO_PRINT("Ú‘±‚µ‚Ä‚È‚­‚Ä‘—‚ê‚È‚©‚Á‚½\n");
+        return FALSE;   // ’ÊMó‘Ô‚ªˆ«‚¢ê‡‘—‚ç‚È‚¢
     }
     if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DSé€šä¿¡çŠ¶æ…‹ãªã®ã«ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãŒä½¿ã‚ã‚ŒãŸ\n");
-        return CommSendData(command, data, size);
+        OHNO_PRINT("WARRNING: DS’ÊMó‘Ô‚È‚Ì‚ÉƒT[ƒo[‘—M‚ªg‚í‚ê‚½\n");
+        return GFL_NET_SystemSendHugeData(command, data, size);
     }
 
-    if(CommQueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, TRUE)){
-
-//        OHNO_PRINT("qnum %d %d\n",command,CommQueueGetNowNum(&_pComm->sendQueueMgrServer));
-
-#if _COMMAND_TEST
-        OHNO_PRINT("<<Sé€ä¿¡ id=%d size=%d ",CommGetCurrentID(), size);
-        CommCommandDebugPrint(command);
-//        DEBUG_DUMP(pSend, size, "Sé€ä¿¡");
+    if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE)){
+#if 0
+        OHNO_PRINT("<<S‘—M id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        GFL_NET_CommandDebugPrint(command);
+//        DEBUG_DUMP(pSend, size, "S‘—M");
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("ã‚­ãƒ¥ãƒ¼ç„¡ã„- %d %d\n",CommGetCurrentID(),
-               CommQueueGetNowNum(&_pComm->sendQueueMgrServer));
+    OHNO_PRINT("-ƒLƒ…–³‚¢- %d %d\n",GFL_NET_SystemGetCurrentID(),
+               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
     GF_ASSERT(0);
 #endif
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        CommSetError();
-    }
+//    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
+        GFL_NET_SystemSetError();
+//    }
     return FALSE;
 }
 
 //==============================================================================
 /**
- * è¦ªæ©Ÿå°‚ç”¨ã‚µãƒ¼ãƒãƒ¼é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰ ã‚µã‚¤ã‚ºå›ºå®šç‰ˆ
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   e‹@ê—pƒT[ƒo[‘—Mƒƒ\ƒbƒh
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendFixSizeData_ServerSide(int command, const void* data)
+BOOL GFL_NET_SystemSendData_ServerSide(int command, const void* data, int size)
 {
-    return CommSendData_ServerSide(command, data, 0);
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){  // e‹@ˆÈŠO‚Íg‚¦‚È‚¢
+        GFL_NET_SystemSetError();
+//        GF_ASSERT(0 && "eˆÈŠO‚Íg—p•s‰Â");
+        return FALSE;
+    }
+    if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
+        OHNO_PRINT("Ú‘±‚µ‚Ä‚È‚­‚Ä‘—‚ê‚È‚©‚Á‚½\n");
+        return FALSE;   // ’ÊMó‘Ô‚ªˆ«‚¢ê‡‘—‚ç‚È‚¢
+    }
+    if(_transmissonType() == _DS_MODE){
+        OHNO_PRINT("WARRNING: DS’ÊMó‘Ô‚È‚Ì‚ÉƒT[ƒo[‘—M‚ªg‚í‚ê‚½\n");
+        return GFL_NET_SystemSendData(command, data, size);
+    }
+
+    if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, TRUE)){
+
+//        OHNO_PRINT("qnum %d %d\n",command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
+
+#if 0
+        OHNO_PRINT("<<S‘—M id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        GFL_NET_CommandDebugPrint(command);
+//        DEBUG_DUMP(pSend, size, "S‘—M");
+#endif
+        return TRUE;
+    }
+#ifdef DEBUG_ONLY_FOR_ohno
+    OHNO_PRINT("ƒLƒ…[–³‚¢- %d %d\n",GFL_NET_SystemGetCurrentID(),
+               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
+    GF_ASSERT(0);
+#endif
+    //if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
+        GFL_NET_SystemSetError();
+    //}
+    return FALSE;
 }
 
 //==============================================================================
 /**
- * é€ä¿¡ãƒãƒƒãƒ•ã‚¡æ®‹ã‚Šå®¹é‡
- * @retval  ã‚µã‚¤ã‚º
+ * @brief   e‹@ê—pƒT[ƒo[‘—Mƒƒ\ƒbƒh ƒTƒCƒYŒÅ’è”Å
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-int CommGetSendRestSize(void)
+BOOL GFL_NET_SystemSendFixSizeData_ServerSide(int command, const void* data)
 {
-    return CommRingDataRestSize(&_pComm->sendRing);
+    return GFL_NET_SystemSendData_ServerSide(command, data, 0);
 }
 
 //==============================================================================
 /**
- * ã‚µãƒ¼ãƒå´ã®é€ä¿¡ãƒãƒƒãƒ•ã‚¡æ®‹ã‚Šå®¹é‡
- * @retval  ã‚µã‚¤ã‚º
+ * @brief   ‘—Mƒoƒbƒtƒ@c‚è—e—Ê
+ * @retval  ƒTƒCƒY
  */
 //==============================================================================
 
-int CommGetSendRestSize_ServerSide(void)
+int GFL_NET_SystemGetSendRestSize(void)
 {
-    return CommRingDataRestSize(&_pComm->sendServerRing);
+    return GFL_NET_RingDataRestSize(&_pComm->sendRing);
 }
 
+//==============================================================================
+/**
+ * @brief   ƒT[ƒo‘¤‚Ì‘—Mƒoƒbƒtƒ@c‚è—e—Ê
+ * @retval  ƒTƒCƒY
+ */
+//==============================================================================
+
+int GFL_NET_SystemGetSendRestSize_ServerSide(void)
+{
+    return GFL_NET_RingDataRestSize(&_pComm->sendServerRing);
+}
+
+
+//==============================================================================
+/**
+ * @brief   ’ÊMƒR[ƒ‹ƒoƒbƒN‚ÌÅŒã‚ÉŒÄ‚Ô ƒRƒ}ƒ“ƒh‚ğÁ‚·
+ * @param   netID   ƒlƒbƒgID
+ * @retval  none
+ */
+//==============================================================================
 
 static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
-    CommCommandCallBack(netID, command, size, pTemp);
-    pRecvComm->valCommand = CS_NONE;
+    GFL_NET_CommandCallBack(netID, command, size, pTemp);
+    pRecvComm->valCommand = GFL_NET_CMD_NONE;
     pRecvComm->valSize = 0xffff;
     pRecvComm->pRecvBuff = NULL;
     pRecvComm->dataPoint = 0;
@@ -2406,10 +2171,10 @@ static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMA
 
 //==============================================================================
 /**
- * å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’ãƒ—ãƒ­ã‚»ã‚¹ä¸­ã«å‡¦ç†ã™ã‚‹
- * @param   pRing  ãƒªãƒ³ã‚°ãƒãƒƒãƒ•ã‚¡ã®ãƒã‚¤ãƒ³ã‚¿
- * @param   netID     å‡¦ç†ã—ã¦ã„ã‚‹netID
- * @param   pTemp    ã‚³ãƒãƒ³ãƒ‰ã‚’çµåˆã™ã‚‹ãŸã‚ã®tempãƒãƒƒãƒ•ã‚¡
+ * @brief   óM‚µ‚½ƒf[ƒ^‚ğƒvƒƒZƒX’†‚Éˆ—‚·‚é
+ * @param   pRing  ƒŠƒ“ƒOƒoƒbƒtƒ@‚Ìƒ|ƒCƒ“ƒ^
+ * @param   netID     ˆ—‚µ‚Ä‚¢‚énetID
+ * @param   pTemp    ƒRƒ}ƒ“ƒh‚ğŒ‹‡‚·‚é‚½‚ß‚Ìtempƒoƒbƒtƒ@
  * @retval  none
  */
 //==============================================================================
@@ -2422,14 +2187,14 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
     int realbyte;
 
     
-    while( CommRingDataSize(pRing) != 0 ){
+    while( GFL_NET_RingDataSize(pRing) != 0 ){
         bkPos = pRing->startPos;
-        if(pRecvComm->valCommand != CS_NONE){
+        if(pRecvComm->valCommand != GFL_NET_CMD_NONE){
             command = pRecvComm->valCommand;
         }
         else{
-            command = CommRingGetByte(pRing);
-            if(command == CS_NONE){
+            command = GFL_NET_RingGetByte(pRing);
+            if(command == GFL_NET_CMD_NONE){
                 continue;
             }
         }
@@ -2437,34 +2202,34 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
         pRecvComm->valCommand = command;
 //        OHNO_PRINT("c %d\n",command);
         if(bDebug){
-            OHNO_PRINT(">>>cR %d %d %d\n", bkPos, CommRingDataSize(pRing), command);
+            OHNO_PRINT(">>>cR %d %d %d\n", bkPos, GFL_NET_RingDataSize(pRing), command);
         }
         if(pRecvComm->valSize != 0xffff){
             size = pRecvComm->valSize;
         }
         else{
-            size = CommCommandGetPacketSize(command);
+            size = GFL_NET_CommandGetPacketSize(command);
             if(_pComm->bError){
                 return;
             }
             if(COMM_VARIABLE_SIZE == size){
-                if( CommRingDataSize(pRing) < 1 ){  // æ®‹ã‚Šãƒ‡ãƒ¼ã‚¿ãŒ1ä»¥ä¸‹ã ã£ãŸ
+                if( GFL_NET_RingDataSize(pRing) < 1 ){  // c‚èƒf[ƒ^‚ª1ˆÈ‰º‚¾‚Á‚½
                     pRing->startPos = bkPos;
                     break;
                 }
-                // ã‚µã‚¤ã‚ºãŒãªã„é€šä¿¡ãƒ‡ãƒ¼ã‚¿ã¯ã“ã“ã«ã‚µã‚¤ã‚ºãŒå…¥ã£ã¦ã„ã‚‹
-                size = CommRingGetByte(pRing)*0x100;
-                size += CommRingGetByte(pRing);
-                OHNO_PRINT("å—ä¿¡ã‚µã‚¤ã‚º  %d\n",size);
-                bkPos = pRing->startPos; // ï¼’å€‹é€²ã‚ã‚‹
+                // ƒTƒCƒY‚ª‚È‚¢’ÊMƒf[ƒ^‚Í‚±‚±‚ÉƒTƒCƒY‚ª“ü‚Á‚Ä‚¢‚é
+                size = GFL_NET_RingGetByte(pRing)*0x100;
+                size += GFL_NET_RingGetByte(pRing);
+                OHNO_PRINT("óMƒTƒCƒY  %d\n",size);
+                bkPos = pRing->startPos; // ‚QŒÂi‚ß‚é
             }
             pRecvComm->valSize = size;
         }
-        if(CommCommandCreateBuffCheck(command)){  // å—ä¿¡ãƒãƒƒãƒ•ã‚¡ãŒã‚ã‚‹å ´åˆ
+        if(GFL_NET_CommandCreateBuffCheck(command)){  // óMƒoƒbƒtƒ@‚ª‚ ‚éê‡
             if(pRecvComm->pRecvBuff==NULL){
-                pRecvComm->pRecvBuff = CommCommandCreateBuffStart(command, netID, pRecvComm->valSize);
+                pRecvComm->pRecvBuff = GFL_NET_CommandCreateBuffStart(command, netID, pRecvComm->valSize);
             }
-            realbyte = CommRingGets(pRing, pTemp, size - pRecvComm->dataPoint);
+            realbyte = GFL_NET_RingGets(pRing, pTemp, size - pRecvComm->dataPoint);
 //            OHNO_SP_PRINT("id %d -- rest %d\n",netID, size - pRecvComm->dataPoint);
             if(pRecvComm->pRecvBuff){
                 MI_CpuCopy8(pTemp, &pRecvComm->pRecvBuff[pRecvComm->dataPoint], realbyte);
@@ -2481,15 +2246,15 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
             }
         }
         else{
-            if( CommRingDataSize(pRing) >= size ){
+            if( GFL_NET_RingDataSize(pRing) >= size ){
                 if(bDebug){
-                    OHNO_PRINT(">>>å—ä¿¡ comm=%d id=%d -- size%d \n",command, netID, size);
+                    OHNO_PRINT(">>>óM comm=%d id=%d -- size%d \n",command, netID, size);
                 }
-                CommRingGets(pRing, pTemp, size);
+                GFL_NET_RingGets(pRing, pTemp, size);
                 _endCallBack(netID, command, size, (void*)pTemp, pRecvComm);
             }
-            else{   // ã¾ã å±Šã„ã¦ã„ãªã„å¤§ãã„ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¬ã‘ã‚‹
-                //            OHNO_PRINT("çµåˆå¾…ã¡ command %d size %d\n",command,size);
+            else{   // ‚Ü‚¾“Í‚¢‚Ä‚¢‚È‚¢‘å‚«‚¢ƒf[ƒ^‚Ìê‡‚Ê‚¯‚é
+                //            OHNO_PRINT("Œ‹‡‘Ò‚¿ command %d size %d\n",command,size);
                 pRing->startPos = bkPos;
                 break;
             }
@@ -2499,7 +2264,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
 
 //==============================================================================
 /**
- * å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’ãƒ—ãƒ­ã‚»ã‚¹ä¸­ã«å‡¦ç†ã™ã‚‹
+ * @brief   óM‚µ‚½ƒf[ƒ^‚ğƒvƒƒZƒX’†‚Éˆ—‚·‚é
  * @param   none
  * @retval  none
  */
@@ -2519,19 +2284,19 @@ static void _recvDataFunc(void)
         return;
     }
 
-    CommRingEndChange(&_pComm->recvRing);
-    if(CommRingDataSize(&_pComm->recvRing) > 0){
-        // ä¸€å€‹å‰ã®ä½ç½®ã‚’å¤‰æ•°ã«ä¿å­˜ã—ã¦ãŠã
+    GFL_NET_RingEndChange(&_pComm->recvRing);
+    if(GFL_NET_RingDataSize(&_pComm->recvRing) > 0){
+        // ˆêŒÂ‘O‚ÌˆÊ’u‚ğ•Ï”‚É•Û‘¶‚µ‚Ä‚¨‚­
 //        MI_CpuCopy8( &_pComm->recvRing,&_pComm->recvRingUndo, sizeof(RingBuffWork));
-//        CommRingStartPush(&_pComm->recvRingUndo); //startä½ç½®ã‚’ä¿å­˜
+//        GFL_NET_RingStartPush(&_pComm->recvRingUndo); //startˆÊ’u‚ğ•Û‘¶
 #if 0
-        OHNO_PRINT("-è§£æé–‹å§‹ %d %d-%d\n",id,
+        OHNO_PRINT("-‰ğÍŠJn %d %d-%d\n",id,
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
 #endif
-//        OHNO_PRINT("å­æ©Ÿè§£æ %d \n",id);
+//        OHNO_PRINT("q‹@‰ğÍ %d \n",id);
         _recvDataFuncSingle(&_pComm->recvRing, id, _pComm->pTmpBuff, TRUE, &_pComm->recvCommClient);
 #if 0
-        OHNO_PRINT("è§£æ %d %d-%d\n",id,
+        OHNO_PRINT("‰ğÍ %d %d-%d\n",id,
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
 #endif
     }
@@ -2539,7 +2304,7 @@ static void _recvDataFunc(void)
 
 //==============================================================================
 /**
- * å—ä¿¡ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’ãƒ—ãƒ­ã‚»ã‚¹ä¸­ã«å‡¦ç†ã™ã‚‹
+ * @brief   óM‚µ‚½ƒf[ƒ^‚ğƒvƒƒZƒX’†‚Éˆ—‚·‚é
  * @param   none
  * @retval  none
  */
@@ -2559,28 +2324,28 @@ static void _recvDataServerFunc(void)
         return;
     }
 
-    machineMax = CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1;
+    machineMax = _getUserMaxNum();
 
     for(id = 0; id < machineMax; id++){
-        CommRingEndChange(&_pComm->recvServerRing[id]);
+        GFL_NET_RingEndChange(&_pComm->recvServerRing[id]);
         
-        if(CommRingDataSize(&_pComm->recvServerRing[id]) > 0){
+        if(GFL_NET_RingDataSize(&_pComm->recvServerRing[id]) > 0){
 #if 0
-            OHNO_PRINT("è§£æé–‹å§‹ %d %d-%d\n",id,
+            OHNO_PRINT("‰ğÍŠJn %d %d-%d\n",id,
                        _pComm->recvServerRing[id].startPos,_pComm->recvServerRing[id].endPos);
 #endif
 #if 0
-            OHNO_PRINT("è¦ªæ©ŸãŒå­æ©Ÿ%dã‚’è§£æ\n",id);
+            OHNO_PRINT("e‹@‚ªq‹@%d‚ğ‰ğÍ\n",id);
 #endif
-#if _COMMAND_TEST
-    //        OHNO_PRINT("DSè§£æ %d\n",id);
+#if 0
+    //        OHNO_PRINT("DS‰ğÍ %d\n",id);
 #endif
-            // ä¸€å€‹å‰ã®ä½ç½®ã‚’å¤‰æ•°ã«ä¿å­˜ã—ã¦ãŠã
+            // ˆêŒÂ‘O‚ÌˆÊ’u‚ğ•Ï”‚É•Û‘¶‚µ‚Ä‚¨‚­
 //            MI_CpuCopy8(&_pComm->recvServerRing[id],
   //                      &_pComm->recvServerRingUndo[id],
     //                    sizeof(RingBuffWork));
-      //      CommRingStartPush(&_pComm->recvServerRingUndo[id]); //startä½ç½®ã‚’ä¿å­˜
-//            OHNO_PRINT("è¦ªæ©ŸãŒå­æ©Ÿ%dã‚’è§£æ\n",id);
+      //      GFL_NET_RingStartPush(&_pComm->recvServerRingUndo[id]); //startˆÊ’u‚ğ•Û‘¶
+//            OHNO_PRINT("e‹@‚ªq‹@%d‚ğ‰ğÍ\n",id);
             _recvDataFuncSingle(&_pComm->recvServerRing[id], id, _pComm->pTmpBuff, FALSE, &_pComm->recvCommServer[id]);
         }
     }
@@ -2588,61 +2353,18 @@ static void _recvDataServerFunc(void)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒ¼ã‚¿ãŒé€ã‚‰ã‚Œã¦ããŸã‹ç¢ºèªã™ã‚‹ã€‚
- * @param   netID       è¦ªæ©Ÿã¯_PARENT_INDEXã€€ä»–ã¯å­æ©Ÿ
- * @param   command     ã“ã®ãƒ‡ãƒ¼ã‚¿ãŒé€ã‚‰ã‚Œã¦ããŸã®ã‹ã©ã†ã‹èª¿ã¹åˆ©ã†
- * @param   retSsize    é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹
- * @param   data        é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿
- * @retval  ã‚³ãƒãƒ³ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã¿ã¤ã‘ãŸã‚‰TRUE
+ * @brief   ’ÊM‰Â”\ó‘Ô‚È‚Ì‚©‚Ç‚¤‚©‚ğ•Ô‚· ‚½‚¾‚µƒRƒ}ƒ“ƒh‚É‚æ‚éƒlƒSƒVƒG[ƒVƒ‡ƒ“‚ª‚Ü‚¾‚Ìó‘Ô
+ * @param   eq‹@‚ÌnetID
+ * @retval  TRUE  ’ÊM‰Â”\    FALSE ’ÊMØ’f
  */
 //==============================================================================
-#if 0
-BOOL CommRecvData(int netID,int chkCommand, int* retSize, u8* data)
-{
-    if(FALSE == CommIsConnect(netID)){
-        return FALSE;
-    }
-    if(_transmissonType() == _DS_MODE){
-        return CommGetRecvData_ServerSide(netID,chkCommand,retSize,data);
-    }
-    return _getRecvDataSingle(&_pComm->recvRingUndo,
-                              chkCommand, retSize, data, _pComm->pTmpBuff);
-}
-#endif
-
-//==============================================================================
-/**
- * ãƒ‡ãƒ¼ã‚¿ãŒé€ã‚‰ã‚Œã¦ããŸã‹ç¢ºèªã™ã‚‹ã€‚ã‚µãƒ¼ãƒãƒ¼å°‚ç”¨
- * @param   netID       machine index
- * @param   command     ã“ã®ãƒ‡ãƒ¼ã‚¿ãŒé€ã‚‰ã‚Œã¦ããŸã®ã‹ã©ã†ã‹èª¿ã¹åˆ©ã†
- * @param   retSsize    é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚ºã‚’å…¥ã‚Œã‚‹
- * @param   data        é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿
- * @retval  ã‚³ãƒãƒ³ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã¿ã¤ã‘ãŸã‚‰TRUE
- */
-//==============================================================================
-#if 0
-BOOL CommGetRecvData_ServerSide(int netID,int chkCommand, int* retSize, u8* data)
-{
-    if(FALSE == CommIsConnect(netID)){
-        return FALSE;
-    }
-    return _getRecvDataSingle(&_pComm->recvServerRingUndo[netID],
-                              chkCommand, retSize, data, _pComm->pTmpBuff);
-}
-#endif
-//==============================================================================
-/**
- * é€šä¿¡å¯èƒ½çŠ¶æ…‹ãªã®ã‹ã©ã†ã‹ã‚’è¿”ã™ ãŸã ã—ã‚³ãƒãƒ³ãƒ‰ã«ã‚ˆã‚‹ãƒã‚´ã‚·ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ãŒã¾ã ã®çŠ¶æ…‹
- * @param   è¦ªå­æ©Ÿã®netID
- * @retval  TRUE  é€šä¿¡å¯èƒ½    FALSE é€šä¿¡åˆ‡æ–­
- */
-//==============================================================================
-BOOL CommIsConnect(u16 netID)
+BOOL GFL_NET_SystemIsConnect(u16 netID)
 {
     if(!_pComm){
         return FALSE;
     }
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+    if( _pComm->device == _DEVICE_WIFI){
+#if 0 //wifi
         if(_pComm->bWifiConnect){
             int id = mydwc_getaid();
             if(-1 != id){
@@ -2654,19 +2376,20 @@ BOOL CommIsConnect(u16 netID)
                 }
             }
         }
+#endif
         return FALSE;
     }
-    if(!CommIsInitialize()){
+    if(!GFL_NET_SystemIsInitialize()){
         return FALSE;
     }
-    if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
+    if (!GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) {
         return FALSE;
     }
-    if(CommGetCurrentID()==netID){// è‡ªåˆ†ã¯ONLINE
+    if(GFL_NET_SystemGetCurrentID()==netID){// ©•ª‚ÍONLINE
         return TRUE;
     }
-    else if(CommGetCurrentID()==COMM_PARENT_ID){  // è¦ªæ©Ÿã®ã¿å­æ©Ÿæƒ…å ±ã‚’LIBã§å¾—ã‚‰ã‚Œã‚‹
-        u16 bitmap = WH_GetBitmap();
+    else if(GFL_NET_SystemGetCurrentID()==COMM_PARENT_ID){  // e‹@‚Ì‚İq‹@î•ñ‚ğLIB‚Å“¾‚ç‚ê‚é
+        u16 bitmap = GFL_NET_WL_GetBitmap();
         if( bitmap & (1<<netID)){
             return TRUE;
         }
@@ -2679,17 +2402,17 @@ BOOL CommIsConnect(u16 netID)
 
 //==============================================================================
 /**
- * é€šä¿¡å¯èƒ½çŠ¶æ…‹ã®äººæ•°ã‚’è¿”ã™
+ * @brief   ’ÊM‰Â”\ó‘Ô‚Ìl”‚ğ•Ô‚·
  * @param   none
- * @retval  æ¥ç¶šäººæ•°
+ * @retval  Ú‘±l”
  */
 //==============================================================================
-int CommGetConnectNum(void)
+int GFL_NET_SystemGetConnectNum(void)
 {
     int num = 0,i;
 
     for(i = 0; i < COMM_MACHINE_MAX; i++){
-        if(CommIsConnect(i)){
+        if(GFL_NET_SystemIsConnect(i)){
             num++;
         }
     }
@@ -2698,15 +2421,15 @@ int CommGetConnectNum(void)
 
 //==============================================================================
 /**
- * åˆæœŸåŒ–ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’è¿”ã™
+ * @brief   ‰Šú‰»‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ•Ô‚·
  * @param   none
- * @retval  åˆæœŸãŒçµ‚ã‚ã£ã¦ã„ãŸã‚‰TRUE
+ * @retval  ‰Šú‚ªI‚í‚Á‚Ä‚¢‚½‚çTRUE
  */
 //==============================================================================
-BOOL CommIsInitialize(void)
+BOOL GFL_NET_SystemIsInitialize(void)
 {
     if(_pComm){
-        if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+        if( _pComm->device == _DEVICE_WIFI){
             return TRUE;
         }
     }
@@ -2715,141 +2438,40 @@ BOOL CommIsInitialize(void)
 
 //==============================================================================
 /**
- * ç§»å‹•é€Ÿåº¦ã‚’å…¥ã‚Œã‚‹
- * @param   speed
- * @retval  
- */
-//==============================================================================
-
-void CommSetSpeed(u8 speed)
-{
-    _pComm->sendSpeed = speed;
-}
-
-//==============================================================================
-/**
- * ç§»å‹•é€Ÿåº¦ã‚’è¿”ã™
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-u8 CommGetSpeed(int netID)
-{
-    return _pComm->speed[netID];
-}
-
-//==============================================================================
-/**
- * ãƒ‘ãƒƒãƒ‰ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚’è¿”ã™
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-u16 CommGetPadCont(int netID)
-{
-    int cnt;
-
-    if(!_pComm){
-        return 0;
-    }
-    cnt = _pComm->cont[netID];
-    _pComm->cont[netID] = 0;
-    return cnt;
-}
-
-//==============================================================================
-/**
- * ãƒ‘ãƒƒãƒ‰ã‚’é€ä¿¡å¯èƒ½ã«ã™ã‚‹
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-void CommEnableSendMoveData(void)
-{
-    if(_pComm){
-        _pComm->sendCont |= 0x8000;
-    }
-}
-
-//==============================================================================
-/**
- * ãƒ‘ãƒƒãƒ‰ã‚’é€ä¿¡ä¸å¯ã«ã™ã‚‹
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-void CommDisableSendMoveData(void)
-{
-    if(_pComm){
-        _pComm->sendCont = 0;
-    }
-}
-
-//==============================================================================
-/**
- * ãƒ‘ãƒƒãƒ‰ã‚’é€ä¿¡ä¸å¯ã«ã™ã‚‹
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-void CommStopSendMoveData(BOOL bStop)
-{
-    if(_pComm){
-        _pComm->sendKeyStop = bStop;
-    }
-}
-
-//==============================================================================
-/**
- * ãƒ‘ãƒƒãƒ‰ã‚’é€ä¿¡ä¸å¯ã«ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å¾—ã‚‹
- * @param   netID     ãƒãƒƒãƒˆID
- * @retval  key cond
- */
-//==============================================================================
-BOOL CommIsSendMoveData(void)
-{
-    if(_pComm){
-        return (_pComm->sendCont & 0x8000);
-    }
-    return TRUE;
-}
-
-//==============================================================================
-/**
- * ã‚µãƒ¼ãƒãƒ¼å´ã‹ã‚‰å­æ©Ÿã«é€ã‚‹å ´åˆ é€ä¿¡ã‚­ãƒ¥ãƒ¼ã¸ã®è¿½åŠ 
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
+ * @brief   ƒT[ƒo[‘¤‚©‚çq‹@‚É‘—‚éê‡ ‘—MƒLƒ…[‚Ö‚Ì’Ç‰Á
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
  * @param   sendNetID
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- *                     ã“ã®ãƒ‡ãƒ¼ã‚¿ã¯é™çš„ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„  ãƒãƒƒãƒ•ã‚¡ã«æºœã‚ãªã„ãŸã‚
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ *                     ‚±‚Ìƒf[ƒ^‚ÍÃ“I‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢  ƒoƒbƒtƒ@‚É—­‚ß‚È‚¢‚½‚ß
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSetSendQueue_ServerSide(int command, const void* data, int size)
+BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int size)
 {
     if(_transmissonType() == _DS_MODE){
-        return CommQueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE);
+        return GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE);
     }
     else{
-        return CommQueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE);
+        return GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE);
     }
 }
 
 //==============================================================================
 /**
- * ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã‹ã‚‰è¦ªæ©Ÿã«é€ã‚‹å ´åˆ é€ä¿¡ã‚­ãƒ¥ãƒ¼ã¸ã®è¿½åŠ 
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- *                     ã“ã®ãƒ‡ãƒ¼ã‚¿ã¯é™çš„ã§ãªã‘ã‚Œã°ãªã‚‰ãªã„  ãƒãƒƒãƒ•ã‚¡ã«æºœã‚ãªã„ãŸã‚
- * @param   byte       é€ä¿¡é‡    ã‚³ãƒãƒ³ãƒ‰ã ã‘ã®å ´åˆ0
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   ƒNƒ‰ƒCƒAƒ“ƒg‘¤‚©‚çe‹@‚É‘—‚éê‡ ‘—MƒLƒ…[‚Ö‚Ì’Ç‰Á
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ *                     ‚±‚Ìƒf[ƒ^‚ÍÃ“I‚Å‚È‚¯‚ê‚Î‚È‚ç‚È‚¢  ƒoƒbƒtƒ@‚É—­‚ß‚È‚¢‚½‚ß
+ * @param   byte       ‘—M—Ê    ƒRƒ}ƒ“ƒh‚¾‚¯‚Ìê‡0
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSetSendQueue(int command, const void* data, int size)
+BOOL GFL_NET_SystemSetSendQueue(int command, const void* data, int size)
 {
-    return CommQueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, FALSE, FALSE);
+    return GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, FALSE, FALSE);
 }
 
 enum{
@@ -2872,18 +2494,18 @@ static void _transmission(void)
     switch(_pComm->transmissionNum){
       case _TRANS_LOAD:
         if(_transmissonType() == _DS_MODE){
-            bCatch = CommSendFixSizeData(CS_DSMP_CHANGE_REQ,&_pComm->transmissionSend);
+            bCatch = GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_DSMP_CHANGE_REQ,&_pComm->transmissionSend);
         }
         else{
-            bCatch = CommSendData_ServerSide(CS_DSMP_CHANGE_REQ, &_pComm->transmissionSend, 1);
+            bCatch = GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_DSMP_CHANGE_REQ, &_pComm->transmissionSend, 1);
         }
         if(bCatch){
             _pComm->transmissionNum = _TRANS_LOAD_END;
         }
         break;
       case _TRANS_SEND:
-        if(CommSendFixSizeData(CS_DSMP_CHANGE_END,&_pComm->transmissionSend)){
-            _commSetTransmissonType(_pComm->transmissionSend);  // åˆ‡ã‚Šæ›¿ãˆã‚‹  è¦ªæ©Ÿã¯ã“ã“ã§åˆ‡ã‚Šæ›¿ãˆãªã„
+        if(GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_DSMP_CHANGE_END,&_pComm->transmissionSend)){
+            _commSetTransmissonType(_pComm->transmissionSend);  // Ø‚è‘Ö‚¦‚é  e‹@‚Í‚±‚±‚ÅØ‚è‘Ö‚¦‚È‚¢
             _pComm->transmissionNum = _TRANS_NONE;
         }
         break;
@@ -2893,92 +2515,94 @@ static void _transmission(void)
 
 //==============================================================================
 /**
- * DSé€šä¿¡MPé€šä¿¡ã®åˆ‡ã‚Šæ›¿ãˆ  CS_DSMP_CHANGE
+ * @brief   DS’ÊMMP’ÊM‚ÌØ‚è‘Ö‚¦  GFL_NET_CMD_DSMP_CHANGE
  * @param   none
- * @retval  æ®‹ã‚Šæ•°
+ * @retval  c‚è”
  */
 //==============================================================================
 
-void CommRecvDSMPChange(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChange(int netID, int size, void* pData, void* pWork)
 {
     u8* pBuff = pData;
     int i;
 
-    if(CommGetCurrentID() != COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
-    OHNO_PRINT("CommRecvDSMPChange å—ä¿¡\n");
+    OHNO_PRINT("CommRecvDSMPChange óM\n");
     _pComm->transmissionNum = _TRANS_LOAD;
     _pComm->transmissionSend = pBuff[0];
 }
 
 //==============================================================================
 /**
- * DSé€šä¿¡MPé€šä¿¡ã®åˆ‡ã‚Šæ›¿ãˆ
+ * @brief   DS’ÊMMP’ÊM‚ÌØ‚è‘Ö‚¦
  * @param   none
- * @retval  æ®‹ã‚Šæ•°
+ * @retval  c‚è”
  */
 //==============================================================================
 
-void CommRecvDSMPChangeReq(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChangeReq(int netID, int size, void* pData, void* pWork)
 {
     u8* pBuff = pData;
     int i;
 
-    if(CommGetCurrentID() == COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
         return;
     }
     _pComm->transmissionSend = pBuff[0];
     _pComm->transmissionNum = _TRANS_SEND;
-    OHNO_PRINT("CommRecvDSMPChangeReq å—ä¿¡\n");
+    OHNO_PRINT("CommRecvDSMPChangeReq óM\n");
 }
 
 //==============================================================================
 /**
- * DSé€šä¿¡MPé€šä¿¡ã®åˆ‡ã‚Šæ›¿ãˆ çµ‚äº†å‡¦ç† CS_DSMP_CHANGE_END
+ * @brief   DS’ÊMMP’ÊM‚ÌØ‚è‘Ö‚¦ I—¹ˆ— GFL_NET_CMD_DSMP_CHANGE_END
  * @param   none
- * @retval  æ®‹ã‚Šæ•°
+ * @retval  c‚è”
  */
 //==============================================================================
 
-void CommRecvDSMPChangeEnd(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvDSMPChangeEnd(int netID, int size, void* pData, void* pWork)
 {
     u8* pBuff = pData;
     int i;
 
-    if(CommGetCurrentID() != COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
-    OHNO_PRINT("CommRecvDSMPChangeEND å—ä¿¡\n");
+    OHNO_PRINT("CommRecvDSMPChangeEND óM\n");
 
     if(_pComm->transmissionNum == _TRANS_LOAD_END){
-        _commSetTransmissonType(pBuff[0]);  // åˆ‡ã‚Šæ›¿ãˆã‚‹
+        _commSetTransmissonType(pBuff[0]);  // Ø‚è‘Ö‚¦‚é
         _pComm->transmissionNum = _TRANS_NONE;
     }
 }
 
 //==============================================================================
 /**
- * è‡ªåˆ†ã®æ©Ÿã®IDã‚’è¿”ã™
+ * @brief   ©•ª‚Ì‹@‚ÌID‚ğ•Ô‚·
  * @param   
- * @retval  è‡ªåˆ†ã®æ©Ÿã®ID  ã¤ãªãŒã£ã¦ã„ãªã„å ´åˆCOMM_PARENT_ID
+ * @retval  ©•ª‚Ì‹@‚ÌID  ‚Â‚È‚ª‚Á‚Ä‚¢‚È‚¢ê‡COMM_PARENT_ID
  */
 //==============================================================================
 
-u16 CommGetCurrentID(void)
+u16 GFL_NET_SystemGetCurrentID(void)
 {
     if(_pComm){
-        if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
+        if( _pComm->device == _DEVICE_WIFI){
+#if 0  //wifi
             int id = mydwc_getaid();
             if(id != -1){
                 return id;
             }
+#endif
         }
-        else if(CommGetAloneMode()){
+        else if(GFL_NET_SystemGetAloneMode()){
             return COMM_PARENT_ID;
         }
         else{
-            return WH_GetCurrentAid();
+            return GFL_NET_WL_GetCurrentAid();
         }
     }
     return COMM_PARENT_ID;
@@ -2986,74 +2610,74 @@ u16 CommGetCurrentID(void)
 
 //==============================================================================
 /**
- * æ±ç”¨é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  é€ä¿¡ã‚µã‚¤ã‚ºå›ºå®šã§ã—ã‹ã‚‚å¤§ãã„å ´åˆ
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   ”Ä—p‘—Mƒƒ\ƒbƒh  ‘—MƒTƒCƒYŒÅ’è‚Å‚µ‚©‚à‘å‚«‚¢ê‡
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendFixHugeSizeData(int command, const void* data)
+BOOL GFL_NET_SystemSendFixHugeSizeData(int command, const void* data)
 {
-    return CommSendHugeData(command, data, 0);
+    return GFL_NET_SystemSendHugeData(command, data, 0);
 }
 
 //==============================================================================
 /**
- * æ±ç”¨é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  é€ä¿¡ã‚µã‚¤ã‚ºå›ºå®šã®å ´åˆ
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @param   data       é€ä¿¡ã—ãŸã„ãƒ‡ãƒ¼ã‚¿ ãªã„æ™‚ã¯NULL
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * ”Ä—p‘—Mƒƒ\ƒbƒh  ‘—MƒTƒCƒYŒÅ’è‚Ìê‡
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @param   data       ‘—M‚µ‚½‚¢ƒf[ƒ^ ‚È‚¢‚ÍNULL
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendFixSizeData(int command, const void* data)
+BOOL GFL_NET_SystemSendFixSizeData(int command, const void* data)
 {
-    return CommSendData(command, data, 0);
+    return GFL_NET_SystemSendData(command, data, 0);
 }
 
 //==============================================================================
 /**
- * æ±ç”¨é€ä¿¡ãƒ¡ã‚½ãƒƒãƒ‰  ã‚³ãƒãƒ³ãƒ‰ä»¥å¤–å­˜åœ¨ã—ãªã„å ´åˆ
- * @param   command    comm_sharing.hã«å®šç¾©ã—ãŸãƒ©ãƒ™ãƒ«
- * @retval  é€ä¿¡ã‚­ãƒ¥ãƒ¼ã«å…¥ã£ãŸã‹ã©ã†ã‹
+ * @brief   ”Ä—p‘—Mƒƒ\ƒbƒh  ƒRƒ}ƒ“ƒhˆÈŠO‘¶İ‚µ‚È‚¢ê‡
+ * @param   command    comm_sharing.h‚É’è‹`‚µ‚½ƒ‰ƒxƒ‹
+ * @retval  ‘—MƒLƒ…[‚É“ü‚Á‚½‚©‚Ç‚¤‚©
  */
 //==============================================================================
 
-BOOL CommSendFixData(int command)
+BOOL GFL_NET_SystemSendFixData(int command)
 {
-    return CommSendData(command, NULL, 0);
+    return GFL_NET_SystemSendData(command, NULL, 0);
 }
 
 //==============================================================================
 /**
- * WHãƒ©ã‚¤ãƒ–ãƒ©ãƒªã§ã€€é€šä¿¡çŠ¶æ…‹ã®BITã‚’ç¢ºèª
+ * @brief   WHƒ‰ƒCƒuƒ‰ƒŠ‚Å@’ÊMó‘Ô‚ÌBIT‚ğŠm”F
  * @param   none
- * @retval  æ¥ç¶šãŒã‚ã‹ã‚‹BITé…åˆ—
+ * @retval  Ú‘±‚ª‚í‚©‚éBIT”z—ñ
  */
 //==============================================================================
 
-BOOL CommIsChildsConnecting(void)
+BOOL GFL_NET_SystemIsChildsConnecting(void)
 {
     return CommMPIsChildsConnecting();
 }
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼çŠ¶æ…‹ã‹ã©ã†ã‹
+ * @brief   ƒGƒ‰[ó‘Ô‚©‚Ç‚¤‚©
  * @param   none
- * @retval  ã‚¨ãƒ©ãƒ¼ã®æ™‚TRUE
+ * @retval  ƒGƒ‰[‚ÌTRUE
  */
 //==============================================================================
 
-BOOL CommIsError(void)
+BOOL GFL_NET_SystemIsError(void)
 {
-    if(CommGetAloneMode()){  // ä¸€äººãƒ¢ãƒ¼ãƒ‰ã®å ´åˆã“ã“ã¯ã‚¨ãƒ©ãƒ¼ã«ã—ãªã„
+    if(GFL_NET_SystemGetAloneMode()){  // ˆêlƒ‚[ƒh‚Ìê‡‚±‚±‚ÍƒGƒ‰[‚É‚µ‚È‚¢
         return FALSE;
     }
     if(_pComm){
         if(_pComm->bError){
-            CommStateSetErrorCheck(TRUE,TRUE);
+//            CommStateSetErrorCheck(TRUE,TRUE);
             return TRUE;
         }
     }
@@ -3062,18 +2686,15 @@ BOOL CommIsError(void)
 
 //==============================================================================
 /**
- * ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·ã«å¯¾å¿œã—ãŸå­æ©Ÿé€ä¿¡byteæ•°ã‚’å¾—ã¾ã™
- * ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·ã¯ include/communication/comm_def.hã«ã‚ã‚Šã¾ã™
- * @param   serviceNo ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
- * @retval  å­æ©Ÿå°æ•°
+ * @brief   ƒT[ƒrƒX”Ô†‚É‘Î‰‚µ‚½q‹@‘—Mbyte”‚ğ“¾‚Ü‚·
+ * ƒT[ƒrƒX”Ô†‚Í include/communication/comm_def.h‚É‚ ‚è‚Ü‚·
+ * @param   serviceNo ƒT[ƒrƒX”Ô†
+ * @retval  q‹@‘ä”
  */
 //==============================================================================
 
-u16 CommGetServiceMaxChildSendByte(u16 serviceNo)
+static u16 _getUserMaxSendByte(void)
 {
-    if(CommLocalGetServiceMaxEntry(serviceNo) >= COMM_WIDE_BYTE_SEND_CHILDNUM){
-        return _SEND_BUFF_SIZE_CHILD;
-    }
     if(_transmissonType() == _MP_MODE){
         return _SEND_BUFF_SIZE_CHILD;
     }
@@ -3082,39 +2703,39 @@ u16 CommGetServiceMaxChildSendByte(u16 serviceNo)
 
 //==============================================================================
 /**
- * æœ€å¤§æ¥ç¶šäººæ•°ã‚’å¾—ã‚‹
+ * @brief   Å‘åÚ‘±l”‚ğ“¾‚é
  * @param   none
- * @retval  æœ€å¤§æ¥ç¶šäººæ•°
+ * @retval  Å‘åÚ‘±l”
  */
 //==============================================================================
 
-int CommGetMaxEntry(int service)
+int GFL_NET_SystemGetMaxEntry(int service)
 {
-    return CommLocalGetServiceMaxEntry(service)+1;
+    return _getUserMaxNum();
 }
 
 //==============================================================================
 /**
- * æœ€å°æ¥ç¶šäººæ•°ã‚’å¾—ã‚‹
+ * @brief   Å¬Ú‘±l”‚ğ“¾‚é
  * @param   none
- * @retval  æœ€å°æ¥ç¶šäººæ•°
+ * @retval  Å¬Ú‘±l”
  */
 //==============================================================================
 
-int CommGetMinEntry(int service)
+int GFL_NET_SystemGetMinEntry(int service)
 {
-    return CommLocalGetServiceMinEntry(service)+1;
+    return _getUserMinNum();
 }
 
 //==============================================================================
 /**
- * ä¸€äººé€šä¿¡ãƒ¢ãƒ¼ãƒ‰ã‚’è¨­å®š
- * @param   bAlone    ä¸€äººé€šä¿¡ãƒ¢ãƒ¼ãƒ‰
+ * @brief   ˆêl’ÊMƒ‚[ƒh‚ğİ’è
+ * @param   bAlone    ˆêl’ÊMƒ‚[ƒh
  * @retval  none
  */
 //==============================================================================
 
-void CommSetAloneMode(BOOL bAlone)
+void GFL_NET_SystemSetAloneMode(BOOL bAlone)
 {
     if(_pComm){
         _pComm->bAlone = bAlone;
@@ -3123,13 +2744,13 @@ void CommSetAloneMode(BOOL bAlone)
 
 //==============================================================================
 /**
- * ä¸€äººé€šä¿¡ãƒ¢ãƒ¼ãƒ‰ã‹ã©ã†ã‹ã‚’å–å¾—
+ * @brief   ˆêl’ÊMƒ‚[ƒh‚©‚Ç‚¤‚©‚ğæ“¾
  * @param   none
- * @retval  ä¸€äººé€šä¿¡ãƒ¢ãƒ¼ãƒ‰ã®å ´åˆTRUE
+ * @retval  ˆêl’ÊMƒ‚[ƒh‚Ìê‡TRUE
  */
 //==============================================================================
 
-BOOL CommGetAloneMode(void)
+BOOL GFL_NET_SystemGetAloneMode(void)
 {
     if(_pComm){
         return _pComm->bAlone;
@@ -3139,20 +2760,23 @@ BOOL CommGetAloneMode(void)
 
 //==============================================================================
 /**
- * è‡ªå‹•çµ‚äº†ã‚³ãƒãƒ³ãƒ‰å—ä¿¡
- * @param   callbackç”¨å¼•æ•°
- * @retval  none
+ * @brief   ©“®I—¹ƒRƒ}ƒ“ƒhóM
+ * @param   netID  ’ÊMID
+ * @param   size   ƒTƒCƒY
+ * @param   pData  ƒf[ƒ^
+ * @param   pWork  ƒ[ƒN
+ * @return  none
  */
 //==============================================================================
 
-void CommRecvAutoExit(int netID, int size, void* pData, void* pWork)
+void GFL_NET_SystemRecvAutoExit(int netID, int size, void* pData, void* pWork)
 {
     u8 dummy;
 
-    OHNO_PRINT("CommRecvAutoExit å—ä¿¡ \n");
+    OHNO_PRINT("CommRecvAutoExit óM \n");
     if(!CommMPIsAutoExit()){
-        if(CommGetCurrentID() == COMM_PARENT_ID){   // è‡ªåˆ†ãŒè¦ªã®å ´åˆã¿ã‚“ãªã«é€†è¿”ä¿¡ã™ã‚‹
-            CommSendFixSizeData_ServerSide(CS_AUTO_EXIT, &dummy);
+        if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // ©•ª‚ªe‚Ìê‡‚İ‚ñ‚È‚É‹t•ÔM‚·‚é
+            GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_AUTO_EXIT, &dummy);
         }
     }
     CommMPSetAutoExit();
@@ -3162,15 +2786,15 @@ void CommRecvAutoExit(int netID, int size, void* pData, void* pWork)
 
 //==============================================================================
 /**
- * ãƒ‡ãƒãƒƒã‚°ç”¨ã«ãƒ€ãƒ³ãƒ—ã‚’è¡¨ç¤ºã™ã‚‹
- * @param   adr           è¡¨ç¤ºã—ãŸã„ã‚¢ãƒ‰ãƒ¬ã‚¹
- * @param   length        é•·ã•
- * @param   pInfoStr      è¡¨ç¤ºã—ãŸã„ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
- * @retval  ã‚µãƒ¼ãƒ“ã‚¹ç•ªå·
+ * @brief   ƒfƒoƒbƒO—p‚Éƒ_ƒ“ƒv‚ğ•\¦‚·‚é
+ * @param   adr           •\¦‚µ‚½‚¢ƒAƒhƒŒƒX
+ * @param   length        ’·‚³
+ * @param   pInfoStr      •\¦‚µ‚½‚¢ƒƒbƒZ[ƒW
+ * @retval  ƒT[ƒrƒX”Ô†
  */
 //==============================================================================
 
-void CommDump_Debug(u8* adr, int length, char* pInfoStr)
+void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr)
 {
     int i,j = 0;
 
@@ -3192,169 +2816,110 @@ void CommDump_Debug(u8* adr, int length, char* pInfoStr)
     OHNO_PRINT(" --end\n");
 }
 
-//==============================================================================
-/**
- * ãƒ‡ãƒãƒƒã‚°ã‚ªãƒ¼ãƒˆç§»å‹•åˆ‡ã‚Šæ›¿ãˆ
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-void CommSwitchAutoMove_Debug(void)
-{
-    _pComm->DebugAutoMove =
-        (_pComm->DebugAutoMove) ? 0 : 1;
-}
-
-//==============================================================================
-/**
- * ãƒ‡ãƒãƒƒã‚°ã‚ªãƒ¼ãƒˆç§»å‹•åˆ‡
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _debugAutoMove(void)
-{
-    if(_pComm->DebugAutoMove){
-        _pComm->DebugAutoMove++;
-        if(_pComm->DebugAutoMove==0){
-            _pComm->DebugAutoMove++;
-        }
-        if(_pComm->DebugAutoMove & 0x08){
-            _pComm->sendCont |= (PAD_KEY_LEFT | PAD_BUTTON_Y); //ãƒ€ãƒƒã‚·ãƒ¥ç§»å‹•
-        }
-        else{
-            _pComm->sendCont |= (PAD_KEY_RIGHT | PAD_BUTTON_Y); //ãƒ€ãƒƒã‚·ãƒ¥ç§»å‹•
-        }
-    }
-}
 #endif
 
 //==============================================================================
 /**
- * WEP Key ã®ç¨®ç”¨ã®ä¹±æ•°ç”Ÿæˆæ©Ÿã®åˆæœŸåŒ–
- * @param   pRand  ä¹±æ•°ç®¡ç†æ§‹é€ ä½“
- * @retval  none
- */
-//==============================================================================
-
-void CommRandSeedInitialize(MATHRandContext32* pRand)
-{
-    u64 randSeed = 0;
-    RTCDate date;
-    RTCTime time;
-    
-    GF_RTC_GetDateTime(&date, &time);
-    randSeed = (((((((u64)date.year * 16ULL + date.month) * 32ULL)
-                   + date.day) * 32ULL + time.hour) * 64ULL + time.minute)
-                * 64ULL + (time.second + sys.vsync_counter));
-    MATH_InitRand32(pRand, randSeed);
-}
-
-
-//==============================================================================
-/**
- * ç‰¹å®šã®ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—çµ‚ãˆãŸã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹ ã‚µãƒ¼ãƒå´
- * @param   command èª¿ã¹ã‚‹ã‚³ãƒãƒ³ãƒ‰
- * @retval  ã‚³ãƒãƒ³ãƒ‰ãŒåœ¨ã£ãŸã‚‰TRUE
+ * @brief   “Á’è‚ÌƒRƒ}ƒ“ƒh‚ğ‘—M‚µI‚¦‚½‚©‚Ç‚¤‚©‚ğ’²‚×‚é ƒT[ƒo‘¤
+ * @param   command ’²‚×‚éƒRƒ}ƒ“ƒh
+ * @retval  ƒRƒ}ƒ“ƒh‚ªİ‚Á‚½‚çTRUE
  */
 //==============================================================================
 
 
-BOOL CommIsSendCommand_ServerSize(int command)
+BOOL GFL_NET_SystemIsSendCommand_ServerSize(int command)
 {
-    return CommQueueIsCommand(&_pComm->sendQueueMgrServer, command);
+    return GFL_NET_QueueIsCommand(&_pComm->sendQueueMgrServer, command);
 
 }
 
 
 //==============================================================================
 /**
- * ç‰¹å®šã®ã‚³ãƒãƒ³ãƒ‰ã‚’é€ä¿¡ã—çµ‚ãˆãŸã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹ ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´
- * @param   command èª¿ã¹ã‚‹ã‚³ãƒãƒ³ãƒ‰
- * @retval  ã‚³ãƒãƒ³ãƒ‰ãŒåœ¨ã£ãŸã‚‰TRUE
+ * @brief   “Á’è‚ÌƒRƒ}ƒ“ƒh‚ğ‘—M‚µI‚¦‚½‚©‚Ç‚¤‚©‚ğ’²‚×‚é ƒNƒ‰ƒCƒAƒ“ƒg‘¤
+ * @param   command ’²‚×‚éƒRƒ}ƒ“ƒh
+ * @retval  ƒRƒ}ƒ“ƒh‚ªİ‚Á‚½‚çTRUE
  */
 //==============================================================================
 
 
-BOOL CommIsSendCommand(int command)
+BOOL GFL_NET_SystemIsSendCommand(int command)
 {
-    return CommQueueIsCommand(&_pComm->sendQueueMgr, command);
+    return GFL_NET_QueueIsCommand(&_pComm->sendQueueMgr, command);
 
 }
 
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ãŒç©ºã£ã½ã‹ã©ã†ã‹ ã‚µãƒ¼ãƒãƒ¼å´
+ * @brief   ƒLƒ…[‚ª‹ó‚Á‚Û‚©‚Ç‚¤‚© ƒT[ƒo[‘¤
  * @param   none
- * @retval  ã‚³ãƒãƒ³ãƒ‰ãŒåœ¨ã£ãŸã‚‰FALSE
+ * @retval  ƒRƒ}ƒ“ƒh‚ªİ‚Á‚½‚çFALSE
  */
 //==============================================================================
 
-BOOL CommIsEmptyQueue_ServerSize(void)
+BOOL GFL_NET_SystemIsEmptyQueue_ServerSize(void)
 {
-    return CommQueueIsEmpty(&_pComm->sendQueueMgrServer);
+    return GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgrServer);
 
 }
 
 //==============================================================================
 /**
- * ã‚­ãƒ¥ãƒ¼ãŒç©ºã£ã½ã‹ã©ã†ã‹
+ * @brief   ƒLƒ…[‚ª‹ó‚Á‚Û‚©‚Ç‚¤‚©
  * @param   none
- * @retval  ã‚³ãƒãƒ³ãƒ‰ãŒåœ¨ã£ãŸã‚‰FALSE
+ * @retval  ƒRƒ}ƒ“ƒh‚ªİ‚Á‚½‚çFALSE
  */
 //==============================================================================
 
-BOOL CommIsEmptyQueue(void)
+BOOL GFL_NET_SystemIsEmptyQueue(void)
 {
-    return CommQueueIsEmpty(&_pComm->sendQueueMgr);
+    return GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgr);
 
 }
 
 //==============================================================================
 /**
- * wifiæ¥ç¶šã—ãŸã‹ã©ã†ã‹ã‚’è¨­å®šã™ã‚‹
+ * @brief   wifiÚ‘±‚µ‚½‚©‚Ç‚¤‚©‚ğİ’è‚·‚é
  * @param   none
- * @retval  ã‚³ãƒãƒ³ãƒ‰ãŒåœ¨ã£ãŸã‚‰FALSE
+ * @retval  ƒRƒ}ƒ“ƒh‚ªİ‚Á‚½‚çFALSE
  */
 //==============================================================================
 
-void CommSetWifiConnect(BOOL bConnect)
+void GFL_NET_SystemSetWifiConnect(BOOL bConnect)
 {
-    // é€šä¿¡å¾…æ©ŸçŠ¶æ…‹ã«ã‚ã‚‹ã‹ã©ã†ã‹ã‚’ä¼ãˆã‚‹
+    // ’ÊM‘Ò‹@ó‘Ô‚É‚ ‚é‚©‚Ç‚¤‚©‚ğ“`‚¦‚é
     _pComm->bWifiConnect = bConnect;
 }
 
 //==============================================================================
 /**
- * æˆ¦é—˜ã«å…¥ã‚‹å‰ã®æ•µå‘³æ–¹ã®ç«‹ã¡ä½ç½®ã‚’è¨­å®š
- * @param   no   ç«‹ã£ã¦ã„ãŸä½ç½®ã®ç•ªå·ã«ç›´ã—ãŸã‚‚ã®
- * @param   netID   é€šä¿¡ã®ID
+ * @brief   í“¬‚É“ü‚é‘O‚Ì“G–¡•û‚Ì—§‚¿ˆÊ’u‚ğİ’è
+ * @param   no   —§‚Á‚Ä‚¢‚½ˆÊ’u‚Ì”Ô†‚É’¼‚µ‚½‚à‚Ì
+ * @param   netID   ’ÊM‚ÌID
  * @retval  none
  */
 //==============================================================================
-void CommSetStandNo(int no,int netID)
+void GFL_NET_SystemSetStandNo(int no,int netID)
 {
     if(_pComm){
         _pComm->standNo[netID] = no;
-        OHNO_PRINT("id = %d  ãŒãŸã£ã¦ã‚‹ã¨ã“ã‚ã¯ %d\n",netID,no);
+        OHNO_PRINT("id = %d  ‚ª‚½‚Á‚Ä‚é‚Æ‚±‚ë‚Í %d\n",netID,no);
     }
 }
 
 //==============================================================================
 /**
- * æˆ¦é—˜ã«å…¥ã‚‹å‰ã®æ•µå‘³æ–¹ã®ç«‹ã¡ä½ç½®ã‚’å¾—ã‚‹
- * @param   netID é€šä¿¡ã®ID
- * @retval  ç«‹ã£ã¦ã„ãŸä½ç½®ã®ç•ªå·ã«ç›´ã—ãŸã‚‚ã®  0-3  0,2 vs 1,3
+ * @brief   í“¬‚É“ü‚é‘O‚Ì“G–¡•û‚Ì—§‚¿ˆÊ’u‚ğ“¾‚é
+ * @param   netID ’ÊM‚ÌID
+ * @retval  —§‚Á‚Ä‚¢‚½ˆÊ’u‚Ì”Ô†‚É’¼‚µ‚½‚à‚Ì  0-3  0,2 vs 1,3
  */
 //==============================================================================
-int CommGetStandNo(int netID)
+int GFL_NET_SystemGetStandNo(int netID)
 {
     if(_pComm){
         if(_pComm->standNo[netID] != 0xff){
-            OHNO_PRINT("ç«‹ã¡ä½ç½® %d ã°ã‚“ id%d\n",_pComm->standNo[netID], netID);
+            OHNO_PRINT("—§‚¿ˆÊ’u %d ‚Î‚ñ id%d\n",_pComm->standNo[netID], netID);
             return _pComm->standNo[netID];
         }
     }
@@ -3363,80 +2928,65 @@ int CommGetStandNo(int netID)
 
 //==============================================================================
 /**
- * VCHATçŠ¶æ…‹ã‹ã©ã†ã‹
+ * @brief   VCHATó‘Ô‚©‚Ç‚¤‚©
  * @param   none
- * @retval  VCHATçŠ¶æ…‹ãªã‚‰TRUE
+ * @retval  VCHATó‘Ô‚È‚çTRUE
  */
 //==============================================================================
 
-BOOL CommIsVChat(void)
+BOOL GFL_NET_SystemIsVChat(void)
 {
-    if(CommStateGetServiceNo() < COMM_MODE_BATTLE_SINGLE_WIFI){
-        return FALSE;
-    }
-    return mydwc_IsVChat();
-
-}
-
-//==============================================================================
-/**
- * WIFIé€šä¿¡ã‚’åŒæœŸé€šä¿¡ã™ã‚‹ã‹ã€éåŒæœŸé€šä¿¡ã™ã‚‹ã‹ã®åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†
- * @param   TRUE åŒæœŸ FALSE éåŒæœŸ
- * @retval  none
- */
-//==============================================================================
-
-void CommSetWifiBothNet(BOOL bFlg)
-{
-    if(CommStateGetServiceNo() >= COMM_MODE_BATTLE_SINGLE_WIFI){
-        _pComm->bWifiSendRecv = bFlg;
-        if(bFlg){
-            _pComm->countSendRecv = 0;
-            _pComm->countSendRecvServer[0] = 0;
-            _pComm->countSendRecvServer[1] = 0;
-        }
-        OHNO_PRINT("ooåŒæœŸåˆ‡ã‚Šæ›¿ãˆ %d\n",bFlg);
-    }
-}
-
-//==============================================================================
-/**
- * ã‚­ãƒ¼ã‚’é€ã£ãŸã®ã‹ã©ã†ã‹å¾—ã‚‹
- * @param   TRUE åŒæœŸ FALSE éåŒæœŸ
- * @retval  none
- */
-//==============================================================================
-
-BOOL CommSysIsMoveKey(void)
-{
-    if(_pComm->timSendCond){
-        return TRUE;
+    if( _pComm->device == _DEVICE_WIFI){
+#if 0  // wifi
+        return mydwc_IsVChat();
+#endif
     }
     return FALSE;
 }
 
 //==============================================================================
 /**
- * ã‚¨ãƒ©ãƒ¼ã«ã™ã‚‹å ´åˆTRUE
+ * @brief   WIFI’ÊM‚ğ“¯Šú’ÊM‚·‚é‚©A”ñ“¯Šú’ÊM‚·‚é‚©‚ÌØ‚è‘Ö‚¦‚ğs‚¤
+ * @param   TRUE “¯Šú FALSE ”ñ“¯Šú
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_SystemSetWifiBothNet(BOOL bFlg)
+{
+    if( _pComm->device == _DEVICE_WIFI){
+        _pComm->bWifiSendRecv = bFlg;
+        if(bFlg){
+            _pComm->countSendRecv = 0;
+            _pComm->countSendRecvServer[0] = 0;
+            _pComm->countSendRecvServer[1] = 0;
+        }
+        OHNO_PRINT("oo“¯ŠúØ‚è‘Ö‚¦ %d\n",bFlg);
+    }
+}
+
+//==============================================================================
+/**
+ * @brief   ƒGƒ‰[‚É‚·‚éê‡TRUE
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSetError(void)
+void GFL_NET_SystemSetError(void)
 {
     _pComm->bError=TRUE;
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ã‚’æ­¢ã‚ã‚‹
+ * @brief   ’ÊM‚ğ~‚ß‚é
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemShutdown(void)
+void GFL_NET_SystemSystemShutdown(void)
 {
     if(_pComm){
         _pComm->bShutDown = TRUE;
@@ -3445,26 +2995,26 @@ void CommSystemShutdown(void)
 
 //==============================================================================
 /**
- * ã‚µãƒ¼ãƒãƒ¼å´ã®é€šä¿¡ã‚­ãƒ¥ãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+ * @brief   ƒT[ƒo[‘¤‚Ì’ÊMƒLƒ…[‚ğƒŠƒZƒbƒg‚·‚é
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemResetQueue_Server(void)
+void GFL_NET_SystemSystemResetQueue_Server(void)
 {
-    CommQueueManagerReset(&_pComm->sendQueueMgrServer);
+    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
 }
 
 //==============================================================================
 /**
- * é€šä¿¡ã®å—ä¿¡ã‚’æ­¢ã‚ã‚‹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
- * @param   bFlg  TRUEã§æ­¢ã‚ã‚‹  FALSEã§è¨±å¯
+ * @brief   ’ÊM‚ÌóM‚ğ~‚ß‚éƒtƒ‰ƒO‚ğƒZƒbƒg
+ * @param   bFlg  TRUE‚Å~‚ß‚é  FALSE‚Å‹–‰Â
  * @retval  none
  */
 //==============================================================================
 
-void CommSystemRecvStop(BOOL bFlg)
+void GFL_NET_SystemSystemRecvStop(BOOL bFlg)
 {
     if(_pComm){
         _pComm->bNotRecvCheck = bFlg;

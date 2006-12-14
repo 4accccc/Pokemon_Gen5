@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	comm_command.h
+ * @file	net_command.h
  * @brief	データ共有を行う場合の通信システム
  *          使用する場合に書き込む必要があるものをまとめたヘッダー
  * @author	Katsumi Ohno
@@ -8,8 +8,8 @@
  */
 //=============================================================================
 
-#ifndef __COMM_COMMAND_H__
-#define __COMM_COMMAND_H__
+#ifndef __NET_COMMAND_H__
+#define __NET_COMMAND_H__
 
 
 //==============================================================================
@@ -37,32 +37,27 @@ typedef struct {
 
 /// 汎用通信コマンドの定義
 enum CommCommand_e {
-  CS_NONE = 0xee,                ///< なにもしない
-  CS_FREE = 0,                   ///< 空コマンド
-  CS_COMMAND_MIN = 1,             ///< 最小値
-  CS_EXIT = CS_COMMAND_MIN,            ///< 終了
-  CS_AUTO_EXIT,            ///< 自動終了
-  CS_COMM_INFO,       ///< info情報
-  CS_COMM_INFO_ARRAY,  ///< info情報を投げ返す
-  CS_COMM_INFO_END,   ///< info情報送信終了
-  CS_COMM_NEGOTIATION,  ///< 初期化時のネゴシエーション
-  CS_COMM_NEGOTIATION_RETURN,
-  CS_DEBUG_VARIABLE,         ///< デバッグ用（本番でコマンド番号が変わらないようにこのままおいておく）
-  CS_DEBUG_START,            ///< デバッグ用 バトルスタート
-  CS_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
-  CS_DSMP_CHANGE_REQ,        ///< DSモード通信かMPモード通信かに切り替える指示を出す
-  CS_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
-  CS_COMMAND_THROWOUT,       ///< コマンドを破棄する許可を得る
-  CS_COMMAND_THROWOUT_REQ,   ///< コマンドを破棄する指示を出す
-  CS_COMMAND_THROWOUT_END,   ///< コマンド破棄完了したことを通知-----
-  CS_TIMING_SYNC,            ///< 同期を取るコマンド
-  CS_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
-  CS_TIMING_SYNC_INFO,       ///< 同期の状況を子機に返すコマンド
-  CS_LIST_NO,                ///< DS専用 選択番号を送りあう
-  CS_TOOL_TEMP,              ///< DS専用 汎用データ転送
-  CS_WIFI_EXIT,
+  GFL_NET_CMD_NONE = 0,                ///< なにもしない
+  GFL_NET_CMD_FREE = 0,                   ///< 空コマンド
+  GFL_NET_CMD_COMMAND_MIN = 1,             ///< 最小値
+  GFL_NET_CMD_EXIT = GFL_NET_CMD_COMMAND_MIN,            ///< 終了
+  GFL_NET_CMD_AUTO_EXIT,            ///< 自動終了
+  GFL_NET_CMD_COMM_INFO,       ///< info情報
+  GFL_NET_CMD_COMM_INFO_ARRAY,  ///< info情報を投げ返す
+  GFL_NET_CMD_COMM_INFO_END,   ///< info情報送信終了
+  GFL_NET_CMD_COMM_NEGOTIATION,  ///< 初期化時のネゴシエーション
+  GFL_NET_CMD_COMM_NEGOTIATION_RETURN,
+  GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
+  GFL_NET_CMD_DSMP_CHANGE_REQ,        ///< DSモード通信かMPモード通信かに切り替える指示を出す
+  GFL_NET_CMD_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
+  GFL_NET_CMD_THROWOUT,       ///< コマンドを破棄する許可を得る
+  GFL_NET_CMD_THROWOUT_REQ,   ///< コマンドを破棄する指示を出す
+  GFL_NET_CMD_THROWOUT_END,   ///< コマンド破棄完了したことを通知-----
+  GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド
+  GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
+  GFL_NET_CMD_TIMING_SYNC_INFO,       ///< 同期の状況を子機に返すコマンド
   //------------------------------------------------ここまで----------
-  CS_COMMAND_MAX   // 終端--------------これは移動させないでください     21
+  GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください     21
 };
 
 #define COMM_VARIABLE_SIZE (0xffff)   ///< 可変データ送信であることを示している
@@ -92,5 +87,5 @@ extern void* GFL_NET_CommandCreateBuffStart(int command, int netID, int size);
 extern BOOL GFL_NET_CommandCreateBuffCheck(int command);
 
 
-#endif// __COMM_COMMAND_H__
+#endif// __NET_COMMAND_H__
 

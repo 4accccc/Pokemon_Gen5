@@ -34,6 +34,13 @@
 #endif  // GFL_NET_DEBUG
 #endif  //GFL_NET_PRINT
 // デバッグ用決まり文句----------------------
+// データダンプ
+#ifdef GFL_NET_DEBUG
+extern void CommDump_Debug(u8* adr, int length, char* pInfoStr);
+#define DEBUG_DUMP(a,l,s)  CommDump_Debug(a,l,s)
+#else
+#define DEBUG_DUMP(a,l,s)       ((void) 0)
+#endif
 
 
 // define 

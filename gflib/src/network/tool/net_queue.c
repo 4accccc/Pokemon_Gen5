@@ -27,7 +27,7 @@ static SEND_QUEUE* _freeQueue(SEND_QUEUE_MANAGER* pQueueMgr)
     int i;
 
     for(i = 0;i < pQueueMgr->max; i++){
-        if(pFree->command == CS_FREE){
+        if(pFree->command == GFL_NET_CMD_FREE){
             return pFree;
         }
         pFree++;
@@ -63,7 +63,7 @@ int GFL_NET_QueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr)
     int i,j = 0;
 
     for(i = 0;i < pQueueMgr->max; i++){
-        if(pFree->command != CS_FREE){
+        if(pFree->command != GFL_NET_CMD_FREE){
             j++;
         }
         pFree++;
@@ -368,7 +368,7 @@ BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBu
         bNextPlusFirst = bNextPlus;
     }
     for(i = 0 ; i < pSendBuff->size; i++){
-        *pSendBuff->pData = CS_NONE;
+        *pSendBuff->pData = GFL_NET_CMD_NONE;
         pSendBuff->pData++;
     }
     return TRUE;
@@ -483,7 +483,7 @@ void GFL_NET_QueueDebugTest(void)
     GFL_NET_QueueManagerInitialize(&mgr,3,&sendRing);
 
     // ----- テスト１
-    GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 30, TRUE, TRUE);
+    GFL_NET_QueuePut(&mgr, GFL_NET_CMD_DEBUG_VARIABLE, data1, 30, TRUE, TRUE);
 
     for(i = 0; i < 50; i++){
         if(i < 30){
@@ -505,7 +505,7 @@ void GFL_NET_QueueDebugTest(void)
     GF_ASSERT(buffData.size==-1);
     for(i = 0; i < 100; i++){
         if(i == 0){
-            GF_ASSERT(dummy[i] == CS_DEBUG_VARIABLE);
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_DEBUG_VARIABLE);
         }
         else if(i == 1){
             GF_ASSERT(dummy[i] == 0 && "i=1");
@@ -535,7 +535,7 @@ void GFL_NET_QueueDebugTest(void)
             GF_ASSERT(dummy[i] == 2 && "i < 5");
         }
         else if(i < 25){
-            GF_ASSERT(dummy[i] == CS_NONE && "CS_NONE");
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_NONE && "GFL_NET_CMD_NONE");
         }
         else{
             GF_ASSERT(dummy[i] == 0xff && "i >= 5");
@@ -552,7 +552,7 @@ void GFL_NET_QueueDebugTest(void)
 
     for(i = 0; i < 100; i++){
         if(i < 25){
-            GF_ASSERT(dummy[i] == CS_NONE && "i<25 CS_NONE");
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_NONE && "i<25 GFL_NET_CMD_NONE");
         }
         else{
             GF_ASSERT(dummy[i] == 0xff && "i  all");
@@ -560,27 +560,27 @@ void GFL_NET_QueueDebugTest(void)
     }
 
     // テスト２
-    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, GFL_NET_CMD_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pLast != NULL);
     GF_ASSERT(mgr.fast.pLast == mgr.fast.pTop);
 
-    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data2, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, GFL_NET_CMD_DEBUG_VARIABLE, data2, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pTop->next != NULL);
     GF_ASSERT(mgr.fast.pTop->next->next == NULL);
 
 
-    GF_ASSERT(GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
+    GF_ASSERT(GFL_NET_QueuePut(&mgr, GFL_NET_CMD_DEBUG_VARIABLE, data1, 10, TRUE, FALSE));
 
     GF_ASSERT(mgr.fast.pTop != NULL);
     GF_ASSERT(mgr.fast.pTop->next != NULL);
     GF_ASSERT(mgr.fast.pTop->next->next != NULL);
 
     // これはキューに入らない
-//    GF_ASSERT(!GFL_NET_QueuePut(&mgr, CS_DEBUG_VARIABLE, data1, 10, TRUE, TRUE));
+//    GF_ASSERT(!GFL_NET_QueuePut(&mgr, GFL_NET_CMD_DEBUG_VARIABLE, data1, 10, TRUE, TRUE));
 
 
     buffData.size = 12;
@@ -594,7 +594,7 @@ void GFL_NET_QueueDebugTest(void)
 
     for(i = 0; i < 100; i++){
         if(i == 0){
-            GF_ASSERT(dummy[i] == CS_DEBUG_VARIABLE);
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_DEBUG_VARIABLE);
         }
         else if(i == 1){
             GF_ASSERT(dummy[i] == 0);
@@ -624,7 +624,7 @@ void GFL_NET_QueueDebugTest(void)
             GF_ASSERT(dummy[i] == 2);
         }
         else if(i == 1){
-            GF_ASSERT(dummy[i] == CS_DEBUG_VARIABLE);
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_DEBUG_VARIABLE);
         }
         else if(i == 2){
             GF_ASSERT(dummy[i] == 0);
@@ -656,7 +656,7 @@ void GFL_NET_QueueDebugTest(void)
             GF_ASSERT(dummy[i] == 4);
         }
         else if(i < 4){
-            GF_ASSERT(dummy[i] == CS_NONE);
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_NONE);
         }
         else{
             GF_ASSERT(dummy[i] == 0xff);
@@ -676,7 +676,7 @@ void GFL_NET_QueueDebugTest(void)
 
     for(i = 0; i < 100; i++){
         if(i == 0){
-            GF_ASSERT(dummy[i] == CS_DEBUG_VARIABLE);
+            GF_ASSERT(dummy[i] == GFL_NET_CMD_DEBUG_VARIABLE);
         }
         else if(i == 1){
             GF_ASSERT(dummy[i] == 0);

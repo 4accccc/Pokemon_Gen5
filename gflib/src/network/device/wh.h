@@ -221,24 +221,24 @@ typedef u16 (*WHChildWEPKeyGeneratorFunc) (u16* wepkey, const WMBssDesc* bssDesc
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*WHdisconnectCallBack) (int aid);
 
-extern void HWSetDisconnectCallBack(WHdisconnectCallBack callBack);
+extern void WHSetDisconnectCallBack(WHdisconnectCallBack callBack);
 
-extern void HWSetConnectCallBack(WHdisconnectCallBack callBack);
+extern void WHSetConnectCallBack(WHdisconnectCallBack callBack);
 
 /// 接続確認時に呼ばれるコールバック定義
 typedef BOOL (*WHConnectCheckCallBack) (int aid, void* pData);
 /// 接続確認時に呼ばれるコールバック登録
-extern void HWSetConnectCheckCallBack(WHConnectCheckCallBack callBack);
+extern void WHSetConnectCheckCallBack(WHConnectCheckCallBack callBack);
 
 /// エラー時に呼ばれるコールバック定義
 typedef void (*WHErrorCallBack) (int aid, int errorNo);
 /// エラー時に呼ばれるコールバック登録
-extern void HWSetErrorCallBack(WHErrorCallBack callBack);
+extern void WHSetErrorCallBack(WHErrorCallBack callBack);
 
 /// SSID取得コールバック定義
 typedef u8* (*WHGetSSIDDataCallBack)(void);
 /// SSID取得コールバック登録
-extern void HWSetSSIDGetCallBack(WHGetSSIDDataCallBack callBack);
+extern void WHSetSSIDGetCallBack(WHGetSSIDDataCallBack callBack);
 
 
 
@@ -668,7 +668,7 @@ extern BOOL WHIsSetEntryEnd(void);
 
 extern void WHSetLifeTime(BOOL bMinimum);
 
-extern BOOL HWIsParentBeaconSent(void);
+extern BOOL WHIsParentBeaconSent(void);
 
 extern void WH_ParentDataInit(void);
 

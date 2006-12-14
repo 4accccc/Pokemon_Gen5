@@ -441,12 +441,15 @@ void _receiverFunc(u16 aid, u16 *data, u16 size)
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry)
+BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
 {
     _commInit();
     _parentDataInit(bTGIDChange);
 
     WH_ParentDataInit();
+    
+    WHSetConnectCallBack(pConnectFunc);
+    
     if(!_pCommMP->bSetReceiver){
         WH_SetReceiver(_receiverFunc, _PORT_DATA_CHILD);
       _pCommMP->bSetReceiver = TRUE;
@@ -1002,6 +1005,24 @@ void CommMpProcess(u16 bitmap)
 
 //==============================================================================
 /**
+ * @brief   デバイスが通信可能状態なのかどうかを返す
+ * @param   親子機のnetID
+ * @retval  TRUE  通信可能    FALSE 通信切断
+ */
+//==============================================================================
+BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
+{
+    if(!_pCommMP){
+        return FALSE;
+    }
+    if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+//==============================================================================
+/**
  * @brief   通信可能状態なのかどうかを返す
  * @param   親子機のnetID
  * @retval  TRUE  通信可能    FALSE 通信切断
@@ -1389,7 +1410,7 @@ int CommMPGetServiceNumber(int serviceNo)
 
 BOOL CommMPIsParentBeaconSent(void)
 {
-    return HWIsParentBeaconSent();
+    return WHIsParentBeaconSent();
 }
 
 //------------------------------------------------------
@@ -1445,3 +1466,43 @@ int CommMPGetBConUncacheTime(int index)
 	return _pCommMP->bconUnCatchTime[index];
 }
 
+
+//------------------------------------------------------
+/**
+ * @brief	データ送信する
+ * @param	data	送信データポインタ
+ * @param	size    送信サイズ
+ * @param	callback  送信完了コールバック
+ * @retval  TRUE   送信できそうである
+ * @retval  FALSE  送信できない
+ */
+//------------------------------------------------------
+BOOL GFL_NET_WL_SendData(void* data,int size,PTRSendDataCallback callback)
+{
+    return WH_SendData(data, size,
+                       _PORT_DATA_RETRANSMISSION, callback);
+}
+
+//------------------------------------------------------
+/**
+ * @brief	接続状態をBITMAPで返す
+ * @return  接続状態
+ */
+//------------------------------------------------------
+
+u16 GFL_NET_WL_GetBitmap(void)
+{
+    return WH_GetBitmap();
+}
+
+//------------------------------------------------------
+/**
+ * @brief	自分の接続IDを返す
+ * @return  接続ID
+ */
+//------------------------------------------------------
+
+u16 GFL_NET_WL_GetCurrentAid(void)
+{
+    return WH_GetCurrentAid();
+}

@@ -3856,12 +3856,12 @@ BOOL WHIsSetEntryEnd(void)
 }
 
 /*---------------------------------------------------------------------------*
-  Name:         HWIsParentBeaconSent
+  Name:         WHIsParentBeaconSent
   Description:  ビーコンを投げ終わった時にTRUEになります
   Returns:      both
  *---------------------------------------------------------------------------*/
 
-BOOL HWIsParentBeaconSent(void)
+BOOL WHIsParentBeaconSent(void)
 {
     if(_pWmInfo){
         return (_pWmInfo->stateBeaconSentNum >= 6);
@@ -3913,24 +3913,24 @@ void WHSetGGIDScanCallback(fGGIDCallBack callback)
 #endif
 
 /*---------------------------------------------------------------------------*
-  Name:         HWSetDisconnectCallBack
+  Name:         WHSetDisconnectCallBack
   Description:  接続が切れた際に呼ばれるコールバック関数登録
   Arguments:    コールバック
   Returns:      none
  *---------------------------------------------------------------------------*/
-void HWSetDisconnectCallBack(WHdisconnectCallBack callBack)
+void WHSetDisconnectCallBack(WHdisconnectCallBack callBack)
 {
     _pWmInfo->disconnectCallBack = callBack;
 }
 
 /*---------------------------------------------------------------------------*
-  Name:         HWSetConnectCallBack
+  Name:         WHSetConnectCallBack
   Description:  子機接続時のコールバック登録関数
   Arguments:    callBack コールバック関数
   Returns:      none
  *---------------------------------------------------------------------------*/
 
-void HWSetConnectCallBack(WHdisconnectCallBack callBack)
+void WHSetConnectCallBack(WHdisconnectCallBack callBack)
 {
     _pWmInfo->connectCallBack = callBack;
 }

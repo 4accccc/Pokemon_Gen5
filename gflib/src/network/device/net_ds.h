@@ -7,8 +7,18 @@
  */
 //=============================================================================
 
+
 #ifndef __NET_DS_H__
 #define __NET_DS_H__
+
+
+/// 接続や非接続時に呼ばれるコールバック定義
+typedef void (*GFL_NET_ConnectionCallBack) (int aid);
+
+
+extern BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID);
+
+
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
@@ -99,7 +109,7 @@ extern void _receiverFunc(u16 aid, u16 *data, u16 size);
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry);
+extern BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc );
 //==============================================================================
 /**
  * @brief   子機の接続開始を行う
@@ -411,6 +421,13 @@ extern void* CommMPGetMyGFBss(void);
  */
 //------------------------------------------------------
 extern int CommMPGetBConUncacheTime(int index);
+
+extern BOOL GFL_NET_WL_SendData(void* data,int size,PTRSendDataCallback callback);
+
+extern u16 GFL_NET_WL_GetBitmap(void);
+
+extern u16 GFL_NET_WL_GetCurrentAid(void);
+
 
 #endif  //__NET_DS_H__
 

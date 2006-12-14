@@ -72,7 +72,7 @@ void GFL_NET_TOOL_sysEnd(NET_TOOLSYS* pCT)
 
 //==============================================================================
 /**
- * @brief  タイミングコマンドを受信した   CS_TIMING_SYNC
+ * @brief  タイミングコマンドを受信した   GFL_NET_CMD_TIMING_SYNC
  * @param[in]   netID  通信発信者ID
  * @param[in]   size   受信データサイズ
  * @param[in]   pData  受信データポインタ
@@ -111,7 +111,7 @@ void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const void* pD
 
 //==============================================================================
 /**
- * @brief   タイミングコマンドENDを受信した   CS_TIMING_SYNC_END
+ * @brief   タイミングコマンドENDを受信した   GFL_NET_CMD_TIMING_SYNC_END
  * @param[in]   netID  通信発信者ID
  * @param[in]   size   受信データサイズ
  * @param[in]   pData  受信データポインタ
@@ -167,12 +167,12 @@ void CommTimingSyncSend(GFL_NETHANDLE* pNet)
     }
     
     if(pCT->timingSendM){
-        if(GFL_NET_SendData(pNet, CS_TIMING_SYNC, &pCT->timingSyncMy)){
+        if(GFL_NET_SendData(pNet, GFL_NET_CMD_TIMING_SYNC, &pCT->timingSyncMy)){
             pCT->timingSendM = FALSE;
         }
     }
     if(pCT->timingSendE){
-        if(GFL_NET_SendData(pNet, CS_TIMING_SYNC_END, &pCT->timingSyncMy)){
+        if(GFL_NET_SendData(pNet, GFL_NET_CMD_TIMING_SYNC_END, &pCT->timingSyncMy)){
             pCT->timingSendE = FALSE;
         }
     }
