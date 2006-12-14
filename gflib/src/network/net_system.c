@@ -17,7 +17,7 @@
 
 #include "net.h"
 #include "net_def.h"
-#include "device/net_ds.h"
+#include "device/net_wireless.h"
 #include "net_system.h"
 #include "net_command.h"
 

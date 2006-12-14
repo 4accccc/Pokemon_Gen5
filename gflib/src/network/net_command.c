@@ -10,6 +10,7 @@
 #include "gflib.h"
 #include "net.h"
 #include "net_def.h"
+#include "net_system.h"
 #include "net_command.h"
 
 //==============================================================================

@@ -33,7 +33,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c \
                     network/tool/net_queue.c \
                     network/tool/net_tool.c \
 					network/device/wh.c \
-					network/device/net_ds.c \
+					network/device/net_wireless.c \
 					network/net_system.c \
 					standard/gf_standard.c \
 					calctool.c \
