@@ -71,9 +71,8 @@ static const struct {
 	{  ' ',   h_spc_ },
 	{  '\n',  CR_ },
 	{  '?',   hate_ },
-	{  '_',   uber_ },
 	{  '=',   equal_ },
-	{  '/',   sura_ },
+	{  '_',   uber_ },
 	{  '[',   kakukako_ },
 	{  ']',   kakukakot_ },
 	{  '@',   atmark_ },
@@ -88,7 +87,7 @@ static STRCODE convert1( const unsigned char sjisCode )
 	if((sjisCode >= 'a') && (sjisCode <= 'z' ))		return a__ + (sjisCode - 'a');
 	if((sjisCode >= 'A') && (sjisCode <= 'Z' ))		return A__ + (sjisCode - 'A');
 	if((sjisCode >= '0') && (sjisCode <= '9' ))		return h_n0_ + (sjisCode - '0');
-	if((sjisCode >= '!') && (sjisCode <= '.' ))		return gyoe_ + (sjisCode - '!');
+	if((sjisCode >= '!') && (sjisCode <= '/' ))		return gyoe_ + (sjisCode - '!');
 	{
 		int i;
 
