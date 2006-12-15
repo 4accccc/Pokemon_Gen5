@@ -69,7 +69,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_TEXT_Print
-		( STRBUF* text, GFL_TEXT_PRINTPARAM* param );
+		( const STRBUF* text, GFL_TEXT_PRINTPARAM* param );
 
 //------------------------------------------------------------------
 /**
@@ -81,7 +81,19 @@ void
 //------------------------------------------------------------------
 void
 	GFL_TEXT_PrintCode
-		( STRCODE* textcode, GFL_TEXT_PRINTPARAM* param );
+		( const STRCODE* textcode, GFL_TEXT_PRINTPARAM* param );
+
+//------------------------------------------------------------------
+/**
+ * ビットマップの内部CGX領域に文字を描画する(SjisCode)
+ *
+ * @param   textcode	文字列
+ * @param   param		描画用パラメータ
+ */
+//------------------------------------------------------------------
+void
+	GFL_TEXT_PrintSjisCode
+		( const char* textcode, GFL_TEXT_PRINTPARAM* param );
 
 #endif
 
