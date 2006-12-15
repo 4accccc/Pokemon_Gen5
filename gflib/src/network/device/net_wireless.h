@@ -8,15 +8,14 @@
 //=============================================================================
 
 
-#ifndef __NET_DS_H__
-#define __NET_DS_H__
+#ifndef __NET_WIRELESS_H__
+#define __NET_WIRELESS_H__
 
 
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*GFL_NET_ConnectionCallBack) (int aid);
 
-
-extern BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID);
+typedef struct _WM_INFO_STRUCT  GFL_NETWM;
 
 
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
@@ -27,89 +26,61 @@ extern BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID);
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void* CommMPInitialize(int heapID, GameServiceID serviceNo, u8 num);
+extern void* GFL_NET_WLInitialize(int heapID, GameServiceID serviceNo, u8 num);
 //==============================================================================
 /**
- * @brief   接続しているかどうか (削除予定)
- * @param   none
+ * @brief   接続しているかどうか
  * @retval  TRUE  接続している
  */
 //==============================================================================
-extern BOOL CommMPIsConnect(void);
+extern BOOL GFL_NET_WLIsConnect(GFL_NETWL* pNetWL);
 //==============================================================================
 /**
  * @brief   WVRをVRAMDに移動
- * @param   none
  * @retval  none
  */
 //==============================================================================
-extern void CommVRAMDInitialize(void);
+extern void GFL_NET_WLVRAMDInitialize(void);
 //==============================================================================
 /**
  * @brief   WVRをVRAMDに移動し終わったら1
- * @param   none
  * @retval  none
  */
 //==============================================================================
-extern BOOL CommIsVRAMDInitialize(void);
+extern BOOL GFL_NET_WLIsVRAMDInitialize(void);
 //==============================================================================
 /**
  * @brief   WVRをVRAMDに移動しはじめたら１
- * @param   none
  * @retval  none
  */
 //==============================================================================
-extern BOOL CommIsVRAMDStart(void);
+extern BOOL GFL_NET_WLIsVRAMDStart(void);
 //==============================================================================
 /**
  * @brief   イクニューモン開放
- * @param   none
  * @retval  none
  */
 //==============================================================================
-extern void CommVRAMDFinalize(void);
+extern void GFL_NET_WLVRAMDFinalize(void);
 //==============================================================================
 /**
  * @brief   子機の使用しているデータの初期化
- * @param   bssdesc   グループ情報
  * @retval  none
  */
 //==============================================================================
-extern void ChildBconDataInit(void);
-//==============================================================================
-/**
- * @brief   通信ライブラリに必要なワークサイズを返す
- * @param   none
- * @retval  ワークサイズ
- */
-//==============================================================================
-extern u32 CommGetWorkSize(void);
-//==============================================================================
-/**
- * @brief   受信コールバック
- * @param   work_area 　システムで使うメモリー領域
- *                      NULLの場合すでに初期化済みとして動作
- * @param   serviceNo     ゲームの種類
- * @param   regulationNo  ゲームの種類
- * @param   bTGIDChange  新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
- * @param   size 受信サイズ
- * @retval  none
- */
-//==============================================================================
-extern void _receiverFunc(u16 aid, u16 *data, u16 size);
+extern void GFL_NET_WLChildBconDataInit(void);
 //==============================================================================
 /**
  * @brief   親機の接続開始を行う
- * @param   work_area 　システムで使うメモリー領域
- *                      NULLの場合すでに初期化済みとして動作
- * @param   serviceNo     ゲームの種類
- * @param   regulationNo  ゲームの種類
+ * @param   bAlloc       allocするかどうか
+ * @param   bTGIDChange  TGIDを変更するかどうか
+ * @param   bEntry       
  * @param   bTGIDChange  新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
  * @param  子機を受け付けるかどうか
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc );
+extern BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc );
 //==============================================================================
 /**
  * @brief   子機の接続開始を行う
@@ -121,7 +92,7 @@ extern BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL CommMPChildInit(BOOL bAlloc, BOOL bBconInit);
+extern BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit);
 //==============================================================================
 /**
  * @brief   通信切り替えを行う（親子反転に必要な処理）
@@ -129,7 +100,7 @@ extern BOOL CommMPChildInit(BOOL bAlloc, BOOL bBconInit);
  * @retval  リセットしたらTRUE
  */
 //==============================================================================
-extern BOOL CommMPSwitchParentChild(void);
+extern BOOL GFL_NET_WLSwitchParentChild(void);
 //==============================================================================
 /**
  * @brief   通信切断を行う  ここではあくまで通信終了手続きに入るだけ
@@ -138,7 +109,7 @@ extern BOOL CommMPSwitchParentChild(void);
  * @retval  終了処理に移った場合TRUE
  */
 //==============================================================================
-extern BOOL CommMPFinalize(void);
+extern BOOL GFL_NET_WLFinalize(void);
 //==============================================================================
 /**
  * @brief   通信切断を行う  ただしメモリー開放を行わない
@@ -146,7 +117,7 @@ extern BOOL CommMPFinalize(void);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPStealth(BOOL bStalth);
+extern void GFL_NET_WLStealth(BOOL bStalth);
 //==============================================================================
 /**
  * @brief   探すことができた親の数を返す
@@ -154,7 +125,7 @@ extern void CommMPStealth(BOOL bStalth);
  * @retval  親機の数
  */
 //==============================================================================
-extern int CommMPGetParentCount(void);
+extern int GFL_NET_WLGetParentCount(void);
 //--------------------------------------------------------------
 /**
  * @brief   BmpListの位置からBconの存在するIndex位置を取得する
@@ -170,7 +141,7 @@ extern int CommBmpListPosBconIndexGet(int index);
  * @retval  親機リストに変化があった場合TRUE なければFALSE
  */
 //==============================================================================
-extern BOOL CommMPIsScanListChange(void);
+extern BOOL GFL_NET_WLIsScanListChange(void);
 //==============================================================================
 /**
  * @brief   親機の変化を知らせるフラグをリセットする
@@ -178,7 +149,7 @@ extern BOOL CommMPIsScanListChange(void);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPResetScanChangeFlag(void);
+extern void GFL_NET_WLResetScanChangeFlag(void);
 //==============================================================================
 /**
  * @brief   この親機がいくつとコネクションをもっているのかを得る
@@ -186,7 +157,7 @@ extern void CommMPResetScanChangeFlag(void);
  * @retval  コネクション数 0-16
  */
 //==============================================================================
-extern int CommMPGetParentConnectionNum(int index);
+extern int GFL_NET_WLGetParentConnectionNum(int index);
 //==============================================================================
 /**
  * @brief   すぐに接続していい人が見つかった場合indexを返す
@@ -194,7 +165,7 @@ extern int CommMPGetParentConnectionNum(int index);
  * @retval  該当したらindexを返す
  */
 //==============================================================================
-extern int CommMPGetFastConnectIndex(void);
+extern int GFL_NET_WLGetFastConnectIndex(void);
 //==============================================================================
 /**
  * @brief   次のレベルで繋いでいい人がいたらそのindexを返します
@@ -202,7 +173,7 @@ extern int CommMPGetFastConnectIndex(void);
  * @retval  該当したらindexを返す
  */
 //==============================================================================
-extern int CommMPGetNextConnectIndex(void);
+extern int GFL_NET_WLGetNextConnectIndex(void);
 //==============================================================================
 /**
  * @brief   子機　MP状態で接続
@@ -210,7 +181,7 @@ extern int CommMPGetNextConnectIndex(void);
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-extern BOOL CommMPChildIndexConnect(u16 index);
+extern BOOL GFL_NET_WLChildIndexConnect(u16 index);
 //==============================================================================
 /**
  * @brief   ビーコンデータの定期確認
@@ -219,7 +190,7 @@ extern BOOL CommMPChildIndexConnect(u16 index);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPParentBconCheck(void);
+extern void GFL_NET_WLParentBconCheck(void);
 //==============================================================================
 /**
  * @brief   通信ライブラリー内部の状態を見て、処理をする関数
@@ -232,12 +203,20 @@ extern void CommMPParentBconCheck(void);
 extern void CommMpProcess(u16 bitmap);
 //==============================================================================
 /**
+ * @brief   デバイスが通信可能状態なのかどうかを返す
+ * @param   親子機のnetID
+ * @retval  TRUE  通信可能    FALSE 通信切断
+ */
+//==============================================================================
+extern BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID);
+//==============================================================================
+/**
  * @brief  通信切断モードにはいったかどうか
  * @param   none
  * @retval  接続人数
  */
 //==============================================================================
-extern BOOL CommMPIsConnectStalth(void);
+extern BOOL GFL_NET_WLIsConnectStalth(void);
 //==============================================================================
 /**
  * @brief  初期化しているかどうかを返す
@@ -245,7 +224,7 @@ extern BOOL CommMPIsConnectStalth(void);
  * @retval  初期が終わっていたらTRUE
  */
 //==============================================================================
-extern BOOL CommMPIsInitialize(void);
+extern BOOL GFL_NET_WLIsInitialize(void);
 //==============================================================================
 /**
  * @brief  WHライブラリで　状態がIDLEになっているか確認する
@@ -253,7 +232,7 @@ extern BOOL CommMPIsInitialize(void);
  * @retval  IDLEになっている=TRUE
  */
 //==============================================================================
-extern BOOL CommMPIsStateIdle(void);
+extern BOOL GFL_NET_WLIsStateIdle(void);
 //==============================================================================
 /**
  * @brief  WHライブラリで　通信状態のBITを確認  子機がつながっているかどうか
@@ -261,7 +240,7 @@ extern BOOL CommMPIsStateIdle(void);
  * @retval  つながったらTRUE
  */
 //==============================================================================
-extern BOOL CommMPIsChildsConnecting(void);
+extern BOOL GFL_NET_WLIsChildsConnecting(void);
 //==============================================================================
 /**
  * @brief  親機が落ちたかどうか
@@ -269,7 +248,7 @@ extern BOOL CommMPIsChildsConnecting(void);
  * @retval  落ちた場合TRUE
  */
 //==============================================================================
-extern BOOL CommMPParentDisconnect(void);
+extern BOOL GFL_NET_WLParentDisconnect(void);
 //==============================================================================
 /**
  * @brief  エラー状態かどうか
@@ -277,7 +256,7 @@ extern BOOL CommMPParentDisconnect(void);
  * @retval  エラーの時TRUE
  */
 //==============================================================================
-extern BOOL CommMPIsError(void);
+extern BOOL GFL_NET_WLIsError(void);
 //==============================================================================
 /**
  * @brief  子機がいないのをエラー扱いにするかどうかをSET
@@ -285,7 +264,7 @@ extern BOOL CommMPIsError(void);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPSetNoChildError(BOOL bOn);
+extern void GFL_NET_WLSetNoChildError(BOOL bOn);
 //==============================================================================
 /**
  * @brief 誰かが落ちたのをエラー扱いにするかどうかをSET
@@ -293,7 +272,7 @@ extern void CommMPSetNoChildError(BOOL bOn);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPSetDisconnectOtherError(BOOL bOn);
+extern void GFL_NET_WLSetDisconnectOtherError(BOOL bOn);
 //==============================================================================
 /**
  * @brief   サービス番号に対応したビーコン間隔を得ます
@@ -310,7 +289,7 @@ extern u16 _getServiceBeaconPeriod(u16 serviceNo);
  * @retval   WMBssDesc*  ビーコンバッファポインタ
  */
 //==============================================================================
-extern WMBssDesc* CommMPGetWMBssDesc(int index);
+extern WMBssDesc* GFL_NET_WLGetWMBssDesc(int index);
 //==============================================================================
 /**
  * @brief   GFビーコンデータを得る
@@ -318,7 +297,7 @@ extern WMBssDesc* CommMPGetWMBssDesc(int index);
  * @retval   GF_BSS_DATA_INFO*  ビーコンバッファポインタ
  */
 //==============================================================================
-extern void* CommMPGetGFBss(int index);
+extern void* GFL_NET_WLGetGFBss(int index);
 //==============================================================================
 /**
  * @brief    ビーコンデータを消す
@@ -326,7 +305,7 @@ extern void* CommMPGetGFBss(int index);
  * @retval   none
  */
 //==============================================================================
-extern void CommMPResetWMBssDesc(int index);
+extern void GFL_NET_WLResetWMBssDesc(int index);
 //==============================================================================
 /**
  * @brief    ビーコンデータを消す
@@ -334,7 +313,17 @@ extern void CommMPResetWMBssDesc(int index);
  * @retval   none
  */
 //==============================================================================
-extern void CommMPResetGFBss(int index);
+extern void GFL_NET_WLResetGFBss(int index);
+//==============================================================================
+/**
+ * @brief   User定義のビーコンデータを得る
+ * @param   index ビーコンバッファに対するindex
+ * @retval   GF_BSS_DATA_INFO*  ビーコンバッファポインタ
+ */
+//==============================================================================
+
+extern void* GFL_NET_WLGetUserBss(int index);
+
 //==============================================================================
 /**
  * @brief   macアドレスをバックアップする
@@ -342,7 +331,7 @@ extern void CommMPResetGFBss(int index);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPSetBackupMacAddress(u8* pMac, int netID);
+extern void GFL_NET_WLSetBackupMacAddress(u8* pMac, int netID);
 //==============================================================================
 /**
  * @brief   自動切断モードに入ったかどうかを返す
@@ -350,7 +339,7 @@ extern void CommMPSetBackupMacAddress(u8* pMac, int netID);
  * @retval  入っているならばTRUE
  */
 //==============================================================================
-extern BOOL CommMPIsAutoExit(void);
+extern BOOL GFL_NET_WLIsAutoExit(void);
 //==============================================================================
 /**
  * @brief   自動切断モードON
@@ -358,15 +347,14 @@ extern BOOL CommMPIsAutoExit(void);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPSetAutoExit(void);
+extern void GFL_NET_WLSetAutoExit(void);
 //==============================================================================
 /**
  * @brief   ビーコンデータに現在の状況を反映させる
- * @param   none
  * @retval  none
  */
 //==============================================================================
-extern void CommMPFlashMyBss(void);
+extern void GFL_NET_WLFlashMyBss(void);
 //==============================================================================
 /**
  * @brief   ライフタイムを小さくする または元に戻す
@@ -374,7 +362,7 @@ extern void CommMPFlashMyBss(void);
  * @retval  none
  */
 //==============================================================================
-extern void CommMPSetLifeTime(BOOL bMinimum);
+extern void GFL_NET_WLSetLifeTime(BOOL bMinimum);
 //------------------------------------------------------
 /**
  * @brief   サービス番号のビーコン数を返します
@@ -382,30 +370,28 @@ extern void CommMPSetLifeTime(BOOL bMinimum);
  * @retval  利用者数
  */
 //------------------------------------------------------
-extern int CommMPGetServiceNumber(int serviceNo);
+extern int GFL_NET_WLGetServiceNumber(int serviceNo);
 //------------------------------------------------------
 /**
  * @brief   親機が一回でもビーコンを送信し終わったかどうか
- * @param   none
  * @retval  送信完了=TRUE
  */
 //------------------------------------------------------
-extern BOOL CommMPIsParentBeaconSent(void);
+extern BOOL GFL_NET_WLIsParentBeaconSent(void);
 //------------------------------------------------------
 /**
  * @brief   スキャン状態かどうか
- * @param   none
  * @retval  送信完了=TRUE
  */
 //------------------------------------------------------
-extern BOOL CommMPIsChildStateScan(void);
+extern BOOL GFL_NET_WLIsChildStateScan(void);
 //------------------------------------------------------
 /**
  * @brief   チャンネルを返す
  * @retval  接続チャンネル
  */
 //------------------------------------------------------
-extern int CommMPGetChannel(void);
+extern int GFL_NET_WLGetChannel(void);
 //==============================================================================
 /**
  * @brief	自機ビーコン送信内容の取得
@@ -413,21 +399,47 @@ extern int CommMPGetChannel(void);
  * @return ビーコンの中身
  */
 //==============================================================================
-extern void* CommMPGetMyGFBss(void);
+extern void* GFL_NET_WLGetMyGFBss(void);
 //------------------------------------------------------
 /**
  * @brief	ビーコンを拾ってからのカウントダウンタイマ取得
  * @param	index	位置
  */
 //------------------------------------------------------
-extern int CommMPGetBConUncacheTime(int index);
-
+extern int GFL_NET_WLGetBConUncacheTime(int index);
+//------------------------------------------------------
+/**
+ * @brief	データ送信する
+ * @param	data	送信データポインタ
+ * @param	size    送信サイズ
+ * @param	callback  送信完了コールバック
+ * @retval  TRUE   送信できそうである
+ * @retval  FALSE  送信できない
+ */
+//------------------------------------------------------
 extern BOOL GFL_NET_WL_SendData(void* data,int size,PTRSendDataCallback callback);
-
+//------------------------------------------------------
+/**
+ * @brief	接続状態をBITMAPで返す
+ * @return  接続状態
+ */
+//------------------------------------------------------
 extern u16 GFL_NET_WL_GetBitmap(void);
-
+//------------------------------------------------------
+/**
+ * @brief	自分の接続IDを返す
+ * @return  接続ID
+ */
+//------------------------------------------------------
 extern u16 GFL_NET_WL_GetCurrentAid(void);
+//------------------------------------------------------
+/**
+ * @brief	WHのワークポインタを返す
+ * @return  GFL_NETWMのポインタ
+ */
+//------------------------------------------------------
+extern GFL_NETWM* _GFL_NET_WLGetNETWH(void);
 
 
-#endif  //__NET_DS_H__
+#endif  //__NET_WIRELESS_H__
 

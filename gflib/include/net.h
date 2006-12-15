@@ -133,19 +133,18 @@ typedef struct{
 /**
  * @brief 通信初期化
  * @param[in]   NetInitializeStruct*  pNetInit  通信初期化構造体のポインタ
- * @retval  GFL_NETSYS 通信システムのポインタ
+ * @retval  none
  */
 //==============================================================================
-extern GFL_NETSYS* GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit);
+extern void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID);
 
 //==============================================================================
 /**
  * @brief  通信終了
- * @param[in,out]   pNetSYS     通信システムのポインタ
  * @retval  void
  */
 //==============================================================================
-extern void GFL_NET_Finalize(GFL_NETSYS* pNetSYS);
+extern BOOL GFL_NET_Finalize(void);
 
 //-----ビーコン関連
 //==============================================================================
@@ -390,6 +389,7 @@ extern void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
  */
 //==============================================================================
 extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
+
 
 
 #endif // __NET_H__

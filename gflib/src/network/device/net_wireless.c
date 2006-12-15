@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	net_ds.c
+ * @file	net_wireless.c
  * @brief	DSのデバイスへのアクセスをラップする関数
  * @author	Katsumi Ohno
  * @date    2006.01.25
@@ -68,7 +68,7 @@ typedef enum{    // 切断状態
 
 
 //管理構造体定義
-typedef struct{
+struct _NET_WL_WORK{
     PTRCommRecvLocalFunc recvCallback; ///< 受信コールバック解決用
     NetBeaconCompFunc beaconCompFunc;  ///< ビーコンの比較を行うコールバック
     NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
@@ -77,6 +77,7 @@ typedef struct{
     u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
     u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
+    int heapID;
     u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
   //  u8 regulationNo;   ///< ゲームレギュレーション
     GameServiceID serviceNo;
@@ -97,14 +98,14 @@ typedef struct{
     u8 bAutoExit:1;
     u8 bEntry:1;   // 子機の新規参入
 //    u8 bStalth:1;
-} _COMM_WORK;
+} ;
 
 //==============================================================================
 // ワーク
 //==============================================================================
 
 ///< ワーク構造体のポインタ
-static _COMM_WORK* _pCommMP = NULL;
+////static _COMM_WORK* _pCommMP = NULL;
 
 // 親機になる場合のTGID 構造体に入れていないのは
 // 通信ライブラリーを切ったとしてもインクリメントしたいため
@@ -120,10 +121,10 @@ static volatile int   startCheck;
 // static宣言
 //==============================================================================
 
-static void _whInitialize(void);
+static void _whInitialize(int heapID,GFL_NETWL* pNetWL);
 static void _childDataInit(void);
 static void _parentDataInit(BOOL bTGIDChange);
-static void _commInit(void);
+static void _commInit(GFL_NETWL* pNetWL);
 static void _setUserGameInfo( void );
 static BOOL _isMachBackupMacAddress(u8* pMac);
 static u16 _getServiceBeaconPeriod(u16 serviceNo);
@@ -141,32 +142,34 @@ static int _connectNum(void);
  */
 //==============================================================================
 
-void* CommMPInitialize(int heapID, GameServiceID serviceNo, u8 num)
+void* GFL_NET_WLInitialize(int heapID, GameServiceID serviceNo, u8 num)
 {
     int i;
-    _COMM_WORK* pCommMP = NULL;
+    GFL_NETWL* pNetWL = NULL;
     
-    pCommMP = (_COMM_WORK*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK));
-    MI_CpuClear8(pCommMP, sizeof(_COMM_WORK));
-    pCommMP->_pWHWork = GFL_HEAP_AllocMemory(heapID, WH_GetHeapSize());
-    MI_CpuClear8(_pCommMP->_pWHWork, WH_GetHeapSize());
-    pCommMP->ggid = _DP_GGID;
-    pCommMP->serviceNo = serviceNo;
-    _pCommMP->maxConnectNum = num;
+    pNetWL = (GFL_NETWL*)GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWL));
+    MI_CpuClear8(pNetWL, sizeof(GFL_NETWL));
+    pNetWL->heapID = heapID;
+    pNetWL->ggid = _DP_GGID;
+    pNetWL->serviceNo = serviceNo;
+    pNetWL->maxConnectNum = num;
     // 無線ライブラリ駆動開始
-    _whInitialize();
-    return pCommMP;
+    _whInitialize(heapID, pNetWL);
+    return pNetWL;
 }
 
 //==============================================================================
 /**
- * @brief   接続しているかどうか (削除予定)
+ * @brief   接続しているかどうか
  * @retval  TRUE  接続している
  */
 //==============================================================================
 
-BOOL CommMPIsConnect(void)
+BOOL GFL_NET_WLIsConnect(GFL_NETWL* pNetWL)
 {
+    if(pNetWL==NULL){
+        return FALSE;
+    }
     return TRUE;
 }
 
@@ -190,34 +193,36 @@ static void _scanCallback(WMBssDesc *bssdesc)
 {
     int i;
     _GF_BSS_DATA_INFO* pGF;
-    int serviceNo = _pCommMP->serviceNo;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    
+    int serviceNo = pNetWL->serviceNo;
 
     // catchした親データ
     pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
     if(pGF->pause){
         return;  // ポーズ中の親機はBEACON無視
     }
-    if(FALSE == _pCommMP->beaconCompFunc(serviceNo, pGF->serviceNo)){
+    if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
         return;   // サービスが異なる場合は拾わない
     }
     
     // このループは同じものなのかどうか検査
     for (i = 0; i < SCAN_PARENT_COUNT_MAX; ++i) {
-        if(_pCommMP->bconUnCatchTime[i] == 0 ){
+        if(pNetWL->bconUnCatchTime[i] == 0 ){
             // 親機情報が入っていない場合continue
             continue;
         }
-        if (GFL_STD_MemComp(_pCommMP->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
+        if (GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
             // もう一度拾った場合にタイマー加算
-            _pCommMP->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
+            pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
             // 新しい親情報を保存しておく。
-            MI_CpuCopy8( bssdesc, &_pCommMP->sBssDesc[i], sizeof(WMBssDesc));
+            MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));
             return;
         }
     }
     // このループは空きがあるかどうか検査
     for (i = 0; i < SCAN_PARENT_COUNT_MAX; ++i) {
-        if(_pCommMP->bconUnCatchTime[i] == 0 ){
+        if(pNetWL->bconUnCatchTime[i] == 0 ){
             // 親機情報が入っていない場合break;
             break;
         }
@@ -227,9 +232,9 @@ static void _scanCallback(WMBssDesc *bssdesc)
         return;
     }
     // 新しい親情報を保存しておく。
-    _pCommMP->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
-    MI_CpuCopy8( bssdesc, &_pCommMP->sBssDesc[i],sizeof(WMBssDesc));
-    _pCommMP->bScanCallBack = TRUE;
+    pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
+    MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i],sizeof(WMBssDesc));
+    pNetWL->bScanCallBack = TRUE;
 }
 
 //------------------------------------------------------------------
@@ -272,7 +277,7 @@ static void _endCallback(void *arg, WVRResult result)
  */
 //==============================================================================
 
-void CommVRAMDInitialize(void)
+void GFL_NET_WLVRAMDInitialize(void)
 {
     //************************************
 //	GX_DisableBankForTex();			// テクスチャイメージ
@@ -296,7 +301,7 @@ void CommVRAMDInitialize(void)
  */
 //==============================================================================
 
-BOOL CommIsVRAMDInitialize(void)
+BOOL GFL_NET_WLIsVRAMDInitialize(void)
 {
     return (startCheck==2);
 }
@@ -308,7 +313,7 @@ BOOL CommIsVRAMDInitialize(void)
  */
 //==============================================================================
 
-BOOL CommIsVRAMDStart(void)
+BOOL GFL_NET_WLIsVRAMDStart(void)
 {
     return (startCheck!=0);
 }
@@ -320,7 +325,7 @@ BOOL CommIsVRAMDStart(void)
  */
 //==============================================================================
 
-void CommVRAMDFinalize(void)
+void GFL_NET_WLVRAMDFinalize(void)
 {
     OHNO_PRINT("VRAMD Finalize\n");
     WVR_TerminateAsync(_endCallback,NULL);  // イクニューモン切断
@@ -334,20 +339,13 @@ void CommVRAMDFinalize(void)
  */
 //==============================================================================
 
-static void _whInitialize(void)
+static void _whInitialize(int heapID, GFL_NETWL* pNetWL)
 {
     // 無線初期化
-    {
-        u32 addr = (u32)_pCommMP->_pWHWork;
-        addr = 32 - (addr % 32) + addr;   //32byteアライメント
-        (void)WH_Initialize((void*)addr);
-    }
+    pNetWL->_pWHWork = WH_Initialize(heapID, pNetWL->_pWHWork);
 
     // WH 初期設定
-    WH_SetGgid(_pCommMP->ggid);
-
-    // WEP Key の種用の乱数生成機の初期化
-//    CommRandSeedInitialize(&_pCommMP->sRand);
+    WH_SetGgid(pNetWL->ggid);
 }
 
 //==============================================================================
@@ -357,14 +355,15 @@ static void _whInitialize(void)
  */
 //==============================================================================
 
-void ChildBconDataInit(void)
+void GFL_NET_WLChildBconDataInit(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int i;
 
     for (i = 0; i < SCAN_PARENT_COUNT_MAX; ++i) {
-        _pCommMP->bconUnCatchTime[i] = 0;
+        pNetWL->bconUnCatchTime[i] = 0;
     }
-    MI_CpuClear8(_pCommMP->sBssDesc,sizeof(WMBssDesc)*SCAN_PARENT_COUNT_MAX);
+    MI_CpuClear8(pNetWL->sBssDesc,sizeof(WMBssDesc)*SCAN_PARENT_COUNT_MAX);
 }
 
 //==============================================================================
@@ -377,7 +376,8 @@ void ChildBconDataInit(void)
 
 static void _parentDataInit(BOOL bTGIDChange)
 {
-    _pCommMP->bTGIDChange = bTGIDChange;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    pNetWL->bTGIDChange = bTGIDChange;
 }
 
 //==============================================================================
@@ -387,33 +387,21 @@ static void _parentDataInit(BOOL bTGIDChange)
  */
 //==============================================================================
 
-static void _commInit(void)
+static void _commInit(GFL_NETWL* pNetWL)
 {
-    _pCommMP->bScanCallBack = FALSE;
-    _pCommMP->bErrorState = FALSE;
-    _pCommMP->bErrorNoChild = FALSE;
+    pNetWL->bScanCallBack = FALSE;
+    pNetWL->bErrorState = FALSE;
+    pNetWL->bErrorNoChild = FALSE;
     
-    _pCommMP->disconnectType = _DISCONNECT_NONE;
-    _pCommMP->bAutoExit = FALSE;
-    _pCommMP->bEndScan = 0;
+    pNetWL->disconnectType = _DISCONNECT_NONE;
+    pNetWL->bAutoExit = FALSE;
+    pNetWL->bEndScan = 0;
 
-    _pCommMP->bSetReceiver = FALSE;
+    pNetWL->bSetReceiver = FALSE;
     
     return;
 }
 
-
-//==============================================================================
-/**
- * @brief   通信ライブラリに必要なワークサイズを返す
- * @retval  ワークサイズ
- */
-//==============================================================================
-u32 CommGetWorkSize(void)
-{
-    OHNO_PRINT("_COMM_WORK size %d \n", sizeof(_COMM_WORK));
-    return sizeof(_COMM_WORK);
-}
 
 //==============================================================================
 /**
@@ -425,9 +413,10 @@ u32 CommGetWorkSize(void)
  */
 //==============================================================================
 
-void _receiverFunc(u16 aid, u16 *data, u16 size)
+static void _receiverFunc(u16 aid, u16 *data, u16 size)
 {
-    _pCommMP->recvCallback(aid,data,size);
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    pNetWL->recvCallback(aid,data,size);
 }
 
 //==============================================================================
@@ -441,20 +430,21 @@ void _receiverFunc(u16 aid, u16 *data, u16 size)
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
+BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
 {
-    _commInit();
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    _commInit(pNetWL);
     _parentDataInit(bTGIDChange);
 
     WH_ParentDataInit();
     
     WHSetConnectCallBack(pConnectFunc);
     
-    if(!_pCommMP->bSetReceiver){
+    if(!pNetWL->bSetReceiver){
         WH_SetReceiver(_receiverFunc, _PORT_DATA_CHILD);
-      _pCommMP->bSetReceiver = TRUE;
+      pNetWL->bSetReceiver = TRUE;
     }
-    _pCommMP->bEntry = bEntry;
+    pNetWL->bEntry = bEntry;
 
     // 電波使用率から最適なチャンネルを取得して接続する。非同期関数
     if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
@@ -476,16 +466,17 @@ BOOL CommMPParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_Connec
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL CommMPChildInit(BOOL bAlloc, BOOL bBconInit)
+BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit)
 {
-    _commInit();
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    _commInit(pNetWL);
     if(bBconInit){
         OHNO_PRINT("ビーコンの初期化\n");
-        ChildBconDataInit(); // データの初期化
+        GFL_NET_WLChildBconDataInit(); // データの初期化
     }
-    if(!_pCommMP->bSetReceiver ){
+    if(!pNetWL->bSetReceiver ){
         WH_SetReceiver(_receiverFunc, _PORT_DATA_PARENT);
-        _pCommMP->bSetReceiver = TRUE;
+        pNetWL->bSetReceiver = TRUE;
     }
     // 親機検索スタート
     if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
@@ -506,29 +497,30 @@ BOOL CommMPChildInit(BOOL bAlloc, BOOL bBconInit)
  */
 //==============================================================================
 
-BOOL CommMPSwitchParentChild(void)
+BOOL GFL_NET_WLSwitchParentChild(void)
 {
-    if(!_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(!pNetWL){
         return TRUE;
     }
-    switch(_pCommMP->bEndScan){
+    switch(pNetWL->bEndScan){
       case 0:
         if(WH_IsSysStateScan()){
             WH_EndScan();
-            _pCommMP->bEndScan = 1;
+            pNetWL->bEndScan = 1;
             break;
         }
         else if(WH_IsSysStateBusy()){  //しばらく待つ
         }
         else{
             WH_Finalize();
-            _pCommMP->bEndScan = 2;
+            pNetWL->bEndScan = 2;
         }
         break;
       case 1:
         if(!WH_IsSysStateBusy()){
             WH_Finalize();
-            _pCommMP->bEndScan = 2;
+            pNetWL->bEndScan = 2;
         }
         break;
       case 2:
@@ -536,7 +528,7 @@ BOOL CommMPSwitchParentChild(void)
             return TRUE;
         }
         if(WH_IsSysStateError()){
-            _pCommMP->bEndScan = 1;
+            pNetWL->bEndScan = 1;
         }
         break;
     }
@@ -551,11 +543,12 @@ BOOL CommMPSwitchParentChild(void)
  * @retval  終了処理に移った場合TRUE
  */
 //==============================================================================
-BOOL CommMPFinalize(void)
+BOOL GFL_NET_WLFinalize(void)
 {
-    if(_pCommMP){
-        if(_pCommMP->disconnectType == _DISCONNECT_NONE){
-            _pCommMP->disconnectType = _DISCONNECT_END;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        if(pNetWL->disconnectType == _DISCONNECT_NONE){
+            pNetWL->disconnectType = _DISCONNECT_END;
             WH_Finalize();
             return TRUE;
         }
@@ -570,17 +563,19 @@ BOOL CommMPFinalize(void)
  * @retval  none
  */
 //==============================================================================
-void CommMPStealth(BOOL bStalth)
+void GFL_NET_WLStealth(BOOL bStalth)
 {
-    if(!_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+
+    if(!pNetWL){
         return;
     }
     if(bStalth){
-        _pCommMP->disconnectType = _DISCONNECT_SECRET;
+        pNetWL->disconnectType = _DISCONNECT_SECRET;
     }
     else{
-        _pCommMP->disconnectType = _DISCONNECT_NONE;
-        _whInitialize();  // 無線駆動再開
+        pNetWL->disconnectType = _DISCONNECT_NONE;
+        _whInitialize(pNetWL->heapID, pNetWL);  // 無線駆動再開
     }
 }
 
@@ -593,9 +588,10 @@ void CommMPStealth(BOOL bStalth)
 //==============================================================================
 static void _commEnd(void)
 {
-    GFL_HEAP_FreeMemory(_pCommMP->_pWHWork);
-    GFL_HEAP_FreeMemory(_pCommMP);
-    _pCommMP = NULL;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    GFL_HEAP_FreeMemory(pNetWL->_pWHWork);
+    GFL_HEAP_FreeMemory(pNetWL);
+    pNetWL = NULL;
 }
 
 //==============================================================================
@@ -606,13 +602,14 @@ static void _commEnd(void)
  */
 //==============================================================================
 
-int CommMPGetParentCount(void)
+int GFL_NET_WLGetParentCount(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int i, cnt;
 
     cnt = 0;
     for (i = 0; i < SCAN_PARENT_COUNT_MAX; ++i) {
-        if(_pCommMP->bconUnCatchTime[i] != 0 ){
+        if(pNetWL->bconUnCatchTime[i] != 0 ){
             cnt++;
         }
     }
@@ -628,15 +625,16 @@ int CommMPGetParentCount(void)
 //--------------------------------------------------------------
 int CommBmpListPosBconIndexGet(int index)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 	int i, count;
 	
 //	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
-//		OS_TPrintf("Listのビーコンチェック %d = %d\n", i, _pCommMP->bconUnCatchTime[i]);
+//		OS_TPrintf("Listのビーコンチェック %d = %d\n", i, pNetWL->bconUnCatchTime[i]);
 //	}
 	
 	count = 0;
 	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
-		if(_pCommMP->bconUnCatchTime[i] != 0){
+		if(pNetWL->bconUnCatchTime[i] != 0){
 			if(count == index){
 				return i;
 			}
@@ -655,9 +653,10 @@ int CommBmpListPosBconIndexGet(int index)
  */
 //==============================================================================
 
-BOOL CommMPIsScanListChange(void)
+BOOL GFL_NET_WLIsScanListChange(void)
 {
-    return _pCommMP->bScanCallBack;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    return pNetWL->bScanCallBack;
 }
 
 //==============================================================================
@@ -668,9 +667,10 @@ BOOL CommMPIsScanListChange(void)
  */
 //==============================================================================
 
-void CommMPResetScanChangeFlag(void)
+void GFL_NET_WLResetScanChangeFlag(void)
 {
-    _pCommMP->bScanCallBack = FALSE;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    pNetWL->bScanCallBack = FALSE;
 }
 
 //==============================================================================
@@ -681,14 +681,15 @@ void CommMPResetScanChangeFlag(void)
  */
 //==============================================================================
 
-int CommMPGetParentConnectionNum(int index)
+int GFL_NET_WLGetParentConnectionNum(int index)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int cnt;
     _GF_BSS_DATA_INFO* pGF;
 
     cnt = 0;
-    if(_pCommMP->bconUnCatchTime[index] != 0){
-        pGF = (_GF_BSS_DATA_INFO*)_pCommMP->sBssDesc[index].gameInfo.userGameInfo;
+    if(pNetWL->bconUnCatchTime[index] != 0){
+        pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
         if(pGF->connectNum==0){
             return 1;
         }
@@ -710,7 +711,7 @@ static int _getParentNum(int machNum)
     int i,num;
 
     for (i = SCAN_PARENT_COUNT_MAX-1; i >= 0; i--) {
-        num = CommMPGetParentConnectionNum(i);
+        num = GFL_NET_WLGetParentConnectionNum(i);
         if((num > machNum) && (num < GFL_NET_MACHINE_MAX)){
             return i;
         }
@@ -726,17 +727,18 @@ static int _getParentNum(int machNum)
  */
 //==============================================================================
 
-int CommMPGetFastConnectIndex(void)
+int GFL_NET_WLGetFastConnectIndex(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int i,num;
 
-    if(CommMPGetParentCount()==0){
+    if(GFL_NET_WLGetParentCount()==0){
         return -1;
     }
     for (i = SCAN_PARENT_COUNT_MAX -1; i >= 0; i--) {
-        if(_pCommMP->bconUnCatchTime[i] != 0){
-            if(_isMachBackupMacAddress(&_pCommMP->sBssDesc[i].bssid[0])){  // 古いMACに合致
-                num = CommMPGetParentConnectionNum(i);
+        if(pNetWL->bconUnCatchTime[i] != 0){
+            if(_isMachBackupMacAddress(&pNetWL->sBssDesc[i].bssid[0])){  // 古いMACに合致
+                num = GFL_NET_WLGetParentConnectionNum(i);
                 if(( num > 1) && (num < GFL_NET_MACHINE_MAX)){      // 本親に該当した まだ参加可能
                     return i;
                 }
@@ -754,16 +756,17 @@ int CommMPGetFastConnectIndex(void)
  */
 //==============================================================================
 
-int CommMPGetNextConnectIndex(void)
+int GFL_NET_WLGetNextConnectIndex(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int i;
  
-    if(CommMPGetParentCount()==0){  // ビーコンが無い状態
+    if(GFL_NET_WLGetParentCount()==0){  // ビーコンが無い状態
         return -1;
     }
     for (i = SCAN_PARENT_COUNT_MAX-1; i >= 0; i--) {
-        if(_pCommMP->bconUnCatchTime[i] != 0){
-            if(_isMachBackupMacAddress(&_pCommMP->sBssDesc[i].bssid[0])){  // 古いMACに合致
+        if(pNetWL->bconUnCatchTime[i] != 0){
+            if(_isMachBackupMacAddress(&pNetWL->sBssDesc[i].bssid[0])){  // 古いMACに合致
                 OHNO_PRINT("昔の親 %d\n",i);
                 return i;
             }
@@ -789,8 +792,9 @@ int CommMPGetNextConnectIndex(void)
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-BOOL CommMPChildIndexConnect(u16 index)
+BOOL GFL_NET_WLChildIndexConnect(u16 index)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int serviceNo;
     
     if (WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
@@ -799,11 +803,11 @@ BOOL CommMPChildIndexConnect(u16 index)
     }
     if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
         OHNO_PRINT("子機 接続開始 WH_ChildConnect\n");
-        serviceNo = _pCommMP->serviceNo;
-        _pCommMP->channel = _pCommMP->sBssDesc[index].channel;
-        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, _pCommMP->sBssDesc[index].bssid,0);
-//      WH_ChildConnect(WH_CONNECTMODE_MP_CHILD, &(_pCommMP->sBssDesc[index]));
-//        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, _pCommMP->sBssDesc[index].bssid,0);
+        serviceNo = pNetWL->serviceNo;
+        pNetWL->channel = pNetWL->sBssDesc[index].channel;
+        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
+//      WH_ChildConnect(WH_CONNECTMODE_MP_CHILD, &(pNetWL->sBssDesc[index]));
+//        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
         return TRUE;
     }
     return FALSE;
@@ -818,19 +822,20 @@ BOOL CommMPChildIndexConnect(u16 index)
  */
 //==============================================================================
 
-void CommMPParentBconCheck(void)
+void GFL_NET_WLParentBconCheck(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int id;
 
     for(id = 0; id < SCAN_PARENT_COUNT_MAX; id++){
-        if(_pCommMP->bconUnCatchTime[id] == 0 ){
+        if(pNetWL->bconUnCatchTime[id] == 0 ){
             continue;
         }
-        if(_pCommMP->bconUnCatchTime[id] > 0){
-            _pCommMP->bconUnCatchTime[id]--;
-            if(_pCommMP->bconUnCatchTime[id] == 0){
+        if(pNetWL->bconUnCatchTime[id] > 0){
+            pNetWL->bconUnCatchTime[id]--;
+            if(pNetWL->bconUnCatchTime[id] == 0){
                 OHNO_PRINT("親機反応なし %d\n", id);
-                _pCommMP->bScanCallBack = TRUE;   // データを変更したのでTRUE
+                pNetWL->bScanCallBack = TRUE;   // データを変更したのでTRUE
             }
         }
     }
@@ -850,22 +855,23 @@ static void _setUserGameInfo( void )
     u8 macBuff[6];
     _GF_BSS_DATA_INFO* pGF;
     int size;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
-    if(_pCommMP->beaconGetSizeFunc==NULL){
+    if(pNetWL->beaconGetSizeFunc==NULL){
         OS_Panic("beaconGetSizeFunc none");
         return;
     }
-    size = _pCommMP->beaconGetSizeFunc();
+    size = pNetWL->beaconGetSizeFunc();
     if((WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX) <= size){
         OS_Panic("size over");
         return;
     }
-    pGF = (_GF_BSS_DATA_INFO*)_pCommMP->gameInfoBuff;
-    pGF->serviceNo = _pCommMP->serviceNo;  // ゲームの番号
+    pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
+    pGF->serviceNo = pNetWL->serviceNo;  // ゲームの番号
     pGF->pause = WHGetParentConnectPause();    // 親機が受付を中止しているかどうか
-    GFL_STD_MemCopy( _pCommMP->beaconGetFunc(), pGF->aBeaconDataBuff, size);
-    DC_FlushRange(_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX);
-    WH_SetUserGameInfo((u16*)_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX);
+    GFL_STD_MemCopy( pNetWL->beaconGetFunc(), pGF->aBeaconDataBuff, size);
+    DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
+    WH_SetUserGameInfo((u16*)pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
 }
 
 
@@ -879,15 +885,16 @@ static void _setUserGameInfo( void )
 //==============================================================================
 static void _funcBconDataChange( void )
 {
-    _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)_pCommMP->gameInfoBuff;
-    int size = _pCommMP->beaconGetSizeFunc();
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
+    int size = pNetWL->beaconGetSizeFunc();
 
     if(_connectNum() != pGF->connectNum){
         pGF->connectNum = _connectNum();
-        DC_FlushRange(_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX);
-        WH_SetUserGameInfo((u16*)_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX);
-        WHSetGameInfo(_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX,
-                      _pCommMP->ggid,_sTgid);
+        DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
+        WH_SetUserGameInfo((u16*)pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
+        WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
+                      pNetWL->ggid,_sTgid);
     }
 }
 
@@ -902,20 +909,21 @@ static void _funcBconDataChange( void )
 static void _stateProcess(u16 bitmap)
 {
     int state = WH_GetSystemState();
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 //    CommInfoFunc();
     _funcBconDataChange();      // ビーコンの中身を書き換え中
-    if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!CommMPIsChildsConnecting())){
-        if(_pCommMP->bErrorNoChild){
-            _pCommMP->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
+    if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
+        if(pNetWL->bErrorNoChild){
+            pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
 //            OHNO_PRINT("エラー中 NOCHILD \n");
         }
     }
-    if(_pCommMP->errCheckBitmap == _NOT_INIT_BITMAP){
-        _pCommMP->errCheckBitmap = bitmap;  // このときの接続人数を保持
+    if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
+        pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
     }
-    if(_pCommMP->bErrorDisconnectOther){ // エラー検査を行う
-        if(_pCommMP->errCheckBitmap > bitmap){  // 切断した場合必ず数字が減る 増える分にはOK
-            _pCommMP->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
+    if(pNetWL->bErrorDisconnectOther){ // エラー検査を行う
+        if(pNetWL->errCheckBitmap > bitmap){  // 切断した場合必ず数字が減る 増える分にはOK
+            pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
 //            OHNO_PRINT("エラー中 誰か落ちた \n");
         }
     }
@@ -924,24 +932,24 @@ static void _stateProcess(u16 bitmap)
     }
     switch (state) {
       case WH_SYSSTATE_STOP:
-        if(_pCommMP->disconnectType == _DISCONNECT_END){
+        if(pNetWL->disconnectType == _DISCONNECT_END){
             OHNO_SP_PRINT("WHEnd を呼んで終了しました\n");
             _commEnd();  // ワークから何から全て開放
             return;
         }
-        if(_pCommMP->disconnectType == _DISCONNECT_SECRET){
+        if(pNetWL->disconnectType == _DISCONNECT_SECRET){
             OHNO_SP_PRINT("WHEnd を呼んで死んだふり開始\n");
-            _pCommMP->disconnectType = _DISCONNECT_STEALTH;
+            pNetWL->disconnectType = _DISCONNECT_STEALTH;
             return;
         }
         break;
       case WH_SYSSTATE_IDLE:
-        if(_pCommMP->disconnectType == _DISCONNECT_END){
+        if(pNetWL->disconnectType == _DISCONNECT_END){
             if(WH_End()){
                 return;
             }
         }
-        if(_pCommMP->disconnectType == _DISCONNECT_SECRET){
+        if(pNetWL->disconnectType == _DISCONNECT_SECRET){
             if(WH_End()){
                 return;
             }
@@ -950,8 +958,8 @@ static void _stateProcess(u16 bitmap)
       case WH_SYSSTATE_CONNECT_FAIL:
       case WH_SYSSTATE_ERROR:
         OHNO_PRINT("エラー中 %d \n",WH_GetLastError());
-        if(_pCommMP){
-            _pCommMP->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
+        if(pNetWL){
+            pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
         }
         break;
       case WH_SYSSTATE_MEASURECHANNEL:
@@ -959,25 +967,25 @@ static void _stateProcess(u16 bitmap)
             u16 channel;
             // 利用可能な中から一番使用率の低いチャンネルを返します。
             channel = WH_GetMeasureChannel();  //WH_SYSSTATE_MEASURECHANNEL => WH_SYSSTATE_IDLE
-            if(_pCommMP->keepChannelTime==0){
-                _pCommMP->keepChannelNo = channel;
-                _pCommMP->keepChannelTime = _KEEP_CHANNEL_TIME_MAX;
+            if(pNetWL->keepChannelTime==0){
+                pNetWL->keepChannelNo = channel;
+                pNetWL->keepChannelTime = _KEEP_CHANNEL_TIME_MAX;
             }
             else{
-                _pCommMP->keepChannelTime--;
+                pNetWL->keepChannelTime--;
             }
-            channel = _pCommMP->keepChannelNo;  
-            if(_pCommMP->bTGIDChange){
+            channel = pNetWL->keepChannelNo;  
+            if(pNetWL->bTGIDChange){
                 _sTgid++;
             }
             _setUserGameInfo();
 //            OHNO_PRINT("親機接続開始   tgid=%d channel=%d \n",_sTgid, channel);
             (void)WH_ParentConnect(WH_CONNECTMODE_MP_PARENT,
                                    _sTgid, channel,
-                                   _pCommMP->maxConnectNum,
-                                   _getServiceBeaconPeriod(_pCommMP->serviceNo),
-                                   _pCommMP->bEntry);
-            _pCommMP->channel = channel;
+                                   pNetWL->maxConnectNum,
+                                   _getServiceBeaconPeriod(pNetWL->serviceNo),
+                                   pNetWL->bEntry);
+            pNetWL->channel = channel;
         }
         break;
       default:
@@ -998,7 +1006,8 @@ static void _stateProcess(u16 bitmap)
 
 void CommMpProcess(u16 bitmap)
 {
-    if(_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
         _stateProcess(bitmap);
     }
 }
@@ -1012,7 +1021,8 @@ void CommMpProcess(u16 bitmap)
 //==============================================================================
 BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
 {
-    if(!_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(!pNetWL){
         return FALSE;
     }
     if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
@@ -1030,7 +1040,8 @@ BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
 //==============================================================================
 static BOOL _isConnect(u16 netID)
 {
-    if(!_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(!pNetWL){
         return FALSE;
     }
     if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
@@ -1072,9 +1083,10 @@ static int _connectNum(void)
  */
 //==============================================================================
 
-BOOL CommMPIsConnectStalth(void)
+BOOL GFL_NET_WLIsConnectStalth(void)
 {
-    if(_pCommMP && (_pCommMP->disconnectType == _DISCONNECT_STEALTH)){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->disconnectType == _DISCONNECT_STEALTH)){
         return TRUE;
     }
     return FALSE;
@@ -1087,9 +1099,10 @@ BOOL CommMPIsConnectStalth(void)
  * @retval  初期が終わっていたらTRUE
  */
 //==============================================================================
-BOOL CommMPIsInitialize(void)
+BOOL GFL_NET_WLIsInitialize(void)
 {
-    return (_pCommMP!=NULL);
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    return (pNetWL!=NULL);
 }
 
 //==============================================================================
@@ -1100,9 +1113,10 @@ BOOL CommMPIsInitialize(void)
  */
 //==============================================================================
 
-BOOL CommMPIsStateIdle(void)
+BOOL GFL_NET_WLIsStateIdle(void)
 {
-    if(_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
         return WH_IsSysStateIdle();
     }
     return TRUE;
@@ -1117,9 +1131,10 @@ BOOL CommMPIsStateIdle(void)
  */
 //==============================================================================
 
-BOOL CommMPIsChildsConnecting(void)
+BOOL GFL_NET_WLIsChildsConnecting(void)
 {
-    if(_pCommMP){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
         return( WH_GetBitmap() & 0xfffe);
     }
     return FALSE;
@@ -1133,9 +1148,9 @@ BOOL CommMPIsChildsConnecting(void)
  */
 //==============================================================================
 
-BOOL CommMPParentDisconnect(void)
+BOOL GFL_NET_WLParentDisconnect(void)
 {
-    if(CommMPIsError() && ( WH_ERRCODE_DISCONNECTED == WH_GetLastError())){
+    if(GFL_NET_WLIsError() && ( WH_ERRCODE_DISCONNECTED == WH_GetLastError())){
         return TRUE;
     }
     return FALSE;
@@ -1150,10 +1165,11 @@ BOOL CommMPParentDisconnect(void)
  */
 //==============================================================================
 
-BOOL CommMPIsError(void)
+BOOL GFL_NET_WLIsError(void)
 {
-    if(_pCommMP){
-        if(_pCommMP->bErrorState){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        if(pNetWL->bErrorState){
             return TRUE;
         }
     }
@@ -1168,10 +1184,11 @@ BOOL CommMPIsError(void)
  */
 //==============================================================================
 
-void CommMPSetNoChildError(BOOL bOn)
+void GFL_NET_WLSetNoChildError(BOOL bOn)
 {
-    if(_pCommMP){
-        _pCommMP->bErrorNoChild = bOn;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        pNetWL->bErrorNoChild = bOn;
     }
 }
 
@@ -1183,11 +1200,12 @@ void CommMPSetNoChildError(BOOL bOn)
  */
 //==============================================================================
 
-void CommMPSetDisconnectOtherError(BOOL bOn)
+void GFL_NET_WLSetDisconnectOtherError(BOOL bOn)
 {
-    if(_pCommMP){
-        _pCommMP->bErrorDisconnectOther = bOn;
-        _pCommMP->errCheckBitmap = _NOT_INIT_BITMAP;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        pNetWL->bErrorDisconnectOther = bOn;
+        pNetWL->errCheckBitmap = _NOT_INIT_BITMAP;
     }
 }
 
@@ -1224,10 +1242,11 @@ u16 _getServiceBeaconPeriod(u16 serviceNo)
  */
 //==============================================================================
 
-WMBssDesc* CommMPGetWMBssDesc(int index)
+WMBssDesc* GFL_NET_WLGetWMBssDesc(int index)
 {
-    if(_pCommMP && (_pCommMP->bconUnCatchTime[index]!=0)){
-        return &_pCommMP->sBssDesc[index];
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        return &pNetWL->sBssDesc[index];
     }
     return NULL;
 }
@@ -1240,10 +1259,29 @@ WMBssDesc* CommMPGetWMBssDesc(int index)
  */
 //==============================================================================
 
-void* CommMPGetGFBss(int index)
+void* GFL_NET_WLGetGFBss(int index)
 {
-    if(_pCommMP && (_pCommMP->bconUnCatchTime[index]!=0)){
-        return (void*)_pCommMP->sBssDesc[index].gameInfo.userGameInfo;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        return (void*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
+    }
+    return NULL;
+}
+
+//==============================================================================
+/**
+ * @brief   User定義のビーコンデータを得る
+ * @param   index ビーコンバッファに対するindex
+ * @retval   GF_BSS_DATA_INFO*  ビーコンバッファポインタ
+ */
+//==============================================================================
+
+void* GFL_NET_WLGetUserBss(int index)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
+        return (void*)pGF->aBeaconDataBuff;
     }
     return NULL;
 }
@@ -1256,10 +1294,11 @@ void* CommMPGetGFBss(int index)
  */
 //==============================================================================
 
-void CommMPResetWMBssDesc(int index)
+void GFL_NET_WLResetWMBssDesc(int index)
 {
-    if(_pCommMP && (_pCommMP->bconUnCatchTime[index]!=0)){
-        _pCommMP->bconUnCatchTime[index] = 0;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        pNetWL->bconUnCatchTime[index] = 0;
     }
 }
 
@@ -1271,10 +1310,11 @@ void CommMPResetWMBssDesc(int index)
  */
 //==============================================================================
 
-void CommMPResetGFBss(int index)
+void GFL_NET_WLResetGFBss(int index)
 {
-    if(_pCommMP && (_pCommMP->bconUnCatchTime[index]!=0)){
-        _pCommMP->bconUnCatchTime[index] = 0;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        pNetWL->bconUnCatchTime[index] = 0;
     }
 }
 
@@ -1286,13 +1326,14 @@ void CommMPResetGFBss(int index)
  */
 //==============================================================================
 
-void CommMPSetBackupMacAddress(u8* pMac, int netID)
+void GFL_NET_WLSetBackupMacAddress(u8* pMac, int netID)
 {
-    if(_pCommMP==NULL){
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL==NULL){
         OS_Panic("no mem");
     }
     if(GFL_NET_MACHINE_MAX > netID){
-        MI_CpuCopy8(pMac, _pCommMP->backupBssid[netID], WM_SIZE_BSSID);
+        MI_CpuCopy8(pMac, pNetWL->backupBssid[netID], WM_SIZE_BSSID);
     }
 }
 
@@ -1306,10 +1347,11 @@ void CommMPSetBackupMacAddress(u8* pMac, int netID)
 
 static BOOL _isMachBackupMacAddress(u8* pMac)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int i;
     
     for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
-        if(WM_IsBssidEqual(_pCommMP->backupBssid[i], pMac)){
+        if(WM_IsBssidEqual(pNetWL->backupBssid[i], pMac)){
             return TRUE;
         }
     }
@@ -1325,10 +1367,11 @@ static BOOL _isMachBackupMacAddress(u8* pMac)
  */
 //==============================================================================
 
-BOOL CommMPIsAutoExit(void)
+BOOL GFL_NET_WLIsAutoExit(void)
 {
-    if(_pCommMP){
-        return _pCommMP->bAutoExit;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        return pNetWL->bAutoExit;
     }
     return FALSE;
 }
@@ -1341,10 +1384,11 @@ BOOL CommMPIsAutoExit(void)
  */
 //==============================================================================
 
-void CommMPSetAutoExit(void)
+void GFL_NET_WLSetAutoExit(void)
 {
-    if(_pCommMP){
-        _pCommMP->bAutoExit = TRUE;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL){
+        pNetWL->bAutoExit = TRUE;
     }
 }
 
@@ -1355,13 +1399,14 @@ void CommMPSetAutoExit(void)
  */
 //==============================================================================
 
-void CommMPFlashMyBss(void)
+void GFL_NET_WLFlashMyBss(void)
 {
-    int size = _pCommMP->beaconGetSizeFunc();
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    int size = pNetWL->beaconGetSizeFunc();
 
     _setUserGameInfo();
-    WHSetGameInfo(_pCommMP->gameInfoBuff, size + _BEACON_SIZE_FIX,
-                  _pCommMP->ggid,_sTgid);
+    WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
+                  pNetWL->ggid,_sTgid);
 }
 
 //==============================================================================
@@ -1372,7 +1417,7 @@ void CommMPFlashMyBss(void)
  */
 //==============================================================================
 
-void CommMPSetLifeTime(BOOL bMinimum)
+void GFL_NET_WLSetLifeTime(BOOL bMinimum)
 {
     WHSetLifeTime(bMinimum);
 }
@@ -1385,12 +1430,12 @@ void CommMPSetLifeTime(BOOL bMinimum)
  */
 //------------------------------------------------------
 
-int CommMPGetServiceNumber(int serviceNo)
+int GFL_NET_WLGetServiceNumber(int serviceNo)
 {
     int i,num=0;
     
     for (i = 0; i < SCAN_PARENT_COUNT_MAX; i++) {
-        _GF_BSS_DATA_INFO* pGF = CommMPGetGFBss(i);
+        _GF_BSS_DATA_INFO* pGF = GFL_NET_WLGetGFBss(i);
         if(pGF){
             if( pGF->serviceNo == serviceNo){
                 num += pGF->connectNum;
@@ -1408,7 +1453,7 @@ int CommMPGetServiceNumber(int serviceNo)
  */
 //------------------------------------------------------
 
-BOOL CommMPIsParentBeaconSent(void)
+BOOL GFL_NET_WLIsParentBeaconSent(void)
 {
     return WHIsParentBeaconSent();
 }
@@ -1420,7 +1465,7 @@ BOOL CommMPIsParentBeaconSent(void)
  */
 //------------------------------------------------------
 
-BOOL CommMPIsChildStateScan(void)
+BOOL GFL_NET_WLIsChildStateScan(void)
 {
     return WH_IsSysStateScan();
 }
@@ -1432,9 +1477,10 @@ BOOL CommMPIsChildStateScan(void)
  */
 //------------------------------------------------------
 
-int CommMPGetChannel(void)
+int GFL_NET_WLGetChannel(void)
 {
-    return _pCommMP->channel;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    return pNetWL->channel;
 }
 
 //==============================================================================
@@ -1444,12 +1490,13 @@ int CommMPGetChannel(void)
  * @return ビーコンの中身
  */
 //==============================================================================
-void* CommMPGetMyGFBss(void)
+void* GFL_NET_WLGetMyGFBss(void)
 {
-	if (_pCommMP == NULL) {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+	if (pNetWL == NULL) {
 		return NULL;
 	}
-	return _pCommMP->gameInfoBuff;
+	return pNetWL->gameInfoBuff;
 }
 
 //------------------------------------------------------
@@ -1458,12 +1505,13 @@ void* CommMPGetMyGFBss(void)
  * @param	index	位置
  */
 //------------------------------------------------------
-int CommMPGetBConUncacheTime(int index)
+int GFL_NET_WLGetBConUncacheTime(int index)
 {
-	if (_pCommMP == NULL) {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+	if (pNetWL == NULL) {
 		return 0;
 	}
-	return _pCommMP->bconUnCatchTime[index];
+	return pNetWL->bconUnCatchTime[index];
 }
 
 
@@ -1506,3 +1554,20 @@ u16 GFL_NET_WL_GetCurrentAid(void)
 {
     return WH_GetCurrentAid();
 }
+
+//------------------------------------------------------
+/**
+ * @brief	WHのワークポインタを返す
+ * @return  GFL_NETWMのポインタ
+ */
+//------------------------------------------------------
+
+GFL_NETWM* _GFL_NET_WLGetNETWH(void)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL == NULL){
+        return NULL;
+    }
+    return pNetWL->_pWHWork;
+}
+

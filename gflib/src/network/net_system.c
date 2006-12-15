@@ -9,11 +9,7 @@
 
 #include "gflib.h"
 
-//#include "common.h"
 #include "device/wh_config.h"
-//#include "wh.h"
-//#include "communication/communication.h"
-//#include "comm_local.h"
 
 #include "net.h"
 #include "net_def.h"
@@ -21,15 +17,9 @@
 #include "net_system.h"
 #include "net_command.h"
 
-//#include "system/pm_str.h"
-//#include "system/gamedata.h"  //PERSON_NAME_SIZE
-
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
 #include "tool/net_tool.h"
-//#include "system/savedata.h"
-//#include "savedata/regulation.h"
-//#include "system/pm_rtc.h"  //GF_RTC
 
 //#include "wifi/dwc_rap.h"   //WIFI
 
@@ -668,7 +658,7 @@ BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeM
     BOOL ret = TRUE;
 
     if( _pComm->device == _DEVICE_WIFI){
-        ret = CommMPParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
+        ret = GFL_NET_WLParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
     }
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
     return ret;
@@ -689,7 +679,7 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
     BOOL ret = TRUE;
 
     if( _pComm->device == _DEVICE_WIFI){
-        ret = CommMPChildInit(bAlloc, bBconInit);
+        ret = GFL_NET_WLChildInit(bAlloc, bBconInit);
     }
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM);
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
@@ -835,7 +825,7 @@ void GFL_NET_SystemFinalize(void)
             bEnd = TRUE;
         }
         else{
-            if(CommMPFinalize()){
+            if(GFL_NET_WLFinalize()){
                 bEnd = TRUE;
             }
         }
@@ -870,7 +860,7 @@ void GFL_NET_SystemFinalize(void)
 //==============================================================================
 BOOL GFL_NET_SystemChildIndexConnect(u16 index)
 {
-    return CommMPChildIndexConnect(index);
+    return GFL_NET_WLChildIndexConnect(index);
 }
 
 
@@ -884,11 +874,11 @@ BOOL GFL_NET_SystemChildIndexConnect(u16 index)
 
 static void _autoExitSystemFunc(void)
 {
-    if(!CommMPIsAutoExit()){
+    if(!GFL_NET_WLIsAutoExit()){
         return;
     }
     if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
-        if(CommMPIsChildsConnecting()){
+        if(GFL_NET_WLIsChildsConnecting()){
             return;
         }
         GFL_NET_SystemFinalize();  // 終了処理に入る
@@ -1016,7 +1006,7 @@ void GFL_NET_SystemSystemResetBattleChild(void)
     _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
-        ChildBconDataInit();
+        GFL_NET_WLChildBconDataInit();
     }
     _bVSAccess = bAcc;
 }
@@ -1736,7 +1726,7 @@ static void _updateMpData(void)
 #endif
                     }
                 }
-                else if(CommMPIsChildsConnecting()){         // サーバーとしての処理 自分以外の誰かにつながっている時
+                else if(GFL_NET_WLIsChildsConnecting()){         // サーバーとしての処理 自分以外の誰かにつながっている時
                     _sendCallBack++;
                     _sendCallbackFunc(TRUE);
                     // 子機のふりをする部分          // 親機は自分でコールバックを呼ぶ
@@ -2434,7 +2424,7 @@ BOOL GFL_NET_SystemIsInitialize(void)
             return TRUE;
         }
     }
-    return CommMPIsInitialize();
+    return GFL_NET_WLIsInitialize();
 }
 
 //==============================================================================
@@ -2660,7 +2650,7 @@ BOOL GFL_NET_SystemSendFixData(int command)
 
 BOOL GFL_NET_SystemIsChildsConnecting(void)
 {
-    return CommMPIsChildsConnecting();
+    return GFL_NET_WLIsChildsConnecting();
 }
 
 //==============================================================================
@@ -2682,7 +2672,7 @@ BOOL GFL_NET_SystemIsError(void)
             return TRUE;
         }
     }
-    return CommMPIsError();
+    return GFL_NET_WLIsError();
 }
 
 //==============================================================================
@@ -2775,12 +2765,12 @@ void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pDa
     u8 dummy;
 
     OHNO_PRINT("CommRecvAutoExit 受信 \n");
-    if(!CommMPIsAutoExit()){
+    if(!GFL_NET_WLIsAutoExit()){
         if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
             GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_AUTO_EXIT, &dummy);
         }
     }
-    CommMPSetAutoExit();
+    GFL_NET_WLSetAutoExit();
 }
 
 #ifdef PM_DEBUG

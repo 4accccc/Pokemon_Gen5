@@ -20,6 +20,10 @@
 
 typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
 
+/// @brief WIRELESS管理構造体
+typedef struct _NET_WL_WORK GFL_NETWL;
+
+
 /// @brief コールバック関数の書式 local解決用
 typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 /// @brief 送信完了コールバック
@@ -114,6 +118,9 @@ extern GFL_NETHANDLE* _NETHANDLE_GetSYS(void);
 // pNetHandleからToolsysを受け取る
 extern NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pNetHandle);
 
+extern GFL_NETWL* _GFL_NET_GetNETWL(void);
+
+extern GFL_NETSYS* _GFL_NET_GetNETSYS(void);
 
 #endif
 
