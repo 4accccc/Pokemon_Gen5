@@ -8,6 +8,7 @@
 #include "gflib.h"
 
 #include "textprint.h"
+#include "sjisconv_inter.h"
 //------------------------------------------------------------------
 /**
  * ワーク構造体
@@ -63,7 +64,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_TEXT_Print
-		( STRBUF* text, GFL_TEXT_PRINTPARAM* param )
+		( const STRBUF* text, GFL_TEXT_PRINTPARAM* param )
 {
 	STRCODE* strdat = (STRCODE*)GFL_STR_GetStringCodePointer( text );
 	GFL_TEXT_PrintCode( strdat, param );
@@ -80,7 +81,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_TEXT_PrintCode
-		( STRCODE* textcode, GFL_TEXT_PRINTPARAM* param )
+		( const STRCODE* textcode, GFL_TEXT_PRINTPARAM* param )
 {
 	u8				sizemaxY	= GFL_FONT_GetSizeMaxY();
 	u8				sizeSPC		= GFL_FONT_GetSizeSPC();
@@ -110,8 +111,12 @@ void
 			tw->nowy += ( sizemaxY + param->spacey ); 
 			break;
 
-		case spc_:	/* 改行コード */
+		case spc_:	/* 全角スペースコード */
 			tw->nowx += sizeSPC;
+			break;
+
+		case h_spc_:	/* 半角スペースコード */
+			tw->nowx += (sizeSPC/2);
 			break;
 
 		default:
@@ -135,5 +140,26 @@ void
 	}
 }
 
+
+//------------------------------------------------------------------
+/**
+ * ビットマップの内部CGX領域に文字を描画する(SjisCode)
+ *
+ * @param   textcode	文字列
+ * @param   param		描画用パラメータ
+ */
+//------------------------------------------------------------------
+#define SJISCONVSIZE_MAX (256)//暫定256文字まで
+void
+	GFL_TEXT_PrintSjisCode
+		( const char* textcode, GFL_TEXT_PRINTPARAM* param )
+{
+	STRCODE* tmpcode = GFL_HEAP_AllocMemory( GFL_HEAPID_SYSTEM, SJISCONVSIZE_MAX*2 );
+
+	GFL_STR_Sjis2Systemfontcode( textcode, tmpcode, SJISCONVSIZE_MAX );
+	GFL_TEXT_PrintCode( tmpcode, param );
+
+	GFL_HEAP_FreeMemory( tmpcode );
+}
 
 
