@@ -51,7 +51,7 @@ void	TetsuTestMain(void)
  */
 //------------------------------------------------------------------
 const char		test_text[] = {	
-"ゲームフリーク　プログラムライブラリ\nGame Freak program_Libraries\n\nさくせいチーム\nproduct_team\n\nわたなべ　てつや\nTetsuya Watanabe\n\nたまだ　そうすけ\nSousuke Tamada\n\nそがべ　ひさし\nHisashi Sogabe\n\nおおの　かつみ\nKatsumi Ohno\n\nみつはら　さとし\nSatoshi Mitsuhara"
+"ゲームフリーク　プログラムライブラリ　さくせいチーム\nGame Freak program_Libraries product_team\n\nわたなべ　てつや\nTetsuya Watanabe\n\nたまだ　そうすけ\nSousuke Tamada\n\nそがべ　ひさし\nHisashi Sogabe\n\nおおの　かつみ\nKatsumi Ohno\n\nみつはら　さとし\nSatoshi Mitsuhara\n\nGFL@gamefreak.co.jp"
 };
 
 #define XYSIZE (32*32)
@@ -125,7 +125,7 @@ static void	TestPrintMain(void)
 			bmpchr->size_x = 32*8;
 			bmpchr->size_y = 32*8;
 			test_param->bmp = bmpchr;
-			test_param->writex = 32;
+			test_param->writex = 16;
 			test_param->writey = 8;
 			test_param->spacex = 1;
 			test_param->spacey = 1;
