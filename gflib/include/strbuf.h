@@ -14,6 +14,7 @@ enum {
 	EOM_ = 0,
 	CR_,
 	spc_,
+	h_spc_,
 
 	STR_DEFAULT_CODE_MAX,
 };
