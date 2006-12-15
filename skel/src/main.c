@@ -80,6 +80,8 @@ static	void	SkeltonVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
+#include "tamada/debug_tamada.h"
+	DEBUG_INIT(GFL_HEAPID_SYSTEM);
 }
 
 //------------------------------------------------------------------

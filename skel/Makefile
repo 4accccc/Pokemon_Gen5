@@ -30,6 +30,8 @@ TARGET_BIN		=	main.bin
 SRCS			=	main.c gfl_use.c
 
 
+include make_prog_files
+
 # ƒRƒ“ƒpƒCƒ‹‚ÌŒx—}~
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
