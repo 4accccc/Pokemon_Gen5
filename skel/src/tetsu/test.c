@@ -50,17 +50,10 @@ void	TetsuTestMain(void)
  * @brief	プリント実験
  */
 //------------------------------------------------------------------
-const STRCODE		test_text[] = {	 3, 4, 5, 6, 7, CR_,
-									 8, 9,10,11,12, CR_,
-									13,14,15,16,17, CR_,
-									18,19,20,21,22, CR_,
-									23,24,25,26,27, CR_,
-									28,29,30,31,32, CR_,
-									33,34,35,36,37, CR_,
-									38, 2,39, 2,40, CR_,
-									41,42,43,44,45, CR_,
-									46, 2,47, 2,48, CR_,
-									EOM_ };
+const char		test_text[] = {	
+"ゲームフリーク　プログラムライブラリ\nGame Freak program_Libraries\n\nさくせいチーム\nproduct_team\n\nわたなべ　てつや\nTetsuya Watanabe\n\nたまだ　そうすけ\nSousuke Tamada\n\nそがべ　ひさし\nHisashi Sogabe\n\nおおの　かつみ\nKatsumi Ohno\n\nみつはら　さとし\nSatoshi Mitsuhara"
+};
+
 #define XYSIZE (32*32)
 
 static void	TestPrintInit(void)
@@ -90,7 +83,7 @@ static void	TestPrintMain(void)
 			DC_FlushRange( scr, XYSIZE*2 );
 			GX_LoadBG3Scr( scr, 0, XYSIZE*2 ); 
 
-			GFL_HEAP_FreeMemory(scr);
+			//GFL_HEAP_FreeMemory(scr);
 			test->wp[1] = (void*)G2_GetBG3ScrPtr();
 		}
 		{
@@ -107,9 +100,9 @@ static void	TestPrintMain(void)
 			//パレット作成＆転送
 			u16* plt = GFL_HEAP_AllocMemoryLowClear(GFL_HEAPID_APP,16*2);
 
-			plt[0] = 0x001f;
+			plt[0] = 0x5041;
 			plt[3] = 0x7fff;
-			plt[7] = 0x0000;
+			plt[7] = 0x5041;
 			//GFL_STD_MemCopy16(plt,(void*)HW_BG_PLTT,16*2);
 			DC_FlushRange( plt, 16*2 );
 			GX_LoadBGPltt( plt, 0, 16*2 );
@@ -132,14 +125,14 @@ static void	TestPrintMain(void)
 			bmpchr->size_x = 32*8;
 			bmpchr->size_y = 32*8;
 			test_param->bmp = bmpchr;
-			test_param->writex = 0;
-			test_param->writey = 0;
+			test_param->writex = 32;
+			test_param->writey = 8;
 			test_param->spacex = 1;
 			test_param->spacey = 1;
 			test_param->colorF = 3;
 			test_param->colorB = 7;
 			test_param->mode = GFL_TEXT_WRITE_16;
-			GFL_TEXT_PrintCode( (STRCODE*)test_text, test_param );
+			GFL_TEXT_PrintSjisCode( test_text, test_param );
 			{
 				//キャラクターバッファ作成＆転送
 				//GFL_STD_MemCopy32(test->wp[0],(void*)(u32)G2_GetBG3CharPtr(),XYSIZE*0x20);
