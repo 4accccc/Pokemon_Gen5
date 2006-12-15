@@ -45,7 +45,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapsys.c \
 					g3d/g3d_system.c \
 					arc/arc_tool.c arc/arc_util.c \
 					clact.c \
-					string/textprint.c
+					string/textprint.c string/sjisconv.c
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
 ifdef USE_MCS
