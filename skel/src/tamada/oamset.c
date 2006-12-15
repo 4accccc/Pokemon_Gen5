@@ -17,6 +17,7 @@
 #include "procsys.h"
 
 #include "data.h"
+#include "dispfunc.h"
 
 #include "tamada_internal.h"
 
