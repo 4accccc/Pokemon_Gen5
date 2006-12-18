@@ -326,6 +326,16 @@ extern void* GFL_NET_WLGetUserBss(int index);
 
 //==============================================================================
 /**
+ * @brief   ビーコンの中にあるマックアドレスを得る
+ * @param   index ビーコンバッファに対するindex
+ * @return  maccaddressの配列
+ */
+//==============================================================================
+
+extern void* GFL_NET_WLGetUserMacAddress(int index);
+
+//==============================================================================
+/**
  * @brief   macアドレスをバックアップする
  * @param   pMac   mac address
  * @retval  none

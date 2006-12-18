@@ -26,7 +26,7 @@
 //	型宣言
 //==============================================================================
 // コールバック関数の書式
-typedef void (*PTRStateFunc)(void);
+//typedef void (*PTRStateFunc)(void);
 
 //==============================================================================
 // ワーク
@@ -43,7 +43,7 @@ typedef struct{
     int errorCode;
     u16 reConnectTime;  // 再接続時に使用するタイマー
     u16 timer;
-#ifdef PM_DEBUG		// Debug ROM
+#ifdef GFL_NET_DEBUG		// Debug ROM
     u16 debugTimer;
 #endif
     u8 limitNum;      // 受付制限したい場合のLIMIT数
@@ -51,7 +51,7 @@ typedef struct{
     u8 connectIndex;   // 子機が接続する親機のindex番号
     u8 serviceNo;      // 通信サービス番号
     u8 regulationNo;   // コンテスト種別を決める番号
-#ifdef PM_DEBUG		// Debug ROM
+#ifdef GFL_NET_DEBUG		// Debug ROM
     u8 soloDebugNo;
     u8 bDebugStart;
 #endif
@@ -72,7 +72,7 @@ typedef struct{
     u8 bPauseFlg;
 } _COMM_STATE_WORK;
 
-static _COMM_STATE_WORK* _pCommState = NULL;  ///<　ワーク構造体のポインタ
+//static _COMM_STATE_WORK* _pCommState = NULL;  ///<　ワーク構造体のポインタ
 
 //==============================================================================
 // 定義
@@ -120,18 +120,18 @@ static _COMM_STATE_WORK* _pCommState = NULL;  ///<　ワーク構造体のポインタ
 
 // ステートの初期化
 
-static void _changeStateDebug(PTRStateFunc state, int time, int line);  // ステートを変更する
-static void _changeState(PTRStateFunc state, int time);  // ステートを変更する
+static void _changeStateDebug(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time, int line);  // ステートを変更する
+static void _changeState(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time);  // ステートを変更する
 
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
 #if 1
-#define   _CHANGE_STATE(state, time)  _changeStateDebug(state, time, __LINE__)
+#define   _CHANGE_STATE(state, time)  _changeStateDebug(pNetHandle ,state, time, __LINE__)
 #else
-#define   _CHANGE_STATE(state, time)  _changeState(state, time)
+#define   _CHANGE_STATE(state, time)  _changeState(pNetHandle ,state, time)
 #endif
-#else  //PM_DEBUG
-#define   _CHANGE_STATE(state, time)  _changeState(state, time)
-#endif //PM_DEBUG
+#else  //GFL_NET_DEBUG
+#define   _CHANGE_STATE(state, time)  _changeState(pNetHandle ,state, time)
+#endif //GFL_NET_DEBUG
 
 
 // 地下関連ステート
@@ -218,7 +218,7 @@ static u8 _negotiationMsgReturnOK[]={" GAME"};
 static u8 _negotiationMsgReturnNG[]={" FULL"};
 
 
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
 static u8 _debugConnectNo = 0;
 static u8 _debugParentOnly = 0;
 static u8 _debugChildOnly = 0;
@@ -238,7 +238,7 @@ void DebugOhnoCommDebugUnderChildOnly(int no)
     _debugChildOnly = no;
 }
 
-#endif //PM_DEBUG
+#endif //GFL_NET_DEBUG
 
 //==============================================================================
 /**
@@ -248,7 +248,7 @@ void DebugOhnoCommDebugUnderChildOnly(int no)
  */
 //==============================================================================
 
-static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
+static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
 {
     void* pWork;
 
@@ -257,17 +257,13 @@ static void _commStateInitialize(SAVEDATA* pSaveData,int serviceNo)
     }
     CommVRAMDInitialize();
     // 初期化
-    _pCommState = (_COMM_STATE_WORK*)GFL_HEAP_AllocMemory(HEAPID_COMMUNICATION, sizeof(_COMM_STATE_WORK));
-    MI_CpuFill8(_pCommState, 0, sizeof(_COMM_STATE_WORK));
-    _pCommState->timer = _START_TIME;
-    _pCommState->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
-    _pCommState->pSaveData = pSaveData;
-    _pCommState->pMyStatus = SaveData_GetMyStatus(pSaveData);
-    _pCommState->limitNum = COMM_MODE_UNION_NUM_MIN + 1;   // 一人は最低でも接続可能
-    _pCommState->negotiation = _NEGOTIATION_CHECK;
-    _pCommState->bUnionPause = FALSE;
-    _pCommState->serviceNo = serviceNo;
-    //_pCommState->bWifi = FALSE;
+
+    pNetHandle->timer = _START_TIME;
+    pNetHandle->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
+    pNetHandle->limitNum = 2;         // 一人は最低でも接続可能
+    pNetHandle->negotiation = _NEGOTIATION_CHECK;
+    pNetHandle->serviceNo = serviceNo;
+
     CommRandSeedInitialize(&_pCommState->sRand);
     CommCommandInitialize(NULL, 0, NULL);
 
@@ -314,7 +310,7 @@ static void _stateFinalize(void)
  */
 //==============================================================================
 
-BOOL CommStateIsInitialize(void)
+BOOL GFL_NET_StateIsInitialize(void)
 {
     if(_pCommState){
         return TRUE;
@@ -330,7 +326,7 @@ BOOL CommStateIsInitialize(void)
  */
 //==============================================================================
 
-void CommStateEnterUnderGround(SAVEDATA* pSaveData)
+void GFL_NET_StateEnterUnderGround(SAVEDATA* pSaveData)
 {
     if(_pCommState!=NULL){ // つながっている場合今は除外する
         return;
@@ -340,7 +336,7 @@ void CommStateEnterUnderGround(SAVEDATA* pSaveData)
     _commStateInitialize(pSaveData,COMM_MODE_UNDERGROUND);
 //    _pCommState->serviceNo = COMM_MODE_UNDERGROUND;
     _pCommState->regulationNo = 0;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = _debugConnectNo + SOLO_DEBUG_NO;
     _pCommState->bParentOnly = _debugParentOnly;
     _pCommState->bChildOnly = _debugChildOnly;
@@ -357,7 +353,7 @@ void CommStateEnterUnderGround(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateExitUnderGround(void)
+void GFL_NET_StateExitUnderGround(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
@@ -375,7 +371,7 @@ void CommStateExitUnderGround(void)
  */
 //==============================================================================
 
-void CommStateUnderRestart(void)
+void GFL_NET_StateUnderRestart(void)
 {
     CommSystemReset();   // 今までの通信バッファをクリーンにする
     // ぐるぐるまわす
@@ -422,12 +418,12 @@ static void _underQueueReset(void)
     if(CommIsEmptyQueue_ServerSize()){
         CommSystemResetQueue_Server();
     }
-    OHNO_PRINT("送信キューけし\n");
+    NET_PRINT("送信キューけし\n");
        */
 //    _CHANGE_STATE(_underChildFinalize, _FINALIZE_TIME);
 }
 
-void CommStateUnderParentRestart(void)
+void GFL_NET_StateUnderParentRestart(void)
 {
    // _CHANGE_STATE(_underQueueReset, 0);
     _CHANGE_STATE(_underChildFinalize, 0);
@@ -494,7 +490,7 @@ BOOL CommIsUnderGroundConnectingState(void)
  */
 //==============================================================================
 
-void CommStateUnderGroundOfflineSecretBase(void)
+void GFL_NET_StateUnderGroundOfflineSecretBase(void)
 {
     // 切断ステートに移行する  すぐに切れない
     _CHANGE_STATE(_underSBReset, 0);  // エラー終了の場合RESETする
@@ -508,7 +504,7 @@ void CommStateUnderGroundOfflineSecretBase(void)
  */
 //==============================================================================
 
-void CommStateSetFirstEvent(void)
+void GFL_NET_StateSetFirstEvent(void)
 {
     _pCommState->bNotConnect = TRUE;
 }
@@ -525,7 +521,7 @@ void CommStateSetFirstEvent(void)
  */
 //==============================================================================
 
-void CommStateUnderGroundOnlineSecretBase(void)
+void GFL_NET_StateUnderGroundOnlineSecretBase(void)
 {
     CommVRAMDInitialize();
     _CHANGE_STATE(_underChildOnline, 0);  // エラー終了の場合RESETする
@@ -541,10 +537,10 @@ void CommStateUnderGroundOnlineSecretBase(void)
  */
 //==============================================================================
 
-#ifdef PM_DEBUG
-void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo)
+#ifdef GFL_NET_DEBUG
+void GFL_NET_StateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo)
 #else
-void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi)
+void GFL_NET_StateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi)
 #endif
 {
     if(CommIsInitialize()){
@@ -556,7 +552,7 @@ void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulati
 //    _pCommState->serviceNo = serviceNo;
     _pCommState->regulationNo = regulationNo;
     _pCommState->pReg = pReg;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = soloDebugNo;
 #endif
     _CHANGE_STATE(_battleParentInit, 0);
@@ -570,10 +566,10 @@ void CommStateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulati
  */
 //==============================================================================
 
-#ifdef PM_DEBUG
-void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg,BOOL bWifi, int soloDebugNo)
+#ifdef GFL_NET_DEBUG
+void GFL_NET_StateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg,BOOL bWifi, int soloDebugNo)
 #else
-void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg,BOOL bWifi)
+void GFL_NET_StateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg,BOOL bWifi)
 #endif
 {
     if(CommIsInitialize()){
@@ -585,7 +581,7 @@ void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulatio
 //    _pCommState->serviceNo = serviceNo;
     _pCommState->regulationNo = regulationNo;
     _pCommState->pReg = pReg;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = soloDebugNo;
 #endif
     _CHANGE_STATE(_battleChildInit, 0);
@@ -599,7 +595,7 @@ void CommStateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulatio
  */
 //==============================================================================
 
-void CommStateConnectBattleChild(int connectIndex)
+void GFL_NET_StateConnectBattleChild(int connectIndex)
 {
     _pCommState->connectIndex = connectIndex;
     _CHANGE_STATE(_battleChildConnecting, 0);
@@ -613,7 +609,7 @@ void CommStateConnectBattleChild(int connectIndex)
  */
 //==============================================================================
 
-void CommStateRebootBattleChild(void)
+void GFL_NET_StateRebootBattleChild(void)
 {
     CommSystemResetBattleChild();
     _CHANGE_STATE(_battleChildReTry, 0);
@@ -627,7 +623,7 @@ void CommStateRebootBattleChild(void)
  */
 //==============================================================================
 
-void CommStateExitBattle(void)
+void GFL_NET_StateExitBattle(void)
 {
     if(_pCommState==NULL){
         return;      // すでに終了している場合は除外
@@ -644,7 +640,7 @@ void CommStateExitBattle(void)
  */
 //==============================================================================
 
-void CommStateSetEntryChildEnable(BOOL bEntry)
+void GFL_NET_StateSetEntryChildEnable(BOOL bEntry)
 {
     WHSetEntry(bEntry);
 }
@@ -687,7 +683,7 @@ BOOL CommIsBattleConnectingState(void)
  */
 //==============================================================================
 
-void CommStateUnionBconCollection(SAVEDATA* pSaveData)
+void GFL_NET_StateUnionBconCollection(SAVEDATA* pSaveData)
 {
     if(_pCommState!=NULL){ // つながっている場合今は除外する
         return;
@@ -702,7 +698,7 @@ void CommStateUnionBconCollection(SAVEDATA* pSaveData)
     _commStateInitialize(pSaveData,COMM_MODE_UNION);
     _pCommState->serviceNo = COMM_MODE_UNION;
     _pCommState->regulationNo = 0;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = SOLO_DEBUG_NO;
 #endif
     // ステートの遷移のため初期化
@@ -718,7 +714,7 @@ void CommStateUnionBconCollection(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateUnionConnectStart(int index)
+void GFL_NET_StateUnionConnectStart(int index)
 {
     _pCommState->connectIndex = index;
     _pCommState->reConnectTime = _RETRY_COUNT_UNION;
@@ -735,7 +731,7 @@ void CommStateUnionConnectStart(int index)
  */
 //==============================================================================
 
-int CommStateIsUnionConnectSuccess(void)
+int GFL_NET_StateIsUnionConnectSuccess(void)
 {
     u32 stateAddr;
 
@@ -760,7 +756,7 @@ int CommStateIsUnionConnectSuccess(void)
  */
 //==============================================================================
 
-BOOL CommStateIsUnionParentConnectSuccess(void)
+BOOL GFL_NET_StateIsUnionParentConnectSuccess(void)
 {
     u32 stateAddr;
 
@@ -782,7 +778,7 @@ BOOL CommStateIsUnionParentConnectSuccess(void)
  */
 //==============================================================================
 
-void CommStateUnionBconCollectionRestart(void)
+void GFL_NET_StateUnionBconCollectionRestart(void)
 {
 	OS_TPrintf( "リスタートしました！\n" );
 
@@ -790,12 +786,12 @@ void CommStateUnionBconCollectionRestart(void)
 
 	if( !(_pCommState->bDisconnectError == TRUE && _pCommState->bErrorAuto == TRUE) ||
 		_pCommState->serviceNo == COMM_MODE_UNION ){
-	   CommStateSetErrorCheck(FALSE,FALSE);
+	   GFL_NET_StateSetErrorCheck(FALSE,FALSE);
 	}
 
     WirelessIconEasyEnd();
     _pCommState->serviceNo = COMM_MODE_UNION;
-    OHNO_PRINT(">> UNIONビーコン収集再開\n");
+    NET_PRINT(">> UNIONビーコン収集再開\n");
     _pCommState->bUnionPause = FALSE;
     WH_SetMaxEntry(_pCommState->limitNum);
 
@@ -816,7 +812,7 @@ void CommStateUnionBconCollectionRestart(void)
  */
 //==============================================================================
 
-BOOL CommStateUnionIsRestartSuccess(void)
+BOOL GFL_NET_StateUnionIsRestartSuccess(void)
 {
     u32 stateAddr;
 
@@ -838,7 +834,7 @@ BOOL CommStateUnionIsRestartSuccess(void)
  */
 //==============================================================================
 
-void CommStateExitUnion(void)
+void GFL_NET_StateExitUnion(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
@@ -857,7 +853,7 @@ void CommStateExitUnion(void)
  */
 //==============================================================================
 
-void CommStateChildReserve(void)
+void GFL_NET_StateChildReserve(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
@@ -874,12 +870,12 @@ void CommStateChildReserve(void)
  */
 //==============================================================================
 
-void CommStateUnionPause(void)
+void GFL_NET_StateUnionPause(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
     }
-    OHNO_PRINT(">> UNIONROOM一時停止\n");
+    NET_PRINT(">> UNIONROOM一時停止\n");
     _pCommState->bUnionPause = TRUE;
     WHParentConnectPause(TRUE);
     _CHANGE_STATE(_unionParentPause, 0);
@@ -893,7 +889,7 @@ void CommStateUnionPause(void)
  */
 //==============================================================================
 
-void CommStateUnionAppStart(void)
+void GFL_NET_StateUnionAppStart(void)
 {
     _pCommState->serviceNo = COMM_MODE_UNION_APP;
 }
@@ -906,7 +902,7 @@ void CommStateUnionAppStart(void)
  */
 //==============================================================================
 
-void CommStateUnionAppEnd(void)
+void GFL_NET_StateUnionAppEnd(void)
 {
     _pCommState->serviceNo = COMM_MODE_UNION;
 }
@@ -921,7 +917,7 @@ void CommStateUnionAppEnd(void)
  */
 //==============================================================================
 
-void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
+void GFL_NET_StateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
 {
     if(CommIsInitialize()){
         return;      // つながっている場合今は除外する
@@ -930,7 +926,7 @@ void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = 0;
 #endif
     _CHANGE_STATE(_mysteryParentInit, 0);
@@ -944,7 +940,7 @@ void CommStateEnterMysteryParent(SAVEDATA* pSaveData, int serviceNo)
  */
 //==============================================================================
 
-void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
+void GFL_NET_StateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
 {
     if(CommIsInitialize()){
         return;      // つながっている場合今は除外する
@@ -953,7 +949,7 @@ void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
     _commStateInitialize(pSaveData,serviceNo);
 //    _pCommState->serviceNo = serviceNo;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = 0;
 #endif
     _CHANGE_STATE(_mysteryChildInit, 0);
@@ -968,17 +964,30 @@ void CommStateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
  */
 //==============================================================================
 
-void CommStateCheckFunc(void)
+void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
 {
-
-    if(_pCommState){
-        if(_pCommState->state != NULL){
-            PTRStateFunc state = _pCommState->state;
+    if(pHandle){
+        PTRStateFunc state = GFL_NET_GetStateFunc(pHandle);
+        if(state != NULL){
             state();
         }
     }
 }
 
+
+
+void GFL_NET_StateClientConnect(GFL_NETHANDLE* pHandle)
+{
+
+    if(CommIsInitialize()){
+        return;      // つながっている場合今は除外する
+    }
+    _commStateInitialize(pHandle , serviceNo);
+    _CHANGE_STATE(_battleChildInit, 0);
+}
+
+
+
 //==============================================================================
 /**
  * 通信管理ステートの変更
@@ -988,10 +997,10 @@ void CommStateCheckFunc(void)
  */
 //==============================================================================
 
-static void _changeState(PTRStateFunc state, int time)
+static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
 {
-    _pCommState->state = state;
-    _pCommState->timer = time;
+    pHandle->state = state;
+    pHandle->timer = time;
 }
 
 //==============================================================================
@@ -1002,11 +1011,11 @@ static void _changeState(PTRStateFunc state, int time)
  * @retval  none
  */
 //==============================================================================
-#ifdef PM_DEBUG
-static void _changeStateDebug(PTRStateFunc state, int time, int line)
+#ifdef GFL_NET_DEBUG
+static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time, int line)
 {
-    OHNO_PRINT("comm_state: %d\n",line);
-    _changeState(state, time);
+    NET_PRINT("net_state: %d\n",line);
+    _changeState(pHandle, state, time);
 }
 #endif
 
@@ -1080,7 +1089,7 @@ static void _underChildFInit(void)
         if(bSuccess){
             u32 rand = MATH_Rand32(&_pCommState->sRand, _CHILD_P_SEARCH_TIME*2);
             if(_pCommState->reConnectTime > 0){
-                //OHNO_PRINT("再接続時間考慮 %d \n", _pCommState->reConnectTime);
+                //NET_PRINT("再接続時間考慮 %d \n", _pCommState->reConnectTime);
                 // 再接続時間考慮
                 rand = 2 * _CHILD_P_SEARCH_TIME * _pCommState->reConnectTime;
                 _pCommState->reConnectTime = 0;
@@ -1134,7 +1143,7 @@ static void _underChildPSearching(void)
     if(realParent != -1){
         _pCommState->connectIndex = realParent;  // 記憶
         _CHANGE_STATE(_underChildForceConnect, _CHILD_P_SEARCH_TIME);
-        OHNO_PRINT("本親に接続\n");
+        NET_PRINT("本親に接続\n");
         return;
     }
     if(_pCommState->timer != 0){
@@ -1164,24 +1173,24 @@ static void _underChildPSearching(void)
 
 static void _underChildForceConnect(void)
 {
-    //OHNO_PRINT("_underChildForceConnect...\n");
+    //NET_PRINT("_underChildForceConnect...\n");
     CommMPParentBconCheck();  // bconの検査
     if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // 親が見つかっている場合
-        //OHNO_PRINT("強制接続中\n");
+        //NET_PRINT("強制接続中\n");
         if(CommChildIndexConnect(_pCommState->connectIndex)){  // 接続するまで呼び続ける
             _CHANGE_STATE(_underChildConnecting, 100);
             return;
         }
     }
     if(CommIsError()){
-        //OHNO_PRINT("エラーの場合戻る\n");
+        //NET_PRINT("エラーの場合戻る\n");
         _CHANGE_STATE(_underChildFinalize, 0);
     }
     else if(_pCommState->timer!=0){
         _pCommState->timer--;
     }
     else{
-        OHNO_PRINT("接続時間切れの場合またもどる\n");
+        NET_PRINT("接続時間切れの場合またもどる\n");
         _CHANGE_STATE(_underChildFinalize, 0);
     }
 }
@@ -1201,13 +1210,13 @@ static void _underChildConnecting(void)
         CommSystemReset();   // 今までの通信バッファをクリーンにする
         CommSetAloneMode(FALSE);
         CommEnableSendMoveData();
-        //OHNO_PRINT("子機接続\n");
+        //NET_PRINT("子機接続\n");
         _CHANGE_STATE(_underChildConnect, 0);
         return;
     }
     
     if(CommIsError()){
-        OHNO_PRINT("エラーの場合changeにしてみる\n");
+        NET_PRINT("エラーの場合changeにしてみる\n");
         _CHANGE_STATE(_underChildFinalize, 0);
         return;
     }
@@ -1233,7 +1242,7 @@ static void _underChildFinalize(void)
         return;
     }
     _CHANGE_STATE(_underParentInit, 0);
-//    OHNO_PRINT("親機になり待機 \n");
+//    NET_PRINT("親機になり待機 \n");
 }
 
 //==============================================================================
@@ -1250,7 +1259,7 @@ static void _underParentFinalize(void)
         return;
     }
     _CHANGE_STATE(_underChildPInit, 0);
-//    OHNO_PRINT("子機となり検索 %d\n", rand);
+//    NET_PRINT("子機となり検索 %d\n", rand);
 }
 
 //==============================================================================
@@ -1288,7 +1297,7 @@ static void _underParentInit(void)
 static void _underParentWait(void)
 {
    if(CommIsChildsConnecting()){   // 自分以外がつながったら親機固定
-       OHNO_PRINT("自分以外がつながったら親機固定\n");
+       NET_PRINT("自分以外がつながったら親機固定\n");
         _pCommState->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
         _CHANGE_STATE(_underParentConnectInit, 0);
         return;
@@ -1332,7 +1341,7 @@ static void _underParentConnectInit(void)
 
 static void _underParentConnect(void)
 {
-//    OHNO_PRINT("親機として接続中\n");
+//    NET_PRINT("親機として接続中\n");
     //    if(CommIsError()){
         // 親子検索に戻る
 //        CommMPSwitchParentChild();
@@ -1354,10 +1363,10 @@ static void _underChildConnect(void)
     // 親機がいなくなったら終了処理をして別親を探しにいく
     if(CommMPParentDisconnect() || CommIsError()){
         if(CommMPParentDisconnect()){
-            OHNO_PRINT("親機切断 ??  \n");
+            NET_PRINT("親機切断 ??  \n");
         }
         else{
-            OHNO_PRINT("エラー切断   \n");
+            NET_PRINT("エラー切断   \n");
         }
 //        _stateUnderGroundConnectEnd();
         CommSystemReset();   // 今までの通信バッファをクリーンにする
@@ -1371,7 +1380,7 @@ static void _underChildConnect(void)
 
 static void _underSBBoot(void)
 {
-    OHNO_PRINT("終了の確認 \n");
+    NET_PRINT("終了の確認 \n");
     if(_pCommState->serviceNo < COMM_MODE_BATTLE_SINGLE_WIFI){
         if(!CommMPIsStateIdle()){  // 終了処理がきちんと終わっていることを確認
             return;
@@ -1379,7 +1388,7 @@ static void _underSBBoot(void)
         CommSetAloneMode(TRUE);  // 非接続状態
         CommEnableSendMoveData(); //commsystemにおいてあるキーデータの送信を許可
         CommMPStealth(TRUE);  // 秘密裏に切断
-        OHNO_PRINT("通信切れたはず \n");
+        NET_PRINT("通信切れたはず \n");
     }
     else{
     }
@@ -1399,7 +1408,7 @@ static void _underSBReset(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("再起動    -- %d \n",CommGetCurrentID());
+    NET_PRINT("再起動    -- %d \n",CommGetCurrentID());
     CommSystemReset();         // 今までの通信バッファをクリーンにする
     _CHANGE_STATE(_underSBBoot, 0);
 }
@@ -1422,7 +1431,7 @@ static void _underChildOnline(void)
 
     CommSystemReset();         // 今までの通信バッファをクリーンにする
 
-    OHNO_PRINT("再起動    -- %d \n",CommGetCurrentID());
+    NET_PRINT("再起動    -- %d \n",CommGetCurrentID());
     _CHANGE_STATE(_underChildFInit, 0);
 }
 
@@ -1439,7 +1448,7 @@ static void _underChildReset(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("再起動    -- %d \n",CommGetCurrentID());
+    NET_PRINT("再起動    -- %d \n",CommGetCurrentID());
     _CHANGE_STATE(_underChildFInit, 0);
 }
 
@@ -1563,7 +1572,7 @@ static void _battleChildSendName(void)
 {
 
     if(CommIsError()){
-        //OHNO_PRINT("エラーの場合戻る\n");
+        //NET_PRINT("エラーの場合戻る\n");
         _CHANGE_STATE(_battleChildReset, 0);
     }
 
@@ -1797,7 +1806,7 @@ static void _stateConnectEnd(void)
     if(_pCommState->timer != 0){
         return;
     }
-    OHNO_PRINT("切断する");
+    NET_PRINT("切断する");
     CommFinalize();
     _CHANGE_STATE(_stateEnd, 0);
 }
@@ -1851,7 +1860,7 @@ static void _unionChildSearching(void)
     if(!CommMPSwitchParentChild()){
         return;
     }
-    OHNO_PRINT("子機おわり\n");
+    NET_PRINT("子機おわり\n");
     _CHANGE_STATE(_unionParentInit, 0);
 }
 
@@ -1889,7 +1898,7 @@ static void _unionParentInit(void)
         u32 rand = MATH_Rand32(&_pCommState->sRand, _PARENT_WAIT_TIME*2);
         CommSetTransmissonTypeDS();
         _pCommState->bFirstParent = FALSE;
-        OHNO_PRINT("親機\n");
+        NET_PRINT("親機\n");
         _CHANGE_STATE(_unionParentWait, 10000);
     }
 }
@@ -1908,7 +1917,7 @@ static void _unionParentWait(void)
     }
     else{
         if(CommIsChildsConnecting()){   // 自分以外がつながったら親機固定
-            OHNO_PRINT("親機 -- つながり\n");
+            NET_PRINT("親機 -- つながり\n");
             _pCommState->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
             WirelessIconEasy();
             _CHANGE_STATE(_unionParentConnect, 0);
@@ -1919,7 +1928,7 @@ static void _unionParentWait(void)
             return;
         }
     }
-    OHNO_PRINT("親機おわり\n");
+    NET_PRINT("親機おわり\n");
     if( CommMPSwitchParentChild() ){
         _CHANGE_STATE(_unionChildRestart, 0);
     }
@@ -1944,7 +1953,7 @@ static void _unionChildRestart(void)
     if(CommChildModeInit(FALSE, FALSE, _PACKETSIZE_UNION)){
         CommSetTransmissonTypeDS();
         rand = MATH_Rand32(&_pCommState->sRand, _CHILD_P_SEARCH_TIME);
-        OHNO_PRINT("子機開始 %d \n",rand);
+        NET_PRINT("子機開始 %d \n",rand);
         _CHANGE_STATE(_unionChildSearching, rand);
     }
 }
@@ -1988,23 +1997,23 @@ static void _unionForceConnectStart2(void)
 
 static void _unionForceConnect(void)
 {
-    OHNO_PRINT("_unionForceConnect...\n");
+    NET_PRINT("_unionForceConnect...\n");
     if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // 親が見つかっている場合
-        OHNO_PRINT("強制接続中\n");
+        NET_PRINT("強制接続中\n");
         if(CommChildIndexConnect(_pCommState->connectIndex)){  // 接続するまで呼び続ける
             _CHANGE_STATE(_unionChildConnecting, 100);
             return;
         }
     }
     if(CommIsError()){
-        OHNO_PRINT("エラーの場合再度仕切りなおし\n");
+        NET_PRINT("エラーの場合再度仕切りなおし\n");
         _CHANGE_STATE(_unionChildReset, 0);
     }
     else if(_pCommState->timer!=0){
         _pCommState->timer--;
     }
     else{
-        OHNO_PRINT("接続時間切れの場合またもどる\n");
+        NET_PRINT("接続時間切れの場合またもどる\n");
         _CHANGE_STATE(_unionChildReset, 0);
     }
 }
@@ -2019,12 +2028,12 @@ static void _unionForceConnect(void)
 static void _unionChildConnecting(void)
 {
     if(CommIsError()){
-        OHNO_PRINT("------エラーの場合Reset\n");
+        NET_PRINT("------エラーの場合Reset\n");
         _CHANGE_STATE(_unionChildReset, 0);
         return;
     }
     if(CommIsConnect(CommGetCurrentID())){   // 自分自身が接続していることが確認できたら
-        OHNO_PRINT("子機接続  認証送信\n");
+        NET_PRINT("子機接続  認証送信\n");
         _pCommState->negotiation = _NEGOTIATION_CHECK;
         CommSendFixSizeData(CS_COMM_NEGOTIATION, _negotiationMsg);
         _CHANGE_STATE(_unionChildNegotiation, 120);
@@ -2049,17 +2058,17 @@ static void _unionChildConnecting(void)
 static void _unionChildNegotiation(void)
 {
     if(CommIsError()){
-        OHNO_PRINT("------エラーの場合Reset\n");
+        NET_PRINT("------エラーの場合Reset\n");
         _CHANGE_STATE(_unionChildReset, 0);
         return;
     }
     if(_pCommState->negotiation == _NEGOTIATION_NG){
-        OHNO_PRINT("接続失敗-----------------------\n");
+        NET_PRINT("接続失敗-----------------------\n");
         _CHANGE_STATE(_unionChildConnectFailed, 0);
         return;
     }
     if(_pCommState->negotiation == _NEGOTIATION_OK){
-        OHNO_PRINT("子機接続  認証おわり\n");
+        NET_PRINT("子機接続  認証おわり\n");
         CommInfoSendPokeData();
         _CHANGE_STATE(_unionChildConnectSuccess, 0);
         return;
@@ -2069,7 +2078,7 @@ static void _unionChildNegotiation(void)
         _pCommState->timer--;
         return;
     }
-    OHNO_PRINT(" 時間切れ \n");
+    NET_PRINT(" 時間切れ \n");
     _CHANGE_STATE(_unionChildReset, 0);
 }
 
@@ -2112,11 +2121,11 @@ static void _unionChildReset(void)
 //==============================================================================
 static void _unionParentConnect(void)
 {
-    OHNO_PRINT("commisConnect %d\n",CommIsConnect(1));
+    NET_PRINT("commisConnect %d\n",CommIsConnect(1));
 
     if(!CommIsChildsConnecting()){   // 自分以外がつながってないばあいもう一回
         if(!CommStateGetErrorCheck()){
-            OHNO_PRINT("親機しっぱい\n");
+            NET_PRINT("親機しっぱい\n");
             if( CommMPSwitchParentChild() ){
                 _CHANGE_STATE(_unionChildRestart, 0);
             }
@@ -2129,7 +2138,7 @@ static void _unionParentConnect(void)
     }
     if(CommIsError()){
         if(!CommStateGetErrorCheck()){
-            OHNO_PRINT("------エラーの場合Reset\n");
+            NET_PRINT("------エラーの場合Reset\n");
             _CHANGE_STATE(_unionChildReset, 0);
             return;
         }
@@ -2178,7 +2187,7 @@ static void _pictureBoardChildConnecting(void);
  */
 //==============================================================================
 
-void CommStateUnionPictureBoardChange(void)
+void GFL_NET_StateUnionPictureBoardChange(void)
 {
     _pCommState->serviceNo = COMM_MODE_PICTURE;
     if(CommGetCurrentID() == COMM_PARENT_ID){
@@ -2200,12 +2209,12 @@ void CommStateUnionPictureBoardChange(void)
  */
 //==============================================================================
 
-void CommStateUnionPictureBoardChild(int index)
+void GFL_NET_StateUnionPictureBoardChild(int index)
 {
     _pCommState->connectIndex = index;
     _pCommState->reConnectTime = _RETRY_COUNT_UNION;
     _CHANGE_STATE(_pictureBoardChangeChild, 0);
-    OHNO_PRINT("お絵かきボード子機接続\n");
+    NET_PRINT("お絵かきボード子機接続\n");
 }
 
 //==============================================================================
@@ -2216,7 +2225,7 @@ void CommStateUnionPictureBoardChild(int index)
  */
 //==============================================================================
 
-void CommStateUnionRecordCornerChange(void)
+void GFL_NET_StateUnionRecordCornerChange(void)
 {
     _pCommState->serviceNo = COMM_MODE_RECORD;
 }
@@ -2229,7 +2238,7 @@ void CommStateUnionRecordCornerChange(void)
  */
 //==============================================================================
 
-void CommStateUnionRecordCornerChild(int index)
+void GFL_NET_StateUnionRecordCornerChild(int index)
 {
     _pCommState->connectIndex = index;
     _pCommState->serviceNo = COMM_MODE_RECORD;
@@ -2246,7 +2255,7 @@ void CommStateUnionRecordCornerChild(int index)
  */
 //==============================================================================
 
-BOOL CommStateIsUnionPictureBoardState(void)
+BOOL GFL_NET_StateIsUnionPictureBoardState(void)
 {
     u32 stateAddr = (u32)_pCommState->state;
 
@@ -2275,7 +2284,7 @@ static void _pictureBoardInitParent(void)
     if(!CommMPIsStateIdle()){  // 終了処理がきちんと終わっていることを確認
         return;
     }
-    OHNO_PRINT("お絵かき親に変更\n");
+    NET_PRINT("お絵かき親に変更\n");
     _pCommState->serviceNo = COMM_MODE_PICTURE;
     if(CommParentModeInit(FALSE, FALSE, _PACKETSIZE_UNION,TRUE)) {
         CommSetTransmissonTypeMP();
@@ -2324,9 +2333,9 @@ static void _pictureBoardInitChild(void)
 
 static void _pictureBoardForceConnect(void)
 {
-    OHNO_PRINT("_pictureBoardForceConnect...\n");
+    NET_PRINT("_pictureBoardForceConnect...\n");
     if(CommMPGetParentConnectionNum(_pCommState->connectIndex)!=0){ // 親が見つかっている場合
-        OHNO_PRINT("BOARD強制接続中\n");
+        NET_PRINT("BOARD強制接続中\n");
         if(CommChildIndexConnect(_pCommState->connectIndex)){  // 接続するまで呼び続ける
             _CHANGE_STATE(_pictureBoardChildConnecting, 100);
             return;
@@ -2335,7 +2344,7 @@ static void _pictureBoardForceConnect(void)
     if(CommIsError() || (_pCommState->timer == 0)){
         _pCommState->reConnectTime--;
         if(_pCommState->reConnectTime==0){
-            OHNO_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
+            NET_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
             _CHANGE_STATE(_unionChildConnectFailed, 0);
         }
         else{
@@ -2364,18 +2373,18 @@ static void _pictureBoardChildConnecting(void)
     if(CommIsError()){
         _pCommState->reConnectTime--;
         if(_pCommState->reConnectTime==0){
-            OHNO_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
+            NET_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
             _CHANGE_STATE(_unionChildConnectFailed, 0);
         }
         else{
-            OHNO_PRINT("------エラーの場合Reset\n");
+            NET_PRINT("------エラーの場合Reset\n");
             _CHANGE_STATE(_pictureBoardChangeChild, 0);
         }
         return;
     }
     
     if(CommIsConnect(CommGetCurrentID())){   // 自分自身が接続していることが確認できたら
-        OHNO_PRINT("子機接続\n");
+        NET_PRINT("子機接続\n");
         _CHANGE_STATE(_unionChildConnectSuccess, 0);
         return;
     }
@@ -2385,7 +2394,7 @@ static void _pictureBoardChildConnecting(void)
     }
 
     _pCommState->reConnectTime--;
-    OHNO_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
+    NET_PRINT("接続失敗 %d \n",_pCommState->reConnectTime);
     if(_pCommState->reConnectTime==0){
         _CHANGE_STATE(_unionChildConnectFailed, 0);
     }
@@ -2409,7 +2418,7 @@ void CommRecvNegotiation(int netID, int size, void* pData, void* pWork, GFL_NETH
     u8* pMsg = pData;
     BOOL bMatch = TRUE;
 
-    OHNO_PRINT("------CommRecvNegotiation\n");
+    NET_PRINT("------CommRecvNegotiation\n");
 
     if(CommGetCurrentID() != COMM_PARENT_ID){  // 親機のみ判断可能
         return;
@@ -2423,13 +2432,13 @@ void CommRecvNegotiation(int netID, int size, void* pData, void* pWork, GFL_NETH
     }
     if(bMatch  && (!_pCommState->bUnionPause)){   // 子機から接続確認が来た
 //        if(CommGetConnectNum() <= _pCommState->limitNum){  // 指定接続人数より下回ること
-            OHNO_PRINT("------成功を送信 \n");
+            NET_PRINT("------成功を送信 \n");
             _negotiationMsgReturnOK[0] = netID;
             CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnOK);
             return;
 //        }
     }
-    OHNO_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
+    NET_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
     _negotiationMsgReturnNG[0] = netID;
     CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnNG);
 }
@@ -2471,7 +2480,7 @@ void CommRecvNegotiationReturn(int netID, int size, void* pData, void* pWork, GF
     }
     if(bMatch){   // 親機から接続否定が来た
         id = pMsg[0];
-        OHNO_PRINT("接続拒否コマンドだった%d %d\n",id , CommGetCurrentID());
+        NET_PRINT("接続拒否コマンドだった%d %d\n",id , CommGetCurrentID());
         if(id == (u8)CommGetCurrentID()){
             _pCommState->negotiation = _NEGOTIATION_NG;
         }
@@ -2501,7 +2510,7 @@ int CommRecvGetNegotiationSize(void)
  */
 //==============================================================================
 
-void CommStateSetLimitNum(int num)
+void GFL_NET_StateSetLimitNum(int num)
 {
     if(_pCommState){
         _pCommState->limitNum = num;
@@ -2553,7 +2562,7 @@ static void _poketchChildInit(void)
  */
 //==============================================================================
 
-void CommStateEnterPockchChild(SAVEDATA* pSaveData)
+void GFL_NET_StateEnterPockchChild(SAVEDATA* pSaveData)
 {
     if(CommIsInitialize()){
         return;      // つながっている場合今は除外する
@@ -2563,7 +2572,7 @@ void CommStateEnterPockchChild(SAVEDATA* pSaveData)
     _commStateInitialize(pSaveData,COMM_MODE_POKETCH);
 //    _pCommState->serviceNo = COMM_MODE_POKETCH;
     _pCommState->regulationNo = 0;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = 0;
 #endif
     _CHANGE_STATE(_poketchChildInit, 0);
@@ -2577,12 +2586,12 @@ void CommStateEnterPockchChild(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateExitPoketch(void)
+void GFL_NET_StateExitPoketch(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
     }
-    OHNO_PRINT("いったん切断\n");
+    NET_PRINT("いったん切断\n");
     // 切断ステートに移行する  すぐに切れない
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
@@ -2675,7 +2684,7 @@ static void _partySearchChildInit(void)
  */
 //==============================================================================
 
-void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
+void GFL_NET_StateEnterPartyGameScanChild(SAVEDATA* pSaveData)
 {
     if(CommIsInitialize()){
         return;      // つながっている場合今は除外する
@@ -2684,7 +2693,7 @@ void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
     sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_PARTY );
     _commStateInitialize(pSaveData,COMM_MODE_PARTY);
     _pCommState->regulationNo = 0;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = 0;
 #endif
     _CHANGE_STATE(_partySearchChildInit, 0);
@@ -2698,12 +2707,12 @@ void CommStateEnterPartyGameScanChild(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateExitPartyGameScan(void)
+void GFL_NET_StateExitPartyGameScan(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
     }
-    OHNO_PRINT("いったん切断\n");
+    NET_PRINT("いったん切断\n");
     // 切断ステートに移行する  すぐに切れない
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
@@ -2716,7 +2725,7 @@ void CommStateExitPartyGameScan(void)
  */
 //==============================================================================
 
-u8 CommStateGetPartyGameBit(void)
+u8 GFL_NET_StateGetPartyGameBit(void)
 {
   return _pCommState->partyGameBit;
 }
@@ -2729,7 +2738,7 @@ u8 CommStateGetPartyGameBit(void)
  */
 //==============================================================================
 
-BOOL CommStateExitReset(void)
+BOOL GFL_NET_StateExitReset(void)
 {
     CommSystemShutdown();
     if(_pCommState==NULL){  // すでに終了している
@@ -2858,7 +2867,7 @@ static void _wifiBattleConnect(void)
         _CHANGE_STATE(_wifiBattleTimeout, 0);
     }
     else if(ret == 2){
-        OHNO_PRINT("切断エラー\n");
+        NET_PRINT("切断エラー\n");
         if(_pCommState->bDisconnectError){
             _CHANGE_STATE(_wifiBattleError, 0);
         }
@@ -2955,7 +2964,7 @@ static void _wifiBattleCanceling(void)
             _CHANGE_STATE(_wifiBattleMaching, 0);
         }
         else{
-            OHNO_PRINT(" 状態を変更できなかった もういっかい\n");
+            NET_PRINT(" 状態を変更できなかった もういっかい\n");
 //            _CHANGE_STATE(_wifiBattleLogin, 0);  // 状態を変更できなかった
         }
     }
@@ -3054,7 +3063,7 @@ static void _stateWifiMatchEnd(void)
     }
     ret = mydwc_step();
     if( ret < 0 ){
-        OHNO_PRINT(" エラー発生。");
+        NET_PRINT(" エラー発生。");
         _CHANGE_STATE(_wifiBattleError, 0);
     }
 }
@@ -3069,7 +3078,7 @@ static void _stateWifiMatchEnd(void)
 
 void CommRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    OHNO_PRINT("EXITコマンド受信\n");
+    NET_PRINT("EXITコマンド受信\n");
     if(CommGetCurrentID() == COMM_PARENT_ID){
         _pCommState->disconnectIndex = 0;
         _CHANGE_STATE(_stateWifiMatchEnd, 0);
@@ -3089,7 +3098,7 @@ void CommRecvExit(const int netID, const int size, const void* pData, void* pWor
  */
 //==============================================================================
 
-BOOL CommStateIsWifiDisconnect(void)
+BOOL GFL_NET_StateIsWifiDisconnect(void)
 {
     return _pCommState->bWifiDisconnect;
 }
@@ -3102,7 +3111,7 @@ BOOL CommStateIsWifiDisconnect(void)
  */
 //==============================================================================
 
-BOOL CommStateIsWifiLoginState(void)
+BOOL GFL_NET_StateIsWifiLoginState(void)
 {
     u32 stateAddr = (u32)_pCommState->state;
 
@@ -3113,7 +3122,7 @@ BOOL CommStateIsWifiLoginState(void)
 }
 
 
-BOOL CommStateIsWifiLoginMatchState(void)
+BOOL GFL_NET_StateIsWifiLoginMatchState(void)
 {
     u32 stateAddr = (u32)_pCommState->state;
 
@@ -3134,7 +3143,7 @@ BOOL CommStateIsWifiLoginMatchState(void)
  */
 //==============================================================================
 
-int CommStateGetWifiErrorNo(void)
+int GFL_NET_StateGetWifiErrorNo(void)
 {
     return _pCommState->errorCode;
 }
@@ -3173,7 +3182,7 @@ static void _stateWifiLogout(void)
  */
 //==============================================================================
 
-void CommStateWifiLogout(void)
+void GFL_NET_StateWifiLogout(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
@@ -3191,7 +3200,7 @@ void CommStateWifiLogout(void)
  */
 //==============================================================================
 
-void CommStateWifiMatchEnd(void)
+void GFL_NET_StateWifiMatchEnd(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
@@ -3208,17 +3217,17 @@ void CommStateWifiMatchEnd(void)
  */
 //==============================================================================
 
-void CommStateWifiTradeMatchEnd(void)
+void GFL_NET_StateWifiTradeMatchEnd(void)
 {
     if(_pCommState==NULL){  // すでに終了している
         return;
     }
     if(CommGetCurrentID() == COMM_PARENT_ID){
-        OHNO_PRINT("親は自分で切る\n");
+        NET_PRINT("親は自分で切る\n");
         _pCommState->disconnectIndex = 0;
     }
     else{
-        OHNO_PRINT("子は待機する\n");
+        NET_PRINT("子は待機する\n");
         _pCommState->disconnectIndex = 1;
     }
     _CHANGE_STATE(_stateWifiMatchEnd, 0);
@@ -3228,11 +3237,11 @@ void CommStateWifiTradeMatchEnd(void)
 
 
 
-void CommStateWifiBattleMatchEnd(void)
+void GFL_NET_StateWifiBattleMatchEnd(void)
 {
     u8 id = CommGetCurrentID();
     
-    OHNO_PRINT("CS_WIFI_EXIT %d\n",id);
+    NET_PRINT("CS_WIFI_EXIT %d\n",id);
     CommSendFixSizeData(CS_WIFI_EXIT,&id);
 }
 
@@ -3245,7 +3254,7 @@ void CommStateWifiBattleMatchEnd(void)
  */
 //==============================================================================
 
-BOOL CommStateIsWifiError(void)
+BOOL GFL_NET_StateIsWifiError(void)
 {
     if(_pCommState){
         u32 stateAddr = (u32)_pCommState->state;
@@ -3267,7 +3276,7 @@ BOOL CommStateIsWifiError(void)
  */
 //==============================================================================
 
-void CommStateWifiDPWStart(SAVEDATA* pSaveData)
+void GFL_NET_StateWifiDPWStart(SAVEDATA* pSaveData)
 {
     if(!_pCommState){
         sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_DPW );
@@ -3276,7 +3285,7 @@ void CommStateWifiDPWStart(SAVEDATA* pSaveData)
         _pCommState->serviceNo = COMM_MODE_DPW_WIFI;
         _pCommState->bWorldWifi = TRUE;
         _pCommState->pSaveData = pSaveData;
-        CommStateSetErrorCheck(FALSE,TRUE);
+        GFL_NET_StateSetErrorCheck(FALSE,TRUE);
         sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
     }
 }
@@ -3289,11 +3298,11 @@ void CommStateWifiDPWStart(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateWifiDPWEnd(void)
+void GFL_NET_StateWifiDPWEnd(void)
 {
     if(_pCommState){
         sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
-        CommStateSetErrorCheck(FALSE,FALSE);
+        GFL_NET_StateSetErrorCheck(FALSE,FALSE);
         GFL_HEAP_FreeMemory(_pCommState);
         _pCommState = NULL;
         GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
@@ -3308,7 +3317,7 @@ void CommStateWifiDPWEnd(void)
  */
 //==============================================================================
 
-void CommStateWifiFusigiStart(SAVEDATA* pSaveData)
+void GFL_NET_StateWifiFusigiStart(SAVEDATA* pSaveData)
 {
     if(!_pCommState){
         sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_DPW );
@@ -3317,7 +3326,7 @@ void CommStateWifiFusigiStart(SAVEDATA* pSaveData)
         _pCommState->serviceNo = COMM_MODE_FUSIGI_WIFI;
         _pCommState->bWorldWifi = TRUE;
         _pCommState->pSaveData = pSaveData;
-        CommStateSetErrorCheck(FALSE,TRUE);
+        GFL_NET_StateSetErrorCheck(FALSE,TRUE);
         sys_SoftResetNG(SOFTRESET_TYPE_WIFI);
     }
 }
@@ -3330,11 +3339,11 @@ void CommStateWifiFusigiStart(SAVEDATA* pSaveData)
  */
 //==============================================================================
 
-void CommStateWifiFusigiEnd(void)
+void GFL_NET_StateWifiFusigiEnd(void)
 {
     if(_pCommState){
         sys_SoftResetOK(SOFTRESET_TYPE_WIFI);
-        CommStateSetErrorCheck(FALSE,FALSE);
+        GFL_NET_StateSetErrorCheck(FALSE,FALSE);
         GFL_HEAP_FreeMemory(_pCommState);
         _pCommState = NULL;
         GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
@@ -3352,7 +3361,7 @@ void CommStateWifiFusigiEnd(void)
  */
 //==============================================================================
 
-BOOL CommStateGetWifiDPWError(void)
+BOOL GFL_NET_StateGetWifiDPWError(void)
 {
 	int errorCode,ret;
 	DWCErrorType myErrorType;
@@ -3466,10 +3475,10 @@ static void _wifiBattleChildInit(void)
  */
 //==============================================================================
 
-#ifdef PM_DEBUG
-void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo)
+#ifdef GFL_NET_DEBUG
+void GFL_NET_StateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo)
 #else
-void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo)
+void GFL_NET_StateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regulationNo)
 #endif
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
@@ -3483,7 +3492,7 @@ void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
 //    _pCommState->serviceNo = serviceNo;
     _pCommState->regulationNo = regulationNo;
     _pCommState->pSaveData = pSaveData;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = soloDebugNo;
 #endif
     
@@ -3501,10 +3510,10 @@ void CommStateWifiEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
  */
 //==============================================================================
 
-#ifdef PM_DEBUG
-void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo)
+#ifdef GFL_NET_DEBUG
+void GFL_NET_StateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, int soloDebugNo)
 #else
-void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo)
+void GFL_NET_StateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo)
 #endif
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
@@ -3518,7 +3527,7 @@ void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regu
 //    _pCommState->serviceNo = serviceNo;
     _pCommState->regulationNo = regulationNo;
     _pCommState->pSaveData = pSaveData;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = soloDebugNo;
 #endif
     _CHANGE_STATE(_wifiBattleParentInit, 0);
@@ -3532,7 +3541,7 @@ void CommStateWifiEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regu
  */
 //==============================================================================
 
-void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
+void* GFL_NET_StateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(CommIsInitialize()){
@@ -3547,7 +3556,7 @@ void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
 //    _pCommState->serviceNo = COMM_MODE_LOGIN_WIFI;
     _pCommState->regulationNo = 0;
     _pCommState->pSaveData = pSaveData;
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
     _pCommState->soloDebugNo = 0;
 #endif
 
@@ -3564,7 +3573,7 @@ void* CommStateWifiEnterLogin(SAVEDATA* pSaveData, int wifiFriendStatusSize)
  */
 //==============================================================================
 
-void* CommStateGetMatchWork(void)
+void* GFL_NET_StateGetMatchWork(void)
 {
     return _pCommState->pWifiFriendStatus;
 }
@@ -3578,12 +3587,12 @@ void* CommStateGetMatchWork(void)
  */
 //==============================================================================
 
-void CommStateSetErrorCheck(BOOL bFlg,BOOL bAuto)
+void GFL_NET_StateSetErrorCheck(BOOL bFlg,BOOL bAuto)
 {
     if(_pCommState){
         _pCommState->bDisconnectError = bFlg;
         _pCommState->bErrorAuto = bAuto;
-        OHNO_PRINT("CommStateSetErrorCheck %d %d\n",_pCommState->bDisconnectError,_pCommState->bErrorAuto);
+        NET_PRINT("CommStateSetErrorCheck %d %d\n",_pCommState->bDisconnectError,_pCommState->bErrorAuto);
     }
     CommMPSetNoChildError(bFlg);  // 子機がいなくなったら再検索するためにERR扱いにする
     CommMPSetDisconnectOtherError(bFlg);
@@ -3598,7 +3607,7 @@ void CommStateSetErrorCheck(BOOL bFlg,BOOL bAuto)
  */
 //==============================================================================
 
-BOOL CommStateGetErrorCheck(void)
+BOOL GFL_NET_StateGetErrorCheck(void)
 {
     if(_pCommState){
         if(_pCommState->stateError!=0){
@@ -3611,7 +3620,7 @@ BOOL CommStateGetErrorCheck(void)
 }
 
 
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
 //==============================================================================
 /**
  * デバッグ用通信接続開始
@@ -3620,15 +3629,15 @@ BOOL CommStateGetErrorCheck(void)
  */
 //==============================================================================
 
-void CommStateRecvDebugStart(int netID, int size, void* pData, void* pWork)
+void GFL_NET_StateRecvDebugStart(int netID, int size, void* pData, void* pWork)
 {
     if(_pCommState){
         _pCommState->bDebugStart = TRUE;
     }
-    OHNO_PRINT("コマンド到着\n");
+    NET_PRINT("コマンド到着\n");
 }
 
-BOOL CommStateDBattleIsReady(void)
+BOOL GFL_NET_StateDBattleIsReady(void)
 {
     if(_pCommState){
         return _pCommState->bDebugStart;
@@ -3642,8 +3651,8 @@ static void _commConnectChildDebug(TCB_PTR tcb, void* work)
         return;
     }
     if(CommMPGetGFBss(_pCommState->connectIndex)!=NULL){
-        OHNO_PRINT("デバッグ子機接続開始\n");
-        CommStateConnectBattleChild(_pCommState->connectIndex);  // 接続
+        NET_PRINT("デバッグ子機接続開始\n");
+        GFL_NET_StateConnectBattleChild(_pCommState->connectIndex);  // 接続
         TCB_Delete(tcb);
     }
 }
@@ -3654,48 +3663,48 @@ static void _commConnectParentDebug(TCB_PTR tcb, void* work)
         return;
     }
     if(CommGetConnectNum() == (CommLocalGetServiceMaxEntry(CommStateGetServiceNo())+1) ){
-        OHNO_PRINT("接続人数に達した\n");
+        NET_PRINT("接続人数に達した\n");
         CommSendFixData(CS_DEBUG_START);  // 全員にコマンド送信
         TCB_Delete(tcb);
     }
 }
 
-void CommStateDBattleConnect(BOOL bParent, int gameMode, SAVEDATA* pSaveData)
+void GFL_NET_StateDBattleConnect(BOOL bParent, int gameMode, SAVEDATA* pSaveData)
 {
     MYSTATUS* pMyStatus = SaveData_GetMyStatus(pSaveData);
     if(COMM_MODE_BATTLE_SINGLE_WIFI <= gameMode){
 /*  今は封印
         DwcOverlayStart();
         if(!bParent){
-            CommStateWifiEnterBattleChild(pSaveData, gameMode, 0, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
+            GFL_NET_StateWifiEnterBattleChild(pSaveData, gameMode, 0, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
             _pCommState->connectIndex = 0;
             TCB_Add(_commConnectChildDebug, NULL, _TCB_COMMCHECK_PRT-2);
         }
         else{
-            CommStateWifiEnterBattleParent(pSaveData, gameMode, 0, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
+            GFL_NET_StateWifiEnterBattleParent(pSaveData, gameMode, 0, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
             TCB_Add(_commConnectParentDebug, NULL, _TCB_COMMCHECK_PRT-2);
         }
    */
     }
     else{
         if(!bParent){
-            CommStateEnterBattleChild(pSaveData, gameMode, 0, NULL, FALSE, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
+            GFL_NET_StateEnterBattleChild(pSaveData, gameMode, 0, NULL, FALSE, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
             _pCommState->connectIndex = 0;
             TCB_Add(_commConnectChildDebug, NULL, _TCB_COMMCHECK_PRT-1);
         }
         else{
-            CommStateEnterBattleParent(pSaveData, gameMode, 0, NULL, FALSE, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
+            GFL_NET_StateEnterBattleParent(pSaveData, gameMode, 0, NULL, FALSE, SOLO_DEBUG_NO + COMMDIRECT_DEBUG_NO);
             TCB_Add(_commConnectParentDebug, NULL, _TCB_COMMCHECK_PRT-1);
         }
     }
     _pCommState->bDebugStart = FALSE;
 }
 
-#endif //PM_DEBUG
+#endif //GFL_NET_DEBUG
 
 
 
-int CommStateGetServiceNo(void)
+int GFL_NET_StateGetServiceNo(void)
 {
     if(_pCommState){
         return _pCommState->serviceNo;
@@ -3703,7 +3712,7 @@ int CommStateGetServiceNo(void)
     return COMM_MODE_BATTLE_SINGLE;
 }
 
-int CommStateGetRegulationNo(void)
+int GFL_NET_StateGetRegulationNo(void)
 {
     if(_pCommState){
         return _pCommState->regulationNo;
@@ -3711,21 +3720,21 @@ int CommStateGetRegulationNo(void)
     return COMM_REG_NORMAL;
 }
 
-void CommStateSetPokemon(u8* sel)
+void GFL_NET_StateSetPokemon(u8* sel)
 {
     MI_CpuCopy8(sel,_pCommState->select,NELEMS(_pCommState->select));
 
     OHNO_SP_PRINT("%d %d %d %d %d %d\n",sel[0],sel[1],sel[2],sel[3],sel[4],sel[5]);
 }
 
-void CommStateGetPokemon(u8* sel)
+void GFL_NET_StateGetPokemon(u8* sel)
 {
     MI_CpuCopy8(_pCommState->select,sel,NELEMS(_pCommState->select));
 }
 
 
-#ifdef PM_DEBUG
-int CommStateGetSoloDebugNo(void)
+#ifdef GFL_NET_DEBUG
+int GFL_NET_StateGetSoloDebugNo(void)
 {
     if(_pCommState){
         return _pCommState->soloDebugNo;
@@ -3743,7 +3752,7 @@ int CommStateGetSoloDebugNo(void)
  */
 //==============================================================================
 
-BOOL CommStateIsWifiConnect(void)
+BOOL GFL_NET_StateIsWifiConnect(void)
 {
     if(CommStateGetServiceNo() < COMM_MODE_BATTLE_SINGLE_WIFI){
         return FALSE;
@@ -3838,16 +3847,16 @@ void CommErrorCheck(int heapID, GF_BGL_INI* bgl)
 void CommErrorDispCheck(int heapID)
 {
     if(CommStateGetErrorCheck()){
-        if(CommIsError() || CommStateIsWifiError() || CommStateGetWifiDPWError()
+        if(CommIsError() || GFL_NET_StateIsWifiError() || GFL_NET_StateGetWifiDPWError()
            || (_pCommState->stateError!=0)){
             if(!CommIsResetError()){   // リセットエラー状態で無い場合
-                OHNO_PRINT("サウンドストップ\n");
+                NET_PRINT("サウンドストップ\n");
                 Snd_Stop();
-                OHNO_PRINT("セーブストップ\n");
+                NET_PRINT("セーブストップ\n");
                 SaveData_DivSave_Cancel(_pCommState->pSaveData); // セーブしてたら止める
                 sys.tp_auto_samp = 1;  // サンプリングも止める
 
-                OHNO_PRINT("エラー表示\n");
+                NET_PRINT("エラー表示\n");
                 if(_pCommState->stateError == COMM_ERROR_RESET_GTS){
                     CommSetErrorReset(COMM_ERROR_RESET_GTS);  // エラーリセット状態になる
                 }
@@ -3871,7 +3880,7 @@ void CommErrorDispCheck(int heapID)
  */
 //--------------------------------------------------------------
 
-BOOL CommStateIsResetEnd(void)
+BOOL GFL_NET_StateIsResetEnd(void)
 {
     if(CommMPIsConnectStalth() || !CommStateIsInitialize()){ // 通信終了
         return TRUE;
@@ -3890,7 +3899,7 @@ BOOL CommStateIsResetEnd(void)
  */
 //==============================================================================
 
-BOOL CommStateSetError(int no)
+BOOL GFL_NET_StateSetError(int no)
 {
 
     if(_pCommState){

@@ -129,23 +129,24 @@ typedef struct{
 //  関数 ～外部公開関数は全てここに定義
 //-------------------------------
 
+// 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
  * @brief 通信初期化
- * @param[in]   NetInitializeStruct*  pNetInit  通信初期化構造体のポインタ
- * @retval  none
+ * @param[in]   pNetInit  通信初期化構造体のポインタ
+ * @param[in]   netID     ネットID
+ * @return none
  */
 //==============================================================================
 extern void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID);
-
 //==============================================================================
 /**
  * @brief  通信終了
- * @retval  void
+ * @retval  TRUE  終了しました
+ * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
  */
 //==============================================================================
 extern BOOL GFL_NET_Finalize(void);
-
 //-----ビーコン関連
 //==============================================================================
 /**
@@ -156,72 +157,79 @@ extern BOOL GFL_NET_Finalize(void);
  */
 //==============================================================================
 extern void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid);
-
 //==============================================================================
 /**
  * @brief 受信ビーコンデータを得る
- * @param[in,out]   pNet     通信ハンドルのポインタ
  * @param   index  ビーコンバッファindex
  * @return  ビーコンデータの先頭ポインタ なければNULL
  */
 //==============================================================================
-extern void* GFL_NET_GetBeaconData(GFL_NETHANDLE* pNet, int index);
-
+extern void* GFL_NET_GetBeaconData(int index);
 //==============================================================================
 /**
  * @brief 受信ビーコンに対応したMACアドレスを得る
- * @param[in,out]   pNet     通信ハンドルのポインタ
  * @param   index  ビーコンバッファindex
  * @return  ビーコンデータの先頭ポインタ なければNULL
  */
 //==============================================================================
-extern u8* GFL_NET_GetBeaconMacAddress(GFL_NETHANDLE* pNet, int index);
-
-
+extern u8* GFL_NET_GetBeaconMacAddress(int index);
 //--------接続・切断
+//==============================================================================
+/**
+ * @brief   通信ハンドル分MainStatusをまわす
+ * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ */
+//==============================================================================
+extern void GFL_NET_MainProc(void);
+//==============================================================================
+/**
+ * @brief   通信ハンドルを作る   通信一個単位のワークエリアの事
+ * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ */
+//==============================================================================
+extern GFL_NETHANDLE* GFL_NET_CreateHandle(void);
 //==============================================================================
 /**
  * @brief 子機になり接続する
  * @return  GFL_NETHANDLE  通信ハンドルのポインタ
  */
 //==============================================================================
-extern GFL_NETHANDLE* GFL_NET_ClientConnect(GFL_NETSYS* pNetSYS);
-
+extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief 子機になり指定した親機に接続する
+ * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return  none
  */
 //==============================================================================
-extern GFL_NETHANDLE* GFL_NET_ClientConnectTo(GFL_NETSYS* pNetSYS,u8* macAddress);
-
+extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress);
 //==============================================================================
 /**
- * @brief 親機になり待ち受ける
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ * @brief    親機になり待ち受ける
+ * @param    GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return   none
  */
 //==============================================================================
-extern GFL_NETHANDLE* GFL_NET_ServerConnect(GFL_NETSYS* pNetSYS);
-
+extern void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief 親機になり指定された子機の接続を待ち受ける
+ * @param    GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @param   num            子機人数
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return  none
  */
 //==============================================================================
-extern GFL_NETHANDLE* GFL_NET_ServerConnectTo(GFL_NETSYS* pNetSYS,const u8* macAddress, const int num);
-
+extern void GFL_NET_ServerConnectTo(GFL_NETHANDLE* pHandle,const u8* macAddress, const int num);
 //==============================================================================
 /**
  * @brief 親子切り替え接続を行う
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ * @param    GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return  none
  */
 //==============================================================================
-extern GFL_NETHANDLE* GFL_NET_SwitchConnect(GFL_NETSYS* pNetSYS);
-
+extern void GFL_NET_SwitchConnect(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief このハンドルの通信番号を得る
@@ -229,8 +237,7 @@ extern GFL_NETHANDLE* GFL_NET_SwitchConnect(GFL_NETSYS* pNetSYS);
  * @retval  NetID     通信ID
  */
 //==============================================================================
-extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNet);
-
+extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * @brief 現在の接続人数を得る
@@ -239,7 +246,6 @@ extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet);
-
 //==============================================================================
 /**
  * @brief IDの通信と接続しているかどうかを返す
@@ -249,7 +255,6 @@ extern int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id);
-
 //==============================================================================
 /**
  * @brief 通信切断する
@@ -257,9 +262,7 @@ extern BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id);
  * @retval  none
  */
 //==============================================================================
-//
 extern void GFL_NET_Disconnect(GFL_NETHANDLE* pNet);
-
 //==============================================================================
 /**
  * @brief 接続中かどうか
@@ -268,7 +271,6 @@ extern void GFL_NET_Disconnect(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern BOOL GFL_NET_IsConnect(GFL_NETHANDLE* pNet);
-
 //==============================================================================
 /**
  * @brief 接続数変更
@@ -278,7 +280,6 @@ extern BOOL GFL_NET_IsConnect(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern void GFL_NET_SetClientConnectNum(GFL_NETHANDLE* pNet,u8 num);
-
 //==============================================================================
 /**
  * @brief 新規接続禁止＆許可を設定
@@ -288,10 +289,7 @@ extern void GFL_NET_SetClientConnectNum(GFL_NETHANDLE* pNet,u8 num);
  */
 //==============================================================================
 extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
-
-
 //--------送信
-
 //==============================================================================
 /**
  * @brief 送信開始を子機に伝える（親機専用関数）
@@ -302,7 +300,6 @@ extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
  */
 //==============================================================================
 extern void GFL_NET_SendEnableCommand(GFL_NETHANDLE* pNet,const NetID id);
-
 //==============================================================================
 /**
  * @brief 送信許可が下りたかどうかを検査する（子機専用関数）
@@ -312,7 +309,6 @@ extern void GFL_NET_SendEnableCommand(GFL_NETHANDLE* pNet,const NetID id);
  */
 //==============================================================================
 extern BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet);
-
 //==============================================================================
 /**
  * @brief 送信開始
@@ -326,7 +322,6 @@ extern BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data);
-
 //==============================================================================
 /**
  * @brief 送信開始
@@ -342,9 +337,8 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const voi
  */
 //==============================================================================
 extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand,
-                    const CBSendEndFunc* pCBSendEndFunc,const u32 size,
-                    const void* data, const BOOL bDataCopy);
-
+                                      const CBSendEndFunc* pCBSendEndFunc,const u32 size,
+                                      const void* data, const BOOL bDataCopy);
 //==============================================================================
 /**
  * @brief 送信データが無いかどうか
@@ -354,7 +348,6 @@ extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 
  */
 //==============================================================================
 extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
-
 //==============================================================================
 /**
  * @brief   毎フレーム送りたいデータを登録する
@@ -366,9 +359,6 @@ extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern void GFL_NET_SetEveryTimeSendData(GFL_NETHANDLE* pNet, CBGetEveryTimeData* pGet, CBRecvEveryTimeData* pRecv,const int size);
-
-
-
 //--------その他、ツール類
 //==============================================================================
 /**
@@ -389,7 +379,6 @@ extern void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
  */
 //==============================================================================
 extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
-
 
 
 #endif // __NET_H__

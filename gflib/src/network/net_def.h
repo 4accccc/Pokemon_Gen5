@@ -29,6 +29,10 @@ typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 /// @brief 送信完了コールバック
 typedef void (*PTRSendDataCallback)(BOOL result);
 
+/// コールバック関数の書式 内部ステート遷移用
+typedef void (*PTRStateFunc)(void);
+
+
 
 #define _SCAN_ALL_CHANNEL  (0)  ///< スキャンするチャンネルをランダムで行う場合０に設定する
 
@@ -86,6 +90,22 @@ typedef void (*PTRSendDataCallback)(BOOL result);
 // MYSTATUSを送るための領域
 #define COMM_SEND_MYSTATUS_SIZE   (32)
 #define COMM_SEND_REGULATION_SIZE (32)
+
+
+
+/// ネットワークハンドル
+struct _GFL_NETHANDLE{
+    PTRStateFunc state;   ///< ハンドルのプログラム状態
+    MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
+    u8 machineNo;      ///< マシン番号
+    u8 serviceNo;      ///< 通信サービス番号
+    u16 timer;
+    u8 bFirstParent;   ///< 繰り返し親子切り替えを行う場合の最初の親状態
+    u8 limitNum;       ///< 受付制限したい場合のLIMIT数
+
+};
+
+
 
 
 // 個人的なデバッグの為のプリント

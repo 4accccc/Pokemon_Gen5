@@ -1288,6 +1288,23 @@ void* GFL_NET_WLGetUserBss(int index)
 
 //==============================================================================
 /**
+ * @brief   ビーコンの中にあるマックアドレスを得る
+ * @param   index ビーコンバッファに対するindex
+ * @return  maccaddressの配列
+ */
+//==============================================================================
+
+void* GFL_NET_WLGetUserMacAddress(int index)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        return (void*)&pNetWL->sBssDesc[index].bssid[0];
+    }
+    return NULL;
+}
+
+//==============================================================================
+/**
  * @brief    ビーコンデータを消す
  * @param    index ビーコンバッファに対するindex
  * @retval   none

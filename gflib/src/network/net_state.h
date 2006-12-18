@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	comm_state.h
+ * @file	net_state.h
  * @brief	通信状態を管理するサービス  通信の上位にある
  *          スレッドのひとつとして働き、自分の通信状態や他の機器の
  *          開始や終了を管理する
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef __COMM_STATE_H__
-#define __COMM_STATE_H__
+#ifndef __NET_STATE_H__
+#define __NET_STATE_H__
 
 
 //==============================================================================
@@ -151,5 +151,9 @@ extern void DWClibWarningCall( int heapID, int error_msg_id );
 extern BOOL CommStateSetError(int no);
 
 
-#endif //__COMM_STATE_H__
+extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
+
+
+
+#endif //__NET_STATE_H__
 
