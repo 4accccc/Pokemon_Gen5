@@ -72,6 +72,8 @@ static	void	SkeltonVBlankFunc(void)
 	GFLUser_VIntr();
 }
 
+extern void TestModeInit(void);
+extern void TestModeMain(void);
 //------------------------------------------------------------------
 /**
  * @brief		ゲームごとの初期化処理
@@ -80,6 +82,7 @@ static	void	SkeltonVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
+	TestModeInit();
 }
 
 //------------------------------------------------------------------
@@ -90,6 +93,7 @@ static	void	GameInit(void)
 static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
+	TestModeMain();
 }
 
 
