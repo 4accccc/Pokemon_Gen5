@@ -51,7 +51,7 @@ void	TetsuTestMain(void)
  */
 //------------------------------------------------------------------
 const char		test_text[] = {	
-"ゲームフリーク　プログラムライブラリ　さくせいチーム\nGame Freak program_Libraries product_team\n\nわたなべ　てつや\nTetsuya Watanabe\n\nたまだ　そうすけ\nSousuke Tamada\n\nそがべ　ひさし\nHisashi Sogabe\n\nおおの　かつみ\nKatsumi Ohno\n\nみつはら　さとし\nSatoshi Mitsuhara\n\nGFL@gamefreak.co.jp"
+"ゲームフリーク　プログラムライブラリ　さくせいチーム\nGame Freak program_Libraries product_team\n\nわたなべ　てつや\nTetsuya Watanabe\n\nたまだ　そうすけ\nSousuke Tamada\n\nそがべ　ひさし\nHisashi Sogabe\n\nおおの　かつみ\nKatsumi Ohno\n\nみつはら　さとし\nSatoshi Mitsuhara\n\nhttp://www.gamefreak.co.jp"
 };
 
 #define XYSIZE (32*32)
@@ -83,7 +83,7 @@ static void	TestPrintMain(void)
 			DC_FlushRange( scr, XYSIZE*2 );
 			GX_LoadBG3Scr( scr, 0, XYSIZE*2 ); 
 
-			//GFL_HEAP_FreeMemory(scr);
+			GFL_HEAP_FreeMemory(scr);
 			test->wp[1] = (void*)G2_GetBG3ScrPtr();
 		}
 		{
