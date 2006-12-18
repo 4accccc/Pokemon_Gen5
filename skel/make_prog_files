@@ -1,9 +1,11 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=		tamada/oamset.c \
+SRCS	+=		testmode.c \
+				tamada/oamset.c \
 				tamada/data.c \
 				tamada/dispfunc.c \
 				tamada/bg/debug_graphic.c \
 				tamada/bg/loader.c \
 				tamada/d_proc_bg.c \
-				tamada/debug_tamada.c
+				tamada/debug_tamada.c \
+				
 
