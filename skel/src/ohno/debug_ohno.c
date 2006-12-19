@@ -13,6 +13,7 @@
 #include "ui.h"
 #include "debug_ohno.h"
 #include "test_ui.h"
+#include "test_rand.h"
 
 
 //------------------------------------------------------------------
@@ -43,7 +44,18 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 
     TEST_UI_Main();  //UI TEST
     
+    if(GFL_UI_KeyGetTrg() == PAD_BUTTON_A){
 
+        RTCDate date;
+        RTCTime time;
+        u32 seed;
+        RTC_GetDateTime(&date, &time);
+        seed = date.year + date.month * 0x100 * date.day * 0x10000
+		+ time.hour * 0x10000 + (time.minute + time.second) * 0x1000000;
+
+        TEST_RAND_Main(seed);  // RAND TEST
+    }
+    
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -93,6 +105,8 @@ void DebugOhnoInit(u32 heap_id)
     (void)OS_EnableInterrupts();
     (void)GX_VBlankIntr(TRUE);
 
+    RTC_Init();
+    
 }
 
 
