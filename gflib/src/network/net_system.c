@@ -957,7 +957,7 @@ BOOL GFL_NET_SystemUpdateData(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemReset(void)
+void GFL_NET_SystemReset(void)
 {
     BOOL bAcc = _bVSAccess;
 
@@ -977,7 +977,7 @@ void GFL_NET_SystemSystemReset(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemResetDS(void)
+void GFL_NET_SystemResetDS(void)
 {
     BOOL bAcc = _bVSAccess;
 
@@ -998,7 +998,7 @@ void GFL_NET_SystemSystemResetDS(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemResetBattleChild(void)
+void GFL_NET_SystemResetBattleChild(void)
 {
     BOOL bAcc = _bVSAccess;
 
@@ -2977,7 +2977,7 @@ void GFL_NET_SystemSetError(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemShutdown(void)
+void GFL_NET_SystemShutdown(void)
 {
     if(_pComm){
         _pComm->bShutDown = TRUE;
@@ -2992,7 +2992,7 @@ void GFL_NET_SystemSystemShutdown(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemResetQueue_Server(void)
+void GFL_NET_SystemResetQueue_Server(void)
 {
     GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
 }
@@ -3005,7 +3005,7 @@ void GFL_NET_SystemSystemResetQueue_Server(void)
  */
 //==============================================================================
 
-void GFL_NET_SystemSystemRecvStop(BOOL bFlg)
+void GFL_NET_SystemRecvStop(BOOL bFlg)
 {
     if(_pComm){
         _pComm->bNotRecvCheck = bFlg;

@@ -24,6 +24,9 @@ extern void DebugOhnoCommDebugUnderChildOnly(int no);
 #endif
 
 
+extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
+
+
 extern BOOL CommStateIsInitialize(void);
 
 // バトル時に親になる場合の処理開始

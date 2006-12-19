@@ -279,6 +279,7 @@ static void _endCallback(void *arg, WVRResult result)
 
 void GFL_NET_WLVRAMDInitialize(void)
 {
+    int ans;
     //************************************
 //	GX_DisableBankForTex();			// テクスチャイメージ
 
@@ -286,8 +287,9 @@ void GFL_NET_WLVRAMDInitialize(void)
     // 無線ライブラリ駆動開始
 	// イクニューモンコンポーネントをVRAM-Dに転送する
     startCheck = 1;
-    if (WVR_RESULT_OPERATING != WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL)) {
-        OS_TPanic("WVR_StartUpAsync failed. \n");
+    ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL);
+    if (WVR_RESULT_OPERATING != ans) {
+        OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
     }
     else{
         OHNO_PRINT("WVRStart\n");
@@ -808,6 +810,29 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index)
         WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
 //      WH_ChildConnect(WH_CONNECTMODE_MP_CHILD, &(pNetWL->sBssDesc[index]));
 //        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   子機　MP状態で接続
+ * @param   macAddress    マックアドレス
+ * @retval  子機接続を親機に送ったらTRUE
+ */
+//==============================================================================
+BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    
+    if (WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
+        (void)WH_EndScan();
+        return FALSE;
+    }
+    if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
+        NET_PRINT("子機 接続開始\n");
+        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0);
         return TRUE;
     }
     return FALSE;

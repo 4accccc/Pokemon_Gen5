@@ -10,6 +10,23 @@
  */
 //=============================================================================
 
+#include "gflib.h"
+
+#include "device/wh_config.h"
+
+#include "net.h"
+#include "net_def.h"
+#include "device/net_wireless.h"
+#include "net_system.h"
+#include "net_command.h"
+#include "net_state.h"
+
+#include "tool/net_ring_buff.h"
+#include "tool/net_queue.h"
+#include "tool/net_tool.h"
+
+
+/*
 #include "common.h"
 #include "communication/communication.h"
 #include "wh.h"
@@ -21,7 +38,7 @@
 #include "system/snd_tool.h"  //sndTOOL
 
 #include  "communication/wm_icon.h"
-
+*/
 //==============================================================================
 //	型宣言
 //==============================================================================
@@ -31,14 +48,12 @@
 //==============================================================================
 // ワーク
 //==============================================================================
-
+#if 0 //使わない
 typedef struct{
     void* pWifiFriendStatus;
     u8 select[6];
     MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
     PTRStateFunc state;
-    SAVEDATA* pSaveData;
-    MYSTATUS* pMyStatus;
     const REGULATION* pReg;
     int errorCode;
     u16 reConnectTime;  // 再接続時に使用するタイマー
@@ -71,7 +86,7 @@ typedef struct{
     u8 stateError;         //エラー扱いにする場合1以上
     u8 bPauseFlg;
 } _COMM_STATE_WORK;
-
+#endif
 //static _COMM_STATE_WORK* _pCommState = NULL;  ///<　ワーク構造体のポインタ
 
 //==============================================================================
@@ -218,27 +233,36 @@ static u8 _negotiationMsgReturnOK[]={" GAME"};
 static u8 _negotiationMsgReturnNG[]={" FULL"};
 
 
+//==============================================================================
+/**
+ * 通信管理ステートの変更
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
+{
+    pHandle->state = state;
+    pHandle->timer = time;
+}
+
+//==============================================================================
+/**
+ * 通信管理ステートの変更
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
 #ifdef GFL_NET_DEBUG
-static u8 _debugConnectNo = 0;
-static u8 _debugParentOnly = 0;
-static u8 _debugChildOnly = 0;
-
-void DebugOhnoCommDebugUnderNo(int no)
+static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time, int line)
 {
-    _debugConnectNo = no;
+    NET_PRINT("net_state: %d\n",line);
+    _changeState(pHandle, state, time);
 }
-
-void DebugOhnoCommDebugUnderParentOnly(int no)
-{
-    _debugParentOnly = no;
-}
-
-void DebugOhnoCommDebugUnderChildOnly(int no)
-{
-    _debugChildOnly = no;
-}
-
-#endif //GFL_NET_DEBUG
+#endif
 
 //==============================================================================
 /**
@@ -252,10 +276,10 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
 {
     void* pWork;
 
-    if(_pCommState!=NULL){   // すでに動作中の場合必要ない
+    if(pNetHandle!=NULL){   // すでに動作中の場合必要ない
         return;
     }
-    CommVRAMDInitialize();
+//    CommVRAMDInitialize();
     // 初期化
 
     pNetHandle->timer = _START_TIME;
@@ -264,13 +288,14 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
     pNetHandle->negotiation = _NEGOTIATION_CHECK;
     pNetHandle->serviceNo = serviceNo;
 
-    CommRandSeedInitialize(&_pCommState->sRand);
-    CommCommandInitialize(NULL, 0, NULL);
-
+    //CommRandSeedInitialize(&_pCommState->sRand);  //@@OO乱数初期化を入れる
+    GFL_NET_CommandInitialize(NULL, 0, NULL);
+/*
     if((serviceNo != COMM_MODE_UNION) && (serviceNo != COMM_MODE_PARTY) &&
        (serviceNo != COMM_MODE_MYSTERY)){
-        WirelessIconEasy();
+        WirelessIconEasy();  // アイコン初期化
     }
+*/
 }
 
 
@@ -282,236 +307,84 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
  */
 //==============================================================================
 
-static void _stateFinalize(void)
+static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
 {
-    if(_pCommState==NULL){  // すでに終了している
+    if(pNetHandle==NULL){  // すでに終了している
         return;
     }
-//    TCB_Delete(_pCommState->pTcb);
-    CommCommandFinalize();
-    if(_pCommState->pWifiFriendStatus){
-        GFL_HEAP_FreeMemory(_pCommState->pWifiFriendStatus);
-    }
-    if(_pCommState->serviceNo >= COMM_MODE_BATTLE_SINGLE_WIFI){
-        GFL_HEAP_DeleteHeap(HEAPID_WIFIMENU);
-    }
-    WirelessIconEasyEnd();
-    CommVRAMDFinalize();
-    GFL_HEAP_FreeMemory(_pCommState);
-    GFL_HEAP_DeleteHeap(HEAPID_COMMUNICATION);
-    _pCommState = NULL;
+    GFL_NET_CommandFinalize();
+//    WirelessIconEasyEnd();   //@@OO 後で入れる予定
+    GFL_NET_WLVRAMDFinalize();
+    pNetHandle->state = NULL;
 }
 
 //==============================================================================
 /**
- * 初期化がすんでいるかどうか
+ * 動いているかどうか
  * @param   none
- * @retval  すんでいる場合TRUE
+ * @retval  動いている場合TRUE
  */
 //==============================================================================
 
-BOOL GFL_NET_StateIsInitialize(void)
+static BOOL _stateIsMove(GFL_NETHANDLE* pNetHandle)
 {
-    if(_pCommState){
+    if(pNetHandle->state){
         return TRUE;
     }
     return FALSE;
 }
 
-//==============================================================================
-/**
- * 地下にはいった時の通信処理
- * @param   MYSTATUS* pMyStatus
- * @retval  none
- */
-//==============================================================================
 
-void GFL_NET_StateEnterUnderGround(SAVEDATA* pSaveData)
+
+static void _handleDelete(GFL_NETHANDLE* pNetHandle)
 {
-    if(_pCommState!=NULL){ // つながっている場合今は除外する
-        return;
-    }
-    // 通信ヒープ作成
-    sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_UNDERGROUND );
-    _commStateInitialize(pSaveData,COMM_MODE_UNDERGROUND);
-//    _pCommState->serviceNo = COMM_MODE_UNDERGROUND;
-    _pCommState->regulationNo = 0;
-#ifdef GFL_NET_DEBUG
-    _pCommState->soloDebugNo = _debugConnectNo + SOLO_DEBUG_NO;
-    _pCommState->bParentOnly = _debugParentOnly;
-    _pCommState->bChildOnly = _debugChildOnly;
-#endif
-    // 地下ステートの遷移のため初期化
-    _CHANGE_STATE(_underStart, _START_TIME);
+    GFL_NET_DeleteNetHandle(pNetHandle);
 }
 
+
 //==============================================================================
 /**
- * 地下を出る場合の通信処理
+ * イクニューモン初期化後通信起動
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateExitUnderGround(void)
+static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
 {
-    if(_pCommState==NULL){  // すでに終了している
-        return;
+    if(!GFL_NET_WLIsVRAMDInitialize()){
+        return;  //
     }
-    // 切断ステートに移行する  すぐに切れない
-    CommSystemShutdown();
-    _CHANGE_STATE(_stateUnderGroundConnectEnd, 0);
+    GFL_NET_WLStealth(FALSE);
+
+    GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
+
+    NET_PRINT("再起動    -- \n");
+    _CHANGE_STATE(_handleDelete, 0);
 }
+
 
 //==============================================================================
 /**
- * ビーコン収集を再開する
- * @param   MYSTATUS* pMyStatus
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateUnderRestart(void)
-{
-    CommSystemReset();   // 今までの通信バッファをクリーンにする
-    // ぐるぐるまわす
-    _pCommState->reConnectTime = CommGetCurrentID();
-    _CHANGE_STATE(_underChildReset, 0);  // エラー終了の場合RESETする
-}
-
-//==============================================================================
-/**
- * ビーコン収集を停止する
+ * @brief   通信デバイスを初期化する
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void CommStaetUnderPause(BOOL bFlg)
+void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
 {
-    _pCommState->bPauseFlg = bFlg;
-}
+    GFL_NET_WLVRAMDInitialize();
+    GFL_NET_CommandInitialize(NULL, 0, NULL);
 
-
-//==============================================================================
-/**
- * ビーコン収集を再開する 親機側のリスターと
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _underQueueReset(void)
-{
-
-    if(!CommMPSwitchParentChild()){
-        return;
-    }
-    CommSystemReset();         // 今までの通信バッファをクリーンにする
-    _CHANGE_STATE(_underChildFinalize, 0);
-
-    /*
-    if(_pCommState->timer!=0){
-        _pCommState->timer--;
-        return;
-    }
-    if(CommIsEmptyQueue_ServerSize()){
-        CommSystemResetQueue_Server();
-    }
-    NET_PRINT("送信キューけし\n");
-       */
-//    _CHANGE_STATE(_underChildFinalize, _FINALIZE_TIME);
-}
-
-void GFL_NET_StateUnderParentRestart(void)
-{
-   // _CHANGE_STATE(_underQueueReset, 0);
-    _CHANGE_STATE(_underChildFinalize, 0);
-
-}
-
-
-//==============================================================================
-/**
- * 地下においてリセット中なのかどうか返す
- * @param   none
- * @retval  RESET中ならTRUE
- */
-//==============================================================================
-
-BOOL CommIsUnderResetState(void)
-{
-    int i;
-    u32 stateAddr = (u32)_pCommState->state;
-
-    if(_pCommState==NULL){  // すでに終了している
-        return FALSE;
-    }
-    if(stateAddr == (u32)_underQueueReset){
-        return TRUE;
-    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * 地下において接続中STATEなのかどうか返す
- * @param   none
- * @retval  接続中ならTRUE
- */
-//==============================================================================
-
-BOOL CommIsUnderGroundConnectingState(void)
-{
-    int i;
-    u32 funcTbl[]={
-        (u32)_underChildConnect,
-        (u32)_underParentConnect,
-        0,
-    };
-    u32 stateAddr = (u32)_pCommState->state;
-
-    if(_pCommState==NULL){  // すでに終了している
-        return FALSE;
-    }
-    for(i = 0; funcTbl[i] != 0; i++ ){
-        if(stateAddr == funcTbl[i]){
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * 通信を切り秘密基地にはいる
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateUnderGroundOfflineSecretBase(void)
-{
-    // 切断ステートに移行する  すぐに切れない
-    _CHANGE_STATE(_underSBReset, 0);  // エラー終了の場合RESETする
-}
-
-//==============================================================================
-/**
- * はじめのイベント
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateSetFirstEvent(void)
-{
-    _pCommState->bNotConnect = TRUE;
+    _commStateInitialize(pNetHandle, 0);
+    _CHANGE_STATE(_deviceInitialize, 0);
 }
 
 
 
 
+#if 0   //state修正中
 
 //==============================================================================
 /**
@@ -589,13 +462,13 @@ void GFL_NET_StateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
 
 //==============================================================================
 /**
- * バトル時の子としての通信処理開始
+ * マックアドレスを指定して子機接続開始
  * @param   connectIndex 接続する親機のIndex
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateConnectBattleChild(int connectIndex)
+void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 {
     _pCommState->connectIndex = connectIndex;
     _CHANGE_STATE(_battleChildConnecting, 0);
@@ -969,7 +842,7 @@ void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
     if(pHandle){
         PTRStateFunc state = GFL_NET_GetStateFunc(pHandle);
         if(state != NULL){
-            state();
+            state(pHandle);
         }
     }
 }
@@ -987,37 +860,6 @@ void GFL_NET_StateClientConnect(GFL_NETHANDLE* pHandle)
 }
 
 
-
-//==============================================================================
-/**
- * 通信管理ステートの変更
- * @param   state  変えるステートの関数
- * @param   time   ステート保持時間
- * @retval  none
- */
-//==============================================================================
-
-static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
-{
-    pHandle->state = state;
-    pHandle->timer = time;
-}
-
-//==============================================================================
-/**
- * 通信管理ステートの変更
- * @param   state  変えるステートの関数
- * @param   time   ステート保持時間
- * @retval  none
- */
-//==============================================================================
-#ifdef GFL_NET_DEBUG
-static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time, int line)
-{
-    NET_PRINT("net_state: %d\n",line);
-    _changeState(pHandle, state, time);
-}
-#endif
 
 //==============================================================================
 /**
@@ -1413,28 +1255,6 @@ static void _underSBReset(void)
     _CHANGE_STATE(_underSBBoot, 0);
 }
 
-
-//==============================================================================
-/**
- * イクニューモン初期化後通信起動
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _underChildOnline(void)
-{
-    if(!CommIsVRAMDInitialize()){
-        return;  //
-    }
-    CommMPStealth(FALSE);
-
-    CommSystemReset();         // 今までの通信バッファをクリーンにする
-
-    NET_PRINT("再起動    -- %d \n",CommGetCurrentID());
-    _CHANGE_STATE(_underChildFInit, 0);
-}
-
 //==============================================================================
 /**
  * リセット処理を行い、子機として再起動
@@ -1554,7 +1374,30 @@ static void _battleChildBconScanning(void)
 static void _battleChildConnecting(void)
 {
     CommMPParentBconCheck();
-    if(CommChildIndexConnect(_pCommState->connectIndex)){  // 接続完了
+    if(CommChildIndexConnect(_pCommState->connectIndex)){
+
+//GFL_NET_WLChildMacAddressConnect
+
+        _CHANGE_STATE(_battleChildSendName, _SEND_NAME_TIME);
+    }
+
+}
+
+//==============================================================================
+/**
+ * 子機待機状態  親機に許可もらい中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _childConnecting(GFL_NETHANDLE* pNetHandle)
+{
+    CommMPParentBconCheck();
+//    if(CommChildIndexConnect(_pCommState->connectIndex)){
+
+    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
+
         _CHANGE_STATE(_battleChildSendName, _SEND_NAME_TIME);
     }
 
@@ -1568,15 +1411,13 @@ static void _battleChildConnecting(void)
  */
 //==============================================================================
 
-static void _battleChildSendName(void)
+static void _battleChildSendName(GFL_NETHANDLE* pNetHandle)
 {
 
     if(CommIsError()){
         //NET_PRINT("エラーの場合戻る\n");
         _CHANGE_STATE(_battleChildReset, 0);
     }
-
-    
     if(CommIsConnect(CommGetCurrentID()) && ( COMM_PARENT_ID != CommGetCurrentID())){
         _CHANGE_STATE(_battleChildWaiting, 0);
     }
@@ -1630,7 +1471,7 @@ static void _battleChildReConnect(void)
  */
 //==============================================================================
 
-static void _battleChildWaiting(void)
+static void _battleChildWaiting(GFL_NETHANDLE* pNetHandle)
 {
     if(!CommIsInitialize()){
         _CHANGE_STATE(_stateEnd,0);
@@ -3882,7 +3723,7 @@ void CommErrorDispCheck(int heapID)
 
 BOOL GFL_NET_StateIsResetEnd(void)
 {
-    if(CommMPIsConnectStalth() || !CommStateIsInitialize()){ // 通信終了
+    if(CommMPIsConnectStalth() || !_stateIsMove()){ // 通信終了
         return TRUE;
     }
     if(!CommMPIsConnect()){
@@ -3911,3 +3752,4 @@ BOOL GFL_NET_StateSetError(int no)
 }
 
 
+#endif  //state修正中

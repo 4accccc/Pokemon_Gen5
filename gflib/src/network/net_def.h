@@ -30,7 +30,7 @@ typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 typedef void (*PTRSendDataCallback)(BOOL result);
 
 /// コールバック関数の書式 内部ステート遷移用
-typedef void (*PTRStateFunc)(void);
+typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 
 
 
@@ -95,14 +95,15 @@ typedef void (*PTRStateFunc)(void);
 
 /// ネットワークハンドル
 struct _GFL_NETHANDLE{
-    PTRStateFunc state;   ///< ハンドルのプログラム状態
+    PTRStateFunc state; ///< ハンドルのプログラム状態
     MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
-    u8 machineNo;      ///< マシン番号
-    u8 serviceNo;      ///< 通信サービス番号
-    u16 timer;
-    u8 bFirstParent;   ///< 繰り返し親子切り替えを行う場合の最初の親状態
-    u8 limitNum;       ///< 受付制限したい場合のLIMIT数
-
+    u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
+    u8 machineNo;       ///< マシン番号
+    u8 serviceNo;       ///< 通信サービス番号
+    u16 timer;          ///< 進行タイマー
+    u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
+    u8 limitNum;        ///< 受付制限したい場合のLIMIT数
+    u8 negotiation;     ///< 通信受付の状態
 };
 
 

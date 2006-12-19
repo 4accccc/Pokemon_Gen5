@@ -46,13 +46,26 @@ static int _addNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
     int i;
 
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-        if(pNet->pNetHandle[i]!=NULL){
+        if(pNet->pNetHandle[i] == NULL){
             pNet->pNetHandle[i] = pHandle;
             return i;
         }
     }
     OS_TPanic("no handle");
     return 0;
+}
+
+void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
+{
+    int i;
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        if(pNet->pNetHandle[i]==pHandle){
+            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
+            pNet->pNetHandle[i] = NULL;
+        }
+    }
 }
 
 static void _deleteAllNetHandle(GFL_NETSYS* pNet)
@@ -86,13 +99,15 @@ PTRStateFunc GFL_NET_GetStateFunc(int index)
 void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID)
 {
     GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETSYS));
+    _pNetSys = pNet;
 
     GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
-
     GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
     pNet->heapID = heapID;
-    
-    _pNetSys = pNet;
+    if(pNetInit->bNetwork){
+        GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
+        GFL_NET_StateDeviceInitialize(pNetHandle);
+    }
 }
 
 //==============================================================================
@@ -195,19 +210,6 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 
 //==============================================================================
 /**
- * @brief 子機になり接続する
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
- */
-//==============================================================================
-void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
-{
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
-   // GFL_NET_StateClientConnect(pHandle);
-}
-
-//==============================================================================
-/**
  * @brief 子機になり指定した親機に接続する
  * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
@@ -216,9 +218,8 @@ void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
 //==============================================================================
 void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
-
-    //GFL_NET_StateClientConnectTo(pHandle, macAddress);
-
+    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
+   // GFL_NET_StateConnectMacAddress(pHandle);
 }
 
 //==============================================================================

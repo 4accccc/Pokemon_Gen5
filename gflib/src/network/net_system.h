@@ -88,7 +88,7 @@ extern BOOL GFL_NET_SystemUpdateData(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemReset(void);
+extern void GFL_NET_SystemReset(void);
 //==============================================================================
 /**
  * @brief   DSモードで通信バッファをクリアーする
@@ -96,7 +96,7 @@ extern void GFL_NET_SystemSystemReset(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemResetDS(void);
+extern void GFL_NET_SystemResetDS(void);
 //==============================================================================
 /**
  * @brief   通信バッファをクリアーする+ビーコンの初期化を行う
@@ -104,7 +104,7 @@ extern void GFL_NET_SystemSystemResetDS(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemResetBattleChild(void);
+extern void GFL_NET_SystemResetBattleChild(void);
 //==============================================================================
 /**
  * @brief   通信を受信した時に呼ばれるコールバック
@@ -472,7 +472,7 @@ extern void GFL_NET_SystemSetError(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemShutdown(void);
+extern void GFL_NET_SystemShutdown(void);
 //==============================================================================
 /**
  * サーバー側の通信キューをリセットする
@@ -480,7 +480,7 @@ extern void GFL_NET_SystemSystemShutdown(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemResetQueue_Server(void);
+extern void GFL_NET_SystemResetQueue_Server(void);
 //==============================================================================
 /**
  * 通信の受信を止めるフラグをセット
@@ -488,7 +488,7 @@ extern void GFL_NET_SystemSystemResetQueue_Server(void);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SystemSystemRecvStop(BOOL bFlg);
+extern void GFL_NET_SystemRecvStop(BOOL bFlg);
 
 extern GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID);
 

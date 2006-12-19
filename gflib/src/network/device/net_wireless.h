@@ -93,6 +93,7 @@ extern BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL
  */
 //==============================================================================
 extern BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit);
+
 //==============================================================================
 /**
  * @brief   通信切り替えを行う（親子反転に必要な処理）
@@ -182,6 +183,8 @@ extern int GFL_NET_WLGetNextConnectIndex(void);
  */
 //==============================================================================
 extern BOOL GFL_NET_WLChildIndexConnect(u16 index);
+extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress);
+
 //==============================================================================
 /**
  * @brief   ビーコンデータの定期確認

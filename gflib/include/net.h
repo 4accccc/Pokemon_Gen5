@@ -21,7 +21,7 @@
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
-#undef GFL_NETDEBUG
+#undef GFL_NET_DEBUG
 #define GFL_NET_DEBUG   (1)
 #endif  //DEBUG_ONLY_FOR_ohno
 
@@ -123,6 +123,7 @@ typedef struct{
   NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
   u8 maxConnectNum;   ///< 最大接続人数
   u8 maxBeaconNum;    ///< 最大ビーコン収集数
+  u8 bNetwork;    ///< 通信を開始するかどうか
 } GFLNetInitializeStruct;
 
 //-------------------------------
@@ -188,6 +189,7 @@ extern void GFL_NET_MainProc(void);
  */
 //==============================================================================
 extern GFL_NETHANDLE* GFL_NET_CreateHandle(void);
+extern void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief 子機になり接続する
