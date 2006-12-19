@@ -13,17 +13,39 @@
 #include "gf_standard.h"
 #include "test_net.h"
 #include "net.h"
+#include "ui.h"
 
 
 //------------------------------------------------------------------
 // NET‚ÌƒeƒXƒg
 //------------------------------------------------------------------
 
+enum{
+    _TEST_CONNECT,
+    _TEST_1,
+    _TEST_2,
+
+};
+
+
+static int testNo = 0;
+
 void TEST_NET_Main(void)
 {
 
-   
+    if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
+        switch(testNo){
+          case _TEST_CONNECT:
+            {
+                GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
+                GFL_NET_ClientConnectTo(pHandle,(u8*)"001656A80D74"); //‘å–ì‚ÌDS‚ÌMACADDR
+            }
+            testNo++;
+            break;
+        }
+    }
 
+    GFL_NET_MainProc();
 
 
 }
