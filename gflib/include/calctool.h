@@ -28,8 +28,8 @@
 
 #define FX_GET_ROTA_NUM(x)	( (x*0xffff) / 360 )	// FX_SinIdx CosIdxの引数の回転値を求める
 
-#define GF_RAND_MAX			( 0xffff )		// gf_rand()の最大数
-#define GF_MT_RAND_MAX		( 0xffffffff )	// gf_mtRand()の最大数
+//#define GF_RAND_MAX			( 0xffff )		// gf_rand()の最大数
+//#define GF_MT_RAND_MAX		( 0xffffffff )	// gf_mtRand()の最大数
 
 //=============================================================================================
 //	プロトタイプ宣言
@@ -56,38 +56,6 @@ GLOBAL const u16 RotKey360Tbl[360];
  ///SinIdx(),CosIdx()の値を返す(fx32型を引数に取る、回り込みあり)
  GLOBAL fx32 Sin360FX(fx32 deg);
  GLOBAL fx32 Cos360FX(fx32 deg);
-
-GLOBAL u32 gf_get_seed(void);		// 乱数の種の取得
-GLOBAL void gf_srand(u32 seed);		// 乱数の初期化
-GLOBAL u16 gf_rand(void);			// 乱数取得（0 - 65535)
-GLOBAL u32 gf_fix_rand( u32 seed );	// 種を渡して取得する乱数
-
-GLOBAL void gf_mtSrand(u32 s);		// MT方乱数初期化関数
-GLOBAL u32 gf_mtRand(void);			// MT方乱数取得
-
-//==============================================================================
-/**
- *	確率計算用ランダム取得関数
- * 
- * @param   inDinominate	確率分母
- *
- * @retval  u16		0～inDinominate-1の数
- */
-//==============================================================================
-inline u16 gf_p_rand(const u16 inDinominate)
-{
-//	GF_ASSERT(inDinominate != 0);
-	if (inDinominate <= 1){
-		return 0;
-	}else{
-		u16 per;
-		u16 val;
-		per = (0xffff/inDinominate)+1;
-		val = gf_rand()/per;
-//		GF_ASSERT((val<inDinominate)&&"ERROR:Random Calc Error!");//念のため
-		return val;
-	}
-}
 
 //--------------------------------------------------------------------------------------------
 /**
