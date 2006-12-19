@@ -18,6 +18,11 @@ LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
+
+#イクニューモンコンポーネントのためのライブラリを追加 by Mori 2005.7.27
+LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
+LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
+
 # 個人テスト用定義
 #ifeq	($(PM_DEBUG),yes)
 MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
@@ -29,13 +34,22 @@ TARGET_BIN		=	main.bin
 # ソースファイル
 SRCS			=	main.c gfl_use.c
 
-
 include make_prog_files
+
+## xyzzyでエラージャンプを行う
+ifeq	($(USERNAME),ohno)
+CCFLAGS_MSGSTYLE	?= -msgstyle gcc
+endif
 
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
 
+#------------------------------------------------------#
+# イクニューモンコンポーネントを追加 by Mori 2005.7.27
+# VRAM内に無線ライブラリが配置されるコンポーネント定義 #
+MY_COMPONENT_NAME	= ichneumon
+MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定

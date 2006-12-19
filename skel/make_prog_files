@@ -1,5 +1,9 @@
 #こんな感じで各自のソースを追加してください
 SRCS	+=		testmode.c \
+				ohno/debug_ohno.c \
+				ohno/test_net.c \
+				ohno/test_rand.c \
+				ohno/test_ui.c \
 				tamada/oamset.c \
 				tamada/data.c \
 				tamada/dispfunc.c \

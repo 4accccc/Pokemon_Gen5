@@ -14,6 +14,7 @@
 #include "debug_ohno.h"
 #include "test_ui.h"
 #include "test_rand.h"
+#include "test_net.h"
 
 
 //------------------------------------------------------------------
@@ -29,7 +30,10 @@ static DEBUG_OHNO_CONTROL * DebugOhnoControl;
 static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
 {
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
-	return GFL_PROC_RES_FINISH;
+
+    TEST_NET_Init();
+
+    return GFL_PROC_RES_FINISH;
 }
 
 
@@ -55,6 +59,8 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 
         TEST_RAND_Main(seed);  // RAND TEST
     }
+
+    TEST_NET_Main();
     
 	return GFL_PROC_RES_CONTINUE;
 }
