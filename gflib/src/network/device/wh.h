@@ -426,6 +426,14 @@ extern u16 WH_GetMeasureChannel(void);
  * 以下は、無線を初期化して通信可能状態まで遷移する関数です。
  **************************************************************************/
 
+
+/* ----------------------------------------------------------------------
+   Name:        WH_CreateHandle
+   Description: メモリーを確保し初期化します
+   Arguments:   作業領域.
+   Returns:     メモリー
+   ---------------------------------------------------------------------- */
+extern GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap);
 /** ----------------------------------------------------------------------
  *
  * @brief    初期化作業を行い、初期化シーケンスを開始します。
@@ -433,7 +441,7 @@ extern u16 WH_GetMeasureChannel(void);
  * @param    pHeap   GFL_NETWMのポインタ
  * @return   
    ---------------------------------------------------------------------- */
-extern GFL_NETWM* WH_Initialize(int heapID, void* pHeap);
+extern BOOL WH_Initialize(void* pHeap);
 //extern BOOL WH_Initialize(void* pHeap);
 /* ----------------------------------------------------------------------
    ヒープ領域サイズを返す

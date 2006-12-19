@@ -21,12 +21,20 @@ typedef struct _WM_INFO_STRUCT  GFL_NETWM;
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
+ * @brief   接続クラスのワーク確保
+ * @param   heapID   ワーク確保ID
+ * @retval  _COMM_WORKのポインタ
+ */
+//==============================================================================
+extern void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num);
+//==============================================================================
+/**
  * @brief   接続クラスの初期化
  * @param   heapID   ワーク確保ID
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void* GFL_NET_WLInitialize(int heapID, GameServiceID serviceNo, u8 num);
+extern void GFL_NET_WLInitialize(int heapID);
 //==============================================================================
 /**
  * @brief   接続しているかどうか

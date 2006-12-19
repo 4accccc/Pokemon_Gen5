@@ -81,11 +81,9 @@ static void _deleteAllNetHandle(GFL_NETSYS* pNet)
 }
 
 
-PTRStateFunc GFL_NET_GetStateFunc(int index)
+PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
 {
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
-    return pNet->pNetHandle[index]->state;
+    return pHandle->state;
 }
 
 //==============================================================================
@@ -219,7 +217,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-   // GFL_NET_StateConnectMacAddress(pHandle);
+    GFL_NET_StateConnectMacAddress(pHandle);
 }
 
 //==============================================================================
@@ -490,6 +488,17 @@ GFL_NETSYS* _GFL_NET_GetNETSYS(void)
 
 //==============================================================================
 /**
+ * @brief    通信管理初期化構造体を得る
+ * @return   ネットシステム構造体ポインタ
+ */
+//==============================================================================
+GFLNetInitializeStruct* _GFL_NET_GetNETInitStruct(void)
+{
+    return &_pNetSys->aNetInit;
+}
+
+//==============================================================================
+/**
  * @brief    WL通信管理構造体を得る  （通信内部使用 割り込み用）
  * @return   ネットシステム構造体ポインタ
  */
@@ -498,5 +507,18 @@ GFL_NETSYS* _GFL_NET_GetNETSYS(void)
 GFL_NETWL* _GFL_NET_GetNETWL(void)
 {
     return _pNetSys->pNetWL;
+}
+
+//==============================================================================
+/**
+ * @brief    WL通信管理構造体をセットする
+ * @param    WL通信管理構造体
+ * @return   none
+ */
+//==============================================================================
+
+void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
+{
+    _pNetSys->pNetWL = pWL;
 }
 

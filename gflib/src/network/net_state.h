@@ -26,6 +26,7 @@ extern void DebugOhnoCommDebugUnderChildOnly(int no);
 
 extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
 
+extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle);
 
 extern BOOL CommStateIsInitialize(void);
 

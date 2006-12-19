@@ -2940,18 +2940,30 @@ static s16 SelectChannel(u16 bitmap)
  **************************************************************************/
 
 /* ----------------------------------------------------------------------
+   Name:        WH_CreateHandle
+   Description: メモリーを確保し初期化します
+   Arguments:   作業領域.
+   Returns:     メモリー
+   ---------------------------------------------------------------------- */
+GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap)
+{
+    void* pNet = pHeap;
+    
+    if(pHeap==NULL){
+        pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWM)+32);
+    }
+    return (GFL_NETWM*)pNet;
+}
+
+/* ----------------------------------------------------------------------
    Name:        WH_Initialize
    Description: 初期化作業を行い、初期化シーケンスを開始します。
    Arguments:   作業領域.
    Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-GFL_NETWM* WH_Initialize(int heapID, void* pHeap)
+BOOL WH_Initialize(void* pHeap)
 {
     GFL_NETWM* pWmInfo = (GFL_NETWM*)pHeap;
-    
-    if(pWmInfo==NULL){
-        pWmInfo = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWM));
-    }
 
     pWmInfo->sRecvBufferSize = 0;
     pWmInfo->sSendBufferSize = 0;
@@ -2976,8 +2988,9 @@ GFL_NETWM* WH_Initialize(int heapID, void* pHeap)
     // 初期化シーケンス開始。
     if (!WH_StateInInitialize()) {
         WH_SetError(WM_ERRCODE_FAILED);
+        return FALSE;
     }
-    return pWmInfo;
+    return TRUE;
 }
 
 

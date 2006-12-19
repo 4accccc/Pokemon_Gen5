@@ -134,15 +134,15 @@ static void _startUpCallback(void *arg, WVRResult result);
 static void _indicateCallback(void *arg);
 static int _connectNum(void);
 
+
 //==============================================================================
 /**
- * @brief   接続クラスの初期化
+ * @brief   接続クラスのワーク確保
  * @param   heapID   ワーク確保ID
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-
-void* GFL_NET_WLInitialize(int heapID, GameServiceID serviceNo, u8 num)
+void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
 {
     int i;
     GFL_NETWL* pNetWL = NULL;
@@ -153,9 +153,24 @@ void* GFL_NET_WLInitialize(int heapID, GameServiceID serviceNo, u8 num)
     pNetWL->ggid = _DP_GGID;
     pNetWL->serviceNo = serviceNo;
     pNetWL->maxConnectNum = num;
+    return pNetWL;
+}
+
+//==============================================================================
+/**
+ * @brief   接続クラスの初期化
+ * @param   heapID   ワーク確保ID
+ * @retval  _COMM_WORKのポインタ
+ */
+//==============================================================================
+
+void GFL_NET_WLInitialize(int heapID)
+{
+    int i;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    
     // 無線ライブラリ駆動開始
     _whInitialize(heapID, pNetWL);
-    return pNetWL;
 }
 
 //==============================================================================
@@ -344,8 +359,13 @@ void GFL_NET_WLVRAMDFinalize(void)
 static void _whInitialize(int heapID, GFL_NETWL* pNetWL)
 {
     // 無線初期化
-    pNetWL->_pWHWork = WH_Initialize(heapID, pNetWL->_pWHWork);
+//    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
+    pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork);
+
+    if(FALSE == WH_Initialize(_GFL_NET_WLGetNETWH())){
+        OS_TPanic("not init");
+    }
     // WH 初期設定
     WH_SetGgid(pNetWL->ggid);
 }
@@ -1607,9 +1627,13 @@ u16 GFL_NET_WL_GetCurrentAid(void)
 GFL_NETWM* _GFL_NET_WLGetNETWH(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    u32 addr = (u32)pNetWL;
     if(pNetWL == NULL){
         return NULL;
     }
-    return pNetWL->_pWHWork;
+    if(addr % 32){
+        addr += 32 - (addr % 32);
+    }
+    return (GFL_NETWM*)addr;
 }
 

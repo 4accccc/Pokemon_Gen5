@@ -352,11 +352,19 @@ static void _handleDelete(GFL_NETHANDLE* pNetHandle)
 
 static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+    GFL_NETWL* pWL;
+    
     if(!GFL_NET_WLIsVRAMDInitialize()){
         return;  //
     }
-    GFL_NET_WLStealth(FALSE);
 
+    
+    pWL = GFL_NET_WLGetHandle(pNetIni->allocNo, pNetIni->gsid, pNetIni->maxConnectNum);
+    _GFL_NET_SetNETWL(pWL);
+
+    GFL_NET_WLInitialize(pNetIni->allocNo);
+//    GFL_NET_WLStealth(FALSE);
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
     NET_PRINT("再起動    -- \n");
@@ -381,6 +389,75 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
     _CHANGE_STATE(_deviceInitialize, 0);
 }
 
+//==============================================================================
+/**
+ * 子機待機状態  親機に情報を送信
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _childSendNego(GFL_NETHANDLE* pNetHandle)
+{
+
+    if(GFL_NET_SystemIsError()){
+        //NET_PRINT("エラーの場合戻る\n");
+     //   _CHANGE_STATE(_battleChildReset, 0);
+    }
+  //  if(CommIsConnect(CommGetCurrentID()) && ( COMM_PARENT_ID != CommGetCurrentID())){
+   //     _CHANGE_STATE(_battleChildWaiting, 0);
+   // }
+}
+
+//==============================================================================
+/**
+ * 子機待機状態  親機に許可もらい中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _childConnecting(GFL_NETHANDLE* pNetHandle)
+{
+    GFL_NET_WLParentBconCheck();
+
+    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
+
+        _CHANGE_STATE(_childSendNego, _SEND_NAME_TIME);
+    }
+
+}
+
+//==============================================================================
+/**
+ * マックアドレスを指定して子機接続開始
+ * @param   connectIndex 接続する親機のIndex
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
+{
+    _CHANGE_STATE(_childConnecting, 0);
+}
+
+//==============================================================================
+/**
+ * 通信管理ステートの処理
+ * @param
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
+{
+    if(pHandle){
+        PTRStateFunc state = GFL_NET_GetStateFunc(pHandle);
+        if(state != NULL){
+            state(pHandle);
+        }
+    }
+}
 
 
 
@@ -458,20 +535,6 @@ void GFL_NET_StateEnterBattleChild(SAVEDATA* pSaveData, int serviceNo, int regul
     _pCommState->soloDebugNo = soloDebugNo;
 #endif
     _CHANGE_STATE(_battleChildInit, 0);
-}
-
-//==============================================================================
-/**
- * マックアドレスを指定して子機接続開始
- * @param   connectIndex 接続する親機のIndex
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
-{
-    _pCommState->connectIndex = connectIndex;
-    _CHANGE_STATE(_battleChildConnecting, 0);
 }
 
 //==============================================================================
@@ -828,24 +891,6 @@ void GFL_NET_StateEnterMysteryChild(SAVEDATA* pSaveData, int serviceNo)
     _CHANGE_STATE(_mysteryChildInit, 0);
 }
 
-
-//==============================================================================
-/**
- * 通信管理ステートの処理
- * @param
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
-{
-    if(pHandle){
-        PTRStateFunc state = GFL_NET_GetStateFunc(pHandle);
-        if(state != NULL){
-            state(pHandle);
-        }
-    }
-}
 
 
 
@@ -1381,46 +1426,6 @@ static void _battleChildConnecting(void)
         _CHANGE_STATE(_battleChildSendName, _SEND_NAME_TIME);
     }
 
-}
-
-//==============================================================================
-/**
- * 子機待機状態  親機に許可もらい中
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _childConnecting(GFL_NETHANDLE* pNetHandle)
-{
-    CommMPParentBconCheck();
-//    if(CommChildIndexConnect(_pCommState->connectIndex)){
-
-    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
-
-        _CHANGE_STATE(_battleChildSendName, _SEND_NAME_TIME);
-    }
-
-}
-
-//==============================================================================
-/**
- * 子機待機状態  親機に情報を送信
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _battleChildSendName(GFL_NETHANDLE* pNetHandle)
-{
-
-    if(CommIsError()){
-        //NET_PRINT("エラーの場合戻る\n");
-        _CHANGE_STATE(_battleChildReset, 0);
-    }
-    if(CommIsConnect(CommGetCurrentID()) && ( COMM_PARENT_ID != CommGetCurrentID())){
-        _CHANGE_STATE(_battleChildWaiting, 0);
-    }
 }
 
 //==============================================================================

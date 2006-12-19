@@ -143,5 +143,12 @@ extern GFL_NETWL* _GFL_NET_GetNETWL(void);
 
 extern GFL_NETSYS* _GFL_NET_GetNETSYS(void);
 
+extern GFLNetInitializeStruct* _GFL_NET_GetNETInitStruct(void);
+
+extern PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle);
+
+extern void _GFL_NET_SetNETWL(GFL_NETWL* pWL);
+
+
 #endif
 
