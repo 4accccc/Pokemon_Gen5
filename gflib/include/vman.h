@@ -40,7 +40,7 @@ typedef struct {
 extern u32 GFI_VRAM_CalcVramSize( u32 vramBank );
 extern void GFL_VMAN_sysInit( void );
 extern void GFL_VMAN_sysExit( void );
-extern GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank );
+extern GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, u32 vramBank );
 extern void GFL_VMAN_Delete( GFL_VMAN* man );
 extern void GFL_VMAN_InitReserveInfo( GFL_VMAN_RESERVE_INFO* reserveInfo );
 extern BOOL GFL_VMAN_IsReserveInfoInitialized( const GFL_VMAN_RESERVE_INFO* reserveInfo );
