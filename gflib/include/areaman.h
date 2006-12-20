@@ -11,13 +11,11 @@
 #ifndef __AREAMAN_H__
 #define __AREAMAN_H__
 
-#include "heapsys.h"
-
+//#define AREAMAN_DEBUG
 //--------------------------------------------
 // 不完全型定義
 //--------------------------------------------
 typedef struct _GFL_AREAMAN		GFL_AREAMAN;
-
 
 //--------------------------------------------
 // 
@@ -36,9 +34,9 @@ typedef	u32		GFL_AREAMAN_POS;
  * @retval  GFL_AREAMAN*	領域マネージャポインタ
  */
 //------------------------------------------------------------------
-GFL_AREAMAN*
+extern GFL_AREAMAN*
 	GFL_AREAMAN_Create
-		( u32 maxBlock, u32 heapID );
+		( u32 maxBlock, u16 heapID );
 //------------------------------------------------------------------
 /**
  * 領域マネージャ破棄
@@ -46,7 +44,7 @@ GFL_AREAMAN*
  * @param   man			[in] 領域マネージャポインタ
  */
 //------------------------------------------------------------------
-void
+extern void
 	GFL_AREAMAN_Delete
 		( GFL_AREAMAN* man );
 //------------------------------------------------------------------
@@ -59,7 +57,7 @@ void
  * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
  */
 //------------------------------------------------------------------
-u32
+extern u32
 	GFL_AREAMAN_ReserveAuto
 		( GFL_AREAMAN* man, u32 blockNum );
 //------------------------------------------------------------------
@@ -74,7 +72,7 @@ u32
  * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
  */
 //------------------------------------------------------------------
-u32
+extern u32
 	GFL_AREAMAN_ReserveAssignArea
 		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve );
 //------------------------------------------------------------------
@@ -87,8 +85,8 @@ u32
  * @retval  BOOL			TRUEで成功
  */
 //------------------------------------------------------------------
-BOOL
-	AREAMAN_ReserveAssignPos
+extern BOOL
+	GFL_AREAMAN_ReserveAssignPos
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum );
 //------------------------------------------------------------------
 /**
@@ -99,8 +97,22 @@ BOOL
  * @param   blockNum	[in] 確保しているブロック数
  */
 //------------------------------------------------------------------
-void 
-	AREAMAN_Release
+extern void 
+	GFL_AREAMAN_Release
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum );
+
+#ifdef AREAMAN_DEBUG
+//------------------------------------------------------------------
+/**
+ * デバッグ出力
+ *
+ * @param   man		
+ * @param   flag		
+ */
+//------------------------------------------------------------------
+extern void
+	GFL_AREAMAN_SetPrintDebug
+		( GFL_AREAMAN* man, BOOL flag );
+#endif
 
 #endif	// __AREAMAN_H__
