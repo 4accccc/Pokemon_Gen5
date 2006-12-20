@@ -8,13 +8,11 @@
  *
  */
 //==============================================================================
-
-#include "assert.h"
-#include "heapsys.h"
+#include "gflib.h"
+//#include "assert.h"
 #include "vman.h"
 
-#include "obj_graphic.h"
-
+#include "obj_graphic_man.h"
 
 //==============================================================
 //	CGRデータ管理
@@ -43,8 +41,6 @@ typedef struct {
 	BOOL						emptyFlag;		///< 未使用フラグ
 }CELLANIM_MAN;
 
-
-
 //==============================================================
 //	システムワーク
 //==============================================================
@@ -60,25 +56,25 @@ static struct {
 
 }SysWork;
 
-
-
 //==============================================================
 // Prototype
 //==============================================================
-static CGR_MAN* create_cgr_man( u32 heapID, u32 num );
+static CGR_MAN* create_cgr_man( u16 heapID, u32 num );
 static inline u32 search_empty_cgr_pos( void );
-static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr );
-static inline void trans_ncgr( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, BOOL vramTransferFlag, NNSG2dImageProxy* proxy  );
+static BOOL register_cgr(	u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, 
+							NNSG2dCellDataBank* cellBankPtr );
+static inline void trans_ncgr(	NNSG2dCharacterData* charData, u32 byteOfs, 
+								NNS_G2D_VRAM_TYPE vramType, BOOL vramTransferFlag, 
+								NNSG2dImageProxy* proxy  );
 static void delete_cgr_man( CGR_MAN* man );
-static PLTT_MAN* create_pltt_man( u32 heapID, u32 num );
+static PLTT_MAN* create_pltt_man( u16 heapID, u32 num );
 static inline u32 search_empty_pltt_pos( void );
 static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs );
 static void delete_pltt_man( PLTT_MAN* man );
-static CELLANIM_MAN* create_cellanim_man( u32 heapID, u32 num );
+static CELLANIM_MAN* create_cellanim_man( u16 heapID, u32 num );
 static inline u32 search_empty_cellanim_pos( void );
 static BOOL register_cellanim( u32 idx, void* cellDataPtr, void* animDataPtr );
 static void delete_cellanim_man( CELLANIM_MAN* man );
-
 
 //------------------------------------------------------------------
 /**
@@ -99,7 +95,6 @@ void GFL_OBJGRP_sysExit( void )
 	
 }
 
-
 //==============================================================================================
 /**
  * プロセス毎の初期化処理
@@ -110,7 +105,8 @@ void GFL_OBJGRP_sysExit( void )
  *
  */
 //==============================================================================================
-void GFL_OBJGRP_sysStart( u32 heapID, const GF_BGL_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam )
+void GFL_OBJGRP_sysStart
+	( u16 heapID, const GFL_BG_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam )
 {
 	GF_ASSERT( SysWork.vmanMain == NULL );
 	GF_ASSERT( SysWork.vmanSub == NULL );
@@ -126,6 +122,7 @@ void GFL_OBJGRP_sysStart( u32 heapID, const GF_BGL_DISPVRAM* vramBank, const GFL
 
 	SysWork.initParam = *initParam;
 }
+
 //==============================================================================================
 /**
  * プロセス毎の終了処理
@@ -152,12 +149,9 @@ void GFL_OBJGRP_sysEnd( void )
 	SysWork.cellAnimMan = NULL;
 }
 
-
 //==============================================================================================
 // データ登録および解放関数群
 //==============================================================================================
-
-
 
 //==============================================================================================
 /**
@@ -185,6 +179,7 @@ u32 GFL_OBJGRP_RegisterCGR( void* dataPtr, GFL_VRAM_TYPE targetVram )
 	GF_ASSERT(0);
 	return GFL_OBJGRP_REGISTER_FAILED;
 }
+
 //==============================================================================================
 /**
  * CGRデータの登録（VRAM転送型OBJ用）
@@ -202,14 +197,14 @@ u32 GFL_OBJGRP_RegisterCGR( void* dataPtr, GFL_VRAM_TYPE targetVram )
 //==============================================================================================
 u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram, u32 cellIndex )
 {
-	GF_ASSERT( SysWork.cellAnimMan[cellIndex].emptyFlag == FALSE );
-	GF_ASSERT( NNS_G2dCellDataBankHasVramTransferData( SysWork.cellAnimMan[cellIndex].cellBankPtr ) );
+	GF_ASSERT(SysWork.cellAnimMan[cellIndex].emptyFlag == FALSE);
+	GF_ASSERT(NNS_G2dCellDataBankHasVramTransferData(SysWork.cellAnimMan[cellIndex].cellBankPtr));
 
 	{
 		u32 idx = search_empty_cgr_pos();
 		if( idx != GFL_OBJGRP_REGISTER_FAILED )
 		{
-			if( register_cgr( idx, dataPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr ) )
+			if( register_cgr(idx,dataPtr,targetVram,SysWork.cellAnimMan[cellIndex].cellBankPtr) )
 			{
 				return idx;
 			}
@@ -218,6 +213,7 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram
 		return GFL_OBJGRP_REGISTER_FAILED;
 	}
 }
+
 //==============================================================================================
 /**
  * 登録されたCGRデータの解放
@@ -241,8 +237,6 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 
 	SysWork.cgrMan[index].emptyFlag = TRUE;
 }
-
-
 
 //==============================================================================================
 /**
@@ -270,6 +264,7 @@ u32 GFL_OBJGRP_RegisterCellAnim( void* cellDataPtr, void* animDataPtr )
 	}
 	return idx;
 }
+
 //==============================================================================================
 /**
  * 指定されたセルデータが、VRAM転送型かどうかをチェック
@@ -286,6 +281,7 @@ BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index )
 
 	return NNS_G2dCellDataBankHasVramTransferData( SysWork.cellAnimMan[index].cellBankPtr );
 }
+
 //==============================================================================================
 /**
  * 登録されたセルアニメデータの解放
@@ -300,8 +296,6 @@ void GFL_OBJGRP_ReleaseCellAnim( u32 index )
 
 	SysWork.cellAnimMan[index].emptyFlag = TRUE;
 }
-
-
 
 //==============================================================================================
 /**
@@ -331,6 +325,7 @@ u32 GFL_OBJGRP_RegisterPltt( void* plttData, GFL_VRAM_TYPE vramType, u32 byteOff
 
 	return idx;
 }
+
 //==============================================================================================
 /**
  * 登録されたパレットデータの解放
@@ -362,9 +357,10 @@ typedef struct {
 //==============================================================================================
 // 登録データによるセルアクター構築
 //==============================================================================================
-
-
-CLACT_WORK_PTR GFL_OBJGRP_CreateClAct( CLACT_SET_PTR actset, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, const GFL_OBJGRP_CLWKDAT* param, u8 drawArea, u32 heapID )
+#if 0
+CLACT_WORK_PTR GFL_OBJGRP_CreateClAct
+	( CLACT_SET_PTR actset, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_OBJGRP_CLWKDAT* param, u8 drawArea, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -411,19 +407,11 @@ CLACT_WORK_PTR GFL_OBJGRP_CreateClAct( CLACT_SET_PTR actset, u32 cgrIndex, u32 p
 		return act;
 	}
 }
-
+#endif
 
 
 //==============================================================================================
 //==============================================================================================
-
-
-
-
-
-
-
-
 //------------------------------------------------------------------
 /**
  * CGR管理領域の構築、初期化
@@ -434,16 +422,17 @@ CLACT_WORK_PTR GFL_OBJGRP_CreateClAct( CLACT_SET_PTR actset, u32 cgrIndex, u32 p
  * @retval  CGR_MAN*	管理領域ポインタ
  */
 //------------------------------------------------------------------
-static CGR_MAN* create_cgr_man( u32 heapID, u32 num )
+static CGR_MAN* create_cgr_man( u16 heapID, u32 num )
 {
 	u32 i;
-	CGR_MAN* man = sys_AllocMemory( heapID, sizeof(CGR_MAN)*num );
+	CGR_MAN* man = GFL_HEAP_AllocMemory( heapID, sizeof(CGR_MAN)*num );
 	for(i=0; i<num; i++)
 	{
 		man[i].emptyFlag = TRUE;
 	}
 	return man;
 }
+
 //------------------------------------------------------------------
 /**
  * CGR管理領域から空きを探す
@@ -463,6 +452,7 @@ static inline u32 search_empty_cgr_pos( void )
 	}
 	return GFL_OBJGRP_REGISTER_FAILED;
 }
+
 //------------------------------------------------------------------
 /**
  * CGR登録、転送
@@ -474,7 +464,8 @@ static inline u32 search_empty_cgr_pos( void )
  * @retval  BOOL			成功時TRUE
  */
 //------------------------------------------------------------------
-static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
+static BOOL register_cgr
+	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
 {
 	NNSG2dCharacterData* charData;
 
@@ -502,7 +493,8 @@ static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG
 			if( GFL_VMAN_Reserve( SysWork.vmanMain, szByte, &cgrMan->riMain ) )
 			{
 				u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanMain, &cgrMan->riMain );
-				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DMAIN, vramTransferFlag, &cgrMan->proxy );
+				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DMAIN, 
+							vramTransferFlag, &cgrMan->proxy );
 			}
 		}
 		if( targetVram & GFL_VRAM_2D_SUB )
@@ -510,7 +502,8 @@ static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG
 			if( GFL_VMAN_Reserve( SysWork.vmanSub, szByte, &cgrMan->riSub ) )
 			{
 				u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanSub, &cgrMan->riSub );
-				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DSUB, vramTransferFlag, &cgrMan->proxy );
+				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DSUB, 
+							vramTransferFlag, &cgrMan->proxy );
 			}
 		}
 
@@ -520,6 +513,7 @@ static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG
 	}
 	return FALSE;
 }
+
 //------------------------------------------------------------------
 /**
  * CGR転送コア
@@ -532,7 +526,9 @@ static BOOL register_cgr( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG
  *
  */
 //------------------------------------------------------------------
-static inline void trans_ncgr( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, BOOL vramTransferFlag, NNSG2dImageProxy* proxy  )
+static inline void trans_ncgr
+	( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
+	  BOOL vramTransferFlag, NNSG2dImageProxy* proxy  )
 {
 	if( vramTransferFlag )
 	{
@@ -553,6 +549,7 @@ static inline void trans_ncgr( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G
 		}
 	}
 }
+
 //------------------------------------------------------------------
 /**
  * CGR管理領域の破棄
@@ -562,10 +559,8 @@ static inline void trans_ncgr( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G
 //------------------------------------------------------------------
 static void delete_cgr_man( CGR_MAN* man )
 {
-	sys_FreeMemoryEz( man );
+	GFL_HEAP_FreeMemory( man );
 }
-
-
 
 //------------------------------------------------------------------
 /**
@@ -577,10 +572,10 @@ static void delete_cgr_man( CGR_MAN* man )
  * @retval  CGR_MAN*	管理領域ポインタ
  */
 //------------------------------------------------------------------
-static PLTT_MAN* create_pltt_man( u32 heapID, u32 num )
+static PLTT_MAN* create_pltt_man( u16 heapID, u32 num )
 {
 	u32 i;
-	PLTT_MAN* man = sys_AllocMemory( heapID, sizeof(PLTT_MAN)*num );
+	PLTT_MAN* man = GFL_HEAP_AllocMemory( heapID, sizeof(PLTT_MAN)*num );
 
 	for(i=0; i<num; i++)
 	{
@@ -588,6 +583,7 @@ static PLTT_MAN* create_pltt_man( u32 heapID, u32 num )
 	}
 	return man;
 }
+
 //------------------------------------------------------------------
 /**
  * パレット管理領域から空きを探す
@@ -607,6 +603,7 @@ static inline u32 search_empty_pltt_pos( void )
 	}
 	return GFL_OBJGRP_REGISTER_FAILED;
 }
+
 //------------------------------------------------------------------
 /**
  * パレットデータの登録＆転送
@@ -637,12 +634,14 @@ static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 b
 			if( vramType & GFL_VRAM_2D_MAIN )
 			{
 				OS_TPrintf("CMP PLTT to MAIN idx:%d, ofs:0x%08x\n", idx, byteOffs);
-				NNS_G2dLoadPaletteEx( palData, cmpData, byteOffs, NNS_G2D_VRAM_TYPE_2DMAIN, &man->proxy );
+				NNS_G2dLoadPaletteEx(	palData, cmpData, byteOffs, 
+										NNS_G2D_VRAM_TYPE_2DMAIN, &man->proxy );
 			}
 			if( vramType & GFL_VRAM_2D_SUB )
 			{
 				OS_TPrintf("CMP PLTT to SUB  idx:%d, ofs:0x%08x\n", idx, byteOffs);
-				NNS_G2dLoadPaletteEx( palData, cmpData, byteOffs, NNS_G2D_VRAM_TYPE_2DSUB, &man->proxy );
+				NNS_G2dLoadPaletteEx(	palData, cmpData, byteOffs, 
+										NNS_G2D_VRAM_TYPE_2DSUB, &man->proxy );
 			}
 		}
 		else
@@ -666,6 +665,7 @@ static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 b
 
 	return FALSE;
 }
+
 //------------------------------------------------------------------
 /**
  * パレット管理領域の破棄
@@ -675,10 +675,8 @@ static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 b
 //------------------------------------------------------------------
 static void delete_pltt_man( PLTT_MAN* man )
 {
-	sys_FreeMemoryEz( man );
+	GFL_HEAP_FreeMemory( man );
 }
-
-
 
 //------------------------------------------------------------------
 /**
@@ -690,10 +688,10 @@ static void delete_pltt_man( PLTT_MAN* man )
  * @retval  CGR_MAN*	管理領域ポインタ
  */
 //------------------------------------------------------------------
-static CELLANIM_MAN* create_cellanim_man( u32 heapID, u32 num )
+static CELLANIM_MAN* create_cellanim_man( u16 heapID, u32 num )
 {
 	u32 i;
-	CELLANIM_MAN* man = sys_AllocMemory( heapID, sizeof(CELLANIM_MAN)*num );
+	CELLANIM_MAN* man = GFL_HEAP_AllocMemory( heapID, sizeof(CELLANIM_MAN)*num );
 
 	for(i=0; i<num; i++)
 	{
@@ -701,6 +699,7 @@ static CELLANIM_MAN* create_cellanim_man( u32 heapID, u32 num )
 	}
 	return man;
 }
+
 //------------------------------------------------------------------
 /**
  * セルアニメ管理領域から空きを探す
@@ -720,6 +719,7 @@ static inline u32 search_empty_cellanim_pos( void )
 	}
 	return GFL_OBJGRP_REGISTER_FAILED;
 }
+
 //------------------------------------------------------------------
 /**
  * セルアニメデータの登録
@@ -743,6 +743,7 @@ static BOOL register_cellanim( u32 idx, void* cellDataPtr, void* animDataPtr )
 
 	return FALSE;
 }
+
 //------------------------------------------------------------------
 /**
  * セルアニメ管理領域の破棄
@@ -752,6 +753,6 @@ static BOOL register_cellanim( u32 idx, void* cellDataPtr, void* animDataPtr )
 //------------------------------------------------------------------
 static void delete_cellanim_man( CELLANIM_MAN* man )
 {
-	sys_FreeMemoryEz( man );
+	GFL_HEAP_FreeMemory( man );
 }
 
