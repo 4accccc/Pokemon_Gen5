@@ -95,7 +95,7 @@ void GFL_VMAN_sysExit( void )
  * @retval  GFL_VMAN*	作成したマネージャオブジェクトへのポインタ
  */
 ////==============================================================================================
-GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
+GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, u32 vramBank )
 {
 	GFL_VMAN*  vm;
 	u32 vramSize;
@@ -104,11 +104,11 @@ GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
 	vramSize = GFI_VRAM_CalcVramSize( vramBank );
 
 	if( type == GFL_VMAN_TYPE_OBJ )
-	{
+	{//OBJ
 		vm->unitByteSize = calc_objtype_unit_bytesize( vramSize );
 	}
 	else
-	{
+	{//BG
 		vm->unitByteSize = 0x20;
 	}
 
