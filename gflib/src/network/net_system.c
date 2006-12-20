@@ -339,10 +339,10 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
         if(_pComm!=NULL){  // すでに初期化している場合はreturn
             return TRUE;
         }
-        _pComm->pTool = GFL_NET_Tool_sysInit(heapID, machineMax);
         OHNO_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
         _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
+//        _pComm->pTool = GFL_NET_Tool_sysInit(heapID, machineMax);
         
         _pComm->packetSizeMax = packetSizeMax + 64;
         _pComm->transmissionType = _MP_MODE;
@@ -657,9 +657,7 @@ BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeM
 {
     BOOL ret = TRUE;
 
-    if( _pComm->device == _DEVICE_WIFI){
-        ret = GFL_NET_WLParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
-    }
+    ret = GFL_NET_WLParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
     return ret;
 }
@@ -678,9 +676,7 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
 {
     BOOL ret = TRUE;
 
-    if( _pComm->device == _DEVICE_WIFI){
-        ret = GFL_NET_WLChildInit(bAlloc, bBconInit);
-    }
+    ret = GFL_NET_WLChildInit(bAlloc, bBconInit);
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM);
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
@@ -902,7 +898,6 @@ BOOL GFL_NET_SystemUpdateData(void)
 {
     int j;
 
-    //stateはいらなくなるはず
 //    CommStateCheckFunc(); //commstateをタスク処理しないことにしたのでここに
 
 #if 0 //通信アイコン機能ができたら出す @@OO 2006.12.13
@@ -944,7 +939,6 @@ BOOL GFL_NET_SystemUpdateData(void)
     }
     //エラーの表示の仕組みができたら入れる  @@OO  2006.12.13
 //    CommErrorDispCheck(GFL_HEAPID_SYSTEM);
-    GFL_NET_ToolTimingSyncSend(_NETHANDLE_GetSYS());
     return TRUE;
 }
 
@@ -1563,21 +1557,10 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
     int i;
 
     _pComm->countSendRecvServer[aid]--;  //SERVER受信
-#ifdef PM_DEBUG
-    _pComm->countRecvNumServer[aid]++;
-#endif
     if(adr==NULL){
         return;
     }
 
-#ifdef PM_DEBUG
-    debugHeadData[aid][debugCnt[aid]] = adr[0];
-    debugCnt[aid]++;
-    if(debugCnt[aid]==100){
-        debugCnt[aid] = 0;
-    }
-#endif
-    
     if((_pComm->bFirstCatch[aid]) && (adr[0] & _SEND_NEXT)){
         // まだ一回もデータをもらったことがない状態なのに連続データだった
         OHNO_PRINT("連続データ parent %d \n",aid);
@@ -2227,12 +2210,6 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
             }
             pRecvComm->dataPoint += realbyte;
             if(pRecvComm->dataPoint >= size ){
-
-//                if(25 == command){
-  //                  OHNO_SP_PRINT("%d ",netID);
-    //                DEBUG_DUMP(pRecvComm->pRecvBuff,size,"recv");
-      //          }
-                
                 _endCallBack(netID, command, size, pRecvComm->pRecvBuff, pRecvComm);
             }
         }
@@ -2773,7 +2750,7 @@ void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pDa
     GFL_NET_WLSetAutoExit();
 }
 
-#ifdef PM_DEBUG
+#ifdef GFL_NET_DEBUG
 
 //==============================================================================
 /**

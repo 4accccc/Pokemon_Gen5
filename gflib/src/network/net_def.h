@@ -95,6 +95,7 @@ typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 
 /// ネットワークハンドル
 struct _GFL_NETHANDLE{
+    NET_TOOLSYS* pTool;  ///< netTool
     PTRStateFunc state; ///< ハンドルのプログラム状態
     MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
     u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
@@ -106,6 +107,11 @@ struct _GFL_NETHANDLE{
     u8 negotiation;     ///< 通信受付の状態
 };
 
+enum _negotiationType {
+    _NEGOTIATION_CHECK,   // 接続確認中
+    _NEGOTIATION_OK,      // 接続確認完了
+    _NEGOTIATION_NG,     // 接続失敗
+};
 
 
 

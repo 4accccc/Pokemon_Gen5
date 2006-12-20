@@ -508,9 +508,8 @@ static void WH_StateOutReset(void *arg);
 /* ======================================================================
    debug codes
    ====================================================================== */
-#ifdef DEBUG_ONLY_FOR_ohno
-//#define WMHIGH_DEBUG   //wh関連のデバッグ出力
-#endif
+#define WMHIGH_DEBUG   //wh関連のデバッグ出力
+
 #ifdef PM_DEBUG
 #define _DEBUG_LIFETIME  (0)    // デバッグ時にライフタイムを無効にしたい時に使用
 #else

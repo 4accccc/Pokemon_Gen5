@@ -62,6 +62,7 @@ void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
 
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]==pHandle){
+            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
             pNet->pNetHandle[i] = NULL;
         }
@@ -74,10 +75,17 @@ static void _deleteAllNetHandle(GFL_NETSYS* pNet)
 
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
+            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
             pNet->pNetHandle[i] = NULL;
         }
     }
+}
+
+GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    return pNet->pNetHandle[netID];
 }
 
 
@@ -85,6 +93,19 @@ PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
 {
     return pHandle->state;
 }
+
+BOOL GFL_NET_IsHandleNegotiation(GFL_NETHANDLE* pHandle)
+{
+    return (pHandle->negotiation == _NEGOTIATION_OK);
+}
+
+NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
+{
+    return pHandle->pTool;
+}
+
+
+
 
 //==============================================================================
 /**
@@ -100,6 +121,9 @@ void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID)
     _pNetSys = pNet;
 
     GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
+
+    OS_TPrintf("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
+
     GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
     pNet->heapID = heapID;
     if(pNetInit->bNetwork){
@@ -185,8 +209,10 @@ void GFL_NET_MainProc(void)
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
             GFL_NET_StateMainProc(pNet->pNetHandle[i]);
+            GFL_NET_ToolTimingSyncSend(pNet->pNetHandle[i]);
         }
     }
+    GFL_NET_SystemUpdateData();
 }
 
 //==============================================================================
@@ -202,6 +228,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
     GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->heapID, sizeof(GFL_NETHANDLE));
     GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
     _addNetHandle(pNet, pHandle);
+    pHandle->pTool = GFL_NET_Tool_sysInit(pNet->heapID, pNet->aNetInit.maxConnectNum);
     return pHandle;
 }
 
@@ -229,6 +256,7 @@ void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 //==============================================================================
 void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 {
+    GFL_NET_StateConnectParent(pHandle);
 }
 
 //==============================================================================
@@ -242,6 +270,7 @@ void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 //==============================================================================
 void GFL_NET_ServerConnectTo(GFL_NETHANDLE* pHandle,const u8* macAddress, const int num)
 {
+//    GFL_NET_StateConnectParentMacAddress(pHandle, macAddress, num);
 }
 
 //==============================================================================

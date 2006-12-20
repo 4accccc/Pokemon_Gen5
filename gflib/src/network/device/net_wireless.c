@@ -164,11 +164,13 @@ void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
  */
 //==============================================================================
 
-void GFL_NET_WLInitialize(int heapID)
+void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize)
 {
     int i;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    
+
+    pNetWL->beaconGetFunc = getFunc;    ///< ビーコンデータ取得関数
+    pNetWL->beaconGetSizeFunc = getSize;  ///< ビーコンデータサイズ取得関数
     // 無線ライブラリ駆動開始
     _whInitialize(heapID, pNetWL);
 }
@@ -903,12 +905,15 @@ static void _setUserGameInfo( void )
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
     if(pNetWL->beaconGetSizeFunc==NULL){
-        OS_Panic("beaconGetSizeFunc none");
+        OS_TPanic("beaconGetSizeFunc none");
         return;
     }
-    size = pNetWL->beaconGetSizeFunc();
+    {
+        NetBeaconGetSizeFunc func = pNetWL->beaconGetSizeFunc;
+        size = func();
+    }
     if((WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX) <= size){
-        OS_Panic("size over");
+        OS_TPanic("size over");
         return;
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
@@ -932,7 +937,13 @@ static void _funcBconDataChange( void )
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
-    int size = pNetWL->beaconGetSizeFunc();
+    int size;
+
+    OS_TPrintf("%x \n",(u32)pNetWL);
+    {
+        NetBeaconGetSizeFunc func = pNetWL->beaconGetSizeFunc;
+        size = func();
+    }
 
     if(_connectNum() != pGF->connectNum){
         pGF->connectNum = _connectNum();
@@ -1464,7 +1475,11 @@ void GFL_NET_WLSetAutoExit(void)
 void GFL_NET_WLFlashMyBss(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    int size = pNetWL->beaconGetSizeFunc();
+    int size;
+    {
+        NetBeaconGetSizeFunc func = pNetWL->beaconGetSizeFunc;
+        size = func();
+    }
 
     _setUserGameInfo();
     WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
@@ -1627,10 +1642,11 @@ u16 GFL_NET_WL_GetCurrentAid(void)
 GFL_NETWM* _GFL_NET_WLGetNETWH(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    u32 addr = (u32)pNetWL;
+    u32 addr;
     if(pNetWL == NULL){
         return NULL;
     }
+    addr = (u32)pNetWL->_pWHWork;
     if(addr % 32){
         addr += 32 - (addr % 32);
     }

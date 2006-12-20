@@ -18,7 +18,7 @@
 #endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
@@ -36,8 +36,8 @@
 // デバッグ用決まり文句----------------------
 // データダンプ
 #ifdef GFL_NET_DEBUG
-extern void CommDump_Debug(u8* adr, int length, char* pInfoStr);
-#define DEBUG_DUMP(a,l,s)  CommDump_Debug(a,l,s)
+extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
+#define DEBUG_DUMP(a,l,s)  GFL_NET_SystemDump_Debug(a,l,s)
 #else
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
 #endif
@@ -111,16 +111,16 @@ typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 
 /// @brief 通信の初期化用構造体
 typedef struct{
-  GameServiceID gsid;       ///< ゲームサービスID  通信の種類
-  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
-  u32  allocNo;             ///< allocするための番号
-  NetRecvFuncTable recvFuncTable;  ///< 受信関数テーブル
+  NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
   NetBeaconGetFunc beaconGetFunc;  ///< ビーコンデータ取得関数
   NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
   NetBeaconCompFunc beaconCompFunc; ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
   NetErrorFunc errorFunc;           ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
+  int gsid;       ///< ゲームサービスID  通信の種類
+  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
+  u32  allocNo;             ///< allocするための番号
   u8 maxConnectNum;   ///< 最大接続人数
   u8 maxBeaconNum;    ///< 最大ビーコン収集数
   u8 bNetwork;    ///< 通信を開始するかどうか
@@ -140,6 +140,9 @@ typedef struct{
  */
 //==============================================================================
 extern void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID);
+extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
+extern BOOL GFL_NET_IsHandleNegotiation(GFL_NETHANDLE* pHandle);
+
 //==============================================================================
 /**
  * @brief  通信終了

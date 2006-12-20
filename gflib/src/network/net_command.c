@@ -32,10 +32,10 @@ static void _commCommandRecvThrowOutEnd(const int netID, const int size, const v
 //==============================================================================
 static const NetRecvFuncTable _CommPacketTbl[] = {
     {NULL,                        GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {CommRecvExit,                GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_StateRecvExit,                GFL_NET_COMMAND_SIZE( 0 ), NULL},
     {GFL_NET_SystemRecvAutoExit,            GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {CommRecvNegotiation,         CommRecvGetNegotiationSize, NULL},
-    {CommRecvNegotiationReturn,   CommRecvGetNegotiationSize, NULL},
+    {GFL_NET_StateRecvNegotiation,         GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_StateRecvNegotiationReturn,   GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_SystemRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_SystemRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_SystemRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
@@ -116,26 +116,43 @@ void GFL_NET_CommandFinalize( void )
 
 void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
 {
+    int i;
     PTRCommRecvFunc func;
+    BOOL bCheck;
+    GFL_NETHANDLE* pNetHandle;
 
-    if( command < GFL_NET_CMD_COMMAND_MAX ){
-        func = _CommPacketTbl[command].callbackFunc;
-    }
-    else{
-        if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
-            OHNO_PRINT("command %d \n", command);
-            OS_Panic("no command");
-            GFL_NET_SystemSetError();
-            return;  // 本番ではコマンドなし扱い
-        }
-        func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
-    }
-    if(func != NULL){
-        if(_pCommandWork){
-            func(netID, size, pData, _pCommandWork->pWork, GFL_NET_SystemGetHandle(netID));
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        bCheck=FALSE;
+        pNetHandle = GFL_NET_GetNetHandle(i);
+        if(!GFL_NET_IsHandleNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
+            if((command == GFL_NET_CMD_COMM_NEGOTIATION) || (command == GFL_NET_CMD_COMM_NEGOTIATION_RETURN)){
+                bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
+            }
         }
         else{
-            func(netID, size, pData, NULL, GFL_NET_SystemGetHandle(netID));
+            bCheck=TRUE;
+        }
+        if(bCheck){
+            if( command < GFL_NET_CMD_COMMAND_MAX ){
+                func = _CommPacketTbl[command].callbackFunc;
+            }
+            else{
+                if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
+                    OHNO_PRINT("command %d \n", command);
+                    OS_Panic("no command");
+                    GFL_NET_SystemSetError();
+                    return;  // 本番ではコマンドなし扱い
+                }
+                func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
+            }
+            if(func != NULL){
+                if(_pCommandWork){
+                    func(netID, size, pData, _pCommandWork->pWork, pNetHandle);
+                }
+                else{
+                    func(netID, size, pData, NULL, pNetHandle);
+                }
+            }
         }
     }
 }

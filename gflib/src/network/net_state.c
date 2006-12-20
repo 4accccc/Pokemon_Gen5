@@ -123,10 +123,6 @@ typedef struct{
 #define _TCB_COMMCHECK_PRT   (10)    ///< フィールドを歩く通信の監視ルーチンのPRI
 
 
-#define _NEGOTIATION_OK (1)      // 接続確認完了
-#define _NEGOTIATION_CHECK (0)   // 接続確認中
-#define _NEGOTIATION_NG (2)     // 接続失敗
-
 
 
 //==============================================================================
@@ -359,11 +355,12 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
         return;  //
     }
 
+    NET_PRINT("%x - %x %x\n",(u32)pNetIni,(u32)pNetIni->beaconGetFunc,(u32)pNetIni->beaconGetSizeFunc);
     
     pWL = GFL_NET_WLGetHandle(pNetIni->allocNo, pNetIni->gsid, pNetIni->maxConnectNum);
     _GFL_NET_SetNETWL(pWL);
 
-    GFL_NET_WLInitialize(pNetIni->allocNo);
+    GFL_NET_WLInitialize(pNetIni->allocNo, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc);
 //    GFL_NET_WLStealth(FALSE);
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
@@ -459,27 +456,42 @@ void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
     }
 }
 
-
-
-#if 0   //state修正中
-
 //==============================================================================
 /**
- * 通信を繋ぎ秘密基地から戻る
+ * 親機として待機中
  * @param   none
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateUnderGroundOnlineSecretBase(void)
+static void _parentWait(GFL_NETHANDLE* pHandle)
 {
-    CommVRAMDInitialize();
-    _CHANGE_STATE(_underChildOnline, 0);  // エラー終了の場合RESETする
 }
 
 //==============================================================================
 /**
- * バトル時の親としての通信処理開始
+ * 親機として初期化を行う
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _parentInit(GFL_NETHANDLE* pNetHandle)
+{
+    if(!GFL_NET_WLIsVRAMDInitialize()){
+        return;
+    }
+
+    if(GFL_NET_SystemParentModeInit(TRUE, TRUE, _PACKETSIZE_BATTLE,TRUE)){
+        GFL_NET_SystemSetTransmissonTypeDS();
+        _CHANGE_STATE(_parentWait, 0);
+    }
+}
+
+
+//==============================================================================
+/**
+ * 親としての通信処理開始
  * @param   pMyStatus  mystatus
  * @param   serviceNo  通信サービス番号
  * @param   regulationNo  通信サービス番号
@@ -487,26 +499,102 @@ void GFL_NET_StateUnderGroundOnlineSecretBase(void)
  */
 //==============================================================================
 
-#ifdef GFL_NET_DEBUG
-void GFL_NET_StateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi, int soloDebugNo)
-#else
-void GFL_NET_StateEnterBattleParent(SAVEDATA* pSaveData, int serviceNo, int regulationNo, const REGULATION* pReg, BOOL bWifi)
-#endif
+void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle)
 {
-    if(CommIsInitialize()){
-        return;      // つながっている場合今は除外する
-    }
-    // 通信ヒープ作成
-    sys_CreateHeapLo( HEAPID_BASE_APP, HEAPID_COMMUNICATION, _HEAPSIZE_BATTLE );
-    _commStateInitialize(pSaveData,serviceNo);
-//    _pCommState->serviceNo = serviceNo;
-    _pCommState->regulationNo = regulationNo;
-    _pCommState->pReg = pReg;
-#ifdef GFL_NET_DEBUG
-    _pCommState->soloDebugNo = soloDebugNo;
-#endif
-    _CHANGE_STATE(_battleParentInit, 0);
+
+    _CHANGE_STATE(_parentInit, 0);
 }
+
+
+//==============================================================================
+/**
+ * WIFI終了コマンド   子機が親機にやめるように送信 ぶっつりきる CS_WIFI_EXIT
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    NET_PRINT("EXITコマンド受信\n");
+#if 0
+    if(CommGetCurrentID() == COMM_PARENT_ID){
+        _pCommState->disconnectIndex = 0;
+        _CHANGE_STATE(_stateWifiMatchEnd, 0);
+    }
+    else{
+        _pCommState->disconnectIndex = 1;
+        _CHANGE_STATE(_stateWifiMatchEnd, 0);
+    }
+    _pCommState->bWifiDisconnect = TRUE;
+#endif
+}
+
+//==============================================================================
+/**
+ * ネゴシエーション用コールバック CS_COMM_NEGOTIATION
+ * @param   callback用引数
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+//親機が受け取るわけなのでフラグを立てるのがいい
+
+#if 0
+    int i;
+    u8* pMsg = pData;
+    BOOL bMatch = TRUE;
+
+    OHNO_PRINT("------CommRecvNegotiation\n");
+
+    if(CommGetCurrentID() != COMM_PARENT_ID){  // 親機のみ判断可能
+        return;
+    }
+    bMatch = TRUE;
+    for(i = 0; i < sizeof(_negotiationMsg); i++){
+        if(pMsg[i] != _negotiationMsg[i]){
+            bMatch = FALSE;
+            break;
+        }
+    }
+    if(bMatch  && (!_pCommState->bUnionPause)){   // 子機から接続確認が来た
+//        if(CommGetConnectNum() <= _pCommState->limitNum){  // 指定接続人数より下回ること
+            OHNO_PRINT("------成功を送信 \n");
+            _negotiationMsgReturnOK[0] = netID;
+            CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnOK);
+            return;
+//        }
+    }
+    OHNO_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
+    _negotiationMsgReturnNG[0] = netID;
+    CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnNG);
+#endif
+}
+
+//==============================================================================
+/**
+ * ネゴシエーション用コールバック CS_COMM_NEGOTIATION_RETURN
+ * @param   callback用引数
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const u8* pMsg = pData;
+
+    if(pMsg[0]==1){   // 親機から接続認証が来た
+        pNetHandle->negotiation = _NEGOTIATION_OK;
+    }
+    else{
+        pNetHandle->negotiation = _NEGOTIATION_NG;
+    }
+}
+
+
+#if 0   //state修正中
 
 //==============================================================================
 /**
@@ -1315,30 +1403,6 @@ static void _underChildReset(void)
     }
     NET_PRINT("再起動    -- %d \n",CommGetCurrentID());
     _CHANGE_STATE(_underChildFInit, 0);
-}
-
-//==============================================================================
-/**
- * 親機として初期化を行う
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _battleParentInit(void)
-{
-    MYSTATUS* pMyStatus;
-    
-    if(!CommIsVRAMDInitialize()){
-        return;
-    }
-    CommMPInitialize(_pCommState->pMyStatus);
-    CommInfoInitialize(_pCommState->pSaveData, _pCommState->pReg);
-
-    if(CommParentModeInit(TRUE, TRUE, _PACKETSIZE_BATTLE,TRUE)){
-        CommSetTransmissonTypeDS();
-        _CHANGE_STATE(_battleParentSendName, 0);
-    }
 }
 
 
@@ -2912,28 +2976,6 @@ static void _stateWifiMatchEnd(void)
         NET_PRINT(" エラー発生。");
         _CHANGE_STATE(_wifiBattleError, 0);
     }
-}
-
-//==============================================================================
-/**
- * WIFI終了コマンド   子機が親機にやめるように送信 ぶっつりきる CS_WIFI_EXIT
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-void CommRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    NET_PRINT("EXITコマンド受信\n");
-    if(CommGetCurrentID() == COMM_PARENT_ID){
-        _pCommState->disconnectIndex = 0;
-        _CHANGE_STATE(_stateWifiMatchEnd, 0);
-    }
-    else{
-        _pCommState->disconnectIndex = 1;
-        _CHANGE_STATE(_stateWifiMatchEnd, 0);
-    }
-    _pCommState->bWifiDisconnect = TRUE;
 }
 
 //==============================================================================
