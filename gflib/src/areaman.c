@@ -9,12 +9,9 @@
  */
 //==============================================================================
 #include "gflib.h"
-#include "heapsys.h"
 //#include "assert.h"
 
 #include "areaman.h"
-
-//#define  DEBUG_PRINT_ON	// これを有効にすると、領域確保の度に情報をデバッガ出力する
 
 //----------------------------------------------
 // メモリ破壊チェック用マジックナンバー
@@ -29,7 +26,7 @@ struct _GFL_AREAMAN {
 	u16		areaByteSize;
 	u32*	pMagicNumber;
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	BOOL	printDebugFlag;
 	#endif
 	u8		area[0];
@@ -91,7 +88,7 @@ static void reserve_bit( u8* area, u32 start_pos, u32 num );
 static void release_bit( u8* area, u32 pos, u32 num );
 static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum );
 
-#ifdef DEBUG_PRINT_ON
+#ifdef AREAMAN_DEBUG
 static void print_bit( u8 b );
 static void print_bit_all( GFL_AREAMAN* man );
 static void print_reserveinfo( GFL_AREAMAN* man, u32 pos, u32 blockNum, int pat );
@@ -121,7 +118,7 @@ static inline void CHECK_ASSERT( GFL_AREAMAN* man )
 //------------------------------------------------------------------
 GFL_AREAMAN*
 	GFL_AREAMAN_Create
-		( u32 maxBlock, u32 heapID )
+		( u32 maxBlock, u16 heapID )
 {
 	GFL_AREAMAN* man;
 	u16 areaByteSize;
@@ -135,7 +132,7 @@ GFL_AREAMAN*
 	man->pMagicNumber = (u32*)(man->area + areaByteSize);
 	*(man->pMagicNumber) = MAGIC_NUMBER;
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	man->printDebugFlag = FALSE;
 	#endif
 
@@ -162,28 +159,25 @@ void
 }
 
 
-#if 0
+#ifdef AREAMAN_DEBUG
 //------------------------------------------------------------------
 /**
- * 
+ * デバッグ出力
  *
  * @param   man		
  * @param   flag		
- *
  */
 //------------------------------------------------------------------
 void
 	GFL_AREAMAN_SetPrintDebug
 		( GFL_AREAMAN* man, BOOL flag )
 {
-	#ifdef DEBUG_PRINT_ON
 	man->printDebugFlag = flag;
 
 	if( flag )
 	{
 		OS_TPrintf("AreaMan[%08x] Print Start (MaxBlock=%d)\n", (u32)man, man->maxBlock);
 	}
-	#endif
 }
 #endif
 
@@ -235,7 +229,7 @@ u32
 {
 	CHECK_ASSERT( man );
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	if( man->printDebugFlag )
 	{
 		OS_TPrintf(	"AREAMAN[%08x] reserve %d blocks , start:%d, area:%d\n", 
@@ -246,7 +240,7 @@ u32
 	if(	(numBlockArea < numBlockReserve)
 	||	((startBlock + numBlockReserve) > man->maxBlock )
 	){
-		#ifdef DEBUG_PRINT_ON
+		#ifdef AREAMAN_DEBUG
 		if( man->printDebugFlag )
 		{
 			OS_TPrintf("** reserve failed %dblocks (pat A) ** \n", numBlockReserve);
@@ -270,7 +264,7 @@ u32
 			if( bitpos != AREAMAN_POS_NOTFOUND )
 			{
 				reserve_bit( &(man->area[p]), bitpos, numBlockReserve );
-				#ifdef DEBUG_PRINT_ON
+				#ifdef AREAMAN_DEBUG
 				if( man->printDebugFlag )
 				{
 					print_reserveinfo( man, p*8+bitpos, numBlockReserve, __LINE__ );
@@ -304,7 +298,7 @@ u32
 				if( retpos < startBlockLimit )
 				{
 					reserve_bit( &(man->area[p]), bitpos, numBlockReserve );
-					#ifdef DEBUG_PRINT_ON
+					#ifdef AREAMAN_DEBUG
 					if( man->printDebugFlag )
 					{
 						print_reserveinfo( man, retpos, numBlockReserve, __LINE__ );
@@ -314,7 +308,7 @@ u32
 				}
 				else
 				{
-					#ifdef DEBUG_PRINT_ON
+					#ifdef AREAMAN_DEBUG
 					if( man->printDebugFlag )
 					{
 						OS_TPrintf("** reserve failed %dblocks (pat B) ** \n", numBlockReserve);
@@ -344,7 +338,7 @@ u32
 				{
 					if( pp >= man->areaByteSize )
 					{
-						#ifdef DEBUG_PRINT_ON
+						#ifdef AREAMAN_DEBUG
 						if( man->printDebugFlag )
 						{
 							OS_TPrintf("** reserve failed %dblocks (pat C) ** \n", numBlockReserve);
@@ -370,7 +364,7 @@ u32
 					if( retpos < startBlockLimit )
 					{
 						reserve_area( man, retpos, numBlockReserve );
-						#ifdef DEBUG_PRINT_ON
+						#ifdef AREAMAN_DEBUG
 						if( man->printDebugFlag )
 						{
 							OS_TPrintf("p=%d, obc=%d, retpos=%d\n", p, obc, retpos);
@@ -381,7 +375,7 @@ u32
 					}
 					else
 					{
-						#ifdef DEBUG_PRINT_ON
+						#ifdef AREAMAN_DEBUG
 						if( man->printDebugFlag )
 						{
 							OS_TPrintf("** reserve failed %dblocks (pat D) ** \n", numBlockReserve);
@@ -403,7 +397,7 @@ u32
 		}
 	}
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	if( man->printDebugFlag )
 	{
 		OS_TPrintf("** reserve failed %dblocks (pat E) ** \n", numBlockReserve);
@@ -425,12 +419,12 @@ u32
  */
 //------------------------------------------------------------------
 BOOL
-	AREAMAN_ReserveAssignPos
+	GFL_AREAMAN_ReserveAssignPos
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum )
 {
 	CHECK_ASSERT( man );
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	if( man->printDebugFlag )
 	{
 		OS_TPrintf("AREAMAN[%08x] AP reserve %d blocks , start:%d\n", (u32)man, blockNum, pos);
@@ -439,7 +433,7 @@ BOOL
 
 	reserve_area( man, pos, blockNum );
 
-	#ifdef DEBUG_PRINT_ON
+	#ifdef AREAMAN_DEBUG
 	if( man->printDebugFlag )
 	{
 		print_reserveinfo( man, pos, blockNum, __LINE__ );
@@ -460,7 +454,7 @@ BOOL
  */
 //------------------------------------------------------------------
 void 
-	AREAMAN_Release
+	GFL_AREAMAN_Release
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum )
 {
 	CHECK_ASSERT( man );
@@ -593,7 +587,7 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 }
 
 
-#ifdef DEBUG_PRINT_ON
+#ifdef AREAMAN_DEBUG
 static void print_bit( u8 b )
 {
 	OS_TPrintf("%d", (b>>7)&1);
