@@ -20,6 +20,25 @@
 // NETのテスト
 //------------------------------------------------------------------
 
+typedef struct{
+    int gameNo;   ///< ゲーム種類
+} _testBeaconStruct;
+
+static _testBeaconStruct _testBeacon = { 1 };
+
+
+static void* _netBeaconGetFunc(void)    ///< ビーコンデータ取得関数
+{
+    return &_testBeacon;
+}
+
+static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
+{
+    return sizeof(_testBeacon);
+}
+
+
+//----------------------------------------------------------------
 enum{
     _TEST_CONNECT,
     _TEST_1,
@@ -28,23 +47,35 @@ enum{
 };
 
 
-static int testNo = 0;
+static int _testNo = 0;
 
 void TEST_NET_Main(void)
 {
 
     if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
-        switch(testNo){
+        switch(_testNo){
           case _TEST_CONNECT:
             {
                 GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ClientConnectTo(pHandle,(u8*)"001656A80D74"); //大野のDSのMACADDR
+                GFL_NET_ClientConnectTo(pHandle,(u8*)"0009BF082E6E");
             }
-            testNo++;
+            _testNo++;
             break;
         }
+        OS_TPrintf("c %d\n",_testNo);
     }
-
+    if(PAD_BUTTON_R == GFL_UI_KeyGetTrg()){
+        switch(_testNo){
+          case _TEST_CONNECT:
+            {
+                GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
+                GFL_NET_ServerConnect(pHandle);
+            }
+            _testNo++;
+            break;
+        }
+        OS_TPrintf("p %d\n",_testNo);
+    }
     GFL_NET_MainProc();
 
 
@@ -60,18 +91,16 @@ static u8* _netGetSSID(void)
 
 // 通信初期化構造体
 GFLNetInitializeStruct aGFLNetInit = {
-    1,  //gsid
-    0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-    GFL_HEAPID_SYSTEM,  //allocNo
     NULL,  // 受信関数テーブル
-    NULL,  // ビーコンデータ取得関数
-    NULL,  // ビーコンデータサイズ取得関数
+    _netBeaconGetFunc,  // ビーコンデータ取得関数
+    _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     NULL,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
-    NULL,  // 通信切断時に呼ばれる関数
-    NULL,  // 通信切断時に呼ばれる関数
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
+    1,  //gsid
+    0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    GFL_HEAPID_SYSTEM,  //allocNo
     2,     // 最大接続人数
     16,    // 最大ビーコン収集数
     1,     // 通信を開始するかどうか
