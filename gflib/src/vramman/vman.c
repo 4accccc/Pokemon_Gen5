@@ -8,15 +8,13 @@
  *
  */
 //==============================================================================
-
-#include "heapsys.h"
-#include "assert.h"
+#include "gflib.h"
+//#include "assert.h"
 #include "areaman.h"
 
 #include "vman.h"
 
-
-#define NELEMS(ary)		(sizeof(ary)/sizeof(ary[0]))
+//#define NELEMS(ary)		(sizeof(ary)/sizeof(ary[0]))
 
 
 enum {
@@ -30,8 +28,6 @@ enum {
 //==============================================================
 static u32 calc_objtype_unit_bytesize( u32 vramSize );
 static inline u32 calc_block_size( u32 byteSize, u32 unitSize );
-
-
 
 u32 GFI_VRAM_CalcVramSize( u32 vramBank )
 {
@@ -64,12 +60,11 @@ u32 GFI_VRAM_CalcVramSize( u32 vramBank )
 	return size * 1024;
 }
 
-
 //==============================================================================================
 // マネージャ実体定義
 //==============================================================================================
 struct _GFL_VMAN{
-	AREAMAN*   areaMan;
+	GFL_AREAMAN*   areaMan;
 	u32        unitByteSize;
 };
 
@@ -80,10 +75,12 @@ void GFL_VMAN_sysInit( void )
 {
 
 }
+
 void GFL_VMAN_sysExit( void )
 {
 	
 }
+
 //==============================================================================================
 //==============================================================================================
 
@@ -98,12 +95,12 @@ void GFL_VMAN_sysExit( void )
  * @retval  GFL_VMAN*	作成したマネージャオブジェクトへのポインタ
  */
 ////==============================================================================================
-GFL_VMAN* GFL_VMAN_Create( u32 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
+GFL_VMAN* GFL_VMAN_Create( u16 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
 {
 	GFL_VMAN*  vm;
 	u32 vramSize;
 
-	vm = sys_AllocMemory( heapID, sizeof(GFL_VMAN) );
+	vm = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_VMAN) );
 	vramSize = GFI_VRAM_CalcVramSize( vramBank );
 
 	if( type == GFL_VMAN_TYPE_OBJ )
@@ -115,10 +112,11 @@ GFL_VMAN* GFL_VMAN_Create( u32 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
 		vm->unitByteSize = 0x20;
 	}
 
-	vm->areaMan = AREAMAN_Create( vramSize / vm->unitByteSize, heapID );
+	vm->areaMan = GFL_AREAMAN_Create( vramSize / vm->unitByteSize, heapID );
 
 	return vm;
 }
+
 //==============================================================================================
 /**
  * マネージャ破棄
@@ -129,10 +127,11 @@ GFL_VMAN* GFL_VMAN_Create( u32 heapID, GFL_VMAN_TYPE type, GXVRamOBJ vramBank )
 //==============================================================================================
 void GFL_VMAN_Delete( GFL_VMAN* man )
 {
-	AREAMAN_Delete( man->areaMan );
-	sys_FreeMemoryEz( man );
+	GFL_AREAMAN_Delete( man->areaMan );
+	GFL_HEAP_FreeMemory( man );
 }
 
+#if 0
 //==============================================================================================
 /**
  * 領域確保情報のデバッガ出力ON/OFF
@@ -143,8 +142,9 @@ void GFL_VMAN_Delete( GFL_VMAN* man )
 //==============================================================================================
 void GFL_VMAN_SetPrintDebug( GFL_VMAN* man, BOOL flag )
 {
-	AREAMAN_SetPrintDebug( man->areaMan, flag );
+	GFL_AREAMAN_SetPrintDebug( man->areaMan, flag );
 }
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -184,6 +184,7 @@ void GFL_VMAN_InitReserveInfo( GFL_VMAN_RESERVE_INFO* reserveInfo )
 	reserveInfo->pos = RESERVEINFO_INIT_POS;
 	reserveInfo->size = RESERVEINFO_INIT_SIZE;
 }
+
 //==============================================================================================
 /**
  * 予約領域情報構造体が初期化されているか調べる
@@ -197,8 +198,6 @@ BOOL GFL_VMAN_IsReserveInfoInitialized( const GFL_VMAN_RESERVE_INFO* reserveInfo
 {
 	return (reserveInfo->pos==RESERVEINFO_INIT_POS) && (reserveInfo->size==RESERVEINFO_INIT_SIZE);
 }
-
-
 
 //==============================================================================================
 /**
@@ -218,11 +217,11 @@ BOOL GFL_VMAN_Reserve( GFL_VMAN* man, u32 byteSize, GFL_VMAN_RESERVE_INFO* reser
 	GF_ASSERT( (byteSize % man->unitByteSize) == 0 );
 
 	{
-		AREAMAN_POS pos;
+		GFL_AREAMAN_POS pos;
 		u32 blocks;
 
 		blocks = byteSize / man->unitByteSize;
-		pos = AREAMAN_ReserveAuto( man->areaMan, blocks );
+		pos = GFL_AREAMAN_ReserveAuto( man->areaMan, blocks );
 
 		if( pos != AREAMAN_POS_NOTFOUND )
 		{
@@ -234,6 +233,7 @@ BOOL GFL_VMAN_Reserve( GFL_VMAN* man, u32 byteSize, GFL_VMAN_RESERVE_INFO* reser
 		return FALSE;
 	}
 }
+
 //==============================================================================================
 /**
  * 領域を予約する（指定範囲内で、空いている所を探す）
@@ -256,13 +256,13 @@ BOOL GFL_VMAN_ReserveAssignArea( GFL_VMAN* man, u32 reserveSize, u32 startOffset
 	GF_ASSERT( (areaSize % man->unitByteSize) == 0 );
 
 	{
-		AREAMAN_POS pos;
+		GFL_AREAMAN_POS pos;
 
 		startOffset /= man->unitByteSize;
 		areaSize /= man->unitByteSize;
 		reserveSize /= man->unitByteSize;
 
-		pos = AREAMAN_ReserveAssignArea( man->areaMan, startOffset, areaSize, reserveSize );
+		pos = GFL_AREAMAN_ReserveAssignArea( man->areaMan, startOffset, areaSize, reserveSize );
 
 		if( pos != AREAMAN_POS_NOTFOUND )
 		{
@@ -297,7 +297,7 @@ BOOL GFL_VMAN_ReserveFixPos( GFL_VMAN* man, u32 reserveSize, u32 offset, GFL_VMA
 	offset /= man->unitByteSize;
 	reserveSize /= man->unitByteSize;
 
-	if( AREAMAN_ReserveAssignPos( man->areaMan, offset, reserveSize ) )
+	if( GFL_AREAMAN_ReserveAssignPos( man->areaMan, offset, reserveSize ) )
 	{
 		reserveInfo->pos = offset;
 		reserveInfo->size = reserveSize;
@@ -344,7 +344,7 @@ void GFL_VMAN_Release( GFL_VMAN* man, GFL_VMAN_RESERVE_INFO* reserveInfo )
 	GF_ASSERT(reserveInfo!=NULL);
 	GF_ASSERT(GFL_VMAN_IsReserveInfoInitialized(reserveInfo)==FALSE);
 
-	AREAMAN_Release( man->areaMan, reserveInfo->pos, reserveInfo->size );
+	GFL_AREAMAN_Release( man->areaMan, reserveInfo->pos, reserveInfo->size );
 	GFL_VMAN_InitReserveInfo( reserveInfo );
 }
 
@@ -366,3 +366,4 @@ u32 GFL_VMAN_GetByteOffset( GFL_VMAN* man, const GFL_VMAN_RESERVE_INFO* reserveI
 
 	return reserveInfo->pos * man->unitByteSize;
 }
+
