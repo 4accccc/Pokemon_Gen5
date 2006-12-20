@@ -11,10 +11,9 @@
 #ifndef __OBJ_GRAPHIC_H__
 #define __OBJ_GRAPHIC_H__
 
-#include "gflib/display.h"	// VRAMバンク設定（GF_BGL_DISPVRAM）参照用。
-#include "gflib/vram.h"
+//#include "vram.h"
 
-#include "gflib/clact.h"
+#include "clact.h"
 
 //==============================================================
 //	初期化用構造体
@@ -45,6 +44,14 @@ enum {
 	GFL_OBJGRP_REGISTER_FAILED = 0xffffffff,
 };
 
+//==============================================================
+//	
+//==============================================================
+typedef enum {
+	GFL_VRAM_2D_MAIN = 1,
+	GFL_VRAM_2D_SUB = 2,
+	GFL_VRAM_2D_BOTH = GFL_VRAM_2D_MAIN | GFL_VRAM_2D_SUB,
+}GFL_VRAM_TYPE;
 
 
 
@@ -52,11 +59,13 @@ enum {
 extern void GFL_OBJGRP_sysInit( void );
 extern void GFL_OBJGRP_sysExit( void );
 
-extern void GFL_OBJGRP_sysStart( u32 heapID, const GF_BGL_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
+extern void GFL_OBJGRP_sysStart(	u16 heapID, const GFL_BG_DISPVRAM* vramBank,
+									const GFL_OBJGRP_INIT_PARAM* initParam );
 extern void GFL_OBJGRP_sysEnd( void );
 
 extern u32 GFL_OBJGRP_RegisterCGR( void* dataPtr, GFL_VRAM_TYPE targetVram );
-extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram, u32 cellIndex );
+extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram, 
+												u32 cellIndex );
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
 
 extern u32 GFL_OBJGRP_RegisterCellAnim( void* cellDataPtr, void* animDataPtr );
@@ -66,7 +75,10 @@ extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 extern u32 GFL_OBJGRP_RegisterPltt( void* plttData, GFL_VRAM_TYPE vramType, u32 byteOffs );
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
 
-extern CLACT_WORK_PTR GFL_OBJGRP_CreateClAct( CLACT_SET_PTR actset, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex,
-	const GFL_OBJGRP_CLWKDAT* param, u8 drawArea, u32 heapID );
+#if 0
+extern CLACT_WORK_PTR GFL_OBJGRP_CreateClAct(	CLACT_SET_PTR actset, u32 cgrIndex, u32 plttIndex, 
+												u32 cellAnimIndex, const GFL_OBJGRP_CLWKDAT* param,
+												u8 drawArea, u16 heapID );
+#endif
 
 #endif /* #ifndef __OBJMAN_H__ */
