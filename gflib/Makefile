@@ -25,7 +25,8 @@ TARGET_LIB		=	gflib.a
 
 # ソースファイル
 SRCS			=	initialize.c filesystem.c heap.c heapsys.c \
-					tcb.c procsys.c saveload_system.c areaman.c \
+					tcb.c procsys.c saveload_system.c \
+					areaman.c vramman/vman.c vramman/obj_graphic_man.c \
 					ui/ui.c \
 					ui/touchpanel.c \
 					ui/key.c \
