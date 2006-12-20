@@ -209,6 +209,8 @@ void GFL_NET_MainProc(void)
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
             GFL_NET_StateMainProc(pNet->pNetHandle[i]);
+        }
+        if(pNet->pNetHandle[i]!=NULL){
             GFL_NET_ToolTimingSyncSend(pNet->pNetHandle[i]);
         }
     }
