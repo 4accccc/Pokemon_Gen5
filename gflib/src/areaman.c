@@ -105,6 +105,15 @@ static inline void CHECK_ASSERT( GFL_AREAMAN* man )
 	GF_ASSERT((*(man->pMagicNumber))==MAGIC_NUMBER);
 }
 
+static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos )
+{
+	if( bytePos < (u32)(man->areaByteSize) )
+	{
+		return OpenBackCount[ man->area[bytePos] ];
+	}
+	return 0;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -199,15 +208,6 @@ u32
 	CHECK_ASSERT( man );
 
 	return GFL_AREAMAN_ReserveAssignArea( man, 0, man->maxBlock, blockNum );
-}
-
-static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos )
-{
-	if( bytePos < (u32)(man->areaByteSize) )
-	{
-		return OpenBackCount[ man->area[bytePos] ];
-	}
-	return 0;
 }
 
 
@@ -494,6 +494,12 @@ void
 }
 
 
+//------------------------------------------------------------------
+/**
+ * 
+ * 
+ */
+//------------------------------------------------------------------
 static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num )
 {
 	if( num < 8 )
