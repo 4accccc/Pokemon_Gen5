@@ -38,6 +38,7 @@ static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
 }
 
 
+
 //----------------------------------------------------------------
 enum{
     _TEST_CONNECT,
@@ -48,6 +49,7 @@ enum{
 
 
 static int _testNo = 0;
+static GFL_NETHANDLE* _pHandle=NULL;
 
 void TEST_NET_Main(void)
 {
@@ -58,8 +60,15 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-                GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ClientConnectTo(pHandle,mac);
+                _pHandle = GFL_NET_CreateHandle();
+                GFL_NET_ClientConnectTo(_pHandle,mac);
+            }
+            _testNo++;
+            break;
+          case _TEST_1:
+            {
+                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_COMM_NEGOTIATION,NULL);
+                OS_TPrintf("send %d\n",ret);
             }
             _testNo++;
             break;
