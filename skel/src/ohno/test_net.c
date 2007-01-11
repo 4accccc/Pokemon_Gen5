@@ -51,13 +51,15 @@ static int _testNo = 0;
 
 void TEST_NET_Main(void)
 {
+    u8 mac[6] = {0x00,0x09,0xbf,0x08,0x2e,0x6e};
 
+    
     if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
                 GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ClientConnectTo(pHandle,(u8*)"0009BF082E6E");
+                GFL_NET_ClientConnectTo(pHandle,mac);
             }
             _testNo++;
             break;
