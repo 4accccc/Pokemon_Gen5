@@ -939,7 +939,7 @@ static void _funcBconDataChange( void )
     _GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     int size;
 
-    OS_TPrintf("%x \n",(u32)pNetWL);
+//    OS_TPrintf("%x \n",(u32)pNetWL);
     {
         NetBeaconGetSizeFunc func = pNetWL->beaconGetSizeFunc;
         size = func();

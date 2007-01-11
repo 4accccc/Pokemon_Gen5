@@ -2349,7 +2349,9 @@ static BOOL WH_StateInSetMPData(void *data, u16 datasize, int port, WHSendCallba
                                   data, datasize, 0xffff, port, WH_DATA_PRIO);
     if (result != WM_ERRCODE_OPERATING)
     {
-        WH_TRACE("WH_StateInSetMPData failed - %s\n", WH_GetWMErrCodeName(result));
+        if(WM_ERRCODE_NO_CHILD != result){
+            WH_TRACE("WH_StateInSetMPData failed - %s\n", WH_GetWMErrCodeName(result));
+        }
         return FALSE;
     }
     return TRUE;

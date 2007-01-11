@@ -245,6 +245,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 //==============================================================================
 void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
+    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, 6);
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
     GFL_NET_StateConnectMacAddress(pHandle);
 }
