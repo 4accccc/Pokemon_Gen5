@@ -48,6 +48,15 @@
 //==============================================================================
 // ワーク
 //==============================================================================
+
+
+
+
+struct _NET_PARENTSYS_t{
+    u8 negoCheck[GFL_NET_MACHINE_MAX];     ///< 各子機のネゴシエーション状態
+};
+
+
 #if 0 //使わない
 typedef struct{
     void* pWifiFriendStatus;
@@ -435,6 +444,9 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 {
+
+    GFL_NET_SystemChildModeInit(TRUE,TRUE,512);
+
     _CHANGE_STATE(_childConnecting, 0);
 }
 
@@ -492,15 +504,16 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 /**
  * 親としての通信処理開始
- * @param   pMyStatus  mystatus
- * @param   serviceNo  通信サービス番号
- * @param   regulationNo  通信サービス番号
+ * @param   pNetHandle  ハンドル
+ * @param   heapID      HEAPID
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID)
 {
+    pNetHandle->pParent = GFL_HEAP_AllocMemory(heapID, sizeof(NET_PARENTSYS));
+    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
 
     _CHANGE_STATE(_parentInit, 0);
 }
@@ -541,13 +554,21 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 //親機が受け取るわけなのでフラグを立てるのがいい
+    u8 retCmd = FALSE;
 
+    if(pNetHandle->pParent->negoCheck[netID] == FALSE){
+        pNetHandle->pParent->negoCheck[netID] = TRUE;
+        retCmd = TRUE;
+    }
+    OS_TPrintf("------NegoRet を送信 %d\n",retCmd);
+    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_COMM_NEGOTIATION_RETURN, &retCmd);
+    
 #if 0
     int i;
     u8* pMsg = pData;
     BOOL bMatch = TRUE;
 
-    OHNO_PRINT("------CommRecvNegotiation\n");
+    NET_PRINT("------CommRecvNegotiation\n");
 
     if(CommGetCurrentID() != COMM_PARENT_ID){  // 親機のみ判断可能
         return;
@@ -561,13 +582,13 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
     }
     if(bMatch  && (!_pCommState->bUnionPause)){   // 子機から接続確認が来た
 //        if(CommGetConnectNum() <= _pCommState->limitNum){  // 指定接続人数より下回ること
-            OHNO_PRINT("------成功を送信 \n");
+            NET_PRINT("------成功を送信 \n");
             _negotiationMsgReturnOK[0] = netID;
             CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnOK);
             return;
 //        }
     }
-    OHNO_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
+    NET_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
     _negotiationMsgReturnNG[0] = netID;
     CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnNG);
 #endif

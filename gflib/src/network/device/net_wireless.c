@@ -177,6 +177,20 @@ void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFu
 
 //==============================================================================
 /**
+ * @brief   受信コールバック関数を指定
+ * @param   recvCallback   受信コールバック関数
+ * @return  none
+ */
+//==============================================================================
+
+void GFL_NET_WLSetRecvCallback( PTRCommRecvLocalFunc recvCallback)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    pNetWL->recvCallback = recvCallback;
+}
+
+//==============================================================================
+/**
  * @brief   接続しているかどうか
  * @retval  TRUE  接続している
  */
@@ -201,7 +215,7 @@ BOOL GFL_NET_WLIsConnect(GFL_NETWL* pNetWL)
 
 static void DEBUG_MACDISP(char* msg,WMBssDesc *bssdesc)
 {
-    OHNO_PRINT("%s %02x%02x%02x%02x%02x%02x\n",msg,
+    NET_PRINT("%s %02x%02x%02x%02x%02x%02x\n",msg,
                bssdesc->bssid[0],bssdesc->bssid[1],bssdesc->bssid[2],
                bssdesc->bssid[3],bssdesc->bssid[4],bssdesc->bssid[5]);
 }
@@ -309,7 +323,7 @@ void GFL_NET_WLVRAMDInitialize(void)
         OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
     }
     else{
-        OHNO_PRINT("WVRStart\n");
+        NET_PRINT("WVRStart\n");
     }
 }
 
@@ -346,7 +360,7 @@ BOOL GFL_NET_WLIsVRAMDStart(void)
 
 void GFL_NET_WLVRAMDFinalize(void)
 {
-    OHNO_PRINT("VRAMD Finalize\n");
+    NET_PRINT("VRAMD Finalize\n");
     WVR_TerminateAsync(_endCallback,NULL);  // イクニューモン切断
 }
 
@@ -495,7 +509,7 @@ BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit)
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     _commInit(pNetWL);
     if(bBconInit){
-        OHNO_PRINT("ビーコンの初期化\n");
+        NET_PRINT("ビーコンの初期化\n");
         GFL_NET_WLChildBconDataInit(); // データの初期化
     }
     if(!pNetWL->bSetReceiver ){
@@ -791,19 +805,19 @@ int GFL_NET_WLGetNextConnectIndex(void)
     for (i = SCAN_PARENT_COUNT_MAX-1; i >= 0; i--) {
         if(pNetWL->bconUnCatchTime[i] != 0){
             if(_isMachBackupMacAddress(&pNetWL->sBssDesc[i].bssid[0])){  // 古いMACに合致
-                OHNO_PRINT("昔の親 %d\n",i);
+                NET_PRINT("昔の親 %d\n",i);
                 return i;
             }
         }
     }
     i = _getParentNum(1);
     if(i != -1 ){
-        OHNO_PRINT("履歴なし本親 %d \n", i);
+        NET_PRINT("履歴なし本親 %d \n", i);
         return i;
     }
     i = _getParentNum(0);
     if(i != -1){
-        OHNO_PRINT("履歴なし仮親 %d \n", i);
+        NET_PRINT("履歴なし仮親 %d \n", i);
         return i;
     }
     return i;
@@ -826,7 +840,7 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index)
         return FALSE;
     }
     if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
-        OHNO_PRINT("子機 接続開始 WH_ChildConnect\n");
+        NET_PRINT("子機 接続開始 WH_ChildConnect\n");
         serviceNo = pNetWL->serviceNo;
         pNetWL->channel = pNetWL->sBssDesc[index].channel;
         WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
@@ -881,7 +895,7 @@ void GFL_NET_WLParentBconCheck(void)
         if(pNetWL->bconUnCatchTime[id] > 0){
             pNetWL->bconUnCatchTime[id]--;
             if(pNetWL->bconUnCatchTime[id] == 0){
-                OHNO_PRINT("親機反応なし %d\n", id);
+                NET_PRINT("親機反応なし %d\n", id);
                 pNetWL->bScanCallBack = TRUE;   // データを変更したのでTRUE
             }
         }
@@ -971,7 +985,7 @@ static void _stateProcess(u16 bitmap)
     if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
         if(pNetWL->bErrorNoChild){
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
-//            OHNO_PRINT("エラー中 NOCHILD \n");
+//            NET_PRINT("エラー中 NOCHILD \n");
         }
     }
     if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
@@ -980,7 +994,7 @@ static void _stateProcess(u16 bitmap)
     if(pNetWL->bErrorDisconnectOther){ // エラー検査を行う
         if(pNetWL->errCheckBitmap > bitmap){  // 切断した場合必ず数字が減る 増える分にはOK
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
-//            OHNO_PRINT("エラー中 誰か落ちた \n");
+//            NET_PRINT("エラー中 誰か落ちた \n");
         }
     }
     if(WH_ERRCODE_FATAL == WH_GetLastError()){
@@ -1013,7 +1027,7 @@ static void _stateProcess(u16 bitmap)
         break;
       case WH_SYSSTATE_CONNECT_FAIL:
       case WH_SYSSTATE_ERROR:
-        OHNO_PRINT("エラー中 %d \n",WH_GetLastError());
+        NET_PRINT("エラー中 %d \n",WH_GetLastError());
         if(pNetWL){
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
         }
@@ -1035,7 +1049,7 @@ static void _stateProcess(u16 bitmap)
                 _sTgid++;
             }
             _setUserGameInfo();
-//            OHNO_PRINT("親機接続開始   tgid=%d channel=%d \n",_sTgid, channel);
+//            NET_PRINT("親機接続開始   tgid=%d channel=%d \n",_sTgid, channel);
             (void)WH_ParentConnect(WH_CONNECTMODE_MP_PARENT,
                                    _sTgid, channel,
                                    pNetWL->maxConnectNum,

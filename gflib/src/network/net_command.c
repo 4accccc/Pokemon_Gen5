@@ -121,6 +121,8 @@ void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
     BOOL bCheck;
     GFL_NETHANDLE* pNetHandle;
 
+    OS_TPrintf("--- %d \n", netID);
+
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         bCheck=FALSE;
         pNetHandle = GFL_NET_GetNetHandle(i);
@@ -138,7 +140,7 @@ void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
             }
             else{
                 if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
-                    OHNO_PRINT("command %d \n", command);
+                    NET_PRINT("command %d \n", command);
                     OS_Panic("no command");
                     GFL_NET_SystemSetError();
                     return;  // 本番ではコマンドなし扱い
@@ -170,13 +172,14 @@ int GFL_NET_CommandGetPacketSize(int command)
 {
     int size = 0;
     PTRCommRecvSizeFunc func=NULL;
+    u32 num;
 
     if( command < GFL_NET_CMD_COMMAND_MAX ){
         func = _CommPacketTbl[command].getSizeFunc;
     }
     else{
         if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
-            OHNO_PRINT("command %d \n", command);
+            NET_PRINT("command %d \n", command);
             OS_Panic("no command");
             GFL_NET_SystemSetError();
         }
@@ -185,7 +188,13 @@ int GFL_NET_CommandGetPacketSize(int command)
         }
     }
     if(func != NULL){
-        size = func();
+        num = (int)func;
+        if((_GFL_NET_COMMAND_SIZE_H & num) == _GFL_NET_COMMAND_SIZE_H){
+            size = num - _GFL_NET_COMMAND_SIZE_H;
+        }
+        else{
+            size = func();
+        }
     }
     return size;
 }
@@ -263,7 +272,7 @@ static void _commCommandRecvThrowOut(const int netID, const int size, const void
     if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
-//    OHNO_PRINT("CommRecvDSMPChange 受信\n");
+//    NET_PRINT("CommRecvDSMPChange 受信\n");
     // 全員に切り替え信号を送る
     _pCommandWork->bThrowOutReq[netID] = TRUE;
     for(i = 0 ; i < GFL_NET_MACHINE_MAX; i++){

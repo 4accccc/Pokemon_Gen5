@@ -8,6 +8,7 @@
 //=============================================================================
 
 #include "gflib.h"
+#include "net.h"
 #include "net_ring_buff.h"
 
 
@@ -53,10 +54,9 @@ void GFL_NET_RingPuts(RingBuffWork* pRing, u8* pDataArea, const int size)
     // 最終的にはこのエラーがあると通信を切断します。
     if(GFL_NET_RingDataRestSize(pRing) <= size){
 #ifdef DEBUG_ONLY_FOR_ohno
-        OHNO_PRINT("%d %d line %d \n",GFL_NET_RingDataRestSize(pRing),size,line);
-        GF_ASSERT_MSG(0,"GFL_NET_RingOVER %d %d",GFL_NET_RingDataRestSize(pRing),size);
+        NET_PRINT("%d %d line %d \n",GFL_NET_RingDataRestSize(pRing),size);
+        OS_TPanic(0,"GFL_NET_RingOVER %d %d",GFL_NET_RingDataRestSize(pRing),size);
 #endif
-//        GFL_NET_SetError();
         return;
     }
     j = 0;

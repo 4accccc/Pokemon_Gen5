@@ -385,6 +385,8 @@ extern void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 
+#include "../src/network/net_command.h"
+
 
 #endif // __NET_H__
 

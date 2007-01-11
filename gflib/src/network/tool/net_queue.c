@@ -190,14 +190,14 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
             GFL_NET_RingGets(pSendRing, pSendBuff->pData, pSendBuff->size);
         }
         else{
-          //  OHNO_PRINT("-----%x-%x--%d\n",(int)pQueue->pData, (int)pSendBuff->pData , pSendBuff->size);
+          //  NET_PRINT("-----%x-%x--%d\n",(int)pQueue->pData, (int)pSendBuff->pData , pSendBuff->size);
 //            MI_CpuCopy8( pQueue->pData, pSendBuff->pData, pSendBuff->size);
             
             for(i = 0;i < pSendBuff->size;i++){
                 pSendBuff->pData[i] = pQueue->pData[i];
             }
         }
-//        OHNO_PRINT("-----%d-%d--\n",pQueue->command, pQueue->size);
+//        NET_PRINT("-----%d-%d--\n",pQueue->command, pQueue->size);
         
         pQueue->pData += pSendBuff->size;  // アドレスを進める
         pQueue->size -= pSendBuff->size;  // 送信サイズ減らす
@@ -241,7 +241,7 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea,
 
     bFast = TRUE;
     if(pFree== NULL){
-        OHNO_PRINT("---キューが無い\n");
+        NET_PRINT("---キューが無い\n");
         return FALSE;
     }
     
@@ -254,7 +254,7 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea,
     if(bSave){
         int rest = GFL_NET_RingDataRestSize(pQueueMgr->pSendRing);
         if((cSize+3) >= rest){  // 送信バッファをオーバーしてしまう
-            OHNO_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
+            NET_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
             return FALSE;
         }
         GFL_NET_RingPuts(pQueueMgr->pSendRing, pDataArea, cSize);

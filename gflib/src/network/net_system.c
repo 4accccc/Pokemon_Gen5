@@ -339,7 +339,7 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
         if(_pComm!=NULL){  // すでに初期化している場合はreturn
             return TRUE;
         }
-        OHNO_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
+        NET_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
         _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
 //        _pComm->pTool = GFL_NET_Tool_sysInit(heapID, machineMax);
@@ -410,7 +410,7 @@ static void _commCommandInit(void)
     int i;
 
     // ワークの初期化
-//    OHNO_PRINT("コマンド再初期化\n");
+//    NET_PRINT("コマンド再初期化\n");
     
     _pComm->sendSwitch = 0;
     _pComm->sendServerSwitch = 0;
@@ -419,7 +419,7 @@ static void _commCommandInit(void)
     {
         int machineMax = _getUserMaxNum();
 
-        OHNO_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
+        NET_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
         MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
         for(i = 0; i< machineMax;i++){
             GFL_NET_RingInitialize(&_pComm->recvServerRing[i],
@@ -522,7 +522,7 @@ static void _commCommandInitChange2(void)
     {
         int machineMax = _getUserMaxNum();
 
-        OHNO_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
+        NET_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
         MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
         for(i = 0; i< machineMax;i++){
             GFL_NET_RingInitialize(&_pComm->recvServerRing[i],
@@ -634,7 +634,7 @@ static void _connectFunc(void)
     for(i = 1 ; i < GFL_NET_MACHINE_MAX ; i++){
         if((!GFL_NET_SystemIsConnect(i)) && !_pComm->bFirstCatch[i]){
             if(!GFL_NET_SystemGetAloneMode()){
-                OHNO_PRINT("非接続になった時に %d\n",i);
+                NET_PRINT("非接続になった時に %d\n",i);
                 _clearChildBuffers(i);  // 非接続になった時に
             }
         }
@@ -658,6 +658,7 @@ BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeM
     BOOL ret = TRUE;
 
     ret = GFL_NET_WLParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
+    GFL_NET_WLSetRecvCallback( GFL_NET_SystemRecvParentCallback );
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
     return ret;
 }
@@ -677,6 +678,8 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
     BOOL ret = TRUE;
 
     ret = GFL_NET_WLChildInit(bAlloc, bBconInit);
+    GFL_NET_WLSetRecvCallback( GFL_NET_SystemRecvCallback );
+
     _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM);
     _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
@@ -711,16 +714,16 @@ static void _transmissonTypeChange(void)
     if(_pComm->transmissionType == _CHANGE_MODE_DSMP){
         _pComm->transmissionType = _MP_MODE;
         bChange=TRUE;
-        OHNO_PRINT("MPモードになりました\n");
+        NET_PRINT("MPモードになりました\n");
     }
     if(_pComm->transmissionType == _CHANGE_MODE_MPDS){
         _pComm->transmissionType = _DS_MODE;
         bChange=TRUE;
-        OHNO_PRINT("DSモードになりました\n");
+        NET_PRINT("DSモードになりました\n");
     }
     if(bChange){
         _commCommandInitChange2(); // コマンド全部消し
-        OHNO_PRINT("send Recv %d %d %d \n",_pComm->countSendRecv,_pComm->countSendRecvServer[0],_pComm->countSendRecvServer[1]);
+        NET_PRINT("send Recv %d %d %d \n",_pComm->countSendRecv,_pComm->countSendRecvServer[0],_pComm->countSendRecvServer[1]);
     }
 
     _transmission();
@@ -827,13 +830,13 @@ void GFL_NET_SystemFinalize(void)
         }
     }
     if(bEnd){
-        OHNO_PRINT("切断----開放処理--\n");
+        NET_PRINT("切断----開放処理--\n");
         GFL_NET_Tool_sysEnd(_pComm->pTool);
         _pComm->pTool = NULL;
 //        CommInfoFinalize();
         // VBLANKタスクを切る
         _bVSAccess = FALSE;  // 割り込み内での処理を禁止
-//        OHNO_PRINT("VBLANKタスクを切る\n");
+//        NET_PRINT("VBLANKタスクを切る\n");
     //    TCB_Delete(_pComm->pVBlankTCB);
   //      _pComm->pVBlankTCB = NULL;
         GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
@@ -955,7 +958,7 @@ void GFL_NET_SystemReset(void)
 {
     BOOL bAcc = _bVSAccess;
 
-    OHNO_PRINT("CommSystemReset\n");
+    NET_PRINT("CommSystemReset\n");
     _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
@@ -975,7 +978,7 @@ void GFL_NET_SystemResetDS(void)
 {
     BOOL bAcc = _bVSAccess;
 
-    OHNO_PRINT("CommSystemReset\n");
+    NET_PRINT("CommSystemReset\n");
     _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _pComm->transmissionType = _DS_MODE;
@@ -996,7 +999,7 @@ void GFL_NET_SystemResetBattleChild(void)
 {
     BOOL bAcc = _bVSAccess;
 
-    OHNO_PRINT("CommSystemReset\n");
+    NET_PRINT("CommSystemReset\n");
     _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
@@ -1076,11 +1079,11 @@ static void _dataMpStep(void)
     else if(((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) &&
         (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
         if(_sendCallBack != _SEND_CB_SECOND_SENDEND){  // 2個送ったが送信完了していない
-//            OHNO_PRINT("にかいうけとってない _sendCallBack\n");
+//            NET_PRINT("にかいうけとってない _sendCallBack\n");
             return;
         }
         if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-//            OHNO_PRINT("子機がデータ送信をしない\n");
+//            NET_PRINT("子機がデータ送信をしない\n");
             return;
         }
         _setSendData(_pComm->sSendBuf[_pComm->sendSwitch]);  // 送るデータをリングバッファから差し替える
@@ -1110,11 +1113,11 @@ static BOOL _copyDSData(int switchNo)
     // 初期化
     for(i = 0; i < machineMax; i++){
         if(GFL_NET_SystemIsConnect(i) && (_pComm->recvDSCatchFlg[i] > 1) ){
-            // OHNO_PRINT("--------------追い越しが発生 %d\n",i);
+            // NET_PRINT("--------------追い越しが発生 %d\n",i);
             //                        _pComm->sSendServerBuf[_pComm->sendServerSwitch][i*mcSize] = _NODATA_SEND;
         }
         if(GFL_NET_SystemIsConnect(i) && (_pComm->recvDSCatchFlg[i] == 0) ){
-            OHNO_PRINT("--------------追いぬきが発生 %d\n",i);
+            NET_PRINT("--------------追いぬきが発生 %d\n",i);
             _pComm->sSendServerBuf[switchNo][i * mcSize] = _NODATA_SEND;
             if(CommStateGetServiceNo() < COMM_MODE_BATTLE_SINGLE_WIFI){
                 _sendCallBackServer--;
@@ -1292,20 +1295,20 @@ static void _dataMpServerStep(void)
 #endif
             }
             else{
-                OHNO_PRINT("mydwc_sendToClientに失敗\n");
+                NET_PRINT("mydwc_sendToClientに失敗\n");
             }
         }
 #endif  //wifi封印
     }
     else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) || (GFL_NET_SystemGetAloneMode()) ){
         if(_sendCallBackServer != _SEND_CB_SECOND_SENDEND){
-//            OHNO_PRINT("二回うけとってない_sendCallBackServer\n");
+//            NET_PRINT("二回うけとってない_sendCallBackServer\n");
             return;
         }
         for(i = 1; i < GFL_NET_MACHINE_MAX; i++){
             if(GFL_NET_SystemIsConnect(i)){
                 if(_pComm->countSendRecvServer[i] > _SENDRECV_LIMIT){ // 送信しすぎの場合
-                    //OHNO_PRINT("送信しすぎ%d \n",i);
+                    //NET_PRINT("送信しすぎ%d \n",i);
                     return;
                 }
             }
@@ -1335,7 +1338,7 @@ static u8 debugHeadDataC[5][100];
 static int debugCntC = 0;
 #endif
 
-//#define WIFI_DUMP_TEST
+#define WIFI_DUMP_TEST
 
 //==============================================================================
 /**
@@ -1350,12 +1353,12 @@ void GFL_NET_SystemRecvCallback(u16 aid, u16 *data, u16 size)
     u8* adr = (u8*)data;
 
 #ifdef WIFI_DUMP_TEST
-//    if((adr[0] & 0xf) != 0xe){
- //       DEBUG_DUMP(&adr[0], 38,"cr0");
-//    }
-//    if((adr[38] & 0xf) != 0xe){
-  //DEBUG_DUMP(&adr[38], 38,"cr1");
-//    }
+    if((adr[0] & 0xf) != 0xe){
+    DEBUG_DUMP(&adr[0], 38,"cr0");
+    }
+    if((adr[38] & 0xf) != 0xe){
+  DEBUG_DUMP(&adr[38], 38,"cr1");
+    }
 #endif
 
     if(_pComm->bPSendNoneRecv[COMM_PARENT_ID]){
@@ -1410,19 +1413,19 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
 //    }
     if(adr[0] == _MP_DATA_HEADER){   ///MPデータの場合
         if(_transmissonType() == _DS_MODE){
-            OHNO_PRINT("DSなのにMPデータが来た \n");
+            NET_PRINT("DSなのにMPデータが来た \n");
             return;
         }
         adr++;
         recvSize--;
     }
     else if(_transmissonType() == _MP_MODE){  //DSデータの場合
-        OHNO_PRINT("MPなのにDEPデータが来た \n");
+        NET_PRINT("MPなのにDEPデータが来た \n");
         return;
     }
     if((_pComm->bFirstCatchP2C) && (adr[0] & _SEND_NEXT)){
         // まだ一回もデータをもらったことがない状態なのに連続データだった
-        OHNO_PRINT("連続データ child %d \n",aid);
+        NET_PRINT("連続データ child %d \n",aid);
         DEBUG_DUMP((u8*)data,24,"cr");
         return;
     }
@@ -1448,10 +1451,10 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
             }
             else if(adr[0] == _NODATA_SEND){
                 adr += mcSize;
-//                OHNO_PRINT("--------------今回データなし %d\n",i);
+//                NET_PRINT("--------------今回データなし %d\n",i);
             }
             else if((_pComm->bFirstCatch[i]) && (adr[0] & _SEND_NEXT)){ // まだ一回もデータをもらったことがない状態なのに連続データだった
-                OHNO_PRINT("連続データ parent %d \n",aid);
+                NET_PRINT("連続データ parent %d \n",aid);
                 adr += mcSize;
             }
             else{
@@ -1460,14 +1463,14 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
                 if(_pComm->DSCountRecv[i] != 0xff){
                     if(cnt > _pComm->DSCountRecv[i]){
                         if((cnt-1)!=_pComm->DSCountRecv[i]){
-                            OHNO_PRINT("コマンドずれ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
+                            NET_PRINT("コマンドずれ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
                             DEBUG_DUMP((u8*)data,size,"コマンドずれ");
                             GF_ASSERT((cnt-1)==_pComm->DSCountRecv[i]);
                         }
                     }
                     else{
                         if((cnt!=0) || (_pComm->DSCountRecv[i]!=0xf)){
-                            OHNO_PRINT("コマンドずれ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
+                            NET_PRINT("コマンドずれ  %d %d %d\n",i,cnt-1,_pComm->DSCountRecv[i]);
                             DEBUG_DUMP((u8*)data,size,"コマンドずれ");
                         }
                         GF_ASSERT((cnt==0) && (_pComm->DSCountRecv[i]==0xf));
@@ -1495,7 +1498,7 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
         _pComm->bitmap += adr[0];
         adr++;   // Bitmapでーた
         recvSize -= 3;
-        //    OHNO_PRINT("bitmap %x\n",_pComm->bitmap);
+        //    NET_PRINT("bitmap %x\n",_pComm->bitmap);
         recvSize = adr[0]; 
         adr++;
         //if(recvSize > GFL_NET_RingDataRestSize(&_pComm->recvRing)){
@@ -1521,7 +1524,7 @@ void GFL_NET_SystemRecvParentCallback(u16 aid, u16 *data, u16 size)
 //   if((adr[0] & 0xf) != 0xe){
     if(aid == 1){
         DEBUG_DUMP(&adr[0], 38,"pr1");
-        OHNO_PRINT("adr %x size %d\n",(u32)data, size);
+        NET_PRINT("adr %x size %d\n",(u32)data, size);
     }
     else{
         DEBUG_DUMP(&adr[0], 38,"pr0");
@@ -1563,7 +1566,7 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
 
     if((_pComm->bFirstCatch[aid]) && (adr[0] & _SEND_NEXT)){
         // まだ一回もデータをもらったことがない状態なのに連続データだった
-        OHNO_PRINT("連続データ parent %d \n",aid);
+        NET_PRINT("連続データ parent %d \n",aid);
         i = 0;
         DEBUG_DUMP(adr,12,"連続データ");
         return;
@@ -1586,14 +1589,14 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
             if(adr[i] != GFL_NET_CMD_NONE){  //何かが送られてきてたら
                 GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
                 //OHNO_SP_PRINT("middle %d %d\n",GFL_NET_RingDataSize(&_pComm->recvMidRing[aid]),aid);
-//                OHNO_PRINT(" まるまま中間リングに入れる %d %d \n", aid, GFL_NET_RingDataSize(&_pComm->recvMidRing[aid]));
+//                NET_PRINT(" まるまま中間リングに入れる %d %d \n", aid, GFL_NET_RingDataSize(&_pComm->recvMidRing[aid]));
                 break;
             }
         }
 #endif
         if(!(adr[0] & _SEND_NO_DATA)){
             GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
-//            OHNO_PRINT("MidRingのこり%d\n",GFL_NET_RingDataRestSize(&_pComm->recvMidRing[aid]));
+//            NET_PRINT("MidRingのこり%d\n",GFL_NET_RingDataRestSize(&_pComm->recvMidRing[aid]));
         }
         _pComm->recvDSCatchFlg[aid]++;  // 通信をもらったことを記憶
     }else{   // MPモード
@@ -1603,7 +1606,7 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
         }
         adr++;
         if(_RECV_BUFF_SIZE_PARENT > GFL_NET_RingDataRestSize(&_pComm->recvServerRing[aid])){
-            OHNO_PRINT("Error Throw:受信オーバー\n");
+            NET_PRINT("Error Throw:受信オーバー\n");
             return;
         }
 //        if(aid==0)
@@ -1688,7 +1691,7 @@ static void _updateMpData(void)
         if(GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())){
             if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
                 if(GFL_NET_SystemGetCurrentID()==1){
-                    OHNO_PRINT("自分自身の接続がまだ\n");
+                    NET_PRINT("自分自身の接続がまだ\n");
                 }
                 return;
             }
@@ -1699,7 +1702,7 @@ static void _updateMpData(void)
                     if(!GFL_NET_WL_SendData(_pComm->sSendBuf[_pComm->sendSwitch],
                                     mcSize, _sendCallbackFunc)){
                         _sendCallBack--;
-                        OHNO_PRINT("failed WH_SendData\n");
+                        NET_PRINT("failed WH_SendData\n");
                     }
                     else{
                         _pComm->sendSwitch = 1 - _pComm->sendSwitch;
@@ -1723,7 +1726,7 @@ static void _updateMpData(void)
                 }
             }
             else{
-//                OHNO_PRINT("sendCallBack != _SEND_CB_FIRST_SENDE\n");
+//                NET_PRINT("sendCallBack != _SEND_CB_FIRST_SENDE\n");
             }
         }
     }
@@ -1782,7 +1785,7 @@ static BOOL _setSendData(u8* pSendBuff)
         }
         if(_transmissonType() == _DS_MODE){
             _pComm->DSCount++;
-//            OHNO_PRINT("DSデータセット %d\n",_pComm->DSCount);
+//            NET_PRINT("DSデータセット %d\n",_pComm->DSCount);
             pSendBuff[0] |= ((_pComm->DSCount << 4) & 0xf0);  //DS通信順番カウンタ
         }
     }
@@ -1869,7 +1872,7 @@ static void _setSendDataServer(u8* pSendBuff)
 BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size)
 {
     if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()) && !GFL_NET_SystemGetAloneMode()){
-        //        OHNO_PRINT("接続してなくて送れなかった\n");
+        //        NET_PRINT("接続してなくて送れなかった\n");
         return FALSE;   // 通信状態が悪い場合送らない
     }
     if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE)){
@@ -1878,13 +1881,13 @@ BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size)
             //DEBUG_DUMP((u8*)data,size,"poke");
   //      }
 #if 0
-        OHNO_PRINT("<<<送信 NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
+        NET_PRINT("<<<送信 NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
         GFL_NET_CommandDebugPrint(command);
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-キュ- %d %d\n",GFL_NET_SystemGetCurrentID(),
+    NET_PRINT("-キュ- %d %d\n",GFL_NET_SystemGetCurrentID(),
                GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
     GF_ASSERT(0);
 #endif
@@ -1907,21 +1910,21 @@ BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size)
 
 BOOL GFL_NET_SystemSendData(int command, const void* data, int size)
 {
-    OHNO_PRINT("< 送信 %d %d\n", command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
+    NET_PRINT("< 送信 %d %d\n", command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
 //    GF_ASSERT_RETURN(size < 256 && "CommSendHugeDataを使ってください",FALSE);
     if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()) && !GFL_NET_SystemGetAloneMode()){
-        OHNO_PRINT("接続してなくて送れなかった\n");
+        NET_PRINT("接続してなくて送れなかった\n");
         return FALSE;   // 通信状態が悪い場合送らない
     }
     if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, TRUE)){
 #if 0
-        OHNO_PRINT("<<<送信 NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
+        NET_PRINT("<<<送信 NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
         GFL_NET_CommandDebugPrint(command);
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-キュー無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
+    NET_PRINT("-キュー無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
                GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
     GF_ASSERT(0);
 #endif
@@ -1949,17 +1952,17 @@ static BOOL _data_ServerSide(int command, const void* data, int size, BOOL bCopy
         return FALSE;
     }
     if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
-//        OHNO_PRINT("接続してなくて送れなかった\n");
+//        NET_PRINT("接続してなくて送れなかった\n");
         return FALSE;   // 通信状態が悪い場合送らない
     }
     if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
+        NET_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
         return GFL_NET_SystemSendData(command, data, size);
     }
 
     if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, bCopy)){
 #if 0
-        OHNO_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        NET_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
         GFL_NET_CommandDebugPrint(command);
 //        DEBUG_DUMP(pSend, size, "S送信");
 #endif
@@ -2010,24 +2013,24 @@ BOOL GFL_NET_SystemSendHugeData_ServerSide(int command, const void* data, int si
         return FALSE;
     }
     if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
-//        OHNO_PRINT("接続してなくて送れなかった\n");
+//        NET_PRINT("接続してなくて送れなかった\n");
         return FALSE;   // 通信状態が悪い場合送らない
     }
     if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
+        NET_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
         return GFL_NET_SystemSendHugeData(command, data, size);
     }
 
     if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE)){
 #if 0
-        OHNO_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        NET_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
         GFL_NET_CommandDebugPrint(command);
 //        DEBUG_DUMP(pSend, size, "S送信");
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("-キュ無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
+    NET_PRINT("-キュ無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
                GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
     GF_ASSERT(0);
 #endif
@@ -2055,27 +2058,27 @@ BOOL GFL_NET_SystemSendData_ServerSide(int command, const void* data, int size)
         return FALSE;
     }
     if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
-        OHNO_PRINT("接続してなくて送れなかった\n");
+        NET_PRINT("接続してなくて送れなかった\n");
         return FALSE;   // 通信状態が悪い場合送らない
     }
     if(_transmissonType() == _DS_MODE){
-        OHNO_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
+        NET_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
         return GFL_NET_SystemSendData(command, data, size);
     }
 
     if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, TRUE)){
 
-//        OHNO_PRINT("qnum %d %d\n",command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
+//        NET_PRINT("qnum %d %d\n",command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
 
 #if 0
-        OHNO_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
+        NET_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
         GFL_NET_CommandDebugPrint(command);
 //        DEBUG_DUMP(pSend, size, "S送信");
 #endif
         return TRUE;
     }
 #ifdef DEBUG_ONLY_FOR_ohno
-    OHNO_PRINT("キュー無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
+    NET_PRINT("キュー無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
                GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
     GF_ASSERT(0);
 #endif
@@ -2174,9 +2177,9 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
         }
         bkPos = pRing->startPos;
         pRecvComm->valCommand = command;
-//        OHNO_PRINT("c %d\n",command);
+//        NET_PRINT("c %d\n",command);
         if(bDebug){
-            OHNO_PRINT(">>>cR %d %d %d\n", bkPos, GFL_NET_RingDataSize(pRing), command);
+            NET_PRINT(">>>cR %d %d %d\n", bkPos, GFL_NET_RingDataSize(pRing), command);
         }
         if(pRecvComm->valSize != 0xffff){
             size = pRecvComm->valSize;
@@ -2194,7 +2197,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
                 // サイズがない通信データはここにサイズが入っている
                 size = GFL_NET_RingGetByte(pRing)*0x100;
                 size += GFL_NET_RingGetByte(pRing);
-                OHNO_PRINT("受信サイズ  %d\n",size);
+                NET_PRINT("受信サイズ  %d\n",size);
                 bkPos = pRing->startPos; // ２個進める
             }
             pRecvComm->valSize = size;
@@ -2216,13 +2219,13 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
         else{
             if( GFL_NET_RingDataSize(pRing) >= size ){
                 if(bDebug){
-                    OHNO_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
+                    NET_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
                 }
                 GFL_NET_RingGets(pRing, pTemp, size);
                 _endCallBack(netID, command, size, (void*)pTemp, pRecvComm);
             }
             else{   // まだ届いていない大きいデータの場合ぬける
-                //            OHNO_PRINT("結合待ち command %d size %d\n",command,size);
+                //            NET_PRINT("結合待ち command %d size %d\n",command,size);
                 pRing->startPos = bkPos;
                 break;
             }
@@ -2258,13 +2261,13 @@ static void _recvDataFunc(void)
 //        MI_CpuCopy8( &_pComm->recvRing,&_pComm->recvRingUndo, sizeof(RingBuffWork));
 //        GFL_NET_RingStartPush(&_pComm->recvRingUndo); //start位置を保存
 #if 0
-        OHNO_PRINT("-解析開始 %d %d-%d\n",id,
+        NET_PRINT("-解析開始 %d %d-%d\n",id,
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
 #endif
-//        OHNO_PRINT("子機解析 %d \n",id);
+//        NET_PRINT("子機解析 %d \n",id);
         _recvDataFuncSingle(&_pComm->recvRing, id, _pComm->pTmpBuff, TRUE, &_pComm->recvCommClient);
 #if 0
-        OHNO_PRINT("解析 %d %d-%d\n",id,
+        NET_PRINT("解析 %d %d-%d\n",id,
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
 #endif
     }
@@ -2299,21 +2302,21 @@ static void _recvDataServerFunc(void)
         
         if(GFL_NET_RingDataSize(&_pComm->recvServerRing[id]) > 0){
 #if 0
-            OHNO_PRINT("解析開始 %d %d-%d\n",id,
+            NET_PRINT("解析開始 %d %d-%d\n",id,
                        _pComm->recvServerRing[id].startPos,_pComm->recvServerRing[id].endPos);
 #endif
 #if 0
-            OHNO_PRINT("親機が子機%dを解析\n",id);
+            NET_PRINT("親機が子機%dを解析\n",id);
 #endif
 #if 0
-    //        OHNO_PRINT("DS解析 %d\n",id);
+    //        NET_PRINT("DS解析 %d\n",id);
 #endif
             // 一個前の位置を変数に保存しておく
 //            MI_CpuCopy8(&_pComm->recvServerRing[id],
   //                      &_pComm->recvServerRingUndo[id],
     //                    sizeof(RingBuffWork));
       //      GFL_NET_RingStartPush(&_pComm->recvServerRingUndo[id]); //start位置を保存
-//            OHNO_PRINT("親機が子機%dを解析\n",id);
+//            NET_PRINT("親機が子機%dを解析\n",id);
             _recvDataFuncSingle(&_pComm->recvServerRing[id], id, _pComm->pTmpBuff, FALSE, &_pComm->recvCommServer[id]);
         }
     }
@@ -2497,7 +2500,7 @@ void GFL_NET_SystemRecvDSMPChange(const int netID, const int size, const void* p
     if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
-    OHNO_PRINT("CommRecvDSMPChange 受信\n");
+    NET_PRINT("CommRecvDSMPChange 受信\n");
     _pComm->transmissionNum = _TRANS_LOAD;
     _pComm->transmissionSend = pBuff[0];
 }
@@ -2520,7 +2523,7 @@ void GFL_NET_SystemRecvDSMPChangeReq(const int netID, const int size, const void
     }
     _pComm->transmissionSend = pBuff[0];
     _pComm->transmissionNum = _TRANS_SEND;
-    OHNO_PRINT("CommRecvDSMPChangeReq 受信\n");
+    NET_PRINT("CommRecvDSMPChangeReq 受信\n");
 }
 
 //==============================================================================
@@ -2539,7 +2542,7 @@ void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, const void
     if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
         return;
     }
-    OHNO_PRINT("CommRecvDSMPChangeEND 受信\n");
+    NET_PRINT("CommRecvDSMPChangeEND 受信\n");
 
     if(_pComm->transmissionNum == _TRANS_LOAD_END){
         _commSetTransmissonType(pBuff[0]);  // 切り替える
@@ -2741,7 +2744,7 @@ void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pDa
 {
     u8 dummy;
 
-    OHNO_PRINT("CommRecvAutoExit 受信 \n");
+    NET_PRINT("CommRecvAutoExit 受信 \n");
     if(!GFL_NET_WLIsAutoExit()){
         if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
             GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_AUTO_EXIT, &dummy);
@@ -2766,22 +2769,22 @@ void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr)
 {
     int i,j = 0;
 
-    OHNO_PRINT("%s \n",pInfoStr);
+    NET_PRINT("%s \n",pInfoStr);
     while(length){
-        OHNO_PRINT(">> ");
+        NET_PRINT(">> ");
         for(i = 0 ; i < 8 ; i++){
-            OHNO_PRINT("%2x ",adr[j]);
+            NET_PRINT("%2x ",adr[j]);
             j++;
             if(j == length){
                 break;
             }
         }
-        OHNO_PRINT("\n");
+        NET_PRINT("\n");
         if(j == length){
             break;
         }
     }
-    OHNO_PRINT(" --end\n");
+    NET_PRINT(" --end\n");
 }
 
 #endif
@@ -2872,7 +2875,7 @@ void GFL_NET_SystemSetStandNo(int no,int netID)
 {
     if(_pComm){
         _pComm->standNo[netID] = no;
-        OHNO_PRINT("id = %d  がたってるところは %d\n",netID,no);
+        NET_PRINT("id = %d  がたってるところは %d\n",netID,no);
     }
 }
 
@@ -2887,7 +2890,7 @@ int GFL_NET_SystemGetStandNo(int netID)
 {
     if(_pComm){
         if(_pComm->standNo[netID] != 0xff){
-            OHNO_PRINT("立ち位置 %d ばん id%d\n",_pComm->standNo[netID], netID);
+            NET_PRINT("立ち位置 %d ばん id%d\n",_pComm->standNo[netID], netID);
             return _pComm->standNo[netID];
         }
     }
@@ -2929,7 +2932,7 @@ void GFL_NET_SystemSetWifiBothNet(BOOL bFlg)
             _pComm->countSendRecvServer[0] = 0;
             _pComm->countSendRecvServer[1] = 0;
         }
-        OHNO_PRINT("oo同期切り替え %d\n",bFlg);
+        NET_PRINT("oo同期切り替え %d\n",bFlg);
     }
 }
 

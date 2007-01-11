@@ -38,6 +38,14 @@ extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGe
 //extern void GFL_NET_WLInitialize(int heapID);
 //==============================================================================
 /**
+ * @brief   受信コールバック関数を指定
+ * @param   recvCallback   受信コールバック関数
+ * @return  none
+ */
+//==============================================================================
+extern void GFL_NET_WLSetRecvCallback( PTRCommRecvLocalFunc recvCallback);
+//==============================================================================
+/**
  * @brief   接続しているかどうか
  * @retval  TRUE  接続している
  */

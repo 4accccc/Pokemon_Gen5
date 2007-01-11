@@ -973,7 +973,7 @@ static void WH_StateOutStartParent(void *arg)
         //-----------------------------------
         // ビーコン送信通知
     case WM_STATECODE_BEACON_SENT:
-        //OHNO_PRINT("ビーコン送信\n");
+        //NET_PRINT("ビーコン送信\n");
         pNetWH->stateBeaconSentNum++;
 
         break;
@@ -2208,7 +2208,7 @@ static void WH_StateOutReset(void *arg)
     {
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
         WH_REPORT_FAILURE(cb->errcode);
-        OHNO_PRINT("WH_StateOutReset でエラーが出た\n");
+        NET_PRINT("WH_StateOutReset でエラーが出た\n");
         return;
     }
     // Reset は次の状態を開始せず、アイドリング（待機中）状態にします。
@@ -3182,7 +3182,7 @@ static void WH_StateOutPowerOn(void *arg)
         return;
     }
 
-    OHNO_PRINT(" システム状態をアイドリング（待機中）に変更。\n");
+    NET_PRINT(" システム状態をアイドリング（待機中）に変更。\n");
     WH_ChangeSysState(WH_SYSSTATE_IDLE);
 
     // 次の状態をセットしないので、ここでシーケンスはいったん終了です。
@@ -3608,7 +3608,7 @@ BOOL WH_End(void)
     err = WM_End(WH_StateOutEnd);
     if (err != WM_ERRCODE_OPERATING)
     {
-        OHNO_PRINT(" WH_End エラー%d\n",err);
+        NET_PRINT(" WH_End エラー%d\n",err);
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
 
         return FALSE;

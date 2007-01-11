@@ -259,7 +259,8 @@ void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 //==============================================================================
 void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 {
-    GFL_NET_StateConnectParent(pHandle);
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    GFL_NET_StateConnectParent(pHandle, pNet->heapID);
 }
 
 //==============================================================================
@@ -425,6 +426,10 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
+
+    GFL_NET_SystemSendData(sendCommand,data,0);
+
+
     return TRUE;
 }
 

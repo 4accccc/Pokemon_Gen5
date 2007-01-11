@@ -94,7 +94,7 @@ void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pDa
     if(GFL_NET_GetNetID(pNet) == COMM_PARENT_ID){
         sendBuff[0] = netID;
         sendBuff[1] = syncNo;
-        OHNO_PRINT("同期受信 %d %d\n",netID,syncNo);
+        NET_PRINT("同期受信 %d %d\n",netID,syncNo);
         pCT->timingSyncBuff[netID] = syncNo;     // 同期コマンド用
         for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
             if(GFL_NET_IsConnectMember(pNet, i)){

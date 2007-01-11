@@ -19,6 +19,7 @@
 //------------------------------------------------------------------
 
 typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
+typedef struct _NET_PARENTSYS_t NET_PARENTSYS;
 
 /// @brief WIRELESS管理構造体
 typedef struct _NET_WL_WORK GFL_NETWL;
@@ -96,6 +97,7 @@ typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 /// ネットワークハンドル
 struct _GFL_NETHANDLE{
     NET_TOOLSYS* pTool;  ///< netTool
+    NET_PARENTSYS* pParent; ///< 親の情報を保持するポインタ
     PTRStateFunc state; ///< ハンドルのプログラム状態
     MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
     u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
