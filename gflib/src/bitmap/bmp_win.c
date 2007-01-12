@@ -1,1558 +1,482 @@
 //=============================================================================================
 /**
- * @file	bmp_win.c
- * @brief	BMPウィンドウシステム
- * @author	Hiroyuki Nakamura
- * @date	2006/10/18
  *
- *	ポケモンDPのbg_system.cから分割
- *		BGL		->	bg_sys.c
- *		BMP		->	bmp.c
- *		BMPWIN	->	bmp_win.c
+ * @file	bmp_win.c
+ * @brief	ビットマップウィンドウシステム
+ *
  */
 //=============================================================================================
 #include "gflib.h"
 
-#include "bmp_win_def.h"
-
-//*------------------------------------------*/
-/**   プロトタイプ宣言                       */
-//*------------------------------------------*/
-
-static	void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID );
-
-static void BmpWinOn_Normal( GFL_BMPWIN_DATA * win );
-static void BmpWinOnVReq_Normal( GFL_BMPWIN_DATA * win );
-static void BmpWinOn_Affine( GFL_BMPWIN_DATA * win );
-static void BmpWinOnVReq_Affine( GFL_BMPWIN_DATA * win );
-static void BmpWinOff_Normal( GFL_BMPWIN_DATA * win );
-static void BmpWinOffVReq_Normal( GFL_BMPWIN_DATA * win );
-static void BmpWinOff_Affine( GFL_BMPWIN_DATA * win );
-static void BmpWinOffVReq_Affine( GFL_BMPWIN_DATA * win );
-static void BmpWinShift16( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
-static void BmpWinShift256( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data );
-
-static void MakeWinScrnText( GFL_BMPWIN_DATA * win );
-static void MakeWinScrnAffine( GFL_BMPWIN_DATA * win );
-static void ClearWinScrnText( GFL_BMPWIN_DATA * win );
-static void ClearWinScrnAffine( GFL_BMPWIN_DATA * win );
-
-
-//*------------------------------------------*/
-/**   ウィンドウデータ作成＆転送関数         */
-//*------------------------------------------*/
-static void (* const WinOnFunc[])(GFL_BMPWIN_DATA*) = {
-	BmpWinOn_Normal,		// テキスト
-	BmpWinOn_Affine,		// アフィン
-	BmpWinOn_Normal,		// 拡張アフィン
-};
-static void (* const WinOnVReqFunc[])(GFL_BMPWIN_DATA*) = {
-	BmpWinOnVReq_Normal,		// テキスト
-	BmpWinOnVReq_Affine,		// アフィン
-	BmpWinOnVReq_Normal,		// 拡張アフィン
-};
-//*------------------------------------------*/
-/**   ウィンドウ表示オフ＆転送関数           */
-//*------------------------------------------*/
-static void (* const WinOffFunc[])(GFL_BMPWIN_DATA*) = {
-	BmpWinOff_Normal,
-	BmpWinOff_Affine,
-	BmpWinOff_Normal,
-};
-static void (* const WinOffVReqFunc[])(GFL_BMPWIN_DATA*) = {
-	BmpWinOffVReq_Normal,
-	BmpWinOffVReq_Affine,
-	BmpWinOffVReq_Normal,
-};
-
-//*------------------------------------------*/
-/**   ウィンドウスクリーン作成関数テーブル   */
-//*------------------------------------------*/
-static void (* const WinScrnMakeFunc[])(GFL_BMPWIN_DATA*) = {
-	MakeWinScrnText,		// テキスト
-	MakeWinScrnAffine,		// アフィン
-	MakeWinScrnText,		// 拡張アフィン
-};
-
-//*------------------------------------------*/
-/**   ウィンドウスクリーンクリア関数テーブル */
-//*------------------------------------------*/
-static void (* const WinScrnClearFunc[])(GFL_BMPWIN_DATA*) = {
-	ClearWinScrnText,		// テキスト
-	ClearWinScrnAffine,		// アフィン
-	ClearWinScrnText,		// 拡張アフィン
-};
-
-
-static const u8 ScreenXElems[] =  {
-	16,		// GFL_BG_SCRSIZ_128x128
-	32,		// GFL_BG_SCRSIZ_256x256
-	32,		// GFL_BG_SCRSIZ_256x512
-	32,		// GFL_BG_SCRSIZ_512x256
-	32,		// GFL_BG_SCRSIZ_512x512
-	32,		// GFL_BG_SCRSIZ_1024x1024
-};
-
-
-
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWINデータ確保
- *
- * @param	heapID	ヒープID
- * @param	bgl		BGシステム構造体
- * @param	num		確保するBMPウィンドウの数
- *
- * @return	確保したデータのアドレス
- */
-//--------------------------------------------------------------------------------------------
-GFL_BMPWIN_DATA * GFL_BMPWIN_sysInit( u32 heapID, GFL_BG_INI *bgl, u8 num )
-{
-	GFL_BMPWIN_DATA * wk;
-	u16	i;
-
-	wk = (GFL_BMPWIN_DATA *)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_DATA) * num );
-
-	for( i=0; i<num; i++ ){
-		GFL_BMPWIN_Init( &wk[i], bgl, heapID );
-	}
-
-	return wk;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWINデータ初期化
- *
- * @param	wk		BMPWINデータ
- * @param	bgl		BGシステム構造体
- * @param	heapID	ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static	void GFL_BMPWIN_Init( GFL_BMPWIN_DATA * wk, GFL_BG_INI *bgl, u32 heapID )
-{
-	wk->bgl		= bgl;
-	wk->heapID	= heapID;
-	wk->frmnum	= GFL_BMPWIN_FRM_NULL;
-	wk->posx	= 0;
-	wk->posy	= 0;
-	wk->sizx	= 0;
-	wk->sizy	= 0;
-	wk->palnum	= 0;
-	wk->chrofs	= 0;
-	wk->bmp		= NULL;
-	wk->bitmode = GFL_BMPWIN_BITMODE_4;		// 念のため良く使う方で初期化しておく
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWINデータ破棄
- *
- * @param	wk		BMPWINデータ
- */
-//--------------------------------------------------------------------------------------------
-void	GFL_BMPWIN_sysExit( GFL_BMPWIN_DATA * wk )
-{
-	GFL_HEAP_FreeMemory( wk );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWIN登録チェック
- *
- * @param	win		BMPWINデータ
- *
- * @retval	"TRUE = 登録済み"
- * @retval	"FALSE = 未登録"
- */
-//--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_AddCheck( GFL_BMPWIN_DATA * win )
-{
-	if( win->frmnum == GFL_BMPWIN_FRM_NULL || win->bmp->adrs == NULL ){
-		return FALSE;
-	}
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWIN追加
- *
- * @param	win		BMPWINデータ格納場所
- * @param	frmnum	BGフレーム番号
- * @param	posx	X座標（キャラ単位）
- * @param	posy	Y座標（キャラ単位）
- * @param	sizx	Xサイズ（キャラ単位）
- * @param	sizy	Xサイズ（キャラ単位）
- * @param	palnum	使用パレット番号
- * @param	chrofs	使用CGXオフセット
- * @param	heapID	ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Add(
-		GFL_BMPWIN_DATA * win, u8 frmnum,
-		u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u16 chrofs, u32 heapID )
-{
-	// 使用フレーム状況の判定（スクリーンバッファ確保されているか）
-	if( GFL_BG_ScreenAdrsGet( win->bgl, frmnum ) == NULL ){
-#ifdef	OSP_ERR_BGL_BMPADD		// BMP登録失敗
-		OS_Printf( "ＢＭＰ登録失敗\n" );
-#endif	// OSP_ERR_BGL_BMPADD
-		return;
-	}
-
-	// ビットマップの設定
-	win->heapID = heapID;
-	win->frmnum = frmnum;
-	win->posx   = posx;
-	win->posy   = posy;
-	win->sizx   = sizx;
-	win->sizy   = sizy;
-	win->palnum = palnum;
-	win->chrofs = chrofs;
-	win->bmp	= GFL_BMP_sysInit( sizx, sizy, GFL_BG_BaseCharSizeGet( win->bgl, frmnum ), heapID );
-	win->bitmode = (GFL_BG_ScreenColorModeGet( win->bgl, frmnum) == GX_BG_COLORMODE_16)? GFL_BMPWIN_BITMODE_4 : GFL_BMPWIN_BITMODE_8;
-
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPWIN追加（データ指定）
- *
- * @param	win			BMPWINデータ格納場所
- * @param	dat			BMPWIN_SET構造体型データへのポインタ
- * @param	heapID		ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_AddEx( GFL_BMPWIN_DATA * win, const BMPWIN_SET * dat, u32 heapID )
-{
-	GFL_BMPWIN_Add(
-		win, dat->frm_num, dat->pos_x, dat->pos_y,
-		dat->siz_x, dat->siz_y, dat->palnum, dat->chrnum, heapID );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ削除
- *
- * @param	win		BMPWINデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Del( GFL_BMPWIN_DATA * win )
-{
-	// キャラクタバッファ割り当て開放
-	GFL_BMP_sysExit( win->bmp );
-
-	win->frmnum = GFL_BMPWIN_FRM_NULL;
-	win->posx   = 0;
-	win->posy   = 0;
-	win->sizx   = 0;
-	win->sizy   = 0;
-	win->palnum = 0;
-	win->chrofs = 0;
-	win->bmp	= NULL;
-	win->heapID = 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ削除（BMPデータも開放）
- *
- * @param	win		BMPWINデータ
- * @param	num		個数
- *
- * @return	none
- *
- *	GFL_BMPWIN_AllocGet()で確保した場合に使用して下さい
- *	
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Free( GFL_BMPWIN_DATA * win, u8 num )
-{
-	u16	i;
-
-	// キャラクタバッファ割り当て開放
-	for( i=0; i<num; i++ ){
-		if( win[i].bmp == NULL ){ continue; }
-		GFL_BMP_sysExit( win[i].bmp );
-	}
-
-	// BMPデータ領域開放
-	GFL_HEAP_FreeMemory( win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン、キャラ転送）
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_On( GFL_BMPWIN_DATA * win )
-{
-	u8	mode;
-	
-	GF_ASSERT(win!=NULL);
-	GF_ASSERT(win->frmnum<8);
-
-	mode = GFL_BG_BgModeGet( win->bgl, win->frmnum );
-
-	GF_ASSERT(mode < NELEMS(WinOnFunc));
-	WinOnFunc[ mode ]( win );
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン転送リクエスト、キャラ転送）
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_OnVReq( GFL_BMPWIN_DATA * win )
-{
-	u8	mode;
-
-	GF_ASSERT(win!=NULL);
-	GF_ASSERT(win->frmnum<8);
-
-	mode = GFL_BG_BgModeGet( win->bgl, win->frmnum );
-
-	GF_ASSERT(mode < NELEMS(WinOnVReqFunc));
-	WinOnVReqFunc[ mode ]( win );
-}
-//------------------------------------------------------------------
-/**
- * Window領域スクリーンを関連BG内部バッファに作成する
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-void GFL_BMPWIN_MakeScrn( GFL_BMPWIN_DATA * win )
-{
-	WinScrnMakeFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
-}
-//------------------------------------------------------------------
-/**
- * Window領域スクリーンを関連BG内部バッファに作成する
- * （サイズ指定可。BitmapWindow作成時よりも小さい領域のスクリーン作成が可能。大きいのはＮＧ。）
- *
- * @param   win			BitmapWindow へのポインタ
- * @param   width		スクリーン作成領域の幅（キャラ単位）
- * @param   height		スクリーン作成領域の高さ（キャラ単位）
- *
- */
-//------------------------------------------------------------------
-void GFL_BMPWIN_MakeScrnLimited( GFL_BMPWIN_DATA * win, u32 width, u32 height )
-{
-	u32  x_save, y_save;
-
-	x_save = win->sizx;
-	y_save = win->sizy;
-	win->sizx = width;
-	win->sizy = height;
-
-	WinScrnMakeFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
-
-	win->sizx = x_save;
-	win->sizy = y_save;
-
-}
-//------------------------------------------------------------------
-/**
- * 関連BG内部バッファのWindow領域スクリーンをクリアする
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-void GFL_BMPWIN_ClearScrn( GFL_BMPWIN_DATA * win )
-{
-	WinScrnClearFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum) ]( win );
-}
-
-//------------------------------------------------------------------
-/**
- * スクリーン作成（テキスト・拡張アフィン用）
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-static void MakeWinScrnText( GFL_BMPWIN_DATA * win )
-{
-	u16 * scrn = (u16 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
-
-	if( scrn != NULL ){
-		u32 x, y, x_max, y_max, chr, p, xelems;
-
-//		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet(win->frmnum) ];
-		xelems = 32;
-
-		chr = win->chrofs;
-
-		x_max = win->posx + win->sizx;
-		y_max = win->posy + win->sizy;
-		for(y = win->posy; y < y_max; y++){
-			for(x = win->posx; x < x_max; x++){
-				p = ((y&0x20)*32) + ((x&0x20)*32) + ((y&0x1f)*xelems) + (x&0x1f);
-				scrn[p] = chr | (win->palnum << 12);
-				chr++;
-			}
-		}
-	}
-}
-//------------------------------------------------------------------
-/**
- * スクリーン作成（アフィンBG用）
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-static void MakeWinScrnAffine( GFL_BMPWIN_DATA * win )
-{
-	u8 * scrn = (u8 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
-
-	if( scrn != NULL ){
-		int x, y, chr, xelems;
-
-		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum) ];
-
-		scrn = scrn + win->posy * xelems + win->posx;
-
-		chr = win->chrofs;
-
-		for( y = 0; y < win->sizy; y++ ){
-			for( x = 0; x < win->sizx; x++ ){
-				scrn[x] = chr++;
-			}
-			scrn += xelems;
-		}
-	}
-}
-//------------------------------------------------------------------
-/**
- * スクリーンクリア（テキスト・拡張アフィン用）
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-static void ClearWinScrnText( GFL_BMPWIN_DATA * win )
-{
-	u16 * scrn = (u16 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
-
-	if( scrn != NULL ){
-		u32 x, y, x_max, y_max, p, xelems;
-
-		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum ) ];
-
-		x_max = win->posx + win->sizx;
-		y_max = win->posy + win->sizy;
-		for(y = win->posy; y < y_max; y++){
-			for(x = win->posx; x < x_max; x++){
-				p = ((y&0x20)*32) + ((x&0x20)*32) + ((y&0x1f)*xelems) + (x&0x1f);
-				scrn[p] = 0x0000;
-			}
-		}
-	}
-}
-//------------------------------------------------------------------
-/**
- * スクリーンクリア（アフィンBG用）
- *
- * @param   win		
- *
- */
-//------------------------------------------------------------------
-static void ClearWinScrnAffine( GFL_BMPWIN_DATA * win )
-{
-	u8 * scrn = (u8 *)GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum );
-
-	if( scrn != NULL ){
-		int x, y, xelems;
-
-		xelems = ScreenXElems[ GFL_BG_ScreenTypeGet( win->bgl, win->frmnum) ];
-
-		scrn = scrn + win->posy * xelems + win->posx;
-
-		for( y = 0; y < win->sizy; y++ ){
-			for( x = 0; x < win->sizx; x++ ){
-				scrn[x] = 0;
-			}
-			scrn += xelems;
-		}
-	}
-
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン、キャラ転送（テキスト、アフィン拡張BG））
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOn_Normal( GFL_BMPWIN_DATA * win )
-{
-	MakeWinScrnText( win );
-
-	GFL_BG_LoadScreen(
-		win->bgl,
-		win->frmnum,
-		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
-
-	GFL_BMPWIN_CgxOn( win );
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン転送リクエスト、キャラ転送（テキスト、アフィン拡張BG））
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOnVReq_Normal( GFL_BMPWIN_DATA * win )
-{
-	MakeWinScrnText( win );
-
-	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
-	GFL_BMPWIN_CgxOn( win );
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン、キャラ転送（拡縮面））
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOn_Affine( GFL_BMPWIN_DATA * win )
-{
-	MakeWinScrnAffine( win );
-
-	GFL_BG_LoadScreen(
-		win->bgl,
-		win->frmnum,
-		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
-
-	GFL_BG_LoadCharacter(
-		win->bgl, win->frmnum, win->bmp->adrs,
-		(u32)( win->sizx * win->sizy * GFL_BG_8BITCHRSIZ ), (u32)win->chrofs );
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（スクリーン転送リクエスト、キャラ転送（拡縮面））
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOnVReq_Affine( GFL_BMPWIN_DATA * win )
-{
-	MakeWinScrnAffine( win );
-
-	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
-	GFL_BG_LoadCharacter(
-		win->bgl, win->frmnum, win->bmp->adrs,
-		(u32)( win->sizx * win->sizy * GFL_BG_8BITCHRSIZ ), (u32)win->chrofs );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ表示（キャラ転送のみ）
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_CgxOn( GFL_BMPWIN_DATA * win )
-{
-	u32 chrsize = win->sizx * win->sizy * GFL_BG_BaseCharSizeGet( win->bgl, win->frmnum );
-
-	GFL_BG_LoadCharacter( win->bgl, win->frmnum, win->bmp->adrs, chrsize, win->chrofs );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示（スクリーンクリア＆転送）
- *
- * @param	win		BMPデータ格納場所
- *
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Off( GFL_BMPWIN_DATA * win )
-{
-	WinOffFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
-}
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示（スクリーンクリア＆転送リクエスト）
- *
- * @param	win		BMPデータ格納場所
- *
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_OffVReq( GFL_BMPWIN_DATA * win )
-{
-	WinOffVReqFunc[ GFL_BG_BgModeGet( win->bgl, win->frmnum ) ]( win );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示（テキスト、アフィン拡張BG）
- *
- * @param	win
- *
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOff_Normal( GFL_BMPWIN_DATA * win )
-{
-	ClearWinScrnText( win );
-	GFL_BG_LoadScreen(
-		win->bgl,
-		win->frmnum,
-		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示リクエスト（テキスト、アフィン拡張BG）
- *
- * @param	win
- *
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOffVReq_Normal( GFL_BMPWIN_DATA * win )
-{
-	ClearWinScrnText( win );
-	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示（拡縮面）
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOff_Affine( GFL_BMPWIN_DATA * win )
-{
-	ClearWinScrnAffine( win );
-	GFL_BG_LoadScreen(
-		win->bgl, 
-		win->frmnum, 
-		GFL_BG_ScreenAdrsGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenSizGet( win->bgl, win->frmnum ),
-		GFL_BG_ScreenOfsGet( win->bgl, win->frmnum ) );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ非表示リクエスト（拡縮面）
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void BmpWinOffVReq_Affine( GFL_BMPWIN_DATA * win )
-{
-	ClearWinScrnAffine( win );
-	GFL_BG_LoadScreenV_Req( win->bgl, win->frmnum );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 指定カラーで全体を塗りつぶす
- *
- * @param	win		BMPデータ格納場所
- * @param	col		カラーナンバー
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_DataFill( GFL_BMPWIN_DATA * win, u8 col )
-{
-	u32	datasize;
-	u32 data;
-	u32	base_char_siz;
-
-	base_char_siz = GFL_BG_BaseCharSizeGet( win->bgl, win->frmnum );
-
-	if( base_char_siz == GFL_BG_1CHRDATASIZ ){
-		col = (col<<4)|col;
-	}
-	data = (col<<24)|(col<<16)|(col<<8)|col;
-
-	datasize = base_char_siz * win->sizx * win->sizy;
-
-	MI_CpuFillFast( win->bmp->adrs, data, datasize );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ビットマップ描画
- *
- * @param	win		BMPデータ格納場所
- * @param	src		ビットマップ表示データポインタ
- * @param	src_x	ビットマップ表示開始位置Ｘ
- * @param	src_y	ビットマップ表示開始位置Ｙ
- * @param	src_dx	ビットマップデータサイズＸ
- * @param	src_dy	ビットマップデータサイズＸ
- * @param	win_x	ウインドウ表示開始位置Ｘ
- * @param	win_y	ウインドウ表示開始位置Ｙ
- * @param	win_dx	ウインドウデータサイズＸ
- * @param	win_dy	ウインドウデータサイズＹ
- *
- * @retval	なし
- *
- * ビットマップデータの書き込みを実行
- * ビットマップデータの切り取りを可能にしたもの
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Print(
-			GFL_BMPWIN_DATA * win, void * src,
-			u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
-			u16 win_x, u16 win_y, u16 win_dx, u16 win_dy )
-{
-	GFL_BMPWIN_PrintEx(
-		win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy, 0 );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- *	ビットマップ描画（拡張版）
- *
- * @param	win		BMPデータ格納場所
- * @param	src		ビットマップ表示データポインタ
- * @param	src_x	ビットマップ表示開始位置Ｘ
- * @param	src_y	ビットマップ表示開始位置Ｙ
- * @param	src_dx	ビットマップデータサイズＸ
- * @param	src_dy	ビットマップデータサイズＸ
- * @param	win_x	ウインドウ表示開始位置Ｘ
- * @param	win_y	ウインドウ表示開始位置Ｙ
- * @param	win_dx	ウインドウデータサイズＸ
- * @param	win_dy	ウインドウデータサイズＹ
- * @param	nuki	透明色指定（0～15 0xff:透明色指定なし）
- *
- * @retval	なし
- *
- * ビットマップデータの書き込みを実行
- * ビットマップデータの切り取りを可能にしたもの
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_PrintEx(
-		GFL_BMPWIN_DATA * win, void * src,
-		u16 src_x, u16 src_y, u16 src_dx, u16 src_dy,
-		u16 win_x, u16 win_y, u16 win_dx, u16 win_dy, u16 nuki )
-{
-	GFL_BMP_DATA	src_data;
-	GFL_BMP_DATA	dst_data;
-
-	src_data.adrs	= (u8 *)src;
-	src_data.size_x = src_dx;
-	src_data.size_y = src_dy;
-
-	dst_data.adrs	= (u8 *)win->bmp->adrs;
-	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
-	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
-
-	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GFL_BMP_PrintMain(
-			&src_data, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
-	}else{
-		GFL_BMP_PrintMain256(
-			&src_data, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- *	ビットマップ描画（ソース元がGFL_BMP_DATA型）
- *
- * @param	win		BMPデータ格納場所
- * @param	src		ビットマップ表示データポインタ
- * @param	src_x	ビットマップ表示開始位置Ｘ
- * @param	src_y	ビットマップ表示開始位置Ｙ
- * @param	win_x	ウインドウ表示開始位置Ｘ
- * @param	win_y	ウインドウ表示開始位置Ｙ
- * @param	win_dx	ウインドウデータサイズＸ
- * @param	win_dy	ウインドウデータサイズＹ
- * @param	nuki	透明色指定（0～15 0xff:透明色指定なし）
- *
- * @retval	なし
- *
- * ビットマップデータの書き込みを実行
- * ビットマップデータの切り取りを可能にしたもの
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_PrintBmpData(
-		GFL_BMPWIN_DATA * win, GFL_BMP_DATA * src,
-		u16 src_x, u16 src_y,
-		u16 win_x, u16 win_y, u16 win_dx, u16 win_dy, u16 nuki )
-{
-	GFL_BMP_DATA	dst_data;
-
-	dst_data.adrs	= (u8 *)win->bmp->adrs;
-	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
-	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
-
-	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GFL_BMP_PrintMain(
-			src, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
-	}else{
-		GFL_BMP_PrintMain256(
-			src, &dst_data, src_x, src_y, win_x, win_y, win_dx, win_dy, nuki );
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 指定範囲を塗りつぶす
- *
- * @param	win			BMPデータ
- * @param	col			塗りつぶしカラー
- * @param	px			開始X座標
- * @param	py			開始Y座標
- * @param	sx			Xサイズ
- * @param	sy			Yサイズ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Fill( GFL_BMPWIN_DATA * win, u8 col, u16 px, u16 py, u16 sx, u16 sy )
-{
-	GFL_BMP_DATA	dst_data;
-
-	dst_data.adrs	= (u8 *)win->bmp->adrs;
-	dst_data.size_x = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
-	dst_data.size_y = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
-
-	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum ) == GX_BG_COLORMODE_16 ){
-		GFL_BMP_Fill( (const GFL_BMP_DATA *)&dst_data, px, py, sx, sy, col );
-	}else{
-		GFL_BMP_Fill256( (const GFL_BMP_DATA *)&dst_data, px, py, sx, sy, col );
-	}
-}
-
-//---------------------------------------------------------------------------------------------
-/**
- * 文字表示専用処理効率アップ版
- *
- * @param	win		BMPデータ格納場所
- * @param	src		キャラデータ
- * @param	ssx		フォントXサイズ
- * @param	ssy		フォントYサイズ
- * @param	wx		書き込みX座標
- * @param	wy		書き込みY座標
- *
- * @return	none
- */
-//---------------------------------------------------------------------------------------------
-#define	M_NULLPAL_L	(0)
-#define	M_NULLPAL_H	(NULLPAL_L << 4)
-#define	M_BMPWIN_CHR_DOT	(8)
-
-#define M_SRC_ADRS	(src)
-#define M_SRC_POSX	(0)
-#define M_SRC_POSY	(0)
-#define M_SRC_SIZX	(16)
-#define M_SRC_SIZY	(16)
-#define	M_SRC_XARG	(((M_SRC_SIZX) + (M_SRC_SIZX & 7))>>3)
-
-#define M_DST_ADRS	(dst)
-#define M_DST_POSX	(wx)
-#define M_DST_POSY	(wy)
-#define M_DST_SIZX	(dsx)
-#define M_DST_SIZY	(dsy)
-#define	M_DST_XARG	(((M_DST_SIZX) + (M_DST_SIZX & 7))>>3)
-
-#define M_WRT_SIZX	(ssx)
-#define M_WRT_SIZY	(ssy)
-
-#define DOT_PUT(xofs,yofs,xsiz,ysiz,dadrs,dpx,dpy,dxarg)				\
-	{																	\
-		int	sx, dx, sy, dy, shiftval;									\
-		u8	src_dat;													\
-		u8	*srcadrs, *destadrs;										\
-		u32 src_base;													\
-																		\
-		srcadrs	= M_SRC_ADRS + (yofs / 8 * 0x40) + (xofs / 8 * 0x20);	\
-		for(sy=0, dy=dpy+yofs; sy < ysiz; sy++, dy++){					\
-			src_base = *(u32*)srcadrs;									\
-			for(sx=0, dx=dpx+xofs; sx < xsiz; sx++, dx++){				\
-				destadrs = DPPCALC(dadrs, dx, dy, dxarg);				\
-																		\
-				src_dat = (u8)((src_base >> (sx * 4)) & 0x0f);			\
-																		\
-				if(src_dat != M_NULLPAL_L){								\
-					shiftval = (dx & 1)*4;								\
-					*destadrs = (u8)((src_dat << shiftval)|(*destadrs & (0xf0 >> shiftval)));\
-				}														\
-			}															\
-			srcadrs	+= 4;												\
-		}																\
-	}
-
-#define DOT_PUT_256(xofs,yofs,xsiz,ysiz,dadrs,dpx,dpy,dxarg)			\
-	{																	\
-		int	sx, dx, sy, dy;												\
-		u8	src_dat;													\
-		u8	*srcadrs, *destadrs;										\
-		u32 src_base;													\
-																		\
-		srcadrs	= M_SRC_ADRS + (yofs / 8 * 0x40) + (xofs / 8 * 0x40);	\
-		for( sy=0, dy=dpy+yofs; sy<ysiz; sy++, dy++ ){					\
-			src_base = *(u32*)srcadrs;									\
-			for( sx=0, dx=dpx+xofs; sx<xsiz; sx++, dx++ ){				\
-				destadrs = DPPCALC_256(dadrs, dx, dy, dxarg);			\
-																		\
-				src_dat = (u8)((src_base >> (sx * 4)) & 0x0f);			\
-																		\
-				if( src_dat != M_NULLPAL_L ){							\
-					*destadrs = src_dat;								\
-				}														\
-			}															\
-			srcadrs	+= 4;												\
-		}																\
-	}
-
-void GFL_BMPWIN_PrintMsg( GFL_BMPWIN_DATA * win, u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy )
-{
-	u8 * dst; 
-	u16	dsx, dsy;
-	int	x_max, y_max;
-	u8	print_pat;
-
-	dst	= (u8 *)win->bmp->adrs;
-	dsx = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
-	dsy = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
-
-	if((M_DST_SIZX - M_DST_POSX) < M_WRT_SIZX){
-		x_max = M_DST_SIZX - M_DST_POSX;
-	}else{
-		x_max = M_WRT_SIZX;
-	}
-
-	if((M_DST_SIZY - M_DST_POSY) < M_WRT_SIZY){
-		y_max = M_DST_SIZY - M_DST_POSY;
-	}else{
-		y_max = M_WRT_SIZY;
-	}
-	print_pat = 0;
-
-	if( x_max > 8 ){ print_pat |= 1; }
-	if( y_max > 8 ){ print_pat |= 2; }
-
-	if( win->bitmode == GFL_BMPWIN_BITMODE_4 ){
-		switch( print_pat ){
-		case 0:	//１キャラ(8x8)
-			DOT_PUT( 0, 0, x_max,	y_max,	 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			return;
-		case 1:	//２キャラ(16x8)
-			DOT_PUT( 0, 0, 8,		y_max,	 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			DOT_PUT( 8, 0, x_max-8,	y_max,	 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			return;
-		case 2:	//２キャラ(8x16)
-			DOT_PUT( 0, 0, x_max,	8,		 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			DOT_PUT( 0, 8, x_max,	y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			return;
-		case 3:	//４キャラ(16x16)
-			DOT_PUT( 0, 0, 8,		8,		 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			DOT_PUT( 8, 0, x_max-8,	8,		 M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			DOT_PUT( 0, 8, 8,		y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			DOT_PUT( 8, 8, x_max-8,	y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG );
-			return;
-		}
-	}else{
-		switch( print_pat ){
-		case 0:	//１キャラ(8x8)
-			DOT_PUT_256( 0, 0, x_max,	y_max,	 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			return;
-		case 1:	//２キャラ(16x8)
-			DOT_PUT_256( 0, 0, 8,		y_max,	 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			DOT_PUT_256( 8, 0, x_max-8,	y_max,	 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			return;
-		case 2:	//２キャラ(8x16)
-			DOT_PUT_256( 0, 0, x_max,	8,		 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			DOT_PUT_256( 0, 8, x_max,	y_max-8, M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			return;
-		case 3:	//４キャラ(16x16)
-			DOT_PUT_256( 0, 0, 8,		8,		 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			DOT_PUT_256( 8, 0, x_max-8,	8,		 M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			DOT_PUT_256( 0, 8, 8,		y_max-8, M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			DOT_PUT_256( 8, 8, x_max-8,	y_max-8, M_DST_ADRS,M_DST_POSX,M_DST_POSY,M_DST_XARG);
-			return;
-		}
-	}
-}
-
-
 //=============================================================================================
+//	型宣言
 //=============================================================================================
-#define	M_PUT_TBL	( tbl )
+#define	GFL_BMPWIN_MAGICNUM		(15676)
 
-#define DOT_PUT_W(xofs,yofs,xsiz,ysiz,dadrs,dpx,dpy,dxarg,ptbl)			\
-	{																	\
-		int	sx, dx, sy, dy, shiftval;									\
-		u8	src_dat;													\
-		u8	tbl_flg;													\
-		u8	tbl_bit;													\
-		u8	*destadrs;													\
-		const u8* srcadrs;												\
-		u32 src_base;													\
-																		\
-		srcadrs	= M_SRC_ADRS + (yofs / 8 * 0x40) + (xofs / 8 * 0x20);	\
-																		\
-		if( yofs == 0 ){												\
-			dy = dpy + yofs;											\
-			tbl_bit = (u8)( ptbl & 0xff );								\
-		}else{															\
-			dy = dpy + yofs;											\
-			for( sy=0; sy<8; sy++ ){									\
-				if( ( (ptbl>>sy) & 1 ) != 0 ){ dy++; }					\
-			}															\
-			tbl_bit = (u8)( ptbl >> 8 );								\
-		}																\
-																		\
-		for( sy=0; sy<ysiz; sy++ ){										\
-			src_base = *(u32*)srcadrs;									\
-			tbl_flg = (u8)(( tbl_bit >> sy ) & 1);						\
-			for(sx=0, dx=dpx+xofs; sx < xsiz; sx++, dx++){				\
-				destadrs = DPPCALC(dadrs, dx, dy, dxarg);				\
-																		\
-				src_dat = (u8)((src_base >> (sx * 4)) & 0x0f);			\
-																		\
-				if(src_dat != M_NULLPAL_L){								\
-					shiftval = (dx & 1)*4;								\
-					src_dat = (u8)((src_dat << shiftval)|(*destadrs & (0xf0 >> shiftval)));\
-					*destadrs = src_dat;								\
-																		\
-					if( tbl_flg != 0 ){									\
-						destadrs = DPPCALC(dadrs, dx, (dy+1), dxarg);	\
-						*destadrs = src_dat;							\
-					}													\
-				}														\
-			}															\
-			if( tbl_flg != 0 ){											\
-				dy += 2;												\
-			}else{														\
-				dy++;													\
-			}															\
-			srcadrs	+= 4;												\
-		}																\
-	}
-/*
-#define DOT_PUT_W_256(xofs,yofs,xsiz,ysiz,dadrs,dpx,dpy,dxarg,ptbl)		\
-	{																	\
-		int	sx, dx, sy, dy, shiftval;									\
-		u8	src_dat;													\
-		u8	tbl_flg;													\
-		u8	tbl_bit;													\
-		u8	*destadrs;													\
-		const u8* srcadrs;												\
-		u32 src_base;													\
-																		\
-		srcadrs	= M_SRC_ADRS + (yofs / 8 * 0x40) + (xofs / 8 * 0x20);	\
-																		\
-		if( yofs == 0 ){												\
-			dy = dpy + yofs;											\
-			tbl_bit = (u8)( ptbl & 0xff );								\
-		}else{															\
-			dy = dpy + yofs;											\
-			for( sy=0; sy<8; sy++ ){									\
-				if( ( (ptbl>>sy) & 1 ) != 0 ){ dy++; }					\
-			}															\
-			tbl_bit = (u8)( ptbl >> 8 );								\
-		}																\
-																		\
-		for( sy=0; sy<ysiz; sy++ ){										\
-			src_base = *(u32*)srcadrs;									\
-			tbl_flg = (u8)(( tbl_bit >> sy ) & 1);						\
-			for(sx=0, dx=dpx+xofs; sx < xsiz; sx++, dx++){				\
-				destadrs = DPPCALC_256(dadrs, dx, dy, dxarg);			\
-																		\
-				src_dat = (u8)((src_base >> (sx * 4)) & 0x0f);			\
-																		\
-				if(src_dat != M_NULLPAL_L){								\
-					shiftval = (dx & 1)*4;								\
-					*destadrs = src_dat;								\
-																		\
-					if( tbl_flg != 0 ){									\
-						destadrs = DPPCALC_256(dadrs,dx,(dy+1),dxarg);	\
-						*destadrs = src_dat;							\
-					}													\
-				}														\
-			}															\
-			if( tbl_flg != 0 ){											\
-				dy += 2;												\
-			}else{														\
-				dy++;													\
-			}															\
-			srcadrs	+= 4;												\
-		}																\
-	}
-*/
+///領域管理構造体
+typedef struct {
+	GFL_AREAMAN*	man;
+	u32				start;
+	u32				size;
 
-#define CM_SRC_ADRS	(chg_src)
+}GFL_BMPWIN_AREA;
 
-#define DOT_PUT_W_256(xofs,yofs,xsiz,ysiz,dadrs,dpx,dpy,dxarg,ptbl)		\
-	{																	\
-		int	sx, dx, sy, dy;												\
-		u8	src_dat;													\
-		u8	tbl_flg;													\
-		u8	tbl_bit;													\
-		u8	*destadrs;													\
-		const u8* srcadrs;												\
-		u8 * src_base;													\
-																		\
-		srcadrs	= CM_SRC_ADRS + (yofs / 8 * 0x80) + (xofs / 8 * 0x40);	\
-																		\
-		if( yofs == 0 ){												\
-			dy = dpy + yofs;											\
-			tbl_bit = (u8)( ptbl & 0xff );								\
-		}else{															\
-			dy = dpy + yofs;											\
-			for( sy=0; sy<8; sy++ ){									\
-				if( ( (ptbl>>sy) & 1 ) != 0 ){ dy++; }					\
-			}															\
-			tbl_bit = (u8)( ptbl >> 8 );								\
-		}																\
-																		\
-		for( sy=0; sy<ysiz; sy++ ){										\
-			src_base = (u8 *)srcadrs;									\
-			tbl_flg = (u8)(( tbl_bit >> sy ) & 1);						\
-			for(sx=0, dx=dpx+xofs; sx < xsiz; sx++, dx++){				\
-				destadrs = DPPCALC_256(dadrs, dx, dy, dxarg);			\
-																		\
-				src_dat = src_base[sx];									\
-																		\
-				if(src_dat != M_NULLPAL_L){								\
-					*destadrs = src_dat;								\
-																		\
-					if( tbl_flg != 0 ){									\
-						destadrs = DPPCALC_256(dadrs,dx,(dy+1),dxarg);	\
-						*destadrs = src_dat;							\
-					}													\
-				}														\
-			}															\
-			if( tbl_flg != 0 ){											\
-				dy += 2;												\
-			}else{														\
-				dy++;													\
-			}															\
-			srcadrs	+= 8;												\
-		}																\
-	}
+///BMPWINデータ構造体
+typedef struct {
+	GFL_BG_INI*		bgl;
+	GFL_BMPWIN_AREA	area[ GFL_BG_FRAME_MAX ];
+	u16				heapID;
 
-void GFL_BMPWIN_PrintMsgWide(
-		GFL_BMPWIN_DATA * win, const u8 * src, u16 ssx, u16 ssy, u16 wx, u16 wy, u16 tbl )
-{
-	u8 * dst;
-	u16	dsx,dsy;
-	int	x_max, y_max;
-	u8	print_pat;
+}GFL_BMPWIN_SYS;
 
-	dst	= (u8 *)win->bmp->adrs;
-	dsx = (u16)(win->sizx * GFL_BG_1CHRDOTSIZ);
-	dsy = (u16)(win->sizy * GFL_BG_1CHRDOTSIZ);
+///BMPWINデータ構造体
+struct _GFL_BMPWIN {
+	u16				magicnum:15;
+	u16				bitmode:1;	
+	u8				frmnum;
+	u8				posx;
+	u8				posy;
+	u8				sizx;
+	u8				sizy;
+	u8				width;
+	u8				height;
+	u8				palnum;
+	u16				chrnum;
+	GFL_BMP_DATA	bmp;
+};
 
-	if((M_DST_SIZX - M_DST_POSX) < M_WRT_SIZX){
-		x_max = M_DST_SIZX - M_DST_POSX;
-	}else{
-		x_max = M_WRT_SIZX;
-	}
-
-	if((M_DST_SIZY - M_DST_POSY) < M_WRT_SIZY){
-		y_max = M_DST_SIZY - M_DST_POSY;
-	}else{
-		y_max = M_WRT_SIZY;
-	}
-
-	print_pat = 0;
-
-	if( x_max > 8 ){ print_pat |= 1; }
-	if( y_max > 8 ){ print_pat |= 2; }
-
-	if( win->bitmode == GFL_BMPWIN_BITMODE_4 ){
-		switch( print_pat ){
-		case 0:	//１キャラ(8x8)
-			DOT_PUT_W( 0, 0, x_max,	y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			return;
-		case 1:	//２キャラ(16x8)
-			DOT_PUT_W( 0, 0, 8, y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W( 8, 0, x_max-8, y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			return;
-		case 2:	//２キャラ(8x16)
-			DOT_PUT_W( 0, 0, x_max,	8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W( 0, 8, x_max,	y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			return;
-		case 3:	//４キャラ(16x16)
-			DOT_PUT_W( 0, 0, 8, 8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W( 8, 0, x_max-8, 8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W( 0, 8, 8, y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W( 8, 8, x_max-8, y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			return;
-		}
-	}else{
-		u8 * chg_src = GFL_BG_4BitCgxChange8Bit( src, ssx*4*ssy*8, win->palnum, win->heapID );
-
-		switch( print_pat ){
-		case 0:	//１キャラ(8x8)
-			DOT_PUT_W_256( 0, 0, x_max,	y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			break;
-		case 1:	//２キャラ(16x8)
-			DOT_PUT_W_256( 0, 0, 8, y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W_256( 8, 0, x_max-8, y_max, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			break;
-		case 2:	//２キャラ(8x16)
-			DOT_PUT_W_256( 0, 0, x_max,	8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W_256( 0, 8, x_max,	y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			break;
-		case 3:	//４キャラ(16x16)
-			DOT_PUT_W_256( 0, 0, 8, 8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W_256( 8, 0, x_max-8, 8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W_256( 0, 8, 8, y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			DOT_PUT_W_256( 8, 8, x_max-8, y_max-8, M_DST_ADRS, M_DST_POSX, M_DST_POSY, M_DST_XARG, M_PUT_TBL );
-			break;
-		}
-
-		GFL_HEAP_FreeMemory( chg_src );
-	}
-}
-
+static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
+//--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * ビットマップウインドウデータシフト
  *
- * @param	win		BMPデータ格納場所
- * @param	direct	方向
- * @param	offset	シフト幅
- * @param	data	空白になった領域を埋めるデータ
+ * ビットマップ管理システムの開始、終了
  *
- * @return	none
- *
- * ビットマップデータ(全領域)のシフトを実行
+ * 主にプロセス起動、終了時に呼ばれる。
+ * ビットマップウインドウを使用するＢＧフレーム（複数指定可）、使用ＣＧＸ領域の設定を行う。
+ * これ以後、各ビットマップ作成の際は、ここで設定したステータスが用いられる。
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_Shift( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
-{
-	if( GFL_BG_ScreenColorModeGet( win->bgl, win->frmnum) == GX_BG_COLORMODE_16 ){
-		BmpWinShift16( win, direct, offset, data );
-	}else{
-		BmpWinShift256( win, direct, offset, data );
-	}
-}
-
+//--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * ビットマップウインドウデータシフト（１６色用）
+ * システム初期化
  *
- * @param	win		BMPデータ格納場所
- * @param	direct	方向
- * @param	offset	シフト幅
- * @param	data	空白になった領域を埋めるデータ
- *
- * @return	none
+ * @param	bgl		BGシステム構造体ポインタ
+ * @param	set		使用領域設定構造体
+ * @param	heapID	使用ヒープ領域
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinShift16( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
+void
+	GFL_BMPWIN_sysInit
+		( GFL_BG_INI* bgl, GFL_BMPWIN_SET* set, u16 heapID )
 {
-	u8 * cgxram;
-	int	chroffs, woffs, roffs;
-	int	blanch_chr, over_offs;
-	int	xsiz, rline;
 	int	i;
 
-	cgxram		= (u8 *)win->bmp->adrs;
-	blanch_chr	= (data<<24) | (data<<16) | (data<<8) | (data<<0);
-	over_offs	= win->sizy * win->sizx * GFL_BG_1CHRDATASIZ;
-	xsiz		= win->sizx;
+	bmpwin_sys = (GFL_BMPWIN_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_SYS) );
+	bmpwin_sys->bgl = bgl;
+	bmpwin_sys->heapID = heapID;
 
-	switch( direct ){
-	case GFL_BMPWIN_SHIFT_U:
-		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_1CHRDATASIZ ){
-			rline = offset;
+	//領域管理マネージャの作成
+	for( i=0; i<GFL_BG_FRAME_MAX;i++ ){
+		u32 blocksize = ( set->limit[i].end - set->limit[i].start ) / 0x20;
 
-			for( i=0; i<8; i++ ){
-				woffs = chroffs + (i << 2);
-				roffs = chroffs + (((xsiz * (rline&0xfffffff8))|(rline&0x00000007)) << 2);
-				if(roffs < over_offs){
-					*(u32*)(cgxram + woffs) = *(u32*)(cgxram + roffs);
-				}else{
-					*(u32*)(cgxram + woffs) = blanch_chr;
-				}
-				rline++;
-			}
+		if( blocksize ){
+			//ビットマップウインドウを使用するフレーム(enable)
+			bmpwin_sys->area[i].man = GFL_AREAMAN_Create( blocksize, heapID );
+			bmpwin_sys->area[i].start = 0;
+			bmpwin_sys->area[i].size = blocksize;
+			//透明キャラクター用にデフォルト確保
+			GFL_AREAMAN_ReserveAssignArea( bmpwin_sys->area[i].man, 0, blocksize, 1 );
+		} else {
+			//ビットマップウインドウを使用しないフレーム(disable)
+			bmpwin_sys->area[i].man = NULL;
+			bmpwin_sys->area[i].start = 0;
+			bmpwin_sys->area[i].size = 0;
 		}
-		break;
-	case GFL_BMPWIN_SHIFT_D:
-		cgxram += over_offs - 4;
-
-		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_1CHRDATASIZ ){
-			rline = offset;
-
-			for( i=0; i<8; i++ ){
-				woffs = chroffs + (i << 2);
-				roffs = chroffs + (((xsiz * (rline&0xfffffff8))|(rline&0x00000007)) << 2);
-				if(roffs < over_offs){
-					*(u32*)(cgxram - woffs) = *(u32*)(cgxram - roffs);
-				}else{
-					*(u32*)(cgxram - woffs) = blanch_chr;
-				}
-				rline++;
-			}
-		}
-		break;
-	case GFL_BMPWIN_SHIFT_L:
-		break;
-	case GFL_BMPWIN_SHIFT_R:
-		break;
 	}
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ビットマップウインドウデータシフト（２５６色用）
- *
- * @param	win		BMPデータ格納場所
- * @param	direct	方向
- * @param	offset	シフト幅
- * @param	data	空白になった領域を埋めるデータ
- *
- * @return	none
+ * システム終了
  */
 //--------------------------------------------------------------------------------------------
-static void BmpWinShift256( GFL_BMPWIN_DATA * win, u8 direct, u8 offset, u8 data )
+void
+	GFL_BMPWIN_sysExit
+		( void )
 {
-	u8 * cgxram;
-	int	chroffs, woffs, roffs;
-	int	blanch_chr, over_offs;
-	int	xsiz, rline;
 	int	i;
 
-	cgxram		= (u8 *)win->bmp->adrs;
-	blanch_chr	= ( data << 24 ) | ( data << 16 ) | ( data << 8 ) | data;
-	over_offs	= win->sizy * win->sizx * GFL_BG_8BITCHRSIZ;
-	xsiz		= win->sizx;
-
-	switch(direct){
-	case GFL_BMPWIN_SHIFT_U:
-		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_8BITCHRSIZ ){
-			rline = offset;
-
-			for( i=0; i<8; i++ ){
-				woffs = chroffs + (i << 3);
-				roffs = chroffs + (((xsiz * (rline&0xfffffff8))|(rline&0x00000007)) << 3);
-				if( roffs < over_offs ){
-					*(u32*)(cgxram + woffs) = *(u32*)(cgxram + roffs);
-				}else{
-					*(u32*)(cgxram + woffs) = blanch_chr;
-				}
-
-				woffs += 4;
-				roffs += 4;
-				if( roffs < over_offs + 4 ){
-					*(u32*)(cgxram + woffs) = *(u32*)(cgxram + roffs);
-				}else{
-					*(u32*)(cgxram + woffs) = blanch_chr;
-				}
-
-				rline++;
-			}
+	//領域管理マネージャの解放
+	for( i=0; i<GFL_BG_FRAME_MAX;i++ ){
+		if( bmpwin_sys->area[i].man != NULL ){
+			GFL_AREAMAN_Delete( bmpwin_sys->area[i].man );
 		}
-		break;
-	case GFL_BMPWIN_SHIFT_D:
-		cgxram += ( over_offs - 8 );
+	}
+	GFL_HEAP_FreeMemory( bmpwin_sys );
+	bmpwin_sys = NULL;
+}
 
-		for( chroffs=0; chroffs<over_offs; chroffs+=GFL_BG_8BITCHRSIZ ){
-			rline = offset;
 
-			for( i=0; i<8; i++ ){
-				woffs = chroffs + (i << 3);
-				roffs = chroffs + (((xsiz * (rline&0xfffffff8))|(rline&0x00000007)) << 3);
-				if( roffs < over_offs ){
-					*(u32*)(cgxram - woffs) = *(u32*)(cgxram - roffs);
-				}else{
-					*(u32*)(cgxram - woffs) = blanch_chr;
-				}
-
-				woffs -= 4;
-				roffs -= 4;
-				if( roffs < over_offs - 4 ){
-					*(u32*)(cgxram - woffs) = *(u32*)(cgxram - roffs);
-				}else{
-					*(u32*)(cgxram - woffs) = blanch_chr;
-				}
-
-				rline++;
-			}
-		}
-		break;
-	case GFL_BMPWIN_SHIFT_L:
-		break;
-	case GFL_BMPWIN_SHIFT_R:
-		break;
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * ビットマップウインドウの作成、破棄
+ *
+ * ビットマップとして使用したいＢＧフレーム、描画位置、使用ＣＧＸサイズの設定などを指定し
+ * ビットマップウインドウ管理ハンドルを作成する。
+ * 自動でＣＧＸバッファ領域のヒープ確保も行う。
+ * 作成後のビットマップウインドウ操作は、ハンドルポインタによって行われる。
+ */
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+static inline void CHK_BMPWIN( GFL_BMPWIN* bmpwin )
+{
+	if( bmpwin->magicnum != GFL_BMPWIN_MAGICNUM ){
+		OS_Panic( "指定されたハンドルはGFL_BMPWINハンドルではありません(bmp_win.c)\n" );
 	}
 }
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * ビットマップウインドウの作成
+ *
+ * @param	frmnum	GFL_BGL使用フレーム
+ * @param	posx	Ｘ座標（キャラクター単位）
+ * @param	posy	Ｙ座標（キャラクター単位）
+ * @param	sizx	Ｘサイズ（キャラクター単位）
+ * @param	sizy	Ｙサイズ（キャラクター単位）
+ * @param	panum	使用パレットナンバー
+ * @param	dir		確保ＶＲＡＭ方向
+ *
+ * @return	ビットマップウインドウハンドルポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GFL_BMPWIN* 
+	GFL_BMPWIN_Create
+		( u8 frmnum, u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u8 dir )
+{
+	GFL_BMPWIN* bmpwin;
+	u32 areasiz, areapos;
+	u16 heapID = bmpwin_sys->heapID;
 
-//=============================================================================================
-//=============================================================================================
-//	BMPデータ操作
-//=============================================================================================
-//=============================================================================================
+	bmpwin = (GFL_BMPWIN*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN) );
+
+	bmpwin->magicnum	= GFL_BMPWIN_MAGICNUM;
+	bmpwin->frmnum		= frmnum;
+	bmpwin->posx		= posx;
+	bmpwin->posy		= posy;
+	bmpwin->sizx		= sizx;
+	bmpwin->sizy		= sizy;
+	bmpwin->width		= sizx;	//スクリーン描画サイズ（デフォルトはサイズと等しい）
+	bmpwin->height		= sizy;	//スクリーン描画サイズ（デフォルトはサイズと等しい）
+	bmpwin->palnum		= palnum;
+
+	//キャラクタモード判別
+	if( GFL_BG_ScreenColorModeGet( bmpwin_sys->bgl, frmnum) == GX_BG_COLORMODE_16){
+		bmpwin->bitmode = GFL_BMPWIN_BITMODE_4;	//１６色モード
+		areasiz = sizx * sizy;
+	} else {
+		bmpwin->bitmode = GFL_BMPWIN_BITMODE_8;	//２５６色モード
+		areasiz = sizx * sizy * 2;	//使用するキャラ領域は２倍(0x40)
+	}
+	if( bmpwin_sys->area[frmnum].man == NULL ){
+		OS_Panic( "ビットマップ生成可能なフレームではありません\n" );
+	}
+	//キャラクター領域の確保
+	areapos = GFL_AREAMAN_ReserveAssignArea(	bmpwin_sys->area[frmnum].man,
+												bmpwin_sys->area[frmnum].start,
+												bmpwin_sys->area[frmnum].size,
+												areasiz );
+	if( areapos == AREAMAN_POS_NOTFOUND ){
+		OS_Panic( "ビットマップ生成に必要なキャラＶＲＡＭ領域が足りない\n" );
+	} else {
+		bmpwin->chrnum = areapos;
+		bmpwin->bmp.adrs = GFL_HEAP_AllocMemory( heapID, areasiz * 0x20 );
+		bmpwin->bmp.size_x = sizx * 8;
+		bmpwin->bmp.size_y = sizy * 8;
+	}
+	return bmpwin;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMPデータ取得：BGフレーム番号
  *
- * @param	win		BMPデータ格納場所
+ * ビットマップウインドウの破棄
  *
- * @return	win->frmnum
+ * @param	bmpwin	ビットマップウインドウポインタ
+ *
  */
 //--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_GetFrame( GFL_BMPWIN_DATA * win )
+void
+	GFL_BMPWIN_Delete
+		( GFL_BMPWIN* bmpwin )
 {
-	return win->frmnum;
+	u32 areasiz;
+
+	CHK_BMPWIN( bmpwin );
+
+	if(	bmpwin->bitmode == GFL_BMPWIN_BITMODE_4 ){
+		areasiz = bmpwin->sizx * bmpwin->sizy;
+	} else {
+		areasiz = bmpwin->sizx * bmpwin->sizy * 2;	//使用するキャラ領域は２倍(0x40)
+	}
+	//キャラクター領域の解放
+	GFL_AREAMAN_Release( bmpwin_sys->area[bmpwin->frmnum].man, bmpwin->chrnum, areasiz );
+
+	GFL_HEAP_FreeMemory( bmpwin->bmp.adrs );
+	GFL_HEAP_FreeMemory( bmpwin );
 }
+
+
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ *
+ * 描画制御
+ *
+ *
+ */
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+//---------------------------------------------------------
+/**
+ * ビットマップ用キャラクターを内部バッファからＶＲＡＭへ転送
+ *
+ * @param	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+void
+	GFL_BMPWIN_UploadChar
+		( GFL_BMPWIN * bmpwin )
+{
+	u32	bmpsize;
+
+	CHK_BMPWIN( bmpwin );
+
+	bmpsize = (u32)
+		((bmpwin->sizx*bmpwin->sizy * GFL_BG_BaseCharSizeGet(bmpwin_sys->bgl,bmpwin->frmnum)));
+
+	GFL_BG_LoadCharacter
+		( bmpwin_sys->bgl, bmpwin->frmnum, bmpwin->bmp.adrs, bmpsize, bmpwin->chrnum );
+}
+
+//---------------------------------------------------------
+/**
+ * ビットマップ用スクリーンを関連ＢＧスクリーンバッファに作成する
+ *
+ * @param	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+void
+	GFL_BMPWIN_MakeScrn
+		( GFL_BMPWIN * bmpwin )
+{
+	u16*	scrnbuf;
+	u16		scrnsiz,scrnchr,scrnpal;
+	int		i;
+
+	CHK_BMPWIN( bmpwin );
+
+	scrnsiz = bmpwin->sizx * bmpwin->sizy;
+	scrnbuf = (u16*)GFL_HEAP_AllocMemoryLow( bmpwin_sys->heapID, scrnsiz*2 );
+	scrnchr = bmpwin->chrnum;
+	scrnpal = (bmpwin->palnum << 12);
+				
+	for(i=0;i<scrnsiz;i++){
+		scrnbuf[i] = (scrnchr|scrnpal);
+		scrnchr++;
+	}
+	GFL_BG_ScrWrite( bmpwin_sys->bgl, bmpwin->frmnum, scrnbuf, 
+						bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy );
+
+	GFL_HEAP_FreeMemory( scrnbuf );
+}
+
+//---------------------------------------------------------
+/**
+ * 関連ＢＧスクリーンバッファのビットマップ用スクリーンをクリアする
+ *
+ * @param	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+void
+	GFL_BMPWIN_ClearScrn
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+
+	CHK_BMPWIN( bmpwin );
+
+	GFL_BG_ScrFill( bmpwin_sys->bgl, bmpwin->frmnum, 0,
+					bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy, 0 );
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMPデータ取得：Xサイズ
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	win->sizx
+ * ビットマップウインドウステータス取得
  */
 //--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_GetSizeX( GFL_BMPWIN_DATA * win )
+//--------------------------------
+/**
+ * フレームナンバーの取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetFrame
+		( GFL_BMPWIN * bmpwin )
 {
-	return win->sizx;
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->frmnum;
 }
+
+//--------------------------------
+/**
+ * キャラクターＸサイズの取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetSizeX
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->sizx;
+}
+
+//--------------------------------
+/**
+ * キャラクターＹサイズの取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetSizeY
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->sizy;
+}
+
+//--------------------------------
+/**
+ * 描画Ｘ座標の取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetPosX
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->posx;
+}
+
+//--------------------------------
+/**
+ * 描画Ｙ座標の取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetPosY
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->posy;
+}
+
+//--------------------------------
+/**
+ * キャラクターナンバーの取得
+ */
+//--------------------------------
+u16
+	GFL_BMPWIN_GetChrNum
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return bmpwin->chrnum;
+}
+
+//--------------------------------
+/**
+ * ビットマップポインタの取得
+ */
+//--------------------------------
+GFL_BMP_DATA*
+	GFL_BMPWIN_GetBmp
+		( GFL_BMPWIN * bmpwin )
+{
+	CHK_BMPWIN( bmpwin );
+	return &bmpwin->bmp;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMPデータ取得：Yサイズ
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	win->sizy
+ * ビットマップウインドウステータス変更
  */
 //--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_GetSizeY( GFL_BMPWIN_DATA * win )
+//--------------------------------
+/**
+ * 描画Ｘ座標の変更
+ */
+//--------------------------------
+void
+	GFL_BMPWIN_SetPosX
+		( GFL_BMPWIN * bmpwin, u8 px )
 {
-	return win->sizy;
+	CHK_BMPWIN( bmpwin );
+	bmpwin->posx = px;
+}
+//--------------------------------
+/**
+ * 描画Ｙ座標の変更
+ */
+//--------------------------------
+void
+	GFL_BMPWIN_SetPosY
+		( GFL_BMPWIN * bmpwin, u8 py )
+{
+	CHK_BMPWIN( bmpwin );
+	bmpwin->posy = py;
+}
+//--------------------------------
+/**
+ * スクリーン描画サイズＸの変更
+ */
+//--------------------------------
+void
+	GFL_BMPWIN_SetScrnSizX
+		( GFL_BMPWIN * bmpwin, u8 sx )
+{
+	CHK_BMPWIN( bmpwin );
+	bmpwin->width = sx;
+}
+//--------------------------------
+/**
+ * スクリーン描画サイズＹの変更
+ */
+//--------------------------------
+void
+	GFL_BMPWIN_SetScrnSizY
+		( GFL_BMPWIN * bmpwin, u8 sy )
+{
+	CHK_BMPWIN( bmpwin );
+	bmpwin->height = sy;
+}
+//--------------------------------
+/**
+ * パレットの変更
+ */
+//--------------------------------
+void
+	GFL_BMPWIN_SetPal
+		( GFL_BMPWIN * bmpwin, u8 palnum )
+{
+	CHK_BMPWIN( bmpwin );
+	bmpwin->palnum = palnum;
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ取得：X座標
- *
- * @param	win		BMPデータ格納場所
- * @param	index	ビットマップ使用設定ヘッダINDEX
- *
- * @return	win->posx
- */
-//--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_GetPosX( GFL_BMPWIN_DATA * win )
-{
-	return win->posx;
-}
 
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ取得：Y座標
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	win->posy
- */
-//--------------------------------------------------------------------------------------------
-u8 GFL_BMPWIN_GetPosY( GFL_BMPWIN_DATA * win )
-{
-	return win->posy;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ取得：キャラ番号
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	win->chrofs
- */
-//--------------------------------------------------------------------------------------------
-u16 GFL_BMPWIN_GetChrofs( GFL_BMPWIN_DATA * win )
-{
-	return win->chrofs;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ設定：X座標
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_SetPosX( GFL_BMPWIN_DATA * win, u8 px )
-{
-	win->posx = px;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ設定：Y座標
- *
- * @param	win		BMPデータ格納場所
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_SetPosY( GFL_BMPWIN_DATA * win, u8 py )
-{
-	win->posy = py;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * BMPデータ設定：パレット番号
- *
- * @param	win		BMPデータ格納場所
- * @param   palnum	パレット番号
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void GFL_BMPWIN_SetPal( GFL_BMPWIN_DATA * win, u8 palnum )
-{
-	win->palnum = palnum;
-}
