@@ -23,6 +23,7 @@
 #include "heapsys.h"
 #include "filesystem.h"
 #include "arc_tool.h"
+#include "areaman.h"
 #include "bg_sys.h"
 #include "display.h"
 #include "strbuf.h"
