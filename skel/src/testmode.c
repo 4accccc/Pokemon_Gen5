@@ -99,11 +99,13 @@ static void	bg_init( void )
 	}
 	{//パレット作成＆転送
 		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
+		plt[0] = 0x5041;	//青(背景)
 
-		plt[0] = 0x5041;	//青
 		plt[1] = 0x7fff;	//白
-		plt[2] = 0x001f;	//赤
 		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
+		plt[1] = 0x001f;	//赤
+		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 16*2 );
+
 		GFL_HEAP_FreeMemory( plt );
 	}
 	{//文字表示パラメータワーク作成
@@ -126,12 +128,32 @@ static void	bg_exit( void )
 	GFL_BG_sysExit( testmode->bgl );
 }
 
-static void bmpwin_msg_write( GFL_BMPWIN* bmpwin, const char* msg, u8 x, u8 y )
+//------------------------------------------------------------------
+/**
+ * @brief		メッセージビットマップウインドウコントロール
+ */
+//------------------------------------------------------------------
+static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
 {
-	testmode->textParam->bmp = GFL_BMPWIN_GetBmp( bmpwin );
-	testmode->textParam->writex = x;
-	testmode->textParam->writey = y;
+	testmode->bmpwin[bmpwinNum] = GFL_BMPWIN_Create( TEXT_FRM, px, py, sx, sy, 0, 0 );
+
+	testmode->textParam->bmp = GFL_BMPWIN_GetBmp( testmode->bmpwin[ bmpwinNum ] );
+	testmode->textParam->writex = 0;
+	testmode->textParam->writey = 0;
 	GFL_TEXT_PrintSjisCode( msg, testmode->textParam );
+
+	GFL_BMPWIN_UploadChar( testmode->bmpwin[bmpwinNum] );
+	GFL_BMPWIN_MakeScrn( testmode->bmpwin[bmpwinNum] );
+}
+	
+static void msg_bmpwin_trush( u8 bmpwinNum )
+{
+	GFL_BMPWIN_Delete( testmode->bmpwin[bmpwinNum] );
+}
+	
+static void msg_bmpwin_palset( u8 bmpwinNum, u8 pal )
+{
+	GFL_BMPWIN_SetPal( testmode->bmpwin[bmpwinNum], pal );
 }
 	
 //------------------------------------------------------------------
@@ -139,33 +161,58 @@ static void bmpwin_msg_write( GFL_BMPWIN* bmpwin, const char* msg, u8 x, u8 y )
  * @brief	プリント実験
  */
 //------------------------------------------------------------------
-static const char	test_index0[] = 
-{"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
-static const char	test_index1[] = {"http://www.gamefreak.co.jp"};
+enum {
+	NUM_TITLE = 0,
+	NUM_URL,
+	NUM_SELECT1,
+	NUM_SELECT2,
+	NUM_SELECT3,
+	NUM_SELECT4,
+	NUM_SELECT5,
+};
 
-static const char	test_select0[] = {"わたなべ　てつや\nTetsuya Watanabe"};
-static const char	test_select1[] = {"たまだ　そうすけ\nSousuke Tamada"};
-static const char	test_select2[] = {"そがべ　ひさし\nHisashi Sogabe"};
-static const char	test_select3[] = {"おおの　かつみ\nKatsumi Ohno"};
-static const char	test_select4[] = {"みつはら　さとし\nSatoshi Mitsuhara"};
+enum {
+	MSG_WHITE = 0,
+	MSG_RED,
+};
+
+static const char	test_index1[] = 
+{"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
+static const char	test_index2[] = {"http://www.gamefreak.co.jp"};
+
+static const char	test_select1[] = {"わたなべ　てつや\nTetsuya Watanabe"};
+static const char	test_select2[] = {"たまだ　そうすけ\nSousuke Tamada"};
+static const char	test_select3[] = {"そがべ　ひさし\nHisashi Sogabe"};
+static const char	test_select4[] = {"おおの　かつみ\nKatsumi Ohno"};
+static const char	test_select5[] = {"みつはら　さとし\nSatoshi Mitsuhara"};
 
 typedef struct {
-	const char*	name;
-	u8 writex;
-	u8 writey;
+	const char*	msg;
+	u8 posx;
+	u8 posy;
+	u8 sizx;
+	u8 sizy;
 }TESTMODE_PRINTLIST;
 
 static const TESTMODE_PRINTLIST indexList[] = {
-	{ test_index0, 16, 8},
-	{ test_index1, 16, 180},
+	{ test_index1, 2,  1, 30, 2 },
+	{ test_index2, 2, 22, 30, 1 },
 };
 
 static const TESTMODE_PRINTLIST selectList[] = {
-	{ test_select0, 32, (0*25)+40},
-	{ test_select1, 32, (1*25)+40},
-	{ test_select2, 32, (2*25)+40},
-	{ test_select3, 32, (3*25)+40},
-	{ test_select4, 32, (4*25)+40},
+#if 0
+	{ test_select1, 4,  5, 20, 3 },
+	{ test_select2, 4,  8, 20, 3 },
+	{ test_select3, 4, 11, 20, 3 },
+	{ test_select4, 4, 14, 20, 3 },
+	{ test_select5, 4, 17, 20, 3 },
+#else
+	{ test_select1,  1,  5, 14, 3 },
+	{ test_select2, 15,  5, 14, 3 },
+	{ test_select3,  1,  8, 14, 3 },
+	{ test_select4, 15,  8, 14, 3 },
+	{ test_select5,  1, 11, 14, 3 },
+#endif
 };
 
 static BOOL	TestModeControl( void )
@@ -178,258 +225,31 @@ static BOOL	TestModeControl( void )
 	case 0:
 		bg_init();
 		testmode->listPosition = 0;
+		testmode->seq++;
+		break;
 
-		testmode->bmpwin[0] = GFL_BMPWIN_Create( TEXT_FRM,  0,  8, 32, 2, 0, 0 );
-		bmpwin_msg_write( testmode->bmpwin[0], test_index0, 16, 0 );
-		GFL_BMPWIN_UploadChar( testmode->bmpwin[0] );
-		GFL_BMPWIN_MakeScrn( testmode->bmpwin[0] );
-		testmode->work[0] = 1;
+	case 1:
+		for(i=0;i<NELEMS(indexList);i++){
+			msg_bmpwin_make( NUM_TITLE+i, indexList[i].msg,
+				indexList[i].posx, indexList[i].posy, indexList[i].sizx, indexList[i].sizy );
+		}
+		for(i=0;i<NELEMS(selectList);i++){
+			msg_bmpwin_make( NUM_SELECT1+i, selectList[i].msg,
+				selectList[i].posx, selectList[i].posy, selectList[i].sizx, selectList[i].sizy );
+		}
+		testmode->seq++;
+		break;
 
-		testmode->bmpwin[1] = GFL_BMPWIN_Create( TEXT_FRM,  0, 22, 32, 1, 0, 0 );
-		bmpwin_msg_write( testmode->bmpwin[1], test_index1, 16, 0 );
-		GFL_BMPWIN_UploadChar( testmode->bmpwin[1] );
-		GFL_BMPWIN_MakeScrn( testmode->bmpwin[1] );
-		testmode->work[1] = 1;
-
+	case 2:
+		for(i=0;i<NELEMS(selectList);i++){
+			if( i == testmode->listPosition ){
+				msg_bmpwin_palset( NUM_SELECT1+i, MSG_RED );
+			}else{
+				msg_bmpwin_palset( NUM_SELECT1+i, MSG_WHITE );
+			}
+			GFL_BMPWIN_MakeScrn( testmode->bmpwin[NUM_SELECT1+i] );
+		}
 		GFL_BG_LoadScreenReq( testmode->bgl, TEXT_FRM );
-
-		testmode->seq++;
-		break;
-
-	case 1:
-		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ){
-			if( testmode->work[0] ){
-				GFL_BMPWIN_ClearScrn( testmode->bmpwin[0] );
-				testmode->work[0] = 0;
-			} else {
-				GFL_BMPWIN_MakeScrn( testmode->bmpwin[0] );
-				testmode->work[0] = 1;
-			}
-			GFL_BG_LoadScreenReq( testmode->bgl, TEXT_FRM );
-			break;
-		}
-		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_B ){
-			if( testmode->work[1] ){
-				GFL_BMPWIN_ClearScrn( testmode->bmpwin[1] );
-				testmode->work[1] = 0;
-			} else {
-				GFL_BMPWIN_MakeScrn( testmode->bmpwin[1] );
-				testmode->work[1] = 1;
-			}
-			GFL_BG_LoadScreenReq( testmode->bgl, TEXT_FRM );
-			break;
-		}
-#if 0
-		for(i=0;i<NELEMS(indexList);i++){
-			testmode->textParam->writex = indexList[i].writex;
-			testmode->textParam->writey = indexList[i].writey;
-			GFL_TEXT_PrintSjisCode( indexList[i].name, testmode->textParam );
-		}
-		testmode->seq++;
-#endif
-		break;
-
-	case 2:
-#if 0
-		for(i=0;i<NELEMS(selectList);i++){
-			testmode->textParam->writex = selectList[i].writex;
-			testmode->textParam->writey = selectList[i].writey;
-			if( testmode->listPosition == i ){
-				testmode->textParam->colorF = 2;
-			} else {
-				testmode->textParam->colorF = 1;
-			}
-			GFL_TEXT_PrintSjisCode( selectList[i].name, testmode->textParam );
-		}
-		bgchr_trans( testmode->chrbuf );
-		testmode->seq++;
-#endif
-		break;
-
-	case 3:
-#if 0
-		if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
-			if( testmode->listPosition > 0 ){
-				testmode->listPosition--;
-				testmode->seq--;
-			}
-		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_DOWN ){
-			if( testmode->listPosition < NELEMS(selectList)-1 ){
-				testmode->listPosition++;
-				testmode->seq--;
-			}
-		}
-#endif
-		break;
-
-	case 4:
-		GFL_BMPWIN_Delete( testmode->bmpwin[1] );
-		GFL_BMPWIN_Delete( testmode->bmpwin[0] );
-		bg_exit();
-		break;
-	}
-	return return_flag;
-}
-
-#if 0
-//------------------------------------------------------------------
-/**
- * @brief		ＢＧ設定＆データ転送
- */
-//------------------------------------------------------------------
-static void	bgscr_trans( void* scr )
-{
-	//GFL_STD_MemCopy32(scr,(void*)G2_GetBG3ScrPtr(),XYSIZE*2);
-	DC_FlushRange( scr, XYSIZE*2 );
-	GX_LoadBG3Scr( scr, 0, XYSIZE*2 ); 
-}
-
-static void	bgchr_trans( void* chr )
-{
-	//GFL_STD_MemCopy32(chr,(void*)(u32)G2_GetBG3CharPtr(),XYSIZE*0x20);
-	DC_FlushRange( chr, XYSIZE*0x20 );
-	GX_LoadBG3Char( chr, 0, XYSIZE*0x20 ); 
-}
-
-static void	bgplt_trans( void* plt )
-{
-	//GFL_STD_MemCopy16(plt,(void*)HW_BG_PLTT,16*2);
-	DC_FlushRange( plt, 16*2 );
-	GX_LoadBGPltt( plt, 0, 16*2 );
-}
-
-static void	bg_init( void )
-{
-	GX_SetBankForBG(GX_VRAM_BG_64_E);
-	GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_2D); 
-	G2_SetBG3ControlText(	GX_BG_SCRSIZE_TEXT_256x256,GX_BG_COLORMODE_16,
-							GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000 );
-	GX_SetVisiblePlane(GX_PLANEMASK_BG3);
-	G2_SetBG3Priority(0);
-
-	{//スクリーン作成＆転送
-		int	i;
-		u16* scr = GFL_HEAP_AllocMemoryLowClear(GFL_HEAPID_APP,XYSIZE*2);
-
-		for(i=0;i<XYSIZE;i++){
-			scr[i] = i; 	//キャラナンバー0から埋める
-		}
-		bgscr_trans(scr);
-		GFL_HEAP_FreeMemory(scr);
-	}
-	{//キャラクターバッファ作成＆転送
-		u16* chr = GFL_HEAP_AllocMemoryClear(GFL_HEAPID_APP,XYSIZE*0x20);
-		bgchr_trans(chr);
-		testmode->chrbuf = chr;	//キャラ転送用に保存
-	}
-	{//パレット作成＆転送
-		u16* plt = GFL_HEAP_AllocMemoryLowClear(GFL_HEAPID_APP,16*2);
-
-		plt[0] = 0x5041;	//青
-		plt[1] = 0x7fff;	//白
-		plt[2] = 0x001f;	//赤
-		bgplt_trans(plt);
-		GFL_HEAP_FreeMemory(plt);
-	}
-	{//ビットマップヘッダ作成
-		GFL_BMP_DATA* bmpchr = GFL_HEAP_AllocMemoryLowClear(GFL_HEAPID_APP,sizeof(GFL_BMP_DATA));
-
-		bmpchr->adrs = testmode->chrbuf;
-		bmpchr->size_x = 32*8;
-		bmpchr->size_y = 32*8;
-		testmode->bmpHeader = bmpchr;
-	}
-	{//文字表示パラメータワーク作成
-		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocMemoryLowClear
-										(GFL_HEAPID_APP,sizeof(GFL_TEXT_PRINTPARAM));
-		param->bmp = testmode->bmpHeader;
-		param->writex = 16;
-		param->writey = 8;
-		param->spacex = 1;
-		param->spacey = 1;
-		param->colorF = 1;
-		param->colorB = 0;
-		param->mode = GFL_TEXT_WRITE_16;
-		testmode->textParam = param;
-	}
-	GX_DispOn(); 
-}
-
-static void	bg_exit( void )
-{
-	GFL_HEAP_FreeMemory(testmode->bmpHeader);
-	GFL_HEAP_FreeMemory(testmode->textParam);
-	GFL_HEAP_FreeMemory(testmode->chrbuf);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	プリント実験
- */
-//------------------------------------------------------------------
-static const char	test_index0[] = 
-{"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
-static const char	test_index1[] = {"http://www.gamefreak.co.jp"};
-
-static const char	test_select0[] = {"わたなべ　てつや\nTetsuya Watanabe"};
-static const char	test_select1[] = {"たまだ　そうすけ\nSousuke Tamada"};
-static const char	test_select2[] = {"そがべ　ひさし\nHisashi Sogabe"};
-static const char	test_select3[] = {"おおの　かつみ\nKatsumi Ohno"};
-static const char	test_select4[] = {"みつはら　さとし\nSatoshi Mitsuhara"};
-
-typedef struct {
-	const char*	name;
-	u8 writex;
-	u8 writey;
-}TESTMODE_PRINTLIST;
-
-static const TESTMODE_PRINTLIST indexList[] = {
-	{ test_index0, 16, 8},
-	{ test_index1, 16, 180},
-};
-
-static const TESTMODE_PRINTLIST selectList[] = {
-	{ test_select0, 32, (0*25)+40},
-	{ test_select1, 32, (1*25)+40},
-	{ test_select2, 32, (2*25)+40},
-	{ test_select3, 32, (3*25)+40},
-	{ test_select4, 32, (4*25)+40},
-};
-
-static BOOL	TestModeControl( void )
-{
-	BOOL return_flag = FALSE;
-	int i;
-
-	switch( testmode->seq ){
-
-	case 0:
-		bg_init();
-		testmode->listPosition = 0;
-		testmode->seq++;
-		break;
-
-	case 1:
-		for(i=0;i<NELEMS(indexList);i++){
-			testmode->textParam->writex = indexList[i].writex;
-			testmode->textParam->writey = indexList[i].writey;
-			GFL_TEXT_PrintSjisCode( indexList[i].name, testmode->textParam );
-		}
-		testmode->seq++;
-		break;
-
-	case 2:
-		for(i=0;i<NELEMS(selectList);i++){
-			testmode->textParam->writex = selectList[i].writex;
-			testmode->textParam->writey = selectList[i].writey;
-			if( testmode->listPosition == i ){
-				testmode->textParam->colorF = 2;
-			} else {
-				testmode->textParam->colorF = 1;
-			}
-			GFL_TEXT_PrintSjisCode( selectList[i].name, testmode->textParam );
-		}
-		bgchr_trans( testmode->chrbuf );
 		testmode->seq++;
 		break;
 
@@ -448,11 +268,16 @@ static BOOL	TestModeControl( void )
 		break;
 
 	case 4:
+		for(i=0;i<NELEMS(indexList);i++){
+			msg_bmpwin_trush( NUM_TITLE+i );
+		}
+		for(i=0;i<NELEMS(selectList);i++){
+			msg_bmpwin_trush( NUM_SELECT1+i );
+		}
 		bg_exit();
 		break;
 	}
 	return return_flag;
 }
 
-#endif
 
