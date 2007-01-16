@@ -101,6 +101,7 @@ struct _GFL_NETHANDLE{
     PTRStateFunc state; ///< ハンドルのプログラム状態
     MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
     u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
+    u8 negotiationID[(GFL_NET_MACHINE_MAX/8)+(0!=(GFL_NET_MACHINE_MAX%8))]; ///< 接続しているハンドルの状態
     u8 machineNo;       ///< マシン番号
     u8 serviceNo;       ///< 通信サービス番号
     u16 timer;          ///< 進行タイマー

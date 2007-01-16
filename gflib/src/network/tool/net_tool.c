@@ -66,8 +66,10 @@ NET_TOOLSYS* GFL_NET_Tool_sysInit(const int heapID, const int num)
 
 void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT)
 {
-    GFL_HEAP_FreeMemory(pCT->timingSyncBuff);
-    GFL_HEAP_FreeMemory(pCT);
+    if(pCT){
+        GFL_HEAP_FreeMemory(pCT->timingSyncBuff);
+        GFL_HEAP_FreeMemory(pCT);
+    }
 }
 
 //==============================================================================

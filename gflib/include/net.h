@@ -141,7 +141,7 @@ typedef struct{
 //==============================================================================
 extern void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID);
 extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
-extern BOOL GFL_NET_IsHandleNegotiation(GFL_NETHANDLE* pHandle);
+extern BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle);
 
 //==============================================================================
 /**
@@ -192,6 +192,12 @@ extern void GFL_NET_MainProc(void);
  */
 //==============================================================================
 extern GFL_NETHANDLE* GFL_NET_CreateHandle(void);
+//==============================================================================
+/**
+ * @brief   通信ハンドルを消す   通信一個単位のワークエリアの事
+ * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ */
+//==============================================================================
 extern void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
@@ -245,12 +251,12 @@ extern void GFL_NET_SwitchConnect(GFL_NETHANDLE* pHandle);
 extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
- * @brief 現在の接続人数を得る
- * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
+ * @brief 現在の接続台数を得る
  * @retval  int  接続数
  */
 //==============================================================================
-extern int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet);
+extern int GFL_NET_GetConnectNum(void);
+//extern int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief IDの通信と接続しているかどうかを返す
@@ -262,12 +268,12 @@ extern int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet);
 extern BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id);
 //==============================================================================
 /**
- * @brief 通信切断する
+ * @brief   通信切断する
  * @param   NetHandle* pNet     通信ハンドルのポインタ
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_Disconnect(GFL_NETHANDLE* pNet);
+extern void GFL_NET_Disconnect(void);
 //==============================================================================
 /**
  * @brief 接続中かどうか

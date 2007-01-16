@@ -60,6 +60,8 @@ void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+
+    
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]==pHandle){
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
@@ -88,24 +90,39 @@ GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID)
     return pNet->pNetHandle[netID];
 }
 
-
 PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
 {
     return pHandle->state;
 }
 
-BOOL GFL_NET_IsHandleNegotiation(GFL_NETHANDLE* pHandle)
+//==============================================================================
+/**
+ * @brief       自分のネゴシエーションがすんでいるかどうか
+ * @param[in]   pHandle   通信ハンドル
+ * @param[in]   netID     ネットID
+ * @return      none
+ */
+//==============================================================================
+BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
 {
-    return (pHandle->negotiation == _NEGOTIATION_OK);
+    if(pHandle){
+        return (pHandle->negotiation == _NEGOTIATION_OK);
+    }
+    return _NEGOTIATION_NG;
 }
 
+//==============================================================================
+/**
+ * @brief       toolのworkポインタを得る
+ * @param[in]   pNetInit  通信初期化構造体のポインタ
+ * @param[in]   netID     ネットID
+ * @return      none
+ */
+//==============================================================================
 NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
 {
     return pHandle->pTool;
 }
-
-
-
 
 //==============================================================================
 /**
@@ -311,14 +328,13 @@ NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * @brief 現在の接続人数を得る
- * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
+ * @brief 現在の接続台数を得る
  * @retval  int  接続数
  */
 //==============================================================================
-int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet)
+int GFL_NET_GetConnectNum(void)
 {
-    return 0;
+    return GFL_NET_SystemGetConnectNum();
 }
 
 //==============================================================================
@@ -331,46 +347,42 @@ int GFL_NET_GetConnectNum(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id)
 {
-    return TRUE;
+    return pNet->negotiationID[id];
 }
 
 //==============================================================================
 /**
  * @brief 通信切断する
- * @param   NetHandle* pNet     通信ハンドルのポインタ
  * @retval  none
  */
 //==============================================================================
 //
-void GFL_NET_Disconnect(GFL_NETHANDLE* pNet)
+void GFL_NET_Disconnect(void)
 {
+    int i,userNo = 0;
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        if(pNet->pNetHandle[i]){
+            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
+            userNo = i;
+        }
+    }
+    GFL_NET_StateExit(pNet->pNetHandle[userNo]);
 }
 
 //==============================================================================
 /**
- * @brief 接続中かどうか
- * @param   NetHandle* pNet     通信ハンドルのポインタ
- * @retval  none
- */
-//==============================================================================
-BOOL GFL_NET_IsConnect(GFL_NETHANDLE* pNet)
-{
-    return TRUE;
-}
-
-//==============================================================================
-/**
- * @brief 接続数変更
+ * @brief   接続台数変更
  * @param   NetHandle* pNet     通信ハンドルのポインタ
  * @param   u8 num     変更数
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_SetClientConnectNum(GFL_NETHANDLE* pNet,u8 num)
-{
-    
-}
+//void GFL_NET_SetClientConnectNum(GFL_NETHANDLE* pNet,u8 num)
+//{
+//    
+//}
 
 //==============================================================================
 /**

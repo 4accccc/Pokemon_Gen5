@@ -124,10 +124,13 @@ void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
     OS_TPrintf("--- %d \n", netID);
 
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-        bCheck=FALSE;
         pNetHandle = GFL_NET_GetNetHandle(i);
-        if(!GFL_NET_IsHandleNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
-            if((command == GFL_NET_CMD_COMM_NEGOTIATION) || (command == GFL_NET_CMD_COMM_NEGOTIATION_RETURN)){
+        if(!pNetHandle){
+            continue;
+        }
+        bCheck=FALSE;
+        if(!GFL_NET_IsNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
+            if((command == GFL_NET_CMD_NEGOTIATION) || (command == GFL_NET_CMD_NEGOTIATION_RETURN)){
                 bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
             }
         }

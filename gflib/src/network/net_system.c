@@ -1356,6 +1356,10 @@ void GFL_NET_SystemRecvCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
 
+    if(!data){
+        return;
+    }
+    
 #ifdef WIFI_DUMP_TEST
     if((adr[0] & 0xf) != 0xe){
     DEBUG_DUMP(&adr[0], 38,"cr0");
@@ -1524,6 +1528,11 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
 void GFL_NET_SystemRecvParentCallback(u16 aid, u16 *data, u16 size)
 {
     u8* adr = (u8*)data;
+
+    if(!data){  //ÉfÅ[É^Ç™ë∂ç›ÇµÇ»Ç¢
+        return;
+    }
+    
 #ifdef WIFI_DUMP_TEST
 //   if((adr[0] & 0xf) != 0xe){
     if(aid == 1){

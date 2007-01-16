@@ -218,12 +218,14 @@ static void _mysteryParentInit(void);
 static void _mysteryChildInit(void);
 
 // その他一般的なステート
-static void _stateNone(void);            // 何もしない
+
+static void _stateEnd(GFL_NETHANDLE* pNetHandle);             // 終了処理
+static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle);      // 切断処理開始
+static void _stateNone(GFL_NETHANDLE* pNetHandle);            // 何もしない
+
 static void _stateConnectError(void);    // 接続エラー状態
-static void _stateEnd(void);             // 終了処理
 static void _stateConnectChildEndWait(void);   // 子機の終了を待って終わる
 static void _stateConnectChildEnd(void);
-static void _stateConnectEnd(void);      // 切断処理開始
 static void _stateConnectAutoEnd(void);  // 自動切断処理開始
 
 
@@ -556,12 +558,15 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
 //親機が受け取るわけなのでフラグを立てるのがいい
     u8 retCmd = FALSE;
 
+    if(!pNetHandle->pParent){
+        return;
+    }
     if(pNetHandle->pParent->negoCheck[netID] == FALSE){
         pNetHandle->pParent->negoCheck[netID] = TRUE;
         retCmd = TRUE;
     }
     OS_TPrintf("------NegoRet を送信 %d\n",retCmd);
-    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_COMM_NEGOTIATION_RETURN, &retCmd);
+    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, &retCmd);
     
 #if 0
     int i;
@@ -613,6 +618,74 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
         pNetHandle->negotiation = _NEGOTIATION_NG;
     }
 }
+
+//==============================================================================
+/**
+ * @brief  終了処理中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _stateEnd(GFL_NETHANDLE* pNetHandle)
+{
+    if(GFL_NET_SystemIsInitialize()){
+        return;
+    }
+    _stateFinalize(pNetHandle);
+}
+
+//==============================================================================
+/**
+ * @brief  終了処理開始
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle)
+{
+    if(pNetHandle->timer != 0){
+        pNetHandle->timer--;
+    }
+    if(!GFL_NET_WLSwitchParentChild()){
+        return;
+    }
+    if(pNetHandle->timer != 0){
+        return;
+    }
+    NET_PRINT("切断する");
+    GFL_NET_SystemFinalize();
+    _CHANGE_STATE(_stateEnd, 0);
+}
+
+//==============================================================================
+/**
+ * 通信処理終了手続き開始
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle)
+{
+    _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
+}
+
+//==============================================================================
+/**
+ * 何もしないステート
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _stateNone(GFL_NETHANDLE* pNetHandle)
+{
+    // なにもしていない
+}
+
+
+
 
 
 #if 0   //state修正中
@@ -1609,19 +1682,6 @@ static void _battleChildReInit(void)
 
 //==============================================================================
 /**
- * 何もしないステート
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _stateNone(void)
-{
-    // なにもしていない
-}
-
-//==============================================================================
-/**
  * @brief エラー処理
  * @param   none
  * @retval  none
@@ -1716,30 +1776,6 @@ static void _stateConnectChildEnd(void)
     }
     CommSystemReset();   // 今までの通信バッファをクリーンにする
     _CHANGE_STATE(_unionChildFinalize, 0);
-}
-
-//==============================================================================
-/**
- * @brief  終了処理開始
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _stateConnectEnd(void)
-{
-    if(_pCommState->timer != 0){
-        _pCommState->timer--;
-    }
-    if(!CommMPSwitchParentChild()){
-        return;
-    }
-    if(_pCommState->timer != 0){
-        return;
-    }
-    NET_PRINT("切断する");
-    CommFinalize();
-    _CHANGE_STATE(_stateEnd, 0);
 }
 
 

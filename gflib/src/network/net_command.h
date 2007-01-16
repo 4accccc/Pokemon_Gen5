@@ -30,8 +30,9 @@ enum CommCommand_e {
   GFL_NET_CMD_COMMAND_MIN = 1,             ///< 最小値
   GFL_NET_CMD_EXIT = GFL_NET_CMD_COMMAND_MIN,            ///< 終了
   GFL_NET_CMD_AUTO_EXIT,            ///< 自動終了
-  GFL_NET_CMD_COMM_NEGOTIATION,  ///< 初期化時のネゴシエーション
-  GFL_NET_CMD_COMM_NEGOTIATION_RETURN,
+  GFL_NET_CMD_NEGOTIATION,  ///< 初期化時のネゴシエーション
+  GFL_NET_CMD_NEGOTIATION_RETURN,  ///< ネゴシエーションの返事
+  GFL_NET_CMD_NEGOTIATION_BIT,   ///< ネゴシエーション状況を送信する
   GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
   GFL_NET_CMD_DSMP_CHANGE_REQ,        ///< DSモード通信かMPモード通信かに切り替える指示を出す
   GFL_NET_CMD_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
