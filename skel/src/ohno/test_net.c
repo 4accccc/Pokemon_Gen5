@@ -67,9 +67,13 @@ void TEST_NET_Main(void)
             break;
           case _TEST_1:
             {
-                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_COMM_NEGOTIATION,NULL);
+                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_NEGOTIATION,NULL);
                 OS_TPrintf("send %d\n",ret);
             }
+            _testNo++;
+            break;
+          case _TEST_2:
+            GFL_NET_Disconnect();
             _testNo++;
             break;
         }
@@ -82,6 +86,10 @@ void TEST_NET_Main(void)
                 GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
                 GFL_NET_ServerConnect(pHandle);
             }
+            _testNo++;
+            break;
+          case _TEST_1:
+            GFL_NET_Disconnect();
             _testNo++;
             break;
         }
