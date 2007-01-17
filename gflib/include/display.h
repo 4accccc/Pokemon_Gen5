@@ -18,6 +18,11 @@
 #define	VISIBLE_OFF		(0)		// 非表示へ
 #define	VISIBLE_ON		(1)		// 表示へ
 
+
+//GFL_DISP_DispSelect( int value )用定義
+#define	GFL_DISP_3D_TO_MAIN	(GX_DISP_SELECT_MAIN_SUB)	//上画面がメイン
+#define	GFL_DISP_3D_TO_SUB	(GX_DISP_SELECT_SUB_MAIN)	//下画面がメイン
+
 //=============================================================================================
 //	型宣言
 //=============================================================================================
