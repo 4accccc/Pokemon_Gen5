@@ -56,8 +56,18 @@ struct _GFL_BG_INI {
 	GFL_BG_SYS	bgsys[GFL_BG_FRAME_MAX];
 };
 
+static	GFL_AREAMAN	*bgl_area_m;			//メイン画面用エリアマネージャポインタ
+static	GFL_AREAMAN	*bgl_area_s;			//サブ画面用エリアマネージャポインタ
+
+static	u32	CharVramBaseAdrs[GFL_BG_FRAME_MAX];	//VRAMベースアドレスを格納
+static	u32	ScrVramBaseAdrs[GFL_BG_FRAME_MAX];	//VRAMベースアドレスを格納
+
 //------------------------------------------------------------------
 
+//=============================================================================================
+//	定数宣言
+//=============================================================================================
+#define	GFL_BG_AREA_SIZE	(0x20000/0x20)
 
 //=============================================================================================
 //	プロトタイプ宣言
@@ -88,6 +98,9 @@ static void CenterParamSet( GFL_BG_SYS * ini, u8 mode, int value );
 static	void	*LoadFile(int heapID,const char *path);
 static	void	*LoadFileEx(int heapID,const char *path,u32 *size);
 
+static	void	GFL_BG_CharAreaSet( u32 frmnum, u32 ofs, u32 size );
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size );
+
 //=============================================================================================
 //=============================================================================================
 //	設定関数
@@ -106,11 +119,21 @@ static	void	*LoadFileEx(int heapID,const char *path,u32 *size);
 GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 {
 	GFL_BG_INI * bgl = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BG_INI) );
+	int			i;
 
 	memset( bgl, 0, sizeof(GFL_BG_INI) );
 	bgl->heapID = heapID;
 	bgl->scroll_req = 0;
 	bgl->loadscrn_req = 0;
+
+	//VRAMエリアマネージャ初期化
+	bgl_area_m=GFL_AREAMAN_Create( GFL_BG_AREA_SIZE, heapID );
+	bgl_area_s=GFL_AREAMAN_Create( GFL_BG_AREA_SIZE, heapID );
+
+	for(i=0;i<GFL_BG_FRAME_MAX;i++){
+		CharVramBaseAdrs[i]=NULL;
+		ScrVramBaseAdrs[i]=NULL;
+	}
 
 	return bgl;
 }
@@ -125,6 +148,77 @@ GFL_BG_INI * GFL_BG_sysInit( u32 heapID )
 void	GFL_BG_sysExit( GFL_BG_INI *bgl )
 {
 	GFL_HEAP_FreeMemory( bgl );
+
+	//VRAMエリアマネージャ削除
+	GFL_AREAMAN_Delete( bgl_area_m );
+	GFL_AREAMAN_Delete( bgl_area_s );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エリアマネージャを使用して未使用領域を検索して領域を確保
+ *
+ * @param	frmnum		ＢＧフレーム番号
+ * @param	size		確保するサイズ
+ * 
+ * @return	pos			確保した領域のポジション（確保できなかった時はAREAMAN_POS_NOTFOUND）
+ */
+//--------------------------------------------------------------------------------------------
+u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size )
+{
+	u32	pos;
+
+	switch(frmnum){
+	case GFL_BG_FRAME0_M:
+	case GFL_BG_FRAME1_M:
+	case GFL_BG_FRAME2_M:
+	case GFL_BG_FRAME3_M:
+		pos=GFL_AREAMAN_ReserveAssignArea
+				( bgl_area_m, CharVramBaseAdrs[frmnum]/0x20, GFL_BG_AREA_SIZE, (size/0x20)+((size%0x20)==0?0:1));
+		break;
+	case GFL_BG_FRAME0_S:
+	case GFL_BG_FRAME1_S:
+	case GFL_BG_FRAME2_S:
+	case GFL_BG_FRAME3_S:
+		pos=GFL_AREAMAN_ReserveAssignArea
+				( bgl_area_s, CharVramBaseAdrs[frmnum]/0x20, GFL_BG_AREA_SIZE, (size/0x20)+((size%0x20)==0?0:1));
+		break;
+	}
+
+	pos=(pos*0x20-CharVramBaseAdrs[frmnum])/0x20;
+
+	return pos;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 確保した領域を開放
+ *
+ * @param	frmnum		ＢＧフレーム番号
+ * @param	pos			確保した領域の先頭位置
+ * @param	size		開放するサイズ
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_BG_CharAreaFree( u32 frmnum, u32 pos, u32 size )
+{
+	OS_Printf("frmnum:%d pos:0x%08x size:0x%08x\n",frmnum,pos,size);
+
+	pos=(pos*0x20+CharVramBaseAdrs[frmnum])/0x20;
+
+	switch(frmnum){
+	case GFL_BG_FRAME0_M:
+	case GFL_BG_FRAME1_M:
+	case GFL_BG_FRAME2_M:
+	case GFL_BG_FRAME3_M:
+		GFL_AREAMAN_Release( bgl_area_m, pos, (size/0x20)+((size%0x20)==0?0:1));
+		break;
+	case GFL_BG_FRAME0_S:
+	case GFL_BG_FRAME1_S:
+	case GFL_BG_FRAME2_S:
+	case GFL_BG_FRAME3_S:
+		GFL_AREAMAN_Release( bgl_area_s, pos, (size/0x20)+((size%0x20)==0?0:1));
+		break;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -413,6 +507,10 @@ void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER
 
 	GFL_BG_ScrollSet( bgl, frmnum, GFL_BG_SCROLL_X_SET, data->scrollX );
 	GFL_BG_ScrollSet( bgl, frmnum, GFL_BG_SCROLL_Y_SET, data->scrollY );
+
+	//VRAMベースアドレスを格納
+	CharVramBaseAdrs[frmnum]=((GXBGCharBase)data->charBase)*0x4000;
+	ScrVramBaseAdrs[frmnum]=((GXBGScrBase)data->screenBase)*0x0800;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1243,6 +1341,8 @@ void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 
 //--------------------------------------------------------------------------------------------
 static void GFL_BG_LoadScreenSub( u8 frmnum, void* src, u32 ofs, u32 siz )
 {
+	GFL_BG_ScrAreaSet( frmnum, ofs, siz );
+
 #if DMA_USE
 	DC_FlushRange( src, siz );
 
@@ -1424,6 +1524,8 @@ static void LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 da
 //--------------------------------------------------------------------------------------------
 static void GFL_BG_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz )
 {
+	GFL_BG_CharAreaSet( frmnum, ofs, siz );
+
 #if DMA_USE
 	DC_FlushRange( src, siz );
 
@@ -3252,5 +3354,63 @@ static	void	*LoadFileEx(int heapID,const char *path,u32 *size)
 	GF_ReadFile((char *)path,buf);
 
 	return buf;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エリアマネージャに領域確保を宣言（キャラデータ用）
+ *
+ * @param	frmnum	領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
+ * @param	ofs		確保先オフセット
+ * @param	size	確保サイズ
+ *
+ * @retval	データを読み込んだアドレス
+ */
+//--------------------------------------------------------------------------------------------
+static	void	GFL_BG_CharAreaSet( u32 frmnum, u32 ofs, u32 size )
+{
+	switch(frmnum){
+	case GFL_BG_FRAME0_M:
+	case GFL_BG_FRAME1_M:
+	case GFL_BG_FRAME2_M:
+	case GFL_BG_FRAME3_M:
+		GFL_AREAMAN_ReserveAssignPos(bgl_area_m,(CharVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
+		break;
+	case GFL_BG_FRAME0_S:
+	case GFL_BG_FRAME1_S:
+	case GFL_BG_FRAME2_S:
+	case GFL_BG_FRAME3_S:
+		GFL_AREAMAN_ReserveAssignPos(bgl_area_s,(CharVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
+		break;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * エリアマネージャに領域確保を宣言（スクリーンデータ用）
+ *
+ * @param	frmnum	領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
+ * @param	ofs		確保先オフセット
+ * @param	size	確保サイズ
+ *
+ * @retval	データを読み込んだアドレス
+ */
+//--------------------------------------------------------------------------------------------
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size )
+{
+	switch(frmnum){
+	case GFL_BG_FRAME0_M:
+	case GFL_BG_FRAME1_M:
+	case GFL_BG_FRAME2_M:
+	case GFL_BG_FRAME3_M:
+		GFL_AREAMAN_ReserveAssignPos(bgl_area_m,(ScrVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
+		break;
+	case GFL_BG_FRAME0_S:
+	case GFL_BG_FRAME1_S:
+	case GFL_BG_FRAME2_S:
+	case GFL_BG_FRAME3_S:
+		GFL_AREAMAN_ReserveAssignPos(bgl_area_s,(ScrVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
+		break;
+	}
 }
 
