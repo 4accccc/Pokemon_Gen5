@@ -188,7 +188,7 @@ void	GFL_DISP_DispOff( void )
 /**
  * 画面の表示サイド設定
  *
- * @param	value	上下どちらをメイン画面にするか（DISP_3D_TO_MAIN:上画面がメイン　DISP_3D_TO_SUB:下画面がメイン）
+ * @param	value	上下どちらをメイン画面にするか（GFL_DISP_3D_TO_MAIN:上画面がメイン　GFL_DISP_3D_TO_SUB:下画面がメイン）
  */
 //--------------------------------------------------------------------------------------------
 void GFL_DISP_DispSelect( int value )
