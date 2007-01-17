@@ -49,14 +49,13 @@ typedef struct _GFL_BMPWIN	GFL_BMPWIN;
 /**
  * システム初期化
  *
- * @param	bgl		BGシステム構造体ポインタ
  * @param	set		使用領域設定構造体
  * @param	heapID	使用ヒープ領域
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_BMPWIN_sysInit
-		( GFL_BG_INI *bgl, GFL_BMPWIN_SET* set, u16 heapID );
+		( GFL_BMPWIN_SET* set, u16 heapID );
 //--------------------------------------------------------------------------------------------
 /**
  * システム終了

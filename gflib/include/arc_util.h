@@ -55,7 +55,6 @@ typedef enum {
  *
  * @param   arcFile			アーカイブファイルインデックス
  * @param   arcIndex		アーカイブデータインデックス
- * @param   bgl				BGLﾃﾞｰﾀ
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -65,7 +64,7 @@ typedef enum {
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
+extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 
 //------------------------------------------------------------------
@@ -93,7 +92,6 @@ extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u3
  *
  * @param   arcFile			アーカイブファイルインデックス
  * @param   arcIndex		アーカイブデータインデックス
- * @param   bgl				BGLﾃﾞｰﾀ
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -102,7 +100,7 @@ extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u3
  *
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_ARC_UtilScrnSet(u32 arcFile, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
+extern void GFL_ARC_UtilScrnSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 
 //------------------------------------------------------------------

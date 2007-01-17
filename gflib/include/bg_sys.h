@@ -190,16 +190,14 @@ enum {
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL GFL_BG_INI * GFL_BG_sysInit( u32 heapID );
+GLOBAL void	GFL_BG_sysInit( u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * システムワークエリア開放
- *
- * @param	bgl		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_BG_sysExit( GFL_BG_INI *bgl );
+GLOBAL void	GFL_BG_sysExit( void );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -226,14 +224,21 @@ GLOBAL	void GFL_BG_CharAreaFree( u32 frmnum, u32 pos, u32 size );
 
 //--------------------------------------------------------------------------------------------
 /**
- * ヒープID取得
+ * BGL取得
  *
- * @param	bgl		BGLデータ
+ * @return	BGL
+ */
+//--------------------------------------------------------------------------------------------
+GLOBAL GFL_BG_INI * GFL_BG_BGLGet( void );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ヒープID取得
  *
  * @return	BGLのヒープID
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32	GFL_BG_HeapIDGet( GFL_BG_INI * bgl );
+GLOBAL u32	GFL_BG_HeapIDGet( void );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -276,7 +281,7 @@ GLOBAL void GFL_BG_InitBGDisp( const GFL_BG_SYS_HEADER * data, u8 flg );
  * @li	mode = GFL_BG_MODE_256X16	: アフィン拡張BG
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode );
+GLOBAL void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -289,19 +294,18 @@ GLOBAL void GFL_BG_BGControlSet( GFL_BG_INI * bgl, u8 frmnum, const GFL_BG_BGCNT
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_BGControlReset( GFL_BG_INI * bgl, u8 frm, u8 flg, u8 prm );
+GLOBAL void GFL_BG_BGControlReset( u8 frm, u8 flg, u8 prm );
 
 //--------------------------------------------------------------------------------------------
 /**
  * GFL_BG_BGControlSetで取得したメモリを開放
  *
- * @param	ini			BGLデータ
  * @param	frmnum		BGフレーム
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_BGControlExit( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL void GFL_BG_BGControlExit( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -347,7 +351,7 @@ GLOBAL void GFL_BG_VisibleSet( u8 frmnum, u8 visible );
  * @li	拡縮面が拡縮・回転する場合はGFL_BG_AffineScrollSet(...)を使用すること
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrollSet( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int value );
+GLOBAL void GFL_BG_ScrollSet( u8 frmnum, u8 mode, int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -358,7 +362,7 @@ GLOBAL void GFL_BG_ScrollSet( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int value );
  * @return	int			スクロール値Ｘ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_ScrollGetX( GFL_BG_INI * bgl, u32 frmnum );
+GLOBAL int GFL_BG_ScrollGetX( u32 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -369,7 +373,7 @@ GLOBAL int GFL_BG_ScrollGetX( GFL_BG_INI * bgl, u32 frmnum );
  * @return	int			スクロール値Ｙ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_ScrollGetY( GFL_BG_INI * bgl, u32 frmnum );
+GLOBAL int GFL_BG_ScrollGetY( u32 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -385,8 +389,7 @@ GLOBAL int GFL_BG_ScrollGetY( GFL_BG_INI * bgl, u32 frmnum );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_AffineScrollSet( GFL_BG_INI * bgl,
-		u8 frmnum, u8 mode, int value, const MtxFx22 * mtx, int cx, int cy );
+GLOBAL void GFL_BG_AffineScrollSet( u8 frmnum, u8 mode, int value, const MtxFx22 * mtx, int cx, int cy );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -400,7 +403,7 @@ GLOBAL void GFL_BG_AffineScrollSet( GFL_BG_INI * bgl,
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_AffineSet( GFL_BG_INI * bgl, u8 frmnum, const MtxFx22 * mtx, int cx, int cy );
+GLOBAL void GFL_BG_AffineSet( u8 frmnum, const MtxFx22 * mtx, int cx, int cy );
 
 
 //=============================================================================================
@@ -440,7 +443,7 @@ GLOBAL void GFL_BG_DataDecord( const void * src, void * dst, u32 datasiz );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadScreenReq( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL void GFL_BG_LoadScreenReq( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -460,7 +463,7 @@ GLOBAL void GFL_BG_LoadScreenReq( GFL_BG_INI * bgl, u8 frmnum );
  *	セットされないので、注意すること。
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
+GLOBAL void GFL_BG_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -475,7 +478,7 @@ GLOBAL void GFL_BG_LoadScreen( GFL_BG_INI * bgl, u8 frmnum, const void * src, u3
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
+GLOBAL void GFL_BG_LoadScreenFile( u8 frmnum, const char * path, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -488,7 +491,7 @@ GLOBAL void GFL_BG_LoadScreenFile( GFL_BG_INI * bgl, u8 frmnum, const char * pat
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScreenBufSet( GFL_BG_INI * bgl, u8 frmnum, const void * dat, u32 datasiz );
+GLOBAL void GFL_BG_ScreenBufSet( u8 frmnum, const void * dat, u32 datasiz );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -504,7 +507,7 @@ GLOBAL void GFL_BG_ScreenBufSet( GFL_BG_INI * bgl, u8 frmnum, const void * dat, 
  * @li	datasiz = GFL_BG_DATA_LZH : 圧縮データ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src, u32 datasiz, u32 offs );
+GLOBAL void GFL_BG_LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -520,7 +523,7 @@ GLOBAL void GFL_BG_LoadCharacter( GFL_BG_INI * bgl, u8 frmnum, const void * src,
  *	圧縮未対応
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadCharacterFile( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
+GLOBAL void GFL_BG_LoadCharacterFile( u8 frmnum, const char * path, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -547,7 +550,7 @@ GLOBAL void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_CharFill( GFL_BG_INI * bgl, u32 frmnum, u32 clear_code, u32 charcnt, u32 offs );
+GLOBAL void GFL_BG_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -596,7 +599,7 @@ GLOBAL void GFL_BG_BackGroundColorSet( u8 frmnum, u16 col );
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrWrite( GFL_BG_INI * bgl, u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy );
+GLOBAL void GFL_BG_ScrWrite( u8 frmnum, const void * buf, u8 px, u8 py, u8 sx, u8 sy );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -615,8 +618,7 @@ GLOBAL void GFL_BG_ScrWrite( GFL_BG_INI * bgl, u8 frmnum, const void * buf, u8 p
  * @retrn	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrWriteExpand( GFL_BG_INI * bgl,
-				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
+GLOBAL void GFL_BG_ScrWriteExpand( u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
 
 //--------------------------------------------------------------------------------------------
@@ -639,8 +641,7 @@ GLOBAL void GFL_BG_ScrWriteExpand( GFL_BG_INI * bgl,
  * @li	折り返し有り1x1～64x64キャラのフリーサイズスクリーンデータの矩形書き込み
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrWriteFree( GFL_BG_INI * bgl,
-				u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
+GLOBAL void GFL_BG_ScrWriteFree( u8 frmnum, u8 write_px, u8 write_py, u8 write_sx, u8 write_sy,
 				const void * buf, u8 buf_px, u8 buf_py, u8 buf_sx, u8 buf_sy );
 
 //--------------------------------------------------------------------------------------------
@@ -662,7 +663,7 @@ GLOBAL void GFL_BG_ScrWriteFree( GFL_BG_INI * bgl,
  * @li	mode = 0 ～ 15 : パレット番号
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrFill( GFL_BG_INI * bgl, u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode );
+GLOBAL void GFL_BG_ScrFill( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -678,7 +679,7 @@ GLOBAL void GFL_BG_ScrFill( GFL_BG_INI * bgl, u8 frmnum, u16 dat, u8 px, u8 py, 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrPalChange( GFL_BG_INI * bgl, u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
+GLOBAL void GFL_BG_ScrPalChange( u8 frmnum, u8 px, u8 py, u8 sx, u8 sy, u8 pal );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -689,7 +690,7 @@ GLOBAL void GFL_BG_ScrPalChange( GFL_BG_INI * bgl, u8 frmnum, u8 px, u8 py, u8 s
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrClear( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL void GFL_BG_ScrClear( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -701,7 +702,7 @@ GLOBAL void GFL_BG_ScrClear( GFL_BG_INI * bgl, u8 frmnum );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrClearCode( GFL_BG_INI * bgl, u8 frmnum, u16 clear_code );
+GLOBAL void GFL_BG_ScrClearCode( u8 frmnum, u16 clear_code );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -715,7 +716,7 @@ GLOBAL void GFL_BG_ScrClearCode( GFL_BG_INI * bgl, u8 frmnum, u16 clear_code );
  * @li	転送はVBlankで
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrClearCodeVReq( GFL_BG_INI * bgl, u8 frmnum, u16 clear_code );
+GLOBAL void GFL_BG_ScrClearCodeVReq( u8 frmnum, u16 clear_code );
 
 
 //=============================================================================================
@@ -779,7 +780,7 @@ GLOBAL void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs
  * @return	スクリーンバッファアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void * GFL_BG_ScreenAdrsGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL void * GFL_BG_ScreenAdrsGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -790,7 +791,7 @@ GLOBAL void * GFL_BG_ScreenAdrsGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	スクリーンバッファサイズ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GFL_BG_ScreenSizGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u32 GFL_BG_ScreenSizGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -801,7 +802,7 @@ GLOBAL u32 GFL_BG_ScreenSizGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	スクリーンバッファオフセット
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GFL_BG_ScreenOfsGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u32 GFL_BG_ScreenOfsGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -812,7 +813,7 @@ GLOBAL u32 GFL_BG_ScreenOfsGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	GFL_BG_SCRSIZ_128x128 等
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u32 GFL_BG_ScreenTypeGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u32 GFL_BG_ScreenTypeGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -823,7 +824,7 @@ GLOBAL u32 GFL_BG_ScreenTypeGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	スクロールカウンタX
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_ScreenScrollXGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL int GFL_BG_ScreenScrollXGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -834,7 +835,7 @@ GLOBAL int GFL_BG_ScreenScrollXGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	スクロールカウンタY
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_ScreenScrollYGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL int GFL_BG_ScreenScrollYGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -845,7 +846,7 @@ GLOBAL int GFL_BG_ScreenScrollYGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	BGモード
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GFL_BG_BgModeGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u8 GFL_BG_BgModeGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -856,7 +857,7 @@ GLOBAL u8 GFL_BG_BgModeGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	カラーモード
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GFL_BG_ScreenColorModeGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u8 GFL_BG_ScreenColorModeGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -867,7 +868,7 @@ GLOBAL u8 GFL_BG_ScreenColorModeGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	キャラサイズ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GFL_BG_BaseCharSizeGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u8 GFL_BG_BaseCharSizeGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -878,7 +879,7 @@ GLOBAL u8 GFL_BG_BaseCharSizeGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	回転角度
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u16 GFL_BG_RadianGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL u16 GFL_BG_RadianGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -889,7 +890,7 @@ GLOBAL u16 GFL_BG_RadianGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	X方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL fx32 GFL_BG_ScaleXGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL fx32 GFL_BG_ScaleXGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -900,7 +901,7 @@ GLOBAL fx32 GFL_BG_ScaleXGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	Y方向の拡縮パラメータ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL fx32 GFL_BG_ScaleYGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL fx32 GFL_BG_ScaleYGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -911,7 +912,7 @@ GLOBAL fx32 GFL_BG_ScaleYGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	回転中心X座標
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_CenterXGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL int GFL_BG_CenterXGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -922,7 +923,7 @@ GLOBAL int GFL_BG_CenterXGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	回転中心Y座標
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_BG_CenterYGet( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL int GFL_BG_CenterYGet( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -933,7 +934,7 @@ GLOBAL int GFL_BG_CenterYGet( GFL_BG_INI * bgl, u8 frmnum );
  * @return	プライオリティ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GFL_BG_PriorityGet( GFL_BG_INI * bgl, u8 frm );
+GLOBAL u8 GFL_BG_PriorityGet( u8 frm );
 
 
 
@@ -943,7 +944,7 @@ GLOBAL u8 GFL_BG_PriorityGet( GFL_BG_INI * bgl, u8 frm );
 //=============================================================================================
 //=============================================================================================
 
-GLOBAL void GFL_BG_NTRCHR_CharLoadEx( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs, u32 size );
+GLOBAL void GFL_BG_NTRCHR_CharLoadEx( u8 frmnum, const char * path, u32 offs, u32 size );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -956,7 +957,7 @@ GLOBAL void GFL_BG_NTRCHR_CharLoadEx( GFL_BG_INI * bgl, u8 frmnum, const char * 
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_NTRCHR_CharLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
+GLOBAL void GFL_BG_NTRCHR_CharLoad( u8 frmnum, const char * path, u32 offs );
 
 
 
@@ -1001,7 +1002,7 @@ GLOBAL NNSG2dPaletteData * GFL_BG_NTRCHR_PalLoad( void ** mem, int mode, const c
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_NTRCHR_ScrnLoad( GFL_BG_INI * bgl, u8 frmnum, const char * path, u32 offs );
+GLOBAL void GFL_BG_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs );
 
 
 //=============================================================================================
@@ -1021,7 +1022,7 @@ GLOBAL void GFL_BG_NTRCHR_ScrnLoad( GFL_BG_INI * bgl, u8 frmnum, const char * pa
  * @li	VBlank内で呼んで下さい
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_VBlankFunc(GFL_BG_INI * bgl);
+GLOBAL void GFL_BG_VBlankFunc( void );
 
 
 //--------------------------------------------------------------------------------------------
@@ -1035,7 +1036,7 @@ GLOBAL void GFL_BG_VBlankFunc(GFL_BG_INI * bgl);
  * @li	VBlank内でGFL_BG_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_LoadScreenV_Req( GFL_BG_INI * bgl, u8 frmnum );
+GLOBAL void GFL_BG_LoadScreenV_Req( u8 frmnum );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1050,7 +1051,7 @@ GLOBAL void GFL_BG_LoadScreenV_Req( GFL_BG_INI * bgl, u8 frmnum );
  * @li	VBlank内でGFL_BG_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScrollReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int value );
+GLOBAL void GFL_BG_ScrollReq( u8 frmnum, u8 mode, int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1065,7 +1066,7 @@ GLOBAL void GFL_BG_ScrollReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int value );
  * @li	VBlank内でGFL_BG_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_RadianSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, u16 value );
+GLOBAL void GFL_BG_RadianSetReq( u8 frmnum, u8 mode, u16 value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1080,7 +1081,7 @@ GLOBAL void GFL_BG_RadianSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, u16 value
  * @li	VBlank内でGFL_BG_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ScaleSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, fx32 value );
+GLOBAL void GFL_BG_ScaleSetReq( u8 frmnum, u8 mode, fx32 value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1095,7 +1096,7 @@ GLOBAL void GFL_BG_ScaleSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, fx32 value
  * @li	VBlank内でGFL_BG_VBlankFunc(...)を呼ぶこと
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_RotateCenterSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int value );
+GLOBAL void GFL_BG_RotateCenterSetReq( u8 frmnum, u8 mode, int value );
 
 
 //=============================================================================================
@@ -1125,7 +1126,7 @@ GLOBAL void GFL_BG_RotateCenterSetReq( GFL_BG_INI * bgl, u8 frmnum, u8 mode, int
  *				カラー88, 124, 223以外はFALSEが返る
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL u8 GFL_BG_DotCheck( GFL_BG_INI * bgl, u8 frmnum, u16 px, u16 py, u16 * pat );
+GLOBAL u8 GFL_BG_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat );
 
 
 
