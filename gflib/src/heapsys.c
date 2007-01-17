@@ -20,7 +20,7 @@
 //----------------------------------------------------------------
 #ifdef HEAPSYS_DEBUG
 static void HeaderDebugParamSet( void* memory, const char* filename, u16 lineNum );
-static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 linenum );
+static void PrintShortHeap( u16 heapID, u32 size, const char* filename, u32 linenum );
 static void PrintAllocInfo( void* memory, u32 size );
 static void PrintFreeInfo( void* memory );
 #endif
@@ -178,11 +178,11 @@ void
 #ifndef HEAPSYS_DEBUG
 void*
 	GFL_HEAP_AllocMemoryblock
-		( u32 heapID, u32 size )
+		( u16 heapID, u32 size )
 #else
 void*
 	GFL_HEAP_AllocMemoryblock
-		( u32 heapID, u32 size, const char* filename, u16 linenum )
+		( u16 heapID, u32 size, const char* filename, u16 linenum )
 #endif
 {
 	void* memory = GFI_HEAP_AllocMemory( heapID, size );
@@ -273,7 +273,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment )
+		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment )
 {
 	BOOL result = GFI_HEAP_InitAllocator( pAllocator, heapID, alignment );
 
@@ -338,7 +338,7 @@ void
 //------------------------------------------------------------------
 u32
 	GFL_HEAP_GetHeapFreeSize
-		( u32 heapID )
+		( u16 heapID )
 {
 	u32 result =  GFI_HEAP_GetHeapFreeSize( heapID );
 
@@ -362,7 +362,7 @@ u32
 //------------------------------------------------------------------
 void
 	GFL_HEAP_CheckHeapSafe
-		( u32 heapID )
+		( u16 heapID )
 {
 	BOOL result = GFI_HEAP_CheckHeapSafe( heapID );
 
@@ -449,7 +449,7 @@ static void GetFileName( char* dst, char* src )
  *
  */
 //------------------------------------------------------------------
-static void PrintShortHeap( u32 heapID, u32 size, const char* filename, u32 linenum )
+static void PrintShortHeap( u16 heapID, u32 size, const char* filename, u32 linenum )
 {
 	NNSFndHeapHandle handle = GFI_HEAP_GetHandle(heapID);
 	u32 freeAreaSize = NNS_FndGetTotalFreeSizeForExpHeap( handle );
@@ -601,7 +601,7 @@ u32 GFL_HEAP_DEBUG_GetMemoryBlockSize( const void* memory )
 struct _HEAP_STATE_STACK {
 	u16   sp;
 	u16   stackNum;
-	u32   heapID;
+	u16   heapID;
 	u64   stack[0];
 };
 
@@ -615,7 +615,7 @@ struct _HEAP_STATE_STACK {
  * @retval  HEAP_STATE_STACK*		作成したスタックへのポインタ
  */
 //------------------------------------------------------------------
-HEAP_STATE_STACK*  HSS_Create( u32 heapID, u32 stackNum )
+HEAP_STATE_STACK*  HSS_Create( u16 heapID, u32 stackNum )
 {
 	HEAP_STATE_STACK* hss;
 	u32 size;
