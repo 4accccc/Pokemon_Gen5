@@ -16,7 +16,6 @@ typedef struct {
 	GFL_BMP_DATA*			bmpHeader;
 	GFL_TEXT_PRINTPARAM*	textParam;
 
-	GFL_BG_INI*				bgl;
 	GFL_BMPWIN*				bmpwin[8];
 
 	u16						work[16];
@@ -65,7 +64,7 @@ static void	bg_init( void )
 {
 	u16 heapID = GFL_HEAPID_APP;
 
-	testmode->bgl = GFL_BG_sysInit( heapID );
+	GFL_BG_sysInit( heapID );
 
 	GX_SetBankForBG(GX_VRAM_BG_64_E);
 	{
@@ -81,7 +80,7 @@ static void	bg_init( void )
 			GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
-		GFL_BG_BGControlSet( testmode->bgl, TEXT_FRM, &bgCont, GFL_BG_MODE_TEXT );
+		GFL_BG_BGControlSet( TEXT_FRM, &bgCont, GFL_BG_MODE_TEXT );
 		GFL_BG_PrioritySet( TEXT_FRM, 0 );
 		GFL_BG_VisibleSet( TEXT_FRM, VISIBLE_ON );
 	}
@@ -95,7 +94,7 @@ static void	bg_init( void )
 		}
 		bmpwinSet.limit[3].start = 0x4000;
 		bmpwinSet.limit[3].end = 0x8000;
-		GFL_BMPWIN_sysInit( testmode->bgl, &bmpwinSet, heapID );
+		GFL_BMPWIN_sysInit( &bmpwinSet, heapID );
 	}
 	{//ƒpƒŒƒbƒgì¬•“]‘—
 		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
@@ -118,14 +117,14 @@ static void	bg_init( void )
 		param->mode = GFL_TEXT_WRITE_16;
 		testmode->textParam = param;
 	}
-	GFL_BG_LoadScreenReq( testmode->bgl, TEXT_FRM );
+	GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
 static void	bg_exit( void )
 {
 	GFL_BMPWIN_sysExit();
-	GFL_BG_BGControlExit( testmode->bgl, TEXT_FRM );
-	GFL_BG_sysExit( testmode->bgl );
+	GFL_BG_BGControlExit( TEXT_FRM );
+	GFL_BG_sysExit();
 }
 
 //------------------------------------------------------------------
@@ -249,7 +248,7 @@ static BOOL	TestModeControl( void )
 			}
 			GFL_BMPWIN_MakeScrn( testmode->bmpwin[NUM_SELECT1+i] );
 		}
-		GFL_BG_LoadScreenReq( testmode->bgl, TEXT_FRM );
+		GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
 		break;
 
