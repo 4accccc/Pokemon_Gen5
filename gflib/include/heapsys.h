@@ -36,7 +36,7 @@ typedef struct {
  *	インライン関数
  */
 //----------------------------------------------------------------
-static inline  u32 HeapGetLow( u32 heapID )	
+static inline  u16 HeapGetLow( u16 heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
@@ -111,7 +111,7 @@ extern void
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
-		( u32 heapID, u32 size );
+		( u16 heapID, u32 size );
 
 #define GFL_HEAP_AllocMemory( ID, siz )		\
 			GFL_HEAP_AllocMemoryblock( ID, siz )
@@ -123,7 +123,7 @@ extern void*
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
-		( u32 heapID, u32 size, const char* filename, u16 linenum );
+		( u16 heapID, u32 size, const char* filename, u16 linenum );
 
 #define GFL_HEAP_AllocMemory( ID, siz )		\
 			GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
@@ -135,7 +135,7 @@ extern void*
 
 inline  void*
 	GFL_HEAP_AllocMemoryClear
-		( u32 heapID, u32 size )
+		( u16 heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( heapID, size );
 	GFL_STD_MemClear32( memory, size );
@@ -144,7 +144,7 @@ inline  void*
 
 inline  void*
 	GFL_HEAP_AllocMemoryLowClear
-		( u32 heapID, u32 size )
+		( u16 heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( HeapGetLow(heapID), size );
 	GFL_STD_MemClear32( memory, size );
@@ -175,7 +175,7 @@ extern void
 //------------------------------------------------------------------
 extern void
 	GFL_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u32 heapID, s32 alignment );
+		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment );
 
 //------------------------------------------------------------------
 /**
@@ -201,7 +201,7 @@ extern void
 //------------------------------------------------------------------
 extern u32
 	GFL_HEAP_GetHeapFreeSize
-		( u32 heapID );
+		( u16 heapID );
 
 //------------------------------------------------------------------
 /**
@@ -212,7 +212,7 @@ extern u32
 //------------------------------------------------------------------
 extern void
 	GFL_HEAP_CheckHeapSafe
-		( u32 heapID );
+		( u16 heapID );
 
 #ifdef HEAPSYS_DEBUG
 //------------------------------------------------------------------
@@ -257,7 +257,7 @@ u32 GFL_HEAP_DEBUG_GetMemoryBlockSize ( const void* memory );
 typedef struct _HEAP_STATE_STACK	HEAP_STATE_STACK;
 
 #ifdef HEAP_DEBUG
-extern HEAP_STATE_STACK*  HSS_Create( u32 heapID, u32 stackNum );
+extern HEAP_STATE_STACK*  HSS_Create( u16 heapID, u32 stackNum );
 extern void HSS_Push( HEAP_STATE_STACK* hss );
 extern void HSS_Pop( HEAP_STATE_STACK* hss );
 extern void HSS_Delete( HEAP_STATE_STACK* hss );
