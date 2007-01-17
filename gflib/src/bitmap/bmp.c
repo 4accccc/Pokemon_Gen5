@@ -209,7 +209,8 @@ void GFL_BMP_PrintMain(
 	
 				src_dat = (*srcadrs >> ((sx & 1)*4)) & 0x0f;
 	
-				if(src_dat != NULLPAL_L){
+//				if(src_dat != NULLPAL_L){
+				if(src_dat){
 					shiftval = (dx & 1)*4;
 					*dstadrs = (u8)((src_dat << shiftval)|(*dstadrs & (0xf0 >> shiftval)));
 				}
