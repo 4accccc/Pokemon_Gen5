@@ -23,7 +23,6 @@ typedef struct {
 
 ///BMPWINデータ構造体
 typedef struct {
-	GFL_BG_INI*		bgl;
 	GFL_BMPWIN_AREA	area[ GFL_BG_FRAME_MAX ];
 	u16				heapID;
 
@@ -62,19 +61,17 @@ static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
 /**
  * システム初期化
  *
- * @param	bgl		BGシステム構造体ポインタ
  * @param	set		使用領域設定構造体
  * @param	heapID	使用ヒープ領域
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_BMPWIN_sysInit
-		( GFL_BG_INI* bgl, GFL_BMPWIN_SET* set, u16 heapID )
+		( GFL_BMPWIN_SET* set, u16 heapID )
 {
 	int	i;
 
 	bmpwin_sys = (GFL_BMPWIN_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_SYS) );
-	bmpwin_sys->bgl = bgl;
 	bmpwin_sys->heapID = heapID;
 
 	//領域管理マネージャの作成
@@ -174,7 +171,7 @@ GFL_BMPWIN*
 	bmpwin->palnum		= palnum;
 
 	//キャラクタモード判別
-	if( GFL_BG_ScreenColorModeGet( bmpwin_sys->bgl, frmnum) == GX_BG_COLORMODE_16){
+	if( GFL_BG_ScreenColorModeGet( frmnum) == GX_BG_COLORMODE_16){
 		bmpwin->bitmode = GFL_BMPWIN_BITMODE_4;	//１６色モード
 		areasiz = sizx * sizy;
 	} else {
@@ -260,10 +257,9 @@ void
 	CHK_BMPWIN( bmpwin );
 
 	bmpsize = (u32)
-		((bmpwin->sizx*bmpwin->sizy * GFL_BG_BaseCharSizeGet(bmpwin_sys->bgl,bmpwin->frmnum)));
+		((bmpwin->sizx*bmpwin->sizy * GFL_BG_BaseCharSizeGet(bmpwin->frmnum)));
 
-	GFL_BG_LoadCharacter
-		( bmpwin_sys->bgl, bmpwin->frmnum, bmpwin->bmp.adrs, bmpsize, bmpwin->chrnum );
+	GFL_BG_LoadCharacter( bmpwin->frmnum, bmpwin->bmp.adrs, bmpsize, bmpwin->chrnum );
 }
 
 //---------------------------------------------------------
@@ -292,8 +288,7 @@ void
 		scrnbuf[i] = (scrnchr|scrnpal);
 		scrnchr++;
 	}
-	GFL_BG_ScrWrite( bmpwin_sys->bgl, bmpwin->frmnum, scrnbuf, 
-						bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy );
+	GFL_BG_ScrWrite( bmpwin->frmnum, scrnbuf, bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy );
 
 	GFL_HEAP_FreeMemory( scrnbuf );
 }
@@ -313,8 +308,7 @@ void
 
 	CHK_BMPWIN( bmpwin );
 
-	GFL_BG_ScrFill( bmpwin_sys->bgl, bmpwin->frmnum, 0,
-					bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy, 0 );
+	GFL_BG_ScrFill( bmpwin->frmnum, 0, bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy, 0 );
 }
 
 

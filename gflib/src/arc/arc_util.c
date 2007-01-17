@@ -25,7 +25,6 @@ vu32	*scr=NULL;
  *
  * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
  * @param   dataIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
- * @param   bgl				BGLﾃﾞｰﾀ
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -35,7 +34,7 @@ vu32	*scr=NULL;
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
+u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
 {
 	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID );
 
@@ -50,7 +49,7 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u3
 			{
 				transSize = charData->szByte;
 			}
-			GFL_BG_LoadCharacter(bgl, frm, charData->pRawData, transSize, offs);
+			GFL_BG_LoadCharacter(frm, charData->pRawData, transSize, offs);
 		}
 
 		GFL_HEAP_FreeMemory( arcData );
@@ -65,7 +64,6 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u3
  *
  * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
  * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
- * @param   bgl				BGLﾃﾞｰﾀ
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -74,7 +72,7 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u3
  *
  */
 //--------------------------------------------------------------------------------------------
-void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
+void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID)
 {
 	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID );
 
@@ -90,11 +88,11 @@ void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, GFL_BG_INI* bgl, u32 frm, u32
 				transSize = scrnData->szByte;
 			}
 
-			if( GFL_BG_ScreenAdrsGet( bgl, frm ) != NULL )
+			if( GFL_BG_ScreenAdrsGet( frm ) != NULL )
 			{
-				GFL_BG_ScreenBufSet( bgl, frm, scrnData->rawData, transSize );
+				GFL_BG_ScreenBufSet( frm, scrnData->rawData, transSize );
 			}
-			GFL_BG_LoadScreen( bgl, frm, scrnData->rawData, transSize, offs );
+			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
 		}
 		GFL_HEAP_FreeMemory( arcData );
 	}
