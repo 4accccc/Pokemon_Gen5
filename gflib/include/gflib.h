@@ -32,6 +32,8 @@
 #include "bmp_win.h"
 
 #include "arc_util.h"
+#include "fade.h"
+
 /*  */
 
 #endif	/*	__GFLIB_H__ */
