@@ -20,11 +20,20 @@ struct _SEND_QUEUE{
     u8* pData;     ///< データアドレス
     SEND_QUEUE* prev;      ///< 手前のキュー
     SEND_QUEUE* next;      ///< 次のキュー
-    u16 size;       ///< サイズ
-    u8 command;    ///< コマンド
-    u8 bHeadSet:1;  ///< ヘッダーを送信した場合１ まだの場合０
-    u8 bRing:1;     ///< リングバッファ使用の場合１
+    u16 size;     ///< サイズ
+    u8 command;   ///< コマンド
+    u8 sendNo;    ///< 送る人
+    u8 recvNo;    ///< 受け取る人
+    u8 bHeadSet;  ///< ヘッダーを送信した場合１ まだの場合０
+    u8 bRing;     ///< リングバッファ使用の場合１
 } ;
+
+///  @brief  サイズを含んだキューのヘッダ
+#define _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS (5)
+///  @brief  サイズを含まないキューのヘッダ
+#define _GFL_NET_QUEUE_HEADERBYTE (3)
+
+
 
 /// @brief 送るデータの管理
 typedef struct{
@@ -100,11 +109,13 @@ extern void GFL_NET_QueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr);
  * @param   size    サイズ
  * @param   bFast  優先度が高いデータ?
  * @param   bSave  保存するかどうか
+ * @param   send      送る人
+ * @param   recv      受け取る人
  * @retval  TRUE 蓄えた
  * @retval  FALSE キューに入らなかった
  */
 //==============================================================================
-extern BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave);
+extern BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int send,int recv);
 
 //==============================================================================
 /**

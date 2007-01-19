@@ -260,11 +260,22 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
+void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress,BOOL bAlloc)
 {
-    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, 6);
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-    GFL_NET_StateConnectMacAddress(pHandle);
+    GFL_NET_StateConnectMacAddress(pHandle,bAlloc);
+}
+
+//==============================================================================
+/**
+ * @brief 子機になりビーコンを集める
+ * @param   GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return  none
+ */
+//==============================================================================
+void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
+{
+    GFL_NET_StateBeaconScan(pHandle);
 }
 
 //==============================================================================
@@ -438,11 +449,8 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
-
-    GFL_NET_SystemSendData(sendCommand,data,0);
-
-
-    return TRUE;
+    return GFL_NET_SystemSendData(sendCommand, data, 0,
+                                  FALSE, pNet->creatureNo ,NET_SENDID_ALLUSER);
 }
 
 //==============================================================================
@@ -451,19 +459,23 @@ BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data
  * @param[in,out]  pNet  通信ハンドル
  * @param[in]   sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
  * @param[in]   sendCommand                送信するコマンド
- * @param[in]   pCBSendEndFunc  送信完了をつたえるコールバック関数の登録
  * @param[in]   size                       送信データサイズ
- * @param[in]   data                     送信データポインタ
- * @param[in]   bDataCopy                 データをコピーする場合TRUE
+ * @param[in]   data                       送信データポインタ
+ * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
+ * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
  * @retval  TRUE   成功した
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand,
-                    const CBSendEndFunc* pCBSendEndFunc,const u32 size,
-                    const void* data, const BOOL bDataCopy)
+BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat)
 {
-    return TRUE;
+    if(bRepeat && !GFL_NET_SystemIsSendCommand(sendCommand,pNet->creatureNo)){
+        return GFL_NET_SystemSendData(sendCommand, data, 0, bFast, pNet->creatureNo ,sendID);
+    }
+    else if(bRepeat){
+        return FALSE;
+    }
+    return GFL_NET_SystemSendData(sendCommand, data, 0, bFast, pNet->creatureNo ,sendID);
 }
 
 
@@ -478,20 +490,6 @@ BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCom
 BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet)
 {
     return TRUE;
-}
-
-//==============================================================================
-/**
- * @brief   毎フレーム送りたいデータを登録する
- * @param[in,out]   NetHandle* pNet  通信ハンドル
- * @param   pGet      データ取得関数
- * @param   pRecv     受信関数
- * @param   size      サイズ
- * @return  none
- */
-//==============================================================================
-void GFL_NET_SetEveryTimeSendData(GFL_NETHANDLE* pNet, CBGetEveryTimeData* pGet, CBRecvEveryTimeData* pRecv,const int size)
-{
 }
 
 

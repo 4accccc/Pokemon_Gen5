@@ -49,8 +49,9 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 // define 
-#define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
+//#define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
+#define NET_SENDID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 
 #define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
 
@@ -214,7 +215,7 @@ extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress);
+extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress, BOOL bAlloc);
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
@@ -347,9 +348,7 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const voi
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand,
-                                      const CBSendEndFunc* pCBSendEndFunc,const u32 size,
-                                      const void* data, const BOOL bDataCopy);
+extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat);
 //==============================================================================
 /**
  * @brief 送信データが無いかどうか

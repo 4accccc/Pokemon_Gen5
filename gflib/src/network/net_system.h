@@ -147,11 +147,14 @@ extern BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size);
  * 親機がデータを子機全員に送信するのは別関数
  * @param   command    comm_sharing.hに定義したラベル
  * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
+ * @param   size       送信量    コマンドだけの場合0
+ * @param   bFast       送信量    コマンドだけの場合0
+ * @param   myID       送信する人のハンドルno
+ * @param   sendID     送る相手のID   全員なら0xff
  * @retval  送信キューに入ったかどうか
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemSendData(int command, const void* data, int size);
+extern BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast, int myID, int sendID);
 //==============================================================================
 /**
  * 親機送信メソッド  大きいサイズのデータを送信する  サイズ固定
@@ -386,20 +389,12 @@ extern void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const vo
 extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 //==============================================================================
 /**
- * 特定のコマンドを送信し終えたかどうかを調べる サーバ側
- * @param   command 調べるコマンド
- * @retval  コマンドが在ったらTRUE
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemIsSendCommand_ServerSize(int command);
-//==============================================================================
-/**
  * 特定のコマンドを送信し終えたかどうかを調べる クライアント側
  * @param   command 調べるコマンド
  * @retval  コマンドが在ったらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemIsSendCommand(int command);
+extern BOOL GFL_NET_SystemIsSendCommand(int command, int myID);
 //==============================================================================
 /**
  * キューが空っぽかどうか サーバー側

@@ -151,6 +151,7 @@ void GFL_NET_CommandCallBack(int netID, int command, int size, void* pData)
                 func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
             }
             if(func != NULL){
+                NET_PRINT("command %d \n", command);
                 if(_pCommandWork){
                     func(netID, size, pData, _pCommandWork->pWork, pNetHandle);
                 }
@@ -307,7 +308,9 @@ static void _commCommandRecvThrowOutReq(const int netID, const int size, const v
     _pCommandWork->pWork = NULL;
     _pCommandWork->bThrowOuted = TRUE;
 
-    GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_THROWOUT_END,pData);
+    GFL_NET_SendData(pNetHandle,GFL_NET_CMD_THROWOUT_END,pData);
+
+//    GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_THROWOUT_END,pData);
 }
 
 //==============================================================================

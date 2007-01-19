@@ -37,14 +37,10 @@
 // データシェアリングで使用するポート
 #define WH_DS_PORT                13
 
-// MP通信のみの場合のデータサイズ
-#define WH_MP_PARENT_DATA_SIZE           (192)
-#define WH_MP_CHILD_DATA_SIZE           (12)
 
 // 子機送信量を増やす境目の子機＋親機数
-#define COMM_WIDE_BYTE_SEND_CHILDNUM   (5) //
-
-#define WH_MP_4CHILD_DATA_SIZE         (38)  // 五人  //  (192/COMM_WIDE_BYTE_SEND_CHILDNUM) 
+#define COMM_WIDE_BYTE_SEND_CHILDNUM   (4) //
+#define WH_MP_4CHILD_DATA_SIZE         (GFL_NET_CHILD_DATA_SIZE*2)
 
 
 #endif // __WH_CONFIGH_H__

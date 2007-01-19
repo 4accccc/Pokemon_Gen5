@@ -4,7 +4,6 @@
  * @brief	通信状態を管理するサービス  通信の上位にある
  *          スレッドのひとつとして働き、自分の通信状態や他の機器の
  *          開始や終了を管理する
- *          フィールド管理をしない部分をもう一回ここに引越し...2006.01.12
  * @author	k.ohno
  * @date    2006.01.12
  */
@@ -154,85 +153,10 @@ static void _changeState(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time); 
 #endif //GFL_NET_DEBUG
 
 
-// 地下関連ステート
-static void _underStart(void);           // 子機の初期化 + システムの初期化
-static void _underChildPInit(void);      // 子機の初期化
-static void _underChildFInit(void);
-static void _underChildPSearching(void); // 子機が親機を探している
-static void _underChildForceConnect(void); // 子機が親機に強引に接続中
-static void _underChildConnecting(void);   // 子機が親機に接続中
-static void _underChildConnect(void);    // 子機として接続中
-static void _underChildReset(void);
-static void _underChildFinalize(void);   // 子機になれなかったので終了処理中
-static void _underParentFinalize(void);  // 親機になれなかったので終了処理中
-static void _underParentInit(void);      // 親機として初期化
-static void _underParentWait(void);      // 親機として待機状態
-static void _underParentConnectInit(void); // 接続したので初期化中
-static void _underParentConnect(void);   // 親機として接続中
-static void _stateUnderGroundConnectEnd(void);  // 地下切断
-static void _underSBReset(void);
-
-
-// バトル関連ステート
-static void _battleParentInit(void);     // 戦闘用親機として初期化
-static void _battleParentWaiting(void);  // 戦闘用親機として待機中
-static void _battleParentMoveRoomEnter(void);  // 戦闘前の部屋に入って待機中
-static void _battleParentMoveRoom(void);  // 戦闘前の部屋に入って待機中
-static void _battleParentSendName(void);  // 自分の名前をみんなに送信
-static void _battleParentReTry(void);   // 戦闘用親機を中断
-
-static void _battleChildInit(void);     // 戦闘用子機として初期化
-static void _battleChildBconScanning(void);  // 戦闘用子機として親機選択中
-static void _battleChildConnecting(void);  // 接続許可もらい中
-static void _battleChildSendName(void);  // 自分の名前をみんなに送信
-static void _battleChildWaiting(void);  // ダイレクト用子機待機中
-static void _battleChildMoveRoomEnter(void); // 戦闘前の部屋に入って待機中
-static void _battleChildMoveRoom(void); // 戦闘前の部屋に入って待機中
-static void _battleChildReTry(void);   // 子機を中断
-static void _battleChildReInit(void);   // 子機を再起動
-static void _battleChildReset(void);
-static void _battleChildReConnect(void);
-static void _underChildOnline(void);
-
-
-// UNIONルーム関連ステート
-static void _unionStart(void);
-static void _unionChildSearching(void);
-static void _unionChildFinalize(void);
-static void _unionParentInit(void);
-static void _unionParentWait(void);
-static void _unionChildRestart(void);
-static void _unionChildNegotiation(void);
-
-static void _unionForceConnectStart(void);
-static void _unionForceConnectStart2(void);
-static void _unionForceConnect(void);
-static void _unionChildConnecting(void);
-static void _unionChildConnectSuccess(void);
-static void _unionChildConnectFailed(void);
-static void _unionChildReset(void);
-static void _unionParentConnect(void);
-static void _unionParentPause(void);
-
-static void _mysteryParentInit(void);
-static void _mysteryChildInit(void);
-
 // その他一般的なステート
-
 static void _stateEnd(GFL_NETHANDLE* pNetHandle);             // 終了処理
 static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle);      // 切断処理開始
 static void _stateNone(GFL_NETHANDLE* pNetHandle);            // 何もしない
-
-static void _stateConnectError(void);    // 接続エラー状態
-static void _stateConnectChildEndWait(void);   // 子機の終了を待って終わる
-static void _stateConnectChildEnd(void);
-static void _stateConnectAutoEnd(void);  // 自動切断処理開始
-
-
-// WIFI用
-static void _wifiBattleLogin(void);
-static void _stateWifiLogout(void);
-
 
 // ネゴシエーション用確認KEY
 static u8 _negotiationMsg[]={"FREAK"};
@@ -371,7 +295,8 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     pWL = GFL_NET_WLGetHandle(pNetIni->allocNo, pNetIni->gsid, pNetIni->maxConnectNum);
     _GFL_NET_SetNETWL(pWL);
 
-    GFL_NET_WLInitialize(pNetIni->allocNo, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc);
+    GFL_NET_WLInitialize(pNetIni->allocNo, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
+                         pNetIni->beaconCompFunc);
 //    GFL_NET_WLStealth(FALSE);
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
@@ -440,17 +365,48 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 /**
  * マックアドレスを指定して子機接続開始
  * @param   connectIndex 接続する親機のIndex
+ * @param   bAlloc       メモリーの確保
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bAlloc)
 {
 
-    GFL_NET_SystemChildModeInit(TRUE,TRUE,512);
+    GFL_NET_SystemChildModeInit(bAlloc, TRUE, 512);
 
     _CHANGE_STATE(_childConnecting, 0);
 }
+
+//==============================================================================
+/**
+ * 子機待機状態  ビーコン収集
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _childScanning(GFL_NETHANDLE* pNetHandle)
+{
+    GFL_NET_WLParentBconCheck();
+
+}
+
+//==============================================================================
+/**
+ * 子機開始  ビーコンの収集に入る
+ * @param   connectIndex 接続する親機のIndex
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
+{
+    GFL_NET_SystemChildModeInit(TRUE,TRUE,512);
+    _CHANGE_STATE(_childScanning, 0);
+}
+
+
 
 //==============================================================================
 /**

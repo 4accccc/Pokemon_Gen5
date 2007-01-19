@@ -13,6 +13,7 @@
 #include "net_ring_buff.h"
 #include "net_queue.h"
 
+
 //==============================================================================
 /**
  * @brief   空いているキューを返す
@@ -222,39 +223,41 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
  * @brief   キューを蓄える
  * @param   pQueueMgr キューマネージャーのポインタ
  * @param   command   送信コマンド
- * @param   pDataArea  送信データ
- * @param   size    サイズ
- * @param   bFast  優先度が高いデータ?
- * @param   bSave  保存するかどうか
- * @retval  TRUE 蓄えた
- * @retval  FALSE キューに入らなかった
+ * @param   pDataArea 送信データ
+ * @param   size      サイズ
+ * @param   bFast     優先度が高いデータ?
+ * @param   bSave     保存するかどうか
+ * @param   sendNo      送る人
+ * @param   recvNo      受け取る人
+ * @retval  TRUE      蓄えた
+ * @retval  FALSE     キューに入らなかった
  */
 //==============================================================================
 
-BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea,
-                      int size, BOOL bFast, BOOL bSave)
+BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int sendNo,int recvNo)
 {
     SEND_QUEUE* pLast;
     SEND_QUEUE* pFree = _freeQueue(pQueueMgr);
     SEND_TERMINATOR* pTerm;
-    int cSize;
+    int cSize = size;
 
     bFast = TRUE;
     if(pFree== NULL){
-        NET_PRINT("---キューが無い\n");
+        OS_TPanic("no free queue\n");  //多く取ってあるはずのキューが足りない 送信しすぎ
         return FALSE;
     }
     
     GF_ASSERT(size < 65534 && "65534以上は分割");
-    cSize = GFL_NET_CommandGetPacketSize(command);
+//    cSize = GFL_NET_CommandGetPacketSize(command);
 
-    if(GFL_NET_COMMAND_SIZE_VARIABLE == cSize){
-        cSize = size;
-    }
+  //  if(GFL_NET_COMMAND_SIZE_VARIABLE == cSize){
+//        cSize = size;
+//    }
     if(bSave){
         int rest = GFL_NET_RingDataRestSize(pQueueMgr->pSendRing);
         if((cSize+3) >= rest){  // 送信バッファをオーバーしてしまう
-            NET_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
+            OS_TPanic("送信バッファオーバー\n");  //同じく送信しすぎ
+//            NET_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
             return FALSE;
         }
         GFL_NET_RingPuts(pQueueMgr->pSendRing, pDataArea, cSize);
@@ -264,6 +267,8 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea,
     pFree->size = cSize;
     pFree->command = command;
     pFree->pData = pDataArea;
+    pFree->sendNo = sendNo;
+    pFree->recvNo = recvNo;
     if(bFast == TRUE){
         pTerm = &pQueueMgr->fast;
     }

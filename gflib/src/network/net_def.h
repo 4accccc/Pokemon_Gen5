@@ -51,14 +51,21 @@ typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 #define  SCAN_PARENT_COUNT_MAX ( 16 )
 
 // 子機最大数
-#define  COMM_CHILD_MAX  ( 7 )
+#define  GFL_NET_CHILD_MAX  ( 7 )
 
 // ありえないID
 #define COMM_INVALID_ID  (0xff)
 
 
 // 機最大数
-#define  GFL_NET_MACHINE_MAX  (COMM_CHILD_MAX+1)
+#define  GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)
+
+// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
+#define GFL_NET_DATA_HEADER            (4)
+#define GFL_NET_CHILD_DATA_SIZE           (48)
+#define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
+
+
 
 // 扱えるコマンドの受信最大サイズ
 #define  COMM_COMMAND_RECV_SIZE_MAX  (256)
@@ -108,6 +115,7 @@ struct _GFL_NETHANDLE{
     u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
     u8 limitNum;        ///< 受付制限したい場合のLIMIT数
     u8 negotiation;     ///< 通信受付の状態
+    u8 creatureNo;     ///< 子機としての
 };
 
 enum _negotiationType {

@@ -34,7 +34,7 @@ extern void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num);
  * @retval  _COMM_WORK‚Ìƒ|ƒCƒ“ƒ^
  */
 //==============================================================================
-extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize);
+extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp);
 //extern void GFL_NET_WLInitialize(int heapID);
 //==============================================================================
 /**

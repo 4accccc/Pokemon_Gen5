@@ -61,7 +61,7 @@ void GFL_NET_RingPuts(RingBuffWork* pRing, u8* pDataArea, const int size)
     }
     j = 0;
     for(i = pRing->backupEndPos; i < pRing->backupEndPos + size; i++,j++){
-        GF_ASSERT(pDataArea);
+        GF_ASSERT(pDataArea);  //ƒf[ƒ^‚ª‚È‚¯‚ê‚Î‚¢‚¯‚È‚¢‚Ì‚ÉNULL‚Ìê‡ASSERT
         pRing->pWork[_ringPos( pRing, i )] = pDataArea[j];
     }
     pRing->backupEndPos = (s16)_ringPos( pRing, i );

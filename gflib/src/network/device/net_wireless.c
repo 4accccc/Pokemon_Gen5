@@ -159,18 +159,23 @@ void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
 //==============================================================================
 /**
  * @brief   接続クラスの初期化
- * @param   heapID   ワーク確保ID
- * @retval  _COMM_WORKのポインタ
+ * @param   heapID    ワーク確保ID
+ * @param   getFunc   ビーコン作成関数
+ * @param   getSize   ビーコンサイズ関数
+ * @param   getComp   ビーコン比較関数
+ * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize)
+void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp)
 {
     int i;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
     pNetWL->beaconGetFunc = getFunc;    ///< ビーコンデータ取得関数
     pNetWL->beaconGetSizeFunc = getSize;  ///< ビーコンデータサイズ取得関数
+    pNetWL->beaconCompFunc = getComp;
+
     // 無線ライブラリ駆動開始
     _whInitialize(heapID, pNetWL);
 }
