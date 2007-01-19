@@ -49,7 +49,6 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 trans
 			{
 				transSize = charData->szByte;
 			}
-			GFL_BG_CharAreaSet( frm, offs, transSize );
 			GFL_BG_LoadCharacter(frm, charData->pRawData, transSize, offs);
 		}
 
@@ -58,6 +57,51 @@ u32 GFL_ARC_UtilBgCharSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 trans
 
     return transSize;
 }
+
+//------------------------------------------------------------------
+/**
+ * BGｷｬﾗﾃﾞｰﾀの VRAM 転送（エリアマネージャを使用して開いている領域に自動で転送）
+ *
+ * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   dataIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
+ * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
+ *
+ * @return  転送した位置
+ */
+//------------------------------------------------------------------
+u32 GFL_ARC_UtilBgCharSetAreaMan(u32 fileIdx, u32 dataIdx, u32 frm, u32 transSize, BOOL compressedFlag, u32 heapID)
+{
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID );
+	u32	offs;
+
+	chr=arcData;
+
+	{
+		NNSG2dCharacterData* charData;
+
+		if( NNS_G2dGetUnpackedBGCharacterData( arcData, &charData ) )
+		{
+			if( transSize == 0 )
+			{
+				transSize = charData->szByte;
+			}
+			offs = GFL_BG_LoadCharAreaSet( frm, charData->pRawData, transSize );
+		}
+
+		GFL_HEAP_FreeMemory( arcData );
+	}
+
+	if(GFL_BG_ScreenColorModeGet( frm ) == GX_BG_COLORMODE_16 ){
+		return offs;
+	}
+	else{
+		return offs/2;
+	}
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * ｽｸﾘｰﾝﾃﾞｰﾀの VRAM 転送
@@ -99,6 +143,75 @@ void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 transS
 		GFL_HEAP_FreeMemory( arcData );
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ｽｸﾘｰﾝﾃﾞｰﾀの VRAM 転送（キャラのオフセットも指定可）
+ * ※ BGL側に ｽｸﾘｰﾝﾊﾞｯﾌｧ が用意されていれば、ｽｸﾘｰﾝﾊﾞｯﾌｧ への転送も行う
+ *
+ * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
+ * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
+ * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
+ *
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_ARC_UtilScrnSetCharOfs(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, u32 heapID)
+{
+	void* arcData = GFL_ARC_UtilLoad( fileIdx, dataIdx, compressedFlag, heapID );
+
+	scr=arcData;
+
+	{
+		NNSG2dScreenData* scrnData;
+
+		if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) )
+		{
+			if( transSize == 0 )
+			{
+				transSize = scrnData->szByte;
+			}
+
+			if( GFL_BG_ScreenAdrsGet( frm ) != NULL )
+			{
+				GFL_BG_ScreenBufSet( frm, scrnData->rawData, transSize );
+			}
+			if(chr_ofs){
+				if(GFL_BG_ScreenColorModeGet(frm) == GX_BG_COLORMODE_16 ){
+					{
+						int	i;
+						u16	*scr;
+
+						scr=(u16 *)&scrnData->rawData;
+
+						for(i=0;i<transSize/2;i++){
+							scr[i]+=chr_ofs;
+						}
+					}
+				}
+				else{
+					{
+						int	i;
+						u8	*scr;
+
+						scr=(u8 *)&scrnData->rawData;
+
+						for(i=0;i<transSize;i++){
+							scr[i]+=chr_ofs;
+						}
+					}
+				}
+			}
+			GFL_BG_ScrAreaSet( frm, offs, transSize );
+			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
+		}
+		GFL_HEAP_FreeMemory( arcData );
+	}
+}
+
 //------------------------------------------------------------------
 /**
  * ﾊﾟﾚｯﾄﾃﾞｰﾀ の VRAM 転送

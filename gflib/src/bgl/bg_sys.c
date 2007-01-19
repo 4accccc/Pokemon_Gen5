@@ -519,7 +519,7 @@ void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 	bgl->ScrVramBaseAdrs[frmnum]=((GXBGScrBase)data->screenBase)*0x0800;
 
 	//CharNum0を予約（ビットマップしか使用しない時に０キャラクタのゴミでスクリーンが埋まらないようにする）
-	GFL_BG_CharAreaSet( frmnum, 0, 0x20 );
+	GFL_BG_CharAreaGet( frmnum, 0x20 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -816,31 +816,23 @@ void GFL_BG_BGControlReset( u8 frm, u8 flg, u8 prm )
 
 //--------------------------------------------------------------------------------------------
 /**
- * エリアマネージャに領域確保を宣言（キャラデータ用）
+ * エリアマネージャに領域確保をしてキャラクタデータを転送
  *
  * @param	frmnum	領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
- * @param	ofs		確保先オフセット
- * @param	size	確保サイズ
+ * @param	mem		転送先アドレス
+ * @param	size	確保＆転送サイズ
  *
  * @retval	データを読み込んだアドレス
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_BG_CharAreaSet( u32 frmnum, u32 ofs, u32 size )
+u32 GFL_BG_LoadCharAreaSet( u32 frmnum, void *mem, u32 size )
 {
-	switch(frmnum){
-	case GFL_BG_FRAME0_M:
-	case GFL_BG_FRAME1_M:
-	case GFL_BG_FRAME2_M:
-	case GFL_BG_FRAME3_M:
-		GFL_AREAMAN_ReserveAssignPos(bgl->area_m,(bgl->CharVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
-		break;
-	case GFL_BG_FRAME0_S:
-	case GFL_BG_FRAME1_S:
-	case GFL_BG_FRAME2_S:
-	case GFL_BG_FRAME3_S:
-		GFL_AREAMAN_ReserveAssignPos(bgl->area_s,(bgl->CharVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
-		break;
-	}
+	u32 offs;
+
+	offs = GFL_BG_CharAreaGet( frmnum, size );
+	LoadCharacter( frmnum, mem, size, offs * GFL_BG_1CHRDATASIZ );
+
+	return offs;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1530,12 +1522,45 @@ void GFL_BG_LoadCharacterFile( u8 frmnum, const char * path, u32 offs )
 	if(mem == NULL){
 		return;	//エラー
 	}
-
-	GFL_BG_CharAreaSet( frmnum, offs, size );
-
 	GFL_BG_LoadCharacter( frmnum, mem, size, offs );
 	GFL_HEAP_FreeMemory( mem );
+
 	return;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * キャラクター転送（ファイル参照）（エリアマネージャを使用して開いてる領域に自動で転送）
+ *
+ * @param	frmnum		BGフレーム番号
+ * @param	src			転送するデータ
+ * @param	datasiz		転送サイズ
+ *
+ * @return	キャラクター確保領域のポジション
+ *
+ *	圧縮未対応
+ */
+//--------------------------------------------------------------------------------------------
+u32 GFL_BG_LoadCharacterFileAreaMan( u8 frmnum, const char * path )
+{
+	void * mem;
+	u32	size;
+	u32	offs;
+
+	mem = LoadFileEx( bgl->heapID, path, &size );
+	if(mem == NULL){
+		return 0;	//エラー
+	}
+
+	offs = GFL_BG_LoadCharAreaSet( frmnum, mem, size );
+	GFL_HEAP_FreeMemory( mem );
+
+	if( bgl->bgsys[frmnum].col_mode == GX_BG_COLORMODE_16 ){
+		return offs;
+	}
+	else{
+		return offs/2;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
