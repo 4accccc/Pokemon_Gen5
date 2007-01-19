@@ -11,19 +11,10 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
-#define	GFL_BMPWIN_MAGICNUM		(15676)
-
-///領域管理構造体
-typedef struct {
-	GFL_AREAMAN*	man;
-	u32				start;
-	u32				size;
-
-}GFL_BMPWIN_AREA;
+#define	GFL_BMPWIN_MAGICNUM		(0x7FB2)
 
 ///BMPWINデータ構造体
 typedef struct {
-	GFL_BMPWIN_AREA	area[ GFL_BG_FRAME_MAX ];
 	u16				heapID;
 
 }GFL_BMPWIN_SYS;
@@ -73,25 +64,6 @@ void
 
 	bmpwin_sys = (GFL_BMPWIN_SYS*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN_SYS) );
 	bmpwin_sys->heapID = heapID;
-
-	//領域管理マネージャの作成
-	for( i=0; i<GFL_BG_FRAME_MAX;i++ ){
-		u32 blocksize = ( set->limit[i].end - set->limit[i].start ) / 0x20;
-
-		if( blocksize ){
-			//ビットマップウインドウを使用するフレーム(enable)
-			bmpwin_sys->area[i].man = GFL_AREAMAN_Create( blocksize, heapID );
-			bmpwin_sys->area[i].start = 0;
-			bmpwin_sys->area[i].size = blocksize;
-			//透明キャラクター用にデフォルト確保
-			GFL_AREAMAN_ReserveAssignArea( bmpwin_sys->area[i].man, 0, blocksize, 1 );
-		} else {
-			//ビットマップウインドウを使用しないフレーム(disable)
-			bmpwin_sys->area[i].man = NULL;
-			bmpwin_sys->area[i].start = 0;
-			bmpwin_sys->area[i].size = 0;
-		}
-	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -103,16 +75,10 @@ void
 	GFL_BMPWIN_sysExit
 		( void )
 {
-	int	i;
-
-	//領域管理マネージャの解放
-	for( i=0; i<GFL_BG_FRAME_MAX;i++ ){
-		if( bmpwin_sys->area[i].man != NULL ){
-			GFL_AREAMAN_Delete( bmpwin_sys->area[i].man );
-		}
+	if( bmpwin_sys != NULL ){
+		GFL_HEAP_FreeMemory( bmpwin_sys );
+		bmpwin_sys = NULL;
 	}
-	GFL_HEAP_FreeMemory( bmpwin_sys );
-	bmpwin_sys = NULL;
 }
 
 
@@ -178,14 +144,8 @@ GFL_BMPWIN*
 		bmpwin->bitmode = GFL_BMPWIN_BITMODE_8;	//２５６色モード
 		areasiz = sizx * sizy * 2;	//使用するキャラ領域は２倍(0x40)
 	}
-	if( bmpwin_sys->area[frmnum].man == NULL ){
-		OS_Panic( "ビットマップ生成可能なフレームではありません\n" );
-	}
+
 	//キャラクター領域の確保
-//	areapos = GFL_AREAMAN_ReserveAssignArea(	bmpwin_sys->area[frmnum].man,
-//												bmpwin_sys->area[frmnum].start,
-//												bmpwin_sys->area[frmnum].size,
-//												areasiz );
 	areapos = GFL_BG_CharAreaGet( frmnum, areasiz * 0x20 );
 	if( areapos == AREAMAN_POS_NOTFOUND ){
 		OS_Panic( "ビットマップ生成に必要なキャラＶＲＡＭ領域が足りない\n" );
@@ -222,7 +182,6 @@ void
 		areasiz = bmpwin->sizx * bmpwin->sizy * 2;	//使用するキャラ領域は２倍(0x40)
 	}
 	//キャラクター領域の解放
-//	GFL_AREAMAN_Release( bmpwin_sys->area[bmpwin->frmnum].man, bmpwin->chrnum, areasiz );
 	GFL_BG_CharAreaFree( bmpwin->frmnum, bmpwin->chrnum, areasiz*0x20 );
 
 	GFL_HEAP_FreeMemory( bmpwin->bmp.adrs );
