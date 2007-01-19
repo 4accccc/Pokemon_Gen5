@@ -66,7 +66,6 @@ typedef enum {
 //------------------------------------------------------------------
 extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
-
 //------------------------------------------------------------------
 /**
  * OBJ ｷｬﾗﾃﾞｰﾀ の VRAM 転送
@@ -84,6 +83,21 @@ extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u3
 //------------------------------------------------------------------
 extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID );
 
+//------------------------------------------------------------------
+/**
+ * BGｷｬﾗﾃﾞｰﾀの VRAM 転送（エリアマネージャを使用して開いている領域に自動で転送）
+ *
+ * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   dataIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
+ * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
+ *
+ * @return  転送した位置
+ */
+//------------------------------------------------------------------
+extern	u32 GFL_ARC_UtilBgCharSetAreaMan(u32 fileIdx, u32 dataIdx, u32 frm, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -101,6 +115,23 @@ extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u3
  */
 //--------------------------------------------------------------------------------------------
 extern void GFL_ARC_UtilScrnSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, u32 heapID);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ｽｸﾘｰﾝﾃﾞｰﾀの VRAM 転送（キャラのオフセットも指定可）
+ * ※ BGL側に ｽｸﾘｰﾝﾊﾞｯﾌｧ が用意されていれば、ｽｸﾘｰﾝﾊﾞｯﾌｧ への転送も行う
+ *
+ * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
+ * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
+ * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
+ *
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_ARC_UtilScrnSetCharOfs(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, u32 heapID);
 
 
 //------------------------------------------------------------------
