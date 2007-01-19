@@ -517,6 +517,9 @@ void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 	//VRAMベースアドレスを格納
 	bgl->CharVramBaseAdrs[frmnum]=((GXBGCharBase)data->charBase)*0x4000;
 	bgl->ScrVramBaseAdrs[frmnum]=((GXBGScrBase)data->screenBase)*0x0800;
+
+	//CharNum0を予約（ビットマップしか使用しない時に０キャラクタのゴミでスクリーンが埋まらないようにする）
+	GFL_BG_CharAreaSet( frmnum, 0, 0x20 );
 }
 
 //--------------------------------------------------------------------------------------------
