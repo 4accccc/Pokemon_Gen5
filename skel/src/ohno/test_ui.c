@@ -35,14 +35,14 @@ static void _keyConfigTest(void)
         {GFL_UI_KEY_END,0,0},		// 終了データ
     };
 
-
+#if 0
 	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_X) {
 
         GFL_UI_KeySetControlModeTbl(key_data);
         GFL_UI_KeySetControlMode(1);
         OS_TPrintf("keyconfig %d change\n",GFL_UI_KeyGetControlMode());
     }
-    
+#endif
 
 }
 
