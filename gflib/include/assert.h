@@ -9,10 +9,10 @@
 #ifndef	__ASSERT_H__
 #define	__ASSERT_H__
 
-#define	GF_ASSERT_ENABLE
+//#define	GF_ASSERT_ENABLE
 
 
-#ifndef	GF_ASSERT_ENABLE
+#ifdef	GF_ASSERT_ENABLE
 
 //ASSERTñ≥å¯ÇÃèÍçá
 extern void GFL_Assert(const char * filename, unsigned int line_no, const char * exp);
