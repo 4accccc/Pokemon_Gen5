@@ -60,9 +60,25 @@ extern void
 extern u32
 	GFL_AREAMAN_ReserveAuto
 		( GFL_AREAMAN* man, u32 blockNum );
+
+
 //------------------------------------------------------------------
 /**
- * 領域の指定範囲内から空いている所を探して確保
+ * 領域末尾から先頭まで、空いている所を探して確保
+ *
+ * @param   man				[in] マネージャ
+ * @param   blockNum		[in] 確保したいブロック数
+ *
+ * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+extern u32
+	GFL_AREAMAN_ReserveAutoLo
+		( GFL_AREAMAN* man, u32 blockNum );
+
+//------------------------------------------------------------------
+/**
+ * 領域の指定範囲内から空いている所を探して確保（前方から探索）
  *
  * @param   man				[in] マネージャ
  * @param   startBlock		[in] 探索開始ブロック
@@ -75,6 +91,25 @@ extern u32
 extern u32
 	GFL_AREAMAN_ReserveAssignArea
 		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve );
+
+
+//------------------------------------------------------------------
+/**
+ * 領域の指定範囲内から空いている所を探して確保（後方から探索）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startBlock		[in] 探索開始ブロック
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+extern u32
+	GFL_AREAMAN_ReserveAssignAreaLo
+		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve );
+
+
 //------------------------------------------------------------------
 /**
  * 領域の指定位置から確保
@@ -100,6 +135,9 @@ extern BOOL
 extern void 
 	GFL_AREAMAN_Release
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum );
+
+
+
 
 #ifdef AREAMAN_DEBUG
 //------------------------------------------------------------------
