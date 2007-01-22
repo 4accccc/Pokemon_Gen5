@@ -22,7 +22,7 @@
 // マネージャ本体の構造体定義
 //----------------------------------------------
 struct _GFL_AREAMAN {
-	u16		maxBlock;
+	u16		numBlocks;
 	u16		areaByteSize;
 	u32*	pMagicNumber;
 
@@ -83,10 +83,14 @@ static const u8 BackFillBit[9] = {
 static inline u32 calc_blocks_to_bytes( u32 blocks );
 static inline void CHECK_ASSERT( GFL_AREAMAN* man );
 static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos );
+static u32 reserveLo_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
+static u32 reserveLo( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
 static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num );
+static GFL_AREAMAN_POS check_empty_bit_lo( u8 baseBitMap, u32 start_bit, u32 num );
 static void reserve_bit( u8* area, u32 start_pos, u32 num );
 static void release_bit( u8* area, u32 pos, u32 num );
 static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum );
+
 
 #ifdef AREAMAN_DEBUG
 static void print_bit( u8 b );
@@ -96,7 +100,7 @@ static void print_reserveinfo( GFL_AREAMAN* man, u32 pos, u32 blockNum, int pat 
 
 static inline u32 calc_blocks_to_bytes( u32 blocks )
 {
-	return blocks / 8;
+	return (blocks / 8) + ((blocks % 8) != 0);
 }
 
 static inline void CHECK_ASSERT( GFL_AREAMAN* man )
@@ -119,7 +123,7 @@ static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos )
 /**
  * 領域マネージャ作成
  *
- * @param   maxBlock		[in] このマネージャーが管理するブロック数	
+ * @param   numBlocks		[in] このマネージャーが管理するブロック数	
  * @param   heapID			[in] 使用ヒープＩＤ
  *
  * @retval  GFL_AREAMAN*	領域マネージャポインタ
@@ -127,15 +131,15 @@ static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos )
 //------------------------------------------------------------------
 GFL_AREAMAN*
 	GFL_AREAMAN_Create
-		( u32 maxBlock, u16 heapID )
+		( u32 numBlocks, u16 heapID )
 {
 	GFL_AREAMAN* man;
 	u16 areaByteSize;
 
-	areaByteSize = calc_blocks_to_bytes( maxBlock );
+	areaByteSize = calc_blocks_to_bytes( numBlocks );
 	man = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_AREAMAN)+areaByteSize+sizeof(u32) );
 
-	man->maxBlock = maxBlock;
+	man->numBlocks = numBlocks;
 	man->areaByteSize = areaByteSize;
 
 	man->pMagicNumber = (u32*)(man->area + areaByteSize);
@@ -145,7 +149,7 @@ GFL_AREAMAN*
 	man->printDebugFlag = FALSE;
 	#endif
 
-	GFL_STD_MemFill( man->area, 0, areaByteSize);
+	GFL_STD_MemFill( man->area, 0, areaByteSize );
 
 	return man;
 }
@@ -185,7 +189,7 @@ void
 
 	if( flag )
 	{
-		OS_TPrintf("AreaMan[%08x] Print Start (MaxBlock=%d)\n", (u32)man, man->maxBlock);
+		OS_TPrintf("AreaMan[%08x] Print Start (MaxBlock=%d)\n", (u32)man, man->numBlocks);
 	}
 }
 #endif
@@ -207,13 +211,33 @@ u32
 {
 	CHECK_ASSERT( man );
 
-	return GFL_AREAMAN_ReserveAssignArea( man, 0, man->maxBlock, blockNum );
+	return GFL_AREAMAN_ReserveAssignArea( man, 0, man->numBlocks-1, blockNum );
 }
+
+//------------------------------------------------------------------
+/**
+ * 領域末尾から先頭まで、空いている所を探して確保
+ *
+ * @param   man				[in] マネージャ
+ * @param   blockNum		[in] 確保したいブロック数
+ *
+ * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+u32
+	GFL_AREAMAN_ReserveAutoLo
+		( GFL_AREAMAN* man, u32 blockNum )
+{
+	CHECK_ASSERT( man );
+
+	return GFL_AREAMAN_ReserveAssignAreaLo( man, man->numBlocks-1, man->numBlocks, blockNum );
+}
+
 
 
 //------------------------------------------------------------------
 /**
- * 領域の指定範囲内から空いている所を探して確保
+ * 領域の指定範囲内から空いている所を探して確保（前方から探索）
  *
  * @param   man				[in] マネージャ
  * @param   startBlock		[in] 探索開始ブロック
@@ -238,7 +262,7 @@ u32
 	#endif
 
 	if(	(numBlockArea < numBlockReserve)
-	||	((startBlock + numBlockReserve) > man->maxBlock )
+	||	((startBlock + numBlockReserve) > man->numBlocks )
 	){
 		#ifdef AREAMAN_DEBUG
 		if( man->printDebugFlag )
@@ -410,6 +434,228 @@ u32
 
 //------------------------------------------------------------------
 /**
+ * 領域の指定範囲内から空いている所を探して確保（後方から探索）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startBlock		[in] 探索開始ブロック（100を指定したら、100,99,98 ... と探索する）
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+u32
+	GFL_AREAMAN_ReserveAssignAreaLo
+		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve )
+{
+	CHECK_ASSERT( man );
+
+	GF_ASSERT( numBlockArea >= numBlockReserve );
+	GF_ASSERT( startBlock < man->numBlocks );
+	GF_ASSERT( (int)numBlockReserve < (int)(startBlock-1) );
+
+	#ifdef AREAMAN_DEBUG
+	if( man->printDebugFlag )
+	{
+		OS_TPrintf(	"AREAMAN[%08x] reserve %d blocks , area:%d~%d\n", 
+					(u32)man, numBlockReserve, startBlock, startBlock-numBlockArea+1);
+	}
+	#endif
+
+	if(numBlockArea < numBlockReserve)
+	{
+		#ifdef AREAMAN_DEBUG
+		if( man->printDebugFlag )
+		{
+			OS_TPrintf("** reserve failed %dblocks (pat A) ** \n", numBlockReserve);
+		}
+		#endif
+		return AREAMAN_POS_NOTFOUND;
+	}
+
+	{
+		u32 ret;
+
+		if( numBlockReserve <= 8 )
+		{
+			ret = reserveLo_less8bit( man, startBlock, numBlockArea, numBlockReserve );
+		}
+		else
+		{
+			ret = reserveLo( man, startBlock, numBlockArea, numBlockReserve );
+		}
+
+		print_reserveinfo( man, ret, numBlockReserve, __LINE__ );
+
+		return ret;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * 後方探索実処理（8ブロック以下専用）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startPos		[in] 探索開始ブロック（100を指定したら、100,99,98 ... と探索する）
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  u32				確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+static u32 reserveLo_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve )
+{
+	int returnPos, endPos;
+	int bytePos, bytePosEnd, ofc;
+
+	endPos = startPos - numBlockArea + 1;
+	bytePos = startPos / 8;
+	bytePosEnd = endPos / 8;
+	ofc = startPos & 7;
+
+	do {
+
+		returnPos = AREAMAN_POS_NOTFOUND;
+
+		if( ofc )
+		{
+			u32 p = check_empty_bit_lo( man->area[bytePos], ofc-1, numBlockReserve );
+			if( p != AREAMAN_POS_NOTFOUND )
+			{
+				returnPos = bytePos*8 + p;
+				break;
+			}
+		}
+
+		for( bytePos-- ; bytePos>=bytePosEnd; bytePos-- )
+		{
+			if( EmptyCount[ man->area[bytePos] ] >= numBlockReserve )
+			{
+				u32 p = check_empty_bit_lo( man->area[bytePos], 7, numBlockReserve );
+				returnPos = bytePos*8 + p;
+				break;
+			}
+			else if( OpenFwdCount[ man->area[bytePos] ] && (bytePos > bytePosEnd) )
+			{
+				u32  rem = numBlockReserve - OpenFwdCount[ man->area[bytePos] ];
+
+				if( OpenBackCount[ man->area[bytePos-1] ] >= rem )
+				{
+					returnPos = (bytePos-1)*8 + (8-rem);
+					break;
+				}
+			}
+		}
+
+	}while(0);
+
+
+	if( returnPos != (int)AREAMAN_POS_NOTFOUND )
+	{
+		if( returnPos >= endPos )
+		{
+			reserve_area( man, returnPos, numBlockReserve );
+			return returnPos;
+		}
+	}
+
+	return AREAMAN_POS_NOTFOUND;
+}
+
+//------------------------------------------------------------------
+/**
+ * 後方探索実処理（8ブロックより大きい領域用）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startPos		[in] 探索開始ブロック（100を指定したら、100,99,98 ... と探索する）
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  u32				確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+static u32 reserveLo( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve )
+{
+	u32 returnPos, endPos;
+	int bytePos, bytePosEnd, ofc;
+
+	endPos = startPos - numBlockArea + 1;
+	bytePos = startPos / 8;
+	bytePosEnd = endPos / 8;
+	ofc = (startPos % 8) + 1;
+
+	if( OpenFwdCount[ man->area[bytePos] ] < ofc )
+	{
+		ofc = OpenFwdCount[ man->area[bytePos] ];
+	}
+
+//	OS_TPrintf("startPos:%d, endPos:%d, bytePos:%d, bytePosEnd:%d, startOfc:%d\n", 
+//		startPos, endPos, bytePos, bytePosEnd, ofc);
+
+	while( bytePos >= bytePosEnd )
+	{
+		if( ofc )
+		{
+			int remBlocks, remBytes, remBits, p;
+
+			remBlocks = numBlockReserve - ofc;
+			remBytes = remBlocks / 8;
+			remBits = remBlocks % 8;
+			p = bytePos - 1;
+
+//			OS_TPrintf("  bytePos:%d, remBlocks:%d, remBits:%d, remBytes:%d\n",
+//						bytePos, remBlocks, remBits, remBytes );
+
+			while( remBytes )
+			{
+				if( p < bytePosEnd ){ break; }
+				if( man->area[p] ){ break; }
+				p--;
+				remBytes--;
+			}
+
+			if( remBytes == 0 )
+			{
+				int returnPos = AREAMAN_POS_NOTFOUND;
+
+//				OS_TPrintf("    remBytes is clear! prevByte:%d, obc:%d\n",
+//						man->area[p-1], OpenBackCount[man->area[p-1]]);
+
+				if( remBits == 0 )
+				{
+					returnPos = (p+1)*8;
+				}
+				else
+				{
+					if( p >= bytePosEnd )
+					{
+						if( OpenBackCount[man->area[p]] >= remBits )
+						{
+							returnPos = p*8 + (8-remBits);
+						}
+					}
+				}
+
+				if( (returnPos != (int)(AREAMAN_POS_NOTFOUND))
+				&&	(returnPos >= endPos )
+				){
+					reserve_area( man, returnPos, numBlockReserve );
+					return returnPos;
+				}
+			}
+		}
+		if( --bytePos >= bytePosEnd )
+		{
+			ofc = OpenFwdCount[ man->area[bytePos] ];
+		}
+	}
+
+	return AREAMAN_POS_NOTFOUND;
+
+}
+
+//------------------------------------------------------------------
+/**
  * 領域の指定位置から確保
  *
  * @param   man				[in] マネージャ
@@ -458,7 +704,7 @@ void
 		( GFL_AREAMAN* man, GFL_AREAMAN_POS pos, u32 blockNum )
 {
 	CHECK_ASSERT( man );
-	GF_ASSERT((pos+blockNum) <= man->maxBlock);
+	GF_ASSERT((pos+blockNum) <= man->numBlocks);
 
 	{
 		int p;
@@ -496,8 +742,13 @@ void
 
 //------------------------------------------------------------------
 /**
- * 
- * 
+ * 領域データ1byte分の中に、指定数だけ連続した空きブロックが含まれているかチェック（前方から検索）
+ *
+ * @param   baseBitMap		チェックする領域データ1byte分
+ * @param   start_bit		チェック開始bit（7～0：7が最後方）
+ * @param   num				
+ *
+ * @retval  GFL_AREAMAN_POS		
  */
 //------------------------------------------------------------------
 static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num )
@@ -522,6 +773,42 @@ static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num )
 
 	return AREAMAN_POS_NOTFOUND;
 }
+//------------------------------------------------------------------
+/**
+ * 領域データ1byte分の中に、指定数だけ連続した空きブロックが含まれているかチェック（後方から検索）
+ *
+ * @param   baseBitMap		チェックする領域データ1byte分
+ * @param   start_bit		チェック開始bit（7～0：7が最後方）
+ * @param   num				
+ *
+ * @retval  GFL_AREAMAN_POS		
+ */
+//------------------------------------------------------------------
+static GFL_AREAMAN_POS check_empty_bit_lo( u8 baseBitMap, u32 start_bit, u32 num )
+{
+	if( num < 8 )
+	{
+		int i;
+		u8  inbit;
+
+		start_bit = (start_bit + 1 - num);
+
+		inbit = FwdFillBit[num] >> start_bit;
+
+		for(i=start_bit; i>=0; i--)
+		{
+			if( (baseBitMap & inbit) == 0 )
+			{
+				return i;
+			}
+			inbit <<= 1;
+		}
+	}
+
+	return AREAMAN_POS_NOTFOUND;
+}
+
+
 
 
 static void reserve_bit( u8* area, u32 start_pos, u32 num )
@@ -558,7 +845,7 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 {
 	int start_pos, start_bit_count, start_bit, rem, bytes;
 
-	GF_ASSERT((pos+blockNum)<=man->maxBlock);
+	GF_ASSERT((pos+blockNum)<=man->numBlocks);
 
 	start_pos = pos % 8;
 	start_bit_count = 8 - start_pos;
