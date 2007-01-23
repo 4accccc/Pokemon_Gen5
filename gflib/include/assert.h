@@ -9,7 +9,7 @@
 #ifndef	__ASSERT_H__
 #define	__ASSERT_H__
 
-//#define	GF_ASSERT_ENABLE
+#define	GF_ASSERT_ENABLE
 
 
 #ifdef	GF_ASSERT_ENABLE
