@@ -48,32 +48,32 @@ void GFLUser_Init(void)
   OS_EnableMainExArena();
 #endif
 
-  // システム初期化
-  OS_Init();
-  OS_InitTick();
-  OS_InitAlarm();
-  // RTC初期化
-  RTC_Init();
-  // GX初期化
-  GX_Init();
-  // 固定小数点API初期化
-  FX_Init();
-  // ファイルシステム初期化
-  InitFileSystem();
+	// システム初期化
+	OS_Init();
+	OS_InitTick();
+	OS_InitAlarm();
+	// RTC初期化
+	RTC_Init();
+	// GX初期化
+	GX_Init();
+	// 固定小数点API初期化
+	FX_Init();
+	// ファイルシステム初期化
+	InitFileSystem();
 #endif
 
-  //ヒープシステム初期化
-  GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,4,0);
+	//ヒープシステム初期化
+	GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,4,0);	//メインアリーナ
+	GFL_HEAP_DTCM_sysInit( 0x2000 );				//ＤＴＣＭアリーナ
 
-  //アーカイブシステム初期化
-  //GFL_ARC_SysInit(...);
+	//アーカイブシステム初期化
+	//GFL_ARC_SysInit(...);
 
-  //UIシステム初期化
-  GFL_UI_sysInit(GFL_HEAPID_SYSTEM);
+	//UIシステム初期化
+	GFL_UI_sysInit(GFL_HEAPID_SYSTEM);
 
-  //PROCシステム初期化
-  GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
-
+	//PROCシステム初期化
+	GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
 }
 
 
@@ -113,6 +113,7 @@ void GFLUser_Exit(void)
 {
 	GFL_UI_sysEnd();
 	GFL_PROC_SysExit();
+	GFL_HEAP_DTCM_sysExit();
 	GFL_HEAP_sysExit();
 }
 
