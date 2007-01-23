@@ -24,7 +24,7 @@ NITRO_NO_STD_PCHDR	=	True
 TARGET_LIB		=	gflib.a
 
 # ソースファイル
-SRCS			=	initialize.c filesystem.c heap.c heapsys.c \
+SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					tcb.c procsys.c saveload_system.c \
 					areaman.c vramman/vman.c vramman/obj_graphic_man.c \
 					assert.c \
