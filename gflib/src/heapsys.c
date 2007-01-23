@@ -13,6 +13,19 @@
 //#define  ALLOCINFO_PRINT_HEAPID   HEAPID_BASE_APP	// このヒープＩＤに関してのみ詳細な情報を出力
 #endif
 
+//==============================================================================
+/**
+ *
+ *
+ *
+ *
+ *	メインアリーナ管理
+ *
+ *
+ *
+ *
+ */
+//==============================================================================
 //----------------------------------------------------------------
 /**
  *	プロトタイプ宣言
@@ -671,4 +684,112 @@ void HSS_Delete( HEAP_STATE_STACK* hss )
 }
 
 #endif
+
+
+
+
+
+
+
+
+
+
+//==============================================================================
+/**
+ *
+ *
+ *
+ *
+ *	ＤＴＣＭ管理
+ *
+ *
+ *
+ *
+ */
+//==============================================================================
+#include "heapDTCM.h"
+
+//------------------------------------------------------------------------------
+/**
+ * システム初期化
+ *
+ * @param	size		使用サイズ			
+ */
+//------------------------------------------------------------------------------
+void
+	GFL_HEAP_DTCM_sysInit
+		( u32 size )
+{
+	if( GFI_HEAP_DTCM_sysInit( size ) == FALSE ){
+		OS_Panic("cannot create heap from DTCM size = %x\n", size );
+	}
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * システム終了
+ */
+//------------------------------------------------------------------------------
+void
+	GFL_HEAP_DTCM_sysExit
+		( void )
+{
+	if( GFI_HEAP_DTCM_sysExit() == FALSE ){
+		OS_Panic("cannot delete heap for DTCM\n" );
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
+ * ヒープからメモリを確保する
+ *
+ * @param   size		確保サイズ
+ *
+ * @retval  void*		確保した領域アドレス（失敗ならNULL）
+ */
+//------------------------------------------------------------------
+void*
+	GFL_HEAP_DTCM_AllocMemory
+		( u32 size )
+{
+	void* mem = GFI_HEAP_DTCM_AllocMemory( size );
+
+	if( mem == NULL )
+	{
+		OS_Printf( "Alloc DTCM_Memory FAILED. allocsize = %x\n", size );
+	} else {
+		OS_Printf( "Alloc DTCM_Memory. size = %x\n", size );
+	}
+	return mem;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * ヒープからメモリを解放する
+ *
+ * @param   memory		確保したメモリアドレス
+ */
+//------------------------------------------------------------------
+void
+	GFL_HEAP_DTCM_FreeMemory
+		( void* memory )
+{
+	BOOL result = GFI_HEAP_DTCM_FreeMemory( memory );
+
+	if( result == NULL )
+	{
+		OS_Printf( "Free DTCM_Memory FAILED. memory = %08x\n", memory );
+	} else {
+		OS_Printf( "Free DTCM_Memory. memory = %08x\n", memory );
+	}
+}
+
+
+
+
+
+
 
