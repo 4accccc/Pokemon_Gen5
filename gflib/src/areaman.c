@@ -485,8 +485,6 @@ u32
 			ret = reserveLo( man, startBlock, numBlockArea, numBlockReserve );
 		}
 
-		print_reserveinfo( man, ret, numBlockReserve, __LINE__ );
-
 		return ret;
 	}
 }
