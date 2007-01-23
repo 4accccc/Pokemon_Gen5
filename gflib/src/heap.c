@@ -71,7 +71,7 @@ typedef struct {
 
 //----------------------------------------------------------------
 /**
- *	グローバル
+ *	変数定義
  */
 //----------------------------------------------------------------
 static HEAP_SYS  HeapSys = { 0 };
@@ -365,10 +365,10 @@ void*
 				memheader->heapID = heapID;					//ヘッダにヒープＩＤを保存
 				(u8*)memory += sizeof(MEMHEADER);			//実メモリ領域へポインタ移動
 				GetHeapCount(heapID)++;						//メモリ確保カウンタのインクリメント
+				HeapSys.errorCode = 0;
 			} 
 			OS_RestoreInterrupts( irqold );	//割り込みを復帰
 
-			HeapSys.errorCode = 0;
 			return memory;
 		}
 	}
