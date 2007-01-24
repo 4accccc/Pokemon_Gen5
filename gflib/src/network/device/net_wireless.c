@@ -465,7 +465,6 @@ static void _receiverFunc(u16 aid, u16 *data, u16 size)
 //==============================================================================
 /**
  * @brief   親機の接続開始を行う
- * @param   bAlloc       allocするかどうか
  * @param   bTGIDChange  TGIDを変更するかどうか
  * @param   bEntry       
  * @param   bTGIDChange  新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
@@ -473,7 +472,7 @@ static void _receiverFunc(u16 aid, u16 *data, u16 size)
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
+BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     _commInit(pNetWL);
@@ -509,7 +508,7 @@ BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_Co
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit)
+BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     _commInit(pNetWL);
@@ -1296,16 +1295,8 @@ void GFL_NET_WLSetDisconnectOtherError(BOOL bOn)
 u16 _getServiceBeaconPeriod(u16 serviceNo)
 {
     u16 beaconPeriod = WM_GetDispersionBeaconPeriod();
-/*  必要ならコールバック関数として定義する k.ohno 06.12.05
-    GF_ASSERT_RETURN(serviceNo < COMM_MODE_MAX, beaconPeriod);
-
-    if(COMM_MODE_UNDERGROUND == serviceNo){
-        return beaconPeriod/4;
-    }
-    if((COMM_MODE_UNION == serviceNo) ||
-       (COMM_MODE_PICTURE == serviceNo)){
-        return (beaconPeriod / 4);
-    }*/
+/*  必要ならコールバック関数として定義する
+    基本的には必要としない方向で  k.ohno 06.12.05 */
     return beaconPeriod;
 }
 

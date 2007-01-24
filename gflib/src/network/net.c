@@ -55,6 +55,18 @@ static int _addNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
     return 0;
 }
 
+static int _numNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
+{
+    int i;
+
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        if(pNet->pNetHandle[i] == pHandle){
+            return i;
+        }
+    }
+    return -1;
+}
+
 void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
 {
     int i;
@@ -108,15 +120,31 @@ BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
     if(pHandle){
         return (pHandle->negotiation == _NEGOTIATION_OK);
     }
-    return _NEGOTIATION_NG;
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief       ネゴシエーション開始を親に送信する
+ * @param[in]   pHandle   通信ハンドル
+ * @return      送信に成功したらTRUE
+ */
+//==============================================================================
+
+BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
+{
+    u8 id = GFL_NET_SystemGetCurrentID();
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    id = id * 8 + _numNetHandle(pNet, pHandle);
+    pHandle->creatureNo = id;
+    return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
 }
 
 //==============================================================================
 /**
  * @brief       toolのworkポインタを得る
- * @param[in]   pNetInit  通信初期化構造体のポインタ
- * @param[in]   netID     ネットID
- * @return      none
+ * @param[in]   pHandle  通信ハンドル
+ * @return      NET_TOOLSYSポインタ
  */
 //==============================================================================
 NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
@@ -147,6 +175,9 @@ void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID)
         GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
         GFL_NET_StateDeviceInitialize(pNetHandle);
     }
+
+    GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
+    
 }
 
 //==============================================================================
@@ -181,7 +212,7 @@ void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid)
 
 //==============================================================================
 /**
- * @brief 受信ビーコンデータを得る
+ * @brief   受信ビーコンデータを得る
  * @param   index  ビーコンバッファindex
  * @return  ビーコンデータの先頭ポインタ なければNULL
  */
@@ -196,7 +227,7 @@ void* GFL_NET_GetBeaconData(int index)
 
 //==============================================================================
 /**
- * @brief 受信ビーコンに対応したMACアドレスを得る
+ * @brief   受信ビーコンに対応したMACアドレスを得る
  * @param   index  ビーコンバッファindex
  * @return  ビーコンデータの先頭ポインタ なければNULL
  */
@@ -254,21 +285,21 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 
 //==============================================================================
 /**
- * @brief 子機になり指定した親機に接続する
+ * @brief   子機になり指定した親機に接続する
  * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress,BOOL bAlloc)
+void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-    GFL_NET_StateConnectMacAddress(pHandle,bAlloc);
+    GFL_NET_StateConnectMacAddress(pHandle);
 }
 
 //==============================================================================
 /**
- * @brief 子機になりビーコンを集める
+ * @brief   子機になりビーコンを集める
  * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @return  none
  */
@@ -293,31 +324,6 @@ void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
- * @brief 親機になり指定された子機の接続を待ち受ける
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
- * @param   macAddress     マックアドレスのバッファ
- * @param   num            子機人数
- * @return  none
- */
-//==============================================================================
-void GFL_NET_ServerConnectTo(GFL_NETHANDLE* pHandle,const u8* macAddress, const int num)
-{
-//    GFL_NET_StateConnectParentMacAddress(pHandle, macAddress, num);
-}
-
-//==============================================================================
-/**
- * @brief 親子切り替え接続を行う
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
- * @return  none
- */
-//==============================================================================
-void GFL_NET_SwitchConnect(GFL_NETHANDLE* pHandle)
-{
-}
-
-//==============================================================================
-/**
  * @brief このハンドルの通信番号を得る
  * @param[in,out]  NetHandle* pNet     通信ハンドルのポインタ
  * @retval  NetID     通信ID
@@ -325,16 +331,7 @@ void GFL_NET_SwitchConnect(GFL_NETHANDLE* pHandle)
 //==============================================================================
 NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle)
 {
-    int i;
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
-    for(i = 0; i < GFL_NET_MACHINE_MAX;i++){
-        if(pNet->pNetHandle[i] == pNetHandle){
-            return i;
-        }
-    }
-    OS_TPanic("no handle");
-    return -1;//
+    return pNetHandle->creatureNo;
 }
 
 //==============================================================================
@@ -375,7 +372,7 @@ void GFL_NET_Disconnect(void)
 
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]){
-            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
+//            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
             userNo = i;
         }
     }
@@ -470,12 +467,12 @@ BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data
 BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat)
 {
     if(bRepeat && !GFL_NET_SystemIsSendCommand(sendCommand,pNet->creatureNo)){
-        return GFL_NET_SystemSendData(sendCommand, data, 0, bFast, pNet->creatureNo ,sendID);
+        return GFL_NET_SystemSendData(sendCommand, data, size, bFast, pNet->creatureNo ,sendID);
     }
     else if(bRepeat){
         return FALSE;
     }
-    return GFL_NET_SystemSendData(sendCommand, data, 0, bFast, pNet->creatureNo ,sendID);
+    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, pNet->creatureNo ,sendID);
 }
 
 
@@ -505,6 +502,7 @@ BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet)
 //==============================================================================
 void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 {
+    GFL_NET_ToolTimingSyncStart(pNet,no);
 }
 
 //==============================================================================
@@ -518,7 +516,7 @@ void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 //==============================================================================
 BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
-    return TRUE;
+    return GFL_NET_ToolIsTimingSync(pNet, no);
 }
 
 

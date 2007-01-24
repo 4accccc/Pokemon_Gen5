@@ -51,7 +51,7 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 // define 
 //#define NET_NETID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
 #define NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
-#define NET_SENDID_ALLUSER (0xff)  ///< NetID:全員へ送信する場合
+#define NET_SENDID_ALLUSER (0x10)  ///< NetID:全員へ送信する場合
 
 #define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
 
@@ -79,7 +79,7 @@ typedef struct {
 /// コマンドのサイズを定義する為のマクロ
 #define   GFL_NET_COMMAND_SIZE( num )     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
 /// コマンドのサイズを定義する為のマクロ
-#define   GFL_NET_COMMAND_VARIABLE     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
+#define   GFL_NET_COMMAND_VARIABLE     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + GFL_NET_COMMAND_SIZE_VARIABLE)
 
 
 typedef enum {
@@ -112,7 +112,9 @@ typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 
 /// @brief 通信の初期化用構造体
 typedef struct{
-  NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
+  const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
+  int recvFuncTableNum;
+  void* pWork;                     ///< この通信ゲームで使用しているワーク
   NetBeaconGetFunc beaconGetFunc;  ///< ビーコンデータ取得関数
   NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
   NetBeaconCompFunc beaconCompFunc; ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -215,7 +217,7 @@ extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress, BOOL bAlloc);
+extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress);
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
@@ -224,24 +226,6 @@ extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress, BOOL 
  */
 //==============================================================================
 extern void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle);
-//==============================================================================
-/**
- * @brief 親機になり指定された子機の接続を待ち受ける
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
- * @param   macAddress     マックアドレスのバッファ
- * @param   num            子機人数
- * @return  none
- */
-//==============================================================================
-extern void GFL_NET_ServerConnectTo(GFL_NETHANDLE* pHandle,const u8* macAddress, const int num);
-//==============================================================================
-/**
- * @brief 親子切り替え接続を行う
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
- * @return  none
- */
-//==============================================================================
-extern void GFL_NET_SwitchConnect(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief このハンドルの通信番号を得る
@@ -275,6 +259,16 @@ extern BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id);
  */
 //==============================================================================
 extern void GFL_NET_Disconnect(void);
+
+//==============================================================================
+/**
+ * @brief   親機に接続の許可を送信する
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  送信に成功したらTRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle);
+
 //==============================================================================
 /**
  * @brief 接続中かどうか

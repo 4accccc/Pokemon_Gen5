@@ -65,7 +65,7 @@ extern void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, u8 no);
+extern void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドを送信
@@ -83,7 +83,7 @@ extern void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet);
  * @retval  FALSE  届いていない
  */
 //==============================================================================
-extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, u8 no);
+extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドが届いたかどうかを確認する

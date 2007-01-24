@@ -72,8 +72,6 @@
 /** @brief 通信先頭バイトのBITの意味 */
 #define _SEND_NONE  (0x00)  ///< 一回で送れる場合
 #define _SEND_NEXT  (0x01)  ///< 一回で送れない場合
-//#define _FIX_DATA_INCLUDE  (0x02)  ///< FIXデータが最初にある場合1
-//#define _FIX_DATA_ONLY     (0x04)  ///< FIXデータだけが設定してある場合1
 #define _MP_DATA_HEADER (0x08)  ///< MPデータの場合BITON  DS時にはOFF
 #define _INVALID_HEADER  (0xff)  ///< 初期化＆送信データがまだセットされていない場合
 
@@ -82,7 +80,6 @@ typedef enum{   // 送信状態
     _SEND_CB_NONE,           // なにもしていない
     _SEND_CB_FIRST_SEND,     // 流れの中での最初の送信
     _SEND_CB_FIRST_SENDEND,  // 最初の送信のコールバックが来た
-
 } _sendCallbackCondition_e;
 
 typedef enum{   // 送信形態
@@ -108,6 +105,8 @@ typedef struct{
     u8* pRecvBuff; // 受信バッファ予約があるコマンドのスタート位置
     u16 valSize;
     u8 valCommand;
+    u8 sendID;
+    u8 recvID;
 } _RECV_COMMAND_PACK;
 
 
@@ -153,8 +152,6 @@ typedef struct{
     u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
     u8 bFirstCatch[GFL_NET_MACHINE_MAX];  // コマンドをはじめてもらった時用
 
-    u8 bPSendNoneRecv[GFL_NET_MACHINE_MAX];        // 最初のコールバックを無条件無視
-
     u8 transmissionNum;
     u8 transmissionSend;
     u8 transmissionType;  // 通信形態 DSかMPかの管理
@@ -162,7 +159,7 @@ typedef struct{
    // u8 sendSwitch;   // 送信バッファのスイッチフラグ
     u8 sendServerSwitch;   // 送信バッファのスイッチフラグ（サーバ用）
     u8 bFirstCatchP2C;
-    u8 bSendNoneSend;        // 無効コマンドを送る
+   // u8 bSendNoneSend;        // 無効コマンドを送る
     u8 bNextSendData;  ///
     u8 bNextSendDataServer;  ///
     u8 bAlone;    // 一人で通信できるようにするモードの時TRUE
@@ -177,8 +174,6 @@ static _COMM_WORK_SYSTEM* _pComm = NULL;  ///<　ワーク構造体のポインタ
 // 親機になる場合のTGID 構造体に入れていないのは
 // 通信ライブラリーを切ったとしてもインクリメントしたいため
 static u16 _sTgid = 0;
-// 割り込みでデータを処理するかどうかのフラグ
-static volatile u8 _bVSAccess = FALSE;
 
 // 送信したことを確認するためのフラグ
 static volatile u8 _sendCallBackServer = _SEND_CB_FIRST_SENDEND;
@@ -243,27 +238,19 @@ static int _getUserMinNum(void)
 //==============================================================================
 /**
  * @brief   親子共通、通信の初期化をまとめた
- * @param   bAlloc          メモリー確保するかどうか
  * @param   packetSizeMax   確保したいパケットサイズ
  * @param   heapID          確保してもいいheapID
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
 
-static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
+static BOOL _commInit(int packetSizeMax, int heapID)
 {
     void* pWork;
     int i;
-    // イクニューモン等ネットワークライブラリの再初期化が必要な場合TRUE
-    BOOL bReInit = FALSE;
 
-    _bVSAccess = FALSE;  // 割り込み内での処理を禁止
-
-    if(bAlloc){
+    if(_pComm==NULL){
         int machineMax = _getUserMaxNum();
-        if(_pComm!=NULL){  // すでに初期化している場合はreturn
-            return TRUE;
-        }
         NET_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
         _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
@@ -271,8 +258,6 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
         
         _pComm->packetSizeMax = packetSizeMax + 64;
         _pComm->transmissionType = _DS_MODE;
-//        _pComm->changeService = COMM_MODE_NONE;
-//        _pComm->bAlone = FALSE;
         
         _pComm->pRecvBufRing = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax*2); ///< 子機が受け取るバッファ
         _pComm->pTmpBuff = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax);  ///< 受信受け渡しのための一時バッファ
@@ -283,36 +268,13 @@ static BOOL _commInit(BOOL bAlloc, int packetSizeMax, int heapID)
         GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, heapID);
         GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing, heapID);
 
-#ifdef PM_DEBUG
-//        GFL_NET_QueueDebugTest();  // キューのプログラムテスト
-#endif
-    }
-    else{
-        bReInit = TRUE;
-        GF_ASSERT((_pComm) && "切り替えの時はすでに初期化済み\n");
+        _commCommandInit();
     }
     
     _pComm->bitmap = 0;
-
-    if(!bReInit){   // コマンドの初期化
-        _commCommandInit();
-    }
-
-    //************************************
-
-//    if(!bReInit){   // プロセスタスクの作成
-        // VBLANK
-  //      _pComm->pVBlankTCB = VIntrTCB_Add(_commMpVBlankIntr, NULL, _PRIORITY_VBLANKFUNC);
-
-    //}
     _pComm->bWifiConnect = FALSE;
     return TRUE;
 }
-
-
-#ifdef PM_DEBUG
-static u8 _sendDataNext=FALSE;
-#endif
 
 
 //==============================================================================
@@ -375,15 +337,11 @@ static void _commCommandInit(void)
 
     _pComm->bNextSendData = FALSE;
     _pComm->bNextSendDataServer = FALSE;
-#ifdef PM_DEBUG
-    _sendDataNext=FALSE;
-#endif
     for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
   //      _pComm->DSCountRecv[i] = 0xff;
         _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
-        _pComm->bPSendNoneRecv[i] = TRUE;
-        _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
+         _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
         _pComm->recvCommServer[i].pRecvBuff = NULL;
         _pComm->recvCommServer[i].dataPoint = 0;
@@ -397,7 +355,7 @@ static void _commCommandInit(void)
     _pComm->recvCommClient.dataPoint = 0;
 
     _pComm->bFirstCatchP2C = TRUE;
-    _pComm->bSendNoneSend = TRUE;
+    //_pComm->bSendNoneSend = TRUE;
     
     _sendCallBackServer = _SEND_CB_FIRST_SENDEND;
     _sendCallBack = _SEND_CB_FIRST_SENDEND;
@@ -464,13 +422,9 @@ static void _commCommandInitChange2(void)
 
     _pComm->bNextSendData = FALSE;
     _pComm->bNextSendDataServer = FALSE;
-#ifdef PM_DEBUG
-    _sendDataNext = FALSE;
-#endif
     for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
         _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
-        _pComm->bPSendNoneRecv[i] = TRUE;
         _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
         _pComm->recvCommServer[i].pRecvBuff = NULL;
@@ -483,7 +437,7 @@ static void _commCommandInitChange2(void)
     _pComm->recvCommClient.dataPoint = 0;
 
     _pComm->bFirstCatchP2C = TRUE;
-    _pComm->bSendNoneSend = TRUE;
+    //_pComm->bSendNoneSend = TRUE;
     
 //    _sendCallBackServer = _SEND_CB_SECOND_SENDEND;
 //    _sendCallBack = _SEND_CB_SECOND_SENDEND;
@@ -504,11 +458,9 @@ static void _commCommandInitChange2(void)
 
 static void _clearChildBuffers(int netID)
 {
-//    _pComm->DSCountRecv[netID] = 0xff;
     _pComm->recvDSCatchFlg[netID] = 0;  // 通信をもらったことを記憶 DS同期用
     _pComm->bFirstCatch[netID] = TRUE;  // コマンドをはじめてもらった時用
     _pComm->countSendRecvServer[netID]=0;  //SERVER受信
-    _pComm->bPSendNoneRecv[netID] = TRUE;  // 一個無視
 
     GFL_NET_RingInitialize(&_pComm->recvMidRing[netID],
                        &_pComm->pMidRecvBufRing[netID * _pComm->packetSizeMax],
@@ -558,13 +510,13 @@ static void _connectFunc(void)
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeMax, BOOL bEntry)
+BOOL GFL_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax, BOOL bEntry)
 {
     BOOL ret = TRUE;
 
-    ret = GFL_NET_WLParentInit(bAlloc, bTGIDChange, bEntry, _clearChildBuffers);
+    ret = GFL_NET_WLParentInit(bTGIDChange, bEntry, _clearChildBuffers);
     GFL_NET_WLSetRecvCallback( _commRecvParentCallback );
-    _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
+    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
     return ret;
 }
 
@@ -578,14 +530,14 @@ BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeM
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax)
+BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax)
 {
     BOOL ret = TRUE;
 
-    ret = GFL_NET_WLChildInit(bAlloc, bBconInit);
+    ret = GFL_NET_WLChildInit(bBconInit);
     GFL_NET_WLSetRecvCallback( _commRecvCallback );
 
-    _commInit(bAlloc, packetSizeMax, GFL_HEAPID_SYSTEM);
+    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
     _sendCallBack = _SEND_CB_FIRST_SENDEND;
 
     return ret;
@@ -738,12 +690,6 @@ void GFL_NET_SystemFinalize(void)
         NET_PRINT("切断----開放処理--\n");
         GFL_NET_Tool_sysEnd(_pComm->pTool);
         _pComm->pTool = NULL;
-//        CommInfoFinalize();
-        // VBLANKタスクを切る
-        _bVSAccess = FALSE;  // 割り込み内での処理を禁止
-//        NET_PRINT("VBLANKタスクを切る\n");
-    //    TCB_Delete(_pComm->pVBlankTCB);
-  //      _pComm->pVBlankTCB = NULL;
         GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
         GFL_HEAP_FreeMemory(_pComm->pTmpBuff);
         GFL_HEAP_FreeMemory(_pComm->pServerRecvBufRing);
@@ -819,7 +765,6 @@ BOOL GFL_NET_SystemUpdateData(void)
         
         if(!_pComm->bShutDown){
 
-            _bVSAccess = FALSE;   // 安全のためVBlank割り込みでのアクセス禁止宣言
             _transmissonTypeChange();  //通信切り替え
             _dataMpStep();
             if(_transmissonType() == _MP_MODE){
@@ -832,7 +777,6 @@ BOOL GFL_NET_SystemUpdateData(void)
             if((GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID) || (_transmissonType() == _DS_MODE) || GFL_NET_SystemGetAloneMode() ){
                 _recvDataServerFunc();  // サーバー側の受信処理
             }
-            _bVSAccess = TRUE;  // 次の割り込み時での処理を許可
         }
         CommMpProcess(_pComm->bitmap);
         if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
@@ -859,14 +803,11 @@ BOOL GFL_NET_SystemUpdateData(void)
 
 void GFL_NET_SystemReset(void)
 {
-    BOOL bAcc = _bVSAccess;
 
     NET_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
     }
-    _bVSAccess = bAcc;
 }
 
 //==============================================================================
@@ -879,15 +820,12 @@ void GFL_NET_SystemReset(void)
 
 void GFL_NET_SystemResetDS(void)
 {
-    BOOL bAcc = _bVSAccess;
 
     NET_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _pComm->transmissionType = _DS_MODE;
         _commCommandInit();
     }
-    _bVSAccess = bAcc;
 }
 
 //==============================================================================
@@ -900,15 +838,12 @@ void GFL_NET_SystemResetDS(void)
 
 void GFL_NET_SystemResetBattleChild(void)
 {
-    BOOL bAcc = _bVSAccess;
 
     NET_PRINT("CommSystemReset\n");
-    _bVSAccess = FALSE;  // 割り込み内での処理を禁止
     if(_pComm){
         _commCommandInit();
         GFL_NET_WLChildBconDataInit();
     }
-    _bVSAccess = bAcc;
 }
 
 //==============================================================================
@@ -922,6 +857,7 @@ void GFL_NET_SystemResetBattleChild(void)
 
 static void _dataMpStep(void)
 {
+#if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
 #if 0        // wifiは封印
@@ -942,7 +878,7 @@ static void _dataMpStep(void)
         }
         return;
     }
-
+#endif
 
     if( _pComm->device == _DEVICE_WIFI){
 #if 0  //wifi封印
@@ -979,11 +915,11 @@ static void _dataMpStep(void)
     else if(((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) &&
         (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
         if(_sendCallBack != _SEND_CB_FIRST_SENDEND){  // 1個送ったが送信完了していない
-//            NET_PRINT("うけとってない _sendCallBack\n");
+            NET_PRINT("うけとってない _sendCallBack\n");
             return;
         }
         if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-            NET_PRINT("親の同期待ち\n");
+//            NET_PRINT("親の同期待ち\n");
             return;
         }
         _setSendData(_pComm->sSendBuf);  // 送るデータをリングバッファから差し替える
@@ -1104,7 +1040,7 @@ static void _updateMpDataServer(void)
 static void _dataMpServerStep(void)
 {
     int i;
-
+#if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
 #if 0  //wifi lock
@@ -1124,7 +1060,7 @@ static void _dataMpServerStep(void)
             }
         }
     }
-
+#endif
     if( _pComm->device == _DEVICE_WIFI){
 #if 0 //wifi封印
         if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
@@ -1198,7 +1134,7 @@ static void _dataMpServerStep(void)
 }
 
 
-#define WIFI_DUMP_TEST
+//#define WIFI_DUMP_TEST
 
 
 //==============================================================================
@@ -1431,22 +1367,18 @@ static void _updateMpData(void)
                         NET_PRINT("failed WH_SendData\n");
                     }
                     else{
-//                        _pComm->sendSwitch = 1 - _pComm->sendSwitch;
                         _pComm->countSendRecv++; // MP送信
                     }
                 }
-                else if(GFL_NET_WLIsChildsConnecting()){         // サーバーとしての処理 自分以外の誰かにつながっている時
+                else{
+//                else if(GFL_NET_WLIsChildsConnecting()){         // サーバーとしての処理 自分以外の誰かにつながっている時
                     _sendCallBack++;
                     _sendCallbackFunc(TRUE);
                     // 子機のふりをする部分          // 親機は自分でコールバックを呼ぶ
                     _commRecvParentCallback(COMM_PARENT_ID, (u16*)_pComm->sSendBuf,
                                         mcSize);
-//                    _pComm->sendSwitch = 1 - _pComm->sendSwitch;
                     _pComm->countSendRecv++; // MP送信
                 }
-            }
-            else{
-//                NET_PRINT("sendCallBack != _SEND_CB_FIRST_SENDE\n");
             }
         }
     }
@@ -1532,13 +1464,6 @@ static void _setSendDataServer(u8* pSendBuff)
 
     pSendBuff[0] = _MP_DATA_HEADER;
 
-#ifdef PM_DEBUG
-    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        if(_sendDataNext != _pComm->bNextSendDataServer){
-            GF_ASSERT(0);
-        }
-    }
-#endif
 
     if(_pComm->bNextSendDataServer != FALSE){
         pSendBuff[0] |= _SEND_NEXT;  // 一回で送れない場合
@@ -1560,10 +1485,6 @@ static void _setSendDataServer(u8* pSendBuff)
                 _pComm->bNextSendDataServer = TRUE;
                 pSendBuff[2] = _SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER;
             }
-#ifdef PM_DEBUG
-            _sendDataNext = _pComm->bNextSendDataServer;
-#endif
-
         }
     }
 #if 0
@@ -1821,7 +1742,7 @@ int GFL_NET_SystemGetSendRestSize_ServerSide(void)
 
 static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
-    GFL_NET_CommandCallBack(netID, command, size, pTemp);
+    GFL_NET_CommandCallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
     pRecvComm->valCommand = GFL_NET_CMD_NONE;
     pRecvComm->valSize = 0xffff;
     pRecvComm->pRecvBuff = NULL;
@@ -1845,6 +1766,8 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
     u8 command;
     int bkPos;
     int realbyte;
+    int sendID;
+    int recvID;
 
     
     while( GFL_NET_RingDataSize(pRing) != 0 ){
@@ -1885,6 +1808,11 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
             }
             pRecvComm->valSize = size;
         }
+
+        pRecvComm->sendID = GFL_NET_RingGetByte(pRing);
+        pRecvComm->recvID = GFL_NET_RingGetByte(pRing);
+        bkPos = pRing->startPos; // ２個進める
+
         if(GFL_NET_CommandCreateBuffCheck(command)){  // 受信バッファがある場合
             if(pRecvComm->pRecvBuff==NULL){
                 pRecvComm->pRecvBuff = GFL_NET_CommandCreateBuffStart(command, netID, pRecvComm->valSize);
@@ -2403,7 +2331,7 @@ void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pDa
     NET_PRINT("CommRecvAutoExit 受信 \n");
     if(!GFL_NET_WLIsAutoExit()){
         if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
-            GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_AUTO_EXIT, &dummy);
+            GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_EXIT_REQ, &dummy);
         }
     }
     GFL_NET_WLSetAutoExit();

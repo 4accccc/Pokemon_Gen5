@@ -22,7 +22,7 @@
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int packetSizeMax, BOOL bEntry);
+extern BOOL GFL_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax, BOOL bEntry);
 //==============================================================================
 /**
  * @brief   子機の初期化を行う
@@ -33,7 +33,7 @@ extern BOOL GFL_NET_SystemParentModeInit(BOOL bAlloc, BOOL bTGIDChange, int pack
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemChildModeInit(BOOL bAlloc, BOOL bBconInit, int packetSizeMax);
+extern BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax);
 //==============================================================================
 /**
  * @brief   DSモードに切り替える

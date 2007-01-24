@@ -128,13 +128,13 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
     int cs = GFL_NET_CommandGetPacketSize(pQueue->command);
 
     if( cs == GFL_NET_COMMAND_SIZE_VARIABLE ){
-        if(pSendBuff->size < 3){
+        if(pSendBuff->size < _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS){
             pQueue->bHeadSet = FALSE;
             return TRUE;
         }
     }
     else{
-        if(pSendBuff->size < 1){
+        if(pSendBuff->size < _GFL_NET_QUEUE_HEADERBYTE){
             pQueue->bHeadSet = FALSE;
             return TRUE;
         }
@@ -147,6 +147,8 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
     else{
         pQueue->size = (u16)cs;
     }
+    _setSendData(pSendBuff,(u8)(pQueue->sendNo));
+    _setSendData(pSendBuff,(u8)(pQueue->recvNo));
     pQueue->bHeadSet = TRUE;
     return FALSE;
 }
@@ -170,10 +172,10 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
     int size;
     int cs = GFL_NET_CommandGetPacketSize(pQueue->command);
     if( cs == GFL_NET_COMMAND_SIZE_VARIABLE){
-        size = 3;
+        size = _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS;
     }
     else{
-        size = 1;
+        size = _GFL_NET_QUEUE_HEADERBYTE;
     }
     if((pSendBuff->size < (pQueue->size + size)) && (!bNextPlus)){  // ƒLƒ…[‚Ì‚Ù‚¤‚ª‚Å‚©‚¢ê‡
         return FALSE;

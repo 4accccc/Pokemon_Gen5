@@ -370,10 +370,10 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bAlloc)
+void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 {
 
-    GFL_NET_SystemChildModeInit(bAlloc, TRUE, 512);
+    GFL_NET_SystemChildModeInit(TRUE, 512);
 
     _CHANGE_STATE(_childConnecting, 0);
 }
@@ -402,7 +402,7 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
 {
-    GFL_NET_SystemChildModeInit(TRUE,TRUE,512);
+    GFL_NET_SystemChildModeInit(TRUE,512);
     _CHANGE_STATE(_childScanning, 0);
 }
 
@@ -452,8 +452,10 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
         return;
     }
 
-    if(GFL_NET_SystemParentModeInit(TRUE, TRUE, _PACKETSIZE_BATTLE,TRUE)){
+    if(GFL_NET_SystemParentModeInit(TRUE, _PACKETSIZE_BATTLE,TRUE)){
         GFL_NET_SystemSetTransmissonTypeDS();
+        pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
+        pNetHandle->creatureNo = 0;
         _CHANGE_STATE(_parentWait, 0);
     }
 }
@@ -476,10 +478,25 @@ void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID)
     _CHANGE_STATE(_parentInit, 0);
 }
 
+//==============================================================================
+/**
+ * 子機の終了を待ち、親機が終了する
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _stateEndParentWait(GFL_NETHANDLE* pNetHandle)
+{
+    if(!GFL_NET_WLIsChildsConnecting()){
+        _stateFinalize(pNetHandle);
+    }
+    _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
+}
 
 //==============================================================================
 /**
- * WIFI終了コマンド   子機が親機にやめるように送信 ぶっつりきる CS_WIFI_EXIT
+ * 終了コマンド 子機が親機にやめるように送信  全員の子機に送り返すGFL_NET_CMD_EXIT_REQ
  * @param   none
  * @retval  none
  */
@@ -488,6 +505,16 @@ void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID)
 void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     NET_PRINT("EXITコマンド受信\n");
+    if(!pNetHandle->pParent){
+        return;
+    }
+    NET_PRINT("EXITコマンド受信\n");
+
+    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_EXIT, NULL);
+
+    _CHANGE_STATE(_stateEndParentWait, 0);
+
+
 #if 0
     if(CommGetCurrentID() == COMM_PARENT_ID){
         _pCommState->disconnectIndex = 0;
@@ -503,6 +530,22 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 
 //==============================================================================
 /**
+ * 終了コマンド   子機が親機にやめるように送信 ぶっつりきる GFL_NET_CMD_EXIT
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
+        GFL_NET_Disconnect();
+    }
+}
+
+
+//==============================================================================
+/**
  * ネゴシエーション用コールバック CS_COMM_NEGOTIATION
  * @param   callback用引数
  * @retval  none
@@ -512,47 +555,27 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 //親機が受け取るわけなのでフラグを立てるのがいい
-    u8 retCmd = FALSE;
+    u8 retCmd[2];
+    const u8 *pGet = (const u8*)pData;
+    int i;
 
     if(!pNetHandle->pParent){
         return;
     }
-    if(pNetHandle->pParent->negoCheck[netID] == FALSE){
-        pNetHandle->pParent->negoCheck[netID] = TRUE;
-        retCmd = TRUE;
-    }
-    OS_TPrintf("------NegoRet を送信 %d\n",retCmd);
-    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, &retCmd);
-    
-#if 0
-    int i;
-    u8* pMsg = pData;
-    BOOL bMatch = TRUE;
+    retCmd[1] = pGet[0];
+    retCmd[0] = 0;
 
-    NET_PRINT("------CommRecvNegotiation\n");
-
-    if(CommGetCurrentID() != COMM_PARENT_ID){  // 親機のみ判断可能
-        return;
-    }
-    bMatch = TRUE;
-    for(i = 0; i < sizeof(_negotiationMsg); i++){
-        if(pMsg[i] != _negotiationMsg[i]){
-            bMatch = FALSE;
+    for(i = 1 ; i < GFL_NET_MACHINE_MAX;i++){
+        if(pNetHandle->pParent->negoCheck[i] == FALSE){
+            pNetHandle->pParent->negoCheck[i] = TRUE;
+            retCmd[0] = i;         //このiがIDになる
             break;
         }
     }
-    if(bMatch  && (!_pCommState->bUnionPause)){   // 子機から接続確認が来た
-//        if(CommGetConnectNum() <= _pCommState->limitNum){  // 指定接続人数より下回ること
-            NET_PRINT("------成功を送信 \n");
-            _negotiationMsgReturnOK[0] = netID;
-            CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnOK);
-            return;
-//        }
-    }
-    NET_PRINT("------失敗を送信 %d %d\n",bMatch,_pCommState->bUnionPause);
-    _negotiationMsgReturnNG[0] = netID;
-    CommSendFixSizeData_ServerSide(CS_COMM_NEGOTIATION_RETURN, _negotiationMsgReturnNG);
-#endif
+    OS_TPrintf("------NegoRet を送信 %d\n",retCmd[0]);
+    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, retCmd);
+    pNetHandle->negotiationID[i] = TRUE;
+
 }
 
 //==============================================================================
@@ -567,12 +590,14 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
 {
     const u8* pMsg = pData;
 
-    if(pMsg[0]==1){   // 親機から接続認証が来た
+    NET_PRINT("接続認証\n");
+    if(pNetHandle->creatureNo == pMsg[1]){   // 親機から接続認証が来た
+        NET_PRINT("接続認証 OK\n");
         pNetHandle->negotiation = _NEGOTIATION_OK;
+        pNetHandle->creatureNo = pMsg[0];
     }
-    else{
-        pNetHandle->negotiation = _NEGOTIATION_NG;
-    }
+    GF_ASSERT(pMsg[0] < GFL_NET_MACHINE_MAX);
+    pNetHandle->negotiationID[pMsg[0]]=TRUE;
 }
 
 //==============================================================================

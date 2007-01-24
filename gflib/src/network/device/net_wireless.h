@@ -97,7 +97,7 @@ extern void GFL_NET_WLChildBconDataInit(void);
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc );
+extern BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc );
 //==============================================================================
 /**
  * @brief   子機の接続開始を行う
@@ -109,7 +109,7 @@ extern BOOL GFL_NET_WLParentInit(BOOL bAlloc, BOOL bTGIDChange, BOOL bEntry, GFL
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_WLChildInit(BOOL bAlloc, BOOL bBconInit);
+extern BOOL GFL_NET_WLChildInit(BOOL bBconInit);
 
 //==============================================================================
 /**

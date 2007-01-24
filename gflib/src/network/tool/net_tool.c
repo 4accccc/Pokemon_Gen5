@@ -93,19 +93,23 @@ void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pDa
     int i;
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
-    if(GFL_NET_GetNetID(pNet) == COMM_PARENT_ID){
+    if(pNet->pParent){
         sendBuff[0] = netID;
         sendBuff[1] = syncNo;
         NET_PRINT("同期受信 %d %d\n",netID,syncNo);
         pCT->timingSyncBuff[netID] = syncNo;     // 同期コマンド用
         for(i = 0; i < GFL_NET_MACHINE_MAX; i++){
             if(GFL_NET_IsConnectMember(pNet, i)){
+                NET_PRINT("メンバ確認%d\n",i);
                 if(syncNo != pCT->timingSyncBuff[i]){
                     // 同期していない
+                    pCT->timingSendE = FALSE;
                     return;
                 }
             }
         }
+        NET_PRINT("メンバ確認完了\n");
+        pCT->timingSyncMy = syncNo;
         pCT->timingSendE = TRUE;
     }
 }
@@ -143,7 +147,7 @@ void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const void* 
  */
 //==============================================================================
 
-void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, u8 no)
+void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 {
     NET_TOOLSYS* _pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
@@ -175,6 +179,7 @@ void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet)
     }
     if(pCT->timingSendE){
         if(GFL_NET_SendData(pNet, GFL_NET_CMD_TIMING_SYNC_END, &pCT->timingSyncMy)){
+            NET_PRINT("同期終了を送信\n");
             pCT->timingSendE = FALSE;
         }
     }
@@ -190,10 +195,11 @@ void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet)
  */
 //==============================================================================
 
-BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, u8 no)
+BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
+    NET_PRINT("確認 %d\n",pCT->timingSyncEnd);
     if(pCT->timingSyncEnd == no){
         return TRUE;
     }
