@@ -13,19 +13,6 @@ enum {
 	GFL_BMPWIN_BITMODE_8 = 1
 };
 
-///領域管理構造体
-typedef struct {
-	u32	start;
-	u32	end;
-
-}GFL_BMPWIN_LIMIT;
-
-///ビットマップシステム設定構造体
-typedef struct {
-	GFL_BMPWIN_LIMIT	limit[ GFL_BG_FRAME_MAX ];
-
-}GFL_BMPWIN_SET;
-
 //----------------------------------------------------
 /**
  *  ハンドル構造体の型宣言
@@ -49,13 +36,12 @@ typedef struct _GFL_BMPWIN	GFL_BMPWIN;
 /**
  * システム初期化
  *
- * @param	set		使用領域設定構造体
  * @param	heapID	使用ヒープ領域
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_BMPWIN_sysInit
-		( GFL_BMPWIN_SET* set, u16 heapID );
+		( u16 heapID );
 //--------------------------------------------------------------------------------------------
 /**
  * システム終了
