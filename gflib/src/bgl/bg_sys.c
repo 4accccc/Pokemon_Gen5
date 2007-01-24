@@ -524,6 +524,17 @@ void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * BGñ ê›íË(ÇRÇcêÍópÅFBG0)
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_BG_BGControlSet3D( u8 priority )
+{
+	GFL_DISP_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+	G2_SetBG0Priority( priority );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * BGñ çƒê›íË
  *
  * @param	frmnum		ÇaÇfÉtÉåÅ[ÉÄî‘çÜ
