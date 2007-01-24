@@ -139,8 +139,8 @@ typedef struct {
 	s16 surface_sub_top;	// サブ　サーフェースの左上座標
 	u8	oamst_main;			// メイン画面OAM管理開始位置
 	u8	oamnum_main;		// メイン画面OAM管理数
-	u8	oamst_sub;			// メイン画面OAM管理開始位置
-	u8	oamnum_sub;			// メイン画面OAM管理数
+	u8	oamst_sub;			// サブ画面OAM管理開始位置
+	u8	oamnum_sub;			// サブ画面OAM管理数
 	u8	tr_cell;			// セルVram転送管理数
 } CLSYS_INIT;
 
