@@ -29,6 +29,9 @@ enum _testCommand_e {
     _TEST_VARIABLE_HUGE,
 };
 
+#define _TEST_HUGE_SIZE (5000)
+static u8 _dataPool[_TEST_HUGE_SIZE];  //大容量受信バッファ テスト用
+static u8 _dataSend[_TEST_HUGE_SIZE];  //大容量送信バッファ テスト用
 
 typedef struct{
     int gameNo;   ///< ゲーム種類
@@ -115,11 +118,18 @@ void TEST_NET_Main(void)
           case _TEST_4:
             {
                 const u8 buff[10]={1,2,3,4,5,6,7,8,9,10};
-
+                int i;
 //                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
 //                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
+//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
+                for(i=0;i<_TEST_HUGE_SIZE;i++){
+                    _dataSend[i] = (u8)i;
+                }
+//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                                   _TEST_HUGE, 0, _dataSend, FALSE, FALSE);
                 GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
-                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
+                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
 
             }
@@ -216,15 +226,16 @@ static int _getTestCommandSize(void)
 
 static void _testRecvHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    NET_PRINT("_testRecvHugeSize %d:  %d\n",__LINE__,size);
+    const u8* pBuff=pData;
+    NET_PRINT("_testRecvHugeSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[size-1]);
 }
 
 static void _testRecvVariableHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    NET_PRINT("_testRecvVariableHugeSize %d:  %d\n",__LINE__,size);
+    const u8* pBuff=pData;
+    NET_PRINT("_testRecvVariableHugeSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[size-1]);
 }
 
-static u8 _dataPool[5000];
 static u8* _getHugeMemoryPoolAddress(int netID, void* pWork, int size)
 {
     return _dataPool;
@@ -238,7 +249,7 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     // サイズ取得関数テスト
     {_testRecvGetSize,           _getTestCommandSize, NULL},
     // 大きなサイズテスト
-    {_testRecvHugeSize,          GFL_NET_COMMAND_SIZE( 1000 ), _getHugeMemoryPoolAddress},
+    {_testRecvHugeSize,          GFL_NET_COMMAND_SIZE( _TEST_HUGE_SIZE ), _getHugeMemoryPoolAddress},
     // 巨大な可変サイズのテスト
     {_testRecvVariableHugeSize,  GFL_NET_COMMAND_VARIABLE,      _getHugeMemoryPoolAddress},
 };
