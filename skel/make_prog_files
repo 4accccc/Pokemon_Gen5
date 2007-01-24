@@ -11,5 +11,6 @@ SRCS	+=		testmode.c \
 				tamada/bg/loader.c \
 				tamada/d_proc_bg.c \
 				tamada/debug_tamada.c \
+				tomoya/debug_tomoya.c
 				
 

@@ -55,8 +55,11 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #	ロムに含まれるファイルの指定
 #----------------------------------------------------------------------------
 GFLIBGRADIR	= src/gfl_graphic/
+D_TOMOYADIR = src/tomoya/
 
-FILE_TREE	= $(GFLIBGRADIR)gfl_font.dat
+FILE_TREE	= $(GFLIBGRADIR)gfl_font.dat \
+			  $(D_TOMOYADIR)hero.N*R
+			  
 
 #ロムファイルシステムのルートディレクトリ指定
 MAKEROM_ROMROOT  = ./src/
