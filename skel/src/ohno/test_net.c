@@ -192,7 +192,7 @@ void TEST_NET_Main(void)
         }
         OS_TPrintf("p %d\n",_testNo);
     }
-    GFL_NET_MainProc();
+    GFL_NET_sysMain();
 
 
 }
@@ -273,6 +273,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_SYSTEM,  //allocNo
     2,     // 最大接続人数
     _BCON_GET_NUM,    // 最大ビーコン収集数
+    TRUE,    //MP通信＝親子型通信モードかどうか
     TRUE,     // 通信を開始するかどうか
 };
 
@@ -280,7 +281,7 @@ GFLNetInitializeStruct aGFLNetInit = {
 void TEST_NET_Init(void)
 {
 
-    GFL_NET_Initialize(&aGFLNetInit, GFL_HEAPID_SYSTEM);
+    GFL_NET_sysInit(&aGFLNetInit, GFL_HEAPID_SYSTEM);
 
 }
 

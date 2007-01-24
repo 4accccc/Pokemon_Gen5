@@ -111,7 +111,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	GFL_UI_sysEnd();
+	GFL_UI_sysExit();
 	GFL_PROC_SysExit();
 	GFL_HEAP_DTCM_sysExit();
 	GFL_HEAP_sysExit();
