@@ -58,7 +58,7 @@ static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
 //--------------------------------------------------------------------------------------------
 void
 	GFL_BMPWIN_sysInit
-		( GFL_BMPWIN_SET* set, u16 heapID )
+		( u16 heapID )
 {
 	int	i;
 
