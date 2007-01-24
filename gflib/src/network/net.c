@@ -23,29 +23,30 @@
 #include "tool/net_tool.h"
 
 
+/// @brief  通信システム管理構造体
 struct _GFL_NETSYS{
-    GFLNetInitializeStruct aNetInit;  ///< 初期化構造体
-    GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
-
-    GFL_NETWL* pNetWL;
-    
+    GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
+    GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
+    GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
     int heapID;  ///< 通信の確保メモリーの場所
-    
-} ;
-
+};
 
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
 
 
-
-
-
-
+//==============================================================================
+/**
+ * @brief       netHandleを管理マネージャーに追加
+ * @param       pNet      通信システム管理構造体
+ * @param       pHandle   通信ハンドル
+ * @return      追加した番号
+ */
+//==============================================================================
 static int _addNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
 {
     int i;
 
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+    for(i = 0;i < GFL_NET_HANDLE_MAX; i++){
         if(pNet->pNetHandle[i] == NULL){
             pNet->pNetHandle[i] = pHandle;
             return i;
@@ -55,11 +56,19 @@ static int _addNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
     return 0;
 }
 
+//==============================================================================
+/**
+ * @brief       netHandleの番号を得る
+ * @param       pNet      通信システム管理構造体
+ * @param       pHandle   通信ハンドル
+ * @return      追加した番号
+ */
+//==============================================================================
 static int _numNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
 {
     int i;
 
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+    for(i = 0;i < GFL_NET_HANDLE_MAX; i++){
         if(pNet->pNetHandle[i] == pHandle){
             return i;
         }
@@ -67,14 +76,19 @@ static int _numNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
     return -1;
 }
 
-void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
+//==============================================================================
+/**
+ * @brief       netHandleを消す 非公開関数
+ * @param       pHandle   通信ハンドル
+ * @return      none
+ */
+//==============================================================================
+void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
 {
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-
-    
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         if(pNet->pNetHandle[i]==pHandle){
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
@@ -83,11 +97,18 @@ void GFL_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
     }
 }
 
+//==============================================================================
+/**
+ * @brief       netHandleを全て消す
+ * @param       pNet      通信システム管理構造体
+ * @return      none
+ */
+//==============================================================================
 static void _deleteAllNetHandle(GFL_NETSYS* pNet)
 {
     int i;
 
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
             GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
@@ -96,12 +117,26 @@ static void _deleteAllNetHandle(GFL_NETSYS* pNet)
     }
 }
 
+//==============================================================================
+/**
+ * @brief       idに沿ったnetHandleを出す  非公開関数
+ * @param       netID    id
+ * @return      netHandle
+ */
+//==============================================================================
 GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     return pNet->pNetHandle[netID];
 }
 
+//==============================================================================
+/**
+ * @brief       netHandle のstateハンドルを得る 非公開関数
+ * @param       pNet      通信システム管理構造体
+ * @return      PTRStateFunc
+ */
+//==============================================================================
 PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
 {
     return pHandle->state;
@@ -111,8 +146,7 @@ PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
 /**
  * @brief       自分のネゴシエーションがすんでいるかどうか
  * @param[in]   pHandle   通信ハンドル
- * @param[in]   netID     ネットID
- * @return      none
+ * @return      すんでいる場合TRUE   まだの場合FALSE
  */
 //==============================================================================
 BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
@@ -130,7 +164,6 @@ BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
  * @return      送信に成功したらTRUE
  */
 //==============================================================================
-
 BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
 {
     u8 id = GFL_NET_SystemGetCurrentID();
@@ -142,7 +175,7 @@ BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
- * @brief       toolのworkポインタを得る
+ * @brief       toolのworkポインタを得る 非公開関数
  * @param[in]   pHandle  通信ハンドル
  * @return      NET_TOOLSYSポインタ
  */
@@ -160,7 +193,7 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
  * @return none
  */
 //==============================================================================
-void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID)
+void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,int heapID)
 {
     GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETSYS));
     _pNetSys = pNet;
@@ -187,7 +220,7 @@ void GFL_NET_Initialize(const GFLNetInitializeStruct* pNetInit,int heapID)
  * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
  */
 //==============================================================================
-BOOL GFL_NET_Finalize(void)
+BOOL GFL_NET_sysExit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
@@ -244,12 +277,12 @@ u8* GFL_NET_GetBeaconMacAddress(int index)
 
 //==============================================================================
 /**
- * @brief   通信ハンドル分MainStatusをまわす
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
+ * @brief   通信のメイン実行関数
+ * @return  none
  */
 //==============================================================================
 
-void GFL_NET_MainProc(void)
+void GFL_NET_sysMain(void)
 {
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
@@ -364,7 +397,6 @@ BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id)
  * @retval  none
  */
 //==============================================================================
-//
 void GFL_NET_Disconnect(void)
 {
     int i,userNo = 0;
@@ -378,19 +410,6 @@ void GFL_NET_Disconnect(void)
     }
     GFL_NET_StateExit(pNet->pNetHandle[userNo]);
 }
-
-//==============================================================================
-/**
- * @brief   接続台数変更
- * @param   NetHandle* pNet     通信ハンドルのポインタ
- * @param   u8 num     変更数
- * @retval  none
- */
-//==============================================================================
-//void GFL_NET_SetClientConnectNum(GFL_NETHANDLE* pNet,u8 num)
-//{
-//    
-//}
 
 //==============================================================================
 /**

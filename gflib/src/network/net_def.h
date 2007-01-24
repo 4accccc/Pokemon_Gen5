@@ -57,10 +57,13 @@ typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 #define COMM_INVALID_ID  (0xff)
 
 
-// 機最大数
+/// 機最大数
 #define  GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)
 
-// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
+///   通信ハンドル最大数  子機全部＋親機 分
+#define  GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1)
+
+/// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
 #define GFL_NET_DATA_HEADER            (4)
 #define GFL_NET_CHILD_DATA_SIZE           (48)
 #define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
@@ -166,6 +169,9 @@ extern PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle);
 
 extern void _GFL_NET_SetNETWL(GFL_NETWL* pWL);
 
+extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
+
+extern void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 
 #endif
 

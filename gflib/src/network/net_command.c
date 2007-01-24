@@ -125,7 +125,7 @@ void GFL_NET_CommandCallBack(int netID, int recvID, int command, int size, void*
 
     OS_TPrintf("--- %d \n", netID);
 
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         pNetHandle = GFL_NET_GetNetHandle(i);
         if(!pNetHandle){
             continue;

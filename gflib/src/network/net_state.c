@@ -269,7 +269,7 @@ static BOOL _stateIsMove(GFL_NETHANDLE* pNetHandle)
 
 static void _handleDelete(GFL_NETHANDLE* pNetHandle)
 {
-    GFL_NET_DeleteNetHandle(pNetHandle);
+    GFI_NET_DeleteNetHandle(pNetHandle);
 }
 
 
@@ -298,6 +298,7 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     GFL_NET_WLInitialize(pNetIni->allocNo, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
                          pNetIni->beaconCompFunc);
 //    GFL_NET_WLStealth(FALSE);
+
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
     NET_PRINT("再起動    -- \n");
@@ -355,7 +356,6 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
     GFL_NET_WLParentBconCheck();
 
     if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
-
         _CHANGE_STATE(_childSendNego, _SEND_NAME_TIME);
     }
 
@@ -372,9 +372,14 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
     GFL_NET_SystemChildModeInit(TRUE, 512);
 
+    if(pNetIni->bMPMode){
+        GFL_NET_SystemSetTransmissonTypeMP();
+    }
+    
     _CHANGE_STATE(_childConnecting, 0);
 }
 
@@ -388,8 +393,12 @@ void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 
 static void _childScanning(GFL_NETHANDLE* pNetHandle)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
     GFL_NET_WLParentBconCheck();
 
+    if(pNetIni->bMPMode){
+        GFL_NET_SystemSetTransmissonTypeMP();
+    }
 }
 
 //==============================================================================
@@ -403,6 +412,10 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
 void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
 {
     GFL_NET_SystemChildModeInit(TRUE,512);
+
+
+
+
     _CHANGE_STATE(_childScanning, 0);
 }
 
@@ -448,12 +461,19 @@ static void _parentWait(GFL_NETHANDLE* pHandle)
 
 static void _parentInit(GFL_NETHANDLE* pNetHandle)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
     if(!GFL_NET_WLIsVRAMDInitialize()){
         return;
     }
 
     if(GFL_NET_SystemParentModeInit(TRUE, _PACKETSIZE_BATTLE,TRUE)){
-        GFL_NET_SystemSetTransmissonTypeDS();
+        if(pNetIni->bMPMode){
+            GFL_NET_SystemSetTransmissonTypeMP();
+        }
+        else{
+            GFL_NET_SystemSetTransmissonTypeDS();
+        }
         pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
         pNetHandle->creatureNo = 0;
         _CHANGE_STATE(_parentWait, 0);

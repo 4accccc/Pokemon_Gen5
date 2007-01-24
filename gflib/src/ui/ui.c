@@ -104,7 +104,7 @@ void GFI_UI_sysEnd(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_sysEnd(void)
+void GFL_UI_sysExit(void)
 {
     GFI_UI_sysEnd(_pUI);
 }

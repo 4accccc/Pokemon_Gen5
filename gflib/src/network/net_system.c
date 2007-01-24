@@ -626,7 +626,8 @@ void GFL_NET_SystemSetTransmissonTypeDS(void)
 //==============================================================================
 void GFL_NET_SystemSetTransmissonTypeMP(void)
 {
-    _commSetTransmissonType(_MP_MODE);
+    //_commSetTransmissonType(_MP_MODE);
+    _pComm->transmissionType = _MP_MODE;
 }
 
 //==============================================================================
