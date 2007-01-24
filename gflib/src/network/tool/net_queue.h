@@ -20,7 +20,7 @@ struct _SEND_QUEUE{
     u8* pData;     ///< データアドレス
     SEND_QUEUE* prev;      ///< 手前のキュー
     SEND_QUEUE* next;      ///< 次のキュー
-    u16 size;     ///< サイズ
+    int size;     ///< サイズ
     u8 command;   ///< コマンド
     u8 sendNo;    ///< 送る人
     u8 recvNo;    ///< 受け取る人

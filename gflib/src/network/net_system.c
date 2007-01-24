@@ -1760,7 +1760,7 @@ static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMA
  */
 //==============================================================================
 
-static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL bDebug, _RECV_COMMAND_PACK* pRecvComm)
+static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
     int size;
     u8 command;
@@ -1784,9 +1784,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
         bkPos = pRing->startPos;
         pRecvComm->valCommand = command;
 //        NET_PRINT("c %d\n",command);
-        if(bDebug){
-            NET_PRINT(">>>cR %d %d %d\n", bkPos, GFL_NET_RingDataSize(pRing), command);
-        }
+        NET_PRINT(">>>cR %d %d %d\n", pRecvComm->valSize, GFL_NET_RingDataSize(pRing), command);
         if(pRecvComm->valSize != 0xffff){
             size = pRecvComm->valSize;
         }
@@ -1807,18 +1805,18 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
                 bkPos = pRing->startPos; // ２個進める
             }
             pRecvComm->valSize = size;
+            pRecvComm->sendID = GFL_NET_RingGetByte(pRing);
+            pRecvComm->recvID = GFL_NET_RingGetByte(pRing);
+            bkPos = pRing->startPos; // ２個進める
         }
 
-        pRecvComm->sendID = GFL_NET_RingGetByte(pRing);
-        pRecvComm->recvID = GFL_NET_RingGetByte(pRing);
-        bkPos = pRing->startPos; // ２個進める
 
         if(GFL_NET_CommandCreateBuffCheck(command)){  // 受信バッファがある場合
             if(pRecvComm->pRecvBuff==NULL){
                 pRecvComm->pRecvBuff = GFL_NET_CommandCreateBuffStart(command, netID, pRecvComm->valSize);
             }
             realbyte = GFL_NET_RingGets(pRing, pTemp, size - pRecvComm->dataPoint);
-//            OHNO_SP_PRINT("id %d -- rest %d\n",netID, size - pRecvComm->dataPoint);
+            NET_PRINT("id %d -- rest %d\n",netID, size - pRecvComm->dataPoint);
             if(pRecvComm->pRecvBuff){
                 MI_CpuCopy8(pTemp, &pRecvComm->pRecvBuff[pRecvComm->dataPoint], realbyte);
             }
@@ -1829,14 +1827,12 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, BOOL 
         }
         else{
             if( GFL_NET_RingDataSize(pRing) >= size ){
-                if(bDebug){
-                    NET_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
-                }
+                NET_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
                 GFL_NET_RingGets(pRing, pTemp, size);
                 _endCallBack(netID, command, size, (void*)pTemp, pRecvComm);
             }
             else{   // まだ届いていない大きいデータの場合ぬける
-                //            NET_PRINT("結合待ち command %d size %d\n",command,size);
+                NET_PRINT("結合待ち command %d size %d\n",command,size);
                 pRing->startPos = bkPos;
                 break;
             }
@@ -1876,7 +1872,7 @@ static void _recvDataFunc(void)
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
 #endif
 //        NET_PRINT("子機解析 %d \n",id);
-        _recvDataFuncSingle(&_pComm->recvRing, id, _pComm->pTmpBuff, TRUE, &_pComm->recvCommClient);
+        _recvDataFuncSingle(&_pComm->recvRing, id, _pComm->pTmpBuff, &_pComm->recvCommClient);
 #if 0
         NET_PRINT("解析 %d %d-%d\n",id,
                    _pComm->recvRing.startPos,_pComm->recvRing.endPos);
@@ -1920,15 +1916,9 @@ static void _recvDataServerFunc(void)
             NET_PRINT("親機が子機%dを解析\n",id);
 #endif
 #if 0
-    //        NET_PRINT("DS解析 %d\n",id);
+            NET_PRINT("DS解析 %d\n",id);
 #endif
-            // 一個前の位置を変数に保存しておく
-//            MI_CpuCopy8(&_pComm->recvServerRing[id],
-  //                      &_pComm->recvServerRingUndo[id],
-    //                    sizeof(RingBuffWork));
-      //      GFL_NET_RingStartPush(&_pComm->recvServerRingUndo[id]); //start位置を保存
-//            NET_PRINT("親機が子機%dを解析\n",id);
-            _recvDataFuncSingle(&_pComm->recvServerRing[id], id, _pComm->pTmpBuff, FALSE, &_pComm->recvCommServer[id]);
+            _recvDataFuncSingle(&_pComm->recvServerRing[id], id, _pComm->pTmpBuff, &_pComm->recvCommServer[id]);
         }
     }
 }
