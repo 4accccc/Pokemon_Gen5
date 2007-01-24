@@ -236,22 +236,22 @@ static GFL_G3D_RES*
 	//リソース管理ハンドル作成
 	GFL_G3D_RES* g3Dres = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RES) );
 
-	OS_Printf("3D_resource check now...\n");
+	//OS_Printf("3D_resource check now...\n");
 	//ファイルタイプの判別
 	switch( *(u32*)&header[0] )
 	{
 		case NNS_G3D_SIGNATURE_NSBMD:
-			OS_Printf("nsbmd file check...\n");
+			//OS_Printf("nsbmd file check...\n");
 			if( NNS_G3dGetTex( header ) == NULL ){
-				OS_Printf("this 3D_resource is model_data\n");
+				//OS_Printf("this 3D_resource is model_data\n");
 				g3Dres->type = RES_TYPE_MDL;	//モデリングデータ内包
 			} else {
-				OS_Printf("this 3D_resource is model_data & texture_data\n");
+				//OS_Printf("this 3D_resource is model_data & texture_data\n");
 				g3Dres->type = RES_TYPE_MDLTEX;	//モデリングおよびテクスチャデータ内包
 			}
 			break;
 		case NNS_G3D_SIGNATURE_NSBTX:
-			OS_Printf("this 3D_resource is texture_data\n");
+			//OS_Printf("this 3D_resource is texture_data\n");
 			g3Dres->type = RES_TYPE_TEX;		//テクスチャデータ内包
 			break;
 		case NNS_G3D_SIGNATURE_NSBCA:
@@ -259,18 +259,18 @@ static GFL_G3D_RES*
 		case NNS_G3D_SIGNATURE_NSBMA:
 		case NNS_G3D_SIGNATURE_NSBTP:
 		case NNS_G3D_SIGNATURE_NSBTA:
-			OS_Printf("this 3D_resource is animetion_data\n");
+			//OS_Printf("this 3D_resource is animetion_data\n");
 			g3Dres->type = RES_TYPE_ANM;		//ファイル内にアニメーションデータ内包
 			break;
 		default:
-			OS_Printf("this 3D_resource is unknown\n");
+			//OS_Printf("this 3D_resource is unknown\n");
 			g3Dres->type = RES_TYPE_UNKNOWN;	//不明なデータ
 			break;
 	}
 	g3Dres->magicnum = G3DRES_MAGICNUM;
 	//ファイルポインタの設定
 	g3Dres->file = ( void* )header;
-	OS_Printf("3D_resource is loaded\n");
+	//OS_Printf("3D_resource is loaded\n");
 
 	return g3Dres;
 }
@@ -288,6 +288,7 @@ GFL_G3D_RES*
 		OS_Panic("please setup 3D_system_manager (GFL_G3D_ResourceCreateArc)\n");
 		return NULL;
 	}
+	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadMalloc( arcID, datID, g3Dman->heapID );
 
@@ -307,7 +308,7 @@ GFL_G3D_RES*
 		OS_Panic("please setup 3D_system_manager (GFL_G3D_ResourceCreateArc)\n");
 		return NULL;
 	}
-	OS_Printf("3D_resource loading...\n");
+	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブファイルからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadFilePathMalloc( path, datID, g3Dman->heapID );
 
