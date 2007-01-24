@@ -21,6 +21,15 @@
 // NETのテスト
 //------------------------------------------------------------------
 
+// ローカル通信コマンドの定義
+enum _testCommand_e {
+    _TEST_VARIABLE = GFL_NET_CMD_COMMAND_MAX,
+    _TEST_GETSIZE,
+    _TEST_HUGE,
+    _TEST_VARIABLE_HUGE,
+};
+
+
 typedef struct{
     int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
@@ -51,7 +60,9 @@ enum{
     _TEST_CONNECT,
     _TEST_CONNECT2,
     _TEST_1,
+    _TEST_4,
     _TEST_2,
+    _TEST_3,
     _TEST_END,
 
 };
@@ -59,6 +70,7 @@ enum{
 
 static int _testNo = 0;
 static GFL_NETHANDLE* _pHandle=NULL;
+#define _TEST_TIMING (12)
 
 void TEST_NET_Main(void)
 {
@@ -74,63 +86,96 @@ void TEST_NET_Main(void)
             }
         }
     }
+
+    // クライアント側のテスト
     if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
                 _pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ClientConnect(_pHandle );
-//                GFL_NET_ClientConnectTo(_pHandle, mac, TRUE);
+                GFL_NET_ClientConnect(_pHandle );    // ビーコンを待つ
+//                GFL_NET_ClientConnectTo(_pHandle, mac);  //macアドレスへ接続
             }
             _testNo++;
             break;
           case _TEST_CONNECT2:
             {
-                u8* pData = GFL_NET_GetBeaconMacAddress(0);
+                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
                 if(pData){
-                    GFL_NET_ClientConnectTo(_pHandle, pData,FALSE);
+                    GFL_NET_ClientConnectTo(_pHandle, pData);
                 }
             }
             _testNo++;
             break;
           case _TEST_1:
-            {
-                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_NEGOTIATION,NULL);
-                OS_TPrintf("send %d\n",ret);
-            }
+            GFL_NET_NegotiationRequest( _pHandle );
             _testNo++;
             break;
 
-          case _TEST_2:
+          case _TEST_4:
             {
-                u8 send=12;
-                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_TIMING_SYNC,&send);
-                OS_TPrintf("send %d\n",ret);
+                const u8 buff[10]={1,2,3,4,5,6,7,8,9,10};
+
+//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
+                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
+
+
             }
             _testNo++;
             break;
+            
+
+
+          case _TEST_2:
+            {
+                u8 send = _TEST_TIMING;
+//                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_TIMING_SYNC,&send);
+//                OS_TPrintf("send %d\n",ret);
+                GFL_NET_TimingSyncStart(_pHandle, send);
+            }
+            _testNo++;
+            break;
+          case _TEST_3:
+            if(GFL_NET_IsTimingSync(_pHandle,_TEST_TIMING)){
+                NET_PRINT("タイミング取れた\n");
+                _testNo++;
+            }
+            else{
+                NET_PRINT("タイミングは取れてない\n");
+            }
+            break;
           case _TEST_END:
-            GFL_NET_Disconnect();
+            // その場で切断
+         //   GFL_NET_Disconnect();
+            // 通信で全員を切断
+            GFL_NET_SendData(_pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
             _testNo++;
             break;
         }
         OS_TPrintf("c %d\n",_testNo);
     }
+    // サーバー側のテスト
     if(PAD_BUTTON_R == GFL_UI_KeyGetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
                 GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ServerConnect(pHandle);
-                pHandle = GFL_NET_CreateHandle();
-
-                
-                
+                GFL_NET_ServerConnect(pHandle);   // サーバ
+                _pHandle = GFL_NET_CreateHandle();  // クライアント
             }
             _testNo++;
             break;
           case _TEST_CONNECT2:
+            GFL_NET_NegotiationRequest( _pHandle );
+            _testNo++;
+            break;
           case _TEST_1:
+            GFL_NET_TimingSyncStart(_pHandle, _TEST_TIMING);
+            _testNo = _TEST_END;
+            break;
+          case _TEST_END:
             GFL_NET_Disconnect();
             _testNo++;
             break;
@@ -150,9 +195,62 @@ static u8* _netGetSSID(void)
 }
 
 
+// 可変サイズ受信
+static void _testRecvVariable(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const u8* pBuff=pData;
+    NET_PRINT("_testRecvVariable %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[9]);
+}
+
+
+static void _testRecvGetSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const u8* pBuff=pData;
+    NET_PRINT("_testRecvGetSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[9]);
+}
+
+static int _getTestCommandSize(void)
+{
+    return 12;
+}
+
+static void _testRecvHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    NET_PRINT("_testRecvHugeSize %d:  %d\n",__LINE__,size);
+}
+
+static void _testRecvVariableHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    NET_PRINT("_testRecvVariableHugeSize %d:  %d\n",__LINE__,size);
+}
+
+static u8 _dataPool[5000];
+static u8* _getHugeMemoryPoolAddress(int netID, void* pWork, int size)
+{
+    return _dataPool;
+}
+
+
+// ローカル通信テーブル
+static const NetRecvFuncTable _CommPacketTbl[] = {
+    // 可変サイズテスト
+    {_testRecvVariable,          GFL_NET_COMMAND_VARIABLE, NULL},
+    // サイズ取得関数テスト
+    {_testRecvGetSize,           _getTestCommandSize, NULL},
+    // 大きなサイズテスト
+    {_testRecvHugeSize,          GFL_NET_COMMAND_SIZE( 1000 ), _getHugeMemoryPoolAddress},
+    // 巨大な可変サイズのテスト
+    {_testRecvVariableHugeSize,  GFL_NET_COMMAND_VARIABLE,      _getHugeMemoryPoolAddress},
+};
+
+
+
+
 // 通信初期化構造体
 GFLNetInitializeStruct aGFLNetInit = {
-    NULL,  // 受信関数テーブル
+    _CommPacketTbl,  // 受信関数テーブル
+    NELEMS(_CommPacketTbl), // 受信テーブル要素数
+    NULL,   // ワークポインタ
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
