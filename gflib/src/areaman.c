@@ -722,7 +722,7 @@ void
 			bytes = bits / 8;
 			rem = bits % 8;
 
-			GF_ASSERT( (man->area[pos] & (~BackFillBit[p])) == BackFillBit[p] );
+			GF_ASSERT( (man->area[pos] & (BackFillBit[p])) == BackFillBit[p] );
 			man->area[pos++] &= (~BackFillBit[p]);
 
 			while(bytes--)
@@ -731,7 +731,7 @@ void
 				man->area[pos++] = 0x00;
 			}
 
-			GF_ASSERT( (man->area[pos] & (~FwdFillBit[rem])) == FwdFillBit[rem] );
+			GF_ASSERT( (man->area[pos] & (FwdFillBit[rem])) == FwdFillBit[rem] );
 			man->area[pos] &= (~FwdFillBit[rem]);
 		}
 	}
