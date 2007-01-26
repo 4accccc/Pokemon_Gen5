@@ -95,17 +95,18 @@ void TEST_NET_Main(void)
           case _TEST_CONNECT:
             {
                 _pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ClientConnect(_pHandle );    // ビーコンを待つ
+//                GFL_NET_ClientConnect(_pHandle );    // ビーコンを待つ
 //                GFL_NET_ClientConnectTo(_pHandle, mac);  //macアドレスへ接続
+                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
             _testNo++;
             break;
           case _TEST_CONNECT2:
             {
-                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
-                if(pData){
-                    GFL_NET_ClientConnectTo(_pHandle, pData);
-                }
+//                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
+//                if(pData){
+//                    GFL_NET_ClientConnectTo(_pHandle, pData);
+//                }
             }
             _testNo++;
             break;
@@ -170,9 +171,11 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-                _pHandleServer = GFL_NET_CreateHandle();
-                GFL_NET_ServerConnect(_pHandleServer);   // サーバ
+//                _pHandleServer = GFL_NET_CreateHandle();
+//                GFL_NET_ServerConnect(_pHandleServer);   // サーバ
                 _pHandle = GFL_NET_CreateHandle();  // クライアント
+
+                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
             _testNo++;
             break;
