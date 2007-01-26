@@ -8,7 +8,7 @@
 //=============================================================================
 
 #include "gflib.h"
-#include "net.h"
+
 #include "net_def.h"
 #include "net_system.h"
 #include "net_command.h"
@@ -130,7 +130,7 @@ void GFL_NET_CommandCallBack(int netID, int recvID, int command, int size, void*
         if(!pNetHandle){
             continue;
         }
-        if((recvID != NET_SENDID_ALLUSER) && (i != recvID)){  // 受信者が違う場合continue
+        if((recvID != GFL_NET_SENDID_ALLUSER) && (i != recvID)){  // 受信者が違う場合continue
             continue;
         }
         bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
@@ -289,7 +289,8 @@ static void _commCommandRecvThrowOut(const int netID, const int size, const void
             return;
         }
     }
-    GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_THROWOUT_REQ, NULL, 0);
+//    GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_THROWOUT_REQ, NULL, 0);
+    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_THROWOUT_REQ, NULL);
 }
 
 //==============================================================================

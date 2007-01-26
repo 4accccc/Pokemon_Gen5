@@ -14,7 +14,6 @@
 #include <nitro/cht.h>
 
 #include "wh.h"
-#include "net.h"
 #include "gf_standard.h"
 #include "net_wireless.h"
 

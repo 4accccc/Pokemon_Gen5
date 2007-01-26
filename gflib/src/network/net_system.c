@@ -11,7 +11,6 @@
 
 #include "device/wh_config.h"
 
-#include "net.h"
 #include "net_def.h"
 #include "device/net_wireless.h"
 #include "net_system.h"
@@ -1180,7 +1179,6 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
     _pComm->bFirstCatchP2C = FALSE;
 
     _pComm->bitmap = adr[1];
-    recvSize = adr[2];  // MP受信サイズ
 
     if(_transmissonType() == _DS_MODE){
         int mcSize = _getUserMaxSendByte();
@@ -1204,11 +1202,18 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
         }
     }
     else{   //MPデータ
+
+        recvSize = adr[2]*256;  // MP受信サイズ
+        recvSize += adr[3];  // MP受信サイズ
+
         if((_pComm->bFirstCatchP2C) && (adr[0] & _SEND_NEXT)){
             // まだ一回もデータをもらったことがない状態なのに連続データだった
             NET_PRINT("連続データ child %d \n",aid);
             DEBUG_DUMP((u8*)data,24,"cr");
             return;
+        }
+        if(recvSize!=0){
+            DEBUG_DUMP(&adr[0], _SEND_BUFF_SIZE_CHILD,"MP");
         }
         adr += GFL_NET_DATA_HEADER;      // ヘッダー１バイト読み飛ばす + Bitmapでーた + サイズデータ
         GFL_NET_RingPuts(&_pComm->recvRing , adr, recvSize);
@@ -1457,8 +1462,6 @@ static BOOL _setSendData(u8* pSendBuff)
  */
 //==============================================================================
 
-
-
 static void _setSendDataServer(u8* pSendBuff)
 {
     int i;
@@ -1472,6 +1475,7 @@ static void _setSendDataServer(u8* pSendBuff)
 
     {
         u16 bitmap = GFL_NET_WL_GetBitmap();
+        int size;
         pSendBuff[1] = bitmap;
 
         {
@@ -1480,12 +1484,14 @@ static void _setSendDataServer(u8* pSendBuff)
             buffData.pData = &pSendBuff[GFL_NET_DATA_HEADER];
             if(GFL_NET_QueueGetData(&_pComm->sendQueueMgrServer, &buffData, FALSE)){
                 _pComm->bNextSendDataServer = FALSE;
-                pSendBuff[2] = (_SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER) - buffData.size;
+                size = (_SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER) - buffData.size;
             }
             else{
                 _pComm->bNextSendDataServer = TRUE;
-                pSendBuff[2] = _SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER;
+                size = _SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER;
             }
+            pSendBuff[2] = (size >> 8) & 0xff;
+            pSendBuff[3] = size & 0xff;
         }
     }
 #if 0
@@ -1496,48 +1502,7 @@ static void _setSendDataServer(u8* pSendBuff)
 
 //==============================================================================
 /**
- * @brief   子機送信メソッド  大きいサイズのデータを送信する
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size)
-{
-    if(!GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()) && !GFL_NET_SystemGetAloneMode()){
-        //        NET_PRINT("接続してなくて送れなかった\n");
-        return FALSE;   // 通信状態が悪い場合送らない
-    }
-    if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE,0xf,0xf)){
-//        if(25 == command){
-            //OHNO_SP_PRINT("%d ",GFL_NET_SystemGetCurrentID());
-            //DEBUG_DUMP((u8*)data,size,"poke");
-  //      }
-#if 0
-        NET_PRINT("<<<送信 NetId=%d -- size%d ",GFL_NET_SystemGetCurrentID(), size);
-        GFL_NET_CommandDebugPrint(command);
-#endif
-        return TRUE;
-    }
-#ifdef DEBUG_ONLY_FOR_ohno
-    NET_PRINT("-キュ- %d %d\n",GFL_NET_SystemGetCurrentID(),
-               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
-    GF_ASSERT(0);
-#endif
-//    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        GFL_NET_SystemSetError();
-//    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief   子機送信メソッド
- * 親機がデータを子機全員に送信するのは別関数
+ * @brief   送信メソッド
  * @param   command    comm_sharing.hに定義したラベル
  * @param   data       送信したいデータ ない時はNULL
  * @param   size       送信量    コマンドだけの場合0
@@ -1552,6 +1517,7 @@ BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast,
 {
     int bSave=TRUE;
     int cSize = GFL_NET_CommandGetPacketSize(command);
+    SEND_QUEUE_MANAGER* pMgr;
 
     NET_PRINT("< 送信 %d %d\n", command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
 
@@ -1563,150 +1529,19 @@ BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast,
         bSave = FALSE;
     }
     if((_transmissonType() == _MP_MODE) && (myID == 0)){
-        if(bSave){
-            return GFL_NET_SystemSendData_ServerSide(command,data,size);
-        }
-        else{
-            return GFL_NET_SystemSendHugeData_ServerSide(command,data,size);
-        }
+        pMgr = &_pComm->sendQueueMgrServer;
     }
     else{
-        if(GFL_NET_QueuePut(&_pComm->sendQueueMgr, command,
-                            (u8*)data, cSize, bFast, bSave, myID, sendID)){
-            return TRUE;
-        }
+        pMgr = &_pComm->sendQueueMgr;
+    }
+    if(GFL_NET_QueuePut(pMgr, command, (u8*)data, cSize, bFast, bSave, myID, sendID)){
+        return TRUE;
     }
     NET_PRINT("-キュー無い-");
     GFL_NET_SystemSetError();
     return FALSE;
 }
 
-//==============================================================================
-/**
- * @brief   親機送信メソッド  大きいサイズのデータを送信する  サイズ固定
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendFixHugeSizeData_ServerSide(int command, const void* data)
-{
-    return GFL_NET_SystemSendHugeData_ServerSide(command, data, 0);
-}
-
-//==============================================================================
-/**
- * @brief   親機送信メソッド  大きいサイズのデータを送信する
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendHugeData_ServerSide(int command, const void* data, int size)
-{
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){  // 親機以外は使えない
-        GF_ASSERT(0 && "親以外は使用不可");
-        return FALSE;
-    }
-    if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
-//        NET_PRINT("接続してなくて送れなかった\n");
-        return FALSE;   // 通信状態が悪い場合送らない
-    }
-    if(_transmissonType() == _DS_MODE){
-        NET_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
-        return GFL_NET_SystemSendHugeData(command, data, size);
-    }
-
-    if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE,0xf,0xf)){
-#if 0
-        NET_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
-        GFL_NET_CommandDebugPrint(command);
-//        DEBUG_DUMP(pSend, size, "S送信");
-#endif
-        return TRUE;
-    }
-#ifdef DEBUG_ONLY_FOR_ohno
-    NET_PRINT("-キュ無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
-               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
-    GF_ASSERT(0);
-#endif
-//    if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        GFL_NET_SystemSetError();
-//    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief   親機専用サーバー送信メソッド
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendData_ServerSide(int command, const void* data, int size)
-{
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){  // 親機以外は使えない
-        GFL_NET_SystemSetError();
-//        GF_ASSERT(0 && "親以外は使用不可");
-        return FALSE;
-    }
-    if(!GFL_NET_SystemIsConnect(COMM_PARENT_ID)  && !GFL_NET_SystemGetAloneMode()){
-        NET_PRINT("接続してなくて送れなかった\n");
-        return FALSE;   // 通信状態が悪い場合送らない
-    }
-    if(_transmissonType() == _DS_MODE){
-        NET_PRINT("WARRNING: DS通信状態なのにサーバー送信が使われた\n");
-        return FALSE;
-//        return GFL_NET_SystemSendData(command, data, size);
-    }
-
-    if(GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, TRUE,0xf,0xf)){
-
-//        NET_PRINT("qnum %d %d\n",command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
-
-#if 0
-        NET_PRINT("<<S送信 id=%d size=%d ",GFL_NET_SystemGetCurrentID(), size);
-        GFL_NET_CommandDebugPrint(command);
-//        DEBUG_DUMP(pSend, size, "S送信");
-#endif
-        return TRUE;
-    }
-#ifdef DEBUG_ONLY_FOR_ohno
-    NET_PRINT("キュー無い- %d %d\n",GFL_NET_SystemGetCurrentID(),
-               GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgrServer));
-    GF_ASSERT(0);
-#endif
-    //if(CommStateGetServiceNo() == COMM_MODE_UNDERGROUND){
-        GFL_NET_SystemSetError();
-    //}
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief   親機専用サーバー送信メソッド サイズ固定版
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendFixSizeData_ServerSide(int command, const void* data)
-{
-    return GFL_NET_SystemSendData_ServerSide(command, data, 0);
-}
 
 //==============================================================================
 /**
@@ -2181,19 +2016,6 @@ u16 GFL_NET_SystemGetCurrentID(void)
     return COMM_PARENT_ID;
 }
 
-//==============================================================================
-/**
- * @brief   汎用送信メソッド  送信サイズ固定でしかも大きい場合
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-BOOL GFL_NET_SystemSendFixHugeSizeData(int command, const void* data)
-{
-    return GFL_NET_SystemSendHugeData(command, data, 0);
-}
 
 //==============================================================================
 /**
@@ -2322,7 +2144,7 @@ void GFL_NET_SystemRecvAutoExit(const int netID, const int size, const void* pDa
     NET_PRINT("CommRecvAutoExit 受信 \n");
     if(!GFL_NET_WLIsAutoExit()){
         if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){   // 自分が親の場合みんなに逆返信する
-            GFL_NET_SystemSendFixSizeData_ServerSide(GFL_NET_CMD_EXIT_REQ, &dummy);
+            GFL_NET_SendData(pNetHandle,GFL_NET_CMD_EXIT_REQ, &dummy);
         }
     }
     GFL_NET_WLSetAutoExit();

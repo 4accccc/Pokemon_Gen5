@@ -15,7 +15,6 @@
 
 #include "wh.h"
 #include "wh_config.h"
-#include "net.h"
 #include "net_wireless.h"
 #include "gf_standard.h"
 

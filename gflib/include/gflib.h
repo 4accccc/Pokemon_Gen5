@@ -30,6 +30,8 @@
 
 #include "arc_util.h"
 #include "fade.h"
+#include "net.h"
+#include "ui.h"
 
 /*  */
 

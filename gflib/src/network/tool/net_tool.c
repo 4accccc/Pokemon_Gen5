@@ -8,7 +8,7 @@
 //=============================================================================
 
 #include "gflib.h"
-#include "net.h"
+
 #include "../net_def.h"
 #include "net_tool.h"
 #include "../net_command.h"
@@ -102,6 +102,7 @@ void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pDa
             if(GFL_NET_IsConnectMember(pNet, i)){
                 NET_PRINT("メンバ確認%d\n",i);
                 if(syncNo != pCT->timingSyncBuff[i]){
+                    NET_PRINT("メンバ確認 同期してない%d %d %d\n", i, syncNo, pCT->timingSyncBuff[i]);
                     // 同期していない
                     pCT->timingSendE = FALSE;
                     return;

@@ -11,7 +11,6 @@
 
 #include "device/wh_config.h"
 
-#include "net.h"
 #include "net_def.h"
 #include "device/net_wireless.h"
 #include "net_system.h"
@@ -287,6 +286,9 @@ void GFL_NET_sysMain(void)
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    if(pNet==NULL){
+        return;
+    }
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
             GFL_NET_StateMainProc(pNet->pNetHandle[i]);
@@ -466,7 +468,7 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
     return GFL_NET_SystemSendData(sendCommand, data, 0,
-                                  FALSE, pNet->creatureNo ,NET_SENDID_ALLUSER);
+                                  FALSE, pNet->creatureNo ,GFL_NET_SENDID_ALLUSER);
 }
 
 //==============================================================================

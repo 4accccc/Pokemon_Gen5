@@ -131,18 +131,6 @@ extern void GFL_NET_SystemRecvParentCallback(u16 aid, u16 *data, u16 size);
 extern void GFL_NET_SystemActionCommandSet(void);
 //==============================================================================
 /**
- * 子機送信メソッド  大きいサイズのデータを送信する
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size);
-//==============================================================================
-/**
  * 子機送信メソッド
  * 親機がデータを子機全員に送信するのは別関数
  * @param   command    comm_sharing.hに定義したラベル
@@ -155,50 +143,6 @@ extern BOOL GFL_NET_SystemSendHugeData(int command, const void* data, int size);
  */
 //==============================================================================
 extern BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast, int myID, int sendID);
-//==============================================================================
-/**
- * 親機送信メソッド  大きいサイズのデータを送信する  サイズ固定
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendFixHugeSizeData_ServerSide(int command, const void* data);
-//==============================================================================
-/**
- * 親機送信メソッド  大きいサイズのデータを送信する
- *     バックアップしないので dataの中身を書き換えると、
- *     書き換えたものを送ってしまう可能性がある
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendHugeData_ServerSide(int command, const void* data, int size);
-//==============================================================================
-/**
- * 親機専用サーバー送信メソッド
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendData_ServerSide(int command, const void* data, int size);
-//==============================================================================
-/**
- * 親機専用サーバー送信メソッド サイズ固定版
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendFixSizeData_ServerSide(int command, const void* data);
 //==============================================================================
 /**
  * 送信バッファ残り容量

@@ -13,7 +13,6 @@
 
 #include "device/wh_config.h"
 
-#include "net.h"
 #include "net_def.h"
 #include "device/net_wireless.h"
 #include "net_system.h"
@@ -563,7 +562,6 @@ void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pDa
     }
 }
 
-
 //==============================================================================
 /**
  * ネゴシエーション用コールバック CS_COMM_NEGOTIATION
@@ -574,7 +572,7 @@ void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pDa
 
 void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-//親機が受け取るわけなのでフラグを立てるのがいい
+    // 親機が受け取ってフラグを立てる
     u8 retCmd[2];
     const u8 *pGet = (const u8*)pData;
     int i;
