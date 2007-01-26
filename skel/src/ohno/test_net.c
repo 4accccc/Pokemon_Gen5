@@ -12,8 +12,6 @@
 #include "procsys.h"
 #include "gf_standard.h"
 #include "test_net.h"
-#include "net.h"
-#include "ui.h"
 
 #define _BCON_GET_NUM  (1)
 
@@ -73,6 +71,7 @@ enum{
 
 static int _testNo = 0;
 static GFL_NETHANDLE* _pHandle=NULL;
+static GFL_NETHANDLE* _pHandleServer=NULL;
 #define _TEST_TIMING (12)
 
 void TEST_NET_Main(void)
@@ -119,16 +118,16 @@ void TEST_NET_Main(void)
             {
                 const u8 buff[10]={1,2,3,4,5,6,7,8,9,10};
                 int i;
-//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
 //                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
-//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
 //                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
                 for(i=0;i<_TEST_HUGE_SIZE;i++){
                     _dataSend[i] = (u8)i;
                 }
-//                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
 //                                   _TEST_HUGE, 0, _dataSend, FALSE, FALSE);
-                GFL_NET_SendDataEx(_pHandle,NET_SENDID_ALLUSER,
+                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
                                    _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
 
@@ -171,8 +170,8 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-                GFL_NETHANDLE* pHandle = GFL_NET_CreateHandle();
-                GFL_NET_ServerConnect(pHandle);   // サーバ
+                _pHandleServer = GFL_NET_CreateHandle();
+                GFL_NET_ServerConnect(_pHandleServer);   // サーバ
                 _pHandle = GFL_NET_CreateHandle();  // クライアント
             }
             _testNo++;
@@ -192,7 +191,6 @@ void TEST_NET_Main(void)
         }
         OS_TPrintf("p %d\n",_testNo);
     }
-    GFL_NET_sysMain();
 
 
 }
@@ -273,7 +271,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_SYSTEM,  //allocNo
     2,     // 最大接続人数
     _BCON_GET_NUM,    // 最大ビーコン収集数
-    TRUE,    //MP通信＝親子型通信モードかどうか
+    TRUE,     // MP通信＝親子型通信モードかどうか
     TRUE,     // 通信を開始するかどうか
 };
 

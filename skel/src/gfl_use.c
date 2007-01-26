@@ -15,7 +15,6 @@
 #include "main.h"
 
 #include "gfl_use.h"
-#include "ui.h"
 #include "procsys.h"
 
 //=============================================================================================
@@ -87,6 +86,7 @@ void GFLUser_Init(void)
 void GFLUser_Main(void)
 {
 	GFL_UI_sysMain();
+    GFL_NET_sysMain();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
 	GFL_PROC_SysMain();
 }
