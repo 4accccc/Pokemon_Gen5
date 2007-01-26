@@ -29,6 +29,7 @@ extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID);
+extern void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,int heapID);
 extern void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);

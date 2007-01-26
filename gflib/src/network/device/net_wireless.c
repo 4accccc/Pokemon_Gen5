@@ -76,6 +76,8 @@ struct _NET_WL_WORK{
     u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
     u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
+    GFL_NETHANDLE* pNetHandle;
+    _PARENTFIND_CALLBACK pCallback;
     int heapID;
     u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
   //  u8 regulationNo;   ///< ゲームレギュレーション
@@ -547,6 +549,7 @@ BOOL GFL_NET_WLSwitchParentChild(void)
     switch(pNetWL->bEndScan){
       case 0:
         if(WH_IsSysStateScan()){
+            NET_PRINT("スキャンを消す------1\n");
             WH_EndScan();
             pNetWL->bEndScan = 1;
             break;
@@ -560,6 +563,7 @@ BOOL GFL_NET_WLSwitchParentChild(void)
         break;
       case 1:
         if(!WH_IsSysStateBusy()){
+            NET_PRINT("終了処理----2\n");
             WH_Finalize();
             pNetWL->bEndScan = 2;
         }
@@ -826,6 +830,15 @@ int GFL_NET_WLGetNextConnectIndex(void)
     return i;
 }
 
+static void _parentFindCallback(WMBssDesc* pBeacon)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+
+    if(pNetWL->pCallback){
+        pNetWL->pCallback(pNetWL->pNetHandle);
+    }
+}
+
 //==============================================================================
 /**
  * @brief   子機　MP状態で接続
@@ -833,7 +846,7 @@ int GFL_NET_WLGetNextConnectIndex(void)
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_WLChildIndexConnect(u16 index)
+BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     int serviceNo;
@@ -846,7 +859,10 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index)
         NET_PRINT("子機 接続開始 WH_ChildConnect\n");
         serviceNo = pNetWL->serviceNo;
         pNetWL->channel = pNetWL->sBssDesc[index].channel;
-        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
+        pNetWL->bEndScan = 0;
+        pNetWL->pNetHandle = pNetHandle;
+        pNetWL->pCallback = pCallback;
+        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid, 0, _parentFindCallback);
 //      WH_ChildConnect(WH_CONNECTMODE_MP_CHILD, &(pNetWL->sBssDesc[index]));
 //        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
         return TRUE;
@@ -861,17 +877,20 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index)
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress)
+BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    
+
     if (WH_GetSystemState() == WH_SYSSTATE_SCANNING) {
         (void)WH_EndScan();
         return FALSE;
     }
     if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
         NET_PRINT("子機 接続開始\n");
-        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0);
+        pNetWL->bEndScan = 0;
+        pNetWL->pNetHandle = pNetHandle;
+        pNetWL->pCallback = pCallback;
+        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0, _parentFindCallback);
         return TRUE;
     }
     return FALSE;

@@ -36,6 +36,17 @@ extern BOOL GFL_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax, BO
 extern BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax);
 //==============================================================================
 /**
+ * @brief   子機の初期化を行う+ 接続にすぐ行く
+ * @param   work_area 　システムで使うメモリー領域
+ *                      NULLの場合はすでに初期化済みとして扱う
+ * @param   regulationNo  ゲームの種類
+ * @param   bBconInit  ビーコンデータを初期化するのかどうか
+ * @retval  初期化に成功したらTRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_SystemChildModeInitAndConnect(int packetSizeMax,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle);
+//==============================================================================
+/**
  * @brief   DSモードに切り替える
  * @retval  none
  */
@@ -71,7 +82,7 @@ extern void GFL_NET_SystemFinalize(void);
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemChildIndexConnect(u16 index);
+extern BOOL GFL_NET_SystemChildIndexConnect(u16 index,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief   通信データの更新処理  データを収集

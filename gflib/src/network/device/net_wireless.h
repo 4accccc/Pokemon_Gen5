@@ -18,6 +18,7 @@ typedef void (*GFL_NET_ConnectionCallBack) (int aid);
 typedef struct _WM_INFO_STRUCT  GFL_NETWM;
 
 
+
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
@@ -199,8 +200,8 @@ extern int GFL_NET_WLGetNextConnectIndex(void);
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_WLChildIndexConnect(u16 index);
-extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress);
+extern BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
+extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
 
 //==============================================================================
 /**

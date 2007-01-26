@@ -546,7 +546,7 @@ extern BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc);
 
   Returns:     接続シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-extern BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel);
+extern BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel,WHStartScanCallbackFunc sScanCallback);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_SetJudgeAcceptFunc

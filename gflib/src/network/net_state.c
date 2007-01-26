@@ -140,6 +140,7 @@ typedef struct{
 
 static void _changeStateDebug(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time, int line);  // ステートを変更する
 static void _changeState(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time);  // ステートを変更する
+static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle);
 
 #ifdef GFL_NET_DEBUG
 #if 1
@@ -342,6 +343,22 @@ static void _childSendNego(GFL_NETHANDLE* pNetHandle)
    // }
 }
 
+
+//==============================================================================
+/**
+ * 親機ビーコンを拾った場合のコールバック
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _parentFindCallback(GFL_NETHANDLE* pNetHandle)
+{
+    if(pNetHandle){
+        pNetHandle->timer+=60;  //子機時間を延長
+    }
+}
+
 //==============================================================================
 /**
  * 子機待機状態  親機に許可もらい中
@@ -354,7 +371,7 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 {
     GFL_NET_WLParentBconCheck();
 
-    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
+    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress,_parentFindCallback,pNetHandle)){
         _CHANGE_STATE(_childSendNego, _SEND_NAME_TIME);
     }
 
@@ -479,7 +496,6 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
     }
 }
 
-
 //==============================================================================
 /**
  * 親としての通信処理開始
@@ -495,6 +511,205 @@ void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID)
     GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
 
     _CHANGE_STATE(_parentInit, 0);
+}
+//==============================================================================
+/**
+ * 子機再スタート
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
+{
+    u32 rand;
+    
+    if(!GFL_NET_WLIsStateIdle()){  // 終了処理がきちんと終わっていることを確認
+        return;
+    }
+    // 今度はビーコンを残したまま
+
+    if(GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle)){
+//    if(GFL_NET_SystemChildModeInit(FALSE,512)){
+        rand = MATH_Rand32(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME/2))+(_CHILD_P_SEARCH_TIME/2);
+        NET_PRINT("子機開始 %d \n",rand);
+        _CHANGE_STATE(_changeoverChildSearching, rand);
+    }
+}
+
+//==============================================================================
+/**
+ * 親機になりbcon放出
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+
+static void _changeoverParentRestart(GFL_NETHANDLE* pNetHandle)
+{
+    if( GFL_NET_WLSwitchParentChild() ){
+        _CHANGE_STATE(_changeoverChildRestart, 0);
+        NET_PRINT("親機おわり\n");
+    }
+}
+
+
+//==============================================================================
+/**
+ * ここから先エラーの検査を通信が処理するかどうかを設定
+ * @param   bFlg  TRUEで検査開始
+ * @retval  none
+ */
+//==============================================================================
+
+static BOOL _getErrorCheck(GFL_NETHANDLE* pNetHandle)
+{
+    if(pNetHandle->stateError!=0){
+        return TRUE;
+    }
+    return pNetHandle->bErrorAuto;
+}
+
+
+//==============================================================================
+/**
+ * 親として接続中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+static void _changeoverParentConnect(GFL_NETHANDLE* pNetHandle)
+{
+
+    if(!_getErrorCheck(pNetHandle)){
+        if(!GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながってないばあいもう一回
+            NET_PRINT("親機しっぱい\n");
+            if( GFL_NET_WLSwitchParentChild() ){
+                _CHANGE_STATE(_changeoverChildRestart, 0);
+            }
+        }
+    }
+    else{
+        if(GFL_NET_SystemIsError()){
+            NET_PRINT("------エラーの場合Reset\n");
+//            _CHANGE_STATE(_ChildReset, 0);   //@@OO
+            return;
+        }
+    }
+}
+
+
+
+//==============================================================================
+/**
+ * 親機になりbcon放出
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+
+static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
+{
+    if(GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながったら親機固定
+
+        NET_PRINT("親機 -- つながり\n");
+//        _pCommState->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
+        //WirelessIconEasy();  //@@OO
+        _CHANGE_STATE(_changeoverParentConnect, 0);
+        return;
+    }
+
+    if(GFL_NET_WLIsParentBeaconSent()){  // ビーコンを送り終わったらしばらく待つ
+        if(pNetHandle->timer!=0){
+            pNetHandle->timer--;
+            return;
+        }
+    }
+    else{
+        return;
+    }
+    _CHANGE_STATE(_changeoverParentRestart, 0);
+}
+
+
+//==============================================================================
+/**
+ * 親機開始
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
+{
+    if(!GFL_NET_WLIsStateIdle()){  // 終了処理がきちんと終わっていることを確認
+        return;
+    }
+    // 親機になってみる
+    if(GFL_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_UNION,TRUE))  {
+        pNetHandle->bFirstParent = FALSE;
+        NET_PRINT("親機\n");
+        _CHANGE_STATE(_changeoverParentWait, 30);
+    }
+}
+
+//==============================================================================
+/**
+ * 子機となって親機を探し中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle)
+{
+    int realParent;
+
+    GFL_NET_WLParentBconCheck();  // bconの検査
+
+    if(GFL_NET_SystemGetCurrentID()!=COMM_PARENT_ID){  // 子機として接続が完了した
+        NET_PRINT("子機になった\n");
+        _CHANGE_STATE(_stateNone, 0);
+        return;
+    }
+
+    if(pNetHandle->timer != 0){
+        NET_PRINT("time %d\n",pNetHandle->timer);
+        pNetHandle->timer--;
+        return;
+    }
+
+    if(!GFL_NET_WLSwitchParentChild()){
+        return;
+    }
+    NET_PRINT("子機おわり\n");
+    _CHANGE_STATE(_changeoverParentInit, 0);
+}
+
+//==============================================================================
+/**
+ * 親子自動切り替え通信処理開始
+ * @param   pNetHandle  ハンドル
+ * @param   heapID      HEAPID
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,int heapID)
+{
+
+
+//    GFL_NET_SystemChildModeInit(TRUE,512);
+    GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle);
+    
+//    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
+
+
+    _CHANGE_STATE(_changeoverChildSearching, 30);
+
+
 }
 
 //==============================================================================
@@ -1846,6 +2061,56 @@ static void _unionChildFinalize(void)
     _CHANGE_STATE(_unionParentInit, 0);
 }
 
+
+
+//==============================================================================
+/**
+ * 親機になりbcon放出
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+
+static void _changeoverParentRestart(void)
+{
+    if( CommMPSwitchParentChild() ){
+        _CHANGE_STATE(_unionChildRestart, 0);
+        NET_PRINT("親機おわり\n");
+    }
+}
+
+
+
+//==============================================================================
+/**
+ * 親機になりbcon放出
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+
+static void _changeoverParentWait(void)
+{
+    if(GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながったら親機固定
+
+        NET_PRINT("親機 -- つながり\n");
+//        _pCommState->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
+        //WirelessIconEasy();  //@@OO
+        _CHANGE_STATE(_unionParentConnect, 0);
+        return;
+    }
+
+    if(TRUE != GFL_NET_WLIsParentBeaconSent()){  // ビーコンを送り終わったらしばらく待つ
+        if(_pCommState->timer!=0){
+            _pCommState->timer--;
+            return;
+        }
+    }
+    _CHANGE_STATE(_changeoverParentRestart, 0);
+}
+
 //==============================================================================
 /**
  * 親機開始
@@ -1862,10 +2127,10 @@ static void _unionParentInit(void)
     // 親機になってみる
     if(CommParentModeInit(FALSE, _pCommState->bFirstParent, _PACKETSIZE_UNION,TRUE))  {
         u32 rand = MATH_Rand32(&_pCommState->sRand, _PARENT_WAIT_TIME*2);
-        CommSetTransmissonTypeDS();
+//        CommSetTransmissonTypeDS();
         _pCommState->bFirstParent = FALSE;
         NET_PRINT("親機\n");
-        _CHANGE_STATE(_unionParentWait, 10000);
+        _CHANGE_STATE(_changeoverParentWait, 15);
     }
 }
 
@@ -1879,7 +2144,7 @@ static void _unionParentInit(void)
 
 static void _unionParentWait(void)
 {
-    if(CommMPIsParentBeaconSent()){  // ビーコンを送り終わったら子機に切り替わる
+    if(GFL_NET_WLIsParentBeaconSent()){  // ビーコンを送り終わったら子機に切り替わる
     }
     else{
         if(CommIsChildsConnecting()){   // 自分以外がつながったら親機固定

@@ -242,6 +242,14 @@ extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
  */
 //==============================================================================
 extern void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle);
+//==============================================================================
+/**
+ * @brief    親機子機を繰り返し、誰でもいいので接続する
+ * @param    GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle);
 
 //==============================================================================
 /**

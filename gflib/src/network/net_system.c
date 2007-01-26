@@ -544,6 +544,34 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax)
 
 //==============================================================================
 /**
+ * @brief   子機の初期化を行う+ 接続にすぐ行く
+ * @param   work_area 　システムで使うメモリー領域
+ *                      NULLの場合はすでに初期化済みとして扱う
+ * @param   regulationNo  ゲームの種類
+ * @param   bBconInit  ビーコンデータを初期化するのかどうか
+ * @retval  初期化に成功したらTRUE
+ */
+//==============================================================================
+BOOL GFL_NET_SystemChildModeInitAndConnect(int packetSizeMax,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle)
+{
+    BOOL ret = TRUE;
+    u8 mac[6]={0xff,0xff,0xff,0xff,0xff,0xff};
+
+//    ret = GFL_NET_WLChildInit(bBconInit);
+//    ret = GFL_NET_WLChildMacAddressConnect(mac);
+
+    GFL_NET_WLSetRecvCallback( _commRecvCallback );
+
+    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
+    _sendCallBack = _SEND_CB_FIRST_SENDEND;
+
+    ret = GFL_NET_WLChildMacAddressConnect(mac,pCallback,pHandle);
+    return ret;
+}
+
+
+//==============================================================================
+/**
  * @brief   通信モード切替
  * @param   none
  * @retval  none
@@ -708,9 +736,9 @@ void GFL_NET_SystemFinalize(void)
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_SystemChildIndexConnect(u16 index)
+BOOL GFL_NET_SystemChildIndexConnect(u16 index,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle)
 {
-    return GFL_NET_WLChildIndexConnect(index);
+    return GFL_NET_WLChildIndexConnect(index, pCallback, pHandle);
 }
 
 

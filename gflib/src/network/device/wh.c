@@ -1327,7 +1327,7 @@ static void WH_StateOutEndParent(void *arg)
                           0‚È‚ç‚Î‚·‚×‚Ä‚Ìƒ`ƒƒƒ“ƒlƒ‹‚ðŒŸõ‚·‚éB
                           
    ---------------------------------------------------------------------- */
-BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
+BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel,WHStartScanCallbackFunc sScanCallback)
 {
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     WH_TRACE_STATE(pNetWH->sSysState);
@@ -1356,7 +1356,7 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
     pNetWH->sConnectMode = mode;
 
 
-    pNetWH->sScanCallback = NULL;
+    pNetWH->sScanCallback = sScanCallback;
     pNetWH->sChannelIndex = channel;
     pNetWH->sScanParam.channel = 0;
     pNetWH->sAutoConnectFlag = TRUE;
@@ -1606,6 +1606,7 @@ BOOL WH_EndScan(void)
     {
         return FALSE;
     }
+    pNetWH->sAutoConnectFlag = FALSE;
 
     WH_ChangeSysState(WH_SYSSTATE_BUSY);
     return TRUE;
@@ -1763,6 +1764,7 @@ static void WH_StateOutStartChild(void *arg)
     WMStartConnectCallback *cb = (WMStartConnectCallback *)arg;
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     WH_TRACE_STATE(pNetWH->sSysState);
+    NET_PRINT("errcode %d %d\n",cb->errcode,cb->state);
 
     if (cb->errcode != WM_ERRCODE_SUCCESS)
     {
@@ -3819,7 +3821,7 @@ BOOL WHIsParentBeaconSent(void)
 {
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     if(pNetWH){
-        return (pNetWH->stateBeaconSentNum >= 6);
+        return (pNetWH->stateBeaconSentNum != 0);
     }
     return FALSE;
 }

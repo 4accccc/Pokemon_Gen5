@@ -33,6 +33,8 @@ typedef void (*PTRSendDataCallback)(BOOL result);
 /// コールバック関数の書式 内部ステート遷移用
 typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 
+/// ビーコンを拾ったときに呼ばれるコールバック関数
+typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 
 #define _SCAN_ALL_CHANNEL  (0)  ///< スキャンするチャンネルをランダムで行う場合０に設定する
@@ -106,19 +108,21 @@ typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
 
 /// ネットワークハンドル
 struct _GFL_NETHANDLE{
-    NET_TOOLSYS* pTool;  ///< netTool
-    NET_PARENTSYS* pParent; ///< 親の情報を保持するポインタ
-    PTRStateFunc state; ///< ハンドルのプログラム状態
-    MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
-    u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
-    u8 negotiationID[(GFL_NET_MACHINE_MAX/8)+(0!=(GFL_NET_MACHINE_MAX%8))]; ///< 接続しているハンドルの状態
-    u8 machineNo;       ///< マシン番号
-    u8 serviceNo;       ///< 通信サービス番号
-    u16 timer;          ///< 進行タイマー
-    u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
-    u8 limitNum;        ///< 受付制限したい場合のLIMIT数
-    u8 negotiation;     ///< 通信受付の状態
-    u8 creatureNo;     ///< 子機としての
+  NET_TOOLSYS* pTool;  ///< netTool
+  NET_PARENTSYS* pParent; ///< 親の情報を保持するポインタ
+  PTRStateFunc state; ///< ハンドルのプログラム状態
+  MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
+  u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
+  u8 negotiationID[(GFL_NET_MACHINE_MAX/8)+(0!=(GFL_NET_MACHINE_MAX%8))]; ///< 接続しているハンドルの状態
+  u8 machineNo;       ///< マシン番号
+  u8 serviceNo;       ///< 通信サービス番号
+  u16 timer;          ///< 進行タイマー
+  u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
+  u8 limitNum;        ///< 受付制限したい場合のLIMIT数
+  u8 negotiation;     ///< 通信受付の状態
+  u8 creatureNo;     ///< 子機としての
+  u8 stateError;
+  u8 bErrorAuto;
 };
 
 enum _negotiationType {
