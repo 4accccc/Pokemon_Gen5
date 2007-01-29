@@ -18,9 +18,6 @@
 //==============================================================================
 //  static定義
 //==============================================================================
-static void _commCommandRecvThrowOut(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
-static void _commCommandRecvThrowOutReq(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
-static void _commCommandRecvThrowOutEnd(const int netID, const int size, const void* pData, void* pWork,GFL_NETHANDLE* pNetHandle);
 
 
 //==============================================================================
@@ -38,12 +35,9 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {GFL_NET_StateRecvExitStart,            GFL_NET_COMMAND_SIZE( 0 ), NULL},
     {GFL_NET_StateRecvNegotiation,         GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_StateRecvNegotiationReturn,   GFL_NET_COMMAND_SIZE( 2 ), NULL},
-    {GFL_NET_SystemRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_SystemRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_SystemRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {_commCommandRecvThrowOut,    GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {_commCommandRecvThrowOutReq, GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {_commCommandRecvThrowOutEnd, GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_StateRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_StateRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_StateRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_ToolRecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_ToolRecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
 };
@@ -242,112 +236,5 @@ void* GFL_NET_CommandCreateBuffStart(int command,int netID, int size)
         return func(netID, _pCommandWork->pWork, size);
     }
     return NULL;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   コマンドテーブルの廃棄
- * @param   none
- * @retval  受付完了したらTRUE
- */
-//--------------------------------------------------------------
-
-BOOL GFL_NET_CommandThrowOut(void)
-{
-    if(_pCommandWork==NULL){
-        OS_TPanic("no init");
-    }
-    _pCommandWork->bThrowOuted = FALSE;
-    return GFL_NET_SystemSendFixData(GFL_NET_CMD_THROWOUT);
-}
-
-
-//==============================================================================
-/**
- * コマンド廃棄コールバック
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commCommandRecvThrowOut(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
-        return;
-    }
-//    NET_PRINT("CommRecvDSMPChange 受信\n");
-    // 全員に切り替え信号を送る
-    _pCommandWork->bThrowOutReq[netID] = TRUE;
-    for(i = 0 ; i < GFL_NET_MACHINE_MAX; i++){
-        if(!GFL_NET_SystemIsConnect(i)){
-            continue;
-        }
-        if(!_pCommandWork->bThrowOutReq[i]){
-            return;
-        }
-    }
-//    GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_THROWOUT_REQ, NULL, 0);
-    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_THROWOUT_REQ, NULL);
-}
-
-//==============================================================================
-/**
- * コマンド廃棄実行コールバック
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commCommandRecvThrowOutReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    _pCommandWork->pCommPacket = NULL;
-    _pCommandWork->listNum = 0;
-    _pCommandWork->pWork = NULL;
-    _pCommandWork->bThrowOuted = TRUE;
-
-    GFL_NET_SendData(pNetHandle,GFL_NET_CMD_THROWOUT_END,pData);
-
-//    GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_THROWOUT_END,pData);
-}
-
-//==============================================================================
-/**
- * コマンド廃棄完了コールバック
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commCommandRecvThrowOutEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
-        return;
-    }
-    _pCommandWork->bThrowOutReq[netID] = FALSE;
-}
-
-//==============================================================================
-/**
- * コマンド交換できたかどうかを確認する
- * @retval  TRUE 交換完了
- * @retval  FALSE 完了していない
- */
-//==============================================================================
-
-BOOL GFL_NET_CommandIsThrowOuted(void)
-{
-    if(_pCommandWork){
-        return _pCommandWork->bThrowOuted;
-    }
-    return FALSE;
 }
 

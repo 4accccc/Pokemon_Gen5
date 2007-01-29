@@ -93,6 +93,16 @@ extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 extern int GFL_NET_ToolGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
 
+//==============================================================================
+/**
+ * @brief   DSMPモード変更のMain関数
+ * @param   pNet  通信ハンドル
+ * @return  noen
+ */
+//==============================================================================
+extern void GFL_NET_ToolTransmissonMain(GFL_NETHANDLE* pNet);
+
+
 #endif //__NET_TOOL_H__
 
 

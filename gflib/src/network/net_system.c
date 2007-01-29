@@ -206,7 +206,7 @@ static void _queueSet(int restSize);
 static void _queueSetServer(int restSize);
 static void _spritDataSendFunc(void);
 
-static void _transmission(void);
+//static void _transmission(void);
 static u16 _getUserMaxSendByte(void);
 
 
@@ -583,18 +583,6 @@ static void _transmissonTypeChange(void)
     int i;
     BOOL bChange = FALSE;
 
-    // 遅延してる時に変更しないようにした
-    if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
-        if(_sendCallBackServer != _SEND_CB_FIRST_SENDEND){
-            return;
-        }
-    }
-    else{
-        if(_sendCallBack != _SEND_CB_FIRST_SENDEND){
-            return;
-        }
-    }
-    
     if(_pComm->transmissionType == _CHANGE_MODE_DSMP){
         _pComm->transmissionType = _MP_MODE;
         bChange=TRUE;
@@ -605,12 +593,8 @@ static void _transmissonTypeChange(void)
         bChange=TRUE;
         NET_PRINT("DSモードになりました\n");
     }
-    if(bChange){
-        _commCommandInitChange2(); // コマンド全部消し
-        NET_PRINT("send Recv %d %d %d \n",_pComm->countSendRecv,_pComm->countSendRecvServer[0],_pComm->countSendRecvServer[1]);
-    }
 
-    _transmission();
+//    _transmission();
 
 }
 
@@ -653,8 +637,20 @@ void GFL_NET_SystemSetTransmissonTypeDS(void)
 //==============================================================================
 void GFL_NET_SystemSetTransmissonTypeMP(void)
 {
-    //_commSetTransmissonType(_MP_MODE);
-    _pComm->transmissionType = _MP_MODE;
+    _commSetTransmissonType(_MP_MODE);
+   // _pComm->transmissionType = _MP_MODE;
+}
+
+//==============================================================================
+/**
+ * @brief   指定モードに切り替える
+ * @param   DSかMPかの指定モード
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_SystemSetTransmissonType(int type)
+{
+    _commSetTransmissonType(type);
 }
 
 //==============================================================================
@@ -1884,6 +1880,7 @@ BOOL GFL_NET_SystemIsInitialize(void)
  */
 //==============================================================================
 
+#if 0
 BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int size)
 {
     if(_transmissonType() == _DS_MODE){
@@ -1893,6 +1890,7 @@ BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int si
         return GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE,0xf,0xf);
     }
 }
+#endif
 
 //==============================================================================
 /**
@@ -1909,7 +1907,7 @@ BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int si
 //{
 //    return GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, FALSE, FALSE);
 //}
-
+#if 0
 enum{
     _TRANS_NONE,
     _TRANS_LOAD,
@@ -2014,6 +2012,7 @@ void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, const void
         _pComm->transmissionNum = _TRANS_NONE;
     }
 }
+#endif
 
 //==============================================================================
 /**

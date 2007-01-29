@@ -12,6 +12,7 @@
 #include "../net_def.h"
 #include "net_tool.h"
 #include "../net_command.h"
+#include "../net_system.h"
 
 //==============================================================================
 // staticéŒ¾

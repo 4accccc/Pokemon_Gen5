@@ -35,9 +35,6 @@ enum CommCommand_e {
   GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
   GFL_NET_CMD_DSMP_CHANGE_REQ,        ///< DSモード通信かMPモード通信かに切り替える指示を出す
   GFL_NET_CMD_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
-  GFL_NET_CMD_THROWOUT,       ///< コマンドを破棄する許可を得る
-  GFL_NET_CMD_THROWOUT_REQ,   ///< コマンドを破棄する指示を出す
-  GFL_NET_CMD_THROWOUT_END,   ///< コマンド破棄完了したことを通知-----
   GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド
   GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
   //------------------------------------------------ここまで----------

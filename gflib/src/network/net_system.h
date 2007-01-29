@@ -61,6 +61,14 @@ extern void GFL_NET_SystemSetTransmissonTypeDS(void);
 extern void GFL_NET_SystemSetTransmissonTypeMP(void);
 //==============================================================================
 /**
+ * @brief   指定モードに切り替える
+ * @param   DSかMPかの指定モード
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_SystemSetTransmissonType(int type);
+//==============================================================================
+/**
  * @brief   現在 DSモードかどうか
  * @param   none
  * @retval  TRUEならDS
@@ -203,7 +211,7 @@ extern BOOL GFL_NET_SystemIsInitialize(void);
  * @retval  送信キューに入ったかどうか
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int size);
+//extern BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int size);
 //==============================================================================
 /**
  * クライアント側から親機に送る場合 送信キューへの追加

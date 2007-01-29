@@ -67,7 +67,7 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 /// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
 #define GFL_NET_DATA_HEADER            (4)
-#define GFL_NET_CHILD_DATA_SIZE           (48)
+#define GFL_NET_CHILD_DATA_SIZE           (40)
 #define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
 
 
@@ -123,6 +123,8 @@ struct _GFL_NETHANDLE{
   u8 creatureNo;     ///< 子機としての
   u8 stateError;
   u8 bErrorAuto;
+  u8 dsmpChange;        ///< 通信モード変更
+  u8 dsmpChangeType;    ///< 通信モード変更タイプ
 };
 
 enum _negotiationType {

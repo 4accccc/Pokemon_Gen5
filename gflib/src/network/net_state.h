@@ -36,9 +36,16 @@ extern void GFL_NET_StateRecvNegotiation(const int netID, const int size, const 
 extern void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle);
 
+extern void GFL_NET_StateTransmissonMain(GFL_NETHANDLE* pNet);
+extern void GFL_NET_StateRecvDSMPChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void GFL_NET_StateRecvDSMPChangeReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
-extern BOOL CommStateIsInitialize(void);
+extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
 
+//extern BOOL CommStateIsInitialize(void);
+
+#if 0
 // バトル時に親になる場合の処理開始
 extern void CommStateEnterBattleParent(int serviceNo, int regulationNo, BOOL bWifi);
 // バトル時に子になる場合の処理開始
@@ -164,9 +171,8 @@ extern void DWClibWarningCall( int heapID, int error_msg_id );
 extern BOOL CommStateSetError(int no);
 
 
-extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
 
-
+#endif
 
 #endif //__NET_STATE_H__
 

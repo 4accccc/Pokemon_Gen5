@@ -223,6 +223,9 @@ BOOL GFL_NET_sysExit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    if(GFL_NET_SystemIsInitialize()){
+        return FALSE;
+    }
     _deleteAllNetHandle(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;
@@ -291,10 +294,11 @@ void GFL_NET_sysMain(void)
     }
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
-            GFL_NET_StateMainProc(pNet->pNetHandle[i]);
+            GFL_NET_StateMainProc(pNet->pNetHandle[i]);  // この内部でhandleを消すことがある
         }
         if(pNet->pNetHandle[i]!=NULL){
             GFL_NET_ToolTimingSyncSend(pNet->pNetHandle[i]);
+            GFL_NET_StateTransmissonMain(pNet->pNetHandle[i]);
         }
     }
     GFL_NET_SystemUpdateData();
@@ -552,6 +556,36 @@ BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
     return GFL_NET_ToolIsTimingSync(pNet, no);
 }
+
+//==============================================================================
+/**
+ * @brief     DSモードに変更する
+ * @param     NetHandle* pNet  通信ハンドル
+ * @return    none
+ */
+//==============================================================================
+void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet)
+{
+    u8 bDSMode = TRUE;
+    GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
+}
+
+//==============================================================================
+/**
+ * @brief     MPモードに変更する
+ * @param     NetHandle* pNet  通信ハンドル
+ * @return    none
+ */
+//==============================================================================
+void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet)
+{
+    u8 bDSMode = FALSE;
+    GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
+}
+
+
+
+
 
 
 //==============================================================================
