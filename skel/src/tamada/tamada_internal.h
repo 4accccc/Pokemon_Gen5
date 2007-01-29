@@ -34,6 +34,7 @@ typedef struct {
 extern void GFL_INTR_SetVblankFunc(GFL_INTR_FUNC func, void * work);
 
 
+extern const GFL_PROC_DATA DebugTamadaMainProcData;
 extern const GFL_PROC_DATA OamKeyDemoProcData;
 extern const GFL_PROC_DATA DebugTamadaSubProcData1;
 extern const GFL_PROC_DATA DebugTamadaSubProcData2;
