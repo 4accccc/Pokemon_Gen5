@@ -95,18 +95,18 @@ void TEST_NET_Main(void)
           case _TEST_CONNECT:
             {
                 _pHandle = GFL_NET_CreateHandle();
-//                GFL_NET_ClientConnect(_pHandle );    // ビーコンを待つ
+                GFL_NET_ClientConnect(_pHandle );    // ビーコンを待つ
 //                GFL_NET_ClientConnectTo(_pHandle, mac);  //macアドレスへ接続
-                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
+//                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
             _testNo++;
             break;
           case _TEST_CONNECT2:
             {
-//                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
-//                if(pData){
-//                    GFL_NET_ClientConnectTo(_pHandle, pData);
-//                }
+                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
+                if(pData){
+                    GFL_NET_ClientConnectTo(_pHandle, pData);
+                }
             }
             _testNo++;
             break;
@@ -123,14 +123,16 @@ void TEST_NET_Main(void)
 //                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
 //                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
 //                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
-                for(i=0;i<_TEST_HUGE_SIZE;i++){
-                    _dataSend[i] = (u8)i;
-                }
+//                for(i=0;i<_TEST_HUGE_SIZE;i++){
+//                    _dataSend[i] = (u8)i;
+//                }
 //                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
 //                                   _TEST_HUGE, 0, _dataSend, FALSE, FALSE);
-                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
-                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
+//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
+//                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
+
+                GFL_NET_ChangeMPMode(_pHandle);
 
             }
             _testNo++;
@@ -171,11 +173,10 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-//                _pHandleServer = GFL_NET_CreateHandle();
-//                GFL_NET_ServerConnect(_pHandleServer);   // サーバ
+                _pHandleServer = GFL_NET_CreateHandle();
+                GFL_NET_ServerConnect(_pHandleServer);   // サーバ
                 _pHandle = GFL_NET_CreateHandle();  // クライアント
-
-                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
+//                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
             _testNo++;
             break;
@@ -274,7 +275,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_SYSTEM,  //allocNo
     2,     // 最大接続人数
     _BCON_GET_NUM,    // 最大ビーコン収集数
-    TRUE,     // MP通信＝親子型通信モードかどうか
+    FALSE,     // MP通信＝親子型通信モードかどうか
     TRUE,     // 通信を開始するかどうか
 };
 
