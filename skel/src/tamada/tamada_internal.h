@@ -25,7 +25,7 @@ typedef void (*GFL_INTR_FUNC)(void *);
 //------------------------------------------------------------------
 typedef struct {
 	u32 debug_heap_id;
-	UISYS * uisys;
+	UISYS * uisys;					///<UI‚Ö‚Ìƒ|ƒCƒ“ƒ^
 	GFL_INTR_FUNC vblank_func;
 	void * vblank_work;
 }DEBUG_TAMADA_CONTROL;
