@@ -195,7 +195,10 @@ void GFI_PROC_SysMain(GFL_PROCSYS * psys)
 			parent = psys->proc->parent;
 			GFI_PROC_Delete(psys->proc);
 			psys->proc = GFI_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
-			parent->child = psys->proc;
+			if (parent != NULL) {
+				//ルートプロセスでない場合は親に対して自分を子として登録
+				parent->child = psys->proc;
+			}
 			psys->proc->parent = parent;
 			psys->jump_flag = FALSE;
 		} else {
