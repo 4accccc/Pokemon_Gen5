@@ -262,11 +262,11 @@ static void	g2d_unload( void )
 {
 	int i;
 
-	for(i=0;i<NELEMS(indexList);i++){
-		msg_bmpwin_trush( NUM_TITLE+i );
-	}
 	for(i=0;i<NELEMS(selectList);i++){
 		msg_bmpwin_trush( NUM_SELECT1+i );
+	}
+	for(i=0;i<NELEMS(indexList);i++){
+		msg_bmpwin_trush( NUM_TITLE+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
 }
@@ -363,6 +363,7 @@ static BOOL	TestModeControl( void )
 		g3d_unload();	//‚R‚cƒf[ƒ^”jŠü
 		g2d_unload();	//‚Q‚cƒf[ƒ^”jŠü
 		bg_exit();
+		return_flag = TRUE;
 		break;
 	}
 	return return_flag;
