@@ -15,6 +15,8 @@
 #include "gfl_use.h"
 #include "main.h"
 
+#include "testmode.h"
+
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
@@ -36,6 +38,7 @@ void NitroMain(void)
 	(void)OS_EnableIrq();
 
 	(void)GX_VBlankIntr(TRUE);
+	(void)OS_EnableInterrupts();
 
 	// •K—v‚ÈTCB‚Æ‚©“o˜^‚µ‚Äc
 	GameInit();
@@ -72,8 +75,6 @@ static	void	SkeltonVBlankFunc(void)
 	GFLUser_VIntr();
 }
 
-extern void TestModeInit(void);
-extern void TestModeMain(void);
 //------------------------------------------------------------------
 /**
  * @brief		ƒQ[ƒ€‚²‚Æ‚Ì‰Šú‰»ˆ—

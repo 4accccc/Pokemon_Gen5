@@ -11,6 +11,8 @@
 #include "g3d_system.h"
 #include "procsys.h"
 
+#include "testmode.h"
+
 //#include "tetsu/titledemo.naix"
 
 //------------------------------------------------------------------
@@ -86,6 +88,8 @@ static const TESTMODE_PRINTLIST selectList[] = {
 //------------------------------------------------------------------
 /**
  * @brief		初期化
+ *
+ * 現状、中身はルートプロセスの生成のみとなっている
  */
 //------------------------------------------------------------------
 void	TestModeInit(void)
@@ -97,6 +101,9 @@ void	TestModeInit(void)
 //------------------------------------------------------------------
 /**
  * @brief		メイン
+ *
+ * TestModeInitでセットされたプロセスが動作しているため、
+ * 現状は中身は何もない状態となっている。
  */
 //------------------------------------------------------------------
 void	TestModeMain(void)
@@ -389,7 +396,6 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 	return GFL_PROC_RES_CONTINUE;
 }
 
-extern const GFL_PROC_DATA DebugTamadaMainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
