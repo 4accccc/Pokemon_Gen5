@@ -16,15 +16,31 @@
 
 #include "gfl_use.h"
 #include "procsys.h"
+#include "tcb.h"
 
 //=============================================================================================
 //=============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+	TCB_VINTR_MAX = 16,
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct {
+	TCBSYS * TCBSysVintr;
+	void * TCBMemVintr;
+}GFL_USE_WORK;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_SYSTEM,	OS_ARENA_MAIN },
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
+
+static GFL_USE_WORK * gfl_work = NULL;
 
 //=============================================================================================
 //
@@ -73,6 +89,10 @@ void GFLUser_Init(void)
 
 	//PROCƒVƒXƒeƒ€‰Šú‰»
 	GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
+  gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
+  gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
+		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
+  gfl_work->TCBSysVintr = GFL_TCB_SysInit(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
 }
 
 
@@ -125,6 +145,7 @@ void GFLUser_Exit(void)
 //------------------------------------------------------------------
 void GFLUser_VIntr(void)
 {
+	GFL_TCB_SysMain(gfl_work->TCBSysVintr);
 }
 
 

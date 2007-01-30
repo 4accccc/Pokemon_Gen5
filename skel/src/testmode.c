@@ -9,6 +9,7 @@
 #include "ui.h"
 #include "textprint.h"
 #include "g3d_system.h"
+#include "procsys.h"
 
 //#include "tetsu/titledemo.naix"
 
@@ -33,6 +34,7 @@ void	TestModeInit(void);
 void	TestModeMain(void);
 
 static BOOL	TestModeControl( void );
+static const GFL_PROC_DATA TestMainProcData;
 
 enum {
 	NUM_TITLE = 0,
@@ -88,7 +90,8 @@ static const TESTMODE_PRINTLIST selectList[] = {
 //------------------------------------------------------------------
 void	TestModeInit(void)
 {
-	testmode = GFL_HEAP_AllocMemoryClear(GFL_HEAPID_APP,sizeof(TESTMODE_WORK));
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+//	testmode = GFL_HEAP_AllocMemoryClear(GFL_HEAPID_APP,sizeof(TESTMODE_WORK));
 }
 
 //------------------------------------------------------------------
@@ -98,9 +101,11 @@ void	TestModeInit(void)
 //------------------------------------------------------------------
 void	TestModeMain(void)
 {
+	/* 
 	if( TestModeControl() == TRUE ){
 		GFL_HEAP_FreeMemory( testmode );
 	}
+	*/
 }
 
 
@@ -335,7 +340,12 @@ static BOOL	TestModeControl( void )
 
 	case 3:
 		//ƒL[”»’è
-		if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
+		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
+			if( testmode->listPosition == 1) {
+				//‚Æ‚è‚ ‚¦‚¸‚½‚Ü‚¾‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
+				testmode->seq++;
+			}
+		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
 				testmode->seq--;
@@ -350,12 +360,72 @@ static BOOL	TestModeControl( void )
 
 	case 4:
 		//I—¹
-		g3d_load();	//‚R‚cƒf[ƒ^”jŠü
-		g2d_load();	//‚Q‚cƒf[ƒ^”jŠü
+		g3d_unload();	//‚R‚cƒf[ƒ^”jŠü
+		g2d_unload();	//‚Q‚cƒf[ƒ^”jŠü
 		bg_exit();
 		break;
 	}
 	return return_flag;
 }
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	testmode = GFL_HEAP_AllocMemoryClear(GFL_HEAPID_APP,sizeof(TESTMODE_WORK));
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	if( TestModeControl() == TRUE ){
+		return GFL_PROC_RES_FINISH;
+	}
+	return GFL_PROC_RES_CONTINUE;
+}
+
+extern const GFL_PROC_DATA DebugTamadaMainProcData;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	switch (testmode->listPosition) {
+	case 0:
+		//‚í‚½‚È‚×
+		break;
+	case 1:
+		//‚½‚Ü‚¾
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
+		break;
+	case 2:
+		//‚»‚ª‚×
+		break;
+	case 3:
+		//‚¨‚¨‚Ì
+		break;
+	case 4:
+		//‚Ý‚Â‚Í‚ç
+		break;
+	}
+	GFL_HEAP_FreeMemory( testmode );
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static const GFL_PROC_DATA TestMainProcData = {
+	TestModeProcInit,
+	TestModeProcMain,
+	TestModeProcEnd,
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+
+
 
 

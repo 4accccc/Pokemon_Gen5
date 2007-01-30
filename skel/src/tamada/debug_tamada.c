@@ -26,7 +26,6 @@ static DEBUG_TAMADA_CONTROL * DebugTamadaControl;
 
 
 
-static const GFL_PROC_DATA DebugTamadaMainProcData;
 
 
 //============================================================================================
@@ -102,7 +101,14 @@ void DebugTamadaExit(void)
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTamadaMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_TAMADA_CONTROL * ctrl = pwk;
+	u16 heap_id = GFL_HEAPID_APP;
+	//DEBUG_TAMADA_CONTROL * ctrl = pwk;
+	DEBUG_TAMADA_CONTROL * ctrl;
+	//ctrl = GFL_HEAP_AllocMemory(heap_id, sizeof(DEBUG_TAMADA_CONTROL));
+	ctrl = GFL_PROC_AllocWork(proc, sizeof(DEBUG_TAMADA_CONTROL), heap_id);
+	DebugTamadaControl = ctrl;
+	ctrl->debug_heap_id = heap_id;
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -113,7 +119,8 @@ static GFL_PROC_RESULT DebugTamadaMainProcInit(GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	GFL_PROC * subproc;
-	DEBUG_TAMADA_CONTROL * ctrl = pwk;
+	DEBUG_TAMADA_CONTROL * ctrl = mywk;
+	//DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	int key = GFL_UI_KeyGetTrg();
 
 	switch (*seq) {
@@ -153,7 +160,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcEnd(GFL_PROC * proc, int * seq, void *
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const GFL_PROC_DATA DebugTamadaMainProcData = {
+const GFL_PROC_DATA DebugTamadaMainProcData = {
 	DebugTamadaMainProcInit,
 	DebugTamadaMainProcMain,
 	DebugTamadaMainProcEnd,
