@@ -16,6 +16,7 @@
 #include "test_rand.h"
 #include "test_net.h"
 
+#include "main.h"
 
 //------------------------------------------------------------------
 typedef struct {
@@ -133,4 +134,41 @@ void DebugOhnoExit(void)
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }
+
+
+static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	u16 heap_id = GFL_HEAPID_APP;
+    DebugOhnoInit(heap_id);
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+    DebugOhnoMain();
+    return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+    DebugOhnoExit();
+	return GFL_PROC_RES_FINISH;
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GFL_PROC_DATA DebugOhnoMainProcData = {
+	DebugOhnoMainProcInit,
+	DebugOhnoMainProcMain,
+	DebugOhnoMainProcEnd,
+};
 

@@ -352,6 +352,10 @@ static BOOL	TestModeControl( void )
 				//‚Æ‚è‚ ‚¦‚¸‚½‚Ü‚¾‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
 				testmode->seq++;
 			}
+			if( testmode->listPosition == 3) {
+				//‚Æ‚è‚ ‚¦‚¸‚¨‚¨‚Ì‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
+				testmode->seq++;
+			}
 		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
@@ -413,6 +417,7 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 		break;
 	case 3:
 		//‚¨‚¨‚Ì
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
 	case 4:
 		//‚Ý‚Â‚Í‚ç
