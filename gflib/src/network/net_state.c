@@ -187,6 +187,7 @@ static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
     GFL_NET_WLVRAMDFinalize();
     _GFL_NET_SetNETWL(NULL);
     pNetHandle->state = NULL;
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
 }
 
 //==============================================================================
@@ -256,6 +257,8 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
 {
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
+
     GFL_NET_WLVRAMDInitialize();
     GFL_NET_CommandInitialize(NULL, 0, NULL);
 

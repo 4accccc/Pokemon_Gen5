@@ -28,10 +28,13 @@ struct _UI_SYS {
     UI_KEYSYS* pKey;       ///< キー管理構造体
 	u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
 	u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
-	u8 DS_Boot_Flag;       ///< 
+	u8 DS_Boot_Flag;       ///<
+    u8 AgbCasetteVersion;          ///< AGBカセット対応時のカセットバージョン 通常は0
+    PMBackLightSwitch lightState;  ///< バックライトのIPL状態
 } ;
 
 static UISYS* _pUI = NULL;   ///< 一個しか生成されないのでここでポインタ管理
+static void _UI_SleepFunc(void);
 
 //==============================================================================
 //
@@ -54,6 +57,10 @@ void GFL_UI_sysInit(const int heapID)
     MI_CpuClear8(pUI, sizeof(UISYS));
     pUI->pKey = GFL_UI_Key_sysInit(heapID);
     _pUI = pUI;
+
+    OS_EnableIrq();  // この関数は会議で相談した後で移動する  @@OO
+    
+    PM_GetBackLight(NULL,&pUI->lightState);  // バックライト状態読み込み
     //return pUI;
 }
 
@@ -68,6 +75,7 @@ void GFL_UI_sysInit(const int heapID)
 void GFI_UI_sysMain(UISYS* pUI)
 {
     GFL_UI_Key_sysMain();
+    _UI_SleepFunc();  // スリープ状態管理
 }
 
 //==============================================================================
@@ -237,3 +245,60 @@ UISYS* _UI_GetUISYS(void)
     }
     return _pUI;
 }
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	スリープ状態の管理
+ * @param	none
+ */
+//---------------------------------------------------------------------------
+static void _UI_SleepFunc(void)
+{
+    PMBackLightSwitch up,down;
+    PMWakeUpTrigger trigger;
+    UISYS* pUI = _UI_GetUISYS();
+    
+    if(PAD_DetectFold()){ // ふたが閉まっている
+        if(pUI->DontSleep == 0){  // スリープしていい場合
+            GFL_UI_TPAutoSamplingStop();
+            trigger = PM_TRIGGER_COVER_OPEN|PM_TRIGGER_CARD;
+            // 特定のAGBカートリッジが刺さっている場合のみ復帰条件にカートリッジ設定
+            if(pUI->AgbCasetteVersion)
+                trigger |= PM_TRIGGER_CARTRIDGE;
+            //SLEEP
+            PM_GoSleepMode( trigger, 0, 0 );
+            // 復帰後、カードが抜かれていたら電源OFF
+            if(CARD_IsPulledOut()){
+                PM_ForceToPowerOff();
+            } else if((OS_GetIrqMask() & OS_IE_CARTRIDGE) && CTRDG_IsPulledOut()){
+                // 復帰後、カートリッジが抜かれていたら…
+                if(PAD_DetectFold()){
+                    // まだふたが閉まっている状態ならば再度スリープに入った後に電源OFF
+                    PM_GoSleepMode( PM_TRIGGER_COVER_OPEN|PM_TRIGGER_CARD, 0, 0 );
+                    PM_ForceToPowerOff();
+                } else {
+                    // ふたが開いていたら電源OFF
+                    PM_ForceToPowerOff();
+                }
+            }
+            GFL_UI_TPAutoSamplingReStart();
+        } else{
+            // もしもカートリッジが抜かれたらSLEEP→電源OFF
+            if((OS_GetIrqMask() & OS_IE_CARTRIDGE) && CTRDG_IsPulledOut()){
+                PM_GoSleepMode( PM_TRIGGER_COVER_OPEN|PM_TRIGGER_CARD, 0, 0 );
+                PM_ForceToPowerOff();
+            }
+            //BK OFF
+            PM_GetBackLight(&up,&down);
+            if(PM_BACKLIGHT_ON == up){
+                PM_SetBackLight(PM_LCD_ALL,PM_BACKLIGHT_OFF);
+            }
+        }
+    } else{  // 開いている
+        PM_GetBackLight(&up,&down);
+        if(PM_BACKLIGHT_OFF == up){
+            PM_SetBackLight(PM_LCD_ALL, pUI->lightState);
+        }
+    }
+}
+

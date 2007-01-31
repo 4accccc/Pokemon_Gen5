@@ -56,9 +56,9 @@ static u32 startSampling( UI_TPSYS* pTP, u32 sync );
 
 static UI_TPSYS* _UI_GetTPSYS(const UISYS* pUI)
 {
-    if(_pUITP==NULL){
-        OS_TPanic("no init");
-    }
+//    if(_pUITP==NULL){
+//        OS_TPanic("no init");
+//    }
     return _pUITP;
 }
 
@@ -115,6 +115,10 @@ static void GFI_UI_TP_sysMain(UISYS* pUI)
 	TPData	tpDisp;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
+    if(pTP==NULL){
+        return;
+    }
+    
 	// ふたが閉まっている場合は全ての入力をなしにする
 	if(PAD_DetectFold()){
         MI_CpuClear8(pTP, sizeof(UI_TPSYS));
@@ -905,6 +909,9 @@ static void GFI_UI_TPAutoSamplingReStart( UISYS* pUI )
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	
+    if(pTP==NULL){
+        return;
+    }
 	// 停止中かチェック
 	if( pTP->TouchPanelExStop == FALSE ){
 		return ;
@@ -945,6 +952,9 @@ static void GFI_UI_TPAutoSamplingStop( UISYS* pUI )
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
+    if(pTP==NULL){
+        return;
+    }
     // すでに停止中かチェック
 	if( pTP->TouchPanelExStop == TRUE ){
 		return ;
@@ -1046,6 +1056,9 @@ static u32 GFI_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
 	u32	result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
+    if(pTP==NULL){
+        return TP_ERR;
+    }
     result = _autoStart(pTP, sync);
 	// 転送に失敗したらエラーを返す
 	if( result != TP_OK  ){
@@ -1132,6 +1145,9 @@ static u32 GFI_UI_TPAutoStop( UISYS* pUI )
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
+    if(pTP==NULL){
+        return TP_ERR;
+    }
 	// スリープ停止中は拒否
 	if( pTP->TouchPanelExStop == TRUE ){
 		return TP_ERR;
