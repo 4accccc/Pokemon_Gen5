@@ -386,7 +386,7 @@ extern void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet);
 //==============================================================================
 extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
 
-#include "../src/network/net_command.h"
+#include "net_command.h"
 
 
 #endif // __NET_H__

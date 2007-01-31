@@ -23,6 +23,11 @@ NITRO_NO_STD_PCHDR	=	True
 # 最終的に出力されるファイル(lib/ARM9-xx/xxx/gflib.a)
 TARGET_LIB		=	gflib.a
 
+# 個人テスト用定義
+#ifeq	($(PM_DEBUG),yes)
+MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
+#endif
+
 # ソースファイル
 SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					tcb.c procsys.c saveload_system.c \
