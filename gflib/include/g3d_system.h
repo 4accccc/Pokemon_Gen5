@@ -472,13 +472,14 @@ extern void
  * アニメーションフレームを進める
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
  *
  * @return	BOOL	FALSEで終了検出
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_ObjContAnmFrameInc
-		( GFL_G3D_OBJ* g3Dobj ); 
+		( GFL_G3D_OBJ* g3Dobj, fx32 count ); 
 
 
 #endif
