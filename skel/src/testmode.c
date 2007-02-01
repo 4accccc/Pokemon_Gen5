@@ -513,6 +513,8 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	case 4:
 		//‚Ý‚Â‚Í‚ç
 		break;
+	default:
+		break;
 	}
 	GFL_HEAP_FreeMemory( testmode );
 	return GFL_PROC_RES_FINISH;
