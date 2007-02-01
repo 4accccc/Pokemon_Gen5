@@ -1,7 +1,7 @@
 //==============================================================================
 /**
  *
- *@file		obj_graphic.c
+ *@file		obj_graphic_man.c
  *@brief	OBJ用グラフィックデータ転送、管理
  *@author	taya
  *@data		2006.11.28
@@ -9,16 +9,18 @@
  */
 //==============================================================================
 #include "gflib.h"
-//#include "assert.h"
 #include "vman.h"
 
 #include "obj_graphic_man.h"
+
 
 //==============================================================
 //	CGRデータ管理
 //==============================================================
 typedef struct {
 	NNSG2dImageProxy			proxy;			///< 転送プロキシ
+	void*						loadPtr;		///< データポインタ
+	NNSG2dCharacterData*		g2dCharData;	///< NNSキャラデータポインタ
 	GFL_VMAN_RESERVE_INFO		riMain;			///< 予約領域情報メイン
 	GFL_VMAN_RESERVE_INFO		riSub;			///< 予約領域情報サブ
 	BOOL						emptyFlag;		///< 未使用フラグ
@@ -36,8 +38,10 @@ typedef struct {
 //	セルアニメデータ管理
 //==============================================================
 typedef struct {
-	NNSG2dCellDataBank*			cellBankPtr;	///< セルデータポインタ
-	NNSG2dAnimBankData*			animBankPtr;	///< アニメデータポインタ
+	void*						cellLoadPtr;	///< セルデータポインタ
+	void*						animLoadPtr;	///< アニメデータポインタ
+	NNSG2dCellDataBank*			cellBankPtr;	///< セルバンクポインタ
+	NNSG2dAnimBankData*			animBankPtr;	///< アニメバンクポインタ
 	BOOL						emptyFlag;		///< 未使用フラグ
 }CELLANIM_MAN;
 
@@ -61,7 +65,7 @@ static struct {
 //==============================================================
 static CGR_MAN* create_cgr_man( u16 heapID, u32 num );
 static inline u32 search_empty_cgr_pos( void );
-static BOOL register_cgr(	u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, 
+static void register_cgr(	u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, 
 							NNSG2dCellDataBank* cellBankPtr );
 static inline void trans_ncgr(	NNSG2dCharacterData* charData, u32 byteOfs, 
 								NNS_G2D_VRAM_TYPE vramType, BOOL vramTransferFlag, 
@@ -69,7 +73,7 @@ static inline void trans_ncgr(	NNSG2dCharacterData* charData, u32 byteOfs,
 static void delete_cgr_man( CGR_MAN* man );
 static PLTT_MAN* create_pltt_man( u16 heapID, u32 num );
 static inline u32 search_empty_pltt_pos( void );
-static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs );
+static void register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs );
 static void delete_pltt_man( PLTT_MAN* man );
 static CELLANIM_MAN* create_cellanim_man( u16 heapID, u32 num );
 static inline u32 search_empty_cellanim_pos( void );
@@ -157,24 +161,30 @@ void GFL_OBJGRP_sysEnd( void )
 /**
  * CGRデータの登録（VRAM常駐型OBJ用）
  *
- * CGRデータのVRAM転送を行い、プロキシを作成して保持する。
- * CGRデータの実体は、この関数の後で破棄しても構わない。
+ * アーカイブからCGRデータをロードしてVRAM転送を行い、プロキシを作成して保持する。
+ * CGRデータの実体は破棄する。
  *
- * @param   dataPtr			[in] データポインタ
+ * @param   arcHandle		[in] アーカイブハンドル
+ * @param   cgrDataID		[in] アーカイブ内のCGRデータID
  * @param   targetVram		[in] 転送先VRAM指定
+ * @param   heapID			[in] データロード用ヒープ（テンポラリ）
  *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterCGR( void* dataPtr, GFL_VRAM_TYPE targetVram )
+u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, GFL_VRAM_TYPE targetVram, u16 heapID )
 {
 	u32  idx = search_empty_cgr_pos();
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
-		if( register_cgr( idx, dataPtr, targetVram, NULL ) )
-		{
-			return idx;
-		}
+		CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
+		void* loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cgrDataID, HeapGetLow(heapID) );
+
+		register_cgr( idx, loadPtr, targetVram, NULL );
+		GFL_HEAP_FreeMemory( loadPtr );
+		cgrMan->loadPtr = NULL;
+
+		return idx;
 	}
 	GF_ASSERT(0);
 	return GFL_OBJGRP_REGISTER_FAILED;
@@ -184,18 +194,20 @@ u32 GFL_OBJGRP_RegisterCGR( void* dataPtr, GFL_VRAM_TYPE targetVram )
 /**
  * CGRデータの登録（VRAM転送型OBJ用）
  *
- * CGRデータのVRAM転送は行わず、プロキシを作成して保持する。
- * CGRデータの実体はユーザが保持する必要がある。
- * また、VRAM転送型OBJ用のCGR登録をする場合、関連付けられたセルアニメデータが先に登録されている必要がある。
+ * アーカイブからCGRデータをロードし、プロキシを作成して保持する。
+ * CGRデータの実体も保持し続ける。
+ * CGRデータに関連付けられたセルアニメデータが先に登録されている必要がある。
  *
- * @param   dataPtr			[in] データポインタ
+ * @param   arcHandle		[in] アーカイブハンドル
+ * @param   cgrDataID		[in] CGRデータのアーカイブ内ID
  * @param   targetVram		[in] 転送先VRAM指定
  * @param   cellIndex		[in] 既に登録されているセルデータの登録インデックス
+ * @param   heapID			[in] データロード用ヒープ
  *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram, u32 cellIndex )
+u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, GFL_VRAM_TYPE targetVram, u32 cellIndex, u16 heapID )
 {
 	GF_ASSERT(SysWork.cellAnimMan[cellIndex].emptyFlag == FALSE);
 	GF_ASSERT(NNS_G2dCellDataBankHasVramTransferData(SysWork.cellAnimMan[cellIndex].cellBankPtr));
@@ -204,11 +216,13 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( void* dataPtr, GFL_VRAM_TYPE targetVram
 		u32 idx = search_empty_cgr_pos();
 		if( idx != GFL_OBJGRP_REGISTER_FAILED )
 		{
-			if( register_cgr(idx,dataPtr,targetVram,SysWork.cellAnimMan[cellIndex].cellBankPtr) )
-			{
-				return idx;
-			}
+			CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
+
+			cgrMan->loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cgrDataID, heapID );
+			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
+			return idx;
 		}
+
 		GF_ASSERT(0);
 		return GFL_OBJGRP_REGISTER_FAILED;
 	}
@@ -235,34 +249,78 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 		GFL_VMAN_Release( SysWork.vmanSub, &SysWork.cgrMan[index].riSub );
 	}
 
+	if( SysWork.cgrMan[index].loadPtr )
+	{
+		GFL_HEAP_FreeMemory( SysWork.cgrMan[index].loadPtr );
+		SysWork.cgrMan[index].loadPtr = NULL;
+	}
+
 	SysWork.cgrMan[index].emptyFlag = TRUE;
 }
 
+
+
 //==============================================================================================
 /**
- * セルアニメデータの登録
+ * セルアニメデータ登録
  *
- * セルデータ＆アニメデータをUnpackしたポインタを保持する。
- * データ実体はユーザが保持する必要がある。
+ * アーカイブからセル＆アニメデータをロードし、Unpackして実体ごと保持する。
  *
- * @param   cellDataPtr		[in] セルデータ
- * @param   animDataPtr		[in] アニメデータ
+ * @param   arcHandle		アーカイブハンドル
+ * @param   cellDataID		セルデータID
+ * @param   animDataID		アニメデータID
+ * @param   heapID			ヒープID
  *
- * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
+ * @retval  登録インデックス
+ *
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterCellAnim( void* cellDataPtr, void* animDataPtr )
+u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID )
 {
 	u32 idx = search_empty_cellanim_pos();
-	if( idx != GFL_OBJGRP_REGISTER_FAILED )
+
 	{
-		if( register_cellanim( idx, cellDataPtr, animDataPtr ) == FALSE )
+		CELLANIM_MAN* man = &SysWork.cellAnimMan[idx];
+
+		man->cellLoadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cellDataID, heapID );
+		man->animLoadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, animDataID, heapID );
+
+		if( register_cellanim( idx, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
 		{
 			GF_ASSERT(0);
-			return GFL_OBJGRP_REGISTER_FAILED;
 		}
+
+		return idx;
 	}
-	return idx;
+}
+//==============================================================================================
+/**
+ * 登録されたセルアニメデータの解放
+ *
+ * @param   index		[in] 登録インデックス
+ */
+//==============================================================================================
+void GFL_OBJGRP_ReleaseCellAnim( u32 index )
+{
+	GF_ASSERT( index < SysWork.initParam.CELL_RegisterMax );
+	GF_ASSERT( SysWork.cellAnimMan[index].emptyFlag == FALSE );
+
+	{
+		CELLANIM_MAN* man = &SysWork.cellAnimMan[index];
+
+		if( man->cellLoadPtr )
+		{
+			GFL_HEAP_FreeMemory( man->cellLoadPtr );
+			man->cellLoadPtr = NULL;
+		}
+		if( man->animLoadPtr )
+		{
+			GFL_HEAP_FreeMemory( man->animLoadPtr );
+			man->animLoadPtr = NULL;
+		}
+
+		man->emptyFlag = TRUE;
+	}
 }
 
 //==============================================================================================
@@ -282,45 +340,33 @@ BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index )
 	return NNS_G2dCellDataBankHasVramTransferData( SysWork.cellAnimMan[index].cellBankPtr );
 }
 
-//==============================================================================================
-/**
- * 登録されたセルアニメデータの解放
- *
- * @param   index		[in] 登録インデックス
- */
-//==============================================================================================
-void GFL_OBJGRP_ReleaseCellAnim( u32 index )
-{
-	GF_ASSERT( index < SysWork.initParam.CELL_RegisterMax );
-	GF_ASSERT( SysWork.cellAnimMan[index].emptyFlag == FALSE );
 
-	SysWork.cellAnimMan[index].emptyFlag = TRUE;
-}
 
 //==============================================================================================
 /**
  * パレットデータの登録およびVRAMへの転送
  *
- * パレットデータをVRAM転送後、作成したプロキシを保持する。
- * データ実体は破棄しても構わない。
+ * パレットデータをアーカイブからロードしてVRAM転送を行い、プロキシを作成して保持する。
+ * ロードしたデータ実体は破棄する。
  *
- * @param   plttData		[in] パレットデータ
+ * @param   arcHandle		[in] アーカイブハンドル
+ * @param   plttDataID		[in] パレットデータのアーカイブ内データID
  * @param   vramType		[in] 転送先VRAM指定
  * @param   byteOffs		[in] 転送オフセット
+ * @param   heapID			[in] データロード用ヒープ（テンポラリ）
  *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterPltt( void* plttData, GFL_VRAM_TYPE vramType, u32 byteOffs )
+u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID )
 {
 	u32 idx = search_empty_pltt_pos();
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
-		if( register_pltt( idx, plttData, vramType, byteOffs ) == FALSE )
-		{
-			GF_ASSERT(0);
-			return GFL_OBJGRP_REGISTER_FAILED;
-		}
+		void* loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, plttDataID, HeapGetLow(heapID) );
+		register_pltt( idx, loadPtr, vramType, byteOffs );
+		GFL_HEAP_FreeMemory( loadPtr );
+		return idx;
 	}
 
 	return idx;
@@ -357,10 +403,10 @@ typedef struct {
 //==============================================================================================
 // 登録データによるセルアクター構築
 //==============================================================================================
-#if 0
-CLACT_WORK_PTR GFL_OBJGRP_CreateClAct
-	( CLACT_SET_PTR actset, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_OBJGRP_CLWKDAT* param, u8 drawArea, u16 heapID )
+#if 1
+CLWK* GFL_OBJGRP_CreateClAct
+	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const CLWK_DATA* param, u16 setSerface, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -369,42 +415,18 @@ CLACT_WORK_PTR GFL_OBJGRP_CreateClAct
 	GF_ASSERT_MSG( SysWork.plttMan[plttIndex].emptyFlag == FALSE, "plttIndex=%d", plttIndex );
 	GF_ASSERT( SysWork.cellAnimMan[cellAnimIndex].emptyFlag == FALSE );
 
+
 	{
-		CLACT_HEADER       header;
-		CLACT_ADD_SIMPLE   add;
-		CLACT_WORK_PTR     act;
+		CLWK_RES     clactRes;
 
-		header.pImageProxy   = &(SysWork.cgrMan[cgrIndex].proxy);
-		header.pPaletteProxy = &(SysWork.plttMan[plttIndex].proxy);
-		header.pCellBank     = SysWork.cellAnimMan[cellAnimIndex].cellBankPtr;
-		header.pAnimBank     = SysWork.cellAnimMan[cellAnimIndex].animBankPtr;
-		header.priority      = param->softpri;
-		header.pCharData = NULL;
-		header.pMCBank   = NULL;
-		header.pMCABank  = NULL;
-		header.flag      = FALSE;
+		GFL_CLACT_WkSetCellResData( &clactRes,
+					&(SysWork.cgrMan[cgrIndex].proxy),
+					&(SysWork.plttMan[plttIndex].proxy),
+					SysWork.cellAnimMan[cellAnimIndex].cellBankPtr,
+					SysWork.cellAnimMan[cellAnimIndex].animBankPtr
+		);
 
-		add.ClActSet    = actset;
-		add.ClActHeader = &header;
-		add.mat.x       = param->pos_x * FX32_ONE;
-		add.mat.y       = param->pos_y * FX32_ONE;
-		add.mat.z       = 0;
-		add.pri         = param->softpri;
-		add.DrawArea    = drawArea;
-		add.heap        = heapID;
-
-		act = CLACT_AddSimple( &add );
-
-		if( act )
-		{
-			CLACT_SetAnmFlag( act, TRUE );
-			CLACT_SetAnmFrame( act, param->anmseq );
-		}
-		else
-		{
-			GF_ASSERT(0);
-		}
-		return act;
+		return GFL_CLACT_WkAdd( actUnit, param, &clactRes, setSerface, heapID );
 	}
 }
 #endif
@@ -460,11 +482,12 @@ static inline u32 search_empty_cgr_pos( void )
  * @param   dataPtr			
  * @param   targetVram		
  * @param   cellDataPtr		VRAM転送型の時、最大領域サイズを取得するのに使用。
+ *							VRAM常駐型なら、NULLを指定すること。
  *
  * @retval  BOOL			成功時TRUE
  */
 //------------------------------------------------------------------
-static BOOL register_cgr
+static void register_cgr
 	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
 {
 	NNSG2dCharacterData* charData;
@@ -507,11 +530,14 @@ static BOOL register_cgr
 			}
 		}
 
+		SysWork.cgrMan[idx].g2dCharData = ( vramTransferFlag )? charData : NULL;
 		SysWork.cgrMan[idx].emptyFlag = FALSE;
 
-		return TRUE;
 	}
-	return FALSE;
+	else
+	{
+		GF_ASSERT(0);
+	}
 }
 
 //------------------------------------------------------------------
@@ -532,7 +558,7 @@ static inline void trans_ncgr
 {
 	if( vramTransferFlag )
 	{
-			OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 		NNS_G2dLoadImageVramTransfer( charData, byteOfs, vramType, proxy );
 	}
 	else
@@ -611,11 +637,9 @@ static inline u32 search_empty_pltt_pos( void )
  * @param   plttData		[in] パレットデータ
  * @param   vramType		[in] 転送先VRAM指定
  * @param   byteOffs		[in] 転送開始オフセット
- *
- * @retval  BOOL			成功時TRUE
  */
 //------------------------------------------------------------------
-static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs )
+static void register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs )
 {
 	NNSG2dPaletteData*  palData;
 	NNSG2dPaletteCompressInfo*  cmpData;
@@ -659,11 +683,11 @@ static BOOL register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 b
 		}
 
 		SysWork.plttMan[idx].emptyFlag = FALSE;
-
-		return TRUE;
 	}
-
-	return FALSE;
+	else
+	{
+		GF_ASSERT(0);
+	}
 }
 
 //------------------------------------------------------------------
