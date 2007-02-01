@@ -250,7 +250,7 @@ static void	g2d_load( void )
 	u16 heapID = GFL_HEAPID_APP;
 
 	//フォント読み込み
-	GFL_TEXT_sysInit( "gfl_graphic/gfl_font.dat" );
+	GFL_TEXT_sysInit( "src/gfl_graphic/gfl_font.dat" );
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
@@ -324,7 +324,7 @@ static void	g2d_unload( void )
 //作成
 static void g3d_load( void )
 {
-	const char* path = "sample_graphic/titledemo.narc";
+	const char* path = "src/sample_graphic/titledemo.narc";
 
 	//モデル＆テクスチャリソース読み込み
 	testmode->g3Dres[0] = GFL_G3D_ResourceCreatePath( path, NARC_titledemo_title_air_nsbmd ); 
