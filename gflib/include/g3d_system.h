@@ -21,8 +21,8 @@ typedef void (*GFL_G3D_SETUP_FUNC)( void );
 
 //	各リソースマネージャモード定義	
 typedef enum {
-	GFL_G3D_VMANLNK = 0,		///<リンクドモード
-	GFL_G3D_VMANFRM,			///<フレームモード
+	GFL_G3D_VMANLNK = 0,		///<リンクドモード(取得解放が存在する断片化に注意)
+	GFL_G3D_VMANFRM,			///<フレームモード(とりっぱなし)
 }GFL_G3D_VMAN_MODE;
 
 //	テクスチャマネージャサイズ定義	
@@ -41,6 +41,14 @@ typedef enum {
 	GFL_G3D_PLT80K = 5,		///<80KB
 	GFL_G3D_PLT96K = 6,		///<96KB
 }GFL_G3D_VMAN_PLTSIZE;
+
+//	グローバルステート定義（射影行列タイプ）
+typedef enum {
+	GFL_G3D_PRJPERS = 0,	///<透視射影を設定
+	GFL_G3D_PRJFRST,		///<透視射影を設定
+	GFL_G3D_PRJORTH,		///<正射影を設定
+	GFL_G3D_PRJMTX,			///<射影行列を設定(設定の際は上記タイプとは別関数)
+}GFL_G3D_PROJECTION_TYPE;
 
 #define GEBUF_SIZE_MAX	(0x1800)	//ジオメトリバッファ最大サイズ。暫定
 
@@ -75,6 +83,75 @@ extern void
 extern void
 	GFL_G3D_sysExit
 		( void );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 内部保持情報（グローバルステート）へのアクセス
+ */
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * 射影行列の設定
+ *	保存しておく必要があるかわわからないが、とりあえず。
+ *	直接射影行列を直接設定する場合、その行列は外部で持つ
+ *
+ * @param	type		射影タイプ
+ * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
+ *						PRJPERS,PRJORTH	→top	  :nearクリップ面上辺のY座標
+ * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
+ *						PRJPERS,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+ * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
+ *						PRJPERS,PRJORTH	→left	  :nearクリップ面左辺のX座標
+ * @param	param4		PRJPERS			→未使用 
+ *						PRJPERS,PRJORTH	→right	  :nearクリップ面右辺のX座標
+ * @param	near		視点からnearクリップ面までの距離	
+ * @param	far			視点からfarクリップ面までの距離	
+ * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_sysProjectionSet
+		( GFL_G3D_PROJECTION_TYPE type, fx32 param1, fx32 param2, fx32 param3, fx32 param4, 
+			fx32 near, fx32 far, fx32 scaleW );
+extern void
+	GFL_G3D_sysProjectionSetDirect
+		( MtxFx44* param );
+//--------------------------------------------------------------------------------------------
+/**
+ * ライトの設定
+ *
+ * @param	lightID			ライトＩＤ
+ * @param	vec				ライトのベクトルポインタ
+ * @param	color			色
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_sysLightSet
+		( u8 lightID, VecFx16* vec, u16 color );
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラ行列の設定
+ *
+ * @param	camPos			カメラ位置ベクトルポインタ
+ * @param	camUp			カメラの上方向のベクトルへのポインタ
+ * @param	target			カメラ焦点へのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_sysLookAtSet
+		( VecFx32* camPos, VecFx32* camUp, VecFx32* target );
+//--------------------------------------------------------------------------------------------
+/**
+ * レンダリングスワップバッファの設定
+ *
+ * @param	sortMode		ソートモード
+ * @param	bufferMode		デプスバッファモード
+ * 設定値についてはNitroSDK内GX_SwapBuffer関数を参照
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_sysSwapBufferModeSet
+		( GXSortMode sortMode, GXBufferMode bufferMode );
 
 
 //=============================================================================================
@@ -217,19 +294,22 @@ extern void
  *
  * 各オブジェクト描画関数
  *
- *	SAMPLE
+ *	SAMPLE	//オブジェクトは、vecTrans,vecRotate,vecScale の情報を持っているものとする
  *	{
- *		MtxFx33 rotate;									//回転変数宣言
+ *		MtxFx33 mtxRotate;						//回転変数宣言
  *
  *		GFL_G3D_DrawStart();							//描画開始
- *		xxxxx();										//カメラセットアップ関数			
+ *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
- *			GFL_G3D_ObjDrawStart							//各オブジェクト描画開始
- *			GFL_G3D_ObjDrawRotateCalcXY( g3Dobj, &rotate );	//各オブジェクト回転計算
- *			GFL_G3D_ObjDraw( g3Dobj, &rotate );				//各オブジェクト描画
+ *			//各オブジェクト描画
+ *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
+ *			GFL_G3D_ObjDrawRotateCalcXY( &vecRotate, &mtxRotate );		//各オブジェクト回転計算
+ *			GFL_G3D_ObjDrawStatusSet( &vecTrans, mtxRotate, &vecScale);	//各オブジェクト情報転送
+ *			GFL_G3D_ObjDraw( g3Dobj );									//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
  *	}
+ *
  */
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
@@ -249,13 +329,22 @@ extern void
  *
  * 全体描画関数内、描画を終了時に呼び出される
  * 内部でバッファのスワップを行う。
- * @param	sortmode	ソートモード(指定型はNitoroSystem参照)
- * @param	buffermode	バッファモード(指定型はNitoroSystem参照)
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_DrawEnd
-		( GXSortMode sortmode, GXBufferMode buffermode );
+		( void );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラグローバルステートの設定
+ *
+ * 全体描画関数内に呼び出される
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_DrawLookAt
+		( void );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -292,35 +381,48 @@ extern void
  * ３Ｄオブジェクトの描画
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	rotate	回転行列
  *
  * 通常描画関数
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_ObjDraw
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( GFL_G3D_OBJ* g3Dobj );
 	
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄオブジェクトの描画(1mat1shape)
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	rotate	回転行列
  *
  * １つのモデルに１つのマテリアルのみ設定されているときに高速描画するための関数
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_ObjDraw1mat1shape
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( GFL_G3D_OBJ* g3Dobj );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトの情報設定
+ *
+ * @param	pTrans	位置情報ベクトルポインタ
+ * @param	pRotate	回転情報マトリクスポインタ
+ * @param	pScale	拡縮情報ベクトルポインタ
+ *
+ * オブジェクト情報を転送。各オブジェクト描画の前に設定される
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_ObjDrawStatusSet
+		( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄオブジェクトの回転行列の作成
  *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	dst		計算後の回転行列格納ポインタ
+ * @param	rotSrc	計算前の回転ベクトルポインタ
+ * @param	rotDst	計算後の回転行列格納ポインタ
  *
  * この関数等を使用し、オブジェクト毎に適切な回転行列を作成したものを、描画に流す。
  */
@@ -328,22 +430,55 @@ extern void
 // Ｘ→Ｙ→Ｚの順番で計算
 extern void
 	GFL_G3D_ObjDrawRotateCalcXY
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( VecFx32* rotSrc, MtxFx33* rotDst );
 
 // Ｘ→Ｙ→Ｚの順番で計算（相対）
 extern void
 	GFL_G3D_ObjDrawRotateCalcXY_Rev
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( VecFx32* rotSrc, MtxFx33* rotDst );
 
 // Ｙ→Ｘ→Ｚの順番で計算
 extern void
 	GFL_G3D_ObjDrawRotateCalcYX
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( VecFx32* rotSrc, MtxFx33* rotDst );
 
 // Ｙ→Ｘ→Ｚの順番で計算（相対）
 extern void
 	GFL_G3D_ObjDrawRotateCalcYX_Rev
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate );
+		( VecFx32* rotSrc, MtxFx33* rotDst );
+
+//=============================================================================================
+/**
+ *
+ *
+ * 各オブジェクトコントロール関数
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションフレームをリセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_ObjContAnmFrameReset
+		( GFL_G3D_OBJ* g3Dobj );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションフレームを進める
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ *
+ * @return	BOOL	FALSEで終了検出
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL
+	GFL_G3D_ObjContAnmFrameInc
+		( GFL_G3D_OBJ* g3Dobj ); 
 
 
 #endif
