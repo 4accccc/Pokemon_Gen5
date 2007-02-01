@@ -15,6 +15,7 @@ extern void TestModeInit(void);
 
 extern void TestModeMain(void);
 
+extern const GFL_PROC_DATA TestMainProcData;
 
 //------------------------------------------------------------------
 //

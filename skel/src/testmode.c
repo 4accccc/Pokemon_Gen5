@@ -33,7 +33,6 @@ void	TestModeInit(void);
 void	TestModeMain(void);
 
 static BOOL	TestModeControl( void );
-static const GFL_PROC_DATA TestMainProcData;
 
 enum {
 	NUM_TITLE = 0,
@@ -444,14 +443,7 @@ static BOOL	TestModeControl( void )
 	case 3:
 		//ƒL[”»’è
 		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
-			if( testmode->listPosition == 1) {
-				//‚Æ‚è‚ ‚¦‚¸‚½‚Ü‚¾‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
-				testmode->seq++;
-			}
-			if( testmode->listPosition == 3) {
-				//‚Æ‚è‚ ‚¦‚¸‚¨‚¨‚Ì‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
-				testmode->seq++;
-			}
+			testmode->seq ++;
 		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
@@ -501,20 +493,26 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 //------------------------------------------------------------------
 static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+	FSOverlayID ov_id;
+	static const GFL_PROC_DATA * pdata;
+	ov_id = NO_OVERLAY_ID;
+	pdata = &TestMainProcData;
 	switch (testmode->listPosition) {
 	case 0:
 		//‚í‚½‚È‚×
+		pdata = &DebugWatanabeMainProcData;
 		break;
 	case 1:
 		//‚½‚Ü‚¾
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
+		pdata = &DebugTamadaMainProcData;
 		break;
 	case 2:
 		//‚»‚ª‚×
+		pdata = &DebugSogabeMainProcData;
 		break;
 	case 3:
 		//‚¨‚¨‚Ì
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+		pdata = &DebugOhnoMainProcData;
 		break;
 	case 4:
 		//‚Ý‚Â‚Í‚ç
@@ -522,13 +520,14 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	default:
 		break;
 	}
+	GFL_PROC_SysSetNextProc(ov_id, pdata, NULL);
 	GFL_HEAP_FreeMemory( testmode );
 	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const GFL_PROC_DATA TestMainProcData = {
+const GFL_PROC_DATA TestMainProcData = {
 	TestModeProcInit,
 	TestModeProcMain,
 	TestModeProcEnd,
