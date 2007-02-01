@@ -1131,9 +1131,9 @@ void
 {
 	MtxFx33 tmp;
 
-	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)-rotSrc->x), FX_CosIdx((u16)-rotSrc->x) );
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)-rotSrc->x), FX_CosIdx((u16)-rotSrc->x) );
 	MTX_Concat33( rotDst, &tmp, rotDst );
 
 	MTX_RotZ33(	&tmp, FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
@@ -1163,9 +1163,9 @@ void
 {
 	MtxFx33 tmp;
 
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
 
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)-rotSrc->y), FX_CosIdx((u16)-rotSrc->y) );
+	MTX_RotX33(	&tmp, FX_SinIdx((u16)-rotSrc->y), FX_CosIdx((u16)-rotSrc->y) );
 	MTX_Concat33( rotDst, &tmp, rotDst );
 
 	MTX_RotZ33(	&tmp,FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
@@ -1211,13 +1211,14 @@ void
  * アニメーションフレームを進める
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
  *
  * @return	BOOL	FALSEで終了検出
  */
 //--------------------------------------------------------------------------------------------
 BOOL
 	GFL_G3D_ObjContAnmFrameInc
-		( GFL_G3D_OBJ* g3Dobj ) 
+		( GFL_G3D_OBJ* g3Dobj, fx32 count ) 
 {
 	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
 		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContAnmFrameInc)\n");
@@ -1227,8 +1228,8 @@ BOOL
 		OS_Printf("this handle is not have animetion (GFL_G3D_ObjContAnmFrameInc)\n");
 		return FALSE;
 	}
-	g3Dobj->anmobj->frame += (FX32_ONE);
-	if( g3Dobj->anmobj->frame == NNS_G3dAnmObjGetNumFrame( g3Dobj->anmobj )){
+	g3Dobj->anmobj->frame += count;
+	if( g3Dobj->anmobj->frame >= NNS_G3dAnmObjGetNumFrame( g3Dobj->anmobj )){
 		return FALSE;
 	} else {
 		return TRUE;
