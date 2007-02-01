@@ -43,24 +43,72 @@ enum CommCommand_e {
 
 
 
-/// コマンドテーブルの初期化をする
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドテーブルの初期化  コマンドテーブルの変更
+ * @param   pCommPacketLocal 呼び出しモジュール専用のコマンド体系テーブル
+ * @param   listNum          コマンド数
+ * @param   pWork            呼び出しモジュール専用のワークエリア
+ * @retval  none
+ */
+//--------------------------------------------------------------
 extern void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
-/// コマンドテーブルの開放処理
+
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドテーブルの開放処理
+ *          ゲーム中に開放する場合は、必ず同期をあわせてから開放してください
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
 extern void GFL_NET_CommandFinalize( void );
-/// データのサイズを得る
-extern int GFL_NET_CommandGetPacketSize(int command);
-///  コマンドテーブルを破棄する時の命令
-extern BOOL GFL_NET_CommandThrowOut(void);
-///  コマンドテーブルが破棄し終わったかどうか検査
-extern BOOL GFL_NET_CommandIsThrowOuted(void);
-///  コールバックを呼ぶ
-extern void GFL_NET_CommandCallBack(int netID, int sendID, int command, int size, void* pData);
-/// プリント
-extern void GFL_NET_CommandDebugPrint(int command);
 
-extern void* GFL_NET_CommandCreateBuffStart(int command, int netID, int size);
-extern BOOL GFL_NET_CommandCreateBuffCheck(int command);
 
+// ここから下はライブラリ専用 GFI関数
+//--------------------------------------------------------------
+/**
+ * @brief   定義があったコマンドのサイズを返します
+ * @param   command         コマンド
+ * @retval  データのサイズ   可変なら COMM_VARIABLE_SIZEを返します
+ */
+//--------------------------------------------------------------
+extern int GFI_NET_CommandGetPacketSize(int command);
+
+//--------------------------------------------------------------
+/**
+ * @brief   テーブルに従い 受信コールバックを呼び出します
+ * @param   netID           ネットワークID
+ * @param   sendID          送信ID
+ * @param   command         受信コマンド
+ * @param   size            受信データサイズ
+ * @param   pData           受信データ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GFI_NET_CommandCallBack(int netID, int sendID, int command, int size, void* pData);
+
+//--------------------------------------------------------------
+/**
+ * @brief   受信バッファを持っているかどうかの検査
+ * @param   command         コマンド
+ * @retval  持ってるならTRUE
+ */
+//--------------------------------------------------------------
+extern BOOL GFI_NET_CommandCreateBuffCheck(int command);
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   受信バッファを得る
+ * @param   command         コマンド
+ * @param   netID           送信者
+ * @param   size         サイズ
+ * @retval  受信バッファ 持っていないならばNULL
+ */
+//--------------------------------------------------------------
+
+extern void* GFI_NET_CommandCreateBuffStart(int command, int netID, int size);
 
 #endif// __NET_COMMAND_H__
 

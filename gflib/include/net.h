@@ -18,7 +18,7 @@
 #endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
@@ -352,29 +352,41 @@ extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
 //--------その他、ツール類
 //==============================================================================
 /**
- * @brief タイミングコマンドを発行する
- * @param[in,out]   NetHandle* pNet  通信ハンドル
- * @param[in]   u8 no   タイミング取りたい番号
- * @return      none
+ * @brief   タイミングコマンドを発行する
+ * @param   NetHandle* pNet  通信ハンドル
+ * @param   u8 no   タイミング取りたい番号
+ * @return  none
  */
 //==============================================================================
 extern void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
 
 //==============================================================================
 /**
- * @brief タイミングコマンドが届いたかどうかを確認する
- * @param[in,out]   NetHandle* pNet  通信ハンドル
- * @param[in]   no   届く番号
+ * @brief   タイミングコマンドが届いたかどうかを確認する
+ * @param   NetHandle* pNet  通信ハンドル
+ * @param   no   届く番号
  * @retval  TRUE    タイミングが合致
  * @retval  FALSE   タイミングがそろっていない
  */
 //==============================================================================
 extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 
-
+//==============================================================================
+/**
+ * @brief   DSモードへ通信を切り替える
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  none
+ */
+//==============================================================================
 extern void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet);
+//==============================================================================
+/**
+ * @brief   MPモードへ通信を切り替える
+ * @param   NetHandle* pNet     通信ハンドルのポインタ
+ * @retval  none
+ */
+//==============================================================================
 extern void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet);
-
 
 //==============================================================================
 /**
@@ -385,6 +397,15 @@ extern void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet);
  */
 //==============================================================================
 extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
+
+//==============================================================================
+/**
+ * @brief   リセットできる状態かどうか
+ * @retval  TRUEならリセット可能
+ */
+//==============================================================================
+
+extern BOOL GFL_NET_IsResetEnable(void);
 
 #include "net_command.h"
 

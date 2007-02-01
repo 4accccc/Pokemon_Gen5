@@ -42,6 +42,9 @@
  */
 //-----------------------------------------------------------------------------
 
+
+#define _GFI_FADE_BASESPEED  (6)  //ソフトリセットの際のフェードスピード
+
 /**
  * @brief ソフトウエアリセット非許可用
  */
@@ -81,6 +84,12 @@ typedef enum {
     GFL_UI_TP_USE_CIRCLE = 0xfe,			///< 円形として使う
     GFL_UI_TP_HIT_NONE = -1	///< あたったテーブルなし
 } GF_UI_TP_CUSTOM_e;
+
+
+#define	PAD_BUTTON_DECIDE	( PAD_BUTTON_A )	///< 決定ボタン定義
+#define	PAD_BUTTON_CANCEL	( PAD_BUTTON_B )	///< キャンセルボタン定義
+#define PAD_BUTTON_SOFTRESET   (PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_BUTTON_L|PAD_BUTTON_R) //ソフトリセットボタン定義
+
 
 //-----------------------------------------------------------------------------
 /**

@@ -508,7 +508,10 @@ static void WH_StateOutReset(void *arg);
 /* ======================================================================
    debug codes
    ====================================================================== */
+#if GFL_NET_DEBUG
 #define WMHIGH_DEBUG   //wh関連のデバッグ出力
+#endif
+
 
 #ifdef PM_DEBUG
 #define _DEBUG_LIFETIME  (0)    // デバッグ時にライフタイムを無効にしたい時に使用
@@ -2964,7 +2967,7 @@ GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap)
    Arguments:   作業領域.
    Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-BOOL WH_Initialize(void* pHeap)
+BOOL WH_Initialize(void* pHeap, BOOL bNet)
 {
     GFL_NETWM* pWmInfo = (GFL_NETWM*)pHeap;
 
@@ -2988,6 +2991,10 @@ BOOL WH_Initialize(void* pHeap)
     pWmInfo->bDisconnectChild = FALSE;
     pWmInfo->bPauseConnect = FALSE;
 
+    if(!bNet){
+        return TRUE;
+    }
+    
     // 初期化シーケンス開始。
     if (!WH_StateInInitialize()) {
         WH_SetError(WM_ERRCODE_FAILED);
@@ -3753,12 +3760,12 @@ void WHSetGameInfo(void* pBuff, int size, int ggid, int tgid)
 {
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     if(pNetWH->sSysState == WH_SYSSTATE_CONNECTED){
-        OS_TPrintf("ビーコンをセットした %d\n",tgid);
+        NET_PRINT("ビーコンをセットした %d\n",tgid);
         WM_SetGameInfo(NULL, pBuff, size,
                        ggid, tgid, WM_ATTR_FLAG_ENTRY);
     }
     else{
-        OS_TPrintf("ビーコンをセットできなかった %d \n",tgid);
+        NET_PRINT("ビーコンをセットできなかった %d \n",tgid);
     }
 }
 

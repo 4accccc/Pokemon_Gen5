@@ -125,6 +125,7 @@ struct _GFL_NETHANDLE{
   u8 bErrorAuto;
   u8 dsmpChange;        ///< 通信モード変更
   u8 dsmpChangeType;    ///< 通信モード変更タイプ
+  u8 bDisconnectState;  ///< 切断状態に入っている場合TRUE
 };
 
 enum _negotiationType {

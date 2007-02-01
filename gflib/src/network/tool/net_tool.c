@@ -18,13 +18,6 @@
 // static宣言
 //==============================================================================
 
-
-
-typedef struct{
-    u8 no;
-    u8 listNo;
-}_ListResult;
-
 struct _NET_TOOLSYS_t{
     u8* timingSyncBuff;   ///< 通信相手の同期コマンド番号
     u8 timingSyncEnd;     ///< 同期コマンド用

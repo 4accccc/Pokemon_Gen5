@@ -441,7 +441,7 @@ extern GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap);
  * @param    pHeap   GFL_NETWMのポインタ
  * @return   
    ---------------------------------------------------------------------- */
-extern BOOL WH_Initialize(void* pHeap);
+extern BOOL WH_Initialize(void* pHeap, BOOL bNet);
 //extern BOOL WH_Initialize(void* pHeap);
 /* ----------------------------------------------------------------------
    ヒープ領域サイズを返す

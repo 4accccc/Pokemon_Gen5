@@ -122,7 +122,7 @@ static volatile int   startCheck;
 // static宣言
 //==============================================================================
 
-static void _whInitialize(int heapID,GFL_NETWL* pNetWL);
+static void _whInitialize(int heapID,GFL_NETWL* pNetWL, BOOL bConnect);
 static void _childDataInit(void);
 static void _parentDataInit(BOOL bTGIDChange);
 static void _commInit(GFL_NETWL* pNetWL);
@@ -164,11 +164,12 @@ void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
  * @param   getFunc   ビーコン作成関数
  * @param   getSize   ビーコンサイズ関数
  * @param   getComp   ビーコン比較関数
+ * @param   bConnect  通信する場合TRUE
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp)
+void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect)
 {
     int i;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
@@ -178,7 +179,14 @@ void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFu
     pNetWL->beaconCompFunc = getComp;
 
     // 無線ライブラリ駆動開始
-    _whInitialize(heapID, pNetWL);
+    _whInitialize(heapID, pNetWL, bConnect);
+
+    if(bConnect){
+        pNetWL->disconnectType = _DISCONNECT_NONE;
+    }
+    else{
+        pNetWL->disconnectType = _DISCONNECT_STEALTH;
+    }
 }
 
 //==============================================================================
@@ -202,8 +210,9 @@ void GFL_NET_WLSetRecvCallback( PTRCommRecvLocalFunc recvCallback)
  */
 //==============================================================================
 
-BOOL GFL_NET_WLIsConnect(GFL_NETWL* pNetWL)
+BOOL GFL_NET_WLIsConnect(void)
 {
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     if(pNetWL==NULL){
         return FALSE;
     }
@@ -288,7 +297,7 @@ static void _startUpCallback(void *arg, WVRResult result)
         OS_TPanic("WVR_StartUpAsync error.[%08xh]\n", result);
     }
     else{
-		OS_Printf("WVR Trans VRAM-D.\n");
+		NET_PRINT("WVR Trans VRAM-D.\n");
 	}
     startCheck = 2;
 }
@@ -378,14 +387,14 @@ void GFL_NET_WLVRAMDFinalize(void)
  */
 //==============================================================================
 
-static void _whInitialize(int heapID, GFL_NETWL* pNetWL)
+static void _whInitialize(int heapID, GFL_NETWL* pNetWL, BOOL bConnect)
 {
     // 無線初期化
 //    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
     pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork);
 
-    if(FALSE == WH_Initialize(_GFL_NET_WLGetNETWH())){
+    if(FALSE == WH_Initialize(_GFL_NET_WLGetNETWH(), bConnect)){
         OS_TPanic("not init");
     }
     // WH 初期設定
@@ -437,7 +446,6 @@ static void _commInit(GFL_NETWL* pNetWL)
     pNetWL->bErrorState = FALSE;
     pNetWL->bErrorNoChild = FALSE;
     
-    pNetWL->disconnectType = _DISCONNECT_NONE;
     pNetWL->bAutoExit = FALSE;
     pNetWL->bEndScan = 0;
 
@@ -477,6 +485,9 @@ BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallB
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     _commInit(pNetWL);
+    if( pNetWL->disconnectType == _DISCONNECT_STEALTH){
+        return TRUE;
+    }
     _parentDataInit(bTGIDChange);
 
     WH_ParentDataInit();
@@ -512,7 +523,12 @@ BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallB
 BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    
     _commInit(pNetWL);
+    if( pNetWL->disconnectType == _DISCONNECT_STEALTH){
+        return TRUE;
+    }
+
     if(bBconInit){
         NET_PRINT("ビーコンの初期化\n");
         GFL_NET_WLChildBconDataInit(); // データの初期化
@@ -544,6 +560,9 @@ BOOL GFL_NET_WLSwitchParentChild(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     if(!pNetWL){
+        return TRUE;
+    }
+    if(pNetWL->disconnectType == _DISCONNECT_STEALTH){
         return TRUE;
     }
     switch(pNetWL->bEndScan){
@@ -620,7 +639,7 @@ void GFL_NET_WLStealth(BOOL bStalth)
     }
     else{
         pNetWL->disconnectType = _DISCONNECT_NONE;
-        _whInitialize(pNetWL->heapID, pNetWL);  // 無線駆動再開
+        _whInitialize(pNetWL->heapID, pNetWL, TRUE);  // 無線駆動再開
     }
 }
 
@@ -636,7 +655,7 @@ static void _commEnd(void)
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     GFL_HEAP_FreeMemory(pNetWL->_pWHWork);
     GFL_HEAP_FreeMemory(pNetWL);
-    pNetWL = NULL;
+    _GFL_NET_SetNETWL( NULL );
 }
 
 //==============================================================================
@@ -1025,12 +1044,12 @@ static void _stateProcess(u16 bitmap)
     switch (state) {
       case WH_SYSSTATE_STOP:
         if(pNetWL->disconnectType == _DISCONNECT_END){
-            OHNO_SP_PRINT("WHEnd を呼んで終了しました\n");
+            NET_PRINT("WHEnd を呼んで終了しました\n");
             _commEnd();  // ワークから何から全て開放
             return;
         }
         if(pNetWL->disconnectType == _DISCONNECT_SECRET){
-            OHNO_SP_PRINT("WHEnd を呼んで死んだふり開始\n");
+            NET_PRINT("WHEnd を呼んで死んだふり開始\n");
             pNetWL->disconnectType = _DISCONNECT_STEALTH;
             return;
         }

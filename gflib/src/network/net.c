@@ -199,7 +199,7 @@ void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,int heapID)
 
     GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
 
-    OS_TPrintf("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
+    NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
 
     GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
     pNet->heapID = heapID;
@@ -418,16 +418,20 @@ BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id)
 //==============================================================================
 void GFL_NET_Disconnect(void)
 {
-    int i,userNo = 0;
+    int i,userNo = -1;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-        if(pNet->pNetHandle[i]){
-//            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
-            userNo = i;
+    if(pNet){
+        for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+            if(pNet->pNetHandle[i]){
+                //            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
+                userNo = i;
+            }
         }
     }
-    GFL_NET_StateExit(pNet->pNetHandle[userNo]);
+    if(userNo != -1){
+        GFL_NET_StateExit(pNet->pNetHandle[userNo]);
+    }
 }
 
 //==============================================================================
@@ -440,6 +444,27 @@ void GFL_NET_Disconnect(void)
 //==============================================================================
 void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable)
 {
+}
+
+//==============================================================================
+/**
+ * @brief   リセットできる状態かどうか
+ * @retval  TRUEならリセット可能
+ */
+//==============================================================================
+
+BOOL GFL_NET_IsResetEnable(void)
+{
+    if(_pNetSys==NULL){
+        return TRUE;
+    }
+    if(GFL_NET_WLIsConnectStalth()){ // 通信終了
+        return TRUE;
+    }
+    if(!GFL_NET_WLIsConnect()){
+        return TRUE;
+    }
+    return FALSE;
 }
 
 

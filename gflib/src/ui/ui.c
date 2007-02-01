@@ -9,13 +9,18 @@
 
 #include "gflib.h" 
 #include "ui.h"
-#include "ui_def.h" 
+#include "ui_def.h"
+#include "fade.h"
 
 //==============================================================================
 //
 //			定義、関数宣言
 //
 //==============================================================================
+
+#define _SOFTRESET_TYPE_NORMAL    (0)  // 電源投入時と同じ
+#define _SOFTRESET_TYPE_NETERROR  (1)  // 通信エラーの時
+
 
 
 //------------------------------------------------------------------
@@ -28,13 +33,13 @@ struct _UI_SYS {
     UI_KEYSYS* pKey;       ///< キー管理構造体
 	u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
 	u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
-	u8 DS_Boot_Flag;       ///<
     u8 AgbCasetteVersion;          ///< AGBカセット対応時のカセットバージョン 通常は0
     PMBackLightSwitch lightState;  ///< バックライトのIPL状態
 } ;
 
 static UISYS* _pUI = NULL;   ///< 一個しか生成されないのでここでポインタ管理
 static void _UI_SleepFunc(void);
+static void _UI_ResetLoop(int resetNo);
 
 //==============================================================================
 //
@@ -76,6 +81,13 @@ void GFI_UI_sysMain(UISYS* pUI)
 {
     GFL_UI_Key_sysMain();
     _UI_SleepFunc();  // スリープ状態管理
+
+    if ((GFL_UI_KeyGetCont() & PAD_BUTTON_SOFTRESET) == PAD_BUTTON_SOFTRESET) {
+        if(pUI->DontSoftReset == 0){  // 抑制するBITが何も無ければReset
+            _UI_ResetLoop(_SOFTRESET_TYPE_NORMAL);  // この関数内でsoftresetされる
+        }
+    }
+
 }
 
 //==============================================================================
@@ -299,6 +311,34 @@ static void _UI_SleepFunc(void)
         if(PM_BACKLIGHT_OFF == up){
             PM_SetBackLight(PM_LCD_ALL, pUI->lightState);
         }
+    }
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	ソフトウエアリセットが起きた場合の処理
+ * @param	resetNo   OS_ResetSystemに渡すリセット種類
+ */
+//---------------------------------------------------------------------------
+static void _UI_ResetLoop(int resetNo)
+{
+    GFL_FADE_MasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0,16, _GFI_FADE_BASESPEED );
+    GFL_FADE_MasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB, 0,16, _GFI_FADE_BASESPEED );
+    GFL_NET_Disconnect();  // 通信リセットへ移行
+#if 0  //後日追加 @@OO
+    // もしセーブしてたらキャンセルしておかないとリセットできない
+    SaveData_DivSave_Cancel(SaveData_GetPointer());
+#endif
+	while (1) {
+         // 通信としてリセットしてもいい状態 + メモリーカード終了
+        if(GFL_NET_IsResetEnable() && CARD_TryWaitBackupAsync()){
+            OS_ResetSystem(resetNo);  // 切断確認後終了
+        }
+        OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+
+        GFL_UI_sysMain();   // 必要最小のGFL関数
+        GFL_NET_sysMain();
+        GFL_FADE_sysMain();
     }
 }
 

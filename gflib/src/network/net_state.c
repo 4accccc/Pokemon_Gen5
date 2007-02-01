@@ -237,8 +237,7 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     _GFL_NET_SetNETWL(pWL);
 
     GFL_NET_WLInitialize(pNetIni->allocNo, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
-                         pNetIni->beaconCompFunc);
-//    GFL_NET_WLStealth(FALSE);
+                         pNetIni->beaconCompFunc, pNetIni->bNetwork);
 
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
@@ -748,7 +747,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
             break;
         }
     }
-    OS_TPrintf("------NegoRet を送信 %d\n",retCmd[0]);
+    NET_PRINT("------NegoRet を送信 %d\n",retCmd[0]);
     GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, retCmd);
     pNetHandle->negotiationID[i] = TRUE;
 
@@ -825,6 +824,10 @@ static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle)
 {
+    if(pNetHandle->bDisconnectState){
+        return;
+    }
+    pNetHandle->bDisconnectState = TRUE;
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
@@ -944,7 +947,4 @@ void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void*
         pNetHandle->dsmpChange = _TRANS_NONE;
     }
 }
-
-
-
 

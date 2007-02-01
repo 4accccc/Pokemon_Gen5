@@ -110,14 +110,14 @@ void GFL_NET_CommandFinalize( void )
  */
 //--------------------------------------------------------------
 
-void GFL_NET_CommandCallBack(int netID, int recvID, int command, int size, void* pData)
+void GFI_NET_CommandCallBack(int netID, int recvID, int command, int size, void* pData)
 {
     int i;
     PTRCommRecvFunc func;
     BOOL bCheck;
     GFL_NETHANDLE* pNetHandle;
 
-    OS_TPrintf("--- %d \n", netID);
+    NET_PRINT("--- %d \n", netID);
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         pNetHandle = GFL_NET_GetNetHandle(i);
@@ -168,7 +168,7 @@ void GFL_NET_CommandCallBack(int netID, int recvID, int command, int size, void*
  */
 //--------------------------------------------------------------
 
-int GFL_NET_CommandGetPacketSize(int command)
+int GFI_NET_CommandGetPacketSize(int command)
 {
     int size = 0;
     PTRCommRecvSizeFunc func=NULL;
@@ -207,7 +207,7 @@ int GFL_NET_CommandGetPacketSize(int command)
  */
 //--------------------------------------------------------------
 
-BOOL GFL_NET_CommandCreateBuffCheck(int command)
+BOOL GFI_NET_CommandCreateBuffCheck(int command)
 {
     if( command < GFL_NET_CMD_COMMAND_MAX ){
         return ( _CommPacketTbl[command].getAddrFunc != NULL);
@@ -217,13 +217,15 @@ BOOL GFL_NET_CommandCreateBuffCheck(int command)
 
 //--------------------------------------------------------------
 /**
- * @brief   
+ * @brief   受信バッファを得る
  * @param   command         コマンド
- * @retval  持ってるならTRUE
+ * @param   netID           送信者
+ * @param   size         サイズ
+ * @retval  受信バッファ 持っていないならばNULL
  */
 //--------------------------------------------------------------
 
-void* GFL_NET_CommandCreateBuffStart(int command,int netID, int size)
+void* GFI_NET_CommandCreateBuffStart(int command,int netID, int size)
 {
     PTRCommRecvBuffAddr func;
 

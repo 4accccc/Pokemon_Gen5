@@ -86,7 +86,7 @@ void GFL_UI_TP_sysInit(const int heapID)
 	if( TP_GetUserInfo( &calibrate ) == TRUE ){
 		// キャリブレーション値の設定
 		TP_SetCalibrateParam( &calibrate );
-		OS_TPrintf("Get Calibration Parameter from NVRAM\n");
+		GFL_UI_PRINT("Get Calibration Parameter from NVRAM\n");
 	}
 	else{
 		// 取得に失敗したのでデフォルトのキャリブレーションの設定
@@ -95,7 +95,7 @@ void GFL_UI_TP_sysInit(const int heapID)
 		calibrate.xDotSize = 0x0e25;
 		calibrate.yDotSize = 0x1208;
 		TP_SetCalibrateParam( &calibrate );
-		OS_TPrintf( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
+		GFL_UI_PRINT( "Warrning : TauchPanelInit( not found valid calibration data )\n" );
 	}
     _pUITP = pTP;
 //    return pTP;

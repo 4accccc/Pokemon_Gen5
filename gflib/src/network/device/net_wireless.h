@@ -35,8 +35,8 @@ extern void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num);
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp);
-//extern void GFL_NET_WLInitialize(int heapID);
+extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect);
+
 //==============================================================================
 /**
  * @brief   受信コールバック関数を指定
@@ -51,7 +51,7 @@ extern void GFL_NET_WLSetRecvCallback( PTRCommRecvLocalFunc recvCallback);
  * @retval  TRUE  接続している
  */
 //==============================================================================
-extern BOOL GFL_NET_WLIsConnect(GFL_NETWL* pNetWL);
+extern BOOL GFL_NET_WLIsConnect(void);
 //==============================================================================
 /**
  * @brief   WVRをVRAMDに移動
