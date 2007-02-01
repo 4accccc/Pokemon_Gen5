@@ -13,7 +13,7 @@
 
 #include "testmode.h"
 
-//#include "tetsu/titledemo.naix"
+#include "sample_graphic/titledemo.naix"
 
 //------------------------------------------------------------------
 typedef struct {
@@ -23,9 +23,10 @@ typedef struct {
 	GFL_BMP_DATA*			bmpHeader;
 	GFL_TEXT_PRINTPARAM*	textParam;
 
-	GFL_BMPWIN*				bmpwin[8];
+	GFL_BMPWIN*				bmpwin[32];
 
 	GFL_G3D_RES*			g3Dres[8];
+	GFL_G3D_OBJ*			g3Dobj[8];
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -57,11 +58,21 @@ static const char	test_index1[] =
 {"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
 static const char	test_index2[] = {"http://www.gamefreak.co.jp"};
 
-static const char	test_select1[] = {"わたなべ　てつや\nTetsuya Watanabe"};
-static const char	test_select2[] = {"たまだ　そうすけ\nSousuke Tamada"};
-static const char	test_select3[] = {"そがべ　ひさし\nHisashi Sogabe"};
-static const char	test_select4[] = {"おおの　かつみ\nKatsumi Ohno"};
-static const char	test_select5[] = {"みつはら　さとし\nSatoshi Mitsuhara"};
+static const char	test_select1[]	= {"わたなべ　てつや　　Tetsuya Watanabe"};
+static const char	test_select2[]	= {"たまだ　そうすけ　　Sousuke Tamada"};
+static const char	test_select3[]	= {"そがべ　ひさし　　Hisashi Sogabe"};
+static const char	test_select4[]	= {"おおの　かつみ　　Katsumi Ohno"};
+static const char	test_select5[]	= {"たや　まさお　　Masao Taya"};
+static const char	test_select6[]	= {"なかむら　ひろゆき　　Hiroyuki Nakamura"};
+static const char	test_select7[]	= {"まつだ　よしのり　　Yoshinori Matsuda"};
+static const char	test_select8[]	= {"かがや　けいた　　Keita Kagaya"};
+static const char	test_select9[]	= {"ごとう　だいすけ　　Daisuke Gotou"};
+static const char	test_select10[]	= {"のはら　さとし　　Satoshi Nohara"};
+static const char	test_select11[]	= {"たかはし　ともや　　Tomoya Takahashi"};
+static const char	test_select12[]	= {"もり　あきと　　Akito Mori"};
+static const char	test_select13[]	= {"おおた　ともみち　　Tomomichi Ohta"};
+static const char	test_select14[]	= {"いわさわ　みゆき　　Miyuki Iwasawa"};
+static const char	test_select15[]	= {"さいとう　のぞむ　　Nozomu Saitou"};
 
 typedef struct {
 	const char*	msg;
@@ -77,11 +88,31 @@ static const TESTMODE_PRINTLIST indexList[] = {
 };
 
 static const TESTMODE_PRINTLIST selectList[] = {
-	{ test_select1, 4,  5, 20, 3 },
-	{ test_select2, 4,  8, 20, 3 },
-	{ test_select3, 4, 11, 20, 3 },
-	{ test_select4, 4, 14, 20, 3 },
-	{ test_select5, 4, 17, 20, 3 },
+#if 0
+	{ test_select1, 4,  5, 24, 1 },
+	{ test_select2, 4,  7, 24, 1 },
+	{ test_select3, 4,  9, 24, 1 },
+	{ test_select4, 4, 11, 24, 1 },
+	{ test_select5, 4, 13, 24, 1 },
+	{ test_select6, 4, 15, 24, 1 },
+	{ test_select7, 4, 17, 24, 1 },
+#else
+	{ test_select1,  4,  5, 24, 1 },
+	{ test_select2,  4,  6, 24, 1 },
+	{ test_select3,  4,  7, 24, 1 },
+	{ test_select4,  4,  8, 24, 1 },
+	{ test_select5,  4,  9, 24, 1 },
+	{ test_select6,  4, 10, 24, 1 },
+	{ test_select7,  4, 11, 24, 1 },
+	{ test_select8,  4, 12, 24, 1 },
+	{ test_select9,  4, 13, 24, 1 },
+	{ test_select10, 4, 14, 24, 1 },
+	{ test_select11, 4, 15, 24, 1 },
+	{ test_select12, 4, 16, 24, 1 },
+	{ test_select13, 4, 17, 24, 1 },
+	{ test_select14, 4, 18, 24, 1 },
+	{ test_select15, 4, 19, 24, 1 },
+#endif
 };
 
 #define TEXT_FRM	(GFL_BG_FRAME3_M)
@@ -132,6 +163,7 @@ static void	bg_init( void )
 	{
 		GX_SetBankForTex(GX_VRAM_TEX_01_AB);
 		GX_SetBankForBG(GX_VRAM_BG_64_E);
+		GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
 	}
 	{
 		//ＢＧモード設定
@@ -159,9 +191,6 @@ static void	bg_init( void )
 		GFL_BG_BGControlSet( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
 		GFL_BG_PrioritySet( TEXT_FRM, 0 );
 		GFL_BG_VisibleSet( TEXT_FRM, VISIBLE_ON );
-
-		//BG0( 3D frame )
-		GFL_BG_BGControlSet3D(1);
 	}
 	//ビットマップウインドウシステムの起動
 	{
@@ -171,6 +200,8 @@ static void	bg_init( void )
 	{
 		GFL_G3D_sysInit( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, heapID, NULL );
+		//BG0( 3D frame )
+		GFL_BG_BGControlSet3D( 1 );
 	}
 }
 
@@ -283,26 +314,84 @@ static void	g2d_unload( void )
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
+#define TD_TITLEP_CMR_CPX_ED			(FX32_ONE * -148)
+#define TD_TITLEP_CMR_CPY_ED			(FX32_ONE * 58)
+#define TD_TITLEP_CMR_CPZ_ED			(FX32_ONE * 190)
+#define TD_TITLEP_CMR_TPX_ED			(FX32_ONE * 8)
+#define TD_TITLEP_CMR_TPY_ED			(FX32_ONE * -5)
+#define TD_TITLEP_CMR_TPZ_ED			(FX32_ONE * 1)
+
+#define TD_TITLE_CAMERA_PERSPWAY		(0x0b60)
+#define TD_TITLE_CAMERA_CLIP_NEAR		(0)
+#define TD_TITLE_CAMERA_CLIP_FAR		(FX32_ONE*100)
+
 //作成
 static void g3d_load( void )
 {
-#if 0
-	const char* path = "tetsu/titledemo.narc";
+	const char* path = "sample_graphic/titledemo.narc";
 
 	//モデル＆テクスチャリソース読み込み
 	testmode->g3Dres[0] = GFL_G3D_ResourceCreatePath( path, NARC_titledemo_title_air_nsbmd ); 
 	//アニメーションリソース読み込み
 	testmode->g3Dres[1] = GFL_G3D_ResourceCreatePath( path, NARC_titledemo_title_air_nsbta ); 
-#endif
+	//テクスチャリソース転送
+	GFL_G3D_TransVramTex( testmode->g3Dres[0] );
+
+	//３Ｄオブジェクト作成
+	testmode->g3Dobj[0] = GFL_G3D_ObjCreate(	testmode->g3Dres[0], 0,		//model
+												testmode->g3Dres[0],		//texture
+												testmode->g3Dres[1], 0 );	//animation
+	{
+		//カメラセット
+		VecFx32	targetPos = {TD_TITLEP_CMR_TPX_ED, TD_TITLEP_CMR_TPY_ED, TD_TITLEP_CMR_TPZ_ED};
+		VecFx32	cameraPos = {TD_TITLEP_CMR_CPX_ED, TD_TITLEP_CMR_CPY_ED, TD_TITLEP_CMR_CPZ_ED};
+		VecFx32 cameraUp = { 0, FX32_ONE, 0 };
+
+		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
+						FX_SinIdx( TD_TITLE_CAMERA_PERSPWAY ), 
+						FX_CosIdx( TD_TITLE_CAMERA_PERSPWAY ), 
+						( FX32_ONE * 4 / 3 ), 0, 
+						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
+		GFL_G3D_sysLookAtSet( &cameraPos, &cameraUp, &targetPos );
+	}
 }
 	
 //破棄
 static void g3d_unload( void )
 {
-#if 0
+	GFL_G3D_ObjDelete( testmode->g3Dobj[0] ); 
+
 	GFL_G3D_ResourceDelete( testmode->g3Dres[1] ); 
 	GFL_G3D_ResourceDelete( testmode->g3Dres[0] ); 
-#endif
+}
+	
+static void g3d_draw( void )
+{
+	VecFx32 trans	= { 0, 0, 0 };											//座標
+	MtxFx33 rotate	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
+	VecFx32 scale	= { FX32_ONE, FX32_ONE, FX32_ONE };						//スケール
+
+	//描画開始
+	GFL_G3D_DrawStart();
+	//カメラグローバルステート設定		
+ 	GFL_G3D_DrawLookAt();
+
+	//各オブジェクト描画
+	{
+		//オブジェクト描画開始
+		GFL_G3D_ObjDrawStart();
+		//オブジェクト情報転送
+		GFL_G3D_ObjDrawStatusSet( &trans, &rotate, &scale );
+		//オブジェクト描画
+		GFL_G3D_ObjDraw( testmode->g3Dobj[0] );
+
+		//アニメーションコントロール
+		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[0] ) == FALSE ){
+			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[0] );
+		}
+	}
+	//描画終了（バッファスワップ）
+	GFL_G3D_DrawEnd();							
 }
 	
 //------------------------------------------------------------------
@@ -343,6 +432,7 @@ static BOOL	TestModeControl( void )
 		}
 		GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
+		g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 3:
@@ -367,6 +457,7 @@ static BOOL	TestModeControl( void )
 				testmode->seq--;
 			}
 		}
+		g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 4:
