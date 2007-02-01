@@ -1816,6 +1816,9 @@ void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq )
 	//OS_Printf( "[%d]\n", __LINE__ );
 	p_wk->anmseq = anmseq;
 	CLWK_AnmDataSetAnmSeq( &p_wk->anmdata, anmseq );
+
+	// アニメーション開始
+	GFL_CLACT_WkStartAnm( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -1848,6 +1851,8 @@ void GFL_CLACT_WkSetAnmSeqDiff( CLWK* p_wk, u16 anmseq )
 	GF_ASSERT( p_wk );
 	if( anmseq != p_wk->anmseq ){
 		GFL_CLACT_WkSetAnmSeq( p_wk, anmseq );
+		// アニメーション開始
+		GFL_CLACT_WkStartAnm( p_wk );
 	}
 }
 
