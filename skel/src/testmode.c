@@ -5,11 +5,7 @@
 //===================================================================
 #include "gflib.h"
 #include "main.h"
-
-#include "ui.h"
 #include "textprint.h"
-#include "g3d_system.h"
-#include "procsys.h"
 
 #include "testmode.h"
 
