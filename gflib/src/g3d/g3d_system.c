@@ -20,15 +20,52 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
+//	グローバルステート構造体（射影）
+typedef struct {
+	GFL_G3D_PROJECTION_TYPE	type;	///<射影行列タイプ
+	fx32		param1;				///<パラメータ１（タイプによって使用法は異なる）
+	fx32		param2;				///<パラメータ２（タイプによって使用法は異なる）
+	fx32		param3;				///<パラメータ３（タイプによって使用法は異なる）
+	fx32		param4;				///<パラメータ４（タイプによって使用法は異なる）
+	fx32		near;				///<視点からnearクリップ面までの距離
+	fx32		far;				///<視点からfarクリップ面までの距離
+	fx32		scaleW;				///<ビューボリュームの精度調整パラメータ（使用しないときは0）
+}GFL_G3D_PROJECTION;
+
+//	グローバルステート構造体（ライト）
+typedef struct {
+	VecFx16		vec;				///<ライト方向
+	u16			color;				///<色
+}GFL_G3D_LIGHT;
+
+//	グローバルステート構造体（カメラ）
+typedef struct {
+	VecFx32		camPos;		///<カメラの位置(＝視点)
+	VecFx32		camUp;		///<カメラの上方向
+	VecFx32		target;		///<カメラの焦点(＝注視点)
+} GFL_G3D_LOOKAT;
+
+//	グローバルステート構造体（レンダリングバッファ）
+typedef struct {
+	GXSortMode		aw;
+	GXBufferMode	zw;
+} GFL_G3D_SWAPBUFMODE;
+
 /**
  * @brief	３Ｄシステムマネージャ構造体
  */
 typedef struct GFL_G3D_MAN_tag
 {
-	NNSFndAllocator		allocater;	///<メモリアロケータ(NNSで使用)
-	void*				plt_memory;	///<パレットマネージャ用メモリ
-	void*				tex_memory;	///<テクスチャマネージャ用メモリ
-	u16					heapID;		///<ヒープＩＤ
+	NNSFndAllocator		allocater;			///<メモリアロケータ(NNSで使用)
+	void*				plt_memory;			///<パレットマネージャ用メモリ
+	void*				tex_memory;			///<テクスチャマネージャ用メモリ
+	u16					heapID;				///<ヒープＩＤ
+
+	GFL_G3D_PROJECTION	projection;			///<グローバルステート（射影）
+	GFL_G3D_LIGHT		light[4];			///<グローバルステート（ライト）
+	GFL_G3D_LOOKAT		lookAt;				///<グローバルステート（カメラ）
+	GFL_G3D_SWAPBUFMODE	swapBufMode;		///<グローバルステート（レンダリングバッファ）
+
 }GFL_G3D_MAN;
 
 static GFL_G3D_MAN*  g3Dman = NULL;
@@ -73,6 +110,13 @@ void
 
 	g3Dman->heapID = heapID;
 
+	// NitroSystem:３Ｄエンジンの初期化
+	NNS_G3dInit();
+	// マトリクススタックの初期化
+    G3X_InitMtxStack();
+	// グローバルステート初期化
+	NNS_G3dGlbInit();
+
 	// ジオメトリコマンドバッファの設定
 	if( GeBufSize ){
 		NNSG3dGeBuffer* geBuf;
@@ -83,14 +127,8 @@ void
 		geBuf = ( NNSG3dGeBuffer* )GFL_HEAP_DTCM_AllocMemory( GeBufSize );
 		NNS_G3dGeSetBuffer( geBuf );
 	}
-
-	// NitroSystem:３Ｄエンジンの初期化
-	NNS_G3dInit();
-	// マトリクススタックの初期化
-    G3X_InitMtxStack();
-
 	// ジオメトリエンジン起動後必ず呼ばれなければならない
-    G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
+    G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 
 	//ＮＮＳ関数で使用するアロケータのセットアップ
 	GFL_HEAP_InitAllocator( &g3Dman->allocater, g3Dman->heapID, 4 ); 
@@ -123,6 +161,28 @@ void
 		//フレームモードの設定
 		NNS_GfdInitFrmTexVramManager( PLT_SLOTSIZ * pltmanSize, TRUE);
 		g3Dman->tex_memory = NULL;
+	}
+
+	//グローバルステート内部情報初期化
+	{
+		VecFx32 initVec32 = { 0, 0, 0 };
+		VecFx16 initVec16 = { FX32_ONE-1, FX32_ONE-1, FX32_ONE-1 };
+
+		//射影
+		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
+						FX_SinIdx( 0x1000 ), FX_CosIdx( 0x1000 ), ( FX32_ONE * 4 / 3 ), 0, 
+						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
+		//ライト
+		GFL_G3D_sysLightSet( 0, &initVec16, 0x7fff );
+		GFL_G3D_sysLightSet( 1, &initVec16, 0x7fff );
+		GFL_G3D_sysLightSet( 2, &initVec16, 0x7fff );
+		GFL_G3D_sysLightSet( 3, &initVec16, 0x7fff );
+		//カメラ
+		GFL_G3D_sysLookAtSet( &initVec32, &initVec32, &initVec32 );
+		g3Dman->lookAt.camPos.z	= ( 256 << FX32_SHIFT );
+		g3Dman->lookAt.camUp.y	= FX32_ONE;
+		//レンダリングスワップバッファ
+		GFL_G3D_sysSwapBufferModeSet( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 	}
 
 	if( setup != NULL ){
@@ -173,6 +233,144 @@ void
 		}
 		GFL_HEAP_FreeMemory( g3Dman );
 	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * 内部保持情報（グローバルステート）へのアクセス
+ *
+ */
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * 射影行列の設定
+ *	保存しておく必要があるかわわからないが、とりあえず。
+ *	直接射影行列を直接設定する場合、その行列は外部で持つ
+ *
+ * @param	type		射影タイプ
+ * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
+ *						PRJPERS,PRJORTH	→top	  :nearクリップ面上辺のY座標
+ * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
+ *						PRJPERS,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+ * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
+ *						PRJPERS,PRJORTH	→left	  :nearクリップ面左辺のX座標
+ * @param	param4		PRJPERS			→未使用 
+ *						PRJPERS,PRJORTH	→right	  :nearクリップ面右辺のX座標
+ * @param	near		視点からnearクリップ面までの距離	
+ * @param	far			視点からfarクリップ面までの距離	
+ * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_sysProjectionSet
+		( GFL_G3D_PROJECTION_TYPE type, fx32 param1, fx32 param2, fx32 param3, fx32 param4, 
+			fx32 near, fx32 far, fx32 scaleW )
+{
+	g3Dman->projection.type		= type;
+	g3Dman->projection.param1	= param1;
+	g3Dman->projection.param2	= param2;
+	g3Dman->projection.param3	= param3;
+	g3Dman->projection.param4	= param4;
+	g3Dman->projection.near		= near;
+	g3Dman->projection.far		= far;
+	g3Dman->projection.scaleW	= scaleW;
+
+	switch( type ){
+		case GFL_G3D_PRJPERS:	// 透視射影を設定
+			if( !scaleW ){
+				NNS_G3dGlbPerspective( param1, param2, param3, near, far );
+			} else {
+				NNS_G3dGlbPerspectiveW( param1, param2, param3, near, far, scaleW );
+			}
+			break;
+		case GFL_G3D_PRJFRST:	// 透視射影を設定
+			if( !scaleW ){
+				NNS_G3dGlbFrustum( param1, param2, param3, param4, near, far );
+			} else {
+				NNS_G3dGlbFrustumW( param1, param2, param3, param4, near, far, scaleW );
+			}
+			break;
+		case GFL_G3D_PRJORTH:	// 正射影を設定
+			if( !scaleW ){
+				NNS_G3dGlbOrtho( param1, param2, param3, param4, near, far );
+			} else {
+				NNS_G3dGlbOrthoW( param1, param2, param3, param4, near, far, scaleW );
+			}
+			break;
+	}
+}
+
+void
+	GFL_G3D_sysProjectionSetDirect
+		( MtxFx44* param )
+{
+	g3Dman->projection.type		= GFL_G3D_PRJMTX;
+	g3Dman->projection.param1	= 0;
+	g3Dman->projection.param2	= 0;
+	g3Dman->projection.param3	= 0;
+	g3Dman->projection.param4	= 0;
+	g3Dman->projection.near		= 0;
+	g3Dman->projection.far		= 0;
+
+	NNS_G3dGlbSetProjectionMtx( param );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ライトの設定
+ *
+ * @param	lightID			ライトＩＤ
+ * @param	vec				ライトのベクトルポインタ
+ * @param	color			色
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_sysLightSet
+		( u8 lightID, VecFx16* vec, u16 color )
+{
+	g3Dman->light[ lightID ].vec.x = vec->x;
+	g3Dman->light[ lightID ].vec.y = vec->y;
+	g3Dman->light[ lightID ].vec.z = vec->z;
+	g3Dman->light[ lightID ].color = color;
+
+	NNS_G3dGlbLightVector( lightID, vec->x, vec->y, vec->z );
+	NNS_G3dGlbLightColor( lightID, color );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラ行列の設定
+ *
+ * @param	camPos			カメラ位置ベクトルポインタ
+ * @param	camUp			カメラの上方向のベクトルへのポインタ
+ * @param	target			カメラ焦点へのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_sysLookAtSet
+		( VecFx32* camPos, VecFx32* camUp, VecFx32* target )
+{
+	g3Dman->lookAt.camPos	= *camPos;
+	g3Dman->lookAt.camUp	= *camUp;
+	g3Dman->lookAt.target	= *target;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * レンダリングスワップバッファの設定
+ *
+ * @param	sortMode		ソートモード
+ * @param	bufferMode		デプスバッファモード
+ * 設定値についてはNitroSDK内GX_SwapBuffer関数を参照
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_sysSwapBufferModeSet
+		( GXSortMode sortMode, GXBufferMode bufferMode )
+{
+	g3Dman->swapBufMode.aw = sortMode;
+	g3Dman->swapBufMode.zw = bufferMode;
 }
 
 
@@ -595,8 +793,7 @@ static BOOL
 struct _GFL_G3D_OBJ
 {
 	u16						magicnum;
-	u8						drawSW;
-	u8						anmSW;
+	u16						dummy;
 
 	NNSG3dRenderObj*		rndobj;
 	NNSG3dAnmObj*			anmobj;
@@ -604,10 +801,6 @@ struct _GFL_G3D_OBJ
 	NNSG3dResMdl*			pMdl;
 	NNSG3dResTex*			pTex;
 	void*					pAnm;
-
-	VecFx32					trans;			//座標
-	VecFx32					scale;			//スケール
-	VecFx32					rotate;			//回転	
 };
 
 static inline BOOL G3DOBJ_HANDLE_CHECK( GFL_G3D_OBJ* g3Dobj )
@@ -709,22 +902,6 @@ GFL_G3D_OBJ*
 	} else {
 		g3Dobj->anmobj = NULL;
 	}
-
-	//配置パラメータ初期化
-	{
-		VecFx32 init_trans	= { 0, 0, 0 };
-		VecFx32 init_scale	= { FX32_ONE, FX32_ONE, FX32_ONE };
-		VecFx32 init_rotate = { 0, 0, 0 };
-
-		g3Dobj->trans	= init_trans;
-		g3Dobj->scale	= init_scale;
-		g3Dobj->rotate	= init_rotate;
-	}
-
-	//描画スイッチ初期化
-	g3Dobj->drawSW = 0; 
-	g3Dobj->anmSW = 0;
-
 	return g3Dobj;
 }
 
@@ -762,32 +939,24 @@ void
  *
  * 各オブジェクト描画関数
  *
- *	SAMPLE
+ *	SAMPLE	//オブジェクトは、vecTrans,vecRotate,vecScale の情報を持っているものとする
  *	{
- *		MtxFx33 rotate;									//回転変数宣言
+ *		MtxFx33 mtxRotate;						//回転変数宣言
  *
  *		GFL_G3D_DrawStart();							//描画開始
- *		xxxxx();										//カメラセットアップ関数		
+ *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
- *			GFL_G3D_ObjDrawStart							//各オブジェクト描画開始
- *			GFL_G3D_ObjDrawRotateCalcXY( g3Dobj, &rotate );	//各オブジェクト回転計算
- *			GFL_G3D_ObjDraw( g3Dobj, &rotate );				//各オブジェクト描画
+ *			//各オブジェクト描画
+ *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
+ *			GFL_G3D_ObjDrawRotateCalcXY( &vecRotate, &mtxRotate );		//各オブジェクト回転計算
+ *			GFL_G3D_ObjDrawStatusSet( &vecTrans, mtxRotate, &vecScale);	//各オブジェクト情報転送
+ *			GFL_G3D_ObjDraw( g3Dobj );									//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
  *	}
  *
  */
 //=============================================================================================
-static inline void G3DOBJ_DRAWCALC( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale )
-{
-	// 位置設定
-	NNS_G3dGlbSetBaseTrans( pTrans );
-	// 角度設定
-	NNS_G3dGlbSetBaseRot( pRotate );
-	// スケール設定
-	NNS_G3dGlbSetBaseScale( pScale );
-}
-
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄ描画の開始
@@ -807,16 +976,28 @@ void
  * ３Ｄ描画の終了
  *
  * 全体描画関数内、描画を終了時に呼び出される
- * 内部でバッファのスワップを行う。
- * @param	sortmode	ソートモード(指定型はNitoroSystem参照)
- * @param	buffermode	バッファモード(指定型はNitoroSystem参照)
+ * 内部でレンダリングバッファのスワップを行う。
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_DrawEnd
-		(GXSortMode sortmode, GXBufferMode buffermode)
+		( void )
 {
-	G3_SwapBuffers( sortmode, buffermode );
+	G3_SwapBuffers( g3Dman->swapBufMode.aw, g3Dman->swapBufMode.zw );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラグローバルステートの設定
+ *
+ * 全体描画関数内に呼び出される
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_DrawLookAt
+		( void )
+{
+	NNS_G3dGlbLookAt( &g3Dman->lookAt.camPos, &g3Dman->lookAt.camUp, &g3Dman->lookAt.target );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -865,17 +1046,14 @@ void
  * ３Ｄオブジェクトの描画
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	rotate	回転行列
  *
  * 通常描画関数
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjDraw
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	G3DOBJ_DRAWCALC( &g3Dobj->trans, rotate, &g3Dobj->scale );
-
 	NNS_G3dDraw( g3Dobj->rndobj );
 	NNS_G3dGeFlushBuffer();
 }
@@ -885,27 +1063,47 @@ void
  * ３Ｄオブジェクトの描画(1mat1shape)
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	rotate	回転行列
  *
  * １つのモデルに１つのマテリアルのみ設定されているときに高速描画するための関数
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjDraw1mat1shape
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	G3DOBJ_DRAWCALC( &g3Dobj->trans, rotate, &g3Dobj->scale );
-
     NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, 0, 0, TRUE );
 	NNS_G3dGeFlushBuffer();
 }
 		
 //--------------------------------------------------------------------------------------------
 /**
+ * ３Ｄオブジェクトの情報設定
+ *
+ * @param	pTrans	位置情報ベクトルポインタ
+ * @param	pRotate	回転情報マトリクスポインタ
+ * @param	pScale	拡縮情報ベクトルポインタ
+ *
+ * オブジェクト情報を転送。各オブジェクト描画の前に設定される
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjDrawStatusSet
+		( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale )
+{
+	// 位置設定
+	NNS_G3dGlbSetBaseTrans( pTrans );
+	// 角度設定
+	NNS_G3dGlbSetBaseRot( pRotate );
+	// スケール設定
+	NNS_G3dGlbSetBaseScale( pScale );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * ３Ｄオブジェクトの回転行列の作成
  *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	dst		計算後の回転行列格納ポインタ
+ * @param	rotSrc	計算前の回転ベクトルポインタ
+ * @param	rotDst	計算後の回転行列格納ポインタ
  *
  * この関数等を使用し、オブジェクト毎に適切な回転行列を作成したものを、描画に流す。
  */
@@ -913,75 +1111,143 @@ void
 // Ｘ→Ｙ→Ｚの順番で計算
 void
 	GFL_G3D_ObjDrawRotateCalcXY
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( VecFx32* rotSrc, MtxFx33* rotDst )
 {
-	VecFx32* src = &g3Dobj->rotate; 
 	MtxFx33 tmp;
 
-	MTX_RotY33(	rotate, FX_SinIdx((u16)src->x), FX_CosIdx((u16)src->x) );
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)src->y), FX_CosIdx((u16)src->y) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)src->z), FX_CosIdx((u16)src->z) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
 // Ｘ→Ｙ→Ｚの順番で計算（相対）
 void
 	GFL_G3D_ObjDrawRotateCalcXY_Rev
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( VecFx32* rotSrc, MtxFx33* rotDst )
 {
-	VecFx32* src = &g3Dobj->rotate; 
 	MtxFx33 tmp;
 
-	MTX_RotY33(	rotate, FX_SinIdx((u16)src->y), FX_CosIdx((u16)src->y) );
+	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)-src->x), FX_CosIdx((u16)-src->x) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotX33(	&tmp, FX_SinIdx((u16)-rotSrc->x), FX_CosIdx((u16)-rotSrc->x) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 
-	MTX_RotZ33(	&tmp, FX_CosIdx((u16)src->z), FX_SinIdx((u16)src->z) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotZ33(	&tmp, FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
 // Ｙ→Ｘ→Ｚの順番で計算
 void
 	GFL_G3D_ObjDrawRotateCalcYX
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( VecFx32* rotSrc, MtxFx33* rotDst )
 {
-	VecFx32* src = &g3Dobj->rotate; 
 	MtxFx33 tmp;
 
-	MTX_RotY33(	rotate, FX_SinIdx((u16)src->y), FX_CosIdx((u16)src->y) );
+	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)src->x), FX_CosIdx((u16)src->x) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotX33(	&tmp, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)src->z), FX_CosIdx((u16)src->z) );
-	MTX_Concat33( rotate,&tmp, rotate );
+	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst,&tmp, rotDst );
 }
 
 // Ｙ→Ｘ→Ｚの順番で計算（相対）
 void
 	GFL_G3D_ObjDrawRotateCalcYX_Rev
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate )
+		( VecFx32* rotSrc, MtxFx33* rotDst )
 {
-	VecFx32* src = &g3Dobj->rotate; 
 	MtxFx33 tmp;
 
-	MTX_RotY33(	rotate, FX_SinIdx((u16)src->x), FX_CosIdx((u16)src->x) );
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)-src->y), FX_CosIdx((u16)-src->y) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)-rotSrc->y), FX_CosIdx((u16)-rotSrc->y) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 
-	MTX_RotZ33(	&tmp,FX_CosIdx((u16)src->z), FX_SinIdx((u16)src->z) );
-	MTX_Concat33( rotate, &tmp, rotate );
+	MTX_RotZ33(	&tmp,FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
 
 
 
 
+//=============================================================================================
+/**
+ *
+ *
+ * 各オブジェクトコントロール関数
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションフレームをリセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjContAnmFrameReset
+		( GFL_G3D_OBJ* g3Dobj ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContAnmFrameInc)\n");
+		return;
+	}
+	if( g3Dobj->anmobj == NULL ){
+		OS_Printf("this handle is not have animetion (GFL_G3D_ObjContAnmFrameInc)\n");
+		return;
+	}
+	g3Dobj->anmobj->frame = 0;
+}
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションフレームを進める
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ *
+ * @return	BOOL	FALSEで終了検出
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_ObjContAnmFrameInc
+		( GFL_G3D_OBJ* g3Dobj ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContAnmFrameInc)\n");
+		return FALSE;
+	}
+	if( g3Dobj->anmobj == NULL ){
+		OS_Printf("this handle is not have animetion (GFL_G3D_ObjContAnmFrameInc)\n");
+		return FALSE;
+	}
+	g3Dobj->anmobj->frame += (FX32_ONE);
+	if( g3Dobj->anmobj->frame == NNS_G3dAnmObjGetNumFrame( g3Dobj->anmobj )){
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
+
+
+
+
+//=============================================================================================
+/**
+ *
+ *
+ * データ
+ *
+ *
+ */
+//=============================================================================================
 
 
 
