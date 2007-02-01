@@ -88,6 +88,7 @@ static const TESTMODE_PRINTLIST indexList[] = {
 };
 
 static const TESTMODE_PRINTLIST selectList[] = {
+#if 0
 	{ test_select1,  4,  5, 24, 1 },
 	{ test_select2,  4,  6, 24, 1 },
 	{ test_select3,  4,  7, 24, 1 },
@@ -103,6 +104,15 @@ static const TESTMODE_PRINTLIST selectList[] = {
 	{ test_select13, 4, 17, 24, 1 },
 	{ test_select14, 4, 18, 24, 1 },
 	{ test_select15, 4, 19, 24, 1 },
+#else
+	{ test_select1,  4,  5, 24, 1 },
+	{ test_select2,  4,  7, 24, 1 },
+	{ test_select3,  4,  9, 24, 1 },
+	{ test_select4,  4, 11, 24, 1 },
+	{ test_select5,  4, 13, 24, 1 },
+	{ test_select6,  4, 15, 24, 1 },
+	{ test_select11, 4, 17, 24, 1 },
+#endif
 };
 
 #define TEXT_FRM	(GFL_BG_FRAME3_M)
