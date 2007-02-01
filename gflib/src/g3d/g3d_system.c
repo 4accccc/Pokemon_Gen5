@@ -386,13 +386,6 @@ void
  */
 //=============================================================================================
 #define G3DRES_MAGICNUM	(0x48BF)
-enum {
-	RES_TYPE_UNKNOWN = 0,	//不明なデータ
-	RES_TYPE_MDLTEX,		//ファイル内にモデリングおよびテクスチャデータ内包
-	RES_TYPE_MDL,			//ファイル内にモデリングデータ内包
-	RES_TYPE_TEX,			//ファイル内にテクスチャデータ内包
-	RES_TYPE_ANM,			//ファイル内にアニメーションデータ内包
-};
 
 ///	３Ｄリソース構造体
 struct _GFL_G3D_RES {
@@ -441,15 +434,15 @@ static GFL_G3D_RES*
 			//OS_Printf("nsbmd file check...\n");
 			if( NNS_G3dGetTex( header ) == NULL ){
 				//OS_Printf("this 3D_resource is model_data\n");
-				g3Dres->type = RES_TYPE_MDL;	//モデリングデータ内包
+				g3Dres->type = GFL_G3D_RES_TYPE_MDL;	//モデリングデータ内包
 			} else {
 				//OS_Printf("this 3D_resource is model_data & texture_data\n");
-				g3Dres->type = RES_TYPE_MDLTEX;	//モデリングおよびテクスチャデータ内包
+				g3Dres->type = GFL_G3D_RES_TYPE_MDLTEX;	//モデリングおよびテクスチャデータ内包
 			}
 			break;
 		case NNS_G3D_SIGNATURE_NSBTX:
 			//OS_Printf("this 3D_resource is texture_data\n");
-			g3Dres->type = RES_TYPE_TEX;		//テクスチャデータ内包
+			g3Dres->type = GFL_G3D_RES_TYPE_TEX;		//テクスチャデータ内包
 			break;
 		case NNS_G3D_SIGNATURE_NSBCA:
 		case NNS_G3D_SIGNATURE_NSBVA:
@@ -457,11 +450,11 @@ static GFL_G3D_RES*
 		case NNS_G3D_SIGNATURE_NSBTP:
 		case NNS_G3D_SIGNATURE_NSBTA:
 			//OS_Printf("this 3D_resource is animetion_data\n");
-			g3Dres->type = RES_TYPE_ANM;		//ファイル内にアニメーションデータ内包
+			g3Dres->type = GFL_G3D_RES_TYPE_ANM;		//ファイル内にアニメーションデータ内包
 			break;
 		default:
 			//OS_Printf("this 3D_resource is unknown\n");
-			g3Dres->type = RES_TYPE_UNKNOWN;	//不明なデータ
+			g3Dres->type = GFL_G3D_RES_TYPE_UNKNOWN;	//不明なデータ
 			break;
 	}
 	g3Dres->magicnum = G3DRES_MAGICNUM;
@@ -517,7 +510,6 @@ GFL_G3D_RES*
  * ３Ｄリソースの破棄
  *
  * @param	g3Dres	３Ｄリソースポインタ
- *
  */
 //--------------------------------------------------------------------------------------------
 void
@@ -530,6 +522,26 @@ void
 	}
 	GFL_HEAP_FreeMemory( g3Dres->file );
 	GFL_HEAP_FreeMemory( g3Dres );
+}
+	
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄリソースタイプの取得
+ *
+ * @param	g3Dres	３Ｄリソースポインタ
+ *
+ * @return	u16		タイプ	
+ */
+//--------------------------------------------------------------------------------------------
+u16
+	GFL_G3D_ResourceTypeGet
+		( GFL_G3D_RES* g3Dres ) 
+{
+	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
+		OS_Printf("file is not 3D_resource (GFL_G3D_ResourceTypeGet)\n");
+		return;
+	}
+	return g3Dres->type;
 }
 	
 //--------------------------------------------------------------------------------------------
@@ -554,7 +566,7 @@ BOOL
 		OS_Printf("file is not 3D_resource (GFL_G3D_TransTex)\n");
 		return FALSE;
 	}
-	if(( g3Dres->type != RES_TYPE_MDLTEX )&&( g3Dres->type != RES_TYPE_TEX )){
+	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
 		OS_Printf("file is not texture_resource (GFL_G3D_TransTex)\n");
 		return FALSE;
 	}
@@ -612,7 +624,7 @@ BOOL
 		OS_Printf("file is not 3D_resource (GFL_G3D_TransTexDataOnly)\n");
 		return FALSE;
 	}
-	if(( g3Dres->type != RES_TYPE_MDLTEX )&&( g3Dres->type != RES_TYPE_TEX )){
+	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
 		OS_Printf("file is not texture_resource (GFL_G3D_TransTexDataOnly)\n");
 		return FALSE;
 	}
@@ -664,7 +676,7 @@ BOOL
 		OS_Printf("file is not 3D_resource (GFL_G3D_TransPlttOnly)\n");
 		return FALSE;
 	}
-	if(( g3Dres->type != RES_TYPE_MDLTEX )&&( g3Dres->type != RES_TYPE_TEX )){
+	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
 		OS_Printf("file is not texture_resource (GFL_G3D_TransPlttOnly)\n");
 		return FALSE;
 	}
@@ -836,7 +848,7 @@ GFL_G3D_OBJ*
 
 	//整合性チェックおよび各種リソースポインタ取得
 	if(( G3DRES_FILE_CHECK( mdl ) == TRUE )&&
-	   (( mdl->type == RES_TYPE_MDLTEX )||( mdl->type == RES_TYPE_MDL )) ){
+	   (( mdl->type == GFL_G3D_RES_TYPE_MDLTEX )||( mdl->type == GFL_G3D_RES_TYPE_MDL )) ){
 		//モデルデータリソースポインタ取得
 		header = (NNSG3dResFileHeader*)mdl->file;
 		pMdlset = NNS_G3dGetMdlSet( header );
@@ -845,14 +857,14 @@ GFL_G3D_OBJ*
 		pMdl = NULL;
 	}
 	if(( G3DRES_FILE_CHECK( tex ) == TRUE )&&
-	   (( tex->type == RES_TYPE_MDLTEX )||( tex->type == RES_TYPE_TEX )) ){
+	   (( tex->type == GFL_G3D_RES_TYPE_MDLTEX )||( tex->type == GFL_G3D_RES_TYPE_TEX )) ){
 		//テクスチャリソースポインタ取得
 		header = (NNSG3dResFileHeader*)tex->file;
 		pTex = NNS_G3dGetTex( header );
 	} else {
 		pTex = NULL;
 	}
-	if(( G3DRES_FILE_CHECK( anm ) == TRUE )&&( anm->type == RES_TYPE_ANM )){
+	if(( G3DRES_FILE_CHECK( anm ) == TRUE )&&( anm->type == GFL_G3D_RES_TYPE_ANM )){
 		//アニメーションリソースポインタ取得
 		pAnm = NNS_G3dGetAnmByIdx( anm->file, anmidx );
 	} else {
