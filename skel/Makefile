@@ -65,9 +65,9 @@ FILE_TREE	= $(GFLIBGRADIR)gfl_font.dat \
 			  $(SAMPLE_GRADIR)*.NANR
 			  
 #ロムファイルシステムのルートディレクトリ指定
-MAKEROM_ROMROOT  = ./src/
+MAKEROM_ROMROOT  = ./
 
-MAKEROM_ROMFILES = $(subst src/,,$(FILE_TREE))
+MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
 
 
 #--------------------------------------- ----------------------------
