@@ -93,6 +93,9 @@ void GFLUser_Init(void)
   gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
   gfl_work->TCBSysVintr = GFL_TCB_SysInit(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
+
+    //FADEシステム初期化
+    GFL_FADE_sysInit(GFL_HEAPID_SYSTEM);
 }
 
 
@@ -109,6 +112,7 @@ void GFLUser_Main(void)
     GFL_NET_sysMain();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
 	GFL_PROC_SysMain();
+    GFL_FADE_sysMain();
 }
 
 //------------------------------------------------------------------
@@ -133,6 +137,7 @@ void GFLUser_Exit(void)
 {
 	GFL_UI_sysExit();
 	GFL_PROC_SysExit();
+	GFL_FADE_sysExit();
 	GFL_HEAP_DTCM_sysExit();
 	GFL_HEAP_sysExit();
 }
