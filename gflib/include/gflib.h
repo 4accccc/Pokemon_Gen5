@@ -21,12 +21,15 @@
 #include "filesystem.h"
 #include "arc_tool.h"
 #include "areaman.h"
+#include "procsys.h"
+
 #include "bg_sys.h"
 #include "display.h"
 #include "strbuf.h"
 #include "msgdata.h"
 #include "bmp.h"
 #include "bmp_win.h"
+#include "g3d_system.h"
 
 #include "arc_util.h"
 #include "fade.h"
