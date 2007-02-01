@@ -88,15 +88,6 @@ static const TESTMODE_PRINTLIST indexList[] = {
 };
 
 static const TESTMODE_PRINTLIST selectList[] = {
-#if 0
-	{ test_select1, 4,  5, 24, 1 },
-	{ test_select2, 4,  7, 24, 1 },
-	{ test_select3, 4,  9, 24, 1 },
-	{ test_select4, 4, 11, 24, 1 },
-	{ test_select5, 4, 13, 24, 1 },
-	{ test_select6, 4, 15, 24, 1 },
-	{ test_select7, 4, 17, 24, 1 },
-#else
 	{ test_select1,  4,  5, 24, 1 },
 	{ test_select2,  4,  6, 24, 1 },
 	{ test_select3,  4,  7, 24, 1 },
@@ -112,7 +103,6 @@ static const TESTMODE_PRINTLIST selectList[] = {
 	{ test_select13, 4, 17, 24, 1 },
 	{ test_select14, 4, 18, 24, 1 },
 	{ test_select15, 4, 19, 24, 1 },
-#endif
 };
 
 #define TEXT_FRM	(GFL_BG_FRAME3_M)
@@ -354,6 +344,7 @@ static void g3d_load( void )
 						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
 		GFL_G3D_sysLookAtSet( &cameraPos, &cameraUp, &targetPos );
 	}
+	testmode->work[0] = 0;
 }
 	
 //破棄
@@ -380,18 +371,27 @@ static void g3d_draw( void )
 	{
 		//オブジェクト描画開始
 		GFL_G3D_ObjDrawStart();
+		//オブジェクト情報計算
+		{
+			//回転計算
+			VecFx32 rotate_tmp = { 0, 0, 0 };
+			rotate_tmp.y = 0x100 * testmode->work[0];	//Ｙ軸回転
+			GFL_G3D_ObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+		}
 		//オブジェクト情報転送
 		GFL_G3D_ObjDrawStatusSet( &trans, &rotate, &scale );
 		//オブジェクト描画
 		GFL_G3D_ObjDraw( testmode->g3Dobj[0] );
 
 		//アニメーションコントロール
-		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[0] ) == FALSE ){
+		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[0], FX32_ONE ) == FALSE ){
 			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[0] );
 		}
 	}
 	//描画終了（バッファスワップ）
 	GFL_G3D_DrawEnd();							
+
+	testmode->work[0]++;
 }
 	
 //------------------------------------------------------------------
