@@ -396,7 +396,7 @@ static void DEBUG_ClactWorkResLoad( DEBUG_CLACT_RES* p_wk, u32 heapID )
 	
 	// キャラクタデータ読み込み＆転送
 	{
-		p_buff = DEBUG_CommonFileLoad( "tomoya/hero.NCGR", heapID );
+		p_buff = DEBUG_CommonFileLoad( "sample_graphic/hero.NCGR", heapID );
 		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
 		GF_ASSERT( result );
 		NNS_G2dInitImageProxy( &p_wk->imageproxy );
@@ -415,7 +415,7 @@ static void DEBUG_ClactWorkResLoad( DEBUG_CLACT_RES* p_wk, u32 heapID )
 
 	// パレットデータ読み込み＆転送
 	{
-		p_buff = DEBUG_CommonFileLoad( "tomoya/hero.NCLR", heapID );
+		p_buff = DEBUG_CommonFileLoad( "sample_graphic/hero.NCLR", heapID );
 		result = NNS_G2dGetUnpackedPaletteData( p_buff, &p_pltt );
 		GF_ASSERT( result );
 		NNS_G2dInitImagePaletteProxy( &p_wk->plttproxy );
@@ -434,14 +434,14 @@ static void DEBUG_ClactWorkResLoad( DEBUG_CLACT_RES* p_wk, u32 heapID )
 
 	// セルデータ読み込み
 	{
-		p_wk->p_cellbuff = DEBUG_CommonFileLoad( "tomoya/hero.NCER", heapID );
+		p_wk->p_cellbuff = DEBUG_CommonFileLoad( "sample_graphic/hero.NCER", heapID );
 		result = NNS_G2dGetUnpackedCellBank( p_wk->p_cellbuff, &p_wk->p_cell );
 		GF_ASSERT( result );
 	}
 
 	// セルアニメデータ読み込み
 	{
-		p_wk->p_cellanmbuff = DEBUG_CommonFileLoad( "tomoya/hero.NANR", heapID );
+		p_wk->p_cellanmbuff = DEBUG_CommonFileLoad( "sample_graphic/hero.NANR", heapID );
 		result = NNS_G2dGetUnpackedAnimBank( p_wk->p_cellanmbuff, &p_wk->p_cellanm );
 		GF_ASSERT( result );
 	}
