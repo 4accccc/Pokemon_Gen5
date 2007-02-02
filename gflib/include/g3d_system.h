@@ -323,9 +323,9 @@ extern void
  *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
  *			//各オブジェクト描画
- *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
  *			GFL_G3D_ObjDrawRotateCalcXY( &vecRotate, &mtxRotate );		//各オブジェクト回転計算
  *			GFL_G3D_ObjDrawStatusSet( &vecTrans, mtxRotate, &vecScale);	//各オブジェクト情報転送
+ *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
  *			GFL_G3D_ObjDraw( g3Dobj );									//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
