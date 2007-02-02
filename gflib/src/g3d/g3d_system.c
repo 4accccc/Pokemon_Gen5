@@ -387,6 +387,14 @@ void
 //=============================================================================================
 #define G3DRES_MAGICNUM	(0x48BF)
 
+enum {
+	GFL_G3D_RES_TYPE_UNKNOWN = 0,	//不明なデータ
+	GFL_G3D_RES_TYPE_MDLTEX,		//ファイル内にモデリングおよびテクスチャデータ内包
+	GFL_G3D_RES_TYPE_MDL,			//ファイル内にモデリングデータ内包
+	GFL_G3D_RES_TYPE_TEX,			//ファイル内にテクスチャデータ内包
+	GFL_G3D_RES_TYPE_ANM,			//ファイル内にアニメーションデータ内包
+};
+
 ///	３Ｄリソース構造体
 struct _GFL_G3D_RES {
 	u16		magicnum;
@@ -398,8 +406,6 @@ static BOOL
 	GFL_G3D_GetTexDataVramkey( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 );
 static BOOL
 	GFL_G3D_GetTexPlttVramkey( NNSG3dResTex* res, NNSGfdPlttKey* pltt );
-static BOOL
-	GFL_G3D_ObjTexkeyLiveCheck( NNSG3dResTex* restex );
 
 static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
 {
@@ -526,27 +532,89 @@ void
 	
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄリソースタイプの取得
+ * ３Ｄリソースタイプの確認
  *
- * @param	g3Dres	３Ｄリソースポインタ
+ * @param	g3Dres		３Ｄリソースポインタ
+ * @param	checkType	チェックするタイプ
  *
- * @return	u16		タイプ	
+ * @return	BOOL		TRUEで一致
  */
 //--------------------------------------------------------------------------------------------
-u16
-	GFL_G3D_ResourceTypeGet
-		( GFL_G3D_RES* g3Dres ) 
+BOOL
+	GFL_G3D_ResourceTypeCheck
+		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE checkType ) 
 {
+	u16 resType;
+
 	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
-		OS_Printf("file is not 3D_resource (GFL_G3D_ResourceTypeGet)\n");
-		return GFL_G3D_RES_TYPE_UNKNOWN;
+		OS_Printf("file is not 3D_resource (GFL_G3D_ResourceTypeCheck)\n");
+		return FALSE;
 	}
-	return g3Dres->type;
+	resType = g3Dres->type;
+
+	switch( checkType ){
+		case GFL_G3D_RES_CHKTYPE_UKN:
+			if( resType == GFL_G3D_RES_TYPE_UNKNOWN ){
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+			break;
+
+		case GFL_G3D_RES_CHKTYPE_MDL:
+			if(( resType == GFL_G3D_RES_TYPE_MDLTEX )||( resType == GFL_G3D_RES_TYPE_MDL )){
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+			break;
+
+		case GFL_G3D_RES_CHKTYPE_TEX:
+			if(( resType == GFL_G3D_RES_TYPE_MDLTEX )||( resType == GFL_G3D_RES_TYPE_TEX )){
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+			break;
+
+		case GFL_G3D_RES_CHKTYPE_ANM:
+			if( resType == GFL_G3D_RES_TYPE_ANM ){
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+			break;
+	}
+	return FALSE;
 }
 	
+
+
+
+
+//=============================================================================================
+/**
+ *
+ *
+ * ３Ｄリソース転送関数（事実上テクスチャデータ、テクスチャパレットのみ）
+ *
+ *
+ */
+//=============================================================================================
+static inline BOOL G3DRES_FILE_CHECK_EQU_TEX( GFL_G3D_RES* g3Dres )
+{
+	if( g3Dres->magicnum == G3DRES_MAGICNUM ){
+		if(( g3Dres->type == GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type == GFL_G3D_RES_TYPE_TEX )){
+			return TRUE;
+		}
+	}
+	OS_Panic("file is not texture_resource (GFL_G3D_VramLoadTex)\n");
+	return FALSE;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
- * テクスチャリソースの転送(→ＶＲＡＭ)
+ * テクスチャリソースのＶＲＡＭ領域確保と転送
  *
  * @param	g3Dres	３Ｄリソースポインタ
  *
@@ -554,7 +622,7 @@ u16
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_TransVramTex
+	GFL_G3D_VramLoadTex
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -562,14 +630,8 @@ BOOL
 	NNSGfdTexKey			texKey, tex4x4Key;
 	NNSGfdPlttKey			plttKey;
 
-	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
-		OS_Printf("file is not 3D_resource (GFL_G3D_TransTex)\n");
-		return FALSE;
-	}
-	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
-		OS_Printf("file is not texture_resource (GFL_G3D_TransTex)\n");
-		return FALSE;
-	}
+	G3DRES_FILE_CHECK_EQU_TEX( g3Dres );
+
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
 	texture = NNS_G3dGetTex( header ); 
@@ -577,11 +639,11 @@ BOOL
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
 		if( GFL_G3D_GetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
-			OS_Printf("Vramkey cannot alloc (GFL_G3D_TransTex)\n");
+			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
 		if( GFL_G3D_GetTexPlttVramkey( texture, &plttKey ) == FALSE ){
-			OS_Printf("Vramkey cannot alloc (GFL_G3D_TransTex)\n");
+			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
 		//リソースへのＶＲＡＭキーの設定
@@ -599,7 +661,47 @@ BOOL
 
 //--------------------------------------------------------------------------------------------
 /**
- * テクスチャデータリソースの転送(→ＶＲＡＭ)
+ * テクスチャリソースをＶＲＡＭから解放
+ *
+ * @param	g3Dres	３Ｄリソースポインタ
+ *
+ * @return	BOOL	結果(成功=TRUE)
+ */
+//--------------------------------------------------------------------------------------------
+BOOL 
+	GFL_G3D_VramUnloadTex
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			texture;
+	NNSGfdTexKey			texKey, tex4x4Key;
+	NNSGfdPlttKey			plttKey;
+
+	G3DRES_FILE_CHECK_EQU_TEX( g3Dres );
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	texture = NNS_G3dGetTex( header ); 
+
+	//ＶＲＡＭキーの放棄フラグをリソースに設定
+	NNS_G3dTexReleaseTexKey( texture, &texKey, &tex4x4Key );
+	plttKey = NNS_G3dPlttReleasePlttKey( texture );
+
+	if( NNS_GfdFreePlttVram( plttKey ) ){
+		OS_Panic("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+	}
+	if( NNS_GfdFreeLnkTexVram( tex4x4Key )){
+		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+	}
+	if( NNS_GfdFreeLnkTexVram( texKey )){
+		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+	}
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * テクスチャデータリソースのＶＲＡＭ領域確保と転送
  *
  * @param	g3Dres	３Ｄリソースポインタ
  *
@@ -613,21 +715,15 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_TransVramTexDataOnly
+	GFL_G3D_VramLoadTexDataOnly
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
 	NNSG3dResTex*			texture;
 	NNSGfdTexKey			texKey, tex4x4Key;
 
-	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
-		OS_Printf("file is not 3D_resource (GFL_G3D_TransTexDataOnly)\n");
-		return FALSE;
-	}
-	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
-		OS_Printf("file is not texture_resource (GFL_G3D_TransTexDataOnly)\n");
-		return FALSE;
-	}
+	G3DRES_FILE_CHECK_EQU_TEX( g3Dres );
+
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
 	texture = NNS_G3dGetTex( header ); 
@@ -635,7 +731,7 @@ BOOL
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
 		if( GFL_G3D_GetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
-			OS_Printf("Vramkey cannot alloc (GFL_G3D_TransTexDataOnly)\n");
+			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTexDataOnly)\n");
 			return FALSE;
 		}
 		//リソースへのＶＲＡＭキーの設定
@@ -651,7 +747,7 @@ BOOL
 
 //--------------------------------------------------------------------------------------------
 /**
- * テクスチャパレットリソースの転送(→ＶＲＡＭ)
+ * テクスチャパレットリソースのＶＲＡＭ領域確保と転送
  *
  * @param	g3Dres	３Ｄリソースポインタ
  *
@@ -665,21 +761,15 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_TransVramTexPlttOnly
+	GFL_G3D_VramLoadTexPlttOnly
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
 	NNSG3dResTex*			texture;
 	NNSGfdPlttKey			plttKey;
 
-	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
-		OS_Printf("file is not 3D_resource (GFL_G3D_TransPlttOnly)\n");
-		return FALSE;
-	}
-	if(( g3Dres->type != GFL_G3D_RES_TYPE_MDLTEX )&&( g3Dres->type != GFL_G3D_RES_TYPE_TEX )){
-		OS_Printf("file is not texture_resource (GFL_G3D_TransPlttOnly)\n");
-		return FALSE;
-	}
+	G3DRES_FILE_CHECK_EQU_TEX( g3Dres );
+
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
 	texture = NNS_G3dGetTex( header ); 
@@ -687,7 +777,7 @@ BOOL
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
 		if( GFL_G3D_GetTexPlttVramkey( texture, &plttKey ) == FALSE ){
-			OS_Printf("Vramkey cannot alloc (GFL_G3D_TransPlttOnly)\n");
+			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadPlttOnly)\n");
 			return FALSE;
 		}
 		//リソースへのＶＲＡＭキーの設定
@@ -773,14 +863,23 @@ static BOOL
  *@return	BOOL		TRUE:割り振られてる、FALSE:割り振られていない
  */
 //-----------------------------------------------------------------------------
-static BOOL
+BOOL
 	GFL_G3D_ObjTexkeyLiveCheck
-		( NNSG3dResTex* restex )
+		( GFL_G3D_RES* g3Dres )
 {
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	G3DRES_FILE_CHECK_EQU_TEX( g3Dres );
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	restex = NNS_G3dGetTex( header ); 
+
 	// 普通のテクスチャか4*4テクセル圧縮テクスチャ
 	// でVramに展開されているかをチェック
-	if((restex->texInfo.flag & NNS_G3D_RESTEX_LOADED) ||
-	   (restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED)){
+	if(( restex->texInfo.flag & NNS_G3D_RESTEX_LOADED ) ||
+	   ( restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED )){
 		return TRUE;
 	}
 	return FALSE;
