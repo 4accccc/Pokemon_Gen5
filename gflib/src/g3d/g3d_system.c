@@ -688,7 +688,7 @@ BOOL
 	plttKey = NNS_G3dPlttReleasePlttKey( texture );
 
 	if( NNS_GfdFreePlttVram( plttKey ) ){
-		OS_Panic("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
 	}
 	if( NNS_GfdFreeLnkTexVram( tex4x4Key )){
 		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
@@ -879,7 +879,8 @@ BOOL
 	// 普通のテクスチャか4*4テクセル圧縮テクスチャ
 	// でVramに展開されているかをチェック
 	if(( restex->texInfo.flag & NNS_G3D_RESTEX_LOADED ) ||
-	   ( restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED )){
+	   ( restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED )||
+	   ( restex->plttInfo.flag & NNS_G3D_RESPLTT_LOADED )){
 		return TRUE;
 	}
 	return FALSE;
