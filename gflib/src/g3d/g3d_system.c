@@ -539,7 +539,7 @@ u16
 {
 	if( G3DRES_FILE_CHECK( g3Dres ) == FALSE ){
 		OS_Printf("file is not 3D_resource (GFL_G3D_ResourceTypeGet)\n");
-		return;
+		return GFL_G3D_RES_TYPE_UNKNOWN;
 	}
 	return g3Dres->type;
 }
@@ -958,9 +958,9 @@ void
  *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
  *			//各オブジェクト描画
- *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
  *			GFL_G3D_ObjDrawRotateCalcXY( &vecRotate, &mtxRotate );		//各オブジェクト回転計算
  *			GFL_G3D_ObjDrawStatusSet( &vecTrans, mtxRotate, &vecScale);	//各オブジェクト情報転送
+ *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
  *			GFL_G3D_ObjDraw( g3Dobj );									//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
