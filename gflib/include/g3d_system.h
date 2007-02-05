@@ -458,7 +458,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_ObjContSetTrans
-		( GFL_G3D_OBJ* g3Dobj, VecFx32* trans );
+		( GFL_G3D_OBJ* g3Dobj, const VecFx32* trans );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -470,7 +470,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_ObjContSetScale
-		( GFL_G3D_OBJ* g3Dobj, VecFx32* scale );
+		( GFL_G3D_OBJ* g3Dobj, const VecFx32* scale );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -482,7 +482,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_ObjContSetRotate
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate ); 
+		( GFL_G3D_OBJ* g3Dobj, const MtxFx33* rotate ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -508,6 +508,21 @@ extern void
 extern BOOL
 	GFL_G3D_ObjContAnmFrameInc
 		( GFL_G3D_OBJ* g3Dobj, fx32 count ); 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションオートループ
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
+ *
+ * @return	BOOL	FALSEで１ループ終了検出
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL
+	GFL_G3D_ObjContAnmFrameAutoLoop
+		( GFL_G3D_OBJ* g3Dobj, fx32 count ); 
+
 
 
 #endif
