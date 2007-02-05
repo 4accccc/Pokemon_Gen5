@@ -751,7 +751,7 @@ void
 //------------------------------------------------------------------
 static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num )
 {
-	if( num < 8 )
+	if( num <= 8 )
 	{
 		u32 i, max;
 		u8  inbit;
@@ -833,7 +833,7 @@ static void release_bit( u8* area, u32 pos, u32 num )
 
 	{
 		u8 bit = FwdFillBit[num] >> pos;
-		GF_ASSERT( ((~bit)&(*area)) == bit );
+		GF_ASSERT( (bit&(*area)) == bit );
 		(*area) &= (~bit);
 	}
 }
