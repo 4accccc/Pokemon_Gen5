@@ -1243,7 +1243,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjContSetTrans
-		( GFL_G3D_OBJ* g3Dobj, VecFx32* trans ) 
+		( GFL_G3D_OBJ* g3Dobj, const VecFx32* trans ) 
 {
 	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
 		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetTrans)\n");
@@ -1262,7 +1262,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjContSetScale
-		( GFL_G3D_OBJ* g3Dobj, VecFx32* scale ) 
+		( GFL_G3D_OBJ* g3Dobj, const VecFx32* scale ) 
 {
 	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
 		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetScale)\n");
@@ -1281,7 +1281,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjContSetRotate
-		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate ) 
+		( GFL_G3D_OBJ* g3Dobj, const MtxFx33* rotate ) 
 {
 	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
 		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetRotate)\n");
@@ -1340,6 +1340,36 @@ BOOL
 	} else {
 		return TRUE;
 	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションオートループ
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
+ *
+ * @return	BOOL	FALSEで１ループ終了検出
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_ObjContAnmFrameAutoLoop
+		( GFL_G3D_OBJ* g3Dobj, fx32 count ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContAnmFrameInc)\n");
+		return FALSE;
+	}
+	if( g3Dobj->anmobj == NULL ){
+		OS_Printf("this handle is not have animetion (GFL_G3D_ObjContAnmFrameInc)\n");
+		return FALSE;
+	}
+	g3Dobj->anmobj->frame += count;
+	if( g3Dobj->anmobj->frame >= NNS_G3dAnmObjGetNumFrame( g3Dobj->anmobj )){
+		g3Dobj->anmobj->frame = 0;
+		return FALSE;
+	}
+	return TRUE;
 }
 
 
