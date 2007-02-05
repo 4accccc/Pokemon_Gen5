@@ -8,7 +8,7 @@
 #include "textprint.h"
 
 #include "testmode.h"
-#include "g3d_util.h"
+//#include "g3d_util.h"
 
 #include "sample_graphic/titledemo.naix"
 
@@ -201,14 +201,14 @@ static void	bg_init( void )
 		//BG0( 3D frame )
 		GFL_BG_BGControlSet3D( 1 );
 		//３Ｄユーティリティー起動（リソース６４個、オブジェクト６４個）
-		GFL_G3D_UtilsysInit( 64, 64, heapID );  
+		//GFL_G3D_UtilsysInit( 64, 64, heapID );  
 	}
 }
 
 static void	bg_exit( void )
 {
 	{
-		GFL_G3D_UtilsysExit();  
+		//GFL_G3D_UtilsysExit();  
 		GFL_G3D_sysExit();
 	}
 	GFL_BMPWIN_sysExit();
@@ -312,6 +312,7 @@ static void	g2d_unload( void )
 	GFL_HEAP_FreeMemory( testmode->textParam );
 }
 
+#if 0
 //------------------------------------------------------------------
 /**
  * @brief		３Ｄデータコントロール
@@ -439,6 +440,7 @@ static void g3d_draw( void )
 
 	testmode->work[0]++;
 }
+#endif
 	
 //------------------------------------------------------------------
 /**
@@ -462,7 +464,7 @@ static BOOL	TestModeControl( void )
 	case 1:
 		//画面作成
 		g2d_load();	//２Ｄデータ作成
-		g3d_load();	//３Ｄデータ作成
+		//g3d_load();	//３Ｄデータ作成
 		testmode->seq++;
 		break;
 
@@ -478,7 +480,7 @@ static BOOL	TestModeControl( void )
 		}
 		GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
-		g3d_draw();		//３Ｄデータ描画
+		//g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 3:
@@ -503,12 +505,12 @@ static BOOL	TestModeControl( void )
 				testmode->seq--;
 			}
 		}
-		g3d_draw();		//３Ｄデータ描画
+		//g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 4:
 		//終了
-		g3d_unload();	//３Ｄデータ破棄
+		//g3d_unload();	//３Ｄデータ破棄
 		g2d_unload();	//２Ｄデータ破棄
 		bg_exit();
 		return_flag = TRUE;
