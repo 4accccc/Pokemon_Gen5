@@ -912,6 +912,10 @@ struct _GFL_G3D_OBJ
 	NNSG3dResMdl*			pMdl;
 	NNSG3dResTex*			pTex;
 	void*					pAnm;
+
+	VecFx32					trans;
+	VecFx32					scale;
+	MtxFx33					rotate;
 };
 
 static inline BOOL G3DOBJ_HANDLE_CHECK( GFL_G3D_OBJ* g3Dobj )
@@ -1013,6 +1017,17 @@ GFL_G3D_OBJ*
 	} else {
 		g3Dobj->anmobj = NULL;
 	}
+
+	//オブジェクトステータスワーク初期化
+	{
+		VecFx32 init_trans	= { 0, 0, 0 };
+		VecFx32 init_scale	= { FX32_ONE, FX32_ONE, FX32_ONE };
+		MtxFx33 init_rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
+
+		g3Dobj->trans	= init_trans;
+		g3Dobj->scale	= init_scale;
+		g3Dobj->rotate	= init_rotate;
+	}
 	return g3Dobj;
 }
 
@@ -1050,18 +1065,12 @@ void
  *
  * 各オブジェクト描画関数
  *
- *	SAMPLE	//オブジェクトは、vecTrans,vecRotate,vecScale の情報を持っているものとする
+ *	SAMPLE
  *	{
- *		MtxFx33 mtxRotate;						//回転変数宣言
- *
  *		GFL_G3D_DrawStart();							//描画開始
  *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
- *			//各オブジェクト描画
- *			GFL_G3D_ObjDrawRotateCalcXY( &vecRotate, &mtxRotate );		//各オブジェクト回転計算
- *			GFL_G3D_ObjDrawStatusSet( &vecTrans, mtxRotate, &vecScale);	//各オブジェクト情報転送
- *			GFL_G3D_ObjDrawStart();										//各オブジェクト描画開始
- *			GFL_G3D_ObjDraw( g3Dobj );									//各オブジェクト描画
+ *			GFL_G3D_ObjDraw( g3Dobj );					//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
  *	}
@@ -1113,93 +1122,25 @@ void
 
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄオブジェクトの描画の開始
- *
- * グローバルステート
- * （射影変換行列、カメラ行列、モデリング行列、ビューポート、ライト設定、マテリアルカラー等）
- * をジオメトリエンジンに送信する。
- * 特にこのステートに外部加工をしていなければ、各オブジェクト描画関数(ObjDraw)直前に
- * いずれかの関数を毎回呼び出すことになる。
- */
-//--------------------------------------------------------------------------------------------
-// カレント射影行列に射影変換行列が、
-// カレント位置座標行列と方向ベクトル行列にカメラ行列とモデリング行列が合成された行列
-// が設定されます。
-void
-	GFL_G3D_ObjDrawStart
-		( void ) 
-{
-	NNS_G3dGlbFlush();
-}
-
-// カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
-// カレント位置座標行列と方向ベクトル行列にモデリング行列
-// が設定されます。
-void
-	GFL_G3D_ObjDrawStartVP
-		( void ) 
-{
-	NNS_G3dGlbFlushVP();
-}
-
-// カレント射影行列に射影変換行列とカメラ行列とモデリング行列が合成された行列が、
-// カレント位置座標行列と方向ベクトル行列に単位行列
-// が設定されます。
-void
-	GFL_G3D_ObjDrawStartWVP
-		( void ) 
-{
-	NNS_G3dGlbFlushWVP();
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * ３Ｄオブジェクトの描画
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
  *
- * 通常描画関数
+ * ～Draw	:カレント射影行列に射影変換行列が、
+ *			 カレント位置座標行列と方向ベクトル行列にカメラ行列とモデリング行列が合成された行列
+ *			 が設定されます。
+ *
+ * ～DrawVP	:カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
+ *			 カレント位置座標行列と方向ベクトル行列にモデリング行列
+ *			 が設定されます。
+ *
+ * ～DrawWVP:カレント射影行列に射影変換行列とカメラ行列とモデリング行列が合成された行列が、
+ *			 カレント位置座標行列と方向ベクトル行列に単位行列
+ *			 が設定されます。
  */
 //--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjDraw
-		( GFL_G3D_OBJ* g3Dobj )
-{
-	NNS_G3dDraw( g3Dobj->rndobj );
-	NNS_G3dGeFlushBuffer();
-}
-		
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの描画(1mat1shape)
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- *
- * １つのモデルに１つのマテリアルのみ設定されているときに高速描画するための関数
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjDraw1mat1shape
-		( GFL_G3D_OBJ* g3Dobj )
-{
-    NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, 0, 0, TRUE );
-	NNS_G3dGeFlushBuffer();
-}
-		
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの情報設定
- *
- * @param	pTrans	位置情報ベクトルポインタ
- * @param	pRotate	回転情報マトリクスポインタ
- * @param	pScale	拡縮情報ベクトルポインタ
- *
- * オブジェクト情報を転送。各オブジェクト描画の前に設定される
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjDrawStatusSet
-		( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale )
+// ３Ｄオブジェクトの情報設定
+static inline void statusSet( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale )
 {
 	// 位置設定
 	NNS_G3dGlbSetBaseTrans( pTrans );
@@ -1209,78 +1150,74 @@ void
 	NNS_G3dGlbSetBaseScale( pScale );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの回転行列の作成
- *
- * @param	rotSrc	計算前の回転ベクトルポインタ
- * @param	rotDst	計算後の回転行列格納ポインタ
- *
- * この関数等を使用し、オブジェクト毎に適切な回転行列を作成したものを、描画に流す。
- */
-//--------------------------------------------------------------------------------------------
-// Ｘ→Ｙ→Ｚの順番で計算
+//--------------------------------------------------------------------------------
+// 通常描画
+//--------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDrawRotateCalcXY
-		( VecFx32* rotSrc, MtxFx33* rotDst )
+	GFL_G3D_ObjDraw
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	MtxFx33 tmp;
-
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlush();
+	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dGeFlushBuffer();
 }
 
-// Ｘ→Ｙ→Ｚの順番で計算（相対）
 void
-	GFL_G3D_ObjDrawRotateCalcXY_Rev
-		( VecFx32* rotSrc, MtxFx33* rotDst )
+	GFL_G3D_ObjDrawVP
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	MtxFx33 tmp;
-
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)-rotSrc->x), FX_CosIdx((u16)-rotSrc->x) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlushVP();
+	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dGeFlushBuffer();
 }
 
-// Ｙ→Ｘ→Ｚの順番で計算
 void
-	GFL_G3D_ObjDrawRotateCalcYX
-		( VecFx32* rotSrc, MtxFx33* rotDst )
+	GFL_G3D_ObjDrawWVP
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	MtxFx33 tmp;
-
-	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst,&tmp, rotDst );
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlushWVP();
+	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dGeFlushBuffer();
 }
 
-// Ｙ→Ｘ→Ｚの順番で計算（相対）
+//--------------------------------------------------------------------------------
+// １つのモデルに１つのマテリアルのみ設定されているときに高速描画するための関数
+//		matID	描画するマテリアルへのインデックス 
+//		shpID	描画するシェイプへのインデックス 
+//		sendMat	マテリアル情報をジオメトリエンジンに送信するかどうか 
+//--------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDrawRotateCalcYX_Rev
-		( VecFx32* rotSrc, MtxFx33* rotDst )
+	GFL_G3D_ObjDraw1mat1shp
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+
 {
-	MtxFx33 tmp;
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlush();
+	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dGeFlushBuffer();
+}
 
-	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+void
+	GFL_G3D_ObjDrawVP1mat1shp
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+{
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlushVP();
+	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dGeFlushBuffer();
+}
 
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)-rotSrc->y), FX_CosIdx((u16)-rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp,FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
+void
+	GFL_G3D_ObjDrawWVP1mat1shp
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+{
+	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	NNS_G3dGlbFlushWVP();
+	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dGeFlushBuffer();
 }
 
 
@@ -1296,6 +1233,63 @@ void
  *
  */
 //=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * 位置情報をセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	trans	セットする位置情報
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjContSetTrans
+		( GFL_G3D_OBJ* g3Dobj, VecFx32* trans ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetTrans)\n");
+		return;
+	}
+	g3Dobj->trans = *trans;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * スケール情報をセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	trans	セットするスケール情報
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjContSetScale
+		( GFL_G3D_OBJ* g3Dobj, VecFx32* scale ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetScale)\n");
+		return;
+	}
+	g3Dobj->scale = *scale;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 回転情報をセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	rotate	セットする回転情報
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjContSetRotate
+		( GFL_G3D_OBJ* g3Dobj, MtxFx33* rotate ) 
+{
+	if( G3DOBJ_HANDLE_CHECK( g3Dobj ) == FALSE ){
+		OS_Printf("handle is not 3D_object (GFL_G3D_ObjContSetRotate)\n");
+		return;
+	}
+	g3Dobj->rotate = *rotate;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * アニメーションフレームをリセット
@@ -1317,6 +1311,7 @@ void
 	}
 	g3Dobj->anmobj->frame = 0;
 }
+
 //--------------------------------------------------------------------------------------------
 /**
  * アニメーションフレームを進める
