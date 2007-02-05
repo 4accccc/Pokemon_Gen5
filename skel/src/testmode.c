@@ -8,7 +8,7 @@
 #include "textprint.h"
 
 #include "testmode.h"
-//#include "g3d_util.h"
+#include "g3d_util.h"
 
 #include "sample_graphic/titledemo.naix"
 
@@ -24,8 +24,7 @@ typedef struct {
 
 	GFL_G3D_RES*			g3Dres[8];
 	GFL_G3D_OBJ*			g3Dobj[8];
-
-//	GFL_G3D_RESTBL_HANDLE*	g3DresTbl;
+	u16						g3DresTblIdx;
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -36,6 +35,7 @@ void	TestModeInit(void);
 void	TestModeMain(void);
 
 static BOOL	TestModeControl( void );
+static const GFL_PROC_DATA TestMainProcData;
 
 enum {
 	NUM_TITLE = 0,
@@ -200,12 +200,17 @@ static void	bg_init( void )
 						0x1000, heapID, NULL );
 		//BG0( 3D frame )
 		GFL_BG_BGControlSet3D( 1 );
+		//３Ｄユーティリティー起動（リソース６４個、オブジェクト６４個）
+		GFL_G3D_UtilsysInit( 64, 64, heapID );  
 	}
 }
 
 static void	bg_exit( void )
 {
-	GFL_G3D_sysExit();
+	{
+		GFL_G3D_UtilsysExit();  
+		GFL_G3D_sysExit();
+	}
 	GFL_BMPWIN_sysExit();
 	GFL_BG_BGControlExit( TEXT_FRM );
 	GFL_BG_sysExit();
@@ -312,64 +317,61 @@ static void	g2d_unload( void )
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
-#define TD_TITLEP_CMR_CPX_ED			0//(FX32_ONE * -148)
-#define TD_TITLEP_CMR_CPY_ED			(FX32_ONE * 58)
-#define TD_TITLEP_CMR_CPZ_ED			(FX32_ONE * 256)//(FX32_ONE * 190)
-#define TD_TITLEP_CMR_TPX_ED			0//(FX32_ONE * 8)
-#define TD_TITLEP_CMR_TPY_ED			0//(FX32_ONE * -5)
-#define TD_TITLEP_CMR_TPZ_ED			0//(FX32_ONE * 1)
-
-#define TD_TITLE_CAMERA_PERSPWAY		(0x0b60)
-#define TD_TITLE_CAMERA_CLIP_NEAR		(0)
-#define TD_TITLE_CAMERA_CLIP_FAR		(FX32_ONE*100)
-
-#if 0
-static const GFL_G3D_UTIL_RESTBL_PATH g3DresouceTable[] = {
-	{ "src/sample_graphic/titledemo.narc", NARC_titledemo_title_air_nsbmd, TRUE },
-	{ "src/sample_graphic/titledemo.narc", NARC_titledemo_title_air_nsbta, 0 },
-	{ "src/sample_graphic/titledemo.narc", NARC_titledemo_title_iar_nsbmd, TRUE },
-	{ "src/sample_graphic/titledemo.narc", NARC_titledemo_title_iar_nsbta, 0 },
+enum {
+	AIR,
+	AIR_ANM,
+	IAR,
+	IAR_ANM,
 };
-#endif
+
+static const GFL_G3D_UTIL_RES g3DresouceTable[] = {
+{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
+{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbta,GFL_G3D_UTIL_RESPATH,0},
+{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
+{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbta,GFL_G3D_UTIL_RESPATH,0},
+};
 
 //作成
 static void g3d_load( void )
 {
-#if 1
-	const char* path = "src/sample_graphic/titledemo.narc";
-
-	//モデル＆テクスチャリソース読み込み
-	testmode->g3Dres[0] = GFL_G3D_ResourceCreatePath( path, NARC_titledemo_title_air_nsbmd ); 
-	//アニメーションリソース読み込み
-	testmode->g3Dres[1] = GFL_G3D_ResourceCreatePath( path, NARC_titledemo_title_air_nsbta ); 
-	//テクスチャリソース転送
-	GFL_G3D_VramLoadTex( testmode->g3Dres[0] );
-
+	//リソースのロード
+	testmode->g3DresTblIdx = GFL_G3D_UtilResLoad( g3DresouceTable, NELEMS(g3DresouceTable) );
+			
 	//３Ｄオブジェクト作成
-	testmode->g3Dobj[0] = GFL_G3D_ObjCreate(	testmode->g3Dres[0], 0,		//model
-												testmode->g3Dres[0],		//texture
-												testmode->g3Dres[1], 0 );	//animation
-#else
-	u16 heapID = GFL_HEAPID_APP;
+	{
+		VecFx32 trans0	= { -FX32_ONE*64, 0, 0 };								//座標
+		MtxFx33 rotate0	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
+		VecFx32 scale0	= { FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 };			//スケール
 
-	testmode->g3DresTbl = GFL_G3D_UtilResourceLoadPath( g3DresouceTable, 4, heapID );
-	//３Ｄオブジェクト作成
-	testmode->g3Dobj[0] = GFL_G3D_ObjCreate(GFL_G3D_UtilResourceGet(testmode->g3DresTbl,0), 0,
-											GFL_G3D_UtilResourceGet(testmode->g3DresTbl,0),	
-											GFL_G3D_UtilResourceGet(testmode->g3DresTbl,1), 0 );
-	testmode->g3Dobj[1] = GFL_G3D_ObjCreate(GFL_G3D_UtilResourceGet(testmode->g3DresTbl,2), 0,
-											GFL_G3D_UtilResourceGet(testmode->g3DresTbl,2),	
-											GFL_G3D_UtilResourceGet(testmode->g3DresTbl,3), 0 );
-#endif
+		testmode->g3Dobj[0] = GFL_G3D_ObjCreate(GFL_G3D_UtilResGet(0), 0,
+												GFL_G3D_UtilResGet(0),	
+												GFL_G3D_UtilResGet(1), 0 );
+		GFL_G3D_ObjContSetTrans( testmode->g3Dobj[0], &trans0 );
+		GFL_G3D_ObjContSetScale( testmode->g3Dobj[0], &scale0 );
+		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[0], &rotate0 );
+	}
+	{
+		VecFx32 trans1	= { FX32_ONE*64, -FX32_ONE*64, 0 };						//座標
+		MtxFx33 rotate1	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
+		VecFx32 scale1	= { FX32_ONE*2/3, FX32_ONE*2/3, FX32_ONE*2/3 };			//スケール
+
+		testmode->g3Dobj[1] = GFL_G3D_ObjCreate(GFL_G3D_UtilResGet(2), 0,
+												GFL_G3D_UtilResGet(2),	
+												GFL_G3D_UtilResGet(3), 0 );
+		GFL_G3D_ObjContSetTrans( testmode->g3Dobj[1], &trans1 );
+		GFL_G3D_ObjContSetScale( testmode->g3Dobj[1], &scale1 );
+		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[1], &rotate1 );
+	}
 	{
 		//カメラセット
-		VecFx32	targetPos = {TD_TITLEP_CMR_TPX_ED, TD_TITLEP_CMR_TPY_ED, TD_TITLEP_CMR_TPZ_ED};
-		VecFx32	cameraPos = {TD_TITLEP_CMR_CPX_ED, TD_TITLEP_CMR_CPY_ED, TD_TITLEP_CMR_CPZ_ED};
+		VecFx32	targetPos = { 0, 0, 0 };
+		VecFx32	cameraPos = { 0, (FX32_ONE * 58), (FX32_ONE * 256) };
 		VecFx32 cameraUp = { 0, FX32_ONE, 0 };
+		u16		perspway = 0x0b60;
 
 		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
-						FX_SinIdx( TD_TITLE_CAMERA_PERSPWAY ), 
-						FX_CosIdx( TD_TITLE_CAMERA_PERSPWAY ), 
+						FX_SinIdx( perspway ), 
+						FX_CosIdx( perspway ), 
 						( FX32_ONE * 4 / 3 ), 0, 
 						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
 		GFL_G3D_sysLookAtSet( &cameraPos, &cameraUp, &targetPos );
@@ -380,22 +382,15 @@ static void g3d_load( void )
 //破棄
 static void g3d_unload( void )
 {
+	GFL_G3D_ObjDelete( testmode->g3Dobj[1] ); 
 	GFL_G3D_ObjDelete( testmode->g3Dobj[0] ); 
-#if 1
-	GFL_G3D_ResourceDelete( testmode->g3Dres[1] ); 
-	GFL_G3D_ResourceDelete( testmode->g3Dres[0] ); 
-#else
-	GFL_G3D_UtilResourceUnload( testmode->g3DresTbl );
-#endif
+	//リソースのアンロード
+	GFL_G3D_UtilResUnload( testmode->g3DresTblIdx, NELEMS(g3DresouceTable) );
 }
 	
 static void g3d_draw( void )
 {
-	VecFx32 trans1	= { -FX32_ONE*64, 0, 0 };								//座標
-	VecFx32 trans2	= { FX32_ONE*64, -FX32_ONE*64, 0 };					//座標
 	MtxFx33 rotate	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
-	VecFx32 scale1	= { FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 };			//スケール
-	VecFx32 scale2	= { FX32_ONE*2/3, FX32_ONE*2/3, FX32_ONE*2/3 };			//スケール
 
 	//描画開始
 	GFL_G3D_DrawStart();
@@ -405,36 +400,33 @@ static void g3d_draw( void )
 	//各オブジェクト描画
 	{
 		//オブジェクト情報計算
+
 		{
 			//回転計算
 			VecFx32 rotate_tmp = { 0, 0, 0 };
 			rotate_tmp.y = 0x100 * testmode->work[0];	//Ｙ軸回転
-			GFL_G3D_ObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+			GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
 		}
-		//オブジェクト情報転送
-		GFL_G3D_ObjDrawStatusSet( &trans1, &rotate, &scale1 );
-		//オブジェクト描画開始
-		GFL_G3D_ObjDrawStart();
+		//オブジェクト情報セット
+		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[0], &rotate );
 		//オブジェクト描画
 		GFL_G3D_ObjDraw( testmode->g3Dobj[0] );
+
 		//アニメーションコントロール
 		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[0], FX32_ONE ) == FALSE ){
 			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[0] );
 		}
 	}
-#if 0
 	{
 		//オブジェクト情報計算
 		{
 			//回転計算
 			VecFx32 rotate_tmp = { 0, 0, 0 };
 			rotate_tmp.y = -0x100 * testmode->work[0];	//Ｙ軸回転
-			GFL_G3D_ObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+			GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
 		}
-		//オブジェクト情報転送
-		GFL_G3D_ObjDrawStatusSet( &trans2, &rotate, &scale2 );
-		//オブジェクト描画開始
-		GFL_G3D_ObjDrawStart();
+		//オブジェクト情報セット
+		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[1], &rotate );
 		//オブジェクト描画
 		GFL_G3D_ObjDraw( testmode->g3Dobj[1] );
 		//アニメーションコントロール
@@ -442,7 +434,6 @@ static void g3d_draw( void )
 			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[1] );
 		}
 	}
-#endif
 	//描画終了（バッファスワップ）
 	GFL_G3D_DrawEnd();							
 
@@ -493,7 +484,14 @@ static BOOL	TestModeControl( void )
 	case 3:
 		//キー判定
 		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
-			testmode->seq ++;
+			if( testmode->listPosition == 1) {
+				//とりあえずたまだのときだけ遷移する
+				testmode->seq++;
+			}
+			if( testmode->listPosition == 3) {
+				//とりあえずおおののときだけ遷移する
+				testmode->seq++;
+			}
 		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
@@ -543,26 +541,20 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 //------------------------------------------------------------------
 static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	FSOverlayID ov_id;
-	static const GFL_PROC_DATA * pdata;
-	ov_id = NO_OVERLAY_ID;
-	pdata = &TestMainProcData;
 	switch (testmode->listPosition) {
 	case 0:
 		//わたなべ
-		pdata = &DebugWatanabeMainProcData;
 		break;
 	case 1:
 		//たまだ
-		pdata = &DebugTamadaMainProcData;
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
 		break;
 	case 2:
 		//そがべ
-		pdata = &DebugSogabeMainProcData;
 		break;
 	case 3:
 		//おおの
-		pdata = &DebugOhnoMainProcData;
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
 	case 4:
 		//みつはら
@@ -570,14 +562,13 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	default:
 		break;
 	}
-	GFL_PROC_SysSetNextProc(ov_id, pdata, NULL);
 	GFL_HEAP_FreeMemory( testmode );
 	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const GFL_PROC_DATA TestMainProcData = {
+static const GFL_PROC_DATA TestMainProcData = {
 	TestModeProcInit,
 	TestModeProcMain,
 	TestModeProcEnd,
