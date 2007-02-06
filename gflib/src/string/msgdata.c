@@ -119,7 +119,7 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
 //------------------------------------------------------------------
 MSGDATA_HEADER*
 	GFL_MSG_DataLoad
-		( u32 arcID, u32 datID, u32 heapID )
+		( u32 arcID, u32 datID, HEAPID heapID )
 {
 	return GFL_ARC_DataLoadMalloc( arcID, datID, heapID );
 }
@@ -196,7 +196,7 @@ void
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrAlloc
-	( const MSGDATA_HEADER* msgdat, u32 strID, u32 heapID )
+	( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID )
 {
 	if( strID < msgdat->numMsgs )
 	{
@@ -244,7 +244,7 @@ STRBUF*
 //------------------------------------------------------------------
 void
 	GFL_MSG_GetStrDirect
-		( u32 arcID, u32 datID, u32 strID, u32 heapID, STRBUF* dst )
+		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
 	GFL_MSG_GetStrDirectByHandle( arcHandle, datID, strID, heapID, dst );
@@ -266,7 +266,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_MSG_GetStrDirectByHandle
-		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID, STRBUF* dst )
+		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
 	MSGDATA_HEADER  header;
 	MSG_PARAM_BLOCK  param;
@@ -311,7 +311,7 @@ void
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrDirectAlloc
-		( u32 arcID, u32 datID, u32 strID, u32 heapID )
+		( u32 arcID, u32 datID, u32 strID, HEAPID heapID )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
 	STRBUF* ret = GFL_MSG_GetStrDirectAllocByHandle( arcHandle, datID, strID, heapID );
@@ -336,7 +336,7 @@ STRBUF*
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrDirectAllocByHandle
-		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID )
+		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID )
 {
 	MSGDATA_HEADER header;
 	STRCODE* str;
@@ -424,7 +424,7 @@ u32
 struct _MSGDATA_MANAGER {
 
 	u16		type;
-	u16		heapID;
+	HEAPID	heapID;
 	u16		arcID;
 	u16		datID;
 
@@ -449,7 +449,7 @@ struct _MSGDATA_MANAGER {
 //------------------------------------------------------------------
 MSGDATA_MANAGER*
 	GFL_MSG_ManagerCreate
-		( MSGMAN_TYPE type, u32 arcID, u32 datID, u32 heapID )
+		( MSGMAN_TYPE type, u32 arcID, u32 datID, HEAPID heapID )
 {
 	// マネージャ作成→文字列取得→マネージャ廃棄…の流れが思ったより多そうなので
 	// マネージャワークはメモリブロックの後方から取得する
