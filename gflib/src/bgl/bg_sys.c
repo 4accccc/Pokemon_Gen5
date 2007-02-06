@@ -50,7 +50,8 @@ typedef	struct	{
 //------------------------------------------------------------------
 ///システム設定構造体（システムワーク）
 struct _GFL_BG_INI {
-	u32			heapID;
+	HEAPID		heapID;
+	u16			padding;							//HEAPID=u16なので
 	u16			scroll_req;							// スクロールリクエストフラグ s3/s2/s1/s0_m3/m2/m1/m0
 	u16			loadscrn_req;						// スクリーン転送リクエストフラグ s3/s2/s1/s0_m3/m2/m1/m0
 	GFL_BG_SYS	bgsys[GFL_BG_FRAME_MAX];
@@ -95,8 +96,8 @@ static void RadianParamSet( GFL_BG_SYS * ini, u8 mode, u16 value );
 static void ScaleParamSet( GFL_BG_SYS * ini, u8 mode, fx32 value );
 static void CenterParamSet( GFL_BG_SYS * ini, u8 mode, int value );
 
-static	void	*LoadFile(int heapID,const char *path);
-static	void	*LoadFileEx(int heapID,const char *path,u32 *size);
+static	void	*LoadFile(HEAPID heapID,const char *path);
+static	void	*LoadFileEx(HEAPID heapID,const char *path,u32 *size);
 
 //=============================================================================================
 //=============================================================================================
@@ -113,7 +114,7 @@ static	void	*LoadFileEx(int heapID,const char *path,u32 *size);
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_BG_sysInit( u32 heapID )
+void	GFL_BG_sysInit( HEAPID heapID )
 {
 	int			i;
 
@@ -3422,7 +3423,7 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
  * @retval	データを読み込んだアドレス
  */
 //--------------------------------------------------------------------------------------------
-static	void	*LoadFile(int heapID,const char *path)
+static	void	*LoadFile(HEAPID heapID,const char *path)
 {
 	void	*buf;
 
@@ -3444,7 +3445,7 @@ static	void	*LoadFile(int heapID,const char *path)
  * @retval	データを読み込んだアドレス
  */
 //--------------------------------------------------------------------------------------------
-static	void	*LoadFileEx(int heapID,const char *path,u32 *size)
+static	void	*LoadFileEx(HEAPID heapID,const char *path,u32 *size)
 {
 	void	*buf;
 

@@ -15,8 +15,8 @@
 
 ///BMPWINデータ構造体
 typedef struct {
-	u16				heapID;
-
+	HEAPID			heapID;
+	u16				padding;		//HEAPID=u16なので
 }GFL_BMPWIN_SYS;
 
 ///BMPWINデータ構造体
@@ -58,7 +58,7 @@ static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
 //--------------------------------------------------------------------------------------------
 void
 	GFL_BMPWIN_sysInit
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	int	i;
 
@@ -122,7 +122,7 @@ GFL_BMPWIN*
 {
 	GFL_BMPWIN* bmpwin;
 	u32 areasiz, areapos;
-	u16 heapID = bmpwin_sys->heapID;
+	HEAPID heapID = bmpwin_sys->heapID;
 
 	bmpwin = (GFL_BMPWIN*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN) );
 

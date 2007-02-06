@@ -36,7 +36,7 @@
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, u32 heapID )
+GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
@@ -72,7 +72,7 @@ void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, u32 heapID )
+GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heapID )
 {
 	GFL_BMP_DATA		*bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 	void				*src;
