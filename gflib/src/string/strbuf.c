@@ -64,7 +64,7 @@ BOOL
 //------------------------------------------------------------------
 STRBUF*
 	GFL_STR_BufferCreate
-		( u32 size, u32 heapID )
+		( u32 size, HEAPID heapID )
 {
 	STRBUF* strbuf;
 
@@ -158,7 +158,7 @@ void
 //------------------------------------------------------------------
 STRBUF*
 	GFL_STR_CreateBufferCopy
-		( const STRBUF* origin, u32 heapID )
+		( const STRBUF* origin, HEAPID heapID )
 {
 	STRBUF* copy;
 
