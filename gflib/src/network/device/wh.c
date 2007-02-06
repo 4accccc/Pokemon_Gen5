@@ -2951,7 +2951,7 @@ static s16 SelectChannel(u16 bitmap)
    Arguments:   ì‹Æ—Ìˆæ.
    Returns:     ƒƒ‚ƒŠ[
    ---------------------------------------------------------------------- */
-GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap)
+GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap)
 {
     void* pNet = pHeap;
     

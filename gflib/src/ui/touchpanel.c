@@ -70,7 +70,7 @@ static UI_TPSYS* _UI_GetTPSYS(const UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysInit(const int heapID)
+void GFL_UI_TP_sysInit(const HEAPID heapID)
 {
 	TPCalibrateParam calibrate;
     UI_TPSYS* pTP = GFL_HEAP_AllocMemory(heapID, sizeof(UI_TPSYS));

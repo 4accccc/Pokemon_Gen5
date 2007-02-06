@@ -156,7 +156,7 @@ typedef struct _UI_TPSYS UI_TPSYS; ///< UIタッチパネルSYS型宣言
  * @return  UISYS  workハンドル
  */
 //==============================================================================
-GLOBAL void GFL_UI_sysInit(const int heapID);
+GLOBAL void GFL_UI_sysInit(const HEAPID heapID);
 
 //==============================================================================
 /**
@@ -224,7 +224,7 @@ GLOBAL void GFL_UI_SoftResetEnable( const u8 softResetBit);
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_TP_sysInit(const int heapID);
+GLOBAL void GFL_UI_TP_sysInit(const HEAPID heapID);
 
 //==============================================================================
 /**

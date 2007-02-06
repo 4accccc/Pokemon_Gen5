@@ -27,7 +27,7 @@ typedef struct _WM_INFO_STRUCT  GFL_NETWM;
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num);
+extern void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num);
 //==============================================================================
 /**
  * @brief   接続クラスの初期化
@@ -35,7 +35,7 @@ extern void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num);
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect);
+extern void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect);
 
 //==============================================================================
 /**

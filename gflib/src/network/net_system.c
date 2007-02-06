@@ -243,7 +243,7 @@ static int _getUserMinNum(void)
  */
 //==============================================================================
 
-static BOOL _commInit(int packetSizeMax, int heapID)
+static BOOL _commInit(int packetSizeMax, HEAPID heapID)
 {
     void* pWork;
     int i;

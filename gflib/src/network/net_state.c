@@ -447,7 +447,7 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID)
+void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
     pNetHandle->pParent = GFL_HEAP_AllocMemory(heapID, sizeof(NET_PARENTSYS));
     GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
@@ -639,7 +639,7 @@ static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,int heapID)
+void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
 
 

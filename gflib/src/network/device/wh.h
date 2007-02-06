@@ -433,7 +433,7 @@ extern u16 WH_GetMeasureChannel(void);
    Arguments:   作業領域.
    Returns:     メモリー
    ---------------------------------------------------------------------- */
-extern GFL_NETWM* WH_CreateHandle(int heapID, void* pHeap);
+extern GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap);
 /** ----------------------------------------------------------------------
  *
  * @brief    初期化作業を行い、初期化シーケンスを開始します。

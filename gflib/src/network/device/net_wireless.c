@@ -78,7 +78,7 @@ struct _NET_WL_WORK{
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
     GFL_NETHANDLE* pNetHandle;
     _PARENTFIND_CALLBACK pCallback;
-    int heapID;
+    HEAPID heapID;
     u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
   //  u8 regulationNo;   ///< ゲームレギュレーション
     GameServiceID serviceNo;
@@ -122,7 +122,7 @@ static volatile int   startCheck;
 // static宣言
 //==============================================================================
 
-static void _whInitialize(int heapID,GFL_NETWL* pNetWL, BOOL bConnect);
+static void _whInitialize(HEAPID heapID,GFL_NETWL* pNetWL, BOOL bConnect);
 static void _childDataInit(void);
 static void _parentDataInit(BOOL bTGIDChange);
 static void _commInit(GFL_NETWL* pNetWL);
@@ -143,7 +143,7 @@ static int _connectNum(void);
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
+void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num)
 {
     int i;
     GFL_NETWL* pNetWL = NULL;
@@ -169,7 +169,7 @@ void* GFL_NET_WLGetHandle(int heapID, GameServiceID serviceNo, u8 num)
  */
 //==============================================================================
 
-void GFL_NET_WLInitialize(int heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect)
+void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect)
 {
     int i;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
@@ -387,7 +387,7 @@ void GFL_NET_WLVRAMDFinalize(void)
  */
 //==============================================================================
 
-static void _whInitialize(int heapID, GFL_NETWL* pNetWL, BOOL bConnect)
+static void _whInitialize(HEAPID heapID, GFL_NETWL* pNetWL, BOOL bConnect)
 {
     // 無線初期化
 //    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();

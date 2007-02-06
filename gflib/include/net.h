@@ -141,7 +141,7 @@ typedef struct{
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,int heapID);
+extern void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,HEAPID heapID);
 //==============================================================================
 /**
  * @brief   í êMèIóπ

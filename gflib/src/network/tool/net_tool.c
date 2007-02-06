@@ -35,7 +35,7 @@ struct _NET_TOOLSYS_t{
  */
 //==============================================================================
 
-NET_TOOLSYS* GFL_NET_Tool_sysInit(const int heapID, const int num)
+NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num)
 {
     int i;
     NET_TOOLSYS* pCT;

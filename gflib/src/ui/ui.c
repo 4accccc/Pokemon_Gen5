@@ -55,7 +55,7 @@ static void _UI_ResetLoop(int resetNo);
  */
 //==============================================================================
 
-void GFL_UI_sysInit(const int heapID)
+void GFL_UI_sysInit(const HEAPID heapID)
 {
     UISYS* pUI = GFL_HEAP_AllocMemory(heapID, sizeof(UISYS));
 

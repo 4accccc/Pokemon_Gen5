@@ -45,7 +45,7 @@ extern UI_KEYSYS* _UI_GetKEYSYS(const UISYS* pUI);
  * @return  UI_KEYSYS  キーシステムワーク
  */
 //==============================================================================
-extern UI_KEYSYS* GFL_UI_Key_sysInit(const int heapID);
+extern UI_KEYSYS* GFL_UI_Key_sysInit(const HEAPID heapID);
 
 //==============================================================================
 /**

@@ -28,8 +28,8 @@ extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
 
 extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle);
-extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,int heapID);
-extern void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,int heapID);
+extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
+extern void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
 extern void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -159,8 +159,8 @@ extern void CommStateSetParentOnlyFlg(BOOL bFlg);
 #define COMM_ERRORTYPE_GTS (3)     // Aボタンでリセット セーブポイントへ戻す
 
 // エラー表示関数
-extern void ComErrorWarningResetCall( int heapID, int type, int code );
-extern void DWClibWarningCall( int heapID, int error_msg_id );
+extern void ComErrorWarningResetCall( HEAPID heapID, int type, int code );
+extern void DWClibWarningCall( HEAPID heapID, int error_msg_id );
 
 
 // エラーにする関数   以下の番号を使用してください

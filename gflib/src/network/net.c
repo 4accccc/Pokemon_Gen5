@@ -27,7 +27,7 @@ struct _GFL_NETSYS{
     GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
     GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
     GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
-    int heapID;  ///< 通信の確保メモリーの場所
+    HEAPID heapID;  ///< 通信の確保メモリーの場所
 };
 
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
@@ -192,7 +192,7 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
  * @return none
  */
 //==============================================================================
-void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,int heapID)
+void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,HEAPID heapID)
 {
     GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETSYS));
     _pNetSys = pNet;

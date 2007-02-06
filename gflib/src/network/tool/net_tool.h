@@ -22,7 +22,7 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
  * @return  NET_TOOLSYS  ネットワークツールシステムワーク
  */
 //==============================================================================
-extern NET_TOOLSYS* GFL_NET_Tool_sysInit(const int heapID, const int num);
+extern NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num);
 //==============================================================================
 /**
  * @brief   ネットワークツール終了

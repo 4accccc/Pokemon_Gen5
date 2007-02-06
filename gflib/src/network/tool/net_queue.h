@@ -80,7 +80,7 @@ extern BOOL GFL_NET_QueueIsEmpty(SEND_QUEUE_MANAGER* pQueueMgr);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_QueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing,int heapid);
+extern void GFL_NET_QueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing,HEAPID heapid);
 
 //==============================================================================
 /**
