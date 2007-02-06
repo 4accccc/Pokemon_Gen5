@@ -21,11 +21,9 @@ typedef struct {
 
 	GFL_BMPWIN*				bmpwin[32];
 
-	GFL_G3D_RES*			g3Dres[8];
-	GFL_G3D_OBJ*			g3Dobj[8];
-
 	u16						g3DresTblIdx;
 	u16						g3DobjTblIdx;
+	u16						g3DanmTblIdx;
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -201,8 +199,8 @@ static void	bg_init( void )
 						0x1000, heapID, NULL );
 		//BG0( 3D frame )
 		GFL_BG_BGControlSet3D( 1 );
-		//３Ｄユーティリティー起動（リソース６４個、オブジェクト６４個）
-		GFL_G3D_UtilsysInit( 64, 64, heapID );  
+		//３Ｄユーティリティー起動（リソース６４個、オブジェクト６４個、アニメーション６４個）
+		GFL_G3D_UtilsysInit( 64, 64, 64, heapID );  
 	}
 }
 
@@ -263,7 +261,7 @@ static void	g2d_load( void )
 	{
 		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
 		plt[0] = 0x5041;	//青(背景)
-		plt[0] = 0x0000;	//
+		//plt[0] = 0x0000;	//
 
 		plt[1] = 0x7fff;	//白
 		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
@@ -319,6 +317,7 @@ static void	g2d_unload( void )
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
+//リソース設定テーブル
 enum {
 	G3RES_AIR,
 	G3RES_AIRANM,
@@ -334,6 +333,7 @@ static const GFL_G3D_UTIL_RES g3DresouceTable[] =
 {(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbta,GFL_G3D_UTIL_RESPATH,0},
 };
 
+//オブジェクト設定テーブル
 enum {
 	G3OBJ_AIR,
 	G3OBJ_IAR,
@@ -342,14 +342,14 @@ enum {
 static const GFL_G3D_UTIL_OBJ g3DobjectTable[] = 
 {
 	{
-		G3RES_AIR,0,G3RES_AIR,G3RES_AIRANM,0,
+		G3RES_AIR,0,G3RES_AIR,
 		{ -FX32_ONE*64, 0, 0 },								//座標
 		{ FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 },		//スケール
 		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 		0,TRUE,
 	},
 	{
-		G3RES_IAR,0,G3RES_IAR,G3RES_IARANM,0,
+		G3RES_IAR,0,G3RES_IAR,
 		{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
 		{ FX32_ONE*3/5, FX32_ONE*3/5, FX32_ONE*3/5 },		//スケール
 		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
@@ -357,13 +357,25 @@ static const GFL_G3D_UTIL_OBJ g3DobjectTable[] =
 	},
 };
 
+//アニメーション設定テーブル
+enum {
+	G3ANM_AIR,
+	G3ANM_IAR,
+};
+
+static const GFL_G3D_UTIL_ANM g3DanimetionTable[] = 
+{
+	{ G3RES_AIRANM, 0, G3OBJ_AIR, TRUE },
+	{ G3RES_IARANM, 0, G3OBJ_IAR, TRUE },
+};
+
+//------------------------------------------------------------------
 //作成
 static void g3d_load( void )
 {
-	//リソースのロード
-	testmode->g3DresTblIdx = GFL_G3D_UtilResLoad( g3DresouceTable, NELEMS(g3DresouceTable) );
-	//３Ｄオブジェクトのロード
-	testmode->g3DobjTblIdx = GFL_G3D_UtilObjLoad( g3DobjectTable, NELEMS(g3DobjectTable) );
+	GFL_G3D_UtilAllLoad( g3DresouceTable, NELEMS(g3DresouceTable), &testmode->g3DresTblIdx,
+						 g3DobjectTable, NELEMS(g3DobjectTable), &testmode->g3DobjTblIdx,
+						 g3DanimetionTable, NELEMS(g3DanimetionTable), &testmode->g3DanmTblIdx );
 	{
 		//カメラセット
 		VecFx32	targetPos = { 0, 0, 0 };
@@ -381,19 +393,18 @@ static void g3d_load( void )
 	testmode->work[0] = 0;
 }
 	
+//描画
 static void g3d_draw( void )
 {
-	//描画
 	GFL_G3D_UtilDraw();
 }
 	
 //破棄
 static void g3d_unload( void )
 {
-	//オブジェクトのアンロード
-	GFL_G3D_UtilObjUnload( testmode->g3DobjTblIdx, NELEMS(g3DobjectTable) );
-	//リソースのアンロード
-	GFL_G3D_UtilResUnload( testmode->g3DresTblIdx, NELEMS(g3DresouceTable) );
+	GFL_G3D_UtilAllUnload(	NELEMS(g3DresouceTable), &testmode->g3DresTblIdx,
+							NELEMS(g3DobjectTable), &testmode->g3DobjTblIdx,
+							NELEMS(g3DanimetionTable), &testmode->g3DanmTblIdx );
 }
 	
 //------------------------------------------------------------------
@@ -481,27 +492,30 @@ static BOOL	TestModeControl( void )
 static void g3d_control_effect( void )
 {
 	MtxFx33 rotate	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
+	VecFx32 rotate_tmp = { 0, 0, 0 };
+	GFL_G3D_OBJ* g3Dobj;
+	GFL_G3D_ANM* g3Danm;
 
 	//回転計算
 	{
-		GFL_G3D_OBJ* g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_AIR );
-		VecFx32 rotate_tmp = { 0, 0, 0 };
+		g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_AIR );
+		g3Danm = GFL_G3D_UtilAnmGet( testmode->g3DanmTblIdx + G3ANM_AIR );
 
 		rotate_tmp.y = 0x100 * testmode->work[0];	//Ｙ軸回転
 		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
 		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
 		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj, FX32_ONE );
+		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, FX32_ONE );
 	}
 	{
-		GFL_G3D_OBJ* g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_IAR );
-		VecFx32 rotate_tmp = { 0, 0, 0 };
+		g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_IAR );
+		g3Danm = GFL_G3D_UtilAnmGet( testmode->g3DanmTblIdx + G3ANM_IAR );
 
 		rotate_tmp.y = -0x100 * testmode->work[0];	//Ｙ軸回転
 		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
 		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
 		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj, FX32_ONE );
+		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, FX32_ONE );
 	}
 	testmode->work[0]++;
 }
