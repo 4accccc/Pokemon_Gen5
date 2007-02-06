@@ -99,7 +99,7 @@ typedef struct _MSGDATA_MANAGER	MSGDATA_MANAGER;
 //------------------------------------------------------------------
 extern MSGDATA_MANAGER*
 	GFL_MSG_ManagerCreate
-		( MSGMAN_TYPE type, u32 arcID, u32 datID, u32 heapID );
+		( MSGMAN_TYPE type, u32 arcID, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -183,7 +183,7 @@ typedef struct _MSGDATA_HEADER	MSGDATA_HEADER;
 //------------------------------------------------------------------
 MSGDATA_HEADER*
 	GFL_MSG_DataLoad
-		( u32 arcID, u32 datID, u32 heapID );
+		( u32 arcID, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -224,7 +224,7 @@ void
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrAlloc
-	( const MSGDATA_HEADER* msgdat, u32 strID, u32 heapID );
+	( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -240,7 +240,7 @@ STRBUF*
 //------------------------------------------------------------------
 void
 	GFL_MSG_GetStrDirect
-		( u32 arcID, u32 datID, u32 strID, u32 heapID, STRBUF* dst );
+		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst );
 
 //------------------------------------------------------------------
 /**
@@ -256,7 +256,7 @@ void
 //------------------------------------------------------------------
 void
 	GFL_MSG_GetStrDirectByHandle
-		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID, STRBUF* dst );
+		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst );
 
 //------------------------------------------------------------------
 /**
@@ -273,7 +273,7 @@ void
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrDirectAlloc
-		( u32 arcID, u32 datID, u32 strID, u32 heapID );
+		( u32 arcID, u32 datID, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -290,7 +290,7 @@ STRBUF*
 //------------------------------------------------------------------
 STRBUF*
 	GFL_MSG_GetStrDirectAllocByHandle
-		( ARCHANDLE* arcHandle, u32 datID, u32 strID, u32 heapID );
+		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
