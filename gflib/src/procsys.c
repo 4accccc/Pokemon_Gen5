@@ -54,7 +54,7 @@ struct _GFL_PROC{
  */
 //------------------------------------------------------------------
 struct _GFL_PROCSYS{
-	u32 heap_id;				///<使用するヒープ指定
+	HEAPID heap_id;				///<使用するヒープ指定
 	FSOverlayID ov_id;			///<現在のメインプロセスのオーバーレイID（未使用）
 	GFL_PROC * proc;			///<現在のメインプロセスのポインタ
 
@@ -72,11 +72,11 @@ struct _GFL_PROCSYS{
 //		※外部公開していない
 //
 //------------------------------------------------------------------
-extern GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id);
+extern GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const HEAPID heap_id);
 extern void GFI_PROC_Delete(GFL_PROC * proc);
 extern BOOL GFI_PROC_Main(GFL_PROC * proc);
 
-extern GFL_PROCSYS * GFI_PROC_SysInit(u32 heap_id);
+extern GFL_PROCSYS * GFI_PROC_SysInit(HEAPID heap_id);
 extern void GFI_PROC_SysMain(GFL_PROCSYS * psys);
 extern void GFI_PROC_SysExit(GFL_PROCSYS * psys);
 
@@ -107,7 +107,7 @@ static GFL_PROCSYS * gfl_procsys;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GFL_PROC_SysInit(u32 heap_id)
+void GFL_PROC_SysInit(HEAPID heap_id)
 {
 	gfl_procsys = GFI_PROC_SysInit(heap_id);
 }
@@ -151,7 +151,7 @@ void GFL_PROC_SysSetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, 
  * @return	GFL_PROCSYS		制御ワークへのポインタ
  */
 //------------------------------------------------------------------
-GFL_PROCSYS * GFI_PROC_SysInit(u32 heap_id)
+GFL_PROCSYS * GFI_PROC_SysInit(HEAPID heap_id)
 {
 	GFL_PROCSYS * psys = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROCSYS));
 	psys->heap_id = heap_id;
@@ -277,7 +277,7 @@ void GFI_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
  * @return	GFL_PROC	生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
-GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const u32 heap_id)
+GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const HEAPID heap_id)
 {
 	GFL_PROC * proc;
 	proc = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROC));
@@ -313,7 +313,7 @@ void GFI_PROC_Delete(GFL_PROC * proc)
  * @return	void *	確保したプロセス内ワークへのポインタ
  */
 //------------------------------------------------------------------
-void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id)
+void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, HEAPID heap_id)
 {
 	proc->work = GFL_HEAP_AllocMemory(heap_id, size);
 	return proc->work;

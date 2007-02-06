@@ -88,7 +88,7 @@ typedef struct {
  * @param	heap_id		PROCシステムで使用するヒープID
  */
 //------------------------------------------------------------------
-extern void GFL_PROC_SysInit(u32 heap_id);
+extern void GFL_PROC_SysInit(HEAPID heap_id);
 
 //------------------------------------------------------------------
 /**
@@ -138,7 +138,7 @@ extern void GFL_PROC_SysSetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * pro
  * @return	void *	確保したプロセス内ワークへのポインタ
  */
 //------------------------------------------------------------------
-extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, u32 heap_id);
+extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, HEAPID heap_id);
 
 //------------------------------------------------------------------
 /**
