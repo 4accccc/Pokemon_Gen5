@@ -64,7 +64,7 @@ typedef struct {
  */
 //----------------------------------------------------------------
 typedef struct {
-	u16		heapID;						///< u32
+	HEAPID	heapID;						///< u32
 //	u16		magicnum;					///< マジックナンバー
 	u8		userInfo[MEMHEADER_USERINFO_SIZE];	///< 外部使用領域
 }MEMHEADER;
@@ -210,7 +210,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL 
 	GFI_HEAP_CreateHeap
-		( u16 parentHeapID, u16 childHeapID, u32 size )
+		( HEAPID parentHeapID, HEAPID childHeapID, u32 size )
 {
 	s32 align;
 
@@ -278,7 +278,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_DeleteHeap
-		( u16 childHeapID )
+		( HEAPID childHeapID )
 {
 	NNSFndHeapHandle  handle;
 
@@ -329,7 +329,7 @@ BOOL
 //------------------------------------------------------------------
 void*
 	GFI_HEAP_AllocMemory
-		( u16 heapID, u32 size )
+		( HEAPID heapID, u32 size )
 {
 	s32 align;
 
@@ -392,7 +392,7 @@ BOOL
 {
 	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
-	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
+	HEAPID	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 	
 //	if( magicnum != MAGICNUM )
 //	{	//指定ポインタに間違いがある
@@ -441,7 +441,7 @@ BOOL
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment )
+		( NNSFndAllocator* pAllocator, HEAPID heapID, s32 alignment )
 {
 	s32 align;
 
@@ -488,7 +488,7 @@ BOOL
 {
 	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
 //	u16	magicnum	= memheader->magicnum;	//メモリ管理ヘッダマジックナンバーの取得
-	u16	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
+	HEAPID	heapID		= memheader->heapID;	//対象ヒープＩＤの取得
 
 	newSize += sizeof(MEMHEADER);	// ヘッダ領域追加
 
@@ -544,7 +544,7 @@ BOOL
 //------------------------------------------------------------------
 u32
 	GFI_HEAP_GetHeapFreeSize
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -571,7 +571,7 @@ u32
 //------------------------------------------------------------------
 NNSFndHeapHandle
 	GFI_HEAP_GetHandle
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -598,7 +598,7 @@ NNSFndHeapHandle
 //------------------------------------------------------------------
 NNSFndHeapHandle
 	GFI_HEAP_GetParentHandle
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -625,7 +625,7 @@ NNSFndHeapHandle
 //------------------------------------------------------------------
 void*
 	GFI_HEAP_GetHeapMemBlock
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -652,7 +652,7 @@ void*
 //------------------------------------------------------------------
 u16
 	GFI_HEAP_GetHeapCount
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
@@ -732,7 +732,7 @@ void*
 //------------------------------------------------------------------
 BOOL
 	GFI_HEAP_CheckHeapSafe
-		( u16 heapID )
+		( HEAPID heapID )
 {
 	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
 
