@@ -36,6 +36,8 @@
 #include "net.h"
 #include "ui.h"
 
+#include "clact.h"
+
 /*  */
 
 #endif	/*	__GFLIB_H__ */

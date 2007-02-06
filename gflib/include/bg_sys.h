@@ -190,7 +190,7 @@ enum {
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_BG_sysInit( u32 heapID );
+GLOBAL void	GFL_BG_sysInit( HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -558,7 +558,7 @@ GLOBAL	u32 GFL_BG_LoadCharacterFileAreaMan( u8 frmnum, const char * path );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap );
+GLOBAL void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, HEAPID heap );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -779,12 +779,12 @@ GLOBAL void GFL_BG_4BitCgxChange8BitMain( const u8 * chr, u32 chr_size, u8 * buf
  * @param	chr			変換元データ（4bitキャラ）
  * @param	chr_size	変換元データのサイズ
  * @param	pal_ofs		元パレット番号 ( 0 ～ 16 )
- * @param	heap		ヒープID
+ * @param	heapID		ヒープID
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, u32 heap );
+GLOBAL void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, HEAPID heapID );
 
 
 //=============================================================================================

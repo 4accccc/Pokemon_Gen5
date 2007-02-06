@@ -40,10 +40,10 @@ extern	void	GFL_ARC_sysInit(const char **tbl,int tbl_max);
 extern	void	GFL_ARC_sysExit(void);
 
 extern	void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
-extern	void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,int heap_id);
+extern	void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,HEAPID heapID);
 extern	void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
-extern	void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,int heap_id,int ofs,int size);
-extern	void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,int heapID);
+extern	void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,HEAPID heapID,int ofs,int size);
+extern	void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,HEAPID heapID);
 extern	u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
 extern	u32		GFL_ARC_DataSizeGet(int file_kind,int index);
 
@@ -75,7 +75,7 @@ typedef struct _ARCHANDLE  ARCHANDLE;
  * @retval  ARCHANDLE	オープンされたハンドルのポインタ（失敗ならNULL）
  */
 //------------------------------------------------------------------
-extern ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, u32 heapId );
+extern ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -138,7 +138,7 @@ extern void GFL_ARC_DataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, 
  * @retval  u32				データサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_DataLoadAllocByHandle( ARCHANDLE* handle, u32 datID, u32 heapID );
+extern void* GFL_ARC_DataLoadAllocByHandle( ARCHANDLE* handle, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**

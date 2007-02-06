@@ -79,7 +79,7 @@ typedef struct{
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, u32 heapID );
+GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -102,7 +102,7 @@ GLOBAL	void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp );
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, u32 heapID );
+GLOBAL	GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
