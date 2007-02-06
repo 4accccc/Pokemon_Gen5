@@ -231,7 +231,7 @@ typedef struct {
 //-------------------------------------
 ///	CLSYS関係
 //=====================================
-GLOBAL void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, u32 heapID );
+GLOBAL void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID );
 GLOBAL void GFL_CLACT_SysExit( void );
 GLOBAL void GFL_CLACT_SysMain( void );
 GLOBAL void GFL_CLACT_SysVblank( void );
@@ -242,7 +242,7 @@ GLOBAL void GFL_CLACT_SysVblank( void );
 // レンダラーを使用したいとき、この関数郡で作成して、
 // セルアクターユニットに関連付けることが出来ます。
 //=====================================
-GLOBAL CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, u32 heapID );
+GLOBAL CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
 GLOBAL void GFL_CLACT_UserRendDelete( CLSYS_REND* p_rend );
 GLOBAL void GFL_CLACT_UserRendSetSurfacePos( CLSYS_REND* p_rend, u32 idx, const CLSYS_POS* cp_pos );
 GLOBAL void GFL_CLACT_UserRendGetSurfacePos( const CLSYS_REND* cp_rend, u32 idx, CLSYS_POS* p_pos );
@@ -254,7 +254,7 @@ GLOBAL CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_re
 //-------------------------------------
 ///	CLUNIT関係
 //=====================================
-GLOBAL CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, u32 heapID );
+GLOBAL CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID );
 GLOBAL void GFL_CLACT_UnitDelete( CLUNIT* p_unit );
 GLOBAL void GFL_CLACT_UnitDraw( CLUNIT* p_unit );
 GLOBAL void GFL_CLACT_UnitSetDrawFlag( CLUNIT* p_unit, BOOL on_off );
@@ -285,8 +285,8 @@ GLOBAL void GFL_CLACT_WkSetTrCellResData( CLWK_RES* p_res, const NNSG2dImageProx
 GLOBAL void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm );
 
 // 登録破棄関係
-GLOBAL CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, u32 heapID );
-GLOBAL CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, u32 heapID );
+GLOBAL CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
+GLOBAL CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
 GLOBAL void GFL_CLACT_WkDel( CLWK* p_wk );
 
 // 描画フラグ

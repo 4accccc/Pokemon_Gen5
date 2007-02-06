@@ -260,7 +260,7 @@ static const u16 CLSYS_DRAW_TYPEtoNNS_G2D_VRAM_TYPE[ CLSYS_DRAW_MAX ] = {
 //-------------------------------------
 ///	CLSYS関係
 //=====================================
-static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, u32 heapID );
+static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, HEAPID heapID );
 static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8 pal_offs );
 
 
@@ -279,7 +279,7 @@ static void OAMMAN_ObjClearBuff( OAMMAN_DATA* p_obj );
 //-------------------------------------
 ///	CLSYS_REND関係
 //=====================================
-static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, u32 heapID );
+static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
 static void REND_SysExit( CLSYS_REND* p_rend );
 static void REND_SysBeginDraw( CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgProxy, const NNSG2dImagePaletteProxy* pPltProxy );
 static void REND_SysEndDraw( CLSYS_REND* p_rend );
@@ -309,16 +309,16 @@ static BOOL REND_CallBackCulling( const NNSG2dCellData* pCell, const MtxFx32* pM
 //-------------------------------------
 ///	TRMAN	関係
 //=====================================
-static void TRMAN_SysInit( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID );
+static void TRMAN_SysInit( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID );
 static void TRMAN_SysExit( CLSYS_TRMAN* p_trman );
 static void TRMAN_SysMain( CLSYS_TRMAN* p_trman );
 static void TRMAN_SysVBlank( CLSYS_TRMAN* p_trman );
 static u8 TRMAN_SysGetBuffNum( const CLSYS_TRMAN* cp_trman );
-static void TRMAN_CellTransManCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID );
+static void TRMAN_CellTransManCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID );
 static void TRMAN_CellTransManDelete( CLSYS_TRMAN* p_trman );
 static u32 TRMAN_CellTransManAddHandle( CLSYS_TRMAN* p_trman );
 static void TRMAN_CellTransManDelHandle( CLSYS_TRMAN* p_trman, u32 handle );
-static void TRMAN_TrSysCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID );
+static void TRMAN_TrSysCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID );
 static void TRMAN_TrSysDelete( CLSYS_TRMAN* p_trman );
 static void TRMAN_TrSysUpdata( CLSYS_TRMAN* p_trman );
 static void TRMAN_TrSysTrans( CLSYS_TRMAN* p_trman );
@@ -355,12 +355,12 @@ static void CLWK_SysGetSetSfPos( const CLWK* cp_wk, u16 setsf, CLSYS_POS* p_pos 
 //-------------------------------------
 ///	CLWK_ANMDATA	関係
 //=====================================
-static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID );
+static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
 static void CLWK_AnmDataExit( CLWK_ANMDATA* p_anmdata );
 static CLWK_ANMTYPE CLWK_AnmDataGetType( const CLWK_RES* cp_res );
-static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID );
-static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID );
-static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID );
+static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
+static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
+static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
 static void CLWK_AnmDataDeleteCellData( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataDeleteTRCellData( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataDeleteMCellData( CLWK_ANMDATA* p_anmdata );
@@ -423,7 +423,7 @@ static void CLWK_AnmDataStopAnm( CLWK_ANMDATA* p_anmdata );
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, u32 heapID )
+void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID )
 {
 	int i;
 
@@ -522,7 +522,7 @@ void GFL_CLACT_SysVblank( void )
  *	@return	作成したレンダラーシステム
  */
 //-----------------------------------------------------------------------------
-CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, u32 heapID )
+CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
 {
 	CLSYS_REND* p_rend;
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -666,7 +666,7 @@ CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_rend, u32
  *	@return	ユニットポインタ
  */
 //-----------------------------------------------------------------------------
-CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, u32 heapID )
+CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID )
 {
 	CLUNIT* p_unit;
 	int i;
@@ -924,7 +924,7 @@ void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_im
  *		CLWK_SETSF_NONEを指定すると絶対座標設定になる
  */
 //-----------------------------------------------------------------------------
-CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, u32 heapID )
+CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
 {
 	CLWK* p_wk;
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -964,7 +964,7 @@ CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES*
  *	@return	登録したセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, u32 heapID )
+CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
 {
 	CLWK* p_wk;
 	GF_ASSERT( cp_data );
@@ -2115,7 +2115,7 @@ CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, u32 heapID )
+static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, HEAPID heapID )
 {
 	// デフォルトレンダラー　サーフェース設定
 	static REND_SURFACE_INIT c_defsurface[ CLSYS_DRAW_MAX ] = {
@@ -2344,7 +2344,7 @@ static void OAMMAN_ObjClearBuff( OAMMAN_DATA* p_obj )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, u32 heapID )
+static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
 {
 	int i;
 
@@ -2850,7 +2850,7 @@ static BOOL REND_CallBackCulling( const NNSG2dCellData* pCell, const MtxFx32* pM
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void TRMAN_SysInit( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID )
+static void TRMAN_SysInit( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID )
 {
 	GF_ASSERT( p_trman );
 
@@ -2935,7 +2935,7 @@ static u8 TRMAN_SysGetBuffNum( const CLSYS_TRMAN* cp_trman )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void TRMAN_CellTransManCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID )
+static void TRMAN_CellTransManCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID )
 {
 	GF_ASSERT( p_trman );
 
@@ -3002,7 +3002,7 @@ static void TRMAN_CellTransManDelHandle( CLSYS_TRMAN* p_trman, u32 handle )
  *	@param	heapID		ヒープ
  */
 //-----------------------------------------------------------------------------
-static void TRMAN_TrSysCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, u32 heapID )
+static void TRMAN_TrSysCreate( CLSYS_TRMAN* p_trman, u8 tr_cell, HEAPID heapID )
 {
 	int i;
 
@@ -3587,9 +3587,9 @@ static void CLWK_SysGetSetSfPos( const CLWK* cp_wk, u16 setsf, CLSYS_POS* p_pos 
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID )
+static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
 {
-	static void (* const p_create[ CLWK_ANM_MAX ])( CLWK_ANMDATA* , const CLWK_RES* ,  u32 ) = {
+	static void (* const p_create[ CLWK_ANM_MAX ])( CLWK_ANMDATA* , const CLWK_RES* ,  HEAPID ) = {
 		CLWK_AnmDataCreateCellData,
 		CLWK_AnmDataCreateTRCellData,
 		CLWK_AnmDataCreateMCellData
@@ -3660,7 +3660,7 @@ static CLWK_ANMTYPE CLWK_AnmDataGetType( const CLWK_RES* cp_res )
  *	@param	heapID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID )
+static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
 {
 	GF_ASSERT( p_anmdata );
 	GF_ASSERT( cp_res );
@@ -3684,7 +3684,7 @@ static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES*
  *	@param	cp_res			リソースデータ
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID )
+static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
 {
 	GF_ASSERT( pClsys );
 	GF_ASSERT( p_anmdata );
@@ -3721,7 +3721,7 @@ static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RE
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, u32 heapID )
+static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
 {
 	u32 wk_size;
 
