@@ -58,7 +58,7 @@ typedef struct GFL_G3D_MAN_tag
 	NNSFndAllocator		allocater;			///<メモリアロケータ(NNSで使用)
 	void*				plt_memory;			///<パレットマネージャ用メモリ
 	void*				tex_memory;			///<テクスチャマネージャ用メモリ
-	u16					heapID;				///<ヒープＩＤ
+	HEAPID				heapID;				///<ヒープＩＤ
 
 	GFL_G3D_PROJECTION	projection;			///<グローバルステート（射影）
 	GFL_G3D_LIGHT		light[4];			///<グローバルステート（ライト）
@@ -102,7 +102,7 @@ void
 	GFL_G3D_sysInit
 		( GFL_G3D_VMAN_MODE texmanMode, GFL_G3D_VMAN_TEXSIZE texmanSize, 
 			GFL_G3D_VMAN_MODE pltmanMode, GFL_G3D_VMAN_PLTSIZE pltmanSize,
-				u16 GeBufSize, u16 heapID, GFL_G3D_SETUP_FUNC setup )
+				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup )
 {
 	int	tex_size,plt_size;
 	g3Dman = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_MAN) );
