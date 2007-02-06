@@ -8,7 +8,6 @@
 #include "textprint.h"
 
 #include "testmode.h"
-//#include "g3d_util.h"
 
 #include "sample_graphic/titledemo.naix"
 
@@ -24,7 +23,9 @@ typedef struct {
 
 	GFL_G3D_RES*			g3Dres[8];
 	GFL_G3D_OBJ*			g3Dobj[8];
+
 	u16						g3DresTblIdx;
+	u16						g3DobjTblIdx;
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -201,14 +202,14 @@ static void	bg_init( void )
 		//BG0( 3D frame )
 		GFL_BG_BGControlSet3D( 1 );
 		//３Ｄユーティリティー起動（リソース６４個、オブジェクト６４個）
-		//GFL_G3D_UtilsysInit( 64, 64, heapID );  
+		GFL_G3D_UtilsysInit( 64, 64, heapID );  
 	}
 }
 
 static void	bg_exit( void )
 {
 	{
-		//GFL_G3D_UtilsysExit();  
+		GFL_G3D_UtilsysExit();  
 		GFL_G3D_sysExit();
 	}
 	GFL_BMPWIN_sysExit();
@@ -262,6 +263,7 @@ static void	g2d_load( void )
 	{
 		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
 		plt[0] = 0x5041;	//青(背景)
+		plt[0] = 0x0000;	//
 
 		plt[1] = 0x7fff;	//白
 		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
@@ -312,24 +314,47 @@ static void	g2d_unload( void )
 	GFL_HEAP_FreeMemory( testmode->textParam );
 }
 
-#if 0
 //------------------------------------------------------------------
 /**
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
 enum {
-	AIR,
-	AIR_ANM,
-	IAR,
-	IAR_ANM,
+	G3RES_AIR,
+	G3RES_AIRANM,
+	G3RES_IAR,
+	G3RES_IARANM,
 };
 
-static const GFL_G3D_UTIL_RES g3DresouceTable[] = {
+static const GFL_G3D_UTIL_RES g3DresouceTable[] = 
+{
 {(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
 {(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbta,GFL_G3D_UTIL_RESPATH,0},
 {(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
 {(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbta,GFL_G3D_UTIL_RESPATH,0},
+};
+
+enum {
+	G3OBJ_AIR,
+	G3OBJ_IAR,
+};
+
+static const GFL_G3D_UTIL_OBJ g3DobjectTable[] = 
+{
+	{
+		G3RES_AIR,0,G3RES_AIR,G3RES_AIRANM,0,
+		{ -FX32_ONE*64, 0, 0 },								//座標
+		{ FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 },		//スケール
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+		0,TRUE,
+	},
+	{
+		G3RES_IAR,0,G3RES_IAR,G3RES_IARANM,0,
+		{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
+		{ FX32_ONE*3/5, FX32_ONE*3/5, FX32_ONE*3/5 },		//スケール
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+		0,TRUE,
+	},
 };
 
 //作成
@@ -337,32 +362,8 @@ static void g3d_load( void )
 {
 	//リソースのロード
 	testmode->g3DresTblIdx = GFL_G3D_UtilResLoad( g3DresouceTable, NELEMS(g3DresouceTable) );
-			
-	//３Ｄオブジェクト作成
-	{
-		VecFx32 trans0	= { -FX32_ONE*64, 0, 0 };								//座標
-		MtxFx33 rotate0	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
-		VecFx32 scale0	= { FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 };			//スケール
-
-		testmode->g3Dobj[0] = GFL_G3D_ObjCreate(GFL_G3D_UtilResGet(0), 0,
-												GFL_G3D_UtilResGet(0),	
-												GFL_G3D_UtilResGet(1), 0 );
-		GFL_G3D_ObjContSetTrans( testmode->g3Dobj[0], &trans0 );
-		GFL_G3D_ObjContSetScale( testmode->g3Dobj[0], &scale0 );
-		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[0], &rotate0 );
-	}
-	{
-		VecFx32 trans1	= { FX32_ONE*64, -FX32_ONE*64, 0 };						//座標
-		MtxFx33 rotate1	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
-		VecFx32 scale1	= { FX32_ONE*2/3, FX32_ONE*2/3, FX32_ONE*2/3 };			//スケール
-
-		testmode->g3Dobj[1] = GFL_G3D_ObjCreate(GFL_G3D_UtilResGet(2), 0,
-												GFL_G3D_UtilResGet(2),	
-												GFL_G3D_UtilResGet(3), 0 );
-		GFL_G3D_ObjContSetTrans( testmode->g3Dobj[1], &trans1 );
-		GFL_G3D_ObjContSetScale( testmode->g3Dobj[1], &scale1 );
-		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[1], &rotate1 );
-	}
+	//３Ｄオブジェクトのロード
+	testmode->g3DobjTblIdx = GFL_G3D_UtilObjLoad( g3DobjectTable, NELEMS(g3DobjectTable) );
 	{
 		//カメラセット
 		VecFx32	targetPos = { 0, 0, 0 };
@@ -380,72 +381,26 @@ static void g3d_load( void )
 	testmode->work[0] = 0;
 }
 	
+static void g3d_draw( void )
+{
+	//描画
+	GFL_G3D_UtilDraw();
+}
+	
 //破棄
 static void g3d_unload( void )
 {
-	GFL_G3D_ObjDelete( testmode->g3Dobj[1] ); 
-	GFL_G3D_ObjDelete( testmode->g3Dobj[0] ); 
+	//オブジェクトのアンロード
+	GFL_G3D_UtilObjUnload( testmode->g3DobjTblIdx, NELEMS(g3DobjectTable) );
 	//リソースのアンロード
 	GFL_G3D_UtilResUnload( testmode->g3DresTblIdx, NELEMS(g3DresouceTable) );
 }
-	
-static void g3d_draw( void )
-{
-	MtxFx33 rotate	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
-
-	//描画開始
-	GFL_G3D_DrawStart();
-	//カメラグローバルステート設定		
- 	GFL_G3D_DrawLookAt();
-
-	//各オブジェクト描画
-	{
-		//オブジェクト情報計算
-
-		{
-			//回転計算
-			VecFx32 rotate_tmp = { 0, 0, 0 };
-			rotate_tmp.y = 0x100 * testmode->work[0];	//Ｙ軸回転
-			GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
-		}
-		//オブジェクト情報セット
-		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[0], &rotate );
-		//オブジェクト描画
-		GFL_G3D_ObjDraw( testmode->g3Dobj[0] );
-
-		//アニメーションコントロール
-		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[0], FX32_ONE ) == FALSE ){
-			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[0] );
-		}
-	}
-	{
-		//オブジェクト情報計算
-		{
-			//回転計算
-			VecFx32 rotate_tmp = { 0, 0, 0 };
-			rotate_tmp.y = -0x100 * testmode->work[0];	//Ｙ軸回転
-			GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
-		}
-		//オブジェクト情報セット
-		GFL_G3D_ObjContSetRotate( testmode->g3Dobj[1], &rotate );
-		//オブジェクト描画
-		GFL_G3D_ObjDraw( testmode->g3Dobj[1] );
-		//アニメーションコントロール
-		if( GFL_G3D_ObjContAnmFrameInc( testmode->g3Dobj[1], FX32_ONE ) == FALSE ){
-			GFL_G3D_ObjContAnmFrameReset( testmode->g3Dobj[1] );
-		}
-	}
-	//描画終了（バッファスワップ）
-	GFL_G3D_DrawEnd();							
-
-	testmode->work[0]++;
-}
-#endif
 	
 //------------------------------------------------------------------
 /**
  * @brief	プリント実験
  */
+static void g3d_control_effect( void );
 //------------------------------------------------------------------
 static BOOL	TestModeControl( void )
 {
@@ -464,7 +419,7 @@ static BOOL	TestModeControl( void )
 	case 1:
 		//画面作成
 		g2d_load();	//２Ｄデータ作成
-		//g3d_load();	//３Ｄデータ作成
+		g3d_load();	//３Ｄデータ作成
 		testmode->seq++;
 		break;
 
@@ -480,7 +435,9 @@ static BOOL	TestModeControl( void )
 		}
 		GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
-		//g3d_draw();		//３Ｄデータ描画
+
+		g3d_control_effect();
+		g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 3:
@@ -505,12 +462,13 @@ static BOOL	TestModeControl( void )
 				testmode->seq--;
 			}
 		}
-		//g3d_draw();		//３Ｄデータ描画
+		g3d_control_effect();
+		g3d_draw();		//３Ｄデータ描画
 		break;
 
 	case 4:
 		//終了
-		//g3d_unload();	//３Ｄデータ破棄
+		g3d_unload();	//３Ｄデータ破棄
 		g2d_unload();	//２Ｄデータ破棄
 		bg_exit();
 		return_flag = TRUE;
@@ -519,6 +477,35 @@ static BOOL	TestModeControl( void )
 	return return_flag;
 }
 
+//============================================================================================
+static void g3d_control_effect( void )
+{
+	MtxFx33 rotate	= { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };	//回転
+
+	//回転計算
+	{
+		GFL_G3D_OBJ* g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_AIR );
+		VecFx32 rotate_tmp = { 0, 0, 0 };
+
+		rotate_tmp.y = 0x100 * testmode->work[0];	//Ｙ軸回転
+		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
+		//アニメーションコントロール
+		GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj, FX32_ONE );
+	}
+	{
+		GFL_G3D_OBJ* g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_IAR );
+		VecFx32 rotate_tmp = { 0, 0, 0 };
+
+		rotate_tmp.y = -0x100 * testmode->work[0];	//Ｙ軸回転
+		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
+		//アニメーションコントロール
+		GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj, FX32_ONE );
+	}
+	testmode->work[0]++;
+}
+	
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
