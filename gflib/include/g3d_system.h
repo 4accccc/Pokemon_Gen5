@@ -79,7 +79,7 @@ extern void
 	GFL_G3D_sysInit
 		( GFL_G3D_VMAN_MODE texmanMode, GFL_G3D_VMAN_TEXSIZE texmanSize, 
 			GFL_G3D_VMAN_MODE pltmanMode, GFL_G3D_VMAN_PLTSIZE pltmanSize,
-				u16 GeBufSize, u16 heapID, GFL_G3D_SETUP_FUNC setup );
+				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup );
 
 //--------------------------------------------------------------------------------------------
 /**
