@@ -25,6 +25,10 @@ typedef struct {
 	u16					g3DobjCount;
 	GFL_G3D_OBJSTAT*	g3DobjStat;
 
+	GFL_G3D_ANM**		g3DanmTbl;
+	GFL_AREAMAN*		g3DanmAreaman;
+	u16					g3DanmCount;
+
 	u16*				g3DobjPriTbl;
 
 	HEAPID				heapID;
@@ -36,7 +40,7 @@ GFL_G3D_UTIL* g3Dutil = NULL;
 /**
  *
  *
- * ３Ｄリソースおよびオブジェクトハンドルの配列管理ユーティリティー
+ * ３Ｄ関連ハンドルの配列管理ユーティリティー
  *
  *
  */
@@ -46,14 +50,15 @@ GFL_G3D_UTIL* g3Dutil = NULL;
 /**
  * セットアップ
  *
- * @param	resourceCount	管理リソース最大数	
- * @param	objectCount		管理オブジェクト最大数
+ * @param	resCount		管理リソース最大数	
+ * @param	objCount		管理オブジェクト最大数
+ * @param	anmCount		管理アニメーション最大数
  * @param	heapID			ヒープＩＤ
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_UtilsysInit
-		( u32 resourceCount, u32 objectCount, HEAPID heapID )  
+		( u16 resCount, u16 objCount, u16 anmCount, HEAPID heapID )  
 {
 	int	i;
 
@@ -63,32 +68,40 @@ void
 	g3Dutil = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_UTIL) );
 
 	//リソース管理配列作成
-	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * resourceCount );
+	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * resCount );
 	//リソース配列領域マネージャ作成
-	g3Dutil->g3DresAreaman = GFL_AREAMAN_Create( resourceCount, heapID );
+	g3Dutil->g3DresAreaman = GFL_AREAMAN_Create( resCount, heapID );
 
 	//オブジェクト管理配列作成
-	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * objectCount );
+	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * objCount );
 	//リソース配列領域マネージャ作成
-	g3Dutil->g3DobjAreaman = GFL_AREAMAN_Create( objectCount, heapID );
-
+	g3Dutil->g3DobjAreaman = GFL_AREAMAN_Create( objCount, heapID );
 	//オブジェクト描画ステータス管理配列作成（オブジェクト管理配列作成と並び順は同じ）
-	g3Dutil->g3DobjStat = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_OBJSTAT)*objectCount );
+	g3Dutil->g3DobjStat = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_OBJSTAT)*objCount );
 	//オブジェクト描画プライオリティー管理配列作成
-	g3Dutil->g3DobjPriTbl = GFL_HEAP_AllocMemory( heapID, sizeof(u16)*objectCount );
+	g3Dutil->g3DobjPriTbl = GFL_HEAP_AllocMemory( heapID, sizeof(u16)*objCount );
+
+	//アニメーション管理配列作成
+	g3Dutil->g3DanmTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * anmCount );
+	//アニメーション配列領域マネージャ作成
+	g3Dutil->g3DanmAreaman = GFL_AREAMAN_Create( anmCount, heapID );
 
 	//初期化
-	for( i=0; i<resourceCount; i++ ){
+	for( i=0; i<resCount; i++ ){
 		g3Dutil->g3DresTbl[i] = NULL;
 	}
-	for( i=0; i<objectCount; i++ ){
+	for( i=0; i<objCount; i++ ){
 		g3Dutil->g3DobjTbl[i] = NULL;
 
 		g3Dutil->g3DobjStat[i].priority = 0;
 		g3Dutil->g3DobjStat[i].drawSW = FALSE;
 	}
-	g3Dutil->g3DresCount = resourceCount;
-	g3Dutil->g3DobjCount = objectCount;
+	for( i=0; i<anmCount; i++ ){
+		g3Dutil->g3DresTbl[i] = NULL;
+	}
+	g3Dutil->g3DresCount = resCount;
+	g3Dutil->g3DobjCount = objCount;
+	g3Dutil->g3DanmCount = anmCount;
 	g3Dutil->heapID = heapID;
 }
 
@@ -105,16 +118,24 @@ void
 
 	GF_ASSERT( g3Dutil );
 
+	//リソース配列領域マネージャ破棄
+	GFL_AREAMAN_Delete( g3Dutil->g3DanmAreaman );
+	//解放忘れチェック
+	for( i=0; i<g3Dutil->g3DanmCount; i++ ){
+		GF_ASSERT_MSG( !(g3Dutil->g3DanmTbl[i]),"not unload animetion exist" );
+	}
+	//リソース管理配列破棄
+	GFL_HEAP_FreeMemory( g3Dutil->g3DanmTbl );
+
 	//オブジェクト描画プライオリティー管理配列破棄
 	GFL_HEAP_FreeMemory( g3Dutil->g3DobjPriTbl );
 	//オブジェクト描画ステータス管理配列破棄
 	GFL_HEAP_FreeMemory( g3Dutil->g3DobjStat );
-
 	//オブジェクト配列領域マネージャ破棄
 	GFL_AREAMAN_Delete( g3Dutil->g3DobjAreaman );
 	//解放忘れチェック
 	for( i=0; i<g3Dutil->g3DobjCount; i++ ){
-		GF_ASSERT_MSG( !(g3Dutil->g3DobjTbl[i]),"unload resouce exist" );
+		GF_ASSERT_MSG( !(g3Dutil->g3DobjTbl[i]),"not unload object exist" );
 	}
 	//オブジェクト管理配列破棄
 	GFL_HEAP_FreeMemory( g3Dutil->g3DobjTbl );
@@ -123,7 +144,7 @@ void
 	GFL_AREAMAN_Delete( g3Dutil->g3DresAreaman );
 	//解放忘れチェック
 	for( i=0; i<g3Dutil->g3DresCount; i++ ){
-		GF_ASSERT_MSG( !(g3Dutil->g3DresTbl[i]),"unload resouce exist" );
+		GF_ASSERT_MSG( !(g3Dutil->g3DresTbl[i]),"not unload resouce exist" );
 	}
 	//リソース管理配列破棄
 	GFL_HEAP_FreeMemory( g3Dutil->g3DresTbl );
@@ -317,6 +338,7 @@ u16
 {
 	int	i;
 	u32 pos;
+	GFL_G3D_RES	*g3DresMdl,*g3DresTex;
 
 	GF_ASSERT( g3Dutil );
 
@@ -325,10 +347,16 @@ u16
 
 	//配列にセットアップ
 	for( i=0; i<objCount; i++ ){
-		g3Dutil->g3DobjTbl[ pos+i ] = GFL_G3D_ObjCreate
-								( g3Dutil->g3DresTbl[objTable[i].mdlresID], objTable[i].mdldatID,
-								  g3Dutil->g3DresTbl[objTable[i].texresID],
-								  g3Dutil->g3DresTbl[objTable[i].anmresID], objTable[i].anmdatID );
+		g3DresMdl = GFL_G3D_UtilResGet( objTable[i].mdlresID );
+		GF_ASSERT( g3DresMdl );
+
+		if( objTable[i].texresID != GFL_G3D_UTIL_RESNULL ){
+			g3DresTex = GFL_G3D_UtilResGet( objTable[i].texresID );
+		} else {
+			g3DresTex = NULL;
+		}
+		g3Dutil->g3DobjTbl[ pos+i ] = GFL_G3D_ObjCreate( g3DresMdl, objTable[i].mdldatID,
+															g3DresTex );
 
 		GFL_G3D_ObjContSetTrans( (g3Dutil->g3DobjTbl)[ pos+i ], &objTable[i].trans );
 		GFL_G3D_ObjContSetScale( (g3Dutil->g3DobjTbl)[ pos+i ], &objTable[i].scale );
@@ -382,6 +410,101 @@ GFL_G3D_OBJ*
 		OS_Panic( "ID over" );
 	}
 	return g3Dutil->g3DobjTbl[idx];
+}
+
+
+
+
+
+//=============================================================================================
+/**
+ *
+ *
+ * ３Ｄアニメーション管理
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションを配列に追加
+ *	参照オブジェクトが必要とされるので、オブジェクトの追加後に行うこと
+ *
+ * @param	anmTable		アニメーション配列ポインタ
+ * @param	anmCount		アニメーション数
+ *
+ * @return	idx				アニメーション配置先頭ＩＮＤＥＸ
+ */
+//--------------------------------------------------------------------------------------------
+u16
+	GFL_G3D_UtilAnmLoad
+		( const GFL_G3D_UTIL_ANM* anmTable, u16 anmCount )  
+{
+	int	i;
+	u32 pos;
+	GFL_G3D_RES*	g3DresAnm;
+	GFL_G3D_OBJ*	g3Dobj;
+
+	GF_ASSERT( g3Dutil );
+
+	pos = GFL_AREAMAN_ReserveAuto( g3Dutil->g3DanmAreaman, anmCount );
+	GF_ASSERT_MSG(( pos != AREAMAN_POS_NOTFOUND ), "cannnot reserve animetion block" );
+
+	//配列にセットアップ
+	for( i=0; i<anmCount; i++ ){
+		g3DresAnm = GFL_G3D_UtilResGet( anmTable[i].anmresID );
+		GF_ASSERT( g3DresAnm );
+		g3Dobj = GFL_G3D_UtilObjGet( anmTable[i].forMdl );
+		GF_ASSERT( g3Dobj );
+
+		g3Dutil->g3DanmTbl[ pos+i ] = GFL_G3D_AnmCreate( g3Dobj, g3DresAnm, anmTable[i].anmdatID,
+															anmTable[i].bind );
+	}
+	return pos;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションを配列から削除
+ *
+ * @param	idx				アニメーション配置先頭ＩＮＤＥＸ
+ * @param	anmCount		アニメーション数
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_UtilAnmUnload
+		( u16 idx, u16 anmCount ) 
+{
+	int	i;
+
+	for( i=0; i<anmCount; i++ ){
+		if( g3Dutil->g3DanmTbl[ i+idx ] ){
+			//アニメーション破棄
+			GFL_G3D_AnmDelete( g3Dutil->g3DanmTbl[ i+idx ] ); 
+			//ＩＮＤＥＸテーブルから削除
+			g3Dutil->g3DanmTbl[ i+idx ] = NULL;
+		}
+	}
+	GFL_AREAMAN_Release( g3Dutil->g3DanmAreaman, idx, anmCount );
+}
+	
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーションハンドルを配列から取得
+ *
+ * @param	idx				アニメーション格納ＩＮＤＥＸ
+ *
+ * @return	GFL_G3D_ANM*	アニメーションポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_ANM*
+	GFL_G3D_UtilAnmGet
+		( u16 idx ) 
+{
+	if( idx >= g3Dutil->g3DanmCount ){
+		OS_Panic( "ID over" );
+	}
+	return g3Dutil->g3DanmTbl[idx];
 }
 
 
