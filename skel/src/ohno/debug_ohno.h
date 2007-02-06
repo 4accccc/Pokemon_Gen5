@@ -12,7 +12,7 @@
 #define __DEBUG_OHNO_H__
 
 
-extern void DebugOhnoInit(u32 heap_id);
+extern void DebugOhnoInit(HEAPID heap_id);
 extern void DebugOhnoMain(void);
 extern void DebugOhnoExit(void);
 

@@ -94,7 +94,7 @@ static void VBlankIntr(void)
 //------------------------------------------------------------------
 //  デバッグ用メイン関数
 //------------------------------------------------------------------
-void DebugOhnoInit(u32 heap_id)
+void DebugOhnoInit(HEAPID heap_id)
 {
 	DEBUG_OHNO_CONTROL * ctrl;
 	ctrl = GFL_HEAP_AllocMemory(heap_id, sizeof(DEBUG_OHNO_CONTROL));
