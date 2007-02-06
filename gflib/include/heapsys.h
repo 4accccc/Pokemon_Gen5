@@ -49,7 +49,7 @@ typedef struct {
  *	インライン関数
  */
 //----------------------------------------------------------------
-static inline  u16 HeapGetLow( u16 heapID )	
+static inline  u16 HeapGetLow( HEAPID heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
@@ -89,10 +89,14 @@ extern void
 //------------------------------------------------------------------
 extern void 
 	GFL_HEAP_CreateHeap
-		( u32 parentHeapID, u32 childHeapID, u32 size );
+		( HEAPID parentHeapID, HEAPID childHeapID, u32 size );
 
-#define	GFL_HEAP_CreateHeapLow( p_heapID, c_heapID, siz )	\
-			GFL_HEAP_CreateHeap( p_heapID, HeapGetLow(c_heapID), siz )
+inline void 
+	GFL_HEAP_CreateHeapLow
+		( HEAPID parentHeapID, HEAPID childHeapID, u32 size )
+{
+	GFL_HEAP_CreateHeap( parentHeapID, HeapGetLow(childHeapID), size );
+}
 
 //------------------------------------------------------------------
 /**
@@ -103,7 +107,7 @@ extern void
 //------------------------------------------------------------------
 extern void
 	GFL_HEAP_DeleteHeap
-		( u32 childHeapID );
+		( HEAPID childHeapID );
 
 //------------------------------------------------------------------
 /**
@@ -124,31 +128,47 @@ extern void
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
-		( u16 heapID, u32 size );
+		( HEAPID heapID, u32 size );
 
-#define GFL_HEAP_AllocMemory( ID, siz )		\
-			GFL_HEAP_AllocMemoryblock( ID, siz )
+inline void*
+	GFL_HEAP_AllocMemory
+		( HEAPID heapID, u32 size )
+{
+	return GFL_HEAP_AllocMemoryblock( heapID, size );
+}
 
-#define GFL_HEAP_AllocMemoryLow( ID, siz )	\
-			GFL_HEAP_AllocMemoryblock( HeapGetLow(ID), siz )
+inline void*
+	GFL_HEAP_AllocMemoryLow
+		( HEAPID heapID, u32 size )
+{
+	return GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size );
+}
 
 #else
 
 extern void*
 	GFL_HEAP_AllocMemoryblock	//この関数を直接呼び出すのは禁止
-		( u16 heapID, u32 size, const char* filename, u16 linenum );
+		( HEAPID heapID, u32 size, const char* filename, u16 linenum );
 
-#define GFL_HEAP_AllocMemory( ID, siz )		\
-			GFL_HEAP_AllocMemoryblock( ID, siz, __FILE__, __LINE__)
+inline void*
+	GFL_HEAP_AllocMemory
+		( HEAPID heapID, u32 size )
+{
+	return GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__);
+}
 
-#define GFL_HEAP_AllocMemoryLow( ID, siz )	\
-			GFL_HEAP_AllocMemoryblock( HeapGetLow(ID), siz, __FILE__, __LINE__)
+inline void*
+	GFL_HEAP_AllocMemoryLow
+		( HEAPID heapID, u32 size )
+{
+	return GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size, __FILE__, __LINE__);
+}
 
 #endif
 
 inline  void*
 	GFL_HEAP_AllocMemoryClear
-		( u16 heapID, u32 size )
+		( HEAPID heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( heapID, size );
 	GFL_STD_MemClear32( memory, size );
@@ -157,7 +177,7 @@ inline  void*
 
 inline  void*
 	GFL_HEAP_AllocMemoryLowClear
-		( u16 heapID, u32 size )
+		( HEAPID heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( HeapGetLow(heapID), size );
 	GFL_STD_MemClear32( memory, size );
@@ -188,7 +208,7 @@ extern void
 //------------------------------------------------------------------
 extern void
 	GFL_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment );
+		( NNSFndAllocator* pAllocator, HEAPID heapID, s32 alignment );
 
 //------------------------------------------------------------------
 /**
@@ -214,7 +234,7 @@ extern void
 //------------------------------------------------------------------
 extern u32
 	GFL_HEAP_GetHeapFreeSize
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -225,7 +245,7 @@ extern u32
 //------------------------------------------------------------------
 extern void
 	GFL_HEAP_CheckHeapSafe
-		( u16 heapID );
+		( HEAPID heapID );
 
 #ifdef HEAPSYS_DEBUG
 //------------------------------------------------------------------
@@ -243,7 +263,7 @@ extern void
  * 未解放領域があればＣＰＵ停止
  */
 //------------------------------------------------------------------
-extern void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck ( u16 heapID );
+extern void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck ( HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * 特定ヒープの全メモリブロック情報を表示
@@ -251,7 +271,7 @@ extern void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck ( u16 heapID );
  * @param   heapID				ヒープID
  */
 //------------------------------------------------------------------
-extern void GFL_HEAP_DEBUG_PrintExistMemoryBlocks ( u16 heapID );
+extern void GFL_HEAP_DEBUG_PrintExistMemoryBlocks ( HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * ヒープから確保したメモリブロックの実サイズ取得（デバッグ用）
@@ -342,7 +362,7 @@ extern void
 typedef struct _HEAP_STATE_STACK	HEAP_STATE_STACK;
 
 #ifdef HEAP_DEBUG
-extern HEAP_STATE_STACK*  HSS_Create( u16 heapID, u32 stackNum );
+extern HEAP_STATE_STACK*  HSS_Create( HEAPID heapID, u32 stackNum );
 extern void HSS_Push( HEAP_STATE_STACK* hss );
 extern void HSS_Pop( HEAP_STATE_STACK* hss );
 extern void HSS_Delete( HEAP_STATE_STACK* hss );
