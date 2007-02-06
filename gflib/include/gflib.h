@@ -30,6 +30,7 @@
 #include "bmp.h"
 #include "bmp_win.h"
 #include "g3d_system.h"
+#include "g3d_util.h"
 
 #include "arc_util.h"
 #include "fade.h"
