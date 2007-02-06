@@ -364,15 +364,15 @@ struct _ARCHANDLE{
 /**
  * アーカイブデータのファイルハンドルオープン
  *
- * @param   arcId		アーカイブデータインデックス
- * @param   heapId		管理用ヒープＩＤ
+ * @param   arcID		アーカイブデータインデックス
+ * @param   heapID		管理用ヒープＩＤ
  *
  * @retval  ARCHANDLE	オープンされたハンドルのポインタ（失敗ならNULL）
  */
 //------------------------------------------------------------------
-ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, u32 heapId )
+ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcID, HEAPID heapID )
 {
-	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapId, sizeof(ARCHANDLE) );
+	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapID, sizeof(ARCHANDLE) );
 	if( handle )
 	{
 		u32 fnt_top, tmp;
@@ -381,7 +381,7 @@ ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, u32 heapId )
 		handle->fat_top = 0;
 
 		FS_InitFile( &(handle->file) );
-		FS_OpenFile( &(handle->file), (char *)ArchiveFileTable[arcId] );
+		FS_OpenFile( &(handle->file), (char *)ArchiveFileTable[arcID] );
 		FS_SeekFile( &(handle->file), ARC_HEAD_SIZE_POS, FS_SEEK_SET );
 		FS_ReadFile( &(handle->file), &(handle->fat_top), 2 );
 		FS_SeekFile( &(handle->file), handle->fat_top+SIZE_OFFSET, FS_SEEK_SET );

@@ -1695,13 +1695,14 @@ static void GFL_BG_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz )
  * @param	frmnum		BGフレーム番号
  * @param	datasiz		転送サイズ
  * @param	offs		オフセット
+ * @param	heapID		ヒープID
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, u32 heap )
+void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, HEAPID heapID )
 {
-	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLow( heap, datasiz );
+	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLow( heapID, datasiz );
 
 	memset( chr, 0, datasiz );
 
@@ -2351,16 +2352,16 @@ void GFL_BG_4BitCgxChange8BitMain( const u8 * chr, u32 chr_size, u8 * buf, u8 pa
  * @param	chr			変換元データ（4bitキャラ）
  * @param	chr_size	変換元データのサイズ
  * @param	pal_ofs		元パレット番号 ( 0 ～ 16 )
- * @param	heap		ヒープID
+ * @param	heapID		ヒープID
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, u32 heap )
+void * GFL_BG_4BitCgxChange8Bit( const u8 * chr, u32 chr_size, u8 pal_ofs, HEAPID heapID )
 {
 	void * buf;
 
-	buf = GFL_HEAP_AllocMemory( heap, chr_size * 2 );
+	buf = GFL_HEAP_AllocMemory( heapID, chr_size * 2 );
 	GFL_BG_4BitCgxChange8BitMain( chr, chr_size, (u8 *)buf, pal_ofs );
 	return buf;
 }
