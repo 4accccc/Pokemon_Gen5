@@ -174,7 +174,7 @@ void
 {
 	u32 areasiz;
 
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	if(	bmpwin->bitmode == GFL_BMPWIN_BITMODE_4 ){
 		areasiz = bmpwin->sizx * bmpwin->sizy;
@@ -213,7 +213,7 @@ void
 {
 	u32	bmpsize;
 
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	bmpsize = (u32)
 		((bmpwin->sizx*bmpwin->sizy * GFL_BG_BaseCharSizeGet(bmpwin->frmnum)));
@@ -236,7 +236,7 @@ void
 	u16		scrnsiz,scrnchr,scrnpal;
 	int		i;
 
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	scrnsiz = bmpwin->sizx * bmpwin->sizy;
 	scrnbuf = (u16*)GFL_HEAP_AllocMemoryLow( bmpwin_sys->heapID, scrnsiz*2 );
@@ -263,9 +263,7 @@ void
 	GFL_BMPWIN_ClearScrn
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
-
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	GFL_BG_ScrFill( bmpwin->frmnum, 0, bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy, 0 );
 }
@@ -285,7 +283,8 @@ u8
 	GFL_BMPWIN_GetFrame
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
+
 	return bmpwin->frmnum;
 }
 
@@ -298,7 +297,8 @@ u8
 	GFL_BMPWIN_GetSizeX
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
+
 	return bmpwin->sizx;
 }
 
@@ -311,7 +311,7 @@ u8
 	GFL_BMPWIN_GetSizeY
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->sizy;
 }
 
@@ -324,7 +324,7 @@ u8
 	GFL_BMPWIN_GetPosX
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->posx;
 }
 
@@ -337,7 +337,7 @@ u8
 	GFL_BMPWIN_GetPosY
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->posy;
 }
 
@@ -350,7 +350,7 @@ u16
 	GFL_BMPWIN_GetChrNum
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->chrnum;
 }
 
@@ -363,7 +363,7 @@ GFL_BMP_DATA*
 	GFL_BMPWIN_GetBmp
 		( GFL_BMPWIN * bmpwin )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return &bmpwin->bmp;
 }
 
@@ -382,7 +382,7 @@ void
 	GFL_BMPWIN_SetPosX
 		( GFL_BMPWIN * bmpwin, u8 px )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	bmpwin->posx = px;
 }
 //--------------------------------
@@ -394,7 +394,7 @@ void
 	GFL_BMPWIN_SetPosY
 		( GFL_BMPWIN * bmpwin, u8 py )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	bmpwin->posy = py;
 }
 //--------------------------------
@@ -406,7 +406,7 @@ void
 	GFL_BMPWIN_SetScrnSizX
 		( GFL_BMPWIN * bmpwin, u8 sx )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	bmpwin->width = sx;
 }
 //--------------------------------
@@ -418,7 +418,7 @@ void
 	GFL_BMPWIN_SetScrnSizY
 		( GFL_BMPWIN * bmpwin, u8 sy )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	bmpwin->height = sy;
 }
 //--------------------------------
@@ -430,7 +430,7 @@ void
 	GFL_BMPWIN_SetPal
 		( GFL_BMPWIN * bmpwin, u8 palnum )
 {
-	CHK_BMPWIN( bmpwin );
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	bmpwin->palnum = palnum;
 }
 
