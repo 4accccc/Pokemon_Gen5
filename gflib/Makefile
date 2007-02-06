@@ -50,7 +50,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					bgl/bg_sys.c bgl/display.c \
 					bitmap/bmp.c bitmap/bmp_win.c \
 					string/strbuf.c string/msgdata.c string/systemfont.c \
-					g3d/g3d_system.c \
+					g3d/g3d_system.c g3d/g3d_util.c \
 					arc/arc_tool.c arc/arc_util.c \
 					clact.c \
 					string/textprint.c string/sjisconv.c \
