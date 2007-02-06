@@ -9,6 +9,7 @@
 #ifndef __HEAP_INTER_H__
 #define __HEAP_INTER_H__
 
+typedef	u16 HEAPID;
 //----------------------------------------------------------------
 /**
  *	íËêî
@@ -35,7 +36,7 @@ typedef struct {
  *	ÉCÉìÉâÉCÉìä÷êî
  */
 //----------------------------------------------------------------
-inline  u16 HeapGetLow( u16 heapID )	
+inline  HEAPID HeapGetLow( HEAPID heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
@@ -90,7 +91,7 @@ enum{
 
 extern BOOL 
 	GFI_HEAP_CreateHeap
-		( u16 parentHeapID, u16 childHeapID, u32 size );
+		( HEAPID parentHeapID, HEAPID childHeapID, u32 size );
 
 //------------------------------------------------------------------
 /**
@@ -109,7 +110,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_DeleteHeap
-		( u16 childHeapID );
+		( HEAPID childHeapID );
 
 //------------------------------------------------------------------
 /**
@@ -130,7 +131,7 @@ enum{
 
 extern void*
 	GFI_HEAP_AllocMemory
-		( u16 heapID, u32 size );
+		( HEAPID heapID, u32 size );
 
 //------------------------------------------------------------------
 /**
@@ -171,7 +172,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_InitAllocator
-		( NNSFndAllocator* pAllocator, u16 heapID, s32 alignment );
+		( NNSFndAllocator* pAllocator, HEAPID heapID, s32 alignment );
 
 //------------------------------------------------------------------
 /**
@@ -219,7 +220,7 @@ enum{
 
 extern u32
 	GFI_HEAP_GetHeapFreeSize
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -237,7 +238,7 @@ enum{
 
 extern NNSFndHeapHandle
 	GFI_HEAP_GetHandle
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -255,7 +256,7 @@ enum{
 
 extern NNSFndHeapHandle
 	GFI_HEAP_GetParentHandle
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -273,7 +274,7 @@ enum{
 
 extern void*
 	GFI_HEAP_GetHeapMemBlock
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -291,7 +292,7 @@ enum{
 
 extern u16
 	GFI_HEAP_GetHeapCount
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -346,7 +347,7 @@ enum{
 
 extern BOOL
 	GFI_HEAP_CheckHeapSafe
-		( u16 heapID );
+		( HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
