@@ -552,12 +552,9 @@ void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 	bgl->ScrVramBaseAdrs[frmnum]=((GXBGScrBase)data->screenBase)*0x0800;
 	bgl->CharVramSize[frmnum]=data->charSize;
 
-	{
-		u32	scr_size[]={0x800,0x1000,0x1000,0x2000};
+	//Screen‚Ì—\–ñ
+	GFL_BG_ScrAreaSet( frmnum, 0,  data->scrbufferSiz );
 
-		//Screen‚Ì—\–ñ
-		GFL_BG_ScrAreaSet( frmnum, 0,  scr_size[screen_size] );
-	}
 }
 
 //--------------------------------------------------------------------------------------------
