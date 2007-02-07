@@ -168,7 +168,7 @@ GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heap
 
 
 void GFL_BMP_PrintMain(
-			const GFL_BMP_DATA * src, const GFL_BMP_DATA * dest,
+			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
 			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
@@ -239,7 +239,7 @@ void GFL_BMP_PrintMain(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_PrintMain256(
-		const GFL_BMP_DATA * src, const GFL_BMP_DATA * dest,
+		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
 		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
 {
@@ -299,7 +299,7 @@ void GFL_BMP_PrintMain256(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Fill(
-		const GFL_BMP_DATA * dest,
+		GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
@@ -350,7 +350,7 @@ void GFL_BMP_Fill(
  */
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Fill256(
-		const GFL_BMP_DATA * dest,
+		GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
