@@ -3,21 +3,6 @@
  * @file	testmode.dat
  */
 //===================================================================
-enum {
-	NUM_TITLE = 0,
-	NUM_URL,
-	NUM_SELECT1,
-	NUM_SELECT2,
-	NUM_SELECT3,
-	NUM_SELECT4,
-	NUM_SELECT5,
-};
-
-enum {
-	MSG_WHITE = 0,
-	MSG_RED,
-};
-
 static const char	test_index1[] = 
 {"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
 static const char	test_index2[] = {"http://www.gamefreak.co.jp"};
