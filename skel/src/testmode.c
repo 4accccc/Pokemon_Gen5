@@ -309,6 +309,10 @@ static BOOL	TestModeControl( void )
 				//‚Æ‚è‚ ‚¦‚¸‚½‚Ü‚¾‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
 				testmode->seq++;
 			}
+			if( testmode->listPosition == 2) {
+				//‚Æ‚è‚ ‚¦‚¸‚»‚ª‚×‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
+				testmode->seq++;
+			}
 			if( testmode->listPosition == 3) {
 				//‚Æ‚è‚ ‚¦‚¸‚¨‚¨‚Ì‚Ì‚Æ‚«‚¾‚¯‘JˆÚ‚·‚é
 				testmode->seq++;
@@ -405,6 +409,7 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 		break;
 	case 2:
 		//‚»‚ª‚×
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
 		break;
 	case 3:
 		//‚¨‚¨‚Ì
