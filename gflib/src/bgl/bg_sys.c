@@ -90,6 +90,8 @@ static void GFL_BG_ScrFill_Normal(
 static void GFL_BG_ScrFill_Affine(
 					GFL_BG_SYS * ini, u8 dat, u8 px, u8 py, u8 sx, u8 sy );
 
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size );
+
 static void CgxFlipCheck( u8 flip, u8 * buf ,u32 headID);
 
 static void RadianParamSet( GFL_BG_SYS * ini, u8 mode, u16 value );
@@ -521,6 +523,13 @@ void GFL_BG_BGControlSet( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 
 	//CharNum0を予約（ビットマップしか使用しない時に０キャラクタのゴミでスクリーンが埋まらないようにする）
 	GFL_BG_CharAreaGet( frmnum, 0x20 );
+
+	{
+		u32	scr_size[]={0x800,0x1000,0x1000,0x2000};
+
+		//Screenの予約
+		GFL_BG_ScrAreaSet( frmnum, 0,  scr_size[screen_size] );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -858,7 +867,7 @@ u32 GFL_BG_LoadCharAreaSet( u32 frmnum, void *mem, u32 size )
  * @retval	データを読み込んだアドレス
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size )
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size )
 {
 	switch(frmnum){
 	case GFL_BG_FRAME0_M:
@@ -1390,8 +1399,6 @@ void GFL_BG_LoadScreenFile( u8 frmnum, const char * path, u32 offs )
 	if( mem == NULL ){
 		return;	//エラー
 	}
-
-	GFL_BG_ScrAreaSet( frmnum, offs, size );
 
 	GFL_BG_ScreenBufSet( frmnum, mem, size );
 	GFL_BG_LoadScreen( frmnum, mem, size, offs );

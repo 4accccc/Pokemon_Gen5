@@ -137,7 +137,6 @@ void GFL_ARC_UtilScrnSet(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 transS
 			{
 				GFL_BG_ScreenBufSet( frm, scrnData->rawData, transSize );
 			}
-			GFL_BG_ScrAreaSet( frm, offs, transSize );
 			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
 		}
 		GFL_HEAP_FreeMemory( arcData );
@@ -205,7 +204,6 @@ void GFL_ARC_UtilScrnSetCharOfs(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32
 					}
 				}
 			}
-			GFL_BG_ScrAreaSet( frm, offs, transSize );
 			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
 		}
 		GFL_HEAP_FreeMemory( arcData );
