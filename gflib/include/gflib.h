@@ -38,6 +38,7 @@
 #include "ui.h"
 
 #include "clact.h"
+#include "tcb.h"
 
 /*  */
 

@@ -82,6 +82,16 @@ inline void memcpy(void *dest,void *src,int size)
 #define	GFL_BG_SCRSIZ_512x512		( 4 )
 #define	GFL_BG_SCRSIZ_1024x1024		( 5 )
 
+//ＢＧキャラサイズ定義
+#define	GFL_BG_CHRSIZ_128x128		( 0x2000 )
+#define	GFL_BG_CHRSIZ_256x128		( 0x4000 )
+#define	GFL_BG_CHRSIZ_128x256		( 0x4000 )
+#define	GFL_BG_CHRSIZ_256x256		( 0x8000 )
+#define	GFL_BG_CHRSIZ256_128x128	( 0x2000 * 2 )
+#define	GFL_BG_CHRSIZ256_256x128	( 0x4000 * 2 )
+#define	GFL_BG_CHRSIZ256_128x256	( 0x4000 * 2 )
+#define	GFL_BG_CHRSIZ256_256x256	( 0x8000 * 2 )
+
 // データ構造定義
 #define GFL_BG_DATA_LZH	(0)
 
@@ -92,6 +102,10 @@ inline void memcpy(void *dest,void *src,int size)
 #define GFL_BG_SCROLL_Y_SET	(3)
 #define GFL_BG_SCROLL_Y_INC	(4)
 #define GFL_BG_SCROLL_Y_DEC	(5)
+
+// VRAM確保方向定義
+#define GFL_BG_CHRAREA_GET_F	(0)		//VRAM前方確保
+#define GFL_BG_CHRAREA_GET_B	(1)		//VRAM後方確保
 
 // 拡縮・回転変更パラメータ
 enum {
@@ -150,6 +164,9 @@ typedef struct {
     u8		colorMode;		//カラーモード
     u8		screenBase;		//スクリーンベースブロック
     u8		charBase;		//キャラクタベースブロック
+
+    u32		charSize;		//キャラクタエリアサイズ
+
     u8		bgExtPltt;		//ＢＧ拡張パレットスロット選択
 	u8		priority;		//表示プライオリティー
 	u8		areaOver;		//エリアオーバーフラグ
@@ -205,11 +222,12 @@ GLOBAL void	GFL_BG_sysExit( void );
  *
  * @param	frmnum		ＢＧフレーム番号
  * @param	size		確保するサイズ
+ * @param	dir			確保する方向
  * 
  * @return	pos			確保した領域のポジション（確保できなかった時はAREAMAN_POS_NOTFOUND）
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size );
+GLOBAL	u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size, u8 dir );
 
 //--------------------------------------------------------------------------------------------
 /**

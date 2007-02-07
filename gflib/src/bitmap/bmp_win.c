@@ -146,7 +146,7 @@ GFL_BMPWIN*
 	}
 
 	//キャラクター領域の確保
-	areapos = GFL_BG_CharAreaGet( frmnum, areasiz * 0x20 );
+	areapos = GFL_BG_CharAreaGet( frmnum, areasiz * 0x20, dir );
 	if( areapos == AREAMAN_POS_NOTFOUND ){
 		OS_Panic( "ビットマップ生成に必要なキャラＶＲＡＭ領域が足りない\n" );
 	} else {
