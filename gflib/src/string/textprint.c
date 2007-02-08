@@ -86,7 +86,7 @@ void
 	u8				sizemaxY	= GFL_FONT_GetSizeMaxY();
 	u8				sizeSPC		= GFL_FONT_GetSizeSPC();
 	STRCODE			fcode;
-	GFL_BMP_DATA	bmpfont;
+	GFL_BMP_DATA	*bmpfont;
 
 	//描画位置初期化
 	tw->nowx = param->writex;
@@ -122,19 +122,21 @@ void
 		default:
 			GFL_FONT_GetData( fcode - STR_DEFAULT_CODE_MAX, &tw->fdata );
 			//フォントビットマップ情報作成
-			bmpfont.adrs = tw->fdata.data;
-			bmpfont.size_x = tw->fdata.sizex;
-			bmpfont.size_y = sizemaxY;
+			bmpfont=GFL_BMP_sysCreate(&tw->fdata.data[0],tw->fdata.sizex,sizemaxY,GFL_HEAPID_SYSTEM);
+//			bmpfont.adrs = tw->fdata.data;
+//			bmpfont.size_x = tw->fdata.sizex;
+//			bmpfont.size_y = sizemaxY;
 
 			if( param->mode == GFL_TEXT_WRITE_16 ){
-				GFL_BMP_PrintMain(	&bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-										bmpfont.size_x, bmpfont.size_y, 0 );
+				GFL_BMP_PrintMain(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
+										GFL_BMP_SizeXGet(bmpfont), GFL_BMP_SizeYGet(bmpfont), 0 );
 			} else {
-				GFL_BMP_PrintMain256(	&bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-											bmpfont.size_x, bmpfont.size_y, 0 );
+				GFL_BMP_PrintMain256(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
+										GFL_BMP_SizeXGet(bmpfont), GFL_BMP_SizeYGet(bmpfont), 0 );
 			}
 			//次の文字の描画位置を設定
 			tw->nowx += ( tw->fdata.sizex + param->spacex );
+			GFL_BMP_sysDelete(bmpfont);
 			break;
 		}
 	}

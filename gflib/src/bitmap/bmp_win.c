@@ -32,7 +32,7 @@ struct _GFL_BMPWIN {
 	u8				height;
 	u8				palnum;
 	u16				chrnum;
-	GFL_BMP_DATA	bmp;
+	GFL_BMP_DATA	*bmp;
 };
 
 static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
@@ -123,6 +123,7 @@ GFL_BMPWIN*
 	GFL_BMPWIN* bmpwin;
 	u32 areasiz, areapos;
 	HEAPID heapID = bmpwin_sys->heapID;
+	int	col;
 
 	bmpwin = (GFL_BMPWIN*)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMPWIN) );
 
@@ -139,9 +140,11 @@ GFL_BMPWIN*
 	//キャラクタモード判別
 	if( GFL_BG_ScreenColorModeGet( frmnum) == GX_BG_COLORMODE_16){
 		bmpwin->bitmode = GFL_BMPWIN_BITMODE_4;	//１６色モード
+		col=GFL_BMP_16_COLOR;
 		areasiz = sizx * sizy;
 	} else {
 		bmpwin->bitmode = GFL_BMPWIN_BITMODE_8;	//２５６色モード
+		col=GFL_BMP_256_COLOR;
 		areasiz = sizx * sizy * 2;	//使用するキャラ領域は２倍(0x40)
 	}
 
@@ -151,9 +154,10 @@ GFL_BMPWIN*
 		OS_Panic( "ビットマップ生成に必要なキャラＶＲＡＭ領域が足りない\n" );
 	} else {
 		bmpwin->chrnum = areapos;
-		bmpwin->bmp.adrs = GFL_HEAP_AllocMemoryClear( heapID, areasiz * 0x20 );
-		bmpwin->bmp.size_x = sizx * 8;
-		bmpwin->bmp.size_y = sizy * 8;
+		bmpwin->bmp=GFL_BMP_sysInit( sizx, sizy, col, heapID ); 	//１６色モード
+//		bmpwin->bmp.adrs = GFL_HEAP_AllocMemoryClear( heapID, areasiz * 0x20 );
+//		bmpwin->bmp.size_x = sizx * 8;
+//		bmpwin->bmp.size_y = sizy * 8;
 	}
 	return bmpwin;
 }
@@ -184,7 +188,7 @@ void
 	//キャラクター領域の解放
 	GFL_BG_CharAreaFree( bmpwin->frmnum, bmpwin->chrnum, areasiz*0x20 );
 
-	GFL_HEAP_FreeMemory( bmpwin->bmp.adrs );
+	GFL_BMP_sysExit( bmpwin->bmp );
 	GFL_HEAP_FreeMemory( bmpwin );
 }
 
@@ -218,7 +222,7 @@ void
 	bmpsize = (u32)
 		((bmpwin->sizx*bmpwin->sizy * GFL_BG_BaseCharSizeGet(bmpwin->frmnum)));
 
-	GFL_BG_LoadCharacter( bmpwin->frmnum, bmpwin->bmp.adrs, bmpsize, bmpwin->chrnum );
+	GFL_BG_LoadCharacter( bmpwin->frmnum, GFL_BMP_ChrAdrsGet(bmpwin->bmp), bmpsize, bmpwin->chrnum );
 }
 
 //---------------------------------------------------------
@@ -364,7 +368,7 @@ GFL_BMP_DATA*
 		( GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
-	return &bmpwin->bmp;
+	return GFL_BMP_BmpAdrsGet(bmpwin->bmp);
 }
 
 
