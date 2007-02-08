@@ -172,10 +172,11 @@ u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size, u8 dir)
 {
 	u32	pos;
 	u32	start;
-	u32	end;
+	u32	areaSize;
 
 	start=bgl->CharVramBaseAdrs[frmnum]/0x20;
-	end=start+(bgl->CharVramSize[frmnum]/0x20)-1;
+	areaSize=(bgl->CharVramSize[frmnum]/0x20);
+
 
 	if(dir==GFL_BG_CHRAREA_GET_F){
 		switch(frmnum){
@@ -184,14 +185,14 @@ u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size, u8 dir)
 		case GFL_BG_FRAME2_M:
 		case GFL_BG_FRAME3_M:
 			pos=GFL_AREAMAN_ReserveAssignArea
-					( bgl->area_m, start, end, (size/0x20)+((size%0x20)==0?0:1));
+					( bgl->area_m, start, areaSize, (size/0x20)+((size%0x20)==0?0:1));
 			break;
 		case GFL_BG_FRAME0_S:
 		case GFL_BG_FRAME1_S:
 		case GFL_BG_FRAME2_S:
 		case GFL_BG_FRAME3_S:
 			pos=GFL_AREAMAN_ReserveAssignArea
-					( bgl->area_s, start, end, (size/0x20)+((size%0x20)==0?0:1));
+					( bgl->area_s, start, areaSize, (size/0x20)+((size%0x20)==0?0:1));
 			break;
 		}
 	}
@@ -202,14 +203,14 @@ u32 GFL_BG_CharAreaGet( u32 frmnum, u32 size, u8 dir)
 		case GFL_BG_FRAME2_M:
 		case GFL_BG_FRAME3_M:
 			pos=GFL_AREAMAN_ReserveAssignAreaLo
-					( bgl->area_m, end, start, (size/0x20)+((size%0x20)==0?0:1));
+					( bgl->area_m, start+areaSize-1, areaSize, (size/0x20)+((size%0x20)==0?0:1));
 			break;
 		case GFL_BG_FRAME0_S:
 		case GFL_BG_FRAME1_S:
 		case GFL_BG_FRAME2_S:
 		case GFL_BG_FRAME3_S:
 			pos=GFL_AREAMAN_ReserveAssignAreaLo
-					( bgl->area_s, end, start, (size/0x20)+((size%0x20)==0?0:1));
+					( bgl->area_s, start+areaSize-1, areaSize, (size/0x20)+((size%0x20)==0?0:1));
 			break;
 		}
 	}
@@ -2927,13 +2928,11 @@ static void VBlankLoadScreen( void );
 //--------------------------------------------------------------------------------------------
 void GFL_BG_VBlankFunc( void )
 {
-	if(bgl!=NULL){
-		VBlankScroll();		// スクロール
-		VBlankLoadScreen();	// スクリーン転送
+	VBlankScroll();		// スクロール
+	VBlankLoadScreen();	// スクリーン転送
 
-		bgl->scroll_req = 0;
-		bgl->loadscrn_req = 0;
-	}
+	bgl->scroll_req = 0;
+	bgl->loadscrn_req = 0;
 }
 
 //--------------------------------------------------------------------------------------------
