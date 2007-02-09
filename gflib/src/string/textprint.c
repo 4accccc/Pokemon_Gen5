@@ -95,6 +95,9 @@ void
 	//色設定
 	GFL_FONT_SetColor( param->colorF, param->colorB );
 
+	//フォントビットマップ情報作成
+	bmpfont=GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_HEAPID_SYSTEM );
+	
 	//フォントデータ取得
 	while( (fcode = *textcode ) != EOM_ ) 
 	{
@@ -121,25 +124,20 @@ void
 
 		default:
 			GFL_FONT_GetData( fcode - STR_DEFAULT_CODE_MAX, &tw->fdata );
-			//フォントビットマップ情報作成
-			bmpfont=GFL_BMP_sysCreate(&tw->fdata.data[0],tw->fdata.sizex,sizemaxY,GFL_HEAPID_SYSTEM);
-//			bmpfont.adrs = tw->fdata.data;
-//			bmpfont.size_x = tw->fdata.sizex;
-//			bmpfont.size_y = sizemaxY;
 
 			if( param->mode == GFL_TEXT_WRITE_16 ){
 				GFL_BMP_PrintMain(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-										GFL_BMP_SizeXGet(bmpfont), GFL_BMP_SizeYGet(bmpfont), 0 );
+									tw->fdata.sizex, sizemaxY, 0 );
 			} else {
 				GFL_BMP_PrintMain256(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-										GFL_BMP_SizeXGet(bmpfont), GFL_BMP_SizeYGet(bmpfont), 0 );
+										tw->fdata.sizex, sizemaxY, 0 );
 			}
 			//次の文字の描画位置を設定
 			tw->nowx += ( tw->fdata.sizex + param->spacex );
-			GFL_BMP_sysDelete(bmpfont);
 			break;
 		}
 	}
+	GFL_BMP_sysDelete(bmpfont);
 }
 
 
