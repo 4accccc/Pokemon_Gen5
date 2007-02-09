@@ -65,24 +65,24 @@ void
 	GF_ASSERT( !g3Dutil );
 
 	//管理領域確保
-	g3Dutil = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_UTIL) );
+	g3Dutil = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_UTIL) );
 
 	//リソース管理配列作成
-	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * resCount );
+	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * resCount );
 	//リソース配列領域マネージャ作成
 	g3Dutil->g3DresAreaman = GFL_AREAMAN_Create( resCount, heapID );
 
 	//オブジェクト管理配列作成
-	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * objCount );
+	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * objCount );
 	//リソース配列領域マネージャ作成
 	g3Dutil->g3DobjAreaman = GFL_AREAMAN_Create( objCount, heapID );
 	//オブジェクト描画ステータス管理配列作成（オブジェクト管理配列作成と並び順は同じ）
-	g3Dutil->g3DobjStat = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_OBJSTAT)*objCount );
+	g3Dutil->g3DobjStat = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_OBJSTAT)*objCount );
 	//オブジェクト描画プライオリティー管理配列作成
-	g3Dutil->g3DobjPriTbl = GFL_HEAP_AllocMemory( heapID, sizeof(u16)*objCount );
+	g3Dutil->g3DobjPriTbl = GFL_HEAP_AllocMemoryClear( heapID, sizeof(u16)*objCount );
 
 	//アニメーション管理配列作成
-	g3Dutil->g3DanmTbl = GFL_HEAP_AllocMemory( heapID, HANDLE_POINTER_SIZE * anmCount );
+	g3Dutil->g3DanmTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * anmCount );
 	//アニメーション配列領域マネージャ作成
 	g3Dutil->g3DanmAreaman = GFL_AREAMAN_Create( anmCount, heapID );
 
