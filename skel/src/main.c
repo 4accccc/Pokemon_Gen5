@@ -21,6 +21,7 @@ static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
 
+extern	void	TestModeSet(void);
 //------------------------------------------------------------------
 /**
  * @brief	メイン処理
@@ -85,7 +86,9 @@ static	void	SkeltonVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
-	TestModeInit();
+
+	/* 起動プロセスの設定 */
+	TestModeSet();	//←サンプルデバッグモード
 }
 
 
@@ -97,7 +100,6 @@ static	void	GameInit(void)
 static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
-	TestModeMain();
 }
 
 
