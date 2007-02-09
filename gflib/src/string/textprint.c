@@ -96,7 +96,7 @@ void
 	GFL_FONT_SetColor( param->colorF, param->colorB );
 
 	//フォントビットマップ情報作成
-	bmpfont=GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_HEAPID_SYSTEM );
+	bmpfont=GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
 	
 	//フォントデータ取得
 	while( (fcode = *textcode ) != EOM_ ) 

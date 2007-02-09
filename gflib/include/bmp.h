@@ -58,12 +58,13 @@ GLOBAL	void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp );
  * @param	adrs	キャラエリアへのポインタ
  * @param	sizex	Xサイズ
  * @param	sizey	Yサイズ
+ * @param	col		カラーコード
  * @param	heapID	ヒープID
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, HEAPID heapID );
+GLOBAL	GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

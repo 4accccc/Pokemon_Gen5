@@ -93,18 +93,20 @@ void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
  * @param	adrs	キャラエリアへのポインタ
  * @param	sizex	Xサイズ
  * @param	sizey	Yサイズ
+ * @param	col		カラーコード
  * @param	heapID	ヒープID
  *
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, HEAPID heapID )
+GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
 	bmp->size_x	=	sizex ;
 	bmp->size_y	=	sizey ;
 	bmp->adrs	=	adrs ;
+	bmp->col	=	col ;
 
 	return bmp;
 }
@@ -280,7 +282,7 @@ void GFL_BMP_PrintMain(
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	//srcとdestのカラーモードに相違があったら、アサートで止める
-//	GF_ASSERT(src->col==dest->col);
+	GF_ASSERT(src->col==dest->col);
 
 	if(src->col==GFL_BMP_16_COLOR){
 		GFL_BMP_PrintMain16( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
