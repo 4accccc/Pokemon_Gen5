@@ -8,7 +8,7 @@
 #include "gflib.h"
 
 // このdefineを有効にすると、暗号化メッセージ対応
-#define  MSGDATA_CODED	
+//#define  MSGDATA_CODED	
 
 /*------------------------------------------------------------*/
 /** 文字列パラメータ                                          */
@@ -22,7 +22,7 @@ typedef struct {
 /** 文字列データヘッダ                                        */
 /*------------------------------------------------------------*/
 struct _MSGDATA_HEADER{
-	#ifdef MSGDATA_CODED
+	#ifndef MSGDATA_CODED
 	u16					numMsgs;
 	u16					randValue;
 	#else
