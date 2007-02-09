@@ -760,7 +760,7 @@ void*
 	{
 		OS_Printf( "Alloc DTCM_Memory FAILED. allocsize = %x\n", size );
 	} else {
-		OS_Printf( "Alloc DTCM_Memory. size = %x\n", size );
+//		OS_Printf( "Alloc DTCM_Memory. size = %x\n", size );
 	}
 	return mem;
 }
@@ -783,7 +783,7 @@ void
 	{
 		OS_Printf( "Free DTCM_Memory FAILED. memory = %08x\n", memory );
 	} else {
-		OS_Printf( "Free DTCM_Memory. memory = %08x\n", memory );
+//		OS_Printf( "Free DTCM_Memory. memory = %08x\n", memory );
 	}
 }
 
