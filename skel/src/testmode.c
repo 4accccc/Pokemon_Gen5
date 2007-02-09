@@ -424,6 +424,7 @@ static void	g2d_unload( void )
 		msg_bmpwin_trush( NUM_TITLE+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
+	GFL_TEXT_sysExit();
 }
 
 //------------------------------------------------------------------
