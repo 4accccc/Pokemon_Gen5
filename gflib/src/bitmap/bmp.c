@@ -280,7 +280,7 @@ void GFL_BMP_PrintMain(
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	//srcとdestのカラーモードに相違があったら、アサートで止める
-	GF_ASSERT(src->col==dest->col);
+//	GF_ASSERT(src->col==dest->col);
 
 	if(src->col==GFL_BMP_16_COLOR){
 		GFL_BMP_PrintMain16( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
