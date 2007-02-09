@@ -151,6 +151,7 @@ void
 
 	//ŠÇ——Ìˆæ‰ğ•ú
 	GFL_HEAP_FreeMemory( g3Dutil );
+	g3Dutil = NULL;
 }
 
 
