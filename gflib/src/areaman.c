@@ -83,6 +83,8 @@ static const u8 BackFillBit[9] = {
 static inline u32 calc_blocks_to_bytes( u32 blocks );
 static inline void CHECK_ASSERT( GFL_AREAMAN* man );
 static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos );
+static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
+static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
 static u32 reserveLo_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
 static u32 reserveLo( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve );
 static GFL_AREAMAN_POS check_empty_bit( u8 baseBitMap, u32 start_bit, u32 num );
@@ -235,7 +237,7 @@ u32
 
 
 
-//------------------------------------------------------------------
+//==============================================================================================
 /**
  * 領域の指定範囲内から空いている所を探して確保（前方から探索）
  *
@@ -246,7 +248,7 @@ u32
  *
  * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
  */
-//------------------------------------------------------------------
+//==============================================================================================
 u32
 	GFL_AREAMAN_ReserveAssignArea
 		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve )
@@ -274,165 +276,200 @@ u32
 	}
 
 	{
-		u32 p, rp, obc;
-		u32 startBlockLimit;
+		u32 ret;
 
-		startBlockLimit = startBlock + (numBlockArea - numBlockReserve);
-
-		p = startBlock >> 3;
-		rp = startBlock & 7;
-
-		if( rp )
+		if( numBlockReserve <= 8 )
 		{
-			u32 bitpos = check_empty_bit( man->area[p], rp, numBlockReserve );
-			if( bitpos != AREAMAN_POS_NOTFOUND )
-			{
-				reserve_bit( &(man->area[p]), bitpos, numBlockReserve );
-				#ifdef AREAMAN_DEBUG
-				if( man->printDebugFlag )
-				{
-					print_reserveinfo( man, p*8+bitpos, numBlockReserve, __LINE__ );
-				}
-				#endif
-				return p*8 + bitpos;
-			}
-			if( (OpenBackCount[man->area[p]] + rp) >= 8 )
-			{
-				obc = 8 - rp;
-			}
-			else
-			{
-				p++;
-				obc = OpenBackCount[ man->area[p] ];
-			}
+			ret = reserveHi_less8bit( man, startBlock, numBlockArea, numBlockReserve );
 		}
 		else
 		{
-			obc = OpenBackCount[ man->area[p] ];
+			ret = reserveHi( man, startBlock, numBlockArea, numBlockReserve );
 		}
 
-		while( p<man->areaByteSize )
-		{
-			if( EmptyCount[man->area[p]] >= numBlockReserve )
-			{
-				u32 bitpos, retpos;
-
-				bitpos = check_empty_bit( man->area[p], 0, numBlockReserve );
-				retpos = p*8+bitpos;
-				if( retpos < startBlockLimit )
-				{
-					reserve_bit( &(man->area[p]), bitpos, numBlockReserve );
-					#ifdef AREAMAN_DEBUG
-					if( man->printDebugFlag )
-					{
-						print_reserveinfo( man, retpos, numBlockReserve, __LINE__ );
-					}
-					#endif
-					return retpos;
-				}
-				else
-				{
-					#ifdef AREAMAN_DEBUG
-					if( man->printDebugFlag )
-					{
-						OS_TPrintf("** reserve failed %dblocks (pat B) ** \n", numBlockReserve);
-					}
-					#endif
-					return AREAMAN_POS_NOTFOUND;
-				}
-			}
-			if( obc )
-			{
-				u32 num, rem, pp;
-
-				if( obc > numBlockReserve )
-				{
-					num = 0;
-					rem = 0;
-				}
-				else
-				{
-					num = (numBlockReserve - obc) >> 3;
-					rem = (numBlockReserve - obc) & 7;
-				}
-
-				pp = p + 1;
-
-				while( num )
-				{
-					if( pp >= man->areaByteSize )
-					{
-						#ifdef AREAMAN_DEBUG
-						if( man->printDebugFlag )
-						{
-							OS_TPrintf("** reserve failed %dblocks (pat C) ** \n", numBlockReserve);
-						}
-						#endif
-						return AREAMAN_POS_NOTFOUND;
-					}
-					if( man->area[pp] == 0 )
-					{
-						num--;
-						pp++;
-					}
-					else
-					{
-						break;
-					}
-				}
-
-				if(	(num == 0)
-				&&	( (rem == 0)||(OpenFwdCount[man->area[pp]] >= rem) )
-				){
-					u32 retpos = p*8 + (8-obc);
-					if( retpos < startBlockLimit )
-					{
-						reserve_area( man, retpos, numBlockReserve );
-						#ifdef AREAMAN_DEBUG
-						if( man->printDebugFlag )
-						{
-							OS_TPrintf("p=%d, obc=%d, retpos=%d\n", p, obc, retpos);
-							print_reserveinfo( man, retpos, numBlockReserve, __LINE__ );
-						}
-						#endif
-						return retpos;
-					}
-					else
-					{
-						#ifdef AREAMAN_DEBUG
-						if( man->printDebugFlag )
-						{
-							OS_TPrintf("** reserve failed %dblocks (pat D) ** \n", numBlockReserve);
-						}
-						#endif
-						return AREAMAN_POS_NOTFOUND;
-					}
-				}
-				else
-				{
-					p = pp;
-				}
-			}
-			else	/* if( obc ) */
-			{
-				p++;
-			}
-			obc = get_open_back_count( man, p );
-		}
+		return ret;
 	}
-
-	#ifdef AREAMAN_DEBUG
-	if( man->printDebugFlag )
-	{
-		OS_TPrintf("** reserve failed %dblocks (pat E) ** \n", numBlockReserve);
-	}
-	#endif
-
-	return AREAMAN_POS_NOTFOUND;
 }
 
 
 //------------------------------------------------------------------
+/**
+ * 前方からの探索実処理（8ブロック以下専用）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startPos		[in] 探索開始ブロック
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  u32				確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve )
+{
+	int returnPos, endPos;
+	int bytePos, bytePosEnd, ofc;
+
+	endPos = startPos + numBlockArea + 1 - numBlockReserve;
+	bytePos = startPos / 8;
+	bytePosEnd = endPos / 8;
+	ofc = startPos & 7;
+
+	OS_TPrintf("rHil8bit... endPos=%d, bytePos=%d, ofc=%d, bytePosEnd=%d\n",
+		endPos, bytePos, ofc, bytePosEnd);
+
+	do {
+
+		returnPos = AREAMAN_POS_NOTFOUND;
+
+		if( (ofc+numBlockReserve) <= 8 )
+		{
+			u32 p = check_empty_bit( man->area[bytePos], ofc, numBlockReserve );
+			if( p != AREAMAN_POS_NOTFOUND )
+			{
+				returnPos = bytePos*8 + p;
+				break;
+			}
+		}
+
+		for( bytePos++ ; bytePos<=bytePosEnd; bytePos++ )
+		{
+			if( EmptyCount[ man->area[bytePos] ] >= numBlockReserve )
+			{
+				u32 p = check_empty_bit( man->area[bytePos], 0, numBlockReserve );
+				returnPos = bytePos*8 + p;
+				break;
+			}
+			else if( OpenBackCount[ man->area[bytePos] ] && (bytePos < bytePosEnd) )
+			{
+				u32  rem = numBlockReserve - OpenBackCount[ man->area[bytePos] ];
+
+				if( OpenFwdCount[ man->area[bytePos+1] ] >= rem )
+				{
+					returnPos = bytePos*8 + (8-rem);
+					break;
+				}
+			}
+		}
+
+	}while(0);
+
+
+	if( returnPos != (int)AREAMAN_POS_NOTFOUND )
+	{
+		if( returnPos <= endPos )
+		{
+			reserve_area( man, returnPos, numBlockReserve );
+
+			#ifdef AREAMAN_DEBUG
+			if( man->printDebugFlag )
+			{
+				print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
+			}
+			#endif
+
+			return returnPos;
+		}
+	}
+
+	return AREAMAN_POS_NOTFOUND;
+}
+
+//------------------------------------------------------------------
+/**
+ * 前方からの探索実処理（8ブロックより大きい領域用）
+ *
+ * @param   man				[in] マネージャ
+ * @param   startPos		[in] 探索開始ブロック
+ * @param   numBlockArea	[in] 探索ブロック範囲
+ * @param   numBlockReserve	[in] 確保したいブロック数
+ *
+ * @retval  u32				確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
+ */
+//------------------------------------------------------------------
+static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numBlockReserve )
+{
+	u32 returnPos, endPos;
+	int bytePos, bytePosEnd, obc;
+
+	endPos = startPos + numBlockArea + 1 - numBlockReserve;
+	bytePos = startPos / 8;
+	bytePosEnd = endPos / 8;
+
+	obc = 8 - (startPos % 8);
+	if( OpenBackCount[ man->area[bytePos] ] < obc )
+	{
+		obc = OpenBackCount[ man->area[bytePos] ];
+	}
+
+//	OS_TPrintf("[RSHI] startPos:%d, endPos:%d, bytePos:%d, bytePosEnd:%d, startObc:%d\n", 
+//		startPos, endPos, bytePos, bytePosEnd, obc);
+
+
+	while( bytePos < bytePosEnd )
+	{
+		if( obc )
+		{
+			int remBlocks, remBytes, remBits, p;
+
+			remBlocks = numBlockReserve - obc;
+			remBytes = remBlocks / 8;
+			remBits = remBlocks % 8;
+			p = bytePos + 1;
+
+//			OS_TPrintf("  bytePos:%d, remBlocks:%d, remBits:%d, remBytes:%d\n",
+//						bytePos, remBlocks, remBits, remBytes );
+
+			while( remBytes )
+			{
+				if( p > bytePosEnd ){ break; }
+				if( man->area[p] ){ break; }
+				p++;
+				remBytes--;
+			}
+
+			if( remBytes == 0 )
+			{
+				int returnPos = AREAMAN_POS_NOTFOUND;
+
+//				OS_TPrintf("    remBytes is clear! prevByte:%d, ofc:%d\n",
+//						man->area[p-1], OpenFwdCount[man->area[p]]);
+
+				if( remBits == 0 )
+				{
+					returnPos = (bytePos*8) + (8 - obc);
+				}
+				else
+				{
+					if( OpenFwdCount[man->area[p]] >= remBits )
+					{
+						returnPos = (bytePos*8) + (8 - obc);
+					}
+				}
+
+				if( returnPos != (int)(AREAMAN_POS_NOTFOUND) )
+				{
+					reserve_area( man, returnPos, numBlockReserve );
+					#ifdef AREAMAN_DEBUG
+					if( man->printDebugFlag )
+					{
+						print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
+					}
+					#endif
+					return returnPos;
+				}
+			}
+		}
+		if( ++bytePos < bytePosEnd )
+		{
+			obc = OpenBackCount[ man->area[bytePos] ];
+		}
+	}
+
+	return AREAMAN_POS_NOTFOUND;
+
+}
+
+//==============================================================================================
 /**
  * 領域の指定範囲内から空いている所を探して確保（後方から探索）
  *
@@ -443,14 +480,18 @@ u32
  *
  * @retval  GFL_AREAMAN_POS		確保できた位置（できなければ AREAMAN_POS_NOTFOUND）
  */
-//------------------------------------------------------------------
+//==============================================================================================
 u32
 	GFL_AREAMAN_ReserveAssignAreaLo
 		( GFL_AREAMAN* man, u32 startBlock, u32 numBlockArea, u32 numBlockReserve )
 {
 	CHECK_ASSERT( man );
 
-	GF_ASSERT( numBlockArea >= numBlockReserve );
+	OS_TPrintf("[AREAMAN] startBlock:%d, numBlockArea:%d, numBlockReserve:%d\n",
+			startBlock, numBlockArea, numBlockReserve );
+
+
+	GF_ASSERT_MSG( numBlockArea >= numBlockReserve, "areasize:%d, reserve:%d\n", numBlockArea, numBlockReserve );
 	GF_ASSERT( startBlock < man->numBlocks );
 	GF_ASSERT( (int)numBlockReserve < (int)(startBlock-1) );
 
@@ -488,7 +529,6 @@ u32
 		return ret;
 	}
 }
-
 //------------------------------------------------------------------
 /**
  * 後方探索実処理（8ブロック以下専用）
@@ -843,7 +883,7 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 {
 	int start_pos, start_bit_count, start_bit, rem, bytes;
 
-	GF_ASSERT((pos+blockNum)<=man->numBlocks);
+	GF_ASSERT_MSG((pos+blockNum)<=man->numBlocks, "pos=%d,blockNum=%d\n", pos, blockNum);
 
 	start_pos = pos % 8;
 	start_bit_count = 8 - start_pos;
