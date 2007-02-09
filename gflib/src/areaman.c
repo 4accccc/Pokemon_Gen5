@@ -314,8 +314,10 @@ static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea,
 	bytePosEnd = endPos / 8;
 	ofc = startPos & 7;
 
+	#ifdef AREAMAN_DEBUG
 	OS_TPrintf("rHil8bit... endPos=%d, bytePos=%d, ofc=%d, bytePosEnd=%d\n",
 		endPos, bytePos, ofc, bytePosEnd);
+	#endif
 
 	do {
 
@@ -487,11 +489,13 @@ u32
 {
 	CHECK_ASSERT( man );
 
+	#ifdef AREAMAN_DEBUG
 	OS_TPrintf("[AREAMAN] startBlock:%d, numBlockArea:%d, numBlockReserve:%d\n",
 			startBlock, numBlockArea, numBlockReserve );
+	#endif
 
-
-	GF_ASSERT_MSG( numBlockArea >= numBlockReserve, "areasize:%d, reserve:%d\n", numBlockArea, numBlockReserve );
+	GF_ASSERT_MSG( numBlockArea >= numBlockReserve, "areasize:%d, reserve:%d\n", 
+					numBlockArea, numBlockReserve );
 	GF_ASSERT( startBlock < man->numBlocks );
 	GF_ASSERT( (int)numBlockReserve < (int)(startBlock-1) );
 
