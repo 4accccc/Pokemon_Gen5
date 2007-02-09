@@ -5,6 +5,8 @@
  * @date	2007.02.02
  * @brief	TCB + メモリ管理
  *
+ * 今までのTCBの機能に加え、各タスクが保持するワークメモリの取得・開放を
+ * システム内部でおこなうようにした。
  */
 //=============================================================================================
 
@@ -24,32 +26,43 @@
 #define TCB_INLINE	
 
 //------------------------------------------------------------------
+/**
+ * @brief
+ */
 //------------------------------------------------------------------
 struct _GFL_TCBL {
-	GFL_TCBLSYS * tcbsys;
-	GFL_TCBL * prev;
-	GFL_TCBL * next;
-	u32 pri;
-	void * work;
-	GFL_TCBLFUNC * func;
+	GFL_TCBLSYS * tcbsys;		///<所属するタスクシステムへのポインタ
+	GFL_TCBL * prev;			///<前のタスクへのポインタ
+	GFL_TCBL * next;			///<次のタスクへのポインタ
+	u32 pri;					///<タスクのプライオリティ指定
+	void * work;				///<タスクワークへのポインタ（NULLのとき、確保済み領域を使用）
+	GFL_TCBLFUNC * func;		///<タスク関数へのポインタ
 };
 
 //------------------------------------------------------------------
+/**
+ * @brief
+ */
 //------------------------------------------------------------------
 struct _GFL_TCBLSYS {
-	u32 tcb_max;
-	u32 work_size;
-	HEAPID heap_id;
-	BOOL add_flag;
-	BOOL sucide_flag;
-	void  * tcb_array;
-	GFL_TCBL tcb_first;
-	GFL_TCBL * now_chain;
-	GFL_TCBL * stack_top;
+	u32 tcb_max;				///<保持できるタスクの最大数
+	u32 work_size;				///<標準で確保しているワークのサイズ
+	HEAPID heap_id;				///<使用するヒープID
+	BOOL add_flag;				///<
+	BOOL sucide_flag;			///<自殺したかどうかのフラグ
+	void  * tcb_array;			///<タスク用に保持したメモリへのポインタ
+	GFL_TCBL tcb_first;			///<双方向リスト先頭になるダミータスク
+	GFL_TCBL * now_chain;		///<現在実行中のタスクへのポインタ
+	GFL_TCBL * stack_top;		///<非使用状態のタスクリストへのポインタ
 };
 
 
 //=============================================================================================
+//
+//
+//	ツール関数
+//
+//
 //=============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -59,6 +72,9 @@ static TCB_INLINE GFL_TCBL * GetTCBPtr(GFL_TCBLSYS * tcbsys, u32 offset)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	未使用タスクリストからタスクを取得
+ */
 //------------------------------------------------------------------
 static TCB_INLINE GFL_TCBL * PopTCB(GFL_TCBLSYS * tcbsys)
 {
@@ -75,6 +91,9 @@ static TCB_INLINE GFL_TCBL * PopTCB(GFL_TCBLSYS * tcbsys)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	未使用タスクリストへのタスクの登録
+ */
 //------------------------------------------------------------------
 static TCB_INLINE void PushTCB(GFL_TCBLSYS * tcbsys, GFL_TCBL * tcb)
 {
@@ -91,6 +110,9 @@ static TCB_INLINE void PushTCB(GFL_TCBLSYS * tcbsys, GFL_TCBL * tcb)
 
 
 //------------------------------------------------------------------
+/**
+ * @brief	タスク用構造体の初期化処理
+ */
 //------------------------------------------------------------------
 static void ClearTCBWork(GFL_TCBLSYS * tcbsys, GFL_TCBL * tcb)
 {
@@ -103,10 +125,16 @@ static void ClearTCBWork(GFL_TCBLSYS * tcbsys, GFL_TCBL * tcb)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	タスクの消去処理
+ */
 //------------------------------------------------------------------
 static void DeleteTCB(GFL_TCBL * tcb)
 {
 	tcb->func = NULL;
+	if (tcb->work) {
+		GFL_HEAP_FreeMemory(tcb->work);
+	}
 	//リストから削除
 	tcb->prev->next = tcb->next;
 	tcb->next->prev = tcb->prev;
@@ -115,6 +143,9 @@ static void DeleteTCB(GFL_TCBL * tcb)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	タスク用ワークへのポインタ取得
+ */
 //------------------------------------------------------------------
 static void * GetWork(GFL_TCBL * tcb)
 {
@@ -141,20 +172,33 @@ static void InitSysWork( GFL_TCBLSYS * tcbsys )
 }
 
 //=============================================================================================
+//
+//
+//		外部公開関数
+//
+//
 //=============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief	TCBL:初期化処理
+ * @param	sys_heap_id
+ * @param	task_max
+ * @param	work_size
+ */
 //------------------------------------------------------------------
-GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID heap_id, u32 task_max, u32 default_work_size)
+GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id, u32 task_max, u32 work_size)
 {
 	GFL_TCBLSYS * tcbsys;
 
-	tcbsys = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_TCBLSYS));
+	tcbsys = GFL_HEAP_AllocMemory(sys_heap_id, sizeof(GFL_TCBLSYS));
 	tcbsys->tcb_max = task_max;
-	tcbsys->work_size = default_work_size;
-	tcbsys->heap_id = heap_id;
+	tcbsys->work_size = work_size;
+	tcbsys->heap_id = usr_heap_id;
 	tcbsys->add_flag = FALSE;
 	tcbsys->sucide_flag = FALSE;
-	tcbsys->tcb_array = GFL_HEAP_AllocMemory(heap_id, (sizeof(GFL_TCBL) + default_work_size) * task_max);
+	//4バイト境界に適合するように正規化する
+	work_size = ROUNDUP(work_size, 4);
+	tcbsys->tcb_array = GFL_HEAP_AllocMemory(sys_heap_id, (sizeof(GFL_TCBL) + work_size) * task_max);
 	tcbsys->stack_top = NULL;
 	InitSysWork(tcbsys);
 	ClearTCBWork(tcbsys, &(tcbsys->tcb_first));
@@ -163,6 +207,10 @@ GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID heap_id, u32 task_max, u32 default_work_s
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	TCBL:メイン処理
+ * @param	tcbsys	TCBL制御ワークへのポインタ
+ */
 //------------------------------------------------------------------
 void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys )
 {
@@ -182,10 +230,15 @@ void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys )
 			tcbsys->now_chain = tcbsys->now_chain->next;
 		}
 	}
+	tcbsys->now_chain = NULL;
 
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	TCBL:終了処理
+ * @param	tcbsys	TCBL制御ワークへのポインタ
+ */
 //------------------------------------------------------------------
 void GFL_TCBL_SysExit( GFL_TCBLSYS * tcbsys )
 {
@@ -199,6 +252,10 @@ void GFL_TCBL_SysExit( GFL_TCBLSYS * tcbsys )
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	TCBLの削除処理
+ * @param	tcb		TCBLへのポインタ
+ */
 //------------------------------------------------------------------
 void GFL_TCBL_Delete(GFL_TCBL * tcb)
 {
@@ -215,6 +272,14 @@ void GFL_TCBL_Delete(GFL_TCBL * tcb)
 
 
 //------------------------------------------------------------------
+/**
+ * @brief	TCBLの生成処理
+ * @param	tcbsys
+ * @param	func
+ * @param	work_size
+ * @param	pri
+ * @return	GFL_TCBL *
+ */
 //------------------------------------------------------------------
 GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32 work_size, u32 pri)
 {
@@ -260,6 +325,11 @@ GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32 work_s
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief	TCBLのワーク取得
+ * @param	tcb		TCBLへのポインタ
+ * @return	void *
+ */
 //------------------------------------------------------------------
 void * GFL_TCBL_GetWork(GFL_TCBL * tcb)
 {
@@ -267,8 +337,14 @@ void * GFL_TCBL_GetWork(GFL_TCBL * tcb)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief
+ * @param	tcb		TCBLへのポインタ
+ * @return	u32
+ */
 //------------------------------------------------------------------
 u32 GFL_TCBL_GetPriority(const GFL_TCBL * tcb)
 {
 	return tcb->pri;
 }
+

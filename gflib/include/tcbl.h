@@ -12,6 +12,8 @@
 #define	__TCBL_H__
 
 
+#include <nitro.h>
+#include "heap.h"
 
 
 /*====================================================================================*/
@@ -22,9 +24,9 @@
 /**
  * @brief	タスクシステム型定義
  *
- * TCBシステムワーク構造体の宣言。
+ * TCBLシステムワーク構造体の宣言。
  * メイン処理用・VBlank用など、任意の箇所で実行される
- * 複数のTCBシステムを作成することが出来る。
+ * 複数のTCBLシステムを作成することが出来る。
  *
  * 内容は隠蔽されており、直接のアクセスはできない。
   */
@@ -35,8 +37,8 @@ typedef struct _GFL_TCBLSYS GFL_TCBLSYS;
 /**
  * @brief	タスク型定義
  *
- * TCBへはこのポインタ型経由でアクセスする。
- * TCB構造体を直接アクセスできないようになっている。
+ * TCBLへはこのポインタ型経由でアクセスする。
+ * TCBL構造体を直接アクセスできないようになっている。
  */
 //------------------------------------------------------------------
 typedef struct _GFL_TCBL GFL_TCBL;
@@ -45,8 +47,8 @@ typedef struct _GFL_TCBL GFL_TCBL;
 /**
  * @brief	タスク動作関数型定義
  *
- * TCBに登録する実行関数の型定義。
- * 引数としてTCB *と、ワークへのポインタをとるようになっている
+ * TCBLに登録する実行関数の型定義。
+ * 引数としてTCBL *と、ワークへのポインタをとるようになっている
  */
 //------------------------------------------------------------------
 typedef void (GFL_TCBLFUNC)(GFL_TCBL *, void *);
@@ -58,25 +60,31 @@ typedef void (GFL_TCBLFUNC)(GFL_TCBL *, void *);
 
 //------------------------------------------------------------------
 /**
- * TCBシステムを作成
+ * タスクシステムを作成
  *
- * @param   heap_id				使用するヒープの指定ID
+ * @param   sys_heap_id			タスクシステムに使用するヒープの指定ID
+ * @param	usr_heap_id			タスクワークに使用するヒープの指定ID
  * @param   task_max			稼働できる最大タスク数
- * @param	default_work_size	各タスクが保持するワークのサイズ
+ * @param	work_size			各タスクが保持するワークのサイズ
  *
- * @retval  GFL_TCBLSYS*		作成されたTCBシステムポインタ
+ * @retval  GFL_TCBLSYS*		作成されたタスクシステムポインタ
+ *
+ * work_sizeで指定したワークｘ最大タスク数分のワークエリアはsys_heap_idから取得する。
+ * タスク生成時にwork_sizeを超えるサイズのワークを必要とするとき、自動的にusr_heap_id
+ * で指定するヒープからワークをallocする。
  *
  */
 //------------------------------------------------------------------
-extern GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID heap_id, u32 task_max, u32 default_work_size);
+extern GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id,
+		u32 task_max, u32 work_size);
 
 //------------------------------------------------------------------
 /**
- *	@brief	TCBシステムメイン
+ *	@brief	タスクシステムメイン
  *
- *	TCBシステムに登録されている各タスクを優先順に呼び出す
+ *	タスクシステムに登録されている各タスクを優先順に呼び出す
  *
- *  @param	tcbsys		TCBシステムワークポインタ
+ *  @param	tcbsys		タスクシステムワークポインタ
  *
  */
 //------------------------------------------------------------------
@@ -84,21 +92,23 @@ extern void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys );
 
 //------------------------------------------------------------------
 /**
- *	@brief	TCBシステム終了
- *  @param	tcbsys		TCBシステムワークポインタ
+ *	@brief	タスクシステム終了
+ *  @param	tcbsys		タスクシステムワークポインタ
  */
 //------------------------------------------------------------------
 extern void GFL_TCBL_SysExit( GFL_TCBLSYS * tcbsys );
 
 //------------------------------------------------------------------------------
 /**
-	@brief	TCBを追加する
-	@param	tcbsys		TCBシステムポインタ
+	@brief	タスクを追加する
+	@param	tcbsys		タスクシステムポインタ
 	@param	func		TCB_FUNC:関連付ける実行関数ポインタ
-	@param	work_size	
+	@param	work_size	使用するワークのサイズ
 	@param	pri			u32:タスクプライオリティ
 
-	@return	TCB *	追加したTCBを示すポインタ
+	@return	TCBL *	追加したタスクを示すポインタ
+
+	必要なワークは内部で自動的に確保される
 */
 //------------------------------------------------------------------------------
 extern GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32 work_size, u32 pri);
@@ -106,8 +116,10 @@ extern GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32
 
 //------------------------------------------------------------------------------
 /**
-	@brief	TCBを消去する
-	@param	tcb		TCBポインタ
+	@brief	タスクを消去する
+	@param	TCBL		タスクポインタ
+
+	保持しているワークの開放処理も同時に行われる
 */
 //------------------------------------------------------------------------------
 extern void GFL_TCBL_Delete(GFL_TCBL * tcb);
@@ -115,23 +127,23 @@ extern void GFL_TCBL_Delete(GFL_TCBL * tcb);
 
 //------------------------------------------------------------------
 /**
- * @brief	TCB関数の切り替え
+ * @brief	タスク関数の切り替え
  *
- * TCBの動作関数を切り替える
+ * タスクの動作関数を切り替える
  *
- * @param	tcb		対象となるTCBへのポインタ
+ * @param	tcb		対象となるタスクへのポインタ
  * @param	func	新しく切り替える動作関数
 */
 //------------------------------------------------------------------
-//extern void GFL_TCBL_ChangeFunc(TCB * tcb, TCB_FUNC func);
+extern void GFL_TCBL_ChangeFunc(GFL_TCBL * tcb, GFL_TCBLFUNC func);
 
 //------------------------------------------------------------------
 /**
- * @brief	TCBワークの取得
+ * @brief	タスクワークの取得
  *
- * TCBの保持しているワークアドレスを取得する
+ * タスクの保持しているワークアドレスを取得する
  *
- * @param	tcb	TCBへのポインタ
+ * @param	tcb	タスクへのポインタ
  * @return	ワークへのポインタ
  */ 
 //------------------------------------------------------------------
@@ -139,11 +151,11 @@ extern void * GFL_TCBL_GetWork(GFL_TCBL * tcb);
 
 //------------------------------------------------------------------
 /**
- * @brief	TCBプライオリティの取得
+ * @brief	タスクプライオリティの取得
  *
- * TCBの動作優先順位を取得する
+ * タスクの動作優先順位を取得する
  *
- * @param	tcb	TCBへのポインタ
+ * @param	tcb	タスクへのポインタ
  * @return	プライオリティの値
  */
 //------------------------------------------------------------------
