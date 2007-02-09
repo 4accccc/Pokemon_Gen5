@@ -68,6 +68,7 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	switch( TestModeSelectPosGet() ) {
 	case 0:
 		//‚í‚½‚È‚×
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
 		break;
 	case 1:
 		//‚½‚Ü‚¾
@@ -81,10 +82,10 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 		//‚¨‚¨‚Ì
 		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
-	case 4:
-		//‚Ý‚Â‚Í‚ç
-		break;
 	default:
+		//‚½‚â
+		//‚È‚©‚Þ‚ç
+		//‚½‚©‚Í‚µ
 		break;
 	}
 	TestModeWorkRelease();
@@ -97,7 +98,7 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
  * @brief		ƒvƒƒZƒXŠÖ”ƒe[ƒuƒ‹
  */
 //------------------------------------------------------------------
-static const GFL_PROC_DATA TestMainProcData = {
+const GFL_PROC_DATA TestMainProcData = {
 	TestModeProcInit,
 	TestModeProcMain,
 	TestModeProcEnd,
@@ -248,8 +249,8 @@ static BOOL	TestModeControl( void )
 	case 3:
 		//ƒL[”»’è
 		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
-			//if(		( testmode->listPosition == 0)		//‚í‚½‚È‚×‚Ì‚Æ‚«‘JˆÚ
-			if(		( testmode->listPosition == 1)		//‚½‚Ü‚¾‚Ì‚Æ‚«‘JˆÚ
+			if(		( testmode->listPosition == 0)		//‚í‚½‚È‚×‚Ì‚Æ‚«‘JˆÚ
+				||	( testmode->listPosition == 1)		//‚½‚Ü‚¾‚Ì‚Æ‚«‘JˆÚ
 				||	( testmode->listPosition == 2)		//‚»‚ª‚×‚Ì‚Æ‚«‘JˆÚ
 				||	( testmode->listPosition == 3)		//‚¨‚¨‚Ì‚Ì‚Æ‚«‘JˆÚ
 			  )
