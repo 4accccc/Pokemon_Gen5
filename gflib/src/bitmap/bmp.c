@@ -21,7 +21,26 @@ struct _GFL_BMP_DATA{
 	u8 * adrs;		///<キャラクタデータの先頭アドレス
 	u16	size_x;		///<キャラクタデータのXサイズ
 	u16	size_y;		///<キャラクタデータのYサイズ
+	int	col;		///<カラーモード（GFL_BMP_16_COLOR:16色　GFL_BMP_256_COLOR:256色）
 };
+
+static	void GFL_BMP_PrintMain16(
+			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
+			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+			u16 size_x, u16 size_y, u16 nuki_col );
+
+static	void GFL_BMP_PrintMain256(
+		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
+		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+		u16 size_x, u16 size_y, u16 nuki_col );
+
+static	void GFL_BMP_Fill16(
+		GFL_BMP_DATA * dest,
+		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
+
+static	void GFL_BMP_Fill256(
+		GFL_BMP_DATA * dest,
+		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
 //=============================================================================================
 //=============================================================================================
@@ -48,7 +67,7 @@ GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID )
 	// 計算プロセス省略のため、内部ではドット単位で保持する
 	bmp->size_x	=	sizex * 8;
 	bmp->size_y	=	sizey * 8;
-
+	bmp->col	=	col;
 	bmp->adrs	=	GFL_HEAP_AllocMemoryClear( heapID, sizex * sizey * col );
 
 	return bmp;
@@ -199,6 +218,135 @@ GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heap
  * @param	nuki_col	透明色指定（0～15 0xff:透明色指定なし）
  *
  * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+#define	NULLPAL_L	(nuki_col)
+
+#define SRC_ADRS	(src->adrs)
+#define SRC_POSX	(pos_sx)
+#define SRC_POSY	(pos_sy)
+#define SRC_SIZX	(src->size_x)
+#define SRC_SIZY	(src->size_y)
+#define	SRC_XARG	(((SRC_SIZX) + (SRC_SIZX & 7))>>3)
+
+#define DST_ADRS	(dest->adrs)
+#define DST_POSX	(pos_dx)
+#define DST_POSY	(pos_dy)
+#define DST_SIZX	(dest->size_x)
+#define DST_SIZY	(dest->size_y)
+#define	DST_XARG	(((DST_SIZX) + (DST_SIZX & 7))>>3)
+
+#define WRT_SIZX	(size_x)
+#define WRT_SIZY	(size_y)
+
+#if 0
+#define DPPCALC(adrs, pos_x, pos_y, size_x)		\
+	(u8*)((adrs) +								\
+	(((pos_x)>>1) & 3) +						\
+	(((pos_x)>>3) << 5) +						\
+	((((pos_y)>>3) * (size_x)) << 5) +			\
+	((u32)((pos_y)<<29)>>27)					\
+	)
+
+#define DPPCALC_256(adrs, pos_x, pos_y, size_x)	\
+	(u8*)((adrs) +								\
+	(pos_x & 7) +								\
+	((pos_x>>3) << 6) +							\
+	(((pos_y>>3) * size_x) << 6) +				\
+	((u32)((pos_y)<<29)>>26)					\
+	)
+#else
+#define DPPCALC(adrs, pos_x, pos_y, size_x)		\
+	(u8*)((adrs) +								\
+	((pos_x >> 1) & 0x00000003) +				\
+	((pos_x << 2) & 0x00003fe0) +				\
+	(((pos_y << 2) & 0x00003fe0) * size_x) +	\
+	((u32)((pos_y << 2)&0x0000001c))			\
+	)
+
+#define DPPCALC_256(adrs, pos_x, pos_y, size_x)	\
+	(u8*)((adrs) +								\
+	(pos_x & 0x00000007) +						\
+	((pos_x << 3) & 0x00007fc0) +				\
+	(((pos_y << 3) & 0x00007fc0) * size_x) +	\
+	((u32)((pos_y << 3)&0x00000038))			\
+	)
+#endif
+
+
+void GFL_BMP_PrintMain(
+			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
+			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+			u16 size_x, u16 size_y, u16 nuki_col )
+{
+	//srcとdestのカラーモードに相違があったら、アサートで止める
+	GF_ASSERT(src->col==dest->col);
+
+	if(src->col==GFL_BMP_16_COLOR){
+		GFL_BMP_PrintMain16( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
+	}
+	else{
+		GFL_BMP_PrintMain256( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 範囲を指定して指定された色コードで塗りつぶし
+ *
+ * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
+ * @param	pos_dx		書き込み先書き込み開始X座標
+ * @param	pos_dy		書き込み先書き込み開始Y座標
+ * @param	size_x		描画範囲Xサイズ
+ * @param	size_y		描画範囲Yサイズ
+ * @param	col_code	塗りつぶし色コード
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_BMP_Fill(
+		GFL_BMP_DATA * dest,
+		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+{
+	if(dest->col==GFL_BMP_16_COLOR){
+		GFL_BMP_Fill16( dest, pos_dx, pos_dy, size_x, size_y, col_code );
+	}
+	else{
+		GFL_BMP_Fill256( dest, pos_dx, pos_dy, size_x, size_y, col_code );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 指定された色コードで塗りつぶし
+ *
+ * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
+ * @param	col_code	塗りつぶし色コード
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code )
+{
+	GFL_STD_MemFill( dest, col_code, dest->size_x * dest->size_y * dest->col );
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 読み込みと書き込みのアドレスと範囲を指定してキャラを描画(透明色指定あり）
+ *
+ * @param	src			読み込み元キャラデータヘッダー構造体ポインタ
+ * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
+ * @param	pos_sx		読み込み元読み込み開始X座標
+ * @param	pos_sy		読み込み元読み込み開始Y座標
+ * @param	pos_dx		書き込み先書き込み開始X座標
+ * @param	pos_dy		書き込み先書き込み開始Y座標
+ * @param	size_x		描画範囲Xサイズ
+ * @param	size_y		描画範囲Yサイズ
+ * @param	nuki_col	透明色指定（0～15 0xff:透明色指定なし）
+ *
+ * @return	none
  *
  * @li	１６色用
  */
@@ -257,7 +405,7 @@ GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heap
 #endif
 
 
-void GFL_BMP_PrintMain(
+static	void GFL_BMP_PrintMain16(
 			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
 			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
@@ -328,7 +476,7 @@ void GFL_BMP_PrintMain(
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMP_PrintMain256(
+static	void GFL_BMP_PrintMain256(
 		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
 		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
@@ -388,7 +536,7 @@ void GFL_BMP_PrintMain256(
  * @li	１６色用
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMP_Fill(
+static	void GFL_BMP_Fill16(
 		GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
@@ -439,7 +587,7 @@ void GFL_BMP_Fill(
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMP_Fill256(
+static	void GFL_BMP_Fill256(
 		GFL_BMP_DATA * dest,
 		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
@@ -465,3 +613,4 @@ void GFL_BMP_Fill256(
 		}
 	}
 }
+

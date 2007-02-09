@@ -125,13 +125,9 @@ void
 		default:
 			GFL_FONT_GetData( fcode - STR_DEFAULT_CODE_MAX, &tw->fdata );
 
-			if( param->mode == GFL_TEXT_WRITE_16 ){
-				GFL_BMP_PrintMain(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-									tw->fdata.sizex, sizemaxY, 0 );
-			} else {
-				GFL_BMP_PrintMain256(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-										tw->fdata.sizex, sizemaxY, 0 );
-			}
+			GFL_BMP_PrintMain(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
+								tw->fdata.sizex, sizemaxY, 0 );
+
 			//ŽŸ‚Ì•¶Žš‚Ì•`‰æˆÊ’u‚ðÝ’è
 			tw->nowx += ( tw->fdata.sizex + param->spacex );
 			break;

@@ -148,30 +148,6 @@ GLOBAL void GFL_BMP_PrintMain(
 
 //--------------------------------------------------------------------------------------------
 /**
- * 読み込みと書き込みのアドレスと範囲を指定してキャラを描画(透明色指定あり）
- *
- * @param	src			読み込み元キャラデータヘッダー構造体ポインタ
- * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
- * @param	pos_sx		読み込み元読み込み開始X座標
- * @param	pos_sy		読み込み元読み込み開始Y座標
- * @param	pos_dx		書き込み先書き込み開始X座標
- * @param	pos_dy		書き込み先書き込み開始Y座標
- * @param	size_x		描画範囲Xサイズ
- * @param	size_y		描画範囲Yサイズ
- * @param	nuki_col	透明色指定（0～15 0xff:透明色指定なし）
- *
- * @return	none
- *
- * @li	２５６色用
- */
-//--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMP_PrintMain256(
-		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
-		u16 size_x, u16 size_y, u16 nuki_col );
-
-//--------------------------------------------------------------------------------------------
-/**
  * 範囲を指定して指定された色コードで塗りつぶし
  *
  * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
@@ -192,24 +168,15 @@ GLOBAL void GFL_BMP_Fill(
 
 //--------------------------------------------------------------------------------------------
 /**
- * 範囲を指定して指定された色コードで塗りつぶし
+ * 指定された色コードで塗りつぶし
  *
  * @param	dest		書き込み先キャラデータヘッダー構造体ポインタ
- * @param	pos_dx		書き込み先書き込み開始X座標
- * @param	pos_dy		書き込み先書き込み開始Y座標
- * @param	size_x		描画範囲Xサイズ
- * @param	size_y		描画範囲Yサイズ
  * @param	col_code	塗りつぶし色コード
  *
  * @return	none
- *
- * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMP_Fill256(
-		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
-
+GLOBAL	void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code );
 
 #undef GLOBAL
 #endif

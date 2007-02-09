@@ -2928,11 +2928,13 @@ static void VBlankLoadScreen( void );
 //--------------------------------------------------------------------------------------------
 void GFL_BG_VBlankFunc( void )
 {
-	VBlankScroll();		// スクロール
-	VBlankLoadScreen();	// スクリーン転送
+	if(bgl){
+		VBlankScroll();		// スクロール
+		VBlankLoadScreen();	// スクリーン転送
 
-	bgl->scroll_req = 0;
-	bgl->loadscrn_req = 0;
+		bgl->scroll_req = 0;
+		bgl->loadscrn_req = 0;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
