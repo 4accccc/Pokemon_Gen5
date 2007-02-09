@@ -32,8 +32,8 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
 /**
  * BMP初期化
  *
- * @param	sizex	Xサイズ
- * @param	sizey	Yサイズ
+ * @param	sizex	Xサイズ（キャラ単位）
+ * @param	sizey	Yサイズ（キャラ単位）
  * @param	col		カラーモード
  * @param	heapID	ヒープＩＤ
  *

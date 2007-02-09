@@ -33,8 +33,8 @@ struct _GFL_BMP_DATA{
 /**
  * BMP初期化
  *
- * @param	sizex	Xサイズ
- * @param	sizey	Yサイズ
+ * @param	sizex	Xサイズ（キャラ単位）
+ * @param	sizey	Yサイズ（キャラ単位）
  * @param	col		カラーモード（GFL_BMP_16_COLOR:16色　GFL_BMP_256_COLOR:256色）
  * @param	heapID	ヒープＩＤ
  *
@@ -45,8 +45,10 @@ GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
+	// 計算プロセス省略のため、内部ではドット単位で保持する
 	bmp->size_x	=	sizex * 8;
 	bmp->size_y	=	sizey * 8;
+
 	bmp->adrs	=	GFL_HEAP_AllocMemoryClear( heapID, sizex * sizey * col );
 
 	return bmp;
