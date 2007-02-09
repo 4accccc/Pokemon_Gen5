@@ -11,10 +11,7 @@
 
 #include "procsys.h"
 
-extern void TestModeInit(void);
-
-extern void TestModeMain(void);
-
+extern void TestModeSet(void);
 extern const GFL_PROC_DATA TestMainProcData;
 
 //------------------------------------------------------------------
