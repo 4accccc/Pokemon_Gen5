@@ -213,7 +213,7 @@ u32
 {
 	CHECK_ASSERT( man );
 
-	return GFL_AREAMAN_ReserveAssignArea( man, 0, man->numBlocks-1, blockNum );
+	return GFL_AREAMAN_ReserveAssignArea( man, 0, man->numBlocks, blockNum );
 }
 
 //------------------------------------------------------------------
@@ -363,10 +363,7 @@ static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea,
 			reserve_area( man, returnPos, numBlockReserve );
 
 			#ifdef AREAMAN_DEBUG
-			if( man->printDebugFlag )
-			{
-				print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
-			}
+			print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
 			#endif
 
 			return returnPos;
@@ -393,7 +390,7 @@ static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numB
 	u32 returnPos, endPos;
 	int bytePos, bytePosEnd, obc;
 
-	endPos = startPos + numBlockArea + 1 - numBlockReserve;
+	endPos = startPos + numBlockArea - numBlockReserve;
 	bytePos = startPos / 8;
 	bytePosEnd = endPos / 8;
 
@@ -407,7 +404,7 @@ static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numB
 //		startPos, endPos, bytePos, bytePosEnd, obc);
 
 
-	while( bytePos < bytePosEnd )
+	while( bytePos <= bytePosEnd )
 	{
 		if( obc )
 		{
@@ -423,7 +420,6 @@ static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numB
 
 			while( remBytes )
 			{
-				if( p > bytePosEnd ){ break; }
 				if( man->area[p] ){ break; }
 				p++;
 				remBytes--;
@@ -452,10 +448,7 @@ static u32 reserveHi( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea, u32 numB
 				{
 					reserve_area( man, returnPos, numBlockReserve );
 					#ifdef AREAMAN_DEBUG
-					if( man->printDebugFlag )
-					{
-						print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
-					}
+					print_reserveinfo( man, returnPos, numBlockReserve, __LINE__ );
 					#endif
 					return returnPos;
 				}
@@ -497,7 +490,7 @@ u32
 	GF_ASSERT_MSG( numBlockArea >= numBlockReserve, "areasize:%d, reserve:%d\n", 
 					numBlockArea, numBlockReserve );
 	GF_ASSERT( startBlock < man->numBlocks );
-	GF_ASSERT( (int)numBlockReserve < (int)(startBlock-1) );
+	GF_ASSERT( (int)numBlockReserve <= (int)(startBlock+1) );
 
 	#ifdef AREAMAN_DEBUG
 	if( man->printDebugFlag )
@@ -529,6 +522,10 @@ u32
 		{
 			ret = reserveLo( man, startBlock, numBlockArea, numBlockReserve );
 		}
+
+		#ifdef AREAMAN_DEBUG
+		print_reserveinfo( man, ret, numBlockReserve, __LINE__ );
+		#endif
 
 		return ret;
 	}
@@ -722,10 +719,7 @@ BOOL
 	reserve_area( man, pos, blockNum );
 
 	#ifdef AREAMAN_DEBUG
-	if( man->printDebugFlag )
-	{
-		print_reserveinfo( man, pos, blockNum, __LINE__ );
-	}
+	print_reserveinfo( man, pos, blockNum, __LINE__ );
 	#endif
 
 	return TRUE;
@@ -953,8 +947,11 @@ static void print_bit_all( GFL_AREAMAN* man )
 
 static void print_reserveinfo( GFL_AREAMAN* man, u32 pos, u32 blockNum, int line )
 {
-	OS_TPrintf("reserve %d to %d (%dblocks) - line:%d\n", pos, pos+blockNum-1, blockNum, line);
-	print_bit_all( man );
+	if( man->printDebugFlag )
+	{
+		OS_TPrintf("reserve %d to %d (%dblocks) - line:%d\n", pos, pos+blockNum-1, blockNum, line);
+		print_bit_all( man );
+	}
 }
 
 #endif
