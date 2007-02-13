@@ -138,6 +138,10 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaSubProcData2, ctrl);
 			*seq = 0;
 			return GFL_PROC_RES_CONTINUE;
+		} else if (key & PAD_BUTTON_X) {
+			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaSubProcData3, ctrl);
+			*seq = 0;
+			return GFL_PROC_RES_CONTINUE;
 		} else if (key & PAD_BUTTON_START) {
 			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &OamKeyDemoProcData, ctrl);
 			*seq = 0;

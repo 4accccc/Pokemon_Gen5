@@ -11,6 +11,7 @@ SRCS	+=		testmode.c \
 				tamada/bg/loader.c \
 				tamada/d_proc_bg.c \
 				tamada/debug_tamada.c \
+				tamada/lifegame.c \
 				sogabe/debug_sogabe.c \
 				sogabe/title.c \
 				tetsu/debug_watanabe.c \

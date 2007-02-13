@@ -42,5 +42,6 @@ extern const GFL_PROC_DATA DebugTamadaMainProcData;
 extern const GFL_PROC_DATA OamKeyDemoProcData;
 extern const GFL_PROC_DATA DebugTamadaSubProcData1;
 extern const GFL_PROC_DATA DebugTamadaSubProcData2;
+extern const GFL_PROC_DATA DebugTamadaSubProcData3;
 
 #endif	/* __TAMADA_INTERNAL_H__ */
