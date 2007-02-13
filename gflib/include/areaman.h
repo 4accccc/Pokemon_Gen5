@@ -11,7 +11,7 @@
 #ifndef __AREAMAN_H__
 #define __AREAMAN_H__
 
-//#define AREAMAN_DEBUG
+#define AREAMAN_DEBUG
 //--------------------------------------------
 // •sŠ®‘SŒ^’è‹`
 //--------------------------------------------
