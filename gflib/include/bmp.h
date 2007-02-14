@@ -25,6 +25,10 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
 #define	GFL_BMP_16_COLOR	(0x20)
 #define	GFL_BMP_256_COLOR	(0x40)
 
+// VRAM確保方向定義
+#define GFL_BMP_CHRAREA_GET_F	(GFL_BG_CHRAREA_GET_F)		//VRAM前方確保
+#define GFL_BMP_CHRAREA_GET_B	(GFL_BG_CHRAREA_GET_B)		//VRAM後方確保
+
 //ビットマップ書き込み用定義
 #define	GF_BMPPRT_NOTNUKI	( 0xffff )	// 抜き色指定なし
 
