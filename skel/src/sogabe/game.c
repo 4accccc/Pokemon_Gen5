@@ -144,14 +144,14 @@ void	YT_InitGame(GAME_PARAM *gp)
 	{
 		int	x,y;
 
-		for(x=0;x<4;x++){
+		for(x=0;x<YT_LINE_MAX;x++){
 			gp->ps[0].falltbl[x]=x;
 			gp->ps[1].falltbl[x]=x;
 			gp->ps[0].stoptbl[x]=x;
 			gp->ps[1].stoptbl[x]=x;
 		}
-		for(y=0;y<8;y++){
-			for(x=0;x<4;x++){
+		for(y=0;y<YT_HEIGHT_MAX;y++){
+			for(x=0;x<YT_LINE_MAX;x++){
 				gp->ps[0].ready[x][y]=NULL;
 				gp->ps[1].ready[x][y]=NULL;
 				gp->ps[0].fall[x][y]=NULL;
@@ -317,14 +317,14 @@ static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps)
 {
 	int	x,y;
 
-	for(x=0;x<4;x++){
-		for(y=0;y<8;y++){
+	for(x=0;x<YT_LINE_MAX;x++){
+		for(y=0;y<YT_HEIGHT_MAX;y++){
 			if(ps->fall[x][y]){
 				return FALSE;
 			}
 		}
 	}
-	for(x=0;x<4;x++){
+	for(x=0;x<YT_LINE_MAX;x++){
 		ps->falltbl[x]=x;
 	}
 	return TRUE;

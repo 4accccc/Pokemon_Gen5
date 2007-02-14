@@ -25,6 +25,8 @@
 struct fall_chr_param{
 	GAME_PARAM	*gp;
 	CLWK		*clwk;
+	CLSYS_POS	now_pos;
+	CLSYS_POS	offset_pos;
 	u8			seq_no;			//シーケンスナンバー
 	u8			push_seq_no;	//シーケンスナンバー
 	u8			player_no;		//プレーヤーナンバー
@@ -37,6 +39,7 @@ struct fall_chr_param{
 
 	int			rotate_speed;
 
+	u8			rotate_wait;
 	u8			fall_wait_tmp;
 	u8			rotate_flag		:2;		//回転フラグ
 	u8			overturn_flag	:1;		//ひっくり返しフラグ

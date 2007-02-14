@@ -30,6 +30,8 @@ enum{
 //=====================================
 
 #define	YT_CLACT_MAX	(128)
+#define	YT_LINE_MAX		(4)
+#define	YT_HEIGHT_MAX	(9)
 
 typedef struct {
 	void* p_cellbuff;
@@ -50,11 +52,11 @@ typedef struct	fall_chr_param	FALL_CHR_PARAM;
 
 typedef struct{
 	TCB				*tcb_player;
-	FALL_CHR_PARAM	*ready[4][8];
-	FALL_CHR_PARAM	*fall[4][8];
-	FALL_CHR_PARAM	*stop[4][8];
-	u8				falltbl[4];
-	u8				stoptbl[4];
+	FALL_CHR_PARAM	*ready[YT_LINE_MAX][YT_HEIGHT_MAX];
+	FALL_CHR_PARAM	*fall[YT_LINE_MAX][YT_HEIGHT_MAX];
+	FALL_CHR_PARAM	*stop[YT_LINE_MAX][YT_HEIGHT_MAX];
+	u8				falltbl[YT_LINE_MAX];
+	u8				stoptbl[YT_LINE_MAX];
 	u8				fall_wait;
 	u8				rotate_flag		:2;		//回転フラグ
 	u8				overturn_flag	:4;		//ひっくり返しフラグ

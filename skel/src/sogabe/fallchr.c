@@ -27,7 +27,7 @@ static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk);
 static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_line,int stop_line,int height);
 static	CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
-static	void	YT_ChrPosSet(CLWK *clwk,CLSYS_POS *pos,int clact_no);
+static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp);
 static	void	YT_AnmSeqSet(CLWK *clwk,u16 anm_seq,int clact_no);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
 
@@ -54,9 +54,12 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 	fcp->line_no=line_no;
 	fcp->dir=0;
 	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
+	fcp->offset_pos.x=0;
+	fcp->offset_pos.y=0;
 
 	GFL_TCB_AddTask(gp->tcbsys,YT_MainFallChr,fcp,TCB_PRI_FALL_CHR);
 	gp->clact->clact_work[fcp->clact_no]=fcp->clwk=YT_ClactWorkAdd(fcp);
+	GFL_CLACT_WkGetWldPos(fcp->clwk,&fcp->now_pos);
 
 	return fcp;
 }
@@ -71,6 +74,7 @@ enum{
 	SEQ_FALL_CHR_READY,
 	SEQ_FALL_CHR_FALL_INIT,
 	SEQ_FALL_CHR_FALL,
+	SEQ_FALL_CHR_LANDING,
 	SEQ_FALL_CHR_STOP,
 	SEQ_FALL_CHR_ROTATE,
 	SEQ_FALL_CHR_OVERTURN,
@@ -91,9 +95,6 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 	GAME_PARAM			*gp=(GAME_PARAM *)fcp->gp;
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
 	CLWK				*clwk=(CLWK *)fcp->clwk;
-	CLSYS_POS			pos;
-
-	GFL_CLACT_WkGetWldPos(clwk,&pos);
 
 	switch(fcp->seq_no){
 	case SEQ_FALL_CHR_READY_INIT:
@@ -101,15 +102,15 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 //		GFL_CLACT_WkSetAutoAnmSpeed(clwk,0);
 		fcp->seq_no++;
 	case SEQ_FALL_CHR_READY:
-		if(pos.y<YT_READY_Y_POS){
-			pos.y+=YT_READY_FALL_SPEED;
+		if(fcp->now_pos.y<YT_READY_Y_POS){
+			fcp->now_pos.y+=YT_READY_FALL_SPEED;
 		}
 		else{
-			pos.y=YT_READY_Y_POS;
+			fcp->now_pos.y=YT_READY_Y_POS;
 			YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp->type,fcp->clact_no);
 			fcp->seq_no++;
 		}
-		YT_ChrPosSet(clwk,&pos,fcp->clact_no);
+		YT_ChrPosSet(fcp);
 		break;
 	case SEQ_FALL_CHR_FALL_INIT:
 		if(ps->fall_wait){
@@ -125,7 +126,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			YT_RotateActSet(fcp);
 			break;
 		}
-		if(ps->rotate_flag){
+		if((ps->rotate_flag)||(ps->overturn_flag)){
 			break;
 		}
 		if((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0){
@@ -151,42 +152,86 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				fcp->seq_no=SEQ_FALL_CHR_STOP;
 				break;
 			default:
-				pos.y+=YT_FALL_SPEED;
-				YT_ChrPosSet(clwk,&pos,fcp->clact_no);
+				if((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0){
+					fcp->now_pos.y+=YT_FALL_SPEED;
+				}
+				else{
+					fcp->now_pos.y+=YT_FALL_SPEED*2;
+				}
+				YT_ChrPosSet(fcp);
 				break;
 			}
 		}
 		break;
 	case SEQ_FALL_CHR_STOP:
 		if(fcp->rotate_flag){
-			YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
 			YT_RotateActSet(fcp);
+			YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
+		}
+		if(fcp->overturn_flag){
+			YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_OVERTURN_UD+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
+			YT_ChrPosSet(fcp);
+			fcp->seq_no=SEQ_FALL_CHR_OVERTURN;
 		}
 		break;
 	case SEQ_FALL_CHR_ROTATE:
-		{
-			int	rotate_pos[][4]={{28,52,76,100},{28,52,76,100}};
-
-			pos.x+=fcp->rotate_speed;
-			if(fcp->rotate_speed>0){
-				if(pos.x>=rotate_pos[fcp->player_no][fcp->rotate_flag]){
-					fcp->line_no=fcp->rotate_flag;
-					fcp->rotate_flag=0;
+		if(fcp->rotate_wait){
+			fcp->rotate_wait--;
+		}
+		else{
+			{
+				int	i;
+				int	rotate_pos[][4]={{28,52,76,100},{28,52,76,100}};
+	
+				fcp->now_pos.x+=fcp->rotate_speed;
+				if(fcp->rotate_speed>0){
+					if(fcp->now_pos.x>=rotate_pos[fcp->player_no][fcp->rotate_flag]){
+						fcp->line_no=fcp->rotate_flag;
+						fcp->rotate_flag=0;
+					}
 				}
-			}
-			else{
-				if(pos.x<=rotate_pos[fcp->player_no][fcp->rotate_flag-1]){
-					fcp->line_no=fcp->rotate_flag-1;
-					fcp->rotate_flag=0;
+				else{
+					if(fcp->now_pos.x<=rotate_pos[fcp->player_no][fcp->rotate_flag-1]){
+						fcp->line_no=fcp->rotate_flag-1;
+						fcp->rotate_flag=0;
+					}
 				}
-			}
-			YT_ChrPosSet(clwk,&pos,fcp->clact_no);
-			if(fcp->rotate_flag==0){
-				fcp->seq_no=fcp->push_seq_no;
+				YT_ChrPosSet(fcp);
+				if(fcp->rotate_flag==0){
+					fcp->seq_no=fcp->push_seq_no;
+					if(fcp->seq_no==SEQ_FALL_CHR_STOP){
+						for(i=0;i<YT_HEIGHT_MAX;i++){
+							if(ps->stop[ps->stoptbl[fcp->line_no]][i]==fcp){
+								break;
+							}
+						}
+						if(ps->stop[ps->stoptbl[fcp->line_no]][i+1]){
+							YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_TUBURE_U+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
+						}
+					}
+				}
 			}
 		}
 		break;
 	case SEQ_FALL_CHR_OVERTURN:
+		if(GFL_CLACT_WkCheckAnmActive(clwk)==FALSE){
+			fcp->dir^=1;
+			fcp->overturn_flag=0;
+			fcp->offset_pos.y=0;
+			YT_ChrPosSet(fcp);
+			fcp->seq_no=SEQ_FALL_CHR_STOP;
+			{
+				int	i;
+				for(i=0;i<YT_HEIGHT_MAX;i++){
+					if(ps->stop[ps->stoptbl[fcp->line_no]][i]==fcp){
+						break;
+					}
+				}
+				if(ps->stop[ps->stoptbl[fcp->line_no]][i+1]){
+					YT_AnmSeqSet(clwk,NANR_fall_obj_KURIBO_TUBURE_U+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
+				}
+			}
+		}
 		break;
 	case SEQ_FALL_CHR_EGG_MAKE:
 		break;
@@ -195,6 +240,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 		fcp->seq_no++;
 	case SEQ_FALL_CHR_VANISH:
 		if(GFL_CLACT_WkCheckAnmActive(clwk)==FALSE){
+			GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
 			GFL_CLACT_WkDel(clwk);
 			GFL_HEAP_FreeMemory(fcp);
 			GFL_TCB_DeleteTask(tcb);
@@ -213,14 +259,14 @@ static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps)
 	int	x,y;
 
 	//ready配列をクリア
-	for(y=0;y<8;y++){
+	for(y=0;y<YT_HEIGHT_MAX;y++){
 		if(ps->ready[fcp->line_no][y]==fcp){
 			ps->ready[fcp->line_no][y]=NULL;
 			break;
 		}
 	}
 	//見つからなければアサート
-	GF_ASSERT(y!=8);
+	GF_ASSERT(y!=YT_HEIGHT_MAX);
 	
 	//fall配列にセット
 	ps->fall[fcp->line_no][y]=fcp;
@@ -237,19 +283,16 @@ static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk)
 	int			check_stop_line=ps->stoptbl[fcp->line_no];
 	int			height;
 	int			height_tbl[]={144,130,116,102,88,74,60,46,32};
-	CLSYS_POS	pos;
 
-	for(height=0;height<9;height++){
+	for(height=0;height<YT_HEIGHT_MAX;height++){
 		if(ps->stop[check_stop_line][height]==0){
 			break;
 		}
 	}
 
-	GFL_CLACT_WkGetWldPos(clwk,&pos);
-
-	if(pos.y>=height_tbl[height]){
-		pos.y=height_tbl[height];
-		YT_ChrPosSet(clwk,&pos,fcp->clact_no);
+	if(fcp->now_pos.y>=height_tbl[height]){
+		fcp->now_pos.y=height_tbl[height];
+		YT_ChrPosSet(fcp);
 		return YT_LandingStart(fcp,ps,check_fall_line,check_stop_line,height);
 	}
 
@@ -266,14 +309,14 @@ static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_li
 	int	x,y;
 
 	//fall配列をクリア
-	for(y=0;y<8;y++){
+	for(y=0;y<YT_HEIGHT_MAX;y++){
 		if(ps->fall[fall_line][y]==fcp){
 			ps->fall[fall_line][y]=NULL;
 			break;
 		}
 	}
 	//見つからなければアサート
-	GF_ASSERT(y!=8);
+	GF_ASSERT(y!=YT_HEIGHT_MAX);
 	
 
 	//一番下ではなければ、下のキャラをつぶすか、マッチングチェックを行う
@@ -319,7 +362,7 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 {
 	CLWK_RES	resdat;
 	CLWK		*p_wk;
-	CLWK_DATA	data[][4]={
+	CLWK_DATA	data[][YT_LINE_MAX]={
 					//PLAYER1
 					{
 						//LINE0
@@ -373,16 +416,16 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 //----------------------------------------------------------------------------
 /**
  *	@brief	アクター位置情報セット
- *	
- *	@param	clwk		セルアクターワーク
- *	@param	pos			位置情報構造体
- *	@param	clact_no	セルアクターナンバー
- *
  */
 //-----------------------------------------------------------------------------
-static	void	YT_ChrPosSet(CLWK *clwk,CLSYS_POS *pos,int clact_no)
+static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp)
 {
-	GFL_CLACT_WkSetWldPos(clwk,pos);
+	CLSYS_POS	pos;
+
+	pos.x=fcp->now_pos.x+fcp->offset_pos.x;
+	pos.y=fcp->now_pos.y+fcp->offset_pos.y;
+
+	GFL_CLACT_WkSetWldPos(fcp->clwk,&pos);
 
 	//通信対戦時には、座標を送信する
 }
@@ -424,3 +467,4 @@ static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp)
 	fcp->push_seq_no=fcp->seq_no;
 	fcp->seq_no=SEQ_FALL_CHR_ROTATE;
 }
+
