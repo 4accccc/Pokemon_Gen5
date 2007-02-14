@@ -151,6 +151,12 @@ void GFLUser_Exit(void)
 void GFLUser_VIntr(void)
 {
 	GFL_TCB_SysMain(gfl_work->TCBSysVintr);
+	GFL_BG_VBlankFunc();
+	// Vブランク期間で実行します。
+	// ただ、ユニットの描画が行われていないのに
+	// この関数を実行すると、描画しているOBJが消えてしまうため
+	// 割り込みないで呼ばないほうが良いかもしれません。
+	GFL_CLACT_SysVblank();
 }
 
 

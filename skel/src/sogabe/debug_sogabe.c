@@ -45,8 +45,8 @@ extern	void	YT_MainTitle(GAME_PARAM *);
 static	ytFunc	YT_JobTable[]={
 	YT_InitTitle,
 	YT_MainTitle,
-//	YT_InitGame,
-//	YT_MainGame,
+	YT_InitGame,
+	YT_MainGame,
 };
 
 //============================================================================================
@@ -71,7 +71,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), GFL_HEAPID_APP);
 
-	gp->job_no=YT_InitTitleNo;
+	gp->heapID=GFL_HEAPID_APP;
+
+	YT_JobNoSet(gp,YT_InitTitleNo);
 
 	game_init(gp);
 
@@ -137,7 +139,7 @@ static	void	game_init(GAME_PARAM *gp)
 	GFL_UI_TP_sysInit(GFL_HEAPID_APP);
 
 	//セルアクター初期化
-//	gp->clact_wk = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(DEBUG_CLACT) );
+	gp->clact = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(YT_CLACT) );
 
 	// セルアクターシステム初期化
 	// まずこの処理を行う必要があります。
@@ -159,5 +161,16 @@ static	void	game_init(GAME_PARAM *gp)
 		};
 		GFL_CLACT_SysInit( &param, GFL_HEAPID_APP );
 	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		gp->job_noへの代入
+ */
+//------------------------------------------------------------------
+void	YT_JobNoSet(GAME_PARAM *gp,int job_no)
+{
+	gp->job_no=job_no;
+	gp->seq_no=0;
 }
 

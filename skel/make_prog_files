@@ -14,6 +14,9 @@ SRCS	+=		testmode.c \
 				tamada/lifegame.c \
 				sogabe/debug_sogabe.c \
 				sogabe/title.c \
+				sogabe/game.c \
+				sogabe/player.c \
+				sogabe/fallchr.c \
 				tetsu/debug_watanabe.c \
 				tomoya/debug_tomoya.c
 				

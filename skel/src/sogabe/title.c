@@ -31,7 +31,7 @@
 void	YT_InitTitle(GAME_PARAM *gp)
 {
 	//BGシステム初期化
-	GFL_BG_sysInit(GFL_HEAPID_APP);
+	GFL_BG_sysInit(gp->heapID);
 
 	//VRAM設定
 	{
@@ -69,13 +69,13 @@ void	YT_InitTitle(GAME_PARAM *gp)
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME2_M
 			{
-				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 			///<FRAME3_M
 			{
-				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
@@ -111,22 +111,19 @@ void	YT_InitTitle(GAME_PARAM *gp)
 		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}
 
-	{
-		u32	chr_ofs;
-
-		chr_ofs=GFL_ARC_UtilBgCharSetAreaMan(0,NARC_yossyegg_TITLE_V2_NCGR,GFL_BG_FRAME2_M,0,0,GFL_HEAPID_APP);
-		GFL_ARC_UtilScrnSetCharOfs(0,NARC_yossyegg_TITLE_V2_NSCR,GFL_BG_FRAME2_M,0,chr_ofs,0,0,GFL_HEAPID_APP);
-		chr_ofs=GFL_ARC_UtilBgCharSetAreaMan(0,NARC_yossyegg_STAGESEL_NCGR,GFL_BG_FRAME3_M,0,0,GFL_HEAPID_APP);
-		GFL_ARC_UtilScrnSetCharOfs(0,NARC_yossyegg_STAGESEL_NSCR,GFL_BG_FRAME3_M,0,chr_ofs,0,0,GFL_HEAPID_APP);
-		GFL_ARC_UtilPalSet(0,NARC_yossyegg_TITLE_BG_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
-	}
+	//画面生成
+	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_TITLE_V2_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_TITLE_V2_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_STAGESEL_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_STAGESEL_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UtilPalSet(0,NARC_yossyegg_TITLE_BG_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
 
 	GFL_DISP_DispOn();
 	GFL_DISP_DispSelect( GFL_DISP_3D_TO_SUB );
 
 	GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
 
-	gp->job_no=YT_MainTitleNo;
+	YT_JobNoSet(gp,YT_MainTitleNo);
 }
 
 //----------------------------------------------------------------------------
@@ -136,7 +133,24 @@ void	YT_InitTitle(GAME_PARAM *gp)
  *	@param	gp		ゲームパラメータポインタ
  */
 //-----------------------------------------------------------------------------
+enum{
+	YT_SEQ_TITLE_KEY_WAIT=0,
+	YT_SEQ_TITLE_END,
+};
 void	YT_MainTitle(GAME_PARAM *gp)
 {
+	switch(gp->seq_no){
+	case YT_SEQ_TITLE_KEY_WAIT:
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_START){
+			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->seq_no++;
+		}
+		break;
+	case YT_SEQ_TITLE_END:
+		if(GFL_FADE_FadeCheck()==FALSE){
+			GFL_BG_sysExit();
+			YT_JobNoSet(gp,YT_InitGameNo);
+		}
+	}
 }
 
