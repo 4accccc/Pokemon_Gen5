@@ -300,6 +300,12 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 			continue;
 		}
 		type=__GFL_STD_MTRand()%4;
+		//デカキャラは、確率を低くする
+		if(type==YT_CHR_TERESA){
+			if(__GFL_STD_MTRand()%5==0){
+				type=YT_CHR_DEKATERESA;
+			}
+		}
 		gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
 		i--;
 	}

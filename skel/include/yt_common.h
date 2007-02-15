@@ -26,6 +26,21 @@ enum{
 };
 
 //-------------------------------------
+///	キャラクタナンバー
+//=====================================
+enum{
+	YT_CHR_KURIBO=0,
+	YT_CHR_PAKKUN,
+	YT_CHR_GESSO,
+	YT_CHR_TERESA,
+	YT_CHR_DEKATERESA,
+	YT_CHR_GREEN_EGG_U,
+	YT_CHR_GREEN_EGG_D,
+	YT_CHR_RED_EGG_U,
+	YT_CHR_RED_EGG_D,
+};
+
+//-------------------------------------
 ///	セルアクタープロセスワーク
 //=====================================
 

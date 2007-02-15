@@ -323,20 +323,37 @@ static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_li
 	if(height){
 		{
 			FALL_CHR_PARAM	*fcp_under=ps->stop[stop_line][height-1];
-			CLWK			*clwk_under=fcp_under->clwk;
+
 			if(fcp->type==fcp_under->type){
 				fcp_under->seq_no=SEQ_FALL_CHR_VANISH_INIT;
 				ps->stop[stop_line][height-1]=NULL;
 				//‚³‚ç‚É‰º‚ÌƒLƒƒƒ‰‚ª‚¢‚½ê‡‚Í‚Â‚Ô‚ê‚ðŒ³‚É–ß‚·
 				if(height-1){
 					fcp_under=ps->stop[stop_line][height-2];
-					clwk_under=fcp_under->clwk;
-					YT_AnmSeqSet(clwk_under,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
+					YT_AnmSeqSet(fcp_under->clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
 				}
 				return YT_ACT_VANISH;
 			}
+			else if((fcp->type==YT_CHR_TERESA)&&(fcp_under->type==YT_CHR_DEKATERESA)){
+				fcp_under->type=YT_CHR_TERESA;
+				YT_AnmSeqSet(fcp_under->clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
+				return YT_ACT_VANISH;
+			}
+			else if((fcp_under->type==YT_CHR_TERESA)&&(fcp->type==YT_CHR_DEKATERESA)){
+				fcp_under->seq_no=SEQ_FALL_CHR_VANISH_INIT;
+				ps->stop[stop_line][height-1]=NULL;
+				//‚³‚ç‚É‰º‚ÌƒLƒƒƒ‰‚ª‚¢‚½ê‡‚Í‚Â‚Ô‚ê‚ðŒ³‚É–ß‚·
+				if(height-1){
+					fcp_under=ps->stop[stop_line][height-2];
+					YT_AnmSeqSet(fcp_under->clwk,NANR_fall_obj_KURIBO_STOP_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
+				}
+				ps->fall[fall_line][y]=fcp;
+				fcp->type=YT_CHR_TERESA;
+				YT_AnmSeqSet(fcp->clwk,NANR_fall_obj_KURIBO_FALL+YT_FALL_CHR_ANM_OFS*fcp->type+fcp->dir,fcp->clact_no);
+				return YT_ACT_FALL;
+			}
 			else{
-				YT_AnmSeqSet(clwk_under,NANR_fall_obj_KURIBO_TUBURE_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
+				YT_AnmSeqSet(fcp_under->clwk,NANR_fall_obj_KURIBO_TUBURE_U+YT_FALL_CHR_ANM_OFS*fcp_under->type+fcp_under->dir,fcp->clact_no);
 			}
 		}
 	}
