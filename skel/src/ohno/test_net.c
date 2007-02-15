@@ -65,6 +65,7 @@ enum{
     _TEST_2,
     _TEST_3,
     _TEST_END,
+    _TEST_EXIT,
 
 };
 
@@ -190,6 +191,10 @@ void TEST_NET_Main(void)
             break;
           case _TEST_END:
             GFL_NET_Disconnect();
+            _testNo++;
+            break;
+          case _TEST_EXIT:
+            GFL_NET_sysExit();
             _testNo++;
             break;
         }
