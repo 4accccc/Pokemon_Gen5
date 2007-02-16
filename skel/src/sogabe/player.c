@@ -467,9 +467,7 @@ static	void	YT_PlayerChrTrans(PLAYER_PARAM *pp);
 static	void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no);
 static	void	YT_PlayerRotateScreenMake(PLAYER_PARAM *pp,u8 flag);
 static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps);
-static	void	YT_PlayerRotateCheck(TCB *tcb,void *work);
 static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag);
-static	void	YT_PlayerOverTurnCheck(TCB *tcb,void *work);
 
 //----------------------------------------------------------------------------
 /**
@@ -541,7 +539,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			}
 			break;
 		case YT_PLAYER_ACT_ROTATE:
-			if(ps->rotate_flag==0){
+			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir);
 				YT_PlayerRotateScreenMake(pp,0);
 				pp->seq_no=SEQ_PLAYER_ROTATE;
@@ -549,21 +547,21 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_L:
-			if(ps->overturn_flag==0){
+			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_R:
-			if(ps->overturn_flag==0){
+			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_C:
-			if(ps->overturn_flag==0){
+			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
@@ -822,13 +820,13 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 		fcp=ps->stop[left_line][i];
 		if(fcp){
 			fcp->rotate_flag=ps->rotate_flag;
-			fcp->rotate_wait=i;
+			fcp->wait_value=i;
 			left_height++;
 		}
 		fcp=ps->stop[right_line][i];
 		if(fcp){
 			fcp->rotate_flag=ps->rotate_flag;
-			fcp->rotate_wait=i;
+			fcp->wait_value=i;
 			right_height++;
 		}
 	}
@@ -864,62 +862,6 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 				}
 			}
 		}
-	}
-	GFL_TCB_AddTask(pp->gp->tcbsys,YT_PlayerRotateCheck,ps,TCB_PRI_PLAYER);
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	回転処理終了チェック
- *	
- *	@param	pp		プレーヤーパラメータポインタ
- *	@param	ps		プレーヤーステータス
- */
-//-----------------------------------------------------------------------------
-static	void	YT_PlayerRotateCheck(TCB *tcb,void *work)
-{
-	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)work;
-	int					i;
-	int					left_line_stop;
-	int					right_line_stop;
-	int					left_line_fall;
-	int					right_line_fall;
-	FALL_CHR_PARAM		*fcp;
-
-	left_line_stop=ps->stoptbl[ps->rotate_flag-1];
-	right_line_stop=ps->stoptbl[ps->rotate_flag];
-	left_line_fall=ps->falltbl[ps->rotate_flag-1];
-	right_line_fall=ps->falltbl[ps->rotate_flag];
-
-	for(i=0;i<YT_HEIGHT_MAX;i++){
-		fcp=ps->stop[left_line_stop][i];
-		if(fcp){
-			if(fcp->rotate_flag){
-				break;
-			}
-		}
-		fcp=ps->stop[right_line_stop][i];
-		if(fcp){
-			if(fcp->rotate_flag){
-				break;
-			}
-		}
-		fcp=ps->fall[left_line_fall][i];
-		if(fcp){
-			if(fcp->rotate_flag){
-				break;
-			}
-		}
-		fcp=ps->fall[right_line_fall][i];
-		if(fcp){
-			if(fcp->rotate_flag){
-				break;
-			}
-		}
-	}
-	if(i==YT_HEIGHT_MAX){
-		ps->rotate_flag=0;
-		GFL_TCB_DeleteTask(tcb);
 	}
 }
 
@@ -965,41 +907,6 @@ static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag)
 				fcp->offset_pos.y=-1;
 			}
 		}
-	}
-
-	GFL_TCB_AddTask(pp->gp->tcbsys,YT_PlayerOverTurnCheck,ps,TCB_PRI_PLAYER);
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	回転処理終了チェック
- *	
- *	@param	pp		プレーヤーパラメータポインタ
- *	@param	ps		プレーヤーステータス
- */
-//-----------------------------------------------------------------------------
-static	void	YT_PlayerOverTurnCheck(TCB *tcb,void *work)
-{
-	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)work;
-	int					x,y,line;
-	FALL_CHR_PARAM		*fcp;
-
-	for(x=0;x<YT_LINE_MAX;x++){
-		line=ps->stoptbl[x];
-		if(ps->overturn_flag&(1<<x)){
-			for(y=0;y<YT_HEIGHT_MAX;y++){
-				fcp=ps->stop[line][y];
-				if(fcp){
-					if(fcp->overturn_flag){
-						break;
-					}
-				}
-			}
-		}
-	}
-	if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
-		ps->overturn_flag=0;
-		GFL_TCB_DeleteTask(tcb);
 	}
 }
 

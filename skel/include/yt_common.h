@@ -38,6 +38,25 @@ enum{
 	YT_CHR_GREEN_EGG_D,
 	YT_CHR_RED_EGG_U,
 	YT_CHR_RED_EGG_D,
+	YT_CHR_GREEN_EGG,
+	YT_CHR_RED_EGG,
+};
+
+//-------------------------------------
+///	キャラクタ毎の表示プライオリティー
+//=====================================
+enum{
+	YT_PRI_KURIBO=40,
+	YT_PRI_PAKKUN=40,
+	YT_PRI_GESSO=40,
+	YT_PRI_TERESA=40,
+	YT_PRI_DEKATERESA=30,
+	YT_PRI_GREEN_EGG_U=0,
+	YT_PRI_GREEN_EGG_D=10,
+	YT_PRI_RED_EGG_U=0,
+	YT_PRI_RED_EGG_D=10,
+	YT_PRI_GREEN_EGG=20,
+	YT_PRI_RED_EGG=20,
 };
 
 //-------------------------------------
@@ -72,10 +91,13 @@ typedef struct{
 	FALL_CHR_PARAM	*stop[YT_LINE_MAX][YT_HEIGHT_MAX];
 	u8				falltbl[YT_LINE_MAX];
 	u8				stoptbl[YT_LINE_MAX];
+	u16				rotate_flag			:2;		//回転フラグ
+	u16				overturn_flag		:4;		//ひっくり返しフラグ
+	u16				egg_make_check_flag	:4;		//タマゴ作成チェックフラグ
+	u16				egg_make_flag		:1;		//タマゴ作成フラグ
+	u16									:5;
 	u8				fall_wait;
-	u8				rotate_flag		:2;		//回転フラグ
-	u8				overturn_flag	:4;		//ひっくり返しフラグ
-	u8								:2;
+	u8				dummy;
 }YT_PLAYER_STATUS;
 
 //ゲームパラメータ構造体宣言
@@ -90,6 +112,7 @@ typedef	struct
 	GFL_AREAMAN			*clact_area;
 	YT_PLAYER_STATUS	ps[2];
 	u8					default_fall_wait;
+	TCB					*check_tcb;
 }GAME_PARAM;
 
 //TCBプライオリティ定義
@@ -101,9 +124,6 @@ typedef	struct
 #define	YT_PLAYER_FRAME		(GFL_BG_FRAME2_M)	//プレーヤーを描画するフレーム
 #define	YT_PLAYER_CHRNO		(0x20)				//プレーヤーキャラを転送するキャラ位置
 #define	YT_PLAYER_PALNO		(0x02<<12)			//プレーヤーキャラのパレットナンバー
-
-//アニメーションNoオフセット
-#define	YT_FALL_CHR_ANM_OFS	(10)
 
 #define	YT_READY_NEXT_Y_POS		(48)
 #define	YT_READY_FALL_SPEED		(4)

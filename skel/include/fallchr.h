@@ -27,6 +27,7 @@ struct fall_chr_param{
 	CLWK		*clwk;
 	CLSYS_POS	now_pos;
 	CLSYS_POS	offset_pos;
+
 	u8			seq_no;			//シーケンスナンバー
 	u8			push_seq_no;	//シーケンスナンバー
 	u8			player_no;		//プレーヤーナンバー
@@ -37,13 +38,15 @@ struct fall_chr_param{
 	u8			clact_no;		//セルアクターナンバー
 	u8			fall_wait;
 
-	int			rotate_speed;
+	int			speed_value;	//移動スピード格納ワーク（ROTATE、EGG_MAKEなど）
 
-	u8			rotate_wait;
+	u8			wait_value;		//ウエイト系の格納ワーク
 	u8			fall_wait_tmp;
 	u8			rotate_flag		:2;		//回転フラグ
 	u8			overturn_flag	:1;		//ひっくり返しフラグ
-	u8							:5;
+	u8			egg_make_flag	:1;
+	u8							:4;
+	u8			dummy;
 };
 
 //----------------------------------------------------------------------------
@@ -59,5 +62,14 @@ struct fall_chr_param{
  */
 //-----------------------------------------------------------------------------
 GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	タマゴ生成チェック
+ *	
+ *	@param	ps		プレーヤーステータス
+ */
+//-----------------------------------------------------------------------------
+GLOBAL	void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps);
 
 #endif	__FALL_CHR_H__

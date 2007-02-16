@@ -28,6 +28,7 @@ static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
 static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
 static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
+static	void	YT_CheckFlag(TCB *tcb,void *work);
 
 //----------------------------------------------------------------------------
 /**
@@ -171,6 +172,9 @@ void	YT_InitGame(GAME_PARAM *gp)
 	//プレーヤー初期化
 	YT_InitPlayer(gp,0,0);
 
+	//ゲームフラグチェックタスクセット
+	gp->check_tcb=GFL_TCB_AddTask(gp->tcbsys,YT_CheckFlag,gp,TCB_PRI_PLAYER);
+
 	YT_JobNoSet(gp,YT_MainGameNo);
 
 }
@@ -306,6 +310,12 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 				type=YT_CHR_DEKATERESA;
 			}
 		}
+		else{
+			//タマゴの殻発生確率
+			if(__GFL_STD_MTRand()%5==0){
+				type=YT_CHR_GREEN_EGG_U+__GFL_STD_MTRand()%4;
+			}
+		}
 		gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
 		i--;
 	}
@@ -401,6 +411,116 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 		clact_res->p_cellanmbuff = GFL_ARC_DataLoadMalloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
 		result = NNS_G2dGetUnpackedAnimBank( clact_res->p_cellanmbuff, &clact_res->p_cellanm );
 		GF_ASSERT( result );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゲームフラグチェックタスク
+ */
+//-----------------------------------------------------------------------------
+static	void	YT_CheckFlag(TCB *tcb,void *work)
+{
+	GAME_PARAM			*gp=(GAME_PARAM *)work;
+	YT_PLAYER_STATUS	*ps;
+	int					player_no;
+
+	for(player_no=0;player_no<2;player_no++){
+		ps=&gp->ps[player_no];
+		//回転処理終了チェック
+		if(ps->rotate_flag){
+			{
+				int					i;
+				int					left_line_stop;
+				int					right_line_stop;
+				int					left_line_fall;
+				int					right_line_fall;
+				FALL_CHR_PARAM		*fcp;
+
+				left_line_stop=ps->stoptbl[ps->rotate_flag-1];
+				right_line_stop=ps->stoptbl[ps->rotate_flag];
+				left_line_fall=ps->falltbl[ps->rotate_flag-1];
+				right_line_fall=ps->falltbl[ps->rotate_flag];
+
+				for(i=0;i<YT_HEIGHT_MAX;i++){
+					fcp=ps->stop[left_line_stop][i];
+					if(fcp){
+						if(fcp->rotate_flag){
+							break;
+						}
+					}
+					fcp=ps->stop[right_line_stop][i];
+					if(fcp){
+						if(fcp->rotate_flag){
+							break;
+						}
+					}
+					fcp=ps->fall[left_line_fall][i];
+					if(fcp){
+						if(fcp->rotate_flag){
+							break;
+						}
+					}
+					fcp=ps->fall[right_line_fall][i];
+					if(fcp){
+						if(fcp->rotate_flag){
+							break;
+						}
+					}
+				}
+				if(i==YT_HEIGHT_MAX){
+					ps->rotate_flag=0;
+				}
+			}
+		}
+		//ひっくり返し処理終了チェック
+		if(ps->overturn_flag){
+			{
+				int					x,y,line;
+				FALL_CHR_PARAM		*fcp;
+
+				for(x=0;x<YT_LINE_MAX;x++){
+					line=ps->stoptbl[x];
+					if(ps->overturn_flag&(1<<x)){
+						for(y=0;y<YT_HEIGHT_MAX;y++){
+							fcp=ps->stop[line][y];
+							if(fcp){
+								if(fcp->overturn_flag){
+									break;
+								}
+							}
+						}
+					}
+				}
+				if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
+					ps->overturn_flag=0;
+				}
+			}
+		}
+		//タマゴ生成チェック
+		if(ps->egg_make_check_flag){
+			YT_EggMakeCheck(ps);
+		}
+		//タマゴ生成中チェック
+		if(ps->egg_make_flag){
+			{
+				YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)work;
+				int					x,y;
+				FALL_CHR_PARAM		*fcp;
+
+				for(x=0;x<YT_LINE_MAX;x++){
+					for(y=0;y<YT_HEIGHT_MAX;y++){
+						fcp=ps->stop[x][y];
+						if(fcp){
+							if(fcp->egg_make_flag){
+								return;
+							}
+						}
+					}
+				}
+				ps->egg_make_flag=0;
+			}
+		}
 	}
 }
 
