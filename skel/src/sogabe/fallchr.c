@@ -319,6 +319,15 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			YT_ChrPosSet(fcp);
 			fcp->seq_no=SEQ_FALL_CHR_OVERTURN;
 		}
+		if((ps->rotate_flag)||(ps->overturn_flag)||(ps->egg_make_check_flag)||(ps->egg_make_flag)){
+			break;
+		}
+		if(fcp->birth_wait){
+			fcp->birth_wait--;
+		}
+		else{
+			YT_YossyBirth(fcp);
+		}
 		break;
 	case SEQ_FALL_CHR_VANISH_INIT:
 		YT_AnmSeqSet(fcp,YT_ANM_VANISH);
@@ -642,6 +651,8 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 	int				egg_line;
 	int				egg_height;
 	int				egg_search;
+	int				chr_count=0;
+	int				egg_count=1;
 	FALL_CHR_PARAM	*fcp_p;
 
 	while(ps->egg_make_check_flag){
@@ -710,9 +721,18 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 							egg_search++;
 						}
 					}
+					fcp_p=ps->stop[egg_line][egg_height];
+					fcp_p->chr_count=chr_count*egg_count;
+					fcp_p->birth_wait=YT_BIRTH_WAIT*fcp_p->chr_count;
 					egg_search=0;
 					break;
+				case YT_CHR_GREEN_EGG:
+				case YT_CHR_RED_EGG:
+					egg_count++;
+					chr_count+=fcp_p->chr_count;
+					break;
 				default:
+					chr_count++;
 					break;
 				}
 			}
@@ -720,5 +740,31 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 		line_no++;
 		ps->egg_make_check_flag=ps->egg_make_check_flag>>1;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ヨッシー誕生処理
+ *	
+ *	@param	fcp		落下キャラパラメータ
+ */
+//-----------------------------------------------------------------------------
+static	void	YT_YossyBirth(FALL_CHR_PARAM *fcp)
+{
+	int	x,y;
+
+	x=fcp->stoptbl[fcp->line_no];
+
+	//stop配列をクリア
+	for(y=0;y<YT_HEIGHT_MAX;y++){
+		if(ps->stop[x][y]==fcp){
+			ps->stop[x][y]=NULL;
+			break;
+		}
+	}
+	//見つからなければアサート
+	GF_ASSERT(y!=YT_HEIGHT_MAX);
+
+	fcp->seq_no=SEQ_FALL_CHR_VANISH_INIT;
 }
 

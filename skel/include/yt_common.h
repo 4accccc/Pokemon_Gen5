@@ -135,6 +135,8 @@ typedef	struct
 
 #define	YT_ROTATE_SPEED			(2)
 
+#define	YT_BIRTH_WAIT			(60)			//はさんだキャラ1個当たりの生まれるまでのウエイト
+
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
 
 #endif	__YT_COMMON_H__
