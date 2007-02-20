@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	comm_state.c
+ * @file	net_state.c
  * @brief	通信状態を管理するサービス  通信の上位にある
  *          スレッドのひとつとして働き、自分の通信状態や他の機器の
  *          開始や終了を管理する
@@ -39,34 +39,12 @@ struct _NET_PARENTSYS_t{
 // 定義
 //==============================================================================
 
-#define _HEAPSIZE_BATTLE           (0x7080)  // バトル機領域
-#define _HEAPSIZE_UNDERGROUND      (0xE000)  // 地下領域
-#define _HEAPSIZE_UNION            (0x7080)  // ユニオンルーム領域
-#define _HEAPSIZE_POKETCH          (0x7000)  // ぽけっち機領域
-#define _HEAPSIZE_PARTY            (0x7000)  // パーティーサーチ
-#define _HEAPSIZE_WIFI            (0x2A000+0x7000)  //DWCRAP が使用する領域
-#define _HEAPSIZE_DPW              (0x100)   // 世界交換　タワー用
+#define _PACKETSIZE_DEFAULT         (512)  // パケットサイズの最大サイズ
 
-#define _PACKETSIZE_BATTLE         (512)//(1376)  // バトル機領域
-#define _PACKETSIZE_UNDERGROUND     (500)  // 地下領域
-#define _PACKETSIZE_UNION          (512)//(1280)  // ユニオンルーム領域
-#define _PACKETSIZE_POKETCH          (32)  // ぽけっち領域
-#define _PACKETSIZE_PARTY         (32)  // ぽけっち領域
-
-
-#define _START_TIME (50)     // 開始時間
-#define _CHILD_P_SEARCH_TIME (32) ///子機として親を探す時間
-#define _PARENT_WAIT_TIME (40) ///親としてのんびり待つ時間
-#define _FINALIZE_TIME (2)
+#define _START_TIME (50)          /// 開始時間
+#define _CHILD_P_SEARCH_TIME (32) /// 子機として親を探す時間
 #define _EXIT_SENDING_TIME (5)
-#define _EXIT_SENDING_TIME2 (15)
-#define _PARENT_END_TIME (2)
 #define _SEND_NAME_TIME (10)
-#define _PARENTSCAN_PA (3)  // 親機として検索する確立は1/3
-
-#define _RETRY_COUNT_UNION  (3)  // ユニオンルームで子機が接続に要する回数
-
-#define _TCB_COMMCHECK_PRT   (10)    ///< フィールドを歩く通信の監視ルーチンのPRI
 
 
 
@@ -97,15 +75,10 @@ static void _stateEnd(GFL_NETHANDLE* pNetHandle);             // 終了処理
 static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle);      // 切断処理開始
 static void _stateNone(GFL_NETHANDLE* pNetHandle);            // 何もしない
 
-// ネゴシエーション用確認KEY
-static u8 _negotiationMsg[]={"FREAK"};
-static u8 _negotiationMsgReturnOK[]={" GAME"};
-static u8 _negotiationMsgReturnNG[]={" FULL"};
-
 
 //==============================================================================
 /**
- * 通信管理ステートの変更
+ * @brief   通信管理ステートの変更
  * @param   state  変えるステートの関数
  * @param   time   ステート保持時間
  * @retval  none
@@ -120,7 +93,7 @@ static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
 
 //==============================================================================
 /**
- * 通信管理ステートの変更
+ * @brief   通信管理ステートの変更
  * @param   state  変えるステートの関数
  * @param   time   ステート保持時間
  * @retval  none
@@ -136,7 +109,7 @@ static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int tim
 
 //==============================================================================
 /**
- * 通信管理ステートの初期化処理
+ * @brief   通信管理ステートの初期化処理
  * @param   MYSTATUS* pMyStatus
  * @retval  none
  */
@@ -171,7 +144,7 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
 
 //==============================================================================
 /**
- * 通信管理ステートの終了処理
+ * @brief   通信管理ステートの終了処理
  * @param   none
  * @retval  none
  */
@@ -192,7 +165,7 @@ static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 動いているかどうか
+ * @brief   動いているかどうか
  * @param   none
  * @retval  動いている場合TRUE
  */
@@ -216,7 +189,7 @@ static void _handleDelete(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * イクニューモン初期化後通信起動
+ * @brief   イクニューモン初期化後通信起動
  * @param   none
  * @retval  none
  */
@@ -267,7 +240,7 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 子機待機状態  親機に情報を送信
+ * @brief   子機待機状態  親機に情報を送信
  * @param   none
  * @retval  none
  */
@@ -288,7 +261,7 @@ static void _childSendNego(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親機ビーコンを拾った場合のコールバック
+ * @brief   親機ビーコンを拾った場合のコールバック
  * @param   none
  * @retval  none
  */
@@ -303,7 +276,7 @@ static void _parentFindCallback(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 子機待機状態  親機に許可もらい中
+ * @brief   子機待機状態  親機に許可もらい中
  * @param   none
  * @retval  none
  */
@@ -321,7 +294,7 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * マックアドレスを指定して子機接続開始
+ * @brief   マックアドレスを指定して子機接続開始
  * @param   connectIndex 接続する親機のIndex
  * @param   bAlloc       メモリーの確保
  * @retval  none
@@ -343,7 +316,7 @@ void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 子機待機状態  ビーコン収集
+ * @brief   子機待機状態  ビーコン収集
  * @param   none
  * @retval  none
  */
@@ -361,7 +334,7 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 子機開始  ビーコンの収集に入る
+ * @brief   子機開始  ビーコンの収集に入る
  * @param   connectIndex 接続する親機のIndex
  * @retval  none
  */
@@ -381,7 +354,7 @@ void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 通信管理ステートの処理
+ * @brief   通信管理ステートの処理
  * @param
  * @retval  none
  */
@@ -399,7 +372,7 @@ void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
- * 親機として待機中
+ * @brief   親機として待機中
  * @param   none
  * @retval  none
  */
@@ -411,7 +384,7 @@ static void _parentWait(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
- * 親機として初期化を行う
+ * @brief   親機として初期化を行う
  * @param   none
  * @retval  none
  */
@@ -425,7 +398,7 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
         return;
     }
 
-    if(GFL_NET_SystemParentModeInit(TRUE, _PACKETSIZE_BATTLE,TRUE)){
+    if(GFL_NET_SystemParentModeInit(TRUE, _PACKETSIZE_DEFAULT,TRUE)){
         if(pNetIni->bMPMode){
             GFL_NET_SystemSetTransmissonTypeMP();
         }
@@ -440,7 +413,7 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親としての通信処理開始
+ * @brief   親としての通信処理開始
  * @param   pNetHandle  ハンドル
  * @param   heapID      HEAPID
  * @retval  none
@@ -456,7 +429,7 @@ void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 }
 //==============================================================================
 /**
- * 子機再スタート
+ * @brief   子機再スタート
  * @param   none
  * @retval  none
  */
@@ -472,7 +445,6 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
     // 今度はビーコンを残したまま
 
     if(GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle)){
-//    if(GFL_NET_SystemChildModeInit(FALSE,512)){
         rand = MATH_Rand32(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME/2))+(_CHILD_P_SEARCH_TIME/2);
         NET_PRINT("子機開始 %d \n",rand);
         _CHANGE_STATE(_changeoverChildSearching, rand);
@@ -481,7 +453,7 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親機になりbcon放出
+ * @brief   親機になりbcon放出
  * @param   none
  * @retval  none
  */
@@ -499,7 +471,7 @@ static void _changeoverParentRestart(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * ここから先エラーの検査を通信が処理するかどうかを設定
+ * @brief   ここから先エラーの検査を通信が処理するかどうかを設定
  * @param   bFlg  TRUEで検査開始
  * @retval  none
  */
@@ -516,7 +488,7 @@ static BOOL _getErrorCheck(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親として接続中
+ * @brief   親として接続中
  * @param   none
  * @retval  none
  */
@@ -545,7 +517,7 @@ static void _changeoverParentConnect(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親機になりbcon放出
+ * @brief   親機になりbcon放出
  * @param   none
  * @retval  none
  */
@@ -578,7 +550,7 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親機開始
+ * @brief   親機開始
  * @param   none
  * @retval  none
  */
@@ -590,7 +562,7 @@ static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
         return;
     }
     // 親機になってみる
-    if(GFL_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_UNION,TRUE))  {
+    if(GFL_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_DEFAULT,TRUE))  {
         pNetHandle->bFirstParent = FALSE;
         NET_PRINT("親機\n");
         _CHANGE_STATE(_changeoverParentWait, 30);
@@ -599,7 +571,7 @@ static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 子機となって親機を探し中
+ * @brief   子機となって親機を探し中
  * @param   none
  * @retval  none
  */
@@ -632,7 +604,7 @@ static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 親子自動切り替え通信処理開始
+ * @brief   親子自動切り替え通信処理開始
  * @param   pNetHandle  ハンドル
  * @param   heapID      HEAPID
  * @retval  none
@@ -656,7 +628,7 @@ void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 
 //==============================================================================
 /**
- * 子機の終了を待ち、親機が終了する
+ * @brief   子機の終了を待ち、親機が終了する
  * @param   none
  * @retval  none
  */
@@ -672,7 +644,7 @@ static void _stateEndParentWait(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 終了コマンド 子機が親機にやめるように送信  全員の子機に送り返すGFL_NET_CMD_EXIT_REQ
+ * @brief   終了コマンド 子機が親機にやめるように送信  全員の子機に送り返すGFL_NET_CMD_EXIT_REQ
  * @param   none
  * @retval  none
  */
@@ -706,7 +678,7 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 
 //==============================================================================
 /**
- * 終了コマンド   子機が親機にやめるように送信 ぶっつりきる GFL_NET_CMD_EXIT
+ * @brief   終了コマンド   子機が親機にやめるように送信 ぶっつりきる GFL_NET_CMD_EXIT
  * @param   none
  * @retval  none
  */
@@ -721,7 +693,7 @@ void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pDa
 
 //==============================================================================
 /**
- * ネゴシエーション用コールバック CS_COMM_NEGOTIATION
+ * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION
  * @param   callback用引数
  * @retval  none
  */
@@ -755,7 +727,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
 
 //==============================================================================
 /**
- * ネゴシエーション用コールバック CS_COMM_NEGOTIATION_RETURN
+ * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION_RETURN
  * @param   callback用引数
  * @retval  none
  */
@@ -816,7 +788,7 @@ static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 通信処理終了手続き開始
+ * @brief   通信処理終了手続き開始
  * @param   none
  * @retval  none
  */
@@ -833,7 +805,7 @@ void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * 何もしないステート
+ * @brief   何もしないステート
  * @param   none
  * @retval  none
  */

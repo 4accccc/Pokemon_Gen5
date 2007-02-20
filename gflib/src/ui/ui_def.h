@@ -63,7 +63,7 @@ extern void GFL_UI_Key_sysMain(void);
  * @return  none
  */
 //==============================================================================
-extern void GFL_UI_Key_sysEnd(void);
+extern void GFL_UI_Key_sysExit(void);
 
 //
 //==============================================================================
@@ -81,7 +81,7 @@ extern void GFI_UI_sysMain(UISYS* pUI);
  */
 //==============================================================================
 
-extern void GFI_UI_sysEnd(UISYS* pUI);
+extern void GFI_UI_sysExit(UISYS* pUI);
 
 //------------------------------------------------------------------
 /**

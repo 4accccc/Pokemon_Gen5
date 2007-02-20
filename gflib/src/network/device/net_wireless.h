@@ -11,6 +11,8 @@
 #ifndef __NET_WIRELESS_H__
 #define __NET_WIRELESS_H__
 
+#include "wh.h"
+#include "wh_config.h"
 
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*GFL_NET_ConnectionCallBack) (int aid);

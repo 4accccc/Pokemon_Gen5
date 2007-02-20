@@ -13,8 +13,6 @@
 #include <nitro/wm.h>
 #include <nitro/cht.h>
 
-#include "wh.h"
-#include "wh_config.h"
 #include "net_wireless.h"
 #include "gf_standard.h"
 
@@ -313,7 +311,7 @@ static void _startUpCallback(void *arg, WVRResult result)
 static void _endCallback(void *arg, WVRResult result)
 {
     startCheck = 0;
-    //sys_SleepOK(SLEEPTYPE_COMM);  // スリープを許可する  @@OO 後で埋め込む
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
 }
 
 //==============================================================================
@@ -329,7 +327,7 @@ void GFL_NET_WLVRAMDInitialize(void)
     //************************************
 //	GX_DisableBankForTex();			// テクスチャイメージ
 
-//    sys_SleepNG(SLEEPTYPE_COMM);  // スリープを禁止   @@OO 後で埋め込む
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
     // 無線ライブラリ駆動開始
 	// イクニューモンコンポーネントをVRAM-Dに転送する
     startCheck = 1;

@@ -110,9 +110,9 @@ void GFL_UI_sysMain(void)
  */
 //==============================================================================
 
-void GFI_UI_sysEnd(UISYS* pUI)
+void GFI_UI_sysExit(UISYS* pUI)
 {
-    GFL_UI_Key_sysEnd();
+    GFL_UI_Key_sysExit();
     GFL_HEAP_FreeMemory(pUI);
 }
 
@@ -126,7 +126,7 @@ void GFI_UI_sysEnd(UISYS* pUI)
 
 void GFL_UI_sysExit(void)
 {
-    GFI_UI_sysEnd(_pUI);
+    GFI_UI_sysExit(_pUI);
 }
 
 //------------------------------------------------------------------

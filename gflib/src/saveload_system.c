@@ -314,7 +314,7 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 {
 	u32 i;
 	u8 * buf = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE);
-	//sys_SleepNG(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_SVLD);
 
 	//各ブロックのフッタ部分だけを先行して削除する
 	(void)EraseFlashFooter(sv, SVBLK_ID_NORMAL, !sv->current_side[SVBLK_ID_NORMAL]);
@@ -330,7 +330,7 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 	GFL_HEAP_FreeMemory(buf);
 	SaveData_ClearData(sv);
 	sv->data_exists = FALSE;
-	//sys_SleepOK(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 
 	return TRUE;
 }
@@ -1108,7 +1108,7 @@ static void NEWSVLD_DivSaveInit(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, u32 block_i
 		ndsw->block_current = block_id;
 		ndsw->block_end = block_id + 1;
 	}
-	//sys_SleepNG(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_SVLD);
 }
 
 //---------------------------------------------------------------------------
@@ -1226,7 +1226,7 @@ static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, SAVE_RESULT 
 		sv->new_data_flag = FALSE;		//新規データではない
 		sv->total_save_flag = FALSE;	//全体セーブは必要ない
 	}
-	//sys_SleepOK(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 }
 
 //---------------------------------------------------------------------------
@@ -1251,7 +1251,7 @@ static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
         CARD_UnlockBackup(ndsw->lock_id);
         OS_ReleaseLockID(ndsw->lock_id);
     }
-	//sys_SleepOK(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 }
 
 //---------------------------------------------------------------------------
@@ -1505,7 +1505,7 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 	u32 data_size;
 	BOOL result;
 
-	//sys_SleepNG(SLEEPTYPE_SAVELOAD);
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_SVLD);
 	GF_ASSERT(id < ExtraSaveDataTableMax);
 	extbl = &ExtraSaveDataTable[id];
 	GF_ASSERT(extbl->id == id);
@@ -1527,11 +1527,10 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 		result |= PMSVLD_Save((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 	}
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 	if (result == TRUE) {
-		//sys_SleepOK(SLEEPTYPE_SAVELOAD);
 		return SAVE_RESULT_OK;
 	} else {
-		//sys_SleepOK(SLEEPTYPE_SAVELOAD);
 		return SAVE_RESULT_NG;
 	}
 }

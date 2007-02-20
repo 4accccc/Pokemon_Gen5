@@ -184,7 +184,7 @@ void GFL_UI_TP_sysMain(void)
  */
 //==============================================================================
 
-static void GFI_UI_TP_sysEnd(UISYS* pUI)
+static void GFI_UI_TP_sysExit(UISYS* pUI)
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     GFL_HEAP_FreeMemory(pTP);
@@ -198,9 +198,9 @@ static void GFI_UI_TP_sysEnd(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysEnd(void)
+void GFL_UI_TP_sysExit(void)
 {
-    GFI_UI_TP_sysEnd(_UI_GetUISYS());
+    GFI_UI_TP_sysExit(_UI_GetUISYS());
     _pUITP = NULL;
 }
 

@@ -133,7 +133,7 @@ void GFL_UI_Key_sysMain(void)
  */
 //==============================================================================
 
-static void GFI_UI_Key_sysEnd(UISYS* pUI)
+static void GFI_UI_Key_sysExit(UISYS* pUI)
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
     GFL_HEAP_FreeMemory(pKey);
@@ -147,9 +147,9 @@ static void GFI_UI_Key_sysEnd(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_Key_sysEnd(void)
+void GFL_UI_Key_sysExit(void)
 {
-    GFI_UI_Key_sysEnd(_UI_GetUISYS());
+    GFI_UI_Key_sysExit(_UI_GetUISYS());
 }
 
 //==============================================================================

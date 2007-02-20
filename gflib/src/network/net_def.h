@@ -41,11 +41,11 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 
 // 無線で使用するDMA番号
-#define COMM_DMA_NO                 (2)
+#define _NETWORK_DMA_NO                 (2)
 //WMのパワーモード
-#define COMM_POWERMODE       (1)
+#define _NETWORK_POWERMODE       (1)
 //SSL処理のスレッド優先順位
-#define COMM_SSL_PRIORITY     (20)
+#define _NETWORK_SSL_PRIORITY     (20)
 
 
 

@@ -26,7 +26,7 @@
 
 
 // 無線で使用するDMA番号
-#define WH_DMA_NO                 COMM_DMA_NO
+#define WH_DMA_NO                 _NETWORK_DMA_NO
 
 // 通常の MP 通信で使用するポート
 #define WH_DATA_PORT              (4)  //14

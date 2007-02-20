@@ -39,6 +39,10 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
                     network/tool/net_ring_buff.c \
                     network/tool/net_queue.c \
                     network/tool/net_tool.c \
+					network/device/dwc_rapinitialize.c \
+					network/device/dwc_rap.c \
+					network/device/dwc_rapcommon.c \
+					network/device/dwc_rapfriend.c \
 					network/device/wh.c \
 					network/device/net_wireless.c \
 					network/net_system.c \
@@ -83,6 +87,14 @@ LDIRT_CLEAN		=	$(INSTALL_DIR)
 include $(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include $(NITROSYSTEM_ROOT)/build/buildtools/nnslibdefs
 include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
+
+#----------------------------------------------------------------------------
+#	WiFi’è‹`
+#----------------------------------------------------------------------------
+#include	$(NITRODWC_ROOT)/build/buildtools/commondefs
+#include	$(NITRODWC_ROOT)/build/buildtools/modulerules
+include	$(NITROVCT_ROOT)/build/buildtools/commondefs
+include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 
 #--------------------------------------- ----------------------------
 do-build:	$(TARGETS)

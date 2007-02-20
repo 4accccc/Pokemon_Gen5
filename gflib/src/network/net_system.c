@@ -144,21 +144,18 @@ typedef struct{
     //-------------------
     NET_TOOLSYS* pTool;  ///< netTOOLのワーク
     GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
-    u8 device;   ///< デバイス切り替え
+    u8 device;   ///< デバイス切り替え wifi<>wi
 
-//    u8 DSCountRecv[GFL_NET_MACHINE_MAX];  // 順番確認用
-    u8 DSCount; // 順番確認用
-    u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
+//    u8 DSCount; // コマンドの順番が正しいかどうか確認用
+//    u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
+
     u8 bFirstCatch[GFL_NET_MACHINE_MAX];  // コマンドをはじめてもらった時用
+    u8 bFirstCatchP2C;    ///< 最初のデータを受信したタイミングでTRUEになるフラグ
 
     u8 transmissionNum;
     u8 transmissionSend;
-    u8 transmissionType;  // 通信形態 DSかMPかの管理
-  //  u8 changeService;    // 通信形態の変更
-   // u8 sendSwitch;   // 送信バッファのスイッチフラグ
-    u8 sendServerSwitch;   // 送信バッファのスイッチフラグ（サーバ用）
-    u8 bFirstCatchP2C;
-   // u8 bSendNoneSend;        // 無効コマンドを送る
+    u8 transmissionType;  ///< 通信形態 DSかMPかの管理
+    
     u8 bNextSendData;  ///
     u8 bNextSendDataServer;  ///
     u8 bAlone;    // 一人で通信できるようにするモードの時TRUE
@@ -166,7 +163,6 @@ typedef struct{
     u8 bResetState;
     u8 bError;  // 復旧不可能な時はTRUE
     u8 bShutDown;
-    u8 bNotRecvCheck;
 } _COMM_WORK_SYSTEM;
 
 static _COMM_WORK_SYSTEM* _pComm = NULL;  ///<　ワーク構造体のポインタ
@@ -206,7 +202,6 @@ static void _queueSet(int restSize);
 static void _queueSetServer(int restSize);
 static void _spritDataSendFunc(void);
 
-//static void _transmission(void);
 static u16 _getUserMaxSendByte(void);
 
 
@@ -338,7 +333,7 @@ static void _commCommandInit(void)
     _pComm->bNextSendDataServer = FALSE;
     for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
   //      _pComm->DSCountRecv[i] = 0xff;
-        _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
+    //    _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
          _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
@@ -422,7 +417,7 @@ static void _commCommandInitChange2(void)
     _pComm->bNextSendData = FALSE;
     _pComm->bNextSendDataServer = FALSE;
     for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
-        _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
+   //     _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
         _pComm->bFirstCatch[i] = TRUE;
         _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
         _pComm->recvCommServer[i].valSize = 0xffff;
@@ -457,7 +452,7 @@ static void _commCommandInitChange2(void)
 
 static void _clearChildBuffers(int netID)
 {
-    _pComm->recvDSCatchFlg[netID] = 0;  // 通信をもらったことを記憶 DS同期用
+//    _pComm->recvDSCatchFlg[netID] = 0;  // 通信をもらったことを記憶 DS同期用
     _pComm->bFirstCatch[netID] = TRUE;  // コマンドをはじめてもらった時用
     _pComm->countSendRecvServer[netID]=0;  //SERVER受信
 
@@ -593,8 +588,6 @@ static void _transmissonTypeChange(void)
         bChange=TRUE;
         NET_PRINT("DSモードになりました\n");
     }
-
-//    _transmission();
 
 }
 
@@ -1288,7 +1281,7 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
         int mcSize = _getUserMaxSendByte();
         int machineMax = _getUserMaxNum();
         GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
-        _pComm->recvDSCatchFlg[aid]++;  // 通信をもらったことを記憶
+//        _pComm->recvDSCatchFlg[aid]++;  // 通信をもらったことを記憶
     }else{   // MPモード
         adr++;
         if(_RECV_BUFF_SIZE_PARENT > GFL_NET_RingDataRestSize(&_pComm->recvServerRing[aid])){
@@ -1464,11 +1457,13 @@ static BOOL _setSendData(u8* pSendBuff)
         if(!GFL_NET_QueueGetData(&_pComm->sendQueueMgr, &buffData, TRUE)){
             _pComm->bNextSendData = TRUE;
         }
+#if 0  // コマンドの送信順番が正しいかどうかの確認用
         if(_transmissonType() == _DS_MODE){
             _pComm->DSCount++;
 //            NET_PRINT("DSデータセット %d\n",_pComm->DSCount);
             pSendBuff[0] |= ((_pComm->DSCount << 4) & 0xf0);  //DS通信順番カウンタ
         }
+#endif
     }
 #if 0
     if(GFL_NET_SystemGetCurrentID()==0){
@@ -1718,9 +1713,6 @@ static void _recvDataFunc(void)
     if(!_pComm){
         return;
     }
-    if(_pComm->bNotRecvCheck){
-        return;
-    }
 
     GFL_NET_RingEndChange(&_pComm->recvRing);
     if(GFL_NET_RingDataSize(&_pComm->recvRing) > 0){
@@ -1756,9 +1748,6 @@ static void _recvDataServerFunc(void)
     int machineMax;
 
     if(!_pComm){
-        return;
-    }
-    if(_pComm->bNotRecvCheck){
         return;
     }
 
@@ -1867,152 +1856,6 @@ BOOL GFL_NET_SystemIsInitialize(void)
     }
     return GFL_NET_WLIsInitialize();
 }
-
-//==============================================================================
-/**
- * @brief   サーバー側から子機に送る場合 送信キューへの追加
- * @param   command    comm_sharing.hに定義したラベル
- * @param   sendNetID
- * @param   data       送信したいデータ ない時はNULL
- *                     このデータは静的でなければならない  バッファに溜めないため
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-#if 0
-BOOL GFL_NET_SystemSetSendQueue_ServerSide(int command, const void* data, int size)
-{
-    if(_transmissonType() == _DS_MODE){
-        return GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, TRUE, FALSE,0xf,0xf);
-    }
-    else{
-        return GFL_NET_QueuePut(&_pComm->sendQueueMgrServer, command, (u8*)data, size, TRUE, FALSE,0xf,0xf);
-    }
-}
-#endif
-
-//==============================================================================
-/**
- * @brief   クライアント側から親機に送る場合 送信キューへの追加
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- *                     このデータは静的でなければならない  バッファに溜めないため
- * @param   byte       送信量    コマンドだけの場合0
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-
-//BOOL GFL_NET_SystemSetSendQueue(int command, const void* data, int size)
-//{
-//    return GFL_NET_QueuePut(&_pComm->sendQueueMgr, command, (u8*)data, size, FALSE, FALSE);
-//}
-#if 0
-enum{
-    _TRANS_NONE,
-    _TRANS_LOAD,
-    _TRANS_LOAD_END,
-    _TRANS_SEND,
-    _TRANS_SEND_END,
-};
-
-
-static void _transmission(void)
-{
-    BOOL bCatch=FALSE;
-
-    if(!_pComm){
-        return;
-    }
-#if 0    /// @@OO モード切替部分　　現在封印中
-    switch(_pComm->transmissionNum){
-      case _TRANS_LOAD:
-        if(_transmissonType() == _DS_MODE){
-            bCatch = GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_DSMP_CHANGE_REQ,&_pComm->transmissionSend);
-        }
-        else{
-            bCatch = GFL_NET_SystemSendData_ServerSide(GFL_NET_CMD_DSMP_CHANGE_REQ, &_pComm->transmissionSend, 1);
-        }
-        if(bCatch){
-            _pComm->transmissionNum = _TRANS_LOAD_END;
-        }
-        break;
-      case _TRANS_SEND:
-        if(GFL_NET_SystemSendFixSizeData(GFL_NET_CMD_DSMP_CHANGE_END,&_pComm->transmissionSend)){
-            _commSetTransmissonType(_pComm->transmissionSend);  // 切り替える  親機はここで切り替えない
-            _pComm->transmissionNum = _TRANS_NONE;
-        }
-        break;
-    }
-#endif
-}
-
-//==============================================================================
-/**
- * @brief   DS通信MP通信の切り替え  GFL_NET_CMD_DSMP_CHANGE
- * @param   none
- * @retval  残り数
- */
-//==============================================================================
-
-void GFL_NET_SystemRecvDSMPChange(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
-        return;
-    }
-    NET_PRINT("CommRecvDSMPChange 受信\n");
-    _pComm->transmissionNum = _TRANS_LOAD;
-    _pComm->transmissionSend = pBuff[0];
-}
-
-//==============================================================================
-/**
- * @brief   DS通信MP通信の切り替え
- * @param   none
- * @retval  残り数
- */
-//==============================================================================
-
-void GFL_NET_SystemRecvDSMPChangeReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
-        return;
-    }
-    _pComm->transmissionSend = pBuff[0];
-    _pComm->transmissionNum = _TRANS_SEND;
-    NET_PRINT("CommRecvDSMPChangeReq 受信\n");
-}
-
-//==============================================================================
-/**
- * @brief   DS通信MP通信の切り替え 終了処理 GFL_NET_CMD_DSMP_CHANGE_END
- * @param   none
- * @retval  残り数
- */
-//==============================================================================
-
-void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
-        return;
-    }
-    NET_PRINT("CommRecvDSMPChangeEND 受信\n");
-
-    if(_pComm->transmissionNum == _TRANS_LOAD_END){
-        _commSetTransmissonType(pBuff[0]);  // 切り替える
-        _pComm->transmissionNum = _TRANS_NONE;
-    }
-}
-#endif
 
 //==============================================================================
 /**
@@ -2352,21 +2195,6 @@ void GFL_NET_SystemShutdown(void)
 void GFL_NET_SystemResetQueue_Server(void)
 {
     GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
-}
-
-//==============================================================================
-/**
- * @brief   通信の受信を止めるフラグをセット
- * @param   bFlg  TRUEで止める  FALSEで許可
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_SystemRecvStop(BOOL bFlg)
-{
-    if(_pComm){
-        _pComm->bNotRecvCheck = bFlg;
-    }
 }
 
 //==============================================================================

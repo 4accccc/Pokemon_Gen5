@@ -17,6 +17,8 @@
 #define GLOBAL extern
 #endif
 
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
+
 // デバッグ用決まり文句----------------------
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
@@ -41,6 +43,9 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #else
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
 #endif
+
+// @@OO セーブのプログラムができたら反映
+#define _SAVE_PROGRAM  (0)
 
 
 /// @brief 通信管理構造体
