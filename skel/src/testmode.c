@@ -115,6 +115,7 @@ const GFL_PROC_DATA TestMainProcData = {
 //
 //
 //============================================================================================
+#define G3DUTIL_USE
 typedef struct {
 	int						seq;
 	u16						listPosition;
@@ -123,10 +124,15 @@ typedef struct {
 	GFL_TEXT_PRINTPARAM*	textParam;
 
 	GFL_BMPWIN*				bmpwin[32];
-
-	u16						g3DresTblIdx;
-	u16						g3DobjTblIdx;
-	u16						g3DanmTblIdx;
+#ifdef G3DUTIL_USE
+	GFL_G3D_UTIL_SCENE*		g3Dscene;
+#else
+	GFL_G3D_RES*			g3Dres[4];
+	GFL_G3D_RND*			g3Drnd[2];
+	GFL_G3D_ANM*			g3Danm[2];
+	GFL_G3D_OBJ*			g3Dobj[2];
+#endif
+	GFL_G3D_OBJSTATUS		status[2];
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -315,12 +321,12 @@ static void	bg_init( void )
 	GFL_G3D_sysInit( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, NULL );
 	GFL_BG_BGControlSet3D( G3D_FRM_PRI );
-	GFL_G3D_UtilsysInit( G3D_UTIL_RESSIZ, G3D_UTIL_OBJSIZ, G3D_UTIL_ANMSIZ, heapID );  
+	//GFL_G3D_UtilsysInit( G3D_UTIL_RESSIZ, G3D_UTIL_OBJSIZ, G3D_UTIL_ANMSIZ, heapID );  
 }
 
 static void	bg_exit( void )
 {
-	GFL_G3D_UtilsysExit();  
+	//GFL_G3D_UtilsysExit();  
 	GFL_G3D_sysExit();
 	GFL_BMPWIN_sysExit();
 	GFL_BG_BGControlExit( TEXT_FRM );
@@ -332,7 +338,6 @@ static void	bg_exit( void )
  * @brief		メッセージビットマップウインドウコントロール
  */
 //------------------------------------------------------------------
-//作成
 static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
 {
 	//ビットマップ作成
@@ -349,13 +354,11 @@ static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx,
 	GFL_BMPWIN_MakeScrn( testmode->bmpwin[bmpwinNum] );
 }
 	
-//破棄
 static void msg_bmpwin_trush( u8 bmpwinNum )
 {
 	GFL_BMPWIN_Delete( testmode->bmpwin[bmpwinNum] );
 }
 	
-//パレット再設定
 static void msg_bmpwin_palset( u8 bmpwinNum, u8 pal )
 {
 	GFL_BMPWIN_SetPal( testmode->bmpwin[bmpwinNum], pal );
@@ -429,16 +432,78 @@ static void	g2d_unload( void )
 
 //------------------------------------------------------------------
 /**
+ * @brief		３Ｄデータ
+ */
+//------------------------------------------------------------------
+static const char g3DarcPath[] = {"src/sample_graphic/titledemo.narc"};
+
+#ifdef G3DUTIL_USE
+enum {
+	G3DRES_AIR_BMD = 0,
+	G3DRES_AIR_BTA,
+	G3DRES_IAR_BMD,
+	G3DRES_IAR_BTA,
+};
+
+static const GFL_G3D_UTIL_SCENE_RES g3Dscene_resTbl[] = {
+	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbmd, GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbta, GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath, NARC_titledemo_title_iar_nsbmd, GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath, NARC_titledemo_title_iar_nsbta, GFL_G3D_UTIL_RESPATH },
+};
+
+static const GFL_G3D_UTIL_SCENE_ANM g3Dscene_anm1Tbl[] = {
+	{ G3DRES_AIR_BTA, 0 },
+};
+
+static const GFL_G3D_UTIL_SCENE_ANM g3Dscene_anm2Tbl[] = {
+	{ G3DRES_IAR_BTA, 0 },
+};
+
+static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
+	{ G3DRES_AIR_BMD, 0, G3DRES_AIR_BMD, g3Dscene_anm1Tbl, NELEMS(g3Dscene_anm1Tbl) },
+	{ G3DRES_IAR_BMD, 0, G3DRES_IAR_BMD, g3Dscene_anm2Tbl, NELEMS(g3Dscene_anm2Tbl) },
+};
+
+static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
+	g3Dscene_resTbl, NELEMS(g3Dscene_resTbl),
+	g3Dscene_objTbl, NELEMS(g3Dscene_objTbl),
+};
+#endif
+
+//------------------------------------------------------------------
+/**
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
-//作成
 static void g3d_load( void )
 {
-	//リソース＆オブジェクト＆アニメーションを一括設定
-	GFL_G3D_UtilAllLoad( g3DresouceTable, NELEMS(g3DresouceTable), &testmode->g3DresTblIdx,
-						 g3DobjectTable, NELEMS(g3DobjectTable), &testmode->g3DobjTblIdx,
-						 g3DanimetionTable, NELEMS(g3DanimetionTable), &testmode->g3DanmTblIdx );
+#ifdef G3DUTIL_USE
+	u16 heapID = GFL_HEAPID_APP;
+
+	testmode->g3Dscene = GFL_G3D_UtilsysCreate( &g3Dscene_setup, heapID );
+#else
+	//		リソースセットアップ
+	testmode->g3Dres[0] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_air_nsbmd );
+	testmode->g3Dres[1] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_air_nsbta );
+	testmode->g3Dres[2] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_iar_nsbmd );
+	testmode->g3Dres[3] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_iar_nsbta );
+	//		リソース転送
+	GFL_G3D_VramLoadTex( testmode->g3Dres[0] );
+	GFL_G3D_VramLoadTex( testmode->g3Dres[2] );
+	//		レンダー作成
+	testmode->g3Drnd[0] = GFL_G3D_RndCreate( testmode->g3Dres[0], 0, testmode->g3Dres[0] );
+	testmode->g3Drnd[1] = GFL_G3D_RndCreate( testmode->g3Dres[2], 0, testmode->g3Dres[2] );
+	//		アニメ作成
+	testmode->g3Danm[0] = GFL_G3D_AnmCreate( testmode->g3Drnd[0], testmode->g3Dres[1], 0 );
+	testmode->g3Danm[1] = GFL_G3D_AnmCreate( testmode->g3Drnd[1], testmode->g3Dres[3], 0 );
+	//		オブジェクト作成
+	testmode->g3Dobj[0] = GFL_G3D_ObjCreate( testmode->g3Drnd[0], &testmode->g3Danm[0], 1 );
+	testmode->g3Dobj[1] = GFL_G3D_ObjCreate( testmode->g3Drnd[1], &testmode->g3Danm[1], 1 );
+#endif
+	//描画ステータスワーク設定
+	testmode->status[0] = status0;
+	testmode->status[1] = status1;
 
 	//カメラセット
 	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
@@ -449,19 +514,50 @@ static void g3d_load( void )
 	testmode->work[0] = 0;
 }
 	
-//描画
 static void g3d_draw( void )
 {
-	GFL_G3D_UtilDraw();
+	GFL_G3D_OBJ* g3Dobj[2];
+#ifdef G3DUTIL_USE
+	g3Dobj[0] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, 0 );
+	g3Dobj[1] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, 1 );
+#else
+	g3Dobj[0] = testmode->g3Dobj[0];
+	g3Dobj[1] = testmode->g3Dobj[1];
+#endif
+	GFL_G3D_DrawStart();
+	GFL_G3D_DrawLookAt();
+	{
+		GFL_G3D_ObjDraw( g3Dobj[0], &testmode->status[0] );
+		GFL_G3D_ObjDraw( g3Dobj[1], &testmode->status[1] );
+	}
+	GFL_G3D_DrawEnd();
+
+	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[0], 0, FX32_ONE ); 
+	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[1], 0, FX32_ONE ); 
 }
 	
-//破棄
 static void g3d_unload( void )
 {
-	//リソース＆オブジェクト＆アニメーションを一括破棄
-	GFL_G3D_UtilAllUnload(	NELEMS(g3DresouceTable), &testmode->g3DresTblIdx,
-							NELEMS(g3DobjectTable), &testmode->g3DobjTblIdx,
-							NELEMS(g3DanimetionTable), &testmode->g3DanmTblIdx );
+#ifdef G3DUTIL_USE
+	GFL_G3D_UtilsysDelete( testmode->g3Dscene );
+#else
+	GFL_G3D_ObjDelete( testmode->g3Dobj[1] );
+	GFL_G3D_ObjDelete( testmode->g3Dobj[0] );
+
+	GFL_G3D_AnmDelete( testmode->g3Danm[1] );
+	GFL_G3D_AnmDelete( testmode->g3Danm[0] );
+
+	GFL_G3D_RndDelete( testmode->g3Drnd[1] );
+	GFL_G3D_RndDelete( testmode->g3Drnd[0] );
+
+	GFL_G3D_VramUnloadTex( testmode->g3Dres[2] );
+	GFL_G3D_VramUnloadTex( testmode->g3Dres[0] );
+
+	GFL_G3D_ResDelete( testmode->g3Dres[3] );
+	GFL_G3D_ResDelete( testmode->g3Dres[2] );
+	GFL_G3D_ResDelete( testmode->g3Dres[1] );
+	GFL_G3D_ResDelete( testmode->g3Dres[0] );
+#endif
 }
 	
 //------------------------------------------------------------------
@@ -469,42 +565,32 @@ static void g3d_unload( void )
  * @brief	３Ｄ動作
  */
 //------------------------------------------------------------------
+static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
+{
+	MtxFx33 tmp;
+
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+
+	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+}
+
 static void g3d_control_effect( void )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
 	GFL_G3D_OBJ* g3Dobj;
-	GFL_G3D_ANM* g3Danm;
 
 	//回転計算
-	{
-		//AIRのオブジェクトハンドルを取得
-		g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_AIR );
-		//AIRのアニメーションハンドルを取得
-		g3Danm = GFL_G3D_UtilAnmGet( testmode->g3DanmTblIdx + G3ANM_AIR );
+	rotate_tmp.y = g3DanmRotateSpeed * testmode->work[0];	//Ｙ軸回転
+	rotateCalc( &rotate_tmp, &testmode->status[0].rotate );
 
-		rotate_tmp.y = g3DanmRotateSpeed * testmode->work[0];	//Ｙ軸回転
-		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+	rotate_tmp.y = -g3DanmRotateSpeed * testmode->work[0];	//Ｙ軸回転
+	rotateCalc( &rotate_tmp, &testmode->status[1].rotate );
 
-		//AIRの回転ステータスをセット
-		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
-		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, g3DanmFrameSpeed );
-	}
-	{
-		//IARのオブジェクトハンドルを取得
-		g3Dobj = GFL_G3D_UtilObjGet( testmode->g3DobjTblIdx + G3OBJ_IAR );
-		//IARのアニメーションハンドルを取得
-		g3Danm = GFL_G3D_UtilAnmGet( testmode->g3DanmTblIdx + G3ANM_IAR );
-
-		rotate_tmp.y = -g3DanmRotateSpeed * testmode->work[0];	//Ｙ軸回転
-		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
-
-		//IARの回転ステータスをセット
-		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
-		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, g3DanmFrameSpeed );
-	}
 	testmode->work[0]++;
 }
 	
