@@ -1,8 +1,8 @@
 //=============================================================================================
 /**
  * @file	g3d_util.c                                                  
- * @brief	３Ｄ描画管理システム使用プログラム
- * @date	2006/4/26
+ * @brief	３Ｄ管理システムプログラム
+ * @date	
  */
 //=============================================================================================
 #include "gflib.h"
@@ -10,675 +10,299 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
-typedef struct {
-	u8			priority;				
-	BOOL		drawSW;
-}GFL_G3D_OBJSTAT;
-
-typedef struct {
+struct _GFL_G3D_UTIL_SCENE {
 	GFL_G3D_RES**		g3DresTbl;
-	GFL_AREAMAN*		g3DresAreaman;
+	u8*					g3DresReference;
 	u16					g3DresCount;
 
 	GFL_G3D_OBJ**		g3DobjTbl;
-	GFL_AREAMAN*		g3DobjAreaman;
+	u8*					g3DobjExResourceRef;
 	u16					g3DobjCount;
-	GFL_G3D_OBJSTAT*	g3DobjStat;
-
-	GFL_G3D_ANM**		g3DanmTbl;
-	GFL_AREAMAN*		g3DanmAreaman;
-	u16					g3DanmCount;
-
-	u16*				g3DobjPriTbl;
 
 	HEAPID				heapID;
-}GFL_G3D_UTIL;
+};
 
-GFL_G3D_UTIL* g3Dutil = NULL;
+enum {
+	RES_NO_REFERENCE	= 0x00,
+	RES_REFERENCE		= 0x01,
+};
+
+enum {
+	EXRES_NULL			= 0x00,
+	EXRES_MDL			= 0x01,
+	EXRES_TEX			= 0x02,
+};
 
 //=============================================================================================
 /**
  *
  *
- * ３Ｄ関連ハンドルの配列管理ユーティリティー
+ * ３Ｄ関連ハンドルの管理ユーティリティー
  *
  *
  */
 //=============================================================================================
-#define HANDLE_POINTER_SIZE (4)
+#define pHANDLE_SIZE (4)
+
+static inline	GFL_G3D_RES* resourceLoad( const GFL_G3D_UTIL_SCENE_RES* resTbl );
+static void		resourceLoadAll
+			( GFL_G3D_RES** g3DresTbl, const GFL_G3D_UTIL_SCENE_SETUP* scene ); 
+static void		resourceUnloadAll
+			( GFL_G3D_RES** g3DresTbl, const u16 resCount );
 //--------------------------------------------------------------------------------------------
 /**
  * セットアップ
  *
- * @param	resCount		管理リソース最大数	
- * @param	objCount		管理オブジェクト最大数
- * @param	anmCount		管理アニメーション最大数
- * @param	heapID			ヒープＩＤ
+ * @param	scene					設定データ
+ * @param	heapID					ヒープＩＤ
+ *
+ * @return	GFL_G3D_UTIL_SCENE*		シーンハンドル
  */
 //--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_UtilsysInit
-		( u16 resCount, u16 objCount, u16 anmCount, HEAPID heapID )  
+GFL_G3D_UTIL_SCENE*
+	GFL_G3D_UtilsysCreate
+		( const GFL_G3D_UTIL_SCENE_SETUP* scene, HEAPID heapID )
 {
-	int	i;
-
-	GF_ASSERT( !g3Dutil );
+	GFL_G3D_UTIL_SCENE*		g3DutilScene;
+	const GFL_G3D_UTIL_SCENE_OBJ*	objTbl;
+	GFL_G3D_RES				*g3DresMdl, *g3DresTex, *g3DresAnm;
+	GFL_G3D_RND*			g3Drnd;
+	GFL_G3D_ANM*			g3Danm;
+	GFL_G3D_ANM**			g3DanmTbl;
+	int						i,j,idx;
 
 	//管理領域確保
-	g3Dutil = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_UTIL) );
+	g3DutilScene = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_UTIL_SCENE) );
 
 	//リソース管理配列作成
-	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * resCount );
-	//リソース配列領域マネージャ作成
-	g3Dutil->g3DresAreaman = GFL_AREAMAN_Create( resCount, heapID );
+	g3DutilScene->g3DresTbl = GFL_HEAP_AllocMemoryClear( heapID, pHANDLE_SIZE * scene->resCount );
+	g3DutilScene->g3DresReference = GFL_HEAP_AllocMemoryClear( heapID, scene->resCount );
+	g3DutilScene->g3DresCount = scene->resCount;
+	//リソース読み込み
+	resourceLoadAll( g3DutilScene->g3DresTbl, scene );
+	//リソース参照フラグ初期化
+	for( i=0; i<scene->objCount; i++ ){
+		g3DutilScene->g3DresReference[i] = RES_NO_REFERENCE;
+	}
 
 	//オブジェクト管理配列作成
-	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * objCount );
-	//リソース配列領域マネージャ作成
-	g3Dutil->g3DobjAreaman = GFL_AREAMAN_Create( objCount, heapID );
-	//オブジェクト描画ステータス管理配列作成（オブジェクト管理配列作成と並び順は同じ）
-	g3Dutil->g3DobjStat = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_OBJSTAT)*objCount );
-	//オブジェクト描画プライオリティー管理配列作成
-	g3Dutil->g3DobjPriTbl = GFL_HEAP_AllocMemoryClear( heapID, sizeof(u16)*objCount );
-
-	//アニメーション管理配列作成
-	g3Dutil->g3DanmTbl = GFL_HEAP_AllocMemoryClear( heapID, HANDLE_POINTER_SIZE * anmCount );
-	//アニメーション配列領域マネージャ作成
-	g3Dutil->g3DanmAreaman = GFL_AREAMAN_Create( anmCount, heapID );
-
-	//初期化
-	for( i=0; i<resCount; i++ ){
-		g3Dutil->g3DresTbl[i] = NULL;
+	g3DutilScene->g3DobjTbl = GFL_HEAP_AllocMemoryClear( heapID, pHANDLE_SIZE * scene->objCount );
+	g3DutilScene->g3DobjExResourceRef = GFL_HEAP_AllocMemoryClear( heapID, scene->objCount );
+	g3DutilScene->g3DobjCount = scene->objCount;
+	//オブジェクト追加リソース作成フラグ初期化
+	for( i=0; i<scene->objCount; i++ ){
+		g3DutilScene->g3DobjExResourceRef[i] = EXRES_NULL;
 	}
-	for( i=0; i<objCount; i++ ){
-		g3Dutil->g3DobjTbl[i] = NULL;
 
-		g3Dutil->g3DobjStat[i].priority = 0;
-		g3Dutil->g3DobjStat[i].drawSW = FALSE;
+	//オブジェクト作成
+	for( i=0; i<scene->objCount; i++ ){
+		objTbl = &scene->objTbl[i];
+
+		//モデルリソースの参照指定
+		idx = objTbl->mdlresID;
+		GF_ASSERT( idx < scene->resCount );
+		if( g3DutilScene->g3DresReference[ idx ] == RES_REFERENCE ){
+			//モデルリソースは共有できないので追加作成する
+			g3DutilScene->g3DobjExResourceRef[i] |= EXRES_MDL;	//追加リソース作成フラグセット
+			g3DresMdl = resourceLoad( &scene->resTbl[ idx ] );
+		} else {
+			g3DutilScene->g3DresReference[ idx ] = RES_REFERENCE;		//参照済フラグセット
+			g3DresMdl = g3DutilScene->g3DresTbl[ idx ];
+		}
+
+		//テクスチャリソースの参照指定
+		idx = objTbl->texresID;
+		GF_ASSERT( objTbl->texresID < scene->resCount );
+		if( objTbl->texresID != objTbl->mdlresID ){
+			if( GFL_G3D_ResTypeCheck
+				( g3DutilScene->g3DresTbl[ idx ], GFL_G3D_RES_CHKTYPE_MDL ) == TRUE ){
+				//モデル内包リソースの場合は共有チェックを行う
+				if( g3DutilScene->g3DresReference[ idx ] == RES_REFERENCE ){
+					//モデルリソースは共有できないので追加作成する
+					g3DutilScene->g3DobjExResourceRef[i] |= EXRES_TEX;//追加リソース作成フラグセット
+					g3DresTex = resourceLoad( &scene->resTbl[ idx ] );
+					GFL_G3D_VramLoadTex( g3DresTex );
+				} else {
+					g3DutilScene->g3DresReference[ idx ] |= RES_REFERENCE;	//参照済フラグセット
+					g3DresTex = g3DutilScene->g3DresTbl[ idx ];
+				}
+			}
+		} else {
+			//モデルリソースと同じ指定の場合はモデル依存で共有
+			g3DresTex = g3DresMdl;
+			if( GFL_G3D_VramTexkeyLiveCheck( g3DresTex ) == FALSE ){
+				//テクスチャ未転送の場合は転送する
+				GFL_G3D_VramLoadTex( g3DresTex );
+			}
+		}
+		//レンダー作成
+		g3Drnd = GFL_G3D_RndCreate( g3DresMdl, objTbl->mdldatID, g3DresTex ); 
+
+		//アニメーションハンドルテンポラリ作成
+		g3DanmTbl = GFL_HEAP_AllocMemoryLowClear( heapID, objTbl->anmCount );
+
+		//アニメーション設定
+		for( j=0; j<objTbl->anmCount; j++ ){
+			//アニメーションリソースの参照指定
+			GF_ASSERT( objTbl->anmTbl[j].anmresID < scene->resCount );
+			g3DresAnm = g3DutilScene->g3DresTbl[ objTbl->anmTbl[j].anmresID ];
+			//アニメーション作成
+			g3Danm = GFL_G3D_AnmCreate( g3Drnd, g3DresAnm, objTbl->anmTbl[j].anmdatID );
+			g3DanmTbl[j] = g3Danm;
+		}
+		//オブジェクト作成
+		g3DutilScene->g3DobjTbl[i] = GFL_G3D_ObjCreate( g3Drnd, g3DanmTbl, objTbl->anmCount );
+
+		GFL_HEAP_FreeMemory( g3DanmTbl );
 	}
-	for( i=0; i<anmCount; i++ ){
-		g3Dutil->g3DresTbl[i] = NULL;
-	}
-	g3Dutil->g3DresCount = resCount;
-	g3Dutil->g3DobjCount = objCount;
-	g3Dutil->g3DanmCount = anmCount;
-	g3Dutil->heapID = heapID;
+	return g3DutilScene;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
  * 破棄
+ *
+ * @param	GFL_G3D_UTIL_SCENE*		シーンハンドル
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_UtilsysExit
-		( void )  
+	GFL_G3D_UtilsysDelete
+		( GFL_G3D_UTIL_SCENE* g3DutilScene )
 {
-	int	i;
+	GFL_G3D_RES			*g3DresMdl,	*g3DresTex, *g3DresAnm;
+	GFL_G3D_RND*		g3Drnd;
+	GFL_G3D_ANM*		g3Danm;
+	GFL_G3D_OBJ*		g3Dobj;
+	int					i,j;
 
-	GF_ASSERT( g3Dutil );
+	//オブジェクト破棄
+	for( i=0; i<g3DutilScene->g3DobjCount; i++ ){
+		g3Dobj = g3DutilScene->g3DobjTbl[i];
+		g3Drnd = GFL_G3D_ObjG3DrndGet( g3Dobj );
 
-	//リソース配列領域マネージャ破棄
-	GFL_AREAMAN_Delete( g3Dutil->g3DanmAreaman );
-	//解放忘れチェック
-	for( i=0; i<g3Dutil->g3DanmCount; i++ ){
-		GF_ASSERT_MSG( !(g3Dutil->g3DanmTbl[i]),"not unload animetion exist" );
+		if( g3DutilScene->g3DobjExResourceRef[i] & (EXRES_TEX^0xff) ){//追加リソース作成フラグ確認
+			//テクスチャリソース解放
+			g3DresTex = GFL_G3D_RndG3DresTexGet( g3Drnd );
+			GFL_G3D_VramUnloadTex( g3DresTex );
+			GFL_G3D_ResDelete( g3DresTex );
+		}
+
+		if( g3DutilScene->g3DobjExResourceRef[i] & (EXRES_MDL^0xff) ){//追加リソース作成フラグ確認
+			//モデルリソース解放
+			g3DresMdl = GFL_G3D_RndG3DresMdlGet( g3Drnd );
+			GFL_G3D_ResDelete( g3DresMdl );
+		}	
+		//レンダー解放
+		GFL_G3D_RndDelete( g3Drnd ); 
+
+		//オブジェクト解放
+		GFL_G3D_ObjDelete( g3DutilScene->g3DobjTbl[i] );
 	}
-	//リソース管理配列破棄
-	GFL_HEAP_FreeMemory( g3Dutil->g3DanmTbl );
+	//オブジェクト管理配列解放
+	GFL_HEAP_FreeMemory( g3DutilScene->g3DobjExResourceRef );
+	GFL_HEAP_FreeMemory( g3DutilScene->g3DobjTbl );
 
-	//オブジェクト描画プライオリティー管理配列破棄
-	GFL_HEAP_FreeMemory( g3Dutil->g3DobjPriTbl );
-	//オブジェクト描画ステータス管理配列破棄
-	GFL_HEAP_FreeMemory( g3Dutil->g3DobjStat );
-	//オブジェクト配列領域マネージャ破棄
-	GFL_AREAMAN_Delete( g3Dutil->g3DobjAreaman );
-	//解放忘れチェック
-	for( i=0; i<g3Dutil->g3DobjCount; i++ ){
-		GF_ASSERT_MSG( !(g3Dutil->g3DobjTbl[i]),"not unload object exist" );
-	}
-	//オブジェクト管理配列破棄
-	GFL_HEAP_FreeMemory( g3Dutil->g3DobjTbl );
-
-	//リソース配列領域マネージャ破棄
-	GFL_AREAMAN_Delete( g3Dutil->g3DresAreaman );
-	//解放忘れチェック
-	for( i=0; i<g3Dutil->g3DresCount; i++ ){
-		GF_ASSERT_MSG( !(g3Dutil->g3DresTbl[i]),"not unload resouce exist" );
-	}
-	//リソース管理配列破棄
-	GFL_HEAP_FreeMemory( g3Dutil->g3DresTbl );
-
+	//リソース破棄
+	resourceUnloadAll( g3DutilScene->g3DresTbl, g3DutilScene->g3DresCount );
+	//リソース管理配列作成
+	GFL_HEAP_FreeMemory( g3DutilScene->g3DresReference );
+	GFL_HEAP_FreeMemory( g3DutilScene->g3DresTbl );
+	
 	//管理領域解放
-	GFL_HEAP_FreeMemory( g3Dutil );
-	g3Dutil = NULL;
+	GFL_HEAP_FreeMemory( g3DutilScene );
 }
 
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * ３Ｄリソース管理
- *
- *
- */
-//=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * リソースを配列に追加
- *
- * @param	resTable		リソース配列ポインタ
- * @param	resCount		リソース数
- *
- * @return	idx				リソース配置先頭ＩＮＤＥＸ
+ * リソース読み込み
  */
 //--------------------------------------------------------------------------------------------
-u16
-	GFL_G3D_UtilResLoad
-		( const GFL_G3D_UTIL_RES* resTable, u16 resCount )  
+static inline GFL_G3D_RES* resourceLoad( const GFL_G3D_UTIL_SCENE_RES* resTbl )
+{
+	if( resTbl->arcType == GFL_G3D_UTIL_RESARC ){
+		//アーカイブＩＤより
+		return GFL_G3D_ResCreateArc( (int)resTbl->arcive, resTbl->datID ); 
+	} else {			
+		//アーカイブパスより
+		return GFL_G3D_ResCreatePath( (const char*)resTbl->arcive, resTbl->datID ); 
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * リソース設定
+ */
+//--------------------------------------------------------------------------------------------
+//リソースを配列に追加
+static void resourceLoadAll
+			( GFL_G3D_RES** g3DresTbl, const GFL_G3D_UTIL_SCENE_SETUP* scene )  
 {
 	int	i;
-	u32 pos;
-
-	GF_ASSERT( g3Dutil );
-
-	pos = GFL_AREAMAN_ReserveAuto( g3Dutil->g3DresAreaman, resCount );
-	GF_ASSERT_MSG(( pos != AREAMAN_POS_NOTFOUND ), "cannnot reserve resouce block" );
 
 	//配列にセットアップ
-	for( i=0; i<resCount; i++ ){
-		if( resTable[i].arcType == GFL_G3D_UTIL_RESARC ){
-			//アーカイブＩＤより
-			g3Dutil->g3DresTbl[ pos+i ] = GFL_G3D_ResourceCreateArc
-										( (int)resTable[i].arcive, resTable[i].datID ); 
-		} else {
-			//アーカイブパスより
-			g3Dutil->g3DresTbl[ pos+i ] = GFL_G3D_ResourceCreatePath
-										( (const char*)resTable[i].arcive, resTable[i].datID ); 
-		}
+	for( i=0; i<scene->resCount; i++ ){
+		g3DresTbl[i] = resourceLoad( &scene->resTbl[i] );
 	}
 
-	//テクスチャの一括転送（試しに効率がいいかもしれない方をやってみる）
-	{
-		int	i;
-		BOOL resTypeFlg;
-
-		//テクスチャデータ連続転送
-		GX_BeginLoadTex();
-
-		for( i=0; i<resCount; i++ ){
-			//テクスチャリソースかどうか確認
-			resTypeFlg = GFL_G3D_ResourceTypeCheck
-							( g3Dutil->g3DresTbl[ pos+i ], GFL_G3D_RES_CHKTYPE_TEX );
-
-			if(( resTable[i].trans == TRUE )&&( resTypeFlg == TRUE )){
-				GFL_G3D_VramLoadTexDataOnly( g3Dutil->g3DresTbl[ pos+i ] );
-			}
+	//テクスチャデータ連続転送（試しに効率がいいかもしれない方をやってみる）
+	GX_BeginLoadTex();
+	for( i=0; i<scene->resCount; i++ ){
+		if( GFL_G3D_ResTypeCheck( g3DresTbl[i], GFL_G3D_RES_CHKTYPE_TEX ) == TRUE ){
+			GFL_G3D_VramLoadTexDataOnly( g3DresTbl[i] );
 		}
-		GX_EndLoadTex();
-	
-		//テクスチャパレット連続転送
-		GX_BeginLoadTexPltt();
-	
-		for( i=0; i<resCount; i++ ){
-			//テクスチャリソースかどうか確認
-			resTypeFlg = GFL_G3D_ResourceTypeCheck
-							( g3Dutil->g3DresTbl[ pos+i ], GFL_G3D_RES_CHKTYPE_TEX );
-	
-			if(( resTable[i].trans == TRUE )&&( resTypeFlg == TRUE )){
-				GFL_G3D_VramLoadTexPlttOnly( g3Dutil->g3DresTbl[ pos+i ] );
-			}
-		}
-		GX_EndLoadTexPltt();
 	}
-	return pos;
+	GX_EndLoadTex();
+
+	//テクスチャパレット連続転送（試しに効率がいいかもしれない方をやってみる）
+	GX_BeginLoadTexPltt();
+	for( i=0; i<scene->resCount; i++ ){
+		if( GFL_G3D_ResTypeCheck( g3DresTbl[i], GFL_G3D_RES_CHKTYPE_TEX ) == TRUE ){
+			GFL_G3D_VramLoadTexPlttOnly( g3DresTbl[i] );
+		}
+	}
+	GX_EndLoadTexPltt();
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * リソースを配列から削除
- *
- * @param	idx				リソース配置先頭ＩＮＤＥＸ
- * @param	resCount		リソース数
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_UtilResUnload
-		( u16 idx, u16 resCount ) 
+//リソースを配列から削除
+static void resourceUnloadAll
+			( GFL_G3D_RES** g3DresTbl, const u16 resCount )  
 {
 	int	i;
 
 	for( i=0; i<resCount; i++ ){
-		if( g3Dutil->g3DresTbl[ i+idx ] ){
-			GFL_G3D_RES* g3Dres = g3Dutil->g3DresTbl[ i+idx ];
-			//テクスチャリソースかどうか確認
-			if( GFL_G3D_ResourceTypeCheck( g3Dres, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE ){
-				//ＶＲＡＭ転送済みかどうか確認
-				if( GFL_G3D_ObjTexkeyLiveCheck( g3Dres ) == TRUE ){
-					//ＶＲＡＭ解放
-					GFL_G3D_VramUnloadTex( g3Dres );
-				}
+		if( g3DresTbl[i] ){
+			if( GFL_G3D_ResTypeCheck( g3DresTbl[i], GFL_G3D_RES_CHKTYPE_TEX ) == TRUE ){
+				//テクスチャリソースの場合ＶＲＡＭ解放（内部で転送したかのチェックは行っている）
+				GFL_G3D_VramUnloadTex( g3DresTbl[i] ); 
 			}
-			//リソース破棄
-			GFL_G3D_ResourceDelete( g3Dres ); 
-			//ＩＮＤＥＸテーブルから削除
-			g3Dutil->g3DresTbl[ i+idx ] = NULL;
+			GFL_G3D_ResDelete( g3DresTbl[i] ); 
 		}
 	}
-	GFL_AREAMAN_Release( g3Dutil->g3DresAreaman, idx, resCount );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * リソースハンドルを配列から取得
- *
- * @param	idx				リソース格納ＩＮＤＥＸ
- *
- * @return	GFL_G3D_RES*	リソースポインタ
- */
-//--------------------------------------------------------------------------------------------
-GFL_G3D_RES*
-	GFL_G3D_UtilResGet
-		( u16 idx ) 
-{
-	if( idx >= g3Dutil->g3DresCount ){
-		OS_Panic( "ID over" );
-	}
-	return g3Dutil->g3DresTbl[idx];
-}
-	
-//--------------------------------------------------------------------------------------------
-/**
- * テクスチャリソースを配列から転送(→ＶＲＡＭ)
- *
- * @param	idx		リソース格納ＩＮＤＥＸ
- *
- * @return	BOOL	結果(成功=TRUE)
- */
-//--------------------------------------------------------------------------------------------
-BOOL 
-	GFL_G3D_UtilVramLoadTex
-		( u16 idx ) 
-{
-	if( idx >= g3Dutil->g3DresCount ){
-		OS_Panic( "ID over" );
-	}
-	return GFL_G3D_VramLoadTex( g3Dutil->g3DresTbl[idx] );
-}
-
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * ３Ｄオブジェクト管理
- *
- *
- */
-//=============================================================================================
-//--------------------------------------------------------------------------------------------
-/**
- * オブジェクトを配列に追加
- *
- * @param	objTable		オブジェクト配列ポインタ
- * @param	objCount		オブジェクト数
- *
- * @return	idx				オブジェクト配置先頭ＩＮＤＥＸ
- */
-//--------------------------------------------------------------------------------------------
-u16
-	GFL_G3D_UtilObjLoad
-		( const GFL_G3D_UTIL_OBJ* objTable, u16 objCount )  
-{
-	int	i;
-	u32 pos;
-	GFL_G3D_RES	*g3DresMdl,*g3DresTex;
-
-	GF_ASSERT( g3Dutil );
-
-	pos = GFL_AREAMAN_ReserveAuto( g3Dutil->g3DobjAreaman, objCount );
-	GF_ASSERT_MSG(( pos != AREAMAN_POS_NOTFOUND ), "cannnot reserve object block" );
-
-	//配列にセットアップ
-	for( i=0; i<objCount; i++ ){
-		g3DresMdl = GFL_G3D_UtilResGet( objTable[i].mdlresID );
-		GF_ASSERT( g3DresMdl );
-
-		if( objTable[i].texresID != GFL_G3D_UTIL_RESNULL ){
-			g3DresTex = GFL_G3D_UtilResGet( objTable[i].texresID );
-		} else {
-			g3DresTex = NULL;
-		}
-		g3Dutil->g3DobjTbl[ pos+i ] = GFL_G3D_ObjCreate( g3DresMdl, objTable[i].mdldatID,
-															g3DresTex );
-
-		GFL_G3D_ObjContSetTrans( (g3Dutil->g3DobjTbl)[ pos+i ], &objTable[i].trans );
-		GFL_G3D_ObjContSetScale( (g3Dutil->g3DobjTbl)[ pos+i ], &objTable[i].scale );
-		GFL_G3D_ObjContSetRotate( (g3Dutil->g3DobjTbl)[ pos+i ], &objTable[i].rotate );
-
-		g3Dutil->g3DobjStat[ pos+i ].priority = objTable[i].priority;
-		g3Dutil->g3DobjStat[ pos+i ].drawSW = objTable[i].drawSW;
-	}
-	return pos;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * オブジェクトを配列から削除
- *
- * @param	idx				オブジェクト配置先頭ＩＮＤＥＸ
- * @param	objCount		オブジェクト数
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_UtilObjUnload
-		( u16 idx, u16 objCount ) 
-{
-	int	i;
-
-	for( i=0; i<objCount; i++ ){
-		if( g3Dutil->g3DobjTbl[ i+idx ] ){
-			//オブジェクト破棄
-			GFL_G3D_ObjDelete( g3Dutil->g3DobjTbl[ i+idx ] ); 
-			//ＩＮＤＥＸテーブルから削除
-			g3Dutil->g3DobjTbl[ i+idx ] = NULL;
-		}
-	}
-	GFL_AREAMAN_Release( g3Dutil->g3DobjAreaman, idx, objCount );
-}
-	
-//--------------------------------------------------------------------------------------------
-/**
- * オブジェクトハンドルを配列から取得
- *
- * @param	idx				オブジェクト格納ＩＮＤＥＸ
- *
- * @return	GFL_G3D_OBJ*	オブジェクトポインタ
+ * オブジェクトハンドル取得
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_OBJ*
-	GFL_G3D_UtilObjGet
-		( u16 idx ) 
+	GFL_G3D_UtilsysObjHandleGet
+		( GFL_G3D_UTIL_SCENE* g3DutilScene, u16 idx )
 {
-	if( idx >= g3Dutil->g3DobjCount ){
-		OS_Panic( "ID over" );
-	}
-	return g3Dutil->g3DobjTbl[idx];
+	return g3DutilScene->g3DobjTbl[idx];
 }
 
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * ３Ｄアニメーション管理
- *
- *
- */
-//=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * アニメーションを配列に追加
- *	参照オブジェクトが必要とされるので、オブジェクトの追加後に行うこと
- *
- * @param	anmTable		アニメーション配列ポインタ
- * @param	anmCount		アニメーション数
- *
- * @return	idx				アニメーション配置先頭ＩＮＤＥＸ
+ * オブジェクト数取得
  */
 //--------------------------------------------------------------------------------------------
 u16
-	GFL_G3D_UtilAnmLoad
-		( const GFL_G3D_UTIL_ANM* anmTable, u16 anmCount )  
+	GFL_G3D_UtilsysObjCountGet
+		( GFL_G3D_UTIL_SCENE* g3DutilScene )
 {
-	int	i;
-	u32 pos;
-	GFL_G3D_RES*	g3DresAnm;
-	GFL_G3D_OBJ*	g3Dobj;
-
-	GF_ASSERT( g3Dutil );
-
-	pos = GFL_AREAMAN_ReserveAuto( g3Dutil->g3DanmAreaman, anmCount );
-	GF_ASSERT_MSG(( pos != AREAMAN_POS_NOTFOUND ), "cannnot reserve animetion block" );
-
-	//配列にセットアップ
-	for( i=0; i<anmCount; i++ ){
-		g3DresAnm = GFL_G3D_UtilResGet( anmTable[i].anmresID );
-		GF_ASSERT( g3DresAnm );
-		g3Dobj = GFL_G3D_UtilObjGet( anmTable[i].forMdl );
-		GF_ASSERT( g3Dobj );
-
-		g3Dutil->g3DanmTbl[ pos+i ] = GFL_G3D_AnmCreate( g3Dobj, g3DresAnm, anmTable[i].anmdatID,
-															anmTable[i].bind );
-	}
-	return pos;
+	return g3DutilScene->g3DobjCount;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * アニメーションを配列から削除
- *
- * @param	idx				アニメーション配置先頭ＩＮＤＥＸ
- * @param	anmCount		アニメーション数
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_UtilAnmUnload
-		( u16 idx, u16 anmCount ) 
-{
-	int	i;
-
-	for( i=0; i<anmCount; i++ ){
-		if( g3Dutil->g3DanmTbl[ i+idx ] ){
-			//アニメーション破棄
-			GFL_G3D_AnmDelete( g3Dutil->g3DanmTbl[ i+idx ] ); 
-			//ＩＮＤＥＸテーブルから削除
-			g3Dutil->g3DanmTbl[ i+idx ] = NULL;
-		}
-	}
-	GFL_AREAMAN_Release( g3Dutil->g3DanmAreaman, idx, anmCount );
-}
-	
-//--------------------------------------------------------------------------------------------
-/**
- * アニメーションハンドルを配列から取得
- *
- * @param	idx				アニメーション格納ＩＮＤＥＸ
- *
- * @return	GFL_G3D_ANM*	アニメーションポインタ
- */
-//--------------------------------------------------------------------------------------------
-GFL_G3D_ANM*
-	GFL_G3D_UtilAnmGet
-		( u16 idx ) 
-{
-	if( idx >= g3Dutil->g3DanmCount ){
-		OS_Panic( "ID over" );
-	}
-	return g3Dutil->g3DanmTbl[idx];
-}
-
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * 描画管理
- *
- *
- */
-//=============================================================================================
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトリストのソート
- */
-//--------------------------------------------------------------------------------------------
-static void objDrawSort( void )
-{
-	int	i;
-	u16	idx1,idx2;
-	u8	pri1,pri2;
-	u32 count = g3Dutil->g3DobjCount;
-
-	for( i=0; i<count; i++ ){
-		g3Dutil->g3DobjPriTbl[i] = i;
-	}
-	while( count ){
-		for( i=0; i<count-1; i++ ){
-			idx1 = g3Dutil->g3DobjPriTbl[i];
-			idx2 = g3Dutil->g3DobjPriTbl[i+1];
-
-			pri1 = g3Dutil->g3DobjStat[idx1].priority;
-			pri2 = g3Dutil->g3DobjStat[idx2].priority;
-
-			if( pri1 > pri2 ){
-				g3Dutil->g3DobjPriTbl[i] = idx2;
-				g3Dutil->g3DobjPriTbl[i+1] = idx1;
-			}
-		}
-		count--;
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの描画
- *
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_UtilDraw
-		( void )
-{
-	//描画開始
-	GFL_G3D_DrawStart();
-	//カメラグローバルステート設定		
- 	GFL_G3D_DrawLookAt();
-
-	objDrawSort();
-	{
-		int	i;
-		u16 idx;
-		GFL_G3D_OBJSTAT*	drawStatus;
-		GFL_G3D_OBJ*		drawObj;
-
-		for( i=0; i<g3Dutil->g3DobjCount; i++ ){
-			idx = g3Dutil->g3DobjPriTbl[i];
-			drawStatus = &g3Dutil->g3DobjStat[ idx ];
-			drawObj = g3Dutil->g3DobjTbl[ idx ];
-
-			if(( drawObj )&&( drawStatus->drawSW == TRUE )){
-				GFL_G3D_ObjDraw( drawObj );
-			}
-		}
-	}
-	//描画終了（バッファスワップ）
-	GFL_G3D_DrawEnd();							
-}
-
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * その他
- *
- *
- */
-//=============================================================================================
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの回転行列の作成
- *
- * @param	rotSrc	計算前の回転ベクトルポインタ
- * @param	rotDst	計算後の回転行列格納ポインタ
- *
- * この関数等を使用し、オブジェクト毎に適切な回転行列を作成したものを、描画に流す。
- */
-//--------------------------------------------------------------------------------------------
-// Ｘ→Ｙ→Ｚの順番で計算
-void
-	GFL_G3D_UtilObjDrawRotateCalcXY
-		( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
-
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-}
-
-// Ｘ→Ｙ→Ｚの順番で計算（相対）
-void
-	GFL_G3D_UtilObjDrawRotateCalcXY_Rev
-		( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
-
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)-rotSrc->x), FX_CosIdx((u16)-rotSrc->x) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-}
-
-// Ｙ→Ｘ→Ｚの順番で計算
-void
-	GFL_G3D_UtilObjDrawRotateCalcYX
-		( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
-
-	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst,&tmp, rotDst );
-}
-
-// Ｙ→Ｘ→Ｚの順番で計算（相対）
-void
-	GFL_G3D_UtilObjDrawRotateCalcYX_Rev
-		( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
-
-	MTX_RotY33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-
-	MTX_RotX33(	&tmp, FX_SinIdx((u16)-rotSrc->y), FX_CosIdx((u16)-rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp,FX_CosIdx((u16)rotSrc->z), FX_SinIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-}
-
-
-
-
 
 
 

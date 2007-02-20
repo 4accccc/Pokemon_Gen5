@@ -1,14 +1,14 @@
 //=============================================================================================
 /**
  * @file	g3d_system.c                                                  
- * @brief	３Ｄ描画管理システムプログラム
+ * @brief	３Ｄ管理システムプログラム
  * @date	2006/4/26
  */
 //=============================================================================================
 #include "gflib.h"
 
 //=============================================================================================
-//	型宣言
+//	定数宣言
 //=============================================================================================
 #define TEX_BLOCKNUM	(128)
 #define PLT_BLOCKNUM	(256)
@@ -70,6 +70,7 @@ typedef struct GFL_G3D_MAN_tag
 static GFL_G3D_MAN*  g3Dman = NULL;
 
 //=============================================================================================
+//=============================================================================================
 /**
  *
  *
@@ -77,6 +78,7 @@ static GFL_G3D_MAN*  g3Dman = NULL;
  *
  *
  */
+//=============================================================================================
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
@@ -98,6 +100,9 @@ void
 				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup )
 {
 	int	tex_size,plt_size;
+
+	GF_ASSERT( g3Dman == NULL );
+
 	g3Dman = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_MAN) );
 
 	g3Dman->heapID = heapID;
@@ -158,7 +163,7 @@ void
 	//グローバルステート内部情報初期化
 	{
 		VecFx32 initVec32 = { 0, 0, 0 };
-		VecFx16 initVec16 = { FX32_ONE-1, FX32_ONE-1, FX32_ONE-1 };
+		VecFx16 initVec16 = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 
 		//射影
 		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
@@ -254,8 +259,9 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_sysProjectionSet
-		( GFL_G3D_PROJECTION_TYPE type, fx32 param1, fx32 param2, fx32 param3, fx32 param4, 
-			fx32 near, fx32 far, fx32 scaleW )
+		( const GFL_G3D_PROJECTION_TYPE type, 
+			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
+				const fx32 near, const fx32 far, const fx32 scaleW )
 {
 	GF_ASSERT( g3Dman != NULL );
 
@@ -295,7 +301,7 @@ void
 
 void
 	GFL_G3D_sysProjectionSetDirect
-		( MtxFx44* param )
+		( const MtxFx44* param )
 {
 	g3Dman->projection.type		= GFL_G3D_PRJMTX;
 	g3Dman->projection.param1	= 0;
@@ -319,7 +325,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_sysLightSet
-		( u8 lightID, VecFx16* vec, u16 color )
+		( const u8 lightID, const VecFx16* vec, const u16 color )
 {
 	GF_ASSERT( g3Dman != NULL );
 
@@ -343,7 +349,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_sysLookAtSet
-		( VecFx32* camPos, VecFx32* camUp, VecFx32* target )
+		( const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target )
 {
 	GF_ASSERT( g3Dman != NULL );
 
@@ -363,7 +369,7 @@ void
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_sysSwapBufferModeSet
-		( GXSortMode sortMode, GXBufferMode bufferMode )
+		( const GXSortMode sortMode, const GXBufferMode bufferMode )
 {
 	GF_ASSERT( g3Dman != NULL );
 
@@ -376,11 +382,30 @@ void
 
 
 //=============================================================================================
+//=============================================================================================
 /**
  *
  *
+ * ３Ｄデータ管理関数
+ *
+ *	３Ｄデータは３階層に区分する。
+ *	作成手順としては以下のとおり
+ *
+ *	１）ファイルで配置されるＲＯＭデータの読み込み		：→リソース管理及びリソース転送参照
+ *	２）１のリソースより各構成要素の作成				：→レンダー及びアニメーション管理参照
+ *	３）２の要素を組み合わせてデータオブジェクトを作成	：→オブジェクト管理参照
+ *
+ */
+//=============================================================================================
+//=============================================================================================
+//=============================================================================================
+/**
+ *
  * ３Ｄリソース管理関数
  *
+ * 　各種リソースファイル（bmd,btx,bca,bva,bma,btp,bta）を一つの型で一元管理する。
+ * 　リソースタイプはハンドルに内包。
+ *　 全体サイズはファイルに依存するので、もちろん不定。
  *
  */
 //=============================================================================================
@@ -402,9 +427,9 @@ struct _GFL_G3D_RES {
 };
 
 static BOOL
-	GFL_G3D_GetTexDataVramkey( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 );
+	GFL_G3D_VramGetTexDataVramkey( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 );
 static BOOL
-	GFL_G3D_GetTexPlttVramkey( NNSG3dResTex* res, NNSGfdPlttKey* pltt );
+	GFL_G3D_VramGetTexPlttVramkey( NNSG3dResTex* res, NNSGfdPlttKey* pltt );
 
 static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
 {
@@ -425,7 +450,7 @@ static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
  */
 //--------------------------------------------------------------------------------------------
 static GFL_G3D_RES*
-	GFL_G3D_ResourceCreate
+	GFL_G3D_ResCreate
 		( NNSG3dResFileHeader* header )
 {
 	//リソース管理ハンドル作成
@@ -473,7 +498,7 @@ static GFL_G3D_RES*
 //-------------------------------
 // アーカイブＩＤによる読み込み
 GFL_G3D_RES*
-	GFL_G3D_ResourceCreateArc
+	GFL_G3D_ResCreateArc
 		( int arcID, int datID ) 
 {
 	NNSG3dResFileHeader* header;
@@ -484,13 +509,13 @@ GFL_G3D_RES*
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadMalloc( arcID, datID, g3Dman->heapID );
 
-	return GFL_G3D_ResourceCreate( header );
+	return GFL_G3D_ResCreate( header );
 }
 
 //-------------------------------
 // アーカイブファイルパスによる読み込み
 GFL_G3D_RES*
-	GFL_G3D_ResourceCreatePath
+	GFL_G3D_ResCreatePath
 		( const char* path, int datID ) 
 {
 	NNSG3dResFileHeader* header;
@@ -501,7 +526,7 @@ GFL_G3D_RES*
 	//対象アーカイブファイルからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadFilePathMalloc( path, datID, g3Dman->heapID );
 
-	return GFL_G3D_ResourceCreate( header );
+	return GFL_G3D_ResCreate( header );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -512,13 +537,33 @@ GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ResourceDelete
+	GFL_G3D_ResDelete
 		( GFL_G3D_RES* g3Dres ) 
 {
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
 
 	GFL_HEAP_FreeMemory( g3Dres->file );
 	GFL_HEAP_FreeMemory( g3Dres );
+}
+	
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄリソースヘッダポインタの取得
+ *
+ * @param	g3Dres		３Ｄリソースポインタ
+ *
+ * @return	NNSG3dResFileHeader*
+ *
+ * 　ＮＮＳ関数を外部で使用したい場合などに使用する
+ */
+//--------------------------------------------------------------------------------------------
+NNSG3dResFileHeader*
+	GFL_G3D_ResFileHeaderGet
+		( GFL_G3D_RES* g3Dres ) 
+{
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+
+	return (NNSG3dResFileHeader*)g3Dres->file;
 }
 	
 //--------------------------------------------------------------------------------------------
@@ -532,7 +577,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 BOOL
-	GFL_G3D_ResourceTypeCheck
+	GFL_G3D_ResTypeCheck
 		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE checkType ) 
 {
 	u16 resType;
@@ -609,7 +654,7 @@ BOOL
 	NNSGfdPlttKey			plttKey;
 
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
 
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
@@ -617,11 +662,11 @@ BOOL
 
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
-		if( GFL_G3D_GetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
+		if( GFL_G3D_VramGetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
-		if( GFL_G3D_GetTexPlttVramkey( texture, &plttKey ) == FALSE ){
+		if( GFL_G3D_VramGetTexPlttVramkey( texture, &plttKey ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
@@ -634,49 +679,9 @@ BOOL
 		//キーを参照して、リソースをＶＲＡＭ転送
 		NNS_G3dTexLoad( texture, TRUE );
 		NNS_G3dPlttLoad( texture, TRUE );
+		return TRUE;
 	}
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * テクスチャリソースをＶＲＡＭから解放
- *
- * @param	g3Dres	３Ｄリソースポインタ
- *
- * @return	BOOL	結果(成功=TRUE)
- */
-//--------------------------------------------------------------------------------------------
-BOOL 
-	GFL_G3D_VramUnloadTex
-		( GFL_G3D_RES* g3Dres )
-{
-	NNSG3dResFileHeader*	header;
-	NNSG3dResTex*			texture;
-	NNSGfdTexKey			texKey, tex4x4Key;
-	NNSGfdPlttKey			plttKey;
-
-	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
-
-	//テクスチャリソースポインタの取得
-	header = (NNSG3dResFileHeader*)g3Dres->file;
-	texture = NNS_G3dGetTex( header ); 
-
-	//ＶＲＡＭキーの放棄フラグをリソースに設定
-	NNS_G3dTexReleaseTexKey( texture, &texKey, &tex4x4Key );
-	plttKey = NNS_G3dPlttReleasePlttKey( texture );
-
-	if( NNS_GfdFreePlttVram( plttKey ) ){
-		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
-	}
-	if( NNS_GfdFreeLnkTexVram( tex4x4Key )){
-		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
-	}
-	if( NNS_GfdFreeLnkTexVram( texKey )){
-		OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
-	}
-	return TRUE;
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -703,7 +708,7 @@ BOOL
 	NNSGfdTexKey			texKey, tex4x4Key;
 
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
 
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
@@ -711,7 +716,7 @@ BOOL
 
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
-		if( GFL_G3D_GetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
+		if( GFL_G3D_VramGetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTexDataOnly)\n");
 			return FALSE;
 		}
@@ -722,8 +727,9 @@ BOOL
 		DC_FlushRange( header, header->fileSize );
 		//キーを参照して、リソースをＶＲＡＭ転送
 		NNS_G3dTexLoad( texture, FALSE );
+		return TRUE;
 	}
-	return TRUE;
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -750,7 +756,7 @@ BOOL
 	NNSGfdPlttKey			plttKey;
 
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
 
 	//テクスチャリソースポインタの取得
 	header = (NNSG3dResFileHeader*)g3Dres->file;
@@ -758,7 +764,7 @@ BOOL
 
 	if( texture ){
 		//リソースを転送するためのＶＲＡＭキーの取得
-		if( GFL_G3D_GetTexPlttVramkey( texture, &plttKey ) == FALSE ){
+		if( GFL_G3D_VramGetTexPlttVramkey( texture, &plttKey ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadPlttOnly)\n");
 			return FALSE;
 		}
@@ -769,8 +775,55 @@ BOOL
 		DC_FlushRange( header, header->fileSize );
 		//キーを参照して、リソースをＶＲＡＭ転送
 		NNS_G3dPlttLoad( texture, FALSE );
+		return TRUE;
 	}
-	return TRUE;
+	return FALSE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * テクスチャリソースをＶＲＡＭから解放
+ *
+ * @param	g3Dres	３Ｄリソースポインタ
+ *
+ * @return	BOOL	結果(成功=TRUE)
+ */
+//--------------------------------------------------------------------------------------------
+BOOL 
+	GFL_G3D_VramUnloadTex
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			texture;
+	NNSGfdTexKey			texKey, tex4x4Key;
+	NNSGfdPlttKey			plttKey;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
+
+	//ＶＲＡＭ転送済みかどうか確認
+	if( GFL_G3D_VramTexkeyLiveCheck( g3Dres ) == TRUE ){
+
+		//テクスチャリソースポインタの取得
+		header = (NNSG3dResFileHeader*)g3Dres->file;
+		texture = NNS_G3dGetTex( header ); 
+
+		//ＶＲＡＭキーの放棄フラグをリソースに設定
+		NNS_G3dTexReleaseTexKey( texture, &texKey, &tex4x4Key );
+		plttKey = NNS_G3dPlttReleasePlttKey( texture );
+
+		if( NNS_GfdFreePlttVram( plttKey ) ){
+			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		}
+		if( NNS_GfdFreeLnkTexVram( tex4x4Key )){
+			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		}
+		if( NNS_GfdFreeLnkTexVram( texKey )){
+			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		}
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -785,7 +838,7 @@ BOOL
  */
 //-----------------------------------------------------------------------------
 static BOOL
-	GFL_G3D_GetTexDataVramkey
+	GFL_G3D_VramGetTexDataVramkey
 		( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 )
 {
 	//各リソースサイズ取得
@@ -818,7 +871,7 @@ static BOOL
  */
 //-----------------------------------------------------------------------------
 static BOOL
-	GFL_G3D_GetTexPlttVramkey
+	GFL_G3D_VramGetTexPlttVramkey
 		( NNSG3dResTex* res, NNSGfdPlttKey* pltt )
 {
 	//リソースサイズ取得
@@ -846,7 +899,7 @@ static BOOL
  */
 //-----------------------------------------------------------------------------
 BOOL
-	GFL_G3D_ObjTexkeyLiveCheck
+	GFL_G3D_VramTexkeyLiveCheck
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -873,290 +926,163 @@ BOOL
 
 
 
-#if 0
 //=============================================================================================
 /**
  *
+ * ３Ｄレンダー管理関数
  *
- * 各オブジェクト管理関数
- *
+ * 　モデリングデータとテクスチャーでデータを管理する。
+ * 　モデルリソースに関しては、テクスチャ貼り付けの際、その内部を書き換えるため
+ * 　１つのレンダーにつき１つのモデルリソースを持つ必要がある。
+ *　 全体サイズは一定。
  *
  */
 //=============================================================================================
-#define G3DOBJ_MAGICNUM	(0x7A14)
-///	３Ｄモデル制御用構造体
-struct _GFL_G3D_OBJ
+#define G3DRND_MAGICNUM	(0x7A14)
+///	３Ｄレンダー制御用構造体
+struct _GFL_G3D_RND
 {
 	u16						magicnum;
 	u16						dummy;
 
 	NNSG3dRenderObj*		rndobj;
-	NNSG3dAnmObj*			anmobj;
-
-	NNSG3dResMdl*			pMdl;
-	NNSG3dResTex*			pTex;
-	void*					pAnm;
-
-	VecFx32					trans;
-	VecFx32					scale;
-	MtxFx33					rotate;
+	GFL_G3D_RES*			mdl;
+	GFL_G3D_RES*			tex;
 };
 
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの作成
- *
- * @param	mdl			参照モデルセットリソース構造体ポインタ
- * @param	mdlidx		mdl内データインデックス(複数登録されている場合。１つの場合は0)
- * @param	tex			参照テクスチャリソース構造体ポインタ(使用しない場合はNULL)
- * @param	anm			参照アニメーションリソース構造体ポインタ(使用しない場合はNULL)
- * @param	anmidx		anm内データインデックス(複数登録されている場合。１つの場合は0)
- *
- * @return	GFL_3D_OBJ	３Ｄオブジェクトハンドル
- */
-//--------------------------------------------------------------------------------------------
-GFL_G3D_OBJ*
-	GFL_G3D_ObjCreate
-		( GFL_G3D_RES* mdl, int mdlidx, GFL_G3D_RES* tex, GFL_G3D_RES* anm, int anmidx )  
-{
-	NNSG3dResFileHeader*	header;
-	NNSG3dResMdlSet*		pMdlset;
-	NNSG3dResMdl*			pMdl;
-	NNSG3dResTex*			pTex;
-	void*					pAnm;
-	GFL_G3D_OBJ*			g3Dobj;
-
-	//整合性チェックおよび各種リソースポインタ取得
-	if( ( mdl != NULL )&&( mdl->magicnum == G3DRES_MAGICNUM )&&
-	   (( mdl->type == GFL_G3D_RES_TYPE_MDLTEX )||( mdl->type == GFL_G3D_RES_TYPE_MDL )) ){
-		//モデルデータリソースポインタ取得
-		header = (NNSG3dResFileHeader*)mdl->file;
-		pMdlset = NNS_G3dGetMdlSet( header );
-		pMdl = NNS_G3dGetMdlByIdx( pMdlset, mdlidx );
-	} else {
-		pMdl = NULL;
-	}
-	if( ( tex != NULL )&&( tex->magicnum == G3DRES_MAGICNUM )&&
-	   (( tex->type == GFL_G3D_RES_TYPE_MDLTEX )||( tex->type == GFL_G3D_RES_TYPE_TEX )) ){
-		//テクスチャリソースポインタ取得
-		header = (NNSG3dResFileHeader*)tex->file;
-		pTex = NNS_G3dGetTex( header );
-	} else {
-		pTex = NULL;
-	}
-	if( ( anm != NULL )&&( anm->magicnum == G3DRES_MAGICNUM )&&
-			( anm->type == GFL_G3D_RES_TYPE_ANM )){
-		//アニメーションリソースポインタ取得
-		pAnm = NNS_G3dGetAnmByIdx( anm->file, anmidx );
-	} else {
-		pAnm = NULL;
-	}
-	GF_ASSERT( pMdl != NULL );
-
-	//オブジェクトハンドルの作成
-	g3Dobj = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_OBJ) );
-	g3Dobj->magicnum = G3DOBJ_MAGICNUM;
-	g3Dobj->pMdl = pMdl;
-	g3Dobj->pTex = pTex;
-	g3Dobj->pAnm = pAnm;
-
-	//レンダリングオブジェクト設定
-	if( pMdl ){
-		//レンダリングオブジェクト領域の確保
-		g3Dobj->rndobj = NNS_G3dAllocRenderObj( &g3Dman->allocater );
-		GF_ASSERT( g3Dobj->rndobj != NULL );
-
-		//テクスチャリソースとの関連付け
-		NNS_G3dBindMdlSet( pMdlset, pTex );
-		//レンダリングオブジェクト初期化
-		NNS_G3dRenderObjInit( g3Dobj->rndobj, pMdl);
-	} else {
-		g3Dobj->rndobj = NULL;	//レンダリングなし※アニメコントロールオブジェクトになる
-	}
-
-	//アニメーションオブジェクト領域の確保と設定
-	if( pAnm ){
-		//アニメーションオブジェクト領域の確保
-		g3Dobj->anmobj = NNS_G3dAllocAnmObj( &g3Dman->allocater, pAnm, pMdl );
-		GF_ASSERT( g3Dobj->anmobj != NULL );
-
-		//アニメーションオブジェクト初期化
-		NNS_G3dAnmObjInit( g3Dobj->anmobj, pAnm, pMdl, pTex );
-		//レンダリングオブジェクトとの関連付け
-		if( g3Dobj->rndobj != NULL ){
-			NNS_G3dRenderObjAddAnmObj( g3Dobj->rndobj, g3Dobj->anmobj );
-		}
-	} else {
-		g3Dobj->anmobj = NULL;
-	}
-
-	//オブジェクトステータスワーク初期化
-	{
-		VecFx32 init_trans	= { 0, 0, 0 };
-		VecFx32 init_scale	= { FX32_ONE, FX32_ONE, FX32_ONE };
-		MtxFx33 init_rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
-
-		g3Dobj->trans	= init_trans;
-		g3Dobj->scale	= init_scale;
-		g3Dobj->rotate	= init_rotate;
-	}
-	return g3Dobj;
-}
 
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄオブジェクトの破棄
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjDelete
-		( GFL_G3D_OBJ* g3Dobj ) 
-{
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
-
-	if( g3Dobj->anmobj != NULL ){
-		NNS_G3dFreeAnmObj( &g3Dman->allocater, g3Dobj->anmobj );
-	}
-	if( g3Dobj->rndobj != NULL ){
-		NNS_G3dFreeRenderObj( &g3Dman->allocater, g3Dobj->rndobj );
-	}
-	GFL_HEAP_FreeMemory( g3Dobj );
-}
-	
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトにアニメーションを追加設定する
- *
- * @param	g3Dobj		３Ｄオブジェクトハンドル(レンダリング)
- * @param	g3Danmobj	３Ｄオブジェクトハンドル(アニメーション)
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjAnmAdd
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Danmobj )
-{
-	GF_ASSERT((g3Dobj->magicnum == G3DOBJ_MAGICNUM )&&( g3Dobj->rndobj != NULL ));
-	GF_ASSERT((g3Danmobj->magicnum == G3DOBJ_MAGICNUM )&&( g3Danmobj->anmobj != NULL ));
-		
-	//レンダリングオブジェクトとの関連付け
-	NNS_G3dRenderObjAddAnmObj( g3Dobj->rndobj, g3Dobj->anmobj );
-}
-#else
-//=============================================================================================
-/**
- *
- *
- * 各オブジェクト管理関数
- *
- *
- */
-//=============================================================================================
-#define G3DOBJ_MAGICNUM	(0x7A14)
-///	３Ｄモデル制御用構造体
-struct _GFL_G3D_OBJ
-{
-	u16						magicnum;
-	u16						dummy;
-
-	NNSG3dRenderObj*		rndobj;
-	NNSG3dResMdl*			pMdl;
-	NNSG3dResTex*			pTex;
-
-	VecFx32					trans;
-	VecFx32					scale;
-	MtxFx33					rotate;
-};
-
-//--------------------------------------------------------------------------------------------
-/**
- * ３Ｄオブジェクトの作成
+ * ３Ｄレンダーの作成
  *
  * @param	mdl			参照モデルセットリソース構造体ポインタ
  * @param	mdlidx		mdl内データインデックス(複数登録されている場合。１つの場合は0)
  * @param	tex			参照テクスチャリソース構造体ポインタ(使用しない場合はNULL)
  *
- * @return	GFL_3D_OBJ	３Ｄオブジェクトハンドル
+ * @return	GFL_3D_RND	３Ｄレンダーハンドル
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_OBJ*
-	GFL_G3D_ObjCreate
+GFL_G3D_RND*
+	GFL_G3D_RndCreate
 		( GFL_G3D_RES* mdl, int mdlidx, GFL_G3D_RES* tex )
 {
-	NNSG3dResFileHeader*	header;
 	NNSG3dResMdlSet*		pMdlset;
-	NNSG3dResMdl*			pMdl;
-	NNSG3dResTex*			pTex;
-	void*					pAnm;
-	GFL_G3D_OBJ*			g3Dobj;
-
-	GF_ASSERT( mdl->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT( GFL_G3D_ResourceTypeCheck( mdl, GFL_G3D_RES_CHKTYPE_MDL ) == TRUE );
+	NNSG3dResMdl*			pMdl = NULL;
+	NNSG3dResTex*			pTex = NULL;
+	GFL_G3D_RND*			g3Drnd;
 
 	//モデルデータリソースポインタ取得
-	header = (NNSG3dResFileHeader*)mdl->file;
-	pMdlset = NNS_G3dGetMdlSet( header );
+	GF_ASSERT( mdl->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT( GFL_G3D_ResTypeCheck( mdl, GFL_G3D_RES_CHKTYPE_MDL ) == TRUE );
+	pMdlset = NNS_G3dGetMdlSet( (NNSG3dResFileHeader*)mdl->file );
 	pMdl = NNS_G3dGetMdlByIdx( pMdlset, mdlidx );
-
-	if(( tex->magicnum == G3DRES_MAGICNUM )&&
-		( GFL_G3D_ResourceTypeCheck( mdl, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE )){
-		//テクスチャリソースポインタ取得
-		header = (NNSG3dResFileHeader*)tex->file;
-		pTex = NNS_G3dGetTex( header );
-	} else {
-		pTex = NULL;
-	}
 	GF_ASSERT( pMdl != NULL );
 
-	//オブジェクトハンドルの作成
-	g3Dobj = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_OBJ) );
-	g3Dobj->magicnum = G3DOBJ_MAGICNUM;
-	g3Dobj->pMdl = pMdl;
-	g3Dobj->pTex = pTex;
+	//テクスチャリソースポインタ取得
+	if( tex != NULL ){	//テクスチャーなしを指定することもできる
+		GF_ASSERT( tex->magicnum == G3DRES_MAGICNUM );
+		GF_ASSERT( GFL_G3D_ResTypeCheck( tex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE );
+		pTex = NNS_G3dGetTex( (NNSG3dResFileHeader*)tex->file );
+		GF_ASSERT( pTex != NULL );
+	}
+
+	//レンダーハンドルの作成
+	g3Drnd = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RND) );
+	g3Drnd->magicnum = G3DRND_MAGICNUM;
+	g3Drnd->mdl = mdl;
+	g3Drnd->tex = tex;
 
 	//レンダリングオブジェクト領域の確保
-	g3Dobj->rndobj = NNS_G3dAllocRenderObj( &g3Dman->allocater );
-	GF_ASSERT( g3Dobj->rndobj != NULL );
+	g3Drnd->rndobj = NNS_G3dAllocRenderObj( &g3Dman->allocater );
+	GF_ASSERT( g3Drnd->rndobj != NULL );
 
 	//テクスチャリソースとの関連付け
 	if( pTex ){
-		NNS_G3dBindMdlSet( pMdlset, pTex );
+		BOOL result = TRUE;
+		result &= NNS_G3dBindMdlTex( pMdl, pTex );
+		result &= NNS_G3dBindMdlPltt( pMdl, pTex );
+		if( result == FALSE ){
+			OS_Printf("texture bind failed\n");
+		}
 	}
 	//レンダリングオブジェクト初期化
-	NNS_G3dRenderObjInit( g3Dobj->rndobj, pMdl);
+	NNS_G3dRenderObjInit( g3Drnd->rndobj, pMdl );
 
-	//オブジェクトステータスワーク初期化
-	{
-		VecFx32 init_trans	= { 0, 0, 0 };
-		VecFx32 init_scale	= { FX32_ONE, FX32_ONE, FX32_ONE };
-		MtxFx33 init_rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
-
-		g3Dobj->trans	= init_trans;
-		g3Dobj->scale	= init_scale;
-		g3Dobj->rotate	= init_rotate;
-	}
-	return g3Dobj;
+	return g3Drnd;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄオブジェクトの破棄
+ * ３Ｄレンダーの破棄
  *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	g3Drnd	３Ｄレンダーハンドル
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDelete
-		( GFL_G3D_OBJ* g3Dobj ) 
+	GFL_G3D_RndDelete
+		( GFL_G3D_RND* g3Drnd ) 
 {
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
 
-	NNS_G3dFreeRenderObj( &g3Dman->allocater, g3Dobj->rndobj );
-	GFL_HEAP_FreeMemory( g3Dobj );
+	NNS_G3dFreeRenderObj( &g3Dman->allocater, g3Drnd->rndobj );
+	GFL_HEAP_FreeMemory( g3Drnd );
 }
-	
-#endif
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄレンダーのモデルリソースポインタを取得
+ *
+ * @param	g3Drnd	３Ｄレンダーハンドル
+ *
+ * @return	GFL_G3D_RES*
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_RES*
+	GFL_G3D_RndG3DresMdlGet
+		( GFL_G3D_RND* g3Drnd ) 
+{
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
+
+	return g3Drnd->mdl;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄレンダーのモデルリソースポインタを取得
+ *
+ * @param	g3Drnd	３Ｄレンダーハンドル
+ *
+ * @return	GFL_G3D_RES*
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_RES*
+	GFL_G3D_RndG3DresTexGet
+		( GFL_G3D_RND* g3Drnd ) 
+{
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
+
+	return g3Drnd->tex;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄレンダーのレンダリングオブジェクトポインタを取得
+ *
+ * @param	g3Drnd	３Ｄレンダーハンドル
+ *
+ * @return	NNSG3dRenderObj*
+ *
+ * 　ＮＮＳ関数を外部で使用したい場合などに使用する
+ */
+//--------------------------------------------------------------------------------------------
+NNSG3dRenderObj*
+	GFL_G3D_RndRenderObjGet
+		( GFL_G3D_RND* g3Drnd ) 
+{
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
+
+	return g3Drnd->rndobj;
+}
 
 
 
@@ -1165,61 +1091,70 @@ void
 //=============================================================================================
 /**
  *
+ * ３Ｄアニメーション管理関数
  *
- * 各アニメーション管理関数
- *
+ * 　テクスチャアニメーション＋ジョイントアニメーション等
+ * 　各種アニメーションを管理する。
+ * 　このアニメーションは一つのレンダーに一種類というわけではないので
+ * 　レンダーとは別の構成要素として管理する。
+ * 　作成の際、対象のレンダーハンドル（アロケートバッファサイズに関係する）を
+ * 　必要とするので、作成手順に注意すること。
  *
  */
 //=============================================================================================
 #define G3DANM_MAGICNUM	(0x59d1)
-///	３Ｄモデル制御用構造体
+///	３Ｄアニメーション制御用構造体
 struct _GFL_G3D_ANM
 {
 	u16				magicnum;
 	u16				dummy;
 
 	NNSG3dAnmObj*	anmobj;
-	void*			pAnm;
+	GFL_G3D_RES*	anm;
 };
 
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄアニメーションの作成
  *
- * @param	g3Dobj		付加される３Ｄオブジェクトハンドル
+ * @param	g3Drnd		付加される対象の３Ｄレンダーハンドル
  * @param	anm			参照アニメーションリソース構造体ポインタ
  * @param	anmidx		anm内データインデックス(複数登録されている場合。１つの場合は0)
- * @param	bind		TRUE = 入力されたg3Dobjハンドルと関連付けをする
  *
  * @return	GFL_3D_ANM	３Ｄアニメーションハンドル
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_ANM*
 	GFL_G3D_AnmCreate
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_RES* anm, int anmidx, BOOL bind )  
+		( GFL_G3D_RND* g3Drnd, GFL_G3D_RES* anm, int anmidx )  
 {
 	GFL_G3D_ANM*	g3Danm;
+	NNSG3dResMdl*	pMdl;
+	NNSG3dResTex*	pTex;
+	void*			pAnm;
 
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
 	GF_ASSERT( anm->magicnum == G3DRES_MAGICNUM );
 	GF_ASSERT( anm->type == GFL_G3D_RES_TYPE_ANM );
 
 	//アニメーションハンドルの作成
 	g3Danm = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_ANM) );
 	g3Danm->magicnum = G3DANM_MAGICNUM;
+	g3Danm->anm = anm;
+
 	//アニメーションリソースポインタ取得
-	g3Danm->pAnm = NNS_G3dGetAnmByIdx( anm->file, anmidx );
-	GF_ASSERT( g3Danm->pAnm != NULL );
+	pAnm = NNS_G3dGetAnmByIdx( anm->file, anmidx );
+	GF_ASSERT( pAnm != NULL );
+
+	pMdl = NNS_G3dRenderObjGetResMdl( g3Drnd->rndobj );
+	pTex = NNS_G3dGetTex( (NNSG3dResFileHeader*)g3Drnd->tex->file );
 
 	//アニメーションオブジェクト領域の確保
-	g3Danm->anmobj = NNS_G3dAllocAnmObj( &g3Dman->allocater, g3Danm->pAnm, g3Dobj->pMdl );
+	g3Danm->anmobj = NNS_G3dAllocAnmObj( &g3Dman->allocater, pAnm, pMdl );
 	GF_ASSERT( g3Danm->anmobj != NULL );
 	//アニメーションオブジェクト初期化
-	NNS_G3dAnmObjInit( g3Danm->anmobj, g3Danm->pAnm, g3Dobj->pMdl, g3Dobj->pTex );
-	//レンダリングオブジェクトとの関連付け
-	if( bind == TRUE ){
-		NNS_G3dRenderObjAddAnmObj( g3Dobj->rndobj, g3Danm->anmobj );
-	}
+	NNS_G3dAnmObjInit( g3Danm->anmobj, pAnm, pMdl, pTex );
+
 	return g3Danm;
 }
 
@@ -1239,24 +1174,43 @@ void
 	NNS_G3dFreeAnmObj( &g3Dman->allocater, g3Danm->anmobj );
 	GFL_HEAP_FreeMemory( g3Danm );
 }
-	
+
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄオブジェクトにアニメーションを追加設定する
+ * ３Ｄアニメーションリソースポインタを取得
  *
- * @param	g3Dobj		３Ｄオブジェクトハンドル
- * @param	g3Danm		３Ｄアニメーションハンドル
+ * @param	g3Danm	３Ｄアニメーションハンドル
+ *
+ * @return	GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjAnmAdd
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_ANM* g3Danm )
+GFL_G3D_RES*
+	GFL_G3D_AnmG3DresGet
+		( GFL_G3D_ANM* g3Danm ) 
 {
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
-		
-	//レンダリングオブジェクトとの関連付け
-	NNS_G3dRenderObjAddAnmObj( g3Dobj->rndobj, g3Danm->anmobj );
+
+	return g3Danm->anm;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄアニメーションのアニメオブジェクトポインタを取得
+ *
+ * @param	g3Danm	３Ｄアニメーションハンドル
+ *
+ * @return	NNSG3dAnmObj*
+ *
+ * 　ＮＮＳ関数を外部で使用したい場合などに使用する
+ */
+//--------------------------------------------------------------------------------------------
+NNSG3dAnmObj*
+	GFL_G3D_AnmAnmObjGet
+		( GFL_G3D_ANM* g3Danm ) 
+{
+	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
+
+	return g3Danm->anmobj;
 }
 
 
@@ -1266,20 +1220,297 @@ void
 //=============================================================================================
 /**
  *
+ * ３Ｄオブジェクト管理関数
  *
- * 各オブジェクト描画関数
+ * 　レンダー及びアニメーションによって構成される。
+ * 　ステータス（座標、スケール、回転）はオブジェクトハンドルには内包しない。
+ * 　※一つのオブジェクトはあくまでも描画リソースデータ郡であり
+ * 　　それが１物体とは限らないため。
+ * 　　　例）森を描画する際、木のオブジェクトを一つ用意し、任意のステータス配置で複数描画する。
+ * 　またアニメーションは複数登録できるように構成されている。（なしも可能）
+ * 　　　例）テクスチャアニメーション＋ジョイントアニメーション
+ *　 そのためハンドルサイズは不定になっていることに注意すること。
+ *
+ */
+//=============================================================================================
+#define G3DOBJ_MAGICNUM	(0x2185)
+///	３Ｄオブジェクト制御用構造体
+struct _GFL_G3D_OBJ
+{
+	u16				magicnum;
+
+	GFL_G3D_RND*	g3Drnd;
+	GFL_G3D_ANM**	anmTbl;
+	u16				anmCount;
+};
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトの作成
+ *
+ * @param	g3Drnd		レンダーハンドル
+ * @param	anmTbl		付加するアニメーションハンドルテーブル（複数設定を可能にするため）
+ * @param	anmCount	付加する、もしくは付加予定のアニメーションの数
+ *
+ * @return	GFL_3D_OBJ	３Ｄオブジェクトハンドル
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_OBJ*
+	GFL_G3D_ObjCreate
+		( GFL_G3D_RND* g3Drnd, GFL_G3D_ANM** anmTbl, u16 anmCount )  
+{
+	GFL_G3D_OBJ*	g3Dobj;
+	GFL_G3D_ANM*	g3Danm;
+	int	i;
+
+	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
+
+	//オブジェクトハンドルの作成
+	g3Dobj = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_OBJ) );
+	g3Dobj->magicnum	= G3DOBJ_MAGICNUM;
+	g3Dobj->g3Drnd		= g3Drnd;
+	g3Dobj->anmCount	= anmCount;
+
+	//アニメーション配列作成
+	g3Dobj->anmTbl = GFL_HEAP_AllocMemoryClear( g3Dman->heapID, sizeof(GFL_G3D_ANM*) * anmCount );
+	for( i=0; i<anmCount; i++ ){
+		g3Danm = anmTbl[i];
+		if( g3Danm != NULL ){
+			GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
+
+			NNS_G3dRenderObjAddAnmObj( g3Drnd->rndobj, g3Danm->anmobj );
+		}
+		g3Dobj->anmTbl[i] = g3Danm;
+	}
+
+	return g3Dobj;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトの破棄
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjDelete
+		( GFL_G3D_OBJ* g3Dobj ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+
+	GFL_HEAP_FreeMemory( g3Dobj->anmTbl );
+	GFL_HEAP_FreeMemory( g3Dobj );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのレンダーハンドルポインタを取得
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ *
+ * @return	GFL_G3D_RND*
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_RND*
+	GFL_G3D_ObjG3DrndGet
+		( GFL_G3D_OBJ* g3Dobj ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+
+	return g3Dobj->g3Drnd;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーションハンドルポインタを取得
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ *
+ * @return	GFL_G3D_ANM*
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_ANM*
+	GFL_G3D_ObjG3DanmGet
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	return g3Dobj->anmTbl[ anmIdx ];
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーション設定数を取得
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ *
+ * @return	u16
+ */
+//--------------------------------------------------------------------------------------------
+u16
+	GFL_G3D_ObjAnmCountGet
+		( GFL_G3D_OBJ* g3Dobj ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+
+	return g3Dobj->anmCount;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトにアニメーションを追加する
+ *
+ * @param	g3Dobj		３Ｄオブジェクトハンドル
+ * @param	g3Danm		３Ｄアニメーションハンドル
+ *
+ * @return	u16			登録位置
+ */
+//--------------------------------------------------------------------------------------------
+u16
+	GFL_G3D_ObjAnmAdd
+		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_ANM* g3Danm )
+{
+	u16	i;
+
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
+
+	for( i=0; i<g3Dobj->anmCount; i++ ){
+		if( g3Dobj->anmTbl[i] == NULL ){
+			//レンダリングオブジェクトとの関連付け
+			NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Danm->anmobj );
+			g3Dobj->anmTbl[ i ] = g3Danm;
+			return i;
+		}
+	}
+	GF_ASSERT(0);
+	return 0xffff;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトからアニメーションを削除する
+ *
+ * @param	g3Dobj		３Ｄオブジェクトハンドル
+ * @param	anmIdx		登録されているアニメーションインデックス
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjAnmRemove
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	//レンダリングオブジェクトとの関連付けを解除
+	NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	g3Dobj->anmTbl[ anmIdx ] = NULL;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーションフレームをリセット
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_ObjContAnmFrameReset
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーションフレームを進める
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
+ *
+ * @return	BOOL	FALSEで終了検出
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_ObjContAnmFrameInc
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ) 
+{
+	NNSG3dAnmObj* anmobj;
+
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
+	anmobj->frame += count;
+	
+	if( anmobj->frame >= NNS_G3dAnmObjGetNumFrame( anmobj )){
+		return FALSE;
+	}
+	return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーションオートループ
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ * @param	count	増加分（FX32_ONEで１フレーム進める）
+ *
+ * @return	BOOL	FALSEで１ループ終了検出
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_ObjContAnmFrameAutoLoop
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ) 
+{
+	NNSG3dAnmObj* anmobj;
+
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
+	anmobj->frame += count;
+	
+	if( anmobj->frame >= NNS_G3dAnmObjGetNumFrame( anmobj )){
+		anmobj->frame = 0;
+		return FALSE;
+	}
+	return TRUE;
+}
+
+
+
+
+
+//=============================================================================================
+//=============================================================================================
+/**
+ *
+ * 描画関数
+ *
+ * 　３Ｄオブジェクトハンドルとそれらのステータス（座標、スケール、回転）を引数として描画を行う。
  *
  *	SAMPLE
  *	{
  *		GFL_G3D_DrawStart();							//描画開始
  *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
  *		{
- *			GFL_G3D_ObjDraw( g3Dobj );					//各オブジェクト描画
+ *			GFL_G3D_ObjDraw( g3Dobj, status );			//各オブジェクト描画
  *		}
  *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
  *	}
  *
  */
+//=============================================================================================
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
@@ -1344,7 +1575,8 @@ void
  */
 //--------------------------------------------------------------------------------------------
 // ３Ｄオブジェクトの情報設定
-static inline void statusSet( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale )
+static inline void 
+	statusSet( const VecFx32* pTrans, const MtxFx33* pRotate, const VecFx32* pScale )
 {
 	// 位置設定
 	NNS_G3dGlbSetBaseTrans( pTrans );
@@ -1359,31 +1591,31 @@ static inline void statusSet( VecFx32* pTrans, MtxFx33* pRotate, VecFx32* pScale
 //--------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjDraw
-		( GFL_G3D_OBJ* g3Dobj )
+		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlush();
-	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
 	GFL_G3D_ObjDrawVP
-		( GFL_G3D_OBJ* g3Dobj )
+		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushVP();
-	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
 	GFL_G3D_ObjDrawWVP
-		( GFL_G3D_OBJ* g3Dobj )
+		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushWVP();
-	NNS_G3dDraw( g3Dobj->rndobj );
+	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
@@ -1395,160 +1627,42 @@ void
 //--------------------------------------------------------------------------------
 void
 	GFL_G3D_ObjDraw1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
+			const GFL_G3D_OBJSTATUS* status )
 
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlush();
-	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
+							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
 	GFL_G3D_ObjDrawVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
+			const GFL_G3D_OBJSTATUS* status )
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushVP();
-	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
+							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
 	GFL_G3D_ObjDrawWVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat )
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
+			const GFL_G3D_OBJSTATUS* status )
 {
-	statusSet( &g3Dobj->trans, &g3Dobj->rotate, &g3Dobj->scale );
+	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushWVP();
-	NNS_G3dDraw1Mat1Shp( g3Dobj->pMdl, matID, shpID, sendMat );
+	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
+							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
-}
-
-
-
-
-
-//=============================================================================================
-/**
- *
- *
- * 各オブジェクトコントロール関数
- *
- *
- */
-//=============================================================================================
-//--------------------------------------------------------------------------------------------
-/**
- * 位置情報をセット
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	trans	セットする位置情報
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjContSetTrans
-		( GFL_G3D_OBJ* g3Dobj, const VecFx32* trans ) 
-{
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
-	g3Dobj->trans = *trans;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * スケール情報をセット
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	trans	セットするスケール情報
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjContSetScale
-		( GFL_G3D_OBJ* g3Dobj, const VecFx32* scale ) 
-{
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
-	g3Dobj->scale = *scale;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 回転情報をセット
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	rotate	セットする回転情報
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjContSetRotate
-		( GFL_G3D_OBJ* g3Dobj, const MtxFx33* rotate ) 
-{
-	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
-	g3Dobj->rotate = *rotate;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アニメーションフレームをリセット
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- */
-//--------------------------------------------------------------------------------------------
-void
-	GFL_G3D_ObjContAnmFrameReset
-		( GFL_G3D_ANM* g3Danm ) 
-{
-	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
-	GF_ASSERT( g3Danm->anmobj != NULL );
-	g3Danm->anmobj->frame = 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アニメーションフレームを進める
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	count	増加分（FX32_ONEで１フレーム進める）
- *
- * @return	BOOL	FALSEで終了検出
- */
-//--------------------------------------------------------------------------------------------
-BOOL
-	GFL_G3D_ObjContAnmFrameInc
-		( GFL_G3D_ANM* g3Danm, fx32 count ) 
-{
-	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
-	GF_ASSERT( g3Danm->anmobj != NULL );
-
-	g3Danm->anmobj->frame += count;
-	if( g3Danm->anmobj->frame >= NNS_G3dAnmObjGetNumFrame( g3Danm->anmobj )){
-		return FALSE;
-	} else {
-		return TRUE;
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * アニメーションオートループ
- *
- * @param	g3Dobj	３Ｄオブジェクトハンドル
- * @param	count	増加分（FX32_ONEで１フレーム進める）
- *
- * @return	BOOL	FALSEで１ループ終了検出
- */
-//--------------------------------------------------------------------------------------------
-BOOL
-	GFL_G3D_ObjContAnmFrameAutoLoop
-		( GFL_G3D_ANM* g3Danm, fx32 count ) 
-{
-	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
-	GF_ASSERT( g3Danm->anmobj != NULL );
-
-	g3Danm->anmobj->frame += count;
-	if( g3Danm->anmobj->frame >= NNS_G3dAnmObjGetNumFrame( g3Danm->anmobj )){
-		g3Danm->anmobj->frame = 0;
-		return FALSE;
-	}
-	return TRUE;
 }
 
 
