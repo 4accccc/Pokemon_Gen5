@@ -152,6 +152,30 @@ void GFL_OBJGRP_sysEnd( void )
 	SysWork.plttMan = NULL;
 	SysWork.cellAnimMan = NULL;
 }
+//==============================================================================================
+// アーカイブからのデータ読み出し・解凍処理
+//==============================================================================================
+static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFlag, HEAPID heapID )
+{
+	void* retBuf;
+
+	if( compressFlag )
+	{
+		void* tmpBuf;
+		u32 size;
+
+		tmpBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, HeapGetLow(heapID) );
+		size = MI_GetUncompressedSize( tmpBuf );
+		retBuf = GFL_HEAP_AllocMemory( heapID, size );
+		MI_UncompressLZ8( tmpBuf, retBuf );
+	}
+	else
+	{
+		retBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, HeapGetLow(heapID) );
+	}
+
+	return retBuf;
+}
 
 //==============================================================================================
 // データ登録および解放関数群
@@ -166,13 +190,14 @@ void GFL_OBJGRP_sysEnd( void )
  *
  * @param   arcHandle		[in] アーカイブハンドル
  * @param   cgrDataID		[in] アーカイブ内のCGRデータID
+ * @param   compressedFlag	[in] データが圧縮されているか
  * @param   targetVram		[in] 転送先VRAM指定
  * @param   heapID			[in] データロード用ヒープ（テンポラリ）
  *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, GFL_VRAM_TYPE targetVram, u16 heapID )
+u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressedFlag, GFL_VRAM_TYPE targetVram, HEAPID heapID )
 {
 	u32  idx = search_empty_cgr_pos();
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
@@ -207,7 +232,7 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, GFL_VRAM_TYPE t
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, GFL_VRAM_TYPE targetVram, u32 cellIndex, u16 heapID )
+u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressedFlag, GFL_VRAM_TYPE targetVram, u32 cellIndex, HEAPID heapID )
 {
 	GF_ASSERT(SysWork.cellAnimMan[cellIndex].emptyFlag == FALSE);
 	GF_ASSERT(NNS_G2dCellDataBankHasVramTransferData(SysWork.cellAnimMan[cellIndex].cellBankPtr));

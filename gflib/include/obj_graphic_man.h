@@ -52,12 +52,15 @@ extern void GFL_OBJGRP_sysStart(	u16 heapID, const GFL_BG_DISPVRAM* vramBank,
 									const GFL_OBJGRP_INIT_PARAM* initParam );
 extern void GFL_OBJGRP_sysEnd( void );
 
-extern u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 dataID, GFL_VRAM_TYPE targetVram, u16 heapID );
-extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 dataID, GFL_VRAM_TYPE targetVram, 
-												u32 cellIndex, u16 heapID );
+extern u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 dataID, BOOL compressedFlag, 
+	GFL_VRAM_TYPE targetVram, HEAPID heapID );
+
+extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 dataID, BOOL compressedFlag, 
+			GFL_VRAM_TYPE targetVram,  u32 cellIndex, HEAPID heapID );
+
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
 
-extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID );
+extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
 extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
 extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 
