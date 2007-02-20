@@ -168,6 +168,8 @@ static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFl
 		size = MI_GetUncompressedSize( tmpBuf );
 		retBuf = GFL_HEAP_AllocMemory( heapID, size );
 		MI_UncompressLZ8( tmpBuf, retBuf );
+		OS_TPrintf("tmpBuf:%08x, retBuf:%08x, size = %dbytes\n", (u32)tmpBuf, (u32)retBuf, size);
+		GFL_HEAP_FreeMemory( tmpBuf );
 	}
 	else
 	{
@@ -203,7 +205,7 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressed
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
 		CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
-		void* loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cgrDataID, HeapGetLow(heapID) );
+		void* loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, HeapGetLow(heapID) );
 
 		register_cgr( idx, loadPtr, targetVram, NULL );
 		GFL_HEAP_FreeMemory( loadPtr );
@@ -243,7 +245,7 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 		{
 			CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
 
-			cgrMan->loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cgrDataID, heapID );
+			cgrMan->loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, heapID );
 			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
 			return idx;
 		}
