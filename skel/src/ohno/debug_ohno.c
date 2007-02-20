@@ -130,7 +130,7 @@ void DebugOhnoMain(void)
 void DebugOhnoExit(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_TP_sysEnd();
+	GFL_UI_TP_sysExit();
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }
