@@ -7,7 +7,16 @@
  */
 //=============================================================================
 
-#include "gflib.h"
+#include <nitro.h>
+#include <nnsys.h>
+#include <dwc.h>
+#include "gf_macro.h"
+#include "gf_standard.h"
+#include "assert.h"
+#include "heapsys.h"
+#include "strbuf.h"
+#include "net.h"
+//#include "gflib.h"
 
 #include "device/wh_config.h"
 
@@ -20,7 +29,7 @@
 #include "tool/net_queue.h"
 #include "tool/net_tool.h"
 
-//#include "wifi/dwc_rap.h"   //WIFI
+#include "device/dwc_rap.h"   //WIFI
 
 #define _SENDRECV_LIMIT  (3)  // ‘—M‚ÆŽóM‚Ì”‚ª‚¸‚ê‚½ê‡‘—M‚ð—}§‚·‚é
 
@@ -694,7 +703,7 @@ void GFL_NET_SystemFinalize(void)
 
     if(_pComm){
         if( _pComm->device == _DEVICE_WIFI){
-            //mydwc_Logout();  // Ø’f
+            mydwc_Logout();  // Ø’f
             bEnd = TRUE;
         }
         else{
@@ -877,7 +886,7 @@ static void _dataMpStep(void)
 #if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0        // wifi‚Í••ˆó
+#if 1
             if( _pComm->bWifiConnect ){
                 if( mydwc_sendToServer( _pComm->sSendBuf, _SEND_BUFF_SIZE_4CHILD )){
                     _pComm->bSendNoneSend = FALSE;
@@ -898,7 +907,7 @@ static void _dataMpStep(void)
 #endif
 
     if( _pComm->device == _DEVICE_WIFI){
-#if 0  //wifi••ˆó
+#if 1
         if( _pComm->bWifiConnect ){
             if( _pComm->bWifiSendRecv ){  // “¯Šú‚ðŽæ‚Á‚Ä‚¢‚éê‡
                 if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //‘—‚è‚·‚¬
@@ -927,7 +936,7 @@ static void _dataMpStep(void)
             else{
             }
         }
-#endif //wifi••ˆó
+#endif
     }
     else if(((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) &&
         (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
@@ -1060,7 +1069,7 @@ static void _dataMpServerStep(void)
 #if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0  //wifi lock
+#if 1  //wifi lock
             if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
                 if( mydwc_sendToClient( _pComm->sSendServerBuf, WH_MP_4CHILD_DATA_SIZE*2 )){
                     _pComm->bSendNoneSend = FALSE;
@@ -1079,7 +1088,7 @@ static void _dataMpServerStep(void)
     }
 #endif
     if( _pComm->device == _DEVICE_WIFI){
-#if 0 //wifi••ˆó
+#if 1 //wifi••ˆó
         if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
             if( _pComm->bWifiSendRecv ){  // “¯Šú‚ðŽæ‚Á‚Ä‚¢‚éê‡
                 if(_pComm->countSendRecvServer[1] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
@@ -1785,7 +1794,7 @@ BOOL GFL_NET_SystemIsConnect(u16 netID)
         return FALSE;
     }
     if( _pComm->device == _DEVICE_WIFI){
-#if 0 //wifi
+#if 1 //wifi
         if(_pComm->bWifiConnect){
             int id = mydwc_getaid();
             if(-1 != id){
@@ -1869,7 +1878,7 @@ u16 GFL_NET_SystemGetCurrentID(void)
 {
     if(_pComm){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0  //wifi
+#if 1  //wifi
             int id = mydwc_getaid();
             if(id != -1){
                 return id;
@@ -2128,7 +2137,7 @@ void GFL_NET_SystemSetWifiConnect(BOOL bConnect)
 BOOL GFL_NET_SystemIsVChat(void)
 {
     if( _pComm->device == _DEVICE_WIFI){
-#if 0  // wifi
+#if 1  // wifi
         return mydwc_IsVChat();
 #endif
     }
