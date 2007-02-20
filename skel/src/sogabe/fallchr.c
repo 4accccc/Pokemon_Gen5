@@ -32,6 +32,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
 static	void	YT_EggMakeCheckSet(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	void	YT_EggMakeFlagCheck(TCB *tcb,void *work);
+static	void	YT_YossyBirth(FALL_CHR_PARAM *fcp);
 
 //----------------------------------------------------------------------------
 /**
@@ -751,20 +752,5 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 //-----------------------------------------------------------------------------
 static	void	YT_YossyBirth(FALL_CHR_PARAM *fcp)
 {
-	int	x,y;
-
-	x=fcp->stoptbl[fcp->line_no];
-
-	//stop配列をクリア
-	for(y=0;y<YT_HEIGHT_MAX;y++){
-		if(ps->stop[x][y]==fcp){
-			ps->stop[x][y]=NULL;
-			break;
-		}
-	}
-	//見つからなければアサート
-	GF_ASSERT(y!=YT_HEIGHT_MAX);
-
-	fcp->seq_no=SEQ_FALL_CHR_VANISH_INIT;
 }
 
