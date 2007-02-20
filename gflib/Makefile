@@ -39,10 +39,6 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
                     network/tool/net_ring_buff.c \
                     network/tool/net_queue.c \
                     network/tool/net_tool.c \
-					network/device/dwc_rapinitialize.c \
-					network/device/dwc_rap.c \
-					network/device/dwc_rapcommon.c \
-					network/device/dwc_rapfriend.c \
 					network/device/wh.c \
 					network/device/net_wireless.c \
 					network/net_system.c \
