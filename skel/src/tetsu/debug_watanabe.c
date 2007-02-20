@@ -12,9 +12,9 @@
 #include "main.h"
 #include "testmode.h"
 
-static void	TestModeWorkSet( HEAPID heapID );
-static void	TestModeWorkRelease( void );
-static BOOL	TestModeControl( void );
+//static void	TestModeWorkSet( HEAPID heapID );
+//static void	TestModeWorkRelease( void );
+//static BOOL	TestModeControl( void );
 //============================================================================================
 //
 //
@@ -34,7 +34,7 @@ static BOOL	TestModeControl( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	TestModeWorkSet( GFL_HEAPID_APP );
+//	TestModeWorkSet( GFL_HEAPID_APP );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -47,9 +47,9 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	if( TestModeControl() == TRUE ){
+//	if( TestModeControl() == TRUE ){
 		return GFL_PROC_RES_FINISH;
-	}
+//	}
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -66,7 +66,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcMain
 static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	TestModeWorkRelease();
+//	TestModeWorkRelease();
 
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
 	return GFL_PROC_RES_FINISH;
@@ -83,6 +83,7 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 
 
 
+#if 0
 
 //============================================================================================
 //
@@ -103,7 +104,7 @@ typedef struct {
 
 TESTMODE_WORK* tetsuWork;
 
-#include "sample_graphic/titledemo.naix"
+#include "sample_graphic/test9ball.naix"
 
 //ＢＧ設定関数
 static void	bg_init( void );
@@ -133,44 +134,234 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 
 //リソース設定テーブル
 enum {
-	G3RES_AIR,
-	G3RES_AIRANM,
-	G3RES_IAR,
-	G3RES_IARANM,
+	G3RES_1BALLMDL = 0,
+	G3RES_2BALLMDL,
+	G3RES_3BALLMDL,
+	G3RES_4BALLMDL,
+	G3RES_5BALLMDL,
+	G3RES_6BALLMDL,
+	G3RES_7BALLMDL,
+	G3RES_8BALLMDL,
+	G3RES_9BALLMDL,
+	G3RES_1BALL,
+	G3RES_2BALL,
+	G3RES_3BALL,
+	G3RES_4BALL,
+	G3RES_5BALL,
+	G3RES_6BALL,
+	G3RES_7BALL,
+	G3RES_8BALL,
+	G3RES_9BALL,
 };
+
+static const char g3Ddata_path[] = {"src/sample_graphic/test9ball.narc"};
 
 static const GFL_G3D_UTIL_RES g3DresouceTable[] = 
 {
-{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
-{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_air_nsbta,GFL_G3D_UTIL_RESPATH,0},
-{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbmd,GFL_G3D_UTIL_RESPATH,TRUE},
-{(u32)"src/sample_graphic/titledemo.narc",NARC_titledemo_title_iar_nsbta,GFL_G3D_UTIL_RESPATH,0},
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH, FALSE },
+{ (u32)g3Ddata_path, NARC_test9ball_test1ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test2ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test3ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test4ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test5ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test6ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test7ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test8ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
+{ (u32)g3Ddata_path, NARC_test9ball_test9ball_nsbtx, GFL_G3D_UTIL_RESPATH, TRUE },
 };
 
 //オブジェクト設定テーブル
 enum {
-	G3OBJ_AIR,
-	G3OBJ_IAR,
+	G3OBJ_1BALL = 0,
+	G3OBJ_2BALL,
+	G3OBJ_3BALL,
+	G3OBJ_4BALL,
+	G3OBJ_5BALL,
+	G3OBJ_6BALL,
+	G3OBJ_7BALL,
+	G3OBJ_8BALL,
+	G3OBJ_9BALL,
 };
+
+#define UL_OFFSX (-FX32_ONE*3*32)
+#define UL_OFFSZ (-FX32_ONE*3*32)
+#define UP_OFFSX ( FX32_ONE*0*32)
+#define UP_OFFSZ (-FX32_ONE*3*32)
+#define UR_OFFSX ( FX32_ONE*3*32)
+#define UR_OFFSZ (-FX32_ONE*3*32)
+
+#define LF_OFFSX (-FX32_ONE*3*32)
+#define LF_OFFSZ ( FX32_ONE*0*32)
+#define CN_OFFSX ( FX32_ONE*0*32)
+#define CN_OFFSZ ( FX32_ONE*0*32)
+#define RG_OFFSX ( FX32_ONE*3*32)
+#define RG_OFFSZ ( FX32_ONE*0*32)
+
+#define DL_OFFSX (-FX32_ONE*3*32)
+#define DL_OFFSZ ( FX32_ONE*3*32)
+#define DN_OFFSX ( FX32_ONE*0*32)
+#define DN_OFFSZ ( FX32_ONE*3*32)
+#define DR_OFFSX ( FX32_ONE*3*32)
+#define DR_OFFSZ ( FX32_ONE*3*32)
 
 static const GFL_G3D_UTIL_OBJ g3DobjectTable[] = 
 {
-	{
-		G3RES_AIR,0,G3RES_AIR,
-		{ -FX32_ONE*64, 0, 0 },								//座標
-		{ FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 },		//スケール
-		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
-		0,TRUE,
-	},
-	{
-		G3RES_IAR,0,G3RES_IAR,
-		{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
-		{ FX32_ONE*3/5, FX32_ONE*3/5, FX32_ONE*3/5 },		//スケール
-		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
-		0,TRUE,
-	},
+#if 0
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{ -FX32_ONE*32, 0, -FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_8BALLMDL,0,G3RES_8BALL,
+		{ -FX32_ONE*32, 0,  FX32_ONE* 0 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_7BALLMDL,0,G3RES_7BALL,
+		{ -FX32_ONE*32, 0,  FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_6BALLMDL,0,G3RES_6BALL,
+		{ -FX32_ONE* 0, 0, -FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_5BALLMDL,0,G3RES_5BALL,
+		{  FX32_ONE* 0, 0,  FX32_ONE* 0 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_4BALLMDL,0,G3RES_4BALL,
+		{  FX32_ONE* 0, 0,  FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_3BALLMDL,0,G3RES_3BALL,
+		{  FX32_ONE*32, 0, -FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_2BALLMDL,0,G3RES_2BALL,
+		{  FX32_ONE*32, 0,  FX32_ONE* 0 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_1BALLMDL,0,G3RES_1BALL,
+		{  FX32_ONE*32, 0,  FX32_ONE*32 }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+#else
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{ -FX32_ONE*32 + UP_OFFSX, 0, -FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_8BALLMDL,0,G3RES_8BALL,
+		{ -FX32_ONE*32 + UP_OFFSX, 0,  FX32_ONE* 0 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_7BALLMDL,0,G3RES_7BALL,
+		{ -FX32_ONE*32 + UP_OFFSX, 0,  FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_6BALLMDL,0,G3RES_6BALL,
+		{ -FX32_ONE* 0 + UP_OFFSX, 0, -FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_5BALLMDL,0,G3RES_5BALL,
+		{  FX32_ONE* 0 + UP_OFFSX, 0,  FX32_ONE* 0 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_4BALLMDL,0,G3RES_4BALL,
+		{  FX32_ONE* 0 + UP_OFFSX, 0,  FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_3BALLMDL,0,G3RES_3BALL,
+		{  FX32_ONE*32 + UP_OFFSX, 0, -FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_2BALLMDL,0,G3RES_2BALL,
+		{  FX32_ONE*32 + UP_OFFSX, 0,  FX32_ONE* 0 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_1BALLMDL,0,G3RES_1BALL,
+		{  FX32_ONE*32 + UP_OFFSX, 0,  FX32_ONE*32 + UP_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{ -FX32_ONE*32 + LF_OFFSX, 0, -FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_8BALLMDL,0,G3RES_8BALL,
+		{ -FX32_ONE*32 + LF_OFFSX, 0,  FX32_ONE* 0 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_7BALLMDL,0,G3RES_7BALL,
+		{ -FX32_ONE*32 + LF_OFFSX, 0,  FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_6BALLMDL,0,G3RES_6BALL,
+		{ -FX32_ONE* 0 + LF_OFFSX, 0, -FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_5BALLMDL,0,G3RES_5BALL,
+		{  FX32_ONE* 0 + LF_OFFSX, 0,  FX32_ONE* 0 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_4BALLMDL,0,G3RES_4BALL,
+		{  FX32_ONE* 0 + LF_OFFSX, 0,  FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_3BALLMDL,0,G3RES_3BALL,
+		{  FX32_ONE*32 + LF_OFFSX, 0, -FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_2BALLMDL,0,G3RES_2BALL,
+		{  FX32_ONE*32 + LF_OFFSX, 0,  FX32_ONE* 0 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_1BALLMDL,0,G3RES_1BALL,
+		{  FX32_ONE*32 + LF_OFFSX, 0,  FX32_ONE*32 + LF_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{ -FX32_ONE*32 + RG_OFFSX, 0, -FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_8BALLMDL,0,G3RES_8BALL,
+		{ -FX32_ONE*32 + RG_OFFSX, 0,  FX32_ONE* 0 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_7BALLMDL,0,G3RES_7BALL,
+		{ -FX32_ONE*32 + RG_OFFSX, 0,  FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_6BALLMDL,0,G3RES_6BALL,
+		{ -FX32_ONE* 0 + RG_OFFSX, 0, -FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_5BALLMDL,0,G3RES_5BALL,
+		{  FX32_ONE* 0 + RG_OFFSX, 0,  FX32_ONE* 0 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_4BALLMDL,0,G3RES_4BALL,
+		{  FX32_ONE* 0 + RG_OFFSX, 0,  FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_3BALLMDL,0,G3RES_3BALL,
+		{  FX32_ONE*32 + RG_OFFSX, 0, -FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_2BALLMDL,0,G3RES_2BALL,
+		{  FX32_ONE*32 + RG_OFFSX, 0,  FX32_ONE* 0 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_1BALLMDL,0,G3RES_1BALL,
+		{  FX32_ONE*32 + RG_OFFSX, 0,  FX32_ONE*32 + RG_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{ -FX32_ONE*32 + DN_OFFSX, 0, -FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_8BALLMDL,0,G3RES_8BALL,
+		{ -FX32_ONE*32 + DN_OFFSX, 0,  FX32_ONE* 0 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_7BALLMDL,0,G3RES_7BALL,
+		{ -FX32_ONE*32 + DN_OFFSX, 0,  FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_6BALLMDL,0,G3RES_6BALL,
+		{ -FX32_ONE* 0 + DN_OFFSX, 0, -FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_5BALLMDL,0,G3RES_5BALL,
+		{  FX32_ONE* 0 + DN_OFFSX, 0,  FX32_ONE* 0 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_4BALLMDL,0,G3RES_4BALL,
+		{  FX32_ONE* 0 + DN_OFFSX, 0,  FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_3BALLMDL,0,G3RES_3BALL,
+		{  FX32_ONE*32 + DN_OFFSX, 0, -FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_2BALLMDL,0,G3RES_2BALL,
+		{  FX32_ONE*32 + DN_OFFSX, 0,  FX32_ONE* 0 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+	{ G3RES_1BALLMDL,0,G3RES_1BALL,
+		{  FX32_ONE*32 + DN_OFFSX, 0,  FX32_ONE*32 + DN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+
+	{ G3RES_9BALLMDL,0,G3RES_9BALL,
+		{  FX32_ONE* 0 + CN_OFFSX, 0,  FX32_ONE* 0 + CN_OFFSZ }, { FX32_ONE, FX32_ONE, FX32_ONE },
+		{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, 0, TRUE },
+#endif
 };
 
+#if 0
 //アニメーション設定テーブル
 enum {
 	G3ANM_AIR,
@@ -182,9 +373,10 @@ static const GFL_G3D_UTIL_ANM g3DanimetionTable[] =
 	{ G3RES_AIRANM, 0, G3OBJ_AIR, TRUE },
 	{ G3RES_IARANM, 0, G3OBJ_IAR, TRUE },
 };
+#endif
 
 static const VecFx32 cameraTarget	= { 0, 0, 0 };
-static const VecFx32 cameraPos		= { 0, (FX32_ONE * 58), (FX32_ONE * 256) };
+static const VecFx32 cameraPos		= { 0, (FX32_ONE * 512), (FX32_ONE * 300) };
 static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
 
 #define cameraPerspway	( 0x0b60 )
@@ -195,6 +387,9 @@ static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
 #define g3DanmRotateSpeed	( 0x100 )
 #define g3DanmFrameSpeed	( FX32_ONE )
 	
+static const VecFx32 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+static const VecFx32 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+
 
 //------------------------------------------------------------------
 /**
@@ -269,6 +464,16 @@ static void	bg_init( void )
 	GX_SetBankForTex(GX_VRAM_TEX_01_AB);
 	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
 
+	//パレット作成＆転送
+	{
+		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
+		plt[0] = GX_RGB( 8, 15, 8);
+		GFL_BG_PaletteSet( GFL_BG_FRAME0_M, plt, 16*2, 0 );
+		GFL_BG_PaletteSet( GFL_BG_FRAME1_M, plt, 16*2, 0 );
+
+		GFL_HEAP_FreeMemory( plt );
+	}
+
 	//ＢＧモード設定
 	GFL_BG_InitBG( &bgsysHeader );
 
@@ -291,20 +496,22 @@ static void	bg_exit( void )
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
+GFL_G3D_RES* g3Dres[8];
+GFL_G3D_OBJ* g3Dobj[8];
+
 //作成
 static void g3d_load( void )
 {
 	//リソース＆オブジェクト＆アニメーションを一括設定
-	GFL_G3D_UtilAllLoad( g3DresouceTable, NELEMS(g3DresouceTable), &tetsuWork->g3DresTblIdx,
-						 g3DobjectTable, NELEMS(g3DobjectTable), &tetsuWork->g3DobjTblIdx,
-						 g3DanimetionTable, NELEMS(g3DanimetionTable), &tetsuWork->g3DanmTblIdx );
-
+	tetsuWork->g3DresTblIdx = GFL_G3D_UtilResLoad( g3DresouceTable, NELEMS(g3DresouceTable) );
+	tetsuWork->g3DobjTblIdx = GFL_G3D_UtilObjLoad( g3DobjectTable, NELEMS(g3DobjectTable) );
 	//カメラセット
 	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
 								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
 								cameraAspect, 0, cameraNear, cameraFar, 0 );
 	GFL_G3D_sysLookAtSet( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
 
+	GFL_G3D_sysLightSet( 0, (VecFx16*)&light0Vec, 0x7fff );
 	tetsuWork->work[0] = 0;
 }
 	
@@ -317,10 +524,8 @@ static void g3d_draw( void )
 //破棄
 static void g3d_unload( void )
 {
-	//リソース＆オブジェクト＆アニメーションを一括破棄
-	GFL_G3D_UtilAllUnload(	NELEMS(g3DresouceTable), &tetsuWork->g3DresTblIdx,
-							NELEMS(g3DobjectTable), &tetsuWork->g3DobjTblIdx,
-							NELEMS(g3DanimetionTable), &tetsuWork->g3DanmTblIdx );
+	GFL_G3D_UtilObjUnload( tetsuWork->g3DresTblIdx, NELEMS(g3DobjectTable) );
+	GFL_G3D_UtilResUnload( tetsuWork->g3DobjTblIdx, NELEMS(g3DresouceTable) );
 }
 	
 //------------------------------------------------------------------
@@ -333,36 +538,19 @@ static void g3d_control_effect( void )
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
 	GFL_G3D_OBJ* g3Dobj;
-	GFL_G3D_ANM* g3Danm;
 
 	//回転計算
 	{
-		//AIRのオブジェクトハンドルを取得
-		g3Dobj = GFL_G3D_UtilObjGet( tetsuWork->g3DobjTblIdx + G3OBJ_AIR );
-		//AIRのアニメーションハンドルを取得
-		g3Danm = GFL_G3D_UtilAnmGet( tetsuWork->g3DanmTblIdx + G3ANM_AIR );
+		int i;
 
-		rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0];	//Ｙ軸回転
-		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+		for( i=0; i<NELEMS(g3DobjectTable); i++ ){
+			//オブジェクトハンドルを取得
+			g3Dobj = GFL_G3D_UtilObjGet( tetsuWork->g3DobjTblIdx + i );
 
-		//AIRの回転ステータスをセット
-		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
-		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, g3DanmFrameSpeed );
-	}
-	{
-		//IARのオブジェクトハンドルを取得
-		g3Dobj = GFL_G3D_UtilObjGet( tetsuWork->g3DobjTblIdx + G3OBJ_IAR );
-		//IARのアニメーションハンドルを取得
-		g3Danm = GFL_G3D_UtilAnmGet( tetsuWork->g3DanmTblIdx + G3ANM_IAR );
-
-		rotate_tmp.y = -g3DanmRotateSpeed * tetsuWork->work[0];	//Ｙ軸回転
-		GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
-
-		//IARの回転ステータスをセット
-		GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
-		//アニメーションコントロール
-		GFL_G3D_ObjContAnmFrameAutoLoop( g3Danm, g3DanmFrameSpeed );
+			rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0] * (i+1);	//Ｙ軸回転
+			GFL_G3D_UtilObjDrawRotateCalcYX( &rotate_tmp, &rotate );
+			GFL_G3D_ObjContSetRotate( g3Dobj, &rotate );
+		}
 	}
 	tetsuWork->work[0]++;
 }
@@ -371,3 +559,4 @@ static void g3d_control_effect( void )
 
 
 
+#endif
