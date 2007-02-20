@@ -71,5 +71,9 @@ extern CLWK* GFL_OBJGRP_CreateClAct
 	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const CLWK_DATA* param, u16 setSerface, u16 heapID );
 
+extern CLWK* GFL_OBJGRP_CreateClActVT
+	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const CLWK_DATA* param, u16 setSerface, u16 heapID );
+
 
 #endif /* #ifndef __OBJMAN_H__ */
