@@ -378,10 +378,13 @@ BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index )
  * @param   arcHandle		[in] アーカイブハンドル
  * @param   plttDataID		[in] パレットデータのアーカイブ内データID
  * @param   vramType		[in] 転送先VRAM指定
- * @param   byteOffs		[in] 転送オフセット
+ * @param   byteOffs		[in] 転送オフセット（バイト）
  * @param   heapID			[in] データロード用ヒープ（テンポラリ）
  *
+ * OBJ拡張パレットを指定したい場合、 byteOffsの値に GFL_OBJGRP_EXPLTT_OFFSET + オフセットバイト数を指定する
+ *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
+ *
  */
 //==============================================================================================
 u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID )
@@ -719,15 +722,27 @@ static inline u32 search_empty_pltt_pos( void )
  * @param   plttData		[in] パレットデータ
  * @param   vramType		[in] 転送先VRAM指定
  * @param   byteOffs		[in] 転送開始オフセット
+ *
  */
 //------------------------------------------------------------------
 static void register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 byteOffs )
 {
 	NNSG2dPaletteData*  palData;
 	NNSG2dPaletteCompressInfo*  cmpData;
-	BOOL  cmpFlag;
+	BOOL  cmpFlag, exFlag;
 
 	PLTT_MAN* man = &SysWork.plttMan[idx];
+
+	// 拡張パレット判定
+	if( byteOffs < GFL_OBJGRP_EXPLTT_OFFSET )
+	{
+		exFlag = FALSE;
+	}
+	else
+	{
+		exFlag = TRUE;
+		byteOffs -= GFL_OBJGRP_EXPLTT_OFFSET;
+	}
 
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( dataPtr, &cmpData );
 
@@ -739,28 +754,49 @@ static void register_pltt( u32 idx, void* dataPtr, GFL_VRAM_TYPE vramType, u32 b
 		{
 			if( vramType & GFL_VRAM_2D_MAIN )
 			{
-				OS_TPrintf("CMP PLTT to MAIN idx:%d, ofs:0x%08x\n", idx, byteOffs);
+				/*
+					拡張パレット転送処理に関する覚え書き
+
+					NitroSDKのマニュアル（GX_SetBankForOBJExtPltt とか GX_SetBankForLCDC のあたり）を読む限り、
+					拡張パレットへのバンク割り当てを解除→LCDCにバンク割り当て→
+					パレットデータ転送→拡張パレットへのバンク割り当て復帰
+					としなければならないように思えるが、
+					拡張パレットへのバンク割り当てを解除処理（→GX_SetBankForOBJExtPltt(0);)
+					を行うと正しく動作しない。以下のように最低限の処理のみ行うと動作するようである。
+					サブ2Dエンジンも同様。
+
+					taya 07/02/21
+				*/
+				int bank = GX_GetBankForOBJExtPltt();
+				if( exFlag ){ GX_SetBankForLCDC( bank ); }
 				NNS_G2dLoadPaletteEx(	palData, cmpData, byteOffs, 
 										NNS_G2D_VRAM_TYPE_2DMAIN, &man->proxy );
+				if( exFlag ){ GX_SetBankForOBJExtPltt( bank ); }
 			}
 			if( vramType & GFL_VRAM_2D_SUB )
 			{
-				OS_TPrintf("CMP PLTT to SUB  idx:%d, ofs:0x%08x\n", idx, byteOffs);
+				int bank = GX_GetBankForSubOBJExtPltt();
+				if( exFlag ){ GX_SetBankForLCDC( bank ); }
 				NNS_G2dLoadPaletteEx(	palData, cmpData, byteOffs, 
 										NNS_G2D_VRAM_TYPE_2DSUB, &man->proxy );
+				if( exFlag ){ GX_SetBankForSubOBJExtPltt( bank ); }
 			}
 		}
 		else
 		{
 			if( vramType & GFL_VRAM_2D_MAIN )
 			{
-				OS_TPrintf("NML PLTT to MAIN idx:%d, ofs:0x%08x\n", idx, byteOffs);
+				int bank = GX_GetBankForOBJExtPltt();
+				if( exFlag ){ GX_SetBankForLCDC( bank ); }
 				NNS_G2dLoadPalette( palData, byteOffs, NNS_G2D_VRAM_TYPE_2DMAIN, &man->proxy );
+				if( exFlag ){ GX_SetBankForOBJExtPltt( bank ); }
 			}
 			if( vramType & GFL_VRAM_2D_SUB )
 			{
-				OS_TPrintf("NML PLTT to SUB  idx:%d, ofs:0x%08x\n", idx, byteOffs);
+				int bank = GX_GetBankForSubOBJExtPltt();
+				if( exFlag ){ GX_SetBankForLCDC( bank ); }
 				NNS_G2dLoadPalette( palData, byteOffs, NNS_G2D_VRAM_TYPE_2DSUB, &man->proxy );
+				if( exFlag ){ GX_SetBankForSubOBJExtPltt( bank ); }
 			}
 		}
 

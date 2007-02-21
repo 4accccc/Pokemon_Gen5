@@ -30,6 +30,7 @@ typedef struct {
 //==============================================================
 enum {
 	GFL_OBJGRP_REGISTER_FAILED = 0xffffffff,
+	GFL_OBJGRP_EXPLTT_OFFSET = 0x200,
 };
 
 
