@@ -134,6 +134,8 @@ GFL_G3D_UTIL_SCENE*
 					g3DutilScene->g3DobjExResourceRef[i] |= EXRES_TEX;	//追加リソースフラグセット
 					GFL_G3D_VramLoadTex( g3DresTex );
 				}
+			} else {
+				g3DresTex = g3DutilScene->g3DresTbl[ objTbl->texresID ];
 			}
 		} else {
 			//モデルリソースと同じ指定の場合はモデル依存で共有
