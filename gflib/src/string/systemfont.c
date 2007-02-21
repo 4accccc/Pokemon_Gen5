@@ -98,7 +98,7 @@ void
 		fsw->header = GFL_HEAP_AllocMemory( GFL_HEAPID_SYSTEM, size );
 		FS_ReadFile( &file, fsw->header, size );
 		FS_CloseFile( &file );
-		OS_Printf("システムフォントをロードしました\n");
+	//	OS_Printf("システムフォントをロードしました\n");
 	} else {
 		OS_Panic("Panic: Can't open file %s\n", fontDataPath);
 	}
