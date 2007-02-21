@@ -228,6 +228,7 @@ void
 		GFL_HEAP_DTCM_FreeMemory( geBuf );
 	}
 	GFL_HEAP_FreeMemory( g3Dman );
+	g3Dman = NULL;
 }
 
 //--------------------------------------------------------------------------------------------
