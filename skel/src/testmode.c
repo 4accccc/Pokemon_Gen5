@@ -437,7 +437,6 @@ static void	g2d_unload( void )
 //------------------------------------------------------------------
 static const char g3DarcPath[] = {"src/sample_graphic/titledemo.narc"};
 
-#ifdef G3DUTIL_USE
 enum {
 	G3DRES_AIR_BMD = 0,
 	G3DRES_AIR_BTA,
@@ -445,6 +444,12 @@ enum {
 	G3DRES_IAR_BTA,
 };
 
+enum {
+	G3D_AIR = 0,
+	G3D_IAR,
+};
+
+#ifdef G3DUTIL_USE
 static const GFL_G3D_UTIL_SCENE_RES g3Dscene_resTbl[] = {
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbmd, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbta, GFL_G3D_UTIL_RESPATH },
@@ -484,26 +489,37 @@ static void g3d_load( void )
 	testmode->g3Dscene = GFL_G3D_UtilsysCreate( &g3Dscene_setup, heapID );
 #else
 	//		リソースセットアップ
-	testmode->g3Dres[0] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_air_nsbmd );
-	testmode->g3Dres[1] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_air_nsbta );
-	testmode->g3Dres[2] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_iar_nsbmd );
-	testmode->g3Dres[3] = GFL_G3D_ResCreatePath( g3DarcPath, NARC_titledemo_title_iar_nsbta );
+	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_ResCreatePath
+										( g3DarcPath, NARC_titledemo_title_air_nsbmd );
+	testmode->g3Dres[ G3DRES_AIR_BTA ] = GFL_G3D_ResCreatePath
+										( g3DarcPath, NARC_titledemo_title_air_nsbta );
+	testmode->g3Dres[ G3DRES_IAR_BMD ] = GFL_G3D_ResCreatePath
+										( g3DarcPath, NARC_titledemo_title_iar_nsbmd );
+	testmode->g3Dres[ G3DRES_IAR_BTA ] = GFL_G3D_ResCreatePath
+										( g3DarcPath, NARC_titledemo_title_iar_nsbta );
+	
 	//		リソース転送
-	GFL_G3D_VramLoadTex( testmode->g3Dres[0] );
-	GFL_G3D_VramLoadTex( testmode->g3Dres[2] );
+	GFL_G3D_VramLoadTex( testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	GFL_G3D_VramLoadTex( testmode->g3Dres[ G3DRES_IAR_BMD ] );
 	//		レンダー作成
-	testmode->g3Drnd[0] = GFL_G3D_RndCreate( testmode->g3Dres[0], 0, testmode->g3Dres[0] );
-	testmode->g3Drnd[1] = GFL_G3D_RndCreate( testmode->g3Dres[2], 0, testmode->g3Dres[2] );
+	testmode->g3Drnd[ G3D_AIR ] = GFL_G3D_RndCreate(	testmode->g3Dres[ G3DRES_AIR_BMD ], 0, 
+														testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	testmode->g3Drnd[ G3D_IAR ] = GFL_G3D_RndCreate(	testmode->g3Dres[ G3DRES_IAR_BMD ], 0, 
+														testmode->g3Dres[ G3DRES_IAR_BMD] );
 	//		アニメ作成
-	testmode->g3Danm[0] = GFL_G3D_AnmCreate( testmode->g3Drnd[0], testmode->g3Dres[1], 0 );
-	testmode->g3Danm[1] = GFL_G3D_AnmCreate( testmode->g3Drnd[1], testmode->g3Dres[3], 0 );
+	testmode->g3Danm[ G3D_AIR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3D_AIR ], 
+														testmode->g3Dres[ G3DRES_AIR_BTA ], 0 );
+	testmode->g3Danm[ G3D_IAR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3DIAR ], 
+														testmode->g3Dres[ G3DRES_IAR_BTA ], 0 );
 	//		オブジェクト作成
-	testmode->g3Dobj[0] = GFL_G3D_ObjCreate( testmode->g3Drnd[0], &testmode->g3Danm[0], 1 );
-	testmode->g3Dobj[1] = GFL_G3D_ObjCreate( testmode->g3Drnd[1], &testmode->g3Danm[1], 1 );
+	testmode->g3Dobj[ G3D_AIR ] = GFL_G3D_ObjCreate(	testmode->g3Drnd[ G3D_AIR ], 
+														&testmode->g3Danm[ G3D_AIR ], 1 );
+	testmode->g3Dobj[ G3D_IAR ] = GFL_G3D_ObjCreate(	testmode->g3Drnd[ G3D_IAR ], 
+														&testmode->g3Danm[ G3D_IAR ], 1 );
 #endif
 	//描画ステータスワーク設定
-	testmode->status[0] = status0;
-	testmode->status[1] = status1;
+	testmode->status[ G3D_AIR ] = status0;
+	testmode->status[ G3D_IAR ] = status1;
 
 	//カメラセット
 	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
@@ -518,22 +534,22 @@ static void g3d_draw( void )
 {
 	GFL_G3D_OBJ* g3Dobj[2];
 #ifdef G3DUTIL_USE
-	g3Dobj[0] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, 0 );
-	g3Dobj[1] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, 1 );
+	g3Dobj[ G3D_AIR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, G3D_AIR  );
+	g3Dobj[ G3D_IAR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, G3D_IAR  );
 #else
-	g3Dobj[0] = testmode->g3Dobj[0];
-	g3Dobj[1] = testmode->g3Dobj[1];
+	g3Dobj[ G3D_AIR ] = testmode->g3Dobj[ G3D_AIR ];
+	g3Dobj[ G3D_IAR ] = testmode->g3Dobj[ G3D_IAR ];
 #endif
 	GFL_G3D_DrawStart();
 	GFL_G3D_DrawLookAt();
 	{
-		GFL_G3D_ObjDraw( g3Dobj[0], &testmode->status[0] );
-		GFL_G3D_ObjDraw( g3Dobj[1], &testmode->status[1] );
+		GFL_G3D_ObjDraw( g3Dobj[ G3D_AIR ], &testmode->status[ G3D_AIR ] );
+		GFL_G3D_ObjDraw( g3Dobj[ G3D_IAR ], &testmode->status[ G3D_IAR ] );
 	}
 	GFL_G3D_DrawEnd();
 
-	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[0], 0, FX32_ONE ); 
-	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[1], 0, FX32_ONE ); 
+	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[ G3D_AIR ], 0, FX32_ONE ); 
+	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[ G3D_IAR ], 0, FX32_ONE ); 
 }
 	
 static void g3d_unload( void )
@@ -541,22 +557,22 @@ static void g3d_unload( void )
 #ifdef G3DUTIL_USE
 	GFL_G3D_UtilsysDelete( testmode->g3Dscene );
 #else
-	GFL_G3D_ObjDelete( testmode->g3Dobj[1] );
-	GFL_G3D_ObjDelete( testmode->g3Dobj[0] );
+	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_IAR ] );
+	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_AIR ] );
 
-	GFL_G3D_AnmDelete( testmode->g3Danm[1] );
-	GFL_G3D_AnmDelete( testmode->g3Danm[0] );
+	GFL_G3D_AnmDelete( testmode->g3Danm[ G3D_IAR ] );
+	GFL_G3D_AnmDelete( testmode->g3Danm[ G3D_AIR ] );
 
-	GFL_G3D_RndDelete( testmode->g3Drnd[1] );
-	GFL_G3D_RndDelete( testmode->g3Drnd[0] );
+	GFL_G3D_RndDelete( testmode->g3Drnd[ G3D_IAR ] );
+	GFL_G3D_RndDelete( testmode->g3Drnd[ G3D_AIR ] );
 
-	GFL_G3D_VramUnloadTex( testmode->g3Dres[2] );
-	GFL_G3D_VramUnloadTex( testmode->g3Dres[0] );
+	GFL_G3D_VramUnloadTex( testmode->g3Dres[ G3DRES_IAR_BMD ] );
+	GFL_G3D_VramUnloadTex( testmode->g3Dres[ G3DRES_AIR_BMD ] );
 
-	GFL_G3D_ResDelete( testmode->g3Dres[3] );
-	GFL_G3D_ResDelete( testmode->g3Dres[2] );
-	GFL_G3D_ResDelete( testmode->g3Dres[1] );
-	GFL_G3D_ResDelete( testmode->g3Dres[0] );
+	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_IAR_BTA ] );
+	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_IAR_BMD ] );
+	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_AIR_BTA ] );
+	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_AIR_BMD ] );
 #endif
 }
 	
