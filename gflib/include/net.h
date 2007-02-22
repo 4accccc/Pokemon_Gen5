@@ -118,20 +118,21 @@ typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 typedef struct{
   const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
   int recvFuncTableNum;             ///< 受信関数テーブル項目数 NELEMS
-  void* pWork;                     ///< この通信ゲームで使用しているワーク
+  void* pWork;                     ///< この通信ゲームで使用しているユーザーのワーク
   NetBeaconGetFunc beaconGetFunc;  ///< ビーコンデータ取得関数
   NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
   NetBeaconCompFunc beaconCompFunc; ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
   NetErrorFunc errorFunc;           ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
-  int gsid;       ///< ゲームサービスID  通信の種類
-  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
-  u32  allocNo;             ///< allocするための番号
-  u8 maxConnectNum;   ///< 最大接続人数
-  u8 maxBeaconNum;    ///< 最大ビーコン収集数
-  u8 bMPMode;     ///< MP通信モードかどうか
-  u8 bNetwork;    ///< 通信を開始するかどうか
+  int gsid;                ///< ゲームサービスID  通信の種類
+  int ggid;                ///< ＤＳでゲームソフトを区別する為のID
+  u32  allocNo;            ///< allocするための番号
+  u8 maxConnectNum;        ///< 最大接続人数
+  u8 maxBeaconNum;         ///< 最大ビーコン収集数
+  u8 bMPMode;              ///< MP通信モードかどうか
+  u8 bWiFi;                ///< Wi-Fi通信をするかどうか
+  u8 bNetwork;             ///< 通信を開始するかどうか FALSEだとOFFLINE動作
 } GFLNetInitializeStruct;
 
 //-------------------------------

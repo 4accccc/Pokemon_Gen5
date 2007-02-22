@@ -7,9 +7,19 @@
  */
 //=============================================================================
 
-#include "common.h"
-#include "wifi/dwc_rap.h"
-#include "wifi/vchat.h"
+#include <nitro.h>
+#include <nnsys.h>
+#include <dwc.h>
+#include "gf_macro.h"
+#include "gf_standard.h"
+#include "assert.h"
+#include "heapsys.h"
+#include "strbuf.h"
+#include "net.h"
+#include "../net_def.h"
+
+#include "dwc_rap.h"
+#include "vchat.h"
 #include <vct.h>
 
 #define MYNNSFORMAT NNS_SND_STRM_FORMAT_PCM16
@@ -721,7 +731,7 @@ void myvct_init( int heapID, int codec )
        
 	if( _vWork == NULL )
 	{
-		_vWork_temp = sys_AllocMemory( heapID, sizeof(MYVCT_WORK) + 32 );
+		_vWork_temp = GFL_HEAP_AllocMemory( heapID, sizeof(MYVCT_WORK) + 32 );
 		_vWork = (MYVCT_WORK *) (( (u32)_vWork_temp + 31 ) / 32 * 32);
 		_vWork->heapID = heapID;
 		_vWork->sRecBuffer = _sRecBuffer;
@@ -911,7 +921,7 @@ void myvct_free(){
 		VCT_Cleanup();
 		
 		// ƒƒ‚ƒŠ‚ð‰ð•ú
-		sys_FreeMemory( _vWork->heapID, _vWork_temp  );
+		GFL_HEAP_FreeMemory( _vWork_temp  );
 		_vWork_temp = NULL;
 		_vWork = NULL;
 		

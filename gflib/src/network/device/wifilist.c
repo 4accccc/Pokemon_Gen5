@@ -7,23 +7,21 @@
  */
 //============================================================================================
 
-#include "savedata/savedata_def.h"	//SAVEDATA参照のため
-
-#include "common.h"
+#include <nitro.h>
+#include <nnsys.h>
 #include <dwc.h>
+#include "gf_macro.h"
+#include "gf_standard.h"
+#include "assert.h"
+#include "heapsys.h"
+#include "strbuf.h"
+#include "net.h"
+#include "../net_def.h"
 
-#include "system/gamedata.h"
-#include "savedata/savedata.h"
-#include "system/pm_rtc.h"
-#include "battle/battle_common.h"
-
-#include "savedata/wifilist.h"
+#include "wifilist.h"
 #include "wifilist_local.h"
-
-#include "system/pm_str.h"
-
-#include "gflib/strbuf_family.h"
-#include "wifi/dwc_rap.h"
+#include "dwc_rap.h"
+#include "dwc_rapcommon.h"
 
 //============================================================================================
 //============================================================================================
@@ -58,7 +56,7 @@ WIFI_LIST * WifiList_AllocWork(u32 heapID)
 {
 	int i;
 	WIFI_LIST * list;
-	list = sys_AllocMemory(heapID, sizeof(WIFI_LIST));
+	list = GFL_HEAP_AllocMemory(heapID, sizeof(WIFI_LIST));
 	
 	WifiList_Init( list );
 
@@ -94,11 +92,6 @@ void WifiList_Init(WIFI_LIST * list)
 	
 	MI_CpuClearFast(list, sizeof(WIFI_LIST));
 
-	for(i=0;i<WIFILIST_FRIEND_MAX;i++){
-		list->friend[i].name[0] = EOM_;
-		list->friend[i].groupName[0] = EOM_;
-        list->friend[i].sex = PM_NEUTRAL;
-	}
     mydwc_createUserData(list);  //GameSpyログイン用仮userコードの作成(絶対必要）
 }
 
@@ -117,106 +110,6 @@ DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
 	return &(list->my_dwcuser);
 }
 
-
-
-//==============================================================================
-/**
- * $brief   WIFI友達情報をタイプ毎に返す
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何番目の友達か
- * @param   type	設定する情報のタイプ（wifilist.hにenum宣言あり)
- *
- * @retval  u32		
- */
-//==============================================================================
-u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
-{
-	u32 result;
-
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-	
-	switch(type){
-      case WIFILIST_FRIEND_ID:
-        result = list->friend[no].id;
-        break;
-      case WIFILIST_FRIEND_BATTLE_WIN:
-        result = list->friend[no].battle_win;
-        break;
-      case WIFILIST_FRIEND_BATTLE_LOSE:
-        result = list->friend[no].battle_lose;
-        break;
-      case WIFILIST_FRIEND_TRADE_NUM:
-        result = list->friend[no].trade_num;
-        break;
-      case WIFILIST_FRIEND_LASTBT_YEAR:
-        result = list->friend[no].year;
-        break;
-      case WIFILIST_FRIEND_LASTBT_MONTH:
-        result = list->friend[no].month;
-        break;
-      case WIFILIST_FRIEND_LASTBT_DAY:
-        result = list->friend[no].day;
-        break;
-      case WIFILIST_FRIEND_SEX:
-        result = list->friend[no].sex;
-        break;
-      case WIFILIST_FRIEND_UNION_GRA:
-        result = list->friend[no].unionGra;
-        break;
-	}
-	return result;
-}
-
-
-//==============================================================================
-/**
- * $brief   
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何番目の友達か
- * @param   type	設定する情報のタイプ（wifilist.hにenum宣言あり)
- * @param   value	設定する値
- *
- * @retval  none	
- */
-//==============================================================================
-void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
-{
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-    switch(type){
-      case WIFILIST_FRIEND_ID:
-        list->friend[no].id = value;
-        break;
-      case WIFILIST_FRIEND_BATTLE_WIN:
-        GF_ASSERT(0);
-        break;
-      case WIFILIST_FRIEND_BATTLE_LOSE:
-        GF_ASSERT(0);
-        break;
-      case WIFILIST_FRIEND_TRADE_NUM:
-        GF_ASSERT(0);
-        break;
-      case WIFILIST_FRIEND_LASTBT_YEAR:
-        list->friend[no].year = value;
-        break;
-      case WIFILIST_FRIEND_LASTBT_MONTH:
-        list->friend[no].month = value;
-        break;
-      case WIFILIST_FRIEND_LASTBT_DAY:
-        list->friend[no].day = value;
-        break;
-      case WIFILIST_FRIEND_SEX:
-        list->friend[no].sex = value;
-        break;
-      case WIFILIST_FRIEND_UNION_GRA:
-        list->friend[no].unionGra = value;
-        break;
-    }
-}
-
-
 //==============================================================================
 /**
  * $brief   ともだちリストから友達のWIFI用情報構造体のポインタを取得
@@ -232,73 +125,6 @@ DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
 	return &(list->friend_dwc[no]);
-}
-
-
-//==============================================================================
-/**
- * $brief   
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- *
- * @retval  u8 *		
- */
-//==============================================================================
-STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
-{
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-	return list->friend[no].name;
-}
-
-//==============================================================================
-/**
- * $brief   
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- *
- * @retval  u8 *		
- */
-//==============================================================================
-void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
-{
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-    STRBUF_GetStringCode(pBuf, list->friend[no].name, sizeof(list->friend[no].name));
-}
-
-//==============================================================================
-/**
- * $brief   
- *
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- *
- * @retval  u8 *		
- */
-//==============================================================================
-STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no )
-{
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-	return list->friend[no].groupName;
-}
-
-//==============================================================================
-/**
- * $brief   
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @retval  u8 *		
- */
-//==============================================================================
-void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
-{
-	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
-
-    STRBUF_GetStringCode(pBuf, list->friend[no].groupName, sizeof(list->friend[no].groupName));
 }
 
 //==============================================================================
@@ -348,17 +174,12 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
 {
     int i;
 
-    GF_ASSERT_RETURN( no < WIFILIST_FRIEND_MAX, );
+    GF_ASSERT( no < WIFILIST_FRIEND_MAX);
     for(i = no; i < (WIFILIST_FRIEND_MAX-1); i++){
-        MI_CpuCopy8(&list->friend[i+1], &list->friend[i], sizeof(WIFI_FRIEND));
         MI_CpuCopy8(&list->friend_dwc[i+1], &list->friend_dwc[i], sizeof(DWCFriendData));
     }
     i = WIFILIST_FRIEND_MAX-1;
-	MI_CpuClearFast(&list->friend[i], sizeof(WIFI_FRIEND));
 	MI_CpuClearFast(&list->friend_dwc[i],sizeof(DWCFriendData));
-    list->friend[i].name[0] = EOM_;
-    list->friend[i].groupName[0] = EOM_;
-    list->friend[i].sex = PM_NEUTRAL;
 }
 
 
@@ -375,13 +196,13 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 {
     int i;
 
-    MI_CpuCopy8(&list->friend[moveNo], &list->friend[no], sizeof(WIFI_FRIEND));
+//    MI_CpuCopy8(&list->friend[moveNo], &list->friend[no], sizeof(WIFI_FRIEND));
     MI_CpuCopy8(&list->friend_dwc[moveNo], &list->friend_dwc[no], sizeof(DWCFriendData));
-	MI_CpuClearFast(&list->friend[moveNo], sizeof(WIFI_FRIEND));
+//	MI_CpuClearFast(&list->friend[moveNo], sizeof(WIFI_FRIEND));
 	MI_CpuClearFast(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
-    list->friend[moveNo].name[0] = EOM_;
-    list->friend[moveNo].groupName[0] = EOM_;
-    list->friend[moveNo].sex = PM_NEUTRAL;
+//    list->friend[moveNo].name[0] = EOM_;
+//    list->friend[moveNo].groupName[0] = EOM_;
+//    list->friend[moveNo].sex = PM_NEUTRAL;
 }
 
 //==============================================================================
@@ -413,87 +234,6 @@ void WifiList_FormUpData( WIFI_LIST *list)
     }
 }
 
-//==============================================================================
-/**
- * $brief   日時の記録をつける
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @retval  none
- */
-//==============================================================================
-void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
-{
-    RTCDate	rtc;
-    GF_RTC_GetDate(&rtc);
-    list->friend[no].year = rtc.year+2000;
-    list->friend[no].month = rtc.month;
-    list->friend[no].day = rtc.day;
-}
-
-//==============================================================================
-/**
- * $brief   勝ち負けの記録をつける
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @param   winNum  勝ち数
- * @param   loseNum 負け数
- * @param   trade   交換数
- * @retval  none
- */
-//==============================================================================
-void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int trade)
-{
-    list->friend[no].battle_win += winNum;
-    if(list->friend[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
-    }
-    list->friend[no].battle_lose += loseNum;
-    if(list->friend[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
-    }
-    list->friend[no].trade_num += trade;
-    if(list->friend[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
-    }
-    OS_TPrintf("list->friend[  %d ].trade_num  %d\n",no,list->friend[no].trade_num);
-    WifiList_SetLastPlayDate(list, no);
-}
-
-
-
-
-//==============================================================================
-/**
- * $brief   Aの人のデータをBの人にマージする
- * @param   list	WIFI_LIST構造体のポインタ
- * @param   no		何人目の友達か
- * @param   winNum  勝ち数
- * @param   loseNum 負け数
- * @param   trade   交換数
- * @retval  none
- */
-//==============================================================================
-void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
-{
-    list->friend[no].battle_win += list->friend[delNo].battle_win;
-    if(list->friend[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
-    }
-    list->friend[no].battle_lose += list->friend[delNo].battle_lose;
-    if(list->friend[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
-    }
-    list->friend[no].trade_num += list->friend[delNo].trade_num;
-    if(list->friend[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
-    }
-	MI_CpuClearFast(&list->friend[delNo], sizeof(WIFI_FRIEND));
-    list->friend[delNo].name[0] = EOM_;
-    list->friend[delNo].groupName[0] = EOM_;
-    list->friend[delNo].sex = PM_NEUTRAL;
-}
-
-
 
 //---------------------------------------------------------------------------
 /**
@@ -502,10 +242,11 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
  * @return	WIFI_LIST	WIFIリスト
  */
 //---------------------------------------------------------------------------
+#if _SAVE_PROGRAM
 WIFI_LIST* SaveData_GetWifiListData(SAVEDATA * sv)
 {
 	WIFI_LIST* pData;
 	pData = SaveData_Get(sv, GMDATA_ID_WIFILIST);
 	return pData;
 }
-
+#endif

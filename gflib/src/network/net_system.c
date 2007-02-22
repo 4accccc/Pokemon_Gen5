@@ -703,7 +703,7 @@ void GFL_NET_SystemFinalize(void)
 
     if(_pComm){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0            
+#if GFL_NET_WIFI
             mydwc_Logout();  // Ø’f
 #endif
             bEnd = TRUE;
@@ -888,7 +888,7 @@ static void _dataMpStep(void)
 #if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
-#if 1
+#if GFL_NET_WIFI
             if( _pComm->bWifiConnect ){
                 if( mydwc_sendToServer( _pComm->sSendBuf, _SEND_BUFF_SIZE_4CHILD )){
                     _pComm->bSendNoneSend = FALSE;
@@ -909,7 +909,7 @@ static void _dataMpStep(void)
 #endif
 
     if( _pComm->device == _DEVICE_WIFI){
-#if 0 //wifi
+#if GFL_NET_WIFI  //wifi
         if( _pComm->bWifiConnect ){
             if( _pComm->bWifiSendRecv ){  // “¯Šú‚ðŽæ‚Á‚Ä‚¢‚éê‡
                 if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //‘—‚è‚·‚¬
@@ -1071,7 +1071,7 @@ static void _dataMpServerStep(void)
 #if 0
     if(_pComm->bSendNoneSend){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0  //wifi lock
+#if GFL_NET_WIFI //wifi lock
             if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
                 if( mydwc_sendToClient( _pComm->sSendServerBuf, WH_MP_4CHILD_DATA_SIZE*2 )){
                     _pComm->bSendNoneSend = FALSE;
@@ -1090,7 +1090,7 @@ static void _dataMpServerStep(void)
     }
 #endif
     if( _pComm->device == _DEVICE_WIFI){
-#if 0 //wifi••ˆó
+#if GFL_NET_WIFI
         if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
             if( _pComm->bWifiSendRecv ){  // “¯Šú‚ðŽæ‚Á‚Ä‚¢‚éê‡
                 if(_pComm->countSendRecvServer[1] > _SENDRECV_LIMIT){ // ‘—M‚µ‚·‚¬‚Ìê‡
@@ -1796,7 +1796,8 @@ BOOL GFL_NET_SystemIsConnect(u16 netID)
         return FALSE;
     }
     if( _pComm->device == _DEVICE_WIFI){
-#if 0 //wifi
+#if GFL_NET_WIFI
+//#if 0 //wifi
         if(_pComm->bWifiConnect){
             int id = mydwc_getaid();
             if(-1 != id){
@@ -1880,7 +1881,8 @@ u16 GFL_NET_SystemGetCurrentID(void)
 {
     if(_pComm){
         if( _pComm->device == _DEVICE_WIFI){
-#if 0  //wifi
+#if GFL_NET_WIFI
+//#if 0  //wifi
             int id = mydwc_getaid();
             if(id != -1){
                 return id;
@@ -2139,7 +2141,8 @@ void GFL_NET_SystemSetWifiConnect(BOOL bConnect)
 BOOL GFL_NET_SystemIsVChat(void)
 {
     if( _pComm->device == _DEVICE_WIFI){
-#if 0  // wifi
+#if GFL_NET_WIFI
+//#if 0  // wifi
         return mydwc_IsVChat();
 #endif
     }
