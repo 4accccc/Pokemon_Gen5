@@ -326,6 +326,16 @@ GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32 work_s
 
 //------------------------------------------------------------------
 /**
+ * @brief	タスク関数の切り替え
+ */
+//------------------------------------------------------------------
+void GFL_TCBL_ChangeFunc(GFL_TCBL * tcb, GFL_TCBLFUNC * func)
+{
+	tcb->func = func;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	TCBLのワーク取得
  * @param	tcb		TCBLへのポインタ
  * @return	void *
