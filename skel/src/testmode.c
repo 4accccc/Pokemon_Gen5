@@ -11,102 +11,6 @@
 
 void	TestModeSet(void);
 
-static void		TestModeWorkSet( HEAPID heapID );
-static void		TestModeWorkRelease( void );
-static BOOL		TestModeControl( void );
-static u16		TestModeSelectPosGet( void );
-
-static const	GFL_PROC_DATA TestMainProcData;
-//============================================================================================
-//
-//
-//	プロセスコントロール
-//
-//
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief		プロセス設定
- */
-//------------------------------------------------------------------
-void	TestModeSet(void)
-{
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		初期化
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
-{
-	TestModeWorkSet( GFL_HEAPID_APP );
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		メイン
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
-{
-	if( TestModeControl() == TRUE ){
-		return GFL_PROC_RES_FINISH;
-	}
-	return GFL_PROC_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		終了
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
-{
-	switch( TestModeSelectPosGet() ) {
-	case 0:
-		//わたなべ
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
-		break;
-	case 1:
-		//たまだ
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
-		break;
-	case 2:
-		//そがべ
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
-		break;
-	case 3:
-		//おおの
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
-		break;
-	default:
-		//たや
-		//なかむら
-		//たかはし
-		break;
-	}
-	TestModeWorkRelease();
-
-	return GFL_PROC_RES_FINISH;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		プロセス関数テーブル
- */
-//------------------------------------------------------------------
-const GFL_PROC_DATA TestMainProcData = {
-	TestModeProcInit,
-	TestModeProcMain,
-	TestModeProcEnd,
-};
-
-
-
-
 
 //============================================================================================
 //
@@ -163,45 +67,31 @@ enum {
 #include "sample_graphic/titledemo.naix"
 #include "testmode.dat"
 
-TESTMODE_WORK* testmode;
+
 
 //ＢＧ設定関数
 static void	bg_init( void );
 static void	bg_exit( void );
 //ビットマップ設定関数
-static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy );
-static void msg_bmpwin_trush( u8 bmpwinNum );
-static void msg_bmpwin_palset( u8 bmpwinNum, u8 pal );
+static void msg_bmpwin_make(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy );
+static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum );
+static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal );
 //２ＤＢＧ作成関数
-static void	g2d_load( void );
-static void	g2d_unload( void );
+static void	g2d_load( TESTMODE_WORK * testmode );
+static void	g2d_unload( TESTMODE_WORK * testmode );
 //３ＤＢＧ作成関数
-static void	g3d_load( void );
-static void g3d_draw( void );
-static void	g3d_unload( void );
+static void	g3d_load( TESTMODE_WORK * testmode );
+static void g3d_draw( TESTMODE_WORK * testmode );
+static void	g3d_unload( TESTMODE_WORK * testmode );
 //エフェクト
-static void g3d_control_effect( void );
-//------------------------------------------------------------------
-/**
- * @brief	ワークの確保と破棄
- */
-//------------------------------------------------------------------
-static void	TestModeWorkSet( HEAPID heapID )
-{
-	testmode = GFL_HEAP_AllocMemoryClear( heapID, sizeof(TESTMODE_WORK) );
-}
-
-static void	TestModeWorkRelease( void )
-{
-	GFL_HEAP_FreeMemory( testmode );
-}
+static void g3d_control_effect( TESTMODE_WORK * testmode );
 
 //------------------------------------------------------------------
 /**
  * @brief	選択リストポジション取得
  */
 //------------------------------------------------------------------
-static u16	TestModeSelectPosGet( void )
+static u16	TestModeSelectPosGet( TESTMODE_WORK * testmode )
 {
 	return testmode->listPosition;
 }
@@ -211,7 +101,7 @@ static u16	TestModeSelectPosGet( void )
  * @brief	リスト選択
  */
 //------------------------------------------------------------------
-static BOOL	TestModeControl( void )
+static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 {
 	BOOL return_flag = FALSE;
 	int i;
@@ -227,8 +117,8 @@ static BOOL	TestModeControl( void )
 
 	case 1:
 		//画面作成
-		g2d_load();	//２Ｄデータ作成
-		g3d_load();	//３Ｄデータ作成
+		g2d_load(testmode);	//２Ｄデータ作成
+		g3d_load(testmode);	//３Ｄデータ作成
 		testmode->seq++;
 		break;
 
@@ -237,9 +127,9 @@ static BOOL	TestModeControl( void )
 		for(i=0;i<NELEMS(selectList);i++){
 			if( i == testmode->listPosition ){
 				//現在のカーソル位置を赤文字で表現
-				msg_bmpwin_palset( NUM_SELECT1+i, MSG_RED );
+				msg_bmpwin_palset( testmode, NUM_SELECT1+i, MSG_RED );
 			}else{
-				msg_bmpwin_palset( NUM_SELECT1+i, MSG_WHITE );
+				msg_bmpwin_palset( testmode, NUM_SELECT1+i, MSG_WHITE );
 			}
 			//ビットマップスクリーン再描画
 			GFL_BMPWIN_MakeScrn( testmode->bmpwin[NUM_SELECT1+i] );
@@ -248,8 +138,8 @@ static BOOL	TestModeControl( void )
 		GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
 
-		g3d_control_effect();
-		g3d_draw();		//３Ｄデータ描画
+		g3d_control_effect(testmode);
+		g3d_draw(testmode);		//３Ｄデータ描画
 		break;
 
 	case 3:
@@ -274,14 +164,14 @@ static BOOL	TestModeControl( void )
 				testmode->seq--;
 			}
 		}
-		g3d_control_effect();
-		g3d_draw();		//３Ｄデータ描画
+		g3d_control_effect(testmode);
+		g3d_draw(testmode);		//３Ｄデータ描画
 		break;
 
 	case 4:
 		//終了
-		g3d_unload();	//３Ｄデータ破棄
-		g2d_unload();	//２Ｄデータ破棄
+		g3d_unload(testmode);	//３Ｄデータ破棄
+		g2d_unload(testmode);	//２Ｄデータ破棄
 		bg_exit();
 		return_flag = TRUE;
 		break;
@@ -338,7 +228,7 @@ static void	bg_exit( void )
  * @brief		メッセージビットマップウインドウコントロール
  */
 //------------------------------------------------------------------
-static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
+static void msg_bmpwin_make(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
 {
 	//ビットマップ作成
 	testmode->bmpwin[bmpwinNum] = GFL_BMPWIN_Create( TEXT_FRM, px, py, sx, sy, 0, 
@@ -354,12 +244,12 @@ static void msg_bmpwin_make( u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx,
 	GFL_BMPWIN_MakeScrn( testmode->bmpwin[bmpwinNum] );
 }
 	
-static void msg_bmpwin_trush( u8 bmpwinNum )
+static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum )
 {
 	GFL_BMPWIN_Delete( testmode->bmpwin[bmpwinNum] );
 }
 	
-static void msg_bmpwin_palset( u8 bmpwinNum, u8 pal )
+static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 {
 	GFL_BMPWIN_SetPal( testmode->bmpwin[bmpwinNum], pal );
 }
@@ -369,7 +259,7 @@ static void msg_bmpwin_palset( u8 bmpwinNum, u8 pal )
  * @brief		２Ｄデータコントロール
  */
 //------------------------------------------------------------------
-static void	g2d_load( void )
+static void	g2d_load( TESTMODE_WORK * testmode )
 {
 	u16 heapID = GFL_HEAPID_APP;
 
@@ -399,13 +289,13 @@ static void	g2d_load( void )
 
 		//表題ビットマップの作成
 		for(i=0;i<NELEMS(indexList);i++){
-			msg_bmpwin_make( NUM_TITLE+i, indexList[i].msg,
+			msg_bmpwin_make( testmode, NUM_TITLE+i, indexList[i].msg,
 							indexList[i].posx, indexList[i].posy, 
 							indexList[i].sizx, indexList[i].sizy );
 		}
 		//選択項目ビットマップの作成
 		for(i=0;i<NELEMS(selectList);i++){
-			msg_bmpwin_make( NUM_SELECT1+i, selectList[i].msg,
+			msg_bmpwin_make( testmode, NUM_SELECT1+i, selectList[i].msg,
 							selectList[i].posx, selectList[i].posy,
 							selectList[i].sizx, selectList[i].sizy );
 		}
@@ -414,17 +304,17 @@ static void	g2d_load( void )
 	GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
-static void	g2d_unload( void )
+static void	g2d_unload( TESTMODE_WORK * testmode )
 {
 	int i;
 
 	//選択項目ビットマップの破棄
 	for(i=0;i<NELEMS(selectList);i++){
-		msg_bmpwin_trush( NUM_SELECT1+i );
+		msg_bmpwin_trush( testmode, NUM_SELECT1+i );
 	}
 	//表題ビットマップの破棄
 	for(i=0;i<NELEMS(indexList);i++){
-		msg_bmpwin_trush( NUM_TITLE+i );
+		msg_bmpwin_trush( testmode, NUM_TITLE+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
 	GFL_TEXT_sysExit();
@@ -481,7 +371,7 @@ static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
  * @brief		３Ｄデータコントロール
  */
 //------------------------------------------------------------------
-static void g3d_load( void )
+static void g3d_load( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
 	u16 heapID = GFL_HEAPID_APP;
@@ -530,7 +420,7 @@ static void g3d_load( void )
 	testmode->work[0] = 0;
 }
 	
-static void g3d_draw( void )
+static void g3d_draw( TESTMODE_WORK * testmode )
 {
 	GFL_G3D_OBJ* g3Dobj[2];
 #ifdef G3DUTIL_USE
@@ -552,7 +442,7 @@ static void g3d_draw( void )
 	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[ G3D_IAR ], 0, FX32_ONE ); 
 }
 	
-static void g3d_unload( void )
+static void g3d_unload( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
 	GFL_G3D_UtilsysDelete( testmode->g3Dscene );
@@ -594,7 +484,7 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
-static void g3d_control_effect( void )
+static void g3d_control_effect( TESTMODE_WORK * testmode )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
@@ -610,6 +500,103 @@ static void g3d_control_effect( void )
 	testmode->work[0]++;
 }
 	
+
+
+
+//============================================================================================
+//
+//
+//	プロセスコントロール
+//
+//
+//============================================================================================
+static const	GFL_PROC_DATA TestMainProcData;
+
+//------------------------------------------------------------------
+/**
+ * @brief		プロセス設定
+ */
+//------------------------------------------------------------------
+void	TestModeSet(void)
+{
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		初期化
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	TESTMODE_WORK * testmode;
+	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), GFL_HEAPID_APP );
+	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		メイン
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	TESTMODE_WORK * testmode = mywk;
+	if( TestModeControl(testmode) == TRUE ){
+		return GFL_PROC_RES_FINISH;
+	}
+	return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		終了
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	TESTMODE_WORK * testmode = mywk;
+	switch( TestModeSelectPosGet(testmode) ) {
+	case 0:
+		//わたなべ
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
+		break;
+	case 1:
+		//たまだ
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
+		break;
+	case 2:
+		//そがべ
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+		break;
+	case 3:
+		//おおの
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+		break;
+	default:
+		//たや
+		//なかむら
+		//たかはし
+		break;
+	}
+	GFL_PROC_FreeWork(mywk);
+
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		プロセス関数テーブル
+ */
+//------------------------------------------------------------------
+const GFL_PROC_DATA TestMainProcData = {
+	TestModeProcInit,
+	TestModeProcMain,
+	TestModeProcEnd,
+};
+
+
 
 
 
