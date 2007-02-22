@@ -18,6 +18,10 @@ LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
+# wifiを使用する場合のLibrary定義
+LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
+NITRODWC_LIB_MODULES_   = base auth ac bm account
+NITRODWC_LIB_GSMODULES_ = common gp gstats gt2 natneg qr2 serverbrowsing
 
 #イクニューモンコンポーネントのためのライブラリを追加 by Mori 2005.7.27
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
@@ -70,12 +74,25 @@ MAKEROM_ROMROOT  = ./
 MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
 
 
+#----------------------------------------------------------------------------
+#	ターゲットファイル設定
+#TARGET_NEF	=	main.nef	TARGET_BINに.srlを指定すると.nefも一緒に生成される
+TARGET_BIN	=	main.srl
+
 #--------------------------------------- ----------------------------
 # システム定義
 #
 include $(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include $(NITROSYSTEM_ROOT)/build/buildtools/nnslibdefs
 include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
+
+#----------------------------------------------------------------------------
+#	WiFi定義
+#----------------------------------------------------------------------------
+#include	$(NITRODWC_ROOT)/build/buildtools/commondefs
+#include	$(NITRODWC_ROOT)/build/buildtools/modulerules
+include	$(NITROVCT_ROOT)/build/buildtools/commondefs
+include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 
 
 #--------------------------------------- ----------------------------
