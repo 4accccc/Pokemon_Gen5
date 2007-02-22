@@ -130,19 +130,11 @@ extern void*
 	GFL_HEAP_AllocMemoryblock	//Ç±ÇÃä÷êîÇíºê⁄åƒÇ—èoÇ∑ÇÃÇÕã÷é~
 		( HEAPID heapID, u32 size );
 
-inline void*
-	GFL_HEAP_AllocMemory
-		( HEAPID heapID, u32 size )
-{
-	return GFL_HEAP_AllocMemoryblock( heapID, size );
-}
+#define GFL_HEAP_AllocMemory( heapID, size ) \
+			GFL_HEAP_AllocMemoryblock( heapID, size )
 
-inline void*
-	GFL_HEAP_AllocMemoryLow
-		( HEAPID heapID, u32 size )
-{
-	return GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size );
-}
+#define GFL_HEAP_AllocMemoryLow( heapID, size )	\
+			GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size )
 
 #else
 
@@ -150,19 +142,11 @@ extern void*
 	GFL_HEAP_AllocMemoryblock	//Ç±ÇÃä÷êîÇíºê⁄åƒÇ—èoÇ∑ÇÃÇÕã÷é~
 		( HEAPID heapID, u32 size, const char* filename, u16 linenum );
 
-inline void*
-	GFL_HEAP_AllocMemory
-		( HEAPID heapID, u32 size )
-{
-	return GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__);
-}
+#define GFL_HEAP_AllocMemory( heapID, size )	\
+			GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__)
 
-inline void*
-	GFL_HEAP_AllocMemoryLow
-		( HEAPID heapID, u32 size )
-{
-	return GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size, __FILE__, __LINE__);
-}
+#define GFL_HEAP_AllocMemoryLow( heapID, size )	\
+			GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size, __FILE__, __LINE__)
 
 #endif
 
