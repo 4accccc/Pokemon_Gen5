@@ -912,11 +912,12 @@ void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_im
  *	@return	登録したセルアクターワーク
  *
  *	【setsfの説明】
- *		通常レンダラーシステムのときはCLSYS_DRAW_TYPEを指定する
- *		CLSYS_DRAW_MAIN	pos_x/yがメイン画面左上座標からの相対座標になる。
- *		CLSYS_DRAW_SUB	pos_x/yがサブ画面左上座標からの相対座標になる。
+ *		CLUNITの使用するレンダラーシステムを変更していないときは
+ *		CLSYS_DEFREND_TYPEの値を指定する
+ *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
+ *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
  *		
- *		独自のレンダラーシステムをセルアクターユニットに指定しているときは、
+ *		独自のレンダラーシステムをCLUNITに設定しているときは、
  *		サーフェースの要素数を指定することで、
  *		指定されたサーフェース左上座標からの相対座標になる。
  *
@@ -2132,10 +2133,10 @@ static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data
 	};
 
 	// 左上座標だけ設定
-	c_defsurface[ CLSYS_DRAW_MAIN ].lefttop_x = cp_data->surface_main_left;
-	c_defsurface[ CLSYS_DRAW_MAIN ].lefttop_y = cp_data->surface_main_top;
-	c_defsurface[ CLSYS_DRAW_SUB ].lefttop_x = cp_data->surface_sub_left;
-	c_defsurface[ CLSYS_DRAW_SUB ].lefttop_y = cp_data->surface_sub_top;
+	c_defsurface[ CLSYS_DEFREND_MAIN ].lefttop_x = cp_data->surface_main_left;
+	c_defsurface[ CLSYS_DEFREND_MAIN ].lefttop_y = cp_data->surface_main_top;
+	c_defsurface[ CLSYS_DEFREND_SUB ].lefttop_x = cp_data->surface_sub_left;
+	c_defsurface[ CLSYS_DEFREND_SUB ].lefttop_y = cp_data->surface_sub_top;
 	
 	REND_SysInit( p_rend, c_defsurface, CLSYS_DRAW_MAX, heapID );
 }

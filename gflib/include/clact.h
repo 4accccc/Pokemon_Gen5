@@ -84,6 +84,16 @@ typedef enum{
 } CLSYS_MAT_TYPE;
 
 //-------------------------------------
+///	デフォルト設定レンダラー内サーフェース指定定数
+//=====================================
+typedef enum{
+	CLSYS_DEFREND_MAIN,
+	CLSYS_DEFREND_SUB,
+	CLSYS_DEFREND_NUM
+} CLSYS_DEFREND_TYPE;
+
+
+//-------------------------------------
 ///	設定サーフェース　絶対座標指定
 //	CLWKの座標設定関数で絶対座標を設定するときに使用します。
 //=====================================
@@ -267,11 +277,11 @@ GLOBAL void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit );
 //
 /*	【setsfの説明】
  *		CLUNITの使用するレンダラーシステムを変更していないときは
- *		CLSYS_DRAW_TYPEの値を指定する
- *		・CLSYS_DRAW_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
- *		・CLSYS_DRAW_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
+ *		CLSYS_DEFREND_TYPEの値を指定する
+ *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
+ *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
  *		
- *		独自のレンダラーシステムをCLUNITに設定しているときは、
+ *		独自のレンダラーシステム(CLSYS_REND)をCLUNITに設定しているときは、
  *		サーフェースの要素数を指定することで、
  *		指定されたサーフェース左上座標からの相対座標になる。
  *
