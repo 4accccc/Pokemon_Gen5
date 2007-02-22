@@ -78,7 +78,7 @@ void GFLUser_Init(void)
 #endif
 
 	//ヒープシステム初期化
-	GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,4,0);	//メインアリーナ
+	GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0);	//メインアリーナ
 	GFL_HEAP_DTCM_sysInit( 0x2000 );				//ＤＴＣＭアリーナ
 
 	//アーカイブシステム初期化
