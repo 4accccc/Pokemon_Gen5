@@ -330,7 +330,11 @@ void GFL_BMP_Fill(
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code )
 {
-	GFL_STD_MemFill( dest->adrs, col_code, ( dest->size_x / 8 ) * ( dest->size_y / 8 ) * dest->col );
+	u8	col;
+
+	col=((col_code&0x0f)<<4)|(col_code&0x0f);
+
+	GFL_STD_MemFill( dest->adrs, col, ( dest->size_x / 8 ) * ( dest->size_y / 8 ) * dest->col );
 }
 
 
