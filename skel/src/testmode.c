@@ -111,7 +111,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 	case 0:
 		//‰Šú‰»
 		bg_init();
-		testmode->listPosition = 0;
+		//testmode->listPosition = 0;
 		testmode->seq++;
 		break;
 
@@ -145,14 +145,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 	case 3:
 		//ƒL[”»’è
 		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
-			if(		( testmode->listPosition == 0)		//‚í‚½‚È‚×‚Ì‚Æ‚«‘JˆÚ
-				||	( testmode->listPosition == 1)		//‚½‚Ü‚¾‚Ì‚Æ‚«‘JˆÚ
-				||	( testmode->listPosition == 2)		//‚»‚ª‚×‚Ì‚Æ‚«‘JˆÚ
-				||	( testmode->listPosition == 3)		//‚¨‚¨‚Ì‚Ì‚Æ‚«‘JˆÚ
-			  )
-			{
-				testmode->seq++;
-			}
+			testmode->seq++;
 		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
@@ -500,6 +493,36 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 	testmode->work[0]++;
 }
 	
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void CallSelectProc( TESTMODE_WORK * testmode )
+{
+	switch( TestModeSelectPosGet(testmode) ) {
+	case 0:
+		//‚í‚½‚È‚×
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
+		break;
+	case 1:
+		//‚½‚Ü‚¾
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
+		break;
+	case 2:
+		//‚»‚ª‚×
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+		break;
+	case 3:
+		//‚¨‚¨‚Ì
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+		break;
+	case 6:
+		//‚Æ‚à‚â
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugClactProcData, NULL);
+	default:
+		//‚½‚â
+		//‚È‚©‚Þ‚ç
+		break;
+	}
+}
 
 
 
@@ -531,7 +554,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 {
 	TESTMODE_WORK * testmode;
 	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), GFL_HEAPID_APP );
-	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+	//GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -543,8 +566,26 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode = mywk;
-	if( TestModeControl(testmode) == TRUE ){
-		return GFL_PROC_RES_FINISH;
+	u16 pos_backup;
+
+	switch( *seq ) {
+	case 0:
+		GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+		(*seq) ++;
+		break;
+	case 1:
+		if( TestModeControl(testmode) == TRUE ){
+			CallSelectProc(testmode);
+			(*seq) ++;
+			//return GFL_PROC_RES_FINISH;
+		}
+		break;
+	case 2:
+		pos_backup = testmode->listPosition;
+		GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+		testmode->listPosition = pos_backup;
+		*seq = 0;
+		break;
 	}
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -557,29 +598,7 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode = mywk;
-	switch( TestModeSelectPosGet(testmode) ) {
-	case 0:
-		//‚í‚½‚È‚×
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
-		break;
-	case 1:
-		//‚½‚Ü‚¾
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
-		break;
-	case 2:
-		//‚»‚ª‚×
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
-		break;
-	case 3:
-		//‚¨‚¨‚Ì
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
-		break;
-	default:
-		//‚½‚â
-		//‚È‚©‚Þ‚ç
-		//‚½‚©‚Í‚µ
-		break;
-	}
+
 	GFL_PROC_FreeWork(mywk);
 
 	return GFL_PROC_RES_FINISH;

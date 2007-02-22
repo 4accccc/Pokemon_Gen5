@@ -78,6 +78,7 @@ static	void	SkeltonVBlankFunc(void)
 }
 
 
+#include "src/tomoya/debug_tomoya.h"
 //------------------------------------------------------------------
 /**
  * @brief		ƒQ[ƒ€‚²‚Æ‚Ì‰Šú‰»ˆ—

@@ -24,6 +24,7 @@ extern const GFL_PROC_DATA DebugTamadaMainProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugMitsuharaMainProcData;
+extern const GFL_PROC_DATA DebugClactProcData;			//tomoya
 
 
 #endif	/*	__TESTMODE_H__ */

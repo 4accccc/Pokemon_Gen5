@@ -101,13 +101,14 @@ void DebugTamadaExit(void)
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTamadaMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	u16 heap_id = GFL_HEAPID_APP;
 	//DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	DEBUG_TAMADA_CONTROL * ctrl;
+
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP, HEAPID_TAMADA_DEBUG, 0x40000);
 	//ctrl = GFL_HEAP_AllocMemory(heap_id, sizeof(DEBUG_TAMADA_CONTROL));
-	ctrl = GFL_PROC_AllocWork(proc, sizeof(DEBUG_TAMADA_CONTROL), heap_id);
+	ctrl = GFL_PROC_AllocWork(proc, sizeof(DEBUG_TAMADA_CONTROL), HEAPID_TAMADA_DEBUG);
 	DebugTamadaControl = ctrl;
-	ctrl->debug_heap_id = heap_id;
+	ctrl->debug_heap_id = HEAPID_TAMADA_DEBUG;
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -130,7 +131,10 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 		(*seq) ++;
 		break;
 	case 1:
-		if (key & PAD_BUTTON_A) {
+		if ((GFL_UI_KeyGetCont() & (PAD_BUTTON_L|PAD_BUTTON_R)) == (PAD_BUTTON_L|PAD_BUTTON_R)) {
+			return GFL_PROC_RES_FINISH;
+
+		} else if (key & PAD_BUTTON_A) {
 			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaSubProcData1, ctrl);
 			*seq = 0;
 			return GFL_PROC_RES_CONTINUE;
@@ -159,6 +163,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTamadaMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+	GFL_HEAP_DeleteHeap(HEAPID_TAMADA_DEBUG);
 	return GFL_PROC_RES_FINISH;
 }
 

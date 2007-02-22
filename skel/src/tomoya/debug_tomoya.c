@@ -14,9 +14,11 @@
 #include "procsys.h"
 #include "ui.h"
 #include "clact.h"
+#include "main.h"		//HEAPID参照のため
 
 #define __DEBUG_TOMOYA_H_GLOBAL
 #include "debug_tomoya.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -48,15 +50,6 @@
  *					構造体宣言
 */
 //-----------------------------------------------------------------------------
-//-------------------------------------
-///	プロセスに渡されるワーク
-//=====================================
-typedef struct {
-	u32 heapID;
-} DEBUG_TOMOYA_PROCW;
-
-
-
 //-------------------------------------
 ///	セルアクターサンプルプロセスワーク
 //=====================================
@@ -91,7 +84,8 @@ static void* DEBUG_CommonFileLoad( char* path, u32 heapID );
 static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work );
 static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work );
 static GFL_PROC_RESULT DEBUG_ClactProcEnd( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work );
-static const GFL_PROC_DATA DEBUG_ClactProcData = {
+
+const GFL_PROC_DATA DebugClactProcData = {
 	DEBUG_ClactProcInit,
 	DEBUG_ClactProcMain,
 	DEBUG_ClactProcEnd,
@@ -104,24 +98,6 @@ static void DEBUG_ClactWorkDel( CLWK* p_wk );
 static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont );
 
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	デバック	初期化
- *
- *	@param	heapID	ヒープID
- */
-//-----------------------------------------------------------------------------
-void DEBUG_TomoyaInit( u32 heapID )
-{
-	DEBUG_TOMOYA_PROCW* p_procw;
-
-	// ワーク確保
-	p_procw = GFL_HEAP_AllocMemory( heapID, sizeof(DEBUG_TOMOYA_PROCW) );
-	p_procw->heapID = heapID;
-
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DEBUG_ClactProcData, p_procw);
-}
 
 
 
@@ -222,14 +198,14 @@ static void* DEBUG_CommonFileLoad( char* path, u32 heapID )
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work )
 {
-	DEBUG_TOMOYA_PROCW* p_procw = p_param;
 	DEBUG_CLACT*		p_clactw;
 
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TOMOYA_DEBUG, 0x10000 );
 	// 基本的な画面設定
 	DEBUG_CommonDispInit();
 	
 	// clactサンプルワーク作成
-	p_clactw = GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_CLACT), p_procw->heapID );
+	p_clactw = GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_CLACT), HEAPID_TOMOYA_DEBUG );
 	memset( p_clactw, 0, sizeof(DEBUG_CLACT) );
 	
 
@@ -251,12 +227,12 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 			0, 128,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
 			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
 		};
-		GFL_CLACT_SysInit( &param, p_procw->heapID );
+		GFL_CLACT_SysInit( &param, HEAPID_TOMOYA_DEBUG );
 	}
 	
 	// セルアクターユニット作成
 	// 各アプリケーション単位で作成する。
-	p_clactw->p_unit = GFL_CLACT_UnitCreate( CLACT_WKNUM, p_procw->heapID );
+	p_clactw->p_unit = GFL_CLACT_UnitCreate( CLACT_WKNUM, HEAPID_TOMOYA_DEBUG );
 
 	
 	// セルアクターワーク生成
@@ -273,8 +249,8 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 			0,		//優先順位
 			0,		//bg優先順位
 		};
-		DEBUG_ClactWorkResLoad( &p_clactw->res[0], p_procw->heapID );
-		p_clactw->p_wk = DEBUG_ClactWorkAdd( p_clactw->p_unit, &p_clactw->res[0], &data, p_procw->heapID );
+		DEBUG_ClactWorkResLoad( &p_clactw->res[0], HEAPID_TOMOYA_DEBUG );
+		p_clactw->p_wk = DEBUG_ClactWorkAdd( p_clactw->p_unit, &p_clactw->res[0], &data, HEAPID_TOMOYA_DEBUG );
 	}
 
 
@@ -286,6 +262,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 		OS_TPrintf( "Bボタン	アニメーションチェンジ\n" );
 		OS_TPrintf( "Yボタン	メイン画面からサブ画面に移動\n" );
 		OS_TPrintf( "Xボタン	サブ画面からメイン画面に移動\n" );
+		OS_TPrintf( "STARTボタン	メニューに戻る\n" );
 		
 	}
 	
@@ -308,7 +285,6 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work )
 {
-	DEBUG_TOMOYA_PROCW* p_procw = p_param;
 	DEBUG_CLACT*		p_clactw = p_work;
 	int trg, cont;
 
@@ -334,8 +310,11 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	// 割り込みないで呼ばないほうが良いかもしれません。
 	GFL_CLACT_SysVblank();
 //*/
-
-	return GFL_PROC_RES_CONTINUE;
+	if( trg & PAD_BUTTON_START ){
+		return GFL_PROC_RES_FINISH;
+	} else {
+		return GFL_PROC_RES_CONTINUE;
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -354,7 +333,6 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT DEBUG_ClactProcEnd( GFL_PROC* p_proc, int* p_seq, void* p_param, void* p_work )
 {
-	DEBUG_TOMOYA_PROCW* p_procw = p_param;
 	DEBUG_CLACT*		p_clactw = p_work;
 
 	// DISPLAYOFF
@@ -375,7 +353,9 @@ static GFL_PROC_RESULT DEBUG_ClactProcEnd( GFL_PROC* p_proc, int* p_seq, void* p
 
 	// ワーク破棄
 	GFL_PROC_FreeWork( p_proc );
-	GFL_HEAP_FreeMemory( p_param );
+	//GFL_HEAP_FreeMemory( p_param );
+
+	GFL_HEAP_DeleteHeap( HEAPID_TOMOYA_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
