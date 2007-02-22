@@ -325,6 +325,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	// 全ユニット描画が完了してから行う必要があります。
 	GFL_CLACT_SysMain();
 
+/*		GFLUser_VIntr関数内でVBlank関数が呼ばれるのでコメントアウト
 	// Vintr待ち
 	OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	// Vブランク期間で実行します。
@@ -332,7 +333,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	// この関数を実行すると、描画しているOBJが消えてしまうため
 	// 割り込みないで呼ばないほうが良いかもしれません。
 	GFL_CLACT_SysVblank();
-
+//*/
 
 	return GFL_PROC_RES_CONTINUE;
 }
