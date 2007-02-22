@@ -152,10 +152,11 @@ void
 	GFL_HEAP_DeleteHeap
 		( HEAPID childHeapID )
 {
-	BOOL result = GFI_HEAP_DeleteHeap( childHeapID );
+	BOOL result;
 #ifdef HEAPSYS_DEBUG
 	GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( childHeapID );
 #endif
+	result = GFI_HEAP_DeleteHeap( childHeapID );
 
 	if( result == FALSE )
 	{
