@@ -4,6 +4,9 @@
  * @brief	３Ｄ管理システムプログラム
  */
 //=============================================================================================
+#ifndef _G3D_UTIL_H_
+#define _G3D_UTIL_H_
+
 typedef struct _GFL_G3D_UTIL_SCENE	GFL_G3D_UTIL_SCENE;
 
 typedef enum {
@@ -93,3 +96,4 @@ extern u16
 	GFL_G3D_UtilsysObjCountGet
 		( GFL_G3D_UTIL_SCENE* g3DutilScene );
 
+#endif
