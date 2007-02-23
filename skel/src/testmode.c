@@ -500,7 +500,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	switch( TestModeSelectPosGet(testmode) ) {
 	case 0:
 		//‚í‚½‚È‚×
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
 		break;
 	case 1:
 		//‚½‚Ü‚¾
@@ -508,11 +508,11 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case 2:
 		//‚»‚ª‚×
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
 		break;
 	case 3:
 		//‚¨‚¨‚Ì
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
 	case 6:
 		//‚Æ‚à‚â
