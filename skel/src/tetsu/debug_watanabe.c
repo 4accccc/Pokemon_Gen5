@@ -8,6 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 #include "textprint.h"
+#include "g3d_actor.h"
 
 #include "main.h"
 #include "testmode.h"
@@ -95,6 +96,8 @@ typedef struct {
 
 	GFL_G3D_UTIL_SCENE*		g3Dscene;
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
+	GFL_G3D_ACTSYS*			actSys;
+	u32						actID;
 
 	u16						work[16];
 }TETSU_WORK;
@@ -108,10 +111,14 @@ static void	bg_init( void );
 static void	bg_exit( void );
 //ÇRÇcÇaÇfçÏê¨ä÷êî
 static void	g3d_load( void );
+static void g3d_move( void );
 static void g3d_draw( void );
 static void	g3d_unload( void );
-//ÉGÉtÉFÉNÉg
-static void g3d_control_effect( void );
+
+static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst );
+static void ball_rotateX( GFL_G3D_ACTOR* act, void* work );
+static void ball_rotateY( GFL_G3D_ACTOR* act, void* work );
+static void ball_rotateZ( GFL_G3D_ACTOR* act, void* work );
 
 //------------------------------------------------------------------
 /**
@@ -125,12 +132,9 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 #define DTCM_SIZE		(0x1000)
 #define G3D_FRM_PRI		(1)
 
-#define G3D_UTIL_RESSIZ	(64)
-#define G3D_UTIL_OBJSIZ	(64)
-#define G3D_UTIL_ANMSIZ	(64)
-
+//---------------------
 static const VecFx32 cameraTarget	= { 0, 0, 0 };
-static const VecFx32 cameraPos		= { 0, (FX32_ONE * 256), (FX32_ONE * 256) };
+static const VecFx32 cameraPos		= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
 static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
 
 #define cameraPerspway	( 0x0b60 )
@@ -138,12 +142,13 @@ static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
 #define cameraNear		( 1 << FX32_SHIFT )
 #define cameraFar		( 1024 << FX32_SHIFT )
 
-#define g3DanmRotateSpeed	( 0x100 )
+#define g3DanmRotateSpeed	( 0x200 )
 #define g3DanmFrameSpeed	( FX32_ONE )
 	
 static const VecFx32 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 static const VecFx32 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 
+//---------------------
 static const char g3DarcPath[] = {"src/sample_graphic/test9ball.narc"};
 
 enum {
@@ -172,6 +177,19 @@ static const GFL_G3D_UTIL_SCENE_RES g3Dscene_resTbl[] = {
 	{ (u32)g3DarcPath, NARC_test9ball_test9ball_nsbtx, GFL_G3D_UTIL_RESPATH },
 };
 
+//---------------------
+enum {
+	G3DOBJ_BALL1 = 0,
+	G3DOBJ_BALL2,
+	G3DOBJ_BALL3,
+	G3DOBJ_BALL4,
+	G3DOBJ_BALL5,
+	G3DOBJ_BALL6,
+	G3DOBJ_BALL7,
+	G3DOBJ_BALL8,
+	G3DOBJ_BALL9,
+};
+
 static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL1_TEX, NULL, 0 },
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL2_TEX, NULL, 0 },
@@ -184,26 +202,68 @@ static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL9_TEX, NULL, 0 },
 };
 
+//---------------------
 static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
 	g3Dscene_resTbl, NELEMS(g3Dscene_resTbl),
 	g3Dscene_objTbl, NELEMS(g3Dscene_objTbl),
 };
 
-static const GFL_G3D_OBJSTATUS statusDefault = {
-	{0,0,0},{FX32_ONE,FX32_ONE,FX32_ONE},{FX32_ONE,0,0,0,FX32_ONE,0,0,0,FX32_ONE},
-};
-
-static const VecFx32 g3DobjectTransTable[] = 
-{
-	{ -FX32_ONE*48, 0, -FX32_ONE*48 }, 
-	{ -FX32_ONE*48, 0,  FX32_ONE* 0 },
-	{ -FX32_ONE*48, 0,  FX32_ONE*48 },
-	{ -FX32_ONE* 0, 0, -FX32_ONE*48 },
-	{  FX32_ONE* 0, 0,  FX32_ONE* 0 },
-	{  FX32_ONE* 0, 0,  FX32_ONE*48 },
-	{  FX32_ONE*48, 0, -FX32_ONE*48 },
-	{  FX32_ONE*48, 0,  FX32_ONE* 0 },
-	{  FX32_ONE*48, 0,  FX32_ONE*48 },
+//---------------------
+static const GFL_G3D_ACTOR_DATA g3DactorData[] = {
+	{	G3DOBJ_BALL1, 0, 1, TRUE, 
+		{	{ -FX32_ONE*48, 0, -FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateX,
+	},
+	{	G3DOBJ_BALL2, 0, 1, TRUE, 
+		{	{ -FX32_ONE*48, 0,  FX32_ONE* 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateY,
+	},
+	{	G3DOBJ_BALL3, 0, 1, TRUE, 
+		{	{ -FX32_ONE*48, 0,  FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateZ,
+	},
+	{	G3DOBJ_BALL4, 0, 1, TRUE, 
+		{	{ -FX32_ONE* 0, 0, -FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateZ,
+	},
+	{	G3DOBJ_BALL5, 0, 1, TRUE, 
+		{	{  FX32_ONE* 0, 0,  FX32_ONE* 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateX,
+	},
+	{	G3DOBJ_BALL6, 0, 1, TRUE, 
+		{	{  FX32_ONE* 0, 0,  FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateY,
+	},
+	{	G3DOBJ_BALL7, 0, 1, TRUE, 
+		{	{  FX32_ONE*48, 0, -FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateY,
+	},
+	{	G3DOBJ_BALL8, 0, 1, TRUE, 
+		{	{  FX32_ONE*48, 0,  FX32_ONE* 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateZ,
+	},
+	{	G3DOBJ_BALL9, 0, 1, TRUE, 
+		{	{  FX32_ONE*48, 0,  FX32_ONE*48 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},ball_rotateX,
+	},
 };
 
 //------------------------------------------------------------------
@@ -249,7 +309,7 @@ static BOOL	TestModeControl( void )
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
 			tetsuWork->seq++;
 		}
-		g3d_control_effect();
+		g3d_move();
 		g3d_draw();		//ÇRÇcÉfÅ[É^ï`âÊ
 		break;
 
@@ -316,11 +376,9 @@ static void g3d_load( void )
 	int	i;
 
 	tetsuWork->g3Dscene = GFL_G3D_UtilsysCreate( &g3Dscene_setup, heapID );
-	//ï`âÊÉXÉeÅ[É^ÉXÉèÅ[ÉNê›íË
-	for( i=0; i<NELEMS(g3Dscene_objTbl); i++ ){
-		tetsuWork->g3DobjStatus[i] = statusDefault;
-		tetsuWork->g3DobjStatus[i].trans = g3DobjectTransTable[i];
-	}
+	tetsuWork->actSys = GFL_G3D_ActorSysCreate( tetsuWork->g3Dscene, 32, 16, heapID );
+	tetsuWork->actID = GFL_G3D_ActorAdd( tetsuWork->actSys, g3DactorData, NELEMS(g3DactorData) );
+
 	//ÉJÉÅÉâÉZÉbÉg
 	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
 								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
@@ -331,25 +389,25 @@ static void g3d_load( void )
 	tetsuWork->work[0] = 0;
 }
 	
+//ìÆçÏ
+static void g3d_move( void )
+{
+	GFL_G3D_ActorSysMain( tetsuWork->actSys );  
+	tetsuWork->work[0]++;
+}
+
 //ï`âÊ
 static void g3d_draw( void )
 {
-	GFL_G3D_OBJ* g3Dobj;
-	int	i;
-
-	GFL_G3D_DrawStart();
-	GFL_G3D_DrawLookAt();
-
-	for( i=0; i<NELEMS(g3Dscene_objTbl); i++ ){
-		g3Dobj = GFL_G3D_UtilsysObjHandleGet( tetsuWork->g3Dscene, i );
-		GFL_G3D_ObjDraw( g3Dobj, &tetsuWork->g3DobjStatus[i] );
-	}
-	GFL_G3D_DrawEnd();
+	GFL_G3D_ActorSysDraw( tetsuWork->actSys );  
 }
 	
 //îjä¸
 static void g3d_unload( void )
 {
+	GFL_G3D_ActorDel( tetsuWork->actSys, tetsuWork->actID, NELEMS(g3DactorData) );
+	GFL_G3D_ActorSysDelete( tetsuWork->actSys );  
+
 	GFL_G3D_UtilsysDelete( tetsuWork->g3Dscene );
 }
 	
@@ -371,26 +429,34 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
-static void g3d_control_effect( void )
+static void ball_rotateX( GFL_G3D_ACTOR* act, void* work )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
-	GFL_G3D_OBJ* g3Dobj;
 
-	//âÒì]åvéZ
-	{
-		int i;
-
-		for( i=0; i<NELEMS(g3Dscene_objTbl); i++ ){
-			//ÉIÉuÉWÉFÉNÉgÉnÉìÉhÉãÇéÊìæ
-			g3Dobj = GFL_G3D_UtilsysObjHandleGet( tetsuWork->g3Dscene, i );
-
-			rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0] * (i+1);	//Çxé≤âÒì]
-			rotateCalc( &rotate_tmp, &tetsuWork->g3DobjStatus[i].rotate );
-		}
-	}
-	tetsuWork->work[0]++;
+	rotate_tmp.x = g3DanmRotateSpeed * tetsuWork->work[0];	//Çxé≤âÒì]
+	rotateCalc( &rotate_tmp, &rotate );
+	GFL_G3D_ActorStatusRotateSet( act, &rotate );
 }
 
+static void ball_rotateY( GFL_G3D_ACTOR* act, void* work )
+{
+	MtxFx33 rotate;
+	VecFx32 rotate_tmp = { 0, 0, 0 };
+
+	rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0];	//Çxé≤âÒì]
+	rotateCalc( &rotate_tmp, &rotate );
+	GFL_G3D_ActorStatusRotateSet( act, &rotate );
+}
+
+static void ball_rotateZ( GFL_G3D_ACTOR* act, void* work )
+{
+	MtxFx33 rotate;
+	VecFx32 rotate_tmp = { 0, 0, 0 };
+
+	rotate_tmp.z = g3DanmRotateSpeed * tetsuWork->work[0];	//Çxé≤âÒì]
+	rotateCalc( &rotate_tmp, &rotate );
+	GFL_G3D_ActorStatusRotateSet( act, &rotate );
+}
 
 
