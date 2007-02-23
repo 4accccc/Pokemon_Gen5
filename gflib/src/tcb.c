@@ -51,7 +51,7 @@ struct _TCB {
 	TCB * next;				///<続くTCBへのポインタ
 	u32 pri;					///<プライオリティ
 	void * work;				///<ワークエリアへのポインタ
-	TCB_FUNC func;				///<実行関数へのポインタ
+	TCB_FUNC * func;			///<実行関数へのポインタ
 
 	u32 sw_flag;				///<関数追加フラグ
 };	// 52 bytes
@@ -83,7 +83,7 @@ static inline void TCB_WorkClear( TCBSYS* tcbsys, TCB * tcb);
 static void InitTCBStack( TCBSYS* tcbsys );
 static TCB * PopTCB( TCBSYS* tcbsys );
 static BOOL PushTCB( TCBSYS* tcbsys, TCB * tcb );
-static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri );
+static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri );
 
 //------------------------------------------------------------------
 /**
@@ -318,7 +318,7 @@ void GFL_TCB_SysExit( TCBSYS* tcbsys )
 	@return	TCB *	追加したTCBを示すポインタ
 */
 //------------------------------------------------------------------------------
-TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri )
+TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
 {
 	TCB *  ret;
 
@@ -340,7 +340,7 @@ TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri )
  * @retval  TCB *		追加したTCBポインタ
  */
 //------------------------------------------------------------------
-static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri )
+static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
 {
 	TCB * get;
 	TCB * find;
@@ -423,7 +423,7 @@ void GFL_TCB_DeleteTask( TCB * tcb )
 //------------------------------------------------------------------
 //TCBの動作関数を切り替える
 //------------------------------------------------------------------
-void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC func)
+void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func)
 {
 	tcb->func = func;
 }

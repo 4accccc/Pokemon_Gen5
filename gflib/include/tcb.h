@@ -53,7 +53,7 @@ typedef struct _TCB TCB;
  * 引数としてTCB *と、ワークへのポインタをとるようになっている
  */
 //------------------------------------------------------------------
-typedef void (*TCB_FUNC)( TCB *, void * );
+typedef void (TCB_FUNC)( TCB *, void * );
 
 /*====================================================================================*/
 /*  関数宣言                                                                          */
@@ -116,7 +116,7 @@ extern void GFL_TCB_SysExit( TCBSYS* tcbsys );
 	@return	TCB *	追加したTCBを示すポインタ
 */
 //------------------------------------------------------------------------------
-extern TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC func, void* work, u32 pri );
+extern TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri );
 
 
 //------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ extern void GFL_TCB_DeleteTask( TCB * tcb );
  * @param	func	新しく切り替える動作関数
 */
 //------------------------------------------------------------------
-extern void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC func);
+extern void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func);
 
 //------------------------------------------------------------------
 /**
