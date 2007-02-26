@@ -119,6 +119,16 @@ extern void GFI_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit);
 //------------------------------------------------------------------
 extern void GFI_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit);
 
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ解除時に呼ばれる関数をセットする
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+extern void GFI_UI_SleepReleaseSetFunc(UISYS* pUI, GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
 //----------------------------------------------------------------------------
 //プロトタイプ宣言 touchpanel.c

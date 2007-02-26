@@ -147,7 +147,7 @@ typedef union{
 
 typedef struct _UI_SYS UISYS;  ///< UISYS 型宣言
 typedef struct _UI_TPSYS UI_TPSYS; ///< UIタッチパネルSYS型宣言
-
+typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ばれる関数
 
 //==============================================================================
 /**
@@ -192,6 +192,16 @@ GLOBAL void GFL_UI_SleepDisable(const u8 sleepTypeBit);
  */
 //------------------------------------------------------------------
 GLOBAL void GFL_UI_SleepEnable(const u8 sleepTypeBit);
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ解除時に呼ばれる関数をセットする
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+GLOBAL void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
 //------------------------------------------------------------------
 /**

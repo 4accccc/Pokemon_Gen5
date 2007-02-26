@@ -7,7 +7,7 @@
  */
 //==============================================================================
 
-#include "gflib.h" 
+#include "gflib.h"
 #include "ui.h"
 #include "ui_def.h"
 #include "fade.h"
@@ -31,8 +31,10 @@
 //------------------------------------------------------------------
 struct _UI_SYS {
     UI_KEYSYS* pKey;       ///< キー管理構造体
-	u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
-	u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
+    GFL_UI_SLEEPRELEASE_FUNC* pRelease;  ///< スリープ解除時に呼ばれる関数
+    void* pWork;           ///< スリープ解除時に引数として渡すワーク
+    u8 DontSleep;          ///< スリープ状態にしてはいけない場合BITがたっている 大丈夫な場合0
+    u8 DontSoftReset;      ///< ソフトリセットしたくない場合BITがたっている 大丈夫な場合0
     u8 AgbCasetteVersion;          ///< AGBカセット対応時のカセットバージョン 通常は0
     PMBackLightSwitch lightState;  ///< バックライトのIPL状態
 } ;
@@ -64,7 +66,7 @@ void GFL_UI_sysInit(const HEAPID heapID)
     _pUI = pUI;
 
     OS_EnableIrq();  // この関数は会議で相談した後で移動する  @@OO
-    
+
     PM_GetBackLight(NULL,&pUI->lightState);  // バックライト状態読み込み
     //return pUI;
 }
@@ -139,7 +141,7 @@ void GFL_UI_sysExit(void)
 //------------------------------------------------------------------
 void GFI_UI_SleepDisable(UISYS* pUI,const u8 sleepTypeBit)
 {
-	pUI->DontSleep |= sleepTypeBit;
+    pUI->DontSleep |= sleepTypeBit;
 }
 
 //------------------------------------------------------------------
@@ -164,7 +166,7 @@ void GFL_UI_SleepDisable(const u8 sleepTypeBit)
 //------------------------------------------------------------------
 void GFI_UI_SleepEnable(UISYS* pUI, const u8 sleepTypeBit)
 {
-	pUI->DontSleep &= ~(sleepTypeBit);
+    pUI->DontSleep &= ~(sleepTypeBit);
 }
 
 //------------------------------------------------------------------
@@ -181,6 +183,34 @@ void GFL_UI_SleepEnable(const u8 sleepTypeBit)
 
 //------------------------------------------------------------------
 /**
+ * @brief   スリープ解除時に呼ばれる関数をセットする
+ * @param   pUI		ユーザーインターフェイス管理構造体
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFI_UI_SleepReleaseSetFunc(UISYS* pUI, GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork)
+{
+    pUI->pRelease = pFunc;
+    pUI->pWork = pWork;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ解除時に呼ばれる関数をセットする
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork)
+{
+    GFI_UI_SleepReleaseSetFunc(_pUI, pFunc, pWork);
+}
+
+//------------------------------------------------------------------
+/**
  * @brief   ソフトウエアリセット状態を禁止する
  * @param   pUI		ユーザーインターフェイス管理構造体
  * @param   softResetBit リセット管理BIT
@@ -189,7 +219,7 @@ void GFL_UI_SleepEnable(const u8 sleepTypeBit)
 //------------------------------------------------------------------
 void GFI_UI_SoftResetDisable(UISYS* pUI,const u8 softResetBit)
 {
-	pUI->DontSoftReset |= softResetBit;
+    pUI->DontSoftReset |= softResetBit;
 }
 
 //------------------------------------------------------------------
@@ -214,7 +244,7 @@ void GFL_UI_SoftResetDisable(const u8 softResetBit)
 //------------------------------------------------------------------
 void GFI_UI_SoftResetEnable(UISYS* pUI, const u8 softResetBit)
 {
-	pUI->DontSoftReset &= ~(softResetBit);
+    pUI->DontSoftReset &= ~(softResetBit);
 }
 
 //------------------------------------------------------------------
@@ -269,7 +299,7 @@ static void _UI_SleepFunc(void)
     PMBackLightSwitch up,down;
     PMWakeUpTrigger trigger;
     UISYS* pUI = _UI_GetUISYS();
-    
+
     if(PAD_DetectFold()){ // ふたが閉まっている
         if(pUI->DontSleep == 0){  // スリープしていい場合
             GFL_UI_TPAutoSamplingStop();
@@ -292,6 +322,10 @@ static void _UI_SleepFunc(void)
                     // ふたが開いていたら電源OFF
                     PM_ForceToPowerOff();
                 }
+            }
+            {
+                GFL_UI_SLEEPRELEASE_FUNC* pRelease = pUI->pRelease;
+                pRelease(pUI->pWork);
             }
             GFL_UI_TPAutoSamplingReStart();
         } else{
@@ -329,8 +363,8 @@ static void _UI_ResetLoop(int resetNo)
     // もしセーブしてたらキャンセルしておかないとリセットできない
     SaveData_DivSave_Cancel(SaveData_GetPointer());
 #endif
-	while (1) {
-         // 通信としてリセットしてもいい状態 + メモリーカード終了
+    while (1) {
+        // 通信としてリセットしてもいい状態 + メモリーカード終了
         if(GFL_NET_IsResetEnable() && CARD_TryWaitBackupAsync()){
             OS_ResetSystem(resetNo);  // 切断確認後終了
         }

@@ -353,9 +353,6 @@ void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
 {
     GFL_NET_SystemChildModeInit(TRUE,512);
 
-
-
-
     _CHANGE_STATE(_childScanning, 0);
 }
 
