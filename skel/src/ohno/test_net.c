@@ -279,11 +279,12 @@ GFLNetInitializeStruct aGFLNetInit = {
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
-    GFL_HEAPID_NETWORK,  //通信用にcreateされるHEAPID
-    GFL_HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+    HEAPID_WIFI,  //wifi用にcreateされるHEAPID
     2,     // 最大接続人数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     FALSE,     // MP通信＝親子型通信モードかどうか
+    FALSE,  //wifi通信を行うかどうか
     TRUE,     // 通信を開始するかどうか
 };
 
