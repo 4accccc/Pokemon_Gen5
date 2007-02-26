@@ -105,7 +105,9 @@ static TCB_INLINE void PushTCB(GFL_TCBLSYS * tcbsys, GFL_TCBL * tcb)
 		stack_top->prev = tcb;
 	}
 	tcbsys->stack_top = tcb;
+#ifdef TCBL_DEBUG 
 	OS_Printf("top:%08x\n", tcbsys->stack_top);
+#endif
 }
 
 
