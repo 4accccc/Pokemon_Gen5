@@ -1,13 +1,13 @@
 //=============================================================================================
 /**
  * @file	g3d_util.h                                                  
- * @brief	３Ｄ管理システムプログラム
+ * @brief	３Ｄデータ管理ユーティリティープログラム
  */
 //=============================================================================================
 #ifndef _G3D_UTIL_H_
 #define _G3D_UTIL_H_
 
-typedef struct _GFL_G3D_UTIL_SCENE	GFL_G3D_UTIL_SCENE;
+typedef struct _GFL_G3D_UTIL	GFL_G3D_UTIL;
 
 typedef enum {
 	GFL_G3D_UTIL_RESARC = 0,		//アーカイブＩＤを指定
@@ -20,29 +20,29 @@ typedef struct {
 	const u32						arcive;		//指定アーカイブＩＤもしくはアーカイブパスポインタ
 	const u16						datID;		//アーカイブ内データＩＤ
 	const GFL_G3D_UTIL_RESTYPE		arcType;	//指定アーカイブタイプ
-}GFL_G3D_UTIL_SCENE_RES;
+}GFL_G3D_UTIL_RES;
 
 typedef struct {
-	const u16						anmresID;	//アニメリソースＩＤ
-	const u16						anmdatID;	//アニメデータＩＤ(リソース内部ＩＮＤＥＸ)
-}GFL_G3D_UTIL_SCENE_ANM;
+	const u16				anmresID;	//アニメリソースＩＤ
+	const u16				anmdatID;	//アニメデータＩＤ(リソース内部ＩＮＤＥＸ)
+}GFL_G3D_UTIL_ANM;
 
 typedef struct {
-	const u16						mdlresID;	//モデルリソースＩＤ
-	const u16						mdldatID;	//モデルデータＩＤ(リソース内部ＩＮＤＥＸ)
-	const u16						texresID;	//テクスチャリソースＩＤ
-	const GFL_G3D_UTIL_SCENE_ANM*	anmTbl;		//アニメテーブル（複数設定のため）
-	const u16						anmCount;	//アニメリソース数
-}GFL_G3D_UTIL_SCENE_OBJ;
+	const u16				mdlresID;	//モデルリソースＩＤ
+	const u16				mdldatID;	//モデルデータＩＤ(リソース内部ＩＮＤＥＸ)
+	const u16				texresID;	//テクスチャリソースＩＤ
+	const GFL_G3D_UTIL_ANM*	anmTbl;		//アニメテーブル（複数設定のため）
+	const u16				anmCount;	//アニメリソース数
+}GFL_G3D_UTIL_OBJ;
 
 typedef struct {
-	const GFL_G3D_UTIL_SCENE_RES*	resTbl;		//リソーステーブル
-	const u16						resCount;	//リソース数
+	const GFL_G3D_UTIL_RES*	resTbl;		//リソーステーブル
+	const u16				resCount;	//リソース数
 
-	const GFL_G3D_UTIL_SCENE_OBJ*	objTbl;		//オブジェクト設定テーブル
-	const u16						objCount;	//オブジェクト数
+	const GFL_G3D_UTIL_OBJ*	objTbl;		//オブジェクト設定テーブル
+	const u16				objCount;	//オブジェクト数
 
-}GFL_G3D_UTIL_SCENE_SETUP;
+}GFL_G3D_UTIL_SETUP;
 
 //=============================================================================================
 /**
@@ -57,26 +57,26 @@ typedef struct {
 /**
  * セットアップ
  *
- * @param	scene					設定データ
- * @param	heapID					ヒープＩＤ
+ * @param	scene				設定データ
+ * @param	heapID				ヒープＩＤ
  *
- * @return	GFL_G3D_UTIL_SCENE*		シーンハンドル
+ * @return	GFL_G3D_UTIL*		データセットハンドル
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_G3D_UTIL_SCENE*
+extern GFL_G3D_UTIL*
 	GFL_G3D_UtilsysCreate
-		( const GFL_G3D_UTIL_SCENE_SETUP* scene, HEAPID heapID );
+		( const GFL_G3D_UTIL_SETUP* setup, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * 破棄
  *
- * @param	GFL_G3D_UTIL_SCENE*		シーンハンドル
+ * @param	GFL_G3D_UTIL*		データセットハンドル
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_UtilsysDelete
-		( GFL_G3D_UTIL_SCENE* g3DutilScene );
+		( GFL_G3D_UTIL* g3Dutil );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -85,7 +85,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_OBJ*
 	GFL_G3D_UtilsysObjHandleGet
-		( GFL_G3D_UTIL_SCENE* g3DutilScene, u16 idx );
+		( GFL_G3D_UTIL* g3Dutil, u16 idx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -94,6 +94,6 @@ extern GFL_G3D_OBJ*
 //--------------------------------------------------------------------------------------------
 extern u16
 	GFL_G3D_UtilsysObjCountGet
-		( GFL_G3D_UTIL_SCENE* g3DutilScene );
+		( GFL_G3D_UTIL* g3Dutil );
 
 #endif
