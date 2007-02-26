@@ -35,6 +35,8 @@ static BOOL	TestModeControl( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x20000 );
+//	TestModeWorkSet( HEAPID_WATANABE_DEBUG );
 	TestModeWorkSet( GFL_HEAPID_APP );
 
 	return GFL_PROC_RES_FINISH;
@@ -68,6 +70,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TestModeWorkRelease();
+//	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
 	return GFL_PROC_RES_FINISH;
@@ -92,9 +95,10 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 //
 //============================================================================================
 typedef struct {
+	HEAPID					heapID;
 	int						seq;
 
-	GFL_G3D_UTIL_SCENE*		g3Dscene;
+	GFL_G3D_UTIL*			g3Dutil;
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
 	GFL_G3D_ACTSYS*			actSys;
 	u32						actID;
@@ -107,10 +111,10 @@ TETSU_WORK* tetsuWork;
 #include "sample_graphic/test9ball.naix"
 
 //‚a‚fÝ’èŠÖ”
-static void	bg_init( void );
+static void	bg_init( HEAPID heapID );
 static void	bg_exit( void );
 //‚R‚c‚a‚fì¬ŠÖ”
-static void	g3d_load( void );
+static void g3d_load( HEAPID heapID );
 static void g3d_move( void );
 static void g3d_draw( void );
 static void	g3d_unload( void );
@@ -164,7 +168,7 @@ enum {
 	G3DRES_BALL9_TEX,
 };
 
-static const GFL_G3D_UTIL_SCENE_RES g3Dscene_resTbl[] = {
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath, NARC_test9ball_test1ball_nsbmd, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_test9ball_test1ball_nsbtx, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_test9ball_test2ball_nsbtx, GFL_G3D_UTIL_RESPATH },
@@ -190,7 +194,7 @@ enum {
 	G3DOBJ_BALL9,
 };
 
-static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL1_TEX, NULL, 0 },
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL2_TEX, NULL, 0 },
 	{ G3DRES_BALL_BMD, 0, G3DRES_BALL3_TEX, NULL, 0 },
@@ -203,9 +207,9 @@ static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
 };
 
 //---------------------
-static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
-	g3Dscene_resTbl, NELEMS(g3Dscene_resTbl),
-	g3Dscene_objTbl, NELEMS(g3Dscene_objTbl),
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
+	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
+	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
 };
 
 //---------------------
@@ -274,6 +278,7 @@ static const GFL_G3D_ACTOR_DATA g3DactorData[] = {
 static void	TestModeWorkSet( HEAPID heapID )
 {
 	tetsuWork = GFL_HEAP_AllocMemoryClear( heapID, sizeof(TETSU_WORK) );
+	tetsuWork->heapID = heapID;
 }
 
 static void	TestModeWorkRelease( void )
@@ -295,13 +300,13 @@ static BOOL	TestModeControl( void )
 
 	case 0:
 		//‰Šú‰»
-		bg_init();
+		bg_init( tetsuWork->heapID );
 		tetsuWork->seq++;
 		break;
 
 	case 1:
 		//‰æ–Êì¬
-		g3d_load();	//‚R‚cƒf[ƒ^ì¬
+		g3d_load( tetsuWork->heapID );	//‚R‚cƒf[ƒ^ì¬
 		tetsuWork->seq++;
 		break;
 
@@ -328,10 +333,8 @@ static BOOL	TestModeControl( void )
  * @brief		‚a‚fÝ’è•ƒf[ƒ^“]‘—
  */
 //------------------------------------------------------------------
-static void	bg_init( void )
+static void	bg_init( HEAPID heapID )
 {
-	u16 heapID = GFL_HEAPID_APP;
-
 	//‚a‚fƒVƒXƒeƒ€‹N“®
 	GFL_BG_sysInit( heapID );
 
@@ -370,13 +373,12 @@ static void	bg_exit( void )
  */
 //------------------------------------------------------------------
 //ì¬
-static void g3d_load( void )
+static void g3d_load( HEAPID heapID )
 {
-	u16 heapID = GFL_HEAPID_APP;
 	int	i;
 
-	tetsuWork->g3Dscene = GFL_G3D_UtilsysCreate( &g3Dscene_setup, heapID );
-	tetsuWork->actSys = GFL_G3D_ActorSysCreate( tetsuWork->g3Dscene, 32, 16, heapID );
+	tetsuWork->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, heapID );
+	tetsuWork->actSys = GFL_G3D_ActorSysCreate( tetsuWork->g3Dutil, 32, 16, heapID );
 	tetsuWork->actID = GFL_G3D_ActorAdd( tetsuWork->actSys, g3DactorData, NELEMS(g3DactorData) );
 
 	//ƒJƒƒ‰ƒZƒbƒg
@@ -408,7 +410,7 @@ static void g3d_unload( void )
 	GFL_G3D_ActorDel( tetsuWork->actSys, tetsuWork->actID, NELEMS(g3DactorData) );
 	GFL_G3D_ActorSysDelete( tetsuWork->actSys );  
 
-	GFL_G3D_UtilsysDelete( tetsuWork->g3Dscene );
+	GFL_G3D_UtilsysDelete( tetsuWork->g3Dutil );
 }
 	
 //------------------------------------------------------------------
