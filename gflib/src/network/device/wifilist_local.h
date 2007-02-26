@@ -12,7 +12,7 @@
 #include "strbuf.h"
 
 
-struct _WIFI_LIST{
+struct _GFL_WIFI_FRIENDLIST{
 	DWCUserData		my_dwcuser;							// 64
 	DWCFriendData	friend_dwc[WIFILIST_FRIEND_MAX];	// 64+12*32 = 448
 };

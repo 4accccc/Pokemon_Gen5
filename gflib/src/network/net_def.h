@@ -108,12 +108,21 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 /// ネットワークハンドル
 struct _GFL_NETHANDLE{
-  NET_TOOLSYS* pTool;  ///< netTool
-  NET_PARENTSYS* pParent; ///< 親の情報を保持するポインタ
-  PTRStateFunc state; ///< ハンドルのプログラム状態
+  NET_TOOLSYS* pTool;      ///< netTool
+  NET_PARENTSYS* pParent;  ///< 親の情報を保持するポインタ
+  GFL_WIFI_FRIENDLIST* pWiFiList;
+  PTRStateFunc state;      ///< ハンドルのプログラム状態
   MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
-  u8 aMacAddress[6];  ///< 接続先MACアドレス格納バッファ
+  HEAPID baseHeapID;       ///< 通信がcreateするためのID
+  HEAPID netHeapID;        ///< 通信libが使用するID
+  HEAPID wifiHeapID;       ///< wifiLibが使用するID
+  u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ
   u8 negotiationID[(GFL_NET_MACHINE_MAX/8)+(0!=(GFL_NET_MACHINE_MAX%8))]; ///< 接続しているハンドルの状態
+  u8 wifiTargetNo;    ///< 接続再起番号(wifi用)
+  u8 disconnectType;  ///< 切断時のタイプ(wifi)
+  u8 bWifiDisconnect;  ///< 切断フラグ(wifi)
+  u8 bDisconnectError; ///< 切断エラー(wifi)
+  u8 errorCode;       ///< 最新エラーコード保存
   u8 machineNo;       ///< マシン番号
   u8 serviceNo;       ///< 通信サービス番号
   u16 timer;          ///< 進行タイマー

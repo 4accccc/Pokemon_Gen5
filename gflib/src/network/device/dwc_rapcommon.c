@@ -23,7 +23,7 @@
 //==============================================================================
 /**
  * DWCライブラリ初期化
- * @param   WIFI_LIST  ユーザーデータがない場合作成
+ * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
@@ -46,11 +46,11 @@ int mydwc_init(int heapID)
 //==============================================================================
 /**
  * DWC  UserDataを作る
- * @param   WIFI_LIST  ユーザーデータがない場合作成
+ * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
-void mydwc_createUserData( WIFI_LIST *pWifiList )
+void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList )
 {
     // ユーザデータ作成をする。    
     DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
@@ -64,12 +64,12 @@ void mydwc_createUserData( WIFI_LIST *pWifiList )
 //==============================================================================
 /**
  * 自分のGSIDを取得する
- * @param   WIFI_LIST  
+ * @param   GFL_WIFI_FRIENDLIST  
  * @retval  ０と－１は失敗   正の値は成功
  */
 //==============================================================================
 
-int mydwc_getMyGSID(WIFI_LIST *pWifiList)
+int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList)
 {
     DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
     DWCFriendData friendData;
@@ -81,14 +81,14 @@ int mydwc_getMyGSID(WIFI_LIST *pWifiList)
 //==============================================================================
 /**
  * 自分のGSIDが正しいのか検査する
- * @param   WIFI_LIST  
+ * @param   GFL_WIFI_FRIENDLIST  
  * @retval  TRUEが成功
  */
 //==============================================================================
 #if _SAVE_PROGRAM
 BOOL mydwc_checkMyGSID(SAVEDATA *pSV)
 {
-    WIFI_LIST* pList = SaveData_GetWifiListData(pSV);
+    GFL_WIFI_FRIENDLIST* pList = SaveData_GetWifiListData(pSV);
     DWCUserData *userdata = WifiList_GetMyUserInfo(pList);
 
     if( DWC_CheckHasProfile( userdata )

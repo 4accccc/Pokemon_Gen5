@@ -35,19 +35,15 @@ extern void mydwc_setVchat(int codec);
 
 //==============================================================================
 /**
- * インターネットへ接続開始   2006.04.07 k.ohno改造
- * @param   SAVEDATA* pSaveData 自分のログインデータ フレンドリストがあるセーブデータ
- * @param   heapID ヒープID
+ * インターネットへ接続開始
+ * @param   pWiFiList フレンドリストの先頭ポインタ
+ * @param   heapID    wifiライブラリ用メモリのID
  * @retval  MYDWC_STARTCONNECT_OK … OK
  * @retval  MYDWC_STARTCONNECT_FIRST … 初めて接続する場合。（メッセージ表示の必要有
- * @retval  MYDWC_STARTCONNECT_OK … 異なるＤＳで接続しようしてる場合。（要警告）
+ * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-#if _SAVE_PROGRAM
-extern int mydwc_startConnect(SAVEDATA* pSaveData, int heapid);
-#else
-extern int mydwc_startConnect(int heapid);
-#endif
+extern int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID);
 
 #define MYDWC_STARTCONNECT_OK 0
 #define MYDWC_STARTCONNECT_FIRST 1
@@ -293,12 +289,12 @@ extern int mydwc_getFriendIndex();
 //==============================================================================
 /**
  * 自分のGSIDを取得する
- * @param   WIFI_LIST  
+ * @param   GFL_WIFI_FRIENDLIST  
  * @retval  ０と－１は失敗   正の値は成功
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(WIFI_LIST *pWifiList);
+extern int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList);
 
 
 

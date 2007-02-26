@@ -17,7 +17,7 @@
 //==============================================================================
 /**
  * DWCライブラリ初期化
- * @param   WIFI_LIST  ユーザーデータがない場合作成
+ * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
@@ -26,22 +26,22 @@ extern int mydwc_init(int heapID);
 //==============================================================================
 /**
  * DWC  UserDataを作る
- * @param   WIFI_LIST  ユーザーデータがない場合作成
+ * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
  * @retval  DS本体に保存するユーザIDのチェック・作成結果。
  */
 //==============================================================================
-extern void mydwc_createUserData( WIFI_LIST *pWifiList );
+extern void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList );
 
 
 //==============================================================================
 /**
  * 自分のGSIDを取得する
- * @param   WIFI_LIST  
+ * @param   GFL_WIFI_FRIENDLIST  
  * @retval  ０と－１は失敗   正の値は成功
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(WIFI_LIST *pWifiList);
+extern int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList);
 
 //==============================================================================
 /**

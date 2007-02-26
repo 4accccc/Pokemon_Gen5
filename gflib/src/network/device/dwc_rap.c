@@ -87,13 +87,10 @@ typedef struct
 	DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体	
     DWCUserData *myUserData;		// DWCのユーザデータ（自分のデータ）
 	DWCInetControl stConnCtrl;
-#if _SAVE_PROGRAM
-    SAVEDATA* pSaveData;   // @@OO フレンドリストはセーブする必要がある
-#endif
+    GFL_WIFI_FRIENDLIST* pWiFiList;          // ユーザーデータまで含んだ友達リスト スケルトンにおく必要がある
     
 	void *heapPtr;
 	NNSFndHeapHandle headHandle;
-
 	MYDWCReceiverFunc serverCallback;
 	MYDWCReceiverFunc clientCallback;
 	
@@ -225,18 +222,14 @@ static void _NNSFndHeapVisitor(void* memBlock, NNSFndHeapHandle heap, u32 userPa
 //==============================================================================
 /**
  * インターネットへ接続開始
- * @param   userdata 自分のログインデータへのポインタ
- * @param   list フレンドリストの先頭ポインタ
+ * @param   pWiFiList フレンドリストの先頭ポインタ
+ * @param   heapID    wifiライブラリ用メモリのID
  * @retval  MYDWC_STARTCONNECT_OK … OK
  * @retval  MYDWC_STARTCONNECT_FIRST … 初めて接続する場合。（メッセージ表示の必要有
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-#if _SAVE_PROGRAM
-int mydwc_startConnect(SAVEDATA* pSaveData, int heapID)  //@@OO 
-#else
-int mydwc_startConnect(int heapID)
-#endif
+int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID)
 {
     // ヒープ領域からワーク領域を確保。
 	GF_ASSERT( _dWork_temp == NULL );
@@ -251,7 +244,7 @@ int mydwc_startConnect(int heapID)
 	_dWork_temp = GFL_HEAP_AllocMemory(heapID, sizeof(MYDWC_WORK) + 32);
 	_dWork = (MYDWC_WORK *)( ((u32)_dWork_temp + 31) / 32 * 32 );
 #if _SAVE_PROGRAM
-    _dWork->pSaveData = pSaveData;  //@@OO
+    _dWork->pWiFiList = pWiFiList;
 #endif
     _dWork->serverCallback = NULL;
 	_dWork->clientCallback = NULL;	

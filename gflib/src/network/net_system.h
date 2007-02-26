@@ -13,6 +13,25 @@
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
+ * @brief   WiFiGameの初期化を行う
+ * @param   packetSizeMax パケットのサイズマックス
+ * @param   regulationNo  ゲームの種類
+ * @param   pWiFiList     GFL_WIFI_FRIENDLIST
+ * @retval  初期化に成功したらTRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi, GFL_WIFI_FRIENDLIST* pWiFiList);
+//==============================================================================
+/**
+ * @brief   wifiのゲームを開始する
+ * @param   target:   負なら親、０以上ならつなぎにいく親機の番号
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_SystemWifiApplicationStart( int target );
+//==============================================================================
+/**
  * @brief   親機の初期化を行う
  * @param   work_area 　システムで使うメモリー領域
  *                      NULLの場合すでに初期化済みとして動作

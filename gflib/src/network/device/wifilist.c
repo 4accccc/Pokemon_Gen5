@@ -42,21 +42,21 @@
 //----------------------------------------------------------
 int WifiList_GetWorkSize(void)
 {
-	return sizeof(WIFI_LIST);
+	return sizeof(GFL_WIFI_FRIENDLIST);
 }
 
 //----------------------------------------------------------
 /**
  * @brief	自分状態保持ワークの確保
  * @param	heapID		メモリ確保をおこなうヒープ指定
- * @return	WIFI_LIST	取得したワークへのポインタ
+ * @return	GFL_WIFI_FRIENDLIST	取得したワークへのポインタ
  */
 //----------------------------------------------------------
-WIFI_LIST * WifiList_AllocWork(u32 heapID)
+GFL_WIFI_FRIENDLIST * WifiList_AllocWork(u32 heapID)
 {
 	int i;
-	WIFI_LIST * list;
-	list = GFL_HEAP_AllocMemory(heapID, sizeof(WIFI_LIST));
+	GFL_WIFI_FRIENDLIST * list;
+	list = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_WIFI_FRIENDLIST));
 	
 	WifiList_Init( list );
 
@@ -65,19 +65,19 @@ WIFI_LIST * WifiList_AllocWork(u32 heapID)
 
 //----------------------------------------------------------
 /**
- * @brief	WIFI_LISTのコピー
- * @param	from	コピー元WIFI_LISTへのポインタ
- * @param	to		コピー先WIFI_LISTへのポインタ
+ * @brief	GFL_WIFI_FRIENDLISTのコピー
+ * @param	from	コピー元GFL_WIFI_FRIENDLISTへのポインタ
+ * @param	to		コピー先GFL_WIFI_FRIENDLISTへのポインタ
  */
 //----------------------------------------------------------
-void WifiList_Copy(const WIFI_LIST * from, WIFI_LIST * to)
+void WifiList_Copy(const GFL_WIFI_FRIENDLIST * from, GFL_WIFI_FRIENDLIST * to)
 {
-	MI_CpuCopy8(from, to, sizeof(WIFI_LIST));
+	MI_CpuCopy8(from, to, sizeof(GFL_WIFI_FRIENDLIST));
 }
 
 //============================================================================================
 //
-//	WIFI_LIST操作のための関数
+//	GFL_WIFI_FRIENDLIST操作のための関数
 //
 //============================================================================================
 //----------------------------------------------------------
@@ -86,11 +86,11 @@ void WifiList_Copy(const WIFI_LIST * from, WIFI_LIST * to)
  * @param			
  */
 //----------------------------------------------------------
-void WifiList_Init(WIFI_LIST * list)
+void WifiList_Init(GFL_WIFI_FRIENDLIST * list)
 {
 	int i;
 	
-	MI_CpuClearFast(list, sizeof(WIFI_LIST));
+	MI_CpuClearFast(list, sizeof(GFL_WIFI_FRIENDLIST));
 
     mydwc_createUserData(list);  //GameSpyログイン用仮userコードの作成(絶対必要）
 }
@@ -100,12 +100,12 @@ void WifiList_Init(WIFI_LIST * list)
 /**
  * $brief   自分のWIFI接続署名情報のポインタを返す
  *
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  *
  * @retval  u8*		
  */
 //==============================================================================
-DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
+DWCUserData* WifiList_GetMyUserInfo( GFL_WIFI_FRIENDLIST* list )
 {
 	return &(list->my_dwcuser);
 }
@@ -114,13 +114,13 @@ DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
 /**
  * $brief   ともだちリストから友達のWIFI用情報構造体のポインタを取得
  *
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		何人目の友達か
  *
  * @retval  DWCFriendData	*		
  */
 //==============================================================================
-DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
+DWCFriendData	*WifiList_GetDwcDataPtr( GFL_WIFI_FRIENDLIST* list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
@@ -130,12 +130,12 @@ DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
 //==============================================================================
 /**
  * $brief   データが入っているかどうか
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  BOOL
  */
 //==============================================================================
-BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
+BOOL WifiList_IsFriendData( GFL_WIFI_FRIENDLIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
     // フレンドコードが正しいかどうかで判断
@@ -145,12 +145,12 @@ BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
 //==============================================================================
 /**
  * $brief   入っている人数をかえす
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  BOOL
  */
 //==============================================================================
-int WifiList_GetFriendDataNum( WIFI_LIST *list )
+int WifiList_GetFriendDataNum( GFL_WIFI_FRIENDLIST *list )
 {
     int i,num = 0;
 
@@ -165,12 +165,12 @@ int WifiList_GetFriendDataNum( WIFI_LIST *list )
 //==============================================================================
 /**
  * $brief   フレンドの名前を消す
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  none
  */
 //==============================================================================
-void WifiList_ResetData( WIFI_LIST *list, int no)
+void WifiList_ResetData( GFL_WIFI_FRIENDLIST *list, int no)
 {
     int i;
 
@@ -186,13 +186,13 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
 //==============================================================================
 /**
  * $brief   フレンドの名前を移動する
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		    ここに移動
  * @param   moveNo		移動させるデータ
  * @retval  none
  */
 //==============================================================================
-static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
+static void WifiList_MoveData( GFL_WIFI_FRIENDLIST *list, int no, int moveNo)
 {
     int i;
 
@@ -208,12 +208,12 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 //==============================================================================
 /**
  * $brief   フレンドをつめる
- * @param   list	WIFI_LIST構造体のポインタ
+ * @param   list	GFL_WIFI_FRIENDLIST構造体のポインタ
  * @param   no		何人目の友達か
  * @retval  none
  */
 //==============================================================================
-void WifiList_FormUpData( WIFI_LIST *list)
+void WifiList_FormUpData( GFL_WIFI_FRIENDLIST *list)
 {
     int i,blank = -1;
 
@@ -239,13 +239,13 @@ void WifiList_FormUpData( WIFI_LIST *list)
 /**
  * @brief	WIFIリストをセーブデータから引き出す
  * @param	sv			セーブデータ保持ワークへのポインタ
- * @return	WIFI_LIST	WIFIリスト
+ * @return	GFL_WIFI_FRIENDLIST	WIFIリスト
  */
 //---------------------------------------------------------------------------
 #if _SAVE_PROGRAM
-WIFI_LIST* SaveData_GetWifiListData(SAVEDATA * sv)
+GFL_WIFI_FRIENDLIST* SaveData_GetWifiListData(SAVEDATA * sv)
 {
-	WIFI_LIST* pData;
+	GFL_WIFI_FRIENDLIST* pData;
 	pData = SaveData_Get(sv, GMDATA_ID_WIFILIST);
 	return pData;
 }

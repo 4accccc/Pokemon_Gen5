@@ -40,6 +40,11 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {GFL_NET_StateRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_ToolRecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_ToolRecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+#if 0
+    {GFL_NET_StateRecvWifiExit,            GFL_NET_COMMAND_SIZE( 1 ), NULL},
+#else
+    {GFL_NET_ToolRecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+#endif
 };
 
 typedef struct{

@@ -52,6 +52,9 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 typedef struct _GFL_NETSYS GFL_NETSYS;
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
+/// @brief	WiFiフレンドリスト用グループデータ型定義 友達データの統合管理のため外部で用意する必要がある
+typedef struct _GFL_WIFI_FRIENDLIST GFL_WIFI_FRIENDLIST;
+
 
 // define 
 #define GFL_NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
@@ -127,7 +130,10 @@ typedef struct{
   NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
   int gsid;                ///< ゲームサービスID  通信の種類
   int ggid;                ///< ＤＳでゲームソフトを区別する為のID
-  u32  allocNo;            ///< allocするための番号
+//  u32  allocNo;            ///< allocするための番号
+  HEAPID baseHeapID;        ///< 元となるHEAPID
+  HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
+  HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
   u8 maxConnectNum;        ///< 最大接続人数
   u8 maxBeaconNum;         ///< 最大ビーコン収集数
   u8 bMPMode;              ///< MP通信モードかどうか
@@ -143,11 +149,10 @@ typedef struct{
 /**
  * @brief   通信初期化
  * @param   pNetInit  通信初期化構造体のポインタ
- * @param   heapID    通信ライブラリでメモリーを確保する際のheapID
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,HEAPID heapID);
+extern void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit);
 //==============================================================================
 /**
  * @brief   通信終了

@@ -24,12 +24,6 @@
 
 //============================================================================================
 //============================================================================================
-//----------------------------------------------------------
-/**
- * @brief	しりあいグループデータ型定義
- */
-//----------------------------------------------------------
-typedef struct _WIFI_LIST WIFI_LIST;
 
 
 // WifiList_<Get*Set>FriendInfoで使うenum
@@ -52,31 +46,31 @@ enum{
 //	セーブデータシステムが依存する関数
 //----------------------------------------------------------
 extern int WifiList_GetWorkSize(void);
-extern WIFI_LIST * WifiList_AllocWork(u32 heapID);
-extern void WifiList_Copy(const WIFI_LIST * from, WIFI_LIST * to);
-extern void WifiList_Init(WIFI_LIST * list);
-extern DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list );
-extern u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type );
-extern void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value );
-extern DWCFriendData* WifiList_GetDwcDataPtr( WIFI_LIST* list, int no );
-extern STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no );
-extern void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf );
-extern STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no );
-extern void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf );
-extern BOOL WifiList_IsFriendData( WIFI_LIST *list, int no );
-extern int WifiList_GetFriendDataNum( WIFI_LIST *list );
-extern void WifiList_SetLastPlayDate( WIFI_LIST *list, int no);
+extern GFL_WIFI_FRIENDLIST * WifiList_AllocWork(u32 heapID);
+extern void WifiList_Copy(const GFL_WIFI_FRIENDLIST * from, GFL_WIFI_FRIENDLIST * to);
+extern void WifiList_Init(GFL_WIFI_FRIENDLIST * list);
+extern DWCUserData* WifiList_GetMyUserInfo( GFL_WIFI_FRIENDLIST* list );
+extern u32 WifiList_GetFriendInfo( GFL_WIFI_FRIENDLIST* list, int no, int type );
+extern void WifiList_SetFriendInfo( GFL_WIFI_FRIENDLIST* list, int no, int type, u32 value );
+extern DWCFriendData* WifiList_GetDwcDataPtr( GFL_WIFI_FRIENDLIST* list, int no );
+extern STRCODE *WifiList_GetFriendNamePtr( GFL_WIFI_FRIENDLIST *list, int no );
+extern void WifiList_SetFriendName( GFL_WIFI_FRIENDLIST *list, int no, STRBUF* pBuf );
+extern STRCODE *WifiList_GetFriendGroupNamePtr( GFL_WIFI_FRIENDLIST *list, int no );
+extern void WifiList_SetFriendGroupName( GFL_WIFI_FRIENDLIST *list, int no, STRBUF* pBuf );
+extern BOOL WifiList_IsFriendData( GFL_WIFI_FRIENDLIST *list, int no );
+extern int WifiList_GetFriendDataNum( GFL_WIFI_FRIENDLIST *list );
+extern void WifiList_SetLastPlayDate( GFL_WIFI_FRIENDLIST *list, int no);
 
-extern void WifiList_ResetData( WIFI_LIST *list, int no);
-extern void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int trade);
-extern void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no);
-extern void WifiList_FormUpData( WIFI_LIST *list);
+extern void WifiList_ResetData( GFL_WIFI_FRIENDLIST *list, int no);
+extern void WifiList_SetResult( GFL_WIFI_FRIENDLIST *list, int no, int winNum, int loseNum,int trade);
+extern void WifiList_DataMarge( GFL_WIFI_FRIENDLIST *list, int delNo, int no);
+extern void WifiList_FormUpData( GFL_WIFI_FRIENDLIST *list);
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 
 //@@OO
-//extern WIFI_LIST* SaveData_GetWifiListData(SAVEDATA* pSave);
+//extern GFL_WIFI_FRIENDLIST* SaveData_GetWifiListData(SAVEDATA* pSave);
 
 #endif

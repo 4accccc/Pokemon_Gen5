@@ -504,6 +504,48 @@ static void _connectFunc(void)
 
 //==============================================================================
 /**
+ * @brief   WiFiGameの初期化を行う
+ * @param   packetSizeMax パケットのサイズマックス
+ * @param   regulationNo  ゲームの種類
+ * @retval  初期化に成功したらTRUE
+ */
+//==============================================================================
+BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi, GFL_WIFI_FRIENDLIST* pWiFiList)
+{
+    BOOL ret = TRUE;
+
+    if(!GFL_NET_WLIsVRAMDInitialize()){
+        return FALSE;
+    }
+    
+    //sys_CreateHeapLo( HEAPID_BASE_APP, heapIDWifi, _HEAPSIZE_WIFI);
+    _commInit(packetSizeMax, heapIDSys);
+    mydwc_startConnect( pWiFiList, heapIDWifi);
+//    mydwc_setFetalErrorCallback(CommFatalErrorFunc);   //@@OO エラー処理追加必要 07/02/22
+    mydwc_setReceiver( _commRecvParentCallback, _commRecvCallback );
+    GFL_NET_SystemSetTransmissonTypeDS();
+    return TRUE;
+}
+
+//==============================================================================
+/**
+ * @brief   wifiのゲームを開始する
+ * @param   target:   負なら親、０以上ならつなぎにいく親機の番号
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+int GFL_NET_SystemWifiApplicationStart( int target )
+{
+    if( mydwc_getFriendStatus(target) != DWC_STATUS_MATCH_SC_SV ){
+        return FALSE;
+    }
+//    mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
+    return TRUE;
+}
+
+//==============================================================================
+/**
  * @brief   親機の初期化を行う
  * @param   work_area 　システムで使うメモリー領域
  *                      NULLの場合すでに初期化済みとして動作

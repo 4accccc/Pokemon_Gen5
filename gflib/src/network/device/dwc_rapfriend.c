@@ -182,7 +182,7 @@ BOOL dwc_friendAutoInputCheck( SAVEDATA* pSaveData, int* netIDList, int heapID)
 
 void dwc_friendWrite(SAVEDATA* pSaveData, int netID, int addListIndex, int heapID, int overWrite)
 {
-    WIFI_LIST* pList = SaveData_GetWifiListData(pSaveData);
+    GFL_WIFI_FRIENDLIST* pList = SaveData_GetWifiListData(pSaveData);
     DWCFriendData *keyList  = WifiList_GetDwcDataPtr(pList, addListIndex);
     MYSTATUS* pMyStatus = CommInfoGetMyStatus(netID);
     DWCFriendData* pFriend;

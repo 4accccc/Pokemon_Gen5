@@ -21,13 +21,16 @@
 #include "tool/net_queue.h"
 #include "tool/net_tool.h"
 
+// 通信で使用するCreateHEAP量
+
+#define _HEAPSIZE_NET              (0x7080)          ///< NET関連のメモリ領域
+#define _HEAPSIZE_WIFI             (0x2A000+0x7000)  ///< DWCが使用する領域
 
 /// @brief  通信システム管理構造体
 struct _GFL_NETSYS{
     GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
     GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
     GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
-    HEAPID heapID;  ///< 通信の確保メモリーの場所
 };
 
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
@@ -188,28 +191,32 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
 /**
  * @brief 通信初期化
  * @param[in]   pNetInit  通信初期化構造体のポインタ
- * @param[in]   netID     ネットID
  * @return none
  */
 //==============================================================================
-void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,HEAPID heapID)
+void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit)
 {
-    GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETSYS));
-    _pNetSys = pNet;
-
-    GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
-
-    NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
-
-    GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
-    pNet->heapID = heapID;
-    if(pNetInit->bNetwork){
-        GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
-        GFL_NET_StateDeviceInitialize(pNetHandle);
+    // 通信ヒープ作成
+    GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->netHeapID, _HEAPSIZE_NET );
+    if(pNetInit->bWiFi){
+        GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, _HEAPSIZE_WIFI);
     }
+    {
+        GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(pNetInit->netHeapID, sizeof(GFL_NETSYS));
+        _pNetSys = pNet;
 
-    GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
-    
+        GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
+
+        NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
+
+        GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
+        if(pNetInit->bNetwork){
+            GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
+            GFL_NET_StateDeviceInitialize(pNetHandle);
+        }
+
+        GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
+    }
 }
 
 //==============================================================================
@@ -222,13 +229,21 @@ void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit,HEAPID heapID)
 BOOL GFL_NET_sysExit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
+    HEAPID netHeapID = pNet->aNetInit.netHeapID;
+    HEAPID wifiHeapID = pNet->aNetInit.wifiHeapID;
+    BOOL bWiFi = pNet->aNetInit.bWiFi;
+    
     if(GFL_NET_SystemIsInitialize()){
         return FALSE;
     }
     _deleteAllNetHandle(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;
+
+    if(bWiFi){
+        GFL_HEAP_DeleteHeap(wifiHeapID);
+    }
+    GFL_HEAP_DeleteHeap(netHeapID);
     return TRUE;
 }
 
@@ -314,10 +329,10 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-    GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->heapID, sizeof(GFL_NETHANDLE));
+    GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
     GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
     _addNetHandle(pNet, pHandle);
-    pHandle->pTool = GFL_NET_Tool_sysInit(pNet->heapID, pNet->aNetInit.maxConnectNum);
+    pHandle->pTool = GFL_NET_Tool_sysInit(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
     return pHandle;
 }
 
@@ -358,7 +373,7 @@ void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
 void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GFL_NET_StateConnectParent(pHandle, pNet->heapID);
+    GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
 }
 
 //==============================================================================
@@ -371,7 +386,7 @@ void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
 void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GFL_NET_StateChangeoverConnect(pHandle, pNet->heapID);
+    GFL_NET_StateChangeoverConnect(pHandle, pNet->aNetInit.netHeapID);
 }
 
 //==============================================================================

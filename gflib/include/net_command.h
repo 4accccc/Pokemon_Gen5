@@ -37,6 +37,7 @@ enum CommCommand_e {
   GFL_NET_CMD_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
   GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド
   GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
+  GFL_NET_CMD_WIFI_EXIT,              ///< 子機が親機に終了するように送信
   //------------------------------------------------ここまで----------
   GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
