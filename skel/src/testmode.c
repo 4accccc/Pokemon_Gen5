@@ -21,6 +21,7 @@ void	TestModeSet(void);
 //============================================================================================
 #define G3DUTIL_USE
 typedef struct {
+	HEAPID					heapID;
 	int						seq;
 	u16						listPosition;
 	void*					chrbuf;
@@ -29,7 +30,7 @@ typedef struct {
 
 	GFL_BMPWIN*				bmpwin[32];
 #ifdef G3DUTIL_USE
-	GFL_G3D_UTIL_SCENE*		g3Dscene;
+	GFL_G3D_UTIL*			g3Dutil;
 #else
 	GFL_G3D_RES*			g3Dres[4];
 	GFL_G3D_RND*			g3Drnd[2];
@@ -70,7 +71,7 @@ enum {
 
 
 //ＢＧ設定関数
-static void	bg_init( void );
+static void	bg_init( HEAPID heapID );
 static void	bg_exit( void );
 //ビットマップ設定関数
 static void msg_bmpwin_make(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy );
@@ -110,7 +111,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 
 	case 0:
 		//初期化
-		bg_init();
+		bg_init( testmode->heapID );
 		//testmode->listPosition = 0;
 		testmode->seq++;
 		break;
@@ -177,10 +178,8 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
  * @brief		ＢＧ設定＆データ転送
  */
 //------------------------------------------------------------------
-static void	bg_init( void )
+static void	bg_init( HEAPID heapID )
 {
-	u16 heapID = GFL_HEAPID_APP;
-
 	//ＢＧシステム起動
 	GFL_BG_sysInit( heapID );
 
@@ -221,7 +220,8 @@ static void	bg_exit( void )
  * @brief		メッセージビットマップウインドウコントロール
  */
 //------------------------------------------------------------------
-static void msg_bmpwin_make(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
+static void msg_bmpwin_make
+			(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* msg, u8 px, u8 py, u8 sx, u8 sy )
 {
 	//ビットマップ作成
 	testmode->bmpwin[bmpwinNum] = GFL_BMPWIN_Create( TEXT_FRM, px, py, sx, sy, 0, 
@@ -254,13 +254,11 @@ static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 //------------------------------------------------------------------
 static void	g2d_load( TESTMODE_WORK * testmode )
 {
-	u16 heapID = GFL_HEAPID_APP;
-
 	//フォント読み込み
 	GFL_TEXT_sysInit( font_path );
 	//パレット作成＆転送
 	{
-		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
+		u16* plt = GFL_HEAP_AllocMemoryLowClear( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
 		plt[1] = G2D_FONT_COL;
 		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
@@ -272,7 +270,7 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 	//文字表示パラメータワーク作成
 	{
 		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocMemoryLowClear
-										( heapID,sizeof(GFL_TEXT_PRINTPARAM));
+										( testmode->heapID,sizeof(GFL_TEXT_PRINTPARAM));
 		*param = default_param;
 		testmode->textParam = param;
 	}
@@ -333,29 +331,29 @@ enum {
 };
 
 #ifdef G3DUTIL_USE
-static const GFL_G3D_UTIL_SCENE_RES g3Dscene_resTbl[] = {
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbmd, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbta, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_titledemo_title_iar_nsbmd, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_titledemo_title_iar_nsbta, GFL_G3D_UTIL_RESPATH },
 };
 
-static const GFL_G3D_UTIL_SCENE_ANM g3Dscene_anm1Tbl[] = {
+static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
 	{ G3DRES_AIR_BTA, 0 },
 };
 
-static const GFL_G3D_UTIL_SCENE_ANM g3Dscene_anm2Tbl[] = {
+static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
 	{ G3DRES_IAR_BTA, 0 },
 };
 
-static const GFL_G3D_UTIL_SCENE_OBJ g3Dscene_objTbl[] = {
-	{ G3DRES_AIR_BMD, 0, G3DRES_AIR_BMD, g3Dscene_anm1Tbl, NELEMS(g3Dscene_anm1Tbl) },
-	{ G3DRES_IAR_BMD, 0, G3DRES_IAR_BMD, g3Dscene_anm2Tbl, NELEMS(g3Dscene_anm2Tbl) },
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+	{ G3DRES_AIR_BMD, 0, G3DRES_AIR_BMD, g3Dutil_anm1Tbl, NELEMS(g3Dutil_anm1Tbl) },
+	{ G3DRES_IAR_BMD, 0, G3DRES_IAR_BMD, g3Dutil_anm2Tbl, NELEMS(g3Dutil_anm2Tbl) },
 };
 
-static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
-	g3Dscene_resTbl, NELEMS(g3Dscene_resTbl),
-	g3Dscene_objTbl, NELEMS(g3Dscene_objTbl),
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
+	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
+	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
 };
 #endif
 
@@ -367,9 +365,7 @@ static const GFL_G3D_UTIL_SCENE_SETUP g3Dscene_setup = {
 static void g3d_load( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
-	u16 heapID = GFL_HEAPID_APP;
-
-	testmode->g3Dscene = GFL_G3D_UtilsysCreate( &g3Dscene_setup, heapID );
+	testmode->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, testmode->heapID );
 #else
 	//		リソースセットアップ
 	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_ResCreatePath
@@ -417,8 +413,8 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 {
 	GFL_G3D_OBJ* g3Dobj[2];
 #ifdef G3DUTIL_USE
-	g3Dobj[ G3D_AIR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, G3D_AIR  );
-	g3Dobj[ G3D_IAR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dscene, G3D_IAR  );
+	g3Dobj[ G3D_AIR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dutil, G3D_AIR  );
+	g3Dobj[ G3D_IAR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dutil, G3D_IAR  );
 #else
 	g3Dobj[ G3D_AIR ] = testmode->g3Dobj[ G3D_AIR ];
 	g3Dobj[ G3D_IAR ] = testmode->g3Dobj[ G3D_IAR ];
@@ -438,7 +434,7 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 static void g3d_unload( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
-	GFL_G3D_UtilsysDelete( testmode->g3Dscene );
+	GFL_G3D_UtilsysDelete( testmode->g3Dutil );
 #else
 	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_IAR ] );
 	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_AIR ] );
@@ -553,8 +549,16 @@ void	TestModeSet(void)
 static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode;
-	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), GFL_HEAPID_APP );
-	//GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+	HEAPID			heapID;
+#if 0
+	heapID = GFL_HEAPID_APP;
+#else
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x40000 );
+	heapID = HEAPID_WATANABE_DEBUG;
+#endif
+	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), heapID );
+	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+	testmode->heapID = heapID;
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -567,7 +571,11 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 {
 	TESTMODE_WORK * testmode = mywk;
 	u16 pos_backup;
-
+#if 0
+	testmode->heapID = GFL_HEAPID_APP;
+#else
+	testmode->heapID = HEAPID_WATANABE_DEBUG;
+#endif
 	switch( *seq ) {
 	case 0:
 		GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
@@ -600,7 +608,10 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	TESTMODE_WORK * testmode = mywk;
 
 	GFL_PROC_FreeWork(mywk);
-
+#if 0
+#else
+	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
