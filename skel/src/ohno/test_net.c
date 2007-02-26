@@ -12,6 +12,7 @@
 #include "procsys.h"
 #include "gf_standard.h"
 #include "test_net.h"
+#include "main.h"
 
 #define _BCON_GET_NUM  (1)
 
@@ -277,7 +278,9 @@ GFLNetInitializeStruct aGFLNetInit = {
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
-    GFL_HEAPID_SYSTEM,  //allocNo
+    GFL_HEAPID_APP,  //元になるheapid
+    GFL_HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+    GFL_HEAPID_WIFI,  //wifi用にcreateされるHEAPID
     2,     // 最大接続人数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     FALSE,     // MP通信＝親子型通信モードかどうか
@@ -288,7 +291,7 @@ GFLNetInitializeStruct aGFLNetInit = {
 void TEST_NET_Init(void)
 {
 
-    GFL_NET_sysInit(&aGFLNetInit, GFL_HEAPID_SYSTEM);
+    GFL_NET_sysInit(&aGFLNetInit);
 
 }
 
