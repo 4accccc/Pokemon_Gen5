@@ -8,7 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 #include "textprint.h"
-#include "g3d_actor.h"
+#include "g3d_scene.h"
 
 #include "main.h"
 #include "testmode.h"
@@ -100,8 +100,8 @@ typedef struct {
 
 	GFL_G3D_UTIL*			g3Dutil;
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
-	GFL_G3D_ACTSYS*			actSys;
-	u32						actID;
+	GFL_G3D_SCENE*			g3Dscene;
+	u32						g3DsceneObjID;
 
 	u16						work[16];
 }TETSU_WORK;
@@ -120,9 +120,9 @@ static void g3d_draw( void );
 static void	g3d_unload( void );
 
 static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst );
-static void ball_rotateX( GFL_G3D_ACTOR* act, void* work );
-static void ball_rotateY( GFL_G3D_ACTOR* act, void* work );
-static void ball_rotateZ( GFL_G3D_ACTOR* act, void* work );
+static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 //------------------------------------------------------------------
 /**
@@ -213,7 +213,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 };
 
 //---------------------
-static const GFL_G3D_ACTOR_DATA g3DactorData[] = {
+static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 	{	G3DOBJ_BALL1, 0, 1, TRUE, 
 		{	{ -FX32_ONE*48, 0, -FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
@@ -378,8 +378,9 @@ static void g3d_load( HEAPID heapID )
 	int	i;
 
 	tetsuWork->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, heapID );
-	tetsuWork->actSys = GFL_G3D_ActorSysCreate( tetsuWork->g3Dutil, 32, 16, heapID );
-	tetsuWork->actID = GFL_G3D_ActorAdd( tetsuWork->actSys, g3DactorData, NELEMS(g3DactorData) );
+	tetsuWork->g3Dscene = GFL_G3D_SceneCreate( tetsuWork->g3Dutil, 32, 16, heapID );
+	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
+								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
 
 	//ƒJƒƒ‰ƒZƒbƒg
 	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
@@ -394,21 +395,21 @@ static void g3d_load( HEAPID heapID )
 //“®ì
 static void g3d_move( void )
 {
-	GFL_G3D_ActorSysMain( tetsuWork->actSys );  
+	GFL_G3D_SceneMain( tetsuWork->g3Dscene );  
 	tetsuWork->work[0]++;
 }
 
 //•`‰æ
 static void g3d_draw( void )
 {
-	GFL_G3D_ActorSysDraw( tetsuWork->actSys );  
+	GFL_G3D_SceneDraw( tetsuWork->g3Dscene );  
 }
 	
 //”jŠü
 static void g3d_unload( void )
 {
-	GFL_G3D_ActorDel( tetsuWork->actSys, tetsuWork->actID, NELEMS(g3DactorData) );
-	GFL_G3D_ActorSysDelete( tetsuWork->actSys );  
+	GFL_G3D_SceneObjDel( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData) );
+	GFL_G3D_SceneDelete( tetsuWork->g3Dscene );  
 
 	GFL_G3D_UtilsysDelete( tetsuWork->g3Dutil );
 }
@@ -431,34 +432,34 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
-static void ball_rotateX( GFL_G3D_ACTOR* act, void* work )
+static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
 
 	rotate_tmp.x = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
 	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_ActorStatusRotateSet( act, &rotate );
+	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 }
 
-static void ball_rotateY( GFL_G3D_ACTOR* act, void* work )
+static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
 
 	rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
 	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_ActorStatusRotateSet( act, &rotate );
+	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 }
 
-static void ball_rotateZ( GFL_G3D_ACTOR* act, void* work )
+static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
 	VecFx32 rotate_tmp = { 0, 0, 0 };
 
 	rotate_tmp.z = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
 	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_ActorStatusRotateSet( act, &rotate );
+	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 }
 
 
