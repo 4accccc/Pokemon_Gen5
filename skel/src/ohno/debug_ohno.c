@@ -27,12 +27,22 @@ typedef struct {
 static DEBUG_OHNO_CONTROL * DebugOhnoControl;
 
 
+//------------------------------------------------------------------
+// ÉXÉäÅ[ÉvâèúéûÇ…åƒÇŒÇÍÇÈä÷êî
+//------------------------------------------------------------------
+
+static void _sleepRelease(void *pWork)
+{
+    OS_TPrintf(" sleep release \n");
+}
+
 
 static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
 {
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
-    TEST_NET_Init();
+    GFL_UI_SleepReleaseSetFunc(_sleepRelease, NULL);
+  //  TEST_NET_Init();
 
     return GFL_PROC_RES_FINISH;
 }
@@ -61,7 +71,7 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
         TEST_RAND_Main(seed);  // RAND TEST
     }
 
-    TEST_NET_Main();
+//    TEST_NET_Main();
     
 	return GFL_PROC_RES_CONTINUE;
 }
