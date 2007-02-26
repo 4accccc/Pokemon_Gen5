@@ -32,7 +32,7 @@ typedef struct {
 /**
  * システム作成
  *
- * @param	g3Dscene		依存するg3DutilScene
+ * @param	g3Dutil			依存するg3Dutil
  * @param	actMax			設定可能なアクター数
  * @param	wksiz			１アクターに割り当てるワークのサイズ
  * @param	heapID			ヒープＩＤ
@@ -40,7 +40,7 @@ typedef struct {
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_ACTSYS*
 	GFL_G3D_ActorSysCreate
-		( GFL_G3D_UTIL_SCENE* g3Dscene, const u16 actMax, const u32 wksiz, const HEAPID heapID );
+		( GFL_G3D_UTIL* g3Dutil, const u16 actMax, const u32 wksiz, const HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
