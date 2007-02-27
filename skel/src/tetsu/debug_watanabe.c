@@ -108,6 +108,12 @@ typedef struct {
 
 TETSU_WORK* tetsuWork;
 
+typedef struct {
+	int		seq;
+
+	VecFx32	rotateTmp;
+}BALL_WORK;
+
 #include "sample_graphic/test9ball.naix"
 
 //‚a‚fÝ’èŠÖ”
@@ -163,6 +169,7 @@ static BOOL	TestModeControl( void )
 
 	case 0:
 		//‰Šú‰»
+		GFL_STD_MTRandInit(0);
 		bg_init( tetsuWork->heapID );
 		tetsuWork->seq++;
 		break;
@@ -271,7 +278,7 @@ static void g3d_load( HEAPID heapID )
 
 	tetsuWork->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SceneCreate( tetsuWork->g3Dutil, NELEMS(g3DsceneObjData)+1,
-												16, heapID );
+												sizeof(BALL_WORK), heapID );
 	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
 
@@ -322,34 +329,85 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
+static inline void drawSWset( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
+{
+	BOOL swBuf = sw;
+	GFL_G3D_SceneObjDrawSWSet( sceneObj, &swBuf );
+}
+
 static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
-	VecFx32 rotate_tmp = { 0, 0, 0 };
+	BALL_WORK* ballWk = (BALL_WORK*)work;
 
-	rotate_tmp.x = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
-	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+	switch( ballWk->seq ){
+		case 0:
+			{
+				u16 val;
+				GFL_G3D_SceneObjIDGet( sceneObj, &val );
+				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
+			}
+			drawSWset( sceneObj, TRUE );
+			ballWk->seq++;
+			break;
+		case 1:
+			ballWk->rotateTmp.x += g3DanmRotateSpeed;
+			rotateCalc( &ballWk->rotateTmp, &rotate );
+			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+			break;
+	}
 }
 
 static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
-	VecFx32 rotate_tmp = { 0, 0, 0 };
+	BALL_WORK* ballWk = (BALL_WORK*)work;
 
-	rotate_tmp.y = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
-	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+	switch( ballWk->seq ){
+		case 0:
+			{
+				u16 val;
+				GFL_G3D_SceneObjIDGet( sceneObj, &val );
+				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
+			}
+			drawSWset( sceneObj, TRUE );
+			ballWk->seq++;
+			break;
+		case 1:
+			ballWk->rotateTmp.y += g3DanmRotateSpeed;
+			rotateCalc( &ballWk->rotateTmp, &rotate );
+			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+			break;
+	}
 }
 
 static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
-	VecFx32 rotate_tmp = { 0, 0, 0 };
+	BALL_WORK* ballWk = (BALL_WORK*)work;
 
-	rotate_tmp.z = g3DanmRotateSpeed * tetsuWork->work[0];	//‚xŽ²‰ñ“]
-	rotateCalc( &rotate_tmp, &rotate );
-	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+	switch( ballWk->seq ){
+		case 0:
+			{
+				u16 val;
+				GFL_G3D_SceneObjIDGet( sceneObj, &val );
+				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
+				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
+			}
+			drawSWset( sceneObj, TRUE );
+			ballWk->seq++;
+			break;
+		case 1:
+			ballWk->rotateTmp.z += g3DanmRotateSpeed;
+			rotateCalc( &ballWk->rotateTmp, &rotate );
+			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+			break;
+	}
 }
 
 static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
