@@ -271,6 +271,8 @@ u32
 		g3DsceneObj = GFL_TCBL_GetWork( g3DsceneObjTCBL );
 		g3DsceneObj->sceneObjData	= sceneObjTbl[i];
 		g3DsceneObj->sceneObjWorkEx	= NULL;
+		GFL_STD_MemClear( (void*)((u32)g3DsceneObj + sizeof(GFL_G3D_SCENEOBJ)), 
+							g3Dscene->g3DsceneObjWorkSize - sizeof(GFL_G3D_SCENEOBJ) );
 	}
 	return pos;
 }
