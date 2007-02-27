@@ -130,12 +130,14 @@ void GFL_PROC_SysExit(void)
 //------------------------------------------------------------------
 void GFL_PROC_SysCallProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork)
 {
+	//GF_ASSERT(gfl_procsys->proc->proc_seq == SEQ_MAIN);
 	GFI_PROC_SysCallProc(gfl_procsys, ov_id, procdata, pwork);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GFL_PROC_SysSetNextProc(FSOverlayID ov_id, const GFL_PROC_DATA * procdata, void * pwork)
 {
+	GF_ASSERT(gfl_procsys->proc->proc_seq == SEQ_END);
 	GFI_PROC_SysSetNextProc(gfl_procsys, ov_id, procdata, pwork);
 }
 
@@ -300,7 +302,7 @@ GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const
 //------------------------------------------------------------------
 void GFI_PROC_Delete(GFL_PROC * proc)
 {
-	SDK_ASSERT(proc->work == NULL);
+	GF_ASSERT(proc->work == NULL);
 	GFL_HEAP_FreeMemory(proc);
 }
 
@@ -315,6 +317,7 @@ void GFI_PROC_Delete(GFL_PROC * proc)
 //------------------------------------------------------------------
 void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, HEAPID heap_id)
 {
+	GF_ASSERT(proc->proc_seq == SEQ_INIT);
 	proc->work = GFL_HEAP_AllocMemory(heap_id, size);
 	return proc->work;
 }
@@ -327,7 +330,8 @@ void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, HEAPID heap_id)
 //------------------------------------------------------------------
 void GFL_PROC_FreeWork(GFL_PROC * proc)
 {
-	SDK_ASSERT(proc->work != NULL);
+	GF_ASSERT(proc->proc_seq == SEQ_END);
+	GF_ASSERT(proc->work != NULL);
 	GFL_HEAP_FreeMemory(proc->work);
 	proc->work = NULL;
 }
