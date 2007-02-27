@@ -206,7 +206,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 	
 	// clactサンプルワーク作成
 	p_clactw = GFL_PROC_AllocWork( p_proc, sizeof(DEBUG_CLACT), HEAPID_TOMOYA_DEBUG );
-	memset( p_clactw, 0, sizeof(DEBUG_CLACT) );
+	GFL_STD_MemFill( p_clactw, 0, sizeof(DEBUG_CLACT) );
 	
 
 	// セルアクターシステム初期化
