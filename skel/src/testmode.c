@@ -388,7 +388,7 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	//		アニメ作成
 	testmode->g3Danm[ G3D_AIR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3D_AIR ], 
 														testmode->g3Dres[ G3DRES_AIR_BTA ], 0 );
-	testmode->g3Danm[ G3D_IAR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3DIAR ], 
+	testmode->g3Danm[ G3D_IAR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3D_IAR ], 
 														testmode->g3Dres[ G3DRES_IAR_BTA ], 0 );
 	//		オブジェクト作成
 	testmode->g3Dobj[ G3D_AIR ] = GFL_G3D_ObjCreate(	testmode->g3Drnd[ G3D_AIR ], 
@@ -548,6 +548,7 @@ void	TestModeSet(void)
 //------------------------------------------------------------------
 static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+#if 0
 	TESTMODE_WORK * testmode;
 	HEAPID			heapID;
 #if 0
@@ -559,6 +560,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), heapID );
 	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
 	testmode->heapID = heapID;
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -570,29 +572,57 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode = mywk;
-	u16 pos_backup;
 #if 0
 	testmode->heapID = GFL_HEAPID_APP;
 #else
-	testmode->heapID = HEAPID_WATANABE_DEBUG;
+	//testmode->heapID = HEAPID_WATANABE_DEBUG;
 #endif
 	switch( *seq ) {
 	case 0:
-		GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+		{
+			//HEAPID heapID_backup = testmode->heapID;
+
+			//GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+			//testmode->heapID = heapID_backup;
+		}
+#if 1
+		{
+			TESTMODE_WORK * testmode;
+			HEAPID			heapID;
+			GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x40000 );
+			heapID = HEAPID_WATANABE_DEBUG;
+			testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), heapID );
+			GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+			testmode->heapID = heapID;
+		}
+#endif
 		(*seq) ++;
 		break;
 	case 1:
 		if( TestModeControl(testmode) == TRUE ){
 			CallSelectProc(testmode);
+#if 1
+			GFL_PROC_FreeWork(mywk);
+			GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+#endif
 			(*seq) ++;
 			//return GFL_PROC_RES_FINISH;
 		}
 		break;
 	case 2:
-		pos_backup = testmode->listPosition;
-		GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
-		testmode->listPosition = pos_backup;
+#if 0
+		{
+			HEAPID heapID_backup = testmode->heapID;
+			u16 pos_backup = testmode->listPosition;
+
+			GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+			testmode->listPosition = pos_backup;
+			testmode->heapID = heapID_backup;
+		}
+		*seq = 1;
+#else
 		*seq = 0;
+#endif
 		break;
 	}
 	return GFL_PROC_RES_CONTINUE;
