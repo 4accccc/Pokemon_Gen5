@@ -432,7 +432,7 @@ void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID )
 	//OS_Printf( "[%d]\n", __LINE__ );
 
 	pClsys = GFL_HEAP_AllocMemory( heapID, sizeof(CLSYS) );
-	memset( pClsys, 0, sizeof(CLSYS) );
+	GFL_STD_MemFill( pClsys, 0, sizeof(CLSYS) );
 	
 	// OAMマネジャー初期化
 	OAMMAN_SysInit( &pClsys->oamman, 
@@ -674,7 +674,7 @@ CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID )
 
 	// 実体を生成
 	p_unit = GFL_HEAP_AllocMemory( heapID, sizeof(CLUNIT) );
-	memset( p_unit, 0, sizeof(CLUNIT) );
+	GFL_STD_MemFill( p_unit, 0, sizeof(CLUNIT) );
 
 	// ワーク作成
 	p_unit->p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(CLWK)*wknum );
@@ -3140,7 +3140,7 @@ static BOOL TRMAN_TrSysCallBackAddTransData( NNS_GFD_DST_TYPE type, u32 dstAddr,
 static void TRMAN_TrDataClean( TRMAN_DATA* p_data )
 {
 	GF_ASSERT( p_data );
-	memset( p_data, 0, sizeof(TRMAN_DATA) );
+	GFL_STD_MemFill( p_data, 0, sizeof(TRMAN_DATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -3395,7 +3395,7 @@ static CLWK* CLUNIT_DrawListSarchBottom( CLWK* p_bottom, u8 pri )
 static void CLWK_SysClean( CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
-	memset( p_wk, 0, sizeof(CLWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(CLWK) );
 	p_wk->auto_anm_speed = CLWK_AUTOANM_DEFF_SPEED;
 	NNS_G2dInitImageProxy( &p_wk->img_proxy );
 	NNS_G2dInitImagePaletteProxy( &p_wk->pltt_proxy );
@@ -3624,7 +3624,7 @@ static void CLWK_AnmDataExit( CLWK_ANMDATA* p_anmdata )
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 	
 	p_delete[ p_anmdata->type ]( p_anmdata );
-	memset( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
+	GFL_STD_MemFill( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
 }
 
 
@@ -3764,7 +3764,7 @@ static void CLWK_AnmDataDeleteCellData( CLWK_ANMDATA* p_anmdata )
 {
 	GF_ASSERT( p_anmdata );
 	// 何もしなくて良い
-	memset( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
+	GFL_STD_MemFill( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -3781,7 +3781,7 @@ static void CLWK_AnmDataDeleteTRCellData( CLWK_ANMDATA* p_anmdata )
 
 	// Vram転送管理ハンドル解放
 	TRMAN_CellTransManDelHandle( &pClsys->trman, p_anmdata->data.trcell.trhandle );
-	memset( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
+	GFL_STD_MemFill( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
 }
 
 //----------------------------------------------------------------------------
@@ -3797,7 +3797,7 @@ static void CLWK_AnmDataDeleteMCellData( CLWK_ANMDATA* p_anmdata )
 
 	// ワーク破棄
 	GFL_HEAP_FreeMemory( p_anmdata->data.multicell.p_wk );
-	memset( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
+	GFL_STD_MemFill( p_anmdata, 0, sizeof(CLWK_ANMDATA) );
 }
 
 //----------------------------------------------------------------------------
