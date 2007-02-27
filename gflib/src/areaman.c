@@ -100,15 +100,19 @@ static void print_bit_all( GFL_AREAMAN* man );
 static void print_reserveinfo( GFL_AREAMAN* man, u32 pos, u32 blockNum, int pat );
 #endif
 
-static inline u32 calc_blocks_to_bytes( u32 blocks )
-{
-	return (blocks / 8) + ((blocks % 8) != 0);
+
+#define CHECK_ASSERT(man)	\
+{							\
+	GF_ASSERT(man!=NULL);	\
+	GF_ASSERT((*(man->pMagicNumber))==MAGIC_NUMBER);	\
 }
 
-static inline void CHECK_ASSERT( GFL_AREAMAN* man )
+
+static inline u32 calc_blocks_to_bytes( u32 blocks )
 {
-	GF_ASSERT(man!=NULL);
-	GF_ASSERT((*(man->pMagicNumber))==MAGIC_NUMBER);
+	u32 size = (blocks / 8) + ((blocks % 8) != 0);
+	while( size % 4 ){ size++; }
+	return size;
 }
 
 static inline u32 get_open_back_count( GFL_AREAMAN* man, u32 bytePos )
@@ -145,6 +149,7 @@ GFL_AREAMAN*
 	man->areaByteSize = areaByteSize;
 
 	man->pMagicNumber = (u32*)(man->area + areaByteSize);
+	
 	*(man->pMagicNumber) = MAGIC_NUMBER;
 
 	#ifdef AREAMAN_DEBUG
