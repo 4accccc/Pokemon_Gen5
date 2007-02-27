@@ -123,7 +123,7 @@ void	GFL_BG_sysInit( HEAPID heapID )
 
 	bgl = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BG_INI) );
 
-	memset( bgl, 0, sizeof(GFL_BG_INI) );
+	GFL_STD_MemFill( bgl, 0, sizeof(GFL_BG_INI) );
 	bgl->heapID = heapID;
 	bgl->scroll_req = 0;
 	bgl->loadscrn_req = 0;
@@ -1737,7 +1737,7 @@ void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, HEAPID heapID )
 {
 	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLow( heapID, datasiz );
 
-	memset( chr, 0, datasiz );
+	GFL_STD_MemFill( chr, 0, datasiz );
 
 	GFL_BG_LoadCharacterSub( frmnum, (void*)chr, offs, datasiz );
 	GFL_HEAP_FreeMemory( chr );
@@ -3396,7 +3396,7 @@ u8 GFL_BG_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 			scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
 			buf  = GFL_HEAP_AllocMemoryLow( bgl->heapID, 64 );
 
-			memcpy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
+			GFL_STD_MemCopy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
 			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
 
 			dot = buf[ chr_x+(chr_y<<3) ];
@@ -3436,14 +3436,14 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 				tmp[ i*8+j ] = buf[ i*8+(7-j) ];
 			}
 		}
-		memcpy( buf, tmp, 64 );
+		GFL_STD_MemCopy( buf, tmp, 64 );
 	}
 
 	if( flip & 2 ){
 		for( i=0; i<8; i++ ){
-			memcpy( &tmp[i*8], &buf[(7-i)*8], 8 );
+			GFL_STD_MemCopy( &tmp[i*8], &buf[(7-i)*8], 8 );
 		}
-		memcpy( buf, tmp, 64 );
+		GFL_STD_MemCopy( buf, tmp, 64 );
 	}
 
 	GFL_HEAP_FreeMemory( tmp );
