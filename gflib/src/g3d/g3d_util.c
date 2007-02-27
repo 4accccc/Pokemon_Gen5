@@ -182,12 +182,18 @@ void
 	GFL_G3D_ANM*		g3Danm;
 	GFL_G3D_OBJ*		g3Dobj;
 	int					i,j;
+	u16					anmCount;
 
 	//オブジェクト破棄
 	for( i=0; i<g3Dutil->g3DobjCount; i++ ){
 		g3Dobj = g3Dutil->g3DobjTbl[i];
 		g3Drnd = GFL_G3D_ObjG3DrndGet( g3Dobj );
 
+		//アニメーション解放
+		anmCount = GFL_G3D_ObjAnmCountGet( g3Dobj );
+		for( j=0; j<anmCount; j++ ){
+			GFL_G3D_AnmDelete( GFL_G3D_ObjG3DanmGet( g3Dobj, j ) );
+		}
 		//追加テクスチャリソース作成フラグ確認
 		if( g3Dutil->g3DobjExResourceRef[i] & (EXRES_TEX^0xff) ){
 			//テクスチャリソース解放
