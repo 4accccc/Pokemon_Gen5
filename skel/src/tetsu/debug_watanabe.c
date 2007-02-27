@@ -314,16 +314,16 @@ static BOOL	TestModeControl( void )
 	case 2:
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
 			tetsuWork->seq++;
-		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_LEFT ){
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
 			VecFx32 trans = { -FX32_ONE, 0, 0 };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_RIGHT ){
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_RIGHT ){
 			VecFx32 trans = { FX32_ONE, 0, 0 };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_UP ){
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_UP ){
 			VecFx32 trans = { 0, 0, -FX32_ONE };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_DOWN ){
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_DOWN ){
 			VecFx32 trans = { 0, 0, FX32_ONE };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
@@ -487,7 +487,7 @@ static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
 		GFL_G3D_SceneObjStatusTransGet( g3DsceneObj, &tmp );
 		tmp.x += trans->x;
 		tmp.y += trans->y;
-		tmp.x += trans->z;
+		tmp.z += trans->z;
 		GFL_G3D_SceneObjStatusTransSet( g3DsceneObj, &tmp );
 		idx++;
 	}
