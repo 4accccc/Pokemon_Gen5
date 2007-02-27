@@ -35,9 +35,9 @@ static BOOL	TestModeControl( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x20000 );
-//	TestModeWorkSet( HEAPID_WATANABE_DEBUG );
-	TestModeWorkSet( GFL_HEAPID_APP );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x20000 );
+	TestModeWorkSet( HEAPID_WATANABE_DEBUG );
+//	TestModeWorkSet( GFL_HEAPID_APP );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -70,9 +70,9 @@ static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TestModeWorkRelease();
-//	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+//	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -124,6 +124,7 @@ static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
+static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans );
 //------------------------------------------------------------------
 /**
  * @brief	ƒf[ƒ^
@@ -313,6 +314,18 @@ static BOOL	TestModeControl( void )
 	case 2:
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
 			tetsuWork->seq++;
+		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_LEFT ){
+			VecFx32 trans = { -FX32_ONE, 0, 0 };
+			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
+		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_RIGHT ){
+			VecFx32 trans = { FX32_ONE, 0, 0 };
+			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
+		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_UP ){
+			VecFx32 trans = { 0, 0, -FX32_ONE };
+			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
+		} else if( GFL_UI_KeyGetTrg() & PAD_KEY_DOWN ){
+			VecFx32 trans = { 0, 0, FX32_ONE };
+			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
 		g3d_move();
 		g3d_draw();		//‚R‚cƒf[ƒ^•`‰æ
@@ -462,4 +475,21 @@ static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 }
 
+static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
+{
+	GFL_G3D_SCENEOBJ*	g3DsceneObj;
+	VecFx32				tmp;
+	int					i;
+	u16					idx = tetsuWork->g3DsceneObjID;
+
+	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
+		g3DsceneObj = GFL_G3D_SceneObjGet( g3Dscene, idx );
+		GFL_G3D_SceneObjStatusTransGet( g3DsceneObj, &tmp );
+		tmp.x += trans->x;
+		tmp.y += trans->y;
+		tmp.x += trans->z;
+		GFL_G3D_SceneObjStatusTransSet( g3DsceneObj, &tmp );
+		idx++;
+	}
+}
 
