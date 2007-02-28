@@ -13,11 +13,12 @@
 //==============================================================================
 /**
  * @brief   Wi-Fi接続初期化 初期化時に呼び出しておく必要がある
- * @param   heapID  メモリ領域
+ * @param   heapID     メモリ領域
+ * @param   errorFunc  エラー表示関数
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_WifiStart( int heapID );
+extern void GFL_NET_WifiStart( int heapID, NetErrorFunc errorFunc );
 
 //==============================================================================
 /**

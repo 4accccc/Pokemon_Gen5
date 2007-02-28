@@ -182,10 +182,11 @@ typedef struct{
 /**
  * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
  * @param    heapID  使用するtempメモリID
+ * @param    errorFunc  エラー時に呼び出す画面表示関数
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_deviceInit(HEAPID heapID);
+extern void GFL_NET_deviceInit(HEAPID heapID, NetErrorFunc errorFunc);
 //==============================================================================
 /**
  * @brief   通信初期化

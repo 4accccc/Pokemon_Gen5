@@ -23,13 +23,14 @@
 /**
  * @brief   Wi-Fi接続初期化 初期化時に呼び出しておく必要がある
  * @param   heapID  メモリ領域
+ * @param   エラー時に呼び出す関数
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_WifiStart( int heapID )
+void GFL_NET_WifiStart( int heapID , NetErrorFunc errorFunc)
 {
     if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ){ //dwc初期化
-    //    DWClibWarningCall(heapID,0); //dwc初期化のエラー表示   //@@OO
+        errorFunc(NULL, 0);
     }
 }
 

@@ -190,15 +190,16 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
 //==============================================================================
 /**
  * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
- * @param    heapID  使用するtempメモリID
+ * @param    heapID    使用するtempメモリID
+ * @param    errorFunc エラー時に呼び出す関数
  * @return   none
  */
 //==============================================================================
-void GFL_NET_deviceInit(HEAPID heapID)
+void GFL_NET_deviceInit(HEAPID heapID, NetErrorFunc errorFunc)
 {
 #if GFL_NET_WIFI
     //WIFIのIPL初期設定
-    GFL_NET_hardInitWifiStart( heapID );
+    GFL_NET_WifiStart( heapID, errorFunc );
 #endif
 }
 
