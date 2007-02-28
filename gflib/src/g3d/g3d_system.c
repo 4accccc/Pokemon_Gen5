@@ -167,7 +167,9 @@ void
 
 		//射影
 		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
-						FX_SinIdx( 0x1000 ), FX_CosIdx( 0x1000 ), ( FX32_ONE * 4 / 3 ), 0, 
+						FX_SinIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
+						FX_CosIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
+						( FX32_ONE * 4 / 3 ), 0, 
 						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
 		//ライト
 		GFL_G3D_sysLightSet( 0, &initVec16, 0x7fff );
@@ -246,13 +248,13 @@ void
  *
  * @param	type		射影タイプ
  * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
- *						PRJPERS,PRJORTH	→top	  :nearクリップ面上辺のY座標
+ *						PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
  * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
- *						PRJPERS,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+ *						PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
  * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
- *						PRJPERS,PRJORTH	→left	  :nearクリップ面左辺のX座標
+ *						PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
  * @param	param4		PRJPERS			→未使用 
- *						PRJPERS,PRJORTH	→right	  :nearクリップ面右辺のX座標
+ *						PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
  * @param	near		視点からnearクリップ面までの距離	
  * @param	far			視点からfarクリップ面までの距離	
  * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
@@ -344,8 +346,8 @@ void
  * カメラ行列の設定
  *
  * @param	camPos			カメラ位置ベクトルポインタ
- * @param	camUp			カメラの上方向のベクトルへのポインタ
- * @param	target			カメラ焦点へのポインタ
+ * @param	camUp			カメラの上方向へのベクトルポインタ
+ * @param	target			カメラ焦点ベクトルポインタ
  */
 //--------------------------------------------------------------------------------------------
 void
