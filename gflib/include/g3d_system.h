@@ -128,13 +128,13 @@ extern void
  *
  * @param	type		射影タイプ
  * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
- *						PRJPERS,PRJORTH	→top	  :nearクリップ面上辺のY座標
+ *						PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
  * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
- *						PRJPERS,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+ *						PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
  * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
- *						PRJPERS,PRJORTH	→left	  :nearクリップ面左辺のX座標
+ *						PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
  * @param	param4		PRJPERS			→未使用 
- *						PRJPERS,PRJORTH	→right	  :nearクリップ面右辺のX座標
+ *						PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
  * @param	near		視点からnearクリップ面までの距離	
  * @param	far			視点からfarクリップ面までの距離	
  * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
