@@ -65,8 +65,9 @@ typedef struct {
 	MtxFx33		rotate;
 }GFL_G3D_OBJSTATUS;
 
-#define GEBUF_SIZE_MAX	(0x1800)	//ジオメトリバッファ最大サイズ。暫定
+#define GEBUF_SIZE_MAX			(0x1800)	//ジオメトリバッファ最大サイズ。暫定
 
+#define PERSPWAY_COEFFICIENT	0x10000/360	//画角計算係数（度数にこれを掛けるといい感じかも）
 
 
 
