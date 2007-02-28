@@ -4,6 +4,7 @@ SRCS	+=		testmode.c \
 				ohno/test_net.c \
 				ohno/test_rand.c \
 				ohno/test_ui.c \
+				ohno/fatal_error.c \
 				tamada/oamset.c \
 				tamada/data.c \
 				tamada/dispfunc.c \

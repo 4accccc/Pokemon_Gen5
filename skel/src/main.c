@@ -79,6 +79,7 @@ static	void	SkeltonVBlankFunc(void)
 
 
 #include "src/tomoya/debug_tomoya.h"
+#include "src/ohno/fatal_error.h"
 //------------------------------------------------------------------
 /**
  * @brief		ゲームごとの初期化処理
@@ -87,6 +88,8 @@ static	void	SkeltonVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
+    //WIFIを使用する場合 通信ハードウエアよりの初期設定
+    GFL_NET_deviceInit( GFL_HEAPID_APP, FatalError_Disp );
 
 	/* 起動プロセスの設定 */
 	TestModeSet();	//←サンプルデバッグモード

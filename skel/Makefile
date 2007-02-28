@@ -100,6 +100,11 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 include	$(NITROVCT_ROOT)/build/buildtools/commondefs
 include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 
+#----------------------------------------------------------------------------
+#	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
+#----------------------------------------------------------------------------
+$(MAKEFILE):  make_prog_files
+	touch $(MAKEFILE)
 
 #--------------------------------------- ----------------------------
 do-build:		$(TARGETS)

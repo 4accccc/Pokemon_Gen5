@@ -98,8 +98,6 @@ void GFLUser_Init(void)
     //FADEシステム初期化
     GFL_FADE_sysInit(GFL_HEAPID_SYSTEM);
 
-    //通信ハードウエアよりの初期設定
-    GFL_NET_deviceInit( GFL_HEAPID_APP );
 }
 
 

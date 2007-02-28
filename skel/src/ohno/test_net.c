@@ -13,6 +13,7 @@
 #include "gf_standard.h"
 #include "test_net.h"
 #include "main.h"
+#include "fatal_error.h"
 
 #define _BCON_GET_NUM  (1)
 
@@ -320,7 +321,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+    FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
     NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
@@ -349,7 +350,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
-    NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+    FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
