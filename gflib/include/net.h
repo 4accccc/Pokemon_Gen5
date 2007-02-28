@@ -17,7 +17,7 @@
 #define GLOBAL extern
 #endif
 
-#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 
 // デバッグ用決まり文句----------------------
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
@@ -52,8 +52,6 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 typedef struct _GFL_NETSYS GFL_NETSYS;
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
-/// @brief	WiFiフレンドリスト用グループデータ型定義 友達データの統合管理のため外部で用意する必要がある
-typedef struct _GFL_WIFI_FRIENDLIST GFL_WIFI_FRIENDLIST;
 
 
 // define 
@@ -114,37 +112,80 @@ typedef BOOL (*NetBeaconCompFunc)(int GameServiceID1, int GameServiceID2);  ///<
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
+typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiユーザーデータをセーブする時に呼ぶ関数
+typedef void (*NetWifiMargeFrinedDataFunc)(int baseFrinedNo, int delFriendNo);  ///< WiFiフレンドデータをマージする状況時に呼ぶ関数
 
 
+#if GFL_NET_WIFI
 
-/// @brief 通信の初期化用構造体
+#include <dwc.h>
+
+/// @brief 通信の初期化用構造体 wifi使用時
 typedef struct{
   const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
-  int recvFuncTableNum;             ///< 受信関数テーブル項目数 NELEMS
-  void* pWork;                     ///< この通信ゲームで使用しているユーザーのワーク
-  NetBeaconGetFunc beaconGetFunc;  ///< ビーコンデータ取得関数
-  NetBeaconGetSizeFunc beaconGetSizeFunc;  ///< ビーコンデータサイズ取得関数
-  NetBeaconCompFunc beaconCompFunc; ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
-  NetErrorFunc errorFunc;           ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+  int recvFuncTableNum;              ///< 受信関数テーブル項目数 NELEMS
+  void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
+  NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
+  NetBeaconGetSizeFunc beaconGetSizeFunc;   ///< ビーコンデータサイズ取得関数
+  NetBeaconCompFunc beaconCompFunc;  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
+  NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
-  NetGetSSID getSSID;        ///< 親子接続時に認証する為のバイト列  
-  int gsid;                ///< ゲームサービスID  通信の種類
-  int ggid;                ///< ＤＳでゲームソフトを区別する為のID
-//  u32  allocNo;            ///< allocするための番号
+  NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+  NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  DWCFriendData *keyList;   ///< DWC形式の友達リスト	
+  DWCUserData *myUserData;  ///< DWCのユーザデータ（自分のデータ）
+  NetGetSSID getSSID;       ///< 親子接続時に認証する為のバイト列  
+  int gsid;                 ///< ゲームサービスID  通信の種類
+  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
   HEAPID baseHeapID;        ///< 元となるHEAPID
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
-  u8 maxConnectNum;        ///< 最大接続人数
-  u8 maxBeaconNum;         ///< 最大ビーコン収集数
-  u8 bMPMode;              ///< MP通信モードかどうか
-  u8 bWiFi;                ///< Wi-Fi通信をするかどうか
-  u8 bNetwork;             ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+  u8 maxConnectNum;         ///< 最大接続人数
+  u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
+  u8 bMPMode;               ///< MP通信モードかどうか
+  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
+  u8 bNetwork;              ///< 通信を開始するかどうか FALSEだとOFFLINE動作
 } GFLNetInitializeStruct;
+
+#else  //GFL_NET_WIFI
+
+/// @brief 通信の初期化用構造体 wifiを使用しない場合
+typedef struct{
+  const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
+  int recvFuncTableNum;              ///< 受信関数テーブル項目数 NELEMS
+  void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
+  NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
+  NetBeaconGetSizeFunc beaconGetSizeFunc;   ///< ビーコンデータサイズ取得関数
+  NetBeaconCompFunc beaconCompFunc;  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
+  NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+  NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
+  NetGetSSID getSSID;       ///< 親子接続時に認証する為のバイト列  
+  int gsid;                 ///< ゲームサービスID  通信の種類
+  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
+  HEAPID baseHeapID;        ///< 元となるHEAPID
+  HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
+  HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
+  u8 maxConnectNum;         ///< 最大接続人数
+  u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
+  u8 bMPMode;               ///< MP通信モードかどうか
+  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
+  u8 bNetwork;              ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+} GFLNetInitializeStruct;
+
+#endif  //GFL_NET_WIFI
 
 //-------------------------------
 //  関数 ～外部公開関数は全てここに定義
 //-------------------------------
 
+//==============================================================================
+/**
+ * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
+ * @param    heapID  使用するtempメモリID
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_deviceInit(HEAPID heapID);
 //==============================================================================
 /**
  * @brief   通信初期化
@@ -248,6 +289,16 @@ extern void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle);
  */
 //==============================================================================
 extern void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle);
+
+//==============================================================================
+/**
+ * @brief    Wi-Fiロビーへ接続する
+ * @param    GFL_NETHANDLE        通信ハンドルのポインタ
+ * @param    GFL_WIFI_FRIENDLIST  フレンドリスト構造体のポインタ
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_WiFiLogin(GFL_NETHANDLE* pHandle);
 
 //==============================================================================
 /**
@@ -417,6 +468,10 @@ extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
 //==============================================================================
 
 extern BOOL GFL_NET_IsResetEnable(void);
+
+#if GFL_NET_WIFI
+#include "net_wifi.h"
+#endif //GFL_NET_WIFI
 
 #include "net_command.h"
 

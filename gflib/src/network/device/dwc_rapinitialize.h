@@ -11,14 +11,6 @@
 #ifndef __DWC_RAPINITIALIZE_H__
 #define __DWC_RAPINITIALIZE_H__
 
-//==============================================================================
-/**
- * @brief   Wi-FiÚ‘±‰Šú‰» ‰Šú‰»‚ÉŒÄ‚Ño‚µ‚Ä‚¨‚­•K—v‚ª‚ ‚é
- * @param   heapID  ƒƒ‚ƒŠ—Ìˆæ
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_startWiFi( int heapID );
 
 #endif //__DWC_RAPINITIALIZE_H__
 

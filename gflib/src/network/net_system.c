@@ -7,19 +7,9 @@
  */
 //=============================================================================
 
-#include <nitro.h>
-#include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "strbuf.h"
-#include "net.h"
-//#include "gflib.h"
+#include "gflib.h"
 
 #include "device/wh_config.h"
-
 #include "net_def.h"
 #include "device/net_wireless.h"
 #include "net_system.h"
@@ -98,10 +88,6 @@ typedef enum{   // 送信形態
 } _connectMode_e;
 
 
-typedef enum {
-    _DEVICE_WIRELESS,
-    _DEVICE_WIFI,
-} _deviceMode_e;
 
 //==============================================================================
 // ワーク
@@ -153,7 +139,7 @@ typedef struct{
     //-------------------
     NET_TOOLSYS* pTool;  ///< netTOOLのワーク
     GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
-    u8 device;   ///< デバイス切り替え wifi<>wi
+//    u8 device;   ///< デバイス切り替え wifi<>wi
 
 //    u8 DSCount; // コマンドの順番が正しいかどうか確認用
 //    u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
@@ -502,6 +488,8 @@ static void _connectFunc(void)
 
 }
 
+#if GFL_NET_WIFI
+
 //==============================================================================
 /**
  * @brief   WiFiGameの初期化を行う
@@ -510,17 +498,21 @@ static void _connectFunc(void)
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi, GFL_WIFI_FRIENDLIST* pWiFiList)
+BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi)
 {
     BOOL ret = TRUE;
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
     if(!GFL_NET_WLIsVRAMDInitialize()){
         return FALSE;
     }
+
+
     
     //sys_CreateHeapLo( HEAPID_BASE_APP, heapIDWifi, _HEAPSIZE_WIFI);
     _commInit(packetSizeMax, heapIDSys);
-    mydwc_startConnect( pWiFiList, heapIDWifi);
+    mydwc_startConnect( GFI_NET_GetMyDWCUserData() ,GFI_NET_GetMyDWCFriendData(),
+                        heapIDWifi, pNetIni->maxBeaconNum);
 //    mydwc_setFetalErrorCallback(CommFatalErrorFunc);   //@@OO エラー処理追加必要 07/02/22
     mydwc_setReceiver( _commRecvParentCallback, _commRecvCallback );
     GFL_NET_SystemSetTransmissonTypeDS();
@@ -543,6 +535,8 @@ int GFL_NET_SystemWifiApplicationStart( int target )
 //    mydwc_setReceiver( CommRecvParentCallback, CommRecvCallback );
     return TRUE;
 }
+
+#endif //GFL_NET_WIFI
 
 //==============================================================================
 /**
@@ -742,9 +736,11 @@ BOOL GFL_NET_SystemIsTransmissonDSType(void)
 void GFL_NET_SystemFinalize(void)
 {
     BOOL bEnd = FALSE;
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
 
     if(_pComm){
-        if( _pComm->device == _DEVICE_WIFI){
+        if( pNetIni->bWiFi){
 #if GFL_NET_WIFI
             mydwc_Logout();  // 切断
 #endif
@@ -927,30 +923,9 @@ void GFL_NET_SystemResetBattleChild(void)
 
 static void _dataMpStep(void)
 {
-#if 0
-    if(_pComm->bSendNoneSend){
-        if( _pComm->device == _DEVICE_WIFI){
-#if GFL_NET_WIFI
-            if( _pComm->bWifiConnect ){
-                if( mydwc_sendToServer( _pComm->sSendBuf, _SEND_BUFF_SIZE_4CHILD )){
-                    _pComm->bSendNoneSend = FALSE;
-                }
-            }
-#endif
-        }
-        else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()) &&
-                 (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
-            _sendCallBack = _SEND_CB_NONE;
-            _updateMpData();     // データ送受信
-            if(_sendCallBack != _SEND_CB_NONE){
-                _pComm->bSendNoneSend = FALSE;
-            }
-        }
-        return;
-    }
-#endif
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
-    if( _pComm->device == _DEVICE_WIFI){
+    if( pNetIni->bWiFi){
 #if GFL_NET_WIFI  //wifi
         if( _pComm->bWifiConnect ){
             if( _pComm->bWifiSendRecv ){  // 同期を取っている場合
@@ -1056,8 +1031,11 @@ static void _updateMpDataServer(void)
     if(!_pComm){
         return;
     }
-    if( _pComm->device == _DEVICE_WIFI){
-        return;
+    {
+        GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+        if( pNetIni->bWiFi){
+            return;
+        }
     }
     mcSize = _getUserMaxSendByte();
     machineMax = _getUserMaxNum();
@@ -1110,28 +1088,9 @@ static void _updateMpDataServer(void)
 static void _dataMpServerStep(void)
 {
     int i;
-#if 0
-    if(_pComm->bSendNoneSend){
-        if( _pComm->device == _DEVICE_WIFI){
-#if GFL_NET_WIFI //wifi lock
-            if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
-                if( mydwc_sendToClient( _pComm->sSendServerBuf, WH_MP_4CHILD_DATA_SIZE*2 )){
-                    _pComm->bSendNoneSend = FALSE;
-                    return;
-                }
-            }
-#endif //wifi lock
-        }
-        else if((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) || (GFL_NET_SystemGetAloneMode()) ){
-            _updateMpDataServer();
-            if(_sendCallBackServer == _SEND_CB_FIRST_SENDEND){
-                _pComm->bSendNoneSend = FALSE;
-                return;
-            }
-        }
-    }
-#endif
-    if( _pComm->device == _DEVICE_WIFI){
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
+    if( pNetIni->bWiFi){
 #if GFL_NET_WIFI
         if( GFL_NET_SystemIsConnect(COMM_PARENT_ID) ){
             if( _pComm->bWifiSendRecv ){  // 同期を取っている場合
@@ -1408,8 +1367,11 @@ static void _updateMpData(void)
     if(!_pComm){
         return;
     }
-    if( _pComm->device == _DEVICE_WIFI){
-        return;
+    {
+        GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+        if( pNetIni->bWiFi){
+            return;
+        }
     }
     {
         int mcSize = _getUserMaxSendByte();
@@ -1834,10 +1796,12 @@ static void _recvDataServerFunc(void)
 //==============================================================================
 BOOL GFL_NET_SystemIsConnect(u16 netID)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
     if(!_pComm){
         return FALSE;
     }
-    if( _pComm->device == _DEVICE_WIFI){
+    if( pNetIni->bWiFi){
 #if GFL_NET_WIFI
 //#if 0 //wifi
         if(_pComm->bWifiConnect){
@@ -1903,8 +1867,10 @@ int GFL_NET_SystemGetConnectNum(void)
 //==============================================================================
 BOOL GFL_NET_SystemIsInitialize(void)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
     if(_pComm){
-        if( _pComm->device == _DEVICE_WIFI){
+        if( pNetIni->bWiFi){
             return TRUE;
         }
     }
@@ -1922,7 +1888,9 @@ BOOL GFL_NET_SystemIsInitialize(void)
 u16 GFL_NET_SystemGetCurrentID(void)
 {
     if(_pComm){
-        if( _pComm->device == _DEVICE_WIFI){
+        GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
+        if( pNetIni->bWiFi){
 #if GFL_NET_WIFI
 //#if 0  //wifi
             int id = mydwc_getaid();
@@ -2182,12 +2150,13 @@ void GFL_NET_SystemSetWifiConnect(BOOL bConnect)
 
 BOOL GFL_NET_SystemIsVChat(void)
 {
-    if( _pComm->device == _DEVICE_WIFI){
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
 #if GFL_NET_WIFI
-//#if 0  // wifi
+    if( pNetIni->bWiFi){
         return mydwc_IsVChat();
-#endif
     }
+#endif
     return FALSE;
 }
 
@@ -2201,7 +2170,10 @@ BOOL GFL_NET_SystemIsVChat(void)
 
 void GFL_NET_SystemSetWifiBothNet(BOOL bFlg)
 {
-    if( _pComm->device == _DEVICE_WIFI){
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
+#if GFL_NET_WIFI
+    if( pNetIni->bWiFi){
         _pComm->bWifiSendRecv = bFlg;
         if(bFlg){
             _pComm->countSendRecv = 0;
@@ -2210,6 +2182,7 @@ void GFL_NET_SystemSetWifiBothNet(BOOL bFlg)
         }
         NET_PRINT("oo同期切り替え %d\n",bFlg);
     }
+#endif
 }
 
 //==============================================================================

@@ -11,8 +11,6 @@
 #ifndef __DWC_RAPCOMMON_H__
 #define __DWC_RAPCOMMON_H__
 
-#include "wifilist.h"
-
 
 //==============================================================================
 /**
@@ -25,13 +23,12 @@ extern int mydwc_init(int heapID);
 
 //==============================================================================
 /**
- * DWC  UserDataを作る
- * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
- * @retval  DS本体に保存するユーザIDのチェック・作成結果。
+ * @brief   DWC  UserDataを作る
+ * @param   DWCUserData  ユーザーデータがない場合作成
+ * @retval  none
  */
 //==============================================================================
-extern void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList );
-
+extern void mydwc_createUserData( DWCUserData *userdata );
 
 //==============================================================================
 /**
@@ -41,18 +38,15 @@ extern void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList );
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList);
+extern int mydwc_getMyGSID(void);
 
 //==============================================================================
 /**
  * 自分のGSIDが正しいのか検査する
- * @param   SAVEDATA*  
  * @retval  TRUEが成功
  */
 //==============================================================================
-#if _SAVE_PROGRAM
-extern BOOL mydwc_checkMyGSID(SAVEDATA *pSV);
-#endif //_SAVE_PROGRAM
+extern BOOL mydwc_checkMyGSID(void);
 
 #endif //
 

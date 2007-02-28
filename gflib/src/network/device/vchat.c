@@ -7,17 +7,9 @@
  */
 //=============================================================================
 
-#include <nitro.h>
-#include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "strbuf.h"
-#include "net.h"
-#include "../net_def.h"
+#include "gflib.h"
 
+#include "../net_def.h"
 #include "dwc_rap.h"
 #include "vchat.h"
 #include <vct.h>

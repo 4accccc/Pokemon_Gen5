@@ -189,6 +189,21 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
+ * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
+ * @param    heapID  使用するtempメモリID
+ * @return   none
+ */
+//==============================================================================
+void GFL_NET_deviceInit(HEAPID heapID)
+{
+#if GFL_NET_WIFI
+    //WIFIのIPL初期設定
+    GFL_NET_hardInitWifiStart( heapID );
+#endif
+}
+
+//==============================================================================
+/**
  * @brief 通信初期化
  * @param[in]   pNetInit  通信初期化構造体のポインタ
  * @return none
@@ -387,6 +402,25 @@ void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     GFL_NET_StateChangeoverConnect(pHandle, pNet->aNetInit.netHeapID);
+}
+
+//==============================================================================
+/**
+ * @brief    Wi-Fiロビーへ接続する
+ * @param    GFL_NETHANDLE        通信ハンドルのポインタ
+ * @param    GFL_WIFI_FRIENDLIST  フレンドリスト構造体のポインタ
+ * @return   none
+ */
+//==============================================================================
+
+void GFL_NET_WiFiLogin(GFL_NETHANDLE* pHandle)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+    GFL_NET_StateWifiEnterLogin(pHandle,
+                                pNet->aNetInit.netHeapID, pNet->aNetInit.wifiHeapID);
+
+
 }
 
 //==============================================================================
@@ -624,9 +658,82 @@ void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet)
 }
 
 
+#if GFL_NET_WIFI //wifi
+
+//==============================================================================
+/**
+ * @brief    DWCのユーザーデータを得る
+ * @return   DWCUserDataのポインタ
+ */
+//==============================================================================
+
+DWCUserData* GFI_NET_GetMyDWCUserData(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    return pNet->aNetInit.myUserData;
+}
+
+//==============================================================================
+/**
+ * @brief    DWCの友達データを得る
+ * @return   DWCFriendDataのポインタ
+ */
+//==============================================================================
+
+DWCFriendData* GFI_NET_GetMyDWCFriendData(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    return pNet->aNetInit.keyList;
+}
+
+//==============================================================================
+/**
+ * @brief    DWCの友達データ本数を得る
+ * @return   DWCFriendDataの本数
+ */
+//==============================================================================
+int GFI_NET_GetFriendNumMax(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    GF_ASSERT(pNet->aNetInit.maxBeaconNum < DWC_ACC_USERDATA_BUFSIZE);
+    return pNet->aNetInit.maxBeaconNum;
+}
 
 
+//==============================================================================
+/**
+ * @brief    DWCUserデータをセーブしてほしい時のコールバック関数を呼び出す
+ * @return   none
+ */
+//==============================================================================
+void GFI_NET_NetWifiSaveUserDataFunc(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    if(pNet->aNetInit.wifiSaveFunc){
+        pNet->aNetInit.wifiSaveFunc();
+    }
+}
+
+//==============================================================================
+/**
+ * @brief    友達データをマージするための関数を呼び出す
+ * @param    deletedIndex  消えるフレンドコード
+ * @param    srcIndex      元になるフレンドコード
+ * @return   none
+ */
+//==============================================================================
+void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+    if(pNet->aNetInit.wifiMargeFunc){
+        pNet->aNetInit.wifiMargeFunc(deletedIndex, srcIndex);
+    }
+}
+
+
+#endif // GFL_NET_WIFI
 
 //==============================================================================
 /**
@@ -674,4 +781,5 @@ void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
 {
     _pNetSys->pNetWL = pWL;
 }
+
 

@@ -9,31 +9,43 @@
 
 #include <nitro.h>
 #include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "net.h"
-//#include "gflib.h"
-//#include "dwc_rap.h"
+#include "gflib.h"
+
+#if GFL_NET_WIFI
+
 #include "net_wireless.h"
+#include "dwc_rapcommon.h"
 #include "dwc_rapinitialize.h"
+
+
 
 //==============================================================================
 /**
  * @brief   Wi-Fi接続初期化 初期化時に呼び出しておく必要がある
-            network内部で呼び出すのでGFI扱い
  * @param   heapID  メモリ領域
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_startWiFi( int heapID )
+void GFL_NET_WifiStart( int heapID )
+{
+    if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ){ //dwc初期化
+    //    DWClibWarningCall(heapID,0); //dwc初期化のエラー表示   //@@OO
+    }
+}
+
+
+//==============================================================================
+/**
+ * @brief   Wi-Fi設定画面を呼び出す
+ * @param   heapID  メモリ領域
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_WifiUtility( int heapID )
 {
 	OSIntrMode old;
 	void *work;
 
-    
 	GFL_NET_WLVRAMDInitialize(); // 
 	// アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
 
@@ -60,3 +72,4 @@ void GFL_NET_startWiFi( int heapID )
 
 }
 
+#endif //GFL_NET_WIFI

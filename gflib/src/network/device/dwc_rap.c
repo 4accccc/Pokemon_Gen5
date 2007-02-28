@@ -9,15 +9,11 @@
 
 #include <nitro.h>
 #include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "strbuf.h"
-#include "net.h"
-#include "../net_def.h"
+#include "gflib.h"
 
+#if GFL_NET_WIFI
+
+#include "../net_def.h"
 #include "dwc_rap.h"
 #include "vchat.h"
 //#include "system/pm_debug_wifi.h"
@@ -58,10 +54,7 @@
 
 
 // テスト用サーバに繋ぐときに定義
-//#define USE_AUTHSERVER_DEVELOP
-
-// フレンドリストのサイズ
-#define FRIENDLIST_MAXSIZE 32
+#define USE_AUTHSERVER_DEVELOP
 
 // １フレームに何人分のデータを更新するか。
 #define FRIENDINFO_UPDATA_PERFRAME 4
@@ -87,7 +80,7 @@ typedef struct
 	DWCFriendsMatchControl stDwcCnt;    // DWC制御構造体	
     DWCUserData *myUserData;		// DWCのユーザデータ（自分のデータ）
 	DWCInetControl stConnCtrl;
-    GFL_WIFI_FRIENDLIST* pWiFiList;          // ユーザーデータまで含んだ友達リスト スケルトンにおく必要がある
+//    GFL_WIFI_FRIENDLIST* pWiFiList;    ///< ユーザーデータまで含んだ友達リスト スケルトンにおく必要がある
     
 	void *heapPtr;
 	NNSFndHeapHandle headHandle;
@@ -95,8 +88,9 @@ typedef struct
 	MYDWCReceiverFunc clientCallback;
 	
 	void (*fetalErrorCallback)(int);
-	
-	u8 friend_status[FRIENDLIST_MAXSIZE];
+
+    int friendMax;    // フレンドリスト最大人数
+	u8 friend_status[DWC_ACC_USERDATA_BUFSIZE];
 	void *friendinfo;	
 	int infosize;	
 	u32 friendupdate_index;	
@@ -222,14 +216,16 @@ static void _NNSFndHeapVisitor(void* memBlock, NNSFndHeapHandle heap, u32 userPa
 //==============================================================================
 /**
  * インターネットへ接続開始
- * @param   pWiFiList フレンドリストの先頭ポインタ
- * @param   heapID    wifiライブラリ用メモリのID
+ * @param   pMyUserData  DWCUserData
+ * @param   pFriendList  DWCFriendData
+ * @param   heapID       wifiライブラリ用メモリのID
+ * @param   friendMax    友達リストの最大
  * @retval  MYDWC_STARTCONNECT_OK … OK
  * @retval  MYDWC_STARTCONNECT_FIRST … 初めて接続する場合。（メッセージ表示の必要有
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID)
+int mydwc_startConnect(DWCUserData* pMyUserData, DWCFriendData* pFriendList, HEAPID heapID, int friendMax)
 {
     // ヒープ領域からワーク領域を確保。
 	GF_ASSERT( _dWork_temp == NULL );
@@ -243,9 +239,7 @@ int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID)
     
 	_dWork_temp = GFL_HEAP_AllocMemory(heapID, sizeof(MYDWC_WORK) + 32);
 	_dWork = (MYDWC_WORK *)( ((u32)_dWork_temp + 31) / 32 * 32 );
-#if _SAVE_PROGRAM
-    _dWork->pWiFiList = pWiFiList;
-#endif
+    _dWork->friendMax = friendMax;
     _dWork->serverCallback = NULL;
 	_dWork->clientCallback = NULL;	
 	_dWork->fetalErrorCallback = NULL;
@@ -268,27 +262,17 @@ int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID)
     _dWork->myvchaton = 1;
     _dWork->opvchaton = 1;
 
-#if _SAVE_PROGRAM
-    if(pSaveData!=NULL){
-        _dWork->myUserData = WifiList_GetMyUserInfo(SaveData_GetWifiListData(_dWork->pSaveData));
-        _dWork->keyList = (DWCFriendData*)WifiList_GetDwcDataPtr(SaveData_GetWifiListData(_dWork->pSaveData),0);
-    }
-#endif
-    
+    _dWork->myUserData = pMyUserData;
+    _dWork->keyList = pFriendList;
+
 #ifdef PM_DEBUG
     DWC_ReportUserData(_dWork->myUserData);
-#endif
-
-#ifdef DEBUG_ONLY_FOR_ohno
-   if( !DWC_CheckUserData( _dWork->myUserData ) ){
-       GF_ASSERT(0);  //修正確認のため入れてあるk.ohno
-   }
 #endif
 
 	_dWork->friendinfo = NULL;
 	{
 		int i;
-		for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
+		for( i = 0; i < _dWork->friendMax; i++ )
 		{
 			_dWork->friend_status[i] = DWC_STATUS_OFFLINE;
 		}
@@ -409,7 +393,7 @@ int mydwc_connect()
 		    DWC_InitFriendsMatch(&(_dWork->stDwcCnt), (_dWork->myUserData), 
 		    			 GAME_PRODUCTID, GAME_NAME,
                          GAME_SECRET_KEY, 0, 0,
-                         _dWork->keyList, FRIENDLIST_MAXSIZE);
+                         _dWork->keyList, _dWork->friendMax);
 
             // とりあえず、IPLのユーザ名を使ってログイン
 		    {
@@ -778,10 +762,8 @@ static void LoginCallback(DWCError error, int profileID, void *param)
 	    // DWCUserDataをDSカードのバックアップに保存するようにしてください。
 	    DWCUserData *userdata = NULL;
 	    DWC_ClearDirtyFlag(_dWork->myUserData);
-
-#if _SAVE_PROGRAM
-        SaveData_SaveParts(_dWork->pSaveData, SVBLK_ID_NORMAL);
-#endif
+        // バックアップコールバックを呼ぶ
+        GFI_NET_NetWifiSaveUserDataFunc();
     }
 
     if (error == DWC_ERROR_NONE){
@@ -878,10 +860,7 @@ static void DeleteFriendListCallback(int deletedIndex, int srcIndex, void* param
     OS_TPrintf("friend[%d] was deleted (equal friend[%d]).\n",
                deletedIndex, srcIndex);
     // 書き戻し
-#if _SAVE_PROGRAM
-    MI_CpuCopy8(_dWork->keyList,WifiList_GetDwcDataPtr(SaveData_GetWifiListData(_dWork->pSaveData), 0),FRIENDLIST_MAXSIZE * sizeof(DWCFriendData));
-    WifiList_DataMarge(SaveData_GetWifiListData(_dWork->pSaveData),deletedIndex, srcIndex);
-#endif
+    GFI_NET_NetWifiMargeFrinedDataFunc(deletedIndex,srcIndex);
     
 }
 
@@ -1669,7 +1648,7 @@ static void mydwc_updateFriendInfo( )
 	if( _dWork->friendinfo == NULL ) return;
 	for(i = 0; i < FRIENDINFO_UPDATA_PERFRAME; i++)
 	{
-		int index = _dWork->friendupdate_index % FRIENDLIST_MAXSIZE;
+		int index = _dWork->friendupdate_index % _dWork->friendMax;
 		int size;
 	
 		if( DWC_IsBuddyFriendData( &(_dWork->keyList[index]) ) ) 
@@ -1687,7 +1666,7 @@ static void mydwc_updateFriendInfo( )
 			}
 		}
 			
-		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % FRIENDLIST_MAXSIZE;
+		_dWork->friendupdate_index = (_dWork->friendupdate_index + 1) % _dWork->friendMax;
 	}
 }
 
@@ -1969,7 +1948,7 @@ void mydwc_showFriendInfo()
 		OS_TPrintf("プロファイルＩＤ:%d \n\n", DWC_GetGsProfileId( _dWork->myUserData, &token ) );	
 	}
 	
-	for( i = 0; i < FRIENDLIST_MAXSIZE; i++ )
+	for( i = 0; i < _dWork->friendMax; i++ )
 	{
 		int ret = DWC_GetFriendDataType( &(_dWork->keyList[i]) );
 		u32 *ptr = (u32*)(&_dWork->keyList[i]);
@@ -2099,3 +2078,5 @@ void mydwc_VChatRestart()
 		sendPacket();
 	}
 }
+
+#endif //GFL_NET_WIFI

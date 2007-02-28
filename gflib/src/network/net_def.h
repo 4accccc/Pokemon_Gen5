@@ -110,7 +110,6 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 struct _GFL_NETHANDLE{
   NET_TOOLSYS* pTool;      ///< netTool
   NET_PARENTSYS* pParent;  ///< 親の情報を保持するポインタ
-  GFL_WIFI_FRIENDLIST* pWiFiList;
   PTRStateFunc state;      ///< ハンドルのプログラム状態
   MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
   HEAPID baseHeapID;       ///< 通信がcreateするためのID
@@ -189,5 +188,15 @@ extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
 
 extern void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 
-#endif
 
+#if GFL_NET_WIFI //wifi
+
+extern void GFI_NET_NetWifiSaveUserDataFunc(void);
+extern void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex);
+extern DWCUserData* GFI_NET_GetMyDWCUserData(void);
+extern DWCFriendData* GFI_NET_GetMyDWCFriendData(void);
+extern int GFI_NET_GetFriendNumMax(void);
+
+#endif //GFL_NET_WIFI
+ 
+#endif	//__NET_DEF_H__

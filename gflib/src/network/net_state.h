@@ -232,14 +232,12 @@ extern BOOL GFL_NET_StateIsWifiError(GFL_NETHANDLE* pNetHandle);
 /**
  * @brief   wifiマッチング状態へログインする
  * @param   pNetHandle  GFL_NETHANDLE
- * @param   pWifiList   GFL_WIFI_FRIENDLIST
- * @param   baseHeapID  元になるheapid
  * @param   netHeapID   netLibで確保使用するID
  * @param   wifiHeapID  NitroWifi&NitroDWC&VCTで確保するメモリ
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID baseHeapID, HEAPID netHeapID, HEAPID wifiHeapID);
+extern void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HEAPID wifiHeapID);
 //--------------------------errfunc------------------------------------------------
 
 #define _ERR_DEFINE  (0)

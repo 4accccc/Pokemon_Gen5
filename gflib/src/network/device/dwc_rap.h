@@ -3,10 +3,10 @@
 
 #include <dwc.h>
 
-#if _SAVE_PROGRAM
-#include "savedata.h"
-#endif
-#include "wifilist.h"
+//#if _SAVE_PROGRAM
+//#include "savedata.h"
+//#endif
+//#include "wifilist.h"
 
 // 受信コールバック型。WHReceiverFuncと同形
 typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
@@ -36,14 +36,16 @@ extern void mydwc_setVchat(int codec);
 //==============================================================================
 /**
  * インターネットへ接続開始
- * @param   pWiFiList フレンドリストの先頭ポインタ
- * @param   heapID    wifiライブラリ用メモリのID
+ * @param   pMyUserData  DWCUserData
+ * @param   pFriendList  DWCFriendData
+ * @param   heapID       wifiライブラリ用メモリのID
+ * @param   friendMax    友達リストの最大
  * @retval  MYDWC_STARTCONNECT_OK … OK
  * @retval  MYDWC_STARTCONNECT_FIRST … 初めて接続する場合。（メッセージ表示の必要有
  * @retval  MYDWC_STARTCONNECT_DIFFERENTDS … 異なるＤＳで接続しようしてる場合。（要警告）
  */
 //==============================================================================
-extern int mydwc_startConnect(GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID heapID);
+extern int mydwc_startConnect(DWCUserData* pMyUserData, DWCFriendData* pFriendList, HEAPID heapID, int friendMax);
 
 #define MYDWC_STARTCONNECT_OK 0
 #define MYDWC_STARTCONNECT_FIRST 1
@@ -294,7 +296,7 @@ extern int mydwc_getFriendIndex();
  */
 //==============================================================================
 
-extern int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList);
+extern int mydwc_getMyGSID(void);
 
 
 

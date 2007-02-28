@@ -9,16 +9,7 @@
  */
 //=============================================================================
 
-#include <nitro.h>
-#include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "strbuf.h"
-#include "net.h"
-#include "ui.h"
+#include "gflib.h"
 
 #include "device/wh_config.h"
 
@@ -214,13 +205,13 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     }
 
     NET_PRINT("%x - %x %x\n",(u32)pNetIni,(u32)pNetIni->beaconGetFunc,(u32)pNetIni->beaconGetSizeFunc);
-    
-    pWL = GFL_NET_WLGetHandle(pNetIni->netHeapID, pNetIni->gsid, pNetIni->maxConnectNum);
-    _GFL_NET_SetNETWL(pWL);
+    if(!pNetIni->bWiFi){
+        pWL = GFL_NET_WLGetHandle(pNetIni->netHeapID, pNetIni->gsid, pNetIni->maxConnectNum);
+        _GFL_NET_SetNETWL(pWL);
 
-    GFL_NET_WLInitialize(pNetIni->netHeapID, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
-                         pNetIni->beaconCompFunc, pNetIni->bNetwork);
-
+        GFL_NET_WLInitialize(pNetIni->netHeapID, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
+                             pNetIni->beaconCompFunc, pNetIni->bNetwork);
+    }
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
     NET_PRINT("再起動    -- \n");
@@ -1366,8 +1357,7 @@ static void _wifiApplicationConnecting(GFL_NETHANDLE* pNetHandle)
 static void _wifiLoginInit(GFL_NETHANDLE* pNetHandle)
 {
     if(GFL_NET_SystemWiFiModeInit(_PACKETSIZE_DEFAULT,
-                                  pNetHandle->netHeapID, pNetHandle->wifiHeapID,
-                                  pNetHandle->pWiFiList)){
+                                  pNetHandle->netHeapID, pNetHandle->wifiHeapID)){
         _CHANGE_STATE(_wifiApplicationConnecting, 0);
     }
 }
@@ -1376,15 +1366,13 @@ static void _wifiLoginInit(GFL_NETHANDLE* pNetHandle)
 /**
  * @brief   wifiマッチング状態へログインする
  * @param   pNetHandle  GFL_NETHANDLE
- * @param   pWifiList   GFL_WIFI_FRIENDLIST
- * @param   baseHeapID  元になるheapid
  * @param   netHeapID   netLibで確保使用するID
  * @param   wifiHeapID  NitroWifi&NitroDWC&VCTで確保するメモリ
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, GFL_WIFI_FRIENDLIST* pWiFiList, HEAPID baseHeapID, HEAPID netHeapID, HEAPID wifiHeapID)
+void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HEAPID wifiHeapID)
 {
     if(GFL_NET_SystemIsInitialize()){
         return;      // つながっている場合今は除外する
@@ -1393,10 +1381,8 @@ void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, GFL_WIFI_FRIENDLIST*
 
     _commStateInitialize(pNetHandle, 0);
 
-    pNetHandle->baseHeapID = baseHeapID;
     pNetHandle->netHeapID = netHeapID;
     pNetHandle->wifiHeapID = wifiHeapID;
-    pNetHandle->pWiFiList = pWiFiList;
 
     _CHANGE_STATE(_wifiLoginInit, 0);
 }

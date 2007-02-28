@@ -9,15 +9,11 @@
 
 #include <nitro.h>
 #include <nnsys.h>
-#include <dwc.h>
-#include "gf_macro.h"
-#include "gf_standard.h"
-#include "assert.h"
-#include "heapsys.h"
-#include "strbuf.h"
-#include "net.h"
-#include "../net_def.h"
+#include "gflib.h"
 
+#if GFL_NET_WIFI
+
+#include "../net_def.h"
 #include "dwc_rapcommon.h"
 
 //==============================================================================
@@ -45,15 +41,15 @@ int mydwc_init(int heapID)
 
 //==============================================================================
 /**
- * DWC  UserDataを作る
- * @param   GFL_WIFI_FRIENDLIST  ユーザーデータがない場合作成
- * @retval  DS本体に保存するユーザIDのチェック・作成結果。
+ * @brief   DWC  UserDataを作る
+ * @param   DWCUserData  ユーザーデータがない場合作成
+ * @retval  none
  */
 //==============================================================================
-void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList )
+void mydwc_createUserData( DWCUserData *userdata )
 {
-    // ユーザデータ作成をする。    
-    DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+    // ユーザデータ作成をする。
+	MI_CpuClearFast(userdata, sizeof(DWCUserData));
     if( !DWC_CheckUserData( userdata ) ){
         DWC_CreateUserData( userdata, 'ADAJ' );
         DWC_ClearDirtyFlag( userdata );
@@ -63,17 +59,18 @@ void mydwc_createUserData( GFL_WIFI_FRIENDLIST *pWifiList )
 
 //==============================================================================
 /**
- * 自分のGSIDを取得する
+ * @brief   自分のGSIDを取得する
  * @param   GFL_WIFI_FRIENDLIST  
  * @retval  ０と－１は失敗   正の値は成功
  */
 //==============================================================================
 
-int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList)
+int mydwc_getMyGSID(void)
 {
-    DWCUserData *userdata = WifiList_GetMyUserInfo(pWifiList);
+    DWCUserData *userdata = GFI_NET_GetMyDWCUserData();//WifiList_GetMyUserInfo(pWifiList);
     DWCFriendData friendData;
 
+    GF_ASSERT(userdata);
     DWC_CreateExchangeToken(userdata,&friendData);
     return DWC_GetGsProfileId( userdata,&friendData);
 }
@@ -85,16 +82,16 @@ int mydwc_getMyGSID(GFL_WIFI_FRIENDLIST *pWifiList)
  * @retval  TRUEが成功
  */
 //==============================================================================
-#if _SAVE_PROGRAM
-BOOL mydwc_checkMyGSID(SAVEDATA *pSV)
+BOOL mydwc_checkMyGSID(void)
 {
-    GFL_WIFI_FRIENDLIST* pList = SaveData_GetWifiListData(pSV);
-    DWCUserData *userdata = WifiList_GetMyUserInfo(pList);
+    DWCUserData *userdata = GFI_NET_GetMyDWCUserData();
 
+    GF_ASSERT(userdata);
     if( DWC_CheckHasProfile( userdata )
        && DWC_CheckValidConsole( userdata ) ){
        return TRUE;
    }
    return FALSE;
 }
-#endif //_SAVE_PROGRAM
+
+#endif GFL_NET_WIFI

@@ -16,11 +16,10 @@
  * @brief   WiFiGameの初期化を行う
  * @param   packetSizeMax パケットのサイズマックス
  * @param   regulationNo  ゲームの種類
- * @param   pWiFiList     GFL_WIFI_FRIENDLIST
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi, GFL_WIFI_FRIENDLIST* pWiFiList);
+extern BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heapIDWifi);
 //==============================================================================
 /**
  * @brief   wifiのゲームを開始する
