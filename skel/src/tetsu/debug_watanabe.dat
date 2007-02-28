@@ -20,18 +20,12 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 //---------------------
 static const VecFx32 cameraTarget	= { 0, 0, 0 };
 static const VecFx32 cameraPos		= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
-static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
-
-#define cameraPerspway	( 20 * PERSPWAY_COEFFICIENT )
-#define cameraAspect	( FX32_ONE * 4 / 3 )
-#define cameraNear		( 1 << FX32_SHIFT )
-#define cameraFar		( 1024 << FX32_SHIFT )
 
 #define g3DanmRotateSpeed	( 0x200 )
 #define g3DanmFrameSpeed	( FX32_ONE )
 	
-static const VecFx32 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
-static const VecFx32 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+static const VecFx16 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+static const VecFx16 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 
 //---------------------
 static const char g3DarcPath[] = {"src/sample_graphic/test9ball.narc"};
@@ -112,49 +106,49 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define DR_OFFS_Z	( FX32_ONE*48*3)
 
 static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
-	{	G3DOBJ_BALL1, 0, 1, TRUE, 
+	{	G3DOBJ_BALL1, 0, 2, TRUE, 
 		{	{ -FX32_ONE*48, 0, -FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateX,
 	},
-	{	G3DOBJ_BALL2, 0, 1, TRUE, 
+	{	G3DOBJ_BALL2, 0, 2, TRUE, 
 		{	{ -FX32_ONE*48, 0,  FX32_ONE* 0 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateY,
 	},
-	{	G3DOBJ_BALL3, 0, 1, TRUE, 
+	{	G3DOBJ_BALL3, 0, 2, TRUE, 
 		{	{ -FX32_ONE*48, 0,  FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateZ,
 	},
-	{	G3DOBJ_BALL4, 0, 1, TRUE, 
+	{	G3DOBJ_BALL4, 0, 2, TRUE, 
 		{	{ -FX32_ONE* 0, 0, -FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateZ,
 	},
-	{	G3DOBJ_BALL5, 0, 1, TRUE, 
+	{	G3DOBJ_BALL5, 0, 2, TRUE, 
 		{	{  FX32_ONE* 0, 0,  FX32_ONE* 0 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateX,
 	},
-	{	G3DOBJ_BALL6, 0, 1, TRUE, 
+	{	G3DOBJ_BALL6, 0, 2, TRUE, 
 		{	{  FX32_ONE* 0, 0,  FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateY,
 	},
-	{	G3DOBJ_BALL7, 0, 1, TRUE, 
+	{	G3DOBJ_BALL7, 0, 2, TRUE, 
 		{	{  FX32_ONE*48, 0, -FX32_ONE*48 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},ball_rotateY,
 	},
-	{	G3DOBJ_BALL8, 0, 1, TRUE, 
+	{	G3DOBJ_BALL8, 0, 2, TRUE, 
 		{	{  FX32_ONE*48, 0,  FX32_ONE* 0 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },

@@ -9,6 +9,7 @@
 #include "gflib.h"
 #include "textprint.h"
 #include "g3d_scene.h"
+#include "g3d_camera.h"
 
 #include "main.h"
 #include "testmode.h"
@@ -102,6 +103,7 @@ typedef struct {
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
 	GFL_G3D_SCENE*			g3Dscene;
 	u32						g3DsceneObjID;
+	GFL_G3D_CAMERA*			g3Dcamera;
 
 	u16						work[16];
 }TETSU_WORK;
@@ -198,17 +200,9 @@ static BOOL	TestModeControl( void )
 			VecFx32 trans = { 0, 0, -FX32_ONE };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
-#if 0
-		//if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
-			if( tetsuWork->work[1] ){
-				GFL_DISP_DispSelect( GFL_DISP_3D_TO_MAIN );
-				tetsuWork->work[1] = 0;
-			} else {
-				GFL_DISP_DispSelect( GFL_DISP_3D_TO_SUB );
-				tetsuWork->work[1] = 1;
-			}
-		//}
-#endif
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
+			GFL_G3D_CameraOn( tetsuWork->g3Dcamera );
+		}
 		g3d_move();
 		tetsuWork->work[0]++;
 		g3d_draw();		//‚R‚cƒf[ƒ^•`‰æ
@@ -281,13 +275,8 @@ static void g3d_load( HEAPID heapID )
 												sizeof(BALL_WORK), heapID );
 	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
-
-	//ƒJƒƒ‰ƒZƒbƒg
-	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
-								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
-								cameraAspect, 0, cameraNear, cameraFar, 0 );
-	GFL_G3D_sysLookAtSet( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
-	GFL_G3D_sysLightSet( 0, (VecFx16*)&light0Vec, 0x7fff );
+	tetsuWork->g3Dcamera = GFL_G3D_CameraDefaultCreate( &cameraPos, &cameraTarget, heapID );
+	GFL_G3D_sysLightSet( 0, &light0Vec, 0x7fff );
 }
 	
 //“®ì
@@ -305,6 +294,7 @@ static void g3d_draw( void )
 //”jŠü
 static void g3d_unload( void )
 {
+	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera );
 	GFL_G3D_SceneObjDel( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData) );
 	GFL_G3D_SceneDelete( tetsuWork->g3Dscene );  
 
