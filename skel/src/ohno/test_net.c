@@ -76,6 +76,46 @@ static GFL_NETHANDLE* _pHandle=NULL;
 static GFL_NETHANDLE* _pHandleServer=NULL;
 #define _TEST_TIMING (12)
 
+#if GFL_NET_WIFI //GFL_NET_WIFI WIFI通信テスト
+
+void TEST_NET_Main(void)
+{
+    int i;
+    
+    // クライアント側のテスト
+    if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
+        switch(_testNo){
+          case _TEST_CONNECT:
+            {
+                _pHandle = GFL_NET_CreateHandle();
+                GFL_NET_WiFiLogin(_pHandle );    // wifiLogin マッチング待機へ移動
+            }
+            _testNo++;
+            break;
+          case _TEST_CONNECT2:
+            _testNo++;
+            break;
+          case _TEST_1:
+            _testNo++;
+            break;
+          case _TEST_4:
+            _testNo++;
+            break;
+          case _TEST_2:
+            _testNo++;
+            break;
+          case _TEST_3:
+            break;
+          case _TEST_END:
+            break;
+        }
+        OS_TPrintf("c %d\n",_testNo);
+    }
+
+}
+
+#else  //GFL_NET_WIFI 普通のワイヤレス通信
+
 void TEST_NET_Main(void)
 {
     u8 mac[6] = {0x00,0x09,0xbf,0x08,0x2e,0x6e};
@@ -205,6 +245,9 @@ void TEST_NET_Main(void)
 
 }
 
+#endif//GFL_NET_WIFI 
+
+
 #define SSID "GF_ORG01"
 
 static u8* _netGetSSID(void)
@@ -262,10 +305,43 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_testRecvVariableHugeSize,  GFL_NET_COMMAND_VARIABLE,      _getHugeMemoryPoolAddress},
 };
 
+#if GFL_NET_WIFI //GFL_NET_WIFI WIFI通信テスト
+
+// この二つのデータが「ともだちこーど」になります。本来はセーブする必要があります
+static DWCUserData _testUserData;
+static DWCFriendData _testFriendData[_BCON_GET_NUM];
 
 
+// 通信初期化構造体  wifi用
+GFLNetInitializeStruct aGFLNetInit = {
+    _CommPacketTbl,  // 受信関数テーブル
+    NELEMS(_CommPacketTbl), // 受信テーブル要素数
+    NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // ビーコンデータ取得関数
+    _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
+    _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
+    NULL,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+    NULL,  // 通信切断時に呼ばれる関数
+    NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    &_testFriendData[0],  // DWC形式の友達リスト	
+    &_testUserData,  // DWCのユーザデータ（自分のデータ）
+    _netGetSSID,  // 親子接続時に認証する為のバイト列  
+    1,  //gsid
+    0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    GFL_HEAPID_APP,  //元になるheapid
+    HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+    HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    2,     // 最大接続人数
+    _BCON_GET_NUM,    // 最大ビーコン収集数
+    FALSE,     // MP通信＝親子型通信モードかどうか
+    TRUE,  //wifi通信を行うかどうか
+    TRUE,     // 通信を開始するかどうか
+};
 
-// 通信初期化構造体
+#else  //GFL_NET_WIFI 普通のワイヤレス通信
+
+// 通信初期化構造体  wifi用
 GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
@@ -288,6 +364,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     TRUE,     // 通信を開始するかどうか
 };
 
+#endif //GFL_NET_WIFI
 
 void TEST_NET_Init(void)
 {

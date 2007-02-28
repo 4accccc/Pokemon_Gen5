@@ -42,7 +42,7 @@ static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_wor
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
     GFL_UI_SleepReleaseSetFunc(_sleepRelease, NULL);
-  //  TEST_NET_Init();
+    TEST_NET_Init();
 
     return GFL_PROC_RES_FINISH;
 }
@@ -71,7 +71,7 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
         TEST_RAND_Main(seed);  // RAND TEST
     }
 
-//    TEST_NET_Main();
+    TEST_NET_Main();
     
 	return GFL_PROC_RES_CONTINUE;
 }

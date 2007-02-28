@@ -20,8 +20,8 @@ LLIBRARIES		=  	gflib.a
 
 # wifiを使用する場合のLibrary定義
 LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
-NITRODWC_LIB_MODULES_   = base auth ac bm account
-NITRODWC_LIB_GSMODULES_ = common gp gstats gt2 natneg qr2 serverbrowsing
+NITRODWC_LIB_MODULES_   = base auth ac bm account util
+NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
 
 #イクニューモンコンポーネントのためのライブラリを追加 by Mori 2005.7.27
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
@@ -60,8 +60,10 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #----------------------------------------------------------------------------
 GFLIBGRADIR	= src/gfl_graphic/
 SAMPLE_GRADIR = src/sample_graphic/
+NITROLIB_DIR = src/nitrolib/
 
-FILE_TREE	= $(GFLIBGRADIR)gfl_font.dat \
+FILE_TREE	= $(NITROLIB_DIR)utility.bin \
+              $(GFLIBGRADIR)gfl_font.dat \
 			  $(SAMPLE_GRADIR)*.narc \
 			  $(SAMPLE_GRADIR)*.NCLR \
 			  $(SAMPLE_GRADIR)*.NCGR \
@@ -73,6 +75,10 @@ MAKEROM_ROMROOT  = ./
 
 MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
 
+#----------------------------------------------------------------------------
+#	ロムスペックファイル読み込みのため追加
+#----------------------------------------------------------------------------
+ROM_SPEC= default.rsf
 
 #----------------------------------------------------------------------------
 #	ターゲットファイル設定
