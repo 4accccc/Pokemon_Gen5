@@ -201,7 +201,7 @@ static BOOL	TestModeControl( void )
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
-			GFL_G3D_CameraOn( tetsuWork->g3Dcamera );
+			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera );
 		}
 		g3d_move();
 		tetsuWork->work[0]++;
