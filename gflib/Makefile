@@ -56,7 +56,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					bitmap/bmp.c bitmap/bmp_win.c \
 					string/strbuf.c string/msgdata.c string/systemfont.c \
 					g3d/g3d_system.c g3d/g3d_util.c g3d/g3d_scene.c \
-					g3d/g3d_camera.c \
+					g3d/g3d_camera.c g3d/g3d_light.c \
 					arc/arc_tool.c arc/arc_util.c \
 					clact.c \
 					string/textprint.c string/sjisconv.c \
