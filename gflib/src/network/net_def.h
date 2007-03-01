@@ -188,6 +188,8 @@ extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
 
 extern void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 
+extern void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo);
+
 
 #if GFL_NET_WIFI //wifi
 

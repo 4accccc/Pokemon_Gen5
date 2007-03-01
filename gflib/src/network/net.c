@@ -733,8 +733,22 @@ void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex)
     }
 }
 
-
 #endif // GFL_NET_WIFI
+
+//==============================================================================
+/**
+ * @brief    FatalError実行
+ * @param    pNetHandle  ネットハンドル
+ * @param    errorNo     エラー番号
+ * @return   DWCUserDataのポインタ
+ */
+//==============================================================================
+
+void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    pNet->aNetInit.errorFunc(pNetHandle, errorNo);
+}
 
 //==============================================================================
 /**

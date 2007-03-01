@@ -2619,8 +2619,10 @@ int WH_GetConnectMode(void)
    ---------------------------------------------------------------------- */
 int WH_GetLastError(void)
 {
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    return pNetWH->sErrCode;
+    return WH_ERRCODE_FATAL;
+
+//    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
+//    return pNetWH->sErrCode;
 }
 
 /*---------------------------------------------------------------------------*

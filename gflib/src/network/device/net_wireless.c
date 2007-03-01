@@ -1037,7 +1037,7 @@ static void _stateProcess(u16 bitmap)
         }
     }
     if(WH_ERRCODE_FATAL == WH_GetLastError()){
-//        CommFatalErrorFunc(0);   @@OO エラー表示を入れる必要がある 06.12.5
+        GFI_NET_FatalErrorFunc(NULL, 0);
     }
     switch (state) {
       case WH_SYSSTATE_STOP:
