@@ -10,12 +10,9 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
-struct _GFL_G3D_LIGHTING {
-	u16			num;
-	u16			color;
-	VecFx16		vec;
+struct _GFL_G3D_LIGHTSET {
+	GFL_G3D_LIGHT	light[4];
 };
-
 //=============================================================================================
 /**
  *
@@ -27,109 +24,121 @@ struct _GFL_G3D_LIGHTING {
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * ライト作成
+ * ライトセット作成
  *
- * @param	num			使用ライトナンバー
- * @param	color		ライトの色
- * @param	vec			ライト方向ベクトル
+ * @param	light		ライト設定データポインタ
+ * @param	lightCount	ライト数
  *
- * @return	g3Dlight	ライトハンドル
+ * @return	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_LIGHTING*
+GFL_G3D_LIGHTSET*
 	GFL_G3D_LightCreate
-		( const u16 num, const u16 color, const VecFx16* vec, HEAPID heapID )
+		( const GFL_G3D_LIGHTSET_SETUP* setUp, HEAPID heapID )
 {
-	GFL_G3D_LIGHTING*	g3Dlight;
+	GFL_G3D_LIGHTSET*	g3Dlightset;
+	int	i;
+
 	//管理領域確保
-	g3Dlight = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_LIGHTING) );
+	g3Dlightset = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_LIGHTSET) );
 
-	g3Dlight->num	= num;
-	g3Dlight->color	= color;
-	g3Dlight->vec	= *vec;
-
-	return g3Dlight;
+	//ライトセットを取得。セットアップ後のcolor=0は存在しないライトとみなす。
+	for( i=0; i<setUp->lightCount; i++ ){
+		g3Dlightset->light[ setUp->lightData[i].num ] = setUp->lightData[i].data;
+	}
+	return g3Dlightset;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ破棄
+ * ライトセット破棄
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_LightDelete
-		( GFL_G3D_LIGHTING* g3Dlight )
+		( GFL_G3D_LIGHTSET* g3Dlightset )
 {
-	GF_ASSERT( g3Dlight );
+	GF_ASSERT( g3Dlightset );
 
-	GFL_HEAP_FreeMemory( g3Dlight );
+	GFL_HEAP_FreeMemory( g3Dlightset );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ライト反映
+ * ライトセット反映
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_LightSwitching
-		( GFL_G3D_LIGHTING* g3Dlight )
+		( GFL_G3D_LIGHTSET* g3Dlightset )
 {
-	GF_ASSERT( g3Dlight );
+	VecFx16	initVec = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+	int	i;
+
+	GF_ASSERT( g3Dlightset );
 
 	//ライト設定
-	GFL_G3D_sysLightSet( g3Dlight->num, &g3Dlight->vec, g3Dlight->color );
+	for( i=0; i<4; i++ ){
+		if( g3Dlightset->light[i].color ){
+			GFL_G3D_sysLightSet( i, &g3Dlightset->light[i].vec, g3Dlightset->light[i].color );
+		} else {
+			GFL_G3D_sysLightSet( i, &initVec, 0 );
+		}
+	}
 }
 
 //--------------------------------------------------------------------------------------------
 /**
  * ライト方向の取得と変更
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
+ * @param	idx			ライトＩＮＤＥＸ
  * @param	vec			ライトベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_LightVecGet
-		( GFL_G3D_LIGHTING* g3Dlight, VecFx16* vec )
+		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec )
 {
-	GF_ASSERT( g3Dlight );
-	*vec = g3Dlight->vec;
+	GF_ASSERT( g3Dlightset );
+	*vec = g3Dlightset->light[ idx ].vec;
 }
 
 void
 	GFL_G3D_LightVecSet
-		( GFL_G3D_LIGHTING* g3Dlight, VecFx16* vec )
+		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec )
 {
-	GF_ASSERT( g3Dlight );
-	g3Dlight->vec = *vec;
+	GF_ASSERT( g3Dlightset );
+	g3Dlightset->light[ idx ].vec = *vec;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ色の取得と変更
+ * ライト色の取得と変更
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
+ * @param	idx			ライトＩＮＤＥＸ
  * @param	color		ライト色の格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_LightColorGet
-		( GFL_G3D_LIGHTING* g3Dlight, u16* color )
+		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color )
 {
-	GF_ASSERT( g3Dlight );
-	*color = g3Dlight->color;
+	GF_ASSERT( g3Dlightset );
+	*color = g3Dlightset->light[ idx ].color;
 }
 
 void
 	GFL_G3D_LightColorSet
-		( GFL_G3D_LIGHTING* g3Dlight, u16* color )
+		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color )
 {
-	GF_ASSERT( g3Dlight );
-	g3Dlight->color = *color;
+	GF_ASSERT( g3Dlightset );
+	g3Dlightset->light[ idx ].color = *color;
 }
 
 

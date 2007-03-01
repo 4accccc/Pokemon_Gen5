@@ -11,17 +11,8 @@
 //	Œ^éŒ¾
 //=============================================================================================
 struct _GFL_G3D_CAMERA {
-	GFL_G3D_PROJECTION_TYPE type; 
-	fx32					param1;
-	fx32					param2;
-	fx32					param3;
-	fx32					param4;
-	fx32					near;
-	fx32					far;
-	fx32					scaleW;
-	VecFx32					camPos;
-	VecFx32					camUp;
-	VecFx32					target;
+	GFL_G3D_PROJECTION	projection; 
+	GFL_G3D_LOOKAT		lookAt; 
 };
 
 //=============================================================================================
@@ -64,17 +55,17 @@ GFL_G3D_CAMERA*
 	//ŠÇ——ÌˆæŠm•Û
 	g3Dcamera = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_CAMERA) );
 
-	g3Dcamera->type		= type;
-	g3Dcamera->param1	= param1;
-	g3Dcamera->param2	= param2;
-	g3Dcamera->param3	= param3;
-	g3Dcamera->param4	= param4;
-	g3Dcamera->near		= near;
-	g3Dcamera->far		= far;
-	g3Dcamera->scaleW	= scaleW;
-	g3Dcamera->camPos	= *camPos;
-	g3Dcamera->camUp	= *camUp;
-	g3Dcamera->target	= *target;
+	g3Dcamera->projection.type		= type;
+	g3Dcamera->projection.param1	= param1;
+	g3Dcamera->projection.param2	= param2;
+	g3Dcamera->projection.param3	= param3;
+	g3Dcamera->projection.param4	= param4;
+	g3Dcamera->projection.near		= near;
+	g3Dcamera->projection.far		= far;
+	g3Dcamera->projection.scaleW	= scaleW;
+	g3Dcamera->lookAt.camPos		= *camPos;
+	g3Dcamera->lookAt.camUp			= *camUp;
+	g3Dcamera->lookAt.target		= *target;
 
 	return g3Dcamera;
 }
@@ -109,13 +100,15 @@ void
 	GF_ASSERT( g3Dcamera );
 
 	//ŽË‰eÝ’è
-	GFL_G3D_sysProjectionSet(	g3Dcamera->type,
-								g3Dcamera->param1, g3Dcamera->param2,
-								g3Dcamera->param3, g3Dcamera->param4,
-								g3Dcamera->near, g3Dcamera->far,
-								g3Dcamera->scaleW );
+	GFL_G3D_sysProjectionSet(	g3Dcamera->projection.type,
+								g3Dcamera->projection.param1, g3Dcamera->projection.param2,
+								g3Dcamera->projection.param3, g3Dcamera->projection.param4,
+								g3Dcamera->projection.near, g3Dcamera->projection.far,
+								g3Dcamera->projection.scaleW );
 	//ƒJƒƒ‰s—ñÝ’è
-	GFL_G3D_sysLookAtSet( &g3Dcamera->camPos, &g3Dcamera->camUp, &g3Dcamera->target );
+	GFL_G3D_sysLookAtSet(	&g3Dcamera->lookAt.camPos, 
+							&g3Dcamera->lookAt.camUp,
+							&g3Dcamera->lookAt.target );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -131,7 +124,7 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos )
 {
 	GF_ASSERT( g3Dcamera );
-	*camPos = g3Dcamera->camPos;
+	*camPos = g3Dcamera->lookAt.camPos;
 }
 
 void
@@ -139,7 +132,7 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos )
 {
 	GF_ASSERT( g3Dcamera );
-	g3Dcamera->camPos = *camPos;
+	g3Dcamera->lookAt.camPos = *camPos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -155,7 +148,7 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
 {
 	GF_ASSERT( g3Dcamera );
-	*camUp = g3Dcamera->camUp;
+	*camUp = g3Dcamera->lookAt.camUp;
 }
 
 void
@@ -163,7 +156,7 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
 {
 	GF_ASSERT( g3Dcamera );
-	g3Dcamera->camUp = *camUp;
+	g3Dcamera->lookAt.camUp = *camUp;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -179,7 +172,7 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target )
 {
 	GF_ASSERT( g3Dcamera );
-	*target = g3Dcamera->target;
+	*target = g3Dcamera->lookAt.target;
 }
 
 void
@@ -187,6 +180,6 @@ void
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target )
 {
 	GF_ASSERT( g3Dcamera );
-	g3Dcamera->target = *target;
+	g3Dcamera->lookAt.target = *target;
 }
 
