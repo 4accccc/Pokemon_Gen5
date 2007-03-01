@@ -14,13 +14,13 @@
 typedef struct _GFL_G3D_LIGHTSET	GFL_G3D_LIGHTSET;
 
 typedef struct {
-	u8				num;
-	GFL_G3D_LIGHT	data;
+	const u8				num;
+	const GFL_G3D_LIGHT		data;
 }GFL_G3D_LIGHT_DATA;
 
 typedef struct {
-	GFL_G3D_LIGHT_DATA*	lightData;
-	u8					lightCount;
+	const GFL_G3D_LIGHT_DATA*	lightData;
+	const u8					lightCount;
 }GFL_G3D_LIGHTSET_SETUP;
 
 //=============================================================================================
