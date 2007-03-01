@@ -11,7 +11,17 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
-typedef struct _GFL_G3D_LIGHTING	GFL_G3D_LIGHTING;
+typedef struct _GFL_G3D_LIGHTSET	GFL_G3D_LIGHTSET;
+
+typedef struct {
+	u8				num;
+	GFL_G3D_LIGHT	data;
+}GFL_G3D_LIGHT_DATA;
+
+typedef struct {
+	GFL_G3D_LIGHT_DATA*	lightData;
+	u8					lightCount;
+}GFL_G3D_LIGHTSET_SETUP;
 
 //=============================================================================================
 /**
@@ -24,62 +34,63 @@ typedef struct _GFL_G3D_LIGHTING	GFL_G3D_LIGHTING;
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * ライト作成
+ * ライトセット作成
  *
- * @param	num			使用ライトナンバー
- * @param	color		ライトの色
- * @param	vec			ライト方向ベクトル
+ * @param	light		ライト設定データポインタ
+ * @param	lightCount	ライト数
  *
- * @return	g3Dlight	ライトハンドル
+ * @return	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_G3D_LIGHTING*
+extern GFL_G3D_LIGHTSET*
 	GFL_G3D_LightCreate
-		( const u16 num, const u16 color, const VecFx16* vec, HEAPID heapID );
+		( const GFL_G3D_LIGHTSET_SETUP* setUp, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ破棄
+ * ライトセット破棄
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_LightDelete
-		( GFL_G3D_LIGHTING* g3Dlight );
+		( GFL_G3D_LIGHTSET* g3Dlightset );
 
 //--------------------------------------------------------------------------------------------
 /**
- * ライト反映
+ * ライトセット反映
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
  */
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_LightSwitching
-		( GFL_G3D_LIGHTING* g3Dlight );
+		( GFL_G3D_LIGHTSET* g3Dlightset );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ライト方向の取得と変更
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
+ * @param	idx			ライトＩＮＤＥＸ
  * @param	vec			ライトベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_LightVecGet( GFL_G3D_LIGHTING* g3Dlight, VecFx16* vec );
-extern void GFL_G3D_LightVecSet( GFL_G3D_LIGHTING* g3Dlight, VecFx16* vec );
+extern void GFL_G3D_LightVecGet( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec );
+extern void GFL_G3D_LightVecSet( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec );
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ色の取得と変更
+ * ライト色の取得と変更
  *
- * @param	g3Dlight	ライトハンドル
+ * @param	g3Dlightset	ライトセットハンドル
+ * @param	idx			ライトＩＮＤＥＸ
  * @param	color		ライト色の格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_LightColorGet( GFL_G3D_LIGHTING* g3Dlight, u16* color );
-extern void GFL_G3D_LightColorSet( GFL_G3D_LIGHTING* g3Dlight, u16* color );
+extern void GFL_G3D_LightColorGet( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color );
+extern void GFL_G3D_LightColorSet( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color );
 
 #endif
 
