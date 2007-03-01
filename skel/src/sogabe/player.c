@@ -539,7 +539,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			}
 			break;
 		case YT_PLAYER_ACT_ROTATE:
-			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
+			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir);
 				YT_PlayerRotateScreenMake(pp,0);
 				pp->seq_no=SEQ_PLAYER_ROTATE;
@@ -547,21 +547,21 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_L:
-			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
+			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_R:
-			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
+			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
 			}
 			break;
 		case YT_PLAYER_ACT_OVERTURN_C:
-			if((ps->rotate_flag+ps->overturn_flag+ps->egg_make_flag)==0){
+			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
@@ -809,7 +809,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 	int				height_tbl[]={144,130,116,102,88,74,60,46,32};
 	CLSYS_POS		pos;
 
-	ps->rotate_flag=pp->line_no+1;
+	ps->status.rotate_flag=pp->line_no+1;
 
 	left_line=ps->stoptbl[pp->line_no];
 	right_line=ps->stoptbl[pp->line_no+1];
@@ -819,13 +819,13 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 	for(i=0;i<YT_HEIGHT_MAX;i++){
 		fcp=ps->stop[left_line][i];
 		if(fcp){
-			fcp->rotate_flag=ps->rotate_flag;
+			fcp->rotate_flag=ps->status.rotate_flag;
 			fcp->wait_value=i;
 			left_height++;
 		}
 		fcp=ps->stop[right_line][i];
 		if(fcp){
-			fcp->rotate_flag=ps->rotate_flag;
+			fcp->rotate_flag=ps->status.rotate_flag;
 			fcp->wait_value=i;
 			right_height++;
 		}
@@ -840,7 +840,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 				if(fcp){
 					GFL_CLACT_WkGetWldPos(fcp->clwk,&pos);
 					if(pos.y>height_tbl[left_height]){
-						fcp->rotate_flag=ps->rotate_flag;
+						fcp->rotate_flag=ps->status.rotate_flag;
 						ps->falltbl[pp->line_no+1]=left_line;
 						ps->falltbl[pp->line_no]=right_line;
 						break;
@@ -854,7 +854,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 				if(fcp){
 					GFL_CLACT_WkGetWldPos(fcp->clwk,&pos);
 					if(pos.y>height_tbl[right_height]){
-						fcp->rotate_flag=ps->rotate_flag;
+						fcp->rotate_flag=ps->status.rotate_flag;
 						ps->falltbl[pp->line_no+1]=left_line;
 						ps->falltbl[pp->line_no]=right_line;
 						break;
@@ -886,10 +886,10 @@ static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag)
 	right_line=ps->stoptbl[pp->line_no+1];
 
 	if(flag&OVER_TURN_L){
-		ps->overturn_flag|=(1<<pp->line_no);
+		ps->status.overturn_flag|=(1<<pp->line_no);
 	}
 	if(flag&OVER_TURN_R){
-		ps->overturn_flag|=(1<<(pp->line_no+1));
+		ps->status.overturn_flag|=(1<<(pp->line_no+1));
 	}
 
 	for(i=0;i<YT_HEIGHT_MAX;i++){

@@ -91,11 +91,18 @@ typedef struct{
 	FALL_CHR_PARAM	*stop[YT_LINE_MAX][YT_HEIGHT_MAX];
 	u8				falltbl[YT_LINE_MAX];
 	u8				stoptbl[YT_LINE_MAX];
-	u16				rotate_flag			:2;		//回転フラグ
-	u16				overturn_flag		:4;		//ひっくり返しフラグ
-	u16				egg_make_check_flag	:4;		//タマゴ作成チェックフラグ
-	u16				egg_make_flag		:1;		//タマゴ作成フラグ
-	u16									:5;
+	union{
+		u16			no_active_flag;
+		struct{
+			u16		rotate_flag			:2;		//回転フラグ
+			u16		overturn_flag		:4;		//ひっくり返しフラグ
+			u16		egg_make_check_flag	:4;		//タマゴ作成チェックフラグ
+			u16		egg_make_flag		:1;		//タマゴ作成フラグ
+			u16		birth_flag			:1;		//ヨッシー生まれるフラグ
+			u16		rensa_flag			:1;		//連鎖フラグ
+			u16							:3;
+		};
+	}status;
 	u8				fall_wait;
 	u8				dummy;
 }YT_PLAYER_STATUS;
@@ -135,7 +142,8 @@ typedef	struct
 
 #define	YT_ROTATE_SPEED			(2)
 
-#define	YT_BIRTH_WAIT			(60)			//はさんだキャラ1個当たりの生まれるまでのウエイト
+#define	YT_BIRTH_WAIT			(3*FX32_ONE)		//はさんだキャラ1個当たりの生まれるまでのウエイト
+#define	YT_BIRTH_SPEED			(0x80)
 
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
 

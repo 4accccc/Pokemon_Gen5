@@ -428,7 +428,7 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 	for(player_no=0;player_no<2;player_no++){
 		ps=&gp->ps[player_no];
 		//回転処理終了チェック
-		if(ps->rotate_flag){
+		if(ps->status.rotate_flag){
 			{
 				int					i;
 				int					left_line_stop;
@@ -437,10 +437,10 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 				int					right_line_fall;
 				FALL_CHR_PARAM		*fcp;
 
-				left_line_stop=ps->stoptbl[ps->rotate_flag-1];
-				right_line_stop=ps->stoptbl[ps->rotate_flag];
-				left_line_fall=ps->falltbl[ps->rotate_flag-1];
-				right_line_fall=ps->falltbl[ps->rotate_flag];
+				left_line_stop=ps->stoptbl[ps->status.rotate_flag-1];
+				right_line_stop=ps->stoptbl[ps->status.rotate_flag];
+				left_line_fall=ps->falltbl[ps->status.rotate_flag-1];
+				right_line_fall=ps->falltbl[ps->status.rotate_flag];
 
 				for(i=0;i<YT_HEIGHT_MAX;i++){
 					fcp=ps->stop[left_line_stop][i];
@@ -469,19 +469,19 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 					}
 				}
 				if(i==YT_HEIGHT_MAX){
-					ps->rotate_flag=0;
+					ps->status.rotate_flag=0;
 				}
 			}
 		}
 		//ひっくり返し処理終了チェック
-		if(ps->overturn_flag){
+		if(ps->status.overturn_flag){
 			{
 				int					x,y,line;
 				FALL_CHR_PARAM		*fcp;
 
 				for(x=0;x<YT_LINE_MAX;x++){
 					line=ps->stoptbl[x];
-					if(ps->overturn_flag&(1<<x)){
+					if(ps->status.overturn_flag&(1<<x)){
 						for(y=0;y<YT_HEIGHT_MAX;y++){
 							fcp=ps->stop[line][y];
 							if(fcp){
@@ -493,16 +493,16 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 					}
 				}
 				if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
-					ps->overturn_flag=0;
+					ps->status.overturn_flag=0;
 				}
 			}
 		}
 		//タマゴ生成チェック
-		if(ps->egg_make_check_flag){
+		if(ps->status.egg_make_check_flag){
 			YT_EggMakeCheck(ps);
 		}
 		//タマゴ生成中チェック
-		if(ps->egg_make_flag){
+		if(ps->status.egg_make_flag){
 			{
 				YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)work;
 				int					x,y;
@@ -518,7 +518,7 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 						}
 					}
 				}
-				ps->egg_make_flag=0;
+				ps->status.egg_make_flag=0;
 			}
 		}
 	}

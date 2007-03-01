@@ -152,7 +152,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			YT_RotateActSet(fcp);
 			break;
 		}
-		if((ps->rotate_flag)||(ps->overturn_flag)||(ps->egg_make_check_flag)||(ps->egg_make_flag)){
+		if(ps->status.no_active_flag){
 			break;
 		}
 		if((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0){
@@ -176,7 +176,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				YT_AnmSeqSet(fcp,YT_ANM_LANDING);
 				GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
 				if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-					ps->egg_make_check_flag=(1<<fcp->line_no);
+					ps->status.egg_make_check_flag=(1<<fcp->line_no);
 				}
 				fcp->seq_no=SEQ_FALL_CHR_STOP;
 				break;
@@ -258,7 +258,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			fcp->offset_pos.y=0;
 			YT_ChrPosSet(fcp);
 			if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-				ps->egg_make_check_flag=(1<<fcp->line_no);
+				ps->status.egg_make_check_flag=(1<<fcp->line_no);
 			}
 			fcp->seq_no=SEQ_FALL_CHR_STOP;
 			{
@@ -303,7 +303,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				}
 				else{
 					if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-						ps->egg_make_check_flag=(1<<fcp->line_no);
+						ps->status.egg_make_check_flag=(1<<fcp->line_no);
 					}
 					fcp->seq_no=SEQ_FALL_CHR_STOP;
 				}
@@ -320,14 +320,25 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			YT_ChrPosSet(fcp);
 			fcp->seq_no=SEQ_FALL_CHR_OVERTURN;
 		}
-		if((ps->rotate_flag)||(ps->overturn_flag)||(ps->egg_make_check_flag)||(ps->egg_make_flag)){
+		if(ps->status.no_active_flag){
 			break;
 		}
 		if(fcp->birth_wait){
-			fcp->birth_wait--;
+			if(fcp->birth_wait>YT_BIRTH_SPEED){
+				fcp->birth_wait-=YT_BIRTH_SPEED;
+			}
+			else{
+				fcp->birth_wait=0;
+			}
 		}
 		else{
 			YT_YossyBirth(fcp);
+		}
+		{
+			u32	wait;
+
+			wait=20*FX32_ONE-fcp->birth_wait;
+			GFL_CLACT_WkSetAutoAnmSpeed(clwk,wait);
 		}
 		break;
 	case SEQ_FALL_CHR_VANISH_INIT:
@@ -656,8 +667,8 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 	int				egg_count=1;
 	FALL_CHR_PARAM	*fcp_p;
 
-	while(ps->egg_make_check_flag){
-		if(ps->egg_make_check_flag&1){
+	while(ps->status.egg_make_check_flag){
+		if(ps->status.egg_make_check_flag&1){
 			egg_line=ps->stoptbl[line_no];
 
 			for(egg_height=0;egg_height<YT_HEIGHT_MAX;egg_height++){
@@ -683,6 +694,13 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 					break;
 				case YT_CHR_GREEN_EGG_D:
 				case YT_CHR_RED_EGG_D:
+					//ƒ^ƒ}ƒS‚Å‚Í‚³‚ñ‚¾ŒÂ”‚ðŒvŽZ
+					fcp_p=ps->stop[egg_line][egg_height];
+					fcp_p->chr_count=chr_count*egg_count;
+					fcp_p->birth_wait=YT_BIRTH_WAIT*fcp_p->chr_count;
+					if(fcp_p->birth_wait>20*FX32_ONE){
+						fcp_p->birth_wait=20*FX32_ONE;
+					}
 					{
 						int	height;
 						int	speed_value=0;
@@ -722,15 +740,15 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 							egg_search++;
 						}
 					}
-					fcp_p=ps->stop[egg_line][egg_height];
-					fcp_p->chr_count=chr_count*egg_count;
-					fcp_p->birth_wait=YT_BIRTH_WAIT*fcp_p->chr_count;
 					egg_search=0;
 					break;
 				case YT_CHR_GREEN_EGG:
 				case YT_CHR_RED_EGG:
 					egg_count++;
 					chr_count+=fcp_p->chr_count;
+					break;
+				case YT_CHR_DEKATERESA:
+					chr_count+=2;
 					break;
 				default:
 					chr_count++;
@@ -739,7 +757,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 			}
 		}
 		line_no++;
-		ps->egg_make_check_flag=ps->egg_make_check_flag>>1;
+		ps->status.egg_make_check_flag=ps->status.egg_make_check_flag>>1;
 	}
 }
 
