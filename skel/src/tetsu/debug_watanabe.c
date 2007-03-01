@@ -102,6 +102,7 @@ typedef struct {
 	GFL_G3D_SCENE*			g3Dscene;
 	u32						g3DsceneObjID;
 	GFL_G3D_CAMERA*			g3Dcamera;
+	GFL_G3D_LIGHTSET*		g3Dlightset;
 
 	u16						work[16];
 }TETSU_WORK;
@@ -200,6 +201,7 @@ static BOOL	TestModeControl( void )
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
 			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera );
+			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset );
 		}
 		g3d_move();
 		tetsuWork->work[0]++;
@@ -274,7 +276,7 @@ static void g3d_load( HEAPID heapID )
 	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
 	tetsuWork->g3Dcamera = GFL_G3D_CameraDefaultCreate( &cameraPos, &cameraTarget, heapID );
-	GFL_G3D_sysLightSet( 0, &light0Vec, 0x7fff );
+	tetsuWork->g3Dlightset = GFL_G3D_LightCreate( &lightSetup, heapID );
 }
 	
 //“®ì
@@ -292,6 +294,7 @@ static void g3d_draw( void )
 //”jŠü
 static void g3d_unload( void )
 {
+	GFL_G3D_LightDelete( tetsuWork->g3Dlightset );
 	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera );
 	GFL_G3D_SceneObjDel( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData) );
 	GFL_G3D_SceneDelete( tetsuWork->g3Dscene );  

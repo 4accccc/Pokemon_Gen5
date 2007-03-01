@@ -24,8 +24,16 @@ static const VecFx32 cameraPos		= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
 #define g3DanmRotateSpeed	( 0x200 )
 #define g3DanmFrameSpeed	( FX32_ONE )
 	
-static const VecFx16 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
-static const VecFx16 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+//static const VecFx16 light0Vec		= { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+//static const VecFx16 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+
+static const GFL_G3D_LIGHT_DATA lightTbl[] = {
+	{ 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
+};
+
+static const GFL_G3D_LIGHTSET_SETUP lightSetup = {
+	lightTbl, NELEMS(lightTbl),
+};
 
 //---------------------
 static const char g3DarcPath[] = {"src/sample_graphic/test9ball.narc"};
