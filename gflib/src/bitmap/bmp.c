@@ -198,6 +198,19 @@ GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heap
 	bmp->size_x	=	chr->W*GFL_BG_1CHRDOTSIZ;
 	bmp->size_y	=	chr->H*GFL_BG_1CHRDOTSIZ;
 	bmp->adrs	=	GFL_HEAP_AllocMemory( heapID, chr->szByte );
+	switch(chr->pixelFmt){ 
+	case GX_TEXFMT_PLTT16:
+		bmp->col	=	GFL_BMP_16_COLOR;
+		break;
+	case GX_TEXFMT_PLTT256:
+		bmp->col	=	GFL_BMP_256_COLOR;
+		break;
+	default:
+		//G2Dにおいては、１６色、２５６色以外のPixelフォーマットはアサートにする
+		GF_ASSERT(0);
+		break;
+	}
+
 	GFL_STD_MemCopy32( chr->pRawData, bmp->adrs, chr->szByte );
 
 	GFL_HEAP_FreeMemory( src );
