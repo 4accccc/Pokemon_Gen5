@@ -126,8 +126,8 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
 	GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
 
 	while(TRUE){
-        GFLUser_Main();
-        GFLUser_Display();
+        GFL_UI_sysMain();
+        GFL_FADE_sysMain();
 		// VBLANK‘Ò‚¿
 		// ¦gflib‚É“KØ‚ÈŠÖ”‚ªo—ˆ‚½‚ç’u‚«Š·‚¦‚Ä‚­‚¾‚³‚¢
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
