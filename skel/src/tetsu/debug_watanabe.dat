@@ -28,7 +28,7 @@ static const VecFx32 cameraPos		= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
 //static const VecFx16 light1Vec		= {  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 
 static const GFL_G3D_LIGHT_DATA lightTbl[] = {
-	{ 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
+	{ 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7fff } },
 };
 
 static const GFL_G3D_LIGHTSET_SETUP lightSetup = {
