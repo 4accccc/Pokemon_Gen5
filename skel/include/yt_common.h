@@ -113,6 +113,7 @@ typedef	struct
 	int					heapID;
 	int					job_no;			//ジョブナンバー
 	int					seq_no;			//シーケンスナンバー
+	int					game_seq_no[2];	//シーケンスナンバー
 	TCBSYS				*tcbsys;
 	void				*tcb_work;
 	YT_CLACT			*clact;

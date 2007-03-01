@@ -23,6 +23,8 @@
 #define __GAME_H_GLOBAL__
 #include "game.h"
 
+#define	PLAYER1_READY	(0)
+
 static	void	YT_MainGameAct(GAME_PARAM *gp);
 static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
 static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
@@ -170,7 +172,10 @@ void	YT_InitGame(GAME_PARAM *gp)
 	}
 
 	//プレーヤー初期化
+	gp->game_seq_no[0]=0;
+	gp->game_seq_no[1]=0;
 	YT_InitPlayer(gp,0,0);
+	YT_InitPlayer(gp,1,1);
 
 	//ゲームフラグチェックタスクセット
 	gp->check_tcb=GFL_TCB_AddTask(gp->tcbsys,YT_CheckFlag,gp,TCB_PRI_PLAYER);
@@ -222,31 +227,35 @@ enum{
 
 static	void	YT_MainGameAct(GAME_PARAM *gp)
 {
-	switch(gp->seq_no){
-	case SEQ_GAME_START_WAIT:
-		if(GFL_FADE_FadeCheck()==FALSE){
-			gp->seq_no++;
-		}
-		break;
-	case SEQ_GAME_READY_CHECK:
-		switch(YT_ReadyCheck(gp,&gp->ps[0])){
-		case YT_READY_MAKE:
-			YT_ReadyAct(gp,0);
-		case YT_READY_ALREADY:
-			gp->ps[0].fall_wait=YT_FALL_WAIT;
-			gp->seq_no++;
-			break;
-		default:
-			break;
-		}
-		break;
-	case SEQ_GAME_FALL_CHECK:
-		if(YT_FallCheck(gp,&gp->ps[0])==TRUE){
-			if(--gp->ps[0].fall_wait==0){
-				gp->seq_no=SEQ_GAME_READY_CHECK;
+	int	player_no;
+
+	for(player_no=0;player_no<2;player_no++){
+		switch(gp->game_seq_no[player_no]){
+		case SEQ_GAME_START_WAIT:
+			if(GFL_FADE_FadeCheck()==FALSE){
+				gp->game_seq_no[player_no]++;
 			}
+			break;
+		case SEQ_GAME_READY_CHECK:
+			switch(YT_ReadyCheck(gp,&gp->ps[player_no])){
+			case YT_READY_MAKE:
+				YT_ReadyAct(gp,player_no);
+			case YT_READY_ALREADY:
+				gp->ps[player_no].fall_wait=YT_FALL_WAIT;
+				gp->game_seq_no[player_no]++;
+				break;
+			default:
+				break;
+			}
+			break;
+		case SEQ_GAME_FALL_CHECK:
+			if(YT_FallCheck(gp,&gp->ps[player_no])==TRUE){
+				if(--gp->ps[player_no].fall_wait==0){
+					gp->game_seq_no[player_no]=SEQ_GAME_READY_CHECK;
+				}
+			}
+			break;
 		}
-		break;
 	}
 }
 

@@ -210,7 +210,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 		else{
 			{
 				int	i;
-				int	rotate_pos[][4]={{28,52,76,100},{28,52,76,100}};
+				int	rotate_pos[][4]={{28,52,76,100},{28+128,52+128,76+128,100+128}};
 	
 				fcp->now_pos.x+=fcp->speed_value;
 				if(fcp->speed_value>0){
@@ -512,6 +512,37 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 						//LINE3
 						{
 							100, -8,	//座標(x,y)
+							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
+							0,		//優先順位
+							0,		//bg優先順位
+						},
+					},
+					//PLAYER2
+					{
+						//LINE0
+						{
+							28+128, -8,	//座標(x,y)
+							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
+							0,		//優先順位
+							0,		//bg優先順位
+						},
+						//LINE1
+						{
+							52+128, -8,	//座標(x,y)
+							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
+							0,		//優先順位
+							0,		//bg優先順位
+						},
+						//LINE2
+						{
+							 76+128, -8,	//座標(x,y)
+							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
+							0,		//優先順位
+							0,		//bg優先順位
+						},
+						//LINE3
+						{
+							100+128, -8,	//座標(x,y)
 							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
 							0,		//優先順位
 							0,		//bg優先順位
