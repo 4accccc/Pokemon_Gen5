@@ -470,6 +470,19 @@ extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
 
 extern BOOL GFL_NET_IsResetEnable(void);
 
+
+//==============================================================================
+/**
+ * @brief     äÑÇËçûÇ›íÜÇ…çsÇ§èàóùÇé¿çs
+ * @param     none
+ * @return    none
+ */
+//==============================================================================
+extern void GFL_NET_VBlankFunc(void);
+
+
+
+
 #if GFL_NET_WIFI
 #include "net_wifi.h"
 #endif //GFL_NET_WIFI

@@ -16,6 +16,7 @@
 #include "net_system.h"
 #include "net_command.h"
 #include "net_state.h"
+#include "wm_icon.h"
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
@@ -80,6 +81,22 @@ static int _numNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
+ * @brief       netHandleの中身を消す
+ * @param       pNetHandle   通信ハンドル
+ * @return      追加した番号
+ */
+//==============================================================================
+static void _deleteHandle(GFL_NETHANDLE* pNetHandle)
+{
+    if(pNetHandle->pParent){
+        GFL_HEAP_FreeMemory(pNetHandle->pParent);
+    }
+    GFL_NET_Tool_sysEnd(pNetHandle->pTool);
+    GFL_HEAP_FreeMemory(pNetHandle);
+}
+
+//==============================================================================
+/**
  * @brief       netHandleを消す 非公開関数
  * @param       pHandle   通信ハンドル
  * @return      none
@@ -92,8 +109,7 @@ void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         if(pNet->pNetHandle[i]==pHandle){
-            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
-            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
+            _deleteHandle(pNet->pNetHandle[i]);
             pNet->pNetHandle[i] = NULL;
         }
     }
@@ -112,8 +128,7 @@ static void _deleteAllNetHandle(GFL_NETSYS* pNet)
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
-            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]->pTool);
-            GFL_HEAP_FreeMemory(pNet->pNetHandle[i]);
+            _deleteHandle(pNet->pNetHandle[i]);
             pNet->pNetHandle[i] = NULL;
         }
     }
@@ -233,6 +248,7 @@ void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit)
 
         GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
+    WirelessIconEasy(pNetInit->bWiFi, pNetInit->netHeapID);
 }
 
 //==============================================================================
@@ -248,10 +264,11 @@ BOOL GFL_NET_sysExit(void)
     HEAPID netHeapID = pNet->aNetInit.netHeapID;
     HEAPID wifiHeapID = pNet->aNetInit.wifiHeapID;
     BOOL bWiFi = pNet->aNetInit.bWiFi;
-    
+
     if(GFL_NET_SystemIsInitialize()){
         return FALSE;
     }
+    WirelessIconEasyEnd();
     _deleteAllNetHandle(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;
@@ -658,6 +675,17 @@ void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet)
     GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
 }
 
+//==============================================================================
+/**
+ * @brief     割り込み中に行う処理を実行
+ * @param     none
+ * @return    none
+ */
+//==============================================================================
+void GFL_NET_VBlankFunc(void)
+{
+    WirelessIconEasyFunc();
+}
 
 #if GFL_NET_WIFI //wifi
 

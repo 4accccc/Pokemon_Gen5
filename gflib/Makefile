@@ -46,6 +46,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					network/device/dwc_rapcommon.c \
 					network/device/dwc_rapfriend.c \
 					network/device/vchat.c \
+					network/wm_icon.c \
 					network/net_system.c \
 					network/net_command.c \
 					network/net_state.c \

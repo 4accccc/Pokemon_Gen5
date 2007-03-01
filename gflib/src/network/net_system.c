@@ -14,6 +14,7 @@
 #include "device/net_wireless.h"
 #include "net_system.h"
 #include "net_command.h"
+#include "wm_icon.h"
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
@@ -818,16 +819,13 @@ BOOL GFL_NET_SystemUpdateData(void)
 {
     int j;
 
-#if 0 //通信アイコン機能ができたら出す @@OO 2006.12.13
-    if(CommStateIsWifiConnect()){
-        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
-    }
-    else if(CommMPIsInitialize()){
-        WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - WM_GetLinkLevel());
-    }
-#endif
-
     if(_pComm != NULL){
+        if( _pComm->bWifiConnect ){
+            WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
+        }
+        else if(GFL_NET_WLIsInitialize()){
+            WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - WM_GetLinkLevel());
+        }
         
         if(!_pComm->bShutDown){
 
