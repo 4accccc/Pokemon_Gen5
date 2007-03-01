@@ -31,6 +31,8 @@
 #include "bmp_win.h"
 #include "g3d_system.h"
 #include "g3d_util.h"
+#include "g3d_scene.h"
+#include "g3d_camera.h"
 
 #include "arc_util.h"
 #include "fade.h"
