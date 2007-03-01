@@ -33,6 +33,7 @@
 #include "g3d_util.h"
 #include "g3d_scene.h"
 #include "g3d_camera.h"
+#include "g3d_light.h"
 
 #include "arc_util.h"
 #include "fade.h"
