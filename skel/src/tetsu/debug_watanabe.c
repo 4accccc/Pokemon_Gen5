@@ -8,8 +8,6 @@
 //============================================================================================
 #include "gflib.h"
 #include "textprint.h"
-#include "g3d_scene.h"
-#include "g3d_camera.h"
 
 #include "main.h"
 #include "testmode.h"
