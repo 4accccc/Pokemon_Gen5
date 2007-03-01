@@ -58,6 +58,37 @@ typedef enum {
 	GFL_G3D_RES_CHKTYPE_ANM,	//アニメーションデータが存在するリソース
 }GFL_G3D_RES_CHKTYPE;
 
+//	グローバルステート構造体（射影）
+typedef struct {
+	GFL_G3D_PROJECTION_TYPE	type;	///<射影行列タイプ
+	fx32		param1;				///<パラメータ１（タイプによって使用法は異なる）
+	fx32		param2;				///<パラメータ２（タイプによって使用法は異なる）
+	fx32		param3;				///<パラメータ３（タイプによって使用法は異なる）
+	fx32		param4;				///<パラメータ４（タイプによって使用法は異なる）
+	fx32		near;				///<視点からnearクリップ面までの距離
+	fx32		far;				///<視点からfarクリップ面までの距離
+	fx32		scaleW;				///<ビューボリュームの精度調整パラメータ（使用しないときは0）
+}GFL_G3D_PROJECTION;
+
+//	グローバルステート構造体（カメラ）
+typedef struct {
+	VecFx32		camPos;		///<カメラの位置(＝視点)
+	VecFx32		camUp;		///<カメラの上方向
+	VecFx32		target;		///<カメラの焦点(＝注視点)
+} GFL_G3D_LOOKAT;
+
+//	グローバルステート構造体（レンダリングバッファ）
+typedef struct {
+	GXSortMode		aw;
+	GXBufferMode	zw;
+} GFL_G3D_SWAPBUFMODE;
+
+//	グローバルステート構造体（ライト）
+typedef struct {
+	VecFx16		vec;				///<ライト方向
+	u16			color;				///<色
+}GFL_G3D_LIGHT;
+
 //	オブジェクト描画情報構造体
 typedef struct {
 	VecFx32		trans;
