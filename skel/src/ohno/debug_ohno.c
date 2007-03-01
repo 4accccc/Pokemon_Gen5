@@ -114,13 +114,6 @@ void DebugOhnoInit(HEAPID heap_id)
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
 	GFL_UI_TP_sysInit(ctrl->debug_heap_id);
 
-    /* Vƒuƒ‰ƒ“ƒNŠ„İ’è */
-    (void)OS_SetIrqFunction(OS_IE_V_BLANK, VBlankIntr);
-    (void)OS_EnableIrqMask(OS_IE_V_BLANK);
-    (void)OS_EnableIrqMask(OS_IE_FIFO_RECV);
-    (void)OS_EnableIrq();
-    (void)OS_EnableInterrupts();
-    (void)GX_VBlankIntr(TRUE);
 
     RTC_Init();
     

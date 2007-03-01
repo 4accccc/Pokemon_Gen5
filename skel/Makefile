@@ -60,9 +60,10 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #----------------------------------------------------------------------------
 GFLIBGRADIR	= src/gfl_graphic/
 SAMPLE_GRADIR = src/sample_graphic/
-NITROLIB_DIR = src/nitrolib/
 
-FILE_TREE	= $(NITROLIB_DIR)utility.bin \
+FILE_TREE	= $(GFLIBGRADIR)utility.bin \
+			  $(GFLIBGRADIR)*.ncgr \
+			  $(GFLIBGRADIR)*.nclr \
               $(GFLIBGRADIR)gfl_font.dat \
 			  $(SAMPLE_GRADIR)*.narc \
 			  $(SAMPLE_GRADIR)*.NCLR \

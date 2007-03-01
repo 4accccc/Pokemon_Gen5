@@ -137,7 +137,7 @@ RomSpec
 	Root		/
 	File		$(MAKEROM_ROMFILES)
 
-	HostRoot	./src/nitrolib
+	HostRoot	./src/gfl_graphic
 	Root	/dwc
 	File	utility.bin
 }
