@@ -151,12 +151,12 @@ typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ば
 
 //==============================================================================
 /**
- * @brief UI初期化
+ * @brief UI起動処理(UIには初期化がboot時に行うものしかありません)
  * @param   heapID    ヒープ確保を行うID
  * @return  UISYS  workハンドル
  */
 //==============================================================================
-GLOBAL void GFL_UI_sysInit(const HEAPID heapID);
+GLOBAL void GFL_UI_boot(const HEAPID heapID);
 
 //==============================================================================
 /**

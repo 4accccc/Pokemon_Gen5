@@ -53,7 +53,7 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 #define  SCAN_PARENT_COUNT_MAX ( 16 )
 
 // 子機最大数
-#define  GFL_NET_CHILD_MAX  ( 7 )
+#define  GFL_NET_CHILD_MAX  ( 15 )
 
 // ありえないID
 #define COMM_INVALID_ID  (0xff)
@@ -67,8 +67,8 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 /// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
 #define GFL_NET_DATA_HEADER            (4)
-#define GFL_NET_CHILD_DATA_SIZE           (40)
-#define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
+//#define GFL_NET_CHILD_DATA_SIZE           (40)
+//#define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
 
 
 
@@ -99,10 +99,6 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 #define CC_BUSY_STATE  (1)  //通信の内部状態が遷移中で、接続にいけない場合
 #define CC_CONNECT_STARTING (2) // 接続関数を呼び出したら
 
-
-// MYSTATUSを送るための領域
-#define COMM_SEND_MYSTATUS_SIZE   (32)
-#define COMM_SEND_REGULATION_SIZE (32)
 
 
 
@@ -189,6 +185,10 @@ extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
 extern void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 
 extern void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo);
+
+extern int GFI_NET_GetConnectNumMax(void);
+
+extern int GFI_NET_GetSendSizeMax(void);
 
 
 #if GFL_NET_WIFI //wifi

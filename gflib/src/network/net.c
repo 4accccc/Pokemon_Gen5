@@ -204,13 +204,13 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
- * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
+ * @brief    通信のboot時初期化
  * @param    heapID    使用するtempメモリID
  * @param    errorFunc エラー時に呼び出す関数
  * @return   none
  */
 //==============================================================================
-void GFL_NET_deviceInit(HEAPID heapID, NetErrorFunc errorFunc)
+void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc)
 {
 #if GFL_NET_WIFI
     //WIFIのIPL初期設定
@@ -762,6 +762,39 @@ void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex)
 }
 
 #endif // GFL_NET_WIFI
+
+//==============================================================================
+/**
+ * @brief    接続可能なマシンの台数＝自分含む数を返す
+ * @return   接続人数
+ */
+//==============================================================================
+int GFI_NET_GetConnectNumMax(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    GF_ASSERT(pNet->aNetInit.maxConnectNum < GFL_NET_MACHINE_MAX);
+    return pNet->aNetInit.maxConnectNum;
+}
+
+
+//==============================================================================
+/**
+ * @brief    送信最大サイズを得る
+ * @return   送信サイズ
+ */
+//==============================================================================
+int GFI_NET_GetSendSizeMax(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+#ifdef PM_DEBUG
+    GF_ASSERT(pNet->aNetInit.maxConnectNum > 0);
+    GF_ASSERT(pNet->aNetInit.maxSendSize < ((WM_SIZE_MP_DATA_MAX-4)/pNet->aNetInit.maxConnectNum));
+#endif
+    return pNet->aNetInit.maxSendSize;
+}
+
+
+
 
 //==============================================================================
 /**

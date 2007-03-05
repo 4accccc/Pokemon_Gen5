@@ -390,7 +390,8 @@ static void _whInitialize(HEAPID heapID, GFL_NETWL* pNetWL, BOOL bConnect)
     // –³ü‰Šú‰»
 //    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
-    pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork);
+    pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork,
+                                       GFI_NET_GetConnectNumMax() , GFI_NET_GetSendSizeMax());
 
     if(FALSE == WH_Initialize(_GFL_NET_WLGetNETWH(), bConnect)){
         OS_TPanic("not init");
@@ -651,7 +652,8 @@ void GFL_NET_WLStealth(BOOL bStalth)
 static void _commEnd(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    GFL_HEAP_FreeMemory(pNetWL->_pWHWork);
+
+    WH_DestroyHandle(pNetWL->_pWHWork);
     GFL_HEAP_FreeMemory(pNetWL);
     _GFL_NET_SetNETWL( NULL );
 }

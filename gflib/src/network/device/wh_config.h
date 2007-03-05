@@ -29,7 +29,7 @@
 #define WH_DMA_NO                 _NETWORK_DMA_NO
 
 // 通常の MP 通信で使用するポート
-#define WH_DATA_PORT              (4)  //14
+//#define WH_DATA_PORT              (4)  //14
 
 // 通常の MP 通信で使用する優先度
 #define WH_DATA_PRIO              WM_PRIORITY_NORMAL
@@ -38,9 +38,7 @@
 #define WH_DS_PORT                13
 
 
-// 子機送信量を増やす境目の子機＋親機数
-#define COMM_WIDE_BYTE_SEND_CHILDNUM   (4) //
-#define WH_MP_4CHILD_DATA_SIZE         (GFL_NET_CHILD_DATA_SIZE*2)
+//#define WH_MP_4CHILD_DATA_SIZE         (GFL_NET_CHILD_DATA_SIZE*2)
 
 
 #endif // __WH_CONFIGH_H__

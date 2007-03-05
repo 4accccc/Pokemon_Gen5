@@ -285,57 +285,30 @@ static u16 WH_GetConnectNum(void);
 // リファレンスのワイヤレスマネージャ(WM)→図表・情報→無線通信時間計算シート
 // で計算した MP 通信1回分の所要時間が 5600 μ秒以下となることを推奨しています。
 
-#define WH_PARENT_DS_SIZE      (WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + 4)
-#define WH_CHILD_DS_SIZE       (WH_DS_DATA_SIZE)
-#define WH_PARENT_MP_SIZE      (GFL_NET_PARENT_DATA_SIZE)
-#define WH_CHILD_MP_SIZE       (GFL_NET_CHILD_DATA_SIZE)
-#define WH_MP_CHILD_DATA_SIZE  (GFL_NET_CHILD_DATA_SIZE)
-//#define WH_4CHILD_MP_SIZE       (WH_MP_4CHILD_DATA_SIZE)
 
-
-
-#define WH_PARENT_MAX_SIZE      MATH_MAX((WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + 4), GFL_NET_PARENT_DATA_SIZE)
-#define WH_CHILD_MAX_SIZE       MATH_MAX((WH_DS_DATA_SIZE), GFL_MP_CHILD_DATA_SIZE)
-//#define WH_PARENT_MAX_SIZE      (WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + 4)
-//#define WH_CHILD_MAX_SIZE       (WH_DS_DATA_SIZE)
-
-
-/* 親機受信バッファのサイズ  DS通信する場合は再計算 */
-#define WH_PARENT_RECV_BUFFER_SIZE  MATH_MAX(WM_SIZE_MP_PARENT_RECEIVE_BUFFER( WH_DS_DATA_SIZE, WH_CHILD_MAX, FALSE ) , WM_SIZE_MP_PARENT_RECEIVE_BUFFER( GFL_NET_CHILD_DATA_SIZE, WH_CHILD_MAX, FALSE ) )
-/* 親機送信バッファのサイズ */
-#define WH_PARENT_SEND_BUFFER_SIZE  WM_SIZE_MP_PARENT_SEND_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
-
-/* 子機受信バッファのサイズ */
-#define WH_CHILD_RECV_BUFFER_SIZE   WM_SIZE_MP_CHILD_RECEIVE_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
-/* 子機送信バッファのサイズ */
-#define WH_CHILD_SEND_BUFFER_SIZE   MATH_MAX(WM_SIZE_MP_CHILD_SEND_BUFFER( WH_DS_DATA_SIZE, FALSE ), MATH_MAX(WM_SIZE_MP_CHILD_SEND_BUFFER( GFL_NET_CHILD_DATA_SIZE, FALSE ), WM_SIZE_MP_CHILD_SEND_BUFFER( WH_MP_CHILD_DATA_SIZE, FALSE )))
 
 struct _WM_INFO_STRUCT {
-    WMParentParam sParentParam ATTRIBUTE_ALIGN(32);
+    WMParentParam sParentParam;
     /* WM 用システムワーク領域バッファ */
-    u8 sWmBuffer[WM_SYSTEM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
-// 内部使用する送受信バッファとそのサイズ
-    u8 sSendBuffer[MATH_MAX(WH_PARENT_SEND_BUFFER_SIZE, WH_CHILD_SEND_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
-    u8 sRecvBuffer[MATH_MAX(WH_PARENT_RECV_BUFFER_SIZE, WH_CHILD_RECV_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
-/* WEP 設定用 */
-//    u16 sWEPKey[20/sizeof(u16)] ATTRIBUTE_ALIGN(32);
-/* データシェアリング用 */
-//    WMDataSharingInfo sDSInfo ATTRIBUTE_ALIGN(32);
-//    WMDataSet sDataSet ATTRIBUTE_ALIGN(32);
-//    WMKeySetBuf sWMKeySetBuf ATTRIBUTE_ALIGN(32);
-
-    
+    u8 sWmBuffer[WM_SYSTEM_BUF_SIZE];
 /* 親機検索用 */
-    WMBssDesc sBssDesc ATTRIBUTE_ALIGN(32);
-    WMScanParam sScanParam ATTRIBUTE_ALIGN(32);
+    WMBssDesc sBssDesc;
+    WMScanParam sScanParam;
     WHStartScanCallbackFunc sScanCallback;
 
-/* WEP 設定用 */
-//    WHParentWEPKeyGeneratorFunc sParentWEPKeyGenerator;
-//    WHChildWEPKeyGeneratorFunc sChildWEPKeyGenerator;
-
+// 内部使用する送受信バッファとそのサイズ
+    u8* sSendBuffer;   //送信バッファ 32ALIGN
+    u8* sRecvBuffer;   //受信バッファ 32ALIGN
+    u8* pSendBufferBK;  //送信バッファalloc
+    u8* pRecvBufferBK;  //受信バッファalloc
     s32 sSendBufferSize;
     s32 sRecvBufferSize;
+    s32 sParentSendBufferSize;
+    s32 sParentRecvBufferSize;
+    s32 sChildSendBufferSize;
+    s32 sChildRecvBufferSize;
+    s32 parentMPSize;
+    s32 childMPSize;
 
     u16 sChannelIndex;
     u16 sAutoConnectFlag;
@@ -352,10 +325,6 @@ struct _WM_INFO_STRUCT {
 // 接続許可判定用ユーザ関数
     WHJudgeAcceptFunc sJudgeAcceptFunc;
 
-#if 0
-    //GGIDスキャンコールバック
-    fGGIDCallBack sGGIDScanCallback;
-#endif
     
     WHdisconnectCallBack disconnectCallBack;
 
@@ -1165,50 +1134,8 @@ static void WH_StateOutStartParentMP(void *arg)
         // StartMP 正常終了の通知。
         // これ以降、送受信可能になります。
 
-        if (pNetWH->sConnectMode == WH_CONNECTMODE_KS_PARENT)
-        {
-            // キーシェアリング指定だった場合は、更に StartParentKeyShare へ
-            // 移行します。
-            if (pNetWH->sSysState == WH_SYSSTATE_CONNECTED)
-            {
-#if 0
-                // 通常の MP 接続。
-                if (!WH_StateInStartParentKeyShare())
-                {
-                    WH_TRACE("WH_StateInStartParentKeyShare failed\n");
-                    WH_ChangeSysState(WH_SYSSTATE_ERROR);
-                }
-                return;
-#endif
-            }
-            else if (pNetWH->sSysState == WH_SYSSTATE_KEYSHARING)
-            {
-                // 既にキーシェアリング状態になっている模様。
-                return;
-            }
-        }
-        else if (pNetWH->sConnectMode == WH_CONNECTMODE_DS_PARENT)
-        {
-#if 0
-            // データシェアリング指定の場合は、StartDataSharing を呼びます。
-            // この関数は同期動作関数なので、WH状態の遷移はしません。
-            WMErrCode result;
-            u16 aidBitmap;
-
-            aidBitmap = (u16)((1 << (WH_CHILD_MAX + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
-            result = WM_StartDataSharing(&pNetWH->sDSInfo, WH_DS_PORT, aidBitmap, WH_DS_DATA_SIZE, TRUE);
-
-            if (result != WM_ERRCODE_SUCCESS)
-            {
-                WH_REPORT_FAILURE(result);
-                WH_ChangeSysState(WH_SYSSTATE_ERROR);
-                return;
-            }
-            // WH_TRACE("WM_StartDataSharing OK\n");
-            WH_ChangeSysState(WH_SYSSTATE_DATASHARING);
-            return;
-#endif
-        }
+        GF_ASSERT(pNetWH->sConnectMode != WH_CONNECTMODE_KS_PARENT);
+        GF_ASSERT(pNetWH->sConnectMode != WH_CONNECTMODE_DS_PARENT);
 
         WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
         break;
@@ -1342,8 +1269,8 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel,WHStartScanCal
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    pNetWH->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
-    pNetWH->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
+    pNetWH->sRecvBufferSize = pNetWH->sChildRecvBufferSize;//WH_CHILD_RECV_BUFFER_SIZE;
+    pNetWH->sSendBufferSize = pNetWH->sChildSendBufferSize;//WH_CHILD_SEND_BUFFER_SIZE;
 
     WH_TRACE("recv buffer size = %d\n", pNetWH->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", pNetWH->sSendBufferSize);
@@ -1967,53 +1894,8 @@ static void WH_StateOutStartChildMP(void *arg)
     case WM_STATECODE_MP_START:
         // StartMP が正常終了した通知。
         // これ以降、送受信可能となります。
-
-        if (pNetWH->sConnectMode == WH_CONNECTMODE_KS_CHILD)
-        {
-            // キーシェアリング指定だった場合。
-            if (pNetWH->sSysState == WH_SYSSTATE_KEYSHARING)
-            {
-                // 既にキーシェアリング状態にあるので、何もしません。
-                return;
-            }
-
-            if (pNetWH->sSysState == WH_SYSSTATE_CONNECTED)
-            {
-#if 0
-                // 更に StartChildKeyShare へ移行します。
-                if (!WH_StateInStartChildKeyShare())
-                {
-                    WH_TRACE("WH_StateInStartChildKeyShare failed\n");
-                    (void)WH_Finalize();
-                }
-                return;
-#endif
-            }
-
-        }
-        else if (pNetWH->sConnectMode == WH_CONNECTMODE_DS_CHILD)
-        {
-#if 0
-            // データシェアリング指定だった場合は、 WM_StartDataSharing を
-            // 呼びます。この関数は同期関数なので、WH状態の遷移はしていません。
-            WMErrCode result;
-            u16 aidBitmap;
-
-            aidBitmap = (u16)((1 << (WH_CHILD_MAX + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
-            result = WM_StartDataSharing(&pNetWH->sDSInfo, WH_DS_PORT, aidBitmap, WH_DS_DATA_SIZE, TRUE);
-            if (result != WM_ERRCODE_SUCCESS)
-            {
-                WH_REPORT_FAILURE(result);
-                (void)WH_Finalize();
-                return;
-            }
-
-            WH_TRACE("WH_StateOutStartChildMP : WM_StartDataSharing OK\n");
-            WH_ChangeSysState(WH_SYSSTATE_DATASHARING);
-            return;
-#endif
-        }
-
+        GF_ASSERT(pNetWH->sConnectMode != WH_CONNECTMODE_KS_CHILD);
+        GF_ASSERT(pNetWH->sConnectMode != WH_CONNECTMODE_DS_CHILD);
         WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
         break;
 
@@ -2352,9 +2234,12 @@ static BOOL WH_StateInSetMPData(void *data, u16 datasize, int port, WHSendCallba
     result = WM_SetMPDataToPortEx(WH_StateOutSetMPData,
                                   (void *)callback,
                                   data, datasize, 0xffff, port, WH_DATA_PRIO);
+    
+    
     if (result != WM_ERRCODE_OPERATING)
     {
         if(WM_ERRCODE_NO_CHILD != result){
+            OS_TPrintf("----- %d\n",datasize);
             WH_TRACE("WH_StateInSetMPData failed - %s\n", WH_GetWMErrCodeName(result));
         }
         return FALSE;
@@ -2951,14 +2836,75 @@ static s16 SelectChannel(u16 bitmap)
    Arguments:   作業領域.
    Returns:     メモリー
    ---------------------------------------------------------------------- */
-GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap)
+
+static void* _pMem = NULL;
+
+GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte)
 {
-    void* pNet = pHeap;
+    GFL_NETWM* pWmInfo = (GFL_NETWM*)pHeap;
+    u32 addr;
     
-    if(pHeap==NULL){
-        pNet = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWM)+32);
+    if(pHeap!=NULL){
+        return (GFL_NETWM*)pHeap;
     }
-    return (GFL_NETWM*)pNet;
+    _pMem = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWM)+32);
+    addr = (u32)_pMem;
+    if(addr % 32){
+        addr += 32 - (addr % 32);
+    }
+    pWmInfo = (GFL_NETWM*)addr;
+    addr = (u32)&pWmInfo->sParentParam;// ATTRIBUTE_ALIGN(32);
+    GF_ASSERT((addr%32)==0);
+    addr = (u32)&pWmInfo->sWmBuffer;// ATTRIBUTE_ALIGN(32);
+    GF_ASSERT((addr%32)==0);
+    addr = (u32)&pWmInfo->sBssDesc;// ATTRIBUTE_ALIGN(32);
+    GF_ASSERT((addr%32)==0);
+    addr = (u32)&pWmInfo->sScanParam;// ATTRIBUTE_ALIGN(32);
+    GF_ASSERT((addr%32)==0);
+
+    pWmInfo->parentMPSize = GFL_NET_DATA_HEADER + maxNum * maxByte;
+    pWmInfo->childMPSize = maxByte;
+
+    // 送受信バッファは親の分サイズ確保
+    {
+        int sendSize = pWmInfo->parentMPSize;
+        sendSize = WM_SIZE_MP_PARENT_SEND_BUFFER( sendSize, FALSE );
+        pWmInfo->sParentSendBufferSize=sendSize;
+        pWmInfo->sChildRecvBufferSize = WM_SIZE_MP_CHILD_RECEIVE_BUFFER(sendSize,FALSE);
+        pWmInfo->pSendBufferBK = GFL_HEAP_AllocMemory(heapID, sendSize+32);
+        addr = (u32)pWmInfo->pSendBufferBK;
+        if(addr % 32){
+            addr += 32 - (addr % 32);
+        }
+        pWmInfo->sSendBuffer = (u8*)addr;
+
+    }
+    {
+        int recvSize = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( pWmInfo->childMPSize, maxNum, FALSE );//32byteアライメント
+        pWmInfo->sParentRecvBufferSize = recvSize;
+        pWmInfo->sChildSendBufferSize =  WM_SIZE_MP_CHILD_SEND_BUFFER( pWmInfo->childMPSize, FALSE );
+        pWmInfo->pRecvBufferBK = GFL_HEAP_AllocMemory(heapID,recvSize+32);
+        addr = (u32)pWmInfo->pRecvBufferBK;
+        if(addr % 32){
+            addr += 32 - (addr % 32);
+        }
+        pWmInfo->sRecvBuffer = (u8*)addr;
+    }
+    return (GFL_NETWM*)pWmInfo;
+}
+
+
+/* ----------------------------------------------------------------------
+   Name:        WH_DestroyHandle
+   Description: メモリーを開放処理します
+   Arguments:   作業領域.
+   Returns:     メモリー
+   ---------------------------------------------------------------------- */
+void WH_DestroyHandle(GFL_NETWM* pWmInfo)
+{
+    GFL_HEAP_FreeMemory(pWmInfo->pRecvBufferBK);
+    GFL_HEAP_FreeMemory(pWmInfo->pSendBufferBK);
+    GFL_HEAP_FreeMemory(_pMem);
 }
 
 /* ----------------------------------------------------------------------
@@ -2971,6 +2917,7 @@ BOOL WH_Initialize(void* pHeap, BOOL bNet)
 {
     GFL_NETWM* pWmInfo = (GFL_NETWM*)pHeap;
 
+    
     pWmInfo->sRecvBufferSize = 0;
     pWmInfo->sSendBufferSize = 0;
 
@@ -3243,8 +3190,8 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry,u16 beaconPer
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    pNetWH->sRecvBufferSize = WH_PARENT_RECV_BUFFER_SIZE;
-    pNetWH->sSendBufferSize = WH_PARENT_SEND_BUFFER_SIZE;
+    pNetWH->sRecvBufferSize = pNetWH->sParentRecvBufferSize;//WH_PARENT_RECV_BUFFER_SIZE;
+    pNetWH->sSendBufferSize = pNetWH->sParentSendBufferSize;//WH_PARENT_SEND_BUFFER_SIZE;
     
     WH_TRACE("recv buffer size = %d\n", pNetWH->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", pNetWH->sSendBufferSize);
@@ -3255,21 +3202,10 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry,u16 beaconPer
     pNetWH->sParentParam.tgid = tgid;
     pNetWH->sParentParam.channel = channel;
     pNetWH->sParentParam.beaconPeriod = beaconPeriod;
-    switch(mode){
-      case WH_CONNECTMODE_MP_PARENT:
-        pNetWH->sParentParam.parentMaxSize = WH_PARENT_MP_SIZE;
-//        if(maxEntry >= COMM_WIDE_BYTE_SEND_CHILDNUM){
-            pNetWH->sParentParam.childMaxSize = WH_CHILD_MP_SIZE;
-  //      }
-    //    else{
-      //      pNetWH->sParentParam.childMaxSize = WH_4CHILD_MP_SIZE;
-        //}
-        break;
-      case WH_CONNECTMODE_DS_PARENT:
-        pNetWH->sParentParam.parentMaxSize = WH_PARENT_DS_SIZE;
-        pNetWH->sParentParam.childMaxSize = WH_CHILD_DS_SIZE;
-        break;
-    }
+
+    GF_ASSERT(mode == WH_CONNECTMODE_MP_PARENT);
+    pNetWH->sParentParam.parentMaxSize = pNetWH->parentMPSize;
+    pNetWH->sParentParam.childMaxSize = pNetWH->childMPSize;
     pNetWH->sParentParam.maxEntry = maxEntry;
     pNetWH->sParentParam.CS_Flag = 0;
     pNetWH->sParentParam.multiBootFlag = 0;
@@ -3321,8 +3257,10 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    pNetWH->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
-    pNetWH->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
+    pNetWH->sRecvBufferSize = pNetWH->sChildRecvBufferSize;//WH_CHILD_RECV_BUFFER_SIZE;
+    pNetWH->sSendBufferSize = pNetWH->sChildSendBufferSize;//WH_CHILD_SEND_BUFFER_SIZE;
+//    pNetWH->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
+//    pNetWH->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
 
     WH_TRACE("recv buffer size = %d\n", pNetWH->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", pNetWH->sSendBufferSize);

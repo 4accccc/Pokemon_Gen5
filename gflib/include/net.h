@@ -44,9 +44,6 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
 #endif
 
-// @@OO セーブのプログラムができたら反映
-#define _SAVE_PROGRAM  (0)
-
 
 /// @brief 通信管理構造体
 typedef struct _GFL_NETSYS GFL_NETSYS;
@@ -141,6 +138,7 @@ typedef struct{
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
   u8 maxConnectNum;         ///< 最大接続人数
+  u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
   u8 bMPMode;               ///< MP通信モードかどうか
   u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
@@ -166,6 +164,7 @@ typedef struct{
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
   u8 maxConnectNum;         ///< 最大接続人数
+  u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
   u8 bMPMode;               ///< MP通信モードかどうか
   u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
@@ -180,13 +179,13 @@ typedef struct{
 
 //==============================================================================
 /**
- * @brief    通信ハードウエアの初期化  マシン起動時に呼ぶ必要がある　対になるendは無い
+ * @brief    通信のブート時初期化
  * @param    heapID  使用するtempメモリID
  * @param    errorFunc  エラー時に呼び出す画面表示関数
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_deviceInit(HEAPID heapID, NetErrorFunc errorFunc);
+extern void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc);
 //==============================================================================
 /**
  * @brief   通信初期化

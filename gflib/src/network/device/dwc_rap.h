@@ -3,10 +3,6 @@
 
 #include <dwc.h>
 
-//#if _SAVE_PROGRAM
-//#include "savedata.h"
-//#endif
-//#include "wifilist.h"
 
 // 受信コールバック型。WHReceiverFuncと同形
 typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);

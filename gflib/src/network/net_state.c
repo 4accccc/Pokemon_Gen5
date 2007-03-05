@@ -918,6 +918,7 @@ void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void*
 }
 
 //--------------------------wifi------------------------------------------------
+#if GFL_NET_WIFI
 
 //==============================================================================
 /**
@@ -1210,14 +1211,12 @@ void GFL_NET_StateRecvWifiExit(const int netID, const int size, const void* pDat
  * @retval  none
  */
 //==============================================================================
-
 void GFL_NET_StateSendWifiMatchEnd(GFL_NETHANDLE* pNetHandle)
 {
     u8 id = GFL_NET_SystemGetCurrentID();
 
     GFL_NET_SendData(pNetHandle, GFL_NET_CMD_WIFI_EXIT,&id);
 }
-
 
 //==============================================================================
 /**
@@ -1386,6 +1385,7 @@ void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HE
 
     _CHANGE_STATE(_wifiLoginInit, 0);
 }
+#endif  //GFL_NET_WIFI
 
 //--------------------------errfunc------------------------------------------------
 #define DEBUG_OHNO 0

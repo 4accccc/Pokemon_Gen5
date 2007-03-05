@@ -35,26 +35,30 @@
 // 定義
 //==============================================================================
 
-/// クライアント送信用キューのバッファサイズ
+/// クライアント送信用キューの本数
 #define _SENDQUEUE_NUM_MAX  (100)
-/// サーバー送信用キューのバッファサイズ
+/// サーバー送信用キューの本数
 #define _SENDQUEUE_SERVER_NUM_MAX      (280)
 
 //子機送信バッファのサイズ    8台つなぐ場合の任天堂の推奨バイト数
-#define _SEND_BUFF_SIZE_CHILD  GFL_NET_CHILD_DATA_SIZE
+//#define _SEND_BUFF_SIZE_CHILD  GFL_NET_CHILD_DATA_SIZE
 //子機送信バッファのサイズ    ４台以下接続時の送信バイト数
-#define _SEND_BUFF_SIZE_4CHILD  GFL_NET_CHILD_DATA_SIZE
-// 子機RING送信バッファサイズ
-#define _SEND_RINGBUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_CHILD * 22)
+//#define _SEND_BUFF_SIZE_4CHILD  GFL_NET_CHILD_DATA_SIZE
+
+// 子機RING送信係数
+#define _SEND_RINGBUFF_FACTOR_CHILD  (22)
+// 親機RING送信係数
+#define _SEND_RINGBUFF_FACTOR_PARENT  (2)
+
 //親機送信バッファのサイズ
-#define _SEND_BUFF_SIZE_PARENT  GFL_NET_PARENT_DATA_SIZE
+//#define _SEND_BUFF_SIZE_PARENT  GFL_NET_PARENT_DATA_SIZE
 // 親機RING送信バッファサイズ
-#define _SEND_RINGBUFF_SIZE_PARENT  (_SEND_BUFF_SIZE_PARENT * 2)
+//#define _SEND_RINGBUFF__PARENT  (_SEND_BUFF_SIZE_PARENT * 2)
 
 // 子機受信バッファのサイズ
-#define _RECV_BUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_PARENT-1)
+//#define _RECV_BUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_PARENT-1)
 // 親機受信バッファサイズ
-#define _RECV_BUFF_SIZE_PARENT (_SEND_BUFF_SIZE_CHILD-1)
+//#define _RECV_BUFF_SIZE_PARENT (_SEND_BUFF_SIZE_CHILD-1)
 
 
 
@@ -107,10 +111,10 @@ typedef struct{
 
 typedef struct{
     /// ----------------------------子機用＆親機用BUFF
-    u8 sSendBuf[_SEND_BUFF_SIZE_4CHILD];          ///<  子機の送信用バッファ
-    u8 sSendBufRing[_SEND_RINGBUFF_SIZE_CHILD];  ///<  子機の送信リングバッファ
-    u8 sSendServerBuf[_SEND_BUFF_SIZE_PARENT];          ///<  親機の送信用バッファ
-    u8 sSendServerBufRing[_SEND_RINGBUFF_SIZE_PARENT];
+    u8* sSendBuf;          ///<  子機の送信用バッファ
+    u8* sSendBufRing;  ///<  子機の送信リングバッファ
+    u8* sSendServerBuf;          ///<  親機の送信用バッファ
+    u8* sSendServerBufRing;
     u8* pMidRecvBufRing;          ///< 受け取るバッファをバックアップする DS専用
     u8* pServerRecvBufRing;       ///< 親機側受信バッファ
     u8* pRecvBufRing;             ///< 子機が受け取るバッファ
@@ -198,8 +202,6 @@ static void _queueSet(int restSize);
 static void _queueSetServer(int restSize);
 static void _spritDataSendFunc(void);
 
-static u16 _getUserMaxSendByte(void);
-
 
 //==============================================================================
 /**
@@ -210,19 +212,31 @@ static u16 _getUserMaxSendByte(void);
 
 static int _getUserMaxNum(void)
 {
-    return 5;  // 最大接続人数 @@OO 初期化構造体から得る
+    return GFI_NET_GetConnectNumMax();
 }
 
 //==============================================================================
 /**
- * @brief   最小接続人数を得る
- * @return  最大接続人数
+ * @brief   子機送信byte数を得ます
+ * @retval  子機送信サイズ
  */
 //==============================================================================
 
-static int _getUserMinNum(void)
+static int _getUserMaxSendByte(void)
 {
-    return 5;  // 最小接続人数 @@OO 初期化構造体から得る
+    return GFI_NET_GetSendSizeMax();
+}
+
+//==============================================================================
+/**
+ * @brief   親機送信byte数を得ます
+ * @retval  親機送信サイズ
+ */
+//==============================================================================
+
+static int _getUserMaxSendByteParent(void)
+{
+    return GFI_NET_GetSendSizeMax()*GFI_NET_GetConnectNumMax()+GFL_NET_DATA_HEADER;
 }
 
 //==============================================================================
@@ -241,6 +255,8 @@ static BOOL _commInit(int packetSizeMax, HEAPID heapID)
 
     if(_pComm==NULL){
         int machineMax = _getUserMaxNum();
+        int parentSize = _getUserMaxSendByteParent();
+        
         NET_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
         _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
@@ -255,6 +271,13 @@ static BOOL _commInit(int packetSizeMax, HEAPID heapID)
         _pComm->pMidRecvBufRing = GFL_HEAP_AllocMemory(heapID, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする DS専用
         // キューの初期化
 
+
+        _pComm->sSendBuf = GFL_HEAP_AllocMemory(heapID, _getUserMaxSendByte()); 
+        _pComm->sSendBufRing = GFL_HEAP_AllocMemory(heapID, _getUserMaxSendByte()*_SEND_RINGBUFF_FACTOR_CHILD);
+        _pComm->sSendServerBuf = GFL_HEAP_AllocMemory(heapID, parentSize);
+        _pComm->sSendServerBufRing = GFL_HEAP_AllocMemory(heapID, parentSize * _SEND_RINGBUFF_FACTOR_PARENT);
+
+        
         GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, heapID);
         GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgrServer, _SENDQUEUE_SERVER_NUM_MAX, &_pComm->sendServerRing, heapID);
 
@@ -279,17 +302,12 @@ static void _commCommandInit(void)
 {
     void* pWork;
     int i;
+    int machineMax = _getUserMaxNum();
+    int parentSize = _getUserMaxSendByteParent();
+    int childSize = _getUserMaxSendByte();
 
-    // ワークの初期化
-//    NET_PRINT("コマンド再初期化\n");
-    
-//    _pComm->sendSwitch = 0;
-   // _pComm->sendServerSwitch = 0;
-    
     // 親機のみの送受信
     {
-        int machineMax = _getUserMaxNum();
-
         NET_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
         MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
         for(i = 0; i< machineMax;i++){
@@ -308,18 +326,18 @@ static void _commCommandInit(void)
                                _pComm->packetSizeMax);
         }
     }
-    MI_CpuFill8(_pComm->sSendServerBufRing, 0, _SEND_RINGBUFF_SIZE_PARENT);
+    MI_CpuFill8(_pComm->sSendServerBufRing, 0, parentSize * _SEND_RINGBUFF_FACTOR_PARENT);
     GFL_NET_RingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
-                       _SEND_RINGBUFF_SIZE_PARENT);
-    for(i = 0; i < _SEND_BUFF_SIZE_PARENT; i++){
+                       parentSize * _SEND_RINGBUFF_FACTOR_PARENT);
+    for(i = 0; i < parentSize; i++){
         _pComm->sSendServerBuf[i] = GFL_NET_CMD_NONE;
     }
     // 子機の送受信
-    MI_CpuFill8(_pComm->sSendBufRing, 0, _SEND_RINGBUFF_SIZE_CHILD);
-    GFL_NET_RingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
+    MI_CpuFill8(_pComm->sSendBufRing, 0, childSize*_SEND_RINGBUFF_FACTOR_CHILD);
+    GFL_NET_RingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, childSize*_SEND_RINGBUFF_FACTOR_CHILD);
 
     _pComm->sSendBuf[0] = _INVALID_HEADER;
-    for(i = 1;i < _SEND_BUFF_SIZE_4CHILD;i++){
+    for(i = 1;i < childSize;i++){
         _pComm->sSendBuf[i] = GFL_NET_CMD_NONE;
     }
     MI_CpuFill8(_pComm->pRecvBufRing, 0, _pComm->packetSizeMax*2);
@@ -349,88 +367,6 @@ static void _commCommandInit(void)
     
     _sendCallBackServer = _SEND_CB_FIRST_SENDEND;
     _sendCallBack = _SEND_CB_FIRST_SENDEND;
-
-        // キューのリセット
-    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgr);
-    GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
-    _pComm->bResetState = FALSE;
-}
-
-//==============================================================================
-/**
- * @brief   親子共通、DSMPを交換する場合に呼ばれる
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _commCommandInitChange2(void)
-{
-    void* pWork;
-    int i;
-
-//    _pComm->randPadType = 0;
-//    _pComm->randPadStep = 0;
-//    _pComm->sendSwitch = 0;
-//    _pComm->sendServerSwitch = 0;
-    
-    // 親機のみの送受信
-    {
-        int machineMax = _getUserMaxNum();
-
-        NET_PRINT("packet %d %d\n",_pComm->packetSizeMax,machineMax);
-        MI_CpuFill8(_pComm->pServerRecvBufRing, 0, _pComm->packetSizeMax * machineMax);
-        for(i = 0; i< machineMax;i++){
-            GFL_NET_RingInitialize(&_pComm->recvServerRing[i],
-                               &_pComm->pServerRecvBufRing[i*_pComm->packetSizeMax],
-                               _pComm->packetSizeMax);
-        }
-
-        MI_CpuFill8(_pComm->pMidRecvBufRing, 0, _pComm->packetSizeMax * machineMax );
-        for(i = 0; i < machineMax; i++){
-            GFL_NET_RingInitialize(&_pComm->recvMidRing[i],
-                               &_pComm->pMidRecvBufRing[i * _pComm->packetSizeMax],
-                               _pComm->packetSizeMax);
-        }
-    }
-    MI_CpuFill8(_pComm->sSendServerBufRing, 0, _SEND_RINGBUFF_SIZE_PARENT);
-    GFL_NET_RingInitialize(&_pComm->sendServerRing, _pComm->sSendServerBufRing,
-                       _SEND_RINGBUFF_SIZE_PARENT);
-    for(i = 0; i < _SEND_BUFF_SIZE_PARENT; i++){
-        _pComm->sSendServerBuf[i] = GFL_NET_CMD_NONE;
-    }
-    // 子機の送受信
-    MI_CpuFill8(_pComm->sSendBufRing, 0, _SEND_RINGBUFF_SIZE_CHILD);
-    GFL_NET_RingInitialize(&_pComm->sendRing, _pComm->sSendBufRing, _SEND_RINGBUFF_SIZE_CHILD);
-
-    _pComm->sSendBuf[0] = _INVALID_HEADER;
-    for(i = 1;i < _SEND_BUFF_SIZE_4CHILD;i++){
-        _pComm->sSendBuf[i] = GFL_NET_CMD_NONE;
-    }
-    MI_CpuFill8(_pComm->pRecvBufRing, 0, _pComm->packetSizeMax*2);
-    GFL_NET_RingInitialize(&_pComm->recvRing, _pComm->pRecvBufRing, _pComm->packetSizeMax*2);
-
-    _pComm->bNextSendData = FALSE;
-    _pComm->bNextSendDataServer = FALSE;
-    for(i = 0; i< GFL_NET_MACHINE_MAX;i++){
-   //     _pComm->recvDSCatchFlg[i] = 0;  // 通信をもらったことを記憶
-        _pComm->bFirstCatch[i] = TRUE;
-        _pComm->recvCommServer[i].valCommand = GFL_NET_CMD_NONE;
-        _pComm->recvCommServer[i].valSize = 0xffff;
-        _pComm->recvCommServer[i].pRecvBuff = NULL;
-        _pComm->recvCommServer[i].dataPoint = 0;
-    }
-    _pComm->bWifiSendRecv = TRUE;
-    _pComm->recvCommClient.valCommand = GFL_NET_CMD_NONE;
-    _pComm->recvCommClient.valSize = 0xffff;
-    _pComm->recvCommClient.pRecvBuff = NULL;
-    _pComm->recvCommClient.dataPoint = 0;
-
-    _pComm->bFirstCatchP2C = TRUE;
-    //_pComm->bSendNoneSend = TRUE;
-    
-//    _sendCallBackServer = _SEND_CB_SECOND_SENDEND;
-//    _sendCallBack = _SEND_CB_SECOND_SENDEND;
 
         // キューのリセット
     GFL_NET_QueueManagerReset(&_pComm->sendQueueMgr);
@@ -763,6 +699,10 @@ void GFL_NET_SystemFinalize(void)
         GFL_HEAP_FreeMemory(_pComm->pMidRecvBufRing);
         GFL_NET_QueueManagerFinalize(&_pComm->sendQueueMgrServer);
         GFL_NET_QueueManagerFinalize(&_pComm->sendQueueMgr);
+        GFL_HEAP_FreeMemory(_pComm->sSendBuf);
+        GFL_HEAP_FreeMemory(_pComm->sSendBufRing);
+        GFL_HEAP_FreeMemory(_pComm->sSendServerBuf);
+        GFL_HEAP_FreeMemory(_pComm->sSendServerBufRing);
         GFL_HEAP_FreeMemory(_pComm);
         _pComm = NULL;
     }
@@ -1035,7 +975,7 @@ static void _updateMpDataServer(void)
             return;
         }
     }
-    mcSize = _getUserMaxSendByte();
+//    mcSize = _getUserMaxSendByte();
     machineMax = _getUserMaxNum();
     if(_sendCallBackServer == _SEND_CB_NONE){
         _sendCallBackServer++;
@@ -1045,8 +985,8 @@ static void _updateMpDataServer(void)
         }
         if( (GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()))  && !GFL_NET_SystemGetAloneMode()){
             if(!GFL_NET_WL_SendData(_pComm->sSendServerBuf,
-                            _SEND_BUFF_SIZE_PARENT,
-                            _sendServerCallback)){
+                                    _getUserMaxSendByteParent(),
+                                    _sendServerCallback)){
                 _sendCallBackServer--;
             }
         }
@@ -1065,7 +1005,7 @@ static void _updateMpDataServer(void)
             // 親機自身に子機の動きをさせるためここでコールバックを呼ぶ
             _commRecvCallback(COMM_PARENT_ID,
                               (u16*)_pComm->sSendServerBuf,
-                              _SEND_BUFF_SIZE_PARENT);
+                              _getUserMaxSendByteParent());
         }
 
         if( !(GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()))  || GFL_NET_SystemGetAloneMode() ){
@@ -1116,7 +1056,7 @@ static void _dataMpServerStep(void)
                 _sendCallBackServer = _SEND_CB_NONE;
             }
 
-            if( mydwc_sendToClient( _pComm->sSendServerBuf, WH_MP_4CHILD_DATA_SIZE*2 )){
+            if( mydwc_sendToClient( _pComm->sSendServerBuf, _getUserMaxSendByte()*2 )){
                 OHNO_SP_PRINT("send %d \n",_pComm->sSendServerBuf[0]);
                 _sendCallBackServer = _SEND_CB_FIRST_SENDEND;
                 _pComm->countSendRecvServer[0]++; // wifi server
@@ -1240,7 +1180,7 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
             return;
         }
         if(recvSize!=0){
-            DEBUG_DUMP(&adr[0], _SEND_BUFF_SIZE_CHILD,"MP");
+            DEBUG_DUMP(&adr[0], _getUserMaxSendByte(),"MP");
         }
         adr += GFL_NET_DATA_HEADER;      // ヘッダー１バイト読み飛ばす + Bitmapでーた + サイズデータ
         GFL_NET_RingPuts(&_pComm->recvRing , adr, recvSize);
@@ -1294,11 +1234,11 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
 //        _pComm->recvDSCatchFlg[aid]++;  // 通信をもらったことを記憶
     }else{   // MPモード
         adr++;
-        if(_RECV_BUFF_SIZE_PARENT > GFL_NET_RingDataRestSize(&_pComm->recvServerRing[aid])){
+        if(_getUserMaxSendByte() > GFL_NET_RingDataRestSize(&_pComm->recvServerRing[aid])){
             NET_PRINT("Error Throw:受信オーバー\n");
             return;
         }
-        GFL_NET_RingPuts(&_pComm->recvServerRing[aid] , adr, _RECV_BUFF_SIZE_PARENT);
+        GFL_NET_RingPuts(&_pComm->recvServerRing[aid] , adr, _getUserMaxSendByte()-1);
     }
 }
 
@@ -1512,22 +1452,22 @@ static void _setSendDataServer(u8* pSendBuff)
 
         {
             SEND_BUFF_DATA buffData;
-            buffData.size = _SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER;
+            buffData.size = _getUserMaxSendByteParent() - GFL_NET_DATA_HEADER;
             buffData.pData = &pSendBuff[GFL_NET_DATA_HEADER];
             if(GFL_NET_QueueGetData(&_pComm->sendQueueMgrServer, &buffData, FALSE)){
                 _pComm->bNextSendDataServer = FALSE;
-                size = (_SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER) - buffData.size;
+                size = (_getUserMaxSendByteParent() - GFL_NET_DATA_HEADER) - buffData.size;
             }
             else{
                 _pComm->bNextSendDataServer = TRUE;
-                size = _SEND_BUFF_SIZE_PARENT - GFL_NET_DATA_HEADER;
+                size = _getUserMaxSendByteParent() - GFL_NET_DATA_HEADER;
             }
             pSendBuff[2] = (size >> 8) & 0xff;
             pSendBuff[3] = size & 0xff;
         }
     }
 #if 0
-    DEBUG_DUMP(pSendBuff, _SEND_BUFF_SIZE_PARENT, "MP SERVER SEND");
+    DEBUG_DUMP(pSendBuff, _getUserMaxSendByteParent(), "MP SERVER SEND");
 #endif
 }
 
@@ -1941,49 +1881,6 @@ BOOL GFL_NET_SystemIsError(void)
         }
     }
     return GFL_NET_WLIsError();
-}
-
-//==============================================================================
-/**
- * @brief   サービス番号に対応した子機送信byte数を得ます
- * サービス番号は include/communication/comm_def.hにあります
- * @param   serviceNo サービス番号
- * @retval  子機台数
- */
-//==============================================================================
-
-static u16 _getUserMaxSendByte(void)
-{
-    if(_transmissonType() == _MP_MODE){
-        return _SEND_BUFF_SIZE_CHILD;
-    }
-    return _SEND_BUFF_SIZE_4CHILD;
-}
-
-//==============================================================================
-/**
- * @brief   最大接続人数を得る
- * @param   none
- * @retval  最大接続人数
- */
-//==============================================================================
-
-int GFL_NET_SystemGetMaxEntry(int service)
-{
-    return _getUserMaxNum();
-}
-
-//==============================================================================
-/**
- * @brief   最小接続人数を得る
- * @param   none
- * @retval  最小接続人数
- */
-//==============================================================================
-
-int GFL_NET_SystemGetMinEntry(int service)
-{
-    return _getUserMinNum();
 }
 
 //==============================================================================
