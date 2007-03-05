@@ -135,7 +135,6 @@ static	void	game_init(GAME_PARAM *gp)
 	GFL_FADE_sysInit(GFL_HEAPID_APP);
 
 	//タッチパネル初期化
-	GFL_UI_sysInit(GFL_HEAPID_APP);
 	GFL_UI_TP_sysInit(GFL_HEAPID_APP);
 
 	//セルアクター初期化

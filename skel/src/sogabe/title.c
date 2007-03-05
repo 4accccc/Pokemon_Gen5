@@ -145,6 +145,12 @@ void	YT_MainTitle(GAME_PARAM *gp)
 			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
 			gp->seq_no++;
 		}
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_SELECT){ // セレクトボタンが押された
+            gp->sNetParam.pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
+            GFL_NET_ChangeoverConnect(gp->sNetParam.pNetHandle[0]); // 自動接続
+			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->seq_no++;
+		}
 		break;
 	case YT_SEQ_TITLE_END:
 		if(GFL_FADE_FadeCheck()==FALSE){

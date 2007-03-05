@@ -596,6 +596,9 @@ static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp)
 	GFL_CLACT_WkSetWldPos(fcp->clwk,&pos);
 
 	//通信対戦時には、座標を送信する
+
+//    GFL_NET_SendData();
+
 }
 
 //----------------------------------------------------------------------------

@@ -306,12 +306,14 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_testRecvVariableHugeSize,  GFL_NET_COMMAND_VARIABLE,      _getHugeMemoryPoolAddress},
 };
 
+#define _MAXNUM (2)     // 接続最大
+#define _MAXSIZE (120)  // 送信最大サイズ
+
 #if GFL_NET_WIFI //GFL_NET_WIFI WIFI通信テスト
 
 // この二つのデータが「ともだちこーど」になります。本来はセーブする必要があります
 static DWCUserData _testUserData;
 static DWCFriendData _testFriendData[_BCON_GET_NUM];
-
 
 // 通信初期化構造体  wifi用
 GFLNetInitializeStruct aGFLNetInit = {
@@ -333,7 +335,8 @@ GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    2,     // 最大接続人数
+    _MAXNUM,     // 最大接続人数
+    _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     FALSE,     // MP通信＝親子型通信モードかどうか
     TRUE,  //wifi通信を行うかどうか
@@ -358,7 +361,8 @@ GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-    2,     // 最大接続人数
+    _MAXNUM,     // 最大接続人数
+    _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか

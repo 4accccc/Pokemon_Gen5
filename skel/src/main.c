@@ -88,9 +88,9 @@ static	void	SkeltonVBlankFunc(void)
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
-    //WIFIを使用する場合 通信ハードウエアよりの初期設定
-    GFL_NET_deviceInit( GFL_HEAPID_APP, FatalError_Disp );
 
+    // 通信ブート処理 VBlank割り込み後に行うためここに記述
+    GFL_NET_boot( GFL_HEAPID_APP, FatalError_Disp );
 	/* 起動プロセスの設定 */
 	TestModeSet();	//←サンプルデバッグモード
 }

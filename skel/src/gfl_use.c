@@ -86,7 +86,7 @@ void GFLUser_Init(void)
 	//GFL_ARC_SysInit(...);
 
 	//UIシステム初期化
-	GFL_UI_sysInit(GFL_HEAPID_SYSTEM);
+	GFL_UI_boot(GFL_HEAPID_SYSTEM);
 
 	//PROCシステム初期化
 	GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);

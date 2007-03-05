@@ -17,6 +17,8 @@
 #define GLOBAL extern
 #endif
 
+#include "yt_net.h"
+
 //ジョブナンバー定義
 enum{
 	YT_InitTitleNo=0,
@@ -120,6 +122,7 @@ typedef	struct
 	GFL_AREAMAN			*clact_area;
 	YT_PLAYER_STATUS	ps[2];
 	u8					default_fall_wait;
+    NET_PARAM           sNetParam;   //通信用構造体
 	TCB					*check_tcb;
 }GAME_PARAM;
 
