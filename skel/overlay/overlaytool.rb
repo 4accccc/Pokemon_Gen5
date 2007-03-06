@@ -1,8 +1,9 @@
 #DEFAULT_LSFFILE		= "default.lsf"
+OVERLAY_DIR			= "overlay"
 MAKE_PROG_FILE  	= "make_prog_files"
-OUTPUT_LSFFILE  	= "main.lsf"
-OUTPUT_OVERLAYFILES	= "overlay_files"
-OUTPUT_OVERLAYTEXT  = "overlaymap.txt"
+OUTPUT_LSFFILE  	= OVERLAY_DIR + "/main.lsf"
+OUTPUT_OVERLAYFILES	= OVERLAY_DIR + "/overlay_files"
+OUTPUT_OVERLAYTEXT  = OVERLAY_DIR + "/overlaymap.txt"
 
 MATCH_KEYWORD	 = /\A#===>/			# 行頭が「#===>」
 MATCH_LIB        = /^#LIB=>/            # ライブラリを含める場合
