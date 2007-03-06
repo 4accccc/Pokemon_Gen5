@@ -188,24 +188,23 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 #オーバーレイに該当するファイルがコンパルターゲットになるようにする
 File.open(OUTPUT_OVERLAYFILES,"w"){|file|
 	for i in 3..overlay_name.size-1
-	if i==3 then
-		file.printf("SRCS_OVERLAY\t=\t")
+		if i==3 then
+			file.printf("SRCS_OVERLAY\t=\t")
+		end
+		file.printf("\t\t\t$(%s)",overlay_name[i])
+		if i!=overlay_name.size-1 then
+			file.printf("\t\\\n",overlay_name[i])
+		else
+			file.printf("\n")
+		end
 	end
-	file.printf("\t\t\t$(%s)",overlay_name[i])
-	if i!=overlay_name.size-1 then
-		file.printf("\t\\\n",overlay_name[i])
-	else
-		file.printf("\n")
-	end
-
-end
 
 }
 
 
 #オーバーレイのターゲットネームとその番号をテキストに吐き出す
 File.open(OUTPUT_OVERLAYTEXT,"w"){|file|
-	for i in 1..overlay_count-1
+	for i in 0..overlay_count-1
 		file.printf( " ID 0x%x = %s\n",i,overlay_name[i+3].downcase.sub(/srcs_overlay_/,""));
 	end
 }
