@@ -101,8 +101,8 @@ typedef struct {
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
 	GFL_G3D_SCENE*			g3Dscene;
 	u32						g3DsceneObjID;
-	GFL_G3D_CAMERA*			g3Dcamera;
-	GFL_G3D_LIGHTSET*		g3Dlightset;
+	GFL_G3D_CAMERA*			g3Dcamera[4];
+	GFL_G3D_LIGHTSET*		g3Dlightset[4];
 
 	u16						work[16];
 }TETSU_WORK;
@@ -200,8 +200,16 @@ static BOOL	TestModeControl( void )
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
-			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera );
-			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset );
+			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[1] );
+			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[1] );
+		}
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
+			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
+			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+		}
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
+			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[2] );
+			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[2] );
 		}
 		g3d_move();
 		tetsuWork->work[0]++;
@@ -270,13 +278,28 @@ static void g3d_load( HEAPID heapID )
 {
 	int	i;
 
+	//配置物設定
 	tetsuWork->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SceneCreate( tetsuWork->g3Dutil, NELEMS(g3DsceneObjData)+1,
 												sizeof(BALL_WORK), heapID );
 	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
-	tetsuWork->g3Dcamera = GFL_G3D_CameraDefaultCreate( &cameraPos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset = GFL_G3D_LightCreate( &lightSetup, heapID );
+
+	//カメラライト0作成
+	tetsuWork->g3Dcamera[0] = GFL_G3D_CameraDefaultCreate( &camera0Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[0] = GFL_G3D_LightCreate( &light0Setup, heapID );
+
+	//カメラライト1作成
+	tetsuWork->g3Dcamera[1] = GFL_G3D_CameraDefaultCreate( &camera1Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[1] = GFL_G3D_LightCreate( &light1Setup, heapID );
+
+	//カメラライト2作成
+	tetsuWork->g3Dcamera[2] = GFL_G3D_CameraDefaultCreate( &camera2Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[2] = GFL_G3D_LightCreate( &light2Setup, heapID );
+
+	//カメラライト0反映
+	GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
+	GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
 }
 	
 //動作
@@ -294,8 +317,13 @@ static void g3d_draw( void )
 //破棄
 static void g3d_unload( void )
 {
-	GFL_G3D_LightDelete( tetsuWork->g3Dlightset );
-	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera );
+	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[2] );
+	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[2] );
+	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[1] );
+	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[1] );
+	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[0] );
+	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[0] );
+
 	GFL_G3D_SceneObjDel( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData) );
 	GFL_G3D_SceneDelete( tetsuWork->g3Dscene );  
 
