@@ -30,14 +30,6 @@ NitroStaticInitを使用するには
 
 //--------------------------------------------------------------
 /**
- * @brief	オーバーレイが存在しないことを示すID
- */
-//--------------------------------------------------------------
-#define	NOT_EXIST_ID		(0xffffffff)
-
-
-//--------------------------------------------------------------
-/**
  * @brief	オーバーレイの展開メモリエリア
  */
 //--------------------------------------------------------------
@@ -105,22 +97,23 @@ static void UnloadEachWork(OVERLAY_WORK * ov_wk, int count);
 /**
  */
 //--------------------------------------------------------------
-void GFL_OVERLAY_SysInit(HEAPID heapID, int main_num, int itcm_num, int dtcm_num)
+void GFL_OVERLAY_boot(HEAPID heapID, int main_num, int itcm_num, int dtcm_num)
 {
-	OverlaySys = GFL_HEAP_AllocMemory(heapID, sizeof(OVERLAY_SYSTEM));
-	GFL_STD_MemClear32(OverlaySys, sizeof(OVERLAY_SYSTEM));
+	int size;
+	size = sizeof(OVERLAY_SYSTEM) + sizeof(OVERLAY_WORK) * (main_num + itcm_num + dtcm_num);
+
+	GF_ASSERT(main_num >= 0);
+	GF_ASSERT(itcm_num >= 0);
+	GF_ASSERT(dtcm_num >= 0);
+	OverlaySys = GFL_HEAP_AllocMemory(heapID, size);
+	GFL_STD_MemClear32(OverlaySys, size);
 
 	OverlaySys->main_num = main_num;
-	OverlaySys->main = GFL_HEAP_AllocMemory(heapID, sizeof(OVERLAY_WORK) * main_num);
-	GFL_STD_MemClear32(OverlaySys->main, sizeof(OVERLAY_WORK) * main_num);
-
 	OverlaySys->itcm_num = itcm_num;
-	OverlaySys->itcm = GFL_HEAP_AllocMemory(heapID, sizeof(OVERLAY_WORK) * itcm_num);
-	GFL_STD_MemClear32(OverlaySys->itcm, sizeof(OVERLAY_WORK) * itcm_num);
-
 	OverlaySys->dtcm_num = dtcm_num;
-	OverlaySys->dtcm = GFL_HEAP_AllocMemory(heapID, sizeof(OVERLAY_WORK) * dtcm_num);
-	GFL_STD_MemClear32(OverlaySys->dtcm, sizeof(OVERLAY_WORK) * dtcm_num);
+	OverlaySys->main = (OVERLAY_WORK *)((u8*)OverlaySys + sizeof(OVERLAY_SYSTEM));
+	OverlaySys->itcm = OverlaySys->main + main_num;
+	OverlaySys->dtcm = OverlaySys->itcm + itcm_num;
 }
 
 //--------------------------------------------------------------
@@ -146,13 +139,10 @@ static void UnloadEachWork(OVERLAY_WORK * ov_wk, int count)
 void GFL_OVERLAY_SysExit(void)
 {
 	UnloadEachWork(OverlaySys->main, OverlaySys->main_num);
-	GFL_HEAP_FreeMemory(&OverlaySys->main);
 
 	UnloadEachWork(OverlaySys->itcm, OverlaySys->itcm_num);
-	GFL_HEAP_FreeMemory(&OverlaySys->itcm);
 
 	UnloadEachWork(OverlaySys->dtcm, OverlaySys->dtcm_num);
-	GFL_HEAP_FreeMemory(&OverlaySys->dtcm);
 
 	GFL_HEAP_FreeMemory(OverlaySys);
 }
@@ -167,16 +157,8 @@ static void Overlay_Unload(OVERLAY_WORK *ovwork)
 {
 	//現在読み込まれているオーバーレイモジュールをアンロードします
 	BOOL ret;
-#ifdef DEBUG_OVELAY_UNLOAD_CLEAR
-	u32 start, end;
-#endif
 
 	GF_ASSERT(ovwork->loaded == TRUE);
-
-#ifdef DEBUG_OVELAY_UNLOAD_CLEAR
-	//アンロードしたオーバーレイ領域を0クリアするために解放する前にアドレス取得
-	GetOverlayAddress(ovwork->loaded_id, &start, &end);
-#endif
 
 	ret = FS_UnloadOverlay(MI_PROCESSOR_ARM9, ovwork->loaded_id);
 	OS_Printf("overlay unload id = 0x%08X\n", ovwork->loaded_id);
@@ -184,10 +166,15 @@ static void Overlay_Unload(OVERLAY_WORK *ovwork)
 	ovwork->loaded = FALSE;
 
 #ifdef DEBUG_OVELAY_UNLOAD_CLEAR
-	//アンロードしたオーバーレイ領域をクリアする
-	OS_TPrintf("overlay unload start address = 0x%08X\n", start);
-	OS_TPrintf("overlay unload end address = 0x%08X\n", end);
-	MI_CpuFill8((void*)start, 0xff, end - start);
+	{
+		u32 start, end;
+		//アンロードしたオーバーレイ領域を0クリアするために解放する前にアドレス取得
+		GetOverlayAddress(ovwork->loaded_id, &start, &end);
+		//アンロードしたオーバーレイ領域をクリアする
+		OS_TPrintf("overlay unload start address = 0x%08X\n", start);
+		OS_TPrintf("overlay unload end address = 0x%08X\n", end);
+		MI_CpuFill8((void*)start, 0xff, end - start);
+	}
 #endif
 }
 
@@ -206,7 +193,9 @@ void GFL_OVERLAY_Unload(const FSOverlayID id)
 	int size;
 	int i;
 	
-	if (id == NOT_EXIST_ID) {
+	GF_ASSERT_MSG(OverlaySys != NULL, "Overlay Systemが初期化されていない\n");
+
+	if (id == GFL_OVERLAY_BLANK_ID) {
 		OS_TPrintf("不要なoverlay unload 呼び出し\n");
 		return;
 	}
@@ -224,32 +213,6 @@ void GFL_OVERLAY_Unload(const FSOverlayID id)
 	}
 	OS_TPrintf("エラー：読み込んでいないOverlayIDへのUnload要求(%d)\n",ovwork[i].loaded_id);
 	GF_ASSERT(0);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   指定オーバーレイIDの展開先メモリエリアを取得する
- * @param   id		オーバーレイID
- * @retval  展開先メモリエリア(GF_OVERLAY_AREA_???)
- */
-//--------------------------------------------------------------
-GF_OVERLAY_AREA GetMemoryAreaID(const FSOverlayID id)
-{
-	FSOverlayInfo info;
-	BOOL ret;
-	u32 ram_address;
-	
-	ret = FS_LoadOverlayInfo(&info, MI_PROCESSOR_ARM9, id);
-	GF_ASSERT(ret == TRUE);
-	
-	ram_address = (u32)FS_GetOverlayAddress(&info);
-	if(ram_address <= HW_ITCM_END && ram_address >= HW_ITCM_IMAGE){
-		return GF_OVERLAY_AREA_ITCM;
-	}
-	else if(ram_address <= HW_DTCM_END && ram_address >= HW_DTCM){
-		return GF_OVERLAY_AREA_DTCM;
-	}
-	return GF_OVERLAY_AREA_MAIN;
 }
 
 //--------------------------------------------------------------
@@ -278,7 +241,9 @@ BOOL GFL_OVERLAY_Load(const FSOverlayID id)
 	int size;
 	int i;
 	
-	if (id == NOT_EXIST_ID) {
+	GF_ASSERT_MSG(OverlaySys != NULL, "Overlay Systemが初期化されていない\n");
+
+	if (id == GFL_OVERLAY_BLANK_ID) {
 		OS_TPrintf("不要なoverlay load 呼び出し\n");
 		return TRUE;
 	}
@@ -385,7 +350,7 @@ static OVERLAY_WORK * GetWorkPointer(GF_OVERLAY_AREA memory_area)
 	
 	switch(memory_area){
 	default:
-		GF_ASSERT(0);
+		GF_ASSERT_MSG(0, "error:overlay:未定義のメモリエリア指定(%d)\n", memory_area);
 		/* FALL THROUGH */
 	case GF_OVERLAY_AREA_MAIN:
 		ovwork = OverlaySys->main;
@@ -417,8 +382,34 @@ static int GetWorkSize(GF_OVERLAY_AREA memory_area)
 	case GF_OVERLAY_AREA_DTCM:
 		return OverlaySys->dtcm_num;
 	}
-	GF_ASSERT(0);
+	GF_ASSERT_MSG(0, "error:overlay:未定義のメモリエリア指定(%d)\n", memory_area);
 	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   指定オーバーレイIDの展開先メモリエリアを取得する
+ * @param   id		オーバーレイID
+ * @retval  展開先メモリエリア(GF_OVERLAY_AREA_???)
+ */
+//--------------------------------------------------------------
+static GF_OVERLAY_AREA GetMemoryAreaID(const FSOverlayID id)
+{
+	FSOverlayInfo info;
+	BOOL ret;
+	u32 ram_address;
+	
+	ret = FS_LoadOverlayInfo(&info, MI_PROCESSOR_ARM9, id);
+	GF_ASSERT(ret == TRUE);
+	
+	ram_address = (u32)FS_GetOverlayAddress(&info);
+	if(ram_address <= HW_ITCM_END && ram_address >= HW_ITCM_IMAGE){
+		return GF_OVERLAY_AREA_ITCM;
+	}
+	else if(ram_address <= HW_DTCM_END && ram_address >= HW_DTCM){
+		return GF_OVERLAY_AREA_DTCM;
+	}
+	return GF_OVERLAY_AREA_MAIN;
 }
 
 //--------------------------------------------------------------

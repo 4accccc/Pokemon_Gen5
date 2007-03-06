@@ -14,6 +14,9 @@
 #include <nitro.h>
 #include <nnsys.h>
 
+#include "heapsys.h"
+#include "gf_overlay.h"
+
 //===========================================================================
 //
 //		’è‹`

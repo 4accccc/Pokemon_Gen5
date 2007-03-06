@@ -11,7 +11,7 @@
 
 #include "gflib.h"
 
-//#include "pm_overlay.h"
+#include "gf_overlay.h"
 
 #include "procsys.h"
 
@@ -38,7 +38,7 @@ enum {
  */
 //------------------------------------------------------------------
 struct _GFL_PROC{
-	GFL_PROC_DATA data;				///<プロセス定義データへのポインタ
+	const GFL_PROC_DATA * data;	///<プロセス定義データへのポインタ
 	FSOverlayID overlay_id;
 	int proc_seq;				///<プロセス内部シーケンス
 	int subseq;					///<プロセス関数の動作シーケンス
@@ -72,7 +72,8 @@ struct _GFL_PROCSYS{
 //		※外部公開していない
 //
 //------------------------------------------------------------------
-extern GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const HEAPID heap_id);
+extern GFL_PROC * GFI_PROC_Create(FSOverlayID ov_id, const GFL_PROC_DATA * data,
+		void * parent_work, const HEAPID heap_id);
 extern void GFI_PROC_Delete(GFL_PROC * proc);
 extern BOOL GFI_PROC_Main(GFL_PROC * proc);
 
@@ -185,7 +186,7 @@ void GFI_PROC_SysMain(GFL_PROCSYS * psys)
 
 	if (psys->call_flag) {
 		GFL_PROC * proc;
-		proc = GFI_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+		proc = GFI_PROC_Create(psys->next_ov_id, psys->next_data, psys->next_param, psys->heap_id);
 		proc->parent = psys->proc;
 		psys->proc->child = proc;
 		psys->proc = proc;
@@ -196,7 +197,8 @@ void GFI_PROC_SysMain(GFL_PROCSYS * psys)
 			GFL_PROC * parent;
 			parent = psys->proc->parent;
 			GFI_PROC_Delete(psys->proc);
-			psys->proc = GFI_PROC_Create(psys->next_data, psys->next_param, psys->heap_id);
+			psys->proc = GFI_PROC_Create(psys->next_ov_id, psys->next_data,
+					psys->next_param, psys->heap_id);
 			if (parent != NULL) {
 				//ルートプロセスでない場合は親に対して自分を子として登録
 				parent->child = psys->proc;
@@ -259,7 +261,7 @@ void GFI_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
 	if (psys->proc == NULL) {
 		//一番最初のプロセスの場合
 		GFL_PROC * proc;
-		proc = GFI_PROC_Create(procdata, pwork, psys->heap_id);
+		proc = GFI_PROC_Create(ov_id, procdata, pwork, psys->heap_id);
 		psys->proc = proc;
 	} else {
 		//サブプロセスの場合
@@ -279,12 +281,13 @@ void GFI_PROC_SysCallProc(GFL_PROCSYS * psys, FSOverlayID ov_id,
  * @return	GFL_PROC	生成したプロセスへのポインタ
  */
 //------------------------------------------------------------------
-GFL_PROC * GFI_PROC_Create(const GFL_PROC_DATA * data, void * parent_work, const HEAPID heap_id)
+GFL_PROC * GFI_PROC_Create(FSOverlayID ov_id, const GFL_PROC_DATA * data,
+		void * parent_work, const HEAPID heap_id)
 {
 	GFL_PROC * proc;
 	proc = GFL_HEAP_AllocMemory(heap_id, sizeof(GFL_PROC));
-	proc->data = *data;
-	proc->overlay_id = NO_OVERLAY_ID;
+	proc->data = data;
+	proc->overlay_id = ov_id;
 	proc->proc_seq = 0;
 	proc->subseq = 0;
 	proc->parent_work = parent_work;
@@ -351,32 +354,31 @@ BOOL GFI_PROC_Main(GFL_PROC * proc)
 	switch (proc->proc_seq) {
 	case SEQ_OVERLAY_LOAD:
 		if(proc->overlay_id != NO_OVERLAY_ID){
-			//TPRINTF("OVERLAY ID = %d\n", proc->overlay_id);
-			//Overlay_Load( proc->overlay_id, OVERLAY_LOAD_NOT_SYNCHRONIZE);
+			GFL_OVERLAY_Load( proc->overlay_id );
 		}
 		proc->proc_seq = SEQ_INIT;
 
 		/* fallthru */
 			
 	case SEQ_INIT:
-		result = proc->data.init_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		result = proc->data->init_func(proc, &proc->subseq, proc->parent_work, proc->work);
 		if (result == GFL_PROC_RES_FINISH) {
 			proc->proc_seq = SEQ_MAIN;
 			proc->subseq = 0;
 		}
 		break;
 	case SEQ_MAIN:
-		result = proc->data.main_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		result = proc->data->main_func(proc, &proc->subseq, proc->parent_work, proc->work);
 		if (result == GFL_PROC_RES_FINISH) {
 			proc->proc_seq = SEQ_END;
 			proc->subseq = 0;
 		}
 		break;
 	case SEQ_END:
-		result = proc->data.end_func(proc, &proc->subseq, proc->parent_work, proc->work);
+		result = proc->data->end_func(proc, &proc->subseq, proc->parent_work, proc->work);
 		if (result == GFL_PROC_RES_FINISH) {
 			if(proc->overlay_id != NO_OVERLAY_ID){
-				//Overlay_UnloadID( proc->overlay_id );
+				GFL_OVERLAY_Unload( proc->overlay_id );
 			}
 			return TRUE;
 		}
