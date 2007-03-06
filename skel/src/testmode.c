@@ -490,6 +490,8 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 	
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+FS_EXTERN_OVERLAY(debug_tomoya);
+FS_EXTERN_OVERLAY(debug_tamada);
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
 	switch( TestModeSelectPosGet(testmode) ) {
@@ -499,7 +501,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case 1:
 		//‚½‚Ü‚¾
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTamadaMainProcData, NULL);
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 		break;
 	case 2:
 		//‚»‚ª‚×
@@ -511,7 +513,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case 6:
 		//‚Æ‚à‚â
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugClactProcData, NULL);
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tomoya), &DebugClactProcData, NULL);
 	default:
 		//‚½‚â
 		//‚È‚©‚Þ‚ç

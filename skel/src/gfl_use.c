@@ -16,6 +16,7 @@
 
 #include "gfl_use.h"
 #include "procsys.h"
+#include "gf_overlay.h"
 #include "tcb.h"
 
 
@@ -88,6 +89,9 @@ void GFLUser_Init(void)
 	//UIシステム初期化
 	GFL_UI_boot(GFL_HEAPID_SYSTEM);
 
+	//OVERLAYシステム初期化
+	GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
+
 	//PROCシステム初期化
 	GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
   gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
@@ -139,6 +143,7 @@ void GFLUser_Exit(void)
 {
 	GFL_UI_sysExit();
 	GFL_PROC_SysExit();
+	GFL_OVERLAY_SysExit();
 	GFL_FADE_sysExit();
 	GFL_HEAP_DTCM_sysExit();
 	GFL_HEAP_sysExit();

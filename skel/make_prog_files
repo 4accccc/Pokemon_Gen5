@@ -5,20 +5,75 @@ SRCS	+=		testmode.c \
 				ohno/test_rand.c \
 				ohno/test_ui.c \
 				ohno/fatal_error.c \
+				sogabe/debug_sogabe.c \
+				sogabe/title.c \
+				sogabe/game.c \
+				sogabe/player.c \
+				sogabe/fallchr.c \
+				tetsu/debug_watanabe.c
+				
+#================================================
+# ここから下はオーバーレイプログラム定義
+#================================================
+# オーバーレイ用のソースコード定義の１行上に「#===>」とあるのは
+# オーバーレイツール用の特殊キーワードです。
+# この「#===>」の後ろにある文字列はオーバーレイする際のモジュールの
+# ターゲットを指しています。
+# 「main」というキーワードは常駐プログラム部分を指す予約語です。
+# 「main」の後ろにつくプログラム領域の名前は「SRCS_OVERLAY_????????」の
+# 「????????」の部分を小文字にして使用します。
+# 「SRCS_OVERLAY_POKETCH01」というソースコード群は「poketch01」という
+# オーバーレイIDになります
+#
+# これらの処理はoverlaytool.rbで行われています。
+# ■注意■ 
+# 1.このツールはフォルダ内のソースコード名取得は行っていません
+#   つまり、「$(DEBUGDIR)」のみ書いてこのフォルダの中のファイルを
+#   全てオーバーレイ扱いにするという処理は作成していません。
+#   ($(DEBUGDIR)/d_mori.c)というようにソースファイル名も指定する事を
+#   期待した動作をしています。
+# 2.オーバーレイ用のソースコード定義をオーバーレイIDに変換して使用する為、
+#   存在していないオーバーレイソースを先に「===>」で指定しないように
+#   してください（チェックはしています）
+#   一番初めのオーバーレイターゲット定義は「main」しか書けない事になります。
+# 3.ライブラリをオーバーレイする場合  #LIB=>	???.a  と書いてください
+#
+# --------------
+# ==> main
+# SRCS_OVERLY_FIRST = $(SRC)\test.c
+# 
+# ==> SRCS_OVERLY_FIRST
+# SRCS_OVERLY_SECOND = $(SRC)\test2.c
+# --------------
+# は書けますが、
+# 
+# --------------
+# ==> SRCS_OVERLY_SECOND
+# SRCS_OVERLY_FIRST = $(SRC)\test.c
+# 
+# ==> main
+# SRCS_OVERLY_SECOND = $(SRC)\test2.c
+# --------------
+# はFIRSTの下にSECONDがあるのに先にSECONDをターゲットに
+# しようとしているのでエラーになります。
+# 
+# 
+# 要望・質問は森にお願いします。
+# 
+
+
+#ともやくんデバッグ用
+#===> main
+SRCS_OVERLAY_DEBUG_TOMOYA =			tomoya/debug_tomoya.c
+
+#
+#===> main
+SRCS_OVERLAY_DEBUG_TAMADA =			tamada/debug_tamada.c \
 				tamada/oamset.c \
 				tamada/data.c \
 				tamada/dispfunc.c \
 				tamada/bg/debug_graphic.c \
 				tamada/bg/loader.c \
 				tamada/d_proc_bg.c \
-				tamada/debug_tamada.c \
-				tamada/lifegame.c \
-				sogabe/debug_sogabe.c \
-				sogabe/title.c \
-				sogabe/game.c \
-				sogabe/player.c \
-				sogabe/fallchr.c \
-				tetsu/debug_watanabe.c \
-				tomoya/debug_tomoya.c
-				
+				tamada/lifegame.c
 

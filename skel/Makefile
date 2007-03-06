@@ -23,9 +23,18 @@ LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
 NITRODWC_LIB_MODULES_   = base auth ac bm account util
 NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
 
-#イクニューモンコンポーネントのためのライブラリを追加 by Mori 2005.7.27
+#----------------------------------------------------------------------------
+#イクニューモンコンポーネントのためのライブラリを追加
+#----------------------------------------------------------------------------
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
+
+#----------------------------------------------------------------------------
+#	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
+#----------------------------------------------------------------------------
+LCFILE_SPEC	=	overlay/main.lsf
+MAKELCF_FLAGS	+=	-DADDRESS_MAIN=0x02000000
+
 
 # 個人テスト用定義
 #ifeq	($(PM_DEBUG),yes)
@@ -39,6 +48,7 @@ TARGET_BIN		=	main.bin
 SRCS			=	main.c gfl_use.c
 
 include make_prog_files
+-include overlay/overlay_files
 
 ## xyzzyでエラージャンプを行う
 ifeq	($(USERNAME),ohno)
@@ -104,8 +114,15 @@ include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
 #----------------------------------------------------------------------------
-$(MAKEFILE):  make_prog_files
-	touch $(MAKEFILE)
+#$(MAKEFILE):  make_prog_files overlay/overlay_files
+#	ruby overlay/overlaytool.rb
+#	//touch $(MAKEFILE)
+
+overlay/main.lsf:	make_prog_files
+	ruby overlay/overlaytool.rb
+
+overlay/overlay_files:	make_prog_files
+	ruby overlay/overlaytool.rb
 
 #--------------------------------------- ----------------------------
 do-build:		$(TARGETS)
