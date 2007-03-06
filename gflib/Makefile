@@ -33,6 +33,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					tcb.c tcbl.c procsys.c saveload_system.c \
 					areaman.c vramman/vman.c vramman/obj_graphic_man.c \
 					assert.c \
+					gf_overlay.c \
 					ui/ui.c \
 					ui/touchpanel.c \
 					ui/key.c \
