@@ -103,7 +103,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcInit(GFL_PROC * proc, int * seq, void 
 {
 	DEBUG_TAMADA_CONTROL * ctrl;
 
-	GFL_HEAP_CreateHeap(GFL_HEAPID_APP, HEAPID_TAMADA_DEBUG, 0x40000);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP, HEAPID_TAMADA_DEBUG, 0x30000);
 	ctrl = GFL_PROC_AllocWork(proc, sizeof(DEBUG_TAMADA_CONTROL), HEAPID_TAMADA_DEBUG);
 	DebugTamadaControl = ctrl;
 	ctrl->debug_heap_id = HEAPID_TAMADA_DEBUG;
