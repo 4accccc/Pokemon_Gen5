@@ -105,6 +105,7 @@ typedef struct {
 	GFL_G3D_LIGHTSET*		g3Dlightset[4];
 
 	u16						work[16];
+	u16						mode;
 }TETSU_WORK;
 
 TETSU_WORK* tetsuWork;
@@ -180,6 +181,7 @@ static BOOL	TestModeControl( void )
 		g3d_load( tetsuWork->heapID );	//‚R‚cƒf[ƒ^ì¬
 		tetsuWork->work[0] = 0;
 		tetsuWork->work[1] = 0;
+		tetsuWork->mode = 3;
 		tetsuWork->seq++;
 		break;
 
@@ -199,17 +201,37 @@ static BOOL	TestModeControl( void )
 			VecFx32 trans = { 0, 0, -FX32_ONE };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_B ){
+			if( tetsuWork->mode > 1 ){
+				tetsuWork->mode--;
+			} else {
+				tetsuWork->mode = 3;
+			}
+		}
+
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
-			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[1] );
-			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[1] );
+			if( tetsuWork->mode & 1 ){
+				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[1] );
+			}
+			if( tetsuWork->mode & 2 ){
+				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[1] );
+			}
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
-			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
-			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+			if( tetsuWork->mode & 1 ){
+				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
+			}
+			if( tetsuWork->mode & 2 ){
+				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+			}
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
-			GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[2] );
-			GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[2] );
+			if( tetsuWork->mode & 1 ){
+				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[2] );
+			}
+			if( tetsuWork->mode & 2 ){
+				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[2] );
+			}
 		}
 		g3d_move();
 		tetsuWork->work[0]++;
