@@ -643,19 +643,19 @@ static inline void trans_ncgr
 {
 	if( vramTransferFlag )
 	{
-		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+//		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 		NNS_G2dLoadImageVramTransfer( charData, byteOfs, vramType, proxy );
 	}
 	else
 	{
 		if( charData->mapingType != GX_OBJVRAMMODE_CHAR_2D )
 		{
-			OS_TPrintf("trans cgr 1d  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+//			OS_TPrintf("trans cgr 1d  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 			NNS_G2dLoadImage1DMapping( charData, byteOfs, vramType, proxy );
 		}
 		else
 		{
-			OS_TPrintf("trans cgr 2d  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+//			OS_TPrintf("trans cgr 2d  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 			NNS_G2dLoadImage2DMapping( charData, byteOfs, vramType, proxy );
 		}
 	}
