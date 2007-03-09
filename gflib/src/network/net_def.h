@@ -112,7 +112,7 @@ struct _GFL_NETHANDLE{
   HEAPID netHeapID;        ///< 通信libが使用するID
   HEAPID wifiHeapID;       ///< wifiLibが使用するID
   u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ
-  u8 negotiationID[(GFL_NET_MACHINE_MAX/8)+(0!=(GFL_NET_MACHINE_MAX%8))]; ///< 接続しているハンドルの状態
+  u8 negotiationID[GFL_NET_HANDLE_MAX]; ///< 接続しているハンドルの状態
   u8 wifiTargetNo;    ///< 接続再起番号(wifi用)
   u8 disconnectType;  ///< 切断時のタイプ(wifi)
   u8 bWifiDisconnect;  ///< 切断フラグ(wifi)
@@ -189,6 +189,10 @@ extern void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo);
 extern int GFI_NET_GetConnectNumMax(void);
 
 extern int GFI_NET_GetSendSizeMax(void);
+
+extern void GFI_NET_AutoParentConnectFunc(void);
+
+extern u8* GFI_NET_GetSSID(void);
 
 
 #if GFL_NET_WIFI //wifi

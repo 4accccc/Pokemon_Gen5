@@ -31,6 +31,7 @@
 struct _GFL_NETSYS{
     GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
     GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
+    GFL_NETHANDLE* pNetHandleInit;  ///< 初期化用ハンドル
     GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
 };
 
@@ -109,6 +110,9 @@ void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         if(pNet->pNetHandle[i]==pHandle){
+            if(pNet->pNetHandleInit == pHandle){
+                pNet->pNetHandleInit = NULL;
+            }
             _deleteHandle(pNet->pNetHandle[i]);
             pNet->pNetHandle[i] = NULL;
         }
@@ -187,7 +191,11 @@ BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     id = id * 8 + _numNetHandle(pNet, pHandle);
     pHandle->creatureNo = id;
-    return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
+
+    if(GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
+        return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
+    }
+    return FALSE;
 }
 
 //==============================================================================
@@ -244,11 +252,29 @@ void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit)
         if(pNetInit->bNetwork){
             GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
             GFL_NET_StateDeviceInitialize(pNetHandle);
+            pNet->pNetHandleInit = pNetHandle;
         }
 
         GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
     WirelessIconEasy(pNetInit->bWiFi, pNetInit->netHeapID);
+}
+
+//==============================================================================
+/**
+ * @brief 通信初期化が完了したかどうかを確認する
+ * @retval TRUE   初期化終了
+ * @retval FALSE  初期化がまだ終わっていない
+ */
+//==============================================================================
+BOOL GFL_NET_IsInit(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+    if(pNet->pNetHandleInit!=NULL){
+        return FALSE;
+    }
+    return TRUE;
 }
 
 //==============================================================================
@@ -381,7 +407,21 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-    GFL_NET_StateConnectMacAddress(pHandle);
+    GFL_NET_StateConnectMacAddress(pHandle, TRUE);
+}
+
+//==============================================================================
+/**
+ * @brief   指定した親機に接続する
+ * @param   GFL_NETHANDLE  通信ハンドルのポインタ
+ * @param   macAddress     マックアドレスのバッファ
+ * @return  none
+ */
+//==============================================================================
+void GFL_NET_ClientToAccess(GFL_NETHANDLE* pHandle,u8* macAddress)
+{
+    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
+    GFL_NET_StateConnectMacAddress(pHandle, FALSE);
 }
 
 //==============================================================================
@@ -475,6 +515,25 @@ int GFL_NET_GetConnectNum(void)
 BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id)
 {
     return pNet->negotiationID[id];
+}
+
+//==============================================================================
+/**
+ * @brief   ネゴシエーション済み人数を得る
+ * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
+ * @return   人数
+ */
+//==============================================================================
+int GFL_NET_GetNegotiationConnectNum(GFL_NETHANDLE* pNet)
+{
+    int j=0,i;
+
+    for(i = 0; i < GFL_NET_HANDLE_MAX ; i++){
+        if( pNet->negotiationID[i] ){
+            j++;
+        }
+    }
+    return j;
 }
 
 //==============================================================================
@@ -793,8 +852,23 @@ int GFI_NET_GetSendSizeMax(void)
     return pNet->aNetInit.maxSendSize;
 }
 
+//==============================================================================
+/**
+ * @brief    GFI_NET_AutoParentConnectFunc
+ * @param    pNetHandle  ネットハンドル
+ * @param    errorNo     エラー番号
+ * @return   DWCUserDataのポインタ
+ */
+//==============================================================================
 
+void GFI_NET_AutoParentConnectFunc(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    if(pNet->aNetInit.autoParentConnect!=NULL){
+        pNet->aNetInit.autoParentConnect(pNet->aNetInit.pWork);
+    }
+}
 
 //==============================================================================
 /**
@@ -808,7 +882,25 @@ int GFI_NET_GetSendSizeMax(void)
 void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    pNet->aNetInit.errorFunc(pNetHandle, errorNo);
+    if(pNet->aNetInit.errorFunc != NULL){
+        pNet->aNetInit.errorFunc(pNetHandle, errorNo);
+    }
+}
+
+//==============================================================================
+/**
+ * @brief    SSIDを得る関数
+ * @return   SSID
+ */
+//==============================================================================
+
+u8* GFI_NET_GetSSID(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    if(pNet->aNetInit.getSSID != NULL){
+        return pNet->aNetInit.getSSID();
+    }
+    return NULL;
 }
 
 //==============================================================================
@@ -858,4 +950,26 @@ void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
     _pNetSys->pNetWL = pWL;
 }
 
+//==============================================================================
+/**
+ * @brief    デバッグ用 メモリの中を分析する
+ * @param    data  メモリ
+ * @param    size  検査サイズ
+ * @return   none
+ */
+//==============================================================================
+#if 1
+void debugcheck(u32* data,int size )
+{
+    int i;
+    u8* p=(u8*)data;
+
+    for(i = 0 ; i < size ; i++){
+        if((*p == 0xfc) && (*p+1 == 0x0f) && (*p+2 == 0x00) && (*p+3 == 0x10)){
+            OS_Panic("check");
+        }
+        p++;
+    }
+}
+#endif 
 

@@ -179,13 +179,19 @@ static BOOL _stateIsMove(GFL_NETHANDLE* pNetHandle)
     return FALSE;
 }
 
-
+//==============================================================================
+/**
+ * @brief   ハンドルを消す
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
 
 static void _handleDelete(GFL_NETHANDLE* pNetHandle)
 {
     GFI_NET_DeleteNetHandle(pNetHandle);
+    _CHANGE_STATE(_stateNone, 0);
 }
-
 
 //==============================================================================
 /**
@@ -232,8 +238,6 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
 
     GFL_NET_WLVRAMDInitialize();
-    GFL_NET_CommandInitialize(NULL, 0, NULL);
-
     _commStateInitialize(pNetHandle, 0);
     _CHANGE_STATE(_deviceInitialize, 0);
 }
@@ -248,7 +252,7 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
 
 static void _childSendNego(GFL_NETHANDLE* pNetHandle)
 {
-
+    //@@OOエラー処理
     if(GFL_NET_SystemIsError()){
         //NET_PRINT("エラーの場合戻る\n");
      //   _CHANGE_STATE(_battleChildReset, 0);
@@ -301,17 +305,36 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle)
+static void _childAutoConnect(GFL_NETHANDLE* pNetHandle)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
-    GFL_NET_SystemChildModeInit(TRUE, 512);
-
-    if(pNetIni->bMPMode){
-        GFL_NET_SystemSetTransmissonTypeMP();
+    if(GFL_NET_SystemChildModeInit(TRUE, 512)){
+        if(pNetIni->bMPMode){
+            GFL_NET_SystemSetTransmissonTypeMP();
+        }
+        
+        _CHANGE_STATE(_childConnecting, 0);
     }
-    
-    _CHANGE_STATE(_childConnecting, 0);
+}
+
+//==============================================================================
+/**
+ * @brief   マックアドレスを指定して子機接続開始
+ * @param   connectIndex 接続する親機のIndex
+ * @param   bAlloc       メモリーの確保
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit)
+{
+    if(bInit){
+        _CHANGE_STATE(_childAutoConnect, 0);
+    }
+    else{
+        _CHANGE_STATE(_childConnecting, 0);
+    }
 }
 
 //==============================================================================
@@ -334,6 +357,21 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
+ * @brief   子機待機状態  初期化待ち
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _childIniting(GFL_NETHANDLE* pNetHandle)
+{
+    if(GFL_NET_SystemChildModeInit(TRUE,512)){
+        _CHANGE_STATE(_childScanning, 0);
+    }
+}
+
+//==============================================================================
+/**
  * @brief   子機開始  ビーコンの収集に入る
  * @param   connectIndex 接続する親機のIndex
  * @retval  none
@@ -342,11 +380,8 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
 {
-    GFL_NET_SystemChildModeInit(TRUE,512);
-
-    _CHANGE_STATE(_childScanning, 0);
+    _CHANGE_STATE(_childIniting, 0);
 }
-
 
 
 //==============================================================================
@@ -528,6 +563,7 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
         NET_PRINT("親機 -- つながり\n");
 //        pNetHandle->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
         //WirelessIconEasy();  //@@OO
+        GFI_NET_AutoParentConnectFunc();
         _CHANGE_STATE(_changeoverParentConnect, 0);
         return;
     }
@@ -708,6 +744,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
     }
     retCmd[1] = pGet[0];
     retCmd[0] = 0;
+    NET_PRINT("--RECV----CS_COMM_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
 
     for(i = 1 ; i < GFL_NET_MACHINE_MAX;i++){
         if(pNetHandle->pParent->negoCheck[i] == FALSE){
@@ -734,7 +771,7 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
 {
     const u8* pMsg = pData;
 
-    NET_PRINT("接続認証\n");
+    NET_PRINT("接続認証 %d %d\n",pNetHandle->creatureNo, pMsg[1]);
     if(pNetHandle->creatureNo == pMsg[1]){   // 親機から接続認証が来た
         NET_PRINT("接続認証 OK\n");
         pNetHandle->negotiation = _NEGOTIATION_OK;

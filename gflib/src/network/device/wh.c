@@ -334,8 +334,6 @@ struct _WM_INFO_STRUCT {
     WHConnectCheckCallBack connectCheckCallBack;
     /// エラー発生時のコールバック
     WHErrorCallBack errorCallBack;
-    /// SSID取得関数 24byte
-    WHGetSSIDDataCallBack ssidData;
     
     /// 自分の aid が入ります（子機は切断・再接続時に変化する可能性あり）
     u16 sMyAid;
@@ -1665,10 +1663,8 @@ static BOOL WH_StateInStartChild(void)
     result = WM_StartConnectEx(WH_StateOutStartChild, &pNetWH->sBssDesc,
                                ssid_data, TRUE, WM_AUTHMODE_OPEN_SYSTEM);
 #else
-    if(pNetWH->ssidData){
-        GFL_STD_MemCopy(pNetWH->ssidData(),ssid_data,WM_SIZE_CHILD_SSID );
-        pSsidData = ssid_data;
-    }
+
+    pSsidData = GFI_NET_GetSSID();
     result = WM_StartConnectEx(WH_StateOutStartChild, &pNetWH->sBssDesc,
                                pSsidData, TRUE, WM_AUTHMODE_OPEN_SYSTEM);
 #endif
@@ -2848,6 +2844,8 @@ GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte)
         return (GFL_NETWM*)pHeap;
     }
     _pMem = GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWM)+32);
+    GFL_STD_MemClear(_pMem, sizeof(GFL_NETWM)+32);
+    
     addr = (u32)_pMem;
     if(addr % 32){
         addr += 32 - (addr % 32);
@@ -3347,100 +3345,6 @@ BOOL WH_SendData(void *data, u16 size, int port, WHSendCallbackFunc callback)
 {
     return WH_StateInSetMPData(data, size, port, callback);
 }
-
-
-/**************************************************************************
- * 以下は、データシェアリング通信を制御する関数です。
- **************************************************************************/
-
-/* ----------------------------------------------------------------------
-   Name:        WH_GetKeySet
-   Description: 共有キーデータを読み出します。
-   Arguments:   keyset - データ格納先指定
-   Returns:     成功すれば真。
-   ---------------------------------------------------------------------- */
-BOOL WH_GetKeySet(WMKeySet *keyset)
-{
-#if 0
-    WMErrCode result;
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-
-    if (pNetWH->sSysState != WH_SYSSTATE_KEYSHARING)
-    {
-        WH_TRACE("WH_GetKeySet failed (invalid system state)\n");
-        return FALSE;
-    }
-
-    if ((pNetWH->sConnectMode != WH_CONNECTMODE_KS_CHILD)
-        && (pNetWH->sConnectMode != WH_CONNECTMODE_KS_PARENT))
-    {
-        WH_TRACE("WH_GetKeySet failed (invalid connect mode)\n");
-        return FALSE;
-    }
-
-    result = WM_GetKeySet(&pNetWH->sWMKeySetBuf, keyset);
-    if (result != WM_ERRCODE_SUCCESS)
-    {
-        WH_REPORT_FAILURE(result);
-        return FALSE;
-    }
-#endif
-    return FALSE;
-}
-#if 0
-/* ----------------------------------------------------------------------
-   Name:        WH_GetSharedDataAdr
-  Description: 指定の aid を持つマシンから得たデータのアドレスを
-                共有データのアドレスから計算し取得します。
-   Arguments:   aid - マシンの指定
-   Returns:     失敗時は NULL 。
-   ---------------------------------------------------------------------- */
-u16 *WH_GetSharedDataAdr(u16 aid)
-{
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    return WM_GetSharedDataAddress(&pNetWH->sDSInfo, &pNetWH->sDataSet, aid);
-}
-#endif
-/* ----------------------------------------------------------------------
-   Name:        WH_StepDS
-   Description: データシェアリングの同期を1つ進めます。
-                毎フレーム通信するなら、この関数も毎フレーム呼ぶ必要が
-                あります。
-   Arguments:   data - 送信するデータ
-   Returns:     成功すれば真。
-   ---------------------------------------------------------------------- */
-#if 0
-BOOL WH_StepDS(void *data)
-{
-    WMErrCode result;
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-
-    result = WM_StepDataSharing(&pNetWH->sDSInfo, (u16 *)data, &pNetWH->sDataSet);
-
-    if (result == WM_ERRCODE_NO_CHILD)
-    {
-        // 親機なのに子機がいない（これをエラーとするかは自由）
-//        return TRUE;
-        WH_SetError(result);
-        return FALSE;
-    }
-
-    if (result == WM_ERRCODE_NO_DATASET)
-    {
-        WH_TRACE("WH_StepDataSharing - Warning No DataSet\n");  //@@OO 2005-08-29
-        WH_SetError(result);
-        return FALSE;
-    }
-
-    if (result != WM_ERRCODE_SUCCESS)
-    {
-        WH_REPORT_FAILURE(result);
-        return FALSE;
-    }
-
-    return TRUE;
-}
-#endif
 
 /**************************************************************************
  * 以下は、通信を終了して初期化状態まで遷移させる関数です。

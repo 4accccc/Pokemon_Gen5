@@ -30,7 +30,7 @@ extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle);
+extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit);
 //==============================================================================
 /**
  * @brief   子機開始  ビーコンの収集に入る

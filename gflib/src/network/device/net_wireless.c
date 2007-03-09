@@ -1021,7 +1021,7 @@ static void _stateProcess(u16 bitmap)
 {
     int state = WH_GetSystemState();
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-//    CommInfoFunc();
+
     _funcBconDataChange();      // ビーコンの中身を書き換え中
     if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
         if(pNetWL->bErrorNoChild){
@@ -1136,9 +1136,16 @@ BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
     if(!pNetWL){
         return FALSE;
     }
+
+    if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
+        return FALSE;
+    }
+    
     if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
         return FALSE;
     }
+
+    
     return TRUE;
 }
 

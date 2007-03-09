@@ -372,6 +372,9 @@ static void _commCommandInit(void)
     GFL_NET_QueueManagerReset(&_pComm->sendQueueMgr);
     GFL_NET_QueueManagerReset(&_pComm->sendQueueMgrServer);
     _pComm->bResetState = FALSE;
+
+    NET_PRINT(" 通信データリセット\n");
+
 }
 
 //==============================================================================
@@ -511,11 +514,11 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax)
     BOOL ret = TRUE;
 
     ret = GFL_NET_WLChildInit(bBconInit);
-    GFL_NET_WLSetRecvCallback( _commRecvCallback );
-
-    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
-    _sendCallBack = _SEND_CB_FIRST_SENDEND;
-
+    if(ret==TRUE){
+        GFL_NET_WLSetRecvCallback( _commRecvCallback );
+        _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
+        _sendCallBack = _SEND_CB_FIRST_SENDEND;
+    }
     return ret;
 }
 
@@ -807,8 +810,6 @@ BOOL GFL_NET_SystemUpdateData(void)
 
 void GFL_NET_SystemReset(void)
 {
-
-    NET_PRINT("CommSystemReset\n");
     if(_pComm){
         _commCommandInit();
     }
@@ -824,8 +825,6 @@ void GFL_NET_SystemReset(void)
 
 void GFL_NET_SystemResetDS(void)
 {
-
-    NET_PRINT("CommSystemReset\n");
     if(_pComm){
         _pComm->transmissionType = _DS_MODE;
         _commCommandInit();
@@ -842,8 +841,6 @@ void GFL_NET_SystemResetDS(void)
 
 void GFL_NET_SystemResetBattleChild(void)
 {
-
-    NET_PRINT("CommSystemReset\n");
     if(_pComm){
         _commCommandInit();
         GFL_NET_WLChildBconDataInit();
@@ -977,6 +974,7 @@ static void _updateMpDataServer(void)
     }
 //    mcSize = _getUserMaxSendByte();
     machineMax = _getUserMaxNum();
+
     if(_sendCallBackServer == _SEND_CB_NONE){
         _sendCallBackServer++;
         
@@ -1001,7 +999,6 @@ static void _updateMpDataServer(void)
                     _pComm->countSendRecvServer[i]++; // 親MP送信
                 }
             }
-
             // 親機自身に子機の動きをさせるためここでコールバックを呼ぶ
             _commRecvCallback(COMM_PARENT_ID,
                               (u16*)_pComm->sSendServerBuf,
@@ -1230,6 +1227,7 @@ static void _commRecvParentCallback(u16 aid, u16 *data, u16 size)
     if(_transmissonType() == _DS_MODE){  //DS
         int mcSize = _getUserMaxSendByte();
         int machineMax = _getUserMaxNum();
+
         GFL_NET_RingPuts(&_pComm->recvMidRing[aid] , adr, mcSize);
 //        _pComm->recvDSCatchFlg[aid]++;  // 通信をもらったことを記憶
     }else{   // MPモード
@@ -1491,7 +1489,6 @@ BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast,
     int cSize = GFI_NET_CommandGetPacketSize(command);
     SEND_QUEUE_MANAGER* pMgr;
 
-    NET_PRINT("< 送信 %d %d\n", command,GFL_NET_QueueGetNowNum(&_pComm->sendQueueMgr));
 
     if(GFL_NET_COMMAND_SIZE_VARIABLE == cSize){
         cSize = size;
@@ -1502,9 +1499,11 @@ BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast,
     }
     if((_transmissonType() == _MP_MODE) && (myID == 0)){
         pMgr = &_pComm->sendQueueMgrServer;
+        NET_PRINT("< S送信 %d %d\n", command,GFL_NET_QueueGetNowNum(pMgr));
     }
     else{
         pMgr = &_pComm->sendQueueMgr;
+        NET_PRINT("< C送信 %d %d\n", command,GFL_NET_QueueGetNowNum(pMgr));
     }
     if(GFL_NET_QueuePut(pMgr, command, (u8*)data, cSize, bFast, bSave, myID, sendID)){
         return TRUE;
