@@ -148,7 +148,7 @@ void TEST_NET_Main(void)
             {
                 u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
                 if(pData){
-                    GFL_NET_ClientConnectTo(_pHandle, pData);
+                    GFL_NET_ClientToAccess(_pHandle, pData);
                 }
             }
             _testNo++;
@@ -316,7 +316,7 @@ static DWCUserData _testUserData;
 static DWCFriendData _testFriendData[_BCON_GET_NUM];
 
 // 通信初期化構造体  wifi用
-GFLNetInitializeStruct aGFLNetInit = {
+static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
@@ -325,6 +325,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
+    NULL,  // オート接続で親になった場合
     NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
     NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
     &_testFriendData[0],  // DWC形式の友達リスト	
@@ -346,7 +347,7 @@ GFLNetInitializeStruct aGFLNetInit = {
 #else  //GFL_NET_WIFI 普通のワイヤレス通信
 
 // 通信初期化構造体  wifi用
-GFLNetInitializeStruct aGFLNetInit = {
+static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
@@ -355,6 +356,7 @@ GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
+    NULL,  // オート接続で親になった場合
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346

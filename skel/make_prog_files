@@ -10,6 +10,7 @@ SRCS	+=		testmode.c \
 				sogabe/game.c \
 				sogabe/player.c \
 				sogabe/fallchr.c \
+                sogabe/yt_net.c \
 				tetsu/debug_watanabe.c
 				
 #================================================

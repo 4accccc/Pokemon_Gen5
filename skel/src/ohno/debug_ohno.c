@@ -115,7 +115,7 @@ void DebugOhnoInit(HEAPID heap_id)
 	GFL_UI_TP_sysInit(ctrl->debug_heap_id);
 
 
-    RTC_Init();
+//    RTC_Init();
     
 }
 

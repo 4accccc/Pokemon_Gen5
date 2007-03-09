@@ -15,6 +15,7 @@
 
 #include "main.h"
 #include "yt_common.h"
+#include "yt_net.h"
 
 #include "sample_graphic/yossyegg.naix"
 
@@ -136,6 +137,8 @@ void	YT_InitTitle(GAME_PARAM *gp)
 enum{
 	YT_SEQ_TITLE_KEY_WAIT=0,
 	YT_SEQ_TITLE_END,
+	YT_SEQ_TITLE_NET_CHILD,
+	YT_SEQ_TITLE_NET_PARENT,
 };
 void	YT_MainTitle(GAME_PARAM *gp)
 {
@@ -145,11 +148,13 @@ void	YT_MainTitle(GAME_PARAM *gp)
 			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
 			gp->seq_no++;
 		}
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_SELECT){ // セレクトボタンが押された
-            gp->sNetParam.pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
-            GFL_NET_ChangeoverConnect(gp->sNetParam.pNetHandle[0]); // 自動接続
-			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
-			gp->seq_no++;
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_L){ // Lボタンが押された
+            YT_NET_Init(gp, FALSE);  // 通信開始
+			gp->seq_no = YT_SEQ_TITLE_NET_CHILD;
+		}
+		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R){ // Rボタンが押された
+            YT_NET_Init(gp, TRUE);  // 通信開始
+			gp->seq_no = YT_SEQ_TITLE_NET_PARENT;
 		}
 		break;
 	case YT_SEQ_TITLE_END:
@@ -157,6 +162,14 @@ void	YT_MainTitle(GAME_PARAM *gp)
 			GFL_BG_sysExit();
 			YT_JobNoSet(gp,YT_InitGameNo);
 		}
+        break;
+    case YT_SEQ_TITLE_NET_CHILD:
+    case YT_SEQ_TITLE_NET_PARENT:
+        if(YT_NET_Main(gp->pNetParam)){
+			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+            gp->seq_no = YT_SEQ_TITLE_END;
+        }
+        break;
 	}
 }
 

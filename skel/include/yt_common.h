@@ -17,8 +17,6 @@
 #define GLOBAL extern
 #endif
 
-#include "yt_net.h"
-
 //ジョブナンバー定義
 enum{
 	YT_InitTitleNo=0,
@@ -85,6 +83,9 @@ typedef struct {
 } YT_CLACT;
 
 typedef struct	fall_chr_param	FALL_CHR_PARAM;
+//通信用構造体
+typedef	struct  _NET_PARAM NET_PARAM;
+
 
 typedef struct{
 	TCB				*tcb_player;
@@ -122,7 +123,7 @@ typedef	struct
 	GFL_AREAMAN			*clact_area;
 	YT_PLAYER_STATUS	ps[2];
 	u8					default_fall_wait;
-    NET_PARAM           sNetParam;   //通信用構造体
+    NET_PARAM*          pNetParam;   //通信用構造体
 	TCB					*check_tcb;
 }GAME_PARAM;
 
@@ -150,5 +151,7 @@ typedef	struct
 #define	YT_BIRTH_SPEED			(0x80)
 
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
+
+#include "yt_net.h"
 
 #endif	__YT_COMMON_H__
