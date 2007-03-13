@@ -68,6 +68,8 @@ extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID );
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
 
+extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
+
 extern CLWK* GFL_OBJGRP_CreateClAct
 	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const CLWK_DATA* param, u16 setSerface, u16 heapID );
