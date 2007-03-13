@@ -91,7 +91,7 @@ typedef struct {
  * @param	heap_id		PROCシステムで使用するヒープID
  */
 //------------------------------------------------------------------
-extern void GFL_PROC_SysInit(HEAPID heap_id);
+extern void GFL_PROC_boot(HEAPID heap_id);
 
 //------------------------------------------------------------------
 /**

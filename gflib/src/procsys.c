@@ -108,7 +108,7 @@ static GFL_PROCSYS * gfl_procsys;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GFL_PROC_SysInit(HEAPID heap_id)
+void GFL_PROC_boot(HEAPID heap_id)
 {
 	gfl_procsys = GFI_PROC_SysInit(heap_id);
 }

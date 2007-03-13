@@ -93,7 +93,7 @@ void GFLUser_Init(void)
 	GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
 
 	//PROCƒVƒXƒeƒ€‰Šú‰»
-	GFL_PROC_SysInit(GFL_HEAPID_SYSTEM);
+	GFL_PROC_boot(GFL_HEAPID_SYSTEM);
   gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
   gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
