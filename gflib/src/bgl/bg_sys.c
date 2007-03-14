@@ -1760,6 +1760,39 @@ void GFL_BG_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs )
 	u32 * chr;
 	u32  size;
 
+	switch(frmnum){
+	case GFL_BG_FRAME0_M:
+	case GFL_BG_FRAME1_M:
+	case GFL_BG_FRAME2_M:
+	case GFL_BG_FRAME3_M:
+		if( bgl->bgsys[frmnum].base_char_size == GFL_BG_1CHRDATASIZ ){
+			GFL_AREAMAN_ReserveAssignPos(bgl->area_m,
+										 (bgl->CharVramBaseAdrs[frmnum]+offs*bgl->bgsys[frmnum].base_char_size)/0x20,
+										 charcnt);
+		}
+		else{
+			GFL_AREAMAN_ReserveAssignPos(bgl->area_m,
+										 (bgl->CharVramBaseAdrs[frmnum]+offs*bgl->bgsys[frmnum].base_char_size)/0x20,
+										 charcnt*2);
+		}
+		break;
+	case GFL_BG_FRAME0_S:
+	case GFL_BG_FRAME1_S:
+	case GFL_BG_FRAME2_S:
+	case GFL_BG_FRAME3_S:
+		if( bgl->bgsys[frmnum].base_char_size == GFL_BG_1CHRDATASIZ ){
+			GFL_AREAMAN_ReserveAssignPos(bgl->area_s,
+										 (bgl->CharVramBaseAdrs[frmnum]+offs*bgl->bgsys[frmnum].base_char_size)/0x20,
+										 charcnt);
+		}
+		else{
+			GFL_AREAMAN_ReserveAssignPos(bgl->area_s,
+										 (bgl->CharVramBaseAdrs[frmnum]+offs*bgl->bgsys[frmnum].base_char_size)/0x20,
+										 charcnt*2);
+		}
+		break;
+	}
+
 	size = charcnt * bgl->bgsys[frmnum].base_char_size;
 	chr = (u32 *)GFL_HEAP_AllocMemoryLow( bgl->heapID,  size );
 
