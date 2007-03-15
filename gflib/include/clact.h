@@ -342,9 +342,11 @@ GLOBAL void GFL_CLACT_WkSetPlttOffs( CLWK* p_wk, u8 pal_offs );
 GLOBAL u8 GFL_CLACT_WkGetPlttOffs( const CLWK* cp_wk );
 GLOBAL u32 GFL_CLACT_WkGetPlttAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
 GLOBAL void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_pltt );
+GLOBAL void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt );
 // キャラクタ
 GLOBAL u32 GFL_CLACT_WkGetCharAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
 GLOBAL void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img );
+GLOBAL void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img );
 // ソフト優先順位
 GLOBAL void GFL_CLACT_WkSetSoftPri( CLWK* p_wk, u8 pri );
 GLOBAL u8 GFL_CLACT_WkGetSoftPri( const CLWK* cp_wk );

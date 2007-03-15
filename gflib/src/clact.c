@@ -1694,6 +1694,21 @@ void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_plt
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	パレットプロクシデータの取得
+ *
+ *	@param	cp_wk			セルアクターワーク
+ *	@param	p_pltt			パレットプロクシ格納先
+ */
+//-----------------------------------------------------------------------------
+void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt )
+{
+	GF_ASSERT( cp_wk );
+	GF_ASSERT( p_pltt );
+	*p_pltt = cp_wk->pltt_proxy;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	キャラクタデータVramアドレスを取得
  *
  *	@param	cp_wk		セルアクターワーク
@@ -1733,6 +1748,21 @@ void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img )
 	GF_ASSERT( cp_img );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	p_wk->img_proxy = *cp_img;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	イメージプロクシを取得
+ *
+ *	@param	cp_wk			セルアクターワーク
+ *	@param	p_img			イメージプロクシ格納先
+ */
+//-----------------------------------------------------------------------------
+void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img )
+{
+	GF_ASSERT( cp_wk );
+	GF_ASSERT( p_img );
+	*p_img = cp_wk->img_proxy;
 }
 
 //----------------------------------------------------------------------------
