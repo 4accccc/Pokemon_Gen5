@@ -189,7 +189,7 @@ BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
 {
     u8 id = GFL_NET_SystemGetCurrentID();
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    id = id * 8 + _numNetHandle(pNet, pHandle);
+//    id = id * 8 + _numNetHandle(pNet, pHandle);
     pHandle->creatureNo = id;
 
     if(GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){

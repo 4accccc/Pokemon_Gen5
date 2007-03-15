@@ -194,8 +194,8 @@ BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
-    NET_PRINT("確認 %d\n",pCT->timingSyncEnd);
     if(pCT->timingSyncEnd == no){
+        NET_PRINT("確認 %d\n",pCT->timingSyncEnd);
         return TRUE;
     }
     return FALSE;

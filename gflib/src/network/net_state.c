@@ -726,7 +726,7 @@ void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pDa
 
 //==============================================================================
 /**
- * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION
+ * @brief   ネゴシエーション用コールバック GFL_NET_CMD_NEGOTIATION
  * @param   callback用引数
  * @retval  none
  */
@@ -744,7 +744,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
     }
     retCmd[1] = pGet[0];
     retCmd[0] = 0;
-    NET_PRINT("--RECV----CS_COMM_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
+    NET_PRINT("--RECV----GFL_NET_CMD_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
 
     for(i = 1 ; i < GFL_NET_MACHINE_MAX;i++){
         if(pNetHandle->pParent->negoCheck[i] == FALSE){
@@ -761,7 +761,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
 
 //==============================================================================
 /**
- * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION_RETURN
+ * @brief   ネゴシエーション用コールバック GFL_NET_CMD_NEGOTIATION_RETURN
  * @param   callback用引数
  * @retval  none
  */
