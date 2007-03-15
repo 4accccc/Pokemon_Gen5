@@ -230,6 +230,14 @@ static	void	YT_MainGameAct(GAME_PARAM *gp)
 	int	player_no;
 
 	for(player_no=0;player_no<2;player_no++){
+        if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+            continue;
+        }
+        else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+            continue;
+        }
+
+        
 		switch(gp->game_seq_no[player_no]){
 		case SEQ_GAME_START_WAIT:
 			if(GFL_FADE_FadeCheck()==FALSE){

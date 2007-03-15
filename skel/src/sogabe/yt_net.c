@@ -15,13 +15,20 @@
 #include "main.h"
 #include "yt_common.h"
 #include "yt_net.h"
+#include "fallchr.h"
 #include "../ohno/fatal_error.h"
+
+
+// static 関数定義
+static void _recvCLACTPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvCLACTAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //通信用構造体
 struct _NET_PARAM
 {
     GFL_NETHANDLE* pNetHandle[2];  //通信用ハンドル 親と子のハンドルを管理するから２個必要
+    CLWK* pCLACT[YT_CLACT_MAX];  // 描画してるclact
     u32 seq;
     BOOL bGameStart;
 };
@@ -65,21 +72,43 @@ static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得
     return TRUE;
 }
 
-static void _recvCLACTPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-}
-
 #define _MAXNUM (2)     // 接続最大
 #define _MAXSIZE (120)  // 送信最大サイズ
 
 //普通のワイヤレス通信
 
+
+/// バトル専用通信コマンドの定義。
+enum CommCommandBattle_e {
+    YT_NET_COMMAND_ANIM = GFL_NET_CMD_COMMAND_MAX,  ///< アニメコマンド送信
+    YT_NET_COMMAND_POS,                             ///< 位置コマンド送信
+    //------------------------------------------------ここまで
+    YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
+};
+
+//----------------------------------------------------------------------------
+// @brief	アニメーション設定を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 clactNo;
+    u16 anmseq;
+} COMM_ANIM_ST;
+
+//----------------------------------------------------------------------------
+// @brief	位置設定を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 clactNo;
+    s16 x;
+    s16 y;
+} COMM_POS_ST;
+
+
+
 // ローカル通信テーブル
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {_recvCLACTPos, GFL_NET_COMMAND_VARIABLE, NULL},
-    {_recvCLACTPos, GFL_NET_COMMAND_VARIABLE, NULL},
-    {_recvCLACTPos, GFL_NET_COMMAND_VARIABLE, NULL},
-    {_recvCLACTPos, GFL_NET_COMMAND_VARIABLE, NULL},
+    {_recvCLACTAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_ANIM_ST)), NULL},
+    {_recvCLACTPos, GFL_NET_COMMAND_SIZE(sizeof(COMM_POS_ST)), NULL},
 };
 
 
@@ -109,6 +138,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 };
 
 
+
 enum{
     _INIT_WAIT_PARENT,
     _INIT_WAIT_CHILD,
@@ -133,9 +163,115 @@ static void _seqChange(NET_PARAM* pNet, int no)
 #define _SEQCHANGE(no)   _seqChange(pNet,no)
 
 
-BOOL YT_NET_Main(void *work)
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	位置命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvCLACTPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    NET_PARAM* pNet = work;
+    const COMM_POS_ST* pPos = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+	CLSYS_POS	pos;
+
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    
+    //OS_TPrintf("testPos %d %d %d\n",pPos->clactNo, pPos->x, pPos->y);
+    pos.x = pPos->x;
+    pos.y = pPos->y;
+    if(pNet->pCLACT[pPos->clactNo] != NULL){
+        GFL_CLACT_WkSetWldPos(pNet->pCLACT[pPos->clactNo],&pos);
+    }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーション命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvCLACTAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_ANIM_ST* pAnim = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+
+    //OS_TPrintf("testAnim %d %d\n",pAnim->clactNo,pAnim->anmseq);
+
+    GF_ASSERT(pAnim->clactNo < YT_CLACT_MAX);
+    
+    if(pNet->pCLACT[pAnim->clactNo]==NULL){
+        pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->anmseq,0);
+    }
+    else{
+        GFL_CLACT_WkSetAnmSeq(pNet->pCLACT[pAnim->clactNo],pAnim->anmseq);
+    }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	親機かどうかを判断する
+ */
+//-----------------------------------------------------------------------------
+
+BOOL YT_NET_IsParent(NET_PARAM* pNet)
+{
+    return (pNet->pNetHandle[0] != NULL);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、アニメーションナンバーを送信する
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendAnmReq(int clactno,CLWK* p_wk,u16 anmseq,NET_PARAM* pNet)
+{
+    COMM_ANIM_ST CommAnmSt;
+
+    CommAnmSt.clactNo = clactno;
+    CommAnmSt.anmseq = anmseq;
+
+    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM, &CommAnmSt);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、位置を送信する
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendPosReq(int clactno,CLWK* p_wk,s16 x, s16 y,NET_PARAM* pNet)
+{
+    COMM_POS_ST CommPosSt;
+
+    CommPosSt.clactNo = clactno;
+    CommPosSt.x = x;
+    CommPosSt.y = y;
+    //OS_TPrintf("位置送信 %d %d\n",x,y);
+    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_POS, &CommPosSt);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信のメインシーケンス
+ */
+//-----------------------------------------------------------------------------
+
+BOOL YT_NET_Main(NET_PARAM* pNet)
+{
 
     switch(pNet->seq){
       case _INIT_WAIT_PARENT:
@@ -166,17 +302,19 @@ BOOL YT_NET_Main(void *work)
         _SEQCHANGE( _NEGO_START );
         break;
       case _NEGO_START:
-        if(pNet->pNetHandle[0]){
-            if(GFL_NET_NegotiationRequest( pNet->pNetHandle[1] )){
-                _SEQCHANGE( _TIM_START );
-            }
-        }
-        else{
+        if(YT_NET_IsParent(pNet)){  //親機の場合
             if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
                 if(GFL_NET_NegotiationRequest( pNet->pNetHandle[1] )){
                     _SEQCHANGE( _TIM_START );
                 }
             }
+        }
+        else{
+//            if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
+                if(GFL_NET_NegotiationRequest( pNet->pNetHandle[1] )){
+                    _SEQCHANGE( _TIM_START );
+                }
+  //          }
         }
         break;
       case _TIM_START:
@@ -196,7 +334,6 @@ BOOL YT_NET_Main(void *work)
     return pNet->bGameStart;
 }
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	
@@ -209,7 +346,7 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
     NET_PARAM* pNet = GFL_HEAP_AllocMemory(gp->heapID, sizeof(NET_PARAM));
 
     GFL_STD_MemClear(pNet, sizeof(NET_PARAM));
-    aGFLNetInit.pWork = pNet;
+    aGFLNetInit.pWork = gp;
     gp->pNetParam = pNet;
 
     GFL_NET_sysInit(&aGFLNetInit);

@@ -66,6 +66,20 @@ GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 lin
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	Network用落下キャラ生成
+ *	
+ *	@param	gp			ゲームパラメータポインタ
+ *	@param	player_no	1P or 2P
+ *	@param	type		キャラタイプ
+ *	@param	line_no		落下ラインナンバー
+ *
+ *	@retval CLWK*
+ */
+//-----------------------------------------------------------------------------
+GLOBAL CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	タマゴ生成チェック
  *	
  *	@param	ps		プレーヤーステータス
