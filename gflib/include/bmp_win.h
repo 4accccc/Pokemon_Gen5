@@ -114,22 +114,28 @@ extern void GFL_BMPWIN_ClearScrn( GFL_BMPWIN* bmpwin );
  */
 //--------------------------------------------------------------------------------------------
 // フレームナンバーの取得
-extern u8 GFL_BMPWIN_GetFrame( GFL_BMPWIN* bmpwin );
+extern u8 GFL_BMPWIN_GetFrame( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // キャラクターＸサイズの取得
-extern u8 GFL_BMPWIN_GetSizeX( GFL_BMPWIN* bmpwin );
+extern u8 GFL_BMPWIN_GetSizeX( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // キャラクターＹサイズの取得
-extern u8 GFL_BMPWIN_GetSizeY( GFL_BMPWIN* bmpwin );
+extern u8 GFL_BMPWIN_GetSizeY( const GFL_BMPWIN* bmpwin );
+//--------------------------------
+// スクリーンＸサイズの取得
+extern u8 GFL_BMPWIN_GetScrnSizeX( const GFL_BMPWIN* bmpwin );
+//--------------------------------
+// スクリーンＹサイズの取得
+extern u8 GFL_BMPWIN_GetScrnSizeY( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // 描画Ｘ座標の取得
-extern u8 GFL_BMPWIN_GetPosX( GFL_BMPWIN* bmpwin );
+extern u8 GFL_BMPWIN_GetPosX( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // 描画Ｙ座標の取得
-extern u8 GFL_BMPWIN_GetPosY( GFL_BMPWIN* bmpwin );
+extern u8 GFL_BMPWIN_GetPosY( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // キャラクターナンバーの取得
-extern u16 GFL_BMPWIN_GetChrNum( GFL_BMPWIN* bmpwin );
+extern u16 GFL_BMPWIN_GetChrNum( const GFL_BMPWIN* bmpwin );
 //--------------------------------
 // ビットマップポインタの取得
 GFL_BMP_DATA* GFL_BMPWIN_GetBmp( GFL_BMPWIN * bmpwin );

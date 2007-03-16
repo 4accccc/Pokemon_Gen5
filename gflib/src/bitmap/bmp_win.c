@@ -251,7 +251,9 @@ void
 		scrnbuf[i] = (scrnchr|scrnpal);
 		scrnchr++;
 	}
-	GFL_BG_ScrWrite( bmpwin->frmnum, scrnbuf, bmpwin->posx, bmpwin->posy, bmpwin->sizx, bmpwin->sizy );
+	GFL_BG_ScrWrite( bmpwin->frmnum, scrnbuf, bmpwin->posx, bmpwin->posy, bmpwin->width, bmpwin->height );
+	GFL_BG_ScrWriteExpand(  bmpwin->frmnum, bmpwin->posx, bmpwin->posy, bmpwin->width, bmpwin->height,
+							scrnbuf, 0, 0, bmpwin->sizx, bmpwin->sizy );
 
 	GFL_HEAP_FreeMemory( scrnbuf );
 }
@@ -285,7 +287,7 @@ void
 //--------------------------------
 u8
 	GFL_BMPWIN_GetFrame
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
@@ -299,7 +301,7 @@ u8
 //--------------------------------
 u8
 	GFL_BMPWIN_GetSizeX
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
@@ -313,11 +315,41 @@ u8
 //--------------------------------
 u8
 	GFL_BMPWIN_GetSizeY
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->sizy;
 }
+
+//--------------------------------
+/**
+ * スクリーンＸサイズの取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetScrnSizeX
+		( const GFL_BMPWIN * bmpwin )
+{
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
+
+	return bmpwin->width;
+}
+
+//--------------------------------
+/**
+ * スクリーンＹサイズの取得
+ */
+//--------------------------------
+u8
+	GFL_BMPWIN_GetScrnSizeY
+		( const GFL_BMPWIN * bmpwin )
+{
+	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
+
+	return bmpwin->height;
+}
+
+
 
 //--------------------------------
 /**
@@ -326,7 +358,7 @@ u8
 //--------------------------------
 u8
 	GFL_BMPWIN_GetPosX
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->posx;
@@ -339,7 +371,7 @@ u8
 //--------------------------------
 u8
 	GFL_BMPWIN_GetPosY
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->posy;
@@ -352,7 +384,7 @@ u8
 //--------------------------------
 u16
 	GFL_BMPWIN_GetChrNum
-		( GFL_BMPWIN * bmpwin )
+		( const GFL_BMPWIN * bmpwin )
 {
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 	return bmpwin->chrnum;
