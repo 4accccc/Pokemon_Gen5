@@ -104,6 +104,9 @@ typedef struct {
 	GFL_G3D_CAMERA*			g3Dcamera[4];
 	GFL_G3D_LIGHTSET*		g3Dlightset[4];
 
+	u16						nowCameraNum;
+	u16						nowLightNum;
+
 	u16						work[16];
 	u16						mode;
 }TETSU_WORK;
@@ -134,6 +137,7 @@ static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans );
+static void CameraMove( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans );
 //------------------------------------------------------------------
 /**
  * @brief	データ
@@ -162,6 +166,8 @@ static void	TestModeWorkRelease( void )
  * @brief	メイン
  */
 //------------------------------------------------------------------
+#define MOVE_SPEED ( FX32_ONE*2)
+
 static BOOL	TestModeControl( void )
 {
 	BOOL return_flag = FALSE;
@@ -188,19 +194,36 @@ static BOOL	TestModeControl( void )
 	case 2:
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
 			tetsuWork->seq++;
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
-			VecFx32 trans = {  FX32_ONE, 0, 0 };
+		}
+#if 0
+		if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
+			VecFx32 trans = {  MOVE_SPEED, 0, 0 };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		} else if( GFL_UI_KeyGetCont() & PAD_KEY_RIGHT ){
-			VecFx32 trans = { -FX32_ONE, 0, 0 };
+			VecFx32 trans = { -MOVE_SPEED, 0, 0 };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		} else if( GFL_UI_KeyGetCont() & PAD_KEY_UP ){
-			VecFx32 trans = { 0, 0,  FX32_ONE };
+			VecFx32 trans = { 0, 0,  MOVE_SPEED };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		} else if( GFL_UI_KeyGetCont() & PAD_KEY_DOWN ){
-			VecFx32 trans = { 0, 0, -FX32_ONE };
+			VecFx32 trans = { 0, 0, -MOVE_SPEED };
 			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
 		}
+#else
+		if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
+			VecFx32 trans = { -MOVE_SPEED, 0, 0 };
+			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_RIGHT ){
+			VecFx32 trans = {  MOVE_SPEED, 0, 0 };
+			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_UP ){
+			VecFx32 trans = { 0, 0, -MOVE_SPEED };
+			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
+		} else if( GFL_UI_KeyGetCont() & PAD_KEY_DOWN ){
+			VecFx32 trans = { 0, 0,  MOVE_SPEED };
+			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
+		}
+#endif
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_B ){
 			if( tetsuWork->mode > 1 ){
 				tetsuWork->mode--;
@@ -212,25 +235,31 @@ static BOOL	TestModeControl( void )
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
 			if( tetsuWork->mode & 1 ){
 				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[1] );
+				tetsuWork->nowCameraNum = 1;
 			}
 			if( tetsuWork->mode & 2 ){
 				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[1] );
+				tetsuWork->nowLightNum = 1;
 			}
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
 			if( tetsuWork->mode & 1 ){
 				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
+				tetsuWork->nowCameraNum = 0;
 			}
 			if( tetsuWork->mode & 2 ){
 				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+				tetsuWork->nowLightNum = 0;
 			}
 		}
 		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
 			if( tetsuWork->mode & 1 ){
 				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[2] );
+				tetsuWork->nowCameraNum = 2;
 			}
 			if( tetsuWork->mode & 2 ){
 				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[2] );
+				tetsuWork->nowLightNum = 2;
 			}
 		}
 		g3d_move();
@@ -322,6 +351,8 @@ static void g3d_load( HEAPID heapID )
 	//カメラライト0反映
 	GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
 	GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+	tetsuWork->nowCameraNum = 0;
+	tetsuWork->nowLightNum = 0;
 }
 	
 //動作
@@ -378,6 +409,7 @@ static inline void drawSWset( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 
 static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
+#if 0
 	MtxFx33 rotate;
 	BALL_WORK* ballWk = (BALL_WORK*)work;
 
@@ -399,10 +431,12 @@ static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 			break;
 	}
+#endif
 }
 
 static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
+#if 0
 	MtxFx33 rotate;
 	BALL_WORK* ballWk = (BALL_WORK*)work;
 
@@ -424,10 +458,12 @@ static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 			break;
 	}
+#endif
 }
 
 static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
+#if 0
 	MtxFx33 rotate;
 	BALL_WORK* ballWk = (BALL_WORK*)work;
 
@@ -449,6 +485,7 @@ static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
 			break;
 	}
+#endif
 }
 
 static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
@@ -467,6 +504,25 @@ static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
 		GFL_G3D_SceneObjStatusTransSet( g3DsceneObj, &tmp );
 		idx++;
 	}
+}
+
+static void CameraMove( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans )
+{
+	VecFx32	tmpVec;
+	
+	GFL_G3D_CameraPosGet( g3Dcamera, &tmpVec );
+	tmpVec.x += trans->x;
+	tmpVec.y += trans->y;
+	tmpVec.z += trans->z;
+	GFL_G3D_CameraPosSet( g3Dcamera, &tmpVec );
+
+	GFL_G3D_CameraTargetGet( g3Dcamera, &tmpVec );
+	tmpVec.x += trans->x;
+	tmpVec.y += trans->y;
+	tmpVec.z += trans->z;
+	GFL_G3D_CameraTargetSet( g3Dcamera, &tmpVec );
+
+	GFL_G3D_CameraSwitching( g3Dcamera );
 }
 
 //------------------------------------------------------------------
