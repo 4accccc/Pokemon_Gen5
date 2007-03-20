@@ -16,12 +16,15 @@
 #include "yt_common.h"
 #include "yt_net.h"
 #include "fallchr.h"
+#include "player.h"
 #include "../ohno/fatal_error.h"
 
 
 // static 関数定義
 static void _recvCLACTPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvCLACTAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvCLACTDelete(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 //通信用構造体
@@ -29,6 +32,7 @@ struct _NET_PARAM
 {
     GFL_NETHANDLE* pNetHandle[2];  //通信用ハンドル 親と子のハンドルを管理するから２個必要
     CLWK* pCLACT[YT_CLACT_MAX];  // 描画してるclact
+    PLAYER_PARAM* pp;
     u32 seq;
     BOOL bGameStart;
 };
@@ -82,6 +86,8 @@ static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得
 enum CommCommandBattle_e {
     YT_NET_COMMAND_ANIM = GFL_NET_CMD_COMMAND_MAX,  ///< アニメコマンド送信
     YT_NET_COMMAND_POS,                             ///< 位置コマンド送信
+    YT_NET_COMMAND_PLAYERANIM,            ///< プレーヤーのアニメーション情報の送信
+    YT_NET_COMMAND_DELETE,            /// CLACTを消す命令
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -95,6 +101,16 @@ typedef struct {
 } COMM_ANIM_ST;
 
 //----------------------------------------------------------------------------
+// @brief	プレイヤーアニメーション設定を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u16 anm_no;
+    u8 line_no;
+    u8 rot;
+    u8 actno;
+} COMM_PLAYER_ANIM_ST;
+
+//----------------------------------------------------------------------------
 // @brief	位置設定を送信する
 //-----------------------------------------------------------------------------
 typedef struct {
@@ -103,12 +119,20 @@ typedef struct {
     s16 y;
 } COMM_POS_ST;
 
+// @brief	消す命令
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 clactNo;
+} COMM_DELETE_ST;
+
 
 
 // ローカル通信テーブル
 static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvCLACTAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_ANIM_ST)), NULL},
     {_recvCLACTPos, GFL_NET_COMMAND_SIZE(sizeof(COMM_POS_ST)), NULL},
+    {_recvCLACTPlayerAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_PLAYER_ANIM_ST)), NULL},
+    {_recvCLACTDelete, GFL_NET_COMMAND_SIZE(sizeof(COMM_DELETE_ST)), NULL},
 };
 
 
@@ -189,6 +213,28 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
     }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	消す命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvCLACTDelete(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_POS_ST* pPos = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+	CLSYS_POS	pos;
+
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    if(pNet->pCLACT[pPos->clactNo] != NULL){
+        GFL_CLACT_WkDel(pNet->pCLACT[pPos->clactNo]);
+        pNet->pCLACT[pPos->clactNo] = NULL;
+    }
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -222,6 +268,31 @@ static void _recvCLACTAnim(const int netID, const int size, const void* pData, v
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	プレイヤーアニメーション命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_PLAYER_ANIM_ST* pAnim = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    OS_TPrintf("player --\n");
+
+    if(pNet->pp == NULL){
+        pNet->pp = YT_InitPlayer(gp,netID,netID);
+    }
+    else{
+        YT_PlayerAnimeNetSet(gp, pNet->pp, netID, pAnim->anm_no, pAnim->line_no, pAnim->rot,pAnim->actno);
+    }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	親機かどうかを判断する
  */
 //-----------------------------------------------------------------------------
@@ -233,19 +304,60 @@ BOOL YT_NET_IsParent(NET_PARAM* pNet)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	通信の場合はアニメーションＮＯを送信
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendPlayerAnmReq(int anm_no,u16 line_no,int rot, int actno,NET_PARAM* pNet)
+{
+    COMM_PLAYER_ANIM_ST CommPlayerAnmSt;
+
+    if(pNet){
+        CommPlayerAnmSt.anm_no = anm_no;
+        CommPlayerAnmSt.line_no = line_no;
+        CommPlayerAnmSt.rot = rot;
+        CommPlayerAnmSt.actno = actno;
+
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_PLAYERANIM, &CommPlayerAnmSt);
+    }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	通信対戦時には、アニメーションナンバーを送信する
  */
 //-----------------------------------------------------------------------------
 
-void YT_NET_SendAnmReq(int clactno,CLWK* p_wk,u16 anmseq,NET_PARAM* pNet)
+void YT_NET_SendAnmReq(int clactno,u16 anmseq,NET_PARAM* pNet)
 {
     COMM_ANIM_ST CommAnmSt;
+    if(pNet){
 
     CommAnmSt.clactNo = clactno;
     CommAnmSt.anmseq = anmseq;
 
     GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM, &CommAnmSt);
+    }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLACTを消す
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_DeleteReq(int clactno,NET_PARAM* pNet)
+{
+    COMM_DELETE_ST CommDelSt;
+
+    if(pNet){
+    OS_TPrintf("DeleteReq\n");
+
+    CommDelSt.clactNo = clactno;
+    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_DELETE, &CommDelSt);
+    }
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -253,15 +365,17 @@ void YT_NET_SendAnmReq(int clactno,CLWK* p_wk,u16 anmseq,NET_PARAM* pNet)
  */
 //-----------------------------------------------------------------------------
 
-void YT_NET_SendPosReq(int clactno,CLWK* p_wk,s16 x, s16 y,NET_PARAM* pNet)
+void YT_NET_SendPosReq(int clactno,s16 x, s16 y,NET_PARAM* pNet)
 {
     COMM_POS_ST CommPosSt;
 
+    if(pNet){
     CommPosSt.clactNo = clactno;
     CommPosSt.x = x;
     CommPosSt.y = y;
     //OS_TPrintf("位置送信 %d %d\n",x,y);
     GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_POS, &CommPosSt);
+    }
 }
 
 //----------------------------------------------------------------------------

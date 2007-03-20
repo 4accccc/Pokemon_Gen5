@@ -41,7 +41,9 @@ static	void	YT_CheckFlag(TCB *tcb,void *work);
 //-----------------------------------------------------------------------------
 void	YT_InitGame(GAME_PARAM *gp)
 {
-	// セルアクターユニット作成
+    PLAYER_PARAM* pp;
+
+    // セルアクターユニット作成
 	gp->clact->p_unit = GFL_CLACT_UnitCreate( YT_CLACT_MAX, gp->heapID );
 
 	//エリアマネージャ初期化
@@ -174,8 +176,27 @@ void	YT_InitGame(GAME_PARAM *gp)
 	//プレーヤー初期化
 	gp->game_seq_no[0]=0;
 	gp->game_seq_no[1]=0;
-	YT_InitPlayer(gp,0,0);
-	YT_InitPlayer(gp,1,1);
+
+    if(gp->pNetParam){  // 通信にあわせてマリオの初期化を行います
+        int	player_no;
+
+        for(player_no=0;player_no<2;player_no++){
+            if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+                continue;
+            }
+            else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+                continue;
+            }
+            pp = YT_InitPlayer(gp,player_no,player_no);
+            YT_InitPlayerAddTask(gp, pp, player_no);
+        }
+    }
+    else{
+        pp = YT_InitPlayer(gp,0,0);
+        YT_InitPlayerAddTask(gp, pp, 0);
+        pp = YT_InitPlayer(gp,1,1);
+        YT_InitPlayerAddTask(gp, pp, 1);
+    }
 
 	//ゲームフラグチェックタスクセット
 	gp->check_tcb=GFL_TCB_AddTask(gp->tcbsys,YT_CheckFlag,gp,TCB_PRI_PLAYER);
@@ -230,14 +251,14 @@ static	void	YT_MainGameAct(GAME_PARAM *gp)
 	int	player_no;
 
 	for(player_no=0;player_no<2;player_no++){
-        if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
-            continue;
+        if(gp->pNetParam){
+            if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+                continue;
+            }
+            else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+                continue;
+            }
         }
-        else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
-            continue;
-        }
-
-        
 		switch(gp->game_seq_no[player_no]){
 		case SEQ_GAME_START_WAIT:
 			if(GFL_FADE_FadeCheck()==FALSE){

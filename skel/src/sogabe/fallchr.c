@@ -119,6 +119,31 @@ CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	落下キャラ削除
+ *	@param	gp			ゲームパラメータポインタ
+ *	@param	player_no	1P or 2P
+ *	@param	type		キャラタイプ
+ *	@param	line_no		落下ラインナンバー
+ *
+ *	@retval void
+ */
+//-----------------------------------------------------------------------------
+static void YT_DeleteFallChr(CLWK* clwk,FALL_CHR_PARAM *fcp,TCB *tcb,NET_PARAM* pNet)
+{
+	//通信対戦時には、消す命令を送信する
+    if(pNet){
+        YT_NET_DeleteReq(fcp->clact_no, pNet);
+    }
+
+    GFL_CLACT_WkDel(clwk);
+    GFL_HEAP_FreeMemory(fcp);
+    GFL_TCB_DeleteTask(tcb);
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	落下キャラメイン処理
  */
 //-----------------------------------------------------------------------------
@@ -150,6 +175,8 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
     NET_PARAM*          pNet = gp->pNetParam;
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
 	CLWK				*clwk=(CLWK *)fcp->clwk;
+
+    GF_ASSERT(clwk);
 
 	switch(fcp->seq_no){
 	case SEQ_FALL_CHR_READY_INIT:
@@ -325,9 +352,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 					}
 					else{
 						GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
-						GFL_CLACT_WkDel(clwk);
-						GFL_HEAP_FreeMemory(fcp);
-						GFL_TCB_DeleteTask(tcb);
+                        YT_DeleteFallChr(clwk,fcp,tcb,pNet);
 					}
 				}
 				else{
@@ -376,9 +401,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 	case SEQ_FALL_CHR_VANISH:
 		if(GFL_CLACT_WkCheckAnmActive(clwk)==FALSE){
 			GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
-			GFL_CLACT_WkDel(clwk);
-			GFL_HEAP_FreeMemory(fcp);
-			GFL_TCB_DeleteTask(tcb);
+            YT_DeleteFallChr(clwk,fcp,tcb,pNet);
 		}
 		break;
 	}
@@ -603,6 +626,7 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 			&data[fcp->player_no][fcp->line_no], &resdat,
 			CLWK_SETSF_NONE,
 			fcp->gp->heapID );
+    GF_ASSERT(p_wk);
 
 	// オートアニメーション設定
 	GFL_CLACT_WkSetAutoAnmFlag( p_wk, TRUE );
@@ -626,7 +650,7 @@ static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet)
 
 	//通信対戦時には、座標を送信する
     if(pNet){
-        YT_NET_SendPosReq(fcp->clact_no, fcp->clwk, pos.x, pos.y, pNet);
+        YT_NET_SendPosReq(fcp->clact_no, pos.x, pos.y, pNet);
     }
 }
 
@@ -687,7 +711,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 
     //通信対戦時には、アニメーションナンバーを送信する
     if(pNet){
-        YT_NET_SendAnmReq(fcp->clact_no, fcp->clwk, anm_seq, pNet);
+        YT_NET_SendAnmReq(fcp->clact_no, anm_seq, pNet);
     }
 }
 
