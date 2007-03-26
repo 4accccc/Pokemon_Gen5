@@ -281,7 +281,6 @@ static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pD
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
-    OS_TPrintf("player --\n");
 
     if(pNet->pp == NULL){
         pNet->pp = YT_InitPlayer(gp,netID,netID);
@@ -351,7 +350,6 @@ void YT_NET_DeleteReq(int clactno,NET_PARAM* pNet)
     COMM_DELETE_ST CommDelSt;
 
     if(pNet){
-    OS_TPrintf("DeleteReq\n");
 
     CommDelSt.clactNo = clactno;
     GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_DELETE, &CommDelSt);

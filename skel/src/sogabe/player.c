@@ -695,127 +695,99 @@ static void YT_NetPlayerChrTrans(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,i
 //-----------------------------------------------------------------------------
 void	YT_PlayerAnimeNetSet(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot,int actno)
 {
+	YT_PLAYER_STATUS	*ps=&pp->gp->ps[player_no];
 
+    OS_TPrintf("pp->seq_no %d \n",pp->seq_no);
+    pp->anm_no = anm_no;
     switch(pp->seq_no){
       case SEQ_PLAYER_ACT_CHECK:
         switch(actno){
           case YT_PLAYER_ACT_MOVE_L:
-//            if(line_no){
-                YT_PlayerScreenMake(pp,line_no+1,line_no);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no+1,rot);
-  //          }
+            YT_PlayerScreenMake(pp,line_no+1,line_no);
+            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no+1,rot);
             break;
           case YT_PLAYER_ACT_MOVE_R:
-	//		if(line_no<2){
-                YT_PlayerScreenMake(pp,line_no-1,line_no);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no-1,rot);
-      //      }
+            YT_PlayerScreenMake(pp,line_no-1,line_no);
+            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no-1,rot);
             break;
-        }
-    }
-#if 0
           case YT_PLAYER_ACT_ROTATE:
-			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir,actno);
-				YT_PlayerRotateScreenMake(pp,0);
+            if(ps->status.no_active_flag==0){
+//                YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+                YT_PlayerRotateScreenMake(pp,0);
 				pp->seq_no=SEQ_PLAYER_ROTATE;
 				YT_PlayerRotateAct(pp,ps);
 			}
 			break;
-		case YT_PLAYER_ACT_OVERTURN_L:
-			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir,actno);
-				pp->seq_no=SEQ_PLAYER_OVERTURN;
+          case YT_PLAYER_ACT_OVERTURN_L:
+            if(ps->status.no_active_flag==0){
+//                YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+                pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
 			}
-			break;
-		case YT_PLAYER_ACT_OVERTURN_R:
-			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir,actno);
+            break;
+          case YT_PLAYER_ACT_OVERTURN_R:
+            if(ps->status.no_active_flag==0){
+//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
 			}
 			break;
-		case YT_PLAYER_ACT_OVERTURN_C:
+          case YT_PLAYER_ACT_OVERTURN_C:
 			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir,actno);
+//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
 			}
 			break;
-		default:
+          default:
 			break;
-		}
-		break;
+        }
+        break;
 	case SEQ_PLAYER_ROTATE:
-		switch(YT_PlayerActGet(pp)){
-		case YT_PLAYER_ACT_MOVE_L:
-			if(pp->line_no){
-				pp->dir^=1;
+        OS_TPrintf("rotate  %d %d %d\n",actno, line_no, rot);
+        switch(actno){
+          case YT_PLAYER_ACT_MOVE_L:
+            if(line_no){
+                pp->dir^=1;
 				YT_PlayerRotateScreenMake(pp,1);
-				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no-1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerScreenMake(pp,line_no+1,line_no);
+//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 			}
 			break;
-		case YT_PLAYER_ACT_MOVE_R:
-			if(pp->line_no<2){
+          case YT_PLAYER_ACT_MOVE_R:
+			if(line_no<2){
 				pp->dir^=1;
 				YT_PlayerRotateScreenMake(pp,1);
-				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no+1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerScreenMake(pp,line_no-1,line_no);
+//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 			}
 			break;
-		default:
-			if(YT_PlayerAnimeCheck(pp)==FALSE){
+          default:
+//			if(YT_PlayerAnimeCheck(pp)==FALSE){
 				pp->dir^=1;
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
 				YT_PlayerRotateScreenMake(pp,1);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
-			}
+//			}
 		}
-		break;
-	case SEQ_PLAYER_OVERTURN:
-		if(YT_PlayerAnimeCheck(pp)==FALSE){
-			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+        break;
+      case SEQ_PLAYER_OVERTURN:
+        if(YT_PlayerAnimeCheck(pp)==FALSE){
+//			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
 			pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 		}
-		break;
-	}
-#endif
-
-#if 0
-    switch(actno){
-      case YT_PLAYER_ACT_MOVE_L:
-        YT_PlayerScreenMake(pp,pp->line_no,pp->line_no);
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        break;
-      case YT_PLAYER_ACT_MOVE_R:
-        YT_PlayerScreenMake(pp,pp->line_no,pp->line_no);
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        break;
-      case YT_PLAYER_ACT_ROTATE:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        YT_PlayerRotateScreenMake(pp,0);
-//        YT_PlayerRotateAct(pp,ps);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_L:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-//        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_R:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-//        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_C:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
- //       YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
-        break;
-      default:
         break;
     }
-#endif
 }
 
 //----------------------------------------------------------------------------
