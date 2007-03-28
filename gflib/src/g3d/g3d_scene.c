@@ -15,6 +15,7 @@
 //=============================================================================================
 struct _GFL_G3D_SCENEOBJ {
 	GFL_G3D_SCENEOBJ_DATA	sceneObjData;
+	GFL_G3D_OBJ*			g3Dobj;
 	void*					sceneObjWorkEx;
 };
 
@@ -121,8 +122,11 @@ void
 	while( ( i<g3Dscene->g3DsceneObjMax )&&( g3Dscene->g3DsceneObjPriTbl[i] != 0xffff) ){
 		g3DsceneObj = GFL_TCBL_GetWork
 						( g3Dscene->g3DsceneObjTCBLtbl[ g3Dscene->g3DsceneObjPriTbl[i] ] );
+#if 0
 		g3Dobj = GFL_G3D_UtilsysObjHandleGet( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
-
+#else
+		g3Dobj = g3DsceneObj->g3Dobj;
+#endif
 		GFL_G3D_ObjDraw( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
@@ -270,6 +274,8 @@ u32
 
 		g3DsceneObj = GFL_TCBL_GetWork( g3DsceneObjTCBL );
 		g3DsceneObj->sceneObjData	= sceneObjTbl[i];
+		g3DsceneObj->g3Dobj	= GFL_G3D_UtilsysObjHandleGet
+								( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
 		g3DsceneObj->sceneObjWorkEx	= NULL;
 		GFL_STD_MemClear( (void*)((u32)g3DsceneObj + sizeof(GFL_G3D_SCENEOBJ)), 
 							g3Dscene->g3DsceneObjWorkSize - sizeof(GFL_G3D_SCENEOBJ) );
@@ -303,6 +309,20 @@ void
 		}
 	}
 	GFL_AREAMAN_Release( g3Dscene->g3DsceneObjAreaman, idx, sceneObjCount );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * オブジェクトハンドル(G3D_OBJ)の取得
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_OBJ*
+	GFL_G3D_SceneObjHandleGet
+		( GFL_G3D_SCENEOBJ* g3DsceneObj )
+{
+	return g3DsceneObj->g3Dobj;
 }
 
 //--------------------------------------------------------------------------------------------
