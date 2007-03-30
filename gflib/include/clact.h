@@ -245,6 +245,8 @@ GLOBAL void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID );
 GLOBAL void GFL_CLACT_SysExit( void );
 GLOBAL void GFL_CLACT_SysMain( void );
 GLOBAL void GFL_CLACT_SysVblank( void );
+GLOBAL void GFL_CLACT_SysOamBuffClean( void );
+GLOBAL void GFL_CLACT_SysVblankTransOnly( void );
 
 //-------------------------------------
 ///	USERíËã`ÉåÉìÉ_ÉâÅ[ä÷åW

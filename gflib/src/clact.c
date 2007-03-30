@@ -270,6 +270,7 @@ static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8
 static void OAMMAN_SysInit( CLSYS_OAMMAN* p_oamman, u8 oamst_main, u8 oamnum_main, u8 oamst_sub, u8 oamnum_sub );
 static void OAMMAN_SysExit( CLSYS_OAMMAN* p_oamman );
 static void OAMMAN_SysTrans( CLSYS_OAMMAN* p_oamman );
+static void OAMMAN_SysClean( CLSYS_OAMMAN* p_oamman );
 static void OAMMAN_ObjCreate( OAMMAN_DATA* p_obj, u8 oamst, u8 oamnum, NNSG2dOamType oam_type );
 static BOOL OAMMAN_ObjEntryOamAttr( OAMMAN_DATA* p_obj, const GXOamAttr* pOam, u16 affineIndex );
 static u16 OAMMAN_ObjEntryAffine( OAMMAN_DATA* p_obj, const MtxFx22* mtx );
@@ -493,13 +494,42 @@ void GFL_CLACT_SysMain( void )
 /**
  *	@brief	セルアクターシステム　Vブランク処理
  *
- *	@param	none
- *	＊VBlank割り込み処理内で行うのではなく、割り込み後に行ってください
+ *	＊OAMデータ転送後バッファをクリーンします。
  */
 //-----------------------------------------------------------------------------
 void GFL_CLACT_SysVblank( void )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
+	if( pClsys ){
+		OAMMAN_SysTrans( &pClsys->oamman );
+		OAMMAN_SysClean( &pClsys->oamman );
+		TRMAN_SysVBlank( &pClsys->trman );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルアクターOAMバッファのクリーン処理
+ */
+//-----------------------------------------------------------------------------
+void GFL_CLACT_SysOamBuffClean( void )
+{
+	if( pClsys ){
+		OAMMAN_SysClean( &pClsys->oamman );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルアクターシステム	Vブランク処理	転送のみ
+ *
+ *	＊OAMデータの転送のみ行います。
+ *	OAMバッファの初期化は、各自のタイミングで行ってください。
+ *	その際には「GFL_CLACT_SysOamBuffClean」関数を使用してください。
+ */
+//-----------------------------------------------------------------------------
+void GFL_CLACT_SysVblankTransOnly( void )
+{
 	if( pClsys ){
 		OAMMAN_SysTrans( &pClsys->oamman );
 		TRMAN_SysVBlank( &pClsys->trman );
@@ -2248,6 +2278,21 @@ static void OAMMAN_SysTrans( CLSYS_OAMMAN* p_oamman )
 	GF_ASSERT( p_oamman );
 	for( i=0; i<CLSYS_DRAW_MAX; i++ ){
 		OAMMAN_ObjTrans( &p_oamman->man[ i ] );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OAMマネージャシステム　バッファクリーン処理
+ *
+ *	@param	p_oamman		OAMマネージャシステム
+ */
+//-----------------------------------------------------------------------------
+static void OAMMAN_SysClean( CLSYS_OAMMAN* p_oamman )
+{
+	int i;
+	GF_ASSERT( p_oamman );
+	for( i=0; i<CLSYS_DRAW_MAX; i++ ){
 		OAMMAN_ObjClearBuff( &p_oamman->man[ i ] );
 	}
 }
