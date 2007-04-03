@@ -66,7 +66,7 @@ static inline  u16 HeapGetLow( HEAPID heapID )
  */
 //------------------------------------------------------------------------------
 extern void
-	GFL_HEAP_sysInit
+	GFL_HEAP_Init
 		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset);
 
 //------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ extern void
  */
 //------------------------------------------------------------------------------
 extern void
-	GFL_HEAP_sysExit
+	GFL_HEAP_Exit
 		( void );
 
 //------------------------------------------------------------------
@@ -95,7 +95,7 @@ inline void
 	GFL_HEAP_CreateHeapLow
 		( HEAPID parentHeapID, HEAPID childHeapID, u32 size )
 {
-	GFL_HEAP_CreateHeap( parentHeapID, HeapGetLow(childHeapID), size );
+	GFL_HEAP_CreateHeap( parentHeapID, GetHeapLowID(childHeapID), size );
 }
 
 //------------------------------------------------------------------
@@ -134,7 +134,7 @@ extern void*
 			GFL_HEAP_AllocMemoryblock( heapID, size )
 
 #define GFL_HEAP_AllocMemoryLow( heapID, size )	\
-			GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size )
+			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size )
 
 #else
 
@@ -146,7 +146,7 @@ extern void*
 			GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__)
 
 #define GFL_HEAP_AllocMemoryLow( heapID, size )	\
-			GFL_HEAP_AllocMemoryblock( HeapGetLow(heapID), size, __FILE__, __LINE__)
+			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size, __FILE__, __LINE__)
 
 #endif
 
@@ -163,7 +163,7 @@ inline  void*
 	GFL_HEAP_AllocMemoryLowClear
 		( HEAPID heapID, u32 size )
 {
-	void* memory = GFL_HEAP_AllocMemory( HeapGetLow(heapID), size );
+	void* memory = GFL_HEAP_AllocMemory( GetHeapLowID(heapID), size );
 	GFL_STD_MemClear32( memory, size );
 	return memory;
 }
@@ -203,7 +203,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern void
-	GFL_HEAP_MemoryResize
+	GFL_HEAP_ResizeMemory
 		( void* memory, u32 newSize );
 
 //------------------------------------------------------------------
@@ -297,7 +297,7 @@ u32 GFL_HEAP_DEBUG_GetMemoryBlockSize ( const void* memory );
  */
 //------------------------------------------------------------------------------
 extern void
-	GFL_HEAP_DTCM_sysInit
+	GFL_HEAP_DTCM_Init
 		( u32 size );
 
 //------------------------------------------------------------------------------
@@ -306,7 +306,7 @@ extern void
  */
 //------------------------------------------------------------------------------
 extern void
-	GFL_HEAP_DTCM_sysExit
+	GFL_HEAP_DTCM_Exit
 		( void );
 
 //------------------------------------------------------------------
