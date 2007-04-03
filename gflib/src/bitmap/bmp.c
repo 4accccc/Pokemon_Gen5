@@ -68,7 +68,7 @@ GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID )
 	bmp->size_x	=	sizex * 8;
 	bmp->size_y	=	sizey * 8;
 	bmp->col	=	col;
-	bmp->adrs	=	GFL_HEAP_AllocMemoryClear( heapID, sizex * sizey * col );
+	bmp->adrs	=	GFL_HEAP_AllocClearMemory( heapID, sizex * sizey * col );
 
 	return bmp;
 }

@@ -243,7 +243,7 @@ void
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	scrnsiz = bmpwin->sizx * bmpwin->sizy;
-	scrnbuf = (u16*)GFL_HEAP_AllocMemoryLow( bmpwin_sys->heapID, scrnsiz*2 );
+	scrnbuf = (u16*)GFL_HEAP_AllocMemoryLo( bmpwin_sys->heapID, scrnsiz*2 );
 	scrnchr = bmpwin->chrnum;
 	scrnpal = (bmpwin->palnum << 12);
 				
