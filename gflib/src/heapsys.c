@@ -114,7 +114,7 @@ void
 	{
 		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-		OS_Printf( "Create ChildHeap FAILED. ID = %d size = %x\n", childHeapID, size );
+		OS_Printf( "Create ChildHeap FAILED. ID = %d size = %x\n", childHeapID&HEAPID_MASK, size );
 
 		switch( errorCode )
 		{
@@ -126,7 +126,7 @@ void
 				break;
 			case HEAP_CANNOT_CREATE_HEAP:
 				OS_Panic( "not enough memory. ParentHeap ID = %d remains = %x\n",
-							parentHeapID, GFI_HEAP_GetHeapFreeSize( parentHeapID ) );
+							parentHeapID&HEAPID_MASK, GFI_HEAP_GetHeapFreeSize( parentHeapID ) );
 				break;
 			case HEAP_CANNOT_CREATE_HEAPTABLE:
 				OS_Panic( "no more create heap.\n" );
@@ -136,7 +136,7 @@ void
 				break;
 		}
 	} else {
-		OS_Printf( "Create ChildHeap. ID = %d size = %x\n", childHeapID, size );
+		OS_Printf( "Create ChildHeap. ID = %d size = %x\n", childHeapID&HEAPID_MASK, size );
 	}
 }
 
@@ -162,7 +162,7 @@ void
 	{
 		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-		OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID );
+		OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID&HEAPID_MASK );
 
 		switch( errorCode )
 		{
@@ -174,7 +174,7 @@ void
 				break;
 		}
 	} else {
-		OS_Printf( "Delete ChildHeap. ID = %d\n", childHeapID );
+		OS_Printf( "Delete ChildHeap. ID = %d\n", childHeapID&HEAPID_MASK );
 	}
 }
 
@@ -205,7 +205,7 @@ void*
 	{
 		u32 errorCode = GFI_HEAP_ErrorCodeGet();
 
-		OS_Printf( "Alloc Memory FAILED. heapID = %d. allocsize = %x\n", heapID, size );
+		OS_Printf( "Alloc Memory FAILED. heapID = %d. allocsize = %x\n", heapID&HEAPID_MASK, size );
 
 		switch( errorCode )
 		{
@@ -217,7 +217,7 @@ void*
 				break;
 			case HEAP_CANNOT_ALLOC_MEM:
 				OS_Printf( "not enough memory. heapID = %d remains = %x\n",
-							heapID,	GFI_HEAP_GetHeapFreeSize( heapID ));
+							heapID&HEAPID_MASK,	GFI_HEAP_GetHeapFreeSize( heapID ));
 				break;
 		}
 		#ifdef HEAPSYS_DEBUG
@@ -230,7 +230,7 @@ void*
 		#endif
 	}
 	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
-	//OS_Printf( "Alloc Memory. Heap ID = %d. allocsize = %x\n", heapID, size );
+	//OS_Printf( "Alloc Memory. Heap ID = %d. allocsize = %x\n", heapID&HEAPID_MASK, size );
 	return memory;
 }
 
@@ -294,7 +294,7 @@ void
 	if( result == FALSE )
 	{
 		OS_Printf( "InitAllocator FAILED.\n" );
-		OS_Panic( "heapID is not exist. ID = %d\n", heapID );
+		OS_Panic( "heapID is not exist. ID = %d\n", heapID&HEAPID_MASK );
 	}
 }
 
@@ -359,7 +359,7 @@ u32
 	if( result == 0 )
 	{
 		OS_Printf( "GetHeapFreeSize FAILED.\n" );
-		OS_Panic( "heapID is not exist. ID = %d\n", heapID );
+		OS_Panic( "heapID is not exist. ID = %d\n", heapID&HEAPID_MASK );
 	}
 	return result;
 }
@@ -469,7 +469,7 @@ static void PrintShortHeap( HEAPID heapID, u32 size, const char* filename, u32 l
 	u32 freeAreaSize = NNS_FndGetTotalFreeSizeForExpHeap( handle );
 	u32 allocatableMaxSize = NNS_FndGetAllocatableSizeForExpHeapEx( handle, 4 );
 
-	OS_Printf("Can't alloc %ldbytes memory from Heap(%d)\n", size, heapID);
+	OS_Printf("Can't alloc %ldbytes memory from Heap(%d)\n", size, heapID&HEAPID_MASK);
 	OS_Printf("This Heap have %ldbytes Free Area\n", freeAreaSize );
 	OS_Printf("and %ldbytes Allocatable Area\n", allocatableMaxSize );
 	OS_Printf("%s(%d)\n", filename, linenum);
@@ -553,7 +553,7 @@ void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID heapID )
 
 	if( restheap_count ){
 		OS_Printf( "these Memoryblocks haven't released\n" );
-		OS_Printf( "HeapID = %d  restcnt = %d .....\n", heapID, restheap_count );
+		OS_Printf( "HeapID = %d  restcnt = %d .....\n", heapID&HEAPID_MASK, restheap_count );
 		OS_Printf( "freesize = 0x%x bytes \n", GFI_HEAP_GetHeapFreeSize(heapID) );
 
 		GFL_HEAP_DEBUG_PrintExistMemoryBlocks( heapID );
