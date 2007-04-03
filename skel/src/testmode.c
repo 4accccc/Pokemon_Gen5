@@ -552,7 +552,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	TESTMODE_WORK * testmode;
 	HEAPID			heapID = HEAPID_TITLE;
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x40000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
 
 	testmode = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), heapID );
 	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
