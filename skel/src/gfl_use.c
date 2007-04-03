@@ -80,8 +80,8 @@ void GFLUser_Init(void)
 #endif
 
 	//ヒープシステム初期化
-	GFL_HEAP_sysInit(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0);	//メインアリーナ
-	GFL_HEAP_DTCM_sysInit( 0x2000 );				//ＤＴＣＭアリーナ
+	GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0);	//メインアリーナ
+	GFL_HEAP_DTCM_Init( 0x2000 );				//ＤＴＣＭアリーナ
 
 	//アーカイブシステム初期化
 	//GFL_ARC_SysInit(...);
@@ -145,8 +145,8 @@ void GFLUser_Exit(void)
 	GFL_PROC_SysExit();
 	GFL_OVERLAY_SysExit();
 	GFL_FADE_sysExit();
-	GFL_HEAP_DTCM_sysExit();
-	GFL_HEAP_sysExit();
+	GFL_HEAP_DTCM_Exit();
+	GFL_HEAP_Exit();
 }
 
 
