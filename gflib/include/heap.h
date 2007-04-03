@@ -36,7 +36,7 @@ typedef struct {
  *	ÉCÉìÉâÉCÉìä÷êî
  */
 //----------------------------------------------------------------
-inline  HEAPID HeapGetLow( HEAPID heapID )	
+inline  HEAPID GetHeapLowID( HEAPID heapID )	
 {
 	return (( heapID & HEAPID_MASK )|( HEAPDIR_MASK ));
 }
@@ -55,7 +55,7 @@ inline  HEAPID HeapGetLow( HEAPID heapID )
  */
 //------------------------------------------------------------------------------
 extern BOOL
-	GFI_HEAP_sysInit
+	GFI_HEAP_Init
 		(const HEAP_INIT_HEADER* header, u16 parentHeapMax, u16 totalHeapMax, u32 startOffset);
 
 //------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ extern BOOL
  */
 //------------------------------------------------------------------------------
 extern BOOL
-	GFI_HEAP_sysExit
+	GFI_HEAP_Exit
 		( void );
 
 //------------------------------------------------------------------
@@ -201,7 +201,7 @@ enum{
 };
 
 extern BOOL
-	GFI_HEAP_MemoryResize
+	GFI_HEAP_ResizeMemory
 		( void* memory, u32 newSize );
 
 //------------------------------------------------------------------
@@ -357,7 +357,7 @@ extern BOOL
  */
 //------------------------------------------------------------------
 extern u32
-	GFI_HEAP_ErrorCodeGet
+	GFI_HEAP_GetErrorCode
 		( void );
 
 
