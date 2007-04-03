@@ -745,7 +745,7 @@ void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, HEAPID hea
 
 	if( compressedFlag )
 	{
-		arcData = GFL_HEAP_AllocMemoryLow( heapID, GFL_ARC_DataSizeGet(fileIdx, dataIdx) );
+		arcData = GFL_HEAP_AllocMemoryLo( heapID, GFL_ARC_DataSizeGet(fileIdx, dataIdx) );
 	}
 	else
 	{
@@ -787,7 +787,7 @@ void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, HEAPID h
 
 	if( compressedFlag )
 	{
-		arcData = GFL_HEAP_AllocMemoryLow( heapID, *pSize );
+		arcData = GFL_HEAP_AllocMemoryLo( heapID, *pSize );
 	}
 	else
 	{
