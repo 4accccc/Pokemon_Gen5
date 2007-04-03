@@ -1244,7 +1244,7 @@ GFL_G3D_OBJ*
 	g3Dobj->anmCount	= anmCount;
 
 	//アニメーション配列作成
-	g3Dobj->anmTbl = GFL_HEAP_AllocMemoryClear( g3Dman->heapID, sizeof(GFL_G3D_ANM*) * anmCount );
+	g3Dobj->anmTbl = GFL_HEAP_AllocClearMemory( g3Dman->heapID, sizeof(GFL_G3D_ANM*) * anmCount );
 	for( i=0; i<anmCount; i++ ){
 		g3Danm = anmTbl[i];
 		if( g3Danm != NULL ){

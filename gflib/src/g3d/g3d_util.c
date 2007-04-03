@@ -73,11 +73,11 @@ GFL_G3D_UTIL*
 	int						i,j;
 
 	//管理領域確保
-	g3Dutil = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_UTIL) );
+	g3Dutil = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_G3D_UTIL) );
 
 	//リソース管理配列作成
-	g3Dutil->g3DresTbl = GFL_HEAP_AllocMemoryClear( heapID, pHANDLE_SIZE * setup->resCount );
-	g3Dutil->g3DresReference = GFL_HEAP_AllocMemoryClear( heapID, setup->resCount );
+	g3Dutil->g3DresTbl = GFL_HEAP_AllocClearMemory( heapID, pHANDLE_SIZE * setup->resCount );
+	g3Dutil->g3DresReference = GFL_HEAP_AllocClearMemory( heapID, setup->resCount );
 	g3Dutil->g3DresCount = setup->resCount;
 	//リソース読み込み
 	for( i=0; i<setup->resCount; i++ ){
@@ -108,8 +108,8 @@ GFL_G3D_UTIL*
 		GX_EndLoadTexPltt();
 	}
 	//オブジェクト管理配列作成
-	g3Dutil->g3DobjTbl = GFL_HEAP_AllocMemoryClear( heapID, pHANDLE_SIZE * setup->objCount );
-	g3Dutil->g3DobjExResourceRef = GFL_HEAP_AllocMemoryClear( heapID, setup->objCount );
+	g3Dutil->g3DobjTbl = GFL_HEAP_AllocClearMemory( heapID, pHANDLE_SIZE * setup->objCount );
+	g3Dutil->g3DobjExResourceRef = GFL_HEAP_AllocClearMemory( heapID, setup->objCount );
 	g3Dutil->g3DobjCount = setup->objCount;
 	//オブジェクト追加リソース作成フラグ初期化
 	for( i=0; i<setup->objCount; i++ ){
@@ -147,7 +147,7 @@ GFL_G3D_UTIL*
 		g3Drnd = GFL_G3D_RndCreate( g3DresMdl, objTbl->mdldatID, g3DresTex ); 
 
 		//アニメーションハンドルテンポラリ作成
-		g3DanmTbl = GFL_HEAP_AllocMemoryLowClear( heapID, objTbl->anmCount );
+		g3DanmTbl = GFL_HEAP_AllocClearMemoryLo( heapID, objTbl->anmCount );
 
 		//アニメーション設定
 		for( j=0; j<objTbl->anmCount; j++ ){

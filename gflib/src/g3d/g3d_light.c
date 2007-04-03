@@ -40,7 +40,7 @@ GFL_G3D_LIGHTSET*
 	int	i;
 
 	//管理領域確保
-	g3Dlightset = GFL_HEAP_AllocMemoryClear( heapID, sizeof(GFL_G3D_LIGHTSET) );
+	g3Dlightset = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_G3D_LIGHTSET) );
 
 	//ライトセットを取得。セットアップ後のcolor=0は存在しないライトとみなす。
 	for( i=0; i<setUp->lightCount; i++ ){
