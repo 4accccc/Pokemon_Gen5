@@ -164,7 +164,7 @@ static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFl
 		void* tmpBuf;
 		u32 size;
 
-		tmpBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, HeapGetLow(heapID) );
+		tmpBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
 		size = MI_GetUncompressedSize( tmpBuf );
 		retBuf = GFL_HEAP_AllocMemory( heapID, size );
 		MI_UncompressLZ8( tmpBuf, retBuf );
@@ -172,7 +172,7 @@ static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFl
 	}
 	else
 	{
-		retBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, HeapGetLow(heapID) );
+		retBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
 	}
 
 	return retBuf;
@@ -204,7 +204,10 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressed
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
 		CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
-		void* loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, HeapGetLow(heapID) );
+		void* loadPtr = ReadDataWithUncompress( arcHandle, 
+												cgrDataID, 
+												compressedFlag, 
+												GetHeapLowID(heapID) );
 
 		register_cgr( idx, loadPtr, targetVram, NULL );
 		GFL_HEAP_FreeMemory( loadPtr );
@@ -392,7 +395,9 @@ u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE
 	u32 idx = search_empty_pltt_pos();
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
-		void* loadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, plttDataID, HeapGetLow(heapID) );
+		void* loadPtr = GFL_ARC_DataLoadAllocByHandle(	arcHandle, 
+														plttDataID, 
+														GetHeapLowID(heapID) );
 		register_pltt( idx, loadPtr, vramType, byteOffs );
 		GFL_HEAP_FreeMemory( loadPtr );
 		return idx;
