@@ -165,7 +165,7 @@ void
 		DecodeParam( &param, strID, msgdat->randValue );
 
 		size = param.len * sizeof(STRCODE);
-		str = GFL_HEAP_AllocMemory( HeapGetLow( GFL_HEAPID_SYSTEM ), size );
+		str = GFL_HEAP_AllocMemory( GetHeapLowID( GFL_HEAPID_SYSTEM ), size );
 
 		//コンバートされている文字列を指定のローカルバッファにコピー
 		GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
@@ -208,7 +208,7 @@ STRBUF*
 		param = msgdat->params[strID];
 		DecodeParam( &param, strID, msgdat->randValue );
 		size = param.len * sizeof(STRCODE);
-		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID) , size );
+		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID) , size );
 
 		//コンバートされている文字列を指定のローカルバッファにコピー
 		GFL_STD_MemCopy16( (((u8*)msgdat) + param.offset), str, size );
@@ -282,7 +282,7 @@ void
 		DecodeParam( &param, strID, header.randValue );
 
 		size = param.len * sizeof(STRCODE);
-		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), size );
+		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), size );
 
 		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
 		DecodeStr( str, param.len, strID, header.randValue );
@@ -355,7 +355,7 @@ STRBUF*
 
 		dst = GFL_STR_BufferCreate( param.len, heapID );
 		size = param.len * sizeof(STRCODE);
-		str = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), size );
+		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), size );
 
 		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
 		DecodeStr( str, param.len, strID, header.randValue );
@@ -453,7 +453,7 @@ MSGDATA_MANAGER*
 {
 	// マネージャ作成→文字列取得→マネージャ廃棄…の流れが思ったより多そうなので
 	// マネージャワークはメモリブロックの後方から取得する
-	MSGDATA_MANAGER* man = GFL_HEAP_AllocMemory( HeapGetLow( heapID ), sizeof(MSGDATA_MANAGER) );
+	MSGDATA_MANAGER* man = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), sizeof(MSGDATA_MANAGER) );
 
 	if( type == MSGMAN_TYPE_NORMAL )
 	{
