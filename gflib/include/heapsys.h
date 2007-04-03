@@ -92,7 +92,7 @@ extern void
 		( HEAPID parentHeapID, HEAPID childHeapID, u32 size );
 
 inline void 
-	GFL_HEAP_CreateHeapLow
+	GFL_HEAP_CreateHeapLo
 		( HEAPID parentHeapID, HEAPID childHeapID, u32 size )
 {
 	GFL_HEAP_CreateHeap( parentHeapID, GetHeapLowID(childHeapID), size );
@@ -133,7 +133,7 @@ extern void*
 #define GFL_HEAP_AllocMemory( heapID, size ) \
 			GFL_HEAP_AllocMemoryblock( heapID, size )
 
-#define GFL_HEAP_AllocMemoryLow( heapID, size )	\
+#define GFL_HEAP_AllocMemoryLo( heapID, size )	\
 			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size )
 
 #else
@@ -145,13 +145,13 @@ extern void*
 #define GFL_HEAP_AllocMemory( heapID, size )	\
 			GFL_HEAP_AllocMemoryblock( heapID, size, __FILE__, __LINE__)
 
-#define GFL_HEAP_AllocMemoryLow( heapID, size )	\
+#define GFL_HEAP_AllocMemoryLo( heapID, size )	\
 			GFL_HEAP_AllocMemoryblock( GetHeapLowID(heapID), size, __FILE__, __LINE__)
 
 #endif
 
 inline  void*
-	GFL_HEAP_AllocMemoryClear
+	GFL_HEAP_AllocClearMemory
 		( HEAPID heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( heapID, size );
@@ -160,7 +160,7 @@ inline  void*
 }
 
 inline  void*
-	GFL_HEAP_AllocMemoryLowClear
+	GFL_HEAP_AllocClearMemoryLo
 		( HEAPID heapID, u32 size )
 {
 	void* memory = GFL_HEAP_AllocMemory( GetHeapLowID(heapID), size );
