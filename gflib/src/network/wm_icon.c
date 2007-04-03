@@ -106,7 +106,7 @@ static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, i
 	trans_cgx_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId );
 
 	// タスク登録・ワーク初期化
-	vwi        = (VINTR_WIRELESS_ICON*)GFL_HEAP_AllocMemoryLow(HeapId, sizeof(VINTR_WIRELESS_ICON));
+	vwi        = (VINTR_WIRELESS_ICON*)GFL_HEAP_AllocMemoryLo(HeapId, sizeof(VINTR_WIRELESS_ICON));
 
 	vwi->x     = x;
 	vwi->y     = y;
@@ -375,7 +375,7 @@ static void WirelessIconDefaultLCD( VINTR_WIRELESS_ICON* vwi )
 //------------------------------------------------------------------
 static void trans_palette_data( int vramType, BOOL bWifi, u32 offset, HEAPID heapID )
 {
-	void* pal = GFL_HEAP_AllocMemoryLow( heapID, WM_ICON_PALFILE_SIZE );
+	void* pal = GFL_HEAP_AllocMemoryLo( heapID, WM_ICON_PALFILE_SIZE );
 	if( pal )
 	{
 		NNSG2dPaletteData* palData;
@@ -409,7 +409,7 @@ static void trans_palette_data( int vramType, BOOL bWifi, u32 offset, HEAPID hea
 //------------------------------------------------------------------
 static void trans_cgx_data( int vramType, BOOL bWifi, HEAPID heapID )
 {
-	void *ncg = GFL_HEAP_AllocMemoryLow( heapID, WM_ICON_CHARFILE_SIZE );
+	void *ncg = GFL_HEAP_AllocMemoryLo( heapID, WM_ICON_CHARFILE_SIZE );
 
 	if( ncg )
 	{
