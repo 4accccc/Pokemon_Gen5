@@ -1384,7 +1384,7 @@ void GFL_BG_LoadScreen( u8 frmnum, const void * src, u32 datasiz, u32 offs )
 			u32	alloc_siz;
 
 			alloc_siz	= ((*(u32*)src) >> 8);
-			decode_buf = GFL_HEAP_AllocMemoryLow( bgl->heapID, alloc_siz );
+			decode_buf = GFL_HEAP_AllocMemoryLo( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// “WŠJ—ÌˆæŠm•ÛŽ¸”s
 			if( decode_buf == NULL ){
@@ -1630,7 +1630,7 @@ static void LoadCharacter( u8 frmnum, const void * src, u32 datasiz, u32 offs )
 		u32	alloc_siz;
 
 		alloc_siz  = ((*(u32*)src) >> 8);
-		decode_buf = GFL_HEAP_AllocMemoryLow( bgl->heapID, alloc_siz );
+		decode_buf = GFL_HEAP_AllocMemoryLo( bgl->heapID, alloc_siz );
 
 #ifdef	OSP_ERR_BGL_DECODEBUF_GET		// “WŠJ—ÌˆæŠm•ÛŽ¸”s
 		if( decode_buf == NULL ){
@@ -1735,7 +1735,7 @@ static void GFL_BG_LoadCharacterSub( u8 frmnum, void* src, u32 ofs, u32 siz )
 //--------------------------------------------------------------------------------------------
 void GFL_BG_ClearCharSet( u8 frmnum, u32 datasiz, u32 offs, HEAPID heapID )
 {
-	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLow( heapID, datasiz );
+	u32 * chr = (u32 *)GFL_HEAP_AllocMemoryLo( heapID, datasiz );
 
 	GFL_STD_MemFill( chr, 0, datasiz );
 
@@ -1794,7 +1794,7 @@ void GFL_BG_CharFill( u32 frmnum, u32 clear_code, u32 charcnt, u32 offs )
 	}
 
 	size = charcnt * bgl->bgsys[frmnum].base_char_size;
-	chr = (u32 *)GFL_HEAP_AllocMemoryLow( bgl->heapID,  size );
+	chr = (u32 *)GFL_HEAP_AllocMemoryLo( bgl->heapID,  size );
 
 	if( bgl->bgsys[frmnum].base_char_size == GFL_BG_1CHRDATASIZ ){
 		clear_code = (clear_code<<12) | (clear_code<<8) | (clear_code<<4) | clear_code;
@@ -3403,7 +3403,7 @@ u8 GFL_BG_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 		u8 * buf;
 
 		scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-		buf  = GFL_HEAP_AllocMemoryLow( bgl->heapID, 64 );
+		buf  = GFL_HEAP_AllocMemoryLo( bgl->heapID, 64 );
 
 		cgx += ( ( scrn[pos] & 0x3ff ) << 5 );
 		for( i=0; i<32; i++ ){
@@ -3427,7 +3427,7 @@ u8 GFL_BG_DotCheck( u8 frmnum, u16 px, u16 py, u16 * pat )
 			u8 * buf;
 
 			scrn = (u16 *)bgl->bgsys[frmnum].screen_buf;
-			buf  = GFL_HEAP_AllocMemoryLow( bgl->heapID, 64 );
+			buf  = GFL_HEAP_AllocMemoryLo( bgl->heapID, 64 );
 
 			GFL_STD_MemCopy( buf, &cgx[(scrn[pos]&0x3ff)<<6], 64 );
 			CgxFlipCheck( (u8)((scrn[pos]>>10)&3), buf ,bgl->heapID);
@@ -3461,7 +3461,7 @@ static void CgxFlipCheck( u8 flip, u8 * buf ,u32 heapID)
 
 	if( flip == 0 ){ return; }
 
-	tmp = GFL_HEAP_AllocMemoryLow( heapID, 64 );
+	tmp = GFL_HEAP_AllocMemoryLo( heapID, 64 );
 
 	if( flip & 1 ){
 		for( i=0; i<8; i++ ){
