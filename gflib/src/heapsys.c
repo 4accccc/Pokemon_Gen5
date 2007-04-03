@@ -32,7 +32,7 @@
  */
 //----------------------------------------------------------------
 #ifdef HEAPSYS_DEBUG
-static void HeaderDebugParamSet( void* memory, const char* filename, u16 lineNum );
+static void SetHeaderDebugParam( void* memory, const char* filename, u16 lineNum );
 static void PrintShortHeap( HEAPID heapID, u32 size, const char* filename, u32 linenum );
 static void PrintAllocInfo( void* memory, u32 size );
 static void PrintFreeInfo( void* memory );
@@ -61,16 +61,16 @@ typedef struct {
  */
 //------------------------------------------------------------------------------
 void
-	GFL_HEAP_sysInit
+	GFL_HEAP_Init
 		(const HEAP_INIT_HEADER* header, u32 parentHeapMax, u32 totalHeapMax, u32 startOffset)
 {
-	BOOL result = GFI_HEAP_sysInit( header, parentHeapMax, totalHeapMax, startOffset );
+	BOOL result = GFI_HEAP_Init( header, parentHeapMax, totalHeapMax, startOffset );
 	u32	 remainsize = (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo());
 
 	OS_Printf( "remains of MainRAM = 0x%08x bytes.\n", remainsize ); 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 		OS_Panic( "Create ParentHeap FAILED. ID = %d size = %x\n" , 
 					errorCode, header[errorCode].size );
 	}
@@ -83,10 +83,10 @@ void
  */
 //------------------------------------------------------------------------------
 void
-	GFL_HEAP_sysExit
+	GFL_HEAP_Exit
 		( void )
 {
-	BOOL result = GFI_HEAP_sysExit();
+	BOOL result = GFI_HEAP_Exit();
 
 	if( result == FALSE )
 	{
@@ -112,7 +112,7 @@ void
 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "Create ChildHeap FAILED. ID = %d size = %x\n", childHeapID&HEAPID_MASK, size );
 
@@ -160,7 +160,7 @@ void
 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "Delete ChildHeap FAILED. ID = %d\n", childHeapID&HEAPID_MASK );
 
@@ -203,7 +203,7 @@ void*
 
 	if( memory == NULL )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "Alloc Memory FAILED. heapID = %d. allocsize = %x\n", heapID&HEAPID_MASK, size );
 
@@ -226,7 +226,7 @@ void*
 		OS_Panic( "....................................\n" );
 	} else {
 		#ifdef HEAPSYS_DEBUG
-		HeaderDebugParamSet( memory, filename, linenum );
+		SetHeaderDebugParam( memory, filename, linenum );
 		#endif
 	}
 	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
@@ -250,7 +250,7 @@ void
 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "Free Memory FAILED. memory = %08x\n", memory );
 
@@ -308,14 +308,14 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_HEAP_MemoryResize
+	GFL_HEAP_ResizeMemory
 		( void* memory, u32 newSize )
 {
-	BOOL result = GFI_HEAP_MemoryResize( memory, newSize );
+	BOOL result = GFI_HEAP_ResizeMemory( memory, newSize );
 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "MemoryResize FAILED.\n" );
 
@@ -382,7 +382,7 @@ void
 
 	if( result == FALSE )
 	{
-		u32 errorCode = GFI_HEAP_ErrorCodeGet();
+		u32 errorCode = GFI_HEAP_GetErrorCode();
 
 		OS_Printf( "Memory Check FAILED.\n" );
 
@@ -419,7 +419,7 @@ void
  * @param   line_no		行番号
  */
 //------------------------------------------------------------------
-static void HeaderDebugParamSet( void* memory, const char* filename, u16 lineNum )
+static void SetHeaderDebugParam( void* memory, const char* filename, u16 lineNum )
 {
 	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
 
@@ -568,7 +568,7 @@ void GFL_HEAP_DEBUG_PrintUnreleasedMemoryCheck( HEAPID heapID )
  * @param   heapID				ヒープID
  */
 //------------------------------------------------------------------
-static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param)
+static void printHeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle, u32 param)
 {
 	void*	memory = (u8*)memBlock + MEMHEADER_SIZE;
 	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
@@ -584,7 +584,7 @@ static void HeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHandle,
 void GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID heapID )
 {
 	//拡張ヒープから確保したメモリブロック全て（Allocされたもの）に対し、指定した関数を呼ばせる
-	NNS_FndVisitAllocatedForExpHeap( GFI_HEAP_GetHandle(heapID), HeapConflictVisitorFunc, 0 );
+	NNS_FndVisitAllocatedForExpHeap( GFI_HEAP_GetHandle(heapID), printHeapConflictVisitorFunc, 0 );
 }
 
 //------------------------------------------------------------------
@@ -718,10 +718,10 @@ void HSS_Delete( HEAP_STATE_STACK* hss )
  */
 //------------------------------------------------------------------------------
 void
-	GFL_HEAP_DTCM_sysInit
+	GFL_HEAP_DTCM_Init
 		( u32 size )
 {
-	if( GFI_HEAP_DTCM_sysInit( size ) == FALSE ){
+	if( GFI_HEAP_DTCM_Init( size ) == FALSE ){
 		OS_Panic("cannot create heap from DTCM size = %x\n", size );
 	}
 }
@@ -733,10 +733,10 @@ void
  */
 //------------------------------------------------------------------------------
 void
-	GFL_HEAP_DTCM_sysExit
+	GFL_HEAP_DTCM_Exit
 		( void )
 {
-	if( GFI_HEAP_DTCM_sysExit() == FALSE ){
+	if( GFI_HEAP_DTCM_Exit() == FALSE ){
 		OS_Panic("cannot delete heap for DTCM\n" );
 	}
 }

@@ -116,7 +116,7 @@ static HEAP_SYS  HeapSys = { 0 };
  */
 //------------------------------------------------------------------------------
 BOOL
-	GFI_HEAP_sysInit
+	GFI_HEAP_Init
 		(const HEAP_INIT_HEADER* header, u16 parentHeapMax, u16 totalHeapMax, u32 startOffset)
 {
 	void *mem;
@@ -189,7 +189,7 @@ BOOL
  */
 //------------------------------------------------------------------------------
 BOOL
-	GFI_HEAP_sysExit
+	GFI_HEAP_Exit
 		( void )
 {
 	return TRUE;
@@ -483,7 +483,7 @@ BOOL
  */
 //------------------------------------------------------------------
 BOOL
-	GFI_HEAP_MemoryResize
+	GFI_HEAP_ResizeMemory
 		( void* memory, u32 newSize )
 {
 	MEMHEADER* memheader = (MEMHEADER*)((u8*)memory - sizeof(MEMHEADER));
@@ -767,7 +767,7 @@ BOOL
  */
 //------------------------------------------------------------------
 u32
-	GFI_HEAP_ErrorCodeGet
+	GFI_HEAP_GetErrorCode
 		( void )
 {
 	return (u32)HeapSys.errorCode;

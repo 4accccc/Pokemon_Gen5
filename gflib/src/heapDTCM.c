@@ -66,7 +66,7 @@ static HEAP_SYS_DTCM  HeapSysDTCM = { 0 };
  */
 //------------------------------------------------------------------------------
 BOOL
-	GFI_HEAP_DTCM_sysInit
+	GFI_HEAP_DTCM_Init
 		( u32 size )
 {
 	void	*memLo, *memHi, *mem;
@@ -102,7 +102,7 @@ BOOL
  */
 //------------------------------------------------------------------------------
 BOOL
-	GFI_HEAP_DTCM_sysExit
+	GFI_HEAP_DTCM_Exit
 		( void )
 {
 	OS_DestroyHeap( OS_ARENA_DTCM, HeapSysDTCM.heaphandle );
