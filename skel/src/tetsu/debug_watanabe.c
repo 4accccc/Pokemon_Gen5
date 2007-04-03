@@ -152,7 +152,7 @@ static void CameraMove( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans );
 //------------------------------------------------------------------
 static void	TestModeWorkSet( HEAPID heapID )
 {
-	tetsuWork = GFL_HEAP_AllocMemoryClear( heapID, sizeof(TETSU_WORK) );
+	tetsuWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(TETSU_WORK) );
 	tetsuWork->heapID = heapID;
 }
 
@@ -293,7 +293,7 @@ static void	bg_init( HEAPID heapID )
 
 	//ƒpƒŒƒbƒgì¬•“]‘—
 	{
-		u16* plt = GFL_HEAP_AllocMemoryLowClear( heapID, 16*2 );
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( heapID, 16*2 );
 		plt[0] = GX_RGB( 8, 15, 8);
 		GFL_BG_PaletteSet( GFL_BG_FRAME0_M, plt, 16*2, 0 );
 		GFL_BG_PaletteSet( GFL_BG_FRAME1_M, plt, 16*2, 0 );

@@ -257,7 +257,7 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 	GFL_TEXT_sysInit( font_path );
 	//パレット作成＆転送
 	{
-		u16* plt = GFL_HEAP_AllocMemoryLowClear( testmode->heapID, 16*2 );
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
 		plt[1] = G2D_FONT_COL;
 		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
@@ -268,7 +268,7 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 	}
 	//文字表示パラメータワーク作成
 	{
-		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocMemoryLowClear
+		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocClearMemoryLo
 										( testmode->heapID,sizeof(GFL_TEXT_PRINTPARAM));
 		*param = default_param;
 		testmode->textParam = param;

@@ -74,7 +74,7 @@ static	const	u16	yt_anime_table[][2]={
 //-----------------------------------------------------------------------------
 FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 {
-	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocMemoryClear(gp->heapID,sizeof(FALL_CHR_PARAM));
+	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocClearMemory(gp->heapID,sizeof(FALL_CHR_PARAM));
 
 	fcp->gp=gp;
 	fcp->player_no=player_no;
@@ -103,7 +103,7 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 //-----------------------------------------------------------------------------
 CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 {
-	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocMemoryClear(gp->heapID,sizeof(FALL_CHR_PARAM));
+	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocClearMemory(gp->heapID,sizeof(FALL_CHR_PARAM));
     CLWK* pCLWK;
     
 	fcp->gp=gp;
