@@ -63,7 +63,7 @@ static GFL_G3D_MAN*  g3Dman = NULL;
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysInit
+	GFL_G3D_Init
 		( GFL_G3D_VMAN_MODE texmanMode, GFL_G3D_VMAN_TEXSIZE texmanSize, 
 			GFL_G3D_VMAN_MODE pltmanMode, GFL_G3D_VMAN_PLTSIZE pltmanSize,
 				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup )
@@ -135,22 +135,22 @@ void
 		VecFx16 initVec16 = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
 
 		//射影
-		GFL_G3D_sysProjectionSet( GFL_G3D_PRJPERS,
+		GFL_G3D_SetSystemProjection( GFL_G3D_PRJPERS,
 						FX_SinIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
 						FX_CosIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
 						( FX32_ONE * 4 / 3 ), 0, 
 						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
 		//ライト
-		GFL_G3D_sysLightSet( 0, &initVec16, 0x7fff );
-		GFL_G3D_sysLightSet( 1, &initVec16, 0x7fff );
-		GFL_G3D_sysLightSet( 2, &initVec16, 0x7fff );
-		GFL_G3D_sysLightSet( 3, &initVec16, 0x7fff );
+		GFL_G3D_SetSystemLight( 0, &initVec16, 0x7fff );
+		GFL_G3D_SetSystemLight( 1, &initVec16, 0x7fff );
+		GFL_G3D_SetSystemLight( 2, &initVec16, 0x7fff );
+		GFL_G3D_SetSystemLight( 3, &initVec16, 0x7fff );
 		//カメラ
-		GFL_G3D_sysLookAtSet( &initVec32, &initVec32, &initVec32 );
+		GFL_G3D_SetSystemLookAt( &initVec32, &initVec32, &initVec32 );
 		g3Dman->lookAt.camPos.z	= ( 256 << FX32_SHIFT );
 		g3Dman->lookAt.camUp.y	= FX32_ONE;
 		//レンダリングスワップバッファ
-		GFL_G3D_sysSwapBufferModeSet( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 	}
 
 	if( setup != NULL ){
@@ -180,7 +180,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysExit
+	GFL_G3D_Exit
 		( void )
 {
 	GF_ASSERT( g3Dman != NULL );
@@ -230,7 +230,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysProjectionSet
+	GFL_G3D_SetSystemProjection
 		( const GFL_G3D_PROJECTION_TYPE type, 
 			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
 				const fx32 near, const fx32 far, const fx32 scaleW )
@@ -296,7 +296,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysLightSet
+	GFL_G3D_SetSystemLight
 		( const u8 lightID, const VecFx16* vec, const u16 color )
 {
 	GF_ASSERT( g3Dman != NULL );
@@ -320,7 +320,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysLookAtSet
+	GFL_G3D_SetSystemLookAt
 		( const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target )
 {
 	GF_ASSERT( g3Dman != NULL );
@@ -340,7 +340,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_sysSwapBufferModeSet
+	GFL_G3D_SetSystemSwapBufferMode
 		( const GXSortMode sortMode, const GXBufferMode bufferMode )
 {
 	GF_ASSERT( g3Dman != NULL );
@@ -422,7 +422,7 @@ static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
  */
 //--------------------------------------------------------------------------------------------
 static GFL_G3D_RES*
-	GFL_G3D_ResCreate
+	GFL_G3D_CreateResource
 		( NNSG3dResFileHeader* header )
 {
 	//リソース管理ハンドル作成
@@ -470,7 +470,7 @@ static GFL_G3D_RES*
 //-------------------------------
 // アーカイブＩＤによる読み込み
 GFL_G3D_RES*
-	GFL_G3D_ResCreateArc
+	GFL_G3D_CreateResourceArc
 		( int arcID, int datID ) 
 {
 	NNSG3dResFileHeader* header;
@@ -481,13 +481,13 @@ GFL_G3D_RES*
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadMalloc( arcID, datID, g3Dman->heapID );
 
-	return GFL_G3D_ResCreate( header );
+	return GFL_G3D_CreateResource( header );
 }
 
 //-------------------------------
 // アーカイブファイルパスによる読み込み
 GFL_G3D_RES*
-	GFL_G3D_ResCreatePath
+	GFL_G3D_CreateResourcePath
 		( const char* path, int datID ) 
 {
 	NNSG3dResFileHeader* header;
@@ -498,7 +498,7 @@ GFL_G3D_RES*
 	//対象アーカイブファイルからヘッダデータを読み込み
 	header = GFL_ARC_DataLoadFilePathMalloc( path, datID, g3Dman->heapID );
 
-	return GFL_G3D_ResCreate( header );
+	return GFL_G3D_CreateResource( header );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -509,7 +509,7 @@ GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ResDelete
+	GFL_G3D_DeleteResource
 		( GFL_G3D_RES* g3Dres ) 
 {
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
@@ -530,7 +530,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 NNSG3dResFileHeader*
-	GFL_G3D_ResFileHeaderGet
+	GFL_G3D_GetResourceFileHeader
 		( GFL_G3D_RES* g3Dres ) 
 {
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
@@ -549,7 +549,7 @@ NNSG3dResFileHeader*
  */
 //--------------------------------------------------------------------------------------------
 BOOL
-	GFL_G3D_ResTypeCheck
+	GFL_G3D_CheckResourceType
 		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE checkType ) 
 {
 	u16 resType;
@@ -617,7 +617,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_VramLoadTex
+	GFL_G3D_TransVramTexture
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -672,7 +672,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_VramLoadTexDataOnly
+	GFL_G3D_TransVramTextureDataOnly
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -720,7 +720,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_VramLoadTexPlttOnly
+	GFL_G3D_TransVramTexturePlttOnly
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -762,7 +762,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL 
-	GFL_G3D_VramUnloadTex
+	GFL_G3D_FreeVramTexture
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -774,7 +774,7 @@ BOOL
 	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
 
 	//ＶＲＡＭ転送済みかどうか確認
-	if( GFL_G3D_VramTexkeyLiveCheck( g3Dres ) == TRUE ){
+	if( GFL_G3D_CheckTextureKeyLive( g3Dres ) == TRUE ){
 
 		//テクスチャリソースポインタの取得
 		header = (NNSG3dResFileHeader*)g3Dres->file;
@@ -810,7 +810,7 @@ BOOL
  */
 //-----------------------------------------------------------------------------
 static BOOL
-	GFL_G3D_VramGetTexDataVramkey
+	GFL_G3D_GetTextureDataKey
 		( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 )
 {
 	//各リソースサイズ取得
@@ -843,7 +843,7 @@ static BOOL
  */
 //-----------------------------------------------------------------------------
 static BOOL
-	GFL_G3D_VramGetTexPlttVramkey
+	GFL_G3D_GetTexturePlttKey
 		( NNSG3dResTex* res, NNSGfdPlttKey* pltt )
 {
 	//リソースサイズ取得
@@ -871,7 +871,7 @@ static BOOL
  */
 //-----------------------------------------------------------------------------
 BOOL
-	GFL_G3D_VramTexkeyLiveCheck
+	GFL_G3D_CheckTextureKeyLive
 		( GFL_G3D_RES* g3Dres )
 {
 	NNSG3dResFileHeader*	header;
@@ -935,7 +935,7 @@ struct _GFL_G3D_RND
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_RND*
-	GFL_G3D_RndCreate
+	GFL_G3D_RENDER_Create
 		( GFL_G3D_RES* mdl, int mdlidx, GFL_G3D_RES* tex )
 {
 	NNSG3dResMdlSet*		pMdlset;
@@ -945,7 +945,7 @@ GFL_G3D_RND*
 
 	//モデルデータリソースポインタ取得
 	GF_ASSERT( mdl->magicnum == G3DRES_MAGICNUM );
-	GF_ASSERT( GFL_G3D_ResTypeCheck( mdl, GFL_G3D_RES_CHKTYPE_MDL ) == TRUE );
+	GF_ASSERT( GFL_G3D_CheckResourceType( mdl, GFL_G3D_RES_CHKTYPE_MDL ) == TRUE );
 	pMdlset = NNS_G3dGetMdlSet( (NNSG3dResFileHeader*)mdl->file );
 	pMdl = NNS_G3dGetMdlByIdx( pMdlset, mdlidx );
 	GF_ASSERT( pMdl != NULL );
@@ -953,7 +953,7 @@ GFL_G3D_RND*
 	//テクスチャリソースポインタ取得
 	if( tex != NULL ){	//テクスチャーなしを指定することもできる
 		GF_ASSERT( tex->magicnum == G3DRES_MAGICNUM );
-		GF_ASSERT( GFL_G3D_ResTypeCheck( tex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE );
+		GF_ASSERT( GFL_G3D_CheckResourceType( tex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE );
 		pTex = NNS_G3dGetTex( (NNSG3dResFileHeader*)tex->file );
 		GF_ASSERT( pTex != NULL );
 	}
@@ -991,7 +991,7 @@ GFL_G3D_RND*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_RndDelete
+	GFL_G3D_RENDER_Delete
 		( GFL_G3D_RND* g3Drnd ) 
 {
 	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
@@ -1010,7 +1010,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_RES*
-	GFL_G3D_RndG3DresMdlGet
+	GFL_G3D_RENDER_GetG3DresMdl
 		( GFL_G3D_RND* g3Drnd ) 
 {
 	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
@@ -1028,7 +1028,7 @@ GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_RES*
-	GFL_G3D_RndG3DresTexGet
+	GFL_G3D_RENDER_GetG3DresTex
 		( GFL_G3D_RND* g3Drnd ) 
 {
 	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
@@ -1048,7 +1048,7 @@ GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 NNSG3dRenderObj*
-	GFL_G3D_RndRenderObjGet
+	GFL_G3D_RENDER_GetRenderObj
 		( GFL_G3D_RND* g3Drnd ) 
 {
 	GF_ASSERT( g3Drnd->magicnum == G3DRND_MAGICNUM );
@@ -1097,7 +1097,7 @@ struct _GFL_G3D_ANM
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_ANM*
-	GFL_G3D_AnmCreate
+	GFL_G3D_ANIME_Create
 		( GFL_G3D_RND* g3Drnd, GFL_G3D_RES* anm, int anmidx )  
 {
 	GFL_G3D_ANM*	g3Danm;
@@ -1138,7 +1138,7 @@ GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_AnmDelete
+	GFL_G3D_ANIME_Delete
 		( GFL_G3D_ANM* g3Danm ) 
 {
 	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
@@ -1157,7 +1157,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_RES*
-	GFL_G3D_AnmG3DresGet
+	GFL_G3D_ANIME_GetG3Dres
 		( GFL_G3D_ANM* g3Danm ) 
 {
 	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
@@ -1177,7 +1177,7 @@ GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 NNSG3dAnmObj*
-	GFL_G3D_AnmAnmObjGet
+	GFL_G3D_ANIME_GetAnmObj
 		( GFL_G3D_ANM* g3Danm ) 
 {
 	GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
@@ -1228,7 +1228,7 @@ struct _GFL_G3D_OBJ
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_OBJ*
-	GFL_G3D_ObjCreate
+	GFL_G3D_OBJECT_Create
 		( GFL_G3D_RND* g3Drnd, GFL_G3D_ANM** anmTbl, u16 anmCount )  
 {
 	GFL_G3D_OBJ*	g3Dobj;
@@ -1266,7 +1266,7 @@ GFL_G3D_OBJ*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDelete
+	GFL_G3D_OBJECT_Delete
 		( GFL_G3D_OBJ* g3Dobj ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1285,7 +1285,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_RND*
-	GFL_G3D_ObjG3DrndGet
+	GFL_G3D_OBJECT_GetG3Drnd
 		( GFL_G3D_OBJ* g3Dobj ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1304,7 +1304,7 @@ GFL_G3D_RND*
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_ANM*
-	GFL_G3D_ObjG3DanmGet
+	GFL_G3D_OBJECT_GetG3Danm
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1323,7 +1323,7 @@ GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
 u16
-	GFL_G3D_ObjAnmCountGet
+	GFL_G3D_OBJECT_GetAnimeCount
 		( GFL_G3D_OBJ* g3Dobj ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1342,7 +1342,7 @@ u16
  */
 //--------------------------------------------------------------------------------------------
 u16
-	GFL_G3D_ObjAnmAdd
+	GFL_G3D_OBJECT_AddAnime
 		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_ANM* g3Danm )
 {
 	u16	i;
@@ -1371,7 +1371,7 @@ u16
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjAnmRemove
+	GFL_G3D_OBJECT_RemoveAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1391,7 +1391,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjContAnmFrameReset
+	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
@@ -1412,7 +1412,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 BOOL
-	GFL_G3D_ObjContAnmFrameInc
+	GFL_G3D_OBJECT_IncAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ) 
 {
 	NNSG3dAnmObj* anmobj;
@@ -1441,7 +1441,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 BOOL
-	GFL_G3D_ObjContAnmFrameAutoLoop
+	GFL_G3D_OBJECT_LoopAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ) 
 {
 	NNSG3dAnmObj* anmobj;
@@ -1473,12 +1473,12 @@ BOOL
  *
  *	SAMPLE
  *	{
- *		GFL_G3D_DrawStart();							//描画開始
- *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
+ *		GFL_G3D_DRAW_Start();							//描画開始
+ *		GFL_G3D_DRAW_SetLookAt();						//カメラグローバルステート設定		
  *		{
- *			GFL_G3D_ObjDraw( g3Dobj, status );			//各オブジェクト描画
+ *			GFL_G3D_DRAW_DrawObject( g3Dobj, status );	//各オブジェクト描画
  *		}
- *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
+ *		GFL_G3D_DRAW_End();								//描画終了（バッファスワップ）
  *	}
  *
  */
@@ -1492,7 +1492,7 @@ BOOL
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_DrawStart
+	GFL_G3D_DRAW_Start
 		( void )
 {
 	G3X_Reset();
@@ -1507,7 +1507,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_DrawEnd
+	GFL_G3D_DRAW_End
 		( void )
 {
 	G3_SwapBuffers( g3Dman->swapBufMode.aw, g3Dman->swapBufMode.zw );
@@ -1521,7 +1521,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_DrawLookAt
+	GFL_G3D_DRAW_SetLookAt
 		( void )
 {
 	NNS_G3dGlbLookAt( &g3Dman->lookAt.camPos, &g3Dman->lookAt.camUp, &g3Dman->lookAt.target );
@@ -1562,32 +1562,32 @@ static inline void
 // 通常描画
 //--------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDraw
+	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlush();
-	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
-	GFL_G3D_ObjDrawVP
+	GFL_G3D_DRAW_DrawObjectVP
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushVP();
-	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
-	GFL_G3D_ObjDrawWVP
+	GFL_G3D_DRAW_DrawObjectWVP
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushWVP();
-	NNS_G3dDraw( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) );
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
 }
 
@@ -1598,7 +1598,7 @@ void
 //		sendMat	マテリアル情報をジオメトリエンジンに送信するかどうか 
 //--------------------------------------------------------------------------------
 void
-	GFL_G3D_ObjDraw1mat1shp
+	GFL_G3D_DRAW_DrawObject1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status )
 
@@ -1606,33 +1606,33 @@ void
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlush();
 	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
 								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
-	GFL_G3D_ObjDrawVP1mat1shp
+	GFL_G3D_DRAW_DrawObjectVP1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
 			const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushVP();
 	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
 								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }
 
 void
-	GFL_G3D_ObjDrawWVP1mat1shp
+	GFL_G3D_DRAW_DrawObjectWVP1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
 			const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	NNS_G3dGlbFlushWVP();
 	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							( GFL_G3D_RndRenderObjGet( GFL_G3D_ObjG3DrndGet( g3Dobj ) ) ), 
+							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
 								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }

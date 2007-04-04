@@ -54,7 +54,7 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene );
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENE*
-	GFL_G3D_SceneCreate
+	GFL_G3D_SCENE_Create
 		( GFL_G3D_UTIL* g3Dutil, const u16 sceneObjMax, const u32 sceneObjWkSiz, 
 			const HEAPID heapID )
 {
@@ -90,7 +90,7 @@ GFL_G3D_SCENE*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneMain
+	GFL_G3D_SCENE_Main
 		( GFL_G3D_SCENE* g3Dscene )  
 {
 	GFL_TCBL_SysMain( g3Dscene->g3DsceneObjTCBLsys );
@@ -104,7 +104,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneDraw
+	GFL_G3D_SCENE_Draw
 		( GFL_G3D_SCENE* g3Dscene )  
 {
 	GFL_G3D_SCENEOBJ*	g3DsceneObj;
@@ -112,9 +112,9 @@ void
 	int	i = 0;
 
 	//描画開始
-	GFL_G3D_DrawStart();
+	GFL_G3D_DRAW_Start();
 	//カメラグローバルステート設定		
- 	GFL_G3D_DrawLookAt();
+ 	GFL_G3D_DRAW_SetLookAt();
 	//描画プライオリティーによるソート
 	objDrawSort( g3Dscene );
 
@@ -123,15 +123,15 @@ void
 		g3DsceneObj = GFL_TCBL_GetWork
 						( g3Dscene->g3DsceneObjTCBLtbl[ g3Dscene->g3DsceneObjPriTbl[i] ] );
 #if 0
-		g3Dobj = GFL_G3D_UtilsysObjHandleGet( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
+		g3Dobj = GFL_G3D_UTIL_GetObjHandle( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
 #else
 		g3Dobj = g3DsceneObj->g3Dobj;
 #endif
-		GFL_G3D_ObjDraw( g3Dobj, &g3DsceneObj->sceneObjData.status );
+		GFL_G3D_DRAW_DrawObject( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
 	//描画終了（バッファスワップ）
-	GFL_G3D_DrawEnd();							
+	GFL_G3D_DRAW_End();							
 }
 
 //--------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneDelete
+	GFL_G3D_SCENE_Delete
 		( GFL_G3D_SCENE* g3Dscene )  
 {
 	GFL_HEAP_FreeMemory( g3Dscene->g3DsceneObjPriTbl );
@@ -161,7 +161,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENEOBJ*
-	GFL_G3D_SceneObjGet
+	GFL_G3D_SCENEOBJ_Get
 		( GFL_G3D_SCENE* g3Dscene, u32 idx )
 {
 	GF_ASSERT( idx < g3Dscene->g3DsceneObjMax );
@@ -199,7 +199,7 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
 
 	for( i=0; i<g3Dscene->g3DsceneObjMax; i++ ){
 		if( g3Dscene->g3DsceneObjTCBLtbl[i] != NULL ){
-			GFL_G3D_SceneObjDrawSWGet( GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[i]), &sw );
+			GFL_G3D_SCENEOBJ_GetDrawSW( GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[i]), &sw );
 			if( sw == TRUE ){
 				g3Dscene->g3DsceneObjPriTbl[ count ] = i;
 				count++;
@@ -214,8 +214,8 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
 			idx1 = g3Dscene->g3DsceneObjPriTbl[i];
 			idx2 = g3Dscene->g3DsceneObjPriTbl[i+1];
 
-			GFL_G3D_SceneObjDrawPriGet(GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[idx1]),&pri1);
-			GFL_G3D_SceneObjDrawPriGet(GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[idx2]),&pri2);
+			GFL_G3D_SCENEOBJ_GetDrawPri(GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[idx1]),&pri1);
+			GFL_G3D_SCENEOBJ_GetDrawPri(GFL_TCBL_GetWork(g3Dscene->g3DsceneObjTCBLtbl[idx2]),&pri2);
 
 			if( pri1 > pri2 ){
 				g3Dscene->g3DsceneObjPriTbl[i] = idx2;
@@ -251,7 +251,7 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
  */
 //--------------------------------------------------------------------------------------------
 u32
-	GFL_G3D_SceneObjAdd
+	GFL_G3D_SCENEOBJ_Add
 		( GFL_G3D_SCENE* g3Dscene, const GFL_G3D_SCENEOBJ_DATA* sceneObjTbl, 
 			const u16 sceneObjCount )
 {
@@ -274,7 +274,7 @@ u32
 
 		g3DsceneObj = GFL_TCBL_GetWork( g3DsceneObjTCBL );
 		g3DsceneObj->sceneObjData	= sceneObjTbl[i];
-		g3DsceneObj->g3Dobj	= GFL_G3D_UtilsysObjHandleGet
+		g3DsceneObj->g3Dobj	= GFL_G3D_UTIL_GetObjHandle
 								( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
 		g3DsceneObj->sceneObjWorkEx	= NULL;
 		GFL_STD_MemClear( (void*)((u32)g3DsceneObj + sizeof(GFL_G3D_SCENEOBJ)), 
@@ -293,7 +293,7 @@ u32
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjDel
+	GFL_G3D_SCENEOBJ_Remove
 		( GFL_G3D_SCENE* g3Dscene, u32 idx, const u16 sceneObjCount )
 {
 	GFL_TCBL* g3DsceneObjTCBL;
@@ -319,7 +319,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_OBJ*
-	GFL_G3D_SceneObjHandleGet
+	GFL_G3D_SCENEOBJ_GetHandle
 		( GFL_G3D_SCENEOBJ* g3DsceneObj )
 {
 	return g3DsceneObj->g3Dobj;
@@ -334,14 +334,14 @@ GFL_G3D_OBJ*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjIDGet
+	GFL_G3D_SCENEOBJ_GetObjID
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID )
 {
 	*objID = g3DsceneObj->sceneObjData.objID;
 }
 
 void
-	GFL_G3D_SceneObjIDSet
+	GFL_G3D_SCENEOBJ_SetObjID
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID )
 {
 	g3DsceneObj->sceneObjData.objID = *objID;
@@ -356,14 +356,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjDrawPriGet
+	GFL_G3D_SCENEOBJ_GetDrawPri
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri )
 {
 	*drawPri = g3DsceneObj->sceneObjData.drawPriority;
 }
 
 void
-	GFL_G3D_SceneObjDrawPriSet
+	GFL_G3D_SCENEOBJ_SetDrawPri
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri )
 {
 	g3DsceneObj->sceneObjData.drawPriority = *drawPri;
@@ -378,14 +378,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjDrawSWGet
+	GFL_G3D_SCENEOBJ_GetDrawSW
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW )
 {
 	*drawSW = g3DsceneObj->sceneObjData.drawSW;
 }
 
 void
-	GFL_G3D_SceneObjDrawSWSet
+	GFL_G3D_SCENEOBJ_SetDrawSW
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW )
 {
 	g3DsceneObj->sceneObjData.drawSW = *drawSW;
@@ -400,14 +400,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjStatusTransGet
+	GFL_G3D_SCENEOBJ_GetPos
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans )
 {
 	*trans = g3DsceneObj->sceneObjData.status.trans;
 }
 
 void
-	GFL_G3D_SceneObjStatusTransSet
+	GFL_G3D_SCENEOBJ_SetPos
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans )
 {
 	g3DsceneObj->sceneObjData.status.trans = *trans;
@@ -422,14 +422,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjStatusScaleGet
+	GFL_G3D_SCENEOBJ_GetScale
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale )
 {
 	*scale = g3DsceneObj->sceneObjData.status.scale;
 }
 
 void
-	GFL_G3D_SceneObjStatusScaleSet
+	GFL_G3D_SCENEOBJ_SetScale
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale )
 {
 	g3DsceneObj->sceneObjData.status.scale = *scale;
@@ -444,14 +444,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjStatusRotateGet
+	GFL_G3D_SCENEOBJ_GetRotate
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate )
 {
 	*rotate = g3DsceneObj->sceneObjData.status.rotate;
 }
 
 void
-	GFL_G3D_SceneObjStatusRotateSet
+	GFL_G3D_SCENEOBJ_SetRotate
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate )
 {
 	g3DsceneObj->sceneObjData.status.rotate = *rotate;
@@ -466,14 +466,14 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SceneObjFuncGet
+	GFL_G3D_SCENEOBJ_GetFunc
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func )
 {
 	*func = g3DsceneObj->sceneObjData.func;
 }
 
 void
-	GFL_G3D_SceneObjFuncSet
+	GFL_G3D_SCENEOBJ_SetFunc
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func )
 {
 	g3DsceneObj->sceneObjData.func = *func;

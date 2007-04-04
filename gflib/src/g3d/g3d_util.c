@@ -44,8 +44,8 @@ enum {
 //=============================================================================================
 #define pHANDLE_SIZE (4)
 
-#define RES_MDL_CHECK( res ) ( GFL_G3D_ResTypeCheck( res, GFL_G3D_RES_CHKTYPE_MDL ) )
-#define RES_TEX_CHECK( res ) ( GFL_G3D_ResTypeCheck( res, GFL_G3D_RES_CHKTYPE_TEX ) )
+#define RES_MDL_CHECK( res ) ( GFL_G3D_CheckResourceType( res, GFL_G3D_RES_CHKTYPE_MDL ) )
+#define RES_TEX_CHECK( res ) ( GFL_G3D_CheckResourceType( res, GFL_G3D_RES_CHKTYPE_TEX ) )
 			
 static inline BOOL resourceLoad( const GFL_G3D_UTIL_RES* resTbl, GFL_G3D_RES** p_g3Dres );
 static inline BOOL resourceHandleGet( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_SETUP* setup,
@@ -61,7 +61,7 @@ static inline BOOL resourceHandleGet( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_UTIL*
-	GFL_G3D_UtilsysCreate
+	GFL_G3D_UTIL_Create
 		( const GFL_G3D_UTIL_SETUP* setup, HEAPID heapID )
 {
 	GFL_G3D_UTIL*			g3Dutil;
@@ -92,7 +92,7 @@ GFL_G3D_UTIL*
 		GX_BeginLoadTex();
 		for( i=0; i<setup->resCount; i++ ){
 			if( RES_TEX_CHECK( g3Dutil->g3DresTbl[i] ) == TRUE ){
-				GFL_G3D_VramLoadTexDataOnly( g3Dutil->g3DresTbl[i] );
+				GFL_G3D_TransVramTextureDataOnly( g3Dutil->g3DresTbl[i] );
 			}
 		}
 		GX_EndLoadTex();
@@ -102,7 +102,7 @@ GFL_G3D_UTIL*
 		GX_BeginLoadTexPltt();
 		for( i=0; i<setup->resCount; i++ ){
 			if( RES_TEX_CHECK( g3Dutil->g3DresTbl[i] ) == TRUE ){
-				GFL_G3D_VramLoadTexPlttOnly( g3Dutil->g3DresTbl[i] );
+				GFL_G3D_TransVramTexturePlttOnly( g3Dutil->g3DresTbl[i] );
 			}
 		}
 		GX_EndLoadTexPltt();
@@ -130,7 +130,7 @@ GFL_G3D_UTIL*
 			if( RES_MDL_CHECK( g3Dutil->g3DresTbl[ objTbl->texresID ] ) == TRUE ){
 				if( resourceHandleGet(g3Dutil, setup, &g3DresTex, objTbl->texresID ) == TRUE){
 					g3Dutil->g3DobjExResourceRef[i] |= EXRES_TEX;	//追加リソースフラグセット
-					GFL_G3D_VramLoadTex( g3DresTex );
+					GFL_G3D_TransVramTexture( g3DresTex );
 				}
 			} else {
 				g3DresTex = g3Dutil->g3DresTbl[ objTbl->texresID ];
@@ -139,12 +139,12 @@ GFL_G3D_UTIL*
 			//モデルリソースと同じ指定の場合はモデル依存で共有
 			g3DresTex = g3DresMdl;
 			//テクスチャVRAM未転送の場合は転送する
-			if( GFL_G3D_VramTexkeyLiveCheck( g3DresTex ) == FALSE ){
-				GFL_G3D_VramLoadTex( g3DresTex );
+			if( GFL_G3D_CheckTextureKeyLive( g3DresTex ) == FALSE ){
+				GFL_G3D_TransVramTexture( g3DresTex );
 			}
 		}
 		//レンダー作成
-		g3Drnd = GFL_G3D_RndCreate( g3DresMdl, objTbl->mdldatID, g3DresTex ); 
+		g3Drnd = GFL_G3D_RENDER_Create( g3DresMdl, objTbl->mdldatID, g3DresTex ); 
 
 		//アニメーションハンドルテンポラリ作成
 		g3DanmTbl = GFL_HEAP_AllocClearMemoryLo( heapID, objTbl->anmCount );
@@ -155,11 +155,11 @@ GFL_G3D_UTIL*
 			GF_ASSERT( objTbl->anmTbl[j].anmresID < setup->resCount );
 			g3DresAnm = g3Dutil->g3DresTbl[ objTbl->anmTbl[j].anmresID ];
 			//アニメーション作成
-			g3Danm = GFL_G3D_AnmCreate( g3Drnd, g3DresAnm, objTbl->anmTbl[j].anmdatID );
+			g3Danm = GFL_G3D_ANIME_Create( g3Drnd, g3DresAnm, objTbl->anmTbl[j].anmdatID );
 			g3DanmTbl[j] = g3Danm;
 		}
 		//オブジェクト作成
-		g3Dutil->g3DobjTbl[i] = GFL_G3D_ObjCreate( g3Drnd, g3DanmTbl, objTbl->anmCount );
+		g3Dutil->g3DobjTbl[i] = GFL_G3D_OBJECT_Create( g3Drnd, g3DanmTbl, objTbl->anmCount );
 
 		GFL_HEAP_FreeMemory( g3DanmTbl );
 	}
@@ -174,7 +174,7 @@ GFL_G3D_UTIL*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_UtilsysDelete
+	GFL_G3D_UTIL_Delete
 		( GFL_G3D_UTIL* g3Dutil )
 {
 	GFL_G3D_RES			*g3DresMdl,	*g3DresTex, *g3DresAnm;
@@ -187,31 +187,31 @@ void
 	//オブジェクト破棄
 	for( i=0; i<g3Dutil->g3DobjCount; i++ ){
 		g3Dobj = g3Dutil->g3DobjTbl[i];
-		g3Drnd = GFL_G3D_ObjG3DrndGet( g3Dobj );
+		g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3Dobj );
 
 		//アニメーション解放
-		anmCount = GFL_G3D_ObjAnmCountGet( g3Dobj );
+		anmCount = GFL_G3D_OBJECT_GetAnimeCount( g3Dobj );
 		for( j=0; j<anmCount; j++ ){
-			GFL_G3D_AnmDelete( GFL_G3D_ObjG3DanmGet( g3Dobj, j ) );
+			GFL_G3D_ANIME_Delete( GFL_G3D_OBJECT_GetG3Danm( g3Dobj, j ) );
 		}
 		//追加テクスチャリソース作成フラグ確認
 		if( g3Dutil->g3DobjExResourceRef[i] & (EXRES_TEX^0xff) ){
 			//テクスチャリソース解放
-			g3DresTex = GFL_G3D_RndG3DresTexGet( g3Drnd );
-			GFL_G3D_VramUnloadTex( g3DresTex );
-			GFL_G3D_ResDelete( g3DresTex );
+			g3DresTex = GFL_G3D_RENDER_GetG3DresTex( g3Drnd );
+			GFL_G3D_FreeVramTexture( g3DresTex );
+			GFL_G3D_DeleteResource( g3DresTex );
 		}
 		//追加モデルリソース作成フラグ確認
 		if( g3Dutil->g3DobjExResourceRef[i] & (EXRES_MDL^0xff) ){
 			//モデルリソース解放
-			g3DresMdl = GFL_G3D_RndG3DresMdlGet( g3Drnd );
-			GFL_G3D_ResDelete( g3DresMdl );
+			g3DresMdl = GFL_G3D_RENDER_GetG3DresMdl( g3Drnd );
+			GFL_G3D_DeleteResource( g3DresMdl );
 		}	
 		//レンダー解放
-		GFL_G3D_RndDelete( g3Drnd ); 
+		GFL_G3D_RENDER_Delete( g3Drnd ); 
 
 		//オブジェクト解放
-		GFL_G3D_ObjDelete( g3Dutil->g3DobjTbl[i] );
+		GFL_G3D_OBJECT_Delete( g3Dutil->g3DobjTbl[i] );
 	}
 	//オブジェクト管理配列解放
 	GFL_HEAP_FreeMemory( g3Dutil->g3DobjExResourceRef );
@@ -222,9 +222,9 @@ void
 		if( g3Dutil->g3DresTbl[i] ){
 			if( RES_TEX_CHECK( g3Dutil->g3DresTbl[i] ) == TRUE ){
 				//テクスチャリソースの場合ＶＲＡＭ解放（内部で転送したかのチェックは行っている）
-				GFL_G3D_VramUnloadTex( g3Dutil->g3DresTbl[i] ); 
+				GFL_G3D_FreeVramTexture( g3Dutil->g3DresTbl[i] ); 
 			}
-			GFL_G3D_ResDelete( g3Dutil->g3DresTbl[i] ); 
+			GFL_G3D_DeleteResource( g3Dutil->g3DresTbl[i] ); 
 		}
 	}
 	//リソース管理配列作成
@@ -244,11 +244,11 @@ static inline BOOL resourceLoad( const GFL_G3D_UTIL_RES* resTbl, GFL_G3D_RES** p
 {
 	if( resTbl->arcType == GFL_G3D_UTIL_RESARC ){
 		//アーカイブＩＤより
-		*p_g3Dres = GFL_G3D_ResCreateArc( (int)resTbl->arcive, resTbl->datID ); 
+		*p_g3Dres = GFL_G3D_CreateResourceArc( (int)resTbl->arcive, resTbl->datID ); 
 		return TRUE;
 	} else {			
 		//アーカイブパスより
-		*p_g3Dres = GFL_G3D_ResCreatePath( (const char*)resTbl->arcive, resTbl->datID ); 
+		*p_g3Dres = GFL_G3D_CreateResourcePath( (const char*)resTbl->arcive, resTbl->datID ); 
 		return TRUE;
 	}
 }
@@ -280,7 +280,7 @@ static inline BOOL resourceHandleGet( GFL_G3D_UTIL* g3Dutil, const GFL_G3D_UTIL_
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_OBJ*
-	GFL_G3D_UtilsysObjHandleGet
+	GFL_G3D_UTIL_GetObjHandle
 		( GFL_G3D_UTIL* g3Dutil, u16 idx )
 {
 	return g3Dutil->g3DobjTbl[idx];
@@ -292,7 +292,7 @@ GFL_G3D_OBJ*
  */
 //--------------------------------------------------------------------------------------------
 u16
-	GFL_G3D_UtilsysObjCountGet
+	GFL_G3D_UTIL_GetObjCount
 		( GFL_G3D_UTIL* g3Dutil )
 {
 	return g3Dutil->g3DobjCount;

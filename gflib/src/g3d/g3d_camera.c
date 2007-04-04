@@ -44,7 +44,7 @@ struct _GFL_G3D_CAMERA {
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_CAMERA*
-	GFL_G3D_CameraCreate
+	GFL_G3D_CAMERA_Create
 		( const GFL_G3D_PROJECTION_TYPE type, 
 			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
 				const fx32 near, const fx32 far, const fx32 scaleW,
@@ -78,7 +78,7 @@ GFL_G3D_CAMERA*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_CameraDelete
+	GFL_G3D_CAMERA_Delete
 		( GFL_G3D_CAMERA* g3Dcamera )
 {
 	GF_ASSERT( g3Dcamera );
@@ -94,21 +94,21 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_CameraSwitching
+	GFL_G3D_CAMERA_Switching
 		( GFL_G3D_CAMERA* g3Dcamera )
 {
 	GF_ASSERT( g3Dcamera );
 
 	//ŽË‰eÝ’è
-	GFL_G3D_sysProjectionSet(	g3Dcamera->projection.type,
-								g3Dcamera->projection.param1, g3Dcamera->projection.param2,
-								g3Dcamera->projection.param3, g3Dcamera->projection.param4,
-								g3Dcamera->projection.near, g3Dcamera->projection.far,
-								g3Dcamera->projection.scaleW );
+	GFL_G3D_SetSystemProjection(	g3Dcamera->projection.type,
+									g3Dcamera->projection.param1, g3Dcamera->projection.param2,
+									g3Dcamera->projection.param3, g3Dcamera->projection.param4,
+									g3Dcamera->projection.near, g3Dcamera->projection.far,
+									g3Dcamera->projection.scaleW );
 	//ƒJƒƒ‰s—ñÝ’è
-	GFL_G3D_sysLookAtSet(	&g3Dcamera->lookAt.camPos, 
-							&g3Dcamera->lookAt.camUp,
-							&g3Dcamera->lookAt.target );
+	GFL_G3D_SetSystemLookAt(		&g3Dcamera->lookAt.camPos, 
+									&g3Dcamera->lookAt.camUp,
+									&g3Dcamera->lookAt.target );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_CameraPosGet
+	GFL_G3D_CAMERA_GetPos
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos )
 {
 	GF_ASSERT( g3Dcamera );
@@ -128,7 +128,7 @@ void
 }
 
 void
-	GFL_G3D_CameraPosSet
+	GFL_G3D_CAMERA_SetPos
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos )
 {
 	GF_ASSERT( g3Dcamera );
@@ -144,7 +144,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_CameraUpGet
+	GFL_G3D_CAMERA_GetCamUp
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
 {
 	GF_ASSERT( g3Dcamera );
@@ -152,7 +152,7 @@ void
 }
 
 void
-	GFL_G3D_CameraUpSet
+	GFL_G3D_CAMERA_SetCamUp
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
 {
 	GF_ASSERT( g3Dcamera );
@@ -168,7 +168,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_CameraTargetGet
+	GFL_G3D_CAMERA_GetTarget
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target )
 {
 	GF_ASSERT( g3Dcamera );
@@ -176,7 +176,7 @@ void
 }
 
 void
-	GFL_G3D_CameraTargetSet
+	GFL_G3D_CAMERA_SetTarget
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target )
 {
 	GF_ASSERT( g3Dcamera );

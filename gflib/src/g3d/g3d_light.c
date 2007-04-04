@@ -33,7 +33,7 @@ struct _GFL_G3D_LIGHTSET {
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_LIGHTSET*
-	GFL_G3D_LightCreate
+	GFL_G3D_LIGHT_Create
 		( const GFL_G3D_LIGHTSET_SETUP* setUp, HEAPID heapID )
 {
 	GFL_G3D_LIGHTSET*	g3Dlightset;
@@ -57,7 +57,7 @@ GFL_G3D_LIGHTSET*
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_LightDelete
+	GFL_G3D_LIGHT_Delete
 		( GFL_G3D_LIGHTSET* g3Dlightset )
 {
 	GF_ASSERT( g3Dlightset );
@@ -73,7 +73,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_LightSwitching
+	GFL_G3D_LIGHT_Switching
 		( GFL_G3D_LIGHTSET* g3Dlightset )
 {
 	VecFx16	initVec = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
@@ -84,9 +84,9 @@ void
 	//ÉâÉCÉgê›íË
 	for( i=0; i<4; i++ ){
 		if( g3Dlightset->light[i].color ){
-			GFL_G3D_sysLightSet( i, &g3Dlightset->light[i].vec, g3Dlightset->light[i].color );
+			GFL_G3D_SetSystemLight( i, &g3Dlightset->light[i].vec, g3Dlightset->light[i].color );
 		} else {
-			GFL_G3D_sysLightSet( i, &initVec, 0 );
+			GFL_G3D_SetSystemLight( i, &initVec, 0 );
 		}
 	}
 }
@@ -101,7 +101,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_LightVecGet
+	GFL_G3D_LIGHT_GetVec
 		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec )
 {
 	GF_ASSERT( g3Dlightset );
@@ -109,7 +109,7 @@ void
 }
 
 void
-	GFL_G3D_LightVecSet
+	GFL_G3D_LIGHT_SetVec
 		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16* vec )
 {
 	GF_ASSERT( g3Dlightset );
@@ -126,7 +126,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_LightColorGet
+	GFL_G3D_LIGHT_GetColor
 		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color )
 {
 	GF_ASSERT( g3Dlightset );
@@ -134,7 +134,7 @@ void
 }
 
 void
-	GFL_G3D_LightColorSet
+	GFL_G3D_LIGHT_SetColor
 		( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color )
 {
 	GF_ASSERT( g3Dlightset );
