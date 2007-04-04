@@ -83,7 +83,7 @@ static const u32 mask_table[256] = {
  */
 //------------------------------------------------------------------
 void
-	GFL_FONT_sysInit
+	GFL_FONT_Create
 		( const char* fontDataPath )
 {
 	FSFile	file;
@@ -114,7 +114,7 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_FONT_sysExit
+	GFL_FONT_Delete
 		( void )
 {
 	GFL_HEAP_FreeMemory( fsw->header );

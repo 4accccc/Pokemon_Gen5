@@ -41,7 +41,7 @@ typedef struct _STRBUF {
  */
 //------------------------------------------------------------------
 BOOL
-	STRBUF_CheckValid
+	GFL_STR_CheckBufferValid
 		(const void* ptr)
 {
 	if( (ptr != NULL) && (((const STRBUF*)ptr)->magicNumber == STRBUF_MAGIC_NUMBER) ){
@@ -63,7 +63,7 @@ BOOL
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_STR_BufferCreate
+	GFL_STR_CreateBuffer
 		( u32 size, HEAPID heapID )
 {
 	STRBUF* strbuf;
@@ -88,10 +88,10 @@ STRBUF*
  */
 //------------------------------------------------------------------
 void
-	GFL_STR_BufferDelete
+	GFL_STR_DeleteBuffer
 		( STRBUF* strbuf )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	// Free 直後に同じアドレスで呼び出されるとMagicNumberがそのまま残ってるので
 	strbuf->magicNumber = 0;
@@ -110,10 +110,10 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_STR_BufferClear
+	GFL_STR_ClearBuffer
 		( STRBUF* strbuf )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	strbuf->strlen = 0;
 	strbuf->buffer[0] = EOM_;
@@ -130,11 +130,11 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_STR_BufferCopy
+	GFL_STR_CopyBuffer
 		( STRBUF* dst, const STRBUF* src )
 {
-	GF_ASSERT( STRBUF_CheckValid( dst ) == TRUE );
-	GF_ASSERT( STRBUF_CheckValid( src ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( dst ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( src ) == TRUE );
 
 	if( dst->size > src->strlen )
 	{
@@ -157,15 +157,15 @@ void
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_STR_CreateBufferCopy
+	GFL_STR_CreateCopyBuffer
 		( const STRBUF* origin, HEAPID heapID )
 {
 	STRBUF* copy;
 
-	GF_ASSERT( STRBUF_CheckValid( origin ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( origin ) == TRUE );
 
-	copy = GFL_STR_BufferCreate( origin->strlen + EOM_CODESIZE, heapID );
-	GFL_STR_BufferCopy( copy, origin );
+	copy = GFL_STR_CreateBuffer( origin->strlen + EOM_CODESIZE, heapID );
+	GFL_STR_CopyBuffer( copy, origin );
 
 	return copy;
 }
@@ -182,13 +182,13 @@ STRBUF*
  */
 //------------------------------------------------------------------
 BOOL
-	GFL_STR_BufferCompare
+	GFL_STR_CompareBuffer
 		( const STRBUF* str1, const STRBUF* str2 )
 {
 	int i;
 
-	GF_ASSERT( STRBUF_CheckValid( str1 ) == TRUE );
-	GF_ASSERT( STRBUF_CheckValid( str2 ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( str1 ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( str2 ) == TRUE );
 
 	for(i=0; str1->buffer[i] == str2->buffer[i]; i++)
 	{
@@ -214,7 +214,7 @@ u32
 	GFL_STR_GetBufferLength
 		( const STRBUF* str )
 {
-	GF_ASSERT( STRBUF_CheckValid( str ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( str ) == TRUE );
 
 	return str->strlen;
 }
@@ -237,7 +237,7 @@ void
 	GFL_STR_SetStringCode
 		( STRBUF* strbuf, const STRCODE* sz )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	strbuf->strlen = 0;
 	while( *sz != EOM_ )
@@ -267,7 +267,7 @@ void
 	GFL_STR_SetStringCodeOrderLength
 		( STRBUF* strbuf, const STRCODE* str, u32 len )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	if( len <= strbuf->size )
 	{
@@ -309,7 +309,7 @@ void
 	GFL_STR_GetStringCode
 		( const STRBUF* strbuf, STRCODE* ary, u32 arysize )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	if( ( strbuf->strlen + EOM_CODESIZE ) <= arysize )
 	{
@@ -336,7 +336,7 @@ const STRCODE*
 	GFL_STR_GetStringCodePointer
 		( const STRBUF* strbuf )
 {
-	GF_ASSERT( STRBUF_CheckValid( strbuf ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	return strbuf->buffer;
 }
@@ -356,11 +356,11 @@ const STRCODE*
  */
 //------------------------------------------------------------------
 void
-	GFL_STR_AddStr
+	GFL_STR_AddString
 		( STRBUF* dst, const STRBUF* src )
 {
-	GF_ASSERT( STRBUF_CheckValid( dst ) == TRUE );
-	GF_ASSERT( STRBUF_CheckValid( src ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( dst ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( src ) == TRUE );
 
 	if( ( dst->strlen + src->strlen + EOM_CODESIZE ) <= dst->size )
 		
@@ -385,10 +385,10 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_STR_AddChar
+	GFL_STR_AddCode
 		( STRBUF* dst, STRCODE code )
 {
-	GF_ASSERT( STRBUF_CheckValid( dst ) == TRUE );
+	GF_ASSERT( GFL_STR_CheckBufferValid( dst ) == TRUE );
 
 	if( (dst->strlen + EOM_CODESIZE) < dst->size )
 	{

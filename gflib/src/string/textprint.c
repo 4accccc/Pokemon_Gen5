@@ -30,10 +30,10 @@ TEXT_WORK* tw;
  */
 //------------------------------------------------------------------
 void
-	GFL_TEXT_sysInit
+	GFL_TEXT_CreateSystem
 		( const char* fontDataPath )
 {
-	GFL_FONT_sysInit( fontDataPath );
+	GFL_FONT_Create( fontDataPath );
 	tw = GFL_HEAP_AllocMemory( GFL_HEAPID_SYSTEM, sizeof(TEXT_WORK) );
 }
 
@@ -46,11 +46,11 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_TEXT_sysExit
+	GFL_TEXT_DeleteSystem
 		( void )
 {
 	GFL_HEAP_FreeMemory( tw );
-	GFL_FONT_sysExit();
+	GFL_FONT_Delete();
 }
 
 
@@ -96,7 +96,8 @@ void
 	GFL_FONT_SetColor( param->colorF, param->colorB );
 
 	//フォントビットマップ情報作成
-	bmpfont=GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
+	bmpfont = GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, 
+									GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
 	
 	//フォントデータ取得
 	while( (fcode = *textcode ) != EOM_ ) 
@@ -152,7 +153,7 @@ void
 {
 	STRCODE* tmpcode = GFL_HEAP_AllocMemory( GFL_HEAPID_SYSTEM, SJISCONVSIZE_MAX*2 );
 
-	GFL_STR_Sjis2Systemfontcode( textcode, tmpcode, SJISCONVSIZE_MAX );
+	GFL_STR_CONV_Sjis2Systemfontcode( textcode, tmpcode, SJISCONVSIZE_MAX );
 	GFL_TEXT_PrintCode( tmpcode, param );
 
 	GFL_HEAP_FreeMemory( tmpcode );

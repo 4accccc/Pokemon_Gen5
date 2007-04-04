@@ -21,7 +21,7 @@
  *
  */
 //------------------------------------------------------------------
-extern void GFL_STR_Sjis2Systemfontcode( const char* src, STRCODE* dst, int dstcodesCount );
+extern void GFL_STR_CONV_Sjis2Systemfontcode( const char* src, STRCODE* dst, int dstcodesCount );
 
 #endif
 

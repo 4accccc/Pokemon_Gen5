@@ -108,7 +108,7 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
 /*============================================================================================*/
 //------------------------------------------------------------------
 /**
- * メッセージデータをアーカイブからロードする
+ * メッセージデータ郡をアーカイブからロードする
  *
  * @param   arcID		アーカイブファイルＩＤ
  * @param   datID		アーカイブファイル内のメッセージデータＩＤ
@@ -118,7 +118,7 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
  */
 //------------------------------------------------------------------
 MSGDATA_HEADER*
-	GFL_MSG_DataLoad
+	GFL_MSG_Create
 		( u32 arcID, u32 datID, HEAPID heapID )
 {
 	return GFL_ARC_DataLoadMalloc( arcID, datID, heapID );
@@ -127,14 +127,14 @@ MSGDATA_HEADER*
 
 //------------------------------------------------------------------
 /**
- * ロードしたメッセージデータをアンロードする
+ * ロードしたメッセージデータ郡をアンロードする
  *
  * @param   msgdat		メッセージデータポインタ
  *
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_DataUnload
+	GFL_MSG_Delete
 		( MSGDATA_HEADER* msgdat )
 {
 	GFL_HEAP_FreeMemory( msgdat );
@@ -152,7 +152,7 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStr
+	GFL_MSG_GetString
 		( const MSGDATA_HEADER* msgdat, u32 strID, STRBUF* dst )
 {
 	if( strID < msgdat->numMsgs )
@@ -177,7 +177,7 @@ void
 	else
 	{
 		GF_ASSERT_MSG(0, "strID:%d", strID);
-		GFL_STR_BufferClear( dst );
+		GFL_STR_ClearBuffer( dst );
 	}
 }
 
@@ -192,11 +192,13 @@ void
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
  *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrAlloc
-	( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID )
+	GFL_MSG_CreateString
+		( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID )
 {
 	if( strID < msgdat->numMsgs )
 	{
@@ -215,7 +217,7 @@ STRBUF*
 
 		DecodeStr( str, param.len, strID, msgdat->randValue );
 
-		dst = GFL_STR_BufferCreate( param.len, heapID );
+		dst = GFL_STR_CreateBuffer( param.len, heapID );
 		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
 
 		GFL_HEAP_FreeMemory( str );
@@ -243,11 +245,11 @@ STRBUF*
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStrDirect
+	GFL_MSG_GetStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
-	GFL_MSG_GetStrDirectByHandle( arcHandle, datID, strID, heapID, dst );
+	GFL_MSG_GetStringDirectByHandle( arcHandle, datID, strID, heapID, dst );
 	GFL_ARC_DataHandleClose( arcHandle );
 }
 
@@ -265,7 +267,7 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStrDirectByHandle
+	GFL_MSG_GetStringDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
 	MSGDATA_HEADER  header;
@@ -307,14 +309,17 @@ void
  * @param   heapID		一時メモリ確保用のヒープＩＤ
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrDirectAlloc
+	GFL_MSG_CreateStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
-	STRBUF* ret = GFL_MSG_GetStrDirectAllocByHandle( arcHandle, datID, strID, heapID );
+	STRBUF* ret = GFL_MSG_CreateStringDirectByHandle( arcHandle, datID, strID, heapID );
 	GFL_ARC_DataHandleClose( arcHandle );
 
 	return ret;
@@ -332,10 +337,13 @@ STRBUF*
  * @param   heapID		一時メモリ確保用のヒープＩＤ
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrDirectAllocByHandle
+	GFL_MSG_CreateStringDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID )
 {
 	MSGDATA_HEADER header;
@@ -353,7 +361,7 @@ STRBUF*
 									sizeof(MSG_PARAM_BLOCK), &param );
 		DecodeParam( &param, strID, header.randValue );
 
-		dst = GFL_STR_BufferCreate( param.len, heapID );
+		dst = GFL_STR_CreateBuffer( param.len, heapID );
 		size = param.len * sizeof(STRCODE);
 		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), size );
 
@@ -448,7 +456,7 @@ struct _MSGDATA_MANAGER {
  */
 //------------------------------------------------------------------
 MSGDATA_MANAGER*
-	GFL_MSG_ManagerCreate
+	GFL_MSG_MANAGER_Create
 		( MSGMAN_TYPE type, u32 arcID, u32 datID, HEAPID heapID )
 {
 	// マネージャ作成→文字列取得→マネージャ廃棄…の流れが思ったより多そうなので
@@ -457,7 +465,7 @@ MSGDATA_MANAGER*
 
 	if( type == MSGMAN_TYPE_NORMAL )
 	{
-		man->msgData = GFL_MSG_DataLoad( arcID, datID, heapID );
+		man->msgData = GFL_MSG_Create( arcID, datID, heapID );
 	}
 	else
 	{
@@ -481,14 +489,14 @@ MSGDATA_MANAGER*
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_ManagerDelete
+	GFL_MSG_MANAGER_Delete
 		( MSGDATA_MANAGER* man )
 {
 	if( man )
 	{
 		switch( man->type ){
 		case MSGMAN_TYPE_NORMAL:
-			GFL_MSG_DataUnload( man->msgData );
+			GFL_MSG_Delete( man->msgData );
 			break;
 		case MSGMAN_TYPE_DIRECT:
 			GFL_ARC_DataHandleClose( man->arcHandle );
@@ -510,16 +518,16 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_ManagerGetString
+	GFL_MSG_MANAGER_GetString
 		( const MSGDATA_MANAGER* man, u32 strID, STRBUF* dst )
 {
 	switch( man->type ){
 	case MSGMAN_TYPE_NORMAL:
-		GFL_MSG_GetStr( man->msgData, strID, dst );
+		GFL_MSG_GetString( man->msgData, strID, dst );
 		break;
 
 	case MSGMAN_TYPE_DIRECT:
-		GFL_MSG_GetStrDirectByHandle( man->arcHandle, man->datID, strID, man->heapID, dst );
+		GFL_MSG_GetStringDirectByHandle( man->arcHandle, man->datID, strID, man->heapID, dst );
 		break;
 	}
 }
@@ -528,24 +536,27 @@ void
 //------------------------------------------------------------------
 /**
  * メッセージデータマネージャを使って文字列を取得
- *（内部でSTRBUFを作成して返す。作成されたSTRBUFの破棄は各自で行う）
  *
  * @param   man			マネージャワークポインタ
  * @param   strID		文字列ID
  *
  * @retval  STRBUF*		コピー先バッファポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_ManagerAllocString
+	GFL_MSG_MANAGER_CreateString
 		( const MSGDATA_MANAGER* man, u32 strID )
 {
 	switch( man->type ){
 	case MSGMAN_TYPE_NORMAL:
-		return GFL_MSG_GetStrAlloc( man->msgData, strID, man->heapID );
+		return GFL_MSG_CreateString( man->msgData, strID, man->heapID );
 
 	case MSGMAN_TYPE_DIRECT:
-		return GFL_MSG_GetStrDirectAllocByHandle( man->arcHandle, man->datID, strID, man->heapID );
+		return GFL_MSG_CreateStringDirectByHandle
+						( man->arcHandle, man->datID, strID, man->heapID );
 	}
 	return NULL;
 }
@@ -561,7 +572,7 @@ STRBUF*
  */
 //------------------------------------------------------------------
 u32
-	GFL_MSG_ManagerGetMessageCount
+	GFL_MSG_MANAGER_GetMessageCount
 		( const MSGDATA_MANAGER* man )
 {
 	switch( man->type ){
