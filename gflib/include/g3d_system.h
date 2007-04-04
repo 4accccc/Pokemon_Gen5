@@ -128,7 +128,7 @@ typedef struct {
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysInit
+	GFL_G3D_Init
 		( GFL_G3D_VMAN_MODE texmanMode, GFL_G3D_VMAN_TEXSIZE texmanSize, 
 			GFL_G3D_VMAN_MODE pltmanMode, GFL_G3D_VMAN_PLTSIZE pltmanSize,
 				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup );
@@ -141,7 +141,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysExit
+	GFL_G3D_Exit
 		( void );
 
 //--------------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysProjectionSet
+	GFL_G3D_SetSystemProjection
 		( const GFL_G3D_PROJECTION_TYPE type, 
 			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
 				const fx32 near, const fx32 far, const fx32 scaleW );
@@ -190,7 +190,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysLightSet
+	GFL_G3D_SetSystemLight
 		( const u8 lightID, const VecFx16* vec, const u16 color );
 
 //--------------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysLookAtSet
+	GFL_G3D_SetSystemLookAt
 		( const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target );
 
 //--------------------------------------------------------------------------------------------
@@ -216,7 +216,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_sysSwapBufferModeSet
+	GFL_G3D_SetSystemSwapBufferMode
 		( const GXSortMode sortMode, const GXBufferMode bufferMode );
 
 
@@ -268,13 +268,13 @@ typedef struct _GFL_G3D_RES	GFL_G3D_RES;
 //-------------------------------
 // アーカイブＩＤによる読み込み
 extern GFL_G3D_RES*
-	GFL_G3D_ResCreateArc
+	GFL_G3D_CreateResourceArc
 		( int arcID, int datID );
 
 //-------------------------------
 // アーカイブファイルパスによる読み込み
 extern GFL_G3D_RES*
-	GFL_G3D_ResCreatePath
+	GFL_G3D_CreateResourcePath
 		( const char* path, int datID ); 
 
 //--------------------------------------------------------------------------------------------
@@ -285,7 +285,7 @@ extern GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ResDelete
+	GFL_G3D_DeleteResource
 		( GFL_G3D_RES* g3Dres ); 
 	
 //--------------------------------------------------------------------------------------------
@@ -300,7 +300,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern NNSG3dResFileHeader*
-	GFL_G3D_ResFileHeaderGet
+	GFL_G3D_GetResourceFileHeader
 		( GFL_G3D_RES* g3Dres );
 	
 //--------------------------------------------------------------------------------------------
@@ -314,7 +314,7 @@ extern NNSG3dResFileHeader*
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL
-	GFL_G3D_ResTypeCheck
+	GFL_G3D_CheckResourceType
 		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE checkType ); 
 
 
@@ -337,7 +337,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL 
-	GFL_G3D_VramLoadTex
+	GFL_G3D_TransVramTexture
 		( GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
@@ -356,7 +356,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL 
-	GFL_G3D_VramLoadTexDataOnly
+	GFL_G3D_TransVramTextureDataOnly
 		( GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
@@ -375,7 +375,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL 
-	GFL_G3D_VramLoadTexPlttOnly
+	GFL_G3D_TransVramTexturePlttOnly
 		( GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
@@ -388,7 +388,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL 
-	GFL_G3D_VramUnloadTex
+	GFL_G3D_FreeVramTexture
 		( GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
@@ -402,7 +402,7 @@ extern BOOL
  */
 //-----------------------------------------------------------------------------
 extern BOOL
-	GFL_G3D_VramTexkeyLiveCheck
+	GFL_G3D_CheckTextureKeyLive
 		( GFL_G3D_RES* g3Dres );
 
 
@@ -433,7 +433,7 @@ typedef struct _GFL_G3D_RND	GFL_G3D_RND;
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RND*
-	GFL_G3D_RndCreate
+	GFL_G3D_RENDER_Create
 		( GFL_G3D_RES* mdl, int mdlidx, GFL_G3D_RES* tex );
 
 //--------------------------------------------------------------------------------------------
@@ -444,7 +444,7 @@ extern GFL_G3D_RND*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_RndDelete
+	GFL_G3D_RENDER_Delete
 		( GFL_G3D_RND* g3Drnd ); 
 
 //--------------------------------------------------------------------------------------------
@@ -457,7 +457,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
-	GFL_G3D_RndG3DresMdlGet
+	GFL_G3D_RENDER_GetG3DresMdl
 		( GFL_G3D_RND* g3Drnd ); 
 
 //--------------------------------------------------------------------------------------------
@@ -470,7 +470,7 @@ extern GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
-	GFL_G3D_RndG3DresTexGet
+	GFL_G3D_RENDER_GetG3DresTex
 		( GFL_G3D_RND* g3Drnd ); 
 
 //--------------------------------------------------------------------------------------------
@@ -485,7 +485,7 @@ extern GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 extern NNSG3dRenderObj*
-	GFL_G3D_RndRenderObjGet
+	GFL_G3D_RENDER_GetRenderObj
 		( GFL_G3D_RND* g3Drnd );
 
 
@@ -518,7 +518,7 @@ typedef struct _GFL_G3D_ANM	GFL_G3D_ANM;
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_ANM*
-	GFL_G3D_AnmCreate
+	GFL_G3D_ANIME_Create
 		( GFL_G3D_RND* g3Drnd, GFL_G3D_RES* anm, int anmidx ); 
 
 //--------------------------------------------------------------------------------------------
@@ -529,7 +529,7 @@ extern GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_AnmDelete
+	GFL_G3D_ANIME_Delete
 		( GFL_G3D_ANM* g3Danm );
 
 //--------------------------------------------------------------------------------------------
@@ -542,7 +542,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
-	GFL_G3D_AnmG3DresGet
+	GFL_G3D_ANIME_GetG3Dres
 		( GFL_G3D_ANM* g3Danm ); 
 
 //--------------------------------------------------------------------------------------------
@@ -557,7 +557,7 @@ extern GFL_G3D_RES*
  */
 //--------------------------------------------------------------------------------------------
 extern NNSG3dAnmObj*
-	GFL_G3D_AnmAnmObjGet
+	GFL_G3D_ANIME_GetAnmObj
 		( GFL_G3D_ANM* g3Danm );
 
 
@@ -592,7 +592,7 @@ typedef struct _GFL_G3D_OBJ	GFL_G3D_OBJ;
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_OBJ*
-	GFL_G3D_ObjCreate
+	GFL_G3D_OBJECT_Create
 		( GFL_G3D_RND* g3Drnd, GFL_G3D_ANM** anmTbl, u16 anmCount );
 
 //--------------------------------------------------------------------------------------------
@@ -603,7 +603,7 @@ extern GFL_G3D_OBJ*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ObjDelete
+	GFL_G3D_OBJECT_Delete
 		( GFL_G3D_OBJ* g3Dobj );
 
 //--------------------------------------------------------------------------------------------
@@ -616,7 +616,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RND*
-	GFL_G3D_ObjG3DrndGet
+	GFL_G3D_OBJECT_GetG3Drnd
 		( GFL_G3D_OBJ* g3Dobj ); 
 
 //--------------------------------------------------------------------------------------------
@@ -630,7 +630,7 @@ extern GFL_G3D_RND*
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_ANM*
-	GFL_G3D_ObjG3DanmGet
+	GFL_G3D_OBJECT_GetG3Danm
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
 
 //--------------------------------------------------------------------------------------------
@@ -643,7 +643,7 @@ GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
 u16
-	GFL_G3D_ObjAnmCountGet
+	GFL_G3D_OBJECT_GetAnimeCount
 		( GFL_G3D_OBJ* g3Dobj ); 
 
 //--------------------------------------------------------------------------------------------
@@ -657,7 +657,7 @@ u16
  */
 //--------------------------------------------------------------------------------------------
 extern u16
-	GFL_G3D_ObjAnmAdd
+	GFL_G3D_OBJECT_AddAnime
 		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_ANM* g3Danm );
 
 //--------------------------------------------------------------------------------------------
@@ -669,7 +669,7 @@ extern u16
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ObjAnmRemove
+	GFL_G3D_OBJECT_RemoveAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
@@ -681,7 +681,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ObjContAnmFrameReset
+	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
@@ -696,7 +696,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL
-	GFL_G3D_ObjContAnmFrameInc
+	GFL_G3D_OBJECT_IncAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ); 
 
 //--------------------------------------------------------------------------------------------
@@ -711,7 +711,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL
-	GFL_G3D_ObjContAnmFrameAutoLoop
+	GFL_G3D_OBJECT_LoopAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count );
 
 
@@ -725,12 +725,12 @@ extern BOOL
  *
  *	SAMPLE
  *	{
- *		GFL_G3D_DrawStart();							//描画開始
- *		GFL_G3D_DrawLookAt();							//カメラグローバルステート設定		
+ *		GFL_G3D_DRAW_Start();							//描画開始
+ *		GFL_G3D_DRAW_SetLookAt();						//カメラグローバルステート設定		
  *		{
- *			GFL_G3D_ObjDraw( g3Dobj, status );			//各オブジェクト描画
+ *			GFL_G3D_DRAW_DrawObject( g3Dobj, status );	//各オブジェクト描画
  *		}
- *		GFL_G3D_DrawEnd();								//描画終了（バッファスワップ）
+ *		GFL_G3D_DRAW_End();								//描画終了（バッファスワップ）
  *	}
  *
  */
@@ -744,7 +744,7 @@ extern BOOL
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_DrawStart
+	GFL_G3D_DRAW_Start
 		( void );
 
 //--------------------------------------------------------------------------------------------
@@ -756,7 +756,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_DrawEnd
+	GFL_G3D_DRAW_End
 		( void );
 
 //--------------------------------------------------------------------------------------------
@@ -767,7 +767,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_DrawLookAt
+	GFL_G3D_DRAW_SetLookAt
 		( void );
 
 //--------------------------------------------------------------------------------------------
@@ -793,15 +793,15 @@ extern void
 // 通常描画
 //--------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ObjDraw
+	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 
 extern void
-	GFL_G3D_ObjDrawVP
+	GFL_G3D_DRAW_DrawObjectVP
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 
 extern void
-	GFL_G3D_ObjDrawWVP
+	GFL_G3D_DRAW_DrawObjectWVP
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 
 //--------------------------------------------------------------------------------
@@ -811,17 +811,17 @@ extern void
 //		sendMat	マテリアル情報をジオメトリエンジンに送信するかどうか 
 //--------------------------------------------------------------------------------
 extern void
-	GFL_G3D_ObjDraw1mat1shp
+	GFL_G3D_DRAW_DrawObject1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 
 extern void
-	GFL_G3D_ObjDrawVP1mat1shp
+	GFL_G3D_DRAW_DrawObjectVP1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
 			const GFL_G3D_OBJSTATUS* status );
 
 extern void
-	GFL_G3D_ObjDrawWVP1mat1shp
+	GFL_G3D_DRAW_DrawObjectWVP1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
 			const GFL_G3D_OBJSTATUS* status );
 

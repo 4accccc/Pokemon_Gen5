@@ -42,7 +42,7 @@ typedef struct _GFL_G3D_CAMERA	GFL_G3D_CAMERA;
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_CAMERA*
-	GFL_G3D_CameraCreate
+	GFL_G3D_CAMERA_Create
 		( const GFL_G3D_PROJECTION_TYPE type, 
 			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
 				const fx32 near, const fx32 far, const fx32 scaleW,
@@ -67,12 +67,12 @@ extern GFL_G3D_CAMERA*
 #define defaultCameraFar	( 1024 << FX32_SHIFT )
 
 inline GFL_G3D_CAMERA*
-	GFL_G3D_CameraDefaultCreate
+	GFL_G3D_CAMERA_CreateDefault
 		( const VecFx32* camPos, const VecFx32* target, HEAPID heapID )
 {
 	VecFx32 defaultCameraUp = { 0, FX32_ONE, 0 };
  
-	return GFL_G3D_CameraCreate(	GFL_G3D_PRJPERS, 
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									defaultCameraAspect, 0,
@@ -97,11 +97,11 @@ inline GFL_G3D_CAMERA*
  */
 //--------------------------------------------------------------------------------------------
 inline GFL_G3D_CAMERA*
-	GFL_G3D_CameraPerspectiveCreate
+	GFL_G3D_CAMERA_CreatePerspective
 		( const u16 fovy, const fx32 aspect, const fx32 near, const fx32 far, const fx32 scaleW,
 			const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target, HEAPID heapID )
 {
-	return GFL_G3D_CameraCreate(	GFL_G3D_PRJPERS, 
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( fovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( fovy/2 *PERSPWAY_COEFFICIENT ),
 									aspect, 0, near, far, scaleW,
@@ -127,12 +127,12 @@ inline GFL_G3D_CAMERA*
  */
 //--------------------------------------------------------------------------------------------
 inline GFL_G3D_CAMERA*
-	GFL_G3D_CameraFrustumCreate
+	GFL_G3D_CAMERA_CreateFrustum
 		( const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
 			const fx32 near, const fx32 far, const fx32 scaleW,
 				const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target, HEAPID heapID )
 {
-	return GFL_G3D_CameraCreate(	GFL_G3D_PRJFRST, top, bottom, left, right,
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJFRST, top, bottom, left, right,
 									near, far, scaleW, camPos, camUp, target, heapID );
 }
 
@@ -155,12 +155,12 @@ inline GFL_G3D_CAMERA*
  */
 //--------------------------------------------------------------------------------------------
 inline GFL_G3D_CAMERA*
-	GFL_G3D_CameraOrthoCreate
+	GFL_G3D_CAMERA_CreateOrtho
 		( const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
 			const fx32 near, const fx32 far, const fx32 scaleW,
 				const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target, HEAPID heapID )
 {
-	return GFL_G3D_CameraCreate(	GFL_G3D_PRJORTH, top, bottom, left, right,
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJORTH, top, bottom, left, right,
 									near, far, scaleW, camPos, camUp, target, heapID );
 }
 
@@ -172,7 +172,7 @@ inline GFL_G3D_CAMERA*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_CameraDelete
+	GFL_G3D_CAMERA_Delete
 		( GFL_G3D_CAMERA* g3Dcamera );
 
 //--------------------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_CameraSwitching
+	GFL_G3D_CAMERA_Switching
 		( GFL_G3D_CAMERA* g3Dcamera );
 
 //--------------------------------------------------------------------------------------------
@@ -194,8 +194,8 @@ extern void
  * @param	pos			座標ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CameraPosGet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
-extern void GFL_G3D_CameraPosSet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
+extern void GFL_G3D_CAMERA_GetPos( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
+extern void GFL_G3D_CAMERA_SetPos( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
 //--------------------------------------------------------------------------------------------
 /**
  * カメラ上方向の取得と変更
@@ -204,8 +204,8 @@ extern void GFL_G3D_CameraPosSet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
  * @param	pos			上方向ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CameraUpGet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
-extern void GFL_G3D_CameraUpSet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
+extern void GFL_G3D_CAMERA_GetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
+extern void GFL_G3D_CAMERA_SetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
 //--------------------------------------------------------------------------------------------
 /**
  * カメラ注視点の取得と変更
@@ -214,8 +214,8 @@ extern void GFL_G3D_CameraUpSet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
  * @param	target		注視点ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CameraTargetGet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
-extern void GFL_G3D_CameraTargetSet( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
+extern void GFL_G3D_CAMERA_GetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
+extern void GFL_G3D_CAMERA_SetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
 
 
 #endif

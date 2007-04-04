@@ -39,7 +39,7 @@ typedef struct {
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_SCENE*
-	GFL_G3D_SceneCreate
+	GFL_G3D_SCENE_Create
 		( GFL_G3D_UTIL* g3Dutil, const u16 sceneObjMax, const u32 sceneObjWkSiz, 
 			const HEAPID heapID );
 
@@ -51,7 +51,7 @@ extern GFL_G3D_SCENE*
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_SceneMain
+	GFL_G3D_SCENE_Main
 		( GFL_G3D_SCENE* g3Dscene );  
 
 //--------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_SceneDraw
+	GFL_G3D_SCENE_Draw
 		( GFL_G3D_SCENE* g3Dscene );  
 
 //--------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_SceneDelete
+	GFL_G3D_SCENE_Delete
 		( GFL_G3D_SCENE* g3Dscene );  
 
 //--------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENEOBJ*
-	GFL_G3D_SceneObjGet
+	GFL_G3D_SCENEOBJ_Get
 		( GFL_G3D_SCENE* g3Dscene, u32 idx );
 
 //=============================================================================================
@@ -105,7 +105,7 @@ GFL_G3D_SCENEOBJ*
  */
 //--------------------------------------------------------------------------------------------
 extern u32
-	GFL_G3D_SceneObjAdd
+	GFL_G3D_SCENEOBJ_Add
 		( GFL_G3D_SCENE* g3Dscene, const GFL_G3D_SCENEOBJ_DATA* sceneObjTbl, 
 			const u16 sceneObjCount );
 
@@ -119,7 +119,7 @@ extern u32
  */
 //--------------------------------------------------------------------------------------------
 extern void
-	GFL_G3D_SceneObjDel
+	GFL_G3D_SCENEOBJ_Remove
 		( GFL_G3D_SCENE* g3Dscene, u32 idx, const u16 sceneObjCount );
 
 //--------------------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_OBJ*
-	GFL_G3D_SceneObjHandleGet
+	GFL_G3D_SCENEOBJ_GetHandle
 		( GFL_G3D_SCENEOBJ* g3DsceneObj );
 
 //--------------------------------------------------------------------------------------------
@@ -141,8 +141,8 @@ extern GFL_G3D_OBJ*
  * @param	objID			オブジェクトＩＤの格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjIDGet( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID );
-extern void GFL_G3D_SceneObjIDSet( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID );
+extern void GFL_G3D_SCENEOBJ_GetObjID( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID );
+extern void GFL_G3D_SCENEOBJ_SetObjID( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -152,8 +152,8 @@ extern void GFL_G3D_SceneObjIDSet( GFL_G3D_SCENEOBJ* g3DsceneObj, u16* objID );
  * @param	drawPri			描画プライオリティーの格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjDrawPriGet( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri );
-extern void GFL_G3D_SceneObjDrawPriSet( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri );
+extern void GFL_G3D_SCENEOBJ_GetDrawPri( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri );
+extern void GFL_G3D_SCENEOBJ_SetDrawPri( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawPri );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -163,8 +163,8 @@ extern void GFL_G3D_SceneObjDrawPriSet( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* drawP
  * @param	drawSW			描画スイッチの格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjDrawSWGet( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW );
-extern void GFL_G3D_SceneObjDrawSWSet( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW );
+extern void GFL_G3D_SCENEOBJ_GetDrawSW( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW );
+extern void GFL_G3D_SCENEOBJ_SetDrawSW( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* drawSW );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -174,8 +174,8 @@ extern void GFL_G3D_SceneObjDrawSWSet( GFL_G3D_SCENEOBJ* g3DsceneObj, BOOL* draw
  * @param	trans			位置情報の格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjStatusTransGet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans );
-extern void GFL_G3D_SceneObjStatusTransSet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans );
+extern void GFL_G3D_SCENEOBJ_GetPos( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans );
+extern void GFL_G3D_SCENEOBJ_SetPos( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* trans );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -185,8 +185,8 @@ extern void GFL_G3D_SceneObjStatusTransSet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx
  * @param	scale			スケール情報の格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjStatusScaleGet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale );
-extern void GFL_G3D_SceneObjStatusScaleSet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale );
+extern void GFL_G3D_SCENEOBJ_GetScale( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale );
+extern void GFL_G3D_SCENEOBJ_SetScale( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx32* scale );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -196,8 +196,8 @@ extern void GFL_G3D_SceneObjStatusScaleSet( GFL_G3D_SCENEOBJ* g3DsceneObj, VecFx
  * @param	rotate			回転情報の格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjStatusRotateGet( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate );
-extern void GFL_G3D_SceneObjStatusRotateSet( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate );
+extern void GFL_G3D_SCENEOBJ_GetRotate( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate );
+extern void GFL_G3D_SCENEOBJ_SetRotate( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* rotate );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -207,8 +207,8 @@ extern void GFL_G3D_SceneObjStatusRotateSet( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxF
  * @param	scale			スケール情報の格納もしくは参照ワークポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_SceneObjFuncGet( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
-extern void GFL_G3D_SceneObjFuncSet( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
+extern void GFL_G3D_SCENEOBJ_GetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
+extern void GFL_G3D_SCENEOBJ_SetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
 
 
 
