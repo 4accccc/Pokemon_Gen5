@@ -98,7 +98,7 @@ typedef struct _MSGDATA_MANAGER	MSGDATA_MANAGER;
  */
 //------------------------------------------------------------------
 extern MSGDATA_MANAGER*
-	GFL_MSG_ManagerCreate
+	GFL_MSG_MANAGER_Create
 		( MSGMAN_TYPE type, u32 arcID, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -110,7 +110,7 @@ extern MSGDATA_MANAGER*
  */
 //------------------------------------------------------------------
 extern void
-	GFL_MSG_ManagerDelete
+	GFL_MSG_MANAGER_Delete
 		( MSGDATA_MANAGER* man );
 
 //------------------------------------------------------------------
@@ -125,7 +125,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern void
-	GFL_MSG_ManagerGetString
+	GFL_MSG_MANAGER_GetString
 		( const MSGDATA_MANAGER* man, u32 strID, STRBUF* dst );
 
 //------------------------------------------------------------------
@@ -137,10 +137,13 @@ extern void
  * @param   strID		文字列ID
  *
  * @retval  STRBUF*		コピー先バッファポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 extern STRBUF*
-	GFL_MSG_ManagerAllocString
+	GFL_MSG_MANAGER_CreateString
 		( const MSGDATA_MANAGER* man, u32 strID );
 
 //------------------------------------------------------------------
@@ -153,7 +156,7 @@ extern STRBUF*
  */
 //------------------------------------------------------------------
 extern u32
-	GFL_MSG_ManagerGetMessageCount
+	GFL_MSG_MANAGER_GetMessageCount
 		( const MSGDATA_MANAGER* man );
 
 /*============================================================================================*/
@@ -172,7 +175,7 @@ typedef struct _MSGDATA_HEADER	MSGDATA_HEADER;
 
 //------------------------------------------------------------------
 /**
- * メッセージデータをアーカイブからロードする
+ * メッセージデータ郡をアーカイブからロードする
  *
  * @param   arcID		アーカイブファイルＩＤ
  * @param   datID		アーカイブファイル内のメッセージデータＩＤ
@@ -182,18 +185,18 @@ typedef struct _MSGDATA_HEADER	MSGDATA_HEADER;
  */
 //------------------------------------------------------------------
 MSGDATA_HEADER*
-	GFL_MSG_DataLoad
+	GFL_MSG_Create
 		( u32 arcID, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
- * ロードしたメッセージデータをアンロードする
+ * ロードしたメッセージデータ郡をアンロードする
  *
  * @param   msgdat		メッセージデータポインタ
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_DataUnload
+	GFL_MSG_Delete
 		( MSGDATA_HEADER* msgdat );
 
 //------------------------------------------------------------------
@@ -207,7 +210,7 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStr
+	GFL_MSG_GetString
 		( const MSGDATA_HEADER* msgdat, u32 strID, STRBUF* dst );
 
 //------------------------------------------------------------------
@@ -220,10 +223,12 @@ void
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
  *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrAlloc
+	GFL_MSG_CreateString
 	( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -239,7 +244,7 @@ STRBUF*
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStrDirect
+	GFL_MSG_GetStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst );
 
 //------------------------------------------------------------------
@@ -255,7 +260,7 @@ void
  */
 //------------------------------------------------------------------
 void
-	GFL_MSG_GetStrDirectByHandle
+	GFL_MSG_GetStringDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst );
 
 //------------------------------------------------------------------
@@ -269,10 +274,13 @@ void
  * @param   heapID		一時メモリ確保用のヒープＩＤ
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrDirectAlloc
+	GFL_MSG_CreateStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -286,10 +294,13 @@ STRBUF*
  * @param   heapID		一時メモリ確保用のヒープＩＤ
  *
  * @retval  文字列がコピーされた文字列バッファ型オブジェクトへのポインタ
+ *
+ * 内部でSTRBUFがアロケートされるので
+ * 使用後はGFL_STR_DeleteBufferなどで領域を開放すること
  */
 //------------------------------------------------------------------
 STRBUF*
-	GFL_MSG_GetStrDirectAllocByHandle
+	GFL_MSG_CreateStringDirectByHandle
 		( ARCHANDLE* arcHandle, u32 datID, u32 strID, HEAPID heapID );
 
 //------------------------------------------------------------------
