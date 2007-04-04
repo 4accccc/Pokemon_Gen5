@@ -37,7 +37,7 @@ typedef struct {
  *
  */
 //------------------------------------------------------------------
-extern void GFL_FONT_sysInit( const char* fontDataPath );
+extern void GFL_FONT_Create( const char* fontDataPath );
 //------------------------------------------------------------------
 /**
  *
@@ -46,7 +46,7 @@ extern void GFL_FONT_sysInit( const char* fontDataPath );
  *
  */
 //------------------------------------------------------------------
-extern void GFL_FONT_sysExit( void );
+extern void GFL_FONT_Delete( void );
 //------------------------------------------------------------------
 /**
  *

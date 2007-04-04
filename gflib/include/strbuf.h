@@ -30,7 +30,7 @@ enum {
  */
 //------------------------------------------------------------------
 extern BOOL
-	STRBUF_CheckValid
+	GFL_STR_CheckBufferValid
 		(const void* ptr);
 
 //------------------------------------------------------------------
@@ -44,7 +44,7 @@ extern BOOL
  */
 //------------------------------------------------------------------
 extern STRBUF*
-	GFL_STR_BufferCreate
+	GFL_STR_CreateBuffer
 		( u32 size, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -56,7 +56,7 @@ extern STRBUF*
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_BufferDelete
+	GFL_STR_DeleteBuffer
 		( STRBUF* strbuf );
 
 //------------------------------------------------------------------
@@ -69,7 +69,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_BufferClear
+	GFL_STR_ClearBuffer
 		( STRBUF* strbuf );
 
 //------------------------------------------------------------------
@@ -82,7 +82,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_BufferCopy
+	GFL_STR_CopyBuffer
 		( STRBUF* dst, const STRBUF* src );
 
 //------------------------------------------------------------------
@@ -95,7 +95,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern STRBUF*
-	GFL_STR_CreateBufferCopy
+	GFL_STR_CreateCopyBuffer
 		( const STRBUF* origin, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -109,7 +109,7 @@ extern STRBUF*
  */
 //------------------------------------------------------------------
 extern BOOL
-	GFL_STR_BufferCompare
+	GFL_STR_CompareBuffer
 		( const STRBUF* str1, const STRBUF* str2 );
 
 //------------------------------------------------------------------
@@ -200,7 +200,7 @@ extern const STRCODE*
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_AddStr
+	GFL_STR_AddString
 		( STRBUF* dst, const STRBUF* src );
 
 //------------------------------------------------------------------
@@ -213,7 +213,7 @@ extern void
  */
 //------------------------------------------------------------------
 extern void
-	GFL_STR_AddChar
+	GFL_STR_AddCode
 		( STRBUF* dst, STRCODE code );
 
 #endif
