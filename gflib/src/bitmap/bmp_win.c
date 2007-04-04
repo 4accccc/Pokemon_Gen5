@@ -57,7 +57,7 @@ static GFL_BMPWIN_SYS* bmpwin_sys = NULL;
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_BMPWIN_sysInit
+	GFL_BMPWIN_Init
 		( HEAPID heapID )
 {
 	int	i;
@@ -72,7 +72,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_BMPWIN_sysExit
+	GFL_BMPWIN_Exit
 		( void )
 {
 	if( bmpwin_sys != NULL ){
