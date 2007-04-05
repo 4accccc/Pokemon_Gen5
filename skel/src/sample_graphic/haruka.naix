@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: haruka.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-03-30T20:42:36
+ *****************************************************************************/
+
+#ifndef NARC_HARUKA_NAIX_
+#define NARC_HARUKA_NAIX_
+
+enum {
+	NARC_haruka_haruka_nsbca = 0,
+	NARC_haruka_haruka_nsbmd = 1,
+	NARC_haruka_test_wall_nsbmd = 2,
+	NARC_haruka_test_floor_nsbmd = 3
+};
+
+/* NARC_HARUKA_NAIX_ */
+#endif
