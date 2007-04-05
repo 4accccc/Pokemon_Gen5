@@ -319,7 +319,7 @@ void
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_OBJ*
-	GFL_G3D_SCENEOBJ_GetHandle
+	GFL_G3D_SCENEOBJ_GetG3DobjHandle
 		( GFL_G3D_SCENEOBJ* g3DsceneObj )
 {
 	return g3DsceneObj->g3Dobj;
