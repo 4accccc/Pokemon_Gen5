@@ -367,33 +367,33 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	testmode->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, testmode->heapID );
 #else
 	//		リソースセットアップ
-	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_ResCreatePath
+	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_CreateResourcePath
 										( g3DarcPath, NARC_titledemo_title_air_nsbmd );
-	testmode->g3Dres[ G3DRES_AIR_BTA ] = GFL_G3D_ResCreatePath
+	testmode->g3Dres[ G3DRES_AIR_BTA ] = GFL_G3D_CreateResourcePath
 										( g3DarcPath, NARC_titledemo_title_air_nsbta );
-	testmode->g3Dres[ G3DRES_IAR_BMD ] = GFL_G3D_ResCreatePath
+	testmode->g3Dres[ G3DRES_IAR_BMD ] = GFL_G3D_CreateResourcePath
 										( g3DarcPath, NARC_titledemo_title_iar_nsbmd );
-	testmode->g3Dres[ G3DRES_IAR_BTA ] = GFL_G3D_ResCreatePath
+	testmode->g3Dres[ G3DRES_IAR_BTA ] = GFL_G3D_CreateResourcePath
 										( g3DarcPath, NARC_titledemo_title_iar_nsbta );
 	
 	//		リソース転送
-	GFL_G3D_VramLoadTex( testmode->g3Dres[ G3DRES_AIR_BMD ] );
-	GFL_G3D_VramLoadTex( testmode->g3Dres[ G3DRES_IAR_BMD ] );
+	GFL_G3D_TransVramTexture( testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	GFL_G3D_TransVramTexture( testmode->g3Dres[ G3DRES_IAR_BMD ] );
 	//		レンダー作成
-	testmode->g3Drnd[ G3D_AIR ] = GFL_G3D_RndCreate(	testmode->g3Dres[ G3DRES_AIR_BMD ], 0, 
-														testmode->g3Dres[ G3DRES_AIR_BMD ] );
-	testmode->g3Drnd[ G3D_IAR ] = GFL_G3D_RndCreate(	testmode->g3Dres[ G3DRES_IAR_BMD ], 0, 
-														testmode->g3Dres[ G3DRES_IAR_BMD] );
+	testmode->g3Drnd[ G3D_AIR ] = GFL_G3D_RENDER_Create(	testmode->g3Dres[ G3DRES_AIR_BMD ], 0, 
+															testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	testmode->g3Drnd[ G3D_IAR ] = GFL_G3D_RENDER_Create(	testmode->g3Dres[ G3DRES_IAR_BMD ], 0, 
+															testmode->g3Dres[ G3DRES_IAR_BMD] );
 	//		アニメ作成
-	testmode->g3Danm[ G3D_AIR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3D_AIR ], 
+	testmode->g3Danm[ G3D_AIR ] = GFL_G3D_ANIME_Create(	testmode->g3Drnd[ G3D_AIR ], 
 														testmode->g3Dres[ G3DRES_AIR_BTA ], 0 );
-	testmode->g3Danm[ G3D_IAR ] = GFL_G3D_AnmCreate(	testmode->g3Drnd[ G3D_IAR ], 
+	testmode->g3Danm[ G3D_IAR ] = GFL_G3D_ANIME_Create(	testmode->g3Drnd[ G3D_IAR ], 
 														testmode->g3Dres[ G3DRES_IAR_BTA ], 0 );
 	//		オブジェクト作成
-	testmode->g3Dobj[ G3D_AIR ] = GFL_G3D_ObjCreate(	testmode->g3Drnd[ G3D_AIR ], 
-														&testmode->g3Danm[ G3D_AIR ], 1 );
-	testmode->g3Dobj[ G3D_IAR ] = GFL_G3D_ObjCreate(	testmode->g3Drnd[ G3D_IAR ], 
-														&testmode->g3Danm[ G3D_IAR ], 1 );
+	testmode->g3Dobj[ G3D_AIR ] = GFL_G3D_OBJECT_Create(	testmode->g3Drnd[ G3D_AIR ], 
+															&testmode->g3Danm[ G3D_AIR ], 1 );
+	testmode->g3Dobj[ G3D_IAR ] = GFL_G3D_OBJECT_Create(	testmode->g3Drnd[ G3D_IAR ], 
+															&testmode->g3Danm[ G3D_IAR ], 1 );
 #endif
 	//描画ステータスワーク設定
 	testmode->status[ G3D_AIR ] = status0;
@@ -435,22 +435,22 @@ static void g3d_unload( TESTMODE_WORK * testmode )
 #ifdef G3DUTIL_USE
 	GFL_G3D_UTIL_Delete( testmode->g3Dutil );
 #else
-	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_IAR ] );
-	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_AIR ] );
+	GFL_G3D_OBJECT_Delete( testmode->g3Dobj[ G3D_IAR ] );
+	GFL_G3D_OBJECT_Delete( testmode->g3Dobj[ G3D_AIR ] );
 
-	GFL_G3D_AnmDelete( testmode->g3Danm[ G3D_IAR ] );
-	GFL_G3D_AnmDelete( testmode->g3Danm[ G3D_AIR ] );
+	GFL_G3D_ANIME_Delete( testmode->g3Danm[ G3D_IAR ] );
+	GFL_G3D_ANIME_Delete( testmode->g3Danm[ G3D_AIR ] );
 
-	GFL_G3D_RndDelete( testmode->g3Drnd[ G3D_IAR ] );
-	GFL_G3D_RndDelete( testmode->g3Drnd[ G3D_AIR ] );
+	GFL_G3D_RENDER_Delete( testmode->g3Drnd[ G3D_IAR ] );
+	GFL_G3D_RENDER_Delete( testmode->g3Drnd[ G3D_AIR ] );
 
-	GFL_G3D_VramUnloadTex( testmode->g3Dres[ G3DRES_IAR_BMD ] );
-	GFL_G3D_VramUnloadTex( testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	GFL_G3D_FreeVramTexture( testmode->g3Dres[ G3DRES_IAR_BMD ] );
+	GFL_G3D_FreeVramTexture( testmode->g3Dres[ G3DRES_AIR_BMD ] );
 
-	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_IAR_BTA ] );
-	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_IAR_BMD ] );
-	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_AIR_BTA ] );
-	GFL_G3D_ResDelete( testmode->g3Dres[ G3DRES_AIR_BMD ] );
+	GFL_G3D_DeleteResource( testmode->g3Dres[ G3DRES_IAR_BTA ] );
+	GFL_G3D_DeleteResource( testmode->g3Dres[ G3DRES_IAR_BMD ] );
+	GFL_G3D_DeleteResource( testmode->g3Dres[ G3DRES_AIR_BTA ] );
+	GFL_G3D_DeleteResource( testmode->g3Dres[ G3DRES_AIR_BMD ] );
 #endif
 }
 	
