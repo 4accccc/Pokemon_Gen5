@@ -196,10 +196,10 @@ static void	bg_init( HEAPID heapID )
 	GFL_BG_VisibleSet( TEXT_FRM, VISIBLE_ON );
 
 	//ビットマップウインドウシステムの起動
-	GFL_BMPWIN_sysInit( heapID );
+	GFL_BMPWIN_Init( heapID );
 
 	//３Ｄシステム起動
-	GFL_G3D_sysInit( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, NULL );
 	GFL_BG_BGControlSet3D( G3D_FRM_PRI );
 	//GFL_G3D_UtilsysInit( G3D_UTIL_RESSIZ, G3D_UTIL_OBJSIZ, G3D_UTIL_ANMSIZ, heapID );  
@@ -208,8 +208,8 @@ static void	bg_init( HEAPID heapID )
 static void	bg_exit( void )
 {
 	//GFL_G3D_UtilsysExit();  
-	GFL_G3D_sysExit();
-	GFL_BMPWIN_sysExit();
+	GFL_G3D_Exit();
+	GFL_BMPWIN_Exit();
 	GFL_BG_BGControlExit( TEXT_FRM );
 	GFL_BG_sysExit();
 }
@@ -254,7 +254,7 @@ static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 static void	g2d_load( TESTMODE_WORK * testmode )
 {
 	//フォント読み込み
-	GFL_TEXT_sysInit( font_path );
+	GFL_TEXT_CreateSystem( font_path );
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
@@ -307,7 +307,7 @@ static void	g2d_unload( TESTMODE_WORK * testmode )
 		msg_bmpwin_trush( testmode, NUM_TITLE+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
-	GFL_TEXT_sysExit();
+	GFL_TEXT_DeleteSystem();
 }
 
 //------------------------------------------------------------------
@@ -364,7 +364,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 static void g3d_load( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
-	testmode->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, testmode->heapID );
+	testmode->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, testmode->heapID );
 #else
 	//		リソースセットアップ
 	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_ResCreatePath
@@ -400,10 +400,10 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	testmode->status[ G3D_IAR ] = status1;
 
 	//カメラセット
-	GFL_G3D_sysProjectionSet(	GFL_G3D_PRJPERS, 
+	GFL_G3D_SetSystemProjection(	GFL_G3D_PRJPERS, 
 								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
 								cameraAspect, 0, cameraNear, cameraFar, 0 );
-	GFL_G3D_sysLookAtSet( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
+	GFL_G3D_SetSystemLookAt( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
 
 	testmode->work[0] = 0;
 }
@@ -412,28 +412,28 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 {
 	GFL_G3D_OBJ* g3Dobj[2];
 #ifdef G3DUTIL_USE
-	g3Dobj[ G3D_AIR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dutil, G3D_AIR  );
-	g3Dobj[ G3D_IAR ] = GFL_G3D_UtilsysObjHandleGet( testmode->g3Dutil, G3D_IAR  );
+	g3Dobj[ G3D_AIR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  );
+	g3Dobj[ G3D_IAR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  );
 #else
 	g3Dobj[ G3D_AIR ] = testmode->g3Dobj[ G3D_AIR ];
 	g3Dobj[ G3D_IAR ] = testmode->g3Dobj[ G3D_IAR ];
 #endif
-	GFL_G3D_DrawStart();
-	GFL_G3D_DrawLookAt();
+	GFL_G3D_DRAW_Start();
+	GFL_G3D_DRAW_SetLookAt();
 	{
-		GFL_G3D_ObjDraw( g3Dobj[ G3D_AIR ], &testmode->status[ G3D_AIR ] );
-		GFL_G3D_ObjDraw( g3Dobj[ G3D_IAR ], &testmode->status[ G3D_IAR ] );
+		GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_AIR ], &testmode->status[ G3D_AIR ] );
+		GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_IAR ], &testmode->status[ G3D_IAR ] );
 	}
-	GFL_G3D_DrawEnd();
+	GFL_G3D_DRAW_End();
 
-	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[ G3D_AIR ], 0, FX32_ONE ); 
-	GFL_G3D_ObjContAnmFrameAutoLoop( g3Dobj[ G3D_IAR ], 0, FX32_ONE ); 
+	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj[ G3D_AIR ], 0, FX32_ONE ); 
+	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj[ G3D_IAR ], 0, FX32_ONE ); 
 }
 	
 static void g3d_unload( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
-	GFL_G3D_UtilsysDelete( testmode->g3Dutil );
+	GFL_G3D_UTIL_Delete( testmode->g3Dutil );
 #else
 	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_IAR ] );
 	GFL_G3D_ObjDelete( testmode->g3Dobj[ G3D_AIR ] );
