@@ -34,7 +34,7 @@ static BOOL	TestModeControl( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x20000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x4c000 );
 	TestModeWorkSet( HEAPID_WATANABE_DEBUG );
 //	TestModeWorkSet( GFL_HEAPID_APP );
 
@@ -93,6 +93,11 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
 //
 //
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	構造体定義
+ */
+//------------------------------------------------------------------
 typedef struct {
 	HEAPID					heapID;
 	int						seq;
@@ -109,18 +114,79 @@ typedef struct {
 
 	u16						work[16];
 	u16						mode;
+
+	int						contSeq;
+	u16						contRotate;
+	u16						nowRotate;
+	u16						updateRotate;
+	s16						updateRotateOffs;
+	VecFx32					contPos;
+	BOOL					updateRotateFlag;
+	BOOL					SpeedUpFlag;
+
+	u16						mainCameraRotate;
+	u16						autoCameraRotate1;
+	u16						autoCameraRotate2;
 }TETSU_WORK;
 
-TETSU_WORK* tetsuWork;
+typedef struct {
+	const GFL_G3D_SCENEOBJ_DATA*	data;
+	int						count;
+}GFL_G3D_SCENEOBJ_DATA_SETUP;
 
 typedef struct {
 	int		seq;
 
 	VecFx32	rotateTmp;
-}BALL_WORK;
+}OBJ_WORK;
 
-#include "sample_graphic/test9ball.naix"
+typedef struct {
+	const char*				data;
+	int						sizeX;
+	int						sizeZ;
+	GFL_G3D_SCENEOBJ_DATA	floor;
+}MAPDATA;
 
+//------------------------------------------------------------------
+/**
+ * @brief	マップデータ
+ */
+//------------------------------------------------------------------
+static const VecFx32 cameraTarget	= { 0, 0, 0 };
+static const VecFx32 camera0Pos	= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
+static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_ONE * 180) };
+static const VecFx32 camera2Pos	= { -(FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_ONE * 180) };
+
+#define g3DanmRotateSpeed	( 0x200 )
+#define g3DanmFrameSpeed	( FX32_ONE )
+	
+static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
+	{ 0, {{ 0, 0, -(FX16_ONE-1) }, 0x7fff } },
+};
+static const GFL_G3D_LIGHT_DATA light1Tbl[] = {
+	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
+};
+static const GFL_G3D_LIGHT_DATA light2Tbl[] = {
+	{ 0, {{ (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7e00 } },
+};
+
+static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl) };
+static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl) };
+static const GFL_G3D_LIGHTSET_SETUP light2Setup = { light2Tbl, NELEMS(light2Tbl) };
+
+static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+
+#include "debug_watanabe.dat"
+
+static const MAPDATA mapDataTbl;
+//------------------------------------------------------------------
+/**
+ * @brief	ローカル宣言
+ */
+//------------------------------------------------------------------
 //ＢＧ設定関数
 static void	bg_init( HEAPID heapID );
 static void	bg_exit( void );
@@ -131,20 +197,15 @@ static void g3d_move( void );
 static void g3d_draw( void );
 static void	g3d_unload( void );
 
-static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst );
-static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work );
-static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
-static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void KeyControlInit( void );
+static BOOL KeyControlEndCheck( void );
+static void KeyControlCameraLightChange( void );
+static void KeyControlCameraMove1( void );
 
-static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans );
-static void CameraMove( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans );
-//------------------------------------------------------------------
-/**
- * @brief	データ
- */
-//------------------------------------------------------------------
-#include "debug_watanabe.dat"
+static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID );
+static void MapDataDelete( GFL_G3D_SCENEOBJ_DATA_SETUP* setup );
 
+TETSU_WORK* tetsuWork;
 //------------------------------------------------------------------
 /**
  * @brief	ワークの確保と破棄
@@ -166,8 +227,6 @@ static void	TestModeWorkRelease( void )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MOVE_SPEED ( FX32_ONE*2)
-
 static BOOL	TestModeControl( void )
 {
 	BOOL return_flag = FALSE;
@@ -185,85 +244,18 @@ static BOOL	TestModeControl( void )
 	case 1:
 		//画面作成
 		g3d_load( tetsuWork->heapID );	//３Ｄデータ作成
-		tetsuWork->work[0] = 0;
-		tetsuWork->work[1] = 0;
-		tetsuWork->mode = 3;
+		KeyControlInit();
 		tetsuWork->seq++;
 		break;
 
 	case 2:
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
+		if( KeyControlEndCheck() == TRUE ){
 			tetsuWork->seq++;
 		}
-#if 0
-		if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
-			VecFx32 trans = {  MOVE_SPEED, 0, 0 };
-			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_RIGHT ){
-			VecFx32 trans = { -MOVE_SPEED, 0, 0 };
-			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_UP ){
-			VecFx32 trans = { 0, 0,  MOVE_SPEED };
-			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_DOWN ){
-			VecFx32 trans = { 0, 0, -MOVE_SPEED };
-			SceneObjTransAddAll( tetsuWork->g3Dscene, &trans );
-		}
-#else
-		if( GFL_UI_KeyGetCont() & PAD_KEY_LEFT ){
-			VecFx32 trans = { -MOVE_SPEED, 0, 0 };
-			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_RIGHT ){
-			VecFx32 trans = {  MOVE_SPEED, 0, 0 };
-			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_UP ){
-			VecFx32 trans = { 0, 0, -MOVE_SPEED };
-			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
-		} else if( GFL_UI_KeyGetCont() & PAD_KEY_DOWN ){
-			VecFx32 trans = { 0, 0,  MOVE_SPEED };
-			CameraMove( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &trans );
-		}
-#endif
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_B ){
-			if( tetsuWork->mode > 1 ){
-				tetsuWork->mode--;
-			} else {
-				tetsuWork->mode = 3;
-			}
-		}
+		KeyControlCameraLightChange();
+		KeyControlCameraMove1();
 
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
-			if( tetsuWork->mode & 1 ){
-				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[1] );
-				tetsuWork->nowCameraNum = 1;
-			}
-			if( tetsuWork->mode & 2 ){
-				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[1] );
-				tetsuWork->nowLightNum = 1;
-			}
-		}
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
-			if( tetsuWork->mode & 1 ){
-				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
-				tetsuWork->nowCameraNum = 0;
-			}
-			if( tetsuWork->mode & 2 ){
-				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
-				tetsuWork->nowLightNum = 0;
-			}
-		}
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
-			if( tetsuWork->mode & 1 ){
-				GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[2] );
-				tetsuWork->nowCameraNum = 2;
-			}
-			if( tetsuWork->mode & 2 ){
-				GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[2] );
-				tetsuWork->nowLightNum = 2;
-			}
-		}
 		g3d_move();
-		tetsuWork->work[0]++;
 		g3d_draw();		//３Ｄデータ描画
 		break;
 
@@ -282,6 +274,13 @@ static BOOL	TestModeControl( void )
  * @brief		ＢＧ設定＆データ転送
  */
 //------------------------------------------------------------------
+static const GFL_BG_SYS_HEADER bgsysHeader = {
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+};	
+
+#define DTCM_SIZE		(0x1000)
+#define G3D_FRM_PRI		(1)
+
 static void	bg_init( HEAPID heapID )
 {
 	//ＢＧシステム起動
@@ -305,7 +304,7 @@ static void	bg_init( HEAPID heapID )
 	GFL_BG_InitBG( &bgsysHeader );
 
 	//３Ｄシステム起動
-	GFL_G3D_sysInit( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, G3DsysSetup );
 	GFL_BG_BGControlSet3D( G3D_FRM_PRI );
 
@@ -315,7 +314,7 @@ static void	bg_init( HEAPID heapID )
 
 static void	bg_exit( void )
 {
-	GFL_G3D_sysExit();
+	GFL_G3D_Exit();
 	GFL_BG_sysExit();
 }
 
@@ -330,57 +329,69 @@ static void g3d_load( HEAPID heapID )
 	int	i;
 
 	//配置物設定
-	tetsuWork->g3Dutil = GFL_G3D_UtilsysCreate( &g3Dutil_setup, heapID );
-	tetsuWork->g3Dscene = GFL_G3D_SceneCreate( tetsuWork->g3Dutil, NELEMS(g3DsceneObjData)+1,
-												sizeof(BALL_WORK), heapID );
-	tetsuWork->g3DsceneObjID = GFL_G3D_SceneObjAdd
+	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
+	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
+												sizeof(OBJ_WORK), heapID );
+#if 0
+	tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
+#else
+	{
+		GFL_G3D_SCENEOBJ_DATA_SETUP* setup = MapDataCreate( &mapDataTbl, heapID );
+		tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
+								( tetsuWork->g3Dscene, setup->data, setup->count );
+		MapDataDelete( setup );
+	}
+#endif
 
 	//カメラライト0作成
-	tetsuWork->g3Dcamera[0] = GFL_G3D_CameraDefaultCreate( &camera0Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset[0] = GFL_G3D_LightCreate( &light0Setup, heapID );
+	tetsuWork->g3Dcamera[0] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[0] = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
 
 	//カメラライト1作成
-	tetsuWork->g3Dcamera[1] = GFL_G3D_CameraDefaultCreate( &camera1Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset[1] = GFL_G3D_LightCreate( &light1Setup, heapID );
+	tetsuWork->g3Dcamera[1] = GFL_G3D_CAMERA_CreateDefault( &camera1Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[1] = GFL_G3D_LIGHT_Create( &light1Setup, heapID );
 
 	//カメラライト2作成
-	tetsuWork->g3Dcamera[2] = GFL_G3D_CameraDefaultCreate( &camera2Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset[2] = GFL_G3D_LightCreate( &light2Setup, heapID );
+	tetsuWork->g3Dcamera[2] = GFL_G3D_CAMERA_CreateDefault( &camera2Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dlightset[2] = GFL_G3D_LIGHT_Create( &light2Setup, heapID );
 
 	//カメラライト0反映
-	GFL_G3D_CameraSwitching( tetsuWork->g3Dcamera[0] );
-	GFL_G3D_LightSwitching( tetsuWork->g3Dlightset[0] );
+	GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
+	GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[0] );
 	tetsuWork->nowCameraNum = 0;
 	tetsuWork->nowLightNum = 0;
+
+	tetsuWork->work[0] = 0;
 }
 	
 //動作
 static void g3d_move( void )
 {
-	GFL_G3D_SceneMain( tetsuWork->g3Dscene );  
+	GFL_G3D_SCENE_Main( tetsuWork->g3Dscene );  
+	tetsuWork->work[0]++;
 }
 
 //描画
 static void g3d_draw( void )
 {
-	GFL_G3D_SceneDraw( tetsuWork->g3Dscene );  
+	GFL_G3D_SCENE_Draw( tetsuWork->g3Dscene );  
 }
 	
 //破棄
 static void g3d_unload( void )
 {
-	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[2] );
-	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[2] );
-	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[1] );
-	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[1] );
-	GFL_G3D_LightDelete( tetsuWork->g3Dlightset[0] );
-	GFL_G3D_CameraDelete( tetsuWork->g3Dcamera[0] );
+	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[2] );
+	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[2] );
+	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[1] );
+	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[1] );
+	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[0] );
+	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[0] );
 
-	GFL_G3D_SceneObjDel( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData) );
-	GFL_G3D_SceneDelete( tetsuWork->g3Dscene );  
+	GFL_G3D_SCENEOBJ_Remove(tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData));
+	GFL_G3D_SCENE_Delete( tetsuWork->g3Dscene );  
 
-	GFL_G3D_UtilsysDelete( tetsuWork->g3Dutil );
+	GFL_G3D_UTIL_Delete( tetsuWork->g3Dutil );
 }
 	
 //------------------------------------------------------------------
@@ -404,125 +415,64 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 static inline void drawSWset( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 {
 	BOOL swBuf = sw;
-	GFL_G3D_SceneObjDrawSWSet( sceneObj, &swBuf );
-}
-
-static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work )
-{
-#if 0
-	MtxFx33 rotate;
-	BALL_WORK* ballWk = (BALL_WORK*)work;
-
-	switch( ballWk->seq ){
-		case 0:
-			{
-				u16 val;
-				GFL_G3D_SceneObjIDGet( sceneObj, &val );
-				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
-			}
-			drawSWset( sceneObj, TRUE );
-			ballWk->seq++;
-			break;
-		case 1:
-			ballWk->rotateTmp.x += g3DanmRotateSpeed;
-			rotateCalc( &ballWk->rotateTmp, &rotate );
-			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
-			break;
-	}
-#endif
+	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
 }
 
 static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-#if 0
 	MtxFx33 rotate;
-	BALL_WORK* ballWk = (BALL_WORK*)work;
+	OBJ_WORK* ballWk = (OBJ_WORK*)work;
 
 	switch( ballWk->seq ){
 		case 0:
 			{
 				u16 val;
-				GFL_G3D_SceneObjIDGet( sceneObj, &val );
+				GFL_G3D_SCENEOBJ_GetObjID( sceneObj, &val );
 				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
 				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
 				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
 			}
-			drawSWset( sceneObj, TRUE );
+			//drawSWset( sceneObj, TRUE );
 			ballWk->seq++;
 			break;
 		case 1:
 			ballWk->rotateTmp.y += g3DanmRotateSpeed;
 			rotateCalc( &ballWk->rotateTmp, &rotate );
-			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
+			GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
 			break;
-	}
-#endif
-}
-
-static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work )
-{
-#if 0
-	MtxFx33 rotate;
-	BALL_WORK* ballWk = (BALL_WORK*)work;
-
-	switch( ballWk->seq ){
-		case 0:
-			{
-				u16 val;
-				GFL_G3D_SceneObjIDGet( sceneObj, &val );
-				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
-			}
-			drawSWset( sceneObj, TRUE );
-			ballWk->seq++;
-			break;
-		case 1:
-			ballWk->rotateTmp.z += g3DanmRotateSpeed;
-			rotateCalc( &ballWk->rotateTmp, &rotate );
-			GFL_G3D_SceneObjStatusRotateSet( sceneObj, &rotate );
-			break;
-	}
-#endif
-}
-
-static void SceneObjTransAddAll( GFL_G3D_SCENE* g3Dscene, VecFx32* trans )
-{
-	GFL_G3D_SCENEOBJ*	g3DsceneObj;
-	VecFx32				tmp;
-	int					i;
-	u16					idx = tetsuWork->g3DsceneObjID;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SceneObjGet( g3Dscene, idx );
-		GFL_G3D_SceneObjStatusTransGet( g3DsceneObj, &tmp );
-		tmp.x += trans->x;
-		tmp.y += trans->y;
-		tmp.z += trans->z;
-		GFL_G3D_SceneObjStatusTransSet( g3DsceneObj, &tmp );
-		idx++;
 	}
 }
 
-static void CameraMove( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans )
+static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	VecFx32	tmpVec;
-	
-	GFL_G3D_CameraPosGet( g3Dcamera, &tmpVec );
-	tmpVec.x += trans->x;
-	tmpVec.y += trans->y;
-	tmpVec.z += trans->z;
-	GFL_G3D_CameraPosSet( g3Dcamera, &tmpVec );
+	MtxFx33			rotate;
+	VecFx32			rotVec;
+	VecFx32			trans;
+	GFL_G3D_OBJ*	g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( sceneObj );
 
-	GFL_G3D_CameraTargetGet( g3Dcamera, &tmpVec );
-	tmpVec.x += trans->x;
-	tmpVec.y += trans->y;
-	tmpVec.z += trans->z;
-	GFL_G3D_CameraTargetSet( g3Dcamera, &tmpVec );
+	trans.x = tetsuWork->contPos.x;
+	trans.y = 0;
+	trans.z = tetsuWork->contPos.z;
+	rotVec.x = 0;
+	rotVec.y = tetsuWork->nowRotate + 0x8000;
+	rotVec.z = 0;
+	rotateCalc( &rotVec, &rotate );
 
-	GFL_G3D_CameraSwitching( g3Dcamera );
+	GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
+	GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
+
+	if( GFL_UI_KeyGetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+		int speed;
+
+		if( tetsuWork->SpeedUpFlag == TRUE ){
+			speed = FX32_ONE * 2; 
+		} else {
+			speed = FX32_ONE; 
+		}
+		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, speed ); 
+	} else {
+		GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, 0 );
+	}
 }
 
 //------------------------------------------------------------------
@@ -548,5 +498,386 @@ static void G3DsysSetup( void )
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief	コントロール初期化
+ */
+//------------------------------------------------------------------
+static void KeyControlInit( void )
+{
+	tetsuWork->work[1] = 0;
+	tetsuWork->mode = 3;
+	tetsuWork->contSeq = 0;
+	tetsuWork->contRotate = 0;
+	tetsuWork->nowRotate = 0;
+	tetsuWork->contPos.x = cameraTarget.x;
+	tetsuWork->contPos.y = cameraTarget.y;
+	tetsuWork->contPos.z = cameraTarget.z;
+	tetsuWork->updateRotateFlag = FALSE;
+	tetsuWork->updateRotate = 0;
+	tetsuWork->updateRotateOffs = 0;
+	tetsuWork->mainCameraRotate = 0;
+	tetsuWork->autoCameraRotate1 = 0;
+	tetsuWork->autoCameraRotate2 = 0;
+}
 
+//------------------------------------------------------------------
+/**
+ * @brief	コントロール終了チェック
+ */
+//------------------------------------------------------------------
+static BOOL KeyControlEndCheck( void )
+{
+	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	カメラ＆ライトの切り替えテスト
+ */
+//------------------------------------------------------------------
+static void KeyControlCameraLightChange( void )
+{
+#if 0
+	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_B ){
+		if( tetsuWork->mode > 1 ){
+			tetsuWork->mode--;
+		} else {
+			tetsuWork->mode = 3;
+		}
+	}
+#endif
+	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
+		if( tetsuWork->mode & 1 ){
+			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
+			tetsuWork->nowCameraNum = 1;
+		}
+		if( tetsuWork->mode & 2 ){
+			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[1] );
+			tetsuWork->nowLightNum = 1;
+		}
+	}
+	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
+		if( tetsuWork->mode & 1 ){
+			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
+			tetsuWork->nowCameraNum = 0;
+		}
+		if( tetsuWork->mode & 2 ){
+			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[0] );
+			tetsuWork->nowLightNum = 0;
+		}
+	}
+	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
+		if( tetsuWork->mode & 1 ){
+			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[2] );
+			tetsuWork->nowCameraNum = 2;
+		}
+		if( tetsuWork->mode & 2 ){
+			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[2] );
+			tetsuWork->nowLightNum = 2;
+		}
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	メインカメラ移動コントロール１
+ */
+//------------------------------------------------------------------
+#define MOVE_SPEED ( 2 )
+#define ROTATE_SPEED ( 0x200 )
+
+static void KeyControlCameraMove1( void )
+{
+	switch( tetsuWork->contSeq ){
+
+	case 0:
+		{
+			int cameraNum = tetsuWork->nowCameraNum;
+			GFL_G3D_CAMERA* g3Dcamera;
+			VecFx32 move = { 0, 0, 0 };
+			VecFx32 cameraPos = { 0, 0, 0 };
+			VecFx32 cameraOffs = { 0, 0, 0 };
+			BOOL	moveFlag = FALSE;
+			int		key = GFL_UI_KeyGetCont();
+
+			if( GFL_UI_KeyGetTrg() & PAD_BUTTON_L ){
+				if( tetsuWork->updateRotateFlag == FALSE ){
+					tetsuWork->updateRotateFlag = TRUE;
+					tetsuWork->updateRotate = tetsuWork->nowRotate;
+					{
+						s16 diff = tetsuWork->nowRotate - tetsuWork->mainCameraRotate;
+						if( diff > 0 ){
+							if( diff >= 0x6000 ){
+								tetsuWork->updateRotateOffs = 0x2000;
+							} else if( diff >= 0x4000 ){
+								tetsuWork->updateRotateOffs = 0x1000;
+							} else {
+								tetsuWork->updateRotateOffs = 0x800;
+							}
+						} else {
+							if( diff <= -0x6000 ){
+								tetsuWork->updateRotateOffs = -0x2000;
+							} else if( diff <= -0x4000 ){
+								tetsuWork->updateRotateOffs = -0x1000;
+							} else {
+								tetsuWork->updateRotateOffs = -0x800;
+							}
+						}
+					}
+				}
+			}
+			if( GFL_UI_KeyGetCont() & PAD_BUTTON_B ){
+				tetsuWork->SpeedUpFlag = TRUE;
+			} else {
+				tetsuWork->SpeedUpFlag = FALSE;
+			}
+
+			if( (key & ( PAD_KEY_UP|PAD_KEY_LEFT )) == ( PAD_KEY_UP|PAD_KEY_LEFT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x2000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_DOWN|PAD_KEY_LEFT )) == ( PAD_KEY_DOWN|PAD_KEY_LEFT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x6000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_DOWN|PAD_KEY_RIGHT )) == ( PAD_KEY_DOWN|PAD_KEY_RIGHT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0xa000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_UP|PAD_KEY_RIGHT )) == ( PAD_KEY_UP|PAD_KEY_RIGHT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0xe000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_UP )) == ( PAD_KEY_UP ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x0000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_LEFT )) == ( PAD_KEY_LEFT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x4000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_DOWN )) == ( PAD_KEY_DOWN ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x8000;
+				moveFlag = TRUE;
+
+			} else if( (key & ( PAD_KEY_RIGHT )) == ( PAD_KEY_RIGHT ) ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0xc000;
+				moveFlag = TRUE;
+			}
+
+			if( moveFlag == TRUE ){
+				int speed;
+
+				if( tetsuWork->SpeedUpFlag == TRUE ){
+					speed = -MOVE_SPEED*2;
+				} else {
+					speed = -MOVE_SPEED;
+				}
+				move.x = speed * FX_SinIdx( tetsuWork->nowRotate );
+				move.z = speed * FX_CosIdx( tetsuWork->nowRotate );
+
+				tetsuWork->contPos.x += move.x;
+				tetsuWork->contPos.z += move.z;
+			}
+			tetsuWork->contPos.y = FX32_ONE*16;
+
+			tetsuWork->autoCameraRotate1 += 0x0200;
+			tetsuWork->autoCameraRotate2 -= 0x0200;
+
+			switch( cameraNum ){
+			case 0:
+			default:
+				if( tetsuWork->updateRotateFlag == TRUE ){
+					if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
+						tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
+						if( (tetsuWork->updateRotateOffs > 0x100 )
+							||( tetsuWork->updateRotateOffs < -0x100 )){
+							tetsuWork->updateRotateOffs /= 2;
+						}
+					}else{
+						tetsuWork->contRotate = tetsuWork->updateRotate;
+						tetsuWork->updateRotateFlag = FALSE;
+					}
+				}
+				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.y = FX32_ONE * 40;
+				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+
+				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+
+				g3Dcamera = tetsuWork->g3Dcamera[0];
+				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
+				GFL_G3D_CAMERA_Switching( g3Dcamera );
+				break;
+			case 1:
+				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+				cameraOffs.y = FX32_ONE * 40;
+				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+	
+				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+	
+				g3Dcamera = tetsuWork->g3Dcamera[1];
+				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
+				GFL_G3D_CAMERA_Switching( g3Dcamera );
+				break;
+			case 2:
+				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate2 );
+				cameraOffs.y = FX32_ONE * 40;
+				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate2 );
+	
+				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+	
+				g3Dcamera = tetsuWork->g3Dcamera[2];
+				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
+				GFL_G3D_CAMERA_Switching( g3Dcamera );
+				break;
+			}
+		}
+		break;
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		セットアップ用３Ｄマップデータ作成
+ */
+//------------------------------------------------------------------
+static const  GFL_G3D_OBJSTATUS defaultStatus = {
+	{ 0, 0, 0 },
+	{ FX32_ONE, FX32_ONE, FX32_ONE },
+	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+};
+#define mapGrid		(FX32_ONE*64)
+#define defaultMapX	(-mapGrid*16+mapGrid/2)
+#define defaultMapZ	(-mapGrid*16+mapGrid/2)
+
+static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID )
+{
+	GFL_G3D_SCENEOBJ_DATA_SETUP* setup;
+	GFL_G3D_SCENEOBJ_DATA*	pdata;
+	GFL_G3D_SCENEOBJ_DATA	data;
+	int count = 0;
+	int		x,z;
+	u16*	mapData = (u16*)map->data;	//めんどいので全角のみに制限
+	int	sizeX = map->sizeX;
+	int	sizeZ = map->sizeZ;
+	u16 mapCode;
+
+	setup = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA_SETUP) );
+	pdata = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA)*sizeX*sizeZ+1 );
+
+	pdata[ count ] = map->floor;
+	count++;
+
+	for( z=0; z<sizeZ; z++ ){
+		for( x=0; x<sizeX; x++ ){
+			mapCode = ((mapData[z*sizeX+x] & 0x00ff )<<8) + ((mapData[z*sizeX+x] & 0xff00 )>>8);
+			switch( mapCode ){
+			case '　':
+				break;
+			case '■':	//壁
+				data.objID = G3DOBJ_MAP_WALL; 
+				data.movePriority = 0;
+				data.drawPriority = 2;
+				data.drawSW = TRUE;
+				data.status = defaultStatus;
+				data.status.trans.x = defaultMapX + (mapGrid * x);
+				data.status.trans.z = defaultMapZ + (mapGrid * z);
+				data.func = NULL;
+				pdata[ count ] = data;
+				count++;
+				break;
+			case '◎':	//プレーヤー
+				data.objID = G3DOBJ_HARUKA; 
+				data.movePriority = 0;
+				data.drawPriority = 2;
+				data.drawSW = TRUE;
+				data.status = defaultStatus;
+				data.status.trans.x = defaultMapX + (mapGrid * x);
+				data.status.trans.z = defaultMapZ + (mapGrid * z);
+				data.func = NULL;
+				pdata[ count ] = data;
+				count++;
+				break;
+			case '○':	//配置人物１
+				break;
+			case '●':	//配置人物２
+				break;
+			}
+		}
+	}
+	setup->data = pdata;
+	setup->count = count;
+
+	return setup;
+}
+
+static void MapDataDelete( GFL_G3D_SCENEOBJ_DATA_SETUP* setup )
+{
+	GFL_HEAP_FreeMemory( (void*)setup->data );
+	GFL_HEAP_FreeMemory( setup );
+}
+
+
+static const char mapData1[] = {
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
+"　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"
+"　■　　○　　　　　　　　　　　　　　　　○　　　　　　　　■　"
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"
+"　■　■　　　　　　　　　　　　○　　　　　　　　　　　■　■　"
+"　■　■　■■■■■■■■■■■■■■■■■■■■■■　■　■　"
+"　■　■　■　　　　○　　　　　　　　　　　　　　　■　■　■　"
+"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"
+#if 0
+"　■　■　■　■　　　　　　　　　　　　○　　　■　■　■　■　"
+"　■　■　■　■　■■■■■■■■■■■■■■　■○■　■　■　"
+"　■　■　■　■　■　　　　　　　○　　　　■　■　■　■　■　"
+"　■　■　■　■　■○■■■■■■■■■■　■　■　■　■　■　"
+"　■　■　■　■　■　■　　　　　　　　■　■　■　■○■　■　"
+"　■　■　■　■　■　■　■■■■■■　■　■　■　■　■　■　"
+"　■　■　■　■　■　■　■　　　　■○■　■　■　■　■　■　"
+"　■　■○■　■　■　■　■　●　　■　■　■　■　■　■○■　"
+"　■　■　■　■　■　■○■　　　　■　■　■　■　■　■　■　"
+"　■　■　■　■　■　■　■　　　　■　■　■　■　■　■　■　"
+"　■○■　■　■　■　■　■　■■■■　■○■　■　■　■　■　"
+"　■　■　■　■　■　　　　　　　　　　■　■　■　■　■　■　"
+"　■　■　■　■　■　■■■■■■■■■■　■　■　■　■　■　"
+"　■　■　■○■　■　　　　　○　　　　　　■　■　■　■　■　"
+"　■　■　■　■　■　■■■■■■■■■■■■　■　■　■　■　"
+"　■○■　■　　　　　○　　　　　　　　　○　　■　■　■　■　"
+"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"
+"　■　■　■　　　　　　　　　　○　　　　　　　　　■　■　■　"
+"　■　■　■　■■■■■■■■■■■■■■■■■■■■　■○■　"
+"　■　　　　　　　　　○　　　　　　　　　　○　　　　　■　■　"
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"
+"　■◎　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
+#endif
+};
+
+static const MAPDATA mapDataTbl = {
+	mapData1, 32, 32,
+	{	G3DOBJ_MAP_FLOOR, 0, 2, TRUE, 
+		{	{ 0, 0, 0 },
+			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+};
 
