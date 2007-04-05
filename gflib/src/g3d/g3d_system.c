@@ -399,9 +399,9 @@ struct _GFL_G3D_RES {
 };
 
 static BOOL
-	GFL_G3D_VramGetTexDataVramkey( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 );
+	GFL_G3D_GetTextureDataKey( NNSG3dResTex* res, NNSGfdTexKey* tex, NNSGfdTexKey* tex4x4 );
 static BOOL
-	GFL_G3D_VramGetTexPlttVramkey( NNSG3dResTex* res, NNSGfdPlttKey* pltt );
+	GFL_G3D_GetTexturePlttKey( NNSG3dResTex* res, NNSGfdPlttKey* pltt );
 
 static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
 {
@@ -634,11 +634,11 @@ BOOL
 
 	if( texture ){
 		//ƒŠƒ\[ƒX‚ğ“]‘—‚·‚é‚½‚ß‚Ì‚u‚q‚`‚lƒL[‚Ìæ“¾
-		if( GFL_G3D_VramGetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
+		if( GFL_G3D_GetTextureDataKey( texture, &texKey, &tex4x4Key ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
-		if( GFL_G3D_VramGetTexPlttVramkey( texture, &plttKey ) == FALSE ){
+		if( GFL_G3D_GetTexturePlttKey( texture, &plttKey ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTex)\n");
 			return FALSE;
 		}
@@ -688,7 +688,7 @@ BOOL
 
 	if( texture ){
 		//ƒŠƒ\[ƒX‚ğ“]‘—‚·‚é‚½‚ß‚Ì‚u‚q‚`‚lƒL[‚Ìæ“¾
-		if( GFL_G3D_VramGetTexDataVramkey( texture, &texKey, &tex4x4Key ) == FALSE ){
+		if( GFL_G3D_GetTextureDataKey( texture, &texKey, &tex4x4Key ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadTexDataOnly)\n");
 			return FALSE;
 		}
@@ -736,7 +736,7 @@ BOOL
 
 	if( texture ){
 		//ƒŠƒ\[ƒX‚ğ“]‘—‚·‚é‚½‚ß‚Ì‚u‚q‚`‚lƒL[‚Ìæ“¾
-		if( GFL_G3D_VramGetTexPlttVramkey( texture, &plttKey ) == FALSE ){
+		if( GFL_G3D_GetTexturePlttKey( texture, &plttKey ) == FALSE ){
 			OS_Printf("Vramkey cannot alloc (GFL_G3D_VramLoadPlttOnly)\n");
 			return FALSE;
 		}
