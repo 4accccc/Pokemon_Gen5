@@ -106,6 +106,8 @@ typedef struct {
 	GFL_G3D_OBJSTATUS		g3DobjStatus[16];
 	GFL_G3D_SCENE*			g3Dscene;
 	u32						g3DsceneObjID;
+	u32						g3DsceneMapObjID;
+	u32						g3DsceneMapObjCount;
 	GFL_G3D_CAMERA*			g3Dcamera[4];
 	GFL_G3D_LIGHTSET*		g3Dlightset[4];
 
@@ -174,9 +176,7 @@ static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl)
 static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl) };
 static const GFL_G3D_LIGHTSET_SETUP light2Setup = { light2Tbl, NELEMS(light2Tbl) };
 
-static void ball_rotateX( GFL_G3D_SCENEOBJ* sceneObj, void* work );
-static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
-static void ball_rotateZ( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 #include "debug_watanabe.dat"
@@ -332,17 +332,15 @@ static void g3d_load( HEAPID heapID )
 	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
 												sizeof(OBJ_WORK), heapID );
-#if 0
 	tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
-#else
 	{
 		GFL_G3D_SCENEOBJ_DATA_SETUP* setup = MapDataCreate( &mapDataTbl, heapID );
-		tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
+		tetsuWork->g3DsceneMapObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, setup->data, setup->count );
+		tetsuWork->g3DsceneMapObjCount = setup->count;
 		MapDataDelete( setup );
 	}
-#endif
 
 	//カメラライト0作成
 	tetsuWork->g3Dcamera[0] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
@@ -388,6 +386,8 @@ static void g3d_unload( void )
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[0] );
 	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[0] );
 
+	GFL_G3D_SCENEOBJ_Remove
+		(tetsuWork->g3Dscene, tetsuWork->g3DsceneMapObjID, tetsuWork->g3DsceneMapObjCount ); 
 	GFL_G3D_SCENEOBJ_Remove(tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData));
 	GFL_G3D_SCENE_Delete( tetsuWork->g3Dscene );  
 
@@ -418,7 +418,7 @@ static inline void drawSWset( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
 }
 
-static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
 	OBJ_WORK* ballWk = (OBJ_WORK*)work;
@@ -432,7 +432,6 @@ static void ball_rotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
 				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
 			}
-			//drawSWset( sceneObj, TRUE );
 			ballWk->seq++;
 			break;
 		case 1:
@@ -473,6 +472,34 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	} else {
 		GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, 0 );
 	}
+}
+
+#define VIEW_LENGTH	(64*7)
+static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	VecFx32 cameraPos, target, minePos, cameraVec;
+	fx32	diffX,diffZ,diffLength;
+			
+	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
+	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &target );
+	cameraVec.x = target.x - cameraPos.x;
+	cameraVec.y = target.y - cameraPos.y;
+	cameraVec.z = target.z - cameraPos.z;
+
+	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
+	diffX = (cameraPos.x - minePos.x)/FX32_ONE;
+	diffZ = (cameraPos.z - minePos.z)/FX32_ONE;
+	diffLength = diffX * diffX + diffZ * diffZ;
+	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
+		drawSWset( sceneObj, FALSE );
+		//OS_Printf
+		//	("diffX = %x, diffZ = %x, diffLength = %x, appear FALSE\n",diffX,diffZ,diffLength); 
+	} else {
+		drawSWset( sceneObj, TRUE );
+		//OS_Printf
+		//	("diffX = %x, diffZ = %x, diffLength = %x, appear TRUE\n",diffX,diffZ,diffLength); 
+	}
+				
 }
 
 //------------------------------------------------------------------
@@ -798,7 +825,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.status = defaultStatus;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
-				data.func = NULL;
+				data.func = moveWall;
 				pdata[ count ] = data;
 				count++;
 				break;
@@ -843,7 +870,6 @@ static const char mapData1[] = {
 "　■　■　■■■■■■■■■■■■■■■■■■■■■■　■　■　"
 "　■　■　■　　　　○　　　　　　　　　　　　　　　■　■　■　"
 "　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"
-#if 0
 "　■　■　■　■　　　　　　　　　　　　○　　　■　■　■　■　"
 "　■　■　■　■　■■■■■■■■■■■■■■　■○■　■　■　"
 "　■　■　■　■　■　　　　　　　○　　　　■　■　■　■　■　"
@@ -868,7 +894,6 @@ static const char mapData1[] = {
 "　■◎　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"
 "　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"
 "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
-#endif
 };
 
 static const MAPDATA mapDataTbl = {
