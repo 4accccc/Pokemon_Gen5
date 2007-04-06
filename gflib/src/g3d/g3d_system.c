@@ -1529,8 +1529,8 @@ BOOL
 static BOOL GFL_G3D_DRAW_CheckCulling( GFL_G3D_OBJ* g3Dobj );
 static s32	GFL_G3D_DRAW_TestBoundingBox( const GXBoxTestParam* boundingBox );
 static MtxFx43 GFL_G3D_DRAW_GetTRSMatrix( const GFL_G3D_OBJSTATUS* status );
-u32 DebugCullingCount = 0;
-u32 DebugPrintCount = 0;
+//u32 DebugCullingCount = 0;
+//u32 DebugPrintCount = 0;
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
@@ -1544,8 +1544,8 @@ void
 		( void )
 {
 	G3X_Reset();
-	DebugPrintCount = 0;
-	DebugCullingCount = 0;
+	//DebugPrintCount = 0;
+	//DebugCullingCount = 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1561,7 +1561,7 @@ void
 		( void )
 {
 	G3_SwapBuffers( g3Dman->swapBufMode.aw, g3Dman->swapBufMode.zw );
-	OS_Printf(" CullingCount is %d PrintCount is %d\n", DebugCullingCount, DebugPrintCount );
+	//OS_Printf(" CullingCount is %d PrintCount is %d\n", DebugCullingCount, DebugPrintCount );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1633,7 +1633,7 @@ void
 	g3Dman->drawFlushFunc();
 	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
 		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-		DebugPrintCount++;
+		//DebugPrintCount++;
 	}
 	NNS_G3dGeFlushBuffer();
 }
@@ -1710,7 +1710,7 @@ static BOOL
 	//チェック
 	if( !GFL_G3D_DRAW_TestBoundingBox( &boundingBox ) ){
 		result = FALSE;
-		DebugCullingCount++;
+		//DebugCullingCount++;
 	}
 	NNS_G3dGePopMtx(1);
 

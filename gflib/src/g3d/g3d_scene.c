@@ -123,7 +123,7 @@ void
 		g3DsceneObj = GFL_TCBL_GetWork
 						( g3Dscene->g3DsceneObjTCBLtbl[ g3Dscene->g3DsceneObjPriTbl[i] ] );
 		g3Dobj = g3DsceneObj->g3Dobj;
-		GFL_G3D_DRAW_DrawObject( g3Dobj, &g3DsceneObj->sceneObjData.status );
+		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
 	//描画終了（バッファスワップ）
