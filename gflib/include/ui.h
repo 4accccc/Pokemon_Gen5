@@ -10,13 +10,6 @@
 #ifndef __UI_H__
 #define	__UI_H__
 
-#undef GLOBAL
-#ifdef __UI_SYS_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
-
 // デバッグ用決まり文句----------------------
 #define GFL_UI_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
@@ -156,7 +149,7 @@ typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ば
  * @return  UISYS  workハンドル
  */
 //==============================================================================
-GLOBAL void GFL_UI_boot(const HEAPID heapID);
+extern void GFL_UI_Boot(const HEAPID heapID);
 
 //==============================================================================
 /**
@@ -164,7 +157,7 @@ GLOBAL void GFL_UI_boot(const HEAPID heapID);
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_sysMain(void);
+extern void GFL_UI_Main(void);
 
 //==============================================================================
 /**
@@ -173,7 +166,7 @@ GLOBAL void GFL_UI_sysMain(void);
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_sysExit(void);
+extern void GFL_UI_Exit(void);
 
 //------------------------------------------------------------------
 /**
@@ -182,7 +175,7 @@ GLOBAL void GFL_UI_sysExit(void);
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SleepDisable(const u8 sleepTypeBit);
+extern void GFL_UI_SleepDisable(const u8 sleepTypeBit);
 
 //------------------------------------------------------------------
 /**
@@ -191,7 +184,7 @@ GLOBAL void GFL_UI_SleepDisable(const u8 sleepTypeBit);
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SleepEnable(const u8 sleepTypeBit);
+extern void GFL_UI_SleepEnable(const u8 sleepTypeBit);
 
 //------------------------------------------------------------------
 /**
@@ -201,7 +194,7 @@ GLOBAL void GFL_UI_SleepEnable(const u8 sleepTypeBit);
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
+extern void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
 //------------------------------------------------------------------
 /**
@@ -210,7 +203,7 @@ GLOBAL void GFL_UI_SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pW
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SoftResetDisable(const u8 softResetBit);
+extern void GFL_UI_SoftResetDisable(const u8 softResetBit);
 
 //------------------------------------------------------------------
 /**
@@ -219,7 +212,7 @@ GLOBAL void GFL_UI_SoftResetDisable(const u8 softResetBit);
  * @return  none
  */
 //------------------------------------------------------------------
-GLOBAL void GFL_UI_SoftResetEnable( const u8 softResetBit);
+extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
 
 
 //----------------------------------------------------------------------------
@@ -234,7 +227,7 @@ GLOBAL void GFL_UI_SoftResetEnable( const u8 softResetBit);
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_TP_sysInit(const HEAPID heapID);
+extern void GFL_UI_TP_Init(const HEAPID heapID);
 
 //==============================================================================
 /**
@@ -244,7 +237,7 @@ GLOBAL void GFL_UI_TP_sysInit(const HEAPID heapID);
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_TP_sysMain(void);
+extern void GFL_UI_TP_Main(void);
 
 //==============================================================================
 /**
@@ -254,7 +247,7 @@ GLOBAL void GFL_UI_TP_sysMain(void);
  */
 //==============================================================================
 
-GLOBAL void GFL_UI_TP_sysExit(void);
+extern void GFL_UI_TP_Exit(void);
 
 
 //==============================================================================
@@ -265,7 +258,7 @@ GLOBAL void GFL_UI_TP_sysExit(void);
  * @retval  FALSE  していない
  */
 //==============================================================================
-GLOBAL int GFL_UI_TPGetAutoSamplingFlg(void);
+extern int GFL_UI_TP_GetAutoSamplingFlg(void);
 
 //==============================================================================
 /**
@@ -274,7 +267,7 @@ GLOBAL int GFL_UI_TPGetAutoSamplingFlg(void);
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_TPSetAutoSamplingFlg( const BOOL bAuto);
+extern void GFL_UI_TP_SetAutoSamplingFlg( const BOOL bAuto);
 
 //------------------------------------------------------------------
 /**
@@ -283,7 +276,7 @@ GLOBAL void GFL_UI_TPSetAutoSamplingFlg( const BOOL bAuto);
  * @return  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-GLOBAL int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl );
+extern int GFL_UI_TP_HitCont( const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
@@ -292,7 +285,7 @@ GLOBAL int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl );
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-GLOBAL int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl );
+extern int GFL_UI_TP_HitTrg( const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
@@ -301,7 +294,7 @@ GLOBAL int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl );
  * @retval  BOOL		TRUEで触れている
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetCont( void );
+extern BOOL GFL_UI_TP_GetCont( void );
 
 //------------------------------------------------------------------
 /**
@@ -310,7 +303,7 @@ GLOBAL BOOL GFL_UI_TouchPanelGetCont( void );
  * @retval  BOOL		TRUEで触れた
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetTrg( void );
+extern BOOL GFL_UI_TP_GetTrg( void );
 
 //----------------------------------------------------------------------------
 /**
@@ -321,7 +314,7 @@ GLOBAL BOOL GFL_UI_TouchPanelGetTrg( void );
  *	@retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //-----------------------------------------------------------------------------
-GLOBAL int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
+extern int GFL_UI_TP_HitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
 
 //------------------------------------------------------------------
 /**
@@ -332,7 +325,7 @@ GLOBAL int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y );
+extern BOOL GFL_UI_TP_GetPointCont( u32* x, u32* y );
 
 //------------------------------------------------------------------
 /**
@@ -343,7 +336,7 @@ GLOBAL BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y );
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-GLOBAL BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y );
+extern BOOL GFL_UI_TP_GetPointTrg( u32* x, u32* y );
 
 //----------------------------------------------------------------------------
 //プロトタイプ宣言 key.c
@@ -357,7 +350,7 @@ GLOBAL BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y );
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait );
+extern void GFL_UI_KEY_SetRepeatSpeed(const int speed, const int wait );
 
 //==============================================================================
 /**
@@ -366,7 +359,7 @@ GLOBAL void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait );
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl );
+extern void GFL_UI_KEY_SetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl );
 
 //==============================================================================
 /**
@@ -375,7 +368,7 @@ GLOBAL void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl );
  * @return  キートリガ
  */
 //==============================================================================
-GLOBAL int GFL_UI_KeyGetTrg( void );
+extern int GFL_UI_KEY_GetTrg( void );
 
 //==============================================================================
 /**
@@ -384,7 +377,7 @@ GLOBAL int GFL_UI_KeyGetTrg( void );
  * @return  キーコント
  */
 //==============================================================================
-GLOBAL int GFL_UI_KeyGetCont(void);
+extern int GFL_UI_KEY_GetCont(void);
 
 //==============================================================================
 /**
@@ -393,7 +386,7 @@ GLOBAL int GFL_UI_KeyGetCont(void);
  * @return  キーコント
  */
 //==============================================================================
-GLOBAL int GFL_UI_KeyGetRepeat( void );
+extern int GFL_UI_KEY_GetRepeat( void );
 
 //==============================================================================
 /**
@@ -402,7 +395,7 @@ GLOBAL int GFL_UI_KeyGetRepeat( void );
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-GLOBAL BOOL GFL_UI_KeyCheckTrg( int keyBit );
+extern BOOL GFL_UI_KEY_CheckTrg( int keyBit );
 
 //==============================================================================
 /**
@@ -411,7 +404,7 @@ GLOBAL BOOL GFL_UI_KeyCheckTrg( int keyBit );
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-GLOBAL BOOL GFL_UI_KeyCheckCont( int keyBit );
+extern BOOL GFL_UI_KEY_CheckCont( int keyBit );
 
 //==============================================================================
 /**
@@ -420,7 +413,7 @@ GLOBAL BOOL GFL_UI_KeyCheckCont( int keyBit );
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-GLOBAL BOOL GFL_UI_KeyCheckRepeat( int keyBit );
+extern BOOL GFL_UI_KEY_CheckRepeat( int keyBit );
 
 //==============================================================================
 /**
@@ -430,7 +423,7 @@ GLOBAL BOOL GFL_UI_KeyCheckRepeat( int keyBit );
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeyGetRepeatSpeed(int* speed, int* wait );
+extern void GFL_UI_KEY_GetRepeatSpeed(int* speed, int* wait );
 
 //==============================================================================
 /**
@@ -439,7 +432,7 @@ GLOBAL void GFL_UI_KeyGetRepeatSpeed(int* speed, int* wait );
  * @return  none
  */
 //==============================================================================
-GLOBAL void GFL_UI_KeySetControlMode(const int mode);
+extern void GFL_UI_KEY_SetControlMode(const int mode);
 
 //==============================================================================
 /**
@@ -448,7 +441,7 @@ GLOBAL void GFL_UI_KeySetControlMode(const int mode);
  * @return  コントロールモード
  */
 //==============================================================================
-GLOBAL int GFL_UI_KeyGetControlMode( void );
+extern int GFL_UI_KEY_GetControlMode( void );
 
 
 
@@ -518,7 +511,7 @@ typedef struct
 					type：TP_SAMP_NOT_START	サンプリング開始されていません
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num );
+extern u32 GFL_UI_TP_AutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num );
 
 //----------------------------------------------------------------------------
 /**
@@ -527,7 +520,7 @@ GLOBAL u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num
  * @return	none
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_UI_TPAutoSamplingReStart( void );
+extern void GFL_UI_TP_AutoSamplingReStart( void );
 
 //----------------------------------------------------------------------------
 /**
@@ -536,7 +529,7 @@ GLOBAL void GFL_UI_TPAutoSamplingReStart( void );
  * @return  none
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_UI_TPAutoSamplingStop( void );
+extern void GFL_UI_TP_AutoSamplingStop( void );
 
 //----------------------------------------------------------------------------
 /**
@@ -549,7 +542,7 @@ GLOBAL void GFL_UI_TPAutoSamplingStop( void );
  * @retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStart( TPData* p_buff, u32 size, u32 sync);
+extern u32 GFL_UI_TP_AutoStart( TPData* p_buff, u32 size, u32 sync);
 
 //----------------------------------------------------------------------------
 /**
@@ -560,7 +553,7 @@ GLOBAL u32 GFL_UI_TPAutoStart( TPData* p_buff, u32 size, u32 sync);
  * @retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStartNoBuff(u32 sync);
+extern u32 GFL_UI_TP_AutoStartNoBuff(u32 sync);
 
 //----------------------------------------------------------------------------
 /**
@@ -571,10 +564,9 @@ GLOBAL u32 GFL_UI_TPAutoStartNoBuff(u32 sync);
  *@retval	TP_ERR：転送以外の失敗
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_UI_TPAutoStop( void );
+extern u32 GFL_UI_TP_AutoStop( void );
 
 
-#undef GLOBAL
 
 
 #endif //__UI_H__

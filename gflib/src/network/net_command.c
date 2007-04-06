@@ -38,8 +38,8 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {GFL_NET_StateRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_StateRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
     {GFL_NET_StateRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_ToolRecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_ToolRecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_TOOL_RecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_TOOL_RecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
 #if GFL_NET_WIFI
     {GFL_NET_StateRecvWifiExit,            GFL_NET_COMMAND_SIZE( 1 ), NULL},
 #endif
@@ -66,7 +66,7 @@ static _COMM_COMMAND_WORK* _pCommandWork = NULL;
  */
 //--------------------------------------------------------------
 
-void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork)
+void GFL_NET_COMMAND_Init(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork)
 {
     int i;
     
@@ -94,7 +94,7 @@ void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int list
  */
 //--------------------------------------------------------------
 
-void GFL_NET_CommandFinalize( void )
+void GFL_NET_COMMAND_Exit( void )
 {
     if(_pCommandWork){
         GFL_HEAP_FreeMemory(_pCommandWork);
@@ -113,7 +113,7 @@ void GFL_NET_CommandFinalize( void )
  */
 //--------------------------------------------------------------
 
-void GFI_NET_CommandCallBack(int netID, int recvID, int command, int size, void* pData)
+void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void* pData)
 {
     int i;
     PTRCommRecvFunc func;
@@ -171,7 +171,7 @@ void GFI_NET_CommandCallBack(int netID, int recvID, int command, int size, void*
  */
 //--------------------------------------------------------------
 
-int GFI_NET_CommandGetPacketSize(int command)
+int GFI_NET_COMMAND_GetPacketSize(int command)
 {
     int size = 0;
     PTRCommRecvSizeFunc func=NULL;
@@ -210,7 +210,7 @@ int GFI_NET_CommandGetPacketSize(int command)
  */
 //--------------------------------------------------------------
 
-BOOL GFI_NET_CommandCreateBuffCheck(int command)
+BOOL GFI_NET_COMMAND_CreateBuffCheck(int command)
 {
     if( command < GFL_NET_CMD_COMMAND_MAX ){
         return ( _CommPacketTbl[command].getAddrFunc != NULL);
@@ -228,7 +228,7 @@ BOOL GFI_NET_CommandCreateBuffCheck(int command)
  */
 //--------------------------------------------------------------
 
-void* GFI_NET_CommandCreateBuffStart(int command,int netID, int size)
+void* GFI_NET_COMMAND_CreateBuffStart(int command,int netID, int size)
 {
     PTRCommRecvBuffAddr func;
 

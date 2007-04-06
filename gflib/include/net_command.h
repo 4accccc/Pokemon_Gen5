@@ -55,7 +55,7 @@ enum CommCommand_e {
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
+extern void GFL_NET_COMMAND_Init(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
 
 //--------------------------------------------------------------
 /**
@@ -65,7 +65,7 @@ extern void GFL_NET_CommandInitialize(const NetRecvFuncTable* pCommPacketLocal,i
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFL_NET_CommandFinalize( void );
+extern void GFL_NET_COMMAND_Exit( void );
 
 
 // ここから下はライブラリ専用 GFI関数
@@ -76,7 +76,7 @@ extern void GFL_NET_CommandFinalize( void );
  * @retval  データのサイズ   可変なら COMM_VARIABLE_SIZEを返します
  */
 //--------------------------------------------------------------
-extern int GFI_NET_CommandGetPacketSize(int command);
+extern int GFI_NET_COMMAND_GetPacketSize(int command);
 
 //--------------------------------------------------------------
 /**
@@ -89,7 +89,7 @@ extern int GFI_NET_CommandGetPacketSize(int command);
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFI_NET_CommandCallBack(int netID, int sendID, int command, int size, void* pData);
+extern void GFI_NET_COMMAND_CallBack(int netID, int sendID, int command, int size, void* pData);
 
 //--------------------------------------------------------------
 /**
@@ -98,7 +98,7 @@ extern void GFI_NET_CommandCallBack(int netID, int sendID, int command, int size
  * @retval  持ってるならTRUE
  */
 //--------------------------------------------------------------
-extern BOOL GFI_NET_CommandCreateBuffCheck(int command);
+extern BOOL GFI_NET_COMMAND_CreateBuffCheck(int command);
 
 
 //--------------------------------------------------------------
@@ -111,7 +111,7 @@ extern BOOL GFI_NET_CommandCreateBuffCheck(int command);
  */
 //--------------------------------------------------------------
 
-extern void* GFI_NET_CommandCreateBuffStart(int command, int netID, int size);
+extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
 
 #endif// __NET_COMMAND_H__
 

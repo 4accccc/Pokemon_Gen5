@@ -66,7 +66,7 @@ static u32 mag01[2]={0x0UL, MATRIX_A};	///< 式の結果１ビット目を添え字番号として
  *  @return  none
  * 
  ----------------------------------------------------------------------------*/
-void GFL_STD_MTRandInit(u32 s)
+void GFL_STD_MtRandInit(u32 s)
 {
 //    mt[0]= s & 0xffffffff;			// シード値を要素０に代入
     mt[0]= s ;			// シード値を要素０に代入
@@ -85,7 +85,7 @@ void GFL_STD_MTRandInit(u32 s)
  *  @brief   メルセンヌツイスターで符号なし３２ビット長の乱数を取得
  *	@return  生成された乱数
 ------------------------------------------------------------------------------*/
-u32 __GFL_STD_MTRand(void)
+u32 __GFL_STD_MtRand(void)
 {
     u32 y;
     
@@ -99,7 +99,7 @@ u32 __GFL_STD_MTRand(void)
 		// mtiがN+1のときは初期化
         if (mti == N+1)   
 		{
-			GFL_STD_MTRandInit(5489UL);		// 適当な値で初期化
+			GFL_STD_MtRandInit(5489UL);		// 適当な値で初期化
 		}
 
 		//

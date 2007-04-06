@@ -125,7 +125,7 @@ static void _setSendData(SEND_BUFF_DATA* pSendBuff ,u8 byte)
 
 static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
 {
-    int cs = GFI_NET_CommandGetPacketSize(pQueue->command);
+    int cs = GFI_NET_COMMAND_GetPacketSize(pQueue->command);
 
     if( cs == GFL_NET_COMMAND_SIZE_VARIABLE ){
         if(pSendBuff->size < _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS){
@@ -170,7 +170,7 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
 {
     int i;
     int size;
-    int cs = GFI_NET_CommandGetPacketSize(pQueue->command);
+    int cs = GFI_NET_COMMAND_GetPacketSize(pQueue->command);
     if( cs == GFL_NET_COMMAND_SIZE_VARIABLE){
         size = _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS;
     }
@@ -250,7 +250,7 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, 
     }
     
     GF_ASSERT(size < 65534 && "65534ˆÈã‚Í•ªŠ„");
-//    cSize = GFL_NET_CommandGetPacketSize(command);
+//    cSize = GFL_NET_COMMAND_GetPacketSize(command);
 
   //  if(GFL_NET_COMMAND_SIZE_VARIABLE == cSize){
 //        cSize = size;

@@ -92,7 +92,7 @@ static void _deleteHandle(GFL_NETHANDLE* pNetHandle)
     if(pNetHandle->pParent){
         GFL_HEAP_FreeMemory(pNetHandle->pParent);
     }
-    GFL_NET_Tool_sysEnd(pNetHandle->pTool);
+    GFL_NET_TOOL_End(pNetHandle->pTool);
     GFL_HEAP_FreeMemory(pNetHandle);
 }
 
@@ -185,7 +185,7 @@ BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
  * @return      送信に成功したらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle)
+BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle)
 {
     u8 id = GFL_NET_SystemGetCurrentID();
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
@@ -218,7 +218,7 @@ NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
  * @return   none
  */
 //==============================================================================
-void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc)
+void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc)
 {
 #if GFL_NET_WIFI
     //WIFIのIPL初期設定
@@ -233,7 +233,7 @@ void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc)
  * @return none
  */
 //==============================================================================
-void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit)
+void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
 {
     // 通信ヒープ作成
     GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->netHeapID, _HEAPSIZE_NET );
@@ -255,7 +255,7 @@ void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit)
             pNet->pNetHandleInit = pNetHandle;
         }
 
-        GFL_NET_CommandInitialize( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
+        GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
     WirelessIconEasy(pNetInit->bWiFi, pNetInit->netHeapID);
 }
@@ -284,7 +284,7 @@ BOOL GFL_NET_IsInit(void)
  * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
  */
 //==============================================================================
-BOOL GFL_NET_sysExit(void)
+BOOL GFL_NET_Exit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     HEAPID netHeapID = pNet->aNetInit.netHeapID;
@@ -358,7 +358,7 @@ u8* GFL_NET_GetBeaconMacAddress(int index)
  */
 //==============================================================================
 
-void GFL_NET_sysMain(void)
+void GFL_NET_Main(void)
 {
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
@@ -371,7 +371,7 @@ void GFL_NET_sysMain(void)
             GFL_NET_StateMainProc(pNet->pNetHandle[i]);  // この内部でhandleを消すことがある
         }
         if(pNet->pNetHandle[i]!=NULL){
-            GFL_NET_ToolTimingSyncSend(pNet->pNetHandle[i]);
+            GFL_NET_TOOL_TimingSyncSend(pNet->pNetHandle[i]);
             GFL_NET_StateTransmissonMain(pNet->pNetHandle[i]);
         }
     }
@@ -391,7 +391,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
     GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
     GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
     _addNetHandle(pNet, pHandle);
-    pHandle->pTool = GFL_NET_Tool_sysInit(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
+    pHandle->pTool = GFL_NET_TOOL_Init(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
     return pHandle;
 }
 
@@ -404,7 +404,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
+void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
     GFL_NET_StateConnectMacAddress(pHandle, TRUE);
@@ -418,7 +418,7 @@ void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ClientToAccess(GFL_NETHANDLE* pHandle,u8* macAddress)
+void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
     GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
     GFL_NET_StateConnectMacAddress(pHandle, FALSE);
@@ -431,7 +431,7 @@ void GFL_NET_ClientToAccess(GFL_NETHANDLE* pHandle,u8* macAddress)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
+void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pHandle)
 {
     GFL_NET_StateBeaconScan(pHandle);
 }
@@ -443,7 +443,7 @@ void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle)
  * @return   none
  */
 //==============================================================================
-void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle)
+void GFL_NET_InitServer(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
@@ -471,7 +471,7 @@ void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
  */
 //==============================================================================
 
-void GFL_NET_WiFiLogin(GFL_NETHANDLE* pHandle)
+void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
@@ -691,7 +691,7 @@ BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet)
 //==============================================================================
 void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 {
-    GFL_NET_ToolTimingSyncStart(pNet,no);
+    GFL_NET_TOOL_TimingSyncStart(pNet,no);
 }
 
 //==============================================================================
@@ -705,7 +705,7 @@ void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 //==============================================================================
 BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
-    return GFL_NET_ToolIsTimingSync(pNet, no);
+    return GFL_NET_TOOL_IsTimingSync(pNet, no);
 }
 
 //==============================================================================
@@ -715,7 +715,7 @@ BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
  * @return    none
  */
 //==============================================================================
-void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet)
+void GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet)
 {
     u8 bDSMode = TRUE;
     GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
@@ -728,7 +728,7 @@ void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet)
  * @return    none
  */
 //==============================================================================
-void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet)
+void GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet)
 {
     u8 bDSMode = FALSE;
     GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);

@@ -70,7 +70,7 @@ static UI_TPSYS* _UI_GetTPSYS(const UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysInit(const HEAPID heapID)
+void GFL_UI_TP_Init(const HEAPID heapID)
 {
 	TPCalibrateParam calibrate;
     UI_TPSYS* pTP = GFL_HEAP_AllocMemory(heapID, sizeof(UI_TPSYS));
@@ -109,7 +109,7 @@ void GFL_UI_TP_sysInit(const HEAPID heapID)
  */
 //==============================================================================
 
-static void GFI_UI_TP_sysMain(UISYS* pUI)
+static void GFI_UI_TP_Main(UISYS* pUI)
 {
 	TPData	tpTemp;
 	TPData	tpDisp;
@@ -171,9 +171,9 @@ static void GFI_UI_TP_sysMain(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysMain(void)
+void GFL_UI_TP_Main(void)
 {
-    GFI_UI_TP_sysMain(_UI_GetUISYS());
+    GFI_UI_TP_Main(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -184,7 +184,7 @@ void GFL_UI_TP_sysMain(void)
  */
 //==============================================================================
 
-static void GFI_UI_TP_sysExit(UISYS* pUI)
+static void GFI_UI_TP_Exit(UISYS* pUI)
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     GFL_HEAP_FreeMemory(pTP);
@@ -198,9 +198,9 @@ static void GFI_UI_TP_sysExit(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_TP_sysExit(void)
+void GFL_UI_TP_Exit(void)
 {
-    GFI_UI_TP_sysExit(_UI_GetUISYS());
+    GFI_UI_TP_Exit(_UI_GetUISYS());
     _pUITP = NULL;
 }
 
@@ -304,9 +304,9 @@ static int GFI_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *t
  * @return  int		ìñÇΩÇËÇ™Ç†ÇÍÇŒÇªÇÃóvëfî‘çÜÅAÇ»ÇØÇÍÇŒ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl )
+int GFL_UI_TP_HitCont( const GFL_UI_TP_HITTBL *tbl )
 {
-    return GFI_UI_TouchPanelHitCont(_UI_GetUISYS(), tbl);
+    return GFI_UI_TP_HitCont(_UI_GetUISYS(), tbl);
 }
 
 //------------------------------------------------------------------
@@ -317,7 +317,7 @@ int GFL_UI_TouchPanelHitCont( const GFL_UI_TP_HITTBL *tbl )
  * @retval  int		ìñÇΩÇËÇ™Ç†ÇÍÇŒÇªÇÃóvëfî‘çÜÅAÇ»ÇØÇÍÇŒ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-static int GFI_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
+static int GFI_UI_TP_HitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -334,9 +334,9 @@ static int GFI_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tb
  * @retval  int		ìñÇΩÇËÇ™Ç†ÇÍÇŒÇªÇÃóvëfî‘çÜÅAÇ»ÇØÇÍÇŒ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl )
+int GFL_UI_TP_HitTrg( const GFL_UI_TP_HITTBL *tbl )
 {
-    return GFI_UI_TouchPanelHitTrg(_UI_GetUISYS(), tbl);
+    return GFI_UI_TP_HitTrg(_UI_GetUISYS(), tbl);
 }
 
 //------------------------------------------------------------------
@@ -346,7 +346,7 @@ int GFL_UI_TouchPanelHitTrg( const GFL_UI_TP_HITTBL *tbl )
  * @retval  BOOL		TRUEÇ≈êGÇÍÇƒÇ¢ÇÈ
  */
 //------------------------------------------------------------------
-static BOOL GFI_UI_TouchPanelGetCont( const UISYS* pUI )
+static BOOL GFI_UI_TP_GetCont( const UISYS* pUI )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     return pTP->tp_cont;
@@ -359,9 +359,9 @@ static BOOL GFI_UI_TouchPanelGetCont( const UISYS* pUI )
  * @retval  BOOL		TRUEÇ≈êGÇÍÇƒÇ¢ÇÈ
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetCont( void )
+BOOL GFL_UI_TP_GetCont( void )
 {
-    return GFI_UI_TouchPanelGetCont(_UI_GetUISYS());
+    return GFI_UI_TP_GetCont(_UI_GetUISYS());
 }
 
 //------------------------------------------------------------------
@@ -371,7 +371,7 @@ BOOL GFL_UI_TouchPanelGetCont( void )
  * @retval  BOOL		TRUEÇ≈êGÇÍÇΩ
  */
 //------------------------------------------------------------------
-static BOOL GFI_UI_TouchPanelGetTrg( const UISYS* pUI )
+static BOOL GFI_UI_TP_GetTrg( const UISYS* pUI )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	return pTP->tp_trg;
@@ -384,9 +384,9 @@ static BOOL GFI_UI_TouchPanelGetTrg( const UISYS* pUI )
  * @retval  BOOL		TRUEÇ≈êGÇÍÇΩ
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetTrg( void )
+BOOL GFL_UI_TP_GetTrg( void )
 {
-    return GFI_UI_TouchPanelGetTrg(_UI_GetUISYS());
+    return GFI_UI_TP_GetTrg(_UI_GetUISYS());
 }
 
 //------------------------------------------------------------------
@@ -399,7 +399,7 @@ BOOL GFL_UI_TouchPanelGetTrg( void )
  * @retval  FALSE êGÇÍÇƒÇ¢Ç»Ç¢ÅBà¯êîÇ…ÇÕâΩÇ‡ÇµÇ»Ç¢ÅB
  */
 //------------------------------------------------------------------
-static BOOL GFI_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
+static BOOL GFI_UI_TP_GetPointCont( const UISYS* pUI, u32* x, u32* y )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -421,9 +421,9 @@ static BOOL GFI_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y )
  * @retval  FALSE êGÇÍÇƒÇ¢Ç»Ç¢ÅBà¯êîÇ…ÇÕâΩÇ‡ÇµÇ»Ç¢ÅB
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y )
+BOOL GFL_UI_TP_GetPointCont( u32* x, u32* y )
 {
-    return GFI_UI_TouchPanelGetPointCont( _UI_GetUISYS(), x, y );
+    return GFI_UI_TP_GetPointCont( _UI_GetUISYS(), x, y );
 }
 
 //------------------------------------------------------------------
@@ -436,7 +436,7 @@ BOOL GFL_UI_TouchPanelGetPointCont( u32* x, u32* y )
  * @retval  FALSE êGÇÍÇƒÇ¢Ç»Ç¢ÅBà¯êîÇ…ÇÕâΩÇ‡ÇµÇ»Ç¢ÅB
  */
 //------------------------------------------------------------------
-static BOOL GFI_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y )
+static BOOL GFI_UI_TP_GetPointTrg( const UISYS* pUI, u32* x, u32* y )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 
@@ -458,9 +458,9 @@ static BOOL GFI_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y )
  * @retval  FALSE êGÇÍÇƒÇ¢Ç»Ç¢ÅBà¯êîÇ…ÇÕâΩÇ‡ÇµÇ»Ç¢ÅB
  */
 //------------------------------------------------------------------
-BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y )
+BOOL GFL_UI_TP_GetPointTrg( u32* x, u32* y )
 {
-    return GFI_UI_TouchPanelGetPointTrg( _UI_GetUISYS(), x, y );
+    return GFI_UI_TP_GetPointTrg( _UI_GetUISYS(), x, y );
 }
 
 //----------------------------------------------------------------------------
@@ -472,7 +472,7 @@ BOOL GFL_UI_TouchPanelGetPointTrg( u32* x, u32* y )
  *	@retval  int		ìñÇΩÇËÇ™Ç†ÇÍÇŒÇªÇÃóvëfî‘çÜÅAÇ»ÇØÇÍÇŒ TP_HIT_NONE
  */
 //-----------------------------------------------------------------------------
-int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
+int GFL_UI_TP_HitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 {
     return _tblHitCheck(tbl, x, y);
 }
@@ -485,7 +485,7 @@ int GFL_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
  * @retval  FALSE  ÇµÇƒÇ¢Ç»Ç¢
  */
 //==============================================================================
-static int GFI_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
+static int GFI_UI_TP_GetAutoSamplingFlg(const UISYS* pUI)
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	return pTP->tp_auto_samp;
@@ -499,9 +499,9 @@ static int GFI_UI_TPGetAutoSamplingFlg(const UISYS* pUI)
  * @retval  FALSE  ÇµÇƒÇ¢Ç»Ç¢
  */
 //==============================================================================
-int GFL_UI_TPGetAutoSamplingFlg(void)
+int GFL_UI_TP_GetAutoSamplingFlg(void)
 {
-    return GFI_UI_TPGetAutoSamplingFlg(_UI_GetUISYS());
+    return GFI_UI_TP_GetAutoSamplingFlg(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -512,7 +512,7 @@ int GFL_UI_TPGetAutoSamplingFlg(void)
  * @return  none
  */
 //==============================================================================
-static void GFI_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
+static void GFI_UI_TP_SetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	pTP->tp_auto_samp = bAuto;
@@ -526,9 +526,9 @@ static void GFI_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto)
  * @return  none
  */
 //==============================================================================
-void GFL_UI_TPSetAutoSamplingFlg(const BOOL bAuto)
+void GFL_UI_TP_SetAutoSamplingFlg(const BOOL bAuto)
 {
-    GFI_UI_TPSetAutoSamplingFlg(_UI_GetUISYS(), bAuto);
+    GFI_UI_TP_SetAutoSamplingFlg(_UI_GetUISYS(), bAuto);
 }
 
 //----------------------------------------------------------------------------
@@ -838,7 +838,7 @@ static u32 modeBuff( UI_TPSYS* pTP, u32 type, u32 last_idx, u32 comp_num )
  * @retval  TP_SAMP_NOT_START	ÉTÉìÉvÉäÉìÉOäJénÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ
  */
 //-----------------------------------------------------------------------------
-static u32 GFI_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 comp_num )
+static u32 GFI_UI_TP_AutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, u32 comp_num )
 {
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
 	u32 ret = TP_SAMP_NOT_START;	// ñﬂÇËíl
@@ -892,9 +892,9 @@ static u32 GFI_UI_TPAutoSamplingMain( UISYS* pUI, TP_ONE_DATA* pData, u32 type, 
  * @retval  TP_SAMP_NOT_START	ÉTÉìÉvÉäÉìÉOäJénÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num )
+u32 GFL_UI_TP_AutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num )
 {
-    return GFI_UI_TPAutoSamplingMain( _UI_GetUISYS(), pData, type, comp_num );
+    return GFI_UI_TP_AutoSamplingMain( _UI_GetUISYS(), pData, type, comp_num );
 }
 
 //----------------------------------------------------------------------------
@@ -904,7 +904,7 @@ u32 GFL_UI_TPAutoSamplingMain( TP_ONE_DATA* pData, u32 type, u32 comp_num )
  * @return	none
  */
 //-----------------------------------------------------------------------------
-static void GFI_UI_TPAutoSamplingReStart( UISYS* pUI )
+static void GFI_UI_TP_AutoSamplingReStart( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -935,9 +935,9 @@ static void GFI_UI_TPAutoSamplingReStart( UISYS* pUI )
  * @return	none
  */
 //-----------------------------------------------------------------------------
-void GFL_UI_TPAutoSamplingReStart( void )
+void GFL_UI_TP_AutoSamplingReStart( void )
 {
-    GFI_UI_TPAutoSamplingReStart( _UI_GetUISYS() );
+    GFI_UI_TP_AutoSamplingReStart( _UI_GetUISYS() );
 }
 
 //----------------------------------------------------------------------------
@@ -947,7 +947,7 @@ void GFL_UI_TPAutoSamplingReStart( void )
  * @return  none
  */
 //-----------------------------------------------------------------------------
-static void GFI_UI_TPAutoSamplingStop( UISYS* pUI )
+static void GFI_UI_TP_AutoSamplingStop( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -978,9 +978,9 @@ static void GFI_UI_TPAutoSamplingStop( UISYS* pUI )
  * @return  none
  */
 //-----------------------------------------------------------------------------
-void GFL_UI_TPAutoSamplingStop( void )
+void GFL_UI_TP_AutoSamplingStop( void )
 {
-    GFI_UI_TPAutoSamplingStop( _UI_GetUISYS() );
+    GFI_UI_TP_AutoSamplingStop( _UI_GetUISYS() );
 }
 
 //----------------------------------------------------------------------------
@@ -1051,7 +1051,7 @@ static u32 _autoStart(UI_TPSYS* pTP, u32 sync)
  * @retval	TP_ERR ì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-static u32 GFI_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
+static u32 GFI_UI_TP_AutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
 {
 	u32	result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -1083,9 +1083,9 @@ static u32 GFI_UI_TPAutoStart(UISYS* pUI, TPData* p_buff, u32 size, u32 sync)
  * @retval	TP_ERR ì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStart(TPData* p_buff, u32 size, u32 sync)
+u32 GFL_UI_TP_AutoStart(TPData* p_buff, u32 size, u32 sync)
 {
-    return GFI_UI_TPAutoStart(_UI_GetUISYS(), p_buff, size, sync);
+    return GFI_UI_TP_AutoStart(_UI_GetUISYS(), p_buff, size, sync);
 }
 
 //----------------------------------------------------------------------------
@@ -1098,7 +1098,7 @@ u32 GFL_UI_TPAutoStart(TPData* p_buff, u32 size, u32 sync)
  * @retval	TP_ERR ì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-static u32 GFI_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
+static u32 GFI_UI_TP_AutoStartNoBuff(UISYS* pUI, u32 sync)
 {
 	u32	result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -1126,9 +1126,9 @@ static u32 GFI_UI_TPAutoStartNoBuff(UISYS* pUI, u32 sync)
  * @retval	TP_ERR ì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStartNoBuff(u32 sync)
+u32 GFL_UI_TP_AutoStartNoBuff(u32 sync)
 {
-    return GFI_UI_TPAutoStartNoBuff(_UI_GetUISYS(), sync);
+    return GFI_UI_TP_AutoStartNoBuff(_UI_GetUISYS(), sync);
 }
 
 //----------------------------------------------------------------------------
@@ -1140,7 +1140,7 @@ u32 GFL_UI_TPAutoStartNoBuff(u32 sync)
  * @retval	TP_ERRÅFì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-static u32 GFI_UI_TPAutoStop( UISYS* pUI )
+static u32 GFI_UI_TP_AutoStop( UISYS* pUI )
 {
 	u32 result;
     UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
@@ -1169,8 +1169,8 @@ static u32 GFI_UI_TPAutoStop( UISYS* pUI )
  * @retval	TP_ERRÅFì]ëóà»äOÇÃé∏îs
  */
 //-----------------------------------------------------------------------------
-u32 GFL_UI_TPAutoStop( void )
+u32 GFL_UI_TP_AutoStop( void )
 {
-    return GFI_UI_TPAutoStop( _UI_GetUISYS() );
+    return GFI_UI_TP_AutoStop( _UI_GetUISYS() );
 }
 

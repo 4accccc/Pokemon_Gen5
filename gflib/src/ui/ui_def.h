@@ -45,7 +45,7 @@ extern UI_KEYSYS* _UI_GetKEYSYS(const UISYS* pUI);
  * @return  UI_KEYSYS  キーシステムワーク
  */
 //==============================================================================
-extern UI_KEYSYS* GFL_UI_Key_sysInit(const HEAPID heapID);
+extern UI_KEYSYS* GFL_UI_KEY_Init(const HEAPID heapID);
 
 //==============================================================================
 /**
@@ -54,7 +54,7 @@ extern UI_KEYSYS* GFL_UI_Key_sysInit(const HEAPID heapID);
  * @return  none
  */
 //==============================================================================
-extern void GFL_UI_Key_sysMain(void);
+extern void GFL_UI_KEY_Main(void);
 
 //==============================================================================
 /**
@@ -63,7 +63,7 @@ extern void GFL_UI_Key_sysMain(void);
  * @return  none
  */
 //==============================================================================
-extern void GFL_UI_Key_sysExit(void);
+extern void GFL_UI_KEY_Exit(void);
 
 //
 //==============================================================================
@@ -72,7 +72,7 @@ extern void GFL_UI_Key_sysExit(void);
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_sysMain(UISYS* pUI);
+extern void GFI_UI_Main(UISYS* pUI);
 
 //==============================================================================
 /**
@@ -81,7 +81,7 @@ extern void GFI_UI_sysMain(UISYS* pUI);
  */
 //==============================================================================
 
-extern void GFI_UI_sysExit(UISYS* pUI);
+extern void GFI_UI_Exit(UISYS* pUI);
 
 //------------------------------------------------------------------
 /**
@@ -143,7 +143,7 @@ extern void GFI_UI_SleepReleaseSetFunc(UISYS* pUI, GFL_UI_SLEEPRELEASE_FUNC* pFu
  * @retval  FALSE  していない
  */
 //==============================================================================
-extern int GFI_UI_TPGetAutoSamplingFlg(const UISYS* pUI);
+extern int GFI_UI_TP_GetAutoSamplingFlg(const UISYS* pUI);
 
 //==============================================================================
 /**
@@ -153,7 +153,7 @@ extern int GFI_UI_TPGetAutoSamplingFlg(const UISYS* pUI);
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto);
+extern void GFI_UI_TP_SetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto);
 
 //------------------------------------------------------------------
 /**
@@ -163,7 +163,7 @@ extern void GFI_UI_TPSetAutoSamplingFlg(UISYS* pUI, const BOOL bAuto);
  * @return  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-extern int GFI_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
+extern int GFI_UI_TP_HitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
@@ -173,7 +173,7 @@ extern int GFI_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *t
  * @retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-extern int GFI_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
+extern int GFI_UI_TP_HitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl );
 
 //------------------------------------------------------------------
 /**
@@ -182,7 +182,7 @@ extern int GFI_UI_TouchPanelHitTrg( const UISYS* pUI, const GFL_UI_TP_HITTBL *tb
  * @retval  BOOL		TRUEで触れている
  */
 //------------------------------------------------------------------
-extern BOOL GFI_UI_TouchPanelGetCont( const UISYS* pUI );
+extern BOOL GFI_UI_TP_GetCont( const UISYS* pUI );
 
 //------------------------------------------------------------------
 /**
@@ -191,7 +191,7 @@ extern BOOL GFI_UI_TouchPanelGetCont( const UISYS* pUI );
  * @retval  BOOL		TRUEで触れた
  */
 //------------------------------------------------------------------
-extern BOOL GFI_UI_TouchPanelGetTrg( const UISYS* pUI );
+extern BOOL GFI_UI_TP_GetTrg( const UISYS* pUI );
 
 //----------------------------------------------------------------------------
 /**
@@ -202,7 +202,7 @@ extern BOOL GFI_UI_TouchPanelGetTrg( const UISYS* pUI );
  *	@retval  int		当たりがあればその要素番号、なければ TP_HIT_NONE
  */
 //-----------------------------------------------------------------------------
-extern int GFI_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
+extern int GFI_UI_TP_HitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y );
 
 //------------------------------------------------------------------
 /**
@@ -214,7 +214,7 @@ extern int GFI_UI_TouchPanelHitSelf( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-extern BOOL GFI_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y );
+extern BOOL GFI_UI_TP_GetPointCont( const UISYS* pUI, u32* x, u32* y );
 
 //------------------------------------------------------------------
 /**
@@ -226,7 +226,7 @@ extern BOOL GFI_UI_TouchPanelGetPointCont( const UISYS* pUI, u32* x, u32* y );
  * @retval  FALSE 触れていない。引数には何もしない。
  */
 //------------------------------------------------------------------
-extern BOOL GFI_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y );
+extern BOOL GFI_UI_TP_GetPointTrg( const UISYS* pUI, u32* x, u32* y );
 
 //----------------------------------------------------------------------------
 //プロトタイプ宣言 key.c
@@ -241,7 +241,7 @@ extern BOOL GFI_UI_TouchPanelGetPointTrg( const UISYS* pUI, u32* x, u32* y );
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait );
+extern void GFI_UI_KEY_SetRepeatSpeed(UISYS* pUI, const int speed, const int wait );
 
 //==============================================================================
 /**
@@ -251,7 +251,7 @@ extern void GFI_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl );
+extern void GFI_UI_KEY_SetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl );
 
 //==============================================================================
 /**
@@ -260,7 +260,7 @@ extern void GFI_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL*
  * @return  キートリガ
  */
 //==============================================================================
-extern GFI_UI_KeyGetTrg( const UISYS* pUI );
+extern GFI_UI_KEY_GetTrg( const UISYS* pUI );
 
 //==============================================================================
 /**
@@ -269,7 +269,7 @@ extern GFI_UI_KeyGetTrg( const UISYS* pUI );
  * @return  キーコント
  */
 //==============================================================================
-extern GFI_UI_KeyGetCont( const UISYS* pUI );
+extern GFI_UI_KEY_GetCont( const UISYS* pUI );
 
 //==============================================================================
 /**
@@ -278,7 +278,7 @@ extern GFI_UI_KeyGetCont( const UISYS* pUI );
  * @return  キーコント
  */
 //==============================================================================
-extern GFI_UI_KeyGetRepeat( const UISYS* pUI );
+extern GFI_UI_KEY_GetRepeat( const UISYS* pUI );
 
 //==============================================================================
 /**
@@ -289,7 +289,7 @@ extern GFI_UI_KeyGetRepeat( const UISYS* pUI );
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait );
+extern void GFI_UI_KEY_GetRepeatSpeed(const UISYS* pUI, int* speed, int* wait );
 
 //==============================================================================
 /**
@@ -299,7 +299,7 @@ extern void GFI_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait );
  * @return  none
  */
 //==============================================================================
-extern void GFI_UI_KeySetControlMode(UISYS* pUI,const int mode);
+extern void GFI_UI_KEY_SetControlMode(UISYS* pUI,const int mode);
 
 //==============================================================================
 /**
@@ -308,7 +308,7 @@ extern void GFI_UI_KeySetControlMode(UISYS* pUI,const int mode);
  * @return  コントロールモード
  */
 //==============================================================================
-extern int GFI_UI_KeyGetControlMode(const UISYS* pUI);
+extern int GFI_UI_KEY_GetControlMode(const UISYS* pUI);
 
 
 //----------------------------------------------------------------------------

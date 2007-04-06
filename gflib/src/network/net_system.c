@@ -694,7 +694,7 @@ void GFL_NET_SystemFinalize(void)
     }
     if(bEnd){
         NET_PRINT("切断----開放処理--\n");
-        GFL_NET_Tool_sysEnd(_pComm->pTool);
+        GFL_NET_TOOL_End(_pComm->pTool);
         _pComm->pTool = NULL;
         GFL_HEAP_FreeMemory(_pComm->pRecvBufRing);
         GFL_HEAP_FreeMemory(_pComm->pTmpBuff);
@@ -1486,7 +1486,7 @@ static void _setSendDataServer(u8* pSendBuff)
 BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast, int myID, int sendID)
 {
     int bSave=TRUE;
-    int cSize = GFI_NET_CommandGetPacketSize(command);
+    int cSize = GFI_NET_COMMAND_GetPacketSize(command);
     SEND_QUEUE_MANAGER* pMgr;
 
 
@@ -1549,7 +1549,7 @@ int GFL_NET_SystemGetSendRestSize_ServerSide(void)
 
 static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
-    GFI_NET_CommandCallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
+    GFI_NET_COMMAND_CallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
     pRecvComm->valCommand = GFL_NET_CMD_NONE;
     pRecvComm->valSize = 0xffff;
     pRecvComm->pRecvBuff = NULL;
@@ -1596,7 +1596,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
             size = pRecvComm->valSize;
         }
         else{
-            size = GFI_NET_CommandGetPacketSize(command);
+            size = GFI_NET_COMMAND_GetPacketSize(command);
             if(_pComm->bError){
                 return;
             }
@@ -1618,9 +1618,9 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
         }
 
 
-        if(GFI_NET_CommandCreateBuffCheck(command)){  // 受信バッファがある場合
+        if(GFI_NET_COMMAND_CreateBuffCheck(command)){  // 受信バッファがある場合
             if(pRecvComm->pRecvBuff==NULL){
-                pRecvComm->pRecvBuff = GFI_NET_CommandCreateBuffStart(command, netID, pRecvComm->valSize);
+                pRecvComm->pRecvBuff = GFI_NET_COMMAND_CreateBuffStart(command, netID, pRecvComm->valSize);
             }
             realbyte = GFL_NET_RingGets(pRing, pTemp, size - pRecvComm->dataPoint);
             NET_PRINT("id %d -- rest %d\n",netID, size - pRecvComm->dataPoint);

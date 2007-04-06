@@ -132,7 +132,7 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
     pNetHandle->serviceNo = serviceNo;
 
     //CommRandSeedInitialize(&pNetHandle->sRand);  //@@OO—”‰Šú‰»‚ğ“ü‚ê‚é
-    GFL_NET_CommandInitialize(NULL, 0, NULL);
+    GFL_NET_COMMAND_Init(NULL, 0, NULL);
 /*
     if((serviceNo != COMM_MODE_UNION) && (serviceNo != COMM_MODE_PARTY) &&
        (serviceNo != COMM_MODE_MYSTERY)){
@@ -155,7 +155,7 @@ static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
     if(pNetHandle==NULL){  // ‚·‚Å‚ÉI—¹‚µ‚Ä‚¢‚é
         return;
     }
-    GFL_NET_CommandFinalize();
+    GFL_NET_COMMAND_Exit();
 //    WirelessIconEasyEnd();   //@@OO Œã‚Å“ü‚ê‚é—\’è
     GFL_NET_WLVRAMDFinalize();
     _GFL_NET_SetNETWL(NULL);

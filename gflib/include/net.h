@@ -10,13 +10,6 @@
 #define __NET_H__
 
 
-#undef GLOBAL
-#ifdef __NET_SYS_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
-
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 
 // デバッグ用決まり文句----------------------
@@ -24,7 +17,7 @@
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
-#define GFL_NET_DEBUG   (0)
+#define GFL_NET_DEBUG   (1)
 #endif  //DEBUG_ONLY_FOR_ohno
 
 #ifndef NET_PRINT
@@ -161,7 +154,7 @@ typedef struct{
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc);
+extern void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc);
 //==============================================================================
 /**
  * @brief   通信初期化
@@ -169,7 +162,7 @@ extern void GFL_NET_boot(HEAPID heapID, NetErrorFunc errorFunc);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_sysInit(const GFLNetInitializeStruct* pNetInit);
+extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit);
 //==============================================================================
 /**
  * @brief 通信初期化が完了したかどうかを確認する
@@ -185,14 +178,14 @@ extern BOOL GFL_NET_IsInit(void);
  * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
  */
 //==============================================================================
-extern BOOL GFL_NET_sysExit(void);
+extern BOOL GFL_NET_Exit(void);
 //==============================================================================
 /**
  * @brief   通信のメイン実行関数
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_sysMain(void);
+extern void GFL_NET_Main(void);
 
 //-----ビーコン関連
 //==============================================================================
@@ -242,22 +235,22 @@ extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle);
 //-----通信接続管理
 //==============================================================================
 /**
- * @brief   子機になり指定した親機に接続する
+ * @brief   子機初期化を行い指定した親機に接続する
  * @param   pHandle        通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ClientConnectTo(GFL_NETHANDLE* pHandle,u8* macAddress);
+extern void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
 //==============================================================================
 /**
- * @brief   指定した親機に接続する
+ * @brief   指定した親機に接続する（子機初期化済み）
  * @param   GFL_NETHANDLE  通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ClientToAccess(GFL_NETHANDLE* pHandle,u8* macAddress);
+extern void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
 //==============================================================================
 /**
  * @brief   子機になりビーコンを集める
@@ -265,7 +258,7 @@ extern void GFL_NET_ClientToAccess(GFL_NETHANDLE* pHandle,u8* macAddress);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
@@ -273,7 +266,7 @@ extern void GFL_NET_ClientConnect(GFL_NETHANDLE* pHandle);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_ServerConnect(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_InitServer(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief    親機子機を繰り返し、誰でもいいので接続する
@@ -291,7 +284,7 @@ extern void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_WiFiLogin(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle);
 
 //==============================================================================
 /**
@@ -329,7 +322,7 @@ extern int GFL_NET_GetNegotiationConnectNum(GFL_NETHANDLE* pNet);
  * @return      送信に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_NegotiationRequest(GFL_NETHANDLE* pHandle);
+extern BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle);
 
 
 //==============================================================================
@@ -442,7 +435,7 @@ extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet);
+extern void GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief   MPモードへ通信を切り替える
@@ -450,7 +443,7 @@ extern void GFL_NET_ChangeDSMode(GFL_NETHANDLE* pNet);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ChangeMPMode(GFL_NETHANDLE* pNet);
+extern void GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet);
 
 //==============================================================================
 /**
@@ -474,7 +467,7 @@ extern BOOL GFL_NET_IsResetEnable(void);
 
 //==============================================================================
 /**
- * @brief     割り込み中に行う処理を実行
+ * @brief     VBlank時に行う処理を実行  (通信アイコンの表示)
  * @param     none
  * @return    none
  */

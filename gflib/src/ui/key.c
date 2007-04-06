@@ -56,7 +56,7 @@ struct _UI_KEYSYS {
  */
 //==============================================================================
 
-UI_KEYSYS* GFL_UI_Key_sysInit(const HEAPID heapID)
+UI_KEYSYS* GFL_UI_KEY_Init(const HEAPID heapID)
 {
     UI_KEYSYS* pKey = GFL_HEAP_AllocMemory(heapID, sizeof(UI_KEYSYS));
 
@@ -74,7 +74,7 @@ UI_KEYSYS* GFL_UI_Key_sysInit(const HEAPID heapID)
  */
 //==============================================================================
 
-static void GFI_UI_Key_sysMain(UISYS* pUI)
+static void GFI_UI_KEY_Main(UISYS* pUI)
 {
 	TPData	tpTemp;
 	TPData	tpDisp;
@@ -120,9 +120,9 @@ static void GFI_UI_Key_sysMain(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_Key_sysMain(void)
+void GFL_UI_KEY_Main(void)
 {
-    GFI_UI_Key_sysMain(_UI_GetUISYS());
+    GFI_UI_KEY_Main(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -133,7 +133,7 @@ void GFL_UI_Key_sysMain(void)
  */
 //==============================================================================
 
-static void GFI_UI_Key_sysExit(UISYS* pUI)
+static void GFI_UI_KEY_Exit(UISYS* pUI)
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
     GFL_HEAP_FreeMemory(pKey);
@@ -147,9 +147,9 @@ static void GFI_UI_Key_sysExit(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_Key_sysExit(void)
+void GFL_UI_KEY_Exit(void)
 {
-    GFI_UI_Key_sysExit(_UI_GetUISYS());
+    GFI_UI_KEY_Exit(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -256,7 +256,7 @@ static void _keyConvert(UI_KEYSYS* pKey)
  * @return  none
  */
 //==============================================================================
-void GFI_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
+void GFI_UI_KEY_SetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
     pKey->repeatSpeed	= speed;
@@ -271,9 +271,9 @@ void GFI_UI_KeySetRepeatSpeed(UISYS* pUI, const int speed, const int wait )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait )
+void GFL_UI_KEY_SetRepeatSpeed(const int speed, const int wait )
 {
-    GFI_UI_KeySetRepeatSpeed(_UI_GetUISYS(),speed,wait );
+    GFI_UI_KEY_SetRepeatSpeed(_UI_GetUISYS(),speed,wait );
 }
 
 //==============================================================================
@@ -284,7 +284,7 @@ void GFL_UI_KeySetRepeatSpeed(const int speed, const int wait )
  * @return  none
  */
 //==============================================================================
-void GFI_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
+void GFI_UI_KEY_SetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	pKey->pControl = pTbl;
@@ -297,9 +297,9 @@ void GFI_UI_KeySetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL* pTbl )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl )
+void GFL_UI_KEY_SetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl )
 {
-    GFI_UI_KeySetControlModeTbl(_UI_GetUISYS(),pTbl);
+    GFI_UI_KEY_SetControlModeTbl(_UI_GetUISYS(),pTbl);
 }
 
 //==============================================================================
@@ -309,7 +309,7 @@ void GFL_UI_KeySetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl )
  * @return  キートリガ
  */
 //==============================================================================
-int GFI_UI_KeyGetTrg( const UISYS* pUI )
+int GFI_UI_KEY_GetTrg( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->trg;
@@ -322,9 +322,9 @@ int GFI_UI_KeyGetTrg( const UISYS* pUI )
  * @return  キートリガ
  */
 //==============================================================================
-int GFL_UI_KeyGetTrg( void )
+int GFL_UI_KEY_GetTrg( void )
 {
-    return GFI_UI_KeyGetTrg(_UI_GetUISYS());
+    return GFI_UI_KEY_GetTrg(_UI_GetUISYS());
 }
 
 //==============================================================================
@@ -334,7 +334,7 @@ int GFL_UI_KeyGetTrg( void )
  * @return  キーコント
  */
 //==============================================================================
-int GFI_UI_KeyGetCont( const UISYS* pUI )
+int GFI_UI_KEY_GetCont( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->cont;
@@ -347,9 +347,9 @@ int GFI_UI_KeyGetCont( const UISYS* pUI )
  * @return  キーコント
  */
 //==============================================================================
-int GFL_UI_KeyGetCont( void )
+int GFL_UI_KEY_GetCont( void )
 {
-     return GFI_UI_KeyGetCont( _UI_GetUISYS() );
+     return GFI_UI_KEY_GetCont( _UI_GetUISYS() );
 }
 
 //==============================================================================
@@ -359,7 +359,7 @@ int GFL_UI_KeyGetCont( void )
  * @return  キーコント
  */
 //==============================================================================
-int GFI_UI_KeyGetRepeat( const UISYS* pUI )
+int GFI_UI_KEY_GetRepeat( const UISYS* pUI )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->repeat;
@@ -372,9 +372,9 @@ int GFI_UI_KeyGetRepeat( const UISYS* pUI )
  * @return  キーコント
  */
 //==============================================================================
-int GFL_UI_KeyGetRepeat(void )
+int GFL_UI_KEY_GetRepeat(void )
 {
-    return GFI_UI_KeyGetRepeat( _UI_GetUISYS());
+    return GFI_UI_KEY_GetRepeat( _UI_GetUISYS());
 }
 
 //==============================================================================
@@ -384,7 +384,7 @@ int GFL_UI_KeyGetRepeat(void )
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-BOOL GFL_UI_KeyCheckTrg( int keyBit )
+BOOL GFL_UI_KEY_CheckTrg( int keyBit )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
 
@@ -401,7 +401,7 @@ BOOL GFL_UI_KeyCheckTrg( int keyBit )
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-BOOL GFL_UI_KeyCheckCont( int keyBit )
+BOOL GFL_UI_KEY_CheckCont( int keyBit )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
 
@@ -418,7 +418,7 @@ BOOL GFL_UI_KeyCheckCont( int keyBit )
  * @return  渡されたものだけが押されていたらTRUE
  */
 //==============================================================================
-BOOL GFL_UI_KeyCheckRepeat( int keyBit )
+BOOL GFL_UI_KEY_CheckRepeat( int keyBit )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
 
@@ -437,7 +437,7 @@ BOOL GFL_UI_KeyCheckRepeat( int keyBit )
  * @return  none
  */
 //==============================================================================
-void GFI_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
+void GFI_UI_KEY_GetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
 {
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	*speed = pKey->repeatSpeed;
@@ -452,9 +452,9 @@ void GFI_UI_KeyGetRepeatSpeed(const UISYS* pUI, int* speed, int* wait )
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeyGetRepeatSpeed( int* speed, int* wait )
+void GFL_UI_KEY_GetRepeatSpeed( int* speed, int* wait )
 {
-    GFI_UI_KeyGetRepeatSpeed(_UI_GetUISYS(), speed, wait);
+    GFI_UI_KEY_GetRepeatSpeed(_UI_GetUISYS(), speed, wait);
 }
 
 //==============================================================================
@@ -465,7 +465,7 @@ void GFL_UI_KeyGetRepeatSpeed( int* speed, int* wait )
  * @return  none
  */
 //==============================================================================
-void GFI_UI_KeySetControlMode(UISYS* pUI,const int mode)
+void GFI_UI_KEY_SetControlMode(UISYS* pUI,const int mode)
 {
     const GFL_UI_KEY_CUSTOM_TBL* pTbl;
     UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
@@ -493,9 +493,9 @@ void GFI_UI_KeySetControlMode(UISYS* pUI,const int mode)
  * @return  none
  */
 //==============================================================================
-void GFL_UI_KeySetControlMode(const int mode)
+void GFL_UI_KEY_SetControlMode(const int mode)
 {
-    GFI_UI_KeySetControlMode(_UI_GetUISYS(), mode);
+    GFI_UI_KEY_SetControlMode(_UI_GetUISYS(), mode);
 }
 
 //==============================================================================
@@ -505,7 +505,7 @@ void GFL_UI_KeySetControlMode(const int mode)
  * @return  コントロールモード
  */
 //==============================================================================
-int GFI_UI_KeyGetControlMode(const UISYS* pUI)
+int GFI_UI_KEY_GetControlMode(const UISYS* pUI)
 {
     const UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->control_mode;
@@ -518,7 +518,7 @@ int GFI_UI_KeyGetControlMode(const UISYS* pUI)
  * @return  コントロールモード
  */
 //==============================================================================
-int GFL_UI_KeyGetControlMode(void)
+int GFL_UI_KEY_GetControlMode(void)
 {
-    return GFI_UI_KeyGetControlMode(_UI_GetUISYS());
+    return GFI_UI_KEY_GetControlMode(_UI_GetUISYS());
 }

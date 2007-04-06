@@ -57,12 +57,12 @@ static void _UI_ResetLoop(int resetNo);
  */
 //==============================================================================
 
-void GFL_UI_boot(const HEAPID heapID)
+void GFL_UI_Boot(const HEAPID heapID)
 {
     UISYS* pUI = GFL_HEAP_AllocMemory(heapID, sizeof(UISYS));
 
     MI_CpuClear8(pUI, sizeof(UISYS));
-    pUI->pKey = GFL_UI_Key_sysInit(heapID);
+    pUI->pKey = GFL_UI_KEY_Init(heapID);
     _pUI = pUI;
 
     OS_EnableIrq();  // この関数は会議で相談した後で移動する  @@OO
@@ -79,12 +79,12 @@ void GFL_UI_boot(const HEAPID heapID)
  */
 //==============================================================================
 
-void GFI_UI_sysMain(UISYS* pUI)
+void GFI_UI_Main(UISYS* pUI)
 {
-    GFL_UI_Key_sysMain();
+    GFL_UI_KEY_Main();
     _UI_SleepFunc();  // スリープ状態管理
 
-    if ((GFL_UI_KeyGetCont() & PAD_BUTTON_SOFTRESET) == PAD_BUTTON_SOFTRESET) {
+    if ((GFL_UI_KEY_GetCont() & PAD_BUTTON_SOFTRESET) == PAD_BUTTON_SOFTRESET) {
         if(pUI->DontSoftReset == 0){  // 抑制するBITが何も無ければReset
             _UI_ResetLoop(_SOFTRESET_TYPE_NORMAL);  // この関数内でsoftresetされる
         }
@@ -99,9 +99,9 @@ void GFI_UI_sysMain(UISYS* pUI)
  * @return  none
  */
 //==============================================================================
-void GFL_UI_sysMain(void)
+void GFL_UI_Main(void)
 {
-    GFI_UI_sysMain(_pUI);
+    GFI_UI_Main(_pUI);
 }
 
 //==============================================================================
@@ -112,9 +112,9 @@ void GFL_UI_sysMain(void)
  */
 //==============================================================================
 
-void GFI_UI_sysExit(UISYS* pUI)
+void GFI_UI_Exit(UISYS* pUI)
 {
-    GFL_UI_Key_sysExit();
+    GFL_UI_KEY_Exit();
     GFL_HEAP_FreeMemory(pUI);
 }
 
@@ -126,9 +126,9 @@ void GFI_UI_sysExit(UISYS* pUI)
  */
 //==============================================================================
 
-void GFL_UI_sysExit(void)
+void GFL_UI_Exit(void)
 {
-    GFI_UI_sysExit(_pUI);
+    GFI_UI_Exit(_pUI);
 }
 
 //------------------------------------------------------------------
@@ -302,7 +302,7 @@ static void _UI_SleepFunc(void)
 
     if(PAD_DetectFold()){ // ふたが閉まっている
         if(pUI->DontSleep == 0){  // スリープしていい場合
-            GFL_UI_TPAutoSamplingStop();
+            GFL_UI_TP_AutoSamplingStop();
             trigger = PM_TRIGGER_COVER_OPEN|PM_TRIGGER_CARD;
             // 特定のAGBカートリッジが刺さっている場合のみ復帰条件にカートリッジ設定
             if(pUI->AgbCasetteVersion)
@@ -327,7 +327,7 @@ static void _UI_SleepFunc(void)
                 GFL_UI_SLEEPRELEASE_FUNC* pRelease = pUI->pRelease;
                 pRelease(pUI->pWork);
             }
-            GFL_UI_TPAutoSamplingReStart();
+            GFL_UI_TP_AutoSamplingReStart();
         } else{
             // もしもカートリッジが抜かれたらSLEEP→電源OFF
             if((OS_GetIrqMask() & OS_IE_CARTRIDGE) && CTRDG_IsPulledOut()){
@@ -366,13 +366,17 @@ static void _UI_ResetLoop(int resetNo)
     while (1) {
         // 通信としてリセットしてもいい状態 + メモリーカード終了
         if(GFL_NET_IsResetEnable() && CARD_TryWaitBackupAsync()){
+
+            GFL_BG_Exit();  // 名前書き換え後エリア開放を入れるテストを行う  k.ohno
+
             OS_ResetSystem(resetNo);  // 切断確認後終了
         }
         OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 
-        GFL_UI_sysMain();   // 必要最小のGFL関数
-        GFL_NET_sysMain();
+        GFL_UI_Main();   // 必要最小のGFL関数
+        GFL_NET_Main();
         GFL_FADE_Main();
+        
     }
 }
 

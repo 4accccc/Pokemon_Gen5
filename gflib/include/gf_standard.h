@@ -126,7 +126,7 @@ extern int GFL_STD_MemComp( const void *s1, const void *s2, const u32 size );
  *  @return  none
  */
 //----------------------------------------------------------------------------
-extern void GFL_STD_MTRandInit(u32 s);
+extern void GFL_STD_MtRandInit(u32 s);
 
 //----------------------------------------------------------------------------
 /**
@@ -137,10 +137,10 @@ extern void GFL_STD_MTRandInit(u32 s);
  *	@return  生成された乱数
  */
 //----------------------------------------------------------------------------
-extern u32 __GFL_STD_MTRand(void); ///< 使用禁止  下のinline関数を使ってください
-static inline u32 GFL_STD_MTRand(u32 max)
+extern u32 __GFL_STD_MtRand(void); ///< 使用禁止  下のinline関数を使ってください
+static inline u32 GFL_STD_MtRand(u32 max)
 {
-    u64 x = (u64)__GFL_STD_MTRand();
+    u64 x = (u64)__GFL_STD_MtRand();
 
     // 引数maxが定数ならばコンパイラにより最適化される。
     if (max == 0) {

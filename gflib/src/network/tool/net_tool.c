@@ -35,7 +35,7 @@ struct _NET_TOOLSYS_t{
  */
 //==============================================================================
 
-NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num)
+NET_TOOLSYS* GFL_NET_TOOL_Init(const HEAPID heapID, const int num)
 {
     int i;
     NET_TOOLSYS* pCT;
@@ -58,7 +58,7 @@ NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num)
  */
 //==============================================================================
 
-void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT)
+void GFL_NET_TOOL_End(NET_TOOLSYS* pCT)
 {
     if(pCT){
         GFL_HEAP_FreeMemory(pCT->timingSyncBuff);
@@ -78,7 +78,7 @@ void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT)
  */
 //==============================================================================
 
-void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pData,
+void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const void* pData,
                                 void* pWork, GFL_NETHANDLE* pNet)
 {
     const u8* pBuff = (const u8*)pData;
@@ -122,7 +122,7 @@ void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pDa
  */
 //==============================================================================
 
-void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const void* pData,
+void GFL_NET_TOOL_RecvTimingSyncEnd(const int netID, const int size, const void* pData,
                                  void* pWork, GFL_NETHANDLE* pNet)
 {
     const u8* pBuff = (const u8*)pData;
@@ -142,7 +142,7 @@ void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const void* 
  */
 //==============================================================================
 
-void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
+void GFL_NET_TOOL_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 {
     NET_TOOLSYS* _pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
@@ -159,7 +159,7 @@ void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
  */
 //==============================================================================
 
-void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet)
+void GFL_NET_TOOL_TimingSyncSend(GFL_NETHANDLE* pNet)
 {
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
@@ -190,7 +190,7 @@ void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet)
  */
 //==============================================================================
 
-BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
+BOOL GFL_NET_TOOL_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
 
@@ -209,7 +209,7 @@ BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
  */
 //==============================================================================
 
-int GFL_NET_ToolGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID)
+int GFL_NET_TOOL_GetTimingSyncNo(GFL_NETHANDLE* pNet, int netID)
 {
     NET_TOOLSYS* pCT = _NETHANDLE_GetTOOLSYS(pNet);
     return pCT->timingSyncBuff[netID];

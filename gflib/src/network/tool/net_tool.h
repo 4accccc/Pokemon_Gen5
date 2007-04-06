@@ -22,7 +22,7 @@ typedef struct _NET_TOOLSYS_t NET_TOOLSYS;
  * @return  NET_TOOLSYS  ネットワークツールシステムワーク
  */
 //==============================================================================
-extern NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num);
+extern NET_TOOLSYS* GFL_NET_TOOL_Init(const HEAPID heapID, const int num);
 //==============================================================================
 /**
  * @brief   ネットワークツール終了
@@ -30,7 +30,7 @@ extern NET_TOOLSYS* GFL_NET_Tool_sysInit(const HEAPID heapID, const int num);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT);
+extern void GFL_NET_TOOL_End(NET_TOOLSYS* pCT);
 //==============================================================================
 /**
  * @brief  タイミングコマンドを受信した   GFL_NET_CMD_TIMING_SYNC
@@ -42,7 +42,7 @@ extern void GFL_NET_Tool_sysEnd(NET_TOOLSYS* pCT);
  * @retval      none
  */
 //==============================================================================
-extern void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const void* pData,
+extern void GFL_NET_TOOL_RecvTimingSync(const int netID, const int size, const void* pData,
                                        void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
@@ -55,7 +55,7 @@ extern void GFL_NET_ToolRecvTimingSync(const int netID, const int size, const vo
  * @retval      none
  */
 //==============================================================================
-extern void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const void* pData,
+extern void GFL_NET_TOOL_RecvTimingSyncEnd(const int netID, const int size, const void* pData,
                                           void* pWork, GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
@@ -65,7 +65,7 @@ extern void GFL_NET_ToolRecvTimingSyncEnd(const int netID, const int size, const
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
+extern void GFL_NET_TOOL_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドを送信
@@ -73,7 +73,7 @@ extern void GFL_NET_ToolTimingSyncStart(GFL_NETHANDLE* pNet, const u8 no);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet);
+extern void GFL_NET_TOOL_TimingSyncSend(GFL_NETHANDLE* pNet);
 //==============================================================================
 /**
  * @brief   タイミングコマンドが届いたかどうかを確認する
@@ -83,7 +83,7 @@ extern void GFL_NET_ToolTimingSyncSend(GFL_NETHANDLE* pNet);
  * @retval  FALSE  届いていない
  */
 //==============================================================================
-extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
+extern BOOL GFL_NET_TOOL_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 //==============================================================================
 /**
  * @brief   タイミングコマンドが届いたかどうかを確認する
@@ -91,7 +91,7 @@ extern BOOL GFL_NET_ToolIsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
  * @retval  届いていたらTRUE
  */
 //==============================================================================
-extern int GFL_NET_ToolGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
+extern int GFL_NET_TOOL_GetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
 
 //==============================================================================
 /**
@@ -100,7 +100,7 @@ extern int GFL_NET_ToolGetTimingSyncNo(GFL_NETHANDLE* pNet, int netID);
  * @return  noen
  */
 //==============================================================================
-extern void GFL_NET_ToolTransmissonMain(GFL_NETHANDLE* pNet);
+extern void GFL_NET_TOOL_TransmissonMain(GFL_NETHANDLE* pNet);
 
 
 #endif //__NET_TOOL_H__
