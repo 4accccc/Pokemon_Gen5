@@ -122,11 +122,7 @@ void
 	while( ( i<g3Dscene->g3DsceneObjMax )&&( g3Dscene->g3DsceneObjPriTbl[i] != 0xffff) ){
 		g3DsceneObj = GFL_TCBL_GetWork
 						( g3Dscene->g3DsceneObjTCBLtbl[ g3Dscene->g3DsceneObjPriTbl[i] ] );
-#if 0
-		g3Dobj = GFL_G3D_UTIL_GetObjHandle( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
-#else
 		g3Dobj = g3DsceneObj->g3Dobj;
-#endif
 		GFL_G3D_DRAW_DrawObject( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
@@ -480,9 +476,6 @@ void
 }
 
 	
-
-
-
 
 
 

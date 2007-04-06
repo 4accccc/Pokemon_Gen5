@@ -19,21 +19,24 @@
 //=============================================================================================
 //	型宣言
 //=============================================================================================
+typedef void	(GFL_G3D_DRAW_FLASHFUNC)( void );
+
 /**
  * @brief	３Ｄシステムマネージャ構造体
  */
 typedef struct GFL_G3D_MAN_tag
 {
-	NNSFndAllocator		allocater;			///<メモリアロケータ(NNSで使用)
-	void*				plt_memory;			///<パレットマネージャ用メモリ
-	void*				tex_memory;			///<テクスチャマネージャ用メモリ
-	HEAPID				heapID;				///<ヒープＩＤ
+	NNSFndAllocator			allocater;			///<メモリアロケータ(NNSで使用)
+	void*					plt_memory;			///<パレットマネージャ用メモリ
+	void*					tex_memory;			///<テクスチャマネージャ用メモリ
+	HEAPID					heapID;				///<ヒープＩＤ
 
-	GFL_G3D_PROJECTION	projection;			///<グローバルステート（射影）
-	GFL_G3D_LIGHT		light[4];			///<グローバルステート（ライト）
-	GFL_G3D_LOOKAT		lookAt;				///<グローバルステート（カメラ）
-	GFL_G3D_SWAPBUFMODE	swapBufMode;		///<グローバルステート（レンダリングバッファ）
+	GFL_G3D_PROJECTION		projection;			///<グローバルステート（射影）
+	GFL_G3D_LIGHT			light[4];			///<グローバルステート（ライト）
+	GFL_G3D_LOOKAT			lookAt;				///<グローバルステート（カメラ）
+	GFL_G3D_SWAPBUFMODE		swapBufMode;		///<グローバルステート（レンダリングバッファ）
 
+	GFL_G3D_DRAW_FLASHFUNC*	drawFlushFunc;		///<描画フラッシュタイプ
 }GFL_G3D_MAN;
 
 static GFL_G3D_MAN*  g3Dman = NULL;
@@ -152,6 +155,7 @@ void
 		//レンダリングスワップバッファ
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 	}
+	GFL_G3D_SetDrawFlushMode( GFL_G3D_FLUSH_P );
 
 	if( setup != NULL ){
 		setup();
@@ -347,6 +351,45 @@ void
 
 	g3Dman->swapBufMode.aw = sortMode;
 	g3Dman->swapBufMode.zw = bufferMode;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * オブジェクト描画フラッシュ（グローバル状態送信）タイプの設定
+ *
+ * @param	type	描画タイプ
+ *
+ * GFL_G3D_FLUSH_P:		カレント射影行列に射影変換行列が、
+ *						カレント位置座標行列と方向ベクトル行列に
+ *						カメラ行列とモデリング行列が合成された行列が設定されます。
+ *
+ * GFL_G3D_FLUSH_VP:	カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
+ *						カレント位置座標行列と方向ベクトル行列にモデリング行列
+ *						が設定されます。
+ *
+ * GFL_G3D_FLUSH_WVP:	カレント射影行列に
+ *						射影変換行列とカメラ行列とモデリング行列が合成された行列が、
+ *						カレント位置座標行列と方向ベクトル行列に単位行列が設定されます。
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_SetDrawFlushMode
+		( GFL_G3D_DRAWFLUSH_TYPE type )
+{
+	GF_ASSERT( g3Dman != NULL );
+
+	switch( type ){
+		default:
+		case GFL_G3D_FLUSH_P:
+			g3Dman->drawFlushFunc = NNS_G3dGlbFlush;
+			break;
+		case GFL_G3D_FLUSH_VP:
+			g3Dman->drawFlushFunc = NNS_G3dGlbFlushVP;
+			break;
+		case GFL_G3D_FLUSH_WVP:
+			g3Dman->drawFlushFunc = NNS_G3dGlbFlushWVP;
+			break;
+	}
 }
 
 
@@ -1483,6 +1526,11 @@ BOOL
  *
  */
 //=============================================================================================
+static BOOL GFL_G3D_DRAW_CheckCulling( GFL_G3D_OBJ* g3Dobj );
+static s32	GFL_G3D_DRAW_TestBoundingBox( const GXBoxTestParam* boundingBox );
+static MtxFx43 GFL_G3D_DRAW_GetTRSMatrix( const GFL_G3D_OBJSTATUS* status );
+u32 DebugCullingCount = 0;
+u32 DebugPrintCount = 0;
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
@@ -1496,6 +1544,8 @@ void
 		( void )
 {
 	G3X_Reset();
+	DebugPrintCount = 0;
+	DebugCullingCount = 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1511,6 +1561,7 @@ void
 		( void )
 {
 	G3_SwapBuffers( g3Dman->swapBufMode.aw, g3Dman->swapBufMode.zw );
+	OS_Printf(" CullingCount is %d PrintCount is %d\n", DebugCullingCount, DebugPrintCount );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1525,6 +1576,7 @@ void
 		( void )
 {
 	NNS_G3dGlbLookAt( &g3Dman->lookAt.camPos, &g3Dman->lookAt.camUp, &g3Dman->lookAt.target );
+	g3Dman->drawFlushFunc();	//グローバルステート反映
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1532,18 +1584,6 @@ void
  * ３Ｄオブジェクトの描画
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- *
- * ～Draw	:カレント射影行列に射影変換行列が、
- *			 カレント位置座標行列と方向ベクトル行列にカメラ行列とモデリング行列が合成された行列
- *			 が設定されます。
- *
- * ～DrawVP	:カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
- *			 カレント位置座標行列と方向ベクトル行列にモデリング行列
- *			 が設定されます。
- *
- * ～DrawWVP:カレント射影行列に射影変換行列とカメラ行列とモデリング行列が合成された行列が、
- *			 カレント位置座標行列と方向ベクトル行列に単位行列
- *			 が設定されます。
  */
 //--------------------------------------------------------------------------------------------
 // ３Ｄオブジェクトの情報設定
@@ -1561,33 +1601,40 @@ static inline void
 //--------------------------------------------------------------------------------
 // 通常描画
 //--------------------------------------------------------------------------------
+//カリングなし
 void
 	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
+#if 1
 	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlush();
+	g3Dman->drawFlushFunc();
 	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
 	NNS_G3dGeFlushBuffer();
+#else
+	MtxFx43 mtxTRS;
+
+	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
+	mtxTRS = GFL_G3D_DRAW_GetTRSMatrix( status );
+	G3_PushMtx();
+	G3_MultMtx43( &mtxTRS );
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	G3_PopMtx(1);
+	NNS_G3dGeFlushBuffer();
+#endif
 }
 
+//カリングあり
 void
-	GFL_G3D_DRAW_DrawObjectVP
+	GFL_G3D_DRAW_DrawObjectCullingON
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlushVP();
-	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-	NNS_G3dGeFlushBuffer();
-}
-
-void
-	GFL_G3D_DRAW_DrawObjectWVP
-		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
-{
-	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlushWVP();
-	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	g3Dman->drawFlushFunc();
+	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
+		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+		DebugPrintCount++;
+	}
 	NNS_G3dGeFlushBuffer();
 }
 
@@ -1597,6 +1644,7 @@ void
 //		shpID	描画するシェイプへのインデックス 
 //		sendMat	マテリアル情報をジオメトリエンジンに送信するかどうか 
 //--------------------------------------------------------------------------------
+//カリングなし
 void
 	GFL_G3D_DRAW_DrawObject1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
@@ -1604,37 +1652,128 @@ void
 
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlush();
+	g3Dman->drawFlushFunc();
 	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
 							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
 								matID, shpID, sendMat );
 	NNS_G3dGeFlushBuffer();
 }
 
+//カリングあり
 void
-	GFL_G3D_DRAW_DrawObjectVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
+	GFL_G3D_DRAW_DrawObject1mat1shpCullingON
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status )
+
 {
 	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlushVP();
-	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
-								matID, shpID, sendMat );
+	g3Dman->drawFlushFunc();
+	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
+		NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
+								(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
+									matID, shpID, sendMat );
+	}
 	NNS_G3dGeFlushBuffer();
 }
 
-void
-	GFL_G3D_DRAW_DrawObjectWVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
-			const GFL_G3D_OBJSTATUS* status )
+//--------------------------------------------------------------------------------------------
+/**
+ * カリングチェック
+ *
+ * オブジェクトのグローバルステータス反映後に呼ぶこと
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL
+	GFL_G3D_DRAW_CheckCulling
+		( GFL_G3D_OBJ* g3Dobj )
 {
-	statusSet( &status->trans, &status->rotate, &status->scale );
-	NNS_G3dGlbFlushWVP();
-	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
-								matID, shpID, sendMat );
-	NNS_G3dGeFlushBuffer();
+	NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
+	BOOL				result = TRUE;
+	GXBoxTestParam		boundingBox;
+
+	//ボックステスト用パラメータ取得
+	modelInfo = NNS_G3dGetMdlInfo
+	( NNS_G3dRenderObjGetResMdl(GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(g3Dobj))));
+
+	//バウンディングボックス作成
+	boundingBox.x		= modelInfo->boxX;
+	boundingBox.y		= modelInfo->boxY;
+	boundingBox.z		= modelInfo->boxZ;
+	boundingBox.width	= modelInfo->boxW;
+	boundingBox.height	= modelInfo->boxH;
+	boundingBox.depth	= modelInfo->boxD;
+
+	//上のボックステストの箱の値をposScaleでかけることにより本当の値になる
+	NNS_G3dGePushMtx();
+	NNS_G3dGeScale( modelInfo->boxPosScale, modelInfo->boxPosScale, modelInfo->boxPosScale );
+	
+	//チェック
+	if( !GFL_G3D_DRAW_TestBoundingBox( &boundingBox ) ){
+		result = FALSE;
+		DebugCullingCount++;
+	}
+	NNS_G3dGePopMtx(1);
+
+	return result;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * ボックス視体積内外テスト
+ *
+ * @param	boundingBox		ボックステスト用パラメータへのポインタ
+ *
+ * @return	s32				0以外の値であれば、ボックスの一部または全部が視体積内
+ *							0であれば、ボックスの全てが視体積外 
+ */
+//-----------------------------------------------------------------------------
+static s32
+	GFL_G3D_DRAW_TestBoundingBox
+		( const GXBoxTestParam* boundingBox )
+{
+	s32 testResult = 1;
+
+	//ポリゴン属性の「FAR面交差クリッピングフラグ」と「１ドットポリゴン表示フラグ」を1に設定
+	//※ライブラリからの要求
+	NNS_G3dGePolygonAttr( GX_LIGHTMASK_0, GX_POLYGONMODE_MODULATE, GX_CULL_NONE,           
+					0, 0, GX_POLYGON_ATTR_MISC_FAR_CLIPPING | GX_POLYGON_ATTR_MISC_DISP_1DOT );
+
+	//ポリゴンアトリビュート反映 ※ライブラリ指定手順
+	NNS_G3dGeBegin( GX_BEGIN_TRIANGLES );							
+	NNS_G3dGeEnd();	
+
+	NNS_G3dGeBoxTest( boundingBox );	// ボックステスト
+	NNS_G3dGeFlushBuffer();				// 同期を取る
+
+	//チェック本体（返り値が0の場合テスト終了）。 0:視体積内、それ以外の値は視体積外
+	while ( G3X_GetBoxTestResult( &testResult ) != 0 ) ;
+
+	return testResult;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * TRSマトリクスを取得
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static MtxFx43 
+	GFL_G3D_DRAW_GetTRSMatrix
+		( const GFL_G3D_OBJSTATUS* status )
+{
+	MtxFx43 mtx;
+	MtxFx43	rot;
+	MtxFx43 scl;
+
+	MTX_Identity43( &mtx );
+	MTX_TransApply43( &mtx, &mtx, status->trans.x, status->trans.y, status->trans.z);
+	MTX_Copy33To43( &status->rotate, &rot );
+	MTX_Scale43( &scl, status->scale.x, status->scale.y, status->scale.z);
+	MTX_Concat43( &rot, &mtx, &mtx);
+	MTX_Concat43( &scl, &mtx, &mtx);
+
+	return mtx;
 }
 
 
