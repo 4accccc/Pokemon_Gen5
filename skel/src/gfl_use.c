@@ -87,7 +87,7 @@ void GFLUser_Init(void)
 	//GFL_ARC_SysInit(...);
 
 	//UIシステム初期化
-	GFL_UI_boot(GFL_HEAPID_SYSTEM);
+	GFL_UI_Boot(GFL_HEAPID_SYSTEM);
 
 	//OVERLAYシステム初期化
 	GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
@@ -114,8 +114,8 @@ void GFLUser_Init(void)
 //------------------------------------------------------------------
 void GFLUser_Main(void)
 {
-	GFL_UI_sysMain();
-    GFL_NET_sysMain();  //キーの処理の後すぐに通信を処理したい為ここに配置
+	GFL_UI_Main();
+    GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
 	GFL_PROC_SysMain();
     GFL_FADE_sysMain();
@@ -141,7 +141,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	GFL_UI_sysExit();
+	GFL_UI_Exit();
 	GFL_PROC_SysExit();
 	GFL_OVERLAY_SysExit();
 	GFL_FADE_sysExit();

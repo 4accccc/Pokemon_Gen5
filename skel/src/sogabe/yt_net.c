@@ -389,7 +389,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _INIT_WAIT_PARENT:
         if(GFL_NET_IsInit()){
             pNet->pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
-            GFL_NET_ServerConnect(pNet->pNetHandle[0]); // 自動接続
+            GFL_NET_InitServer(pNet->pNetHandle[0]); // 自動接続
             pNet->pNetHandle[1] = GFL_NET_CreateHandle();   // ハンドル作成
             _SEQCHANGE(_CONNECT_WAIT);
         }
@@ -397,7 +397,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _INIT_WAIT_CHILD:
         if(GFL_NET_IsInit()){
             pNet->pNetHandle[1] = GFL_NET_CreateHandle();   // ハンドル作成
-            GFL_NET_ClientConnect(pNet->pNetHandle[1]); // 自動接続
+            GFL_NET_StateBeaconScan(pNet->pNetHandle[1]); // 自動接続
             _SEQCHANGE( _SEARCH_CHILD );
         }
         break;
@@ -405,7 +405,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
         {
             u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
             if(pData){
-                GFL_NET_ClientToAccess(pNet->pNetHandle[1], pData);
+                GFL_NET_ConnectToParent(pNet->pNetHandle[1], pData);
                 _SEQCHANGE( _CONNECT_WAIT );
             }
         }
@@ -416,14 +416,14 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _NEGO_START:
         if(YT_NET_IsParent(pNet)){  //親機の場合
             if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
-                if(GFL_NET_NegotiationRequest( pNet->pNetHandle[1] )){
+                if(GFL_NET_RequestNegotiation( pNet->pNetHandle[1] )){
                     _SEQCHANGE( _TIM_START );
                 }
             }
         }
         else{
 //            if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
-                if(GFL_NET_NegotiationRequest( pNet->pNetHandle[1] )){
+                if(GFL_NET_RequestNegotiation( pNet->pNetHandle[1] )){
                     _SEQCHANGE( _TIM_START );
                 }
   //          }
