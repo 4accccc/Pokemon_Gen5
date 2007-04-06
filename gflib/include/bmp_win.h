@@ -39,17 +39,14 @@ typedef struct _GFL_BMPWIN	GFL_BMPWIN;
  * @param	heapID	使用ヒープ領域
  */
 //--------------------------------------------------------------------------------------------
-extern void
-	GFL_BMPWIN_Init
-		( HEAPID heapID );
+extern void	GFL_BMPWIN_Init( HEAPID heapID );
+
 //--------------------------------------------------------------------------------------------
 /**
  * システム終了
  */
 //--------------------------------------------------------------------------------------------
-extern void
-	GFL_BMPWIN_Exit
-		( void );
+extern void GFL_BMPWIN_Exit( void );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -72,14 +69,13 @@ extern void
  * @param	sizx	Ｘサイズ（キャラクター単位）
  * @param	sizy	Ｙサイズ（キャラクター単位）
  * @param	panum	使用パレットナンバー
- * @param	dir		確保ＶＲＡＭ方向
+ * @param	dir		確保ＶＲＡＭ方向(GFL_BMP_CHRAREA_GET_F:前方確保　GFL_BMP_CHRAREA_GET_B:後方確保）
  *
  * @return	ビットマップウインドウハンドルポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern GFL_BMPWIN* 
-	GFL_BMPWIN_Create
-		( u8 frmnum, u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u8 dir );
+extern GFL_BMPWIN* GFL_BMPWIN_Create( u8 frmnum, u8 posx, u8 posy, u8 sizx, u8 sizy, u8 palnum, u8 dir );
+
 //--------------------------------------------------------------------------------------------
 /**
  * ビットマップウインドウの破棄
@@ -87,9 +83,7 @@ extern GFL_BMPWIN*
  * @param	bmpwin	ビットマップウインドウポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void
-	GFL_BMPWIN_Delete
-		( GFL_BMPWIN* bmpwin );
+extern void GFL_BMPWIN_Delete( GFL_BMPWIN* bmpwin );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -99,65 +93,190 @@ extern void
  */
 //--------------------------------------------------------------------------------------------
 //---------------------------------------------------------
-// ビットマップ用キャラクターを内部バッファからＶＲＡＭへ転送
-extern void GFL_BMPWIN_UploadChar( GFL_BMPWIN* bmpwin );
+/**
+ * ビットマップ用キャラクターを内部バッファからＶＲＡＭへ転送
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
 //---------------------------------------------------------
-// ビットマップ用スクリーンを関連ＢＧスクリーンバッファに作成する
-extern void GFL_BMPWIN_MakeScrn( GFL_BMPWIN* bmpwin );
+extern	void	GFL_BMPWIN_TransVramCharacter( GFL_BMPWIN * bmpwin );
+
 //---------------------------------------------------------
-// 関連ＢＧスクリーンバッファのビットマップ用スクリーンをクリアする
-extern void GFL_BMPWIN_ClearScrn( GFL_BMPWIN* bmpwin );
+/**
+ * ビットマップ用スクリーンを関連ＢＧスクリーンバッファに作成する
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+extern	void	GFL_BMPWIN_MakeScreen( GFL_BMPWIN * bmpwin );
+
+//---------------------------------------------------------
+/**
+ * 関連ＢＧスクリーンバッファのビットマップ用スクリーンをクリアする
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ */
+//---------------------------------------------------------
+extern	void	GFL_BMPWIN_ClearScreen( GFL_BMPWIN * bmpwin );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ビットマップウインドウステータス取得
  */
 //--------------------------------------------------------------------------------------------
-// フレームナンバーの取得
-extern u8 GFL_BMPWIN_GetFrame( const GFL_BMPWIN* bmpwin );
 //--------------------------------
-// キャラクターＸサイズの取得
-extern u8 GFL_BMPWIN_GetSizeX( const GFL_BMPWIN* bmpwin );
+/**
+ *
+ * フレームナンバーの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	フレームナンバー
+ */
 //--------------------------------
-// キャラクターＹサイズの取得
-extern u8 GFL_BMPWIN_GetSizeY( const GFL_BMPWIN* bmpwin );
+extern	u8	GFL_BMPWIN_GetFrame( const GFL_BMPWIN * bmpwin );
+
 //--------------------------------
-// スクリーンＸサイズの取得
-extern u8 GFL_BMPWIN_GetScrnSizeX( const GFL_BMPWIN* bmpwin );
+/**
+ * BMP領域のXサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	BMP領域のXサイズ
+ */
 //--------------------------------
-// スクリーンＹサイズの取得
-extern u8 GFL_BMPWIN_GetScrnSizeY( const GFL_BMPWIN* bmpwin );
+extern	u8	GFL_BMPWIN_GetSizeX( const GFL_BMPWIN * bmpwin );
+
 //--------------------------------
-// 描画Ｘ座標の取得
-extern u8 GFL_BMPWIN_GetPosX( const GFL_BMPWIN* bmpwin );
+/**
+ * BMP領域のYサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	BMP領域のYサイズ
+ */
 //--------------------------------
-// 描画Ｙ座標の取得
-extern u8 GFL_BMPWIN_GetPosY( const GFL_BMPWIN* bmpwin );
+extern	u8	GFL_BMPWIN_GetSizeY( const GFL_BMPWIN * bmpwin );
+
 //--------------------------------
-// キャラクターナンバーの取得
-extern u16 GFL_BMPWIN_GetChrNum( const GFL_BMPWIN* bmpwin );
+/**
+ * スクリーンXサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	スクリーンXサイズ
+ */
 //--------------------------------
-// ビットマップポインタの取得
-GFL_BMP_DATA* GFL_BMPWIN_GetBmp( GFL_BMPWIN * bmpwin );
+extern	u8	GFL_BMPWIN_GetScreenSizeX( const GFL_BMPWIN * bmpwin );
+
+//--------------------------------
+/**
+ * スクリーンYサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	スクリーンYサイズ
+ */
+//--------------------------------
+extern	u8	GFL_BMPWIN_GetScreenSizeY( const GFL_BMPWIN * bmpwin );
+
+//--------------------------------
+/**
+ * 描画Xサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	描画Xサイズ
+ */
+//--------------------------------
+extern	u8	GFL_BMPWIN_GetPosX( const GFL_BMPWIN * bmpwin );
+
+//--------------------------------
+/**
+ * 描画Yサイズの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	描画Yサイズ
+ */
+//--------------------------------
+extern	u8	GFL_BMPWIN_GetPosY( const GFL_BMPWIN * bmpwin );
+
+//--------------------------------
+/**
+ * キャラクターナンバーの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	キャラクターナンバー
+ */
+//--------------------------------
+extern	u16	GFL_BMPWIN_GetChrNum( const GFL_BMPWIN * bmpwin );
+
+//--------------------------------
+/**
+ * ビットマップポインタの取得
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ *
+ * @retval	ビットマップポインタ
+ */
+//--------------------------------
+extern	GFL_BMP_DATA*	GFL_BMPWIN_GetBmp( GFL_BMPWIN * bmpwin );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ビットマップウインドウステータス変更
  */
 //--------------------------------------------------------------------------------------------
-// 描画Ｘ座標の変更
-extern void GFL_BMPWIN_SetPosX( GFL_BMPWIN* bmpwin,u8 px );
 //--------------------------------
-// 描画Ｙ座標の変更
-extern void GFL_BMPWIN_SetPosY( GFL_BMPWIN* bmpwin,u8 py );
+/**
+ * 描画X座標の変更
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ * @param[in]	px		セットする描画X座標
+ */
 //--------------------------------
-// スクリーン描画サイズＸの変更
-extern void GFL_BMPWIN_SetScrnSizX( GFL_BMPWIN* bmpwin, u8 sx );
+extern	void	GFL_BMPWIN_SetPosX( GFL_BMPWIN * bmpwin, u8 px );
+
 //--------------------------------
-// スクリーン描画サイズＹの変更
-extern void GFL_BMPWIN_SetScrnSizY( GFL_BMPWIN* bmpwin, u8 sy );
+/**
+ * 描画Y座標の変更
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ * @param[in]	py		セットする描画Y座標
+ */
 //--------------------------------
-// パレットの変更
-extern void GFL_BMPWIN_SetPal( GFL_BMPWIN* bmpwin, u8 palnum );
+extern	void	GFL_BMPWIN_SetPosY( GFL_BMPWIN * bmpwin, u8 py );
+
+//--------------------------------
+/**
+ * スクリーン描画サイズXの変更
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ * @param[in]	sx		セットするスクリーン描画サイズX
+ */
+//--------------------------------
+extern	void	GFL_BMPWIN_SetScreenSizeX( GFL_BMPWIN * bmpwin, u8 sx );
+
+//--------------------------------
+/**
+ * スクリーン描画サイズＹの変更
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ * @param[in]	sy		セットするスクリーン描画サイズY
+ */
+//--------------------------------
+extern	void	GFL_BMPWIN_SetScreenSizeY( GFL_BMPWIN * bmpwin, u8 sy );
+
+//--------------------------------
+/**
+ * パレットナンバーの変更
+ *
+ * @param[in]	bmpwin	ビットマップウインドウポインタ
+ * @param[in]	palnum	セットするパレットナンバー
+ */
+//--------------------------------
+extern	void	GFL_BMPWIN_SetPalette( GFL_BMPWIN * bmpwin, u8 palnum );
 
 #endif

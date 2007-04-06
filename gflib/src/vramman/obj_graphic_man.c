@@ -164,7 +164,7 @@ static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFl
 		void* tmpBuf;
 		u32 size;
 
-		tmpBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
+		tmpBuf = GFL_ARC_LoadDataAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
 		size = MI_GetUncompressedSize( tmpBuf );
 		retBuf = GFL_HEAP_AllocMemory( heapID, size );
 		MI_UncompressLZ8( tmpBuf, retBuf );
@@ -172,7 +172,7 @@ static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFl
 	}
 	else
 	{
-		retBuf = GFL_ARC_DataLoadAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
+		retBuf = GFL_ARC_LoadDataAllocByHandle( arc, dataID, GetHeapLowID(heapID) );
 	}
 
 	return retBuf;
@@ -311,8 +311,8 @@ u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animD
 	{
 		CELLANIM_MAN* man = &SysWork.cellAnimMan[idx];
 
-		man->cellLoadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, cellDataID, heapID );
-		man->animLoadPtr = GFL_ARC_DataLoadAllocByHandle( arcHandle, animDataID, heapID );
+		man->cellLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, cellDataID, heapID );
+		man->animLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, animDataID, heapID );
 
 		if( register_cellanim( idx, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
 		{
@@ -395,7 +395,7 @@ u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE
 	u32 idx = search_empty_pltt_pos();
 	if( idx != GFL_OBJGRP_REGISTER_FAILED )
 	{
-		void* loadPtr = GFL_ARC_DataLoadAllocByHandle(	arcHandle, 
+		void* loadPtr = GFL_ARC_LoadDataAllocByHandle(	arcHandle, 
 														plttDataID, 
 														GetHeapLowID(heapID) );
 		register_pltt( idx, loadPtr, vramType, byteOffs );

@@ -121,7 +121,7 @@ MSGDATA_HEADER*
 	GFL_MSG_Create
 		( u32 arcID, u32 datID, HEAPID heapID )
 {
-	return GFL_ARC_DataLoadMalloc( arcID, datID, heapID );
+	return GFL_ARC_LoadDataAlloc( arcID, datID, heapID );
 }
 
 
@@ -248,9 +248,9 @@ void
 	GFL_MSG_GetStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
-	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
+	ARCHANDLE*  arcHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
 	GFL_MSG_GetStringDirectByHandle( arcHandle, datID, strID, heapID, dst );
-	GFL_ARC_DataHandleClose( arcHandle );
+	GFL_ARC_CloseDataHandle( arcHandle );
 }
 
 
@@ -275,18 +275,18 @@ void
 	STRCODE*  str;
 	u32 size;
 
-	GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
 
 	if( strID < header.numMsgs )
 	{
-		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
+		GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
 									sizeof(MSG_PARAM_BLOCK), &param );
 		DecodeParam( &param, strID, header.randValue );
 
 		size = param.len * sizeof(STRCODE);
 		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), size );
 
-		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
+		GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, param.offset, size, str );
 		DecodeStr( str, param.len, strID, header.randValue );
 		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
 		GFL_HEAP_FreeMemory( str );
@@ -318,9 +318,9 @@ STRBUF*
 	GFL_MSG_CreateStringDirect
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID )
 {
-	ARCHANDLE*  arcHandle = GFL_ARC_DataHandleOpen( arcID, heapID );
+	ARCHANDLE*  arcHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
 	STRBUF* ret = GFL_MSG_CreateStringDirectByHandle( arcHandle, datID, strID, heapID );
-	GFL_ARC_DataHandleClose( arcHandle );
+	GFL_ARC_CloseDataHandle( arcHandle );
 
 	return ret;
 }
@@ -350,14 +350,14 @@ STRBUF*
 	STRCODE* str;
 	u32	size;
 
-	GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
 
 	if( strID < header.numMsgs )
 	{
 		MSG_PARAM_BLOCK  param;
 		STRBUF*   dst;
 
-		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
+		GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, CalcParamBlockOfs(strID),
 									sizeof(MSG_PARAM_BLOCK), &param );
 		DecodeParam( &param, strID, header.randValue );
 
@@ -365,7 +365,7 @@ STRBUF*
 		size = param.len * sizeof(STRCODE);
 		str = GFL_HEAP_AllocMemory( GetHeapLowID( heapID ), size );
 
-		GFL_ARC_DataLoadOfsByHandle( arcHandle, datID, param.offset, size, str );
+		GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, param.offset, size, str );
 		DecodeStr( str, param.len, strID, header.randValue );
 		GFL_STR_SetStringCodeOrderLength( dst, str, param.len );
 		GFL_HEAP_FreeMemory( str );
@@ -411,7 +411,7 @@ u32
 		( u32 arcID, u32 datID )
 {
 	MSGDATA_HEADER  header;
-	GFL_ARC_DataLoadOfs( &header, arcID, datID, 0, sizeof(MSGDATA_HEADER) );
+	GFL_ARC_LoadDataOfs( &header, arcID, datID, 0, sizeof(MSGDATA_HEADER) );
 
 	return header.numMsgs;
 }
@@ -469,7 +469,7 @@ MSGDATA_MANAGER*
 	}
 	else
 	{
-		man->arcHandle = GFL_ARC_DataHandleOpen(arcID, heapID);
+		man->arcHandle = GFL_ARC_OpenDataHandle(arcID, heapID);
 	}
 	man->type = type;
 	man->arcID = arcID;
@@ -499,7 +499,7 @@ void
 			GFL_MSG_Delete( man->msgData );
 			break;
 		case MSGMAN_TYPE_DIRECT:
-			GFL_ARC_DataHandleClose( man->arcHandle );
+			GFL_ARC_CloseDataHandle( man->arcHandle );
 			break;
 		}
 		GFL_HEAP_FreeMemory( man );

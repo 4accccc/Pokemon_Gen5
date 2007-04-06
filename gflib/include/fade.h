@@ -11,13 +11,6 @@
 #ifndef _FADE_H_
 #define _FADE_H_
 
-#undef GLOBAL
-#ifdef __FADE_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
-
 //=========================================================================
 //	定数定義
 //=========================================================================
@@ -42,21 +35,21 @@
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void	GFL_FADE_sysInit( u32 heapID );
+extern	void	GFL_FADE_Init( u32 heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * フェードシステムメイン
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void	GFL_FADE_sysMain( void );
+extern	void	GFL_FADE_Main( void );
 
 //--------------------------------------------------------------------------------------------
 /**
  * フェードシステム終了
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void	GFL_FADE_sysExit( void );
+extern	void	GFL_FADE_Exit( void );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -68,7 +61,7 @@ GLOBAL	void	GFL_FADE_sysExit( void );
  * @param	wait		フェードスピード
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void	GFL_FADE_MasterBrightReq( int mode, int start_evy, int end_evy, int wait );
+extern	void	GFL_FADE_SetMasterBrightReq( int mode, int start_evy, int end_evy, int wait );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -77,6 +70,6 @@ GLOBAL	void	GFL_FADE_MasterBrightReq( int mode, int start_evy, int end_evy, int 
  * @reval	TRUE:実行中 FALSE:未実行
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	BOOL	GFL_FADE_FadeCheck( void );
+extern	BOOL	GFL_FADE_CheckFade( void );
 
 #endif //_FADE_H_

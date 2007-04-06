@@ -9,7 +9,6 @@
 //=============================================================================================
 #include "gflib.h"
 
-#define	__FADE_H_GLOBAL__
 #include "fade.h"
 
 struct	_GFL_FADE_SYS
@@ -40,7 +39,7 @@ static	void	GFL_FADE_MasterBrightAct( void );
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-void GFL_FADE_sysInit( u32 heapID )
+void GFL_FADE_Init( u32 heapID )
 {
 	fade_sys  = (GFL_FADE_SYS *)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FADE_SYS) );
 }
@@ -50,7 +49,7 @@ void GFL_FADE_sysInit( u32 heapID )
  * フェードシステムメイン
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_FADE_sysMain( void )
+void	GFL_FADE_Main( void )
 {
 	if( fade_sys == NULL ){
 		return;
@@ -84,7 +83,7 @@ void	GFL_FADE_sysMain( void )
  * フェードシステム終了
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_FADE_sysExit( void )
+void	GFL_FADE_Exit( void )
 {
 	GFL_HEAP_FreeMemory( fade_sys );
 	fade_sys = NULL;
@@ -100,7 +99,7 @@ void	GFL_FADE_sysExit( void )
  * @param	wait		フェードスピード
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_FADE_MasterBrightReq( int mode, int start_evy, int end_evy, int wait )
+void	GFL_FADE_SetMasterBrightReq( int mode, int start_evy, int end_evy, int wait )
 {
 	fade_sys->mode = mode;
 	fade_sys->start_evy = start_evy;
@@ -133,7 +132,7 @@ void	GFL_FADE_MasterBrightReq( int mode, int start_evy, int end_evy, int wait )
  * @reval	TRUE:実行中 FALSE:未実行
  */
 //--------------------------------------------------------------------------------------------
-BOOL	GFL_FADE_FadeCheck( void )
+BOOL	GFL_FADE_CheckFade( void )
 {
 	return ( fade_sys->mode !=0 );
 }

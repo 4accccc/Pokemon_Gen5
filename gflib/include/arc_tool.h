@@ -12,40 +12,117 @@
 #define	__ARC_TOOL_H_
 
 //============================================================================================
-//		定数定義
-//============================================================================================
-
-#define	OFS_NO_SET		(0)		///<ArchiveDataLoadOfs,ArchiveDataLoadOfs用OFS値なしの定数
-#define	SIZE_NO_SET		(0)		///<ArchiveDataLoadOfs,ArchiveDataLoadOfs用SIZE値なしの定数
-
-//============================================================================================
 /**
- *
  *	アーカイブシステム初期化
  *
  * @param[in]	tbl		アーカイブデータテーブルのアドレス
  * @param[in]	tbl_max	アーカイブデータテーブルの要素数のMAX
- *
  */
 //============================================================================================
-extern	void	GFL_ARC_sysInit(const char **tbl,int tbl_max);
+extern	void	GFL_ARC_Init(const char **tbl,int tbl_max);
 
 //============================================================================================
 /**
- *
- *	アーカイブシステム終了（現状は特になにもしない）
- *
+ *	アーカイブシステム終了
  */
 //============================================================================================
-extern	void	GFL_ARC_sysExit(void);
+extern	void	GFL_ARC_Exit(void);
 
-extern	void	GFL_ARC_DataLoad(void *data,int file_kind,int index);
-extern	void	*GFL_ARC_DataLoadMalloc(int file_kind,int index,HEAPID heapID);
-extern	void	GFL_ARC_DataLoadOfs(void *data,int file_kind,int index,int ofs,int size);
-extern	void	*GFL_ARC_DataLoadMallocOfs(int file_kind,int index,HEAPID heapID,int ofs,int size);
-extern	void	*GFL_ARC_DataLoadFilePathMalloc(const char *name,int datID,HEAPID heapID);
-extern	u16		GFL_ARC_DataFileCntGet(int file_kind,int index);
-extern	u32		GFL_ARC_DataSizeGet(int file_kind,int index);
+//============================================================================================
+/**
+ * アーカイブファイルデータロード
+ *
+ * @param[in]	data		読み込んだデータを格納するワークのポインタ
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ */
+//============================================================================================
+extern	void	GFL_ARC_LoadData(void *data, int arcID, int datID);
+
+//============================================================================================
+/**
+ * アーカイブファイルデータロード（読み込んだデータを格納するワークを関数内で確保するバージョン）
+ *
+ * ※関数内でワークをAllocするので、自前で開放処理をする必要があります
+ *
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ * @param[in]	heapID		メモリを確保するヒープ領域のID
+ *
+ * @retval	関数内で確保したデータ格納ワークのアドレス
+ */
+//============================================================================================
+extern	void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID);
+
+//============================================================================================
+/**
+ * アーカイブファイルデータロード（オフセット指定あり）
+ *
+ * @param[in]	data		読み込んだデータを格納するワークのポインタ
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ * @param[in]	ofs			読み込むデータの先頭からのオフセット
+ * @param[in]	size		読み込むデータサイズ
+ */
+//============================================================================================
+extern	void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size);
+
+//============================================================================================
+/**
+ * アーカイブファイルデータロード（読み込んだデータを格納するワークを関数内で確保するバージョンとオフセット指定あり）
+ *
+ * ※関数内でワークをAllocするので、自前で開放処理をする必要があります
+ *
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ * @param[in]	heapID		メモリを確保するヒープ領域のID
+ * @param[in]	ofs			読み込むデータの先頭からのオフセット
+ * @param[in]	size		読み込むデータサイズ
+ *
+ * @retval	関数内で確保したデータ格納ワークのアドレス
+ */
+//============================================================================================
+extern	void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int size);
+
+//============================================================================================
+/**
+ *	nnsarcで作成したアーカイブファイルに対して直接ファイル名を指定して任意のデータを取り出す
+ *	読み込んだデータを格納するワークもこの関数内で確保して、ポインタを返す
+ *
+ * @param[in]	name		読み込むアーカイブファイル名
+ * @param[in]	datID		読み込むデータのアーカイブ上のインデックスナンバー
+ * @param[in]	heapID		メモリを確保するヒープ領域のID
+ *
+ * @retval	関数内で確保したデータ格納ワークのアドレス
+ */
+//============================================================================================
+extern	void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID heapID);
+
+//============================================================================================
+/**
+ * アーカイブファイルデータのファイル数を取得
+ *
+ * @param[in]	arcID	読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ *
+ * @retval	アーカイブファイルデータのファイル数
+ */
+//============================================================================================
+extern	u16	GFL_ARC_GetDataFileCnt(int arcID, int datID);
+
+//============================================================================================
+/**
+ * アーカイブファイルデータのサイズを取得
+ *
+ *	ArchiveDataLoadを使用する時、確保するメモリサイズを取得するのに使用します
+ *
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー（arc_tool.hに記述）
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ *
+ * @retval	アーカイブファイルデータのサイズ
+ */
+//============================================================================================
+extern	u32	GFL_ARC_GetDataSize(int arcID,int datID);
 
 /*====================================================================================*/
 /*
@@ -55,7 +132,6 @@ extern	u32		GFL_ARC_DataSizeGet(int file_kind,int index);
   オープン・クローズ回数を減らすことで処理負荷を軽減させるための仕組み。
 */
 /*====================================================================================*/
-
 
 //--------------------------------------------------
 /**
@@ -69,13 +145,13 @@ typedef struct _ARCHANDLE  ARCHANDLE;
  * アーカイブデータハンドルオープン
  * （内部でファイルをオープンします）
  *
- * @param   arcId		アーカイブデータインデックス
- * @param   heapId		管理用ヒープＩＤ
+ * @param   arcID		アーカイブデータインデックス
+ * @param   heapID		管理用ヒープＩＤ
  *
  * @retval  ARCHANDLE	オープンされたハンドルのポインタ（失敗ならNULL）
  */
 //------------------------------------------------------------------
-extern ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, HEAPID heapID );
+extern ARCHANDLE* GFL_ARC_OpenDataHandle( u32 arcID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -83,49 +159,45 @@ extern ARCHANDLE* GFL_ARC_DataHandleOpen( u32 arcId, HEAPID heapID );
  * （内部でファイルをクローズします）
  *
  * @param   handle			ハンドルポインタ
- *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_DataHandleClose( ARCHANDLE* handle );
-
+extern void GFL_ARC_CloseDataHandle( ARCHANDLE* handle );
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータハンドルを使ってデータ取得
  *
  * @param   handle		ハンドルポインタ
- * @param   datId		アーカイブ内のデータインデックス
+ * @param   datID		アーカイブ内のデータインデックス
  * @param   buffer		データ読み込み先バッファ
- *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_DataLoadByHandle( ARCHANDLE* handle, u32 datId, void* buffer );
+extern void GFL_ARC_LoadDataByHandle( ARCHANDLE* handle, u32 datID, void* buffer );
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータハンドルを使ってデータサイズ取得
  *
  * @param   handle		ハンドルポインタ
- * @param   datId		アーカイブ内のデータインデックス
- * @retval	u32			インデックスのデータサイズ
+ * @param   datID		アーカイブ内のデータインデックス
  *
+ * @retval	u32			インデックスのデータサイズ
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_DataSizeGetByHandle( ARCHANDLE* handle, u32 datId );
+extern u32 GFL_ARC_GetDataSizeByHandle( ARCHANDLE* handle, u32 datID );
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータハンドルを使ってデータ取得（読み込み開始オフセット＆サイズ指定）
  *
  * @param   handle		ハンドルポインタ
- * @param   datId		アーカイブ内のデータインデックス
+ * @param   datID		アーカイブ内のデータインデックス
  * @param   ofs			読み込み開始オフセット
  * @param   size		読み込みサイズ
  * @param   buffer		データ読み込み先バッファ
- *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_DataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, u32 size, void* buffer );
+extern void GFL_ARC_LoadDataOfsByHandle( ARCHANDLE* handle, u32 datID, u32 ofs, u32 size, void* buffer );
 
 //------------------------------------------------------------------
 /**
@@ -138,19 +210,18 @@ extern void GFL_ARC_DataLoadOfsByHandle( ARCHANDLE* handle, u32 datId, u32 ofs, 
  * @retval  u32				データサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_DataLoadAllocByHandle( ARCHANDLE* handle, u32 datID, HEAPID heapID );
+extern void* GFL_ARC_LoadDataAllocByHandle( ARCHANDLE* handle, u32 datID, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータハンドルを使ってイメージデータオフセット取得
  *
  * @param   handle		ハンドルポインタ
- * @param   datId		アーカイブ内のデータインデックス
+ * @param   datID		アーカイブ内のデータインデックス
  * @param   offset		オフセット読み込み先バッファ
- *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_DataLoadImgofsByHandle( ARCHANDLE* handle, u32 datId, u32* offset );
+extern void GFL_ARC_LoadDataImgofsByHandle( ARCHANDLE* handle, u32 datID, u32* offset );
 
 //------------------------------------------------------------------
 /**
@@ -159,10 +230,9 @@ extern void GFL_ARC_DataLoadImgofsByHandle( ARCHANDLE* handle, u32 datId, u32* o
  * @param   handle		ハンドルポインタ
  * @param   size		読み込みサイズ
  * @param   buffer		データ読み込み先バッファ
- *
  */
 //------------------------------------------------------------------
-extern	void GFL_ARC_DataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer );
+extern	void GFL_ARC_LoadDataByHandleContinue( ARCHANDLE* handle, u32 size, void* buffer );
 
 //------------------------------------------------------------------
 /**
@@ -170,20 +240,20 @@ extern	void GFL_ARC_DataLoadByHandleContinue( ARCHANDLE* handle, u32 size, void*
  *
  * @param   handle		ハンドルポインタ
  * @param   size
- *
  */
 //------------------------------------------------------------------
-extern	void GFL_ARC_DataSeekByHandle( ARCHANDLE* handle, u32 size );
+extern	void GFL_ARC_SeekDataByHandle( ARCHANDLE* handle, u32 size );
 
 //============================================================================================
 /**
  * アーカイブファイルデータのファイル数を取得(ハンドル使用)
  *
  * @param	handle			ハンドルポインタ
+ *
  * @retval	u16				ファイル数	
  */
 //============================================================================================
-extern	u16		GFL_ARC_DataFileCntGetByHandle(ARCHANDLE* handle);
+extern	u16		GFL_ARC_GetDataFileCntByHandle(ARCHANDLE* handle);
 
 #endif	__ARC_TOOL_H_
 

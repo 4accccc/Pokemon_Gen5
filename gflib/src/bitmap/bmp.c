@@ -13,25 +13,24 @@
 //=============================================================================================
 #include "gflib.h"
 
-#define	__BMP_H_GLOBAL__
 #include "bmp.h"
 #include "bg_sys.h"
 
+#define	GFL_BMP_NORMAL		(0)		//GFL_BMP_Createで生成
+#define	GFL_BMP_WITH_DATA	(1)		//GFL_BMP_CreateWithDataで生成
+
 struct _GFL_BMP_DATA{
-	u8 * adrs;		///<キャラクタデータの先頭アドレス
-	u16	size_x;		///<キャラクタデータのXサイズ
-	u16	size_y;		///<キャラクタデータのYサイズ
-	int	col;		///<カラーモード（GFL_BMP_16_COLOR:16色　GFL_BMP_256_COLOR:256色）
+	u8 * adrs;			///<キャラクタデータの先頭アドレス
+	u16	size_x;			///<キャラクタデータのXサイズ
+	u16	size_y;			///<キャラクタデータのYサイズ
+	u16	col;			///<カラーモード（GFL_BMP_16_COLOR:16色　GFL_BMP_256_COLOR:256色）
+	u16	create_flag;	///<BMPCreate方法フラグ（GFL_BMP_NORMAL:GFL_BMP_Create　GFL_BMP_WITH_DATA:GFL_BMP_CreateWithData）
 };
 
-static	void GFL_BMP_PrintMain16(
-			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
 
-static	void GFL_BMP_PrintMain256(
-		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col );
 
 static	void GFL_BMP_Fill16(
@@ -50,7 +49,7 @@ static	void GFL_BMP_Fill256(
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP初期化
+ * BMP領域生成
  *
  * @param	sizex	Xサイズ（キャラ単位）
  * @param	sizey	Yサイズ（キャラ単位）
@@ -60,35 +59,38 @@ static	void GFL_BMP_Fill256(
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID )
+GFL_BMP_DATA * GFL_BMP_Create( int sizex, int sizey, int col, HEAPID heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
 	// 計算プロセス省略のため、内部ではドット単位で保持する
-	bmp->size_x	=	sizex * 8;
-	bmp->size_y	=	sizey * 8;
-	bmp->col	=	col;
-	bmp->adrs	=	GFL_HEAP_AllocClearMemory( heapID, sizex * sizey * col );
+	bmp->size_x			=	sizex * 8;
+	bmp->size_y			=	sizey * 8;
+	bmp->col			=	col;
+	bmp->adrs			=	GFL_HEAP_AllocClearMemory( heapID, sizex * sizey * col );
+	bmp->create_flag	=	GFL_BMP_NORMAL;
 
 	return bmp;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * システムワークエリア開放
+ * BMP領域開放
  *
  * @param	bmp		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
+void	GFL_BMP_Delete( GFL_BMP_DATA *bmp )
 {
-	GFL_HEAP_FreeMemory( bmp->adrs );
+	if(bmp->create_flag==GFL_BMP_NORMAL){
+		GFL_HEAP_FreeMemory( bmp->adrs );
+	}
 	GFL_HEAP_FreeMemory( bmp );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP初期化（GFL_BMP_DATAポインタを生成して、それ以外は引数のものをメンバに代入
+ * BMP領域生成（GFL_BMP_DATAポインタを生成して、それ以外は引数のものをメンバに代入
  *
  * @param	adrs	キャラエリアへのポインタ
  * @param	sizex	Xサイズ
@@ -99,29 +101,31 @@ void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp )
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID )
+GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID )
 {
 	GFL_BMP_DATA * bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 
-	bmp->size_x	=	sizex ;
-	bmp->size_y	=	sizey ;
-	bmp->adrs	=	adrs ;
-	bmp->col	=	col ;
+	bmp->size_x			=	sizex ;
+	bmp->size_y			=	sizey ;
+	bmp->adrs			=	adrs ;
+	bmp->col			=	col ;
+	bmp->create_flag	=	GFL_BMP_WITH_DATA;
 
 	return bmp;
 }
 
 //--------------------------------------------------------------------------------------------
-/**
- * BMP破棄（sysCreateで生成したもの専用の破棄関数）
+/*
+ * GFL_BMP_DATA構造体のサイズを取得
  *
- * @param	bmp		システムワークエリアへのポインタ
+ * @retval	GFL_BMP_DATA構造体のサイズ
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMP_sysDelete( GFL_BMP_DATA *bmp )
+int		GFL_BMP_GetGFL_BMP_DATASize( void )
 {
-	GFL_HEAP_FreeMemory( bmp );
+	return sizeof(GFL_BMP_DATA);
 }
+
 
 //--------------------------------------------------------------------------------------------
 /*
@@ -130,7 +134,7 @@ void GFL_BMP_sysDelete( GFL_BMP_DATA *bmp )
  * @param	bmp		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA	*GFL_BMP_BmpAdrsGet( GFL_BMP_DATA *bmp )
+GFL_BMP_DATA	*GFL_BMP_GetBmpAdrs( GFL_BMP_DATA *bmp )
 {
 	return bmp;
 }
@@ -142,7 +146,7 @@ GFL_BMP_DATA	*GFL_BMP_BmpAdrsGet( GFL_BMP_DATA *bmp )
  * @param	bmp		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-u8	*GFL_BMP_ChrAdrsGet( GFL_BMP_DATA *bmp )
+u8	*GFL_BMP_GetCharacterAdrs( GFL_BMP_DATA *bmp )
 {
 	return bmp->adrs;
 }
@@ -154,7 +158,7 @@ u8	*GFL_BMP_ChrAdrsGet( GFL_BMP_DATA *bmp )
  * @param	bmp		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-u16	GFL_BMP_SizeXGet( GFL_BMP_DATA *bmp )
+u16	GFL_BMP_GetSizeX( GFL_BMP_DATA *bmp )
 {
 	return bmp->size_x;
 }
@@ -166,7 +170,7 @@ u16	GFL_BMP_SizeXGet( GFL_BMP_DATA *bmp )
  * @param	bmp		システムワークエリアへのポインタ
  */
 //--------------------------------------------------------------------------------------------
-u16	GFL_BMP_SizeYGet( GFL_BMP_DATA *bmp )
+u16	GFL_BMP_GetSizeY( GFL_BMP_DATA *bmp )
 {
 	return bmp->size_y;
 }
@@ -183,13 +187,13 @@ u16	GFL_BMP_SizeYGet( GFL_BMP_DATA *bmp )
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heapID )
+GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID heapID )
 {
 	GFL_BMP_DATA		*bmp = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_BMP_DATA) );
 	void				*src;
 	NNSG2dCharacterData	*chr;
 
-	src=GFL_ARC_UtilLoad( arcID, datID, compflag, heapID );
+	src=GFL_ARC_UTIL_Load( arcID, datID, compflag, heapID );
 	if( NNS_G2dGetUnpackedBGCharacterData( src, &chr ) == FALSE){
 		OS_Panic("GFL_BMP_CharLoad:Faild\n");
 		return NULL;
@@ -235,73 +239,17 @@ GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heap
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-#define	NULLPAL_L	(nuki_col)
-
-#define SRC_ADRS	(src->adrs)
-#define SRC_POSX	(pos_sx)
-#define SRC_POSY	(pos_sy)
-#define SRC_SIZX	(src->size_x)
-#define SRC_SIZY	(src->size_y)
-#define	SRC_XARG	(((SRC_SIZX) + (SRC_SIZX & 7))>>3)
-
-#define DST_ADRS	(dest->adrs)
-#define DST_POSX	(pos_dx)
-#define DST_POSY	(pos_dy)
-#define DST_SIZX	(dest->size_x)
-#define DST_SIZY	(dest->size_y)
-#define	DST_XARG	(((DST_SIZX) + (DST_SIZX & 7))>>3)
-
-#define WRT_SIZX	(size_x)
-#define WRT_SIZY	(size_y)
-
-#if 0
-#define DPPCALC(adrs, pos_x, pos_y, size_x)		\
-	(u8*)((adrs) +								\
-	(((pos_x)>>1) & 3) +						\
-	(((pos_x)>>3) << 5) +						\
-	((((pos_y)>>3) * (size_x)) << 5) +			\
-	((u32)((pos_y)<<29)>>27)					\
-	)
-
-#define DPPCALC_256(adrs, pos_x, pos_y, size_x)	\
-	(u8*)((adrs) +								\
-	(pos_x & 7) +								\
-	((pos_x>>3) << 6) +							\
-	(((pos_y>>3) * size_x) << 6) +				\
-	((u32)((pos_y)<<29)>>26)					\
-	)
-#else
-#define DPPCALC(adrs, pos_x, pos_y, size_x)		\
-	(u8*)((adrs) +								\
-	((pos_x >> 1) & 0x00000003) +				\
-	((pos_x << 2) & 0x00003fe0) +				\
-	(((pos_y << 2) & 0x00003fe0) * size_x) +	\
-	((u32)((pos_y << 2)&0x0000001c))			\
-	)
-
-#define DPPCALC_256(adrs, pos_x, pos_y, size_x)	\
-	(u8*)((adrs) +								\
-	(pos_x & 0x00000007) +						\
-	((pos_x << 3) & 0x00007fc0) +				\
-	(((pos_y << 3) & 0x00007fc0) * size_x) +	\
-	((u32)((pos_y << 3)&0x00000038))			\
-	)
-#endif
-
-
-void GFL_BMP_PrintMain(
-			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	//srcとdestのカラーモードに相違があったら、アサートで止める
 	GF_ASSERT(src->col==dest->col);
 
 	if(src->col==GFL_BMP_16_COLOR){
-		GFL_BMP_PrintMain16( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
+		GFL_BMP_Print16( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
 	}
 	else{
-		GFL_BMP_PrintMain256( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
+		GFL_BMP_Print256( src, dest, pos_sx, pos_sy, pos_dx, pos_dy, size_x, size_y, nuki_col );
 	}
 }
 
@@ -389,23 +337,6 @@ void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code )
 #define WRT_SIZX	(size_x)
 #define WRT_SIZY	(size_y)
 
-#if 0
-#define DPPCALC(adrs, pos_x, pos_y, size_x)		\
-	(u8*)((adrs) +								\
-	(((pos_x)>>1) & 3) +						\
-	(((pos_x)>>3) << 5) +						\
-	((((pos_y)>>3) * (size_x)) << 5) +			\
-	((u32)((pos_y)<<29)>>27)					\
-	)
-
-#define DPPCALC_256(adrs, pos_x, pos_y, size_x)	\
-	(u8*)((adrs) +								\
-	(pos_x & 7) +								\
-	((pos_x>>3) << 6) +							\
-	(((pos_y>>3) * size_x) << 6) +				\
-	((u32)((pos_y)<<29)>>26)					\
-	)
-#else
 #define DPPCALC(adrs, pos_x, pos_y, size_x)		\
 	(u8*)((adrs) +								\
 	((pos_x >> 1) & 0x00000003) +				\
@@ -421,12 +352,8 @@ void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code )
 	(((pos_y << 3) & 0x00007fc0) * size_x) +	\
 	((u32)((pos_y << 3)&0x00000038))			\
 	)
-#endif
 
-
-static	void GFL_BMP_PrintMain16(
-			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	int	sx, dx, sy, dy, src_dat, shiftval, x_max, y_max, srcxarg, dstxarg;
@@ -495,9 +422,7 @@ static	void GFL_BMP_PrintMain16(
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_PrintMain256(
-		const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-		u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
 {
 	int	sx, dx, sy, dy, x_max, y_max, srcxarg, dstxarg;
@@ -555,9 +480,7 @@ static	void GFL_BMP_PrintMain256(
  * @li	１６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_Fill16(
-		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
 	u8	*destadrs;
@@ -606,9 +529,7 @@ static	void GFL_BMP_Fill16(
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_Fill256(
-		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
 	u8	*destadrs;

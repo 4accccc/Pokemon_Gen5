@@ -96,8 +96,7 @@ void
 	GFL_FONT_SetColor( param->colorF, param->colorB );
 
 	//フォントビットマップ情報作成
-	bmpfont = GFL_BMP_sysCreate( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, 
-									GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
+	bmpfont = GFL_BMP_CreateWithData( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
 	
 	//フォントデータ取得
 	while( (fcode = *textcode ) != EOM_ ) 
@@ -126,15 +125,14 @@ void
 		default:
 			GFL_FONT_GetData( fcode - STR_DEFAULT_CODE_MAX, &tw->fdata );
 
-			GFL_BMP_PrintMain(	bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, 
-								tw->fdata.sizex, sizemaxY, 0 );
+			GFL_BMP_Print( bmpfont, param->bmp, 0, 0, tw->nowx, tw->nowy, tw->fdata.sizex, sizemaxY, 0 );
 
 			//次の文字の描画位置を設定
 			tw->nowx += ( tw->fdata.sizex + param->spacex );
 			break;
 		}
 	}
-	GFL_BMP_sysDelete(bmpfont);
+	GFL_BMP_Delete(bmpfont);
 }
 
 

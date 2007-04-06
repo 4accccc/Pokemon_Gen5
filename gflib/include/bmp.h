@@ -9,14 +9,6 @@
 #ifndef _BMP_H_
 #define _BMP_H_
 
-#undef GLOBAL
-#ifdef __BMP_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
-
-
 //--------------------------------------------------------------------
 //ビットマップ描画データ構造体
 typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
@@ -34,7 +26,7 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP初期化
+ * BMP領域生成
  *
  * @param	sizex	Xサイズ（キャラ単位）
  * @param	sizey	Yサイズ（キャラ単位）
@@ -44,20 +36,20 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_sysInit( int sizex, int sizey, int col, HEAPID heapID );
+extern	GFL_BMP_DATA * GFL_BMP_Create( int sizex, int sizey, int col, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
- * システムワークエリア開放
+ * BMP領域開放
  *
- * @param	bgl		システムワークエリアへのポインタ
+ * @param	bmp		BMP領域へのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp );
+extern	void	GFL_BMP_Delete( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP初期化（GFL_BMP_DATAポインタを生成して、それ以外は引数のものをメンバに代入
+ * BMP領域生成（GFL_BMP_DATAポインタを生成して、それ以外は引数のものをメンバに代入
  *
  * @param	adrs	キャラエリアへのポインタ
  * @param	sizex	Xサイズ
@@ -68,50 +60,52 @@ GLOBAL	void	GFL_BMP_sysExit( GFL_BMP_DATA *bmp );
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_sysCreate( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
+extern	GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
-/**
- * BMP破棄（sysCreateで生成したもの専用の破棄関数）
+/*
+ * GFL_BMP_DATA構造体のサイズを取得
+ *
+ * @retval	GFL_BMP_DATA構造体のサイズ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void GFL_BMP_sysDelete( GFL_BMP_DATA *bmp );
+extern	int		GFL_BMP_GetGFL_BMP_DATASize( void );
 
 //--------------------------------------------------------------------------------------------
 /*
  * ビットマップアドレスを取得
  *
- * @param	bmp		システムワークエリアへのポインタ
+ * @param	bmp		BMP領域へのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA	*GFL_BMP_BmpAdrsGet( GFL_BMP_DATA *bmp );
+extern	GFL_BMP_DATA	*GFL_BMP_GetBmpAdrs( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*
  * ビットマップキャラエリアアドレスを取得
  *
- * @param	bmp		システムワークエリアへのポインタ
+ * @param	bmp		BMP領域へのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	u8	*GFL_BMP_ChrAdrsGet( GFL_BMP_DATA *bmp );
+extern	u8	*GFL_BMP_GetCharacterAdrs( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*
  * ビットマップサイズXを取得
  *
- * @param	bmp		システムワークエリアへのポインタ
+ * @param	bmp		BMP領域へのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	u16	GFL_BMP_SizeXGet( GFL_BMP_DATA *bmp );
+extern	u16	GFL_BMP_GetSizeX( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*
  * ビットマップサイズYを取得
  *
- * @param	bmp		システムワークエリアへのポインタ
+ * @param	bmp		BMP領域へのポインタ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	u16	GFL_BMP_SizeYGet( GFL_BMP_DATA *bmp );
+extern	u16	GFL_BMP_GetSizeY( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -125,7 +119,7 @@ GLOBAL	u16	GFL_BMP_SizeYGet( GFL_BMP_DATA *bmp );
  * @return	取得したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAPID heapID );
+extern	GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -142,13 +136,9 @@ GLOBAL	GFL_BMP_DATA * GFL_BMP_CharLoad( int arcID, int datID, int compflag, HEAP
  * @param	nuki_col	透明色指定（0～15 0xff:透明色指定なし）
  *
  * @return	none
- *
- * @li	１６色用
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMP_PrintMain(
-			const GFL_BMP_DATA * src, GFL_BMP_DATA * dest,
-			u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
 
 //--------------------------------------------------------------------------------------------
@@ -163,13 +153,9 @@ GLOBAL void GFL_BMP_PrintMain(
  * @param	col_code	塗りつぶし色コード
  *
  * @return	none
- *
- * @li	１６色用
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_BMP_Fill(
-		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
+extern void GFL_BMP_Fill( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -181,7 +167,6 @@ GLOBAL void GFL_BMP_Fill(
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL	void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code );
+extern	void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code );
 
-#undef GLOBAL
 #endif

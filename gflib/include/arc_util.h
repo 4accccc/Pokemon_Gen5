@@ -48,13 +48,12 @@ typedef enum {
 	CHAR_MAP_2D,		// 2D
 }CHAR_MAPPING_TYPE;
 
-
 //------------------------------------------------------------------
 /**
  * BGｷｬﾗﾃﾞｰﾀの VRAM 転送
  *
- * @param   arcFile			アーカイブファイルインデックス
- * @param   arcIndex		アーカイブデータインデックス
+ * @param   arcID			アーカイブファイルインデックス
+ * @param   datID			アーカイブデータインデックス
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -64,14 +63,30 @@ typedef enum {
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern u32 GFL_ARC_UTIL_TransVramBgCharacter(u32 arcID, u32 datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+
+//------------------------------------------------------------------
+/**
+ * BGｷｬﾗﾃﾞｰﾀの VRAM 転送（エリアマネージャを使用して開いている領域に自動で転送）
+ *
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
+ * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
+ *
+ * @return  転送した位置
+ */
+//------------------------------------------------------------------
+extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(u32 arcID, u32 datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
  * OBJ ｷｬﾗﾃﾞｰﾀ の VRAM 転送
  *
- * @param   fileIdx				アーカイブファイルインデックス
- * @param   dataIdx				アーカイブデータインデックス
+ * @param   arcID				アーカイブファイルインデックス
+ * @param   datID				アーカイブデータインデックス
  * @param   objType				OBJﾀｲﾌﾟ
  * @param   offs				ｵﾌｾｯﾄ（ﾊﾞｲﾄ単位）
  * @param   transSize			転送ｻｲｽﾞ（ﾊﾞｲﾄ単位 : 0 で全転送）
@@ -81,31 +96,15 @@ extern u32 GFL_ARC_UtilBgCharSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u3
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UtilObjCharSet( u32 fileIdx, u32 dataIdx, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
-
-//------------------------------------------------------------------
-/**
- * BGｷｬﾗﾃﾞｰﾀの VRAM 転送（エリアマネージャを使用して開いている領域に自動で転送）
- *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
- * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
- * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
- * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
- * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
- *
- * @return  転送した位置
- */
-//------------------------------------------------------------------
-extern	u32 GFL_ARC_UtilBgCharSetAreaMan(u32 fileIdx, u32 dataIdx, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern u32 GFL_ARC_UTIL_TransVramObjCharacter( u32 arcID, u32 datID, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ｽｸﾘｰﾝﾃﾞｰﾀの VRAM 転送
  * ※ BGL側に ｽｸﾘｰﾝﾊﾞｯﾌｧ が用意されていれば、ｽｸﾘｰﾝﾊﾞｯﾌｧ への転送も行う
  *
- * @param   arcFile			アーカイブファイルインデックス
- * @param   arcIndex		アーカイブデータインデックス
+ * @param   arcID			アーカイブファイルインデックス
+ * @param   datID			アーカイブデータインデックス
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
@@ -114,32 +113,32 @@ extern	u32 GFL_ARC_UtilBgCharSetAreaMan(u32 fileIdx, u32 dataIdx, u32 frm, u32 t
  *
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_ARC_UtilScrnSet(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern void GFL_ARC_UTIL_TransVramScreen(u32 arcFile, u32 dataIdx, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //--------------------------------------------------------------------------------------------
 /**
  * ｽｸﾘｰﾝﾃﾞｰﾀの VRAM 転送（キャラのオフセットも指定可）
  * ※ BGL側に ｽｸﾘｰﾝﾊﾞｯﾌｧ が用意されていれば、ｽｸﾘｰﾝﾊﾞｯﾌｧ への転送も行う
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   frm				転送先ﾌﾚｰﾑﾅﾝﾊﾞ
  * @param   offs			転送ｵﾌｾｯﾄ（ｷｬﾗ単位）
+ * @param   chr_ofs			スクリーンデータのキャラNoへのｵﾌｾｯﾄ
  * @param	transSize		転送するｻｲｽﾞ（ﾊﾞｲﾄ単位 ==0で全転送）
  * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
  * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
  *
  */
 //--------------------------------------------------------------------------------------------
-extern	void GFL_ARC_UtilScrnSetCharOfs(u32 fileIdx, u32 dataIdx, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
-
+extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(u32 arcID, u32 datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
  * ﾊﾟﾚｯﾄﾃﾞｰﾀ の VRAM 転送
  *
- * @param   arcFile		アーカイブファイルインデックス
- * @param   dataIdx		アーカイブデータインデックス
+ * @param   arcID		アーカイブファイルインデックス
+ * @param   datID		アーカイブデータインデックス
  * @param   palType		ﾊﾟﾚｯﾄ転送先ﾀｲﾌﾟ
  * @param   offs		ﾊﾟﾚｯﾄ転送先ｵﾌｾｯﾄ
  * @param   transSize	ﾊﾟﾚｯﾄ転送ｻｲｽﾞ（0 で全転送）
@@ -147,15 +146,15 @@ extern	void GFL_ARC_UtilScrnSetCharOfs(u32 fileIdx, u32 dataIdx, u32 frm, u32 of
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UtilPalSet( u32 arcFile, u32 dataIdx, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
+extern void GFL_ARC_UTIL_TransVramPalette( u32 arcID, u32 datID, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
 
 
 //------------------------------------------------------------------
 /**
  * ﾊﾟﾚｯﾄﾃﾞｰﾀ の VRAM 転送（転送元の読み込み開始ｵﾌｾｯﾄ指定版）
  *
- * @param   fileIdx		ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID		ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   palType		ﾊﾟﾚｯﾄ転送先ﾀｲﾌﾟ
  * @param   srcOfs		ﾊﾟﾚｯﾄ転送元読み込み開始ｵﾌｾｯﾄ
  * @param   dstOfs		ﾊﾟﾚｯﾄ転送先ｵﾌｾｯﾄ
@@ -164,15 +163,15 @@ extern void GFL_ARC_UtilPalSet( u32 arcFile, u32 dataIdx, PALTYPE palType, u32 o
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UtilPalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
+extern void GFL_ARC_UTIL_TransVramPaletteEx( u32 arcID, u32 datID, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
  * ﾊﾟﾚｯﾄﾃﾞｰﾀ の VRAM 転送＆ NITRO System ﾊﾟﾚｯﾄﾌﾟﾛｷｼ を作成
  *（3D, OBJ 用にのみ対応。BG には使いません）
  *
- * @param   fileIdx		ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID		ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   type		転送先ﾀｲﾌﾟ
  * @param   offs		転送ｵﾌｾｯﾄ
  * @param   heapID		ﾋｰﾌﾟID
@@ -185,7 +184,7 @@ extern void GFL_ARC_UtilPalSetEx( u32 fileIdx, u32 dataIdx, PALTYPE palType, u32
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UtilPalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
+extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( u32 arcID, u32 datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
 
 //------------------------------------------------------------------
 /**
@@ -193,8 +192,8 @@ extern void GFL_ARC_UtilPalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE 
  *（3D, OBJ 用にのみ対応。BG には使いません）
  *
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているか
  * @param   mapType			ﾏｯﾋﾟﾝｸﾞﾀｲﾌﾟ
  * @param   transSize		転送ｻｲｽﾞ（0なら全転送）
@@ -218,7 +217,7 @@ extern void GFL_ARC_UtilPalSysLoad( u32 fileIdx, u32 dataIdx, NNS_G2D_VRAM_TYPE 
  *
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UtilCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
+extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( u32 arcID, u32 datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
 	u32 transSize, NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 
@@ -229,8 +228,8 @@ extern u32 GFL_ARC_UtilCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFla
  *
  * ｷｬﾗﾃﾞｰﾀのﾏｯﾋﾟﾝｸﾞﾓｰﾄﾞ値を、現在のﾚｼﾞｽﾀ設定に合わせて書き換えます
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているか
  * @param   mapType			ﾏｯﾋﾟﾝｸﾞﾀｲﾌﾟ
  * @param   transSize		転送サイズ。０なら全転送。
@@ -253,7 +252,7 @@ extern u32 GFL_ARC_UtilCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFla
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UtilCharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( u32 arcID, u32 datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 //------------------------------------------------------------------
@@ -264,8 +263,8 @@ extern void GFL_ARC_UtilCharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, 
  *    この関数でﾛｰﾄﾞしたﾃﾞｰﾀは解放されません。戻り値のconst void*を管理して、
  *    不要になったら解放処理を行ってください。
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているか
  * @param   vramType		転送先ﾀｲﾌﾟ
  * @param   offs			転送ｵﾌｾｯﾄ
@@ -282,7 +281,7 @@ extern void GFL_ARC_UtilCharSysLoadSyncroMappingMode( u32 fileIdx, u32 dataIdx, 
  *
  */
 //------------------------------------------------------------------
-extern const void* GFL_ARC_UtilTransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, 
+extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( u32 arcID, u32 datID, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
 
 
@@ -290,8 +289,8 @@ extern const void* GFL_ARC_UtilTransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, B
 /**
  * ｷｬﾗﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
  *
- * @param   fileIdx				ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   dataIdx				ﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID				ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID				ﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag		圧縮されているか
  * @param   charData			ｷｬﾗﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
  * @param   heapID				ﾋｰﾌﾟID
@@ -299,14 +298,14 @@ extern const void* GFL_ARC_UtilTransTypeCharSysLoad( u32 fileIdx, u32 dataIdx, B
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilCharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadCharacter( u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ｽｸﾘｰﾝﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
  * @param   scrnData		ｽｸﾘｰﾝﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
  * @param   heapID			ﾃﾞｰﾀ読み込み・解凍ﾃﾝﾎﾟﾗﾘとして使うﾋｰﾌﾟID
@@ -314,28 +313,28 @@ extern void* GFL_ARC_UtilCharDataGet( u32 fileIdx, u32 dataIdx, BOOL compressedF
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UtilScrnDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadScreen(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
  * ﾊﾟﾚｯﾄﾃﾞｰﾀをﾛｰﾄﾞして Unpack するだけです。解放は各自で。
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   palData			ﾊﾟﾚｯﾄﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
  * @param   heapID			ﾋｰﾌﾟID
  *
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilPalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData** palData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadPalette( u32 arcID, u32 datID, NNSG2dPaletteData** palData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ｾﾙﾊﾞﾝｸﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
  * @param   cellBank		ｾﾙﾊﾞﾝｸﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
  * @param   heapID			ﾋｰﾌﾟID
@@ -343,14 +342,14 @@ extern void* GFL_ARC_UtilPalDataGet( u32 fileIdx, u32 dataIdx, NNSG2dPaletteData
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UtilCellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadCellBank(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
  * ｱﾆﾒﾊﾞﾝｸﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
  *
- * @param   fileIdx			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   arcIndex		ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
  * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
  * @param   anmBank			ｱﾆﾒﾊﾞﾝｸﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
  * @param   heapID			ﾋｰﾌﾟID
@@ -358,29 +357,29 @@ extern void* GFL_ARC_UtilCellBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compress
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UtilAnimBankDataGet(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadAnimeBank(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
 
 
 //------------------------------------------------------------------
 /**
  * LZ圧縮後アーカイブされているデータを読み出し、解凍して返す
  *
- * @param   fileIdx		アーカイブファイルインデックス
- * @param   dataIdx		アーカイブデータインデックス
+ * @param   arcID		アーカイブファイルインデックス
+ * @param   datID		アーカイブデータインデックス
  * @param   heapID		読み出し・解凍に使うヒープＩＤ
  *
  * @retval  void*		解凍後のデータ保存先アドレス
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilUnCompress(u32 fileIdx, u32 dataIdx, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadUnCompress(u32 arcID, u32 datID, HEAPID heapID);
 
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータの読み出し
  *
- * @param   fileIdx			アーカイブファイルインデックス
- * @param   dataIdx			アーカイブデータインデックス
+ * @param   arcID			アーカイブファイルインデックス
+ * @param   datID			アーカイブデータインデックス
  * @param   compressedFlag	圧縮されているか？
  * @param   heapID			メモリ確保に使うヒープＩＤ
  * @param   allocType		ヒープのどの位置からメモリ確保するか
@@ -388,14 +387,14 @@ extern void* GFL_ARC_UtilUnCompress(u32 fileIdx, u32 dataIdx, HEAPID heapID);
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, HEAPID heapID );
+extern void* GFL_ARC_UTIL_Load(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
  * アーカイブデータの読み出し＆データサイズ取得（圧縮されていたら解凍後のサイズを取得する）
  *
- * @param   fileIdx			アーカイブファイルインデックス
- * @param   dataIdx			アーカイブデータインデックス
+ * @param   arcID			アーカイブファイルインデックス
+ * @param   datID			アーカイブデータインデックス
  * @param   compressedFlag	圧縮されているか？
  * @param   heapID			メモリ確保に使うヒープＩＤ
  * @param   allocType		ヒープのどの位置からメモリ確保するか
@@ -404,8 +403,6 @@ extern void* GFL_ARC_UtilLoad(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, HEA
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UtilLoadEx(u32 fileIdx, u32 dataIdx, BOOL compressedFlag, HEAPID heapID, u32* pSize);
-
-
+extern void* GFL_ARC_UTIL_LoadEx(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID heapID, u32* pSize);
 
 #endif

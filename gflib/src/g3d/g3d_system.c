@@ -522,7 +522,7 @@ GFL_G3D_RES*
 
 	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
-	header = GFL_ARC_DataLoadMalloc( arcID, datID, g3Dman->heapID );
+	header = GFL_ARC_LoadDataAlloc( arcID, datID, g3Dman->heapID );
 
 	return GFL_G3D_CreateResource( header );
 }
@@ -539,7 +539,7 @@ GFL_G3D_RES*
 
 	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブファイルからヘッダデータを読み込み
-	header = GFL_ARC_DataLoadFilePathMalloc( path, datID, g3Dman->heapID );
+	header = GFL_ARC_LoadDataFilePathAlloc( path, datID, g3Dman->heapID );
 
 	return GFL_G3D_CreateResource( header );
 }

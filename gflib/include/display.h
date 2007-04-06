@@ -4,12 +4,9 @@
  * @brief	表示システム設定
  */
 //=============================================================================================
-#undef GLOBAL
-#ifdef __DISPLAY_H_GLOBAL__
-#define GLOBAL /*	*/
-#else
-#define GLOBAL extern
-#endif
+
+#ifndef __DISPLAY_H_
+#define __DISPLAY_H_
 
 #include <nitro.h>
 #include <nnsys.h>
@@ -47,7 +44,7 @@ typedef	struct	{
  * @param	data	設定データ
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
+extern void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン画面の各面の表示コントロール初期化
@@ -55,8 +52,8 @@ GLOBAL void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
  * @param	
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_DISP_GX_VisibleControlInit( void );
-GLOBAL void GFL_DISP_GXS_VisibleControlInit( void );
+extern void GFL_DISP_GX_InitVisibleControl( void );
+extern void GFL_DISP_GXS_InitVisibleControl( void );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン＆サブ画面の各面の表示コントロール
@@ -68,8 +65,8 @@ GLOBAL void GFL_DISP_GXS_VisibleControlInit( void );
  * @li	flg = VISIBLE_OFF	: 非表示
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_DISP_GX_VisibleControl( u8 gxplanemask, u8 flg );
-GLOBAL void GFL_DISP_GXS_VisibleControl( u8 gxplanemask, u8 flg );
+extern void GFL_DISP_GX_SetVisibleControl( u8 gxplanemask, u8 flg );
+extern void GFL_DISP_GXS_SetVisibleControl( u8 gxplanemask, u8 flg );
 //--------------------------------------------------------------------------------------------
 /**
  * メイン＆サブ画面の各面の表示コントロール（復帰とか）
@@ -79,8 +76,8 @@ GLOBAL void GFL_DISP_GXS_VisibleControl( u8 gxplanemask, u8 flg );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_DISP_GX_VisibleControlDirect( int prm );
-GLOBAL void GFL_DISP_GXS_VisibleControlDirect( int prm );
+extern void GFL_DISP_GX_SetVisibleControlDirect( int prm );
+extern void GFL_DISP_GXS_SetVisibleControlDirect( int prm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -90,7 +87,7 @@ GLOBAL void GFL_DISP_GXS_VisibleControlDirect( int prm );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_DISP_DispOn( void );
+extern void	GFL_DISP_SetDispOn( void );
 //--------------------------------------------------------------------------------------------
 /**
  * 表示無効設定
@@ -99,7 +96,7 @@ GLOBAL void	GFL_DISP_DispOn( void );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void	GFL_DISP_DispOff( void );
+extern void	GFL_DISP_SetDispOff( void );
 //--------------------------------------------------------------------------------------------
 /**
  * 画面の表示サイド設定
@@ -107,7 +104,7 @@ GLOBAL void	GFL_DISP_DispOff( void );
  * @param	value	上下どちらをメイン画面にするか（DISP_3D_TO_MAIN:上画面がメイン　DISP_3D_TO_SUB:下画面がメイン）
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL void GFL_DISP_DispSelect( int value );
+extern void GFL_DISP_SetDispSelect( int value );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -117,7 +114,7 @@ GLOBAL void GFL_DISP_DispSelect( int value );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_DISP_MainVisibleGet(void);
+extern int GFL_DISP_GetMainVisible(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -127,7 +124,6 @@ GLOBAL int GFL_DISP_MainVisibleGet(void);
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-GLOBAL int GFL_DISP_SubVisibleGet(void);
+extern int GFL_DISP_SetSubVisible(void);
 
-
-#undef GLOBAL
+#endif __DISPLAY_H_
