@@ -50,6 +50,13 @@ typedef enum {
 	GFL_G3D_PRJMTX,			///<射影行列を設定(設定の際は上記タイプとは別関数)
 }GFL_G3D_PROJECTION_TYPE;
 
+//	オブジェクト描画タイプ定義（各種別の詳細は関数宣言コメント部を参照）
+typedef enum {
+	GFL_G3D_FLUSH_P = 0,	///<標準タイプ
+	GFL_G3D_FLUSH_VP,		///<VPタイプ
+	GFL_G3D_FLUSH_WVP,		///<WVPタイプ
+}GFL_G3D_DRAWFLUSH_TYPE;
+
 //	リソースタイプ確認用
 typedef enum {
 	GFL_G3D_RES_CHKTYPE_UKN = 0,//不明
@@ -218,6 +225,29 @@ extern void
 extern void
 	GFL_G3D_SetSystemSwapBufferMode
 		( const GXSortMode sortMode, const GXBufferMode bufferMode );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * オブジェクト描画フラッシュ（グローバル状態送信）タイプの設定
+ *
+ * @param	type	描画タイプ
+ *
+ * GFL_G3D_FLUSH_N:		カレント射影行列に射影変換行列が、
+ *						カレント位置座標行列と方向ベクトル行列に
+ *						カメラ行列とモデリング行列が合成された行列が設定されます。
+ *
+ * GFL_G3D_FLUSH_VP:	カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
+ *						カレント位置座標行列と方向ベクトル行列にモデリング行列
+ *						が設定されます。
+ *
+ * GFL_G3D_FLUSH_WVP:	カレント射影行列に
+ *						射影変換行列とカメラ行列とモデリング行列が合成された行列が、
+ *						カレント位置座標行列と方向ベクトル行列に単位行列が設定されます。
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_SetDrawFlushMode
+		( GFL_G3D_DRAWFLUSH_TYPE type );
 
 
 
@@ -775,33 +805,18 @@ extern void
  * ３Ｄオブジェクトの描画
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
- *
- * ～Draw	:カレント射影行列に射影変換行列が、
- *			 カレント位置座標行列と方向ベクトル行列にカメラ行列とモデリング行列が合成された行列
- *			 が設定されます。
- *
- * ～DrawVP	:カレント射影行列に射影変換行列とカメラ行列が合成された行列が、
- *			 カレント位置座標行列と方向ベクトル行列にモデリング行列
- *			 が設定されます。
- *
- * ～DrawWVP:カレント射影行列に射影変換行列とカメラ行列とモデリング行列が合成された行列が、
- *			 カレント位置座標行列と方向ベクトル行列に単位行列
- *			 が設定されます。
  */
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 // 通常描画
 //--------------------------------------------------------------------------------
+//カリングなし
 extern void
 	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
-
+//カリングあり
 extern void
-	GFL_G3D_DRAW_DrawObjectVP
-		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
-
-extern void
-	GFL_G3D_DRAW_DrawObjectWVP
+	GFL_G3D_DRAW_DrawObjectCullingON
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 
 //--------------------------------------------------------------------------------
@@ -810,19 +825,15 @@ extern void
 //		shpID	描画するシェイプへのインデックス 
 //		sendMat	マテリアル情報をジオメトリエンジンに送信するかどうか 
 //--------------------------------------------------------------------------------
+//カリングなし
 extern void
 	GFL_G3D_DRAW_DrawObject1mat1shp
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
-
+//カリングあり
 extern void
-	GFL_G3D_DRAW_DrawObjectVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
-			const GFL_G3D_OBJSTATUS* status );
-
-extern void
-	GFL_G3D_DRAW_DrawObjectWVP1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat,
+	GFL_G3D_DRAW_DrawObject1mat1shpCullingON
+		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 
 
