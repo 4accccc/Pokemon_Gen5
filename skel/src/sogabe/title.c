@@ -32,7 +32,7 @@
 void	YT_InitTitle(GAME_PARAM *gp)
 {
 	//BGシステム初期化
-	GFL_BG_sysInit(gp->heapID);
+	GFL_BG_Init(gp->heapID);
 
 	//VRAM設定
 	{
@@ -93,36 +93,36 @@ void	YT_InitTitle(GAME_PARAM *gp)
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_S, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_S );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_S );
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_S, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_S );
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_S );
 
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG0, VISIBLE_ON );
 
 		// OBJマッピングモード
 		GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 		GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 
-		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}
 
 	//画面生成
-	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_TITLE_V2_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_TITLE_V2_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_STAGESEL_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_STAGESEL_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilPalSet(0,NARC_yossyegg_TITLE_BG_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_TITLE_V2_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_TITLE_V2_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_STAGESEL_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_STAGESEL_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_TITLE_BG_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
 
-	GFL_DISP_DispOn();
-	GFL_DISP_DispSelect( GFL_DISP_3D_TO_SUB );
+	GFL_DISP_SetDispOn();
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
 
-	GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
+	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
 
 	YT_JobNoSet(gp,YT_MainTitleNo);
 }
@@ -144,29 +144,29 @@ void	YT_MainTitle(GAME_PARAM *gp)
 {
 	switch(gp->seq_no){
 	case YT_SEQ_TITLE_KEY_WAIT:
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_START){
-			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START){
+			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
 			gp->seq_no++;
 		}
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_L){ // Lボタンが押された
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){ // Lボタンが押された
             YT_NET_Init(gp, FALSE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_CHILD;
 		}
-		if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R){ // Rボタンが押された
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){ // Rボタンが押された
             YT_NET_Init(gp, TRUE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_PARENT;
 		}
 		break;
 	case YT_SEQ_TITLE_END:
-		if(GFL_FADE_FadeCheck()==FALSE){
-			GFL_BG_sysExit();
+		if(GFL_FADE_CheckFade()==FALSE){
+			GFL_BG_Exit();
 			YT_JobNoSet(gp,YT_InitGameNo);
 		}
         break;
     case YT_SEQ_TITLE_NET_CHILD:
     case YT_SEQ_TITLE_NET_PARENT:
         if(YT_NET_Main(gp->pNetParam)){
-			GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
             gp->seq_no = YT_SEQ_TITLE_END;
         }
         break;

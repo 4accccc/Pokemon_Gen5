@@ -32,7 +32,8 @@ static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
 static	void	YT_EggMakeCheckSet(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	void	YT_EggMakeFlagCheck(TCB *tcb,void *work);
-static	void	YT_YossyBirth(FALL_CHR_PARAM *fcp);
+static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp);
+static	void	YT_YossyBirthAnime(TCB *tcb,void *work);
 
 //----------------------------------------------------------------------------
 /**
@@ -211,14 +212,14 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 		if(ps->status.no_active_flag){
 			break;
 		}
-		if((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0){
+		if((GFL_UI_KEY_GetCont()&PAD_KEY_DOWN)==0){
 			GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
 		}
 		else{ 
 			GFL_CLACT_WkSetAutoAnmSpeed(clwk,6*FX32_ONE);
 		}
 //		GFL_CLACT_WkSetAutoAnmSpeed(clwk,0);
-		if((fcp->fall_wait)&&((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0)){
+		if((fcp->fall_wait)&&((GFL_UI_KEY_GetCont()&PAD_KEY_DOWN)==0)){
 			fcp->fall_wait--;
 		}
 		else{
@@ -237,7 +238,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				fcp->seq_no=SEQ_FALL_CHR_STOP;
 				break;
 			default:
-				if((GFL_UI_KeyGetCont()&PAD_KEY_DOWN)==0){
+				if((GFL_UI_KEY_GetCont()&PAD_KEY_DOWN)==0){
 					fcp->now_pos.y+=YT_FALL_SPEED;
 				}
 				else{
@@ -386,7 +387,10 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			}
 		}
 		else{
-			YT_YossyBirth(fcp);
+			YT_YossyBirth(gp,fcp);
+			GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
+            YT_DeleteFallChr(clwk,fcp,tcb,pNet);
+			return;
 		}
 		{
 			u32	wait;
@@ -537,67 +541,49 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 {
 	CLWK_RES	resdat;
 	CLWK		*p_wk;
-	CLWK_DATA	data[][YT_LINE_MAX]={
+	CLWK_DATA	data={
+					28, -8,	//座標(x,y)
+					NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
+					0,		//優先順位
+					0,		//bg優先順位
+				};
+	s16			pos_data[][YT_LINE_MAX][2]={
 					//PLAYER1
 					{
 						//LINE0
 						{
-							28, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
+							 28, -8,	//座標(x,y)
 						},
 						//LINE1
 						{
-							52, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
+							 52, -8,	//座標(x,y)
 						},
 						//LINE2
 						{
 							 76, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
 						},
 						//LINE3
 						{
 							100, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
 						},
 					},
 					//PLAYER2
 					{
 						//LINE0
 						{
-							28+128, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
+							 28+128, -8,	//座標(x,y)
 						},
 						//LINE1
 						{
-							52+128, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
+							 52+128, -8,	//座標(x,y)
 						},
 						//LINE2
 						{
 							 76+128, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
 						},
 						//LINE3
 						{
 							100+128, -8,	//座標(x,y)
-							NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
-							0,		//優先順位
-							0,		//bg優先順位
 						},
 					},
 				};
@@ -614,16 +600,32 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 					YT_PRI_GREEN_EGG,
 					YT_PRI_RED_EGG,
 				};
+	u8			bg_pri[]={
+					2,		//YT_PRI_KURIBO,
+					2,		//YT_PRI_PAKKUN,
+					2,		//YT_PRI_GESSO,
+					2,		//YT_PRI_TERESA,
+					2,		//YT_PRI_DEKATERESA,
+					1,		//YT_PRI_GREEN_EGG_U,
+					2,		//YT_PRI_GREEN_EGG_D,
+					1,		//YT_PRI_RED_EGG_U,
+					2,		//YT_PRI_RED_EGG_D,
+					2,		//YT_PRI_GREEN_EGG,
+					2,		//YT_PRI_RED_EGG,
+				};
 
 	// リソースデータ代入
 	GFL_CLACT_WkSetCellResData( &resdat, 
 			&fcp->gp->clact->res.imageproxy, &fcp->gp->clact->res.plttproxy,
 			fcp->gp->clact->res.p_cell, fcp->gp->clact->res.p_cellanm );
 	// 登録
-	data[fcp->player_no][fcp->line_no].anmseq+=fcp->type;
-	data[fcp->player_no][fcp->line_no].softpri=soft_pri[fcp->type];
+	data.pos_x=pos_data[fcp->player_no][fcp->line_no][0];
+	data.pos_y=pos_data[fcp->player_no][fcp->line_no][1];
+	data.anmseq+=fcp->type;
+	data.softpri=soft_pri[fcp->type];
+	data.bgpri=bg_pri[fcp->type];
 	p_wk = GFL_CLACT_WkAdd( fcp->gp->clact->p_unit, 
-			&data[fcp->player_no][fcp->line_no], &resdat,
+			&data, &resdat,
 			CLWK_SETSF_NONE,
 			fcp->gp->heapID );
     GF_ASSERT(p_wk);
@@ -858,7 +860,38 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
  *	@param	fcp		落下キャラパラメータ
  */
 //-----------------------------------------------------------------------------
-static	void	YT_YossyBirth(FALL_CHR_PARAM *fcp)
+static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 {
+	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
+	int					height;
+
+	for(height=0;height<YT_HEIGHT_MAX;height++){
+		if(ps->stop[ps->stoptbl[fcp->line_no]][height]==fcp){
+		break;
+		}
+	}
+
+
+//	GFL_TCB_AddTask(gp->tcbsys,YT_YossyAnime,gp,TCB_PRI_PLAYER);
 }
 
+#if 0
+static	void	YT_YossyBirthAnime(TCB *tcb,void *work)
+{
+	GAME_PARAM			*gp=(GAME_PARAM *)work;
+
+	if(ya_wait==0){
+		ya_wait=4;
+		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(gp->yossy_bmpwin),0,0,32,48,0);
+		GFL_BMP_PrintMain(gp->yossy_bmp,GFL_BMPWIN_GetBmp(gp->yossy_bmpwin),0,0+48*ya_work,0,0,32,48,0);
+		GFL_BMPWIN_UploadChar(gp->yossy_bmpwin);
+		ya_work++;
+		if(ya_work==19){
+			ya_work=0;
+		}
+	}
+	else{
+		ya_wait--;
+	}
+}
+#endif

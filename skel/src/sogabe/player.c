@@ -30,16 +30,17 @@
  */
 //-----------------------------------------------------------------------------
 struct _PLAYER_PARAM {
-	GAME_PARAM	*gp;
-	u8			seq_no;			//シーケンスナンバー
-	u8			player_no;		//プレーヤーナンバー
-	u8			type;			//プレーヤーの種類
-	u8			line_no;		//現在いるライン
-	u8			dir;			//キャラクタの向き
-	u8			anm_no;
-	u8			pat_no;
-	u8			anm_wait;
-	u8			*chr_data;
+	GAME_PARAM			*gp;
+	u8					seq_no;			//シーケンスナンバー
+	u8					player_no;		//プレーヤーナンバー
+	u8					type;			//プレーヤーの種類
+	u8					line_no;		//現在いるライン
+	u8					dir;			//キャラクタの向き
+	u8					anm_no;
+	u8					pat_no;
+	u8					anm_wait;
+	void				*chr_data;
+	NNSG2dCharacterData *nns_char_data;
 };
 
 //----------------------------------------------------------------------------
@@ -491,7 +492,7 @@ PLAYER_PARAM* YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type)
 	pp->dir=0;
 
 	//キャラクタデータ展開
-	pp->chr_data=GFL_ARC_DataLoadMalloc(0,NARC_yossyegg_YT_MARIO_NCGR,gp->heapID);
+	pp->chr_data=GFL_ARC_UTIL_LoadCharacter(0,NARC_yossyegg_YT_MARIO_NCGR,0,&pp->nns_char_data,gp->heapID);
 
 	YT_PlayerScreenMake(pp,pp->line_no,pp->line_no);
 
@@ -638,22 +639,22 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 static	u8		YT_PlayerActGet(PLAYER_PARAM *pp)
 {
 	//キーから動作を選択
-	if( GFL_UI_KeyGetTrg() & PAD_KEY_LEFT ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
 		return YT_PLAYER_ACT_MOVE_L;
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_KEY_RIGHT ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
 		return YT_PLAYER_ACT_MOVE_R;
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_ROTATE ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_ROTATE ){
 		return YT_PLAYER_ACT_ROTATE;
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_L ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 		return YT_PLAYER_ACT_OVERTURN_L;
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 		return YT_PLAYER_ACT_OVERTURN_R;
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_KEY_UP ){
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
 		return YT_PLAYER_ACT_OVERTURN_C;
 	}
 	return YT_PLAYER_ACT_MAX;
@@ -874,7 +875,9 @@ static	BOOL	YT_PlayerAnimeCheck(PLAYER_PARAM *pp)
 static	void	YT_PlayerChrTrans(PLAYER_PARAM *pp)
 {
 	const	YT_ANIME_TABLE	* yat=yt_anime_table[pp->anm_no];
-	void	*buf=pp->chr_data+yat[pp->pat_no].pat_adrs;
+	u8		*buf=pp->nns_char_data->pRawData;
+	
+	buf+=yat[pp->pat_no].pat_adrs;
 
 	GFL_BG_LoadCharacter( YT_PLAYER_FRAME, buf, YT_PLAYER_CHR_SIZE, PlayerChrTransAdrs[pp->player_no] );
 }
@@ -892,7 +895,7 @@ static	void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no)
 {
 	int	x,y;
 	u16	chr_no=0;
-	u16	*scr_adrs=(u16 *)GFL_BG_ScreenAdrsGet( YT_PLAYER_FRAME );
+	u16	*scr_adrs=(u16 *)GFL_BG_GetScreenBufferAdrs( YT_PLAYER_FRAME );
 
 	if(old_line_no!=new_line_no){
 		//現在位置のスクリーンデータを消去
@@ -929,7 +932,7 @@ static	void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no)
 //-----------------------------------------------------------------------------
 static	void	YT_PlayerRotateScreenMake(PLAYER_PARAM *pp,u8 flag)
 {
-	u16	*scr_adrs=(u16 *)GFL_BG_ScreenAdrsGet( YT_PLAYER_FRAME );
+	u16	*scr_adrs=(u16 *)GFL_BG_GetScreenBufferAdrs( YT_PLAYER_FRAME );
 
 	if(flag){
 		scr_adrs[PlayerScreenAdrs[pp->player_no][pp->line_no]-1]=0x2001;

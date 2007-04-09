@@ -461,7 +461,7 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
     aGFLNetInit.pWork = gp;
     gp->pNetParam = pNet;
 
-    GFL_NET_sysInit(&aGFLNetInit);
+    GFL_NET_Init(&aGFLNetInit);
 
     if(bParent){
         pNet->seq = _INIT_WAIT_PARENT;

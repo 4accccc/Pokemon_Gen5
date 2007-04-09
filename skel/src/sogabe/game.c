@@ -50,7 +50,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 	gp->clact_area=GFL_AREAMAN_Create(YT_CLACT_MAX,gp->heapID);
 	
 	//BGシステム初期化
-	GFL_BG_sysInit(gp->heapID);
+	GFL_BG_Init(gp->heapID);
 
 	//VRAM設定
 	{
@@ -86,17 +86,23 @@ void	YT_InitGame(GAME_PARAM *gp)
 	//メイン画面フレーム設定
 	{
 		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
-			///<FRAME2_M
+			///<FRAME1_M
 			{
 				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
-			///<FRAME3_M
+			///<FRAME2_M
 			{
 				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
-				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			},
+			///<FRAME3_M
+			{
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 			},
 			///<FRAME2_S
 			{
@@ -111,39 +117,48 @@ void	YT_InitGame(GAME_PARAM *gp)
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_S, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_S );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_S );
-
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME1_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_S);
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_S, &TextBgCntDat[4], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_S);
 
 		// OBJマッピングモード
 		GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 		GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 
-		GFL_DISP_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-		GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}
 
 	//画面生成
-	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_game_bg_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_game_bg_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilBgCharSet(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilScrnSet(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UtilPalSet(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_game_bg_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_game_bg_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
 
-	GFL_DISP_DispOn();
-	GFL_DISP_DispSelect( GFL_DISP_3D_TO_SUB );
+	GFL_DISP_SetDispOn();
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
 
-	GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,16,0,2);
+	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,16,0,2);
 
 	//セルアクターリソース読み込み
 	YT_ClactResourceLoad(&gp->clact->res, gp->heapID);
+
+	//ヨッシーキャラデータ読み込み
+	gp->yossy_bmp=GFL_BMP_LoadCharacter(0,NARC_yossyegg_yossy_birth_NCGR,0,gp->heapID);
+
+	//BMP関連初期化
+	GFL_BMPWIN_Init(gp->heapID);
+	gp->yossy_bmpwin=GFL_BMPWIN_Create(GFL_BG_FRAME1_M,0,0,32,32,2,GFL_BMP_CHRAREA_GET_B);
+	GFL_BMPWIN_MakeScreen(gp->yossy_bmpwin);
+	GFL_BG_LoadScreenReq(GFL_BG_FRAME1_M);
 
 	//フラグ関連初期
 	{
@@ -170,7 +185,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 	//乱数初期化
 	{
-		GFL_STD_MTRandInit(0);
+		GFL_STD_MtRandInit(0);
 	}
 
 	//プレーヤー初期化
@@ -194,8 +209,7 @@ void	YT_InitGame(GAME_PARAM *gp)
     else{
         pp = YT_InitPlayer(gp,0,0);
         YT_InitPlayerAddTask(gp, pp, 0);
-        pp = YT_InitPlayer(gp,1,1);
-        YT_InitPlayerAddTask(gp, pp, 1);
+		gp->ps[0].exist_flag=1;
     }
 
 	//ゲームフラグチェックタスクセット
@@ -259,9 +273,12 @@ static	void	YT_MainGameAct(GAME_PARAM *gp)
                 continue;
             }
         }
+		else if(gp->ps[player_no].exist_flag==0){
+			continue;
+		}
 		switch(gp->game_seq_no[player_no]){
 		case SEQ_GAME_START_WAIT:
-			if(GFL_FADE_FadeCheck()==FALSE){
+			if(GFL_FADE_CheckFade()==FALSE){
 				gp->game_seq_no[player_no]++;
 			}
 			break;
@@ -337,21 +354,21 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 	int	line,type;
 
 	while(i){
-		line=__GFL_STD_MTRand()%4;
+		line=__GFL_STD_MtRand()%4;
 		if(gp->ps[player_no].ready[line][0]){
 			continue;
 		}
-		type=__GFL_STD_MTRand()%4;
+		type=__GFL_STD_MtRand()%4;
 		//デカキャラは、確率を低くする
 		if(type==YT_CHR_TERESA){
-			if(__GFL_STD_MTRand()%5==0){
+			if(__GFL_STD_MtRand()%5==0){
 				type=YT_CHR_DEKATERESA;
 			}
 		}
 		else{
 			//タマゴの殻発生確率
-			if(__GFL_STD_MTRand()%5==0){
-				type=YT_CHR_GREEN_EGG_U+__GFL_STD_MTRand()%4;
+			if(__GFL_STD_MtRand()%5==0){
+				type=YT_CHR_GREEN_EGG_U+__GFL_STD_MtRand()%4;
 			}
 		}
 		gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
@@ -401,7 +418,7 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 	
 	// キャラクタデータ読み込み＆転送
 	{
-		p_buff = GFL_ARC_DataLoadMalloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
+		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
 		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
 		GF_ASSERT( result );
 		NNS_G2dInitImageProxy( &clact_res->imageproxy );
@@ -420,7 +437,7 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 
 	// パレットデータ読み込み＆転送
 	{
-		p_buff = GFL_ARC_DataLoadMalloc( 0,NARC_yossyegg_OBJ_COL_NCLR, heapID );
+		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_OBJ_COL_NCLR, heapID );
 		result = NNS_G2dGetUnpackedPaletteData( p_buff, &p_pltt );
 		GF_ASSERT( result );
 		NNS_G2dInitImagePaletteProxy( &clact_res->plttproxy );
@@ -439,14 +456,14 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 
 	// セルデータ読み込み
 	{
-		clact_res->p_cellbuff = GFL_ARC_DataLoadMalloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
+		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
 		result = NNS_G2dGetUnpackedCellBank( clact_res->p_cellbuff, &clact_res->p_cell );
 		GF_ASSERT( result );
 	}
 
 	// セルアニメデータ読み込み
 	{
-		clact_res->p_cellanmbuff = GFL_ARC_DataLoadMalloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
+		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
 		result = NNS_G2dGetUnpackedAnimBank( clact_res->p_cellanmbuff, &clact_res->p_cellanm );
 		GF_ASSERT( result );
 	}

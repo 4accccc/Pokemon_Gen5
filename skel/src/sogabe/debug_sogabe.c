@@ -69,9 +69,10 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 {
 	GAME_PARAM	*gp;
 
-	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), GFL_HEAPID_APP);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_SOGABE_DEBUG,0x80000);
+	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), HEAPID_SOGABE_DEBUG);
 
-	gp->heapID=GFL_HEAPID_APP;
+	gp->heapID=HEAPID_SOGABE_DEBUG;
 
 	YT_JobNoSet(gp,YT_InitTitleNo);
 
@@ -129,13 +130,13 @@ static	void	game_init(GAME_PARAM *gp)
 	gp->tcbsys=GFL_TCB_SysInit(ACTIVE_TCB_MAX,gp->tcb_work);
 
 	//ARCシステム初期化
-	GFL_ARC_sysInit(&GraphicFileTable[0],1);
+	GFL_ARC_Init(&GraphicFileTable[0],1);
 
 	//FADEシステム初期化
-	GFL_FADE_sysInit(GFL_HEAPID_APP);
+	GFL_FADE_Init(GFL_HEAPID_APP);
 
 	//タッチパネル初期化
-	GFL_UI_TP_sysInit(GFL_HEAPID_APP);
+	GFL_UI_TP_Init(GFL_HEAPID_APP);
 
 	//セルアクター初期化
 	gp->clact = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(YT_CLACT) );
