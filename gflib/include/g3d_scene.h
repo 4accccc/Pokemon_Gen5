@@ -24,6 +24,7 @@ typedef struct {
 	GFL_G3D_SCENEOBJFUNC*	func;
 }GFL_G3D_SCENEOBJ_DATA;
 
+#define GFL_G3D_SCENEOBJ_ALPHA_OFF	( 255 )
 //=============================================================================================
 /**
  * ä«óùÉVÉXÉeÉÄ
