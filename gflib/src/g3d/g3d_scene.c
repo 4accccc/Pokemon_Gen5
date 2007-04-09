@@ -33,6 +33,9 @@ struct _GFL_G3D_SCENE {
 
 static void sceneObjfunc( GFL_TCBL* tcbl, void* work );
 static void objDrawSort( GFL_G3D_SCENE* g3Dscene );
+
+//static void getTranslucent( NNSG3dRS* rs );
+
 #define TCBL_POINTER_SIZ	(4)
 //=============================================================================================
 /**
@@ -109,6 +112,8 @@ void
 {
 	GFL_G3D_SCENEOBJ*	g3DsceneObj;
 	GFL_G3D_OBJ*		g3Dobj;
+	GFL_G3D_RND*		g3Drnd;
+	NNSG3dResMdl*		pMdl;
 	int	i = 0;
 
 	//描画開始
@@ -123,6 +128,24 @@ void
 		g3DsceneObj = GFL_TCBL_GetWork
 						( g3Dscene->g3DsceneObjTCBLtbl[ g3Dscene->g3DsceneObjPriTbl[i] ] );
 		g3Dobj = g3DsceneObj->g3Dobj;
+
+		//半透明設定
+		g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3DsceneObj->g3Dobj );
+		pMdl = NNS_G3dRenderObjGetResMdl( GFL_G3D_RENDER_GetRenderObj( g3Drnd ) );
+#if 0
+		{
+			u32 MatID;
+
+			NNS_G3dMdlUseMdlAlpha( pMdl );
+			for ( MatID = 0; MatID < pMdl->info.numMat; ++MatID ){
+				NNS_G3dMdlSetMdlAlpha( pMdl, MatID, g3DsceneObj->sceneObjData.blendAlpha );
+			}
+		}
+#else
+		NNS_G3dGlbPolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE,
+								GX_CULL_BACK, 0, g3DsceneObj->sceneObjData.blendAlpha, 0 );
+		NNS_G3dMdlUseGlbAlpha( pMdl );	//反映しているのはα設定だけ
+#endif
 		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
@@ -182,7 +205,7 @@ static void sceneObjfunc( GFL_TCBL* tcbl, void* work )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ソート関数（ローカル）
+ * ソート関数【昇順】（ローカル）
  */
 //--------------------------------------------------------------------------------------------
 static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
@@ -273,6 +296,15 @@ u32
 		g3DsceneObj->g3Dobj	= GFL_G3D_UTIL_GetObjHandle
 								( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
 		g3DsceneObj->sceneObjWorkEx	= NULL;
+#if 0
+		if( g3DsceneObj->sceneObjData.objID == 0 )
+		// 半透明処理コールバック設定
+		{
+			GFL_G3D_RND* g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3DsceneObj->g3Dobj );
+			NNS_G3dRenderObjSetCallBack( GFL_G3D_RENDER_GetRenderObj( g3Drnd ),
+						&getTranslucent, NULL, NNS_G3D_SBC_MAT, NNS_G3D_SBC_CALLBACK_TIMING_B);
+		}
+#endif
 		GFL_STD_MemClear( (void*)((u32)g3DsceneObj + sizeof(GFL_G3D_SCENEOBJ)), 
 							g3Dscene->g3DsceneObjWorkSize - sizeof(GFL_G3D_SCENEOBJ) );
 	}
@@ -475,9 +507,50 @@ void
 	g3DsceneObj->sceneObjData.func = *func;
 }
 
-	
 
 
+
+
+//=============================================================================================
+/**
+ *
+ *
+ * コールバック
+ *
+ *
+ */
+//=============================================================================================
+#if 0
+static void getTranslucent( NNSG3dRS* rs )
+{
+#if 0
+    int matID;
+    NNSG3dMatAnmResult* matResult;
+    NNS_G3D_GET_MATID(NNS_G3dRenderObjGetResMdl(NNS_G3dRSGetRenderObj(rs)),
+                      &matID,
+                      "lambert2");
+    SDK_ASSERT(matID >= 0);
+
+    matResult = NNS_G3dRSGetMatAnmResult(rs);
+
+    if (NNS_G3dRSGetCurrentMatID(rs) == matID)
+    {
+        matResult->prmPolygonAttr =
+            (matResult->prmPolygonAttr & ~REG_G3_POLYGON_ATTR_ALPHA_MASK) |
+            (16 << REG_G3_POLYGON_ATTR_ALPHA_SHIFT);
+    }
+    else
+    {
+        matResult->flag |= NNS_G3D_MATANM_RESULTFLAG_WIREFRAME;
+    }
+#else
+	NNSG3dMatAnmResult* matResult = NNS_G3dRSGetMatAnmResult(rs);
+
+	matResult->prmPolygonAttr = (matResult->prmPolygonAttr & ~REG_G3_POLYGON_ATTR_ALPHA_MASK) |
+								(8 << REG_G3_POLYGON_ATTR_ALPHA_SHIFT);
+#endif
+}
+#endif
 
 
 
