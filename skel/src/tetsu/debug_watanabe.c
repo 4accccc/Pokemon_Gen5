@@ -236,7 +236,7 @@ static BOOL	TestModeControl( void )
 
 	case 0:
 		//‰Šú‰»
-		GFL_STD_MTRandInit(0);
+		GFL_STD_MtRandInit(0);
 		bg_init( tetsuWork->heapID );
 		tetsuWork->seq++;
 		break;
@@ -284,7 +284,7 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 static void	bg_init( HEAPID heapID )
 {
 	//‚a‚fƒVƒXƒeƒ€‹N“®
-	GFL_BG_sysInit( heapID );
+	GFL_BG_Init( heapID );
 
 	//‚u‚q‚`‚lÝ’è
 	GX_SetBankForTex(GX_VRAM_TEX_01_AB);
@@ -294,8 +294,8 @@ static void	bg_init( HEAPID heapID )
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( heapID, 16*2 );
 		plt[0] = GX_RGB( 8, 15, 8);
-		GFL_BG_PaletteSet( GFL_BG_FRAME0_M, plt, 16*2, 0 );
-		GFL_BG_PaletteSet( GFL_BG_FRAME1_M, plt, 16*2, 0 );
+		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 );
+		GFL_BG_LoadPalette( GFL_BG_FRAME1_M, plt, 16*2, 0 );
 
 		GFL_HEAP_FreeMemory( plt );
 	}
@@ -306,16 +306,16 @@ static void	bg_init( HEAPID heapID )
 	//‚R‚cƒVƒXƒeƒ€‹N“®
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, G3DsysSetup );
-	GFL_BG_BGControlSet3D( G3D_FRM_PRI );
+	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ƒfƒBƒXƒvƒŒƒC–Ê‚Ì‘I‘ð
-	GFL_DISP_DispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 }
 
 static void	bg_exit( void )
 {
 	GFL_G3D_Exit();
-	GFL_BG_sysExit();
+	GFL_BG_Exit();
 }
 
 //------------------------------------------------------------------
@@ -460,7 +460,7 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
 	GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
 
-	if( GFL_UI_KeyGetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+	if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
 		int speed;
 
 		if( tetsuWork->SpeedUpFlag == TRUE ){
@@ -555,7 +555,7 @@ static void KeyControlInit( void )
 //------------------------------------------------------------------
 static BOOL KeyControlEndCheck( void )
 {
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
 		return TRUE;
 	} else {
 		return FALSE;
@@ -578,7 +578,7 @@ static void KeyControlCameraLightChange( void )
 		}
 	}
 #endif
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_A ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
 		if( tetsuWork->mode & 1 ){
 			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
 			tetsuWork->nowCameraNum = 1;
@@ -588,7 +588,7 @@ static void KeyControlCameraLightChange( void )
 			tetsuWork->nowLightNum = 1;
 		}
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_X ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		if( tetsuWork->mode & 1 ){
 			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
 			tetsuWork->nowCameraNum = 0;
@@ -598,7 +598,7 @@ static void KeyControlCameraLightChange( void )
 			tetsuWork->nowLightNum = 0;
 		}
 	}
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
 		if( tetsuWork->mode & 1 ){
 			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[2] );
 			tetsuWork->nowCameraNum = 2;
@@ -630,9 +630,9 @@ static void KeyControlCameraMove1( void )
 			VecFx32 cameraPos = { 0, 0, 0 };
 			VecFx32 cameraOffs = { 0, 0, 0 };
 			BOOL	moveFlag = FALSE;
-			int		key = GFL_UI_KeyGetCont();
+			int		key = GFL_UI_KEY_GetCont();
 
-			if( GFL_UI_KeyGetTrg() & PAD_BUTTON_L ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 				if( tetsuWork->updateRotateFlag == FALSE ){
 					tetsuWork->updateRotateFlag = TRUE;
 					tetsuWork->updateRotate = tetsuWork->nowRotate;
@@ -658,7 +658,7 @@ static void KeyControlCameraMove1( void )
 					}
 				}
 			}
-			if( GFL_UI_KeyGetCont() & PAD_BUTTON_B ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
 				tetsuWork->SpeedUpFlag = TRUE;
 			} else {
 				tetsuWork->SpeedUpFlag = FALSE;
