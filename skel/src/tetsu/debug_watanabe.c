@@ -412,10 +412,22 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
-static inline void drawSWset( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
+static inline void SetDrawSW( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 {
 	BOOL swBuf = sw;
 	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
+}
+
+static inline void SetDrawPri( GFL_G3D_SCENEOBJ* sceneObj, u8 pri )
+{
+	u8 priBuf = pri;
+	GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &priBuf );
+}
+
+static inline void SetAlpha( GFL_G3D_SCENEOBJ* sceneObj, u8 alpha )
+{
+	u8 alphaBuf = alpha;
+	GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alphaBuf );
 }
 
 static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -491,11 +503,24 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	diffZ = (cameraPos.z - minePos.z)/FX32_ONE;
 	diffLength = diffX * diffX + diffZ * diffZ;
 	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
-		drawSWset( sceneObj, FALSE );
+		SetDrawSW( sceneObj, FALSE );
 		//OS_Printf
 		//	("diffX = %x, diffZ = %x, diffLength = %x, appear FALSE\n",diffX,diffZ,diffLength); 
 	} else {
-		drawSWset( sceneObj, TRUE );
+#if 1
+		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
+		SetDrawPri( sceneObj, 249 - diffLength * 200/ VIEW_LENGTH * VIEW_LENGTH );
+#else
+		//半透明処理の関係上、手前に見えるものから優先( 距離を200分割 )
+		SetDrawPri( sceneObj, 8+ diffLength * 200/ VIEW_LENGTH * VIEW_LENGTH );
+#endif
+#if 0
+		//手前の物体ほど半透明度を高く( 32段階まで )
+		SetAlpha( sceneObj, 15 + diffLength * 16/ VIEW_LENGTH * VIEW_LENGTH );	
+#else
+		SetAlpha( sceneObj, 16 );	
+#endif
+		SetDrawSW( sceneObj, TRUE );
 		//OS_Printf
 		//	("diffX = %x, diffZ = %x, diffLength = %x, appear TRUE\n",diffX,diffZ,diffLength); 
 	}
@@ -513,7 +538,8 @@ static void G3DsysSetup( void )
 	G3X_SetShading( GX_SHADING_TOON );
 	G3X_AntiAlias( FALSE );
 	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-	G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
+	//G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
+	G3X_AlphaBlend(TRUE);
 	G3X_EdgeMarking( FALSE );
 	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
 
@@ -808,8 +834,8 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 	setup = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA_SETUP) );
 	pdata = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA)*sizeX*sizeZ+1 );
 
-	pdata[ count ] = map->floor;
-	count++;
+//	pdata[ count ] = map->floor;
+//	count++;
 
 	for( z=0; z<sizeZ; z++ ){
 		for( x=0; x<sizeX; x++ ){
@@ -822,6 +848,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.movePriority = 0;
 				data.drawPriority = 2;
 				data.drawSW = TRUE;
+				data.blendAlpha = 31;
 				data.status = defaultStatus;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
@@ -832,11 +859,15 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 			case '◎':	//プレーヤー
 				data.objID = G3DOBJ_HARUKA; 
 				data.movePriority = 0;
-				data.drawPriority = 2;
+				data.drawPriority = 1;
 				data.drawSW = TRUE;
 				data.status = defaultStatus;
+				data.blendAlpha = 8;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
+				data.status.scale.x = FX32_ONE*8;
+				data.status.scale.y = FX32_ONE*8;
+				data.status.scale.z = FX32_ONE*8;
 				data.func = NULL;
 				pdata[ count ] = data;
 				count++;
@@ -848,6 +879,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 			}
 		}
 	}
+	pdata[ count ] = map->floor;
+	count++;
+
 	setup->data = pdata;
 	setup->count = count;
 
@@ -898,7 +932,7 @@ static const char mapData1[] = {
 
 static const MAPDATA mapDataTbl = {
 	mapData1, 32, 32,
-	{	G3DOBJ_MAP_FLOOR, 0, 2, TRUE, 
+	{	G3DOBJ_MAP_FLOOR, 0, 250, 31, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
