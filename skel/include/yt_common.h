@@ -107,7 +107,8 @@ typedef struct{
 		};
 	}status;
 	u8				fall_wait;
-	u8				dummy;
+	u8				exist_flag			:1;		//プレイヤー存在フラグ
+	u8									:7;
 }YT_PLAYER_STATUS;
 
 //ゲームパラメータ構造体宣言
@@ -125,6 +126,8 @@ typedef	struct
 	u8					default_fall_wait;
     NET_PARAM*          pNetParam;   //通信用構造体
 	TCB					*check_tcb;
+	GFL_BMP_DATA		*yossy_bmp;
+	GFL_BMPWIN			*yossy_bmpwin;
 }GAME_PARAM;
 
 //TCBプライオリティ定義
