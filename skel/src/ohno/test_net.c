@@ -84,7 +84,7 @@ void TEST_NET_Main(void)
     int i;
     
     // クライアント側のテスト
-    if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
+    if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
@@ -175,7 +175,7 @@ void TEST_NET_Main(void)
 //                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
 
-//                GFL_NET_ChangeMPMode(_pHandle);
+                GFL_NET_ChangeMpMode(_pHandle);
 
             }
             _testNo++;
