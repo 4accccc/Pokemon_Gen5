@@ -132,7 +132,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 				msg_bmpwin_palset( testmode, NUM_SELECT1+i, MSG_WHITE );
 			}
 			//ビットマップスクリーン再描画
-			GFL_BMPWIN_MakeScrn( testmode->bmpwin[NUM_SELECT1+i] );
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT1+i] );
 		}
 		//ＢＧスクリーン転送リクエスト発行
 		GFL_BG_LoadScreenReq( TEXT_FRM );
@@ -144,14 +144,14 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 
 	case 3:
 		//キー判定
-		if( GFL_UI_KeyGetTrg() == PAD_BUTTON_A ) {
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ) {
 			testmode->seq++;
-		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_UP ){
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ){
 			if( testmode->listPosition > 0 ){
 				testmode->listPosition--;
 				testmode->seq--;
 			}
-		} else if( GFL_UI_KeyGetTrg() == PAD_KEY_DOWN ){
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ){
 			if( testmode->listPosition < NELEMS(selectList)-1 ){
 				testmode->listPosition++;
 				testmode->seq--;
@@ -180,7 +180,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 static void	bg_init( HEAPID heapID )
 {
 	//ＢＧシステム起動
-	GFL_BG_sysInit( heapID );
+	GFL_BG_Init( heapID );
 
 	//ＶＲＡＭ設定
 	GX_SetBankForTex(GX_VRAM_TEX_01_AB);
@@ -191,9 +191,9 @@ static void	bg_init( HEAPID heapID )
 	GFL_BG_InitBG( &bgsysHeader );
 
 	//ＢＧコントロール設定
-	GFL_BG_BGControlSet( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
-	GFL_BG_PrioritySet( TEXT_FRM, TEXT_FRM_PRI );
-	GFL_BG_VisibleSet( TEXT_FRM, VISIBLE_ON );
+	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
+	GFL_BG_SetPriority( TEXT_FRM, TEXT_FRM_PRI );
+	GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
 
 	//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( heapID );
@@ -201,7 +201,7 @@ static void	bg_init( HEAPID heapID )
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, NULL );
-	GFL_BG_BGControlSet3D( G3D_FRM_PRI );
+	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 	//GFL_G3D_UtilsysInit( G3D_UTIL_RESSIZ, G3D_UTIL_OBJSIZ, G3D_UTIL_ANMSIZ, heapID );  
 }
 
@@ -210,8 +210,8 @@ static void	bg_exit( void )
 	//GFL_G3D_UtilsysExit();  
 	GFL_G3D_Exit();
 	GFL_BMPWIN_Exit();
-	GFL_BG_BGControlExit( TEXT_FRM );
-	GFL_BG_sysExit();
+	GFL_BG_FreeBGControl( TEXT_FRM );
+	GFL_BG_Exit();
 }
 
 //------------------------------------------------------------------
@@ -231,9 +231,9 @@ static void msg_bmpwin_make
 	GFL_TEXT_PrintSjisCode( msg, testmode->textParam );
 
 	//ビットマップキャラクターをアップデート
-	GFL_BMPWIN_UploadChar( testmode->bmpwin[bmpwinNum] );
+	GFL_BMPWIN_TransVramCharacter( testmode->bmpwin[bmpwinNum] );
 	//ビットマップスクリーン作成
-	GFL_BMPWIN_MakeScrn( testmode->bmpwin[bmpwinNum] );
+	GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
 }
 	
 static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum )
@@ -243,7 +243,7 @@ static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum )
 	
 static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 {
-	GFL_BMPWIN_SetPal( testmode->bmpwin[bmpwinNum], pal );
+	GFL_BMPWIN_SetPalette( testmode->bmpwin[bmpwinNum], pal );
 }
 	
 //------------------------------------------------------------------
@@ -260,9 +260,9 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
 		plt[1] = G2D_FONT_COL;
-		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 0 );
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 0 );
 		plt[1] = G2D_FONTSELECT_COL;
-		GFL_BG_PaletteSet( TEXT_FRM, plt, 16*2, 16*2 );
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 16*2 );
 
 		GFL_HEAP_FreeMemory( plt );
 	}
