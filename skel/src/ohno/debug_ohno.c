@@ -59,7 +59,7 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 
     TEST_UI_Main();  //UI TEST
     
-    if(GFL_UI_KeyGetTrg() == PAD_BUTTON_A){
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
 
         RTCDate date;
         RTCTime time;
@@ -112,7 +112,7 @@ void DebugOhnoInit(HEAPID heap_id)
 	ctrl->debug_heap_id = heap_id;
 
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
-	GFL_UI_TP_sysInit(ctrl->debug_heap_id);
+	GFL_UI_TP_Init(ctrl->debug_heap_id);
 
 
 //    RTC_Init();
@@ -125,7 +125,7 @@ void DebugOhnoInit(HEAPID heap_id)
 void DebugOhnoMain(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_TP_sysMain();
+	GFL_UI_TP_Main();
 }
 
 //------------------------------------------------------------------
@@ -133,7 +133,7 @@ void DebugOhnoMain(void)
 void DebugOhnoExit(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_TP_sysExit();
+	GFL_UI_TP_Exit();
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }

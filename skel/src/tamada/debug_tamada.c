@@ -119,7 +119,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 {
 	GFL_PROC * subproc;
 	DEBUG_TAMADA_CONTROL * ctrl = mywk;
-	int key = GFL_UI_KeyGetTrg();
+	int key = GFL_UI_KEY_GetTrg();
 
 	switch (*seq) {
 	case 0:
@@ -128,7 +128,7 @@ static GFL_PROC_RESULT DebugTamadaMainProcMain(GFL_PROC * proc, int * seq, void 
 		(*seq) ++;
 		break;
 	case 1:
-		if ((GFL_UI_KeyGetCont() & (PAD_BUTTON_L|PAD_BUTTON_R)) == (PAD_BUTTON_L|PAD_BUTTON_R)) {
+		if ((GFL_UI_KEY_GetCont() & (PAD_BUTTON_L|PAD_BUTTON_R)) == (PAD_BUTTON_L|PAD_BUTTON_R)) {
 			return GFL_PROC_RES_FINISH;
 
 		} else if (key & PAD_BUTTON_A) {

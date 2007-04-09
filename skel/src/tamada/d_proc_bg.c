@@ -35,7 +35,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit1(GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT DebugTamadaSubProcMain1(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
+	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;
@@ -81,7 +81,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit2(GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT DebugTamadaSubProcMain2(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
+	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
 	return GFL_PROC_RES_CONTINUE;
@@ -138,7 +138,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit3(GFL_PROC * proc, int * seq, void 
 {
 	MYWORK3 * m3;
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
-	GFL_STD_MTRandInit(0);
+	GFL_STD_MtRandInit(0);
 	m3 = GFL_PROC_AllocWork(proc, sizeof(MYWORK3), ctrl->debug_heap_id);
 	m3->tcbsys = GFL_TCBL_SysInit(ctrl->debug_heap_id, ctrl->debug_heap_id, 32, sizeof(TWK));
 	Debug_GraphicInit();
@@ -156,15 +156,15 @@ static GFL_PROC_RESULT DebugTamadaSubProcMain3(GFL_PROC * proc, int * seq, void 
 	MYWORK3 * m3 = mywk;
 
 	GFL_TCBL_SysMain(m3->tcbsys);
-	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
+	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
-	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_B) {
+	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B) {
 		GFL_TCBL * tcb;
 		TWK * twk;
-		tcb = GFL_TCBL_Create(m3->tcbsys, TaskFunc, sizeof(TWK), GFL_STD_MTRand(100) + 1);
+		tcb = GFL_TCBL_Create(m3->tcbsys, TaskFunc, sizeof(TWK), GFL_STD_MtRand(100) + 1);
 		twk = GFL_TCBL_GetWork(tcb);
-		twk->counter = GFL_STD_MTRand(20) * 10 + 20;
+		twk->counter = GFL_STD_MtRand(20) * 10 + 20;
 		
 	}
 	return GFL_PROC_RES_CONTINUE;

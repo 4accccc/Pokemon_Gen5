@@ -69,21 +69,21 @@ void TEST_RAND_Main(u32 initseed)
     u64 seed;
     u8 buff[_RETRY_NUM+1];
     
-    GFL_STD_MTRandInit(initseed);
+    GFL_STD_MtRandInit(initseed);
 
     for(i = 0;i < _RETRY_NUM;i++){
-        buff[i] = GFL_STD_MTRand( 2 );
+        buff[i] = GFL_STD_MtRand( 2 );
     }
     _coinTest(buff,"MT",_RETRY_NUM);
     for(i = 0;i < _RETRY_NUM;i++){
-        buff[i] = GFL_STD_MTRand( 3 );
+        buff[i] = GFL_STD_MtRand( 3 );
     }
     _gvwTest(buff,"MT",_RETRY_NUM);
 
     // 乱数の種をメルセンヌツイスターから得ます。
     // 固定乱数の場合この値をSAVEしてください
-    seed = GFL_STD_MTRand( 0 );
-    seed = (seed << 32) + GFL_STD_MTRand( 0 );
+    seed = GFL_STD_MtRand( 0 );
+    seed = (seed << 32) + GFL_STD_MtRand( 0 );
     
     GFL_STD_RandInit( &randContext, seed );
 

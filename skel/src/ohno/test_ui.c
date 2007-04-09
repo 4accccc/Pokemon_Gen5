@@ -60,10 +60,10 @@ static void _touchTableTest(void)
         {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
         };
 
-    no = GFL_UI_TouchPanelHitTrg(tp_data);
+    no = GFL_UI_TP_HitTrg(tp_data);
     if(no != GFL_UI_TP_HIT_NONE){
         u32 x=0,y=0;
-        GFL_UI_TouchPanelGetPointCont(&x,&y);
+        GFL_UI_TP_GetPointCont(&x,&y);
         OS_TPrintf("no %d %d %d\n",no,x,y);
     }
 
@@ -75,27 +75,27 @@ static void _touchTableTest(void)
 
 void TEST_UI_Main(void)
 {
-	if (GFL_UI_KeyGetTrg() & PAD_BUTTON_A) {
+	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) {
         OS_TPrintf("a button\n");
 	}
-    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_B){
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
         OS_TPrintf("b button\n");
 	}
-    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_R){
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
         OS_TPrintf("r button\n");
 	}
-    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_L){
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
         OS_TPrintf("l button\n");
 	}
-    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_START){
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_START){
         OS_TPrintf("start button\n");
 	}
-    else if (GFL_UI_KeyGetTrg() & PAD_BUTTON_SELECT){
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
         OS_TPrintf("sel button\n");
 	}
     {
         u32 x,y;
-        if(GFL_UI_TouchPanelGetPointTrg(&x,&y)){
+        if(GFL_UI_TP_GetPointTrg(&x,&y)){
             OS_TPrintf("tx ty %d %d\n", x, y);
         }
     }

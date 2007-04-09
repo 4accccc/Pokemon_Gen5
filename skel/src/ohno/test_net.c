@@ -123,7 +123,7 @@ void TEST_NET_Main(void)
     u8 beacon;
     int i;
     
-    if(PAD_BUTTON_X == GFL_UI_KeyGetTrg()){
+    if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){
         for(i = 0;i < _BCON_GET_NUM; i++){
             u8* pData = GFL_NET_GetBeaconMacAddress(i);
             if(pData){
@@ -133,7 +133,7 @@ void TEST_NET_Main(void)
     }
 
     // クライアント側のテスト
-    if(PAD_BUTTON_B == GFL_UI_KeyGetTrg()){
+    if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
@@ -175,7 +175,7 @@ void TEST_NET_Main(void)
 //                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
 
-                GFL_NET_ChangeMPMode(_pHandle);
+//                GFL_NET_ChangeMPMode(_pHandle);
 
             }
             _testNo++;
@@ -212,7 +212,7 @@ void TEST_NET_Main(void)
         OS_TPrintf("c %d\n",_testNo);
     }
     // サーバー側のテスト
-    if(PAD_BUTTON_R == GFL_UI_KeyGetTrg()){
+    if(PAD_BUTTON_R == GFL_UI_KEY_GetTrg()){
         switch(_testNo){
           case _TEST_CONNECT:
             {
@@ -236,7 +236,7 @@ void TEST_NET_Main(void)
             _testNo++;
             break;
           case _TEST_EXIT:
-            GFL_NET_sysExit();
+            GFL_NET_Exit();
             _testNo++;
             break;
         }
@@ -376,7 +376,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 void TEST_NET_Init(void)
 {
 
-    GFL_NET_sysInit(&aGFLNetInit);
+    GFL_NET_Init(&aGFLNetInit);
 
 }
 
