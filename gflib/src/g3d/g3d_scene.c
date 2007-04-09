@@ -399,6 +399,28 @@ void
 
 //--------------------------------------------------------------------------------------------
 /**
+ * αブレンド値の取得と変更
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	blendAlpha		αブレンドの格納もしくは参照ワークポインタ
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_SCENEOBJ_GetBlendAlpha
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* blendAlpha )
+{
+	*blendAlpha = g3DsceneObj->sceneObjData.blendAlpha;
+}
+
+void
+	GFL_G3D_SCENEOBJ_SetBlendAlpha
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u8* blendAlpha )
+{
+	g3DsceneObj->sceneObjData.blendAlpha = *blendAlpha;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * 描画スイッチの取得と変更
  *
  * @param	g3DsceneObj		配置オブジェクトポインタ
