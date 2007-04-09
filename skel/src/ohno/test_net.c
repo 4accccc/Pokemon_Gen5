@@ -138,7 +138,7 @@ void TEST_NET_Main(void)
           case _TEST_CONNECT:
             {
                 _pHandle = GFL_NET_CreateHandle();
-                GFL_NET_StateBeaconScan(_pHandle );    // ビーコンを待つ
+                GFL_NET_StartBeaconScan(_pHandle );    // ビーコンを待つ
 //                GFL_NET_InitClientAndConnectToParent(_pHandle, mac);  //macアドレスへ接続
 //                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }

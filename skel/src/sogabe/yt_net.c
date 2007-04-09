@@ -397,7 +397,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _INIT_WAIT_CHILD:
         if(GFL_NET_IsInit()){
             pNet->pNetHandle[1] = GFL_NET_CreateHandle();   // ƒnƒ“ƒhƒ‹ì¬
-            GFL_NET_StateBeaconScan(pNet->pNetHandle[1]); // ©“®Ú‘±
+            GFL_NET_StartBeaconScan(pNet->pNetHandle[1]); // ©“®Ú‘±
             _SEQCHANGE( _SEARCH_CHILD );
         }
         break;

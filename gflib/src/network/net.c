@@ -431,7 +431,7 @@ void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pHandle)
+void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle)
 {
     GFL_NET_StateBeaconScan(pHandle);
 }

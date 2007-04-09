@@ -258,7 +258,7 @@ extern void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
  * @brief    êeã@Ç…Ç»ÇËë“ÇøéÛÇØÇÈ
