@@ -110,9 +110,9 @@ static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont );
 //-----------------------------------------------------------------------------
 static void DEBUG_CommonDispInit( void )
 {
-	GFL_DISP_GX_VisibleControlInit();
-	GFL_DISP_GXS_VisibleControlInit();
-	GFL_DISP_DispOn();
+	GFL_DISP_GX_InitVisibleControl();
+	GFL_DISP_GXS_InitVisibleControl();
+	GFL_DISP_SetDispOn();
 	{
 		static const GFL_BG_DISPVRAM param = {
 			GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
@@ -134,8 +134,8 @@ static void DEBUG_CommonDispInit( void )
 	GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 
 
-	GFL_DISP_GX_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-	GFL_DISP_GXS_VisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //----------------------------------------------------------------------------
@@ -145,9 +145,9 @@ static void DEBUG_CommonDispInit( void )
 //-----------------------------------------------------------------------------
 static void DEBUG_CommonDispExit( void )
 {
-	GFL_DISP_DispOff();
-	GFL_DISP_GX_VisibleControlInit();
-	GFL_DISP_GXS_VisibleControlInit();
+	GFL_DISP_SetDispOff();
+	GFL_DISP_GX_InitVisibleControl();
+	GFL_DISP_GXS_InitVisibleControl();
 }
 
 //----------------------------------------------------------------------------
@@ -289,8 +289,8 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	int trg, cont;
 
 
-	trg = GFL_UI_KeyGetTrg();
-	cont = GFL_UI_KeyGetCont();
+	trg = GFL_UI_KEY_GetTrg();
+	cont = GFL_UI_KEY_GetCont();
 	// キー動作
 	DEBUG_ClactWorkKeyMove( p_clactw->p_wk, trg, cont );
 
