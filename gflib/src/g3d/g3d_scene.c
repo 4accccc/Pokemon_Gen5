@@ -143,8 +143,9 @@ void
 		}
 #else
 		NNS_G3dGlbPolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE,
-								GX_CULL_BACK, 0, g3DsceneObj->sceneObjData.blendAlpha, 0 );
-		NNS_G3dMdlUseGlbAlpha( pMdl );	//”½‰f‚µ‚Ä‚¢‚é‚Ì‚Íƒ¿Ý’è‚¾‚¯
+								GX_CULL_NONE, 0, g3DsceneObj->sceneObjData.blendAlpha, 0 );
+		NNS_G3dMdlUseGlbCullMode( pMdl );	//”w–Ê‚Í‘‚­
+		NNS_G3dMdlUseGlbAlpha( pMdl );		//”½‰f‚µ‚Ä‚¢‚é‚Ì‚Íƒ¿Ý’è‚¾‚¯
 #endif
 		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
