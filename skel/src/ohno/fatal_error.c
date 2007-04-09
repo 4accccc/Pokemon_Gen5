@@ -29,10 +29,10 @@ static	const	char	*GraphicFileTable[]={
 void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
 {
 	//BGシステム初期化
-	GFL_BG_sysInit(GFL_HEAPID_APP);
+	GFL_BG_Init(GFL_HEAPID_APP);
 
     //ARCシステム初期化
-	GFL_ARC_sysInit(&GraphicFileTable[0],1);
+	GFL_ARC_Init(&GraphicFileTable[0],1);
 
 	//VRAM設定
 	{
@@ -93,19 +93,19 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_M );
-		GFL_BG_BGControlSet(GFL_BG_FRAME2_S, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME2_S );
-		GFL_BG_BGControlSet(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
-		GFL_BG_ScrClear(GFL_BG_FRAME3_S );
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_S, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_S );
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_S );
 
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG0, VISIBLE_OFF );
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG1, VISIBLE_OFF );
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG3, VISIBLE_OFF );
-		GFL_DISP_GX_VisibleControl(GX_PLANEMASK_BG2, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG0, VISIBLE_OFF );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG1, VISIBLE_OFF );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG3, VISIBLE_OFF );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG2, VISIBLE_ON );
 
 		// OBJマッピングモード
 		GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
@@ -116,18 +116,18 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
 	}
 
 	//画面生成
-	GFL_ARC_UtilBgCharSet(0,NARC_fatal_error_fatal_error_lz_NCGR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UtilScrnSet(0,NARC_fatal_error_fatal_error_lz_NSCR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UtilPalSet(0,NARC_fatal_error_fatal_error_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_fatal_error_fatal_error_lz_NCGR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_fatal_error_fatal_error_lz_NSCR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramPalette(0,NARC_fatal_error_fatal_error_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
 
-	GFL_DISP_DispOn();
-	GFL_DISP_DispSelect( GFL_DISP_3D_TO_SUB );
+	GFL_DISP_SetDispOn();
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
 
-	GFL_FADE_MasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
+	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
 
 	while(TRUE){
-        GFL_UI_sysMain();
-        GFL_FADE_sysMain();
+        GFL_UI_Main();
+        GFL_FADE_Main();
 		// VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
