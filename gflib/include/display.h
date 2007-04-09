@@ -124,6 +124,6 @@ extern int GFL_DISP_GetMainVisible(void);
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern int GFL_DISP_SetSubVisible(void);
+extern int GFL_DISP_GetSubVisible(void);
 
 #endif __DISPLAY_H_
