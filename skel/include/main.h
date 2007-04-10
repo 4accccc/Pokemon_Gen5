@@ -36,5 +36,5 @@ enum{
 };
 
 #define	HEAPSIZE_SYSTEM	(0x08000)
-#define	HEAPSIZE_APP	(0x80000)
+#define	HEAPSIZE_APP	(0x100000)
 
