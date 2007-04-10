@@ -19,6 +19,7 @@ typedef struct {
 	u8						movePriority;				
 	u8						drawPriority;				
 	u8						blendAlpha;
+	BOOL					cullingFlag;
 	BOOL					drawSW;
 	GFL_G3D_OBJSTATUS		status; 
 	GFL_G3D_SCENEOBJFUNC*	func;
