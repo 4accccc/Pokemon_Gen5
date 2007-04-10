@@ -143,15 +143,21 @@ void
 		}
 #else
 		if( g3DsceneObj->sceneObjData.blendAlpha == GFL_G3D_SCENEOBJ_ALPHA_OFF ){
-			NNS_G3dMdlUseMdlCullMode( pMdl );
+			NNS_G3dMdlUseMdlPolygonID( pMdl );
 			NNS_G3dMdlUseMdlAlpha( pMdl );
 		} else {
 			NNS_G3dGlbPolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE,
-									GX_CULL_NONE, 0, g3DsceneObj->sceneObjData.blendAlpha, 0 );
-			NNS_G3dMdlUseGlbCullMode( pMdl );	//半透明の場合、背面は書く
+									GX_CULL_NONE, i, g3DsceneObj->sceneObjData.blendAlpha, 0 );
+			NNS_G3dMdlUseGlbPolygonID( pMdl );	//一時的にＩＤを変更（半透明のため）
 			NNS_G3dMdlUseGlbAlpha( pMdl );		//反映しているのはα設定だけ
 		}
 #endif
+		if( g3DsceneObj->sceneObjData.objID == 1 ){
+			OS_Printf("Haruka Printed Num = %d",i);
+		}
+		if( g3DsceneObj->sceneObjData.objID == 3 ){
+			OS_Printf("Floor Printed Num = %d\n",i);
+		}
 		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
@@ -303,7 +309,6 @@ u32
 								( g3Dscene->g3Dutil, g3DsceneObj->sceneObjData.objID );
 		g3DsceneObj->sceneObjWorkEx	= NULL;
 #if 0
-		if( g3DsceneObj->sceneObjData.objID == 0 )
 		// 半透明処理コールバック設定
 		{
 			GFL_G3D_RND* g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3DsceneObj->g3Dobj );
