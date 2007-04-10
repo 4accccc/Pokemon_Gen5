@@ -816,9 +816,9 @@ static void KeyControlCameraMove1( void )
 						tetsuWork->updateRotateFlag = FALSE;
 					}
 				}
-				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
-				cameraOffs.y = FX32_ONE * 40;
-				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.x = 180 * FX_SinIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.y = FX32_ONE * 140;
+				cameraOffs.z = 180 * FX_CosIdx( tetsuWork->mainCameraRotate );
 
 				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
@@ -927,6 +927,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.objID = G3DOBJ_MAP_WALL; 
 				data.movePriority = 0;
 				data.drawPriority = 2;
+				data.cullingFlag = TRUE;
 				data.drawSW = TRUE;
 				data.blendAlpha = 31;
 				data.status = defaultStatus;
@@ -941,6 +942,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.objID = G3DOBJ_HARUKA_STOP; 
 				data.movePriority = 0;
 				data.drawPriority = 250;
+				data.cullingFlag = TRUE;
 				data.drawSW = TRUE;
 				data.status = defaultStatus;
 				data.blendAlpha = 16;
@@ -1025,7 +1027,7 @@ static const char mapData1[] = {
 
 static const MAPDATA mapDataTbl = {
 	mapData1,
-	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, TRUE,
+	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, FALSE, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
