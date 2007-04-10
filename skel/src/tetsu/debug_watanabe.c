@@ -149,6 +149,7 @@ typedef struct {
 	GFL_G3D_SCENEOBJ_DATA	floor;
 }MAPDATA;
 
+u32 DebugCullingCount = 0;
 //------------------------------------------------------------------
 /**
  * @brief	マップデータ
@@ -366,7 +367,9 @@ static void g3d_load( HEAPID heapID )
 //動作
 static void g3d_move( void )
 {
+	DebugCullingCount = 0;
 	GFL_G3D_SCENE_Main( tetsuWork->g3Dscene );  
+	//OS_Printf("CullingCount = %d\n",DebugCullingCount);
 	tetsuWork->work[0]++;
 }
 
@@ -399,6 +402,7 @@ static void g3d_unload( void )
  * @brief	３Ｄ動作
  */
 //------------------------------------------------------------------
+//回転マトリクス変換
 static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 {
 	MtxFx33 tmp;
@@ -412,22 +416,40 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
+//２Ｄカリング
+static BOOL culling2DView( VecFx32 objPos )
+{
+	VecFx32 cameraPos, cameraTarget, viewVec, objVec;
+	int scalar;
+			
+	//カメラパラメータ取得
+	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
+	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraTarget );
+
+	//視界ベクトル計算
+	viewVec.x = (cameraTarget.x - cameraPos.x)/FX32_ONE;
+	viewVec.z = (cameraTarget.z - cameraPos.z)/FX32_ONE;
+
+	//対象物体ベクトル計算
+	objVec.x = (objPos.x - cameraPos.x)/FX32_ONE;
+	objVec.z = (objPos.z - cameraPos.z)/FX32_ONE;
+
+	//視界ベクトルと対象物体ベクトルの内積計算（２Ｄ）
+	scalar = viewVec.x * objVec.x + viewVec.z * objVec.z;
+
+	//スカラーによる位置判定(0は水平、正は前方、負は後方)
+	if( scalar < 0 ){
+		DebugCullingCount++;
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
 static inline void SetDrawSW( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 {
 	BOOL swBuf = sw;
 	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
-}
-
-static inline void SetDrawPri( GFL_G3D_SCENEOBJ* sceneObj, u8 pri )
-{
-	u8 priBuf = pri;
-	GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &priBuf );
-}
-
-static inline void SetAlpha( GFL_G3D_SCENEOBJ* sceneObj, u8 alpha )
-{
-	u8 alphaBuf = alpha;
-	GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alphaBuf );
 }
 
 static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -487,44 +509,64 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 }
 
 #define VIEW_LENGTH	(64*7)
-static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+static fx32 calcLength( VecFx32 pos )
 {
-	VecFx32 cameraPos, target, minePos, cameraVec;
-	fx32	diffX,diffZ,diffLength;
+	VecFx32 cameraPos;
+	fx32	diffX,diffZ;
 			
 	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
-	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &target );
-	cameraVec.x = target.x - cameraPos.x;
-	cameraVec.y = target.y - cameraPos.y;
-	cameraVec.z = target.z - cameraPos.z;
 
+	diffX = (cameraPos.x - pos.x)/FX32_ONE;
+	diffZ = (cameraPos.z - pos.z)/FX32_ONE;
+	return ( diffX * diffX + diffZ * diffZ );
+}
+
+
+static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	VecFx32 minePos;
+	fx32	diffLength;
+			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-	diffX = (cameraPos.x - minePos.x)/FX32_ONE;
-	diffZ = (cameraPos.z - minePos.z)/FX32_ONE;
-	diffLength = diffX * diffX + diffZ * diffZ;
+	if( culling2DView( minePos ) == FALSE ){
+		SetDrawSW( sceneObj, FALSE );
+		return;
+	}
+	diffLength = calcLength( minePos );
+
 	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
 		SetDrawSW( sceneObj, FALSE );
-		//OS_Printf
-		//	("diffX = %x, diffZ = %x, diffLength = %x, appear FALSE\n",diffX,diffZ,diffLength); 
 	} else {
-#if 1
-		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
-		SetDrawPri( sceneObj, 249 - diffLength * 200/ VIEW_LENGTH * VIEW_LENGTH );
-#else
-		//半透明処理の関係上、手前に見えるものから優先( 距離を200分割 )
-		SetDrawPri( sceneObj, 8+ diffLength * 200/ VIEW_LENGTH * VIEW_LENGTH );
-#endif
-#if 0
-		//手前の物体ほど半透明度を高く( 32段階まで )
-		SetAlpha( sceneObj, 15 + diffLength * 16/ VIEW_LENGTH * VIEW_LENGTH );	
-#else
-		SetAlpha( sceneObj, 16 );	
-#endif
 		SetDrawSW( sceneObj, TRUE );
-		//OS_Printf
-		//	("diffX = %x, diffZ = %x, diffLength = %x, appear TRUE\n",diffX,diffZ,diffLength); 
 	}
-				
+}
+
+static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	VecFx32 minePos;
+	fx32	diffLength;
+	u8		drawPri, alpha;
+			
+	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
+	if( culling2DView( minePos ) == FALSE ){
+		SetDrawSW( sceneObj, FALSE );
+		return;
+	}
+	diffLength = calcLength( minePos );
+
+	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
+		SetDrawSW( sceneObj, FALSE );
+	} else {
+		SetDrawSW( sceneObj, TRUE );
+
+		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
+		drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
+		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
+
+		//手前の物体ほど半透明度を高く( 32段階まで )
+		alpha = 15 + (diffLength * 16/ (VIEW_LENGTH * VIEW_LENGTH));	
+		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
+	}
 }
 
 //------------------------------------------------------------------
@@ -548,6 +590,7 @@ static void G3DsysSetup( void )
 
 	// ビューポートの設定
 	G3_ViewPort(0, 0, 255, 191);
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
 
 
@@ -844,6 +887,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 			case '　':
 				break;
 			case '■':	//壁
+#if 0
 				data.objID = G3DOBJ_MAP_WALL; 
 				data.movePriority = 0;
 				data.drawPriority = 2;
@@ -856,13 +900,27 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				pdata[ count ] = data;
 				count++;
 				break;
-			case '◎':	//プレーヤー
-				data.objID = G3DOBJ_HARUKA; 
+#endif
+			case '□':	//透過壁
+				data.objID = G3DOBJ_MAP_WALL; 
 				data.movePriority = 0;
-				data.drawPriority = 1;
+				data.drawPriority = 2;
+				data.drawSW = TRUE;
+				data.blendAlpha = 31;
+				data.status = defaultStatus;
+				data.status.trans.x = defaultMapX + (mapGrid * x);
+				data.status.trans.z = defaultMapZ + (mapGrid * z);
+				data.func = moveSkelWall;
+				pdata[ count ] = data;
+				count++;
+				break;
+			case '◎':	//プレーヤー
+				data.objID = G3DOBJ_HARUKA_STOP; 
+				data.movePriority = 0;
+				data.drawPriority = 250;
 				data.drawSW = TRUE;
 				data.status = defaultStatus;
-				data.blendAlpha = 8;
+				data.blendAlpha = 16;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
 				data.status.scale.x = FX32_ONE*8;
@@ -896,43 +954,43 @@ static void MapDataDelete( GFL_G3D_SCENEOBJ_DATA_SETUP* setup )
 
 
 static const char mapData1[] = {
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
-"　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"
-"　■　　○　　　　　　　　　　　　　　　　○　　　　　　　　■　"
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"
-"　■　■　　　　　　　　　　　　○　　　　　　　　　　　■　■　"
-"　■　■　■■■■■■■■■■■■■■■■■■■■■■　■　■　"
-"　■　■　■　　　　○　　　　　　　　　　　　　　　■　■　■　"
-"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"
-"　■　■　■　■　　　　　　　　　　　　○　　　■　■　■　■　"
-"　■　■　■　■　■■■■■■■■■■■■■■　■○■　■　■　"
-"　■　■　■　■　■　　　　　　　○　　　　■　■　■　■　■　"
-"　■　■　■　■　■○■■■■■■■■■■　■　■　■　■　■　"
-"　■　■　■　■　■　■　　　　　　　　■　■　■　■○■　■　"
-"　■　■　■　■　■　■　■■■■■■　■　■　■　■　■　■　"
-"　■　■　■　■　■　■　■　　　　■○■　■　■　■　■　■　"
-"　■　■○■　■　■　■　■　●　　■　■　■　■　■　■○■　"
-"　■　■　■　■　■　■○■　　　　■　■　■　■　■　■　■　"
-"　■　■　■　■　■　■　■　　　　■　■　■　■　■　■　■　"
-"　■○■　■　■　■　■　■　■■■■　■○■　■　■　■　■　"
-"　■　■　■　■　■　　　　　　　　　　■　■　■　■　■　■　"
-"　■　■　■　■　■　■■■■■■■■■■　■　■　■　■　■　"
-"　■　■　■○■　■　　　　　○　　　　　　■　■　■　■　■　"
-"　■　■　■　■　■　■■■■■■■■■■■■　■　■　■　■　"
-"　■○■　■　　　　　○　　　　　　　　　○　　■　■　■　■　"
-"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"
-"　■　■　■　　　　　　　　　　○　　　　　　　　　■　■　■　"
-"　■　■　■　■■■■■■■■■■■■■■■■■■■■　■○■　"
-"　■　　　　　　　　　○　　　　　　　　　　○　　　　　■　■　"
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"
-"　■◎　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
-};
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0
+"　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//30
+"　■　　○　　　　　　　　　　　　　　　　○　　　　　　　　■　"	//2
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"	//28
+"　■　■　　　　　　　　　　　　○　　　　　　　　　　　■　■　"	//4
+"　■　■　■■■■■■■■■■■■■■■■■■■■■■　■　■　"	//26
+"　■　■　■　　　　○　　　　　　　　　　　　　　　■　■　■　"	//6
+"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"	//24
+"　■　■　■　■　　　　　　　　　　　　○　　　■　■　■　■　"	//8
+"　■　■　■　■　■■■■■■■■■■■■■■　■○■　■　■　"	//22
+"　■　■　■　■　■　　　　　　　○　　　　■　■　■　■　■　"	//10
+"　■　■　■　■　■○■■■■■■■■■■　■　■　■　■　■　"	//20
+"　■　■　■　■　■　■　　　　　　　　■　■　■　■○■　■　"	//12
+"　■　■　■　■　■　■　■■■■■■　■　■　■　■　■　■　"	//18//210
+"　■　■　■　■　■　■　■　　　　■○■　■　■　■　■　■　"	//14
+"　■　■○■　■　■　■　■　●　　■　■　■　■　■　■○■　"	//14
+"　■　■　■　■　■　■○■　　　　■　■　■　■　■　■　■　"	//14
+"　■　■　■　■　■　■　■　　　　■　■　■　■　■　■　■　"	//14//56
+"　■○■　■　■　■　■　■　□□□■　■○■　■　■　■　■　"	//17
+"　■　■　■　■　■　　　　　　　　　　■　■　■　■　■　■　"	//11
+"　■　■　■　■　■　■■■■■■■■■■　■　■　■　■　■　"	//20
+"　■　■　■○■　■　　　　　○　　　　　　■　■　■　■　■　"	//10
+"　■　■　■　■　■　■■■■■■■■■■■■　■　■　■　■　"	//21
+"　■○■　■　　　　　○　　　　　　　　　○　　■　■　■　■　"	//7
+"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"	//24
+"　■　■　■　　　　　　　　　　○　　　　　　　　　■　■　■　"	//6
+"　■　■　■　■■■■■■■■■■■■■■■■■■■■　■○■　"	//25
+"　■　　　　　　　　　○　　　　　　　　　　○　　　　　■　■　"	//3
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"	//28
+"　■◎　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"	//2
+"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0/210-7
+};//210+56+203-19 = 450
 
 static const MAPDATA mapDataTbl = {
 	mapData1, 32, 32,
-	{	G3DOBJ_MAP_FLOOR, 0, 250, 31, TRUE,
+	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
