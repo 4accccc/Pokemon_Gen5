@@ -152,7 +152,11 @@ void
 			NNS_G3dMdlUseGlbAlpha( pMdl );		//反映しているのはα設定だけ
 		}
 #endif
-		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
+		if( g3DsceneObj->sceneObjData.cullingFlag == TRUE ){
+			GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
+		} else {
+			GFL_G3D_DRAW_DrawObject( g3Dobj, &g3DsceneObj->sceneObjData.status );
+		}
 		i++;
 	}
 	//描画終了（バッファスワップ）
