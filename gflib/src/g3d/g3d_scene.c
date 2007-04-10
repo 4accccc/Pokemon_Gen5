@@ -152,12 +152,6 @@ void
 			NNS_G3dMdlUseGlbAlpha( pMdl );		//”½‰f‚µ‚Ä‚¢‚é‚Ì‚Íƒ¿Ý’è‚¾‚¯
 		}
 #endif
-		if( g3DsceneObj->sceneObjData.objID == 1 ){
-			OS_Printf("Haruka Printed Num = %d",i);
-		}
-		if( g3DsceneObj->sceneObjData.objID == 3 ){
-			OS_Printf("Floor Printed Num = %d\n",i);
-		}
 		GFL_G3D_DRAW_DrawObjectCullingON( g3Dobj, &g3DsceneObj->sceneObjData.status );
 		i++;
 	}
