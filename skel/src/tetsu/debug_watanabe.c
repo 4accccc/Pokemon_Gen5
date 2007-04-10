@@ -34,7 +34,7 @@ static BOOL	TestModeControl( void );
 static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x4c000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x80000 );
 	TestModeWorkSet( HEAPID_WATANABE_DEBUG );
 //	TestModeWorkSet( GFL_HEAPID_APP );
 
@@ -129,11 +129,14 @@ typedef struct {
 	u16						mainCameraRotate;
 	u16						autoCameraRotate1;
 	u16						autoCameraRotate2;
+
+	u16*					mapAttr;
 }TETSU_WORK;
 
 typedef struct {
 	const GFL_G3D_SCENEOBJ_DATA*	data;
-	int						count;
+	int								count;
+	u16*							mapAttr;
 }GFL_G3D_SCENEOBJ_DATA_SETUP;
 
 typedef struct {
@@ -144,8 +147,6 @@ typedef struct {
 
 typedef struct {
 	const char*				data;
-	int						sizeX;
-	int						sizeZ;
 	GFL_G3D_SCENEOBJ_DATA	floor;
 }MAPDATA;
 
@@ -205,6 +206,8 @@ static void KeyControlCameraMove1( void );
 
 static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID );
 static void MapDataDelete( GFL_G3D_SCENEOBJ_DATA_SETUP* setup );
+static void MapAttrDelete( u16* mapAttr );
+static u16	MapAttrGet( u16* mapAttr, VecFx32* pos );
 
 TETSU_WORK* tetsuWork;
 //------------------------------------------------------------------
@@ -340,6 +343,7 @@ static void g3d_load( HEAPID heapID )
 		tetsuWork->g3DsceneMapObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, setup->data, setup->count );
 		tetsuWork->g3DsceneMapObjCount = setup->count;
+		tetsuWork->mapAttr = setup->mapAttr;
 		MapDataDelete( setup );
 	}
 
@@ -389,6 +393,7 @@ static void g3d_unload( void )
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[0] );
 	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[0] );
 
+	MapAttrDelete( tetsuWork->mapAttr );
 	GFL_G3D_SCENEOBJ_Remove
 		(tetsuWork->g3Dscene, tetsuWork->g3DsceneMapObjID, tetsuWork->g3DsceneMapObjCount ); 
 	GFL_G3D_SCENEOBJ_Remove(tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID, NELEMS(g3DsceneObjData));
@@ -563,7 +568,7 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
 		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
 
-		//手前の物体ほど半透明度を高く( 32段階まで )
+		//【実験】手前の物体ほど半透明度を高く( 32段階まで )
 		alpha = 15 + (diffLength * 16/ (VIEW_LENGTH * VIEW_LENGTH));	
 		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
 	}
@@ -777,8 +782,19 @@ static void KeyControlCameraMove1( void )
 				move.x = speed * FX_SinIdx( tetsuWork->nowRotate );
 				move.z = speed * FX_CosIdx( tetsuWork->nowRotate );
 
-				tetsuWork->contPos.x += move.x;
-				tetsuWork->contPos.z += move.z;
+				{
+					VecFx32 tmpPos;
+					u16 attrData;
+
+					tmpPos.x = tetsuWork->contPos.x + move.x;
+					tmpPos.z = tetsuWork->contPos.z + move.z;
+
+					attrData = MapAttrGet( tetsuWork->mapAttr, &tmpPos );
+					if( attrData == 0 ){
+						tetsuWork->contPos.x = tmpPos.x;
+						tetsuWork->contPos.z = tmpPos.z;
+					}
+				}
 			}
 			tetsuWork->contPos.y = FX32_ONE*16;
 
@@ -858,33 +874,39 @@ static const  GFL_G3D_OBJSTATUS defaultStatus = {
 	{ FX32_ONE, FX32_ONE, FX32_ONE },
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 };
+#define mapSizeX	(32)
+#define mapSizeZ	(32)
 #define mapGrid		(FX32_ONE*64)
 #define defaultMapX	(-mapGrid*16+mapGrid/2)
 #define defaultMapZ	(-mapGrid*16+mapGrid/2)
 
 static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID )
 {
-	GFL_G3D_SCENEOBJ_DATA_SETUP* setup;
-	GFL_G3D_SCENEOBJ_DATA*	pdata;
-	GFL_G3D_SCENEOBJ_DATA	data;
+	GFL_G3D_SCENEOBJ_DATA_SETUP*	setup;
+	GFL_G3D_SCENEOBJ_DATA*			pdata;
+	GFL_G3D_SCENEOBJ_DATA			data;
+	u16*							mapAttr;
 	int count = 0;
 	int		x,z;
 	u16*	mapData = (u16*)map->data;	//めんどいので全角のみに制限
-	int	sizeX = map->sizeX;
-	int	sizeZ = map->sizeZ;
+	int	sizeX = mapSizeX;
+	int	sizeZ = mapSizeZ;
 	u16 mapCode;
 
+	mapAttr = GFL_HEAP_AllocMemory( heapID, 2*sizeX*sizeZ );
 	setup = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA_SETUP) );
 	pdata = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA)*sizeX*sizeZ+1 );
 
-//	pdata[ count ] = map->floor;
-//	count++;
+	pdata[ count ] = map->floor;
+	count++;
 
 	for( z=0; z<sizeZ; z++ ){
 		for( x=0; x<sizeX; x++ ){
 			mapCode = ((mapData[z*sizeX+x] & 0x00ff )<<8) + ((mapData[z*sizeX+x] & 0xff00 )>>8);
 			switch( mapCode ){
+			default:
 			case '　':
+				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '■':	//壁
 #if 0
@@ -913,8 +935,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.func = moveSkelWall;
 				pdata[ count ] = data;
 				count++;
+				mapAttr[z*sizeX+x] = 1;
 				break;
-			case '◎':	//プレーヤー
+			case '○':	//配置人物１
 				data.objID = G3DOBJ_HARUKA_STOP; 
 				data.movePriority = 0;
 				data.drawPriority = 250;
@@ -926,22 +949,23 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.status.scale.x = FX32_ONE*8;
 				data.status.scale.y = FX32_ONE*8;
 				data.status.scale.z = FX32_ONE*8;
-				data.func = NULL;
+				data.func = moveSkelWall;
 				pdata[ count ] = data;
 				count++;
+				mapAttr[z*sizeX+x] = 0;
 				break;
-			case '○':	//配置人物１
+			case '◎':	//プレーヤー
+				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '●':	//配置人物２
+				mapAttr[z*sizeX+x] = 0;
 				break;
 			}
 		}
 	}
-	pdata[ count ] = map->floor;
-	count++;
-
 	setup->data = pdata;
 	setup->count = count;
+	setup->mapAttr = mapAttr;
 
 	return setup;
 }
@@ -952,6 +976,17 @@ static void MapDataDelete( GFL_G3D_SCENEOBJ_DATA_SETUP* setup )
 	GFL_HEAP_FreeMemory( setup );
 }
 
+static void MapAttrDelete( u16* mapAttr )
+{
+	GFL_HEAP_FreeMemory( mapAttr );
+}
+
+static u16 MapAttrGet( u16* mapAttr, VecFx32* pos )
+{
+	int x = (pos->x + mapGrid*16)/mapGrid;
+	int z = (pos->z + mapGrid*16)/mapGrid;
+	return mapAttr[z*mapSizeX+x];
+}
 
 static const char mapData1[] = {
 "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0
@@ -989,7 +1024,7 @@ static const char mapData1[] = {
 };//210+56+203-19 = 450
 
 static const MAPDATA mapDataTbl = {
-	mapData1, 32, 32,
+	mapData1,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
