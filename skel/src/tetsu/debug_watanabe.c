@@ -247,8 +247,8 @@ static BOOL	TestModeControl( void )
 
 	case 1:
 		//画面作成
-		g3d_load( tetsuWork->heapID );	//３Ｄデータ作成
 		KeyControlInit();
+		g3d_load( tetsuWork->heapID );	//３Ｄデータ作成
 		tetsuWork->seq++;
 		break;
 
@@ -422,33 +422,38 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 }
 
 //２Ｄカリング
-static BOOL culling2DView( VecFx32 objPos )
+static BOOL culling2DView( VecFx32* objPos )
 {
-	VecFx32 cameraPos, cameraTarget, viewVec, objVec;
-	int scalar;
-			
-	//カメラパラメータ取得
-	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
-	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraTarget );
-
-	//視界ベクトル計算
-	viewVec.x = (cameraTarget.x - cameraPos.x)/FX32_ONE;
-	viewVec.z = (cameraTarget.z - cameraPos.z)/FX32_ONE;
-
-	//対象物体ベクトル計算
-	objVec.x = (objPos.x - cameraPos.x)/FX32_ONE;
-	objVec.z = (objPos.z - cameraPos.z)/FX32_ONE;
-
-	//視界ベクトルと対象物体ベクトルの内積計算（２Ｄ）
-	scalar = viewVec.x * objVec.x + viewVec.z * objVec.z;
-
+	int scalar = GFL_G3D_CAMERA_GetDotProductXZfast
+					( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], objPos );
 	//スカラーによる位置判定(0は水平、正は前方、負は後方)
 	if( scalar < 0 ){
-		DebugCullingCount++;
 		return FALSE;
 	} else {
 		return TRUE;
 	}
+}
+
+//注視点との位置関係取得（ＸＺのみ）
+static int checkPos_toTarget( VecFx32* objPos )
+{
+	VecFx32 cameraPos, cameraTarget;
+	int viewVecX, viewVecZ, objVecX, objVecZ;
+
+	//カメラ情報取得
+	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
+	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraTarget );
+
+	//視界ベクトル計算（整数部のみ）
+	viewVecX = ( cameraTarget.x - cameraPos.x ) >> FX32_SHIFT;
+	viewVecZ = ( cameraTarget.z - cameraPos.z ) >> FX32_SHIFT;
+
+	//対象物体ベクトル計算（整数部のみ）
+	objVecX = ( objPos->x - cameraTarget.x ) >> FX32_SHIFT;
+	objVecZ = ( objPos->z - cameraTarget.z ) >> FX32_SHIFT;
+
+	//視界ベクトルと対象物体ベクトルの内積計算（ＸＺ）
+	return viewVecX * objVecX + viewVecZ * objVecZ;
 }
 
 static inline void SetDrawSW( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
@@ -514,15 +519,15 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 }
 
 #define VIEW_LENGTH	(64*7)
-static fx32 calcLength( VecFx32 pos )
+static fx32 calcLength( VecFx32* pos )
 {
 	VecFx32 cameraPos;
 	fx32	diffX,diffZ;
 			
 	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
 
-	diffX = (cameraPos.x - pos.x)/FX32_ONE;
-	diffZ = (cameraPos.z - pos.z)/FX32_ONE;
+	diffX = (cameraPos.x - pos->x)/FX32_ONE;
+	diffZ = (cameraPos.z - pos->z)/FX32_ONE;
 	return ( diffX * diffX + diffZ * diffZ );
 }
 
@@ -533,16 +538,34 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	fx32	diffLength;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-	if( culling2DView( minePos ) == FALSE ){
+	if( culling2DView( &minePos ) == FALSE ){
+		DebugCullingCount++;
 		SetDrawSW( sceneObj, FALSE );
 		return;
 	}
-	diffLength = calcLength( minePos );
+	diffLength = calcLength( &minePos );
 
 	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
 		SetDrawSW( sceneObj, FALSE );
 	} else {
+		//注視点との位置関係取得
+		int scalar = checkPos_toTarget( &minePos );
+		u8	drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
+		u8	alpha;
+
 		SetDrawSW( sceneObj, TRUE );
+		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
+		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
+		
+		//スカラーによる位置判定により半透明処理をする(0は水平、正は前方、負は後方)
+		if( scalar == 0 ){
+			alpha = 24;
+		} else if( scalar > 0) {
+			alpha = 31;
+		} else {
+			alpha = 16;
+		}
+		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
 	}
 }
 
@@ -553,11 +576,12 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	u8		drawPri, alpha;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-	if( culling2DView( minePos ) == FALSE ){
+	if( culling2DView( &minePos ) == FALSE ){
+		DebugCullingCount++;
 		SetDrawSW( sceneObj, FALSE );
 		return;
 	}
-	diffLength = calcLength( minePos );
+	diffLength = calcLength( &minePos );
 
 	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
 		SetDrawSW( sceneObj, FALSE );
@@ -909,10 +933,10 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '■':	//壁
-#if 0
 				data.objID = G3DOBJ_MAP_WALL; 
 				data.movePriority = 0;
 				data.drawPriority = 2;
+				data.cullingFlag = TRUE;
 				data.drawSW = TRUE;
 				data.blendAlpha = 31;
 				data.status = defaultStatus;
@@ -921,8 +945,8 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.func = moveWall;
 				pdata[ count ] = data;
 				count++;
+				mapAttr[z*sizeX+x] = 1;
 				break;
-#endif
 			case '□':	//透過壁
 				data.objID = G3DOBJ_MAP_WALL; 
 				data.movePriority = 0;
@@ -957,6 +981,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '◎':	//プレーヤー
+				tetsuWork->contPos.x = defaultMapX + (mapGrid * x);
+				tetsuWork->contPos.y = 0;
+				tetsuWork->contPos.z = defaultMapZ + (mapGrid * z);
 				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '●':	//配置人物２
@@ -1020,9 +1047,9 @@ static const char mapData1[] = {
 "　■　■　■　■■■■■■■■■■■■■■■■■■■■　■○■　"	//25
 "　■　　　　　　　　　○　　　　　　　　　　○　　　　　■　■　"	//3
 "　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"	//28
-"　■◎　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"	//2
+"　■　　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"	//2
 "　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0/210-7
+"　　◎　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0/210-7
 };//210+56+203-19 = 450
 
 static const MAPDATA mapDataTbl = {
@@ -1034,4 +1061,5 @@ static const MAPDATA mapDataTbl = {
 		},NULL,
 	},
 };
+
 

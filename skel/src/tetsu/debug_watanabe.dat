@@ -19,36 +19,22 @@ static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
 enum {
 	G3DRES_HARUKA_BCA = 0,
 	G3DRES_HARUKA_BMD,
-#if 0
-	G3DRES_MAP_BIL1,
-	G3DRES_MAP_BIL2,
-	G3DRES_MAP_BIL3,
-	G3DRES_MAP_BIL4,
-	G3DRES_MAP_BIL5,
-	G3DRES_MAP_BIL6,
-	G3DRES_MAP_BIL7,
-	G3DRES_MAP_BIL8,
-	G3DRES_MAP_BIL9,
-#endif
 	G3DRES_MAP_WALL,
+	G3DRES_MAP_WALL1,
+	G3DRES_MAP_WALL2_1,
+	G3DRES_MAP_WALL2_2,
+	G3DRES_MAP_WALL3,
 	G3DRES_MAP_FLOOR,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_haruka_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_haruka_nsbmd,  GFL_G3D_UTIL_RESPATH },
-#if 0
-	{ (u32)g3DarcPath, BMID_C1_B01A, GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C1_B01B, GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C1_B02A, GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C3_B01A, GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C6_H01,	 GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C7_H01,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C9_H01,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C5_B01,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath, BMID_C8_H01,  GFL_G3D_UTIL_RESPATH },
-#endif
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall1_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall2_1_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall2_2_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall3_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
 };
 
@@ -61,36 +47,22 @@ static const GFL_G3D_UTIL_ANM g3Dutil_HarukaAnmTbl[] = {
 enum {
 	G3DOBJ_HARUKA = 0,
 	G3DOBJ_HARUKA_STOP,
-#if 0
-	G3DOBJ_MAP_BIL1,
-	G3DOBJ_MAP_BIL2,
-	G3DOBJ_MAP_BIL3,
-	G3DOBJ_MAP_BIL4,
-	G3DOBJ_MAP_BIL5,
-	G3DOBJ_MAP_BIL6,
-	G3DOBJ_MAP_BIL7,
-	G3DOBJ_MAP_BIL8,
-	G3DOBJ_MAP_BIL9,
-#endif
 	G3DOBJ_MAP_WALL,
+	G3DOBJ_MAP_WALL1,
+	G3DOBJ_MAP_WALL2_1,
+	G3DOBJ_MAP_WALL2_2,
+	G3DOBJ_MAP_WALL3,
 	G3DOBJ_MAP_FLOOR,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_HARUKA_BMD, 0, G3DRES_HARUKA_BMD, g3Dutil_HarukaAnmTbl, NELEMS(g3Dutil_HarukaAnmTbl) },
 	{ G3DRES_HARUKA_BMD, 0, G3DRES_HARUKA_BMD, g3Dutil_HarukaAnmTbl, NELEMS(g3Dutil_HarukaAnmTbl) },
-#if 0
-	{ G3DRES_MAP_BIL1, 0, G3DRES_MAP_BIL1, NULL, 0 },
-	{ G3DRES_MAP_BIL2, 0, G3DRES_MAP_BIL2, NULL, 0 },
-	{ G3DRES_MAP_BIL3, 0, G3DRES_MAP_BIL3, NULL, 0 },
-	{ G3DRES_MAP_BIL4, 0, G3DRES_MAP_BIL4, NULL, 0 },
-	{ G3DRES_MAP_BIL5, 0, G3DRES_MAP_BIL5, NULL, 0 },
-	{ G3DRES_MAP_BIL6, 0, G3DRES_MAP_BIL6, NULL, 0 },
-	{ G3DRES_MAP_BIL7, 0, G3DRES_MAP_BIL7, NULL, 0 },
-	{ G3DRES_MAP_BIL8, 0, G3DRES_MAP_BIL8, NULL, 0 },
-	{ G3DRES_MAP_BIL9, 0, G3DRES_MAP_BIL9, NULL, 0 },
-#endif
 	{ G3DRES_MAP_WALL, 0, G3DRES_MAP_WALL, NULL, 0 },
+	{ G3DRES_MAP_WALL1, 0, G3DRES_MAP_WALL1, NULL, 0 },
+	{ G3DRES_MAP_WALL2_1, 0, G3DRES_MAP_WALL2_1, NULL, 0 },
+	{ G3DRES_MAP_WALL2_2, 0, G3DRES_MAP_WALL2_2, NULL, 0 },
+	{ G3DRES_MAP_WALL3, 0, G3DRES_MAP_WALL3, NULL, 0 },
 	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
 };
 
@@ -101,23 +73,6 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 };
 
 //---------------------
-#define UL_OFFS_X	(-FX32_ONE*128*3)
-#define UL_OFFS_Z	(-FX32_ONE*128*3)
-#define U_OFFS_X	( 0 )
-#define U_OFFS_Z	(-FX32_ONE*128*3)
-#define UR_OFFS_X	( FX32_ONE*128*3)
-#define UR_OFFS_Z	(-FX32_ONE*128*3)
-#define L_OFFS_X	(-FX32_ONE*128*3)
-#define L_OFFS_Z	( 0 )
-#define R_OFFS_X	( FX32_ONE*128*3)
-#define R_OFFS_Z	( 0 )
-#define DL_OFFS_X	(-FX32_ONE*128*3)
-#define DL_OFFS_Z	( FX32_ONE*128*3)
-#define D_OFFS_X	( 0 )
-#define D_OFFS_Z	( FX32_ONE*128*3)
-#define DR_OFFS_X	( FX32_ONE*128*3)
-#define DR_OFFS_Z	( FX32_ONE*128*3)
-
 static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 	{	G3DOBJ_HARUKA, 0, 1, 31, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
@@ -125,26 +80,6 @@ static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveHaruka,
 	},
-#if 0
-	{	G3DOBJ_HARUKA_STOP, 0, 2, 31, TRUE,
-		{	{ -FX32_ONE*(128+64), 0, -FX32_ONE*128+64 },
-			{ FX32_ONE*3, FX32_ONE*3, FX32_ONE*3 },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},simpleRotateY,
-	},
-	{	G3DOBJ_HARUKA_STOP, 0, 2, 31, TRUE,
-		{	{ FX32_ONE*(128+64), 0, -FX32_ONE*128+64 },
-			{ FX32_ONE*3, FX32_ONE*6, FX32_ONE*3 },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},simpleRotateY,
-	},
-	{	G3DOBJ_HARUKA_STOP, 0, 2, 31, TRUE,
-		{	{ -FX32_ONE*(128+64), 0, FX32_ONE*128+64 },
-			{ FX32_ONE*8, FX32_ONE*4, FX32_ONE*8 },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},simpleRotateY,
-	},
-#endif
 };
 
 
