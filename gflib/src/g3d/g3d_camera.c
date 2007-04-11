@@ -183,3 +183,56 @@ void
 	g3Dcamera->lookAt.target = *target;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラ方向と対象位置との内積を取得する
+ *
+ * @param	g3Dcamera	カメラハンドル
+ * @param	objPos		オブジェクト位置ベクトル
+ *
+ * 主に簡易カリングなどに使用する
+ * 内積の値が　	0	:対象ベクトルは水平（カメラの向きに対して垂直のベクトル）に位置する
+ *				正	:対象ベクトルは前方に位置する
+ *				負	:対象ベクトルは後方に位置する
+ */
+//--------------------------------------------------------------------------------------------
+//正規版
+fx32
+	GFL_G3D_CAMERA_GetDotProduct
+		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos )
+{
+	VecFx32	viewVec, objVec;
+	fx32	scalar;
+			
+	GF_ASSERT( g3Dcamera );
+
+	//視界ベクトル計算
+	VEC_Subtract( &g3Dcamera->lookAt.target, &g3Dcamera->lookAt.camPos, &viewVec );
+	//対象物体ベクトル計算
+	VEC_Subtract( objPos, &g3Dcamera->lookAt.camPos, &objVec );
+
+	//視界ベクトルと対象物体ベクトルの内積計算
+	return VEC_DotProduct( &viewVec, &objVec );
+}
+
+//簡易版　※２Ｄ（ＸＺ座標）専用。スカラー精度は落ちるがやや高速
+int
+	GFL_G3D_CAMERA_GetDotProductXZfast
+		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos )
+{
+	int viewVecX, viewVecZ, objVecX, objVecZ;
+			
+	GF_ASSERT( g3Dcamera );
+
+	//視界ベクトル計算（整数部のみ）
+	viewVecX = ( g3Dcamera->lookAt.target.x - g3Dcamera->lookAt.camPos.x )/FX32_ONE;
+	viewVecZ = ( g3Dcamera->lookAt.target.z - g3Dcamera->lookAt.camPos.z )/FX32_ONE;
+
+	//対象物体ベクトル計算（整数部のみ）
+	objVecX = ( objPos->x - g3Dcamera->lookAt.camPos.x )/FX32_ONE;
+	objVecZ = ( objPos->z - g3Dcamera->lookAt.camPos.z )/FX32_ONE;
+
+	//視界ベクトルと対象物体ベクトルの内積計算（ＸＺ）
+	return viewVecX * objVecX + viewVecZ * objVecZ;
+}
+
