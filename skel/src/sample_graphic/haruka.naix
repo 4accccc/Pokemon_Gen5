@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2007-04-10T20:46:20
+	Update:2007-04-11T20:10:45
  *****************************************************************************/
 
 #ifndef NARC_HARUKA_NAIX_
@@ -18,7 +18,8 @@ enum {
 	NARC_haruka_test_wall2_1_nsbmd = 4,
 	NARC_haruka_test_wall2_2_nsbmd = 5,
 	NARC_haruka_test_wall3_nsbmd = 6,
-	NARC_haruka_test_floor_nsbmd = 7
+	NARC_haruka_test_wall0_nsbmd = 7,
+	NARC_haruka_test_floor_nsbmd = 8
 };
 
 /* NARC_HARUKA_NAIX_ */
