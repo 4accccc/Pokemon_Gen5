@@ -904,6 +904,12 @@ static const  GFL_G3D_OBJSTATUS defaultStatus = {
 #define defaultMapX	(-mapGrid*16+mapGrid/2)
 #define defaultMapZ	(-mapGrid*16+mapGrid/2)
 
+static inline u16 GET_MAPCODE( u16* mapdata, int x, int z )
+{
+	u16	tmpdata = mapdata[ z * mapSizeX + x ];
+	return  (( tmpdata & 0x00ff ) << 8 ) + (( tmpdata & 0xff00 ) >> 8 );
+}
+
 static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID )
 {
 	GFL_G3D_SCENEOBJ_DATA_SETUP*	setup;
@@ -926,7 +932,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 
 	for( z=0; z<sizeZ; z++ ){
 		for( x=0; x<sizeX; x++ ){
-			mapCode = ((mapData[z*sizeX+x] & 0x00ff )<<8) + ((mapData[z*sizeX+x] & 0xff00 )>>8);
+			mapCode = GET_MAPCODE( mapData, x, z );
 			switch( mapCode ){
 			default:
 			case 'Å@':
@@ -1061,5 +1067,27 @@ static const MAPDATA mapDataTbl = {
 		},NULL,
 	},
 };
+
+#if 0
+static u32 GetWallCode( u16 up, u16 down, u16 left, u16 right ) 
+{
+	u16 code;
+
+	u16 codeTbl[][4] = {
+		{'Å°','Å°','Å°','Å°'},
+		{'Å°','Å°','Å°','Å°'},
+		{'Å°','Å°','Å°','Å°'},
+		{'Å°','Å°','Å°','Å°'},
+		{'Å°','Å°','Å°','Å°'},
+		{'Å°','Å°','Å°','Å°'},
+	};
+	for(i=0;i<NELEMS(codeTbl))
+	if((up=='Å°')&&(down=='Å°')&&(left=='Å°')&&(down=='Å°'))
+	return code;
+}
+#endif
+
+
+
 
 
