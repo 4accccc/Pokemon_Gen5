@@ -225,12 +225,12 @@ int
 	GF_ASSERT( g3Dcamera );
 
 	//視界ベクトル計算（整数部のみ）
-	viewVecX = ( g3Dcamera->lookAt.target.x - g3Dcamera->lookAt.camPos.x )/FX32_ONE;
-	viewVecZ = ( g3Dcamera->lookAt.target.z - g3Dcamera->lookAt.camPos.z )/FX32_ONE;
+	viewVecX = ( g3Dcamera->lookAt.target.x - g3Dcamera->lookAt.camPos.x ) >> FX32_SHIFT;
+	viewVecZ = ( g3Dcamera->lookAt.target.z - g3Dcamera->lookAt.camPos.z ) >> FX32_SHIFT;
 
 	//対象物体ベクトル計算（整数部のみ）
-	objVecX = ( objPos->x - g3Dcamera->lookAt.camPos.x )/FX32_ONE;
-	objVecZ = ( objPos->z - g3Dcamera->lookAt.camPos.z )/FX32_ONE;
+	objVecX = ( objPos->x - g3Dcamera->lookAt.camPos.x ) >> FX32_SHIFT;
+	objVecZ = ( objPos->z - g3Dcamera->lookAt.camPos.z ) >> FX32_SHIFT;
 
 	//視界ベクトルと対象物体ベクトルの内積計算（ＸＺ）
 	return viewVecX * objVecX + viewVecZ * objVecZ;
