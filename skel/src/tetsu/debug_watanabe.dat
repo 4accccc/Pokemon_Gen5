@@ -24,6 +24,7 @@ enum {
 	G3DRES_MAP_WALL2_1,
 	G3DRES_MAP_WALL2_2,
 	G3DRES_MAP_WALL3,
+	G3DRES_MAP_WALL0,
 	G3DRES_MAP_FLOOR,
 };
 
@@ -35,6 +36,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall2_1_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall2_2_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall3_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall0_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
 };
 
@@ -52,6 +54,7 @@ enum {
 	G3DOBJ_MAP_WALL2_1,
 	G3DOBJ_MAP_WALL2_2,
 	G3DOBJ_MAP_WALL3,
+	G3DOBJ_MAP_WALL0,
 	G3DOBJ_MAP_FLOOR,
 };
 
@@ -63,6 +66,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_MAP_WALL2_1, 0, G3DRES_MAP_WALL2_1, NULL, 0 },
 	{ G3DRES_MAP_WALL2_2, 0, G3DRES_MAP_WALL2_2, NULL, 0 },
 	{ G3DRES_MAP_WALL3, 0, G3DRES_MAP_WALL3, NULL, 0 },
+	{ G3DRES_MAP_WALL0, 0, G3DRES_MAP_WALL0, NULL, 0 },
 	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
 };
 

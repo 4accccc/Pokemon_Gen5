@@ -559,7 +559,7 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		
 		//スカラーによる位置判定により半透明処理をする(0は水平、正は前方、負は後方)
 		if( scalar == 0 ){
-			alpha = 24;
+			alpha = 31;
 		} else if( scalar > 0) {
 			alpha = 31;
 		} else {
@@ -591,9 +591,12 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
 		drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
 		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
-
+#if 0
 		//【実験】手前の物体ほど半透明度を高く( 32段階まで )
 		alpha = 15 + (diffLength * 16/ (VIEW_LENGTH * VIEW_LENGTH));	
+#else
+		alpha = 8;
+#endif
 		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
 	}
 }
@@ -904,9 +907,17 @@ static const  GFL_G3D_OBJSTATUS defaultStatus = {
 #define defaultMapX	(-mapGrid*16+mapGrid/2)
 #define defaultMapZ	(-mapGrid*16+mapGrid/2)
 
+static void GetWallData
+			( GFL_G3D_SCENEOBJ_DATA* data, u16 chkCode, u16 up, u16 down, u16 left, u16 right ); 
+
 static inline u16 GET_MAPCODE( u16* mapdata, int x, int z )
 {
-	u16	tmpdata = mapdata[ z * mapSizeX + x ];
+	u16	tmpdata;
+
+	if(( x < 0 )||( x >= mapSizeX )||( z < 0 )||( z >= mapSizeZ )){
+		return  '■';
+	}
+	tmpdata = mapdata[ z * mapSizeX + x ];
 	return  (( tmpdata & 0x00ff ) << 8 ) + (( tmpdata & 0xff00 ) >> 8 );
 }
 
@@ -939,13 +950,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				mapAttr[z*sizeX+x] = 0;
 				break;
 			case '■':	//壁
-				data.objID = G3DOBJ_MAP_WALL; 
-				data.movePriority = 0;
-				data.drawPriority = 2;
-				data.cullingFlag = TRUE;
-				data.drawSW = TRUE;
-				data.blendAlpha = 31;
-				data.status = defaultStatus;
+				GetWallData( &data, mapCode, 
+							GET_MAPCODE( mapData, x, z-1 ), GET_MAPCODE( mapData, x, z+1 ), 
+							GET_MAPCODE( mapData, x-1, z ), GET_MAPCODE( mapData, x+1, z ) );
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
 				data.func = moveWall;
@@ -954,13 +961,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				mapAttr[z*sizeX+x] = 1;
 				break;
 			case '□':	//透過壁
-				data.objID = G3DOBJ_MAP_WALL; 
-				data.movePriority = 0;
-				data.drawPriority = 2;
-				data.cullingFlag = TRUE;
-				data.drawSW = TRUE;
-				data.blendAlpha = 31;
-				data.status = defaultStatus;
+				GetWallData( &data, mapCode, 
+							GET_MAPCODE( mapData, x, z-1 ), GET_MAPCODE( mapData, x, z+1 ), 
+							GET_MAPCODE( mapData, x-1, z ), GET_MAPCODE( mapData, x+1, z ) );
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
 				data.func = moveSkelWall;
@@ -1058,8 +1061,42 @@ static const char mapData1[] = {
 "　　◎　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0/210-7
 };//210+56+203-19 = 450
 
+static const char mapData2[] = {
+"■　■　　　　　　　　　　　■　　■　　　■　　　　■　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　■　　　　■　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　　　　　　■　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　■　　　　■　　　　　"	//0
+"■　■■■■　■■■■■■■■　　■　　　■　　　　　　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　■■■■■■■■■■■"	//0
+"■　■　　　　　　　　　　　■　　■　　　　　　　　　　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　　　　　　　　　　　　"	//0
+"■　■　　　　　　　　　　　■　　■　　　　　　　　　　　　　　"	//0
+"■　■■■■■■■■　■■■■　　■■■■■■■　　■■■■■■"	//0
+"■　■　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0
+"■　■　　　　　■■■■■■■■■■■■■■■■■■■■　　■■"	//0
+"■　■　　　　　■　　　　　　　　　　　　　■　　　　　　　　　"	//0
+"■　■　　　　　■　　□□□■■■□□□　　■　　　　　　　　　"	//0
+"■　■　　　　　■　　□　　　　　　　□　　■　　　　　　　　　"	//0
+"■　■■■■　　■　　□　　　　　　　□　　■　　　　　　　　　"	//0
+"　　　　　　　　■　　□　　　　　　　□　　■　　■■■■■■■"	//0
+"　　　　　　　　■　　□　　　　　　　□　　■　　■　　　　　　"	//0
+"　　　■　　　　■　　□□□　　　□□□　　■　　■　　　　　　"	//0
+"　　　■　　　　■　　　　　　　　　　　　　■　　■■■■■■　"	//0
+"　　　■　　　　■　　　　　　　　　　　　　■　　■　　　　　　"	//0
+"　　　■　　　　■　　　　　　　　　　　　　■　　■　　　　　　"	//0
+"　　　■■■■■■■■■■■■■■■■■　　■　　■■■■■■　"	//0
+"　　　■　　　　　　　　　　　　　　　　　　　　　■　　　　　　"	//0
+"　　　■　　　　　　　　　　　　　　　　　　　　　■　　　　　　"	//0
+"　　　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//0
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0
+"　　　■■■■■■■■■■■■　　■■■■■■■■■■　■■■■"	//0
+"　　　■■　　　　　　　　　　　　　　　　　　　　■■　　　　　"	//0
+"　　　■■　　　　　■■■■■■■■■■■■■　　■■　　　　　"	//0
+"　◎　■■　　　　　■■■■■■■■■■■■■　　■■　　　　　"	//0
+"　　　■■　　　　　　　　　　　　　　　　　　　　■■　　　　　"	//0
+};//210+56+203-19 = 450
 static const MAPDATA mapDataTbl = {
-	mapData1,
+	mapData2,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, FALSE, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
@@ -1068,24 +1105,62 @@ static const MAPDATA mapDataTbl = {
 	},
 };
 
-#if 0
-static u32 GetWallCode( u16 up, u16 down, u16 left, u16 right ) 
-{
-	u16 code;
+typedef struct {
+	u16		wallCode;
+	fx32	rotateY;
+}WALL_CODE_TBL;
 
-	u16 codeTbl[][4] = {
-		{'■','■','■','■'},
-		{'■','■','■','■'},
-		{'■','■','■','■'},
-		{'■','■','■','■'},
-		{'■','■','■','■'},
-		{'■','■','■','■'},
-	};
-	for(i=0;i<NELEMS(codeTbl))
-	if((up=='■')&&(down=='■')&&(left=='■')&&(down=='■'))
-	return code;
+static const WALL_CODE_TBL wallCodeTbl[] = {	//上下左右の壁あり状態
+	{ G3DOBJ_MAP_WALL,		0x0000 },			//空空空空
+	{ G3DOBJ_MAP_WALL3,		0x8000 },			//壁空空空
+	{ G3DOBJ_MAP_WALL3,		0x0000 },			//空壁空空
+	{ G3DOBJ_MAP_WALL2_2,	0x0000 },			//壁壁空空
+	{ G3DOBJ_MAP_WALL3,		0xc000 },			//空空壁空
+	{ G3DOBJ_MAP_WALL2_1,	0xc000 },			//壁空壁空
+	{ G3DOBJ_MAP_WALL2_1,	0x0000 },			//空壁壁空
+	{ G3DOBJ_MAP_WALL1,		0x4000 },			//壁壁壁空
+	{ G3DOBJ_MAP_WALL3,		0x4000 },			//空空空壁
+	{ G3DOBJ_MAP_WALL2_1,	0x8000 },			//壁空空壁
+	{ G3DOBJ_MAP_WALL2_1,	0x4000 },			//空壁空壁
+	{ G3DOBJ_MAP_WALL1,		0xc000 },			//壁壁空壁
+	{ G3DOBJ_MAP_WALL2_2,	0x4000 },			//空空壁壁
+	{ G3DOBJ_MAP_WALL1,		0x0000 },			//壁空壁壁
+	{ G3DOBJ_MAP_WALL1,		0x8000 },			//空壁壁壁
+	{ G3DOBJ_MAP_WALL0,		0x0000 },			//壁壁壁壁
+};
+
+static void GetWallData
+			( GFL_G3D_SCENEOBJ_DATA* data, u16 chkCode, u16 up, u16 down, u16 left, u16 right ) 
+{
+	u16 pattern = 0;
+	VecFx32 rotate = {0,0,0};
+	MtxFx33 rotMtx = defaultStatus.rotate;
+
+	if( up == chkCode ){
+		pattern |= 0x0001;
+	}
+	if( down == chkCode ){
+		pattern |= 0x0002;
+	}
+	if( left == chkCode ){
+		pattern |= 0x0004;
+	}
+	if( right == chkCode ){
+		pattern |= 0x0008;
+	}
+	data->objID = wallCodeTbl[ pattern ].wallCode;
+	data->movePriority = 0;
+	data->drawPriority = 2;
+	data->cullingFlag = TRUE;
+	data->drawSW = TRUE;
+	data->blendAlpha = 31;
+	data->status = defaultStatus;
+
+	rotate.y = wallCodeTbl[ pattern ].rotateY;
+	rotateCalc( &rotate, &rotMtx );
+	data->status.rotate = rotMtx;
 }
-#endif
+
 
 
 
