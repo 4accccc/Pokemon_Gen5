@@ -407,6 +407,9 @@ static void g3d_unload( void )
  * @brief	３Ｄ動作
  */
 //------------------------------------------------------------------
+#define VIEW_LENGTH		(64*7)
+#define VIEW_SCALAR_MAX	(0x20000)
+
 //回転マトリクス変換
 static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 {
@@ -421,17 +424,62 @@ static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 	MTX_Concat33( rotDst, &tmp, rotDst );
 }
 
-//２Ｄカリング
-static BOOL culling2DView( VecFx32* objPos )
+static inline void SetDrawSW( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
 {
-	int scalar = GFL_G3D_CAMERA_GetDotProductXZfast
-					( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], objPos );
-	//スカラーによる位置判定(0は水平、正は前方、負は後方)
-	if( scalar < 0 ){
+	BOOL swBuf = sw;
+	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
+}
+
+static inline void SetAlpha( GFL_G3D_SCENEOBJ* sceneObj, u8 alpha, int scalar )
+{
+	//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
+	u8	drawPri = 249 - ( scalar * 200 / (VIEW_LENGTH * VIEW_LENGTH) );
+	u8	alphaBuf = alpha;
+
+	GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
+	GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alphaBuf );
+}
+
+static inline void ResetAlpha( GFL_G3D_SCENEOBJ* sceneObj )
+{
+	u8	alphaBuf = 31;
+	u8	drawPri = 3;
+
+	GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
+	GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alphaBuf );
+}
+
+//２Ｄカリング
+static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* scalar )
+{
+	GFL_G3D_CAMERA*	camera = tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ];
+
+	//カメラ位置によるカリング
+	*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
+	//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
+	if( *scalar < 0 ){
+		DebugCullingCount++;
+		SetDrawSW( sceneObj, FALSE );
 		return FALSE;
-	} else {
-		return TRUE;
 	}
+	{	//ターゲット周囲判定によるカリング
+		VecFx32 cameraTarget;
+		fx32	diffX, diffZ, diffLen;
+			
+		GFL_G3D_CAMERA_GetTarget( camera, &cameraTarget );
+
+		diffX = ( cameraTarget.x - objPos->x ) >> FX32_SHIFT;
+		diffZ = ( cameraTarget.z - objPos->z ) >> FX32_SHIFT;
+		diffLen = ( diffX * diffX + diffZ * diffZ );
+		if( diffLen > ( VIEW_LENGTH * VIEW_LENGTH )){
+			DebugCullingCount++;
+			SetDrawSW( sceneObj, FALSE );
+			return FALSE;
+		}
+	}
+
+	SetDrawSW( sceneObj, TRUE );
+	return TRUE;
 }
 
 //注視点との位置関係取得（ＸＺのみ）
@@ -456,12 +504,8 @@ static int checkPos_toTarget( VecFx32* objPos )
 	return viewVecX * objVecX + viewVecZ * objVecZ;
 }
 
-static inline void SetDrawSW( GFL_G3D_SCENEOBJ* sceneObj, BOOL sw )
-{
-	BOOL swBuf = sw;
-	GFL_G3D_SCENEOBJ_SetDrawSW( sceneObj, &swBuf );
-}
 
+//------------------------------------------------------------------
 static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33 rotate;
@@ -518,88 +562,46 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	}
 }
 
-#define VIEW_LENGTH	(64*7)
-static fx32 calcLength( VecFx32* pos )
+static void moveStopHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	VecFx32 cameraPos;
-	fx32	diffX,diffZ;
+	VecFx32	minePos;
+	int		scalar;
 			
-	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
-
-	diffX = (cameraPos.x - pos->x)/FX32_ONE;
-	diffZ = (cameraPos.z - pos->z)/FX32_ONE;
-	return ( diffX * diffX + diffZ * diffZ );
+	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
+	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
+	SetAlpha( sceneObj, 8, scalar );
 }
-
 
 static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	VecFx32 minePos;
-	fx32	diffLength;
+	VecFx32	minePos;
+	int		scalar;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-	if( culling2DView( &minePos ) == FALSE ){
-		DebugCullingCount++;
-		SetDrawSW( sceneObj, FALSE );
-		return;
-	}
-	diffLength = calcLength( &minePos );
-
-	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
-		SetDrawSW( sceneObj, FALSE );
+	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
+	//スカラーによる位置判定により半透明処理をする
+	if( scalar <= 0x8000 ){			//ターゲット位置に相当するスカラー値(アバウト)
+		SetAlpha( sceneObj, 16, scalar );
 	} else {
-		//注視点との位置関係取得
-		int scalar = checkPos_toTarget( &minePos );
-		u8	drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
-		u8	alpha;
-
-		SetDrawSW( sceneObj, TRUE );
-		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
-		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
-		
-		//スカラーによる位置判定により半透明処理をする(0は水平、正は前方、負は後方)
-		if( scalar == 0 ){
-			alpha = 31;
-		} else if( scalar > 0) {
-			alpha = 31;
-		} else {
-			alpha = 16;
-		}
-		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
+		ResetAlpha( sceneObj );
 	}
 }
 
 static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	VecFx32 minePos;
-	fx32	diffLength;
-	u8		drawPri, alpha;
+	VecFx32	minePos;
+	int		scalar;
+	fx32	lenXlen;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-	if( culling2DView( &minePos ) == FALSE ){
-		DebugCullingCount++;
-		SetDrawSW( sceneObj, FALSE );
-		return;
-	}
-	diffLength = calcLength( &minePos );
-
-	if( diffLength > ( VIEW_LENGTH * VIEW_LENGTH )){
-		SetDrawSW( sceneObj, FALSE );
-	} else {
-		SetDrawSW( sceneObj, TRUE );
-
-		//半透明処理の関係上、奥に見えるものから優先( 距離を200分割 )
-		drawPri = 249 - (diffLength * 200/ (VIEW_LENGTH * VIEW_LENGTH));
-		GFL_G3D_SCENEOBJ_SetDrawPri( sceneObj, &drawPri );
+	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 #if 0
-		//【実験】手前の物体ほど半透明度を高く( 32段階まで )
-		alpha = 15 + (diffLength * 16/ (VIEW_LENGTH * VIEW_LENGTH));	
-#else
-		alpha = 8;
-#endif
-		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alpha );
+		OS_Printf("scalar = %x, diffLen = %x\n", scalar, diffLen );
 	}
+#endif
+	SetAlpha( sceneObj, 8, scalar );
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -741,7 +743,7 @@ static void KeyControlCameraMove1( void )
 						s16 diff = tetsuWork->nowRotate - tetsuWork->mainCameraRotate;
 						if( diff > 0 ){
 							if( diff >= 0x6000 ){
-								tetsuWork->updateRotateOffs = 0x2000;
+								tetsuWork->updateRotateOffs = 0x1000;
 							} else if( diff >= 0x4000 ){
 								tetsuWork->updateRotateOffs = 0x1000;
 							} else {
@@ -749,7 +751,7 @@ static void KeyControlCameraMove1( void )
 							}
 						} else {
 							if( diff <= -0x6000 ){
-								tetsuWork->updateRotateOffs = -0x2000;
+								tetsuWork->updateRotateOffs = -0x1000;
 							} else if( diff <= -0x4000 ){
 								tetsuWork->updateRotateOffs = -0x1000;
 							} else {
@@ -984,7 +986,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.status.scale.x = FX32_ONE*8;
 				data.status.scale.y = FX32_ONE*8;
 				data.status.scale.z = FX32_ONE*8;
-				data.func = moveSkelWall;
+				data.func = moveStopHaruka;
 				pdata[ count ] = data;
 				count++;
 				mapAttr[z*sizeX+x] = 0;
@@ -1027,38 +1029,38 @@ static u16 MapAttrGet( u16* mapAttr, VecFx32* pos )
 }
 
 static const char mapData1[] = {
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0
-"　■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//30
-"　■　　○　　　　　　　　　　　　　　　　○　　　　　　　　■　"	//2
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"	//28
-"　■　■　　　　　　　　　　　　○　　　　　　　　　　　■　■　"	//4
-"　■　■　■■■■■■■■■■■■■■■■■■■■■■　■　■　"	//26
-"　■　■　■　　　　○　　　　　　　　　　　　　　　■　■　■　"	//6
-"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"	//24
-"　■　■　■　■　　　　　　　　　　　　○　　　■　■　■　■　"	//8
-"　■　■　■　■　■■■■■■■■■■■■■■　■○■　■　■　"	//22
-"　■　■　■　■　■　　　　　　　○　　　　■　■　■　■　■　"	//10
-"　■　■　■　■　■○■■■■■■■■■■　■　■　■　■　■　"	//20
-"　■　■　■　■　■　■　　　　　　　　■　■　■　■○■　■　"	//12
-"　■　■　■　■　■　■　■■■■■■　■　■　■　■　■　■　"	//18//210
-"　■　■　■　■　■　■　■　　　　■○■　■　■　■　■　■　"	//14
-"　■　■○■　■　■　■　■　●　　■　■　■　■　■　■○■　"	//14
-"　■　■　■　■　■　■○■　　　　■　■　■　■　■　■　■　"	//14
-"　■　■　■　■　■　■　■　　　　■　■　■　■　■　■　■　"	//14//56
-"　■○■　■　■　■　■　■　□□□■　■○■　■　■　■　■　"	//17
-"　■　■　■　■　■　　　　　　　　　　■　■　■　■　■　■　"	//11
-"　■　■　■　■　■　■■■■■■■■■■　■　■　■　■　■　"	//20
-"　■　■　■○■　■　　　　　○　　　　　　■　■　■　■　■　"	//10
-"　■　■　■　■　■　■■■■■■■■■■■■　■　■　■　■　"	//21
-"　■○■　■　　　　　○　　　　　　　　　○　　■　■　■　■　"	//7
-"　■　■　■　■■■■■■■■■■■■■■■■■■　■　■　■　"	//24
-"　■　■　■　　　　　　　　　　○　　　　　　　　　■　■　■　"	//6
-"　■　■　■　■■■■■■■■■■■■■■■■■■■■　■○■　"	//25
-"　■　　　　　　　　　○　　　　　　　　　　○　　　　　■　■　"	//3
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■　■　"	//28
-"　■　　　　○　　　　　　○　　　○　　　　　　　　　　　　■　"	//2
-"　■　■■■■■■■■■■■■■■■■■■■■■■■■■■■■　"	//29
-"　　◎　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//0/210-7
+"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//0
+"■　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　■"	//30
+"■　　　○　　　　　　　　　　　　　　　　○　　　　　　　　　■"	//2
+"■　　■■■■■■■■■■■■■■■■■■■■■■■■■■　　■"	//28
+"■　　■　　　　　　　　　　　　○　　　　　　　　　　　■　　■"	//4
+"■　　■　■■■■■■■■■■■■■■■■■■■■■■　■　　■"	//26
+"■　　■　■　　　　○　　　　　　　　　　　　　　　■　■　　■"	//6
+"■　　■　■　■■■■■■■■■■■■■■■■■■　■　■　　■"	//24
+"■　　■　■　■　　　　　　　　　　　　○　　　■　■　■　　■"	//8
+"■　　■　■　■　■■■■■■■■■■■■■■　■○■　■　　■"	//22
+"■　　■　■　■　■　　　　　　　○　　　　■　■　■　■　　■"	//10
+"■　　■　■　■　■○■■■■■■■■■■　■　■　■　■　　■"	//20
+"■　　■　■　■　■　■　　　　　　　　■　■　■　■○■　　■"	//12
+"■　　■　■　■　■　■　■■■■■■　■　■　■　■　■　　■"	//18//210
+"■　　■　■　■　■　■　■　　　　■○■　■　■　■　■　　■"	//14
+"■　　■○■　■　■　■　■　●　　■　■　■　■　■　■○　■"	//14
+"■　　■　■　■　■　■○■　　　　■　■　■　■　■　■　　■"	//14
+"■　　■　■　■　■　■　■　　　　■　■　■　■　■　■　　■"	//14//56
+"■　○■　■　■　■　■　■　■■■■　■○■　■　■　■　　■"	//17
+"■　　■　■　■　■　　　　　　　　　　■　■　■　■　■　　■"	//11
+"■　　■　■　■　■　■■■■■■■■■■　■　■　■　■　　■"	//20
+"■　　■　■○■　■　　　　　○　　　　　　■　■　■　■　　■"	//10
+"■　　■　■　■　■　■■■■■■■■■■■■　■　■　■　　■"	//21
+"■　○■　■　　　　　○　　　　　　　　　○　　■　■　■　　■"	//7
+"■　　■　■　■■■■■■■■■■■■■■■■■■　■　■　　■"	//24
+"■　　■　■　　　　　　　　　　○　　　　　　　　　■　■　　■"	//6
+"■　　■　■　■■■■■■■■■■■■■■■■■■■■　■○　■"	//25
+"■　　　　　　　　　　○　　　　　　　　　　○　　　　　■　　■"	//3
+"■　　□■■■■■■■■■■■■■■■■■■■■■■■■■　　■"	//28
+"■　　　　　○　　　　　　　　　　○　　　　　　　　　　　　　■"	//2
+"■　　　　　　　　　　　　○　　　　　　　　　　　　　　　　　■"	//29
+"■　◎　■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//0/210-7
 };//210+56+203-19 = 450
 
 static const char mapData2[] = {
@@ -1096,7 +1098,7 @@ static const char mapData2[] = {
 "　　　■■　　　　　　　　　　　　　　　　　　　　■■　　　　　"	//0
 };//210+56+203-19 = 450
 static const MAPDATA mapDataTbl = {
-	mapData2,
+	mapData1,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, FALSE, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
