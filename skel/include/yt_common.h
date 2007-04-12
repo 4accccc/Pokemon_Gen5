@@ -60,6 +60,16 @@ enum{
 };
 
 //-------------------------------------
+///	no_active_flagの内訳
+//=====================================
+#define	YT_ROTATE_FLAG			(0x0003)		//回転フラグ
+#define	YT_OVERTURN_FLAG		(0x003c)		//ひっくり返しフラグ
+#define	YT_EGG_MAKE_CHECK_FLAG	(0x03c0)		//タマゴ作成チェックフラグ
+#define	YT_EGG_MAKE_FLAG		(0x0400)		//タマゴ作成フラグ
+#define	YT_BIRTH_FLAG			(0x0800)		//ヨッシー生まれるフラグ
+#define	YT_RENSA_FLAG			(0x1000)		//連鎖フラグ
+
+//-------------------------------------
 ///	セルアクタープロセスワーク
 //=====================================
 
@@ -92,6 +102,7 @@ typedef struct{
 	FALL_CHR_PARAM	*ready[YT_LINE_MAX][YT_HEIGHT_MAX];
 	FALL_CHR_PARAM	*fall[YT_LINE_MAX][YT_HEIGHT_MAX];
 	FALL_CHR_PARAM	*stop[YT_LINE_MAX][YT_HEIGHT_MAX];
+	FALL_CHR_PARAM	*rensa[YT_HEIGHT_MAX];
 	u8				falltbl[YT_LINE_MAX];
 	u8				stoptbl[YT_LINE_MAX];
 	union{
@@ -150,7 +161,7 @@ typedef	struct
 
 #define	YT_ROTATE_SPEED			(2)
 
-#define	YT_BIRTH_WAIT			(3*FX32_ONE)		//はさんだキャラ1個当たりの生まれるまでのウエイト
+#define	YT_BIRTH_WAIT			(2*FX32_ONE)		//はさんだキャラ1個当たりの生まれるまでのウエイト
 #define	YT_BIRTH_SPEED			(0x80)
 
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
