@@ -171,6 +171,8 @@ void	YT_InitGame(GAME_PARAM *gp)
 			gp->ps[1].stoptbl[x]=x;
 		}
 		for(y=0;y<YT_HEIGHT_MAX;y++){
+			gp->ps[0].rensa[y]=NULL;
+			gp->ps[1].rensa[y]=NULL;
 			for(x=0;x<YT_LINE_MAX;x++){
 				gp->ps[0].ready[x][y]=NULL;
 				gp->ps[1].ready[x][y]=NULL;
@@ -553,13 +555,12 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 			}
 		}
 		//タマゴ生成チェック
-		if(ps->status.egg_make_check_flag){
+		if((ps->status.egg_make_check_flag)&&(ps->status.overturn_flag==0)){
 			YT_EggMakeCheck(ps);
 		}
 		//タマゴ生成中チェック
 		if(ps->status.egg_make_flag){
 			{
-				YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)work;
 				int					x,y;
 				FALL_CHR_PARAM		*fcp;
 
@@ -568,12 +569,31 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 						fcp=ps->stop[x][y];
 						if(fcp){
 							if(fcp->egg_make_flag){
-								return;
+								break;
 							}
 						}
 					}
 				}
-				ps->status.egg_make_flag=0;
+				if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
+					ps->status.egg_make_flag=0;
+				}
+			}
+		}
+		//連鎖落下中チェック
+		if(ps->status.rensa_flag){
+			{
+				int					y;
+				FALL_CHR_PARAM		*fcp;
+
+				for(y=0;y<YT_HEIGHT_MAX;y++){
+					fcp=ps->rensa[y];
+					if(fcp){
+						break;
+					}
+				}
+				if(y==YT_HEIGHT_MAX){
+					ps->status.rensa_flag=0;
+				}
 			}
 		}
 	}

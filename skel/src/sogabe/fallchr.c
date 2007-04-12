@@ -26,14 +26,27 @@ static	void	YT_MainFallChr(TCB *tcb,void *work);
 static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet);
 static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_line,int stop_line,int height,NET_PARAM* pNet);
+static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet);
+static	int		YT_LandingStartRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int stop_line,int height,NET_PARAM* pNet);
 static	CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
 static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag, NET_PARAM* pNet);
 static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
-static	void	YT_EggMakeCheckSet(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	void	YT_EggMakeFlagCheck(TCB *tcb,void *work);
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp);
+static	void	YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count);
 static	void	YT_YossyBirthAnime(TCB *tcb,void *work);
+
+typedef struct{
+	GAME_PARAM			*gp;
+	YT_PLAYER_STATUS	*ps;
+	int					seq_no;
+	int					pat_no;
+	int					wait;
+	int					pos_x;
+	int					pos_y;
+	int					count;
+}YOSSY_BIRTH_ANIME;
 
 //----------------------------------------------------------------------------
 /**
@@ -159,6 +172,8 @@ enum{
 	SEQ_FALL_CHR_OVERTURN,
 	SEQ_FALL_CHR_EGG_MAKE,
 	SEQ_FALL_CHR_YOSSY_BIRTH,
+	SEQ_FALL_CHR_RENSA_FALL_P,
+	SEQ_FALL_CHR_RENSA_FALL_C,
 	SEQ_FALL_CHR_VANISH_INIT,
 	SEQ_FALL_CHR_VANISH,
 };
@@ -169,6 +184,8 @@ enum{
 	YT_ACT_LANDING,
 };
 
+static	FALL_CHR_PARAM	*fcp_p=NULL;
+
 static	void	YT_MainFallChr(TCB *tcb,void *work)
 {
 	FALL_CHR_PARAM		*fcp=(FALL_CHR_PARAM *)work;
@@ -178,6 +195,8 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 	CLWK				*clwk=(CLWK *)fcp->clwk;
 
     GF_ASSERT(clwk);
+
+	fcp_p=fcp;
 
 	switch(fcp->seq_no){
 	case SEQ_FALL_CHR_READY_INIT:
@@ -233,7 +252,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				YT_AnmSeqSet(fcp,YT_ANM_LANDING,pNet);
 				GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
 				if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-					ps->status.egg_make_check_flag=(1<<fcp->line_no);
+					ps->status.egg_make_check_flag|=(1<<fcp->line_no);
 				}
 				fcp->seq_no=SEQ_FALL_CHR_STOP;
 				break;
@@ -315,7 +334,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			fcp->offset_pos.y=0;
 			YT_ChrPosSet(fcp, pNet);
 			if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-				ps->status.egg_make_check_flag=(1<<fcp->line_no);
+				ps->status.egg_make_check_flag|=(1<<fcp->line_no);
 			}
 			fcp->seq_no=SEQ_FALL_CHR_STOP;
 			{
@@ -358,7 +377,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 				}
 				else{
 					if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
-						ps->status.egg_make_check_flag=(1<<fcp->line_no);
+						ps->status.egg_make_check_flag|=(1<<fcp->line_no);
 					}
 					fcp->seq_no=SEQ_FALL_CHR_STOP;
 				}
@@ -398,6 +417,50 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			wait=20*FX32_ONE-fcp->birth_wait;
 			GFL_CLACT_WkSetAutoAnmSpeed(clwk,wait);
 		}
+		break;
+	case SEQ_FALL_CHR_RENSA_FALL_P:
+		{
+			FALL_CHR_PARAM		*fcp_rensa;
+			int					y;
+
+			if(ps->status.no_active_flag==YT_RENSA_FLAG){
+				switch(YT_LandingCheckRensa(fcp,ps,clwk,pNet)){
+				case YT_ACT_VANISH:
+					fcp->seq_no=SEQ_FALL_CHR_VANISH_INIT;
+					for(y=0;y<YT_HEIGHT_MAX;y++){
+						fcp_rensa=ps->rensa[y];
+						if((fcp_rensa!=fcp)&&(fcp_rensa)){
+							fcp_rensa->seq_no=SEQ_FALL_CHR_RENSA_FALL_P;
+							break;
+						}
+					}
+					break;
+				case YT_ACT_LANDING:
+					fcp->seq_no=SEQ_FALL_CHR_STOP;
+					for(y=0;y<YT_HEIGHT_MAX;y++){
+						fcp_rensa=ps->rensa[y];
+						if((fcp_rensa!=fcp)&&(fcp_rensa)){
+							fcp_rensa->seq_no=SEQ_FALL_CHR_RENSA_FALL_P;
+							break;
+						}
+					}
+					break;
+				default:
+					fcp->now_pos.y+=YT_FALL_SPEED*4;
+					YT_ChrPosSet(fcp, pNet);
+					for(y=0;y<YT_HEIGHT_MAX;y++){
+						fcp_rensa=ps->rensa[y];
+						if((fcp_rensa!=fcp)&&(fcp_rensa)){
+							fcp_rensa->now_pos.y+=YT_FALL_SPEED*4;
+							YT_ChrPosSet(fcp_rensa, pNet);
+						}
+					}
+					break;
+				}
+			}
+		}
+		break;
+	case SEQ_FALL_CHR_RENSA_FALL_C:
 		break;
 	case SEQ_FALL_CHR_VANISH_INIT:
 		YT_AnmSeqSet(fcp,YT_ANM_VANISH,pNet);
@@ -512,6 +575,96 @@ static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_li
 				ps->fall[fall_line][y]=fcp;
 				fcp->type=YT_CHR_TERESA;
 				YT_AnmSeqSet(fcp,YT_ANM_FALL,pNet);
+				return YT_ACT_FALL;
+			}
+			else{
+				YT_AnmSeqSet(fcp_under,YT_ANM_TUBURE,pNet);
+			}
+		}
+	}
+	//stop配列にセット
+	ps->stop[stop_line][height]=fcp;
+
+	return YT_ACT_LANDING;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	落下キャラ着地チェック（連鎖時専用）
+ */
+//-----------------------------------------------------------------------------
+static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet)
+{
+	int			check_stop_line=ps->stoptbl[fcp->line_no];
+	int			height;
+	int			height_tbl[]={144,130,116,102,88,74,60,46,32};
+
+	for(height=0;height<YT_HEIGHT_MAX;height++){
+		if(ps->stop[check_stop_line][height]==0){
+			break;
+		}
+	}
+
+	if(fcp->now_pos.y>=height_tbl[height]){
+		fcp->now_pos.y=height_tbl[height];
+		YT_ChrPosSet(fcp, pNet);
+		return YT_LandingStartRensa(fcp,ps,check_stop_line,height,pNet);
+	}
+
+	return YT_ACT_FALL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	着地開始時処理
+ */
+//-----------------------------------------------------------------------------
+static	int		YT_LandingStartRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int stop_line,int height,NET_PARAM* pNet)
+{
+	int	x,y;
+
+	//rensa配列をクリア
+	for(y=0;y<YT_HEIGHT_MAX;y++){
+		if(ps->rensa[y]==fcp){
+			ps->rensa[y]=NULL;
+			break;
+		}
+	}
+	//見つからなければアサート
+	GF_ASSERT(y!=YT_HEIGHT_MAX);
+	
+
+	//一番下ではなければ、下のキャラをつぶすか、マッチングチェックを行う
+	if(height){
+		{
+			FALL_CHR_PARAM	*fcp_under=ps->stop[stop_line][height-1];
+
+			if(fcp->type==fcp_under->type){
+				fcp_under->seq_no=SEQ_FALL_CHR_VANISH_INIT;
+				ps->stop[stop_line][height-1]=NULL;
+				//さらに下のキャラがいた場合はつぶれを元に戻す
+				if(height-1){
+					fcp_under=ps->stop[stop_line][height-2];
+					YT_AnmSeqSet(fcp_under,YT_ANM_STOP,pNet);
+				}
+				return YT_ACT_VANISH;
+			}
+			else if((fcp->type==YT_CHR_TERESA)&&(fcp_under->type==YT_CHR_DEKATERESA)){
+				fcp_under->type=YT_CHR_TERESA;
+				YT_AnmSeqSet(fcp_under,YT_ANM_STOP,pNet);
+				return YT_ACT_VANISH;
+			}
+			else if((fcp_under->type==YT_CHR_TERESA)&&(fcp->type==YT_CHR_DEKATERESA)){
+				fcp_under->seq_no=SEQ_FALL_CHR_VANISH_INIT;
+				ps->stop[stop_line][height-1]=NULL;
+				//さらに下のキャラがいた場合はつぶれを元に戻す
+				if(height-1){
+					fcp_under=ps->stop[stop_line][height-2];
+					YT_AnmSeqSet(fcp_under,YT_ANM_STOP,pNet);
+				}
+				ps->rensa[y]=fcp;
+				fcp->type=YT_CHR_TERESA;
+				YT_AnmSeqSet(fcp,YT_ANM_STOP,pNet);
 				return YT_ACT_FALL;
 			}
 			else{
@@ -755,14 +908,15 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 	int				egg_line;
 	int				egg_height;
 	int				egg_search;
-	int				chr_count=0;
-	int				egg_count=1;
+	int				chr_count;
+	int				egg_count;
 	FALL_CHR_PARAM	*fcp_p;
 
 	while(ps->status.egg_make_check_flag){
 		if(ps->status.egg_make_check_flag&1){
 			egg_line=ps->stoptbl[line_no];
-
+			chr_count=0;
+			egg_count=1;
 			for(egg_height=0;egg_height<YT_HEIGHT_MAX;egg_height++){
 				fcp_p=ps->stop[egg_line][egg_height];
 				if((fcp_p->type==YT_CHR_GREEN_EGG_U)||(fcp_p->type==YT_CHR_RED_EGG_U)){
@@ -864,34 +1018,135 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 {
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
 	int					height;
+	int					height_tbl[]={144-40,130-40,116-40,102-40,88-40,74-40,60-40,46-40,32-40};
 
 	for(height=0;height<YT_HEIGHT_MAX;height++){
 		if(ps->stop[ps->stoptbl[fcp->line_no]][height]==fcp){
-		break;
+			break;
 		}
 	}
+	ps->stop[ps->stoptbl[fcp->line_no]][height]=NULL;
+	//さらに下のキャラがいた場合はつぶれを元に戻す
+	if(height){
+		{
+			FALL_CHR_PARAM*	fcp_under;
+			NET_PARAM*		pNet=gp->pNetParam;
 
+			fcp_under=ps->stop[ps->stoptbl[fcp->line_no]][height-1];
+			YT_AnmSeqSet(fcp_under,YT_ANM_STOP,pNet);
+		}
+	}
+	YT_YossyBirthAnimeTaskSet(gp,ps,16+24*fcp->line_no+128*fcp->player_no,height_tbl[height],fcp->chr_count);
 
-//	GFL_TCB_AddTask(gp->tcbsys,YT_YossyAnime,gp,TCB_PRI_PLAYER);
+	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット
+	{
+		int				count=0;
+		FALL_CHR_PARAM*	fcp_rensa;
+		NET_PARAM*		pNet=gp->pNetParam;
+
+		for(;height<YT_HEIGHT_MAX;height++){
+			fcp_rensa=ps->stop[ps->stoptbl[fcp->line_no]][height];
+			if(fcp_rensa){
+				ps->stop[ps->stoptbl[fcp->line_no]][height]=NULL;
+				if(count==0){
+					fcp_rensa->seq_no=SEQ_FALL_CHR_RENSA_FALL_P;
+				}
+				else{
+					fcp_rensa->seq_no=SEQ_FALL_CHR_RENSA_FALL_C;
+				}
+				YT_AnmSeqSet(fcp_rensa,YT_ANM_STOP,pNet);
+				ps->rensa[count++]=fcp_rensa;
+			}
+		}
+		if(count){
+			ps->status.rensa_flag=1;
+		}
+	}
 }
 
-#if 0
+static	void	YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count)
+{
+	YOSSY_BIRTH_ANIME	*yba=GFL_HEAP_AllocMemory(gp->heapID,sizeof(YOSSY_BIRTH_ANIME));
+
+	yba->gp=gp;
+	yba->ps=ps;
+	yba->seq_no=0;
+	yba->pat_no=0;
+	yba->wait=0;
+	yba->pos_x=pos_x;
+	yba->pos_y=pos_y;
+	yba->count=count;
+	if(ps){
+		ps->status.birth_flag=1;
+	}
+	GFL_TCB_AddTask(gp->tcbsys,YT_YossyBirthAnime,yba,TCB_PRI_PLAYER);
+}
+
 static	void	YT_YossyBirthAnime(TCB *tcb,void *work)
 {
-	GAME_PARAM			*gp=(GAME_PARAM *)work;
+	YOSSY_BIRTH_ANIME	*yba=(YOSSY_BIRTH_ANIME *)work;
 
-	if(ya_wait==0){
-		ya_wait=4;
-		GFL_BMP_Fill(GFL_BMPWIN_GetBmp(gp->yossy_bmpwin),0,0,32,48,0);
-		GFL_BMP_PrintMain(gp->yossy_bmp,GFL_BMPWIN_GetBmp(gp->yossy_bmpwin),0,0+48*ya_work,0,0,32,48,0);
-		GFL_BMPWIN_UploadChar(gp->yossy_bmpwin);
-		ya_work++;
-		if(ya_work==19){
-			ya_work=0;
+	switch(yba->seq_no){
+	case 0:
+		if(yba->wait==0){
+			yba->wait=4;
+			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMP_Print(yba->gp->yossy_bmp,GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),
+						  0,0+48*yba->pat_no,yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
+			yba->pat_no++;
+			if((yba->pat_no>yba->count)||(yba->pat_no==19)){
+				yba->pat_no--;
+				yba->wait=32;
+				yba->seq_no++;
+			}
 		}
-	}
-	else{
-		ya_wait--;
+		else{
+			yba->wait--;
+		}
+		break;
+	case 1:
+	case 2:
+		if(yba->wait==0){
+			yba->wait=8;
+			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMP_Print(yba->gp->yossy_bmp,GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),
+						  0+32*yba->seq_no,0+48*yba->pat_no,yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
+			yba->seq_no++;
+		}
+		else{
+			yba->wait--;
+		}
+		break;
+	case 3:
+	case 4:
+		if(yba->wait==0){
+			yba->wait=8;
+			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMP_Print(yba->gp->yossy_bmp,GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),
+						  0+32*(4-yba->seq_no),0+48*yba->pat_no,yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
+			yba->seq_no++;
+		}
+		else{
+			yba->wait--;
+		}
+		break;
+	case 5:
+		if(yba->wait==0){
+			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
+			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
+			if(yba->ps){
+				yba->ps->status.birth_flag=0;
+			}
+			GFL_HEAP_FreeMemory(yba);
+			GFL_TCB_DeleteTask(tcb);
+		}
+		else{
+			yba->wait--;
+		}
+		break;
 	}
 }
-#endif
+
