@@ -42,6 +42,8 @@ static	void	GFL_FADE_MasterBrightAct( void );
 void GFL_FADE_Init( u32 heapID )
 {
 	fade_sys  = (GFL_FADE_SYS *)GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FADE_SYS) );
+
+	GFL_STD_MemFill( fade_sys, 0, sizeof(GFL_FADE_SYS) );
 }
 
 //--------------------------------------------------------------------------------------------
