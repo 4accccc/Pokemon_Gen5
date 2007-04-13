@@ -43,6 +43,7 @@
 #include "clact.h"
 #include "tcb.h"
 
+#include "double3Ddisp.h"
 /*  */
 
 #endif	/*	__GFLIB_H__ */
