@@ -8,9 +8,12 @@
 //============================================================================================
 #include "gflib.h"
 #include "textprint.h"
+#include "gfl_use.h"
 
 #include "main.h"
 #include "testmode.h"
+
+#include "double3Ddisp.h"
 
 static void	TestModeWorkSet( HEAPID heapID );
 static void	TestModeWorkRelease( void );
@@ -131,6 +134,8 @@ typedef struct {
 	u16						autoCameraRotate2;
 
 	u16*					mapAttr;
+
+	TCB*					dbl3DdispVintr;
 }TETSU_WORK;
 
 typedef struct {
@@ -210,6 +215,7 @@ static void MapAttrDelete( u16* mapAttr );
 static u16	MapAttrGet( u16* mapAttr, VecFx32* pos );
 
 TETSU_WORK* tetsuWork;
+
 //------------------------------------------------------------------
 /**
  * @brief	ワークの確保と破棄
@@ -242,6 +248,9 @@ static BOOL	TestModeControl( void )
 		//初期化
 		GFL_STD_MtRandInit(0);
 		bg_init( tetsuWork->heapID );
+		tetsuWork->dbl3DdispVintr = GFUser_VIntr_CreateTCB
+								( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+
 		tetsuWork->seq++;
 		break;
 
@@ -266,6 +275,8 @@ static BOOL	TestModeControl( void )
 	case 3:
 		//終了
 		g3d_unload();	//３Ｄデータ破棄
+
+		GFL_TCB_DeleteTask( tetsuWork->dbl3DdispVintr );
 		bg_exit();
 		return_flag = TRUE;
 		break;
@@ -297,7 +308,7 @@ static void	bg_init( HEAPID heapID )
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( heapID, 16*2 );
-		plt[0] = GX_RGB( 8, 15, 8);
+		plt[0] = GX_RGB( 0, 0, 0 );
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 );
 		GFL_BG_LoadPalette( GFL_BG_FRAME1_M, plt, 16*2, 0 );
 
@@ -310,14 +321,18 @@ static void	bg_init( HEAPID heapID )
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, G3DsysSetup );
+	GFL_G3D_DOUBLE3D_Init( heapID );
+
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispOn();
 }
 
 static void	bg_exit( void )
 {
+	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
 }
@@ -359,6 +374,9 @@ static void g3d_load( HEAPID heapID )
 	tetsuWork->g3Dcamera[2] = GFL_G3D_CAMERA_CreateDefault( &camera2Pos, &cameraTarget, heapID );
 	tetsuWork->g3Dlightset[2] = GFL_G3D_LIGHT_Create( &light2Setup, heapID );
 
+	//カメラ3作成
+	tetsuWork->g3Dcamera[3] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
+
 	//カメラライト0反映
 	GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
 	GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[0] );
@@ -380,12 +398,19 @@ static void g3d_move( void )
 //描画
 static void g3d_draw( void )
 {
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
+	} else {
+		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[3] );
+	}
 	GFL_G3D_SCENE_Draw( tetsuWork->g3Dscene );  
+	GFL_G3D_DOUBLE3D_SetSwapFlag();
 }
 	
 //破棄
 static void g3d_unload( void )
 {
+	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[3] );
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[2] );
 	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[2] );
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[1] );
@@ -452,8 +477,13 @@ static inline void ResetAlpha( GFL_G3D_SCENEOBJ* sceneObj )
 //２Ｄカリング
 static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* scalar )
 {
-	GFL_G3D_CAMERA*	camera = tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ];
-
+	//GFL_G3D_CAMERA*	camera = tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ];
+	GFL_G3D_CAMERA*	camera;
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		camera = tetsuWork->g3Dcamera[0];
+	} else {
+		camera = tetsuWork->g3Dcamera[3];
+	}
 	//カメラ位置によるカリング
 	*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
 	//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
@@ -477,7 +507,6 @@ static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* sca
 			return FALSE;
 		}
 	}
-
 	SetDrawSW( sceneObj, TRUE );
 	return TRUE;
 }
@@ -579,8 +608,9 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
-	//スカラーによる位置判定により半透明処理をする
-	if( scalar <= 0x8000 ){			//ターゲット位置に相当するスカラー値(アバウト)
+	//スカラーによる位置判定により半透明処理をする※ターゲット位置に相当するスカラー値
+	if(( scalar <= 0x8000 )&&( GFL_G3D_DOUBLE3D_GetFlip() )) {
+	
 		SetAlpha( sceneObj, 16, scalar );
 	} else {
 		ResetAlpha( sceneObj );
@@ -612,9 +642,8 @@ static void G3DsysSetup( void )
 {
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
 	G3X_SetShading( GX_SHADING_TOON );
-	G3X_AntiAlias( FALSE );
+	G3X_AntiAlias( TRUE );
 	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-	//G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
 	G3X_AlphaBlend(TRUE);
 	G3X_EdgeMarking( FALSE );
 	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
@@ -827,7 +856,7 @@ static void KeyControlCameraMove1( void )
 			}
 			tetsuWork->contPos.y = FX32_ONE*16;
 
-			tetsuWork->autoCameraRotate1 += 0x0200;
+			tetsuWork->autoCameraRotate1 += 0x0080;
 			tetsuWork->autoCameraRotate2 -= 0x0200;
 
 			switch( cameraNum ){
@@ -845,9 +874,9 @@ static void KeyControlCameraMove1( void )
 						tetsuWork->updateRotateFlag = FALSE;
 					}
 				}
-				cameraOffs.x = 180 * FX_SinIdx( tetsuWork->mainCameraRotate );
-				cameraOffs.y = FX32_ONE * 140;
-				cameraOffs.z = 180 * FX_CosIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.y = FX32_ONE * 80;
+				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
 
 				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
@@ -856,7 +885,23 @@ static void KeyControlCameraMove1( void )
 				g3Dcamera = tetsuWork->g3Dcamera[0];
 				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
 				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
-				GFL_G3D_CAMERA_Switching( g3Dcamera );
+				{
+					VecFx32 tmpTarget = tetsuWork->contPos;
+
+					cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
+					cameraOffs.y = FX32_ONE * 100;
+					cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+
+					cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+					cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+					cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+
+					tmpTarget.y = tetsuWork->contPos.y + FX32_ONE * 100;
+					g3Dcamera = tetsuWork->g3Dcamera[3];
+					GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+					GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tmpTarget );
+				}
+				//GFL_G3D_CAMERA_Switching( g3Dcamera );
 				break;
 			case 1:
 				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
@@ -980,7 +1025,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.cullingFlag = TRUE;
 				data.drawSW = TRUE;
 				data.status = defaultStatus;
-				data.blendAlpha = 16;
+				data.blendAlpha = 31;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
 				data.status.scale.x = FX32_ONE*8;
@@ -1097,6 +1142,42 @@ static const char mapData2[] = {
 "　◎　■■　　　　　■■■■■■■■■■■■■　　■■　　　　　"	//0
 "　　　■■　　　　　　　　　　　　　　　　　　　　■■　　　　　"	//0
 };//210+56+203-19 = 450
+
+static const char mapData3[] = {
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　○　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　◎　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+};
+
 static const MAPDATA mapDataTbl = {
 	mapData1,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, FALSE, TRUE,
@@ -1162,6 +1243,15 @@ static void GetWallData
 	rotateCalc( &rotate, &rotMtx );
 	data->status.rotate = rotMtx;
 }
+
+
+
+
+
+
+
+
+
 
 
 
