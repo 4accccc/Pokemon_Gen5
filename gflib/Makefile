@@ -62,7 +62,9 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					arc/arc_tool.c arc/arc_util.c \
 					clact.c \
 					string/textprint.c string/sjisconv.c \
-					fade/fade.c
+					fade/fade.c \
+					g3d/double3Ddisp.c
+
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
 ifdef USE_MCS
