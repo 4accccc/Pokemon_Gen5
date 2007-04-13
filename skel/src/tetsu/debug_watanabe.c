@@ -600,7 +600,7 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 	//スカラーによる位置判定により半透明処理をする※ターゲット位置に相当するスカラー値
-	if(( scalar <= 0x2800 )&& GFL_G3D_DOUBLE3D_GetFlip()){ 
+	if(( scalar <= 0x1800 )&& GFL_G3D_DOUBLE3D_GetFlip()){ 
 		SetAlpha( sceneObj, 16, scalar );
 	} else {
 		ResetAlpha( sceneObj );
@@ -613,7 +613,7 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	int		scalar;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-#if 1
+#if 0
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 #else
 	culling2DView( sceneObj, &minePos, &scalar );
@@ -816,9 +816,9 @@ static void KeyControlCameraMove1( void )
 					tetsuWork->updateRotateFlag = FALSE;
 				}
 			}
-			cameraOffs.x = 100 * FX_SinIdx( tetsuWork->mainCameraRotate );
-			cameraOffs.y = FX32_ONE * 100;
-			cameraOffs.z = 100 * FX_CosIdx( tetsuWork->mainCameraRotate );
+			cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
+			cameraOffs.y = FX32_ONE * 80;
+			cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
 
 			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
@@ -833,16 +833,16 @@ static void KeyControlCameraMove1( void )
 			GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
 
 			//上カメラ制御
-			cameraOffs.x = 40 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
-			cameraOffs.y = FX32_ONE * 40;
-			cameraOffs.z = 40 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.x = 32 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.y = FX32_ONE * 32;
+			cameraOffs.z = 32 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
 
 			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
 			cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
 
 			cameraTarget.x = tetsuWork->contPos.x;
-			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*16;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*8;
 			cameraTarget.z = tetsuWork->contPos.z;
 
 			g3Dcamera = tetsuWork->g3Dcamera[1];
