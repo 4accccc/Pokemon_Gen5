@@ -206,7 +206,6 @@ static void	g3d_unload( void );
 
 static void KeyControlInit( void );
 static BOOL KeyControlEndCheck( void );
-static void KeyControlCameraLightChange( void );
 static void KeyControlCameraMove1( void );
 
 static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID heapID );
@@ -265,7 +264,6 @@ static BOOL	TestModeControl( void )
 		if( KeyControlEndCheck() == TRUE ){
 			tetsuWork->seq++;
 		}
-		KeyControlCameraLightChange();
 		KeyControlCameraMove1();
 
 		g3d_move();
@@ -363,20 +361,13 @@ static void g3d_load( HEAPID heapID )
 		MapDataDelete( setup );
 	}
 
-	//カメラライト0作成
+	//カメラ作成
 	tetsuWork->g3Dcamera[0] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset[0] = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
-
-	//カメラライト1作成
 	tetsuWork->g3Dcamera[1] = GFL_G3D_CAMERA_CreateDefault( &camera1Pos, &cameraTarget, heapID );
+
+	//ライト作成
+	tetsuWork->g3Dlightset[0] = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
 	tetsuWork->g3Dlightset[1] = GFL_G3D_LIGHT_Create( &light1Setup, heapID );
-
-	//カメラライト2作成
-	tetsuWork->g3Dcamera[2] = GFL_G3D_CAMERA_CreateDefault( &camera2Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dlightset[2] = GFL_G3D_LIGHT_Create( &light2Setup, heapID );
-
-	//カメラ3作成
-	tetsuWork->g3Dcamera[3] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
 
 	//カメラライト0反映
 	GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
@@ -411,9 +402,6 @@ static void g3d_draw( void )
 //破棄
 static void g3d_unload( void )
 {
-	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[3] );
-	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[2] );
-	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[2] );
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[1] );
 	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[1] );
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[0] );
@@ -433,7 +421,7 @@ static void g3d_unload( void )
  * @brief	３Ｄ動作
  */
 //------------------------------------------------------------------
-#define VIEW_LENGTH		(64*7)
+#define VIEW_LENGTH		(64*6)
 #define VIEW_SCALAR_MAX	(0x20000)
 
 //回転マトリクス変換
@@ -478,20 +466,23 @@ static inline void ResetAlpha( GFL_G3D_SCENEOBJ* sceneObj )
 //２Ｄカリング
 static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* scalar )
 {
+	//カメラポインタ取得
 	GFL_G3D_CAMERA*	camera;
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
-		camera = tetsuWork->g3Dcamera[0];
+		camera = tetsuWork->g3Dcamera[0];	//下カメラ
 	} else {
-		camera = tetsuWork->g3Dcamera[1];
+		camera = tetsuWork->g3Dcamera[1];	//上カメラ
 	}
+
 	//カメラ位置によるカリング
 	*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
 	//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
-	if( *scalar < 0 ){
+	if( *scalar < -0x800 ){
 		DebugCullingCount++;
 		SetDrawSW( sceneObj, FALSE );
 		return FALSE;
 	}
+
 	{	//ターゲット周囲判定によるカリング
 		VecFx32 cameraTarget;
 		fx32	diffX, diffZ, diffLen;
@@ -609,8 +600,7 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 	//スカラーによる位置判定により半透明処理をする※ターゲット位置に相当するスカラー値
-	if( scalar <= 0x8000 ) {
-	
+	if(( scalar <= 0x2800 )&& GFL_G3D_DOUBLE3D_GetFlip()){ 
 		SetAlpha( sceneObj, 16, scalar );
 	} else {
 		ResetAlpha( sceneObj );
@@ -621,12 +611,14 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	VecFx32	minePos;
 	int		scalar;
-	fx32	lenXlen;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
+#if 1
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
-#if 0
-		OS_Printf("scalar = %x, diffLen = %x\n", scalar, diffLen );
+#else
+	culling2DView( sceneObj, &minePos, &scalar );
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){ 
+		OS_Printf("scalar = %x\n", scalar );
 	}
 #endif
 	SetAlpha( sceneObj, 8, scalar );
@@ -696,54 +688,6 @@ static BOOL KeyControlEndCheck( void )
 
 //------------------------------------------------------------------
 /**
- * @brief	カメラ＆ライトの切り替えテスト
- */
-//------------------------------------------------------------------
-static void KeyControlCameraLightChange( void )
-{
-#if 0
-	if( GFL_UI_KeyGetTrg() & PAD_BUTTON_B ){
-		if( tetsuWork->mode > 1 ){
-			tetsuWork->mode--;
-		} else {
-			tetsuWork->mode = 3;
-		}
-	}
-#endif
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		if( tetsuWork->mode & 1 ){
-			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
-			tetsuWork->nowCameraNum = 1;
-		}
-		if( tetsuWork->mode & 2 ){
-			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[1] );
-			tetsuWork->nowLightNum = 1;
-		}
-	}
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-		if( tetsuWork->mode & 1 ){
-			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
-			tetsuWork->nowCameraNum = 0;
-		}
-		if( tetsuWork->mode & 2 ){
-			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[0] );
-			tetsuWork->nowLightNum = 0;
-		}
-	}
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		if( tetsuWork->mode & 1 ){
-			GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[2] );
-			tetsuWork->nowCameraNum = 2;
-		}
-		if( tetsuWork->mode & 2 ){
-			GFL_G3D_LIGHT_Switching( tetsuWork->g3Dlightset[2] );
-			tetsuWork->nowLightNum = 2;
-		}
-	}
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	メインカメラ移動コントロール１
  */
 //------------------------------------------------------------------
@@ -760,6 +704,7 @@ static void KeyControlCameraMove1( void )
 			GFL_G3D_CAMERA* g3Dcamera;
 			VecFx32 move = { 0, 0, 0 };
 			VecFx32 cameraPos = { 0, 0, 0 };
+			VecFx32 cameraTarget = { 0, 0, 0 };
 			VecFx32 cameraOffs = { 0, 0, 0 };
 			BOOL	moveFlag = FALSE;
 			int		key = GFL_UI_KEY_GetCont();
@@ -854,100 +799,55 @@ static void KeyControlCameraMove1( void )
 					}
 				}
 			}
-			tetsuWork->contPos.y = FX32_ONE*16;
+			tetsuWork->contPos.y = 0;
 
 			tetsuWork->autoCameraRotate1 += 0x0080;
-			tetsuWork->autoCameraRotate2 -= 0x0200;
 
-			switch( cameraNum ){
-			case 0:
-			default:
-				if( tetsuWork->updateRotateFlag == TRUE ){
-					if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
-						tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
-						if( (tetsuWork->updateRotateOffs > 0x100 )
-							||( tetsuWork->updateRotateOffs < -0x100 )){
-							tetsuWork->updateRotateOffs /= 2;
-						}
-					}else{
-						tetsuWork->contRotate = tetsuWork->updateRotate;
-						tetsuWork->updateRotateFlag = FALSE;
+			//下カメラ制御
+			if( tetsuWork->updateRotateFlag == TRUE ){
+				if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
+					tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
+					if( (tetsuWork->updateRotateOffs > 0x100 )
+						||( tetsuWork->updateRotateOffs < -0x100 )){
+						tetsuWork->updateRotateOffs /= 2;
 					}
+				}else{
+					tetsuWork->contRotate = tetsuWork->updateRotate;
+					tetsuWork->updateRotateFlag = FALSE;
 				}
-				cameraOffs.x = 180 * FX_SinIdx( tetsuWork->mainCameraRotate );
-				cameraOffs.y = FX32_ONE * 140;
-				cameraOffs.z = 180 * FX_CosIdx( tetsuWork->mainCameraRotate );
-
-				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
-				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
-				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
-
-				g3Dcamera = tetsuWork->g3Dcamera[0];
-				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
-				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
-#if 0
-				{
-					VecFx32 tmpTarget = tetsuWork->contPos;
-
-					cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
-					cameraOffs.y = FX32_ONE * 100;
-					cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
-
-					cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
-					cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
-					cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
-
-					tmpTarget.y = tetsuWork->contPos.y + FX32_ONE * 100;
-					g3Dcamera = tetsuWork->g3Dcamera[3];
-					GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
-					GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tmpTarget );
-				}
-#else
-				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
-				cameraOffs.y = FX32_ONE * 40;
-				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
-	
-				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
-				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
-				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
-	
-				g3Dcamera = tetsuWork->g3Dcamera[1];
-				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
-				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
-#endif
-				//GFL_G3D_CAMERA_Switching( g3Dcamera );
-				break;
-#if 0
-			case 1:
-				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
-				cameraOffs.y = FX32_ONE * 40;
-				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
-	
-				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
-				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
-				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
-	
-				g3Dcamera = tetsuWork->g3Dcamera[1];
-				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
-				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
-				GFL_G3D_CAMERA_Switching( g3Dcamera );
-				break;
-			case 2:
-				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate2 );
-				cameraOffs.y = FX32_ONE * 40;
-				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate2 );
-	
-				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
-				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
-				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
-	
-				g3Dcamera = tetsuWork->g3Dcamera[2];
-				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
-				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
-				GFL_G3D_CAMERA_Switching( g3Dcamera );
-				break;
-#endif
 			}
+			cameraOffs.x = 100 * FX_SinIdx( tetsuWork->mainCameraRotate );
+			cameraOffs.y = FX32_ONE * 100;
+			cameraOffs.z = 100 * FX_CosIdx( tetsuWork->mainCameraRotate );
+
+			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+			cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+
+			cameraTarget.x = tetsuWork->contPos.x;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*32;
+			cameraTarget.z = tetsuWork->contPos.z;
+
+			g3Dcamera = tetsuWork->g3Dcamera[0];
+			GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+			GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
+
+			//上カメラ制御
+			cameraOffs.x = 40 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.y = FX32_ONE * 40;
+			cameraOffs.z = 40 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+
+			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+			cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+
+			cameraTarget.x = tetsuWork->contPos.x;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*16;
+			cameraTarget.z = tetsuWork->contPos.z;
+
+			g3Dcamera = tetsuWork->g3Dcamera[1];
+			GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+			GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
 		}
 		break;
 	}
@@ -1196,7 +1096,7 @@ static const char mapData3[] = {
 
 static const MAPDATA mapDataTbl = {
 	mapData1,
-	{	G3DOBJ_MAP_FLOOR, 0, 1, 8, FALSE, TRUE,
+	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
