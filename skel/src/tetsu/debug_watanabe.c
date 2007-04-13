@@ -332,6 +332,7 @@ static void	bg_init( HEAPID heapID )
 
 static void	bg_exit( void )
 {
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
@@ -401,7 +402,7 @@ static void g3d_draw( void )
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
 	} else {
-		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[3] );
+		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
 	}
 	GFL_G3D_SCENE_Draw( tetsuWork->g3Dscene );  
 	GFL_G3D_DOUBLE3D_SetSwapFlag();
@@ -477,12 +478,11 @@ static inline void ResetAlpha( GFL_G3D_SCENEOBJ* sceneObj )
 //２Ｄカリング
 static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* scalar )
 {
-	//GFL_G3D_CAMERA*	camera = tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ];
 	GFL_G3D_CAMERA*	camera;
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		camera = tetsuWork->g3Dcamera[0];
 	} else {
-		camera = tetsuWork->g3Dcamera[3];
+		camera = tetsuWork->g3Dcamera[1];
 	}
 	//カメラ位置によるカリング
 	*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
@@ -609,7 +609,7 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 	//スカラーによる位置判定により半透明処理をする※ターゲット位置に相当するスカラー値
-	if(( scalar <= 0x8000 )&&( GFL_G3D_DOUBLE3D_GetFlip() )) {
+	if( scalar <= 0x8000 ) {
 	
 		SetAlpha( sceneObj, 16, scalar );
 	} else {
@@ -874,9 +874,9 @@ static void KeyControlCameraMove1( void )
 						tetsuWork->updateRotateFlag = FALSE;
 					}
 				}
-				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
-				cameraOffs.y = FX32_ONE * 80;
-				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.x = 180 * FX_SinIdx( tetsuWork->mainCameraRotate );
+				cameraOffs.y = FX32_ONE * 140;
+				cameraOffs.z = 180 * FX_CosIdx( tetsuWork->mainCameraRotate );
 
 				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
@@ -885,6 +885,7 @@ static void KeyControlCameraMove1( void )
 				g3Dcamera = tetsuWork->g3Dcamera[0];
 				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
 				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
+#if 0
 				{
 					VecFx32 tmpTarget = tetsuWork->contPos;
 
@@ -901,8 +902,22 @@ static void KeyControlCameraMove1( void )
 					GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
 					GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tmpTarget );
 				}
+#else
+				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+				cameraOffs.y = FX32_ONE * 40;
+				cameraOffs.z = 80 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+	
+				cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
+				cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
+				cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
+	
+				g3Dcamera = tetsuWork->g3Dcamera[1];
+				GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
+				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
+#endif
 				//GFL_G3D_CAMERA_Switching( g3Dcamera );
 				break;
+#if 0
 			case 1:
 				cameraOffs.x = 80 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
 				cameraOffs.y = FX32_ONE * 40;
@@ -931,6 +946,7 @@ static void KeyControlCameraMove1( void )
 				GFL_G3D_CAMERA_SetTarget( g3Dcamera, &tetsuWork->contPos );
 				GFL_G3D_CAMERA_Switching( g3Dcamera );
 				break;
+#endif
 			}
 		}
 		break;
