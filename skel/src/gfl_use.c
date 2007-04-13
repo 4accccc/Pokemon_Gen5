@@ -168,4 +168,15 @@ void GFLUser_VIntr(void)
     GFL_NET_VBlankFunc();
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	GFƒ‰ƒCƒuƒ‰ƒŠ—˜—p•”•ªFVBlank’†TCB‚Ì“o˜^ˆ—
+ */
+//------------------------------------------------------------------
+TCB * GFUser_VIntr_CreateTCB(TCB_FUNC * func, void * work, u32 pri)
+{
+	return GFL_TCB_AddTask(gfl_work->TCBSysVintr, func, work, pri);
+}
+
+
 

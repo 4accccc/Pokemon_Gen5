@@ -27,5 +27,7 @@ extern void GFLUser_Exit(void);
 //GFLŠÖ˜AVBlankŠ„‚è‚İˆ—
 extern void GFLUser_VIntr(void);
 
+//VBlank’†TCB‚Ì“o˜^ˆ—‚ğ’Ç‰Á
+extern TCB * GFUser_VIntr_CreateTCB(TCB_FUNC * func, void * work, u32 pri);
 
 #endif	__GFL_USE_H__
