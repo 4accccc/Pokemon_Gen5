@@ -54,16 +54,6 @@ typedef struct {
 }TESTMODE_PRINTLIST;
 
 enum {
-	NUM_TITLE = 0,
-	NUM_URL,
-	NUM_SELECT1,
-	NUM_SELECT2,
-	NUM_SELECT3,
-	NUM_SELECT4,
-	NUM_SELECT5,
-};
-
-enum {
 	MSG_WHITE = 0,
 	MSG_RED,
 };
@@ -318,14 +308,20 @@ static void g2d_draw( TESTMODE_WORK * testmode )
 
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		//表題ビットマップの表示
-		for(i=0;i<NELEMS(indexList);i++){
-			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE+i] );
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE] );
+
+		//選択項目ビットマップの表示
+		for(i=0;i<NUM_COUNT_PAGE1;i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT_PAGE1+i] );
 		}
 		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
 	} else {
+		//表題ビットマップの表示
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_URL] );
+
 		//選択項目ビットマップの表示
-		for(i=0;i<NELEMS(selectList);i++){
-			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT1+i] );
+		for(i=0;i<NUM_COUNT_PAGE2;i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT_PAGE2+i] );
 		}
 		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_OFF );
 	}
@@ -538,32 +534,43 @@ FS_EXTERN_OVERLAY(debug_tamada);
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
 	switch( TestModeSelectPosGet(testmode) ) {
-	case 0:
+	case SELECT_WATANABE:
 		//わたなべ
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
 		break;
-	case 1:
+	case SELECT_TAMADA:
 		//たまだ
 		GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 		break;
-	case 2:
+	case SELECT_SOGABE:
 		//そがべ
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
 		break;
-	case 3:
+	case SELECT_OHNO:
 		//おおの
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
-	case 6:
+	case SELECT_TAKAHASHI:
 		//ともや
 		GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tomoya), &DebugClactProcData, NULL);
 	default:
+	case SELECT_TAYA:
+	case SELECT_NAKAMURA:
+	case SELECT_NAGIHASHI:
+	case SELECT_HOSAKA:
+	case SELECT_MATSUDA:
+	case SELECT_KAGAYA:
+	case SELECT_NOHARA:
+	case SELECT_GOTOU:
+	case SELECT_MORI:
+	case SELECT_OHTA:
+	case SELECT_IWASAWA:
+	case SELECT_SAITOU:
 		//たや
 		//なかむら
 		break;
 	}
 }
-
 
 
 //============================================================================================
