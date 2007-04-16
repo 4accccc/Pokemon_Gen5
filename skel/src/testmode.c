@@ -4,6 +4,7 @@
  */
 //===================================================================
 #include "gflib.h"
+#include "gfl_use.h"
 #include "main.h"
 #include "textprint.h"
 
@@ -38,6 +39,8 @@ typedef struct {
 	GFL_G3D_OBJ*			g3Dobj[2];
 #endif
 	GFL_G3D_OBJSTATUS		status[2];
+
+	TCB*					dbl3DdispVintr;
 
 	u16						work[16];
 }TESTMODE_WORK;
@@ -78,6 +81,7 @@ static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum );
 static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal );
 //‚Q‚c‚a‚fì¬ŠÖ”
 static void	g2d_load( TESTMODE_WORK * testmode );
+static void g2d_draw( TESTMODE_WORK * testmode );
 static void	g2d_unload( TESTMODE_WORK * testmode );
 //‚R‚c‚a‚fì¬ŠÖ”
 static void	g3d_load( TESTMODE_WORK * testmode );
@@ -111,6 +115,8 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 	case 0:
 		//‰Šú‰»
 		bg_init( testmode->heapID );
+		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
+						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
 		//testmode->listPosition = 0;
 		testmode->seq++;
 		break;
@@ -139,6 +145,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		testmode->seq++;
 
 		g3d_control_effect(testmode);
+		g2d_draw(testmode);		//‚Q‚cƒf[ƒ^•`‰æ
 		g3d_draw(testmode);		//‚R‚cƒf[ƒ^•`‰æ
 		break;
 
@@ -158,11 +165,13 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 			}
 		}
 		g3d_control_effect(testmode);
+		g2d_draw(testmode);		//‚Q‚cƒf[ƒ^•`‰æ
 		g3d_draw(testmode);		//‚R‚cƒf[ƒ^•`‰æ
 		break;
 
 	case 4:
 		//I—¹
+		GFL_TCB_DeleteTask( testmode->dbl3DdispVintr );
 		g3d_unload(testmode);	//‚R‚cƒf[ƒ^”jŠü
 		g2d_unload(testmode);	//‚Q‚cƒf[ƒ^”jŠü
 		bg_exit();
@@ -201,13 +210,20 @@ static void	bg_init( HEAPID heapID )
 	//‚R‚cƒVƒXƒeƒ€‹N“®
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, heapID, NULL );
+	GFL_G3D_DOUBLE3D_Init( heapID );
+
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
-	//GFL_G3D_UtilsysInit( G3D_UTIL_RESSIZ, G3D_UTIL_OBJSIZ, G3D_UTIL_ANMSIZ, heapID );  
+
+	//ƒfƒBƒXƒvƒŒƒC–Ê‚Ì‘I‘ð
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispOn();
 }
 
 static void	bg_exit( void )
 {
-	//GFL_G3D_UtilsysExit();  
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+
+	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
 	GFL_BMPWIN_Exit();
 	GFL_BG_FreeBGControl( TEXT_FRM );
@@ -292,6 +308,15 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 	}
 	//‚a‚fƒXƒNƒŠ[ƒ““]‘—ƒŠƒNƒGƒXƒg”­s
 	GFL_BG_LoadScreenReq( TEXT_FRM );
+}
+
+static void g2d_draw( TESTMODE_WORK * testmode )
+{
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+	} else {
+		GFL_BG_SetVisible( TEXT_FRM, VISIBLE_OFF );
+	}
 }
 
 static void	g2d_unload( TESTMODE_WORK * testmode )
@@ -411,6 +436,7 @@ static void g3d_load( TESTMODE_WORK * testmode )
 static void g3d_draw( TESTMODE_WORK * testmode )
 {
 	GFL_G3D_OBJ* g3Dobj[2];
+
 #ifdef G3DUTIL_USE
 	g3Dobj[ G3D_AIR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  );
 	g3Dobj[ G3D_IAR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  );
@@ -421,10 +447,14 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
-		GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_AIR ], &testmode->status[ G3D_AIR ] );
-		GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_IAR ], &testmode->status[ G3D_IAR ] );
+		if( GFL_G3D_DOUBLE3D_GetFlip() ){
+			GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_AIR ], &testmode->status[ G3D_AIR ] );
+		} else {
+			GFL_G3D_DRAW_DrawObject( g3Dobj[ G3D_IAR ], &testmode->status[ G3D_IAR ] );
+		}
 	}
 	GFL_G3D_DRAW_End();
+	GFL_G3D_DOUBLE3D_SetSwapFlag();
 
 	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj[ G3D_AIR ], 0, FX32_ONE ); 
 	GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj[ G3D_IAR ], 0, FX32_ONE ); 

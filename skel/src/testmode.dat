@@ -104,12 +104,14 @@ static const GFL_TEXT_PRINTPARAM default_param =
 #define G3D_FRM_PRI		(1)
 
 static const GFL_G3D_OBJSTATUS status0 = {
-	{ -FX32_ONE*64, 0, 0 },								//座標
+	//{ -FX32_ONE*64, 0, 0 },								//座標
+	{ 0, 0, 0 },								//座標
 	{ FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 },		//スケール
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 };
 static const GFL_G3D_OBJSTATUS status1 = {
-	{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
+	//{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
+	{ 0, -FX32_ONE*48, 0 },					//座標
 	{ FX32_ONE*3/5, FX32_ONE*3/5, FX32_ONE*3/5 },		//スケール
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 };
