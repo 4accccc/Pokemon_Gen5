@@ -24,7 +24,7 @@ static const char	test_select14[]	= {"いわさわ　みゆき　　Miyuki Iwasawa"};
 static const char	test_select15[]	= {"さいとう　のぞむ　　Nozomu Saitou"};
 
 static const TESTMODE_PRINTLIST indexList[] = {
-	{ test_index1, 2,  1, 30, 2 },
+	{ test_index1, 2, 10, 30, 2 },
 	{ test_index2, 2, 22, 30, 1 },
 };
 
@@ -106,7 +106,7 @@ static const GFL_TEXT_PRINTPARAM default_param =
 static const GFL_G3D_OBJSTATUS status0 = {
 	//{ -FX32_ONE*64, 0, 0 },								//座標
 	{ 0, 0, 0 },								//座標
-	{ FX32_ONE*4/5, FX32_ONE*4/5, FX32_ONE*4/5 },		//スケール
+	{ FX32_ONE*7/8, FX32_ONE*7/8, FX32_ONE*7/8 },		//スケール
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
 };
 static const GFL_G3D_OBJSTATUS status1 = {

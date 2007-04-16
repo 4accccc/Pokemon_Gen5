@@ -141,7 +141,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT1+i] );
 		}
 		//ＢＧスクリーン転送リクエスト発行
-		GFL_BG_LoadScreenReq( TEXT_FRM );
+		//GFL_BG_LoadScreenReq( TEXT_FRM );
 		testmode->seq++;
 
 		g3d_control_effect(testmode);
@@ -249,7 +249,7 @@ static void msg_bmpwin_make
 	//ビットマップキャラクターをアップデート
 	GFL_BMPWIN_TransVramCharacter( testmode->bmpwin[bmpwinNum] );
 	//ビットマップスクリーン作成
-	GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
+	//GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
 }
 	
 static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum )
@@ -307,16 +307,29 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 		}
 	}
 	//ＢＧスクリーン転送リクエスト発行
-	GFL_BG_LoadScreenReq( TEXT_FRM );
+	//GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
 static void g2d_draw( TESTMODE_WORK * testmode )
 {
+	int	i;
+
+	GFL_BG_ClearScreen( TEXT_FRM );
+
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
-		GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+		//表題ビットマップの表示
+		for(i=0;i<NELEMS(indexList);i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE+i] );
+		}
+		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
 	} else {
-		GFL_BG_SetVisible( TEXT_FRM, VISIBLE_OFF );
+		//選択項目ビットマップの表示
+		for(i=0;i<NELEMS(selectList);i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT1+i] );
+		}
+		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_OFF );
 	}
+	GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
 static void	g2d_unload( TESTMODE_WORK * testmode )
