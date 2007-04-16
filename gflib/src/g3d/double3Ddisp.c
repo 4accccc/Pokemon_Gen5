@@ -237,22 +237,22 @@ static void setupFrame2N( void )
     GX_SetBankForLCDC(GX_VRAM_LCDC_D);
     GX_SetCapture(GX_CAPTURE_SIZE_256x192,
                   GX_CAPTURE_MODE_A,
-                  GX_CAPTURE_SRCA_3D, (GXCaptureSrcB)0, GX_CAPTURE_DEST_VRAM_D_0x00000, 16, 0);
+                  GX_CAPTURE_SRCA_2D3D, (GXCaptureSrcB)0, GX_CAPTURE_DEST_VRAM_D_0x00000, 16, 0);
 
     GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);
-    GX_SetVisiblePlane(GX_PLANEMASK_BG0);
-    G2_SetBG0Priority(0);
+    //GX_SetVisiblePlane(GX_GetVisiblePlane() | GX_PLANEMASK_BG0);
+    //G2_SetBG0Priority(0);
 
     GXS_SetGraphicsMode(GX_BGMODE_5);
     GXS_SetVisiblePlane(GX_PLANEMASK_BG2);
     G2S_SetBG2ControlDCBmp(GX_BG_SCRSIZE_DCBMP_256x256,
                            GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
-    G2S_SetBG2Priority(0);
+    //G2S_SetBG2Priority(0);
     G2S_BG2Mosaic(FALSE);
 }
 
 //------------------------------------------------------------------
-//è„âÊñ îΩâfê›íË
+//â∫âÊñ îΩâfê›íË
 static void setupFrame2N_1( void )
 {
     GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
@@ -261,11 +261,11 @@ static void setupFrame2N_1( void )
     GX_SetBankForLCDC(GX_VRAM_LCDC_C);
     GX_SetCapture(GX_CAPTURE_SIZE_256x192,
                   GX_CAPTURE_MODE_A,
-                  GX_CAPTURE_SRCA_3D, (GXCaptureSrcB)0, GX_CAPTURE_DEST_VRAM_C_0x00000, 16, 0);
+                  GX_CAPTURE_SRCA_2D3D, (GXCaptureSrcB)0, GX_CAPTURE_DEST_VRAM_C_0x00000, 16, 0);
 
     GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D);
-    GX_SetVisiblePlane(GX_PLANEMASK_BG0);
-    G2_SetBG0Priority(0);
+    //GX_SetVisiblePlane(GX_GetVisiblePlane() | GX_PLANEMASK_BG0);
+    //G2_SetBG0Priority(0);
 
     GXS_SetGraphicsMode(GX_BGMODE_5);
     GXS_SetVisiblePlane(GX_PLANEMASK_OBJ);
