@@ -31,8 +31,8 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-	TCBSYS * TCBSysVintr;
-	void * TCBMemVintr;
+	TCBSYS *	TCBSysVintr;
+	void *		TCBMemVintr;
 }GFL_USE_WORK;
 
 //------------------------------------------------------------------
@@ -42,7 +42,8 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
-static GFL_USE_WORK * gfl_work = NULL;
+static GFL_USE_WORK *	gfl_work = NULL;
+static int				GFL_USE_VintrCounter;
 
 //=============================================================================================
 //
@@ -94,14 +95,15 @@ void GFLUser_Init(void)
 
 	//PROCシステム初期化
 	GFL_PROC_boot(GFL_HEAPID_SYSTEM);
-  gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
-  gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
+	gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
+	gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
-  gfl_work->TCBSysVintr = GFL_TCB_SysInit(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
+	gfl_work->TCBSysVintr = GFL_TCB_SysInit(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
 
     //FADEシステム初期化
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
+	GFL_USE_VintrCounter = 0;
 }
 
 
@@ -166,6 +168,7 @@ void GFLUser_VIntr(void)
 	GFL_CLACT_SysVblank();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     GFL_NET_VBlankFunc();
+	GFL_USE_VintrCounter++;
 }
 
 //------------------------------------------------------------------
@@ -176,6 +179,21 @@ void GFLUser_VIntr(void)
 TCB * GFUser_VIntr_CreateTCB(TCB_FUNC * func, void * work, u32 pri)
 {
 	return GFL_TCB_AddTask(gfl_work->TCBSysVintr, func, work, pri);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	VBlankカウンター取得とリセット
+ */
+//------------------------------------------------------------------
+void GFUser_VIntr_ResetVblankCounter( void )
+{
+	GFL_USE_VintrCounter = 0;
+}
+
+int GFUser_VIntr_GetVblankCounter( void )
+{
+	return GFL_USE_VintrCounter;
 }
 
 
