@@ -185,6 +185,46 @@ void
 
 //--------------------------------------------------------------------------------------------
 /**
+ * ニアファークリップの取得と変更
+ *
+ * @param	g3Dcamera	カメラハンドル
+ * @param	near or far	ニアファー値の格納もしくは参照ワークポインタ	
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_CAMERA_GetNear
+		( GFL_G3D_CAMERA* g3Dcamera, fx32* near )
+{
+	GF_ASSERT( g3Dcamera );
+	*near = g3Dcamera->projection.near;
+}
+
+void
+	GFL_G3D_CAMERA_SetNear
+		( GFL_G3D_CAMERA* g3Dcamera, fx32* near )
+{
+	GF_ASSERT( g3Dcamera );
+	g3Dcamera->projection.near = *near;
+}
+
+void
+	GFL_G3D_CAMERA_GetFar
+		( GFL_G3D_CAMERA* g3Dcamera, fx32* far )
+{
+	GF_ASSERT( g3Dcamera );
+	*far = g3Dcamera->projection.far;
+}
+
+void
+	GFL_G3D_CAMERA_SetFar
+		( GFL_G3D_CAMERA* g3Dcamera, fx32* far )
+{
+	GF_ASSERT( g3Dcamera );
+	g3Dcamera->projection.far = *far;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * カメラ方向と対象位置との内積を取得する
  *
  * @param	g3Dcamera	カメラハンドル
