@@ -216,7 +216,18 @@ extern void GFL_G3D_CAMERA_SetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
 //--------------------------------------------------------------------------------------------
 extern void GFL_G3D_CAMERA_GetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
 extern void GFL_G3D_CAMERA_SetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
-
+//--------------------------------------------------------------------------------------------
+/**
+ * ニアファークリップの取得と変更
+ *
+ * @param	g3Dcamera	カメラハンドル
+ * @param	near or far	ニアファー値の格納もしくは参照ワークポインタ	
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_G3D_CAMERA_GetNear( GFL_G3D_CAMERA* g3Dcamera, fx32* near );
+extern void GFL_G3D_CAMERA_SetNear( GFL_G3D_CAMERA* g3Dcamera, fx32* near );
+extern void GFL_G3D_CAMERA_GetFar( GFL_G3D_CAMERA* g3Dcamera, fx32* far );
+extern void GFL_G3D_CAMERA_SetFar( GFL_G3D_CAMERA* g3Dcamera, fx32* far );
 
 //--------------------------------------------------------------------------------------------
 /**
