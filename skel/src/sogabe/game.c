@@ -204,12 +204,12 @@ void	YT_InitGame(GAME_PARAM *gp)
             else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
                 continue;
             }
-            pp = YT_InitPlayer(gp,player_no,player_no);
+            pp = YT_InitPlayer(gp,player_no,player_no,TRUE);
             YT_InitPlayerAddTask(gp, pp, player_no);
         }
     }
     else{
-        pp = YT_InitPlayer(gp,0,0);
+        pp = YT_InitPlayer(gp,0,0,FALSE);
         YT_InitPlayerAddTask(gp, pp, 0);
 		gp->ps[0].exist_flag=1;
     }

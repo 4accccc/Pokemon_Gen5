@@ -130,7 +130,6 @@ void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void
         if((recvID != GFL_NET_SENDID_ALLUSER) && (i != recvID)){  // 受信者が違う場合continue
             continue;
         }
-
         bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
         if(!GFL_NET_IsNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
             if(!((command == GFL_NET_CMD_NEGOTIATION) || (command == GFL_NET_CMD_NEGOTIATION_RETURN))){

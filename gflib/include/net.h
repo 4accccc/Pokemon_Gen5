@@ -17,7 +17,7 @@
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
-#define GFL_NET_DEBUG   (1)
+#define GFL_NET_DEBUG   (0)
 #endif  //DEBUG_ONLY_FOR_ohno
 
 #ifndef NET_PRINT

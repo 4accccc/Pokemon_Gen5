@@ -28,9 +28,10 @@ typedef struct _PLAYER_PARAM PLAYER_PARAM;
  *	@param	gp			ゲームパラメータポインタ
  *	@param	player_no	1P or 2P
  *	@param	type		プレーヤータイプ
+ *	@param	bNetSend	送信データを送る必要があるときTRUE
  */
 //-----------------------------------------------------------------------------
-GLOBAL PLAYER_PARAM*	YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type);
+GLOBAL PLAYER_PARAM*	YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type,u8 bNetSend);
 
 //----------------------------------------------------------------------------
 /**
@@ -52,7 +53,29 @@ GLOBAL void YT_InitPlayerAddTask(GAME_PARAM *gp, PLAYER_PARAM* pp,u8 player_no);
  *	@param	anm_no	セットするアニメナンバー
  */
 //-----------------------------------------------------------------------------
-GLOBAL void	YT_PlayerAnimeNetSet(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot,int actno);
+GLOBAL void	YT_NetPlayerChrTrans(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot,int pat_no);
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プレーヤー表示用スクリーン生成
+ *	
+ *	@param	pp			プレーヤーパラメータポインタ
+ *	@param	old_line_no	現在のプレーヤーのライン位置
+ *	@param	new_line_no	新たなプレーヤーのライン位置
+ */
+//-----------------------------------------------------------------------------
+GLOBAL void YT_PlayerScreenMakeNetFunc(PLAYER_PARAM *pp, u8 player_no, u8 old_line_no,u8 new_line_no);
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信用 プレーヤー表示用スクリーン生成（ターンするとき）
+ *	
+ *	@param	pp		プレーヤーパラメータポインタ
+ *	@param	flag	0:ターン開始時　1:ターン終了時
+ */
+//-----------------------------------------------------------------------------
+
+GLOBAL void	YT_PlayerRotateScreenMakeNetFunc(PLAYER_PARAM *pp, u8 player_no, u8 line_no, u8 flag);
 
 #endif	//__PLAYER_H__
 

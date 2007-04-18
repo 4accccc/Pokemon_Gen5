@@ -522,6 +522,7 @@ void WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
     if(!GFL_NET_WLIsVRAMDStart()){  // イクニューモンが無い場合通信してない
         return ;
     }
+    WirelessIconEasyEnd();
     VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, WM_IconAnimTbl,VintrWirelessIconPtr);
 }
 

@@ -157,7 +157,7 @@ static	void	game_init(GAME_PARAM *gp)
 			// 通信アイコンなどで0～3のOam領域を使えないときなどは、
 			// OAMAttr管理数設定を変更する必要があります。
 			1, 128-1,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
-			1, 128-1,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
+			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
 		};
 		GFL_CLACT_SysInit( &param, GFL_HEAPID_APP );
 	}

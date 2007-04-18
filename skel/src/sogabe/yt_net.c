@@ -27,6 +27,8 @@ static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pD
 static void _recvCLACTDelete(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvYossyAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvCLACTAnimCreate(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvScreenMake(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvScreenMakeRot(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 //通信用構造体
 struct _NET_PARAM
@@ -91,6 +93,8 @@ enum CommCommandBattle_e {
     YT_NET_COMMAND_DELETE,            /// CLACTを消す命令
     YT_NET_COMMAND_YOSSYANIM,     ///ヨッシーのアニメーション
     YT_NET_COMMAND_ANIM_CREATE,   ///< アニメーション作成
+    TY_NET_COMMAND_SCREENMAKE,
+    TY_NET_COMMAND_SCREENMAKE_ROT,
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -102,6 +106,26 @@ typedef struct {
     u8 clactNo;
     u16 anmseq;
 } COMM_ANIM_ST;
+
+
+
+//----------------------------------------------------------------------------
+// @brief	スクリーン設定を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 player_no;
+    u8 old_line_no;
+    u8 new_line_no;
+} COMM_SCREENMAKE_ST;
+
+//----------------------------------------------------------------------------
+// @brief	スクリーン設定を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 player_no;
+    u8 line_no;
+    u8 flag;
+} COMM_SCREENMAKE_ROT_ST;
 
 //----------------------------------------------------------------------------
 // @brief	アニメーション作成を送信する
@@ -117,9 +141,9 @@ typedef struct {
 typedef struct {
     u16 anm_no;
     u8 player_no;
+    u8 pat_no;
     u8 line_no;
     u8 rot;
-    u8 actno;
 } COMM_PLAYER_ANIM_ST;
 
 //----------------------------------------------------------------------------
@@ -157,6 +181,9 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvCLACTDelete, GFL_NET_COMMAND_SIZE(sizeof(COMM_DELETE_ST)), NULL},
     {_recvYossyAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_YOSSY_ANIM_ST)), NULL},
     {_recvCLACTAnimCreate, GFL_NET_COMMAND_SIZE(sizeof(COMM_ANIM_CREATE_ST)), NULL},
+    {_recvScreenMake, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ST)), NULL},
+    {_recvScreenMakeRot, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ROT_ST)), NULL},
+    
 };
 
 
@@ -274,10 +301,62 @@ static void _recvYossyAnim(const int netID, const int size, const void* pData, v
 {
     const COMM_YOSSY_ANIM_ST* pYossy = pData;
     GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+    
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
     YT_YossyBirthAnimeTaskSet(gp,NULL,pYossy->posx,pYossy->posy,pYossy->count);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スクリーン作成が送られてきた
+ */
+//-----------------------------------------------------------------------------
 
+static void _recvScreenMake(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_SCREENMAKE_ST* pSMake = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    if(pNet->pp){
+        YT_PlayerScreenMakeNetFunc(pNet->pp, pSMake->player_no, pSMake->old_line_no, pSMake->new_line_no);
+    }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Rot時のスクリーン作成が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvScreenMakeRot(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_SCREENMAKE_ROT_ST* pSMake = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    if(pNet->pp){
+        YT_PlayerRotateScreenMakeNetFunc(pNet->pp, pSMake->player_no, pSMake->line_no, pSMake->flag);
+    }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -299,7 +378,7 @@ static void _recvCLACTAnimCreate(const int netID, const int size, const void* pD
         return;
     }
 
-    OS_TPrintf("Create %d %d id=%d\n",pAnim->clactNo,pAnim->type,netID);
+    //OS_TPrintf("Create %d %d id=%d\n",pAnim->clactNo,pAnim->type,netID);
     if(pNet->pCLACT[pAnim->clactNo]==NULL){
         pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->type,0);
         GF_ASSERT(pNet->pCLACT[pAnim->clactNo]);
@@ -331,7 +410,7 @@ static void _recvCLACTAnim(const int netID, const int size, const void* pData, v
         return;
     }
 
-    OS_TPrintf("testAnim %d %d\n",pAnim->clactNo,pAnim->anmseq);
+    //OS_TPrintf("testAnim %d %d\n",pAnim->clactNo,pAnim->anmseq);
 
     GF_ASSERT(pAnim->clactNo < YT_CLACT_MAX);
     
@@ -364,12 +443,13 @@ static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pD
     }
 
     if(pNet->pp == NULL){
-        pNet->pp = YT_InitPlayer(gp,pAnim->player_no,pAnim->player_no);
+        pNet->pp = YT_InitPlayer(gp,pAnim->player_no,pAnim->player_no,FALSE);
     }
     else{
-        YT_PlayerAnimeNetSet(gp, pNet->pp, pAnim->player_no, pAnim->anm_no, pAnim->line_no, pAnim->rot,pAnim->actno);
+        YT_NetPlayerChrTrans(gp, pNet->pp, pAnim->player_no, pAnim->anm_no, pAnim->line_no, pAnim->rot, pAnim->pat_no);
     }
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -388,7 +468,7 @@ BOOL YT_NET_IsParent(NET_PARAM* pNet)
  */
 //-----------------------------------------------------------------------------
 
-void YT_NET_SendPlayerAnmReq(int player_no,int anm_no,u16 line_no,int rot, int actno,NET_PARAM* pNet)
+void YT_NET_SendPlayerAnmReq(int player_no,int anm_no,int pat_no,u16 line_no,int rot,NET_PARAM* pNet)
 {
     COMM_PLAYER_ANIM_ST CommPlayerAnmSt;
 
@@ -397,7 +477,7 @@ void YT_NET_SendPlayerAnmReq(int player_no,int anm_no,u16 line_no,int rot, int a
         CommPlayerAnmSt.anm_no = anm_no;
         CommPlayerAnmSt.line_no = line_no;
         CommPlayerAnmSt.rot = rot;
-        CommPlayerAnmSt.actno = actno;
+        CommPlayerAnmSt.pat_no = pat_no;
 
         GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_PLAYERANIM, &CommPlayerAnmSt);
     }
@@ -457,10 +537,54 @@ void YT_NET_SendAnmReq(int clactno,u16 anmseq,NET_PARAM* pNet)
         CommAnmSt.clactNo = clactno;
         CommAnmSt.anmseq = anmseq;
 
-        OS_TPrintf("sendAnim %d %d\n",clactno,anmseq);
         GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM, &CommAnmSt);
     }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、スクリーンMakeを送信する
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendPlayerScreenMake(int player_no, int old_line_no, int new_line_no,NET_PARAM* pNet)
+{
+    COMM_SCREENMAKE_ST CommScreenMakeSt;
+    if(pNet){
+
+        CommScreenMakeSt.player_no = player_no;
+        CommScreenMakeSt.old_line_no = old_line_no;
+        CommScreenMakeSt.new_line_no = new_line_no;
+
+        GFL_NET_SendData(pNet->pNetHandle[1], TY_NET_COMMAND_SCREENMAKE, &CommScreenMakeSt);
+    }
+
+}
+
+GLOBAL void	YT_PlayerRotateScreenMakeNetFunc(PLAYER_PARAM *pp, u8 player_no, u8 line_no, u8 flag);
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、スクリーンMakeを送信する
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendPlayerRotateScreenMake(u8 player_no, u8 line_no, u8 flag,NET_PARAM* pNet)
+{
+    COMM_SCREENMAKE_ROT_ST CommScreenMakeRotSt;
+    if(pNet){
+
+        CommScreenMakeRotSt.player_no = player_no;
+        CommScreenMakeRotSt.line_no = line_no;
+        CommScreenMakeRotSt.flag = flag;
+
+        GFL_NET_SendData(pNet->pNetHandle[1], TY_NET_COMMAND_SCREENMAKE_ROT, &CommScreenMakeRotSt);
+    }
+
+}
+
 
 //----------------------------------------------------------------------------
 /**

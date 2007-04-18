@@ -41,6 +41,7 @@ struct _PLAYER_PARAM {
 	u8					anm_wait;
 	void				*chr_data;
 	NNSG2dCharacterData *nns_char_data;
+    NET_PARAM           *pNetParam;   //通信用構造体
 };
 
 //----------------------------------------------------------------------------
@@ -461,7 +462,7 @@ enum{
 
 static	void	YT_MainPlayer(TCB *tcb,void *work);
 static	u8		YT_PlayerActGet(PLAYER_PARAM *pp);
-static	void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no,int actno);
+static	void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no);
 static	void	YT_PlayerAnimeMain(PLAYER_PARAM *pp);
 static	BOOL	YT_PlayerAnimeCheck(PLAYER_PARAM *pp);
 static	void	YT_PlayerChrTrans(PLAYER_PARAM *pp);
@@ -480,7 +481,7 @@ static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag)
  *  @retval PLAYER_PARAM
  */
 //-----------------------------------------------------------------------------
-PLAYER_PARAM* YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type)
+PLAYER_PARAM* YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type,u8 bNetSend)
 {
 	PLAYER_PARAM *pp=(PLAYER_PARAM *)GFL_HEAP_AllocMemory(gp->heapID,sizeof(PLAYER_PARAM));
 
@@ -490,13 +491,14 @@ PLAYER_PARAM* YT_InitPlayer(GAME_PARAM *gp,u8 player_no,u8 type)
 	pp->type=type;
 	pp->line_no=1;
 	pp->dir=0;
+    pp->pNetParam = (bNetSend==TRUE) ? gp->pNetParam : NULL;
 
 	//キャラクタデータ展開
 	pp->chr_data=GFL_ARC_UTIL_LoadCharacter(0,NARC_yossyegg_YT_MARIO_NCGR,0,&pp->nns_char_data,gp->heapID);
 
 	YT_PlayerScreenMake(pp,pp->line_no,pp->line_no);
 
-	YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no,YT_PLAYER_ACT_MAX);
+	YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no);
     return pp;
 }
 
@@ -549,18 +551,18 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 		case YT_PLAYER_ACT_MOVE_L:
 			if(pp->line_no){
 				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no-1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 			}
 			break;
 		case YT_PLAYER_ACT_MOVE_R:
 			if(pp->line_no<2){
 				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no+1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 			}
 			break;
 		case YT_PLAYER_ACT_ROTATE:
 			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir);
 				YT_PlayerRotateScreenMake(pp,0);
 				pp->seq_no=SEQ_PLAYER_ROTATE;
 				GFL_SOUND_PlaySE(SE_ROTATE);
@@ -569,7 +571,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			break;
 		case YT_PLAYER_ACT_OVERTURN_L:
 			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				GFL_SOUND_PlaySE(SE_OVERTURN);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
@@ -577,7 +579,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			break;
 		case YT_PLAYER_ACT_OVERTURN_R:
 			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				GFL_SOUND_PlaySE(SE_OVERTURN);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
@@ -585,7 +587,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			break;
 		case YT_PLAYER_ACT_OVERTURN_C:
 			if(ps->status.no_active_flag==0){
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
 				GFL_SOUND_PlaySE(SE_OVERTURN);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
@@ -602,7 +604,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 				pp->dir^=1;
 				YT_PlayerRotateScreenMake(pp,1);
 				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no-1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 			}
 			break;
@@ -611,14 +613,14 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 				pp->dir^=1;
 				YT_PlayerRotateScreenMake(pp,1);
 				YT_PlayerScreenMake(pp,pp->line_no,pp->line_no+1);
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 			}
 			break;
 		default:
 			if(YT_PlayerAnimeCheck(pp)==FALSE){
 				pp->dir^=1;
-				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 				YT_PlayerRotateScreenMake(pp,1);
 				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 			}
@@ -626,7 +628,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 		break;
 	case SEQ_PLAYER_OVERTURN:
 		if(YT_PlayerAnimeCheck(pp)==FALSE){
-			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
+			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 			pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 		}
 		break;
@@ -674,12 +676,12 @@ static	u8		YT_PlayerActGet(PLAYER_PARAM *pp)
  *	@param	anm_no	セットするアニメナンバー
  */
 //-----------------------------------------------------------------------------
-static void YT_NetPlayerChrTrans(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot)
+void YT_NetPlayerChrTrans(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot,int pat_no)
 {
 	const	YT_ANIME_TABLE	* yat=yt_anime_table[anm_no];
 
 	pp->anm_no=anm_no;
-	pp->pat_no=0;
+	pp->pat_no=pat_no;
 	pp->anm_wait=yat[0].wait;
     pp->gp=gp;
     pp->seq_no=0;
@@ -692,105 +694,13 @@ static void YT_NetPlayerChrTrans(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,i
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	通信できたプレーヤーアニメをセット
- *	
- *	@param	pp		プレーヤーパラメータポインタ
- *	@param	anm_no	セットするアニメナンバー
- */
-//-----------------------------------------------------------------------------
-void	YT_PlayerAnimeNetSet(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_no,int line_no,int rot,int actno)
-{
-	YT_PLAYER_STATUS	*ps=&pp->gp->ps[player_no];
-
-    OS_TPrintf("YT_PlayerAnimeNetSet %d %d %d %d %d\n",player_no,anm_no,line_no,rot,actno);
-    pp->anm_no = anm_no;
-    pp->player_no = player_no;
-    pp->line_no = line_no;
-    
-    switch(actno){
-      case YT_PLAYER_ACT_MOVE_L:
-        YT_PlayerScreenMake(pp,line_no+1,line_no);
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no+1,rot);
-        break;
-      case YT_PLAYER_ACT_MOVE_R:
-        YT_PlayerScreenMake(pp,line_no-1,line_no);
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no-1,rot);
-        break;
-      case YT_PLAYER_ACT_ROTATE:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        YT_PlayerRotateScreenMake(pp,0);
-        YT_PlayerRotateAct(pp,ps);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_L:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_R:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
-        break;
-      case YT_PLAYER_ACT_OVERTURN_C:
-        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
-        break;
-      default:
-        break;
-    }
-#if 0
-    break;
-	case SEQ_PLAYER_ROTATE:
-        OS_TPrintf("rotate  %d %d %d\n",actno, line_no, rot);
-        switch(actno){
-          case YT_PLAYER_ACT_MOVE_L:
-            if(line_no){
-                pp->dir^=1;
-				YT_PlayerRotateScreenMake(pp,1);
-				YT_PlayerScreenMake(pp,line_no+1,line_no);
-//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
-			}
-			break;
-          case YT_PLAYER_ACT_MOVE_R:
-			if(line_no<2){
-				pp->dir^=1;
-				YT_PlayerRotateScreenMake(pp,1);
-				YT_PlayerScreenMake(pp,line_no-1,line_no);
-//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
-			}
-			break;
-          default:
-//			if(YT_PlayerAnimeCheck(pp)==FALSE){
-				pp->dir^=1;
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
-				YT_PlayerRotateScreenMake(pp,1);
-				pp->seq_no=SEQ_PLAYER_ACT_CHECK;
-//			}
-		}
-        break;
-      case SEQ_PLAYER_OVERTURN:
-        if(YT_PlayerAnimeCheck(pp)==FALSE){
-//			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir,actno);
-            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-			pp->seq_no=SEQ_PLAYER_ACT_CHECK;
-		}
-        break;
-    }
-#endif
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief	プレーヤーアニメをセット
  *	
  *	@param	pp		プレーヤーパラメータポインタ
  *	@param	anm_no	セットするアニメナンバー
  */
 //-----------------------------------------------------------------------------
-static void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no, int actno)
+static void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no)
 {
 	const	YT_ANIME_TABLE	* yat=yt_anime_table[anm_no];
 
@@ -799,9 +709,6 @@ static void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no, int actno)
 	pp->anm_wait=yat[0].wait;
 
 	YT_PlayerChrTrans(pp);
-
-    // 通信のときは場所を送る
-    YT_NET_SendPlayerAnmReq(pp->player_no, anm_no, pp->line_no, pp->dir, actno, pp->gp->pNetParam);
 }
 
 //----------------------------------------------------------------------------
@@ -871,6 +778,11 @@ static	void	YT_PlayerChrTrans(PLAYER_PARAM *pp)
 	buf+=yat[pp->pat_no].pat_adrs;
 
 	GFL_BG_LoadCharacter( YT_PLAYER_FRAME, buf, YT_PLAYER_CHR_SIZE, PlayerChrTransAdrs[pp->player_no] );
+
+    // 通信のときは場所を送る
+    if(pp->pNetParam){
+        YT_NET_SendPlayerAnmReq(pp->player_no, pp->anm_no, pp->pat_no, pp->line_no, pp->dir, pp->pNetParam);
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -882,7 +794,7 @@ static	void	YT_PlayerChrTrans(PLAYER_PARAM *pp)
  *	@param	new_line_no	新たなプレーヤーのライン位置
  */
 //-----------------------------------------------------------------------------
-static	void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no)
+static void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no)
 {
 	int	x,y;
 	u16	chr_no=0;
@@ -911,6 +823,28 @@ static	void	YT_PlayerScreenMake(PLAYER_PARAM *pp,u8 old_line_no,u8 new_line_no)
 	GFL_BG_LoadScreenV_Req( YT_PLAYER_FRAME );
 
 	pp->line_no=new_line_no;
+
+    // 通信の時には送る
+    if(pp->pNetParam){
+        YT_NET_SendPlayerScreenMake(pp->player_no, old_line_no, new_line_no, pp->pNetParam);
+    }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信用 プレーヤー表示用スクリーン生成
+ *	
+ *	@param	pp			プレーヤーパラメータポインタ
+ *	@param	old_line_no	現在のプレーヤーのライン位置
+ *	@param	new_line_no	新たなプレーヤーのライン位置
+ */
+//-----------------------------------------------------------------------------
+
+void YT_PlayerScreenMakeNetFunc(PLAYER_PARAM *pp, u8 player_no, u8 old_line_no,u8 new_line_no)
+{
+    pp->player_no = player_no;
+    YT_PlayerScreenMake(pp, old_line_no, new_line_no);
 }
 
 //----------------------------------------------------------------------------
@@ -935,6 +869,29 @@ static	void	YT_PlayerRotateScreenMake(PLAYER_PARAM *pp,u8 flag)
 	}
 
 	GFL_BG_LoadScreenV_Req( YT_PLAYER_FRAME );
+
+    // 通信の時には送る
+    if(pp->pNetParam){
+        YT_NET_SendPlayerRotateScreenMake(pp->player_no, pp->line_no,flag, pp->pNetParam);
+    }
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信用 プレーヤー表示用スクリーン生成（ターンするとき）
+ *	
+ *	@param	pp		プレーヤーパラメータポインタ
+ *	@param	flag	0:ターン開始時　1:ターン終了時
+ */
+//-----------------------------------------------------------------------------
+void	YT_PlayerRotateScreenMakeNetFunc(PLAYER_PARAM *pp, u8 player_no, u8 line_no, u8 flag)
+{
+    pp->player_no = player_no;
+    pp->line_no = line_no;
+
+    YT_PlayerRotateScreenMake(pp,flag);
 }
 
 //----------------------------------------------------------------------------

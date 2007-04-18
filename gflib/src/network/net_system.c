@@ -1137,17 +1137,8 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
     _pComm->countRecvNum++;
 #endif
     if(adr==NULL){
-//        GF_ASSERT_MSG(0,"callback");
         return;
     }
-
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID ){
-        //DEBUG_DUMP(adr,32,"-i");
-        OS_TPrintf("> %x \n",(int)adr);
-    }
-    
-//    OHNO_PRINT("> %x aid=%d \n",adr[0],aid);
-
     if(adr[0] == _INVALID_HEADER){
         return;
     }
