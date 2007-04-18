@@ -367,8 +367,6 @@ static void _UI_ResetLoop(int resetNo)
         // 通信としてリセットしてもいい状態 + メモリーカード終了
         if(GFL_NET_IsResetEnable() && CARD_TryWaitBackupAsync()){
 
-            GFL_BG_Exit();  // 名前書き換え後エリア開放を入れるテストを行う  k.ohno
-
             OS_ResetSystem(resetNo);  // 切断確認後終了
         }
         OS_WaitIrq(TRUE, OS_IE_V_BLANK);
