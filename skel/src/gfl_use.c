@@ -103,6 +103,9 @@ void GFLUser_Init(void)
     //FADEシステム初期化
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
+    //サウンドシステム初期化
+    GFL_SOUND_Init();
+
 	GFL_USE_VintrCounter = 0;
 }
 
@@ -121,6 +124,7 @@ void GFLUser_Main(void)
 	
 	GFL_PROC_SysMain();
     GFL_FADE_Main();
+	GFL_SOUND_Main();
 }
 
 //------------------------------------------------------------------
@@ -149,6 +153,7 @@ void GFLUser_Exit(void)
 	GFL_FADE_Exit();
 	GFL_HEAP_DTCM_Exit();
 	GFL_HEAP_Exit();
+	GFL_SOUND_Exit();
 }
 
 
