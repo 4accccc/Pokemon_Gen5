@@ -142,7 +142,7 @@ enum _negotiationType {
 
 // 個人的なデバッグの為のプリント
 #ifndef OHNO_PRINT
-#if defined(DEBUG_ONLY_FOR_ohno)
+#if 0 //defined(DEBUG_ONLY_FOR_ohno)
 //#ifdef  SDK_DEBUG
 
 #if 0

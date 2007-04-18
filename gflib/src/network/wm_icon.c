@@ -95,7 +95,7 @@ static int inline calc_anime_index( int targetVram, int anime_ptn );
  * @retval  VINTR_WIRELESS_ICON *		
  */
 //==============================================================================
-static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, int y, BOOL bWifi, const VOamAnm *tbl)
+static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, int y, BOOL bWifi, const VOamAnm *tbl,VINTR_WIRELESS_ICON* pVwi)
 {
 	VINTR_WIRELESS_ICON *vwi;
 
@@ -105,8 +105,11 @@ static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, i
 	// VRAMの最後にCGXデータ転送
 	trans_cgx_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId );
 
-	// タスク登録・ワーク初期化
-	vwi        = (VINTR_WIRELESS_ICON*)GFL_HEAP_AllocMemoryLo(HeapId, sizeof(VINTR_WIRELESS_ICON));
+    vwi = pVwi;
+    if(vwi==NULL){
+        // タスク登録・ワーク初期化
+        vwi        = (VINTR_WIRELESS_ICON*)GFL_HEAP_AllocMemoryLo(HeapId, sizeof(VINTR_WIRELESS_ICON));
+    }
 
 	vwi->x     = x;
 	vwi->y     = y;
@@ -519,10 +522,7 @@ void WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
     if(!GFL_NET_WLIsVRAMDStart()){  // イクニューモンが無い場合通信してない
         return ;
     }
-    if(VintrWirelessIconPtr){
-        WirelessIconEasyEnd();
-    }
-    VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, WM_IconAnimTbl);
+    VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, WM_IconAnimTbl,VintrWirelessIconPtr);
 }
 
 

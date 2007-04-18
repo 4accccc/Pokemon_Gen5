@@ -593,6 +593,23 @@ BOOL GFL_NET_IsResetEnable(void)
     return FALSE;
 }
 
+//==============================================================================
+/**
+ * @brief   通信アイコンを再度リロードします
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_ReloadIcon(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    if(pNet){
+
+        
+        WirelessIconEasy(pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
+    }
+}
+
 
 //--------送信
 
