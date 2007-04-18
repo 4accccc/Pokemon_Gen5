@@ -87,4 +87,19 @@ GLOBAL CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_n
 //-----------------------------------------------------------------------------
 GLOBAL	void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps);
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ヨッシーの生まれるアニメーションタスクをセット
+ *	
+ *	@param	gs		ゲームパラメータポインタ
+ *	@param	ps		プレーヤーステータス
+ *	@param	pos_x		
+ *	@param	pos_y		
+ *	@param	count		
+ */
+//-----------------------------------------------------------------------------
+GLOBAL void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count);
+
+
 #endif	__FALL_CHR_H__

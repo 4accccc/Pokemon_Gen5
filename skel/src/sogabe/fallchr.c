@@ -34,7 +34,6 @@ static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
 static	void	YT_EggMakeFlagCheck(TCB *tcb,void *work);
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp);
-static	void	YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count);
 static	void	YT_YossyBirthAnime(TCB *tcb,void *work);
 
 typedef struct{
@@ -89,6 +88,7 @@ static	const	u16	yt_anime_table[][2]={
 FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 {
 	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocClearMemory(gp->heapID,sizeof(FALL_CHR_PARAM));
+    NET_PARAM* pNet = gp->pNetParam;
 
 	fcp->gp=gp;
 	fcp->player_no=player_no;
@@ -98,8 +98,14 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 
 	GFL_TCB_AddTask(gp->tcbsys,YT_MainFallChr,fcp,TCB_PRI_FALL_CHR);
 	gp->clact->clact_work[fcp->clact_no]=fcp->clwk=YT_ClactWorkAdd(fcp);
+
 	GFL_CLACT_WkGetWldPos(fcp->clwk,&fcp->now_pos);
 
+    //通信対戦時には、作成typeを送信
+    if(pNet){
+        YT_NET_SendAnmCreate(fcp->clact_no, type, pNet);
+    }
+    
 	return fcp;
 }
 
@@ -1040,8 +1046,13 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 			YT_AnmSeqSet(fcp_under,YT_ANM_STOP,pNet);
 		}
 	}
-	YT_YossyBirthAnimeTaskSet(gp,ps,16+24*fcp->line_no+128*fcp->player_no,height_tbl[height],fcp->chr_count);
-
+    {
+        u8 posx = 16+24*fcp->line_no+128*fcp->player_no;
+        u8 posy = height_tbl[height];
+        YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
+        YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
+    }
+    
 	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット
 	{
 		int				count=0;
@@ -1068,7 +1079,7 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 	}
 }
 
-static	void	YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count)
+void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count)
 {
 	YOSSY_BIRTH_ANIME	*yba=GFL_HEAP_AllocMemory(gp->heapID,sizeof(YOSSY_BIRTH_ANIME));
 

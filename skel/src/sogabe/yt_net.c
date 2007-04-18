@@ -25,7 +25,8 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
 static void _recvCLACTAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvCLACTDelete(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-
+static void _recvYossyAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvCLACTAnimCreate(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 //通信用構造体
 struct _NET_PARAM
@@ -88,6 +89,8 @@ enum CommCommandBattle_e {
     YT_NET_COMMAND_POS,                             ///< 位置コマンド送信
     YT_NET_COMMAND_PLAYERANIM,            ///< プレーヤーのアニメーション情報の送信
     YT_NET_COMMAND_DELETE,            /// CLACTを消す命令
+    YT_NET_COMMAND_YOSSYANIM,     ///ヨッシーのアニメーション
+    YT_NET_COMMAND_ANIM_CREATE,   ///< アニメーション作成
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -101,10 +104,19 @@ typedef struct {
 } COMM_ANIM_ST;
 
 //----------------------------------------------------------------------------
+// @brief	アニメーション作成を送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 clactNo;
+    u16 type;
+} COMM_ANIM_CREATE_ST;
+
+//----------------------------------------------------------------------------
 // @brief	プレイヤーアニメーション設定を送信する
 //-----------------------------------------------------------------------------
 typedef struct {
     u16 anm_no;
+    u8 player_no;
     u8 line_no;
     u8 rot;
     u8 actno;
@@ -119,6 +131,16 @@ typedef struct {
     s16 y;
 } COMM_POS_ST;
 
+//----------------------------------------------------------------------------
+// @brief	ヨッシーアニメ送信
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 count;
+    u8 posx;
+    u8 posy;
+} COMM_YOSSY_ANIM_ST;
+
+//-----------------------------------------------------------------------------
 // @brief	消す命令
 //-----------------------------------------------------------------------------
 typedef struct {
@@ -133,6 +155,8 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvCLACTPos, GFL_NET_COMMAND_SIZE(sizeof(COMM_POS_ST)), NULL},
     {_recvCLACTPlayerAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_PLAYER_ANIM_ST)), NULL},
     {_recvCLACTDelete, GFL_NET_COMMAND_SIZE(sizeof(COMM_DELETE_ST)), NULL},
+    {_recvYossyAnim, GFL_NET_COMMAND_SIZE(sizeof(COMM_YOSSY_ANIM_ST)), NULL},
+    {_recvCLACTAnimCreate, GFL_NET_COMMAND_SIZE(sizeof(COMM_ANIM_CREATE_ST)), NULL},
 };
 
 
@@ -201,10 +225,12 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
     NET_PARAM* pNet = gp->pNetParam;
 	CLSYS_POS	pos;
 
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
-    
     //OS_TPrintf("testPos %d %d %d\n",pPos->clactNo, pPos->x, pPos->y);
     pos.x = pPos->x;
     pos.y = pPos->y;
@@ -226,6 +252,9 @@ static void _recvCLACTDelete(const int netID, const int size, const void* pData,
     NET_PARAM* pNet = gp->pNetParam;
 	CLSYS_POS	pos;
 
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
@@ -233,6 +262,52 @@ static void _recvCLACTDelete(const int netID, const int size, const void* pData,
         GFL_CLACT_WkDel(pNet->pCLACT[pPos->clactNo]);
         pNet->pCLACT[pPos->clactNo] = NULL;
     }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ヨッシーのアニメーションが送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvYossyAnim(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_YOSSY_ANIM_ST* pYossy = pData;
+    GAME_PARAM* gp = pWork;
+    YT_YossyBirthAnimeTaskSet(gp,NULL,pYossy->posx,pYossy->posy,pYossy->count);
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーション作成命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvCLACTAnimCreate(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_ANIM_CREATE_ST* pAnim = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+
+    OS_TPrintf("Create %d %d id=%d\n",pAnim->clactNo,pAnim->type,netID);
+    if(pNet->pCLACT[pAnim->clactNo]==NULL){
+        pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->type,0);
+        GF_ASSERT(pNet->pCLACT[pAnim->clactNo]);
+    }
+    else{
+        GF_ASSERT(0);
+    }
+
 }
 
 
@@ -249,16 +324,19 @@ static void _recvCLACTAnim(const int netID, const int size, const void* pData, v
     NET_PARAM* pNet = gp->pNetParam;
 
 
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
 
-    //OS_TPrintf("testAnim %d %d\n",pAnim->clactNo,pAnim->anmseq);
+    OS_TPrintf("testAnim %d %d\n",pAnim->clactNo,pAnim->anmseq);
 
     GF_ASSERT(pAnim->clactNo < YT_CLACT_MAX);
     
     if(pNet->pCLACT[pAnim->clactNo]==NULL){
-        pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->anmseq,0);
+        GF_ASSERT(0);
     }
     else{
         GFL_CLACT_WkSetAnmSeq(pNet->pCLACT[pAnim->clactNo],pAnim->anmseq);
@@ -278,15 +356,18 @@ static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pD
     GAME_PARAM* gp = pWork;
     NET_PARAM* pNet = gp->pNetParam;
 
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
 
     if(pNet->pp == NULL){
-        pNet->pp = YT_InitPlayer(gp,netID,netID);
+        pNet->pp = YT_InitPlayer(gp,pAnim->player_no,pAnim->player_no);
     }
     else{
-        YT_PlayerAnimeNetSet(gp, pNet->pp, netID, pAnim->anm_no, pAnim->line_no, pAnim->rot,pAnim->actno);
+        YT_PlayerAnimeNetSet(gp, pNet->pp, pAnim->player_no, pAnim->anm_no, pAnim->line_no, pAnim->rot,pAnim->actno);
     }
 }
 
@@ -307,11 +388,12 @@ BOOL YT_NET_IsParent(NET_PARAM* pNet)
  */
 //-----------------------------------------------------------------------------
 
-void YT_NET_SendPlayerAnmReq(int anm_no,u16 line_no,int rot, int actno,NET_PARAM* pNet)
+void YT_NET_SendPlayerAnmReq(int player_no,int anm_no,u16 line_no,int rot, int actno,NET_PARAM* pNet)
 {
     COMM_PLAYER_ANIM_ST CommPlayerAnmSt;
 
     if(pNet){
+        CommPlayerAnmSt.player_no = player_no;
         CommPlayerAnmSt.anm_no = anm_no;
         CommPlayerAnmSt.line_no = line_no;
         CommPlayerAnmSt.rot = rot;
@@ -320,6 +402,46 @@ void YT_NET_SendPlayerAnmReq(int anm_no,u16 line_no,int rot, int actno,NET_PARAM
         GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_PLAYERANIM, &CommPlayerAnmSt);
     }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、ヨッシーアニメーションを送信
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NetSendYossyBirthAnime(u8 posx,u8 posy,u8 count,NET_PARAM* pNet)
+{
+    COMM_YOSSY_ANIM_ST sYossy;
+    if(pNet){
+        sYossy.posx = posx;
+        sYossy.posy = posy;
+        sYossy.count = count;
+
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_YOSSYANIM, &sYossy);
+    }
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	通信対戦時には、アニメーションtypeを送信する
+ */
+//-----------------------------------------------------------------------------
+
+void YT_NET_SendAnmCreate(int clactno,u16 type,NET_PARAM* pNet)
+{
+    COMM_ANIM_CREATE_ST CommAnmCreateSt;
+    if(pNet){
+
+        CommAnmCreateSt.clactNo = clactno;
+        CommAnmCreateSt.type = type;
+
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM_CREATE, &CommAnmCreateSt);
+    }
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -332,10 +454,11 @@ void YT_NET_SendAnmReq(int clactno,u16 anmseq,NET_PARAM* pNet)
     COMM_ANIM_ST CommAnmSt;
     if(pNet){
 
-    CommAnmSt.clactNo = clactno;
-    CommAnmSt.anmseq = anmseq;
+        CommAnmSt.clactNo = clactno;
+        CommAnmSt.anmseq = anmseq;
 
-    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM, &CommAnmSt);
+        OS_TPrintf("sendAnim %d %d\n",clactno,anmseq);
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ANIM, &CommAnmSt);
     }
 }
 
@@ -351,8 +474,8 @@ void YT_NET_DeleteReq(int clactno,NET_PARAM* pNet)
 
     if(pNet){
 
-    CommDelSt.clactNo = clactno;
-    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_DELETE, &CommDelSt);
+        CommDelSt.clactNo = clactno;
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_DELETE, &CommDelSt);
     }
 }
 
@@ -368,11 +491,11 @@ void YT_NET_SendPosReq(int clactno,s16 x, s16 y,NET_PARAM* pNet)
     COMM_POS_ST CommPosSt;
 
     if(pNet){
-    CommPosSt.clactNo = clactno;
-    CommPosSt.x = x;
-    CommPosSt.y = y;
-    //OS_TPrintf("位置送信 %d %d\n",x,y);
-    GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_POS, &CommPosSt);
+        CommPosSt.clactNo = clactno;
+        CommPosSt.x = x;
+        CommPosSt.y = y;
+        //OS_TPrintf("位置送信 %d %d\n",x,y);
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_POS, &CommPosSt);
     }
 }
 
@@ -470,6 +593,7 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
         pNet->seq = _INIT_WAIT_CHILD;
     }
 
+    
 //	GFL_TCB_AddTask(gp->tcbsys,YT_NET_Main,pNet,1);
 }
 

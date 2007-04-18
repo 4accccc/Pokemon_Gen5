@@ -702,56 +702,42 @@ void	YT_PlayerAnimeNetSet(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_
 {
 	YT_PLAYER_STATUS	*ps=&pp->gp->ps[player_no];
 
-    OS_TPrintf("pp->seq_no %d \n",pp->seq_no);
+    OS_TPrintf("YT_PlayerAnimeNetSet %d %d %d %d %d\n",player_no,anm_no,line_no,rot,actno);
     pp->anm_no = anm_no;
-    switch(pp->seq_no){
-      case SEQ_PLAYER_ACT_CHECK:
-        switch(actno){
-          case YT_PLAYER_ACT_MOVE_L:
-            YT_PlayerScreenMake(pp,line_no+1,line_no);
-            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no+1,rot);
-            break;
-          case YT_PLAYER_ACT_MOVE_R:
-            YT_PlayerScreenMake(pp,line_no-1,line_no);
-            YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no-1,rot);
-            break;
-          case YT_PLAYER_ACT_ROTATE:
-            if(ps->status.no_active_flag==0){
-//                YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-                YT_PlayerRotateScreenMake(pp,0);
-				pp->seq_no=SEQ_PLAYER_ROTATE;
-				YT_PlayerRotateAct(pp,ps);
-			}
-			break;
-          case YT_PLAYER_ACT_OVERTURN_L:
-            if(ps->status.no_active_flag==0){
-//                YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-                pp->seq_no=SEQ_PLAYER_OVERTURN;
-				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
-			}
-            break;
-          case YT_PLAYER_ACT_OVERTURN_R:
-            if(ps->status.no_active_flag==0){
-//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-				pp->seq_no=SEQ_PLAYER_OVERTURN;
-				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
-			}
-			break;
-          case YT_PLAYER_ACT_OVERTURN_C:
-			if(ps->status.no_active_flag==0){
-//				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir,actno);
-                YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
-				pp->seq_no=SEQ_PLAYER_OVERTURN;
-				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
-			}
-			break;
-          default:
-			break;
-        }
+    pp->player_no = player_no;
+    pp->line_no = line_no;
+    
+    switch(actno){
+      case YT_PLAYER_ACT_MOVE_L:
+        YT_PlayerScreenMake(pp,line_no+1,line_no);
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no+1,rot);
         break;
+      case YT_PLAYER_ACT_MOVE_R:
+        YT_PlayerScreenMake(pp,line_no-1,line_no);
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no-1,rot);
+        break;
+      case YT_PLAYER_ACT_ROTATE:
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+        YT_PlayerRotateScreenMake(pp,0);
+        YT_PlayerRotateAct(pp,ps);
+        break;
+      case YT_PLAYER_ACT_OVERTURN_L:
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
+        break;
+      case YT_PLAYER_ACT_OVERTURN_R:
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
+        break;
+      case YT_PLAYER_ACT_OVERTURN_C:
+        YT_NetPlayerChrTrans(gp,pp,player_no,anm_no,line_no,rot);
+        YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
+        break;
+      default:
+        break;
+    }
+#if 0
+    break;
 	case SEQ_PLAYER_ROTATE:
         OS_TPrintf("rotate  %d %d %d\n",actno, line_no, rot);
         switch(actno){
@@ -793,6 +779,7 @@ void	YT_PlayerAnimeNetSet(GAME_PARAM *gp,PLAYER_PARAM *pp,int player_no,int anm_
 		}
         break;
     }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -814,7 +801,7 @@ static void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no, int actno)
 	YT_PlayerChrTrans(pp);
 
     // ’ÊM‚Ì‚Æ‚«‚ÍêŠ‚ð‘—‚é
-    YT_NET_SendPlayerAnmReq(anm_no,pp->line_no,pp->dir,actno,pp->gp->pNetParam);
+    YT_NET_SendPlayerAnmReq(pp->player_no, anm_no, pp->line_no, pp->dir, actno, pp->gp->pNetParam);
 }
 
 //----------------------------------------------------------------------------
