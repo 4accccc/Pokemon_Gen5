@@ -35,7 +35,7 @@
 #define WH_DATA_PRIO              WM_PRIORITY_NORMAL
 
 // データシェアリングで使用するポート
-#define WH_DS_PORT                13
+//#define WH_DS_PORT                13
 
 
 //#define WH_MP_4CHILD_DATA_SIZE         (GFL_NET_CHILD_DATA_SIZE*2)

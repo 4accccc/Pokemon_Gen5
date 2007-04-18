@@ -1400,9 +1400,10 @@ static BOOL WH_StateInStartScan(void)
     {
         pNetWH->sScanParam.channel = (u16)pNetWH->sChannelIndex;
     }
-
     pNetWH->sScanParam.maxChannelTime = WM_GetDispersionScanPeriod();
     pNetWH->sScanParam.scanBuf = &pNetWH->sBssDesc;
+
+    OHNO_PRINT("WM_StartScan %d\n",pNetWH->sScanParam.channel);
     result = WM_StartScan(WH_StateOutStartScan, &pNetWH->sScanParam);
 
     if (result != WM_ERRCODE_OPERATING)
@@ -2227,17 +2228,15 @@ static BOOL WH_StateInSetMPData(void *data, u16 datasize, int port, WHSendCallba
     DC_FlushRange(pNetWH->sSendBuffer, (u32)pNetWH->sSendBufferSize);
     /* PXI操作でIOレジスタへアクセスするのでキャッシュの Wait は不要 */
     // DC_WaitWriteBufferEmpty();
+
+
     result = WM_SetMPDataToPortEx(WH_StateOutSetMPData,
                                   (void *)callback,
                                   data, datasize, 0xffff, port, WH_DATA_PRIO);
     
     
-    if (result != WM_ERRCODE_OPERATING)
-    {
-        if(WM_ERRCODE_NO_CHILD != result){
-            OS_TPrintf("----- %d\n",datasize);
-            WH_TRACE("WH_StateInSetMPData failed - %s\n", WH_GetWMErrCodeName(result));
-        }
+    if (result != WM_ERRCODE_OPERATING) {
+        WH_TRACE("WH_StateInSetMPData failed - %s\n", WH_GetWMErrCodeName(result));
         return FALSE;
     }
     return TRUE;
@@ -2839,6 +2838,7 @@ GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte)
 {
     GFL_NETWM* pWmInfo = (GFL_NETWM*)pHeap;
     u32 addr;
+    int allocSize;
     
     if(pHeap!=NULL){
         return (GFL_NETWM*)pHeap;
@@ -2869,7 +2869,15 @@ GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte)
         sendSize = WM_SIZE_MP_PARENT_SEND_BUFFER( sendSize, FALSE );
         pWmInfo->sParentSendBufferSize=sendSize;
         pWmInfo->sChildRecvBufferSize = WM_SIZE_MP_CHILD_RECEIVE_BUFFER(sendSize,FALSE);
-        pWmInfo->pSendBufferBK = GFL_HEAP_AllocMemory(heapID, sendSize+32);
+    }
+    {
+        int recvSize = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( pWmInfo->childMPSize, maxNum, FALSE );//32byteアライメント
+        pWmInfo->sParentRecvBufferSize = recvSize;
+        pWmInfo->sChildSendBufferSize =  WM_SIZE_MP_CHILD_SEND_BUFFER( pWmInfo->childMPSize, FALSE );
+    }
+    {
+        allocSize = pWmInfo->sParentSendBufferSize > pWmInfo->sChildSendBufferSize ? pWmInfo->sParentSendBufferSize : pWmInfo->sChildSendBufferSize;
+        pWmInfo->pSendBufferBK = GFL_HEAP_AllocMemory(heapID, allocSize+32);
         addr = (u32)pWmInfo->pSendBufferBK;
         if(addr % 32){
             addr += 32 - (addr % 32);
@@ -2878,10 +2886,8 @@ GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte)
 
     }
     {
-        int recvSize = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( pWmInfo->childMPSize, maxNum, FALSE );//32byteアライメント
-        pWmInfo->sParentRecvBufferSize = recvSize;
-        pWmInfo->sChildSendBufferSize =  WM_SIZE_MP_CHILD_SEND_BUFFER( pWmInfo->childMPSize, FALSE );
-        pWmInfo->pRecvBufferBK = GFL_HEAP_AllocMemory(heapID,recvSize+32);
+        allocSize = pWmInfo->sParentRecvBufferSize > pWmInfo->sChildRecvBufferSize ? pWmInfo->sParentRecvBufferSize : pWmInfo->sChildRecvBufferSize;
+        pWmInfo->pRecvBufferBK = GFL_HEAP_AllocMemory(heapID,allocSize+32);
         addr = (u32)pWmInfo->pRecvBufferBK;
         if(addr % 32){
             addr += 32 - (addr % 32);
