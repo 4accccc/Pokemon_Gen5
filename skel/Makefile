@@ -70,6 +70,7 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #----------------------------------------------------------------------------
 GFLIBGRADIR	= src/gfl_graphic/
 SAMPLE_GRADIR = src/sample_graphic/
+SAMPLE_SNDDIR = src/sample_sound/
 
 FILE_TREE	= $(GFLIBGRADIR)utility.bin \
 			  $(GFLIBGRADIR)*.ncgr \
@@ -79,7 +80,8 @@ FILE_TREE	= $(GFLIBGRADIR)utility.bin \
 			  $(SAMPLE_GRADIR)*.NCLR \
 			  $(SAMPLE_GRADIR)*.NCGR \
 			  $(SAMPLE_GRADIR)*.NCER \
-			  $(SAMPLE_GRADIR)*.NANR
+			  $(SAMPLE_GRADIR)*.NANR \
+			  $(SAMPLE_SNDDIR)*.sdat
 			  
 #ロムファイルシステムのルートディレクトリ指定
 MAKEROM_ROMROOT  = ./
