@@ -276,6 +276,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 		if(fcp->overturn_flag){
 			YT_AnmSeqSet(fcp,YT_ANM_OVERTURN,pNet);
 			YT_ChrPosSet(fcp, pNet);
+			fcp->push_seq_no=fcp->seq_no;
 			fcp->seq_no=SEQ_FALL_CHR_OVERTURN;
 		}
 		break;
@@ -336,7 +337,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 			if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
 				ps->status.egg_make_check_flag|=(1<<fcp->line_no);
 			}
-			fcp->seq_no=SEQ_FALL_CHR_STOP;
+			fcp->seq_no=fcp->push_seq_no;
 			{
 				int	i;
 				for(i=0;i<YT_HEIGHT_MAX;i++){
@@ -392,6 +393,7 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 		if(fcp->overturn_flag){
 			YT_AnmSeqSet(fcp,YT_ANM_OVERTURN,pNet);
 			YT_ChrPosSet(fcp, pNet);
+			fcp->push_seq_no=fcp->seq_no;
 			fcp->seq_no=SEQ_FALL_CHR_OVERTURN;
 		}
 		if(ps->status.no_active_flag){
@@ -824,8 +826,9 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 	anm_seq=yt_anime_table[flag][fcp->dir];
 
 	switch(flag){
-	case YT_ANM_STOP:
 	case YT_ANM_LANDING:
+		GFL_SOUND_PlaySE(SE_LANDING);
+	case YT_ANM_STOP:
 	case YT_ANM_TUBURE:
 		//タマゴの場合はアニメセットしない
 		if(fcp->type>=YT_CHR_GREEN_EGG_U){
@@ -855,6 +858,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 		}
 		break;
 	case YT_ANM_VANISH:
+		GFL_SOUND_PlaySE(SE_VANISH);
 		break;
 	default:
 		//ありえない数値はバグなので止める
@@ -1108,6 +1112,9 @@ static	void	YT_YossyBirthAnime(TCB *tcb,void *work)
 	case 1:
 	case 2:
 		if(yba->wait==0){
+			if(yba->seq_no==1){
+				GFL_SOUND_PlaySE(SE_YOSSY);
+			}
 			yba->wait=8;
 			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
 			GFL_BMP_Print(yba->gp->yossy_bmp,GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),

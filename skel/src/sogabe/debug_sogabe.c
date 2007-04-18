@@ -161,6 +161,11 @@ static	void	game_init(GAME_PARAM *gp)
 		};
 		GFL_CLACT_SysInit( &param, GFL_HEAPID_APP );
 	}
+
+	//サウンドデータロード
+	GFL_SOUND_LoadArchiveData("src/sample_sound/yossy_egg.sdat");
+	GFL_SOUND_LoadGroupData(GROUP_MAIN);
+
 }
 
 //------------------------------------------------------------------

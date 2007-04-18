@@ -219,6 +219,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 	YT_JobNoSet(gp,YT_MainGameNo);
 
+	GFL_SOUND_PlayBGM(SEQ_MORI);
 }
 
 //----------------------------------------------------------------------------

@@ -125,6 +125,8 @@ void	YT_InitTitle(GAME_PARAM *gp)
 	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN|GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,16,0,2);
 
 	YT_JobNoSet(gp,YT_MainTitleNo);
+
+	GFL_SOUND_PlayBGM(SEQ_TITLE);
 }
 
 //----------------------------------------------------------------------------
