@@ -325,7 +325,11 @@ void GFL_NET_WLVRAMDInitialize(void)
 {
     int ans;
     //************************************
-//	GX_DisableBankForTex();			// テクスチャイメージ
+
+    //イクニューモンを使用する前に VRAMDをdisableにする必要があるのだが
+    //VRAMDが何に使われていたのかがわからないと、消すことができない
+    //ここでは仮で呼んでいるだけ
+    GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
 
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
     // 無線ライブラリ駆動開始
@@ -1658,6 +1662,10 @@ int GFL_NET_WLGetBConUncacheTime(int index)
 //------------------------------------------------------
 BOOL GFL_NET_WL_SendData(void* data,int size,PTRSendDataCallback callback)
 {
+
+    if((WH_GetCurrentAid()==0) && !(0xfe & WH_GetBitmap())){
+        return FALSE;
+    }
     return WH_SendData(data, size,
                        _PORT_DATA_RETRANSMISSION, callback);
 }
