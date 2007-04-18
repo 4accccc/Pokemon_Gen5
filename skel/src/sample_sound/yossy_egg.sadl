@@ -1,0 +1,14 @@
+#define PLAYER_BGM	0
+#define PLAYER_SE	1
+#define WAVEARC_000	0
+#define BANK_BGM	0
+#define BANK_SE	1
+#define SEQ_TITLE	0
+#define SEQ_MORI	1
+#define SEQARC_SE	0
+#define GROUP_MAIN	0
+#define	SE_LANDING	0
+#define	SE_VANISH	1
+#define	SE_OVERTURN	2
+#define	SE_ROTATE	3
+#define	SE_YOSSY	4
