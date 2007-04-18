@@ -17,6 +17,8 @@
 #define GLOBAL extern
 #endif
 
+#include "sample_sound/yossy_egg.sadl"
+
 //ジョブナンバー定義
 enum{
 	YT_InitTitleNo=0,
