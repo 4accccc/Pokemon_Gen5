@@ -44,6 +44,8 @@
 #include "tcb.h"
 
 #include "double3Ddisp.h"
+#include "sound.h"
+
 /*  */
 
 #endif	/*	__GFLIB_H__ */
