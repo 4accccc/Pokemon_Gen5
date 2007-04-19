@@ -188,7 +188,7 @@ static void InitSysWork( GFL_TCBLSYS * tcbsys )
  * @param	work_size
  */
 //------------------------------------------------------------------
-GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id, u32 task_max, u32 work_size)
+GFL_TCBLSYS * GFL_TCBL_Init( HEAPID sys_heap_id, HEAPID usr_heap_id, u32 task_max, u32 work_size)
 {
 	GFL_TCBLSYS * tcbsys;
 
@@ -214,7 +214,7 @@ GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id, u32 task
  * @param	tcbsys	TCBL制御ワークへのポインタ
  */
 //------------------------------------------------------------------
-void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys )
+void GFL_TCBL_Main( GFL_TCBLSYS * tcbsys )
 {
 	GFL_TCBL * now;
 	GFL_TCBL * head = &(tcbsys->tcb_first);
@@ -242,7 +242,7 @@ void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys )
  * @param	tcbsys	TCBL制御ワークへのポインタ
  */
 //------------------------------------------------------------------
-void GFL_TCBL_SysExit( GFL_TCBLSYS * tcbsys )
+void GFL_TCBL_Exit( GFL_TCBLSYS * tcbsys )
 {
 	//実行するべきタスクが残っていたらエラーにする
 	if(tcbsys->tcb_first.next != &(tcbsys->tcb_first)) {

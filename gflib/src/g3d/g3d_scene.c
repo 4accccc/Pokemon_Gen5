@@ -69,7 +69,7 @@ GFL_G3D_SCENE*
 	//管理領域確保
 	g3Dscene = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_G3D_SCENE) );
 	//TCBL起動
-	g3Dscene->g3DsceneObjTCBLsys = GFL_TCBL_SysInit(heapID,heapID,sceneObjMax,TCBLworkSize); 
+	g3Dscene->g3DsceneObjTCBLsys = GFL_TCBL_Init(heapID,heapID,sceneObjMax,TCBLworkSize); 
 	//管理配列作成
 	g3Dscene->g3DsceneObjTCBLtbl = GFL_HEAP_AllocClearMemory(heapID,TCBL_POINTER_SIZ*sceneObjMax);
 	//配列領域マネージャ作成
@@ -96,7 +96,7 @@ void
 	GFL_G3D_SCENE_Main
 		( GFL_G3D_SCENE* g3Dscene )  
 {
-	GFL_TCBL_SysMain( g3Dscene->g3DsceneObjTCBLsys );
+	GFL_TCBL_Main( g3Dscene->g3DsceneObjTCBLsys );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ void
 	GFL_HEAP_FreeMemory( g3Dscene->g3DsceneObjPriTbl );
 	GFL_AREAMAN_Delete( g3Dscene->g3DsceneObjAreaman );
 	GFL_HEAP_FreeMemory( g3Dscene->g3DsceneObjTCBLtbl );
-	GFL_TCBL_SysExit( g3Dscene->g3DsceneObjTCBLsys );
+	GFL_TCBL_Exit( g3Dscene->g3DsceneObjTCBLsys );
 	GFL_HEAP_FreeMemory( g3Dscene );
 }
 

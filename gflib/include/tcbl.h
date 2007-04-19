@@ -77,7 +77,7 @@ typedef void (GFL_TCBLFUNC)(GFL_TCBL *, void *);
  *
  */
 //------------------------------------------------------------------
-extern GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id,
+extern GFL_TCBLSYS * GFL_TCBL_Init( HEAPID sys_heap_id, HEAPID usr_heap_id,
 		u32 task_max, u32 work_size);
 
 //------------------------------------------------------------------
@@ -90,7 +90,7 @@ extern GFL_TCBLSYS * GFL_TCBL_SysInit( HEAPID sys_heap_id, HEAPID usr_heap_id,
  *
  */
 //------------------------------------------------------------------
-extern void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys );
+extern void GFL_TCBL_Main( GFL_TCBLSYS * tcbsys );
 
 //------------------------------------------------------------------
 /**
@@ -98,7 +98,7 @@ extern void GFL_TCBL_SysMain( GFL_TCBLSYS * tcbsys );
  *  @param	tcbsys		タスクシステムワークポインタ
  */
 //------------------------------------------------------------------
-extern void GFL_TCBL_SysExit( GFL_TCBLSYS * tcbsys );
+extern void GFL_TCBL_Exit( GFL_TCBLSYS * tcbsys );
 
 //------------------------------------------------------------------------------
 /**
