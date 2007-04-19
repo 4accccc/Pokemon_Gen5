@@ -1528,7 +1528,7 @@ BOOL
 //=============================================================================================
 static BOOL GFL_G3D_DRAW_CheckCulling( GFL_G3D_OBJ* g3Dobj );
 static s32	GFL_G3D_DRAW_TestBoundingBox( const GXBoxTestParam* boundingBox );
-static MtxFx43 GFL_G3D_DRAW_GetTRSMatrix( const GFL_G3D_OBJSTATUS* status );
+static void GFL_G3D_DRAW_GetTRSMatrix( const GFL_G3D_OBJSTATUS* status, MtxFx43* mtxTRS );
 //u32 DebugCullingCount = 0;
 //u32 DebugPrintCount = 0;
 //=============================================================================================
@@ -1560,6 +1560,7 @@ void
 	GFL_G3D_DRAW_End
 		( void )
 {
+	NNS_G3dGeFlushBuffer();
 	G3_SwapBuffers( g3Dman->swapBufMode.aw, g3Dman->swapBufMode.zw );
 	//OS_Printf(" CullingCount is %d PrintCount is %d\n", DebugCullingCount, DebugPrintCount );
 }
@@ -1610,17 +1611,17 @@ void
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
 	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-	NNS_G3dGeFlushBuffer();
+	//NNS_G3dGeFlushBuffer();
 #else
 	MtxFx43 mtxTRS;
 
 	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
-	mtxTRS = GFL_G3D_DRAW_GetTRSMatrix( status );
-	G3_PushMtx();
+	GFL_G3D_DRAW_GetTRSMatrix( status, &mtxTRS );
+	NNS_G3dGePushMtx();
 	G3_MultMtx43( &mtxTRS );
 	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-	G3_PopMtx(1);
-	NNS_G3dGeFlushBuffer();
+	NNS_G3dGePopMtx(1);
+	//NNS_G3dGeFlushBuffer();
 #endif
 }
 
@@ -1629,13 +1630,28 @@ void
 	GFL_G3D_DRAW_DrawObjectCullingON
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
+#if 1
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
 	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
 		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
 		//DebugPrintCount++;
 	}
-	NNS_G3dGeFlushBuffer();
+	//NNS_G3dGeFlushBuffer();
+#else
+	MtxFx43 mtxTRS;
+
+	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
+	GFL_G3D_DRAW_GetTRSMatrix( status, &mtxTRS );
+	NNS_G3dGePushMtx();
+	G3_MultMtx43( &mtxTRS );
+	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
+		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+		//DebugPrintCount++;
+	}
+	NNS_G3dGePopMtx(1);
+	//NNS_G3dGeFlushBuffer();
+#endif
 }
 
 //--------------------------------------------------------------------------------
@@ -1758,22 +1774,19 @@ static s32
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-static MtxFx43 
+static void 
 	GFL_G3D_DRAW_GetTRSMatrix
-		( const GFL_G3D_OBJSTATUS* status )
+		( const GFL_G3D_OBJSTATUS* status, MtxFx43* mtxTRS )
 {
-	MtxFx43 mtx;
 	MtxFx43	rot;
 	MtxFx43 scl;
 
-	MTX_Identity43( &mtx );
-	MTX_TransApply43( &mtx, &mtx, status->trans.x, status->trans.y, status->trans.z);
+	MTX_Identity43( mtxTRS );
+	MTX_TransApply43( mtxTRS, mtxTRS, status->trans.x, status->trans.y, status->trans.z);
 	MTX_Copy33To43( &status->rotate, &rot );
 	MTX_Scale43( &scl, status->scale.x, status->scale.y, status->scale.z);
-	MTX_Concat43( &rot, &mtx, &mtx);
-	MTX_Concat43( &scl, &mtx, &mtx);
-
-	return mtx;
+	MTX_Concat43( &rot, mtxTRS, mtxTRS );
+	MTX_Concat43( &scl, mtxTRS, mtxTRS );
 }
 
 
