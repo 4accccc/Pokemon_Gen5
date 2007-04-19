@@ -1139,6 +1139,10 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
     if(adr==NULL){
         return;
     }
+    if(aid == 1){
+        DEBUG_DUMP(&adr[0], 12,"cr1");
+    }
+
     if(adr[0] == _INVALID_HEADER){
         return;
     }

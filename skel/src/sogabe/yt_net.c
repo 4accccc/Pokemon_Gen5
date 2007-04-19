@@ -29,6 +29,7 @@ static void _recvYossyAnim(const int netID, const int size, const void* pData, v
 static void _recvCLACTAnimCreate(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvScreenMake(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvScreenMakeRot(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvPlaySe(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 //通信用構造体
 struct _NET_PARAM
@@ -95,6 +96,7 @@ enum CommCommandBattle_e {
     YT_NET_COMMAND_ANIM_CREATE,   ///< アニメーション作成
     TY_NET_COMMAND_SCREENMAKE,
     TY_NET_COMMAND_SCREENMAKE_ROT,
+    YT_NET_COMMAND_PLAY_SE,
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -183,6 +185,7 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvCLACTAnimCreate, GFL_NET_COMMAND_SIZE(sizeof(COMM_ANIM_CREATE_ST)), NULL},
     {_recvScreenMake, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ST)), NULL},
     {_recvScreenMakeRot, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ROT_ST)), NULL},
+    {_recvPlaySe, GFL_NET_COMMAND_SIZE(sizeof(int)), NULL},
     
 };
 
@@ -265,6 +268,29 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
         GFL_CLACT_WkSetWldPos(pNet->pCLACT[pPos->clactNo],&pos);
     }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SE命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvPlaySe(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const int* pSe_no = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    GFL_SOUND_PlaySE(*pSe_no);
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -721,5 +747,18 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
 //	GFL_TCB_AddTask(gp->tcbsys,YT_NET_Main,pNet,1);
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEを鳴らす(+通信で送る)
+ */
+//-----------------------------------------------------------------------------
+void YT_NET_PlaySE(int se_no, NET_PARAM* pNet)
+{
+    GFL_SOUND_PlaySE(se_no);
+    if(pNet){
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_PLAY_SE, &se_no);
+    }
+}
 
 

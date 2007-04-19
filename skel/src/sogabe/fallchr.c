@@ -833,7 +833,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 
 	switch(flag){
 	case YT_ANM_LANDING:
-		GFL_SOUND_PlaySE(SE_LANDING);
+		YT_NET_PlaySE(SE_LANDING,pNet);
 	case YT_ANM_STOP:
 	case YT_ANM_TUBURE:
 		//タマゴの場合はアニメセットしない
@@ -864,7 +864,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 		}
 		break;
 	case YT_ANM_VANISH:
-		GFL_SOUND_PlaySE(SE_VANISH);
+		YT_NET_PlaySE(SE_VANISH,pNet);
 		break;
 	default:
 		//ありえない数値はバグなので止める

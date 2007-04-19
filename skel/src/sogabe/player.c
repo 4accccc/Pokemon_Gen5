@@ -565,7 +565,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF2B+pp->line_no+3*pp->dir);
 				YT_PlayerRotateScreenMake(pp,0);
 				pp->seq_no=SEQ_PLAYER_ROTATE;
-				GFL_SOUND_PlaySE(SE_ROTATE);
+				YT_NET_PlaySE(SE_ROTATE,pp->pNetParam);
 				YT_PlayerRotateAct(pp,ps);
 			}
 			break;
@@ -573,7 +573,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_L+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
-				GFL_SOUND_PlaySE(SE_OVERTURN);
+				YT_NET_PlaySE(SE_OVERTURN,pp->pNetParam);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L);
 			}
 			break;
@@ -581,7 +581,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_R+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
-				GFL_SOUND_PlaySE(SE_OVERTURN);
+				YT_NET_PlaySE(SE_OVERTURN,pp->pNetParam);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_R);
 			}
 			break;
@@ -589,7 +589,7 @@ static	void	YT_MainPlayer(TCB *tcb,void *work)
 			if(ps->status.no_active_flag==0){
 				YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF_PUNCH_C+3*pp->line_no+9*pp->dir);
 				pp->seq_no=SEQ_PLAYER_OVERTURN;
-				GFL_SOUND_PlaySE(SE_OVERTURN);
+				YT_NET_PlaySE(SE_OVERTURN,pp->pNetParam);
 				YT_PlayerOverTurnAct(pp,ps,OVER_TURN_L|OVER_TURN_R);
 			}
 			break;
