@@ -35,10 +35,11 @@ extern	void	GFL_SOUND_Exit( void );
 /**
  * サウンドデータロード（アーカイブデータ）
  *
- * @param	arc_path	サウンドアーカイブのパス名
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
  */
 //--------------------------------------------------------------------------------------------
-extern	void	GFL_SOUND_LoadArchiveData( const char *arc_path );
+extern	void	GFL_SOUND_LoadArchiveData( int arcID, int datID );
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -255,5 +255,16 @@ extern	void GFL_ARC_SeekDataByHandle( ARCHANDLE* handle, u32 size );
 //============================================================================================
 extern	u16		GFL_ARC_GetDataFileCntByHandle(ARCHANDLE* handle);
 
+//============================================================================================
+/**
+ * アーカイブファイルデータをオープンして、FSFile構造体のtopメンバをimg_topで上書きする
+ *
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ * @param[out]	p_file		データを書き込むFSFile構造体のポインタ
+ */
+//============================================================================================
+extern	void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file);
+
 #endif	__ARC_TOOL_H_
 
