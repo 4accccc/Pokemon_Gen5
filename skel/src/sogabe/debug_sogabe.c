@@ -130,7 +130,7 @@ static	void	game_init(GAME_PARAM *gp)
 	//TCB初期化
 	//タスクワーク確保
 	gp->tcb_work=GFL_HEAP_AllocMemory(GFL_HEAPID_APP,TCB_WORK_SIZE);
-	gp->tcbsys=GFL_TCB_SysInit(ACTIVE_TCB_MAX,gp->tcb_work);
+	gp->tcbsys=GFL_TCB_Init(ACTIVE_TCB_MAX,gp->tcb_work);
 
 	//ARCシステム初期化
 	GFL_ARC_Init(&GraphicFileTable[0],1);

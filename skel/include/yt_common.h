@@ -100,7 +100,7 @@ typedef	struct  _NET_PARAM NET_PARAM;
 
 
 typedef struct{
-	TCB				*tcb_player;
+	GFL_TCB			*tcb_player;
 	FALL_CHR_PARAM	*ready[YT_LINE_MAX][YT_HEIGHT_MAX];
 	FALL_CHR_PARAM	*fall[YT_LINE_MAX][YT_HEIGHT_MAX];
 	FALL_CHR_PARAM	*stop[YT_LINE_MAX][YT_HEIGHT_MAX];
@@ -132,14 +132,14 @@ typedef	struct
 	int					job_no;			//ジョブナンバー
 	int					seq_no;			//シーケンスナンバー
 	int					game_seq_no[2];	//シーケンスナンバー
-	TCBSYS				*tcbsys;
+	GFL_TCBSYS			*tcbsys;
 	void				*tcb_work;
 	YT_CLACT			*clact;
 	GFL_AREAMAN			*clact_area;
 	YT_PLAYER_STATUS	ps[2];
 	u8					default_fall_wait;
     NET_PARAM*          pNetParam;   //通信用構造体
-	TCB					*check_tcb;
+	GFL_TCB				*check_tcb;
 	GFL_BMP_DATA		*yossy_bmp;
 	GFL_BMPWIN			*yossy_bmpwin;
 }GAME_PARAM;

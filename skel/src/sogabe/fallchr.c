@@ -22,7 +22,7 @@
 #define __PLAYER_H_GLOBAL__
 #include "fallchr.h"
 
-static	void	YT_MainFallChr(TCB *tcb,void *work);
+static	void	YT_MainFallChr(GFL_TCB *tcb,void *work);
 static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
 static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet);
 static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_line,int stop_line,int height,NET_PARAM* pNet);
@@ -32,9 +32,9 @@ static	CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
 static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag, NET_PARAM* pNet);
 static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
-static	void	YT_EggMakeFlagCheck(TCB *tcb,void *work);
+static	void	YT_EggMakeFlagCheck(GFL_TCB *tcb,void *work);
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp);
-static	void	YT_YossyBirthAnime(TCB *tcb,void *work);
+static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work);
 
 typedef struct{
 	GAME_PARAM			*gp;
@@ -148,7 +148,7 @@ CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
  *	@retval void
  */
 //-----------------------------------------------------------------------------
-static void YT_DeleteFallChr(CLWK* clwk,FALL_CHR_PARAM *fcp,TCB *tcb,NET_PARAM* pNet)
+static void YT_DeleteFallChr(CLWK* clwk,FALL_CHR_PARAM *fcp,GFL_TCB *tcb,NET_PARAM* pNet)
 {
 	//’ÊM‘ÎíŽž‚É‚ÍAÁ‚·–½—ß‚ð‘—M‚·‚é
     if(pNet){
@@ -192,7 +192,7 @@ enum{
 
 static	FALL_CHR_PARAM	*fcp_p=NULL;
 
-static	void	YT_MainFallChr(TCB *tcb,void *work)
+static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 {
 	FALL_CHR_PARAM		*fcp=(FALL_CHR_PARAM *)work;
 	GAME_PARAM			*gp=(GAME_PARAM *)fcp->gp;
@@ -1104,7 +1104,7 @@ void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 p
 	GFL_TCB_AddTask(gp->tcbsys,YT_YossyBirthAnime,yba,TCB_PRI_PLAYER);
 }
 
-static	void	YT_YossyBirthAnime(TCB *tcb,void *work)
+static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work)
 {
 	YOSSY_BIRTH_ANIME	*yba=(YOSSY_BIRTH_ANIME *)work;
 

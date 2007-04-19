@@ -40,7 +40,7 @@ typedef struct {
 #endif
 	GFL_G3D_OBJSTATUS		status[2];
 
-	TCB*					dbl3DdispVintr;
+	GFL_TCB*				dbl3DdispVintr;
 
 	u16						work[16];
 }TESTMODE_WORK;

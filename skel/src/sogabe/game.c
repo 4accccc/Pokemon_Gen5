@@ -30,7 +30,7 @@ static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
 static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
 static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
-static	void	YT_CheckFlag(TCB *tcb,void *work);
+static	void	YT_CheckFlag(GFL_TCB *tcb,void *work);
 
 //----------------------------------------------------------------------------
 /**
@@ -236,7 +236,7 @@ void	YT_MainGame(GAME_PARAM *gp)
 	//ゲームシーケンス処理
 	YT_MainGameAct(gp);
 
-	GFL_TCB_SysMain(gp->tcbsys);
+	GFL_TCB_Main(gp->tcbsys);
 
 	// セルアクターユニット描画処理
 	GFL_CLACT_UnitDraw( gp->clact->p_unit );
@@ -479,7 +479,7 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
  *	@brief	ゲームフラグチェックタスク
  */
 //-----------------------------------------------------------------------------
-static	void	YT_CheckFlag(TCB *tcb,void *work)
+static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 {
 	GAME_PARAM			*gp=(GAME_PARAM *)work;
 	YT_PLAYER_STATUS	*ps;

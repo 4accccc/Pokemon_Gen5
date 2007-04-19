@@ -727,7 +727,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
 
 void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
 {
-    TCBSYS* tcbsys;
+    GFL_TCBSYS* tcbsys;
     NET_PARAM* pNet = GFL_HEAP_AllocMemory(gp->heapID, sizeof(NET_PARAM));
 
     GFL_STD_MemClear(pNet, sizeof(NET_PARAM));

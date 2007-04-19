@@ -460,7 +460,7 @@ enum{
 	YT_PLAYER_ACT_MAX
 };
 
-static	void	YT_MainPlayer(TCB *tcb,void *work);
+static	void	YT_MainPlayer(GFL_TCB *tcb,void *work);
 static	u8		YT_PlayerActGet(PLAYER_PARAM *pp);
 static	void	YT_PlayerAnimeSet(PLAYER_PARAM *pp,int anm_no);
 static	void	YT_PlayerAnimeMain(PLAYER_PARAM *pp);
@@ -536,7 +536,7 @@ enum{
 	OVER_TURN_L=1,
 	OVER_TURN_R=2,
 };
-static	void	YT_MainPlayer(TCB *tcb,void *work)
+static	void	YT_MainPlayer(GFL_TCB *tcb,void *work)
 {
 	PLAYER_PARAM		*pp=(PLAYER_PARAM *)work;
 	YT_PLAYER_STATUS	*ps=&pp->gp->ps[pp->player_no];

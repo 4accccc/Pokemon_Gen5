@@ -31,7 +31,7 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
-	TCBSYS *	TCBSysVintr;
+	GFL_TCBSYS *	TCBSysVintr;
 	void *		TCBMemVintr;
 }GFL_USE_WORK;
 
@@ -98,7 +98,7 @@ void GFLUser_Init(void)
 	gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
 	gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
-	gfl_work->TCBSysVintr = GFL_TCB_SysInit(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
+	gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
 
     //FADEシステム初期化
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
@@ -164,7 +164,7 @@ void GFLUser_Exit(void)
 //------------------------------------------------------------------
 void GFLUser_VIntr(void)
 {
-	GFL_TCB_SysMain(gfl_work->TCBSysVintr);
+	GFL_TCB_Main(gfl_work->TCBSysVintr);
 	GFL_BG_VBlankFunc();
 	// Vブランク期間で実行します。
 	// ただ、ユニットの描画が行われていないのに
@@ -181,7 +181,7 @@ void GFLUser_VIntr(void)
  * @brief	GFライブラリ利用部分：VBlank中TCBの登録処理
  */
 //------------------------------------------------------------------
-TCB * GFUser_VIntr_CreateTCB(TCB_FUNC * func, void * work, u32 pri)
+GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 {
 	return GFL_TCB_AddTask(gfl_work->TCBSysVintr, func, work, pri);
 }

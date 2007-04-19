@@ -28,7 +28,7 @@ extern void GFLUser_Exit(void);
 extern void GFLUser_VIntr(void);
 
 //VBlank中TCBの登録処理を追加
-extern TCB * GFUser_VIntr_CreateTCB(TCB_FUNC * func, void * work, u32 pri);
+extern GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri);
 
 //VBlankカウンター取得とリセット
 extern void GFUser_VIntr_ResetVblankCounter( void );

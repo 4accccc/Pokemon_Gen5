@@ -135,7 +135,7 @@ typedef struct {
 
 	u16*					mapAttr;
 
-	TCB*					dbl3DdispVintr;
+	GFL_TCB*				dbl3DdispVintr;
 }TETSU_WORK;
 
 typedef struct {
