@@ -371,10 +371,12 @@ static	const	YT_ANIME_TABLE	yt_player_anm_win[]={
 };
 //	YT_PLAYER_ANM_LOSE
 static	const	YT_ANIME_TABLE	yt_player_anm_lose[]={
-	{YT_PLAYER_LOSE_1,4},
-	{YT_PLAYER_LOSE_0,4},
-	{YT_PLAYER_LOSE_1,4},
-	{YT_PLAYER_LOSE_0,16},
+	{YT_PLAYER_LOSE_0,8},
+	{YT_PLAYER_LOSE_1,8},
+	{YT_PLAYER_LOSE_0,8},
+	{YT_PLAYER_LOSE_1,8},
+	{YT_PLAYER_LOSE_0,8},
+	{YT_PLAYER_LOSE_1,32},
 	{0,YT_ANIME_LOOP},
 };
 
@@ -532,6 +534,9 @@ enum{
 	SEQ_PLAYER_ACT_CHECK=0,		//プレーヤーの動作チェック
 	SEQ_PLAYER_ROTATE,
 	SEQ_PLAYER_OVERTURN,
+	SEQ_PLAYER_WIN_INIT,
+	SEQ_PLAYER_LOSE_INIT,
+	SEQ_PLAYER_WIN_LOSE,
 
 	OVER_TURN_L=1,
 	OVER_TURN_R=2,
@@ -543,6 +548,19 @@ static	void	YT_MainPlayer(GFL_TCB *tcb,void *work)
     int actno=0;
 
 	YT_PlayerAnimeMain(pp);
+
+	if(pp->seq_no!=SEQ_PLAYER_WIN_LOSE){
+		switch(ps->status.win_lose_flag){
+		case YT_GAME_WIN:
+			pp->seq_no=SEQ_PLAYER_WIN_INIT;
+			break;
+		case YT_GAME_LOSE:
+		case YT_GAME_DRAW:
+			pp->seq_no=SEQ_PLAYER_LOSE_INIT;
+			GFL_SOUND_PlayBGM(SEQ_GAMEOVER);
+			break;
+		}
+	}
 
 	switch(pp->seq_no){
 	case SEQ_PLAYER_ACT_CHECK:
@@ -631,6 +649,16 @@ static	void	YT_MainPlayer(GFL_TCB *tcb,void *work)
 			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LF+pp->line_no+3*pp->dir);
 			pp->seq_no=SEQ_PLAYER_ACT_CHECK;
 		}
+		break;
+	case SEQ_PLAYER_WIN_INIT:
+			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_WIN);
+			pp->seq_no=SEQ_PLAYER_WIN_LOSE;
+		break;
+	case SEQ_PLAYER_LOSE_INIT:
+			YT_PlayerAnimeSet(pp,YT_PLAYER_ANM_LOSE);
+			pp->seq_no=SEQ_PLAYER_WIN_LOSE;
+		break;
+	case SEQ_PLAYER_WIN_LOSE:
 		break;
 	}
 }

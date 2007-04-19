@@ -582,6 +582,21 @@ static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 				}
 			}
 		}
+		//ゲームオーバーチェック
+		if(ps->status.no_active_flag==0){
+			{
+				int				x;
+				FALL_CHR_PARAM	*fcp;
+
+				for(x=0;x<YT_LINE_MAX;x++){
+					fcp=ps->stop[x][YT_HEIGHT_MAX-1];
+					if(fcp){
+						ps->status.win_lose_flag|=YT_GAME_LOSE;
+						gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_WIN;
+					}
+				}
+			}
+		}
 	}
 }
 

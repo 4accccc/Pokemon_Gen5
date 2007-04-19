@@ -32,7 +32,6 @@ static	CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
 static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag, NET_PARAM* pNet);
 static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
-static	void	YT_EggMakeFlagCheck(GFL_TCB *tcb,void *work);
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp);
 static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work);
 
@@ -770,9 +769,9 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 					2,		//YT_PRI_GESSO,
 					2,		//YT_PRI_TERESA,
 					2,		//YT_PRI_DEKATERESA,
-					1,		//YT_PRI_GREEN_EGG_U,
+					2,		//YT_PRI_GREEN_EGG_U,
 					2,		//YT_PRI_GREEN_EGG_D,
-					1,		//YT_PRI_RED_EGG_U,
+					2,		//YT_PRI_RED_EGG_U,
 					2,		//YT_PRI_RED_EGG_D,
 					2,		//YT_PRI_GREEN_EGG,
 					2,		//YT_PRI_RED_EGG,
@@ -934,6 +933,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 			for(egg_height=0;egg_height<YT_HEIGHT_MAX;egg_height++){
 				fcp_top=ps->stop[egg_line][egg_height];
 				if((fcp_top->type==YT_CHR_GREEN_EGG_U)||(fcp_top->type==YT_CHR_RED_EGG_U)){
+					GFL_CLACT_WkSetSoftPri(fcp_top->clwk,YT_PRI_GREEN_EGG_U);
 					break;
 				}
 			}
@@ -953,6 +953,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 					break;
 				case YT_CHR_GREEN_EGG_D:
 				case YT_CHR_RED_EGG_D:
+					GFL_CLACT_WkSetSoftPri(fcp_p->clwk,YT_PRI_GREEN_EGG_D);
 					//ƒ^ƒ}ƒS‚Å‚Í‚³‚ñ‚¾ŒÂ”‚ðŒvŽZ
 					fcp_p=ps->stop[egg_line][egg_height];
 					fcp_p->chr_count=chr_count*egg_count;
@@ -963,19 +964,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 					{
 						int	height;
 						int	speed_value=0;
-						u8	soft_pri[]={
-							YT_PRI_KURIBO,
-							YT_PRI_PAKKUN,
-							YT_PRI_GESSO,
-							YT_PRI_TERESA,
-							YT_PRI_DEKATERESA,
-							YT_PRI_GREEN_EGG_U,
-							YT_PRI_GREEN_EGG_D,
-							YT_PRI_RED_EGG_U,
-							YT_PRI_RED_EGG_D,
-							YT_PRI_GREEN_EGG,
-							YT_PRI_RED_EGG,
-						};
+						int	wait_value=28;
 		
 						for(height=egg_search;height<egg_height;height++){
 							fcp_p=ps->stop[egg_line][height];
@@ -983,18 +972,23 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 							fcp_p->speed_value=speed_value;
 							fcp_p->egg_make_flag=1;
 							ps->egg_make_count++;
-							fcp_p->wait_value=28;
-							GFL_CLACT_WkSetSoftPri(fcp_p->clwk,soft_pri[fcp_p->type]);
 							ps->stop[egg_line][height]=NULL;
-							speed_value++;
+							if(chr_count){
+								fcp_p->wait_value=wait_value;
+								speed_value++;
+							}
+							else{
+								wait_value=14;
+								fcp_p->wait_value=wait_value;
+								speed_value+=2;
+							}
 						}
-						while(ps->stop[egg_line][height]){
+						while((ps->stop[egg_line][height])&&(height<YT_HEIGHT_MAX)){
 							fcp_p=ps->stop[egg_line][height];
 							ps->stop[egg_line][egg_search]=fcp_p;
 							fcp_p->seq_no=SEQ_FALL_CHR_EGG_MAKE;
 							fcp_p->speed_value=speed_value;
-							fcp_p->wait_value=28;
-							GFL_CLACT_WkSetSoftPri(fcp_p->clwk,soft_pri[fcp_p->type]);
+							fcp_p->wait_value=wait_value;
 							ps->stop[egg_line][height]=NULL;
 							height++;
 							egg_search++;
