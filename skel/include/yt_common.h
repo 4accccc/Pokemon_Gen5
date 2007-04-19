@@ -116,6 +116,7 @@ typedef struct{
 			u16		egg_make_flag		:1;		//タマゴ作成フラグ
 			u16		birth_flag			:1;		//ヨッシー生まれるフラグ
 			u16		rensa_flag			:1;		//連鎖フラグ
+			u16		win_lose_flag		:2;		//勝敗フラグ
 			u16							:3;
 		};
 	}status;
@@ -166,6 +167,11 @@ typedef	struct
 
 #define	YT_BIRTH_WAIT			(2*FX32_ONE)		//はさんだキャラ1個当たりの生まれるまでのウエイト
 #define	YT_BIRTH_SPEED			(0x80)
+
+//勝敗フラグ
+#define	YT_GAME_WIN				(1)
+#define	YT_GAME_LOSE			(2)
+#define	YT_GAME_DRAW			(3)
 
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
 
