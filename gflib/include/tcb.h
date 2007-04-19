@@ -23,7 +23,7 @@
 
 //------------------------------------------------------------------
 /**
- * @brief	TCBSYS 型宣言
+ * @brief	GFL_TCBSYS 型宣言
  *
  * TCBシステムワーク構造体の宣言。
  * メイン処理用・VBlank用など、任意の箇所で実行される
@@ -32,7 +32,7 @@
  * 内容は隠蔽されており、直接のアクセスはできない。
   */
 //------------------------------------------------------------------
-typedef struct _TCBSYS		TCBSYS;
+typedef struct _GFL_TCBSYS		GFL_TCBSYS;
 
 //------------------------------------------------------------------
 /**
@@ -42,18 +42,17 @@ typedef struct _TCBSYS		TCBSYS;
  * TCB構造体を直接アクセスできないようになっている。
  */
 //------------------------------------------------------------------
-//typedef	struct _TCB * TCB_PTR;
-typedef struct _TCB TCB;
+typedef struct _GFL_TCB GFL_TCB;
 
 //------------------------------------------------------------------
 /**
- * @brief	TCB関数型
+ * @brief	GFL_TCB関数型
  *
- * TCBに登録する実行関数の型定義。
- * 引数としてTCB *と、ワークへのポインタをとるようになっている
+ * GFL_TCBに登録する実行関数の型定義。
+ * 引数としてGFL_TCB *と、ワークへのポインタをとるようになっている
  */
 //------------------------------------------------------------------
-typedef void (TCB_FUNC)( TCB *, void * );
+typedef void (GFL_TCB_FUNC)( GFL_TCB *, void * );
 
 /*====================================================================================*/
 /*  関数宣言                                                                          */
@@ -78,12 +77,12 @@ extern u32 GFL_TCB_CalcSystemWorkSize( u32 task_max );
  * @param   task_max		稼働できる最大タスク数
  * @param   work_area		システム作成に必要充分なサイズのワークエリアアドレス
  *
- * @retval  TCBSYS*		作成されたTCBシステムポインタ
+ * @retval  GFL_TCBSYS*		作成されたTCBシステムポインタ
  *
  * work_area に必要なサイズは、GFL_TCB_CalcSystemWorkSize で計算する。
  */
 //------------------------------------------------------------------
-extern TCBSYS*  GFL_TCB_SysInit( u32 task_max, void* work_area );
+extern GFL_TCBSYS*  GFL_TCB_Init( u32 task_max, void* work_area );
 
 //------------------------------------------------------------------
 /**
@@ -95,7 +94,7 @@ extern TCBSYS*  GFL_TCB_SysInit( u32 task_max, void* work_area );
  *
  */
 //------------------------------------------------------------------
-extern void GFL_TCB_SysMain( TCBSYS* tcbsys );
+extern void GFL_TCB_Main( GFL_TCBSYS* tcbsys );
 
 //------------------------------------------------------------------
 /**
@@ -103,20 +102,20 @@ extern void GFL_TCB_SysMain( TCBSYS* tcbsys );
  *  @param	tcbsys		TCBシステムワークポインタ
  */
 //------------------------------------------------------------------
-extern void GFL_TCB_SysExit( TCBSYS* tcbsys );
+extern void GFL_TCB_Exit( GFL_TCBSYS* tcbsys );
 
 //------------------------------------------------------------------------------
 /**
 	@brief	TCBを追加する
-	@param	tcbsys	TCBシステムポインタ
-	@param	func	TCB_FUNC:関連付ける実行関数ポインタ
+	@param	GFL_TCBSYS	TCBシステムポインタ
+	@param	func	GFL_TCB_FUNC:関連付ける実行関数ポインタ
 	@param	work	void*:関連付けるワークエリアへのvoid型ポインタ
 	@param	pri		u32:タスクプライオリティ
 
-	@return	TCB *	追加したTCBを示すポインタ
+	@return	GFL_TCB *	追加したTCBを示すポインタ
 */
 //------------------------------------------------------------------------------
-extern TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri );
+extern GFL_TCB * GFL_TCB_AddTask( GFL_TCBSYS* tcbsys, GFL_TCB_FUNC * func, void* work, u32 pri );
 
 
 //------------------------------------------------------------------------------
@@ -125,7 +124,7 @@ extern TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 p
 	@param	tcb		TCBポインタ
 */
 //------------------------------------------------------------------------------
-extern void GFL_TCB_DeleteTask( TCB * tcb );
+extern void GFL_TCB_DeleteTask( GFL_TCB * tcb );
 
 
 //------------------------------------------------------------------
@@ -138,7 +137,7 @@ extern void GFL_TCB_DeleteTask( TCB * tcb );
  * @param	func	新しく切り替える動作関数
 */
 //------------------------------------------------------------------
-extern void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func);
+extern void GFL_TCB_ChangeFunc(GFL_TCB * tcb, GFL_TCB_FUNC * func);
 
 //------------------------------------------------------------------
 /**
@@ -150,7 +149,7 @@ extern void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func);
  * @return	ワークへのポインタ
  */ 
 //------------------------------------------------------------------
-extern void * GFL_TCB_GetWork(TCB * tcb);
+extern void * GFL_TCB_GetWork(GFL_TCB * tcb);
 
 //------------------------------------------------------------------
 /**
@@ -162,7 +161,7 @@ extern void * GFL_TCB_GetWork(TCB * tcb);
  * @return	プライオリティの値
  */
 //------------------------------------------------------------------
-extern u32 GFL_TCB_GetPriority(const TCB * tcb);
+extern u32 GFL_TCB_GetPriority(const GFL_TCB * tcb);
 
 
 #endif /*__TCB_H__*/

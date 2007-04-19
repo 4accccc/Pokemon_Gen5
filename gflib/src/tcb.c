@@ -45,13 +45,13 @@ enum{
  * 必要な部分はアクセス関数を経由するようになっている。
  */
 //------------------------------------------------------------------
-struct _TCB {
-	TCBSYS* sys;				///<自分を管理しているTCBシステムへのポインタ
-	TCB * prev;				///<前のTCBへのポインタ
-	TCB * next;				///<続くTCBへのポインタ
+struct _GFL_TCB {
+	GFL_TCBSYS* sys;				///<自分を管理しているTCBシステムへのポインタ
+	GFL_TCB * prev;				///<前のTCBへのポインタ
+	GFL_TCB * next;				///<続くTCBへのポインタ
 	u32 pri;					///<プライオリティ
 	void * work;				///<ワークエリアへのポインタ
-	TCB_FUNC * func;			///<実行関数へのポインタ
+	GFL_TCB_FUNC * func;			///<実行関数へのポインタ
 
 	u32 sw_flag;				///<関数追加フラグ
 };	// 52 bytes
@@ -62,35 +62,35 @@ struct _TCB {
  * @brief	TCB制御構造体の定義
  */
 //------------------------------------------------------------------
-struct _TCBSYS {
+struct _GFL_TCBSYS {
 	u32			tcb_max;		///< 登録可能なTCBの最大数
 	u32			tcb_stack_ptr;	///< 自信が抱えているTCB用スタックのポインタ
-	TCB			tcb_first;		///< TCB先頭実体
-	TCB **	tcb_stack;		///< TCB用スタック
-	TCB*		tcb_table;		///< TCB実体テーブル
+	GFL_TCB			tcb_first;		///< TCB先頭実体
+	GFL_TCB **	tcb_stack;		///< TCB用スタック
+	GFL_TCB*		tcb_table;		///< TCB実体テーブル
 	BOOL		adding_flag;	///< TCB追加処理実行中フラグ（このフラグが立っている間にMainを実行しない）
 
 
-	TCB *		now_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
-	TCB *		next_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
+	GFL_TCB *		now_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
+	GFL_TCB *		next_chain;		///< メインループ制御内使用連結整合維持TCBポインタ
 };	// 68 bytes
 
 
 //==============================================================
 // Prototype
 //==============================================================
-static inline void TCB_WorkClear( TCBSYS* tcbsys, TCB * tcb);
-static void InitTCBStack( TCBSYS* tcbsys );
-static TCB * PopTCB( TCBSYS* tcbsys );
-static BOOL PushTCB( TCBSYS* tcbsys, TCB * tcb );
-static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri );
+static inline void TCB_WorkClear( GFL_TCBSYS* tcbsys, GFL_TCB * tcb);
+static void InitTCBStack( GFL_TCBSYS* tcbsys );
+static GFL_TCB * PopTCB( GFL_TCBSYS* tcbsys );
+static BOOL PushTCB( GFL_TCBSYS* tcbsys, GFL_TCB * tcb );
+static GFL_TCB * AddTask( GFL_TCBSYS* tcbsys, GFL_TCB_FUNC * func, void* work, u32 pri );
 
 //------------------------------------------------------------------
 /**
  *	TCBシステム使用前の初期化
  */
 //------------------------------------------------------------------
-static void GFL_TCB_Init( TCBSYS* tcbsys );
+static void TCB_Init( GFL_TCBSYS* tcbsys );
 
 
 
@@ -109,7 +109,7 @@ static void GFL_TCB_Init( TCBSYS* tcbsys );
  * @return	none	
  */
 //------------------------------------------------------------------
-static inline void TCB_WorkClear( TCBSYS* tcbsys, TCB * tcb)
+static inline void TCB_WorkClear( GFL_TCBSYS* tcbsys, GFL_TCB * tcb)
 {
 	tcb->sys = tcbsys;
 
@@ -127,7 +127,7 @@ static inline void TCB_WorkClear( TCBSYS* tcbsys, TCB * tcb)
  * 未使用TCBを保持するスタックを初期化する
  */
 //------------------------------------------------------------------
-static void InitTCBStack( TCBSYS* tcbsys )
+static void InitTCBStack( GFL_TCBSYS* tcbsys )
 {
 	int i;
 
@@ -147,9 +147,9 @@ static void InitTCBStack( TCBSYS* tcbsys )
  * @retval	NULL		取り出しに失敗（スタックが空だった場合）
  */
 //------------------------------------------------------------------
-static TCB * PopTCB( TCBSYS* tcbsys )
+static GFL_TCB * PopTCB( GFL_TCBSYS* tcbsys )
 {
-	TCB * tcb;
+	GFL_TCB * tcb;
 	if(tcbsys->tcb_stack_ptr == tcbsys->tcb_max)
 	{
 		return NULL;
@@ -168,7 +168,7 @@ static TCB * PopTCB( TCBSYS* tcbsys )
 	@retval	FALSE	失敗（スタックがいっぱいの場合）
 */
 //------------------------------------------------------------------
-static BOOL PushTCB( TCBSYS* tcbsys, TCB * tcb )
+static BOOL PushTCB( GFL_TCBSYS* tcbsys, GFL_TCB * tcb )
 {
 	if(tcbsys->tcb_stack_ptr == 0)
 	{
@@ -199,7 +199,7 @@ static BOOL PushTCB( TCBSYS* tcbsys, TCB * tcb )
 //------------------------------------------------------------------
 u32 GFL_TCB_CalcSystemWorkSize( u32 task_max )
 {
-	return sizeof(TCBSYS) + (sizeof(TCB *)+sizeof(TCB)) * task_max;
+	return sizeof(GFL_TCBSYS) + (sizeof(GFL_TCB *)+sizeof(GFL_TCB)) * task_max;
 }
 
 //------------------------------------------------------------------
@@ -209,27 +209,27 @@ u32 GFL_TCB_CalcSystemWorkSize( u32 task_max )
  * @param   task_max		稼働できる最大タスク数
  * @param   work_area		システム作成に必要充分なサイズのワークエリアアドレス
  *
- * @retval  TCBSYS*		作成されたTCBシステムポインタ
+ * @retval  GFL_TCBSYS*		作成されたTCBシステムポインタ
  *
  * work_area に必要なサイズは、GFL_TCB_CalcSystemWorkSize で計算する。
  */
 //------------------------------------------------------------------
-TCBSYS*  GFL_TCB_SysInit( u32 task_max, void* work_area )
+GFL_TCBSYS*  GFL_TCB_Init( u32 task_max, void* work_area )
 {
-	TCBSYS* tcbsys;
+	GFL_TCBSYS* tcbsys;
 
 	GF_ASSERT( work_area );
 
 	tcbsys = work_area;
 
-	tcbsys->tcb_stack = (TCB **) ((u8*)(tcbsys) + sizeof(TCBSYS));
-	tcbsys->tcb_table = (TCB*) ((u8*)(tcbsys->tcb_stack) + sizeof(TCB *)*task_max);
+	tcbsys->tcb_stack = (GFL_TCB **) ((u8*)(tcbsys) + sizeof(GFL_TCBSYS));
+	tcbsys->tcb_table = (GFL_TCB*) ((u8*)(tcbsys->tcb_stack) + sizeof(GFL_TCB *)*task_max);
 
 	tcbsys->tcb_max = task_max;
 	tcbsys->tcb_stack_ptr = 0;
 	tcbsys->adding_flag = FALSE;
 
-	GFL_TCB_Init( tcbsys );
+	TCB_Init( tcbsys );
 
 	return tcbsys;
 }
@@ -239,7 +239,7 @@ TCBSYS*  GFL_TCB_SysInit( u32 task_max, void* work_area )
  *	システム使用前の初期化
  */
 //------------------------------------------------------------------
-static void GFL_TCB_Init( TCBSYS* tcbsys )
+static void TCB_Init( GFL_TCBSYS* tcbsys )
 {
 	//スタックの初期化
 	InitTCBStack( tcbsys );
@@ -252,7 +252,7 @@ static void GFL_TCB_Init( TCBSYS* tcbsys )
 //------------------------------------------------------------------
 //	TCBメイン
 //------------------------------------------------------------------
-void GFL_TCB_SysMain( TCBSYS* tcbsys )
+void GFL_TCB_Main( GFL_TCBSYS* tcbsys )
 {
 	#ifdef TASK_ADDPROC_CHECK
 	if( tcbsys->adding_flag )
@@ -285,7 +285,7 @@ void GFL_TCB_SysMain( TCBSYS* tcbsys )
  *  @param	tcbsys		TCBシステムワークポインタ
  */
 //------------------------------------------------------------------
-void GFL_TCB_SysExit( TCBSYS* tcbsys )
+void GFL_TCB_Exit( GFL_TCBSYS* tcbsys )
 {
 #if 0
 	tcbsys->now_chain = tcbsys->tcb_first.next;	//ここが実行の始めの場所
@@ -311,16 +311,16 @@ void GFL_TCB_SysExit( TCBSYS* tcbsys )
 /**
 	@brief	TCBを追加する
 	@param	tcbsys	TCBシステムポインタ
-	@param	func	TCB_FUNC:関連付ける実行関数ポインタ
+	@param	func	GFL_TCB_FUNC:関連付ける実行関数ポインタ
 	@param	work	void*:関連付けるワークエリアへのvoid型ポインタ
 	@param	pri		u32:タスクプライオリティ
 
 	@return	TCB *	追加したTCBを示すポインタ
 */
 //------------------------------------------------------------------------------
-TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
+GFL_TCB * GFL_TCB_AddTask( GFL_TCBSYS* tcbsys, GFL_TCB_FUNC * func, void* work, u32 pri )
 {
-	TCB *  ret;
+	GFL_TCB *  ret;
 
 	tcbsys->adding_flag = TRUE;
 	ret = AddTask( tcbsys, func, work, pri );
@@ -337,13 +337,13 @@ TCB * GFL_TCB_AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
  * @param   work		TCBに関連付けるワークエリアへのポインタ
  * @param   pri			タスクプライオリティ
  *
- * @retval  TCB *		追加したTCBポインタ
+ * @retval  GFL_TCB *		追加したTCBポインタ
  */
 //------------------------------------------------------------------
-static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
+static GFL_TCB * AddTask( GFL_TCBSYS* tcbsys, GFL_TCB_FUNC * func, void* work, u32 pri )
 {
-	TCB * get;
-	TCB * find;
+	GFL_TCB * get;
+	GFL_TCB * find;
 
 	get = PopTCB( tcbsys );	//空いているTCBを拾う
 	if(get == NULL)
@@ -402,7 +402,7 @@ static TCB * AddTask( TCBSYS* tcbsys, TCB_FUNC * func, void* work, u32 pri )
 	@param	tcb		TCBポインタ
 */
 //------------------------------------------------------------------------------
-void GFL_TCB_DeleteTask( TCB * tcb )
+void GFL_TCB_DeleteTask( GFL_TCB * tcb )
 {
 	//連結システムの次のリンク先が削除対象の場合の処理
 	if(tcb->sys->next_chain == tcb){
@@ -423,7 +423,7 @@ void GFL_TCB_DeleteTask( TCB * tcb )
 //------------------------------------------------------------------
 //TCBの動作関数を切り替える
 //------------------------------------------------------------------
-void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func)
+void GFL_TCB_ChangeFunc(GFL_TCB * tcb, GFL_TCB_FUNC * func)
 {
 	tcb->func = func;
 }
@@ -431,7 +431,7 @@ void GFL_TCB_ChangeFunc(TCB * tcb, TCB_FUNC * func)
 //------------------------------------------------------------------
 //TCBのワークアドレス取得
 //------------------------------------------------------------------
-void * GFL_TCB_GetWork(TCB * tcb)
+void * GFL_TCB_GetWork(GFL_TCB * tcb)
 {
 	return tcb->work;
 }
@@ -439,7 +439,7 @@ void * GFL_TCB_GetWork(TCB * tcb)
 //------------------------------------------------------------------
 //TCBプライオリティの取得
 //------------------------------------------------------------------
-u32 GFL_TCB_GetPriority(const TCB * tcb)
+u32 GFL_TCB_GetPriority(const GFL_TCB * tcb)
 {
 	return tcb->pri;
 }

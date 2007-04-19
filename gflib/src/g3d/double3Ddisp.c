@@ -220,7 +220,7 @@ void
 
 void	
 	GFL_G3D_DOUBLE3D_VblankIntrTCB
-		( TCB* tcb, void* work )
+		( GFL_TCB* tcb, void* work )
 {
 	GFL_G3D_DOUBLE3D_VblankIntr();
 }
