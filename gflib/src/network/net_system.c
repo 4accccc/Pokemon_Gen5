@@ -767,12 +767,19 @@ static void _autoExitSystemFunc(void)
  */
 //==============================================================================
 
+static void _testDebugPrint();
 
 BOOL GFL_NET_SystemUpdateData(void)
 {
     int j;
 
     if(_pComm != NULL){
+
+        if ((GFL_UI_KEY_GetTrg() & PAD_BUTTON_L)) {
+            _testDebugPrint();
+        }
+
+        
         if( _pComm->bWifiConnect ){
             WirelessIconEasy_SetLevel(WM_LINK_LEVEL_3 - DWC_GetLinkLevel());
         }
@@ -904,16 +911,19 @@ static void _dataMpStep(void)
     }
     else if(((GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID())) &&
         (GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID()))) || GFL_NET_SystemGetAloneMode()){
-        if(_sendCallBack != _SEND_CB_FIRST_SENDEND){  // 1個送ったが送信完了していない
-            NET_PRINT("うけとってない %d _sendCallBack\n",_sendCallBack);
-            return;
+        while(1){
+            if(_sendCallBack != _SEND_CB_FIRST_SENDEND){  // 1個送ったが送信完了していない
+                NET_PRINT("うけとってない %d _sendCallBack\n",_sendCallBack);
+                break;
+            }
+            if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
+                //            NET_PRINT("親の同期待ち\n");
+                break;
+            }
+            _setSendData(_pComm->sSendBuf);  // 送るデータをリングバッファから差し替える
+            _sendCallBack = _SEND_CB_NONE;
+            break;
         }
-        if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-//            NET_PRINT("親の同期待ち\n");
-            return;
-        }
-        _setSendData(_pComm->sSendBuf);  // 送るデータをリングバッファから差し替える
-        _sendCallBack = _SEND_CB_NONE;
         NET_PRINT("ok %d _sendCallBack\n",_sendCallBack);
         _updateMpData();     // データ送受信
     }
@@ -989,12 +999,6 @@ static void _updateMpDataServer(void)
 //    mcSize = _getUserMaxSendByte();
     machineMax = _getUserMaxNum();
 
-    if(_sendCallBackServer == _SEND_CB_NONE){
-        if(_transmissonType() == _DS_MODE){
-            _copyDSData();
-        }
-        _sendCallBackServer = _SEND_CB_DSDATA_PACK;
-    }
     if((_sendCallBackServer == _SEND_CB_DSDATA_PACK) && (GFL_NET_SystemGetConnectNum()>1)){   
         _sendCallBackServer = _SEND_CB_FIRST_SEND;
         if( (GFL_NET_WL_IsConnectLowDevice(GFL_NET_SystemGetCurrentID()))  && !GFL_NET_SystemGetAloneMode()){
@@ -1107,9 +1111,13 @@ static void _dataMpServerStep(void)
         if(_sendCallBackServer == _SEND_CB_FIRST_SENDEND){
             if(_transmissonType() == _MP_MODE){  // DS時にはすでにsSendServerBufにデータがある
                 _setSendDataServer(_pComm->sSendServerBuf);  // 送るデータをリングバッファから差し替える
+                _sendCallBackServer = _SEND_CB_NONE;
+            }
+            else{
+                _copyDSData();
+                _sendCallBackServer = _SEND_CB_DSDATA_PACK;
             }
         }
-        _sendCallBackServer = _SEND_CB_NONE;
         // 最初の送信処理
         _updateMpDataServer();
     }
@@ -1117,6 +1125,13 @@ static void _dataMpServerStep(void)
 
 
 //#define WIFI_DUMP_TEST
+static u8 _testBuff[10] = {0,0,0,0,0,0,0,0,0,0};
+static u8 _testCount = 0;
+
+static void _testDebugPrint()
+{
+    DEBUG_DUMP(_testBuff,10,"TEST");
+}
 
 
 //==============================================================================
@@ -1139,8 +1154,13 @@ static void _commRecvCallback(u16 aid, u16 *data, u16 size)
     if(adr==NULL){
         return;
     }
-    if(aid == 1){
-        DEBUG_DUMP(&adr[0], 12,"cr1");
+
+    if(aid == 0){
+        _testBuff[_testCount]=adr[0];
+        if(_testCount<9){
+            _testCount++;
+        }
+        
     }
 
     if(adr[0] == _INVALID_HEADER){
@@ -1367,7 +1387,7 @@ static void _updateMpData(void)
                     if(!GFL_NET_WL_SendData(_pComm->sSendBuf,
                                     mcSize, _sendCallbackFunc)){
                         _sendCallBack = _SEND_CB_NONE;
-                        OHNO_PRINT("failed WH_SendData\n");
+                        NET_PRINT("failed WH_SendData\n");
                     }
                     else{
                         _pComm->countSendRecv++; // MP送信

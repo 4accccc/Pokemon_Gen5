@@ -3347,6 +3347,7 @@ void WH_SetReceiver(WHReceiverFunc proc, int port)
    Arguments:   size - データサイズ
    Returns:     送信開始に成功すれば真。
    ---------------------------------------------------------------------- */
+
 BOOL WH_SendData(void *data, u16 size, int port, WHSendCallbackFunc callback)
 {
     return WH_StateInSetMPData(data, size, port, callback);
