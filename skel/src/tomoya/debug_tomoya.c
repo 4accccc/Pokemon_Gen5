@@ -43,7 +43,7 @@
 */
 //-----------------------------------------------------------------------------
 // セルアクターサンプル
-#define CLACT_WKNUM	(1)		// CLACT_UNIT内に作成するワークの数
+#define CLACT_WKNUM	(8)		// CLACT_UNIT内に作成するワークの数
 
 //-----------------------------------------------------------------------------
 /**
@@ -64,8 +64,9 @@ typedef struct {
 
 typedef struct {
 	CLUNIT* p_unit;
-	DEBUG_CLACT_RES res[ CLACT_WKNUM ];
+	DEBUG_CLACT_RES res[ 1 ];
 	CLWK*	p_wk;
+	CLWK*	p_subwk[ CLACT_WKNUM ];
 } DEBUG_CLACT;
 
 
@@ -96,8 +97,6 @@ static void DEBUG_ClactWorkResRelease( DEBUG_CLACT_RES* p_wk );
 static CLWK* DEBUG_ClactWorkAdd( CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const CLWK_DATA* cp_data, u32 heapID );
 static void DEBUG_ClactWorkDel( CLWK* p_wk );
 static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont );
-
-
 
 
 
@@ -246,11 +245,27 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 		static const CLWK_DATA data = {
 			64, 64,	//座標(x,y)
 			0,		//アニメーションシーケンス
-			0,		//優先順位
+			4,		//優先順位
 			0,		//bg優先順位
 		};
 		DEBUG_ClactWorkResLoad( &p_clactw->res[0], HEAPID_TOMOYA_DEBUG );
 		p_clactw->p_wk = DEBUG_ClactWorkAdd( p_clactw->p_unit, &p_clactw->res[0], &data, HEAPID_TOMOYA_DEBUG );
+
+		{
+			static CLWK_DATA sub_data = {
+				0, 64,	//座標(x,y)
+				0,		//アニメーションシーケンス
+				0,		//優先順位
+				0,		//bg優先順位
+			};
+			int i;
+
+			for( i=0; i<4; i++ ){
+				sub_data.pos_x += i*16;
+				sub_data.softpri = i*4;
+				p_clactw->p_subwk[i] = DEBUG_ClactWorkAdd( p_clactw->p_unit, &p_clactw->res[0], &sub_data, HEAPID_TOMOYA_DEBUG );
+			}
+		}
 	}
 
 
@@ -547,13 +562,29 @@ static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont )
 
 	// メインからサブへ
 	if( trg & PAD_BUTTON_Y ){
+#if 1
 		GFL_CLACT_WkGetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
 		GFL_CLACT_WkSetPos( p_wk, &pos, CLSYS_DRAW_SUB );
+#else
+		int pal;
+		pal = GFL_CLACT_WkGetSoftPri( p_wk );
+		pal ++;
+		GFL_CLACT_WkSetSoftPri( p_wk, pal );
+		OS_Printf( "pri %d\n", pal );
+#endif
 	}
 
 	// サブからメインへ
 	if( trg & PAD_BUTTON_X ){
+#if 1
 		GFL_CLACT_WkGetPos( p_wk, &pos, CLSYS_DRAW_SUB );
 		GFL_CLACT_WkSetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
+#else
+		int pal;
+		pal = GFL_CLACT_WkGetSoftPri( p_wk );
+		pal --;
+		GFL_CLACT_WkSetSoftPri( p_wk, pal );
+		OS_Printf( "pri %d\n", pal );
+#endif
 	}
 }
