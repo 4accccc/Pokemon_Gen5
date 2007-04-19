@@ -151,6 +151,9 @@ void GFLUser_Exit(void)
 	GFL_PROC_SysExit();
 	GFL_OVERLAY_SysExit();
 	GFL_FADE_Exit();
+	GFL_TCB_Exit(gfl_work->TCBSysVintr);
+	GFL_HEAP_FreeMemory(gfl_work->TCBSysVintr);
+	GFL_HEAP_FreeMemory(gfl_work->TCBMemVintr);
 	GFL_HEAP_DTCM_Exit();
 	GFL_HEAP_Exit();
 	GFL_SOUND_Exit();
