@@ -98,14 +98,14 @@ extern void GFL_PROC_boot(HEAPID heap_id);
  * @brief	PROCシステムのメイン処理
  */
 //------------------------------------------------------------------
-extern void GFL_PROC_SysMain(void);
+extern void GFL_PROC_Main(void);
 
 //------------------------------------------------------------------
 /**
  * @brief	PROCシステムの終了処理
  */
 //------------------------------------------------------------------
-extern void GFL_PROC_SysExit(void);
+extern void GFL_PROC_Exit(void);
 
 //------------------------------------------------------------------
 /**

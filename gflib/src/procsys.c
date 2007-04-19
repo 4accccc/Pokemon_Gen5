@@ -115,14 +115,14 @@ void GFL_PROC_boot(HEAPID heap_id)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GFL_PROC_SysMain(void)
+void GFL_PROC_Main(void)
 {
 	GFI_PROC_SysMain(gfl_procsys);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GFL_PROC_SysExit(void)
+void GFL_PROC_Exit(void)
 {
 	GFI_PROC_SysExit(gfl_procsys);
 }
