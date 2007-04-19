@@ -27,6 +27,7 @@ typedef	void	(*ytFunc)(GAME_PARAM *);
 
 static	const	char	*GraphicFileTable[]={
 	"src/sample_graphic/yossyegg.narc",
+	"src/sample_sound/yossy_egg.narc",
 };
 
 static	void	game_init(GAME_PARAM *gp);
@@ -71,6 +72,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_SOGABE_DEBUG,0x80000);
 	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), HEAPID_SOGABE_DEBUG);
+
+	GFL_STD_MemClear(gp,sizeof(GAME_PARAM));
 
 	gp->heapID=HEAPID_SOGABE_DEBUG;
 
@@ -163,7 +166,8 @@ static	void	game_init(GAME_PARAM *gp)
 	}
 
 	//サウンドデータロード
-	GFL_SOUND_LoadArchiveData("src/sample_sound/yossy_egg.sdat");
+//	GFL_SOUND_LoadArchiveData("src/sample_sound/yossy_egg.sdat");
+	GFL_SOUND_LoadArchiveData(1,0);
 	GFL_SOUND_LoadGroupData(GROUP_MAIN);
 
 }

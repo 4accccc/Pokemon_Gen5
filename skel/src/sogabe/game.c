@@ -562,25 +562,8 @@ static	void	YT_CheckFlag(TCB *tcb,void *work)
 			YT_EggMakeCheck(ps);
 		}
 		//タマゴ生成中チェック
-		if(ps->status.egg_make_flag){
-			{
-				int					x,y;
-				FALL_CHR_PARAM		*fcp;
-
-				for(x=0;x<YT_LINE_MAX;x++){
-					for(y=0;y<YT_HEIGHT_MAX;y++){
-						fcp=ps->stop[x][y];
-						if(fcp){
-							if(fcp->egg_make_flag){
-								break;
-							}
-						}
-					}
-				}
-				if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
-					ps->status.egg_make_flag=0;
-				}
-			}
+		if((ps->status.egg_make_flag)&&(ps->egg_make_count==0)){
+			ps->status.egg_make_flag=0;
 		}
 		//連鎖落下中チェック
 		if(ps->status.rensa_flag){

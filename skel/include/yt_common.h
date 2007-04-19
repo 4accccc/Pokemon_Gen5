@@ -122,6 +122,7 @@ typedef struct{
 	u8				fall_wait;
 	u8				exist_flag			:1;		//プレイヤー存在フラグ
 	u8									:7;
+	int				egg_make_count;
 }YT_PLAYER_STATUS;
 
 //ゲームパラメータ構造体宣言

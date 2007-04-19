@@ -81,6 +81,7 @@ FILE_TREE	= $(GFLIBGRADIR)utility.bin \
 			  $(SAMPLE_GRADIR)*.NCGR \
 			  $(SAMPLE_GRADIR)*.NCER \
 			  $(SAMPLE_GRADIR)*.NANR \
+			  $(SAMPLE_SNDDIR)*.narc \
 			  $(SAMPLE_SNDDIR)*.sdat
 			  
 #ロムファイルシステムのルートディレクトリ指定

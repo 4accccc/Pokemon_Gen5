@@ -370,14 +370,17 @@ static	void	YT_MainFallChr(TCB *tcb,void *work)
 						YT_AnmSeqSet(fcp,YT_ANM_EGG,pNet);
 						fcp->seq_no=SEQ_FALL_CHR_YOSSY_BIRTH;
 						fcp->egg_make_flag=0;
+						ps->egg_make_count--;
 					}
 					else if(fcp->type==YT_CHR_RED_EGG_U){
 						fcp->type=YT_CHR_RED_EGG;
 						YT_AnmSeqSet(fcp,YT_ANM_EGG,pNet);
 						fcp->seq_no=SEQ_FALL_CHR_YOSSY_BIRTH;
 						fcp->egg_make_flag=0;
+						ps->egg_make_count--;
 					}
 					else{
+						ps->egg_make_count--;
 						GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
                         YT_DeleteFallChr(clwk,fcp,tcb,pNet);
 					}
@@ -920,6 +923,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 	int				egg_search;
 	int				chr_count;
 	int				egg_count;
+	FALL_CHR_PARAM	*fcp_top;
 	FALL_CHR_PARAM	*fcp_p;
 
 	while(ps->status.egg_make_check_flag){
@@ -928,15 +932,14 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 			chr_count=0;
 			egg_count=1;
 			for(egg_height=0;egg_height<YT_HEIGHT_MAX;egg_height++){
-				fcp_p=ps->stop[egg_line][egg_height];
-				if((fcp_p->type==YT_CHR_GREEN_EGG_U)||(fcp_p->type==YT_CHR_RED_EGG_U)){
+				fcp_top=ps->stop[egg_line][egg_height];
+				if((fcp_top->type==YT_CHR_GREEN_EGG_U)||(fcp_top->type==YT_CHR_RED_EGG_U)){
 					break;
 				}
 			}
 			//見つからなかったらアサート
 			GF_ASSERT(egg_height!=YT_HEIGHT_MAX);
 
-			fcp_p->egg_make_flag=1;
 			egg_search=egg_height;
 		
 			while(egg_search){
@@ -979,6 +982,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 							fcp_p->seq_no=SEQ_FALL_CHR_EGG_MAKE;
 							fcp_p->speed_value=speed_value;
 							fcp_p->egg_make_flag=1;
+							ps->egg_make_count++;
 							fcp_p->wait_value=28;
 							GFL_CLACT_WkSetSoftPri(fcp_p->clwk,soft_pri[fcp_p->type]);
 							ps->stop[egg_line][height]=NULL;
@@ -996,6 +1000,9 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 							egg_search++;
 						}
 					}
+					fcp_top->egg_make_flag=1;
+					ps->status.egg_make_flag=1;
+					ps->egg_make_count++;
 					egg_search=0;
 					break;
 				case YT_CHR_GREEN_EGG:
