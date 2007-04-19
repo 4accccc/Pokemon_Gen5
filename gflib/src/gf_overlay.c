@@ -136,7 +136,7 @@ static void UnloadEachWork(OVERLAY_WORK * ov_wk, int count)
 /**
  */
 //--------------------------------------------------------------
-void GFL_OVERLAY_SysExit(void)
+void GFL_OVERLAY_Exit(void)
 {
 	UnloadEachWork(OverlaySys->main, OverlaySys->main_num);
 

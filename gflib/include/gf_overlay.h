@@ -42,7 +42,7 @@ extern void GFL_OVERLAY_boot(HEAPID heapID, int main_num, int itcm_num, int dtcm
  * @brief	オーバーレイ制御システムの終了
  */
 //--------------------------------------------------------------
-extern void GFL_OVERLAY_SysExit(void);
+extern void GFL_OVERLAY_Exit(void);
 
 //--------------------------------------------------------------
 /**
