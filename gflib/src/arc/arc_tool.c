@@ -581,3 +581,42 @@ u16		GFL_ARC_GetDataFileCntByHandle(ARCHANDLE* handle)
 {
 	return	handle->file_cnt;
 }
+
+//============================================================================================
+/**
+ * アーカイブファイルデータをオープンして、FSFile構造体のtopメンバをimg_topで上書きする
+ *
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ * @param[out]	p_file		データを書き込むFSFile構造体のポインタ
+ */
+//============================================================================================
+void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file)
+{
+	u32			size=0;
+	u32			fat_top=0;
+	u32			fnt_top=0;
+	u32			img_top=0;
+	u32			top=0;
+	u16			file_cnt=0;
+
+	FS_InitFile(p_file);
+	FS_OpenFile(p_file,(char *)ArchiveFileTable[arcID]);
+	FS_SeekFile(p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,2);										///<アーカイブヘッダサイズをロード
+	fat_top=size;
+	FS_SeekFile(p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,4);									///<FATサイズをロード
+	FS_ReadFile(p_file,&file_cnt,2);								///<FileCountをロード
+	GF_ASSERT_MSG(file_cnt>datID,"ArchiveLoadDataIndex fileCnt=%d, datID=%d", file_cnt, datID);
+	fnt_top=fat_top+size;
+	FS_SeekFile(p_file,fnt_top+SIZE_OFFSET,FS_SEEK_SET);			///<FNTのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,4);									///<FNTサイズをロード
+	img_top=fnt_top+size;
+	
+	FS_SeekFile(p_file,fat_top+FAT_HEAD_SIZE+datID*8,FS_SEEK_SET);	///<取り出したいFATテーブルに移動
+	FS_ReadFile(p_file,&top,4);										///<FATテーブルtopをロード
+
+	p_file->prop.file.top+=img_top+IMG_HEAD_SIZE+top;				///<取り出したいIMGの先頭に移動
+}
+
