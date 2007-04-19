@@ -122,7 +122,7 @@ void GFLUser_Main(void)
 	GFL_UI_Main();
     GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
 	
-	GFL_PROC_SysMain();
+	GFL_PROC_Main();
     GFL_FADE_Main();
 	GFL_SOUND_Main();
 }
@@ -148,8 +148,8 @@ void GFLUser_Display(void)
 void GFLUser_Exit(void)
 {
 	GFL_UI_Exit();
-	GFL_PROC_SysExit();
-	GFL_OVERLAY_SysExit();
+	GFL_PROC_Exit();
+	GFL_OVERLAY_Exit();
 	GFL_FADE_Exit();
 	GFL_TCB_Exit(gfl_work->TCBSysVintr);
 	GFL_HEAP_FreeMemory(gfl_work->TCBSysVintr);
