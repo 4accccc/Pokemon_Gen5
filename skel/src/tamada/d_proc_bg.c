@@ -140,7 +140,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcInit3(GFL_PROC * proc, int * seq, void 
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	GFL_STD_MtRandInit(0);
 	m3 = GFL_PROC_AllocWork(proc, sizeof(MYWORK3), ctrl->debug_heap_id);
-	m3->tcbsys = GFL_TCBL_SysInit(ctrl->debug_heap_id, ctrl->debug_heap_id, 32, sizeof(TWK));
+	m3->tcbsys = GFL_TCBL_Init(ctrl->debug_heap_id, ctrl->debug_heap_id, 32, sizeof(TWK));
 	Debug_GraphicInit();
 	Debug_GraphicPut(2);
 	return GFL_PROC_RES_FINISH;
@@ -155,7 +155,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcMain3(GFL_PROC * proc, int * seq, void 
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	MYWORK3 * m3 = mywk;
 
-	GFL_TCBL_SysMain(m3->tcbsys);
+	GFL_TCBL_Main(m3->tcbsys);
 	if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A) {
 		return GFL_PROC_RES_FINISH;
 	}
@@ -179,7 +179,7 @@ static GFL_PROC_RESULT DebugTamadaSubProcEnd3(GFL_PROC * proc, int * seq, void *
 	DEBUG_TAMADA_CONTROL * ctrl = pwk;
 	MYWORK3 * m3 = mywk;
 
-	GFL_TCBL_SysExit(m3->tcbsys);
+	GFL_TCBL_Exit(m3->tcbsys);
 	return GFL_PROC_RES_FINISH;
 }
 
