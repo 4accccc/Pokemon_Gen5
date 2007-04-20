@@ -410,7 +410,7 @@ static void g3d_draw( void )
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
 		//OS_Printf("CullingCount = %d\n",DebugCullingCount);
-		OS_Printf("DrawCount = %d\n",DebugDrawCount);
+		//OS_Printf("DrawCount = %d\n",DebugDrawCount);
 	} else {
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
 	}
