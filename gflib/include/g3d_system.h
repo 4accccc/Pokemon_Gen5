@@ -815,9 +815,20 @@ extern void
 	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 //カリングあり
-extern void
+extern BOOL
 	GFL_G3D_DRAW_DrawObjectCullingON
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
+//アクセサリー用
+//	対象GFL_G3D_OBJのレンダリングリソース(imd)はg3dcvtr -s で出力されている必要がある。
+//	※これにより各Node行列が行列スタックに格納された状態で描画を終えるため、
+//	　本体直後にこの関数を呼ぶことにより、指定Node行列を参照した状態で描画することができる。
+//	　Node数の最大は30まで。コンバートの際に制限があるのもこのためらしい。
+//	  また、NNS_G3DGlbFlashを呼ぶ必要はなし。
+//　　カリングＯＮについては本体に依存していいかなと思っているのでとりあえず作らない。
+extern void
+	GFL_G3D_DRAW_DrawAccesory
+		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+			const GFL_G3D_OBJSTATUS* status, const char* jntName );
 
 //--------------------------------------------------------------------------------
 // １つのモデルに１つのマテリアルのみ設定されているときに高速描画するための関数
@@ -831,7 +842,7 @@ extern void
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 //カリングあり
-extern void
+extern BOOL
 	GFL_G3D_DRAW_DrawObject1mat1shpCullingON
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );

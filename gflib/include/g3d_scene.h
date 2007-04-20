@@ -25,6 +25,13 @@ typedef struct {
 	GFL_G3D_SCENEOBJFUNC*	func;
 }GFL_G3D_SCENEOBJ_DATA;
 
+typedef struct {
+	u32						objID;
+	u8						blendAlpha;
+	GFL_G3D_OBJSTATUS		status; 
+	char*					jntName;
+}GFL_G3D_SCENEACCESORY_DATA;
+
 #define GFL_G3D_SCENEOBJ_ALPHA_OFF	( 255 )
 //=============================================================================================
 /**
@@ -44,7 +51,7 @@ typedef struct {
 extern GFL_G3D_SCENE*
 	GFL_G3D_SCENE_Create
 		( GFL_G3D_UTIL* g3Dutil, const u16 sceneObjMax, const u32 sceneObjWkSiz, 
-			const HEAPID heapID );
+			const u16 sceneAccesoryMax, const HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -223,6 +230,101 @@ extern void GFL_G3D_SCENEOBJ_SetRotate( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* 
 //--------------------------------------------------------------------------------------------
 extern void GFL_G3D_SCENEOBJ_GetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
 extern void GFL_G3D_SCENEOBJ_SetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
+
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * アクセサリー関連
+ *　破棄に関しては配置オブジェクトを削除した際にも自動で消える。
+ */
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * アクセサリー登録
+ *
+ * @param	g3DsceneObj			配置オブジェクトポインタ
+ * @param	accesoryTbl			アクセサリー設定データテーブルポインタ
+ * @param	accesoryCount		アクセサリー数
+ *
+ * @return	BOOL
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL
+	GFL_G3D_SCENEOBJ_ACCESORY_Add
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, const GFL_G3D_SCENEACCESORY_DATA* accesoryTbl, 
+			const u16 accesoryCount );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 破棄
+ *
+ * @param	g3DsceneObj			配置オブジェクトポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_SCENEOBJ_ACCESORY_Remove
+		( GFL_G3D_SCENEOBJ* g3DsceneObj );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * オブジェクトＩＤの取得と変更
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	accesoryIdx		アクセサリーインデックス
+ * @param	objID			オブジェクトＩＤの格納もしくは参照ワークポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_G3D_SCENEOBJ_ACCESORY_GetObjID
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, u16* objID );
+extern void GFL_G3D_SCENEOBJ_ACCESORY_SetObjID
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, u16* objID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ステータス（位置情報）の取得と変更
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	accesoryIdx		アクセサリーインデックス
+ * @param	trans			位置情報の格納もしくは参照ワークポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_SCENEOBJ_ACCESORY_GetPos
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, VecFx32* trans );
+extern void
+	GFL_G3D_SCENEOBJ_ACCESORY_SetPos
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, VecFx32* trans );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ステータス（スケール情報）の取得と変更
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	accesoryIdx		アクセサリーインデックス
+ * @param	scale			スケール情報の格納もしくは参照ワークポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_G3D_SCENEOBJ_ACCESORY_GetScale
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, VecFx32* scale );
+extern void GFL_G3D_SCENEOBJ_ACCESORY_SetScale
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, VecFx32* scale );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ステータス（回転情報）の取得と変更
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	accesoryIdx		アクセサリーインデックス
+ * @param	rotate			回転情報の格納もしくは参照ワークポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void GFL_G3D_SCENEOBJ_ACCESORY_GetRotate
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, MtxFx33* rotate );
+extern void
+	GFL_G3D_SCENEOBJ_ACCESORY_SetRotate
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, MtxFx33* rotate );
+
+
 
 
 
