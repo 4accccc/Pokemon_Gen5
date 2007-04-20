@@ -80,10 +80,42 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 	{	G3DOBJ_HARUKA, 0, 1, 31, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
-			{ FX32_ONE*4, FX32_ONE*4, FX32_ONE*4 },
+			{ FX32_ONE*2, FX32_ONE*2, FX32_ONE*2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveHaruka,
 	},
 };
 
+static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData[] = {
+	{	G3DOBJ_MAP_WALL, 31,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface47"	//ì™
+	},
+	{	G3DOBJ_MAP_WALL, 31,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface48"	//ç∂éË
+	},
+	{	G3DOBJ_MAP_WALL, 31,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface52"	//âEéË
+	},
+	{	G3DOBJ_MAP_WALL, 31,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface51"	//ç∂ë´
+	},
+	{	G3DOBJ_MAP_WALL, 31,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface55"	//âEë´
+	},
+};
 

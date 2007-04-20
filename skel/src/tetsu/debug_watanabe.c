@@ -136,6 +136,7 @@ typedef struct {
 	u16*					mapAttr;
 
 	GFL_TCB*				dbl3DdispVintr;
+	int						vBlankCounter;
 }TETSU_WORK;
 
 typedef struct {
@@ -156,12 +157,13 @@ typedef struct {
 }MAPDATA;
 
 u32 DebugCullingCount = 0;
+u32 DebugDrawCount = 0;
 //------------------------------------------------------------------
 /**
  * @brief	マップデータ
  */
 //------------------------------------------------------------------
-static const VecFx32 cameraTarget	= { 0, 0, 0 };
+static const VecFx32 camera0Target	= { 0, 0, 0 };
 static const VecFx32 camera0Pos	= { 0, (FX32_ONE * 100), (FX32_ONE * 180) };
 static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_ONE * 180) };
 static const VecFx32 camera2Pos	= { -(FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_ONE * 180) };
@@ -261,6 +263,10 @@ static BOOL	TestModeControl( void )
 		break;
 
 	case 2:
+		tetsuWork->vBlankCounter = GFUser_VIntr_GetVblankCounter(); 
+		tetsuWork->vBlankCounter = 1;
+		GFUser_VIntr_ResetVblankCounter(); 
+
 		if( KeyControlEndCheck() == TRUE ){
 			tetsuWork->seq++;
 		}
@@ -345,14 +351,21 @@ static void	bg_exit( void )
 static void g3d_load( HEAPID heapID )
 {
 	int	i;
+	BOOL result;
 
 	//配置物設定
 	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
-												sizeof(OBJ_WORK), heapID );
+												sizeof(OBJ_WORK), 32, heapID );
+	//自機作成
 	tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
+	result = GFL_G3D_SCENEOBJ_ACCESORY_Add(
+				GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID ),
+				g3DsceneAccesoryData, NELEMS(g3DsceneAccesoryData) );
+	GF_ASSERT( result == TRUE );
 	{
+		//マップ作成
 		GFL_G3D_SCENEOBJ_DATA_SETUP* setup = MapDataCreate( &mapDataTbl, heapID );
 		tetsuWork->g3DsceneMapObjID = GFL_G3D_SCENEOBJ_Add
 								( tetsuWork->g3Dscene, setup->data, setup->count );
@@ -362,8 +375,12 @@ static void g3d_load( HEAPID heapID )
 	}
 
 	//カメラ作成
-	tetsuWork->g3Dcamera[0] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &cameraTarget, heapID );
-	tetsuWork->g3Dcamera[1] = GFL_G3D_CAMERA_CreateDefault( &camera1Pos, &cameraTarget, heapID );
+	tetsuWork->g3Dcamera[0] = GFL_G3D_CAMERA_CreateDefault( &camera0Pos, &camera0Target, heapID );
+	{
+		fx32 far = 4096 << FX32_SHIFT;
+		GFL_G3D_CAMERA_SetFar( tetsuWork->g3Dcamera[0], &far );
+	}
+	tetsuWork->g3Dcamera[1] = GFL_G3D_CAMERA_CreateDefault( &camera1Pos, &camera0Target, heapID );
 
 	//ライト作成
 	tetsuWork->g3Dlightset[0] = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
@@ -382,8 +399,8 @@ static void g3d_load( HEAPID heapID )
 static void g3d_move( void )
 {
 	DebugCullingCount = 0;
+	DebugDrawCount = 0;
 	GFL_G3D_SCENE_Main( tetsuWork->g3Dscene );  
-	//OS_Printf("CullingCount = %d\n",DebugCullingCount);
 	tetsuWork->work[0]++;
 }
 
@@ -392,6 +409,8 @@ static void g3d_draw( void )
 {
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
+		//OS_Printf("CullingCount = %d\n",DebugCullingCount);
+		OS_Printf("DrawCount = %d\n",DebugDrawCount);
 	} else {
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
 	}
@@ -421,8 +440,11 @@ static void g3d_unload( void )
  * @brief	３Ｄ動作
  */
 //------------------------------------------------------------------
-#define VIEW_LENGTH		(64*6)
+#define VIEW_LENGTH		(64*2)
 #define VIEW_SCALAR_MAX	(0x20000)
+
+#define BETWEEN_SCALAR	(-0x01000000)
+#define BETWEEN_THETA	(0x01100)
 
 //回転マトリクス変換
 static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
@@ -463,36 +485,107 @@ static inline void ResetAlpha( GFL_G3D_SCENEOBJ* sceneObj )
 	GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &alphaBuf );
 }
 
+//対象物とカメラとの視界位置によるカリング（ＸＺのみ）
+static BOOL checkPos_bitweenCamera( GFL_G3D_CAMERA* camera, u16 theta, VecFx32* objPos )
+{
+	VecFx32 cameraPos, cameraTarget;
+	VecFx32 vecView, vecObj;
+	VecFx32 vecA_cross, vecB_cross;
+	fx32	sin, cos;
+	int		scalarA, scalarB;
+	s16		tmpTheta;
+
+	//カメラ情報取得
+	GFL_G3D_CAMERA_GetPos( camera, &cameraPos );
+	GFL_G3D_CAMERA_GetTarget( camera, &cameraTarget );
+
+	//視界ベクトル計算（整数部のみ）
+	vecView.x = ( cameraTarget.x - cameraPos.x ) >> FX32_SHIFT;
+	vecView.z = ( cameraTarget.z - cameraPos.z ) >> FX32_SHIFT;
+
+	//対象物体ベクトル計算（整数部のみ）
+	vecObj.x = ( objPos->x - cameraPos.x ) >> FX32_SHIFT;
+	vecObj.z = ( objPos->z - cameraPos.z ) >> FX32_SHIFT;
+
+	//カメラの方向から左側境界ベクトルＡに直交するベクトルを作成
+	tmpTheta = -theta + 0x4000;	//負方向θ+90°の角度値
+	sin = FX_SinIdx((u16)tmpTheta);
+	cos = FX_CosIdx((u16)tmpTheta);
+	vecA_cross.x = (vecView.x * cos ) - (vecView.z * sin );
+	vecA_cross.z = (vecView.x * sin ) + (vecView.z * cos );
+
+	//カメラの方向から右側境界ベクトルＢに直交するベクトルを作成
+	tmpTheta = theta - 0x4000;	//正方向θ-90°の角度値
+	sin = FX_SinIdx((u16)tmpTheta);
+	cos = FX_CosIdx((u16)tmpTheta);
+	vecB_cross.x = (vecView.x * cos ) - (vecView.z * sin );
+	vecB_cross.z = (vecView.x * sin ) + (vecView.z * cos );
+
+	//ベクトルＡに直交するベクトルとベクトルＢに直交するベクトルに対しての内積が
+	//ともに指定スカラー値範囲内であれば２方向間に存在すると決定する
+	scalarA = vecA_cross.x * vecObj.x + vecA_cross.z * vecObj.z;
+	scalarB = vecB_cross.x * vecObj.x + vecB_cross.z * vecObj.z;
+	if(( scalarA < BETWEEN_SCALAR )||( scalarB < BETWEEN_SCALAR )){
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
+//対象物の周囲位置によるカリング（ＸＺのみ）
+static BOOL checkPos_aroundTarget( GFL_G3D_CAMERA* camera, fx32 len, VecFx32* objPos )
+{
+	VecFx32 cameraTarget;
+	fx32	diffX, diffZ, diffLen;
+				
+	GFL_G3D_CAMERA_GetTarget( camera, &cameraTarget );
+
+	diffX = ( cameraTarget.x - objPos->x ) >> FX32_SHIFT;
+	diffZ = ( cameraTarget.z - objPos->z ) >> FX32_SHIFT;
+	diffLen = ( diffX * diffX + diffZ * diffZ );
+	if( diffLen > len ){
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
 //２Ｄカリング
 static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* scalar )
 {
-	//カメラポインタ取得
 	GFL_G3D_CAMERA*	camera;
+
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		//カメラポインタ取得
 		camera = tetsuWork->g3Dcamera[0];	//下カメラ
+		//カメラ位置による事前カリング
+		*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
+		//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
+		if( *scalar < -0x800 ){
+			DebugCullingCount++;
+			SetDrawSW( sceneObj, FALSE );
+			return FALSE;
+		}
+		//ターゲット視界判定によるカリング
+		if( checkPos_bitweenCamera( camera, BETWEEN_THETA, objPos ) == FALSE ){
+			DebugCullingCount++;
+			SetDrawSW( sceneObj, FALSE );
+			return FALSE;
+		}
+		DebugDrawCount++;
 	} else {
+		//カメラポインタ取得
 		camera = tetsuWork->g3Dcamera[1];	//上カメラ
-	}
-
-	//カメラ位置によるカリング
-	*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
-	//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
-	if( *scalar < -0x800 ){
-		DebugCullingCount++;
-		SetDrawSW( sceneObj, FALSE );
-		return FALSE;
-	}
-
-	{	//ターゲット周囲判定によるカリング
-		VecFx32 cameraTarget;
-		fx32	diffX, diffZ, diffLen;
-			
-		GFL_G3D_CAMERA_GetTarget( camera, &cameraTarget );
-
-		diffX = ( cameraTarget.x - objPos->x ) >> FX32_SHIFT;
-		diffZ = ( cameraTarget.z - objPos->z ) >> FX32_SHIFT;
-		diffLen = ( diffX * diffX + diffZ * diffZ );
-		if( diffLen > ( VIEW_LENGTH * VIEW_LENGTH )){
+		//カメラ位置による事前カリング
+		*scalar = GFL_G3D_CAMERA_GetDotProductXZfast( camera, objPos );
+		//カメラとのスカラーによる位置判定(0は水平、正は前方、負は後方)
+		if( *scalar < -0x800 ){
+			DebugCullingCount++;
+			SetDrawSW( sceneObj, FALSE );
+			return FALSE;
+		}
+		//ターゲット周囲判定によるカリング
+		if( checkPos_aroundTarget( camera, VIEW_LENGTH * VIEW_LENGTH, objPos ) == FALSE ){
 			DebugCullingCount++;
 			SetDrawSW( sceneObj, FALSE );
 			return FALSE;
@@ -501,29 +594,6 @@ static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* sca
 	SetDrawSW( sceneObj, TRUE );
 	return TRUE;
 }
-
-//注視点との位置関係取得（ＸＺのみ）
-static int checkPos_toTarget( VecFx32* objPos )
-{
-	VecFx32 cameraPos, cameraTarget;
-	int viewVecX, viewVecZ, objVecX, objVecZ;
-
-	//カメラ情報取得
-	GFL_G3D_CAMERA_GetPos( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraPos );
-	GFL_G3D_CAMERA_GetTarget( tetsuWork->g3Dcamera[ tetsuWork->nowCameraNum ], &cameraTarget );
-
-	//視界ベクトル計算（整数部のみ）
-	viewVecX = ( cameraTarget.x - cameraPos.x ) >> FX32_SHIFT;
-	viewVecZ = ( cameraTarget.z - cameraPos.z ) >> FX32_SHIFT;
-
-	//対象物体ベクトル計算（整数部のみ）
-	objVecX = ( objPos->x - cameraTarget.x ) >> FX32_SHIFT;
-	objVecZ = ( objPos->z - cameraTarget.z ) >> FX32_SHIFT;
-
-	//視界ベクトルと対象物体ベクトルの内積計算（ＸＺ）
-	return viewVecX * objVecX + viewVecZ * objVecZ;
-}
-
 
 //------------------------------------------------------------------
 static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -576,6 +646,7 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		} else {
 			speed = FX32_ONE; 
 		}
+		speed *= tetsuWork->vBlankCounter; 
 		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, speed ); 
 	} else {
 		GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, 0 );
@@ -589,7 +660,7 @@ static void moveStopHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
-	SetAlpha( sceneObj, 8, scalar );
+	SetAlpha( sceneObj, 16, scalar );
 }
 
 static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -600,7 +671,7 @@ static void moveWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
 	//スカラーによる位置判定により半透明処理をする※ターゲット位置に相当するスカラー値
-	if(( scalar <= 0x1800 )&& GFL_G3D_DOUBLE3D_GetFlip()){ 
+	if(( scalar < 0x800 )&& GFL_G3D_DOUBLE3D_GetFlip()){ 
 		SetAlpha( sceneObj, 16, scalar );
 	} else {
 		ResetAlpha( sceneObj );
@@ -613,14 +684,7 @@ static void moveSkelWall( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	int		scalar;
 			
 	GFL_G3D_SCENEOBJ_GetPos( sceneObj, &minePos );
-#if 0
 	if( culling2DView( sceneObj, &minePos, &scalar ) == FALSE ) return;
-#else
-	culling2DView( sceneObj, &minePos, &scalar );
-	if( GFL_G3D_DOUBLE3D_GetFlip() ){ 
-		OS_Printf("scalar = %x\n", scalar );
-	}
-#endif
 	SetAlpha( sceneObj, 8, scalar );
 }
 
@@ -661,9 +725,9 @@ static void KeyControlInit( void )
 	tetsuWork->contSeq = 0;
 	tetsuWork->contRotate = 0;
 	tetsuWork->nowRotate = 0;
-	tetsuWork->contPos.x = cameraTarget.x;
-	tetsuWork->contPos.y = cameraTarget.y;
-	tetsuWork->contPos.z = cameraTarget.z;
+	tetsuWork->contPos.x = camera0Target.x;
+	tetsuWork->contPos.y = camera0Target.y;
+	tetsuWork->contPos.z = camera0Target.z;
 	tetsuWork->updateRotateFlag = FALSE;
 	tetsuWork->updateRotate = 0;
 	tetsuWork->updateRotateOffs = 0;
@@ -691,7 +755,7 @@ static BOOL KeyControlEndCheck( void )
  * @brief	メインカメラ移動コントロール１
  */
 //------------------------------------------------------------------
-#define MOVE_SPEED ( 2 )
+#define MOVE_SPEED ( 1 )
 #define ROTATE_SPEED ( 0x200 )
 
 static void KeyControlCameraMove1( void )
@@ -717,19 +781,19 @@ static void KeyControlCameraMove1( void )
 						s16 diff = tetsuWork->nowRotate - tetsuWork->mainCameraRotate;
 						if( diff > 0 ){
 							if( diff >= 0x6000 ){
-								tetsuWork->updateRotateOffs = 0x1000;
+								tetsuWork->updateRotateOffs = 0x4000;
 							} else if( diff >= 0x4000 ){
-								tetsuWork->updateRotateOffs = 0x1000;
+								tetsuWork->updateRotateOffs = 0x2000;
 							} else {
-								tetsuWork->updateRotateOffs = 0x800;
+								tetsuWork->updateRotateOffs = 0x1000;
 							}
 						} else {
 							if( diff <= -0x6000 ){
-								tetsuWork->updateRotateOffs = -0x1000;
+								tetsuWork->updateRotateOffs = -0x4000;
 							} else if( diff <= -0x4000 ){
-								tetsuWork->updateRotateOffs = -0x1000;
+								tetsuWork->updateRotateOffs = -0x2000;
 							} else {
-								tetsuWork->updateRotateOffs = -0x800;
+								tetsuWork->updateRotateOffs = -0x1000;
 							}
 						}
 					}
@@ -782,6 +846,7 @@ static void KeyControlCameraMove1( void )
 				} else {
 					speed = -MOVE_SPEED;
 				}
+				speed *= tetsuWork->vBlankCounter; 
 				move.x = speed * FX_SinIdx( tetsuWork->nowRotate );
 				move.z = speed * FX_CosIdx( tetsuWork->nowRotate );
 
@@ -801,31 +866,38 @@ static void KeyControlCameraMove1( void )
 			}
 			tetsuWork->contPos.y = 0;
 
-			tetsuWork->autoCameraRotate1 += 0x0080;
-
 			//下カメラ制御
 			if( tetsuWork->updateRotateFlag == TRUE ){
-				if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
-					tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
-					if( (tetsuWork->updateRotateOffs > 0x100 )
-						||( tetsuWork->updateRotateOffs < -0x100 )){
-						tetsuWork->updateRotateOffs /= 2;
+				int i;
+
+				for( i=0; i<tetsuWork->vBlankCounter; i++ ){
+					if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
+						tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
+						if( (tetsuWork->updateRotateOffs > 0x100 )
+							||( tetsuWork->updateRotateOffs < -0x100 )){
+							tetsuWork->updateRotateOffs /= 2;
+						}
+					}else{
+						tetsuWork->contRotate = tetsuWork->updateRotate;
+						tetsuWork->updateRotateFlag = FALSE;
 					}
-				}else{
-					tetsuWork->contRotate = tetsuWork->updateRotate;
-					tetsuWork->updateRotateFlag = FALSE;
 				}
 			}
-			cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
-			cameraOffs.y = FX32_ONE * 80;
-			cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+			//cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
+			//cameraOffs.y = FX32_ONE * 80;
+			//cameraOffs.y = FX32_ONE * 48;
+			//cameraOffs.z = 80 * FX_CosIdx( tetsuWork->mainCameraRotate );
+			cameraOffs.x = 40 * FX_SinIdx( tetsuWork->mainCameraRotate );
+			cameraOffs.y = FX32_ONE * 24;
+			cameraOffs.z = 40 * FX_CosIdx( tetsuWork->mainCameraRotate );
 
 			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
 			cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
 
 			cameraTarget.x = tetsuWork->contPos.x;
-			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*32;
+			//cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*32;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*16;
 			cameraTarget.z = tetsuWork->contPos.z;
 
 			g3Dcamera = tetsuWork->g3Dcamera[0];
@@ -833,21 +905,27 @@ static void KeyControlCameraMove1( void )
 			GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
 
 			//上カメラ制御
-			cameraOffs.x = 32 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
-			cameraOffs.y = FX32_ONE * 32;
-			cameraOffs.z = 32 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+			//cameraOffs.x = 32 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+			//cameraOffs.y = FX32_ONE * 32;
+			//cameraOffs.z = 32 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.x = 16 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.y = FX32_ONE * 16;
+			cameraOffs.z = 16 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
 
 			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
 			cameraPos.z = tetsuWork->contPos.z + cameraOffs.z;
 
 			cameraTarget.x = tetsuWork->contPos.x;
-			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*8;
+			//cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*8;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*4;
 			cameraTarget.z = tetsuWork->contPos.z;
 
 			g3Dcamera = tetsuWork->g3Dcamera[1];
 			GFL_G3D_CAMERA_SetPos( g3Dcamera, &cameraPos );
 			GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
+
+			tetsuWork->autoCameraRotate1 += 0x0080;
 		}
 		break;
 	}
@@ -864,8 +942,8 @@ static const  GFL_G3D_OBJSTATUS defaultStatus = {
 	{ FX32_ONE, FX32_ONE, FX32_ONE },
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 };
-#define mapSizeX	(32)
-#define mapSizeZ	(32)
+#define mapSizeX	16//(32)
+#define mapSizeZ	16//(32)
 #define mapGrid		(FX32_ONE*64)
 #define defaultMapX	(-mapGrid*16+mapGrid/2)
 #define defaultMapZ	(-mapGrid*16+mapGrid/2)
@@ -989,9 +1067,28 @@ static u16 MapAttrGet( u16* mapAttr, VecFx32* pos )
 	return mapAttr[z*mapSizeX+x];
 }
 
+static const char mapData0[] = {
+"■■■■■■■■■■■■■■■■"
+"■　　　　　　　　　　　　　　■"
+"■　■■■■■■■■■■■■　■"
+"■　■　　　　　　　　　　■　■"
+"■　■　■■■　■■■■　■　■"
+"■　■　■　■　　　　■　■　■"
+"■　■　■　■　　　　■　■　■"
+"■　　　■　■■■　　■　■　■"
+"■　■　■　　　■　　　　■　■"
+"■　■　■■■　■■■■　■　■"
+"■　■　　　■　　　　■　■　■"
+"■　■■■　■■■■■■　■　■"
+"■　◎　■　　　　　　　　■　■"
+"■　　　■■■■■　■■■■　■"
+"■　　　　　　　　　　　　　　■"
+"■■■■■■■■■■■■■■■■"
+};
+
 static const char mapData1[] = {
-"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//0
-"■　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　■"	//30
+"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//32
+"■　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　■"	//2///34
 "■　　　○　　　　　　　　　　　　　　　　○　　　　　　　　　■"	//2
 "■　　■■■■■■■■■■■■■■■■■■■■■■■■■■　　■"	//28
 "■　　■　　　　　　　　　　　　○　　　　　　　　　　　■　　■"	//4
@@ -1003,26 +1100,26 @@ static const char mapData1[] = {
 "■　　■　■　■　■　　　　　　　○　　　　■　■　■　■　　■"	//10
 "■　　■　■　■　■○■■■■■■■■■■　■　■　■　■　　■"	//20
 "■　　■　■　■　■　■　　　　　　　　■　■　■　■○■　　■"	//12
-"■　　■　■　■　■　■　■■■■■■　■　■　■　■　■　　■"	//18//210
+"■　　■　■　■　■　■　■■■■■■　■　■　■　■　■　　■"	//18///180
 "■　　■　■　■　■　■　■　　　　■○■　■　■　■　■　　■"	//14
 "■　　■○■　■　■　■　■　●　　■　■　■　■　■　■○　■"	//14
 "■　　■　■　■　■　■○■　　　　■　■　■　■　■　■　　■"	//14
-"■　　■　■　■　■　■　■　　　　■　■　■　■　■　■　　■"	//14//56
+"■　　■　■　■　■　■　■　　　　■　■　■　■　■　■　　■"	//14///56////270
 "■　○■　■　■　■　■　■　■■■■　■○■　■　■　■　　■"	//17
 "■　　■　■　■　■　　　　　　　　　　■　■　■　■　■　　■"	//11
 "■　　■　■　■　■　■■■■■■■■■■　■　■　■　■　　■"	//20
-"■　　■　■○■　■　　　　　○　　　　　　■　■　■　■　　■"	//10
+"■　　■　■○■　■　　　　　○　　　　　　■　■　■　■　　■"	//10///58
 "■　　■　■　■　■　■■■■■■■■■■■■　■　■　■　　■"	//21
 "■　○■　■　　　　　○　　　　　　　　　○　　■　■　■　　■"	//7
 "■　　■　■　■■■■■■■■■■■■■■■■■■　■　■　　■"	//24
-"■　　■　■　　　　　　　　　　○　　　　　　　　　■　■　　■"	//6
+"■　　■　■　　　　　　　　　　○　　　　　　　　　■　■　　■"	//6///58
 "■　　■　■　■■■■■■■■■■■■■■■■■■■■　■○　■"	//25
 "■　　　　　　　　　　○　　　　　　　　　　○　　　　　■　　■"	//3
 "■　　□■■■■■■■■■■■■■■■■■■■■■■■■■　　■"	//28
-"■　　　　　○　　　　　　　　　　○　　　　　　　　　　　　　■"	//2
-"■　　　　　　　　　　　　○　　　　　　　　　　　　　　　　　■"	//29
-"■　◎　■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//0/210-7
-};//210+56+203-19 = 450
+"■　　　　　○　　　　　　　　　　○　　　　　　　　　　　　　■"	//2///58
+"■　　　　　　　　　　　　○　　　　　　　　　　　　　　　　　■"	//2
+"■　◎　■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//32///34////208
+};//478+27
 
 static const char mapData2[] = {
 "■　■　　　　　　　　　　　■　　■　　　■　　　　■　　　　　"	//0
@@ -1060,42 +1157,77 @@ static const char mapData2[] = {
 };//210+56+203-19 = 450
 
 static const char mapData3[] = {
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　○　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　◎　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
-"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//29
+"○　○　○　○　○　○　○　○　○　○　○　○　○　○　○　○　"	//16
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　■　■　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　■◎■　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+};
+
+static const char mapData4[] = {
+"　　○　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//16
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　◎　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
+"　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//
 };
 
 static const MAPDATA mapDataTbl = {
-	mapData1,
+	mapData0,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*8, FX32_ONE*8, FX32_ONE*8 },
@@ -1158,6 +1290,47 @@ static void GetWallData
 	rotate.y = wallCodeTbl[ pattern ].rotateY;
 	rotateCalc( &rotate, &rotMtx );
 	data->status.rotate = rotMtx;
+}
+
+#define SAVE_MTX_IDX 30
+static void storeJntMtx(NNSG3dRS* rs)
+{
+    //
+    // NODEDESCコマンドのコールバックCで呼ばれる
+    //
+    int jntID;
+    NNS_G3D_GET_JNTID(NNS_G3dRenderObjGetResMdl(NNS_G3dRSGetRenderObj(rs)),
+                      &jntID,
+                      "wrist_l_end");
+    SDK_ASSERT(jntID >= 0);
+
+    if (NNS_G3dRSGetCurrentNodeDescID(rs) == jntID)
+    {
+        // wrist_l_endを処理している
+        fx32 posScale = NNS_G3dRSGetPosScale(rs);
+        fx32 invPosScale = NNS_G3dRSGetInvPosScale(rs);
+#if 0
+        //
+        // 退避先のスタックIdxがモデル描画の際に使われていないことを確認
+        //
+        SDK_ASSERTMSG( SAVE_MTX_IDX >= 
+				NNS_G3dRenderObjGetResMdl(NNS_G3dRSGetRenderObj(rs))->info.firstUnusedMtxStackID,
+                      "SAVE_MTX_IDX will be destroyed");
+#endif
+        // 描画直前にしかposScaleでのスケーリングはかからないので、
+        // 明示的にスケーリングしなくてはならない。
+        NNS_G3dGeScale(posScale, posScale, posScale);
+
+        // 描画中にストアされない場所にカレント行列を退避しておく
+        NNS_G3dGeStoreMtx(SAVE_MTX_IDX);
+
+        // 描画にカレント行列が使われるかもしれないのでスケーリングを元に戻しておく。
+        NNS_G3dGeScale(invPosScale, invPosScale, invPosScale);
+
+        // これ以上コールバックを使用する必要がない場合はリセットしておくと
+        // パフォーマンスへの悪影響が若干小さくなる可能性がある。
+        NNS_G3dRSResetCallBack(rs, NNS_G3D_SBC_NODEDESC);
+    }
 }
 
 
