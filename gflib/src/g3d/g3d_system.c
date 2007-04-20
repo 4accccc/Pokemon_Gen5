@@ -1602,56 +1602,96 @@ static inline void
 //--------------------------------------------------------------------------------
 // 通常描画
 //--------------------------------------------------------------------------------
+//これを置き換えれば高速化されるか？↓
+/*
+#if 0
+	statusSet( &status->trans, &status->rotate, &status->scale );
+	g3Dman->drawFlushFunc();
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	NNS_G3dGeFlushBuffer();
+#else
+	MtxFx43 mtxTRS;
+
+	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
+	GFL_G3D_DRAW_GetTRSMatrix( status, &mtxTRS );
+	NNS_G3dGePushMtx();
+	G3_MultMtx43( &mtxTRS );
+	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	NNS_G3dGePopMtx(1);
+	NNS_G3dGeFlushBuffer();
+#endif
+*/
+
 //カリングなし
 void
 	GFL_G3D_DRAW_DrawObject
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
-#if 1
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
-	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	NNS_G3dDraw( renderobj );
 	//NNS_G3dGeFlushBuffer();
-#else
-	MtxFx43 mtxTRS;
-
-	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
-	GFL_G3D_DRAW_GetTRSMatrix( status, &mtxTRS );
-	NNS_G3dGePushMtx();
-	G3_MultMtx43( &mtxTRS );
-	NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-	NNS_G3dGePopMtx(1);
-	//NNS_G3dGeFlushBuffer();
-#endif
 }
 
 //カリングあり
-void
+BOOL
 	GFL_G3D_DRAW_DrawObjectCullingON
 		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status )
 {
-#if 1
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+	BOOL result;
+
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
-	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
-		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
+	result = GFL_G3D_DRAW_CheckCulling( g3Dobj );
+	if( result == TRUE ){
+		NNS_G3dDraw( renderobj );
 		//DebugPrintCount++;
 	}
 	//NNS_G3dGeFlushBuffer();
-#else
-	MtxFx43 mtxTRS;
+	return result;
+}
 
-	NNS_G3dGeLoadMtx43( &NNS_G3dGlb.cameraMtx );
-	GFL_G3D_DRAW_GetTRSMatrix( status, &mtxTRS );
-	NNS_G3dGePushMtx();
-	G3_MultMtx43( &mtxTRS );
-	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
-		NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ) );
-		//DebugPrintCount++;
+//--------------------------------------------------------------------------------
+//アクセサリーの描画
+//	対象GFL_G3D_OBJのレンダリングリソース(imd)はg3dcvtr -s で出力されている必要がある。
+//	※これにより各Node行列が行列スタックに格納された状態で描画を終えるため、
+//	　本体直後にこの関数を呼ぶことにより、指定Node行列を参照した状態で描画することができる。
+//	　Node数の最大は30まで。コンバートの際に制限があるのもこのためらしい。
+//	  また、NNS_G3DGlbFlashを呼ぶ必要はなし。
+//　　カリングＯＮについては本体に依存していいかなと思っているのでとりあえず作らない。
+void
+	GFL_G3D_DRAW_DrawAccesory
+		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+			const GFL_G3D_OBJSTATUS* status, const char* jntName )
+{
+	int jntID;
+	BOOL result;
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+    NNSG3dRenderObj* renderobj_Accesory = GFL_G3D_RENDER_GetRenderObj
+											( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj_Accesory) );
+
+	// ジョイントIDを取得する。検索で見つからない場合は負の値が返る。
+	//define NNS_G3D_GET_JNTID(pMdl, pJntID, literal)
+	jntID = NNS_G3dGetNodeIdxByName( NNS_G3dGetNodeInfo( renderobj->resMdl ), 
+									(NNSG3dResName*)jntName );
+	GF_ASSERT(jntID > 0);
+
+	// レンダリングオブジェクトのjntIDノードに対応する行列をカレント行列に持ってくる
+	// ２番目の引数にMtxFx43へのポインタを指定すると位置座標行列が、
+	// ３番目の引数にMtxFx33へのポインタを指定すると方向ベクトル行列が得られる。
+	result = NNS_G3dGetResultMtx( renderobj, NULL, NULL, (u32)jntID );
+
+	// jntIDノードに対応する行列がなかった場合はFALSEが返ってくるので念のためチェック
+	if( result != FALSE ){
+		// 描画直前にしかposScaleでのスケーリングはかからないので、
+		// 明示的にスケーリングしなくてはならない。
+		NNS_G3dGeScale( status->scale.x, status->scale.y, status->scale.z );
+		NNS_G3dDraw( renderobj_Accesory );
 	}
-	NNS_G3dGePopMtx(1);
 	//NNS_G3dGeFlushBuffer();
-#endif
 }
 
 //--------------------------------------------------------------------------------
@@ -1667,29 +1707,32 @@ void
 			const GFL_G3D_OBJSTATUS* status )
 
 {
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
-	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-							(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
-								matID, shpID, sendMat );
-	NNS_G3dGeFlushBuffer();
+	NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl( renderobj ), matID, shpID, sendMat );
+	//NNS_G3dGeFlushBuffer();
 }
 
 //カリングあり
-void
+BOOL
 	GFL_G3D_DRAW_DrawObject1mat1shpCullingON
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status )
 
 {
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+	BOOL result;
+
 	statusSet( &status->trans, &status->rotate, &status->scale );
 	g3Dman->drawFlushFunc();
-	if( GFL_G3D_DRAW_CheckCulling( g3Dobj ) == TRUE ){
-		NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl
-								(GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ))), 
-									matID, shpID, sendMat );
+	result = GFL_G3D_DRAW_CheckCulling( g3Dobj );
+	if( result == TRUE ){
+		NNS_G3dDraw1Mat1Shp( NNS_G3dRenderObjGetResMdl( renderobj ), matID, shpID, sendMat );
 	}
-	NNS_G3dGeFlushBuffer();
+	//NNS_G3dGeFlushBuffer();
+	return result;
 }
 
 //--------------------------------------------------------------------------------------------
