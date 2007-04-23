@@ -26,6 +26,7 @@
 #define	PLAYER1_READY	(0)
 
 static	void	YT_MainGameAct(GAME_PARAM *gp);
+static	void	YT_ExitGame(GAME_PARAM *gp);
 static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
 static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
@@ -164,6 +165,9 @@ void	YT_InitGame(GAME_PARAM *gp)
 	{
 		int	x,y;
 
+		GFL_STD_MemClear(&gp->ps[0],sizeof(YT_PLAYER_STATUS));
+		GFL_STD_MemClear(&gp->ps[1],sizeof(YT_PLAYER_STATUS));
+
 		for(x=0;x<YT_LINE_MAX;x++){
 			gp->ps[0].falltbl[x]=x;
 			gp->ps[1].falltbl[x]=x;
@@ -191,6 +195,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 	}
 
 	//プレーヤー初期化
+	gp->seq_no=0;
 	gp->game_seq_no[0]=0;
 	gp->game_seq_no[1]=0;
 
@@ -253,61 +258,105 @@ void	YT_MainGame(GAME_PARAM *gp)
  *	@param	gp		ゲームパラメータポインタ
  */
 //-----------------------------------------------------------------------------
-enum{
-	SEQ_GAME_START_WAIT=0,
-	SEQ_GAME_READY_CHECK,
-	SEQ_GAME_FALL_CHECK,
-};
-
-enum{
-	YT_READY_WAIT=0,
-	YT_READY_MAKE,
-	YT_READY_ALREADY,
-};
-
 static	void	YT_MainGameAct(GAME_PARAM *gp)
 {
 	int	player_no;
 
-	for(player_no=0;player_no<2;player_no++){
-        if(gp->pNetParam){
-            if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
-                continue;
-            }
-            else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
-                continue;
-            }
-        }
-		else if(gp->ps[player_no].exist_flag==0){
-			continue;
-		}
-		switch(gp->game_seq_no[player_no]){
-		case SEQ_GAME_START_WAIT:
-			if(GFL_FADE_CheckFade()==FALSE){
-				gp->game_seq_no[player_no]++;
-			}
-			break;
-		case SEQ_GAME_READY_CHECK:
-			switch(YT_ReadyCheck(gp,&gp->ps[player_no])){
-			case YT_READY_MAKE:
-				YT_ReadyAct(gp,player_no);
-			case YT_READY_ALREADY:
-				gp->ps[player_no].fall_wait=YT_FALL_WAIT;
-				gp->game_seq_no[player_no]++;
-				break;
-			default:
-				break;
-			}
-			break;
-		case SEQ_GAME_FALL_CHECK:
-			if(YT_FallCheck(gp,&gp->ps[player_no])==TRUE){
-				if(--gp->ps[player_no].fall_wait==0){
-					gp->game_seq_no[player_no]=SEQ_GAME_READY_CHECK;
+	switch(gp->seq_no){
+	case SEQ_GAME_PLAY:
+		for(player_no=0;player_no<2;player_no++){
+			if(gp->pNetParam){
+				if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+					continue;
+				}
+				else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+					continue;
 				}
 			}
-			break;
+			else if(gp->ps[player_no].exist_flag==0){
+				continue;
+			}
+			if(gp->ps[player_no].status.win_lose_flag){
+				gp->seq_no=SEQ_GAME_OVER;
+				gp->wait_work=120;
+			}
+			switch(gp->game_seq_no[player_no]){
+			case SEQ_GAME_START_WAIT:
+				if(GFL_FADE_CheckFade()==FALSE){
+					gp->game_seq_no[player_no]++;
+				}
+				break;
+			case SEQ_GAME_READY_CHECK:
+				switch(YT_ReadyCheck(gp,&gp->ps[player_no])){
+				case YT_READY_MAKE:
+					gp->ps[player_no].fall_count++;
+					YT_ReadyAct(gp,player_no);
+				case YT_READY_ALREADY:
+					gp->ps[player_no].fall_wait=YT_FALL_WAIT;
+					gp->game_seq_no[player_no]++;
+					break;
+				default:
+					break;
+				}
+				break;
+			case SEQ_GAME_FALL_CHECK:
+				if(YT_FallCheck(gp,&gp->ps[player_no])==TRUE){
+					if(--gp->ps[player_no].fall_wait==0){
+						gp->game_seq_no[player_no]=SEQ_GAME_READY_CHECK;
+					}
+				}
+				break;
+			}
 		}
+		break;
+	case SEQ_GAME_OVER:
+		if(gp->wait_work){
+			gp->wait_work--;
+		}
+		else{
+			if(GFL_UI_KEY_GetTrg()){
+				GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+				gp->seq_no=SEQ_GAME_TO_TITLE;
+			}
+		}
+		break;
+	case SEQ_GAME_TO_TITLE:
+		if(GFL_FADE_CheckFade()==FALSE){
+			YT_ExitGame(gp);
+		}
+		break;
 	}
+}
+	
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゲーム終了処理
+ *	
+ *	@param	gp		ゲームパラメータポインタ
+ */
+//-----------------------------------------------------------------------------
+static	void	YT_ExitGame(GAME_PARAM *gp)
+{
+	//ゲームフラグチェックタスク破棄
+	GFL_TCB_DeleteTask(gp->check_tcb);
+
+	//BMP関連終了
+	GFL_BMPWIN_Delete(gp->yossy_bmpwin);
+	GFL_BMPWIN_Exit();
+
+	//ヨッシーキャラデータ破棄
+	GFL_HEAP_FreeMemory(gp->yossy_bmp);
+
+	//BGシステム終了
+	GFL_BG_Exit();
+
+	//エリアマネージャ破棄
+	GFL_AREAMAN_Delete(gp->clact_area);
+
+    // セルアクターユニット破棄
+	GFL_CLACT_UnitDelete(gp->clact->p_unit);
+
+	YT_JobNoSet(gp,YT_InitTitleNo);
 }
 
 //----------------------------------------------------------------------------
@@ -593,6 +642,46 @@ static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 					if(fcp){
 						ps->status.win_lose_flag|=YT_GAME_LOSE;
 						gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_WIN;
+					}
+				}
+			}
+		}
+		//全消しチェック
+		if((ps->status.no_active_flag==0)&&(ps->fall_count>2)){
+			{
+				int	x,y;
+
+				for(x=0;x<YT_LINE_MAX;x++){
+					for(y=0;y<YT_HEIGHT_MAX;y++){
+						if(ps->stop[x][y]){
+							break;
+						}
+					}
+					if(y<YT_HEIGHT_MAX){
+						break;
+					}
+				}
+				if((x==YT_LINE_MAX)&&(y==YT_HEIGHT_MAX)){
+					switch(YT_ReadyCheck(gp,ps)){
+					case YT_READY_ALREADY:
+						for(x=0;x<YT_LINE_MAX;x++){
+							for(y=0;y<YT_HEIGHT_MAX;y++){
+								if(ps->fall[x][y]){
+									break;
+								}
+							}
+							if(y<YT_HEIGHT_MAX){
+								break;
+							}
+						}
+						if((x!=YT_LINE_MAX)||(y!=YT_HEIGHT_MAX)){
+							break;
+						}
+					case YT_READY_WAIT:
+						ps->status.win_lose_flag|=YT_GAME_WIN;
+						gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_LOSE;
+					default:
+						break;
 					}
 				}
 			}

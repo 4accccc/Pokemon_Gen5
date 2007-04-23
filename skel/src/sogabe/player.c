@@ -363,10 +363,12 @@ static	const	YT_ANIME_TABLE	yt_player_anm_rb_punch_r[]={
 };
 //	YT_PLAYER_ANM_WIN
 static	const	YT_ANIME_TABLE	yt_player_anm_win[]={
-	{YT_PLAYER_WIN_1,4},
-	{YT_PLAYER_WIN_0,4},
-	{YT_PLAYER_WIN_1,4},
-	{YT_PLAYER_WIN_0,16},
+	{YT_PLAYER_WIN_1,8},
+	{YT_PLAYER_WIN_0,8},
+	{YT_PLAYER_WIN_1,8},
+	{YT_PLAYER_WIN_0,8},
+	{YT_PLAYER_WIN_1,8},
+	{YT_PLAYER_WIN_0,32},
 	{0,YT_ANIME_LOOP},
 };
 //	YT_PLAYER_ANM_LOSE
@@ -553,6 +555,7 @@ static	void	YT_MainPlayer(GFL_TCB *tcb,void *work)
 		switch(ps->status.win_lose_flag){
 		case YT_GAME_WIN:
 			pp->seq_no=SEQ_PLAYER_WIN_INIT;
+			GFL_SOUND_PlayBGM(SEQ_CLEAR);
 			break;
 		case YT_GAME_LOSE:
 		case YT_GAME_DRAW:
@@ -659,6 +662,11 @@ static	void	YT_MainPlayer(GFL_TCB *tcb,void *work)
 			pp->seq_no=SEQ_PLAYER_WIN_LOSE;
 		break;
 	case SEQ_PLAYER_WIN_LOSE:
+		if(pp->gp->seq_no==SEQ_GAME_TO_TITLE){
+			GFL_HEAP_FreeMemory(pp->chr_data);
+			GFL_HEAP_FreeMemory(work);
+			GFL_TCB_DeleteTask(tcb);
+		}
 		break;
 	}
 }
@@ -1041,4 +1049,5 @@ static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag)
 		}
 	}
 }
+
 

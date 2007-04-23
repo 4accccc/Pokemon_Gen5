@@ -124,6 +124,7 @@ typedef struct{
 	u8				exist_flag			:1;		//プレイヤー存在フラグ
 	u8									:7;
 	int				egg_make_count;
+	int				fall_count;
 }YT_PLAYER_STATUS;
 
 //ゲームパラメータ構造体宣言
@@ -133,6 +134,7 @@ typedef	struct
 	int					job_no;			//ジョブナンバー
 	int					seq_no;			//シーケンスナンバー
 	int					game_seq_no[2];	//シーケンスナンバー
+	int					wait_work;
 	GFL_TCBSYS			*tcbsys;
 	void				*tcb_work;
 	YT_CLACT			*clact;
@@ -172,6 +174,24 @@ typedef	struct
 #define	YT_GAME_WIN				(1)
 #define	YT_GAME_LOSE			(2)
 #define	YT_GAME_DRAW			(3)
+
+enum{
+	SEQ_GAME_PLAY=0,
+	SEQ_GAME_OVER,
+	SEQ_GAME_TO_TITLE,
+};
+
+enum{
+	SEQ_GAME_START_WAIT=0,
+	SEQ_GAME_READY_CHECK,
+	SEQ_GAME_FALL_CHECK,
+};
+
+enum{
+	YT_READY_WAIT=0,
+	YT_READY_MAKE,
+	YT_READY_ALREADY,
+};
 
 GLOBAL	void	YT_JobNoSet(GAME_PARAM *gp,int job_no);
 

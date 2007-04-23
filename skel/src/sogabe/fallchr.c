@@ -203,6 +203,12 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 
 	fcp_p=fcp;
 
+	if(gp->seq_no==SEQ_GAME_TO_TITLE){
+		GFL_HEAP_FreeMemory(work);
+		GFL_TCB_DeleteTask(tcb);
+		return;
+	}
+
 	switch(fcp->seq_no){
 	case SEQ_FALL_CHR_READY_INIT:
 		//アニメを最速に
@@ -932,9 +938,22 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 			egg_count=1;
 			for(egg_height=0;egg_height<YT_HEIGHT_MAX;egg_height++){
 				fcp_top=ps->stop[egg_line][egg_height];
-				if((fcp_top->type==YT_CHR_GREEN_EGG_U)||(fcp_top->type==YT_CHR_RED_EGG_U)){
-					GFL_CLACT_WkSetSoftPri(fcp_top->clwk,YT_PRI_GREEN_EGG_U);
-					break;
+				if(fcp_top){
+					if((fcp_top->type==YT_CHR_GREEN_EGG_D)||(fcp_top->type==YT_CHR_RED_EGG_D)){
+						break;
+					}
+				}
+			}
+			if(egg_height==YT_HEIGHT_MAX){
+				egg_height=0;
+			}
+			for(;egg_height<YT_HEIGHT_MAX;egg_height++){
+				fcp_top=ps->stop[egg_line][egg_height];
+				if(fcp_top){
+					if((fcp_top->type==YT_CHR_GREEN_EGG_U)||(fcp_top->type==YT_CHR_RED_EGG_U)){
+						GFL_CLACT_WkSetSoftPri(fcp_top->clwk,YT_PRI_GREEN_EGG_U);
+						break;
+					}
 				}
 			}
 			//見つからなかったらアサート
