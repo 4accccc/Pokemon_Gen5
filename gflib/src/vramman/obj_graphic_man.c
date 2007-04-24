@@ -63,13 +63,9 @@ static struct {
 //==============================================================
 // Prototype
 //==============================================================
+static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFlag, HEAPID heapID );
 static CGR_MAN* create_cgr_man( u16 heapID, u32 num );
 static inline u32 search_empty_cgr_pos( void );
-static void register_cgr(	u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, 
-							NNSG2dCellDataBank* cellBankPtr );
-static inline void trans_ncgr(	NNSG2dCharacterData* charData, u32 byteOfs, 
-								NNS_G2D_VRAM_TYPE vramType, BOOL vramTransferFlag, 
-								NNSG2dImageProxy* proxy  );
 static void delete_cgr_man( CGR_MAN* man );
 static PLTT_MAN* create_pltt_man( u16 heapID, u32 num );
 static inline u32 search_empty_pltt_pos( void );
@@ -80,12 +76,20 @@ static inline u32 search_empty_cellanim_pos( void );
 static BOOL register_cellanim( u32 idx, void* cellDataPtr, void* animDataPtr );
 static void delete_cellanim_man( CELLANIM_MAN* man );
 
+static void register_cgr
+	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr );
+
+static inline void trans_ncgr
+	( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
+	  BOOL vramTransferFlag, NNSG2dImageProxy* proxy  );
+
+
 //------------------------------------------------------------------
 /**
  * システム初期化（メイン起動時に１回だけ呼ぶ）
  */
 //------------------------------------------------------------------
-void GFL_OBJGRP_sysInit( void )
+void GFL_OBJGRP_Init( void )
 {
 	SysWork.vmanMain = NULL;
 	SysWork.vmanSub = NULL;
@@ -94,7 +98,7 @@ void GFL_OBJGRP_sysInit( void )
 	SysWork.cellAnimMan = NULL;
 }
 
-void GFL_OBJGRP_sysExit( void )
+void GFL_OBJGRP_Exit( void )
 {
 	
 }
@@ -140,17 +144,45 @@ void GFL_OBJGRP_sysEnd( void )
 	GF_ASSERT( SysWork.plttMan != NULL );
 	GF_ASSERT( SysWork.cellAnimMan != NULL );
 
-	delete_cgr_man( SysWork.cgrMan );
-	delete_pltt_man( SysWork.plttMan );
-	delete_cellanim_man( SysWork.cellAnimMan );
-	GFL_VMAN_Delete( SysWork.vmanSub );
-	GFL_VMAN_Delete( SysWork.vmanMain );
+	{
+		u32 i;
 
-	SysWork.vmanMain = NULL;
-	SysWork.vmanSub = NULL;
-	SysWork.cgrMan = NULL;
-	SysWork.plttMan = NULL;
-	SysWork.cellAnimMan = NULL;
+		for(i=0; i<SysWork.initParam.CGR_RegisterMax; i++)
+		{
+			if( SysWork.cgrMan[i].emptyFlag == FALSE )
+			{
+				GFL_OBJGRP_ReleaseCGR( i );
+			}
+		}
+
+		for(i=0; i<SysWork.initParam.CELL_RegisterMax; i++)
+		{
+			if( SysWork.cellAnimMan[i].emptyFlag == FALSE )
+			{
+				GFL_OBJGRP_ReleaseCellAnim( i );
+			}
+		}
+
+		for(i=0; i<SysWork.initParam.PLTT_RegisterMax; i++)
+		{
+			if( SysWork.plttMan[i].emptyFlag == FALSE )
+			{
+				GFL_OBJGRP_ReleasePltt( i );
+			}
+		}
+
+		delete_cgr_man( SysWork.cgrMan );
+		delete_pltt_man( SysWork.plttMan );
+		delete_cellanim_man( SysWork.cellAnimMan );
+		GFL_VMAN_Delete( SysWork.vmanSub );
+		GFL_VMAN_Delete( SysWork.vmanMain );
+
+		SysWork.vmanMain = NULL;
+		SysWork.vmanSub = NULL;
+		SysWork.cgrMan = NULL;
+		SysWork.plttMan = NULL;
+		SysWork.cellAnimMan = NULL;
+	}
 }
 //==============================================================================================
 // アーカイブからのデータ読み出し・解凍処理
@@ -249,6 +281,7 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 
 			cgrMan->loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, heapID );
 			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
+
 			return idx;
 		}
 
@@ -273,6 +306,7 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 	{
 		GFL_VMAN_Release( SysWork.vmanMain, &SysWork.cgrMan[index].riMain );
 	}
+
 	if( GFL_VMAN_IsReserveInfoInitialized(&SysWork.cgrMan[index].riSub) == FALSE )
 	{
 		GFL_VMAN_Release( SysWork.vmanSub, &SysWork.cgrMan[index].riSub );
@@ -285,6 +319,7 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 	}
 
 	SysWork.cgrMan[index].emptyFlag = TRUE;
+
 }
 
 
@@ -400,6 +435,7 @@ u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE
 														GetHeapLowID(heapID) );
 		register_pltt( idx, loadPtr, vramType, byteOffs );
 		GFL_HEAP_FreeMemory( loadPtr );
+
 		return idx;
 	}
 
@@ -569,6 +605,8 @@ static CGR_MAN* create_cgr_man( u16 heapID, u32 num )
 	for(i=0; i<num; i++)
 	{
 		man[i].emptyFlag = TRUE;
+		GFL_VMAN_InitReserveInfo( &man[i].riMain );
+		GFL_VMAN_InitReserveInfo( &man[i].riSub );
 	}
 	return man;
 }
@@ -930,4 +968,14 @@ static void delete_cellanim_man( CELLANIM_MAN* man )
 {
 	GFL_HEAP_FreeMemory( man );
 }
+
+
+
+
+
+
+
+
+
+
 
