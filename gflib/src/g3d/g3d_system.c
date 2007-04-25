@@ -1688,7 +1688,8 @@ void
 	if( result != FALSE ){
 		// 描画直前にしかposScaleでのスケーリングはかからないので、
 		// 明示的にスケーリングしなくてはならない。
-		NNS_G3dGeScale( status->scale.x, status->scale.y, status->scale.z );
+		NNS_G3dGeTranslateVec( &status->trans );
+		NNS_G3dGeScaleVec( &status->scale );
 		NNS_G3dDraw( renderobj_Accesory );
 	}
 	//NNS_G3dGeFlushBuffer();
