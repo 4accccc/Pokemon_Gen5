@@ -401,7 +401,18 @@ static void CLWK_AnmDataResetAnmMCell( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataSetAnmMode( CLWK_ANMDATA* p_anmdata, CLSYS_ANM_PLAYMODE playmode );
 static void CLWK_AnmDataStartAnm( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataStopAnm( CLWK_ANMDATA* p_anmdata );
-
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttr( const CLWK_ANMDATA* cp_anmdata, u32 seq );
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrCell( const CLWK_ANMDATA* cp_anmdata, u32 seq );
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrTRCell( const CLWK_ANMDATA* cp_anmdata, u32 seq );
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrMCell( const CLWK_ANMDATA* cp_anmdata, u32 seq );
+static u32 CLWK_AnmDataGetUserCellAttr( const CLWK_ANMDATA* cp_anmdata, u32 idx );
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrCell( const CLWK_ANMDATA* cp_anmdata );
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrTRCell( const CLWK_ANMDATA* cp_anmdata );
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrMCell( const CLWK_ANMDATA* cp_anmdata );
+static u32 CLWK_AnmDataGetAnmSeqNum( const CLWK_ANMDATA* cp_anmdata );
+static u32 CLWK_AnmDataGetAnmSeqNumCell( const CLWK_ANMDATA* cp_anmdata );
+static u32 CLWK_AnmDataGetAnmSeqNumTRCell( const CLWK_ANMDATA* cp_anmdata );
+static u32 CLWK_AnmDataGetAnmSeqNumMCell( const CLWK_ANMDATA* cp_anmdata );
 
 
 
@@ -1900,6 +1911,21 @@ u16 GFL_CLACT_WkGetAnmSeq( const CLWK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	アニメーションシーケンスの数を取得
+ *	
+ *	@param	cp_wk		セルアクターワーク
+ *
+ *	@return	アニメーションシーケンスの数
+ */
+//-----------------------------------------------------------------------------
+u16 GFL_CLACT_WkGetAnmSeqNum( const CLWK* cp_wk )
+{
+	GF_ASSERT( cp_wk );
+	return CLWK_AnmDataGetAnmSeqNum( &cp_wk->anmdata );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	アニメーションシーケンスが変わっていたら変更する
  *
  *	@param	p_wk		セルアクターワーク
@@ -2155,6 +2181,111 @@ CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk )
 	GF_ASSERT( cp_wk );
 	return cp_wk->playmode;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションシーケンスのユーザー拡張アトリビュートデータの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *	@param	seq			シーケンスナンバー
+ *
+ *	@retval	CLWK_USERATTR_NONE	拡張アトリビュートデータなし
+ *	@retval	それ以外			拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_CLACT_WkGetUserAttrAnmSeq( const CLWK* cp_wk, u32 seq )
+{
+	const NNSG2dUserExAnimSequenceAttr* p_seqattr;
+	GF_ASSERT( cp_wk );
+	// シーケンスの拡張アトリビュートデータ取得
+	p_seqattr = CLWK_AnmDataGetUserAnimSeqAttr( &cp_wk->anmdata, seq );
+	if( p_seqattr ){
+		return NNS_G2dGetUserExAnimSeqAttrValue( p_seqattr );
+	}
+	return CLWK_USERATTR_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	今のアニメーションシーケンスのユーザー拡張アトリビュートデータの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *
+ *	@retval	CLWK_USERATTR_NONE	拡張アトリビュートデータなし
+ *	@retval	それ以外			拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_CLACT_WkGetUserAttrAnmSeqNow( const CLWK* cp_wk )
+{
+	u32 seq;
+	seq = GFL_CLACT_WkGetAnmSeq( cp_wk );
+	return GFL_CLACT_WkGetUserAttrAnmSeq( cp_wk, seq );
+}
+	
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションフレームのユーザー拡張アトリビュートデータの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *	@param	seq			シーケンスナンバー
+ *	@param	frame		フレームナンバー
+ *
+ *	@retval	CLWK_USERATTR_NONE	拡張アトリビュートデータなし
+ *	@retval	それ以外			拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_CLACT_WkGetUserAttrAnmFrame( const CLWK* cp_wk, u32 seq, u32 frame )
+{
+	const NNSG2dUserExAnimSequenceAttr* p_seqattr;
+	const NNSG2dUserExAnimFrameAttr* p_frameattr;
+	GF_ASSERT( cp_wk );
+	// シーケンスの拡張アトリビュートデータ取得
+	p_seqattr = CLWK_AnmDataGetUserAnimSeqAttr( &cp_wk->anmdata, seq );
+	if( p_seqattr ){
+		p_frameattr =  NNS_G2dGetUserExAnimFrameAttr( p_seqattr, frame );
+		if( p_frameattr ){
+			return NNS_G2dGetUserExAnimFrmAttrValue( p_frameattr );
+		}
+	}
+	return CLWK_USERATTR_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	今のアニメーションフレームのユーザー拡張アトリビュートデータの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *
+ *	@retval	CLWK_USERATTR_NONE	拡張アトリビュートデータなし
+ *	@retval	それ以外			拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_CLACT_WkGetUserAttrAnmFrameNow( const CLWK* cp_wk )
+{
+	u32 seq;
+	u32 frame;
+
+	seq = GFL_CLACT_WkGetAnmSeq( cp_wk );
+	frame = GFL_CLACT_WkGetAnmFrame( cp_wk );
+	return GFL_CLACT_WkGetUserAttrAnmFrame( cp_wk, seq, frame );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルのユーザー拡張アトリビュートデータの取得
+ *
+ *	@param	cp_wk		セルアクターワーク
+ *	@param	cellidx		セルインデックス
+ *
+ *	@retval	CLWK_USERATTR_NONE	拡張アトリビュートデータなし
+ *	@retval	それ以外			拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+u32 GFL_CLACT_WkGetUserAttrCell( const CLWK* cp_wk, u32 cellidx )
+{
+	return CLWK_AnmDataGetUserCellAttr( &cp_wk->anmdata, cellidx );
+}
+
 
 
 
@@ -4492,5 +4623,139 @@ static void CLWK_AnmDataStopAnm( CLWK_ANMDATA* p_anmdata )
 {
 	NNSG2dAnimController* p_anmctrl = CLWK_AnmDataGetAnmCtrl( p_anmdata );
 	NNS_G2dStopAnimCtrl( p_anmctrl );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションデータ　アニメーションシーケンスの拡張アトリビュートデータ取得
+ *
+ *	@param	cp_anmdata		アニメーションデータ
+ *	@param	seq				シーケンス
+ *
+ *	@return	アニメーションシーケンスの拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttr( const CLWK_ANMDATA* cp_anmdata, u32 seq )
+{
+	static const NNSG2dUserExAnimSequenceAttr* (* const p_getattr[ CLWK_ANM_MAX ])( const CLWK_ANMDATA* cp_anmdata, u32 seq ) = {
+		CLWK_AnmDataGetUserAnimSeqAttrCell,
+		CLWK_AnmDataGetUserAnimSeqAttrTRCell,
+		CLWK_AnmDataGetUserAnimSeqAttrMCell,
+	};
+	GF_ASSERT( cp_anmdata );
+	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
+	return p_getattr[cp_anmdata->type]( cp_anmdata, seq );
+}
+// セル
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrCell( const CLWK_ANMDATA* cp_anmdata, u32 seq )
+{
+	const NNSG2dUserExAnimAttrBank* p_attr_anmbank;
+	p_attr_anmbank = NNS_G2dGetUserExAnimAttrBank( cp_anmdata->data.cell.cp_canm );
+	if( p_attr_anmbank ){
+		return NNS_G2dGetUserExAnimSequenceAttr( p_attr_anmbank, seq );
+	}
+	return NULL;
+}
+// 転送セル
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrTRCell( const CLWK_ANMDATA* cp_anmdata, u32 seq )
+{
+	const NNSG2dUserExAnimAttrBank* p_attr_anmbank;
+	p_attr_anmbank = NNS_G2dGetUserExAnimAttrBank( cp_anmdata->data.trcell.cp_canm );
+	if( p_attr_anmbank ){
+		return NNS_G2dGetUserExAnimSequenceAttr( p_attr_anmbank, seq );
+	}
+	return NULL;
+}
+// マルチセル
+static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttrMCell( const CLWK_ANMDATA* cp_anmdata, u32 seq )
+{
+	const NNSG2dUserExAnimAttrBank* p_attr_anmbank;
+	p_attr_anmbank = NNS_G2dGetUserExAnimAttrBank( cp_anmdata->data.multicell.cp_mcanm );
+	if( p_attr_anmbank ){
+		return NNS_G2dGetUserExAnimSequenceAttr( p_attr_anmbank, seq );
+	}
+	return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションデータ　セルデータの拡張アトリビュートデータ取得
+ *
+ *	@param	cp_anmdata		アニメーションデータ
+ *	@param	idx				セルデータインデックス
+ *
+ *	@return	セルデータの拡張アトリビュートデータ
+ */
+//-----------------------------------------------------------------------------
+static u32 CLWK_AnmDataGetUserCellAttr( const CLWK_ANMDATA* cp_anmdata, u32 idx )
+{
+	static const NNSG2dUserExCellAttrBank* (* const p_getattr[ CLWK_ANM_MAX ])( const CLWK_ANMDATA* cp_anmdata ) = {
+		CLWK_AnmDataGetUserCellAttrCell,
+		CLWK_AnmDataGetUserCellAttrTRCell,
+		CLWK_AnmDataGetUserCellAttrMCell,
+	};
+	const NNSG2dUserExCellAttrBank* p_cellattrbank;
+	const NNSG2dUserExCellAttr* p_cellattr;
+	GF_ASSERT( cp_anmdata );
+	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
+	p_cellattrbank = p_getattr[cp_anmdata->type]( cp_anmdata );
+	if( p_cellattrbank ){
+		p_cellattr = NNS_G2dGetUserExCellAttr( p_cellattrbank, idx ); 
+		if( p_cellattr ){
+			return NNS_G2dGetUserExCellAttrValue( p_cellattr );
+		}
+	}
+	return CLWK_USERATTR_NONE;
+}
+// セル
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return NNS_G2dGetUserExCellAttrBankFromCellBank( cp_anmdata->data.cell.cp_cell );
+}
+// 転送セル
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrTRCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return NNS_G2dGetUserExCellAttrBankFromCellBank( cp_anmdata->data.trcell.p_cell );
+}
+// マルチセル
+static const NNSG2dUserExCellAttrBank* CLWK_AnmDataGetUserCellAttrMCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return NNS_G2dGetUserExCellAttrBankFromMCBank( cp_anmdata->data.multicell.cp_mcell );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アニメーションデータ　アニメーションシーケンスの数を取得
+ *
+ *	@param	cp_anmdata	アニメーションデータ
+ *
+ *	@return	アニメーションシーケンス数
+ */
+//-----------------------------------------------------------------------------
+static u32 CLWK_AnmDataGetAnmSeqNum( const CLWK_ANMDATA* cp_anmdata )
+{
+	static u32 (* const p_func[ CLWK_ANM_MAX ])( const CLWK_ANMDATA* cp_anmdata ) ={
+		CLWK_AnmDataGetAnmSeqNumCell,
+		CLWK_AnmDataGetAnmSeqNumTRCell,
+		CLWK_AnmDataGetAnmSeqNumMCell,
+	};
+	GF_ASSERT( cp_anmdata );
+	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
+	return p_func[cp_anmdata->type]( cp_anmdata );
+}
+// セル
+static u32 CLWK_AnmDataGetAnmSeqNumCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return cp_anmdata->data.cell.cp_canm->numSequences;
+}
+// 転送セル
+static u32 CLWK_AnmDataGetAnmSeqNumTRCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return cp_anmdata->data.trcell.cp_canm->numSequences;
+}
+// マルチセル
+static u32 CLWK_AnmDataGetAnmSeqNumMCell( const CLWK_ANMDATA* cp_anmdata )
+{
+	return cp_anmdata->data.multicell.cp_mcanm->numSequences;
 }
 

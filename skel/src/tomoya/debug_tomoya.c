@@ -558,6 +558,11 @@ static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont )
 		anm_seq = GFL_CLACT_WkGetAnmSeq( p_wk );
 		anm_seq ^= 1;
 		GFL_CLACT_WkSetAnmSeq( p_wk, anm_seq );
+
+		// シーケンス数を表示
+		OS_Printf( "seq %d\n", GFL_CLACT_WkGetAnmSeqNum( p_wk ) );
+		// シーケンスデータ取得
+		OS_Printf( "seq data %d\n", GFL_CLACT_WkGetUserAttrAnmSeqNow(p_wk) );
 	}
 
 	// メインからサブへ
