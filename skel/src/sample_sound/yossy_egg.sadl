@@ -5,8 +5,9 @@
 #define BANK_SE	1
 #define SEQ_TITLE	0
 #define SEQ_MORI	1
-#define SEQ_GAMEOVER	2
-#define SEQ_CLEAR	3
+#define SEQ_UMI	2
+#define SEQ_GAMEOVER	3
+#define SEQ_CLEAR	4
 #define SEQARC_SE	0
 #define GROUP_MAIN	0
 #define	SE_LANDING	0

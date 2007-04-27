@@ -175,6 +175,9 @@ typedef	struct
 #define	YT_GAME_LOSE			(2)
 #define	YT_GAME_DRAW			(3)
 
+//—‰ºƒLƒƒƒ‰’²®‚ğ‚·‚é‘—‰ºƒLƒƒƒ‰”
+#define	YT_ADJ_FALL_COUNT		(100)
+
 enum{
 	SEQ_GAME_PLAY=0,
 	SEQ_GAME_OVER,

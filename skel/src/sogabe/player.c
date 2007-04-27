@@ -363,11 +363,11 @@ static	const	YT_ANIME_TABLE	yt_player_anm_rb_punch_r[]={
 };
 //	YT_PLAYER_ANM_WIN
 static	const	YT_ANIME_TABLE	yt_player_anm_win[]={
-	{YT_PLAYER_WIN_1,8},
-	{YT_PLAYER_WIN_0,8},
-	{YT_PLAYER_WIN_1,8},
-	{YT_PLAYER_WIN_0,8},
-	{YT_PLAYER_WIN_1,8},
+	{YT_PLAYER_WIN_1,12},
+	{YT_PLAYER_WIN_0,12},
+	{YT_PLAYER_WIN_1,12},
+	{YT_PLAYER_WIN_0,12},
+	{YT_PLAYER_WIN_1,12},
 	{YT_PLAYER_WIN_0,32},
 	{0,YT_ANIME_LOOP},
 };

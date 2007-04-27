@@ -18,6 +18,8 @@
 #include "player.h"
 #include "fallchr.h"
 
+#include "calctool.h"
+
 #include "sample_graphic/yossyegg.naix"
 
 #define __GAME_H_GLOBAL__
@@ -32,6 +34,10 @@ static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
 static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_CheckFlag(GFL_TCB *tcb,void *work);
+static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int *kara_flag);
+
+static	u16	RasterBuffer[192+90];
+static	int	raster_count=0;
 
 //----------------------------------------------------------------------------
 /**
@@ -140,9 +146,12 @@ void	YT_InitGame(GAME_PARAM *gp)
 	//画面生成
 	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_game_bg_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
 	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_game_bg_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+//	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+//	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+//	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_UMI_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_UMI_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_umi_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
 
 	GFL_DISP_SetDispOn();
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
@@ -191,7 +200,15 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 	//乱数初期化
 	{
-		GFL_STD_MtRandInit(0);
+		RTCDate	date;
+		RTCTime	time;
+		u32		seed;
+
+		RTC_GetDateTime(&date,&time);
+
+		seed=date.year+date.month*0x100+date.day*0x10000+time.hour*0x100000+(time.minute+time.second)*0x1000000;
+
+		GFL_STD_MtRandInit(seed);
 	}
 
 	//プレーヤー初期化
@@ -224,9 +241,21 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 	YT_JobNoSet(gp,YT_MainGameNo);
 
-	GFL_SOUND_PlayBGM(SEQ_MORI);
+//	GFL_SOUND_PlayBGM(SEQ_MORI);
+	GFL_SOUND_PlayBGM(SEQ_UMI);
 
     GFL_NET_ReloadIcon();
+
+	{
+		int	rad,i;
+
+		rad=0;
+
+		for(i=0;i<192+90;i++){
+			RasterBuffer[i]=(u16)(Sin360FX(rad*FX32_ONE)/1024);
+			rad+=4;
+		}
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -249,6 +278,19 @@ void	YT_MainGame(GAME_PARAM *gp)
 	// セルアクターシステムメイン処理
 	// 全ユニット描画が完了してから行う必要があります。
 	GFL_CLACT_SysMain();
+
+	GFL_DMA_Start(2,(u32)&RasterBuffer[raster_count],(u32)&reg_G2_BG3VOFS,
+				  GFL_DMA_ENABLE,
+				  GFL_DMA_INTR_DISABLE,
+				  GFL_DMA_MODE_HBLANK,
+				  GFL_DMA_SEND_BIT_16,
+				  GFL_DMA_CONTINUE_MODE_ON,
+				  GFL_DMA_SAR_INC,
+				  GFL_DMA_DAR_FIX,
+				  1);
+	if(++raster_count>=90){
+		raster_count=0;
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -406,6 +448,9 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 {
 	int	i=2;
 	int	line,type;
+	int	deka_flag=0,kara_flag=0;
+
+	YT_AdjAllVanishCheck(gp,player_no,&deka_flag,&kara_flag);
 
 	while(i){
 		line=__GFL_STD_MtRand()%4;
@@ -414,14 +459,14 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 		}
 		type=__GFL_STD_MtRand()%4;
 		//デカキャラは、確率を低くする
-		if(type==YT_CHR_TERESA){
-			if(__GFL_STD_MtRand()%5==0){
+		if((type==YT_CHR_TERESA)&&(deka_flag!=2)){
+			if((__GFL_STD_MtRand()%5==0)||(deka_flag==1)){
 				type=YT_CHR_DEKATERESA;
 			}
 		}
 		else{
 			//タマゴの殻発生確率
-			if(__GFL_STD_MtRand()%5==0){
+			if((__GFL_STD_MtRand()%5==0)&&(kara_flag==0)){
 				type=YT_CHR_GREEN_EGG_U+__GFL_STD_MtRand()%4;
 			}
 		}
@@ -472,7 +517,8 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 	
 	// キャラクタデータ読み込み＆転送
 	{
-		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
+//		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
+		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_SEA3_NCGR, heapID );
 		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
 		GF_ASSERT( result );
 		NNS_G2dInitImageProxy( &clact_res->imageproxy );
@@ -510,14 +556,16 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 
 	// セルデータ読み込み
 	{
-		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
+//		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
+		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NCER, heapID );
 		result = NNS_G2dGetUnpackedCellBank( clact_res->p_cellbuff, &clact_res->p_cell );
 		GF_ASSERT( result );
 	}
 
 	// セルアニメデータ読み込み
 	{
-		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
+//		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
+		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NANR, heapID );
 		result = NNS_G2dGetUnpackedAnimBank( clact_res->p_cellanmbuff, &clact_res->p_cellanm );
 		GF_ASSERT( result );
 	}
@@ -698,6 +746,74 @@ static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 				}
 			}
 		}
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	全消ししやすくするチェック（一定時間過ぎたら、全消ししやすくするように、落下キャラを調整）
+ *
+ *	@param[in]	gp			ゲームパラメータ構造体
+ *	@param[in]	player_no	チェックするプレーヤーナンバー
+ *	@param[out]	deka_flag	デカキャラを選択するフラグ
+ *	@param[out]	kara_flag	タマゴの殻を選択するフラグ
+ */
+//-----------------------------------------------------------------------------
+static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int *kara_flag)
+{
+	FALL_CHR_PARAM	*fcp_stop,*fcp_fall;
+	int				x,y;
+	int				deka_count=0,kara_count=0,stop_count=0;
+
+	if(gp->ps[player_no].fall_count<YT_ADJ_FALL_COUNT){
+		return;
+	}
+
+	for(x=0;x<YT_LINE_MAX;x++){
+		for(y=0;y<YT_HEIGHT_MAX;y++){
+			fcp_stop=gp->ps[player_no].stop[x][y];
+			fcp_fall=gp->ps[player_no].fall[x][y];
+			if(fcp_stop){
+				stop_count++;
+				switch(fcp_stop->type){
+				case YT_CHR_DEKATERESA:
+					deka_count++;
+					break;
+				case YT_CHR_GREEN_EGG_U:
+				case YT_CHR_GREEN_EGG_D:
+				case YT_CHR_RED_EGG_U:
+				case YT_CHR_RED_EGG_D:
+					kara_count++;
+				default:
+					break;
+				}
+			}
+			if(fcp_fall){
+				switch(fcp_fall->type){
+				case YT_CHR_DEKATERESA:
+					deka_count++;
+					break;
+				case YT_CHR_GREEN_EGG_U:
+				case YT_CHR_GREEN_EGG_D:
+				case YT_CHR_RED_EGG_U:
+				case YT_CHR_RED_EGG_D:
+					kara_count++;
+				default:
+					break;
+				}
+			}
+		}
+	}
+	if(deka_count==0){
+		if(stop_count&1){
+			deka_flag[0]=1;
+		}
+		else{
+			deka_flag[0]=2;
+		}
+	}
+	if(kara_count==0){
+		kara_flag[0]=1;
 	}
 }
 

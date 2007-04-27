@@ -176,6 +176,8 @@ void GFLUser_VIntr(void)
 	GFL_CLACT_SysVblank();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     GFL_NET_VBlankFunc();
+
+	GFL_DMA_Main();
 	GFL_USE_VintrCounter++;
 }
 

@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2007-04-09T19:21:35
+	Update:2007-04-24T17:23:22
  *****************************************************************************/
 
 #ifndef NARC_YOSSYEGG_NAIX_
@@ -13,22 +13,28 @@
 enum {
 	NARC_yossyegg_fall_obj_NANR = 0,
 	NARC_yossyegg_fall_obj_NCER = 1,
-	NARC_yossyegg_game_bg_NCGR = 2,
-	NARC_yossyegg_game_bg_NSCR = 3,
-	NARC_yossyegg_O_WOODS3_NCGR = 4,
-	NARC_yossyegg_OBJ_COL_NCLR = 5,
-	NARC_yossyegg_STAGESEL_NCGR = 6,
-	NARC_yossyegg_STAGESEL_NSCR = 7,
-	NARC_yossyegg_TITLE_BG_NCLR = 8,
-	NARC_yossyegg_TITLE_V2_NCGR = 9,
-	NARC_yossyegg_TITLE_V2_NSCR = 10,
-	NARC_yossyegg_yossy_birth_NCGR = 11,
-	NARC_yossyegg_YT_BG03_NCGR = 12,
-	NARC_yossyegg_YT_BG03_NCLR = 13,
-	NARC_yossyegg_YT_BG03_NSCR = 14,
-	NARC_yossyegg_YT_LUIGI_NCGR = 15,
-	NARC_yossyegg_YT_MARIO_NCGR = 16,
-	NARC_yossyegg_YT_MARIO_NCLR = 17
+	NARC_yossyegg_fall_obj_umi_NANR = 2,
+	NARC_yossyegg_fall_obj_umi_NCER = 3,
+	NARC_yossyegg_game_bg_NCGR = 4,
+	NARC_yossyegg_game_bg_NSCR = 5,
+	NARC_yossyegg_O_SEA3_NCGR = 6,
+	NARC_yossyegg_O_WOODS3_NCGR = 7,
+	NARC_yossyegg_OBJ_COL_NCLR = 8,
+	NARC_yossyegg_STAGESEL_NCGR = 9,
+	NARC_yossyegg_STAGESEL_NSCR = 10,
+	NARC_yossyegg_TITLE_BG_NCLR = 11,
+	NARC_yossyegg_TITLE_V2_NCGR = 12,
+	NARC_yossyegg_TITLE_V2_NSCR = 13,
+	NARC_yossyegg_UMI_NCGR = 14,
+	NARC_yossyegg_umi_NCLR = 15,
+	NARC_yossyegg_UMI_NSCR = 16,
+	NARC_yossyegg_yossy_birth_NCGR = 17,
+	NARC_yossyegg_YT_BG03_NCGR = 18,
+	NARC_yossyegg_YT_BG03_NCLR = 19,
+	NARC_yossyegg_YT_BG03_NSCR = 20,
+	NARC_yossyegg_YT_LUIGI_NCGR = 21,
+	NARC_yossyegg_YT_MARIO_NCGR = 22,
+	NARC_yossyegg_YT_MARIO_NCLR = 23
 };
 
 /* NARC_YOSSYEGG_NAIX_ */

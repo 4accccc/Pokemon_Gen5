@@ -132,6 +132,9 @@ static	void	game_init(GAME_PARAM *gp)
 	gp->tcb_work=GFL_HEAP_AllocMemory(GFL_HEAPID_APP,TCB_WORK_SIZE);
 	gp->tcbsys=GFL_TCB_Init(ACTIVE_TCB_MAX,gp->tcb_work);
 
+	//DMAシステム初期化
+	GFL_DMA_Init(GFL_HEAPID_APP);
+
 	//ARCシステム初期化
 	GFL_ARC_Init(&GraphicFileTable[0],1);
 
