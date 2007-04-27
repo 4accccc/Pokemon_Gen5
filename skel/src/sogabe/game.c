@@ -640,8 +640,14 @@ static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 				for(x=0;x<YT_LINE_MAX;x++){
 					fcp=ps->stop[x][YT_HEIGHT_MAX-1];
 					if(fcp){
-						ps->status.win_lose_flag|=YT_GAME_LOSE;
-						gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_WIN;
+
+                        if(gp->pNetParam){ //’ÊM‚µ‚Ä‚éê‡‚ÍŸ”s‚ð‘—‚é
+                            YT_NET_SendGameResult(player_no,FALSE,gp->pNetParam);
+                        }
+                        else{
+                            ps->status.win_lose_flag|=YT_GAME_LOSE;
+                            gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_WIN;
+                        }
 					}
 				}
 			}
@@ -678,8 +684,14 @@ static	void	YT_CheckFlag(GFL_TCB *tcb,void *work)
 							break;
 						}
 					case YT_READY_WAIT:
-						ps->status.win_lose_flag|=YT_GAME_WIN;
-						gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_LOSE;
+
+                        if(gp->pNetParam){ //’ÊM‚µ‚Ä‚éê‡‚ÍŸ”s‚ð‘—‚é
+                            YT_NET_SendGameResult(player_no,TRUE,gp->pNetParam);
+                        }
+                        else{
+                            ps->status.win_lose_flag|=YT_GAME_WIN;
+                            gp->ps[player_no^1].status.win_lose_flag|=YT_GAME_LOSE;
+                        }
 					default:
 						break;
 					}

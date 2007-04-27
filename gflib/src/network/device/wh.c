@@ -1400,10 +1400,10 @@ static BOOL WH_StateInStartScan(void)
     {
         pNetWH->sScanParam.channel = (u16)pNetWH->sChannelIndex;
     }
-    pNetWH->sScanParam.maxChannelTime = WM_GetDispersionScanPeriod();
+    pNetWH->sScanParam.maxChannelTime = WM_GetDispersionScanPeriod() / 3;
     pNetWH->sScanParam.scanBuf = &pNetWH->sBssDesc;
 
-    OHNO_PRINT("WM_StartScan %d\n",pNetWH->sScanParam.channel);
+//    NET_PRINT("WM_StartScan %d %d\n",pNetWH->sScanParam.channel,pNetWH->sScanParam.maxChannelTime);
     result = WM_StartScan(WH_StateOutStartScan, &pNetWH->sScanParam);
 
     if (result != WM_ERRCODE_OPERATING)

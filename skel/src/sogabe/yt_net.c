@@ -30,6 +30,8 @@ static void _recvCLACTAnimCreate(const int netID, const int size, const void* pD
 static void _recvScreenMake(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvScreenMakeRot(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvPlaySe(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvPlayGameover(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvPlayEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 //通信用構造体
 struct _NET_PARAM
@@ -81,7 +83,7 @@ static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得
 }
 
 #define _MAXNUM (2)     // 接続最大
-#define _MAXSIZE (120)  // 送信最大サイズ
+#define _MAXSIZE (200)  // 送信最大サイズ
 
 //普通のワイヤレス通信
 
@@ -97,6 +99,8 @@ enum CommCommandBattle_e {
     TY_NET_COMMAND_SCREENMAKE,
     TY_NET_COMMAND_SCREENMAKE_ROT,
     YT_NET_COMMAND_PLAY_SE,
+    YT_NET_COMMAND_GAMERESULT,     ///< ゲーム結果
+    YT_NET_COMMAND_END,
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -109,6 +113,14 @@ typedef struct {
     u16 anmseq;
 } COMM_ANIM_ST;
 
+
+//----------------------------------------------------------------------------
+// @brief	勝ち負けを送信する
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 player;
+    u8 bWin;
+} COMM_RESULT_ST;
 
 
 //----------------------------------------------------------------------------
@@ -186,6 +198,8 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvScreenMake, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ST)), NULL},
     {_recvScreenMakeRot, GFL_NET_COMMAND_SIZE(sizeof(COMM_SCREENMAKE_ROT_ST)), NULL},
     {_recvPlaySe, GFL_NET_COMMAND_SIZE(sizeof(int)), NULL},
+    {_recvPlayGameover, GFL_NET_COMMAND_SIZE(sizeof(COMM_RESULT_ST)), NULL},
+    {_recvPlayEnd, GFL_NET_COMMAND_SIZE(0), NULL},
     
 };
 
@@ -288,6 +302,50 @@ static void _recvPlaySe(const int netID, const int size, const void* pData, void
         return;
     }
     GFL_SOUND_PlaySE(*pSe_no);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	GAMEOVER命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvPlayGameover(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_RESULT_ST* pResult = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){  // 送信者本人
+        YT_PlayerSetWinLoseFlag(&gp->ps[pResult->player], pResult->bWin);
+    }
+    else{
+        YT_PlayerSetWinLoseFlag(&gp->ps[pResult->player^1], !pResult->bWin);
+    }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	END命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvPlayEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const int* pSe_no = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+    // 子機が先に通信を終了させる
 }
 
 
@@ -758,6 +816,22 @@ void YT_NET_PlaySE(int se_no, NET_PARAM* pNet)
     GFL_SOUND_PlaySE(se_no);
     if(pNet){
         GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_PLAY_SE, &se_no);
+    }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ゲーム結果を送る
+ */
+//-----------------------------------------------------------------------------
+void YT_NET_SendGameResult(int player, int bWin, NET_PARAM* pNet)
+{
+    COMM_RESULT_ST sResult;
+    if(pNet){
+        sResult.player = player;
+        sResult.bWin = bWin;
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_GAMERESULT, &sResult);
     }
 }
 

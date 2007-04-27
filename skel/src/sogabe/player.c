@@ -1051,3 +1051,21 @@ static	void	YT_PlayerOverTurnAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps,int flag)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	勝ち負けフラグを立てる
+ *	@param	pp		プレーヤーパラメータポインタ
+ *	@param	bWin	勝った場合にTRUE
+ */
+//-----------------------------------------------------------------------------
+
+void YT_PlayerSetWinLoseFlag(YT_PLAYER_STATUS *ps, int bWin)
+{
+    if(bWin){
+        ps->status.win_lose_flag|=YT_GAME_WIN;
+    }
+    else{
+        ps->status.win_lose_flag|=YT_GAME_LOSE;
+    }
+}
+

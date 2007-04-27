@@ -120,7 +120,7 @@ void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void
     BOOL bCheck;
     GFL_NETHANDLE* pNetHandle;
 
-    NET_PRINT("--- %d \n", netID);
+    //NET_PRINT("--- %d \n", netID);
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         pNetHandle = GFL_NET_GetNetHandle(i);
@@ -150,7 +150,7 @@ void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void
                 func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
             }
             if(func != NULL){
-                NET_PRINT("command %d recvID %d\n", command,i);
+                //NET_PRINT("command %d recvID %d\n", command,i);
                 if(_pCommandWork){
                     func(netID, size, pData, _pCommandWork->pWork, pNetHandle);
                 }
