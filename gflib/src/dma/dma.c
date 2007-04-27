@@ -39,9 +39,10 @@ typedef struct
 			u32	word_count		:21;	//転送回数
 		};
 	}cnt;
-	u32	req_flag	:1;		//設定要求フラグ
-	u32	set_flag	:1;		//設定済みフラグ
-	u32				:31;
+	u32	req_flag		:1;		//設定要求フラグ
+	u32	set_flag		:1;		//設定済みフラグ
+	u32	stop_req_flag	:1;		//DMA停止要求フラグ
+	u32					:29;
 }GFL_DMA_PARAM;
 
 typedef struct
@@ -54,6 +55,11 @@ typedef struct
 //=============================================================================================
 
 static	GFL_DMA_WORK *gdw=NULL;
+
+//=============================================================================================
+//	プロトタイプ宣言
+//=============================================================================================
+static	void	GFL_DMA_StopAct(int ch);
 
 //=============================================================================================
 //	設定関数
@@ -89,11 +95,15 @@ void	GFL_DMA_Main(void)
 	for(ch=0;ch<GFL_DMA_MAX;ch++){
 		if(gdw->gdp[ch].req_flag){
 			gdw->gdp[ch].req_flag=0;
-			gdw->gdp[ch].set_flag=1;
 			if(gdw->gdp[ch].cnt.word_count){
-				GFL_DMA_Stop(ch);
+				GFL_DMA_StopAct(ch);
 				MIi_DmaSetParams(ch,(u32)gdw->gdp[ch].sad,(u32)gdw->gdp[ch].dad,gdw->gdp[ch].cnt.param);
+				gdw->gdp[ch].set_flag=1;
 			}
+		}
+		if(gdw->gdp[ch].stop_req_flag){
+			gdw->gdp[ch].stop_req_flag=0;
+			GFL_DMA_StopAct(ch);
 		}
 	}
 }
@@ -110,7 +120,7 @@ void	GFL_DMA_Exit(void)
 	GF_ASSERT(gdw!=NULL);
 
 	for(ch=0;ch<GFL_DMA_MAX;ch++){
-		GFL_DMA_Stop(ch);
+		GFL_DMA_StopAct(ch);
 	}
 
 	GFL_HEAP_FreeMemory(gdw);
@@ -150,28 +160,29 @@ void	GFL_DMA_Start(int ch,u32 sad,u32 dad,int dma_enable,int intr_enable,int dma
 
 //--------------------------------------------------------------------------------------------
 /**
- * DMA停止
+ * DMA停止要求
  *
  * @param	ch	停止させたいDMAch
  */
 //--------------------------------------------------------------------------------------------
 void	GFL_DMA_Stop(int ch)
 {
+	gdw->gdp[ch].stop_req_flag=1;
+	gdw->gdp[ch].req_flag=0;
+	gdw->gdp[ch].set_flag=0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * DMA停止
+ *
+ * @param	ch	停止させたいDMAch
+ */
+//--------------------------------------------------------------------------------------------
+static	void	GFL_DMA_StopAct(int ch)
+{
+    OSIntrMode enabled = OS_DisableInterrupts();
     vu32   *p = (vu32 *)((u32)REG_DMA0CNT_ADDR + ch * 12);
-
-    *p = (vu32)REG_MI_DMA0CNT_FIELD(GFL_DMA_ENABLE,
-									gdw->gdp[ch].cnt.intr_enable,
-									GFL_DMA_MODE_SOON,
-									gdw->gdp[ch].cnt.send_bit,
-									GFL_DMA_CONTINUE_MODE_OFF,
-									gdw->gdp[ch].cnt.sar,
-									gdw->gdp[ch].cnt.dar,
-									gdw->gdp[ch].cnt.word_count);
-
-    // ARM7 must wait 2 cycle (load is 3 cycle)
-    {
-        u32     dummy = reg_MI_DMA0SAD;
-    }
 
     *p = (vu32)REG_MI_DMA0CNT_FIELD(GFL_DMA_DISABLE,
 									gdw->gdp[ch].cnt.intr_enable,
@@ -181,6 +192,7 @@ void	GFL_DMA_Stop(int ch)
 									gdw->gdp[ch].cnt.sar,
 									gdw->gdp[ch].cnt.dar,
 									gdw->gdp[ch].cnt.word_count);
-	gdw->gdp[ch].set_flag=0;
+
+    (void)OS_RestoreInterrupts(enabled);
 }
 
