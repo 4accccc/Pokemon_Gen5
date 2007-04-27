@@ -45,6 +45,7 @@
 
 #include "double3Ddisp.h"
 #include "sound.h"
+#include "dma.h"
 
 /*  */
 

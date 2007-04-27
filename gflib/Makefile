@@ -64,7 +64,8 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					string/textprint.c string/sjisconv.c \
 					fade/fade.c \
 					g3d/double3Ddisp.c \
-					sound/sound.c
+					sound/sound.c \
+					dma/dma.c
 
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
