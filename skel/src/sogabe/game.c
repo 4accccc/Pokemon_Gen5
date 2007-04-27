@@ -107,7 +107,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 			},
 			///<FRAME3_M
 			{
-				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 			},
@@ -397,6 +397,8 @@ static	void	YT_ExitGame(GAME_PARAM *gp)
 
     // セルアクターユニット破棄
 	GFL_CLACT_UnitDelete(gp->clact->p_unit);
+
+	GFL_DMA_Stop(2);
 
 	YT_JobNoSet(gp,YT_InitTitleNo);
 }

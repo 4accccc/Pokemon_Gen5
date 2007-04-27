@@ -167,7 +167,7 @@ typedef	struct
 
 #define	YT_ROTATE_SPEED			(2)
 
-#define	YT_BIRTH_WAIT			(2*FX32_ONE)		//はさんだキャラ1個当たりの生まれるまでのウエイト
+#define	YT_BIRTH_WAIT			(2*FX32_HALF)		//はさんだキャラ1個当たりの生まれるまでのウエイト
 #define	YT_BIRTH_SPEED			(0x80)
 
 //勝敗フラグ
