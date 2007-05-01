@@ -486,7 +486,7 @@ void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy )
 
 
 //-------------------------------------
-///	CLWK初期化基本データ
+///	GFL_CLWK初期化基本データ
 //=====================================
 /*
 typedef struct {
@@ -495,7 +495,7 @@ typedef struct {
 	u16 anmseq;				// アニメーションシーケンス
 	u8	softpri;			// ソフト優先順位	0>0xff
 	u8	bgpri;				// BG優先順位
-} CLWK_DATA;
+} GFL_CLWK_DATA;
 */
 
 //==============================================================================================
@@ -516,9 +516,9 @@ typedef struct {
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
-CLWK* GFL_OBJGRP_CreateClAct
-	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const CLWK_DATA* param, u16 setSerface, u16 heapID )
+GFL_CLWK* GFL_OBJGRP_CreateClAct
+	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -529,16 +529,16 @@ CLWK* GFL_OBJGRP_CreateClAct
 
 
 	{
-		CLWK_RES     clactRes;
+		GFL_CLWK_RES     clactRes;
 
-		GFL_CLACT_WkSetCellResData( &clactRes,
+		GFL_CLACT_WK_SetCellResData( &clactRes,
 					&(SysWork.cgrMan[cgrIndex].proxy),
 					&(SysWork.plttMan[plttIndex].proxy),
 					SysWork.cellAnimMan[cellAnimIndex].cellBankPtr,
 					SysWork.cellAnimMan[cellAnimIndex].animBankPtr
 		);
 
-		return GFL_CLACT_WkAdd( actUnit, param, &clactRes, setSerface, heapID );
+		return GFL_CLACT_WK_Add( actUnit, param, &clactRes, setSerface, heapID );
 	}
 }
 
@@ -558,9 +558,9 @@ CLWK* GFL_OBJGRP_CreateClAct
  */
 //==============================================================================================
 
-CLWK* GFL_OBJGRP_CreateClActVT
-	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const CLWK_DATA* param, u16 setSerface, u16 heapID )
+GFL_CLWK* GFL_OBJGRP_CreateClActVT
+	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -571,9 +571,9 @@ CLWK* GFL_OBJGRP_CreateClActVT
 
 
 	{
-		CLWK_RES     clactRes;
+		GFL_CLWK_RES     clactRes;
 
-		GFL_CLACT_WkSetTrCellResData( &clactRes,
+		GFL_CLACT_WK_SetTrCellResData( &clactRes,
 					&(SysWork.cgrMan[cgrIndex].proxy),
 					&(SysWork.plttMan[plttIndex].proxy),
 					SysWork.cellAnimMan[cellAnimIndex].cellBankPtr,
@@ -581,7 +581,7 @@ CLWK* GFL_OBJGRP_CreateClActVT
 					SysWork.cgrMan[cgrIndex].g2dCharData
 		);
 
-		return GFL_CLACT_WkAdd( actUnit, param, &clactRes, setSerface, heapID );
+		return GFL_CLACT_WK_Add( actUnit, param, &clactRes, setSerface, heapID );
 	}
 }
 

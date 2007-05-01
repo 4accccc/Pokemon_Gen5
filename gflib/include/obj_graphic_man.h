@@ -70,13 +70,13 @@ extern void GFL_OBJGRP_ReleasePltt( u32 index );
 
 extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
 
-extern CLWK* GFL_OBJGRP_CreateClAct
-	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const CLWK_DATA* param, u16 setSerface, u16 heapID );
+extern GFL_CLWK* GFL_OBJGRP_CreateClAct
+	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
 
-extern CLWK* GFL_OBJGRP_CreateClActVT
-	( CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const CLWK_DATA* param, u16 setSerface, u16 heapID );
+extern GFL_CLWK* GFL_OBJGRP_CreateClActVT
+	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
 
 
 #endif /* #ifndef __OBJMAN_H__ */

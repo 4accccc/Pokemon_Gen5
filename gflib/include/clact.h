@@ -11,12 +11,6 @@
 #ifndef __CLACT_H__
 #define __CLACT_H__
 
-#undef GLOBAL
-#ifdef	__CLACT_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -65,7 +59,7 @@ enum{
 
 //-------------------------------------
 ///	フリップタイプ
-//	CLWKへのフリップ設定に使用します。
+//	GFL_CLWKへのフリップ設定に使用します。
 //=====================================
 typedef enum {
 	CLWK_FLIP_V,		// Vフリップ状態
@@ -95,14 +89,14 @@ typedef enum{
 
 //-------------------------------------
 ///	設定サーフェース　絶対座標指定
-//	CLWKの座標設定関数で絶対座標を設定するときに使用します。
+//	GFL_CLWKの座標設定関数で絶対座標を設定するときに使用します。
 //=====================================
 #define CLWK_SETSF_NONE	(0xffff)
 
 //-------------------------------------
 ///	Vramアドレス取得失敗
-//	GFL_CLACT_WkGetPlttAddr
-//	GFL_CLACT_WkGetCharAddr
+//	GFL_CLACT_WK_GetPlttAddr
+//	GFL_CLACT_WK_GetCharAddr
 //	の戻り値
 //=====================================
 #define CLWK_VRAM_ADDR_NONE	( 0xffffffff )
@@ -111,8 +105,8 @@ typedef enum{
 //-------------------------------------
 ///	ユーザー拡張アトリビュート取得
 //	データがないときの戻り値
-//	GFL_CLACT_WkGetPlttAddr
-//	GFL_CLACT_WkGetCharAddr
+//	GFL_CLACT_WK_GetPlttAddr
+//	GFL_CLACT_WK_GetCharAddr
 //	の戻り値
 //=====================================
 #define CLWK_USERATTR_NONE	(0)	// ユーザー拡張アトリビュートなし
@@ -127,17 +121,17 @@ typedef enum{
 //-------------------------------------
 ///	ユーザー定義レンダラー
 //=====================================
-typedef struct _CLSYS_REND	CLSYS_REND;
+typedef struct _CLSYS_REND	GFL_CLSYS_REND;
 
 //-------------------------------------
 ///	セルアクターユニット
 //=====================================
-typedef struct _CLUNIT		CLUNIT;
+typedef struct _CLUNIT		GFL_CLUNIT;
 
 //-------------------------------------
 ///	セルアクターワーク
 //=====================================
-typedef struct _CLWK		CLWK;
+typedef struct _CLWK		GFL_CLWK;
 
 
 
@@ -161,7 +155,7 @@ typedef struct {
 	u8	oamst_sub;			// サブ画面OAM管理開始位置
 	u8	oamnum_sub;			// サブ画面OAM管理数
 	u8	tr_cell;			// セルVram転送管理数
-} CLSYS_INIT;
+} GFL_CLSYS_INIT;
 
 
 //-------------------------------------
@@ -174,14 +168,14 @@ typedef struct {
 	s16	width;				// サーフェース幅
 	s16	height;				// サーフェース高さ
 	CLSYS_DRAW_TYPE	type;	// サーフェースタイプ(CLSYS_DRAW_TYPE)
-} REND_SURFACE_INIT;
+} GFL_REND_SURFACE_INIT;
 
 //-------------------------------------
-///	CLWK初期化リソースデータ
+///	GFL_CLWK初期化リソースデータ
 //	それぞれのアニメ方法のデータを設定する関数も用意されています。
-//	・セルアニメ			GFL_CLACT_WkSetCellResData(...)
-//	・Vram転送セルアニメ	GFL_CLACT_WkSetTrCellResData(...)
-//	・マルチセルアニメ		GFL_CLACT_WkSetMCellResData(...)
+//	・セルアニメ			GFL_CLACT_WK_SetCellResData(...)
+//	・Vram転送セルアニメ	GFL_CLACT_WK_SetTrCellResData(...)
+//	・マルチセルアニメ		GFL_CLACT_WK_SetMCellResData(...)
 //=====================================
 typedef struct {
 	const NNSG2dImageProxy*			cp_img;		// イメージプロクシ
@@ -193,11 +187,11 @@ typedef struct {
 	const NNSG2dMultiCellDataBank*  cp_mcell;	// マルチセルデータ		（無いときNULL）
     const NNSG2dMultiCellAnimBankData* cp_mcanm;// マルチセルアニメーション（無いときNULL）
 	const NNSG2dCharacterData*		cp_char;	// Vram転送セルアニメ以外はNULL
-} CLWK_RES;
+} GFL_CLWK_RES;
 
 
 //-------------------------------------
-///	CLWK初期化基本データ
+///	GFL_CLWK初期化基本データ
 //=====================================
 typedef struct {
 	s16	pos_x;				// ｘ座標
@@ -205,13 +199,13 @@ typedef struct {
 	u16 anmseq;				// アニメーションシーケンス
 	u8	softpri;			// ソフト優先順位	0>0xff
 	u8	bgpri;				// BG優先順位
-} CLWK_DATA;
+} GFL_CLWK_DATA;
 
 //-------------------------------------
-///	CLWK初期化アフィン変換データ
+///	GFL_CLWK初期化アフィン変換データ
 //=====================================
 typedef struct {
-	CLWK_DATA clwkdata;		// 基本データ
+	GFL_CLWK_DATA clwkdata;		// 基本データ
 	
 	s16	affinepos_x;		// アフィンｘ座標
 	s16 affinepos_y;		// アフィンｙ座標
@@ -219,24 +213,24 @@ typedef struct {
 	fx32 scale_y;			// 拡大ｙ値
 	u16	rotation;			// 回転角度(0～0xffff 0xffffが360度)
 	u16	affine_type;		// 上書きアフィンタイプ（CLSYS_AFFINETYPE）
-} CLWK_AFFINEDATA;
+} GFL_CLWK_AFFINEDATA;
 
 
 //-------------------------------------
-///	CLWK　座標構造体	
+///	GFL_CLWK　座標構造体	
 //=====================================
 typedef struct {
 	s16 x;
 	s16 y;
-} CLSYS_POS;
+} GFL_CLACTPOS;
 
 //-------------------------------------
-///	CLWK　スケール構造体
+///	GFL_CLWK　スケール構造体
 //=====================================
 typedef struct {
 	fx32 x;
 	fx32 y;
-} CLSYS_SCALE;
+} GFL_CLSCALE;
 
 
 
@@ -258,7 +252,7 @@ typedef struct {
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID );
+extern void GFL_CLACT_Init( const GFL_CLSYS_INIT* cp_data, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	破棄
@@ -266,7 +260,7 @@ GLOBAL void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID );
  *	@param	none
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysExit( void );
+extern void GFL_CLACT_Exit( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム　メイン処理
@@ -275,7 +269,7 @@ GLOBAL void GFL_CLACT_SysExit( void );
  *	*メインループの最後に呼ぶようにしておくと確実だと思います。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysMain( void );
+extern void GFL_CLACT_Main( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム　Vブランク処理
@@ -283,13 +277,13 @@ GLOBAL void GFL_CLACT_SysMain( void );
  *	＊OAMデータ転送後バッファをクリーンします。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysVblank( void );
+extern void GFL_CLACT_SysVblank( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターOAMバッファのクリーン処理
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysOamBuffClean( void );
+extern void GFL_CLACT_SysOamBuffClean( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	Vブランク処理	転送のみ
@@ -299,7 +293,7 @@ GLOBAL void GFL_CLACT_SysOamBuffClean( void );
  *	その際には「GFL_CLACT_SysOamBuffClean」関数を使用してください。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_SysVblankTransOnly( void );
+extern void GFL_CLACT_SysVblankTransOnly( void );
 
 //-------------------------------------
 ///	USER定義レンダラー関係
@@ -318,7 +312,7 @@ GLOBAL void GFL_CLACT_SysVblankTransOnly( void );
  *	@return	作成したレンダラーシステム
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
+extern GFL_CLSYS_REND* GFL_CLACT_USERREND_Create( const GFL_REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムを破棄する
@@ -326,7 +320,7 @@ GLOBAL CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u
  *	@param	p_rend			ユーザー定義サーフェースデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendDelete( CLSYS_REND* p_rend );
+extern void GFL_CLACT_USERREND_Delete( GFL_CLSYS_REND* p_rend );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムにサーフェース左上座標を設定する
@@ -336,7 +330,7 @@ GLOBAL void GFL_CLACT_UserRendDelete( CLSYS_REND* p_rend );
  *	@param	cp_pos			設定する座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendSetSurfacePos( CLSYS_REND* p_rend, u32 idx, const CLSYS_POS* cp_pos );
+extern void GFL_CLACT_USERREND_SetSurfacePos( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムからサーフェース左上座標を取得する
@@ -346,7 +340,7 @@ GLOBAL void GFL_CLACT_UserRendSetSurfacePos( CLSYS_REND* p_rend, u32 idx, const 
  *	@param	p_pos			座標格納先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendGetSurfacePos( const CLSYS_REND* cp_rend, u32 idx, CLSYS_POS* p_pos );
+extern void GFL_CLACT_USERREND_GetSurfacePos( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムにサーフェースサイズを設定する
@@ -356,7 +350,7 @@ GLOBAL void GFL_CLACT_UserRendGetSurfacePos( const CLSYS_REND* cp_rend, u32 idx,
  *	@param	cp_size			サイズ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendSetSurfaceSize( CLSYS_REND* p_rend, u32 idx, const CLSYS_POS* cp_size );
+extern void GFL_CLACT_USERREND_SetSurfaceSize( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_size );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムからサーフェースサイズを取得する
@@ -366,7 +360,7 @@ GLOBAL void GFL_CLACT_UserRendSetSurfaceSize( CLSYS_REND* p_rend, u32 idx, const
  *	@param	p_size			サイズ取得先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendGetSurfaceSize( const CLSYS_REND* cp_rend, u32 idx, CLSYS_POS* p_size );
+extern void GFL_CLACT_USERREND_GetSurfaceSize( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_size );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムにサーフェースタイプを設定する
@@ -376,7 +370,7 @@ GLOBAL void GFL_CLACT_UserRendGetSurfaceSize( const CLSYS_REND* cp_rend, u32 idx
  *	@param	type			サーフェースタイプ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UserRendSetSurfaceType( CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_TYPE type );
+extern void GFL_CLACT_USERREND_SetSurfaceType( GFL_CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ユーザー定義レンダラーシステムからサーフェースタイプを取得する
@@ -387,10 +381,10 @@ GLOBAL void GFL_CLACT_UserRendSetSurfaceType( CLSYS_REND* p_rend, u32 idx, CLSYS
  *	@return	サーフェースタイプ	（CLSYS_DRAW_TYPE）
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_rend, u32 idx );
+extern CLSYS_DRAW_TYPE GFL_CLACT_USERREND_GetSurfaceType( const GFL_CLSYS_REND* cp_rend, u32 idx );
 
 //-------------------------------------
-///	CLUNIT関係
+///	GFL_CLUNIT関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
@@ -402,7 +396,7 @@ GLOBAL CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_re
  *	@return	ユニットポインタ
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID );
+extern GFL_CLUNIT* GFL_CLACT_UNIT_Create( u16 wknum, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニットを破棄
@@ -410,7 +404,7 @@ GLOBAL CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID );
  *	@param	p_unit			セルアクターユニット
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UnitDelete( CLUNIT* p_unit );
+extern void GFL_CLACT_UNIT_Delete( GFL_CLUNIT* p_unit );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニット　描画処理
@@ -418,7 +412,7 @@ GLOBAL void GFL_CLACT_UnitDelete( CLUNIT* p_unit );
  *	@param	p_unit			セルアクターユニット
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UnitDraw( CLUNIT* p_unit );
+extern void GFL_CLACT_UNIT_Draw( GFL_CLUNIT* p_unit );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニットに描画フラグを設定
@@ -430,7 +424,7 @@ GLOBAL void GFL_CLACT_UnitDraw( CLUNIT* p_unit );
  *	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UnitSetDrawFlag( CLUNIT* p_unit, BOOL on_off );
+extern void GFL_CLACT_UNIT_SetDrawFlag( GFL_CLUNIT* p_unit, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニットの描画フラグを取得
@@ -441,7 +435,7 @@ GLOBAL void GFL_CLACT_UnitSetDrawFlag( CLUNIT* p_unit, BOOL on_off );
  *	@retval	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_UnitGetDrawFlag( const CLUNIT* cp_unit );
+extern BOOL GFL_CLACT_UNIT_GetDrawFlag( const GFL_CLUNIT* cp_unit );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニットにユーザー独自のレンダラーシステムを設定
@@ -451,14 +445,14 @@ GLOBAL BOOL GFL_CLACT_UnitGetDrawFlag( const CLUNIT* cp_unit );
  *
  *	この関数で、好きな設定をしたレンダラーを使用することが出来るようになります。
  *	＞ユーザー独自のレンダラーを作成する
- *		GFL_CLACT_UserRend～関数で作成できます。
+ *		GFL_CLACT_USERREND_～関数で作成できます。
  *
  *  ＞注意事項
  *	　　座標設定するときに渡すsetsfの値は、ユーザー独自レンダラー
  *	　　に登録したサーフェースのインデックス番号となります。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UnitSetUserRend( CLUNIT* p_unit, CLSYS_REND* p_rend );
+extern void GFL_CLACT_UNIT_SetUserRend( GFL_CLUNIT* p_unit, GFL_CLSYS_REND* p_rend );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターユニットにデフォルトレンダラーシステムを設定
@@ -469,18 +463,18 @@ GLOBAL void GFL_CLACT_UnitSetUserRend( CLUNIT* p_unit, CLSYS_REND* p_rend );
  *	使用するように戻すことが出来ます。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit );
+extern void GFL_CLACT_UNIT_SetDefaultRend( GFL_CLUNIT* p_unit );
 
 //-------------------------------------
-///	CLWK関係
+///	GFL_CLWK関係
 //
 /*	【setsfの説明】
- *		CLUNITの使用するレンダラーシステムを変更していないときは
+ *		GFL_CLUNITの使用するレンダラーシステムを変更していないときは
  *		CLSYS_DEFREND_TYPEの値を指定する
  *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
  *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
  *		
- *		独自のレンダラーシステム(CLSYS_REND)をCLUNITに設定しているときは、
+ *		独自のレンダラーシステム(GFL_CLSYS_REND)をGFL_CLUNITに設定しているときは、
  *		サーフェースの要素数を指定することで、
  *		指定されたサーフェース左上座標からの相対座標になる。
  *
@@ -500,7 +494,7 @@ GLOBAL void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit );
  *	@param	cp_canm			セルアニメーションデータバンク
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm );
+extern void GFL_CLACT_WK_SetCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm );
 //----------------------------------------------------------------------------
 /**
  *	@brief	Vram転送セルアニメーション用リソースデータ作成
@@ -513,7 +507,7 @@ GLOBAL void GFL_CLACT_WkSetCellResData( CLWK_RES* p_res, const NNSG2dImageProxy*
  *	@param	cp_char     キャラクタデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetTrCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dCharacterData* cp_char );
+extern void GFL_CLACT_WK_SetTrCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dCharacterData* cp_char );
 //----------------------------------------------------------------------------
 /**
  *	@brief	マルチセルアニメーション　リソースデータ作成
@@ -527,7 +521,7 @@ GLOBAL void GFL_CLACT_WkSetTrCellResData( CLWK_RES* p_res, const NNSG2dImageProx
  *	@param	cp_mcanm		マルチセルアニメーションデータバンク
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm );
+extern void GFL_CLACT_WK_SetMCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm );
 
 // 登録破棄関係
 //----------------------------------------------------------------------------
@@ -543,12 +537,12 @@ GLOBAL void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy
  *	@return	登録したセルアクターワーク
  *
  *	【setsfの説明】
- *		CLUNITの使用するレンダラーシステムを変更していないときは
+ *		GFL_CLUNITの使用するレンダラーシステムを変更していないときは
  *		CLSYS_DEFREND_TYPEの値を指定する
  *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
  *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
  *		
- *		独自のレンダラーシステムをCLUNITに設定しているときは、
+ *		独自のレンダラーシステムをGFL_CLUNITに設定しているときは、
  *		サーフェースの要素数を指定することで、
  *		指定されたサーフェース左上座標からの相対座標になる。
  *
@@ -556,7 +550,7 @@ GLOBAL void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy
  *		CLWK_SETSF_NONEを指定すると絶対座標設定になる
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
+extern GFL_CLWK* GFL_CLACT_WK_Add( GFL_CLUNIT* p_unit, const GFL_CLWK_DATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターの登録	アフィン変換バージョン
@@ -570,7 +564,7 @@ GLOBAL CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CL
  *	@return	登録したセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
+extern GFL_CLWK* GFL_CLACT_WK_AddAffine( GFL_CLUNIT* p_unit, const GFL_CLWK_AFFINEDATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	破棄処理
@@ -578,7 +572,7 @@ GLOBAL CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_da
  *	@param	p_wk	破棄するセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkDel( CLWK* p_wk );
+extern void GFL_CLACT_WK_Remove( GFL_CLWK* p_wk );
 
 // ワークに対する操作
 //----------------------------------------------------------------------------
@@ -591,7 +585,7 @@ GLOBAL void GFL_CLACT_WkDel( CLWK* p_wk );
  *	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetDrawFlag( CLWK* p_wk, BOOL on_off );
+extern void GFL_CLACT_WK_SetDrawFlag( GFL_CLWK* p_wk, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
  *	@brief	表示フラグ取得
@@ -602,7 +596,7 @@ GLOBAL void GFL_CLACT_WkSetDrawFlag( CLWK* p_wk, BOOL on_off );
  *	@retval	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_WkGetDrawFlag( const CLWK* cp_wk );
+extern BOOL GFL_CLACT_WK_GetDrawFlag( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	サーフェース内相対座標設定
@@ -612,7 +606,7 @@ GLOBAL BOOL GFL_CLACT_WkGetDrawFlag( const CLWK* cp_wk );
  *	@param	setsf			サーフェースインデックス
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetPos( CLWK* p_wk, const CLSYS_POS* cp_pos, u16 setsf );
+extern void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16 setsf );
 //----------------------------------------------------------------------------
 /**
  *	@brief	サーフェース内相対座標取得
@@ -622,7 +616,7 @@ GLOBAL void GFL_CLACT_WkSetPos( CLWK* p_wk, const CLSYS_POS* cp_pos, u16 setsf )
  *	@param	setsf			サーフェースインデックス
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetPos( const CLWK* cp_wk, CLSYS_POS* p_pos, u16 setsf );
+extern void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16 setsf );
 //----------------------------------------------------------------------------
 /**
  *	@brief	サーフェース内相対座標個別設定
@@ -633,7 +627,7 @@ GLOBAL void GFL_CLACT_WkGetPos( const CLWK* cp_wk, CLSYS_POS* p_pos, u16 setsf )
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetTypePos( CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type );
+extern void GFL_CLACT_WK_SetTypePos( GFL_CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	サーフェース内相対座標個別取得
@@ -645,7 +639,7 @@ GLOBAL void GFL_CLACT_WkSetTypePos( CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TY
  *	@return	座標タイプのサーフェース内相対座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL s16 GFL_CLACT_WkGetTypePos( const CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type );
+extern s16 GFL_CLACT_WK_GetTypePos( const GFL_CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	絶対座標設定
@@ -654,7 +648,7 @@ GLOBAL s16 GFL_CLACT_WkGetTypePos( const CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE 
  *	@param	cp_pos			座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetWldPos( CLWK* p_wk, const CLSYS_POS* cp_pos );
+extern void GFL_CLACT_WK_SetWldPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	絶対座標取得
@@ -663,7 +657,7 @@ GLOBAL void GFL_CLACT_WkSetWldPos( CLWK* p_wk, const CLSYS_POS* cp_pos );
  *	@param	p_pos			座標格納先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetWldPos( const CLWK* cp_wk, CLSYS_POS* p_pos );
+extern void GFL_CLACT_WK_GetWldPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	絶対座標個別設定
@@ -673,7 +667,7 @@ GLOBAL void GFL_CLACT_WkGetWldPos( const CLWK* cp_wk, CLSYS_POS* p_pos );
  *	@param	type			座標タイプ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetWldTypePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type );
+extern void GFL_CLACT_WK_SetWldTypePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	絶対座標個別取得
@@ -684,7 +678,7 @@ GLOBAL void GFL_CLACT_WkSetWldTypePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type 
  *	@return	座標タイプの絶対座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL s16 GFL_CLACT_WkGetWldTypePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type );
+extern s16 GFL_CLACT_WK_GetWldTypePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィンパラメータ設定
@@ -697,7 +691,7 @@ GLOBAL s16 GFL_CLACT_WkGetWldTypePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type );
  *		CLSYS_AFFINETYPE_DOUBLE	倍角アフィン変換方式に設定
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAffineParam( CLWK* p_wk, CLSYS_AFFINETYPE affine );
+extern void GFL_CLACT_WK_SetAffineParam( GFL_CLWK* p_wk, CLSYS_AFFINETYPE affine );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィンパラメータ取得
@@ -709,7 +703,7 @@ GLOBAL void GFL_CLACT_WkSetAffineParam( CLWK* p_wk, CLSYS_AFFINETYPE affine );
  *	@retval	CLSYS_AFFINETYPE_DOUBLE	倍角アフィン変換方式に設定
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const CLWK* cp_wk );
+extern CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィン変換相対座標一括設定
@@ -718,7 +712,7 @@ GLOBAL CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const CLWK* cp_wk );
  *	@param	cp_pos		アフィン変換相対座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAffinePos( CLWK* p_wk, const CLSYS_POS* cp_pos );
+extern void GFL_CLACT_WK_SetAffinePos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィン変換相対座標一括取得
@@ -727,7 +721,7 @@ GLOBAL void GFL_CLACT_WkSetAffinePos( CLWK* p_wk, const CLSYS_POS* cp_pos );
  *	@param	p_pos		アフィン変換相対座標取得先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetAffinePos( const CLWK* cp_wk, CLSYS_POS* p_pos );
+extern void GFL_CLACT_WK_GetAffinePos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィン変換相対座標個別設定
@@ -737,7 +731,7 @@ GLOBAL void GFL_CLACT_WkGetAffinePos( const CLWK* cp_wk, CLSYS_POS* p_pos );
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetTypeAffinePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type );
+extern void GFL_CLACT_WK_SetTypeAffinePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アフィン変換相対座標個別取得
@@ -748,7 +742,7 @@ GLOBAL void GFL_CLACT_WkSetTypeAffinePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE ty
  *	@return	座標タイプのアフィン変換相対座標
  */
 //-----------------------------------------------------------------------------
-GLOBAL s16 GFL_CLACT_WkGetTypeAffinePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type );
+extern s16 GFL_CLACT_WK_GetTypeAffinePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	拡大縮小値一括設定
@@ -762,7 +756,7 @@ GLOBAL s16 GFL_CLACT_WkGetTypeAffinePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type 
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetScale( CLWK* p_wk, const CLSYS_SCALE* cp_sca );
+extern void GFL_CLACT_WK_SetScale( GFL_CLWK* p_wk, const GFL_CLSCALE* cp_sca );
 //----------------------------------------------------------------------------
 /**
  *	@brief	拡大縮小値一括取得
@@ -771,7 +765,7 @@ GLOBAL void GFL_CLACT_WkSetScale( CLWK* p_wk, const CLSYS_SCALE* cp_sca );
  *	@param	p_sca			拡大縮小値取得先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetScale( const CLWK* cp_wk, CLSYS_SCALE* p_sca );
+extern void GFL_CLACT_WK_GetScale( const GFL_CLWK* cp_wk, GFL_CLSCALE* p_sca );
 //----------------------------------------------------------------------------
 /**
  *	@brief	拡大縮小値個別設定
@@ -786,7 +780,7 @@ GLOBAL void GFL_CLACT_WkGetScale( const CLWK* cp_wk, CLSYS_SCALE* p_sca );
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetTypeScale( CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type );
+extern void GFL_CLACT_WK_SetTypeScale( GFL_CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	拡大縮小値個別取得
@@ -797,7 +791,7 @@ GLOBAL void GFL_CLACT_WkSetTypeScale( CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE typ
  *	@return	座標タイプの拡大縮小値
  */
 //-----------------------------------------------------------------------------
-GLOBAL fx32 GFL_CLACT_WkGetTypeScale( const CLWK* cp_wk, CLSYS_MAT_TYPE type );
+extern fx32 GFL_CLACT_WK_GetTypeScale( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	回転角度設定
@@ -811,7 +805,7 @@ GLOBAL fx32 GFL_CLACT_WkGetTypeScale( const CLWK* cp_wk, CLSYS_MAT_TYPE type );
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetRotation( CLWK* p_wk, u16 rotation );
+extern void GFL_CLACT_WK_SetRotation( GFL_CLWK* p_wk, u16 rotation );
 //----------------------------------------------------------------------------
 /**
  *	@brief	回転角度を取得
@@ -821,7 +815,7 @@ GLOBAL void GFL_CLACT_WkSetRotation( CLWK* p_wk, u16 rotation );
  *	@return	回転角度(0～0xffff 0xffffが360度)
  */
 //-----------------------------------------------------------------------------
-GLOBAL u16  GFL_CLACT_WkGetRotation( const CLWK* cp_wk );
+extern u16  GFL_CLACT_WK_GetRotation( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief		フリップ設定
@@ -833,7 +827,7 @@ GLOBAL u16  GFL_CLACT_WkGetRotation( const CLWK* cp_wk );
  *	*AffineParamがNNS_G2D_RND_AFFINE_OVERWRITE_NONEになっていないと反映されません
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetFlip( CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off );
+extern void GFL_CLACT_WK_SetFlip( GFL_CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
  *	@brief	フリップ設定を取得
@@ -845,7 +839,7 @@ GLOBAL void GFL_CLACT_WkSetFlip( CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_o
  *	@retval	FALSE	フリップ未設定
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_WkGetFlip( const CLWK* cp_wk, CLWK_FLIP_TYPE flip_type );
+extern BOOL GFL_CLACT_WK_GetFlip( const GFL_CLWK* cp_wk, CLWK_FLIP_TYPE flip_type );
 //----------------------------------------------------------------------------
 /**
  *	@brief		オブジェモード設定
@@ -854,7 +848,7 @@ GLOBAL BOOL GFL_CLACT_WkGetFlip( const CLWK* cp_wk, CLWK_FLIP_TYPE flip_type );
  *	@param	mode		オブジェモード
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetObjMode( CLWK* p_wk, GXOamMode mode );
+extern void GFL_CLACT_WK_SetObjMode( GFL_CLWK* p_wk, GXOamMode mode );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オブジェクトモード取得
@@ -867,7 +861,7 @@ GLOBAL void GFL_CLACT_WkSetObjMode( CLWK* p_wk, GXOamMode mode );
  *	@retval	GX_OAM_MODE_BITMAPOBJ	ビットマップOBJ
  */
 //-----------------------------------------------------------------------------
-GLOBAL GXOamMode GFL_CLACT_WkGetObjMode( const CLWK* cp_wk );
+extern GXOamMode GFL_CLACT_WK_GetObjMode( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	モザイクフラグ設定
@@ -876,7 +870,7 @@ GLOBAL GXOamMode GFL_CLACT_WkGetObjMode( const CLWK* cp_wk );
  *	@param	on_off		モザイクON－OFF	TRUE:On	FALSE:Off
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetMosaic( CLWK* p_wk, BOOL on_off );
+extern void GFL_CLACT_WK_SetMosaic( GFL_CLWK* p_wk, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
  *	@brief	モザイクフラグ取得
@@ -887,7 +881,7 @@ GLOBAL void GFL_CLACT_WkSetMosaic( CLWK* p_wk, BOOL on_off );
  *	@retval	FALSE	モザイク未設定
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_WkGetMosaic( const CLWK* cp_wk );
+extern BOOL GFL_CLACT_WK_GetMosaic( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	パレットオフセット設定
@@ -899,7 +893,7 @@ GLOBAL BOOL GFL_CLACT_WkGetMosaic( const CLWK* cp_wk );
  *	パレット番号を使用するようになります。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetPlttOffs( CLWK* p_wk, u8 pal_offs );
+extern void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs );
 //----------------------------------------------------------------------------
 /**
  *	@brief	パレットオフセット取得
@@ -909,7 +903,7 @@ GLOBAL void GFL_CLACT_WkSetPlttOffs( CLWK* p_wk, u8 pal_offs );
  *	@return	pal_offs	パレットオフセット
  */
 //-----------------------------------------------------------------------------
-GLOBAL u8 GFL_CLACT_WkGetPlttOffs( const CLWK* cp_wk );
+extern u8 GFL_CLACT_WK_GetPlttOffs( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	パレットプロクシのアドレス取得
@@ -921,7 +915,7 @@ GLOBAL u8 GFL_CLACT_WkGetPlttOffs( const CLWK* cp_wk );
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetPlttAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
+extern u32 GFL_CLACT_WK_GetPlttAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	新しいパレットプロクシを設定する
@@ -930,7 +924,7 @@ GLOBAL u32 GFL_CLACT_WkGetPlttAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
  *	@param	cp_pltt			設定するパレットプロクシ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_pltt );
+extern void GFL_CLACT_WK_SetPlttProxy( GFL_CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_pltt );
 //----------------------------------------------------------------------------
 /**
  *	@brief	パレットプロクシデータの取得
@@ -939,7 +933,7 @@ GLOBAL void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy*
  *	@param	p_pltt			パレットプロクシ格納先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt );
+extern void GFL_CLACT_WK_GetPlttProxy( const GFL_CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt );
 //----------------------------------------------------------------------------
 /**
  *	@brief	キャラクタデータVramアドレスを取得
@@ -951,7 +945,7 @@ GLOBAL void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProx
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetCharAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
+extern u32 GFL_CLACT_WK_GetCharAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	イメージプロクシを設定
@@ -960,7 +954,7 @@ GLOBAL u32 GFL_CLACT_WkGetCharAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type );
  *	@param	cp_img			設定イメージプロクシ
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img );
+extern void GFL_CLACT_WK_SetImgProxy( GFL_CLWK* p_wk, const NNSG2dImageProxy* cp_img );
 //----------------------------------------------------------------------------
 /**
  *	@brief	イメージプロクシを取得
@@ -969,7 +963,7 @@ GLOBAL void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img 
  *	@param	p_img			イメージプロクシ格納先
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img );
+extern void GFL_CLACT_WK_GetImgProxy( const GFL_CLWK* cp_wk,  NNSG2dImageProxy* p_img );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ソフト優先順位の設定
@@ -979,7 +973,7 @@ GLOBAL void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img
  *	
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetSoftPri( CLWK* p_wk, u8 pri );
+extern void GFL_CLACT_WK_SetSoftPri( GFL_CLWK* p_wk, u8 pri );
 //----------------------------------------------------------------------------
 /**
  *	@brief	ソフト優先順位の取得
@@ -989,7 +983,7 @@ GLOBAL void GFL_CLACT_WkSetSoftPri( CLWK* p_wk, u8 pri );
  *	@return	ソフト優先順位
  */
 //-----------------------------------------------------------------------------
-GLOBAL u8 GFL_CLACT_WkGetSoftPri( const CLWK* cp_wk );
+extern u8 GFL_CLACT_WK_GetSoftPri( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	BG優先順位の設定
@@ -998,7 +992,7 @@ GLOBAL u8 GFL_CLACT_WkGetSoftPri( const CLWK* cp_wk );
  *	@param	pri				BG優先順位
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetBgPri( CLWK* p_wk, u8 pri );
+extern void GFL_CLACT_WK_SetBgPri( GFL_CLWK* p_wk, u8 pri );
 //----------------------------------------------------------------------------
 /**
  *	@brief	BG優先順位を取得
@@ -1008,7 +1002,7 @@ GLOBAL void GFL_CLACT_WkSetBgPri( CLWK* p_wk, u8 pri );
  *	@return	BG優先順位
  */
 //-----------------------------------------------------------------------------
-GLOBAL u8 GFL_CLACT_WkGetBgPri( const CLWK* cp_wk );
+extern u8 GFL_CLACT_WK_GetBgPri( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスを変更
@@ -1017,7 +1011,7 @@ GLOBAL u8 GFL_CLACT_WkGetBgPri( const CLWK* cp_wk );
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq );
+extern void GFL_CLACT_WK_SetAnmSeq( GFL_CLWK* p_wk, u16 anmseq );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスを取得
@@ -1027,7 +1021,7 @@ GLOBAL void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq );
  *	@return	アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-GLOBAL u16 GFL_CLACT_WkGetAnmSeq( const CLWK* cp_wk );
+extern u16 GFL_CLACT_WK_GetAnmSeq( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスの数を取得
@@ -1037,7 +1031,7 @@ GLOBAL u16 GFL_CLACT_WkGetAnmSeq( const CLWK* cp_wk );
  *	@return	アニメーションシーケンスの数
  */
 //-----------------------------------------------------------------------------
-GLOBAL u16 GFL_CLACT_WkGetAnmSeqNum( const CLWK* cp_wk );
+extern u16 GFL_CLACT_WK_GetAnmSeqNum( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスが変わっていたら変更する
@@ -1046,7 +1040,7 @@ GLOBAL u16 GFL_CLACT_WkGetAnmSeqNum( const CLWK* cp_wk );
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAnmSeqDiff( CLWK* p_wk, u16 anmseq );
+extern void GFL_CLACT_WK_SetAnmSeqDiff( GFL_CLWK* p_wk, u16 anmseq );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスを変更する　
@@ -1056,7 +1050,7 @@ GLOBAL void GFL_CLACT_WkSetAnmSeqDiff( CLWK* p_wk, u16 anmseq );
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAnmSeqNoReset( CLWK* p_wk, u16 anmseq );
+extern void GFL_CLACT_WK_SetAnmSeqNoReset( GFL_CLWK* p_wk, u16 anmseq );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションフレームを設定
@@ -1066,7 +1060,7 @@ GLOBAL void GFL_CLACT_WkSetAnmSeqNoReset( CLWK* p_wk, u16 anmseq );
  *	NitroCharacterのアニメーションシーケンス内のコマ番号を指定してください
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAnmFrame( CLWK* p_wk, u16 idx );
+extern void GFL_CLACT_WK_SetAnmFrame( GFL_CLWK* p_wk, u16 idx );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションフレームを進める
@@ -1077,7 +1071,7 @@ GLOBAL void GFL_CLACT_WkSetAnmFrame( CLWK* p_wk, u16 idx );
  *	*逆再生も可能です
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkAddAnmFrame( CLWK* p_wk, fx32 speed );
+extern void GFL_CLACT_WK_AddAnmFrame( GFL_CLWK* p_wk, fx32 speed );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションフレーム数を取得
@@ -1087,7 +1081,7 @@ GLOBAL void GFL_CLACT_WkAddAnmFrame( CLWK* p_wk, fx32 speed );
  *	@return	アニメーションフレーム数
  */
 //-----------------------------------------------------------------------------
-GLOBAL u16 GFL_CLACT_WkGetAnmFrame( const CLWK* cp_wk );
+extern u16 GFL_CLACT_WK_GetAnmFrame( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オートアニメーションフラグ設定
@@ -1096,7 +1090,7 @@ GLOBAL u16 GFL_CLACT_WkGetAnmFrame( const CLWK* cp_wk );
  *	@param	on_off		オートアニメーションOn-Off	TRUE:On	FALSE:Off
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAutoAnmFlag( CLWK* p_wk, BOOL on_off );
+extern void GFL_CLACT_WK_SetAutoAnmFlag( GFL_CLWK* p_wk, BOOL on_off );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オートアニメーションフラグを取得
@@ -1107,7 +1101,7 @@ GLOBAL void GFL_CLACT_WkSetAutoAnmFlag( CLWK* p_wk, BOOL on_off );
  *	@retval	FALSE	オートアニメOFF
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_WkGetAutoAnmFlag( const CLWK* cp_wk );
+extern BOOL GFL_CLACT_WK_GetAutoAnmFlag( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オートアニメーションスピード設定
@@ -1118,7 +1112,7 @@ GLOBAL BOOL GFL_CLACT_WkGetAutoAnmFlag( const CLWK* cp_wk );
  *	*逆再生も可能です
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAutoAnmSpeed( CLWK* p_wk, fx32 speed );
+extern void GFL_CLACT_WK_SetAutoAnmSpeed( GFL_CLWK* p_wk, fx32 speed );
 //----------------------------------------------------------------------------
 /**
  *	@brief	オートアニメーションスピードを取得
@@ -1128,16 +1122,16 @@ GLOBAL void GFL_CLACT_WkSetAutoAnmSpeed( CLWK* p_wk, fx32 speed );
  *	@return	オートアニメーションスピード
  */
 //-----------------------------------------------------------------------------
-GLOBAL fx32 GFL_CLACT_WkGetAutoAnmSpeed( const CLWK* cp_wk );
+extern fx32 GFL_CLACT_WK_GetAutoAnmSpeed( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーション開始
  *
  *	@param	p_wk		セルアクターワーク
- *	GFL_CLACT_WkStopAnmでとめたアニメーションを開始させます。
+ *	GFL_CLACT_WK_StopAnmでとめたアニメーションを開始させます。
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkStartAnm( CLWK* p_wk );
+extern void GFL_CLACT_WK_StartAnm( GFL_CLWK* p_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーション停止
@@ -1145,7 +1139,7 @@ GLOBAL void GFL_CLACT_WkStartAnm( CLWK* p_wk );
  *	@param	p_wk		セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkStopAnm( CLWK* p_wk );
+extern void GFL_CLACT_WK_StopAnm( GFL_CLWK* p_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターワーク	アニメーション動作チェック
@@ -1156,7 +1150,7 @@ GLOBAL void GFL_CLACT_WkStopAnm( CLWK* p_wk );
  *	@retval	FALSE	停止中
  */
 //-----------------------------------------------------------------------------
-GLOBAL BOOL GFL_CLACT_WkCheckAnmActive( const CLWK* cp_wk );
+extern BOOL GFL_CLACT_WK_CheckAnmActive( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションリスタート
@@ -1164,7 +1158,7 @@ GLOBAL BOOL GFL_CLACT_WkCheckAnmActive( const CLWK* cp_wk );
  *	@param	p_wk	セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkResetAnm( CLWK* p_wk );
+extern void GFL_CLACT_WK_ResetAnm( GFL_CLWK* p_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	上書きアニメーション動作モード設定
@@ -1181,7 +1175,7 @@ GLOBAL void GFL_CLACT_WkResetAnm( CLWK* p_wk );
  *		
  */
 //-----------------------------------------------------------------------------
-GLOBAL void GFL_CLACT_WkSetAnmMode( CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode );
+extern void GFL_CLACT_WK_SetAnmMode( GFL_CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode );
 //----------------------------------------------------------------------------
 /**
  *	@brief	上書きアニメーション方式を取得
@@ -1195,7 +1189,7 @@ GLOBAL void GFL_CLACT_WkSetAnmMode( CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode );
  *	@retval	CLSYS_ANMPM_REVERSE_L	往復再生リピート（リバース（順＋逆順方向） ループ）
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk );
+extern CLSYS_ANM_PLAYMODE GFL_CLACT_WK_GetAnmMode( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションシーケンスのユーザー拡張アトリビュートデータの取得
@@ -1207,7 +1201,7 @@ GLOBAL CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk );
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmSeq( const CLWK* cp_wk, u32 seq );
+extern u32 GFL_CLACT_WK_GetUserAttrAnmSeq( const GFL_CLWK* cp_wk, u32 seq );
 //----------------------------------------------------------------------------
 /**
  *	@brief	今のアニメーションシーケンスのユーザー拡張アトリビュートデータの取得
@@ -1218,7 +1212,7 @@ GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmSeq( const CLWK* cp_wk, u32 seq );
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmSeqNow( const CLWK* cp_wk );
+extern u32 GFL_CLACT_WK_GetUserAttrAnmSeqNow( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	アニメーションフレームのユーザー拡張アトリビュートデータの取得
@@ -1231,7 +1225,7 @@ GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmSeqNow( const CLWK* cp_wk );
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmFrame( const CLWK* cp_wk, u32 seq, u32 frame );
+extern u32 GFL_CLACT_WK_GetUserAttrAnmFrame( const GFL_CLWK* cp_wk, u32 seq, u32 frame );
 //----------------------------------------------------------------------------
 /**
  *	@brief	今のアニメーションフレームのユーザー拡張アトリビュートデータの取得
@@ -1242,7 +1236,7 @@ GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmFrame( const CLWK* cp_wk, u32 seq, u32 fram
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmFrameNow( const CLWK* cp_wk );
+extern u32 GFL_CLACT_WK_GetUserAttrAnmFrameNow( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルのユーザー拡張アトリビュートデータの取得
@@ -1254,8 +1248,7 @@ GLOBAL u32 GFL_CLACT_WkGetUserAttrAnmFrameNow( const CLWK* cp_wk );
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-GLOBAL u32 GFL_CLACT_WkGetUserAttrCell( const CLWK* cp_wk, u32 cellidx );
+extern u32 GFL_CLACT_WK_GetUserAttrCell( const GFL_CLWK* cp_wk, u32 cellidx );
 
-#undef	GLOBAL
 #endif		// __CLACT_H__
 

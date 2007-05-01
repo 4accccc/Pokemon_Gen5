@@ -38,7 +38,7 @@
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
-///	CLSYS_REND関係
+///	GFL_CLSYS_REND関係
 //=====================================
 #define CLSYS_DEFFREND_ZOFFS	(1)		// デフォルトで設定する3D用のZオフセット設定
 
@@ -55,7 +55,7 @@ typedef enum{
 
 
 //-------------------------------------
-///	CLUNIT	レンダラータイプ
+///	GFL_CLUNIT	レンダラータイプ
 //=====================================
 #define CLUNIT_RENDTYPE_DEFF	(0)	// デフォルト設定レンダラー
 #define CLUNIT_RENDTYPE_USER	(1)	// ユーザー定義レンダラー
@@ -103,7 +103,7 @@ typedef struct _CLSYS_REND{
 	NNSG2dRendererInstance rend;
 	NNSG2dRenderSurface*   p_surface;
 	u32	surface_num;
-} CLSYS_REND;
+} GFL_CLSYS_REND;
 
 //-------------------------------------
 ///	TRMAN　転送データ格納領域
@@ -132,7 +132,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	CLSYS_OAMMAN	oamman;
-	CLSYS_REND		rend;
+	GFL_CLSYS_REND		rend;
 	CLSYS_TRMAN		trman;
 	u16 pltt_no[CLSYS_DRAW_MAX];	// 上書きするパレットナンバー
 } CLSYS;
@@ -169,15 +169,15 @@ typedef struct {
 
 
 //-------------------------------------
-///	CLWK構造体
+///	GFL_CLWK構造体
 //=====================================
 typedef struct _CLWK{
-	CLWK*					p_next;			// 次のデータ
-	CLWK*					p_last;			// 前のデータ
-	CLUNIT*					p_unit;			// 自分の親セルアクターユニット
-	CLSYS_POS				pos;			// 座標
-	CLSYS_POS				affinepos;		// アフィン座標
-	CLSYS_SCALE				scale;			// 拡大
+	GFL_CLWK*				p_next;			// 次のデータ
+	GFL_CLWK*				p_last;			// 前のデータ
+	GFL_CLUNIT*				p_unit;			// 自分の親セルアクターユニット
+	GFL_CLACTPOS			pos;			// 座標
+	GFL_CLACTPOS			affinepos;		// アフィン座標
+	GFL_CLSCALE				scale;			// 拡大
 	NNSG2dImageProxy		img_proxy;		// キャラクタ/テクスチャプロキシ
 	NNSG2dImagePaletteProxy pltt_proxy;		// パレットプロキシ
 	fx32					auto_anm_speed;	// オートアニメスピード
@@ -199,20 +199,20 @@ typedef struct _CLWK{
 	u32						dummy:1;		// あまりbit
 
 	CLWK_ANMDATA			anmdata;		// セルアニメデータ
-} CLWK;
+} GFL_CLWK;
 
 
 //-------------------------------------
 ///	CLUNT構造体
 //=====================================
 typedef struct _CLUNIT{
-	CLWK*	p_wk;		// セルワーク
-	CLWK*	p_drawlist;	// 描画リスト
-	CLSYS_REND* p_rend;	// 関連付けられているレンダラー
+	GFL_CLWK*	p_wk;		// セルワーク
+	GFL_CLWK*	p_drawlist;	// 描画リスト
+	GFL_CLSYS_REND* p_rend;	// 関連付けられているレンダラー
 	u16		wk_num;		// セルワーク数
 	u8		rend_type;// レンダラータイプ	（ユーザー/デフォルト）
 	u8		draw_flag;// 描画ON_OFFフラグ
-} CLUNIT;
+} GFL_CLUNIT;
 
 
 
@@ -260,7 +260,7 @@ static const u16 CLSYS_DRAW_TYPEtoNNS_G2D_VRAM_TYPE[ CLSYS_DRAW_MAX ] = {
 //-------------------------------------
 ///	CLSYS関係
 //=====================================
-static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, HEAPID heapID );
+static void CLSYS_DefaultRendInit( GFL_CLSYS_REND* p_rend, const GFL_CLSYS_INIT* cp_data, HEAPID heapID );
 static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8 pal_offs );
 
 
@@ -278,19 +278,19 @@ static void OAMMAN_ObjTrans( OAMMAN_DATA* p_obj );
 static void OAMMAN_ObjClearBuff( OAMMAN_DATA* p_obj );
 
 //-------------------------------------
-///	CLSYS_REND関係
+///	GFL_CLSYS_REND関係
 //=====================================
-static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
-static void REND_SysExit( CLSYS_REND* p_rend );
-static void REND_SysBeginDraw( CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgProxy, const NNSG2dImagePaletteProxy* pPltProxy );
-static void REND_SysEndDraw( CLSYS_REND* p_rend );
-static void REND_SysSetAffine( CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode );
-static void REND_SysSetFlip( CLSYS_REND* p_rend, BOOL vflip, BOOL hflip );
-static void REND_SysSetOverwrite( CLSYS_REND* p_rend, u8 over_write );
-static void REND_SysSetMosaicFlag( CLSYS_REND* p_rend, BOOL on_off );
-static void REND_SysSetOBJMode( CLSYS_REND* p_rend, GXOamMode objmode );
-static void REND_SysSetBGPriority( CLSYS_REND* p_rend, u8 pri );
-static void REND_SurfaceObjCreate( NNSG2dRenderSurface* p_surface, const REND_SURFACE_INIT* cp_data );
+static void REND_SysInit( GFL_CLSYS_REND* p_rend, const GFL_REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID );
+static void REND_SysExit( GFL_CLSYS_REND* p_rend );
+static void REND_SysBeginDraw( GFL_CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgProxy, const NNSG2dImagePaletteProxy* pPltProxy );
+static void REND_SysEndDraw( GFL_CLSYS_REND* p_rend );
+static void REND_SysSetAffine( GFL_CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode );
+static void REND_SysSetFlip( GFL_CLSYS_REND* p_rend, BOOL vflip, BOOL hflip );
+static void REND_SysSetOverwrite( GFL_CLSYS_REND* p_rend, u8 over_write );
+static void REND_SysSetMosaicFlag( GFL_CLSYS_REND* p_rend, BOOL on_off );
+static void REND_SysSetOBJMode( GFL_CLSYS_REND* p_rend, GXOamMode objmode );
+static void REND_SysSetBGPriority( GFL_CLSYS_REND* p_rend, u8 pri );
+static void REND_SurfaceObjCreate( NNSG2dRenderSurface* p_surface, const GFL_REND_SURFACE_INIT* cp_data );
 static void REND_SurfaceObjSetPos( NNSG2dRenderSurface* p_surface, s16 x, s16 y );
 static void REND_SurfaceObjSetSize( NNSG2dRenderSurface* p_surface, s16 width, s16 height );
 static void REND_SurfaceObjSetType( NNSG2dRenderSurface* p_surface, CLSYS_DRAW_TYPE type );
@@ -332,36 +332,36 @@ static BOOL TRMAN_TrDataCheckClean( const TRMAN_DATA* cp_data );
 
 
 //-------------------------------------
-///	CLUNIT	関係
+///	GFL_CLUNIT	関係
 //=====================================
-static CLWK* CLUNIT_SysGetCleanWk( CLUNIT* p_unit );
-static void CLUNIT_DrawListAdd( CLUNIT* p_unit, CLWK* p_wk );
-static void CLUNIT_DrawListDel( CLUNIT* p_unit, CLWK* p_wk );
-static CLWK* CLUNIT_DrawListSarchTop( CLWK* p_top, u8 pri );
-static CLWK* CLUNIT_DrawListSarchBottom( CLWK* p_bottom, u8 pri );
+static GFL_CLWK* CLUNIT_SysGetCleanWk( GFL_CLUNIT* p_unit );
+static void CLUNIT_DrawListAdd( GFL_CLUNIT* p_unit, GFL_CLWK* p_wk );
+static void CLUNIT_DrawListDel( GFL_CLUNIT* p_unit, GFL_CLWK* p_wk );
+static GFL_CLWK* CLUNIT_DrawListSarchTop( GFL_CLWK* p_top, u8 pri );
+static GFL_CLWK* CLUNIT_DrawListSarchBottom( GFL_CLWK* p_bottom, u8 pri );
 
 
 //-------------------------------------
-///	CLWK	関係
+///	GFL_CLWK	関係
 //=====================================
-static void CLWK_SysClean( CLWK* p_wk );
-static void CLWK_SysDraw( CLWK* p_wk, CLSYS_REND* p_rend );
-static void CLWK_SysDrawSetRend( CLWK* p_wk, CLSYS_REND* p_rend );
-static void CLWK_SysDrawCell( CLWK* p_wk );
-static void CLWK_SysAutoAnm( CLWK* p_wk );
-static void CLWK_SysSetClwkData( CLWK* p_wk, const CLWK_DATA* cp_data, u16 setsf );
-static void CLWK_SysSetClwkRes( CLWK* p_wk, const CLWK_RES* cp_res );
-static void CLWK_SysGetSetSfPos( const CLWK* cp_wk, u16 setsf, CLSYS_POS* p_pos );
+static void CLWK_SysClean( GFL_CLWK* p_wk );
+static void CLWK_SysDraw( GFL_CLWK* p_wk, GFL_CLSYS_REND* p_rend );
+static void CLWK_SysDrawSetRend( GFL_CLWK* p_wk, GFL_CLSYS_REND* p_rend );
+static void CLWK_SysDrawCell( GFL_CLWK* p_wk );
+static void CLWK_SysAutoAnm( GFL_CLWK* p_wk );
+static void CLWK_SysSetClwkData( GFL_CLWK* p_wk, const GFL_CLWK_DATA* cp_data, u16 setsf );
+static void CLWK_SysSetClwkRes( GFL_CLWK* p_wk, const GFL_CLWK_RES* cp_res );
+static void CLWK_SysGetSetSfPos( const GFL_CLWK* cp_wk, u16 setsf, GFL_CLACTPOS* p_pos );
 
 //-------------------------------------
 ///	CLWK_ANMDATA	関係
 //=====================================
-static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
+static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID );
 static void CLWK_AnmDataExit( CLWK_ANMDATA* p_anmdata );
-static CLWK_ANMTYPE CLWK_AnmDataGetType( const CLWK_RES* cp_res );
-static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
-static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
-static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID );
+static CLWK_ANMTYPE CLWK_AnmDataGetType( const GFL_CLWK_RES* cp_res );
+static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID );
+static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID );
+static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID );
 static void CLWK_AnmDataDeleteCellData( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataDeleteTRCellData( CLWK_ANMDATA* p_anmdata );
 static void CLWK_AnmDataDeleteMCellData( CLWK_ANMDATA* p_anmdata );
@@ -435,7 +435,7 @@ static u32 CLWK_AnmDataGetAnmSeqNumMCell( const CLWK_ANMDATA* cp_anmdata );
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID )
+void GFL_CLACT_Init( const GFL_CLSYS_INIT* cp_data, HEAPID heapID )
 {
 	int i;
 
@@ -471,7 +471,7 @@ void GFL_CLACT_SysInit( const CLSYS_INIT* cp_data, HEAPID heapID )
  *	@param	none
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysExit( void )
+void GFL_CLACT_Exit( void )
 {
 	GF_ASSERT( pClsys );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -493,7 +493,7 @@ void GFL_CLACT_SysExit( void )
  *	*メインループの最後に呼ぶようにしておくと確実だと思います。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysMain( void )
+void GFL_CLACT_Main( void )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( pClsys ){
@@ -563,13 +563,13 @@ void GFL_CLACT_SysVblankTransOnly( void )
  *	@return	作成したレンダラーシステム
  */
 //-----------------------------------------------------------------------------
-CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
+GFL_CLSYS_REND* GFL_CLACT_USERREND_Create( const GFL_REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
 {
-	CLSYS_REND* p_rend;
+	GFL_CLSYS_REND* p_rend;
 	//OS_Printf( "[%d]\n", __LINE__ );
 	GF_ASSERT( cp_data );
 	
-	p_rend = GFL_HEAP_AllocMemory( heapID, sizeof(CLSYS_REND) );
+	p_rend = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_CLSYS_REND) );
 	REND_SysInit( p_rend, cp_data, data_num, heapID );
 	return p_rend;
 }
@@ -580,7 +580,7 @@ CLSYS_REND* GFL_CLACT_UserRendCreate( const REND_SURFACE_INIT* cp_data, u32 data
  *	@param	p_rend			ユーザー定義サーフェースデータ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendDelete( CLSYS_REND* p_rend )
+void GFL_CLACT_USERREND_Delete( GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_rend );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -598,7 +598,7 @@ void GFL_CLACT_UserRendDelete( CLSYS_REND* p_rend )
  *	@param	cp_pos			設定する座標
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendSetSurfacePos( CLSYS_REND* p_rend, u32 idx, const CLSYS_POS* cp_pos )
+void GFL_CLACT_USERREND_SetSurfacePos( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_pos )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( p_rend->surface_num > idx );
@@ -615,7 +615,7 @@ void GFL_CLACT_UserRendSetSurfacePos( CLSYS_REND* p_rend, u32 idx, const CLSYS_P
  *	@param	p_pos			座標格納先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendGetSurfacePos( const CLSYS_REND* cp_rend, u32 idx, CLSYS_POS* p_pos )
+void GFL_CLACT_USERREND_GetSurfacePos( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_pos )
 {
 	GF_ASSERT( cp_rend );
 	GF_ASSERT( cp_rend->surface_num > idx );
@@ -633,7 +633,7 @@ void GFL_CLACT_UserRendGetSurfacePos( const CLSYS_REND* cp_rend, u32 idx, CLSYS_
  *	@param	cp_size			サイズ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendSetSurfaceSize( CLSYS_REND* p_rend, u32 idx, const CLSYS_POS* cp_size )
+void GFL_CLACT_USERREND_SetSurfaceSize( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_size )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( p_rend->surface_num > idx );
@@ -650,7 +650,7 @@ void GFL_CLACT_UserRendSetSurfaceSize( CLSYS_REND* p_rend, u32 idx, const CLSYS_
  *	@param	p_size			サイズ取得先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendGetSurfaceSize( const CLSYS_REND* cp_rend, u32 idx, CLSYS_POS* p_size )
+void GFL_CLACT_USERREND_GetSurfaceSize( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_size )
 {
 	GF_ASSERT( cp_rend );
 	GF_ASSERT( cp_rend->surface_num > idx );
@@ -667,7 +667,7 @@ void GFL_CLACT_UserRendGetSurfaceSize( const CLSYS_REND* cp_rend, u32 idx, CLSYS
  *	@param	type			サーフェースタイプ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UserRendSetSurfaceType( CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_TYPE type )
+void GFL_CLACT_USERREND_SetSurfaceType( GFL_CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_TYPE type )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( p_rend->surface_num > idx );
@@ -685,7 +685,7 @@ void GFL_CLACT_UserRendSetSurfaceType( CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_T
  *	@return	サーフェースタイプ	（CLSYS_DRAW_TYPE）
  */
 //-----------------------------------------------------------------------------
-CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_rend, u32 idx )
+CLSYS_DRAW_TYPE GFL_CLACT_USERREND_GetSurfaceType( const GFL_CLSYS_REND* cp_rend, u32 idx )
 {
 	GF_ASSERT( cp_rend );
 	GF_ASSERT( cp_rend->surface_num > idx );
@@ -695,7 +695,7 @@ CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_rend, u32
 
 
 //-------------------------------------
-///	CLUNIT関係
+///	GFL_CLUNIT関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
@@ -707,28 +707,28 @@ CLSYS_DRAW_TYPE GFL_CLACT_UserRendGetSurfaceType( const CLSYS_REND* cp_rend, u32
  *	@return	ユニットポインタ
  */
 //-----------------------------------------------------------------------------
-CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID )
+GFL_CLUNIT* GFL_CLACT_UNIT_Create( u16 wknum, HEAPID heapID )
 {
-	CLUNIT* p_unit;
+	GFL_CLUNIT* p_unit;
 	int i;
 	//OS_Printf( "[%d]\n", __LINE__ );
 
 	// 実体を生成
-	p_unit = GFL_HEAP_AllocMemory( heapID, sizeof(CLUNIT) );
-	GFL_STD_MemFill( p_unit, 0, sizeof(CLUNIT) );
+	p_unit = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_CLUNIT) );
+	GFL_STD_MemFill( p_unit, 0, sizeof(GFL_CLUNIT) );
 
 	// ワーク作成
-	p_unit->p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(CLWK)*wknum );
+	p_unit->p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_CLWK)*wknum );
 	p_unit->wk_num = wknum;
 	for( i=0; i<wknum; i++ ){
 		CLWK_SysClean( &p_unit->p_wk[i] );
 	}
 
 	// デフォルトレンダラー設定
-	GFL_CLACT_UnitSetDefaultRend( p_unit );
+	GFL_CLACT_UNIT_SetDefaultRend( p_unit );
 	
 	// 表示ON
-	GFL_CLACT_UnitSetDrawFlag( p_unit, TRUE );
+	GFL_CLACT_UNIT_SetDrawFlag( p_unit, TRUE );
 
 	return p_unit;
 }
@@ -740,7 +740,7 @@ CLUNIT* GFL_CLACT_UnitCreate( u16 wknum, HEAPID heapID )
  *	@param	p_unit			セルアクターユニット
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UnitDelete( CLUNIT* p_unit )
+void GFL_CLACT_UNIT_Delete( GFL_CLUNIT* p_unit )
 {
 	int i;
 	
@@ -750,7 +750,7 @@ void GFL_CLACT_UnitDelete( CLUNIT* p_unit )
 	// 全ワーク破棄
 	for( i=0; i<p_unit->wk_num; i++ ){
 		if( p_unit->p_wk[i].p_next != NULL ){
-			GFL_CLACT_WkDel( &p_unit->p_wk[i] );
+			GFL_CLACT_WK_Remove( &p_unit->p_wk[i] );
 		}
 	}
 	// ワーク破棄
@@ -766,9 +766,9 @@ void GFL_CLACT_UnitDelete( CLUNIT* p_unit )
  *	@param	p_unit			セルアクターユニット
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UnitDraw( CLUNIT* p_unit )
+void GFL_CLACT_UNIT_Draw( GFL_CLUNIT* p_unit )
 {
-	CLWK* p_wk;
+	GFL_CLWK* p_wk;
 
 	GF_ASSERT( p_unit );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -808,7 +808,7 @@ void GFL_CLACT_UnitDraw( CLUNIT* p_unit )
  *	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UnitSetDrawFlag( CLUNIT* p_unit, BOOL on_off )
+void GFL_CLACT_UNIT_SetDrawFlag( GFL_CLUNIT* p_unit, BOOL on_off )
 {
 	GF_ASSERT( p_unit );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -825,7 +825,7 @@ void GFL_CLACT_UnitSetDrawFlag( CLUNIT* p_unit, BOOL on_off )
  *	@retval	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_UnitGetDrawFlag( const CLUNIT* cp_unit )
+BOOL GFL_CLACT_UNIT_GetDrawFlag( const GFL_CLUNIT* cp_unit )
 {
 	GF_ASSERT( cp_unit );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -841,14 +841,14 @@ BOOL GFL_CLACT_UnitGetDrawFlag( const CLUNIT* cp_unit )
  *
  *	この関数で、好きな設定をしたレンダラーを使用することが出来るようになります。
  *	＞ユーザー独自のレンダラーを作成する
- *		GFL_CLACT_UserRend～関数で作成できます。
+ *		GFL_CLACT_USERREND_～関数で作成できます。
  *
  *  ＞注意事項
  *	　　座標設定するときに渡すsetsfの値は、ユーザー独自レンダラー
  *	　　に登録したサーフェースのインデックス番号となります。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UnitSetUserRend( CLUNIT* p_unit, CLSYS_REND* p_rend )
+void GFL_CLACT_UNIT_SetUserRend( GFL_CLUNIT* p_unit, GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_unit );
 	GF_ASSERT( p_rend );
@@ -867,7 +867,7 @@ void GFL_CLACT_UnitSetUserRend( CLUNIT* p_unit, CLSYS_REND* p_rend )
  *	使用するように戻すことが出来ます。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit )
+void GFL_CLACT_UNIT_SetDefaultRend( GFL_CLUNIT* p_unit )
 {
 	GF_ASSERT( pClsys );
 	GF_ASSERT( p_unit );
@@ -878,7 +878,7 @@ void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit )
 
 
 //-------------------------------------
-///	CLWK関係
+///	GFL_CLWK関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
@@ -891,7 +891,7 @@ void GFL_CLACT_UnitSetDefaultRend( CLUNIT* p_unit )
  *	@param	cp_canm			セルアニメーションデータバンク
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm )
+void GFL_CLACT_WK_SetCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm )
 {
 	p_res->cp_img	= cp_img;
 	p_res->cp_pltt	= cp_pltt;
@@ -914,9 +914,9 @@ void GFL_CLACT_WkSetCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img
  *	@param	cp_char     キャラクタデータ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetTrCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dCharacterData* cp_char )
+void GFL_CLACT_WK_SetTrCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dCharacterData* cp_char )
 {
-	GFL_CLACT_WkSetCellResData( p_res, cp_img, cp_pltt, p_cell, cp_canm );
+	GFL_CLACT_WK_SetCellResData( p_res, cp_img, cp_pltt, p_cell, cp_canm );
 	p_res->cp_char = cp_char;
 }
 
@@ -933,9 +933,9 @@ void GFL_CLACT_WkSetTrCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_i
  *	@param	cp_mcanm		マルチセルアニメーションデータバンク
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm )
+void GFL_CLACT_WK_SetMCellResData( GFL_CLWK_RES* p_res, const NNSG2dImageProxy* cp_img, const NNSG2dImagePaletteProxy* cp_pltt, NNSG2dCellDataBank* p_cell, const NNSG2dCellAnimBankData* cp_canm, const NNSG2dMultiCellDataBank* cp_mcell, const NNSG2dMultiCellAnimBankData* cp_mcanm )
 {
-	GFL_CLACT_WkSetCellResData( p_res, cp_img, cp_pltt, p_cell, cp_canm );
+	GFL_CLACT_WK_SetCellResData( p_res, cp_img, cp_pltt, p_cell, cp_canm );
 	p_res->cp_mcell = cp_mcell;
 	p_res->cp_mcanm = cp_mcanm;
 }
@@ -953,12 +953,12 @@ void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_im
  *	@return	登録したセルアクターワーク
  *
  *	【setsfの説明】
- *		CLUNITの使用するレンダラーシステムを変更していないときは
+ *		GFL_CLUNITの使用するレンダラーシステムを変更していないときは
  *		CLSYS_DEFREND_TYPEの値を指定する
  *		・CLSYS_DEFREND_MAIN指定時	pos_x/yがメイン画面左上座標からの相対座標になる。
  *		・CLSYS_DEFREND_SUB指定時	pos_x/yがサブ画面左上座標からの相対座標になる。
  *		
- *		独自のレンダラーシステムをCLUNITに設定しているときは、
+ *		独自のレンダラーシステムをGFL_CLUNITに設定しているときは、
  *		サーフェースの要素数を指定することで、
  *		指定されたサーフェース左上座標からの相対座標になる。
  *
@@ -966,9 +966,9 @@ void GFL_CLACT_WkSetMCellResData( CLWK_RES* p_res, const NNSG2dImageProxy* cp_im
  *		CLWK_SETSF_NONEを指定すると絶対座標設定になる
  */
 //-----------------------------------------------------------------------------
-CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
+GFL_CLWK* GFL_CLACT_WK_Add( GFL_CLUNIT* p_unit, const GFL_CLWK_DATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
 {
-	CLWK* p_wk;
+	GFL_CLWK* p_wk;
 	//OS_Printf( "[%d]\n", __LINE__ );
 	
 	// 空いているワークを取得
@@ -988,7 +988,7 @@ CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES*
 
 	// 描画リストに登録
 	CLUNIT_DrawListAdd( p_unit, p_wk );
-	GFL_CLACT_WkSetDrawFlag( p_wk, TRUE );
+	GFL_CLACT_WK_SetDrawFlag( p_wk, TRUE );
 
 	return p_wk;
 }
@@ -1006,22 +1006,22 @@ CLWK* GFL_CLACT_WkAdd( CLUNIT* p_unit, const CLWK_DATA* cp_data, const CLWK_RES*
  *	@return	登録したセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, const CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
+GFL_CLWK* GFL_CLACT_WK_AddAffine( GFL_CLUNIT* p_unit, const GFL_CLWK_AFFINEDATA* cp_data, const GFL_CLWK_RES* cp_res, u16 setsf, HEAPID heapID )
 {
-	CLWK* p_wk;
+	GFL_CLWK* p_wk;
 	GF_ASSERT( cp_data );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	
 	// 登録
-	p_wk = GFL_CLACT_WkAdd( p_unit, &cp_data->clwkdata, cp_res, setsf, heapID );
+	p_wk = GFL_CLACT_WK_Add( p_unit, &cp_data->clwkdata, cp_res, setsf, heapID );
 
 	// アフィン設定
-	GFL_CLACT_WkSetTypeAffinePos( p_wk, cp_data->affinepos_x, CLSYS_MAT_X );
-	GFL_CLACT_WkSetTypeAffinePos( p_wk, cp_data->affinepos_x, CLSYS_MAT_Y );
-	GFL_CLACT_WkSetTypeScale( p_wk, cp_data->scale_x, CLSYS_MAT_X );
-	GFL_CLACT_WkSetTypeScale( p_wk, cp_data->scale_y, CLSYS_MAT_Y );
-	GFL_CLACT_WkSetRotation( p_wk, cp_data->rotation );
-	GFL_CLACT_WkSetAffineParam( p_wk, cp_data->affine_type );
+	GFL_CLACT_WK_SetTypeAffinePos( p_wk, cp_data->affinepos_x, CLSYS_MAT_X );
+	GFL_CLACT_WK_SetTypeAffinePos( p_wk, cp_data->affinepos_x, CLSYS_MAT_Y );
+	GFL_CLACT_WK_SetTypeScale( p_wk, cp_data->scale_x, CLSYS_MAT_X );
+	GFL_CLACT_WK_SetTypeScale( p_wk, cp_data->scale_y, CLSYS_MAT_Y );
+	GFL_CLACT_WK_SetRotation( p_wk, cp_data->rotation );
+	GFL_CLACT_WK_SetAffineParam( p_wk, cp_data->affine_type );
 
 	return p_wk;
 }
@@ -1033,7 +1033,7 @@ CLWK* GFL_CLACT_WkAddAffine( CLUNIT* p_unit, const CLWK_AFFINEDATA* cp_data, con
  *	@param	p_wk	破棄するセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkDel( CLWK* p_wk )
+void GFL_CLACT_WK_Remove( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1059,7 +1059,7 @@ void GFL_CLACT_WkDel( CLWK* p_wk )
  *	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetDrawFlag( CLWK* p_wk, BOOL on_off )
+void GFL_CLACT_WK_SetDrawFlag( GFL_CLWK* p_wk, BOOL on_off )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1076,7 +1076,7 @@ void GFL_CLACT_WkSetDrawFlag( CLWK* p_wk, BOOL on_off )
  *	@retval	FALSE	非表示
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_WkGetDrawFlag( const CLWK* cp_wk )
+BOOL GFL_CLACT_WK_GetDrawFlag( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1092,10 +1092,10 @@ BOOL GFL_CLACT_WkGetDrawFlag( const CLWK* cp_wk )
  *	@param	setsf			サーフェースインデックス
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetPos( CLWK* p_wk, const CLSYS_POS* cp_pos, u16 setsf )
+void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16 setsf )
 {
-	CLSYS_POS sf_pos;
-	CLSYS_POS wk_pos;
+	GFL_CLACTPOS sf_pos;
+	GFL_CLACTPOS wk_pos;
 
 	GF_ASSERT( cp_pos );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1106,7 +1106,7 @@ void GFL_CLACT_WkSetPos( CLWK* p_wk, const CLSYS_POS* cp_pos, u16 setsf )
 	// 絶対座標にして設定
 	wk_pos.x = cp_pos->x + sf_pos.x;
 	wk_pos.y = cp_pos->y + sf_pos.y;
-	GFL_CLACT_WkSetWldPos( p_wk, &wk_pos );
+	GFL_CLACT_WK_SetWldPos( p_wk, &wk_pos );
 }
 
 //----------------------------------------------------------------------------
@@ -1118,9 +1118,9 @@ void GFL_CLACT_WkSetPos( CLWK* p_wk, const CLSYS_POS* cp_pos, u16 setsf )
  *	@param	setsf			サーフェースインデックス
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetPos( const CLWK* cp_wk, CLSYS_POS* p_pos, u16 setsf )
+void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16 setsf )
 {
-	CLSYS_POS sf_pos;
+	GFL_CLACTPOS sf_pos;
 
 	GF_ASSERT( p_pos );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1129,7 +1129,7 @@ void GFL_CLACT_WkGetPos( const CLWK* cp_wk, CLSYS_POS* p_pos, u16 setsf )
 	CLWK_SysGetSetSfPos( cp_wk, setsf, &sf_pos );
 
 	// 自分の座標を取得する
-	GFL_CLACT_WkGetWldPos( cp_wk, p_pos );
+	GFL_CLACT_WK_GetWldPos( cp_wk, p_pos );
 
 	// 相対座標に変更する
 	p_pos->x -= sf_pos.x;
@@ -1146,9 +1146,9 @@ void GFL_CLACT_WkGetPos( const CLWK* cp_wk, CLSYS_POS* p_pos, u16 setsf )
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetTypePos( CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type )
+void GFL_CLACT_WK_SetTypePos( GFL_CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type )
 {
-	CLSYS_POS sf_pos;
+	GFL_CLACTPOS sf_pos;
 	//OS_Printf( "[%d]\n", __LINE__ );
 	// 設定サーフェースの座標を取得する
 	CLWK_SysGetSetSfPos( p_wk, setsf, &sf_pos );
@@ -1158,7 +1158,7 @@ void GFL_CLACT_WkSetTypePos( CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type
 	}else{
 		pos += sf_pos.y;
 	}
-	GFL_CLACT_WkSetWldTypePos( p_wk, pos, type );
+	GFL_CLACT_WK_SetWldTypePos( p_wk, pos, type );
 }
 
 //----------------------------------------------------------------------------
@@ -1172,9 +1172,9 @@ void GFL_CLACT_WkSetTypePos( CLWK* p_wk, s16 pos, u16 setsf, CLSYS_MAT_TYPE type
  *	@return	座標タイプのサーフェース内相対座標
  */
 //-----------------------------------------------------------------------------
-s16 GFL_CLACT_WkGetTypePos( const CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type )
+s16 GFL_CLACT_WK_GetTypePos( const GFL_CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type )
 {
-	CLSYS_POS sf_pos;
+	GFL_CLACTPOS sf_pos;
 	s16 pos;
 
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1182,7 +1182,7 @@ s16 GFL_CLACT_WkGetTypePos( const CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type )
 	CLWK_SysGetSetSfPos( cp_wk, setsf, &sf_pos );
 
 	// 自分の座標を取得する
-	pos = GFL_CLACT_WkGetWldTypePos( cp_wk, type );
+	pos = GFL_CLACT_WK_GetWldTypePos( cp_wk, type );
 
 	// 相対座標に変更する
 	if( type == CLSYS_MAT_X ){
@@ -1201,7 +1201,7 @@ s16 GFL_CLACT_WkGetTypePos( const CLWK* cp_wk, u16 setsf, CLSYS_MAT_TYPE type )
  *	@param	cp_pos			座標
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetWldPos( CLWK* p_wk, const CLSYS_POS* cp_pos )
+void GFL_CLACT_WK_SetWldPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos )
 {
 	GF_ASSERT( cp_pos );
 	GF_ASSERT( p_wk );
@@ -1217,7 +1217,7 @@ void GFL_CLACT_WkSetWldPos( CLWK* p_wk, const CLSYS_POS* cp_pos )
  *	@param	p_pos			座標格納先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetWldPos( const CLWK* cp_wk, CLSYS_POS* p_pos )
+void GFL_CLACT_WK_GetWldPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_pos );
@@ -1234,7 +1234,7 @@ void GFL_CLACT_WkGetWldPos( const CLWK* cp_wk, CLSYS_POS* p_pos )
  *	@param	type			座標タイプ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetWldTypePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
+void GFL_CLACT_WK_SetWldTypePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( CLSYS_MAT_MAX > type );
@@ -1256,7 +1256,7 @@ void GFL_CLACT_WkSetWldTypePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
  *	@return	座標タイプの絶対座標
  */
 //-----------------------------------------------------------------------------
-s16 GFL_CLACT_WkGetWldTypePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
+s16 GFL_CLACT_WK_GetWldTypePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 {
 	s16 pos;
 	GF_ASSERT( cp_wk );
@@ -1283,7 +1283,7 @@ s16 GFL_CLACT_WkGetWldTypePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
  *		CLSYS_AFFINETYPE_DOUBLE	倍角アフィン変換方式に設定
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAffineParam( CLWK* p_wk, CLSYS_AFFINETYPE affine )
+void GFL_CLACT_WK_SetAffineParam( GFL_CLWK* p_wk, CLSYS_AFFINETYPE affine )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( CLSYS_AFFINETYPE_NUM > affine );
@@ -1302,7 +1302,7 @@ void GFL_CLACT_WkSetAffineParam( CLWK* p_wk, CLSYS_AFFINETYPE affine )
  *	@retval	CLSYS_AFFINETYPE_DOUBLE	倍角アフィン変換方式に設定
  */
 //-----------------------------------------------------------------------------
-CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const CLWK* cp_wk )
+CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1317,7 +1317,7 @@ CLSYS_AFFINETYPE GFL_CLACTWkGetAffineParam( const CLWK* cp_wk )
  *	@param	cp_pos		アフィン変換相対座標
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAffinePos( CLWK* p_wk, const CLSYS_POS* cp_pos )
+void GFL_CLACT_WK_SetAffinePos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_pos );
@@ -1333,7 +1333,7 @@ void GFL_CLACT_WkSetAffinePos( CLWK* p_wk, const CLSYS_POS* cp_pos )
  *	@param	p_pos		アフィン変換相対座標取得先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetAffinePos( const CLWK* cp_wk, CLSYS_POS* p_pos )
+void GFL_CLACT_WK_GetAffinePos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_pos );
@@ -1350,7 +1350,7 @@ void GFL_CLACT_WkGetAffinePos( const CLWK* cp_wk, CLSYS_POS* p_pos )
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetTypeAffinePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
+void GFL_CLACT_WK_SetTypeAffinePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( CLSYS_MAT_MAX > type );
@@ -1372,7 +1372,7 @@ void GFL_CLACT_WkSetTypeAffinePos( CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
  *	@return	座標タイプのアフィン変換相対座標
  */
 //-----------------------------------------------------------------------------
-s16 GFL_CLACT_WkGetTypeAffinePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
+s16 GFL_CLACT_WK_GetTypeAffinePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 {
 	s16 pos;
 
@@ -1401,7 +1401,7 @@ s16 GFL_CLACT_WkGetTypeAffinePos( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetScale( CLWK* p_wk, const CLSYS_SCALE* cp_sca )
+void GFL_CLACT_WK_SetScale( GFL_CLWK* p_wk, const GFL_CLSCALE* cp_sca )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_sca );
@@ -1417,7 +1417,7 @@ void GFL_CLACT_WkSetScale( CLWK* p_wk, const CLSYS_SCALE* cp_sca )
  *	@param	p_sca			拡大縮小値取得先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetScale( const CLWK* cp_wk, CLSYS_SCALE* p_sca )
+void GFL_CLACT_WK_GetScale( const GFL_CLWK* cp_wk, GFL_CLSCALE* p_sca )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_sca );
@@ -1439,7 +1439,7 @@ void GFL_CLACT_WkGetScale( const CLWK* cp_wk, CLSYS_SCALE* p_sca )
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetTypeScale( CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type )
+void GFL_CLACT_WK_SetTypeScale( GFL_CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( CLSYS_MAT_MAX > type );
@@ -1461,7 +1461,7 @@ void GFL_CLACT_WkSetTypeScale( CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type )
  *	@return	座標タイプの拡大縮小値
  */
 //-----------------------------------------------------------------------------
-fx32 GFL_CLACT_WkGetTypeScale( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
+fx32 GFL_CLACT_WK_GetTypeScale( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 {
 	fx32 scale;
 
@@ -1490,7 +1490,7 @@ fx32 GFL_CLACT_WkGetTypeScale( const CLWK* cp_wk, CLSYS_MAT_TYPE type )
  *	が設定されていないと描画に反映されません。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetRotation( CLWK* p_wk, u16 rotation )
+void GFL_CLACT_WK_SetRotation( GFL_CLWK* p_wk, u16 rotation )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1506,7 +1506,7 @@ void GFL_CLACT_WkSetRotation( CLWK* p_wk, u16 rotation )
  *	@return	回転角度(0～0xffff 0xffffが360度)
  */
 //-----------------------------------------------------------------------------
-u16  GFL_CLACT_WkGetRotation( const CLWK* cp_wk )
+u16  GFL_CLACT_WK_GetRotation( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1524,7 +1524,7 @@ u16  GFL_CLACT_WkGetRotation( const CLWK* cp_wk )
  *	*AffineParamがNNS_G2D_RND_AFFINE_OVERWRITE_NONEになっていないと反映されません
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetFlip( CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off )
+void GFL_CLACT_WK_SetFlip( GFL_CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off )
 {
 	u8 msk;
 
@@ -1555,7 +1555,7 @@ void GFL_CLACT_WkSetFlip( CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off )
  *	@retval	FALSE	フリップ未設定
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_WkGetFlip( const CLWK* cp_wk, CLWK_FLIP_TYPE flip_type )
+BOOL GFL_CLACT_WK_GetFlip( const GFL_CLWK* cp_wk, CLWK_FLIP_TYPE flip_type )
 {
 	BOOL ret = FALSE;
 
@@ -1583,7 +1583,7 @@ BOOL GFL_CLACT_WkGetFlip( const CLWK* cp_wk, CLWK_FLIP_TYPE flip_type )
  *	@param	mode		オブジェモード
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetObjMode( CLWK* p_wk, GXOamMode mode )
+void GFL_CLACT_WK_SetObjMode( GFL_CLWK* p_wk, GXOamMode mode )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( GX_OAM_MODE_BITMAPOBJ >= mode );
@@ -1610,7 +1610,7 @@ void GFL_CLACT_WkSetObjMode( CLWK* p_wk, GXOamMode mode )
  *	@retval	GX_OAM_MODE_BITMAPOBJ	ビットマップOBJ
  */
 //-----------------------------------------------------------------------------
-GXOamMode GFL_CLACT_WkGetObjMode( const CLWK* cp_wk )
+GXOamMode GFL_CLACT_WK_GetObjMode( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1625,7 +1625,7 @@ GXOamMode GFL_CLACT_WkGetObjMode( const CLWK* cp_wk )
  *	@param	on_off		モザイクON－OFF	TRUE:On	FALSE:Off
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetMosaic( CLWK* p_wk, BOOL on_off )
+void GFL_CLACT_WK_SetMosaic( GFL_CLWK* p_wk, BOOL on_off )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1648,7 +1648,7 @@ void GFL_CLACT_WkSetMosaic( CLWK* p_wk, BOOL on_off )
  *	@retval	FALSE	モザイク未設定
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_WkGetMosaic( const CLWK* cp_wk )
+BOOL GFL_CLACT_WK_GetMosaic( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1666,7 +1666,7 @@ BOOL GFL_CLACT_WkGetMosaic( const CLWK* cp_wk )
  *	パレット番号を使用するようになります。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetPlttOffs( CLWK* p_wk, u8 pal_offs )
+void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( 16 > pal_offs );
@@ -1683,7 +1683,7 @@ void GFL_CLACT_WkSetPlttOffs( CLWK* p_wk, u8 pal_offs )
  *	@return	pal_offs	パレットオフセット
  */
 //-----------------------------------------------------------------------------
-u8 GFL_CLACT_WkGetPlttOffs( const CLWK* cp_wk )
+u8 GFL_CLACT_WK_GetPlttOffs( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1701,7 +1701,7 @@ u8 GFL_CLACT_WkGetPlttOffs( const CLWK* cp_wk )
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetPlttAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type )
+u32 GFL_CLACT_WK_GetPlttAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type )
 {
 	BOOL result;
 
@@ -1725,7 +1725,7 @@ u32 GFL_CLACT_WkGetPlttAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type )
  *	@param	cp_pltt			設定するパレットプロクシ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_pltt )
+void GFL_CLACT_WK_SetPlttProxy( GFL_CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_pltt )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_pltt );
@@ -1741,7 +1741,7 @@ void GFL_CLACT_WkSetPlttProxy( CLWK* p_wk, const NNSG2dImagePaletteProxy* cp_plt
  *	@param	p_pltt			パレットプロクシ格納先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt )
+void GFL_CLACT_WK_GetPlttProxy( const GFL_CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_pltt );
@@ -1759,7 +1759,7 @@ void GFL_CLACT_WkGetPlttProxy( const CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pl
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetCharAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type )
+u32 GFL_CLACT_WK_GetCharAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type )
 {
 	BOOL result;
 
@@ -1783,7 +1783,7 @@ u32 GFL_CLACT_WkGetCharAddr( const CLWK* cp_wk, CLSYS_DRAW_TYPE type )
  *	@param	cp_img			設定イメージプロクシ
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img )
+void GFL_CLACT_WK_SetImgProxy( GFL_CLWK* p_wk, const NNSG2dImageProxy* cp_img )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_img );
@@ -1799,7 +1799,7 @@ void GFL_CLACT_WkSetImgProxy( CLWK* p_wk, const NNSG2dImageProxy* cp_img )
  *	@param	p_img			イメージプロクシ格納先
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img )
+void GFL_CLACT_WK_GetImgProxy( const GFL_CLWK* cp_wk,  NNSG2dImageProxy* p_img )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_img );
@@ -1815,7 +1815,7 @@ void GFL_CLACT_WkGetImgProxy( const CLWK* cp_wk,  NNSG2dImageProxy* p_img )
  *	
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetSoftPri( CLWK* p_wk, u8 pri )
+void GFL_CLACT_WK_SetSoftPri( GFL_CLWK* p_wk, u8 pri )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1834,7 +1834,7 @@ void GFL_CLACT_WkSetSoftPri( CLWK* p_wk, u8 pri )
  *	@return	ソフト優先順位
  */
 //-----------------------------------------------------------------------------
-u8 GFL_CLACT_WkGetSoftPri( const CLWK* cp_wk )
+u8 GFL_CLACT_WK_GetSoftPri( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1850,7 +1850,7 @@ u8 GFL_CLACT_WkGetSoftPri( const CLWK* cp_wk )
  *	@param	pri				BG優先順位
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetBgPri( CLWK* p_wk, u8 pri )
+void GFL_CLACT_WK_SetBgPri( GFL_CLWK* p_wk, u8 pri )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( 4 > pri );
@@ -1867,7 +1867,7 @@ void GFL_CLACT_WkSetBgPri( CLWK* p_wk, u8 pri )
  *	@return	BG優先順位
  */
 //-----------------------------------------------------------------------------
-u8 GFL_CLACT_WkGetBgPri( const CLWK* cp_wk )
+u8 GFL_CLACT_WK_GetBgPri( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1882,7 +1882,7 @@ u8 GFL_CLACT_WkGetBgPri( const CLWK* cp_wk )
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq )
+void GFL_CLACT_WK_SetAnmSeq( GFL_CLWK* p_wk, u16 anmseq )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1890,7 +1890,7 @@ void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq )
 	CLWK_AnmDataSetAnmSeq( &p_wk->anmdata, anmseq );
 
 	// アニメーション開始
-	GFL_CLACT_WkStartAnm( p_wk );
+	GFL_CLACT_WK_StartAnm( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -1902,7 +1902,7 @@ void GFL_CLACT_WkSetAnmSeq( CLWK* p_wk, u16 anmseq )
  *	@return	アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-u16 GFL_CLACT_WkGetAnmSeq( const CLWK* cp_wk )
+u16 GFL_CLACT_WK_GetAnmSeq( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1918,7 +1918,7 @@ u16 GFL_CLACT_WkGetAnmSeq( const CLWK* cp_wk )
  *	@return	アニメーションシーケンスの数
  */
 //-----------------------------------------------------------------------------
-u16 GFL_CLACT_WkGetAnmSeqNum( const CLWK* cp_wk )
+u16 GFL_CLACT_WK_GetAnmSeqNum( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	return CLWK_AnmDataGetAnmSeqNum( &cp_wk->anmdata );
@@ -1932,14 +1932,14 @@ u16 GFL_CLACT_WkGetAnmSeqNum( const CLWK* cp_wk )
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAnmSeqDiff( CLWK* p_wk, u16 anmseq )
+void GFL_CLACT_WK_SetAnmSeqDiff( GFL_CLWK* p_wk, u16 anmseq )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
 	GF_ASSERT( p_wk );
 	if( anmseq != p_wk->anmseq ){
-		GFL_CLACT_WkSetAnmSeq( p_wk, anmseq );
+		GFL_CLACT_WK_SetAnmSeq( p_wk, anmseq );
 		// アニメーション開始
-		GFL_CLACT_WkStartAnm( p_wk );
+		GFL_CLACT_WK_StartAnm( p_wk );
 	}
 }
 
@@ -1953,7 +1953,7 @@ void GFL_CLACT_WkSetAnmSeqDiff( CLWK* p_wk, u16 anmseq )
  *	@param	anmseq		アニメーションシーケンス
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAnmSeqNoReset( CLWK* p_wk, u16 anmseq )
+void GFL_CLACT_WK_SetAnmSeqNoReset( GFL_CLWK* p_wk, u16 anmseq )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1971,7 +1971,7 @@ void GFL_CLACT_WkSetAnmSeqNoReset( CLWK* p_wk, u16 anmseq )
  *	NitroCharacterのアニメーションシーケンス内のコマ番号を指定してください
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAnmFrame( CLWK* p_wk, u16 idx )
+void GFL_CLACT_WK_SetAnmFrame( GFL_CLWK* p_wk, u16 idx )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1988,7 +1988,7 @@ void GFL_CLACT_WkSetAnmFrame( CLWK* p_wk, u16 idx )
  *	*逆再生も可能です
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkAddAnmFrame( CLWK* p_wk, fx32 speed )
+void GFL_CLACT_WK_AddAnmFrame( GFL_CLWK* p_wk, fx32 speed )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2005,7 +2005,7 @@ void GFL_CLACT_WkAddAnmFrame( CLWK* p_wk, fx32 speed )
  *	@return	アニメーションフレーム数
  */
 //-----------------------------------------------------------------------------
-u16 GFL_CLACT_WkGetAnmFrame( const CLWK* cp_wk )
+u16 GFL_CLACT_WK_GetAnmFrame( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2020,7 +2020,7 @@ u16 GFL_CLACT_WkGetAnmFrame( const CLWK* cp_wk )
  *	@param	on_off		オートアニメーションOn-Off	TRUE:On	FALSE:Off
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAutoAnmFlag( CLWK* p_wk, BOOL on_off )
+void GFL_CLACT_WK_SetAutoAnmFlag( GFL_CLWK* p_wk, BOOL on_off )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2037,7 +2037,7 @@ void GFL_CLACT_WkSetAutoAnmFlag( CLWK* p_wk, BOOL on_off )
  *	@retval	FALSE	オートアニメOFF
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_WkGetAutoAnmFlag( const CLWK* cp_wk )
+BOOL GFL_CLACT_WK_GetAutoAnmFlag( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2054,7 +2054,7 @@ BOOL GFL_CLACT_WkGetAutoAnmFlag( const CLWK* cp_wk )
  *	*逆再生も可能です
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAutoAnmSpeed( CLWK* p_wk, fx32 speed )
+void GFL_CLACT_WK_SetAutoAnmSpeed( GFL_CLWK* p_wk, fx32 speed )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2070,7 +2070,7 @@ void GFL_CLACT_WkSetAutoAnmSpeed( CLWK* p_wk, fx32 speed )
  *	@return	オートアニメーションスピード
  */
 //-----------------------------------------------------------------------------
-fx32 GFL_CLACT_WkGetAutoAnmSpeed( const CLWK* cp_wk )
+fx32 GFL_CLACT_WK_GetAutoAnmSpeed( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2082,10 +2082,10 @@ fx32 GFL_CLACT_WkGetAutoAnmSpeed( const CLWK* cp_wk )
  *	@brief	アニメーション開始
  *
  *	@param	p_wk		セルアクターワーク
- *	GFL_CLACT_WkStopAnmでとめたアニメーションを開始させます。
+ *	GFL_CLACT_WK_StopAnmでとめたアニメーションを開始させます。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkStartAnm( CLWK* p_wk )
+void GFL_CLACT_WK_StartAnm( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2099,7 +2099,7 @@ void GFL_CLACT_WkStartAnm( CLWK* p_wk )
  *	@param	p_wk		セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkStopAnm( CLWK* p_wk )
+void GFL_CLACT_WK_StopAnm( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2116,7 +2116,7 @@ void GFL_CLACT_WkStopAnm( CLWK* p_wk )
  *	@retval	FALSE	停止中
  */
 //-----------------------------------------------------------------------------
-BOOL GFL_CLACT_WkCheckAnmActive( const CLWK* cp_wk )
+BOOL GFL_CLACT_WK_CheckAnmActive( const GFL_CLWK* cp_wk )
 {
 	GF_ASSERT( cp_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2130,7 +2130,7 @@ BOOL GFL_CLACT_WkCheckAnmActive( const CLWK* cp_wk )
  *	@param	p_wk	セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkResetAnm( CLWK* p_wk )
+void GFL_CLACT_WK_ResetAnm( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2154,7 +2154,7 @@ void GFL_CLACT_WkResetAnm( CLWK* p_wk )
  *		
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_WkSetAnmMode( CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode )
+void GFL_CLACT_WK_SetAnmMode( GFL_CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode )
 {
 	GF_ASSERT( p_wk );
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -2175,7 +2175,7 @@ void GFL_CLACT_WkSetAnmMode( CLWK* p_wk, CLSYS_ANM_PLAYMODE playmode )
  *	@retval	CLSYS_ANMPM_REVERSE_L	往復再生リピート（リバース（順＋逆順方向） ループ）
  */
 //-----------------------------------------------------------------------------
-CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk )
+CLSYS_ANM_PLAYMODE GFL_CLACT_WK_GetAnmMode( const GFL_CLWK* cp_wk )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
 	GF_ASSERT( cp_wk );
@@ -2193,7 +2193,7 @@ CLSYS_ANM_PLAYMODE GFL_CLACT_WkGetAnmMode( const CLWK* cp_wk )
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetUserAttrAnmSeq( const CLWK* cp_wk, u32 seq )
+u32 GFL_CLACT_WK_GetUserAttrAnmSeq( const GFL_CLWK* cp_wk, u32 seq )
 {
 	const NNSG2dUserExAnimSequenceAttr* p_seqattr;
 	GF_ASSERT( cp_wk );
@@ -2215,11 +2215,11 @@ u32 GFL_CLACT_WkGetUserAttrAnmSeq( const CLWK* cp_wk, u32 seq )
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetUserAttrAnmSeqNow( const CLWK* cp_wk )
+u32 GFL_CLACT_WK_GetUserAttrAnmSeqNow( const GFL_CLWK* cp_wk )
 {
 	u32 seq;
-	seq = GFL_CLACT_WkGetAnmSeq( cp_wk );
-	return GFL_CLACT_WkGetUserAttrAnmSeq( cp_wk, seq );
+	seq = GFL_CLACT_WK_GetAnmSeq( cp_wk );
+	return GFL_CLACT_WK_GetUserAttrAnmSeq( cp_wk, seq );
 }
 	
 //----------------------------------------------------------------------------
@@ -2234,7 +2234,7 @@ u32 GFL_CLACT_WkGetUserAttrAnmSeqNow( const CLWK* cp_wk )
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetUserAttrAnmFrame( const CLWK* cp_wk, u32 seq, u32 frame )
+u32 GFL_CLACT_WK_GetUserAttrAnmFrame( const GFL_CLWK* cp_wk, u32 seq, u32 frame )
 {
 	const NNSG2dUserExAnimSequenceAttr* p_seqattr;
 	const NNSG2dUserExAnimFrameAttr* p_frameattr;
@@ -2260,14 +2260,14 @@ u32 GFL_CLACT_WkGetUserAttrAnmFrame( const CLWK* cp_wk, u32 seq, u32 frame )
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetUserAttrAnmFrameNow( const CLWK* cp_wk )
+u32 GFL_CLACT_WK_GetUserAttrAnmFrameNow( const GFL_CLWK* cp_wk )
 {
 	u32 seq;
 	u32 frame;
 
-	seq = GFL_CLACT_WkGetAnmSeq( cp_wk );
-	frame = GFL_CLACT_WkGetAnmFrame( cp_wk );
-	return GFL_CLACT_WkGetUserAttrAnmFrame( cp_wk, seq, frame );
+	seq = GFL_CLACT_WK_GetAnmSeq( cp_wk );
+	frame = GFL_CLACT_WK_GetAnmFrame( cp_wk );
+	return GFL_CLACT_WK_GetUserAttrAnmFrame( cp_wk, seq, frame );
 }
 
 //----------------------------------------------------------------------------
@@ -2281,7 +2281,7 @@ u32 GFL_CLACT_WkGetUserAttrAnmFrameNow( const CLWK* cp_wk )
  *	@retval	それ以外			拡張アトリビュートデータ
  */
 //-----------------------------------------------------------------------------
-u32 GFL_CLACT_WkGetUserAttrCell( const CLWK* cp_wk, u32 cellidx )
+u32 GFL_CLACT_WK_GetUserAttrCell( const GFL_CLWK* cp_wk, u32 cellidx )
 {
 	return CLWK_AnmDataGetUserCellAttr( &cp_wk->anmdata, cellidx );
 }
@@ -2307,10 +2307,10 @@ u32 GFL_CLACT_WkGetUserAttrCell( const CLWK* cp_wk, u32 cellidx )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLSYS_DefaultRendInit( CLSYS_REND* p_rend, const CLSYS_INIT* cp_data, HEAPID heapID )
+static void CLSYS_DefaultRendInit( GFL_CLSYS_REND* p_rend, const GFL_CLSYS_INIT* cp_data, HEAPID heapID )
 {
 	// デフォルトレンダラー　サーフェース設定
-	static REND_SURFACE_INIT c_defsurface[ CLSYS_DRAW_MAX ] = {
+	static GFL_REND_SURFACE_INIT c_defsurface[ CLSYS_DRAW_MAX ] = {
 		{
 			0, 0,
 			256, 192,
@@ -2539,7 +2539,7 @@ static void OAMMAN_ObjClearBuff( OAMMAN_DATA* p_obj )
 
 
 //-------------------------------------
-///	CLSYS_REND関係
+///	GFL_CLSYS_REND関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
@@ -2551,7 +2551,7 @@ static void OAMMAN_ObjClearBuff( OAMMAN_DATA* p_obj )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
+static void REND_SysInit( GFL_CLSYS_REND* p_rend, const GFL_REND_SURFACE_INIT* cp_data, u32 data_num, HEAPID heapID )
 {
 	int i;
 
@@ -2583,7 +2583,7 @@ static void REND_SysInit( CLSYS_REND* p_rend, const REND_SURFACE_INIT* cp_data, 
  *	@param	p_rend		レンダラーシステム
  */
 //-----------------------------------------------------------------------------
-static void REND_SysExit( CLSYS_REND* p_rend )
+static void REND_SysExit( GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_rend );
 	// サーフェースオブジェクトメモリ破棄
@@ -2599,7 +2599,7 @@ static void REND_SysExit( CLSYS_REND* p_rend )
  *	@param	pPltProxy		パレットプロクシ
  */
 //-----------------------------------------------------------------------------
-static void REND_SysBeginDraw( CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgProxy, const NNSG2dImagePaletteProxy* pPltProxy )
+static void REND_SysBeginDraw( GFL_CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgProxy, const NNSG2dImagePaletteProxy* pPltProxy )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( pImgProxy );
@@ -2616,7 +2616,7 @@ static void REND_SysBeginDraw( CLSYS_REND* p_rend, const NNSG2dImageProxy* pImgP
  *	@param	p_rend			レンダラーシステム
  */
 //-----------------------------------------------------------------------------
-static void REND_SysEndDraw( CLSYS_REND* p_rend )
+static void REND_SysEndDraw( GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_rend );
 	NNS_G2dEndRendering();
@@ -2630,7 +2630,7 @@ static void REND_SysEndDraw( CLSYS_REND* p_rend )
  *	@param	mode			アフィン変換モード
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetAffine( CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode )
+static void REND_SysSetAffine( GFL_CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( CLSYS_AFFINETYPE_NUM > mode );
@@ -2648,7 +2648,7 @@ static void REND_SysSetAffine( CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode )
  *	@param	hflip		Hフリップ有無
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetFlip( CLSYS_REND* p_rend, BOOL vflip, BOOL hflip )
+static void REND_SysSetFlip( GFL_CLSYS_REND* p_rend, BOOL vflip, BOOL hflip )
 {
 	GF_ASSERT( p_rend );
 	
@@ -2666,7 +2666,7 @@ static void REND_SysSetFlip( CLSYS_REND* p_rend, BOOL vflip, BOOL hflip )
  *	@param	over_write		オーバーライドフラグ
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetOverwrite( CLSYS_REND* p_rend, u8 over_write )
+static void REND_SysSetOverwrite( GFL_CLSYS_REND* p_rend, u8 over_write )
 {
 	GF_ASSERT( p_rend );
 	// オーバーライト有効フラグ設定
@@ -2683,7 +2683,7 @@ static void REND_SysSetOverwrite( CLSYS_REND* p_rend, u8 over_write )
  *	@param	on_off			モザイクの有無
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetMosaicFlag( CLSYS_REND* p_rend, BOOL on_off )
+static void REND_SysSetMosaicFlag( GFL_CLSYS_REND* p_rend, BOOL on_off )
 {
 	GF_ASSERT( p_rend );
 	// オーバーライトにモザイクの値を設定
@@ -2698,7 +2698,7 @@ static void REND_SysSetMosaicFlag( CLSYS_REND* p_rend, BOOL on_off )
  *	@param	objmode			オブジェモード
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetOBJMode( CLSYS_REND* p_rend, GXOamMode objmode )
+static void REND_SysSetOBJMode( GFL_CLSYS_REND* p_rend, GXOamMode objmode )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( GX_OAM_MODE_BITMAPOBJ > objmode );
@@ -2714,7 +2714,7 @@ static void REND_SysSetOBJMode( CLSYS_REND* p_rend, GXOamMode objmode )
  *	@param	pri				BG優先順位
  */
 //-----------------------------------------------------------------------------
-static void REND_SysSetBGPriority( CLSYS_REND* p_rend, u8 pri )
+static void REND_SysSetBGPriority( GFL_CLSYS_REND* p_rend, u8 pri )
 {
 	GF_ASSERT( p_rend );
 	GF_ASSERT( 4 > pri );
@@ -2730,7 +2730,7 @@ static void REND_SysSetBGPriority( CLSYS_REND* p_rend, u8 pri )
  *	@param	cp_data			サーフェースデータ
  */
 //-----------------------------------------------------------------------------
-static void REND_SurfaceObjCreate( NNSG2dRenderSurface* p_surface, const REND_SURFACE_INIT* cp_data )
+static void REND_SurfaceObjCreate( NNSG2dRenderSurface* p_surface, const GFL_REND_SURFACE_INIT* cp_data )
 {
 	// コールバックデータ
 	static const REND_SURFACE_CALLBACK callback[ CLSYS_DRAW_MAX ] = {
@@ -3408,18 +3408,18 @@ static BOOL TRMAN_TrDataCheckClean( const TRMAN_DATA* cp_data )
 
 
 //-------------------------------------
-///	CLUNIT	関係
+///	GFL_CLUNIT	関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	セルアクターユニットから空のCLWKを取得する
+ *	@brief	セルアクターユニットから空のGFL_CLWKを取得する
  *
  *	@param	p_unit		セルアクターユニット
  *	
- *	@return	空のCLWKオブジェクト
+ *	@return	空のGFL_CLWKオブジェクト
  */
 //-----------------------------------------------------------------------------
-static CLWK* CLUNIT_SysGetCleanWk( CLUNIT* p_unit )
+static GFL_CLWK* CLUNIT_SysGetCleanWk( GFL_CLUNIT* p_unit )
 {
 	int i;
 
@@ -3442,13 +3442,13 @@ static CLWK* CLUNIT_SysGetCleanWk( CLUNIT* p_unit )
  *	@param	p_wk		登録するセルアクターワーク
  */
 //-----------------------------------------------------------------------------
-static void CLUNIT_DrawListAdd( CLUNIT* p_unit, CLWK* p_wk )
+static void CLUNIT_DrawListAdd( GFL_CLUNIT* p_unit, GFL_CLWK* p_wk )
 {
 	u8 top_pri;		// 先頭の優先順位
 	u8 bottom_pri;	// 最終の優先順位
 	u8 ave_pri;		// 優先順位の平均
 	u8 wk_pri;		// 登録する優先順位
-	CLWK* p_last;	// 登録する前ワーク
+	GFL_CLWK* p_last;	// 登録する前ワーク
 
 	GF_ASSERT( p_unit );
 	GF_ASSERT( p_wk );
@@ -3462,10 +3462,10 @@ static void CLUNIT_DrawListAdd( CLUNIT* p_unit, CLWK* p_wk )
 	}
 
 	// 登録する優先順位を取得
-	wk_pri = GFL_CLACT_WkGetSoftPri( p_wk );
+	wk_pri = GFL_CLACT_WK_GetSoftPri( p_wk );
 
 	// 先頭に登録するかチェック
-	top_pri = GFL_CLACT_WkGetSoftPri( p_unit->p_drawlist );
+	top_pri = GFL_CLACT_WK_GetSoftPri( p_unit->p_drawlist );
 	if( wk_pri < top_pri ){
 		// 先頭に登録
 		p_last = p_unit->p_drawlist->p_last;
@@ -3474,7 +3474,7 @@ static void CLUNIT_DrawListAdd( CLUNIT* p_unit, CLWK* p_wk )
 	}else{
 
 		// 先頭と最終要素の優先順位を取得
-		bottom_pri = GFL_CLACT_WkGetSoftPri( p_unit->p_drawlist->p_last );
+		bottom_pri = GFL_CLACT_WK_GetSoftPri( p_unit->p_drawlist->p_last );
 		ave_pri = (top_pri + bottom_pri)/2;	// 平均を求める
 
 
@@ -3503,7 +3503,7 @@ static void CLUNIT_DrawListAdd( CLUNIT* p_unit, CLWK* p_wk )
  *	@param	p_wk		はずすワーク
  */
 //-----------------------------------------------------------------------------
-static void CLUNIT_DrawListDel( CLUNIT* p_unit, CLWK* p_wk )
+static void CLUNIT_DrawListDel( GFL_CLUNIT* p_unit, GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_unit );
 	GF_ASSERT( p_wk );
@@ -3537,15 +3537,15 @@ static void CLUNIT_DrawListDel( CLUNIT* p_unit, CLWK* p_wk )
  *	@return	登録する前ワーク
  */
 //-----------------------------------------------------------------------------
-static CLWK* CLUNIT_DrawListSarchTop( CLWK* p_top, u8 pri )
+static GFL_CLWK* CLUNIT_DrawListSarchTop( GFL_CLWK* p_top, u8 pri )
 {
-	CLWK* p_wk = p_top;
+	GFL_CLWK* p_wk = p_top;
 	u8 ck_pri;
 
 	GF_ASSERT( p_top );
 	
 	do{
-		ck_pri = GFL_CLACT_WkGetSoftPri( p_wk );
+		ck_pri = GFL_CLACT_WK_GetSoftPri( p_wk );
 		if( ck_pri > pri ){
 			return p_wk->p_last;	// 優先順位が大きいワークの前のワークの次に追加する
 		}
@@ -3567,15 +3567,15 @@ static CLWK* CLUNIT_DrawListSarchTop( CLWK* p_top, u8 pri )
  *	@return	登録する前ワーク
  */
 //-----------------------------------------------------------------------------
-static CLWK* CLUNIT_DrawListSarchBottom( CLWK* p_bottom, u8 pri )
+static GFL_CLWK* CLUNIT_DrawListSarchBottom( GFL_CLWK* p_bottom, u8 pri )
 {
-	CLWK* p_wk = p_bottom;
+	GFL_CLWK* p_wk = p_bottom;
 	u8 ck_pri;
 
 	GF_ASSERT( p_bottom );
 
 	do{
-		ck_pri = GFL_CLACT_WkGetSoftPri( p_wk );
+		ck_pri = GFL_CLACT_WK_GetSoftPri( p_wk );
 		if( ck_pri <= pri ){
 			return p_wk;	// 優先順位が等しいか小さいワークの次に追加する
 		}
@@ -3589,7 +3589,7 @@ static CLWK* CLUNIT_DrawListSarchBottom( CLWK* p_bottom, u8 pri )
 
 
 //-------------------------------------
-///	CLWK	関係
+///	GFL_CLWK	関係
 //=====================================
 //----------------------------------------------------------------------------
 /**
@@ -3598,10 +3598,10 @@ static CLWK* CLUNIT_DrawListSarchBottom( CLWK* p_bottom, u8 pri )
  *	@param	p_wk		セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysClean( CLWK* p_wk )
+static void CLWK_SysClean( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
-	GFL_STD_MemFill( p_wk, 0, sizeof(CLWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(GFL_CLWK) );
 	p_wk->auto_anm_speed = CLWK_AUTOANM_DEFF_SPEED;
 	NNS_G2dInitImageProxy( &p_wk->img_proxy );
 	NNS_G2dInitImagePaletteProxy( &p_wk->pltt_proxy );
@@ -3616,7 +3616,7 @@ static void CLWK_SysClean( CLWK* p_wk )
  *	@param	p_rend		レンダラーシステム
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysDraw( CLWK* p_wk, CLSYS_REND* p_rend )
+static void CLWK_SysDraw( GFL_CLWK* p_wk, GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_wk );
 
@@ -3653,15 +3653,15 @@ static void CLWK_SysDraw( CLWK* p_wk, CLSYS_REND* p_rend )
  *	@param	p_rend		レンダラーシステム
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysDrawSetRend( CLWK* p_wk, CLSYS_REND* p_rend )
+static void CLWK_SysDrawSetRend( GFL_CLWK* p_wk, GFL_CLSYS_REND* p_rend )
 {
 	GF_ASSERT( p_wk );
 	// アフィン設定
 	REND_SysSetAffine( p_rend, p_wk->affine );
 	if( p_wk->affine == NNS_G2D_RND_AFFINE_OVERWRITE_NONE ){
 		BOOL vflip, hflip;
-		vflip = GFL_CLACT_WkGetFlip( p_wk, CLWK_FLIP_V );
-		hflip = GFL_CLACT_WkGetFlip( p_wk, CLWK_FLIP_H );
+		vflip = GFL_CLACT_WK_GetFlip( p_wk, CLWK_FLIP_V );
+		hflip = GFL_CLACT_WK_GetFlip( p_wk, CLWK_FLIP_H );
 		REND_SysSetFlip( p_rend, vflip, hflip );
 	}
 	// オバーライトフラグ設定
@@ -3679,7 +3679,7 @@ static void CLWK_SysDrawSetRend( CLWK* p_wk, CLSYS_REND* p_rend )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysDrawCell( CLWK* p_wk )
+static void CLWK_SysDrawCell( GFL_CLWK* p_wk )
 {
 	GF_ASSERT( p_wk );
 
@@ -3714,10 +3714,10 @@ static void CLWK_SysDrawCell( CLWK* p_wk )
  *	@param	p_wk	セルアクターワーク
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysAutoAnm( CLWK* p_wk )
+static void CLWK_SysAutoAnm( GFL_CLWK* p_wk )
 {
 	if( p_wk->auto_anm == TRUE ){
-		GFL_CLACT_WkAddAnmFrame( p_wk, p_wk->auto_anm_speed );
+		GFL_CLACT_WK_AddAnmFrame( p_wk, p_wk->auto_anm_speed );
 	}
 }
 
@@ -3730,17 +3730,17 @@ static void CLWK_SysAutoAnm( CLWK* p_wk )
  *	@param	setsf		設定サーフェース
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysSetClwkData( CLWK* p_wk, const CLWK_DATA* cp_data, u16 setsf )
+static void CLWK_SysSetClwkData( GFL_CLWK* p_wk, const GFL_CLWK_DATA* cp_data, u16 setsf )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_data );
 	
-	GFL_CLACT_WkSetTypePos( p_wk, cp_data->pos_x, setsf, CLSYS_MAT_X );
-	GFL_CLACT_WkSetTypePos( p_wk, cp_data->pos_y, setsf, CLSYS_MAT_Y );
+	GFL_CLACT_WK_SetTypePos( p_wk, cp_data->pos_x, setsf, CLSYS_MAT_X );
+	GFL_CLACT_WK_SetTypePos( p_wk, cp_data->pos_y, setsf, CLSYS_MAT_Y );
 	p_wk->soft_pri = cp_data->softpri;
-	GFL_CLACT_WkSetBgPri( p_wk, cp_data->bgpri );
-	GFL_CLACT_WkSetAnmSeq( p_wk, cp_data->anmseq );
-	GFL_CLACT_WkStartAnm( p_wk );
+	GFL_CLACT_WK_SetBgPri( p_wk, cp_data->bgpri );
+	GFL_CLACT_WK_SetAnmSeq( p_wk, cp_data->anmseq );
+	GFL_CLACT_WK_StartAnm( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -3751,7 +3751,7 @@ static void CLWK_SysSetClwkData( CLWK* p_wk, const CLWK_DATA* cp_data, u16 setsf
  *	@param	cp_res		リソースデータ
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysSetClwkRes( CLWK* p_wk, const CLWK_RES* cp_res )
+static void CLWK_SysSetClwkRes( GFL_CLWK* p_wk, const GFL_CLWK_RES* cp_res )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_res );
@@ -3768,13 +3768,13 @@ static void CLWK_SysSetClwkRes( CLWK* p_wk, const CLWK_RES* cp_res )
  *	@param	p_pos		設定サーフェース座標格納先
  */
 //-----------------------------------------------------------------------------
-static void CLWK_SysGetSetSfPos( const CLWK* cp_wk, u16 setsf, CLSYS_POS* p_pos )
+static void CLWK_SysGetSetSfPos( const GFL_CLWK* cp_wk, u16 setsf, GFL_CLACTPOS* p_pos )
 {
 	GF_ASSERT( cp_wk );
 	GF_ASSERT( p_pos );
 	// サーフェース座標を取得
 	if( setsf != CLWK_SETSF_NONE ){
-		GFL_CLACT_UserRendGetSurfacePos( cp_wk->p_unit->p_rend, setsf, p_pos );
+		GFL_CLACT_USERREND_GetSurfacePos( cp_wk->p_unit->p_rend, setsf, p_pos );
 	}else{
 		p_pos->x = 0;
 		p_pos->y = 0;
@@ -3794,9 +3794,9 @@ static void CLWK_SysGetSetSfPos( const CLWK* cp_wk, u16 setsf, CLSYS_POS* p_pos 
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
+static void CLWK_AnmDataInit( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID )
 {
-	static void (* const p_create[ CLWK_ANM_MAX ])( CLWK_ANMDATA* , const CLWK_RES* ,  HEAPID ) = {
+	static void (* const p_create[ CLWK_ANM_MAX ])( CLWK_ANMDATA* , const GFL_CLWK_RES* ,  HEAPID ) = {
 		CLWK_AnmDataCreateCellData,
 		CLWK_AnmDataCreateTRCellData,
 		CLWK_AnmDataCreateMCellData
@@ -3843,7 +3843,7 @@ static void CLWK_AnmDataExit( CLWK_ANMDATA* p_anmdata )
  *	@return	アニメーションタイプ
  */
 //-----------------------------------------------------------------------------
-static CLWK_ANMTYPE CLWK_AnmDataGetType( const CLWK_RES* cp_res )
+static CLWK_ANMTYPE CLWK_AnmDataGetType( const GFL_CLWK_RES* cp_res )
 {
 	GF_ASSERT( cp_res );
 
@@ -3867,7 +3867,7 @@ static CLWK_ANMTYPE CLWK_AnmDataGetType( const CLWK_RES* cp_res )
  *	@param	heapID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
+static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID )
 {
 	GF_ASSERT( p_anmdata );
 	GF_ASSERT( cp_res );
@@ -3891,7 +3891,7 @@ static void CLWK_AnmDataCreateCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES*
  *	@param	cp_res			リソースデータ
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
+static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID )
 {
 	GF_ASSERT( pClsys );
 	GF_ASSERT( p_anmdata );
@@ -3928,7 +3928,7 @@ static void CLWK_AnmDataCreateTRCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RE
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const CLWK_RES* cp_res, HEAPID heapID )
+static void CLWK_AnmDataCreateMCellData( CLWK_ANMDATA* p_anmdata, const GFL_CLWK_RES* cp_res, HEAPID heapID )
 {
 	u32 wk_size;
 
