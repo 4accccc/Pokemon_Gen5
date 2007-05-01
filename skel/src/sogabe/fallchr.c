@@ -24,11 +24,11 @@
 
 static	void	YT_MainFallChr(GFL_TCB *tcb,void *work);
 static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps);
-static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet);
+static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,GFL_CLWK *clwk,NET_PARAM* pNet);
 static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_line,int stop_line,int height,NET_PARAM* pNet);
-static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet);
+static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,GFL_CLWK *clwk,NET_PARAM* pNet);
 static	int		YT_LandingStartRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int stop_line,int height,NET_PARAM* pNet);
-static	CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
+static	GFL_CLWK	*YT_ClactWorkAdd(FALL_CHR_PARAM *fcp);
 static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag, NET_PARAM* pNet);
 static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet);
 static	void	YT_RotateActSet(FALL_CHR_PARAM *fcp);
@@ -98,7 +98,7 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 	GFL_TCB_AddTask(gp->tcbsys,YT_MainFallChr,fcp,TCB_PRI_FALL_CHR);
 	gp->clact->clact_work[fcp->clact_no]=fcp->clwk=YT_ClactWorkAdd(fcp);
 
-	GFL_CLACT_WkGetWldPos(fcp->clwk,&fcp->now_pos);
+	GFL_CLACT_WK_GetWldPos(fcp->clwk,&fcp->now_pos);
 
     //通信対戦時には、作成typeを送信
     if(pNet){
@@ -117,13 +117,13 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
  *	@param	type		キャラタイプ
  *	@param	line_no		落下ラインナンバー
  *
- *	@retval CLWK*
+ *	@retval GFL_CLWK*
  */
 //-----------------------------------------------------------------------------
-CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
+GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 {
 	FALL_CHR_PARAM	*fcp=(FALL_CHR_PARAM *)GFL_HEAP_AllocClearMemory(gp->heapID,sizeof(FALL_CHR_PARAM));
-    CLWK* pCLWK;
+    GFL_CLWK* pCLWK;
     
 	fcp->gp=gp;
 	fcp->player_no=player_no;
@@ -131,7 +131,7 @@ CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
 	fcp->line_no=line_no;
 	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
     pCLWK=YT_ClactWorkAdd(fcp);
-	GFL_CLACT_WkGetWldPos(pCLWK,&fcp->now_pos);
+	GFL_CLACT_WK_GetWldPos(pCLWK,&fcp->now_pos);
     GFL_HEAP_FreeMemory(fcp);
 	return pCLWK;
 }
@@ -147,14 +147,14 @@ CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
  *	@retval void
  */
 //-----------------------------------------------------------------------------
-static void YT_DeleteFallChr(CLWK* clwk,FALL_CHR_PARAM *fcp,GFL_TCB *tcb,NET_PARAM* pNet)
+static void YT_DeleteFallChr(GFL_CLWK* clwk,FALL_CHR_PARAM *fcp,GFL_TCB *tcb,NET_PARAM* pNet)
 {
 	//通信対戦時には、消す命令を送信する
     if(pNet){
         YT_NET_DeleteReq(fcp->clact_no, pNet);
     }
 
-    GFL_CLACT_WkDel(clwk);
+    GFL_CLACT_WK_Remove(clwk);
     GFL_HEAP_FreeMemory(fcp);
     GFL_TCB_DeleteTask(tcb);
 
@@ -197,7 +197,7 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 	GAME_PARAM			*gp=(GAME_PARAM *)fcp->gp;
     NET_PARAM*          pNet = gp->pNetParam;
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
-	CLWK				*clwk=(CLWK *)fcp->clwk;
+	GFL_CLWK			*clwk=(GFL_CLWK *)fcp->clwk;
 
     GF_ASSERT(clwk);
 
@@ -212,7 +212,7 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 	switch(fcp->seq_no){
 	case SEQ_FALL_CHR_READY_INIT:
 		//アニメを最速に
-//		GFL_CLACT_WkSetAutoAnmSpeed(clwk,0);
+//		GFL_CLACT_WK_SetAutoAnmSpeed(clwk,0);
 		fcp->seq_no++;
 	case SEQ_FALL_CHR_READY:
 		if(fcp->now_pos.y<YT_READY_Y_POS){
@@ -243,12 +243,12 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 			break;
 		}
 		if((GFL_UI_KEY_GetCont()&PAD_KEY_DOWN)==0){
-			GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
+			GFL_CLACT_WK_SetAutoAnmSpeed(clwk,1*FX32_ONE);
 		}
 		else{ 
-			GFL_CLACT_WkSetAutoAnmSpeed(clwk,6*FX32_ONE);
+			GFL_CLACT_WK_SetAutoAnmSpeed(clwk,6*FX32_ONE);
 		}
-//		GFL_CLACT_WkSetAutoAnmSpeed(clwk,0);
+//		GFL_CLACT_WK_SetAutoAnmSpeed(clwk,0);
 		if((fcp->fall_wait)&&((GFL_UI_KEY_GetCont()&PAD_KEY_DOWN)==0)){
 			fcp->fall_wait--;
 		}
@@ -256,12 +256,12 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 			fcp->fall_wait=fcp->fall_wait_tmp;
 			switch(YT_LandingCheck(fcp,ps,clwk,pNet)){
 			case YT_ACT_VANISH:
-				GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
+				GFL_CLACT_WK_SetAutoAnmSpeed(clwk,1*FX32_ONE);
 				fcp->seq_no=SEQ_FALL_CHR_VANISH_INIT;
 				break;
 			case YT_ACT_LANDING:
 				YT_AnmSeqSet(fcp,YT_ANM_LANDING,pNet);
-				GFL_CLACT_WkSetAutoAnmSpeed(clwk,1*FX32_ONE);
+				GFL_CLACT_WK_SetAutoAnmSpeed(clwk,1*FX32_ONE);
 				if((fcp->type==YT_CHR_GREEN_EGG_U)||(fcp->type==YT_CHR_RED_EGG_U)){
 					ps->status.egg_make_check_flag|=(1<<fcp->line_no);
 				}
@@ -331,7 +331,7 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 		}
 		break;
 	case SEQ_FALL_CHR_OVERTURN:
-		if(GFL_CLACT_WkCheckAnmActive(clwk)==FALSE){
+		if(GFL_CLACT_WK_CheckAnmActive(clwk)==FALSE){
 			if(fcp->type<YT_CHR_GREEN_EGG_U){
 				fcp->dir^=1;
 			}
@@ -431,7 +431,7 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 			u32	wait;
 
 			wait=20*FX32_ONE-fcp->birth_wait;
-			GFL_CLACT_WkSetAutoAnmSpeed(clwk,wait);
+			GFL_CLACT_WK_SetAutoAnmSpeed(clwk,wait);
 		}
 		break;
 	case SEQ_FALL_CHR_RENSA_FALL_P:
@@ -482,7 +482,7 @@ static	void	YT_MainFallChr(GFL_TCB *tcb,void *work)
 		YT_AnmSeqSet(fcp,YT_ANM_VANISH,pNet);
 		fcp->seq_no++;
 	case SEQ_FALL_CHR_VANISH:
-		if(GFL_CLACT_WkCheckAnmActive(clwk)==FALSE){
+		if(GFL_CLACT_WK_CheckAnmActive(clwk)==FALSE){
 			GFL_AREAMAN_Release(gp->clact_area,fcp->clact_no,1);
             YT_DeleteFallChr(clwk,fcp,tcb,pNet);
 		}
@@ -518,7 +518,7 @@ static	void	YT_FallStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps)
  *	@brief	落下キャラ着地チェック
  */
 //-----------------------------------------------------------------------------
-static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet)
+static	int		YT_LandingCheck(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,GFL_CLWK *clwk,NET_PARAM* pNet)
 {
 	int			check_fall_line=ps->falltbl[fcp->line_no];
 	int			check_stop_line=ps->stoptbl[fcp->line_no];
@@ -609,7 +609,7 @@ static	int		YT_LandingStart(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int fall_li
  *	@brief	落下キャラ着地チェック（連鎖時専用）
  */
 //-----------------------------------------------------------------------------
-static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,CLWK *clwk,NET_PARAM* pNet)
+static	int		YT_LandingCheckRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,GFL_CLWK *clwk,NET_PARAM* pNet)
 {
 	int			check_stop_line=ps->stoptbl[fcp->line_no];
 	int			height;
@@ -706,11 +706,11 @@ static	int		YT_LandingStartRensa(FALL_CHR_PARAM *fcp,YT_PLAYER_STATUS *ps,int st
  *	@return	生成したワーク
  */
 //-----------------------------------------------------------------------------
-static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
+static GFL_CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 {
-	CLWK_RES	resdat;
-	CLWK		*p_wk;
-	CLWK_DATA	data={
+	GFL_CLWK_RES	resdat;
+	GFL_CLWK		*p_wk;
+	GFL_CLWK_DATA	data={
 					28, -8,	//座標(x,y)
 					NANR_fall_obj_KURIBO_FALL,		//アニメーションシーケンス
 					0,		//優先順位
@@ -784,7 +784,7 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 				};
 
 	// リソースデータ代入
-	GFL_CLACT_WkSetCellResData( &resdat, 
+	GFL_CLACT_WK_SetCellResData( &resdat, 
 			&fcp->gp->clact->res.imageproxy, &fcp->gp->clact->res.plttproxy,
 			fcp->gp->clact->res.p_cell, fcp->gp->clact->res.p_cellanm );
 	// 登録
@@ -793,14 +793,14 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 	data.anmseq+=fcp->type;
 	data.softpri=soft_pri[fcp->type];
 	data.bgpri=bg_pri[fcp->type];
-	p_wk = GFL_CLACT_WkAdd( fcp->gp->clact->p_unit, 
+	p_wk = GFL_CLACT_WK_Add( fcp->gp->clact->p_unit, 
 			&data, &resdat,
 			CLWK_SETSF_NONE,
 			fcp->gp->heapID );
     GF_ASSERT(p_wk);
 
 	// オートアニメーション設定
-	GFL_CLACT_WkSetAutoAnmFlag( p_wk, TRUE );
+	GFL_CLACT_WK_SetAutoAnmFlag( p_wk, TRUE );
 
 	return p_wk;
 }
@@ -812,12 +812,12 @@ static CLWK* YT_ClactWorkAdd(FALL_CHR_PARAM *fcp)
 //-----------------------------------------------------------------------------
 static	void	YT_ChrPosSet(FALL_CHR_PARAM *fcp, NET_PARAM* pNet)
 {
-	CLSYS_POS	pos;
+	GFL_CLACTPOS	pos;
 
 	pos.x=fcp->now_pos.x+fcp->offset_pos.x;
 	pos.y=fcp->now_pos.y+fcp->offset_pos.y;
 
-	GFL_CLACT_WkSetWldPos(fcp->clwk,&pos);
+	GFL_CLACT_WK_SetWldPos(fcp->clwk,&pos);
 
 	//通信対戦時には、座標を送信する
     if(pNet){
@@ -880,7 +880,7 @@ static	void	YT_AnmSeqSet(FALL_CHR_PARAM *fcp,int flag,NET_PARAM* pNet)
 		break;
 	}
 
-	GFL_CLACT_WkSetAnmSeq(fcp->clwk,anm_seq);
+	GFL_CLACT_WK_SetAnmSeq(fcp->clwk,anm_seq);
 
     //通信対戦時には、アニメーションナンバーを送信する
     if(pNet){
@@ -951,7 +951,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 				fcp_top=ps->stop[egg_line][egg_height];
 				if(fcp_top){
 					if((fcp_top->type==YT_CHR_GREEN_EGG_U)||(fcp_top->type==YT_CHR_RED_EGG_U)){
-						GFL_CLACT_WkSetSoftPri(fcp_top->clwk,YT_PRI_GREEN_EGG_U);
+						GFL_CLACT_WK_SetSoftPri(fcp_top->clwk,YT_PRI_GREEN_EGG_U);
 						break;
 					}
 				}
@@ -972,7 +972,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 					break;
 				case YT_CHR_GREEN_EGG_D:
 				case YT_CHR_RED_EGG_D:
-					GFL_CLACT_WkSetSoftPri(fcp_p->clwk,YT_PRI_GREEN_EGG_D);
+					GFL_CLACT_WK_SetSoftPri(fcp_p->clwk,YT_PRI_GREEN_EGG_D);
 					//タマゴではさんだ個数を計算
 					fcp_p=ps->stop[egg_line][egg_height];
 					fcp_p->chr_count=chr_count*egg_count;

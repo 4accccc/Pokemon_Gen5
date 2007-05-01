@@ -947,7 +947,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 	int				right_height=0;
 	FALL_CHR_PARAM	*fcp;
 	int				height_tbl[]={144,130,116,102,88,74,60,46,32};
-	CLSYS_POS		pos;
+	GFL_CLACTPOS	pos;
 
 	ps->status.rotate_flag=pp->line_no+1;
 
@@ -978,7 +978,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 			for(i=0;i<YT_HEIGHT_MAX;i++){
 				fcp=ps->fall[right_line][i];
 				if(fcp){
-					GFL_CLACT_WkGetWldPos(fcp->clwk,&pos);
+					GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
 					if(pos.y>height_tbl[left_height]){
 						fcp->rotate_flag=ps->status.rotate_flag;
 						ps->falltbl[pp->line_no+1]=left_line;
@@ -992,7 +992,7 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 			for(i=0;i<YT_HEIGHT_MAX;i++){
 				fcp=ps->fall[left_line][i];
 				if(fcp){
-					GFL_CLACT_WkGetWldPos(fcp->clwk,&pos);
+					GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
 					if(pos.y>height_tbl[right_height]){
 						fcp->rotate_flag=ps->status.rotate_flag;
 						ps->falltbl[pp->line_no+1]=left_line;

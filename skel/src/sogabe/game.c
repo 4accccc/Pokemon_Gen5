@@ -51,7 +51,7 @@ void	YT_InitGame(GAME_PARAM *gp)
     PLAYER_PARAM* pp;
 
     // セルアクターユニット作成
-	gp->clact->p_unit = GFL_CLACT_UnitCreate( YT_CLACT_MAX, gp->heapID );
+	gp->clact->p_unit = GFL_CLACT_UNIT_Create( YT_CLACT_MAX, gp->heapID );
 
 	//エリアマネージャ初期化
 	gp->clact_area=GFL_AREAMAN_Create(YT_CLACT_MAX,gp->heapID);
@@ -273,11 +273,11 @@ void	YT_MainGame(GAME_PARAM *gp)
 	GFL_TCB_Main(gp->tcbsys);
 
 	// セルアクターユニット描画処理
-	GFL_CLACT_UnitDraw( gp->clact->p_unit );
+	GFL_CLACT_UNIT_Draw( gp->clact->p_unit );
 
 	// セルアクターシステムメイン処理
 	// 全ユニット描画が完了してから行う必要があります。
-	GFL_CLACT_SysMain();
+	GFL_CLACT_Main();
 
 	GFL_DMA_Start(2,(u32)&RasterBuffer[raster_count],(u32)&reg_G2_BG3VOFS,
 				  GFL_DMA_ENABLE,
@@ -396,7 +396,7 @@ static	void	YT_ExitGame(GAME_PARAM *gp)
 	GFL_AREAMAN_Delete(gp->clact_area);
 
     // セルアクターユニット破棄
-	GFL_CLACT_UnitDelete(gp->clact->p_unit);
+	GFL_CLACT_UNIT_Delete(gp->clact->p_unit);
 
 	GFL_DMA_Stop(2);
 
@@ -426,8 +426,8 @@ static	int	YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps)
 		for(y=0;y<8;y++){
 			if(ps->fall[x][y]){
 				{
-					CLSYS_POS	pos;
-					GFL_CLACT_WkGetWldPos(gp->clact->clact_work[ps->fall[x][y]->clact_no],&pos);
+					GFL_CLACTPOS	pos;
+					GFL_CLACT_WK_GetWldPos(gp->clact->clact_work[ps->fall[x][y]->clact_no],&pos);
 					if(pos.y<YT_READY_NEXT_Y_POS){
 						return YT_READY_WAIT;
 					}

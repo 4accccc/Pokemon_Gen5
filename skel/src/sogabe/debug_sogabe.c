@@ -150,7 +150,7 @@ static	void	game_init(GAME_PARAM *gp)
 	// セルアクターシステム初期化
 	// まずこの処理を行う必要があります。
 	{
-		static const CLSYS_INIT	param = {
+		static const GFL_CLSYS_INIT	param = {
 			// メインとサブのサーフェース左上座標を設定します。
 			// サーフェースのサイズは（256,192）にするのが普通なので、
 			// メンバには入れませんでした。
@@ -165,7 +165,7 @@ static	void	game_init(GAME_PARAM *gp)
 			1, 128-1,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
 			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
 		};
-		GFL_CLACT_SysInit( &param, GFL_HEAPID_APP );
+		GFL_CLACT_Init( &param, GFL_HEAPID_APP );
 	}
 
 	//サウンドデータロード

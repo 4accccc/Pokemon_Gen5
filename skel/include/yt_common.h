@@ -89,9 +89,9 @@ typedef struct {
 } YT_CLACT_RES;
 
 typedef struct {
-	CLUNIT			*p_unit;
+	GFL_CLUNIT		*p_unit;
 	YT_CLACT_RES	res;
-	CLWK			*clact_work[YT_CLACT_MAX];
+	GFL_CLWK		*clact_work[YT_CLACT_MAX];
 } YT_CLACT;
 
 typedef struct	fall_chr_param	FALL_CHR_PARAM;

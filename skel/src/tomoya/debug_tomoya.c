@@ -63,10 +63,10 @@ typedef struct {
 } DEBUG_CLACT_RES;
 
 typedef struct {
-	CLUNIT* p_unit;
+	GFL_CLUNIT* p_unit;
 	DEBUG_CLACT_RES res[ 1 ];
-	CLWK*	p_wk;
-	CLWK*	p_subwk[ CLACT_WKNUM ];
+	GFL_CLWK*	p_wk;
+	GFL_CLWK*	p_subwk[ CLACT_WKNUM ];
 } DEBUG_CLACT;
 
 
@@ -94,9 +94,9 @@ const GFL_PROC_DATA DebugClactProcData = {
 
 static void DEBUG_ClactWorkResLoad( DEBUG_CLACT_RES* p_wk, u32 heapID );
 static void DEBUG_ClactWorkResRelease( DEBUG_CLACT_RES* p_wk );
-static CLWK* DEBUG_ClactWorkAdd( CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const CLWK_DATA* cp_data, u32 heapID );
-static void DEBUG_ClactWorkDel( CLWK* p_wk );
-static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont );
+static GFL_CLWK* DEBUG_ClactWorkAdd( GFL_CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const GFL_CLWK_DATA* cp_data, u32 heapID );
+static void DEBUG_ClactWorkDel( GFL_CLWK* p_wk );
+static void DEBUG_ClactWorkKeyMove( GFL_CLWK* p_wk, int trg, int cont );
 
 
 
@@ -211,7 +211,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 	// セルアクターシステム初期化
 	// まずこの処理を行う必要があります。
 	{
-		static const CLSYS_INIT	param = {
+		static const GFL_CLSYS_INIT	param = {
 			// メインとサブのサーフェース左上座標を設定します。
 			// サーフェースのサイズは（256,192）にするのが普通なので、
 			// メンバには入れませんでした。
@@ -226,12 +226,12 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 			0, 128,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
 			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
 		};
-		GFL_CLACT_SysInit( &param, HEAPID_TOMOYA_DEBUG );
+		GFL_CLACT_Init( &param, HEAPID_TOMOYA_DEBUG );
 	}
 	
 	// セルアクターユニット作成
 	// 各アプリケーション単位で作成する。
-	p_clactw->p_unit = GFL_CLACT_UnitCreate( CLACT_WKNUM, HEAPID_TOMOYA_DEBUG );
+	p_clactw->p_unit = GFL_CLACT_UNIT_Create( CLACT_WKNUM, HEAPID_TOMOYA_DEBUG );
 
 	
 	// セルアクターワーク生成
@@ -242,7 +242,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 	// ４：登録
 	// 1.2読み込みと転送
 	{
-		static const CLWK_DATA data = {
+		static const GFL_CLWK_DATA data = {
 			64, 64,	//座標(x,y)
 			0,		//アニメーションシーケンス
 			4,		//優先順位
@@ -252,7 +252,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 		p_clactw->p_wk = DEBUG_ClactWorkAdd( p_clactw->p_unit, &p_clactw->res[0], &data, HEAPID_TOMOYA_DEBUG );
 
 		{
-			static CLWK_DATA sub_data = {
+			static GFL_CLWK_DATA sub_data = {
 				0, 64,	//座標(x,y)
 				0,		//アニメーションシーケンス
 				0,		//優先順位
@@ -310,11 +310,11 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	DEBUG_ClactWorkKeyMove( p_clactw->p_wk, trg, cont );
 
 	// セルアクターユニット描画処理
-	GFL_CLACT_UnitDraw( p_clactw->p_unit );
+	GFL_CLACT_UNIT_Draw( p_clactw->p_unit );
 
 	// セルアクターシステムメイン処理
 	// 全ユニット描画が完了してから行う必要があります。
-	GFL_CLACT_SysMain();
+	GFL_CLACT_Main();
 
 /*		GFLUser_VIntr関数内でVBlank関数が呼ばれるのでコメントアウト
 	// Vintr待ち
@@ -360,11 +360,11 @@ static GFL_PROC_RESULT DEBUG_ClactProcEnd( GFL_PROC* p_proc, int* p_seq, void* p
 	DEBUG_ClactWorkResRelease( &p_clactw->res[0] );
 
 	// セルアクターユニット破棄
-	GFL_CLACT_UnitDelete( p_clactw->p_unit );
+	GFL_CLACT_UNIT_Delete( p_clactw->p_unit );
 
 	// セルアクターシステム破棄
 	// 全てのセルアクターユニットを破棄してから呼んでください。
-	GFL_CLACT_SysExit();
+	GFL_CLACT_Exit();
 
 	// ワーク破棄
 	GFL_PROC_FreeWork( p_proc );
@@ -468,17 +468,17 @@ static void DEBUG_ClactWorkResRelease( DEBUG_CLACT_RES* p_wk )
  *	@return	生成したワーク
  */
 //-----------------------------------------------------------------------------
-static CLWK* DEBUG_ClactWorkAdd( CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const CLWK_DATA* cp_data, u32 heapID )
+static GFL_CLWK* DEBUG_ClactWorkAdd( GFL_CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const GFL_CLWK_DATA* cp_data, u32 heapID )
 {
-	CLWK_RES resdat;
-	CLWK* p_wk;
+	GFL_CLWK_RES resdat;
+	GFL_CLWK* p_wk;
 
 	// リソースデータ代入
-	GFL_CLACT_WkSetCellResData( &resdat, 
+	GFL_CLACT_WK_SetCellResData( &resdat, 
 			&p_res->imageproxy, &p_res->plttproxy,
 			p_res->p_cell, p_res->p_cellanm );
 	// 登録
-	p_wk = GFL_CLACT_WkAdd( p_unit, 
+	p_wk = GFL_CLACT_WK_Add( p_unit, 
 			cp_data, &resdat,
 			// **登録先サーフェース指定{setsf}**
 			// セルアクターユニットに独自レンダラーを
@@ -492,7 +492,7 @@ static CLWK* DEBUG_ClactWorkAdd( CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const C
 			heapID );
 
 	// オートアニメーション設定
-	GFL_CLACT_WkSetAutoAnmFlag( p_wk, TRUE );
+	GFL_CLACT_WK_SetAutoAnmFlag( p_wk, TRUE );
 
 	return p_wk;
 }
@@ -504,9 +504,9 @@ static CLWK* DEBUG_ClactWorkAdd( CLUNIT* p_unit, DEBUG_CLACT_RES* p_res, const C
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void DEBUG_ClactWorkDel( CLWK* p_wk )
+static void DEBUG_ClactWorkDel( GFL_CLWK* p_wk )
 {
-	GFL_CLACT_WkDel( p_wk );
+	GFL_CLACT_WK_Remove( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -518,19 +518,19 @@ static void DEBUG_ClactWorkDel( CLWK* p_wk )
  *	@param	cont	contキー
  */
 //-----------------------------------------------------------------------------
-static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont )
+static void DEBUG_ClactWorkKeyMove( GFL_CLWK* p_wk, int trg, int cont )
 {
-	CLSYS_POS pos;
+	GFL_CLACTPOS pos;
 	BOOL auto_anm;
 	u16 anm_seq;
 	
 	// 座標操作には、絶対座標とサーフェース内相対座標の
 	// ２パターンがあります。
-	// GFL_CLACT_WkSetWldPos	Wldとつくのが絶対座標
-	// GFL_CLACT_WkSetPos		何もつかないのがサーフェース内相対座標です。
-	// サーフェース内相対座標は、GFL_CLACT_WkAdd時と同じで、
+	// GFL_CLACT_WK_SetWldPos	Wldとつくのが絶対座標
+	// GFL_CLACT_WK_SetPos		何もつかないのがサーフェース内相対座標です。
+	// サーフェース内相対座標は、GFL_CLACT_WK_Add時と同じで、
 	// setsfを指定する必要があります。
-	GFL_CLACT_WkGetWldPos( p_wk, &pos );	
+	GFL_CLACT_WK_GetWldPos( p_wk, &pos );	
 	
 	// 十字キーで移動
 	if( cont & PAD_KEY_UP ){
@@ -545,36 +545,36 @@ static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont )
 	if( cont & PAD_KEY_RIGHT ){
 		pos.x ++;
 	}
-	GFL_CLACT_WkSetWldPos( p_wk, &pos );
+	GFL_CLACT_WK_SetWldPos( p_wk, &pos );
 
 	// オートアニメーションON
 	if( trg & PAD_BUTTON_A ){
-		auto_anm = GFL_CLACT_WkGetAutoAnmFlag( p_wk );
-		GFL_CLACT_WkSetAutoAnmFlag( p_wk, auto_anm ^ 1 );
+		auto_anm = GFL_CLACT_WK_GetAutoAnmFlag( p_wk );
+		GFL_CLACT_WK_SetAutoAnmFlag( p_wk, auto_anm ^ 1 );
 	}
 
 	// アニメーションを変える
 	if( trg & PAD_BUTTON_B ){
-		anm_seq = GFL_CLACT_WkGetAnmSeq( p_wk );
+		anm_seq = GFL_CLACT_WK_GetAnmSeq( p_wk );
 		anm_seq ^= 1;
-		GFL_CLACT_WkSetAnmSeq( p_wk, anm_seq );
+		GFL_CLACT_WK_SetAnmSeq( p_wk, anm_seq );
 
 		// シーケンス数を表示
-		OS_Printf( "seq %d\n", GFL_CLACT_WkGetAnmSeqNum( p_wk ) );
+		OS_Printf( "seq %d\n", GFL_CLACT_WK_GetAnmSeqNum( p_wk ) );
 		// シーケンスデータ取得
-		OS_Printf( "seq data %d\n", GFL_CLACT_WkGetUserAttrAnmSeqNow(p_wk) );
+		OS_Printf( "seq data %d\n", GFL_CLACT_WK_GetUserAttrAnmSeqNow(p_wk) );
 	}
 
 	// メインからサブへ
 	if( trg & PAD_BUTTON_Y ){
 #if 1
-		GFL_CLACT_WkGetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
-		GFL_CLACT_WkSetPos( p_wk, &pos, CLSYS_DRAW_SUB );
+		GFL_CLACT_WK_GetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
+		GFL_CLACT_WK_SetPos( p_wk, &pos, CLSYS_DRAW_SUB );
 #else
 		int pal;
-		pal = GFL_CLACT_WkGetSoftPri( p_wk );
+		pal = GFL_CLACT_WK_GetSoftPri( p_wk );
 		pal ++;
-		GFL_CLACT_WkSetSoftPri( p_wk, pal );
+		GFL_CLACT_WK_SetSoftPri( p_wk, pal );
 		OS_Printf( "pri %d\n", pal );
 #endif
 	}
@@ -582,13 +582,13 @@ static void DEBUG_ClactWorkKeyMove( CLWK* p_wk, int trg, int cont )
 	// サブからメインへ
 	if( trg & PAD_BUTTON_X ){
 #if 1
-		GFL_CLACT_WkGetPos( p_wk, &pos, CLSYS_DRAW_SUB );
-		GFL_CLACT_WkSetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
+		GFL_CLACT_WK_GetPos( p_wk, &pos, CLSYS_DRAW_SUB );
+		GFL_CLACT_WK_SetPos( p_wk, &pos, CLSYS_DRAW_MAIN );
 #else
 		int pal;
-		pal = GFL_CLACT_WkGetSoftPri( p_wk );
+		pal = GFL_CLACT_WK_GetSoftPri( p_wk );
 		pal --;
-		GFL_CLACT_WkSetSoftPri( p_wk, pal );
+		GFL_CLACT_WK_SetSoftPri( p_wk, pal );
 		OS_Printf( "pri %d\n", pal );
 #endif
 	}

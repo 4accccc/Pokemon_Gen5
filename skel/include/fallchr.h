@@ -23,10 +23,10 @@
  */
 //-----------------------------------------------------------------------------
 struct fall_chr_param{
-	GAME_PARAM	*gp;
-	CLWK		*clwk;
-	CLSYS_POS	now_pos;
-	CLSYS_POS	offset_pos;
+	GAME_PARAM		*gp;
+	GFL_CLWK		*clwk;
+	GFL_CLACTPOS	now_pos;
+	GFL_CLACTPOS	offset_pos;
 
 	u8			seq_no;			//シーケンスナンバー
 	u8			push_seq_no;	//シーケンスナンバー
@@ -73,10 +73,10 @@ GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 lin
  *	@param	type		キャラタイプ
  *	@param	line_no		落下ラインナンバー
  *
- *	@retval CLWK*
+ *	@retval GFL_CLWK*
  */
 //-----------------------------------------------------------------------------
-GLOBAL CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
+GLOBAL GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
 
 //----------------------------------------------------------------------------
 /**

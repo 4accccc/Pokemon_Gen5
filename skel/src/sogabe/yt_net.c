@@ -37,7 +37,7 @@ static void _recvPlayEnd(const int netID, const int size, const void* pData, voi
 struct _NET_PARAM
 {
     GFL_NETHANDLE* pNetHandle[2];  //通信用ハンドル 親と子のハンドルを管理するから２個必要
-    CLWK* pCLACT[YT_CLACT_MAX];  // 描画してるclact
+    GFL_CLWK* pCLACT[YT_CLACT_MAX];  // 描画してるclact
     PLAYER_PARAM* pp;
     u32 seq;
     BOOL bGameStart;
@@ -267,7 +267,7 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
     const COMM_POS_ST* pPos = pData;
     GAME_PARAM* gp = pWork;
     NET_PARAM* pNet = gp->pNetParam;
-	CLSYS_POS	pos;
+	GFL_CLACTPOS	pos;
 
     if(pNet->pNetHandle[1]!=pNetHandle){
         return;
@@ -279,7 +279,7 @@ static void _recvCLACTPos(const int netID, const int size, const void* pData, vo
     pos.x = pPos->x;
     pos.y = pPos->y;
     if(pNet->pCLACT[pPos->clactNo] != NULL){
-        GFL_CLACT_WkSetWldPos(pNet->pCLACT[pPos->clactNo],&pos);
+        GFL_CLACT_WK_SetWldPos(pNet->pCLACT[pPos->clactNo],&pos);
     }
 }
 
@@ -361,7 +361,7 @@ static void _recvCLACTDelete(const int netID, const int size, const void* pData,
     const COMM_POS_ST* pPos = pData;
     GAME_PARAM* gp = pWork;
     NET_PARAM* pNet = gp->pNetParam;
-	CLSYS_POS	pos;
+	GFL_CLACTPOS	pos;
 
     if(pNet->pNetHandle[1]!=pNetHandle){
         return;
@@ -370,7 +370,7 @@ static void _recvCLACTDelete(const int netID, const int size, const void* pData,
         return;
     }
     if(pNet->pCLACT[pPos->clactNo] != NULL){
-        GFL_CLACT_WkDel(pNet->pCLACT[pPos->clactNo]);
+        GFL_CLACT_WK_Remove(pNet->pCLACT[pPos->clactNo]);
         pNet->pCLACT[pPos->clactNo] = NULL;
     }
 }
@@ -502,7 +502,7 @@ static void _recvCLACTAnim(const int netID, const int size, const void* pData, v
         GF_ASSERT(0);
     }
     else{
-        GFL_CLACT_WkSetAnmSeq(pNet->pCLACT[pAnim->clactNo],pAnim->anmseq);
+        GFL_CLACT_WK_SetAnmSeq(pNet->pCLACT[pAnim->clactNo],pAnim->anmseq);
     }
 
 }
