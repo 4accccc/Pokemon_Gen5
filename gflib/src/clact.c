@@ -508,7 +508,7 @@ void GFL_CLACT_Main( void )
  *	＊OAMデータ転送後バッファをクリーンします。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysVblank( void )
+void GFL_CLACT_VBlankFunc( void )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( pClsys ){
@@ -523,7 +523,7 @@ void GFL_CLACT_SysVblank( void )
  *	@brief	セルアクターOAMバッファのクリーン処理
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysOamBuffClean( void )
+void GFL_CLACT_ClearOamBuff( void )
 {
 	if( pClsys ){
 		OAMMAN_SysClean( &pClsys->oamman );
@@ -536,10 +536,10 @@ void GFL_CLACT_SysOamBuffClean( void )
  *
  *	＊OAMデータの転送のみ行います。
  *	OAMバッファの初期化は、各自のタイミングで行ってください。
- *	その際には「GFL_CLACT_SysOamBuffClean」関数を使用してください。
+ *	その際には「GFL_CLACT_ClearOamBuff」関数を使用してください。
  */
 //-----------------------------------------------------------------------------
-void GFL_CLACT_SysVblankTransOnly( void )
+void GFL_CLACT_VBlankFuncTransOnly( void )
 {
 	if( pClsys ){
 		OAMMAN_SysTrans( &pClsys->oamman );

@@ -277,23 +277,23 @@ extern void GFL_CLACT_Main( void );
  *	＊OAMデータ転送後バッファをクリーンします。
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_SysVblank( void );
+extern void GFL_CLACT_VBlankFunc( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターOAMバッファのクリーン処理
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_SysOamBuffClean( void );
+extern void GFL_CLACT_ClearOamBuff( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	Vブランク処理	転送のみ
  *
  *	＊OAMデータの転送のみ行います。
  *	OAMバッファの初期化は、各自のタイミングで行ってください。
- *	その際には「GFL_CLACT_SysOamBuffClean」関数を使用してください。
+ *	その際には「GFL_CLACT_ClearOamBuff」関数を使用してください。
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_SysVblankTransOnly( void );
+extern void GFL_CLACT_VBlankFuncTransOnly( void );
 
 //-------------------------------------
 ///	USER定義レンダラー関係
