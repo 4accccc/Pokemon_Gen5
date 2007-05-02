@@ -48,6 +48,7 @@ struct _NET_PARENTSYS_t{
 #define _SEND_NAME_TIME (10)
 
 #define _WIFIMODE_PARENT (-1)  // 親としてwifi起動
+#define _WIFIMODE_RANDOM (-2)  // ランダムマッチ接続
 
 //==============================================================================
 // static宣言
@@ -1094,7 +1095,7 @@ static void _wifiMachingLoop(GFL_NETHANDLE* pNetHandle)
 
 static void _wifiBattleCanceling(GFL_NETHANDLE* pNetHandle)
 {
-
+    int ret2;
     int ret = mydwc_stepmatch( 1 );  // キャンセル中
 				
     if( ret < 0 ){
@@ -1103,13 +1104,15 @@ static void _wifiBattleCanceling(GFL_NETHANDLE* pNetHandle)
         _CHANGE_STATE(_wifiErrorLoop, 0);
     }
     else{
-        if( mydwc_startgame( pNetHandle->wifiTargetNo ) ){
+        if(pNetHandle->wifiTargetNo == _WIFIMODE_RANDOM ){
+            ret2 = mydwc_startmatch();
+        }
+        else{
+            ret2 = mydwc_startgame( pNetHandle->wifiTargetNo );
+        }
+        if(ret2 != 0 ){
             GFL_NET_SystemReset();   // 今までの通信バッファをクリーンにする
-            if( pNetHandle->wifiTargetNo < 0 ){
-                OS_TPrintf("ゲーム参加者を募集します。\n");
-            } else {
-                OS_TPrintf(" %d番目の友達に接続します。\n", pNetHandle->wifiTargetNo);
-            }
+            NET_PRINT(" %d番目の友達もしくはサーバにに接続\n", pNetHandle->wifiTargetNo);
             _CHANGE_STATE(_wifiMachingLoop, 0);
         }
         else{
@@ -1120,15 +1123,17 @@ static void _wifiBattleCanceling(GFL_NETHANDLE* pNetHandle)
 
 //==============================================================================
 /**
- * @brief   アプリケーションを開始する為に相手につなぐ
+ * @brief   WIFI指定接続を開始する
  * @param   pNetHandle   GFL_NETHANDLE
- * @param   target    負なら親、０以上ならつなぎにいく親機の番号
+ * @param   target    つなぎにいく親機の番号
  * @retval  TRUE      成功
  * @retval  FALSE     失敗
  */
 //==============================================================================
-int GFL_NET_StateWifiApplicationStart( GFL_NETHANDLE* pNetHandle, int target )
+int GFL_NET_StateStartWifiPeerMatch( GFL_NETHANDLE* pNetHandle, int target )
 {
+    GF_ASSERT(!(target < 0));
+
     if( !GFL_NET_SystemWifiApplicationStart(target) ){
         return FALSE;
     }
@@ -1136,6 +1141,40 @@ int GFL_NET_StateWifiApplicationStart( GFL_NETHANDLE* pNetHandle, int target )
     _CHANGE_STATE(_wifiBattleCanceling,0);  // 今の状態を破棄
     return TRUE;
 }
+
+//==============================================================================
+/**
+ * @brief   WIFIランダムマッチを開始する
+ * @param   pNetHandle   GFL_NETHANDLE
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+int GFL_NET_StateStartWifiRandomMatch( GFL_NETHANDLE* pNetHandle )
+{
+    pNetHandle->wifiTargetNo = _WIFIMODE_RANDOM;
+    _CHANGE_STATE(_wifiBattleCanceling,0);  // 今の状態を破棄
+    return TRUE;
+}
+
+//==============================================================================
+/**
+ * @brief   親としての通信処理開始
+ * @param   pNetHandle  ハンドル
+ * @param   heapID      HEAPID
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_StateConnectWifiParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+{
+    pNetHandle->pParent = GFL_HEAP_AllocMemory(heapID, sizeof(NET_PARENTSYS));
+    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
+
+    _CHANGE_STATE(_stateNone, 0);
+}
+
+
 
 //==============================================================================
 /**

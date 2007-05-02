@@ -14,6 +14,7 @@
 
 
 static int _ringPos(const RingBuffWork* pRing,const int i);
+static int _ringRestBackupSize(const RingBuffWork* pRing);
 
 //==============================================================================
 /**
@@ -52,7 +53,7 @@ void GFL_NET_RingPuts(RingBuffWork* pRing, u8* pDataArea, const int size)
     // ストックするバッファ分まであふれると、ここで止まります。
     // 通信のバッファを増やすか、今の部分の処理を分断するか、対処が必要です。
     // 最終的にはこのエラーがあると通信を切断します。
-    if(GFL_NET_RingDataRestSize(pRing) <= size){
+    if(_ringRestBackupSize(pRing) <= size){
 #ifdef DEBUG_ONLY_FOR_ohno
         NET_PRINT("%d %d line %d \n",GFL_NET_RingDataRestSize(pRing),size);
         OS_TPanic(0,"GFL_NET_RingOVER %d %d",GFL_NET_RingDataRestSize(pRing),size);
@@ -164,6 +165,25 @@ int GFL_NET_RingDataRestSize(const RingBuffWork* pRing)
 static int _ringPos(const RingBuffWork* pRing, const int i)
 {
     return i % pRing->size;
+}
+
+//==============================================================================
+/**
+ * @brief   リングバッファのデータがどのくらいあまっているか検査
+ * @param   pRing        リングバッファ管理ポインタ
+ * @retval  実際に読み込んだデータ
+ */
+//==============================================================================
+static int _ringRestBackupSize(const RingBuffWork* pRing)
+{
+    int size;
+    if(pRing->startPos > pRing->backupEndPos){
+        size = (pRing->size + pRing->backupEndPos - pRing->startPos);
+    }
+    else{
+        size = (pRing->backupEndPos - pRing->startPos);
+    }
+    return (pRing->size - size);
 }
 
 //==============================================================================

@@ -13,10 +13,14 @@
 
 #include "net_def.h"
 #include "device/net_wireless.h"
+#include "device/dwc_rapcommon.h"
 #include "net_system.h"
 #include "net_command.h"
 #include "net_state.h"
 #include "wm_icon.h"
+
+#include "device/dwc_rap.h"
+
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
@@ -25,7 +29,7 @@
 // 通信で使用するCreateHEAP量
 
 #define _HEAPSIZE_NET              (0x7080)          ///< NET関連のメモリ領域
-#define _HEAPSIZE_WIFI             (0x2A000+0x7000)  ///< DWCが使用する領域
+#define _HEAPSIZE_WIFI             (MYDWC_HEAPSIZE+0xA000)  ///< DWCが使用する領域
 
 /// @brief  通信システム管理構造体
 struct _GFL_NETSYS{
@@ -446,7 +450,17 @@ void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle)
 void GFL_NET_InitServer(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+#if GFL_NET_WIFI
+    if(pNet->aNetInit.bWiFi){
+        GFL_NET_StateConnectWifiParent(pHandle, pNet->aNetInit.netHeapID);
+    }
+    else{
+        GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
+    }
+#else
     GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
+#endif
 }
 
 //==============================================================================
@@ -836,6 +850,84 @@ void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex)
         pNet->aNetInit.wifiMargeFunc(deletedIndex, srcIndex);
     }
 }
+
+//==============================================================================
+/**
+ * @brief    WIFIロビーへ接続しているかどうか
+ * @param    NetHandle* pNet  通信ハンドル
+ * @retval   TRUE   ロビー接続
+ * @retval   FALSE   まだ接続していない
+ */
+//==============================================================================
+BOOL GFL_NET_IsWifiLobby(GFL_NETHANDLE* pNetHandle)
+{
+    if(2 > GFL_NET_StateWifiIsMatched(pNetHandle)){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   ユーザーデータを初期化する
+ * @param   DWCUserData  ユーザーデータ構造体
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_WIFI_InitUserData(DWCUserData *pUserdata)
+{
+    mydwc_createUserData( pUserdata );
+}
+
+//==============================================================================
+/**
+ * @brief   WIFI接続要求が来たかどうか
+ * @retval  TRUE  きた
+ * @retval  FALSE こない
+ */
+//==============================================================================
+BOOL GFL_NET_WIFI_IsNewPlayer(void)
+{
+    return mydwc_IsNewPlayer();
+}
+
+//==============================================================================
+/**
+ * @brief   物理的なWIFIコネクション番号を得る
+ * @retval  -1    コネクションが張られてない
+ * @retval  0以上 コネクションのID
+ */
+//==============================================================================
+int GFL_NET_WIFI_GetLocalConnectNo(void)
+{
+    return mydwc_getaid();
+}
+
+//==============================================================================
+/**
+ * @brief   ランダムマッチ接続を開始する
+ * @param   pNetHandle  ネットハンドル
+ * @retval  TRUE  成功
+ * @retval  FALSE 失敗
+ */
+//==============================================================================
+BOOL GFL_NET_StartRandomMatch(GFL_NETHANDLE* pNetHandle)
+{
+    return GFL_NET_StateStartWifiRandomMatch( pNetHandle );
+}
+
+//==============================================================================
+/**
+ * @brief   通信を同期か非同期かにきりかえる
+ * @param   TRUE  同期    FALSE 非同期
+ * @return  なし
+ */
+//==============================================================================
+void GFL_NET_SetWifiBothNet(BOOL flag)
+{
+    GFL_NET_SystemSetWifiBothNet(flag);
+}
+
 
 #endif // GFL_NET_WIFI
 

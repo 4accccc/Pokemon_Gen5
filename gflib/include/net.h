@@ -10,7 +10,11 @@
 #define __NET_H__
 
 
+#if defined(DEBUG_ONLY_FOR_ohno)
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
+#else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#endif
 
 // デバッグ用決まり文句----------------------
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
@@ -288,6 +292,16 @@ extern void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle);
 
 //==============================================================================
 /**
+ * @brief    WIFIロビーへ接続しているかどうか
+ * @param    NetHandle* pNet  通信ハンドル
+ * @retval   TRUE   ロビー接続
+ * @retval   FALSE   まだ接続していない
+ */
+//==============================================================================
+extern BOOL GFL_NET_IsWifiLobby(GFL_NETHANDLE* pNetHandle);
+
+//==============================================================================
+/**
  * @brief 通信切断する
  * @retval  none
  */
@@ -482,6 +496,48 @@ extern BOOL GFL_NET_IsResetEnable(void);
 //==============================================================================
 extern void GFL_NET_VBlankFunc(void);
 
+//==============================================================================
+/**
+ * @brief   ユーザーデータを初期化する
+ * @param   DWCUserData  ユーザーデータ構造体
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_WIFI_InitUserData(DWCUserData *pUserdata);
+
+//==============================================================================
+/**
+ * @brief   WIFI接続要求が来たかどうか
+ * @retval  TRUE  きた
+ * @retval  FALSE こない
+ */
+//==============================================================================
+extern BOOL GFL_NET_WIFI_IsNewPlayer(void);
+//==============================================================================
+/**
+ * @brief   ランダムマッチ接続を開始する
+ * @param   pNetHandle  ネットハンドル
+ * @retval  TRUE  成功
+ * @retval  FALSE 失敗
+ */
+//==============================================================================
+extern BOOL GFL_NET_StartRandomMatch(GFL_NETHANDLE* pNetHandle);
+//==============================================================================
+/**
+ * @brief   物理的なWIFIコネクション番号を得る
+ * @retval  -1    コネクションが張られてない
+ * @retval  0以上 コネクションのID
+ */
+//==============================================================================
+extern int GFL_NET_WIFI_GetLocalConnectNo(void);
+//==============================================================================
+/**
+ * @brief   通信を同期か非同期かにきりかえる
+ * @param   TRUE  同期    FALSE 非同期
+ * @return  なし
+ */
+//==============================================================================
+extern void GFL_NET_SetWifiBothNet(BOOL flag);
 
 
 extern void debugcheck(u32* data,int size );

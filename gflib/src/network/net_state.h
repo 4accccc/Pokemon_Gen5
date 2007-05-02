@@ -139,14 +139,32 @@ extern void GFL_NET_StateRecvDSMPChangeReq(const int netID, const int size, cons
 extern void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
- * @brief   アプリケーションを開始する為に相手につなぐ
+ * @brief   WIFI指定接続を開始する
  * @param   pNetHandle   GFL_NETHANDLE
- * @param   target    負なら親、０以上ならつなぎにいく親機の番号
+ * @param   target    つなぎにいく親機の番号
  * @retval  TRUE      成功
  * @retval  FALSE     失敗
  */
 //==============================================================================
-extern int GFL_NET_StateWifiApplicationStart( GFL_NETHANDLE* pNetHandle, int target );
+extern int GFL_NET_StateStartWifiPeerMatch( GFL_NETHANDLE* pNetHandle, int target );
+//==============================================================================
+/**
+ * @brief   WIFIランダムマッチを開始する
+ * @param   pNetHandle   GFL_NETHANDLE
+ * @retval  TRUE      成功
+ * @retval  FALSE     失敗
+ */
+//==============================================================================
+extern int GFL_NET_StateStartWifiRandomMatch( GFL_NETHANDLE* pNetHandle );
+//==============================================================================
+/**
+ * @brief   親としての通信処理開始
+ * @param   pNetHandle  ハンドル
+ * @param   heapID      HEAPID
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_StateConnectWifiParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
 //==============================================================================
 /**
  * @brief   マッチングが完了したかどうかを判定

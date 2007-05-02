@@ -37,9 +37,8 @@
 
 //#define YOSHIHARA_VCHAT_ONOFFTEST
 
-
 // ヒープ領域の最大使用量を監視する場合定義
-#define CHEAK_HEAPSPACE
+//#define CHEAK_HEAPSPACE
 
 // デバッグ出力を大量に吐き出す場合定義
 //#define DEBUGPRINT_ON
@@ -59,18 +58,25 @@
 // １フレームに何人分のデータを更新するか。
 #define FRIENDINFO_UPDATA_PERFRAME 4
 
-// WiFiで使うHeapのサイズ(128Kバイト、仮）+7000
-#define MYDWC_HEAPSIZE (0x2B000)
+// WiFiで使うHeapのサイズ
+//#define MYDWC_HEAPSIZE (0x2B000)
+//#define MYDWC_HEAPSIZE (0x30000)
 
-#define MYDWC_HEAPID HEAPID_WIFIMENU
+//#define MYDWC_HEAPID HEAPID_WIFIMENU
 
 // この辺はテスト用。正式に割り当てられたら、指定する。
+#ifdef USE_AUTHSERVER_DEVELOP
+#define GAME_NAME        "gmtest"  // このサンプルが使用するゲーム名
+#define GAME_SECRET_KEY  "HA6zkS"  // このサンプルが使用するシークレットキー
+#define GAME_PRODUCTID   0         // このサンプルが使用するプロダクトID
+#else
 #define GAME_NAME        "pokemondpds"  // 使用するゲーム名
 #define GAME_SECRET_KEY  "1vTlwb"  // 使用するシークレットキー
 #define GAME_PRODUCTID   10727         // 使用するプロダクトID
+#endif
 
-#define SIZE_RECV_BUFFER (4 * 1024)
-#define SIZE_SEND_BUFFER 256
+#define SIZE_RECV_BUFFER (8 * 1024)
+#define SIZE_SEND_BUFFER 512
 
 typedef struct
 {
@@ -649,27 +655,17 @@ int mydwc_sendToServer(void *data, int size)
         return 0;
     }
 
-    
-	MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
-
-	if( DWC_GetMyAID() == 0 )
-	{
-		// 自分が親
-		// コールバック内で書き換えられる可能性を考え、dataをコピーしておく。
-//		void *buf = mydwc_AllocFunc( NULL, size, 32 );
-//		MI_CpuCopy8	( data, buf, size );
-		
+	if( DWC_GetMyAID() == 0 ){
 		// 自分自身のサーバ受信コールバックを呼び出す。
-		if( _dWork->serverCallback != NULL ) _dWork->serverCallback(0, data, size);
-		
-		// コールバックを呼び出したらすぐに開放。
-//		mydwc_FreeFunc( NULL, buf, size );
-		
-		return 1;
+        if( _dWork->serverCallback != NULL ){
+            _dWork->serverCallback(0, data, size);
+        }
+        return 1;
 	}
-	else
-	{
-		// 相手が親。相手に対してデータ送信。
+    else{
+        MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
+        
+        // 相手が親。相手に対してデータ送信。
 		if( _dWork->sendbufflag || !DWC_IsSendableReliable( 0 ) ) // 送信バッファをチェック。
 		{
 			// 送信バッファがいっぱいなどで送れない。
@@ -2001,6 +1997,19 @@ BOOL mydwc_IsVChat(void)
     }
     return FALSE;
 }
+
+//==============================================================================
+/**
+ * 接続BITMAPを返す
+ * @retval  TRUE…ボイスチャット   FALSE…ボイスチャットではない 
+ */
+//==============================================================================
+
+u32 mydwc_GetBitmap(void)
+{
+    return DWC_GetAIDBitmap();
+}
+
 
 //==============================================================================
 /**

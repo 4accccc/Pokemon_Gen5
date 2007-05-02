@@ -1076,7 +1076,7 @@ static BOOL WH_StateInStartParentMP(void)
     }
 
     WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
-/*    result = WM_StartMPEx(WH_StateOutStartParentMP,
+    result = WM_StartMPEx(WH_StateOutStartParentMP,
                           (u16 *)pNetWH->sRecvBuffer,
                           (u16)pNetWH->sRecvBufferSize,
                           (u16 *)pNetWH->sSendBuffer,
@@ -1088,7 +1088,7 @@ static BOOL WH_StateInStartParentMP(void)
                           FALSE,//        BOOL            fixFreqMode ,
                           FALSE//        BOOL            ignoreFatalError
                           );
-*/
+/*
     result = WM_StartMP(WH_StateOutStartParentMP,
                           (u16 *)pNetWH->sRecvBuffer,
                           (u16)pNetWH->sRecvBufferSize,
@@ -1096,7 +1096,7 @@ static BOOL WH_StateInStartParentMP(void)
                           (u16)pNetWH->sSendBufferSize,
                           1
                           );
-   
+   */
     if (result != WM_ERRCODE_OPERATING)
     {
         WH_REPORT_FAILURE(result);
@@ -1825,11 +1825,25 @@ static BOOL WH_StateInStartChildMP(void)
     WMErrCode result;
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     WH_TRACE_STATE(pNetWH->sSysState);
-
+/*
     result = WM_StartMP(WH_StateOutStartChildMP,
                         (u16 *)pNetWH->sRecvBuffer,
                         (u16)pNetWH->sRecvBufferSize, (u16 *)pNetWH->sSendBuffer,
                         (u16)pNetWH->sSendBufferSize, 1);
+*/
+
+    result = WM_StartMPEx(WH_StateOutStartChildMP,
+                          (u16 *)pNetWH->sRecvBuffer,
+                          (u16)pNetWH->sRecvBufferSize,
+                          (u16 *)pNetWH->sSendBuffer,
+                          (u16)pNetWH->sSendBufferSize,
+                          1,
+                          0,//        u16             defaultRetryCount ,
+                          FALSE,//        BOOL            minPollBmpMode ,
+                          FALSE,//        BOOL            singlePacketMode ,
+                          FALSE,//        BOOL            fixFreqMode ,
+                          FALSE//        BOOL            ignoreFatalError
+                          );
 
     if (result != WM_ERRCODE_OPERATING)
     {

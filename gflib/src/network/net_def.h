@@ -41,7 +41,7 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 
 // 無線で使用するDMA番号
-#define _NETWORK_DMA_NO                 (2)
+#define _NETWORK_DMA_NO                 (1)
 //WMのパワーモード
 #define _NETWORK_POWERMODE       (1)
 //SSL処理のスレッド優先順位
@@ -113,7 +113,7 @@ struct _GFL_NETHANDLE{
   HEAPID wifiHeapID;       ///< wifiLibが使用するID
   u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ
   u8 negotiationID[GFL_NET_HANDLE_MAX]; ///< 接続しているハンドルの状態
-  u8 wifiTargetNo;    ///< 接続再起番号(wifi用)
+  s8 wifiTargetNo;    ///< 接続再起番号(wifi用)
   u8 disconnectType;  ///< 切断時のタイプ(wifi)
   u8 bWifiDisconnect;  ///< 切断フラグ(wifi)
   u8 bDisconnectError; ///< 切断エラー(wifi)

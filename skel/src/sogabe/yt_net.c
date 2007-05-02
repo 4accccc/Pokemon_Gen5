@@ -19,6 +19,12 @@
 #include "player.h"
 #include "../ohno/fatal_error.h"
 
+#if GFL_NET_WIFI //GFL_NET_WIFI WIFI通信テスト
+// この二つのデータが「ともだちこーど」になります。本来はセーブする必要があります
+#define _BCON_GET_NUM  (1)
+static DWCUserData _testUserData;
+static DWCFriendData _testFriendData[_BCON_GET_NUM];
+#endif
 
 // static 関数定義
 static void _recvCLACTPos(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -90,12 +96,12 @@ static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得
 
 /// バトル専用通信コマンドの定義。
 enum CommCommandBattle_e {
-    YT_NET_COMMAND_ANIM = GFL_NET_CMD_COMMAND_MAX,  ///< アニメコマンド送信
-    YT_NET_COMMAND_POS,                             ///< 位置コマンド送信
-    YT_NET_COMMAND_PLAYERANIM,            ///< プレーヤーのアニメーション情報の送信
-    YT_NET_COMMAND_DELETE,            /// CLACTを消す命令
-    YT_NET_COMMAND_YOSSYANIM,     ///ヨッシーのアニメーション
-    YT_NET_COMMAND_ANIM_CREATE,   ///< アニメーション作成
+    YT_NET_COMMAND_ANIM = GFL_NET_CMD_COMMAND_MAX,  ///< アニメコマンド送信  b
+    YT_NET_COMMAND_POS,                             ///< 位置コマンド送信c
+    YT_NET_COMMAND_PLAYERANIM,            ///< プレーヤーのアニメーション情報の送信d
+    YT_NET_COMMAND_DELETE,            /// CLACTを消す命令e
+    YT_NET_COMMAND_YOSSYANIM,     ///ヨッシーのアニメーションf
+    YT_NET_COMMAND_ANIM_CREATE,   ///< アニメーション作成10
     TY_NET_COMMAND_SCREENMAKE,
     TY_NET_COMMAND_SCREENMAKE_ROT,
     YT_NET_COMMAND_PLAY_SE,
@@ -204,7 +210,8 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 };
 
 
-// 通信初期化構造体  wifi用
+
+// 通信初期化構造体  WIFI兼用
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
@@ -215,6 +222,12 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL, //_netAutoParent,    //自動接続の際に親になる場合に呼ばれる関数
+#if GFL_NET_WIFI
+    NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    &_testFriendData[0],  // DWC形式の友達リスト	
+    &_testUserData,  // DWCのユーザデータ（自分のデータ）
+#endif
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
@@ -232,6 +245,9 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 
 enum{
+    _CONNECT_WIFI,
+    _CONNECTING_WIFI,
+    _WIFI_MATCHING,
     _INIT_WAIT_PARENT,
     _INIT_WAIT_CHILD,
     _SEARCH_CHILD,
@@ -717,6 +733,32 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
 {
 
     switch(pNet->seq){
+#if GFL_NET_WIFI
+      case _CONNECT_WIFI:
+        GFL_NET_WIFI_InitUserData(aGFLNetInit.myUserData);
+        pNet->pNetHandle[1] = GFL_NET_CreateHandle();
+        GFL_NET_WifiLogin( pNet->pNetHandle[1] );    // wifiLogin マッチング待機へ移動
+        _SEQCHANGE( _CONNECTING_WIFI );
+        break;
+      case _CONNECTING_WIFI:
+        if( GFL_NET_IsWifiLobby( pNet->pNetHandle[1] ) ){
+            GFL_NET_StartRandomMatch(pNet->pNetHandle[1]); // ランダムマッチ状態にする
+            _SEQCHANGE( _WIFI_MATCHING );
+        }
+        break;
+      case _WIFI_MATCHING:
+        {
+            int localConnect= GFL_NET_WIFI_GetLocalConnectNo();
+            if(localConnect != -1){
+                if(localConnect==0){
+                    pNet->pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
+                    GFL_NET_InitServer(pNet->pNetHandle[0]);       // サーバーにする
+                }
+                _SEQCHANGE( _CONNECT_WAIT );
+            }
+        }
+        break;
+#endif
       case _INIT_WAIT_PARENT:
         if(GFL_NET_IsInit()){
             pNet->pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
@@ -769,6 +811,7 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _TIM_OK:
         if(GFL_NET_IsTimingSync(pNet->pNetHandle[1] , _TEST_TIMING)){
             pNet->bGameStart = TRUE;
+            GFL_NET_SetWifiBothNet(FALSE);  // WIFIはdefaultで非同期接続にしておく
             _SEQCHANGE( _LOOP );
         }
         break;
@@ -794,11 +837,21 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
 
     GFL_NET_Init(&aGFLNetInit);
 
-    if(bParent){
-        pNet->seq = _INIT_WAIT_PARENT;
+    if(aGFLNetInit.bWiFi){
+        if(bParent){
+            pNet->seq = _CONNECT_WIFI;
+        }
+        else{
+            pNet->seq = _CONNECT_WIFI;
+        }
     }
     else{
-        pNet->seq = _INIT_WAIT_CHILD;
+        if(bParent){
+            pNet->seq = _INIT_WAIT_PARENT;
+        }
+        else{
+            pNet->seq = _INIT_WAIT_CHILD;
+        }
     }
 
     
