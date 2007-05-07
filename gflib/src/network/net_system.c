@@ -1051,7 +1051,9 @@ static BOOL _copyDSData(void)
     _debugCounter++;
     _pComm->sSendServerBuf[0] = _SEND_NONE + (_debugCounter * 0x10);
     if( pNetIni->bWiFi){
+#if GFL_NET_WIFI
         _pComm->sSendServerBuf[1] = mydwc_GetBitmap();
+#endif
     }
     else{
         _pComm->sSendServerBuf[1] = WH_GetBitmap();

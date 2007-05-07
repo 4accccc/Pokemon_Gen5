@@ -811,7 +811,9 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
       case _TIM_OK:
         if(GFL_NET_IsTimingSync(pNet->pNetHandle[1] , _TEST_TIMING)){
             pNet->bGameStart = TRUE;
+#if GFL_NET_WIFI
             GFL_NET_SetWifiBothNet(FALSE);  // WIFI‚Ídefault‚Å”ñ“¯ŠúÚ‘±‚É‚µ‚Ä‚¨‚­
+#endif
             _SEQCHANGE( _LOOP );
         }
         break;

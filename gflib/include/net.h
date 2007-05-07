@@ -11,7 +11,7 @@
 
 
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #endif
@@ -496,6 +496,7 @@ extern BOOL GFL_NET_IsResetEnable(void);
 //==============================================================================
 extern void GFL_NET_VBlankFunc(void);
 
+#if GFL_NET_WIFI
 //==============================================================================
 /**
  * @brief   ユーザーデータを初期化する
@@ -504,6 +505,7 @@ extern void GFL_NET_VBlankFunc(void);
  */
 //==============================================================================
 extern void GFL_NET_WIFI_InitUserData(DWCUserData *pUserdata);
+#endif
 
 //==============================================================================
 /**

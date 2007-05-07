@@ -11,6 +11,8 @@
 #ifndef __DWC_RAPCOMMON_H__
 #define __DWC_RAPCOMMON_H__
 
+#if GFL_NET_WIFI
+
 
 //==============================================================================
 /**
@@ -48,5 +50,6 @@ extern int mydwc_getMyGSID(void);
 //==============================================================================
 extern BOOL mydwc_checkMyGSID(void);
 
+#endif //
 #endif //
 
