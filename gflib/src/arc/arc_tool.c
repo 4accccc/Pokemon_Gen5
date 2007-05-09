@@ -293,6 +293,7 @@ u16	GFL_ARC_GetDataFileCnt(int arcID, int datID)
 	FS_SeekFile(&p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
 	FS_ReadFile(&p_file,&size,4);									///<FATサイズをロード
 	FS_ReadFile(&p_file,&file_cnt,2);								///<FileCountをロード
+	FS_CloseFile(&p_file);
 
 	return	file_cnt;
 }
@@ -344,6 +345,7 @@ u32	GFL_ARC_GetDataSize(int arcID,int datID)
 	FS_SeekFile(&p_file,img_top+IMG_HEAD_SIZE+top,FS_SEEK_SET);		///<取り出したいIMGの先頭に移動
 	size=bottom-top;
 	GF_ASSERT_MSG(size!=0,"GFL_ARC_GetDataSize:ReadDataSize=0!");
+	FS_CloseFile(&p_file);
 
 	return	size;
 }
@@ -603,7 +605,7 @@ void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file)
 	FS_InitFile(p_file);
 	FS_OpenFile(p_file,(char *)ArchiveFileTable[arcID]);
 	FS_SeekFile(p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
-	FS_ReadFile(p_file,&size,2);										///<アーカイブヘッダサイズをロード
+	FS_ReadFile(p_file,&size,2);									///<アーカイブヘッダサイズをロード
 	fat_top=size;
 	FS_SeekFile(p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
 	FS_ReadFile(p_file,&size,4);									///<FATサイズをロード
