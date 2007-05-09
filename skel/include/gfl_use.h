@@ -24,6 +24,12 @@ extern void GFLUser_Display(void);
 //GFL関連終了処理
 extern void GFLUser_Exit(void);
 
+//GFL関連HBlank割り込み処理
+extern void GFLUser_HIntr(void);
+
+//HBlank中TCBの登録処理を追加
+extern GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri);
+
 //GFL関連VBlank割り込み処理
 extern void GFLUser_VIntr(void);
 
