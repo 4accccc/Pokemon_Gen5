@@ -27,6 +27,11 @@
 
 #define	PLAYER1_READY	(0)
 
+//#define	DMA_RASTER		//定義有効でDMAによるラスター（無効でHBlank割り込みでのラスター
+#ifndef DMA_RASTER
+#include "gfl_use.h"
+#endif
+
 static	void	YT_MainGameAct(GAME_PARAM *gp);
 static	void	YT_ExitGame(GAME_PARAM *gp);
 static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
@@ -36,8 +41,15 @@ static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_CheckFlag(GFL_TCB *tcb,void *work);
 static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int *kara_flag);
 
-static	u16	RasterBuffer[192+90];
+static	u16	RasterBuffer[256+90];
 static	int	raster_count=0;
+#ifndef DMA_RASTER
+static	void	TCB_RasterHBlank(GFL_TCB *tcb,void *work);
+static	void	TCB_RasterVBlank(GFL_TCB *tcb,void *work);
+static	int	raster_start=0;
+static	GFL_TCB	*raster_h_blank=NULL;
+static	GFL_TCB	*raster_v_blank=NULL;
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -251,11 +263,17 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 		rad=0;
 
-		for(i=0;i<192+90;i++){
+		for(i=0;i<256+90;i++){
 			RasterBuffer[i]=(u16)(Sin360FX(rad*FX32_ONE)/1024);
 			rad+=4;
 		}
 	}
+
+#ifndef DMA_RASTER
+	raster_h_blank=GFUser_HIntr_CreateTCB(TCB_RasterHBlank,NULL,0);
+	raster_v_blank=GFUser_VIntr_CreateTCB(TCB_RasterVBlank,NULL,0);
+#endif
+
 }
 
 //----------------------------------------------------------------------------
@@ -279,6 +297,7 @@ void	YT_MainGame(GAME_PARAM *gp)
 	// 全ユニット描画が完了してから行う必要があります。
 	GFL_CLACT_Main();
 
+#ifdef DMA_RASTER
 	GFL_DMA_Start(2,(u32)&RasterBuffer[raster_count],(u32)&reg_G2_BG3VOFS,
 				  GFL_DMA_ENABLE,
 				  GFL_DMA_INTR_DISABLE,
@@ -291,6 +310,7 @@ void	YT_MainGame(GAME_PARAM *gp)
 	if(++raster_count>=90){
 		raster_count=0;
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -398,7 +418,12 @@ static	void	YT_ExitGame(GAME_PARAM *gp)
     // セルアクターユニット破棄
 	GFL_CLACT_UNIT_Delete(gp->clact->p_unit);
 
+#ifdef DMA_RASTER
 	GFL_DMA_Stop(2);
+#else
+	GFL_TCB_DeleteTask(raster_h_blank);
+	GFL_TCB_DeleteTask(raster_v_blank);
+#endif
 
 	YT_JobNoSet(gp,YT_InitTitleNo);
 }
@@ -819,3 +844,29 @@ static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int
 	}
 }
 
+#ifndef	DMA_RASTER
+//----------------------------------------------------------------------------
+/**
+ *	@brief	割り込み処理によるラスタースクロール
+ *
+ *	@param[in]	gp			ゲームパラメータ構造体
+ *	@param[in]	player_no	チェックするプレーヤーナンバー
+ *	@param[out]	deka_flag	デカキャラを選択するフラグ
+ *	@param[out]	kara_flag	タマゴの殻を選択するフラグ
+ */
+//-----------------------------------------------------------------------------
+static	void	TCB_RasterHBlank(GFL_TCB *tcb,void *work)
+{
+	reg_G2_BG3VOFS=RasterBuffer[raster_count];
+	raster_count++;
+}
+
+static	void	TCB_RasterVBlank(GFL_TCB *tcb,void *work)
+{
+	if(++raster_start==90){
+		raster_start=0;
+	}
+	raster_count=raster_start;
+}
+
+#endif
