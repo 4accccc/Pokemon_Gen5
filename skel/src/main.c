@@ -17,6 +17,7 @@
 
 #include "testmode.h"
 
+static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
@@ -32,12 +33,15 @@ void NitroMain(void)
 	// 初期化して…
 	GFLUser_Init();
 
+	//HBLANK割り込み許可
+	OS_SetIrqFunction(OS_IE_H_BLANK,SkeltonHBlankFunc);
 	//VBLANK割り込み許可
 	OS_SetIrqFunction(OS_IE_V_BLANK,SkeltonVBlankFunc);
 
-	(void)OS_EnableIrqMask(OS_IE_V_BLANK);
+	(void)OS_EnableIrqMask(OS_IE_H_BLANK|OS_IE_V_BLANK);
 	(void)OS_EnableIrq();
 
+	(void)GX_HBlankIntr(TRUE);
 	(void)GX_VBlankIntr(TRUE);
 	(void)OS_EnableInterrupts();
 
@@ -60,6 +64,16 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	}
+}
+
+//------------------------------------------------------------------
+/**
+ * brief	HBlank割り込み処理
+ */
+//------------------------------------------------------------------
+static	void	SkeltonHBlankFunc(void)
+{
+	GFLUser_HIntr();
 }
 
 //------------------------------------------------------------------

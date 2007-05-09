@@ -25,12 +25,15 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
+	TCB_HINTR_MAX = 4,
 	TCB_VINTR_MAX = 16,
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
+	GFL_TCBSYS *	TCBSysHintr;
+	void *		TCBMemHintr;
 	GFL_TCBSYS *	TCBSysVintr;
 	void *		TCBMemVintr;
 }GFL_USE_WORK;
@@ -96,6 +99,9 @@ void GFLUser_Init(void)
 	//PROCシステム初期化
 	GFL_PROC_boot(GFL_HEAPID_SYSTEM);
 	gfl_work = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(GFL_USE_WORK));
+	gfl_work->TCBMemHintr = GFL_HEAP_AllocMemory(
+		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_HINTR_MAX));
+	gfl_work->TCBSysHintr = GFL_TCB_Init(TCB_HINTR_MAX, gfl_work->TCBMemHintr);
 	gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
 	gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
@@ -159,6 +165,25 @@ void GFLUser_Exit(void)
 	GFL_SOUND_Exit();
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	GFライブラリ利用部分：HBlank割り込み処理
+ */
+//------------------------------------------------------------------
+void GFLUser_HIntr(void)
+{
+	GFL_TCB_Main(gfl_work->TCBSysHintr);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	GFライブラリ利用部分：HBlank中TCBの登録処理
+ */
+//------------------------------------------------------------------
+GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
+{
+	return GFL_TCB_AddTask(gfl_work->TCBSysHintr, func, work, pri);
+}
 
 //------------------------------------------------------------------
 /**
