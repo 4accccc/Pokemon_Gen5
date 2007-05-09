@@ -46,6 +46,8 @@ void	GFL_SOUND_Init( void )
 	heap=NNS_SndHeapCreate(&sndHeap,sizeof(sndHeap));
 	NNS_SndHandleInit(&bgmHandle);
 	NNS_SndHandleInit(&seHandle);
+
+	arc.file_open=FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -79,6 +81,10 @@ void	GFL_SOUND_Exit( void )
 void	GFL_SOUND_LoadArchiveData( int arcID, int datID )
 {
 	BOOL	result;
+
+	if(arc.file_open==TRUE){
+		FS_CloseFile(&arc.file);
+	}
 
 	GFL_ARC_OpenFileTopPosWrite(arcID,datID,&arc.file);
 
