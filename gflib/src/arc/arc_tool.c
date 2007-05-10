@@ -20,12 +20,17 @@
 #define	OFS_NO_SET		(0)		///<ArchiveDataLoadOfs,ArchiveDataLoadOfs用OFS値なしの定数
 #define	SIZE_NO_SET		(0)		///<ArchiveDataLoadOfs,ArchiveDataLoadOfs用SIZE値なしの定数
 
+#define	ARCHIVE_FILE_MODE_FS	(0)	///<ファイルシステムを使用する
+#define	ARCHIVE_FILE_MODE_MB	(1)	///<マルチブート対応にする
+
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
 
-static	void	ArchiveLoadDataIndex(void *data,const char *name,int datID,int ofs,int ofs_size);
-static	void*	ArchiveLoadDataIndexMalloc(const char *name,int datID,HEAPID heapID,int ofs,int ofs_size);
+static	void	ArchiveLoadDataIndex(void *data,int arcID,int datID,int ofs,int ofs_size);
+static	void*	ArchiveLoadDataIndexMalloc(int arcID,int datID,HEAPID heapID,int ofs,int ofs_size);
+static	void	ArchiveFileOpen(FSFile *p_file,int arcID);
+static	u32		ArchiveMoveImageTop(FSFile *p_file,int datID,int ofs,int ofs_size);
 
 //============================================================================================
 //	アーカイブテーブル格納変数
@@ -33,6 +38,7 @@ static	void*	ArchiveLoadDataIndexMalloc(const char *name,int datID,HEAPID heapID
 
 static	char	***ArchiveFileTable=NULL;
 static	int		ArchiveFileTableMax=0;
+static	int		ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
 
 //============================================================================================
 /**
@@ -46,6 +52,22 @@ void	GFL_ARC_Init(const char **tbl,int tbl_max)
 {
 	ArchiveFileTable=(char ***)tbl;
 	ArchiveFileTableMax=tbl_max;
+	ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
+}
+
+//============================================================================================
+/**
+ *	アーカイブシステム初期化（マルチブート対応）
+ *
+ * @param[in]	tbl		アーカイブデータテーブルのアドレス
+ * @param[in]	tbl_max	アーカイブデータテーブルの要素数のMAX
+ */
+//============================================================================================
+void	GFL_ARC_InitMultiBoot(const char **tbl,int tbl_max)
+{
+	ArchiveFileTable=(char ***)tbl;
+	ArchiveFileTableMax=tbl_max;
+	ArchiveFileMode=ARCHIVE_FILE_MODE_MB;
 }
 
 //============================================================================================
@@ -64,51 +86,20 @@ void	GFL_ARC_Exit(void)
  *	nnsarcで作成したアーカイブファイルに対してIndexを指定して任意のデータを取り出す
  *
  * @param[in]	data		読み込んだデータを格納するワークのポインタ
- * @param[in]	name		読み込むアーカイブファイル名
+ * @param[in]	arcID		読み込むアーカイブファイルのインデックスナンバー
  * @param[in]	datID		読み込むデータのアーカイブ上のインデックスナンバー
  * @param[in]	ofs			読み込むデータの先頭からのオフセット
  * @param[in]	ofs_size	読み込むデータサイズ
  */
 //============================================================================================
-static	void	ArchiveLoadDataIndex(void *data,const char *name,int datID,int ofs,int ofs_size)
+static	void	ArchiveLoadDataIndex(void *data,int arcID,int datID,int ofs,int ofs_size)
 {
 	FSFile		p_file;
 	u32			size=0;
-	u32			fat_top=0;
-	u32			fnt_top=0;
-	u32			img_top=0;
-	u32			top=0;
-	u32			bottom=0;
-	u16			file_cnt=0;
 
-	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,name);
-	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
-	fat_top=size;
-	FS_SeekFile(&p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FATサイズをロード
-	FS_ReadFile(&p_file,&file_cnt,2);								///<FileCountをロード
-	GF_ASSERT_MSG(file_cnt>datID,"ArchiveLoadDataIndex file=%s, fileCnt=%d, datID=%d", name, file_cnt, datID);
-	fnt_top=fat_top+size;
-	FS_SeekFile(&p_file,fnt_top+SIZE_OFFSET,FS_SEEK_SET);			///<FNTのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FNTサイズをロード
-	img_top=fnt_top+size;
-	
-	FS_SeekFile(&p_file,fat_top+FAT_HEAD_SIZE+datID*8,FS_SEEK_SET);	///<取り出したいFATテーブルに移動
-	FS_ReadFile(&p_file,&top,4);									///<FATテーブルtopをロード
-	FS_ReadFile(&p_file,&bottom,4);									///<FATテーブルbottomをロード
+	ArchiveFileOpen(&p_file,arcID);
+	size=ArchiveMoveImageTop(&p_file,datID,ofs,ofs_size);
 
-	FS_SeekFile(&p_file,img_top+IMG_HEAD_SIZE+top+ofs,FS_SEEK_SET);	///<取り出したいIMGの先頭に移動
-	
-	if(ofs_size){
-		size=ofs_size;
-	}
-	else{
-		size=bottom-top;
-	}
-
-	GF_ASSERT_MSG(size!=0,"ArchiveLoadDataIndex:ReadDataSize=0!");
 	FS_ReadFile(&p_file,data,size);									///<データをロード
 
 	FS_CloseFile(&p_file);
@@ -120,52 +111,21 @@ static	void	ArchiveLoadDataIndex(void *data,const char *name,int datID,int ofs,i
  *	nnsarcで作成したアーカイブファイルに対してIndexを指定して任意のデータを取り出す
  *	読み込んだデータを格納するワークもこの関数内で確保して、ポインタを返す
  *
- * @param[in]	name		読み込むアーカイブファイル名
+ * @param[in]	arcID		読み込むアーカイブファイルのインデックスナンバー
  * @param[in]	datID		読み込むデータのアーカイブ上のインデックスナンバー
  * @param[in]	heapID		メモリを確保するヒープ領域のID
  * @param[in]	ofs			読み込むデータの先頭からのオフセット
  * @param[in]	ofs_size	読み込むデータサイズ
  */
 //============================================================================================
-static	void*	ArchiveLoadDataIndexMalloc(const char *name,int datID,HEAPID heapID,int ofs,int ofs_size)
+static	void*	ArchiveLoadDataIndexMalloc(int arcID,int datID,HEAPID heapID,int ofs,int ofs_size)
 {
 	FSFile		p_file;
 	u32			size=0;
-	u32			fat_top=0;
-	u32			fnt_top=0;
-	u32			img_top=0;
-	u32			top=0;
-	u32			bottom=0;
 	void		*data;
-	u16			file_cnt=0;
 
-	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,name);
-	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
-	fat_top=size;
-	FS_SeekFile(&p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FATサイズをロード
-	FS_ReadFile(&p_file,&file_cnt,2);								///<FileCountをロード
-	GF_ASSERT_MSG(file_cnt>datID,"ArchiveLoadDataIndexMalloc file=%s, fileCnt=%d, datID=%d", name, file_cnt, datID);
-	fnt_top=fat_top+size;
-	FS_SeekFile(&p_file,fnt_top+SIZE_OFFSET,FS_SEEK_SET);			///<FNTのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FNTサイズをロード
-	img_top=fnt_top+size;
-	
-	FS_SeekFile(&p_file,fat_top+FAT_HEAD_SIZE+datID*8,FS_SEEK_SET);	///<取り出したいFATテーブルに移動
-	FS_ReadFile(&p_file,&top,4);									///<FATテーブルtopをロード
-	FS_ReadFile(&p_file,&bottom,4);									///<FATテーブルbottomをロード
-
-	FS_SeekFile(&p_file,img_top+IMG_HEAD_SIZE+top+ofs,FS_SEEK_SET);		///<取り出したいIMGの先頭に移動
-
-	if(ofs_size){
-		size=ofs_size;
-	}
-	else{
-		size=bottom-top;
-	}
-	GF_ASSERT_MSG(size!=0,"ArchiveLoadDataIndexMalloc:ReadDataSize=0!");
+	ArchiveFileOpen(&p_file,arcID);
+	size=ArchiveMoveImageTop(&p_file,datID,ofs,ofs_size);
 
 	data=GFL_HEAP_AllocMemory(heapID,size);
 
@@ -174,6 +134,78 @@ static	void*	ArchiveLoadDataIndexMalloc(const char *name,int datID,HEAPID heapID
 	FS_CloseFile(&p_file);
 
 	return data;
+}
+
+//============================================================================================
+/**
+ * ファイルモードにあわせてファイルオープン処理を行う
+ *
+ * @param[in]	p_file	ファイルポインタ
+ * @param[in]	arcID	読み込むアーカイブファイルの種類インデックスナンバー
+ */
+//============================================================================================
+static	void	ArchiveFileOpen(FSFile *p_file,int arcID)
+{
+	u32	size;
+
+	FS_InitFile(p_file);
+
+	if(ArchiveFileMode==ARCHIVE_FILE_MODE_FS){
+		FS_OpenFile(p_file,(char *)ArchiveFileTable[arcID]);
+	}
+	else{
+		size=(u32)ArchiveFileTable[arcID*2+1];
+		size-=(u32)ArchiveFileTable[arcID*2];
+		FS_CreateFileFromMemory(p_file,(void *)ArchiveFileTable[arcID*2],size);
+	}
+}
+
+//============================================================================================
+/**
+ * 取り出したいイメージの先頭にファイルポインタを移動
+ *
+ * @param[in]	data		読み込んだデータを格納するワークのポインタ
+ * @param[in]	arcID		読み込むアーカイブファイルの種類インデックスナンバー
+ * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
+ */
+//============================================================================================
+static	u32		ArchiveMoveImageTop(FSFile *p_file,int datID,int ofs,int ofs_size)
+{
+	u32			size=0;
+	u32			fat_top=0;
+	u32			fnt_top=0;
+	u32			img_top=0;
+	u32			top=0;
+	u32			bottom=0;
+	u16			file_cnt=0;
+
+	FS_SeekFile(p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,2);									///<アーカイブヘッダサイズをロード
+	fat_top=size;
+	FS_SeekFile(p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,4);									///<FATサイズをロード
+	FS_ReadFile(p_file,&file_cnt,2);								///<FileCountをロード
+	GF_ASSERT_MSG(file_cnt>datID,"ArchiveMoveImageTop fileCnt=%d, datID=%d",file_cnt,datID);
+	fnt_top=fat_top+size;
+	FS_SeekFile(p_file,fnt_top+SIZE_OFFSET,FS_SEEK_SET);			///<FNTのサイズ格納位置に移動
+	FS_ReadFile(p_file,&size,4);									///<FNTサイズをロード
+	img_top=fnt_top+size;
+	
+	FS_SeekFile(p_file,fat_top+FAT_HEAD_SIZE+datID*8,FS_SEEK_SET);	///<取り出したいFATテーブルに移動
+	FS_ReadFile(p_file,&top,4);										///<FATテーブルtopをロード
+	FS_ReadFile(p_file,&bottom,4);									///<FATテーブルbottomをロード
+
+	FS_SeekFile(p_file,img_top+IMG_HEAD_SIZE+top+ofs,FS_SEEK_SET);	///<取り出したいIMGの先頭に移動
+
+	if(ofs_size){
+		size=ofs_size;
+	}
+	else{
+		size=bottom-top;
+	}
+	GF_ASSERT_MSG(size!=0,"ArchiveMoveImageTop:ReadDataSize=0!");
+
+	return size;
 }
 
 //============================================================================================
@@ -188,7 +220,7 @@ static	void*	ArchiveLoadDataIndexMalloc(const char *name,int datID,HEAPID heapID
 void	GFL_ARC_LoadData(void *data, int arcID, int datID)
 {
 	GF_ASSERT(ArchiveFileTable!=NULL);
-	ArchiveLoadDataIndex(data, (char *)ArchiveFileTable[arcID], datID, OFS_NO_SET, SIZE_NO_SET);
+	ArchiveLoadDataIndex(data, arcID, datID, OFS_NO_SET, SIZE_NO_SET);	
 }
 
 //============================================================================================
@@ -207,7 +239,7 @@ void	GFL_ARC_LoadData(void *data, int arcID, int datID)
 void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID)
 {
 	GF_ASSERT(ArchiveFileTable!=NULL);
-	return	ArchiveLoadDataIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,OFS_NO_SET,SIZE_NO_SET);
+	return	ArchiveLoadDataIndexMalloc(arcID,datID,heapID,OFS_NO_SET,SIZE_NO_SET);
 }
 
 //============================================================================================
@@ -224,7 +256,7 @@ void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID)
 void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size)
 {
 	GF_ASSERT(ArchiveFileTable!=NULL);
-	ArchiveLoadDataIndex(data, (char *)ArchiveFileTable[arcID], datID, ofs, size);
+	ArchiveLoadDataIndex(data, arcID, datID, ofs, size);
 }
 
 //============================================================================================
@@ -245,7 +277,7 @@ void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size)
 void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int size)
 {
 	GF_ASSERT(ArchiveFileTable!=NULL);
-	return	ArchiveLoadDataIndexMalloc((char *)ArchiveFileTable[arcID],datID,heapID,ofs,size);
+	return	ArchiveLoadDataIndexMalloc(arcID,datID,heapID,ofs,size);
 }
 
 //============================================================================================
@@ -263,7 +295,21 @@ void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int
 //============================================================================================
 void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID heapID)
 {
-	return	ArchiveLoadDataIndexMalloc(name,datID,heapID,OFS_NO_SET,SIZE_NO_SET);
+	FSFile		p_file;
+	u32			size=0;
+	void		*data;
+
+	FS_InitFile(&p_file);
+	FS_OpenFile(&p_file,name);
+	size=ArchiveMoveImageTop(&p_file,datID,OFS_NO_SET,SIZE_NO_SET);
+
+	data=GFL_HEAP_AllocMemory(heapID,size);
+
+	FS_ReadFile(&p_file,data,size);									///<データをロード
+
+	FS_CloseFile(&p_file);
+
+	return data;
 }
 
 //============================================================================================
@@ -285,8 +331,8 @@ u16	GFL_ARC_GetDataFileCnt(int arcID, int datID)
 
 	GF_ASSERT(ArchiveFileTable!=NULL);
 
-	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,(char *)ArchiveFileTable[arcID]);
+	ArchiveFileOpen(&p_file,arcID);
+
 	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
 	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
 	fat_top=size;
@@ -314,40 +360,12 @@ u32	GFL_ARC_GetDataSize(int arcID,int datID)
 {
 	FSFile		p_file;
 	u32			size=0;
-	u32			fat_top=0;
-	u32			fnt_top=0;
-	u32			img_top=0;
-	u32			top=0;
-	u32			bottom=0;
-	void		*data;
-	u16			file_cnt=0;
 
-	GF_ASSERT(ArchiveFileTable!=NULL);
-
-	FS_InitFile(&p_file);
-	FS_OpenFile(&p_file,(char *)ArchiveFileTable[arcID]);
-	FS_SeekFile(&p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,2);									///<アーカイブヘッダサイズをロード
-	fat_top=size;
-	FS_SeekFile(&p_file,fat_top+SIZE_OFFSET,FS_SEEK_SET);			///<FATのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FATサイズをロード
-	FS_ReadFile(&p_file,&file_cnt,2);								///<FileCountをロード
-	GF_ASSERT_MSG(file_cnt>datID,"GFL_ARC_GetDataSize:FileCnt<datID");
-	fnt_top=fat_top+size;
-	FS_SeekFile(&p_file,fnt_top+SIZE_OFFSET,FS_SEEK_SET);			///<FNTのサイズ格納位置に移動
-	FS_ReadFile(&p_file,&size,4);									///<FNTサイズをロード
-	img_top=fnt_top+size;
-	
-	FS_SeekFile(&p_file,fat_top+FAT_HEAD_SIZE+datID*8,FS_SEEK_SET);	///<取り出したいFATテーブルに移動
-	FS_ReadFile(&p_file,&top,4);									///<FATテーブルtopをロード
-	FS_ReadFile(&p_file,&bottom,4);									///<FATテーブルbottomをロード
-
-	FS_SeekFile(&p_file,img_top+IMG_HEAD_SIZE+top,FS_SEEK_SET);		///<取り出したいIMGの先頭に移動
-	size=bottom-top;
-	GF_ASSERT_MSG(size!=0,"GFL_ARC_GetDataSize:ReadDataSize=0!");
+	ArchiveFileOpen(&p_file,arcID);
+	size=ArchiveMoveImageTop(&p_file,datID,OFS_NO_SET,SIZE_NO_SET);
 	FS_CloseFile(&p_file);
 
-	return	size;
+	return size;
 }
 
 //--------------------------------------------------------
@@ -361,7 +379,6 @@ struct _ARCHANDLE{
 	u32     img_top;
 	u16		file_cnt;
 };
-
 
 //------------------------------------------------------------------
 /**
@@ -386,8 +403,7 @@ ARCHANDLE* GFL_ARC_OpenDataHandle( u32 arcID, HEAPID heapID )
 		// ２バイトを読み込んだ時にゴミが入らないようにしておく
 		handle->fat_top = 0;
 
-		FS_InitFile( &(handle->file) );
-		FS_OpenFile( &(handle->file), (char *)ArchiveFileTable[arcID] );
+		ArchiveFileOpen( &(handle->file) ,arcID);
 		FS_SeekFile( &(handle->file), ARC_HEAD_SIZE_POS, FS_SEEK_SET );
 		FS_ReadFile( &(handle->file), &(handle->fat_top), 2 );
 		FS_SeekFile( &(handle->file), handle->fat_top+SIZE_OFFSET, FS_SEEK_SET );
@@ -602,8 +618,7 @@ void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file)
 	u32			top=0;
 	u16			file_cnt=0;
 
-	FS_InitFile(p_file);
-	FS_OpenFile(p_file,(char *)ArchiveFileTable[arcID]);
+	ArchiveFileOpen(p_file,arcID);
 	FS_SeekFile(p_file,ARC_HEAD_SIZE_POS,FS_SEEK_SET);				///<アーカイブヘッダのサイズ格納位置に移動
 	FS_ReadFile(p_file,&size,2);									///<アーカイブヘッダサイズをロード
 	fat_top=size;
