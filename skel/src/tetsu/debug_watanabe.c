@@ -134,6 +134,7 @@ typedef struct {
 	u16						autoCameraRotate2;
 
 	u16*					mapAttr;
+	u16						accesaryType;
 
 	GFL_TCB*				dbl3DdispVintr;
 	int						vBlankCounter;
@@ -312,7 +313,7 @@ static void	bg_init( HEAPID heapID )
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( heapID, 16*2 );
-		plt[0] = GX_RGB( 0, 0, 0 );
+		plt[0] = GX_RGB( 20, 20, 31 );
 		GFL_BG_LoadPalette( GFL_BG_FRAME0_M, plt, 16*2, 0 );
 		GFL_BG_LoadPalette( GFL_BG_FRAME1_M, plt, 16*2, 0 );
 
@@ -650,6 +651,21 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, speed ); 
 	} else {
 		GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, 0 );
+	}
+	{
+		//アクセサリーの変更
+		u16 accesaryNum;
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			if( tetsuWork->accesaryType ){
+				tetsuWork->accesaryType = 0;
+				accesaryNum = G3DOBJ_ACCE_HAMMER;
+			} else {
+				tetsuWork->accesaryType = 1;
+				accesaryNum = G3DOBJ_ACCE_BOW;
+			}
+			GFL_G3D_SCENEOBJ_ACCESORY_SetObjID( sceneObj, G3DACCE_RIGHTHAND, &accesaryNum );
+		}
 	}
 }
 

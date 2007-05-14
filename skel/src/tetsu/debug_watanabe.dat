@@ -26,6 +26,8 @@ enum {
 	G3DRES_MAP_WALL3,
 	G3DRES_MAP_WALL0,
 	G3DRES_MAP_FLOOR,
+	G3DRES_ACCE_HAMMER,
+	G3DRES_ACCE_BOW,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -38,6 +40,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall3_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall0_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_hammer_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_bow_nsbmd,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
@@ -56,6 +60,8 @@ enum {
 	G3DOBJ_MAP_WALL3,
 	G3DOBJ_MAP_WALL0,
 	G3DOBJ_MAP_FLOOR,
+	G3DOBJ_ACCE_HAMMER,
+	G3DOBJ_ACCE_BOW,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -68,6 +74,8 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_MAP_WALL3, 0, G3DRES_MAP_WALL3, NULL, 0 },
 	{ G3DRES_MAP_WALL0, 0, G3DRES_MAP_WALL0, NULL, 0 },
 	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
+	{ G3DRES_ACCE_HAMMER, 0, G3DRES_ACCE_HAMMER, NULL, 0 },
+	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
 };
 
 //---------------------
@@ -86,36 +94,58 @@ static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 	},
 };
 
+//---------------------
+enum {
+#if 0
+	G3DACCE_HEAD = 0,
+	G3DACCE_LEFTHAND,
+	G3DACCE_RIGHTHAND,
+	G3DACCE_LEFTLEG,
+	G3DACCE_RIGHTLEG,
+#else
+	G3DACCE_RIGHTHAND = 0,
+#endif
+};
+
 static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData[] = {
+#if 0
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ 0, FX32_ONE*3, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface47"	//ì™
+		},"polySurface47"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE*2, FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface48"	//ç∂éË
+		},"polySurface48"
 	},
-	{	G3DOBJ_MAP_WALL, 31,
-		{	{ -FX32_ONE*2, FX32_ONE, 0 },
-			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
+	{	G3DOBJ_ACCE_HAMMER, 31,
+		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
+			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface52"	//âEéË
+		},"polySurface52"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface51"	//ç∂ë´
+		},"polySurface51"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ -FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface55"	//âEë´
+		},"polySurface55"
 	},
+#else
+	{	G3DOBJ_ACCE_HAMMER, 31,
+		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
+			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},"polySurface52"
+	},
+#endif
 };
 
