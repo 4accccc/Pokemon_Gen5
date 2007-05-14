@@ -837,6 +837,10 @@ void YT_NET_Init(GAME_PARAM* gp, BOOL bParent)
     aGFLNetInit.pWork = gp;
     gp->pNetParam = pNet;
 
+    //イクニューモンを使用する前に VRAMDをdisableにする必要があるのだが
+    //VRAMDが何に使われていたのかがわからないと、消すことができない
+    GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
+
     GFL_NET_Init(&aGFLNetInit);
 
     if(aGFLNetInit.bWiFi){

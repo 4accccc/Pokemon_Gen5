@@ -11,7 +11,7 @@
 
 
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #endif
@@ -540,6 +540,31 @@ extern int GFL_NET_WIFI_GetLocalConnectNo(void);
  */
 //==============================================================================
 extern void GFL_NET_SetWifiBothNet(BOOL flag);
+
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリのみを初期化する
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_InitIchneumon(void);
+
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリの初期化が終わったかどうか
+ * @retval   TREU   終了
+ * @retval   FALSE  まだ終わっていない
+ */
+//==============================================================================
+extern BOOL GFL_NET_IsInitIchneumon(void);
+
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリの終了をしらせる
+ * @retval   none
+ */
+//==============================================================================
+extern void GFL_NET_ExitIchneumon(void);
 
 
 extern void debugcheck(u32* data,int size );
