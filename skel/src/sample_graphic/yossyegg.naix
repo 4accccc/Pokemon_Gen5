@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2007-04-27T18:08:08
+	Update:2007-05-11T13:20:57
  *****************************************************************************/
 
 #ifndef NARC_YOSSYEGG_NAIX_
@@ -28,13 +28,16 @@ enum {
 	NARC_yossyegg_UMI_NCGR = 14,
 	NARC_yossyegg_umi_NCLR = 15,
 	NARC_yossyegg_UMI_NSCR = 16,
-	NARC_yossyegg_yossy_birth_NCGR = 17,
-	NARC_yossyegg_YT_BG03_NCGR = 18,
-	NARC_yossyegg_YT_BG03_NCLR = 19,
-	NARC_yossyegg_YT_BG03_NSCR = 20,
-	NARC_yossyegg_YT_LUIGI_NCGR = 21,
-	NARC_yossyegg_YT_MARIO_NCGR = 22,
-	NARC_yossyegg_YT_MARIO_NCLR = 23
+	NARC_yossyegg_VSSEL_B2_NCGR = 17,
+	NARC_yossyegg_VSSEL_B2_NSCR = 18,
+	NARC_yossyegg_VSSEL_BG_NCLR = 19,
+	NARC_yossyegg_yossy_birth_NCGR = 20,
+	NARC_yossyegg_YT_BG03_NCGR = 21,
+	NARC_yossyegg_YT_BG03_NCLR = 22,
+	NARC_yossyegg_YT_BG03_NSCR = 23,
+	NARC_yossyegg_YT_LUIGI_NCGR = 24,
+	NARC_yossyegg_YT_MARIO_NCGR = 25,
+	NARC_yossyegg_YT_MARIO_NCLR = 26
 };
 
 /* NARC_YOSSYEGG_NAIX_ */
