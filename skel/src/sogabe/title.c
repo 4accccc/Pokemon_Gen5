@@ -141,6 +141,7 @@ enum{
 	YT_SEQ_TITLE_END,
 	YT_SEQ_TITLE_NET_CHILD,
 	YT_SEQ_TITLE_NET_PARENT,
+	YT_SEQ_TITLE_MULTI_BOOT,
 };
 void	YT_MainTitle(GAME_PARAM *gp)
 {
@@ -158,6 +159,10 @@ void	YT_MainTitle(GAME_PARAM *gp)
             YT_NET_Init(gp, TRUE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_PARENT;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){ // SELECTボタンが押された
+			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->seq_no = YT_SEQ_TITLE_MULTI_BOOT;
+		}
 		break;
 	case YT_SEQ_TITLE_END:
 		if(GFL_FADE_CheckFade()==FALSE){
@@ -171,6 +176,12 @@ void	YT_MainTitle(GAME_PARAM *gp)
 			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
             gp->seq_no = YT_SEQ_TITLE_END;
         }
+        break;
+	case YT_SEQ_TITLE_MULTI_BOOT:
+		if(GFL_FADE_CheckFade()==FALSE){
+			GFL_BG_Exit();
+			YT_JobNoSet(gp,YT_InitMultiBootNo);
+		}
         break;
 	}
 }

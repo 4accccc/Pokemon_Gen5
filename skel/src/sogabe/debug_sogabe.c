@@ -17,6 +17,7 @@
 #include "yt_common.h"
 #include "title.h"
 #include "game.h"
+#include "multi_boot.h"
 
 #include "testmode.h"
 
@@ -32,9 +33,6 @@ static	const	char	*GraphicFileTable[]={
 
 static	void	game_init(GAME_PARAM *gp);
 
-extern	void	YT_InitTitle(GAME_PARAM *);
-extern	void	YT_MainTitle(GAME_PARAM *);
-
 //============================================================================================
 //
 //
@@ -48,6 +46,8 @@ static	ytFunc	YT_JobTable[]={
 	YT_MainTitle,
 	YT_InitGame,
 	YT_MainGame,
+	YT_InitMultiBoot,
+	YT_MainMultiBoot,
 };
 
 //============================================================================================
@@ -70,7 +70,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 {
 	GAME_PARAM	*gp;
 
-	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_SOGABE_DEBUG,0x80000);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_SOGABE_DEBUG,0x180000);
 	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), HEAPID_SOGABE_DEBUG);
 
 	GFL_STD_MemClear(gp,sizeof(GAME_PARAM));
