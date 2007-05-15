@@ -25,6 +25,8 @@ enum{
 	YT_MainTitleNo,
 	YT_InitGameNo,
 	YT_MainGameNo,
+	YT_InitMultiBootNo,
+	YT_MainMultiBootNo,
 };
 
 //-------------------------------------
@@ -145,6 +147,7 @@ typedef	struct
 	GFL_TCB				*check_tcb;
 	GFL_BMP_DATA		*yossy_bmp;
 	GFL_BMPWIN			*yossy_bmpwin;
+	void				*job_work;		//ジョブ毎に使用するワークのポインタを格納
 }GAME_PARAM;
 
 //TCBプライオリティ定義
