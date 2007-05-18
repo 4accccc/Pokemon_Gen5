@@ -1293,7 +1293,8 @@ GFL_G3D_OBJ*
 		if( g3Danm != NULL ){
 			GF_ASSERT( g3Danm->magicnum == G3DANM_MAGICNUM );
 
-			NNS_G3dRenderObjAddAnmObj( g3Drnd->rndobj, g3Danm->anmobj );
+			//↓この時点ではＯＮにしない(icaが複数設定されているとマージされてしまうため)
+			//NNS_G3dRenderObjAddAnmObj( g3Drnd->rndobj, g3Danm->anmobj );
 		}
 		g3Dobj->anmTbl[i] = g3Danm;
 	}
@@ -1376,6 +1377,44 @@ u16
 
 //--------------------------------------------------------------------------------------------
 /**
+ * ３Ｄオブジェクトのアニメーションを有効にする
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_OBJECT_EnableAnime
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	//レンダリングオブジェクトとの関連付け
+	NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄオブジェクトのアニメーションを無効にする
+ *
+ * @param	g3Dobj	３Ｄオブジェクトハンドル
+ * @param	anmIdx	登録されているアニメーションインデックス
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_OBJECT_DisableAnime
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
+{
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	//レンダリングオブジェクトとの関連付けを解除
+	NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * ３Ｄオブジェクトにアニメーションを追加する
  *
  * @param	g3Dobj		３Ｄオブジェクトハンドル
@@ -1396,7 +1435,7 @@ u16
 	for( i=0; i<g3Dobj->anmCount; i++ ){
 		if( g3Dobj->anmTbl[i] == NULL ){
 			//レンダリングオブジェクトとの関連付け
-			NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Danm->anmobj );
+			//NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Danm->anmobj );
 			g3Dobj->anmTbl[ i ] = g3Danm;
 			return i;
 		}
@@ -1421,7 +1460,7 @@ void
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
 	//レンダリングオブジェクトとの関連付けを解除
-	NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	//NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
 	g3Dobj->anmTbl[ anmIdx ] = NULL;
 }
 
