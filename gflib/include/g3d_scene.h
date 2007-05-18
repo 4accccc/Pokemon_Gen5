@@ -91,7 +91,7 @@ extern void
  * 配置オブジェクトポインタをＩＮＤＥＸより取得
  *
  * @param	g3Dscene		システムポインタ
- * @param	idx				アクター配置ＩＮＤＥＸ
+ * @param	idx				オブジェクト配置ＩＮＤＥＸ
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENEOBJ*
@@ -230,6 +230,49 @@ extern void GFL_G3D_SCENEOBJ_SetRotate( GFL_G3D_SCENEOBJ* g3DsceneObj, MtxFx33* 
 //--------------------------------------------------------------------------------------------
 extern void GFL_G3D_SCENEOBJ_GetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
 extern void GFL_G3D_SCENEOBJ_SetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCENEOBJFUNC** func );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アニメーション用インライン
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ * @param	anmIdx			登録されているアニメーションインデックス
+ */
+//--------------------------------------------------------------------------------------------
+inline void GFL_G3D_SCENEOBJ_EnableAnime
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	GFL_G3D_OBJECT_EnableAnime( g3Dobj, anmIdx );
+}
+
+inline void GFL_G3D_SCENEOBJ_DisableAnime
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	GFL_G3D_OBJECT_DisableAnime( g3Dobj, anmIdx );
+}
+
+inline void GFL_G3D_SCENEOBJ_ResetAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, anmIdx );
+}
+
+inline BOOL GFL_G3D_SCENEOBJ_IncAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, const fx32 count ) 
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	return GFL_G3D_OBJECT_IncAnimeFrame( g3Dobj, anmIdx, count );
+}
+
+inline BOOL GFL_G3D_SCENEOBJ_LoopAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, const fx32 count ) 
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	return GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, anmIdx, count );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
