@@ -292,6 +292,23 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 
 //==============================================================================================
 /**
+ * VRAM転送型OBJの転送元データポインタを取得（取り扱いは慎重に！）
+ *
+ * @param   index		登録インデックス
+ *
+ * @retval  void*		データポインタ
+ */
+//==============================================================================================
+void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index )
+{
+	GF_ASSERT(SysWork.cgrMan[index].emptyFlag == FALSE);
+	GF_ASSERT(SysWork.cgrMan[index].loadPtr != NULL);
+
+	return SysWork.cgrMan[index].loadPtr;
+}
+
+//==============================================================================================
+/**
  * 登録されたCGRデータの解放
  *
  * @param   index		[in] 登録インデックス

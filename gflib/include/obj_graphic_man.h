@@ -46,8 +46,8 @@ typedef enum {
 
 
 
-extern void GFL_OBJGRP_sysInit( void );
-extern void GFL_OBJGRP_sysExit( void );
+extern void GFL_OBJGRP_Init( void );
+extern void GFL_OBJGRP_Exit( void );
 
 extern void GFL_OBJGRP_sysStart(	u16 heapID, const GFL_BG_DISPVRAM* vramBank,
 									const GFL_OBJGRP_INIT_PARAM* initParam );
@@ -58,6 +58,8 @@ extern u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 dataID, BOOL compre
 
 extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 dataID, BOOL compressedFlag, 
 			GFL_VRAM_TYPE targetVram,  u32 cellIndex, HEAPID heapID );
+
+extern void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index );
 
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
 
@@ -77,6 +79,8 @@ extern GFL_CLWK* GFL_OBJGRP_CreateClAct
 extern GFL_CLWK* GFL_OBJGRP_CreateClActVT
 	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
+
+
 
 
 #endif /* #ifndef __OBJMAN_H__ */
