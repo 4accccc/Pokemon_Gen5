@@ -399,6 +399,9 @@ static void g3d_load( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
 	testmode->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, testmode->heapID );
+	//		アニメーションを有効にする
+	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  ), 0 ); 
+	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  ), 0 ); 
 #else
 	//		リソースセットアップ
 	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_CreateResourcePath
@@ -428,7 +431,11 @@ static void g3d_load( TESTMODE_WORK * testmode )
 															&testmode->g3Danm[ G3D_AIR ], 1 );
 	testmode->g3Dobj[ G3D_IAR ] = GFL_G3D_OBJECT_Create(	testmode->g3Drnd[ G3D_IAR ], 
 															&testmode->g3Danm[ G3D_IAR ], 1 );
+	//		アニメーションを有効にする
+	GFL_G3D_OBJECT_EnableAnime( testmode->g3Dobj[ G3D_AIR ], 0 ); 
+	GFL_G3D_OBJECT_EnableAnime( testmode->g3Dobj[ G3D_IAR ], 0 ); 
 #endif
+
 	//描画ステータスワーク設定
 	testmode->status[ G3D_AIR ] = status0;
 	testmode->status[ G3D_IAR ] = status1;
