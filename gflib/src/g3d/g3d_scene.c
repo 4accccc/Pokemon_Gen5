@@ -166,7 +166,7 @@ void
 				g3Dobj_Accesory = GFL_G3D_UTIL_GetObjHandle
 								( g3Dscene->g3Dutil, g3DsceneObj->accesory[j].objID );
 				GFL_G3D_DRAW_DrawAccesory( g3Dobj, g3Dobj_Accesory,
-						&g3DsceneObj->accesory[j].status, g3DsceneObj->accesory[j].jntName );
+						&g3DsceneObj->accesory[j].status, g3DsceneObj->accesory[j].jntID );
 			}
 		}
 		i++;

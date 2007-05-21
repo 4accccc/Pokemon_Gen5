@@ -1704,19 +1704,12 @@ BOOL
 void
 	GFL_G3D_DRAW_DrawAccesory
 		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
-			const GFL_G3D_OBJSTATUS* status, const char* jntName )
+			const GFL_G3D_OBJSTATUS* status, int jntID )
 {
-	int jntID;
-	BOOL result;
     NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
     NNSG3dRenderObj* renderobj_Accesory = GFL_G3D_RENDER_GetRenderObj
 											( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj_Accesory) );
-
-	// ジョイントIDを取得する。検索で見つからない場合は負の値が返る。
-	//define NNS_G3D_GET_JNTID(pMdl, pJntID, literal)
-	jntID = NNS_G3dGetNodeIdxByName( NNS_G3dGetNodeInfo( renderobj->resMdl ), 
-									(NNSG3dResName*)jntName );
-	GF_ASSERT(jntID > 0);
+	BOOL result;
 
 	// レンダリングオブジェクトのjntIDノードに対応する行列をカレント行列に持ってくる
 	// ２番目の引数にMtxFx43へのポインタを指定すると位置座標行列が、
@@ -1732,6 +1725,24 @@ void
 		NNS_G3dDraw( renderobj_Accesory );
 	}
 	//NNS_G3dGeFlushBuffer();
+}
+
+//ジョイント名による描画
+void
+	GFL_G3D_DRAW_DrawAccesoryByName
+		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+			const GFL_G3D_OBJSTATUS* status, const char* jntName )
+{
+	int jntID;
+    NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
+
+	// ジョイントIDを取得する。検索で見つからない場合は負の値が返る。
+	//define NNS_G3D_GET_JNTID(pMdl, pJntID, literal)
+	jntID = NNS_G3dGetNodeIdxByName( NNS_G3dGetNodeInfo( renderobj->resMdl ), 
+									(NNSG3dResName*)jntName );
+	GF_ASSERT(jntID > 0);
+
+	GFL_G3D_DRAW_DrawAccesory( g3Dobj, g3Dobj_Accesory, status, jntID );
 }
 
 //--------------------------------------------------------------------------------
