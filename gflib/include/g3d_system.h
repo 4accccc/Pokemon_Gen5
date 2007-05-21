@@ -852,6 +852,11 @@ extern BOOL
 extern void
 	GFL_G3D_DRAW_DrawAccesory
 		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+			const GFL_G3D_OBJSTATUS* status, const int jntID );
+
+extern void
+	GFL_G3D_DRAW_DrawAccesoryByName
+		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
 			const GFL_G3D_OBJSTATUS* status, const char* jntName );
 
 //--------------------------------------------------------------------------------

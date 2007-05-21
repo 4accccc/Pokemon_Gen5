@@ -29,7 +29,7 @@ typedef struct {
 	u32						objID;
 	u8						blendAlpha;
 	GFL_G3D_OBJSTATUS		status; 
-	char*					jntName;
+	int						jntID;
 }GFL_G3D_SCENEACCESORY_DATA;
 
 #define GFL_G3D_SCENEOBJ_ALPHA_OFF	( 255 )
