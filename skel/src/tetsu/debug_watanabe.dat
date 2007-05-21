@@ -113,38 +113,38 @@ static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData[] = {
 		{	{ 0, FX32_ONE*3, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface47"
+		},1
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE*2, FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface48"
+		},3
 	},
 	{	G3DOBJ_ACCE_HAMMER, 31,
 		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
 			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface52"
+		},7
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface51"
+		},4
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ -FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface55"
+		},8
 	},
 #else
 	{	G3DOBJ_ACCE_HAMMER, 31,
 		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
 			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},"polySurface52"
+		},7
 	},
 #endif
 };
