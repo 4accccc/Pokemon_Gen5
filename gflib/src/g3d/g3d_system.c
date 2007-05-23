@@ -1722,6 +1722,7 @@ void
 		// 明示的にスケーリングしなくてはならない。
 		NNS_G3dGeTranslateVec( &status->trans );
 		NNS_G3dGeScaleVec( &status->scale );
+		NNS_G3dGeMultMtx33( &status->rotate );
 		NNS_G3dDraw( renderobj_Accesory );
 	}
 	//NNS_G3dGeFlushBuffer();
