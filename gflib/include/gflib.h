@@ -47,6 +47,9 @@
 #include "sound.h"
 #include "dma.h"
 
+#include "particle.h"
+#include "spl.h"
+
 /*  */
 
 #endif	/*	__GFLIB_H__ */
