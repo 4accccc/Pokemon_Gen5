@@ -92,7 +92,7 @@ GFL_G3D_SCENE*
 	g3Dscene->GFL_PTC_Enable = GFL_PTC_Enable;
 	
 	if( g3Dscene->GFL_PTC_Enable == TRUE ){
-		GFL_PTC_Init();
+		GFL_PTC_Init(heapID);
 	}
 	return g3Dscene;
 }
