@@ -223,7 +223,7 @@ static void	bg_init( HEAPID heapID )
 	GFL_ARC_Init(&GraphicFileTable[0],1);
 
 	//パーティクルシステム起動
-	GFL_PTC_Init();
+	GFL_PTC_Init(heapID);
 
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -463,7 +463,7 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	//描画ステータスワーク設定
 	testmode->status[ G3D_AIR ] = status0;
 	testmode->status[ G3D_IAR ] = status1;
-#if 0
+#if 1
 	//カメラセット
 	{
 		GFL_G3D_PROJECTION initProjection = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, 
@@ -492,6 +492,7 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 
 	GFL_PTC_Main();
 
+#if 0
 	//カメラセット
 	{
 		GFL_G3D_PROJECTION initProjection = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, 
@@ -501,6 +502,7 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 		GFL_G3D_SetSystemProjection( &initProjection );	
 		GFL_G3D_SetSystemLookAt( &cameraLookAt );	
 	}
+#endif
 
 	GFL_G3D_DRAW_SetLookAt();
 	{
