@@ -37,6 +37,8 @@ typedef struct GFL_G3D_MAN_tag
 	GFL_G3D_SWAPBUFMODE		swapBufMode;		///<グローバルステート（レンダリングバッファ）
 
 	GFL_G3D_DRAW_FLASHFUNC*	drawFlushFunc;		///<描画フラッシュタイプ
+	GFL_G3D_VMAN_MODE		texmanMode;			///<テクスチャマネージャモード
+	GFL_G3D_VMAN_MODE		pltmanMode;			///<パレットマネージャモード
 }GFL_G3D_MAN;
 
 static GFL_G3D_MAN*  g3Dman = NULL;
@@ -78,6 +80,8 @@ void
 	g3Dman = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_G3D_MAN) );
 
 	g3Dman->heapID = heapID;
+	g3Dman->texmanMode = texmanMode;
+	g3Dman->pltmanMode = pltmanMode;
 
 	// NitroSystem:３Ｄエンジンの初期化
 	NNS_G3dInit();
@@ -213,6 +217,24 @@ void
  *
  */
 //--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ *
+ * システム起動チェック
+ *
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_CheckBootSystem
+		( void )
+{
+	if( g3Dman != NULL ){
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * 射影行列の設定
@@ -351,6 +373,27 @@ void
 
 	g3Dman->swapBufMode.aw = sortMode;
 	g3Dman->swapBufMode.zw = bufferMode;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * テクスチャおよびパレットマネージャ状態の取得
+ *
+ * return GFL_G3D_VMAN_MODE		マネージャモード
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_VMAN_MODE
+	GFL_G3D_GetTextureManagerMode
+		( void )
+{
+	return g3Dman->texmanMode;
+}
+
+GFL_G3D_VMAN_MODE
+	GFL_G3D_GetPaletteManagerMode
+		( void )
+{
+	return g3Dman->pltmanMode;
 }
 
 //--------------------------------------------------------------------------------------------
