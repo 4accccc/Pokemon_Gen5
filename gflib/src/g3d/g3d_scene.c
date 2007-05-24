@@ -29,6 +29,7 @@ struct _GFL_G3D_SCENE {
 	u16						g3DsceneObjMax;	
 	u32						g3DsceneObjWorkSize;
 	u16*					g3DsceneObjPriTbl;
+	BOOL					GFL_PTC_Enable;
 	HEAPID					heapID;
 };
 
@@ -58,13 +59,14 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene );
  * @param	g3Dutil			依存するg3Dutil
  * @param	sceneObjMax		配置可能なオブジェクト数
  * @param	sceneObjWkSiz	１オブジェクトに割り当てるワークのサイズ
+ * @param	GFL_PTC_Enable	パーティクルシステムの起動フラグ
  * @param	heapID			ヒープＩＤ
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENE*
 	GFL_G3D_SCENE_Create
 		( GFL_G3D_UTIL* g3Dutil, const u16 sceneObjMax, const u32 sceneObjWkSiz, 
-			const u16 sceneAccesoryMax, const HEAPID heapID )
+			const u16 sceneAccesoryMax, BOOL GFL_PTC_Enable, const HEAPID heapID )
 {
 	GFL_G3D_SCENE*	g3Dscene;
 	GFL_TCBL*		g3DsceneObjTCBL;
@@ -87,7 +89,11 @@ GFL_G3D_SCENE*
 	g3Dscene->g3Dutil = g3Dutil;
 	g3Dscene->g3DsceneObjMax = sceneObjMax;
 	g3Dscene->g3DsceneObjWorkSize = TCBLworkSize;
-
+	g3Dscene->GFL_PTC_Enable = GFL_PTC_Enable;
+	
+	if( g3Dscene->GFL_PTC_Enable == TRUE ){
+		GFL_PTC_Init();
+	}
 	return g3Dscene;
 }
 
@@ -126,6 +132,10 @@ void
 
 	//描画開始
 	GFL_G3D_DRAW_Start();
+
+	if( g3Dscene->GFL_PTC_Enable == TRUE ){
+		GFL_PTC_Main();
+	}
 	//カメラグローバルステート設定		
  	GFL_G3D_DRAW_SetLookAt();
 	//描画プライオリティーによるソート
@@ -186,6 +196,9 @@ void
 	GFL_G3D_SCENE_Delete
 		( GFL_G3D_SCENE* g3Dscene )  
 {
+	if( g3Dscene->GFL_PTC_Enable == TRUE ){
+		GFL_PTC_Exit();
+	}
 	GFL_HEAP_FreeMemory( g3Dscene->g3DsceneObjPriTbl );
 	GFL_AREAMAN_Delete( g3Dscene->g3DsceneObjAreaman );
 	GFL_HEAP_FreeMemory( g3Dscene->g3DsceneObjTCBLtbl );
