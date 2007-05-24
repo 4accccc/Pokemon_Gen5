@@ -12,6 +12,7 @@ SRCS	+=		testmode.c \
 				sogabe/fallchr.c \
                 sogabe/yt_net.c \
                 sogabe/multi_boot.c \
+                sogabe/3d_test.c \
 				tetsu/debug_watanabe.c
 				
 #================================================
