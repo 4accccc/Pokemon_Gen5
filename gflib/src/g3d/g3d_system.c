@@ -138,24 +138,24 @@ void
 
 	//グローバルステート内部情報初期化
 	{
-		VecFx32 initVec32 = { 0, 0, 0 };
-		VecFx16 initVec16 = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
-
-		//射影
-		GFL_G3D_SetSystemProjection( GFL_G3D_PRJPERS,
-						FX_SinIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
-						FX_CosIdx( 40/2 *PERSPWAY_COEFFICIENT ), 
-						( FX32_ONE * 4 / 3 ), 0, 
-						( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 );
-		//ライト
-		GFL_G3D_SetSystemLight( 0, &initVec16, 0x7fff );
-		GFL_G3D_SetSystemLight( 1, &initVec16, 0x7fff );
-		GFL_G3D_SetSystemLight( 2, &initVec16, 0x7fff );
-		GFL_G3D_SetSystemLight( 3, &initVec16, 0x7fff );
-		//カメラ
-		GFL_G3D_SetSystemLookAt( &initVec32, &initVec32, &initVec32 );
-		g3Dman->lookAt.camPos.z	= ( 256 << FX32_SHIFT );
-		g3Dman->lookAt.camUp.y	= FX32_ONE;
+		{	//射影
+			GFL_G3D_PROJECTION initProjection = { GFL_G3D_PRJPERS, 0, 0, ( FX32_ONE * 4 / 3 ), 0, 
+												( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0 };
+			initProjection.param1 = FX_SinIdx( 40/2 *PERSPWAY_COEFFICIENT ); 
+			initProjection.param2 = FX_CosIdx( 40/2 *PERSPWAY_COEFFICIENT ); 
+			GFL_G3D_SetSystemProjection( &initProjection );
+		}
+		{ //ライト
+			GFL_G3D_LIGHT initLight = { { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7fff };
+			GFL_G3D_SetSystemLight( 0, &initLight );
+			GFL_G3D_SetSystemLight( 1, &initLight );
+			GFL_G3D_SetSystemLight( 2, &initLight );
+			GFL_G3D_SetSystemLight( 3, &initLight );
+		}
+		{	//カメラ
+			GFL_G3D_LOOKAT initCamera = {{0,0,(256<<FX32_SHIFT)},{0,FX32_ONE,0},{0,0,0}};
+			GFL_G3D_SetSystemLookAt( &initCamera );
+		}
 		//レンダリングスワップバッファ
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 	}
@@ -237,123 +237,173 @@ BOOL
 
 //--------------------------------------------------------------------------------------------
 /**
- * 射影行列の設定
+ * 射影行列の取得と設定
  *	保存しておく必要があるかわわからないが、とりあえず。
  *	直接射影行列を直接設定する場合、その行列は外部で持つ
  *
- * @param	type		射影タイプ
- * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
- *						PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
- * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
- *						PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
- * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
- *						PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
- * @param	param4		PRJPERS			→未使用 
- *						PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
- * @param	near		視点からnearクリップ面までの距離	
- * @param	far			視点からfarクリップ面までの距離	
- * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
+ *	type		射影タイプ
+ *	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
+ *				PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
+ *	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
+ *				PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+ *	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
+ *				PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
+ *	param4		PRJPERS			→未使用 
+ *				PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
+ *	near		視点からnearクリップ面までの距離	
+ *	far			視点からfarクリップ面までの距離	
+ *	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
+ *
+ * @param	projection		取得or設定用射影パラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SetSystemProjection
-		( const GFL_G3D_PROJECTION_TYPE type, 
-			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
-				const fx32 near, const fx32 far, const fx32 scaleW )
+	GFL_G3D_GetSystemProjection
+		( GFL_G3D_PROJECTION* projection )
 {
 	GF_ASSERT( g3Dman != NULL );
 
-	g3Dman->projection.type		= type;
-	g3Dman->projection.param1	= param1;
-	g3Dman->projection.param2	= param2;
-	g3Dman->projection.param3	= param3;
-	g3Dman->projection.param4	= param4;
-	g3Dman->projection.near		= near;
-	g3Dman->projection.far		= far;
-	g3Dman->projection.scaleW	= scaleW;
+	projection->type	= g3Dman->projection.type;
+	projection->param1	= g3Dman->projection.param1;
+	projection->param2	= g3Dman->projection.param2;
+	projection->param3	= g3Dman->projection.param3;
+	projection->param4	= g3Dman->projection.param4;
+	projection->near	= g3Dman->projection.near;
+	projection->far		= g3Dman->projection.far;
+	projection->scaleW	= g3Dman->projection.scaleW;
+}
 
-	switch( type ){
+void
+	GFL_G3D_SetSystemProjection
+		( const GFL_G3D_PROJECTION* projection )
+{
+	GF_ASSERT( g3Dman != NULL );
+
+	g3Dman->projection.type		= projection->type;
+	g3Dman->projection.param1	= projection->param1;
+	g3Dman->projection.param2	= projection->param2;
+	g3Dman->projection.param3	= projection->param3;
+	g3Dman->projection.param4	= projection->param4;
+	g3Dman->projection.near		= projection->near;
+	g3Dman->projection.far		= projection->far;
+	g3Dman->projection.scaleW	= projection->scaleW;
+
+	switch( g3Dman->projection.type ){
 		case GFL_G3D_PRJPERS:	// 透視射影を設定
-			if( !scaleW ){
-				NNS_G3dGlbPerspective( param1, param2, param3, near, far );
+			if( !g3Dman->projection.scaleW ){
+				NNS_G3dGlbPerspective(	g3Dman->projection.param1, g3Dman->projection.param2, 
+										g3Dman->projection.param3, 
+										g3Dman->projection.near, g3Dman->projection.far );
 			} else {
-				NNS_G3dGlbPerspectiveW( param1, param2, param3, near, far, scaleW );
+				NNS_G3dGlbPerspectiveW( g3Dman->projection.param1, g3Dman->projection.param2, 
+										g3Dman->projection.param3, 
+										g3Dman->projection.near, g3Dman->projection.far, 
+										g3Dman->projection.scaleW );
 			}
 			break;
 		case GFL_G3D_PRJFRST:	// 透視射影を設定
-			if( !scaleW ){
-				NNS_G3dGlbFrustum( param1, param2, param3, param4, near, far );
+			if( !g3Dman->projection.scaleW ){
+				NNS_G3dGlbFrustum(	g3Dman->projection.param1, g3Dman->projection.param2, 
+									g3Dman->projection.param3, g3Dman->projection.param4, 
+									g3Dman->projection.near, g3Dman->projection.far );
 			} else {
-				NNS_G3dGlbFrustumW( param1, param2, param3, param4, near, far, scaleW );
+				NNS_G3dGlbFrustumW( g3Dman->projection.param1, g3Dman->projection.param2, 
+									g3Dman->projection.param3, g3Dman->projection.param4, 
+									g3Dman->projection.near, g3Dman->projection.far, 
+									g3Dman->projection.scaleW );
 			}
 			break;
 		case GFL_G3D_PRJORTH:	// 正射影を設定
-			if( !scaleW ){
-				NNS_G3dGlbOrtho( param1, param2, param3, param4, near, far );
+			if( !g3Dman->projection.scaleW ){
+				NNS_G3dGlbOrtho(	g3Dman->projection.param1, g3Dman->projection.param2, 
+									g3Dman->projection.param3, g3Dman->projection.param4, 
+									g3Dman->projection.near, g3Dman->projection.far );
 			} else {
-				NNS_G3dGlbOrthoW( param1, param2, param3, param4, near, far, scaleW );
+				NNS_G3dGlbOrthoW(	g3Dman->projection.param1, g3Dman->projection.param2,
+									g3Dman->projection.param3, g3Dman->projection.param4, 
+									g3Dman->projection.near, g3Dman->projection.far, 
+									g3Dman->projection.scaleW );
 			}
 			break;
 	}
 }
 
 void
-	GFL_G3D_sysProjectionSetDirect
+	GFL_G3D_GetSystemProjectionDirect
+		( MtxFx44* param )
+{
+	*param = *(NNS_G3dGlbGetProjectionMtx());
+}
+void
+	GFL_G3D_SetSystemProjectionDirect
 		( const MtxFx44* param )
 {
-	g3Dman->projection.type		= GFL_G3D_PRJMTX;
-	g3Dman->projection.param1	= 0;
-	g3Dman->projection.param2	= 0;
-	g3Dman->projection.param3	= 0;
-	g3Dman->projection.param4	= 0;
-	g3Dman->projection.near		= 0;
-	g3Dman->projection.far		= 0;
-
 	NNS_G3dGlbSetProjectionMtx( param );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * ライトの設定
+ * ライトの取得と設定
  *
  * @param	lightID			ライトＩＤ
- * @param	vec				ライトのベクトルポインタ
- * @param	color			色
+ * @param	light			取得or設定用ライトパラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SetSystemLight
-		( const u8 lightID, const VecFx16* vec, const u16 color )
+	GFL_G3D_GetSystemLight
+		( const u8 lightID, GFL_G3D_LIGHT* light )
 {
 	GF_ASSERT( g3Dman != NULL );
 
-	g3Dman->light[ lightID ].vec.x = vec->x;
-	g3Dman->light[ lightID ].vec.y = vec->y;
-	g3Dman->light[ lightID ].vec.z = vec->z;
-	g3Dman->light[ lightID ].color = color;
+	light->vec		= g3Dman->light[ lightID ].vec;
+	light->color	= g3Dman->light[ lightID ].color;
+}
 
-	NNS_G3dGlbLightVector( lightID, vec->x, vec->y, vec->z );
-	NNS_G3dGlbLightColor( lightID, color );
+void
+	GFL_G3D_SetSystemLight
+		( const u8 lightID, const GFL_G3D_LIGHT* light )
+{
+	GF_ASSERT( g3Dman != NULL );
+
+	g3Dman->light[ lightID ].vec	= light->vec;
+	g3Dman->light[ lightID ].color	= light->color;
+
+	NNS_G3dGlbLightVector(	lightID, 
+							g3Dman->light[ lightID ].vec.x,
+							g3Dman->light[ lightID ].vec.y,
+							g3Dman->light[ lightID ].vec.z );
+	NNS_G3dGlbLightColor( lightID, g3Dman->light[ lightID ].color );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ行列の設定
+ * カメラ行列の取得と設定
  *
- * @param	camPos			カメラ位置ベクトルポインタ
- * @param	camUp			カメラの上方向へのベクトルポインタ
- * @param	target			カメラ焦点ベクトルポインタ
+ * @param	lookAt			取得or設定用カメラ行列パラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
 void
-	GFL_G3D_SetSystemLookAt
-		( const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target )
+	GFL_G3D_GetSystemLookAt
+		( GFL_G3D_LOOKAT* lookAt )
 {
 	GF_ASSERT( g3Dman != NULL );
 
-	g3Dman->lookAt.camPos	= *camPos;
-	g3Dman->lookAt.camUp	= *camUp;
-	g3Dman->lookAt.target	= *target;
+	lookAt->camPos	= g3Dman->lookAt.camPos;
+	lookAt->camUp	= g3Dman->lookAt.camUp;
+	lookAt->target	= g3Dman->lookAt.target;
+}
+
+void
+	GFL_G3D_SetSystemLookAt
+		( const GFL_G3D_LOOKAT* lookAt )
+{
+	GF_ASSERT( g3Dman != NULL );
+
+	g3Dman->lookAt.camPos	= lookAt->camPos;
+	g3Dman->lookAt.camUp	= lookAt->camUp;
+	g3Dman->lookAt.target	= lookAt->target;
+
+	NNS_G3dGlbLookAt( &g3Dman->lookAt.camPos, &g3Dman->lookAt.camUp, &g3Dman->lookAt.target );
 }
 
 //--------------------------------------------------------------------------------------------
