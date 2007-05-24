@@ -138,6 +138,7 @@ typedef struct {
 
 	GFL_TCB*				dbl3DdispVintr;
 	int						vBlankCounter;
+	u16						nowAnmIdx;
 }TETSU_WORK;
 
 typedef struct {
@@ -357,14 +358,22 @@ static void g3d_load( HEAPID heapID )
 	//配置物設定
 	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
-												sizeof(OBJ_WORK), 32, heapID );
-	//自機作成
-	tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
-								( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
-	result = GFL_G3D_SCENEOBJ_ACCESORY_Add(
-				GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID ),
-				g3DsceneAccesoryData, NELEMS(g3DsceneAccesoryData) );
-	GF_ASSERT( result == TRUE );
+												sizeof(OBJ_WORK), 32, FALSE, heapID );
+	{
+		//自機作成
+		tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
+							( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
+		//アニメーションの初期有効設定
+		GFL_G3D_SCENEOBJ_EnableAnime
+				( GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, G3DSCOBJ_PLAYER), 0 );
+		tetsuWork->nowAnmIdx = 0;
+#if 1
+		result = GFL_G3D_SCENEOBJ_ACCESORY_Add(
+					GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID ),
+					g3DsceneAccesoryData, NELEMS(g3DsceneAccesoryData) );
+		GF_ASSERT( result == TRUE );
+#endif
+	}
 	{
 		//マップ作成
 		GFL_G3D_SCENEOBJ_DATA_SETUP* setup = MapDataCreate( &mapDataTbl, heapID );
@@ -638,14 +647,14 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 
 	GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
 	GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
-
+#if 0
 	if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
 		int speed;
 
 		if( tetsuWork->SpeedUpFlag == TRUE ){
 			speed = FX32_ONE * 2; 
 		} else {
-			speed = FX32_ONE; 
+			speed = FX32_ONE/2; 
 		}
 		speed *= tetsuWork->vBlankCounter; 
 		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, speed ); 
@@ -667,6 +676,59 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			GFL_G3D_SCENEOBJ_ACCESORY_SetObjID( sceneObj, G3DACCE_RIGHTHAND, &accesaryNum );
 		}
 	}
+#else
+	{
+		u16		anmIdx;
+		fx32	anmSpeed;
+
+		if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+			if( tetsuWork->SpeedUpFlag == TRUE ){
+				anmIdx = 2;
+				anmSpeed = FX32_ONE*4;
+			} else {
+				anmIdx = 1;
+				anmSpeed = FX32_ONE*3;
+			}
+		} else {
+			anmIdx = 0;
+			anmSpeed = FX32_ONE*2;
+		}
+		if( tetsuWork->nowAnmIdx != anmIdx ){
+			GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+			tetsuWork->nowAnmIdx = anmIdx;
+			GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+		}
+		GFL_G3D_SCENEOBJ_LoopAnimeFrame( sceneObj, tetsuWork->nowAnmIdx, anmSpeed ); 
+	}
+	{
+		//アクセサリーの変更
+		u16			accesaryNum;
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+
+			if( tetsuWork->accesaryType ){
+				tetsuWork->accesaryType = 0;
+				accesaryNum = G3DOBJ_ACCE_HAMMER;
+			} else {
+				tetsuWork->accesaryType = 1;
+				accesaryNum = G3DOBJ_ACCE_BOW;
+			}
+			GFL_G3D_SCENEOBJ_ACCESORY_SetObjID( sceneObj, G3DACCE_RIGHTHAND, &accesaryNum );
+		}
+		{
+			MtxFx33	rotate;
+			VecFx32	rotVec = { 0, 0, 0 };
+			if( tetsuWork->accesaryType ){
+				rotVec.z = 0xc000;
+			} else {
+				rotVec.x = 0x8000;
+				rotVec.z = 0x4000;
+			}
+			rotateCalc( &rotVec, &rotate );
+			GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, G3DACCE_RIGHTHAND, &rotate );
+		}
+	}
+#endif
 }
 
 static void moveStopHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -924,9 +986,9 @@ static void KeyControlCameraMove1( void )
 			//cameraOffs.x = 32 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
 			//cameraOffs.y = FX32_ONE * 32;
 			//cameraOffs.z = 32 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
-			cameraOffs.x = 16 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
-			cameraOffs.y = FX32_ONE * 16;
-			cameraOffs.z = 16 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.x = 24 * FX_SinIdx( tetsuWork->autoCameraRotate1 );
+			cameraOffs.y = FX32_ONE * 24;
+			cameraOffs.z = 24 * FX_CosIdx( tetsuWork->autoCameraRotate1 );
 
 			cameraPos.x = tetsuWork->contPos.x + cameraOffs.x;
 			cameraPos.y = tetsuWork->contPos.y + cameraOffs.y;
@@ -934,7 +996,7 @@ static void KeyControlCameraMove1( void )
 
 			cameraTarget.x = tetsuWork->contPos.x;
 			//cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*8;
-			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*4;
+			cameraTarget.y = tetsuWork->contPos.y + FX32_ONE*10;
 			cameraTarget.z = tetsuWork->contPos.z;
 
 			g3Dcamera = tetsuWork->g3Dcamera[1];
@@ -1090,7 +1152,7 @@ static const char mapData0[] = {
 "■　■　　　　　　　　　　■　■"
 "■　■　■■■　■■■■　■　■"
 "■　■　■　■　　　　■　■　■"
-"■　■　■　■　　　　■　■　■"
+"■　■　■　■○　　　■　■　■"
 "■　　　■　■■■　　■　■　■"
 "■　■　■　　　■　　　　■　■"
 "■　■　■■■　■■■■　■　■"

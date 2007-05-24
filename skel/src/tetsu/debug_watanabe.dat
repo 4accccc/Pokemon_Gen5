@@ -28,6 +28,10 @@ enum {
 	G3DRES_MAP_FLOOR,
 	G3DRES_ACCE_HAMMER,
 	G3DRES_ACCE_BOW,
+	G3DRES_HUMAN_BMD,
+	G3DRES_HUMAN_STAY_BCA,
+	G3DRES_HUMAN_WALK_BCA,
+	G3DRES_HUMAN_RUN_BCA,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -42,11 +46,21 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_hammer_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_bow_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human_stay_nsbca,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human_walk_nsbca,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human_run_nsbca,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
 static const GFL_G3D_UTIL_ANM g3Dutil_HarukaAnmTbl[] = {
 	{ G3DRES_HARUKA_BCA, 0 },
+};
+
+static const GFL_G3D_UTIL_ANM g3Dutil_HumanAnmTbl[] = {
+	{ G3DRES_HUMAN_STAY_BCA, 0 },
+	{ G3DRES_HUMAN_WALK_BCA, 0 },
+	{ G3DRES_HUMAN_RUN_BCA, 0 },
 };
 
 //---------------------
@@ -62,6 +76,7 @@ enum {
 	G3DOBJ_MAP_FLOOR,
 	G3DOBJ_ACCE_HAMMER,
 	G3DOBJ_ACCE_BOW,
+	G3DOBJ_HUMAN,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -76,6 +91,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
 	{ G3DRES_ACCE_HAMMER, 0, G3DRES_ACCE_HAMMER, NULL, 0 },
 	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
+	{ G3DRES_HUMAN_BMD, 0, G3DRES_HUMAN_BMD, g3Dutil_HumanAnmTbl, NELEMS(g3Dutil_HumanAnmTbl) },
 };
 
 //---------------------
@@ -85,13 +101,26 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 };
 
 //---------------------
+enum {
+	G3DSCOBJ_PLAYER = 0,
+};
+
 static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
+#if 0
 	{	G3DOBJ_HARUKA, 0, 1, 31, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
 			{ FX32_ONE*2, FX32_ONE*2, FX32_ONE*2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveHaruka,
 	},
+#else
+	{	G3DOBJ_HUMAN, 0, 1, 31, FALSE, TRUE, 
+		{	{ 0, 0, 0 },
+			{ FX32_ONE/4, FX32_ONE/4, FX32_ONE/4 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveHaruka,
+	},
+#endif
 };
 
 //---------------------
@@ -109,42 +138,51 @@ enum {
 
 static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData[] = {
 #if 0
+#if 0
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ 0, FX32_ONE*3, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},1
+		},1//"polySurface47"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE*2, FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},3
+		},3//"polySurface48"
 	},
 	{	G3DOBJ_ACCE_HAMMER, 31,
 		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
 			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},7
+		},7//"polySurface52"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},4
+		},4//"polySurface51"
 	},
 	{	G3DOBJ_MAP_WALL, 31,
 		{	{ -FX32_ONE, -FX32_ONE, 0 },
 			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},8
+		},8//"polySurface55"
 	},
 #else
 	{	G3DOBJ_ACCE_HAMMER, 31,
 		{	{ -FX32_ONE*3/2, FX32_ONE, 0 },
 			{ FX32_ONE/32, FX32_ONE/32, FX32_ONE/32 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},7
+		},7//"polySurface52"
+	},
+#endif
+#else
+	{	G3DOBJ_ACCE_HAMMER, 31,
+		{	{ -FX32_ONE*4, 0, 0 },
+			{ FX32_ONE/2, FX32_ONE/2, FX32_ONE/2 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},13
 	},
 #endif
 };
