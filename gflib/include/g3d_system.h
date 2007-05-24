@@ -66,12 +66,20 @@ typedef enum {
 }GFL_G3D_RES_CHKTYPE;
 
 //	グローバルステート構造体（射影）
+//		param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
+//					PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
+//		param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
+//					PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
+//		param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
+//					PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
+//		param4		PRJPERS			→未使用 
+//					PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
 typedef struct {
 	GFL_G3D_PROJECTION_TYPE	type;	///<射影行列タイプ
-	fx32		param1;				///<パラメータ１（タイプによって使用法は異なる）
-	fx32		param2;				///<パラメータ２（タイプによって使用法は異なる）
-	fx32		param3;				///<パラメータ３（タイプによって使用法は異なる）
-	fx32		param4;				///<パラメータ４（タイプによって使用法は異なる）
+	fx32		param1;				///<パラメータ１（タイプによって使用法は異なる：上記参照）
+	fx32		param2;				///<パラメータ２（タイプによって使用法は異なる：上記参照）
+	fx32		param3;				///<パラメータ３（タイプによって使用法は異なる：上記参照）
+	fx32		param4;				///<パラメータ４（タイプによって使用法は異なる：上記参照）
 	fx32		near;				///<視点からnearクリップ面までの距離
 	fx32		far;				///<視点からfarクリップ面までの距離
 	fx32		scaleW;				///<ビューボリュームの精度調整パラメータ（使用しないときは0）
@@ -171,58 +179,55 @@ extern BOOL
 
 //--------------------------------------------------------------------------------------------
 /**
- * 射影行列の設定
+ * 射影行列の取得と設定
  *	保存しておく必要があるかわわからないが、とりあえず。
  *	直接射影行列を直接設定する場合、その行列は外部で持つ
  *
- * @param	type		射影タイプ
- * @param	param1		PRJPERS			→fovySin :縦(Y)方向の視界角度(画角)/2の正弦をとった値
- *						PRJFRST,PRJORTH	→top	  :nearクリップ面上辺のY座標
- * @param	param2		PRJPERS			→fovyCos :縦(Y)方向の視界角度(画角)/2の余弦をとった値	
- *						PRJFRST,PRJORTH	→bottom  :nearクリップ面下辺のY座標
- * @param	param3		PRJPERS			→aspect  :縦に対する視界の割合(縦横比：視界での幅／高さ)
- *						PRJFRST,PRJORTH	→left	  :nearクリップ面左辺のX座標
- * @param	param4		PRJPERS			→未使用 
- *						PRJFRST,PRJORTH	→right	  :nearクリップ面右辺のX座標
- * @param	near		視点からnearクリップ面までの距離	
- * @param	far			視点からfarクリップ面までの距離	
- * @param	scaleW		ビューボリュームの精度調整パラメータ（使用しないときは0）
+ * @param	projection	取得or設定用射影パラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_GetSystemProjection
+		( GFL_G3D_PROJECTION* projection );
 extern void
 	GFL_G3D_SetSystemProjection
-		( const GFL_G3D_PROJECTION_TYPE type, 
-			const fx32 param1, const fx32 param2, const fx32 param3, const fx32 param4, 
-				const fx32 near, const fx32 far, const fx32 scaleW );
+		( const GFL_G3D_PROJECTION* projection );
 extern void
-	GFL_G3D_sysProjectionSetDirect
-		( const MtxFx44* param );
+	GFL_G3D_GetSystemProjectionDirect
+		( MtxFx44* projectionMtx );
+extern void
+	GFL_G3D_SetSystemProjectionDirect
+		( const MtxFx44* projectionMtx );
 
 //--------------------------------------------------------------------------------------------
 /**
- * ライトの設定
+ * ライトの取得と設定
  *
- * @param	lightID			ライトＩＤ
- * @param	vec				ライトのベクトルポインタ
- * @param	color			色
+ * @param	lightID		ライトＩＤ
+ * @param	light		取得or設定用ライトパラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
+extern void
+	GFL_G3D_GetSystemLight
+		( const u8 lightID, GFL_G3D_LIGHT* light );
+
 extern void
 	GFL_G3D_SetSystemLight
-		( const u8 lightID, const VecFx16* vec, const u16 color );
+		( const u8 lightID, const GFL_G3D_LIGHT* light );
 
 //--------------------------------------------------------------------------------------------
 /**
- * カメラ行列の設定
+ * カメラ行列の取得と設定
  *
- * @param	camPos			カメラ位置ベクトルポインタ
- * @param	camUp			カメラの上方向のベクトルへのポインタ
- * @param	target			カメラ焦点へのポインタ
+ * @param	lookAt		取得or設定用カメラ行列パラメータポインタ
  */
 //--------------------------------------------------------------------------------------------
 extern void
+	GFL_G3D_GetSystemLookAt
+		( GFL_G3D_LOOKAT* lookAt );
+extern void
 	GFL_G3D_SetSystemLookAt
-		( const VecFx32* camPos, const VecFx32* camUp, const VecFx32* target );
+		( const GFL_G3D_LOOKAT* lookAt );
 
 //--------------------------------------------------------------------------------------------
 /**
