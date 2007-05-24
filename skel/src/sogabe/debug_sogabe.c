@@ -29,9 +29,13 @@ typedef	void	(*ytFunc)(GAME_PARAM *);
 static	const	char	*GraphicFileTable[]={
 	"src/sample_graphic/yossyegg.narc",
 	"src/sample_sound/yossy_egg.narc",
+	"src/sample_graphic/spa.narc",
 };
 
 static	void	game_init(GAME_PARAM *gp);
+
+extern	void	YT_Init3DTest(GAME_PARAM *gp);
+extern	void	YT_Main3DTest(GAME_PARAM *gp);
 
 //============================================================================================
 //
@@ -48,6 +52,8 @@ static	ytFunc	YT_JobTable[]={
 	YT_MainGame,
 	YT_InitMultiBoot,
 	YT_MainMultiBoot,
+	YT_Init3DTest,
+	YT_Main3DTest,
 };
 
 //============================================================================================
@@ -77,7 +83,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	gp->heapID=HEAPID_SOGABE_DEBUG;
 
-	YT_JobNoSet(gp,YT_InitTitleNo);
+//	YT_JobNoSet(gp,YT_InitTitleNo);
+	YT_JobNoSet(gp,YT_Init3DTestNo);
 
 	game_init(gp);
 
