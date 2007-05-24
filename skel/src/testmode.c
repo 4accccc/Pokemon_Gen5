@@ -463,7 +463,17 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	//描画ステータスワーク設定
 	testmode->status[ G3D_AIR ] = status0;
 	testmode->status[ G3D_IAR ] = status1;
-
+#if 0
+	//カメラセット
+	{
+		GFL_G3D_PROJECTION initProjection = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, 
+												cameraNear, cameraFar, 0 };
+		initProjection.param1 = FX_SinIdx( cameraPerspway ); 
+		initProjection.param2 = FX_CosIdx( cameraPerspway ); 
+		GFL_G3D_SetSystemProjection( &initProjection );	
+		GFL_G3D_SetSystemLookAt( &cameraLookAt );	
+	}
+#endif
 	testmode->work[0] = 0;
 }
 	
@@ -483,10 +493,14 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 	GFL_PTC_Main();
 
 	//カメラセット
-	GFL_G3D_SetSystemProjection(	GFL_G3D_PRJPERS, 
-								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
-								cameraAspect, 0, cameraNear, cameraFar, 0 );
-	GFL_G3D_SetSystemLookAt( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
+	{
+		GFL_G3D_PROJECTION initProjection = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, 
+												cameraNear, cameraFar, 0 };
+		initProjection.param1 = FX_SinIdx( cameraPerspway ); 
+		initProjection.param2 = FX_CosIdx( cameraPerspway ); 
+		GFL_G3D_SetSystemProjection( &initProjection );	
+		GFL_G3D_SetSystemLookAt( &cameraLookAt );	
+	}
 
 	GFL_G3D_DRAW_SetLookAt();
 	{

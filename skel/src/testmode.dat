@@ -168,9 +168,9 @@ static const GFL_G3D_OBJSTATUS status1 = {
 	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//‰ñ“]
 };
 
-static const VecFx32 cameraTarget	= { 0, 0, 0 };
-static const VecFx32 cameraPos		= { 0, (FX32_ONE * 58), (FX32_ONE * 256) };
-static const VecFx32 cameraUp		= { 0, FX32_ONE, 0 };
+static const GFL_G3D_LOOKAT cameraLookAt = {	{ 0, (FX32_ONE * 58), (FX32_ONE * 256) },
+												{ 0, FX32_ONE, 0 },
+												{ 0, 0, 0 } };
 #define cameraPerspway	( 0x0b60 )
 #define cameraAspect	( FX32_ONE * 4 / 3 )
 #define cameraNear		( 1 << FX32_SHIFT )
