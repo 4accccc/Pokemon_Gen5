@@ -100,15 +100,9 @@ void
 	GF_ASSERT( g3Dcamera );
 
 	//ŽË‰eÝ’è
-	GFL_G3D_SetSystemProjection(	g3Dcamera->projection.type,
-									g3Dcamera->projection.param1, g3Dcamera->projection.param2,
-									g3Dcamera->projection.param3, g3Dcamera->projection.param4,
-									g3Dcamera->projection.near, g3Dcamera->projection.far,
-									g3Dcamera->projection.scaleW );
+	GFL_G3D_SetSystemProjection( &g3Dcamera->projection );
 	//ƒJƒƒ‰s—ñÝ’è
-	GFL_G3D_SetSystemLookAt(		&g3Dcamera->lookAt.camPos, 
-									&g3Dcamera->lookAt.camUp,
-									&g3Dcamera->lookAt.target );
+	GFL_G3D_SetSystemLookAt( &g3Dcamera->lookAt );
 }
 
 //--------------------------------------------------------------------------------------------

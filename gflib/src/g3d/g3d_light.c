@@ -76,7 +76,7 @@ void
 	GFL_G3D_LIGHT_Switching
 		( GFL_G3D_LIGHTSET* g3Dlightset )
 {
-	VecFx16	initVec = { -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) };
+	GFL_G3D_LIGHT initLight = {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0 };
 	int	i;
 
 	GF_ASSERT( g3Dlightset );
@@ -84,9 +84,9 @@ void
 	//ÉâÉCÉgê›íË
 	for( i=0; i<4; i++ ){
 		if( g3Dlightset->light[i].color ){
-			GFL_G3D_SetSystemLight( i, &g3Dlightset->light[i].vec, g3Dlightset->light[i].color );
+			GFL_G3D_SetSystemLight( i, &g3Dlightset->light[i] );
 		} else {
-			GFL_G3D_SetSystemLight( i, &initVec, 0 );
+			GFL_G3D_SetSystemLight( i, &initLight );
 		}
 	}
 }
