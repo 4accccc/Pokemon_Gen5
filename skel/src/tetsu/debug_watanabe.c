@@ -102,6 +102,7 @@ const GFL_PROC_DATA DebugWatanabeMainProcData = {
  */
 //------------------------------------------------------------------
 typedef struct {
+	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];
 	HEAPID					heapID;
 	int						seq;
 
@@ -139,6 +140,9 @@ typedef struct {
 	GFL_TCB*				dbl3DdispVintr;
 	int						vBlankCounter;
 	u16						nowAnmIdx;
+
+	GFL_PTC_PTR				ptc;
+
 }TETSU_WORK;
 
 typedef struct {
@@ -193,6 +197,12 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 #include "debug_watanabe.dat"
 
 static const MAPDATA mapDataTbl;
+
+//アーカイブテーブル
+static	const	char	*GraphicFileTable[]={
+	"src/sample_graphic/spa.narc",
+};
+
 //------------------------------------------------------------------
 /**
  * @brief	ローカル宣言
@@ -250,6 +260,9 @@ static BOOL	TestModeControl( void )
 	case 0:
 		//初期化
 		GFL_STD_MtRandInit(0);
+		//ARCシステム初期化
+		GFL_ARC_Init( &GraphicFileTable[0], 1 );
+
 		bg_init( tetsuWork->heapID );
 		tetsuWork->dbl3DdispVintr = GFUser_VIntr_CreateTCB
 								( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
@@ -284,6 +297,9 @@ static BOOL	TestModeControl( void )
 
 		GFL_TCB_DeleteTask( tetsuWork->dbl3DdispVintr );
 		bg_exit();
+
+		GFL_ARC_Exit();
+
 		return_flag = TRUE;
 		break;
 	}
@@ -358,7 +374,7 @@ static void g3d_load( HEAPID heapID )
 	//配置物設定
 	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
 	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
-												sizeof(OBJ_WORK), 32, FALSE, heapID );
+												sizeof(OBJ_WORK), 32, TRUE, heapID );
 	{
 		//自機作成
 		tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
@@ -403,6 +419,11 @@ static void g3d_load( HEAPID heapID )
 	tetsuWork->nowLightNum = 0;
 
 	tetsuWork->work[0] = 0;
+
+	//パーティクルリソース読み込み
+	tetsuWork->ptc=GFL_PTC_Create
+			(tetsuWork->spa_work,PARTICLE_LIB_HEAP_SIZE,TRUE,tetsuWork->heapID);
+	GFL_PTC_SetResource(tetsuWork->ptc,GFL_PTC_LoadArcResource(0,0,tetsuWork->heapID),TRUE,NULL);
 }
 	
 //動作
@@ -412,6 +433,11 @@ static void g3d_move( void )
 	DebugDrawCount = 0;
 	GFL_G3D_SCENE_Main( tetsuWork->g3Dscene );  
 	tetsuWork->work[0]++;
+
+	if(GFL_PTC_GetEmitterNum(tetsuWork->ptc)<5){
+		VecFx32	pos={0,0,0};
+		GFL_PTC_CreateEmitter(tetsuWork->ptc,0,&pos);
+	}
 }
 
 //描画
@@ -421,8 +447,10 @@ static void g3d_draw( void )
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[0] );
 		//OS_Printf("CullingCount = %d\n",DebugCullingCount);
 		//OS_Printf("DrawCount = %d\n",DebugDrawCount);
+		GFL_G3D_SCENE_SetDrawParticleSW( tetsuWork->g3Dscene, TRUE );
 	} else {
 		GFL_G3D_CAMERA_Switching( tetsuWork->g3Dcamera[1] );
+		GFL_G3D_SCENE_SetDrawParticleSW( tetsuWork->g3Dscene, FALSE );
 	}
 	GFL_G3D_SCENE_Draw( tetsuWork->g3Dscene );  
 	GFL_G3D_DOUBLE3D_SetSwapFlag();
@@ -431,6 +459,8 @@ static void g3d_draw( void )
 //破棄
 static void g3d_unload( void )
 {
+	GFL_PTC_Delete(tetsuWork->ptc);
+
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[1] );
 	GFL_G3D_CAMERA_Delete( tetsuWork->g3Dcamera[1] );
 	GFL_G3D_LIGHT_Delete( tetsuWork->g3Dlightset[0] );
