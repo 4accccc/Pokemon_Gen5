@@ -45,13 +45,14 @@ typedef struct {
  * @param	g3Dutil			依存するg3Dutil
  * @param	SceneObjMax		配置可能なオブジェクト数
  * @param	SceneObjWkSiz	１オブジェクトに割り当てるワークのサイズ
+ * @param	GFL_PTC_Enable	パーティクルシステムの起動フラグ
  * @param	heapID			ヒープＩＤ
  */
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_SCENE*
 	GFL_G3D_SCENE_Create
 		( GFL_G3D_UTIL* g3Dutil, const u16 sceneObjMax, const u32 sceneObjWkSiz, 
-			const u16 sceneAccesoryMax, const HEAPID heapID );
+			const u16 sceneAccesoryMax, BOOL GFL_PTC_Enable, const HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
