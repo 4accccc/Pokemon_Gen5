@@ -43,6 +43,8 @@ typedef struct {
 	GFL_TCB*				dbl3DdispVintr;
 
 	u16						work[16];
+	GFL_PTC_PTR				ptc;
+	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];
 }TESTMODE_WORK;
 
 typedef struct {
@@ -56,6 +58,10 @@ typedef struct {
 enum {
 	MSG_WHITE = 0,
 	MSG_RED,
+};
+
+static	const	char	*GraphicFileTable[]={
+	"src/sample_graphic/spa.narc",
 };
 
 #include "sample_graphic/titledemo.naix"
@@ -107,6 +113,11 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		bg_init( testmode->heapID );
 		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
 						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+
+		//パーティクルリソース読み込み
+		testmode->ptc=GFL_PTC_Create(testmode->spa_work,PARTICLE_LIB_HEAP_SIZE,TRUE,testmode->heapID);
+		GFL_PTC_SetResource(testmode->ptc,GFL_PTC_LoadArcResource(0,0,testmode->heapID),TRUE,NULL);
+
 		//testmode->listPosition = 0;
 		testmode->seq++;
 		break;
@@ -157,6 +168,10 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		g3d_control_effect(testmode);
 		g2d_draw(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
+		if(GFL_PTC_GetEmitterNum(testmode->ptc)<5){
+			VecFx32	pos={0,0,0};
+			GFL_PTC_CreateEmitter(testmode->ptc,0,&pos);
+		}
 		break;
 
 	case 4:
@@ -204,6 +219,12 @@ static void	bg_init( HEAPID heapID )
 
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
+	//ARCシステム初期化
+	GFL_ARC_Init(&GraphicFileTable[0],1);
+
+	//パーティクルシステム起動
+	GFL_PTC_Init();
+
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
@@ -212,6 +233,9 @@ static void	bg_init( HEAPID heapID )
 static void	bg_exit( void )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+
+	GFL_PTC_Exit();
+	GFL_ARC_Exit();
 
 	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
@@ -440,12 +464,6 @@ static void g3d_load( TESTMODE_WORK * testmode )
 	testmode->status[ G3D_AIR ] = status0;
 	testmode->status[ G3D_IAR ] = status1;
 
-	//カメラセット
-	GFL_G3D_SetSystemProjection(	GFL_G3D_PRJPERS, 
-								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
-								cameraAspect, 0, cameraNear, cameraFar, 0 );
-	GFL_G3D_SetSystemLookAt( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
-
 	testmode->work[0] = 0;
 }
 	
@@ -461,6 +479,15 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 	g3Dobj[ G3D_IAR ] = testmode->g3Dobj[ G3D_IAR ];
 #endif
 	GFL_G3D_DRAW_Start();
+
+	GFL_PTC_Main();
+
+	//カメラセット
+	GFL_G3D_SetSystemProjection(	GFL_G3D_PRJPERS, 
+								FX_SinIdx( cameraPerspway ), FX_CosIdx( cameraPerspway ), 
+								cameraAspect, 0, cameraNear, cameraFar, 0 );
+	GFL_G3D_SetSystemLookAt( (VecFx32*)&cameraPos, (VecFx32*)&cameraUp, (VecFx32*)&cameraTarget );
+
 	GFL_G3D_DRAW_SetLookAt();
 	{
 		if( GFL_G3D_DOUBLE3D_GetFlip() ){
