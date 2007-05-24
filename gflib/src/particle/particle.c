@@ -88,6 +88,16 @@ typedef struct _PARTICLE_SYSTEM{
 //==============================================================================
 //	グローバル変数
 //==============================================================================
+typedef	struct
+{
+	void		*ParticleSystemPtr[PARTICLE_GLOBAL_MAX];
+	void		*ParticleTempPtr;
+	GFL_PTC_PTR	TexLoadTempPtc;
+}PTC_MANAGER;
+
+static	PTC_MANAGER	*ptc_man=NULL;
+
+#if 0
 //--------------------------------------------------------------
 /**
  * 現在生成されていパーティクルシステムのポインタが入る。
@@ -115,6 +125,7 @@ static void *ParticleTempPtr;
  */
 //--------------------------------------------------------------
 static GFL_PTC_PTR TexLoadTempPtc;
+#endif
 
 
 //==============================================================================
@@ -278,16 +289,24 @@ static u32 sAllocTexPalette(u32 size, BOOL is4pltt)
 /**
  * @brief   パーティクルシステムで使用するワークの初期化
  *
+ * @param	heapID	管理用ワーク取得ヒープID
+ *
  * Particle_SystemCreateよりも先にこれを実行する必要があります。
  */
 //--------------------------------------------------------------
-void GFL_PTC_Init(void)
+void GFL_PTC_Init(HEAPID heapID)
 {
 	int i;
+
+	GF_ASSERT(ptc_man==NULL);
+
+	ptc_man = GFL_HEAP_AllocMemory(heapID, sizeof(PTC_MANAGER));
 	
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		ParticleSystemPtr[i] = NULL;
+		ptc_man->ParticleSystemPtr[i] = NULL;
 	}
+	ptc_man->ParticleTempPtr=NULL;
+	ptc_man->TexLoadTempPtc=NULL;
 }
 
 //--------------------------------------------------------------
@@ -338,7 +357,7 @@ GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int 
 	
 	//グローバル変数の空きをサーチ
 	for(global_no = 0; global_no < PARTICLE_GLOBAL_MAX; global_no++){
-		if(ParticleSystemPtr[global_no] == NULL){
+		if(ptc_man->ParticleSystemPtr[global_no] == NULL){
 			break;
 		}
 	}
@@ -364,7 +383,7 @@ GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int 
 	psys->heap = work;
 	psys->heap_end = (void*)((u32)work + work_size);
 	psys->global_no = global_no;
-	ParticleSystemPtr[global_no] = psys;
+	ptc_man->ParticleSystemPtr[global_no] = psys;
 	
 	//カメラ設定
 	if(personal_camera == TRUE){
@@ -449,8 +468,8 @@ void	GFL_PTC_Delete(GFL_PTC_PTR psys)
 	
 	//パーティクルシステムのワーク解放
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		if(ParticleSystemPtr[i] == psys){
-			ParticleSystemPtr[i] = NULL;
+		if(ptc_man->ParticleSystemPtr[i] == psys){
+			ptc_man->ParticleSystemPtr[i] = NULL;
 			break;
 		}
 	}
@@ -474,10 +493,26 @@ void	GFL_PTC_Exit(void)
 	int i;
 	
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		if(ParticleSystemPtr[i] != NULL){
-			GFL_PTC_Delete(ParticleSystemPtr[i]);
+		if(ptc_man->ParticleSystemPtr[i] != NULL){
+			GFL_PTC_Delete(ptc_man->ParticleSystemPtr[i]);
 		}
 	}
+
+	GFL_HEAP_FreeMemory(ptc_man);
+
+	ptc_man=NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   パーティクルシステムの起動をチェック
+ *
+ * @retval TRUE:起動中　FALSE:起動していない
+ */
+//--------------------------------------------------------------
+BOOL GFL_PTC_CheckEnable(void)
+{
+	return	(ptc_man!=NULL);
 }
 
 //--------------------------------------------------------------
@@ -521,7 +556,7 @@ static void *Particle_LocalAlloc_0(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_0];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_0];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -537,7 +572,7 @@ static void *Particle_LocalAlloc_1(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_1];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_1];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -553,7 +588,7 @@ static void *Particle_LocalAlloc_2(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_2];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_2];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -569,7 +604,7 @@ static void *Particle_LocalAlloc_3(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_3];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_3];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -585,7 +620,7 @@ static void *Particle_LocalAlloc_4(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_4];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_4];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -601,7 +636,7 @@ static void *Particle_LocalAlloc_5(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_5];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_5];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -617,7 +652,7 @@ static void *Particle_LocalAlloc_6(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_6];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_6];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -633,7 +668,7 @@ static void *Particle_LocalAlloc_7(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_7];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_7];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -649,7 +684,7 @@ static void *Particle_LocalAlloc_8(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_8];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_8];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -665,7 +700,7 @@ static void *Particle_LocalAlloc_9(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_9];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_9];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -681,7 +716,7 @@ static void *Particle_LocalAlloc_10(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_10];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_10];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -697,7 +732,7 @@ static void *Particle_LocalAlloc_11(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_11];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_11];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -713,7 +748,7 @@ static void *Particle_LocalAlloc_12(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_12];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_12];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -729,7 +764,7 @@ static void *Particle_LocalAlloc_13(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_13];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_13];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -745,7 +780,7 @@ static void *Particle_LocalAlloc_14(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_14];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_14];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -761,7 +796,7 @@ static void *Particle_LocalAlloc_15(u32 size)
 {
 	PARTICLE_SYSTEM *psys;
 	
-	psys = ParticleSystemPtr[PARTICLE_GLOBAL_15];
+	psys = ptc_man->ParticleSystemPtr[PARTICLE_GLOBAL_15];
 	return Particle_LocalAlloc(psys, size);
 }
 
@@ -879,7 +914,7 @@ static void Particle_TexLoad(GFL_PTC_PTR psys)
 	SPL_Load(psys->spl_manager, psys->res_ptcl);
 
 	// テクスチャを読み込み
-	TexLoadTempPtc = psys;
+	ptc_man->TexLoadTempPtc = psys;
 	if(psys->user_tex_func == NULL){
 		//NitroSystemのVRAMマネージャに依存する
 		(void)SPL_LoadTexByVRAMManager(psys->spl_manager);
@@ -894,7 +929,7 @@ static void Particle_TexLoad(GFL_PTC_PTR psys)
 	else{
 		SPL_LoadTexPlttByCallbackFunction(psys->spl_manager, psys->user_pltt_func);
 	}
-	TexLoadTempPtc = NULL;
+	ptc_man->TexLoadTempPtc = NULL;
 
 	{
 		u32 tex_size;
@@ -937,9 +972,9 @@ void	GFL_PTC_SetLnkTexKey(NNSGfdTexKey tex_key)
 	GFL_PTC_PTR psys;
 	
 	GF_ASSERT(tex_key != NNS_GFD_ALLOC_ERROR_TEXKEY);
-	GF_ASSERT(TexLoadTempPtc != NULL);
+	GF_ASSERT(ptc_man->TexLoadTempPtc != NULL);
 	
-	psys = TexLoadTempPtc;
+	psys = ptc_man->TexLoadTempPtc;
 	
 	for(i = 0; i < LNK_TEX_KEY_MAX; i++){
 		if(psys->tex_key[i] == NNS_GFD_ALLOC_ERROR_TEXKEY){
@@ -966,9 +1001,9 @@ void	GFL_PTC_SetPlttLnkTexKey(NNSGfdPlttKey pltt_key)
 	GFL_PTC_PTR psys;
 	
 	GF_ASSERT(pltt_key != NNS_GFD_ALLOC_ERROR_PLTTKEY);
-	GF_ASSERT(TexLoadTempPtc != NULL);
+	GF_ASSERT(ptc_man->TexLoadTempPtc != NULL);
 	
-	psys = TexLoadTempPtc;
+	psys = ptc_man->TexLoadTempPtc;
 	
 	for(i = 0; i < LNK_PLTT_KEY_MAX; i++){
 		if(psys->pltt_key[i] == NNS_GFD_ALLOC_ERROR_PLTTKEY){
@@ -1089,9 +1124,14 @@ static void DebugCameraMove(GFL_PTC_PTR psys)
 //--------------------------------------------------------------
 void	GFL_PTC_Draw(GFL_PTC_PTR psys)
 {
-	const MtxFx43 *camera_ptr;
+	const MtxFx43		*camera_ptr;
+	GFL_G3D_PROJECTION	projection;
+	GFL_G3D_LOOKAT		lookAt;
 
+	//パーティクル独自のカメラ設定が存在するならセット
 	if(psys->camera){
+		GFL_G3D_GetSystemProjection(&projection);
+		GFL_G3D_GetSystemLookAt(&lookAt);
 		GFL_G3D_CAMERA_Switching(psys->camera);
 		GFL_G3D_DRAW_SetLookAt();
 	}
@@ -1103,8 +1143,12 @@ void	GFL_PTC_Draw(GFL_PTC_PTR psys)
 	camera_ptr = NNS_G3dGlbGetCameraMtx();
 	SPL_Draw(psys->spl_manager, camera_ptr);
 
-	//再びグローバルステートを適用。サンプルのSimpleがこうやってるんで真似。
-//	NNS_G3dGlbFlush();
+	//パーティクル独自のカメラ設定が存在するなら退避していたカメラ設定を戻す
+	if(psys->camera){
+		GFL_G3D_SetSystemProjection(&projection);
+		GFL_G3D_SetSystemLookAt(&lookAt);
+		GFL_G3D_DRAW_SetLookAt();
+	}
 }
 
 //--------------------------------------------------------------
@@ -1129,7 +1173,7 @@ int		GFL_PTC_GetActionNum(void)
 	
 	count = 0;
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		if(ParticleSystemPtr[i] != NULL){
+		if(ptc_man->ParticleSystemPtr[i] != NULL){
 			count++;
 		}
 	}
@@ -1148,8 +1192,8 @@ int		GFL_PTC_DrawAll(void)
 
 	count = 0;
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		if(ParticleSystemPtr[i] != NULL){
-			GFL_PTC_Draw(ParticleSystemPtr[i]);
+		if(ptc_man->ParticleSystemPtr[i] != NULL){
+			GFL_PTC_Draw(ptc_man->ParticleSystemPtr[i]);
 			count++;
 		}
 	}
@@ -1169,8 +1213,8 @@ int		GFL_PTC_CalcAll(void)
 	
 	count = 0;
 	for(i = 0; i < PARTICLE_GLOBAL_MAX; i++){
-		if(ParticleSystemPtr[i] != NULL){
-			GFL_PTC_Calc(ParticleSystemPtr[i]);
+		if(ptc_man->ParticleSystemPtr[i] != NULL){
+			GFL_PTC_Calc(ptc_man->ParticleSystemPtr[i]);
 			count++;
 		}
 	}
@@ -1225,9 +1269,9 @@ GFL_EMIT_PTR GFL_PTC_CreateEmitterCallback(GFL_PTC_PTR psys, int res_no, pEmitFu
 {
 	GFL_EMIT_PTR emit;
 	
-	ParticleTempPtr = temp_ptr;
+	ptc_man->ParticleTempPtr = temp_ptr;
 	emit = SPL_CreateWithInitialize(psys->spl_manager, res_no, callback);
-	ParticleTempPtr = NULL;
+	ptc_man->ParticleTempPtr = NULL;
 	psys->temp_emit = emit;
 
 	return emit;
@@ -1364,8 +1408,8 @@ void GFL_PTC_SetVup(GFL_PTC_PTR psys, const VecFx32 *v_up)
 //--------------------------------------------------------------
 void * GFL_PTC_GetTempPtr(void)
 {
-	SDK_ASSERT(ParticleTempPtr != NULL);
-	return ParticleTempPtr;
+	SDK_ASSERT(ptc_man->ParticleTempPtr != NULL);
+	return ptc_man->ParticleTempPtr;
 }
 
 //--------------------------------------------------------------
