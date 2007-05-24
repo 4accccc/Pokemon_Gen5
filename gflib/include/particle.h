@@ -109,11 +109,12 @@ typedef void (*pEmitFunc)(GFL_EMIT_PTR);
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern	void			GFL_PTC_Init(void);
+extern	void			GFL_PTC_Init(HEAPID heapID);
 extern	void			GFL_PTC_Main(void);
 extern	GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int heap_id);
 extern	void			GFL_PTC_Delete(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_Exit(void);
+extern	BOOL			GFL_PTC_CheckEnable(void);
 
 //íºê⁄pathéwíËÇÕÇ∆ÇËÇ†Ç¶Ç∏Ç»Çµ
 //extern	void			*Particle_ResourceLoad(int heap_id, const char *path);
