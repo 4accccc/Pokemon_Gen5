@@ -27,6 +27,8 @@ enum{
 	YT_MainGameNo,
 	YT_InitMultiBootNo,
 	YT_MainMultiBootNo,
+	YT_Init3DTestNo,
+	YT_Main3DTestNo,
 };
 
 //-------------------------------------
