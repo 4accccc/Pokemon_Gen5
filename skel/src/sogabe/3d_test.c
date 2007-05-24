@@ -68,7 +68,7 @@ void	YT_Init3DTest(GAME_PARAM *gp)
 	NNS_GfdInitFrmTexVramManager(2,TRUE);
 	NNS_GfdInitFrmPlttVramManager(0x8000,TRUE);
 
-	GFL_PTC_Init();
+	GFL_PTC_Init(gp->heapID);
 	gt->ptc=GFL_PTC_Create(gt->spa_work,PARTICLE_LIB_HEAP_SIZE,FALSE,gp->heapID);
 	GFL_PTC_SetResource(gt->ptc,GFL_PTC_LoadArcResource(2,0,gp->heapID),TRUE,NULL);
 
