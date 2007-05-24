@@ -30,6 +30,7 @@ struct _GFL_G3D_SCENE {
 	u32						g3DsceneObjWorkSize;
 	u16*					g3DsceneObjPriTbl;
 	BOOL					GFL_PTC_Enable;
+	BOOL					GFL_PTC_DrawSW;
 	HEAPID					heapID;
 };
 
@@ -93,6 +94,7 @@ GFL_G3D_SCENE*
 	
 	if( g3Dscene->GFL_PTC_Enable == TRUE ){
 		GFL_PTC_Init(heapID);
+		g3Dscene->GFL_PTC_DrawSW = TRUE;
 	}
 	return g3Dscene;
 }
@@ -133,7 +135,7 @@ void
 	//描画開始
 	GFL_G3D_DRAW_Start();
 
-	if( g3Dscene->GFL_PTC_Enable == TRUE ){
+	if(( g3Dscene->GFL_PTC_Enable == TRUE )&&( g3Dscene->GFL_PTC_DrawSW == TRUE )){
 		GFL_PTC_Main();
 	}
 	//カメラグローバルステート設定		
@@ -196,6 +198,8 @@ void
 	GFL_G3D_SCENE_Delete
 		( GFL_G3D_SCENE* g3Dscene )  
 {
+	GF_ASSERT( g3Dscene );
+
 	if( g3Dscene->GFL_PTC_Enable == TRUE ){
 		GFL_PTC_Exit();
 	}
@@ -218,8 +222,24 @@ GFL_G3D_SCENEOBJ*
 	GFL_G3D_SCENEOBJ_Get
 		( GFL_G3D_SCENE* g3Dscene, u32 idx )
 {
+	GF_ASSERT( g3Dscene );
 	GF_ASSERT( idx < g3Dscene->g3DsceneObjMax );
 	return ( GFL_G3D_SCENEOBJ* )GFL_TCBL_GetWork( g3Dscene->g3DsceneObjTCBLtbl[ idx ] );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * パーティクル描画のＯＮ/ＯＦＦ(パーティクルシステムが起動されている場合のみ有効)
+ *
+ * @param	BOOL			パーティクル描画スイッチ
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_SCENE_SetDrawParticleSW
+		( GFL_G3D_SCENE* g3Dscene, BOOL sw )
+{
+	GF_ASSERT( g3Dscene );
+	g3Dscene->GFL_PTC_DrawSW = sw;
 }
 
 //--------------------------------------------------------------------------------------------
