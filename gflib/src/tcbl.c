@@ -328,6 +328,59 @@ GFL_TCBL * GFL_TCBL_Create(GFL_TCBLSYS * tcbsys, GFL_TCBLFUNC * func, u32 work_s
 
 //------------------------------------------------------------------
 /**
+ * @brief	タスクプライオリティの変更
+ *
+ * タスクの動作優先順位を取得する
+ *
+ * @param	tcb	タスクへのポインタ
+ * @param	pri	変更後のプライオリティ
+ */
+//------------------------------------------------------------------
+void GFL_TCBL_ChangePriority(GFL_TCBL * tcb, u32 pri)
+{
+	GFL_TCBL * find;
+	GFL_TCBL * head = &(tcb->tcbsys->tcb_first);
+
+	//TCB実行中に呼び出された場合、ASSERTで停止させる
+	GF_ASSERT_MSG(tcb->tcbsys->now_chain == NULL, "TCB動作中にpriorityを操作");
+
+	if (tcb->pri > pri) {
+
+		find = tcb->prev;
+		while (find != head && find->pri > pri) {
+			find = find->prev;
+		}
+		//対象をリストからはずす
+		tcb->prev->next = tcb->next;
+		tcb->next->prev = tcb->prev;
+		
+		tcb->next = find->next;
+		tcb->next->prev = tcb;
+		tcb->prev = find;
+		find->next = tcb;
+
+	} else {
+
+		find = tcb->next;
+		while (find != head && find->pri < pri) {
+			find = find->next;
+		}
+		//対象をリストからはずす
+		tcb->prev->next = tcb->next;
+		tcb->next->prev = tcb->prev;
+
+		tcb->prev = find->prev;
+		tcb->prev->next = tcb;
+		tcb->next = find;
+		find->prev = tcb;
+	}
+
+	tcb->pri = pri;
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief	タスク関数の切り替え
  */
 //------------------------------------------------------------------
