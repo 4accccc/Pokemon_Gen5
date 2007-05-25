@@ -48,36 +48,21 @@ typedef enum {
 
 extern void GFL_OBJGRP_Init( void );
 extern void GFL_OBJGRP_Exit( void );
-
-extern void GFL_OBJGRP_sysStart(	u16 heapID, const GFL_BG_DISPVRAM* vramBank,
-									const GFL_OBJGRP_INIT_PARAM* initParam );
+extern void GFL_OBJGRP_sysStart( u16 heapID, const GFL_BG_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
 extern void GFL_OBJGRP_sysEnd( void );
-
-extern u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 dataID, BOOL compressedFlag, 
-	GFL_VRAM_TYPE targetVram, HEAPID heapID );
-
-extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 dataID, BOOL compressedFlag, 
-			GFL_VRAM_TYPE targetVram,  u32 cellIndex, HEAPID heapID );
-
+extern u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressedFlag, GFL_VRAM_TYPE targetVram, HEAPID heapID );
+extern u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressedFlag, GFL_VRAM_TYPE targetVram, u32 cellIndex, HEAPID heapID );
 extern void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index );
-
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
-
-extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
-extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
+extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID );
 extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
-
+extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
 extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID );
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
-
 extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
-
-extern GFL_CLWK* GFL_OBJGRP_CreateClAct
-	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+extern GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
-
-extern GFL_CLWK* GFL_OBJGRP_CreateClActVT
-	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+extern GFL_CLWK* GFL_OBJGRP_CreateClActVT( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
 
 

@@ -113,8 +113,7 @@ void GFL_OBJGRP_Exit( void )
  *
  */
 //==============================================================================================
-void GFL_OBJGRP_sysStart
-	( u16 heapID, const GFL_BG_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam )
+void GFL_OBJGRP_sysStart( u16 heapID, const GFL_BG_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam )
 {
 	GF_ASSERT( SysWork.vmanMain == NULL );
 	GF_ASSERT( SysWork.vmanSub == NULL );
@@ -533,8 +532,7 @@ typedef struct {
  * @retval  u32		ìoò^ÉCÉìÉfÉbÉNÉXÅiìoò^é∏îsÇÃèÍçá, GFL_OBJGRP_REGISTER_FAILEDÅj
  */
 //==============================================================================================
-GFL_CLWK* GFL_OBJGRP_CreateClAct
-	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
@@ -575,8 +573,7 @@ GFL_CLWK* GFL_OBJGRP_CreateClAct
  */
 //==============================================================================================
 
-GFL_CLWK* GFL_OBJGRP_CreateClActVT
-	( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+GFL_CLWK* GFL_OBJGRP_CreateClActVT( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
@@ -661,7 +658,7 @@ static inline u32 search_empty_cgr_pos( void )
  */
 //------------------------------------------------------------------
 static void register_cgr
-	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
+( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
 {
 	NNSG2dCharacterData* charData;
 
