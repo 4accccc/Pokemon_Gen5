@@ -36,9 +36,14 @@ static	u32		ArchiveMoveImageTop(FSFile *p_file,int datID,int ofs,int ofs_size);
 //	アーカイブテーブル格納変数
 //============================================================================================
 
-static	char	***ArchiveFileTable=NULL;
-static	int		ArchiveFileTableMax=0;
-static	int		ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
+struct _GFL_ARC_PARAM
+{
+	char	***ArchiveFileTable;
+	int		ArchiveFileTableMax;
+	int		ArchiveFileMode;
+};
+
+static	GFL_ARC_PARAM	gap;
 
 //============================================================================================
 /**
@@ -50,9 +55,9 @@ static	int		ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
 //============================================================================================
 void	GFL_ARC_Init(const char **tbl,int tbl_max)
 {
-	ArchiveFileTable=(char ***)tbl;
-	ArchiveFileTableMax=tbl_max;
-	ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
+	gap.ArchiveFileTable=(char ***)tbl;
+	gap.ArchiveFileTableMax=tbl_max;
+	gap.ArchiveFileMode=ARCHIVE_FILE_MODE_FS;
 }
 
 //============================================================================================
@@ -65,9 +70,9 @@ void	GFL_ARC_Init(const char **tbl,int tbl_max)
 //============================================================================================
 void	GFL_ARC_InitMultiBoot(const char **tbl,int tbl_max)
 {
-	ArchiveFileTable=(char ***)tbl;
-	ArchiveFileTableMax=tbl_max;
-	ArchiveFileMode=ARCHIVE_FILE_MODE_MB;
+	gap.ArchiveFileTable=(char ***)tbl;
+	gap.ArchiveFileTableMax=tbl_max;
+	gap.ArchiveFileMode=ARCHIVE_FILE_MODE_MB;
 }
 
 //============================================================================================
@@ -77,8 +82,28 @@ void	GFL_ARC_InitMultiBoot(const char **tbl,int tbl_max)
 //============================================================================================
 void	GFL_ARC_Exit(void)
 {
-	ArchiveFileTable=NULL;
-	ArchiveFileTableMax=0;
+	gap.ArchiveFileTable=NULL;
+	gap.ArchiveFileTableMax=0;
+}
+
+//============================================================================================
+/**
+ *	アーカイブデータテーブルアドレス取得
+ */
+//============================================================================================
+void	GFL_ARC_GetArchiveTableAddress(GFL_ARC_PARAM *gap_dest)
+{
+	*gap_dest=gap;
+}
+
+//============================================================================================
+/**
+ *	アーカイブデータテーブルアドレス再セット
+ */
+//============================================================================================
+void	GFL_ARC_SetArchiveTableAddress(GFL_ARC_PARAM *gap_src)
+{
+	gap=*gap_src;
 }
 
 //============================================================================================
@@ -150,13 +175,13 @@ static	void	ArchiveFileOpen(FSFile *p_file,int arcID)
 
 	FS_InitFile(p_file);
 
-	if(ArchiveFileMode==ARCHIVE_FILE_MODE_FS){
-		FS_OpenFile(p_file,(char *)ArchiveFileTable[arcID]);
+	if(gap.ArchiveFileMode==ARCHIVE_FILE_MODE_FS){
+		FS_OpenFile(p_file,(char *)gap.ArchiveFileTable[arcID]);
 	}
 	else{
-		size=(u32)ArchiveFileTable[arcID*2+1];
-		size-=(u32)ArchiveFileTable[arcID*2];
-		FS_CreateFileFromMemory(p_file,(void *)ArchiveFileTable[arcID*2],size);
+		size=(u32)gap.ArchiveFileTable[arcID*2+1];
+		size-=(u32)gap.ArchiveFileTable[arcID*2];
+		FS_CreateFileFromMemory(p_file,(void *)gap.ArchiveFileTable[arcID*2],size);
 	}
 }
 
@@ -219,7 +244,7 @@ static	u32		ArchiveMoveImageTop(FSFile *p_file,int datID,int ofs,int ofs_size)
 //============================================================================================
 void	GFL_ARC_LoadData(void *data, int arcID, int datID)
 {
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 	ArchiveLoadDataIndex(data, arcID, datID, OFS_NO_SET, SIZE_NO_SET);	
 }
 
@@ -238,7 +263,7 @@ void	GFL_ARC_LoadData(void *data, int arcID, int datID)
 //============================================================================================
 void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID)
 {
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 	return	ArchiveLoadDataIndexMalloc(arcID,datID,heapID,OFS_NO_SET,SIZE_NO_SET);
 }
 
@@ -255,7 +280,7 @@ void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID)
 //============================================================================================
 void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size)
 {
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 	ArchiveLoadDataIndex(data, arcID, datID, ofs, size);
 }
 
@@ -276,7 +301,7 @@ void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size)
 //============================================================================================
 void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int size)
 {
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 	return	ArchiveLoadDataIndexMalloc(arcID,datID,heapID,ofs,size);
 }
 
@@ -329,7 +354,7 @@ u16	GFL_ARC_GetDataFileCnt(int arcID, int datID)
 	u32			fat_top=0;
 	u16			file_cnt=0;
 
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 
 	ArchiveFileOpen(&p_file,arcID);
 
@@ -394,7 +419,7 @@ ARCHANDLE* GFL_ARC_OpenDataHandle( u32 arcID, HEAPID heapID )
 {
 	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapID, sizeof(ARCHANDLE) );
 
-	GF_ASSERT(ArchiveFileTable!=NULL);
+	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 
 	if( handle )
 	{
