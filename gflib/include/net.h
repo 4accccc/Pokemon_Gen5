@@ -87,6 +87,15 @@ typedef enum {
   GFL_NET_ERROR_RESET_OTHER,          ///< その他のエラー
 } GFL_NET_ERROR_ENUM;
 
+
+typedef enum {   
+  GFL_NET_ICON_WIFINCGR,   ///< WIFIの絵のデータ
+  GFL_NET_ICON_WMNCGR,     ///< Wirelessの絵のデータ
+  GFL_NET_ICON_WMNCLR,     ///< パレットのデータ
+} GFL_NET_ICON_ENUM;       /// 通信アイコンファイルを外部からもらうときの識別番号
+
+
+
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef u8 ConnectID;      ///< 接続するためのID  0-16 まで
 typedef u8 NetID;          ///< 通信ID  0-16 まで
@@ -109,6 +118,9 @@ typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれ
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiユーザーデータをセーブする時に呼ぶ関数
 typedef void (*NetWifiMargeFrinedDataFunc)(int baseFrinedNo, int delFriendNo);  ///< WiFiフレンドデータをマージする状況時に呼ぶ関数
+typedef const char** (*NetIconGraTableFunc)(void);     ///< 通信アイコンのファイルARCテーブルを返す関数
+typedef void (*NetIconGraNoBuffFunc)(int* pNoBuff);  ///< 通信アイコンのファイルARCの番号を返す関数
+
 
 
 #if GFL_NET_WIFI
@@ -126,6 +138,8 @@ typedef struct{
   NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetAutoParentConnect autoParentConnect; ///< 自動接続したときに親になったマシンで呼び出される
+  NetIconGraTableFunc iconGetTable;     ///< 通信アイコンのファイルARCテーブルを返す関数
+  NetIconGraNoBuffFunc iconGetNoBuff;   ///< 通信アイコンのファイルARCの番号を返す関数
 #if GFL_NET_WIFI
   NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
   NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数

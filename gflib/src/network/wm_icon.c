@@ -12,19 +12,6 @@
 #include "wm_icon.h"
 #include "device/net_wireless.h"
 
-// パレットファイルの大きさ
-#define WM_ICON_PALFILE_SIZE	( 600 )
-#define WM_ICON_CHARFILE_SIZE	( 600 )
-
-// 通信アイコンだすために転送するPAL_VRAMの位置・大きさ(14番パレット使用）
-#define WM_ICON_PAL_POS		( 14 )
-#define WM_ICON_PAL_OFFSET	( 16 * 2 * WM_ICON_PAL_POS )
-#define WM_ICON_PAL_SIZE	( 16 * 2 )
-
-
-// 転送サイズ
-#define WM_ICON_CHAR_SIZE    ( 4*4*32  )		
-
 // アニメパターンの数
 #define WM_ICON_ANIME_MAX	 ( 4 )
 
@@ -60,15 +47,13 @@ struct _VINTR_WIRELESS_ICON {
 };
 
 
-
 //==============================================================
 // Prototype
 //==============================================================
 static void WirelessIconAnimeFunc( void *work );
-static void trans_palette_data( int vramType, BOOL bWifi, u32 offset, HEAPID heapID );
-static void trans_cgx_data( int vramType, BOOL bWifi, HEAPID heapID );
-static int inline get_target_vram( VINTR_WIRELESS_ICON* vwi );
-static int inline calc_anime_index( int targetVram, int anime_ptn );
+static void transIconData(int vramType,BOOL bWifi, int heapID);
+static int get_target_vram( VINTR_WIRELESS_ICON* vwi );
+static int calc_anime_index( int targetVram, int anime_ptn );
 
 
 //==============================================================================
@@ -100,11 +85,13 @@ static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, i
 	VINTR_WIRELESS_ICON *vwi;
 
 	// パレット読み込みメイン14番に転送
-	trans_palette_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, WM_ICON_PAL_OFFSET, HeapId );
+	//trans_palette_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, WM_ICON_PAL_OFFSET, HeapId );
 
 	// VRAMの最後にCGXデータ転送
-	trans_cgx_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId );
+	//trans_cgx_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId );
 
+    transIconData(NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId);
+    
     vwi = pVwi;
     if(vwi==NULL){
         // タスク登録・ワーク初期化
@@ -191,7 +178,7 @@ static void WirelessIconAnimeFunc( void *work )
  * @retval  int 	NNS_G2D_VRAM_TYPE_2DMAIN or NNS_G2D_VRAM_TYPE_2DSUB
  */
 //------------------------------------------------------------------
-static int inline get_target_vram( VINTR_WIRELESS_ICON* vwi )
+static int get_target_vram( VINTR_WIRELESS_ICON* vwi )
 {
 	switch( vwi->main_sub_mode ){
 	case MAIN_SUB_MODE_TOP:
@@ -215,7 +202,7 @@ static int inline get_target_vram( VINTR_WIRELESS_ICON* vwi )
  * @retval  int 			アニメインデックス
  */
 //------------------------------------------------------------------
-static int inline calc_anime_index( int targetVram, int anime_ptn )
+static int calc_anime_index( int targetVram, int anime_ptn )
 {
 	int vramMode, bank;
 
@@ -333,9 +320,9 @@ static void WirelessIconEnd(VINTR_WIRELESS_ICON *vwi)
 //==============================================================================
 static void WirelessIconHoldLCD( VINTR_WIRELESS_ICON *vwi, BOOL bTop, HEAPID heapID )
 {
-	trans_palette_data( NNS_G2D_VRAM_TYPE_2DSUB, vwi->bWifi, WM_ICON_PAL_OFFSET, heapID );
-	trans_cgx_data( NNS_G2D_VRAM_TYPE_2DSUB, vwi->bWifi, heapID );
-	vwi->main_sub_mode = (bTop)? MAIN_SUB_MODE_TOP : MAIN_SUB_MODE_BOTTOM;
+    transIconData(NNS_G2D_VRAM_TYPE_2DSUB, vwi->bWifi, heapID);
+
+    vwi->main_sub_mode = (bTop)? MAIN_SUB_MODE_TOP : MAIN_SUB_MODE_BOTTOM;
 	vwi->sub_wrote_flag = TRUE;
 }
 
@@ -358,129 +345,97 @@ static void WirelessIconDefaultLCD( VINTR_WIRELESS_ICON* vwi )
 	}
 }
 
-
-
-
-
-
-//======================================================================================================
-//======================================================================================================
-
-//------------------------------------------------------------------
+//==============================================================================
 /**
- * パレットデータ転送
- *
- * @param   vramType	VRAMタイプ（MAIN or SUB）
- * @param   bWifi		TRUEならWi-Fi通信アイコン／FALSEならDS通信アイコン
- * @param   offset		転送位置バイトオフセット
- * @param   HeapId		テンポラリヒープID
+ * @brief   vramTypeにあった キャラクターオフセットを返す
+ * @retval   none
  */
-//------------------------------------------------------------------
-static void trans_palette_data( int vramType, BOOL bWifi, u32 offset, HEAPID heapID )
+//==============================================================================
+
+static int _getCharOffset(int vramType)
 {
-	void* pal = GFL_HEAP_AllocMemoryLo( heapID, WM_ICON_PALFILE_SIZE );
-	if( pal )
-	{
-		NNSG2dPaletteData* palData;
+    int vramMode,objBank,offset;
+    
+    // VRAM設定に合わせて転送位置を決定
+    if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN ){
+        vramMode = GX_GetOBJVRamModeChar();
+        objBank = GX_GetBankForOBJ();
+    }
+    else{
+        vramMode = GXS_GetOBJVRamModeChar();
+        objBank = GX_GetBankForOBJ();
+    }
+    switch( vramMode ){
+      case GX_OBJVRAMMODE_CHAR_1D_32K:
+        if( objBank==GX_VRAM_OBJ_16_G || objBank==GX_VRAM_OBJ_16_F ) {
+            offset = WM_ICON_CHAR_OFFSET16;
+        }
+        else{
+            offset = WM_ICON_CHAR_OFFSET32;
+        }
+        break;
+      case GX_OBJVRAMMODE_CHAR_1D_128K:
+        if( objBank==GX_VRAM_OBJ_80_EF || objBank==GX_VRAM_OBJ_80_EG ) {
+            offset = WM_ICON_CHAR_OFFSET80;
+        }
+        else {
+            offset = WM_ICON_CHAR_OFFSET128;
+        }
+        break;
+      default:
+        offset = WM_ICON_CHAR_OFFSET64;
+        break;
+    }
+    return offset;
+}
 
-		GF_ReadFile( "src/gfl_graphic/wm.nclr", pal );
-		DC_FlushRange( pal, WM_ICON_PALFILE_SIZE );
-		NNS_G2dGetUnpackedPaletteData( pal, &palData );    // 展開
+//==============================================================================
+/**
+ * @brief    パレットとキャラをVRAMへ転送する
+ * @retval   none
+ */
+//==============================================================================
 
-		if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN )
-		{
-			GX_LoadOBJPltt( palData->pRawData, offset, WM_ICON_PAL_SIZE );
-		}
-		else
-		{
-			GXS_LoadOBJPltt( palData->pRawData, offset, WM_ICON_PAL_SIZE );
-		}
+static void transIconData(int vramType,BOOL bWifi, int heapID)
+{
+    int aNoBuff[3];
+    int palType,charNo,charType,vramMode;
+    GFLNetInitializeStruct* pNetInit = _GFL_NET_GetNETInitStruct();
+    GFL_ARC_PARAM* pArcBackup = GFL_HEAP_AllocMemory(heapID, GFL_ARC_GetArchiveTableSize());
 
-		GFL_HEAP_FreeMemory( pal );
-	}
+    GFL_ARC_GetArchiveTableAddress(pArcBackup);   //arcテーブル退避
+
+    GFL_ARC_Init(pNetInit->iconGetTable(), 1);
+    pNetInit->iconGetNoBuff(aNoBuff);
+
+    if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN ){
+        palType = PALTYPE_MAIN_OBJ;
+        charType = OBJTYPE_MAIN;
+    }
+    else{
+        palType = PALTYPE_SUB_OBJ;
+        charType = OBJTYPE_SUB;
+    }
+
+    GFL_ARC_UTIL_TransVramPalette(0,aNoBuff[GFL_NET_ICON_WMNCLR],
+                                  palType, WM_ICON_PAL_OFFSET, 0, heapID);
+
+    if(bWifi){
+        charNo = GFL_NET_ICON_WIFINCGR;
+    }
+    else{
+        charNo = GFL_NET_ICON_WMNCGR;
+    }
+
+    GFL_ARC_UTIL_TransVramObjCharacter(0,aNoBuff[charNo],charType,
+                                       _getCharOffset(vramType),
+                                       0,FALSE,heapID);
+
+    GFL_ARC_SetArchiveTableAddress(pArcBackup); //arcテーブル復帰
+    GFL_HEAP_FreeMemory(pArcBackup);
 }
 
 
-//------------------------------------------------------------------
-/**
- * アイコンCGXデータ転送
- *
- * @param   vramType	VRAMタイプ（MAIN or SUB）
- * @param   bWifi		TRUEならWi-Fi通信アイコン／FALSEならDS通信アイコン
- * @param   HeapId		テンポラリヒープID
- */
-//------------------------------------------------------------------
-static void trans_cgx_data( int vramType, BOOL bWifi, HEAPID heapID )
-{
-	void *ncg = GFL_HEAP_AllocMemoryLo( heapID, WM_ICON_CHARFILE_SIZE );
-
-	if( ncg )
-	{
-		NNSG2dCharacterData *ppCharData;
-		int offset, vramMode, objBank;
-
-		// DS通信アイコンか、wifiアイコンを読み込む
-	    if(bWifi)
-	    {
-            GF_ReadFile( "src/gfl_graphic/wifi.ncgr", ncg );
-	    }
-	    else
-	    {
-            GF_ReadFile( "src/gfl_graphic/wm.ncgr", ncg );
-	    }
-		DC_FlushRange( ncg, WM_ICON_CHARFILE_SIZE );
-		NNS_G2dGetUnpackedCharacterData( ncg, &ppCharData );   // 展開
-
-		// VRAM設定に合わせて転送位置を決定
-		if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN )
-		{
-			vramMode = GX_GetOBJVRamModeChar();
-			objBank = GX_GetBankForOBJ();
-		}
-		else
-		{
-			vramMode = GX_GetOBJVRamModeChar();
-			objBank = GX_GetBankForOBJ();
-		}
-		switch( vramMode ){
-		case GX_OBJVRAMMODE_CHAR_1D_32K:
-			if( objBank==GX_VRAM_OBJ_16_G || objBank==GX_VRAM_OBJ_16_F ) 
-			{
-				offset = WM_ICON_CHAR_OFFSET16;
-			}
-			else
-			{
-				offset = WM_ICON_CHAR_OFFSET32;
-			}
-			break;
-		case GX_OBJVRAMMODE_CHAR_1D_128K:
-			if( objBank==GX_VRAM_OBJ_80_EF || objBank==GX_VRAM_OBJ_80_EG ) 
-			{
-				offset = WM_ICON_CHAR_OFFSET80;
-			}
-			else
-			{
-				offset = WM_ICON_CHAR_OFFSET128;
-			}
-			break;
-		default:
-			offset = WM_ICON_CHAR_OFFSET64;
-			break;
-		}
-
-		// OBJキャラをVRAMへ転送
-		if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN )
-		{
-			GX_LoadOBJ( ppCharData->pRawData, offset, WM_ICON_CHAR_SIZE );
-		}
-		else
-		{
-			GXS_LoadOBJ( ppCharData->pRawData, offset, WM_ICON_CHAR_SIZE );
-		}
-
-        GFL_HEAP_FreeMemory( ncg );
-	}
-}
 
 
 

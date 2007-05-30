@@ -46,5 +46,10 @@ extern void WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID );
 extern void WirelessIconEasy_DefaultLCD( void );
 extern void WirelessIconEasyFunc(void);
 
+// 通信アイコンだすために転送するPAL_VRAMの位置・大きさ(14番パレット使用）
+#define WM_ICON_PAL_POS		( 14 )
+#define WM_ICON_PAL_OFFSET	( 16 * 2 * WM_ICON_PAL_POS )
+#define WM_ICON_PAL_SIZE	( 16 * 2 )
+
 
 #endif //_WM_ICON_H_

@@ -326,10 +326,6 @@ void GFL_NET_WLVRAMDInitialize(void)
     int ans;
     //************************************
 
-    //イクニューモンを使用する前に VRAMDをdisableにする必要があるのだが
-    //VRAMDが何に使われていたのかがわからないと、消すことができない
-    //ここでは仮で呼んでいるだけ
-    GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
 
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
     // 無線ライブラリ駆動開始
@@ -337,6 +333,8 @@ void GFL_NET_WLVRAMDInitialize(void)
     startCheck = 1;
     ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL);
     if (WVR_RESULT_OPERATING != ans) {
+        //イクニューモンを使用する前に VRAMDをdisableにする必要がある
+        // そうでないとここにくる
         OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
     }
     else{
