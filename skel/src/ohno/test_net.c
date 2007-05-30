@@ -14,6 +14,7 @@
 #include "test_net.h"
 #include "main.h"
 #include "fatal_error.h"
+#include "net_icondata.h"
 
 #define _BCON_GET_NUM  (1)
 
@@ -326,6 +327,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
+    NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
+    NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
     NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
     NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
     &_testFriendData[0],  // DWC形式の友達リスト	
@@ -357,6 +360,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
+    NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
+    NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
@@ -375,6 +380,26 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 void TEST_NET_Init(void)
 {
+    //イクニューモンを使用する前に VRAMDをdisableにする必要があるのだが
+    //VRAMDが何に使われていたのかがわからないと、消すことができない
+
+    if(GX_VRAM_LCDC_D == GX_GetBankForLCDC()){
+        GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
+    }
+    else if(GX_VRAM_D & GX_GetBankForBG()){
+        GX_DisableBankForBG();
+    }
+    else if(GX_VRAM_D & GX_GetBankForTex()){
+        GX_DisableBankForTex();
+    }
+    else if(GX_VRAM_D & GX_GetBankForClearImage()){
+        GX_DisableBankForClearImage();
+    }
+
+    GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
+    GX_DisableBankForBG();
+    GX_DisableBankForTex();
+    GX_DisableBankForClearImage();
 
     GFL_NET_Init(&aGFLNetInit);
 

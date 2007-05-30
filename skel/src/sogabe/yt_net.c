@@ -18,6 +18,7 @@
 #include "fallchr.h"
 #include "player.h"
 #include "../ohno/fatal_error.h"
+#include "net_icondata.h"
 
 #if GFL_NET_WIFI //GFL_NET_WIFI WIFI通信テスト
 // この二つのデータが「ともだちこーど」になります。本来はセーブする必要があります
@@ -222,6 +223,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL, //_netAutoParent,    //自動接続の際に親になる場合に呼ばれる関数
+    NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
+    NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
 #if GFL_NET_WIFI
     NULL,  // wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
     NULL,  // wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数

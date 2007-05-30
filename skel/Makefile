@@ -74,8 +74,7 @@ SAMPLE_SNDDIR = src/sample_sound/
 SAMPLE_MBRDIR = src/sample_multi_boot_rom/
 
 FILE_TREE	= $(GFLIBGRADIR)utility.bin \
-			  $(GFLIBGRADIR)*.ncgr \
-			  $(GFLIBGRADIR)*.nclr \
+			  $(GFLIBGRADIR)wmi.narc \
               $(GFLIBGRADIR)gfl_font.dat \
 			  $(SAMPLE_GRADIR)*.narc \
 			  $(SAMPLE_GRADIR)*.NCLR \

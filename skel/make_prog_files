@@ -5,6 +5,7 @@ SRCS	+=		testmode.c \
 				ohno/test_rand.c \
 				ohno/test_ui.c \
 				ohno/fatal_error.c \
+                gfl_graphic/net_icondata.c \
 				sogabe/debug_sogabe.c \
 				sogabe/title.c \
 				sogabe/game.c \
