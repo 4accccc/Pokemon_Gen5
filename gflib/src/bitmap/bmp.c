@@ -199,9 +199,10 @@ GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID
 		return NULL;
 	}
 
-	bmp->size_x	=	chr->W*GFL_BG_1CHRDOTSIZ;
-	bmp->size_y	=	chr->H*GFL_BG_1CHRDOTSIZ;
-	bmp->adrs	=	GFL_HEAP_AllocMemory( heapID, chr->szByte );
+	bmp->size_x			=	chr->W*GFL_BG_1CHRDOTSIZ;
+	bmp->size_y			=	chr->H*GFL_BG_1CHRDOTSIZ;
+	bmp->adrs			=	GFL_HEAP_AllocMemory( heapID, chr->szByte );
+	bmp->create_flag	=	GFL_BMP_NORMAL;
 	switch(chr->pixelFmt){ 
 	case GX_TEXFMT_PLTT16:
 		bmp->col	=	GFL_BMP_16_COLOR;
