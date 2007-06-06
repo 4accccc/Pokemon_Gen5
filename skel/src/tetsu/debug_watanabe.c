@@ -128,6 +128,7 @@ typedef struct {
 	s16						updateRotateOffs;
 	VecFx32					contPos;
 	BOOL					updateRotateFlag;
+	BOOL					MoveFlag;
 	BOOL					SpeedUpFlag;
 
 	u16						mainCameraRotate;
@@ -140,6 +141,7 @@ typedef struct {
 	GFL_TCB*				dbl3DdispVintr;
 	int						vBlankCounter;
 	u16						nowAnmIdx;
+	u16						nowAccesary;
 
 	GFL_PTC_PTR				ptc;
 
@@ -150,6 +152,10 @@ typedef struct {
 	int								count;
 	u16*							mapAttr;
 }GFL_G3D_SCENEOBJ_DATA_SETUP;
+
+typedef struct {
+	int		seq;
+}PLAYER_WORK;
 
 typedef struct {
 	int		seq;
@@ -383,12 +389,7 @@ static void g3d_load( HEAPID heapID )
 		GFL_G3D_SCENEOBJ_EnableAnime
 				( GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, G3DSCOBJ_PLAYER), 0 );
 		tetsuWork->nowAnmIdx = 0;
-#if 1
-		result = GFL_G3D_SCENEOBJ_ACCESORY_Add(
-					GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, tetsuWork->g3DsceneObjID ),
-					g3DsceneAccesoryData, NELEMS(g3DsceneAccesoryData) );
-		GF_ASSERT( result == TRUE );
-#endif
+		tetsuWork->nowAccesary = 0;
 	}
 	{
 		//マップ作成
@@ -666,6 +667,7 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	VecFx32			rotVec;
 	VecFx32			trans;
 	GFL_G3D_OBJ*	g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( sceneObj );
+	PLAYER_WORK*	player = (PLAYER_WORK*)work;
 
 	trans.x = tetsuWork->contPos.x;
 	trans.y = 0;
@@ -677,88 +679,117 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 
 	GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
 	GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
-#if 0
-	if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
-		int speed;
 
-		if( tetsuWork->SpeedUpFlag == TRUE ){
-			speed = FX32_ONE * 2; 
-		} else {
-			speed = FX32_ONE/2; 
-		}
-		speed *= tetsuWork->vBlankCounter; 
-		GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, speed ); 
-	} else {
-		GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, 0 );
-	}
-	{
-		//アクセサリーの変更
-		u16 accesaryNum;
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-			if( tetsuWork->accesaryType ){
-				tetsuWork->accesaryType = 0;
-				accesaryNum = G3DOBJ_ACCE_HAMMER;
-			} else {
-				tetsuWork->accesaryType = 1;
-				accesaryNum = G3DOBJ_ACCE_BOW;
+	switch( player->seq ){
+	case 0:
+		{
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+				if( tetsuWork->nowAccesary ){
+					GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+					switch( tetsuWork->nowAccesary ){
+					defasult:
+						tetsuWork->nowAnmIdx = 0;
+						break;
+					case 1:
+						tetsuWork->nowAnmIdx = 4;
+						break;
+					case 2:
+						tetsuWork->nowAnmIdx = 3;
+						break;
+					case 3:
+						tetsuWork->nowAnmIdx = 4;
+						break;
+					}
+					GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+					player->seq = 1;
+				}
+				break;
 			}
-			GFL_G3D_SCENEOBJ_ACCESORY_SetObjID( sceneObj, G3DACCE_RIGHTHAND, &accesaryNum );
-		}
-	}
-#else
-	{
-		u16		anmIdx;
-		fx32	anmSpeed;
-
-		if( GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
-			if( tetsuWork->SpeedUpFlag == TRUE ){
-				anmIdx = 2;
-				anmSpeed = FX32_ONE*4;
-			} else {
-				anmIdx = 1;
-				anmSpeed = FX32_ONE*3;
-			}
-		} else {
-			anmIdx = 0;
-			anmSpeed = FX32_ONE*2;
-		}
-		if( tetsuWork->nowAnmIdx != anmIdx ){
-			GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
-			tetsuWork->nowAnmIdx = anmIdx;
-			GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
-		}
-		GFL_G3D_SCENEOBJ_LoopAnimeFrame( sceneObj, tetsuWork->nowAnmIdx, anmSpeed ); 
-	}
-	{
-		//アクセサリーの変更
-		u16			accesaryNum;
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-
-			if( tetsuWork->accesaryType ){
-				tetsuWork->accesaryType = 0;
-				accesaryNum = G3DOBJ_ACCE_HAMMER;
-			} else {
-				tetsuWork->accesaryType = 1;
-				accesaryNum = G3DOBJ_ACCE_BOW;
-			}
-			GFL_G3D_SCENEOBJ_ACCESORY_SetObjID( sceneObj, G3DACCE_RIGHTHAND, &accesaryNum );
 		}
 		{
-			MtxFx33	rotate;
-			VecFx32	rotVec = { 0, 0, 0 };
-			if( tetsuWork->accesaryType ){
-				rotVec.z = 0xc000;
+			u16		anmIdx;
+			fx32	anmSpeed;
+	
+			if( tetsuWork->MoveFlag == TRUE ){
+				if( tetsuWork->SpeedUpFlag == TRUE ){
+					anmIdx = 2;
+					anmSpeed = FX32_ONE*4;
+				} else {
+					anmIdx = 1;
+					anmSpeed = FX32_ONE*3;
+				}
 			} else {
-				rotVec.x = 0x8000;
-				rotVec.z = 0x4000;
+				anmIdx = 0;
+				anmSpeed = FX32_ONE*2;
 			}
-			rotateCalc( &rotVec, &rotate );
-			GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, G3DACCE_RIGHTHAND, &rotate );
+			if( tetsuWork->nowAnmIdx != anmIdx ){
+				GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+				tetsuWork->nowAnmIdx = anmIdx;
+				GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+			}
+			GFL_G3D_SCENEOBJ_LoopAnimeFrame( sceneObj, tetsuWork->nowAnmIdx, anmSpeed ); 
 		}
+		{
+			//アクセサリーの変更
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+				BOOL result;
+				MtxFx33	rotate;
+				VecFx32	rotVec = { 0, 0, 0 };
+
+				//アクセサリーを外す(設定されてない場合はなにもしないで帰ってくる)
+				GFL_G3D_SCENEOBJ_ACCESORY_Remove( sceneObj );
+
+				//ナンバー切り替え
+				tetsuWork->nowAccesary++;
+				tetsuWork->nowAccesary&= 3;
+
+				switch( tetsuWork->nowAccesary ){
+				case 0:	//手ぶら
+					break;
+				case 1:	//ハンマー
+					result = GFL_G3D_SCENEOBJ_ACCESORY_Add( sceneObj,
+									g3DsceneAccesoryData1, NELEMS(g3DsceneAccesoryData1) );
+					GF_ASSERT( result == TRUE );
+					rotVec.x = 0x8000;
+					rotVec.z = 0x4000;
+					rotateCalc( &rotVec, &rotate );
+					GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 0, &rotate );
+					break;
+				case 2:	//弓
+					result = GFL_G3D_SCENEOBJ_ACCESORY_Add( sceneObj,
+									g3DsceneAccesoryData2, NELEMS(g3DsceneAccesoryData2) );
+					GF_ASSERT( result == TRUE );
+					rotVec.z = 0x4000;
+					rotateCalc( &rotVec, &rotate );
+					GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 0, &rotate );
+					break;
+				case 3:	//杖
+					result = GFL_G3D_SCENEOBJ_ACCESORY_Add( sceneObj,
+									g3DsceneAccesoryData3, NELEMS(g3DsceneAccesoryData3) );
+					GF_ASSERT( result == TRUE );
+					rotVec.z = 0x4000;
+					rotateCalc( &rotVec, &rotate );
+					GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 0, &rotate );
+					break;
+				}
+			}
+		}
+		break;
+	case 1:
+		{
+			BOOL result;
+
+			result = GFL_G3D_SCENEOBJ_IncAnimeFrame( sceneObj, tetsuWork->nowAnmIdx, FX32_ONE*2 );
+			if( result == FALSE ){
+				GFL_G3D_SCENEOBJ_ResetAnimeFrame( sceneObj, tetsuWork->nowAnmIdx );
+				GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+				tetsuWork->nowAnmIdx = 0;
+				GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+				player->seq = 0;
+			}
+		}
+		break;
 	}
-#endif
 }
 
 static void moveStopHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
@@ -878,75 +909,88 @@ static void KeyControlCameraMove1( void )
 			VecFx32 cameraPos = { 0, 0, 0 };
 			VecFx32 cameraTarget = { 0, 0, 0 };
 			VecFx32 cameraOffs = { 0, 0, 0 };
-			BOOL	moveFlag = FALSE;
 			int		key = GFL_UI_KEY_GetCont();
-
+#if 0
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-				if( tetsuWork->updateRotateFlag == FALSE ){
+				//if( tetsuWork->updateRotateFlag == FALSE ){
 					tetsuWork->updateRotateFlag = TRUE;
 					tetsuWork->updateRotate = tetsuWork->nowRotate;
-					{
-						s16 diff = tetsuWork->nowRotate - tetsuWork->mainCameraRotate;
-						if( diff > 0 ){
-							if( diff >= 0x6000 ){
-								tetsuWork->updateRotateOffs = 0x4000;
-							} else if( diff >= 0x4000 ){
-								tetsuWork->updateRotateOffs = 0x2000;
-							} else {
-								tetsuWork->updateRotateOffs = 0x1000;
-							}
-						} else {
-							if( diff <= -0x6000 ){
-								tetsuWork->updateRotateOffs = -0x4000;
-							} else if( diff <= -0x4000 ){
-								tetsuWork->updateRotateOffs = -0x2000;
-							} else {
-								tetsuWork->updateRotateOffs = -0x1000;
-							}
-						}
-					}
-				}
+				//}
 			}
+#endif
 			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B ){
 				tetsuWork->SpeedUpFlag = TRUE;
 			} else {
 				tetsuWork->SpeedUpFlag = FALSE;
 			}
-
+#if 0
 			if( (key & ( PAD_KEY_UP|PAD_KEY_LEFT )) == ( PAD_KEY_UP|PAD_KEY_LEFT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0x2000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_DOWN|PAD_KEY_LEFT )) == ( PAD_KEY_DOWN|PAD_KEY_LEFT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0x6000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_DOWN|PAD_KEY_RIGHT )) == ( PAD_KEY_DOWN|PAD_KEY_RIGHT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0xa000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_UP|PAD_KEY_RIGHT )) == ( PAD_KEY_UP|PAD_KEY_RIGHT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0xe000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_UP )) == ( PAD_KEY_UP ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0x0000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_LEFT )) == ( PAD_KEY_LEFT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0x4000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_DOWN )) == ( PAD_KEY_DOWN ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0x8000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 
 			} else if( (key & ( PAD_KEY_RIGHT )) == ( PAD_KEY_RIGHT ) ){
 				tetsuWork->nowRotate = tetsuWork->contRotate + 0xc000;
-				moveFlag = TRUE;
+				tetsuWork->MoveFlag = TRUE;
 			}
+#else
+			tetsuWork->MoveFlag = FALSE;
 
-			if( moveFlag == TRUE ){
+			if( key & PAD_KEY_UP ){
+				tetsuWork->nowRotate = tetsuWork->contRotate;
+				tetsuWork->MoveFlag = TRUE;
+			}
+			if( key & PAD_KEY_LEFT ){
+				if( key & PAD_KEY_UP ){
+					tetsuWork->contRotate += 0x100;
+					tetsuWork->nowRotate = tetsuWork->contRotate;
+				} else {
+					//tetsuWork->contRotate += 0x200;
+					//tetsuWork->nowRotate = tetsuWork->contRotate;
+					tetsuWork->nowRotate = tetsuWork->contRotate + 0x4000;
+					tetsuWork->MoveFlag = TRUE;
+				}
+			}
+			if( key & PAD_KEY_DOWN ){
+				tetsuWork->nowRotate = tetsuWork->contRotate + 0x8000;
+				tetsuWork->MoveFlag = TRUE;
+			}
+			if( key & PAD_KEY_RIGHT ){
+				if( key & PAD_KEY_UP ){
+					tetsuWork->contRotate -= 0x100;
+					tetsuWork->nowRotate = tetsuWork->contRotate;
+				} else {
+					//tetsuWork->contRotate -= 0x200;
+					//tetsuWork->nowRotate = tetsuWork->contRotate;
+					tetsuWork->nowRotate = tetsuWork->contRotate - 0x4000;
+					tetsuWork->MoveFlag = TRUE;
+				}
+			}
+#endif
+			if( tetsuWork->MoveFlag == TRUE ){
 				int speed;
 
 				if( tetsuWork->SpeedUpFlag == TRUE ){
@@ -975,22 +1019,33 @@ static void KeyControlCameraMove1( void )
 			tetsuWork->contPos.y = 0;
 
 			//下カメラ制御
+#if 0
 			if( tetsuWork->updateRotateFlag == TRUE ){
 				int i;
-
 				for( i=0; i<tetsuWork->vBlankCounter; i++ ){
-					if( tetsuWork->mainCameraRotate != tetsuWork->updateRotate ){
-						tetsuWork->mainCameraRotate += tetsuWork->updateRotateOffs;
-						if( (tetsuWork->updateRotateOffs > 0x100 )
-							||( tetsuWork->updateRotateOffs < -0x100 )){
-							tetsuWork->updateRotateOffs /= 2;
+					if( tetsuWork->mainCameraRotate > tetsuWork->updateRotate ){
+						tetsuWork->mainCameraRotate -= 0x200;
+						if( tetsuWork->mainCameraRotate <= tetsuWork->updateRotate ){
+							tetsuWork->contRotate = tetsuWork->updateRotate;
+							tetsuWork->updateRotateFlag = FALSE;
 						}
-					}else{
+					}else if( tetsuWork->mainCameraRotate < tetsuWork->updateRotate ){
+						tetsuWork->mainCameraRotate += 0x200;
+						if( tetsuWork->mainCameraRotate >= tetsuWork->updateRotate ){
+							tetsuWork->contRotate = tetsuWork->updateRotate;
+							tetsuWork->updateRotateFlag = FALSE;
+						}
+					} else {
 						tetsuWork->contRotate = tetsuWork->updateRotate;
 						tetsuWork->updateRotateFlag = FALSE;
 					}
 				}
+			} else {
+				tetsuWork->mainCameraRotate = tetsuWork->contRotate;
 			}
+#else
+			tetsuWork->mainCameraRotate = tetsuWork->contRotate;
+#endif
 			//cameraOffs.x = 80 * FX_SinIdx( tetsuWork->mainCameraRotate );
 			//cameraOffs.y = FX32_ONE * 80;
 			//cameraOffs.y = FX32_ONE * 48;
