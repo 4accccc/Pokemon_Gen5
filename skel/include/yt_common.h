@@ -29,6 +29,8 @@ enum{
 	YT_MainMultiBootNo,
 	YT_Init3DTestNo,
 	YT_Main3DTestNo,
+	YT_InitBlockOutNo,
+	YT_MainBlockOutNo,
 };
 
 //-------------------------------------
