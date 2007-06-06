@@ -36,6 +36,8 @@ static	void	game_init(GAME_PARAM *gp);
 
 extern	void	YT_Init3DTest(GAME_PARAM *gp);
 extern	void	YT_Main3DTest(GAME_PARAM *gp);
+extern	void	YT_InitBlockOut(GAME_PARAM *gp);
+extern	void	YT_MainBlockOut(GAME_PARAM *gp);
 
 //============================================================================================
 //
@@ -54,6 +56,8 @@ static	ytFunc	YT_JobTable[]={
 	YT_MainMultiBoot,
 	YT_Init3DTest,
 	YT_Main3DTest,
+	YT_InitBlockOut,
+	YT_MainBlockOut,
 };
 
 //============================================================================================
@@ -84,7 +88,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 	gp->heapID=HEAPID_SOGABE_DEBUG;
 
 //	YT_JobNoSet(gp,YT_InitTitleNo);
-	YT_JobNoSet(gp,YT_Init3DTestNo);
+//	YT_JobNoSet(gp,YT_Init3DTestNo);
+	YT_JobNoSet(gp,YT_InitBlockOutNo);
 
 	game_init(gp);
 
