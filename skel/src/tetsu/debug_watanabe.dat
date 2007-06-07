@@ -26,6 +26,8 @@ enum {
 	G3DRES_MAP_WALL3,
 	G3DRES_MAP_WALL0,
 	G3DRES_MAP_FLOOR,
+	G3DRES_ACCE_SWORD,
+	G3DRES_ACCE_SHIELD,
 	G3DRES_ACCE_HAMMER,
 	G3DRES_ACCE_BOW,
 	G3DRES_ACCE_STAFF,
@@ -37,6 +39,7 @@ enum {
 	G3DRES_HUMAN2_STAY_BCA,
 	G3DRES_HUMAN2_WALK_BCA,
 	G3DRES_HUMAN2_RUN_BCA,
+	G3DRES_HUMAN2_ATTACK_BCA,
 	G3DRES_HUMAN2_SHOOT_BCA,
 	G3DRES_HUMAN2_SPELL_BCA,
 };
@@ -51,6 +54,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall3_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall0_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_sword_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_shield_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_hammer_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_bow_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_staff_nsbmd,  GFL_G3D_UTIL_RESPATH },
@@ -62,6 +67,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_human2_stay_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_walk_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_run_nsbca,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human2_attack_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_shoot_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_spell_nsbca,  GFL_G3D_UTIL_RESPATH },
 };
@@ -81,6 +87,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_Human2AnmTbl[] = {
 	{ G3DRES_HUMAN2_STAY_BCA, 0 },
 	{ G3DRES_HUMAN2_WALK_BCA, 0 },
 	{ G3DRES_HUMAN2_RUN_BCA, 0 },
+	{ G3DRES_HUMAN2_ATTACK_BCA, 0 },
 	{ G3DRES_HUMAN2_SHOOT_BCA, 0 },
 	{ G3DRES_HUMAN2_SPELL_BCA, 0 },
 };
@@ -96,6 +103,8 @@ enum {
 	G3DOBJ_MAP_WALL3,
 	G3DOBJ_MAP_WALL0,
 	G3DOBJ_MAP_FLOOR,
+	G3DOBJ_ACCE_SWORD,
+	G3DOBJ_ACCE_SHIELD,
 	G3DOBJ_ACCE_HAMMER,
 	G3DOBJ_ACCE_BOW,
 	G3DOBJ_ACCE_STAFF,
@@ -113,6 +122,8 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_MAP_WALL3, 0, G3DRES_MAP_WALL3, NULL, 0 },
 	{ G3DRES_MAP_WALL0, 0, G3DRES_MAP_WALL0, NULL, 0 },
 	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
+	{ G3DRES_ACCE_SWORD, 0, G3DRES_ACCE_SWORD, NULL, 0 },
+	{ G3DRES_ACCE_SHIELD, 0, G3DRES_ACCE_SHIELD, NULL, 0 },
 	{ G3DRES_ACCE_HAMMER, 0, G3DRES_ACCE_HAMMER, NULL, 0 },
 	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
 	{ G3DRES_ACCE_STAFF, 0, G3DRES_ACCE_STAFF, NULL, 0 },
@@ -142,11 +153,17 @@ static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjData[] = {
 
 //---------------------
 static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData1[] = {
-	{	G3DOBJ_ACCE_HAMMER, 31,
+	{	G3DOBJ_ACCE_SWORD, 31,
 		{	{ 0, 0, 0 },
 			{ FX32_ONE/2, FX32_ONE/2, FX32_ONE/2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},28
+	},
+	{	G3DOBJ_ACCE_SHIELD, 31,
+		{	{ -FX32_ONE*8, FX32_ONE*4, 0 },
+			{ FX32_ONE/2, FX32_ONE/2, FX32_ONE/2 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},20
 	},
 };
 

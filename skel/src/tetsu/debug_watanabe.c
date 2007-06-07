@@ -691,13 +691,13 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 						tetsuWork->nowAnmIdx = 0;
 						break;
 					case 1:
-						tetsuWork->nowAnmIdx = 4;
-						break;
-					case 2:
 						tetsuWork->nowAnmIdx = 3;
 						break;
-					case 3:
+					case 2:
 						tetsuWork->nowAnmIdx = 4;
+						break;
+					case 3:
+						tetsuWork->nowAnmIdx = 5;
 						break;
 					}
 					GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
@@ -750,10 +750,13 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 					result = GFL_G3D_SCENEOBJ_ACCESORY_Add( sceneObj,
 									g3DsceneAccesoryData1, NELEMS(g3DsceneAccesoryData1) );
 					GF_ASSERT( result == TRUE );
-					rotVec.x = 0x8000;
 					rotVec.z = 0x4000;
 					rotateCalc( &rotVec, &rotate );
 					GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 0, &rotate );
+					rotVec.y = 0xc000;
+					rotVec.z = 0x0000;
+					rotateCalc( &rotVec, &rotate );
+					GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 1, &rotate );
 					break;
 				case 2:	//‹|
 					result = GFL_G3D_SCENEOBJ_ACCESORY_Add( sceneObj,
