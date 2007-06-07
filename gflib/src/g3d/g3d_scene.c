@@ -645,6 +645,7 @@ void
 	if( !g3DsceneObj->accesory ) return;
 
 	GFL_HEAP_FreeMemory( g3DsceneObj->accesory );
+	g3DsceneObj->accesory = NULL;
 	g3DsceneObj->accesoryCount = 0;
 }
 
