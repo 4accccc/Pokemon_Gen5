@@ -23,7 +23,8 @@ typedef struct {
 	NNSG2dCharacterData*		g2dCharData;	///< NNSキャラデータポインタ
 	GFL_VMAN_RESERVE_INFO		riMain;			///< 予約領域情報メイン
 	GFL_VMAN_RESERVE_INFO		riSub;			///< 予約領域情報サブ
-	BOOL						emptyFlag;		///< 未使用フラグ
+	u16							refFlag;		///< 他CGRのデータポインタを参照して使っている（VRAM転送型のみ）
+	u16							emptyFlag;		///< 未使用フラグ
 }CGR_MAN;
 
 //==============================================================
@@ -243,6 +244,7 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressed
 		register_cgr( idx, loadPtr, targetVram, NULL );
 		GFL_HEAP_FreeMemory( loadPtr );
 		cgrMan->loadPtr = NULL;
+		cgrMan->refFlag = FALSE;
 
 		return idx;
 	}
@@ -261,7 +263,7 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressed
  * @param   arcHandle		[in] アーカイブハンドル
  * @param   cgrDataID		[in] CGRデータのアーカイブ内ID
  * @param   targetVram		[in] 転送先VRAM指定
- * @param   cellIndex		[in] 既に登録されているセルデータの登録インデックス
+ * @param   cellIndex		[in] 関連付けられたセルデータの登録インデックス
  * @param   heapID			[in] データロード用ヒープ
  *
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
@@ -280,6 +282,7 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 
 			cgrMan->loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, heapID );
 			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
+			cgrMan->refFlag = FALSE;
 
 			return idx;
 		}
@@ -288,6 +291,46 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 		return GFL_OBJGRP_REGISTER_FAILED;
 	}
 }
+
+//==============================================================================================
+/**
+ * 登録されたVRAM転送型CGR参照のコピー
+ *
+ * すでに登録されているCGRデータを参照し、プロキシを作成・保持する。
+ * この関数を使った登録したCGRデータを解放しても、実データの解放は行わない。
+ * CGRデータに関連付けられたセルアニメデータが先に登録されている必要がある。
+ *
+ * @param   srcCgrIdx		[in] すでに登録されているCGRデータインデックス（VRAM転送型）
+ * @param   cellAnimIdx		[in] 関連づけられたセルアニメデータの登録インデックス
+ * @param   targetVram		[in] 転送先VRAM
+ *
+ * @retval  u32		登録インデックス
+ */
+//==============================================================================================
+u32 GFL_OBJGRP_CopyCGR_VramTransfer( u32 srcCgrIdx, u32 cellAnimIdx, GFL_VRAM_TYPE targetVram )
+{
+	GF_ASSERT(SysWork.cellAnimMan[cellAnimIdx].emptyFlag == FALSE);
+	GF_ASSERT(NNS_G2dCellDataBankHasVramTransferData(SysWork.cellAnimMan[cellAnimIdx].cellBankPtr));
+	GF_ASSERT(SysWork.cgrMan[srcCgrIdx].emptyFlag==FALSE);
+	GF_ASSERT(SysWork.cgrMan[srcCgrIdx].loadPtr);
+
+	{
+		u32 idx = search_empty_cgr_pos();
+		if( idx != GFL_OBJGRP_REGISTER_FAILED )
+		{
+			CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
+
+			cgrMan->loadPtr = SysWork.cgrMan[srcCgrIdx].loadPtr;
+			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellAnimIdx].cellBankPtr);
+			cgrMan->refFlag = TRUE;
+			return idx;
+		}
+
+		GF_ASSERT(0);
+		return GFL_OBJGRP_REGISTER_FAILED;
+	}
+}
+
 
 //==============================================================================================
 /**
@@ -330,7 +373,14 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 
 	if( SysWork.cgrMan[index].loadPtr )
 	{
-		GFL_HEAP_FreeMemory( SysWork.cgrMan[index].loadPtr );
+		if( SysWork.cgrMan[index].refFlag == FALSE )
+		{
+			GFL_HEAP_FreeMemory( SysWork.cgrMan[index].loadPtr );
+		}
+		else
+		{
+			SysWork.cgrMan[index].refFlag = FALSE;
+		}
 		SysWork.cgrMan[index].loadPtr = NULL;
 	}
 
