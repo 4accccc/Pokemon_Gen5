@@ -273,6 +273,13 @@ inline void GFL_G3D_SCENEOBJ_ResetAnimeFrame
 	GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, anmIdx );
 }
 
+inline int GFL_G3D_SCENEOBJ_GetAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	return GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, anmIdx );
+}
+
 inline BOOL GFL_G3D_SCENEOBJ_IncAnimeFrame
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, const fx32 count ) 
 {
