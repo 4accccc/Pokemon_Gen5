@@ -67,6 +67,7 @@ static struct {
 static void* ReadDataWithUncompress( ARCHANDLE* arc, u32 dataID, BOOL compressFlag, HEAPID heapID );
 static CGR_MAN* create_cgr_man( u16 heapID, u32 num );
 static inline u32 search_empty_cgr_pos( void );
+static void transCGRData( u32 idx, const NNSG2dCharacterData* charData, const NNSG2dCellDataBank* cellBankPtr, GFL_VRAM_TYPE targetVram );
 static void delete_cgr_man( CGR_MAN* man );
 static PLTT_MAN* create_pltt_man( u16 heapID, u32 num );
 static inline u32 search_empty_pltt_pos( void );
@@ -77,11 +78,11 @@ static inline u32 search_empty_cellanim_pos( void );
 static BOOL register_cellanim( u32 idx, void* cellDataPtr, void* animDataPtr );
 static void delete_cellanim_man( CELLANIM_MAN* man );
 
-static void register_cgr
-	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr );
+static void registerCGR
+	( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, const NNSG2dCellDataBank* cellBankPtr );
 
-static inline void trans_ncgr
-	( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
+static inline void trans_cgr_core
+	( const NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
 	  BOOL vramTransferFlag, NNSG2dImageProxy* proxy  );
 
 
@@ -241,7 +242,7 @@ u32 GFL_OBJGRP_RegisterCGR( ARCHANDLE* arcHandle, u32 cgrDataID, BOOL compressed
 												compressedFlag, 
 												GetHeapLowID(heapID) );
 
-		register_cgr( idx, loadPtr, targetVram, NULL );
+		registerCGR( idx, loadPtr, targetVram, NULL );
 		GFL_HEAP_FreeMemory( loadPtr );
 		cgrMan->loadPtr = NULL;
 		cgrMan->refFlag = FALSE;
@@ -281,7 +282,7 @@ u32 GFL_OBJGRP_RegisterCGR_VramTransfer( ARCHANDLE* arcHandle, u32 cgrDataID, BO
 			CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
 
 			cgrMan->loadPtr = ReadDataWithUncompress( arcHandle, cgrDataID, compressedFlag, heapID );
-			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
+			registerCGR(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellIndex].cellBankPtr);
 			cgrMan->refFlag = FALSE;
 
 			return idx;
@@ -321,14 +322,75 @@ u32 GFL_OBJGRP_CopyCGR_VramTransfer( u32 srcCgrIdx, u32 cellAnimIdx, GFL_VRAM_TY
 			CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
 
 			cgrMan->loadPtr = SysWork.cgrMan[srcCgrIdx].loadPtr;
-			register_cgr(idx, cgrMan->loadPtr, targetVram, SysWork.cellAnimMan[cellAnimIdx].cellBankPtr);
+			cgrMan->g2dCharData = SysWork.cgrMan[srcCgrIdx].g2dCharData;
+			transCGRData( idx, cgrMan->g2dCharData, SysWork.cellAnimMan[cellAnimIdx].cellBankPtr, targetVram );
+
 			cgrMan->refFlag = TRUE;
+			cgrMan->emptyFlag = FALSE;
 			return idx;
 		}
 
 		GF_ASSERT(0);
 		return GFL_OBJGRP_REGISTER_FAILED;
 	}
+}
+//==============================================================================================
+/**
+ * 登録済みVRAM転送型CGRデータを別のデータで上書きする
+ *
+ * @param   index			登録済みCGRデータインデックス（VRAM転送型）
+ * @param   arc				上書きするCGRデータを持つアーカイブのハンドル
+ * @param   cgrDatIdx		上書きするCGRデータのアーカイブ内インデックス
+ * @param   compressedFlag	CGRデータが圧縮されているか
+ * @param	heapID			作業用ヒープID
+ *
+ */
+//==============================================================================================
+void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx, BOOL compressedFlag, HEAPID heapID )
+{
+	GF_ASSERT(SysWork.cgrMan[index].emptyFlag==FALSE);
+	GF_ASSERT(SysWork.cgrMan[index].g2dCharData);
+
+	{
+		NNSG2dCharacterData	*srcData, *dstData;
+		void *srcLoadPtr;
+
+		dstData = SysWork.cgrMan[index].g2dCharData;
+
+		if( compressedFlag )
+		{
+			void* tmp;
+			u32 size;
+
+			tmp = GFL_ARC_LoadDataAllocByHandle( arc, cgrDatIdx, GetHeapLowID(heapID) );
+			size = MI_GetUncompressedSize( tmp );
+			srcLoadPtr = GFL_HEAP_AllocMemory( GetHeapLowID(heapID), size );
+			MI_UncompressLZ8( tmp, srcLoadPtr );
+			GFL_HEAP_FreeMemory( tmp );
+		}
+		else
+		{
+			srcLoadPtr = GFL_ARC_LoadDataAllocByHandle( arc, cgrDatIdx, GetHeapLowID(heapID) );
+		}
+
+		NNS_G2dGetUnpackedCharacterData( srcLoadPtr, &srcData );
+
+		if( srcData->szByte <= dstData->szByte )
+		{
+			MI_CpuCopyFast( srcData->pRawData, dstData->pRawData, srcData->szByte );
+			OS_TPrintf("srcAdrs:%08x, dstAdrs:%08x, size:%08x\n",
+				(u32)(srcData->pRawData), (u32)(dstData->pRawData), srcData->szByte );
+			DC_FlushRange( dstData->pRawData, srcData->szByte );
+		}
+		else
+		{
+			GF_ASSERT(0);
+		}
+
+		GFL_HEAP_FreeMemory( srcLoadPtr );
+	}
+
+
 }
 
 
@@ -707,52 +769,15 @@ static inline u32 search_empty_cgr_pos( void )
  * @retval  BOOL			成功時TRUE
  */
 //------------------------------------------------------------------
-static void register_cgr
-( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, NNSG2dCellDataBank* cellBankPtr )
+static void registerCGR
+( u32 idx, void* dataPtr, GFL_VRAM_TYPE targetVram, const NNSG2dCellDataBank* cellBankPtr )
 {
 	NNSG2dCharacterData* charData;
 
-	if( NNS_G2dGetUnpackedBGCharacterData( dataPtr, &charData ) )
+	if( NNS_G2dGetUnpackedCharacterData( dataPtr, &charData ) )
 	{
-		CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
-		u32 szByte;
-		BOOL vramTransferFlag;
-
-		if( cellBankPtr == NULL )
-		{
-			szByte = charData->szByte;
-			vramTransferFlag = FALSE;
-		}
-		else
-		{
-			szByte = NNS_G2dGetSizeRequiredVramTransferCellDataBank( cellBankPtr );
-			vramTransferFlag = TRUE;
-		}
-
-		NNS_G2dInitImageProxy( &cgrMan->proxy );
-
-		if( targetVram & GFL_VRAM_2D_MAIN )
-		{
-			if( GFL_VMAN_Reserve( SysWork.vmanMain, szByte, &cgrMan->riMain ) )
-			{
-				u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanMain, &cgrMan->riMain );
-				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DMAIN, 
-							vramTransferFlag, &cgrMan->proxy );
-			}
-		}
-		if( targetVram & GFL_VRAM_2D_SUB )
-		{
-			if( GFL_VMAN_Reserve( SysWork.vmanSub, szByte, &cgrMan->riSub ) )
-			{
-				u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanSub, &cgrMan->riSub );
-				trans_ncgr( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DSUB, 
-							vramTransferFlag, &cgrMan->proxy );
-			}
-		}
-
-		SysWork.cgrMan[idx].g2dCharData = ( vramTransferFlag )? charData : NULL;
+		transCGRData( idx, charData, cellBankPtr, targetVram );
 		SysWork.cgrMan[idx].emptyFlag = FALSE;
-
 	}
 	else
 	{
@@ -762,7 +787,61 @@ static void register_cgr
 
 //------------------------------------------------------------------
 /**
- * CGR転送コア
+ * CGR用VRAM予約＆データ転送
+ *
+ * @param   idx				CGR登録インデックス
+ * @param   charData		NitroSystemキャラデータポインタ
+ * @param   cellBankPtr		VRAM転送型なら関連付けるセルバンクデータポインタ／非転送型ならNULLを指定すること
+ * @param   targetVram		転送先VRAM指定
+ *
+ */
+//------------------------------------------------------------------
+static void transCGRData( u32 idx, const NNSG2dCharacterData* charData, const NNSG2dCellDataBank* cellBankPtr, GFL_VRAM_TYPE targetVram )
+{
+	CGR_MAN* cgrMan = &SysWork.cgrMan[idx];
+	u32  transByteSize;
+	BOOL vramTransFlag;
+
+
+	if( cellBankPtr == NULL )
+	{
+		transByteSize = charData->szByte;
+		vramTransFlag = FALSE;
+	}
+	else
+	{
+		transByteSize = NNS_G2dGetSizeRequiredVramTransferCellDataBank( cellBankPtr );
+		vramTransFlag = TRUE;
+	}
+
+	NNS_G2dInitImageProxy( &cgrMan->proxy );
+
+	if( targetVram & GFL_VRAM_2D_MAIN )
+	{
+		if( GFL_VMAN_Reserve( SysWork.vmanMain, transByteSize, &cgrMan->riMain ) )
+		{
+			u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanMain, &cgrMan->riMain );
+			trans_cgr_core( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DMAIN, 
+						vramTransFlag, &cgrMan->proxy );
+		}
+	}
+	if( targetVram & GFL_VRAM_2D_SUB )
+	{
+		if( GFL_VMAN_Reserve( SysWork.vmanSub, transByteSize, &cgrMan->riSub ) )
+		{
+			u32 byteOfs = GFL_VMAN_GetByteOffset( SysWork.vmanSub, &cgrMan->riSub );
+			trans_cgr_core( charData, byteOfs, NNS_G2D_VRAM_TYPE_2DSUB, 
+						vramTransFlag, &cgrMan->proxy );
+		}
+	}
+
+	cgrMan->g2dCharData = ( vramTransFlag )? (NNSG2dCharacterData*)charData : NULL;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * CGRデータ転送コア
  *
  * @param   charData			[in] NITROSystem CharData
  * @param   byteOfs				[in] VRAM先頭からの転送オフセット
@@ -772,13 +851,13 @@ static void register_cgr
  *
  */
 //------------------------------------------------------------------
-static inline void trans_ncgr
-	( NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
+static inline void trans_cgr_core
+	( const NNSG2dCharacterData* charData, u32 byteOfs, NNS_G2D_VRAM_TYPE vramType, 
 	  BOOL vramTransferFlag, NNSG2dImageProxy* proxy  )
 {
 	if( vramTransferFlag )
 	{
-//		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 		NNS_G2dLoadImageVramTransfer( charData, byteOfs, vramType, proxy );
 	}
 	else
