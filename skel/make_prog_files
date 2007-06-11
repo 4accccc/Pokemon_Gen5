@@ -2,6 +2,7 @@
 SRCS	+=		testmode.c \
 				ohno/debug_ohno.c \
 				ohno/test_net.c \
+				ohno/test_beacon.c \
 				ohno/test_rand.c \
 				ohno/test_ui.c \
 				ohno/fatal_error.c \

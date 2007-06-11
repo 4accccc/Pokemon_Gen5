@@ -47,10 +47,10 @@ void GFL_NET_WifiUtility( int heapID )
 	OSIntrMode old;
 	void *work;
 
-	GFL_NET_WLVRAMDInitialize(); // 
+	GFL_NET_InitIchneumon(); // 
 	// アラームシステムを初期化しておかないとDWC_StartUtility呼出し後にPanicが発生する
 
-    while(GFL_NET_WLIsVRAMDInitialize()){
+    while(GFL_NET_IsInitIchneumon()){
         ;
     }
 

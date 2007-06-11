@@ -45,15 +45,8 @@ typedef struct{
 // 定義
 //==============================================================================
 
-/// 拾ったビーコンを保存しておく時間
-#define _DEFAULT_TIMEOUT_FRAME (60 * 10)  //60frame * 10sec
-
+#define _DEFAULT_TIMEOUT_FRAME (60 * 10)  //拾ったビーコンを保存しておく時間 60frame * 10sec
 #define _PORT_DATA_RETRANSMISSION   (14)    // 切断するまで無限再送を行う  こちらを使用している
-#define _PORT_DATA_PARENT           _PORT_DATA_RETRANSMISSION
-#define _PORT_DATA_CHILD            _PORT_DATA_RETRANSMISSION
-
-#define _KEEP_CHANNEL_TIME_MAX   (5)
-
 #define _NOT_INIT_BITMAP  (0xffff)   // 接続人数を固定に指定ない場合の値
 
 typedef enum{    // 切断状態
@@ -83,16 +76,13 @@ struct _NET_WL_WORK{
     u8 maxConnectNum;
     u32 ggid;
     u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
-    u16 keepChannelNo;
     u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
     u8 channel;
-    u8 keepChannelTime;
     u8 disconnectType;    ///< 切断状況
     u8 bSetReceiver;
     u8 bEndScan;  // endscan
     u8 bErrorState:1;     ///< エラーを引き起こしている場合その状態をもちます
-    u8 bErrorDisconnectOther:1;     ///< 誰かが落ちるとエラーになります
-    u8 bErrorNoChild:1;  ///< 子機が無い場合エラー扱いするかどうか
+    u8 bErrorCheck:1;  ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
     u8 bTGIDChange:1;
     u8 bAutoExit:1;
     u8 bEntry:1;   // 子機の新規参入
@@ -114,7 +104,7 @@ static u16 _sTgid = 0;
 
 // コンポーネント転送終了の確認用
 // イクニューモンコンポーネント処理を移動させるときはこれも移動
-static volatile int   startCheck;	
+//static volatile int   startCheck;	
 
 //==============================================================================
 // static宣言
@@ -281,105 +271,6 @@ static void _scanCallback(WMBssDesc *bssdesc)
     pNetWL->bScanCallBack = TRUE;
 }
 
-//------------------------------------------------------------------
-/**
- * @brief   無線駆動制御ライブラリの非同期的な処理終了が通知されるコールバック関数。
- * @param   arg		WVR_StartUpAsyncコール時に指定した引数。未使用。
- * @param   result	非同期関数の処理結果。
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void _startUpCallback(void *arg, WVRResult result)
-{
-    if (result != WVR_RESULT_SUCCESS) {
-        OS_TPanic("WVR_StartUpAsync error.[%08xh]\n", result);
-    }
-    else{
-		NET_PRINT("WVR Trans VRAM-D.\n");
-	}
-    startCheck = 2;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief   無線駆動制御ライブラリの非同期的な処理終了が通知されるコールバック関数。
- * @param   arg		WVR_StartUpAsyncコール時に指定した引数。未使用。
- * @param   result	非同期関数の処理結果。
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void _endCallback(void *arg, WVRResult result)
-{
-    startCheck = 0;
-    GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
-}
-
-//==============================================================================
-/**
- * @brief   WVRをVRAMDに移動
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_WLVRAMDInitialize(void)
-{
-    int ans;
-    //************************************
-
-
-    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
-    // 無線ライブラリ駆動開始
-	// イクニューモンコンポーネントをVRAM-Dに転送する
-    startCheck = 1;
-    ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL);
-    if (WVR_RESULT_OPERATING != ans) {
-        //イクニューモンを使用する前に VRAMDをdisableにする必要がある
-        // そうでないとここにくる
-        OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
-    }
-    else{
-        NET_PRINT("WVRStart\n");
-    }
-}
-
-//==============================================================================
-/**
- * @brief   WVRをVRAMDに移動し終わったら1
- * @retval  none
- */
-//==============================================================================
-
-BOOL GFL_NET_WLIsVRAMDInitialize(void)
-{
-    return (startCheck==2);
-}
-
-//==============================================================================
-/**
- * @brief   WVRをVRAMDに移動しはじめたら１
- * @retval  none
- */
-//==============================================================================
-
-BOOL GFL_NET_WLIsVRAMDStart(void)
-{
-    return (startCheck!=0);
-}
-
-//==============================================================================
-/**
- * @brief   イクニューモン開放
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_WLVRAMDFinalize(void)
-{
-    NET_PRINT("VRAMD Finalize\n");
-    WVR_TerminateAsync(_endCallback,NULL);  // イクニューモン切断
-}
-
-
 //==============================================================================
 /**
  * @brief   WHライブラリの初期化
@@ -445,13 +336,10 @@ static void _commInit(GFL_NETWL* pNetWL)
 {
     pNetWL->bScanCallBack = FALSE;
     pNetWL->bErrorState = FALSE;
-    pNetWL->bErrorNoChild = FALSE;
-    
+    pNetWL->bErrorCheck = FALSE;
     pNetWL->bAutoExit = FALSE;
     pNetWL->bEndScan = 0;
-
     pNetWL->bSetReceiver = FALSE;
-    
     return;
 }
 
@@ -496,7 +384,7 @@ BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallB
     WHSetConnectCallBack(pConnectFunc);
     
     if(!pNetWL->bSetReceiver){
-        WH_SetReceiver(_receiverFunc, _PORT_DATA_CHILD);
+        WH_SetReceiver(_receiverFunc, _PORT_DATA_RETRANSMISSION);
       pNetWL->bSetReceiver = TRUE;
     }
     pNetWL->bEntry = bEntry;
@@ -535,7 +423,7 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
         GFL_NET_WLChildBconDataInit(); // データの初期化
     }
     if(!pNetWL->bSetReceiver ){
-        WH_SetReceiver(_receiverFunc, _PORT_DATA_PARENT);
+        WH_SetReceiver(_receiverFunc, _PORT_DATA_RETRANSMISSION);
         pNetWL->bSetReceiver = TRUE;
     }
     // 親機検索スタート
@@ -1025,19 +913,15 @@ static void _stateProcess(u16 bitmap)
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
     _funcBconDataChange();      // ビーコンの中身を書き換え中
-    if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
-        if(pNetWL->bErrorNoChild){
-            pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
-//            NET_PRINT("エラー中 NOCHILD \n");
-        }
-    }
     if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
         pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
     }
-    if(pNetWL->bErrorDisconnectOther){ // エラー検査を行う
+    if(pNetWL->bErrorCheck){
+        if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
+            pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
+        }
         if(pNetWL->errCheckBitmap > bitmap){  // 切断した場合必ず数字が減る 増える分にはOK
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
-//            NET_PRINT("エラー中 誰か落ちた \n");
         }
     }
     if(WH_ERRCODE_FATAL == WH_GetLastError()){
@@ -1080,14 +964,6 @@ static void _stateProcess(u16 bitmap)
             u16 channel;
             // 利用可能な中から一番使用率の低いチャンネルを返します。
             channel = WH_GetMeasureChannel();  //WH_SYSSTATE_MEASURECHANNEL => WH_SYSSTATE_IDLE
-            if(pNetWL->keepChannelTime==0){
-                pNetWL->keepChannelNo = channel;
-                pNetWL->keepChannelTime = _KEEP_CHANNEL_TIME_MAX;
-            }
-            else{
-                pNetWL->keepChannelTime--;
-            }
-            channel = pNetWL->keepChannelNo;  
             if(pNetWL->bTGIDChange){
                 _sTgid++;
             }
@@ -1298,23 +1174,7 @@ BOOL GFL_NET_WLIsError(void)
 
 //==============================================================================
 /**
- * @brief  子機がいないのをエラー扱いにするかどうかをSET
- * @param   bOn  有効時にTRUE
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_WLSetNoChildError(BOOL bOn)
-{
-    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    if(pNetWL){
-        pNetWL->bErrorNoChild = bOn;
-    }
-}
-
-//==============================================================================
-/**
- * @brief 誰かが落ちたのをエラー扱いにするかどうかをSET
+ * @brief   誰かが落ちたのをエラー扱いにするかどうかをSET
  * @param   bOn  有効時にTRUE
  * @retval  none
  */
@@ -1324,7 +1184,7 @@ void GFL_NET_WLSetDisconnectOtherError(BOOL bOn)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     if(pNetWL){
-        pNetWL->bErrorDisconnectOther = bOn;
+        pNetWL->bErrorCheck = bOn;
         pNetWL->errCheckBitmap = _NOT_INIT_BITMAP;
     }
 }
@@ -1361,6 +1221,24 @@ WMBssDesc* GFL_NET_WLGetWMBssDesc(int index)
         return &pNetWL->sBssDesc[index];
     }
     return NULL;
+}
+
+//==============================================================================
+/**
+ * @brief    ビーコン強度を得る
+ * @param    index ビーコンバッファに対するindex
+ * @retval   u16  通信強度
+ */
+//==============================================================================
+
+u16 GFL_NET_WL_GetRssi(int index)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+        u16 rate_rssi,rssi;
+        return pNetWL->sBssDesc[index].rssi;
+    }
+    return 0;
 }
 
 //==============================================================================

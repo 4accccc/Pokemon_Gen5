@@ -15,13 +15,16 @@
 #include "test_ui.h"
 #include "test_rand.h"
 #include "test_net.h"
+#include "test_beacon.h"
 
 #include "main.h"
+
 
 //------------------------------------------------------------------
 typedef struct {
 	u32 debug_heap_id;
 	GFL_PROCSYS * psys;
+    SKEL_TEST_BEACON_WORK* pBeaconWork;
 }DEBUG_OHNO_CONTROL;
 
 static DEBUG_OHNO_CONTROL * DebugOhnoControl;
@@ -42,7 +45,11 @@ static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_wor
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
     GFL_UI_SleepReleaseSetFunc(_sleepRelease, NULL);
+#if 0
     TEST_NET_Init();
+#endif
+
+    ctrl->pBeaconWork = TEST_BEACON_Init(ctrl->debug_heap_id);
 
     return GFL_PROC_RES_FINISH;
 }
@@ -57,6 +64,7 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 	GFL_PROC * subproc;
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
+#if 0
     TEST_UI_Main();  //UI TEST
     
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
@@ -70,8 +78,10 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 
         TEST_RAND_Main(seed);  // RAND TEST
     }
-
     TEST_NET_Main();
+#endif
+    TEST_BEACON_Main(ctrl->pBeaconWork);
+
     
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -82,7 +92,10 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 //------------------------------------------------------------------
 static GFL_PROC_RESULT _debugUIProcEnd(GFL_PROC * proc, int * seq, void * p_work, void * my_work)
 {
-	return GFL_PROC_RES_FINISH;
+	DEBUG_OHNO_CONTROL * ctrl = p_work;
+
+    TEST_BEACON_End(ctrl->pBeaconWork);
+    return GFL_PROC_RES_FINISH;
 }
 
 

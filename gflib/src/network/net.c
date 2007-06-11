@@ -41,6 +41,8 @@ struct _GFL_NETSYS{
 
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
 
+// コンポーネント転送終了の確認用  イクニューモンコンポーネント処理を移動させるときはこれも移動
+static volatile u8   startCheck;	
 
 //==============================================================================
 /**
@@ -380,6 +382,7 @@ void GFL_NET_Main(void)
         }
     }
     GFL_NET_SystemUpdateData();
+    
 }
 
 //==============================================================================
@@ -1061,6 +1064,51 @@ void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
 
 //==============================================================================
 /**
+ * @brief   自動的にエラー検出を行うかどうか
+ *          (TRUEの場合エラーをみつけるとブルースクリーン＋再起動になる)
+ * @param   bAuto  TRUEで検査開始 FALSEでエラー処理を行わない
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
+{
+    GFL_NET_STATE_SetAutoErrorCheck(pNetHandle, bAuto);
+}
+
+//==============================================================================
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定する
+ * @param   bFlg    切断=エラーにする
+ * @param   bAuto  TRUEで検査開始
+ * @retval  none
+ */
+//==============================================================================
+void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
+{
+    GFL_NET_STATE_SetNoChildErrorCheck(pNetHandle, bFlg);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   無線駆動制御ライブラリの非同期的な処理終了が通知されるコールバック関数。
+ * @param   arg		WVR_StartUpAsyncコール時に指定した引数。未使用。
+ * @param   result	非同期関数の処理結果。
+ * @retval  none		
+ */
+//------------------------------------------------------------------
+static void _startUpCallback(void *arg, WVRResult result)
+{
+    if (result != WVR_RESULT_SUCCESS) {
+        OS_TPanic("WVR_StartUpAsync error.[%08xh]\n", result);
+    }
+    else{
+		NET_PRINT("WVR Trans VRAM-D.\n");
+	}
+    startCheck = 2;
+}
+
+//==============================================================================
+/**
  * @brief    イクニューモンライブラリのみを初期化する
  * @return   none
  */
@@ -1068,7 +1116,23 @@ void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
 
 void GFL_NET_InitIchneumon(void)
 {
-    GFL_NET_WLVRAMDInitialize();
+    int ans;
+    //************************************
+
+
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
+    // 無線ライブラリ駆動開始
+	// イクニューモンコンポーネントをVRAM-Dに転送する
+    startCheck = 1;
+    ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL);
+    if (WVR_RESULT_OPERATING != ans) {
+        //イクニューモンを使用する前に VRAMDをdisableにする必要がある
+        // そうでないとここにくる
+        OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
+    }
+    else{
+        NET_PRINT("WVRStart\n");
+    }
 }
 
 //==============================================================================
@@ -1081,7 +1145,21 @@ void GFL_NET_InitIchneumon(void)
 
 BOOL GFL_NET_IsInitIchneumon(void)
 {
-    return GFL_NET_WLIsVRAMDInitialize();
+    return (startCheck==2);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   無線駆動制御ライブラリの非同期的な処理終了が通知されるコールバック関数。
+ * @param   arg		WVR_StartUpAsyncコール時に指定した引数。未使用。
+ * @param   result	非同期関数の処理結果。
+ * @retval  none		
+ */
+//------------------------------------------------------------------
+static void _endCallback(void *arg, WVRResult result)
+{
+    startCheck = 0;
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
 }
 
 //==============================================================================
@@ -1094,7 +1172,8 @@ BOOL GFL_NET_IsInitIchneumon(void)
 
 void GFL_NET_ExitIchneumon(void)
 {
-   GFL_NET_WLVRAMDFinalize();
+    NET_PRINT("VRAMD Finalize\n");
+    WVR_TerminateAsync(_endCallback,NULL);  // イクニューモン切断
 }
 
 

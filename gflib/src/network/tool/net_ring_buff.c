@@ -30,7 +30,7 @@ void GFL_NET_RingInitialize(RingBuffWork* pRing, u8* pDataArea, const int size)
     pRing->pWork = pDataArea;
     pRing->size = (s16)size;
     pRing->startPos = 0;
-    pRing->endPos = 0;
+ //   pRing->endPos = 0;
     pRing->backupEndPos = 0;
 //    pRing->backupStartPos = 0;
 }
@@ -119,7 +119,8 @@ int GFL_NET_RingChecks(const RingBuffWork* pRing, u8* pDataArea, const int size)
 
     j = 0;
     for(i = pRing->startPos; i < pRing->startPos + size; i++,j++){
-        if(pRing->endPos == _ringPos( pRing,i )){
+//        if(pRing->endPos == _ringPos( pRing,i )){
+        if(pRing->backupEndPos == _ringPos( pRing,i )){
             return j;
         }
         pDataArea[j] = pRing->pWork[_ringPos( pRing,i )];
@@ -136,10 +137,14 @@ int GFL_NET_RingChecks(const RingBuffWork* pRing, u8* pDataArea, const int size)
 //==============================================================================
 int GFL_NET_RingDataSize(const RingBuffWork* pRing)
 {
-    if(pRing->startPos > pRing->endPos){
-        return (pRing->size + pRing->endPos - pRing->startPos);
+//    if(pRing->startPos > pRing->endPos){
+  //      return (pRing->size + pRing->endPos - pRing->startPos);
+    //}
+   // return (pRing->endPos - pRing->startPos);
+    if(pRing->startPos > pRing->backupEndPos){
+        return (pRing->size + pRing->backupEndPos - pRing->startPos);
     }
-    return (pRing->endPos - pRing->startPos);
+    return (pRing->backupEndPos - pRing->startPos);
 }
 
 //==============================================================================
@@ -195,6 +200,6 @@ static int _ringRestBackupSize(const RingBuffWork* pRing)
 //==============================================================================
 void GFL_NET_RingEndChange(RingBuffWork* pRing)
 {
-    pRing->endPos = pRing->backupEndPos;
+//    pRing->endPos = pRing->backupEndPos;
 }
 

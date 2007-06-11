@@ -59,6 +59,7 @@ struct _NET_PARENTSYS_t{
 static void _changeStateDebug(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time, int line);  // ステートを変更する
 static void _changeState(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time);  // ステートを変更する
 static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle);
+static void _errorDispCheck(GFL_NETHANDLE* pNetHandle);
 
 #ifdef GFL_NET_DEBUG
 #if 1
@@ -158,7 +159,7 @@ static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
     }
     GFL_NET_COMMAND_Exit();
 //    WirelessIconEasyEnd();   //@@OO 後で入れる予定
-    GFL_NET_WLVRAMDFinalize();
+    GFL_NET_InitIchneumon();
     _GFL_NET_SetNETWL(NULL);
     pNetHandle->state = NULL;
     GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
@@ -207,7 +208,7 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
     GFL_NETWL* pWL;
     
-    if(!GFL_NET_WLIsVRAMDInitialize()){
+    if(!GFL_NET_IsInitIchneumon()){
         return;  //
     }
 
@@ -238,7 +239,7 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
 {
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
 
-    GFL_NET_WLVRAMDInitialize();
+    GFL_NET_InitIchneumon();
     _commStateInitialize(pNetHandle, 0);
     _CHANGE_STATE(_deviceInitialize, 0);
 }
@@ -400,6 +401,7 @@ void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
         if(state != NULL){
             state(pHandle);
         }
+        _errorDispCheck(pHandle);
     }
 }
 
@@ -427,7 +429,7 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
-    if(!GFL_NET_WLIsVRAMDInitialize()){
+    if(!GFL_NET_IsInitIchneumon()){
         return;
     }
 
@@ -1464,48 +1466,38 @@ void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HE
 #endif  //GFL_NET_WIFI
 
 //--------------------------errfunc------------------------------------------------
-#define DEBUG_OHNO 0
-#if DEBUG_OHNO
 
 //==============================================================================
 /**
- * @brief   ここから先エラーの検査を通信が処理するかどうかを設定
+ * @brief   自動的にエラー検出を行うかどうか
+ *          (TRUEの場合エラーをみつけるとブルースクリーン＋再起動になる)
+ * @param   bAuto  TRUEで検査開始 FALSEでエラー処理を行わない
+ * @retval  none
+ */
+//==============================================================================
+
+void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
+{
+    if(pNetHandle){
+        pNetHandle->bErrorAuto = bAuto;
+    }
+}
+
+//==============================================================================
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定する
  * @param   bFlg    切断=エラーにする
  * @param   bAuto  TRUEで検査開始
  * @retval  none
  */
 //==============================================================================
 
-void CommStateSetErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg,BOOL bAuto)
+void GFL_NET_STATE_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
 {
     if(pNetHandle){
         pNetHandle->bDisconnectError = bFlg;
-        pNetHandle->bErrorAuto = bAuto;
-        OHNO_PRINT("CommStateSetErrorCheck %d %d\n",pNetHandle->bDisconnectError,pNetHandle->bErrorAuto);
     }
-    CommMPSetNoChildError(bFlg);  // 子機がいなくなったら再検索するためにERR扱いにする
-    CommMPSetDisconnectOtherError(bFlg);
-}
-
-
-//==============================================================================
-/**
- * @brief   ここから先エラーの検査を通信が処理するかどうかを設定
- * @param   bFlg  TRUEで検査開始
- * @retval  none
- */
-//==============================================================================
-
-BOOL CommStateGetErrorCheck(GFL_NETHANDLE* pNetHandle)
-{
-    if(pNetHandle){
-        if(pNetHandle->stateError!=0){
-            return TRUE;
-        }
-        return pNetHandle->bErrorAuto;
-    }
-    return FALSE;
-//    CommMPSetDisconnectOtherError(bFlg);
+    GFL_NET_WLSetDisconnectOtherError(bFlg);
 }
 
 //==============================================================================
@@ -1516,7 +1508,7 @@ BOOL CommStateGetErrorCheck(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void CommSetErrorReset(GFL_NETHANDLE* pNetHandle,u8 type)
+static void _setErrorReset(GFL_NETHANDLE* pNetHandle,u8 type)
 {
     if(pNetHandle){
         pNetHandle->ResetStateType = type;
@@ -1531,13 +1523,50 @@ void CommSetErrorReset(GFL_NETHANDLE* pNetHandle,u8 type)
  */
 //==============================================================================
 
-u8 CommIsResetError(GFL_NETHANDLE* pNetHandle)
+static u8 _isResetError(GFL_NETHANDLE* pNetHandle)
 {
     if(pNetHandle){
         return pNetHandle->ResetStateType;
     }
     return FALSE;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   エラーを感知して 通信エラー用ウインドウを出す
+ * @param   heapID    メモリー確保するHEAPID
+ * @param   bgl       GF_BGL_INI
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _errorDispCheck(GFL_NETHANDLE* pNetHandle)
+{
+    if(_getErrorCheck(pNetHandle)){
+#if GFL_NET_WIFI
+        if(GFL_NET_SystemIsError() || GFL_NET_StateGetWifiErrorNo(pNetHandle) || (pNetHandle->stateError!=0)){
+#else
+        if(GFL_NET_SystemIsError() || (pNetHandle->stateError!=0)){
+#endif
+            if(!_isResetError(pNetHandle)){   // リセットエラー状態で無い場合
+                //Snd_Stop();
+                //SaveData_DivSave_Cancel(pNetHandle->pSaveData); // セーブしてたら止める
+                //sys.tp_auto_samp = 1;  // サンプリングも止める
+
+                _setErrorReset(pNetHandle,GFL_NET_ERROR_RESET_SAVEPOINT);  // エラーリセット状態になる
+                GFI_NET_FatalErrorFunc(pNetHandle,GFL_NET_ERROR_RESET_SAVEPOINT);
+                while(1){
+                }
+            }
+        }
+    }
+}
+
+
+#define DEBUG_OHNO 0
+#if DEBUG_OHNO
+
+
 
 //--------------------------------------------------------------
 /**
@@ -1581,40 +1610,6 @@ void CommErrorCheck(int heapID, GF_BGL_INI* bgl)
 // この関数では処理しないことになりました
 }
 
-
-//--------------------------------------------------------------
-/**
- * @brief   エラーを感知して 通信エラー用ウインドウを出す
- * @param   heapID    メモリー確保するHEAPID
- * @param   bgl       GF_BGL_INI
- * @retval  none
- */
-//--------------------------------------------------------------
-
-void CommErrorDispCheck(GFL_NETHANDLE* pNetHandle,int heapID)
-{
-    if(CommStateGetErrorCheck()){
-        if(CommIsError() || CommStateIsWifiError() || CommStateGetWifiDPWError()
-           || (pNetHandle->stateError!=0)){
-            if(!CommIsResetError()){   // リセットエラー状態で無い場合
-                Snd_Stop();
-                SaveData_DivSave_Cancel(pNetHandle->pSaveData); // セーブしてたら止める
-                sys.tp_auto_samp = 1;  // サンプリングも止める
-
-                if(pNetHandle->stateError == COMM_ERROR_RESET_GTS){
-                    CommSetErrorReset(COMM_ERROR_RESET_GTS);  // エラーリセット状態になる
-                }
-                else if((pNetHandle->serviceNo == COMM_MODE_FUSIGI_WIFI)
-                   || (pNetHandle->serviceNo == COMM_MODE_MYSTERY)){
-                    CommSetErrorReset(COMM_ERROR_RESET_TITLE);  // エラーリセット状態になる
-                }
-                else{
-                    CommSetErrorReset(COMM_ERROR_RESET_SAVEPOINT);  // エラーリセット状態になる
-                }
-            }
-        }
-    }
-}
 
 //--------------------------------------------------------------
 /**

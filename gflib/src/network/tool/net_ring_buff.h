@@ -15,7 +15,7 @@
 typedef struct{
     u8* pWork;                   ///< 保存領域の先頭ポインタ
     s16 startPos;                ///< 読み出していないデータの位置
-    volatile s16 endPos;         ///< 書かれているデータの最後の位置
+ //   volatile s16 endPos;         ///< 書かれているデータの最後の位置
     volatile s16 backupEndPos;   ///< 最後の位置のバックアップ
     s16 size;                    ///< 保存領域サイズ
 } RingBuffWork;

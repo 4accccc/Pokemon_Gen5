@@ -474,7 +474,7 @@ void WirelessIconEasy(BOOL bWifi, HEAPID heapID)
 //==============================================================================
 void WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
 {
-    if(!GFL_NET_WLIsVRAMDStart()){  // イクニューモンが無い場合通信してない
+    if(!GFL_NET_IsInitIchneumon()){  // イクニューモンが無い場合通信してない
         return ;
     }
     WirelessIconEasyEnd();

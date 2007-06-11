@@ -462,7 +462,7 @@ BOOL GFL_NET_SystemWiFiModeInit(int packetSizeMax, HEAPID heapIDSys, HEAPID heap
     BOOL ret = TRUE;
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
-    if(!GFL_NET_WLIsVRAMDInitialize()){
+    if(!GFL_NET_IsInitIchneumon()){
         return FALSE;
     }
 

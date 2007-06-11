@@ -11,7 +11,7 @@
 
 
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #endif
@@ -554,6 +554,25 @@ extern int GFL_NET_WIFI_GetLocalConnectNo(void);
  */
 //==============================================================================
 extern void GFL_NET_SetWifiBothNet(BOOL flag);
+//==============================================================================
+/**
+ * @brief   自動的にエラー検出を行うかどうか
+ *          (TRUEの場合エラーをみつけるとブルースクリーン＋再起動になる)
+ * @param   bAuto  TRUEで検査開始 FALSEでエラー処理を行わない
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto);
+//==============================================================================
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定する
+ * @param   bFlg    切断=エラーにする
+ * @param   bAuto  TRUEで検査開始
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg);
+
 
 //==============================================================================
 /**

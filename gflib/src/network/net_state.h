@@ -258,18 +258,29 @@ extern BOOL GFL_NET_StateIsWifiError(GFL_NETHANDLE* pNetHandle);
 extern void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HEAPID wifiHeapID);
 //--------------------------errfunc------------------------------------------------
 
-#define _ERR_DEFINE  (0)
-#if _ERR_DEFINE
-
 //==============================================================================
 /**
- * @brief   ここから先エラーの検査を通信が処理するかどうかを設定
+ * @brief   自動的にエラー検出を行うかどうか
+ *          (TRUEの場合エラーをみつけるとブルースクリーン＋再起動になる)
+ * @param   bAuto  TRUEで検査開始 FALSEでエラー処理を行わない
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto);
+//==============================================================================
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定する
  * @param   bFlg    切断=エラーにする
  * @param   bAuto  TRUEで検査開始
  * @retval  none
  */
 //==============================================================================
-extern void CommStateSetErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg,BOOL bAuto);
+extern void GFL_NET_STATE_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg);
+
+
+#define _ERR_DEFINE  (0)
+#if _ERR_DEFINE
+
 //==============================================================================
 /**
  * @brief   ここから先エラーの検査を通信が処理するかどうかを設定

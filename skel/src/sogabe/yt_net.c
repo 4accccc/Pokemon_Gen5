@@ -817,6 +817,8 @@ BOOL YT_NET_Main(NET_PARAM* pNet)
 #if GFL_NET_WIFI
             GFL_NET_SetWifiBothNet(FALSE);  // WIFI‚Ídefault‚Å”ñ“¯ŠúÚ‘±‚É‚µ‚Ä‚¨‚­
 #endif
+            GFL_NET_SetNoChildErrorCheck(pNet->pNetHandle[1], TRUE);
+            GFL_NET_SetAutoErrorCheck(pNet->pNetHandle[1], TRUE);
             _SEQCHANGE( _LOOP );
         }
         break;
