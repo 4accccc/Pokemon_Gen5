@@ -155,12 +155,10 @@ typedef struct {
 
 typedef struct {
 	int		seq;
-}PLAYER_WORK;
-
-typedef struct {
-	int		seq;
-
-	VecFx32	rotateTmp;
+	int		work1;
+	int		work2;
+	int		work3;
+	int		work4;
 }OBJ_WORK;
 
 typedef struct {
@@ -197,7 +195,6 @@ static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl)
 static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl) };
 static const GFL_G3D_LIGHTSET_SETUP light2Setup = { light2Tbl, NELEMS(light2Tbl) };
 
-static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 #include "debug_watanabe.dat"
@@ -379,17 +376,29 @@ static void g3d_load( HEAPID heapID )
 
 	//配置物設定
 	tetsuWork->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, heapID );
+	{
+		//アニメーションの初期有効設定
+		GFL_G3D_OBJECT_EnableAnime
+		( GFL_G3D_UTIL_GetObjHandle( tetsuWork->g3Dutil, G3DOBJ_HUMAN2), HUMAN2_ANM_STAY );
+		tetsuWork->nowAnmIdx = 0;
+		tetsuWork->nowAccesary = 0;
+		GFL_G3D_OBJECT_EnableAnime
+		( GFL_G3D_UTIL_GetObjHandle( tetsuWork->g3Dutil, G3DOBJ_HUMAN2_STOP), HUMAN2_ANM_STAY );
+	}
+
 	tetsuWork->g3Dscene = GFL_G3D_SCENE_Create( tetsuWork->g3Dutil, 1000,
 												sizeof(OBJ_WORK), 32, TRUE, heapID );
 	{
 		//自機作成
 		tetsuWork->g3DsceneObjID = GFL_G3D_SCENEOBJ_Add
 							( tetsuWork->g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
+#if 0
 		//アニメーションの初期有効設定
 		GFL_G3D_SCENEOBJ_EnableAnime
 				( GFL_G3D_SCENEOBJ_Get( tetsuWork->g3Dscene, G3DSCOBJ_PLAYER), 0 );
 		tetsuWork->nowAnmIdx = 0;
 		tetsuWork->nowAccesary = 0;
+#endif
 	}
 	{
 		//マップ作成
@@ -637,37 +646,13 @@ static BOOL culling2DView( GFL_G3D_SCENEOBJ* sceneObj, VecFx32* objPos, int* sca
 }
 
 //------------------------------------------------------------------
-static void simpleRotateY( GFL_G3D_SCENEOBJ* sceneObj, void* work )
-{
-	MtxFx33 rotate;
-	OBJ_WORK* ballWk = (OBJ_WORK*)work;
-
-	switch( ballWk->seq ){
-		case 0:
-			{
-				u16 val;
-				GFL_G3D_SCENEOBJ_GetObjID( sceneObj, &val );
-				ballWk->rotateTmp.x = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.y = g3DanmRotateSpeed * val;
-				ballWk->rotateTmp.z = g3DanmRotateSpeed * val;
-			}
-			ballWk->seq++;
-			break;
-		case 1:
-			ballWk->rotateTmp.y += g3DanmRotateSpeed;
-			rotateCalc( &ballWk->rotateTmp, &rotate );
-			GFL_G3D_SCENEOBJ_SetRotate( sceneObj, &rotate );
-			break;
-	}
-}
-
 static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
 	MtxFx33			rotate;
 	VecFx32			rotVec;
 	VecFx32			trans;
 	GFL_G3D_OBJ*	g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( sceneObj );
-	PLAYER_WORK*	player = (PLAYER_WORK*)work;
+	OBJ_WORK*	player = (OBJ_WORK*)work;
 
 	trans.x = tetsuWork->contPos.x;
 	trans.y = 0;
@@ -688,16 +673,16 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 					GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
 					switch( tetsuWork->nowAccesary ){
 					defasult:
-						tetsuWork->nowAnmIdx = 0;
+						tetsuWork->nowAnmIdx = HUMAN2_ANM_STAY;
 						break;
 					case 1:
-						tetsuWork->nowAnmIdx = 3;
+						tetsuWork->nowAnmIdx = HUMAN2_ANM_ATTACK;
 						break;
 					case 2:
-						tetsuWork->nowAnmIdx = 4;
+						tetsuWork->nowAnmIdx = HUMAN2_ANM_SHOOT;
 						break;
 					case 3:
-						tetsuWork->nowAnmIdx = 5;
+						tetsuWork->nowAnmIdx = HUMAN2_ANM_SPELL;
 						break;
 					}
 					GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
@@ -706,20 +691,27 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 				break;
 			}
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+			tetsuWork->nowAnmIdx = HUMAN2_ANM_SIT;
+			GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+			player->seq = 2;
+			break;
+		}
 		{
 			u16		anmIdx;
 			fx32	anmSpeed;
 	
 			if( tetsuWork->MoveFlag == TRUE ){
 				if( tetsuWork->SpeedUpFlag == TRUE ){
-					anmIdx = 2;
+					anmIdx = HUMAN2_ANM_RUN;
 					anmSpeed = FX32_ONE*4;
 				} else {
-					anmIdx = 1;
-					anmSpeed = FX32_ONE*3;
+					anmIdx = HUMAN2_ANM_WALK;
+					anmSpeed = FX32_ONE*2;
 				}
 			} else {
-				anmIdx = 0;
+				anmIdx = HUMAN2_ANM_STAY;
 				anmSpeed = FX32_ONE*2;
 			}
 			if( tetsuWork->nowAnmIdx != anmIdx ){
@@ -778,19 +770,46 @@ static void moveHaruka( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			}
 		}
 		break;
+
 	case 1:
 		{
 			BOOL result;
 
 			result = GFL_G3D_SCENEOBJ_IncAnimeFrame( sceneObj, tetsuWork->nowAnmIdx, FX32_ONE*2 );
 			if( result == FALSE ){
-				GFL_G3D_SCENEOBJ_ResetAnimeFrame( sceneObj, tetsuWork->nowAnmIdx );
-				GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
-				tetsuWork->nowAnmIdx = 0;
-				GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
-				player->seq = 0;
+				player->seq = 3;
 			}
 		}
+		break;
+
+	case 2:
+		{
+			int anmFrame = GFL_G3D_SCENEOBJ_GetAnimeFrame
+							( sceneObj, tetsuWork->nowAnmIdx );
+			BOOL result;
+
+			if( anmFrame == (FX32_ONE * 20) ){
+				if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_X) == 0 ){
+					GFL_G3D_SCENEOBJ_IncAnimeFrame
+						( sceneObj, tetsuWork->nowAnmIdx, FX32_ONE );
+				}
+			} else {
+				result = GFL_G3D_SCENEOBJ_IncAnimeFrame
+							( sceneObj, tetsuWork->nowAnmIdx, FX32_ONE );
+				if( result == FALSE ){
+						player->seq = 3;
+						break;
+				}
+			}
+		}
+		break;
+
+	case 3:
+		GFL_G3D_SCENEOBJ_ResetAnimeFrame( sceneObj, tetsuWork->nowAnmIdx );
+		GFL_G3D_SCENEOBJ_DisableAnime( sceneObj, tetsuWork->nowAnmIdx );
+		tetsuWork->nowAnmIdx = HUMAN2_ANM_STAY;
+		GFL_G3D_SCENEOBJ_EnableAnime( sceneObj, tetsuWork->nowAnmIdx );
+		player->seq = 0;
 		break;
 	}
 }
@@ -997,13 +1016,13 @@ static void KeyControlCameraMove1( void )
 				int speed;
 
 				if( tetsuWork->SpeedUpFlag == TRUE ){
-					speed = -MOVE_SPEED*2;
+					speed = -MOVE_SPEED*4;
 				} else {
 					speed = -MOVE_SPEED;
 				}
 				speed *= tetsuWork->vBlankCounter; 
-				move.x = speed * FX_SinIdx( tetsuWork->nowRotate );
-				move.z = speed * FX_CosIdx( tetsuWork->nowRotate );
+				move.x = speed * FX_SinIdx( tetsuWork->nowRotate ) /2;
+				move.z = speed * FX_CosIdx( tetsuWork->nowRotate ) /2;
 
 				{
 					VecFx32 tmpPos;
@@ -1013,10 +1032,10 @@ static void KeyControlCameraMove1( void )
 					tmpPos.z = tetsuWork->contPos.z + move.z;
 
 					attrData = MapAttrGet( tetsuWork->mapAttr, &tmpPos );
-					if( attrData == 0 ){
+					//if( attrData == 0 ){
 						tetsuWork->contPos.x = tmpPos.x;
 						tetsuWork->contPos.z = tmpPos.z;
-					}
+					//}
 				}
 			}
 			tetsuWork->contPos.y = 0;
@@ -1147,7 +1166,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 
 	pdata[ count ] = map->floor;
 	count++;
-
+#if 0
 	for( z=0; z<sizeZ; z++ ){
 		for( x=0; x<sizeX; x++ ){
 			mapCode = GET_MAPCODE( mapData, x, z );
@@ -1179,7 +1198,8 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				mapAttr[z*sizeX+x] = 1;
 				break;
 			case '○':	//配置人物１
-				data.objID = G3DOBJ_HARUKA_STOP; 
+				//data.objID = G3DOBJ_HARUKA_STOP; 
+				data.objID = G3DOBJ_HUMAN2_STOP; 
 				data.movePriority = 0;
 				data.drawPriority = 250;
 				data.cullingFlag = TRUE;
@@ -1188,9 +1208,9 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 				data.blendAlpha = 31;
 				data.status.trans.x = defaultMapX + (mapGrid * x);
 				data.status.trans.z = defaultMapZ + (mapGrid * z);
-				data.status.scale.x = FX32_ONE*8;
-				data.status.scale.y = FX32_ONE*8;
-				data.status.scale.z = FX32_ONE*8;
+				data.status.scale.x = FX32_ONE/4;
+				data.status.scale.y = FX32_ONE/4;
+				data.status.scale.z = FX32_ONE/4;
 				data.func = moveStopHaruka;
 				pdata[ count ] = data;
 				count++;
@@ -1208,6 +1228,7 @@ static GFL_G3D_SCENEOBJ_DATA_SETUP* MapDataCreate( const MAPDATA* map, HEAPID he
 			}
 		}
 	}
+#endif
 	setup->data = pdata;
 	setup->count = count;
 	setup->mapAttr = mapAttr;
@@ -1235,20 +1256,20 @@ static u16 MapAttrGet( u16* mapAttr, VecFx32* pos )
 
 static const char mapData0[] = {
 "■■■■■■■■■■■■■■■■"
-"■　　　　　　　　　　　　　　■"
+"■　　　○　　　　○　　　　　■"
 "■　■■■■■■■■■■■■　■"
-"■　■　　　　　　　　　　■　■"
-"■　■　■■■　■■■■　■　■"
-"■　■　■　■　　　　■　■　■"
+"■　■　　　　　　○　　　■　■"
+"■○■　■■■　■■■■　■○■"
+"■　■　■　■　　　　■○■　■"
 "■　■　■　■○　　　■　■　■"
 "■　　　■　■■■　　■　■　■"
 "■　■　■　　　■　　　　■　■"
-"■　■　■■■　■■■■　■　■"
-"■　■　　　■　　　　■　■　■"
+"■　■　■■■　■■■■　■○■"
+"■　■　　　　　　　　■○■　■"
 "■　■■■　■■■■■■　■　■"
-"■　◎　■　　　　　　　　■　■"
+"■　◎　■　　　　○　　　■　■"
 "■　　　■■■■■　■■■■　■"
-"■　　　　　　　　　　　　　　■"
+"■　　　　　○　　　　　　　○■"
 "■■■■■■■■■■■■■■■■"
 };
 

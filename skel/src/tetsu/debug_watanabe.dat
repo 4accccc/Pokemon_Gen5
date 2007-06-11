@@ -42,6 +42,7 @@ enum {
 	G3DRES_HUMAN2_ATTACK_BCA,
 	G3DRES_HUMAN2_SHOOT_BCA,
 	G3DRES_HUMAN2_SPELL_BCA,
+	G3DRES_HUMAN2_SIT_BCA,
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -53,7 +54,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall2_2_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall3_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall0_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_test_floor_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_floor2_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_sword_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_shield_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_hammer_nsbmd,  GFL_G3D_UTIL_RESPATH },
@@ -70,6 +71,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_human2_attack_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_shoot_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_human2_spell_nsbca,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_human2_sit_nsbca,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
@@ -83,6 +85,16 @@ static const GFL_G3D_UTIL_ANM g3Dutil_HumanAnmTbl[] = {
 	{ G3DRES_HUMAN_RUN_BCA, 0 },
 };
 
+enum {
+	HUMAN2_ANM_STAY = 0,
+	HUMAN2_ANM_WALK,
+	HUMAN2_ANM_RUN,
+	HUMAN2_ANM_ATTACK,
+	HUMAN2_ANM_SHOOT,
+	HUMAN2_ANM_SPELL,
+	HUMAN2_ANM_SIT,
+};
+
 static const GFL_G3D_UTIL_ANM g3Dutil_Human2AnmTbl[] = {
 	{ G3DRES_HUMAN2_STAY_BCA, 0 },
 	{ G3DRES_HUMAN2_WALK_BCA, 0 },
@@ -90,6 +102,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_Human2AnmTbl[] = {
 	{ G3DRES_HUMAN2_ATTACK_BCA, 0 },
 	{ G3DRES_HUMAN2_SHOOT_BCA, 0 },
 	{ G3DRES_HUMAN2_SPELL_BCA, 0 },
+	{ G3DRES_HUMAN2_SIT_BCA, 0 },
 };
 
 //---------------------
@@ -110,6 +123,7 @@ enum {
 	G3DOBJ_ACCE_STAFF,
 	G3DOBJ_HUMAN,
 	G3DOBJ_HUMAN2,
+	G3DOBJ_HUMAN2_STOP,
 };
 
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -128,6 +142,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
 	{ G3DRES_ACCE_STAFF, 0, G3DRES_ACCE_STAFF, NULL, 0 },
 	{ G3DRES_HUMAN_BMD, 0, G3DRES_HUMAN_BMD, g3Dutil_HumanAnmTbl, NELEMS(g3Dutil_HumanAnmTbl) },
+	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl) },
 	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl) },
 };
 
