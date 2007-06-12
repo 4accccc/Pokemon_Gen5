@@ -42,30 +42,11 @@ typedef struct {
 }SAVEDATA_TABLE;
 
 
-//---------------------------------------------------------------------------
-/**
- * @brief	特殊セーブデータ定義データの構造体定義
- */
-//---------------------------------------------------------------------------
-typedef struct {
-	EXDATA_ID id;					///<特殊セーブデータ識別ID
-	u32 sector;						///<開始セクタ
-	FUNC_GET_SIZE get_size;			///<データサイズ取得関数
-	FUNC_INIT_WORK init_work;		///<セーブデータ初期化関数
-}EXSAVEDATA_TABLE;
-
 //=============================================================================
 //=============================================================================
 
 extern const SAVEDATA_TABLE SaveDataTable[];
 extern const int SaveDataTableMax;
-
-extern const EXSAVEDATA_TABLE ExtraSaveDataTable[];
-extern const int ExtraSaveDataTableMax;
-
-extern SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data);
-extern void * SaveData_Extra_LoadAlloc(SAVEDATA * sv,
-		u32 heap_id, EXDATA_ID id, LOAD_RESULT * result);
 
 
 
