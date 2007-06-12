@@ -598,6 +598,14 @@ extern BOOL GFL_NET_IsInitIchneumon(void);
  */
 //==============================================================================
 extern void GFL_NET_ExitIchneumon(void);
+//==============================================================================
+/**
+ * @brief    ビーコン強度を得る
+ * @param    index ビーコンバッファに対するindex
+ * @retval   u16
+ */
+//==============================================================================
+extern u16 GFL_NET_WL_GetRssi(int index);
 
 
 extern void debugcheck(u32* data,int size );

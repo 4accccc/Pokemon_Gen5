@@ -17,6 +17,7 @@
 #include "net_icondata.h"
 #include "textprint.h"
 
+
 #define _BCON_GET_NUM  (6)
 
 //------------------------------------------------------------------
@@ -89,17 +90,101 @@ static const GFL_TEXT_PRINTPARAM default_param =
 
 //------------------------------------------------------------------
 /**
+ * @brief		ＢＧ設定
+ */
+//------------------------------------------------------------------
+static const GFL_BG_SYS_HEADER bgsysHeader = {
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+};	
+
+static const GFL_BG_BGCNT_HEADER bgCont3 = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+
+static const GFL_BG_BGCNT_HEADER bgCont0 = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+
+
+#define _BACKUP_NUM  (5)   //RSSIの平均を出すためにバックアップ
+//------------------------------------------------------------------
+/**
  * @brief		内部ワーク構造体
  */
 //------------------------------------------------------------------
+/// コールバック関数の書式 内部ステート遷移用
+typedef void (*_PTRFunc)(SKEL_TEST_BEACON_WORK* pNetHandle);
 
 struct _SKEL_TEST_BEACON_WORK{
     HEAPID heapID;
     BOOL bParent;   ///< 親機モードかどうか
     GFL_TEXT_PRINTPARAM* textParam;
-    GFL_BMPWIN*				bmpwin[32];
+    GFL_BMPWIN*	bmpwin[5];
+    GFL_BMPWIN* pBmpwinBeacon[_BCON_GET_NUM];
+    u16 rssiBackup[_BCON_GET_NUM][_BACKUP_NUM];
+    u16 rssiDir[8];
+    int dir;
     int testNo;
+    _PTRFunc state;
+    int timer;
+    GFL_NETHANDLE* _pHandle;
+    GFL_NETHANDLE* _pHandleServer;
 };
+
+#if defined(DEBUG_ONLY_FOR_ohno)
+#define   _CHANGE_STATE(state, time)  _changeStateDebug(pWork ,state, time, __LINE__)
+#else
+#define   _CHANGE_STATE(state, time)  _changeState(pWork ,state, time)
+#endif
+
+//==============================================================================
+/**
+ * @brief   通信管理ステートの変更
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeState(SKEL_TEST_BEACON_WORK* pWork,_PTRFunc state, int time)
+{
+    pWork->state = state;
+    pWork->timer = time;
+}
+
+//==============================================================================
+/**
+ * @brief   通信管理ステートの変更
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
+#ifdef GFL_NET_DEBUG
+static void _changeStateDebug(SKEL_TEST_BEACON_WORK* pWork,_PTRFunc state, int time, int line)
+{
+    NET_PRINT("net_state: %d\n",line);
+    _changeState(pWork, state, time);
+}
+#endif
+
+//==============================================================================
+/**
+ * @brief   なにもしない
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
+static void _noneFunc(SKEL_TEST_BEACON_WORK* pWork)
+{
+}
 
 //------------------------------------------------------------------
 /**
@@ -175,6 +260,39 @@ static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
 	//GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧ設定＆データ転送
+ */
+//------------------------------------------------------------------
+static void	bg_init( HEAPID heapID )
+{
+	//ＢＧシステム起動
+	GFL_BG_Init( heapID );
+
+	//ＶＲＡＭ設定
+	GX_SetBankForTex(GX_VRAM_TEX_01_AB);
+	GX_SetBankForBG(GX_VRAM_BG_64_E);
+	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
+
+	//ＢＧモード設定
+	GFL_BG_InitBG( &bgsysHeader );
+
+	//ＢＧコントロール設定
+	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
+	GFL_BG_SetPriority( TEXT_FRM, TEXT_FRM_PRI );
+	GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+
+	//ビットマップウインドウシステムの起動
+	GFL_BMPWIN_Init( heapID );
+
+	//ARCシステム初期化
+//	GFL_ARC_Init(&GraphicFileTable[0],1);
+
+	//ディスプレイ面の選択
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+	GFL_DISP_SetDispOn();
+}
 
 
 static void* _netBeaconGetFunc(void)    ///< ビーコンデータ取得関数
@@ -189,37 +307,119 @@ static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
 
 static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得関数
 {
-    OS_TPrintf("比較してます%d\n",beaconNo);
     return TRUE;
 }
 
 
+//----------------------------------------------------------------
 
+
+static u16 _backupRssi(SKEL_TEST_BEACON_WORK* pWork,int index, u16 rssi)
+{
+    u16 sum = 0;
+    int i;
+
+    if((pWork->rssiBackup[index][_BACKUP_NUM-1]==0) ||(pWork->rssiBackup[index][0] != rssi)){
+        for(i = _BACKUP_NUM-1; (i-1) >= 0; i--){
+            pWork->rssiBackup[index][i] = pWork->rssiBackup[index][i-1];
+        }
+        pWork->rssiBackup[index][0] = rssi;
+    }
+    for(i = 0; i < _BACKUP_NUM ; i++){
+        sum  += pWork->rssiBackup[index][i];
+    }
+    if(sum!=0){
+        sum /= _BACKUP_NUM;
+    }
+    return sum;
+}
+
+
+static void _stockRssi(SKEL_TEST_BEACON_WORK* pWork, u16 rssi)
+{
+
+    if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){
+        GFL_STD_MemClear(pWork->rssiDir,sizeof(u16)*8);
+        pWork->dir=0;
+    }
+    if(PAD_BUTTON_Y == GFL_UI_KEY_GetTrg()){
+
+
+    }
+    if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
+        pWork->rssiDir[pWork->dir] = rssi;
+        pWork->dir++;
+        if(pWork->dir >= 8){
+            pWork->dir=0;
+        }
+    }
+
+}
 
 
 //----------------------------------------------------------------
-enum{
-    _TEST_CONNECT,
-    _TEST_CONNECT2,
-    _TEST_1,
-    _TEST_4,
-    _TEST_2,
-    _TEST_3,
-    _TEST_END,
-    _TEST_EXIT,
-
-};
 
 
-static int _testNo = 0;
-static GFL_NETHANDLE* _pHandle=NULL;
-static GFL_NETHANDLE* _pHandleServer=NULL;
-#define _TEST_TIMING (12)
+static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
+{
+    int i;
+    
+    for(i = 0;i < _BCON_GET_NUM; i++){
+        u8* pData = GFL_NET_GetBeaconMacAddress(i);
+        
+        if(pData){
+//            OS_TPrintf("%d: mac %x\n",i,);
+            char msg[100];
+            u16 rssi = GFL_NET_WL_GetRssi(i);
+
+            rssi = _backupRssi(pWork,i,rssi);
+
+            _stockRssi(pWork,rssi);
+            
+            GFL_STD_MemClear(msg,100);
+            OS_SPrintf(msg,"%d: %3d %3d %3d %3d %3d %3d %3d %3d",rssi,
+                       pWork->rssiDir[0],
+                       pWork->rssiDir[1],
+                       pWork->rssiDir[2],
+                       pWork->rssiDir[3],
+                       pWork->rssiDir[4],
+                       pWork->rssiDir[5],
+                       pWork->rssiDir[6],
+                       pWork->rssiDir[7]
+                       );
+
+            GFL_BMPWIN_ClearScreen(pWork->pBmpwinBeacon[ i ]);
+            
+            pWork->textParam->bmp = GFL_BMPWIN_GetBmp( pWork->pBmpwinBeacon[ i ] );
+            GFL_BMP_Clear(pWork->textParam->bmp,0);
+            GFL_TEXT_PrintSjisCode( msg, pWork->textParam );
+
+            //ビットマップキャラクターをアップデート
+            GFL_BMPWIN_TransVramCharacter( pWork->pBmpwinBeacon[i] );
+        }
+        else{
+            pWork->textParam->bmp = GFL_BMPWIN_GetBmp( pWork->pBmpwinBeacon[ i ] );
+            GFL_BMP_Clear(pWork->textParam->bmp,0);
+            GFL_BMPWIN_TransVramCharacter( pWork->pBmpwinBeacon[i] );
+        }
+    }
+}
+
+
+static void rssiWindowInit(SKEL_TEST_BEACON_WORK* pWork)
+{
+    int i;
+    
+    for(i = 0;i < _BCON_GET_NUM; i++){
+        pWork->pBmpwinBeacon[i] = GFL_BMPWIN_Create( TEXT_FRM,
+                                                       4, 5+i*2, 24, 1, 0, 
+                                                       GFL_BG_CHRAREA_GET_B );
+    }
+}
 
 
 static void _testChild(SKEL_TEST_BEACON_WORK* pWork)
 {
-    u8 mac[6] = {0x00,0x09,0xbf,0x08,0x2e,0x6e};
     u8 beacon;
     int i;
 
@@ -232,115 +432,42 @@ static void _testChild(SKEL_TEST_BEACON_WORK* pWork)
         }
     }
 
-    // クライアント側のテスト
-    switch(pWork->testNo){
-      case _TEST_CONNECT:
-        {
-            _pHandle = GFL_NET_CreateHandle();
-            GFL_NET_StartBeaconScan(_pHandle );    // ビーコンを待つ
-            //                GFL_NET_InitClientAndConnectToParent(_pHandle, mac);  //macアドレスへ接続
-            //                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
-        }
-            pWork->testNo++;
-            break;
-          case _TEST_CONNECT2:
-            {
-                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
-                if(pData){
-                    GFL_NET_ConnectToParent(_pHandle, pData);
-                }
-            }
-            pWork->testNo++;
-            break;
-          case _TEST_1:
-            GFL_NET_RequestNegotiation( _pHandle );
-            pWork->testNo++;
-            break;
-
-          case _TEST_4:
-            {
-                const u8 buff[10]={1,2,3,4,5,6,7,8,9,10};
-                int i;
-//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
-//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
-//                for(i=0;i<_TEST_HUGE_SIZE;i++){
-//                    _dataSend[i] = (u8)i;
-//                }
-//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_HUGE, 0, _dataSend, FALSE, FALSE);
-//                GFL_NET_SendDataEx(_pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
+    bg_init( pWork->heapID );
+    //画面作成
+    g2d_load(pWork);	//２Ｄデータ作成
 
 
-                GFL_NET_ChangeMpMode(_pHandle);
-
-            }
-            pWork->testNo++;
-            break;
-            
-
-
-          case _TEST_2:
-            {
-                u8 send = _TEST_TIMING;
-//                BOOL ret = GFL_NET_SendData(_pHandle, GFL_NET_CMD_TIMING_SYNC,&send);
-//                OS_TPrintf("send %d\n",ret);
-                GFL_NET_TimingSyncStart(_pHandle, send);
-            }
-            pWork->testNo++;
-            break;
-          case _TEST_3:
-            if(GFL_NET_IsTimingSync(_pHandle,_TEST_TIMING)){
-                NET_PRINT("タイミング取れた\n");
-                pWork->testNo++;
-            }
-            else{
-                NET_PRINT("タイミングは取れてない\n");
-            }
-            break;
-          case _TEST_END:
-            // その場で切断
-         //   GFL_NET_Disconnect();
-            // 通信で全員を切断
-            GFL_NET_SendData(_pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
-            pWork->testNo++;
-            break;
-        }
+    rssiWindowInit(pWork);
+        
+    pWork->_pHandle = GFL_NET_CreateHandle();
+    GFL_NET_StartBeaconScan(pWork->_pHandle );    // ビーコンを待つ
+    _CHANGE_STATE(_dispBeacon, 0);
 }
+
+//            u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
 
 
 static void _testParent(SKEL_TEST_BEACON_WORK* pWork)
 {
 
+    bg_init( pWork->heapID );    //画面作成
+    g2d_load(pWork);	//２Ｄデータ作成
     // サーバー側のテスト  ビーコン出しているだけ
-    switch(_testNo){
-      case _TEST_CONNECT:
-        {
-            _pHandleServer = GFL_NET_CreateHandle();
-            GFL_NET_InitServer(_pHandleServer);   // サーバ
-            _pHandle = GFL_NET_CreateHandle();  // クライアント
-            //                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
-        }
-        pWork->testNo++;
-        break;
-      case _TEST_CONNECT2:
-        GFL_NET_RequestNegotiation( _pHandle );
-        pWork->testNo++;
-        break;
-      case _TEST_1:
-        break;
-    }
+    pWork->_pHandleServer = GFL_NET_CreateHandle();
+    GFL_NET_InitServer(pWork->_pHandleServer);   // サーバ
+    pWork->_pHandle = GFL_NET_CreateHandle();  // クライアント
+    _CHANGE_STATE(_noneFunc, 0);
+
 }
 
 void TEST_BEACON_Main(SKEL_TEST_BEACON_WORK* pWork)
 {
-    if(pWork->bParent){
-        _testParent(pWork);
-    }
-    else{
-        _testChild(pWork);
+
+    if(pWork){
+        _PTRFunc state = pWork->state;
+        if(state != NULL){
+            state(pWork);
+        }
     }
 }
 
@@ -422,9 +549,12 @@ SKEL_TEST_BEACON_WORK* TEST_BEACON_Init(HEAPID heapID)
 {
 
     SKEL_TEST_BEACON_WORK* pWork = GFL_HEAP_AllocMemory(heapID, sizeof(SKEL_TEST_BEACON_WORK));
+    GFL_STD_MemClear(pWork, sizeof(SKEL_TEST_BEACON_WORK));
+    pWork->heapID = heapID;
+
     //イクニューモンを使用する前に VRAMDをdisableにする必要があるのだが
     //VRAMDが何に使われていたのかがわからないと、消すことができない
-
+    
     if(GX_VRAM_LCDC_D == GX_GetBankForLCDC()){
         GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
     }
@@ -437,19 +567,25 @@ SKEL_TEST_BEACON_WORK* TEST_BEACON_Init(HEAPID heapID)
     else if(GX_VRAM_D & GX_GetBankForClearImage()){
         GX_DisableBankForClearImage();
     }
+    else if(GX_VRAM_D & GX_GetBankForSubOBJ()){
+        GX_DisableBankForSubOBJ();
+    }
 
     GX_DisableBankForLCDC(); // LCDCにVRAMDが割り当てられてるようなので打ち消す
     GX_DisableBankForBG();
     GX_DisableBankForTex();
     GX_DisableBankForClearImage();
+    GX_DisableBankForSubOBJ();
 
     GFL_NET_Init(&aGFLNetInit);
 
-    if(PAD_BUTTON_R == GFL_UI_KEY_GetCont()){
-        pWork->bParent = TRUE;
+    if(PAD_BUTTON_R & GFL_UI_KEY_GetCont()){
+        OS_TPrintf("親になった\n");
+        _CHANGE_STATE(_testParent,0);
     }
-    else if(PAD_BUTTON_L == GFL_UI_KEY_GetCont()){
-        pWork->bParent = FALSE;
+    else{
+        OS_TPrintf("子になった\n");
+        _CHANGE_STATE(_testChild,0);
     }
 
     return pWork;

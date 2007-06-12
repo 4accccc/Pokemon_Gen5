@@ -125,7 +125,7 @@ void DebugOhnoInit(HEAPID heap_id)
 	ctrl->debug_heap_id = heap_id;
 
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
-	GFL_UI_TP_Init(ctrl->debug_heap_id);
+//	GFL_UI_TP_Init(ctrl->debug_heap_id);
 
 
 //    RTC_Init();
@@ -138,7 +138,7 @@ void DebugOhnoInit(HEAPID heap_id)
 void DebugOhnoMain(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 }
 
 //------------------------------------------------------------------
@@ -146,7 +146,7 @@ void DebugOhnoMain(void)
 void DebugOhnoExit(void)
 {
 	DEBUG_OHNO_CONTROL * ctrl = DebugOhnoControl;
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 	GFL_HEAP_FreeMemory(ctrl);
     DebugOhnoControl = NULL;
 }
@@ -154,8 +154,9 @@ void DebugOhnoExit(void)
 
 static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	u16 heap_id = GFL_HEAPID_APP;
-    DebugOhnoInit(heap_id);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_OHNO_DEBUG,0x20000);
+
+    DebugOhnoInit(HEAPID_OHNO_DEBUG);
 	return GFL_PROC_RES_FINISH;
 }
 

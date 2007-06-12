@@ -28,7 +28,7 @@
 
 // 通信で使用するCreateHEAP量
 
-#define _HEAPSIZE_NET              (0x7080)          ///< NET関連のメモリ領域
+#define _HEAPSIZE_NET              (0xE000)          ///< NET関連のメモリ領域
 #define _HEAPSIZE_WIFI             (MYDWC_HEAPSIZE+0xA000)  ///< DWCが使用する領域
 
 /// @brief  通信システム管理構造体

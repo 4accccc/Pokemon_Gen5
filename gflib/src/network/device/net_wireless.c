@@ -246,8 +246,9 @@ static void _scanCallback(WMBssDesc *bssdesc)
             // 親機情報が入っていない場合continue
             continue;
         }
-        if (GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
+        if (0==GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
             // もう一度拾った場合にタイマー加算
+            OS_TPrintf("もう一度拾った場合にタイマー加算\n");
             pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
             // 新しい親情報を保存しておく。
             MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));
@@ -412,6 +413,10 @@ BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallB
 BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+
+    if(pNetWL == NULL){
+        return FALSE;
+    }
     
     _commInit(pNetWL);
     if( pNetWL->disconnectType == _DISCONNECT_STEALTH){

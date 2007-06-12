@@ -38,7 +38,7 @@
 /// クライアント送信用キューの本数
 #define _SENDQUEUE_NUM_MAX  (100)
 /// サーバー送信用キューの本数
-#define _SENDQUEUE_SERVER_NUM_MAX      (280)
+#define _SENDQUEUE_SERVER_NUM_MAX      (180)
 
 //子機送信バッファのサイズ    8台つなぐ場合の任天堂の推奨バイト数
 //#define _SEND_BUFF_SIZE_CHILD  GFL_NET_CHILD_DATA_SIZE
@@ -46,11 +46,11 @@
 //#define _SEND_BUFF_SIZE_4CHILD  GFL_NET_CHILD_DATA_SIZE
 
 // 子機RING送信係数
-#define _SEND_RINGBUFF_FACTOR_CHILD  (22)
+#define _SEND_RINGBUFF_FACTOR_CHILD  (15)
 // 親機RING送信係数
 #define _SEND_RINGBUFF_FACTOR_PARENT  (2)
 
-#define _MIDDLE_BUFF_NUM  (5)  ///DS用ミドルバッファにどの程度ためられるのか
+#define _MIDDLE_BUFF_NUM  (4)  ///DS用ミドルバッファにどの程度ためられるのか
 
 //親機送信バッファのサイズ
 //#define _SEND_BUFF_SIZE_PARENT  GFL_NET_PARENT_DATA_SIZE
@@ -514,7 +514,7 @@ BOOL GFL_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax, BOOL bEnt
 
     ret = GFL_NET_WLParentInit(bTGIDChange, bEntry, _clearChildBuffers);
     GFL_NET_WLSetRecvCallback( _commRecvParentCallback );
-    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM); //@@OO後で外部に出す
+    _commInit(packetSizeMax, _GFL_NET_GetNETInitStruct()->netHeapID); //@@OO後で外部に出す
     return ret;
 }
 
@@ -535,7 +535,7 @@ BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax)
     ret = GFL_NET_WLChildInit(bBconInit);
     if(ret==TRUE){
         GFL_NET_WLSetRecvCallback( _commRecvCallback );
-        _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
+        _commInit(packetSizeMax, _GFL_NET_GetNETInitStruct()->netHeapID);
         _setSendCallBack( _SEND_CB_FIRST_SENDEND );
     }
     return ret;
@@ -561,7 +561,7 @@ BOOL GFL_NET_SystemChildModeInitAndConnect(int packetSizeMax,_PARENTFIND_CALLBAC
 
     GFL_NET_WLSetRecvCallback( _commRecvCallback );
 
-    _commInit(packetSizeMax, GFL_HEAPID_SYSTEM);
+    _commInit(packetSizeMax, _GFL_NET_GetNETInitStruct()->netHeapID);
     _setSendCallBack( _SEND_CB_FIRST_SENDEND );
 
     ret = GFL_NET_WLChildMacAddressConnect(mac,pCallback,pHandle);
@@ -820,8 +820,6 @@ BOOL GFL_NET_SystemUpdateData(void)
     else{
         CommMpProcess(0);
     }
-    //エラーの表示の仕組みができたら入れる  @@OO  2006.12.13
-//    CommErrorDispCheck(GFL_HEAPID_SYSTEM);
     return TRUE;
 }
 
