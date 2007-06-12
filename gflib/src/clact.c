@@ -3330,9 +3330,10 @@ static BOOL TRMAN_TrSysCallBackAddTransData( NNS_GFD_DST_TYPE type, u32 dstAddr,
 	}
 
 	GF_ASSERT( pSrc );
-	GF_ASSERT( szByte != 0 );
-	
-	TRMAN_TrDataAddData( p_data, tr_type, dstAddr, pSrc, szByte );
+//	GF_ASSERT( szByte != 0 );	0のときもあったので変更
+	if( szByte != 0 ){	// サイズが0のときは転送する必要もない
+		TRMAN_TrDataAddData( p_data, tr_type, dstAddr, pSrc, szByte );
+	}
 	return TRUE;
 }
 
