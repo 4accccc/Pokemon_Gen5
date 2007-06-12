@@ -20,6 +20,8 @@
 #include "gflib.h"
 #include "heapsys.h"
 
+#include "flash_access.h"
+
 //#include "application/backup.h"	//SaveErrorWarningCall
 
 
@@ -194,9 +196,6 @@ static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side)
 
 static int GetTotalSector(const SAVEDATA * sv);
 
-static u16 PMSVLD_DivSave_Init(u32 src, void * dst, u32 len);
-static BOOL PMSVLD_DivSave_Main(u16 lock_id, BOOL * result);
-static void PMSVLD_SaveError(u16 lock_id, int error_msg_id);
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブデータ構造の初期化
@@ -212,7 +211,7 @@ SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
 	SvPointer = sv;
 	sv->heap_save_id = heap_save_id;
 	sv->heap_temp_id = heap_temp_id;
-	sv->flash_exists = PMSVLD_Init();
+	sv->flash_exists = GFL_FLASH_Init();
 	sv->data_exists = FALSE;			//データは存在しない
 	sv->new_data_flag = TRUE;			//新規データになる
 	sv->total_save_flag = TRUE;			//全体セーブの必要がある
@@ -324,8 +323,8 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 
 	MI_CpuFillFast(buf, 0xffffffff, SECTOR_SIZE);
 	for (i = 0; i < SECTOR_MAX * 2; i++) {
-		(void)PMSVLD_Save(SECTOR_SIZE * (i + FIRST_MIRROR_START), buf, SECTOR_SIZE);
-		(void)PMSVLD_Save(SECTOR_SIZE * (i + SECOND_MIRROR_START), buf, SECTOR_SIZE);
+		(void)GFL_FLASH_Save(SECTOR_SIZE * (i + FIRST_MIRROR_START), buf, SECTOR_SIZE);
+		(void)GFL_FLASH_Save(SECTOR_SIZE * (i + SECOND_MIRROR_START), buf, SECTOR_SIZE);
 	}
 	GFL_HEAP_FreeMemory(buf);
 	SaveData_ClearData(sv);
@@ -871,14 +870,14 @@ static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 	buffer1 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
 	buffer2 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
 
-	if(PMSVLD_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SECTOR_SIZE * SECTOR_MAX)) {
+	if(GFL_FLASH_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SECTOR_SIZE * SECTOR_MAX)) {
 		_checkBlockInfo(&ndata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_NORMAL);
 		_checkBlockInfo(&bdata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_BOX);
 	} else {
 		_setDummyInfo(&ndata[MIRROR1ST]);
 		_setDummyInfo(&bdata[MIRROR1ST]);
 	}
-	if(PMSVLD_Load(SECOND_MIRROR_START * SECTOR_SIZE, buffer2, SECTOR_SIZE * SECTOR_MAX)) {
+	if(GFL_FLASH_Load(SECOND_MIRROR_START * SECTOR_SIZE, buffer2, SECTOR_SIZE * SECTOR_MAX)) {
 		_checkBlockInfo(&ndata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_NORMAL);
 		_checkBlockInfo(&bdata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_BOX);
 	} else {
@@ -968,7 +967,7 @@ static BOOL _loadBlock(u32 mirror_id, const SVBLK_INFO * blkinfo, u8 * svwk)
 
 	base_ofs = _getFlashOffset(mirror_id, blkinfo);
 	svwk += blkinfo->start_ofs;
-	return PMSVLD_Load(base_ofs, svwk, blkinfo->size);
+	return GFL_FLASH_Load(base_ofs, svwk, blkinfo->size);
 }
 
 //---------------------------------------------------------------------------
@@ -1020,7 +1019,7 @@ static u16 _saveDivStartMain(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 	base_ofs = _getFlashOffset(mirror_side, blkinfo);
 	svwk = sv->svwk.data + blkinfo->start_ofs;
 
-	return PMSVLD_DivSave_Init(base_ofs, svwk, blkinfo->size - LAST_DATA_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, blkinfo->size - LAST_DATA_SIZE);
 }
 
 //---------------------------------------------------------------------------
@@ -1042,7 +1041,7 @@ static u16 _saveDivStartFooter(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE;
 	svwk = sv->svwk.data + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE;
 
-	return PMSVLD_DivSave_Init(base_ofs, svwk, LAST_DATA_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA_SIZE);
 }
 
 //---------------------------------------------------------------------------
@@ -1064,7 +1063,7 @@ static u16 _saveDivStartFooter2(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
 	svwk = sv->svwk.data + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
 
-	return PMSVLD_DivSave_Init(base_ofs, svwk, LAST_DATA2_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA2_SIZE);
 }
 
 
@@ -1135,7 +1134,7 @@ static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
 		/* FALL THROUGH */
 	case 1:
 		//メインデータ部分セーブ
-		if (PMSVLD_DivSave_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
 			break;
 		}
 #ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
@@ -1154,7 +1153,7 @@ static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
 
 	case 3:
 		//フッタ部分セーブ
-		if (PMSVLD_DivSave_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
 			break;
 		}
 #ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
@@ -1178,7 +1177,7 @@ static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
 
 	case 5:
 		//フッタ部分セーブ
-		if (PMSVLD_DivSave_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
 			break;
 		}
 #ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
@@ -1287,7 +1286,7 @@ static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side)
 	MI_CpuFill8(&dmy_footer, 0xff, sizeof(SAVE_FOOTER));
 	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE;
 
-	return PMSVLD_Save(base_ofs, &dmy_footer, LAST_DATA_SIZE);
+	return GFL_FLASH_Save(base_ofs, &dmy_footer, LAST_DATA_SIZE);
 }
 
 
@@ -1514,17 +1513,17 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 
 	if (sv->dendou_sector_switch == 1) {
 		MakeExtraCheckData(sv, data, id, extbl->get_size());
-		result = PMSVLD_Save((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
+		result = GFL_FLASH_Save((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 		MakeExtraCheckData(sv, data, id, extbl->get_size());
-		result |= PMSVLD_Save((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
+		result |= GFL_FLASH_Save((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 	} else {
 		MakeExtraCheckData(sv, data, id, extbl->get_size());
-		result = PMSVLD_Save((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
+		result = GFL_FLASH_Save((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 		MakeExtraCheckData(sv, data, id, extbl->get_size());
-		result |= PMSVLD_Save((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
+		result |= GFL_FLASH_Save((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, data, data_size);
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 	}
     GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
@@ -1558,11 +1557,11 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, u32 heap_id, EXDATA_ID id, LOAD_RE
 	data_size = extbl->get_size() + sizeof(CHECK_TAIL_DATA);
 	buf = GFL_HEAP_AllocMemory(heap_id, data_size);
 
-	(void)PMSVLD_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+	(void)GFL_FLASH_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 	res1 = IsCorrectExtraCheckData(sv, buf, id, extbl->get_size());
 	counter1 = GetCounterFromExtraData(buf, extbl->get_size());
 
-	(void)PMSVLD_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+	(void)GFL_FLASH_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 	res2 = IsCorrectExtraCheckData(sv, buf, id ,extbl->get_size());
 	counter2 = GetCounterFromExtraData(buf, extbl->get_size());
 
@@ -1573,14 +1572,14 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, u32 heap_id, EXDATA_ID id, LOAD_RE
 	if (res1 == TRUE && res2 == FALSE) {
 		sv->dendou_sector_switch = 0;
 		sv->dendou_counter = counter1;
-		(void)PMSVLD_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+		(void)GFL_FLASH_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 		return buf;
 	}
 	//２が正常の場合
 	if (res1 == FALSE && res2 == TRUE) {
 		sv->dendou_sector_switch = 1;
 		sv->dendou_counter = counter2;
-		(void)PMSVLD_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+		(void)GFL_FLASH_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 		return buf;
 	}
 	//両方が正常の場合
@@ -1588,12 +1587,12 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, u32 heap_id, EXDATA_ID id, LOAD_RE
 		if (_diffCounter(counter1, counter2) != -1) {
 			sv->dendou_sector_switch = 0;
 			sv->dendou_counter = counter1;
-			(void)PMSVLD_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+			(void)GFL_FLASH_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 			return buf;
 		} else {
 			sv->dendou_sector_switch = 1;
 			sv->dendou_counter = counter2;
-			(void)PMSVLD_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
+			(void)GFL_FLASH_Load((SECOND_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 			return buf;
 		}
 	}
@@ -1606,217 +1605,4 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, u32 heap_id, EXDATA_ID id, LOAD_RE
 
 
 
-
-//============================================================================================
-//
-//
-//			ライブラリI/O部分
-//
-//
-//============================================================================================
-//---------------------------------------------------------------------------
-/**
- * @brief	バックアップフラッシュの動作確認
- * @retval	TRUE	バックアップフラッシュが正常に動作する
- * @retval	FALSE	正常動作しない（存在しない、違う種類のバックアップデバイス等）
- */
-//---------------------------------------------------------------------------
-BOOL PMSVLD_Init(void)
-{
-	s32 lock_id;
-	BOOL result;
-	//u32 read_buf;
-
-	lock_id = OS_GetLockID();
-	GF_ASSERT(lock_id != OS_LOCK_ID_ERROR);
-	CARD_LockBackup((CARD_ID)lock_id);
-
-	if (CARD_IdentifyBackup(CARD_BACKUP_TYPE_FLASH_4MBITS)) {
-		result = CARD_BACKUP_TYPE_FLASH_4MBITS;
-	} else
-	if (CARD_IdentifyBackup(CARD_BACKUP_TYPE_FLASH_2MBITS)) {
-		result = CARD_BACKUP_TYPE_FLASH_2MBITS;
-	} else {
-		result = CARD_BACKUP_TYPE_NOT_USE;
-	}
-
-	CARD_UnlockBackup((CARD_ID)lock_id);
-	OS_ReleaseLockID((CARD_ID)lock_id);
-
-	if (result == CARD_BACKUP_TYPE_FLASH_4MBITS) {
-		OS_TPrintf("Identified 4M FLASH\t");
-	}else if (result == CARD_BACKUP_TYPE_FLASH_2MBITS) {
-		OS_TPrintf("Identified 2M FLASH\t");
-	}else{
-		OS_TPrintf("No FLASH Identified\t");
-	}
-
-	OS_TPrintf("CardResult %d\n",CARD_GetResultCode());
-	//4Mbit FLASH SectorSize == 0x10000 PageSize == 0x100 TotalSize == 0x80000
-	//OS_TPrintf("SECTOR SIZE %x\n",CARD_GetBackupSectorSize());
-	//OS_TPrintf("PAGE SIZE %x\n",CARD_GetBackupPageSize());
-	//OS_TPrintf("TOTAL SIZE %x\n", CARD_GetBackupTotalSize());
-
-	return (result != CARD_BACKUP_TYPE_NOT_USE);
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブ
- * @param	src		フラッシュのアドレス（０～）※セクタ指定ではない
- * @param	dst		書き込むデータのアドレス
- * @param	len		書き込むデータの長さ
- * @return	BOOL	TRUEで成功、FALSEで失敗
- */
-//---------------------------------------------------------------------------
-BOOL PMSVLD_Save(u32 src, void * dst, u32 len)
-{
-	u16 lock_id;
-	BOOL result;
-	lock_id = PMSVLD_DivSave_Init(src, dst, len);
-	while (PMSVLD_DivSave_Main(lock_id, &result) == FALSE) {
-		/* Do Nothing */
-	}
-	return result;
-#if 0
-	s32 lock_id;
-	BOOL result;
-
-	lock_id = OS_GetLockID();
-	GF_ASSERT(lock_id != OS_LOCK_ID_ERROR);
-	CARD_LockBackup((CARD_ID)lock_id);
-
-//	result = CARD_WriteAndVerifyFlash(src, dst, len);
-	CARD_WriteAndVerifyFlashAsync(src, dst, len, NULL, NULL);
-	result = CARD_WaitBackupAsync();
-
-	CARD_UnlockBackup((CARD_ID)lock_id);
-	OS_ReleaseLockID((CARD_ID)lock_id);
-
-	return result;
-#endif
-}
-//---------------------------------------------------------------------------
-/**
- * @brief	ロード
- * @param	src		フラッシュのアドレス（０～）※セクタ指定ではない
- * @param	dst		読み込み先アドレス
- * @param	len		読み込むデータの長さ
- * @return	BOOL	TRUEで成功、FALSEで失敗
- */
-//---------------------------------------------------------------------------
-BOOL PMSVLD_Load(u32 src, void * dst, u32 len)
-{
-	s32 lock_id;
-	BOOL result;
-
-	lock_id = OS_GetLockID();
-	GF_ASSERT(lock_id != OS_LOCK_ID_ERROR);
-	CARD_LockBackup((CARD_ID)lock_id);
-
-	//result = CARD_ReadFlash(src, dst, len);
-	CARD_ReadFlashAsync(src, dst, len, NULL, NULL);
-	result = CARD_WaitBackupAsync();
-
-	CARD_UnlockBackup((CARD_ID)lock_id);
-	OS_ReleaseLockID((CARD_ID)lock_id);
-
-#ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
-	if (!result) {
-		GFL_HEAP_FreeMemory(SvPointer);
-		GF_ASSERT(0);
-		//BackupErrorWarningCall(HEAPID_BASE_SAVE);
-	}
-#endif
-
-	return result;
-}
-
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static BOOL SaveEndFlag;
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static void SaveCallBack(void * src)
-{
-	SaveEndFlag = TRUE;
-}
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static u16 PMSVLD_DivSave_Init(u32 src, void * dst, u32 len)
-{
-	s32 lock_id;
-	u32 buf;
-	BOOL result;
-
-	lock_id = OS_GetLockID();
-	GF_ASSERT(lock_id != OS_LOCK_ID_ERROR);
-	CARD_LockBackup((CARD_ID)lock_id);
-
-#ifndef	DISABLE_FLASH_CHECK
-	result = CARD_ReadFlash(0, &buf, sizeof(buf));
-	if (!result) {
-		/* セーブデータが読めない＝接触不良 */
-		//PMSVLD_SaveError(lock_id, SAVEERROR_MSG_DISABLE_READ);
-	}
-#endif
-	SaveEndFlag = FALSE;
-	CARD_WriteAndVerifyFlashAsync(src, dst, len, SaveCallBack, NULL);
-	return (CARD_ID)lock_id;
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static BOOL PMSVLD_DivSave_Main(u16 lock_id, BOOL * result)
-{
-	if (SaveEndFlag == TRUE) {
-		CARD_UnlockBackup(lock_id);
-		OS_ReleaseLockID(lock_id);
-
-#ifdef	DISABLE_FLASH_CHECK
-		*result = TRUE;
-#else
-		switch (CARD_GetResultCode()) {
-		case CARD_RESULT_SUCCESS:
-			*result = TRUE;
-			break;
-		default:
-			GF_ASSERT(0);
-		case CARD_RESULT_TIMEOUT:
-			*result = FALSE;
-			/* セーブデータが書き込めない＝フラッシュ寿命か故障 */
-			//PMSVLD_SaveError(lock_id, SAVEERROR_MSG_DISABLE_WRITE);
-		case CARD_RESULT_NO_RESPONSE:
-			*result = FALSE;
-			/* CARD_RESULT_NO_RESPONSE＝＝接触不良 */
-			//PMSVLD_SaveError(lock_id, SAVEERROR_MSG_DISABLE_READ);
-			break;
-		}
-#endif
-		return TRUE;
-	}
-	return FALSE;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブ失敗によるカード異常
- * @param	lock_id		バスロックでシステムが返したID
- */
-//---------------------------------------------------------------------------
-static void PMSVLD_SaveError(u16 lock_id, int error_msg_id)
-{
-	//ロックしているバスを開放する（ロムが読めなくなるので）
-	CARD_UnlockBackup(lock_id);
-	OS_ReleaseLockID(lock_id);
-
-	//セーブ失敗画面でセーブヒープを使用できるように開放する
-	GFL_HEAP_FreeMemory(SvPointer);
-
-	//セーブ失敗画面呼び出し
-	GF_ASSERT(0);
-	//SaveErrorWarningCall(HEAPID_BASE_SAVE, error_msg_id);
-}
 
