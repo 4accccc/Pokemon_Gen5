@@ -31,8 +31,6 @@
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 #define MAGIC_NUMBER	(0x20060623)
-#define	SECTOR_SIZE		(SAVE_SECTOR_SIZE)
-#define SECTOR_MAX		(SAVE_PAGE_MAX)
 
 #define	FIRST_MIRROR_START	(0)
 #define	SECOND_MIRROR_START	(64)
@@ -44,9 +42,6 @@
 #define HEAPID_SAVE_TEMP	(HEAPID_BASE_APP)
 
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-#define	SEC_DATA_SIZE		SECTOR_SIZE
 
 
 //---------------------------------------------------------------------------
@@ -59,44 +54,6 @@ typedef struct {
 	u32 blk_id;			///<対象のブロック指定ID
 	u16 crc;			///<データ全体のCRC値
 }SAVE_FOOTER;
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブブロックデータ情報
- */
-//---------------------------------------------------------------------------
-typedef struct {
-	u32 id;				///<ブロック定義ID
-	u32 start_sec;		///<開始セクタ位置
-	u32 use_sec;			///<占有セクタ数
-	u32 start_ofs;		///<セーブデータでの開始オフセット
-	u32 size;			///<セーブデータの占有サイズ
-}SVBLK_INFO;
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブデータ項目ごとの情報定義
- */
-//---------------------------------------------------------------------------
-typedef struct {
-	GMDATA_ID gmdataID;	///<セーブデータ識別ID
-	u32 size;			///<データサイズ格納
-	u32 address;		///<データ開始位置
-	u16 crc;			///<エラー検出用CRCコード格納
-	u16 blockID;		///<所属ブロックのID
-}SVPAGE_INFO;
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブワーク構造体
- *
- * 実際のセーブされる部分の構造
- */
-//---------------------------------------------------------------------------
-typedef struct {
-	u8 data[SECTOR_SIZE * SECTOR_MAX];	///<実際のデータ保持領域
-}SAVEWORK;
-
 
 //---------------------------------------------------------------------------
 /**
@@ -133,23 +90,23 @@ struct _SAVEDATA {
 	u32 heap_temp_id;
 	MATHCRC16Table crc_table;	///<CRC算出用テーブル
 
-	SAVEWORK svwk;				///<セーブデータ本体
-
 	u32 global_counter;
 	u32 current_counters[SVBLK_ID_MAX];
 	u32 current_side[SVBLK_ID_MAX];
 
 	///セーブ項目データ情報
-	SVPAGE_INFO pageinfo[GMDATA_ID_MAX];
+	//SVPAGE_INFO pageinfo[GMDATA_ID_MAX];
 
 	///セーブブロックデータ情報
 	SVBLK_INFO blkinfo[SVBLK_ID_MAX];
 
+	SVDT * svdt;
+
 	///分割転送制御用ワーク
 	NEWDIVSV_WORK ndsw;
 
-	int dendou_sector_switch;
-	u32 dendou_counter;
+	u8 svwk[SAVEAREA_SIZE];	///<実際のデータ保持領域
+
 };
 
 
@@ -178,9 +135,6 @@ static SAVEDATA * SvPointer = NULL;
 //
 //
 //============================================================================================
-static void SVDT_Init(SAVEWORK * svwk, const SVPAGE_INFO * pageinfo);
-static void SVDT_MakeIndex(SVPAGE_INFO * pageinfo);
-static void SVDT_MakeBlockIndex(SVBLK_INFO * blkinfo, const SVPAGE_INFO * pageinfo);
 
 
 static SAVE_RESULT NewSVLD_Save(SAVEDATA * sv);
@@ -193,7 +147,6 @@ static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw);
 
 static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side);
 
-static int GetTotalSector(const SAVEDATA * sv);
 
 //---------------------------------------------------------------------------
 /**
@@ -215,8 +168,9 @@ SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
 	sv->new_data_flag = TRUE;			//新規データになる
 	sv->total_save_flag = TRUE;			//全体セーブの必要がある
 	MATH_CRC16CCITTInitTable(&sv->crc_table);
-	SVDT_MakeIndex(sv->pageinfo);
-	SVDT_MakeBlockIndex(sv->blkinfo, sv->pageinfo);
+	//SVDT_MakeIndex(sv->pageinfo, sizeof(SAVE_FOOTER));
+	//SVDT_MakeBlockIndex(sv->blkinfo, sv->pageinfo, sizeof(SAVE_FOOTER));
+	sv->svdt = SVDT_Create(heap_save_id, SaveDataTable, SaveDataTableMax, sizeof(SAVE_FOOTER));
 	MI_CpuClearFast(sv->current_counters, sizeof(sv->current_counters));
 
 
@@ -240,22 +194,6 @@ SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
 		break;
 	}
 
-#ifdef	PM_DEBUG
-	{
-		int i, rest;
-		for (i = 0; i < SVBLK_ID_MAX; i++) {
-			OS_TPrintf("[%d] ",i);
-			OS_TPrintf("(%04x x %02d) - %05x = %05x\n",
-					SEC_DATA_SIZE,sv->blkinfo[i].use_sec,
-					sv->blkinfo[i].size,
-					SEC_DATA_SIZE * sv->blkinfo[i].use_sec - sv->blkinfo[i].size);
-		}
-		rest = SECTOR_MAX - GetTotalSector(sv);
-		if (rest > 0) {
-			OS_TPrintf("%2d sector(0x%05x) left.\n", rest, 0x1000 * rest);
-		}
-	}
-#endif
 
 	return sv;
 }
@@ -287,8 +225,7 @@ SAVEDATA * SaveData_GetPointer(void)
 //---------------------------------------------------------------------------
 void * SaveData_Get(SAVEDATA * sv, GMDATA_ID gmdataID)
 {
-	GF_ASSERT(gmdataID < GMDATA_ID_MAX);
-	return &(sv->svwk.data[sv->pageinfo[gmdataID].address]);
+	return &(sv->svwk[SVDT_GetPageOffset(sv->svdt, gmdataID)]);
 }
 
 //---------------------------------------------------------------------------
@@ -426,7 +363,7 @@ void SaveData_ClearData(SAVEDATA * sv)
 {
 	sv->new_data_flag = TRUE;				//新規データである
 	sv->total_save_flag = TRUE;				//全体セーブする必要がある
-	SVDT_Init(&sv->svwk, sv->pageinfo);
+	SVDT_ClearWork(sv->svwk, sv->svdt, SAVEAREA_SIZE);
 }
 
 //---------------------------------------------------------------------------
@@ -514,20 +451,6 @@ BOOL SaveData_GetTotalSaveFlag(const SAVEDATA * sv)
 void SaveData_RequestTotalSave(void)
 {
 	SvPointer->total_save_flag = TRUE;
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static int GetTotalSector(const SAVEDATA * sv)
-{
-	int i;
-	int total = 0;
-	const SVBLK_INFO * blkinfo = sv->blkinfo;
-	for (i = 0; i < SVBLK_ID_MAX; i++) {
-		total += blkinfo[i].use_sec;
-	}
-	GF_ASSERT(total == blkinfo[SVBLK_ID_MAX-1].start_sec + blkinfo[SVBLK_ID_MAX-1].use_sec);
-	return total;
 }
 
 //============================================================================================
@@ -866,17 +789,17 @@ static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 	u32 nres, bres;
 	u32 n_main, b_main, n_sub, b_sub;
 
-	buffer1 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
-	buffer2 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE * SECTOR_MAX);
+	buffer1 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SAVEAREA_SIZE);
+	buffer2 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SAVEAREA_SIZE);
 
-	if(GFL_FLASH_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SECTOR_SIZE * SECTOR_MAX)) {
+	if(GFL_FLASH_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SAVEAREA_SIZE)) {
 		_checkBlockInfo(&ndata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_NORMAL);
 		_checkBlockInfo(&bdata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_BOX);
 	} else {
 		_setDummyInfo(&ndata[MIRROR1ST]);
 		_setDummyInfo(&bdata[MIRROR1ST]);
 	}
-	if(GFL_FLASH_Load(SECOND_MIRROR_START * SECTOR_SIZE, buffer2, SECTOR_SIZE * SECTOR_MAX)) {
+	if(GFL_FLASH_Load(SECOND_MIRROR_START * SECTOR_SIZE, buffer2, SAVEAREA_SIZE)) {
 		_checkBlockInfo(&ndata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_NORMAL);
 		_checkBlockInfo(&bdata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_BOX);
 	} else {
@@ -978,10 +901,10 @@ BOOL NewSVLD_Load(SAVEDATA * sv)
 	const SVBLK_INFO * blkinfo = sv->blkinfo;
 
 	for (i = 0; i < SVBLK_ID_MAX; i++) {
-		if (_loadBlock(sv->current_side[i], &sv->blkinfo[i], sv->svwk.data) == FALSE) {
+		if (_loadBlock(sv->current_side[i], &sv->blkinfo[i], sv->svwk) == FALSE) {
 			return FALSE;
 		}
-		if (_checkSaveFooter(sv, (u32)sv->svwk.data, i) == FALSE) {
+		if (_checkSaveFooter(sv, (u32)sv->svwk, i) == FALSE) {
 			return FALSE;
 		}
 	}
@@ -1014,9 +937,9 @@ static u16 _saveDivStartMain(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 	u8 * svwk;
 	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	_setSaveFooter(sv, (u32)sv->svwk.data, block_id);
+	_setSaveFooter(sv, (u32)sv->svwk, block_id);
 	base_ofs = _getFlashOffset(mirror_side, blkinfo);
-	svwk = sv->svwk.data + blkinfo->start_ofs;
+	svwk = sv->svwk + blkinfo->start_ofs;
 
 	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, blkinfo->size - LAST_DATA_SIZE);
 }
@@ -1036,9 +959,9 @@ static u16 _saveDivStartFooter(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 	u8 * svwk;
 	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	//_setSaveFooter(sv, (u32)sv->svwk.data, block_id);
+	//_setSaveFooter(sv, (u32)sv->svwk, block_id);
 	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE;
-	svwk = sv->svwk.data + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE;
+	svwk = sv->svwk + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE;
 
 	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA_SIZE);
 }
@@ -1060,7 +983,7 @@ static u16 _saveDivStartFooter2(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 
 	//_setSaveFooter(sv, (u32)sv->svwk.data, block_id);
 	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
-	svwk = sv->svwk.data + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
+	svwk = sv->svwk + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
 
 	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA2_SIZE);
 }
@@ -1288,140 +1211,4 @@ static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side)
 	return GFL_FLASH_Save(base_ofs, &dmy_footer, LAST_DATA_SIZE);
 }
 
-
-//============================================================================================
-//
-//
-//
-//============================================================================================
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static u32 GetWorkSize(int id)
-{
-	u32 size;
-	const SAVEDATA_TABLE * table = SaveDataTable;
-	GF_ASSERT(id < SaveDataTableMax);
-	size = table[id].get_size();
-	size += 4 - (size % 4);
-	return size;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブ項目に関する辞書を作成する
- * @param	pageinfo	セーブ項目保持ワーク
- */
-//---------------------------------------------------------------------------
-static void SVDT_MakeIndex(SVPAGE_INFO * pageinfo)
-{
-	const SAVEDATA_TABLE * table = SaveDataTable;
-	int i;
-	u32 savedata_total_size = 0;
-
-
-	GF_ASSERT(SaveDataTableMax == GMDATA_ID_MAX);
-
-	for (i = 0; i < SaveDataTableMax; i++) {
-		GF_ASSERT(table[i].gmdataID == i);
-		pageinfo[i].gmdataID = table[i].gmdataID;
-		pageinfo[i].size = GetWorkSize(i);
-		pageinfo[i].address = savedata_total_size;
-		pageinfo[i].crc = 0;
-		pageinfo[i].blockID = table[i].blockID;
-		savedata_total_size += pageinfo[i].size;
-		if (i == SaveDataTableMax - 1 || table[i].blockID != table[i+1].blockID) {
-			//一番最後、あるいはブロックが切り替わるところでは
-			//フッタ用領域の分アドレスを勧めておく
-			savedata_total_size += sizeof(SAVE_FOOTER);
-		}
-#ifdef	DEBUG_ONLY_FOR_tamada
-		if (i % 4 == 0) {
-			OS_TPrintf("SVDT:");
-		}
-		OS_TPrintf("%02d:%02d:%05x(%05x) ", pageinfo[i].gmdataID, pageinfo[i].blockID,
-				pageinfo[i].address, pageinfo[i].size);
-		if (i % 4 == 3) {
-			OS_PutString("\n");
-		}
-#endif
-	}
-	if (i % 4 != 0) {
-		OS_PutString("\n");
-	}
-	GF_ASSERT(savedata_total_size <= SECTOR_SIZE * SECTOR_MAX);
-}
-
-
-//---------------------------------------------------------------------------
-/**
- * @brief	ブロックに関する辞書を作成する
- * @param	blkinfo		ブロック項目保持ワーク
- * @param	pageinfo	セーブ項目保持ワーク
- */
-//---------------------------------------------------------------------------
-static void SVDT_MakeBlockIndex(SVBLK_INFO * blkinfo, const SVPAGE_INFO * pageinfo)
-{
-	int blk_count = 0;
-	u32 total_sec, address;
-	u32 i, page;
-
-	total_sec = 0;
-	address = 0;
-	page = 0;
-	for (i = 0; i < SVBLK_ID_MAX; i ++) {
-		blkinfo[i].id = i;
-		//データサイズを計算
-		blkinfo[i].size = 0;
-		for (; pageinfo[page].blockID == i && page < SaveDataTableMax; page++) {
-			blkinfo[i].size += pageinfo[page].size;
-		}
-		blkinfo[i].size += sizeof(SAVE_FOOTER);
-		//セクタ開始ナンバーを代入
-		blkinfo[i].start_sec = total_sec;
-		//セーブワークでの開始アドレスを代入
-		blkinfo[i].start_ofs = address;
-		//使用セクタ数（切り上げ）を代入
-		blkinfo[i].use_sec = (blkinfo[i].size + SEC_DATA_SIZE - 1) / SEC_DATA_SIZE;
-
-		total_sec += blkinfo[i].use_sec;
-		address += blkinfo[i].size;
-#ifdef	DEBUG_ONLY_FOR_tamada
-		OS_TPrintf("SVBLK:%d:%08x(%02x) size:%05x(%02x)\n",i,
-				blkinfo[i].start_ofs, blkinfo[i].start_sec,
-				blkinfo[i].size, blkinfo[i].use_sec);
-#endif
-	}
-
-	GF_ASSERT(total_sec == blkinfo[SVBLK_ID_MAX-1].start_sec + blkinfo[SVBLK_ID_MAX-1].use_sec);
-	GF_ASSERT(total_sec <= SECTOR_MAX);
-}
-
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブデータのクリア
- * @param	svwk	セーブワークへのポインタ
- * @param	pageinfo	セーブ項目保持ワーク
- */
-//---------------------------------------------------------------------------
-static void SVDT_Init(SAVEWORK * svwk, const SVPAGE_INFO * pageinfo)
-{
-	const SAVEDATA_TABLE * table = SaveDataTable;
-	int i;
-	u32 size;
-	void * page;
-	u32 adrs;
-
-
-	MI_CpuClearFast(svwk->data, sizeof(svwk->data));
-
-	for (i = 0; i <SaveDataTableMax; i++) {
-		adrs = pageinfo[i].address;
-		page = &svwk->data[adrs];
-		size = pageinfo[i].size;
-		MI_CpuClearFast(page, size);
-		table[i].init_work(page);
-	}
-
-}
 
