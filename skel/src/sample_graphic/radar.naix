@@ -1,0 +1,24 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: radar.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-06-12T18:43:53
+ *****************************************************************************/
+
+#ifndef NARC_RADAR_NAIX_
+#define NARC_RADAR_NAIX_
+
+enum {
+	NARC_radar_ug_radar_NCGR = 0,
+	NARC_radar_ug_radar_NCLR = 1,
+	NARC_radar_ug_radar_NSCR = 2,
+	NARC_radar_ug_radar_obj_NANR = 3,
+	NARC_radar_ug_radar_obj_NCER = 4,
+	NARC_radar_ug_radar_obj_NCGR = 5,
+	NARC_radar_ug_radar_obj_NCLR = 6
+};
+
+/* NARC_RADAR_NAIX_ */
+#endif
