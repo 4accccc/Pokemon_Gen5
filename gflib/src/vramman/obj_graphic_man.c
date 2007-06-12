@@ -857,7 +857,7 @@ static inline void trans_cgr_core
 {
 	if( vramTransferFlag )
 	{
-		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
+//		OS_TPrintf("trans cgr VT  ofs:0x%08x, type:%d\n", byteOfs, vramType);
 		NNS_G2dLoadImageVramTransfer( charData, byteOfs, vramType, proxy );
 	}
 	else
