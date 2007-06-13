@@ -114,6 +114,10 @@ static void VBlankIntr(void)
     OS_SetIrqCheckFlag(OS_IE_V_BLANK);
 }
 
+static	const	char	*_graphicFileTable[]={
+	"src/sample_graphic/radar.narc",
+};
+
 //------------------------------------------------------------------
 //  デバッグ用メイン関数
 //------------------------------------------------------------------
@@ -125,7 +129,33 @@ void DebugOhnoInit(HEAPID heap_id)
 	ctrl->debug_heap_id = heap_id;
 
 	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &UITestProcTbl, ctrl);
-//	GFL_UI_TP_Init(ctrl->debug_heap_id);
+
+	//ARCシステム初期化
+	GFL_ARC_Init(&_graphicFileTable[0],NELEMS(_graphicFileTable));
+
+    // セルアクターシステム初期化
+	// まずこの処理を行う必要があります。
+	{
+		static const GFL_CLSYS_INIT	param = {
+			// メインとサブのサーフェース左上座標を設定します。
+			// サーフェースのサイズは（256,192）にするのが普通なので、
+			// メンバには入れませんでした。
+			// 上下の画面をつなげて使用するときは、
+			// サブサーフェースの左上座標を(0, 192)などにする必要があると思います。
+			0, 0,		// メインサーフェースの左上座標（x,y）
+			0, 256,		// サブサーフェースの左上座標（x,y）
+			
+			// 今はフルにOAMAttrを使用する場合の設定
+			// 通信アイコンなどで0～3のOam領域を使えないときなどは、
+			// OAMAttr管理数設定を変更する必要があります。
+			1, 128-1,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
+			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
+		};
+		GFL_CLACT_Init( &param, GFL_HEAPID_APP );
+	}
+
+
+    //	GFL_UI_TP_Init(ctrl->debug_heap_id);
 
 
 //    RTC_Init();

@@ -16,6 +16,7 @@
 #include "fatal_error.h"
 #include "net_icondata.h"
 #include "textprint.h"
+#include "sample_graphic/radar.naix"
 
 
 #define _BCON_GET_NUM  (6)
@@ -62,13 +63,13 @@ enum {
 };
 
 static const TESTMODE_PRINTLIST _childIndexList[] = {
-	{ test_index1, 2, 1, 30, 2 },
-	{ test_index2, 2, 22, 30, 1 },
+	{ test_index1, 2, 1, 30, 1 },
+	{ test_index2, 2, 2, 30, 1 },
 };
 
 static const TESTMODE_PRINTLIST _parentIndexList[] = {
-	{ test_index1, 2, 1, 30, 2 },
-	{ test_index3, 2, 22, 30, 1 },
+	{ test_index1, 2, 1, 30, 1 },
+	{ test_index3, 2, 2, 30, 1 },
 };
 
 //------------------------------------------------------------------
@@ -85,7 +86,7 @@ static const char font_path[] = {"src/gfl_graphic/gfl_font.dat"};
 static const GFL_TEXT_PRINTPARAM default_param = 
 { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
 
-#define TEXT_FRM			(GFL_BG_FRAME3_M)
+#define TEXT_FRM			(GFL_BG_FRAME3_S)
 #define TEXT_FRM_PRI		(0)
 
 //------------------------------------------------------------------
@@ -94,25 +95,13 @@ static const GFL_TEXT_PRINTPARAM default_param =
  */
 //------------------------------------------------------------------
 static const GFL_BG_SYS_HEADER bgsysHeader = {
-	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D
 };	
 
-static const GFL_BG_BGCNT_HEADER bgCont3 = {
-	0, 0, 0x800, 0,
-	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-};
-
-static const GFL_BG_BGCNT_HEADER bgCont0 = {
-	0, 0, 0x800, 0,
-	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
-	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-};
 
 
 #define _BACKUP_NUM  (5)   //RSSIの平均を出すためにバックアップ
+
 //------------------------------------------------------------------
 /**
  * @brief		内部ワーク構造体
@@ -135,6 +124,18 @@ struct _SKEL_TEST_BEACON_WORK{
     int timer;
     GFL_NETHANDLE* _pHandle;
     GFL_NETHANDLE* _pHandleServer;
+	GFL_CLUNIT		*p_unit;
+	GFL_CLWK		*clact_work[_BCON_GET_NUM];
+
+	void* p_cellbuff;
+	void* p_cellanmbuff;
+	NNSG2dCellDataBank*		p_cell;
+	NNSG2dCellAnimBankData*	p_cellanm;
+	NNSG2dImageProxy		imageproxy;
+	NNSG2dImagePaletteProxy	plttproxy;
+
+    
+    GFL_AREAMAN			*clact_area;
 };
 
 #if defined(DEBUG_ONLY_FOR_ohno)
@@ -205,7 +206,7 @@ static void msg_bmpwin_make
 	//ビットマップキャラクターをアップデート
 	GFL_BMPWIN_TransVramCharacter( testmode->bmpwin[bmpwinNum] );
 	//ビットマップスクリーン作成
-	//GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
+	GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
 }
 
 //------------------------------------------------------------------
@@ -268,30 +269,30 @@ static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
 static void	bg_init( HEAPID heapID )
 {
 	//ＢＧシステム起動
-	GFL_BG_Init( heapID );
+	//GFL_BG_Init( heapID );
 
 	//ＶＲＡＭ設定
-	GX_SetBankForTex(GX_VRAM_TEX_01_AB);
-	GX_SetBankForBG(GX_VRAM_BG_64_E);
-	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
+	//GX_SetBankForTex(GX_VRAM_TEX_01_AB);
+	//GX_SetBankForBG(GX_VRAM_BG_64_E);
+	//GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
 
 	//ＢＧモード設定
-	GFL_BG_InitBG( &bgsysHeader );
+//	GFL_BG_InitBG( &bgsysHeader );
 
 	//ＢＧコントロール設定
-	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
+//	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( TEXT_FRM, TEXT_FRM_PRI );
 	GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
 
 	//ビットマップウインドウシステムの起動
-	GFL_BMPWIN_Init( heapID );
+	//GFL_BMPWIN_Init( heapID );
 
 	//ARCシステム初期化
 //	GFL_ARC_Init(&GraphicFileTable[0],1);
 
 	//ディスプレイ面の選択
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
-	GFL_DISP_SetDispOn();
+	//GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+//	GFL_DISP_SetDispOn();
 }
 
 
@@ -396,11 +397,15 @@ static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
 
             //ビットマップキャラクターをアップデート
             GFL_BMPWIN_TransVramCharacter( pWork->pBmpwinBeacon[i] );
+
+            GFL_BMPWIN_MakeScreen( pWork->pBmpwinBeacon[i] );
+
         }
         else{
             pWork->textParam->bmp = GFL_BMPWIN_GetBmp( pWork->pBmpwinBeacon[ i ] );
             GFL_BMP_Clear(pWork->textParam->bmp,0);
             GFL_BMPWIN_TransVramCharacter( pWork->pBmpwinBeacon[i] );
+            GFL_BMPWIN_MakeScreen( pWork->pBmpwinBeacon[i] );
         }
     }
 }
@@ -501,6 +506,197 @@ static int _getTestCommandSize(void)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	セルアクターリソース読み込み
+ *
+ *	@param	clact_res	ワーク
+ *	@param	heapID		ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void _ClactResourceLoad( SKEL_TEST_BEACON_WORK *pWork, u32 heapID )
+{
+	BOOL result;
+	void* p_buff;
+	NNSG2dCharacterData* p_char;
+	NNSG2dPaletteData* p_pltt;
+	
+	// キャラクタデータ読み込み＆転送
+	{
+		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCGR, heapID );
+		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
+		GF_ASSERT( result );
+		NNS_G2dInitImageProxy( &pWork->imageproxy );
+		NNS_G2dLoadImage1DMapping( 
+				p_char, 
+				0, 
+				NNS_G2D_VRAM_TYPE_2DMAIN, 
+				&pWork->imageproxy );
+		NNS_G2dLoadImage1DMapping( 
+				p_char, 
+				0, 
+				NNS_G2D_VRAM_TYPE_2DSUB, 
+				&pWork->imageproxy );
+		GFL_HEAP_FreeMemory( p_buff );
+	}
+
+	// パレットデータ読み込み＆転送
+	{
+		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCLR, heapID );
+		result = NNS_G2dGetUnpackedPaletteData( p_buff, &p_pltt );
+		GF_ASSERT( result );
+		NNS_G2dInitImagePaletteProxy( &pWork->plttproxy );
+		NNS_G2dLoadPalette( 
+				p_pltt, 
+				0, 
+				NNS_G2D_VRAM_TYPE_2DMAIN, 
+				&pWork->plttproxy );
+		NNS_G2dLoadPalette( 
+				p_pltt, 
+				0, 
+				NNS_G2D_VRAM_TYPE_2DSUB, 
+				&pWork->plttproxy );
+		GFL_HEAP_FreeMemory( p_buff );
+	}
+
+	// セルデータ読み込み
+	{
+		pWork->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCER, heapID );
+		result = NNS_G2dGetUnpackedCellBank( pWork->p_cellbuff, &pWork->p_cell );
+		GF_ASSERT( result );
+	}
+
+	// セルアニメデータ読み込み
+	{
+		pWork->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NANR, heapID );
+		result = NNS_G2dGetUnpackedAnimBank( pWork->p_cellanmbuff, &pWork->p_cellanm );
+		GF_ASSERT( result );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		画面の初期化
+ */
+//------------------------------------------------------------------
+
+static void _grapInit(SKEL_TEST_BEACON_WORK* pWork)
+{
+    // セルアクターユニット作成
+	pWork->p_unit = GFL_CLACT_UNIT_Create( _BCON_GET_NUM, pWork->heapID );
+	//エリアマネージャ初期化
+	pWork->clact_area=GFL_AREAMAN_Create(_BCON_GET_NUM, pWork->heapID);
+	
+	//BGシステム初期化
+	GFL_BG_Init(pWork->heapID);
+
+	//VRAM設定
+	{
+		GFL_BG_DISPVRAM vramSetTable = {
+			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+			GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+			GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
+			GX_VRAM_TEXPLTT_0_F				// テクスチャパレットスロット
+		};
+		GFL_DISP_SetBank( &vramSetTable );
+
+		//VRAMクリア
+		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+	}
+
+	// BG SYSTEM
+    GFL_BG_InitBG( &bgsysHeader );
+
+	//メイン画面フレーム設定
+	{
+		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
+			///<FRAME1_M
+			{
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
+			///<FRAME2_M
+			{
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			},
+			///<FRAME3_M
+			{
+				0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+			},
+			///<FRAME2_S
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
+			///<FRAME3_S
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
+		};
+		GFL_BG_SetBGControl(GFL_BG_FRAME1_M, &TextBgCntDat[0], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME1_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+		GFL_BG_SetBGControl(GFL_BG_FRAME2_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME2_S);
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_S, &TextBgCntDat[4], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_S);
+
+		// OBJマッピングモード
+		GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
+		GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
+
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	}
+
+	//画面生成
+	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_radar_ug_radar_NCGR,GFL_BG_FRAME2_M,0,0,0,pWork->heapID);
+	GFL_ARC_UTIL_TransVramScreen(0,NARC_radar_ug_radar_NSCR,GFL_BG_FRAME2_M,0,0,0,pWork->heapID);
+	GFL_ARC_UTIL_TransVramPalette(0,NARC_radar_ug_radar_NCLR,PALTYPE_MAIN_BG,0,0x100,pWork->heapID);
+
+	GFL_DISP_SetDispOn();
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+
+	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,16,0,2);
+
+	//セルアクターリソース読み込み
+	_ClactResourceLoad(pWork, pWork->heapID);
+
+
+	//BMP関連初期化
+	GFL_BMPWIN_Init(pWork->heapID);
+#if 0
+    pWork->yossy_bmpwin=GFL_BMPWIN_Create(GFL_BG_FRAME1_M,0,0,32,32,2,GFL_BMP_CHRAREA_GET_B);
+	GFL_BMPWIN_MakeScreen(pWork->yossy_bmpwin);
+	GFL_BG_LoadScreenReq(GFL_BG_FRAME1_M);
+#endif
+
+    // 通信アイコン再描画
+    GFL_NET_ReloadIcon();
+
+
+}
+
 // ローカル通信テーブル
 static const NetRecvFuncTable _CommPacketTbl[] = {
     // 可変サイズテスト
@@ -577,6 +773,8 @@ SKEL_TEST_BEACON_WORK* TEST_BEACON_Init(HEAPID heapID)
     GX_DisableBankForClearImage();
     GX_DisableBankForSubOBJ();
 
+    _grapInit(pWork);
+    
     GFL_NET_Init(&aGFLNetInit);
 
     if(PAD_BUTTON_R & GFL_UI_KEY_GetCont()){
