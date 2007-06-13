@@ -20,4 +20,5 @@ extern BOOL GFL_FLASH_Save(u32 src, void * dst, u32 len);
 extern BOOL GFL_FLASH_Load(u32 src, void * dst, u32 len);
 extern u16 GFL_FLASH_SAVEASYNC_Init(u32 src, void * dst, u32 len);
 extern BOOL GFL_FLASH_SAVEASYNC_Main(u16 lock_id, BOOL * result);
+extern void GFL_FLASH_SAVEASYNC_Cancel(u16 lock_id);
 

@@ -210,6 +210,24 @@ static BOOL GFL_FLASH_SAVEASYNC_Main(u16 lock_id, BOOL * result)
 
 //---------------------------------------------------------------------------
 /**
+ * @brief
+ * @param	lock_id
+ *
+ */
+//---------------------------------------------------------------------------
+void GFL_FLASH_SAVEASYNC_Cancel(u16 lock_id)
+{
+    if(!CARD_TryWaitBackupAsync()){
+        CARD_CancelBackupAsync();		//非同期処理キャンセルのリクエスト
+
+        CARD_UnlockBackup(lock_id);
+        OS_ReleaseLockID(lock_id);
+    }
+}
+
+
+//---------------------------------------------------------------------------
+/**
  * @brief	セーブ失敗によるカード異常
  * @param	lock_id		バスロックでシステムが返したID
  */

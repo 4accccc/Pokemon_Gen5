@@ -9,10 +9,8 @@
  */
 //============================================================================================
 
-//#include "common.h"
 #include <nitro.h>
 #include <nnsys.h>
-//#include "gflib/system.h"
 
 #include "savedata.h"
 #include "savedata_local.h"
@@ -22,7 +20,6 @@
 
 #include "flash_access.h"
 
-//#include "application/backup.h"	//SaveErrorWarningCall
 
 
 //=============================================================================
@@ -30,47 +27,36 @@
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-#define MAGIC_NUMBER	(0x20060623)
-
-#define	FIRST_MIRROR_START	(0)
-#define	SECOND_MIRROR_START	(64)
-
 #define MIRROR1ST	(0)
 #define	MIRROR2ND	(1)
 #define	MIRRORERROR	(2)
 
-#define HEAPID_SAVE_TEMP	(HEAPID_BASE_APP)
-
-
-
-
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 typedef struct {
-	u32 g_count;		///<グローバルカウンタ（MYデータ、BOXデータ共有）
-	u32 b_count;		///<ブロック内カウンタ（MYデータとBOXデータとで独立）
+	u32 g_count;		///<グローバルカウンタ
 	u32 size;			///<データサイズ（フッタサイズ含む）
 	u32 magic_number;	///<マジックナンバー
-	u32 blk_id;			///<対象のブロック指定ID
 	u16 crc;			///<データ全体のCRC値
 }SAVE_FOOTER;
 
 //---------------------------------------------------------------------------
 /**
- * @brief	分割転送制御用ワーク
+ * @brief	バックアップ制御構造体
  */
 //---------------------------------------------------------------------------
 typedef struct {
-	BOOL total_save_mode;
-	u32 block_start;
-	u32 block_current;
-	u32 block_end;
+	BOOL flash_exists;			///<バックアップFLASHが存在するかどうか
+	u32 heap_save_id;			///<セーブデータ用に使用するヒープの指定
+	u32 heap_temp_id;			///<テンポラリに使用するヒープの指定
+	MATHCRC16Table crc_table;	///<CRC算出用テーブル
+
+	///分割転送制御用ワーク
+	u32 counter_backup;
 	u16 lock_id;
 	int div_seq;
-	u32 g_backup;
-	u32 b_backup[SVBLK_ID_MAX];
-}NEWDIVSV_WORK;
 
+}BACKUP_SYSTEM;
 
 //---------------------------------------------------------------------------
 /**
@@ -80,35 +66,21 @@ typedef struct {
  */
 //---------------------------------------------------------------------------
 struct _SAVEDATA {
-	BOOL flash_exists;			///<バックアップFLASHが存在するかどうか
+	u32 start_ofs;
+	u32 savearea_size;
+	u32 magic_number;
+
 	BOOL data_exists;			///<データが存在するかどうか
-	BOOL new_data_flag;			///<「さいしょから」のデータかどうか
-	BOOL total_save_flag;		///<全体セーブが必要かどうかのフラグ
 	LOAD_RESULT first_status;	///<一番最初のセーブデータチェック結果
-
-	u32 heap_save_id;
-	u32 heap_temp_id;
-	MATHCRC16Table crc_table;	///<CRC算出用テーブル
-
 	u32 global_counter;
-	u32 current_counters[SVBLK_ID_MAX];
-	u32 current_side[SVBLK_ID_MAX];
+	u32 current_side;
 
-	///セーブ項目データ情報
-	//SVPAGE_INFO pageinfo[GMDATA_ID_MAX];
-
-	///セーブブロックデータ情報
-	SVBLK_INFO blkinfo[SVBLK_ID_MAX];
-
+	///セーブデータ構造定義へのポインタ
 	SVDT * svdt;
+	u32 svdt_size;
 
-	///分割転送制御用ワーク
-	NEWDIVSV_WORK ndsw;
-
-	u8 svwk[SAVEAREA_SIZE];	///<実際のデータ保持領域
-
+	u8 * svwk;	///<実際のデータ保持領域
 };
-
 
 //============================================================================================
 //
@@ -119,13 +91,10 @@ struct _SAVEDATA {
 //============================================================================================
 //---------------------------------------------------------------------------
 /**
- * @brief	セーブデータ構造体へのポインタ
- *
- * このファイルで唯一静的確保される変数。
- * ゲーム開始時に初期化される。
+ * @brief	バックアップシステムの制御構造体
  */
 //---------------------------------------------------------------------------
-static SAVEDATA * SvPointer = NULL;
+static BACKUP_SYSTEM * svsys;
 
 
 //============================================================================================
@@ -140,52 +109,77 @@ static SAVEDATA * SvPointer = NULL;
 static SAVE_RESULT NewSVLD_Save(SAVEDATA * sv);
 static BOOL NewSVLD_Load(SAVEDATA * sv);
 static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv);
-static void NEWSVLD_DivSaveInit(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, u32 block_id);
-static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw);
-static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, SAVE_RESULT result);
-static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw);
 
-static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side);
+static void NEWSVLD_DivSaveInit(SAVEDATA * sv);
+static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv);
+static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, SAVE_RESULT result);
+static void NEWSVLD_DivSaveCancel(SAVEDATA * sv);
+
+static BOOL EraseFlashFooter(const SAVEDATA * sv);
 
 
 //---------------------------------------------------------------------------
 /**
- * @brief	セーブデータ構造の初期化
  */
 //---------------------------------------------------------------------------
-SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
+void GFL_BACKUP_Init(u32 heap_save_id, u32 heap_temp_id)
+{
+	svsys = GFL_HEAP_AllocMemory(heap_save_id, sizeof(BACKUP_SYSTEM));
+	GFL_STD_MemClear32(svsys, sizeof(SAVEDATA));
+	svsys->heap_save_id = heap_save_id;
+	svsys->heap_temp_id = heap_temp_id;
+	MATH_CRC16CCITTInitTable(&svsys->crc_table);
+	//フラッシュアクセス関連初期化
+	svsys->flash_exists = GFL_FLASH_Init();
+}
+
+//---------------------------------------------------------------------------
+/**
+ */
+//---------------------------------------------------------------------------
+void GFL_BACKUP_Exit(void)
+{
+	GFL_HEAP_FreeMemory(svsys);
+	svsys = NULL;
+}
+
+//---------------------------------------------------------------------------
+/**
+ */
+//---------------------------------------------------------------------------
+SAVEDATA * GFL_SVLD_Create(const GFL_SVLD_PARAM * sv_param)
 {
 	SAVEDATA * sv;
 
+	sv = GFL_HEAP_AllocMemory(svsys->heap_save_id, sizeof(SAVEDATA));
+	GFL_STD_MemClear32(sv, sizeof(SAVEDATA));
 
-	sv = GFL_HEAP_AllocMemory(heap_save_id, sizeof(SAVEDATA));
-	MI_CpuClearFast(sv, sizeof(SAVEDATA));
-	SvPointer = sv;
-	sv->heap_save_id = heap_save_id;
-	sv->heap_temp_id = heap_temp_id;
-	sv->flash_exists = GFL_FLASH_Init();
+	//初期化用パラメータ設定
+	sv->start_ofs = sv_param->savearea_top_address;
+	sv->savearea_size = sv_param->savearea_size;
+	sv->magic_number = sv_param->magic_number;
+
+	//セーブデータ構造テーブル生成
+	sv->svdt = SVDT_Create(svsys->heap_save_id, sv_param->table, sv_param->table_max,
+			sv->savearea_size, sizeof(SAVE_FOOTER));
+
+	//セーブデータ用メモリを確保
+	sv->svwk = GFL_HEAP_AllocMemory(svsys->heap_save_id, sv->savearea_size);
+	GFL_STD_MemClear32(sv->svwk, sv->savearea_size);
 	sv->data_exists = FALSE;			//データは存在しない
-	sv->new_data_flag = TRUE;			//新規データになる
-	sv->total_save_flag = TRUE;			//全体セーブの必要がある
-	MATH_CRC16CCITTInitTable(&sv->crc_table);
-	//SVDT_MakeIndex(sv->pageinfo, sizeof(SAVE_FOOTER));
-	//SVDT_MakeBlockIndex(sv->blkinfo, sv->pageinfo, sizeof(SAVE_FOOTER));
-	sv->svdt = SVDT_Create(heap_save_id, SaveDataTable, SaveDataTableMax, sizeof(SAVE_FOOTER));
-	MI_CpuClearFast(sv->current_counters, sizeof(sv->current_counters));
+
+	//実データサイズを計算
+	sv->svdt_size = SVDT_GetWorkSize(sv->svdt);
 
 
 	//データ存在チェックを行っている
 	sv->first_status = NewCheckLoadData(sv);
 	switch (sv->first_status) {
 	case LOAD_RESULT_OK:
-		sv->total_save_flag = FALSE;	//全体セーブの必要はない
-										//NGの場合はTRUEのままなので全体セーブになる
-		/* FALL THROUGH */
 	case LOAD_RESULT_NG:
 		//まともなデータがあるようなので読み込む
 		(void)NewSVLD_Load(sv);
 		sv->data_exists = TRUE;			//データは存在する
-		sv->new_data_flag = FALSE;		//新規データではない
 		break;
 	case LOAD_RESULT_NULL:
 	case LOAD_RESULT_BREAK:
@@ -194,25 +188,18 @@ SAVEDATA * SaveData_System_Init(u32 heap_save_id, u32 heap_temp_id)
 		break;
 	}
 
-
 	return sv;
 }
 
 //---------------------------------------------------------------------------
 /**
- * @brief	セーブデータへのポインタ取得
- * @return	SAVEDATA	セーブデータ構造へのポインタ
- *
- * 基本的にはセーブデータへのグローバル参照は避けたい。そのため、この関数を
- * 使用する箇所は厳重に制限されなければならない。できればプログラマリーダーの
- * 許可がなければ使用できないようにしたい。
- * 変なアクセスをしたら修正がかかります。使用方法には注意してください。
  */
 //---------------------------------------------------------------------------
-SAVEDATA * SaveData_GetPointer(void)
+void GFL_SVLD_Delete(SAVEDATA * sv)
 {
-	GF_ASSERT(SvPointer != NULL);
-	return SvPointer;
+	SVDT_Delete(sv->svdt);
+	GFL_HEAP_FreeMemory(sv->svwk);
+	GFL_HEAP_FreeMemory(sv);
 }
 
 //---------------------------------------------------------------------------
@@ -223,14 +210,14 @@ SAVEDATA * SaveData_GetPointer(void)
  * @return	必要なセーブ領域へのポインタ
  */
 //---------------------------------------------------------------------------
-void * SaveData_Get(SAVEDATA * sv, GMDATA_ID gmdataID)
+void * SaveData_Get(SAVEDATA * sv, DATA_ID gmdataID)
 {
 	return &(sv->svwk[SVDT_GetPageOffset(sv->svdt, gmdataID)]);
 }
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-const void * SaveData_GetReadOnlyData(const SAVEDATA * sv, GMDATA_ID gmdataID)
+const void * SaveData_GetReadOnlyData(const SAVEDATA * sv, DATA_ID gmdataID)
 {
 	return SaveData_Get((SAVEDATA *)sv, gmdataID);
 }
@@ -247,20 +234,18 @@ const void * SaveData_GetReadOnlyData(const SAVEDATA * sv, GMDATA_ID gmdataID)
 //---------------------------------------------------------------------------
 BOOL SaveData_Erase(SAVEDATA * sv)
 {
-	u32 i;
-	u8 * buf = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SECTOR_SIZE);
+	u32 adrs;
+	u32 work_size = 0x1000;		//適当
+	u8 * buf = GFL_HEAP_AllocMemory(- svsys->heap_temp_id, work_size);
     GFL_UI_SleepDisable(GFL_UI_SLEEP_SVLD);
 
 	//各ブロックのフッタ部分だけを先行して削除する
-	(void)EraseFlashFooter(sv, SVBLK_ID_NORMAL, !sv->current_side[SVBLK_ID_NORMAL]);
-	(void)EraseFlashFooter(sv, SVBLK_ID_BOX, !sv->current_side[SVBLK_ID_BOX]);
-	(void)EraseFlashFooter(sv, SVBLK_ID_NORMAL, sv->current_side[SVBLK_ID_NORMAL]);
-	(void)EraseFlashFooter(sv, SVBLK_ID_BOX, sv->current_side[SVBLK_ID_BOX]);
+	EraseFlashFooter(sv);
 
-	MI_CpuFillFast(buf, 0xffffffff, SECTOR_SIZE);
-	for (i = 0; i < SECTOR_MAX * 2; i++) {
-		(void)GFL_FLASH_Save(SECTOR_SIZE * (i + FIRST_MIRROR_START), buf, SECTOR_SIZE);
-		(void)GFL_FLASH_Save(SECTOR_SIZE * (i + SECOND_MIRROR_START), buf, SECTOR_SIZE);
+	GFL_STD_MemFill32(buf, 0xffffffff, work_size);
+	for (adrs = 0; adrs < sv->savearea_size; adrs += work_size) {
+		GFL_FLASH_Save(adrs + sv->start_ofs, buf, work_size);
+		//GFL_FLASH_Save(adrs + sv->start_ofs + sv->savearea_size, buf, work_size);
 	}
 	GFL_HEAP_FreeMemory(buf);
 	SaveData_ClearData(sv);
@@ -281,7 +266,7 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 BOOL SaveData_Load(SAVEDATA * sv)
 {
 	BOOL result;
-	if (!sv->flash_exists) {
+	if (!svsys->flash_exists) {
 		return FALSE;
 	}
 
@@ -289,7 +274,6 @@ BOOL SaveData_Load(SAVEDATA * sv)
 
 	if (result) {
 		sv->data_exists = TRUE;			//データは存在する
-		sv->new_data_flag = FALSE;		//新規データではない
 		return TRUE;
 	} else {
 		return FALSE;
@@ -308,45 +292,15 @@ SAVE_RESULT SaveData_Save(SAVEDATA * sv)
 {
 	SAVE_RESULT result;
 
-	if (!sv->flash_exists) {
-#ifdef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
-		return SAVE_RESULT_OK;
-#else
+	if (!svsys->flash_exists) {
 		return SAVE_RESULT_NG;
-#endif
 	}
 
 	result = NewSVLD_Save(sv);
 
 	if (result == SAVE_RESULT_OK) {
 		sv->data_exists = TRUE;			//データは存在する
-		sv->new_data_flag = FALSE;		//新規データではない
 	}
-	return result;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブ処理（部分）
- * @param	sv			セーブデータ構造へのポインタ
- * @param	id			セーブ対象のブロックID
- * @retval	TRUE		書き込み成功
- * @retval	FALSE		書き込み失敗
- *
- * id　にSVBLK_ID_MAXを指定すると全体セーブとなる
- */
-//---------------------------------------------------------------------------
-SAVE_RESULT SaveData_SaveParts(SAVEDATA * sv, SVBLK_ID id)
-{
-	SAVE_RESULT result;
-
-	GF_ASSERT(id < SVBLK_ID_MAX);
-	GF_ASSERT(sv->new_data_flag == FALSE);
-	GF_ASSERT(sv->data_exists == TRUE);
-	SaveData_DivSave_Init(sv, id);
-	do {
-		result = SaveData_DivSave_Main(sv);
-	}while(result == SAVE_RESULT_CONTINUE || result == SAVE_RESULT_LAST);
 	return result;
 }
 
@@ -361,9 +315,7 @@ SAVE_RESULT SaveData_SaveParts(SAVEDATA * sv, SVBLK_ID id)
 //---------------------------------------------------------------------------
 void SaveData_ClearData(SAVEDATA * sv)
 {
-	sv->new_data_flag = TRUE;				//新規データである
-	sv->total_save_flag = TRUE;				//全体セーブする必要がある
-	SVDT_ClearWork(sv->svwk, sv->svdt, SAVEAREA_SIZE);
+	SVDT_ClearWork(sv->svwk, sv->svdt);
 }
 
 //---------------------------------------------------------------------------
@@ -373,9 +325,9 @@ void SaveData_ClearData(SAVEDATA * sv)
  * @return	BOOL		TRUEのとき、フラッシュが存在する
  */
 //---------------------------------------------------------------------------
-BOOL SaveData_GetFlashExistsFlag(const SAVEDATA * sv)
+BOOL GFL_BACKUP_IsEnableFlash(const SAVEDATA * sv)
 {
-	return sv->flash_exists;
+	return svsys->flash_exists;
 }
 
 //---------------------------------------------------------------------------
@@ -402,57 +354,6 @@ BOOL SaveData_GetExistFlag(const SAVEDATA * sv)
 	return sv->data_exists;
 }
 
-//---------------------------------------------------------------------------
-/**
- * @brief	新規ゲーム状態を取得
- * @param	sv			セーブデータ構造へのポインタ
- * @param	BOOL		TRUEのとき、新規ゲーム（でまだセーブしていない）
- */
-//---------------------------------------------------------------------------
-BOOL SaveData_GetNewDataFlag(const SAVEDATA * sv)
-{
-	return sv->new_data_flag;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	データ上書きチェック
- * @param	sv			セーブデータ構造へのポインタ
- * @retval	TRUE		既にあるデータに別のデータを上書きしようとしている
- * @retval	FALSE		データがないか、既存データである
- */
-//---------------------------------------------------------------------------
-BOOL SaveData_IsOverwritingOtherData(const SAVEDATA * sv)
-{
-	if (SaveData_GetNewDataFlag(sv) && SaveData_GetExistFlag(sv)) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	全体セーブが必要な状態かどうかを判定する
- * @param	sv			セーブデータ構造へのポインタ
- * @return	BOOL		TRUEのとき、全体セーブが必要（ボックスが更新されている）
- */
-//---------------------------------------------------------------------------
-BOOL SaveData_GetTotalSaveFlag(const SAVEDATA * sv)
-{
-	return sv->total_save_flag;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief	全体セーブを要求する
- */
-//---------------------------------------------------------------------------
-void SaveData_RequestTotalSave(void)
-{
-	SvPointer->total_save_flag = TRUE;
-}
-
 //============================================================================================
 //
 //
@@ -467,9 +368,9 @@ void SaveData_RequestTotalSave(void)
  * @param	sv			セーブデータ構造へのポインタ
  */
 //---------------------------------------------------------------------------
-void SaveData_DivSave_Init(SAVEDATA * sv, u32 BlockID)
+void SaveData_DivSave_Init(SAVEDATA * sv)
 {
-	NEWSVLD_DivSaveInit(sv, &sv->ndsw, BlockID);
+	NEWSVLD_DivSaveInit(sv);
 }
 
 //---------------------------------------------------------------------------
@@ -482,9 +383,9 @@ void SaveData_DivSave_Init(SAVEDATA * sv, u32 BlockID)
 SAVE_RESULT SaveData_DivSave_Main(SAVEDATA * sv)
 {
 	SAVE_RESULT result;
-	result = NEWSVLD_DivSaveMain(sv, &sv->ndsw);
+	result = NEWSVLD_DivSaveMain(sv);
 	if (result != SAVE_RESULT_CONTINUE && result != SAVE_RESULT_LAST) {
-		NEWSVLD_DivSaveEnd(sv, &sv->ndsw, result);
+		NEWSVLD_DivSaveEnd(sv, result);
 	}
 	return result;
 }
@@ -497,7 +398,7 @@ SAVE_RESULT SaveData_DivSave_Main(SAVEDATA * sv)
 //---------------------------------------------------------------------------
 void SaveData_DivSave_Cancel(SAVEDATA * sv)
 {
-	NEWSVLD_DivSaveCancel(sv, &sv->ndsw);
+	NEWSVLD_DivSaveCancel(sv);
 }
 
 //============================================================================================
@@ -510,64 +411,7 @@ void SaveData_DivSave_Cancel(SAVEDATA * sv)
 typedef struct {
 	BOOL IsCorrect;
 	u32 g_count;
-	u32 b_count;
 }CHK_INFO;
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-/**
- * @brief	セーブデータの取りえる状態について
- *
- * ありえるパターンについて！
- * 上下は進行データとボックスデータ、左右はミラーの組。正常化どうかが4ビットあるので
- * 16通りのパターンとなる
- *
- *	０		１		２		３
- *	○○	○○	○○	○○
- *	○○	○×	×○	××
- *
- *	４		５		６		７
- *	○×	○×	○×	○×
- *	○○	○×	×○	××
- *
- *	８		９		１０	１１
- *	×○	×○	×○	×○
- *	○○	○×	×○	××
- *
- *	１２	１３	１４	１５
- *	××	××	××	××
- *	○○	○×	×○	××
- */
-
-#ifdef	DEBUG_ONLY_FOR_tamada
-//---------------------------------------------------------------------------
-/**
- */
-//---------------------------------------------------------------------------
-static void _DebugPutFooter(const SAVE_FOOTER * footer)
-{
-	OS_TPrintf("FOOTER:adrs:%08x",footer);
-	OS_TPrintf(" size:%05x\n",footer->size);
-	OS_TPrintf("FOOTER:GCNT:%08x",footer->g_count);
-	OS_TPrintf(" BCNT:%08x\n",footer->b_count);
-	//OS_TPrintf("FOOTER:MGNR:%08x\n",footer->magic_number);
-	OS_TPrintf("FOOTER:BKID:%02d",footer->blk_id);
-	OS_TPrintf(" CRC :%04x\n",footer->crc);
-}
-static void _DebugPutOX(BOOL flag)
-{
-	if (flag) {
-		OS_PutString(" O");
-	} else {
-		OS_PutString(" X");
-	}
-}
-#define	DEBUG_FOOTER_PUT(footer)	_DebugPutFooter(footer)
-#define	DEBUG_OX_PUT(value)			_DebugPutOX(value)
-#else
-#define	DEBUG_FOOTER_PUT(footer)	/* DO NOTHING */
-#define	DEBUG_OX_PUT(value)			/* DO NOTHING */
-#endif
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
@@ -575,7 +419,6 @@ static void _setDummyInfo(CHK_INFO * chkinfo)
 {
 	chkinfo->IsCorrect = FALSE;
 	chkinfo->g_count = 0;
-	chkinfo->b_count = 0;
 }
 //---------------------------------------------------------------------------
 /**
@@ -585,94 +428,63 @@ static void _setDummyInfo(CHK_INFO * chkinfo)
  * @param	size	セーブデータのサイズ（フッタ部分含む）
  */
 //---------------------------------------------------------------------------
-static u16 _calcFooterCrc(const SAVEDATA * sv, void * start, u32 size)
+static u16 _calcFooterCrc(void * start, u32 size)
 {
-	return MATH_CalcCRC16CCITT(&sv->crc_table, start, size - sizeof(SAVE_FOOTER));
+	return MATH_CalcCRC16CCITT(&svsys->crc_table, start, size - sizeof(SAVE_FOOTER));
 }
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブフラッシュへのアドレスオフセット取得
- * @param	mirror_id	対象とするミラーの指定（0 or 1)
- * @param	blkinfo		ブロック情報へのポインタ
  */
 //---------------------------------------------------------------------------
-static u32 _getFlashOffset(u32 mirror_id, const SVBLK_INFO * blkinfo)
+static u32 _getFlashOffset(const SAVEDATA * sv)
 {
-	u32 base_ofs;
-	if (mirror_id == MIRROR1ST) {
-		base_ofs = FIRST_MIRROR_START * SECTOR_SIZE;
-	} else {
-		base_ofs = SECOND_MIRROR_START * SECTOR_SIZE;
-	}
-	base_ofs += blkinfo->start_ofs;
-	return base_ofs;
+	return sv->start_ofs;
 }
 
 //---------------------------------------------------------------------------
 /**
  */
 //---------------------------------------------------------------------------
-static SAVE_FOOTER * _getFooterAddress(SAVEDATA * sv, u32 svwk_adrs, u32 blk_id)
+static SAVE_FOOTER * _getFooterAddress(SAVEDATA * sv, u8 * svwk_adrs)
 {
-	u32 start_adr;
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[blk_id];
+	u8 * start_adr;
 
-	start_adr = svwk_adrs + blkinfo->start_ofs;
-	GF_ASSERT(blkinfo->size);
-	start_adr += blkinfo->size;
-	start_adr -= sizeof(SAVE_FOOTER);
+	start_adr = svwk_adrs + sv->svdt_size - sizeof(SAVE_FOOTER);
 	return (SAVE_FOOTER *)start_adr;
 }
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static BOOL _checkSaveFooter(SAVEDATA * sv, u32 svwk_adrs, u32 blk_id)
-{
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[blk_id];
-	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs, blk_id);
-	u32 start_adr = svwk_adrs + blkinfo->start_ofs;
 
-	DEBUG_FOOTER_PUT(footer);
-	if (footer->size != blkinfo->size) {
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static BOOL _checkSaveFooter(SAVEDATA * sv, u8 * svwk_adrs)
+{
+	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs);
+
+	if (footer->size != sv->svdt_size) {
 		return FALSE;
 	}
-	if (footer->magic_number != MAGIC_NUMBER) {
+	if (footer->magic_number != sv->magic_number) {
 		return FALSE;
 	}
-	if (footer->blk_id != blk_id) {
-		return FALSE;
-	}
-	if (footer->crc != _calcFooterCrc(sv, (void *)start_adr, blkinfo->size)) {
+	if (footer->crc != _calcFooterCrc(svwk_adrs, sv->svdt_size)) {
 		return FALSE;
 	}
 	return TRUE;
 }
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static void _checkBlockInfo(CHK_INFO * chkinfo, SAVEDATA * sv, u32 svwk_adrs, u32 blk_id)
-{
-	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs, blk_id);
-	chkinfo->IsCorrect = _checkSaveFooter(sv, svwk_adrs, blk_id);
-	chkinfo->g_count = footer->g_count;
-	chkinfo->b_count = footer->b_count;
-}
+
 //---------------------------------------------------------------------------
 /**
  */
 //---------------------------------------------------------------------------
-static void _setSaveFooter(SAVEDATA * sv, u32 svwk_adrs, u32 blk_id)
+static void _setSaveFooter(SAVEDATA * sv, u8 * svwk_adrs)
 {
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[blk_id];
-	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs, blk_id);
-	u32 start_adr = svwk_adrs + blkinfo->start_ofs;
+	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs);
 
 	footer->g_count = sv->global_counter;
-	footer->b_count = sv->current_counters[blk_id];
-	footer->size = blkinfo->size;
-	footer->magic_number = MAGIC_NUMBER;
-	footer->blk_id = blk_id;
-	footer->crc = _calcFooterCrc(sv, (void *)start_adr, blkinfo->size);
+	footer->size = sv->svdt_size;
+	footer->magic_number = sv->magic_number;
+	footer->crc = _calcFooterCrc(svwk_adrs, sv->svdt_size);
 
-	DEBUG_FOOTER_PUT(footer);
 }
 
 //---------------------------------------------------------------------------
@@ -705,37 +517,18 @@ static int _diffCounter(u32 counter1, u32 counter2)
 //---------------------------------------------------------------------------
 static u32 _getNewerData(const CHK_INFO * chk1, const CHK_INFO * chk2, u32 *res1, u32 *res2)
 {
-	int global, block;
+	int global;
 	global = _diffCounter(chk1->g_count, chk2->g_count);
-	block = _diffCounter(chk1->b_count, chk2->b_count);
 
 	if (chk1->IsCorrect && chk2->IsCorrect) {
 		//両方とも正常の場合
 		if (global > 0) {
-			//GLOBALが違う場合＝全体セーブ直後
-			GF_ASSERT(block > 0);
 			*res1 = MIRROR1ST;
 			*res2 = MIRROR2ND;
 		}
 		else if (global < 0) {
-			//GLOBALが違う場合＝全体セーブ直後
-			GF_ASSERT(block < 0);
 			*res1 = MIRROR2ND;
 			*res2 = MIRROR1ST;
-		}
-		else if (block > 0) {
-			//GLOBALが同じ場合＝部分セーブ後
-			*res1 = MIRROR1ST;
-			*res2 = MIRROR2ND;
-		} else if (block < 0) {
-			*res1 = MIRROR2ND;
-			*res2 = MIRROR1ST;
-		} else {
-			//GLOBALが同じでブロックカウンタも同じ
-			//→ありえないはずだが,２Mフラッシュのためにとりあえず機能させる
-			//GF_ASSERT(0);
-			*res1 = MIRROR1ST;
-			*res2 = MIRROR2ND;
 		}
 		return 2;
 	}
@@ -746,11 +539,13 @@ static u32 _getNewerData(const CHK_INFO * chk1, const CHK_INFO * chk2, u32 *res1
 		return 1;
 	}
 	else if (!chk1->IsCorrect && chk2->IsCorrect) {
+		//片方のみ正常の場合
 		*res1 = MIRROR2ND;
 		*res2 = MIRRORERROR;
 		return 1;
 	}
 	else {
+		//両方とも異常の場合
 		*res1 = MIRRORERROR;
 		*res2 = MIRRORERROR;
 		return 0;
@@ -759,20 +554,20 @@ static u32 _getNewerData(const CHK_INFO * chk1, const CHK_INFO * chk2, u32 *res1
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static void _setCurrentInfo(SAVEDATA * sv, const CHK_INFO * ndata, const CHK_INFO * bdata,
-		u32 n_ofs, u32 b_ofs)
+static void _setCurrentInfo(SAVEDATA * sv, const CHK_INFO * chkinfo, u32 n_ofs)
 {
-	sv->global_counter = ndata[n_ofs].g_count;
-	sv->current_counters[SVBLK_ID_NORMAL] = ndata[n_ofs].b_count;
-	sv->current_counters[SVBLK_ID_BOX] = bdata[b_ofs].b_count;
-	sv->current_side[SVBLK_ID_NORMAL] = n_ofs;
-	sv->current_side[SVBLK_ID_BOX] = b_ofs;
-#ifdef	DEBUG_ONLY_FOR_tamada
-	OS_Printf("CURRENT NORMAL NML %d  BOX %d\n",n_ofs, b_ofs);
-	OS_Printf("CURRENT COUNTER NML %08x BOX %08x\n", ndata[n_ofs].b_count, bdata[b_ofs].b_count);
-	OS_Printf("CURRENT GLOBAL %08x\n", sv->global_counter);
-#endif
+	sv->global_counter = chkinfo[n_ofs].g_count;
+	sv->current_side = n_ofs;
 }
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static void _checkBlockInfo(CHK_INFO * chkinfo, SAVEDATA * sv, u8 * svwk_adrs)
+{
+	SAVE_FOOTER * footer = _getFooterAddress(sv, svwk_adrs);
+	chkinfo->IsCorrect = _checkSaveFooter(sv, svwk_adrs);
+	chkinfo->g_count = footer->g_count;
+}
+
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブデータのチェック
@@ -782,131 +577,59 @@ static void _setCurrentInfo(SAVEDATA * sv, const CHK_INFO * ndata, const CHK_INF
 //---------------------------------------------------------------------------
 static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 {
-	CHK_INFO ndata[2];
-	CHK_INFO bdata[2];
+	CHK_INFO chkinfo[2];
 	u8 * buffer1;
 	u8 * buffer2;
-	u32 nres, bres;
-	u32 n_main, b_main, n_sub, b_sub;
+	u32 nres;
+	u32 newer, older;
 
-	buffer1 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SAVEAREA_SIZE);
-	buffer2 = GFL_HEAP_AllocMemory(- sv->heap_temp_id, SAVEAREA_SIZE);
+	buffer1 = GFL_HEAP_AllocMemory(- svsys->heap_temp_id, sv->savearea_size);
+	buffer2 = GFL_HEAP_AllocMemory(- svsys->heap_temp_id, sv->savearea_size);
 
-	if(GFL_FLASH_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SAVEAREA_SIZE)) {
-		_checkBlockInfo(&ndata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_NORMAL);
-		_checkBlockInfo(&bdata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_BOX);
+	if(GFL_FLASH_Load(sv->start_ofs, buffer1, sv->savearea_size)) {
+		_checkBlockInfo(&chkinfo[MIRROR1ST], sv, buffer1);
 	} else {
-		_setDummyInfo(&ndata[MIRROR1ST]);
-		_setDummyInfo(&bdata[MIRROR1ST]);
+		_setDummyInfo(&chkinfo[MIRROR1ST]);
 	}
-	if(GFL_FLASH_Load(SECOND_MIRROR_START * SECTOR_SIZE, buffer2, SAVEAREA_SIZE)) {
-		_checkBlockInfo(&ndata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_NORMAL);
-		_checkBlockInfo(&bdata[MIRROR2ND], sv, (u32)buffer2, SVBLK_ID_BOX);
+
+	if(GFL_FLASH_Load(sv->start_ofs, buffer2, sv->savearea_size)) {
+		_checkBlockInfo(&chkinfo[MIRROR2ND], sv, buffer2);
 	} else {
-		_setDummyInfo(&ndata[MIRROR2ND]);
-		_setDummyInfo(&bdata[MIRROR2ND]);
+		_setDummyInfo(&chkinfo[MIRROR2ND]);
 	}
 
 	GFL_HEAP_FreeMemory(buffer1);
 	GFL_HEAP_FreeMemory(buffer2);
 
-	nres = _getNewerData(&ndata[MIRROR1ST], &ndata[MIRROR2ND], &n_main, &n_sub);
-	bres = _getNewerData(&bdata[MIRROR1ST], &bdata[MIRROR2ND], &b_main, &b_sub);
-	{
-		OS_PutString("SAVE NORMAL:");
-		DEBUG_OX_PUT(ndata[MIRROR1ST].IsCorrect);
-		DEBUG_OX_PUT(ndata[MIRROR2ND].IsCorrect);
-		OS_TPrintf("...OK=%d\n",nres);
-		OS_PutString("SAVE BOX   :");
-		DEBUG_OX_PUT(bdata[MIRROR1ST].IsCorrect);
-		DEBUG_OX_PUT(bdata[MIRROR2ND].IsCorrect);
-		OS_TPrintf("...OK=%d\n",bres);
-	}
-	if (nres == 0 && bres == 0) {
-		//通常データもボックスデータも壊れている→単にデータがないとみなす
-		return LOAD_RESULT_NULL;		//パターン１５
-	}
-	if (nres == 0 || bres == 0) {
-		//通常データかボックスデータかのどちらかが壊れている→破壊
-		return LOAD_RESULT_BREAK;	//パターン３，７，１１、１２，１３，１４
-	}
+	nres = _getNewerData(&chkinfo[MIRROR1ST], &chkinfo[MIRROR2ND], &newer, &older);
 
-	if (nres == 2 && bres == 2){
-		// 正常データが2組	
-		if (ndata[n_main].g_count == bdata[b_main].g_count) {
-			_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-			return LOAD_RESULT_OK;	//パターン０
-		} else {
-			//進行データとボックスデータのセーブのちょうど間で
-			//電源切断した場合
-			_setCurrentInfo(sv, ndata, bdata, n_sub, b_main);
-			return LOAD_RESULT_NG;	//パターン０
-		}
+	if (nres == 2) {
+		// 両方正常データ
+		_setCurrentInfo(sv, chkinfo, newer);
+		return LOAD_RESULT_OK;
 	}
-	if (nres == 1 && bres == 2) {
-		//部分、あるいは全体書き込み中断による進行データ破壊
-		if (ndata[n_main].g_count == bdata[b_main].g_count) {
-			_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-			return LOAD_RESULT_NG;	//パターン４、８
-		} else if (ndata[n_main].g_count == bdata[b_sub].g_count) {
-			_setCurrentInfo(sv, ndata, bdata, n_main, b_sub);
-			return LOAD_RESULT_NG;	//パターン４、８
-		}
-		//GF_ASSERT(ndata[n_main].g_count == bdata[b_main].g_count);
-		//_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-		return LOAD_RESULT_BREAK;	//パターン４、８
+	if (nres == 1) {
+		//どちらか壊れている
+		_setCurrentInfo(sv, chkinfo, newer);
+		return LOAD_RESULT_NG;
 	}
-	if (nres == 2 && bres == 1) {
-		if (ndata[n_main].g_count == bdata[b_main].g_count) {
-			//初回セーブ後一度も全体セーブを行っていない場合
-			_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-			return LOAD_RESULT_OK;	//パターン１，２
-		} else {
-			//全体書き込み中断によるボックスデータ破壊
-			//データの巻き戻しが発生する
-			_setCurrentInfo(sv, ndata, bdata, n_sub, b_main);
-			return LOAD_RESULT_NG;	//パターン１，２
-		}
-	}
-	if (nres == 1 && bres == 1 && n_main == b_main) {
-		// 正常データが一組 →初回
-		GF_ASSERT(ndata[n_main].g_count == bdata[b_main].g_count);
-		_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-		return LOAD_RESULT_OK;	//パターン５、あるいは１０も
-	} else {
-		//初回セーブ、2,3回目を進行データのみにして3回目を中断で失敗した場合
-		GF_ASSERT(ndata[n_main].g_count == bdata[b_main].g_count);
-		_setCurrentInfo(sv, ndata, bdata, n_main, b_main);
-		return LOAD_RESULT_NG;	//パターン６、９
-	}
-}
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-static BOOL _loadBlock(u32 mirror_id, const SVBLK_INFO * blkinfo, u8 * svwk)
-{
-	u32 base_ofs;
-
-	base_ofs = _getFlashOffset(mirror_id, blkinfo);
-	svwk += blkinfo->start_ofs;
-	return GFL_FLASH_Load(base_ofs, svwk, blkinfo->size);
+	//if (nres == 0) 
+	//データ壊れている→単にデータがないとみなす
+	return LOAD_RESULT_NULL;
 }
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 BOOL NewSVLD_Load(SAVEDATA * sv)
 {
-	u32 i;
-	//u32 base_ofs;
-	const SVBLK_INFO * blkinfo = sv->blkinfo;
+	u32 flash_pos;
 
-	for (i = 0; i < SVBLK_ID_MAX; i++) {
-		if (_loadBlock(sv->current_side[i], &sv->blkinfo[i], sv->svwk) == FALSE) {
-			return FALSE;
-		}
-		if (_checkSaveFooter(sv, (u32)sv->svwk, i) == FALSE) {
-			return FALSE;
-		}
+	flash_pos = _getFlashOffset(sv);
+	if (GFL_FLASH_Load(flash_pos, sv->svwk, sv->svdt_size) == FALSE) {
+		return FALSE;
+	}
+	if (_checkSaveFooter(sv, sv->svwk) == FALSE) {
+		return FALSE;
 	}
 	return TRUE;
 }
@@ -919,73 +642,58 @@ BOOL NewSVLD_Load(SAVEDATA * sv)
 //
 //============================================================================================
 #define	LAST_DATA_SIZE	sizeof(SAVE_FOOTER)
-//#define	LAST_DATA_SIZE	(8)
 #define	LAST_DATA2_SIZE	(8)
 
 //---------------------------------------------------------------------------
 /**
  * @brief	非同期セーブセット：データメイン部分
  * @param	sv			セーブデータ構造へのポインタ
- * @param	block_id	セーブするブロック指定ID
- * @param	mirror_side	セーブするミラーの指定（0 or 1)
  */
 //---------------------------------------------------------------------------
-static u16 _saveDivStartMain(SAVEDATA *sv, u32 block_id, u8 mirror_side)
+static u16 _saveDivStart_Body(SAVEDATA *sv)
 {
-	u32 base_ofs;
-	//BOOL result;
+	u32 flash_pos;
 	u8 * svwk;
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	_setSaveFooter(sv, (u32)sv->svwk, block_id);
-	base_ofs = _getFlashOffset(mirror_side, blkinfo);
-	svwk = sv->svwk + blkinfo->start_ofs;
+	_setSaveFooter(sv, sv->svwk);
+	flash_pos = _getFlashOffset(sv);
+	svwk = sv->svwk;
 
-	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, blkinfo->size - LAST_DATA_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(flash_pos, svwk, sv->svdt_size - LAST_DATA_SIZE);
 }
 
 //---------------------------------------------------------------------------
 /**
- * @brief	非同期セーブセット：フッタ部分
+ * @brief	非同期セーブセット：フッタ部分途中
  * @param	sv			セーブデータ構造へのポインタ
- * @param	block_id	セーブするブロック指定ID
- * @param	mirror_side	セーブするミラーの指定（0 or 1)
  */
 //---------------------------------------------------------------------------
-static u16 _saveDivStartFooter(SAVEDATA *sv, u32 block_id, u8 mirror_side)
+static u16 _saveDivStart_Footer(SAVEDATA *sv)
 {
-	u32 base_ofs;
-	//BOOL result;
+	u32 flash_pos;
 	u8 * svwk;
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	//_setSaveFooter(sv, (u32)sv->svwk, block_id);
-	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE;
-	svwk = sv->svwk + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE;
+	flash_pos = _getFlashOffset(sv) + sv->svdt_size - LAST_DATA_SIZE;
+	svwk = sv->svwk + sv->svdt_size - LAST_DATA_SIZE;
 
-	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(flash_pos, svwk, LAST_DATA_SIZE);
 }
 
 //---------------------------------------------------------------------------
 /**
- * @brief	非同期セーブセット：フッタ部分
+ * @brief	非同期セーブセット：フッタ部分最後
  * @param	sv			セーブデータ構造へのポインタ
- * @param	block_id	セーブするブロック指定ID
- * @param	mirror_side	セーブするミラーの指定（0 or 1)
  */
 //---------------------------------------------------------------------------
-static u16 _saveDivStartFooter2(SAVEDATA *sv, u32 block_id, u8 mirror_side)
+static u16 _saveDivStart_Footer2(SAVEDATA *sv)
 {
-	u32 base_ofs;
-	//BOOL result;
+	u32 flash_pos;
 	u8 * svwk;
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	//_setSaveFooter(sv, (u32)sv->svwk.data, block_id);
-	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
-	svwk = sv->svwk + blkinfo->start_ofs + blkinfo->size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
+	flash_pos = _getFlashOffset(sv) + sv->svdt_size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
+	svwk = sv->svwk + sv->svdt_size - LAST_DATA_SIZE + LAST_DATA2_SIZE;
 
-	return GFL_FLASH_SAVEASYNC_Init(base_ofs, svwk, LAST_DATA2_SIZE);
+	return GFL_FLASH_SAVEASYNC_Init(flash_pos, svwk, LAST_DATA2_SIZE);
 }
 
 
@@ -994,41 +702,15 @@ static u16 _saveDivStartFooter2(SAVEDATA *sv, u32 block_id, u8 mirror_side)
 /**
  * @brief	非同期セーブ処理：初期化
  * @param	sv			セーブデータ構造へのポインタ
- * @param	ndsw		非同期セーブ制御ワークへのポインタ
- * @param	block_id	セーブするブロック指定ID
  */
 //---------------------------------------------------------------------------
-static void NEWSVLD_DivSaveInit(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, u32 block_id)
+static void NEWSVLD_DivSaveInit(SAVEDATA * sv)
 {
-	int i;
+	svsys->div_seq = 0;
 
-	for (i = 0; i < SVBLK_ID_MAX; i++) {
-		ndsw->b_backup[i] = sv->current_counters[i];
-		sv->current_counters[i] ++;
-	}
+	svsys->counter_backup = sv->global_counter;
+	sv->global_counter ++;
 
-	ndsw->div_seq = 0;
-	ndsw->total_save_mode = FALSE;
-
-	if (block_id == SVBLK_ID_MAX) {
-		if (sv->total_save_flag) {
-			ndsw->total_save_mode = TRUE;
-			ndsw->g_backup = sv->global_counter;
-			sv->global_counter ++;
-
-			ndsw->block_start = 0;
-			ndsw->block_current = 0;
-			ndsw->block_end = SVBLK_ID_MAX;
-		} else {
-			ndsw->block_start = SVBLK_ID_NORMAL;
-			ndsw->block_current = SVBLK_ID_NORMAL;
-			ndsw->block_end = SVBLK_ID_NORMAL + 1;
-		}
-	} else {
-		ndsw->block_start = block_id;
-		ndsw->block_current = block_id;
-		ndsw->block_end = block_id + 1;
-	}
     GFL_UI_SleepDisable(GFL_UI_SLEEP_SVLD);
 }
 
@@ -1036,84 +718,64 @@ static void NEWSVLD_DivSaveInit(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, u32 block_i
 /**
  * @brief	非同期セーブ処理：メイン
  * @param	sv			セーブデータ構造へのポインタ
- * @param	ndsw		非同期セーブ制御ワークへのポインタ
  * @retval	SAVE_RESULT_CONTINUE	セーブ継続中
  * @retval	SAVE_RESULT_LAST		セーブ継続中、最後の部分
  * @retval	SAVE_RESULT_OK			セーブ終了、成功
  * @retval	SAVE_RESULT_NG			セーブ終了、失敗
  */
 //---------------------------------------------------------------------------
-static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
+static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv)
 {
 	BOOL result;
 
-	switch (ndsw->div_seq) {
+	switch (svsys->div_seq) {
 	case 0:
-		OS_TPrintf("DIV SAVE:BLOCK %d SIDE %d\n",
-				ndsw->block_current, !sv->current_side[ndsw->block_current]);
-		ndsw->lock_id = _saveDivStartMain(sv, ndsw->block_current, !sv->current_side[ndsw->block_current]);
-		ndsw->div_seq ++;
+		svsys->lock_id = _saveDivStart_Body(sv);
+		svsys->div_seq ++;
 		/* FALL THROUGH */
 	case 1:
 		//メインデータ部分セーブ
-		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(svsys->lock_id, &result) == FALSE) {
 			break;
 		}
-#ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
 		if (!result) {
-			OS_TPrintf("DIV SAVE ERROR!!!!\n");
 			return SAVE_RESULT_NG;
 		}
-#endif
-		ndsw->div_seq ++;
+		svsys->div_seq ++;
 		/* FALL THROUGH */
 
 	case 2:
-		ndsw->lock_id = _saveDivStartFooter2(sv, ndsw->block_current, !sv->current_side[ndsw->block_current]);
-		ndsw->div_seq ++;
+		svsys->lock_id = _saveDivStart_Footer2(sv);
+		svsys->div_seq ++;
 		/* FALL THROUGH */
 
 	case 3:
 		//フッタ部分セーブ
-		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(svsys->lock_id, &result) == FALSE) {
 			break;
 		}
-#ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
 		if (!result) {
-			OS_TPrintf("DIV SAVE ERROR!!!!\n");
 			return SAVE_RESULT_NG;
 		}
-#endif
-		ndsw->div_seq ++;
-		if (ndsw->block_current + 1 == ndsw->block_end) {
-			//最後のブロックのセーブの場合、それを外部に知らせるために
-			//SAVE_RESULT_CONTINUEでなくSAVE_RESULT_LASTを返す
-			return SAVE_RESULT_LAST;
-		}
-		/* FALL THROUGH */
+		svsys->div_seq ++;
+		//最後のブロックのセーブの場合、それを外部に知らせるために
+		//SAVE_RESULT_CONTINUEでなくSAVE_RESULT_LASTを返す
+		return SAVE_RESULT_LAST;
 
 	case 4:
-		ndsw->lock_id = _saveDivStartFooter(sv, ndsw->block_current, !sv->current_side[ndsw->block_current]);
-		ndsw->div_seq ++;
+		svsys->lock_id = _saveDivStart_Footer(sv);
+		svsys->div_seq ++;
 		/* FALL THROUGH */
 
 	case 5:
 		//フッタ部分セーブ
-		if (GFL_FLASH_SAVEASYNC_Main(ndsw->lock_id, &result) == FALSE) {
+		if (GFL_FLASH_SAVEASYNC_Main(svsys->lock_id, &result) == FALSE) {
 			break;
 		}
-#ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
 		if (!result) {
-			OS_TPrintf("DIV SAVE ERROR!!!!\n");
 			return SAVE_RESULT_NG;
 		}
-#endif
-		ndsw->block_current ++;
-		if (ndsw->block_current == ndsw->block_end) {
-			OS_TPrintf("DIV SAVE OK!\n");
-			return SAVE_RESULT_OK;
-		}
-		ndsw->div_seq = 0;
+		return SAVE_RESULT_OK;
 		break;
 	}
 	return SAVE_RESULT_CONTINUE;
@@ -1123,29 +785,18 @@ static SAVE_RESULT NEWSVLD_DivSaveMain(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
 /**
  * @brief	非同期セーブ処理：終了処理
  * @param	sv			セーブデータ構造へのポインタ
- * @param	ndsw		非同期セーブ制御ワークへのポインタ
  * @param	result		セーブ結果
  */
 //---------------------------------------------------------------------------
-static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, SAVE_RESULT result)
+static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, SAVE_RESULT result)
 {
-	u32 i;
 	if (result == SAVE_RESULT_NG) {
 		//セーブ失敗の場合
-		if (ndsw->total_save_mode) {
-			sv->global_counter = ndsw->g_backup;
-		}
-		for (i = 0; i < SVBLK_ID_MAX; i++) {
-			sv->current_counters[i] = ndsw->b_backup[i];
-		}
+		sv->global_counter = svsys->counter_backup;
 	} else {
 		//今回セーブしたブロックの参照ミラーを逆転しておく
-		for (i = ndsw->block_start; i < ndsw->block_end; i++) {
-			sv->current_side[i] = !sv->current_side[i];
-		}
+		sv->current_side = !sv->current_side;
 		sv->data_exists = TRUE;			//データは存在する
-		sv->new_data_flag = FALSE;		//新規データではない
-		sv->total_save_flag = FALSE;	//全体セーブは必要ない
 	}
     GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 }
@@ -1154,24 +805,14 @@ static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, SAVE_RESULT 
 /**
  * @brief	非同期セーブ処理：キャンセル処理
  * @param	sv			セーブデータ構造へのポインタ
- * @param	ndsw		非同期セーブ制御ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
+static void NEWSVLD_DivSaveCancel(SAVEDATA * sv)
 {
-	int i;
-	if (ndsw->total_save_mode) {
-		sv->global_counter = ndsw->g_backup;
-	}
-	for (i = 0; i < SVBLK_ID_MAX; i++) {
-		sv->current_counters[i] = ndsw->b_backup[i];
-	}
-    if(!CARD_TryWaitBackupAsync()){
-        CARD_CancelBackupAsync();		//非同期処理キャンセルのリクエスト
+	sv->global_counter = svsys->counter_backup;
+	//非同期処理キャンセルのリクエスト
+	GFL_FLASH_SAVEASYNC_Cancel(svsys->lock_id);
 
-        CARD_UnlockBackup(ndsw->lock_id);
-        OS_ReleaseLockID(ndsw->lock_id);
-    }
     GFL_UI_SleepEnable(GFL_UI_SLEEP_SVLD);
 }
 
@@ -1180,14 +821,13 @@ static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
 SAVE_RESULT NewSVLD_Save(SAVEDATA * sv)
 {
 	SAVE_RESULT result;
-	NEWDIVSV_WORK ndsw;
 
-	NEWSVLD_DivSaveInit(sv, &ndsw, SVBLK_ID_MAX);
+	NEWSVLD_DivSaveInit(sv);
 
 	do {
-		result = NEWSVLD_DivSaveMain(sv, &ndsw);
+		result = NEWSVLD_DivSaveMain(sv);
 	}while (result == SAVE_RESULT_CONTINUE || result == SAVE_RESULT_LAST);
-	NEWSVLD_DivSaveEnd(sv, &ndsw, result);
+	NEWSVLD_DivSaveEnd(sv, result);
 	return result;
 }
 
@@ -1195,20 +835,17 @@ SAVE_RESULT NewSVLD_Save(SAVEDATA * sv)
 /**
  * @brief	指定ブロックのフッタ部分を消去する
  * @param	sv			セーブデータ構造へのポインタ
- * @param	block_id	消去するブロック指定ID
- * @param	mirror_side	消去するミラーの指定（0 or 1)
  */
 //---------------------------------------------------------------------------
-static BOOL EraseFlashFooter(const SAVEDATA * sv, u32 block_id, u32 mirror_side)
+static BOOL EraseFlashFooter(const SAVEDATA * sv)
 {
-	u32 base_ofs;
+	u32 flash_pos;
 	SAVE_FOOTER dmy_footer;
-	const SVBLK_INFO * blkinfo = &sv->blkinfo[block_id];
 
-	MI_CpuFill8(&dmy_footer, 0xff, sizeof(SAVE_FOOTER));
-	base_ofs = _getFlashOffset(mirror_side, blkinfo) + blkinfo->size - LAST_DATA_SIZE;
+	GFL_STD_MemFill(&dmy_footer, 0xff, sizeof(SAVE_FOOTER));
+	flash_pos = _getFlashOffset(sv) + sv->svdt_size - LAST_DATA_SIZE;
 
-	return GFL_FLASH_Save(base_ofs, &dmy_footer, LAST_DATA_SIZE);
+	return GFL_FLASH_Save(flash_pos, &dmy_footer, LAST_DATA_SIZE);
 }
 
 
