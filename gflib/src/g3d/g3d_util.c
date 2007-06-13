@@ -147,7 +147,7 @@ GFL_G3D_UTIL*
 		g3Drnd = GFL_G3D_RENDER_Create( g3DresMdl, objTbl->mdldatID, g3DresTex ); 
 
 		//アニメーションハンドルテンポラリ作成
-		g3DanmTbl = GFL_HEAP_AllocClearMemoryLo( heapID, objTbl->anmCount );
+		g3DanmTbl = GFL_HEAP_AllocClearMemoryLo( heapID, objTbl->anmCount * pHANDLE_SIZE );
 
 		//アニメーション設定
 		for( j=0; j<objTbl->anmCount; j++ ){
