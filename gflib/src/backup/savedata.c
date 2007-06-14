@@ -13,7 +13,7 @@
 #include "gflib.h"
 
 #include "assert.h"
-#include "savedata.h"
+#include "backup_system.h"
 #include "savedata_local.h"
 //============================================================================================
 //============================================================================================
@@ -23,15 +23,15 @@
  */
 //---------------------------------------------------------------------------
 typedef struct {
-	DATA_ID gmdataID;	///<セーブデータ識別ID
-	u32 size;			///<データサイズ格納
-	u32 address;		///<データ開始位置
+	GFL_SVDT_ID gmdataID;	///<セーブデータ識別ID
+	u32 size;				///<データサイズ格納
+	u32 address;			///<データ開始位置
 }SVPAGE_INFO;
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 struct _SVDT {
-	const SAVEDATA_TABLE * table;
+	const GFL_SAVEDATA_TABLE * table;
 	u32 table_max;
 	u32 footer_size;
 	u32 total_size;
@@ -47,7 +47,7 @@ static u32 GetWorkSize(const SVDT * svdt, int id);
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-SVDT * SVDT_Create(HEAPID heap_id, const SAVEDATA_TABLE * table, u32 table_max,
+SVDT * SVDT_Create(HEAPID heap_id, const GFL_SAVEDATA_TABLE * table, u32 table_max,
 		u32 savearea_size, u32 footer_size)
 {
 	SVDT * svdt;
@@ -80,7 +80,7 @@ void SVDT_Delete(SVDT * svdt)
 //---------------------------------------------------------------------------
 void SVDT_ClearWork(u8 * svwk, const SVDT * svdt)
 {
-	const SAVEDATA_TABLE * table = svdt->table;
+	const GFL_SAVEDATA_TABLE * table = svdt->table;
 	u32 table_max = svdt->table_max;
 	int i;
 	u32 size;
@@ -105,7 +105,7 @@ void SVDT_ClearWork(u8 * svwk, const SVDT * svdt)
 static u32 GetWorkSize(const SVDT * svdt, int id)
 {
 	u32 size;
-	const SAVEDATA_TABLE * table = svdt->table;
+	const GFL_SAVEDATA_TABLE * table = svdt->table;
 	GF_ASSERT(id < svdt->table_max);
 	size = table[id].get_size();
 	size += 4 - (size % 4);
@@ -120,7 +120,7 @@ static u32 GetWorkSize(const SVDT * svdt, int id)
 //---------------------------------------------------------------------------
 static void SVDT_MakeIndex(SVDT * svdt)
 {
-	const SAVEDATA_TABLE * table = svdt->table;
+	const GFL_SAVEDATA_TABLE * table = svdt->table;
 	SVPAGE_INFO * pageinfo = svdt->pageinfo;
 	int i;
 	u32 table_max = svdt->table_max;
@@ -159,7 +159,7 @@ static void SVDT_MakeIndex(SVDT * svdt)
 //============================================================================================
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-u32 SVDT_GetPageOffset(SVDT * svdt, DATA_ID gmdataid)
+u32 SVDT_GetPageOffset(SVDT * svdt, GFL_SVDT_ID gmdataid)
 {
 	GF_ASSERT(gmdataid < svdt->table_max);
 	return svdt->pageinfo[gmdataid].address;

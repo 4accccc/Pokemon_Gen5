@@ -16,7 +16,7 @@
  * 中身は見えないけどポインタ経由で参照はできる
  */
 //------------------------------------------------------------
-typedef struct _SAVEDATA SAVEDATA;
+typedef struct _GFL_SAVEDATA GFL_SAVEDATA;
 
 //------------------------------------------------------------
 ///	ロード結果定義
@@ -25,7 +25,8 @@ typedef enum{
 	LOAD_RESULT_NULL = 0,		///<データなし
 	LOAD_RESULT_OK,				///<データ正常読み込み
 	LOAD_RESULT_NG,				///<データ異常
-	LOAD_RESULT_BREAK			///<破壊、復旧不能
+	LOAD_RESULT_BREAK,			///<破壊、復旧不能
+	LOAD_RESULT_ERROR,			///<機器故障などで読み取り不能
 }LOAD_RESULT;
 
 //------------------------------------------------------------

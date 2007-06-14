@@ -31,7 +31,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 # ソースファイル
 SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					tcb.c tcbl.c procsys.c \
-					backup/saveload_system.c \
+					backup/backup_system.c \
 					backup/flash_access.c \
 					backup/savedata.c \
 					areaman.c vramman/vman.c vramman/obj_graphic_man.c \
