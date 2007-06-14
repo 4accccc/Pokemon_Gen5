@@ -341,7 +341,7 @@ LOAD_RESULT GFL_BACKUP_Load(GFL_SAVEDATA * sv)
 
 	result = NewSVLD_Load(sv);
 
-	switch ((SVLD_STATUS)result) {
+	switch (result) {
 	case SVLD_STAT_OK:
 		sv->data_exists = TRUE;			//ÉfÅ[É^ÇÕë∂ç›Ç∑ÇÈ
 		return LOAD_RESULT_OK;
@@ -353,6 +353,8 @@ LOAD_RESULT GFL_BACKUP_Load(GFL_SAVEDATA * sv)
 	case SVLD_STAT_ERROR:
 		return LOAD_RESULT_ERROR;
 	}
+	GF_ASSERT_MSG(0, "FATAL ERROR result = %d\n", result);
+	return LOAD_RESULT_ERROR;
 }
 
 //---------------------------------------------------------------------------
