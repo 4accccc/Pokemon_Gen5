@@ -16,6 +16,7 @@ SRCS	+=		testmode.c \
                 sogabe/multi_boot.c \
                 sogabe/3d_test.c \
                 sogabe/blockout.c \
+				tamada/backup_sample.c \
 				tetsu/debug_watanabe.c
 				
 #================================================
