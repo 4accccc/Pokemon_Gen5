@@ -18,6 +18,7 @@
 #include "procsys.h"
 #include "gf_overlay.h"
 #include "tcb.h"
+#include "backup_system.h"
 
 
 //=============================================================================================
@@ -112,6 +113,9 @@ void GFLUser_Init(void)
     //サウンドシステム初期化
     GFL_SOUND_Init();
 
+	//バックアップシステム初期化
+	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
+
 	GFL_USE_VintrCounter = 0;
 }
 
@@ -153,6 +157,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
+	GFL_BACKUP_Exit();
 	GFL_UI_Exit();
 	GFL_PROC_Exit();
 	GFL_OVERLAY_Exit();
