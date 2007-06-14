@@ -177,7 +177,7 @@ u16 GFL_FLASH_SAVEASYNC_Init(u32 src, void * dst, u32 len)
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-static BOOL GFL_FLASH_SAVEASYNC_Main(u16 lock_id, BOOL * result)
+BOOL GFL_FLASH_SAVEASYNC_Main(u16 lock_id, BOOL * result)
 {
 	if (SaveEndFlag == TRUE) {
 		CARD_UnlockBackup(lock_id);
