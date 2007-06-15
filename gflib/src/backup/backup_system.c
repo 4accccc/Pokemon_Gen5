@@ -200,14 +200,9 @@ GFL_SAVEDATA * GFL_SAVEDATA_Create(const GFL_SVLD_PARAM * sv_param)
 	sv->data_exists = FALSE;			//データは存在しない
 	sv->global_counter = 0;
 	sv->current_side = 0;
+	sv->first_status = LOAD_RESULT_NULL;
 
-	sv->first_status = GFL_BACKUP_Load(sv);
-	switch (sv->first_status) {
-	case LOAD_RESULT_NULL:
-	case LOAD_RESULT_BREAK:
-		//新規 or データ破壊なのでクリアする
-		GFL_SAVEDATA_Clear(sv);
-	}
+	GFL_SAVEDATA_Clear(sv);
 
 	return sv;
 }
