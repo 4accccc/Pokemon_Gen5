@@ -1,7 +1,7 @@
 //============================================================================================
 /**
- * @brief
- * @file
+ * @file	backup_data.c
+ * @brief	バックアップデータの内部構造アクセス
  * @author	tamada GAME FREAK inc.
  * @date	2007.06.12
  */
@@ -15,7 +15,12 @@
 #include "assert.h"
 #include "backup_system.h"
 #include "savedata_local.h"
+
+
 //============================================================================================
+//
+//			定義
+//
 //============================================================================================
 //---------------------------------------------------------------------------
 /**
@@ -29,23 +34,35 @@ typedef struct {
 }SVPAGE_INFO;
 
 //---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータ項目管理用の構造体定義
+ */
 //---------------------------------------------------------------------------
 struct _SVDT {
-	const GFL_SAVEDATA_TABLE * table;
-	u32 table_max;
-	u32 footer_size;
-	u32 total_size;
-	u32 savearea_size;
-	SVPAGE_INFO * pageinfo;
+	const GFL_SAVEDATA_TABLE * table;	///<セーブデータ構造定義データへのポインタ
+	u32 table_max;						///<セーブデータ構造定義データの要素数
+	u32 footer_size;					///<セーブデータに付加するフッタのサイズ
+	u32 total_size;						///<セーブデータの実際のサイズ
+	u32 savearea_size;					///<割り当てられているバックアップ領域のサイズ
+	SVPAGE_INFO * pageinfo;				///<セーブデータ項目毎のデータへのポインタ
 };
 
 //============================================================================================
+//
+//			関数
+//
 //============================================================================================
 static void SVDT_MakeIndex(SVDT * svdt);
 
 static u32 GetWorkSize(const SVDT * svdt, int id);
 
 //---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータ構造管理用データを生成する
+ * @return	svdt	セーブデータ構造管理用データへのポインタ
+ *
+ * 与えられた初期化データに基づいてセーブデータ管理用のデータを生成する。
+ */
 //---------------------------------------------------------------------------
 SVDT * SVDT_Create(HEAPID heap_id, const GFL_SAVEDATA_TABLE * table, u32 table_max,
 		u32 savearea_size, u32 footer_size)
@@ -64,6 +81,10 @@ SVDT * SVDT_Create(HEAPID heap_id, const GFL_SAVEDATA_TABLE * table, u32 table_m
 }
 
 //---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータ構造管理用データの解放処理
+ * @param	svdt	セーブデータ構造管理用データへのポインタ
+ */
 //---------------------------------------------------------------------------
 void SVDT_Delete(SVDT * svdt)
 {
@@ -75,7 +96,7 @@ void SVDT_Delete(SVDT * svdt)
 /**
  * @brief	セーブデータのクリア
  * @param	svwk	セーブワークへのポインタ
- * @param	pageinfo	セーブ項目保持ワーク
+ * @param	svdt	セーブデータ構造管理用データへのポインタ
  */
 //---------------------------------------------------------------------------
 void SVDT_ClearWork(u8 * svwk, const SVDT * svdt)
@@ -88,16 +109,15 @@ void SVDT_ClearWork(u8 * svwk, const SVDT * svdt)
 	u32 adrs;
 
 
-	MI_CpuClearFast(svwk, svdt->savearea_size);
+	GFL_STD_MemClear32(svwk, svdt->savearea_size);
 
 	for (i = 0; i <table_max; i++) {
 		adrs = svdt->pageinfo[i].address;
 		page = &svwk[adrs];
 		size = svdt->pageinfo[i].size;
-		MI_CpuClearFast(page, size);
+		GFL_STD_MemClear32(page, size);
 		table[i].init_work(page);
 	}
-
 }
 
 //---------------------------------------------------------------------------
@@ -115,7 +135,7 @@ static u32 GetWorkSize(const SVDT * svdt, int id)
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブ項目に関する辞書を作成する
- * @param	pageinfo	セーブ項目保持ワーク
+ * @param	svdt	セーブデータ構造管理用データへのポインタ
  */
 //---------------------------------------------------------------------------
 static void SVDT_MakeIndex(SVDT * svdt)
@@ -128,24 +148,13 @@ static void SVDT_MakeIndex(SVDT * svdt)
 
 
 	for (i = 0; i < table_max; i++) {
+		//現時点ではセーブデータの並びとIDの並びが一致することを想定しているので
+		//違った場合はASSERTで停止する
 		GF_ASSERT(table[i].gmdataID == i);
 		pageinfo[i].gmdataID = table[i].gmdataID;
 		pageinfo[i].size = GetWorkSize(svdt, i);
 		pageinfo[i].address = savedata_total_size;
 		savedata_total_size += pageinfo[i].size;
-#ifdef	DEBUG_ONLY_FOR_tamada
-		if (i % 4 == 0) {
-			OS_TPrintf("SVDT:");
-		}
-		OS_TPrintf("%02d:%05x(%05x) ", pageinfo[i].gmdataID, 
-				pageinfo[i].address, pageinfo[i].size);
-		if (i % 4 == 3) {
-			OS_PutString("\n");
-		}
-#endif
-	}
-	if (i % 4 != 0) {
-		OS_PutString("\n");
 	}
 	svdt->total_size = savedata_total_size + svdt->footer_size;
 	GF_ASSERT(svdt->total_size <= svdt->savearea_size);
@@ -158,6 +167,13 @@ static void SVDT_MakeIndex(SVDT * svdt)
 //
 //============================================================================================
 //---------------------------------------------------------------------------
+/**
+ * @brief	各セーブ項目の相対開始位置を取得
+ * @param	svdt	セーブデータ構造管理用データへのポインタ
+ * @param	gmdataid
+ *
+ * セーブデータ内での各項目の開始アドレスを取得する
+ */
 //---------------------------------------------------------------------------
 u32 SVDT_GetPageOffset(SVDT * svdt, GFL_SVDT_ID gmdataid)
 {
@@ -166,6 +182,12 @@ u32 SVDT_GetPageOffset(SVDT * svdt, GFL_SVDT_ID gmdataid)
 }
 
 //---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータ全体の大きさを取得する
+ * @param	svdt	セーブデータ構造管理用データへのポインタ
+ *
+ * 各項目が占有する領域＋フッタ領域（CRCなど）を含めた実セーブデータのサイズを返す
+ */
 //---------------------------------------------------------------------------
 u32 SVDT_GetWorkSize(const SVDT * svdt)
 {
