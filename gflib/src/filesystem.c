@@ -78,7 +78,7 @@ int GF_ReadFile(char *path, void *buf)
 
   fp = OS_AllocFromMainArenaLo(sizeof(FSFile), 4);
   if(FS_OpenFile(fp, path) == TRUE){
-    size = FS_ReadFile(fp, buf, INT_MAX);
+    size = FS_ReadFile(fp, buf, 0x7fffffff);   //INT_MAX
     (void)FS_CloseFile(fp);
   } else {
     OS_Panic("Panic: Can't open file %s\n", path);

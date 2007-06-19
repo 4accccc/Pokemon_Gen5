@@ -215,36 +215,6 @@ static void _keyConvert(UI_KEYSYS* pKey)
         pTbl++;
     }
     
-#if 0
-    switch( pKey->control_mode ){
-	case KEYCONTROL_NORMAL:
-		break;
-	case KEYCONTROL_PATTERN1:
-
-		KEYCONV( pKey->trg, PAD_BUTTON_START, PAD_BUTTON_X )
-		KEYCONV( pKey->cont, PAD_BUTTON_START, PAD_BUTTON_X )
-		KEYCONV( pKey->repeat, PAD_BUTTON_START, PAD_BUTTON_X )
-		break;
-
-	case KEYCONTROL_PATTERN2:
-
-		KEYCONV_EXCHANGE( pKey->trg, PAD_BUTTON_X,PAD_BUTTON_Y )
-		KEYCONV_EXCHANGE( pKey->cont, PAD_BUTTON_X,PAD_BUTTON_Y )
-		KEYCONV_EXCHANGE( pKey->repeat, PAD_BUTTON_X,PAD_BUTTON_Y )
-		break;
-
-	case KEYCONTROL_PATTERN3:
-
-		KEYCONV( pKey->trg, PAD_BUTTON_L, PAD_BUTTON_A )
-		KEYCONV( pKey->cont, PAD_BUTTON_L, PAD_BUTTON_A )
-		KEYCONV( pKey->repeat, PAD_BUTTON_L, PAD_BUTTON_A )
-
-		KEY_RESET( pKey->trg, ( PAD_BUTTON_L | PAD_BUTTON_R ) )
-		KEY_RESET( pKey->cont, ( PAD_BUTTON_L | PAD_BUTTON_R ) )
-		KEY_RESET( pKey->repeat, ( PAD_BUTTON_L | PAD_BUTTON_R ) )
-		break;
-	}
-#endif
 }
 
 //==============================================================================

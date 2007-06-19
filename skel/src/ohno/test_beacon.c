@@ -20,6 +20,10 @@
 
 
 #define _BCON_GET_NUM  (6)
+#define _BACKUP_NUM  (5)    // RSSIの平均を出すためにバックアップ
+#define _DIR_SAMPL_NUM (8)  // 方向の取得サンプル
+#define _GAME_BMPWIN (5)
+#define _SAMP_TIMER  (60*5)  // ５秒サンプリング
 
 //------------------------------------------------------------------
 // NETのテスト
@@ -55,6 +59,9 @@ typedef struct {
 static const char	test_index1[] = {"beacon catch"};
 static const char	test_index2[] = {"scan mode"};
 static const char	test_index3[] = {"point mode"};
+static const char	test_index4[] = {"xxxxxxxx"};
+static const char	test_index5[] = {"start"};
+static const char	test_index6[] = {"end"};
 
 
 enum {
@@ -70,6 +77,11 @@ static const TESTMODE_PRINTLIST _childIndexList[] = {
 static const TESTMODE_PRINTLIST _parentIndexList[] = {
 	{ test_index1, 2, 1, 30, 1 },
 	{ test_index3, 2, 2, 30, 1 },
+};
+
+static const TESTMODE_PRINTLIST _gameIndexList[] = {
+	{ test_index5, 2, 3, 30, 1 },
+	{ test_index4, 2, 4, 30, 1 },
 };
 
 //------------------------------------------------------------------
@@ -100,8 +112,6 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 
 
 
-#define _BACKUP_NUM  (5)   //RSSIの平均を出すためにバックアップ
-
 //------------------------------------------------------------------
 /**
  * @brief		内部ワーク構造体
@@ -114,11 +124,12 @@ struct _SKEL_TEST_BEACON_WORK{
     HEAPID heapID;
     BOOL bParent;   ///< 親機モードかどうか
     GFL_TEXT_PRINTPARAM* textParam;
-    GFL_BMPWIN*	bmpwin[5];
+    GFL_BMPWIN*	bmpwin[7];
     GFL_BMPWIN* pBmpwinBeacon[_BCON_GET_NUM];
     u16 rssiBackup[_BCON_GET_NUM][_BACKUP_NUM];
-    u16 rssiDir[8];
+    u16 rssiDir[_BCON_GET_NUM][_DIR_SAMPL_NUM];
     int dir;
+    int countDir;
     int testNo;
     _PTRFunc state;
     int timer;
@@ -175,18 +186,6 @@ static void _changeStateDebug(SKEL_TEST_BEACON_WORK* pWork,_PTRFunc state, int t
 }
 #endif
 
-//==============================================================================
-/**
- * @brief   なにもしない
- * @param   state  変えるステートの関数
- * @param   time   ステート保持時間
- * @retval  none
- */
-//==============================================================================
-static void _noneFunc(SKEL_TEST_BEACON_WORK* pWork)
-{
-}
-
 //------------------------------------------------------------------
 /**
  * @brief		メッセージビットマップウインドウコントロール
@@ -211,16 +210,35 @@ static void msg_bmpwin_make
 
 //------------------------------------------------------------------
 /**
+ * @brief		２Ｄデータ表示
+ */
+//------------------------------------------------------------------
+
+static void text_draw(SKEL_TEST_BEACON_WORK* testmode )
+{
+    int i;
+    
+	GFL_BG_ClearScreen( TEXT_FRM );
+
+    //選択項目ビットマップの表示
+    for(i=0;i<NELEMS(_parentIndexList);i++){
+        GFL_BMPWIN_MakeScreen( testmode->bmpwin[i] );
+    }
+	GFL_BG_LoadScreenReq( TEXT_FRM );
+}
+
+//------------------------------------------------------------------
+/**
  * @brief		２Ｄデータコントロール
  */
 //------------------------------------------------------------------
-static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
+static void	g2d_load( SKEL_TEST_BEACON_WORK* pWork )
 {
 	//フォント読み込み
 	GFL_TEXT_CreateSystem( font_path );
 	//パレット作成＆転送
 	{
-		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( pWork->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
 		plt[1] = G2D_FONT_COL;
 		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 0 );
@@ -232,16 +250,16 @@ static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
 	//文字表示パラメータワーク作成
 	{
 		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocClearMemoryLo
-										( testmode->heapID,sizeof(GFL_TEXT_PRINTPARAM));
+										( pWork->heapID,sizeof(GFL_TEXT_PRINTPARAM));
 		*param = default_param;
-		testmode->textParam = param;
+		pWork->textParam = param;
 	}
 	//文字表示ビットマップの作成
 	{
 		int i,num;
         const TESTMODE_PRINTLIST* pList;
 
-        if(testmode->bParent){
+        if(pWork->bParent){
             pList = &_parentIndexList[0];
             num = NELEMS(_parentIndexList);
         }
@@ -252,13 +270,18 @@ static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
         
 		//表題ビットマップの作成
 		for(i = 0 ; i < num ; i++,pList++){
-			msg_bmpwin_make( testmode, i, pList->msg,
+			msg_bmpwin_make( pWork, i, pList->msg,
 							pList->posx, pList->posy, 
 							pList->sizx, pList->sizy );
 		}
-	}
-	//ＢＧスクリーン転送リクエスト発行
-	//GFL_BG_LoadScreenReq( TEXT_FRM );
+
+        for(i=0; i < NELEMS(_gameIndexList);i++, pList++){
+            pList = &_gameIndexList[0];
+            msg_bmpwin_make( pWork, _GAME_BMPWIN+i, pList->msg,
+                             pList->posx, pList->posy, 
+                             pList->sizx, pList->sizy );
+        }
+    }
 }
 
 //------------------------------------------------------------------
@@ -268,31 +291,22 @@ static void	g2d_load( SKEL_TEST_BEACON_WORK* testmode )
 //------------------------------------------------------------------
 static void	bg_init( HEAPID heapID )
 {
-	//ＢＧシステム起動
-	//GFL_BG_Init( heapID );
-
-	//ＶＲＡＭ設定
-	//GX_SetBankForTex(GX_VRAM_TEX_01_AB);
-	//GX_SetBankForBG(GX_VRAM_BG_64_E);
-	//GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
-
-	//ＢＧモード設定
-//	GFL_BG_InitBG( &bgsysHeader );
-
 	//ＢＧコントロール設定
-//	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( TEXT_FRM, TEXT_FRM_PRI );
 	GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+}
 
-	//ビットマップウインドウシステムの起動
-	//GFL_BMPWIN_Init( heapID );
-
-	//ARCシステム初期化
-//	GFL_ARC_Init(&GraphicFileTable[0],1);
-
-	//ディスプレイ面の選択
-	//GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
-//	GFL_DISP_SetDispOn();
+//==============================================================================
+/**
+ * @brief   なにもしない
+ * @param   state  変えるステートの関数
+ * @param   time   ステート保持時間
+ * @retval  none
+ */
+//==============================================================================
+static void _noneFunc(SKEL_TEST_BEACON_WORK* pWork)
+{
+    text_draw(pWork );
 }
 
 
@@ -335,26 +349,72 @@ static u16 _backupRssi(SKEL_TEST_BEACON_WORK* pWork,int index, u16 rssi)
     return sum;
 }
 
+//==============================================================================
+/**
+ * @brief   キーを監視してゲームスタートを見る
+ * @param   pWork  ゲームのワーク
+ * @retval  none
+ */
+//==============================================================================
 
-static void _stockRssi(SKEL_TEST_BEACON_WORK* pWork, u16 rssi)
+static void _gameStartCheck(SKEL_TEST_BEACON_WORK* pWork)
 {
-
-    if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){
-        GFL_STD_MemClear(pWork->rssiDir,sizeof(u16)*8);
-        pWork->dir=0;
-    }
-    if(PAD_BUTTON_Y == GFL_UI_KEY_GetTrg()){
-
-
+    if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){  // バッファを消す
+        GFL_STD_MemClear(pWork->rssiDir,sizeof(u16)*_DIR_SAMPL_NUM*_BCON_GET_NUM);
+        pWork->dir = 0;
     }
     if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
-        pWork->rssiDir[pWork->dir] = rssi;
-        pWork->dir++;
-        if(pWork->dir >= 8){
+        if((pWork->dir == 0) && (pWork->countDir==0)){
+            pWork->countDir = _SAMP_TIMER;
+
+        }
+    }
+}
+
+//==============================================================================
+/**
+ * @brief   ゲームの実行、一定間隔でサンプリング方向を進める
+ * @param   pWork  ゲームのワーク
+ * @retval  none
+ */
+//==============================================================================
+
+static void _gameStartFunc(SKEL_TEST_BEACON_WORK* pWork)
+{
+    int i,msgindex=0;
+    char msg[100];
+
+//    pWork->bmpwin[_GAME_BMPWIN+i];
+
+    GFL_STD_MemClear(msg,100);
+
+    for(i = 0;i < _DIR_SAMPL_NUM; i++){
+        if(pWork->dir > i){
+            msg[i]='o';
+        }
+        else{
+            msg[i]='x';
+        }
+    }
+    
+    GFL_BMPWIN_ClearScreen(pWork->bmpwin[ _GAME_BMPWIN+1 ]);
+    pWork->textParam->bmp = GFL_BMPWIN_GetBmp( pWork->bmpwin[ _GAME_BMPWIN+1  ] );
+    GFL_BMP_Clear(pWork->textParam->bmp,0);
+    GFL_TEXT_PrintSjisCode( msg, pWork->textParam );
+    GFL_BMPWIN_TransVramCharacter( pWork->bmpwin[_GAME_BMPWIN+1 ] );
+    GFL_BMPWIN_MakeScreen( pWork->bmpwin[_GAME_BMPWIN+1 ] );
+
+    if(pWork->countDir){
+        pWork->countDir--;
+        if(pWork->countDir==0){
+            pWork->countDir = _SAMP_TIMER;
+            pWork->dir++;
+        }
+        if(pWork->dir == _DIR_SAMPL_NUM){
+            pWork->countDir = 0;
             pWork->dir=0;
         }
     }
-
 }
 
 
@@ -364,6 +424,17 @@ static void _stockRssi(SKEL_TEST_BEACON_WORK* pWork, u16 rssi)
 static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
 {
     int i;
+
+
+	GFL_BG_ClearScreen( TEXT_FRM );
+
+    
+    for(i=0;i<NELEMS(_parentIndexList);i++){
+        GFL_BMPWIN_MakeScreen( pWork->bmpwin[i] );
+    }
+
+    _gameStartCheck(pWork);
+    _gameStartFunc(pWork);
     
     for(i = 0;i < _BCON_GET_NUM; i++){
         u8* pData = GFL_NET_GetBeaconMacAddress(i);
@@ -374,20 +445,21 @@ static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
             u16 rssi = GFL_NET_WL_GetRssi(i);
 
             rssi = _backupRssi(pWork,i,rssi);
-
-            _stockRssi(pWork,rssi);
+            
+            if(pWork->countDir){
+                pWork->rssiDir[i][pWork->dir] = rssi;
+            }
             
             GFL_STD_MemClear(msg,100);
-            OS_SPrintf(msg,"%d: %3d %3d %3d %3d %3d %3d %3d %3d",rssi,
-                       pWork->rssiDir[0],
-                       pWork->rssiDir[1],
-                       pWork->rssiDir[2],
-                       pWork->rssiDir[3],
-                       pWork->rssiDir[4],
-                       pWork->rssiDir[5],
-                       pWork->rssiDir[6],
-                       pWork->rssiDir[7]
-                       );
+            OS_SPrintf(msg,"%d : %d %d %d %d %d %d %d %d",rssi,
+                       pWork->rssiDir[i][0],
+                       pWork->rssiDir[i][1],
+                       pWork->rssiDir[i][2],
+                       pWork->rssiDir[i][3],
+                       pWork->rssiDir[i][4],
+                       pWork->rssiDir[i][5],
+                       pWork->rssiDir[i][6],
+                       pWork->rssiDir[i][7]  );
 
             GFL_BMPWIN_ClearScreen(pWork->pBmpwinBeacon[ i ]);
             
@@ -408,6 +480,9 @@ static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
             GFL_BMPWIN_MakeScreen( pWork->pBmpwinBeacon[i] );
         }
     }
+
+	GFL_BG_LoadScreenReq( TEXT_FRM );
+
 }
 
 
@@ -779,10 +854,12 @@ SKEL_TEST_BEACON_WORK* TEST_BEACON_Init(HEAPID heapID)
 
     if(PAD_BUTTON_R & GFL_UI_KEY_GetCont()){
         OS_TPrintf("親になった\n");
+        pWork->bParent = TRUE;
         _CHANGE_STATE(_testParent,0);
     }
     else{
         OS_TPrintf("子になった\n");
+        pWork->bParent = FALSE;
         _CHANGE_STATE(_testChild,0);
     }
 

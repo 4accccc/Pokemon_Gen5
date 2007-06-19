@@ -26,7 +26,7 @@
 //#define VCT_ERROR_NONE (VCT_SUCCESS)
 
 // エコーキャンセル機能を使う場合は定義して下さい。（この場合はライブラリはさしかえて下さい）
-#define USE_ECHOCANCEL
+//#define USE_ECHOCANCEL
 
 // マイクゲインを設定
 #define MY_AMPGAIN PM_AMPGAIN_160
@@ -162,6 +162,7 @@ static void InitFirst()
     OS_TPrintf("Init sound system done.\n");
     
     _difftime = 0;
+    VCT_EnableEchoCancel(TRUE);
 }
 
 
@@ -418,7 +419,7 @@ static void SndCallback(NNSSndStrmCallbackStatus sts,
     }  
 
     for (ch = 0; ch < nChannels; ++ch) {
-        if( !VCT_ReceiveAudio(buffer[ch], length, ch, NULL) )
+        if( !VCT_ReceiveAudio(buffer[ch], length, NULL) )
         {
         	// 音声データを受け取れなかった。
         	// バッファを０クリア
