@@ -1577,20 +1577,41 @@ void
 
 //--------------------------------------------------------------------------------------------
 /**
- * ３Ｄオブジェクトのアニメーションフレームを取得
+ * ３Ｄオブジェクトのアニメーションフレームの取得と設定
  *
  * @param	g3Dobj	３Ｄオブジェクトハンドル
  * @param	anmIdx	登録されているアニメーションインデックス
+ * @param	anmFrm	取得、設定に用いる値格納ポインタ
  */
 //--------------------------------------------------------------------------------------------
-int
+void
 	GFL_G3D_OBJECT_GetAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
-	return 	g3Dobj->anmTbl[ anmIdx ]->anmobj->frame;
+	*anmFrm = g3Dobj->anmTbl[ anmIdx ]->anmobj->frame;
+}
+
+void
+	GFL_G3D_OBJECT_SetAnimeFrame
+		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
+{
+	NNSG3dAnmObj*	anmobj;
+	int				anmFrmMax;
+
+	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
+	GF_ASSERT( anmIdx < g3Dobj->anmCount );
+
+	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
+	anmFrmMax = NNS_G3dAnmObjGetNumFrame( anmobj );
+
+	if( *anmFrm >= anmFrmMax ){
+		g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = anmFrmMax;
+	} else {
+		g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = *anmFrm;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
