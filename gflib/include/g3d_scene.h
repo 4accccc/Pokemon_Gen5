@@ -158,6 +158,17 @@ extern GFL_G3D_OBJ*
 
 //--------------------------------------------------------------------------------------------
 /**
+ * ユーザーワークエリアポインタの取得
+ *
+ * @param	g3DsceneObj		配置オブジェクトポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern void*
+	GFL_G3D_SCENEOBJ_GetWork
+		( GFL_G3D_SCENEOBJ* g3DsceneObj );
+
+//--------------------------------------------------------------------------------------------
+/**
  * オブジェクトＩＤの取得と変更
  *
  * @param	g3DsceneObj		配置オブジェクトポインタ
@@ -273,11 +284,18 @@ inline void GFL_G3D_SCENEOBJ_ResetAnimeFrame
 	GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, anmIdx );
 }
 
-inline int GFL_G3D_SCENEOBJ_GetAnimeFrame
-		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
+inline void GFL_G3D_SCENEOBJ_GetAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, int* anmFrm )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	return GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, anmIdx );
+	GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, anmIdx, anmFrm );
+}
+
+inline void GFL_G3D_SCENEOBJ_SetAnimeFrame
+		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, int* anmFrm )
+{
+	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
+	GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, anmIdx, anmFrm );
 }
 
 inline BOOL GFL_G3D_SCENEOBJ_IncAnimeFrame
