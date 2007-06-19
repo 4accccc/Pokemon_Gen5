@@ -631,7 +631,7 @@ typedef struct {
 //==============================================================================================
 //==============================================================================================
 /**
- * 登録データによるセルアクター構築（VRAM常駐タイプ）
+ * 登録データによるセルアクター構築（VRAM常駐タイプ：ノーマル）
  *
  * @param   actUnit			[in] アクターユニットポインタ
  * @param   cgrIndex		[in] 使用するCGRデータの登録インデックス
@@ -645,7 +645,7 @@ typedef struct {
  */
 //==============================================================================================
 GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
+	  const GFL_CLWK_DATA* param, u16 setSerface, HEAPID heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -668,10 +668,9 @@ GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttInd
 		return GFL_CLACT_WK_Add( actUnit, param, &clactRes, setSerface, heapID );
 	}
 }
-
 //==============================================================================================
 /**
- * 登録データによるセルアクター構築（VRAM転送タイプ）
+ * 登録データによるセルアクター構築（VRAM常駐タイプ：アフィン）
  *
  * @param   actUnit			[in] アクターユニットポインタ
  * @param   cgrIndex		[in] 使用するCGRデータの登録インデックス
@@ -684,9 +683,47 @@ GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttInd
  * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
  */
 //==============================================================================================
+GFL_CLWK* GFL_OBJGRP_CreateClActAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex,
+	const GFL_CLWK_AFFINEDATA* param, u16 setSerface, HEAPID heapID )
+{
+	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
+	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
+	GF_ASSERT( cellAnimIndex < SysWork.initParam.CELL_RegisterMax );
+	GF_ASSERT( SysWork.cgrMan[cgrIndex].emptyFlag == FALSE );
+	GF_ASSERT_MSG( SysWork.plttMan[plttIndex].emptyFlag == FALSE, "plttIndex=%d", plttIndex );
+	GF_ASSERT( SysWork.cellAnimMan[cellAnimIndex].emptyFlag == FALSE );
 
+
+	{
+		GFL_CLWK_RES     clactRes;
+
+		GFL_CLACT_WK_SetCellResData( &clactRes,
+					&(SysWork.cgrMan[cgrIndex].proxy),
+					&(SysWork.plttMan[plttIndex].proxy),
+					SysWork.cellAnimMan[cellAnimIndex].cellBankPtr,
+					SysWork.cellAnimMan[cellAnimIndex].animBankPtr
+		);
+
+		return GFL_CLACT_WK_AddAffine( actUnit, param, &clactRes, setSerface, heapID );
+	}
+}
+//==============================================================================================
+/**
+ * 登録データによるセルアクター構築（VRAM転送タイプ：ノーマル）
+ *
+ * @param   actUnit			[in] アクターユニットポインタ
+ * @param   cgrIndex		[in] 使用するCGRデータの登録インデックス
+ * @param   plttIndex		[in] 使用するパレットデータの登録インデックス
+ * @param   cellAnimIndex	[in] 使用するセルアニメデータの登録インデックス
+ * @param   param			[in] アクター登録パラメータ
+ * @param   setSerface		[in] アクターをセットするサーフェイス指定（clact.h参照）
+ * @param   heapID			[in] アクター作成用ヒープID
+ *
+ * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
+ */
+//==============================================================================================
 GFL_CLWK* GFL_OBJGRP_CreateClActVT( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID )
+	  const GFL_CLWK_DATA* param, u16 setSerface, HEAPID heapID )
 {
 	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
 	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
@@ -708,6 +745,46 @@ GFL_CLWK* GFL_OBJGRP_CreateClActVT( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttI
 		);
 
 		return GFL_CLACT_WK_Add( actUnit, param, &clactRes, setSerface, heapID );
+	}
+}
+//==============================================================================================
+/**
+ * 登録データによるセルアクター構築（VRAM転送タイプ：アフィン）
+ *
+ * @param   actUnit			[in] アクターユニットポインタ
+ * @param   cgrIndex		[in] 使用するCGRデータの登録インデックス
+ * @param   plttIndex		[in] 使用するパレットデータの登録インデックス
+ * @param   cellAnimIndex	[in] 使用するセルアニメデータの登録インデックス
+ * @param   param			[in] アクター登録パラメータ
+ * @param   setSerface		[in] アクターをセットするサーフェイス指定（clact.h参照）
+ * @param   heapID			[in] アクター作成用ヒープID
+ *
+ * @retval  u32		登録インデックス（登録失敗の場合, GFL_OBJGRP_REGISTER_FAILED）
+ */
+//==============================================================================================
+extern GFL_CLWK* GFL_OBJGRP_CreateClActVTAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
+	  const GFL_CLWK_AFFINEDATA* param, u16 setSerface, HEAPID heapID )
+{
+	GF_ASSERT( cgrIndex < SysWork.initParam.CGR_RegisterMax );
+	GF_ASSERT( plttIndex < SysWork.initParam.PLTT_RegisterMax );
+	GF_ASSERT( cellAnimIndex < SysWork.initParam.CELL_RegisterMax );
+	GF_ASSERT( SysWork.cgrMan[cgrIndex].emptyFlag == FALSE );
+	GF_ASSERT_MSG( SysWork.plttMan[plttIndex].emptyFlag == FALSE, "plttIndex=%d", plttIndex );
+	GF_ASSERT( SysWork.cellAnimMan[cellAnimIndex].emptyFlag == FALSE );
+
+
+	{
+		GFL_CLWK_RES     clactRes;
+
+		GFL_CLACT_WK_SetTrCellResData( &clactRes,
+					&(SysWork.cgrMan[cgrIndex].proxy),
+					&(SysWork.plttMan[plttIndex].proxy),
+					SysWork.cellAnimMan[cellAnimIndex].cellBankPtr,
+					SysWork.cellAnimMan[cellAnimIndex].animBankPtr,
+					SysWork.cgrMan[cgrIndex].g2dCharData
+		);
+
+		return GFL_CLACT_WK_AddAffine( actUnit, param, &clactRes, setSerface, heapID );
 	}
 }
 
