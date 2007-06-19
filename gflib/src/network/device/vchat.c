@@ -9,6 +9,8 @@
 
 #include "gflib.h"
 
+#if GFL_NET_WIFI
+
 #include "../net_def.h"
 #include "dwc_rap.h"
 #include "vchat.h"
@@ -984,3 +986,7 @@ void myvct_onVchat()
 BOOL myvct_isVchatOn(){
 	return ( _vWork->off_flag == 0 );
 }
+
+
+#endif  //GFL_NET_WIFI
+
