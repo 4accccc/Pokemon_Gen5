@@ -143,7 +143,7 @@ static void ControlKey( void )
 		SetPlayerControlCommand( gw->pc, PCC_SIT );
 		return;
 	}
-	//カメラ方向調整
+	//カメラ方向リセット（現在のプレーヤーの向いている方向）
 	if( trg & PAD_BUTTON_L ){
 		u16 direction;
 		GetPlayerDirection( gw->pc, &direction );

@@ -36,7 +36,7 @@
 //------------------------------------------------------------------
 struct _CAMERA_CONTROL {
 	GAME_SYSTEM*			gs;
-	int						targetObj;
+	int						targetAct;
 
 	u16						seq;
 	u16						mainCameraDirection;
@@ -49,12 +49,12 @@ struct _CAMERA_CONTROL {
  * @brief	カメラコントロールセット
  */
 //------------------------------------------------------------------
-CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetObj, HEAPID heapID )
+CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID )
 {
 	CAMERA_CONTROL* cc = GFL_HEAP_AllocClearMemory( heapID, sizeof(CAMERA_CONTROL) );
 	cc->heapID = heapID;
 	cc->gs = gs;
-	cc->targetObj = targetObj;
+	cc->targetAct = targetAct;
 	cc->mainCameraDirection = 0;
 	cc->autoCameraDirection = 0;
 
@@ -97,8 +97,8 @@ void MainCameraControl( CAMERA_CONTROL* cc )
 	VecFx32 targetTrans, targetRotate;
 	VecFx32 cameraPos, cameraTarget;
 
-	Get3DobjTrans( Get_GS_SceneObj( cc->gs ), cc->targetObj, &targetTrans );
-	Get3DobjRotate( Get_GS_SceneObj( cc->gs ), cc->targetObj, &targetRotate );
+	Get3DactTrans( Get_GS_SceneAct( cc->gs ), cc->targetAct, &targetTrans );
+	Get3DactRotate( Get_GS_SceneAct( cc->gs ), cc->targetAct, &targetRotate );
 
 	//下カメラ制御
 	cameraPos.x = targetTrans.x + MAINCAMERA_POFS_LENGTH * FX_SinIdx(cc->mainCameraDirection);

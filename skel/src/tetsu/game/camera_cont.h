@@ -8,7 +8,7 @@
 typedef struct _CAMERA_CONTROL	CAMERA_CONTROL;
 
 // カメラコントロールセット
-extern CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetObj, HEAPID heapID );
+extern CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID );
 // カメラコントロールメイン
 extern void MainCameraControl( CAMERA_CONTROL* cc );
 // カメラコントロール終了
