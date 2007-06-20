@@ -16,6 +16,8 @@
 void	GameBoot( HEAPID heapID );
 void	GameEnd( void );
 BOOL	GameMain( void );
+
+#define CAMERA_MOVE_SPEED	(0x0100)
 //============================================================================================
 //
 //
@@ -110,7 +112,7 @@ BOOL	GameMain( void )
 //------------------------------------------------------------------
 static BOOL GameEndCheck( void )
 {
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
 		return TRUE;
 	} else {
 		return FALSE;
@@ -143,12 +145,25 @@ static void ControlKey( void )
 		SetPlayerControlCommand( gw->pc, PCC_SIT );
 		return;
 	}
-	//カメラ方向リセット（現在のプレーヤーの向いている方向）
-	if( trg & PAD_BUTTON_L ){
+	{
+		//カメラ操作
 		u16 direction;
-		GetPlayerDirection( gw->pc, &direction );
-		SetPlayerControlDirection( gw->pc, &direction );
-		SetCameraControlDirection( gw->cc, &direction );
+		
+		if(( cont & PAD_BUTTON_L )&&( cont & PAD_BUTTON_R )){	//リセット（プレーヤー前方）
+			//GetPlayerDirection( gw->pc, &direction );
+			//SetPlayerControlDirection( gw->pc, &direction );
+			//SetCameraControlDirection( gw->cc, &direction );
+		} else if( cont & PAD_BUTTON_L ){	//左移動
+			GetPlayerControlDirection( gw->pc, &direction );
+			direction += CAMERA_MOVE_SPEED;
+			SetPlayerControlDirection( gw->pc, &direction );
+			SetCameraControlDirection( gw->cc, &direction );
+		} else if( cont & PAD_BUTTON_R ){	//右移動
+			GetPlayerControlDirection( gw->pc, &direction );
+			direction -= CAMERA_MOVE_SPEED;
+			SetPlayerControlDirection( gw->pc, &direction );
+			SetCameraControlDirection( gw->cc, &direction );
+		}
 	}
 	//速度チェック
 	if( cont & PAD_BUTTON_B ){
