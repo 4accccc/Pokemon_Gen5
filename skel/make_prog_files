@@ -17,7 +17,7 @@ SRCS	+=		testmode.c \
                 sogabe/3d_test.c \
 				tetsu/game/gamemain.c \
 				tetsu/game/setup.c \
-				tetsu/game/obj3d.c \
+				tetsu/game/act3d.c \
 				tetsu/game/map3d.c \
 				tetsu/game/player_cont.c \
 				tetsu/game/camera_cont.c \
