@@ -109,13 +109,14 @@ static inline void moveSet( PLAYER_CONTROL* pc, u16 direction, int speed )
 	VecFx32	rotVec, tmpTransVec;		
 	u16		mapAttr;
 
+	//簡易ヒットチェック(自分を中心とした円衝突判定)
 	pc->nowDirection = direction;
 	tmpTransVec.x = pc->contTrans.x + ( -( speed + HITOFS ) * FX_SinIdx( direction ) /2 );
 	tmpTransVec.y = pc->contTrans.y;
 	tmpTransVec.z = pc->contTrans.z + ( -( speed + HITOFS ) * FX_CosIdx( direction ) /2 );
 
 	if( Get3DmapAttr( Get_GS_SceneMap( pc->gs ), &tmpTransVec, &mapAttr ) == TRUE ){
-		if( mapAttr == 0 ){	//簡易ヒットチェック
+		if( mapAttr == 0 ){
 			pc->contTrans.x += ( -speed * FX_SinIdx( direction ) /2 );
 			pc->contTrans.z += ( -speed * FX_CosIdx( direction ) /2 );
 		}
