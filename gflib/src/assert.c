@@ -60,7 +60,7 @@ void GFL_AssertMsg(const char * filename, unsigned int line_no, const char * fmt
 	va_list vlist;
 	AssertPrintTitle(filename, line_no);
 	va_start(vlist, fmt);
-	AssertPrintf(fmt, vlist);
+	OS_TVPrintf(fmt, vlist);
 	va_end(vlist);
 
 	OS_Terminate();
