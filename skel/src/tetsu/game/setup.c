@@ -45,11 +45,9 @@ struct _GAME_SYSTEM {
 	GFL_PTC_PTR				ptc;			//パーティクルLibハンドル
 	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];	//パーティクル使用ワーク
 	SCENE_MAP*				sceneMap;		//３Ｄマップ設定ハンドル
-	SCENE_OBJ*				sceneObj;		//３Ｄオブジェクト設定ハンドル
+	SCENE_ACT*				sceneAct;		//３Ｄオブジェクト設定ハンドル
 	GFL_TCB*				dbl3DdispVintr;	//vIntrTaskハンドル
 	HEAPID					heapID;
-
-	u32						g3DsceneObjID;
 };
 
 //------------------------------------------------------------------
@@ -309,7 +307,7 @@ static void g3d_load( GAME_SYSTEM*	gs )
 						G3D_OBJ_COUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
 
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
-	gs->sceneObj = Create3Dobj( gs->g3Dscene, gs->heapID );
+	gs->sceneAct = Create3Dact( gs->g3Dscene, gs->heapID );
 
 	//カメラ作成
 	{
@@ -345,7 +343,7 @@ static void g3d_unload( GAME_SYSTEM* gs )
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset[MAINLIGHT_ID] );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera[MAINCAMERA_ID] );
 
-	Delete3Dobj( gs->sceneObj );
+	Delete3Dact( gs->sceneAct );
 	Delete3Dmap( gs->sceneMap );
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
@@ -388,7 +386,7 @@ SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs )
 	return gs->sceneMap;
 }
 
-SCENE_OBJ*			Get_GS_SceneObj( GAME_SYSTEM* gs )
+SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs )
 {
-	return gs->sceneObj;
+	return gs->sceneAct;
 }

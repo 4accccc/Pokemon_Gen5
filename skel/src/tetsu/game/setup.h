@@ -6,7 +6,7 @@
  */
 //============================================================================================
 #include "map3d.h"
-#include "obj3d.h"
+#include "act3d.h"
 
 typedef struct _GAME_SYSTEM GAME_SYSTEM;
 
@@ -21,7 +21,7 @@ GFL_G3D_CAMERA*		Get_GS_G3Dcamera( GAME_SYSTEM* gs, int cameraID );
 GFL_G3D_LIGHTSET*	Get_GS_G3Dlight( GAME_SYSTEM* gs, int lightID );
 GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs );
 SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs );
-SCENE_OBJ*			Get_GS_SceneObj( GAME_SYSTEM* gs );
+SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs );
 
 //------------------------------------------------------------------
 /**

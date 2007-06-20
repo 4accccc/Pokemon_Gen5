@@ -36,7 +36,7 @@ typedef enum {
 }PLAYER_CONTROL_COMMAND;
 
 // プレーヤーコントロールセット
-extern PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetObj, HEAPID heapID );
+extern PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID );
 // プレーヤーコントロールメイン
 extern void MainPlayerControl( PLAYER_CONTROL* pc );
 // プレーヤーコントロール終了

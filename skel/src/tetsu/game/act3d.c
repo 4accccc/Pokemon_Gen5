@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file	obj3d.c
+ * @file	act3d.c
  * @brief	
  * @author	
  * @date	
@@ -14,10 +14,10 @@
  * @brief	型宣言
  */
 //------------------------------------------------------------------
-struct _SCENE_OBJ {
+struct _SCENE_ACT {
 	GFL_G3D_SCENE*	g3Dscene;
-	int				objID;
-	int				objCount;
+	int				actID;
+	int				actCount;
 };
 
 typedef struct { 
@@ -29,7 +29,7 @@ typedef struct {
 	u8			accesoryID;
 	u8			accesoryIDNow;
 	BOOL		busyFlag;
-}OBJ_WORK;//setup.cで指定されているサイズに収めるように注意
+}ACT_WORK;//setup.cで指定されているサイズに収めるように注意
 
 static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
@@ -102,17 +102,17 @@ static const GFL_G3D_SCENEACCESORY_DATA g3DsceneAccesoryData3[] = {
  * @brief		３Ｄオブジェクト生成
  */
 //------------------------------------------------------------------
-SCENE_OBJ* Create3Dobj( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
+SCENE_ACT* Create3Dact( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 {
-	SCENE_OBJ* sceneObj = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_OBJ) );
+	SCENE_ACT* sceneAct = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_ACT) );
 
 	//自機作成
-	sceneObj->objID = GFL_G3D_SCENEOBJ_Add
+	sceneAct->actID = GFL_G3D_SCENEOBJ_Add
 						( g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData) );
-	sceneObj->g3Dscene = g3Dscene;
-	sceneObj->objCount = NELEMS(g3DsceneObjData);
+	sceneAct->g3Dscene = g3Dscene;
+	sceneAct->actCount = NELEMS(g3DsceneObjData);
 
-	return sceneObj;
+	return sceneAct;
 }
 	
 //------------------------------------------------------------------
@@ -120,10 +120,10 @@ SCENE_OBJ* Create3Dobj( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
  * @brief		３Ｄオブジェクト破棄
  */
 //------------------------------------------------------------------
-void	Delete3Dobj( SCENE_OBJ* sceneObj )
+void	Delete3Dact( SCENE_ACT* sceneAct )
 {
-	GFL_G3D_SCENEOBJ_Remove( sceneObj->g3Dscene, sceneObj->objID, sceneObj->objCount ); 
-	GFL_HEAP_FreeMemory( sceneObj );
+	GFL_G3D_SCENEOBJ_Remove( sceneAct->g3Dscene, sceneAct->actID, sceneAct->actCount ); 
+	GFL_HEAP_FreeMemory( sceneAct );
 }
 
 //------------------------------------------------------------------
@@ -131,9 +131,9 @@ void	Delete3Dobj( SCENE_OBJ* sceneObj )
  * @brief		３Ｄオブジェクトハンドルポインタ取得
  */
 //------------------------------------------------------------------
-GFL_G3D_SCENEOBJ*	Get3DobjHandle( SCENE_OBJ* sceneObj, u32 idx )
+GFL_G3D_SCENEOBJ*	Get3DactHandle( SCENE_ACT* sceneAct, u32 idx )
 {
-	return GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, sceneObj->objID + idx );
+	return GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + idx );
 }
 
 //------------------------------------------------------------------
@@ -141,9 +141,9 @@ GFL_G3D_SCENEOBJ*	Get3DobjHandle( SCENE_OBJ* sceneObj, u32 idx )
  * @brief		３Ｄオブジェクトワークポインタ取得
  */
 //------------------------------------------------------------------
-void*	Get3DobjWork( SCENE_OBJ* sceneObj, u32 idx )
+void*	Get3DactWork( SCENE_ACT* sceneAct, u32 idx )
 {
-	return GFL_G3D_SCENEOBJ_GetWork( GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, idx ) );
+	return GFL_G3D_SCENEOBJ_GetWork( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, idx ) );
 }
 
 //------------------------------------------------------------------
@@ -151,17 +151,17 @@ void*	Get3DobjWork( SCENE_OBJ* sceneObj, u32 idx )
  * @brief		３Ｄオブジェクト座標の取得と設定
  */
 //------------------------------------------------------------------
-void	Get3DobjTrans( SCENE_OBJ* sceneObj, u32 idx, VecFx32* trans )
+void	Get3DactTrans( SCENE_ACT* sceneAct, u32 idx, VecFx32* trans )
 {
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, 
-														sceneObj->objID + idx );
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, 
+														sceneAct->actID + idx );
 	GFL_G3D_SCENEOBJ_GetPos( g3DsceneObj, trans );
 }
 
-void	Set3DobjTrans( SCENE_OBJ* sceneObj, u32 idx, VecFx32* trans )
+void	Set3DactTrans( SCENE_ACT* sceneAct, u32 idx, VecFx32* trans )
 {
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, 
-														sceneObj->objID + idx );
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, 
+														sceneAct->actID + idx );
 	GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, trans );
 }
 
@@ -170,20 +170,20 @@ void	Set3DobjTrans( SCENE_OBJ* sceneObj, u32 idx, VecFx32* trans )
  * @brief		３Ｄオブジェクト回転の取得と設定
  */
 //------------------------------------------------------------------
-void	Get3DobjRotate( SCENE_OBJ* sceneObj, u32 idx, VecFx32* rotate )
+void	Get3DactRotate( SCENE_ACT* sceneAct, u32 idx, VecFx32* rotate )
 {
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, 
-														sceneObj->objID + idx );
-	OBJ_WORK* work = (OBJ_WORK*)GFL_G3D_SCENEOBJ_GetWork( g3DsceneObj );
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, 
+														sceneAct->actID + idx );
+	ACT_WORK* work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork( g3DsceneObj );
 
 	*rotate = work->rotateVec;
 }
 
-void	Set3DobjRotate( SCENE_OBJ* sceneObj, u32 idx, VecFx32* rotate )
+void	Set3DactRotate( SCENE_ACT* sceneAct, u32 idx, VecFx32* rotate )
 {
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene, 
-														sceneObj->objID + idx );
-	OBJ_WORK* work = (OBJ_WORK*)GFL_G3D_SCENEOBJ_GetWork( g3DsceneObj );
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, 
+														sceneAct->actID + idx );
+	ACT_WORK* work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork( g3DsceneObj );
 	MtxFx33			rotateMtx;
 
 	work->rotateVec = *rotate;
@@ -201,39 +201,39 @@ void	Set3DobjRotate( SCENE_OBJ* sceneObj, u32 idx, VecFx32* rotate )
 //	プレーヤーキャラ
 //
 //------------------------------------------------------------------
-void	Set3DobjPlayerChrAnimeCmd( SCENE_OBJ* sceneObj, u32 idx, u8 animeCmd )
+void	Set3DactPlayerChrAnimeCmd( SCENE_ACT* sceneAct, u32 idx, u8 animeCmd )
 {
-	OBJ_WORK* work = (OBJ_WORK*)GFL_G3D_SCENEOBJ_GetWork
-						( GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene,sceneObj->objID + idx )); 
+	ACT_WORK* work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork
+						( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene,sceneAct->actID + idx )); 
 	work->animeCmd = animeCmd;
 }
 
-void	Set3DobjPlayerChrAccesory( SCENE_OBJ* sceneObj, u32 idx, u8 accesoryID )
+void	Set3DactPlayerChrAccesory( SCENE_ACT* sceneAct, u32 idx, u8 accesoryID )
 {
-	OBJ_WORK* work = (OBJ_WORK*)GFL_G3D_SCENEOBJ_GetWork
-						( GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene,sceneObj->objID + idx )); 
+	ACT_WORK* work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork
+						( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene,sceneAct->actID + idx )); 
 	work->accesoryID = accesoryID;
 }
 
-BOOL	Check3DobjPlayerBusy( SCENE_OBJ* sceneObj, u32 idx )
+BOOL	Check3DactPlayerBusy( SCENE_ACT* sceneAct, u32 idx )
 {
-	OBJ_WORK* work = (OBJ_WORK*)GFL_G3D_SCENEOBJ_GetWork
-						( GFL_G3D_SCENEOBJ_Get( sceneObj->g3Dscene,sceneObj->objID + idx )); 
+	ACT_WORK* work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork
+						( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene,sceneAct->actID + idx )); 
 	return work->busyFlag;
 }
 
 //------------------------------------------------------------------
 enum {
-	OBJANMSEQ_PLAYER_SET = 0,
-	OBJANMSEQ_PLAYER_STAY,
-	OBJANMSEQ_PLAYER_WALK,
-	OBJANMSEQ_PLAYER_RUN,
-	OBJANMSEQ_PLAYER_ATTACK,
-	OBJANMSEQ_PLAYER_SHOOT,
-	OBJANMSEQ_PLAYER_SPELL,
-	OBJANMSEQ_PLAYER_SITDOWN,
-	OBJANMSEQ_PLAYER_STANDUP,
-	OBJANMSEQ_PLAYER_TAKE,
+	ACTANMSEQ_PLAYER_SET = 0,
+	ACTANMSEQ_PLAYER_STAY,
+	ACTANMSEQ_PLAYER_WALK,
+	ACTANMSEQ_PLAYER_RUN,
+	ACTANMSEQ_PLAYER_ATTACK,
+	ACTANMSEQ_PLAYER_SHOOT,
+	ACTANMSEQ_PLAYER_SPELL,
+	ACTANMSEQ_PLAYER_SITDOWN,
+	ACTANMSEQ_PLAYER_STANDUP,
+	ACTANMSEQ_PLAYER_TAKE,
 };
 
 typedef struct {
@@ -245,20 +245,20 @@ typedef struct {
 }PLAYER_ANMIDATA_TBL;
 
 static const PLAYER_ANMIDATA_TBL anmDataTable[] = {
-	{ HUMAN2_ANM_STAY,		OBJANMSEQ_PLAYER_STAY,		0,	0,	2 },	//OBJANM_PLAYER_STAY
-	{ HUMAN2_ANM_WALK,		OBJANMSEQ_PLAYER_WALK,		0,	0,	2 },	//OBJANM_PLAYER_WALK
-	{ HUMAN2_ANM_RUN,		OBJANMSEQ_PLAYER_RUN,		0,	0,	4 },	//OBJANM_PLAYER_RUN
-	{ HUMAN2_ANM_ATTACK,	OBJANMSEQ_PLAYER_ATTACK,	0,	0,	2 },	//OBJANM_PLAYER_ATTACK
-	{ HUMAN2_ANM_SHOOT,		OBJANMSEQ_PLAYER_SHOOT,		0,	0,	2 },	//OBJANM_PLAYER_SHOOT
-	{ HUMAN2_ANM_SPELL,		OBJANMSEQ_PLAYER_SPELL,		0,	0,	2 },	//OBJANM_PLAYER_SPELL
-	{ HUMAN2_ANM_SIT,		OBJANMSEQ_PLAYER_SITDOWN,	0,	20,	1 },	//OBJANM_PLAYER_SITDOWN
-	{ HUMAN2_ANM_SIT,		OBJANMSEQ_PLAYER_STANDUP,	20,	0,	1 },	//OBJANM_PLAYER_STANDUP
-	{ HUMAN2_ANM_SIT,		OBJANMSEQ_PLAYER_TAKE,		0,	0,	1 },	//OBJANM_PLAYER_TAKE
+	{ HUMAN2_ANM_STAY,		ACTANMSEQ_PLAYER_STAY,		0,	0,	2 },	//ACTANM_PLAYER_STAY
+	{ HUMAN2_ANM_WALK,		ACTANMSEQ_PLAYER_WALK,		0,	0,	2 },	//ACTANM_PLAYER_WALK
+	{ HUMAN2_ANM_RUN,		ACTANMSEQ_PLAYER_RUN,		0,	0,	4 },	//ACTANM_PLAYER_RUN
+	{ HUMAN2_ANM_ATTACK,	ACTANMSEQ_PLAYER_ATTACK,	0,	0,	2 },	//ACTANM_PLAYER_ATTACK
+	{ HUMAN2_ANM_SHOOT,		ACTANMSEQ_PLAYER_SHOOT,		0,	0,	2 },	//ACTANM_PLAYER_SHOOT
+	{ HUMAN2_ANM_SPELL,		ACTANMSEQ_PLAYER_SPELL,		0,	0,	2 },	//ACTANM_PLAYER_SPELL
+	{ HUMAN2_ANM_SIT,		ACTANMSEQ_PLAYER_SITDOWN,	0,	20,	1 },	//ACTANM_PLAYER_SITDOWN
+	{ HUMAN2_ANM_SIT,		ACTANMSEQ_PLAYER_STANDUP,	20,	0,	1 },	//ACTANM_PLAYER_STANDUP
+	{ HUMAN2_ANM_SIT,		ACTANMSEQ_PLAYER_TAKE,		0,	0,	1 },	//ACTANM_PLAYER_TAKE
 };
 
 static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	OBJ_WORK*	pw = (OBJ_WORK*)work;
+	ACT_WORK*	pw = (ACT_WORK*)work;
 	int			anmID;
 	fx32		start, end, wait;
 
@@ -280,24 +280,24 @@ static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 	wait	= FX32_ONE * anmDataTable[pw->animeCmd].wait;
 
 	switch( pw->seq ){
-	case OBJANMSEQ_PLAYER_STAY:
-	case OBJANMSEQ_PLAYER_WALK:
-	case OBJANMSEQ_PLAYER_RUN:
+	case ACTANMSEQ_PLAYER_STAY:
+	case ACTANMSEQ_PLAYER_WALK:
+	case ACTANMSEQ_PLAYER_RUN:
 		GFL_G3D_SCENEOBJ_LoopAnimeFrame( sceneObj, anmID, wait ); 
 		pw->busyFlag = FALSE;
 		break;
-	case OBJANMSEQ_PLAYER_ATTACK:
-	case OBJANMSEQ_PLAYER_SHOOT:
-	case OBJANMSEQ_PLAYER_SPELL:
-	case OBJANMSEQ_PLAYER_TAKE:
-	case OBJANMSEQ_PLAYER_STANDUP:
+	case ACTANMSEQ_PLAYER_ATTACK:
+	case ACTANMSEQ_PLAYER_SHOOT:
+	case ACTANMSEQ_PLAYER_SPELL:
+	case ACTANMSEQ_PLAYER_TAKE:
+	case ACTANMSEQ_PLAYER_STANDUP:
 		if( GFL_G3D_SCENEOBJ_IncAnimeFrame( sceneObj, anmID, wait ) == FALSE ){
-			pw->animeCmd = OBJANM_CMD_STAY;
+			pw->animeCmd = ACTANM_CMD_STAY;
 		} else {
 			pw->busyFlag = TRUE;
 		}
 		break;
-	case OBJANMSEQ_PLAYER_SITDOWN:
+	case ACTANMSEQ_PLAYER_SITDOWN:
 		{
 			fx32 nowFrm;
 			GFL_G3D_SCENEOBJ_GetAnimeFrame( sceneObj, anmID, (int*)&nowFrm );

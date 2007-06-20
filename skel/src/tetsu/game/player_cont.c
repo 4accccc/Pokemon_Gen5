@@ -26,7 +26,7 @@
 struct _PLAYER_CONTROL {
 	HEAPID					heapID;
 	GAME_SYSTEM*			gs;
-	int						targetObj;
+	int						targetAct;
 	PLAYER_CONTROL_COMMAND	contCommand;
 
 	u16						contDirection;
@@ -45,15 +45,15 @@ struct _PLAYER_CONTROL {
  * @brief	プレーヤーコントロール初期化
  */
 //------------------------------------------------------------------
-PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetObj, HEAPID heapID )
+PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID )
 {
 	PLAYER_CONTROL* pc = GFL_HEAP_AllocClearMemory( heapID, sizeof(PLAYER_CONTROL) );
 	pc->heapID = heapID;
 	pc->gs = gs;
-	pc->targetObj = targetObj;
+	pc->targetAct = targetAct;
 	pc->contDirection = 0;
 	pc->nowDirection = 0;
-	Get3DobjTrans( Get_GS_SceneObj( pc->gs ), pc->targetObj, &pc->contTrans );
+	Get3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
 	pc->sitDownFlag = FALSE;
 
 	return pc;
@@ -124,8 +124,8 @@ static inline void moveSet( PLAYER_CONTROL* pc, u16 direction, int speed )
 	rotVec.y = direction + 0x8000;
 	rotVec.z = 0;
 
-	Set3DobjTrans( Get_GS_SceneObj( pc->gs ), pc->targetObj, &pc->contTrans );
-	Set3DobjRotate( Get_GS_SceneObj( pc->gs ), pc->targetObj, &rotVec );
+	Set3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
+	Set3DactRotate( Get_GS_SceneAct( pc->gs ), pc->targetAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -134,11 +134,11 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	VecFx32 move = { 0, 0, 0 };
 	BOOL	moveFlag = FALSE;
 
-	if( Check3DobjPlayerBusy( Get_GS_SceneObj( pc->gs ), pc->targetObj ) == TRUE ){
+	if( Check3DactPlayerBusy( Get_GS_SceneAct( pc->gs ), pc->targetAct ) == TRUE ){
 		return;
 	}
 	if(( pc->contCommand != PCC_SIT )&&( pc->sitDownFlag == TRUE )){	//しゃがみ中立ち判定処理
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_STANDUP );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_STANDUP );
 		pc->sitDownFlag = FALSE;
 		return;
 	}
@@ -146,100 +146,100 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	case PCC_NOP:
 		break;
 	case PCC_STAY:
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_STAY );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_STAY );
 		break;
 	case PCC_WALK_FRONT:
 		moveSet( pc, pc->contDirection + 0x0000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_BACK:
 		moveSet( pc, pc->contDirection + 0x8000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_LEFT:
 		moveSet( pc, pc->contDirection + 0x4000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_RIGHT:
 		moveSet( pc, pc->contDirection - 0x4000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_FRONT_LEFT:
 		moveSet( pc, pc->contDirection + 0x2000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_FRONT_RIGHT:
 		moveSet( pc, pc->contDirection - 0x2000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_BACK_LEFT:
 		moveSet( pc, pc->contDirection + 0x6000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_WALK_BACK_RIGHT:
 		moveSet( pc, pc->contDirection - 0x6000, WALK_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_WALK );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_WALK );
 		break;
 	case PCC_RUN_FRONT:
 		moveSet( pc, pc->contDirection + 0x0000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_BACK:
 		moveSet( pc, pc->contDirection + 0x8000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_LEFT:
 		moveSet( pc, pc->contDirection + 0x4000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_RIGHT:
 		moveSet( pc, pc->contDirection - 0x4000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_FRONT_LEFT:
 		moveSet( pc, pc->contDirection + 0x2000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_FRONT_RIGHT:
 		moveSet( pc, pc->contDirection - 0x2000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_BACK_LEFT:
 		moveSet( pc, pc->contDirection + 0x6000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_RUN_BACK_RIGHT:
 		moveSet( pc, pc->contDirection - 0x6000, RUN_SPEED );
-		Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_RUN );
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_RUN );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
 		switch( pc->nowAccesary ){
 		defasult:
-			Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_STAY );
+			Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_STAY );
 			break;
 		case 1:
-			Set3DobjPlayerChrAnimeCmd
-				( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_ATTACK );
+			Set3DactPlayerChrAnimeCmd
+				( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_ATTACK );
 			break;
 		case 2:
-			Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_SHOOT );
+			Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_SHOOT );
 			break;
 		case 3:
-			Set3DobjPlayerChrAnimeCmd( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_SPELL );
+			Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_SPELL );
 			break;
 		}
 		break;
 	case PCC_SIT:
-		Set3DobjPlayerChrAnimeCmd
-			( Get_GS_SceneObj( pc->gs ), pc->targetObj, OBJANM_CMD_SITDOWN );
+		Set3DactPlayerChrAnimeCmd
+			( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_SITDOWN );
 		pc->sitDownFlag = TRUE;
 		break;
 	case PCC_WEPONCHANGE:		
 		//ナンバー切り替え
 		pc->nowAccesary++;
 		pc->nowAccesary&= 3;
-		Set3DobjPlayerChrAccesory( Get_GS_SceneObj( pc->gs ), pc->targetObj, pc->nowAccesary );
+		Set3DactPlayerChrAccesory( Get_GS_SceneAct( pc->gs ), pc->targetAct, pc->nowAccesary );
 		break;
 	}
 	//pc->contCommand = PCC_NOP;
