@@ -43,7 +43,8 @@ extern void MainPlayerControl( PLAYER_CONTROL* pc );
 extern void RemovePlayerControl( PLAYER_CONTROL* pc );
 // プレーヤー方向の取得
 extern void GetPlayerDirection( PLAYER_CONTROL* pc, u16* direction );
-//プレーヤーコントロール方向の設定
+//プレーヤーコントロール方向の取得と設定
+extern void GetPlayerControlDirection( PLAYER_CONTROL* pc, u16* direction );
 extern void SetPlayerControlDirection( PLAYER_CONTROL* pc, u16* direction );
 // プレーヤーコマンドの設定
 extern void SetPlayerControlCommand( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command );

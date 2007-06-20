@@ -81,9 +81,14 @@ void GetPlayerDirection( PLAYER_CONTROL* pc, u16* direction )
 
 //------------------------------------------------------------------
 /**
- * @brief	プレーヤーコントロール方向の設定
+ * @brief	プレーヤーコントロール方向の取得と設定
  */
 //------------------------------------------------------------------
+void GetPlayerControlDirection( PLAYER_CONTROL* pc, u16* direction )
+{
+	*direction = pc->contDirection;
+}
+
 void SetPlayerControlDirection( PLAYER_CONTROL* pc, u16* direction )
 {
 	pc->contDirection = *direction;
