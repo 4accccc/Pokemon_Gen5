@@ -325,7 +325,9 @@ static void _UI_SleepFunc(void)
             }
             {
                 GFL_UI_SLEEPRELEASE_FUNC* pRelease = pUI->pRelease;
-                pRelease(pUI->pWork);
+                if(pRelease){
+                    pRelease(pUI->pWork);
+                }
             }
             GFL_UI_TP_AutoSamplingReStart();
         } else{
