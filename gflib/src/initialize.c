@@ -39,6 +39,8 @@ void InitSystem(void)
   FX_Init();
   // ファイルシステム初期化
   InitFileSystem();
+
+  OS_EnableIrq();  // この関数は会議で相談した後で移動する  @@OO
 }
 
 

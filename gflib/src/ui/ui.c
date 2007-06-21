@@ -65,8 +65,6 @@ void GFL_UI_Boot(const HEAPID heapID)
     pUI->pKey = GFL_UI_KEY_Init(heapID);
     _pUI = pUI;
 
-    OS_EnableIrq();  // この関数は会議で相談した後で移動する  @@OO
-
     PM_GetBackLight(NULL,&pUI->lightState);  // バックライト状態読み込み
     //return pUI;
 }
