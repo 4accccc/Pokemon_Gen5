@@ -246,7 +246,7 @@ void GFL_TCBL_Exit( GFL_TCBLSYS * tcbsys )
 {
 	//実行するべきタスクが残っていたらエラーにする
 	if(tcbsys->tcb_first.next != &(tcbsys->tcb_first)) {
-		OS_Printf("%08X != %08X\n", tcbsys->tcb_first.next, &(tcbsys->tcb_first));
+		OS_Printf("Error:Task Left. function = %08X\n",tcbsys->tcb_first.next->func);
 		GF_ASSERT(0);
 	}
 	GFL_HEAP_FreeMemory(tcbsys->tcb_array);
