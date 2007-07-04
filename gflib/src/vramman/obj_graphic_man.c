@@ -378,8 +378,8 @@ void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx
 		if( srcData->szByte <= dstData->szByte )
 		{
 			MI_CpuCopyFast( srcData->pRawData, dstData->pRawData, srcData->szByte );
-			OS_TPrintf("srcAdrs:%08x, dstAdrs:%08x, size:%08x\n",
-				(u32)(srcData->pRawData), (u32)(dstData->pRawData), srcData->szByte );
+//			OS_TPrintf("srcAdrs:%08x, dstAdrs:%08x, size:%08x\n",
+//				(u32)(srcData->pRawData), (u32)(dstData->pRawData), srcData->szByte );
 			DC_FlushRange( dstData->pRawData, srcData->szByte );
 		}
 		else
