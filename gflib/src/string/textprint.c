@@ -9,6 +9,7 @@
 
 #include "textprint.h"
 #include "sjisconv_inter.h"
+
 //------------------------------------------------------------------
 /**
  * ƒ[ƒN\‘¢‘Ì
@@ -36,6 +37,8 @@ void
 	GFL_FONT_Create( fontDataPath );
 	tw = GFL_HEAP_AllocMemory( GFL_HEAPID_SYSTEM, sizeof(TEXT_WORK) );
 }
+
+
 
 
 //------------------------------------------------------------------
@@ -132,6 +135,10 @@ void
 			break;
 		}
 	}
+
+	param->writex = tw->nowx;
+	param->writey = tw->nowy;
+
 	GFL_BMP_Delete(bmpfont);
 }
 
