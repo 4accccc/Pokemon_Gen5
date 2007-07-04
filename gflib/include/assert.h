@@ -14,7 +14,7 @@
 
 #ifdef	GF_ASSERT_ENABLE
 
-//ASSERT無効の場合
+// ASSERT有効の場合 --------------------------------------------------------------------------
 extern void GFL_Assert(const char * filename, unsigned int line_no, const char * exp);
 extern void GFL_AssertMsg(const char * filename, unsigned int line_no, const char * fmt, ... );
 
@@ -25,8 +25,17 @@ extern void GFL_AssertMsg(const char * filename, unsigned int line_no, const cha
 //#define GF_ASSERT_Printf( ... )		((exp)? ((void)0);
 
 
+/* ASSERT情報出力をユーザ定義するための関数型定義 */
+
+typedef void (*GFL_ASSERT_DispInitFunc)(void);
+typedef void (*GFL_ASSERT_DispMainFunc)( const char* );
+typedef void (*GFL_ASSERT_DispFinishFunc)(void);
+
+extern void GFL_ASSERT_SetDisplayFunc( GFL_ASSERT_DispInitFunc initFunc, GFL_ASSERT_DispMainFunc mainFunc, GFL_ASSERT_DispFinishFunc finishFunc );
+
+
 #else
-//ASSERT有効の場合
+// ASSERT無効の場合 --------------------------------------------------------------------------
 
 #define GF_ASSERT(exp)				((void)0);
 #define GF_ASSERT_MSG(exp, ...)		((void)0);
