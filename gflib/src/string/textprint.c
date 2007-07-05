@@ -8,6 +8,7 @@
 #include "gflib.h"
 
 #include "textprint.h"
+#include "systemfontcode.h"
 #include "sjisconv_inter.h"
 
 //------------------------------------------------------------------
@@ -88,7 +89,7 @@ void
 {
 	u8				sizemaxY	= GFL_FONT_GetSizeMaxY();
 	u8				sizeSPC		= GFL_FONT_GetSizeSPC();
-	STRCODE			fcode;
+	STRCODE			fcode, EOMCode;
 	GFL_BMP_DATA	*bmpfont;
 
 	//描画位置初期化
@@ -100,17 +101,13 @@ void
 
 	//フォントビットマップ情報作成
 	bmpfont = GFL_BMP_CreateWithData( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
-	
+	EOMCode = GFL_STR_GetEOMCode();
 	//フォントデータ取得
-	while( (fcode = *textcode ) != EOM_ ) 
+	while( (fcode = *textcode ) != EOMCode ) 
 	{
 		textcode++;
 
 		switch(fcode){
-
-		case EOM_:	/* 終了コード */
-			GFL_HEAP_FreeMemory( tw );
-			return;
 
 		case CR_:	/* 改行コード */
 			tw->nowx = param->writex;

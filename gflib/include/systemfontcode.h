@@ -1,4 +1,11 @@
 enum {
+	CR_ = 1,
+	spc_,
+	h_spc_,
+	STR_DEFAULT_CODE_MAX,
+};
+
+enum {
 	/* "‚Ÿ" */		aa_ = STR_DEFAULT_CODE_MAX,
 	/* "‚ " */		a_,
 	/* "‚¡" */		ii_,

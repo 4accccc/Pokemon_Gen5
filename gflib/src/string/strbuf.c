@@ -31,6 +31,27 @@ typedef struct _STRBUF {
 #define STRBUF_HEADER_SIZE	(sizeof(STRBUF) - sizeof(STRCODE))
 
 //==============================================================================================
+static STRCODE  EOMCode = 0xffff;
+
+
+
+//==============================================================================================
+
+//------------------------------------------------------------------
+/**
+ * EOMコードを設定する
+ *
+ * @param   code		EOMコード指定
+ *
+ */
+//------------------------------------------------------------------
+void GFL_STR_SetEOMCode( STRCODE code )
+{
+	EOMCode = code;
+}
+
+
+//==============================================================================================
 //------------------------------------------------------------------
 /**
  * 指定されたポインタがSTRBUFとして有効なものであるかチェック
@@ -73,7 +94,7 @@ STRBUF*
 	strbuf->magicNumber = STRBUF_MAGIC_NUMBER;
 	strbuf->size = size;
 	strbuf->strlen = 0;
-	strbuf->buffer[0] = EOM_;
+	strbuf->buffer[0] = EOMCode;
 
 	return strbuf;
 }
@@ -116,7 +137,7 @@ void
 	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	strbuf->strlen = 0;
-	strbuf->buffer[0] = EOM_;
+	strbuf->buffer[0] = EOMCode;
 }
 
 
@@ -192,7 +213,7 @@ BOOL
 
 	for(i=0; str1->buffer[i] == str2->buffer[i]; i++)
 	{
-		if( str1->buffer[i] == EOM_ )
+		if( str1->buffer[i] == EOMCode )
 		{
 			return TRUE;
 		}
@@ -240,7 +261,7 @@ void
 	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	strbuf->strlen = 0;
-	while( *sz != EOM_ )
+	while( *sz != EOMCode )
 	{
 		if( strbuf->strlen >= (strbuf->size-1) )
 		{
@@ -249,7 +270,7 @@ void
 		}
 		strbuf->buffer[ strbuf->strlen++ ] = *sz++;
 	}
-	strbuf->buffer[strbuf->strlen] = EOM_;
+	strbuf->buffer[strbuf->strlen] = EOMCode;
 }
 
 
@@ -277,7 +298,7 @@ void
 
 		for(i=0; i<len; i++)
 		{
-			if(strbuf->buffer[i] == EOM_)
+			if(strbuf->buffer[i] == EOMCode)
 			{
 				break;
 			}
@@ -287,7 +308,7 @@ void
 		// EOM付きじゃない文字列だったら付けておく
 		if( i==len )
 		{
-			strbuf->buffer[len-1] = EOM_;
+			strbuf->buffer[len-1] = EOMCode;
 		}
 		return;
 	}
@@ -339,6 +360,18 @@ const STRCODE*
 	GF_ASSERT( GFL_STR_CheckBufferValid( strbuf ) == TRUE );
 
 	return strbuf->buffer;
+}
+
+//------------------------------------------------------------------
+/**
+ * EOMコードを取得
+ *
+ * @retval  STRCODE		EOMコード
+ */
+//------------------------------------------------------------------
+STRCODE GFL_STR_GetEOMCode( void )
+{
+	return EOMCode;
 }
 
 
@@ -393,7 +426,7 @@ void
 	if( (dst->strlen + EOM_CODESIZE) < dst->size )
 	{
 		dst->buffer[dst->strlen++] = code;
-		dst->buffer[dst->strlen] = EOM_;
+		dst->buffer[dst->strlen] = EOMCode;
 		return;
 	}
 	GF_ASSERT_MSG(0, "STRBUF overflow: busize=%d", dst->size);

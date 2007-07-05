@@ -51,7 +51,7 @@ void
 			i++;
 		}
 	}
-	*dst = EOM_;
+	*dst = GFL_STR_GetEOMCode();
 }
 
 
