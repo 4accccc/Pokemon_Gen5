@@ -21,6 +21,8 @@ SRCS	+=		testmode.c \
 				tetsu/game/map3d.c \
 				tetsu/game/player_cont.c \
 				tetsu/game/camera_cont.c \
+				tetsu/game/text_cont.c \
+				tetsu/game/skill_cont.c \
                 sogabe/blockout.c \
 				tamada/backup_sample.c \
 				tetsu/debug_watanabe.c
