@@ -88,6 +88,21 @@ void SetCameraControlDirection( CAMERA_CONTROL* cc, u16* value )
 
 //------------------------------------------------------------------
 /**
+ * @brief	カメラターゲットＩＤの取得と設定
+ */
+//------------------------------------------------------------------
+void GetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID )
+{
+	*ID = cc->targetAct;
+}
+
+void SetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID )
+{
+	cc->targetAct = *ID;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	カメラコントロールメイン
  */
 //------------------------------------------------------------------

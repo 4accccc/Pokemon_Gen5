@@ -33,6 +33,7 @@ typedef struct {
 static GFL_G3D_SCENEOBJ_DATA*	
 		MapDataCreate( SCENE_MAP* sceneMap, const MAPDATA* map, HEAPID heapID );
 static const	MAPDATA mapDataTbl;
+
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップ生成
@@ -73,14 +74,17 @@ void	Delete3Dmap( SCENE_MAP* sceneMap )
  * @brief	３Ｄマップアトリビュート取得
  */
 //------------------------------------------------------------------
+int work[2];
 BOOL		Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr )
 {
-	int x = (pos->x + mapGrid*16)/mapGrid;
-	int z = (pos->z + mapGrid*16)/mapGrid;
-	if(( x < 0 )||( x >= mapGrid*mapSizeX )||( z < 0 )||( z >= mapGrid*mapSizeX )){
+	fx32 wx = pos->x + mapGrid*16;
+	fx32 wz = pos->z + mapGrid*16;
+	int x = wx/mapGrid;
+	int z = wz/mapGrid;
+	if(( wx < 0 )||( wx >= mapGrid * mapSizeX )||( wz < 0 )||( wz >= mapGrid * mapSizeZ )){
 		return FALSE;
 	}
-	*attr = sceneMap->mapAttr[z*mapSizeX+x];
+	*attr = sceneMap->mapAttr[ z * mapSizeX + x ];
 	return TRUE;
 }
 
@@ -153,10 +157,10 @@ static GFL_G3D_SCENEOBJ_DATA*
 			switch( mapCode ){
 			default:
 			case '　':
-				mapAttr[z*sizeX+x] = 0;
+				mapAttr[ z * sizeX + x ] = 0;
 				break;
 			case '■':	//壁
-				mapAttr[z*sizeX+x] = 1;
+				mapAttr[ z * sizeX + x ] = 1;
 				break;
 			case '○':	//配置人物１
 #if 0

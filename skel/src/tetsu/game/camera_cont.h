@@ -16,4 +16,7 @@ extern void RemoveCameraControl( CAMERA_CONTROL* cc );
 // カメラ回転値の取得と設定
 extern void GetCameraControlDirection( CAMERA_CONTROL* cc, u16* value );
 extern void SetCameraControlDirection( CAMERA_CONTROL* cc, u16* value );
+// カメラターゲットＩＤの取得と設定
+extern void GetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID );
+extern void SetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID );
 

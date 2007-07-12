@@ -27,9 +27,18 @@ enum {
 	ACTANM_CMD_SITDOWN,
 	ACTANM_CMD_STANDUP,
 	ACTANM_CMD_TAKE,
+	ACTANM_CMD_HIT,
 };
 
 extern void	Set3DactPlayerChrAnimeCmd( SCENE_ACT* sceneAct, u32 idx, u8 animeCmd );
+extern void	Set3DactPlayerChrAnimeForceCmd( SCENE_ACT* sceneAct, u32 idx, u8 animeCmd );
 extern void	Set3DactPlayerChrAccesory( SCENE_ACT* sceneAct, u32 idx, u8 accesoryID );
 extern BOOL	Check3DactPlayerBusy( SCENE_ACT* sceneAct, u32 idx );
+
+//---------------------
+//g3Dscene オブジェクト設定テーブルデータＩＮＤＥＸ
+enum {
+	G3DSCOBJ_PLAYER1 = 0,
+	G3DSCOBJ_PLAYER2,
+};
 
