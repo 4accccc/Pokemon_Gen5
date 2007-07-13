@@ -75,7 +75,7 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
 //------------------------------------------------------------------
 #define G3D_FRM_PRI		(1)			//３Ｄ面の描画プライオリティー
 #define G3D_OBJ_COUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
-#define G3D_OBJWORK_SZ	(32)		//g3Dsceneで使用するsceneObjのワークサイズ
+#define G3D_OBJWORK_SZ	(64)		//g3Dsceneで使用するsceneObjのワークサイズ
 #define G3D_ACC_COUNT	(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
 
 static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
