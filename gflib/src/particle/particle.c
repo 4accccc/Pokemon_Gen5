@@ -1682,6 +1682,19 @@ void GFL_PTC_SetEmitterAxis(GFL_EMIT_PTR emit, const VecFx16 * p_vec)
 	SPL_SetEmitterAxis( emit, p_vec ); 
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   エミッタのスケールを設定する
+ *
+ * @param   emit		エミッタへのポインタ
+ * @param   p_scale		設定スケール
+ */
+//--------------------------------------------------------------
+void GFL_PTC_SetEmitterBaseScale(GFL_EMIT_PTR emit, const fx16 p_scale)
+{
+	SPL_SetEmitterBaseScale( emit, p_scale ); 
+}
+
 // ----------------------------------------------------------------------------
 //
 //
