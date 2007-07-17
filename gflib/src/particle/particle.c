@@ -1135,10 +1135,10 @@ void	GFL_PTC_Draw(GFL_PTC_PTR psys)
 		GFL_G3D_CAMERA_Switching(psys->camera);
 		GFL_G3D_DRAW_SetLookAt();
 	}
-
+#if 0
 	//グローバルステートを適用
 	NNS_G3dGlbFlush();
-
+#endif
 	// パーティクル描画
 	camera_ptr = NNS_G3dGlbGetCameraMtx();
 	SPL_Draw(psys->spl_manager, camera_ptr);
@@ -1656,6 +1656,31 @@ void GFL_PTC_GetEmitterBasePosition(GFL_EMIT_PTR emit, VecFx32 * p_pos)
 	*p_pos = emit->p_res->p_base->pos;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   エミッタの位置を設定する
+ *
+ * @param   emit		エミッタへのポインタ
+ * @param   p_pos		設定座標
+ */
+//--------------------------------------------------------------
+void GFL_PTC_SetEmitterPosition(GFL_EMIT_PTR emit, const VecFx32 * p_pos)
+{
+	SPL_SetEmitterPosition( emit, p_pos ); 
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   エミッタの方向を設定する
+ *
+ * @param   emit		エミッタへのポインタ
+ * @param   p_vec		設定方向ベクトル(正規化されている必要あり)
+ */
+//--------------------------------------------------------------
+void GFL_PTC_SetEmitterAxis(GFL_EMIT_PTR emit, const VecFx16 * p_vec)
+{
+	SPL_SetEmitterAxis( emit, p_vec ); 
+}
 
 // ----------------------------------------------------------------------------
 //
