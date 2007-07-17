@@ -162,6 +162,11 @@ extern	fx32			GFL_PTC_GetEmitterGenerationRatio(GFL_EMIT_PTR emit);
 extern	void			GFL_PTC_GetEmitterPosition(GFL_EMIT_PTR emit, VecFx32 * p_pos);
 extern	void			GFL_PTC_GetEmitterBasePosition(GFL_EMIT_PTR emit, VecFx32 * p_pos);
 
+//エミッタの位置を設定する
+extern	void			GFL_PTC_SetEmitterPosition(GFL_EMIT_PTR emit, const VecFx32 * p_pos);
+//エミッタの方向を設定する
+extern	void			GFL_PTC_SetEmitterAxis(GFL_EMIT_PTR emit, const VecFx16 * p_vec);
+
 // -----------------------------------------
 //
 //	Field param 操作関数
