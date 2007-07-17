@@ -135,11 +135,12 @@ void
 	//描画開始
 	GFL_G3D_DRAW_Start();
 
+	//カメラグローバルステート設定		
+ 	GFL_G3D_DRAW_SetLookAt();
+
 	if(( g3Dscene->GFL_PTC_Enable == TRUE )&&( g3Dscene->GFL_PTC_DrawSW == TRUE )){
 		GFL_PTC_Main();
 	}
-	//カメラグローバルステート設定		
- 	GFL_G3D_DRAW_SetLookAt();
 	//描画プライオリティーによるソート
 	objDrawSort( g3Dscene );
 
