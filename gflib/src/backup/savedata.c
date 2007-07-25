@@ -157,7 +157,8 @@ static void SVDT_MakeIndex(SVDT * svdt)
 		savedata_total_size += pageinfo[i].size;
 	}
 	svdt->total_size = savedata_total_size + svdt->footer_size;
-	GF_ASSERT(svdt->total_size <= svdt->savearea_size);
+	GF_ASSERT_MSG(svdt->total_size <= svdt->savearea_size,
+		"SaveDataSize=%08xbytes, SaveAreaSize=%08xbytes", svdt->total_size, svdt->savearea_size );
 }
 
 
