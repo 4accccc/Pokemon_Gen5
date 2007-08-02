@@ -10,6 +10,7 @@
 #include "textprint.h"
 
 #include "setup.h"
+#include "game_net.h"
 #include "player_cont.h"
 #include "camera_cont.h"
 #include "text_cont.h"
@@ -104,6 +105,9 @@ BOOL	GameMain( void )
 	switch( gw->seq ){
 
 	case 0:
+		//通信初期化
+		InitGameNet();
+
 		gw->gs = SetupGameSystem( gw->heapID );
 		for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
 			gw->pc[i] = AddPlayerControl( gw->gs, G3DSCOBJ_PLAYER1+i, gw->heapID );
@@ -120,17 +124,24 @@ BOOL	GameMain( void )
 			}
 		}
 		gw->playerSide = 0;
+
 		gw->seq++;
 		break;
 
 	case 1:
+		if( ConnectGameNet() == TRUE ){
+			gw->seq++;
+		}
+		break;
+
+	case 2:
+		//MainGameNet();
+
 		if( GameEndCheck() == TRUE ){
 			gw->seq++;
 		}
 		ControlKey();
-//DebugCheck
-//		Debug_Regenerate();
-//
+
 		for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
 			MainPlayerControl( gw->pc[i] );
 			SetSkillControlCommand( gw->sc, gw->pc[i], GetPlayerSkillCommand( gw->pc[i] ));
@@ -144,7 +155,13 @@ BOOL	GameMain( void )
 		StatusWinUpdate();
 		break;
 
-	case 2:
+	case 3:
+		if( ExitGameNet() == TRUE ){
+			gw->seq++;
+		}
+		break;
+
+	case 4:
 		RemoveSkillControl( gw->sc );
 		RemoveCameraControl( gw->cc );
 		for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
@@ -186,21 +203,6 @@ static void ControlKey( void )
 
 	pc = gw->pc[gw->playerSide];
 
-	//武器の変更
-	if( trg & PAD_BUTTON_Y ){
-		SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
-		return;
-	}
-	//攻撃
-	if( trg & PAD_BUTTON_A ){
-		SetPlayerControlCommand( pc, PCC_ATTACK );
-		return;
-	}
-	//座る
-	if( cont & PAD_BUTTON_X ){
-		SetPlayerControlCommand( pc, PCC_SIT );
-		return;
-	}
 	{
 		//カメラ操作
 		u16 direction;
@@ -221,10 +223,30 @@ static void ControlKey( void )
 			SetCameraControlDirection( gw->cc, &direction );
 		}
 	}
-	//速度チェック
-	if( cont & PAD_BUTTON_B ){
-		speedupFlag = TRUE;
+	//武器の変更
+	if( trg & PAD_BUTTON_Y ){
+		SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
+		return;
 	}
+	//攻撃
+	if( trg & PAD_BUTTON_A ){
+		SetPlayerControlCommand( pc, PCC_ATTACK );
+		return;
+	}
+	//置く、拾う
+	if( trg & PAD_BUTTON_B ){
+		SetPlayerControlCommand( pc, PCC_PUTON );
+		return;
+	}
+	//座る
+	if( cont & PAD_BUTTON_X ){
+		SetPlayerControlCommand( pc, PCC_SIT );
+		return;
+	}
+	//速度チェック
+//	if( cont & PAD_BUTTON_B ){
+		speedupFlag = TRUE;
+//	}
 	//移動
 	if( cont & PAD_KEY_UP ){
 		if( cont & PAD_KEY_LEFT ){
@@ -325,25 +347,4 @@ static void StatusWinUpdate( void )
  * @brief	デバッグ
  */
 //------------------------------------------------------------------
-int DebugTimer = 0;
-static void Debug_Regenerate( void )
-{
-	int	i;
-
-	if( DebugTimer ){
-		DebugTimer--;
-		return;
-	}
-	DebugTimer = 60;
-
-	for( i=0; i<PLAYER_SETUP_NUM; i++ ){
-		PLAYER_STATUS* status = GetPlayerStatusPointer( gw->pc[i] ); 
-		if( status->hp < status->hpMax ){
-			status->hp += 36;
-			if( status->hp > status->hpMax ){
-				status->hp = status->hpMax;
-			}
-		}
-	}
-}
 
