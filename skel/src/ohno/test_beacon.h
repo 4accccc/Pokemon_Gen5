@@ -12,6 +12,7 @@
 #define __TEST_BEACON_H__
 
 typedef struct _SKEL_TEST_BEACON_WORK SKEL_TEST_BEACON_WORK;
+typedef struct _access_point_param ACCESS_POINT_PARAM;
 
 extern void TEST_BEACON_End(SKEL_TEST_BEACON_WORK* pWork);
 extern void TEST_BEACON_Main(SKEL_TEST_BEACON_WORK* pWork);

@@ -23,7 +23,7 @@
 #define _BACKUP_NUM  (5)    // RSSIの平均を出すためにバックアップ
 #define _DIR_SAMPL_NUM (8)  // 方向の取得サンプル
 #define _GAME_BMPWIN (5)
-#define _SAMP_TIMER  (60*5)  // ５秒サンプリング
+#define _SAMP_TIMER  (60*3)  // ５秒サンプリング
 
 //------------------------------------------------------------------
 // NETのテスト
@@ -111,12 +111,35 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 };	
 
 
+//------------------------------------------------------------------
+/**
+ * @brief		内部ワーク構造体
+ */
+//------------------------------------------------------------------
+
+typedef struct {
+	GFL_CLWK		*clwk;
+	GFL_CLACTPOS	now_pos;
+	GFL_CLACTPOS	offset_pos;
+	u8			clact_no;		//セルアクターナンバー
+} _ACCESS_POINT_PARAM;
 
 //------------------------------------------------------------------
 /**
  * @brief		内部ワーク構造体
  */
 //------------------------------------------------------------------
+
+typedef struct {
+	void* p_cellbuff;
+	void* p_cellanmbuff;
+	NNSG2dCellDataBank*		p_cell;
+	NNSG2dCellAnimBankData*	p_cellanm;
+	NNSG2dImageProxy		imageproxy;
+	NNSG2dImagePaletteProxy	plttproxy;
+} _CLACT_RES;
+
+
 /// コールバック関数の書式 内部ステート遷移用
 typedef void (*_PTRFunc)(SKEL_TEST_BEACON_WORK* pNetHandle);
 
@@ -128,6 +151,7 @@ struct _SKEL_TEST_BEACON_WORK{
     GFL_BMPWIN* pBmpwinBeacon[_BCON_GET_NUM];
     u16 rssiBackup[_BCON_GET_NUM][_BACKUP_NUM];
     u16 rssiDir[_BCON_GET_NUM][_DIR_SAMPL_NUM];
+    _ACCESS_POINT_PARAM pAP[_BCON_GET_NUM];
     int dir;
     int countDir;
     int testNo;
@@ -137,14 +161,8 @@ struct _SKEL_TEST_BEACON_WORK{
     GFL_NETHANDLE* _pHandleServer;
 	GFL_CLUNIT		*p_unit;
 	GFL_CLWK		*clact_work[_BCON_GET_NUM];
-
-	void* p_cellbuff;
-	void* p_cellanmbuff;
-	NNSG2dCellDataBank*		p_cell;
-	NNSG2dCellAnimBankData*	p_cellanm;
-	NNSG2dImageProxy		imageproxy;
-	NNSG2dImagePaletteProxy	plttproxy;
-
+    ACCESS_POINT_PARAM* Ap[_BCON_GET_NUM];
+	_CLACT_RES res;
     
     GFL_AREAMAN			*clact_area;
 };
@@ -154,6 +172,10 @@ struct _SKEL_TEST_BEACON_WORK{
 #else
 #define   _CHANGE_STATE(state, time)  _changeState(pWork ,state, time)
 #endif
+
+static _ACCESS_POINT_PARAM	*_InitAPChr(SKEL_TEST_BEACON_WORK *pWork, u16 xpos, u16 ypos, u16 rssi);
+static void _DeleteFallChr(SKEL_TEST_BEACON_WORK* pWork,int clact_no);
+
 
 //==============================================================================
 /**
@@ -206,6 +228,23 @@ static void msg_bmpwin_make
 	GFL_BMPWIN_TransVramCharacter( testmode->bmpwin[bmpwinNum] );
 	//ビットマップスクリーン作成
 	GFL_BMPWIN_MakeScreen( testmode->bmpwin[bmpwinNum] );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		２Ｄデータ表示
+ */
+//------------------------------------------------------------------
+
+static void clact_draw(SKEL_TEST_BEACON_WORK* testmode )
+{
+    if(testmode->p_unit){
+        // セルアクターユニット描画処理
+        GFL_CLACT_UNIT_Draw( testmode->p_unit );
+        // セルアクターシステムメイン処理
+        // 全ユニット描画が完了してから行う必要があります。
+        GFL_CLACT_Main();
+    }
 }
 
 //------------------------------------------------------------------
@@ -306,7 +345,8 @@ static void	bg_init( HEAPID heapID )
 //==============================================================================
 static void _noneFunc(SKEL_TEST_BEACON_WORK* pWork)
 {
-    text_draw(pWork );
+    text_draw(pWork);
+    clact_draw(pWork);
 }
 
 
@@ -320,7 +360,7 @@ static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
     return sizeof(_testBeacon);
 }
 
-static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得関数
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)    ///< ビーコンデータ取得関数
 {
     return TRUE;
 }
@@ -359,10 +399,18 @@ static u16 _backupRssi(SKEL_TEST_BEACON_WORK* pWork,int index, u16 rssi)
 
 static void _gameStartCheck(SKEL_TEST_BEACON_WORK* pWork)
 {
+    int i;
+
     if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){  // バッファを消す
         GFL_STD_MemClear(pWork->rssiDir,sizeof(u16)*_DIR_SAMPL_NUM*_BCON_GET_NUM);
         pWork->dir = 0;
+
+        for(i = 0;i < _BCON_GET_NUM;i++){
+            _DeleteFallChr(pWork,i);
+        }
     }
+
+
     if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
         if((pWork->dir == 0) && (pWork->countDir==0)){
             pWork->countDir = _SAMP_TIMER;
@@ -379,7 +427,7 @@ static void _gameStartCheck(SKEL_TEST_BEACON_WORK* pWork)
  */
 //==============================================================================
 
-static void _gameStartFunc(SKEL_TEST_BEACON_WORK* pWork)
+static BOOL _gameStartFunc(SKEL_TEST_BEACON_WORK* pWork)
 {
     int i,msgindex=0;
     char msg[100];
@@ -410,11 +458,58 @@ static void _gameStartFunc(SKEL_TEST_BEACON_WORK* pWork)
             pWork->countDir = _SAMP_TIMER;
             pWork->dir++;
         }
-        if(pWork->dir == _DIR_SAMPL_NUM){
+        if(pWork->dir == _DIR_SAMPL_NUM){ // 収集完了
             pWork->countDir = 0;
             pWork->dir=0;
+            return TRUE;
         }
     }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   アクセスポイント結果表示
+ * @param   pWork  ゲームのワーク
+ * @retval  none
+ */
+//==============================================================================
+
+static void _APDisp(SKEL_TEST_BEACON_WORK* pWork,int index)
+{
+    u16 max=0,dir=0,j;
+    fx16 posx,posy;
+    u16 x,y;
+    s16 sx,sy;
+
+    for(j =0; j < _DIR_SAMPL_NUM;j++){
+        if(pWork->rssiDir[index][j] > max){
+            dir = j;
+            max = pWork->rssiDir[index][j];
+        }
+    }
+
+    if(max==0){
+        return;
+    }
+    if(max >= 140){
+        max = 140;
+    }
+    
+    
+    posx = FX_SinIdx((0xffff/_DIR_SAMPL_NUM)*dir);
+    posx = (posx >> (FX16_SHIFT/2));
+    posx = posx * (((140-max)));
+    sx = (s16)(posx >> (FX16_SHIFT/2));
+    
+    posy = FX_CosIdx((0xffff/_DIR_SAMPL_NUM)*dir);
+    posy = posy >> (FX16_SHIFT/2);
+    posy = posy * (((140-max)));
+    sy = (s16)(posy >> (FX16_SHIFT/2));
+    x = (u16)(sx + 128);
+    y = (u16)(96 - sy);
+
+    _InitAPChr(pWork, x, y, 144);
 }
 
 
@@ -424,6 +519,7 @@ static void _gameStartFunc(SKEL_TEST_BEACON_WORK* pWork)
 static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
 {
     int i;
+    BOOL bEndScan;
 
 
 	GFL_BG_ClearScreen( TEXT_FRM );
@@ -434,8 +530,11 @@ static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
     }
 
     _gameStartCheck(pWork);
-    _gameStartFunc(pWork);
-    
+    if( _gameStartFunc(pWork) ){
+        for(i = 0;i < _BCON_GET_NUM; i++){
+            _APDisp(pWork,i);
+        }
+    }
     for(i = 0;i < _BCON_GET_NUM; i++){
         u8* pData = GFL_NET_GetBeaconMacAddress(i);
         
@@ -479,9 +578,11 @@ static void _dispBeacon(SKEL_TEST_BEACON_WORK* pWork)
             GFL_BMPWIN_TransVramCharacter( pWork->pBmpwinBeacon[i] );
             GFL_BMPWIN_MakeScreen( pWork->pBmpwinBeacon[i] );
         }
+
     }
 
 	GFL_BG_LoadScreenReq( TEXT_FRM );
+    clact_draw(pWork);
 
 }
 
@@ -492,8 +593,8 @@ static void rssiWindowInit(SKEL_TEST_BEACON_WORK* pWork)
     
     for(i = 0;i < _BCON_GET_NUM; i++){
         pWork->pBmpwinBeacon[i] = GFL_BMPWIN_Create( TEXT_FRM,
-                                                       4, 5+i*2, 24, 1, 0, 
-                                                       GFL_BG_CHRAREA_GET_B );
+                                                     4, 5+i*2, 24, 1, 0, 
+                                                     GFL_BG_CHRAREA_GET_B );
     }
 }
 
@@ -601,17 +702,17 @@ static void _ClactResourceLoad( SKEL_TEST_BEACON_WORK *pWork, u32 heapID )
 		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCGR, heapID );
 		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
 		GF_ASSERT( result );
-		NNS_G2dInitImageProxy( &pWork->imageproxy );
+		NNS_G2dInitImageProxy( &pWork->res.imageproxy );
 		NNS_G2dLoadImage1DMapping( 
 				p_char, 
 				0, 
 				NNS_G2D_VRAM_TYPE_2DMAIN, 
-				&pWork->imageproxy );
+				&pWork->res.imageproxy );
 		NNS_G2dLoadImage1DMapping( 
 				p_char, 
 				0, 
 				NNS_G2D_VRAM_TYPE_2DSUB, 
-				&pWork->imageproxy );
+				&pWork->res.imageproxy );
 		GFL_HEAP_FreeMemory( p_buff );
 	}
 
@@ -620,31 +721,31 @@ static void _ClactResourceLoad( SKEL_TEST_BEACON_WORK *pWork, u32 heapID )
 		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCLR, heapID );
 		result = NNS_G2dGetUnpackedPaletteData( p_buff, &p_pltt );
 		GF_ASSERT( result );
-		NNS_G2dInitImagePaletteProxy( &pWork->plttproxy );
+		NNS_G2dInitImagePaletteProxy( &pWork->res.plttproxy );
 		NNS_G2dLoadPalette( 
 				p_pltt, 
 				0, 
 				NNS_G2D_VRAM_TYPE_2DMAIN, 
-				&pWork->plttproxy );
+				&pWork->res.plttproxy );
 		NNS_G2dLoadPalette( 
 				p_pltt, 
 				0, 
 				NNS_G2D_VRAM_TYPE_2DSUB, 
-				&pWork->plttproxy );
+				&pWork->res.plttproxy );
 		GFL_HEAP_FreeMemory( p_buff );
 	}
 
 	// セルデータ読み込み
 	{
-		pWork->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCER, heapID );
-		result = NNS_G2dGetUnpackedCellBank( pWork->p_cellbuff, &pWork->p_cell );
+		pWork->res.p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NCER, heapID );
+		result = NNS_G2dGetUnpackedCellBank( pWork->res.p_cellbuff, &pWork->res.p_cell );
 		GF_ASSERT( result );
 	}
 
 	// セルアニメデータ読み込み
 	{
-		pWork->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NANR, heapID );
-		result = NNS_G2dGetUnpackedAnimBank( pWork->p_cellanmbuff, &pWork->p_cellanm );
+		pWork->res.p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_radar_ug_radar_obj_NANR, heapID );
+		result = NNS_G2dGetUnpackedAnimBank( pWork->res.p_cellanmbuff, &pWork->res.p_cellanm );
 		GF_ASSERT( result );
 	}
 }
@@ -760,11 +861,6 @@ static void _grapInit(SKEL_TEST_BEACON_WORK* pWork)
 
 	//BMP関連初期化
 	GFL_BMPWIN_Init(pWork->heapID);
-#if 0
-    pWork->yossy_bmpwin=GFL_BMPWIN_Create(GFL_BG_FRAME1_M,0,0,32,32,2,GFL_BMP_CHRAREA_GET_B);
-	GFL_BMPWIN_MakeScreen(pWork->yossy_bmpwin);
-	GFL_BG_LoadScreenReq(GFL_BG_FRAME1_M);
-#endif
 
     // 通信アイコン再描画
     GFL_NET_ReloadIcon();
@@ -875,4 +971,85 @@ SKEL_TEST_BEACON_WORK* TEST_BEACON_Init(HEAPID heapID)
 void TEST_BEACON_End(SKEL_TEST_BEACON_WORK* pWork)
 {
     GFL_HEAP_FreeMemory(pWork);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	CLACT登録
+ *  @param  ワークポインタ
+ *	@return	生成したワーク
+ */
+//-----------------------------------------------------------------------------
+static GFL_CLWK* _ClactWorkAdd(SKEL_TEST_BEACON_WORK *pWork, _ACCESS_POINT_PARAM* pAP,
+                               s16 posx, s16 posy)
+{
+    GFL_CLWK_RES	resdat;
+	GFL_CLWK		*p_wk;
+	GFL_CLWK_DATA	data={
+        0,0,
+        NARC_radar_ug_radar_obj_NANR,		//アニメーションシーケンス
+        0,		//優先順位
+        0		//bg優先順位
+    };
+
+    data.pos_x = posx;
+    data.pos_y = posy;
+
+	// リソースデータ代入
+	GFL_CLACT_WK_SetCellResData( &resdat, 
+                                 &pWork->res.imageproxy, &pWork->res.plttproxy,
+                                 pWork->res.p_cell, pWork->res.p_cellanm );
+	// 登録
+	//data.anmseq+=fcp->type;
+//	data.softpri=soft_pri[fcp->type];
+//	data.bgpri=bg_pri[fcp->type];
+	p_wk = GFL_CLACT_WK_Add( pWork->p_unit, 
+			&data, &resdat,
+			CLWK_SETSF_NONE,
+			pWork->heapID );
+    GF_ASSERT(p_wk);
+
+	// オートアニメーション設定
+	GFL_CLACT_WK_SetAutoAnmFlag( p_wk, TRUE );
+
+	return p_wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	AP CLACT生成
+ *  @param  ワークポインタ
+ *	@return	生成したワーク
+ */
+//-----------------------------------------------------------------------------
+static _ACCESS_POINT_PARAM	*_InitAPChr(SKEL_TEST_BEACON_WORK *pWork, u16 xpos, u16 ypos, u16 rssi)
+{
+	int clact_no=GFL_AREAMAN_ReserveAuto(pWork->clact_area,1);
+
+    GF_ASSERT(clact_no < _BCON_GET_NUM);
+    
+    pWork->pAP[clact_no].clact_no = clact_no;
+	pWork->clact_work[clact_no] = _ClactWorkAdd(pWork, &pWork->pAP[clact_no],xpos,ypos);
+    pWork->pAP[clact_no].clwk = pWork->clact_work[clact_no];
+	GFL_CLACT_WK_GetWldPos(pWork->pAP[clact_no].clwk, &pWork->pAP[clact_no].now_pos);
+
+    
+	return &pWork->pAP[clact_no];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャラ削除
+ *	@param	clact_no		落下ラインナンバー
+ *	@retval void
+ */
+//-----------------------------------------------------------------------------
+static void _DeleteFallChr(SKEL_TEST_BEACON_WORK* pWork,int clact_no)
+{
+
+    if(pWork->pAP[clact_no].clwk){
+        GFL_CLACT_WK_Remove(pWork->pAP[clact_no].clwk);
+    }
+    pWork->pAP[clact_no].clwk=NULL;
 }
