@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2007-07-03T17:18:04
+	Update:2007-07-25T17:18:39
  *****************************************************************************/
 
 #ifndef NARC_HARUKA_NAIX_
@@ -38,7 +38,8 @@ enum {
 	NARC_haruka_human2_shoot_nsbca = 24,
 	NARC_haruka_human2_spell_nsbca = 25,
 	NARC_haruka_human2_sit_nsbca = 26,
-	NARC_haruka_human2_hit_nsbca = 27
+	NARC_haruka_human2_hit_nsbca = 27,
+	NARC_haruka_effect_arrow_nsbmd = 28
 };
 
 /* NARC_HARUKA_NAIX_ */
