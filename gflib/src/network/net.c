@@ -199,7 +199,13 @@ BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle)
     pHandle->creatureNo = id;
 
     if(GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
-        return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
+        if(pHandle->negoCount==0){
+            OS_TPrintf("GFL_NET_CMD_NEGOTIATION \n");
+            return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
+        }
+        else{
+            pHandle->negoCount--;
+        }
     }
     return FALSE;
 }
@@ -321,9 +327,9 @@ BOOL GFL_NET_Exit(void)
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid)
-{
-}
+//void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid)
+//{
+//}
 
 //==============================================================================
 /**
@@ -397,6 +403,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 
     GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
     GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
+    pHandle->negoCount=10;
     _addNetHandle(pNet, pHandle);
     pHandle->pTool = GFL_NET_TOOL_Init(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
     return pHandle;
@@ -464,6 +471,20 @@ void GFL_NET_InitServer(GFL_NETHANDLE* pHandle)
 #else
     GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
 #endif
+}
+
+
+//==============================================================================
+/**
+ * @brief    親機になる
+ * @param    GFL_NETHANDLE  通信ハンドルのポインタ
+ * @return   none
+ */
+//==============================================================================
+void GFL_NET_CreateServer(GFL_NETHANDLE* pHandle)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    GFL_NET_StateCreateParent(pHandle,pNet->aNetInit.netHeapID);
 }
 
 //==============================================================================

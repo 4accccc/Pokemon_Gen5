@@ -2006,6 +2006,7 @@ void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr)
 {
     int i,j = 0;
 
+    return;
     NET_PRINT("%s \n",pInfoStr);
     while(length){
         NET_PRINT(">> ");

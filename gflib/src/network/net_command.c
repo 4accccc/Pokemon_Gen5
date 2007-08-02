@@ -132,6 +132,7 @@ void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void
         }
         bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
         if(!GFL_NET_IsNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
+            OS_TPrintf("--- %d ", i);
             if(!((command == GFL_NET_CMD_NEGOTIATION) || (command == GFL_NET_CMD_NEGOTIATION_RETURN))){
                 bCheck=FALSE;
             }

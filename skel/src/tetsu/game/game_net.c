@@ -62,7 +62,7 @@ static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
     return sizeof(_testBeacon);
 }
 
-static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得関数
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)    ///< ビーコンデータ取得関数
 {
     OS_TPrintf("比較してます%d\n",beaconNo);
     return TRUE;
@@ -147,7 +147,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
-    0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    2,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -189,6 +189,7 @@ BOOL ConnectGameNet(void)
 {
 	BOOL result = FALSE;
 
+    //OS_TPrintf("ConnectGameNet%d\n",gNetSys._connectSeqNo);
 	switch( gNetSys._connectSeqNo ){
 
 	case _CONNECT_START:

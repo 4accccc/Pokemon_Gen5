@@ -455,13 +455,28 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
+void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+{
+    pNetHandle->pParent = GFL_HEAP_AllocMemory( heapID, sizeof(NET_PARENTSYS));
+    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
+}
+
+//==============================================================================
+/**
+ * @brief   親としての通信処理開始
+ * @param   pNetHandle  ハンドル
+ * @param   heapID      HEAPID
+ * @retval  none
+ */
+//==============================================================================
+
 void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocMemory(heapID, sizeof(NET_PARENTSYS));
-    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
-
+    GFL_NET_StateCreateParent(pNetHandle, heapID);
     _CHANGE_STATE(_parentInit, 0);
 }
+
+
 //==============================================================================
 /**
  * @brief   子機再スタート
@@ -566,7 +581,13 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
         NET_PRINT("親機 -- つながり\n");
 //        pNetHandle->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
         //WirelessIconEasy();  //@@OO
-        GFI_NET_AutoParentConnectFunc();
+        {
+//            GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+            GFL_NETHANDLE* pHandleServer;
+            pHandleServer = GFL_NET_CreateHandle();
+            GFL_NET_CreateServer(pHandleServer);   // サーバ
+            GFI_NET_AutoParentConnectFunc();
+        }
         _CHANGE_STATE(_changeoverParentConnect, 0);
         return;
     }
@@ -742,12 +763,15 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
     const u8 *pGet = (const u8*)pData;
     int i;
 
+
+    OS_TPrintf("GFL_NET_StateRecvNegotiation %d \n",netID);
+    
     if(!pNetHandle->pParent){
         return;
     }
     retCmd[1] = pGet[0];
     retCmd[0] = 0;
-    NET_PRINT("--RECV----GFL_NET_CMD_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
+    OS_TPrintf("--RECV----GFL_NET_CMD_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
 
     for(i = 1 ; i < GFL_NET_MACHINE_MAX;i++){
         if(pNetHandle->pParent->negoCheck[i] == FALSE){
@@ -756,7 +780,7 @@ void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* p
             break;
         }
     }
-    NET_PRINT("------NegoRet を送信 %d\n",retCmd[0]);
+    OS_TPrintf("------NegoRet を送信 %d\n",retCmd[0]);
     GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, retCmd);
     pNetHandle->negotiationID[i] = TRUE;
 
@@ -774,9 +798,9 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
 {
     const u8* pMsg = pData;
 
-    NET_PRINT("接続認証 %d %d\n",pNetHandle->creatureNo, pMsg[1]);
+    OS_TPrintf("接続認証 %d %d\n",pNetHandle->creatureNo, pMsg[1]);
     if(pNetHandle->creatureNo == pMsg[1]){   // 親機から接続認証が来た
-        NET_PRINT("接続認証 OK\n");
+        OS_TPrintf("接続認証 OK\n");
         pNetHandle->negotiation = _NEGOTIATION_OK;
         pNetHandle->creatureNo = pMsg[0];
     }

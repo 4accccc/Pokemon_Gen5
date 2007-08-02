@@ -55,6 +55,7 @@ extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
  * @retval  none
  */
 //==============================================================================
+extern void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
 extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
 //==============================================================================
 /**

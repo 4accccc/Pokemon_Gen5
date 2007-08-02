@@ -233,9 +233,11 @@ static void _scanCallback(WMBssDesc *bssdesc)
 
     // catchした親データ
     pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
-    if(pGF->pause){
-        return;  // ポーズ中の親機はBEACON無視
-    }
+//#if (!BEACON_TEST)
+//    if(pGF->pause){
+//        return;  // ポーズ中の親機はBEACON無視
+//    }
+//#endif
     if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
         return;   // サービスが異なる場合は拾わない
     }

@@ -294,6 +294,14 @@ extern void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle);
 extern void GFL_NET_InitServer(GFL_NETHANDLE* pHandle);
 //==============================================================================
 /**
+ * @brief    親機になる
+ * @param    pHandle  通信ハンドルのポインタ
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_CreateServer(GFL_NETHANDLE* pHandle);
+//==============================================================================
+/**
  * @brief    親機子機を繰り返し、誰でもいいので接続する
  * @param    pHandle  通信ハンドルのポインタ
  * @return   none

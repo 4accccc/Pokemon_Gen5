@@ -1472,13 +1472,14 @@ static void WH_StateOutStartScan(void *arg)
             pNetWH->sGGIDScanCallback(cb->gameInfo.ggid, pGF->serviceNo);
         }
 #endif
+
+//#if (!BEACON_TEST)
         if (cb->gameInfoLength < 8 || cb->gameInfo.ggid != pNetWH->sParentParam.ggid)
         {
             // GGIDが違っていれば無視する
             WH_TRACE("not my parent ggid \n");
             break;
         }
-
         // エントリーフラグが立っていなければ子機を受付中でないので無視する
         // またマルチブートフラグが立っている場合は、DSダウンロード親機であるので無視する。
         if ( ( cb->gameInfo.gameNameCount_attribute & (WM_ATTR_FLAG_ENTRY | WM_ATTR_FLAG_MB) )
@@ -1487,7 +1488,7 @@ static void WH_StateOutStartScan(void *arg)
             WH_TRACE("not recieve entry\n");
             break;
         }
-
+//#endif
         WH_TRACE("parent find\n");
 
         // コールバックが必要ならば呼び出し

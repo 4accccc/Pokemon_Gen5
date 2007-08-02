@@ -123,6 +123,7 @@ struct _GFL_NETHANDLE{
   u16 timer;          ///< 進行タイマー
   u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
   u8 limitNum;        ///< 受付制限したい場合のLIMIT数
+  u8 negoCount;  ///< 通信受付の状態
   u8 negotiation;     ///< 通信受付の状態
   u8 creatureNo;     ///< 子機としての
   u8 stateError;
