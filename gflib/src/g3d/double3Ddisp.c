@@ -98,7 +98,7 @@ static void setupSubOAM(void)
 
 //------------------------------------------------------------------
 /**
- * @brief	終了
+ * @brief	終了（VBLANKタスクリムーブ後に呼ぶこと）
  */
 //------------------------------------------------------------------
 void 
@@ -106,6 +106,10 @@ void
 		( void )
 {
 //	GFL_TCB_DeleteTask( dbl3D->vIntrTask );
+	GX_DisableBankForLCDC();
+    GX_DisableBankForSubBG();
+    GX_DisableBankForSubOBJ();
+
 	GFL_HEAP_FreeMemory( dbl3D );
 	dbl3D = NULL;
 }
