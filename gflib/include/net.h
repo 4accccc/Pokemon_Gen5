@@ -16,6 +16,12 @@
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
 #endif
 
+//#if defined(DEBUG_ONLY_FOR_ohno)
+//#define BEACON_TEST (0)
+//#else
+//#define BEACON_TEST    (0) 
+//#endif
+
 // デバッグ用決まり文句----------------------
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
@@ -146,9 +152,9 @@ typedef struct{
   DWCFriendData *keyList;   ///< DWC形式の友達リスト	
   DWCUserData *myUserData;  ///< DWCのユーザデータ（自分のデータ）
 #endif  //GFL_NET_WIFI
-  NetGetSSID getSSID;       ///< 親子接続時に認証する為のバイト列  
-  int gsid;                 ///< ゲームサービスID  通信の種類
-  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID
+  NetGetSSID getSSID;       ///< 親子接続時に認証する為のバイト列  自由に決めて良いがゲームのタイトルがわかるような文字列
+  int gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
+  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう
   HEAPID baseHeapID;        ///< 元となるHEAPID
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
