@@ -118,7 +118,7 @@ typedef void (*CBRecvEveryTimeData)(int netID, void* pWork, int size);
 typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される
 typedef void* (*NetBeaconGetFunc)(void);    ///< ビーコンデータ取得関数
 typedef int (*NetBeaconGetSizeFunc)(void);    ///< ビーコンデータサイズ取得関数
-typedef BOOL (*NetBeaconCompFunc)(int GameServiceID1, int GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
+typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
@@ -218,9 +218,10 @@ extern void GFL_NET_Main(void);
  * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
  * @param   GameServiceID gsid  ゲームサービスID  通信の種類
  * @retval  none
+  現在未完成
  */
 //==============================================================================
-extern void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid);
+//extern void GFL_NET_AddBeaconServiceID(GFL_NETHANDLE* pNet, GameServiceID gsid);
 //==============================================================================
 /**
  * @brief   受信ビーコンデータを得る

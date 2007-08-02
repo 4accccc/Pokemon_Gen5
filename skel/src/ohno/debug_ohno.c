@@ -45,11 +45,12 @@ static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_wor
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
     GFL_UI_SleepReleaseSetFunc(_sleepRelease, NULL);
-#if 0
+#if 1
     TEST_NET_Init();
-#endif
-
+#else
+    //ビーコン探知機
     ctrl->pBeaconWork = TEST_BEACON_Init(ctrl->debug_heap_id);
+#endif
 
     return GFL_PROC_RES_FINISH;
 }
@@ -64,8 +65,8 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 	GFL_PROC * subproc;
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
-#if 0
-    TEST_UI_Main();  //UI TEST
+#if 1
+//    TEST_UI_Main();  //UI TEST
     
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
 
@@ -79,8 +80,10 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
         TEST_RAND_Main(seed);  // RAND TEST
     }
     TEST_NET_Main();
-#endif
+#else
+    // ビーコン探知機
     TEST_BEACON_Main(ctrl->pBeaconWork);
+#endif
 
     
 	return GFL_PROC_RES_CONTINUE;

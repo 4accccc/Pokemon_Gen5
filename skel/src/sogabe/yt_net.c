@@ -83,7 +83,7 @@ static u8* _netGetSSID(void)
     return (u8*)SSID;
 }
 
-static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得関数
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)    ///< ビーコンデータ取得関数
 {
     OS_TPrintf("比較してます%d\n",beaconNo);
     return TRUE;
