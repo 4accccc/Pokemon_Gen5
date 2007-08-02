@@ -18,6 +18,7 @@
 #include "setup.h"
 #include "src/sample_graphic/haruka.naix"
 
+//#define	DOUBLE_DISP_ENABLE
 //============================================================================================
 //
 //
@@ -97,6 +98,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_bow_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_staff_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_effect_arrow_nsbmd,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
@@ -131,6 +133,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
 	{ G3DRES_ACCE_STAFF, 0, G3DRES_ACCE_STAFF, NULL, 0 },
 	{ G3DRES_EFFECT_WALL, 0, G3DRES_EFFECT_WALL, NULL, 0 },
+	{ G3DRES_EFFECT_ARROW, 0, G3DRES_EFFECT_ARROW, NULL, 0 },
 };
 
 //---------------------
@@ -142,7 +145,8 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 
 //パーティクル用アーカイブテーブル（sample）
 static	const	char	*GraphicFileTable[]={
-	"src/sample_graphic/spa.narc",
+	//"src/sample_graphic/spa.narc",
+	"src/sample_graphic/spaEffect.narc",
 };
 
 //------------------------------------------------------------------
@@ -150,7 +154,11 @@ static	const	char	*GraphicFileTable[]={
  * @brief		２Ｄリソースデータ
  */
 //------------------------------------------------------------------
+#ifdef	DOUBLE_DISP_ENABLE
 #define TEXT_FRM			(GFL_BG_FRAME3_M)
+#else
+#define TEXT_FRM			(GFL_BG_FRAME3_S)
+#endif
 #define TEXT_FRM_PRI		(0)
 #define TEXT_PLTT			(15)
 #define G2D_FONT_COL		(0x7fff)
@@ -243,9 +251,10 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 	g3d_load( gs );
 	//２Ｄデータのロード
 	g2d_load( gs );
+#ifdef	DOUBLE_DISP_ENABLE
 	//両面３Ｄ用vIntrTask設定
 	gs->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
-
+#endif
 	return gs;
 }
 
@@ -258,8 +267,9 @@ void	RemoveGameSystem( GAME_SYSTEM* gs )
 {
 	g3d_unload( gs );	//３Ｄデータ破棄
 	g2d_unload( gs );	//２Ｄデータ破棄
-
+#ifdef	DOUBLE_DISP_ENABLE
 	GFL_TCB_DeleteTask( gs->dbl3DdispVintr );
+#endif
 	bg_exit( gs );
 
 	GFL_ARC_Exit();
@@ -330,7 +340,9 @@ static void	bg_init( GAME_SYSTEM* gs )
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
+#ifdef	DOUBLE_DISP_ENABLE
 	GFL_G3D_DOUBLE3D_Init( gs->heapID );	//両面３Ｄ用の初期化
+#endif
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
@@ -341,7 +353,9 @@ static void	bg_init( GAME_SYSTEM* gs )
 static void	bg_exit( GAME_SYSTEM* gs )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+#ifdef	DOUBLE_DISP_ENABLE
 	GFL_G3D_DOUBLE3D_Exit();
+#endif
 	GFL_G3D_Exit();
 	GFL_BMPWIN_Exit();
 	GFL_BG_FreeBGControl( TEXT_FRM );
@@ -416,7 +430,7 @@ static void g3d_load( GAME_SYSTEM* gs )
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset[MAINLIGHT_ID] );
 
 	//パーティクルリソース読み込み
-	gs->ptc=GFL_PTC_Create( gs->spa_work, PARTICLE_LIB_HEAP_SIZE,TRUE, gs->heapID );
+	gs->ptc=GFL_PTC_Create( gs->spa_work, PARTICLE_LIB_HEAP_SIZE, FALSE, gs->heapID );
 	GFL_PTC_SetResource( gs->ptc, GFL_PTC_LoadArcResource( 0, 0, gs->heapID ), TRUE, NULL );
 }
 	
@@ -429,6 +443,7 @@ static void g3d_control( GAME_SYSTEM* gs )
 //描画
 static void g3d_draw( GAME_SYSTEM* gs )
 {
+#ifdef	DOUBLE_DISP_ENABLE
 	//フラグによって描画を切り替える
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
@@ -439,6 +454,11 @@ static void g3d_draw( GAME_SYSTEM* gs )
 	}
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 	GFL_G3D_DOUBLE3D_SetSwapFlag();
+#else
+	GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
+	GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
+	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
+#endif
 }
 
 //破棄
@@ -499,13 +519,18 @@ static void g2d_draw( GAME_SYSTEM* gs )
 	int	i;
 
 	GFL_BG_ClearScreen( TEXT_FRM );
-
+#ifdef	DOUBLE_DISP_ENABLE
 	if( GFL_G3D_DOUBLE3D_GetFlip() ){
 		for( i=0; i<NELEMS(bitmapWinList); i++ ){
 			GFL_BMPWIN_MakeScreen( gs->bitmapWin[i] );
 		}
 	} else {
 	}
+#else
+	for( i=0; i<NELEMS(bitmapWinList); i++ ){
+		GFL_BMPWIN_MakeScreen( gs->bitmapWin[i] );
+	}
+#endif
 	GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 

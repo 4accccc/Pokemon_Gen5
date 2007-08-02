@@ -72,9 +72,9 @@ static const GFL_G3D_SCENEOBJ_DATA skillEffectData1[] = {
 };
 static const GFL_G3D_SCENEOBJ_DATA skillEffectData2[] = {
 	{ 
-		G3DOBJ_EFFECT_WALL, 0, 1, 24, FALSE, TRUE, 
+		G3DOBJ_EFFECT_ARROW, 0, 1, 24, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
-			{ FX32_ONE/8 , FX32_ONE/8, FX32_ONE/8 },
+			{ FX32_ONE , FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveTraceSkill,
 	},
@@ -307,6 +307,20 @@ static BOOL DamageSetAll( SKILL_CONTROL* sc, PLAYER_CONTROL* pc,
 	return hitResult;
 }
 
+//回転マトリクス変換
+static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
+{
+	MtxFx33 tmp;
+
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+
+	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+}
+
 //------------------------------------------------------------------
 //　なにもしない
 //------------------------------------------------------------------
@@ -379,7 +393,7 @@ static void SwordMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 //------------------------------------------------------------------
 #define	ARROW_HITOFS	(FX32_ONE*0)
 #define	ARROW_HITLEN	(FX32_ONE/64)
-#define	ARROW_SPEED		(FX32_ONE*16)
+#define	ARROW_SPEED		(FX32_ONE*8)
 #define	ARROW_LIMITLEN	(FX32_ONE*256)
 typedef struct {
 	u16		seq;
@@ -394,6 +408,7 @@ static void ArrowInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
 	arrow_w->seq = 0;
 	arrow_w->waitTimer = 30;
 	arrow_w->length = 0;
+	sw->trans.y = FX32_ONE*8;
 }
 
 static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
@@ -409,6 +424,18 @@ static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			return;
 		} else {
 			SkillEffectAdd( sc, &arrow_w->effectID, SKILL_EFFECT_TEST2, sw );
+			{
+				VecFx32	rotateVec;		
+				MtxFx33	rotateMtx;
+				GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get
+												( Get_GS_G3Dscene( sc->gs ), arrow_w->effectID );
+				rotateVec.x = 0;
+				rotateVec.y = sw->direction;
+				rotateVec.z = 0;
+	
+				rotateCalc( &rotateVec, &rotateMtx );
+				GFL_G3D_SCENEOBJ_SetRotate( g3DsceneObj, &rotateMtx );
+			}
 			arrow_w->seq++;
 		}
 		break;
@@ -436,14 +463,16 @@ static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 //------------------------------------------------------------------
 #define	STAFF_HITOFS	(FX32_ONE*0)
 #define	STAFF_HITLEN	(FX32_ONE/1)
-#define	STAFF_SPEED		(FX32_ONE*4)
+#define	STAFF_SPEED		(FX32_ONE*2)
 #define	STAFF_LIMITLEN	(FX32_ONE*128)
+#define	STAFF_OFS_FIRST	(FX32_ONE*8)
 typedef struct {
-	u16		seq;
-	u16		waitTimer;
-	int		effectID;
-	fx32	length;
-	fx32	wait;
+	u16				seq;
+	u16				waitTimer;
+	int				effectID;
+	fx32			length;
+	fx32			wait;
+	GFL_EMIT_PTR	effectEmitter;
 }SKILL_STAFF_WORK;
 
 static void StaffInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
@@ -452,6 +481,7 @@ static void StaffInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
 	staff_w->seq = 0;
 	staff_w->waitTimer = 30;
 	staff_w->length = 0;
+	sw->trans.y = FX32_ONE*12;
 }
 
 static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
@@ -466,17 +496,33 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			staff_w->waitTimer--;
 			return;
 		} else {
-			SkillEffectAdd( sc, &staff_w->effectID, SKILL_EFFECT_TEST3, sw );
+			VecFx16 rotVec;
+
+			calc_XZtrans( &sw->trans, STAFF_OFS_FIRST, sw->direction );
+			rotVec.x = FX_SinIdx( sw->direction );
+			rotVec.y = 0;
+			rotVec.z = FX_CosIdx( sw->direction );
+
+			staff_w->effectEmitter = GFL_PTC_CreateEmitter
+										( Get_GS_Perticle(sc->gs), 0, &sw->trans );
+			GFL_PTC_SetEmitterAxis( staff_w->effectEmitter, &rotVec );
+			GFL_PTC_SetEmitterBaseScale( staff_w->effectEmitter, FX16_ONE*2 );
+
+			ResetPlayerSkillBusyFlag( sw->pc );	//早い段階でプレーヤー動作可能
 			staff_w->seq++;
 		}
 		break;
 	case 1:
 		calc_XZtrans( &sw->trans, STAFF_SPEED, sw->direction );
+		GFL_PTC_SetEmitterPosition( staff_w->effectEmitter, &sw->trans );
+
 		staff_w->length += STAFF_SPEED;
 		if( staff_w->length >= STAFF_LIMITLEN ){
 			staff_w->length = STAFF_LIMITLEN;
-			staff_w->seq++;
+
+			GFL_PTC_DeleteEmitter( Get_GS_Perticle(sc->gs), staff_w->effectEmitter );
 			staff_w->wait = 10;
+			staff_w->seq++;
 		}
 		break;
 	case 2:
@@ -484,7 +530,6 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		if( staff_w->wait ){
 			staff_w->wait--;
 		} else {
-			SkillEffectRemove( sc, &staff_w->effectID, SKILL_EFFECT_TEST3 );
 			DeleteSkill( sw );
 		}
 		break;

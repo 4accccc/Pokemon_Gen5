@@ -46,6 +46,8 @@ typedef enum {
 	PCC_SIT,
 	PCC_WEPONCHANGE,
 
+	PCC_PUTON,
+
 }PLAYER_CONTROL_COMMAND;
 
 // プレーヤーコントロールセット

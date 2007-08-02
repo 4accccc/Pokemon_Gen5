@@ -451,6 +451,10 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		pc->nowAccesary&= 3;
 		Set3DactPlayerChrAccesory( Get_GS_SceneAct( pc->gs ), pc->targetAct, pc->nowAccesary );
 		break;
+	case PCC_PUTON:		
+		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct(pc->gs), pc->targetAct, ACTANM_CMD_TAKE );
+		AddObject3Dmap( Get_GS_SceneMap( pc->gs ), EXMAPOBJ_WALL, &pc->contTrans );
+		break;
 	}
 	//pc->contCommand = PCC_NOP;
 }

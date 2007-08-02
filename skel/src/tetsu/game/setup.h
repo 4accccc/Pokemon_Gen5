@@ -9,7 +9,7 @@
 #include "act3d.h"
 
 #define PLAYER_SETUP_MAX	(8)	//ç°ÇÃÇ∆Ç±ÇÎÇ±ÇÍà»è„ï\é¶Ç≥ÇπÇÈÇÃÇÕìÔÇµÇ¢Ç©Ç‡ÅAÉâÉCÉì
-#define PLAYER_SETUP_NUM	(8)
+#define PLAYER_SETUP_NUM	(2)
 
 typedef struct _GAME_SYSTEM GAME_SYSTEM;
 
@@ -61,6 +61,7 @@ enum {
 	G3DRES_ACCE_BOW,
 	G3DRES_ACCE_STAFF,
 	G3DRES_EFFECT_WALL,
+	G3DRES_EFFECT_ARROW,
 };
 
 //---------------------
@@ -96,6 +97,7 @@ enum {
 	G3DOBJ_ACCE_STAFF,
 
 	G3DOBJ_EFFECT_WALL,
+	G3DOBJ_EFFECT_ARROW,
 };
 
 //---------------------
