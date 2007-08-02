@@ -15,8 +15,10 @@
 #include "main.h"
 #include "fatal_error.h"
 #include "net_icondata.h"
+#include "gfl_use.h"
 
-#define _BCON_GET_NUM  (1)
+#define _BCON_GET_NUM  (6)   //親機ビーコンを取得する台数 自由に決められる
+#define _USERNAME_MAXLEN (8) //いわゆる主人公の名前の長さ ビーコン内に含める
 
 //------------------------------------------------------------------
 // NETのテスト
@@ -35,10 +37,12 @@ static u8 _dataPool[_TEST_HUGE_SIZE];  //大容量受信バッファ テスト用
 static u8 _dataSend[_TEST_HUGE_SIZE];  //大容量送信バッファ テスト用
 
 typedef struct{
-    int gameNo;   ///< ゲーム種類
+    int gameNo;      ///< ゲーム種類
+    u8 userName[_USERNAME_MAXLEN];  ///< ユーザーの名前
 } _testBeaconStruct;
 
-static _testBeaconStruct _testBeacon = { 1 };
+//ダミービーコンデータ
+static _testBeaconStruct _testBeacon = { 1,{'G','F','L','I',0,0,0,0} };
 
 
 static void* _netBeaconGetFunc(void)    ///< ビーコンデータ取得関数
@@ -51,9 +55,9 @@ static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
     return sizeof(_testBeacon);
 }
 
-static BOOL _netBeaconCompFunc(int myNo,int beaconNo)    ///< ビーコンデータ取得関数
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)    ///< ビーコンデータ取得関数
 {
-    OS_TPrintf("比較してます%d\n",beaconNo);
+ //   OS_TPrintf("比較してます%d\n",beaconNo);
     return TRUE;
 }
 
@@ -124,11 +128,20 @@ void TEST_NET_Main(void)
     u8 beacon;
     int i;
     
+//    if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){
+//        for(i = 0;i < _BCON_GET_NUM; i++){
+//            u8* pData = GFL_NET_GetBeaconMacAddress(i);
+//            if(pData){
+//                OS_TPrintf("%d: mac %x%x%x%x%x%x\n",i,pData[0],pData[1],pData[2],pData[3],pData[4],pData[5]);
+////            }
+//        }
+//    }
     if(PAD_BUTTON_X == GFL_UI_KEY_GetTrg()){
+        _testBeaconStruct* pBS; // ビーコンに親機の情報があるので加工して使用する
         for(i = 0;i < _BCON_GET_NUM; i++){
-            u8* pData = GFL_NET_GetBeaconMacAddress(i);
-            if(pData){
-                OS_TPrintf("%d: mac %x%x%x%x%x%x\n",i,pData[0],pData[1],pData[2],pData[3],pData[4],pData[5]);
+            pBS = GFL_NET_GetBeaconData(i);
+            if(pBS){  //発見したら名前を表示している
+                OS_TPrintf("%d: Find %s\n",i, pBS->userName);
             }
         }
     }
@@ -334,7 +347,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     &_testFriendData[0],  // DWC形式の友達リスト	
     &_testUserData,  // DWCのユーザデータ（自分のデータ）
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
-    1,  //gsid
+    1,  //gsid  通信ゲームによって変える数字
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
@@ -401,6 +414,14 @@ void TEST_NET_Init(void)
     GX_DisableBankForTex();
     GX_DisableBankForClearImage();
 
+	GFLUser_VIntr();
+	GFLUser_VIntr();
+	GFLUser_VIntr();
+	GFLUser_VIntr();
+	GFLUser_VIntr();
+	GFLUser_VIntr();
+//    SkeltonVBlankFunc();
+    
     GFL_NET_Init(&aGFLNetInit);
 
 }
