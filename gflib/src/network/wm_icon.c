@@ -418,7 +418,7 @@ static void transIconData(int vramType,BOOL bWifi, int heapID)
     }
 
     GFL_ARC_UTIL_TransVramPalette(0,aNoBuff[GFL_NET_ICON_WMNCLR],
-                                  palType, WM_ICON_PAL_OFFSET, 0, heapID);
+                                  palType, WM_ICON_PAL_OFFSET, 32, heapID);
 
     if(bWifi){
         charNo = GFL_NET_ICON_WIFINCGR;
