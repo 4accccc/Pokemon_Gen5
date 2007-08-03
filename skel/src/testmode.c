@@ -115,7 +115,8 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
 
 		//パーティクルリソース読み込み
-		testmode->ptc=GFL_PTC_Create(testmode->spa_work,PARTICLE_LIB_HEAP_SIZE,TRUE,testmode->heapID);
+		testmode->ptc = GFL_PTC_Create
+					( testmode->spa_work, PARTICLE_LIB_HEAP_SIZE, TRUE, testmode->heapID );
 		GFL_PTC_SetResource(testmode->ptc,GFL_PTC_LoadArcResource(0,0,testmode->heapID),TRUE,NULL);
 
 		//testmode->listPosition = 0;
@@ -258,6 +259,8 @@ static void msg_bmpwin_make
 
 	//テキストをビットマップに表示
 	testmode->textParam->bmp = GFL_BMPWIN_GetBmp( testmode->bmpwin[ bmpwinNum ] );
+	testmode->textParam->writex = 0;
+	testmode->textParam->writey = 0;
 	GFL_TEXT_PrintSjisCode( msg, testmode->textParam );
 
 	//ビットマップキャラクターをアップデート
