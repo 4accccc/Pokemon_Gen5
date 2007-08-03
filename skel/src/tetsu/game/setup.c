@@ -265,11 +265,11 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 //------------------------------------------------------------------
 void	RemoveGameSystem( GAME_SYSTEM* gs )
 {
-	g3d_unload( gs );	//‚R‚cƒf[ƒ^”jŠü
-	g2d_unload( gs );	//‚Q‚cƒf[ƒ^”jŠü
 #ifdef	DOUBLE_DISP_ENABLE
 	GFL_TCB_DeleteTask( gs->dbl3DdispVintr );
 #endif
+	g2d_unload( gs );	//‚Q‚cƒf[ƒ^”jŠü
+	g3d_unload( gs );	//‚R‚cƒf[ƒ^”jŠü
 	bg_exit( gs );
 
 	GFL_ARC_Exit();
