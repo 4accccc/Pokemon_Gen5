@@ -459,6 +459,10 @@ void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
     pNetHandle->pParent = GFL_HEAP_AllocMemory( heapID, sizeof(NET_PARENTSYS));
     GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
+
+    pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
+    pNetHandle->creatureNo = 0;
+    _CHANGE_STATE(_parentWait, 0);
 }
 
 //==============================================================================
@@ -472,7 +476,8 @@ void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 
 void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
-    GFL_NET_StateCreateParent(pNetHandle, heapID);
+    pNetHandle->pParent = GFL_HEAP_AllocMemory( heapID, sizeof(NET_PARENTSYS));
+    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
     _CHANGE_STATE(_parentInit, 0);
 }
 
@@ -802,7 +807,7 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
     if(pNetHandle->creatureNo == pMsg[1]){   // 親機から接続認証が来た
         OS_TPrintf("接続認証 OK\n");
         pNetHandle->negotiation = _NEGOTIATION_OK;
-        pNetHandle->creatureNo = pMsg[0];
+//        pNetHandle->creatureNo++;
     }
     GF_ASSERT(pMsg[0] < GFL_NET_MACHINE_MAX);
     pNetHandle->negotiationID[pMsg[0]]=TRUE;

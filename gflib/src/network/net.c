@@ -193,14 +193,14 @@ BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
 //==============================================================================
 BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle)
 {
-    u8 id = GFL_NET_SystemGetCurrentID();
+    u8 id = GFL_NET_SystemGetCurrentID()+1;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 //    id = id * 8 + _numNetHandle(pNet, pHandle);
     pHandle->creatureNo = id;
 
     if(GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
         if(pHandle->negoCount==0){
-            OS_TPrintf("GFL_NET_CMD_NEGOTIATION \n");
+            OS_TPrintf("GFL_NET_CMD_NEGOTIATION %d\n",id);
             return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
         }
         else{
@@ -690,6 +690,8 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
+    OS_TPrintf("GFL_NET_SendData %d \n", pNet->creatureNo);
+
     return GFL_NET_SystemSendData(sendCommand, data, 0,
                                   FALSE, pNet->creatureNo ,GFL_NET_SENDID_ALLUSER);
 }
