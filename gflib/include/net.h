@@ -60,6 +60,10 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 #define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
 
+#define GFL_WICON_POSX (240)   ///< ワイヤレスアイコンのデフォルトＸＹ位置
+#define GFL_WICON_POSY (0)
+
+
 
 /// @brief  コマンド関連の定義
 
@@ -158,6 +162,8 @@ typedef struct{
   HEAPID baseHeapID;        ///< 元となるHEAPID
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
+  u16 iconX;                ///< 通信アイコンX位置
+  u16 iconY;                ///< 通信アイコンY位置
   u8 maxConnectNum;         ///< 最大接続人数
   u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数

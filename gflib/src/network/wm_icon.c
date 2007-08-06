@@ -418,7 +418,7 @@ static void transIconData(int vramType,BOOL bWifi, int heapID)
     }
 
     GFL_ARC_UTIL_TransVramPalette(0,aNoBuff[GFL_NET_ICON_WMNCLR],
-                                  palType, WM_ICON_PAL_OFFSET, 32, heapID);
+                                  palType, WM_ICON_PAL_OFFSET, WM_ICON_PAL_SIZE, heapID);
 
     if(bWifi){
         charNo = GFL_NET_ICON_WIFINCGR;
@@ -460,7 +460,7 @@ static VINTR_WIRELESS_ICON *VintrWirelessIconPtr = NULL;
 //==============================================================================
 void WirelessIconEasy(BOOL bWifi, HEAPID heapID)
 {
-    WirelessIconEasyXY(240, 0, bWifi, heapID);
+    WirelessIconEasyXY(GFL_WICON_POSX,GFL_WICON_POSY, bWifi, heapID);
 }
 
 //==============================================================================

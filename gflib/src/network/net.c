@@ -269,7 +269,7 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
 
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
-    WirelessIconEasy(pNetInit->bWiFi, pNetInit->netHeapID);
+    WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
 }
 
 //==============================================================================

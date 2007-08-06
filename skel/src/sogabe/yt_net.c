@@ -237,6 +237,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
