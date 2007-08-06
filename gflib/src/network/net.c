@@ -642,9 +642,7 @@ void GFL_NET_ReloadIcon(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     if(pNet){
-
-        
-        WirelessIconEasy(pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
+        WirelessIconEasyXY( pNet->aNetInit.iconX, pNet->aNetInit.iconY, pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
     }
 }
 
