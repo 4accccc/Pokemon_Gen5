@@ -263,7 +263,7 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
 static u16 WH_GetConnectNum(void);
 
 
-#define SSID  "DP"
+#define SSID  "ORGLIB"
 
 // 子機最大数（親機を含まない数）
 #define WH_CHILD_MAX              7
@@ -964,7 +964,8 @@ static void WH_StateOutStartParent(void *arg)
             }
             if((pNetWH->bPauseConnectSystem == TRUE  ) ||
                (pNetWH->bPauseConnect == TRUE) ||
-               (!bConnect) ){
+               (!bConnect) ||
+               (0 != GFL_STD_MemComp(SSID,&cb->ssid[1],sizeof(SSID)))){
 #endif
 #if 0
             if((pNetWH->bPauseConnectSystem == TRUE  ) ||
@@ -1658,9 +1659,9 @@ static BOOL WH_StateInStartChild(void)
 //                               (u16)((pNetWH->sChildWEPKeyGenerator!=NULL) ? WM_AUTHMODE_SHARED_KEY : WM_AUTHMODE_OPEN_SYSTEM));
 
     //ssid送信
-#if 0
+#if 1
     GFL_STD_MemCopy(SSID,&ssid_data[1],sizeof(SSID));
-    ssid_data[0] = CommStateGetServiceNo();
+    ssid_data[0] = 0;
     OS_TPrintf("ssid  %d %s %d\n",ssid_data[0],SSID,sizeof(SSID));
     result = WM_StartConnectEx(WH_StateOutStartChild, &pNetWH->sBssDesc,
                                ssid_data, TRUE, WM_AUTHMODE_OPEN_SYSTEM);

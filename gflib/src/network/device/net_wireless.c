@@ -28,6 +28,14 @@
  */
 #define _BEACON_SIZE_FIX (3)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
+
+//一人でテストを行う場合、ここの数を他の人とわける
+#ifdef PM_DEBUG
+#define _DEBUG_ALONETEST (10)
+#else
+#define _DEBUG_ALONETEST (0)
+#endif
+
 /**
  *  @brief ビーコン構造体
  */
@@ -35,7 +43,8 @@
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
   GameServiceID  		serviceNo;   	///< 通信サービス番号
-  u8  		connectNum;    	///< つながっている台数  --> 本親かどうか識別	
+  u8        debugAloneTest;
+  u8  		connectNum;    	///< つながっている台数  --> 本親かどうか識別
   u8        pause;          ///< 接続を禁止したい時に使用する
   u8       aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
@@ -238,6 +247,13 @@ static void _scanCallback(WMBssDesc *bssdesc)
 //        return;  // ポーズ中の親機はBEACON無視
 //    }
 //#endif
+#ifdef PM_DEBUG
+    if(pGF->debugAloneTest != _DEBUG_ALONETEST){
+        return;
+    }
+#endif
+
+    
     if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
         return;   // サービスが異なる場合は拾わない
     }
@@ -870,6 +886,7 @@ static void _setUserGameInfo( void )
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     pGF->serviceNo = pNetWL->serviceNo;  // ゲームの番号
+    pGF->debugAloneTest = _DEBUG_ALONETEST;
     pGF->pause = WHGetParentConnectPause();    // 親機が受付を中止しているかどうか
     GFL_STD_MemCopy( pNetWL->beaconGetFunc(), pGF->aBeaconDataBuff, size);
     DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);

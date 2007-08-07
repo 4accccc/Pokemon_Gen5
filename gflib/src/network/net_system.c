@@ -1600,7 +1600,7 @@ int GFL_NET_SystemGetSendRestSize_ServerSide(void)
  */
 //==============================================================================
 
-static void _endCallBack(int netID,int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
+static void _endCallBack(int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
     GFI_NET_COMMAND_CallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
     pRecvComm->valCommand = GFL_NET_CMD_NONE;
@@ -1673,7 +1673,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
 
         if(GFI_NET_COMMAND_CreateBuffCheck(command)){  // 受信バッファがある場合
             if(pRecvComm->pRecvBuff==NULL){
-                pRecvComm->pRecvBuff = GFI_NET_COMMAND_CreateBuffStart(command, netID, pRecvComm->valSize);
+                pRecvComm->pRecvBuff = GFI_NET_COMMAND_CreateBuffStart(command, pRecvComm->sendID, pRecvComm->valSize);
             }
             realbyte = GFL_NET_RingGets(pRing, pTemp, size - pRecvComm->dataPoint);
             //NET_PRINT("id %d -- rest %d\n",netID, size - pRecvComm->dataPoint);
@@ -1682,14 +1682,14 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
             }
             pRecvComm->dataPoint += realbyte;
             if(pRecvComm->dataPoint >= size ){
-                _endCallBack(netID, command, size, pRecvComm->pRecvBuff, pRecvComm);
+                _endCallBack(command, size, pRecvComm->pRecvBuff, pRecvComm);
             }
         }
         else{
             if( GFL_NET_RingDataSize(pRing) >= size ){
                 ///NET_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
                 GFL_NET_RingGets(pRing, pTemp, size);
-                _endCallBack(netID, command, size, (void*)pTemp, pRecvComm);
+                _endCallBack(command, size, (void*)pTemp, pRecvComm);
             }
             else{   // まだ届いていない大きいデータの場合ぬける
                 NET_PRINT("結合待ち command %d size %d\n",command,size);
