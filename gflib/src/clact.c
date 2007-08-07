@@ -2392,6 +2392,11 @@ static void OAMMAN_SysInit( CLSYS_OAMMAN* p_oamman, u8 oamst_main, u8 oamnum_mai
 static void OAMMAN_SysExit( CLSYS_OAMMAN* p_oamman )
 {
 	GF_ASSERT( p_oamman );	// OAMMANを持っていないならこの処理を行うことが出来ないようにするため
+
+	// 描画していたOAMRAM状態をクリアする
+	OAMMAN_SysClean( p_oamman );
+	OAMMAN_SysTrans( p_oamman );
+	
 	// NitroSystem OamManagerSystemの初期化
 	NNS_G2dInitOamManagerModule();
 }
