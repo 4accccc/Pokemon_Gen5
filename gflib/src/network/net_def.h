@@ -107,7 +107,7 @@ struct _GFL_NETHANDLE{
   NET_TOOLSYS* pTool;      ///< netTool
   NET_PARENTSYS* pParent;  ///< 親の情報を保持するポインタ
   PTRStateFunc state;      ///< ハンドルのプログラム状態
-  MATHRandContext32 sRand; ///< 親子機ネゴシエーション用乱数キー
+  GFL_STD_RandContext sRand; ///< 親子機ネゴシエーション用乱数キー
   HEAPID baseHeapID;       ///< 通信がcreateするためのID
   HEAPID netHeapID;        ///< 通信libが使用するID
   HEAPID wifiHeapID;       ///< wifiLibが使用するID

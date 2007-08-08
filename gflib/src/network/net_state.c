@@ -121,26 +121,14 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
 {
     void* pWork;
 
-    if(pNetHandle!=NULL){   // すでに動作中の場合必要ない
-        return;
-    }
-//    CommVRAMDInitialize();
     // 初期化
-
     pNetHandle->timer = _START_TIME;
     pNetHandle->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
     pNetHandle->limitNum = 2;         // 一人は最低でも接続可能
     pNetHandle->negotiation = _NEGOTIATION_CHECK;
     pNetHandle->serviceNo = serviceNo;
 
-    //CommRandSeedInitialize(&pNetHandle->sRand);  //@@OO乱数初期化を入れる
     GFL_NET_COMMAND_Init(NULL, 0, NULL);
-/*
-    if((serviceNo != COMM_MODE_UNION) && (serviceNo != COMM_MODE_PARTY) &&
-       (serviceNo != COMM_MODE_MYSTERY)){
-        WirelessIconEasy();  // アイコン初期化
-    }
-*/
 }
 
 
@@ -500,7 +488,7 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
     // 今度はビーコンを残したまま
 
     if(GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle)){
-        rand = MATH_Rand32(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME/2))+(_CHILD_P_SEARCH_TIME/2);
+        rand = GFL_STD_Rand(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME));
         NET_PRINT("子機開始 %d \n",rand);
         _CHANGE_STATE(_changeoverChildSearching, rand);
     }

@@ -12,7 +12,7 @@
 
 #include "gflib.h"
 
-extern void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo);
+extern void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 
 #endif //__FATAL_ERROR_H__
 

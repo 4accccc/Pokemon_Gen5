@@ -400,12 +400,16 @@ void GFL_NET_Main(void)
 GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
+    u64 seed;
     GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
+
     GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
     pHandle->negoCount=10;
     _addNetHandle(pNet, pHandle);
     pHandle->pTool = GFL_NET_TOOL_Init(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
+    seed = GFL_STD_MtRand( 0 );
+    seed = (seed << 32) + GFL_STD_MtRand( 0 );
+    GFL_STD_RandInit(&pHandle->sRand,seed);
     return pHandle;
 }
 
@@ -995,6 +999,20 @@ void GFL_NET_SetWifiBothNet(BOOL flag)
     GFL_NET_SystemSetWifiBothNet(flag);
 }
 
+//==============================================================================
+/**
+ * @brief   ユーザーの使用ワークを再設定する
+ * @param   ワークのポインタ
+ * @return  なし
+ */
+//==============================================================================
+
+void GFL_NET_SetUserWork(void* pWork)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    pNet->aNetInit.pWork = pWork;
+}
+
 
 #endif // GFL_NET_WIFI
 
@@ -1059,7 +1077,7 @@ void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     if(pNet->aNetInit.errorFunc != NULL){
-        pNet->aNetInit.errorFunc(pNetHandle, errorNo);
+        pNet->aNetInit.errorFunc(pNetHandle, errorNo, pNet->aNetInit.pWork);
     }
 }
 

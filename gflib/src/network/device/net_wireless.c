@@ -31,13 +31,8 @@
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
 //一人でテストを行う場合、ここの数を他の人とわける
-#ifdef PM_DEBUG
-
 #ifdef DEBUG_ONLY_FOR_ohno
 #define _DEBUG_ALONETEST (2)
-#else
-#define _DEBUG_ALONETEST (1)
-#endif
 #else
 #define _DEBUG_ALONETEST (0)
 #endif
@@ -256,11 +251,12 @@ static void _scanCallback(WMBssDesc *bssdesc)
 //        return;  // ポーズ中の親機はBEACON無視
 //    }
 //#endif
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+    OS_TPrintf("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
     if(pGF->debugAloneTest != _DEBUG_ALONETEST){
         return;
     }
-#endif
+//#endif
 
     if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
         OS_TPrintf("beacon不一致\n");

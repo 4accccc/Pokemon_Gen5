@@ -26,7 +26,7 @@ static	const	char	*GraphicFileTable[]={
  *	@brief	エラー表示
  */
 //-----------------------------------------------------------------------------
-void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
+void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 {
 	//BGシステム初期化
 	GFL_BG_Init(GFL_HEAPID_APP);

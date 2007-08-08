@@ -123,7 +123,7 @@ typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親にな
 typedef void* (*NetBeaconGetFunc)(void);    ///< ビーコンデータ取得関数
 typedef int (*NetBeaconGetSizeFunc)(void);    ///< ビーコンデータサイズ取得関数
 typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
-typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiユーザーデータをセーブする時に呼ぶ関数
@@ -594,6 +594,14 @@ extern int GFL_NET_WIFI_GetLocalConnectNo(void);
  */
 //==============================================================================
 extern void GFL_NET_SetWifiBothNet(BOOL flag);
+//==============================================================================
+/**
+ * @brief   ユーザーの使用ワークを再設定する
+ * @param   ワークのポインタ
+ * @return  なし
+ */
+//==============================================================================
+extern void GFL_NET_SetUserWork(void* pWork);
 //==============================================================================
 /**
  * @brief   自動的にエラー検出を行うかどうか
