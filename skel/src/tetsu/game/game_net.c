@@ -154,7 +154,7 @@ BOOL ConnectGameNet(void)
 
 	case _CONNECT_NEGOCHECK:
 		if( GFL_NET_IsNegotiation( gNetSys._pHandle ) == TRUE ){
-			if( GF_NET_IsParentMachine() == FALSE ){
+			if( GFL_NET_IsParentMachine() == FALSE ){
 				//子機の場合モードセット可能(defaultはDSモード)
 				//GFL_NET_ChangeMpMode(gNetSys._pHandle);
 			}
@@ -194,7 +194,7 @@ BOOL ExitGameNet(void)
 	switch( gNetSys._exitSeqNo ){
 
 	case _EXIT_START:
-		if( GF_NET_IsParentMachine() == TRUE ){
+		if( GFL_NET_IsParentMachine() == TRUE ){
 			GFL_NET_Disconnect();
 		}else{
 			GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);

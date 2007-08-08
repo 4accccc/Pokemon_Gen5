@@ -393,10 +393,12 @@ static void _recvGameKey
 	COMMWORK_KEY* commDataP = (COMMWORK_KEY*)pData;
 	int	workp = netID-1;	//DS通信は親=0（内部隠し構造）の1orgin
 
-	gw->commKey[workp].trg = commDataP->keyTrg;
-	gw->commKey[workp].cont = commDataP->keyCont;
-	OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", 
-				netID, commDataP->keyTrg, commDataP->keyCont );
+    if(GFL_NET_IsParentHandle(pNetHandle)==FALSE){
+        gw->commKey[workp].trg = commDataP->keyTrg;
+        gw->commKey[workp].cont = commDataP->keyCont;
+        OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", 
+                   netID, commDataP->keyTrg, commDataP->keyCont );
+    }
 }
 
 //------------------------------------------------------------------

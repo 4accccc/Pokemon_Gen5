@@ -529,8 +529,17 @@ extern BOOL GFL_NET_IsResetEnable(void);
  * @retval  FALSE  子機
  */
 //==============================================================================
+extern BOOL GFL_NET_IsParentMachine(void);
 
-extern BOOL GF_NET_IsParentMachine(void);
+//==============================================================================
+/**
+ * @brief   親機のハンドルかどうか
+ * @param   void
+ * @retval  TRUE   親機
+ * @retval  FALSE  子機
+ */
+//==============================================================================
+extern BOOL GFL_NET_IsParentHandle(GFL_NETHANDLE* pNetHandle);
 
 //==============================================================================
 /**

@@ -32,7 +32,12 @@
 
 //一人でテストを行う場合、ここの数を他の人とわける
 #ifdef PM_DEBUG
-#define _DEBUG_ALONETEST (10)
+
+#ifdef DEBUG_ONLY_FOR_ohno
+#define _DEBUG_ALONETEST (2)
+#else
+#define _DEBUG_ALONETEST (1)
+#endif
 #else
 #define _DEBUG_ALONETEST (0)
 #endif
@@ -1000,7 +1005,7 @@ static void _stateProcess(u16 bitmap)
             // 利用可能な中から一番使用率の低いチャンネルを返します。
             channel = WH_GetMeasureChannel();  //WH_SYSSTATE_MEASURECHANNEL => WH_SYSSTATE_IDLE
             if(pNetWL->bTGIDChange){
-                _sTgid++;
+//                _sTgid++;
             }
             _setUserGameInfo();
 //            NET_PRINT("親機接続開始   tgid=%d channel=%d \n",_sTgid, channel);

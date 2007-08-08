@@ -657,7 +657,7 @@ void GFL_NET_ReloadIcon(void)
  */
 //==============================================================================
 
-BOOL GF_NET_IsParentMachine(void)
+BOOL GFL_NET_IsParentMachine(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     int i;
@@ -673,6 +673,21 @@ BOOL GF_NET_IsParentMachine(void)
     return FALSE;
 }
 
+//==============================================================================
+/**
+ * @brief   親機のハンドルかどうか
+ * @param   void
+ * @retval  TRUE   親機
+ * @retval  FALSE  子機
+ */
+//==============================================================================
+BOOL GFL_NET_IsParentHandle(GFL_NETHANDLE* pNetHandle)
+{
+    if(pNetHandle->pParent){
+        return TRUE;
+    }
+    return FALSE;
+}
 
 
 //--------送信
