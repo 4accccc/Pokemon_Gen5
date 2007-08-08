@@ -217,7 +217,7 @@ BOOL ExitGameNet(void)
 //------------------------------------------------------------------
 void SendGameNet( int comm, void* commWork )
 {
-	GFL_NET_SendData( gNetSys._pHandle, comm, &commWork );
+	GFL_NET_SendData( gNetSys._pHandle, comm, commWork );
 }
 
 
