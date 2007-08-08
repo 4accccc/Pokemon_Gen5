@@ -9,40 +9,30 @@
 #include "net_icondata.h"
 
 #include "game_net.h"
+//------------------------------------------------------------------
+// 
+//	システム構造体
+//
+//------------------------------------------------------------------
+typedef struct {
+	int				_connectSeqNo;
+	int				_exitSeqNo;
+	GFL_NETHANDLE*	_pHandle;
 
-#define _BCON_GET_NUM  (1)
+}GAMENET_SYS;
+
+static GAMENET_SYS	gNetSys;
+
+extern const NetRecvFuncTable _CommPacketTbl[1];
 //------------------------------------------------------------------
 // 
 //	初期化
 //
 //------------------------------------------------------------------
-// ローカル通信コマンドの定義
-enum _testCommand_e {
-    _TEST_VARIABLE = GFL_NET_CMD_COMMAND_MAX,
-    _TEST_GETSIZE,
-    _TEST_HUGE,
-    _TEST_VARIABLE_HUGE,
-};
+#define _BCON_GET_NUM  (1)
 
-typedef enum {
-	gNetSysParent = 0,
-	gNetSysChild = 1,
-}GAMENET_SYSMODE;
-
-#define _TEST_HUGE_SIZE (5000)
-
-typedef struct {
-	u8				_dataPool[_TEST_HUGE_SIZE];  //大容量受信バッファ テスト用
-	u8				_dataSend[_TEST_HUGE_SIZE];  //大容量送信バッファ テスト用
-	int				_connectSeqNo;
-	int				_exitSeqNo;
-	GFL_NETHANDLE*	_pHandle;
-	GFL_NETHANDLE*	_pHandleServer;
-	GAMENET_SYSMODE	mode;
-
-}GAMENET_SYS;
-
-static GAMENET_SYS	gNetSys;
+#define _MAXNUM (2)     // 接続最大
+#define _MAXSIZE (120)  // 送信最大サイズ
 
 #define _TEST_TIMING (12)
 
@@ -52,90 +42,42 @@ typedef struct{
 
 static _testBeaconStruct _testBeacon = { 1 };
 
-static void* _netBeaconGetFunc(void)    ///< ビーコンデータ取得関数
+///< ビーコンデータ取得関数
+static void* _netBeaconGetFunc(void)
 {
-    return &_testBeacon;
+	return &_testBeacon;
 }
 
-static int _netBeaconGetSizeFunc(void)    ///< ビーコンデータサイズ取得関数
+///< ビーコンデータサイズ取得関数
+static int _netBeaconGetSizeFunc(void)
 {
-    return sizeof(_testBeacon);
+	return sizeof(_testBeacon);
 }
 
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)    ///< ビーコンデータ取得関数
+///< ビーコンデータ取得関数
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 {
-    OS_TPrintf("比較してます%d\n",beaconNo);
-    return TRUE;
+	OS_TPrintf("比較してます%d\n",beaconNo);
+	return TRUE;
 }
 
-#define SSID "GF_ORG01"
+#define SSID "GF_TETSU"
 
 static u8* _netGetSSID(void)
 {
     return (u8*)SSID;
 }
 
-
-// 可変サイズ受信
-static void _testRecvVariable(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff=pData;
-    OS_Printf("_testRecvVariable %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[9]);
-}
-
-
-static void _testRecvGetSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff=pData;
-    OS_Printf("_testRecvGetSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[9]);
-}
-
-static int _getTestCommandSize(void)
-{
-    return 12;
-}
-
-static void _testRecvHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff=pData;
-    OS_Printf("_testRecvHugeSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[size-1]);
-}
-
-static void _testRecvVariableHugeSize(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff=pData;
-    OS_Printf("_testRecvVariableHugeSize %d:  %d : %d %d\n",__LINE__,size,pBuff[0],pBuff[size-1]);
-}
-
-static u8* _getHugeMemoryPoolAddress(int netID, void* pWork, int size)
-{
-    return gNetSys._dataPool;
-}
-
 static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo)
 {
 	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+	OS_TPrintf("通信不能エラーが発生 ErrorNo = %d\n",errNo);
 }
-
-// ローカル通信テーブル
-static const NetRecvFuncTable _CommPacketTbl[] = {
-    // 可変サイズテスト
-    { _testRecvVariable, GFL_NET_COMMAND_VARIABLE, NULL },
-    // サイズ取得関数テスト
-    { _testRecvGetSize, _getTestCommandSize, NULL },
-    // 大きなサイズテスト
-    { _testRecvHugeSize, GFL_NET_COMMAND_SIZE( _TEST_HUGE_SIZE ), _getHugeMemoryPoolAddress },
-    // 巨大な可変サイズのテスト
-    { _testRecvVariableHugeSize, GFL_NET_COMMAND_VARIABLE, _getHugeMemoryPoolAddress },
-};
-
-#define _MAXNUM (2)     // 接続最大
-#define _MAXSIZE (120)  // 送信最大サイズ
 
 // 通信初期化構造体  wifi用
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
-    NELEMS(_CommPacketTbl), // 受信テーブル要素数
+    1,//NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
@@ -167,7 +109,6 @@ void InitGameNet(void)
 	gNetSys._connectSeqNo = 0;
 	gNetSys._exitSeqNo = 0;
 	gNetSys._pHandle = NULL;
-	gNetSys._pHandleServer = NULL;
 }
 
 
@@ -213,8 +154,8 @@ BOOL ConnectGameNet(void)
 
 	case _CONNECT_NEGOCHECK:
 		if( GFL_NET_IsNegotiation( gNetSys._pHandle ) == TRUE ){
-			if( gNetSys.mode == gNetSysChild ){
-				//モードセット
+			if( GF_NET_IsParentMachine() == FALSE ){
+				//子機の場合モードセット可能(defaultはDSモード)
 				//GFL_NET_ChangeMpMode(gNetSys._pHandle);
 			}
 			gNetSys._connectSeqNo = _CONNECT_TIMINGSTART;
@@ -236,139 +177,6 @@ BOOL ConnectGameNet(void)
 	return result;
 }
 
-#if 0
-enum{
-    _TEST_CONNECT,
-    _TEST_CONNECT2,
-    _TEST_1,
-    _TEST_4,
-    _TEST_2,
-    _TEST_3,
-    _TEST_END,
-    _TEST_EXIT,
-
-};
-
-BOOL ConnectGameNet(void)
-{
-    // クライアント側のテスト
-    if(PAD_BUTTON_B == GFL_UI_KEY_GetTrg()){
-        switch( gNetSys._connectSeqNo){
-          case _TEST_CONNECT:
-            {
-                gNetSys._pHandle = GFL_NET_CreateHandle();
-                GFL_NET_StartBeaconScan(gNetSys._pHandle );    // ビーコンを待つ
-//                GFL_NET_InitClientAndConnectToParent(gNetSys._pHandle, mac);  //macアドレスへ接続
-//                GFL_NET_ChangeoverConnect(gNetSys._pHandle); // 自動接続
-            }
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_CONNECT2:
-            {
-                u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
-                if(pData){
-                    GFL_NET_ConnectToParent(gNetSys._pHandle, pData);
-                }
-            }
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_1:
-            GFL_NET_RequestNegotiation( gNetSys._pHandle );
-             gNetSys._connectSeqNo++;
-            break;
-
-          case _TEST_4:
-            {
-                const u8 buff[10]={1,2,3,4,5,6,7,8,9,10};
-                int i;
-//                GFL_NET_SendDataEx(gNetSys._pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_VARIABLE, 10, buff, FALSE, FALSE);
-//                GFL_NET_SendDataEx(gNetSys._pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_GETSIZE, 0, buff, FALSE, FALSE);
-//                for(i=0;i<_TEST_HUGE_SIZE;i++){
-//                    gNetSys._dataSend[i] = (u8)i;
-//                }
-//                GFL_NET_SendDataEx(gNetSys._pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_HUGE, 0, gNetSys._dataSend, FALSE, FALSE);
-//                GFL_NET_SendDataEx(gNetSys._pHandle,GFL_NET_SENDID_ALLUSER,
-//                                   _TEST_VARIABLE_HUGE, 10, gNetSys._dataSend, FALSE, FALSE);
-
-
-                GFL_NET_ChangeMpMode(gNetSys._pHandle);
-
-            }
-             gNetSys._connectSeqNo++;
-            break;
-            
-
-
-          case _TEST_2:
-            {
-                u8 send = _TEST_TIMING;
-//                BOOL ret = GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_TIMING_SYNC,&send);
-//                OS_TPrintf("send %d\n",ret);
-                GFL_NET_TimingSyncStart(gNetSys._pHandle, send);
-            }
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_3:
-            if(GFL_NET_IsTimingSync(gNetSys._pHandle,_TEST_TIMING)){
-                OS_Printf("タイミング取れた\n");
-				gNetSys.mode = gNetSysChild;	//子
-	
-                 gNetSys._connectSeqNo++;
-            }
-            else{
-                OS_Printf("タイミングは取れてない\n");
-            }
-            break;
-
-          case _TEST_END:
-            // その場で切断
-         //   GFL_NET_Disconnect();
-            // 通信で全員を切断
-            GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
-             gNetSys._connectSeqNo++;
-            break;
-        }
-        OS_TPrintf("c %d\n", gNetSys._connectSeqNo);
-    }
-    // サーバー側のテスト
-    if(PAD_BUTTON_R == GFL_UI_KEY_GetTrg()){
-        switch( gNetSys._connectSeqNo){
-          case _TEST_CONNECT:
-            {
-                gNetSys._pHandleServer = GFL_NET_CreateHandle();
-                GFL_NET_InitServer(gNetSys._pHandleServer);   // サーバ
-                gNetSys._pHandle = GFL_NET_CreateHandle();  // クライアント
-//                GFL_NET_ChangeoverConnect(gNetSys._pHandle); // 自動接続
-            }
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_CONNECT2:
-            GFL_NET_RequestNegotiation( gNetSys._pHandle );
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_1:
-            GFL_NET_TimingSyncStart(gNetSys._pHandle, _TEST_TIMING);
-			gNetSys.mode = gNetSysParent;	//親
-	
-             gNetSys._connectSeqNo = _TEST_END;
-            break;
-          case _TEST_END:
-            GFL_NET_Disconnect();
-             gNetSys._connectSeqNo++;
-            break;
-          case _TEST_EXIT:
-            GFL_NET_Exit();
-             gNetSys._connectSeqNo++;
-            break;
-        }
-        OS_TPrintf("p %d\n", gNetSys._connectSeqNo);
-    }
-}
-#endif
-
 //------------------------------------------------------------------
 // 
 //	終了
@@ -386,7 +194,7 @@ BOOL ExitGameNet(void)
 	switch( gNetSys._exitSeqNo ){
 
 	case _EXIT_START:
-		if( gNetSys.mode == gNetSysParent ){
+		if( GF_NET_IsParentMachine() == TRUE ){
 			GFL_NET_Disconnect();
 		}else{
 			GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
@@ -400,6 +208,16 @@ BOOL ExitGameNet(void)
 		break;
 	}
 	return result;
+}
+
+//------------------------------------------------------------------
+// 
+//	データ送信
+//
+//------------------------------------------------------------------
+void SendGameNet( int comm, void* commWork )
+{
+	GFL_NET_SendData( gNetSys._pHandle, comm, &commWork );
 }
 
 

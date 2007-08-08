@@ -52,6 +52,11 @@ static const PLAYER_STATUS*	testStatus[] = {
  */
 //------------------------------------------------------------------
 typedef struct {
+	u16 trg;
+	u16 cont;
+}COMM_KEY;
+
+typedef struct {
 	HEAPID					heapID;
 	GAME_SYSTEM*			gs;
 	CAMERA_CONTROL*			cc; 
@@ -61,6 +66,9 @@ typedef struct {
 	int						seq;
 	int						playerSide;
 	int						timer;
+
+	COMM_KEY				commKey[PLAYER_SETUP_NUM]; 
+
 }GAME_WORK;
 
 //------------------------------------------------------------------
@@ -193,6 +201,7 @@ static BOOL GameEndCheck( void )
 /**
  * @brief	コントロール
  */
+static void _sendGameKey( u16 trg, u16 cont );
 //------------------------------------------------------------------
 static void ControlKey( void )
 {
@@ -201,6 +210,7 @@ static void ControlKey( void )
 	int	speedupFlag = FALSE;
 	PLAYER_CONTROL*	pc; 
 
+	_sendGameKey( trg, cont );
 	pc = gw->pc[gw->playerSide];
 
 	{
@@ -341,6 +351,61 @@ static void StatusWinUpdate( void )
 
 	SetStatusWinReload( gw->swc[win] );
 }
+
+
+
+//============================================================================================
+//
+//
+//	通信関数
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	受信関数
+ */
+//------------------------------------------------------------------
+// ローカル通信コマンドの定義
+enum _gameCommand_e {
+	_GAME_COM_KEY = GFL_NET_CMD_COMMAND_MAX,
+};
+
+//------------------------------------------------------------------
+// 位置情報受信
+typedef struct {
+    u16 keyTrg;
+    u16 keyCont;
+} COMMWORK_KEY;
+
+static void _sendGameKey( u16 trg, u16 cont )
+{
+	COMMWORK_KEY commData;
+	commData.keyTrg = 0x100;//trg;
+	commData.keyCont = 0x200;//cont;
+
+	SendGameNet( _GAME_COM_KEY, &commData );
+}
+
+static void _recvGameKey
+	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+	COMMWORK_KEY* commDataP = (COMMWORK_KEY*)pData;
+	int	workp = netID-1;	//DS通信は親=0（内部隠し構造）の1orgin
+
+	gw->commKey[workp].trg = commDataP->keyTrg;
+	gw->commKey[workp].cont = commDataP->keyCont;
+	OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", 
+				netID, commDataP->keyTrg, commDataP->keyCont );
+}
+
+//------------------------------------------------------------------
+// ローカル通信テーブル
+const NetRecvFuncTable _CommPacketTbl[] = {
+    { _recvGameKey, GFL_NET_COMMAND_SIZE(sizeof(COMMWORK_KEY)), NULL },
+};
+
+
 
 //------------------------------------------------------------------
 /**
