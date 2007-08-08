@@ -151,12 +151,13 @@ typedef struct _WM_INFO_STRUCT  GFL_NETWM;
 
 
 // 使用する GGID
+#if 0
 #define _DP_GGID       (0x333)   // メインのGGID
 #define _MYSTERY_GGID  (0x333)
 #define	_RANGER_GGID   (0x00000178)
 #define	_WII_GGID      (0x346)   //
 #define _BCON_DOWNLOAD_GGID (0x345)
-
+#endif
 
 // WM_Initializeを使用して初期化する場合はOFF
 // WM_Init, WM_Enable, WM_PowerOnを個別に使用して細かく制御する必要がある場合にはONに設定する。

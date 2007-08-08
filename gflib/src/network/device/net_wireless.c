@@ -26,7 +26,8 @@
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
  */
-#define _BEACON_SIZE_FIX (3)
+#define _BEACON_SIZE_FIX (10)
+#define _BEACON_SSIDHEAD_SIZE (4)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
 //一人でテストを行う場合、ここの数を他の人とわける
@@ -42,11 +43,12 @@
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
-  GameServiceID  		serviceNo;   	///< 通信サービス番号
-  u8        debugAloneTest;
-  u8  		connectNum;    	///< つながっている台数  --> 本親かどうか識別
-  u8        pause;          ///< 接続を禁止したい時に使用する
-  u8       aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
+    u8        ssidHead[_BEACON_SSIDHEAD_SIZE];         ///< SSIDの４バイト部分
+    GameServiceID  		serviceNo; ///< 通信サービス番号
+    u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
+    u8  		connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
+    u8        pause;               ///< 接続を禁止したい時に使用する
+    u8       aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
 
 
@@ -144,11 +146,12 @@ void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num)
 {
     int i;
     GFL_NETWL* pNetWL = NULL;
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
     
     pNetWL = (GFL_NETWL*)GFL_HEAP_AllocMemory(heapID, sizeof(GFL_NETWL));
     MI_CpuClear8(pNetWL, sizeof(GFL_NETWL));
     pNetWL->heapID = heapID;
-    pNetWL->ggid = _DP_GGID;
+    pNetWL->ggid = pInit->ggid;
     pNetWL->serviceNo = serviceNo;
     pNetWL->maxConnectNum = num;
     return pNetWL;
@@ -237,6 +240,7 @@ static void _scanCallback(WMBssDesc *bssdesc)
     int i;
     _GF_BSS_DATA_INFO* pGF;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
     
     int serviceNo = pNetWL->serviceNo;
 
@@ -253,6 +257,10 @@ static void _scanCallback(WMBssDesc *bssdesc)
     }
 #endif
 
+    if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
+        OS_TPrintf("beacon不一致\n");
+        return;
+    }
     
     if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
         return;   // サービスが異なる場合は拾わない
@@ -871,6 +879,7 @@ static void _setUserGameInfo( void )
     _GF_BSS_DATA_INFO* pGF;
     int size;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
 
     if(pNetWL->beaconGetSizeFunc==NULL){
         OS_TPanic("beaconGetSizeFunc none");
@@ -887,6 +896,8 @@ static void _setUserGameInfo( void )
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     pGF->serviceNo = pNetWL->serviceNo;  // ゲームの番号
     pGF->debugAloneTest = _DEBUG_ALONETEST;
+    GFL_STD_MemCopy( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE);
+    
     pGF->pause = WHGetParentConnectPause();    // 親機が受付を中止しているかどうか
     GFL_STD_MemCopy( pNetWL->beaconGetFunc(), pGF->aBeaconDataBuff, size);
     DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);

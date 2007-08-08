@@ -36,6 +36,30 @@ int GFL_STD_MemComp(const void *s1, const void *s2, const u32 size)
     return (0);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	０が現れるまでのバイト数を計る
+            文字の扱いにはSTRBUFを使うこと  これは通信のSSIDなど ASCII文字列に使用する用途にもちいる事
+ *	@param	s	    データ列
+ *	@return	サイズ＝長さ
+ */
+//-----------------------------------------------------------------------------
+int GFL_STD_StrLen( const void *s )
+{
+    const unsigned char  *p1 = (const unsigned char *)s;
+    int n = 0;
+
+    while( 1 ){
+        if(*p1 == 0){
+            return n;
+        }
+        p1++;
+        n++;
+    }
+    return 0;
+}
+
+
 /*-----------------------------------------------------------------------------
  *
  *	H16/11/10		Tomoya Takahashi

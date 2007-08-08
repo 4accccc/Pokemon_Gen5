@@ -263,7 +263,7 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
 static u16 WH_GetConnectNum(void);
 
 
-#define SSID  "ORGLIB"
+//#define SSID  "ORGLIB"
 
 // 子機最大数（親機を含まない数）
 #define WH_CHILD_MAX              7
@@ -952,9 +952,10 @@ static void WH_StateOutStartParent(void *arg)
         // 子機の接続を通知
     case WM_STATECODE_CONNECTED:
         {
+            GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
             // cb->macAddress に接続してきた子機の MAC アドレスが入っています。
             // cb->ssid は子機が WM_StartConnect の ssid 引数にセットしたデータです。
-            WH_TRACE("StartParent - new child (aid %x) connected\n", cb->aid);
+            WH_TRACE("StartParent - new child (aid %x) %s %d connected\n", cb->aid, cb->ssid, GFL_STD_StrLen( cb->ssid ) );
 
 //            OS_TPrintf("ssid my %d  child %d\n",CommStateGetServiceNo(),cb->ssid[0]);
 
@@ -965,7 +966,7 @@ static void WH_StateOutStartParent(void *arg)
             if((pNetWH->bPauseConnectSystem == TRUE  ) ||
                (pNetWH->bPauseConnect == TRUE) ||
                (!bConnect) ||
-               (0 != GFL_STD_MemComp(SSID,&cb->ssid[1],sizeof(SSID)))){
+               (0 != GFL_STD_MemComp(pInit->getSSID(), cb->ssid, GFL_STD_StrLen( cb->ssid ) ))){
 #endif
 #if 0
             if((pNetWH->bPauseConnectSystem == TRUE  ) ||
@@ -1006,7 +1007,9 @@ static void WH_StateOutStartParent(void *arg)
             }
    */
             pNetWH->sConnectBitmap |= target_bitmap;
-
+            WH_TRACE("NowBIT-(%x)\n", pNetWH->sConnectBitmap);
+            
+                
             // 子機接続時のコールバック
             if(pNetWH->connectCallBack){
                 pNetWH->connectCallBack(cb->aid);
@@ -1638,7 +1641,7 @@ static void WH_StateOutSetChildWEPKey(void *arg)
   ---------------------------------------------------------------------- */
 static BOOL WH_StateInStartChild(void)
 {
-    u8 ssid_data[32];
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
     u8* pSsidData = NULL;
     WMErrCode result;
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
@@ -1660,11 +1663,9 @@ static BOOL WH_StateInStartChild(void)
 
     //ssid送信
 #if 1
-    GFL_STD_MemCopy(SSID,&ssid_data[1],sizeof(SSID));
-    ssid_data[0] = 0;
-    OS_TPrintf("ssid  %d %s %d\n",ssid_data[0],SSID,sizeof(SSID));
+    OS_TPrintf("ssid  %s \n",pInit->getSSID());
     result = WM_StartConnectEx(WH_StateOutStartChild, &pNetWH->sBssDesc,
-                               ssid_data, TRUE, WM_AUTHMODE_OPEN_SYSTEM);
+                               pInit->getSSID(), TRUE, WM_AUTHMODE_OPEN_SYSTEM);
 #else
 
     pSsidData = GFI_NET_GetSSID();

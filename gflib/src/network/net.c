@@ -598,6 +598,7 @@ void GFL_NET_Disconnect(void)
     }
 }
 
+
 //==============================================================================
 /**
  * @brief 新規接続禁止＆許可を設定
@@ -645,6 +646,33 @@ void GFL_NET_ReloadIcon(void)
         WirelessIconEasyXY( pNet->aNetInit.iconX, pNet->aNetInit.iconY, pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
     }
 }
+
+
+//==============================================================================
+/**
+ * @brief   親機マシンかどうか
+ * @param   void
+ * @retval  TRUE   親機
+ * @retval  FALSE  子機
+ */
+//==============================================================================
+
+BOOL GF_NET_IsParentMachine(void)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    int i;
+    
+    if(pNet==NULL){
+        return TRUE;  // 通信していないときは親機扱い
+    }
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        if((pNet->pNetHandle[i]) && (pNet->pNetHandle[i]->pParent)){
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 
 
 //--------送信

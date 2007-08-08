@@ -521,6 +521,16 @@ extern void GFL_NET_SetClientConnect(GFL_NETHANDLE* pNet,BOOL bEnable);
 
 extern BOOL GFL_NET_IsResetEnable(void);
 
+//==============================================================================
+/**
+ * @brief   親機マシンかどうか
+ * @param   void
+ * @retval  TRUE   親機
+ * @retval  FALSE  子機
+ */
+//==============================================================================
+
+extern BOOL GF_NET_IsParentMachine(void);
 
 //==============================================================================
 /**
