@@ -20,6 +20,8 @@ void	GameBoot( HEAPID heapID );
 void	GameEnd( void );
 BOOL	GameMain( void );
 
+static void _initRecvBuffer( void );
+static void _sendGameKey( u16 trg, u16 cont );
 #define CAMERA_MOVE_SPEED	(0x0100)
 //------------------------------------------------------------------
 /**
@@ -51,9 +53,15 @@ static const PLAYER_STATUS*	testStatus[] = {
  * @brief	構造体定義
  */
 //------------------------------------------------------------------
+#define COMM_STACK_MAX (5)
 typedef struct {
 	u16 trg;
 	u16 cont;
+}COMM_KEYDATA;
+
+typedef struct {
+	int						keyStackCount;
+	COMM_KEYDATA			keyStack[COMM_STACK_MAX]; 
 }COMM_KEY;
 
 typedef struct {
@@ -63,6 +71,7 @@ typedef struct {
 	SKILL_CONTROL*			sc; 
 	PLAYER_CONTROL*			pc[PLAYER_SETUP_NUM]; 
 	STATUSWIN_CONTROL*		swc[PLAYER_SETUP_NUM]; 
+	int						myID;
 	int						seq;
 	int						playerSide;
 	int						timer;
@@ -77,7 +86,7 @@ typedef struct {
  */
 //------------------------------------------------------------------
 static BOOL GameEndCheck( void );
-static void ControlKey( void );
+static void ControlKey( PLAYER_CONTROL* pc, COMM_KEYDATA* key );
 static void StatusWinUpdate( void );
 
 GAME_WORK* gw;
@@ -115,8 +124,12 @@ BOOL	GameMain( void )
 	case 0:
 		//通信初期化
 		InitGameNet();
+		_initRecvBuffer();
 
+		//システムセットアップ
 		gw->gs = SetupGameSystem( gw->heapID );
+
+		//プレーヤーキャラ登録
 		for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
 			gw->pc[i] = AddPlayerControl( gw->gs, G3DSCOBJ_PLAYER1+i, gw->heapID );
 			SetPlayerStatus( gw->pc[i], testStatus[i] ); 
@@ -124,8 +137,10 @@ BOOL	GameMain( void )
 												Get_GS_BmpWin( gw->gs, G2DBMPWIN_P1+i ), 
 												gw->heapID );
 		}
-		gw->cc = AddCameraControl( gw->gs, G3DSCOBJ_PLAYER1, gw->heapID );
-		{
+		{//カメラ登録
+			gw->cc = AddCameraControl( gw->gs, G3DSCOBJ_PLAYER1, gw->heapID );
+		}
+		{//スキルコントローラ登録
 			gw->sc = AddSkillControl( gw->gs, gw->heapID );
 			for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
 				AddSkillCheckPlayer( gw->sc, gw->pc[i] );
@@ -138,6 +153,10 @@ BOOL	GameMain( void )
 
 	case 1:
 		if( ConnectGameNet() == TRUE ){
+			//ネットＩＤをプレーヤー配列ＩＤとしてみなす
+			gw->myID = G3DSCOBJ_PLAYER1 + ((int)GetNetID() -1 );
+
+			SetCameraControlTargetID( gw->cc, &gw->myID );
 			gw->seq++;
 		}
 		break;
@@ -148,8 +167,33 @@ BOOL	GameMain( void )
 		if( GameEndCheck() == TRUE ){
 			gw->seq++;
 		}
-		ControlKey();
+		{
+			//キー交換通信
+			int	trg = GFL_UI_KEY_GetTrg();
+			int	cont = GFL_UI_KEY_GetCont();
 
+			_sendGameKey( trg, cont );
+		}
+		{
+			int i, j;
+			COMM_KEY* commKey;
+
+			for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
+				commKey = &gw->commKey[i];
+				for( j=0; j<commKey->keyStackCount; j++ ){
+
+					ControlKey( gw->pc[i], &commKey->keyStack[j] );
+
+					if( i == gw->myID ){
+						u16 direction;
+						//カメラ反映
+						GetPlayerControlDirection( gw->pc[i], &direction );
+						SetCameraControlDirection( gw->cc, &direction );
+					}
+				}
+			}
+			_initRecvBuffer();
+		}
 		for( i=0; i<PLAYER_SETUP_NUM; i++ ){ 
 			MainPlayerControl( gw->pc[i] );
 			SetSkillControlCommand( gw->sc, gw->pc[i], GetPlayerSkillCommand( gw->pc[i] ));
@@ -201,36 +245,28 @@ static BOOL GameEndCheck( void )
 /**
  * @brief	コントロール
  */
-static void _sendGameKey( u16 trg, u16 cont );
 //------------------------------------------------------------------
-static void ControlKey( void )
+static void ControlKey( PLAYER_CONTROL* pc, COMM_KEYDATA* key )
 {
-	int	trg = GFL_UI_KEY_GetTrg();
-	int	cont = GFL_UI_KEY_GetCont();
+	int	trg = key->trg;
+	int	cont = key->cont;
 	int	speedupFlag = FALSE;
-	PLAYER_CONTROL*	pc; 
-
-	_sendGameKey( trg, cont );
-	pc = gw->pc[gw->playerSide];
 
 	{
-		//カメラ操作
+		//方向設定
 		u16 direction;
 		
 		if(( cont & PAD_BUTTON_L )&&( cont & PAD_BUTTON_R )){	//リセット（プレーヤー前方）
 			//GetPlayerDirection( pc, &direction );
 			//SetPlayerControlDirection( pc, &direction );
-			//SetCameraControlDirection( gw->cc, &direction );
 		} else if( cont & PAD_BUTTON_L ){	//左移動
 			GetPlayerControlDirection( pc, &direction );
 			direction += CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
-			SetCameraControlDirection( gw->cc, &direction );
 		} else if( cont & PAD_BUTTON_R ){	//右移動
 			GetPlayerControlDirection( pc, &direction );
 			direction -= CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
-			SetCameraControlDirection( gw->cc, &direction );
 		}
 	}
 	//武器の変更
@@ -319,24 +355,6 @@ static void ControlKey( void )
 		return;
 	}
 	SetPlayerControlCommand( pc, PCC_STAY );
-
-	//プレーヤー変更
-	if( trg & PAD_BUTTON_SELECT ){
-		int ID;
-		u16 direction;
-
-		gw->playerSide++;
-		if( gw->playerSide >= PLAYER_SETUP_NUM ){
-			gw->playerSide = 0;
-		}
-		pc = gw->pc[gw->playerSide];
-		ID = G3DSCOBJ_PLAYER1 + gw->playerSide;
-
-		//カメラ方向をプレーヤーに合わせて再設定
-		SetCameraControlTargetID( gw->cc, &ID );
-		GetPlayerControlDirection( pc, &direction );
-		SetCameraControlDirection( gw->cc, &direction );
-	}
 }
 
 //------------------------------------------------------------------
@@ -361,6 +379,24 @@ static void StatusWinUpdate( void )
 //
 //
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	受信ワーク初期化
+ */
+//------------------------------------------------------------------
+static void _initRecvBuffer( void )
+{
+	int	i,j;
+
+	for( i=0; i<PLAYER_SETUP_NUM;  i++ ){
+		for( j=0; j<COMM_STACK_MAX; j++ ){
+			gw->commKey[i].keyStackCount = 0;
+			gw->commKey[i].keyStack[j].trg = 0;
+			gw->commKey[i].keyStack[j].cont = 0;
+		}
+	}
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	受信関数
@@ -393,11 +429,19 @@ static void _recvGameKey
 	COMMWORK_KEY* commDataP = (COMMWORK_KEY*)pData;
 	int	workp = netID-1;	//DS通信は親=0（内部隠し構造）の1orgin
 
-    if(GFL_NET_IsParentHandle(pNetHandle)==FALSE){
-        gw->commKey[workp].trg = commDataP->keyTrg;
-        gw->commKey[workp].cont = commDataP->keyCont;
-        OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", 
-                   netID, commDataP->keyTrg, commDataP->keyCont );
+    if( GFL_NET_IsParentHandle(pNetHandle) == FALSE ){
+		int	i;
+		COMM_KEY* commKey = &gw->commKey[workp];
+
+		if( commKey->keyStackCount < COMM_STACK_MAX ){
+			commKey->keyStack[commKey->keyStackCount].trg = commDataP->keyTrg;
+			commKey->keyStack[commKey->keyStackCount].cont = commDataP->keyCont;
+			OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", 
+				        netID, commDataP->keyTrg, commDataP->keyCont );
+			commKey->keyStackCount++;
+		} else {
+			OS_TPrintf("受信バッファオーバー");
+		}
     }
 }
 
