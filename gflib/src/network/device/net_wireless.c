@@ -129,7 +129,7 @@ static void _setUserGameInfo( void );
 static BOOL _isMachBackupMacAddress(u8* pMac);
 static u16 _getServiceBeaconPeriod(u16 serviceNo);
 
-static void _scanCallback(WMBssDesc *bssdesc);
+static BOOL _scanCallback(WMBssDesc *bssdesc);
 static void _startUpCallback(void *arg, WVRResult result);
 static void _indicateCallback(void *arg);
 static int _connectNum(void);
@@ -219,10 +219,10 @@ BOOL GFL_NET_WLIsConnect(void)
     return TRUE;
 }
 
+
 //==============================================================================
 /**
- * @brief   子機が親機を探し出した時に呼ばれるコールバック関数
- * 親機を拾うたびに呼ばれる
+ * @brief   マックアドレス表示
  * @param   bssdesc   グループ情報
  * @retval  none
  */
@@ -235,7 +235,58 @@ static void DEBUG_MACDISP(char* msg,WMBssDesc *bssdesc)
                bssdesc->bssid[3],bssdesc->bssid[4],bssdesc->bssid[5]);
 }
 
-static void _scanCallback(WMBssDesc *bssdesc)
+//==============================================================================
+/**
+ * @brief   接続して良いかどうか判断する
+ * @param   bssdesc   グループ情報
+ * @retval  none
+ */
+//==============================================================================
+
+static BOOL _scanCheck(WMBssDesc *bssdesc)
+{
+    int i;
+    _GF_BSS_DATA_INFO* pGF;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
+    int serviceNo = pNetWL->serviceNo;
+
+    // catchした親データ
+    pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
+    if(pGF->pause){
+        return FALSE;  // ポーズ中の親機はBEACON無視
+    }
+    OS_TPrintf("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
+    if(pGF->debugAloneTest != _DEBUG_ALONETEST){
+        return FALSE;
+    }
+
+    if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
+        OS_TPrintf("beacon不一致\n");
+        return FALSE;
+    }
+    if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
+        return FALSE;   // サービスが異なる場合は拾わない
+    }
+    if(pGF->connectNum >= pInit->maxConnectNum){
+        return FALSE;   // 接続人数いっぱいの場合拾わない
+    }
+    NET_PRINT("_scanCheckok\n");
+    return TRUE;
+}
+
+
+
+//==============================================================================
+/**
+ * @brief   子機が親機を探し出した時に呼ばれるコールバック関数
+ * 親機を拾うたびに呼ばれる
+ * @param   bssdesc   グループ情報
+ * @retval  none
+ */
+//==============================================================================
+
+static BOOL _scanCallback(WMBssDesc *bssdesc)
 {
     int i;
     _GF_BSS_DATA_INFO* pGF;
@@ -244,27 +295,8 @@ static void _scanCallback(WMBssDesc *bssdesc)
     
     int serviceNo = pNetWL->serviceNo;
 
-    // catchした親データ
-    pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
-//#if (!BEACON_TEST)
-//    if(pGF->pause){
-//        return;  // ポーズ中の親機はBEACON無視
-//    }
-//#endif
-//#ifdef PM_DEBUG
-    OS_TPrintf("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
-    if(pGF->debugAloneTest != _DEBUG_ALONETEST){
-        return;
-    }
-//#endif
-
-    if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
-        OS_TPrintf("beacon不一致\n");
-        return;
-    }
-    
-    if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
-        return;   // サービスが異なる場合は拾わない
+    if(FALSE == _scanCheck(bssdesc)){
+        return FALSE;
     }
     
     // このループは同じものなのかどうか検査
@@ -279,7 +311,7 @@ static void _scanCallback(WMBssDesc *bssdesc)
             pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
             // 新しい親情報を保存しておく。
             MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));
-            return;
+            return TRUE;
         }
     }
     // このループは空きがあるかどうか検査
@@ -291,13 +323,16 @@ static void _scanCallback(WMBssDesc *bssdesc)
     }
     if(i >= SCAN_PARENT_COUNT_MAX){
         // 構造体がいっぱいの場合は親機を拾わない
-        return;
+        return FALSE;
     }
     // 新しい親情報を保存しておく。
     pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
     MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i],sizeof(WMBssDesc));
     pNetWL->bScanCallBack = TRUE;
+    return TRUE;
 }
+
+
 
 //==============================================================================
 /**
@@ -771,13 +806,17 @@ int GFL_NET_WLGetNextConnectIndex(void)
     return i;
 }
 
-static void _parentFindCallback(WMBssDesc* pBeacon)
+static BOOL _parentFindCallback(WMBssDesc* pBeacon)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
+    if(_scanCheck(pBeacon)==FALSE){
+        return FALSE;
+    }
     if(pNetWL->pCallback){
         pNetWL->pCallback(pNetWL->pNetHandle);
     }
+    return TRUE;
 }
 
 //==============================================================================

@@ -1493,13 +1493,15 @@ static void WH_StateOutStartScan(void *arg)
             break;
         }
 //#endif
-        WH_TRACE("parent find\n");
 
         // コールバックが必要ならば呼び出し
         if (pNetWH->sScanCallback != NULL)
         {
-            pNetWH->sScanCallback(&pNetWH->sBssDesc);
+            if(FALSE == pNetWH->sScanCallback(&pNetWH->sBssDesc)){
+                break;
+            }
         }
+        WH_TRACE("parent find\n");
 
         // 見つかった親機に自動接続のためスキャン終了
         if (pNetWH->sAutoConnectFlag)

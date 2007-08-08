@@ -487,6 +487,8 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
     }
     // 今度はビーコンを残したまま
 
+//    if(GFL_NET_SystemChildModeInit(FALSE, 512)){
+    
     if(GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle)){
         rand = GFL_STD_Rand(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME));
         NET_PRINT("子機開始 %d \n",rand);
@@ -665,7 +667,7 @@ void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
 
 
-//    GFL_NET_SystemChildModeInit(TRUE,512);
+  //  GFL_NET_SystemChildModeInit(TRUE,512);
     GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle);
     
 //    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){

@@ -202,7 +202,7 @@ enum
     WH_ERRCODE_MAX
 };
 
-typedef void (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
+typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 
 /* 未接続, または親機しかいない状態を示すビットマップ値 */
 #define WH_BITMAP_EMPTY           1

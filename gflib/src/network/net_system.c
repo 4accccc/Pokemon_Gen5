@@ -1056,6 +1056,7 @@ static BOOL _copyDSData(void)
     else{
         _pComm->sSendServerBuf[1] = WH_GetBitmap();
     }
+//    OS_TPrintf("_copyDSDataTRU\n");
 //    _pComm->sSendServerBuf[2] = mcSize;
     return TRUE;
 }
