@@ -381,8 +381,8 @@ typedef struct {
 static void _sendGameKey( u16 trg, u16 cont )
 {
 	COMMWORK_KEY commData;
-	commData.keyTrg = 0x100;//trg;
-	commData.keyCont = 0x200;//cont;
+	commData.keyTrg = trg;
+	commData.keyCont = cont;
 
 	SendGameNet( _GAME_COM_KEY, &commData );
 }
