@@ -135,6 +135,8 @@ typedef struct {
 	GFL_CLSYS_REND		rend;
 	CLSYS_TRMAN		trman;
 	u16 pltt_no[CLSYS_DRAW_MAX];	// 上書きするパレットナンバー
+	BOOL transflag;					// 転送許可フラグ
+	BOOL oammanclear;				// OAMMANclear許可フラグ
 } CLSYS;
 
 
@@ -262,6 +264,10 @@ static const u16 CLSYS_DRAW_TYPEtoNNS_G2D_VRAM_TYPE[ CLSYS_DRAW_MAX ] = {
 //=====================================
 static void CLSYS_DefaultRendInit( GFL_CLSYS_REND* p_rend, const GFL_CLSYS_INIT* cp_data, HEAPID heapID );
 static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8 pal_offs );
+static void CLSYS_SetTransFlag( BOOL flag );
+static BOOL CLSYS_GetTransFlag( void );
+static void CLSYS_SetOamManClearFlag( BOOL flag );
+static BOOL CLSYS_GetOamManClearFlag( void );
 
 
 //-------------------------------------
@@ -462,6 +468,12 @@ void GFL_CLACT_Init( const GFL_CLSYS_INIT* cp_data, HEAPID heapID )
 	for( i=0; i<CLSYS_DRAW_MAX; i++ ){
 		pClsys->pltt_no[i] = 0;
 	}
+
+	// 転送許可
+	CLSYS_SetTransFlag( TRUE );
+
+	// OAMMANクリア許可設定
+	CLSYS_SetOamManClearFlag( TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -475,6 +487,9 @@ void GFL_CLACT_Exit( void )
 {
 	GF_ASSERT( pClsys );
 	//OS_Printf( "[%d]\n", __LINE__ );
+
+	// 転送不可設定
+	CLSYS_SetTransFlag( FALSE );
 	
 	// 各システム破棄
 	OAMMAN_SysExit( &pClsys->oamman );
@@ -505,16 +520,46 @@ void GFL_CLACT_Main( void )
 /**
  *	@brief	セルアクターシステム　Vブランク処理
  *
- *	＊OAMデータ転送後バッファをクリーンします。
+ * [セルアクターシステム　Vブランク期間内での転送処理　説明]
+ *	＞用途に合わせて２つのタイプを選べる
+ *　　・転送処理方法には２つのタイプがあります。
+ *		1.	GFL_CLACT_VBlankFunc
+ *		2.	GFL_CLACT_VBlankFuncTransOnly ＋　GFL_CLACT_ClearOamBuff
+ *	　・1　GFL_CLACT_VBlankFunc
+ *		OAMデータ転送後、バッファをクリーンします。
+ *	　　処理落ちなどで、１ループ中に２回割り込みが入ると何も表示されなく
+ *	　　なってしまいますので、割り込み内で使用する事が出来ません。
+ *
+ *	  ・2　GFL_CLACT_VBlankFuncTransOnly ＋　GFL_CLACT_ClearOamBuff
+ *		GFL_CLACT_VBlankFuncTransOnlyはOAMバッファのデータの転送のみ行いますので、
+ *		この関数をVBlank割り込み内で呼んでください。
+ *		CLACT_UNITの描画前にGFL_CLACT_ClearOamBuffを呼ぶことでOAMバッファをクリアする
+ *		事が出来ます。
+ *
+ *	　＞GFL_CLACT_ClearOamBuffについて
+ *		・セルアクターシステム内にはoammanclearフラグというものを持っています。
+ *		　これは、OamBuffをクリアしてよいかを判別するフラグです。
+ *		　フラグが立っている状態のときのみGFL_CLACT_ClearOamBuffを
+ *		　実行することが出来ます。
+ *		　『oammanclearフラグの動作』
+ *			GFL_CLACT_VBlankFuncTransOnlyが呼ばれると立ちます。
+ *			GFL_CLACT_ClearOamBuffが呼ばれると落ちます。
+ *		　これはCLACT_UNITが自由にGFL_CLACT_ClearOamBuffを呼べるようにするため
+ *		　行っています。
+ *			
  */
 //-----------------------------------------------------------------------------
 void GFL_CLACT_VBlankFunc( void )
 {
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( pClsys ){
-		OAMMAN_SysTrans( &pClsys->oamman );
-		OAMMAN_SysClean( &pClsys->oamman );
-		TRMAN_SysVBlank( &pClsys->trman );
+		if( CLSYS_GetTransFlag() ){
+			OAMMAN_SysTrans( &pClsys->oamman );
+			OAMMAN_SysClean( &pClsys->oamman );
+			TRMAN_SysVBlank( &pClsys->trman );
+
+			CLSYS_SetOamManClearFlag( FALSE );	// 常にOAMMANバッファクリア不可設定
+		}
 	}
 }
 
@@ -526,24 +571,28 @@ void GFL_CLACT_VBlankFunc( void )
 void GFL_CLACT_ClearOamBuff( void )
 {
 	if( pClsys ){
-		OAMMAN_SysClean( &pClsys->oamman );
+		if( CLSYS_GetOamManClearFlag() ){
+			CLSYS_SetTransFlag( FALSE );	// 転送不可
+			OAMMAN_SysClean( &pClsys->oamman );
+			CLSYS_SetOamManClearFlag( FALSE );	// １回クリアしたので不可設定
+			CLSYS_SetTransFlag( TRUE );	// 転送許可
+		}
 	}
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	Vブランク処理	転送のみ
- *
- *	＊OAMデータの転送のみ行います。
- *	OAMバッファの初期化は、各自のタイミングで行ってください。
- *	その際には「GFL_CLACT_ClearOamBuff」関数を使用してください。
  */
 //-----------------------------------------------------------------------------
 void GFL_CLACT_VBlankFuncTransOnly( void )
 {
 	if( pClsys ){
-		OAMMAN_SysTrans( &pClsys->oamman );
-		TRMAN_SysVBlank( &pClsys->trman );
+		if( CLSYS_GetTransFlag() ){
+			OAMMAN_SysTrans( &pClsys->oamman );
+			TRMAN_SysVBlank( &pClsys->trman );
+			CLSYS_SetOamManClearFlag( TRUE );	// バッファクリア許可
+		}
 	}
 }
 
@@ -782,6 +831,9 @@ void GFL_CLACT_UNIT_Draw( GFL_CLUNIT* p_unit )
 		return;
 	}
 
+	// 転送不可設定
+	CLSYS_SetTransFlag( FALSE );
+ 
 	// 先頭のデータを設定
 	p_wk = p_unit->p_drawlist;
 
@@ -795,6 +847,9 @@ void GFL_CLACT_UNIT_Draw( GFL_CLUNIT* p_unit )
 		// 次へ
 		p_wk = p_wk->p_next;
 	}while( p_wk != p_unit->p_drawlist );
+
+	// 転送許可設定
+	CLSYS_SetTransFlag( TRUE );
 }
 
 //----------------------------------------------------------------------------
@@ -2353,6 +2408,67 @@ static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8
 	pClsys->pltt_no[ CLSYS_DRAW_MAIN ] += pal_offs;
 	pClsys->pltt_no[ CLSYS_DRAW_SUB ] += pal_offs;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	転送許可フラグの設定
+ *
+ *	@param	flag	フラグ
+ */
+//-----------------------------------------------------------------------------
+static void CLSYS_SetTransFlag( BOOL flag )
+{
+	if( pClsys ){
+		pClsys->transflag = flag;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	転送許可フラグの取得
+ *
+ *	@retval	TRUE	転送可
+ *	@retval	FALSE	転送不可
+ */
+//-----------------------------------------------------------------------------
+static BOOL CLSYS_GetTransFlag( void )
+{
+	if( pClsys ){
+		return pClsys->transflag;
+	}
+	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OAMバッファのクリア許可フラグ設定
+ *
+ *	@param	flag	設定フラグ
+ */
+//-----------------------------------------------------------------------------
+static void CLSYS_SetOamManClearFlag( BOOL flag )
+{
+	if( pClsys ){
+		pClsys->oammanclear = flag;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	OAMバッファのクリア許可フラグ取得
+ *
+ *	@retval	TRUE	クリア可
+ *	@retval	FALSE	クリア不可
+ */
+//-----------------------------------------------------------------------------
+static BOOL CLSYS_GetOamManClearFlag( void )
+{
+	if( pClsys ){
+		return pClsys->oammanclear;
+	}
+	return FALSE;
+}
+
 
 
 

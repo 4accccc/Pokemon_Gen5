@@ -270,11 +270,42 @@ extern void GFL_CLACT_Exit( void );
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_Main( void );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム　Vブランク処理
  *
- *	＊OAMデータ転送後バッファをクリーンします。
+ * 長いですが、すみません。呼んでください↓
+ *
+ * [セルアクターシステム　Vブランク期間内での転送処理　説明]
+ *	＞用途に合わせて２つのタイプを選べる
+ *　　・転送処理方法には２つのタイプがあります。
+ *		1.	GFL_CLACT_VBlankFunc
+ *		2.	GFL_CLACT_VBlankFuncTransOnly ＋　GFL_CLACT_ClearOamBuff
+ *	　・1　GFL_CLACT_VBlankFunc
+ *		OAMデータ転送後、バッファをクリーンします。
+ *	　　処理落ちなどで、１ループ中に２回割り込みが入ると何も表示されなく
+ *	　　なってしまいますので、割り込み内で使用する事が出来ません。
+ *
+ *	  ・2　GFL_CLACT_VBlankFuncTransOnly ＋　GFL_CLACT_ClearOamBuff
+ *		GFL_CLACT_VBlankFuncTransOnlyはOAMバッファのデータの転送のみ行いますので、
+ *		この関数をVBlank割り込み内で呼んでください。
+ *		CLACT_UNITの描画前にGFL_CLACT_ClearOamBuffを呼ぶことでOAMバッファをクリアする
+ *		事が出来ます。
+ *
+ *	　＞GFL_CLACT_ClearOamBuffについて
+ *		・セルアクターシステム内にはoammanclearフラグというものを持っています。
+ *		　これは、OamBuffをクリアしてよいかを判別するフラグです。
+ *		　フラグが立っている状態のときのみGFL_CLACT_ClearOamBuffを
+ *		　実行することが出来ます。
+ *		　『oammanclearフラグの動作』
+ *			GFL_CLACT_VBlankFuncTransOnlyが呼ばれると立ちます。
+ *			GFL_CLACT_ClearOamBuffが呼ばれると落ちます。
+ *		　これはCLACT_UNITが自由にGFL_CLACT_ClearOamBuffを呼べるようにするため
+ *		　行っています。
+ *		・GFL_CLACT_VBlankFuncの関数ではoammanclearフラグが立たないので、
+ *		　GFL_CLACT_ClearOamBuffは機能しません。
+ *			
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_VBlankFunc( void );
@@ -287,10 +318,6 @@ extern void GFL_CLACT_ClearOamBuff( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	Vブランク処理	転送のみ
- *
- *	＊OAMデータの転送のみ行います。
- *	OAMバッファの初期化は、各自のタイミングで行ってください。
- *	その際には「GFL_CLACT_ClearOamBuff」関数を使用してください。
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_VBlankFuncTransOnly( void );

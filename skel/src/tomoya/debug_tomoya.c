@@ -310,6 +310,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	DEBUG_ClactWorkKeyMove( p_clactw->p_wk, trg, cont );
 
 	// セルアクターユニット描画処理
+	GFL_CLACT_ClearOamBuff();
 	GFL_CLACT_UNIT_Draw( p_clactw->p_unit );
 
 	// セルアクターシステムメイン処理
@@ -320,10 +321,10 @@ static GFL_PROC_RESULT DEBUG_ClactProcMain( GFL_PROC* p_proc, int* p_seq, void* 
 	// Vintr待ち
 	OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	// Vブランク期間で実行します。
-	// ただ、ユニットの描画が行われていないのに
-	// この関数を実行すると、描画しているOBJが消えてしまうため
-	// 割り込みないで呼ばないほうが良いかもしれません。
-	GFL_CLACT_SysVblank();
+	// ただし、この関数は割り込みないで使用しないでください。
+	GFL_CLACT_VblankFunc();
+	// 割り込み内で使用するときは、GFL_CLACT_VBlankFuncTransOnly()と
+	// GFL_CLACT_ClearOamBuff()を使用してください。
 //*/
 	if( trg & PAD_BUTTON_START ){
 		return GFL_PROC_RES_FINISH;
