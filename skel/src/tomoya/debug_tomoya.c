@@ -226,7 +226,7 @@ static GFL_PROC_RESULT DEBUG_ClactProcInit( GFL_PROC* p_proc, int* p_seq, void* 
 			0, 128,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
 			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
 		};
-		GFL_CLACT_Init( &param, HEAPID_TOMOYA_DEBUG );
+		GFL_CLACT_Init( &GFL_CLSYSINIT_DEF_DIVSCREEN, HEAPID_TOMOYA_DEBUG );
 	}
 	
 	// セルアクターユニット作成

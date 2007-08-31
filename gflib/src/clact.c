@@ -242,6 +242,33 @@ typedef struct {
 static CLSYS* pClsys = NULL;
 
 
+//-----------------------------------------------------------------------------
+/**
+ *			セルアクターシステム　基本初期化データ
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	スクリーンを分割したバージョン
+//=====================================
+const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN = {
+	0, 0,
+ 	0, 512,
+	0, 128,
+	0, 128,
+	0
+};
+//-------------------------------------
+///	スクリーンをつなげるバージョン
+//=====================================
+const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_CONSCREEN = {
+	0, 0,
+	0, 192,
+	0, 128,
+	0, 128,
+	0
+};
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -650,6 +677,7 @@ void GFL_CLACT_USERREND_Delete( GFL_CLSYS_REND* p_rend )
 void GFL_CLACT_USERREND_SetSurfacePos( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_pos )
 {
 	GF_ASSERT( p_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( p_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	REND_SurfaceObjSetPos( &p_rend->p_surface[ idx ], cp_pos->x, cp_pos->y );
@@ -667,6 +695,7 @@ void GFL_CLACT_USERREND_SetSurfacePos( GFL_CLSYS_REND* p_rend, u32 idx, const GF
 void GFL_CLACT_USERREND_GetSurfacePos( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_pos )
 {
 	GF_ASSERT( cp_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( cp_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	
@@ -685,6 +714,7 @@ void GFL_CLACT_USERREND_GetSurfacePos( const GFL_CLSYS_REND* cp_rend, u32 idx, G
 void GFL_CLACT_USERREND_SetSurfaceSize( GFL_CLSYS_REND* p_rend, u32 idx, const GFL_CLACTPOS* cp_size )
 {
 	GF_ASSERT( p_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( p_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	REND_SurfaceObjSetSize( &p_rend->p_surface[ idx ], cp_size->x, cp_size->y );
@@ -702,6 +732,7 @@ void GFL_CLACT_USERREND_SetSurfaceSize( GFL_CLSYS_REND* p_rend, u32 idx, const G
 void GFL_CLACT_USERREND_GetSurfaceSize( const GFL_CLSYS_REND* cp_rend, u32 idx, GFL_CLACTPOS* p_size )
 {
 	GF_ASSERT( cp_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( cp_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	REND_SurfaceObjGetSize( &cp_rend->p_surface[ idx ], &p_size->x, &p_size->y );
@@ -719,6 +750,7 @@ void GFL_CLACT_USERREND_GetSurfaceSize( const GFL_CLSYS_REND* cp_rend, u32 idx, 
 void GFL_CLACT_USERREND_SetSurfaceType( GFL_CLSYS_REND* p_rend, u32 idx, CLSYS_DRAW_TYPE type )
 {
 	GF_ASSERT( p_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( p_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	REND_SurfaceObjSetType( &p_rend->p_surface[ idx ], type );
@@ -737,6 +769,7 @@ void GFL_CLACT_USERREND_SetSurfaceType( GFL_CLSYS_REND* p_rend, u32 idx, CLSYS_D
 CLSYS_DRAW_TYPE GFL_CLACT_USERREND_GetSurfaceType( const GFL_CLSYS_REND* cp_rend, u32 idx )
 {
 	GF_ASSERT( cp_rend );
+	// サーフェース数を超えたidxでバッファを参照しようとしています
 	GF_ASSERT( cp_rend->surface_num > idx );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	return REND_SurfaceObjGetType( &cp_rend->p_surface[ idx ] );
@@ -1292,6 +1325,7 @@ void GFL_CLACT_WK_GetWldPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos )
 void GFL_CLACT_WK_SetWldTypePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
+	// 対応していないtypeです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( type == CLSYS_MAT_X ){
@@ -1315,6 +1349,7 @@ s16 GFL_CLACT_WK_GetWldTypePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 {
 	s16 pos;
 	GF_ASSERT( cp_wk );
+	// 対応していないtypeです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( type == CLSYS_MAT_X ){
@@ -1341,6 +1376,7 @@ s16 GFL_CLACT_WK_GetWldTypePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 void GFL_CLACT_WK_SetAffineParam( GFL_CLWK* p_wk, CLSYS_AFFINETYPE affine )
 {
 	GF_ASSERT( p_wk );
+	// 対応していないアフィンタイプです
 	GF_ASSERT( CLSYS_AFFINETYPE_NUM > affine );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	p_wk->affine = affine;
@@ -1408,6 +1444,7 @@ void GFL_CLACT_WK_GetAffinePos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos )
 void GFL_CLACT_WK_SetTypeAffinePos( GFL_CLWK* p_wk, s16 pos, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
+	// 対応していない座標タイプです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( type == CLSYS_MAT_X ){
@@ -1432,6 +1469,7 @@ s16 GFL_CLACT_WK_GetTypeAffinePos( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 	s16 pos;
 
 	GF_ASSERT( cp_wk );
+	// 対応していない座標タイプです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 
@@ -1497,6 +1535,7 @@ void GFL_CLACT_WK_GetScale( const GFL_CLWK* cp_wk, GFL_CLSCALE* p_sca )
 void GFL_CLACT_WK_SetTypeScale( GFL_CLWK* p_wk, fx32 scale, CLSYS_MAT_TYPE type )
 {
 	GF_ASSERT( p_wk );
+	// 対応していない座標タイプです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	if( type == CLSYS_MAT_X ){
@@ -1521,6 +1560,7 @@ fx32 GFL_CLACT_WK_GetTypeScale( const GFL_CLWK* cp_wk, CLSYS_MAT_TYPE type )
 	fx32 scale;
 
 	GF_ASSERT( cp_wk );
+	// 対応していない座標タイプです
 	GF_ASSERT( CLSYS_MAT_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	
@@ -1584,6 +1624,7 @@ void GFL_CLACT_WK_SetFlip( GFL_CLWK* p_wk, CLWK_FLIP_TYPE flip_type, BOOL on_off
 	u8 msk;
 
 	GF_ASSERT( p_wk );
+	// 対応していないフリップタイプです
 	GF_ASSERT( CLWK_FLIP_MAX > flip_type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	
@@ -1616,6 +1657,7 @@ BOOL GFL_CLACT_WK_GetFlip( const GFL_CLWK* cp_wk, CLWK_FLIP_TYPE flip_type )
 
 	//OS_Printf( "[%d]\n", __LINE__ );
 	GF_ASSERT( cp_wk );
+	// 対応していないフリップタイプです
 	GF_ASSERT( CLWK_FLIP_MAX > flip_type );
 	
 	if( flip_type == CLWK_FLIP_V ){
@@ -1641,6 +1683,7 @@ BOOL GFL_CLACT_WK_GetFlip( const GFL_CLWK* cp_wk, CLWK_FLIP_TYPE flip_type )
 void GFL_CLACT_WK_SetObjMode( GFL_CLWK* p_wk, GXOamMode mode )
 {
 	GF_ASSERT( p_wk );
+	// 対応していないオブジェモードです
 	GF_ASSERT( GX_OAM_MODE_BITMAPOBJ >= mode );
 
 	//OS_Printf( "[%d]\n", __LINE__ );
@@ -1724,6 +1767,7 @@ BOOL GFL_CLACT_WK_GetMosaic( const GFL_CLWK* cp_wk )
 void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs )
 {
 	GF_ASSERT( p_wk );
+	// パレットのリミットをオーバーします
 	GF_ASSERT( 16 > pal_offs );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	p_wk->pal_offs = pal_offs;
@@ -1762,6 +1806,7 @@ u32 GFL_CLACT_WK_GetPlttAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type )
 
 	//OS_Printf( "[%d]\n", __LINE__ );
 	GF_ASSERT( cp_wk );
+	// ありえない描画面タイプです
 	GF_ASSERT( CLSYS_DRAW_MAX > type );
 
 	// 描画タイプのVRAMにパレットが読み込まれているかチェック
@@ -1819,6 +1864,7 @@ u32 GFL_CLACT_WK_GetCharAddr( const GFL_CLWK* cp_wk, CLSYS_DRAW_TYPE type )
 	BOOL result;
 
 	GF_ASSERT( cp_wk );
+	// ありえない描画面タイプです
 	GF_ASSERT( CLSYS_DRAW_MAX > type );
 	//OS_Printf( "[%d]\n", __LINE__ );
 
@@ -1908,6 +1954,7 @@ u8 GFL_CLACT_WK_GetSoftPri( const GFL_CLWK* cp_wk )
 void GFL_CLACT_WK_SetBgPri( GFL_CLWK* p_wk, u8 pri )
 {
 	GF_ASSERT( p_wk );
+	// ありえないBGプライオリティプです
 	GF_ASSERT( 4 > pri );
 	//OS_Printf( "[%d]\n", __LINE__ );
 	p_wk->bg_pri = pri;
@@ -2399,6 +2446,7 @@ static void CLSYS_SysSetPaletteProxy( const NNSG2dImagePaletteProxy* cp_pltt, u8
 {
 	GF_ASSERT( pClsys );
 	GF_ASSERT( cp_pltt );
+	// ありえないパレット番号です
 	GF_ASSERT( 16 > pal_offs );
 	
 	// パレットプロクシからアドレスを取得する
@@ -2576,6 +2624,8 @@ static void OAMMAN_ObjCreate( OAMMAN_DATA* p_obj, u8 oamst, u8 oamnum, NNSG2dOam
 				oamnum,
 				oam_type
 				);
+		// OAMマネージャを作成できません。
+		// GFL_CLSYS_INITのOAM管理情報を変更する必要があります。
 		GF_ASSERT( result == TRUE );
 
 		p_obj->init = TRUE;
@@ -2597,7 +2647,7 @@ static void OAMMAN_ObjCreate( OAMMAN_DATA* p_obj, u8 oamst, u8 oamnum, NNSG2dOam
 static BOOL OAMMAN_ObjEntryOamAttr( OAMMAN_DATA* p_obj, const GXOamAttr* pOam, u16 affineIndex )
 {
 	GF_ASSERT( p_obj );
-	GF_ASSERT( p_obj->init );
+	GF_ASSERT( p_obj->init );	// 初期化されていない
 	GF_ASSERT( pOam );
 	
 	return NNS_G2dEntryOamManagerOamWithAffineIdx(
@@ -2620,7 +2670,7 @@ static BOOL OAMMAN_ObjEntryOamAttr( OAMMAN_DATA* p_obj, const GXOamAttr* pOam, u
 static u16 OAMMAN_ObjEntryAffine( OAMMAN_DATA* p_obj, const MtxFx22* mtx )
 {
 	GF_ASSERT( p_obj );
-	GF_ASSERT( p_obj->init );
+	GF_ASSERT( p_obj->init );	// 初期化されていない
 	GF_ASSERT( mtx );
 	return NNS_G2dEntryOamManagerAffine(
 			&p_obj->man,
@@ -2754,6 +2804,7 @@ static void REND_SysEndDraw( GFL_CLSYS_REND* p_rend )
 static void REND_SysSetAffine( GFL_CLSYS_REND* p_rend, CLSYS_AFFINETYPE mode )
 {
 	GF_ASSERT( p_rend );
+	// 不正なアフィンタイプ
 	GF_ASSERT( CLSYS_AFFINETYPE_NUM > mode );
 	NNS_G2dSetRndCoreAffineOverwriteMode(
 			&(p_rend->rend.rendererCore),
@@ -2822,6 +2873,7 @@ static void REND_SysSetMosaicFlag( GFL_CLSYS_REND* p_rend, BOOL on_off )
 static void REND_SysSetOBJMode( GFL_CLSYS_REND* p_rend, GXOamMode objmode )
 {
 	GF_ASSERT( p_rend );
+	// 不正なオブジェモードです
 	GF_ASSERT( GX_OAM_MODE_BITMAPOBJ > objmode );
 	// オーバーライトにOBJモードの値を設定
 	NNS_G2dSetRendererOverwriteOBJMode( &p_rend->rend, objmode );
@@ -2838,6 +2890,7 @@ static void REND_SysSetOBJMode( GFL_CLSYS_REND* p_rend, GXOamMode objmode )
 static void REND_SysSetBGPriority( GFL_CLSYS_REND* p_rend, u8 pri )
 {
 	GF_ASSERT( p_rend );
+	// 不正なプライオリティです
 	GF_ASSERT( 4 > pri );
 	// BG優先順位を設定
 	NNS_G2dSetRendererOverwritePriority( &p_rend->rend, pri );
@@ -2868,6 +2921,7 @@ static void REND_SurfaceObjCreate( NNSG2dRenderSurface* p_surface, const GFL_REN
 	};
 
 	GF_ASSERT( cp_data );
+	// 不正な描画面です
 	GF_ASSERT( CLSYS_DRAW_MAX > cp_data->type );
 
 	NNS_G2dInitRenderSurface(p_surface);
@@ -2927,6 +2981,7 @@ static void REND_SurfaceObjSetType( NNSG2dRenderSurface* p_surface, CLSYS_DRAW_T
 	};
 
 	GF_ASSERT( p_surface );
+	// 不正な描画面です
 	GF_ASSERT( CLSYS_DRAW_MAX > type );
 
 	p_surface->type = type_dict[ type ];
@@ -3036,6 +3091,9 @@ static BOOL REND_CallBackAddOam( OAMMAN_DATA* p_obj, const GXOamAttr* pOam, u16 
 	}else{
 		// 表示パレットNoが15以上になりました。
 		// そのパレット位置だと色が出ないです。
+		//
+		// また、描画可能では無いサーフェースの描画エリアに座標が入ってしまってる
+		// 可能性があります。
 		GF_ASSERT( 0 );
 	}
 	
@@ -3082,6 +3140,7 @@ static u16 REND_CallBackMainAddAffine( const MtxFx22* mtx )
 	GF_ASSERT( pClsys );
 	result = OAMMAN_ObjEntryAffine( &pClsys->oamman.man[ CLSYS_DRAW_MAIN ], mtx );
 	// アフィンインデックス登録失敗
+	// 登録可能最大数を超えています
 	GF_ASSERT( result != NNS_G2D_OAM_AFFINE_IDX_NONE );
 	return result;
 }
@@ -3092,6 +3151,7 @@ static u16 REND_CallBackSubAddAffine( const MtxFx22* mtx )
 	GF_ASSERT( pClsys );
 	result = OAMMAN_ObjEntryAffine( &pClsys->oamman.man[ CLSYS_DRAW_SUB ], mtx );
 	// アフィンインデックス登録失敗
+	// 登録可能最大数を超えています
 	GF_ASSERT( result != NNS_G2D_OAM_AFFINE_IDX_NONE );
 	return result;
 }
@@ -3949,6 +4009,7 @@ static void CLWK_AnmDataExit( CLWK_ANMDATA* p_anmdata )
 	};
 
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 	
 	p_delete[ p_anmdata->type ]( p_anmdata );
@@ -4144,6 +4205,7 @@ static void CLWK_AnmDataSetAnmSeq( CLWK_ANMDATA* p_anmdata, u16 anmseq )
 		CLWK_AnmDataSetAnmSeqMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 	p_SetAnmSeq[ p_anmdata->type ]( p_anmdata, anmseq );
 }
@@ -4307,6 +4369,7 @@ static void CLWK_AnmDataSetAnmFrame( CLWK_ANMDATA* p_anmdata, u16 idx )
 		CLWK_AnmDataSetAnmFrameMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 
 	p_SetFrame[ p_anmdata->type ]( p_anmdata, idx );
@@ -4370,6 +4433,7 @@ static void CLWK_AnmDataAddAnmFrame( CLWK_ANMDATA* p_anmdata, fx32 speed )
 		CLWK_AnmDataAddAnmFrameMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 
 	p_add[ p_anmdata->type ]( p_anmdata, speed );
@@ -4434,6 +4498,7 @@ static NNSG2dAnimController* CLWK_AnmDataGetAnmCtrl( CLWK_ANMDATA* p_anmdata )
 		CLWK_AnmDataGetAnmCtrlMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 		
 	return p_get[ p_anmdata->type ]( p_anmdata );
@@ -4501,6 +4566,7 @@ static const NNSG2dAnimController* CLWK_AnmDataGetCAnmCtrl( const CLWK_ANMDATA* 
 		CLWK_AnmDataGetCAnmCtrlMCell,
 	};
 	GF_ASSERT( cp_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
 
 	return p_get[ cp_anmdata->type ]( cp_anmdata );
@@ -4584,6 +4650,7 @@ static void CLWK_AnmDataSetAnmSpeed( CLWK_ANMDATA* p_anmdata, fx32 speed )
 		CLWK_AnmDataSetAnmSpeedMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 
 	p_set[ p_anmdata->type ]( p_anmdata, speed );
@@ -4664,6 +4731,7 @@ static void CLWK_AnmDataResetAnm( CLWK_ANMDATA* p_anmdata )
 		CLWK_AnmDataResetAnmMCell,
 	};
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > p_anmdata->type );
 
 	p_reset[p_anmdata->type]( p_anmdata );
@@ -4710,6 +4778,7 @@ static void CLWK_AnmDataSetAnmMode( CLWK_ANMDATA* p_anmdata, CLSYS_ANM_PLAYMODE 
 	NNSG2dAnimController* p_anmctrl = CLWK_AnmDataGetAnmCtrl( p_anmdata );
 	
 	GF_ASSERT( p_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLSYS_ANMPM_MAX > playmode );
 	
 	if( playmode == CLSYS_ANMPM_INVALID ){
@@ -4765,6 +4834,7 @@ static const NNSG2dUserExAnimSequenceAttr* CLWK_AnmDataGetUserAnimSeqAttr( const
 		CLWK_AnmDataGetUserAnimSeqAttrMCell,
 	};
 	GF_ASSERT( cp_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
 	return p_getattr[cp_anmdata->type]( cp_anmdata, seq );
 }
@@ -4819,6 +4889,7 @@ static u32 CLWK_AnmDataGetUserCellAttr( const CLWK_ANMDATA* cp_anmdata, u32 idx 
 	const NNSG2dUserExCellAttrBank* p_cellattrbank;
 	const NNSG2dUserExCellAttr* p_cellattr;
 	GF_ASSERT( cp_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
 	p_cellattrbank = p_getattr[cp_anmdata->type]( cp_anmdata );
 	if( p_cellattrbank ){
@@ -4862,6 +4933,7 @@ static u32 CLWK_AnmDataGetAnmSeqNum( const CLWK_ANMDATA* cp_anmdata )
 		CLWK_AnmDataGetAnmSeqNumMCell,
 	};
 	GF_ASSERT( cp_anmdata );
+	// ありえないアニメタイプ
 	GF_ASSERT( CLWK_ANM_MAX > cp_anmdata->type );
 	return p_func[cp_anmdata->type]( cp_anmdata );
 }
