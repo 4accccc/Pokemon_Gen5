@@ -20,7 +20,7 @@
  */
 //------------------------------------------------------------------
 
-#define SHAPE_DIR_CHECK
+//#define SHAPE_DIR_CHECK
 
 #define	ROTATE_VALUE	(65536/4)
 
@@ -1790,7 +1790,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	bo->pos_x=2;
 	bo->pos_y=2;
 	bo->pos_z=MAP_Z-1;
-	bo->shape=BLOCK_LBLOCK;
+	bo->shape=BLOCK_QBLOCK;
 	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
 		rot_x-=ROTATE_VALUE;
 		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
@@ -1922,8 +1922,8 @@ static	void	DrawBlock(VecFx32 pos,int shape,int dir,int alpha,int tex)
 	G3_Translate(pos.x,pos.y,pos.z);
 
 #ifdef SHAPE_DIR_CHECK
-	G3_RotX(FX_SinIdx(rot_x),FX_CosIdx(rot_x));
 	G3_RotY(FX_SinIdx(rot_y),FX_CosIdx(rot_y));
+	G3_RotX(FX_SinIdx(rot_x),FX_CosIdx(rot_x));
 	G3_RotZ(FX_SinIdx(rot_z),FX_CosIdx(rot_z));
 #else
 	G3_RotX(FX_SinIdx(bs[dir].rot_x),FX_CosIdx(bs[dir].rot_x));

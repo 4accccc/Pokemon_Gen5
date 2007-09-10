@@ -158,12 +158,16 @@ void	YT_InitGame(GAME_PARAM *gp)
 	//‰æ–Ê¶¬
 	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_game_bg_NCGR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
 	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_game_bg_NSCR,GFL_BG_FRAME2_M,0,0,0,gp->heapID);
-//	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-//	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-//	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
-	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_UMI_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_UMI_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
-	GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_umi_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	if(gp->raster_flag){
+		GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_UMI_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+		GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_UMI_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+		GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_umi_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	}
+	else{
+		GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_yossyegg_YT_BG03_NCGR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+		GFL_ARC_UTIL_TransVramScreen(0,NARC_yossyegg_YT_BG03_NSCR,GFL_BG_FRAME3_M,0,0,0,gp->heapID);
+		GFL_ARC_UTIL_TransVramPalette(0,NARC_yossyegg_YT_BG03_NCLR,PALTYPE_MAIN_BG,0,0x100,gp->heapID);
+	}
 
 	GFL_DISP_SetDispOn();
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
@@ -253,8 +257,15 @@ void	YT_InitGame(GAME_PARAM *gp)
 
 	YT_JobNoSet(gp,YT_MainGameNo);
 
-//	GFL_SOUND_PlayBGM(SEQ_MORI);
-	GFL_SOUND_PlayBGM(SEQ_UMI);
+	GFL_SOUND_LoadHeapState(gp->mus_level[MUS_LEVEL_JINGLE]);
+	if(gp->raster_flag){
+		GFL_SOUND_LoadGroupData(GROUP_UMI);
+		GFL_SOUND_PlayBGM(SEQ_UMI);
+	}
+	else{
+		GFL_SOUND_LoadGroupData(GROUP_MORI);
+		GFL_SOUND_PlayBGM(SEQ_MORI);
+	}
 
     GFL_NET_ReloadIcon();
 
@@ -270,8 +281,8 @@ void	YT_InitGame(GAME_PARAM *gp)
 	}
 
 #ifndef DMA_RASTER
-	raster_h_blank=GFUser_HIntr_CreateTCB(TCB_RasterHBlank,NULL,0);
-	raster_v_blank=GFUser_VIntr_CreateTCB(TCB_RasterVBlank,NULL,0);
+	raster_h_blank=GFUser_HIntr_CreateTCB(TCB_RasterHBlank,gp,0);
+	raster_v_blank=GFUser_VIntr_CreateTCB(TCB_RasterVBlank,gp,0);
 #endif
 
 }
@@ -857,16 +868,24 @@ static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int
 //-----------------------------------------------------------------------------
 static	void	TCB_RasterHBlank(GFL_TCB *tcb,void *work)
 {
-	reg_G2_BG3VOFS=RasterBuffer[raster_count];
-	raster_count++;
+	GAME_PARAM *gp=(GAME_PARAM *)work;
+
+	if(gp->raster_flag){
+		reg_G2_BG3VOFS=RasterBuffer[raster_count];
+		raster_count++;
+	}
 }
 
 static	void	TCB_RasterVBlank(GFL_TCB *tcb,void *work)
 {
-	if(++raster_start==90){
-		raster_start=0;
+	GAME_PARAM *gp=(GAME_PARAM *)work;
+
+	if(gp->raster_flag){
+		if(++raster_start==90){
+			raster_start=0;
+		}
+		raster_count=raster_start;
 	}
-	raster_count=raster_start;
 }
 
 #endif

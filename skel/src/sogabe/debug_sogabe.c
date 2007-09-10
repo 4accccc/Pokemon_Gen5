@@ -87,9 +87,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	gp->heapID=HEAPID_SOGABE_DEBUG;
 
-//	YT_JobNoSet(gp,YT_InitTitleNo);
+	YT_JobNoSet(gp,YT_InitTitleNo);
 //	YT_JobNoSet(gp,YT_Init3DTestNo);
-	YT_JobNoSet(gp,YT_InitBlockOutNo);
+//	YT_JobNoSet(gp,YT_InitBlockOutNo);
 
 	game_init(gp);
 
@@ -183,8 +183,9 @@ static	void	game_init(GAME_PARAM *gp)
 	//サウンドデータロード
 //	GFL_SOUND_LoadArchiveData("src/sample_sound/yossy_egg.sdat");
 	GFL_SOUND_LoadArchiveData(1,0);
-	GFL_SOUND_LoadGroupData(GROUP_MAIN);
-
+	GFL_SOUND_LoadGroupData(GROUP_SE);
+	GFL_SOUND_LoadGroupData(GROUP_JINGLE);
+	gp->mus_level[MUS_LEVEL_JINGLE]=GFL_SOUND_SaveHeapState();
 }
 
 //------------------------------------------------------------------

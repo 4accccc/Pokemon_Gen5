@@ -126,6 +126,8 @@ void	YT_InitTitle(GAME_PARAM *gp)
 
 	YT_JobNoSet(gp,YT_MainTitleNo);
 
+	GFL_SOUND_LoadHeapState(gp->mus_level[MUS_LEVEL_JINGLE]);
+	GFL_SOUND_LoadGroupData(GROUP_TITLE);
 	GFL_SOUND_PlayBGM(SEQ_TITLE);
 }
 
@@ -147,8 +149,20 @@ void	YT_MainTitle(GAME_PARAM *gp)
 {
 	switch(gp->seq_no){
 	case YT_SEQ_TITLE_KEY_WAIT:
+#if 0
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START){
 			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->seq_no++;
+		}
+#endif
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->raster_flag=0;
+			gp->seq_no++;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
+			GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,0,16,2);
+			gp->raster_flag=1;
 			gp->seq_no++;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){ // Lƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½

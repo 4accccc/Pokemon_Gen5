@@ -338,7 +338,7 @@ void	YT_MainMultiBoot(GAME_PARAM *gp)
 	gp->wait_work++;
 	switch(gp->seq_no){
 	case SEQ_MB_ICHNEUMON_TRANS:
-		GFL_NET_InitIchneumon();
+//		GFL_NET_InitIchneumon();
 		gp->seq_no++;
 		break;
 	case SEQ_MB_ICHNEUMON_TRANS_WAIT:
