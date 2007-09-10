@@ -68,6 +68,16 @@ enum{
 };
 
 //-------------------------------------
+///	サウンド階層レベル
+//=====================================
+enum{
+	MUS_LEVEL_SE=0,
+	MUS_LEVEL_JINGLE,
+	MUS_LEVEL_BGM,
+	MUS_LEVEL_MAX,
+};
+
+//-------------------------------------
 ///	no_active_flagの内訳
 //=====================================
 #define	YT_ROTATE_FLAG			(0x0003)		//回転フラグ
@@ -152,6 +162,8 @@ typedef	struct
 	GFL_BMP_DATA		*yossy_bmp;
 	GFL_BMPWIN			*yossy_bmpwin;
 	void				*job_work;		//ジョブ毎に使用するワークのポインタを格納
+	int					mus_level[MUS_LEVEL_MAX];	//サウンド階層レベルの保持
+	int					raster_flag;
 }GAME_PARAM;
 
 //TCBプライオリティ定義
