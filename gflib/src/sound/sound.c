@@ -18,6 +18,7 @@
 #define	SOUND_HEAP_SIZE		(0x40000)
 #define	STOP_FADE_FRAME		(1)				//GFL_SOUND_StopBgmでの曲がとまるまでのFADE_WAIT
 #define	SOUND_SEQARC_NOLOAD	(0xffffffff)
+#define	SOUND_HANDLE_MAX	(8)
 
 //=============================================================================================
 //	ワーク
@@ -25,9 +26,9 @@
 static	NNSSndArc			arc;
 static	u8					sndHeap[SOUND_HEAP_SIZE];
 static	NNSSndHeapHandle	heap;
-static	NNSSndHandle		bgmHandle;
-static	NNSSndHandle		seHandle;
+static	NNSSndHandle		sndHandle[SOUND_HANDLE_MAX];
 static	int					GFL_SOUND_seqarc_no=SOUND_SEQARC_NOLOAD;
+static	int					cur_bgm_no;
 
 //=============================================================================================
 //=============================================================================================
@@ -42,10 +43,14 @@ static	int					GFL_SOUND_seqarc_no=SOUND_SEQARC_NOLOAD;
 //--------------------------------------------------------------------------------------------
 void	GFL_SOUND_Init( void )
 {
+	int	i;
+
 	NNS_SndInit();
 	heap=NNS_SndHeapCreate(&sndHeap,sizeof(sndHeap));
-	NNS_SndHandleInit(&bgmHandle);
-	NNS_SndHandleInit(&seHandle);
+
+	for(i=0;i<SOUND_HANDLE_MAX;i++){
+		NNS_SndHandleInit(&sndHandle[i]);
+	}
 
 	arc.file_open=FALSE;
 }
@@ -173,6 +178,39 @@ void	GFL_SOUND_LoadGroupData( int group_no )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * シーケンスナンバーからプレイヤーナンバーを取得
+ *
+ * @param	no	シーケンスナンバー
+ *
+ * @retval	プレイヤーナンバー or 0xff=取得失敗
+ */
+//--------------------------------------------------------------------------------------------
+u8	GFL_SOUND_GetPlayerNo( u16 no )
+{
+	const NNSSndSeqParam* param;
+	
+	if( no == 0 ){
+		//GF_ASSERT( (0) && "シーケンスナンバーが不正なのでプレイヤーナンバー取得失敗！" );
+		return 0xff;	//エラー
+	}
+
+	//サウンドアーカイブ中の各シーケンスに対する、シーケンスパラメータ構造体を取得
+	param = NNS_SndArcGetSeqParam( no );
+	//OS_Printf( "プレイヤーナンバー = %d\n", param->playerNo );
+
+	if( param == NULL ){
+		//GF_ASSERT( (0) && "シーケンスナンバーが不正なのでプレイヤーナンバー取得失敗！" );
+		OS_Printf( "シーケンスナンバーが不正なのでプレイヤーナンバー取得失敗！\n" );
+		return 0xff;	//エラー
+	}
+
+	GF_ASSERT(param->playerNo<SOUND_HANDLE_MAX);
+
+	return param->playerNo;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * サウンドデータ再生（BGM）
  *
  * @param	bgm_no	BGMナンバー
@@ -180,7 +218,13 @@ void	GFL_SOUND_LoadGroupData( int group_no )
 //--------------------------------------------------------------------------------------------
 void	GFL_SOUND_PlayBGM( int bgm_no )
 {
-	NNS_SndArcPlayerStartSeq(&bgmHandle,bgm_no);
+	u8	player_no;
+
+	player_no=GFL_SOUND_GetPlayerNo(bgm_no);
+	GF_ASSERT(player_no!=0xff);
+
+	NNS_SndArcPlayerStartSeq(&sndHandle[player_no],bgm_no);
+	cur_bgm_no=bgm_no;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -192,14 +236,62 @@ void	GFL_SOUND_PlayBGM( int bgm_no )
 //--------------------------------------------------------------------------------------------
 void	GFL_SOUND_StopBGM( void )
 {
-	NNS_SndPlayerStopSeq(&bgmHandle,STOP_FADE_FRAME);
+	u8	player_no;
+
+	player_no=GFL_SOUND_GetPlayerNo(cur_bgm_no);
+	GF_ASSERT(player_no!=0xff);
+
+	NNS_SndPlayerStopSeq(&sndHandle[player_no],STOP_FADE_FRAME);
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * サウンドデータ再生（BGM）
+ * サウンドデータ再生（SE）
  *
- * @param	bgm_no	BGMナンバー
+ * @param	se_no	SEナンバー
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_SOUND_PlaySE( int se_no )
+{
+	u8	player_no;
+
+	player_no=GFL_SOUND_GetPlayerNo(se_no);
+	GF_ASSERT(player_no!=0xff);
+
+	NNS_SndArcPlayerStartSeq(&sndHandle[player_no],se_no);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * サウンドヒープ階層ロード
+ *
+ * @param	level	ロードする階層レベル
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_SOUND_LoadHeapState(int level)
+{
+	NNS_SndHeapLoadState(heap,level);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * サウンドヒープ階層セーブ
+ *
+ * @retval	保存した階層レベル（-1でエラー）
+ */
+//--------------------------------------------------------------------------------------------
+int	GFL_SOUND_SaveHeapState(void)
+{
+	return NNS_SndHeapSaveState(heap);
+}
+
+//SEQARCを用いての再生（現状は未サポート）
+#if 0
+//--------------------------------------------------------------------------------------------
+/**
+ * サウンドデータ再生（SE）
+ *
+ * @param	se_no	SEナンバー
  */
 //--------------------------------------------------------------------------------------------
 void	GFL_SOUND_PlaySE( int se_no )
@@ -207,4 +299,5 @@ void	GFL_SOUND_PlaySE( int se_no )
 	GF_ASSERT(GFL_SOUND_seqarc_no!=SOUND_SEQARC_NOLOAD);
 	NNS_SndArcPlayerStartSeqArc(&seHandle,GFL_SOUND_seqarc_no,se_no);
 }
+#endif
 
