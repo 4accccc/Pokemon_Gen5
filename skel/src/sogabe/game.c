@@ -34,7 +34,7 @@
 
 static	void	YT_MainGameAct(GAME_PARAM *gp);
 static	void	YT_ExitGame(GAME_PARAM *gp);
-static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID );
+static	void	YT_ClactResourceLoad( YT_CLACT_RES *clact_res, int flag, u32 heapID );
 static	int		YT_ReadyCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
 static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
@@ -175,7 +175,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,16,0,2);
 
 	//セルアクターリソース読み込み
-	YT_ClactResourceLoad(&gp->clact->res, gp->heapID);
+	YT_ClactResourceLoad(&gp->clact->res, gp->raster_flag, gp->heapID);
 
 	//ヨッシーキャラデータ読み込み
 	gp->yossy_bmp=GFL_BMP_LoadCharacter(0,NARC_yossyegg_yossy_birth_NCGR,0,gp->heapID);
@@ -546,7 +546,7 @@ static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps)
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
+static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, int flag, u32 heapID )
 {
 	BOOL result;
 	void* p_buff;
@@ -555,8 +555,12 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 	
 	// キャラクタデータ読み込み＆転送
 	{
-//		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
-		p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_SEA3_NCGR, heapID );
+		if(flag){
+			p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_SEA3_NCGR, heapID );
+		}
+		else{
+			p_buff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_O_WOODS3_NCGR, heapID );
+		}
 		result = NNS_G2dGetUnpackedCharacterData( p_buff, &p_char );
 		GF_ASSERT( result );
 		NNS_G2dInitImageProxy( &clact_res->imageproxy );
@@ -594,16 +598,24 @@ static void YT_ClactResourceLoad( YT_CLACT_RES *clact_res, u32 heapID )
 
 	// セルデータ読み込み
 	{
-//		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
-		clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NCER, heapID );
+		if(flag){
+			clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NCER, heapID );
+		}
+		else{
+			clact_res->p_cellbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NCER, heapID );
+		}
 		result = NNS_G2dGetUnpackedCellBank( clact_res->p_cellbuff, &clact_res->p_cell );
 		GF_ASSERT( result );
 	}
 
 	// セルアニメデータ読み込み
 	{
-//		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
-		clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NANR, heapID );
+		if(flag){
+			clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_umi_NANR, heapID );
+		}
+		else{
+			clact_res->p_cellanmbuff = GFL_ARC_LoadDataAlloc( 0,NARC_yossyegg_fall_obj_NANR, heapID );
+		}
 		result = NNS_G2dGetUnpackedAnimBank( clact_res->p_cellanmbuff, &clact_res->p_cellanm );
 		GF_ASSERT( result );
 	}
