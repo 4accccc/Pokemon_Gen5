@@ -46,8 +46,11 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
+#define	SOUND_HEAP_SIZE	(0x40000)
+
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;
+static	u8				sndHeap[SOUND_HEAP_SIZE];
 
 //=============================================================================================
 //
@@ -111,7 +114,7 @@ void GFLUser_Init(void)
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
     //サウンドシステム初期化
-    GFL_SOUND_Init();
+    GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
 	//バックアップシステム初期化
 	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
