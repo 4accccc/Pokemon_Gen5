@@ -24,7 +24,7 @@
 //	ワーク
 //=============================================================================================
 static	NNSSndArc			arc;
-static	u8					sndHeap[SOUND_HEAP_SIZE];
+//static	u8					sndHeap[SOUND_HEAP_SIZE];	//アプリごとに静的に確保してもらうように変更（サイズを可変にするため）
 static	NNSSndHeapHandle	heap;
 static	NNSSndHandle		sndHandle[SOUND_HANDLE_MAX];
 static	int					GFL_SOUND_seqarc_no=SOUND_SEQARC_NOLOAD;
@@ -39,14 +39,17 @@ static	int					cur_bgm_no;
 //--------------------------------------------------------------------------------------------
 /**
  * サウンド初期化
+ *
+ * @param	sndHeap		サウンドヒープへのポインタ（静的に確保することを推奨）
+ * @param	sndHeapSize	サウンドヒープのサイズ
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_SOUND_Init( void )
+void	GFL_SOUND_Init( u8 *sndHeap,int sndHeapSize )
 {
 	int	i;
 
 	NNS_SndInit();
-	heap=NNS_SndHeapCreate(&sndHeap,sizeof(sndHeap));
+	heap=NNS_SndHeapCreate(sndHeap,sndHeapSize);
 
 	for(i=0;i<SOUND_HANDLE_MAX;i++){
 		NNS_SndHandleInit(&sndHandle[i]);
