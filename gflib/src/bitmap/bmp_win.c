@@ -219,22 +219,39 @@ void	GFL_BMPWIN_TransVramCharacter( GFL_BMPWIN * bmpwin )
 //---------------------------------------------------------
 void	GFL_BMPWIN_MakeScreen( GFL_BMPWIN * bmpwin )
 {
-	u16*	scrnbuf;
-	u16		scrnsiz,scrnchr,scrnpal;
-	int		i;
+	void*		scrnbuf;
+	u16			scrnsiz,scrnchr,scrnpal;
+	int			i;
 
 	GF_ASSERT( bmpwin->magicnum == GFL_BMPWIN_MAGICNUM );
 
 	scrnsiz = bmpwin->sizx * bmpwin->sizy;
-	scrnbuf = (u16*)GFL_HEAP_AllocMemoryLo( bmpwin_sys->heapID, scrnsiz*2 );
 	scrnchr = bmpwin->chrnum;
 	scrnpal = (bmpwin->palnum << 12);
-				
-	for(i=0;i<scrnsiz;i++){
-		scrnbuf[i] = (scrnchr|scrnpal);
-		scrnchr++;
+
+	if( GFL_BG_GetBgMode( bmpwin->frmnum ) != GFL_BG_MODE_AFFINE ){
+		scrnbuf = GFL_HEAP_AllocMemoryLo( bmpwin_sys->heapID, scrnsiz*2 );
+		{
+			u16	*scrnbuf16=scrnbuf;
+
+			for(i=0;i<scrnsiz;i++){
+				scrnbuf16[i] = (scrnchr|scrnpal);
+				scrnchr++;
+			}
+		}
 	}
-	GFL_BG_WriteScreen( bmpwin->frmnum, scrnbuf, bmpwin->posx, bmpwin->posy, bmpwin->width, bmpwin->height );
+	else{
+		scrnbuf = GFL_HEAP_AllocMemoryLo( bmpwin_sys->heapID, scrnsiz );
+		{
+			u8	*scrnbuf8=scrnbuf;
+
+			for(i=0;i<scrnsiz;i++){
+				scrnbuf8[i] = scrnchr;
+				scrnchr++;
+			}
+		}
+	}
+//	GFL_BG_WriteScreen( bmpwin->frmnum, scrnbuf, bmpwin->posx, bmpwin->posy, bmpwin->width, bmpwin->height );
 	GFL_BG_WriteScreenExpand(  bmpwin->frmnum, bmpwin->posx, bmpwin->posy, bmpwin->width, bmpwin->height,
 							scrnbuf, 0, 0, bmpwin->sizx, bmpwin->sizy );
 
