@@ -64,6 +64,7 @@ extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
 extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID );
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
 extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
+extern void GFL_OBJGRP_GetPlttProxy( u32 index, NNSG2dImagePaletteProxy* proxy );
 
 extern GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );

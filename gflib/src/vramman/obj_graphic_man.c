@@ -608,8 +608,22 @@ void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy )
 	*proxy = SysWork.cgrMan[index].proxy;
 }
 
+//==============================================================================================
+/**
+ * パレットプロキシ取得
+ *
+ * @param   index		[in]  登録インデックス
+ * @param   proxy		[out] プロキシデータ取得のための構造体アドレス
+ *
+ */
+//==============================================================================================
+void GFL_OBJGRP_GetPlttProxy( u32 index, NNSG2dImagePaletteProxy* proxy )
+{
+	GF_ASSERT(index < SysWork.initParam.PLTT_RegisterMax);
+	GF_ASSERT(SysWork.plttMan[index].emptyFlag == FALSE);
 
-
+	*proxy = SysWork.plttMan[index].proxy;
+}
 
 
 
