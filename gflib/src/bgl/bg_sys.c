@@ -262,7 +262,6 @@ void	GFL_BG_FreeCharacterArea( u32 frmnum, u32 pos, u32 size )
 GFL_BG_INI * GFL_BG_GetBGL( void )
 {
 	GF_ASSERT(bgl!=NULL);
-
 	return bgl;
 }
 
