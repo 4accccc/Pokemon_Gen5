@@ -16,6 +16,8 @@
 //==============================================================================
 //	定数定義
 //==============================================================================
+#define	DEFAULT_PERSP_WAY	(8192)		//投射影の角度のデフォルト値（エディタの見た目に近い値）0x06c1
+
 //--------------------------------------------------------------
 //	Particle_ResourceSet関数のvram_free_mode
 //--------------------------------------------------------------
@@ -131,6 +133,8 @@ extern	void			GFL_PTC_DeleteEmitter(GFL_PTC_PTR psys, GFL_EMIT_PTR emit);
 extern	GFL_EMIT_PTR	GFL_PTC_GetTempEmitterPtr(GFL_PTC_PTR psys);
 extern	GFL_EMIT_PTR	GFL_PTC_CreateEmitterCallback(GFL_PTC_PTR psys, int res_no, pEmitFunc callback, void *temp_ptr);
 extern	void			*GFL_PTC_GetHeapPtr(GFL_PTC_PTR psys);
+extern	void			GFL_PTC_PersonalCameraCreate(GFL_PTC_PTR psys,GFL_G3D_PROJECTION *proj,u16 persp_way,VecFx32 *Eye,VecFx32 *Up,VecFx32 *At,int heap_id);
+extern	void			GFL_PTC_PersonalCameraDelete(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_GetEye(GFL_PTC_PTR psys, VecFx32 *eye);
 extern	void			GFL_PTC_SetEye(GFL_PTC_PTR psys, const VecFx32 *eye);
 extern	void			GFL_PTC_GetVup(GFL_PTC_PTR psys, VecFx32 *up);
