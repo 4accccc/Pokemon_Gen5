@@ -387,6 +387,8 @@ GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int 
 	
 	//カメラ設定
 	if(personal_camera == TRUE){
+		GFL_PTC_PersonalCameraCreate(psys,NULL,DEFAULT_PERSP_WAY,NULL,NULL,NULL,heap_id);
+/*
 		VEC_Set(&psys->vec, 0, 0, 0);
 		psys->persp_way = 8192;//0x06c1;
 		psys->camera_type = GFL_G3D_PRJPERS;
@@ -402,6 +404,7 @@ GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int 
 											 &DefaultUp,
 											 &DefaultAt,
 											 heap_id);
+*/
 //		GFL_G3D_CAMERA_Switching(psys->camera);
 	}
 
@@ -1345,6 +1348,81 @@ GFL_EMIT_PTR GFL_PTC_GetTempEmitterPtr(GFL_PTC_PTR psys)
 void * GFL_PTC_GetHeapPtr(GFL_PTC_PTR psys)
 {
 	return psys->heap_start;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   パーティクルシステム独自カメラの生成
+ *
+ * @param   psys		パーティクルシステムワークへのポインタ
+ * @param   proj		カメラのパラメータ構造体へのポインタ（NULLだとデフォルトを設定）
+ * @param   persp_way	投射影の角度（DEFAULT_PERSP_WAYでエディタ上での見た目に近くなります）
+ * @param   Eye			カメラの位置ベクトル（NULLでデフォルト）
+ * @param   Up			カメラの上方向のベクトル（NULLでデフォルト）
+ * @param   At			カメラの焦点へのベクトル（NULLでデフォルト）
+ * @param	heap_id		使用するヒープID
+ */
+//--------------------------------------------------------------
+void	GFL_PTC_PersonalCameraCreate(GFL_PTC_PTR psys,GFL_G3D_PROJECTION *proj,u16 persp_way,VecFx32 *Eye,VecFx32 *Up,VecFx32 *At,int heap_id)
+{
+	GF_ASSERT( psys->camera == NULL );
+	
+	VEC_Set(&psys->vec, 0, 0, 0);
+	psys->persp_way = persp_way;
+
+	if( Eye == NULL ){
+		Eye = (VecFx32 *)&DefaultEye;
+	}
+	if( Up == NULL ){
+		Up = (VecFx32 *)&DefaultUp;
+	}
+	if( At == NULL){
+		At = (VecFx32 *)&DefaultAt;
+	}
+
+	if(proj){
+		psys->camera_type = proj->type;
+		psys->camera = GFL_G3D_CAMERA_Create(proj->type,
+											 proj->param1,
+											 proj->param2,
+											 proj->param3,
+											 proj->param4,
+											 proj->near,
+											 proj->far,
+											 proj->scaleW,
+											 Eye,
+											 Up,
+											 At,
+											 heap_id);
+	}
+	else{
+		psys->camera_type = GFL_G3D_PRJPERS;
+		psys->camera = GFL_G3D_CAMERA_Create(GFL_G3D_PRJPERS,
+											 FX32_SIN45,
+											 FX32_COS45,
+											 FX32_ONE*4/3,
+											 NULL,
+											 FX32_ONE,
+											 FX32_ONE*900,
+											 NULL,
+											 Eye,
+											 Up,
+											 At,
+											 heap_id);
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   パーティクルシステム独自カメラの破棄
+ */
+//--------------------------------------------------------------
+void	GFL_PTC_PersonalCameraDelete(GFL_PTC_PTR psys)
+{
+	GF_ASSERT(psys->camera);
+
+	GFL_G3D_CAMERA_Delete(psys->camera);
+	psys->camera=NULL;
 }
 
 //--------------------------------------------------------------
