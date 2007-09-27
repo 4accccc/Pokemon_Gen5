@@ -37,6 +37,7 @@ static void PrintShortHeap( HEAPID heapID, u32 size, const char* filename, u32 l
 static void PrintAllocInfo( void* memory, u32 size );
 static void PrintFreeInfo( void* memory );
 static void PrintDebugAllocInfo( HEAPID heapID, void* memory, u32 size );
+static void PrintDebugFreeInfo( void* memory );
 #endif
 
 //----------------------------------------------------------------
@@ -258,7 +259,13 @@ void
 	GFL_HEAP_FreeMemoryblock
 		( void* memory )
 {
-	BOOL result = GFI_HEAP_FreeMemory( memory );
+	BOOL result;
+
+	#ifdef HEAPSYS_DEBUG
+	PrintDebugFreeInfo( memory );
+	#endif
+
+	result = GFI_HEAP_FreeMemory( memory );
 
 	if( result == FALSE )
 	{
@@ -517,6 +524,7 @@ static void PrintAllocInfo( void* memory, u32 size )
 //------------------------------------------------------------------
 /**
  * メモリ解放時の詳細情報表示
+ * ※この関数はメモリ解放前に呼び出す
  *
  * @param   heapID			ヒープID
  * @param   size			確保したサイズ
@@ -561,6 +569,26 @@ static void PrintDebugAllocInfo( HEAPID heapID, void* memory, u32 size )
 	if( DebugPrintHeapID >= 0 && heapID == DebugPrintHeapID )
 	{
 		PrintAllocInfo( memory, size );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * デバッグ対象のヒープIDであれば、メモリ開放後の情報出力を行う
+ * ※この関数はメモリ解放前に呼び出す
+ *
+ * @param   heapID		
+ * @param   memory		
+ *
+ */
+//------------------------------------------------------------------
+static void PrintDebugFreeInfo( void* memory )
+{
+	HEAPID	heapID = GFI_HEAP_GetMemheaderHeapID( memory );
+
+	if( DebugPrintHeapID >= 0 && heapID == DebugPrintHeapID )
+	{
+		PrintFreeInfo( memory );
 	}
 }
 
