@@ -962,12 +962,12 @@ extern void GFL_CLACT_WK_SetPlttOffs( GFL_CLWK* p_wk, u8 pal_offs );
 extern u8 GFL_CLACT_WK_GetPlttOffs( const GFL_CLWK* cp_wk );
 //----------------------------------------------------------------------------
 /**
- *	@brief	パレットプロクシのアドレス取得
+ *	@brief	パレットプロクシのVRAMオフセットアドレス取得
  *
  *	@param	cp_wk		セルアクターワーク
  *	@param	type		描画タイプ
  *
- *	@retval	CLWK_VRAM_ADDR_NONE以外	パレットVramアドレス
+ *	@retval	CLWK_VRAM_ADDR_NONE以外	パレットVRAMオフセットアドレス
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
@@ -992,12 +992,12 @@ extern void GFL_CLACT_WK_SetPlttProxy( GFL_CLWK* p_wk, const NNSG2dImagePaletteP
 extern void GFL_CLACT_WK_GetPlttProxy( const GFL_CLWK* cp_wk,  NNSG2dImagePaletteProxy* p_pltt );
 //----------------------------------------------------------------------------
 /**
- *	@brief	キャラクタデータVramアドレスを取得
+ *	@brief	キャラクタデータVRAMオフセットアドレスを取得
  *
  *	@param	cp_wk		セルアクターワーク
  *	@param	type		描画タイプ
  *
- *	@retval	CLWK_VRAM_ADDR_NONE以外	キャラクタVramアドレス
+ *	@retval	CLWK_VRAM_ADDR_NONE以外	キャラクタのVRAMオフセットアドレス
  *	@retval	CLWK_VRAM_ADDR_NONE		読み込まれていない
  */
 //-----------------------------------------------------------------------------
