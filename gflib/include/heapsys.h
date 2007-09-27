@@ -267,6 +267,10 @@ extern void GFL_HEAP_DEBUG_PrintExistMemoryBlocks ( HEAPID heapID );
 //------------------------------------------------------------------
 u32 GFL_HEAP_DEBUG_GetMemoryBlockSize ( const void* memory );
 
+
+extern void GFL_HEAP_DEBUG_StartPrint( HEAPID heapID );
+extern void GFL_HEAP_DEBUG_EndPrint( void );
+
 #endif
 
 

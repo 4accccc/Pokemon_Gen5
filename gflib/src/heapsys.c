@@ -36,7 +36,18 @@ static void SetHeaderDebugParam( void* memory, const char* filename, u16 lineNum
 static void PrintShortHeap( HEAPID heapID, u32 size, const char* filename, u32 linenum );
 static void PrintAllocInfo( void* memory, u32 size );
 static void PrintFreeInfo( void* memory );
+static void PrintDebugAllocInfo( HEAPID heapID, void* memory, u32 size );
 #endif
+
+//----------------------------------------------------------------
+/**
+ *	グローバル
+ */
+//----------------------------------------------------------------
+#ifdef HEAPSYS_DEBUG
+static int DebugPrintHeapID = -1;	///< 有効なヒープIDがセットされていたら詳細なデバッガ出力を行う
+#endif
+
 
 //----------------------------------------------------------------
 /**
@@ -227,6 +238,7 @@ void*
 	} else {
 		#ifdef HEAPSYS_DEBUG
 		SetHeaderDebugParam( memory, filename, linenum );
+		PrintDebugAllocInfo( heapID, memory, size );
 		#endif
 	}
 	//↓必要に応じて情報の表示をする（呼び出される回数が多いのでDefaultでは表示しない）
@@ -534,6 +546,24 @@ static void PrintFreeInfo( void* memory )
 				filename, header->lineNum );
 }
 
+//------------------------------------------------------------------
+/**
+ * デバッグ対象のヒープIDであれば、メモリアロケート後の情報出力を行う
+ *
+ * @param   heapID		
+ * @param   memory		
+ * @param   size		
+ *
+ */
+//------------------------------------------------------------------
+static void PrintDebugAllocInfo( HEAPID heapID, void* memory, u32 size )
+{
+	if( DebugPrintHeapID >= 0 && heapID == DebugPrintHeapID )
+	{
+		PrintAllocInfo( memory, size );
+	}
+}
+
 //----------------------------------------------------------------
 /**
  *	デバッグ用関数（グローバル）
@@ -601,6 +631,33 @@ u32 GFL_HEAP_DEBUG_GetMemoryBlockSize( const void* memory )
 	((u8*)memory) -= MEMHEADER_SIZE;
 	return NNS_FndGetSizeForMBlockExpHeap( memory );
 }
+
+//------------------------------------------------------------------
+/**
+ * 特定ヒープに対するメモリ状況のデバッガ出力を開始する
+ *
+ * @param   heapID	対象ヒープID
+ *
+ */
+//------------------------------------------------------------------
+void GFL_HEAP_DEBUG_StartPrint( HEAPID heapID )
+{
+	DebugPrintHeapID = heapID;
+}
+
+//------------------------------------------------------------------
+/**
+ * 特定ヒープに対するメモリ状況のデバッガ出力を停止する
+ *
+ * @param   heapID	対象ヒープID
+ *
+ */
+//------------------------------------------------------------------
+void GFL_HEAP_DEBUG_EndPrint( void )
+{
+	DebugPrintHeapID = -1;
+}
+
 
 #endif
 
