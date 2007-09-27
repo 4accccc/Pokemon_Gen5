@@ -24,10 +24,10 @@
 #define WM_ICON_CHAR_OFFSET32  ( (1024-16)*32 )	
 //OBJ64Kモードの時
 #define WM_ICON_CHAR_OFFSET64 ( (2048-16)*32 )	
-//OBJ128Kモードの時
-#define WM_ICON_CHAR_OFFSET128 ( (4096-16)*32 )	
 //OBJ80Kモードの時
 #define WM_ICON_CHAR_OFFSET80 ( (2560-16)*32 )	
+//OBJ128Kモードの時
+#define WM_ICON_CHAR_OFFSET128 ( (4096-16)*32 )	
 
 // -----------------------------------------------
 // 管理用構造体定義

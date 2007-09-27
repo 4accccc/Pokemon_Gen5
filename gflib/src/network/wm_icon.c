@@ -208,37 +208,31 @@ static int calc_anime_index( int targetVram, int anime_ptn )
 
 	if( targetVram == NNS_G2D_VRAM_TYPE_2DMAIN )
 	{
-		vramMode = GX_GetOBJVRamModeChar();
 		bank = GX_GetBankForOBJ();
 	}
 	else
 	{
-		vramMode = GXS_GetOBJVRamModeChar();
 		bank = GX_GetBankForSubOBJ();
 	}
-
-	switch( vramMode ){
-	case GX_OBJVRAMMODE_CHAR_1D_32K:
-		if( (bank == GX_VRAM_OBJ_16_G) || (bank == GX_VRAM_OBJ_16_F) )
-		{
-			return 512-16+4*anime_ptn;
-		}
-		else
-		{
-			return 1024-16+4*anime_ptn;
-		}
-	case GX_OBJVRAMMODE_CHAR_1D_128K:
-		if( (bank == GX_VRAM_OBJ_80_EF) || (bank == GX_VRAM_OBJ_80_EG) )
-		{
-			return 640-4+1*anime_ptn;
-		}
-		else
-		{
-			return 1024-4+1*anime_ptn;
-		}
-	default:
+	switch( bank ){
+      case GX_VRAM_OBJ_16_F:  	//OBJに16KBytes確保します。VRAM-Fを割り当てます。
+      case GX_VRAM_OBJ_16_G: 	//OBJに16KBytes確保します。VRAM-Gを割り当てます。
+        return 512-16+4*anime_ptn;
+      case GX_VRAM_OBJ_32_FG: 	//OBJに32KBytes確保します。VRAM-F,Gを割り当てます。
+        return 1024-16+4*anime_ptn;
+      case GX_VRAM_OBJ_64_E: 	//OBJに64KBytes確保します。VRAM-Eを割り当てます。
+		return 512-8+2*anime_ptn;
+      case GX_VRAM_OBJ_80_EF: 	//OBJに80KBytes確保します。VRAM-E,Fを割り当てます。
+      case GX_VRAM_OBJ_80_EG: 	//OBJに80KBytes確保します。VRAM-E,Gを割り当てます。
+        return 640-4+1*anime_ptn;
+      case GX_VRAM_OBJ_96_EFG: 	//OBJに96KBytes確保します。VRAM-E,F,Gを割り当てます。
+      case GX_VRAM_OBJ_128_A: 	//OBJに128KBytes確保します。VRAM-Aを割り当てます。
+      case GX_VRAM_OBJ_128_B: 	//OBJに128KBytes確保します。VRAM-Bを割り当てます。
+        return 1024-4+1*anime_ptn;
+      case GX_VRAM_OBJ_256_AB: 	//OBJに256KBytes確保します。VRAM-A,Bを割り当てます。
+      default:
 		return 1024-8+2*anime_ptn;
-	}
+    }
 }
 //------------------------------------------------------------------
 /**
@@ -358,33 +352,35 @@ static int _getCharOffset(int vramType)
     
     // VRAM設定に合わせて転送位置を決定
     if( vramType == NNS_G2D_VRAM_TYPE_2DMAIN ){
-        vramMode = GX_GetOBJVRamModeChar();
         objBank = GX_GetBankForOBJ();
     }
     else{
-        vramMode = GXS_GetOBJVRamModeChar();
-        objBank = GX_GetBankForOBJ();
+        objBank = GX_GetBankForSubOBJ();
     }
-    switch( vramMode ){
-      case GX_OBJVRAMMODE_CHAR_1D_32K:
-        if( objBank==GX_VRAM_OBJ_16_G || objBank==GX_VRAM_OBJ_16_F ) {
-            offset = WM_ICON_CHAR_OFFSET16;
-        }
-        else{
-            offset = WM_ICON_CHAR_OFFSET32;
-        }
+
+	switch( objBank ){
+      case GX_VRAM_OBJ_16_F:  	//OBJに16KBytes確保します。VRAM-Fを割り当てます。
+      case GX_VRAM_OBJ_16_G: 	//OBJに16KBytes確保します。VRAM-Gを割り当てます。
+        offset = WM_ICON_CHAR_OFFSET16;
         break;
-      case GX_OBJVRAMMODE_CHAR_1D_128K:
-        if( objBank==GX_VRAM_OBJ_80_EF || objBank==GX_VRAM_OBJ_80_EG ) {
-            offset = WM_ICON_CHAR_OFFSET80;
-        }
-        else {
-            offset = WM_ICON_CHAR_OFFSET128;
-        }
+      case GX_VRAM_OBJ_32_FG: 	//OBJに32KBytes確保します。VRAM-F,Gを割り当てます。
+        offset = WM_ICON_CHAR_OFFSET32;
         break;
-      default:
+      case GX_VRAM_OBJ_64_E: 	//OBJに64KBytes確保します。VRAM-Eを割り当てます。
         offset = WM_ICON_CHAR_OFFSET64;
         break;
+      case GX_VRAM_OBJ_80_EF: 	//OBJに80KBytes確保します。VRAM-E,Fを割り当てます。
+      case GX_VRAM_OBJ_80_EG: 	//OBJに80KBytes確保します。VRAM-E,Gを割り当てます。
+        offset = WM_ICON_CHAR_OFFSET80;
+        break;
+      case GX_VRAM_OBJ_96_EFG: 	//OBJに96KBytes確保します。VRAM-E,F,Gを割り当てます。
+      case GX_VRAM_OBJ_128_A: 	//OBJに128KBytes確保します。VRAM-Aを割り当てます。
+      case GX_VRAM_OBJ_128_B: 	//OBJに128KBytes確保します。VRAM-Bを割り当てます。
+        offset = WM_ICON_CHAR_OFFSET128;
+        break;
+      case GX_VRAM_OBJ_256_AB: 	//OBJに256KBytes確保します。VRAM-A,Bを割り当てます。
+      default:
+        offset = WM_ICON_CHAR_OFFSET64;
     }
     return offset;
 }
