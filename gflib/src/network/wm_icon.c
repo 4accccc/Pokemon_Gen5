@@ -221,7 +221,7 @@ static int calc_anime_index( int targetVram, int anime_ptn )
       case GX_VRAM_OBJ_32_FG: 	//OBJに32KBytes確保します。VRAM-F,Gを割り当てます。
         return 1024-16+4*anime_ptn;
       case GX_VRAM_OBJ_64_E: 	//OBJに64KBytes確保します。VRAM-Eを割り当てます。
-		return 512-8+2*anime_ptn;
+		return 512-4+1*anime_ptn;
       case GX_VRAM_OBJ_80_EF: 	//OBJに80KBytes確保します。VRAM-E,Fを割り当てます。
       case GX_VRAM_OBJ_80_EG: 	//OBJに80KBytes確保します。VRAM-E,Gを割り当てます。
         return 640-4+1*anime_ptn;
@@ -274,7 +274,7 @@ static inline void clear_oam( GXOamAttr* oam )
 //==============================================================================
 static void WirelessIconAnimeChange(VINTR_WIRELESS_ICON *vwi, int anime)
 {
-	// アニメチェンジ
+    // アニメチェンジ
 	if(anime<WM_ICON_ANIME_MAX)
 	{
 		vwi->anime = anime;
