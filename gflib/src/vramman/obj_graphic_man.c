@@ -390,7 +390,6 @@ void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx
 		GFL_HEAP_FreeMemory( srcLoadPtr );
 	}
 
-
 }
 
 
@@ -406,9 +405,9 @@ void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx
 void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index )
 {
 	GF_ASSERT(SysWork.cgrMan[index].emptyFlag == FALSE);
-	GF_ASSERT(SysWork.cgrMan[index].loadPtr != NULL);
+	GF_ASSERT(SysWork.cgrMan[index].g2dCharData != NULL);
 
-	return SysWork.cgrMan[index].loadPtr;
+	return SysWork.cgrMan[index].g2dCharData->pRawData;
 }
 
 //==============================================================================================
