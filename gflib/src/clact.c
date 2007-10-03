@@ -1830,6 +1830,16 @@ void GFL_CLACT_WK_SetPlttProxy( GFL_CLWK* p_wk, const NNSG2dImagePaletteProxy* c
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_pltt );
 	//OS_Printf( "[%d]\n", __LINE__ );
+	
+	// 値が入っているかチェック
+	{
+		BOOL main_plttproxy;
+		BOOL sub_plttproxy;
+		main_plttproxy	= NNS_G2dIsImagePaletteReadyToUse( cp_pltt, NNS_G2D_VRAM_TYPE_2DMAIN );
+		sub_plttproxy	= NNS_G2dIsImagePaletteReadyToUse( cp_pltt, NNS_G2D_VRAM_TYPE_2DSUB );
+		GF_ASSERT( ((main_plttproxy == TRUE) || (sub_plttproxy == TRUE)) );
+	}
+	
 	p_wk->pltt_proxy = *cp_pltt;
 }
 
@@ -1889,6 +1899,17 @@ void GFL_CLACT_WK_SetImgProxy( GFL_CLWK* p_wk, const NNSG2dImageProxy* cp_img )
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_img );
 	//OS_Printf( "[%d]\n", __LINE__ );
+	
+
+	// 値が入っているかチェック
+	{
+		BOOL main_imgproxy;
+		BOOL sub_imgproxy;
+		main_imgproxy	= NNS_G2dIsImageReadyToUse( cp_img, NNS_G2D_VRAM_TYPE_2DMAIN );
+		sub_imgproxy	= NNS_G2dIsImageReadyToUse( cp_img, NNS_G2D_VRAM_TYPE_2DSUB );
+		GF_ASSERT( ((main_imgproxy == TRUE) || (sub_imgproxy == TRUE)) );
+	}
+	
 	p_wk->img_proxy = *cp_img;
 }
 
@@ -3937,8 +3958,8 @@ static void CLWK_SysSetClwkRes( GFL_CLWK* p_wk, const GFL_CLWK_RES* cp_res )
 {
 	GF_ASSERT( p_wk );
 	GF_ASSERT( cp_res );
-	p_wk->img_proxy = *cp_res->cp_img;
-	p_wk->pltt_proxy = *cp_res->cp_pltt;
+	GFL_CLACT_WK_SetImgProxy( p_wk, cp_res->cp_img );
+	GFL_CLACT_WK_SetPlttProxy( p_wk, cp_res->cp_pltt );
 }
 
 //----------------------------------------------------------------------------
