@@ -202,10 +202,6 @@ void GFL_ARC_UTIL_TransVramScreenCharOfs(u32 arcID, u32 datID, u32 frm, u32 offs
 				transSize = scrnData->szByte;
 			}
 
-			if( GFL_BG_GetScreenBufferAdrs( frm ) != NULL )
-			{
-				GFL_BG_LoadScreenBuffer( frm, scrnData->rawData, transSize );
-			}
 			if(chr_ofs){
 				if(GFL_BG_GetScreenColorMode(frm) == GX_BG_COLORMODE_16 ){
 					{
@@ -232,6 +228,12 @@ void GFL_ARC_UTIL_TransVramScreenCharOfs(u32 arcID, u32 datID, u32 frm, u32 offs
 					}
 				}
 			}
+
+			if( GFL_BG_GetScreenBufferAdrs( frm ) != NULL )
+			{
+				GFL_BG_LoadScreenBuffer( frm, scrnData->rawData, transSize );
+			}
+
 			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
 		}
 		GFL_HEAP_FreeMemory( arcData );
