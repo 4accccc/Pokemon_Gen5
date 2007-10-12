@@ -352,7 +352,7 @@ static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea,
 
 				if( OpenFwdCount[ man->area[bytePos+1] ] >= rem )
 				{
-					returnPos = bytePos*8 + (8-rem);
+					returnPos = bytePos*8 + (8-OpenBackCount[ man->area[bytePos] ]);
 					break;
 				}
 			}
@@ -905,7 +905,19 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 		rem = (blockNum - start_bit_count) % 8;
 	}
 
-	GF_ASSERT((man->area[pos] & start_bit) == 0);
+
+	if( (man->area[pos] & start_bit) != 0 )
+	{
+		#ifdef AREAMAN_DEBUG
+		OS_TPrintf("pos=%d, start_bit=");
+		print_bit( start_bit );
+		OS_TPrintf(" area=");
+		print_bit( man->area[pos] );
+		#endif
+
+		GF_ASSERT(0);
+	}
+
 
 	man->area[pos++] |= start_bit;
 	while( bytes-- )
