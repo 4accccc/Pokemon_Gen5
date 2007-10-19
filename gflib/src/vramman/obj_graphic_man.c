@@ -486,36 +486,6 @@ u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animD
 }
 //==============================================================================================
 /**
- * 登録済みセルアニメデータ領域を別のデータで上書き
- *
- * @param   index			登録インデックス
- * @param   arcHandle		アーカイブハンドル
- * @param   cellDataID		セルデータID
- * @param   animDataID		アニメデータID
- * @param   heapID			ヒープID
- *
- */
-//==============================================================================================
-void GFL_OBJGRP_ReloadCellAnim( u32 index, ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID )
-{
-	GF_ASSERT( index < SysWork.initParam.CELL_RegisterMax );
-	GF_ASSERT( SysWork.cellAnimMan[index].emptyFlag == FALSE );
-
-	{
-		CELLANIM_MAN* man = &SysWork.cellAnimMan[index];
-
-		man->cellLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, cellDataID, heapID );
-		man->animLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, animDataID, heapID );
-
-		if( register_cellanim( index, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
-		{
-			GF_ASSERT(0);
-		}
-	}
-
-}
-//==============================================================================================
-/**
  * 登録されたセルアニメデータの解放
  *
  * @param   index		[in] 登録インデックス
@@ -696,7 +666,6 @@ GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttInd
 	GF_ASSERT( SysWork.cgrMan[cgrIndex].emptyFlag == FALSE );
 	GF_ASSERT_MSG( SysWork.plttMan[plttIndex].emptyFlag == FALSE, "plttIndex=%d", plttIndex );
 	GF_ASSERT( SysWork.cellAnimMan[cellAnimIndex].emptyFlag == FALSE );
-
 
 	{
 		GFL_CLWK_RES     clactRes;

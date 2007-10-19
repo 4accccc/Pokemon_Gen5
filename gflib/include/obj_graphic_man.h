@@ -59,7 +59,6 @@ extern void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cg
 extern void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index );
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
 extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID );
-extern void GFL_OBJGRP_ReloadCellAnim( u32 index, ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
 extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
 extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID );
