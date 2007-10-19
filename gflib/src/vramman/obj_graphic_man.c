@@ -468,21 +468,51 @@ void GFL_OBJGRP_ReleaseCGR( u32 index )
 //==============================================================================================
 u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID )
 {
-	u32 idx = search_empty_cellanim_pos();
+	u32 index = search_empty_cellanim_pos();
 
 	{
-		CELLANIM_MAN* man = &SysWork.cellAnimMan[idx];
+		CELLANIM_MAN* man = &SysWork.cellAnimMan[index];
 
 		man->cellLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, cellDataID, heapID );
 		man->animLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, animDataID, heapID );
 
-		if( register_cellanim( idx, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
+		if( register_cellanim( index, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
 		{
 			GF_ASSERT(0);
 		}
 
-		return idx;
+		return index;
 	}
+}
+//==============================================================================================
+/**
+ * 登録済みセルアニメデータ領域を別のデータで上書き
+ *
+ * @param   index			登録インデックス
+ * @param   arcHandle		アーカイブハンドル
+ * @param   cellDataID		セルデータID
+ * @param   animDataID		アニメデータID
+ * @param   heapID			ヒープID
+ *
+ */
+//==============================================================================================
+void GFL_OBJGRP_ReloadCellAnim( u32 index, ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID )
+{
+	GF_ASSERT( index < SysWork.initParam.CELL_RegisterMax );
+	GF_ASSERT( SysWork.cellAnimMan[index].emptyFlag == FALSE );
+
+	{
+		CELLANIM_MAN* man = &SysWork.cellAnimMan[index];
+
+		man->cellLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, cellDataID, heapID );
+		man->animLoadPtr = GFL_ARC_LoadDataAllocByHandle( arcHandle, animDataID, heapID );
+
+		if( register_cellanim( index, man->cellLoadPtr, man->animLoadPtr ) == FALSE )
+		{
+			GF_ASSERT(0);
+		}
+	}
+
 }
 //==============================================================================================
 /**
