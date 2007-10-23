@@ -165,6 +165,11 @@ void	YT_MainTitle(GAME_PARAM *gp)
 			gp->raster_flag=1;
 			gp->seq_no++;
 		}
+		//FRAME_NUMを指定してVRAMクリアの実験
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+//			GFL_BG_ClearFrame(GFL_BG_FRAME3_M);
+//			GFL_DISP_ClearVRAM();
+		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){ // Lボタンが押された
             YT_NET_Init(gp, FALSE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_CHILD;

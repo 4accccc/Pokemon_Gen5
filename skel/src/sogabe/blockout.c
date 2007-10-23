@@ -1692,6 +1692,9 @@ static	BOOL	CollisionCheck(BLOCK_OUT *bo,int ofs_x,int ofs_y,int ofs_z,int dir);
 static	void	BlockLanding(BLOCK_OUT *bo);
 static	void	SurfaceCheck(BLOCK_OUT *bo);
 
+void	YT_InitBlockOut(GAME_PARAM *gp);
+void	YT_MainBlockOut(GAME_PARAM *gp);
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	3Dèâä˙âª
