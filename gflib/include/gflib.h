@@ -41,6 +41,7 @@
 #include "ui.h"
 
 #include "clact.h"
+#include "obj_graphic_man.h"
 #include "tcb.h"
 
 #include "double3Ddisp.h"
