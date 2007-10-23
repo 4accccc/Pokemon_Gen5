@@ -20,6 +20,26 @@ static	int				SubVisiblePlane;
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
+ * 描画にかかわるVRAMのオールクリア
+ *
+ * @brief	内部でVRAM割り当てをLCDCに変更してクリアするので、
+ *			この関数を呼んだ後に、GFL_DISP_SetBankでVRAMの再割り当てをおこなう必要があります
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_DISP_ClearVRAM( void )
+{
+	//VRAMクリア
+	GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+	MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+	(void)GX_DisableBankForLCDC();
+	MI_CpuFillFast((void *)HW_OAM, 192, HW_OAM_SIZE);			// clear OAM
+	MI_CpuClearFast((void *)HW_PLTT, HW_PLTT_SIZE);				// clear the standard palette
+	MI_CpuFillFast((void *)HW_DB_OAM, 192, HW_DB_OAM_SIZE);		// clear OAM
+	MI_CpuClearFast((void *)HW_DB_PLTT, HW_DB_PLTT_SIZE);		// clear the standard palette
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * ＶＲＡＭバンク全体設定
  *
  * @param	data	設定データ
