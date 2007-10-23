@@ -923,10 +923,7 @@ BOOL
 		if( NNS_GfdFreePlttVram( plttKey ) ){
 			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
 		}
-		if( NNS_GfdFreeLnkTexVram( tex4x4Key )){
-			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
-		}
-		if( NNS_GfdFreeLnkTexVram( texKey )){
+		if( NNS_GfdFreeLnkTexVram( tex4x4Key )&& NNS_GfdFreeLnkTexVram( texKey ) ){
 			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
 		}
 		return TRUE;
