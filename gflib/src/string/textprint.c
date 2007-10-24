@@ -13,6 +13,15 @@
 
 //------------------------------------------------------------------
 /**
+ * define定義
+ */
+//------------------------------------------------------------------
+
+#define	FONT_SIZE_X	(8)
+#define	FONT_SIZE_Y	(8)
+
+//------------------------------------------------------------------
+/**
  * ワーク構造体
  */
 //------------------------------------------------------------------
@@ -100,7 +109,9 @@ void
 	GFL_FONT_SetColor( param->colorF, param->colorB );
 
 	//フォントビットマップ情報作成
-	bmpfont = GFL_BMP_CreateWithData( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
+	//GFL_FONT_GetDataが呼ばれないとtw->fdata.sizexが不定のため、固定値に変更
+//	bmpfont = GFL_BMP_CreateWithData( &tw->fdata.data[0], tw->fdata.sizex, sizemaxY, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
+	bmpfont = GFL_BMP_CreateWithData( &tw->fdata.data[0], FONT_SIZE_X, FONT_SIZE_Y, GFL_BMP_16_COLOR, GFL_HEAPID_SYSTEM );
 	EOMCode = GFL_STR_GetEOMCode();
 	//フォントデータ取得
 	while( (fcode = *textcode ) != EOMCode ) 
