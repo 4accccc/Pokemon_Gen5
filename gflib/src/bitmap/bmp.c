@@ -27,19 +27,19 @@ struct _GFL_BMP_DATA{
 	u16	create_flag;	///<BMPCreate方法フラグ（GFL_BMP_NORMAL:GFL_BMP_Create　GFL_BMP_WITH_DATA:GFL_BMP_CreateWithData）
 };
 
-static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
 
-static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col );
 
 static	void GFL_BMP_Fill16(
 		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
+		s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
 static	void GFL_BMP_Fill256(
 		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
+		s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
 //=============================================================================================
 //=============================================================================================
@@ -240,7 +240,7 @@ GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	//srcとdestのカラーモードに相違があったら、アサートで止める
@@ -270,7 +270,7 @@ void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u
 //--------------------------------------------------------------------------------------------
 void GFL_BMP_Fill(
 		GFL_BMP_DATA * dest,
-		u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+		s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	if(dest->col==GFL_BMP_16_COLOR){
 		GFL_BMP_Fill16( dest, pos_dx, pos_dy, size_x, size_y, col_code );
@@ -354,7 +354,7 @@ void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code )
 	((u32)((pos_y << 3)&0x00000038))			\
 	)
 
-static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col )
 {
 	int	sx, dx, sy, dy, src_dat, shiftval, x_max, y_max, srcxarg, dstxarg;
@@ -378,26 +378,45 @@ static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 
 	if(nuki_col==GF_BMPPRT_NOTNUKI){	//抜き色指定なし
 		for(sy=SRC_POSY, dy=DST_POSY; sy < y_max; sy++, dy++){
 			for(sx=SRC_POSX, dx=DST_POSX; sx < x_max; sx++, dx++){
-				srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
-				dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
+				if( ( dx >= 0 ) && ( dy >= 0)){
+
+					//サイズオーバーがあったらアサートで止める
+					GF_ASSERT( sx < src->size_x);
+					GF_ASSERT( sy < src->size_y);
+					GF_ASSERT( dx < dest->size_x);
+					GF_ASSERT( dy < dest->size_y);
+
+					srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
+					dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
 	
-				src_dat = (*srcadrs >> ((sx & 1)*4)) & 0x0f;
-				shiftval = (dx & 1)*4;
-				*dstadrs = (u8)((src_dat << shiftval)|(*dstadrs & (0xf0 >> shiftval)));
+					src_dat = (*srcadrs >> ((sx & 1)*4)) & 0x0f;
+					shiftval = (dx & 1)*4;
+					*dstadrs = (u8)((src_dat << shiftval)|(*dstadrs & (0xf0 >> shiftval)));
+				}
 			}
 		}
 	}else{				//抜き色指定あり
 		for(sy=SRC_POSY, dy=DST_POSY; sy < y_max; sy++, dy++){
 			for(sx=SRC_POSX, dx=DST_POSX; sx < x_max; sx++, dx++){
-				srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
-				dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
+				if( ( dx >= 0 ) && ( dy >= 0)){
+
+					//サイズオーバーがあったらアサートで止める
+					GF_ASSERT( sx < src->size_x);
+					GF_ASSERT( sy < src->size_y);
+					GF_ASSERT( dx < dest->size_x);
+					GF_ASSERT( dy < dest->size_y);
+
+					srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
+					dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
 	
-				src_dat = (*srcadrs >> ((sx & 1)*4)) & 0x0f;
+					src_dat = (*srcadrs >> ((sx & 1)*4)) & 0x0f;
 	
-//				if(src_dat != NULLPAL_L){
-				if(src_dat){
-					shiftval = (dx & 1)*4;
-					*dstadrs = (u8)((src_dat << shiftval)|(*dstadrs & (0xf0 >> shiftval)));
+//					if(src_dat != NULLPAL_L){
+					if(src_dat){
+						shiftval = (dx & 1)*4;
+						*dstadrs = (u8)((src_dat << shiftval)|(*dstadrs & (0xf0 >> shiftval)));
+					}
+//					}
 				}
 			}
 		}
@@ -423,7 +442,7 @@ static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 		u16 size_x, u16 size_y, u16 nuki_col )
 {
 	int	sx, dx, sy, dy, x_max, y_max, srcxarg, dstxarg;
@@ -447,18 +466,36 @@ static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16
 	if( nuki_col == GF_BMPPRT_NOTNUKI ){	//抜き色指定なし
 		for( sy=SRC_POSY, dy=DST_POSY; sy<y_max; sy++, dy++ ){
 			for( sx=SRC_POSX, dx=DST_POSX; sx<x_max; sx++, dx++ ){
-				srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
-				dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
-				*dstadrs = *srcadrs;
+				if( ( dx >= 0 ) && ( dy >= 0 ) ){
+
+					//サイズオーバーがあったらアサートで止める
+					GF_ASSERT( sx < src->size_x);
+					GF_ASSERT( sy < src->size_y);
+					GF_ASSERT( dx < dest->size_x);
+					GF_ASSERT( dy < dest->size_y);
+
+					srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
+					dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
+					*dstadrs = *srcadrs;
+				}
 			}
 		}
 	}else{				//抜き色指定あり
 		for( sy=SRC_POSY, dy=DST_POSY; sy<y_max; sy++, dy++ ){
 			for( sx=SRC_POSX, dx=DST_POSX; sx<x_max; sx++, dx++ ){
-				srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
-				dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
-				if( *srcadrs != NULLPAL_L ){
-					*dstadrs = *srcadrs;
+				if( ( dx >= 0 ) && ( dy >= 0 ) ){
+
+					//サイズオーバーがあったらアサートで止める
+					GF_ASSERT( sx < src->size_x);
+					GF_ASSERT( sy < src->size_y);
+					GF_ASSERT( dx < dest->size_x);
+					GF_ASSERT( dy < dest->size_y);
+
+					srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
+					dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
+					if( *srcadrs != NULLPAL_L ){
+						*dstadrs = *srcadrs;
+					}
 				}
 			}
 		}
@@ -481,7 +518,7 @@ static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16
  * @li	１６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
 	u8	*destadrs;
@@ -500,15 +537,21 @@ static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 siz
 
 	for(y = pos_dy; y < y_max; y++){
 		for(x = pos_dx; x < x_max; x++){
+			if( ( x >= 0 ) && ( y >= 0 ) ){
 
-			destadrs=DPPCALC(dest->adrs, x, y, xarg);
-			if(x&1){
-				*destadrs&=0x0f;
-				*destadrs|=(col_code<<4);
-			}
-			else{
-				*destadrs&=0xf0;
-				*destadrs|=col_code;
+				//サイズオーバーがあったらアサートで止める
+				GF_ASSERT( x < dest->size_x);
+				GF_ASSERT( y < dest->size_y);
+
+				destadrs=DPPCALC(dest->adrs, x, y, xarg);
+				if(x&1){
+					*destadrs&=0x0f;
+					*destadrs|=(col_code<<4);
+				}
+				else{
+					*destadrs&=0xf0;
+					*destadrs|=col_code;
+				}
 			}
 		}
 	}
@@ -530,7 +573,7 @@ static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 siz
  * @li	２５６色用
  */
 //--------------------------------------------------------------------------------------------
-static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
+static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code )
 {
 	int	x,y,x_max,y_max,xarg;
 	u8	*destadrs;
@@ -549,8 +592,15 @@ static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 si
 
 	for( y=pos_dy; y<y_max; y++ ){
 		for( x=pos_dx; x<x_max; x++ ){
-			destadrs = DPPCALC_256( dest->adrs, x, y, xarg );
-			*destadrs = col_code;
+			if( ( x >= 0 ) && ( y >= 0 ) ){
+
+				//サイズオーバーがあったらアサートで止める
+				GF_ASSERT( x < dest->size_x);
+				GF_ASSERT( y < dest->size_y);
+
+				destadrs = DPPCALC_256( dest->adrs, x, y, xarg );
+				*destadrs = col_code;
+			}
 		}
 	}
 }

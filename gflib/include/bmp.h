@@ -138,7 +138,7 @@ extern	GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag,
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, u16 pos_dx, u16 pos_dy,
+extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 pos_sx, u16 pos_sy, s16 pos_dx, s16 pos_dy,
 			u16 size_x, u16 size_y, u16 nuki_col );
 
 //--------------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ extern void GFL_BMP_Print( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 po
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BMP_Fill( GFL_BMP_DATA * dest, u16 pos_dx, u16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
+extern void GFL_BMP_Fill( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 size_x, u16 size_y, u8 col_code );
 
 //--------------------------------------------------------------------------------------------
 /**
