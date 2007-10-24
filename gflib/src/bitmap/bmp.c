@@ -381,10 +381,10 @@ static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 
 				if( ( dx >= 0 ) && ( dy >= 0)){
 
 					//サイズオーバーがあったらアサートで止める
-					GF_ASSERT( sx < src->size_x);
-					GF_ASSERT( sy < src->size_y);
-					GF_ASSERT( dx < dest->size_x);
-					GF_ASSERT( dy < dest->size_y);
+//					GF_ASSERT( sx < src->size_x);
+//					GF_ASSERT( sy < src->size_y);
+//					GF_ASSERT( dx < dest->size_x);
+//					GF_ASSERT( dy < dest->size_y);
 
 					srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
 					dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
@@ -401,10 +401,10 @@ static	void GFL_BMP_Print16( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16 
 				if( ( dx >= 0 ) && ( dy >= 0)){
 
 					//サイズオーバーがあったらアサートで止める
-					GF_ASSERT( sx < src->size_x);
-					GF_ASSERT( sy < src->size_y);
-					GF_ASSERT( dx < dest->size_x);
-					GF_ASSERT( dy < dest->size_y);
+//					GF_ASSERT( sx < src->size_x);
+//					GF_ASSERT( sy < src->size_y);
+//					GF_ASSERT( dx < dest->size_x);
+//					GF_ASSERT( dy < dest->size_y);
 
 					srcadrs	= DPPCALC(SRC_ADRS, sx, sy, srcxarg);
 					dstadrs = DPPCALC(DST_ADRS, dx, dy, dstxarg);
@@ -469,10 +469,10 @@ static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16
 				if( ( dx >= 0 ) && ( dy >= 0 ) ){
 
 					//サイズオーバーがあったらアサートで止める
-					GF_ASSERT( sx < src->size_x);
-					GF_ASSERT( sy < src->size_y);
-					GF_ASSERT( dx < dest->size_x);
-					GF_ASSERT( dy < dest->size_y);
+//					GF_ASSERT( sx < src->size_x);
+//					GF_ASSERT( sy < src->size_y);
+//					GF_ASSERT( dx < dest->size_x);
+//					GF_ASSERT( dy < dest->size_y);
 
 					srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
 					dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
@@ -486,10 +486,10 @@ static	void GFL_BMP_Print256( const GFL_BMP_DATA * src, GFL_BMP_DATA * dest, u16
 				if( ( dx >= 0 ) && ( dy >= 0 ) ){
 
 					//サイズオーバーがあったらアサートで止める
-					GF_ASSERT( sx < src->size_x);
-					GF_ASSERT( sy < src->size_y);
-					GF_ASSERT( dx < dest->size_x);
-					GF_ASSERT( dy < dest->size_y);
+//					GF_ASSERT( sx < src->size_x);
+//					GF_ASSERT( sy < src->size_y);
+//					GF_ASSERT( dx < dest->size_x);
+//					GF_ASSERT( dy < dest->size_y);
 
 					srcadrs	= DPPCALC_256( SRC_ADRS, sx, sy, srcxarg );
 					dstadrs = DPPCALC_256( DST_ADRS, dx, dy, dstxarg );
@@ -540,8 +540,8 @@ static	void GFL_BMP_Fill16( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 siz
 			if( ( x >= 0 ) && ( y >= 0 ) ){
 
 				//サイズオーバーがあったらアサートで止める
-				GF_ASSERT( x < dest->size_x);
-				GF_ASSERT( y < dest->size_y);
+//				GF_ASSERT( x < dest->size_x);
+//				GF_ASSERT( y < dest->size_y);
 
 				destadrs=DPPCALC(dest->adrs, x, y, xarg);
 				if(x&1){
@@ -595,8 +595,8 @@ static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 si
 			if( ( x >= 0 ) && ( y >= 0 ) ){
 
 				//サイズオーバーがあったらアサートで止める
-				GF_ASSERT( x < dest->size_x);
-				GF_ASSERT( y < dest->size_y);
+//				GF_ASSERT( x < dest->size_x);
+//				GF_ASSERT( y < dest->size_y);
 
 				destadrs = DPPCALC_256( dest->adrs, x, y, xarg );
 				*destadrs = col_code;
