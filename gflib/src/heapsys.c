@@ -631,12 +631,13 @@ static void printHeapConflictVisitorFunc(void* memBlock, NNSFndHeapHandle heapHa
 	void*	memory = (u8*)memBlock + MEMHEADER_SIZE;
 	DEBUG_MEMHEADER* header = (DEBUG_MEMHEADER*)GFI_HEAP_GetMemheaderUserinfo( memory );
 	char	filename[FILENAME_LEN+1];
+	u32 size = NNS_FndGetSizeForMBlockExpHeap(memBlock);
+	size -= MEMHEADER_SIZE;
 
 	GetFileName( filename, header->filename );
 
 	OS_Printf(filename);
-	OS_Printf(" (%d)  adr:%08x  siz:%05x\n", 
-			header->lineNum, (u32)memory, NNS_FndGetSizeForMBlockExpHeap(memBlock));
+	OS_Printf(" (%d)  adr:%08x siz:%05x\n", header->lineNum, (u32)memory , size );
 }
 
 void GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID heapID )
