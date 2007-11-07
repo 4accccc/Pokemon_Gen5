@@ -24,12 +24,14 @@ static	int				SubVisiblePlane;
  *
  * @brief	内部でVRAM割り当てをLCDCに変更してクリアするので、
  *			この関数を呼んだ後に、GFL_DISP_SetBankでVRAMの再割り当てをおこなう必要があります
+ *
+ * @param	withoutVRAM	非クリアにしたいVRAMを指定（NULLで指定なし、GX_VRAM_A～GX_VRAM_I、複数をORで指定可能）
  */
 //--------------------------------------------------------------------------------------------
-void	GFL_DISP_ClearVRAM( void )
+void	GFL_DISP_ClearVRAM( u16	withoutVRAM )
 {
 	//VRAMクリア
-	GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+	GX_SetBankForLCDC(GX_VRAM_LCDC_ALL&(withoutVRAM^0xffff));
 	MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
 	(void)GX_DisableBankForLCDC();
 	MI_CpuFillFast((void *)HW_OAM, 192, HW_OAM_SIZE);			// clear OAM
