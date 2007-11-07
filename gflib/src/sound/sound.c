@@ -264,6 +264,37 @@ void	GFL_SOUND_PlaySE( int se_no )
 	NNS_SndArcPlayerStartSeq(&sndHandle[player_no],se_no);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief	player_noを指定して再生中のシーケンスを止める
+ *
+ * @param	player_no	playerナンバー
+ */
+//--------------------------------------------------------------
+void	GFL_SOUND_StopPlayerNo(u8 player_no)
+{
+	NNS_SndPlayerStopSeqByPlayerNo( player_no, 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	player_noを指定して再生中のシーケンスの数を返す
+ *
+ * @param	player_no	playerナンバー
+ *
+ * @retval	"再生中のシーケンスの数"
+ */
+//--------------------------------------------------------------
+int		GFL_SOUND_CheckPlaySeq( u8 player_no )
+{
+	//上限はチェックしていないので注意！
+	if( player_no < 0 ){
+		GF_ASSERT( (0) && "引数が不正です！" );
+	}
+
+	return NNS_SndPlayerCountPlayingSeqByPlayerNo( player_no );
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * サウンドヒープ階層ロード
