@@ -19,8 +19,12 @@ SRCS	+=		testmode.c \
 				tetsu/game/setup.c \
 				tetsu/game/act3d.c \
 				tetsu/game/map3d.c \
+				tetsu/game/util3d.c \
+				tetsu/game/game_cont.c \
+				tetsu/game/team_cont.c \
 				tetsu/game/player_cont.c \
 				tetsu/game/camera_cont.c \
+				tetsu/game/status_cont.c \
 				tetsu/game/text_cont.c \
 				tetsu/game/skill_cont.c \
 				tetsu/game/game_net.c \

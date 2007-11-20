@@ -8,25 +8,31 @@
 #include "map3d.h"
 #include "act3d.h"
 
-#define PLAYER_SETUP_MAX	(8)	//今のところこれ以上表示させるのは難しいかも、ライン
-#define PLAYER_SETUP_NUM	(2)
+#define PLAYER_SETUP_MAX	(8)		//今のところこれ以上表示させるのは難しいかも、ライン
+#define PLAYER_SETUP_NUM	(8)
+#define STATUS_SETUP_NUM	(48)		//ステータスアイコン最大数
 
 typedef struct _GAME_SYSTEM GAME_SYSTEM;
 
-GAME_SYSTEM*	SetupGameSystem( HEAPID heapID );
-void			RemoveGameSystem( GAME_SYSTEM* gs );
-void			MainGameSystemPref( GAME_SYSTEM* gs );
-void			MainGameSystemAfter( GAME_SYSTEM* gs );
+extern GAME_SYSTEM*	SetupGameSystem( HEAPID heapID );
+extern void			RemoveGameSystem( GAME_SYSTEM* gs );
+extern void			MainGameSystemPref( GAME_SYSTEM* gs );
+extern void			MainGameSystemAfter( GAME_SYSTEM* gs );
 
-GFL_G3D_UTIL*		Get_GS_G3Dutil( GAME_SYSTEM* gs );
-GFL_G3D_SCENE*		Get_GS_G3Dscene( GAME_SYSTEM* gs );
-GFL_G3D_CAMERA*		Get_GS_G3Dcamera( GAME_SYSTEM* gs, int cameraID );
-GFL_G3D_LIGHTSET*	Get_GS_G3Dlight( GAME_SYSTEM* gs, int lightID );
-GFL_BMPWIN*			Get_GS_BmpWin( GAME_SYSTEM* gs, int bmpwinID );
-GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs );
-SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs );
-SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs );
+extern GFL_G3D_UTIL*		Get_GS_G3Dutil( GAME_SYSTEM* gs );
+extern GFL_G3D_SCENE*		Get_GS_G3Dscene( GAME_SYSTEM* gs );
+extern GFL_G3D_CAMERA*		Get_GS_G3Dcamera( GAME_SYSTEM* gs, int cameraID );
+extern GFL_G3D_LIGHTSET*	Get_GS_G3Dlight( GAME_SYSTEM* gs, int lightID );
+extern GFL_BMPWIN*			Get_GS_BmpWin( GAME_SYSTEM* gs, int bmpwinID );
+extern GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs );
+extern SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs );
+extern SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs );
+extern GFL_CLUNIT*			Get_GS_ClactUnit( GAME_SYSTEM* gs, u32 unitID );
+extern u32					Get_GS_ClactResIdx( GAME_SYSTEM* gs, u32 resID );
 
+#define PLT_2D_COL_WHITE	(15)
+#define PLT_2D_COL_BLACK	(1)
+#define PLT_2D_COL_NULL		(0)
 //------------------------------------------------------------------
 /**
  * @brief	データヘッダ
@@ -48,14 +54,10 @@ enum {
 enum {
 	G3DRES_MAP_FLOOR = 0,
 	G3DRES_HUMAN2_BMD,
-	G3DRES_HUMAN2_STAY_BCA,
-	G3DRES_HUMAN2_WALK_BCA,
-	G3DRES_HUMAN2_RUN_BCA,
+	G3DRES_HUMAN_COMMON_BCA,
 	G3DRES_HUMAN2_ATTACK_BCA,
 	G3DRES_HUMAN2_SHOOT_BCA,
 	G3DRES_HUMAN2_SPELL_BCA,
-	G3DRES_HUMAN2_SIT_BCA,
-	G3DRES_HUMAN2_HIT_BCA,
 	G3DRES_ACCE_SWORD,
 	G3DRES_ACCE_SHIELD,
 	G3DRES_ACCE_BOW,
@@ -67,14 +69,10 @@ enum {
 //---------------------
 //３Ｄオブジェクトアニメーション定義テーブルＩＮＤＥＸ
 enum {
-	HUMAN2_ANM_STAY = 0,
-	HUMAN2_ANM_WALK,
-	HUMAN2_ANM_RUN,
+	HUMAN_ANM_COMMON = 0,
 	HUMAN2_ANM_ATTACK,
 	HUMAN2_ANM_SHOOT,
 	HUMAN2_ANM_SPELL,
-	HUMAN2_ANM_SIT,
-	HUMAN2_ANM_HIT,
 };
 
 //---------------------
@@ -98,18 +96,34 @@ enum {
 
 	G3DOBJ_EFFECT_WALL,
 	G3DOBJ_EFFECT_ARROW,
+	G3DOBJ_NPC,
 };
 
 //---------------------
 //２Ｄビットマップウインドウ定義テーブルＩＮＤＥＸ
 enum {
-	G2DBMPWIN_P1 = 0,
-	G2DBMPWIN_P2,
-	G2DBMPWIN_P3,
-	G2DBMPWIN_P4,
-	G2DBMPWIN_P5,
-	G2DBMPWIN_P6,
-	G2DBMPWIN_P7,
-	G2DBMPWIN_P8,
+	G2DBMPWIN_STATUS = 0,
+	G2DBMPWIN_MSG,
+	G2DBMPWIN_MAP,
+	G2DBMPWIN_MASK,
+};
+
+//---------------------
+//ＣＬＡＣＴリソース定義テーブルＩＮＤＥＸ
+enum {
+	CLACTRES_MAPOBJ_CGX = 0,
+	CLACTRES_MAPOBJ_PLT_R,
+	CLACTRES_MAPOBJ_PLT_B,
+	CLACTRES_MAPOBJ_CEL,
+	CLACTRES_STATUS_CEL,
+	CLACTRES_STATUS_CGX,
+	CLACTRES_STATUS_PLT = CLACTRES_STATUS_CGX + STATUS_SETUP_NUM,
+};
+
+//---------------------
+//ＣＬＡＣＴユニット定義テーブルＩＮＤＥＸ
+enum {
+	CLACTUNIT_MAPOBJ = 0,
+	CLACTUNIT_STATUS,
 };
 

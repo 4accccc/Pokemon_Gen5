@@ -104,8 +104,9 @@ static GFLNetInitializeStruct aGFLNetInit = {
 
 void InitGameNet(void)
 {
+#ifdef NET_WORK_ON
     GFL_NET_Init(&aGFLNetInit);
-
+#endif
 	gNetSys._connectSeqNo = 0;
 	gNetSys._exitSeqNo = 0;
 	gNetSys._pHandle = NULL;
@@ -129,6 +130,7 @@ enum{
 
 BOOL ConnectGameNet(void)
 {
+#ifdef NET_WORK_ON
 	BOOL result = FALSE;
 
     //OS_TPrintf("ConnectGameNet%d\n",gNetSys._connectSeqNo);
@@ -175,6 +177,9 @@ BOOL ConnectGameNet(void)
 		break;
 	}
 	return result;
+#else
+	return TRUE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -189,6 +194,7 @@ enum{
 
 BOOL ExitGameNet(void)
 {
+#ifdef NET_WORK_ON
 	BOOL result = FALSE;
 
 	switch( gNetSys._exitSeqNo ){
@@ -208,6 +214,9 @@ BOOL ExitGameNet(void)
 		break;
 	}
 	return result;
+#else
+	return TRUE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -227,7 +236,11 @@ void SendGameNet( int comm, void* commWork )
 //------------------------------------------------------------------
 NetID GetNetID(void)
 {
+#ifdef NET_WORK_ON
 	return GFL_NET_GetNetID( gNetSys._pHandle );
+#else
+	return 1;		//1orgin
+#endif
 }
 
 

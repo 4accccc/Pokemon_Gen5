@@ -9,7 +9,7 @@
 #include "gflib.h"
 
 #include "setup.h"
-#include "player_cont.h"
+#include "team_cont.h"
 #include "skill_cont.h"
 
 //============================================================================================
@@ -26,12 +26,13 @@
  */
 //------------------------------------------------------------------
 typedef struct {
-	u16				skillCommand;
-	u16				seq;
-	PLAYER_CONTROL* pc;			//発生させたプレーヤー
-	VecFx32			trans;
-	u16				direction;
-	u32				work[8];
+	PLAYER_SKILL_COMMAND	skillCommand;
+	u16						seq;
+	TEAM_CONTROL*			tc;			//発生させたプレーヤーのチーム
+	PLAYER_CONTROL*			pc;			//発生させたプレーヤー
+	VecFx32					trans;
+	u16						direction;
+	u32						work[8];
 }SKILL_WORK;
 
 typedef struct {
@@ -42,8 +43,11 @@ typedef struct {
 struct _SKILL_CONTROL {
 	HEAPID			heapID;
 	GAME_SYSTEM*	gs;
-	PLAYER_CONTROL* pc[PLAYER_SETUP_MAX];		//判定させるプレーヤー配列
+	TEAM_CONTROL**	p_tc;
+	int				teamCount;
+
 	SKILL_WORK		skill[SKILL_SETUP_MAX];
+	BOOL			onGameFlag;
 };
 
 typedef void	(SKILL_FUNC)( SKILL_CONTROL*, SKILL_WORK* );
@@ -109,18 +113,24 @@ static void SkillEffectRemove( SKILL_CONTROL* sc, int* effectID, SKILL_EFFECTID 
  * @brief	スキルコントロールセット
  */
 //------------------------------------------------------------------
-SKILL_CONTROL* AddSkillControl( GAME_SYSTEM* gs, HEAPID heapID )
+SKILL_CONTROL* AddSkillControl( SKILLCONT_SETUP* setup )
 {
-	int	i,j;
+	SKILL_CONTROL* sc = GFL_HEAP_AllocClearMemory( setup->heapID, sizeof(SKILL_CONTROL) );
+	TEAM_CONTROL** p_tc = GFL_HEAP_AllocClearMemory
+							( setup->heapID, setup->teamCount * sizeof(TEAM_CONTROL*) );
+	int i, j;
 
-	SKILL_CONTROL* sc = GFL_HEAP_AllocClearMemory( heapID, sizeof(SKILL_CONTROL) );
-	sc->heapID = heapID;
-	sc->gs = gs;
-	for( i=0; i<PLAYER_SETUP_MAX; i++ ){
-		sc->pc[i] = NULL;
+	for( i=0; i<setup->teamCount; i++ ){
+		p_tc[i] = setup->p_tc[i];
 	}
+
+	sc->heapID = setup->heapID;
+	sc->gs = setup->gs;
+	sc->p_tc = p_tc;
+	sc->teamCount = setup->teamCount;
+
 	for( i=0; i<SKILL_SETUP_MAX; i++ ){
-		sc->skill[i].skillCommand = 0;
+		sc->skill[i].skillCommand = PSC_NOP;
 		sc->skill[i].seq = 0;
 		sc->skill[i].pc = NULL;
 		for( j=0; j<8; j++ ){
@@ -137,43 +147,8 @@ SKILL_CONTROL* AddSkillControl( GAME_SYSTEM* gs, HEAPID heapID )
 //------------------------------------------------------------------
 void RemoveSkillControl( SKILL_CONTROL* sc )
 {
+	GFL_HEAP_FreeMemory( sc->p_tc ); 
 	GFL_HEAP_FreeMemory( sc ); 
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	判定プレーヤーの追加
- */
-//------------------------------------------------------------------
-void AddSkillCheckPlayer( SKILL_CONTROL* sc, PLAYER_CONTROL* pc )
-{
-	int	i;
-
-	for( i=0; i<PLAYER_SETUP_MAX; i++ ){
-		if( sc->pc[i] == NULL ){
-			sc->pc[i] = pc;
-			return;
-		}
-	}
-	GF_ASSERT(0);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	判定プレーヤーの削除
- */
-//------------------------------------------------------------------
-void RemoveSkillCheckPlayer( SKILL_CONTROL* sc, PLAYER_CONTROL* pc )
-{
-	int	i;
-
-	for( i=0; i<PLAYER_SETUP_MAX; i++ ){
-		if( sc->pc[i] == pc ){
-			sc->pc[i] = NULL;
-			return;
-		}
-	}
-	GF_ASSERT(0);
 }
 
 //------------------------------------------------------------------
@@ -181,15 +156,17 @@ void RemoveSkillCheckPlayer( SKILL_CONTROL* sc, PLAYER_CONTROL* pc )
  * @brief	スキルの追加
  */
 //------------------------------------------------------------------
-void SetSkillControlCommand( SKILL_CONTROL* sc, PLAYER_CONTROL* pc, int skillCommand )
+void SetSkillControlCommand
+	( SKILL_CONTROL* sc, TEAM_CONTROL* tc, PLAYER_CONTROL* pc, PLAYER_SKILL_COMMAND skillCommand )
 {
 	int i;
 
 	if( skillCommand ){
 		for( i=0; i<SKILL_SETUP_MAX; i++ ){
-			if( sc->skill[i].skillCommand == 0 ){
+			if( sc->skill[i].skillCommand == PSC_NOP ){
 				sc->skill[i].skillCommand = skillCommand;
 				sc->skill[i].seq = 0;
+				sc->skill[i].tc = tc;
 				sc->skill[i].pc = pc;			//発生させたプレーヤー
 				GetPlayerControlTrans( pc, &sc->skill[i].trans );
 				GetPlayerDirection( pc, &sc->skill[i].direction );
@@ -208,12 +185,14 @@ void SetSkillControlCommand( SKILL_CONTROL* sc, PLAYER_CONTROL* pc, int skillCom
  * @brief	スキルメインコントロール
  */
 //------------------------------------------------------------------
-void MainSkillControl( SKILL_CONTROL* sc )
+void MainSkillControl( SKILL_CONTROL* sc, BOOL onGameFlag )
 {
 	int i;
 
+	sc->onGameFlag = onGameFlag;
+
 	for( i=0; i<SKILL_SETUP_MAX; i++ ){
-		if( sc->skill[i].skillCommand != 0 ){
+		if( sc->skill[i].skillCommand != PSC_NOP ){
 			( skillProcTable[sc->skill[i].skillCommand].main )( sc, &sc->skill[i] );
 		}
 	}
@@ -234,12 +213,6 @@ void MainSkillControl( SKILL_CONTROL* sc )
  *
  */
 //------------------------------------------------------------------
-static void DeleteSkill( SKILL_WORK* sw )
-{
-	sw->skillCommand = 0;
-	ResetPlayerSkillBusyFlag( sw->pc );
-}
-	
 static BOOL calc_XZhitEasy( VecFx32* vec1, VecFx32* vec2, fx32 len )
 {
 	fx32	diffX, diffZ, diffLen;
@@ -260,20 +233,34 @@ static void calc_XZtrans( VecFx32* trans, fx32 lenoffs, u16 direction  )
 	trans->z += ( -lenoffs * FX_CosIdx( direction )/ FX16_ONE );
 }
 
-static BOOL DamageSetOne( SKILL_CONTROL* sc, PLAYER_CONTROL* pc, 
-		VecFx32* skillTrans, fx32 hitLen, s16 damage, u8 dotcount, u8 dottimer, s8 dotvalue )
+//------------------------------------------------------------------
+//
+//	共通判定
+//
+//------------------------------------------------------------------
+typedef struct {
+	PLAYER_CONTROL* pc;			//発生させたプレーヤー
+	VecFx32*		skillTrans;
+	fx32			hitLen;
+	s16				damage;
+	u8				dotCount;
+	u8				dotTimer;
+	u8				dotValue;
+	BOOL			result;
+}SKILL_CALLBACK_WORK;
+
+static BOOL	SkillHitCheckPlayer( PLAYER_CONTROL* pc, SKILL_CALLBACK_WORK* scw )
 {
-	int i;
 	VecFx32 targetTrans;
 
-	for( i=0; i<PLAYER_SETUP_MAX; i++ ){
-		if(( sc->pc[i] != NULL )&&( sc->pc[i] != pc )){
-			GetPlayerControlTrans( sc->pc[i], &targetTrans );
+	if( scw->result == FALSE ){
+		if( GetPlayerHitEnableFlag( pc ) == TRUE ){
+			GetPlayerControlTrans( pc, &targetTrans );
 
-			if( calc_XZhitEasy( skillTrans, &targetTrans, hitLen ) == TRUE ){
-				SetPlayerDamage( sc->pc[i], damage );
-				if( dotvalue ){
-					SetPlayerDamageOnTime( sc->pc[i], dotcount, dottimer, dotvalue );
+			if( calc_XZhitEasy( scw->skillTrans, &targetTrans, scw->hitLen ) == TRUE ){
+				SetPlayerDamage( pc, scw->damage );
+				if( scw->dotValue ){
+					SetPlayerDamageOnTime( pc, scw->dotCount, scw->dotTimer, scw->dotValue );
 				}
 				return TRUE;
 			}
@@ -282,31 +269,139 @@ static BOOL DamageSetOne( SKILL_CONTROL* sc, PLAYER_CONTROL* pc,
 	return FALSE;
 }
 
-static BOOL DamageSetAll( SKILL_CONTROL* sc, PLAYER_CONTROL* pc,
-		VecFx32* skillTrans, fx32 hitLen, s16 damage, u8 dotcount, u8 dottimer, s8 dotvalue )
+static BOOL	SkillHitCheckSummon( TEAM_CONTROL* tc, int summonID, SKILL_CALLBACK_WORK* scw )
 {
-	int i;
 	VecFx32 targetTrans;
-	BOOL	hitResult = FALSE;
+	int damage = -scw->damage;
 
-	for( i=0; i<PLAYER_SETUP_MAX; i++ ){
-		if(( sc->pc[i] != NULL )&&( sc->pc[i] != pc )){
-			if( GetPlayerHitEnableFlag( sc->pc[i] ) == TRUE ){
-				GetPlayerControlTrans( sc->pc[i], &targetTrans );
-
-				if( calc_XZhitEasy( skillTrans, &targetTrans, hitLen ) == TRUE ){
-					SetPlayerDamage( sc->pc[i], damage );
-					if( dotvalue ){
-						SetPlayerDamageOnTime( sc->pc[i], dotcount, dottimer, dotvalue );
-					}
-					hitResult = TRUE;
-				}
-			}
+	if( scw->result == FALSE ){
+		GetSummonObjectTrans( tc, summonID, &targetTrans );
+		if( calc_XZhitEasy( scw->skillTrans, &targetTrans, scw->hitLen ) == TRUE ){
+			SetSummonObjectDamage( tc, summonID, &damage );
+			return TRUE;
 		}
 	}
+	return FALSE;
+}
+
+//------------------------------------------------------------------
+static void	SkillHitCheckOnePlayerCallBack( PLAYER_CONTROL* pc, int num, void* work );
+static void	SkillHitCheckOneSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work );
+
+static BOOL DamageSetOne( SKILL_CONTROL* sc, SKILL_WORK* sw, fx32 hitLen, 
+							s16 damage, u8 dotCount, u8 dotTimer, s8 dotValue )
+{
+	SKILL_CALLBACK_WORK* scw = GFL_HEAP_AllocClearMemory(sc->heapID, sizeof(SKILL_CALLBACK_WORK));
+	int i;
+	VecFx32 targetTrans;
+	BOOL hitResult;
+
+	scw->pc			= sw->pc;
+	scw->skillTrans = &sw->trans;
+	scw->hitLen		= hitLen;
+	scw->damage		= damage;
+	scw->dotCount	= dotCount;
+	scw->dotTimer	= dotTimer;
+	scw->dotValue	= dotValue;
+	scw->result		= FALSE;
+
+	for( i=0; i<sc->teamCount; i++ ){
+		if( sc->p_tc[i] != sw->tc ){
+			if( sc->onGameFlag == TRUE ){
+				ProcessingAllTeamPlayer
+					( sc->p_tc[i], SkillHitCheckOnePlayerCallBack, (void*)scw );
+				ProcessingAllTeamSummonObject
+					( sc->p_tc[i], SkillHitCheckOneSummonCallBack, (void*)scw );
+			}
+		}
+		if( scw->result == TRUE ){
+			break;
+		}
+	}
+	hitResult = scw->result;
+	GFL_HEAP_FreeMemory(scw);
+
 	return hitResult;
 }
 
+static void	SkillHitCheckOnePlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
+{
+	SKILL_CALLBACK_WORK* scw = (SKILL_CALLBACK_WORK*)work;
+
+	scw->result = SkillHitCheckPlayer( pc, scw );
+}
+
+static void	SkillHitCheckOneSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work )
+{
+	SKILL_CALLBACK_WORK* scw = (SKILL_CALLBACK_WORK*)work;
+
+	scw->result = SkillHitCheckSummon( tc, summonID, scw );
+}
+
+//------------------------------------------------------------------
+static void	SkillHitCheckAllPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work );
+static void	SkillHitCheckAllSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work );
+
+static BOOL DamageSetAll( SKILL_CONTROL* sc, SKILL_WORK* sw, fx32 hitLen, 
+							s16 damage, u8 dotCount, u8 dotTimer, s8 dotValue )
+{
+	SKILL_CALLBACK_WORK* scw = GFL_HEAP_AllocClearMemory(sc->heapID, sizeof(SKILL_CALLBACK_WORK));
+	int i;
+	VecFx32 targetTrans;
+	BOOL hitResult;
+
+	scw->pc			= sw->pc;
+	scw->skillTrans = &sw->trans;
+	scw->hitLen		= hitLen;
+	scw->damage		= damage;
+	scw->dotCount	= dotCount;
+	scw->dotTimer	= dotTimer;
+	scw->dotValue	= dotValue;
+	scw->result		= FALSE;
+
+	for( i=0; i<sc->teamCount; i++ ){
+		if( sc->p_tc[i] != sw->tc ){
+			if( sc->onGameFlag == TRUE ){
+				ProcessingAllTeamPlayer
+					( sc->p_tc[i], SkillHitCheckAllPlayerCallBack, (void*)scw );
+				ProcessingAllTeamSummonObject
+					( sc->p_tc[i], SkillHitCheckAllSummonCallBack, (void*)scw );
+			}
+		}
+	}
+	hitResult = scw->result;
+	GFL_HEAP_FreeMemory(scw);
+
+	return hitResult;
+}
+
+static void	SkillHitCheckAllPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
+{
+	SKILL_CALLBACK_WORK* scw = (SKILL_CALLBACK_WORK*)work;
+
+	SkillHitCheckPlayer( pc, scw );
+}
+
+static void	SkillHitCheckAllSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work )
+{
+	SKILL_CALLBACK_WORK* scw = (SKILL_CALLBACK_WORK*)work;
+
+	SkillHitCheckSummon( tc, summonID, scw );
+}
+
+//------------------------------------------------------------------
+//	
+//
+//	各種スキル別関数
+//
+//
+//------------------------------------------------------------------
+static void DeleteSkill( SKILL_WORK* sw )
+{
+	sw->skillCommand = PSC_NOP;
+	ResetPlayerSkillBusyFlag( sw->pc );
+}
+	
 //回転マトリクス変換
 static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
 {
@@ -336,8 +431,8 @@ static void NopMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 //　剣
 //------------------------------------------------------------------
 #define	SWORD_HITOFS	(FX32_ONE*0)
-#define	SWORD_HITLEN	(FX32_ONE/64)
-#define	SWORD_SPEED		(FX32_ONE*16)
+#define	SWORD_HITLEN	(FX32_ONE/32)
+#define	SWORD_SPEED		(FX32_ONE*8*2)
 #define	SWORD_LIMITLEN	(FX32_ONE*16)
 typedef struct {
 	u16		seq;
@@ -350,7 +445,7 @@ static void SwordInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
 {
 	SKILL_SWORD_WORK* sword_w = (SKILL_SWORD_WORK*)sw->work;
 	sword_w->seq = 0;
-	sword_w->waitTimer = 20;
+	sword_w->waitTimer = 20/2;
 	sword_w->length = 0;
 }
 
@@ -366,23 +461,24 @@ static void SwordMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			sword_w->waitTimer--;
 			return;
 		} else {
-			SkillEffectAdd( sc, &sword_w->effectID, SKILL_EFFECT_TEST1, sw );
+//			SkillEffectAdd( sc, &sword_w->effectID, SKILL_EFFECT_TEST1, sw );
 			sword_w->seq++;
 		}
 		break;
 	case 1:
+		hitResult = DamageSetOne( sc, sw, SWORD_HITLEN, -50, 0, 0, 0 );
 		calc_XZtrans( &sw->trans, SWORD_SPEED, sw->direction );
-		hitResult = DamageSetOne( sc, sw->pc, &sw->trans, SWORD_HITLEN, -50, 0, 0, 0 );
 		if( hitResult == TRUE ){
 			deleteFlag = TRUE;
 		} else {
-			sword_w->length += SWORD_SPEED;
 			if( sword_w->length >= SWORD_LIMITLEN ){
 				deleteFlag = TRUE;
+			} else {
+				sword_w->length += SWORD_SPEED;
 			}
 		}
 		if( deleteFlag == TRUE ){
-			SkillEffectRemove( sc, &sword_w->effectID, SKILL_EFFECT_TEST1 );
+//			SkillEffectRemove( sc, &sword_w->effectID, SKILL_EFFECT_TEST1 );
 			DeleteSkill( sw );
 		}
 	}
@@ -393,7 +489,7 @@ static void SwordMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 //------------------------------------------------------------------
 #define	ARROW_HITOFS	(FX32_ONE*0)
 #define	ARROW_HITLEN	(FX32_ONE/64)
-#define	ARROW_SPEED		(FX32_ONE*8)
+#define	ARROW_SPEED		(FX32_ONE*8*2)
 #define	ARROW_LIMITLEN	(FX32_ONE*256)
 typedef struct {
 	u16		seq;
@@ -406,7 +502,7 @@ static void ArrowInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
 {
 	SKILL_ARROW_WORK* arrow_w = (SKILL_ARROW_WORK*)sw->work;
 	arrow_w->seq = 0;
-	arrow_w->waitTimer = 30;
+	arrow_w->waitTimer = 30/2;
 	arrow_w->length = 0;
 	sw->trans.y = FX32_ONE*8;
 }
@@ -440,14 +536,15 @@ static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		}
 		break;
 	case 1:
+		hitResult = DamageSetOne( sc, sw, ARROW_HITLEN, -20, 0, 0, 0 );
 		calc_XZtrans( &sw->trans, ARROW_SPEED, sw->direction );
-		hitResult = DamageSetOne( sc, sw->pc, &sw->trans, ARROW_HITLEN, -20, 0, 0, 0 );
 		if( hitResult == TRUE ){
 			deleteFlag = TRUE;
 		} else {
-			arrow_w->length += ARROW_SPEED;
 			if( arrow_w->length >= ARROW_LIMITLEN ){
 				deleteFlag = TRUE;
+			} else {
+				arrow_w->length += ARROW_SPEED;
 			}
 		}
 		if( deleteFlag == TRUE ){
@@ -463,7 +560,7 @@ static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 //------------------------------------------------------------------
 #define	STAFF_HITOFS	(FX32_ONE*0)
 #define	STAFF_HITLEN	(FX32_ONE/1)
-#define	STAFF_SPEED		(FX32_ONE*2)
+#define	STAFF_SPEED		(FX32_ONE*2*2)
 #define	STAFF_LIMITLEN	(FX32_ONE*128)
 #define	STAFF_OFS_FIRST	(FX32_ONE*8)
 typedef struct {
@@ -479,7 +576,7 @@ static void StaffInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
 {
 	SKILL_STAFF_WORK* staff_w = (SKILL_STAFF_WORK*)sw->work;
 	staff_w->seq = 0;
-	staff_w->waitTimer = 30;
+	staff_w->waitTimer = 30/2;
 	staff_w->length = 0;
 	sw->trans.y = FX32_ONE*12;
 }
@@ -521,12 +618,12 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			staff_w->length = STAFF_LIMITLEN;
 
 			GFL_PTC_DeleteEmitter( Get_GS_Perticle(sc->gs), staff_w->effectEmitter );
-			staff_w->wait = 10;
+			staff_w->wait = 10/2;
 			staff_w->seq++;
 		}
 		break;
 	case 2:
-		hitResult = DamageSetAll( sc, sw->pc, &sw->trans, STAFF_HITLEN, -30, 5, 60, -5 );
+		hitResult = DamageSetAll( sc, sw, STAFF_HITLEN, -30, 5, 60, -5 );
 		if( staff_w->wait ){
 			staff_w->wait--;
 		} else {

@@ -14,16 +14,23 @@ typedef enum {
 	SKILL_STAFF,
 }SKILL_CONTROL_COMMAND;
 
+typedef struct _STATUSWIN_CONTROL	STATUSWIN_CONTROL;
+
+typedef struct {
+	HEAPID				heapID;
+	GAME_SYSTEM*		gs;
+	TEAM_CONTROL**		p_tc;
+	int					teamCount;
+}SKILLCONT_SETUP;
+
 //スキルコントロールセット
-extern SKILL_CONTROL* AddSkillControl( GAME_SYSTEM* gs, HEAPID heapID );
+extern SKILL_CONTROL* AddSkillControl( SKILLCONT_SETUP* setup );
 //スキルコントロール終了
 extern void RemoveSkillControl( SKILL_CONTROL* sc );
-//判定プレーヤーの追加
-extern void AddSkillCheckPlayer( SKILL_CONTROL* sc, PLAYER_CONTROL* pc );
-//判定プレーヤーの削除
-extern void RemoveSkillCheckPlayer( SKILL_CONTROL* sc, PLAYER_CONTROL* pc );
 //スキルの追加
-extern void SetSkillControlCommand( SKILL_CONTROL* sc, PLAYER_CONTROL* pc, int skillCommand );
+extern void SetSkillControlCommand
+	( SKILL_CONTROL* sc, TEAM_CONTROL* tc, PLAYER_CONTROL* pc, PLAYER_SKILL_COMMAND skillCommand );
 //スキルメインコントロール
-extern void MainSkillControl( SKILL_CONTROL* sc );
+extern void MainSkillControl( SKILL_CONTROL* sc, BOOL onGameFlag );
+
 

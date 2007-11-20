@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2007-07-25T17:18:39
+	Update:2007-11-15T17:05:58
  *****************************************************************************/
 
 #ifndef NARC_HARUKA_NAIX_
@@ -27,19 +27,25 @@ enum {
 	NARC_haruka_bow_nsbmd = 13,
 	NARC_haruka_staff_nsbmd = 14,
 	NARC_haruka_human_nsbmd = 15,
-	NARC_haruka_human_stay_nsbca = 16,
-	NARC_haruka_human_walk_nsbca = 17,
-	NARC_haruka_human_run_nsbca = 18,
-	NARC_haruka_human2_nsbmd = 19,
-	NARC_haruka_human2_stay_nsbca = 20,
-	NARC_haruka_human2_walk_nsbca = 21,
-	NARC_haruka_human2_run_nsbca = 22,
-	NARC_haruka_human2_attack_nsbca = 23,
-	NARC_haruka_human2_shoot_nsbca = 24,
-	NARC_haruka_human2_spell_nsbca = 25,
-	NARC_haruka_human2_sit_nsbca = 26,
-	NARC_haruka_human2_hit_nsbca = 27,
-	NARC_haruka_effect_arrow_nsbmd = 28
+	NARC_haruka_human_common_nsbca = 16,
+	NARC_haruka_human_stay_nsbca = 17,
+	NARC_haruka_human_walk_nsbca = 18,
+	NARC_haruka_human_run_nsbca = 19,
+	NARC_haruka_human2_nsbmd = 20,
+	NARC_haruka_human2_stay_nsbca = 21,
+	NARC_haruka_human2_walk_nsbca = 22,
+	NARC_haruka_human2_run_nsbca = 23,
+	NARC_haruka_human2_attack_nsbca = 24,
+	NARC_haruka_human2_shoot_nsbca = 25,
+	NARC_haruka_human2_spell_nsbca = 26,
+	NARC_haruka_human2_sit_nsbca = 27,
+	NARC_haruka_human2_hit_nsbca = 28,
+	NARC_haruka_human2_dead_nsbca = 29,
+	NARC_haruka_human2_jump_nsbca = 30,
+	NARC_haruka_effect_arrow_nsbmd = 31,
+	NARC_haruka_gamemap_NCGR = 32,
+	NARC_haruka_gamemap_NCLR = 33,
+	NARC_haruka_human2_test_nsbmd = 34
 };
 
 /* NARC_HARUKA_NAIX_ */

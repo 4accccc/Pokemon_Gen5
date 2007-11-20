@@ -11,3 +11,5 @@ extern BOOL		ExitGameNet(void);
 extern void		SendGameNet( int comm, void* commWork );
 extern NetID	GetNetID(void);
 
+//#define NET_WORK_ON
+

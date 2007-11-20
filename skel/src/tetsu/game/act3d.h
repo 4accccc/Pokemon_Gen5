@@ -16,6 +16,10 @@ extern void					Get3DactTrans( SCENE_ACT* sceneAct, u32 idx, VecFx32* trans );
 extern void					Set3DactTrans( SCENE_ACT* sceneAct, u32 idx, VecFx32* trans );
 extern void					Get3DactRotate( SCENE_ACT* sceneAct, u32 idx, VecFx32* rotate );
 extern void					Set3DactRotate( SCENE_ACT* sceneAct, u32 idx, VecFx32* rotate );
+extern void					Set3DactBlendAlpha( SCENE_ACT* sceneAct, u32 idx, u8* alpha );
+extern void					Set3DactDrawSw( SCENE_ACT* sceneAct, u32 idx, BOOL sw );
+
+
 
 enum {
 	ACTANM_CMD_STAY = 0,
@@ -28,6 +32,11 @@ enum {
 	ACTANM_CMD_STANDUP,
 	ACTANM_CMD_TAKE,
 	ACTANM_CMD_HIT,
+	ACTANM_CMD_DEAD,
+	ACTANM_CMD_JUMP_RDY,
+	ACTANM_CMD_JUMPUP,
+	ACTANM_CMD_JUMPDOWN,
+	ACTANM_CMD_JUMP_END,
 };
 
 extern void	Set3DactPlayerChrAnimeCmd( SCENE_ACT* sceneAct, u32 idx, u8 animeCmd );

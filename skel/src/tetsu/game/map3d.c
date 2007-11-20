@@ -55,7 +55,6 @@ static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj );
 static const	MAPDATA mapDataTbl;
 static const	EXOBJ_DATATABLE extraObjectDataTbl[5];
 
-void	AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップ生成
@@ -81,23 +80,6 @@ SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 
 //------------------------------------------------------------------
 /**
- * @brief	３Ｄマップオブジェクト追加
- */
-//------------------------------------------------------------------
-void	AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans )
-{
-	int	i;
-
-	for( i=0; i<EXOBJ_MAX; i++ ){
-		if( sceneMap->extraObject[i].id == EXOBJ_NULL ){
-			AddExtraObject( sceneMap, &sceneMap->extraObject[i], objID, trans );
-			return;
-		}
-	}
-}	
-
-//------------------------------------------------------------------
-/**
  * @brief	３Ｄマップ破棄
  */
 //------------------------------------------------------------------
@@ -116,11 +98,66 @@ void	Delete3Dmap( SCENE_MAP* sceneMap )
 
 //------------------------------------------------------------------
 /**
+ * @brief	３Ｄマップオブジェクト追加
+ */
+//------------------------------------------------------------------
+int		AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans )
+{
+	int	i;
+
+	for( i=0; i<EXOBJ_MAX; i++ ){
+		if( sceneMap->extraObject[i].id == EXOBJ_NULL ){
+			AddExtraObject( sceneMap, &sceneMap->extraObject[i], objID, trans );
+			return i;
+		}
+	}
+	GF_ASSERT(0);
+	return 0;
+}	
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト破棄
+ */
+//------------------------------------------------------------------
+void	RemoveObject3Dmap( SCENE_MAP* sceneMap, int mapobjID )
+{
+	if( sceneMap->extraObject[mapobjID].id != EXOBJ_NULL ){
+		RemoveExtraObject( sceneMap, &sceneMap->extraObject[mapobjID] );
+		sceneMap->extraObject[mapobjID].id = EXOBJ_NULL;
+	}
+}	
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト描画スイッチ設定
+ */
+//------------------------------------------------------------------
+void	Set3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
+													sceneMap->extraObject[mapobjID].id );
+	GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, sw );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト描画スイッチ取得
+ */
+//------------------------------------------------------------------
+void	Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
+													sceneMap->extraObject[mapobjID].id );
+	GFL_G3D_SCENEOBJ_GetDrawSW( g3DsceneObj, sw );
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	３Ｄマップアトリビュート取得
  */
 //------------------------------------------------------------------
-int work[2];
-BOOL		Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr )
+BOOL	Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr )
 {
 	fx32 wx = pos->x + mapGrid*16;
 	fx32 wz = pos->z + mapGrid*16;
@@ -384,7 +421,7 @@ static const MAPDATA mapDataTbl = {
 };
 
 static const GFL_G3D_SCENEOBJ_DATA extraObject1[] = {
-	{	G3DOBJ_EFFECT_WALL, 0, 1, 8, FALSE, TRUE,
+	{	G3DOBJ_NPC, 0, 1, 8, TRUE, TRUE,
 		{	{ 0, -FX32_ONE*64, 0 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
