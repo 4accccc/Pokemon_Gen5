@@ -319,6 +319,21 @@ int	GFL_SOUND_SaveHeapState(void)
 	return NNS_SndHeapSaveState(heap);
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * プレイヤーナンバーを指定して一時停止
+ *
+ * @param	playerNo	プレイヤー番号
+ * @param	flg			一時停止フラグ ( TRUE = PAUSE )
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_SOUND_PausePlayerNo( int playerNo, BOOL flg )
+{
+	NNS_SndPlayerPauseByPlayerNo( playerNo, flg );
+}
+
 //SEQARCを用いての再生（現状は未サポート）
 #if 0
 //--------------------------------------------------------------------------------------------
