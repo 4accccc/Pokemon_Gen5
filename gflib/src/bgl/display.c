@@ -79,6 +79,32 @@ void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * メイン画面の各面の表示コントロール初期化（ＢＧのみ）
+ *
+ * @param	
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_DISP_GX_InitVisibleControlBG( void )
+{
+	MainVisiblePlane &= GX_PLANEMASK_OBJ ;
+	//GX_SetVisiblePlane( MainVisiblePlane );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * メイン画面の各面の表示コントロール初期化（ＯＢＪのみ）
+ *
+ * @param	
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_DISP_GX_InitVisibleControlOBJ( void )
+{
+	MainVisiblePlane &= ( GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3 );
+	//GX_SetVisiblePlane( MainVisiblePlane );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * メイン画面の各面の表示コントロール初期化
  *
  * @param	
@@ -86,8 +112,8 @@ void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram )
 //--------------------------------------------------------------------------------------------
 void GFL_DISP_GX_InitVisibleControl( void )
 {
-	MainVisiblePlane = 0;
-	//GX_SetVisiblePlane( MainVisiblePlane );
+	GFL_DISP_GX_InitVisibleControlBG();
+	GFL_DISP_GX_InitVisibleControlOBJ();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -129,15 +155,41 @@ void GFL_DISP_GX_SetVisibleControlDirect( int prm )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * サブ画面の各面の表示コントロール初期化（ＢＧのみ）
+ *
+ * @param	
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_DISP_GXS_InitVisibleControlBG( void )
+{
+	SubVisiblePlane &= GX_PLANEMASK_OBJ ;
+	//GXS_SetVisiblePlane( MainVisiblePlane );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * サブ画面の各面の表示コントロール初期化
+ *
+ * @param	
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_DISP_GXS_InitVisibleControlOBJ( void )
+{
+	SubVisiblePlane &= ( GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3 );
+	//GXS_SetVisiblePlane( MainVisiblePlane );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * サブ画面の各面の表示コントロール初期化（ＯＢＪのみ）
  *
  * @param	
  */
 //--------------------------------------------------------------------------------------------
 void GFL_DISP_GXS_InitVisibleControl( void )
 {
-	SubVisiblePlane = 0;
-	//GXS_SetVisiblePlane( MainVisiblePlane );
+	GFL_DISP_GXS_InitVisibleControlBG();
+	GFL_DISP_GXS_InitVisibleControlOBJ();
 }
 
 //--------------------------------------------------------------------------------------------

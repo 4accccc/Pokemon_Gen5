@@ -286,7 +286,7 @@ u32	GFL_BG_GetHeapID( void )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data )
+void GFL_BG_SetBGMode( const GFL_BG_SYS_HEADER * data )
 {
     GX_SetGraphicsMode( data->dispMode, data->bgMode, data->bg0_2Dor3D );
     GXS_SetGraphicsMode( data->bgModeSub );
@@ -294,8 +294,8 @@ void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data )
 	GX_SetBGScrOffset( GX_BGSCROFFSET_0x00000 ); 
 	GX_SetBGCharOffset( GX_BGCHAROFFSET_0x00000 ); 
 
-	GFL_DISP_GX_InitVisibleControl();
-	GFL_DISP_GXS_InitVisibleControl();
+	GFL_DISP_GX_InitVisibleControlBG();
+	GFL_DISP_GXS_InitVisibleControlBG();
 }
 
 //--------------------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data )
  * @li	flg = GFL_BG_SUB_DISP : ƒTƒu‰æ–Ê
  */
 //--------------------------------------------------------------------------------------------
-void GFL_BG_InitBGDisp( const GFL_BG_SYS_HEADER * data, u8 flg )
+void GFL_BG_SetBGModeDisp( const GFL_BG_SYS_HEADER * data, u8 flg )
 {
 	if( flg == GFL_BG_MAIN_DISP ){
 		GX_SetGraphicsMode( data->dispMode, data->bgMode, data->bg0_2Dor3D );
@@ -343,7 +343,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 
 	switch( frmnum ){
 	case GFL_BG_FRAME0_M:
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+//		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 		G2_SetBG0Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -355,7 +355,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME1_M:
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+//		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		G2_SetBG1Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -367,7 +367,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME2_M:
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+//		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -397,7 +397,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME3_M:
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+//		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -427,7 +427,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME0_S:
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 		G2S_SetBG0Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -439,7 +439,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME1_S:
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 		G2S_SetBG1Control(
 				(GXBGScrSizeText)screen_size, 
 				(GXBGColorMode)data->colorMode,
@@ -451,7 +451,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME2_S:
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
@@ -481,7 +481,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 		break;
 
 	case GFL_BG_FRAME3_S:
-		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+//		GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		switch( mode ){
 		default:
 		case GFL_BG_MODE_TEXT:
