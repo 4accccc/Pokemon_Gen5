@@ -156,4 +156,16 @@ extern	void	GFL_SOUND_LoadHeapState(int level);
 //--------------------------------------------------------------------------------------------
 extern	int	GFL_SOUND_SaveHeapState(void);
 
+//--------------------------------------------------------------------------------------------
+/**
+ * プレイヤーナンバーを指定して一時停止
+ *
+ * @param	playerNo	プレイヤー番号
+ * @param	flg			一時停止フラグ ( TRUE = PAUSE )
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_SOUND_PausePlayerNo( int playerNo, BOOL flg );
+
 #endif
