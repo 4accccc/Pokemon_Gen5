@@ -227,7 +227,7 @@ extern u32	GFL_BG_GetHeapID( void );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data );
+extern void GFL_BG_SetBGMode( const GFL_BG_SYS_HEADER * data );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -242,7 +242,7 @@ extern void GFL_BG_InitBG( const GFL_BG_SYS_HEADER * data );
  * @li	flg = GFL_BG_SUB_DISP : ƒTƒu‰æ–Ê
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_BG_InitBGDisp( const GFL_BG_SYS_HEADER * data, u8 flg );
+extern void GFL_BG_SetBGModeDisp( const GFL_BG_SYS_HEADER * data, u8 flg );
 
 //--------------------------------------------------------------------------------------------
 /**

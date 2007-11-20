@@ -66,7 +66,11 @@ extern void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
  */
 //--------------------------------------------------------------------------------------------
 extern void GFL_DISP_GX_InitVisibleControl( void );
+extern void GFL_DISP_GX_InitVisibleControlBG( void );
+extern void GFL_DISP_GX_InitVisibleControlOBJ( void );
 extern void GFL_DISP_GXS_InitVisibleControl( void );
+extern void GFL_DISP_GXS_InitVisibleControlBG( void );
+extern void GFL_DISP_GXS_InitVisibleControlOBJ( void );
 
 //--------------------------------------------------------------------------------------------
 /**
