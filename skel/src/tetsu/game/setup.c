@@ -452,7 +452,7 @@ static void	bg_init( GAME_SYSTEM* gs )
 		GFL_HEAP_FreeMemory( plt );
 	}
 	//ＢＧモード設定
-	GFL_BG_InitBG( &bgsysHeader );
+	GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl( TEXT_FRM, &textBGcont, GFL_BG_MODE_TEXT );

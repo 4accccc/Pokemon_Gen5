@@ -99,7 +99,7 @@ void	YT_InitGame(GAME_PARAM *gp)
 		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
-		GFL_BG_InitBG( &BGsys_data );
+		GFL_BG_SetBGMode( &BGsys_data );
 	}
 
 	//ƒƒCƒ“‰æ–ÊƒtƒŒ[ƒ€Ý’è

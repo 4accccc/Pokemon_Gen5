@@ -790,7 +790,7 @@ static void _grapInit(SKEL_TEST_BEACON_WORK* pWork)
 	}
 
 	// BG SYSTEM
-    GFL_BG_InitBG( &bgsysHeader );
+    GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ƒƒCƒ“‰æ–ÊƒtƒŒ[ƒ€İ’è
 	{

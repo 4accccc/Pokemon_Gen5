@@ -203,7 +203,7 @@ static void	bg_init( HEAPID heapID )
 	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
 
 	//ＢＧモード設定
-	GFL_BG_InitBG( &bgsysHeader );
+	GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl( TEXT_FRM, &bgCont3, GFL_BG_MODE_TEXT );
