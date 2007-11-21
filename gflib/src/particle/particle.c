@@ -97,37 +97,6 @@ typedef	struct
 
 static	PTC_MANAGER	*ptc_man=NULL;
 
-#if 0
-//--------------------------------------------------------------
-/**
- * 現在生成されていパーティクルシステムのポインタが入る。
- * SPLライブラリで使用するLocalAlloc関数内で、パーティクルシステムで確保しているヒープ領域の
- * 取得する必要がある。しかしLocalAllocはSPLライブラリで関数の型が決められているため、
- * ヒープ領域のポインタを渡すことが出来ないので、このグローバル変数経由で渡す。
- */
-//--------------------------------------------------------------
-static void *ParticleSystemPtr[PARTICLE_GLOBAL_MAX];
-
-//--------------------------------------------------------------
-/**
- * エミッタ作成時のコールバック関数中で、任意のデータを参照出来るよう、
- * 一時的にここに渡したいデータのポインタを入れる。
- * (自滅エミッタの場合、EmitCreateでNULLポインタが返ってくるので、エミッタ動作を変える場合、
- *  コールバック関数内で変更してあげる必要があるため)
- */
-//--------------------------------------------------------------
-static void *ParticleTempPtr;
-
-//--------------------------------------------------------------
-/**
- * テクスチャロード時のコールバック関数内で、リンクドマネージャーの場合、キー情報を
- * PTCに記憶する必要があるので、ここに一時的にPTCのアドレスをセットしておく
- */
-//--------------------------------------------------------------
-static GFL_PTC_PTR TexLoadTempPtc;
-#endif
-
-
 //==============================================================================
 //	データ定義
 //==============================================================================
@@ -195,103 +164,13 @@ static const SPLAlloc LocalAllocFunc[] = {
 	Particle_LocalAlloc_15,
 };
 
-
-
-#if 0	//------- パーティクル使用例 ---- 2005.07.15(金)
-
-void BattleParticle_TestInit(void)
-{
-	PARTICLE_SYSTEM *psys;
-	
-	psys = Particle_SystemCreate(sAllocTex, sAllocTexPalette);
-//	psys = Particle_SystemCreate(NULL, sAllocTexPalette);
-	TCB_Add(BattleParticle_Main, psys, 20);
-}
-
-static void BattleParticle_Main(TCB_PTR tcb, void *work)
-{
-	PARTICLE_SYSTEM *psys = work;
-	void *resource;
-	
-	switch(psys->seq){
-	case 0:
-		resource = Particle_ResourceLoad("wazaeffect/effectdata/output5.spa");
-		Particle_ResourceSet(psys, resource);
-		psys->seq++;
-		break;
-	case 1:
-		Particle_Draw(psys);	//パーティクル描画
-		Particle_Calc(psys);	//パーティクル計算
-		break;
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   テクスチャVRAMアドレスを返すためのコールバック関数
- *
- * @param   size		テクスチャサイズ
- * @param   is4x4comp	4x4圧縮テクスチャであるかどうかのフラグ(TRUE=圧縮テクスチャ)
- *
- * @retval  読み込みを開始するVRAMのアドレス
- */
-//--------------------------------------------------------------
-static u32 sAllocTex(u32 size, BOOL is4x4comp)
-{
-#if 0
-	NNSGfdTexKey key = NNS_GfdAllocTexVram(size, is4x4comp, 0);
-	SDK_ASSERT(key != NNS_GFD_ALLOC_ERROR_TEXKEY);
-	return NNS_GfdGetTexKeyAddr(key);
-#else
-	u32 address;
-	
-	NNSGfdTexKey key = NNS_GfdAllocTexVram(size, is4x4comp, 0);
-	key = NNS_GfdAllocTexVram(size, is4x4comp, 0);
-	SDK_ASSERT(key != NNS_GFD_ALLOC_ERROR_TEXKEY);
-	address = NNS_GfdGetTexKeyAddr(key);
-	OS_Printf("Vramアドレス＝%#x\n", address);
-	return address;
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * @brief	テクスチャパレットVRAMアドレスを返すためのコールバック関数
- *
- * @param	size		テクスチャサイズ
- * @param	is4pltt		4色パレットであるかどうかのフラグ
- *
- * @retval	読み込みを開始するVRAMのアドレス
- *
- * direct形式のテクスチャの場合、SPL_LoadTexPlttByCallbackFunctionは
- * コールバック関数を呼び出しません。
- */
-//--------------------------------------------------------------
-static u32 sAllocTexPalette(u32 size, BOOL is4pltt)
-{
-#if 0
-	NNSGfdPlttKey key = NNS_GfdAllocPlttVram(size, is4pltt, 0);
-	if(key == NNS_GFD_ALLOC_ERROR_PLTTKEY){
-		GF_ASSERT(0 && "パレットエラー");
-	}
-	return NNS_GfdGetPlttKeyAddr(key);
-#else
-	return 0x20*4;
-#endif
-}
-
-#endif	//------------- パーティクル使用例 ---------------------------
-
-
-
-
 //--------------------------------------------------------------
 /**
  * @brief   パーティクルシステムで使用するワークの初期化
  *
  * @param	heapID	管理用ワーク取得ヒープID
  *
- * Particle_SystemCreateよりも先にこれを実行する必要があります。
+ * GFL_PTC_Createよりも先にこれを実行する必要があります。
  */
 //--------------------------------------------------------------
 void GFL_PTC_Init(HEAPID heapID)
@@ -341,7 +220,7 @@ void GFL_PTC_Main(void)
  * @retval  パーティクルシステムワークへのポインタ(生成出来なかった場合はNULL)
  *
  * workで渡したワークはSPLライブラリで使用します。
- * Allocして手に入れたワーク領域のポインタを渡した場合、Particle_SystemExit後、外側で
+ * Allocして手に入れたワーク領域のポインタを渡した場合、GFL_PTC_Delete後、外側で
  * 解放処理を行ってください。(パーティクルシステム側でワークの解放処理はしません)
  *
  * global_no：パーティクルシステム内でSPLライブラリとのやり取りでグローバル変数を使用します。
@@ -803,26 +682,6 @@ static void *Particle_LocalAlloc_15(u32 size)
 	return Particle_LocalAlloc(psys, size);
 }
 
-#if 0	//とりあえずpath指定の読み込みは削除
-//--------------------------------------------------------------
-/**
- * @brief   パーティクルのリソースファイルを読み込む
- *
- * @param   heap_id		ヒープID
- * @param   path		読み込むリソースファイル(*.spa)へのポインタ
- *
- * @retval  読み込んだリソースファイルのポインタ
- *
- * Particle_ResourceSet関数とセットで使用する事が前提です。
- * 読み込んだリソースファイルはParticle_SystemExitでFreeMemoryされます。
- */
-//--------------------------------------------------------------
-void * Particle_ResourceLoad(int heap_id, const char *path)
-{
-	return sys_LoadFile(heap_id, path);
-}
-#endif
-
 //--------------------------------------------------------------
 /**
  * @brief   Arcされているパーティクルのリソースファイルを読み込む
@@ -833,8 +692,8 @@ void * Particle_ResourceLoad(int heap_id, const char *path)
  *
  * @retval  読み込んだリソースファイルのポインタ
  *
- * Particle_ResourceSet関数とセットで使用する事が前提です。
- * 読み込んだリソースファイルはParticle_SystemExitでFreeMemoryされます。
+ * GFL_PTC_SetResource関数とセットで使用する事が前提です。
+ * 読み込んだリソースファイルはGFL_PTC_DeleteでFreeMemoryされます。
  */
 //--------------------------------------------------------------
 void * GFL_PTC_LoadArcResource(int file_kind, int index, int heap_id)
@@ -847,7 +706,7 @@ void * GFL_PTC_LoadArcResource(int file_kind, int index, int heap_id)
  * @brief   パーティクルのリソースファイルをパーティクルシステムにセットし初期化を行う
  *
  * @param   psys			パーティクルシステムワークへのポインタ
- * @param   resource		Particle_(Arc)ResourceLoadで読み込んだリソースファイルのポインタ
+ * @param   resource		GFL_PTC_LoadArcResourceで読み込んだリソースファイルのポインタ
  * @param   tex_at_once		TRUE:テクスチャ即転送、FALSE:Vブランク中に転送
  * @param	tcbsys			tex_at_onceにFALSEを設定したときにVブランクで回っているTCBSYSポインタを指定する
  *
@@ -1017,109 +876,6 @@ void	GFL_PTC_SetPlttLnkTexKey(NNSGfdPlttKey pltt_key)
 	GF_ASSERT(0 && "パーティクルパレットテクスチャ管理数を超えています!\n");
 }
 
-#if 0
-#ifdef PM_DEBUG		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//--------------------------------------------------------------
-/**
- * @brief   キー入力によってカメラの位置を移動する(デバッグ機能)
- * @param   psys		パーティクルシステムワークへのポインタ
- */
-//--------------------------------------------------------------
-static void DebugCameraMove(GFL_PTC_PTR psys)
-{
-	const fx32 a = FX32_ONE / 0x10;
-	int flag = 0;
-	
-	if((sys.trg & PAD_BUTTON_START) && (sys.cont & PAD_BUTTON_R) && (sys.cont & PAD_BUTTON_L)){
-		WeDebugWork.eye = DefaultEye;
-		WeDebugWork.up = DefaultUp;
-		WeDebugWork.at = DefaultAt;
-		OS_Printf("DebugCamera:標準設定に戻しました\n");
-		return;
-	}
-	
-	if(sys.cont & PAD_BUTTON_R){
-		if(sys.cont & PAD_KEY_LEFT){
-			WeDebugWork.up.x -= a;
-		}
-		else if(sys.cont & PAD_KEY_RIGHT){
-			WeDebugWork.up.x += a;
-		}
-		else if(sys.cont & PAD_KEY_UP){
-			WeDebugWork.up.y -= a;
-		}
-		else if(sys.cont & PAD_KEY_DOWN){
-			WeDebugWork.up.y += a;
-		}
-		else if(sys.cont & PAD_BUTTON_X){
-			WeDebugWork.up.z -= a;
-		}
-		else if(sys.cont & PAD_BUTTON_B){
-			WeDebugWork.up.z += a;
-		}
-		else{
-			flag++;
-		}
-		if(flag == 0){
-			OS_Printf("v_up: x = %#xd, y = %#xd, z = %#xd\n", WeDebugWork.up.x, WeDebugWork.up.y, WeDebugWork.up.z);
-		}
-	}
-	else if(sys.cont & PAD_BUTTON_L){
-		if(sys.cont & PAD_KEY_LEFT){
-			WeDebugWork.at.x -= a;
-		}
-		else if(sys.cont & PAD_KEY_RIGHT){
-			WeDebugWork.at.x += a;
-		}
-		else if(sys.cont & PAD_KEY_UP){
-			WeDebugWork.at.y -= a;
-		}
-		else if(sys.cont & PAD_KEY_DOWN){
-			WeDebugWork.at.y += a;
-		}
-		else if(sys.cont & PAD_BUTTON_X){
-			WeDebugWork.at.z -= a;
-		}
-		else if(sys.cont & PAD_BUTTON_B){
-			WeDebugWork.at.z += a;
-		}
-		else{
-			flag++;
-		}
-		if(flag == 0){
-			OS_Printf("at: x = %#xd, y = %#xd, z = %#xd\n", WeDebugWork.at.x, WeDebugWork.at.y, WeDebugWork.at.z);
-		}
-	}
-	else{
-		if(sys.cont & PAD_KEY_LEFT){
-			WeDebugWork.eye.x -= a;
-		}
-		else if(sys.cont & PAD_KEY_RIGHT){
-			WeDebugWork.eye.x += a;
-		}
-		else if(sys.cont & PAD_KEY_UP){
-			WeDebugWork.eye.y -= a;
-		}
-		else if(sys.cont & PAD_KEY_DOWN){
-			WeDebugWork.eye.y += a;
-		}
-		else if(sys.cont & PAD_BUTTON_X){
-			WeDebugWork.eye.z -= a;
-		}
-		else if(sys.cont & PAD_BUTTON_B){
-			WeDebugWork.eye.z += a;
-		}
-		else{
-			flag++;
-		}
-		if(flag == 0){
-			OS_Printf("eye: x = %#xd, y = %#xd, z = %#xd\n", WeDebugWork.eye.x, WeDebugWork.eye.y, WeDebugWork.eye.z);
-		}
-	}
-}
-#endif		//+++++++++++++++++++++++++ PM_DEBUG ++++++++++++++++++++++++++++++++++++++
-#endif
-
 //--------------------------------------------------------------
 /**
  * @brief	描画
@@ -1138,10 +894,7 @@ void	GFL_PTC_Draw(GFL_PTC_PTR psys)
 		GFL_G3D_CAMERA_Switching(psys->camera);
 		GFL_G3D_DRAW_SetLookAt();
 	}
-#if 0
-	//グローバルステートを適用
-	NNS_G3dGlbFlush();
-#endif
+
 	// パーティクル描画
 	camera_ptr = NNS_G3dGlbGetCameraMtx();
 	SPL_Draw(psys->spl_manager, camera_ptr);
@@ -1241,11 +994,7 @@ GFL_EMIT_PTR GFL_PTC_CreateEmitter(GFL_PTC_PTR psys, int res_no, const VecFx32 *
 	
 	emit = SPL_Create(psys->spl_manager, res_no, init_pos);
 	psys->temp_emit = emit;
-#if 0
-	if(emit != NULL){
-		SPL_Terminate(emit);
-	}
-#endif
+
 	return emit;
 }
 
@@ -1256,9 +1005,9 @@ GFL_EMIT_PTR GFL_PTC_CreateEmitter(GFL_PTC_PTR psys, int res_no, const VecFx32 *
  * @param   psys			パーティクルシステムワークへのポインタ
  * @param   res_no			リソース番号
  * @param   callback		エミッタ生成時に呼び出されるコールバック関数へのポインタ
- * @param   temp_ptr		コールバック関数の中でParticle_GetTempPtr関数を使う事で、
+ * @param   temp_ptr		コールバック関数の中でGFL_PTC_GetTempPtr関数を使う事で、
  *                          ここで渡したポインタを取得する事が出来ます。
- *                          Particle_GetTempPtr関数が使えるのはコールバック関数内のみです。
+ *                          GFL_PTC_GetTempPtr関数が使えるのはコールバック関数内のみです。
  *
  * @retval  生成されたエミッタへのポインタ。自滅エミッタの場合はNULLが返ります
  *
@@ -1342,7 +1091,7 @@ GFL_EMIT_PTR GFL_PTC_GetTempEmitterPtr(GFL_PTC_PTR psys)
  *
  * @param   psys		パーティクルシステムワークへのポインタ
  *
- * @retval  ヒープの先頭アドレス(Particle_SystemCreateで渡したアドレスが返ります)
+ * @retval  ヒープの先頭アドレス(GFL_PTC_Createで渡したアドレスが返ります)
  */
 //--------------------------------------------------------------
 void * GFL_PTC_GetHeapPtr(GFL_PTC_PTR psys)
