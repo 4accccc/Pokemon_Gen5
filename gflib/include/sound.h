@@ -168,4 +168,30 @@ extern	int	GFL_SOUND_SaveHeapState(void);
 //--------------------------------------------------------------------------------------------
 extern	void GFL_SOUND_PausePlayerNo( int playerNo, BOOL flg );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 音程を変更
+ *
+ * @param	playerNo	プレイヤー番号
+ * @param	trbitmask	トラックビットマスク
+ * @param	pitch		音程変化の値（-32768～32767）
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_SOUND_SetPitch( int playerNo, u16 trbitmask, int pitch );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 音程を変更
+ *
+ * @param	playerNo	プレイヤー番号
+ * @param	trbitmask	トラックビットマスク
+ * @param	pan			定位変化の値（-128～127）
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_SOUND_SetPan( int playerNo, u16 trbitmask, int pan );
+
 #endif

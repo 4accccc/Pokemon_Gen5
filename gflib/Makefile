@@ -69,6 +69,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					fade/fade.c \
 					g3d/double3Ddisp.c \
 					sound/sound.c \
+					sound/sound_tool.c \
 					dma/dma.c \
 					particle/particle.c
 
