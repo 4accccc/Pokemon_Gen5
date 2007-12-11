@@ -20,11 +20,11 @@ LLIBRARIES		=  	gflib.a
 
 # wifiを使用する場合のLibrary定義
 LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
-NITRODWC_LIB_MODULES_   = base auth ac bm account util
+NITRODWC_LIB_MODULES_   = base auth ac bm account
 NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
 
 #----------------------------------------------------------------------------
-#イクニューモンコンポーネントのためのライブラリを追加
+#パーティクル＋イクニューモンコンポーネントのためのライブラリを追加
 #----------------------------------------------------------------------------
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
