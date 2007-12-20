@@ -235,7 +235,7 @@ GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID
  * @param	pos_dy		書き込み先書き込み開始Y座標
  * @param	size_x		描画範囲Xサイズ
  * @param	size_y		描画範囲Yサイズ
- * @param	nuki_col	透明色指定（0～15 0xff:透明色指定なし）
+ * @param	nuki_col	透明色指定（0～15 GF_BMPPRT_NOTNUKI:透明色指定なし）
  *
  * @return	none
  */
