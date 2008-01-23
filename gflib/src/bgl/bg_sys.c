@@ -575,7 +575,7 @@ void GFL_BG_FreeBGControl( u8 frmnum )
 	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	GFL_BG_FreeScrArea( frmnum, 0, bgl->bgsys[frmnum].screen_siz );
+	GFL_BG_FreeScrArea( frmnum, 0, bgl->bgsys[frmnum].screen_buf_siz );
 	GFL_HEAP_FreeMemory( bgl->bgsys[frmnum].screen_buf );
 	bgl->bgsys[frmnum].screen_buf = NULL;
 }
