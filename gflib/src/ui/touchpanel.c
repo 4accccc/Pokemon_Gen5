@@ -286,7 +286,7 @@ static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y )
  * @return  int		ìñÇΩÇËÇ™Ç†ÇÍÇŒÇªÇÃóvëfî‘çÜÅAÇ»ÇØÇÍÇŒ TP_HIT_NONE
  */
 //------------------------------------------------------------------
-static int GFI_UI_TouchPanelHitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
+static int GFI_UI_TP_HitCont( const UISYS* pUI, const GFL_UI_TP_HITTBL *tbl )
 {
     const UI_TPSYS* pTP = _UI_GetTPSYS(pUI);
     
