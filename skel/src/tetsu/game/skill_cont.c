@@ -47,6 +47,8 @@ struct _SKILL_CONTROL {
 	int				teamCount;
 
 	SKILL_WORK		skill[SKILL_SETUP_MAX];
+	u16				g3DutilUnitIdx;
+	u16				g3DutilObjIdx;
 	BOOL			onGameFlag;
 };
 
@@ -58,6 +60,41 @@ typedef struct {
 }SKILL_PROC;
 
 //------------------------------------------------------------------
+/**
+ * @brief	３Ｄセットアップデータ
+ */
+//------------------------------------------------------------------
+#include "src/sample_graphic/haruka.naix"
+static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
+
+//------------------------------------------------------------------
+enum {
+	G3DRES_EFFECT_ARROW = 0,
+};
+
+//３Ｄグラフィックリソーステーブル
+static const GFL_G3D_UTIL_RES g3DresTbl[] = {
+	{ (u32)g3DarcPath2, NARC_haruka_effect_arrow_nsbmd,  GFL_G3D_UTIL_RESPATH },
+};
+
+//------------------------------------------------------------------
+enum {
+	G3DOBJ_EFFECT_ARROW = 0,
+};
+
+//３Ｄオブジェクト定義テーブル
+static const GFL_G3D_UTIL_OBJ g3DobjTbl[] = {
+	{ G3DRES_EFFECT_ARROW, 0, G3DRES_EFFECT_ARROW, NULL, 0 },
+};
+
+//------------------------------------------------------------------
+//設定テーブルデータ
+static const GFL_G3D_UTIL_SETUP g3Dsetup = {
+	g3DresTbl, NELEMS(g3DresTbl),
+	g3DobjTbl, NELEMS(g3DobjTbl),
+};
+
+//------------------------------------------------------------------
 static void moveTraceSkill( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 typedef struct {
@@ -67,7 +104,7 @@ typedef struct {
 
 static const GFL_G3D_SCENEOBJ_DATA skillEffectData1[] = {
 	{ 
-		G3DOBJ_EFFECT_WALL, 0, 1, 24, FALSE, TRUE, 
+		G3DOBJ_EFFECT_ARROW, 0, 1, 24, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
 			{ FX32_ONE/8 , FX32_ONE/8, FX32_ONE/8 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
@@ -85,7 +122,7 @@ static const GFL_G3D_SCENEOBJ_DATA skillEffectData2[] = {
 };
 static const GFL_G3D_SCENEOBJ_DATA skillEffectData3[] = {
 	{ 
-		G3DOBJ_EFFECT_WALL, 0, 1, 24, FALSE, TRUE, 
+		G3DOBJ_EFFECT_ARROW, 0, 1, 24, FALSE, TRUE, 
 		{	{ 0, 0, 0 },
 			{ FX32_ONE/2 , FX32_ONE/2, FX32_ONE/2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
@@ -137,6 +174,12 @@ SKILL_CONTROL* AddSkillControl( SKILLCONT_SETUP* setup )
 			sc->skill[i].work[j] = 0;
 		}
 	}
+	//３Ｄデータセットアップ
+	{
+		GFL_G3D_SCENE* g3Dscene = Get_GS_G3Dscene( sc->gs );
+		sc->g3DutilUnitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3Dsetup );
+		sc->g3DutilObjIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sc->g3DutilUnitIdx );
+	}
 	return sc;
 }
 
@@ -147,6 +190,8 @@ SKILL_CONTROL* AddSkillControl( SKILLCONT_SETUP* setup )
 //------------------------------------------------------------------
 void RemoveSkillControl( SKILL_CONTROL* sc )
 {
+	GFL_G3D_SCENE_DelG3DutilUnit( Get_GS_G3Dscene( sc->gs ), sc->g3DutilUnitIdx );
+
 	GFL_HEAP_FreeMemory( sc->p_tc ); 
 	GFL_HEAP_FreeMemory( sc ); 
 }
@@ -466,7 +511,7 @@ static void SwordMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		}
 		break;
 	case 1:
-		hitResult = DamageSetOne( sc, sw, SWORD_HITLEN, -50, 0, 0, 0 );
+		hitResult = DamageSetOne( sc, sw, SWORD_HITLEN, -300, 0, 0, 0 );
 		calc_XZtrans( &sw->trans, SWORD_SPEED, sw->direction );
 		if( hitResult == TRUE ){
 			deleteFlag = TRUE;
@@ -536,7 +581,7 @@ static void ArrowMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		}
 		break;
 	case 1:
-		hitResult = DamageSetOne( sc, sw, ARROW_HITLEN, -20, 0, 0, 0 );
+		hitResult = DamageSetOne( sc, sw, ARROW_HITLEN, -100, 0, 0, 0 );
 		calc_XZtrans( &sw->trans, ARROW_SPEED, sw->direction );
 		if( hitResult == TRUE ){
 			deleteFlag = TRUE;
@@ -623,7 +668,7 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		}
 		break;
 	case 2:
-		hitResult = DamageSetAll( sc, sw, STAFF_HITLEN, -30, 5, 60, -5 );
+		hitResult = DamageSetAll( sc, sw, STAFF_HITLEN, -150, 5, 50, -5 );
 		if( staff_w->wait ){
 			staff_w->wait--;
 		} else {
@@ -662,7 +707,7 @@ static void SkillEffectAdd( SKILL_CONTROL* sc, int* effectID, SKILL_EFFECTID seI
 	GFL_G3D_SCENEOBJ* g3DsceneObj;
 
 	*effectID = GFL_G3D_SCENEOBJ_Add( g3Dscene,	skillEffectTable[seID].data,
-										skillEffectTable[seID].count );
+										skillEffectTable[seID].count, sc->g3DutilObjIdx );
 	for( i=0; i<skillEffectTable[seID].count; i++ ){
 		sew = (SKILL_EFFECT_WORK*)GFL_G3D_SCENEOBJ_GetWork
 						( GFL_G3D_SCENEOBJ_Get( g3Dscene, *effectID + i )); 

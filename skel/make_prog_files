@@ -28,6 +28,7 @@ SRCS	+=		testmode.c \
 				tetsu/game/text_cont.c \
 				tetsu/game/skill_cont.c \
 				tetsu/game/game_net.c \
+				tetsu/game/mouse_event.c \
                 sogabe/blockout.c \
 				tamada/backup_sample.c \
 				tetsu/debug_watanabe.c

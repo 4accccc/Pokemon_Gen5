@@ -12,6 +12,8 @@
 
 #include "game_cont.h"
 
+#include "mouse_event.h"
+
 #include "text_cont.h"
 #include "camera_cont.h"
 #include "skill_cont.h"
@@ -24,7 +26,11 @@
 //
 //
 //============================================================================================
+#if 0
 static void ControlKey( PLAYER_CONTROL* pc, int trg, int cont );
+#else
+static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont );
+#endif
 static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc );
 //------------------------------------------------------------------
 /**
@@ -43,10 +49,14 @@ struct _GAME_CONTROL {
 	HEAPID					heapID;
 	GAME_SYSTEM*			gs;
 	int						seq;
+
+	MOUSE_EVENT_SYS*		mes;
+
 	PLAYER_CONTROL*			myPc;
 	TEAM_CONTROL*			myTc;
 	int						teamCount;
 	COMM_KEYDATA			commKey[PLAYER_SETUP_NUM]; 
+	GAME_NETWORK_PLAYDATA	gnd[PLAYER_SETUP_NUM]; 
 
 	TEAM_CONTROL*			tc[TEAM_COUNT_MAX]; 
 	CAMERA_CONTROL*			cc; 
@@ -61,6 +71,7 @@ struct _GAME_CONTROL {
 	BOOL					onGameFlag;
 	BOOL					endGameFlag;
 	int						time;
+	int						tp_blank;
 };
 
 //------------------------------------------------------------------
@@ -79,6 +90,9 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->seq = 0;
 	gc->myPc = NULL;
 	gc->time = 0;
+	gc->tp_blank = 0;
+
+	gc->mes = InitMouseEvent( gs, heapID );
 
 	//チームコントローラ登録
 	for( i=0; i<setup->teamCount; i++ ){
@@ -134,7 +148,7 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 		}
 	}
 	//カメラコントローラ登録
-	gc->cc = AddCameraControl( gc->gs, G3DSCOBJ_PLAYER1+setup->myID, gc->heapID );
+	gc->cc = AddCameraControl( gc->gs, gc->heapID );
 
 	//スキルコントローラ登録
 	{
@@ -186,6 +200,8 @@ void RemoveGameControl( GAME_CONTROL* gc )
 	for( i=0; i<gc->teamCount; i++ ){
 		RemoveTeamControl( gc->tc[i] );
 	}
+	ExitMouseEvent( gc->mes );
+
 	GFL_HEAP_FreeMemory( gc ); 
 }
 
@@ -216,6 +232,8 @@ enum {
 void MainGameControl( GAME_CONTROL* gc )
 {
 	int i;
+	MainMouseEvent( gc->mes );
+
 	//チーム別メイン処理
 	{
 		MAINCONT_CALLBACK_WORK* mccw = GFL_HEAP_AllocClearMemory
@@ -224,18 +242,6 @@ void MainGameControl( GAME_CONTROL* gc )
 		mccw->cc = gc->cc;
 
 		for( i=0; i<gc->teamCount; i++ ){
-#if 0
-			int				pcID, netID;
-			PLAYER_CONTROL* pc;
-	
-			for( pcID=0; pcID<TEAM_PLAYER_COUNT_MAX; pcID++ ){
-				pc = GetTeamPlayerControl( gc->tc[i], pcID );
-				if( pc != NULL ){
-					netID = GetPlayerNetID( pc );
-					ControlKey( pc, gc->commKey[netID].trg, gc->commKey[netID].cont );
-				}
-			}
-#endif
 			MainTeamControl( gc->tc[i], gc->onGameFlag );
 			mccw->tc = gc->tc[i];
 			ProcessingAllTeamSummonObject( gc->tc[i], MainGameControlSummonCallBack, (void*)mccw );
@@ -245,8 +251,12 @@ void MainGameControl( GAME_CONTROL* gc )
 	}
 	//カメラ反映
 	{
-		u16 direction;
+		VecFx32	trans;
+		u16		direction;
 
+		GetPlayerControlTrans( gc->myPc, &trans );
+	//	trans.y = 0;
+		SetCameraControlTrans( gc->cc, &trans );
 		GetPlayerControlDirection( gc->myPc, &direction );
 		SetCameraControlDirection( gc->cc, &direction );
 	}
@@ -261,7 +271,8 @@ void MainGameControl( GAME_CONTROL* gc )
 	switch( gc->seq ){
 
 	case GAME_CASTLE_BUILD_START:
-		gc->onGameFlag = FALSE;
+		//gc->onGameFlag = FALSE;
+		gc->onGameFlag = TRUE;
 		gc->endGameFlag = FALSE;
 		//PutMessageWin( gc->mwc, GMSG_GAME_START_WAIT );
 		gc->seq = GAME_CASTLE_BUILD_ON;
@@ -350,23 +361,6 @@ void MainGameControl( GAME_CONTROL* gc )
 //------------------------------------------------------------------
 static void	MainGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work )
 {
-#if 0
-	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
-	VecFx32 trans;
-	BOOL cullingFlag;
-
-	GetSummonObjectTrans( tc, summonID, &trans );
-	//カメラとのスカラー値によるカリング
-	cullingFlag = CullingCameraScalar( mccw->cc, &trans, 0x0000 );
-
-	SetSummonObjectDrawSW( tc, summonID, &cullingFlag );
-#if 0
-	//カメラの視界位置によるカリング（ＸＺのみ）
-	checkCulling_bitweenCamera( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans, u16 theta );
-	//カメラ対象物の周囲位置によるカリング（ＸＺのみ）
-	checkCulling_aroundTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* trans, fx32 len );
-#endif
-#else
 	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
 	VecFx32 trans;
 	BOOL cullingFlag;
@@ -391,18 +385,10 @@ static void	MainGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int n
 	cullingFlag = CullingCameraBitween( mccw->cc, &trans, 0x2000 );
 
 	SetSummonObjectDrawSW( tc, summonID, &cullingFlag );
-#endif
 }
 
 static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
 {
-#if 0
-	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
-	BOOL cullingFlag;
-
-	SetSkillControlCommand( mccw->gc->sc, mccw->tc, pc, GetPlayerSkillCommand( pc ));
-	ResetPlayerSkillCommand( pc );
-#else
 	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
 	BOOL cullingFlag;
 	PLAYER_BUILD_COMMAND buildCommand;
@@ -411,12 +397,20 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 	BOOL buildFlag;
 
 	netID = GetPlayerNetID( pc );
-	ControlKey( pc, mccw->gc->commKey[netID].trg, mccw->gc->commKey[netID].cont );
 
-	MainPlayerControl( pc );
+	if( pc == mccw->gc->myPc ){
+#if 0
+		ControlKey( pc, mccw->gc->gnd[netID].trg, mccw->gc->gnd[netID].cont );
+#else
+		ControlKey( pc, mccw->gc, mccw->gc->gnd[netID].trg, mccw->gc->gnd[netID].cont );
+#endif
+		MainPlayerControl( pc );
+	} else {
+		MainNetWorkPlayerControl( pc, &mccw->gc->gnd[netID].psn );
+	}
 	SetSkillControlCommand( mccw->gc->sc, mccw->tc, pc, GetPlayerSkillCommand( pc ));
 	buildCommand = GetPlayerBuildCommand( pc );
-	
+
 	if( mccw->gc->endGameFlag == FALSE ){
 		if( mccw->gc->onGameFlag == TRUE ){
 			if( buildCommand == PBC_SUMMON ){
@@ -458,12 +452,40 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 			}
 		}
 	}
+//	ResetPlayerBuildCommand( pc );
+//	ResetPlayerDeadFlag( pc );
+//	ResetPlayerSkillCommand( pc );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	ゲームメインコントロール後のフラグリセット処理
+ */
+static void	ResetGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work );
+static void	ResetGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work );
+//------------------------------------------------------------------
+void ResetGameControl( GAME_CONTROL* gc )
+{
+	int i;
+	//チーム別メイン処理
+
+	for( i=0; i<gc->teamCount; i++ ){
+		ProcessingAllTeamSummonObject( gc->tc[i], ResetGameControlSummonCallBack, NULL );
+		ProcessingAllTeamPlayer( gc->tc[i], ResetGameControlPlayerCallBack, NULL );
+	}
+}
+
+//------------------------------------------------------------------
+static void	ResetGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work )
+{
+}
+
+static void	ResetGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
+{
 	ResetPlayerBuildCommand( pc );
 	ResetPlayerDeadFlag( pc );
 	ResetPlayerSkillCommand( pc );
-#endif
 }
-
 
 //------------------------------------------------------------------
 /**
@@ -494,7 +516,7 @@ BOOL SetGameControlKeyCommand( GAME_CONTROL* gc, int netID, int trg, int cont )
 	return TRUE;
 }
 
-void ResetGameControlKeyCommand( GAME_CONTROL* gc, int netID ) 
+static void ResetGameControlKeyCommand( GAME_CONTROL* gc, int netID ) 
 {
 	COMM_KEYDATA* commKey = &gc->commKey[netID];
 
@@ -513,10 +535,49 @@ void ResetAllGameControlKeyCommand( GAME_CONTROL* gc )
 
 //------------------------------------------------------------------
 /**
+ * @brief	通信ゲームデータ情報の取得と設定
+ */
+//------------------------------------------------------------------
+void GetGameNetWorkPlayData( GAME_CONTROL* gc, int netID, GAME_NETWORK_PLAYDATA* gnd ) 
+{
+	GetPlayerNetStatus( gc->myPc, &gnd->psn );
+	{
+		PLAYER_STATUS_NETWORK* psn = &gnd->psn;
+
+		//OS_TPrintf("SEND trans %x,%x,%x, dir %x\n ", 
+		//			psn->trans.x, psn->trans.y, psn->trans.z, psn->direction );
+	}
+}
+
+void SetGameNetWorkPlayData( GAME_CONTROL* gc, int netID, GAME_NETWORK_PLAYDATA* gnd )
+{
+	gc->gnd[netID] = *gnd;
+	{
+		PLAYER_STATUS_NETWORK* psn = &gc->gnd[netID].psn;
+
+		//OS_TPrintf("RECV trans %x,%x,%x, dir %x\n ", 
+		//			psn->trans.x, psn->trans.y, psn->trans.z, psn->direction );
+	}
+}
+
+void ResetAllGameNetWorkPlayData( GAME_CONTROL* gc )
+{
+	int i;
+
+	for( i=0; i<PLAYER_SETUP_NUM; i++ ){
+		gc->gnd[i].trg = 0;
+		gc->gnd[i].cont = 0;
+		ResetPlayerNetStatus( &gc->gnd[i].psn );
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief	コントロール
  */
 //------------------------------------------------------------------
-#define CAMERA_MOVE_SPEED	(0x0100*2)
+#define CAMERA_MOVE_SPEED	(0x0200*2)
 
 static BOOL checkMoveDirection( int cont, PLAYER_MOVE_DIR* dir )
 {
@@ -552,45 +613,76 @@ static BOOL checkMoveDirection( int cont, PLAYER_MOVE_DIR* dir )
 }
 
 //------------------------------------------------------------------
-static void ControlKey( PLAYER_CONTROL* pc, int trg, int cont )
+static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont )
 {
+	MOUSE_EVENT me = GetMouseEvent( gc->mes );
+
 	//方向設定
 	{
 		u16 direction;
 		
-		if(( cont & PAD_BUTTON_L )&&( cont & PAD_BUTTON_R )){	//リセット（プレーヤー前方）
-			//GetPlayerDirection( pc, &direction );
-			//SetPlayerControlDirection( pc, &direction );
-		} else if( cont & PAD_BUTTON_L ){	//左移動
+		if( me == MOUSE_EVENT_CAMERAMOVE_L ){	//左移動
 			GetPlayerControlDirection( pc, &direction );
 			direction += CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
-		} else if( cont & PAD_BUTTON_R ){	//右移動
+		} else if( me == MOUSE_EVENT_CAMERAMOVE_R ){	//右移動
 			GetPlayerControlDirection( pc, &direction );
 			direction -= CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
 		}
 	}
-	//武器の変更
-	if( trg & PAD_BUTTON_Y ){
-		SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
+	{
+		//テスト
+		if( !gc->tp_blank ){
+			//武器の変更
+			if( me == MOUSE_EVENT_ACTION_7 ){
+				SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
+				gc->tp_blank = 8;
+				return;
+			}
+			//装備の変更
+			if( me == MOUSE_EVENT_ACTION_8 ){
+				SetPlayerControlCommand( pc, PCC_TEST );
+				gc->tp_blank = 8;
+				return;
+			}
+		} else {
+				gc->tp_blank--;
+		}
+	}
+	//建設
+	if( me == MOUSE_EVENT_ACTION_13 ){
+		SetPlayerControlCommand( pc, PCC_BUILD );
+		return;
+	}
+	//召喚
+	if( me == MOUSE_EVENT_ACTION_12 ){
+		SetPlayerControlCommand( pc, PCC_SUMMON );
 		return;
 	}
 	//攻撃
-	if( trg & PAD_BUTTON_A ){
-		SetPlayerControlCommand( pc, PCC_ATTACK );
+	if(	( me == MOUSE_EVENT_ACTION_1 )||( me == MOUSE_EVENT_ACTION_2 )||
+		( me == MOUSE_EVENT_ACTION_3 )||( me == MOUSE_EVENT_ACTION_4 )||
+		( me == MOUSE_EVENT_ACTION_5 )||( me == MOUSE_EVENT_ACTION_6 ) ){
+		SetPlayerAttackCommand( pc, PCC_ATTACK, me - MOUSE_EVENT_ACTION_1 );
 		return;
 	}
 	//座る
-	if( cont & PAD_BUTTON_B ){
+	if( me == MOUSE_EVENT_ACTION_11 ){
 		SetPlayerControlCommand( pc, PCC_SIT );
 		return;
 	}
-	//置く、拾う
-	if( trg & PAD_BUTTON_START ){
+	//拾う
+	if( me == MOUSE_EVENT_ACTION_9 ){
+		SetPlayerControlCommand( pc, PCC_TAKEOFF );
+		return;
+	}
+	//置く
+	if( me == MOUSE_EVENT_ACTION_10 ){
 		SetPlayerControlCommand( pc, PCC_PUTON );
 		return;
 	}
+#if 0
 	{
 		PLAYER_MOVE_DIR mvDir; 
 
@@ -610,6 +702,16 @@ static void ControlKey( PLAYER_CONTROL* pc, int trg, int cont )
 			SetPlayerControlCommand( pc, PCC_STAY );
 		}
 	}
+#else
+	if( me == MOUSE_EVENT_MOVE ){
+		VecFx32 mvDir;
+
+		GetMousePos( gc->mes, &mvDir );
+		SetPlayerMoveCommand( pc, PCC_RUN, &mvDir );
+		return;
+	}
+	SetPlayerControlCommand( pc, PCC_STAY );
+#endif
 }
 
 
@@ -708,9 +810,6 @@ static void		ChangeControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wor
 
 	if( pcNetID == ccw->playNetID ){
 		ccw->gc->myPc = pc;
-		GetPlayerAct3dID( pc, &act3dID );
-		SetCameraControlTargetID( ccw->cc, &act3dID );
-
 		ccw->result = TRUE;
 	}
 }

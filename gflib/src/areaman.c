@@ -320,11 +320,8 @@ static u32 reserveHi_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea,
 	ofc = startPos & 7;
 
 	#ifdef AREAMAN_DEBUG
-	if( man->printDebugFlag )
-	{
-		OS_TPrintf("rHil8bit... endPos=%d, bytePos=%d, ofc=%d, bytePosEnd=%d\n",
-			endPos, bytePos, ofc, bytePosEnd);
-	}
+	OS_TPrintf("rHil8bit... endPos=%d, bytePos=%d, ofc=%d, bytePosEnd=%d\n",
+		endPos, bytePos, ofc, bytePosEnd);
 	#endif
 
 	do {
@@ -491,11 +488,8 @@ u32
 	CHECK_ASSERT( man );
 
 	#ifdef AREAMAN_DEBUG
-	if( man->printDebugFlag )
-	{
-		OS_TPrintf("[AREAMAN] startBlock:%d, numBlockArea:%d, numBlockReserve:%d\n",
-				startBlock, numBlockArea, numBlockReserve );
-	}
+	OS_TPrintf("[AREAMAN] startBlock:%d, numBlockArea:%d, numBlockReserve:%d\n",
+			startBlock, numBlockArea, numBlockReserve );
 	#endif
 
 	GF_ASSERT_MSG( numBlockArea >= numBlockReserve, "areasize:%d, reserve:%d\n", 
@@ -753,13 +747,6 @@ void
 	CHECK_ASSERT( man );
 	GF_ASSERT((pos+blockNum) <= man->numBlocks);
 
-	#ifdef AREAMAN_DEBUG
-	if( man->printDebugFlag )
-	{
-		OS_TPrintf("AREAMAN[%08x] release %d blocks , start:%d\n", (u32)man, blockNum, pos);
-	}
-	#endif
-
 	{
 		int p;
 		p = pos % 8;
@@ -791,12 +778,6 @@ void
 			man->area[pos] &= (~FwdFillBit[rem]);
 		}
 	}
-
-
-	#ifdef AREAMAN_DEBUG
-	print_bit_all( man );
-	#endif
-
 }
 
 
@@ -928,13 +909,10 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 	if( (man->area[pos] & start_bit) != 0 )
 	{
 		#ifdef AREAMAN_DEBUG
-		if( man->printDebugFlag )
-		{
-			OS_TPrintf("pos=%d, start_bit=");
-			print_bit( start_bit );
-			OS_TPrintf(" area=");
-			print_bit( man->area[pos] );
-		}
+		OS_TPrintf("pos=%d, start_bit=");
+		print_bit( start_bit );
+		OS_TPrintf(" area=");
+		print_bit( man->area[pos] );
 		#endif
 
 		GF_ASSERT(0);
@@ -958,18 +936,6 @@ static void reserve_area( GFL_AREAMAN* man, int pos, u32 blockNum )
 #ifdef AREAMAN_DEBUG
 static void print_bit( u8 b )
 {
-	static const char* let[] = { "0", "1" };
-
-	OS_PutString( let[ (b>>7)&1 ] );
-	OS_PutString( let[ (b>>6)&1 ] );
-	OS_PutString( let[ (b>>5)&1 ] );
-	OS_PutString( let[ (b>>4)&1 ] );
-	OS_PutString( let[ (b>>3)&1 ] );
-	OS_PutString( let[ (b>>2)&1 ] );
-	OS_PutString( let[ (b>>1)&1 ] );
-	OS_PutString( let[ (b>>0)&1 ] );
-
-#if 0
 	OS_TPrintf("%d", (b>>7)&1);
 	OS_TPrintf("%d", (b>>6)&1);
 	OS_TPrintf("%d", (b>>5)&1);
@@ -978,26 +944,22 @@ static void print_bit( u8 b )
 	OS_TPrintf("%d", (b>>2)&1);
 	OS_TPrintf("%d", (b>>1)&1);
 	OS_TPrintf("%d", (b>>0)&1);
-#endif
 }
 
 static void print_bit_all( GFL_AREAMAN* man )
 {
-	if( man->printDebugFlag )
-	{
-		int i;
+	int i;
 
-		for(i=0; i<man->areaByteSize; i++)
+	for(i=0; i<man->areaByteSize; i++)
+	{
+		print_bit(man->area[i]);
+		OS_TPrintf(" ");
+		if((i+1)%8==0)
 		{
-			print_bit(man->area[i]);
-			OS_TPrintf(" ");
-			if((i+1)%8==0)
-			{
-				OS_TPrintf("\n");
-			}
+			OS_TPrintf("\n");
 		}
-		OS_TPrintf("\n");
 	}
+	OS_TPrintf("\n");
 }
 
 static void print_reserveinfo( GFL_AREAMAN* man, u32 pos, u32 blockNum, int line )

@@ -690,7 +690,7 @@ extern GFL_G3D_RND*
  * @return	GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_ANM*
+extern GFL_G3D_ANM*
 	GFL_G3D_OBJECT_GetG3Danm
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
 
@@ -703,7 +703,7 @@ GFL_G3D_ANM*
  * @return	u16
  */
 //--------------------------------------------------------------------------------------------
-u16
+extern u16
 	GFL_G3D_OBJECT_GetAnimeCount
 		( GFL_G3D_OBJ* g3Dobj ); 
 
@@ -715,7 +715,7 @@ u16
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+extern BOOL
 	GFL_G3D_OBJECT_EnableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
@@ -727,7 +727,7 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+extern BOOL
 	GFL_G3D_OBJECT_DisableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
 
@@ -765,7 +765,7 @@ extern void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
@@ -778,11 +778,11 @@ extern void
  * @param	anmFrm	取得、設定に用いる値格納ポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_GetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
 
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
 
@@ -924,6 +924,40 @@ extern BOOL
 		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 
+
+//=============================================================================================
+/**
+ *
+ *
+ * 計算
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P0).N = 0（内積計算）
+ *			※PおよびP0:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ * @param	posRay		レイの位置
+ * @param	vecRay		レイの進行ベクトル
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ *
+ * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL
+	GFL_G3D_Calc_GetClossPointRayPlane
+		( const VecFx32* posRay, const VecFx32* vecRay, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest );
 
 //=============================================================================================
 /**

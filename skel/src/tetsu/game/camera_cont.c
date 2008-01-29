@@ -18,7 +18,7 @@
 //
 //
 //============================================================================================
-#define	MAINCAMERA_POFS_LENGTH	(40)
+#define	MAINCAMERA_POFS_LENGTH	(64)
 #define	MAINCAMERA_POFS_HEIGHT	(24)
 #define	MAINCAMERA_TOFS_LENGTH	(0)
 #define	MAINCAMERA_TOFS_HEIGHT	(16)
@@ -35,13 +35,14 @@
  */
 //------------------------------------------------------------------
 struct _CAMERA_CONTROL {
-	GAME_SYSTEM*			gs;
-	int						targetAct;
+	GAME_SYSTEM*	gs;
 
-	u16						seq;
-	u16						mainCameraDirection;
-	u16						autoCameraDirection;
-	HEAPID					heapID;
+	u16				seq;
+	VecFx32			mainCameraTrans;
+	u16				mainCameraDirection;
+	VecFx32			autoCameraTrans;
+	u16				autoCameraDirection;
+	HEAPID			heapID;
 };
 
 //------------------------------------------------------------------
@@ -49,13 +50,18 @@ struct _CAMERA_CONTROL {
  * @brief	カメラコントロールセット
  */
 //------------------------------------------------------------------
-CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID )
+CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, HEAPID heapID )
 {
 	CAMERA_CONTROL* cc = GFL_HEAP_AllocClearMemory( heapID, sizeof(CAMERA_CONTROL) );
 	cc->heapID = heapID;
 	cc->gs = gs;
-	cc->targetAct = targetAct;
+	cc->mainCameraTrans.x = 0;
+	cc->mainCameraTrans.y = 0;
+	cc->mainCameraTrans.z = 0;
 	cc->mainCameraDirection = 0;
+	cc->autoCameraTrans.x = 0;
+	cc->autoCameraTrans.y = 0;
+	cc->autoCameraTrans.z = 0;
 	cc->autoCameraDirection = 0;
 
 	return cc;
@@ -73,6 +79,21 @@ void RemoveCameraControl( CAMERA_CONTROL* cc )
 
 //------------------------------------------------------------------
 /**
+ * @brief	カメラ座標の取得と設定
+ */
+//------------------------------------------------------------------
+void GetCameraControlTrans( CAMERA_CONTROL* cc, VecFx32* trans )
+{
+	*trans = cc->mainCameraTrans;
+}
+
+void SetCameraControlTrans( CAMERA_CONTROL* cc, VecFx32* trans )
+{
+	cc->mainCameraTrans = *trans;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	カメラ方向の取得と設定
  */
 //------------------------------------------------------------------
@@ -84,21 +105,6 @@ void GetCameraControlDirection( CAMERA_CONTROL* cc, u16* value )
 void SetCameraControlDirection( CAMERA_CONTROL* cc, u16* value )
 {
 	cc->mainCameraDirection = *value;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	カメラターゲットＩＤの取得と設定
- */
-//------------------------------------------------------------------
-void GetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID )
-{
-	*ID = cc->targetAct;
-}
-
-void SetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID )
-{
-	cc->targetAct = *ID;
 }
 
 //------------------------------------------------------------------
@@ -214,13 +220,12 @@ BOOL CullingCameraAround( CAMERA_CONTROL* cc, VecFx32* trans, fx32 len )
 void MainCameraControl( CAMERA_CONTROL* cc )
 {
 	GFL_G3D_CAMERA* g3Dcamera;
-	VecFx32 targetTrans, targetRotate;
+	VecFx32 targetTrans;
 	VecFx32 cameraPos, cameraTarget;
 
-	Get3DactTrans( Get_GS_SceneAct( cc->gs ), cc->targetAct, &targetTrans );
-	Get3DactRotate( Get_GS_SceneAct( cc->gs ), cc->targetAct, &targetRotate );
-
 	//下カメラ制御
+	targetTrans = cc->mainCameraTrans;
+
 	cameraPos.x = targetTrans.x + MAINCAMERA_POFS_LENGTH * FX_SinIdx(cc->mainCameraDirection);
 	cameraPos.y = targetTrans.y + MAINCAMERA_POFS_HEIGHT * FX32_ONE;
 	cameraPos.z = targetTrans.z + MAINCAMERA_POFS_LENGTH * FX_CosIdx(cc->mainCameraDirection);
@@ -234,6 +239,8 @@ void MainCameraControl( CAMERA_CONTROL* cc )
 	GFL_G3D_CAMERA_SetTarget( g3Dcamera, &cameraTarget );
 
 	//上カメラ制御
+	targetTrans = cc->autoCameraTrans;
+
 	cameraPos.x = targetTrans.x + VIEWCAMERA_POFS_LENGTH * FX_SinIdx(cc->autoCameraDirection);
 	cameraPos.y = targetTrans.y + VIEWCAMERA_POFS_HEIGHT * FX32_ONE;
 	cameraPos.z = targetTrans.z + VIEWCAMERA_POFS_LENGTH * FX_CosIdx(cc->autoCameraDirection);

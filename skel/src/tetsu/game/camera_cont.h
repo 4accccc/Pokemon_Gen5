@@ -8,17 +8,17 @@
 typedef struct _CAMERA_CONTROL	CAMERA_CONTROL;
 
 // カメラコントロールセット
-extern CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, int targetAct, HEAPID heapID );
+extern CAMERA_CONTROL* AddCameraControl( GAME_SYSTEM* gs, HEAPID heapID );
 // カメラコントロールメイン
 extern void MainCameraControl( CAMERA_CONTROL* cc );
 // カメラコントロール終了
 extern void RemoveCameraControl( CAMERA_CONTROL* cc );
+// カメラ座標の取得と設定
+extern void GetCameraControlTrans( CAMERA_CONTROL* cc, VecFx32* trans );
+extern void SetCameraControlTrans( CAMERA_CONTROL* cc, VecFx32* trans );
 // カメラ回転値の取得と設定
 extern void GetCameraControlDirection( CAMERA_CONTROL* cc, u16* value );
 extern void SetCameraControlDirection( CAMERA_CONTROL* cc, u16* value );
-// カメラターゲットＩＤの取得と設定
-extern void GetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID );
-extern void SetCameraControlTargetID( CAMERA_CONTROL* cc, int* ID );
 // カメラ方向と対象物の内積取得
 extern void GetCameraControlDotProduct( CAMERA_CONTROL* cc, VecFx32* trans, int* scalar );
 // カリングチェック：カメラとのスカラー値によるカリング

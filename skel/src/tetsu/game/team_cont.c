@@ -99,16 +99,7 @@ TEAM_CONTROL* AddTeamControl( GAME_SYSTEM* gs, HEAPID heapID )
 	}
 	tc->mapArea = GFL_BMP_Create( MAPAREA_SIZX, MAPAREA_SIZY, GFL_BMP_16_COLOR, heapID );
 	GFL_BMP_Clear( tc->mapArea, MAPAREAMASK_COL );
-#if 1
-	//”wŒiFƒpƒŒƒbƒgì¬•“]‘—
-	{
-		u16* plt = GFL_HEAP_AllocClearMemoryLo( heapID, 16*2 );
-		plt[2] = 0x07c0;
-		plt[3] = 0x05e0;
-		GFL_BG_LoadPalette( GFL_BG_FRAME0_S, plt, 8*2, 16*2 );	//ƒTƒu‰æ–Ê‚Ì”wŒiF“]‘—
-		GFL_HEAP_FreeMemory( plt );
-	}
-#endif
+
 	tc->mapAreaDrawFlag = TRUE;
 	return tc;
 }

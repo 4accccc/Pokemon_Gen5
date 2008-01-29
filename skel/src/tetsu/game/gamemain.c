@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include "gflib.h"
+#include "gfl_use.h"
 #include "textprint.h"
 
 #include "setup.h"
@@ -22,6 +23,7 @@ BOOL	GameMain( void );
 
 static void _initRecvBuffer( void );
 static void _sendGameKey( u16 trg, u16 cont );
+static void _sendGamePlay( u16 trg, u16 cont );
 #define CAMERA_MOVE_SPEED	(0x0100)
 //------------------------------------------------------------------
 /**
@@ -60,6 +62,7 @@ typedef struct {
 
 	int				myNetID;
 	int				seq;
+	int				mainContSeq;
 	int				timer;
 	int				trg;
 	int				cont;
@@ -87,10 +90,14 @@ void	GameBoot( HEAPID heapID )
 {
 	gw = GFL_HEAP_AllocClearMemory( heapID, sizeof(GAME_WORK) );
 	gw->heapID = heapID;
+
+	GFL_UI_TP_Init( gw->heapID );
 }
 
 void	GameEnd( void )
 {
+	GFL_UI_TP_Exit();
+
 	GFL_HEAP_FreeMemory( gw );
 }
 
@@ -106,6 +113,8 @@ BOOL	GameMain( void )
 	BOOL return_flag = FALSE;
 	int i;
 	gw->timer++;
+
+	GFL_UI_TP_Main();
 
 	switch( gw->seq ){
 
@@ -169,6 +178,7 @@ BOOL	GameMain( void )
 		gw->cont = 0;
 
 		gw->seq++;
+		gw->mainContSeq = 0;
 		break;
 
 	case 3:
@@ -176,7 +186,9 @@ BOOL	GameMain( void )
 		gw->trg |= GFL_UI_KEY_GetTrg();
 		gw->cont |= GFL_UI_KEY_GetCont();
 
-		if( !(gw->timer&1) ){
+		switch( gw->mainContSeq ){
+		case 0:
+			GFUser_VIntr_ResetVblankCounter();
 			//---------------
 			{
 				if( gw->trg & PAD_BUTTON_SELECT ){
@@ -189,17 +201,25 @@ BOOL	GameMain( void )
 			if( GameEndCheck( gw->cont ) == TRUE ){
 				gw->seq++;
 			}
+			MainGameControl( gw->gc );
+			//ResetAllGameControlKeyCommand( gw->gc ); 
+			MainGameSystem( gw->gs );
 			{
 				//キー交換通信
-				_sendGameKey( gw->trg, gw->cont );
+				//_sendGameKey( gw->trg, gw->cont );
+				_sendGamePlay( gw->trg, gw->cont );
 			}
-			MainGameControl( gw->gc );
-			ResetAllGameControlKeyCommand( gw->gc ); 
-			MainGameSystemPref( gw->gs );
+			ResetGameControl( gw->gc );
+
 			gw->trg = 0;
 			gw->cont = 0;
-		} else {
-			MainGameSystemAfter( gw->gs );
+			gw->mainContSeq++;
+			break;
+		case 1:
+			if( GFUser_VIntr_GetVblankCounter() > 1 ){
+				gw->mainContSeq = 0;
+			}
+			break;
 		}
 		break;
 
@@ -263,10 +283,11 @@ static void _initRecvBuffer( void )
 // ローカル通信コマンドの定義
 enum _gameCommand_e {
 	_GAME_COM_KEY = GFL_NET_CMD_COMMAND_MAX,
+	_GAME_COM_PLAY,
 };
 
 //------------------------------------------------------------------
-// 位置情報受信
+// _GAME_COM_KEY　位置情報送受信
 typedef struct {
     u16 keyTrg;
     u16 keyCont;
@@ -298,9 +319,41 @@ static void _recvGameKey
 }
 
 //------------------------------------------------------------------
+// _GAME_COM_PLAY　ゲーム情報送受信
+
+static void _sendGamePlay( u16 trg, u16 cont )
+{
+	GAME_NETWORK_PLAYDATA gnd;
+	gnd.trg = trg;
+	gnd.cont = cont;
+
+#ifdef NET_WORK_ON
+	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
+	SendGameNet( _GAME_COM_PLAY, &gnd );
+#else
+	//GetGameNetWorkPlayData( gw->gc, gw->myNetID, &gnd );
+	//SetGameNetWorkPlayData( gw->gc, gw->myNetID, &gnd );
+	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
+	SetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
+#endif
+}
+
+static void _recvGamePlay
+	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+	GAME_NETWORK_PLAYDATA* pGnd = (GAME_NETWORK_PLAYDATA*)pData;
+	int	workp = netID-1;	//DS通信は親=0（内部隠し構造）の1orgin
+
+    if( GFL_NET_IsParentHandle(pNetHandle) == FALSE ){
+		SetGameNetWorkPlayData( gw->gc, workp, pGnd );
+    }
+}
+
+//------------------------------------------------------------------
 // ローカル通信テーブル
 const NetRecvFuncTable _CommPacketTbl[] = {
     { _recvGameKey, GFL_NET_COMMAND_SIZE(sizeof(COMMWORK_KEY)), NULL },
+    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(GAME_NETWORK_PLAYDATA)), NULL },
 };
 
 

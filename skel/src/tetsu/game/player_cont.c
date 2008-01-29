@@ -58,16 +58,23 @@ struct _PLAYER_CONTROL {
 	u16						nowAccesary;
 	u16						recoverTimer;
 	u16						jumpCalcWork;
+	VecFx32					moveVecNormal;
+	VecFx32					moveVec;
+	int						attackID;
 
 	PLAYER_STATUS			status;
+	BOOL					anmSetFlag;	//通信用
+	int						anmSetID;	//通信用
 #if 0
 	GFL_CLWK*				statusObj;
 #endif
+	SCENE_ACT*				sceneAct;
+	u16						work[8];
 };
 
-#define WALK_SPEED	(2)//(1)		//実質1/2
-#define RUN_SPEED	(8)//(4)		//実質2
-#define JUMP_SPEED	(16)//(4)		//実質2
+#define WALK_SPEED	(1)
+#define RUN_SPEED	(4)
+#define JUMP_SPEED	(3)
 #define HITOFS		(16)
 static const PLAYER_STATUS	statusDefault = { {"Null"},1000, 100, 1000, 100, 50, 50, 50, 50, 50 };
 static const GFL_CLWK_DATA clwkData = { 0, 0, 0, 0, 0 }; 
@@ -82,6 +89,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->gs = gs;
 	pc->targetAct = targetAct;
 	pc->netID = netID;
+	pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
 
 	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
@@ -99,17 +107,28 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 
 	pc->contDirection = 0;
 	pc->nowDirection = 0;
-	Get3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
+
+	pc->contTrans.x = 0;
+	pc->contTrans.y = 0;
+	pc->contTrans.z = 0;
+
 	pc->nowAccesary = 0;
 	pc->recoverTimer = 0;
 	pc->jumpCalcWork = 0;
+	pc->attackID = 0;
 
 	pc->subSeq = 0;
 	pc->nowCommand = 0;
 	pc->status = statusDefault;
 
-	Set3DactDrawSw( Get_GS_SceneAct( pc->gs ), pc->targetAct, TRUE );
+	Set3DactDrawSw( pc->sceneAct, TRUE );
 
+	{
+		int i;
+		for( i=0; i<8; i++ ){
+			pc->work[i] = 0;
+		}
+	}
 	return pc;
 }
 
@@ -120,6 +139,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 //------------------------------------------------------------------
 void RemovePlayerControl( PLAYER_CONTROL* pc )
 {
+	Delete3Dact( pc->sceneAct );
 	GFL_HEAP_FreeMemory( pc ); 
 }
 
@@ -156,7 +176,7 @@ void GetPlayerControlTrans( PLAYER_CONTROL* pc, VecFx32* trans )
 void SetPlayerControlTrans( PLAYER_CONTROL* pc, const VecFx32* trans )
 {
 	pc->contTrans = *trans;
-	Set3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
+	Set3DactTrans( pc->sceneAct, &pc->contTrans );
 }
 
 //------------------------------------------------------------------
@@ -211,17 +231,31 @@ void SetPlayerControlCommand( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND c
 
 //------------------------------------------------------------------
 /**
- * @brief	移動コマンドの設定
+ * @brief	プレーヤー攻撃コマンドの設定
+ */
+//------------------------------------------------------------------
+void SetPlayerAttackCommand
+	( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND command, int attackID )
+{
+	pc->contCommand = command;
+	pc->attackID = attackID;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	プレーヤー移動コマンドの設定
  */
 //------------------------------------------------------------------
 void SetPlayerMoveCommand
-	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, PLAYER_MOVE_DIR dir )
+	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, VecFx32* mvDir )
 {
 	if( pc->jumpFlag == TRUE ){	//ジャンプ中制御不可
 		return;
 	}
 	pc->contCommand = command;
-	pc->moveDir = dir;
+	//進行ベクトルの算出
+	VEC_Subtract( mvDir, &pc->contTrans, &pc->moveVecNormal );
+	VEC_Normalize( &pc->moveVecNormal, &pc->moveVecNormal );	//正規化
 }
 
 //------------------------------------------------------------------
@@ -306,6 +340,33 @@ int GetPlayerNetID( PLAYER_CONTROL* pc )
 
 //------------------------------------------------------------------
 /**
+ * @brief	ネットワーク用ステータスの取得とリセット
+ */
+//------------------------------------------------------------------
+void GetPlayerNetStatus( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* pNetStatus )
+{
+	pNetStatus->trans = pc->contTrans;
+	pNetStatus->direction = pc->nowDirection;
+	pNetStatus->anmSetFlag = pc->anmSetFlag;
+	pNetStatus->anmSetID = pc->anmSetID;
+	pNetStatus->skillCommand = pc->skillCommand;
+	pNetStatus->buildCommand = pc->buildCommand;
+}
+
+void ResetPlayerNetStatus( PLAYER_STATUS_NETWORK* pNetStatus )
+{
+	pNetStatus->trans.x = 0;
+	pNetStatus->trans.y = 0;
+	pNetStatus->trans.z = 0;
+	pNetStatus->direction = 0;
+	pNetStatus->anmSetFlag = FALSE;
+	pNetStatus->anmSetID = 0;
+	pNetStatus->skillCommand = 0;
+	pNetStatus->buildCommand = 0;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ＨＰ減少値の設定
  */
 //------------------------------------------------------------------
@@ -351,19 +412,33 @@ void SetPlayerRegenerate( PLAYER_CONTROL* pc, const u8 count, const u8 timer, co
  * @brief	プレーヤーメインコントロール
  */
 //------------------------------------------------------------------
-#define JUMP_HEIGHT (FX32_ONE*48)
+#define JUMP_HEIGHT (FX32_ONE*16)
 
 static int dirOffsTable[] = 
 	{ 0x0000, 0x8000, 0x4000,-0x4000, 0x2000,-0x2000, 0x6000,-0x6000, };
 
 //------------------------------------------------------------------
-static BOOL anmSet( PLAYER_CONTROL* pc, int anmID )
+static void anmReset( PLAYER_CONTROL* pc )
 {
-	if( pc->jumpFlag == FALSE ){
-		Set3DactPlayerChrAnimeCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, anmID );
-		return TRUE;
+	pc->anmSetFlag = FALSE;
+	pc->anmSetID = ACTANM_CMD_STAY;	//=0
+}
+
+//------------------------------------------------------------------
+static void anmSet( PLAYER_CONTROL* pc, int anmID )
+{
+	if( Set3DactPlayerChrAnimeCmd( pc->sceneAct, anmID ) == TRUE ){
+		pc->anmSetFlag = TRUE;
+		pc->anmSetID = anmID;
 	}
-	return FALSE;
+}
+
+//------------------------------------------------------------------
+static void anmSetForce( PLAYER_CONTROL* pc, int anmID )
+{
+	Set3DactPlayerChrAnimeForceCmd( pc->sceneAct, anmID );
+	pc->anmSetFlag = TRUE;
+	pc->anmSetID = anmID;
 }
 
 //------------------------------------------------------------------
@@ -375,27 +450,28 @@ static BOOL moveSet( PLAYER_CONTROL* pc, int speed, u16 direction )
 	BOOL	mvf;
 
 	//簡易ヒットチェック(自分を中心とした円衝突判定)
-	pc->nowDirection = direction;
-	tmpTransVec.x = pc->contTrans.x + ( -( speed + HITOFS ) * FX_SinIdx( direction ) /2 );
-	tmpTransVec.y = pc->contTrans.y;
-	tmpTransVec.z = pc->contTrans.z + ( -( speed + HITOFS ) * FX_CosIdx( direction ) /2 );
+	VEC_MultAdd( speed << FX32_SHIFT, &pc->moveVecNormal, &pc->contTrans, &tmpTransVec );
 
 	//簡易アトリビュート取得
 	areaOver = Get3DmapAttr( Get_GS_SceneMap( pc->gs ), &tmpTransVec, &mapAttr );
+	{
+		VecFx32 vec0 = { 0, 0, 0 };
 
-	if(( areaOver == TRUE )&&( mapAttr == 0 )){
-		pc->contTrans.x += ( -speed * FX_SinIdx( direction ) /2 );
-		pc->contTrans.z += ( -speed * FX_CosIdx( direction ) /2 );
-		mvf = TRUE;
-	} else {
-		mvf = FALSE;
+		if(( areaOver == TRUE )&&( mapAttr == 0 )){
+			VEC_MultAdd( speed << FX32_SHIFT, &pc->moveVecNormal, &vec0, &pc->moveVec );
+			pc->contTrans = tmpTransVec;
+			mvf = TRUE;
+		} else {
+			pc->moveVec = vec0;
+			mvf = FALSE;
+		}
 	}
 	rotVec.x = 0;
-	rotVec.y = direction + 0x8000;
+	rotVec.y = FX_Atan2Idx( -pc->moveVecNormal.z, pc->moveVecNormal.x ) + 0x4000;
 	rotVec.z = 0;
 
-	Set3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
-	Set3DactRotate( Get_GS_SceneAct( pc->gs ), pc->targetAct, &rotVec );
+	Set3DactTrans( pc->sceneAct, &pc->contTrans );
+	Set3DactRotate( pc->sceneAct, &rotVec );
 	return mvf;
 }
 
@@ -408,8 +484,7 @@ static void directionSet( PLAYER_CONTROL* pc, u16 direction )
 	rotVec.x = 0;
 	rotVec.y = direction + 0x8000;
 	rotVec.z = 0;
-
-	Set3DactRotate( Get_GS_SceneAct( pc->gs ), pc->targetAct, &rotVec );
+	Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -463,20 +538,66 @@ static BOOL damageSet( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
+static BOOL damageControl( PLAYER_CONTROL* pc )
+{
+	if( pc->recoverTimer ){
+		if( pc->recoverTimer < 10 + 10*30 ){	//復帰待ち１０秒
+			pc->recoverTimer++;
+		} else {
+			u8 alpha = 31;
+
+			anmSetForce( pc, ACTANM_CMD_STAY );
+			pc->recoverTimer = 0;	//復帰待ちカウンタ初期化
+			Set3DactBlendAlpha( pc->sceneAct, &alpha );
+			pc->status.hp = pc->status.hpMax;	//復帰
+			pc->deadFlag = FALSE;
+			pc->subSeq = 0;
+		}
+	} else {
+		if( damageSet(pc) == TRUE ){
+			if( pc->status.hp ){
+				//ダメージくらった
+				anmSetForce( pc, ACTANM_CMD_HIT );
+				pc->hitEnableFlag = FALSE;	//やられモーション中はヒット判定をしない（暫定）
+			} else {
+				u8 alpha = 20;	//半透明演出
+				//死亡
+				anmSetForce( pc, ACTANM_CMD_DEAD );
+				Set3DactBlendAlpha( pc->sceneAct, &alpha );
+				pc->deadFlag = TRUE;
+				pc->hitEnableFlag = FALSE;	//死亡時はヒット判定をしない
+				pc->recoverTimer = 10;	//復帰待ちカウンタ開始
+			}
+		} else {
+			//行動処理
+			if( Check3DactPlayerBusy( pc->sceneAct ) == TRUE ){
+				return FALSE;	//強制アニメ中
+			}
+			if( pc->skillBusyFlag ){
+				return FALSE;	//スキル実行中
+			}
+			pc->hitEnableFlag = TRUE;
+		}
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//------------------------------------------------------------------
 static BOOL jumpControl( PLAYER_CONTROL* pc )
 {
 	BOOL retFlag = TRUE;
 
 	switch( pc->subSeq ){
 	case 0:
-		Set3DactPlayerChrAnimeCmd(Get_GS_SceneAct(pc->gs), pc->targetAct, ACTANM_CMD_JUMP_RDY);
+		anmSet( pc, ACTANM_CMD_JUMP_RDY );
 		pc->moveDir = pc->contDirection + pc->moveDir;
 		pc->jumpFlag = TRUE;
 		pc->subSeq++;
 		retFlag = FALSE;
 		break;
 	case 1:
-		Set3DactPlayerChrAnimeCmd(Get_GS_SceneAct(pc->gs), pc->targetAct, ACTANM_CMD_JUMPUP);
+		anmSet( pc, ACTANM_CMD_JUMPUP );
 		pc->jumpCalcWork = 0;
 		pc->subSeq++;
 		retFlag = FALSE;
@@ -484,24 +605,24 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 	case 2:
 		if( pc->jumpCalcWork < 0x6000 ){
 			pc->contTrans.y = (JUMP_HEIGHT * FX_SinIdx( pc->jumpCalcWork )/ FX16_ONE);
-			pc->jumpCalcWork += 0x0200;
+			pc->jumpCalcWork += 0x1000;
 		} else {
-			Set3DactPlayerChrAnimeCmd
-				(Get_GS_SceneAct(pc->gs), pc->targetAct, ACTANM_CMD_JUMPDOWN);
+			anmSet( pc, ACTANM_CMD_JUMPDOWN );
 			pc->subSeq++;
 		}
+		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+		break;
 	case 3:
 		if( pc->jumpCalcWork < 0x8000 ){
 			pc->contTrans.y = (JUMP_HEIGHT * FX_SinIdx( pc->jumpCalcWork )/ FX16_ONE);
-			pc->jumpCalcWork += 0x0800;
+			pc->jumpCalcWork += 0x1000;
 		} else {
-			Set3DactPlayerChrAnimeCmd
-				(Get_GS_SceneAct(pc->gs), pc->targetAct, ACTANM_CMD_JUMP_END);
+			anmSet( pc, ACTANM_CMD_JUMP_END );
 			pc->contTrans.y = 0;
 			pc->subSeq++;
 			retFlag = FALSE;
 		}
-		Set3DactTrans( Get_GS_SceneAct( pc->gs ), pc->targetAct, &pc->contTrans );
+		Set3DactTrans( pc->sceneAct, &pc->contTrans );
 		break;
 	case 4:
 		pc->contCommand = PCC_STAY;
@@ -518,27 +639,16 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 {
 	BOOL mvf;
 
-	if( damageSet(pc) == TRUE ){
-		if( pc->status.hp ){
-			pc->contCommand = PCC_HIT;	//ダメージくらった
-		} else {
-			pc->contCommand = PCC_DEAD;	//死亡
-		}
-	} else {
-		//行動処理
-		if( Check3DactPlayerBusy( Get_GS_SceneAct( pc->gs ), pc->targetAct ) == TRUE ){
-			return;	//強制アニメ中
-		}
-		if( pc->skillBusyFlag ){
-			return;	//スキル実行中
-		}
-		pc->hitEnableFlag = TRUE;
+	anmReset( pc );			//通信アニメコマンドリセット
+
+	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
+		return;
 	}
 	if( pc->subSeq ){
 		pc->contCommand = pc->nowCommand;//サブシーケンス動作中
 	}
 	if(( pc->contCommand != PCC_SIT )&&( pc->sitDownFlag == TRUE )){	//しゃがみ中立ち判定処理
-		anmSet( pc, ACTANM_CMD_STANDUP );
+		anmSetForce( pc, ACTANM_CMD_STANDUP );
 		pc->sitDownFlag = FALSE;
 		return;
 	}
@@ -550,7 +660,6 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_JUMP:
 		if( jumpControl( pc ) == TRUE ){
-			//mvf = moveSet( pc, JUMP_SPEED, pc->contDirection + pc->moveDir );
 			mvf = moveSet( pc, JUMP_SPEED, pc->moveDir );
 		}
 		break;
@@ -575,74 +684,81 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
+#if 0
 		switch( pc->nowAccesary ){
 		defasult:
-			anmSet( pc, ACTANM_CMD_STAY );
+			anmSetForce( pc, ACTANM_CMD_STAY );
 			break;
 		case 1:
 			directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSet( pc, ACTANM_CMD_ATTACK );
+			anmSetForce( pc, ACTANM_CMD_ATTACK );
 			pc->skillCommand = PSC_ATTACK_SWORD;
 			break;
 		case 2:
 			directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSet( pc, ACTANM_CMD_SHOOT );
+			anmSetForce( pc, ACTANM_CMD_SHOOT );
 			pc->skillCommand = PSC_ATTACK_BOW;
 			break;
 		case 3:
 			directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSet( pc, ACTANM_CMD_SPELL );
+			anmSetForce( pc, ACTANM_CMD_SPELL );
 			pc->skillCommand = PSC_ATTACK_FIRE;
 			break;
 		}
+#else
+		directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
+		anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 + pc->attackID );
+		pc->skillCommand = PSC_ATTACK_SWORD;
+#endif
+		break;
+	case PCC_BUILD:
+		anmSet( pc, ACTANM_CMD_TAKE );
+		pc->buildCommand = PBC_BUILD_CASTLE;
+		break;
+	case PCC_SUMMON:
+		anmSet( pc, ACTANM_CMD_TAKE );
+		pc->buildCommand = PBC_SUMMON;
 		break;
 	case PCC_SIT:
 		anmSet( pc, ACTANM_CMD_SITDOWN );
 		pc->sitDownFlag = TRUE;
-		pc->buildCommand = PBC_SUMMON;
+		break;
+	case PCC_PUTON:		
+		anmSetForce( pc, ACTANM_CMD_TAKE );
+		break;
+	case PCC_TAKEOFF:		
+		anmSetForce( pc, ACTANM_CMD_TAKE );
 		break;
 	case PCC_WEPONCHANGE:		
 		//ナンバー切り替え
 		pc->nowAccesary++;
 		pc->nowAccesary&= 3;
-		Set3DactPlayerChrAccesory( Get_GS_SceneAct( pc->gs ), pc->targetAct, pc->nowAccesary );
+		Set3DactPlayerChrAccesory( pc->sceneAct, pc->nowAccesary );
 		break;
-	case PCC_PUTON:		
-		anmSet( pc, ACTANM_CMD_TAKE );
-		pc->buildCommand = PBC_BUILD_CASTLE;
-		break;
-	case PCC_HIT:		
-		Set3DactPlayerChrAnimeForceCmd( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_HIT );
-		pc->hitEnableFlag = FALSE;	//やられモーション中はヒット判定をしないこともできる
-		break;
-	case PCC_DEAD:		
-		switch( pc->subSeq ){
-		case 0:
-			Set3DactPlayerChrAnimeForceCmd
-							( Get_GS_SceneAct( pc->gs ), pc->targetAct, ACTANM_CMD_DEAD );
-			{
-				u8 alpha = 20;	//半透明演出
-				Set3DactBlendAlpha( Get_GS_SceneAct( pc->gs ), pc->targetAct, &alpha );
-			}
-			pc->deadFlag = TRUE;
-			pc->recoverTimer = 10*60;	//復帰待ち１０秒
-			pc->hitEnableFlag = FALSE;	//やられモーション中はヒット判定をしないこともできる
-			pc->subSeq++;
-			break;
-		case 1:
-			if( pc->recoverTimer ){
-				pc->recoverTimer--;
-			} else {
-				u8 alpha = 31;
-				Set3DactBlendAlpha( Get_GS_SceneAct( pc->gs ), pc->targetAct, &alpha );
-				pc->status.hp = pc->status.hpMax;	//復帰
-				pc->deadFlag = FALSE;
-				pc->subSeq = 0;
-			}
-			break;
-		}
+	case PCC_TEST:		
+		pc->work[0]++;
+		pc->work[0]&=3;
+		ChangeEquipNum( pc->sceneAct, pc->work[0] );
+		anmSetForce( pc, ACTANM_CMD_STAY );
 		break;
 	}
 	pc->nowCommand = pc->contCommand;
+}
+
+//------------------------------------------------------------------
+void MainNetWorkPlayerControl( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* psn )
+{
+	SetPlayerControlTrans( pc, &psn->trans );
+	directionSet( pc, psn->direction );
+	pc->skillCommand = psn->skillCommand;
+	pc->buildCommand = psn->buildCommand;
+
+	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
+		return;
+	}
+	if( psn->anmSetFlag == TRUE ){
+		Set3DactPlayerChrAnimeForceCmd( pc->sceneAct, psn->anmSetID );
+		psn->anmSetFlag = FALSE;
+	}
 }
 

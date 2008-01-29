@@ -34,9 +34,15 @@ typedef enum {
 	PCC_WEPONCHANGE,
 
 	PCC_PUTON,
+	PCC_TAKEOFF,
+
+	PCC_BUILD,
+	PCC_SUMMON,
 
 	PCC_HIT,
 	PCC_DEAD,
+
+	PCC_TEST,
 
 }PLAYER_CONTROL_COMMAND;
 
@@ -74,11 +80,23 @@ typedef enum {
 
 }PLAYER_BUILD_COMMAND;
 
+typedef struct {
+	VecFx32					trans;
+	u16						direction;
+	BOOL					anmSetFlag;
+	BOOL					anmSetID;
+	PLAYER_SKILL_COMMAND	skillCommand;
+	PLAYER_BUILD_COMMAND	buildCommand;
+
+}PLAYER_STATUS_NETWORK;
+
 // プレーヤーコントロールセット
 extern PLAYER_CONTROL* AddPlayerControl
 			( GAME_SYSTEM* gs, int targetAct, int netID, HEAPID heapID );
 // プレーヤーコントロールメイン
 extern void MainPlayerControl( PLAYER_CONTROL* pc );
+// プレーヤーコントロールメイン(ネットワーク)
+extern void MainNetWorkPlayerControl( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* psn );
 // プレーヤーコントロール終了
 extern void RemovePlayerControl( PLAYER_CONTROL* pc );
 // プレーヤー関連付け3DactIDの取得
@@ -98,9 +116,12 @@ extern void GetPlayerStatus( PLAYER_CONTROL* pc, PLAYER_STATUS* status );
 extern void SetPlayerStatus( PLAYER_CONTROL* pc, const PLAYER_STATUS* status );
 // プレーヤーコマンドの設定
 extern void SetPlayerControlCommand( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND command );
-// 移動コマンドの設定
+// プレーヤー攻撃コマンドの設定
+extern void SetPlayerAttackCommand
+	( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND command, int attackID );
+// プレーヤー移動コマンドの設定
 extern void SetPlayerMoveCommand
-	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, PLAYER_MOVE_DIR dir );
+	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, VecFx32* mvDir );
 // スキルコマンドの取得とリセット
 extern PLAYER_SKILL_COMMAND GetPlayerSkillCommand( PLAYER_CONTROL* pc );
 extern void ResetPlayerSkillCommand( PLAYER_CONTROL* pc );
@@ -117,6 +138,9 @@ extern BOOL GetPlayerDeadFlag( PLAYER_CONTROL* pc );
 extern void ResetPlayerDeadFlag( PLAYER_CONTROL* pc );
 // ネットＩＤの取得
 extern int GetPlayerNetID( PLAYER_CONTROL* pc );
+// ネットワーク用ステータスの取得とリセット
+extern void GetPlayerNetStatus( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* pNetStatus );
+extern void ResetPlayerNetStatus( PLAYER_STATUS_NETWORK* pNetStatus );
 // ＨＰ減少値の設定
 extern void SetPlayerDamage( PLAYER_CONTROL* pc, const s16 damage );
 // ＤＯＴ（時間経過によるＨＰ減少値）の設定

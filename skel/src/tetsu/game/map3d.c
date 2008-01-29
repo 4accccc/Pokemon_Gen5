@@ -7,6 +7,7 @@
 #include "gflib.h"
 
 #include "setup.h"
+
 //------------------------------------------------------------------
 /**
  * @brief	型宣言
@@ -22,6 +23,8 @@ typedef struct {
 
 struct _SCENE_MAP {
 	GFL_G3D_SCENE*		g3Dscene;
+	u16					unitIdx;
+	u16					objIdx;
 	u16*				mapAttr;
 	MAPOBJ_HEADER		defaultFloor;
 	MAPOBJ_HEADER		extraObject[EXOBJ_MAX];
@@ -57,18 +60,57 @@ static const	EXOBJ_DATATABLE extraObjectDataTbl[5];
 
 //------------------------------------------------------------------
 /**
+ * @brief	セットアップ
+ */
+//------------------------------------------------------------------
+#include "src/sample_graphic/haruka.naix"
+static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
+
+enum {
+	G3DRES_MAP_FLOOR = 0,
+	G3DRES_EFFECT_WALL,
+};
+//３Ｄグラフィックリソーステーブル
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	{ (u32)g3DarcPath2, NARC_haruka_test_floor2_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESPATH },
+};
+
+//---------------------
+enum {
+	G3DOBJ_MAP_FLOOR = 0,
+	G3DOBJ_EFFECT_WALL,
+};
+//３Ｄオブジェクト定義テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
+	{ G3DRES_EFFECT_WALL, 0, G3DRES_EFFECT_WALL, NULL, 0 },
+};
+
+//---------------------
+//g3Dscene 初期設定テーブルデータ
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
+	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
+	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
+};
+
+//------------------------------------------------------------------
+/**
  * @brief	３Ｄマップ生成
  */
 //------------------------------------------------------------------
 SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 {
+	SCENE_MAP* sceneMap = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_MAP) );
+	GFL_G3D_SCENEOBJ_DATA* data;
 	int	i;
 
-	GFL_G3D_SCENEOBJ_DATA* data;
-	SCENE_MAP* sceneMap = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_MAP) );
-	sceneMap->g3Dscene = g3Dscene;
+	//３Ｄデータセットアップ
+	sceneMap->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3Dutil_setup );
+	sceneMap->objIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sceneMap->unitIdx );
 
 	//マップ作成
+	sceneMap->g3Dscene = g3Dscene;
 	MapDataCreate( sceneMap, &mapDataTbl, heapID );
 
 	for( i=0; i<EXOBJ_MAX; i++ ){
@@ -93,6 +135,7 @@ void	Delete3Dmap( SCENE_MAP* sceneMap )
 		}
 	}
 	MapDataDelete( sceneMap );
+	GFL_G3D_SCENE_DelG3DutilUnit( sceneMap->g3Dscene, sceneMap->unitIdx );
 	GFL_HEAP_FreeMemory( sceneMap );
 }
 
@@ -276,7 +319,8 @@ static void MapDataCreate( SCENE_MAP* sceneMap, const MAPDATA* map, HEAPID heapI
 	}
 
 	//マップオブジェクト追加
-	sceneMap->defaultFloor.id = GFL_G3D_SCENEOBJ_Add( sceneMap->g3Dscene, pdata, count );
+	sceneMap->defaultFloor.id = GFL_G3D_SCENEOBJ_Add
+								( sceneMap->g3Dscene, pdata, count, sceneMap->objIdx );
 	sceneMap->defaultFloor.count = count;
 	sceneMap->mapAttr = mapAttr;
 
@@ -305,7 +349,7 @@ static void AddExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj, int objID
 
 	exobj->count = extraObjectDataTbl[objID].count;
 	exobj->id = GFL_G3D_SCENEOBJ_Add
-				( sceneMap->g3Dscene, extraObjectDataTbl[objID].data, exobj->count );
+			( sceneMap->g3Dscene, extraObjectDataTbl[objID].data, exobj->count, sceneMap->objIdx );
 
 	for( i=0; i<exobj->count; i++ ){
 		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, exobj->id + i );
@@ -421,7 +465,7 @@ static const MAPDATA mapDataTbl = {
 };
 
 static const GFL_G3D_SCENEOBJ_DATA extraObject1[] = {
-	{	G3DOBJ_NPC, 0, 1, 8, TRUE, TRUE,
+	{	G3DOBJ_EFFECT_WALL, 0, 1, 8, TRUE, TRUE,
 		{	{ 0, -FX32_ONE*64, 0 },
 			{ FX32_ONE, FX32_ONE, FX32_ONE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },

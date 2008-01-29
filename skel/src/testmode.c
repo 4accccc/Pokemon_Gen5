@@ -12,7 +12,6 @@
 
 void	TestModeSet(void);
 
-
 //============================================================================================
 //
 //
@@ -21,6 +20,7 @@ void	TestModeSet(void);
 //
 //============================================================================================
 #define G3DUTIL_USE
+
 typedef struct {
 	HEAPID					heapID;
 	int						seq;
@@ -32,6 +32,7 @@ typedef struct {
 	GFL_BMPWIN*				bmpwin[32];
 #ifdef G3DUTIL_USE
 	GFL_G3D_UTIL*			g3Dutil;
+	u16						g3DutilUnitIdx;
 #else
 	GFL_G3D_RES*			g3Dres[4];
 	GFL_G3D_RND*			g3Drnd[2];
@@ -66,7 +67,6 @@ static	const	char	*GraphicFileTable[]={
 
 #include "sample_graphic/titledemo.naix"
 #include "testmode.dat"
-
 
 //ＢＧ設定関数
 static void	bg_init( HEAPID heapID );
@@ -391,6 +391,10 @@ enum {
 };
 
 #ifdef G3DUTIL_USE
+
+#define G3DUTIL_RESCOUNT	(4)
+#define G3DUTIL_OBJCOUNT	(2)
+
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbmd, GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_titledemo_title_air_nsbta, GFL_G3D_UTIL_RESPATH },
@@ -425,10 +429,20 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 static void g3d_load( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
-	testmode->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, testmode->heapID );
-	//		アニメーションを有効にする
-	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  ), 0 ); 
-	GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  ), 0 ); 
+	testmode->g3Dutil = GFL_G3D_UTIL_Create( G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, testmode->heapID );
+	testmode->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( testmode->g3Dutil, &g3Dutil_setup );
+
+	{//		アニメーションを有効にする
+		u16				objIdx;
+		GFL_G3D_OBJ*	g3Dobj;
+
+		objIdx = GFL_G3D_UTIL_GetUnitObjIdx( testmode->g3Dutil, testmode->g3DutilUnitIdx );
+
+		g3Dobj = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, objIdx+G3D_AIR );
+		GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  ), 0 ); 
+		g3Dobj = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, objIdx+G3D_IAR );
+		GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  ), 0 ); 
+	}
 #else
 	//		リソースセットアップ
 	testmode->g3Dres[ G3DRES_AIR_BMD ] = GFL_G3D_CreateResourcePath
@@ -485,8 +499,13 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 	GFL_G3D_OBJ* g3Dobj[2];
 
 #ifdef G3DUTIL_USE
-	g3Dobj[ G3D_AIR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_AIR  );
-	g3Dobj[ G3D_IAR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, G3D_IAR  );
+	{
+		u16				objIdx;
+		objIdx = GFL_G3D_UTIL_GetUnitObjIdx( testmode->g3Dutil, testmode->g3DutilUnitIdx );
+
+		g3Dobj[ G3D_AIR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, objIdx+G3D_AIR );
+		g3Dobj[ G3D_IAR ] = GFL_G3D_UTIL_GetObjHandle( testmode->g3Dutil, objIdx+G3D_IAR );
+	}
 #else
 	g3Dobj[ G3D_AIR ] = testmode->g3Dobj[ G3D_AIR ];
 	g3Dobj[ G3D_IAR ] = testmode->g3Dobj[ G3D_IAR ];
@@ -525,6 +544,7 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 static void g3d_unload( TESTMODE_WORK * testmode )
 {
 #ifdef G3DUTIL_USE
+	GFL_G3D_UTIL_DelUnit( testmode->g3Dutil, testmode->g3DutilUnitIdx );
 	GFL_G3D_UTIL_Delete( testmode->g3Dutil );
 #else
 	GFL_G3D_OBJECT_Delete( testmode->g3Dobj[ G3D_IAR ] );

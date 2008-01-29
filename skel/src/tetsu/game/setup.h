@@ -16,8 +16,7 @@ typedef struct _GAME_SYSTEM GAME_SYSTEM;
 
 extern GAME_SYSTEM*	SetupGameSystem( HEAPID heapID );
 extern void			RemoveGameSystem( GAME_SYSTEM* gs );
-extern void			MainGameSystemPref( GAME_SYSTEM* gs );
-extern void			MainGameSystemAfter( GAME_SYSTEM* gs );
+extern void			MainGameSystem( GAME_SYSTEM* gs );
 
 extern GFL_G3D_UTIL*		Get_GS_G3Dutil( GAME_SYSTEM* gs );
 extern GFL_G3D_SCENE*		Get_GS_G3Dscene( GAME_SYSTEM* gs );
@@ -25,14 +24,31 @@ extern GFL_G3D_CAMERA*		Get_GS_G3Dcamera( GAME_SYSTEM* gs, int cameraID );
 extern GFL_G3D_LIGHTSET*	Get_GS_G3Dlight( GAME_SYSTEM* gs, int lightID );
 extern GFL_BMPWIN*			Get_GS_BmpWin( GAME_SYSTEM* gs, int bmpwinID );
 extern GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs );
+extern SCENE_ACTSYS*		Get_GS_SceneActSys( GAME_SYSTEM* gs );
 extern SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs );
-extern SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs );
 extern GFL_CLUNIT*			Get_GS_ClactUnit( GAME_SYSTEM* gs, u32 unitID );
 extern u32					Get_GS_ClactResIdx( GAME_SYSTEM* gs, u32 resID );
 
 #define PLT_2D_COL_WHITE	(15)
 #define PLT_2D_COL_BLACK	(1)
 #define PLT_2D_COL_NULL		(0)
+
+#define PLAYICON_FRM		(GFL_BG_FRAME3_M)
+#define TEXT_FRM			(GFL_BG_FRAME3_S)
+#define MASK_FRM			(GFL_BG_FRAME2_S)
+#define PLAYICON_FRM_PRI	(0)
+#define TEXT_FRM_PRI		(1)
+#define MASK_FRM_PRI		(0)
+#define PLAYICON_PLTT		(0)
+#define TEXT_PLTT			(15)
+#define MASK_PLTT			(1)
+#define MAP_PLTT			(1)
+#define G2D_FONT_COL		(0x7fff)
+#define G2D_FONTSELECT_COL	(0x001f)
+#define PLTT_DATSIZ			(16*2)
+#define CLACT_WKSIZ_MAPOBJ	(64)
+#define CLACT_WKSIZ_STATUS	(64)
+
 //------------------------------------------------------------------
 /**
  * @brief	データヘッダ
@@ -48,55 +64,6 @@ enum {
 enum {
 	MAINLIGHT_ID = 0,
 	SUBLIGHT_ID,
-};
-
-//３ＤグラフィックリソーステーブルＩＮＤＥＸ
-enum {
-	G3DRES_MAP_FLOOR = 0,
-	G3DRES_HUMAN2_BMD,
-	G3DRES_HUMAN_COMMON_BCA,
-	G3DRES_HUMAN2_ATTACK_BCA,
-	G3DRES_HUMAN2_SHOOT_BCA,
-	G3DRES_HUMAN2_SPELL_BCA,
-	G3DRES_ACCE_SWORD,
-	G3DRES_ACCE_SHIELD,
-	G3DRES_ACCE_BOW,
-	G3DRES_ACCE_STAFF,
-	G3DRES_EFFECT_WALL,
-	G3DRES_EFFECT_ARROW,
-};
-
-//---------------------
-//３Ｄオブジェクトアニメーション定義テーブルＩＮＤＥＸ
-enum {
-	HUMAN_ANM_COMMON = 0,
-	HUMAN2_ANM_ATTACK,
-	HUMAN2_ANM_SHOOT,
-	HUMAN2_ANM_SPELL,
-};
-
-//---------------------
-//３Ｄオブジェクト定義テーブルＩＮＤＥＸ
-enum {
-	G3DOBJ_MAP_FLOOR,
-// プレーヤー数 (=PLAYER_SETUP_NUM)
-	G3DOBJ_HUMAN1,
-	G3DOBJ_HUMAN2,
-	G3DOBJ_HUMAN3,
-	G3DOBJ_HUMAN4,
-	G3DOBJ_HUMAN5,
-	G3DOBJ_HUMAN6,
-	G3DOBJ_HUMAN7,
-	G3DOBJ_HUMAN8,
-//
-	G3DOBJ_ACCE_SWORD,
-	G3DOBJ_ACCE_SHIELD,
-	G3DOBJ_ACCE_BOW,
-	G3DOBJ_ACCE_STAFF,
-
-	G3DOBJ_EFFECT_WALL,
-	G3DOBJ_EFFECT_ARROW,
-	G3DOBJ_NPC,
 };
 
 //---------------------

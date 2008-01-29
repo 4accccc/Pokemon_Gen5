@@ -92,8 +92,7 @@ static	void	GFL_BG_ScrFill_Normal(
 static	void	GFL_BG_ScrFill_Affine(
 					GFL_BG_SYS * ini, u8 dat, u8 px, u8 py, u8 sx, u8 sy );
 
-static	void	GFL_BG_ReserveScrArea( u32 frmnum, u32 ofs, u32 size );
-static	void	GFL_BG_FreeScrArea( u32 frmnum, u32 ofs, u32 size );
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size );
 
 static	void	CgxFlipCheck( u8 flip, u8 * buf ,u32 headID);
 
@@ -557,7 +556,7 @@ void GFL_BG_SetBGControl( u8 frmnum, const GFL_BG_BGCNT_HEADER * data, u8 mode )
 	bgl->CharVramSize[frmnum]=data->charSize;
 
 	//Screenの予約
-	GFL_BG_ReserveScrArea( frmnum, 0,  data->scrbufferSiz );
+	GFL_BG_ScrAreaSet( frmnum, 0,  data->scrbufferSiz );
 
 }
 
@@ -575,7 +574,6 @@ void GFL_BG_FreeBGControl( u8 frmnum )
 	if( bgl->bgsys[frmnum].screen_buf == NULL ){
 		return;
 	}
-	GFL_BG_FreeScrArea( frmnum, 0, bgl->bgsys[frmnum].screen_buf_siz );
 	GFL_HEAP_FreeMemory( bgl->bgsys[frmnum].screen_buf );
 	bgl->bgsys[frmnum].screen_buf = NULL;
 }
@@ -3104,9 +3102,11 @@ static	void	GFL_BG_ScrFill_Affine(
  * @param	frmnum	領域確保するフレームナンバー（VRAMアドレスを取得するのに使用）
  * @param	ofs		確保先オフセット
  * @param	size	確保サイズ
+ *
+ * @retval	データを読み込んだアドレス
  */
 //--------------------------------------------------------------------------------------------
-static	void	GFL_BG_ReserveScrArea( u32 frmnum, u32 ofs, u32 size )
+static	void	GFL_BG_ScrAreaSet( u32 frmnum, u32 ofs, u32 size )
 {
 	switch(frmnum){
 	case GFL_BG_FRAME0_M:
@@ -3120,33 +3120,6 @@ static	void	GFL_BG_ReserveScrArea( u32 frmnum, u32 ofs, u32 size )
 	case GFL_BG_FRAME2_S:
 	case GFL_BG_FRAME3_S:
 		GFL_AREAMAN_ReserveAssignPos(bgl->area_s,(bgl->ScrVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
-		break;
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * エリアマネージャに領域開放を指示（スクリーンデータ用）
- *
- * @param	frmnum	領域開放するフレームナンバー（VRAMアドレスを取得するのに使用）
- * @param	ofs		開放先オフセット
- * @param	size	開放サイズ
- */
-//--------------------------------------------------------------------------------------------
-static	void	GFL_BG_FreeScrArea( u32 frmnum, u32 ofs, u32 size )
-{
-	switch(frmnum){
-	case GFL_BG_FRAME0_M:
-	case GFL_BG_FRAME1_M:
-	case GFL_BG_FRAME2_M:
-	case GFL_BG_FRAME3_M:
-		GFL_AREAMAN_Release(bgl->area_m,(bgl->ScrVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
-		break;
-	case GFL_BG_FRAME0_S:
-	case GFL_BG_FRAME1_S:
-	case GFL_BG_FRAME2_S:
-	case GFL_BG_FRAME3_S:
-		GFL_AREAMAN_Release(bgl->area_s,(bgl->ScrVramBaseAdrs[frmnum]+ofs)/0x20,(size/0x20)+((size%0x20)==0?0:1));
 		break;
 	}
 }

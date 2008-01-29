@@ -16,8 +16,6 @@
 #include "double3Ddisp.h"
 
 #include "setup.h"
-#include "src/sample_graphic/haruka.naix"
-#include "src/sample_graphic/mapobj.naix"
 
 //#define	DOUBLE_DISP_ENABLE
 //============================================================================================
@@ -38,6 +36,7 @@
 
 struct _GAME_SYSTEM {
 	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
+	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
 	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
 	GFL_G3D_CAMERA*			g3Dcamera[2];	//g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET*		g3Dlightset[2];	//g3Dlight Lib ハンドル
@@ -51,14 +50,16 @@ struct _GAME_SYSTEM {
 	u32						clactRes[64][2];//clact リソースINDEX
 	u32						clactResCount;	//clact リソース数
 	GFL_CLUNIT*				clactUnit[8];	//clact ユニット
-	GFL_TCB*				g2dVintr;		//vIntrTaskハンドル
+	GFL_TCB*				g2dVintr;		//2D用vIntrTaskハンドル
+//	BOOL					g2dVintrEnable;	//2D用vIntrTask呼び出し許可
 
+	SCENE_ACTSYS*			sceneActSys;	//３Ｄアクターシステム設定ハンドル
 	SCENE_MAP*				sceneMap;		//３Ｄマップ設定ハンドル
-	SCENE_ACT*				sceneAct;		//３Ｄオブジェクト設定ハンドル
 
 	HEAPID					heapID;
 };
 
+BOOL g2dVintrEnable;
 //------------------------------------------------------------------
 /**
  * @brief	ディスプレイ環境データ
@@ -66,7 +67,7 @@ struct _GAME_SYSTEM {
 //------------------------------------------------------------------
 ///ＶＲＡＭバンク設定構造体
 static const GFL_BG_DISPVRAM dispVram = {
-	GX_VRAM_BG_NONE,				//メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BG_16_F,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_SUB_BG_128_C,			//サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
@@ -118,73 +119,23 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
  * @brief	３Ｄリソースデータ
  */
 //------------------------------------------------------------------
-#define G3D_FRM_PRI		(1)			//３Ｄ面の描画プライオリティー
-#define G3D_OBJ_COUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
-#define G3D_OBJWORK_SZ	(64)		//g3Dsceneで使用するsceneObjのワークサイズ
-#define G3D_ACC_COUNT	(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
-
-static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
-
-//３Ｄグラフィックリソーステーブル
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{ (u32)g3DarcPath2, NARC_haruka_test_floor2_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_human2_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_human_common_nsbca,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_human2_attack_nsbca,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_human2_shoot_nsbca,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_human2_spell_nsbca,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_sword_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_shield_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_bow_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_staff_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESPATH },
-	{ (u32)g3DarcPath2, NARC_haruka_effect_arrow_nsbmd,  GFL_G3D_UTIL_RESPATH },
-};
-
-//---------------------
-//３Ｄオブジェクトアニメーション定義テーブル
-static const GFL_G3D_UTIL_ANM g3Dutil_Human2AnmTbl[] = {
-	{ G3DRES_HUMAN_COMMON_BCA, 0 },
-	{ G3DRES_HUMAN2_ATTACK_BCA, 0 },
-	{ G3DRES_HUMAN2_SHOOT_BCA, 0 },
-	{ G3DRES_HUMAN2_SPELL_BCA, 0 },
-};
-
-//---------------------
-//３Ｄオブジェクト定義テーブル
-static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
-	// プレーヤー数 (=PLAYER_SETUP_NUM)
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-	// 
-	{ G3DRES_ACCE_SWORD, 0, G3DRES_ACCE_SWORD, NULL, 0 },
-	{ G3DRES_ACCE_SHIELD, 0, G3DRES_ACCE_SHIELD, NULL, 0 },
-	{ G3DRES_ACCE_BOW, 0, G3DRES_ACCE_BOW, NULL, 0 },
-	{ G3DRES_ACCE_STAFF, 0, G3DRES_ACCE_STAFF, NULL, 0 },
-	{ G3DRES_EFFECT_WALL, 0, G3DRES_EFFECT_WALL, NULL, 0 },
-	{ G3DRES_EFFECT_ARROW, 0, G3DRES_EFFECT_ARROW, NULL, 0 },
-	{ G3DRES_HUMAN2_BMD, 0, G3DRES_HUMAN2_BMD, g3Dutil_Human2AnmTbl, NELEMS(g3Dutil_Human2AnmTbl)},
-};
-
-//---------------------
-//g3Dscene 初期設定テーブルデータ
-static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
-	g3Dutil_resTbl, NELEMS(g3Dutil_resTbl),
-	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
-};
+#define G3D_FRM_PRI			(1)			//３Ｄ面の描画プライオリティー
+#define G3D_UTIL_RESCOUNT	(512)		//g3Dutilで使用するリソースの最大設定可能数
+#define G3D_UTIL_OBJCOUNT	(128)		//g3Dutilで使用するオブジェクトの最大設定可能数
+#define G3D_SCENE_OBJCOUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
+#define G3D_OBJWORK_SZ		(64)		//g3Dsceneで使用するsceneObjのワークサイズ
+#define G3D_ACC_COUNT		(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
 
 //------------------------------------------------------------------
 /**
  * @brief		２Ｄリソースデータ
  */
 //------------------------------------------------------------------
+#include "src/sample_graphic/haruka.naix"
+#include "src/sample_graphic/mapobj.naix"
+static const char g3DarcPath2[] = {"src/sample_graphic/haruka.narc"};
+
+#if 0
 #ifdef	DOUBLE_DISP_ENABLE
 #define TEXT_FRM			(GFL_BG_FRAME3_M)
 #define MASK_FRM			(GFL_BG_FRAME2_M)
@@ -192,8 +143,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define TEXT_FRM			(GFL_BG_FRAME3_S)
 #define MASK_FRM			(GFL_BG_FRAME2_S)
 #endif
+#define PLAYICON_FRM_PRI	(0)
 #define TEXT_FRM_PRI		(1)
 #define MASK_FRM_PRI		(0)
+#define PLAYICON_PLTT		(0)
 #define TEXT_PLTT			(15)
 #define MASK_PLTT			(1)
 #define MAP_PLTT			(1)
@@ -202,9 +155,16 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 #define PLTT_DATSIZ			(16*2)
 #define CLACT_WKSIZ_MAPOBJ	(64)
 #define CLACT_WKSIZ_STATUS	(64)
+#endif
 
 static const char font_path[] = {"src/gfl_graphic/gfl_font.dat"};
 
+static const GFL_BG_BGCNT_HEADER playiconBGcont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
 static const GFL_BG_BGCNT_HEADER textBGcont = {
 	0, 0, 0x800, 0,
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -292,18 +252,7 @@ static const u32 clactResList[] = {
 	CLACT_RESLOAD_CEL, NARC_mapobj_icon_NCER, NARC_mapobj_icon_NANR,
 	//ステータスアイコン
 	CLACT_RESLOAD_CEL, NARC_mapobj_status_NCER, NARC_mapobj_status_NANR,
-#if 0
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-	CLACT_RESLOAD_CGX_TRANS, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN,
-#else
 	CLACT_RESLOAD_CGX_TRANS_LOOP, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN, STATUS_SETUP_NUM,
-#endif
 	CLACT_RESLOAD_PLT, NARC_mapobj_status_NCLR, (u32)GFL_VRAM_2D_MAIN, PLTT_DATSIZ * 0,
 	//終了コマンド
 	CLACT_RESLOAD_END,
@@ -334,6 +283,7 @@ static void g2d_draw( GAME_SYSTEM* gs );
 static void	g2d_unload( GAME_SYSTEM* gs );
 static void	g2d_vblank( GFL_TCB* tcb, void* work );
 
+static void* GetScrnData_for_NitroScrnData( void* scrnFile );
 static void* GetCharData_for_NitroCharData( void* charFile );
 static void* GetPlttData_for_NitroPlttData( void* plttFile );
 //------------------------------------------------------------------
@@ -367,6 +317,7 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 	//２Ｄデータのロード
 	g2d_load( gs );
 	gs->g2dVintr = GFUser_VIntr_CreateTCB( g2d_vblank, NULL, 0 );
+	g2dVintrEnable = FALSE;
 #ifdef	DOUBLE_DISP_ENABLE
 	//両面３Ｄ用vIntrTask設定
 	gs->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
@@ -396,36 +347,15 @@ void	RemoveGameSystem( GAME_SYSTEM* gs )
 
 //------------------------------------------------------------------
 /**
- * @brief	システムメイン関数（前）
+ * @brief	システムメイン関数
  */
 //------------------------------------------------------------------
-void	MainGameSystemPref( GAME_SYSTEM* gs )
+void	MainGameSystem( GAME_SYSTEM* gs )
 {
-#if 0
-	g2d_control( gs );
-	g3d_control( gs );
-#else
 	g2d_control( gs );
 	g2d_draw( gs );
 	g3d_control( gs );
-#endif
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	システムメイン関数（後）
- */
-//------------------------------------------------------------------
-void	MainGameSystemAfter( GAME_SYSTEM* gs )
-{
-#if 0
-	g2d_draw( gs );
 	g3d_draw( gs );
-#else
-	g2d_control( gs );
-	g2d_draw( gs );
-	g3d_draw( gs );
-#endif
 }
 
 //------------------------------------------------------------------
@@ -455,6 +385,9 @@ static void	bg_init( GAME_SYSTEM* gs )
 	GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ＢＧコントロール設定
+	GFL_BG_SetBGControl( PLAYICON_FRM, &playiconBGcont, GFL_BG_MODE_TEXT );
+	GFL_BG_SetPriority( PLAYICON_FRM, PLAYICON_FRM_PRI );
+	GFL_BG_SetVisible( PLAYICON_FRM, VISIBLE_ON );
 	GFL_BG_SetBGControl( TEXT_FRM, &textBGcont, GFL_BG_MODE_TEXT );
 	GFL_BG_SetPriority( TEXT_FRM, TEXT_FRM_PRI );
 	GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
@@ -524,21 +457,13 @@ static void g3d_load( GAME_SYSTEM* gs )
 	//配置物設定
 
 	//g3Dutilを使用し配列管理をする
-	gs->g3Dutil = GFL_G3D_UTIL_Create( &g3Dutil_setup, gs->heapID );
-	{
-		//アニメーションの初期有効設定(0番のアニメーションを有効にする)
-		int i;
-		for( i=0; i<PLAYER_SETUP_NUM; i++ ){
-			GFL_G3D_OBJECT_EnableAnime
-			( GFL_G3D_UTIL_GetObjHandle( gs->g3Dutil, G3DOBJ_HUMAN1+i), 0 );
-		}
-	}
+	gs->g3Dutil = GFL_G3D_UTIL_Create( G3D_UTIL_RESCOUNT, G3D_UTIL_OBJCOUNT, gs->heapID );
 	//g3Dsceneを使用し管理をする
 	gs->g3Dscene = GFL_G3D_SCENE_Create( gs->g3Dutil, 
-						G3D_OBJ_COUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
+						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
 
+	gs->sceneActSys = Create3DactSys( gs->g3Dscene, gs->heapID );
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
-	gs->sceneAct = Create3Dact( gs->g3Dscene, gs->heapID );
 
 	//カメラ作成
 	{
@@ -602,11 +527,10 @@ static void g3d_unload( GAME_SYSTEM* gs )
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset[MAINLIGHT_ID] );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera[MAINCAMERA_ID] );
 
-	Delete3Dact( gs->sceneAct );
 	Delete3Dmap( gs->sceneMap );
+	Delete3DactSys( gs->sceneActSys );
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
-
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
 }
 	
@@ -679,7 +603,27 @@ static void	g2d_load( GAME_SYSTEM* gs )
 			GFL_HEAP_FreeMemory( map_char );
 			GFL_HEAP_FreeMemory( map_pltt );
 		}
+		{
+			//アイコン用
+			void* playicon_pltt = GFL_ARC_LoadDataFilePathAlloc
+						( g3DarcPath2, NARC_haruka_playicon_NCLR, gs->heapID );
+			void* playicon_char = GFL_ARC_LoadDataFilePathAlloc
+						( g3DarcPath2, NARC_haruka_playicon_NCGR, gs->heapID );
+			void* playicon_scrn = GFL_ARC_LoadDataFilePathAlloc
+						( g3DarcPath2, NARC_haruka_playicon_NSCR, gs->heapID );
+	
+			GFL_BG_LoadPalette( PLAYICON_FRM, GetPlttData_for_NitroPlttData( playicon_pltt ), 
+								PLTT_DATSIZ*2, PLAYICON_PLTT * PLTT_DATSIZ );
+			GFL_BG_LoadCharacter( PLAYICON_FRM, GetCharData_for_NitroCharData( playicon_char ),
+								8*16*0x20, 0 );
+			GFL_BG_LoadScreenBuffer( PLAYICON_FRM, GetScrnData_for_NitroScrnData( playicon_scrn ), 
+								0x800 );
+			GFL_HEAP_FreeMemory( playicon_scrn );
+			GFL_HEAP_FreeMemory( playicon_char );
+			GFL_HEAP_FreeMemory( playicon_pltt );
+		}
 	}
+	GFL_BG_LoadScreenReq( PLAYICON_FRM );
 	GFL_BG_LoadScreenReq( TEXT_FRM );
 	GFL_BG_LoadScreenReq( MASK_FRM );
 
@@ -844,7 +788,6 @@ static void	g2d_unload( GAME_SYSTEM* gs )
 
 static void	g2d_vblank( GFL_TCB* tcb, void* work )
 {
-	//GFL_CLACT_VBlankFunc();
 	GFL_CLACT_VBlankFuncTransOnly();
 }
 
@@ -854,6 +797,14 @@ static void	g2d_vblank( GFL_TCB* tcb, void* work )
  * @brief		NNSポインタ取得関連
  */
 //------------------------------------------------------------------
+static void* GetScrnData_for_NitroScrnData( void* scrnFile )
+{
+	NNSG2dScreenData* data;
+
+	NNS_G2dGetUnpackedScreenData( scrnFile, &data );
+	return &data->rawData[0];
+}
+
 static void* GetCharData_for_NitroCharData( void* charFile )
 {
 	NNSG2dCharacterData* data;
@@ -908,14 +859,14 @@ GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs )
 	return gs->ptc;
 }
 
+SCENE_ACTSYS*		Get_GS_SceneActSys( GAME_SYSTEM* gs )
+{
+	return gs->sceneActSys;
+}
+
 SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs )
 {
 	return gs->sceneMap;
-}
-
-SCENE_ACT*			Get_GS_SceneAct( GAME_SYSTEM* gs )
-{
-	return gs->sceneAct;
 }
 
 GFL_CLUNIT*			Get_GS_ClactUnit( GAME_SYSTEM* gs, u32 unitID )

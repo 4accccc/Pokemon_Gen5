@@ -1378,6 +1378,7 @@ GFL_G3D_OBJ*
 
 	//アニメーション配列作成
 	g3Dobj->anmTbl = GFL_HEAP_AllocClearMemory( g3Dman->heapID, sizeof(GFL_G3D_ANM*) * anmCount );
+
 	for( i=0; i<anmCount; i++ ){
 		g3Danm = anmTbl[i];
 		if( g3Danm != NULL ){
@@ -1473,15 +1474,19 @@ u16
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_EnableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	//レンダリングオブジェクトとの関連付け
 	NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1492,15 +1497,19 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_DisableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	//レンダリングオブジェクトとの関連付けを解除
 	NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1562,14 +1571,18 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	} 
 	g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = 0;
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1581,17 +1594,21 @@ void
  * @param	anmFrm	取得、設定に用いる値格納ポインタ
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_GetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	*anmFrm = g3Dobj->anmTbl[ anmIdx ]->anmobj->frame;
+	return TRUE;
 }
 
-void
+BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
 {
@@ -1601,6 +1618,9 @@ void
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmFrmMax = NNS_G3dAnmObjGetNumFrame( anmobj );
 
@@ -1609,6 +1629,7 @@ void
 	} else {
 		g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = *anmFrm;
 	}
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1631,9 +1652,12 @@ BOOL
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmobj->frame += count;
-	
+
 	if( anmobj->frame >= NNS_G3dAnmObjGetNumFrame( anmobj )){
 		return FALSE;
 	}
@@ -1660,6 +1684,9 @@ BOOL
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmobj->frame += count;
 	
@@ -2014,7 +2041,67 @@ static void
 }
 
 
+//=============================================================================================
+/**
+ *
+ *
+ * 計算
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P1).N = 0（内積計算）
+ *			※PおよびP1:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ *		両式を連立させ P = P1 + ((P1 - P0 ).N / V.N) * V
+ *		とい方程式を得る
+ *
+ * @param	posRay		レイの位置
+ * @param	vecRay		レイの進行ベクトル
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ *
+ * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_Calc_GetClossPointRayPlane
+		( const VecFx32* posRay, const VecFx32* vecRay, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest )
+{
+	VecFx32	vecP0R0;
+	fx32	t, scalar_V_N, scalar_P0R0_N;
+	
+	//posRay->posRefベクトルの算出:P0-R0
+	VEC_Subtract( posRef, posRay, &vecP0R0 );
+	//posRes->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
+	//進行ベクトルと法線ベクトルの内積の算出:VN
+	scalar_V_N = VEC_DotProduct( vecRay, vecN );
+	if( !scalar_V_N ){
+		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		return FALSE;
+	}
+	//経過オフセットtの算出:(P0-R0)N/VN
+	t = scalar_P0R0_N/scalar_V_N;
 
+	//交点の算出:R0 + (P0-R0)N/VN * V
+	VEC_MultAdd( t << FX32_SHIFT, vecRay, posRay, dest );
+	if( t < 0 ){
+		//交点が後方
+		return FALSE;
+	}
+	return TRUE;
+}
 
 
 //=============================================================================================
