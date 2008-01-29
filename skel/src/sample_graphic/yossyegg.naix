@@ -1,0 +1,44 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: yossyegg.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-05-11T13:20:57
+ *****************************************************************************/
+
+#ifndef NARC_YOSSYEGG_NAIX_
+#define NARC_YOSSYEGG_NAIX_
+
+enum {
+	NARC_yossyegg_fall_obj_NANR = 0,
+	NARC_yossyegg_fall_obj_NCER = 1,
+	NARC_yossyegg_fall_obj_umi_NANR = 2,
+	NARC_yossyegg_fall_obj_umi_NCER = 3,
+	NARC_yossyegg_game_bg_NCGR = 4,
+	NARC_yossyegg_game_bg_NSCR = 5,
+	NARC_yossyegg_O_SEA3_NCGR = 6,
+	NARC_yossyegg_O_WOODS3_NCGR = 7,
+	NARC_yossyegg_OBJ_COL_NCLR = 8,
+	NARC_yossyegg_STAGESEL_NCGR = 9,
+	NARC_yossyegg_STAGESEL_NSCR = 10,
+	NARC_yossyegg_TITLE_BG_NCLR = 11,
+	NARC_yossyegg_TITLE_V2_NCGR = 12,
+	NARC_yossyegg_TITLE_V2_NSCR = 13,
+	NARC_yossyegg_UMI_NCGR = 14,
+	NARC_yossyegg_umi_NCLR = 15,
+	NARC_yossyegg_UMI_NSCR = 16,
+	NARC_yossyegg_VSSEL_B2_NCGR = 17,
+	NARC_yossyegg_VSSEL_B2_NSCR = 18,
+	NARC_yossyegg_VSSEL_BG_NCLR = 19,
+	NARC_yossyegg_yossy_birth_NCGR = 20,
+	NARC_yossyegg_YT_BG03_NCGR = 21,
+	NARC_yossyegg_YT_BG03_NCLR = 22,
+	NARC_yossyegg_YT_BG03_NSCR = 23,
+	NARC_yossyegg_YT_LUIGI_NCGR = 24,
+	NARC_yossyegg_YT_MARIO_NCGR = 25,
+	NARC_yossyegg_YT_MARIO_NCLR = 26
+};
+
+/* NARC_YOSSYEGG_NAIX_ */
+#endif
