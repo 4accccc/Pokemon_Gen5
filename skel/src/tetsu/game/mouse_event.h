@@ -41,8 +41,8 @@ typedef enum {
 
 extern MOUSE_EVENT_SYS*	InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID );
 extern void				ExitMouseEvent( MOUSE_EVENT_SYS* mes );
-extern MOUSE_EVENT		MainMouseEvent( MOUSE_EVENT_SYS* mes );
+extern void				MainMouseEvent( MOUSE_EVENT_SYS* mes );
 
-extern MOUSE_EVENT		GetMouseEvent( MOUSE_EVENT_SYS* mes );
+extern BOOL				CheckMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 extern void				GetMousePos( MOUSE_EVENT_SYS* mes, VecFx32* pos );
 

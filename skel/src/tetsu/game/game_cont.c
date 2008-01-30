@@ -615,17 +615,15 @@ static BOOL checkMoveDirection( int cont, PLAYER_MOVE_DIR* dir )
 //------------------------------------------------------------------
 static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont )
 {
-	MOUSE_EVENT me = GetMouseEvent( gc->mes );
-
 	//方向設定
 	{
 		u16 direction;
 		
-		if( me == MOUSE_EVENT_CAMERAMOVE_L ){	//左移動
+		if( CheckMouseEvent( gc->mes, MOUSE_EVENT_CAMERAMOVE_L ) == TRUE ){	//左移動
 			GetPlayerControlDirection( pc, &direction );
 			direction += CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
-		} else if( me == MOUSE_EVENT_CAMERAMOVE_R ){	//右移動
+		} else if( CheckMouseEvent( gc->mes, MOUSE_EVENT_CAMERAMOVE_R ) == TRUE ){	//右移動
 			GetPlayerControlDirection( pc, &direction );
 			direction -= CAMERA_MOVE_SPEED;
 			SetPlayerControlDirection( pc, &direction );
@@ -633,52 +631,79 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 	}
 	{
 		//テスト
-		if( !gc->tp_blank ){
-			//武器の変更
-			if( me == MOUSE_EVENT_ACTION_7 ){
+		//武器の変更
+		if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_6 ) == TRUE ){
+			if( !gc->tp_blank ){
 				SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
 				gc->tp_blank = 8;
-				return;
+			} else {
+				SetPlayerControlCommand( pc, PCC_STAY );
+				gc->tp_blank--;
 			}
-			//装備の変更
-			if( me == MOUSE_EVENT_ACTION_8 ){
+			return;
+		}
+		//装備の変更
+		if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_7 ) == TRUE ){
+			if( !gc->tp_blank ){
 				SetPlayerControlCommand( pc, PCC_TEST );
 				gc->tp_blank = 8;
-				return;
-			}
-		} else {
+			} else {
+				SetPlayerControlCommand( pc, PCC_STAY );
 				gc->tp_blank--;
+			}
+			return;
 		}
+		gc->tp_blank = 0;
 	}
 	//建設
-	if( me == MOUSE_EVENT_ACTION_13 ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_1 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_BUILD );
 		return;
 	}
 	//召喚
-	if( me == MOUSE_EVENT_ACTION_12 ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_2 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_SUMMON );
 		return;
 	}
 	//攻撃
-	if(	( me == MOUSE_EVENT_ACTION_1 )||( me == MOUSE_EVENT_ACTION_2 )||
-		( me == MOUSE_EVENT_ACTION_3 )||( me == MOUSE_EVENT_ACTION_4 )||
-		( me == MOUSE_EVENT_ACTION_5 )||( me == MOUSE_EVENT_ACTION_6 ) ){
-		SetPlayerAttackCommand( pc, PCC_ATTACK, me - MOUSE_EVENT_ACTION_1 );
-		return;
+	{
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_8 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 0 );
+			return;
+		}
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_9 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 1 );
+			return;
+		}
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_10 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 2 );
+			return;
+		}
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_11 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 3 );
+			return;
+		}
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_12 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 4 );
+			return;
+		}
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_13 ) == TRUE ){
+			SetPlayerAttackCommand( pc, PCC_ATTACK, 5 );
+			return;
+		}
 	}
 	//座る
-	if( me == MOUSE_EVENT_ACTION_11 ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_3 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_SIT );
 		return;
 	}
 	//拾う
-	if( me == MOUSE_EVENT_ACTION_9 ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_4 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_TAKEOFF );
 		return;
 	}
 	//置く
-	if( me == MOUSE_EVENT_ACTION_10 ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_5 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_PUTON );
 		return;
 	}
@@ -703,7 +728,7 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 		}
 	}
 #else
-	if( me == MOUSE_EVENT_MOVE ){
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_MOVE) == TRUE ){
 		VecFx32 mvDir;
 
 		GetMousePos( gc->mes, &mvDir );
