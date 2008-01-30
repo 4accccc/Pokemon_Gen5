@@ -260,16 +260,6 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
 };
 */
 
-static u16 WH_GetConnectNum(void);
-
-
-//#define SSID  "ORGLIB"
-
-// 子機最大数（親機を含まない数）
-#define WH_CHILD_MAX              7
-
-// シェア出来るデータの最大サイズ
-#define WH_DS_DATA_SIZE           12
 
 
 // エラー処理を厳密にしたプログラム
@@ -322,12 +312,8 @@ struct _WM_INFO_STRUCT {
 // MP 通信モードでのデータ受信ユーザ関数
     WHReceiverFunc sReceiverFunc;
 
-// 接続許可判定用ユーザ関数
-    WHJudgeAcceptFunc sJudgeAcceptFunc;
-
-    
+    /// 切断時のコールバック
     WHdisconnectCallBack disconnectCallBack;
-
     /// 子機接続時のコールバック
     WHdisconnectCallBack connectCallBack;
     /// 接続時の検査コールバック
@@ -351,8 +337,6 @@ struct _WM_INFO_STRUCT {
     u16 sChannel;
     u16 sChannelBusyRatio;
     u16 sChannelBitmap;
-    u8 bPauseConnect;
-    u8 bPauseConnectSystem;
     u8 bSetEntry;
     u8 stateBeaconSentNum;
 } ;
@@ -470,6 +454,9 @@ static void WH_StateOutEnd(void *arg);
 /* X -> IDLE */
 static BOOL WH_StateInReset(void);
 static void WH_StateOutReset(void *arg);
+
+static u16 WH_GetConnectNum(void);  //接続人数を得る
+
 
 
 /* ======================================================================
@@ -741,7 +728,7 @@ static void WH_ChangeSysState(int state)
     WH_TRACE("%s\n", statenames[pNetWH->sSysState]);
 }
 
-#else
+#else  //defined(WMHIGH_DEBUG)
 
 #define WH_GetWMErrCodeName(result)    ("")
 #define WH_GetWMStateCodeName(result)  ("")
@@ -760,7 +747,7 @@ static void WH_ChangeSysState(int state)
     pNetWH->sSysState = state;
 }
 
-#endif
+#endif  //defined(WMHIGH_DEBUG)
 
 static void WH_SetError(int code)
 {
@@ -818,60 +805,6 @@ static void WH_StateOutSetParentParam(void *arg)
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
         return;
     }
-#if 0
-    if (pNetWH->sParentWEPKeyGenerator != NULL)
-    {
-        // WEP Key Generator が設定されていれば、WEP Key の設定へ
-        if (!WH_StateInSetParentWEPKey())
-        {
-            WH_ChangeSysState(WH_SYSSTATE_ERROR);
-        }
-    }
-    else
-#endif
-    {
-        // 正常に進行していれば次は StartParent 状態へ。
-        if (!WH_StateInStartParent())
-        {
-            WH_ChangeSysState(WH_SYSSTATE_ERROR);
-        }
-    }
-}
-#if 0
-static BOOL WH_StateInSetParentWEPKey(void)
-{
-    u16 wepmode;
-    WMErrCode result;
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    WH_TRACE_STATE(pNetWH->sSysState);
-
-    WH_ChangeSysState(WH_SYSSTATE_BUSY);
-
-    wepmode = (*pNetWH->sParentWEPKeyGenerator)(pNetWH->sWEPKey, &pNetWH->sParentParam);
-    result = WM_SetWEPKey(WH_StateOutSetParentWEPKey, wepmode, pNetWH->sWEPKey);
-    if (result != WM_ERRCODE_OPERATING)
-    {
-        WH_REPORT_FAILURE(result);
-        WH_ChangeSysState(WH_SYSSTATE_ERROR);
-        return FALSE;
-    }
-
-    return TRUE;
-}
-
-static void WH_StateOutSetParentWEPKey(void *arg)
-{
-    WMCallback *cb = (WMCallback *)arg;
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    WH_TRACE_STATE(pNetWH->sSysState);
-
-    if (cb->errcode != WM_ERRCODE_SUCCESS)
-    {
-        WH_REPORT_FAILURE(cb->errcode);
-        WH_ChangeSysState(WH_SYSSTATE_ERROR);
-        return;
-    }
-
     // 正常に進行していれば次は StartParent 状態へ。
     if (!WH_StateInStartParent())
     {
@@ -879,7 +812,6 @@ static void WH_StateOutSetParentWEPKey(void *arg)
     }
 }
 
-#endif
 /* ----------------------------------------------------------------------
    state : StartParent
   ---------------------------------------------------------------------- */
@@ -893,17 +825,11 @@ static BOOL WH_StateInStartParent(void)
 
     if ( (pNetWH->sSysState == WH_SYSSTATE_CONNECTED)
          || (pNetWH->sSysState == WH_SYSSTATE_KEYSHARING) 
-         || (pNetWH->sSysState == WH_SYSSTATE_DATASHARING) )
-    {
+         || (pNetWH->sSysState == WH_SYSSTATE_DATASHARING) ){
         // 以上の場合には既に親としての設定は済んでいるはず。
         return TRUE;
     }
-    {  // ユニオンルーム話しかけ対策
-        WMStatus* status = (WMStatus*)WMi_GetStatusAddress();
-        DC_InvalidateRange(&status->wep_flag, sizeof(status->wep_flag));
-        status->wep_flag = FALSE;
-        DC_FlushRange(&status->wep_flag, sizeof(status->wep_flag));
-    }
+
     result = WM_StartParent(WH_StateOutStartParent);
 
     if (result != WM_ERRCODE_OPERATING)
@@ -959,22 +885,11 @@ static void WH_StateOutStartParent(void *arg)
 
 //            OS_TPrintf("ssid my %d  child %d\n",CommStateGetServiceNo(),cb->ssid[0]);
 
-#if 1 // 改良 比較関数を渡す必要がある @@OO
             if(pNetWH->connectCheckCallBack){
                 bConnect = pNetWH->connectCheckCallBack(cb->aid,&cb->ssid[0]);
             }
-            if((pNetWH->bPauseConnectSystem == TRUE  ) ||
-               (pNetWH->bPauseConnect == TRUE) ||
-               (!bConnect) ||
+            if((!bConnect) ||
                (0 != GFL_STD_MemComp(pInit->getSSID(), cb->ssid, GFL_STD_StrLen( cb->ssid ) ))){
-#endif
-#if 0
-            if((pNetWH->bPauseConnectSystem == TRUE  ) ||
-                (pNetWH->bPauseConnect == TRUE) ||
-                (WH_GetConnectNum() >= pNetWH->maxEntry) ||
-               (cb->ssid[0] != CommStateGetServiceNo()) ||
-               (0 != GFL_STD_MemComp(SSID,&cb->ssid[1],sizeof(SSID)))){
-#endif
                 
                 WMErrCode result;
                 // 接続を切断します。
@@ -988,24 +903,6 @@ static void WH_StateOutStartParent(void *arg)
                 }
                 break;
             }
-/*
-            // 接続してきた子機が接続許可条件を満たしているかどうかをチェック
-            if (pNetWH->sJudgeAcceptFunc != NULL)
-            {
-                if (!pNetWH->sJudgeAcceptFunc(cb))
-                {
-                    WMErrCode result;
-                    // 接続を切断します。
-                    result = WM_Disconnect(NULL, cb->aid);
-                    if (result != WM_ERRCODE_OPERATING)
-                    {
-                        WH_REPORT_FAILURE(result);
-                        WH_ChangeSysState(WH_SYSSTATE_ERROR);
-                    }
-                    break;
-                }
-            }
-   */
             pNetWH->sConnectBitmap |= target_bitmap;
             WH_TRACE("NowBIT-(%x)\n", pNetWH->sConnectBitmap);
             
@@ -1021,41 +918,33 @@ static void WH_StateOutStartParent(void *arg)
         //-----------------------------------
         // 子機の切断を通知
     case WM_STATECODE_DISCONNECTED:
-        {
-            WH_TRACE("StartParent - child (aid %x) disconnected\n", cb->aid);
-            OS_TPrintf("disconnect %d\n",cb->aid);
-            // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
-            pNetWH->sConnectBitmap &= ~target_bitmap;
-            
-            if(pNetWH->disconnectCallBack){
+        WH_TRACE("StartParent - child (aid %x) disconnected\n", cb->aid);
+        // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
+        pNetWH->sConnectBitmap &= ~target_bitmap;
+        
+        if(pNetWH->disconnectCallBack){
             pNetWH->disconnectCallBack(cb->aid);
-            }
-            
         }
         break;
 
         //-----------------------------------
         // 自ら子機を切断した
     case WM_STATECODE_DISCONNECTED_FROM_MYSELF:
-        {
-            WH_TRACE("StartParent - child (aid 0x%x) disconnected from myself\n", cb->aid);
-            // 自ら切断した場合は処理を行いません
-            // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
+        WH_TRACE("StartParent - child (aid 0x%x) disconnected from myself\n", cb->aid);
+        pNetWH->sConnectBitmap &= ~target_bitmap;
+        if(pNetWH->disconnectCallBack){
+            pNetWH->disconnectCallBack(cb->aid);
         }
         break;
 
         //-----------------------------------
         // StartParentの処理が終了
     case WM_STATECODE_PARENT_START:
-        {
-            // MP 通信状態に移行します。
-            if (!WH_StateInStartParentMP())
-            {
-                WH_ChangeSysState(WH_SYSSTATE_ERROR);
-            }
+        // MP 通信状態に移行します。
+        if (!WH_StateInStartParentMP()) {
+            WH_ChangeSysState(WH_SYSSTATE_ERROR);
         }
         break;
-
         //-----------------------------------
     default:
         WH_TRACE("unknown indicate, state = %d\n", cb->state);
@@ -2465,10 +2354,10 @@ u16 WH_GetBitmap(void)
 
 
 /* ----------------------------------------------------------------------
-   Name:        WH_GetBitmap
-   Description: 接続状態を示すビットパターンを取得します。
+   Name:        WH_GetConnectNum
+   Description: 接続状態を示すビットパターンから接続人数を取得
    Arguments:   none.
-   Returns:     bitmap pattern
+   Returns:     接続人数
    ---------------------------------------------------------------------- */
 static u16 WH_GetConnectNum(void)
 {
@@ -2476,7 +2365,7 @@ static u16 WH_GetConnectNum(void)
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     u16 bitmap = pNetWH->sConnectBitmap;
     
-    for(i = 0;i < 16; i++){
+    for(i = 0;i < GFL_NET_MACHINE_MAX; i++){
         if(bitmap & 0x01){
             num++;
         }
@@ -2955,11 +2844,10 @@ BOOL WH_Initialize(void* pHeap, BOOL bNet)
     pWmInfo->sParentParam.userGameInfoLength = 0;
 
     // 接続子機のユーザ判定関数をNULL (multiboot)
-    pWmInfo->sJudgeAcceptFunc = NULL;
+    pWmInfo->connectCheckCallBack = NULL;
     pWmInfo->maxEntry = GFL_NET_MACHINE_MAX;
     
     pWmInfo->bDisconnectChild = FALSE;
-    pWmInfo->bPauseConnect = FALSE;
 
     if(!bNet){
         return TRUE;
@@ -3321,7 +3209,7 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
 }
 
 /*---------------------------------------------------------------------------*
-  Name:         WH_SetJudgeAcceptFunc
+  Name:         WH_SetConnectCheckCallBack
 
   Description:  子機の接続受け入れを判定するための関数をセットします。
 
@@ -3329,12 +3217,11 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-void WH_SetJudgeAcceptFunc(WHJudgeAcceptFunc func)
+void WH_SetConnectCheckCallBack(WHConnectCheckCallBack callBack)
 {
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    pNetWH->sJudgeAcceptFunc = func;
+    pNetWH->connectCheckCallBack = callBack;
 }
-
 
 /**************************************************************************
  * 以下は、WH_DATA_PORT ポートを使用する直接的な MP 通信の関数です。
@@ -3771,46 +3658,6 @@ void WHSetConnectCallBack(WHdisconnectCallBack callBack)
     GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
     pNetWH->connectCallBack = callBack;
 }
-
-/*---------------------------------------------------------------------------*
-  Name:         WHParentConnectPause
-  Description:  親機にくる接続を止める もしくは解除
-  Arguments:    止める もしくは解除
-  Returns:      none
- *---------------------------------------------------------------------------*/
-
-void WHParentConnectPause(BOOL bPause)
-{
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    pNetWH->bPauseConnect = bPause;
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         WHParentConnectPause
-  Description:  親機にくる接続を止める もしくは解除を得る
-  Arguments:    止める もしくは解除
-  Returns:      none
- *---------------------------------------------------------------------------*/
-
-BOOL WHGetParentConnectPause(void)
-{
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    return pNetWH->bPauseConnect;
-}
-
-/*---------------------------------------------------------------------------*
-  Name:         WHParentConnectPauseSystem  システム専用
-  Description:  親機にくる接続を止める もしくは解除
-  Arguments:    止める もしくは解除
-  Returns:      none
- *---------------------------------------------------------------------------*/
-
-void WHParentConnectPauseSystem(BOOL bPause)
-{
-    GFL_NETWM* pNetWH = _GFL_NET_WLGetNETWH();
-    pNetWH->bPauseConnectSystem = bPause;
-}
-
 
 /*---------------------------------------------------------------------------*
   Name:         WHChildConnectPause

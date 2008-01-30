@@ -20,6 +20,7 @@ struct _SEND_QUEUE{
     u8* pData;     ///< データアドレス
     SEND_QUEUE* prev;      ///< 手前のキュー
     SEND_QUEUE* next;      ///< 次のキュー
+    u16 crc;      ///< データのCRC
     int size;     ///< サイズ
     u8 command;   ///< コマンド
     u8 sendNo;    ///< 送る人
@@ -28,10 +29,9 @@ struct _SEND_QUEUE{
     u8 bRing;     ///< リングバッファ使用の場合１
 } ;
 
-///  @brief  サイズを含んだキューのヘッダ
-#define _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS (5)
-///  @brief  サイズを含まないキューのヘッダ
-#define _GFL_NET_QUEUE_HEADERBYTE (3)
+///  @brief  サイズを必ず含むようになり 現在最大５バイトヘッダになります
+#define _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS (7)
+#define _GFL_NET_QUEUE_HEADERBYTE (7)
 
 
 

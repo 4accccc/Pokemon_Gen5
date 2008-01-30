@@ -40,29 +40,12 @@
 /// サーバー送信用キューの本数
 #define _SENDQUEUE_SERVER_NUM_MAX      (180)
 
-//子機送信バッファのサイズ    8台つなぐ場合の任天堂の推奨バイト数
-//#define _SEND_BUFF_SIZE_CHILD  GFL_NET_CHILD_DATA_SIZE
-//子機送信バッファのサイズ    ４台以下接続時の送信バイト数
-//#define _SEND_BUFF_SIZE_4CHILD  GFL_NET_CHILD_DATA_SIZE
-
 // 子機RING送信係数
 #define _SEND_RINGBUFF_FACTOR_CHILD  (15)
 // 親機RING送信係数
 #define _SEND_RINGBUFF_FACTOR_PARENT  (2)
 
 #define _MIDDLE_BUFF_NUM  (4)  ///DS用ミドルバッファにどの程度ためられるのか
-
-//親機送信バッファのサイズ
-//#define _SEND_BUFF_SIZE_PARENT  GFL_NET_PARENT_DATA_SIZE
-// 親機RING送信バッファサイズ
-//#define _SEND_RINGBUFF__PARENT  (_SEND_BUFF_SIZE_PARENT * 2)
-
-// 子機受信バッファのサイズ
-//#define _RECV_BUFF_SIZE_CHILD  (_SEND_BUFF_SIZE_PARENT-1)
-// 親機受信バッファサイズ
-//#define _RECV_BUFF_SIZE_PARENT (_SEND_BUFF_SIZE_CHILD-1)
-
-
 
 // 初期化されていないイテレーターの数
 #define _NULL_ITERATE (-1)
@@ -105,10 +88,11 @@ typedef enum{   // 送信形態
 typedef struct{
     int dataPoint; // 受信バッファ予約があるコマンドのスタート位置
     u8* pRecvBuff; // 受信バッファ予約があるコマンドのスタート位置
-    u16 valSize;
-    u8 valCommand;
-    u8 sendID;
-    u8 recvID;
+    u16 crc;       /// CRC
+    u16 valSize;   /// 受け取りサイズ
+    u8 valCommand;  /// コマンド
+    u8 sendID;      /// 送信者ID
+    u8 recvID;      /// 受信ID
 } _RECV_COMMAND_PACK;
 
 #define _COUNT_TEST (1)  // パケットの順番の監視
@@ -1602,6 +1586,13 @@ int GFL_NET_SystemGetSendRestSize_ServerSide(void)
 
 static void _endCallBack(int command,int size,void* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
+    if(pNetIni->bCRC){
+        GF_ASSERT(pRecvComm->crc==GFL_STD_CrcCalc(pTemp, size));
+        OS_TPrintf("crc%d\n",pRecvComm->crc);
+    }
+
     GFI_NET_COMMAND_CallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
     pRecvComm->valCommand = GFL_NET_CMD_NONE;
     pRecvComm->valSize = 0xffff;
@@ -1622,12 +1613,15 @@ static void _endCallBack(int command,int size,void* pTemp, _RECV_COMMAND_PACK* p
 
 static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
+    u8 sizeByte;
     int size;
+    int sizeTbl;
     u8 command;
     int bkPos;
     int realbyte;
     int sendID;
     int recvID;
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
     
     while( GFL_NET_RingDataSize(pRing) != 0 ){
@@ -1649,25 +1643,40 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
             size = pRecvComm->valSize;
         }
         else{
-            size = GFI_NET_COMMAND_GetPacketSize(command);
+            sizeTbl = GFI_NET_COMMAND_GetPacketSize(command);
             if(_pComm->bError){
                 return;
             }
-            if(GFL_NET_COMMAND_SIZE_VARIABLE == size){
-                if( GFL_NET_RingDataSize(pRing) < 1 ){  // 残りデータが1以下だった
-                    pRing->startPos = bkPos;
-                    break;
-                }
-                // サイズがない通信データはここにサイズが入っている
-                size = GFL_NET_RingGetByte(pRing)*0x100;
+            if( GFL_NET_RingDataSize(pRing) < 6 ){  // 残りデータが4以下だったら次回
+                pRing->startPos = bkPos;
+                break;
+            }
+
+            sizeByte = GFL_NET_RingGetByte(pRing);
+            if(sizeByte & 0x80){   //１２７以上は最上位BITを立てて２バイトで格納
+                size = (sizeByte & 0x7f);
+                size *= 0x100;
                 size += GFL_NET_RingGetByte(pRing);
+            }
+            else{
+                size = sizeByte;
+            }
+            if(GFL_NET_COMMAND_SIZE_VARIABLE == sizeTbl){
+                // サイズがない通信データはここにサイズが入っている
+                sizeTbl = size;
                 NET_PRINT("受信サイズ  %d\n",size);
-                bkPos = pRing->startPos; // ２個進める
+                bkPos = pRing->startPos; // 進める
             }
             pRecvComm->valSize = size;
             pRecvComm->sendID = GFL_NET_RingGetByte(pRing);
             pRecvComm->recvID = GFL_NET_RingGetByte(pRing);
-            bkPos = pRing->startPos; // ２個進める
+            {
+                if(pNetIni->bCRC){
+                    pRecvComm->crc = GFL_NET_RingGetByte(pRing);
+                    pRecvComm->crc = GFL_NET_RingGetByte(pRing) + pRecvComm->crc * 0x100;
+                }
+            }
+            bkPos = pRing->startPos; // 進める
         }
 
 
@@ -1689,7 +1698,7 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
             if( GFL_NET_RingDataSize(pRing) >= size ){
                 ///NET_PRINT(">>>受信 comm=%d id=%d -- size%d \n",command, netID, size);
                 GFL_NET_RingGets(pRing, pTemp, size);
-                _endCallBack(command, size, (void*)pTemp, pRecvComm);
+                _endCallBack(command, sizeTbl, (void*)pTemp, pRecvComm);
             }
             else{   // まだ届いていない大きいデータの場合ぬける
                 NET_PRINT("結合待ち command %d size %d\n",command,size);

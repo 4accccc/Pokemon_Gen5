@@ -356,6 +356,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
+    FALSE,  //CRCを自動計算するかどうか TRUEの場合すべて計算する
     FALSE,     // MP通信＝親子型通信モードかどうか
     TRUE,  //wifi通信を行うかどうか
     TRUE,     // 通信を開始するかどうか
@@ -386,6 +387,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
+    FALSE,  //CRCを自動計算するかどうか TRUEの場合すべて計算する
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか
     TRUE,     // 通信を開始するかどうか

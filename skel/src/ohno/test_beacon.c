@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file	test_net.c
+ * @file	test_beacon.c
  * @brief	通信動作テスト用関数
  * @author	ohno
  * @date	2006.12.19
@@ -892,6 +892,12 @@ static GFLNetInitializeStruct aGFLNetInit = {
     NULL,  // オート接続で親になった場合
     NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
     NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
+#if GFL_NET_WIFI
+    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    NULL,   ///< DWC形式の友達リスト	
+    NULL,  ///< DWCのユーザデータ（自分のデータ）
+#endif  //GFL_NET_WIFI
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     0,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
@@ -902,6 +908,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
+    FALSE,  //CRCを自動計算するかどうか TRUEの場合すべて計算する
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか
     TRUE,     // 通信を開始するかどうか

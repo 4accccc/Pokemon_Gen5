@@ -30,10 +30,13 @@ extern	void	TestModeSet(void);
 //------------------------------------------------------------------
 void NitroMain(void)
 {
-	// 初期化して…
+
+    // 初期化して…
 	GFLUser_Init();
 
-	//HBLANK割り込み許可
+    OS_InitTick();
+
+    //HBLANK割り込み許可
 	OS_SetIrqFunction(OS_IE_H_BLANK,SkeltonHBlankFunc);
 	//VBLANK割り込み許可
 	OS_SetIrqFunction(OS_IE_V_BLANK,SkeltonVBlankFunc);
@@ -60,6 +63,9 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
+        OS_TPrintf("timer %d\n",OS_TicksToMicroSeconds32( OS_GetTick()));
+
+        
 		// VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);

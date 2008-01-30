@@ -4,7 +4,7 @@
 // dwc_rap.c とvchat.cからのみ呼び出される。
 // ボイスチャットを呼ぶ場合は、dwc_rap.h経由で呼ぶ。
 
-extern void myvct_init( int heapID, int codec );
+extern void myvct_init( int heapID, int codec,int maxEntry );
 extern void myvct_setCodec( int codec );
 extern void myvct_main( );
 extern BOOL myvct_checkData( int aid, void *data, int size );
@@ -64,6 +64,30 @@ extern void myvct_onVchat();
 
 // ボイスチャットがオンかを返します。
 extern BOOL myvct_isVchatOn();
+
+//==============================================================================
+/**
+ * VCTカンファレンスに招待する
+ * @param   bitmap   接続しているCLIENTのBITMAP
+ * @param   myAid    自分のID
+ * @retval  TRUE 設定できた
+ */
+//==============================================================================
+
+extern BOOL myvct_AddConference(int bitmap, int myAid);
+
+//==============================================================================
+/**
+ * VCTカンファレンスから全員はずす
+ * @param   bitmap   接続しているCLIENTのBITMAP
+ * @param   myAid    自分のID
+ * @retval  TRUE 設定できた
+ * @retval  FALSE 現状のまま もしくは必要がない
+ */
+//==============================================================================
+
+extern BOOL myvct_DelConference(int myAid);
+
 
 #endif
 

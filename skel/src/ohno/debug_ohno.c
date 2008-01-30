@@ -45,7 +45,7 @@ static GFL_PROC_RESULT _debugUIProcInit(GFL_PROC * proc, int * seq, void * p_wor
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
     GFL_UI_SleepReleaseSetFunc(_sleepRelease, NULL);
-#if 1
+#if 0
     TEST_NET_Init();
 #else
     //ビーコン探知機
@@ -65,7 +65,34 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 	GFL_PROC * subproc;
 	DEBUG_OHNO_CONTROL * ctrl = p_work;
 
-#if 1
+    
+
+
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_L){
+        OSTick tick;
+        u64 time;
+        MATHCRC16Table localTable;
+        int i;
+        int testsize = 364+288*2;
+        u8* pDummyBuff = GFL_HEAP_AllocMemory(ctrl->debug_heap_id, testsize);
+
+        OS_InitTick();
+        OS_SetTick((OSTick)0);
+        MATH_CRC16CCITTInitTable( &localTable );
+        
+        for(i=0;i<100;i++){
+            MATH_CalcCRC16CCITT( &localTable, pDummyBuff, testsize );
+            pDummyBuff[i%testsize]++;
+            MATH_CalcCRC16CCITT( &localTable, pDummyBuff, testsize );
+        }
+        tick = OS_GetTick();
+        time = OS_TicksToMilliSeconds(tick);
+        OS_TPrintf("時間 %d\n",time);
+        GFL_HEAP_FreeMemory(pDummyBuff);
+    }
+
+
+#if 0
 //    TEST_UI_Main();  //UI TEST
     
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){

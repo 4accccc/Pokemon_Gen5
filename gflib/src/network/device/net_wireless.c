@@ -92,12 +92,12 @@ struct _NET_WL_WORK{
     u8 disconnectType;    ///< 切断状況
     u8 bSetReceiver;
     u8 bEndScan;  // endscan
-    u8 bErrorState:1;     ///< エラーを引き起こしている場合その状態をもちます
-    u8 bErrorCheck:1;  ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
+    u8 bPauseConnect;   ///< 子機の受付中止状態
+    u8 bErrorState:1;   ///< エラーを引き起こしている場合その状態をもちます
+    u8 bErrorCheck:1;   ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
     u8 bTGIDChange:1;
     u8 bAutoExit:1;
-    u8 bEntry:1;   // 子機の新規参入
-//    u8 bStalth:1;
+    u8 bEntry:1;        ///< 子機の新規参入
 } ;
 
 //==============================================================================
@@ -354,6 +354,9 @@ static void _whInitialize(HEAPID heapID, GFL_NETWL* pNetWL, BOOL bConnect)
     }
     // WH 初期設定
     WH_SetGgid(pNetWL->ggid);
+
+//    WHSetConnectCheckCallBack();
+    
 }
 
 //==============================================================================
@@ -397,6 +400,7 @@ static void _parentDataInit(BOOL bTGIDChange)
 
 static void _commInit(GFL_NETWL* pNetWL)
 {
+    pNetWL->bPauseConnect = FALSE;
     pNetWL->bScanCallBack = FALSE;
     pNetWL->bErrorState = FALSE;
     pNetWL->bErrorCheck = FALSE;
@@ -934,11 +938,11 @@ static void _setUserGameInfo( void )
         return;
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
-    pGF->serviceNo = pNetWL->serviceNo;  // ゲームの番号
+    pGF->serviceNo = pNetWL->serviceNo;    // ゲームの番号
     pGF->debugAloneTest = _DEBUG_ALONETEST;
     GFL_STD_MemCopy( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE);
-    
-    pGF->pause = WHGetParentConnectPause();    // 親機が受付を中止しているかどうか
+
+    pGF->pause = pNetWL->bPauseConnect;
     GFL_STD_MemCopy( pNetWL->beaconGetFunc(), pGF->aBeaconDataBuff, size);
     DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
     WH_SetUserGameInfo((u16*)pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);

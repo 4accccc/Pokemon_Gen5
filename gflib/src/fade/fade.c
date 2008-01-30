@@ -103,6 +103,9 @@ void	GFL_FADE_Exit( void )
 //--------------------------------------------------------------------------------------------
 void	GFL_FADE_SetMasterBrightReq( int mode, int start_evy, int end_evy, int wait )
 {
+	if( fade_sys == NULL ){
+		return;
+	}
 	fade_sys->mode = mode;
 	fade_sys->start_evy = start_evy;
 	fade_sys->end_evy = end_evy;

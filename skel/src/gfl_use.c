@@ -94,6 +94,9 @@ void GFLUser_Init(void)
 	//アーカイブシステム初期化
 	//GFL_ARC_SysInit(...);
 
+    //STD 標準ライブラリ初期化（乱数やCRC）
+    GFL_STD_Init(GFL_HEAPID_SYSTEM);
+    
 	//UIシステム初期化
 	GFL_UI_Boot(GFL_HEAPID_SYSTEM);
 
@@ -162,6 +165,7 @@ void GFLUser_Exit(void)
 {
 	GFL_BACKUP_Exit();
 	GFL_UI_Exit();
+    GFL_STD_Exit();
 	GFL_PROC_Exit();
 	GFL_OVERLAY_Exit();
 	GFL_FADE_Exit();

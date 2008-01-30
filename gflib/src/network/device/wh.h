@@ -210,9 +210,6 @@ typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 // 送信コールバック型 (for data-sharing model)
 typedef void (*WHSendCallbackFunc) (BOOL result);
 
-// 接続許可判定関数型 (for multiboot model)
-typedef BOOL (*WHJudgeAcceptFunc) (WMStartParentCallback *);
-
 // ggidスキャンコールバック
 typedef void (*fGGIDCallBack) (u32 ggid, int serviceNo);
 
@@ -558,18 +555,6 @@ extern BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc);
    ---------------------------------------------------------------------- */
 extern BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel,WHStartScanCallbackFunc sScanCallback);
 
-/*---------------------------------------------------------------------------*
-  Name:         WH_SetJudgeAcceptFunc
-
-  Description:  子機の接続受け入れを判定するための関数をセットします。
-
-  Arguments:    子機の接続判定関数を設定.
-
-  Returns:      None.
- *---------------------------------------------------------------------------*/
-extern void WH_SetJudgeAcceptFunc(WHJudgeAcceptFunc func);
-
-
 /**************************************************************************
  * 以下は、WH_DATA_PORT ポートを使用する直接的な MP 通信の関数です。
  **************************************************************************/
@@ -728,5 +713,7 @@ extern BOOL WHGetParentConnectPause(void);
  *---------------------------------------------------------------------------*/
 
 extern void WHParentConnectPauseSystem(BOOL bPause);
+
+extern void WH_SetConnectCheckCallBack(WHConnectCheckCallBack callBack);
 
 #endif

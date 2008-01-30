@@ -126,7 +126,9 @@ static void dispFinish( void )
 		GX_LoadBG0Char( cgxData, 0, BMP_CHARDATA_SIZE );
 	}
 
+
 	OS_Terminate();
+    
 }
 
 

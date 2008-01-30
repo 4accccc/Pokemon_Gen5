@@ -140,6 +140,18 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
         }
     }
     _setSendData(pSendBuff,pQueue->command);
+
+    if(cs != GFL_NET_COMMAND_SIZE_VARIABLE){
+        pQueue->size = (u16)cs;  //ƒe[ƒuƒ‹‚ÌƒTƒCƒY‚ğŠi”[
+    }
+    if(cs < 127){  // ‚P‚Q‚V–¢–‚Í•’Ê‚ÉŠi”[
+        _setSendData(pSendBuff,(u8)(pQueue->size));
+    }
+    else{   //‚P‚Q‚VˆÈã‚ÍÅãˆÊBIT‚ğ—§‚Ä‚Ä‚QƒoƒCƒg‚ÅŠi”[
+        _setSendData(pSendBuff,(u8)((pQueue->size >> 8)  & 0xff) | 0x80);
+        _setSendData(pSendBuff,(u8)(pQueue->size & 0xff));
+    }
+#if 0
     if(cs == GFL_NET_COMMAND_SIZE_VARIABLE){
         _setSendData(pSendBuff,(u8)((pQueue->size >> 8)  & 0xff));
         _setSendData(pSendBuff,(u8)(pQueue->size & 0xff));
@@ -147,8 +159,17 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
     else{
         pQueue->size = (u16)cs;
     }
+#endif
     _setSendData(pSendBuff,(u8)(pQueue->sendNo));
     _setSendData(pSendBuff,(u8)(pQueue->recvNo));
+    {
+        GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+        if(pNetIni->bCRC){
+            _setSendData(pSendBuff,(u8)((pQueue->crc >> 8)  & 0xff));
+            _setSendData(pSendBuff,(u8)((pQueue->crc)  & 0xff));
+        }
+    }
+
     pQueue->bHeadSet = TRUE;
     return FALSE;
 }
@@ -271,6 +292,8 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, 
     pFree->pData = pDataArea;
     pFree->sendNo = sendNo;
     pFree->recvNo = recvNo;
+    pFree->crc = GFL_STD_CrcCalc(pFree->pData, pFree->size);
+    
     if(bFast == TRUE){
         pTerm = &pQueueMgr->fast;
     }

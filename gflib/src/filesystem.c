@@ -29,6 +29,8 @@ void InitFileSystem(void)
 
   // ファイルシステム初期化
   FS_Init(FS_DMA_NUMBER);
+  // キャッシュクリアの閾値を設定
+  CARD_SetCacheFlushThreshold(0x500,0x2400);
   // ファイル管理テーブルをRAMへ載せる→ファイルへの高速アクセスが可能
   file_table_size = FS_GetTableSize();
   p_table = OS_AllocFromMainArenaLo(file_table_size, 4);

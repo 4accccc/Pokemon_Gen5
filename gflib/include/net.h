@@ -167,6 +167,7 @@ typedef struct{
   u8 maxConnectNum;         ///< 最大接続人数
   u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
+  u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
   u8 bMPMode;               ///< MP通信モードかどうか
   u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
   u8 bNetwork;              ///< 通信を開始するかどうか FALSEだとOFFLINE動作
