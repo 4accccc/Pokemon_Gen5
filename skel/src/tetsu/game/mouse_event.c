@@ -38,6 +38,8 @@ struct _MOUSE_EVENT_SYS {
 	int				now_icon;
 
 	u32				eventFlag;
+	BOOL			jumpTrg;
+	u32				jumpTrgEnableCount;
 };
 
 typedef struct {
@@ -187,6 +189,10 @@ static const GFL_G3D_SCENEOBJ_DATA mouseCursorData[] = {
 static void setMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 static void resetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 static void clearMouseEvent( MOUSE_EVENT_SYS* mes );
+static void setJumpTrg( MOUSE_EVENT_SYS* mes );
+static void resetJumpTrg( MOUSE_EVENT_SYS* mes );
+static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes );
+
 static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos );
 //------------------------------------------------------------------
 /**
@@ -202,6 +208,7 @@ MOUSE_EVENT_SYS* InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID )
 	mes->now_icon = NO_HIT_ICON;
 	GFL_BG_LoadScreenReq( PLAYICON_FRM );
 
+	resetJumpTrg( mes );
 	clearMouseEvent( mes );
 	//３Ｄデータセットアップ
 	{
@@ -249,12 +256,23 @@ void MainMouseEvent( MOUSE_EVENT_SYS* mes )
 	if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == FALSE ){
 		scrClearFlag = TRUE;
 		GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &cursorDrawSw );
+		if( checkJumpTrg( mes ) == TRUE ){
+			setMouseEvent( mes, MOUSE_EVENT_JUMP );
+		}
+		resetJumpTrg( mes );
 	} else {
 		//移動判定
 		if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos ) == TRUE ){
 			cursorDrawSw = TRUE;
 			GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &cursorDrawSw );
 			GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &mes->mouseCursorPos );
+			if( mes->jumpTrg == TRUE ){
+				if( mes->jumpTrgEnableCount ){
+					mes->jumpTrgEnableCount--;
+				}
+			}else{
+				setJumpTrg( mes );
+			}
 			setMouseEvent( mes, MOUSE_EVENT_MOVE );
 		}
 		//アイコン判定
@@ -309,6 +327,29 @@ static void resetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID )
 static void clearMouseEvent( MOUSE_EVENT_SYS* mes )
 {
 	mes->eventFlag = 0;
+}
+
+//------------------------------------------------------------------
+static void setJumpTrg( MOUSE_EVENT_SYS* mes )
+{
+	mes->jumpTrg = TRUE;
+	mes->jumpTrgEnableCount = 4;
+}
+
+static void resetJumpTrg( MOUSE_EVENT_SYS* mes )
+{
+	mes->jumpTrg = FALSE;
+	mes->jumpTrgEnableCount = 0;
+}
+
+static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes )
+{
+	if( mes->jumpTrg == TRUE ){
+		if( mes->jumpTrgEnableCount ){
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 //------------------------------------------------------------------

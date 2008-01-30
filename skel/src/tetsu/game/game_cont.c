@@ -707,27 +707,15 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 		SetPlayerControlCommand( pc, PCC_PUTON );
 		return;
 	}
-#if 0
-	{
-		PLAYER_MOVE_DIR mvDir; 
+	//ジャンプ
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_JUMP) == TRUE ){
+		VecFx32 mvDir;
 
-		//ジャンプ
-		if( trg & PAD_BUTTON_X ){
-			if( checkMoveDirection( cont, &mvDir ) == TRUE ){
-				SetPlayerMoveCommand( pc, PCC_JUMP, mvDir );
-			} else {
-				SetPlayerMoveCommand( pc, PCC_STAYJUMP, mvDir );
-			}
-			return;
-		}
-		//移動
-		if( checkMoveDirection( cont, &mvDir ) == TRUE ){
-			SetPlayerMoveCommand( pc, PCC_RUN, mvDir );
-		} else {
-			SetPlayerControlCommand( pc, PCC_STAY );
-		}
+		GetMousePos( gc->mes, &mvDir );
+		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
+		return;
 	}
-#else
+	//移動
 	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_MOVE) == TRUE ){
 		VecFx32 mvDir;
 
@@ -736,7 +724,6 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 		return;
 	}
 	SetPlayerControlCommand( pc, PCC_STAY );
-#endif
 }
 
 
