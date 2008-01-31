@@ -207,6 +207,7 @@ extern BOOL
 //------------------------------------------------------------------
 /**
  * ヒープの空き領域サイズを返す
+ * ヒープの確保可能最大領域サイズを返す
  *
  * @param   heapID	ヒープＩＤ（最上位ビットは取得方向フラグ）
  *
@@ -220,6 +221,10 @@ enum{
 
 extern u32
 	GFI_HEAP_GetHeapFreeSize
+		( HEAPID heapID );
+
+extern u32
+	GFI_HEAP_GetHeapAllocatableSize
 		( HEAPID heapID );
 
 //------------------------------------------------------------------

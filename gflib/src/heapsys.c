@@ -228,8 +228,10 @@ void*
 				OS_Printf( "heap is not exist.\n" );
 				break;
 			case HEAP_CANNOT_ALLOC_MEM:
-				OS_Printf( "not enough memory. heapID = %d remains = %x\n",
-							heapID&HEAPID_MASK,	GFI_HEAP_GetHeapFreeSize( heapID ));
+				OS_Printf( "not enough memory?. heapID = %d remains = %x allocatableSize = %x\n",
+							heapID&HEAPID_MASK,	
+							GFI_HEAP_GetHeapFreeSize( heapID ),
+							GFI_HEAP_GetHeapAllocatableSize( heapID ));
 				break;
 		}
 		#ifdef HEAPSYS_DEBUG

@@ -558,6 +558,31 @@ u32
 	return 0;
 }
 
+//------------------------------------------------------------------
+/**
+ * ヒープの確保可能最大領域サイズを返す
+ *
+ * @param   heapID	ヒープＩＤ（最上位ビットは取得方向フラグ）
+ *
+ * @retval  u32		空き領域サイズ（バイト単位）、取得失敗時は0
+ *					errorCode：失敗原因
+ */
+//------------------------------------------------------------------
+u32
+	GFI_HEAP_GetHeapAllocatableSize
+		( HEAPID heapID )
+{
+	heapID &= HEAPID_MASK;	//実ヒープＩＤの取得
+
+	if( heapID >= HeapSys.heapMax )
+	{	//指定ＩＤが無効
+		HeapSys.errorCode = HEAP_CANNOT_GETSIZE_NOID;
+	} else {
+		HeapSys.errorCode = 0;
+		return NNS_FndGetAllocatableSizeForExpHeap( GetHeapHandle( heapID ) );
+	}
+	return 0;
+}
 
 //------------------------------------------------------------------
 /**
