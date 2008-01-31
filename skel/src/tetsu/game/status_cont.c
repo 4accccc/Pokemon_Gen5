@@ -60,7 +60,7 @@ enum {
 static const char	castleName[] = {"Castle"};
 static const char	summonName[] = {"Summon"};
 // ｘｙ座標、アニメーションシーケンス、ソフト優先順位(0>0xff)、BG優先順位
-static const GFL_CLWK_DATA clwkData = { 0, 0, 0, 0, 0 }; 
+static const GFL_CLWK_DATA clwkData = { 0, 0, 0, 0, 1 }; 
 
 static BOOL setScreenPos( GFL_CLWK* clact, VecFx32* trans, CAMERA_CONTROL* cc );
 static void resetStatus( STATUS_CLACT_P* tact );

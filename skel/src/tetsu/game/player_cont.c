@@ -442,7 +442,7 @@ static void anmSetForce( PLAYER_CONTROL* pc, int anmID )
 }
 
 //------------------------------------------------------------------
-static BOOL moveSet( PLAYER_CONTROL* pc, int speed, u16 direction )
+static BOOL moveSet( PLAYER_CONTROL* pc, int speed )
 {
 	VecFx32	rotVec, tmpTransVec;		
 	u16		mapAttr;
@@ -469,6 +469,8 @@ static BOOL moveSet( PLAYER_CONTROL* pc, int speed, u16 direction )
 	rotVec.x = 0;
 	rotVec.y = FX_Atan2Idx( -pc->moveVecNormal.z, pc->moveVecNormal.x ) + 0x4000;
 	rotVec.z = 0;
+
+	pc->nowDirection = rotVec.y - 0x8000;
 
 	Set3DactTrans( pc->sceneAct, &pc->contTrans );
 	Set3DactRotate( pc->sceneAct, &rotVec );
@@ -660,14 +662,14 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_JUMP:
 		if( jumpControl( pc ) == TRUE ){
-			mvf = moveSet( pc, JUMP_SPEED, pc->moveDir );
+			mvf = moveSet( pc, JUMP_SPEED );
 		}
 		break;
 	case PCC_STAYJUMP:
 		jumpControl( pc );
 		break;
 	case PCC_WALK:
-		mvf = moveSet( pc, WALK_SPEED, pc->contDirection + pc->moveDir );
+		mvf = moveSet( pc, WALK_SPEED );
 		if( mvf == TRUE ){
 			anmSet( pc, ACTANM_CMD_WALK );
 		} else {
@@ -675,7 +677,7 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		}
 		break;
 	case PCC_RUN:
-		mvf = moveSet( pc, RUN_SPEED, pc->contDirection + pc->moveDir );
+		mvf = moveSet( pc, RUN_SPEED );
 		if( mvf == TRUE ){
 			anmSet( pc, ACTANM_CMD_RUN );
 		} else {

@@ -333,7 +333,7 @@ static void clearMouseEvent( MOUSE_EVENT_SYS* mes )
 static void setJumpTrg( MOUSE_EVENT_SYS* mes )
 {
 	mes->jumpTrg = TRUE;
-	mes->jumpTrgEnableCount = 4;
+	mes->jumpTrgEnableCount = 2;
 }
 
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes )
