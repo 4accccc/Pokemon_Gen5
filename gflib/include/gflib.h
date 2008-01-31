@@ -46,6 +46,7 @@
 
 #include "double3Ddisp.h"
 #include "sound.h"
+#include "sound_tool.h"
 #include "dma.h"
 
 #include "particle.h"
