@@ -2083,7 +2083,7 @@ BOOL
 	
 	//posRay->posRefベクトルの算出:P0-R0
 	VEC_Subtract( posRef, posRay, &vecP0R0 );
-	//posRes->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//進行ベクトルと法線ベクトルの内積の算出:VN
 	scalar_V_N = VEC_DotProduct( vecRay, vecN );
@@ -2092,10 +2092,10 @@ BOOL
 		return FALSE;
 	}
 	//経過オフセットtの算出:(P0-R0)N/VN
-	t = scalar_P0R0_N/scalar_V_N;
+	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
 
 	//交点の算出:R0 + (P0-R0)N/VN * V
-	VEC_MultAdd( t << FX32_SHIFT, vecRay, posRay, dest );
+	VEC_MultAdd( t, vecRay, posRay, dest );
 	if( t < 0 ){
 		//交点が後方
 		return FALSE;
@@ -2105,7 +2105,7 @@ BOOL
 
 //--------------------------------------------------------------------------------------------
 /**
- * レイトレース計算
+ * レイトレース計算（距離制限つき）
  * 　レイと平面の交点ベクトルを算出
  *
  *		直線の方程式 P = P0 + t * V		
@@ -2123,7 +2123,7 @@ BOOL
  * @param	vecN		平面の法線ベクトル
  * @param	dest		交点の位置
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	BOOL		交点がレイの距離範囲外および存在しない場合はFALSE
  */
 //--------------------------------------------------------------------------------------------
 BOOL
@@ -2132,30 +2132,30 @@ BOOL
 			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest )
 {
 	VecFx32	vecP0R0, vecR1R0;
-	fx32	t, scalar_V_N, scalar_P0R0_N;
+	fx32	t, scalar_R1R0_N, scalar_P0R0_N;
 	
 	//posRay->posRefベクトルの算出:P0-R0
 	VEC_Subtract( posRef, posRay, &vecP0R0 );
 	//posRay->posRayEndベクトルの算出:R1-R0
 	VEC_Subtract( posRayEnd, posRay, &vecR1R0 );
-	//posRes->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
-	//進行ベクトルと法線ベクトルの内積の算出:VN
-	scalar_V_N = VEC_DotProduct( &vecR1R0, vecN );
-	if( !scalar_V_N ){
+	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
+	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
+	if( !scalar_R1R0_N ){
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
 		return FALSE;
 	}
-	//経過オフセットtの算出:(P0-R0)N/VN
-	t = scalar_P0R0_N/scalar_V_N;
+	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
+	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
 
-	//交点の算出:R0 + (P0-R0)N/VN * V
-	VEC_MultAdd( t << FX32_SHIFT, &vecR1R0, posRay, dest );
+	//交点の算出:R0 + (P0-R0)N/(R1-R0)N * (R1-R0) 
+	VEC_MultAdd( t, &vecR1R0, posRay, dest );
 	if( t < 0 ){
 		//交点が発射地点より後方
 		return FALSE;
 	}
-	if( t > 1 ){
+	if( t > FX32_ONE ){
 		//交点が到達地点より前方
 		return FALSE;
 	}
