@@ -945,7 +945,7 @@ extern BOOL
  *			※PおよびP0:平面上の任意の２点,N:法線ベクトル
  *		を同時にみたす点Pが交点であることを利用して算出
  *
- * @param	posRay		レイの位置
+ * @param	posRay		レイの発射位置
  * @param	vecRay		レイの進行ベクトル
  * @param	posRef		平面上の一点の位置
  * @param	vecN		平面の法線ベクトル
@@ -957,6 +957,33 @@ extern BOOL
 extern BOOL
 	GFL_G3D_Calc_GetClossPointRayPlane
 		( const VecFx32* posRay, const VecFx32* vecRay, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest );
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算（距離制限つき）
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P1).N = 0（内積計算）
+ *			※PおよびP1:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ *		両式を連立させ P = P1 + ((P1 - P0 ).N / V.N) * V
+ *		という方程式を得る
+ *
+ * @param	posRay		レイの発射位置
+ * @param	posRayEnd	レイの最終到達位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ *
+ * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_Calc_GetClossPointRayPlaneLimit
+		( const VecFx32* posRay, const VecFx32* posRayEnd, 
 			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest );
 
 //=============================================================================================
