@@ -2052,6 +2052,41 @@ static void
 //=============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
+ * 平面計算
+ * 　点が平面上にあるかどうかの判定
+ *
+ *		指定された点が平面の方程式 (P - P1).N = 0（内積計算）
+ *			※P1:平面上の任意の点,N:法線ベクトル
+ *		をみたすかどうか判定
+ *
+ * @param	pos			指定位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL
+	GFL_G3D_Calc_CheckPointOnPlane
+		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, fx32 margin )
+{
+	VecFx32	vecP1P0;
+	fx32	scalar_P1P0_N;
+	
+	//pos->posRefベクトルの算出:P1-P0
+	VEC_Subtract( posRef, pos, &vecP1P0 );
+	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	scalar_P1P0_N = VEC_DotProduct( &vecP1P0, vecN );
+	if(( scalar_P1P0_N >= -margin )&&( scalar_P1P0_N <= margin )){
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * レイトレース計算
  * 　レイと平面の交点ベクトルを算出
  *
@@ -2083,7 +2118,7 @@ BOOL
 	
 	//posRay->posRefベクトルの算出:P0-R0
 	VEC_Subtract( posRef, posRay, &vecP0R0 );
-	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	//posRay->posRefベクトルと法線ベクトルの内積の算出:(P0-R0)N
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//進行ベクトルと法線ベクトルの内積の算出:VN
 	scalar_V_N = VEC_DotProduct( vecRay, vecN );
@@ -2138,7 +2173,7 @@ BOOL
 	VEC_Subtract( posRef, posRay, &vecP0R0 );
 	//posRay->posRayEndベクトルの算出:R1-R0
 	VEC_Subtract( posRayEnd, posRay, &vecR1R0 );
-	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	//posRay->posRefベクトルと法線ベクトルの内積の算出:(P0-R0)N
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
 	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
