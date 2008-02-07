@@ -266,8 +266,10 @@ static void	DrawStatusPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
 
 	if( pc == dscw->myPc ){
 		GFL_CLACTPOS pos;
-		pos.x = 0x80;
-		pos.y = 0x40;
+		pos.x = 48;
+		pos.y = 192-16;
+//		pos.x = 0x80;
+//		pos.y = 0x40;
 		GFL_CLACT_WK_SetPos( dscw->tact->player[num].clact, &pos, CLSYS_DRAW_MAIN );
 		StatusDraw( &dscw->tact->player[num], ps->name, 
 					ps->hp, ps->hpMax, STATUS_DRAW_FULL, dscw->bmpTmp );
@@ -322,7 +324,9 @@ static BOOL setScreenPos( GFL_CLWK* clact, VecFx32* trans, CAMERA_CONTROL* cc )
 			NNS_G3dWorldPosToScrPos( trans, &scrx, &scry );
 			pos.x = scrx;
 			pos.y = scry;
-			GFL_CLACT_WK_SetPos( clact, &pos, CLSYS_DRAW_MAIN );
+			if(( scry >= 0 )&&( scry <= 192 )){
+				GFL_CLACT_WK_SetPos( clact, &pos, CLSYS_DRAW_MAIN );
+			}
 			return TRUE;
 		}
 	}

@@ -10,6 +10,7 @@ typedef struct _MOUSE_EVENT_SYS MOUSE_EVENT_SYS;
 typedef enum {
 	MOUSE_EVENT_NONE = 0,
 
+	MOUSE_EVENT_MOVESTART,
 	MOUSE_EVENT_MOVE,
 	MOUSE_EVENT_JUMP,
 
@@ -34,16 +35,21 @@ typedef enum {
 
 	MOUSE_EVENT_OPEN_MENU,
 
-	MOUSE_EVENT_PLAYERMOVE_L,
-	MOUSE_EVENT_PLAYERMOVE_R,
-	MOUSE_EVENT_PLAYERMOVE_U,
-	MOUSE_EVENT_PLAYERMOVE_D,
+	MOUSE_EVENT_ATTACK_1,
+	MOUSE_EVENT_ATTACK_2,
+	MOUSE_EVENT_ATTACK_3,
+	MOUSE_EVENT_ATTACK_4,
+	MOUSE_EVENT_ATTACK_5,
+	MOUSE_EVENT_ATTACK_6,
+//åªèÛ32bitÇ‹Ç≈
 }MOUSE_EVENT;
 
 extern MOUSE_EVENT_SYS*	InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID );
 extern void				ExitMouseEvent( MOUSE_EVENT_SYS* mes );
 extern void				MainMouseEvent( MOUSE_EVENT_SYS* mes );
 
+extern void				StartMouseEvent( MOUSE_EVENT_SYS* mes );
 extern BOOL				CheckMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 extern void				GetMousePos( MOUSE_EVENT_SYS* mes, VecFx32* pos );
+
 

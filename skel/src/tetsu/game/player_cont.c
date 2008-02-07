@@ -59,7 +59,7 @@ struct _PLAYER_CONTROL {
 	u16						recoverTimer;
 	u16						jumpCalcWork;
 	VecFx32					moveVecNormal;
-	VecFx32					moveVec;
+	int						moveYcount;
 	int						attackID;
 
 	PLAYER_STATUS			status;
@@ -72,9 +72,9 @@ struct _PLAYER_CONTROL {
 	u16						work[8];
 };
 
-#define WALK_SPEED	(1)
-#define RUN_SPEED	(4)
-#define JUMP_SPEED	(3)
+#define WALK_SPEED	(4 << FX32_SHIFT)
+#define RUN_SPEED	(4 << FX32_SHIFT)
+#define JUMP_SPEED	(4 << FX32_SHIFT)
 #define HITOFS		(16)
 static const PLAYER_STATUS	statusDefault = { {"Null"},1000, 100, 1000, 100, 50, 50, 50, 50, 50 };
 static const GFL_CLWK_DATA clwkData = { 0, 0, 0, 0, 0 }; 
@@ -115,6 +115,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->nowAccesary = 0;
 	pc->recoverTimer = 0;
 	pc->jumpCalcWork = 0;
+	pc->moveYcount = 0;
 	pc->attackID = 0;
 
 	pc->subSeq = 0;
@@ -243,19 +244,38 @@ void SetPlayerAttackCommand
 
 //------------------------------------------------------------------
 /**
- * @brief	プレーヤー移動コマンドの設定
+ * @brief	プレーヤー移動コマンドの設定（XZ軸）
  */
 //------------------------------------------------------------------
 void SetPlayerMoveCommand
 	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, VecFx32* mvDir )
 {
+	VecFx32 tmpVec, rotVec;
+	fx32 speed = WALK_SPEED;
+
 	if( pc->jumpFlag == TRUE ){	//ジャンプ中制御不可
 		return;
 	}
 	pc->contCommand = command;
 	//進行ベクトルの算出
-	VEC_Subtract( mvDir, &pc->contTrans, &pc->moveVecNormal );
-	VEC_Normalize( &pc->moveVecNormal, &pc->moveVecNormal );	//正規化
+	VEC_Subtract( mvDir, &pc->contTrans, &tmpVec );
+	tmpVec.y = 0;	//XZ軸についての精度をあげるため0固定
+	VEC_Normalize( &tmpVec, &tmpVec );	//正規化
+
+	if( command == PCC_RUN ){
+		speed = RUN_SPEED;
+	}
+	pc->moveVecNormal.x = FX_Mul( tmpVec.x, speed );
+	pc->moveVecNormal.z = FX_Mul( tmpVec.z, speed );
+
+	//方向設定
+	rotVec.x = 0;
+	rotVec.y = FX_Atan2Idx( -pc->moveVecNormal.z, pc->moveVecNormal.x ) + 0x4000;
+	rotVec.z = 0;
+
+	pc->nowDirection = rotVec.y - 0x8000;
+
+	Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -412,8 +432,6 @@ void SetPlayerRegenerate( PLAYER_CONTROL* pc, const u8 count, const u8 timer, co
  * @brief	プレーヤーメインコントロール
  */
 //------------------------------------------------------------------
-#define JUMP_HEIGHT (FX32_ONE*16)
-
 static int dirOffsTable[] = 
 	{ 0x0000, 0x8000, 0x4000,-0x4000, 0x2000,-0x2000, 0x6000,-0x6000, };
 
@@ -439,42 +457,6 @@ static void anmSetForce( PLAYER_CONTROL* pc, int anmID )
 	Set3DactPlayerChrAnimeForceCmd( pc->sceneAct, anmID );
 	pc->anmSetFlag = TRUE;
 	pc->anmSetID = anmID;
-}
-
-//------------------------------------------------------------------
-static BOOL moveSet( PLAYER_CONTROL* pc, int speed )
-{
-	VecFx32	rotVec, tmpTransVec;		
-	u16		mapAttr;
-	BOOL	areaOver;
-	BOOL	mvf;
-
-	//簡易ヒットチェック(自分を中心とした円衝突判定)
-	VEC_MultAdd( speed << FX32_SHIFT, &pc->moveVecNormal, &pc->contTrans, &tmpTransVec );
-
-	//簡易アトリビュート取得
-	areaOver = Get3DmapAttr( Get_GS_SceneMap( pc->gs ), &tmpTransVec, &mapAttr );
-	{
-		VecFx32 vec0 = { 0, 0, 0 };
-
-		if(( areaOver == TRUE )&&( mapAttr == 0 )){
-			VEC_MultAdd( speed << FX32_SHIFT, &pc->moveVecNormal, &vec0, &pc->moveVec );
-			pc->contTrans = tmpTransVec;
-			mvf = TRUE;
-		} else {
-			pc->moveVec = vec0;
-			mvf = FALSE;
-		}
-	}
-	rotVec.x = 0;
-	rotVec.y = FX_Atan2Idx( -pc->moveVecNormal.z, pc->moveVecNormal.x ) + 0x4000;
-	rotVec.z = 0;
-
-	pc->nowDirection = rotVec.y - 0x8000;
-
-	Set3DactTrans( pc->sceneAct, &pc->contTrans );
-	Set3DactRotate( pc->sceneAct, &rotVec );
-	return mvf;
 }
 
 //------------------------------------------------------------------
@@ -586,6 +568,41 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
+static BOOL moveControl( PLAYER_CONTROL* pc )
+{
+	fx32	gravity = (9.8f * FX32_ONE)/8;
+
+	VecFx32 limitTrans;
+	VecFx32 nextTrans = pc->contTrans;
+
+	nextTrans.x += pc->moveVecNormal.x;
+	nextTrans.y += pc->moveVecNormal.y;
+	nextTrans.z += pc->moveVecNormal.z;
+
+	if( pc->moveVecNormal.y ){	//上下移動要素あり
+		//Y軸移動（重力コントロール）
+		nextTrans.y -= ( gravity * pc->moveYcount / 2 );
+		pc->moveYcount++;
+	}
+	if( CheckHitMapGroundLimit( &pc->contTrans, &nextTrans, &limitTrans ) == TRUE ){
+		//接地
+		pc->moveVecNormal.y = 0;
+		pc->moveYcount = 0;
+		nextTrans = limitTrans;
+	}
+	pc->contTrans = nextTrans;
+
+	pc->moveVecNormal.x = 0;
+	pc->moveVecNormal.z = 0;
+
+	Set3DactTrans( pc->sceneAct, &pc->contTrans );
+
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+#define JUMP_SPEEDY (FX32_ONE*3)
+
 static BOOL jumpControl( PLAYER_CONTROL* pc )
 {
 	BOOL retFlag = TRUE;
@@ -593,40 +610,37 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 	switch( pc->subSeq ){
 	case 0:
 		anmSet( pc, ACTANM_CMD_JUMP_RDY );
-		pc->moveDir = pc->contDirection + pc->moveDir;
 		pc->jumpFlag = TRUE;
 		pc->subSeq++;
 		retFlag = FALSE;
 		break;
 	case 1:
 		anmSet( pc, ACTANM_CMD_JUMPUP );
-		pc->jumpCalcWork = 0;
+		pc->moveVecNormal.y = JUMP_SPEEDY;
+		pc->moveYcount = 0;
 		pc->subSeq++;
 		retFlag = FALSE;
 		break;
 	case 2:
-		if( pc->jumpCalcWork < 0x6000 ){
-			pc->contTrans.y = (JUMP_HEIGHT * FX_SinIdx( pc->jumpCalcWork )/ FX16_ONE);
-			pc->jumpCalcWork += 0x1000;
-		} else {
-			anmSet( pc, ACTANM_CMD_JUMPDOWN );
+		if( !pc->moveVecNormal.y ){
+			anmSet( pc, ACTANM_CMD_JUMP_END );
 			pc->subSeq++;
+		} else {
+			//移動設定
+			VecFx32 tmpTrans;
+
+			tmpTrans.x = -(fx32)FX_SinIdx( pc->nowDirection );
+			tmpTrans.y = 0;
+			tmpTrans.z = -(fx32)FX_CosIdx( pc->nowDirection );
+
+			VEC_Normalize( &tmpTrans, &tmpTrans );	//正規化
+
+			pc->moveVecNormal.x = FX_Mul( tmpTrans.x, JUMP_SPEED );
+			pc->moveVecNormal.z = FX_Mul( tmpTrans.z, JUMP_SPEED );
 		}
-		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+		retFlag = TRUE;
 		break;
 	case 3:
-		if( pc->jumpCalcWork < 0x8000 ){
-			pc->contTrans.y = (JUMP_HEIGHT * FX_SinIdx( pc->jumpCalcWork )/ FX16_ONE);
-			pc->jumpCalcWork += 0x1000;
-		} else {
-			anmSet( pc, ACTANM_CMD_JUMP_END );
-			pc->contTrans.y = 0;
-			pc->subSeq++;
-			retFlag = FALSE;
-		}
-		Set3DactTrans( pc->sceneAct, &pc->contTrans );
-		break;
-	case 4:
 		pc->contCommand = PCC_STAY;
 		pc->jumpFlag = FALSE;
 		pc->subSeq = 0;
@@ -646,6 +660,10 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
 		return;
 	}
+	if( moveControl( pc ) == FALSE ){
+		return;
+	}
+
 	if( pc->subSeq ){
 		pc->contCommand = pc->nowCommand;//サブシーケンス動作中
 	}
@@ -661,28 +679,14 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		anmSet( pc, ACTANM_CMD_STAY );
 		break;
 	case PCC_JUMP:
-		if( jumpControl( pc ) == TRUE ){
-			mvf = moveSet( pc, JUMP_SPEED );
-		}
-		break;
 	case PCC_STAYJUMP:
 		jumpControl( pc );
 		break;
 	case PCC_WALK:
-		mvf = moveSet( pc, WALK_SPEED );
-		if( mvf == TRUE ){
-			anmSet( pc, ACTANM_CMD_WALK );
-		} else {
-			anmSet( pc, ACTANM_CMD_STAY );
-		}
+		anmSet( pc, ACTANM_CMD_WALK );
 		break;
 	case PCC_RUN:
-		mvf = moveSet( pc, RUN_SPEED );
-		if( mvf == TRUE ){
-			anmSet( pc, ACTANM_CMD_RUN );
-		} else {
-			anmSet( pc, ACTANM_CMD_STAY );
-		}
+		anmSet( pc, ACTANM_CMD_RUN );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化

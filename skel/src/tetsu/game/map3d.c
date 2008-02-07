@@ -483,5 +483,48 @@ static const	EXOBJ_DATATABLE extraObjectDataTbl[5] = {
 
 
 
+//------------------------------------------------------------------
+/**
+ * @brief		地面との当たり判定
+ */
+//------------------------------------------------------------------
+BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult )
+{
+	VecFx32 vecRay, posRef, vecN;
+
+	//レイ進行ベクトルの算出
+	vecRay = *vecMove;
+	VEC_Normalize( &vecRay, &vecRay );	//正規化
+
+	//原点(0,0,0)を通るy=0水平面を暫定の地形とする
+	posRef.x = 0;
+	posRef.y = 0;
+	posRef.z = 0;
+	vecN.x = 0;
+	vecN.y = FX32_ONE;
+	vecN.z = 0;
+
+	return GFL_G3D_Calc_GetClossPointRayPlane( posNow, &vecRay, &posRef, &vecN, posResult );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		ベクトル移動の際の地面との当たり判定
+ */
+//------------------------------------------------------------------
+BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResult )
+{
+	VecFx32 vecMove, posRef, vecN;
+
+	//原点(0,0,0)を通るy=0水平面を暫定の地形とする
+	posRef.x = 0;
+	posRef.y = 0;
+	posRef.z = 0;
+	vecN.x = 0;
+	vecN.y = FX32_ONE;
+	vecN.z = 0;
+
+	return GFL_G3D_Calc_GetClossPointRayPlaneLimit( posNow, posNext, &posRef, &vecN, posResult );
+}
 
 

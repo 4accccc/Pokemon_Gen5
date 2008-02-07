@@ -26,11 +26,7 @@
 //
 //
 //============================================================================================
-#if 0
-static void ControlKey( PLAYER_CONTROL* pc, int trg, int cont );
-#else
-static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont );
-#endif
+static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc );
 static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc );
 //------------------------------------------------------------------
 /**
@@ -93,6 +89,7 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->tp_blank = 0;
 
 	gc->mes = InitMouseEvent( gs, heapID );
+	StartMouseEvent( gc->mes );
 
 	//チームコントローラ登録
 	for( i=0; i<setup->teamCount; i++ ){
@@ -399,11 +396,7 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 	netID = GetPlayerNetID( pc );
 
 	if( pc == mccw->gc->myPc ){
-#if 0
-		ControlKey( pc, mccw->gc->gnd[netID].trg, mccw->gc->gnd[netID].cont );
-#else
-		ControlKey( pc, mccw->gc, mccw->gc->gnd[netID].trg, mccw->gc->gnd[netID].cont );
-#endif
+		ControlKey( pc, mccw->gc );
 		MainPlayerControl( pc );
 	} else {
 		MainNetWorkPlayerControl( pc, &mccw->gc->gnd[netID].psn );
@@ -613,7 +606,7 @@ static BOOL checkMoveDirection( int cont, PLAYER_MOVE_DIR* dir )
 }
 
 //------------------------------------------------------------------
-static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont )
+static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 {
 	//方向設定
 	{
@@ -667,27 +660,27 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 	}
 	//攻撃
 	{
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_8 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_3 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 0 );
 			return;
 		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_9 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_5 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 1 );
 			return;
 		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_10 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_4 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 2 );
 			return;
 		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_11 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_6 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 3 );
 			return;
 		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_12 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_2 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 4 );
 			return;
 		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_13 ) == TRUE ){
+		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_1 ) == TRUE ){
 			SetPlayerAttackCommand( pc, PCC_ATTACK, 5 );
 			return;
 		}
@@ -716,6 +709,13 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc, int trg, int cont 
 		return;
 	}
 	//移動
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_MOVESTART) == TRUE ){
+		VecFx32 mvDir;
+
+		GetMousePos( gc->mes, &mvDir );
+		SetPlayerMoveCommand( pc, PCC_WALK, &mvDir );
+		return;
+	}
 	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_MOVE) == TRUE ){
 		VecFx32 mvDir;
 
