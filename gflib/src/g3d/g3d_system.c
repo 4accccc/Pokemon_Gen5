@@ -2122,8 +2122,9 @@ BOOL
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//進行ベクトルと法線ベクトルの内積の算出:VN
 	scalar_V_N = VEC_DotProduct( vecRay, vecN );
-	if( !scalar_V_N ){
+	if( scalar_V_N >= 0 ){
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		//向きが同じ
 		return FALSE;
 	}
 	//経過オフセットtの算出:(P0-R0)N/VN
@@ -2177,8 +2178,9 @@ BOOL
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
 	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
-	if( !scalar_R1R0_N ){
+	if( scalar_R1R0_N >= 0 ){
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		//向きが同じ
 		return FALSE;
 	}
 	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
