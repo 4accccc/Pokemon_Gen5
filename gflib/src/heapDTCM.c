@@ -69,7 +69,7 @@ BOOL
 	GFI_HEAP_DTCM_Init
 		( u32 size )
 {
-	void	*memLo, *memHi, *mem;
+	void	*memLo, *memHi;
 
 	//サイズ判定（現状AREA_MAX_SIZE以上は確保できないようにする）
 	if( size > AREA_MAX_SIZE ){
@@ -81,10 +81,10 @@ BOOL
 	OS_SetDTCMArenaHi( (void*)( HW_DTCM_END - 0x1000 ) );
 
 	memHi = (void*)((u32)memLo + size);
-	mem = OS_InitAlloc( OS_ARENA_DTCM, memLo, memHi, 1 );
+	memLo = OS_InitAlloc( OS_ARENA_DTCM, memLo, memHi, 1 );
 
 	//アリーナの上限再設定
-	OS_SetDTCMArenaLo( mem );
+	OS_SetDTCMArenaLo( memLo );
 
 	HeapSysDTCM.heaphandle = OS_CreateHeap( OS_ARENA_DTCM, memLo, memHi );
 	if( (int)HeapSysDTCM.heaphandle == -1 ){
