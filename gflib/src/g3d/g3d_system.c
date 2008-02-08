@@ -2123,13 +2123,7 @@ GFL_G3D_CALC_RESULT
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//進行ベクトルと法線ベクトルの内積の算出:VN
 	scalar_V_N = VEC_DotProduct( vecRay, vecN );
-#if 0
-	if(( scalar_V_N >= -margin )&&( scalar_V_N <= margin )){
-		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
-		//（並行判定※許容誤差あり）
-		return GFL_G3D_CALC_FALSE;
-	}
-#else
+
 	if( scalar_V_N > margin ){
 		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
 		return GFL_G3D_CALC_OUTRANGE;
@@ -2138,7 +2132,6 @@ GFL_G3D_CALC_RESULT
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
 		return GFL_G3D_CALC_FALSE;
 	}
-#endif
 	//経過オフセットtの算出:(P0-R0)N/VN
 	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
 
@@ -2191,13 +2184,7 @@ GFL_G3D_CALC_RESULT
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
 	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
-#if 0
-	if(( scalar_R1R0_N >= -margin )&&( scalar_R1R0_N <= margin )){
-		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
-		//（並行判定※許容誤差あり）
-		return GFL_G3D_CALC_FALSE;
-	}
-#else
+
 	if( scalar_R1R0_N > margin ){
 		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
 		return GFL_G3D_CALC_OUTRANGE;
@@ -2206,7 +2193,6 @@ GFL_G3D_CALC_RESULT
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
 		return GFL_G3D_CALC_FALSE;
 	}
-#endif
 	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
 	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
 

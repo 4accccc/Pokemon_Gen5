@@ -506,7 +506,7 @@ BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult )
 	vecN.z = 0;
 
 	result = GFL_G3D_Calc_GetClossPointRayPlane
-				( posNow, &vecRay, &posRef, &vecN, posResult, 0.1f * FX32_ONE );
+				( posNow, &vecRay, &posRef, &vecN, posResult, 0 );
 	if( result == GFL_G3D_CALC_TRUE ){
 		return TRUE;
 	}
@@ -534,9 +534,7 @@ BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResu
 	vecN.z = 0;
 
 	result = GFL_G3D_Calc_GetClossPointRayPlaneLimit
-				//( posNow, posNext, &posRef, &vecN, posResult, 0.1f * FX32_ONE );
 				( posNow, posNext, &posRef, &vecN, posResult, 0 );
-	OS_Printf("result = %x\n",result);
 
 	if( result == GFL_G3D_CALC_OUTRANGE ){
 		return FALSE;
@@ -545,6 +543,41 @@ BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResu
 		*posResult = *posNext;
 		return TRUE;
 	}
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		マップ上でのベクトル移動（重力あり）
+ *
+ *	gravityTimerはここでしか操作しないようにする
+ */
+//------------------------------------------------------------------
+void	InitMoveMapGround( int* gravityTimer )
+{
+	*gravityTimer = 0;
+}
+
+BOOL	MoveMapGround( VecFx32* posNow, VecFx32* vecMove, int* gravityTimer )
+{
+	VecFx32 posNext, posLimit;
+	fx32	gravity = (9.8f * FX32_ONE)/8;
+
+	VEC_Add( posNow, vecMove, &posNext );
+
+	if( *gravityTimer ){
+		//Y軸移動（重力コントロール）
+		posNext.y -= ( gravity * (*gravityTimer) / 2 );
+	}
+	if( CheckHitMapGroundLimit( posNow, &posNext, &posLimit ) == TRUE ){
+		//接地
+		*gravityTimer = 0;
+		posNext = posLimit;
+	} else {
+		(*gravityTimer)++;
+	}
+	*posNow = posNext;
+
 	return TRUE;
 }
 

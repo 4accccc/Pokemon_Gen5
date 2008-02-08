@@ -15,19 +15,6 @@ extern void			Set3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw );
 extern void			Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw );
 extern BOOL			Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr );
 
-//------------------------------------------------------------------
-/**
- * @brief		地面との当たり判定（距離制限なし）
- */
-//------------------------------------------------------------------
-BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult );
-//------------------------------------------------------------------
-/**
- * @brief		地面との当たり判定（距離制限あり）
- */
-//------------------------------------------------------------------
-BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResult );
-
 enum {
 	EXMAPOBJ_WALL = 0,
 	EXMAPOBJ_WALL1,
@@ -35,5 +22,27 @@ enum {
 	EXMAPOBJ_WALL3,
 	EXMAPOBJ_WALL4,
 };
+
+//------------------------------------------------------------------
+/**
+ * @brief		地面との当たり判定（距離制限なし）
+ */
+//------------------------------------------------------------------
+extern BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult );
+//------------------------------------------------------------------
+/**
+ * @brief		地面との当たり判定（距離制限あり）
+ */
+//------------------------------------------------------------------
+extern BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResult );
+//------------------------------------------------------------------
+/**
+ * @brief		マップ上でのベクトル移動（重力あり）
+ *
+ *	gravityTimerはここでしか操作しないようにする
+ */
+//------------------------------------------------------------------
+extern void	InitMoveMapGround( int* gravityTimer );
+extern BOOL	MoveMapGround( VecFx32* posNow, VecFx32* vecMove, int* gravityTimer );
 
 

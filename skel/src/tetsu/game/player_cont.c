@@ -58,8 +58,8 @@ struct _PLAYER_CONTROL {
 	u16						nowAccesary;
 	u16						recoverTimer;
 	u16						jumpCalcWork;
-	VecFx32					moveVecNormal;
-	int						gravityCount;
+	VecFx32					moveVec;
+	int						gravityTimer;
 	int						attackID;
 
 	PLAYER_STATUS			status;
@@ -115,15 +115,14 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->nowAccesary = 0;
 	pc->recoverTimer = 0;
 	pc->jumpCalcWork = 0;
-	pc->gravityCount = 0;
 	pc->attackID = 0;
 
 	pc->subSeq = 0;
 	pc->nowCommand = 0;
 	pc->status = statusDefault;
 
+	InitMoveMapGround( &pc->gravityTimer );
 	Set3DactDrawSw( pc->sceneAct, TRUE );
-
 	{
 		int i;
 		for( i=0; i<8; i++ ){
@@ -281,12 +280,12 @@ void SetPlayerMoveCommand
 	if( command == PCC_RUN ){
 		speed = RUN_SPEED;
 	}
-	pc->moveVecNormal.x = FX_Mul( tmpVec.x, speed );
-	pc->moveVecNormal.z = FX_Mul( tmpVec.z, speed );
+	pc->moveVec.x = FX_Mul( tmpVec.x, speed );
+	pc->moveVec.z = FX_Mul( tmpVec.z, speed );
 
 	//方向設定
 	rotVec.x = 0;
-	rotVec.y = FX_Atan2Idx( -pc->moveVecNormal.z, pc->moveVecNormal.x ) + 0x4000;
+	rotVec.y = FX_Atan2Idx( -pc->moveVec.z, pc->moveVec.x ) + 0x4000;
 	rotVec.z = 0;
 
 	pc->nowDirection = rotVec.y - 0x8000;
@@ -584,42 +583,6 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
-static BOOL moveControl( PLAYER_CONTROL* pc )
-{
-	fx32	gravity = (9.8f * FX32_ONE)/8;
-
-	VecFx32 limitTrans;
-	VecFx32 nextTrans = pc->contTrans;
-
-	nextTrans.x += pc->moveVecNormal.x;
-	nextTrans.y += pc->moveVecNormal.y;
-	nextTrans.z += pc->moveVecNormal.z;
-
-	if( pc->gravityCount ){
-		//Y軸移動（重力コントロール）
-		nextTrans.y -= ( gravity * pc->gravityCount / 2 );
-	}
-	if( CheckHitMapGroundLimit( &pc->contTrans, &nextTrans, &limitTrans ) == TRUE ){
-		//接地
-		pc->moveVecNormal.y = 0;
-		pc->gravityCount = 0;
-		nextTrans = limitTrans;
-	} else {
-		pc->gravityCount++;
-	}
-
-	pc->contTrans = nextTrans;
-
-	pc->moveVecNormal.x = 0;
-	pc->moveVecNormal.z = 0;
-
-	Set3DactTrans( pc->sceneAct, &pc->contTrans );
-
-	//OS_Printf("gravityCount = %x\n",pc->gravityCount);
-	return TRUE;
-}
-
-//------------------------------------------------------------------
 #define JUMP_SPEEDY (FX32_ONE*3)
 
 static BOOL jumpControl( PLAYER_CONTROL* pc )
@@ -635,12 +598,12 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 		break;
 	case 1:
 		anmSet( pc, ACTANM_CMD_JUMPUP );
-		pc->moveVecNormal.y = JUMP_SPEEDY;
+		pc->moveVec.y = JUMP_SPEEDY;
 		pc->subSeq++;
 		retFlag = FALSE;
 		break;
 	case 2:
-		if( !pc->moveVecNormal.y ){
+		if( !pc->gravityTimer ){
 			anmSet( pc, ACTANM_CMD_JUMP_END );
 			pc->subSeq++;
 		} else {
@@ -653,9 +616,9 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 
 			VEC_Normalize( &tmpTrans, &tmpTrans );	//正規化
 
-			pc->moveVecNormal.x = FX_Mul( tmpTrans.x, JUMP_SPEED );
-			//pc->moveVecNormal.y = JUMP_SPEEDY;
-			pc->moveVecNormal.z = FX_Mul( tmpTrans.z, JUMP_SPEED );
+			pc->moveVec.x = FX_Mul( tmpTrans.x, JUMP_SPEED );
+			pc->moveVec.y = JUMP_SPEEDY;
+			pc->moveVec.z = FX_Mul( tmpTrans.z, JUMP_SPEED );
 		}
 		retFlag = TRUE;
 		break;
@@ -679,10 +642,16 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
 		return;
 	}
-	if( moveControl( pc ) == FALSE ){
-		return;
-	}
+	{
+		//移動制御
+		MoveMapGround( &pc->contTrans, &pc->moveVec, &pc->gravityTimer );
 
+		pc->moveVec.x = 0;
+		pc->moveVec.y = 0;
+		pc->moveVec.z = 0;
+
+		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+	}
 	if( pc->subSeq ){
 		pc->contCommand = pc->nowCommand;//サブシーケンス動作中
 	}
