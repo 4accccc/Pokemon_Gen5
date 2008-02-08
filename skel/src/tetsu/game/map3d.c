@@ -491,6 +491,7 @@ static const	EXOBJ_DATATABLE extraObjectDataTbl[5] = {
 BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult )
 {
 	VecFx32 vecRay, posRef, vecN;
+	GFL_G3D_CALC_RESULT result;
 
 	//レイ進行ベクトルの算出
 	vecRay = *vecMove;
@@ -504,7 +505,12 @@ BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult )
 	vecN.y = FX32_ONE;
 	vecN.z = 0;
 
-	return GFL_G3D_Calc_GetClossPointRayPlane( posNow, &vecRay, &posRef, &vecN, posResult );
+	result = GFL_G3D_Calc_GetClossPointRayPlane
+				( posNow, &vecRay, &posRef, &vecN, posResult, 0.1f * FX32_ONE );
+	if( result == GFL_G3D_CALC_TRUE ){
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //------------------------------------------------------------------
@@ -515,6 +521,9 @@ BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult )
 BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResult )
 {
 	VecFx32 vecMove, posRef, vecN;
+	fx32 scalar;
+	BOOL retFlag;
+	GFL_G3D_CALC_RESULT result;
 
 	//原点(0,0,0)を通るy=0水平面を暫定の地形とする
 	posRef.x = 0;
@@ -524,7 +533,18 @@ BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResu
 	vecN.y = FX32_ONE;
 	vecN.z = 0;
 
-	return GFL_G3D_Calc_GetClossPointRayPlaneLimit( posNow, posNext, &posRef, &vecN, posResult );
-}
+	result = GFL_G3D_Calc_GetClossPointRayPlaneLimit
+				//( posNow, posNext, &posRef, &vecN, posResult, 0.1f * FX32_ONE );
+				( posNow, posNext, &posRef, &vecN, posResult, 0 );
+	OS_Printf("result = %x\n",result);
 
+	if( result == GFL_G3D_CALC_OUTRANGE ){
+		return FALSE;
+	}
+	if( result == GFL_G3D_CALC_FALSE ){
+		*posResult = *posNext;
+		return TRUE;
+	}
+	return TRUE;
+}
 

@@ -111,6 +111,8 @@ extern void GetPlayerControlDirection( PLAYER_CONTROL* pc, u16* direction );
 extern void SetPlayerControlDirection( PLAYER_CONTROL* pc, const u16* direction );
 //プレーヤーステータスポインタの取得
 extern PLAYER_STATUS* GetPlayerStatusPointer( PLAYER_CONTROL* pc );
+//プレーヤーコントロール可能かどうかのチェック
+extern BOOL CheckPlayerControlEnable( PLAYER_CONTROL* pc );
 //プレーヤーステータスの取得と設定
 extern void GetPlayerStatus( PLAYER_CONTROL* pc, PLAYER_STATUS* status );
 extern void SetPlayerStatus( PLAYER_CONTROL* pc, const PLAYER_STATUS* status );

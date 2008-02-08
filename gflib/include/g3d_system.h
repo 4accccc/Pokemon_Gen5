@@ -115,6 +115,13 @@ typedef struct {
 
 #define PERSPWAY_COEFFICIENT	0x10000/360	//画角計算係数（度数にこれを掛けるといい感じかも）
 
+//	計算結果定義
+typedef enum {
+	GFL_G3D_CALC_FALSE = 0,	///<失敗
+	GFL_G3D_CALC_TRUE,		///<成功
+	GFL_G3D_CALC_OUTRANGE,	///<範囲外
+}GFL_G3D_CALC_RESULT;
+
 
 
 
@@ -948,12 +955,12 @@ extern BOOL
  * @param	vecN		平面の法線ベクトル
  * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT		判定結果
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL
+extern GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_CheckPointOnPlane
-		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, fx32 margin );
+		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, const fx32 margin );
 //--------------------------------------------------------------------------------------------
 /**
  * レイトレース計算
@@ -970,14 +977,15 @@ extern BOOL
  * @param	posRef		平面上の一点の位置
  * @param	vecN		平面の法線ベクトル
  * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT		算出結果
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL
+extern GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_GetClossPointRayPlane
 		( const VecFx32* posRay, const VecFx32* vecRay, 
-			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest );
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin );
 //--------------------------------------------------------------------------------------------
 /**
  * レイトレース計算（距離制限つき）
@@ -997,14 +1005,15 @@ extern BOOL
  * @param	posRef		平面上の一点の位置
  * @param	vecN		平面の法線ベクトル
  * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT		算出結果
  */
 //--------------------------------------------------------------------------------------------
-BOOL
+extern GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_GetClossPointRayPlaneLimit
 		( const VecFx32* posRay, const VecFx32* posRayEnd, 
-			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest );
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin );
 
 //=============================================================================================
 /**

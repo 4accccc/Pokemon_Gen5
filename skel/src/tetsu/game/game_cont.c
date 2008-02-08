@@ -622,6 +622,10 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 			SetPlayerControlDirection( pc, &direction );
 		}
 	}
+	//コントロール可否判定
+	if( CheckPlayerControlEnable( pc ) == FALSE ){
+		return;
+	}
 	{
 		//テスト
 		//武器の変更

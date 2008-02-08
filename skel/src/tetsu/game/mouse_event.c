@@ -291,6 +291,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes )
 				cursorDrawSw = FALSE;
 				GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &cursorDrawSw );
 				resetJumpTrg( mes );	//ジャンプ判定削除
+				clearMouseEvent( mes );	//移動判定削除
 				mes->eventMode = EVENT_MODE_ATTACK;
 				mes->attackFrameCounter = 0;
 				mes->mouseActionMode = MOUSE_ACTION_ATTACK;	//攻撃モードに移行
@@ -466,6 +467,7 @@ static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
 {
 	VecFx32 posRay, vecRay, posRef, vecN;
 	VecFx32 pNear, pFar;
+	GFL_G3D_CALC_RESULT result;
 
 	//タッチパネル座標→ワールド座標系への変換 -1でビューポート外
 	if( NNS_G3dScrPosToWorldLine( tpx, tpy, &pNear, &pFar ) == -1 ){
@@ -485,6 +487,11 @@ static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
 	vecN.y = FX32_ONE;
 	vecN.z = 0;
 
-	return GFL_G3D_Calc_GetClossPointRayPlane( &posRay, &vecRay, &posRef, &vecN, cursorPos );
+	result = GFL_G3D_Calc_GetClossPointRayPlane
+				( &posRay, &vecRay, &posRef, &vecN, cursorPos, 0 );
+	if( result == GFL_G3D_CALC_TRUE ){
+		return TRUE;
+	}
+	return FALSE;
 }
 

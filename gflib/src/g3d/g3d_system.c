@@ -2064,12 +2064,12 @@ static void
  * @param	vecN		平面の法線ベクトル
  * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT			判定結果
  */
 //--------------------------------------------------------------------------------------------
-BOOL
+GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_CheckPointOnPlane
-		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, fx32 margin )
+		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, const fx32 margin )
 {
 	VecFx32	vecP1P0;
 	fx32	scalar_P1P0_N;
@@ -2079,9 +2079,9 @@ BOOL
 	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
 	scalar_P1P0_N = VEC_DotProduct( &vecP1P0, vecN );
 	if(( scalar_P1P0_N >= -margin )&&( scalar_P1P0_N <= margin )){
-		return TRUE;
+		return GFL_G3D_CALC_TRUE;
 	} else {
-		return FALSE;
+		return GFL_G3D_CALC_FALSE;
 	}
 }
 
@@ -2104,14 +2104,15 @@ BOOL
  * @param	posRef		平面上の一点の位置
  * @param	vecN		平面の法線ベクトル
  * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの後方および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT			算出結果
  */
 //--------------------------------------------------------------------------------------------
-BOOL
+GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_GetClossPointRayPlane
 		( const VecFx32* posRay, const VecFx32* vecRay, 
-			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest )
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin )
 {
 	VecFx32	vecP0R0;
 	fx32	t, scalar_V_N, scalar_P0R0_N;
@@ -2122,11 +2123,22 @@ BOOL
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//進行ベクトルと法線ベクトルの内積の算出:VN
 	scalar_V_N = VEC_DotProduct( vecRay, vecN );
-	if( scalar_V_N >= 0 ){
+#if 0
+	if(( scalar_V_N >= -margin )&&( scalar_V_N <= margin )){
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
-		//ベクトルの向きが同じ
-		return FALSE;
+		//（並行判定※許容誤差あり）
+		return GFL_G3D_CALC_FALSE;
 	}
+#else
+	if( scalar_V_N > margin ){
+		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	if( scalar_V_N >= -margin ){
+		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		return GFL_G3D_CALC_FALSE;
+	}
+#endif
 	//経過オフセットtの算出:(P0-R0)N/VN
 	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
 
@@ -2134,9 +2146,9 @@ BOOL
 	VEC_MultAdd( t, vecRay, posRay, dest );
 	if( t < 0 ){
 		//交点が後方
-		return FALSE;
+		return GFL_G3D_CALC_OUTRANGE;
 	}
-	return TRUE;
+	return GFL_G3D_CALC_TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2158,14 +2170,15 @@ BOOL
  * @param	posRef		平面上の一点の位置
  * @param	vecN		平面の法線ベクトル
  * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
  *
- * @return	BOOL		交点がレイの距離範囲外および存在しない場合はFALSE
+ * @return	GFL_G3D_CALC_RESULT			算出結果
  */
 //--------------------------------------------------------------------------------------------
-BOOL
+GFL_G3D_CALC_RESULT
 	GFL_G3D_Calc_GetClossPointRayPlaneLimit
 		( const VecFx32* posRay, const VecFx32* posRayEnd, 
-			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest )
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin )
 {
 	VecFx32	vecP0R0, vecR1R0;
 	fx32	t, scalar_R1R0_N, scalar_P0R0_N;
@@ -2178,11 +2191,22 @@ BOOL
 	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
 	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
 	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
-	if( scalar_R1R0_N >= 0 ){
+#if 0
+	if(( scalar_R1R0_N >= -margin )&&( scalar_R1R0_N <= margin )){
 		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
-		//ベクトルの向きが同じ
-		return FALSE;
+		//（並行判定※許容誤差あり）
+		return GFL_G3D_CALC_FALSE;
 	}
+#else
+	if( scalar_R1R0_N > margin ){
+		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	if( scalar_R1R0_N >= -margin ){
+		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		return GFL_G3D_CALC_FALSE;
+	}
+#endif
 	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
 	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
 
@@ -2190,13 +2214,13 @@ BOOL
 	VEC_MultAdd( t, &vecR1R0, posRay, dest );
 	if( t < 0 ){
 		//交点が発射地点より後方
-		return FALSE;
+		return GFL_G3D_CALC_OUTRANGE;
 	}
 	if( t > FX32_ONE ){
 		//交点が到達地点より前方
-		return FALSE;
+		return GFL_G3D_CALC_OUTRANGE;
 	}
-	return TRUE;
+	return GFL_G3D_CALC_TRUE;
 }
 
 //=============================================================================================

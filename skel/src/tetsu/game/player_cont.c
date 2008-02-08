@@ -59,7 +59,7 @@ struct _PLAYER_CONTROL {
 	u16						recoverTimer;
 	u16						jumpCalcWork;
 	VecFx32					moveVecNormal;
-	int						moveYcount;
+	int						gravityCount;
 	int						attackID;
 
 	PLAYER_STATUS			status;
@@ -115,7 +115,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->nowAccesary = 0;
 	pc->recoverTimer = 0;
 	pc->jumpCalcWork = 0;
-	pc->moveYcount = 0;
+	pc->gravityCount = 0;
 	pc->attackID = 0;
 
 	pc->subSeq = 0;
@@ -207,6 +207,25 @@ PLAYER_STATUS* GetPlayerStatusPointer( PLAYER_CONTROL* pc )
 
 //------------------------------------------------------------------
 /**
+ * @brief	プレーヤーコントロール可能かどうかのチェック
+ */
+//------------------------------------------------------------------
+BOOL CheckPlayerControlEnable( PLAYER_CONTROL* pc )
+{
+	if( pc->jumpFlag == TRUE ){
+		return FALSE;	//ジャンプ中
+	}
+	if( Check3DactPlayerBusy( pc->sceneAct ) == TRUE ){
+		return FALSE;	//強制アニメ中
+	}
+	if( pc->skillBusyFlag ){
+		return FALSE;	//スキル実行中
+	}
+	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	プレーヤーステータスの取得と設定
  */
 //------------------------------------------------------------------
@@ -253,9 +272,6 @@ void SetPlayerMoveCommand
 	VecFx32 tmpVec, rotVec;
 	fx32 speed = WALK_SPEED;
 
-	if( pc->jumpFlag == TRUE ){	//ジャンプ中制御不可
-		return;
-	}
 	pc->contCommand = command;
 	//進行ベクトルの算出
 	VEC_Subtract( mvDir, &pc->contTrans, &tmpVec );
@@ -579,17 +595,19 @@ static BOOL moveControl( PLAYER_CONTROL* pc )
 	nextTrans.y += pc->moveVecNormal.y;
 	nextTrans.z += pc->moveVecNormal.z;
 
-	if( pc->moveVecNormal.y ){	//上下移動要素あり
+	if( pc->gravityCount ){
 		//Y軸移動（重力コントロール）
-		nextTrans.y -= ( gravity * pc->moveYcount / 2 );
-		pc->moveYcount++;
+		nextTrans.y -= ( gravity * pc->gravityCount / 2 );
 	}
 	if( CheckHitMapGroundLimit( &pc->contTrans, &nextTrans, &limitTrans ) == TRUE ){
 		//接地
 		pc->moveVecNormal.y = 0;
-		pc->moveYcount = 0;
+		pc->gravityCount = 0;
 		nextTrans = limitTrans;
+	} else {
+		pc->gravityCount++;
 	}
+
 	pc->contTrans = nextTrans;
 
 	pc->moveVecNormal.x = 0;
@@ -597,6 +615,7 @@ static BOOL moveControl( PLAYER_CONTROL* pc )
 
 	Set3DactTrans( pc->sceneAct, &pc->contTrans );
 
+	//OS_Printf("gravityCount = %x\n",pc->gravityCount);
 	return TRUE;
 }
 
@@ -617,7 +636,6 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 	case 1:
 		anmSet( pc, ACTANM_CMD_JUMPUP );
 		pc->moveVecNormal.y = JUMP_SPEEDY;
-		pc->moveYcount = 0;
 		pc->subSeq++;
 		retFlag = FALSE;
 		break;
@@ -636,6 +654,7 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 			VEC_Normalize( &tmpTrans, &tmpTrans );	//正規化
 
 			pc->moveVecNormal.x = FX_Mul( tmpTrans.x, JUMP_SPEED );
+			//pc->moveVecNormal.y = JUMP_SPEEDY;
 			pc->moveVecNormal.z = FX_Mul( tmpTrans.z, JUMP_SPEED );
 		}
 		retFlag = TRUE;
