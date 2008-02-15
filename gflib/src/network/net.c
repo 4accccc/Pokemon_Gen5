@@ -9,10 +9,8 @@
 
 #include "gflib.h"
 
-#include "device/wh_config.h"
-
 #include "net_def.h"
-#include "device/net_wireless.h"
+#include "device/net_beacon.h"
 #include "device/dwc_rapcommon.h"
 #include "net_system.h"
 #include "net_command.h"
@@ -42,7 +40,7 @@ struct _GFL_NETSYS{
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
 
 // コンポーネント転送終了の確認用  イクニューモンコンポーネント処理を移動させるときはこれも移動
-static volatile u8   startCheck;	
+static volatile u8   startCheck;
 
 //==============================================================================
 /**
@@ -261,7 +259,7 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
         NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
 
         GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
-        if(pNetInit->bNetwork){
+        {
             GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
             GFL_NET_StateDeviceInitialize(pNetHandle);
             pNet->pNetHandleInit = pNetHandle;
@@ -1025,7 +1023,7 @@ void GFL_NET_SetUserWork(void* pWork)
 int GFI_NET_GetConnectNumMax(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GF_ASSERT(pNet->aNetInit.maxConnectNum < GFL_NET_MACHINE_MAX);
+    GF_ASSERT(pNet->aNetInit.maxConnectNum <= GFL_NET_MACHINE_MAX);
     return pNet->aNetInit.maxConnectNum;
 }
 
@@ -1041,7 +1039,7 @@ int GFI_NET_GetSendSizeMax(void)
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 #ifdef PM_DEBUG
     GF_ASSERT(pNet->aNetInit.maxConnectNum > 0);
-    GF_ASSERT(pNet->aNetInit.maxSendSize < ((WM_SIZE_MP_DATA_MAX-4)/pNet->aNetInit.maxConnectNum));
+//    GF_ASSERT(pNet->aNetInit.maxSendSize < ((WM_SIZE_MP_DATA_MAX-4)/pNet->aNetInit.maxConnectNum));
 #endif
     return pNet->aNetInit.maxSendSize;
 }

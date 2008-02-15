@@ -10,7 +10,7 @@
 #include "gflib.h"
 #include "net.h"
 #include "wm_icon.h"
-#include "device/net_wireless.h"
+#include "device/net_beacon.h"
 
 // アニメパターンの数
 #define WM_ICON_ANIME_MAX	 ( 4 )

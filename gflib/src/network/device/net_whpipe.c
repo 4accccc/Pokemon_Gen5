@@ -1,22 +1,29 @@
 //=============================================================================
 /**
- * @file	net_wireless.c
- * @brief	DSのデバイスへのアクセスをラップする関数
- * @author	Katsumi Ohno
- * @date    2006.01.25
+ * @file	net_whpipe.c
+ * @brief	通信システム
+ * @author	GAME FREAK Inc.
+ * @date    2006.12.05
  */
 //=============================================================================
 
-
 #include "gflib.h"
+
+#include "../net_def.h"
+#include "../net_system.h"
+//#include "wm_icon.h"
+
 #include <nitro.h>
 #include <nitro/wm.h>
 #include <nitro/cht.h>
 
-#include "net_wireless.h"
+#include "net_whpipe.h"
 #include "gf_standard.h"
 
 #include "../tool/net_ring_buff.h"
+
+
+
 
 //==============================================================================
 // extern宣言
@@ -57,7 +64,7 @@ typedef struct{
 //==============================================================================
 
 #define _DEFAULT_TIMEOUT_FRAME (60 * 10)  //拾ったビーコンを保存しておく時間 60frame * 10sec
-#define _PORT_DATA_RETRANSMISSION   (14)    // 切断するまで無限再送を行う  こちらを使用している
+//#define _PORT_DATA_RETRANSMISSION   (14)    // 切断するまで無限再送を行う  こちらを使用している
 #define _NOT_INIT_BITMAP  (0xffff)   // 接続人数を固定に指定ない場合の値
 
 typedef enum{    // 切断状態
@@ -121,11 +128,11 @@ static u16 _sTgid = 0;
 // static宣言
 //==============================================================================
 
-static void _whInitialize(HEAPID heapID,GFL_NETWL* pNetWL, BOOL bConnect);
+static void _whInitialize(HEAPID heapID,GFL_NETWL* pNetWL);
 static void _childDataInit(void);
 static void _parentDataInit(BOOL bTGIDChange);
 static void _commInit(GFL_NETWL* pNetWL);
-static void _setUserGameInfo( void );
+//static void _setUserGameInfo( void );
 static BOOL _isMachBackupMacAddress(u8* pMac);
 static u16 _getServiceBeaconPeriod(u16 serviceNo);
 
@@ -169,7 +176,7 @@ void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num)
  */
 //==============================================================================
 
-void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect)
+void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp)
 {
     int i;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
@@ -179,14 +186,9 @@ void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSiz
     pNetWL->beaconCompFunc = getComp;
 
     // 無線ライブラリ駆動開始
-    _whInitialize(heapID, pNetWL, bConnect);
+    _whInitialize(heapID, pNetWL);
 
-    if(bConnect){
-        pNetWL->disconnectType = _DISCONNECT_NONE;
-    }
-    else{
-        pNetWL->disconnectType = _DISCONNECT_STEALTH;
-    }
+    pNetWL->disconnectType = _DISCONNECT_NONE;
 }
 
 //==============================================================================
@@ -341,15 +343,15 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
  */
 //==============================================================================
 
-static void _whInitialize(HEAPID heapID, GFL_NETWL* pNetWL, BOOL bConnect)
+static void _whInitialize(HEAPID heapID, GFL_NETWL* pNetWL)
 {
     // 無線初期化
 //    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
-    pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork,
-                                       GFI_NET_GetConnectNumMax() , GFI_NET_GetSendSizeMax());
+//    pNetWL->_pWHWork = WH_CreateHandle(heapID, pNetWL->_pWHWork,
+//                                       GFI_NET_GetConnectNumMax() , GFI_NET_GetSendSizeMax());
 
-    if(FALSE == WH_Initialize(_GFL_NET_WLGetNETWH(), bConnect)){
+    if(FALSE == WH_Initialize( heapID)){
         OS_TPanic("not init");
     }
     // WH 初期設定
@@ -427,43 +429,6 @@ static void _receiverFunc(u16 aid, u16 *data, u16 size)
     pNetWL->recvCallback(aid,data,size);
 }
 
-//==============================================================================
-/**
- * @brief   親機の接続開始を行う
- * @param   bTGIDChange  TGIDを変更するかどうか
- * @param   bEntry       
- * @param   bTGIDChange  新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
- * @param  子機を受け付けるかどうか
- * @retval  初期化に成功したらTRUE
- */
-//==============================================================================
-BOOL GFL_NET_WLParentInit(BOOL bTGIDChange, BOOL bEntry, GFL_NET_ConnectionCallBack pConnectFunc )
-{
-    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    _commInit(pNetWL);
-    if( pNetWL->disconnectType == _DISCONNECT_STEALTH){
-        return TRUE;
-    }
-    _parentDataInit(bTGIDChange);
-
-    WH_ParentDataInit();
-    
-    WHSetConnectCallBack(pConnectFunc);
-    
-    if(!pNetWL->bSetReceiver){
-        WH_SetReceiver(_receiverFunc, _PORT_DATA_RETRANSMISSION);
-      pNetWL->bSetReceiver = TRUE;
-    }
-    pNetWL->bEntry = bEntry;
-
-    // 電波使用率から最適なチャンネルを取得して接続する。非同期関数
-    if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
-        if(WH_StartMeasureChannel()){
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
 
 //==============================================================================
 /**
@@ -494,14 +459,12 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
         GFL_NET_WLChildBconDataInit(); // データの初期化
     }
     if(!pNetWL->bSetReceiver ){
-        WH_SetReceiver(_receiverFunc, _PORT_DATA_RETRANSMISSION);
+        WH_SetReceiver(_receiverFunc);
         pNetWL->bSetReceiver = TRUE;
     }
     // 親機検索スタート
     if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
-        // MACアドレス指定　　全部FFで全てを探しにいく
-        const u8 sAnyParent[6] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
-        if(WH_StartScan(_scanCallback, sAnyParent, _SCAN_ALL_CHANNEL)){
+        if(WH_StartScan(_scanCallback, NULL, 0)){
             return TRUE;
         }
     }
@@ -527,13 +490,13 @@ BOOL GFL_NET_WLSwitchParentChild(void)
     }
     switch(pNetWL->bEndScan){
       case 0:
-        if(WH_IsSysStateScan()){
+        if(WH_SYSSTATE_SCANNING == WH_GetSystemState()){
             NET_PRINT("スキャンを消す------1\n");
             WH_EndScan();
             pNetWL->bEndScan = 1;
             break;
         }
-        else if(WH_IsSysStateBusy()){  //しばらく待つ
+        else if(WH_SYSSTATE_BUSY == WH_GetSystemState()){  //しばらく待つ
         }
         else{
             WH_Finalize();
@@ -541,17 +504,17 @@ BOOL GFL_NET_WLSwitchParentChild(void)
         }
         break;
       case 1:
-        if(!WH_IsSysStateBusy()){
+        if(WH_SYSSTATE_BUSY != WH_GetSystemState()){
             NET_PRINT("終了処理----2\n");
             WH_Finalize();
             pNetWL->bEndScan = 2;
         }
         break;
       case 2:
-        if(WH_IsSysStateIdle()){
+        if(WH_SYSSTATE_BUSY != WH_GetSystemState()){
             return TRUE;
         }
-        if(WH_IsSysStateError()){
+        if(WH_SYSSTATE_ERROR == WH_GetSystemState()){
             pNetWL->bEndScan = 1;
         }
         break;
@@ -599,7 +562,7 @@ void GFL_NET_WLStealth(BOOL bStalth)
     }
     else{
         pNetWL->disconnectType = _DISCONNECT_NONE;
-        _whInitialize(pNetWL->heapID, pNetWL, TRUE);  // 無線駆動再開
+        _whInitialize(pNetWL->heapID, pNetWL);  // 無線駆動再開
     }
 }
 
@@ -614,7 +577,7 @@ static void _commEnd(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
-    WH_DestroyHandle(pNetWL->_pWHWork);
+ //   WH_DestroyHandle(pNetWL->_pWHWork);
     GFL_HEAP_FreeMemory(pNetWL);
     _GFL_NET_SetNETWL( NULL );
 }
@@ -830,6 +793,7 @@ static BOOL _parentFindCallback(WMBssDesc* pBeacon)
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
+/*
 BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
@@ -840,19 +804,37 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_
         return FALSE;
     }
     if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
+        GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
+        u16 mode;
         NET_PRINT("子機 接続開始 WH_ChildConnect\n");
         serviceNo = pNetWL->serviceNo;
         pNetWL->channel = pNetWL->sBssDesc[index].channel;
         pNetWL->bEndScan = 0;
         pNetWL->pNetHandle = pNetHandle;
         pNetWL->pCallback = pCallback;
-        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid, 0, _parentFindCallback);
-//      WH_ChildConnect(WH_CONNECTMODE_MP_CHILD, &(pNetWL->sBssDesc[index]));
-//        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, pNetWL->sBssDesc[index].bssid,0);
+        if(pInit->bMPMode){
+            mode = WH_CONNECTMODE_MP_PARENT;
+        }
+        else{
+            mode = WH_CONNECTMODE_DS_PARENT;
+        }
+        WH_ChildConnectAuto(mode, pNetWL->sBssDesc[index].bssid, 0);
+        WH_SetScanCallback(_parentFindCallback);
         return TRUE;
     }
     return FALSE;
 }
+*/
+
+void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
+{
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();    pNetWL->bEndScan = 0;
+    pNetWL->pNetHandle = pNetHandle;
+    pNetWL->pCallback = pCallback;
+    WH_SetScanCallback(_parentFindCallback);
+}
+
+
 
 //==============================================================================
 /**
@@ -874,7 +856,8 @@ BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCall
         pNetWL->bEndScan = 0;
         pNetWL->pNetHandle = pNetHandle;
         pNetWL->pCallback = pCallback;
-        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0, _parentFindCallback);
+        WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0);
+        WH_SetScanCallback(_parentFindCallback);
         return TRUE;
     }
     return FALSE;
@@ -917,7 +900,7 @@ void GFL_NET_WLParentBconCheck(void)
  *  @retval  none
  */
 //==============================================================================
-static void _setUserGameInfo( void )
+void GFI_NET_BeaconSetInfo( void )
 {
     u8 macBuff[6];
     _GF_BSS_DATA_INFO* pGF;
@@ -1038,24 +1021,6 @@ static void _stateProcess(u16 bitmap)
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
         }
         break;
-      case WH_SYSSTATE_MEASURECHANNEL:
-        {
-            u16 channel;
-            // 利用可能な中から一番使用率の低いチャンネルを返します。
-            channel = WH_GetMeasureChannel();  //WH_SYSSTATE_MEASURECHANNEL => WH_SYSSTATE_IDLE
-            if(pNetWL->bTGIDChange){
-//                _sTgid++;
-            }
-            _setUserGameInfo();
-//            NET_PRINT("親機接続開始   tgid=%d channel=%d \n",_sTgid, channel);
-            (void)WH_ParentConnect(WH_CONNECTMODE_MP_PARENT,
-                                   _sTgid, channel,
-                                   pNetWL->maxConnectNum,
-                                   _getServiceBeaconPeriod(pNetWL->serviceNo),
-                                   pNetWL->bEntry);
-            pNetWL->channel = channel;
-        }
-        break;
       default:
         break;
     }
@@ -1098,12 +1063,11 @@ BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
         return FALSE;
     }
     
-    if (WH_GetSystemState() != WH_SYSSTATE_CONNECTED) {
-        return FALSE;
+    if ((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (WH_GetSystemState() == WH_SYSSTATE_DATASHARING)
+        || (WH_GetSystemState() == WH_SYSSTATE_KEYSHARING)) {
+        return TRUE;
     }
-
-    
-    return TRUE;
+    return FALSE;
 }
 
 //==============================================================================
@@ -1192,7 +1156,7 @@ BOOL GFL_NET_WLIsStateIdle(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     if(pNetWL){
-        return WH_IsSysStateIdle();
+        return WH_GetSystemState() == WH_SYSSTATE_IDLE;
     }
     return TRUE;
 }
@@ -1494,7 +1458,7 @@ void GFL_NET_WLFlashMyBss(void)
         size = func();
     }
 
-    _setUserGameInfo();
+    GFI_NET_BeaconSetInfo();
     WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
                   pNetWL->ggid,_sTgid);
 }
@@ -1507,10 +1471,10 @@ void GFL_NET_WLFlashMyBss(void)
  */
 //==============================================================================
 
-void GFL_NET_WLSetLifeTime(BOOL bMinimum)
-{
-    WHSetLifeTime(bMinimum);
-}
+//void GFL_NET_WLSetLifeTime(BOOL bMinimum)
+//{
+  //  WHSetLifeTime(bMinimum);
+//}
 
 //------------------------------------------------------
 /**
@@ -1545,19 +1509,19 @@ int GFL_NET_WLGetServiceNumber(int serviceNo)
 
 BOOL GFL_NET_WLIsParentBeaconSent(void)
 {
-    return WHIsParentBeaconSent();
+    return (0!=WHGetBeaconSendNum());
 }
 
 //------------------------------------------------------
 /**
  * @brief   スキャン状態かどうか
- * @retval  送信完了=TRUE
+ * @retval  スキャン状態ならTRUE
  */
 //------------------------------------------------------
 
 BOOL GFL_NET_WLIsChildStateScan(void)
 {
-    return WH_IsSysStateScan();
+    return WH_GetSystemState() == WH_SYSSTATE_SCANNING;
 }
 
 //------------------------------------------------------
@@ -1617,12 +1581,7 @@ int GFL_NET_WLGetBConUncacheTime(int index)
 //------------------------------------------------------
 BOOL GFL_NET_WL_SendData(void* data,int size,PTRSendDataCallback callback)
 {
-
-    if((WH_GetCurrentAid()==0) && !(0xfe & WH_GetBitmap())){
-        return FALSE;
-    }
-    return WH_SendData(data, size,
-                       _PORT_DATA_RETRANSMISSION, callback);
+    return WH_SendData(data, size, callback);
 }
 
 //------------------------------------------------------
@@ -1647,26 +1606,5 @@ u16 GFL_NET_WL_GetBitmap(void)
 u16 GFL_NET_WL_GetCurrentAid(void)
 {
     return WH_GetCurrentAid();
-}
-
-//------------------------------------------------------
-/**
- * @brief	WHのワークポインタを返す
- * @return  GFL_NETWMのポインタ
- */
-//------------------------------------------------------
-
-GFL_NETWM* _GFL_NET_WLGetNETWH(void)
-{
-    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
-    u32 addr;
-    if(pNetWL == NULL){
-        return NULL;
-    }
-    addr = (u32)pNetWL->_pWHWork;
-    if(addr % 32){
-        addr += 32 - (addr % 32);
-    }
-    return (GFL_NETWM*)addr;
 }
 

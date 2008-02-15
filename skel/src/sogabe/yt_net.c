@@ -244,7 +244,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     TRUE,  //CRCを自動計算するかどうか TRUEの場合すべて計算する
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか
-    TRUE,     // 通信を開始するかどうか
+    TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
 };
 
 
@@ -736,7 +736,7 @@ void YT_NET_SendPosReq(int clactno,s16 x, s16 y,NET_PARAM* pNet)
 
 BOOL YT_NET_Main(NET_PARAM* pNet)
 {
-
+    OS_TPrintf("m %d\n", pNet->seq);
     switch(pNet->seq){
 #if GFL_NET_WIFI
       case _CONNECT_WIFI:

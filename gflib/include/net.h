@@ -23,7 +23,7 @@
 //#endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
@@ -33,7 +33,7 @@
 #ifndef NET_PRINT
 #if GFL_NET_DEBUG
 #define NET_PRINT(...) \
-  (void) ((OS_Printf(__VA_ARGS__)))
+  (void) ((OS_TPrintf(__VA_ARGS__)))
 #else   //GFL_NET_DEBUG
 #define NET_PRINT(...)           ((void) 0)
 #endif  // GFL_NET_DEBUG
@@ -167,10 +167,12 @@ typedef struct{
   u8 maxConnectNum;         ///< 最大接続人数
   u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
-  u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
-  u8 bMPMode;               ///< MP通信モードかどうか
-  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
-  u8 bNetwork;              ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+  u8 bCRC:1;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
+  u8 bMPMode:1;               ///< MP通信モードかどうか
+//  u8 bRequestOnly:1;          ///< 通信要求があったときだけ送信するかどうか  WIFIでは必ずON  WLのDS通信だと必ずOFF
+  u8 bWiFi:1;                 ///< Wi-Fi通信をするかどうか
+//  u8 bNetwork:1;            ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+  u8 bTGIDChange:1;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
 } GFLNetInitializeStruct;
 
 //-------------------------------

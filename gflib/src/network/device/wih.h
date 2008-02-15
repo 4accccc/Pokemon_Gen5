@@ -165,16 +165,16 @@
 #ifndef __WMHIGH_H__
 #define __WMHIGH_H__
 
-#include "communication/comm_def.h"
+#include "../net_def.h"
 
 // 無線で使用するDMA番号
-#define WH_DMA_NO                 COMM_DMA_NO
+#define WH_DMA_NO                 _NETWORK_DMA_NO
 
 // 子機最大数（親機を含まない数）
-#define WH_CHILD_MAX              15
+//#define WH_CHILD_MAX              15
 
 // シェア出来るデータの最大サイズ
-#define WH_DS_DATA_SIZE           12
+//#define WH_DS_DATA_SIZE           12//128//12
 
 // 1回の通信で送れるデータの最大サイズ
 // データシェアリングに加えて通常の通信をする場合は、その分だけ
@@ -184,15 +184,15 @@
 // GUIDELINE : ガイドライン準拠ポイント(6.3.2)
 // リファレンスのワイヤレスマネージャ(WM)→図表・情報→無線通信時間計算シート
 // で計算した MP 通信1回分の所要時間が 5600 μ秒以下となることを推奨しています。
-#define WH_PARENT_MAX_SIZE      (WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + WM_SIZE_DS_PARENT_HEADER)
-#define WH_CHILD_MAX_SIZE       (WH_DS_DATA_SIZE)
+//#define WH_PARENT_MAX_SIZE      (WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + WM_SIZE_DS_PARENT_HEADER)
+//#define WH_CHILD_MAX_SIZE       (WH_DS_DATA_SIZE)
 
 // 1ピクチャーフレームあたりのMP通信回数上限
 // データシェアリングとブロック転送など複数のプロトコルを並行する場合は
 // この値を1より大きく(または無制限を示す0に)設定する必要があります。
 // そうでない場合、もっとも優先度の高い1つのプロトコル以外は
 // MP通信を一切実行できなくなってしまいます。
-#define WH_MP_FREQUENCY           3
+#define WH_MP_FREQUENCY           1
 
 // 通常の MP 通信で使用するポート
 #define WH_DATA_PORT              14
@@ -206,11 +206,6 @@
 // ネゴシエーションポート
 #define WH_NG_PORT                12
 
-
-/* NITRO-SDK3.1RC から追加. (それ以前は常に1) */
-#if !defined(WH_MP_FREQUENCY)
-#define WH_MP_FREQUENCY   1
-#endif
 
 // WM_Initializeを使用して初期化する場合はOFF
 // WM_Init, WM_Enable, WM_PowerOnを個別に使用して細かく制御する必要がある場合にはONに設定する。
@@ -260,20 +255,21 @@ enum
     WH_ERRCODE_NO_RADIO,               // 無線使用不可
     WH_ERRCODE_LOST_PARENT,            // 親を見失った
     WH_ERRCODE_NOMORE_CHANNEL,         // すべてのチャンネルの調査を終えた
+    WH_ERRCODE_FATAL,   //FATALエラー
     WH_ERRCODE_MAX
 };
 
-typedef void (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
+typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
 
 /* 親機受信バッファのサイズ */
-#define WH_PARENT_RECV_BUFFER_SIZE  WM_SIZE_MP_PARENT_RECEIVE_BUFFER( WH_CHILD_MAX_SIZE, WH_CHILD_MAX, FALSE )
+//#define WH_PARENT_RECV_BUFFER_SIZE  WM_SIZE_MP_PARENT_RECEIVE_BUFFER( WH_CHILD_MAX_SIZE, WH_CHILD_MAX, FALSE )
 /* 親機送信バッファのサイズ */
-#define WH_PARENT_SEND_BUFFER_SIZE  WM_SIZE_MP_PARENT_SEND_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
+//#define WH_PARENT_SEND_BUFFER_SIZE  WM_SIZE_MP_PARENT_SEND_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
 
 /* 子機受信バッファのサイズ */
-#define WH_CHILD_RECV_BUFFER_SIZE   WM_SIZE_MP_CHILD_RECEIVE_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
+//#define WH_CHILD_RECV_BUFFER_SIZE   WM_SIZE_MP_CHILD_RECEIVE_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
 /* 子機送信バッファのサイズ */
-#define WH_CHILD_SEND_BUFFER_SIZE   WM_SIZE_MP_CHILD_SEND_BUFFER( WH_CHILD_MAX_SIZE, FALSE )
+//#define WH_CHILD_SEND_BUFFER_SIZE   WM_SIZE_MP_CHILD_SEND_BUFFER( WH_CHILD_MAX_SIZE, FALSE )
 
 /* SDK のサンプルデモ用に予約された GGID を定義するマクロ */
 #define SDK_MAKEGGID_SYSTEM(num)    (0x003FFF00 | (num))
@@ -292,6 +288,8 @@ typedef void (*WHReceiverFunc) (u16 aid, u16 *data, u16 size);
 
 /// 非接続時に呼ばれるコールバック定義
 typedef void (*WHDisconnectCallBack) (int aid);
+// ビーコンを集めている際のコールバック
+typedef BOOL (*WHBeaconScanCallBack)(WMBssDesc* bd);
 
 // WEP Key 生成関数
 typedef u16 (*WHParentWEPKeyGeneratorFunc) (u16 *wepkey, const WMParentParam *parentParam);
@@ -743,5 +741,50 @@ extern BOOL WH_End(void);
   Returns:      AIDの値
  *---------------------------------------------------------------------------*/
 extern u16 WH_GetCurrentAid(void);
+
+/*---------------------------------------------------------------------------*
+  Name:         WH_SetScanCallback
+  Description:  スキャンコールバック設定
+  Arguments:    コールバック
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+extern void WH_SetScanCallback(WHStartScanCallbackFunc callback);
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetGameInfo
+  Description:  ビーコンの中身を変更する
+                接続時にしか働かない
+  Arguments:
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+
+extern void WHSetGameInfo(void* pBuff, int size, int ggid, int tgid);
+
+/*---------------------------------------------------------------------------*
+  Name:         WHGetBeaconSendNum
+  Description:  ビーコンを何回送ったかを得る
+  Arguments:    none
+  Returns:      送った回数
+ *---------------------------------------------------------------------------*/
+
+extern u16 WHGetBeaconSendNum(void);
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetDisconnectCallBack
+  Description:  接続が切れた際に呼ばれるコールバック関数登録
+  Arguments:    コールバック
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+extern void WHSetDisconnectCallBack(WHDisconnectCallBack callBack);
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetConnectCallBack
+  Description:  子機接続時のコールバック登録関数
+  Arguments:    callBack コールバック関数
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+
+extern void WHSetConnectCallBack(WHDisconnectCallBack callBack);
+
 
 #endif

@@ -63,7 +63,7 @@ void NitroMain(void)
 		// ¦gflib‚É“KØ‚ÈŠÖ”‚ªo—ˆ‚½‚ç’u‚«Š·‚¦‚Ä‚­‚¾‚³‚¢
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
-        OS_TPrintf("timer %d\n",OS_TicksToMicroSeconds32( OS_GetTick()));
+//        OS_TPrintf("timer %d\n",OS_TicksToMicroSeconds32( OS_GetTick()));
 
         
 		// VBLANK‘Ò‚¿

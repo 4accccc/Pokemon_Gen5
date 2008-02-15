@@ -11,10 +11,10 @@
 
 #include "gflib.h"
 
-#include "device/wh_config.h"
+#include "device/wih.h"
 
 #include "net_def.h"
-#include "device/net_wireless.h"
+#include "device/net_beacon.h"
 #include "device/dwc_rap.h"
 #include "net_system.h"
 #include "net_command.h"
@@ -206,7 +206,7 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
         _GFL_NET_SetNETWL(pWL);
 
         GFL_NET_WLInitialize(pNetIni->netHeapID, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
-                             pNetIni->beaconCompFunc, pNetIni->bNetwork);
+                             pNetIni->beaconCompFunc);
     }
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
@@ -280,7 +280,7 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
 {
     GFL_NET_WLParentBconCheck();
 
-    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress,_parentFindCallback,pNetHandle)){
+    if(GFL_NET_SystemChildModeInitAndConnect(FALSE, pNetHandle->aMacAddress, _PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle)){
         _CHANGE_STATE(_childSendNego, _SEND_NAME_TIME);
     }
 
@@ -301,7 +301,7 @@ static void _childAutoConnect(GFL_NETHANDLE* pNetHandle)
 
     if(GFL_NET_SystemChildModeInit(TRUE, 512)){
         if(pNetIni->bMPMode){
-            GFL_NET_SystemSetTransmissonTypeMP();
+ //           GFL_NET_SystemSetTransmissonTypeMP();
         }
         
         _CHANGE_STATE(_childConnecting, 0);
@@ -341,7 +341,7 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
     GFL_NET_WLParentBconCheck();
 
     if(pNetIni->bMPMode){
-        GFL_NET_SystemSetTransmissonTypeMP();
+//        GFL_NET_SystemSetTransmissonTypeMP();
     }
 }
 
@@ -407,6 +407,21 @@ static void _parentWait(GFL_NETHANDLE* pHandle)
 
 //==============================================================================
 /**
+ * @brief   親機初期化待機中
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _parentInitWait(GFL_NETHANDLE* pNetHandle)
+{
+    if(GFI_NET_SystemParentModeInitProcess()){
+        _CHANGE_STATE(_parentWait, 0);
+    }
+}
+
+//==============================================================================
+/**
  * @brief   親機として初期化を行う
  * @param   none
  * @retval  none
@@ -421,16 +436,10 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
         return;
     }
 
-    if(GFL_NET_SystemParentModeInit(TRUE, _PACKETSIZE_DEFAULT,TRUE)){
-        if(pNetIni->bMPMode){
-            GFL_NET_SystemSetTransmissonTypeMP();
-        }
-        else{
-            GFL_NET_SystemSetTransmissonTypeDS();
-        }
+    if(GFI_NET_SystemParentModeInit(TRUE, _PACKETSIZE_DEFAULT)){
         pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
         pNetHandle->creatureNo = 0;
-        _CHANGE_STATE(_parentWait, 0);
+        _CHANGE_STATE(_parentInitWait, 0);
     }
 }
 
@@ -450,7 +459,7 @@ void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 
     pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
     pNetHandle->creatureNo = 0;
-    _CHANGE_STATE(_parentWait, 0);
+    _CHANGE_STATE(_parentInitWait, 0);
 }
 
 //==============================================================================
@@ -487,9 +496,8 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
     }
     // 今度はビーコンを残したまま
 
-//    if(GFL_NET_SystemChildModeInit(FALSE, 512)){
     
-    if(GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle)){
+    if(GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle)){
         rand = GFL_STD_Rand(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME));
         NET_PRINT("子機開始 %d \n",rand);
         _CHANGE_STATE(_changeoverChildSearching, rand);
@@ -614,7 +622,7 @@ static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
         return;
     }
     // 親機になってみる
-    if(GFL_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_DEFAULT,TRUE))  {
+    if(GFI_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_DEFAULT))  {
         pNetHandle->bFirstParent = FALSE;
         NET_PRINT("親機\n");
         _CHANGE_STATE(_changeoverParentWait, 30);
@@ -668,7 +676,7 @@ void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 
 
   //  GFL_NET_SystemChildModeInit(TRUE,512);
-    GFL_NET_SystemChildModeInitAndConnect(512,_parentFindCallback,pNetHandle);
+    GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle);
     
 //    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
 
@@ -903,7 +911,7 @@ void GFL_NET_StateTransmissonMain(GFL_NETHANDLE* pNet)
         break;
       case _TRANS_SEND:
         if(GFL_NET_SendData(pNet,GFL_NET_CMD_DSMP_CHANGE_END,&pNet->dsmpChangeType)){
-            GFL_NET_SystemSetTransmissonType(pNet->dsmpChangeType);  // 切り替える  親機はここで切り替えない
+//            GFL_NET_SystemSetTransmissonType(pNet->dsmpChangeType);  // 切り替える  親機はここで切り替えない
             pNet->dsmpChange = _TRANS_NONE;
         }
         break;
@@ -971,7 +979,7 @@ void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void*
     NET_PRINT("CommRecvDSMPChangeEND 受信\n");
 
     if(pNetHandle->dsmpChange == _TRANS_LOAD_END){
-        GFL_NET_SystemSetTransmissonType(pBuff[0]);  // 切り替える
+//        GFL_NET_SystemSetTransmissonType(pBuff[0]);  // 切り替える
         pNetHandle->dsmpChange = _TRANS_NONE;
     }
 }

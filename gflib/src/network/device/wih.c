@@ -1,3 +1,15 @@
+//=============================================================================
+/**
+ * @file	wih.c
+ * @brief	任天堂のwh.cを改造したもの
+            ベースは Revision 1.70  2007/10/19 05:12:41
+ * @author	Katsumi Ohno
+ * @date    2008.1.30
+ */
+//=============================================================================
+
+#include "gflib.h"
+
 /*
   Project:  NitroSDK - wireless_shared - demos - wh
   File:     wh.c
@@ -193,13 +205,13 @@
 
   Revision 1.10  2004/10/29 02:35:30  takano_makoto
   デバッグ出力修正
-  
+
   Revision 1.9  2004/10/29 02:16:34  takano_makoto
   WH_StartScanの引数変更
-  
+
   Revision 1.8  2004/10/29 02:05:28  takano_makoto
   親機リストを作成できるように、Scan関数を外から利用可能なように変更
-  
+
   Revision 1.7  2004/10/28 10:38:31  terui
   親機としての終了処理部分を修正。
   WM_StartConnectへのコールバック部分でのエラーチェック処理を修正。
@@ -231,12 +243,12 @@
   $NoKeywords$
  */
 
-#include "common.h"
+
 #include <nitro.h>
 #include <nitro/wm.h>
 #include <nitro/cht.h>
 
-#include "network/net.h"
+#include "net.h"
 #include "wih.h"
 
 /*
@@ -478,7 +490,7 @@ static WMParentParam sParentParam ATTRIBUTE_ALIGN(32) =
     // childMaxSize - 子機が送るデータの最大サイズ
     WH_CHILD_MAX_SIZE,
 };
-*/
+ */
 
 typedef struct{
     WMParentParam sParentParam ATTRIBUTE_ALIGN(32);
@@ -491,8 +503,13 @@ typedef struct{
     WMDataSharingInfo sDSInfo ATTRIBUTE_ALIGN(32);
     WMDataSet sDataSet ATTRIBUTE_ALIGN(32);
     WMKeySetBuf sWMKeySetBuf ATTRIBUTE_ALIGN(32);
-    u8 sSendBuffer[MATH_MAX(WH_PARENT_SEND_BUFFER_SIZE, WH_CHILD_SEND_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
-    u8 sRecvBuffer[MATH_MAX(WH_PARENT_RECV_BUFFER_SIZE, WH_CHILD_RECV_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
+    //u8 sSendBuffer[MATH_MAX(WH_PARENT_SEND_BUFFER_SIZE, WH_CHILD_SEND_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
+    //u8 sRecvBuffer[MATH_MAX(WH_PARENT_RECV_BUFFER_SIZE, WH_CHILD_RECV_BUFFER_SIZE)] ATTRIBUTE_ALIGN(32);
+    u8* sSendBuffer;
+    u8* sRecvBuffer;
+    u8* sSendBufferOrg;
+    u8* sRecvBufferOrg;
+    
     // wh の状態（WH状態とは別モノです。外からは参照のみ）
     int sSysState; // = WH_SYSSTATE_STOP;
     // 接続モード（外から設定し、このソース内では触りません）
@@ -501,8 +518,12 @@ typedef struct{
     WHReceiverFunc sReceiverFunc;
     // 接続許可判定用ユーザ関数
     WHJudgeAcceptFunc sJudgeAcceptFunc;
-    /// 子機接続時のコールバック
+    /// 子機切断時のコールバック
     WHDisconnectCallBack disconnectCallBack;
+    /// 子機接続時のコールバック
+    WHDisconnectCallBack connectCallBack;
+    // ビーコンを集めている際のコールバック
+    WHBeaconScanCallBack sBeaconBuffScanCallback;
     // 内部使用する送受信バッファとそのサイズ
     s32 sSendBufferSize;
     s32 sRecvBufferSize;
@@ -527,19 +548,23 @@ typedef struct{
     // ネゴシエーション用
     u16 negoIDSend;
     u16 negoIDRecv;
+    u16 beaconSendNum;
+
+    HEAPID heapID;
+    
 } _WM_INFO_STRUCT;
 
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 static void* _dWork_temp; //アライメントをそろえる為のバッファ
 
-#define DATASHARING_DOUBLEMODE (FALSE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
+#define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
 /* デバッグ出力フック関数 */
 static void (*wh_trace) (const char *, ...) =
 #if GFL_NET_DEBUG
-        OS_TPrintf;
+OS_TPrintf;
 #else
-        NULL;
+NULL;
 #endif
 
 
@@ -654,9 +679,9 @@ static void WH_StateOutReset(void *arg);
 
 #define WH_REPORT_FAILURE(result)                \
     do{ OS_TPrintf("Failed in %s, %s = %s\n",      \
-                  __func__,                      \
-                  #result,                       \
-                  WH_GetWMErrCodeName(result));  \
+                   __func__,                      \
+#result,                       \
+                   WH_GetWMErrCodeName(result));  \
         WH_SetError(result); }while(0)
 
 #define WH_ASSERT(exp) \
@@ -716,6 +741,12 @@ static const char *WH_GetWMErrCodeName(int result)
         "WH_ERRCODE_DISCONNECTED",
         "WH_ERRCODE_PARENT_NOT_FOUND",
         "WH_ERRCODE_NO_RADIO",
+
+        "WH_ERRCODBEACONE_LOST_PARENT",            // 親を見失った
+        "WH_ERRCODE_NOMORE_CHANNEL",         // すべてのチャンネルの調査を終えた
+        "WH_ERRCODE_FATAL",   //FATALエラー
+
+        
     };
 
     if (0 <= result && result < sizeof(errnames) / sizeof(char *))
@@ -823,7 +854,7 @@ static const char *WH_GetWMApiidName(u16 apiid)
         "WM_APIID_PORT_SEND",
         "WM_APIID_PORT_RECV",
         "WM_APIID_READ_STATUS"
-    };
+        };
     static const char *apiname_unknown = "WM_APIID_UNKNOWN";
 
     if (0 <= apiid && apiid < sizeof(apinames) / sizeof(char *))
@@ -896,10 +927,10 @@ static void WH_ChangeSysState(int state)
     WH_TRACE("%s -> ", statenames[_pWmInfo->sSysState]);
     _pWmInfo->sSysState = state;
     WH_TRACE("%s\n", statenames[_pWmInfo->sSysState]);
-//    if (sStateCallback)
-//    {
-//        (*sStateCallback)(sSysState, prev);
-//    }
+    //    if (sStateCallback)
+    //    {
+    //        (*sStateCallback)(sSysState, prev);
+    //    }
 }
 
 #else
@@ -921,6 +952,35 @@ static void WH_ChangeSysState(int state)
 }
 
 #endif
+
+
+static void _memoryAlloc(BOOL bParent)
+{
+    int size = GFI_NET_GetSendSizeMax();
+    int num = GFI_NET_GetConnectNumMax()-1;
+    int _PARENT_MAX_SIZE  =    ((size * num) + WM_SIZE_DS_PARENT_HEADER);
+    int _CHILD_MAX_SIZE   =    (size);
+    int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE )*2;
+    int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE )*2;
+    int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE )*2;
+    int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE )*2;
+
+    if(bParent){
+        _pWmInfo->sRecvBufferSize = _PARENT_RECV_BUFFER_SIZE;
+        _pWmInfo->sSendBufferSize = _PARENT_SEND_BUFFER_SIZE;
+    }
+    else{
+        _pWmInfo->sRecvBufferSize = _CHILD_RECV_BUFFER_SIZE;
+        _pWmInfo->sSendBufferSize = _CHILD_SEND_BUFFER_SIZE;
+    }
+    
+    _pWmInfo->sRecvBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
+    _pWmInfo->sSendBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
+    
+    _pWmInfo->sRecvBuffer = (u8 *)( ((u32)_pWmInfo->sRecvBufferOrg + 31) / 32 * 32 );
+    _pWmInfo->sSendBuffer = (u8 *)( ((u32)_pWmInfo->sSendBufferOrg + 31) / 32 * 32 );
+    
+}
 
 static void WH_SetError(int code)
 {
@@ -1037,15 +1097,15 @@ static void WH_StateOutStartParent(void *arg)
     {
         //-----------------------------------
         // ビーコン送信通知
-    case WM_STATECODE_BEACON_SENT:
-        // ビーコン送信通知は無視します。
+      case WM_STATECODE_BEACON_SENT:
+        _pWmInfo->beaconSendNum++;
         break;
 
         //-----------------------------------
         // 子機の接続を通知
-    case WM_STATECODE_CONNECTED:
+      case WM_STATECODE_CONNECTED:
         {
-            BOOL bConnect = TRUE; 
+            BOOL bConnect = TRUE;
             // cb->macAddress に接続してきた子機の MAC アドレスが入っています。
             // cb->ssid は子機が WM_StartConnect の ssid 引数にセットしたデータです。
             WH_TRACE("StartParent - new child (aid 0x%x) connected\n", cb->aid);
@@ -1056,24 +1116,27 @@ static void WH_StateOutStartParent(void *arg)
             if (!bConnect ||
                 (0 != GFL_STD_MemComp(GFI_NET_GetSSID(), cb->ssid, GFL_STD_StrLen( cb->ssid ) ))){
                 WMErrCode result;
-                    // 接続を切断します。
-                    result = WM_Disconnect(NULL, cb->aid);
-                    if (result != WM_ERRCODE_OPERATING)
-                    {
-                        WH_REPORT_FAILURE(result);
-                        WH_ChangeSysState(WH_SYSSTATE_ERROR);
-                    }
-                    break;
+                // 接続を切断します。
+                result = WM_Disconnect(NULL, cb->aid);
+                if (result != WM_ERRCODE_OPERATING)
+                {
+                    WH_REPORT_FAILURE(result);
+                    WH_ChangeSysState(WH_SYSSTATE_ERROR);
                 }
+                break;
             }
             _pWmInfo->sConnectBitmap |= target_bitmap;
+            // 子機接続時のコールバック
+            if(_pWmInfo->connectCallBack){
+                _pWmInfo->connectCallBack(cb->aid);
+            }
         }
         break;
 
         //-----------------------------------
         // 子機の切断を通知
-    case WM_STATECODE_DISCONNECTED:
-    case WM_STATECODE_DISCONNECTED_FROM_MYSELF:
+      case WM_STATECODE_DISCONNECTED:
+      case WM_STATECODE_DISCONNECTED_FROM_MYSELF:
         {
             WH_TRACE("StartParent - child (aid 0x%x) disconnected\n", cb->aid);
             // cb->macAddress には, 切断された子機の MAC アドレスが入っています。
@@ -1086,7 +1149,7 @@ static void WH_StateOutStartParent(void *arg)
 
         //-----------------------------------
         // StartParentの処理が終了
-    case WM_STATECODE_PARENT_START:
+      case WM_STATECODE_PARENT_START:
         {
             // MP 通信状態に移行します。
             if (!WH_StateInStartParentMP())
@@ -1097,7 +1160,7 @@ static void WH_StateOutStartParent(void *arg)
         break;
 
         //-----------------------------------
-    default:
+      default:
         WH_TRACE("unknown indicate, state = %d\n", cb->state);
     }
 }
@@ -1154,7 +1217,7 @@ static void WH_StateOutStartParentMP(void *arg)
 
     switch (cb->state)
     {
-    case WM_STATECODE_MP_START:
+      case WM_STATECODE_MP_START:
         // StartMP 正常終了の通知。
         // これ以降、送受信可能になります。
         if (_pWmInfo->sConnectMode == WH_CONNECTMODE_KS_PARENT)
@@ -1184,10 +1247,13 @@ static void WH_StateOutStartParentMP(void *arg)
             // この関数は同期動作関数なので、WH状態の遷移はしません。
             WMErrCode result;
             u16     aidBitmap;
+            int mcSize = GFI_NET_GetSendSizeMax();
+            int num = GFI_NET_GetConnectNumMax()-1;
 
-            aidBitmap = (u16)((1 << (WH_CHILD_MAX + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
+            aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
+            WH_TRACE("aidBitmap %x\n",aidBitmap);
             result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
-                                         WH_DS_DATA_SIZE, DATASHARING_DOUBLEMODE);
+                                         mcSize, DATASHARING_DOUBLEMODE);
 
             if (result != WM_ERRCODE_SUCCESS)
             {
@@ -1203,7 +1269,7 @@ static void WH_StateOutStartParentMP(void *arg)
         WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
         break;
 
-    case WM_STATECODE_MPEND_IND:
+      case WM_STATECODE_MPEND_IND:
         // 親機の受信完了通知。
 
         // cb->recvBuf で子機から受信したデータフレームの内容を受け取れますが、
@@ -1212,11 +1278,11 @@ static void WH_StateOutStartParentMP(void *arg)
         // 受信処理は内部的に行われますので、WM_SetPortCallback を使う必要もありません。
         break;
 
-    case WM_STATECODE_MP_IND:
-    case WM_STATECODE_MPACK_IND:
+      case WM_STATECODE_MP_IND:
+      case WM_STATECODE_MPACK_IND:
         // 親機ならここへは来ないはずです。
 
-    default:
+      default:
         WH_TRACE("unknown indicate, state = %d\n", cb->state);
         break;
     }
@@ -1360,10 +1426,10 @@ static void WH_StateOutEndParent(void *arg)
 
                 macAddr - 接続する親機のMACアドレスを指定
                           NULL もしくは 0xFFFFFFFFFFFFならばすべての親機を検索する。
-                          
+
                 channel - 親を検索するチャンネルを指定
                           0ならばすべてのチャンネルを検索する。
-                          
+
    ---------------------------------------------------------------------- */
 BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
 {
@@ -1376,9 +1442,12 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    _pWmInfo->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
-    _pWmInfo->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
+//    _pWmInfo->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
+  //  _pWmInfo->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
 
+    _memoryAlloc(FALSE);
+    
+    
     WH_TRACE("recv buffer size = %d\n", _pWmInfo->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", _pWmInfo->sSendBufferSize);
 
@@ -1418,10 +1487,10 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
   Description:  親機のビーコンを取得する関数
 
   Arguments:    callback - 親機発見時に返すコールバックを設定する。
-                
+
                 macAddr  - 接続する親機のMACアドレスを指定
                            NULL もしくは 0xFFFFFFFFFFFFならばすべての親機を検索する。
-                           
+
                 channel  - 親を検索するチャンネルを指定
                            0ならばすべてのチャンネルを検索する。
 
@@ -1557,10 +1626,10 @@ static void WH_StateOutStartScan(void *arg)
 
     switch (cb->state)
     {
-    case WM_STATECODE_PARENT_NOT_FOUND:
+      case WM_STATECODE_PARENT_NOT_FOUND:
         break;
 
-    case WM_STATECODE_PARENT_FOUND:
+      case WM_STATECODE_PARENT_FOUND:
         // 親機が見つかった場合
 
         WH_TRACE("WH_StateOutStartScan : bssDescCount=%d\n", cb->bssDescCount);
@@ -1586,7 +1655,7 @@ static void WH_StateOutStartScan(void *arg)
                      bd->bssid[3], bd->bssid[4], bd->bssid[5]);
 
 
-            if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (cb->gameInfoLength < 8)
+            if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (bd->gameInfoLength < 8)
                 || (bd->gameInfo.ggid != _pWmInfo->sParentParam.ggid))
             {
                 // GGIDが違っていれば無視する
@@ -1606,7 +1675,7 @@ static void WH_StateOutStartScan(void *arg)
             WH_TRACE("parent find\n");
 
             // ビーコンを蓄積するコールバックが必要ならば呼び出し
-            if ((_pWmInfo->sBeaconBuffScanCallback != NULL) && (FALSE == _pWmInfo->sBeaconBuffScanCallback(&_pWmInfo->sBssDesc[i])){
+            if ((_pWmInfo->sBeaconBuffScanCallback != NULL) && (FALSE == _pWmInfo->sBeaconBuffScanCallback(bd))){
             }
             else{
                 MI_CpuCopy8(bd, &_pWmInfo->sBssDesc, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
@@ -1883,8 +1952,8 @@ static BOOL WH_StateInStartChildMP(void)
     WH_TRACE_STATE;
 
     result = WM_StartMP(WH_StateOutStartChildMP,
-                        (u16 *)_pWmInfo->sRecvBuffer,
-                        (u16)_pWmInfo->sRecvBufferSize, (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
+                        (u16 *)_pWmInfo->sRecvBuffer,(u16)_pWmInfo->sRecvBufferSize,
+                        (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
                         WH_MP_FREQUENCY);
 
     if (result != WM_ERRCODE_OPERATING)
@@ -1939,7 +2008,7 @@ static void WH_StateOutStartChildMP(void *arg)
 
     switch (cb->state)
     {
-    case WM_STATECODE_MP_START:
+      case WM_STATECODE_MP_START:
         // StartMP が正常終了した通知。
         // これ以降、送受信可能となります。
 
@@ -1970,9 +2039,13 @@ static void WH_StateOutStartChildMP(void *arg)
             // 呼びます。この関数は同期関数なので、WH状態の遷移はしていません。
             WMErrCode result;
             u16     aidBitmap;
+            int mcSize = GFI_NET_GetSendSizeMax();
+            int num = GFI_NET_GetConnectNumMax()-1;
 
-            aidBitmap = (u16)((1 << (WH_CHILD_MAX + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
-            result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap, WH_DS_DATA_SIZE, DATASHARING_DOUBLEMODE);
+            aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
+            WH_TRACE("aidBitmap %x\n",aidBitmap);
+            result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
+                                         mcSize, DATASHARING_DOUBLEMODE);
             if (result != WM_ERRCODE_SUCCESS)
             {
                 WH_REPORT_FAILURE(result);
@@ -1988,7 +2061,7 @@ static void WH_StateOutStartChildMP(void *arg)
         WH_ChangeSysState(WH_SYSSTATE_CONNECTED);
         break;
 
-    case WM_STATECODE_MP_IND:
+      case WM_STATECODE_MP_IND:
         // 子機の受信完了。
 
         // cb->recvBuf で親機から受信したデータフレームの内容を受け取れますが、
@@ -1998,14 +2071,14 @@ static void WH_StateOutStartChildMP(void *arg)
 
         break;
 
-    case WM_STATECODE_MPACK_IND:
+      case WM_STATECODE_MPACK_IND:
         // MPACK フレームの受信通知。デバッグ用です。
         break;
 
-    case WM_STATECODE_MPEND_IND:
+      case WM_STATECODE_MPEND_IND:
         // 子機ならここへは来ないはずです。
 
-    default:
+      default:
         WH_TRACE("unknown indicate, state = %d\n", cb->state);
         break;
     }
@@ -2891,7 +2964,7 @@ static WMErrCode WHi_MeasureChannel(WMCallbackFunc func, u16 channel)
                 になっている必要があります。
                 この関数がコールされると一番使用率の低いチャンネルを返し
                 WH_SYSSTATE_IDLE状態に遷移します。
-                
+
   Arguments:    None.
 
   Returns:      もっとも使用率の低い利用可能なチャンネル番号.
@@ -2913,7 +2986,7 @@ u16 WH_GetMeasureChannel(void)
   Description:  最も電波使用率の低かったチャンネルを取得します。
                 最も電波使用率の低いチャンネルが複数あった場合には、
                 乱数を使用する。
-                
+
   Arguments:    チャンネルビットマップ.
 
   Returns:      もっとも使用率の低い利用可能なチャンネル番号.
@@ -2976,13 +3049,14 @@ BOOL WH_Initialize(HEAPID heapID)
     if(_pWmInfo != NULL){
         return FALSE;
     }
-    _dWork_temp = sys_AllocMemory(heapID, sizeof(_WM_INFO_STRUCT) + 32);
+    _dWork_temp = GFL_HEAP_AllocMemory(heapID, sizeof(_WM_INFO_STRUCT) + 32);
     _pWmInfo = (_WM_INFO_STRUCT *)( ((u32)_dWork_temp + 31) / 32 * 32 );
 
     MI_CpuClear8(_pWmInfo, sizeof(_pWmInfo));
 
     _pWmInfo->sConnectBitmap = WH_BITMAP_EMPTY;
     _pWmInfo->sErrCode = WM_ERRCODE_SUCCESS;
+    _pWmInfo->heapID = heapID;
 
     // 初期化シーケンス開始。
     if (!WH_StateInInitialize())
@@ -3006,7 +3080,7 @@ static void WH_IndicateHandler(void *arg)
         // プレイヤーにその旨を通知する画面などを表示し、
         // ワイヤレス通信処理を停止させて下さい。
         WH_ChangeSysState(WH_SYSSTATE_ERROR);
-        OS_TPanic("Wireless FATAL error occured.\n");
+        WH_SetError(WH_ERRCODE_FATAL);
     }
 }
 
@@ -3198,8 +3272,10 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry)
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    _pWmInfo->sRecvBufferSize = WH_PARENT_RECV_BUFFER_SIZE;
-    _pWmInfo->sSendBufferSize = WH_PARENT_SEND_BUFFER_SIZE;
+//    _pWmInfo->sRecvBufferSize = WH_PARENT_RECV_BUFFER_SIZE;
+//    _pWmInfo->sSendBufferSize = WH_PARENT_SEND_BUFFER_SIZE;
+    _memoryAlloc(TRUE);
+    _pWmInfo->beaconSendNum = 0; 
 
     WH_TRACE("recv buffer size = %d\n", _pWmInfo->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", _pWmInfo->sSendBufferSize);
@@ -3210,8 +3286,10 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry)
     _pWmInfo->sParentParam.tgid = tgid;
     _pWmInfo->sParentParam.channel = channel;
     _pWmInfo->sParentParam.beaconPeriod = WM_GetDispersionBeaconPeriod();
-    _pWmInfo->sParentParam.parentMaxSize = WH_PARENT_MAX_SIZE;
-    _pWmInfo->sParentParam.childMaxSize = WH_CHILD_MAX_SIZE;
+    _pWmInfo->sParentParam.parentMaxSize = ((GFI_NET_GetSendSizeMax() * (GFI_NET_GetConnectNumMax())) + WM_SIZE_DS_PARENT_HEADER);
+    _pWmInfo->sParentParam.childMaxSize = GFI_NET_GetSendSizeMax();
+    
+
     _pWmInfo->sParentParam.maxEntry = maxEntry;
     _pWmInfo->sParentParam.CS_Flag = 0;
     _pWmInfo->sParentParam.multiBootFlag = 0;
@@ -3220,12 +3298,12 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry)
 
     switch (mode)
     {
-    case WH_CONNECTMODE_MP_PARENT:
-    case WH_CONNECTMODE_KS_PARENT:
-    case WH_CONNECTMODE_DS_PARENT:
+      case WH_CONNECTMODE_MP_PARENT:
+      case WH_CONNECTMODE_KS_PARENT:
+      case WH_CONNECTMODE_DS_PARENT:
         // 親機モードで接続開始。
         return WH_StateInSetParentParam();
-    default:
+      default:
         break;
     }
 
@@ -3241,7 +3319,7 @@ BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry)
                          WH_CONNECTMODE_DS_CHILD ならば子機としてDataSharing開始。
                          WH_CONNECTMODE_KS_CHILD ならば子機としてKeySharing開始。
                bssDesc - 接続する親機のbssDesc
-                
+
   Returns:     接続シーケンス開始に成功すれば真。
   ---------------------------------------------------------------------- */
 BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
@@ -3256,8 +3334,9 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
     // 同様に事前に静的にバッファを確保したい場合は WM_SIZE_MP_* 関数マクロを、
     // 動的に確保して構わない場合は、親子接続後で WM_StartMP() を呼び出す直前に
     // WM_GetSendBufferSize() API を用います。
-    _pWmInfo->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
-    _pWmInfo->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
+//    _pWmInfo->sRecvBufferSize = WH_CHILD_RECV_BUFFER_SIZE;
+//    _pWmInfo->sSendBufferSize = WH_CHILD_SEND_BUFFER_SIZE;
+    _memoryAlloc(FALSE);
 
     WH_TRACE("recv buffer size = %d\n", _pWmInfo->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", _pWmInfo->sSendBufferSize);
@@ -3267,16 +3346,16 @@ BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc)
 
     switch (mode)
     {
-    case WH_CONNECTMODE_MP_CHILD:
-    case WH_CONNECTMODE_KS_CHILD:
-    case WH_CONNECTMODE_DS_CHILD:
+      case WH_CONNECTMODE_MP_CHILD:
+      case WH_CONNECTMODE_KS_CHILD:
+      case WH_CONNECTMODE_DS_CHILD:
         // 子機モードで接続開始。
         // 保存されていた親機のBssDescを使用してスキャン無しで接続する。
         MI_CpuCopy8(bssDesc, &_pWmInfo->sBssDesc, sizeof(WMBssDesc));
         {
             return WH_StateInStartChild();
         }
-    default:
+      default:
         break;
     }
 
@@ -3328,6 +3407,9 @@ void WH_SetReceiver(WHReceiverFunc proc)
    ---------------------------------------------------------------------- */
 BOOL WH_SendData(const void *data, u16 size, WHSendCallbackFunc callback)
 {
+    if((WH_GetCurrentAid()==0) && !(0xfe & WH_GetBitmap())){
+        return FALSE;
+    }
     return WH_StateInSetMPData(data, size, callback);
 }
 
@@ -3426,8 +3508,9 @@ BOOL WH_StepDS(const void *data)
 
     if (result == WM_ERRCODE_NO_CHILD)
     {
-        // 親機なのに子機がいない（これをエラーとするかは自由）
-        return TRUE;
+        WH_TRACE("WH_StepDataSharing - Warning No Child\n");
+        // 親機なのに子機がいない( これをエラーとするかは自由）
+        return FALSE; //エラーにした
     }
 
     if (result == WM_ERRCODE_NO_DATASET)
@@ -3489,18 +3572,13 @@ void WH_Reset(void)
    ---------------------------------------------------------------------- */
 void WH_Finalize(void)
 {
-    if (_pWmInfo->sSysState == WH_SYSSTATE_IDLE)
-    {
+    if ((_pWmInfo==NULL) || (_pWmInfo->sSysState == WH_SYSSTATE_IDLE)){
         WH_TRACE("already WH_SYSSTATE_IDLE\n");
         return;
     }
-
     WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
-
-    if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING)
-    {
-        if (!WH_EndScan())
-        {
+    if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
+        if (!WH_EndScan()){
             WH_Reset();
         }
         return;
@@ -3520,14 +3598,14 @@ void WH_Finalize(void)
 
     switch (_pWmInfo->sConnectMode)
     {
-    case WH_CONNECTMODE_KS_CHILD:
+      case WH_CONNECTMODE_KS_CHILD:
         if (!WH_StateInEndChildKeyShare())
         {
             WH_Reset();
         }
         break;
 
-    case WH_CONNECTMODE_DS_CHILD:
+      case WH_CONNECTMODE_DS_CHILD:
         if (WM_EndDataSharing(&_pWmInfo->sDSInfo) != WM_ERRCODE_SUCCESS)
         {
             WH_Reset();
@@ -3535,21 +3613,21 @@ void WH_Finalize(void)
         }
         // don't break;
 
-    case WH_CONNECTMODE_MP_CHILD:
+      case WH_CONNECTMODE_MP_CHILD:
         if (!WH_StateInEndChildMP())
         {
             WH_Reset();
         }
         break;
 
-    case WH_CONNECTMODE_KS_PARENT:
+      case WH_CONNECTMODE_KS_PARENT:
         if (!WH_StateInEndParentKeyShare())
         {
             WH_Reset();
         }
         break;
 
-    case WH_CONNECTMODE_DS_PARENT:
+      case WH_CONNECTMODE_DS_PARENT:
         if (WM_EndDataSharing(&_pWmInfo->sDSInfo) != WM_ERRCODE_SUCCESS)
         {
             WH_Reset();
@@ -3557,7 +3635,7 @@ void WH_Finalize(void)
         }
         // don't break;
 
-    case WH_CONNECTMODE_MP_PARENT:
+      case WH_CONNECTMODE_MP_PARENT:
         if (!WH_StateInEndParentMP())
         {
             WH_Reset();
@@ -3587,8 +3665,8 @@ BOOL WH_End(void)
     }
 
     _pWmInfo = NULL;
-    sys_FreeMemoryEz(_dWork_temp);
-    
+    GFL_HEAP_FreeMemory(_dWork_temp);
+
     return TRUE;
 }
 
@@ -3605,5 +3683,71 @@ BOOL WH_End(void)
 u16 WH_GetCurrentAid(void)
 {
     return _pWmInfo->sMyAid;
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WH_SetScanCallback
+  Description:  スキャンコールバック設定
+  Arguments:    コールバック
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+void WH_SetScanCallback(WHStartScanCallbackFunc callback)
+{
+    _pWmInfo->sScanCallback = callback;
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetGameInfo
+  Description:  ビーコンの中身を変更する
+                接続時にしか働かない
+  Arguments:
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+
+void WHSetGameInfo(void* pBuff, int size, int ggid, int tgid)
+{
+    if(_pWmInfo->sSysState == WH_SYSSTATE_CONNECTED){
+        NET_PRINT("ビーコンをセットした %d\n",tgid);
+        WM_SetGameInfo(NULL, pBuff, size,
+                       ggid, tgid, WM_ATTR_FLAG_ENTRY);
+    }
+    else{
+        NET_PRINT("ビーコンをセットできなかった %d \n",tgid);
+    }
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHGetBeaconSendNum
+  Description:  ビーコンを何回送ったかを得る
+  Arguments:    none
+  Returns:      送った回数
+ *---------------------------------------------------------------------------*/
+
+u16 WHGetBeaconSendNum(void)
+{
+    return _pWmInfo->beaconSendNum; 
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetDisconnectCallBack
+  Description:  接続が切れた際に呼ばれるコールバック関数登録
+  Arguments:    コールバック
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+void WHSetDisconnectCallBack(WHDisconnectCallBack callBack)
+{
+    _pWmInfo->disconnectCallBack = callBack;
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetConnectCallBack
+  Description:  子機接続時のコールバック登録関数
+  Arguments:    callBack コールバック関数
+  Returns:      none
+ *---------------------------------------------------------------------------*/
+
+void WHSetConnectCallBack(WHDisconnectCallBack callBack)
+{
+    _pWmInfo->connectCallBack = callBack;
 }
 
