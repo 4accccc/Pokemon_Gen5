@@ -88,9 +88,6 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->time = 0;
 	gc->tp_blank = 0;
 
-	gc->mes = InitMouseEvent( gs, heapID );
-	StartMouseEvent( gc->mes );
-
 	//チームコントローラ登録
 	for( i=0; i<setup->teamCount; i++ ){
 		gc->tc[i] = AddTeamControl( gc->gs, gc->heapID );
@@ -111,7 +108,8 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->teamCount = setup->teamCount;
 	GF_ASSERT( gc->myPc != NULL );
 
-	{//テキストウインドウ登録
+	//テキストウインドウ登録
+	{
 		{//ステータスウインドウ
 			STATUSWIN_SETUP statuswinSetUp;
 
@@ -157,7 +155,8 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 		skillcontSetUp.teamCount	= gc->teamCount;
 		gc->sc = AddSkillControl( &skillcontSetUp );
 	}
-	{//ＯＢＪコントローラ登録
+	//ＯＢＪコントローラ登録
+	{
 		{//ステータスバー
 			STATUS_SETUP statusSetUp;
 
@@ -170,6 +169,11 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 
 			gc->stc = AddStatusControl( &statusSetUp );
 		}
+	}
+	//マウス（タッチペン）コントローラ登録
+	{
+		gc->mes = InitMouseEvent( gs, heapID );
+		StartMouseEvent( gc->mes );
 	}
 	gc->onGameFlag = FALSE;
 
@@ -229,8 +233,13 @@ enum {
 void MainGameControl( GAME_CONTROL* gc )
 {
 	int i;
-	MainMouseEvent( gc->mes );
+	{
+		VecFx32 cTrans;
+		GetCameraControlTrans( gc->cc, &cTrans );
+		SetMouseLine( gc->mes, cTrans.y );
 
+		MainMouseEvent( gc->mes );
+	}
 	//チーム別メイン処理
 	{
 		MAINCONT_CALLBACK_WORK* mccw = GFL_HEAP_AllocClearMemory

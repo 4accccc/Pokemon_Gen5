@@ -45,6 +45,8 @@ struct _MOUSE_EVENT_SYS {
 
 	u32				attackFrameCounter;
 	BOOL			scrClrFlag;
+
+	fx32			lineH;
 };
 
 enum {
@@ -194,7 +196,7 @@ static void setJumpTrg( MOUSE_EVENT_SYS* mes );
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes );
 static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes );
 
-static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos );
+static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos, fx32 lineH );
 //------------------------------------------------------------------
 /**
  * @brief	マウスイベント判定システム起動と終了
@@ -211,6 +213,7 @@ MOUSE_EVENT_SYS* InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID )
 
 	mes->mouseActionMode = MOUSE_ACTION_STOP;
 	mes->scrClrFlag = FALSE;
+	mes->lineH = 0;
 
 	resetJumpTrg( mes );
 	clearMouseEvent( mes );
@@ -238,6 +241,16 @@ void ExitMouseEvent( MOUSE_EVENT_SYS* mes )
 	}
 
 	GFL_HEAP_FreeMemory( mes );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	検出用設定
+ */
+//------------------------------------------------------------------
+void SetMouseLine( MOUSE_EVENT_SYS* mes, fx32 lineH )
+{
+	mes->lineH = lineH;
 }
 
 //------------------------------------------------------------------
@@ -299,7 +312,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes )
 			}
 		}
 		//移動判定
-		if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos ) == TRUE ){
+		if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos, mes->lineH ) == TRUE ){
 			cursorDrawSw = TRUE;
 			GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &cursorDrawSw );
 			GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &mes->mouseCursorPos );
@@ -463,7 +476,7 @@ void GetMousePos( MOUSE_EVENT_SYS* mes, VecFx32* pos )
  * @brief	マウスカーソル地形あたり判定
  */
 //------------------------------------------------------------------
-static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
+static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos, fx32 lineH )
 {
 	VecFx32 posRay, vecRay, posRef, vecN;
 	VecFx32 pNear, pFar;
@@ -479,9 +492,9 @@ static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
 	VEC_Subtract( &pFar, &pNear, &vecRay );
 	VEC_Normalize( &vecRay, &vecRay );	//正規化
 
-	//原点(0,0,0)を通るy=0水平面を暫定の地形とする
+	//y=0水平面を暫定の地形とする
 	posRef.x = 0;
-	posRef.y = 0;
+	posRef.y = lineH;
 	posRef.z = 0;
 	vecN.x = 0;
 	vecN.y = FX32_ONE;
