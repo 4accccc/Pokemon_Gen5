@@ -2133,7 +2133,8 @@ GFL_G3D_CALC_RESULT
 		return GFL_G3D_CALC_FALSE;
 	}
 	//経過オフセットtの算出:(P0-R0)N/VN
-	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
+	//t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
+	t = FX_Div( scalar_P0R0_N, scalar_V_N );
 
 	//交点の算出:R0 + (P0-R0)N/VN * V
 	VEC_MultAdd( t, vecRay, posRay, dest );
@@ -2194,7 +2195,8 @@ GFL_G3D_CALC_RESULT
 		return GFL_G3D_CALC_FALSE;
 	}
 	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
-	t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
+	//t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
+	t = FX_Div( scalar_P0R0_N, scalar_R1R0_N );
 
 	//交点の算出:R0 + (P0-R0)N/(R1-R0)N * (R1-R0) 
 	VEC_MultAdd( t, &vecR1R0, posRay, dest );
