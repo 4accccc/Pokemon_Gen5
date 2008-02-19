@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-01-23T20:46:17
+	Update:2008-02-08T18:40:39
  *****************************************************************************/
 
 #ifndef NARC_HARUKA_NAIX_
@@ -21,30 +21,31 @@ enum {
 	NARC_haruka_test_wall0_nsbmd = 7,
 	NARC_haruka_test_floor_nsbmd = 8,
 	NARC_haruka_test_floor2_nsbmd = 9,
-	NARC_haruka_effect_arrow_nsbmd = 10,
-	NARC_haruka_gamemap_NCGR = 11,
-	NARC_haruka_gamemap_NCLR = 12,
-	NARC_haruka_playicon_NCGR = 13,
-	NARC_haruka_playicon_NCLR = 14,
-	NARC_haruka_playicon_NSCR = 15,
-	NARC_haruka_human2_nsbmd = 16,
-	NARC_haruka_sword_nsbmd = 17,
-	NARC_haruka_shield_nsbmd = 18,
-	NARC_haruka_bow_nsbmd = 19,
-	NARC_haruka_staff_nsbmd = 20,
-	NARC_haruka_human2_attack_nsbca = 21,
-	NARC_haruka_human2_shoot_nsbca = 22,
-	NARC_haruka_human2_spell_nsbca = 23,
-	NARC_haruka_armor_common_nsbca = 24,
-	NARC_haruka_sword_attack_nsbca = 25,
-	NARC_haruka_armor_head_nsbmd = 26,
-	NARC_haruka_armor_body_nsbmd = 27,
-	NARC_haruka_armor_arms_nsbmd = 28,
-	NARC_haruka_armor_legs_nsbmd = 29,
-	NARC_haruka_armor2_head_nsbmd = 30,
-	NARC_haruka_armor2_body_nsbmd = 31,
-	NARC_haruka_armor2_arms_nsbmd = 32,
-	NARC_haruka_armor2_legs_nsbmd = 33
+	NARC_haruka_test_floor3_nsbmd = 10,
+	NARC_haruka_effect_arrow_nsbmd = 11,
+	NARC_haruka_gamemap_NCGR = 12,
+	NARC_haruka_gamemap_NCLR = 13,
+	NARC_haruka_playicon_NCGR = 14,
+	NARC_haruka_playicon_NCLR = 15,
+	NARC_haruka_playicon_NSCR = 16,
+	NARC_haruka_human2_nsbmd = 17,
+	NARC_haruka_sword_nsbmd = 18,
+	NARC_haruka_shield_nsbmd = 19,
+	NARC_haruka_bow_nsbmd = 20,
+	NARC_haruka_staff_nsbmd = 21,
+	NARC_haruka_human2_attack_nsbca = 22,
+	NARC_haruka_human2_shoot_nsbca = 23,
+	NARC_haruka_human2_spell_nsbca = 24,
+	NARC_haruka_armor_common_nsbca = 25,
+	NARC_haruka_sword_attack_nsbca = 26,
+	NARC_haruka_armor_head_nsbmd = 27,
+	NARC_haruka_armor_body_nsbmd = 28,
+	NARC_haruka_armor_arms_nsbmd = 29,
+	NARC_haruka_armor_legs_nsbmd = 30,
+	NARC_haruka_armor2_head_nsbmd = 31,
+	NARC_haruka_armor2_body_nsbmd = 32,
+	NARC_haruka_armor2_arms_nsbmd = 33,
+	NARC_haruka_armor2_legs_nsbmd = 34
 };
 
 /* NARC_HARUKA_NAIX_ */

@@ -59,7 +59,6 @@ struct _PLAYER_CONTROL {
 	u16						recoverTimer;
 	u16						jumpCalcWork;
 	VecFx32					moveVec;
-	int						gravityTimer;
 	int						attackID;
 
 	PLAYER_STATUS			status;
@@ -69,6 +68,8 @@ struct _PLAYER_CONTROL {
 	GFL_CLWK*				statusObj;
 #endif
 	SCENE_ACT*				sceneAct;
+	CALC_PH_MV*				calcPHMV;
+
 	u16						work[8];
 };
 
@@ -90,6 +91,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->targetAct = targetAct;
 	pc->netID = netID;
 	pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
+	pc->calcPHMV = CreateCalcPhisicsMoving( heapID, TRUE );
 
 	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
@@ -121,7 +123,6 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->nowCommand = 0;
 	pc->status = statusDefault;
 
-	InitMoveMapGround( &pc->gravityTimer );
 	Set3DactDrawSw( pc->sceneAct, TRUE );
 	{
 		int i;
@@ -139,6 +140,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 //------------------------------------------------------------------
 void RemovePlayerControl( PLAYER_CONTROL* pc )
 {
+	DeleteCalcPhisicsMoving( pc->calcPHMV );
 	Delete3Dact( pc->sceneAct );
 	GFL_HEAP_FreeMemory( pc ); 
 }
@@ -269,7 +271,6 @@ void SetPlayerMoveCommand
 	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, VecFx32* mvDir )
 {
 	VecFx32 tmpVec, rotVec;
-	fx32 speed = WALK_SPEED;
 
 	pc->contCommand = command;
 	//進行ベクトルの算出
@@ -277,11 +278,7 @@ void SetPlayerMoveCommand
 	tmpVec.y = 0;	//XZ軸についての精度をあげるため0固定
 	VEC_Normalize( &tmpVec, &tmpVec );	//正規化
 
-	if( command == PCC_RUN ){
-		speed = RUN_SPEED;
-	}
-	pc->moveVec.x = FX_Mul( tmpVec.x, speed );
-	pc->moveVec.z = FX_Mul( tmpVec.z, speed );
+	pc->moveVec = tmpVec;
 
 	//方向設定
 	rotVec.x = 0;
@@ -583,53 +580,39 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
-#define JUMP_SPEEDY (FX32_ONE*3)
+#define JUMP_SPEEDY (FX32_ONE*6)
 
-static BOOL jumpControl( PLAYER_CONTROL* pc )
+static void jumpControl( PLAYER_CONTROL* pc )
 {
-	BOOL retFlag = TRUE;
-
 	switch( pc->subSeq ){
 	case 0:
 		anmSet( pc, ACTANM_CMD_JUMP_RDY );
 		pc->jumpFlag = TRUE;
 		pc->subSeq++;
-		retFlag = FALSE;
 		break;
 	case 1:
+		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, JUMP_SPEEDY, 0x2000 );
 		anmSet( pc, ACTANM_CMD_JUMPUP );
-		pc->moveVec.y = JUMP_SPEEDY;
 		pc->subSeq++;
-		retFlag = FALSE;
 		break;
 	case 2:
-		if( !pc->gravityTimer ){
+		if( CheckOnFloorPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE ){
+			ResetMovePHMV( pc->calcPHMV );
 			anmSet( pc, ACTANM_CMD_JUMP_END );
 			pc->subSeq++;
 		} else {
 			//移動設定
-			VecFx32 tmpTrans;
-
-			tmpTrans.x = -(fx32)FX_SinIdx( pc->nowDirection );
-			tmpTrans.y = 0;
-			tmpTrans.z = -(fx32)FX_CosIdx( pc->nowDirection );
-
-			VEC_Normalize( &tmpTrans, &tmpTrans );	//正規化
-
-			pc->moveVec.x = FX_Mul( tmpTrans.x, JUMP_SPEED );
-			pc->moveVec.y = JUMP_SPEEDY;
-			pc->moveVec.z = FX_Mul( tmpTrans.z, JUMP_SPEED );
+			pc->moveVec.x = -(fx32)FX_SinIdx( pc->nowDirection );
+			pc->moveVec.y = 0;
+			pc->moveVec.z = -(fx32)FX_CosIdx( pc->nowDirection );
 		}
-		retFlag = TRUE;
 		break;
 	case 3:
 		pc->contCommand = PCC_STAY;
 		pc->jumpFlag = FALSE;
 		pc->subSeq = 0;
-		retFlag = FALSE;
 		break;
 	}
-	return retFlag;
 }
 
 //------------------------------------------------------------------
@@ -644,13 +627,17 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	}
 	{
 		//移動制御
-		MoveMapGround( &pc->contTrans, &pc->moveVec, &pc->gravityTimer );
-
-		pc->moveVec.x = 0;
-		pc->moveVec.y = 0;
-		pc->moveVec.z = 0;
-
+		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
 		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+
+		if( CheckMoveSpeedPHMV( pc->calcPHMV ) == FALSE ){
+			if( pc->jumpFlag != TRUE ){
+				//すべり制御
+				ResetMovePHMV( pc->calcPHMV );
+				anmSet( pc, ACTANM_CMD_JUMPDOWN );
+				return;
+			}
+		}
 	}
 	if( pc->subSeq ){
 		pc->contCommand = pc->nowCommand;//サブシーケンス動作中
@@ -664,6 +651,7 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	case PCC_NOP:
 		break;
 	case PCC_STAY:
+		ResetMovePHMV( pc->calcPHMV );
 		anmSet( pc, ACTANM_CMD_STAY );
 		break;
 	case PCC_JUMP:
@@ -671,9 +659,11 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		jumpControl( pc );
 		break;
 	case PCC_WALK:
+		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, WALK_SPEED, 0 );
 		anmSet( pc, ACTANM_CMD_WALK );
 		break;
 	case PCC_RUN:
+		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, RUN_SPEED, 0 );
 		anmSet( pc, ACTANM_CMD_RUN );
 		break;
 	case PCC_ATTACK:
@@ -700,9 +690,10 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 			break;
 		}
 #else
-		directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
+//		directionSet( pc, pc->contDirection );	//カメラ方向に向き直り
 		anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 + pc->attackID );
-		pc->skillCommand = PSC_ATTACK_SWORD;
+		//pc->skillCommand = PSC_ATTACK_SWORD;
+		pc->skillCommand = PSC_ATTACK_FIRE;
 #endif
 		break;
 	case PCC_BUILD:

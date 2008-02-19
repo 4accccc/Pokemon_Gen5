@@ -615,6 +615,7 @@ typedef struct {
 	fx32			length;
 	fx32			wait;
 	GFL_EMIT_PTR	effectEmitter;
+	CALC_PH_MV*		calcPHMV;
 }SKILL_STAFF_WORK;
 
 static void StaffInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
@@ -654,6 +655,7 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			staff_w->seq++;
 		}
 		break;
+#if 0
 	case 1:
 		calc_XZtrans( &sw->trans, STAFF_SPEED, sw->direction );
 		GFL_PTC_SetEmitterPosition( staff_w->effectEmitter, &sw->trans );
@@ -675,6 +677,37 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			DeleteSkill( sw );
 		}
 		break;
+#else
+	case 1:
+		staff_w->calcPHMV = CreateCalcPhisicsMoving( sc->heapID, FALSE );
+		{
+			VecFx32 vecMove;
+			fx32	speed =	(8 << FX32_SHIFT);
+			fx32	theta =	0x1800;
+
+			vecMove.x = -FX_SinIdx( sw->direction );
+			vecMove.y = FX32_ONE;
+			vecMove.z = -FX_CosIdx( sw->direction );
+			VEC_Normalize( &vecMove, &vecMove );	//³‹K‰»
+
+			StartMovePHMV( staff_w->calcPHMV, &sw->trans, &vecMove, speed, theta ); 
+		}
+		staff_w->seq++;
+		break;
+	case 2:
+		CalcMovePHMV( staff_w->calcPHMV, &sw->trans );
+		GFL_PTC_SetEmitterPosition( staff_w->effectEmitter, &sw->trans );
+
+		if( CheckMoveEndPHMV( staff_w->calcPHMV ) == TRUE ){
+			staff_w->seq++;
+		}
+		break;
+	case 3:
+		DeleteCalcPhisicsMoving( staff_w->calcPHMV );
+		GFL_PTC_DeleteEmitter( Get_GS_Perticle(sc->gs), staff_w->effectEmitter );
+		DeleteSkill( sw );
+		break;
+#endif
 	}
 }
 

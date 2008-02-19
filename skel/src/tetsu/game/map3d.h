@@ -25,24 +25,19 @@ enum {
 
 //------------------------------------------------------------------
 /**
- * @brief		地面との当たり判定（距離制限なし）
- */
-//------------------------------------------------------------------
-extern BOOL	CheckHitMapGround( VecFx32* posNow, VecFx32* vecMove, VecFx32* posResult );
-//------------------------------------------------------------------
-/**
- * @brief		地面との当たり判定（距離制限あり）
- */
-//------------------------------------------------------------------
-extern BOOL	CheckHitMapGroundLimit( VecFx32* posNow, VecFx32* posNext, VecFx32* posResult );
-//------------------------------------------------------------------
-/**
  * @brief		マップ上でのベクトル移動（重力あり）
- *
- *	gravityTimerはここでしか操作しないようにする
  */
 //------------------------------------------------------------------
-extern void	InitMoveMapGround( int* gravityTimer );
-extern BOOL	MoveMapGround( VecFx32* posNow, VecFx32* vecMove, int* gravityTimer );
+typedef struct _CALC_PH_MV CALC_PH_MV; 
 
+extern CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, BOOL absorbFlag );
+extern void			DeleteCalcPhisicsMoving( CALC_PH_MV* calcPHMV );
+extern void			SetAbsorbPHMV( CALC_PH_MV* calcPHMV, BOOL absorbFlag );
+extern BOOL			CheckMoveEndPHMV( CALC_PH_MV* calcPHMV );
+extern BOOL			CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV );
+extern BOOL			CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos );
+extern void			StartMovePHMV( CALC_PH_MV* calcPHMV, 
+						VecFx32* posStart, VecFx32* dirXZ, fx32 speed, u16 theta );
+extern void			ResetMovePHMV( CALC_PH_MV* calcPHMV );
+extern BOOL			CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow );
 
