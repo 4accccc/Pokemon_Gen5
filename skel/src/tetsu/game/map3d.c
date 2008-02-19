@@ -1000,6 +1000,16 @@ BOOL CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos )
 }
 
 //------------------------------------------------------------------
+BOOL CheckGravitySpeedPHMV( CALC_PH_MV* calcPHMV )
+{
+	if( calcPHMV->gravitySpeed ){
+		return FALSE;
+	} else {
+		return TRUE;
+	}
+}
+
+//------------------------------------------------------------------
 void StartMovePHMV
 	( CALC_PH_MV* calcPHMV, VecFx32* posStart, VecFx32* dirXZ, fx32 speed, u16 theta )
 {

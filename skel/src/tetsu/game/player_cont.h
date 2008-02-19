@@ -28,6 +28,7 @@ typedef enum {
 	PCC_RUN,
 	PCC_JUMP,
 	PCC_STAYJUMP,
+	PCC_SLIDE,
 
 	PCC_ATTACK,
 	PCC_SIT,

@@ -36,6 +36,7 @@ extern void			SetAbsorbPHMV( CALC_PH_MV* calcPHMV, BOOL absorbFlag );
 extern BOOL			CheckMoveEndPHMV( CALC_PH_MV* calcPHMV );
 extern BOOL			CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV );
 extern BOOL			CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos );
+extern BOOL			CheckGravitySpeedPHMV( CALC_PH_MV* calcPHMV );
 extern void			StartMovePHMV( CALC_PH_MV* calcPHMV, 
 						VecFx32* posStart, VecFx32* dirXZ, fx32 speed, u16 theta );
 extern void			ResetMovePHMV( CALC_PH_MV* calcPHMV );

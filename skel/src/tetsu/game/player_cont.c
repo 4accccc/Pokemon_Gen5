@@ -47,7 +47,7 @@ struct _PLAYER_CONTROL {
 	HP_INCDEC_ONTIME		regenerateStatus;
 
 	BOOL					sitDownFlag;
-	BOOL					jumpFlag;
+	BOOL					forceMoveing;
 	BOOL					skillBusyFlag;
 	BOOL					hitEnableFlag;
 	BOOL					deadFlag;
@@ -102,7 +102,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->regenerateStatus.count = 0;
 
 	pc->sitDownFlag = FALSE;
-	pc->jumpFlag = FALSE;
+	pc->forceMoveing = FALSE;
 	pc->skillBusyFlag = FALSE;
 	pc->hitEnableFlag = FALSE;
 	pc->deadFlag = FALSE;
@@ -213,7 +213,7 @@ PLAYER_STATUS* GetPlayerStatusPointer( PLAYER_CONTROL* pc )
 //------------------------------------------------------------------
 BOOL CheckPlayerControlEnable( PLAYER_CONTROL* pc )
 {
-	if( pc->jumpFlag == TRUE ){
+	if( pc->forceMoveing == TRUE ){
 		return FALSE;	//ジャンプ中
 	}
 	if( Check3DactPlayerBusy( pc->sceneAct ) == TRUE ){
@@ -587,7 +587,7 @@ static void jumpControl( PLAYER_CONTROL* pc )
 	switch( pc->subSeq ){
 	case 0:
 		anmSet( pc, ACTANM_CMD_JUMP_RDY );
-		pc->jumpFlag = TRUE;
+		pc->forceMoveing = TRUE;
 		pc->subSeq++;
 		break;
 	case 1:
@@ -599,18 +599,11 @@ static void jumpControl( PLAYER_CONTROL* pc )
 		if( CheckOnFloorPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE ){
 			ResetMovePHMV( pc->calcPHMV );
 			anmSet( pc, ACTANM_CMD_JUMP_END );
-			pc->subSeq++;
-		} else {
-			//移動設定
-			pc->moveVec.x = -(fx32)FX_SinIdx( pc->nowDirection );
-			pc->moveVec.y = 0;
-			pc->moveVec.z = -(fx32)FX_CosIdx( pc->nowDirection );
+
+			pc->contCommand = PCC_STAY;
+			pc->forceMoveing = FALSE;
+			pc->subSeq = 0;
 		}
-		break;
-	case 3:
-		pc->contCommand = PCC_STAY;
-		pc->jumpFlag = FALSE;
-		pc->subSeq = 0;
 		break;
 	}
 }
@@ -631,10 +624,10 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		Set3DactTrans( pc->sceneAct, &pc->contTrans );
 
 		if( CheckMoveSpeedPHMV( pc->calcPHMV ) == FALSE ){
-			if( pc->jumpFlag != TRUE ){
+			if( pc->forceMoveing != TRUE ){
 				//すべり制御
-				ResetMovePHMV( pc->calcPHMV );
-				anmSet( pc, ACTANM_CMD_JUMPDOWN );
+				pc->forceMoveing = TRUE;
+				pc->contCommand = PCC_SLIDE;
 				return;
 			}
 		}
@@ -665,6 +658,13 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 	case PCC_RUN:
 		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, RUN_SPEED, 0 );
 		anmSet( pc, ACTANM_CMD_RUN );
+		break;
+	case PCC_SLIDE:
+		if( CheckGravitySpeedPHMV( pc->calcPHMV ) == TRUE ){
+			pc->forceMoveing = FALSE;
+		}
+		ResetMovePHMV( pc->calcPHMV );
+		anmSet( pc, ACTANM_CMD_JUMPDOWN );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
