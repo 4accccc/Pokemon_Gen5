@@ -98,6 +98,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 		setup.gravityFall = 9.8f * FX32_ONE/30;
 		setup.planeMarginTheta = 0x1000;
 		setup.absorbVal = 0;
+		setup.enableMoveTheta = 0x3800;
 
 		pc->calcPHMV = CreateCalcPhisicsMoving( heapID, &setup );
 	}

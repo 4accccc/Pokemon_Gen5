@@ -36,6 +36,7 @@ typedef struct {
 	fx32	gravityFall;		//重力:空中用
 	u16		planeMarginTheta;	//平面とみなす傾き
 	fx32	absorbVal;			//反発力吸収値(PHMV_FULL_ABSORB	= 反発なし)
+	u16		enableMoveTheta;	//移動可能な角度
 
 }PHMV_SETUP;
 
