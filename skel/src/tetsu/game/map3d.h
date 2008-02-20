@@ -30,9 +30,18 @@ enum {
 //------------------------------------------------------------------
 typedef struct _CALC_PH_MV CALC_PH_MV; 
 
-extern CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, BOOL absorbFlag );
+#define PHMV_FULL_ABSORB	(0xffffffff)
+typedef struct {
+	fx32	gravityMove;		//重力:移動用(調整可能にするため空中とは分離)
+	fx32	gravityFall;		//重力:空中用
+	u16		planeMarginTheta;	//平面とみなす傾き
+	fx32	absorbVal;			//反発力吸収値(PHMV_FULL_ABSORB	= 反発なし)
+
+}PHMV_SETUP;
+
+extern CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, PHMV_SETUP* setup );
 extern void			DeleteCalcPhisicsMoving( CALC_PH_MV* calcPHMV );
-extern void			SetAbsorbPHMV( CALC_PH_MV* calcPHMV, BOOL absorbFlag );
+extern void			SetAbsorbPHMV( CALC_PH_MV* calcPHMV, fx32 absorbVal );
 extern BOOL			CheckMoveEndPHMV( CALC_PH_MV* calcPHMV );
 extern BOOL			CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV );
 extern BOOL			CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos );

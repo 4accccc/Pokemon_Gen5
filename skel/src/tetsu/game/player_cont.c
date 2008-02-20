@@ -91,7 +91,16 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->targetAct = targetAct;
 	pc->netID = netID;
 	pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
-	pc->calcPHMV = CreateCalcPhisicsMoving( heapID, TRUE );
+	{
+		PHMV_SETUP setup;
+
+		setup.gravityMove = 9.8f * FX32_ONE/86;
+		setup.gravityFall = 9.8f * FX32_ONE/30;
+		setup.planeMarginTheta = 0x1000;
+		setup.absorbVal = 0;
+
+		pc->calcPHMV = CreateCalcPhisicsMoving( heapID, &setup );
+	}
 
 	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
@@ -609,36 +618,10 @@ static void jumpControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
-void MainPlayerControl( PLAYER_CONTROL* pc )
+static void commandControl( PLAYER_CONTROL* pc )
 {
-	BOOL mvf;
-
-	anmReset( pc );			//通信アニメコマンドリセット
-
-	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
-		return;
-	}
-	{
-		//移動制御
-		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
-		Set3DactTrans( pc->sceneAct, &pc->contTrans );
-
-		if( CheckMoveSpeedPHMV( pc->calcPHMV ) == FALSE ){
-			if( pc->forceMoveing != TRUE ){
-				//すべり制御
-				pc->forceMoveing = TRUE;
-				pc->contCommand = PCC_SLIDE;
-				return;
-			}
-		}
-	}
 	if( pc->subSeq ){
 		pc->contCommand = pc->nowCommand;//サブシーケンス動作中
-	}
-	if(( pc->contCommand != PCC_SIT )&&( pc->sitDownFlag == TRUE )){	//しゃがみ中立ち判定処理
-		anmSetForce( pc, ACTANM_CMD_STANDUP );
-		pc->sitDownFlag = FALSE;
-		return;
 	}
 	switch( pc->contCommand ){
 	case PCC_NOP:
@@ -663,8 +646,6 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		if( CheckGravitySpeedPHMV( pc->calcPHMV ) == TRUE ){
 			pc->forceMoveing = FALSE;
 		}
-		ResetMovePHMV( pc->calcPHMV );
-		anmSet( pc, ACTANM_CMD_JUMPDOWN );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
@@ -728,6 +709,38 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		break;
 	}
 	pc->nowCommand = pc->contCommand;
+}
+
+//------------------------------------------------------------------
+void MainPlayerControl( PLAYER_CONTROL* pc )
+{
+	anmReset( pc );			//通信アニメコマンドリセット
+
+	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
+		return;
+	}
+	if(( pc->contCommand != PCC_SIT )&&( pc->sitDownFlag == TRUE )){	//しゃがみ中立ち判定処理
+		anmSetForce( pc, ACTANM_CMD_STANDUP );
+		pc->sitDownFlag = FALSE;
+		return;
+	}
+	commandControl( pc );
+	{
+		//移動制御
+		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
+		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+
+		if( CheckMoveSpeedPHMV( pc->calcPHMV ) == FALSE ){
+			if( pc->forceMoveing != TRUE ){
+				//すべり制御
+				pc->forceMoveing = TRUE;
+				ResetMovePHMV( pc->calcPHMV );
+				anmSet( pc, ACTANM_CMD_JUMPDOWN );
+				pc->contCommand = PCC_SLIDE;
+				return;
+			}
+		}
+	}
 }
 
 //------------------------------------------------------------------

@@ -848,18 +848,30 @@ static BOOL	GetGroundTraiangleID( VecFx32* pos, u16* gridOffs, u16* ID )
 	return FALSE;
 }
 
-static BOOL	GetGroundPlaneData( VecFx32* pos, VecFx32* posRef, VecFx32* vecN, fx32* valD )
+static BOOL	GetGroundPlaneData( VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
 	u16		gridOffs, triangleID;
 
 	if( GetGroundTraiangleID( pos, &gridOffs, &triangleID ) == FALSE ){
 		return FALSE;
 	}
-	*posRef = mapGridData[ gridOffs ].triangle[ triangleID ].vtx0;
 	*vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
 	*valD	= mapGridData[ gridOffs ].triangle[ triangleID ].valD;
 
 	return TRUE;
+}
+
+static void	GetGroundPlaneVecN( VecFx32* pos, VecFx32* vecN )
+{
+	u16		gridOffs, triangleID;
+
+	if( GetGroundTraiangleID( pos, &gridOffs, &triangleID ) == FALSE ){
+		vecN->x = 0;
+		vecN->y = FX32_ONE;
+		vecN->z = 0;
+		return;
+	}
+	*vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
 }
 
 static void	GetGroundPlaneHeight( VecFx32* posNow, fx32* height ) 
@@ -879,6 +891,27 @@ static void	GetGroundPlaneHeight( VecFx32* posNow, fx32* height )
 	*height = FX_Div( by, vecN.y );
 }
 
+//------------------------------------------------------------------
+/**
+ *
+ * @brief		マップ上でのベクトル移動（重力あり）
+ *
+ */
+//------------------------------------------------------------------
+struct _CALC_PH_MV {
+	fx32	gravityMove;
+	fx32	gravityFall;
+	fx32	planeMargin;
+	fx32	absorbVal;
+
+	fx32	gravitySpeed;
+	VecFx32	vecMove;
+	fx32	speed;
+	u16		theta;
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static BOOL	CheckOnGround( VecFx32* pos, fx32* y )
 {
 	fx32 groundHeight;
@@ -909,17 +942,17 @@ static void	GetGroundMoveVec( VecFx32* pos, fx32* speedH, VecFx32* vecMove, VecF
 	VEC_Normalize( dst, dst );
 }
 
-static void	GetGravityVec( VecFx32* pos, VecFx32* dst, BOOL groundFlag ) 
+static BOOL	GetGravityVec( VecFx32* pos, VecFx32* dst, fx32 planeMargin ) 
 {
-	VecFx32 posRef, vecN, vecH, vecG;
+	VecFx32 vecN, vecH, vecG;
 	VecFx32 vecGravity = { 0, -FX32_ONE, 0 };
-	fx32	scalar, valD;
+	fx32	scalar;
 
-	if( groundFlag == FALSE ){
+	if( CheckOnGround( pos, &pos->y ) == FALSE ){
 		*dst = vecGravity;	//空中
-		return;
+		return FALSE;
 	}
-	GetGroundPlaneData( pos, &posRef, &vecN, &valD );
+	GetGroundPlaneVecN( pos, &vecN );
 
 	VEC_CrossProduct( &vecN, &vecGravity, &vecH );	//平面上の水平ベクトル算出
 	VEC_CrossProduct( &vecN, &vecH, &vecG );		//平面上の斜面ベクトル算出
@@ -934,30 +967,27 @@ static void	GetGravityVec( VecFx32* pos, VecFx32* dst, BOOL groundFlag )
 	dst->x = FX_Div( FX_Mul( scalar, vecG.x ), FX32_ONE );
 	dst->y = FX_Div( FX_Mul( scalar, vecG.y ), FX32_ONE );
 	dst->z = FX_Div( FX_Mul( scalar, vecG.z ), FX32_ONE );
+
+	if( dst->y < planeMargin ){
+		return FALSE;
+	}
+	dst->y = 0;
+
+	return TRUE;
 }
 
 //------------------------------------------------------------------
-/**
- *
- * @brief		マップ上でのベクトル移動（重力あり）
- *
- */
 //------------------------------------------------------------------
-struct _CALC_PH_MV {
-	VecFx32	vecMove;
-	fx32	speed;
-	fx32	gravitySpeed;
-	BOOL	absorbFlag;
-	u16		theta;
-};
-
-//------------------------------------------------------------------
-CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, BOOL absorbFlag )
+CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, PHMV_SETUP* setup )
 {
 	CALC_PH_MV*	calcPHMV = GFL_HEAP_AllocClearMemory( heapID, sizeof(CALC_PH_MV) );
 
+	calcPHMV->gravityMove = setup->gravityMove;
+	calcPHMV->gravityFall = setup->gravityFall;
+	calcPHMV->planeMargin = -FX_SinIdx( setup->planeMarginTheta );
+	calcPHMV->absorbVal = setup->absorbVal;
+	
 	calcPHMV->gravitySpeed = 0;
-	calcPHMV->absorbFlag = absorbFlag;
 
 	return calcPHMV;
 }
@@ -968,9 +998,9 @@ void DeleteCalcPhisicsMoving( CALC_PH_MV* calcPHMV )
 }
 
 //------------------------------------------------------------------
-void SetAbsorbPHMV( CALC_PH_MV* calcPHMV, BOOL absorbFlag )
+void SetAbsorbPHMV( CALC_PH_MV* calcPHMV, fx32 absorbVal )
 {
-	calcPHMV->absorbFlag = absorbFlag;
+	calcPHMV->absorbVal = absorbVal;
 }
 
 //------------------------------------------------------------------
@@ -987,25 +1017,25 @@ BOOL CheckMoveEndPHMV( CALC_PH_MV* calcPHMV )
 BOOL CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV )
 {
 	if( (calcPHMV->speed - calcPHMV->gravitySpeed) < 0 ){
-		return FALSE;
+		return FALSE;	//後進or下降
 	} else {
-		return TRUE;
+		return TRUE;	//前進or上昇
 	}
 }
 
 //------------------------------------------------------------------
 BOOL CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos )
 {
-	return CheckOnGround( pos, NULL );
+	return CheckOnGround( pos, NULL );	//TRUE = 地上, FALSE = 空中
 }
 
 //------------------------------------------------------------------
 BOOL CheckGravitySpeedPHMV( CALC_PH_MV* calcPHMV )
 {
 	if( calcPHMV->gravitySpeed ){
-		return FALSE;
+		return FALSE;	//空中or地上斜面
 	} else {
-		return TRUE;
+		return TRUE;	//地上平面
 	}
 }
 
@@ -1036,43 +1066,34 @@ void ResetMovePHMV( CALC_PH_MV* calcPHMV )
 BOOL	CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow )
 {
 	VecFx32 vecG;
-	fx32	gravity = 9.8f * FX32_ONE/86;
 	BOOL	gSpeedResetFlag = FALSE;
 
-	if( calcPHMV->speed ){
-		VecFx32 vecM;
-		fx32	speedH, speedV;
+	VecFx32 vecM;
+	fx32	speedH, speedV;
 
-		speedH = FX_Mul( calcPHMV->speed, FX_CosIdx( calcPHMV->theta ) );
-		speedV = FX_Mul( calcPHMV->speed, FX_SinIdx( calcPHMV->theta ) );
+	speedH = FX_Mul( calcPHMV->speed, FX_CosIdx( calcPHMV->theta ) );
+	speedV = FX_Mul( calcPHMV->speed, FX_SinIdx( calcPHMV->theta ) );
 
-		if( !speedV ){
-			//水平移動
-			//移動ベクトルの取得と予想移動位置の計算
-			GetGroundMoveVec( posNow, &speedH, &calcPHMV->vecMove, &vecM );
-			VEC_MultAdd( speedH, &vecM, posNow, posNow );
-	
-			//重力ベクトルの算出
-			GetGravityVec( posNow, &vecG, TRUE );
-		} else {
-			posNow->x = FX_Mul( speedH, calcPHMV->vecMove.x ) + posNow->x;
-			posNow->y = FX_Mul( speedV, calcPHMV->vecMove.y ) + posNow->y;
-			posNow->z = FX_Mul( speedH, calcPHMV->vecMove.z ) + posNow->z;
-			//重力ベクトルの算出
-			GetGravityVec( posNow, &vecG, CheckOnGround( posNow, &posNow->y ) );
-			gravity = 9.8f * FX32_ONE/30;	//重力をきつめに調整
-		}
+	if( !speedV ){
+		//水平移動
+		//移動ベクトルの取得と予想移動位置の計算
+		GetGroundMoveVec( posNow, &speedH, &calcPHMV->vecMove, &vecM );
+		VEC_MultAdd( speedH, &vecM, posNow, posNow );
+		GetGroundPlaneHeight( posNow, &posNow->y );
+		calcPHMV->gravitySpeed += calcPHMV->gravityMove;	//重力加速度の計算
 	} else {
-		//重力ベクトルの算出
-		GetGravityVec( posNow, &vecG, CheckOnGround( posNow, &posNow->y ) );
+		//空中移動
+		posNow->x = FX_Mul( speedH, calcPHMV->vecMove.x ) + posNow->x;
+		posNow->y = FX_Mul( speedV, calcPHMV->vecMove.y ) + posNow->y;
+		posNow->z = FX_Mul( speedH, calcPHMV->vecMove.z ) + posNow->z;
+		calcPHMV->gravitySpeed += calcPHMV->gravityFall;	//重力加速度の計算
 	}
-	//最終統合計算
-	calcPHMV->gravitySpeed += gravity;	//重力加速度の計算
-	VEC_MultAdd( calcPHMV->gravitySpeed, &vecG, posNow, posNow );
-	CheckOnGround( posNow, &posNow->y );	//最終高さ補正
-
-	if( vecG.y >= 0 ){
-		calcPHMV->gravitySpeed = 0;	//重力加速度のリセット判定
+	//重力ベクトルの算出
+	if( GetGravityVec( posNow, &vecG, calcPHMV->planeMargin ) == TRUE ){
+		calcPHMV->gravitySpeed = 0;	//重力加速度のリセット
+	} else {
+		VEC_MultAdd( calcPHMV->gravitySpeed, &vecG, posNow, posNow );
+		CheckOnGround( posNow, &posNow->y );	//最終高さ補正
 	}
 	return TRUE;
 }

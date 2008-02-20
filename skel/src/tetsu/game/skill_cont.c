@@ -655,7 +655,7 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 			staff_w->seq++;
 		}
 		break;
-#if 0
+#if 1
 	case 1:
 		calc_XZtrans( &sw->trans, STAFF_SPEED, sw->direction );
 		GFL_PTC_SetEmitterPosition( staff_w->effectEmitter, &sw->trans );
