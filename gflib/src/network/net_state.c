@@ -454,8 +454,7 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
 
 void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocMemory( heapID, sizeof(NET_PARENTSYS));
-    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
+    pNetHandle->pParent = GFL_HEAP_AllocClearMemory( heapID, sizeof(NET_PARENTSYS));
 
     pNetHandle->negotiation = _NEGOTIATION_OK;  // Ž©•ª‚Í”FØŠ®—¹
     pNetHandle->creatureNo = 0;
@@ -473,8 +472,7 @@ void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 
 void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocMemory( heapID, sizeof(NET_PARENTSYS));
-    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
+    pNetHandle->pParent = GFL_HEAP_AllocClearMemory( heapID, sizeof(NET_PARENTSYS));
     _CHANGE_STATE(_parentInit, 0);
 }
 
@@ -1197,9 +1195,7 @@ int GFL_NET_StateStartWifiRandomMatch( GFL_NETHANDLE* pNetHandle )
 
 void GFL_NET_StateConnectWifiParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocMemory(heapID, sizeof(NET_PARENTSYS));
-    GFL_STD_MemClear(pNetHandle->pParent, sizeof(NET_PARENTSYS));
-
+    pNetHandle->pParent = GFL_HEAP_AllocClearMemory(heapID, sizeof(NET_PARENTSYS));
     _CHANGE_STATE(_stateNone, 0);
 }
 

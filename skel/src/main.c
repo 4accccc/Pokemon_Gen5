@@ -53,11 +53,16 @@ void NitroMain(void)
 
 	while(TRUE){
 		// メイン処理して…
-		GFLUser_Main();
-		GameMain();
+        if(!GFLUser_Main()){
+            // VBLANK待ち
+            // ※gflibに適切な関数が出来たら置き換えてください
+            OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+            continue;
+        }
 
-		// 描画に必要な準備して…
-		GFLUser_Display();
+        GameMain();
+        // 描画に必要な準備して…
+        GFLUser_Display();
 
 		// レンダリングエンジンが参照するデータ群をスワップ
 		// ※gflibに適切な関数が出来たら置き換えてください

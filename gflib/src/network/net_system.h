@@ -431,6 +431,15 @@ extern void GFL_NET_SystemResetQueue_Server(void);
  */
 //==============================================================================
 extern void GFL_NET_SystemRecvStop(BOOL bFlg);
+//==============================================================================
+/**
+ * @brief   キーシェアリング機能でキーを得る
+ * @retval  TRUE  データシェアリング成功
+ * @retval  FALSE データシェアリング失敗
+ */
+//==============================================================================
+
+extern BOOL GFL_NET_SystemGetKey(int no, u16* key);
 
 extern GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID);
 
@@ -485,6 +494,8 @@ typedef struct{
     //-------------------
     NET_TOOLSYS* pTool;  ///< netTOOLのワーク
     GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
+    u16 key[GFL_NET_MACHINE_MAX];
+    UI_KEYSYS* pKey[GFL_NET_MACHINE_MAX];       ///<  キーシェアリングポインタ
 //    u8 device;   ///< デバイス切り替え wifi<>wi
 
 #if _COUNT_TEST

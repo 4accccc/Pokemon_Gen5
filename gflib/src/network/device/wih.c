@@ -557,7 +557,7 @@ typedef struct{
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 static void* _dWork_temp; //アライメントをそろえる為のバッファ
 
-#define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
+#define DATASHARING_DOUBLEMODE (FALSE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
 /* デバッグ出力フック関数 */
 static void (*wh_trace) (const char *, ...) =
@@ -669,7 +669,7 @@ static void WH_StateOutReset(void *arg);
    debug codes
    ====================================================================== */
 #ifdef DEBUG_ONLY_FOR_ohno
-#define WMHIGH_DEBUG
+//#define WMHIGH_DEBUG
 #endif
 #if defined(WMHIGH_DEBUG)
 
@@ -960,10 +960,10 @@ static void _memoryAlloc(BOOL bParent)
     int num = GFI_NET_GetConnectNumMax()-1;
     int _PARENT_MAX_SIZE  =    ((size * num) + WM_SIZE_DS_PARENT_HEADER);
     int _CHILD_MAX_SIZE   =    (size);
-    int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE )*2;
-    int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE )*2;
-    int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE )*2;
-    int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE )*2;
+    int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE )*3;
+    int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
+    int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
+    int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE )*3;
 
     if(bParent){
         _pWmInfo->sRecvBufferSize = _PARENT_RECV_BUFFER_SIZE;

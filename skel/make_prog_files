@@ -8,6 +8,11 @@ SRCS	+=		testmode.c \
 				ohno/test_ui.c \
 				ohno/fatal_error.c \
 				ohno/exnport.c \
+				ohno/key_title.c \
+				ohno/key_game.c \
+				ohno/key_player.c \
+				ohno/key_fallchr.c \
+                ohno/key_yt_net.c \
                 gfl_graphic/net_icondata.c \
 				sogabe/debug_sogabe.c \
 				sogabe/title.c \

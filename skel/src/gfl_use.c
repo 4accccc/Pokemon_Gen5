@@ -133,14 +133,17 @@ void GFLUser_Init(void)
  * 毎フレーム呼び出される必要があるメイン処理を記述する
  */
 //------------------------------------------------------------------
-void GFLUser_Main(void)
+BOOL GFLUser_Main(void)
 {
-	GFL_UI_Main();
-    GFL_NET_Main();  //キーの処理の後すぐに通信を処理したい為ここに配置
-	
-	GFL_PROC_Main();
-    GFL_FADE_Main();
-	GFL_SOUND_Main();
+    BOOL bRet;
+    
+    if(bRet = GFL_NET_Main()){  //キーの処理の後すぐに通信を処理したい為ここに配置
+        GFL_UI_Main();
+        GFL_PROC_Main();
+        GFL_FADE_Main();
+    }
+    GFL_SOUND_Main();
+    return bRet;
 }
 
 //------------------------------------------------------------------

@@ -19,7 +19,7 @@
 //==============================================================================
 
 struct _NET_TOOLSYS_t{
-    u8* timingSyncBuff;   ///< 通信相手の同期コマンド番号
+    u8 timingSyncBuff[GFL_NET_MACHINE_MAX];   ///< 通信相手の同期コマンド番号
     u8 timingSyncEnd;     ///< 同期コマンド用
     u8 timingSendE;       ///< 送ったかどうか
     u8 timingSyncMy;      ///< 自分が送ったNO
@@ -40,8 +40,7 @@ NET_TOOLSYS* GFL_NET_TOOL_Init(const HEAPID heapID, const int num)
     int i;
     NET_TOOLSYS* pCT;
 
-    pCT = GFL_HEAP_AllocMemory(heapID, sizeof(NET_TOOLSYS));
-    pCT->timingSyncBuff = GFL_HEAP_AllocMemory(heapID, num);
+    pCT = GFL_HEAP_AllocClearMemory(heapID, sizeof(NET_TOOLSYS));
     MI_CpuFill8(pCT->timingSyncBuff, 0xff , num);
     pCT->timingSyncEnd = 0xff;
     pCT->timingSyncMy = 0xff;
@@ -61,7 +60,6 @@ NET_TOOLSYS* GFL_NET_TOOL_Init(const HEAPID heapID, const int num)
 void GFL_NET_TOOL_End(NET_TOOLSYS* pCT)
 {
     if(pCT){
-        GFL_HEAP_FreeMemory(pCT->timingSyncBuff);
         GFL_HEAP_FreeMemory(pCT);
     }
 }

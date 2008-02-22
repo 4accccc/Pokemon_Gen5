@@ -568,6 +568,15 @@ extern u32 GFL_UI_TP_AutoStop( void );
 
 
 
+//------------------------------------------------------------------
+/**
+ * @brief	定義
+ */
+//------------------------------------------------------------------
+typedef struct _UI_TPSYS  UI_TPSYS;   ///< タッチパネル構造体定義
+typedef struct _UI_KEYSYS  UI_KEYSYS; ///< キー構造体定義
+typedef struct _UI_TPAUTOSYS UI_TPAUTOSYS;  ///< 
+
 
 #endif //__UI_H__
 

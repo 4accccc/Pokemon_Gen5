@@ -16,7 +16,7 @@
 #include "net_command.h"
 #include "net_state.h"
 #include "wm_icon.h"
-
+#include "ui/ui_def.h"
 #include "device/dwc_rap.h"
 
 
@@ -33,6 +33,7 @@
 struct _GFL_NETSYS{
     GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
     GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
+    UI_KEYSYS* pKey[GFL_NET_HANDLE_MAX];  ///< キーバッファ
     GFL_NETHANDLE* pNetHandleInit;  ///< 初期化用ハンドル
     GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
 };
@@ -97,6 +98,9 @@ static void _deleteHandle(GFL_NETHANDLE* pNetHandle)
         GFL_HEAP_FreeMemory(pNetHandle->pParent);
     }
     GFL_NET_TOOL_End(pNetHandle->pTool);
+//    if(pNetHandle->pKey){
+  //      GFL_HEAP_FreeMemory(pNetHandle->pKey);
+    //}
     GFL_HEAP_FreeMemory(pNetHandle);
 }
 
@@ -245,16 +249,15 @@ void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc)
 //==============================================================================
 void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
 {
+    int index;
     // 通信ヒープ作成
     GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->netHeapID, _HEAPSIZE_NET );
     if(pNetInit->bWiFi){
         GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, _HEAPSIZE_WIFI);
     }
     {
-        GFL_NETSYS* pNet = GFL_HEAP_AllocMemory(pNetInit->netHeapID, sizeof(GFL_NETSYS));
+        GFL_NETSYS* pNet = GFL_HEAP_AllocClearMemory(pNetInit->netHeapID, sizeof(GFL_NETSYS));
         _pNetSys = pNet;
-
-        GFL_STD_MemClear(pNet, sizeof(GFL_NETSYS));
 
         NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
 
@@ -263,6 +266,9 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
             GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
             GFL_NET_StateDeviceInitialize(pNetHandle);
             pNet->pNetHandleInit = pNetHandle;
+        }
+        for(index = 0; index < pNet->aNetInit.maxConnectNum; index++){
+            _pNetSys->pKey[index] = GFL_UI_KEY_Init(pNet->aNetInit.netHeapID);
         }
 
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
@@ -300,9 +306,13 @@ BOOL GFL_NET_Exit(void)
     HEAPID netHeapID = pNet->aNetInit.netHeapID;
     HEAPID wifiHeapID = pNet->aNetInit.wifiHeapID;
     BOOL bWiFi = pNet->aNetInit.bWiFi;
+    int index;
 
     if(GFL_NET_SystemIsInitialize()){
         return FALSE;
+    }
+    for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
+        GFL_HEAP_FreeMemory(pNet->pKey[index]);
     }
     WirelessIconEasyEnd();
     _deleteAllNetHandle(pNet);
@@ -364,17 +374,18 @@ u8* GFL_NET_GetBeaconMacAddress(int index)
 //==============================================================================
 /**
  * @brief   通信のメイン実行関数
- * @return  none
+ * @retval  TRUE  処理を行ってよい場合
+ * @retval  FALSE 同期が取れていないので処理を行わない場合
  */
 //==============================================================================
 
-void GFL_NET_Main(void)
+BOOL GFL_NET_Main(void)
 {
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
     if(pNet==NULL){
-        return;
+        return TRUE;
     }
     for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
         if(pNet->pNetHandle[i]!=NULL){
@@ -386,7 +397,7 @@ void GFL_NET_Main(void)
         }
     }
     GFL_NET_SystemUpdateData();
-    
+    return GFL_NET_SystemCheckDataSharing();
 }
 
 //==============================================================================
@@ -399,9 +410,8 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     u64 seed;
-    GFL_NETHANDLE* pHandle = GFL_HEAP_AllocMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
+    GFL_NETHANDLE* pHandle = GFL_HEAP_AllocClearMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
 
-    GFL_STD_MemClear(pHandle, sizeof(GFL_NETHANDLE));
     pHandle->negoCount=10;
     _addNetHandle(pNet, pHandle);
     pHandle->pTool = GFL_NET_TOOL_Init(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
@@ -733,8 +743,6 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
-    OS_TPrintf("GFL_NET_SendData %d \n", pNet->creatureNo);
-
     return GFL_NET_SystemSendData(sendCommand, data, 0,
                                   FALSE, pNet->creatureNo ,GFL_NET_SENDID_ALLUSER);
 }
@@ -1167,6 +1175,81 @@ void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
 {
     GFL_NET_STATE_SetNoChildErrorCheck(pNetHandle, bFlg);
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   ネットワークキーシェアリングメイン関数
+ * @param   NetKeyMainFunc		通信キー処理
+ * @retval  うまく処理できたらTRUE
+ */
+//------------------------------------------------------------------
+
+BOOL GFL_NET_KeyMain(NetKeyMainFunc keyMain)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    int i;
+
+    if(!GFL_NET_SystemIsKeySharing()){
+        return FALSE;
+    }
+    
+    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
+        if(pNet->pKey[i]){
+            u16 key;
+            if(GFL_NET_SystemGetKey(i, &key)){
+                keyMain(pNet->pKey[i], key);
+            }
+        }
+    }
+}
+
+// ＵＩと同じものを使用するために ここだけで公開
+extern int GFI_UI_KEY_GetCont( const UI_KEYSYS* pKey );
+extern int GFI_UI_KEY_GetTrg( const UI_KEYSYS* pKey );
+
+//==============================================================================
+/**
+ * @brief  ネットワーク上の キートリガゲット
+ * @param  none
+ * @return  キートリガ
+ */
+//==============================================================================
+int GFL_NET_KEY_GetTrg( int netID )
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    if(GFL_NET_SystemIsKeySharing()){
+        if(pNet->pKey[netID]){
+            return GFI_UI_KEY_GetTrg( pNet->pKey[netID] );
+        }
+        else{
+            return 0;
+        }
+    }
+    return GFL_UI_KEY_GetTrg();
+}
+
+//==============================================================================
+/**
+ * @brief  ネットワーク上の キーコントゲット
+ * @param  none
+ * @return  キーコント
+ */
+//==============================================================================
+int GFL_NET_KEY_GetCont( int netID )
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    if(GFL_NET_SystemIsKeySharing()){
+        if(pNet->pKey[netID]){
+            return GFI_UI_KEY_GetCont( pNet->pKey[netID] );
+        }
+        else{
+            return 0;
+        }
+    }
+    return GFL_UI_KEY_GetCont();
+}
+
 
 //------------------------------------------------------------------
 /**

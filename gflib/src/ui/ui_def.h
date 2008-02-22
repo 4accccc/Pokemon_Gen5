@@ -10,15 +10,6 @@
 #ifndef __UI_DEF_H__
 #define	__UI_DEF_H__
 
-//------------------------------------------------------------------
-/**
- * @brief	定義
- */
-//------------------------------------------------------------------
-typedef struct _UI_TPSYS  UI_TPSYS;   ///< タッチパネル構造体定義
-typedef struct _UI_KEYSYS  UI_KEYSYS; ///< キー構造体定義
-typedef struct _UI_TPAUTOSYS UI_TPAUTOSYS;  ///< 
-
 
 //------------------------------------------------------------------
 /**
@@ -256,20 +247,20 @@ extern void GFI_UI_KEY_SetControlModeTbl(UISYS* pUI, const GFL_UI_KEY_CUSTOM_TBL
 //==============================================================================
 /**
  * @brief キートリガゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]   pKey     ユーザーインターフェイスハンドルのポインタ
  * @return  キートリガ
  */
 //==============================================================================
-extern GFI_UI_KEY_GetTrg( const UISYS* pUI );
+extern GFI_UI_KEY_GetTrg( const UI_KEYSYS* pKey );
 
 //==============================================================================
 /**
  * @brief キーコントゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]   pKey     ユーザーインターフェイスハンドルのポインタ
  * @return  キーコント
  */
 //==============================================================================
-extern GFI_UI_KEY_GetCont( const UISYS* pUI );
+extern GFI_UI_KEY_GetCont( const UI_KEYSYS* pKey );
 
 //==============================================================================
 /**

@@ -178,24 +178,22 @@ static BOOL _commSystemInit(int packetSizeMax, HEAPID heapID)
         int parentSize = _getUserMaxSendByteParent();
         
         NET_PRINT("_COMM_WORK_SYSTEM size %d \n", sizeof(_COMM_WORK_SYSTEM));
-        _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
-        MI_CpuClear8(_pComm, sizeof(_COMM_WORK_SYSTEM));
-//        _pComm->pTool = GFL_NET_Tool_sysInit(heapID, machineMax);
+        _pComm = (_COMM_WORK_SYSTEM*)GFL_HEAP_AllocClearMemory(heapID, sizeof(_COMM_WORK_SYSTEM));
         
         _pComm->packetSizeMax = packetSizeMax + 64;
         _pComm->midSizeMax = packetSizeMax * _MIDDLE_BUFF_NUM + 16;
         
-        _pComm->pRecvBufRing = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax*2); ///< 子機が受け取るバッファ
-        _pComm->pTmpBuff = GFL_HEAP_AllocMemory(heapID, _pComm->packetSizeMax);  ///< 受信受け渡しのための一時バッファ
-        _pComm->pServerRecvBufRing = GFL_HEAP_AllocMemory(heapID, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする
-//        _pComm->pMidRecvBufRing = GFL_HEAP_AllocMemory(heapID, machineMax * _pComm->midSizeMax);   ///< 受け取るバッファをバックアップする DS専用
+        _pComm->pRecvBufRing = GFL_HEAP_AllocClearMemory(heapID, _pComm->packetSizeMax*2); ///< 子機が受け取るバッファ
+        _pComm->pTmpBuff = GFL_HEAP_AllocClearMemory(heapID, _pComm->packetSizeMax);  ///< 受信受け渡しのための一時バッファ
+        _pComm->pServerRecvBufRing = GFL_HEAP_AllocClearMemory(heapID, machineMax * _pComm->packetSizeMax);   ///< 受け取るバッファをバックアップする
+//        _pComm->pMidRecvBufRing = GFL_HEAP_AllocClearMemory(heapID, machineMax * _pComm->midSizeMax);   ///< 受け取るバッファをバックアップする DS専用
         // キューの初期化
 
 
-        _pComm->sSendBuf = GFL_HEAP_AllocMemory(heapID, _getUserMaxSendByte()); 
-        _pComm->sSendBufRing = GFL_HEAP_AllocMemory(heapID, _getUserMaxSendByte()*_SEND_RINGBUFF_FACTOR_CHILD);
-        _pComm->sSendServerBuf = GFL_HEAP_AllocMemory(heapID, parentSize);
-        _pComm->sSendServerBufRing = GFL_HEAP_AllocMemory(heapID, parentSize * _SEND_RINGBUFF_FACTOR_PARENT);
+        _pComm->sSendBuf = GFL_HEAP_AllocClearMemory(heapID, _getUserMaxSendByte()); 
+        _pComm->sSendBufRing = GFL_HEAP_AllocClearMemory(heapID, _getUserMaxSendByte()*_SEND_RINGBUFF_FACTOR_CHILD);
+        _pComm->sSendServerBuf = GFL_HEAP_AllocClearMemory(heapID, parentSize);
+        _pComm->sSendServerBufRing = GFL_HEAP_AllocClearMemory(heapID, parentSize * _SEND_RINGBUFF_FACTOR_PARENT);
 
         
         GFL_NET_QueueManagerInitialize(&_pComm->sendQueueMgr, _SENDQUEUE_NUM_MAX, &_pComm->sendRing, heapID);
@@ -831,30 +829,35 @@ static void _dataDsStep(void)
         {
             mcSize = _getUserMaxSendByte();
             machineMax = _getUserMaxNum();
-            OS_TPrintf("machineMax %d\n",machineMax);
             for(index = 0; index < machineMax ; index++){ // 受信コールバック
+                u8 header;
                 u8* adr = (u8*)WH_GetSharedDataAdr(index);
                 if(adr==NULL){
                     continue;
                 }
-                GFL_NET_SystemDump_Debug(adr,8,"DS");
-                if(adr[0] == _INVALID_HEADER){
+                header = *adr;
+                adr++;
+                _pComm->key[index] = *adr;
+                _pComm->key[index] = _pComm->key[index] << 8;
+                adr++;
+                _pComm->key[index] += *adr;
+
+                if(header == _INVALID_HEADER){
                     continue;
                 }
-                //adr += GFL_NET_DATA_HEADER;      // ヘッダー１バイト読み飛ばす + Bitmapでーた + サイズデータ
-                OS_TPrintf("Step %d\n",index);
-                if((_pComm->bFirstCatch[index]) && (adr[0] & _SEND_NEXT)){ // まだ一回もデータをもらったことがない状態なのに連続データだった
+                if((_pComm->bFirstCatch[index]) && (header & _SEND_NEXT)){ // まだ一回もデータをもらったことがない状態なのに連続データだった
                     NET_PRINT("連続データ parent %d \n",index);
                     continue;
                 }
                 adr++;
-                GFL_NET_RingPuts(&_pComm->recvServerRing[index], adr, mcSize-1);
+                GFL_NET_RingPuts(&_pComm->recvServerRing[index], adr, mcSize-3);
                 _pComm->bFirstCatch[index] = FALSE;
             }
         }
     }
     else{  //同期できなかった=受け取れてない
         _pComm->bDSSendOK=FALSE;
+//        NET_PRINT("DS同期FALSE\n");
     }
 }
 
@@ -1340,12 +1343,11 @@ static BOOL _setSendData(u8* pSendBuff)
         pSendBuff[0] = _SEND_NEXT;  // 一回で送れない場合
     }
     _pComm->bNextSendData = FALSE;
-#if 0
-    if(GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgr) && (pInit->bMPMode)){
-        pSendBuff[0] |= _SEND_NO_DATA;  // 空っぽなら何も送らない
+    {
+        u16 keyData = PAD_Read();
+        pSendBuff[1] = ((keyData>>8) & 0xff);
+        pSendBuff[2] = ((keyData   ) & 0xff);
     }
-#endif
-    
     if(GFL_NET_QueueIsEmpty(&_pComm->sendQueueMgr)){
         pSendBuff[0] = _INVALID_HEADER;  // 空っぽなら何も送らない
         return FALSE;  // 送るものが何も無い
@@ -1353,7 +1355,7 @@ static BOOL _setSendData(u8* pSendBuff)
     else{
         SEND_BUFF_DATA buffData;
         buffData.size = mcSize - 1;
-        buffData.pData = &pSendBuff[1];
+        buffData.pData = &pSendBuff[3];
         if(!GFL_NET_QueueGetData(&_pComm->sendQueueMgr, &buffData, TRUE)){
             _pComm->bNextSendData = TRUE;
         }
@@ -1497,7 +1499,7 @@ static void _endCallBack(int command,int size,void* pTemp, _RECV_COMMAND_PACK* p
 
     if(pNetIni->bCRC){
         GF_ASSERT(pRecvComm->crc==GFL_STD_CrcCalc(pTemp, size));
-        OS_TPrintf("crc%d\n",pRecvComm->crc);
+//        OS_TPrintf("crc%d\n",pRecvComm->crc);
     }
 
     GFI_NET_COMMAND_CallBack(pRecvComm->sendID, pRecvComm->recvID, command, size, pTemp);
@@ -2101,5 +2103,61 @@ void GFL_NET_SystemResetQueue_Server(void)
 GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID)
 {
     return _pComm->pNetHandle[NetID];
+}
+
+//==============================================================================
+/**
+ * @brief   データシェアリングが成功したかどうか
+ * @retval  TRUE  データシェアリング成功
+ * @retval  FALSE データシェアリング失敗
+ */
+//==============================================================================
+
+BOOL GFL_NET_SystemCheckDataSharing(void)
+{
+    if(_pComm){
+        GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
+        if(!pInit->bMPMode && !pInit->bWiFi){
+            return _pComm->bDSSendOK;
+        }
+    }
+    return TRUE;
+}
+
+//==============================================================================
+/**
+ * @brief   キーシェアリング機能でキーを得る
+ * @retval  TRUE  データシェアリング成功
+ * @retval  FALSE データシェアリング失敗
+ */
+//==============================================================================
+
+BOOL GFL_NET_SystemGetKey(int no, u16* key)
+{
+    if(_pComm){
+        *key = _pComm->key[no];
+        return TRUE;
+    }
+    return FALSE;
+}
+
+//==============================================================================
+/**
+ * @brief   キーシェアリングをしているのかどうか
+ * @retval  TRUE  しています
+ * @retval  FALSE していません
+ */
+//==============================================================================
+
+BOOL GFL_NET_SystemIsKeySharing(void)
+{
+    if(_pComm){
+        GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
+        if(!pInit->bMPMode && !pInit->bWiFi){
+            return TRUE;
+        }
+    }
+    return FALSE;
+
 }
 

@@ -12,6 +12,7 @@
 
 #include "ui.h"
 #include "ui_def.h"
+#include "net.h"
 
 //==============================================================================
 //
@@ -74,13 +75,8 @@ UI_KEYSYS* GFL_UI_KEY_Init(const HEAPID heapID)
  */
 //==============================================================================
 
-static void GFI_UI_KEY_Main(UISYS* pUI)
+static void GFI_UI_KEY_Main(UI_KEYSYS* pKey, u16 keyData)
 {
-	TPData	tpTemp;
-	TPData	tpDisp;
-	int	keyData;
-    UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
-
 	// ふたが閉まっている場合は全ての入力をなしにする
 	if(PAD_DetectFold()){
 	  pKey->trg	= 0;
@@ -89,9 +85,7 @@ static void GFI_UI_KEY_Main(UISYS* pUI)
 	  return;
 	}
 
-	keyData = PAD_Read();
-	
-	pKey->trg_org = keyData & (keyData ^ pKey->cont_org);	// トリガ 入力
+    pKey->trg_org = keyData & (keyData ^ pKey->cont_org);	// トリガ 入力
     pKey->repeat_org = keyData & (keyData ^ pKey->cont_org);        // リピート 入力
 
     if((keyData!=0) && (pKey->cont_org==keyData)){
@@ -122,7 +116,14 @@ static void GFI_UI_KEY_Main(UISYS* pUI)
 
 void GFL_UI_KEY_Main(void)
 {
-    GFI_UI_KEY_Main(_UI_GetUISYS());
+    int i=0;
+    u16 keyData;
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+
+    keyData = PAD_Read();
+    GFI_UI_KEY_Main(pKey, keyData);
+    
+    GFL_NET_KeyMain(&GFI_UI_KEY_Main);
 }
 
 //==============================================================================
@@ -279,9 +280,8 @@ void GFL_UI_KEY_SetControlModeTbl(const GFL_UI_KEY_CUSTOM_TBL* pTbl )
  * @return  キートリガ
  */
 //==============================================================================
-int GFI_UI_KEY_GetTrg( const UISYS* pUI )
+int GFI_UI_KEY_GetTrg( const UI_KEYSYS* pKey )
 {
-    UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->trg;
 }
 
@@ -294,19 +294,19 @@ int GFI_UI_KEY_GetTrg( const UISYS* pUI )
 //==============================================================================
 int GFL_UI_KEY_GetTrg( void )
 {
-    return GFI_UI_KEY_GetTrg(_UI_GetUISYS());
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+    return GFI_UI_KEY_GetTrg( pKey);
 }
 
 //==============================================================================
 /**
  * @brief キーコントゲット
- * @param[in]   pUI     ユーザーインターフェイスハンドルのポインタ
+ * @param[in]   pKey     ユーザーインターフェイスハンドルのポインタ
  * @return  キーコント
  */
 //==============================================================================
-int GFI_UI_KEY_GetCont( const UISYS* pUI )
+int GFI_UI_KEY_GetCont( const UI_KEYSYS* pKey )
 {
-    UI_KEYSYS* pKey = _UI_GetKEYSYS(pUI);
 	return pKey->cont;
 }
 
@@ -319,7 +319,8 @@ int GFI_UI_KEY_GetCont( const UISYS* pUI )
 //==============================================================================
 int GFL_UI_KEY_GetCont( void )
 {
-     return GFI_UI_KEY_GetCont( _UI_GetUISYS() );
+    UI_KEYSYS* pKey = _UI_GetKEYSYS(_UI_GetUISYS());
+    return GFI_UI_KEY_GetCont( pKey );
 }
 
 //==============================================================================

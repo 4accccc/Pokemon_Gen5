@@ -10,6 +10,8 @@
 #define __NET_H__
 
 
+#include "ui.h"
+
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_WIFI    (0)   ///< WIFI‚ðƒQ[ƒ€‚ÅŽg—p‚·‚éê‡ ON
 #else
@@ -130,6 +132,7 @@ typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiƒ†[ƒU[ƒf[ƒ^‚ðƒZ[ƒu‚
 typedef void (*NetWifiMargeFrinedDataFunc)(int baseFrinedNo, int delFriendNo);  ///< WiFiƒtƒŒƒ“ƒhƒf[ƒ^‚ðƒ}[ƒW‚·‚éó‹µŽž‚ÉŒÄ‚ÔŠÖ”
 typedef const char** (*NetIconGraTableFunc)(void);     ///< ’ÊMƒAƒCƒRƒ“‚Ìƒtƒ@ƒCƒ‹ARCƒe[ƒuƒ‹‚ð•Ô‚·ŠÖ”
 typedef void (*NetIconGraNoBuffFunc)(int* pNoBuff);  ///< ’ÊMƒAƒCƒRƒ“‚Ìƒtƒ@ƒCƒ‹ARC‚Ì”Ô†‚ð•Ô‚·ŠÖ”
+typedef void (*NetKeyMainFunc)(UI_KEYSYS* pKey, u16 keyData);  ///< ƒL[“à•”ˆ—
 
 
 
@@ -215,10 +218,11 @@ extern BOOL GFL_NET_Exit(void);
 //==============================================================================
 /**
  * @brief   ’ÊM‚ÌƒƒCƒ“ŽÀsŠÖ”
- * @return  none
+ * @retval  TRUE  ˆ—‚ðs‚Á‚Ä‚æ‚¢ê‡
+ * @retval  FALSE “¯Šú‚ªŽæ‚ê‚Ä‚¢‚È‚¢‚Ì‚Åˆ—‚ðs‚í‚È‚¢ê‡
  */
 //==============================================================================
-extern void GFL_NET_Main(void);
+extern BOOL GFL_NET_Main(void);
 
 //-----ƒr[ƒRƒ“ŠÖ˜A
 //==============================================================================
@@ -657,6 +661,51 @@ extern void GFL_NET_ExitIchneumon(void);
  */
 //==============================================================================
 extern u16 GFL_NET_WL_GetRssi(int index);
+//==============================================================================
+/**
+ * @brief   ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO‚ª¬Œ÷‚µ‚½‚©‚Ç‚¤‚©
+ * @retval  TRUE  ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO¬Œ÷
+ * @retval  FALSE ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒOŽ¸”s
+ */
+//==============================================================================
+extern BOOL GFL_NET_SystemCheckDataSharing(void);
+
+//==============================================================================
+/**
+ * @brief   ƒL[ƒVƒFƒAƒŠƒ“ƒO‚ð‚µ‚Ä‚¢‚é‚Ì‚©‚Ç‚¤‚©
+ * @retval  TRUE  ‚µ‚Ä‚¢‚Ü‚·
+ * @retval  FALSE ‚µ‚Ä‚¢‚Ü‚¹‚ñ
+ */
+//==============================================================================
+extern BOOL GFL_NET_SystemIsKeySharing(void);
+
+//------------------------------------------------------------------
+/**
+ * @brief   ƒlƒbƒgƒ[ƒNƒL[ƒVƒFƒAƒŠƒ“ƒOƒƒCƒ“ŠÖ”
+ * @param   NetKeyMainFunc		’ÊMƒL[ˆ—
+ * @retval  ‚¤‚Ü‚­ˆ—‚Å‚«‚½‚çTRUE
+ */
+//------------------------------------------------------------------
+extern BOOL GFL_NET_KeyMain(NetKeyMainFunc keyMain);
+
+
+//==============================================================================
+/**
+ * @brief  ƒlƒbƒgƒ[ƒNã‚Ì ƒL[ƒgƒŠƒKƒQƒbƒg
+ * @param  netID    ƒlƒbƒgƒ[ƒNID 
+ * @return  ƒL[ƒgƒŠƒK
+ */
+//==============================================================================
+extern int GFL_NET_KEY_GetTrg( int netID );
+
+//==============================================================================
+/**
+ * @brief  ƒlƒbƒgƒ[ƒNã‚Ì ƒL[ƒRƒ“ƒgƒQƒbƒg
+ * @param  netID    ƒlƒbƒgƒ[ƒNID 
+ * @return  ƒL[ƒRƒ“ƒg
+ */
+//==============================================================================
+extern int GFL_NET_KEY_GetCont( int netID );
 
 
 extern void debugcheck(u32* data,int size );

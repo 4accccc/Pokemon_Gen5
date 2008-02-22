@@ -16,7 +16,7 @@
 extern void GFLUser_Init(void);
 
 //GFL関連Main呼び出し
-extern void GFLUser_Main(void);
+extern BOOL GFLUser_Main(void);
 
 //GFL関連描画処理呼び出し
 extern void GFLUser_Display(void);

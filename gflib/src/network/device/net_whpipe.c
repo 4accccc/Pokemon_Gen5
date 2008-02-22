@@ -1063,8 +1063,7 @@ BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
         return FALSE;
     }
     
-    if ((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (WH_GetSystemState() == WH_SYSSTATE_DATASHARING)
-        || (WH_GetSystemState() == WH_SYSSTATE_KEYSHARING)) {
+    if ((WH_GetSystemState() == WH_SYSSTATE_CONNECTED) || (WH_GetSystemState() == WH_SYSSTATE_DATASHARING)) {
         return TRUE;
     }
     return FALSE;

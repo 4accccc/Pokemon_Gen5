@@ -148,6 +148,186 @@ static	const	char	*_graphicFileTable[]={
 	"src/sample_graphic/radar.narc",
 };
 
+
+//----------------------------------------------よっしの卵キーシェアリング
+
+#include "key_yt_common.h"
+#include "key_title.h"
+#include "key_game.h"
+
+#include "testmode.h"
+
+#define	TCB_WORK_SIZE		(0x10000)
+#define	ACTIVE_TCB_MAX		(144)
+
+typedef	void	(*ytFunc)(GAME_PARAM *);
+
+static	const	char	*GraphicFileTable[]={
+	"src/sample_graphic/yossyegg.narc",
+	"src/sample_sound/yossy_egg.narc",
+	"src/sample_graphic/spa.narc",
+};
+
+static	void	game_init(GAME_PARAM *gp);
+
+extern	void	KEY_YT_Init3DTest(GAME_PARAM *gp);
+extern	void	KEY_YT_Main3DTest(GAME_PARAM *gp);
+extern	void	KEY_YT_InitBlockOut(GAME_PARAM *gp);
+extern	void	KEY_YT_MainBlockOut(GAME_PARAM *gp);
+
+//============================================================================================
+//
+//
+//		Jobテーブル
+//
+//
+//============================================================================================
+
+static	ytFunc	YT_JobTable[]={
+	KEY_YT_InitTitle,
+	KEY_YT_MainTitle,
+	KEY_YT_InitGame,
+	KEY_YT_MainGame,
+};
+
+//============================================================================================
+//
+//
+//		プロセスの定義
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスの初期化
+ *
+ * ここでヒープの生成や各種初期化処理を行う。
+ * 初期段階ではmywkはNULLだが、GFL_PROC_AllocWorkを使用すると
+ * 以降は確保したワークのアドレスとなる。
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	GAME_PARAM	*gp;
+
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP,HEAPID_OHNO_DEBUG,0x180000);
+	gp=GFL_PROC_AllocWork(proc, sizeof(GAME_PARAM), HEAPID_OHNO_DEBUG);
+
+	GFL_STD_MemClear(gp,sizeof(GAME_PARAM));
+
+	gp->heapID=HEAPID_OHNO_DEBUG;
+
+	KEY_YT_JobNoSet(gp,KEY_YT_InitTitleNo);
+
+	game_init(gp);
+
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスのメイン
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	GAME_PARAM	*gp=(GAME_PARAM *)mywk;
+
+	YT_JobTable[gp->job_no](gp);
+
+	return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	プロセスの終了処理
+ *
+ * 単に終了した場合、親プロセスに処理が返る。
+ * GFL_PROC_SysSetNextProcを呼んでおくと、終了後そのプロセスに
+ * 処理が遷移する。
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	return GFL_PROC_RES_FINISH;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		ゲームごとの初期化処理
+ */
+//------------------------------------------------------------------
+static	void	game_init(GAME_PARAM *gp)
+{
+	//TCB初期化
+	//タスクワーク確保
+	gp->tcb_work=GFL_HEAP_AllocMemory(GFL_HEAPID_APP,TCB_WORK_SIZE);
+	gp->tcbsys=GFL_TCB_Init(ACTIVE_TCB_MAX,gp->tcb_work);
+
+	//DMAシステム初期化
+	GFL_DMA_Init(GFL_HEAPID_APP);
+
+	//ARCシステム初期化
+	GFL_ARC_Init(&GraphicFileTable[0],1);
+
+	//FADEシステム初期化
+	GFL_FADE_Init(GFL_HEAPID_APP);
+
+	//タッチパネル初期化
+	GFL_UI_TP_Init(GFL_HEAPID_APP);
+
+	//セルアクター初期化
+	gp->clact = GFL_HEAP_AllocMemory( GFL_HEAPID_APP, sizeof(KEY_YT_CLACT) );
+
+	// セルアクターシステム初期化
+	// まずこの処理を行う必要があります。
+	{
+		static const GFL_CLSYS_INIT	param = {
+			// メインとサブのサーフェース左上座標を設定します。
+			// サーフェースのサイズは（256,192）にするのが普通なので、
+			// メンバには入れませんでした。
+			// 上下の画面をつなげて使用するときは、
+			// サブサーフェースの左上座標を(0, 192)などにする必要があると思います。
+			0, 0,		// メインサーフェースの左上座標（x,y）
+			0, 256,		// サブサーフェースの左上座標（x,y）
+			
+			// 今はフルにOAMAttrを使用する場合の設定
+			// 通信アイコンなどで0～3のOam領域を使えないときなどは、
+			// OAMAttr管理数設定を変更する必要があります。
+			1, 128-1,		// メインOAMマネージャのOamAttr管理数(開始No,管理数)
+			0, 128,		// サブOAMマネージャのOamAttr管理数(開始No,管理数)
+		};
+		GFL_CLACT_Init( &param, GFL_HEAPID_APP );
+	}
+
+	//サウンドデータロード
+//	GFL_SOUND_LoadArchiveData("src/sample_sound/yossy_egg.sdat");
+	GFL_SOUND_LoadArchiveData(1,0);
+	GFL_SOUND_LoadGroupData(GROUP_SE);
+	GFL_SOUND_LoadGroupData(GROUP_JINGLE);
+	gp->mus_level[MUS_LEVEL_JINGLE]=GFL_SOUND_SaveHeapState();
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		gp->job_noへの代入
+ */
+//------------------------------------------------------------------
+void	KEY_YT_JobNoSet(GAME_PARAM *gp,int job_no)
+{
+	gp->job_no=job_no;
+	gp->seq_no=0;
+}
+
+
+
+
+
+
+#define COMMENT_OHNO 0
+#if COMMENT_OHNO
+
 //------------------------------------------------------------------
 //  デバッグ用メイン関数
 //------------------------------------------------------------------
@@ -239,7 +419,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * p
     DebugOhnoExit();
 	return GFL_PROC_RES_FINISH;
 }
-
+#endif  //COMMENT_OHNO
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
