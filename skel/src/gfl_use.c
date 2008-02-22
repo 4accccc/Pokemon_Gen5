@@ -138,6 +138,15 @@ BOOL GFLUser_Main(void)
     BOOL bRet;
     
     if(bRet = GFL_NET_Main()){  //キーの処理の後すぐに通信を処理したい為ここに配置
+
+        // Vブランク期間で実行します。
+        // ただ、ユニットの描画が行われていないのに
+        // この関数を実行すると、描画しているOBJが消えてしまうため
+        // 割り込みないで呼ばないほうが良いかもしれません。
+        GFL_CLACT_VBlankFunc();
+        // 通信アイコンの描画のためにあります。通信自体は行っていません
+        GFL_NET_VBlankFunc();
+
         GFL_UI_Main();
         GFL_PROC_Main();
         GFL_FADE_Main();
@@ -209,13 +218,6 @@ void GFLUser_VIntr(void)
 {
 	GFL_TCB_Main(gfl_work->TCBSysVintr);
 	GFL_BG_VBlankFunc();
-	// Vブランク期間で実行します。
-	// ただ、ユニットの描画が行われていないのに
-	// この関数を実行すると、描画しているOBJが消えてしまうため
-	// 割り込みないで呼ばないほうが良いかもしれません。
-	GFL_CLACT_VBlankFunc();
-    // 通信アイコンの描画のためにあります。通信自体は行っていません
-    GFL_NET_VBlankFunc();
 
 	GFL_DMA_Main();
 	GFL_USE_VintrCounter++;

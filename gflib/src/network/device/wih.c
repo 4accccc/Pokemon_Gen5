@@ -557,7 +557,7 @@ typedef struct{
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 static void* _dWork_temp; //アライメントをそろえる為のバッファ
 
-#define DATASHARING_DOUBLEMODE (FALSE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
+#define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
 /* デバッグ出力フック関数 */
 static void (*wh_trace) (const char *, ...) =
