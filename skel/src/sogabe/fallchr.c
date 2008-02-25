@@ -1047,6 +1047,7 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 {
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
+	YT_PLAYER_STATUS	*ps2=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no^1];
 	int					height;
 	int					height_tbl[]={144-40,130-40,116-40,102-40,88-40,74-40,60-40,46-40,32-40};
 
@@ -1071,6 +1072,7 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
         u8 posy = height_tbl[height];
         YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
         YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
+		ps2->egg_fall_count=fcp->chr_count;
     }
     
 	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット

@@ -45,7 +45,8 @@ struct fall_chr_param{
 	u8			rotate_flag		:2;		//回転フラグ
 	u8			overturn_flag	:1;		//ひっくり返しフラグ
 	u8			egg_make_flag	:1;
-	u8							:4;		//連鎖落下中フラグ
+	u8			ikari_flag		:1;		//いかりキャラフラグ
+	u8							:3;		
 	u8			chr_count;		//タマゴキャラの時のはさんでいるタマゴの数
 	int			birth_wait;		//生まれるまでのウエイト
 };

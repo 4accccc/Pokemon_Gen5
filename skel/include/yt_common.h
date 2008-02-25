@@ -141,6 +141,7 @@ typedef struct{
 	u8									:7;
 	int				egg_make_count;
 	int				fall_count;
+	int				egg_fall_count;				//たまごが生まれたことによって降らせるキャラの数
 }YT_PLAYER_STATUS;
 
 //ゲームパラメータ構造体宣言

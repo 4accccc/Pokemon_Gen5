@@ -40,6 +40,7 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no);
 static	BOOL	YT_FallCheck(GAME_PARAM *gp,YT_PLAYER_STATUS *ps);
 static	void	YT_CheckFlag(GFL_TCB *tcb,void *work);
 static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int *kara_flag);
+static	int		YT_GetStopLineHeight(GAME_PARAM *gp,int player_no,int line_no);
 
 static	u16	RasterBuffer[256+90];
 static	int	raster_count=0;
@@ -490,28 +491,67 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 	int	line,type;
 	int	deka_flag=0,kara_flag=0;
 
-	YT_AdjAllVanishCheck(gp,player_no,&deka_flag,&kara_flag);
+	if(gp->ps[player_no].egg_fall_count==0){
 
-	while(i){
-		line=__GFL_STD_MtRand()%4;
-		if(gp->ps[player_no].ready[line][0]){
-			continue;
+		YT_AdjAllVanishCheck(gp,player_no,&deka_flag,&kara_flag);
+
+		while(i){
+			line=__GFL_STD_MtRand()%4;
+			if(gp->ps[player_no].ready[line][0]){
+				continue;
+			}
+			type=__GFL_STD_MtRand()%4;
+			//デカキャラは、確率を低くする
+			if((type==YT_CHR_TERESA)&&(deka_flag!=2)){
+				if((__GFL_STD_MtRand()%5==0)||(deka_flag==1)){
+					type=YT_CHR_DEKATERESA;
+				}
+			}
+			else{
+				//タマゴの殻発生確率
+				if((__GFL_STD_MtRand()%5==0)&&(kara_flag==0)){
+					type=YT_CHR_GREEN_EGG_U+__GFL_STD_MtRand()%4;
+				}
+			} gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
+			i--;
 		}
-		type=__GFL_STD_MtRand()%4;
-		//デカキャラは、確率を低くする
-		if((type==YT_CHR_TERESA)&&(deka_flag!=2)){
-			if((__GFL_STD_MtRand()%5==0)||(deka_flag==1)){
-				type=YT_CHR_DEKATERESA;
+	}
+	else{
+		int line_tbl[4]={0,1,2,3};
+		int	chr_no[4]={-1,-1,-1,-1};
+		int	cnt=0;
+		
+		for(i=0;i<4-1;i++){
+			for(line=i+1;line<4;line++){
+				if(YT_GetStopLineHeight(gp,player_no,line_tbl[i])>YT_GetStopLineHeight(gp,player_no,line_tbl[line])){
+					type=line_tbl[i];
+					line_tbl[i]=line_tbl[line];
+					line_tbl[line]=type;
+				}
 			}
 		}
-		else{
-			//タマゴの殻発生確率
-			if((__GFL_STD_MtRand()%5==0)&&(kara_flag==0)){
-				type=YT_CHR_GREEN_EGG_U+__GFL_STD_MtRand()%4;
+
+		for(i=0;i<4;i++){
+			if((line=YT_GetStopLineHeight(gp,player_no,i))!=0){
+				chr_no[i]=gp->ps[player_no].stop[i][line-1]->type;
+				if(chr_no[i]==YT_CHR_DEKATERESA){
+					chr_no[i]=YT_CHR_TERESA;
+				}
 			}
 		}
-		gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
-		i--;
+
+		i=gp->ps[player_no].egg_fall_count+2;
+		gp->ps[player_no].egg_fall_count=0;
+
+		while(i){
+			line=line_tbl[cnt%4];
+			type=__GFL_STD_MtRand()%4;
+			if(type==chr_no[line]) continue;
+			gp->ps[player_no].ready[line][cnt/4]=YT_InitFallChr(gp,player_no,type,line);
+			gp->ps[player_no].ready[line][cnt/4]->ikari_flag=1;
+			i--;
+			cnt++;
+		}
 	}
 }
 
@@ -867,6 +907,27 @@ static	void	YT_AdjAllVanishCheck(GAME_PARAM *gp,int player_no,int *deka_flag,int
 	if(kara_count==0){
 		kara_flag[0]=1;
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	つみあがっているキャラの高さを取得
+ *
+ *	@param[in]	gp			ゲームパラメータ構造体
+ *	@param[in]	player_no	チェックするプレーヤーナンバー
+ *	@param[in]	line_no		チェックするLineNo
+ */
+//-----------------------------------------------------------------------------
+static	int		YT_GetStopLineHeight(GAME_PARAM *gp,int player_no,int line_no)
+{
+	int	height;
+
+	for(height=0;height<YT_HEIGHT_MAX;height++){
+		if(gp->ps[player_no].stop[line_no][height]==0){
+			break;
+		}
+	}
+	return height;
 }
 
 #ifndef	DMA_RASTER
