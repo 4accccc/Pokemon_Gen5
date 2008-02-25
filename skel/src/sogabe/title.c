@@ -102,7 +102,7 @@ void	YT_InitTitle(GAME_PARAM *gp)
 		GFL_BG_SetBGControl(GFL_BG_FRAME3_S, &TextBgCntDat[3], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME3_S );
 
-		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG0, VISIBLE_ON );
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_ON );
 
 		// OBJマッピングモード
 		GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
