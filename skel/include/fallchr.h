@@ -102,5 +102,14 @@ GLOBAL	void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps);
 //-----------------------------------------------------------------------------
 GLOBAL void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count);
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ヨッシーが相手にキャラを送ってきた
+ *	
+ *	@param  player_no 相手側番号
+ *	@param  num   追加数
+ */
+//-----------------------------------------------------------------------------
+GLOBAL void YT_NetFallchrAddChar(GAME_PARAM *gp,u8 player_no, u8 num);
 
 #endif	__FALL_CHR_H__

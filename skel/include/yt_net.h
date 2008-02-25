@@ -24,6 +24,7 @@ extern void YT_NET_SendPlayerScreenMake(int player_no, int old_line_no, int new_
 extern void YT_NET_SendPlayerRotateScreenMake(u8 player_no, u8 line_no, u8 flag,NET_PARAM* pNet);
 extern void YT_NET_PlaySE(int se_no, NET_PARAM* pNet);
 extern void YT_NET_SendGameResult(int player, int bWin, NET_PARAM* pNet);
+extern void YT_NetSendAddChar(int player, int num, NET_PARAM* pNet);
 
 
 #endif	__YT_NET_H__

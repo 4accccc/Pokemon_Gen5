@@ -39,6 +39,7 @@ static void _recvScreenMakeRot(const int netID, const int size, const void* pDat
 static void _recvPlaySe(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvPlayGameover(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _recvPlayEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _recvAddChar(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 //通信用構造体
 struct _NET_PARAM
@@ -108,6 +109,7 @@ enum CommCommandBattle_e {
     YT_NET_COMMAND_PLAY_SE,
     YT_NET_COMMAND_GAMERESULT,     ///< ゲーム結果
     YT_NET_COMMAND_END,
+    YT_NET_COMMAND_ADDCHAR,
     //------------------------------------------------ここまで
     YT_NET_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
@@ -192,6 +194,14 @@ typedef struct {
     u8 clactNo;
 } COMM_DELETE_ST;
 
+//-----------------------------------------------------------------------------
+// @brief	お邪魔キャラ追加
+//-----------------------------------------------------------------------------
+typedef struct {
+    u8 player;
+    u8 num;
+} COMM_ADD_CHAR_ST;
+
 
 
 // ローカル通信テーブル
@@ -207,7 +217,7 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_recvPlaySe, GFL_NET_COMMAND_SIZE(sizeof(int)), NULL},
     {_recvPlayGameover, GFL_NET_COMMAND_SIZE(sizeof(COMM_RESULT_ST)), NULL},
     {_recvPlayEnd, GFL_NET_COMMAND_SIZE(0), NULL},
-    
+    {_recvAddChar, GFL_NET_COMMAND_SIZE(sizeof(COMM_ADD_CHAR_ST)), NULL},
 };
 
 
@@ -552,6 +562,28 @@ static void _recvCLACTPlayerAnim(const int netID, const int size, const void* pD
     else{
         YT_NetPlayerChrTrans(gp, pNet->pp, pAnim->player_no, pAnim->anm_no, pAnim->line_no, pAnim->rot, pAnim->pat_no);
     }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プレイヤーアニメーション命令が送られてきた
+ */
+//-----------------------------------------------------------------------------
+
+static void _recvAddChar(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    const COMM_ADD_CHAR_ST* pAdd = pData;
+    GAME_PARAM* gp = pWork;
+    NET_PARAM* pNet = gp->pNetParam;
+
+    if(pNet->pNetHandle[1]!=pNetHandle){
+        return;
+    }
+    if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
+        return;
+    }
+
+    YT_NetFallchrAddChar(gp, pAdd->player, pAdd->num);
 }
 
 
@@ -900,4 +932,18 @@ void YT_NET_SendGameResult(int player, int bWin, NET_PARAM* pNet)
     }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	お邪魔キャラを送る
+ */
+//-----------------------------------------------------------------------------
+void YT_NetSendAddChar(int player, int num, NET_PARAM* pNet)
+{
+    COMM_ADD_CHAR_ST sAdd;
+    if(pNet){
+        sAdd.player = player;
+        sAdd.num = num;
+        GFL_NET_SendData(pNet->pNetHandle[1], YT_NET_COMMAND_ADDCHAR, &sAdd);
+    }
+}
 

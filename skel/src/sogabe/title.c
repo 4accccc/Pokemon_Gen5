@@ -170,11 +170,11 @@ void	YT_MainTitle(GAME_PARAM *gp)
 //			GFL_BG_ClearFrame(GFL_BG_FRAME3_M);
 //			GFL_DISP_ClearVRAM();
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){ // Lボタンが押された
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){ // Rボタンが押された
             YT_NET_Init(gp, FALSE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_CHILD;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){ // Rボタンが押された
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){ // Lボタンが押された
             YT_NET_Init(gp, TRUE);  // 通信開始
 			gp->seq_no = YT_SEQ_TITLE_NET_PARENT;
 		}

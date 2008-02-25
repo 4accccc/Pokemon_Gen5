@@ -1072,7 +1072,8 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
         u8 posy = height_tbl[height];
         YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
         YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
-		ps2->egg_fall_count=fcp->chr_count;
+        YT_NetSendAddChar(fcp->player_no^1, fcp->chr_count,gp->pNetParam);
+        //		ps2->egg_fall_count=fcp->chr_count;
     }
     
 	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット
@@ -1100,6 +1101,24 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 		}
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ヨッシーが相手にキャラを送ってきた
+ *	
+ *	@param  player_no 相手側番号
+ *	@param  num   追加数
+ */
+//-----------------------------------------------------------------------------
+void YT_NetFallchrAddChar(GAME_PARAM *gp,u8 player_no, u8 num)
+{
+	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[player_no];
+
+   	ps->egg_fall_count = num + 2;  //現在追加数がマジックナンバーになってしまっている
+}
+
+
+
 
 void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count)
 {
