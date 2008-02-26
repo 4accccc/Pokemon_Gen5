@@ -1118,7 +1118,12 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 					chr_count+=2;
 					break;
 				default:
-					chr_count++;
+					if(fcp_p->ikari_flag){
+						chr_count+=2;
+					}
+					else{
+						chr_count++;
+					}
 					break;
 				}
 			}

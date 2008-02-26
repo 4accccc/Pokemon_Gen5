@@ -544,7 +544,7 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 			}
 		}
 
-		i=gp->ps[player_no].egg_fall_count+2;
+		i=gp->ps[player_no].egg_fall_count+1;
 		gp->ps[player_no].egg_fall_count=0;
 
 		while(i){
