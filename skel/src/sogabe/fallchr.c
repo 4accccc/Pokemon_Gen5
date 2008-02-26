@@ -1206,7 +1206,7 @@ void YT_NetFallchrAddChar(GAME_PARAM *gp,u8 player_no, u8 num)
 {
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[player_no];
 
-   	ps->egg_fall_count = num + 2;  //現在追加数がマジックナンバーになってしまっている
+   	ps->egg_fall_count = num;
 }
 
 
