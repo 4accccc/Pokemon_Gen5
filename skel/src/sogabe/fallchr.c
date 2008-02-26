@@ -1158,8 +1158,8 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
         u8 posy = height_tbl[height];
         YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
         YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
-//		ps2->egg_fall_count=fcp->chr_count;
-		ps->egg_fall_count=fcp->chr_count;
+		ps2->egg_fall_count=fcp->chr_count;
+//		ps->egg_fall_count=fcp->chr_count;
         YT_NetSendAddChar(fcp->player_no^1, fcp->chr_count,gp->pNetParam);
     }
     
