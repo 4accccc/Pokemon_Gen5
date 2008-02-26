@@ -131,7 +131,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 		setup.getGroundVecN_func = GetGroundPlaneVecN;
 		setup.getGroundHeight_func = GetGroundPlaneHeight;
 
-		setup.gravityMove = 9.8f * FX32_ONE/80;
+		setup.gravityMove = 9.8f * FX32_ONE/86;
 		setup.gravityFall = 9.8f * FX32_ONE/30;
 		setup.planeMarginTheta = 0x0800;
 		setup.absorbVal = 0;
@@ -732,7 +732,7 @@ static void commandControl( PLAYER_CONTROL* pc )
 				slideEndFlag = TRUE;
 			} else {
 				GetMoveVecPHMV( pc->calcPHMV, &vecMove );
-				if( vecMove.y > 0 ){
+				if( vecMove.y >= 0 ){
 					//すべり中にもかかわらず上に進んでいるとき
 					//次のアクションがあるまで、ループ回避のため一時的に計算を止める
 					pc->calcMoveEnable = FALSE;
