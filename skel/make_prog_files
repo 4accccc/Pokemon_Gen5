@@ -15,6 +15,7 @@ SRCS	+=		testmode.c \
                 sogabe/yt_net.c \
                 sogabe/multi_boot.c \
                 sogabe/3d_test.c \
+				tetsu/game/calc_ph.c \
 				tetsu/game/gamemain.c \
 				tetsu/game/setup.c \
 				tetsu/game/act3d.c \

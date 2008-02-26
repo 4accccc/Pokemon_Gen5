@@ -615,7 +615,7 @@ typedef struct {
 	fx32			length;
 	fx32			wait;
 	GFL_EMIT_PTR	effectEmitter;
-	CALC_PH_MV*		calcPHMV;
+//	CALC_PH_MV*		calcPHMV;
 }SKILL_STAFF_WORK;
 
 static void StaffInit( SKILL_CONTROL* sc, SKILL_WORK* sw )

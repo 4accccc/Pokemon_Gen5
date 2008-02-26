@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include "gflib.h"
+#include "calc_ph.h"
 
 #include "setup.h"
 #include "player_cont.h"
@@ -126,6 +127,9 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	Set3DactDrawSw( pc->sceneAct, TRUE );
 	{
 		PHMV_SETUP setup;
+
+		setup.getGroundVecN_func = GetGroundPlaneVecN;
+		setup.getGroundHeight_func = GetGroundPlaneHeight;
 
 		setup.gravityMove = 9.8f * FX32_ONE/80;
 		setup.gravityFall = 9.8f * FX32_ONE/30;
