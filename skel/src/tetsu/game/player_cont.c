@@ -69,6 +69,7 @@ struct _PLAYER_CONTROL {
 #endif
 	SCENE_ACT*				sceneAct;
 	CALC_PH_MV*				calcPHMV;
+	BOOL					calcMoveEnable;
 
 	u16						work[8];
 };
@@ -91,17 +92,6 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->targetAct = targetAct;
 	pc->netID = netID;
 	pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
-	{
-		PHMV_SETUP setup;
-
-		setup.gravityMove = 9.8f * FX32_ONE/86;
-		setup.gravityFall = 9.8f * FX32_ONE/30;
-		setup.planeMarginTheta = 0x1000;
-		setup.absorbVal = 0;
-		setup.enableMoveTheta = 0x3800;
-
-		pc->calcPHMV = CreateCalcPhisicsMoving( heapID, &setup );
-	}
 
 	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
@@ -134,6 +124,18 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 	pc->status = statusDefault;
 
 	Set3DactDrawSw( pc->sceneAct, TRUE );
+	{
+		PHMV_SETUP setup;
+
+		setup.gravityMove = 9.8f * FX32_ONE/80;
+		setup.gravityFall = 9.8f * FX32_ONE/30;
+		setup.planeMarginTheta = 0x0800;
+		setup.absorbVal = 0;
+		setup.enableMoveTheta = 0x3800;
+
+		pc->calcPHMV = CreateCalcPhisicsMoving( heapID, &setup );
+		pc->calcMoveEnable = TRUE;
+	}
 	{
 		int i;
 		for( i=0; i<8; i++ ){
@@ -289,15 +291,6 @@ void SetPlayerMoveCommand
 	VEC_Normalize( &tmpVec, &tmpVec );	//正規化
 
 	pc->moveVec = tmpVec;
-
-	//方向設定
-	rotVec.x = 0;
-	rotVec.y = FX_Atan2Idx( -pc->moveVec.z, pc->moveVec.x ) + 0x4000;
-	rotVec.z = 0;
-
-	pc->nowDirection = rotVec.y - 0x8000;
-
-	Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -494,6 +487,21 @@ static void directionSet( PLAYER_CONTROL* pc, u16 direction )
 }
 
 //------------------------------------------------------------------
+static void moveDirectionSet( PLAYER_CONTROL* pc )
+{
+	VecFx32	vecDir, rotVec;		
+
+	GetMoveDirPHMV( pc->calcPHMV, &vecDir );
+	//方向設定
+	rotVec.x = 0;
+	rotVec.y = FX_Atan2Idx( -vecDir.z, vecDir.x ) + 0x4000;
+	rotVec.z = 0;
+
+	pc->nowDirection = rotVec.y - 0x8000;
+	Set3DactRotate( pc->sceneAct, &rotVec );
+}
+
+//------------------------------------------------------------------
 static BOOL damageSet( PLAYER_CONTROL* pc )
 {
 	if( pc->status.hp == 0 ){
@@ -601,7 +609,7 @@ static void jumpControl( PLAYER_CONTROL* pc )
 		pc->subSeq++;
 		break;
 	case 1:
-		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, JUMP_SPEEDY, 0x2000 );
+		StartMovePHMV( pc->calcPHMV, &pc->moveVec, JUMP_SPEEDY, 0x2000 );
 		anmSet( pc, ACTANM_CMD_JUMPUP );
 		pc->subSeq++;
 		break;
@@ -609,12 +617,50 @@ static void jumpControl( PLAYER_CONTROL* pc )
 		if( CheckOnFloorPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE ){
 			ResetMovePHMV( pc->calcPHMV );
 			anmSet( pc, ACTANM_CMD_JUMP_END );
-
-			pc->contCommand = PCC_STAY;
-			pc->forceMoveing = FALSE;
-			pc->subSeq = 0;
+			pc->subSeq++;
 		}
 		break;
+	case 3:
+		pc->contCommand = PCC_STAY;
+		pc->forceMoveing = FALSE;
+		pc->subSeq = 0;
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+static void moveControl( PLAYER_CONTROL* pc )
+{
+	VecFx32 vecSpeed;
+	fx32	scalar, valSpeed;
+
+	//移動制御
+	if( pc->calcMoveEnable == TRUE ){
+		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
+		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+
+		if( pc->forceMoveing != TRUE ){
+			if(( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE )
+				&&( GetMoveSpeedPHMV( pc->calcPHMV ) < RUN_SPEED / 4 )){
+				//斜面にいるとき、一定速度以下なら停止させる→すべり状態
+				pc->contCommand = PCC_STAY;
+			}
+		}
+	}
+}
+
+//------------------------------------------------------------------
+static void keepSpeed( PLAYER_CONTROL* pc, fx32 keepSpeed, fx32 nowSpeed, fx32 addSpeed )
+{
+	fx32 speed0 = keepSpeed - addSpeed;
+	fx32 speed1 = keepSpeed + addSpeed;
+
+	if(( nowSpeed >= speed0 )&&( nowSpeed <= speed1 )){
+		SetMoveSpeedPHMV( pc->calcPHMV, keepSpeed );
+	} else if( nowSpeed < speed0 ){
+		AddMoveSpeedPHMV( pc->calcPHMV, addSpeed );
+	} else if( nowSpeed > speed1 ){
+		AddMoveSpeedPHMV( pc->calcPHMV, -addSpeed );
 	}
 }
 
@@ -628,25 +674,94 @@ static void commandControl( PLAYER_CONTROL* pc )
 	case PCC_NOP:
 		break;
 	case PCC_STAY:
-		ResetMovePHMV( pc->calcPHMV );
-		anmSet( pc, ACTANM_CMD_STAY );
+		if(	( pc->forceMoveing != TRUE )
+			&&( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE )
+			&&( pc->calcMoveEnable == TRUE )){
+			//移動可能状態で斜面にいるときすべり状態にする
+		
+			//すべり制御
+			ResetMovePHMV( pc->calcPHMV );
+			pc->forceMoveing = TRUE;
+			anmSet( pc, ACTANM_CMD_JUMPDOWN );
+			pc->contCommand = PCC_SLIDE;
+		} else {
+			ResetMovePHMV( pc->calcPHMV );
+			anmSet( pc, ACTANM_CMD_STAY );
+		}
 		break;
 	case PCC_JUMP:
 	case PCC_STAYJUMP:
+		pc->calcMoveEnable = TRUE;
 		jumpControl( pc );
 		break;
 	case PCC_WALK:
-		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, WALK_SPEED, 0 );
+		pc->calcMoveEnable = TRUE;
+		StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
+		moveDirectionSet( pc );
 		anmSet( pc, ACTANM_CMD_WALK );
 		break;
 	case PCC_RUN:
-		StartMovePHMV( pc->calcPHMV, &pc->contTrans, &pc->moveVec, RUN_SPEED, 0 );
+		pc->calcMoveEnable = TRUE;
+		{
+			fx32 speed = GetMoveSpeedPHMV( pc->calcPHMV );
+
+			if( speed ){
+				SetMoveVecPHMV( pc->calcPHMV, &pc->moveVec );
+			} else {
+				StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
+			}
+			moveDirectionSet( pc );
+
+			//平地時はなるべく速度を保つようにする
+			if( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == FALSE ){
+				keepSpeed( pc, RUN_SPEED, speed, RUN_SPEED/32 );
+			}
+		}
 		anmSet( pc, ACTANM_CMD_RUN );
 		break;
 	case PCC_SLIDE:
-		if( CheckGravitySpeedPHMV( pc->calcPHMV ) == TRUE ){
-			pc->forceMoveing = FALSE;
+		{
+			BOOL slideEndFlag = FALSE;
+			VecFx32	vecMove;
+
+			if( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == FALSE ){
+				slideEndFlag = TRUE;
+			} else {
+				GetMoveVecPHMV( pc->calcPHMV, &vecMove );
+				if( vecMove.y > 0 ){
+					//すべり中にもかかわらず上に進んでいるとき
+					//次のアクションがあるまで、ループ回避のため一時的に計算を止める
+					pc->calcMoveEnable = FALSE;
+					slideEndFlag = TRUE;
+				}
+			}
+			if( slideEndFlag == TRUE ){
+				if( GetMoveSpeedPHMV( pc->calcPHMV ) >= RUN_SPEED/2 ){
+					//着地時一定以上のスピードが出ている場合は着地アニメを入れる
+					anmSet( pc, ACTANM_CMD_JUMP_END );
+				}
+				ResetMovePHMV( pc->calcPHMV );
+				pc->forceMoveing = FALSE;
+			}
 		}
+		break;
+	case PCC_BUILD:
+		anmSet( pc, ACTANM_CMD_TAKE );
+		pc->buildCommand = PBC_BUILD_CASTLE;
+		break;
+	case PCC_SUMMON:
+		anmSet( pc, ACTANM_CMD_TAKE );
+		pc->buildCommand = PBC_SUMMON;
+		break;
+	case PCC_SIT:
+		anmSet( pc, ACTANM_CMD_SITDOWN );
+		pc->sitDownFlag = TRUE;
+		break;
+	case PCC_PUTON:		
+		anmSetForce( pc, ACTANM_CMD_TAKE );
+		break;
+	case PCC_TAKEOFF:		
+		anmSetForce( pc, ACTANM_CMD_TAKE );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
@@ -678,24 +793,6 @@ static void commandControl( PLAYER_CONTROL* pc )
 		pc->skillCommand = PSC_ATTACK_FIRE;
 #endif
 		break;
-	case PCC_BUILD:
-		anmSet( pc, ACTANM_CMD_TAKE );
-		pc->buildCommand = PBC_BUILD_CASTLE;
-		break;
-	case PCC_SUMMON:
-		anmSet( pc, ACTANM_CMD_TAKE );
-		pc->buildCommand = PBC_SUMMON;
-		break;
-	case PCC_SIT:
-		anmSet( pc, ACTANM_CMD_SITDOWN );
-		pc->sitDownFlag = TRUE;
-		break;
-	case PCC_PUTON:		
-		anmSetForce( pc, ACTANM_CMD_TAKE );
-		break;
-	case PCC_TAKEOFF:		
-		anmSetForce( pc, ACTANM_CMD_TAKE );
-		break;
 	case PCC_WEPONCHANGE:		
 		//ナンバー切り替え
 		pc->nowAccesary++;
@@ -725,23 +822,8 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		pc->sitDownFlag = FALSE;
 		return;
 	}
+	moveControl( pc );
 	commandControl( pc );
-	{
-		//移動制御
-		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
-		Set3DactTrans( pc->sceneAct, &pc->contTrans );
-
-		if( CheckMoveSpeedPHMV( pc->calcPHMV ) == FALSE ){
-			if( pc->forceMoveing != TRUE ){
-				//すべり制御
-				pc->forceMoveing = TRUE;
-				ResetMovePHMV( pc->calcPHMV );
-				anmSet( pc, ACTANM_CMD_JUMPDOWN );
-				pc->contCommand = PCC_SLIDE;
-				return;
-			}
-		}
-	}
 }
 
 //------------------------------------------------------------------
@@ -760,4 +842,5 @@ void MainNetWorkPlayerControl( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* psn )
 		psn->anmSetFlag = FALSE;
 	}
 }
+
 

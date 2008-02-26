@@ -297,6 +297,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes )
 		resetJumpTrg( mes );
 	} else {
 		//UŒ‚ƒgƒŠƒK”»’è
+#if 0
 		tpContTblPos = GFL_UI_TP_HitCont( attacktp_data_trg );
 		if( tpContTblPos != GFL_UI_TP_HIT_NONE ){
 			if( mes->eventMode != EVENT_MODE_MOVE ){
@@ -311,6 +312,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes )
 				return;
 			}
 		}
+#endif
 		//ˆÚ“®”»’è
 		if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos, mes->lineH ) == TRUE ){
 			cursorDrawSw = TRUE;

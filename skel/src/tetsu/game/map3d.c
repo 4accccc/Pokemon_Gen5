@@ -497,10 +497,10 @@ static const char mapData1[] = {
 "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　"	//7
 "　　　　　　　　　□□□□□□　　　　　　　　　　　　　　　　　"	//8
 "　　　　□□□□□□　　　　□　　　　　　　　　　　　　　　　　"	//9
-"　　　　□　　　□□　　　　□　□□□□□□　　　　　　　　　　"	//10
-"　　　　□　　　□□　　　　□　□　　　　□　　　　　　　　　　"	//11
-"　　　　□　　　□□　　　　□　□　　　　□　　　　　　　　　　"	//12
-"　　　　□　　　□□　　　　□　□□□□□□　　　　　　　　　　"	//13
+"　　　　□□□□□□　　　　□　□□□□□□　　　　　　　　　　"	//10
+"　　　　□□　□□□　　　　□　□　　　　□　　　　　　　　　　"	//11
+"　　　　□□　□□□　　　　□　□　　　　□　　　　　　　　　　"	//12
+"　　　　□□□□□□　　　　□　□□□□□□　　　　　　　　　　"	//13
 "　　　　□□□□□□　　　　□　　　　　　　　　　　　　　　　　"	//14
 "　　　　　　　　　□□□□□□　　　■　　　　　　　　　　　　　"	//15
 "　　　　　　　　　　　　　　　　　　■　　　　　　　　　　　　　"	//16
@@ -608,22 +608,22 @@ static const MAP_GRIDMAKE_DATA mapGrid1[] = {
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
 //10//
-{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},
+{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,1,1,3,1},{1,1,3,3,0},{1,1,3,1,0},
 {1,0,1,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,0,1,0,0},{0,0,0,0,0},
 {0,0,0,4,1},{0,0,4,4,0},{0,0,4,4,0},{0,0,4,4,0},{0,0,4,4,0},{0,0,4,0,0},{0,0,0,0,0},{0,0,0,0,0},
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
 //11//
-{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},
+{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,3,1,3,0},{3,3,3,3,0},{3,1,3,1,0},
 {1,0,1,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,0,1,0,0},{0,0,0,0,0},
 {0,4,0,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,0,4,0,0},{0,0,0,0,0},{0,0,0,0,0},
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
 //12//
-{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},
+{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,3,1,3,0},{3,3,3,3,0},{3,1,3,1,0},
 {1,0,1,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,0,1,0,0},{0,0,0,0,0},
 {0,4,0,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,4,4,4,0},{4,0,4,0,0},{0,0,0,0,0},{0,0,0,0,0},
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
 //13//
-{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},
+{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,1,0,1,0},{1,3,1,1,0},{3,3,1,1,0},{3,1,1,1,1},
 {1,0,1,0,0},{0,1,0,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,1,1,1,0},{1,0,1,0,0},{0,0,0,0,0},
 {0,4,0,0,0},{4,4,0,0,0},{4,4,0,0,0},{4,4,0,0,0},{4,4,0,0,0},{4,0,0,0,1},{0,0,0,0,0},{0,0,0,0,0},
 {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0},
@@ -829,7 +829,7 @@ static void MakeTriangleData( MAP_TRI_DATA* triData, VecFx32* vtx0, VecFx32* vtx
  * @brief	３Ｄマップ高さデータ取得(暫定)
  */
 //------------------------------------------------------------------
-static BOOL	CheckGetGroundOutSideData( fx32 x, fx32 z )
+static BOOL	CheckGetGroundOutSideData( const fx32 x, const fx32 z )
 {
 	if(( x < 0 )||( x >= mapGrid * mapSizeX )||( z < 0 )||( z >= mapGrid * mapSizeZ ) ){ 
 		return TRUE;
@@ -838,7 +838,7 @@ static BOOL	CheckGetGroundOutSideData( fx32 x, fx32 z )
 	}
 }
 
-static BOOL	GetGroundTraiangleID( VecFx32* pos, u16* gridOffs, u16* ID )
+static BOOL	GetGroundTraiangleID( const VecFx32* pos, u16* gridOffs, u16* ID )
 {
 	fx32	wx = pos->x + mapGrid*16;
 	fx32	wz = pos->z + mapGrid*16;
@@ -874,7 +874,7 @@ static BOOL	GetGroundTraiangleID( VecFx32* pos, u16* gridOffs, u16* ID )
 	return FALSE;
 }
 
-static BOOL	GetGroundPlaneData( VecFx32* pos, VecFx32* vecN, fx32* valD )
+BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
 	u16		gridOffs, triangleID;
 
@@ -887,7 +887,7 @@ static BOOL	GetGroundPlaneData( VecFx32* pos, VecFx32* vecN, fx32* valD )
 	return TRUE;
 }
 
-static void	GetGroundPlaneVecN( VecFx32* pos, VecFx32* vecN )
+void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN )
 {
 	u16		gridOffs, triangleID;
 
@@ -900,20 +900,20 @@ static void	GetGroundPlaneVecN( VecFx32* pos, VecFx32* vecN )
 	*vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
 }
 
-static void	GetGroundPlaneHeight( VecFx32* posNow, fx32* height ) 
+void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height ) 
 {
 	u16		gridOffs, triangleID;
 	VecFx32 vecN;
 	fx32	by, valD;
 
-	if( GetGroundTraiangleID( posNow, &gridOffs, &triangleID ) == FALSE ){
+	if( GetGroundTraiangleID( pos, &gridOffs, &triangleID ) == FALSE ){
 		*height = 0;
 		return;
 	}
 	vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
 	valD	= mapGridData[ gridOffs ].triangle[ triangleID ].valD;
 
-	by = -( FX_Mul( vecN.x, posNow->x ) + FX_Mul( vecN.z, posNow->z ) + valD );
+	by = -( FX_Mul( vecN.x, pos->x ) + FX_Mul( vecN.z, pos->z ) + valD );
 	*height = FX_Div( by, vecN.y );
 }
 
@@ -931,11 +931,38 @@ struct _CALC_PH_MV {
 	fx32	absorbVal;
 	u16		enableMoveTheta;
 
-	fx32	gravitySpeed;
-	VecFx32	vecMove;
+	VecFx32	vecDir;
 	fx32	speed;
 	u16		theta;
+
+	VecFx32	vecSpeed;
+	VecFx32	vecMove;
 };
+
+static void	inline VEC_Mult( const fx32 a, const VecFx32* b, VecFx32* dst ) 
+{
+	dst->x = FX_Mul( a, b->x );
+	dst->y = FX_Mul( a, b->y );
+	dst->z = FX_Mul( a, b->z );
+}
+
+static void	inline VEC_Divt( const fx32 a, const VecFx32* b, VecFx32* dst ) 
+{
+	GF_ASSERT( a );
+
+	dst->x = FX_Div( b->x, a );
+	dst->y = FX_Div( b->y, a );
+	dst->z = FX_Div( b->z, a );
+}
+
+static void	inline VEC_Proj( const VecFx32* a, const VecFx32* b, VecFx32* dst ) 
+{
+	// Ｂは正規化済みであること
+	// 　※ＡをＢに投影するのは、Ｂは正規化済みであることを前提で (Ａ・Ｂ)Ｂ
+	// 　　正確には(Ａ・Ｂ)Ｂ／(Ｂの長さ)
+	fx32 scalar = VEC_DotProduct( a, b );
+	VEC_Mult( scalar, b, dst );
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -954,53 +981,42 @@ static BOOL	CheckOnGround( VecFx32* pos, fx32* y )
 	}
 }
 
-static void	GetGroundMoveVec( VecFx32* pos, fx32* speedH, VecFx32* vecMove, VecFx32* dst ) 
+static void	GetGroundGravity( const VecFx32* pos, VecFx32* vecG, const fx32 gravity )
 {
-	VecFx32 posNext;
-	fx32	height;
+	VecFx32 vecN, vecH, vecV;
+	VecFx32 vecGravity = { 0, -FX32_ONE, 0 };
 
-	posNext.x = FX_Mul( *speedH, vecMove->x ) + pos->x;
-	posNext.y = 0;
-	posNext.z = FX_Mul( *speedH, vecMove->z ) + pos->z;
+	//平面の法線ベクトルにより地面に垂直で斜面に並行なベクトルを算出
+	GetGroundPlaneVecN( pos, &vecN );				//平面の法線を取得
+	VEC_CrossProduct( &vecN, &vecGravity, &vecH );	//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+	if( vecV.y > 0 ){
+		//正方向（天向き）へのベクトルが出てしまった場合負方向（地向き）へ修正
+		VEC_Set( &vecV, -vecV.x, -vecV.y, -vecV.z );
+	}
+	VEC_Normalize( &vecV, &vecV );
 
-	GetGroundPlaneHeight( &posNext, &posNext.y );
-
-	VEC_Subtract( &posNext, pos, dst );
-	VEC_Normalize( dst, dst );
+	//重力ベクトルを投影し、かかるべき重力ベクトルを算出
+	vecGravity.y = -gravity;
+	VEC_Proj( &vecGravity, &vecV, vecG ); 
 }
 
-static BOOL	GetGravityVec( VecFx32* pos, VecFx32* dst, fx32 planeMargin ) 
+static void	GetGroundVec( const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecGround )
 {
-	VecFx32 vecN, vecH, vecG;
-	VecFx32 vecGravity = { 0, -FX32_ONE, 0 };
-	fx32	scalar;
+	VecFx32 vecN, vecH, vecV;
 
-	if( CheckOnGround( pos, &pos->y ) == FALSE ){
-		*dst = vecGravity;	//空中
-		return FALSE;
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	GetGroundPlaneVecN( pos, &vecN );				//平面の法線を取得
+	VEC_CrossProduct( &vecN, vecDir, &vecH );		//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+
+	if( VEC_DotProduct( &vecV, vecDir ) < 0 ){
+		//逆方向へのベクトルが出てしまった場合修正
+		VEC_Set( vecGround, -vecV.x, -vecV.y, -vecV.z );
+	} else {
+		VEC_Set( vecGround, vecV.x, vecV.y, vecV.z );
 	}
-	GetGroundPlaneVecN( pos, &vecN );
-
-	VEC_CrossProduct( &vecN, &vecGravity, &vecH );	//平面上の水平ベクトル算出
-	VEC_CrossProduct( &vecN, &vecH, &vecG );		//平面上の斜面ベクトル算出
-	if( vecG.y > 0 ){
-		//正方向（天向き）へのベクトルが出てしまった場合負方向（地向き）へ修正
-		VEC_Set( &vecG, -vecG.x, -vecG.y, -vecG.z );
-	}
-	VEC_Normalize( &vecG, &vecG );
-
-	//重力ベクトルを投影
-	scalar = VEC_DotProduct( &vecGravity, &vecG );
-	dst->x = FX_Div( FX_Mul( scalar, vecG.x ), FX32_ONE );
-	dst->y = FX_Div( FX_Mul( scalar, vecG.y ), FX32_ONE );
-	dst->z = FX_Div( FX_Mul( scalar, vecG.z ), FX32_ONE );
-
-	if( dst->y < planeMargin ){
-		return FALSE;
-	}
-	dst->y = 0;
-
-	return TRUE;
+	VEC_Normalize( vecGround, vecGround );
 }
 
 //------------------------------------------------------------------
@@ -1015,8 +1031,7 @@ CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, PHMV_SETUP* setup )
 	calcPHMV->absorbVal			= setup->absorbVal;
 	calcPHMV->enableMoveTheta	= setup->enableMoveTheta;
 	
-	calcPHMV->gravitySpeed = 0;
-
+	ResetMovePHMV( calcPHMV );
 	return calcPHMV;
 }
 
@@ -1032,23 +1047,56 @@ void SetAbsorbPHMV( CALC_PH_MV* calcPHMV, fx32 absorbVal )
 }
 
 //------------------------------------------------------------------
-BOOL CheckMoveEndPHMV( CALC_PH_MV* calcPHMV )
+void SetMoveVecPHMV( CALC_PH_MV* calcPHMV, VecFx32* dirXZ )
 {
-	if( calcPHMV->speed ){
-		return FALSE;
-	} else {
-		return TRUE;
-	}
+	VecFx32 vecDir, vecMove;
+
+	vecDir.x = FX_Mul( dirXZ->x, FX_CosIdx( calcPHMV->theta ) );
+	vecDir.y = FX_SinIdx( calcPHMV->theta );
+	vecDir.z = FX_Mul( dirXZ->z, FX_CosIdx( calcPHMV->theta ) );
+	VEC_Normalize( &vecDir, &vecDir );
+	VEC_Mult( calcPHMV->speed, &vecDir, &vecDir );
+
+	VEC_Add( &vecDir, &calcPHMV->vecSpeed, &vecDir );
+	VEC_Normalize( &vecDir, &vecDir );
+
+	VEC_Mult( VEC_Mag( &calcPHMV->vecSpeed ), &vecDir, &calcPHMV->vecSpeed );
 }
 
 //------------------------------------------------------------------
-BOOL CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV )
+void GetMoveDirPHMV( CALC_PH_MV* calcPHMV, VecFx32* vecDir )
 {
-	if( (calcPHMV->speed - calcPHMV->gravitySpeed) < 0 ){
-		return FALSE;	//後進or下降
-	} else {
-		return TRUE;	//前進or上昇
-	}
+	VEC_Normalize( &calcPHMV->vecSpeed, vecDir );
+}
+
+//------------------------------------------------------------------
+void GetMoveVecPHMV( CALC_PH_MV* calcPHMV, VecFx32* vecMove )
+{
+	*vecMove = calcPHMV->vecMove;
+}
+
+//------------------------------------------------------------------
+fx32 GetMoveSpeedPHMV( CALC_PH_MV* calcPHMV )
+{
+	return VEC_Mag( &calcPHMV->vecSpeed );
+}
+
+//------------------------------------------------------------------
+void SetMoveSpeedPHMV( CALC_PH_MV* calcPHMV, fx32 speed )
+{
+	VecFx32 vecSpeed;
+
+	VEC_Normalize( &calcPHMV->vecSpeed, &vecSpeed );
+	VEC_Mult( speed, &vecSpeed, &calcPHMV->vecSpeed );
+}
+//------------------------------------------------------------------
+void AddMoveSpeedPHMV( CALC_PH_MV* calcPHMV, fx32 speed )
+{
+	VecFx32 vecSpeed;
+	fx32	valSpeed = VEC_Mag( &calcPHMV->vecSpeed ) + speed;
+
+	VEC_Normalize( &calcPHMV->vecSpeed, &vecSpeed );
+	VEC_Mult( valSpeed, &vecSpeed, &calcPHMV->vecSpeed );
 }
 
 //------------------------------------------------------------------
@@ -1058,78 +1106,98 @@ BOOL CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos )
 }
 
 //------------------------------------------------------------------
-BOOL CheckGravitySpeedPHMV( CALC_PH_MV* calcPHMV )
+BOOL CheckGroundGravityPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos )
 {
-	if( calcPHMV->gravitySpeed ){
-		return FALSE;	//空中or地上斜面
+	VecFx32 vecG;
+
+	GetGroundGravity( pos, &vecG, FX32_ONE );
+	if( vecG.y < 0 ){
+		return TRUE;	//空中or地上斜面(重力による仕事が発生している状態)
 	} else {
-		return TRUE;	//地上平面
+		return FALSE;	//地上平面
 	}
 }
 
 //------------------------------------------------------------------
-void StartMovePHMV
-	( CALC_PH_MV* calcPHMV, VecFx32* posStart, VecFx32* dirXZ, fx32 speed, u16 theta )
+void StartMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* dirXZ, fx32 speed, u16 theta )
 {
-	calcPHMV->vecMove.x = FX_Mul( dirXZ->x, FX_CosIdx( theta ) );
-	calcPHMV->vecMove.y = FX_SinIdx( theta );
-	calcPHMV->vecMove.z = FX_Mul( dirXZ->z, FX_CosIdx( theta ) );
-
 	calcPHMV->speed = speed;
 	calcPHMV->theta = theta;
+
+	calcPHMV->vecDir.x = FX_Mul( dirXZ->x, FX_CosIdx( calcPHMV->theta ) );
+	calcPHMV->vecDir.y = FX_SinIdx( calcPHMV->theta );
+	calcPHMV->vecDir.z = FX_Mul( dirXZ->z, FX_CosIdx( calcPHMV->theta ) );
+	VEC_Normalize( &calcPHMV->vecDir, &calcPHMV->vecDir );
+
+	VEC_Mult( calcPHMV->speed, &calcPHMV->vecDir, &calcPHMV->vecSpeed ); 
 }
 
 //------------------------------------------------------------------
 void ResetMovePHMV( CALC_PH_MV* calcPHMV )
 {
-	calcPHMV->vecMove.x = 0;
-	calcPHMV->vecMove.y = 0;
-	calcPHMV->vecMove.z = 0;
-
 	calcPHMV->speed = 0;
 	calcPHMV->theta = 0;
+
+	calcPHMV->vecDir.x = 0;
+	calcPHMV->vecDir.y = 0;
+	calcPHMV->vecDir.z = 0;
+
+	calcPHMV->vecSpeed.x = 0;
+	calcPHMV->vecSpeed.y = 0;
+	calcPHMV->vecSpeed.z = 0;
 }
 
 //------------------------------------------------------------------
 BOOL	CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow )
 {
-	VecFx32 vecM, vecG;
-	fx32	speedH, speedV;
-	BOOL	moveFlag = FALSE;
+	VecFx32 vecMove, vecG, vecSpeed, posNext;
+	VecFx32	vecSpeed_next;
+	u16		thetaGround;
 
-	speedH = FX_Mul( calcPHMV->speed, FX_CosIdx( calcPHMV->theta ) );
-	speedV = FX_Mul( calcPHMV->speed, FX_SinIdx( calcPHMV->theta ) );
-
-	if( !speedV ){
+	if( !calcPHMV->vecDir.y ){
 		//水平移動
-		//移動ベクトルの取得と予想移動位置の計算
-		GetGroundMoveVec( posNow, &speedH, &calcPHMV->vecMove, &vecM );
-		{
-			fx32 xz = FX_Sqrt( FX_Mul( vecM.x, vecM.x ) + FX_Mul( vecM.z, vecM.z )); 
-			s16 theta = FX_Atan2Idx( vecM.y, xz );
 
-			if(( theta >= -calcPHMV->enableMoveTheta )&&( theta <= calcPHMV->enableMoveTheta )){
-				VEC_MultAdd( speedH, &vecM, posNow, posNow );
-				GetGroundPlaneHeight( posNow, &posNow->y );
-				moveFlag = TRUE;
-			}
-		}
-		calcPHMV->gravitySpeed += calcPHMV->gravityMove;	//重力加速度の計算
+		//移動方向の地形に沿った単位ベクトル取得
+		GetGroundVec( posNow, &calcPHMV->vecSpeed, &vecMove );
+		//移動ベクトル取得
+		VEC_Mult( VEC_Mag( &calcPHMV->vecSpeed ), &vecMove, &calcPHMV->vecSpeed );
+		//予想移動位置の計算
+		VEC_Add( posNow, &calcPHMV->vecSpeed, &posNext );
+		GetGroundGravity( &posNext, &vecG, calcPHMV->gravityMove );
+
+		//速度の平均を算出( V0+V1 / 2 )
+		VEC_Add( &calcPHMV->vecSpeed, &vecG, &vecSpeed_next );
+		VEC_Add( &calcPHMV->vecSpeed, &vecSpeed_next, &vecSpeed );
+		VEC_Divt( 2 * FX32_ONE, &vecSpeed, &vecSpeed );
+
+		calcPHMV->vecSpeed = vecSpeed_next;
+		//OS_Printf("speed{ %d }\n ", VEC_Mag( &calcPHMV->vecSpeed ));
+
+		//移動位置の計算
+		VEC_Add( posNow, &vecSpeed, &posNext );
+		GetGroundPlaneHeight( &posNext, &posNext.y );
 	} else {
 		//空中移動
-		posNow->x = FX_Mul( speedH, calcPHMV->vecMove.x ) + posNow->x;
-		posNow->y = FX_Mul( speedV, calcPHMV->vecMove.y ) + posNow->y;
-		posNow->z = FX_Mul( speedH, calcPHMV->vecMove.z ) + posNow->z;
-		calcPHMV->gravitySpeed += calcPHMV->gravityFall;	//重力加速度の計算
-		moveFlag = TRUE;
+		vecG.x = 0;
+		vecG.y = -calcPHMV->gravityFall;
+		vecG.z = 0;
+		
+		//速度の平均を算出( V0+V1 / 2 )
+		VEC_Add( &calcPHMV->vecSpeed, &vecG, &vecSpeed_next );
+		VEC_Add( &calcPHMV->vecSpeed, &vecSpeed_next, &vecSpeed );
+		VEC_Divt( 2 * FX32_ONE, &vecSpeed, &vecSpeed );
+
+		calcPHMV->vecSpeed = vecSpeed_next;
+
+		//移動位置の計算
+		VEC_Add( posNow, &vecSpeed, &posNext );
+		CheckOnGround( &posNext, &posNext.y );
 	}
-	//重力ベクトルの算出
-	if( GetGravityVec( posNow, &vecG, calcPHMV->planeMargin ) == TRUE ){
-		calcPHMV->gravitySpeed = 0;	//重力加速度のリセット
-	} else {
-		VEC_MultAdd( calcPHMV->gravitySpeed, &vecG, posNow, posNow );
-		CheckOnGround( posNow, &posNow->y );	//最終高さ補正
-	}
-	return moveFlag;
+	VEC_Subtract( &posNext, posNow, &calcPHMV->vecMove );
+	*posNow = posNext;
+
+	return TRUE;
 }
+
+
 

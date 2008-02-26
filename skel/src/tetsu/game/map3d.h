@@ -23,6 +23,11 @@ enum {
 	EXMAPOBJ_WALL4,
 };
 
+
+extern BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD );
+extern void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN );
+extern void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height );
+
 //------------------------------------------------------------------
 /**
  * @brief		マップ上でのベクトル移動（重力あり）
@@ -43,12 +48,17 @@ typedef struct {
 extern CALC_PH_MV*	CreateCalcPhisicsMoving( HEAPID heapID, PHMV_SETUP* setup );
 extern void			DeleteCalcPhisicsMoving( CALC_PH_MV* calcPHMV );
 extern void			SetAbsorbPHMV( CALC_PH_MV* calcPHMV, fx32 absorbVal );
-extern BOOL			CheckMoveEndPHMV( CALC_PH_MV* calcPHMV );
-extern BOOL			CheckMoveSpeedPHMV( CALC_PH_MV* calcPHMV );
+extern void			SetMoveVecPHMV( CALC_PH_MV* calcPHMV, VecFx32* dirXZ );
+extern void			GetMoveDirPHMV( CALC_PH_MV* calcPHMV, VecFx32* vecDir );
+extern void			GetMoveVecPHMV( CALC_PH_MV* calcPHMV, VecFx32* vecMove );
+extern fx32			GetMoveSpeedPHMV( CALC_PH_MV* calcPHMV );
+extern void			SetMoveSpeedPHMV( CALC_PH_MV* calcPHMV, fx32 speed );
+extern void			AddMoveSpeedPHMV( CALC_PH_MV* calcPHMV, fx32 speed );
 extern BOOL			CheckOnFloorPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos );
-extern BOOL			CheckGravitySpeedPHMV( CALC_PH_MV* calcPHMV );
-extern void			StartMovePHMV( CALC_PH_MV* calcPHMV, 
-						VecFx32* posStart, VecFx32* dirXZ, fx32 speed, u16 theta );
+extern BOOL			CheckGroundGravityPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos );
+extern void			StartMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* dirXZ, fx32 speed, u16 theta );
 extern void			ResetMovePHMV( CALC_PH_MV* calcPHMV );
 extern BOOL			CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow );
+
+
 
