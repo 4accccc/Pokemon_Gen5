@@ -37,7 +37,7 @@ static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work);
 
 typedef struct{
 	GAME_PARAM			*gp;
-	YT_PLAYER_STATUS	*ps;
+	int					player_no;
 	int					seq_no;
 	int					pat_no;
 	int					wait;
@@ -1138,7 +1138,6 @@ void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps)
 static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
 {
 	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no];
-	YT_PLAYER_STATUS	*ps2=(YT_PLAYER_STATUS *)&gp->ps[fcp->player_no^1];
 	int					height;
 	int					height_tbl[]={144-40,130-40,116-40,102-40,88-40,74-40,60-40,46-40,32-40};
 
@@ -1161,11 +1160,8 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
     {
         u8 posx = 16+24*fcp->line_no+128*fcp->player_no;
         u8 posy = height_tbl[height];
-        YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
+        YT_YossyBirthAnimeTaskSet(gp,fcp->player_no,posx,posy,fcp->chr_count);
         YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
-		ps2->egg_fall_count=fcp->chr_count;
-//		ps->egg_fall_count=fcp->chr_count;
-        YT_NetSendAddChar(fcp->player_no^1, fcp->chr_count,gp->pNetParam);
     }
     
 	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット
@@ -1212,27 +1208,27 @@ void YT_NetFallchrAddChar(GAME_PARAM *gp,u8 player_no, u8 num)
 
 
 
-void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count)
+void	YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,int player_no,u8 pos_x,u8 pos_y,u8 count)
 {
 	YOSSY_BIRTH_ANIME	*yba=GFL_HEAP_AllocMemory(gp->heapID,sizeof(YOSSY_BIRTH_ANIME));
 
 	yba->gp=gp;
-	yba->ps=ps;
+	yba->player_no=player_no;
 	yba->seq_no=0;
 	yba->pat_no=0;
 	yba->wait=0;
 	yba->pos_x=pos_x;
 	yba->pos_y=pos_y;
 	yba->count=count;
-	if(ps){
-		ps->status.birth_flag=1;
-	}
+	gp->ps[player_no].status.birth_flag=1;
 	GFL_TCB_AddTask(gp->tcbsys,YT_YossyBirthAnime,yba,TCB_PRI_PLAYER);
 }
 
 static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work)
 {
 	YOSSY_BIRTH_ANIME	*yba=(YOSSY_BIRTH_ANIME *)work;
+	YT_PLAYER_STATUS	*ps=(YT_PLAYER_STATUS *)&yba->gp->ps[yba->player_no];
+	YT_PLAYER_STATUS	*ps2=(YT_PLAYER_STATUS *)&yba->gp->ps[yba->player_no^1];
 
 	switch(yba->seq_no){
 	case 0:
@@ -1288,9 +1284,10 @@ static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work)
 		if(yba->wait==0){
 			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
 			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
-			if(yba->ps){
-				yba->ps->status.birth_flag=0;
-			}
+			ps->status.birth_flag=0;
+			ps2->egg_fall_count=yba->count;
+//			ps->egg_fall_count=yba->count;
+	        YT_NetSendAddChar(yba->player_no^1, yba->count,yba->gp->pNetParam);
 			GFL_HEAP_FreeMemory(yba);
 			GFL_TCB_DeleteTask(tcb);
 		}

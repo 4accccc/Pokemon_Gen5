@@ -96,14 +96,14 @@ GLOBAL	void	YT_EggMakeCheck(YT_PLAYER_STATUS *ps);
 /**
  *	@brief	ヨッシーの生まれるアニメーションタスクをセット
  *	
- *	@param	gs		ゲームパラメータポインタ
- *	@param	ps		プレーヤーステータス
+ *	@param	gs			ゲームパラメータポインタ
+ *	@param	player_no	プレーヤーナンバー
  *	@param	pos_x		
  *	@param	pos_y		
  *	@param	count		
  */
 //-----------------------------------------------------------------------------
-GLOBAL void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,YT_PLAYER_STATUS *ps,u8 pos_x,u8 pos_y,u8 count);
+GLOBAL void YT_YossyBirthAnimeTaskSet(GAME_PARAM *gp,int player_no,u8 pos_x,u8 pos_y,u8 count);
 
 //----------------------------------------------------------------------------
 /**
