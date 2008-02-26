@@ -46,6 +46,8 @@ typedef struct{
 	int					count;
 }YOSSY_BIRTH_ANIME;
 
+extern	vu16	cl_add_actor;
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	落下キャラアニメーションテーブル
@@ -100,6 +102,7 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no,in
 	fcp->line_no=line_no;
 	fcp->height=height;
 	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
+	cl_add_actor++;
 
 	GFL_TCB_AddTask(gp->tcbsys,YT_MainFallChr,fcp,TCB_PRI_FALL_CHR);
 	gp->clact->clact_work[fcp->clact_no]=fcp->clwk=YT_ClactWorkAdd(fcp,height);
@@ -161,6 +164,8 @@ static void YT_DeleteFallChr(GFL_CLWK* clwk,FALL_CHR_PARAM *fcp,GFL_TCB *tcb,NET
     if(pNet){
         YT_NET_DeleteReq(fcp->clact_no, pNet);
     }
+
+	cl_add_actor--;
 
     GFL_CLACT_WK_Remove(clwk);
     GFL_HEAP_FreeMemory(fcp);
@@ -1158,8 +1163,8 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
         u8 posy = height_tbl[height];
         YT_YossyBirthAnimeTaskSet(gp,ps,posx,posy,fcp->chr_count);
         YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
-		ps2->egg_fall_count=fcp->chr_count;
-//		ps->egg_fall_count=fcp->chr_count;
+//		ps2->egg_fall_count=fcp->chr_count;
+		ps->egg_fall_count=fcp->chr_count;
         YT_NetSendAddChar(fcp->player_no^1, fcp->chr_count,gp->pNetParam);
     }
     

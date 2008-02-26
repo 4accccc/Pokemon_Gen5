@@ -975,29 +975,33 @@ static	void	YT_PlayerRotateAct(PLAYER_PARAM *pp,YT_PLAYER_STATUS *ps)
 	right_line=ps->falltbl[pp->line_no+1];
 	if(left_height!=right_height){
 		if(left_height>right_height){
-			for(i=0;i<YT_HEIGHT_MAX;i++){
-				fcp=ps->fall[right_line][i];
-				if(fcp){
-					GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
-					if(pos.y>height_tbl[left_height]){
-						fcp->rotate_flag=ps->status.rotate_flag;
-						ps->falltbl[pp->line_no+1]=left_line;
-						ps->falltbl[pp->line_no]=right_line;
-						break;
+			fcp=ps->fall[right_line][0];
+			if(fcp){
+				GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
+				if(pos.y>height_tbl[left_height]){
+					for(i=0;i<YT_HEIGHT_MAX;i++){
+						fcp=ps->fall[right_line][i];
+						if(fcp){
+							fcp->rotate_flag=ps->status.rotate_flag;
+							ps->falltbl[pp->line_no+1]=left_line;
+							ps->falltbl[pp->line_no]=right_line;
+						}
 					}
 				}
 			}
 		}
 		else{
-			for(i=0;i<YT_HEIGHT_MAX;i++){
-				fcp=ps->fall[left_line][i];
-				if(fcp){
-					GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
-					if(pos.y>height_tbl[right_height]){
-						fcp->rotate_flag=ps->status.rotate_flag;
-						ps->falltbl[pp->line_no+1]=left_line;
-						ps->falltbl[pp->line_no]=right_line;
-						break;
+			fcp=ps->fall[left_line][0];
+			if(fcp){
+				GFL_CLACT_WK_GetWldPos(fcp->clwk,&pos);
+				if(pos.y>height_tbl[right_height]){
+					for(i=0;i<YT_HEIGHT_MAX;i++){
+						fcp=ps->fall[left_line][i];
+						if(fcp){
+							fcp->rotate_flag=ps->status.rotate_flag;
+							ps->falltbl[pp->line_no+1]=left_line;
+							ps->falltbl[pp->line_no]=right_line;
+						}
 					}
 				}
 			}
