@@ -494,7 +494,7 @@ static void _recvCLACTAnimCreate(const int netID, const int size, const void* pD
 
     //OS_TPrintf("Create %d %d id=%d\n",pAnim->clactNo,pAnim->type,netID);
     if(pNet->pCLACT[pAnim->clactNo]==NULL){
-        pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->type,0);
+        pNet->pCLACT[pAnim->clactNo] = YT_InitNetworkFallChr(gp,netID,pAnim->type,0,0);
         GF_ASSERT(pNet->pCLACT[pAnim->clactNo]);
     }
     else{

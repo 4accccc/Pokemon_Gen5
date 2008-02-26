@@ -39,6 +39,7 @@ struct fall_chr_param{
 	u8			fall_wait;
 
 	int			speed_value;	//移動スピード格納ワーク（ROTATE、EGG_MAKEなど）
+	int			height;			//高さ情報（タマゴで送られてきたとき用）
 
 	u8			wait_value;		//ウエイト系の格納ワーク
 	u8			fall_wait_tmp;
@@ -59,11 +60,12 @@ struct fall_chr_param{
  *	@param	player_no	1P or 2P
  *	@param	type		キャラタイプ
  *	@param	line_no		落下ラインナンバー
+ *	@param	height		高さ情報
  *
  *	@retval FALL_CHR_PARAM
  */
 //-----------------------------------------------------------------------------
-GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
+GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no,int height);
 
 //----------------------------------------------------------------------------
 /**
@@ -73,11 +75,12 @@ GLOBAL	FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 lin
  *	@param	player_no	1P or 2P
  *	@param	type		キャラタイプ
  *	@param	line_no		落下ラインナンバー
+ *	@param	height		高さ情報
  *
  *	@retval GFL_CLWK*
  */
 //-----------------------------------------------------------------------------
-GLOBAL GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no);
+GLOBAL GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no,int height);
 
 //----------------------------------------------------------------------------
 /**

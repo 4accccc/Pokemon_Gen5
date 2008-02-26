@@ -133,7 +133,7 @@ typedef struct{
 			u16		birth_flag			:1;		//ヨッシー生まれるフラグ
 			u16		rensa_flag			:1;		//連鎖フラグ
 			u16		win_lose_flag		:2;		//勝敗フラグ
-			u16							:3;
+			u16							:1;
 		};
 	}status;
 	u8				fall_wait;

@@ -512,7 +512,8 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 				if((__GFL_STD_MtRand()%5==0)&&(kara_flag==0)){
 					type=YT_CHR_GREEN_EGG_U+__GFL_STD_MtRand()%4;
 				}
-			} gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line);
+			}
+			gp->ps[player_no].ready[line][0]=YT_InitFallChr(gp,player_no,type,line,0);
 			i--;
 		}
 	}
@@ -547,7 +548,10 @@ static	void	YT_ReadyAct(GAME_PARAM *gp,int player_no)
 			line=line_tbl[cnt%4];
 			type=__GFL_STD_MtRand()%4;
 			if(type==chr_no[line]) continue;
-			gp->ps[player_no].ready[line][cnt/4]=YT_InitFallChr(gp,player_no,type,line);
+			if((cnt/4)>0){
+				if(gp->ps[player_no].ready[line][(cnt/4)-1]->type==type) continue;
+			}
+			gp->ps[player_no].ready[line][cnt/4]=YT_InitFallChr(gp,player_no,type,line,cnt/4);
 			gp->ps[player_no].ready[line][cnt/4]->ikari_flag=1;
 			i--;
 			cnt++;
