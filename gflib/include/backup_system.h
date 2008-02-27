@@ -17,6 +17,10 @@
 
 #include "savedata_def.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //============================================================================================
 //
 //			セーブデータ構築用定義
@@ -216,5 +220,9 @@ extern void * GFL_SAVEDATA_Get(GFL_SAVEDATA * sv, GFL_SVDT_ID gmdataID);
 //---------------------------------------------------------------------------
 extern const void * GFL_SAVEDATA_GetReadOnly(const GFL_SAVEDATA * sv, GFL_SVDT_ID gmdataID);
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 

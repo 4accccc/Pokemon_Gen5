@@ -11,6 +11,10 @@
 #define __TEXTPRINT_H__
 
 #include "systemfont.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //------------------------------------------------------------------
 /**
  * ï`âÊÉÇÅ[ÉhíËã`
@@ -94,6 +98,10 @@ void
 void
 	GFL_TEXT_PrintSjisCode
 		( const char* textcode, GFL_TEXT_PRINTPARAM* param );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif
 

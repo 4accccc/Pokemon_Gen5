@@ -11,6 +11,10 @@
 #ifndef __DMA_H_
 #define __DMA_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //DMAイネーブルフラグ（0:disable 1:enable）
 #define	GFL_DMA_DISABLE				(0)
 #define	GFL_DMA_ENABLE				(1)
@@ -104,6 +108,10 @@ extern	void	GFL_DMA_Start(int ch,u32 sad,u32 dad,int dma_enable,int intr_enable,
  */
 //--------------------------------------------------------------------------------------------
 extern	void	GFL_DMA_Stop(int ch);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif __DMA_H_
 

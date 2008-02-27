@@ -12,6 +12,10 @@
 #define __CLACT_H__
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					íËêîêÈåæ
@@ -1305,6 +1309,10 @@ extern u32 GFL_CLACT_WK_GetUserAttrAnmFrameNow( const GFL_CLWK* cp_wk );
  */
 //-----------------------------------------------------------------------------
 extern u32 GFL_CLACT_WK_GetUserAttrCell( const GFL_CLWK* cp_wk, u32 cellidx );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif		// __CLACT_H__
 

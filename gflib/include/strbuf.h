@@ -13,6 +13,10 @@ typedef struct _STRBUF	STRBUF;
 #define EOM_CODESIZE			(1)
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 //------------------------------------------------------------------
 /**
@@ -231,5 +235,9 @@ extern void
 extern void
 	GFL_STR_AddCode
 		( STRBUF* dst, STRCODE code );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

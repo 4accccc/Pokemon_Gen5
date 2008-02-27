@@ -1,36 +1,36 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=		testmode.c \
-				ohno/debug_ohno.c \
-				ohno/test_net.c \
-				ohno/test_beacon.c \
-				ohno/test_rand.c \
-				ohno/test_ui.c \
-				ohno/fatal_error.c \
-                gfl_graphic/net_icondata.c \
-				sogabe/debug_sogabe.c \
-				sogabe/title.c \
-				sogabe/game.c \
-				sogabe/player.c \
-				sogabe/fallchr.c \
-                sogabe/yt_net.c \
-                sogabe/multi_boot.c \
-                sogabe/3d_test.c \
-				tetsu/game/gamemain.c \
-				tetsu/game/setup.c \
-				tetsu/game/act3d.c \
-				tetsu/game/map3d.c \
-				tetsu/game/util3d.c \
-				tetsu/game/game_cont.c \
-				tetsu/game/team_cont.c \
-				tetsu/game/player_cont.c \
-				tetsu/game/camera_cont.c \
-				tetsu/game/status_cont.c \
-				tetsu/game/text_cont.c \
-				tetsu/game/skill_cont.c \
-				tetsu/game/game_net.c \
-                sogabe/blockout.c \
-				tamada/backup_sample.c \
-				tetsu/debug_watanabe.c
+SRCS	+=		testmode.cpp \
+				ohno/debug_ohno.cpp \
+				ohno/test_net.cpp \
+				ohno/test_beacon.cpp \
+				ohno/test_rand.cpp \
+				ohno/test_ui.cpp \
+				ohno/fatal_error.cpp \
+                gfl_graphic/net_icondata.cpp \
+				sogabe/debug_sogabe.cpp \
+				sogabe/title.cpp \
+				sogabe/game.cpp \
+				sogabe/player.cpp \
+				sogabe/fallchr.cpp \
+                sogabe/yt_net.cpp \
+                sogabe/multi_boot.cpp \
+                sogabe/3d_test.cpp \
+				tetsu/game/gamemain.cpp \
+				tetsu/game/setup.cpp \
+				tetsu/game/act3d.cpp \
+				tetsu/game/map3d.cpp \
+				tetsu/game/util3d.cpp \
+				tetsu/game/game_cont.cpp \
+				tetsu/game/team_cont.cpp \
+				tetsu/game/player_cont.cpp \
+				tetsu/game/camera_cont.cpp \
+				tetsu/game/status_cont.cpp \
+				tetsu/game/text_cont.cpp \
+				tetsu/game/skill_cont.cpp \
+				tetsu/game/game_net.cpp \
+                sogabe/blockout.cpp \
+				tamada/backup_sample.cpp \
+				tetsu/debug_watanabe.cpp
 				
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -84,16 +84,16 @@ SRCS	+=		testmode.c \
 
 #ともやくんデバッグ用
 #===> main
-SRCS_OVERLAY_DEBUG_TOMOYA =			tomoya/debug_tomoya.c
+SRCS_OVERLAY_DEBUG_TOMOYA =			tomoya/debug_tomoya.cpp
 
 #
 #===> main
-SRCS_OVERLAY_DEBUG_TAMADA =			tamada/debug_tamada.c \
-				tamada/oamset.c \
-				tamada/data.c \
-				tamada/dispfunc.c \
-				tamada/bg/debug_graphic.c \
-				tamada/bg/loader.c \
-				tamada/d_proc_bg.c \
-				tamada/lifegame.c
+SRCS_OVERLAY_DEBUG_TAMADA =			tamada/debug_tamada.cpp \
+				tamada/oamset.cpp \
+				tamada/data.cpp \
+				tamada/dispfunc.cpp \
+				tamada/bg/debug_graphic.cpp \
+				tamada/bg/loader.cpp \
+				tamada/d_proc_bg.cpp \
+				tamada/lifegame.cpp
 

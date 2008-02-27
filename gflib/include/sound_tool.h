@@ -10,6 +10,10 @@
 #ifndef __SOUND_TOOL_H_
 #define __SOUND_TOOL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------------------------------
 /**
  *	SENoÇ∆PitchÇê›íËÇµÇƒçƒê∂
@@ -40,5 +44,9 @@ extern	void	GFL_SNDTOOL_PlaySEwithPan( int se_no, int pan );
  */
 //--------------------------------------------------------------------------------------------
 extern	void	GFL_SNDTOOL_PlaySEwithPitchPan( int se_no, int pitch, int pan );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif __SOUND_TOOL_H_

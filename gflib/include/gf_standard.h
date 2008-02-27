@@ -11,6 +11,10 @@
 #ifndef	__GF_STANDARD_H__
 #define	__GF_STANDARD_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------
 /**
  * @brief	メモリーコピー関数
@@ -213,6 +217,10 @@ static inline u32 GFL_STD_Rand(GFL_STD_RandContext *context, u32 max)
     }
 }
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif	/*	__GF_STANDARD_H__ */

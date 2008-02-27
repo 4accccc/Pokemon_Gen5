@@ -146,6 +146,10 @@
 #include "spl_particle.h"
 #include "spl_resource.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 構造体 ------------------------------------------------------------------ */
 
 // エミッタフラグ
@@ -601,5 +605,9 @@ static inline void SPL_SetEmitterSimpleCollisionHeight( SPLEmitter* p_emtr, fx32
 
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

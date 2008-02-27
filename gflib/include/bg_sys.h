@@ -9,6 +9,10 @@
 #ifndef _BG_SYS_H_
 #define _BG_SYS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //=============================================================================================
 //	å^êÈåæ
 //=============================================================================================
@@ -1170,6 +1174,10 @@ extern void GFL_BG_NTRCHR_ScrnLoad( u8 frmnum, const char * path, u32 offs );
 
 
 
+#endif
+
+#ifdef __cplusplus
+}/* extern "C" */
 #endif
 
 #endif

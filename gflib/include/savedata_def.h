@@ -9,6 +9,10 @@
 #ifndef	__SAVEDATA_DEF_H__
 #define	__SAVEDATA_DEF_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //------------------------------------------------------------
 /**
  * @brief	セーブデータ管理構造への不完全型ポインタ
@@ -38,5 +42,9 @@ typedef enum {
 	SAVE_RESULT_OK,					///<セーブ正常終了
 	SAVE_RESULT_NG					///<セーブ失敗終了
 }SAVE_RESULT;
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	/*	__SAVEDATA_DEF_H__ */

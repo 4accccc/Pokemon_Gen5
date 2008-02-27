@@ -11,6 +11,10 @@
 
 #include "strbuf.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //----------------------------------------------------------------
 /**
  *	íËêî
@@ -99,6 +103,10 @@ extern u8 GFL_FONT_GetSizeSPC( void );
 //------------------------------------------------------------------
 extern void	GFL_FONT_SetColor( int fontCol, int baseCol );
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif
 

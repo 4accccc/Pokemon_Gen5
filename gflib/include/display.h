@@ -11,6 +11,10 @@
 #include <nitro.h>
 #include <nnsys.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //‚a‚fE‚n‚a‚i•\¦—p’è‹`
 #define	VISIBLE_OFF		(0)		// ”ñ•\¦‚Ö
 #define	VISIBLE_ON		(1)		// •\¦‚Ö
@@ -146,5 +150,9 @@ extern int GFL_DISP_GetMainVisible(void);
  */
 //--------------------------------------------------------------------------------------------
 extern int GFL_DISP_GetSubVisible(void);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif __DISPLAY_H_

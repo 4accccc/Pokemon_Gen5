@@ -10,6 +10,10 @@
 #ifndef __SOUND_H_
 #define __SOUND_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------------------------------
 /**
  * ƒTƒEƒ“ƒh‰Šú‰»
@@ -193,5 +197,9 @@ extern	void GFL_SOUND_SetPitch( int playerNo, u16 trbitmask, int pitch );
  */
 //--------------------------------------------------------------------------------------------
 extern	void GFL_SOUND_SetPan( int playerNo, u16 trbitmask, int pan );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

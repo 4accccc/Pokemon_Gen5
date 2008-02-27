@@ -11,6 +11,10 @@
 
 #include "spl.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MATSUDA_TEST
 
 //==============================================================================
@@ -204,6 +208,10 @@ extern	void			GFL_PTC_SetEmitterConvergencePos(GFL_EMIT_PTR emit, VecFx32* p_pos
 extern	void			GFL_PTC_GetEmitterConvergencePos(GFL_EMIT_PTR emit, VecFx32* p_pos);
 extern	void			GFL_PTC_SetEmitterConvergenceRatio(GFL_EMIT_PTR emit, fx16* ratio);
 extern	void			GFL_PTC_GetEmitterConvergenceRatio(GFL_EMIT_PTR emit, fx16* ratio);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	//__PARTICLE_H__
 

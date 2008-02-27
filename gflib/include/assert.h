@@ -9,6 +9,10 @@
 #ifndef	__ASSERT_H__
 #define	__ASSERT_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define	GF_ASSERT_ENABLE
 
 
@@ -40,6 +44,10 @@ extern void GFL_ASSERT_SetDisplayFunc( GFL_ASSERT_DispInitFunc initFunc, GFL_ASS
 #define GF_ASSERT(exp)				((void)0);
 #define GF_ASSERT_MSG(exp, ...)		((void)0);
 
+#endif
+
+#ifdef __cplusplus
+}/* extern "C" */
 #endif
 
 

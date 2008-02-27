@@ -10,6 +10,10 @@
 
 #include "assert.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //------------------------------------------------------------------
 /**
  * 実機動作時に、ASSERT情報を実機画面表示するモードに切り替える
@@ -20,6 +24,10 @@
 extern void GFL_ASSERT_SetLCDMode( void );
 #else
 #define GFL_ASSERT_SetLCDMode()	/* */
+#endif
+
+#ifdef __cplusplus
+}/* extern "C" */
 #endif
 
 

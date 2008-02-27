@@ -45,7 +45,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c
+SRCS			=	main.cpp gfl_use.cpp
 
 include make_prog_files
 -include overlay/overlay_files

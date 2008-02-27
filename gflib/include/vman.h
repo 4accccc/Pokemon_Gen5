@@ -11,6 +11,10 @@
 #ifndef __VMAN_H__
 #define __VMAN_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //==============================================================
 //	管理オブジェクト不完全型定義
 //==============================================================
@@ -55,6 +59,10 @@ extern u32 GFL_VMAN_GetByteOffset( GFL_VMAN* man, const GFL_VMAN_RESERVE_INFO* r
 extern void GFL_VMAN_SetPrintDebug( GFL_VMAN* man, BOOL flag );
 #endif
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	/* #ifndef __VMAN_H__ */
 

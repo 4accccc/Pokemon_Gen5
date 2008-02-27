@@ -7,6 +7,10 @@
 #ifndef _G3D_SCENE_H_
 #define _G3D_SCENE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //=============================================================================================
 //	å^êÈåæ
 //=============================================================================================
@@ -406,6 +410,10 @@ extern void
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, MtxFx33* rotate );
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 

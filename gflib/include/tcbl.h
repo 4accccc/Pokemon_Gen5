@@ -17,6 +17,10 @@
 #include <nitro.h>
 #include "heap.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /*====================================================================================*/
 /*  å^êÈåæ                                                                            */
@@ -174,6 +178,12 @@ extern void GFL_TCBL_ChangePriority(GFL_TCBL * tcb, u32 pri);
  */
 //------------------------------------------------------------------
 extern u32 GFL_TCBL_GetPriority(const GFL_TCBL * tcb);
+
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
+
 
 
 #endif /*__TCBL_H__*/

@@ -11,6 +11,10 @@
 
 #include "heap.h"	//©‚±‚Ì’†‚ÌŠÖ”‚ğ’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹Ö~
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define HEAPSYS_DEBUG
 
 //==============================================================================
@@ -369,6 +373,10 @@ extern void HSS_Delete( HEAP_STATE_STACK* hss );
 #define HeapStatePush()		/* */
 #define HeapStatePop()		/* */
 #define HeapStateCheck(h)	/* */
+#endif
+
+#ifdef __cplusplus
+}/* extern "C" */
 #endif
 
 
