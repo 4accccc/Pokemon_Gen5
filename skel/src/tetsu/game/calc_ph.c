@@ -38,6 +38,7 @@ struct _CALC_PH_MV {
 	VecFx32	vecMove;
 };
 
+//ベクトルのスカラー乗算（a * b）
 static void	inline VEC_Mult( const fx32 a, const VecFx32* b, VecFx32* dst ) 
 {
 	dst->x = FX_Mul( a, b->x );
@@ -45,6 +46,7 @@ static void	inline VEC_Mult( const fx32 a, const VecFx32* b, VecFx32* dst )
 	dst->z = FX_Mul( a, b->z );
 }
 
+//ベクトルのスカラー除算（b / a）
 static void	inline VEC_Divt( const fx32 a, const VecFx32* b, VecFx32* dst ) 
 {
 	GF_ASSERT( a );
@@ -54,6 +56,7 @@ static void	inline VEC_Divt( const fx32 a, const VecFx32* b, VecFx32* dst )
 	dst->z = FX_Div( b->z, a );
 }
 
+//ベクトルの投影演算（aをbへ投影）
 static void	inline VEC_Proj( const VecFx32* a, const VecFx32* b, VecFx32* dst ) 
 {
 	// Ｂは正規化済みであること
@@ -63,13 +66,23 @@ static void	inline VEC_Proj( const VecFx32* a, const VecFx32* b, VecFx32* dst )
 	VEC_Mult( scalar, b, dst );
 }
 
+//ベクトルの反射演算（aをb軸に対して反射）
+static void	inline VEC_Refrect( const VecFx32* a, const VecFx32* b, VecFx32* dst ) 
+{
+	// Ｂは正規化済みであること
+	VecFx32 vecP;
+
+	VEC_Proj( a, b, &vecP ); 
+	VEC_Set( &vecP, -vecP.x, -vecP.y, -vecP.z );	//負方向に変換
+	VEC_MultAdd( 2 * FX32_ONE, &vecP, a, dst );
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static BOOL	CheckOnGround( CALC_PH_MV* calcPHMV, VecFx32* pos, fx32* y )
 {
 	fx32 groundHeight;
 
-	//GetGroundPlaneHeight( pos, &groundHeight );
 	calcPHMV->getGroundHeight_func( pos, &groundHeight );
 	
 	if( pos->y <= groundHeight + (0.001f * FX32_ONE) ){	//0.1fは誤差許容幅
@@ -89,7 +102,6 @@ static void	GetGroundGravity( CALC_PH_MV* calcPHMV,
 	VecFx32 vecGravity = { 0, -FX32_ONE, 0 };
 
 	//平面の法線ベクトルにより地面に垂直で斜面に並行なベクトルを算出
-	//GetGroundPlaneVecN( pos, &vecN );				//平面の法線を取得
 	calcPHMV->getGroundVecN_func( pos, &vecN );		//平面の法線を取得
 	VEC_CrossProduct( &vecN, &vecGravity, &vecH );	//平面上の水平ベクトル算出
 	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
@@ -110,7 +122,6 @@ static void	GetGroundVec( CALC_PH_MV* calcPHMV,
 	VecFx32 vecN, vecH, vecV;
 
 	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
-	//GetGroundPlaneVecN( pos, &vecN );				//平面の法線を取得
 	calcPHMV->getGroundVecN_func( pos, &vecN );		//平面の法線を取得
 	VEC_CrossProduct( &vecN, vecDir, &vecH );		//平面上の水平ベクトル算出
 	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
@@ -122,6 +133,17 @@ static void	GetGroundVec( CALC_PH_MV* calcPHMV,
 		VEC_Set( vecGround, vecV.x, vecV.y, vecV.z );
 	}
 	VEC_Normalize( vecGround, vecGround );
+}
+
+static void	GetGroundRefrectVec( CALC_PH_MV* calcPHMV,
+		const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecRefrect )
+{
+	VecFx32 vecN;
+
+	calcPHMV->getGroundVecN_func( pos, &vecN );		//平面の法線を取得
+
+	VEC_Refrect( vecDir, &vecN, vecRefrect );
+	VEC_Normalize( vecRefrect, vecRefrect );
 }
 
 //------------------------------------------------------------------
@@ -303,7 +325,26 @@ BOOL	CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow )
 
 		//移動位置の計算
 		VEC_Add( posNow, &vecSpeed, &posNext );
-		CheckOnGround( calcPHMV, &posNext, &posNext.y );
+		//地面との衝突判定
+		if( CheckOnGround( calcPHMV, &posNext, &posNext.y ) == TRUE ){
+			VecFx32 vecDir, vecRefrect;
+			fx32	valSpeed;
+
+			//地面を軸にした反射ベクトル取得
+			VEC_Normalize( &vecSpeed, &vecDir );
+			GetGroundRefrectVec( calcPHMV, &posNext, &vecDir, &vecRefrect );
+
+			//スピード設定
+			if( calcPHMV->absorbVal == PHMV_FULL_ABSORB ){
+				valSpeed = 0;
+			} else {
+				valSpeed = VEC_Mag( &calcPHMV->vecSpeed ) - calcPHMV->absorbVal;
+				if( valSpeed < 0 ){
+					valSpeed = 0;
+				}
+			}
+			VEC_Mult( valSpeed, &vecRefrect, &calcPHMV->vecSpeed );
+		}
 	}
 	VEC_Subtract( &posNext, posNow, &calcPHMV->vecMove );
 	*posNow = posNext;

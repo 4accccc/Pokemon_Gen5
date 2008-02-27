@@ -631,6 +631,14 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 			SetPlayerControlDirection( pc, &direction );
 		}
 	}
+	//ジャンプ
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_JUMP) == TRUE ){
+		VecFx32 mvDir;
+
+		GetMousePos( gc->mes, &mvDir );
+		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
+		return;
+	}
 	//コントロール可否判定
 	if( CheckPlayerControlEnable( pc ) == FALSE ){
 		return;
@@ -713,6 +721,7 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 		SetPlayerControlCommand( pc, PCC_PUTON );
 		return;
 	}
+#if 0
 	//ジャンプ
 	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_JUMP) == TRUE ){
 		VecFx32 mvDir;
@@ -721,6 +730,7 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
 		return;
 	}
+#endif
 	//移動
 	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_MOVESTART) == TRUE ){
 		VecFx32 mvDir;

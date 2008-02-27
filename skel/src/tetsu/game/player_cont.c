@@ -131,10 +131,10 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int targetAct, int netID, HEA
 		setup.getGroundVecN_func = GetGroundPlaneVecN;
 		setup.getGroundHeight_func = GetGroundPlaneHeight;
 
-		setup.gravityMove = 9.8f * FX32_ONE/86;
+		setup.gravityMove = 9.8f * FX32_ONE/30;//86;
 		setup.gravityFall = 9.8f * FX32_ONE/30;
 		setup.planeMarginTheta = 0x0800;
-		setup.absorbVal = 0;
+		setup.absorbVal = PHMV_FULL_ABSORB;
 		setup.enableMoveTheta = 0x3800;
 
 		pc->calcPHMV = CreateCalcPhisicsMoving( heapID, &setup );
@@ -286,6 +286,7 @@ void SetPlayerAttackCommand
 void SetPlayerMoveCommand
 	( PLAYER_CONTROL* pc, PLAYER_CONTROL_COMMAND command, VecFx32* mvDir )
 {
+#if 0
 	VecFx32 tmpVec, rotVec;
 
 	pc->contCommand = command;
@@ -295,6 +296,22 @@ void SetPlayerMoveCommand
 	VEC_Normalize( &tmpVec, &tmpVec );	//正規化
 
 	pc->moveVec = tmpVec;
+#else
+	VecFx32 tmpVec, rotVec;
+
+	if( command == PCC_JUMP ){
+		if( pc->subSeq != 0 ){
+			return;
+		}
+	}
+	pc->contCommand = command;
+	//進行ベクトルの算出
+	VEC_Subtract( mvDir, &pc->contTrans, &tmpVec );
+	tmpVec.y = 0;	//XZ軸についての精度をあげるため0固定
+	VEC_Normalize( &tmpVec, &tmpVec );	//正規化
+
+	pc->moveVec = tmpVec;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -602,12 +619,24 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
+//#define JUMP_SPEEDY (FX32_ONE*3.5f)
 #define JUMP_SPEEDY (FX32_ONE*6)
 
 static void jumpControl( PLAYER_CONTROL* pc )
 {
 	switch( pc->subSeq ){
 	case 0:
+		{
+			VecFx32	rotVec;		
+
+			//方向設定
+			rotVec.x = 0;
+			rotVec.y = FX_Atan2Idx( -pc->moveVec.z, pc->moveVec.x ) + 0x4000;
+			rotVec.z = 0;
+
+			pc->nowDirection = rotVec.y - 0x8000;
+			Set3DactRotate( pc->sceneAct, &rotVec );
+		}
 		anmSet( pc, ACTANM_CMD_JUMP_RDY );
 		pc->forceMoveing = TRUE;
 		pc->subSeq++;
@@ -618,7 +647,7 @@ static void jumpControl( PLAYER_CONTROL* pc )
 		pc->subSeq++;
 		break;
 	case 2:
-		if( CheckOnFloorPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE ){
+		if( GetMoveSpeedPHMV( pc->calcPHMV ) == 0 ){
 			ResetMovePHMV( pc->calcPHMV );
 			anmSet( pc, ACTANM_CMD_JUMP_END );
 			pc->subSeq++;
