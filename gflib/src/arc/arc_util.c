@@ -165,8 +165,12 @@ void GFL_ARC_UTIL_TransVramScreen(u32 arcID, u32 datID, u32 frm, u32 offs, u32 t
 			if( GFL_BG_GetScreenBufferAdrs( frm ) != NULL )
 			{
 				GFL_BG_LoadScreenBuffer( frm, scrnData->rawData, transSize );
+				GFL_BG_LoadScreenReq( frm );
 			}
-			GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
+			else
+			{
+				GFL_BG_LoadScreen( frm, scrnData->rawData, transSize, offs );
+			}
 		}
 		GFL_HEAP_FreeMemory( arcData );
 	}
