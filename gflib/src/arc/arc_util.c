@@ -150,7 +150,7 @@ u32 GFL_ARC_UTIL_TransVramObjCharacter( u32 arcID, u32 datID, OBJTYPE objType, u
 //--------------------------------------------------------------------------------------------
 void GFL_ARC_UTIL_TransVramScreen(u32 arcID, u32 datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID)
 {
-	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, heapID );
+	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, GetHeapLowID(heapID) );
 
 	{
 		NNSG2dScreenData* scrnData;
@@ -285,18 +285,30 @@ void GFL_ARC_UTIL_TransVramPaletteEx( u32 arcID, u32 datID, PALTYPE palType, u32
 		GXS_LoadOBJExtPltt,
 	};
 
-	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, FALSE, heapID );
+	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, FALSE, GetHeapLowID(heapID) );
 
 	if( arcData != NULL )
 	{
 		NNSG2dPaletteData* palData;
+		NNSG2dPaletteCompressInfo*  cmpInfo;
+		BOOL  cmpFlag;
 
+		cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 		if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) )
 		{
 			(u8*)(palData->pRawData) += srcOfs;
 			if( transSize == 0 )
 			{
-				transSize = palData->szByte - srcOfs;
+				if( !cmpFlag )
+				{
+					transSize = palData->szByte;
+				}
+				else
+				{
+					u32 onePlttSize = (palData->fmt == GX_TEXFMT_PLTT16)? 0x20 : 0x200;
+					transSize = cmpInfo->numPalette * onePlttSize;
+				}
+				transSize -= srcOfs;
 			}
 			DC_FlushRange( palData->pRawData, transSize );
 
@@ -356,7 +368,7 @@ void GFL_ARC_UTIL_TransVramPaletteEx( u32 arcID, u32 datID, PALTYPE palType, u32
 //------------------------------------------------------------------
 void GFL_ARC_UTIL_TransVramPaletteMakeProxy( u32 arcID, u32 datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy )
 {
-	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, FALSE, heapID );
+	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, FALSE, GetHeapLowID(heapID) );
 
 	if( arcData != NULL )
 	{
@@ -419,7 +431,7 @@ u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( u32 arcID, u32 datID, BOOL compres
 		NNS_G2dLoadImage2DMapping,
 	};
 
-	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, heapID );
+	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, GetHeapLowID(heapID) );
 	u32  transed_size = 0;
 
 	if( arcData != NULL )
@@ -479,7 +491,7 @@ void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( u32 arcID, u32 d
 		NNS_G2dLoadImage2DMapping,
 	};
 
-	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, heapID );
+	void* arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, GetHeapLowID(heapID) );
 
 	if( arcData != NULL )
 	{
