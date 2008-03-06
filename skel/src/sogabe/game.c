@@ -52,8 +52,6 @@ static	GFL_TCB	*raster_h_blank=NULL;
 static	GFL_TCB	*raster_v_blank=NULL;
 #endif
 
-vu16	cl_add_actor=0;
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	ゲーム初期化
@@ -301,7 +299,6 @@ void	YT_InitGame(GAME_PARAM *gp)
 //-----------------------------------------------------------------------------
 void	YT_MainGame(GAME_PARAM *gp)
 {
-	OS_TPrintf("cl_act:%d\n",cl_add_actor);
 	//ゲームシーケンス処理
 	YT_MainGameAct(gp);
 

@@ -185,6 +185,7 @@ typedef struct {
     u8 count;
     u8 posx;
     u8 posy;
+	u8 player_no;
 } COMM_YOSSY_ANIM_ST;
 
 //-----------------------------------------------------------------------------
@@ -400,6 +401,7 @@ static void _recvCLACTDelete(const int netID, const int size, const void* pData,
         return;
     }
     if(pNet->pCLACT[pPos->clactNo] != NULL){
+        GFL_AREAMAN_Release(gp->clact_area,pPos->clactNo,1);
         GFL_CLACT_WK_Remove(pNet->pCLACT[pPos->clactNo]);
         pNet->pCLACT[pPos->clactNo] = NULL;
     }
@@ -423,7 +425,7 @@ static void _recvYossyAnim(const int netID, const int size, const void* pData, v
     if(netID==GFL_NET_GetNetID(pNet->pNetHandle[1])){
         return;
     }
-    YT_YossyBirthAnimeTaskSet(gp,NULL,pYossy->posx,pYossy->posy,pYossy->count);
+    YT_YossyBirthAnimeTaskSet(gp,pYossy->player_no,pYossy->posx,pYossy->posy,pYossy->count);
 }
 
 //----------------------------------------------------------------------------
@@ -625,10 +627,11 @@ void YT_NET_SendPlayerAnmReq(int player_no,int anm_no,int pat_no,u16 line_no,int
  */
 //-----------------------------------------------------------------------------
 
-void YT_NetSendYossyBirthAnime(u8 posx,u8 posy,u8 count,NET_PARAM* pNet)
+void YT_NetSendYossyBirthAnime(int player_no,u8 posx,u8 posy,u8 count,NET_PARAM* pNet)
 {
     COMM_YOSSY_ANIM_ST sYossy;
     if(pNet){
+        sYossy.player_no = player_no;
         sYossy.posx = posx;
         sYossy.posy = posy;
         sYossy.count = count;

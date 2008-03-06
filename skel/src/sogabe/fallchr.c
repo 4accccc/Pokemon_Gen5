@@ -46,8 +46,6 @@ typedef struct{
 	int					count;
 }YOSSY_BIRTH_ANIME;
 
-extern	vu16	cl_add_actor;
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	落下キャラアニメーションテーブル
@@ -101,8 +99,16 @@ FALL_CHR_PARAM	*YT_InitFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no,in
 	fcp->type=type;
 	fcp->line_no=line_no;
 	fcp->height=height;
-	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
-	cl_add_actor++;
+	if(player_no){
+		fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
+	}
+	else{
+		fcp->clact_no=GFL_AREAMAN_ReserveAutoLo(gp->clact_area,1);
+	}
+
+#ifdef DEBUG_ONLY_FOR_sogabe
+	OS_TPrintf("clact_no:%d\n",fcp->clact_no);
+#endif
 
 	GFL_TCB_AddTask(gp->tcbsys,YT_MainFallChr,fcp,TCB_PRI_FALL_CHR);
 	gp->clact->clact_work[fcp->clact_no]=fcp->clwk=YT_ClactWorkAdd(fcp,height);
@@ -140,7 +146,17 @@ GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no,i
 	fcp->type=type;
 	fcp->line_no=line_no;
 	fcp->height=height;
-	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
+	if(player_no){
+		fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);
+	}
+	else{
+		fcp->clact_no=GFL_AREAMAN_ReserveAutoLo(gp->clact_area,1);
+	}
+
+#ifdef DEBUG_ONLY_FOR_sogabe
+	OS_TPrintf("clact_no_net:%d\n",fcp->clact_no);
+#endif
+
     pCLWK=YT_ClactWorkAdd(fcp,height);
 	GFL_CLACT_WK_GetWldPos(pCLWK,&fcp->now_pos);
     GFL_HEAP_FreeMemory(fcp);
@@ -164,8 +180,6 @@ static void YT_DeleteFallChr(GFL_CLWK* clwk,FALL_CHR_PARAM *fcp,GFL_TCB *tcb,NET
     if(pNet){
         YT_NET_DeleteReq(fcp->clact_no, pNet);
     }
-
-	cl_add_actor--;
 
     GFL_CLACT_WK_Remove(clwk);
     GFL_HEAP_FreeMemory(fcp);
@@ -1166,7 +1180,7 @@ static	void	YT_YossyBirth(GAME_PARAM *gp,FALL_CHR_PARAM *fcp)
         u8 posx = 16+24*fcp->line_no+128*fcp->player_no;
         u8 posy = height_tbl[height];
         YT_YossyBirthAnimeTaskSet(gp,fcp->player_no,posx,posy,fcp->chr_count);
-        YT_NetSendYossyBirthAnime(posx,posy,fcp->chr_count,gp->pNetParam);
+        YT_NetSendYossyBirthAnime(fcp->player_no,posx,posy,fcp->chr_count,gp->pNetParam);
     }
     
 	//タマゴの上にキャラがいた場合は、連鎖落下シーケンスをセット
@@ -1290,8 +1304,8 @@ static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work)
 			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);
 			GFL_BMPWIN_TransVramCharacter(yba->gp->yossy_bmpwin);
 			ps->status.birth_flag=0;
-			ps2->egg_fall_count=yba->count;
-//			ps->egg_fall_count=yba->count;
+			ps2->egg_fall_count+=yba->count;
+//			ps->egg_fall_count+=yba->count;
 	        YT_NetSendAddChar(yba->player_no^1, yba->count,yba->gp->pNetParam);
 			GFL_HEAP_FreeMemory(yba);
 			GFL_TCB_DeleteTask(tcb);
