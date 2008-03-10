@@ -217,6 +217,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // Infomationデータ取得関数
+    _netBeaconGetSizeFunc,  // Infomationデータサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -737,44 +739,15 @@ void KEY_YT_NET_SendPosReq(int clactno,s16 x, s16 y,NET_PARAM* pNet)
 BOOL KEY_YT_NET_Main(NET_PARAM* pNet)
 {
     switch(pNet->seq){
-#if GFL_NET_WIFI
-      case _CONNECT_WIFI:
-        GFL_NET_WIFI_InitUserData(aGFLNetInit.myUserData);
-        pNet->pNetHandle[1] = GFL_NET_CreateHandle();
-        GFL_NET_WifiLogin( pNet->pNetHandle[1] );    // wifiLogin マッチング待機へ移動
-        _SEQCHANGE( _CONNECTING_WIFI );
-        break;
-      case _CONNECTING_WIFI:
-        if( GFL_NET_IsWifiLobby( pNet->pNetHandle[1] ) ){
-            GFL_NET_StartRandomMatch(pNet->pNetHandle[1]); // ランダムマッチ状態にする
-            _SEQCHANGE( _WIFI_MATCHING );
-        }
-        break;
-      case _WIFI_MATCHING:
-        {
-            int localConnect= GFL_NET_WIFI_GetLocalConnectNo();
-            if(localConnect != -1){
-                if(localConnect==0){
-                    pNet->pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
-                    GFL_NET_InitServer(pNet->pNetHandle[0]);       // サーバーにする
-                }
-                _SEQCHANGE( _CONNECT_WAIT );
-            }
-        }
-        break;
-#endif
       case _INIT_WAIT_PARENT:
         if(GFL_NET_IsInit()){
-            pNet->pNetHandle[0] = GFL_NET_CreateHandle();   // ハンドル作成
-            GFL_NET_InitServer(pNet->pNetHandle[0]); // 自動接続
-            pNet->pNetHandle[1] = GFL_NET_CreateHandle();   // ハンドル作成
+            GFL_NET_InitServer(); // 自動接続
             _SEQCHANGE(_CONNECT_WAIT);
         }
         break;
       case _INIT_WAIT_CHILD:
         if(GFL_NET_IsInit()){
-            pNet->pNetHandle[1] = GFL_NET_CreateHandle();   // ハンドル作成
-            GFL_NET_StartBeaconScan(pNet->pNetHandle[1]); // 自動接続
+            GFL_NET_StartBeaconScan(); // 自動接続
             _SEQCHANGE( _SEARCH_CHILD );
         }
         break;
@@ -782,7 +755,7 @@ BOOL KEY_YT_NET_Main(NET_PARAM* pNet)
         {
             u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
             if(pData){
-                GFL_NET_ConnectToParent(pNet->pNetHandle[1], pData);
+                GFL_NET_ConnectToParent(pData);
                 _SEQCHANGE( _CONNECT_WAIT );
             }
         }
@@ -792,22 +765,23 @@ BOOL KEY_YT_NET_Main(NET_PARAM* pNet)
         break;
       case _NEGO_START:
         if(KEY_YT_NET_IsParent(pNet)){  //親機の場合
-            if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
-                if(GFL_NET_RequestNegotiation( pNet->pNetHandle[1] )){
+            if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
+                if(GFL_NET_HANDLE_RequestNegotiation()){
                     _SEQCHANGE( _TIM_START );
                 }
             }
         }
         else{
-//            if(GFL_NET_GetNegotiationConnectNum( pNet->pNetHandle[1]) != 0){
-                if(GFL_NET_RequestNegotiation( pNet->pNetHandle[1] )){
+//            if(GFL_NET_HANDLE_GetNumNegotiation( pNet->pNetHandle[1]) != 0){
+                if(GFL_NET_HANDLE_RequestNegotiation( )){
                     _SEQCHANGE( _TIM_START );
                 }
   //          }
         }
         break;
       case _TIM_START:
-        if(GFL_NET_GetNegotiationConnectNum(pNet->pNetHandle[1])==2){
+        if(GFL_NET_HANDLE_GetNumNegotiation()==2){
+            pNet->pNetHandle[1] = GFL_NET_HANDLE_GetCurrentHandle();   // ハンドル作成
             GFL_NET_TimingSyncStart(pNet->pNetHandle[1] , _TEST_TIMING);
             _SEQCHANGE( _TIM_OK );
         }
@@ -818,8 +792,8 @@ BOOL KEY_YT_NET_Main(NET_PARAM* pNet)
 #if GFL_NET_WIFI
             GFL_NET_SetWifiBothNet(FALSE);  // WIFIはdefaultで非同期接続にしておく
 #endif
-            GFL_NET_SetNoChildErrorCheck(pNet->pNetHandle[1], TRUE);
-            GFL_NET_SetAutoErrorCheck(pNet->pNetHandle[1], TRUE);
+            GFL_NET_SetNoChildErrorCheck(TRUE);
+            GFL_NET_SetAutoErrorCheck(TRUE);
             _SEQCHANGE( _LOOP );
         }
         break;

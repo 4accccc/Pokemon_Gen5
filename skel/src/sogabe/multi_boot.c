@@ -338,11 +338,11 @@ void	YT_MainMultiBoot(GAME_PARAM *gp)
 	gp->wait_work++;
 	switch(gp->seq_no){
 	case SEQ_MB_ICHNEUMON_TRANS:
-//		GFL_NET_InitIchneumon();
+		GFL_NET_InitIchneumon(NULL,NULL);
 		gp->seq_no++;
 		break;
 	case SEQ_MB_ICHNEUMON_TRANS_WAIT:
-		if((GFL_NET_IsInitIchneumon()==TRUE)&&(GFL_FADE_CheckFade()==FALSE)){
+		if((GFL_NET_IsIchneumon()==TRUE)&&(GFL_FADE_CheckFade()==FALSE)){
 			gp->seq_no++;
 		}
 		break;
@@ -377,7 +377,7 @@ void	YT_MainMultiBoot(GAME_PARAM *gp)
 		break;
 	case SEQ_MB_END:
 		if(GFL_FADE_CheckFade()==FALSE){
-			GFL_NET_ExitIchneumon();
+			GFL_NET_ExitIchneumon(NULL,NULL);
 			MB_End();
 			GFL_BG_Exit();
 			YT_JobNoSet(gp,YT_InitTitleNo);

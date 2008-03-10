@@ -2168,5 +2168,18 @@ void mydwc_stopvchat(void)
     _dWork->backupBitmap = 0;
 }
 
+//==============================================================================
+/**
+ * @brief   MYDWC‚ª‰Šú‰»Ï‚İ‚©‚Ç‚¤‚©
+ * @param   void
+ * @retval  TRUE  ‰Šú‰»Ï‚İ
+ */
+//==============================================================================
+
+BOOL GFL_NET_DWC_IsInit(void)
+{
+    return (_dWork != NULL);
+}
+
 
 #endif //GFL_NET_WIFI

@@ -85,7 +85,6 @@ struct _NET_WL_WORK{
     u8  backupBssid[GFL_NET_MACHINE_MAX][WM_SIZE_BSSID];   // 今まで接続していた
     u16 bconUnCatchTime[SCAN_PARENT_COUNT_MAX]; ///< 親機のビーコンを拾わなかった時間+データがあるかどうか
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
-    GFL_NETHANDLE* pNetHandle;
     _PARENTFIND_CALLBACK pCallback;
     HEAPID heapID;
     u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
@@ -781,7 +780,7 @@ static BOOL _parentFindCallback(WMBssDesc* pBeacon)
         return FALSE;
     }
     if(pNetWL->pCallback){
-        pNetWL->pCallback(pNetWL->pNetHandle);
+        pNetWL->pCallback();
     }
     return TRUE;
 }
@@ -826,10 +825,10 @@ BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_
 }
 */
 
-void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
+void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback)
 {
-    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();    pNetWL->bEndScan = 0;
-    pNetWL->pNetHandle = pNetHandle;
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
+    pNetWL->bEndScan = 0;
     pNetWL->pCallback = pCallback;
     WH_SetScanCallback(_parentFindCallback);
 }
@@ -843,7 +842,7 @@ void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE
  * @retval  子機接続を親機に送ったらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
@@ -854,7 +853,6 @@ BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCall
     if (WH_GetSystemState() == WH_SYSSTATE_IDLE) {
         NET_PRINT("子機 接続開始\n");
         pNetWL->bEndScan = 0;
-        pNetWL->pNetHandle = pNetHandle;
         pNetWL->pCallback = pCallback;
         WH_ChildConnectAuto(WH_CONNECTMODE_MP_CHILD, macAddress, 0);
         WH_SetScanCallback(_parentFindCallback);
@@ -979,7 +977,7 @@ static void _stateProcess(u16 bitmap)
         pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
     }
     if(pNetWL->bErrorCheck){
-        if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
+        if((WH_GetCurrentAid() == GFL_NET_PARENT_NETID) && (!GFL_NET_WLIsChildsConnecting())){
             pNetWL->bErrorState = TRUE;   ///< エラーを引き起こしている場合その状態をもちます
         }
         if(pNetWL->errCheckBitmap > bitmap){  // 切断した場合必ず数字が減る 増える分にはOK
@@ -987,7 +985,7 @@ static void _stateProcess(u16 bitmap)
         }
     }
     if(WH_ERRCODE_FATAL == WH_GetLastError()){
-        GFI_NET_FatalErrorFunc(NULL, 0);
+        GFI_NET_FatalErrorFunc(0);
     }
     switch (state) {
       case WH_SYSSTATE_STOP:
@@ -1059,7 +1057,7 @@ BOOL GFL_NET_WL_IsConnectLowDevice(u16 netID)
         return FALSE;
     }
 
-    if((WH_GetCurrentAid() == COMM_PARENT_ID) && (!GFL_NET_WLIsChildsConnecting())){
+    if((WH_GetCurrentAid() == GFL_NET_PARENT_NETID) && (!GFL_NET_WLIsChildsConnecting())){
         return FALSE;
     }
     

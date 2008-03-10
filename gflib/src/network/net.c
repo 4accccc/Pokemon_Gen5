@@ -10,7 +10,8 @@
 #include "gflib.h"
 
 #include "net_def.h"
-#include "device/net_beacon.h"
+#include "net_local.h"
+#include "device/net_whpipe.h"
 #include "device/dwc_rapcommon.h"
 #include "net_system.h"
 #include "net_command.h"
@@ -22,211 +23,23 @@
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
-#include "tool/net_tool.h"
+#include "net_handle.h"
 
 // 通信で使用するCreateHEAP量
 
 #define _HEAPSIZE_NET              (0xE000)          ///< NET関連のメモリ領域
 #define _HEAPSIZE_WIFI             (MYDWC_HEAPSIZE+0xA000)  ///< DWCが使用する領域
 
-/// @brief  通信システム管理構造体
-struct _GFL_NETSYS{
-    GFLNetInitializeStruct aNetInit;  ///< 初期化構造体のコピー
-    GFL_NETHANDLE* pNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
-    UI_KEYSYS* pKey[GFL_NET_HANDLE_MAX];  ///< キーバッファ
-    GFL_NETHANDLE* pNetHandleInit;  ///< 初期化用ハンドル
-    GFL_NETWL* pNetWL;   ///<  ワイヤレスマネージャーポインタ
-};
-
 static GFL_NETSYS* _pNetSys = NULL; // 通信のメモリーを管理するstatic変数
 
 // コンポーネント転送終了の確認用  イクニューモンコンポーネント処理を移動させるときはこれも移動
-static volatile u8   startCheck;
+static PTRIchneumonCallback pIchneumonCallback = NULL;
+static u8 bLoadIchneumon = FALSE;
 
 //==============================================================================
 /**
- * @brief       netHandleを管理マネージャーに追加
- * @param       pNet      通信システム管理構造体
- * @param       pHandle   通信ハンドル
- * @return      追加した番号
- */
-//==============================================================================
-static int _addNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
-{
-    int i;
-
-    for(i = 0;i < GFL_NET_HANDLE_MAX; i++){
-        if(pNet->pNetHandle[i] == NULL){
-            pNet->pNetHandle[i] = pHandle;
-            return i;
-        }
-    }
-    OS_TPanic("no handle");
-    return 0;
-}
-
-//==============================================================================
-/**
- * @brief       netHandleの番号を得る
- * @param       pNet      通信システム管理構造体
- * @param       pHandle   通信ハンドル
- * @return      追加した番号
- */
-//==============================================================================
-static int _numNetHandle(GFL_NETSYS* pNet, GFL_NETHANDLE* pHandle)
-{
-    int i;
-
-    for(i = 0;i < GFL_NET_HANDLE_MAX; i++){
-        if(pNet->pNetHandle[i] == pHandle){
-            return i;
-        }
-    }
-    return -1;
-}
-
-//==============================================================================
-/**
- * @brief       netHandleの中身を消す
- * @param       pNetHandle   通信ハンドル
- * @return      追加した番号
- */
-//==============================================================================
-static void _deleteHandle(GFL_NETHANDLE* pNetHandle)
-{
-    if(pNetHandle->pParent){
-        GFL_HEAP_FreeMemory(pNetHandle->pParent);
-    }
-    GFL_NET_TOOL_End(pNetHandle->pTool);
-//    if(pNetHandle->pKey){
-  //      GFL_HEAP_FreeMemory(pNetHandle->pKey);
-    //}
-    GFL_HEAP_FreeMemory(pNetHandle);
-}
-
-//==============================================================================
-/**
- * @brief       netHandleを消す 非公開関数
- * @param       pHandle   通信ハンドル
- * @return      none
- */
-//==============================================================================
-void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle)
-{
-    int i;
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
-    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
-        if(pNet->pNetHandle[i]==pHandle){
-            if(pNet->pNetHandleInit == pHandle){
-                pNet->pNetHandleInit = NULL;
-            }
-            _deleteHandle(pNet->pNetHandle[i]);
-            pNet->pNetHandle[i] = NULL;
-        }
-    }
-}
-
-//==============================================================================
-/**
- * @brief       netHandleを全て消す
- * @param       pNet      通信システム管理構造体
- * @return      none
- */
-//==============================================================================
-static void _deleteAllNetHandle(GFL_NETSYS* pNet)
-{
-    int i;
-
-    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
-        if(pNet->pNetHandle[i]!=NULL){
-            _deleteHandle(pNet->pNetHandle[i]);
-            pNet->pNetHandle[i] = NULL;
-        }
-    }
-}
-
-//==============================================================================
-/**
- * @brief       idに沿ったnetHandleを出す  非公開関数
- * @param       netID    id
- * @return      netHandle
- */
-//==============================================================================
-GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID)
-{
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    return pNet->pNetHandle[netID];
-}
-
-//==============================================================================
-/**
- * @brief       netHandle のstateハンドルを得る 非公開関数
- * @param       pNet      通信システム管理構造体
- * @return      PTRStateFunc
- */
-//==============================================================================
-PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle)
-{
-    return pHandle->state;
-}
-
-//==============================================================================
-/**
- * @brief       自分のネゴシエーションがすんでいるかどうか
- * @param[in]   pHandle   通信ハンドル
- * @return      すんでいる場合TRUE   まだの場合FALSE
- */
-//==============================================================================
-BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle)
-{
-    if(pHandle){
-        return (pHandle->negotiation == _NEGOTIATION_OK);
-    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief       ネゴシエーション開始を親に送信する
- * @param[in]   pHandle   通信ハンドル
- * @return      送信に成功したらTRUE
- */
-//==============================================================================
-BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle)
-{
-    u8 id = GFL_NET_SystemGetCurrentID()+1;
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-//    id = id * 8 + _numNetHandle(pNet, pHandle);
-    pHandle->creatureNo = id;
-
-    if(GFL_NET_SystemIsConnect(GFL_NET_SystemGetCurrentID())){
-        if(pHandle->negoCount==0){
-            OS_TPrintf("GFL_NET_CMD_NEGOTIATION %d\n",id);
-            return GFL_NET_SendData(pHandle, GFL_NET_CMD_NEGOTIATION, &id);
-        }
-        else{
-            pHandle->negoCount--;
-        }
-    }
-    return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief       toolのworkポインタを得る 非公開関数
- * @param[in]   pHandle  通信ハンドル
- * @return      NET_TOOLSYSポインタ
- */
-//==============================================================================
-NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pHandle)
-{
-    return pHandle->pTool;
-}
-
-//==============================================================================
-/**
- * @brief    通信のboot時初期化
+ * @brief    boot時の通信初期化
+ *           WIFIのIPL初期設定が起動時に必要な為
  * @param    heapID    使用するtempメモリID
  * @param    errorFunc エラー時に呼び出す関数
  * @return   none
@@ -262,23 +75,19 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
         NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
 
         GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
-        {
-            GFL_NETHANDLE* pNetHandle = GFL_NET_CreateHandle();
-            GFL_NET_StateDeviceInitialize(pNetHandle);
-            pNet->pNetHandleInit = pNetHandle;
-        }
+        GFL_NET_StateDeviceInitialize(pNetInit->netHeapID);
         for(index = 0; index < pNet->aNetInit.maxConnectNum; index++){
             _pNetSys->pKey[index] = GFL_UI_KEY_Init(pNet->aNetInit.netHeapID);
         }
 
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
-    WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
+    GFL_NET_WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
 }
 
 //==============================================================================
 /**
- * @brief 通信初期化が完了したかどうかを確認する
+ * @brief 通信初期化が完了したかどうかを確認する  今のところIchneumonと同じ
  * @retval TRUE   初期化終了
  * @retval FALSE  初期化がまだ終わっていない
  */
@@ -287,10 +96,17 @@ BOOL GFL_NET_IsInit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-    if(pNet->pNetHandleInit!=NULL){
-        return FALSE;
+    if(pNet->aNetInit.bWiFi){
+#if GFL_NET_WIFI
+        return GFL_NET_DWC_IsInit();
+#endif
     }
-    return TRUE;
+    else{
+        if( _GFL_NET_GetNETWL()){
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 //==============================================================================
@@ -314,8 +130,8 @@ BOOL GFL_NET_Exit(void)
     for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
         GFL_HEAP_FreeMemory(pNet->pKey[index]);
     }
-    WirelessIconEasyEnd();
-    _deleteAllNetHandle(pNet);
+    GFL_NET_WirelessIconEasyEnd();
+    GFL_NET_HANDLE_DeleteAll(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;
 
@@ -387,38 +203,11 @@ BOOL GFL_NET_Main(void)
     if(pNet==NULL){
         return TRUE;
     }
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-        if(pNet->pNetHandle[i]!=NULL){
-            GFL_NET_StateMainProc(pNet->pNetHandle[i]);  // この内部でhandleを消すことがある
-        }
-        if(pNet->pNetHandle[i]!=NULL){
-            GFL_NET_TOOL_TimingSyncSend(pNet->pNetHandle[i]);
-            GFL_NET_StateTransmissonMain(pNet->pNetHandle[i]);
-        }
-    }
+    GFL_NET_WirelessIconEasyFunc();
+    GFL_NET_StateMainProc();
+    GFL_NET_HANDLE_MainProc();
     GFL_NET_SystemUpdateData();
     return GFL_NET_SystemCheckDataSharing();
-}
-
-//==============================================================================
-/**
- * @brief   通信ハンドルを作る   通信一個単位のワークエリアの事
- * @return  GFL_NETHANDLE  通信ハンドルのポインタ
- */
-//==============================================================================
-GFL_NETHANDLE* GFL_NET_CreateHandle(void)
-{
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    u64 seed;
-    GFL_NETHANDLE* pHandle = GFL_HEAP_AllocClearMemory(pNet->aNetInit.netHeapID, sizeof(GFL_NETHANDLE));
-
-    pHandle->negoCount=10;
-    _addNetHandle(pNet, pHandle);
-    pHandle->pTool = GFL_NET_TOOL_Init(pNet->aNetInit.netHeapID, pNet->aNetInit.maxConnectNum);
-    seed = GFL_STD_MtRand( 0 );
-    seed = (seed << 32) + GFL_STD_MtRand( 0 );
-    GFL_STD_RandInit(&pHandle->sRand,seed);
-    return pHandle;
 }
 
 
@@ -432,8 +221,7 @@ GFL_NETHANDLE* GFL_NET_CreateHandle(void)
 //==============================================================================
 void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
 {
-    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-    GFL_NET_StateConnectMacAddress(pHandle, TRUE);
+    GFL_NET_StateConnectMacAddress(macAddress,TRUE);
 }
 
 //==============================================================================
@@ -444,44 +232,42 @@ void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
+void GFL_NET_ConnectToParent(u8* macAddress)
 {
-    GFL_STD_MemCopy(macAddress, pHandle->aMacAddress, sizeof(pHandle->aMacAddress));
-    GFL_NET_StateConnectMacAddress(pHandle, FALSE);
+    GFL_NET_StateConnectMacAddress(macAddress, FALSE);
 }
 
 //==============================================================================
 /**
  * @brief   子機になりビーコンを集める
- * @param   GFL_NETHANDLE  通信ハンドルのポインタ
+ * @param   @@OO エンドコールバックが必要
  * @return  none
  */
 //==============================================================================
-void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle)
+void GFL_NET_StartBeaconScan(void)
 {
-    GFL_NET_StateBeaconScan(pHandle);
+    GFL_NET_StateBeaconScan();
 }
 
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
  * @return   none
  */
 //==============================================================================
-void GFL_NET_InitServer(GFL_NETHANDLE* pHandle)
+void GFL_NET_InitServer(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
 #if GFL_NET_WIFI
     if(pNet->aNetInit.bWiFi){
-        GFL_NET_StateConnectWifiParent(pHandle, pNet->aNetInit.netHeapID);
+        GFL_NET_StateConnectWifiParent(pNet->aNetInit.netHeapID);
     }
     else{
-        GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
+        GFL_NET_StateConnectParent(pNet->aNetInit.netHeapID);
     }
 #else
-    GFL_NET_StateConnectParent(pHandle, pNet->aNetInit.netHeapID);
+    GFL_NET_StateConnectParent(pNet->aNetInit.netHeapID);
 #endif
 }
 
@@ -493,10 +279,10 @@ void GFL_NET_InitServer(GFL_NETHANDLE* pHandle)
  * @return   none
  */
 //==============================================================================
-void GFL_NET_CreateServer(GFL_NETHANDLE* pHandle)
+void GFL_NET_CreateServer(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GFL_NET_StateCreateParent(pHandle,pNet->aNetInit.netHeapID);
+    GFL_NET_StateCreateParent(pNet->aNetInit.netHeapID);
 }
 
 //==============================================================================
@@ -509,7 +295,7 @@ void GFL_NET_CreateServer(GFL_NETHANDLE* pHandle)
 void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GFL_NET_StateChangeoverConnect(pHandle, pNet->aNetInit.netHeapID);
+    GFL_NET_StateChangeoverConnect(pNet->aNetInit.netHeapID);
 }
 
 //==============================================================================
@@ -521,14 +307,11 @@ void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
  */
 //==============================================================================
 
-void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle)
+void GFL_NET_WifiLogin(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-    GFL_NET_StateWifiEnterLogin(pHandle,
-                                pNet->aNetInit.netHeapID, pNet->aNetInit.wifiHeapID);
-
-
+    GFL_NET_StateWifiEnterLogin(pNet->aNetInit.netHeapID, pNet->aNetInit.wifiHeapID);
 }
 
 //==============================================================================
@@ -540,7 +323,7 @@ void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle)
 //==============================================================================
 NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle)
 {
-    return pNetHandle->creatureNo;
+    return GFL_NET_HANDLE_GetNetHandleID(pNetHandle);
 }
 
 //==============================================================================
@@ -551,7 +334,7 @@ NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 int GFL_NET_GetConnectNum(void)
 {
-    return GFL_NET_SystemGetConnectNum();
+    return GFL_NET_HANDLE_GetNumNegotiation();
 }
 
 //==============================================================================
@@ -562,28 +345,9 @@ int GFL_NET_GetConnectNum(void)
  * @retval  BOOL  接続していたらTRUE
  */
 //==============================================================================
-BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id)
+BOOL GFL_NET_IsConnectMember(NetID id)
 {
-    return pNet->negotiationID[id];
-}
-
-//==============================================================================
-/**
- * @brief   ネゴシエーション済み人数を得る
- * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
- * @return   人数
- */
-//==============================================================================
-int GFL_NET_GetNegotiationConnectNum(GFL_NETHANDLE* pNet)
-{
-    int j=0,i;
-
-    for(i = 0; i < GFL_NET_HANDLE_MAX ; i++){
-        if( pNet->negotiationID[i] ){
-            j++;
-        }
-    }
-    return j;
+    return GFL_NET_HANDLE_IsNegotiation(GFL_NET_GetNetHandle(id));
 }
 
 //==============================================================================
@@ -594,20 +358,7 @@ int GFL_NET_GetNegotiationConnectNum(GFL_NETHANDLE* pNet)
 //==============================================================================
 void GFL_NET_Disconnect(void)
 {
-    int i,userNo = -1;
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-
-    if(pNet){
-        for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-            if(pNet->pNetHandle[i]){
-                //            GFL_NET_SendData(pNet->pNetHandle[i],GFL_NET_CMD_EXIT,NULL); ///終了を全員に送信
-                userNo = i;
-            }
-        }
-    }
-    if(userNo != -1){
-        GFL_NET_StateExit(pNet->pNetHandle[userNo]);
-    }
+    GFL_NET_StateExit();
 }
 
 
@@ -655,7 +406,7 @@ void GFL_NET_ReloadIcon(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     if(pNet){
-        WirelessIconEasyXY( pNet->aNetInit.iconX, pNet->aNetInit.iconY, pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
+        GFL_NET_WirelessIconEasyXY( pNet->aNetInit.iconX, pNet->aNetInit.iconY, pNet->aNetInit.bWiFi, pNet->aNetInit.netHeapID);
     }
 }
 
@@ -671,18 +422,12 @@ void GFL_NET_ReloadIcon(void)
 
 BOOL GFL_NET_IsParentMachine(void)
 {
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    int i;
-    
-    if(pNet==NULL){
-        return TRUE;  // 通信していないときは親機扱い
+    BOOL ret = FALSE;
+
+    if(GFL_NET_SystemGetCurrentID() == GFL_NET_PARENT_NETID){
+        ret = TRUE;
     }
-    for(i = 0;i < GFL_NET_MACHINE_MAX;i++){
-        if((pNet->pNetHandle[i]) && (pNet->pNetHandle[i]->pParent)){
-            return TRUE;
-        }
-    }
-    return FALSE;
+    return ret;
 }
 
 //==============================================================================
@@ -695,7 +440,7 @@ BOOL GFL_NET_IsParentMachine(void)
 //==============================================================================
 BOOL GFL_NET_IsParentHandle(GFL_NETHANDLE* pNetHandle)
 {
-    if(pNetHandle->pParent){
+    if(GFL_NET_HANDLE_GetNetHandleID(pNetHandle) == GFL_NET_PARENT_NETID){
         return TRUE;
     }
     return FALSE;
@@ -726,7 +471,7 @@ void GFL_NET_SendEnableCommand(GFL_NETHANDLE* pNet,const NetID id)
 //==============================================================================
 BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 {
-    return TRUE;
+    return (pNet->negotiationType == _NEG_TYPE_CONNECT);
 }
 
 //==============================================================================
@@ -744,7 +489,7 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
     return GFL_NET_SystemSendData(sendCommand, data, 0,
-                                  FALSE, pNet->creatureNo ,GFL_NET_SENDID_ALLUSER);
+                                  FALSE, GFL_NET_HANDLE_GetNetHandleID(pNet) ,GFL_NET_SENDID_ALLUSER);
 }
 
 //==============================================================================
@@ -761,15 +506,16 @@ BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat)
+BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat)
 {
-    if(bRepeat && !GFL_NET_SystemIsSendCommand(sendCommand,pNet->creatureNo)){
-        return GFL_NET_SystemSendData(sendCommand, data, size, bFast, pNet->creatureNo ,sendID);
-    }
-    else if(bRepeat){
+    if((GFL_NET_IsSendEnable(pNet)==FALSE) && (sendCommand >= GFL_NET_CMD_COMMAND_MAX)){
+        // 認証が終わらないのに、メイン以外のコマンドを送ることはできない
         return FALSE;
     }
-    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, pNet->creatureNo ,sendID);
+    if(bRepeat && GFL_NET_SystemIsSendCommand(sendCommand,GFL_NET_HANDLE_GetNetHandleID(pNet))){
+        return FALSE;
+    }
+    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, GFL_NET_HANDLE_GetNetHandleID(pNet) ,sendID);
 }
 
 
@@ -783,7 +529,7 @@ BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCom
 //==============================================================================
 BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet)
 {
-    return TRUE;
+    return GFL_NET_SystemIsEmptyQueue();
 }
 
 
@@ -799,7 +545,7 @@ BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet)
 //==============================================================================
 void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 {
-    GFL_NET_TOOL_TimingSyncStart(pNet,no);
+    GFL_NET_HANDLE_TimingSyncStart(pNet,no);
 }
 
 //==============================================================================
@@ -813,46 +559,60 @@ void GFL_NET_TimingSyncStart(GFL_NETHANDLE* pNet, const u8 no)
 //==============================================================================
 BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no)
 {
-    return GFL_NET_TOOL_IsTimingSync(pNet, no);
+    return GFL_NET_HANDLE_IsTimingSync(pNet, no);
+}
+
+
+//==============================================================================
+/**
+ * @brief     モード変更関数
+ * @param     NetHandle* pNet  通信ハンドル
+ * @return    none
+ */
+//==============================================================================
+static BOOL _changeModeRequest(GFL_NETHANDLE* pNetHandle, NetModeChangeFunc func,BOOL bDSMode)
+{
+    BOOL bReturn;
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+
+    bReturn = GFL_NET_SendData(pNetHandle, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
+    if(FALSE == bReturn){
+        if(func){
+            func(pNet->aNetInit.pWork, FALSE);
+        }
+    }
+    else{
+        pNet->pNetModeChangeFunc = func;
+    }
+    return bReturn;
 }
 
 //==============================================================================
 /**
  * @brief     DSモードに変更する
- * @param     NetHandle* pNet  通信ハンドル
- * @return    none
+ * @param     NetHandle* pNet    通信ハンドル
+ * @param     NetModeChangeFunc  変更した時に呼ばれるコールバック
+ * @return    TRUE 成功   FALSE 失敗
  */
 //==============================================================================
-void GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet)
+BOOL GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet, NetModeChangeFunc func)
 {
-    u8 bDSMode = TRUE;
-    GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
+    return _changeModeRequest(pNet, func, TRUE);
 }
 
 //==============================================================================
 /**
  * @brief     MPモードに変更する
- * @param     NetHandle* pNet  通信ハンドル
- * @return    none
+ * @param     NetHandle* pNet    通信ハンドル
+ * @param     NetModeChangeFunc  変更した時に呼ばれるコールバック
+ * @return    TRUE 成功   FALSE 失敗
  */
 //==============================================================================
-void GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet)
+BOOL GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet, NetModeChangeFunc func)
 {
-    u8 bDSMode = FALSE;
-    GFL_NET_SendData(pNet, GFL_NET_CMD_DSMP_CHANGE, &bDSMode);
+    return _changeModeRequest(pNet, func, FALSE);
 }
 
-//==============================================================================
-/**
- * @brief     割り込み中に行う処理を実行
- * @param     none
- * @return    none
- */
-//==============================================================================
-void GFL_NET_VBlankFunc(void)
-{
-    WirelessIconEasyFunc();
-}
 
 #if GFL_NET_WIFI //wifi
 
@@ -936,9 +696,9 @@ void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex)
  * @retval   FALSE   まだ接続していない
  */
 //==============================================================================
-BOOL GFL_NET_IsWifiLobby(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_IsWifiLobby(void)
 {
-    if(2 > GFL_NET_StateWifiIsMatched(pNetHandle)){
+    if(2 > GFL_NET_StateWifiIsMatched()){
         return TRUE;
     }
     return FALSE;
@@ -988,9 +748,9 @@ int GFL_NET_WIFI_GetLocalConnectNo(void)
  * @retval  FALSE 失敗
  */
 //==============================================================================
-BOOL GFL_NET_StartRandomMatch(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_StartRandomMatch(void)
 {
-    return GFL_NET_StateStartWifiRandomMatch( pNetHandle );
+    return GFL_NET_StateStartWifiRandomMatch();
 }
 
 //==============================================================================
@@ -1079,11 +839,11 @@ void GFI_NET_AutoParentConnectFunc(void)
  */
 //==============================================================================
 
-void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo)
+void GFI_NET_FatalErrorFunc(int errorNo)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     if(pNet->aNetInit.errorFunc != NULL){
-        pNet->aNetInit.errorFunc(pNetHandle, errorNo, pNet->aNetInit.pWork);
+        pNet->aNetInit.errorFunc(GFL_NET_HANDLE_GetCurrentHandle(), errorNo, pNet->aNetInit.pWork);
     }
 }
 
@@ -1158,9 +918,9 @@ void _GFL_NET_SetNETWL(GFL_NETWL* pWL)
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
+void GFL_NET_SetAutoErrorCheck(BOOL bAuto)
 {
-    GFL_NET_STATE_SetAutoErrorCheck(pNetHandle, bAuto);
+    GFL_NET_STATE_SetAutoErrorCheck(bAuto);
 }
 
 //==============================================================================
@@ -1171,9 +931,9 @@ void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
+void GFL_NET_SetNoChildErrorCheck(BOOL bFlg)
 {
-    GFL_NET_STATE_SetNoChildErrorCheck(pNetHandle, bFlg);
+    GFL_NET_STATE_SetNoChildErrorCheck(bFlg);
 }
 
 
@@ -1202,6 +962,7 @@ BOOL GFL_NET_KeyMain(NetKeyMainFunc keyMain)
             }
         }
     }
+    return TRUE;
 }
 
 // ＵＩと同じものを使用するために ここだけで公開
@@ -1261,54 +1022,18 @@ int GFL_NET_KEY_GetCont( int netID )
 //------------------------------------------------------------------
 static void _startUpCallback(void *arg, WVRResult result)
 {
+    BOOL bResult = TRUE;
     if (result != WVR_RESULT_SUCCESS) {
-        OS_TPanic("WVR_StartUpAsync error.[%08xh]\n", result);
+        GF_ASSERT_MSG(0,"WVR_StartUpAsync error.[%08xh]\n", result);
+        bResult = FALSE;
     }
     else{
+        bLoadIchneumon = TRUE;
 		NET_PRINT("WVR Trans VRAM-D.\n");
 	}
-    startCheck = 2;
-}
-
-//==============================================================================
-/**
- * @brief    イクニューモンライブラリのみを初期化する
- * @return   none
- */
-//==============================================================================
-
-void GFL_NET_InitIchneumon(void)
-{
-    int ans;
-    //************************************
-
-
-    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
-    // 無線ライブラリ駆動開始
-	// イクニューモンコンポーネントをVRAM-Dに転送する
-    startCheck = 1;
-    ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, NULL);
-    if (WVR_RESULT_OPERATING != ans) {
-        //イクニューモンを使用する前に VRAMDをdisableにする必要がある
-        // そうでないとここにくる
-        OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
+    if(pIchneumonCallback){
+        pIchneumonCallback(arg, bResult);
     }
-    else{
-        NET_PRINT("WVRStart\n");
-    }
-}
-
-//==============================================================================
-/**
- * @brief    イクニューモンライブラリの初期化が終わったかどうか
- * @retval   TREU   終了
- * @retval   FALSE  まだ終わっていない
- */
-//==============================================================================
-
-BOOL GFL_NET_IsInitIchneumon(void)
-{
-    return (startCheck==2);
 }
 
 //------------------------------------------------------------------
@@ -1321,8 +1046,44 @@ BOOL GFL_NET_IsInitIchneumon(void)
 //------------------------------------------------------------------
 static void _endCallback(void *arg, WVRResult result)
 {
-    startCheck = 0;
+    BOOL bResult = TRUE;
+    if (result != WVR_RESULT_SUCCESS) {
+        GF_ASSERT_MSG(0,"WVR_StartUpAsync error.[%08xh]\n", result);
+        bResult = FALSE;
+    }
+    if(pIchneumonCallback){
+        pIchneumonCallback(arg, bResult);
+    }
     GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
+}
+
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリのみを初期化する
+ * @param    callback 終わったら呼ばれるコールバック
+ * @param    pWork    呼ぶ側のワーク
+ * @return   none
+ */
+//==============================================================================
+
+void GFL_NET_InitIchneumon(PTRIchneumonCallback callback,void* pWork)
+{
+    int ans;
+    //************************************
+    GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
+    GF_ASSERT(callback);
+    pIchneumonCallback = callback;
+    // 無線ライブラリ駆動開始
+	// イクニューモンコンポーネントをVRAM-Dに転送する
+    ans = WVR_StartUpAsync(GX_VRAM_ARM7_128_D, _startUpCallback, pWork);
+    if (WVR_RESULT_OPERATING != ans) {
+        //イクニューモンを使用する前に VRAMDをdisableにする必要がある
+        // そうでないとここにくる
+        OS_TPanic("WVR_StartUpAsync failed. %d\n",ans);
+    }
+    else{
+        NET_PRINT("WVRStart\n");
+    }
 }
 
 //==============================================================================
@@ -1333,10 +1094,25 @@ static void _endCallback(void *arg, WVRResult result)
 //==============================================================================
 
 
-void GFL_NET_ExitIchneumon(void)
+void GFL_NET_ExitIchneumon(PTRIchneumonCallback callback,void* pWork)
 {
     NET_PRINT("VRAMD Finalize\n");
+    GF_ASSERT(callback);
+    bLoadIchneumon = FALSE;
+    pIchneumonCallback = callback;
     WVR_TerminateAsync(_endCallback,NULL);  // イクニューモン切断
+}
+
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリが動いているかどうかを得る
+ * @retval   TRUE なら動作中
+ */
+//==============================================================================
+
+BOOL GFL_NET_IsIchneumon(void)
+{
+    return bLoadIchneumon;
 }
 
 

@@ -14,7 +14,7 @@
 #include "device/wih.h"
 
 #include "net_def.h"
-#include "device/net_beacon.h"
+#include "device/net_whpipe.h"
 #include "device/dwc_rap.h"
 #include "net_system.h"
 #include "net_command.h"
@@ -22,7 +22,8 @@
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
-#include "tool/net_tool.h"
+#include "net_handle.h"
+#include "wm_icon.h"
 
 //==============================================================================
 // ワーク
@@ -33,8 +34,29 @@
 ///< 親機のみで必要なデータ
 struct _NET_PARENTSYS_t{
     u8 negoCheck[GFL_NET_MACHINE_MAX];     ///< 各子機のネゴシエーション状態
-    u8 dsmpChangeBuff[GFL_NET_MACHINE_MAX];   ///< 通信相手の通信モード変更バッファ
 };
+
+typedef struct _NET_WORK_STATE  GFL_NETSTATE;
+
+
+/// コールバック関数の書式 内部ステート遷移用
+typedef void (*PTRStateFunc)(GFL_NETSTATE* pState);
+
+struct _NET_WORK_STATE{
+  NET_PARENTSYS sParent;  ///< 親の情報を保持するポインタ
+  PTRStateFunc state;      ///< ハンドルのプログラム状態
+  GFL_STD_RandContext sRand; ///< 親子機ネゴシエーション用乱数キー
+  u16 timer;           ///< 進行タイマー
+  u8 bFirstParent;     ///< 繰り返し親子切り替えを行う場合の最初の親状態
+  u8 stateError;
+  u8 bErrorAuto;
+  u8 bDisconnectError;
+  u8 bDisconnectState;  ///< 切断状態に入っている場合TRUE
+  u8 ResetStateType;   ///< 通信リセットがかかるときの種類
+  u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ
+};
+
+static GFL_NETSTATE* _pNetState = NULL;
 
 //==============================================================================
 // 定義
@@ -56,26 +78,26 @@ struct _NET_PARENTSYS_t{
 
 // ステートの初期化
 
-static void _changeStateDebug(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time, int line);  // ステートを変更する
-static void _changeState(GFL_NETHANDLE* pHandle, PTRStateFunc state, int time);  // ステートを変更する
-static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle);
-static void _errorDispCheck(GFL_NETHANDLE* pNetHandle);
+static void _changeStateDebug(GFL_NETSTATE* pState, PTRStateFunc state, int time, int line);  // ステートを変更する
+static void _changeState(GFL_NETSTATE* pState, PTRStateFunc state, int time);  // ステートを変更する
+static void _changeoverChildSearching(GFL_NETSTATE* pState);
+static void _errorDispCheck(GFL_NETSTATE* pState);
 
 #ifdef GFL_NET_DEBUG
 #if 1
-#define   _CHANGE_STATE(state, time)  _changeStateDebug(pNetHandle ,state, time, __LINE__)
+#define   _CHANGE_STATE(state, time)  _changeStateDebug(_pNetState ,state, time, __LINE__)
 #else
-#define   _CHANGE_STATE(state, time)  _changeState(pNetHandle ,state, time)
+#define   _CHANGE_STATE(state, time)  _changeState(_pNetState ,state, time)
 #endif
 #else  //GFL_NET_DEBUG
-#define   _CHANGE_STATE(state, time)  _changeState(pNetHandle ,state, time)
+#define   _CHANGE_STATE(state, time)  _changeState(_pNetState ,state, time)
 #endif //GFL_NET_DEBUG
 
 
 // その他一般的なステート
-static void _stateEnd(GFL_NETHANDLE* pNetHandle);             // 終了処理
-static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle);      // 切断処理開始
-static void _stateNone(GFL_NETHANDLE* pNetHandle);            // 何もしない
+static void _stateEnd(GFL_NETSTATE* pState);             // 終了処理
+static void _stateConnectEnd(GFL_NETSTATE* pState);      // 切断処理開始
+static void _stateNone(GFL_NETSTATE* pState);            // 何もしない
 
 
 //==============================================================================
@@ -87,10 +109,10 @@ static void _stateNone(GFL_NETHANDLE* pNetHandle);            // 何もしない
  */
 //==============================================================================
 
-static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
+static void _changeState(GFL_NETSTATE* pState,PTRStateFunc state, int time)
 {
-    pHandle->state = state;
-    pHandle->timer = time;
+    pState->state = state;
+    pState->timer = time;
 }
 
 //==============================================================================
@@ -102,10 +124,10 @@ static void _changeState(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time)
  */
 //==============================================================================
 #ifdef GFL_NET_DEBUG
-static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int time, int line)
+static void _changeStateDebug(GFL_NETSTATE* pState,PTRStateFunc state, int time, int line)
 {
     NET_PRINT("net_state: %d\n",line);
-    _changeState(pHandle, state, time);
+    _changeState(pState, state, time);
 }
 #endif
 
@@ -117,20 +139,19 @@ static void _changeStateDebug(GFL_NETHANDLE* pHandle,PTRStateFunc state, int tim
  */
 //==============================================================================
 
-static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
+static void _commStateInitialize(HEAPID heapID)
 {
-    void* pWork;
-
     // 初期化
-    pNetHandle->timer = _START_TIME;
-    pNetHandle->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
-    pNetHandle->limitNum = 2;         // 一人は最低でも接続可能
-    pNetHandle->negotiation = _NEGOTIATION_CHECK;
-    pNetHandle->serviceNo = serviceNo;
-
+    _pNetState = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_NETSTATE));
+    _pNetState->timer = _START_TIME;
+    _pNetState->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
     GFL_NET_COMMAND_Init(NULL, 0, NULL);
 }
 
+static void _endIchneumon(void* pWork, BOOL bRet)
+{
+
+}
 
 //==============================================================================
 /**
@@ -140,17 +161,17 @@ static void _commStateInitialize(GFL_NETHANDLE* pNetHandle,int serviceNo)
  */
 //==============================================================================
 
-static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
+static void _stateFinalize(GFL_NETSTATE* pState)
 {
-    if(pNetHandle==NULL){  // すでに終了している
+    if(pState==NULL){  // すでに終了している
         return;
     }
     GFL_NET_COMMAND_Exit();
-//    WirelessIconEasyEnd();   //@@OO 後で入れる予定
-    GFL_NET_InitIchneumon();
+    GFL_NET_WirelessIconEasyEnd();
+    GFL_NET_ExitIchneumon(_endIchneumon,NULL);
     _GFL_NET_SetNETWL(NULL);
-    pNetHandle->state = NULL;
-    GFL_UI_SleepEnable(GFL_UI_SLEEP_NET);  // スリープ許可
+    GFL_HEAP_FreeMemory(_pNetState);
+    _pNetState = NULL;
 }
 
 //==============================================================================
@@ -161,26 +182,12 @@ static void _stateFinalize(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static BOOL _stateIsMove(GFL_NETHANDLE* pNetHandle)
+static BOOL _stateIsMove(GFL_NETSTATE* pState)
 {
-    if(pNetHandle->state){
+    if(pState->state){
         return TRUE;
     }
     return FALSE;
-}
-
-//==============================================================================
-/**
- * @brief   ハンドルを消す
- * @param   none
- * @retval  none
- */
-//==============================================================================
-
-static void _handleDelete(GFL_NETHANDLE* pNetHandle)
-{
-    GFI_NET_DeleteNetHandle(pNetHandle);
-    _CHANGE_STATE(_stateNone, 0);
 }
 
 //==============================================================================
@@ -191,12 +198,12 @@ static void _handleDelete(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
+static void _deviceInitialize(GFL_NETSTATE* pState)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
     GFL_NETWL* pWL;
     
-    if(!GFL_NET_IsInitIchneumon()){
+    if(!GFL_NET_IsIchneumon()){
         return;  //
     }
 
@@ -211,9 +218,15 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
 
     NET_PRINT("再起動    -- \n");
-    _CHANGE_STATE(_handleDelete, 0);
+    _CHANGE_STATE(_stateNone, 0);
 }
 
+static void _initIchneumon(void* pWork, BOOL bRet)
+{
+    if(bRet){
+        _CHANGE_STATE(_deviceInitialize, 0);
+    }
+}
 
 //==============================================================================
 /**
@@ -223,13 +236,12 @@ static void _deviceInitialize(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateDeviceInitialize(HEAPID heapID)
 {
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
 
-    GFL_NET_InitIchneumon();
-    _commStateInitialize(pNetHandle, 0);
-    _CHANGE_STATE(_deviceInitialize, 0);
+    GFL_NET_InitIchneumon(_initIchneumon, NULL);
+    _commStateInitialize(heapID);
 }
 
 //==============================================================================
@@ -240,14 +252,14 @@ void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _childSendNego(GFL_NETHANDLE* pNetHandle)
+static void _childSendNego(GFL_NETSTATE* pState)
 {
     //@@OOエラー処理
     if(GFL_NET_SystemIsError()){
         //NET_PRINT("エラーの場合戻る\n");
      //   _CHANGE_STATE(_battleChildReset, 0);
     }
-  //  if(CommIsConnect(CommGetCurrentID()) && ( COMM_PARENT_ID != CommGetCurrentID())){
+  //  if(CommIsConnect(CommGetCurrentID()) && ( GFL_NET_PARENT_NETID != CommGetCurrentID())){
    //     _CHANGE_STATE(_battleChildWaiting, 0);
    // }
 }
@@ -261,11 +273,9 @@ static void _childSendNego(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _parentFindCallback(GFL_NETHANDLE* pNetHandle)
+static void _parentFindCallback(void)
 {
-    if(pNetHandle){
-        pNetHandle->timer+=60;  //子機時間を延長
-    }
+    _pNetState->timer+=60;  //子機時間を延長
 }
 
 //==============================================================================
@@ -276,11 +286,11 @@ static void _parentFindCallback(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _childConnecting(GFL_NETHANDLE* pNetHandle)
+static void _childConnecting(GFL_NETSTATE* pState)
 {
     GFL_NET_WLParentBconCheck();
 
-    if(GFL_NET_SystemChildModeInitAndConnect(FALSE, pNetHandle->aMacAddress, _PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle)){
+    if(GFL_NET_SystemChildModeInitAndConnect(FALSE, pState->aMacAddress, _PACKETSIZE_DEFAULT,_parentFindCallback)){
         _CHANGE_STATE(_childSendNego, _SEND_NAME_TIME);
     }
 
@@ -295,7 +305,7 @@ static void _childConnecting(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _childAutoConnect(GFL_NETHANDLE* pNetHandle)
+static void _childAutoConnect(GFL_NETSTATE* pState)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
@@ -311,14 +321,15 @@ static void _childAutoConnect(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 /**
  * @brief   マックアドレスを指定して子機接続開始
- * @param   connectIndex 接続する親機のIndex
- * @param   bAlloc       メモリーの確保
+ * @param   macAddress    アドレス
+ * @param   bInit         初期化するのかどうか
  * @retval  none
  */
 //==============================================================================
 
-void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit)
+void GFL_NET_StateConnectMacAddress(u8* macAddress, BOOL bInit)
 {
+    GFL_STD_MemCopy(macAddress, _pNetState->aMacAddress, sizeof(_pNetState->aMacAddress));
     if(bInit){
         _CHANGE_STATE(_childAutoConnect, 0);
     }
@@ -335,7 +346,7 @@ void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit)
  */
 //==============================================================================
 
-static void _childScanning(GFL_NETHANDLE* pNetHandle)
+static void _childScanning(GFL_NETSTATE* pState)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
     GFL_NET_WLParentBconCheck();
@@ -353,7 +364,7 @@ static void _childScanning(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _childIniting(GFL_NETHANDLE* pNetHandle)
+static void _childIniting(GFL_NETSTATE* pState)
 {
     if(GFL_NET_SystemChildModeInit(TRUE,512)){
         _CHANGE_STATE(_childScanning, 0);
@@ -368,7 +379,7 @@ static void _childIniting(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateBeaconScan(void)
 {
     _CHANGE_STATE(_childIniting, 0);
 }
@@ -382,15 +393,13 @@ void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
+void GFL_NET_StateMainProc(void)
 {
-    if(pHandle){
-        PTRStateFunc state = GFL_NET_GetStateFunc(pHandle);
-        if(state != NULL){
-            state(pHandle);
-        }
-        _errorDispCheck(pHandle);
+    PTRStateFunc state = _pNetState->state;
+    if(state != NULL){
+        state(_pNetState);
     }
+    _errorDispCheck(_pNetState);
 }
 
 //==============================================================================
@@ -401,7 +410,7 @@ void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle)
  */
 //==============================================================================
 
-static void _parentWait(GFL_NETHANDLE* pHandle)
+static void _parentWait(GFL_NETSTATE* pState)
 {
 }
 
@@ -413,7 +422,7 @@ static void _parentWait(GFL_NETHANDLE* pHandle)
  */
 //==============================================================================
 
-static void _parentInitWait(GFL_NETHANDLE* pNetHandle)
+static void _parentInitWait(GFL_NETSTATE* pState)
 {
     if(GFI_NET_SystemParentModeInitProcess()){
         _CHANGE_STATE(_parentWait, 0);
@@ -428,17 +437,17 @@ static void _parentInitWait(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _parentInit(GFL_NETHANDLE* pNetHandle)
+static void _parentInit(GFL_NETSTATE* pState)
 {
     GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
-    if(!GFL_NET_IsInitIchneumon()){
+    if(!GFL_NET_IsIchneumon()){
         return;
     }
 
     if(GFI_NET_SystemParentModeInit(TRUE, _PACKETSIZE_DEFAULT)){
-        pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
-        pNetHandle->creatureNo = 0;
+//        pState->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
+//        pState->creatureNo = 0;
         _CHANGE_STATE(_parentInitWait, 0);
     }
 }
@@ -452,12 +461,12 @@ static void _parentInit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+void GFL_NET_StateCreateParent(HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocClearMemory( heapID, sizeof(NET_PARENTSYS));
+//    _pNetState->pParent = GFL_HEAP_AllocClearMemory( heapID, sizeof(NET_PARENTSYS));
 
-    pNetHandle->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
-    pNetHandle->creatureNo = 0;
+    //_pNetState->negotiation = _NEGOTIATION_OK;  // 自分は認証完了
+   // _pNetState->creatureNo = 0;
     _CHANGE_STATE(_parentInitWait, 0);
 }
 
@@ -470,9 +479,8 @@ void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
  */
 //==============================================================================
 
-void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+void GFL_NET_StateConnectParent(HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocClearMemory( heapID, sizeof(NET_PARENTSYS));
     _CHANGE_STATE(_parentInit, 0);
 }
 
@@ -485,7 +493,7 @@ void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
  */
 //==============================================================================
 
-static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
+static void _changeoverChildRestart(GFL_NETSTATE* pState)
 {
     u32 rand;
     
@@ -495,8 +503,8 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
     // 今度はビーコンを残したまま
 
     
-    if(GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle)){
-        rand = GFL_STD_Rand(&pNetHandle->sRand, (_CHILD_P_SEARCH_TIME));
+    if(GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback)){
+        rand = GFL_STD_Rand(&pState->sRand, (_CHILD_P_SEARCH_TIME));
         NET_PRINT("子機開始 %d \n",rand);
         _CHANGE_STATE(_changeoverChildSearching, rand);
     }
@@ -511,7 +519,7 @@ static void _changeoverChildRestart(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 
 
-static void _changeoverParentRestart(GFL_NETHANDLE* pNetHandle)
+static void _changeoverParentRestart(GFL_NETSTATE* pState)
 {
     if( GFL_NET_WLSwitchParentChild() ){
         _CHANGE_STATE(_changeoverChildRestart, 0);
@@ -528,12 +536,12 @@ static void _changeoverParentRestart(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static BOOL _getErrorCheck(GFL_NETHANDLE* pNetHandle)
+static BOOL _getErrorCheck(GFL_NETSTATE* pState)
 {
-    if(pNetHandle->stateError!=0){
+    if(pState->stateError!=0){
         return TRUE;
     }
-    return pNetHandle->bErrorAuto;
+    return pState->bErrorAuto;
 }
 
 
@@ -544,10 +552,10 @@ static BOOL _getErrorCheck(GFL_NETHANDLE* pNetHandle)
  * @retval  none
  */
 //==============================================================================
-static void _changeoverParentConnect(GFL_NETHANDLE* pNetHandle)
+static void _changeoverParentConnect(GFL_NETSTATE* pState)
 {
 
-    if(!_getErrorCheck(pNetHandle)){
+    if(!_getErrorCheck(pState)){
         if(!GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながってないばあいもう一回
             NET_PRINT("親機しっぱい\n");
             if( GFL_NET_WLSwitchParentChild() ){
@@ -575,7 +583,7 @@ static void _changeoverParentConnect(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 
 
-static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
+static void _changeoverParentWait(GFL_NETSTATE* pState)
 {
     if(GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながったら親機固定
 
@@ -584,9 +592,9 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
         //WirelessIconEasy();  //@@OO
         {
 //            GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-            GFL_NETHANDLE* pHandleServer;
-            pHandleServer = GFL_NET_CreateHandle();
-            GFL_NET_CreateServer(pHandleServer);   // サーバ
+//            GFL_NETHANDLE* pHandleServer;
+  //          pHandleServer = GFL_NET_CreateHandle();
+            GFL_NET_CreateServer();   // サーバ
             GFI_NET_AutoParentConnectFunc();
         }
         _CHANGE_STATE(_changeoverParentConnect, 0);
@@ -594,8 +602,8 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
     }
 
     if(GFL_NET_WLIsParentBeaconSent()){  // ビーコンを送り終わったらしばらく待つ
-        if(pNetHandle->timer!=0){
-            pNetHandle->timer--;
+        if(pState->timer!=0){
+            pState->timer--;
             return;
         }
     }
@@ -614,14 +622,14 @@ static void _changeoverParentWait(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
+static void _changeoverParentInit(GFL_NETSTATE* pState)
 {
     if(!GFL_NET_WLIsStateIdle()){  // 終了処理がきちんと終わっていることを確認
         return;
     }
     // 親機になってみる
     if(GFI_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_DEFAULT))  {
-        pNetHandle->bFirstParent = FALSE;
+        pState->bFirstParent = FALSE;
         NET_PRINT("親機\n");
         _CHANGE_STATE(_changeoverParentWait, 30);
     }
@@ -635,21 +643,21 @@ static void _changeoverParentInit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle)
+static void _changeoverChildSearching(GFL_NETSTATE* pState)
 {
     int realParent;
 
     GFL_NET_WLParentBconCheck();  // bconの検査
 
-    if(GFL_NET_SystemGetCurrentID()!=COMM_PARENT_ID){  // 子機として接続が完了した
+    if(GFL_NET_SystemGetCurrentID()!=GFL_NET_PARENT_NETID){  // 子機として接続が完了した
         NET_PRINT("子機になった\n");
         _CHANGE_STATE(_stateNone, 0);
         return;
     }
 
-    if(pNetHandle->timer != 0){
-        NET_PRINT("time %d\n",pNetHandle->timer);
-        pNetHandle->timer--;
+    if(pState->timer != 0){
+        NET_PRINT("time %d\n",pState->timer);
+        pState->timer--;
         return;
     }
 
@@ -669,19 +677,10 @@ static void _changeoverChildSearching(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+void GFL_NET_StateChangeoverConnect(HEAPID heapID)
 {
-
-
-  //  GFL_NET_SystemChildModeInit(TRUE,512);
-    GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback,pNetHandle);
-    
-//    if(GFL_NET_WLChildMacAddressConnect(pNetHandle->aMacAddress)){
-
-
+    GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback);
     _CHANGE_STATE(_changeoverChildSearching, 30);
-
-
 }
 
 //==============================================================================
@@ -692,10 +691,10 @@ void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
  */
 //==============================================================================
 
-static void _stateEndParentWait(GFL_NETHANDLE* pNetHandle)
+static void _stateEndParentWait(GFL_NETSTATE* pState)
 {
     if(!GFL_NET_WLIsChildsConnecting()){
-        _stateFinalize(pNetHandle);
+        _stateFinalize(pState);
     }
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
@@ -711,10 +710,6 @@ static void _stateEndParentWait(GFL_NETHANDLE* pNetHandle)
 void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     NET_PRINT("EXITコマンド受信\n");
-    if(!pNetHandle->pParent){
-        return;
-    }
-    NET_PRINT("EXITコマンド受信\n");
 
     GFL_NET_SendData(pNetHandle, GFL_NET_CMD_EXIT, NULL);
 
@@ -722,7 +717,7 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 
 
 #if 0
-    if(CommGetCurrentID() == COMM_PARENT_ID){
+    if(CommGetCurrentID() == GFL_NET_PARENT_NETID){
         pNetHandle->disconnectType = 0;
         _CHANGE_STATE(_stateWifiMatchEnd, 0);
     }
@@ -744,69 +739,9 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 
 void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    if(GFL_NET_SystemGetCurrentID() != COMM_PARENT_ID){
+    if(GFL_NET_SystemGetCurrentID() != GFL_NET_PARENT_NETID){
         GFL_NET_Disconnect();
     }
-}
-
-//==============================================================================
-/**
- * @brief   ネゴシエーション用コールバック GFL_NET_CMD_NEGOTIATION
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    // 親機が受け取ってフラグを立てる
-    u8 retCmd[2];
-    const u8 *pGet = (const u8*)pData;
-    int i;
-
-
-    OS_TPrintf("GFL_NET_StateRecvNegotiation %d \n",netID);
-    
-    if(!pNetHandle->pParent){
-        return;
-    }
-    retCmd[1] = pGet[0];
-    retCmd[0] = 0;
-    OS_TPrintf("--RECV----GFL_NET_CMD_NEGOTIATION %d %d\n",retCmd[0],retCmd[1]);
-
-    for(i = 1 ; i < GFL_NET_MACHINE_MAX;i++){
-        if(pNetHandle->pParent->negoCheck[i] == FALSE){
-            pNetHandle->pParent->negoCheck[i] = TRUE;
-            retCmd[0] = i;         //このiがIDになる
-            break;
-        }
-    }
-    OS_TPrintf("------NegoRet を送信 %d\n",retCmd[0]);
-    GFL_NET_SendData(pNetHandle, GFL_NET_CMD_NEGOTIATION_RETURN, retCmd);
-    pNetHandle->negotiationID[i] = TRUE;
-
-}
-
-//==============================================================================
-/**
- * @brief   ネゴシエーション用コールバック GFL_NET_CMD_NEGOTIATION_RETURN
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-
-void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pMsg = pData;
-
-    OS_TPrintf("接続認証 %d %d\n",pNetHandle->creatureNo, pMsg[1]);
-    if(pNetHandle->creatureNo == pMsg[1]){   // 親機から接続認証が来た
-        OS_TPrintf("接続認証 OK\n");
-        pNetHandle->negotiation = _NEGOTIATION_OK;
-//        pNetHandle->creatureNo++;
-    }
-    GF_ASSERT(pMsg[0] < GFL_NET_MACHINE_MAX);
-    pNetHandle->negotiationID[pMsg[0]]=TRUE;
 }
 
 //==============================================================================
@@ -817,12 +752,12 @@ void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const v
  */
 //==============================================================================
 
-static void _stateEnd(GFL_NETHANDLE* pNetHandle)
+static void _stateEnd(GFL_NETSTATE* pState)
 {
     if(GFL_NET_SystemIsInitialize()){
         return;
     }
-    _stateFinalize(pNetHandle);
+    _stateFinalize(pState);
 }
 
 //==============================================================================
@@ -832,15 +767,15 @@ static void _stateEnd(GFL_NETHANDLE* pNetHandle)
  * @retval  none
  */
 //==============================================================================
-static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle)
+static void _stateConnectEnd(GFL_NETSTATE* pState)
 {
-    if(pNetHandle->timer != 0){
-        pNetHandle->timer--;
+    if(pState->timer != 0){
+        pState->timer--;
     }
     if(!GFL_NET_WLSwitchParentChild()){
         return;
     }
-    if(pNetHandle->timer != 0){
+    if(pState->timer != 0){
         return;
     }
     NET_PRINT("切断する");
@@ -856,12 +791,12 @@ static void _stateConnectEnd(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateExit(void)
 {
-    if(pNetHandle->bDisconnectState){
+    if(_pNetState && _pNetState->bDisconnectState){
         return;
     }
-    pNetHandle->bDisconnectState = TRUE;
+    _pNetState->bDisconnectState = TRUE;
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
@@ -873,7 +808,7 @@ void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _stateNone(GFL_NETHANDLE* pNetHandle)
+static void _stateNone(GFL_NETSTATE* pState)
 {
     // なにもしていない
 }
@@ -890,34 +825,6 @@ enum{
 
 //==============================================================================
 /**
- * @brief   DSMPモード変更のMain関数
- * @param   pNet  通信ハンドル
- * @return  noen
- */
-//==============================================================================
-
-void GFL_NET_StateTransmissonMain(GFL_NETHANDLE* pNet)
-{
-    BOOL bCatch=FALSE;
-
-    switch(pNet->dsmpChange){
-      case _TRANS_LOAD:
-        bCatch = GFL_NET_SendData(pNet,GFL_NET_CMD_DSMP_CHANGE_REQ,&pNet->dsmpChangeType);
-        if(bCatch){
-            pNet->dsmpChange = _TRANS_LOAD_END;
-        }
-        break;
-      case _TRANS_SEND:
-        if(GFL_NET_SendData(pNet,GFL_NET_CMD_DSMP_CHANGE_END,&pNet->dsmpChangeType)){
-//            GFL_NET_SystemSetTransmissonType(pNet->dsmpChangeType);  // 切り替える  親機はここで切り替えない
-            pNet->dsmpChange = _TRANS_NONE;
-        }
-        break;
-    }
-}
-
-//==============================================================================
-/**
  * @brief   DS通信MP通信の切り替え  GFL_NET_CMD_DSMP_CHANGE
  * @param   none
  * @retval  残り数
@@ -929,57 +836,10 @@ void GFL_NET_StateRecvDSMPChange(const int netID, const int size, const void* pD
     const u8* pBuff = pData;
     int i;
 
-    if(!pNetHandle->pParent){
-        return;
-    }
-    NET_PRINT("CommRecvDSMPChange 受信\n");
-    pNetHandle->dsmpChange = _TRANS_LOAD;
-    pNetHandle->dsmpChangeType = pBuff[0];
-}
+    GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
 
-//==============================================================================
-/**
- * @brief   DS通信MP通信の切り替え
- * @param   none
- * @retval  残り数
- */
-//==============================================================================
-
-void GFL_NET_StateRecvDSMPChangeReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(pNetHandle->pParent){
-        return;
-    }
-    pNetHandle->dsmpChangeType = pBuff[0];
-    pNetHandle->dsmpChange = _TRANS_SEND;
-    NET_PRINT("CommRecvDSMPChangeReq 受信\n");
-}
-
-//==============================================================================
-/**
- * @brief   DS通信MP通信の切り替え 終了処理 GFL_NET_CMD_DSMP_CHANGE_END
- * @param   none
- * @retval  残り数
- */
-//==============================================================================
-
-void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    const u8* pBuff = pData;
-    int i;
-
-    if(!pNetHandle->pParent){
-        return;
-    }
-    NET_PRINT("CommRecvDSMPChangeEND 受信\n");
-
-    if(pNetHandle->dsmpChange == _TRANS_LOAD_END){
-//        GFL_NET_SystemSetTransmissonType(pBuff[0]);  // 切り替える
-        pNetHandle->dsmpChange = _TRANS_NONE;
-    }
+    pInit->bMPMode = pBuff[0];
+    NET_PRINT("CommRecvDSMPChange 受信 %d\n",pBuff[0]);
 }
 
 //--------------------------wifi------------------------------------------------
@@ -993,13 +853,13 @@ void GFL_NET_StateRecvDSMPChangeEnd(const int netID, const int size, const void*
  */
 //==============================================================================
 
-static void _wifiErrorLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiErrorLoop(GFL_NETSTATE* pState)
 {
 }
-static void _wifiDisconnectLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiDisconnectLoop(GFL_NETSTATE* pState)
 {
 }
-static void _wifiFailedLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiFailedLoop(GFL_NETSTATE* pState)
 {
 }
 
@@ -1011,7 +871,7 @@ static void _wifiFailedLoop(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiTimeoutLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiTimeoutLoop(GFL_NETSTATE* pState)
 {
     int ret;
     ret = mydwc_step();
@@ -1030,7 +890,7 @@ static void _wifiTimeoutLoop(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiApplicationConnect(GFL_NETHANDLE* pNetHandle)
+static void _wifiApplicationConnect(GFL_NETSTATE* pState)
 {
     int ret,errCode;
 
@@ -1065,7 +925,7 @@ static void _wifiApplicationConnect(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _errcodeConvert(GFL_NETHANDLE* pNetHandle,int ret)
+static void _errcodeConvert(GFL_NETSTATE* pState,int ret)
 {
     // エラー発生。	
     int errorcode;
@@ -1087,7 +947,7 @@ static void _errcodeConvert(GFL_NETHANDLE* pNetHandle,int ret)
  */
 //==============================================================================
 
-static void _wifiMachingLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiMachingLoop(GFL_NETSTATE* pState)
 {
     int ret = mydwc_stepmatch( 0 );
 
@@ -1120,7 +980,7 @@ static void _wifiMachingLoop(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiBattleCanceling(GFL_NETHANDLE* pNetHandle)
+static void _wifiBattleCanceling(GFL_NETSTATE* pState)
 {
     int ret2;
     int ret = mydwc_stepmatch( 1 );  // キャンセル中
@@ -1157,7 +1017,7 @@ static void _wifiBattleCanceling(GFL_NETHANDLE* pNetHandle)
  * @retval  FALSE     失敗
  */
 //==============================================================================
-int GFL_NET_StateStartWifiPeerMatch( GFL_NETHANDLE* pNetHandle, int target )
+int GFL_NET_StateStartWifiPeerMatch( GFL_NETSTATE* pState, int target )
 {
     GF_ASSERT(!(target < 0));
 
@@ -1177,9 +1037,9 @@ int GFL_NET_StateStartWifiPeerMatch( GFL_NETHANDLE* pNetHandle, int target )
  * @retval  FALSE     失敗
  */
 //==============================================================================
-int GFL_NET_StateStartWifiRandomMatch( GFL_NETHANDLE* pNetHandle )
+int GFL_NET_StateStartWifiRandomMatch(void )
 {
-    pNetHandle->wifiTargetNo = _WIFIMODE_RANDOM;
+    _pNetState->wifiTargetNo = _WIFIMODE_RANDOM;
     _CHANGE_STATE(_wifiBattleCanceling,0);  // 今の状態を破棄
     return TRUE;
 }
@@ -1193,9 +1053,8 @@ int GFL_NET_StateStartWifiRandomMatch( GFL_NETHANDLE* pNetHandle )
  */
 //==============================================================================
 
-void GFL_NET_StateConnectWifiParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
+void GFL_NET_StateConnectWifiParent(HEAPID heapID)
 {
-    pNetHandle->pParent = GFL_HEAP_AllocClearMemory(heapID, sizeof(NET_PARENTSYS));
     _CHANGE_STATE(_stateNone, 0);
 }
 
@@ -1209,13 +1068,13 @@ void GFL_NET_StateConnectWifiParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID)
  * @retval  1. 完了　　0. 接続中   2. エラーやキャンセルで中断
  */
 //==============================================================================
-int GFL_NET_StateWifiIsMatched(GFL_NETHANDLE* pNetHandle)
+int GFL_NET_StateWifiIsMatched(void)
 {
-	if( pNetHandle->state == _wifiMachingLoop ) return 0;
-	if( pNetHandle->state == _wifiApplicationConnect ) return 1;
-    if( pNetHandle->state == _wifiTimeoutLoop ) return 3;
-    if( pNetHandle->state == _wifiDisconnectLoop ) return 4;
-    if( pNetHandle->state == _wifiFailedLoop ) return 5;
+	if( _pNetState->state == _wifiMachingLoop ) return 0;
+	if( _pNetState->state == _wifiApplicationConnect ) return 1;
+    if( _pNetState->state == _wifiTimeoutLoop ) return 3;
+    if( _pNetState->state == _wifiDisconnectLoop ) return 4;
+    if( _pNetState->state == _wifiFailedLoop ) return 5;
     return 2;
 }
 
@@ -1227,7 +1086,7 @@ int GFL_NET_StateWifiIsMatched(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiLoginLoop(GFL_NETHANDLE* pNetHandle)
+static void _wifiLoginLoop(GFL_NETSTATE* pState)
 {
     if( mydwc_startgame( _WIFIMODE_PARENT ) ){   //最初はVCT待ち状態になるので、親状態起動
         pNetHandle->bWifiDisconnect = FALSE;
@@ -1246,7 +1105,7 @@ static void _wifiLoginLoop(GFL_NETHANDLE* pNetHandle)
 //==============================================================================
 
 
-static void _stateWifiMatchEnd(GFL_NETHANDLE* pNetHandle)
+static void _stateWifiMatchEnd(GFL_NETSTATE* pState)
 {
     int ret;
 
@@ -1271,13 +1130,13 @@ static void _stateWifiMatchEnd(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateWifiMatchEnd(BOOL bAuto, GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateWifiMatchEnd(BOOL bAuto, GFL_NETSTATE* pState)
 {
     if(pNetHandle == NULL){  // すでに終了している
         return;
     }
     if(bAuto){
-        if(GFL_NET_SystemGetCurrentID() == COMM_PARENT_ID){
+        if(GFL_NET_SystemGetCurrentID() == GFL_NET_PARENT_NETID){
             pNetHandle->disconnectType = 0;
         }
         else{
@@ -1298,7 +1157,7 @@ void GFL_NET_StateWifiMatchEnd(BOOL bAuto, GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateRecvWifiExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateRecvWifiExit(const int netID, const int size, const void* pData, void* pWork, GFL_NETSTATE* pState)
 {
     GFL_NET_StateWifiMatchEnd(TRUE, pNetHandle);
     pNetHandle->bWifiDisconnect = TRUE;
@@ -1312,7 +1171,7 @@ void GFL_NET_StateRecvWifiExit(const int netID, const int size, const void* pDat
  * @retval  none
  */
 //==============================================================================
-void GFL_NET_StateSendWifiMatchEnd(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateSendWifiMatchEnd(GFL_NETSTATE* pState)
 {
     u8 id = GFL_NET_SystemGetCurrentID();
 
@@ -1327,7 +1186,7 @@ void GFL_NET_StateSendWifiMatchEnd(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-BOOL GFL_NET_StateIsWifiDisconnect(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_StateIsWifiDisconnect(GFL_NETSTATE* pState)
 {
     return pNetHandle->bWifiDisconnect;
 }
@@ -1340,7 +1199,7 @@ BOOL GFL_NET_StateIsWifiDisconnect(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-BOOL GFL_NET_StateIsWifiLoginState(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_StateIsWifiLoginState(GFL_NETSTATE* pState)
 {
     u32 stateAddr = (u32)pNetHandle->state;
 
@@ -1358,7 +1217,7 @@ BOOL GFL_NET_StateIsWifiLoginState(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-BOOL GFL_NET_StateIsWifiLoginMatchState(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_StateIsWifiLoginMatchState(GFL_NETSTATE* pState)
 {
     u32 stateAddr = (u32)pNetHandle->state;
 
@@ -1376,7 +1235,7 @@ BOOL GFL_NET_StateIsWifiLoginMatchState(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-int GFL_NET_StateGetWifiErrorNo(GFL_NETHANDLE* pNetHandle)
+int GFL_NET_StateGetWifiErrorNo(GFL_NETSTATE* pState)
 {
     return pNetHandle->errorCode;
 }
@@ -1389,7 +1248,7 @@ int GFL_NET_StateGetWifiErrorNo(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateWifiLogout(GFL_NETHANDLE* pNetHandle)
+void GFL_NET_StateWifiLogout(GFL_NETSTATE* pState)
 {
     if(pNetHandle==NULL){  // すでに終了している
         return;
@@ -1407,7 +1266,7 @@ void GFL_NET_StateWifiLogout(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-BOOL GFL_NET_StateIsWifiError(GFL_NETHANDLE* pNetHandle)
+BOOL GFL_NET_StateIsWifiError(GFL_NETSTATE* pState)
 {
     if(pNetHandle){
         u32 stateAddr = (u32)pNetHandle->state;
@@ -1429,7 +1288,7 @@ BOOL GFL_NET_StateIsWifiError(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiApplicationConnecting(GFL_NETHANDLE* pNetHandle)
+static void _wifiApplicationConnecting(GFL_NETSTATE* pState)
 {
     // 接続中
     int ret = mydwc_connect();
@@ -1454,7 +1313,7 @@ static void _wifiApplicationConnecting(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-static void _wifiLoginInit(GFL_NETHANDLE* pNetHandle)
+static void _wifiLoginInit(GFL_NETSTATE* pState)
 {
     if(GFL_NET_SystemWiFiModeInit(_PACKETSIZE_DEFAULT,
                                   pNetHandle->netHeapID, pNetHandle->wifiHeapID)){
@@ -1472,18 +1331,13 @@ static void _wifiLoginInit(GFL_NETHANDLE* pNetHandle)
  */
 //==============================================================================
 
-void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HEAPID wifiHeapID)
+void GFL_NET_StateWifiEnterLogin(HEAPID netHeapID, HEAPID wifiHeapID)
 {
     if(GFL_NET_SystemIsInitialize()){
         return;      // つながっている場合今は除外する
     }
     GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_WIFI);
-
-    _commStateInitialize(pNetHandle, 0);
-
-    pNetHandle->netHeapID = netHeapID;
-    pNetHandle->wifiHeapID = wifiHeapID;
-
+    _commStateInitialize(netHeapID);
     _CHANGE_STATE(_wifiLoginInit, 0);
 }
 #endif  //GFL_NET_WIFI
@@ -1499,10 +1353,10 @@ void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HE
  */
 //==============================================================================
 
-void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
+void GFL_NET_STATE_SetAutoErrorCheck(BOOL bAuto)
 {
-    if(pNetHandle){
-        pNetHandle->bErrorAuto = bAuto;
+    if(_pNetState){
+        _pNetState->bErrorAuto = bAuto;
     }
 }
 
@@ -1515,10 +1369,10 @@ void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto)
  */
 //==============================================================================
 
-void GFL_NET_STATE_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
+void GFL_NET_STATE_SetNoChildErrorCheck(BOOL bFlg)
 {
-    if(pNetHandle){
-        pNetHandle->bDisconnectError = bFlg;
+    if(_pNetState){
+        _pNetState->bDisconnectError = bFlg;
     }
     GFL_NET_WLSetDisconnectOtherError(bFlg);
 }
@@ -1531,10 +1385,10 @@ void GFL_NET_STATE_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg)
  */
 //==============================================================================
 
-static void _setErrorReset(GFL_NETHANDLE* pNetHandle,u8 type)
+static void _setErrorReset(GFL_NETSTATE* pState,u8 type)
 {
-    if(pNetHandle){
-        pNetHandle->ResetStateType = type;
+    if(pState){
+        pState->ResetStateType = type;
     }
 }
 
@@ -1546,10 +1400,10 @@ static void _setErrorReset(GFL_NETHANDLE* pNetHandle,u8 type)
  */
 //==============================================================================
 
-static u8 _isResetError(GFL_NETHANDLE* pNetHandle)
+static u8 _isResetError(GFL_NETSTATE* pState)
 {
-    if(pNetHandle){
-        return pNetHandle->ResetStateType;
+    if(pState){
+        return pState->ResetStateType;
     }
     return FALSE;
 }
@@ -1563,23 +1417,22 @@ static u8 _isResetError(GFL_NETHANDLE* pNetHandle)
  */
 //--------------------------------------------------------------
 
-static void _errorDispCheck(GFL_NETHANDLE* pNetHandle)
+static void _errorDispCheck(GFL_NETSTATE* pState)
 {
-    if(_getErrorCheck(pNetHandle)){
+    if(_getErrorCheck(pState)){
 #if GFL_NET_WIFI
-        if(GFL_NET_SystemIsError() || GFL_NET_StateGetWifiErrorNo(pNetHandle) || (pNetHandle->stateError!=0)){
+        if(GFL_NET_SystemIsError() || GFL_NET_StateGetWifiErrorNo(pState) || (pState->stateError!=0)){
 #else
-        if(GFL_NET_SystemIsError() || (pNetHandle->stateError!=0)){
+        if(GFL_NET_SystemIsError() || (pState->stateError!=0)){
 #endif
-            if(!_isResetError(pNetHandle)){   // リセットエラー状態で無い場合
+            if(!_isResetError(pState)){   // リセットエラー状態で無い場合
                 //Snd_Stop();
                 //SaveData_DivSave_Cancel(pNetHandle->pSaveData); // セーブしてたら止める
                 //sys.tp_auto_samp = 1;  // サンプリングも止める
 
-                _setErrorReset(pNetHandle,GFL_NET_ERROR_RESET_SAVEPOINT);  // エラーリセット状態になる
-                GFI_NET_FatalErrorFunc(pNetHandle,GFL_NET_ERROR_RESET_SAVEPOINT);
-                while(1){
-                }
+                _setErrorReset(pState,GFL_NET_ERROR_RESET_SAVEPOINT);  // エラーリセット状態になる
+                GFI_NET_FatalErrorFunc(GFL_NET_ERROR_RESET_SAVEPOINT);
+                while(1){            }
             }
         }
     }
@@ -1661,7 +1514,7 @@ BOOL CommStateIsResetEnd(void)
  */
 //==============================================================================
 
-BOOL CommStateSetError(GFL_NETHANDLE* pNetHandle,int no)
+BOOL CommStateSetError(GFL_NETSTATE* pState,int no)
 {
 
     if(pNetHandle){

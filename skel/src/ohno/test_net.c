@@ -151,8 +151,9 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-                _pHandle = GFL_NET_CreateHandle();
-                GFL_NET_StartBeaconScan(_pHandle );    // ビーコンを待つ
+                //_pHandle = GFL_NET_CreateHandle();
+                GFL_NET_StartBeaconScan();    // ビーコンを待つ
+//                GFL_NET_StartBeaconScan(_pHandle );    // ビーコンを待つ
 //                GFL_NET_InitClientAndConnectToParent(_pHandle, mac);  //macアドレスへ接続
 //                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
@@ -162,13 +163,13 @@ void TEST_NET_Main(void)
             {
                 u8* pData = GFL_NET_GetBeaconMacAddress(0);//ビーコンリストの0番目を得る
                 if(pData){
-                    GFL_NET_ConnectToParent(_pHandle, pData);
+                    GFL_NET_ConnectToParent( pData);
                 }
             }
             _testNo++;
             break;
           case _TEST_1:
-            GFL_NET_RequestNegotiation( _pHandle );
+            GFL_NET_HANDLE_RequestNegotiation();
             _testNo++;
             break;
 
@@ -189,7 +190,7 @@ void TEST_NET_Main(void)
 //                                   _TEST_VARIABLE_HUGE, 10, _dataSend, FALSE, FALSE);
 
 
-                GFL_NET_ChangeMpMode(_pHandle);
+                GFL_NET_ChangeMpMode(_pHandle,NULL);
 
             }
             _testNo++;
@@ -230,15 +231,14 @@ void TEST_NET_Main(void)
         switch(_testNo){
           case _TEST_CONNECT:
             {
-                _pHandleServer = GFL_NET_CreateHandle();
-                GFL_NET_InitServer(_pHandleServer);   // サーバ
-                _pHandle = GFL_NET_CreateHandle();  // クライアント
+                GFL_NET_InitServer();   // サーバ
+//                _pHandle = GFL_NET_CreateHandle();  // クライアント
 //                GFL_NET_ChangeoverConnect(_pHandle); // 自動接続
             }
             _testNo++;
             break;
           case _TEST_CONNECT2:
-            GFL_NET_RequestNegotiation( _pHandle );
+            GFL_NET_HANDLE_RequestNegotiation( );
             _testNo++;
             break;
           case _TEST_1:
@@ -334,6 +334,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // Infomationデータ取得関数
+    _netBeaconGetSizeFunc,  // Infomationデータサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -369,6 +371,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // Infomationデータ取得関数
+    _netBeaconGetSizeFunc,  // Infomationデータサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する

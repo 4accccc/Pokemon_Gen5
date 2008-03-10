@@ -79,6 +79,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     1,//NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // Infomationデータ取得関数
+    _netBeaconGetSizeFunc,  // Infomationデータサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -162,7 +164,7 @@ BOOL ConnectGameNet(void)
 		break;
 
 	case _CONNECT_NEGOCHECK:
-		if( GFL_NET_IsNegotiation( gNetSys._pHandle ) == TRUE ){
+		if( GFL_NET_HANDLE_IsNegotiation( gNetSys._pHandle ) == TRUE ){
 			if( GFL_NET_IsParentMachine() == FALSE ){
 				//子機の場合モードセット可能(defaultはDSモード)
 				//GFL_NET_ChangeMpMode(gNetSys._pHandle);

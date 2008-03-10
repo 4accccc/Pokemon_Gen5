@@ -10,7 +10,7 @@
 #
 #----------------------------------------------------------------------------
 
-.PHONY : gflib
+.PHONY : gflib all
 
 # GF-Library
 GFLIB_DIR		=	../gflib
@@ -145,3 +145,10 @@ gflib:
 source:
 	-$(RM) $(DEPENDDIR)/*.d
 	$(MAKE)
+
+
+#  allmake‚·‚é
+all:
+	$(MAKE) -C $(GFLIB_DIR)
+	$(MAKE)
+

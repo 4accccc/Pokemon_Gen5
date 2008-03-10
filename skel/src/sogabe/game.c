@@ -236,10 +236,10 @@ void	YT_InitGame(GAME_PARAM *gp)
         int	player_no;
 
         for(player_no=0;player_no<2;player_no++){
-            if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+            if(GFL_NET_IsParentMachine() && (player_no == 1)){
                 continue;
             }
-            else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+            else if(!GFL_NET_IsParentMachine() && (player_no == 0)){
                 continue;
             }
             pp = YT_InitPlayer(gp,player_no,player_no,TRUE);
@@ -339,10 +339,10 @@ static	void	YT_MainGameAct(GAME_PARAM *gp)
 	case SEQ_GAME_PLAY:
 		for(player_no=0;player_no<2;player_no++){
 			if(gp->pNetParam){
-				if(YT_NET_IsParent(gp->pNetParam) && (player_no == 1)){
+				if(GFL_NET_IsParentMachine() && (player_no == 1)){
 					continue;
 				}
-				else if(!YT_NET_IsParent(gp->pNetParam) && (player_no == 0)){
+				else if(!GFL_NET_IsParentMachine() && (player_no == 0)){
 					continue;
 				}
 			}

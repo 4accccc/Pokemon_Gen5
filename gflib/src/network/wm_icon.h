@@ -38,13 +38,13 @@ typedef struct{
 }VOamAnm;
 
 
-extern void WirelessIconEasy(BOOL bWifi, HEAPID heapID);
-extern void WirelessIconEasyXY(int x, int y, BOOL bWifi, HEAPID heapID);
-extern void WirelessIconEasyEnd(void);
-extern void WirelessIconEasy_SetLevel(int level);
-extern void WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID );
-extern void WirelessIconEasy_DefaultLCD( void );
-extern void WirelessIconEasyFunc(void);
+extern void GFL_NET_WirelessIconEasy(BOOL bWifi, HEAPID heapID);
+extern void GFL_NET_WirelessIconEasyXY(int x, int y, BOOL bWifi, HEAPID heapID);
+extern void GFL_NET_WirelessIconEasyEnd(void);
+extern void GFL_NET_WirelessIconEasy_SetLevel(int level);
+extern void GFL_NET_WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID );
+extern void GFL_NET_WirelessIconEasy_DefaultLCD( void );
+extern void GFL_NET_WirelessIconEasyFunc(void);
 
 // 通信アイコンだすために転送するPAL_VRAMの位置・大きさ(14番パレット使用）
 #define WM_ICON_PAL_POS		( 14 )

@@ -409,6 +409,15 @@ extern int mydwc_SetClientBlock(void);
  */
 //==============================================================================
 extern void mydwc_ResetClientBlock(void);
+//==============================================================================
+/**
+ * @brief   MYDWC‚ª‰Šú‰»Ï‚İ‚©‚Ç‚¤‚©
+ * @param   void
+ * @retval  TRUE  ‰Šú‰»Ï‚İ
+ */
+//==============================================================================
+
+extern BOOL GFL_NET_DWC_IsInit(void);
 
 
 //#include "dwc_overlay.h"

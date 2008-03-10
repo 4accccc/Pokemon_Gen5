@@ -174,8 +174,8 @@ extern int GFL_NET_WLGetNextConnectIndex(void);
  */
 //==============================================================================
 extern BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
-extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
-extern void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
+extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback);
+extern void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback);
 
 //==============================================================================
 /**

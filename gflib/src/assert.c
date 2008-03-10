@@ -89,9 +89,9 @@ static void AssertVPrintf( const char* fmt, va_list vlist )
 //------------------------------------------------------------------
 static void FinishAssertDisp( void )
 {
-#if DEBUG_ONLY_FOR_ohno
-    OS_TPanic("assert");
-#endif
+//#if DEBUG_ONLY_FOR_ohno
+//    OS_TPanic("assert");
+//#endif
 	if( DispFinishFunc != NULL )
 	{
 		DispFinishFunc();

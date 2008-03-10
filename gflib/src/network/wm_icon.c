@@ -10,7 +10,7 @@
 #include "gflib.h"
 #include "net.h"
 #include "wm_icon.h"
-#include "device/net_beacon.h"
+#include "device/net_whpipe.h"
 
 // アニメパターンの数
 #define WM_ICON_ANIME_MAX	 ( 4 )
@@ -454,9 +454,9 @@ static VINTR_WIRELESS_ICON *VintrWirelessIconPtr = NULL;
  * @retval  none		
  */
 //==============================================================================
-void WirelessIconEasy(BOOL bWifi, HEAPID heapID)
+void GFL_NET_WirelessIconEasy(BOOL bWifi, HEAPID heapID)
 {
-    WirelessIconEasyXY(GFL_WICON_POSX,GFL_WICON_POSY, bWifi, heapID);
+    GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX,GFL_WICON_POSY, bWifi, heapID);
 }
 
 //==============================================================================
@@ -468,12 +468,12 @@ void WirelessIconEasy(BOOL bWifi, HEAPID heapID)
  * @retval  none		
  */
 //==============================================================================
-void WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
+void GFL_NET_WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
 {
-    if(!GFL_NET_IsInitIchneumon()){  // イクニューモンが無い場合通信してない
+    if(!GFL_NET_IsIchneumon()){  // イクニューモンが無い場合通信してない
         return ;
     }
-    WirelessIconEasyEnd();
+    GFL_NET_WirelessIconEasyEnd();
     VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, WM_IconAnimTbl,VintrWirelessIconPtr);
 }
 
@@ -487,7 +487,7 @@ void WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
  * @retval  none		
  */
 //==============================================================================
-void WirelessIconEasyEnd(void)
+void GFL_NET_WirelessIconEasyEnd(void)
 {
     if(VintrWirelessIconPtr){
         WirelessIconEnd(VintrWirelessIconPtr);
@@ -502,7 +502,7 @@ void WirelessIconEasyEnd(void)
  * @retval  none
  */
 //==============================================================================
-void WirelessIconEasy_SetLevel(int level)
+void GFL_NET_WirelessIconEasy_SetLevel(int level)
 {
     if(VintrWirelessIconPtr){
         WirelessIconAnimeChange(VintrWirelessIconPtr, level);
@@ -518,7 +518,7 @@ void WirelessIconEasy_SetLevel(int level)
  *
  */
 //------------------------------------------------------------------
-void WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID )
+void GFL_NET_WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID )
 {
     if(VintrWirelessIconPtr)
     {
@@ -531,7 +531,7 @@ void WirelessIconEasy_HoldLCD( BOOL bTop, HEAPID heapID )
  * 超絶らくちん通信アイコン：表示LCDの固定を止め、デフォルトの挙動に戻す
  */
 //------------------------------------------------------------------
-void WirelessIconEasy_DefaultLCD( void )
+void GFL_NET_WirelessIconEasy_DefaultLCD( void )
 {
     if(VintrWirelessIconPtr){
 		WirelessIconDefaultLCD( VintrWirelessIconPtr );
@@ -545,7 +545,7 @@ void WirelessIconEasy_DefaultLCD( void )
  * @retval  none
  */
 //==============================================================================
-void WirelessIconEasyFunc(void)
+void GFL_NET_WirelessIconEasyFunc(void)
 {
     if(VintrWirelessIconPtr){
         WirelessIconAnimeFunc( VintrWirelessIconPtr );

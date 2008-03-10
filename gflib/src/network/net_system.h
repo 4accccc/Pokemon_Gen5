@@ -12,7 +12,7 @@
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
-#include "tool/net_tool.h"
+#include "net_handle.h"
 
 
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
@@ -73,8 +73,7 @@ extern BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax);
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-//extern BOOL GFL_NET_SystemChildModeInitAndConnect(int packetSizeMax,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle);
-extern BOOL GFL_NET_SystemChildModeInitAndConnect(BOOL bInit,u8* pMacAddr,int packetSizeMax,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle);
+extern BOOL GFL_NET_SystemChildModeInitAndConnect(BOOL bInit,u8* pMacAddr,int packetSizeMax,_PARENTFIND_CALLBACK pCallback);
 //==============================================================================
 /**
  * @brief   通信切断を行う
@@ -440,7 +439,13 @@ extern void GFL_NET_SystemRecvStop(BOOL bFlg);
 //==============================================================================
 
 extern BOOL GFL_NET_SystemGetKey(int no, u16* key);
-
+//==============================================================================
+/**
+ * @brief   指定されたIDのハンドルを返す
+ * @param   NetID  ネットＩＤ
+ * @retval  GFL_NETHANDLE
+ */
+//==============================================================================
 extern GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID);
 
 //extern void _commRecvCallback(u16 aid, u16 *data, u16 size);
@@ -464,14 +469,13 @@ typedef struct{
     u8* sSendBufRing;  ///<  子機の送信リングバッファ
     u8* sSendServerBuf;          ///<  親機の送信用バッファ
     u8* sSendServerBufRing;
-    u8* pMidRecvBufRing;          ///< 受け取るバッファをバックアップする DS専用
     u8* pServerRecvBufRing;       ///< 親機側受信バッファ
     u8* pRecvBufRing;             ///< 子機が受け取るバッファ
     u8* pTmpBuff;                 ///< 受信受け渡しのための一時バッファポインタ
     //----ringbuff manager
     RingBuffWork sendRing;
     RingBuffWork recvRing;                      ///< 子機の受信リングバッファ
-    RingBuffWork recvMidRing[GFL_NET_MACHINE_MAX];
+    //RingBuffWork recvMidRing[GFL_NET_MACHINE_MAX];
     RingBuffWork sendServerRing;
     RingBuffWork recvServerRing[GFL_NET_MACHINE_MAX];
     ///---quemanager 関連
@@ -492,8 +496,8 @@ typedef struct{
     u16 bitmap;   // 接続している機器をBIT管理
     
     //-------------------
-    NET_TOOLSYS* pTool;  ///< netTOOLのワーク
-    GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
+//    NET_TOOLSYS* pTool;  ///< netTOOLのワーク
+//    GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
     u16 key[GFL_NET_MACHINE_MAX];
     UI_KEYSYS* pKey[GFL_NET_MACHINE_MAX];       ///<  キーシェアリングポインタ
 //    u8 device;   ///< デバイス切り替え wifi<>wi

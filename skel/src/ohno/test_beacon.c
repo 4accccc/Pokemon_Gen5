@@ -620,8 +620,8 @@ static void _testChild(SKEL_TEST_BEACON_WORK* pWork)
 
     rssiWindowInit(pWork);
         
-    pWork->_pHandle = GFL_NET_CreateHandle();
-    GFL_NET_StartBeaconScan(pWork->_pHandle );    // ビーコンを待つ
+   // pWork->_pHandle = GFL_NET_CreateHandle();
+    GFL_NET_StartBeaconScan();    // ビーコンを待つ
     _CHANGE_STATE(_dispBeacon, 0);
 }
 
@@ -634,9 +634,8 @@ static void _testParent(SKEL_TEST_BEACON_WORK* pWork)
     bg_init( pWork->heapID );    //画面作成
     g2d_load(pWork);	//２Ｄデータ作成
     // サーバー側のテスト  ビーコン出しているだけ
-    pWork->_pHandleServer = GFL_NET_CreateHandle();
-    GFL_NET_InitServer(pWork->_pHandleServer);   // サーバ
-    pWork->_pHandle = GFL_NET_CreateHandle();  // クライアント
+    GFL_NET_InitServer();   // サーバ
+//    pWork->_pHandle = GFL_NET_CreateHandle();  // クライアント
     _CHANGE_STATE(_noneFunc, 0);
 
 }
@@ -884,6 +883,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    _netBeaconGetFunc,  // Infomationデータ取得関数
+    _netBeaconGetSizeFunc,  // infomationデータサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する

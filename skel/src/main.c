@@ -22,8 +22,6 @@ static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
 
-static int vsync_flame_counter;
-
 extern	void	TestModeSet(void);
 //------------------------------------------------------------------
 /**
@@ -32,7 +30,6 @@ extern	void	TestModeSet(void);
 //------------------------------------------------------------------
 void NitroMain(void)
 {
-    vsync_flame_counter=0;
     // 初期化して…
 	GFLUser_Init();
 
@@ -72,14 +69,15 @@ void NitroMain(void)
 
 //        OS_TPrintf("timer %d\n",OS_TicksToMicroSeconds32( OS_GetTick()));
 
-        if(vsync_flame_counter == 0){
+        if(GFUser_VIntr_GetVblankCounter()==0){
             OS_WaitIrq(TRUE,OS_IE_V_BLANK);
         }
 		// VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
-        vsync_flame_counter = 0;
-	}
+        GFUser_VIntr_ResetVblankCounter();
+
+    }
 }
 
 //------------------------------------------------------------------
@@ -104,7 +102,6 @@ static	void	SkeltonVBlankFunc(void)
 	MI_WaitDma(GX_DEFAULT_DMAID);
 
 	GFLUser_VIntr();
-    vsync_flame_counter++;
 }
 
 

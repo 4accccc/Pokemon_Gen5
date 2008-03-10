@@ -127,6 +127,7 @@ GFL_CLWK* YT_InitNetworkFallChr(GAME_PARAM *gp,u8 player_no,u8 type,u8 line_no)
     
 	fcp->gp=gp;
 	fcp->player_no=player_no;
+    NET_PRINT("YT_InitNetworkFallChr %d\n",player_no);
 	fcp->type=type;
 	fcp->line_no=line_no;
 	fcp->clact_no=GFL_AREAMAN_ReserveAuto(gp->clact_area,1);

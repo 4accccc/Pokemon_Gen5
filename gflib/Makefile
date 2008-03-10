@@ -43,7 +43,6 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					ui/key.c \
                     network/tool/net_ring_buff.c \
                     network/tool/net_queue.c \
-                    network/tool/net_tool.c \
 					network/device/wih.c \
 					network/device/net_whpipe.c \
 					network/device/dwc_rap.c \
@@ -55,6 +54,7 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					network/net_system.c \
 					network/net_command.c \
 					network/net_state.c \
+					network/net_handle.c \
 					network/net.c \
 					standard/gf_standard.c \
 					calctool.c \
