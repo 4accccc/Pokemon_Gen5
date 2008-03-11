@@ -120,6 +120,18 @@ inline void	GFL_G3D_SCENE_DelG3DutilUnit
 	GFL_G3D_UTIL_DelUnit( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
 }
 
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitResIdx
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitResIdx( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitResCount
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitResCount( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
 inline u16	GFL_G3D_SCENE_GetG3DutilUnitObjIdx
 		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
 {
@@ -130,6 +142,12 @@ inline u16	GFL_G3D_SCENE_GetG3DutilUnitObjCount
 		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
 {
 	return GFL_G3D_UTIL_GetUnitObjCount( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline GFL_G3D_RES*	GFL_G3D_SCENE_GetG3DutilResHandle
+		( GFL_G3D_SCENE* g3Dscene, u16 resIdx )
+{
+	return GFL_G3D_UTIL_GetResHandle( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), resIdx );
 }
 
 inline GFL_G3D_OBJ*	GFL_G3D_SCENE_GetG3DutilObjHandle

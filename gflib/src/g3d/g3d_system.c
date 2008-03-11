@@ -729,7 +729,7 @@ BOOL
 	}
 	return FALSE;
 }
-	
+
 
 
 
@@ -934,6 +934,30 @@ BOOL
 //----------------------------------------------------------------------------
 /**
  *
+ *@brief	テクスチャリソースの取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dResTex*
+	GFL_G3D_GetResTex
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+
+	return  NNS_G3dGetTex( header ); 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
  *@brief	テクスチャキーの取得
  *
  *	@param	res		テクスチャリソース参照ポインタ
@@ -1025,6 +1049,65 @@ BOOL
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	テクスチャキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dTexKey
+	GFL_G3D_GetTextureDataVramKey
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	restex = NNS_G3dGetTex( header ); 
+
+	if( restex->texInfo.flag & NNS_G3D_RESTEX_LOADED ){
+		return restex->texInfo.vramKey;
+	}
+	if( restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED ){
+		return restex->tex4x4Info.vramKey;
+	}
+	return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	パレットキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dPlttKey
+	GFL_G3D_GetTexturePlttVramKey
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	restex = NNS_G3dGetTex( header ); 
+
+	if( restex->plttInfo.flag & NNS_G3D_RESPLTT_LOADED ){
+		return restex->plttInfo.vramKey;
+	}
+	return NULL;
 }
 
 
