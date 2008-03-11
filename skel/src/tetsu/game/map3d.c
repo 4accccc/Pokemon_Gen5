@@ -29,6 +29,7 @@ struct _SCENE_MAP {
 	u16*				mapAttr;
 	MAPOBJ_HEADER		defaultFloor;
 	MAPOBJ_HEADER		extraObject[EXOBJ_MAX];
+	u16					anmTimer;
 };
 
 typedef struct {
@@ -145,7 +146,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 //------------------------------------------------------------------
 SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 {
-	SCENE_MAP* sceneMap = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_MAP) );
+	SCENE_MAP* sceneMap = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCENE_MAP) );
 	GFL_G3D_SCENEOBJ_DATA* data;
 	int	i;
 
@@ -162,6 +163,7 @@ SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 		sceneMap->extraObject[i].id = EXOBJ_NULL;
 		sceneMap->extraObject[i].count = 0;
 	}
+	sceneMap->anmTimer= 0;
 
 	CreateMapGridData( heapID );
 
@@ -772,8 +774,9 @@ static void CreateMapGridData( HEAPID heapID )
 					MakeGridData( x, z, 0, 0, height, height ); 
 				}
 			} else {
-				MakeGridData( x, z, 
-				mapGrid1[i].vtxY0, mapGrid1[i].vtxY1, mapGrid1[i].vtxY2, mapGrid1[i].vtxY3 );
+				MakeGridData(	x, z, 
+								mapGrid1[i].vtxY0, mapGrid1[i].vtxY1,
+								mapGrid1[i].vtxY2, mapGrid1[i].vtxY3 );
 			}
 #else
 			MakeGridData( x, z, 0, 0, 0, 0 );
@@ -1000,150 +1003,148 @@ static void GetMapTexAddress
 void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 {
 	u32			texData, texPltt, texData1, texPltt1, texData2, texPltt2;
-	int			x, z;
-	fx32		px, pz;
-	int			offset;
-	VecFx16		*pVtx0, *pVtx1, *pVtx2, *pVtx3;
-	fx32		s0, t0, s1, t1, s2, t2;
-	GXRgb		vtx0col, vtx1col, vtx2col;
-	fx16		col;
-	GXTexFmt	texFmt;
-	int			i;
+	VecFx32		camPos, camUp, target;
 
+	//テクスチャ設定取得
 	GetMapTexAddress( sceneMap, G3DRES_FIELD_TEX1, &texData1, &texPltt1 );
 	GetMapTexAddress( sceneMap, G3DRES_FIELD_TEX2, &texData2, &texPltt2 );
-
-	//水平線描画
-	G3X_Reset();
-	{
-		//カメラ設定
-		VecFx32 camPos, camUp, target;
-
-		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-		G3_LookAt( &camPos, &camUp, &target, NULL);
-	}
-	//マテリアル設定
-	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
-	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-	G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 8, 0);
-
-	G3_Scale( FX32_ONE*64*32, FX32_ONE*64*32, FX32_ONE*64*32 );
-	G3_PushMtx();
-	G3_Translate( 0, 0, 0 );
-
-	G3_Begin( GX_BEGIN_QUADS );
-
-	//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
-	G3_Color( GX_RGB(0, 0, 16) );
-	G3_Vtx( -FX16_ONE, -4, FX16_ONE );
-	G3_Color( GX_RGB(0, 0, 31) );
-	G3_Vtx( FX16_ONE, -4, FX16_ONE );
-	G3_Color( GX_RGB(0, 0, 16) );
-	G3_Vtx( FX16_ONE, -4, -FX16_ONE );
-	G3_Color( GX_RGB(0, 0, 31) );
-	G3_Vtx( -FX16_ONE, -4, -FX16_ONE );
-
-	G3_End();
-	G3_PopMtx(1);
+	//カメラ設定取得
+	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+	GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
 
 	//地形描画
-	G3X_Reset();
 	{
-		//カメラ設定
-		VecFx32 camPos, camUp, target;
+		int			x, z;
+		fx32		px, pz;
+		int			offset;
+		VecFx16		*pVtx0, *pVtx1, *pVtx2, *pVtx3;
+		fx32		s0, t0, s1, t1, s2, t2;
+		GXRgb		vtx0col, vtx1col, vtx2col;
+		fx16		col;
+		GXTexFmt	texFmt;
+		int			i;
 
-		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
+		G3X_Reset();
 		G3_LookAt( &camPos, &camUp, &target, NULL);
-	}
-	{
-		G3_MtxMode(GX_MTXMODE_TEXTURE);
-		G3_Identity();
-		// Use an identity matrix for the texture matrix for simplicity
-		G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
-	}
-	//マテリアル設定
-	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
-	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-	G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 31, 0);
-	G3_Scale( mapGrid, mapGrid, mapGrid );
-
-	for( z=0; z<mapSizeZ; z++ ){
-		for( x=0; x<mapSizeX; x++ ){
-
-			px = (x - mapSizeX/2) * FX16_ONE; 
-			pz = (z - mapSizeZ/2) * FX16_ONE;
-			offset = z * mapSizeX + x;
-
-			G3_PushMtx();
-
-			G3_Translate( px, 0, pz );
-
-			G3_Begin( GX_BEGIN_TRIANGLES );
-
-			for( i=0; i<2; i++ ){
-				pVtx0 = &mapGridData[offset].triangle[i].vtx0;
-				pVtx1 = &mapGridData[offset].triangle[i].vtx1;
-				pVtx2 = &mapGridData[offset].triangle[i].vtx2;
-
-				if(( pVtx0->y == pVtx1->y )&&( pVtx0->y == pVtx2->y )){
-					//平面（草）
-					texFmt	= GX_TEXFMT_PLTT16;// use 16 colors palette texture
-					texData = texData1;
-					texPltt = texPltt1;
-					s0 = 0;
-					t0 = 0;
-					s1 = 0;
-					t1 = 64 * FX32_ONE;
-					s2 = 64 * FX32_ONE;
-					t2 = 0;
-				} else {
-					//斜面（土）
-					texFmt	= GX_TEXFMT_PLTT4;// use 4 colors palette texture
-					texData = texData2;
-					texPltt = texPltt2;
-					s0 = 0;
-					t0 = 0;
-					s1 = 0;
-					t1 = 64 * FX32_ONE;
-					s2 = 64 * FX32_ONE;
-					t2 = 0;
-				}
-				G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD,// use texcoord
-									GX_TEXSIZE_S64, GX_TEXSIZE_T64,// 64 pixels
-									GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-									GX_TEXPLTTCOLOR0_USE, texData );
-				G3_TexPlttBase( texPltt, texFmt );
-
-				//gxSt0 = GX_ST( pVtx0->x * 64, pVtx0->z * 64 );
-				//gxSt1 = GX_ST( pVtx1->x * 64, pVtx1->z * 64 );
-				//gxSt2 = GX_ST( pVtx2->x * 64, pVtx2->z * 64 );
-				vtx0col = GX_RGB(16, 16, 16);
-				vtx1col = GX_RGB(24, 24, 24);
-				vtx2col = GX_RGB(31, 31, 31);
-
-				//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
-				G3_Color( vtx0col );
-				G3_TexCoord( s0, t0 );
-				G3_Vtx( pVtx0->x, pVtx0->y, pVtx0->z );
-
-				G3_Color( vtx1col );
-				G3_TexCoord( s1, t1 );
-				G3_Vtx( pVtx1->x, pVtx1->y, pVtx1->z );
-
-				G3_Color( vtx2col );
-				G3_TexCoord( s2, t2 );
-				G3_Vtx( pVtx2->x, pVtx2->y, pVtx2->z );
-			}
-			G3_End();
-
-			G3_PopMtx(1);
+		{
+			G3_MtxMode(GX_MTXMODE_TEXTURE);
+			G3_Identity();
+			// Use an identity matrix for the texture matrix for simplicity
+			G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
 		}
+		//マテリアル設定
+		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
+		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
+		G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 31, 0);
+		G3_Scale( mapGrid, mapGrid, mapGrid );
+
+		for( z=0; z<mapSizeZ; z++ ){
+			for( x=0; x<mapSizeX; x++ ){
+	
+				px = (x - mapSizeX/2) * FX16_ONE; 
+				pz = (z - mapSizeZ/2) * FX16_ONE;
+				offset = z * mapSizeX + x;
+	
+				G3_PushMtx();
+	
+				G3_Translate( px, 0, pz );
+	
+				G3_Begin( GX_BEGIN_TRIANGLES );
+	
+				for( i=0; i<2; i++ ){
+					pVtx0 = &mapGridData[offset].triangle[i].vtx0;
+					pVtx1 = &mapGridData[offset].triangle[i].vtx1;
+					pVtx2 = &mapGridData[offset].triangle[i].vtx2;
+	
+					if(( pVtx0->y == pVtx1->y )&&( pVtx0->y == pVtx2->y )){
+						//平面（草）
+						texFmt	= GX_TEXFMT_PLTT16;// use 16 colors palette texture
+						texData = texData1;
+						texPltt = texPltt1;
+						s0 = 0;
+						t0 = 0;
+						s1 = 0;
+						t1 = 64 * FX32_ONE;
+						s2 = 64 * FX32_ONE;
+						t2 = 0;
+					} else {
+						//斜面（土）
+						texFmt	= GX_TEXFMT_PLTT4;// use 4 colors palette texture
+						texData = texData2;
+						texPltt = texPltt2;
+						s0 = 0;
+						t0 = 0;
+						s1 = 0;
+						t1 = 64 * FX32_ONE;
+						s2 = 64 * FX32_ONE;
+						t2 = 0;
+					}
+					G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD,// use texcoord
+										GX_TEXSIZE_S64, GX_TEXSIZE_T64,// 64 pixels
+										GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
+										GX_TEXPLTTCOLOR0_USE, texData );
+					G3_TexPlttBase( texPltt, texFmt );
+	
+					//gxSt0 = GX_ST( pVtx0->x * 64, pVtx0->z * 64 );
+					//gxSt1 = GX_ST( pVtx1->x * 64, pVtx1->z * 64 );
+					//gxSt2 = GX_ST( pVtx2->x * 64, pVtx2->z * 64 );
+					vtx0col = GX_RGB(16, 16, 16);
+					vtx1col = GX_RGB(24, 24, 24);
+					vtx2col = GX_RGB(31, 31, 31);
+	
+					//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
+					G3_Color( vtx0col );
+					G3_TexCoord( s0, t0 );
+					G3_Vtx( pVtx0->x, pVtx0->y, pVtx0->z );
+	
+					G3_Color( vtx1col );
+					G3_TexCoord( s1, t1 );
+					G3_Vtx( pVtx1->x, pVtx1->y, pVtx1->z );
+	
+					G3_Color( vtx2col );
+					G3_TexCoord( s2, t2 );
+					G3_Vtx( pVtx2->x, pVtx2->y, pVtx2->z );
+				}
+				G3_End();
+	
+				G3_PopMtx(1);
+			}
+		}
+	}
+	//水平線描画
+	{
+		fx16 waterLine;
+
+		sceneMap->anmTimer += 0x400;
+		waterLine = 2 * FX_SinIdx( sceneMap->anmTimer );
+
+		G3X_Reset();
+		G3_LookAt( &camPos, &camUp, &target, NULL);
+
+		//マテリアル設定
+		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
+		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
+		G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 8, 0);
+	
+		G3_Scale( FX32_ONE*64*32, FX32_ONE, FX32_ONE*64*32 );
+		G3_PushMtx();
+		G3_Translate( 0, -FX16_ONE*4, 0 );
+	
+		G3_Begin( GX_BEGIN_QUADS );
+	
+		//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
+		G3_Color( GX_RGB(0, 0, 16) );
+		G3_Vtx( -FX16_ONE, waterLine, FX16_ONE );
+		G3_Color( GX_RGB(0, 0, 31) );
+		G3_Vtx( FX16_ONE, waterLine, FX16_ONE );
+		G3_Color( GX_RGB(0, 0, 16) );
+		G3_Vtx( FX16_ONE, waterLine, -FX16_ONE );
+		G3_Color( GX_RGB(0, 0, 31) );
+		G3_Vtx( -FX16_ONE, waterLine, -FX16_ONE );
+	
+		G3_End();
+		G3_PopMtx(1);
 	}
 	//↓後にG3D_Systemで行うので、ここではやらない
 	//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
