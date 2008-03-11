@@ -22,8 +22,7 @@ void	GameEnd( void );
 BOOL	GameMain( void );
 
 static void _initRecvBuffer( void );
-static void _sendGameKey( u16 trg, u16 cont );
-static void _sendGamePlay( u16 trg, u16 cont );
+static void _sendGamePlay( void );
 #define CAMERA_MOVE_SPEED	(0x0100)
 //------------------------------------------------------------------
 /**
@@ -170,8 +169,6 @@ BOOL	GameMain( void )
 
 			GFL_HEAP_FreeMemory(gcSetup); 
 
-			ResetAllGameControlKeyCommand( gw->gc ); 
-
 			gw->totalPlayerCount = pcount;
 		}
 		gw->trg = 0;
@@ -183,8 +180,17 @@ BOOL	GameMain( void )
 
 	case 3:
 		//MainGameNet();
-		gw->trg |= GFL_UI_KEY_GetTrg();
-		gw->cont |= GFL_UI_KEY_GetCont();
+		{
+			GAME_CONT_KEYDATA key;
+
+			key.keyTrg	= GFL_UI_KEY_GetTrg();
+			key.keyCont	= GFL_UI_KEY_GetCont();
+
+			key.tpCont = GFL_UI_TP_GetPointCont( &key.tpx, &key.tpy );
+			key.tpTrg  = GFL_UI_TP_GetPointTrg( &key.tpx, &key.tpy );
+
+			SetGameControlKey( gw->gc, &key );
+		}
 
 		switch( gw->mainContSeq ){
 		case 0:
@@ -202,17 +208,13 @@ BOOL	GameMain( void )
 				gw->seq++;
 			}
 			MainGameControl( gw->gc );
-			//ResetAllGameControlKeyCommand( gw->gc ); 
 			MainGameSystem( gw->gs );
 			{
 				//キー交換通信
-				//_sendGameKey( gw->trg, gw->cont );
-				_sendGamePlay( gw->trg, gw->cont );
+				_sendGamePlay();
 			}
 			ResetGameControl( gw->gc );
-
-			gw->trg = 0;
-			gw->cont = 0;
+			ResetGameControlKey( gw->gc );
 			gw->mainContSeq++;
 			break;
 		case 1:
@@ -282,51 +284,15 @@ static void _initRecvBuffer( void )
 //------------------------------------------------------------------
 // ローカル通信コマンドの定義
 enum _gameCommand_e {
-	_GAME_COM_KEY = GFL_NET_CMD_COMMAND_MAX,
-	_GAME_COM_PLAY,
+	_GAME_COM_PLAY = GFL_NET_CMD_COMMAND_MAX,
 };
-
-//------------------------------------------------------------------
-// _GAME_COM_KEY　位置情報送受信
-typedef struct {
-    u16 keyTrg;
-    u16 keyCont;
-} COMMWORK_KEY;
-
-static void _sendGameKey( u16 trg, u16 cont )
-{
-#ifdef NET_WORK_ON
-	COMMWORK_KEY commData;
-	commData.keyTrg = trg;
-	commData.keyCont = cont;
-
-	SendGameNet( _GAME_COM_KEY, &commData );
-#else
-	//SetGameControlKeyCommand( gw->gc, gw->myNetID, trg, cont );
-	SetGameControlKeyCommand( gw->gc, gw->playNetID, trg, cont );
-#endif
-}
-
-static void _recvGameKey
-	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-	COMMWORK_KEY* commDataP = (COMMWORK_KEY*)pData;
-	int	workp = netID-1;	//DS通信は親=0（内部隠し構造）の1orgin
-
-    if( GFL_NET_IsParentHandle(pNetHandle) == FALSE ){
-		SetGameControlKeyCommand( gw->gc, workp, commDataP->keyTrg, commDataP->keyCont );
-    }
-}
 
 //------------------------------------------------------------------
 // _GAME_COM_PLAY　ゲーム情報送受信
 
-static void _sendGamePlay( u16 trg, u16 cont )
+static void _sendGamePlay( void )
 {
 	GAME_NETWORK_PLAYDATA gnd;
-	gnd.trg = trg;
-	gnd.cont = cont;
-
 #ifdef NET_WORK_ON
 	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
 	SendGameNet( _GAME_COM_PLAY, &gnd );
@@ -352,7 +318,6 @@ static void _recvGamePlay
 //------------------------------------------------------------------
 // ローカル通信テーブル
 const NetRecvFuncTable _CommPacketTbl[] = {
-    { _recvGameKey, GFL_NET_COMMAND_SIZE(sizeof(COMMWORK_KEY)), NULL },
     { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(GAME_NETWORK_PLAYDATA)), NULL },
 };
 

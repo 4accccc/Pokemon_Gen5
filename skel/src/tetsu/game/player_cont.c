@@ -820,7 +820,7 @@ static void commandControl( PLAYER_CONTROL* pc )
 			break;
 		}
 #else
-//		directionSet( pc, pc->contDirection );	//ƒJƒƒ‰•ûŒü‚ÉŒü‚«’¼‚è
+		directionSet( pc, pc->contDirection );	//ƒJƒƒ‰•ûŒü‚ÉŒü‚«’¼‚è
 		anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 + pc->attackID );
 		//pc->skillCommand = PSC_ATTACK_SWORD;
 		pc->skillCommand = PSC_ATTACK_FIRE;

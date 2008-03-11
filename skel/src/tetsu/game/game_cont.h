@@ -28,10 +28,17 @@ typedef struct {
 }GAME_CONT_SETUP;
 
 typedef struct {
-	u16						trg;
-	u16						cont;
 	PLAYER_STATUS_NETWORK	psn;
 }GAME_NETWORK_PLAYDATA;
+
+typedef struct {
+	u32		keyTrg;
+	u32		keyCont;
+	BOOL	tpTrg;
+	BOOL	tpCont;
+	u32		tpx;
+	u32		tpy;
+}GAME_CONT_KEYDATA;
 
 typedef struct _GAME_CONTROL	GAME_CONTROL;
 
@@ -44,10 +51,11 @@ extern void ResetGameControl( GAME_CONTROL* gc );
 // ゲームコントロール終了
 extern void RemoveGameControl( GAME_CONTROL* gc );
 
+//	ゲームキーデータ設定
+extern void SetGameControlKey( GAME_CONTROL* gc, GAME_CONT_KEYDATA* data );
+extern void ResetGameControlKey( GAME_CONTROL* gc );
+
 // 通信コマンドセット
-//キーステータス
-extern BOOL SetGameControlKeyCommand( GAME_CONTROL* gc, int netID, int trg, int cont ); 
-extern void ResetAllGameControlKeyCommand( GAME_CONTROL* gc ); 
 //ゲームプレイ情報データ
 extern void GetGameNetWorkPlayData( GAME_CONTROL* gc, int netID, GAME_NETWORK_PLAYDATA* gnd ); 
 extern void SetGameNetWorkPlayData( GAME_CONTROL* gc, int netID, GAME_NETWORK_PLAYDATA* gnd ); 

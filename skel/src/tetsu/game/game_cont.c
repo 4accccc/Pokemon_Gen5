@@ -35,12 +35,6 @@ static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc
 //------------------------------------------------------------------
 #define TEAM_COUNT_MAX	(2) 
 
-#define COMM_STACK_MAX (5)
-typedef struct {
-	u16 trg;
-	u16 cont;
-}COMM_KEYDATA;
-
 struct _GAME_CONTROL {
 	HEAPID					heapID;
 	GAME_SYSTEM*			gs;
@@ -51,7 +45,6 @@ struct _GAME_CONTROL {
 	PLAYER_CONTROL*			myPc;
 	TEAM_CONTROL*			myTc;
 	int						teamCount;
-	COMM_KEYDATA			commKey[PLAYER_SETUP_NUM]; 
 	GAME_NETWORK_PLAYDATA	gnd[PLAYER_SETUP_NUM]; 
 
 	TEAM_CONTROL*			tc[TEAM_COUNT_MAX]; 
@@ -67,6 +60,8 @@ struct _GAME_CONTROL {
 	BOOL					onGameFlag;
 	BOOL					endGameFlag;
 	int						time;
+
+	GAME_CONT_KEYDATA		key;
 	int						tp_blank;
 };
 
@@ -208,6 +203,36 @@ void RemoveGameControl( GAME_CONTROL* gc )
 
 //------------------------------------------------------------------
 /**
+ * @brief	ゲームキーデータ設定
+ */
+//------------------------------------------------------------------
+void SetGameControlKey( GAME_CONTROL* gc, GAME_CONT_KEYDATA* data )
+{
+	gc->key.keyTrg	|= data->keyTrg;
+	gc->key.keyCont	|= data->keyCont;
+
+	if( data->tpTrg == TRUE ){
+		gc->key.tpTrg = TRUE;
+	}
+	if( data->tpCont == TRUE ){
+		gc->key.tpCont = TRUE;
+	}
+	gc->key.tpx			= data->tpx;
+	gc->key.tpy			= data->tpy;
+}
+
+void ResetGameControlKey( GAME_CONTROL* gc )
+{
+	gc->key.keyTrg	= 0;
+	gc->key.keyCont	= 0;
+	gc->key.tpTrg	= FALSE;
+	gc->key.tpCont	= FALSE;
+	gc->key.tpx		= 0;
+	gc->key.tpy		= 0;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ゲームメインコントロール
  */
 typedef struct {
@@ -236,7 +261,6 @@ void MainGameControl( GAME_CONTROL* gc )
 	{
 		VecFx32 cTrans;
 		GetCameraControlTrans( gc->cc, &cTrans );
-		SetMouseLine( gc->mes, cTrans.y );
 
 		MainMouseEvent( gc->mes );
 	}
@@ -303,7 +327,7 @@ void MainGameControl( GAME_CONTROL* gc )
 
 	case GAME_START:
 		gc->time = 0;
-		PutMessageWin( gc->mwc, GMSG_GAME_START );
+		//PutMessageWin( gc->mwc, GMSG_GAME_START );
 		gc->seq = GAME_ON;
 		break;
 
@@ -341,12 +365,12 @@ void MainGameControl( GAME_CONTROL* gc )
 			if( castleCount <= 1 ){
 				if( castleCount == 1 ){
 					if( myCastleExistFlag == TRUE ){
-						PutMessageWin( gc->mwc, GMSG_GAME_WIN );
+						//PutMessageWin( gc->mwc, GMSG_GAME_WIN );
 					} else {
-						PutMessageWin( gc->mwc, GMSG_GAME_LOSE );
+						//PutMessageWin( gc->mwc, GMSG_GAME_LOSE );
 					}
 				} else {
-					PutMessageWin( gc->mwc, GMSG_GAME_EVEN );
+					//PutMessageWin( gc->mwc, GMSG_GAME_EVEN );
 				}
 				gc->onGameFlag = FALSE;
 				gc->endGameFlag = TRUE;
@@ -408,7 +432,11 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 		ControlKey( pc, mccw->gc );
 		MainPlayerControl( pc );
 	} else {
+#ifdef NET_WORK_ON
 		MainNetWorkPlayerControl( pc, &mccw->gc->gnd[netID].psn );
+#else
+		MainPlayerControl( pc );
+#endif
 	}
 	SetSkillControlCommand( mccw->gc->sc, mccw->tc, pc, GetPlayerSkillCommand( pc ));
 	buildCommand = GetPlayerBuildCommand( pc );
@@ -497,41 +525,7 @@ static void	ResetGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* w
 static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc )
 {
 	if( pc == gc->myPc ){
-		PutMessageWin( gc->mwc, msgID );
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	通信コマンドセット
- */
-//------------------------------------------------------------------
-//キーステータス
-BOOL SetGameControlKeyCommand( GAME_CONTROL* gc, int netID, int trg, int cont ) 
-{
-	COMM_KEYDATA* commKey = &gc->commKey[netID];
-
-	commKey->trg = trg;
-	commKey->cont = cont;
-//	OS_TPrintf(" netID = %d, keyTrg = %x, keyCont = %x\n", netID, trg, cont );
-
-	return TRUE;
-}
-
-static void ResetGameControlKeyCommand( GAME_CONTROL* gc, int netID ) 
-{
-	COMM_KEYDATA* commKey = &gc->commKey[netID];
-
-	commKey->trg = 0;
-	commKey->cont = 0;
-}
-
-void ResetAllGameControlKeyCommand( GAME_CONTROL* gc ) 
-{
-	int i;
-
-	for( i=0; i<PLAYER_SETUP_NUM; i++ ){
-		ResetGameControlKeyCommand( gc, i );
+		//PutMessageWin( gc->mwc, msgID );
 	}
 }
 
@@ -567,8 +561,6 @@ void ResetAllGameNetWorkPlayData( GAME_CONTROL* gc )
 	int i;
 
 	for( i=0; i<PLAYER_SETUP_NUM; i++ ){
-		gc->gnd[i].trg = 0;
-		gc->gnd[i].cont = 0;
 		ResetPlayerNetStatus( &gc->gnd[i].psn );
 	}
 }
@@ -719,6 +711,22 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 	//置く
 	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_5 ) == TRUE ){
 		SetPlayerControlCommand( pc, PCC_PUTON );
+		return;
+	}
+	//地形ＵＰ
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_UP ) == TRUE ){
+		VecFx32 pos;
+		GetMousePos( gc->mes, &pos );
+		SetPlayerControlCommand( pc, PCC_TAKEOFF );
+		SetMapGroundUp( &pos );
+		return;
+	}
+	//地形ＤＯＷＮ
+	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_DOWN ) == TRUE ){
+		VecFx32 pos;
+		GetMousePos( gc->mes, &pos );
+		SetPlayerControlCommand( pc, PCC_PUTON );
+		SetMapGroundDown( &pos );
 		return;
 	}
 #if 0

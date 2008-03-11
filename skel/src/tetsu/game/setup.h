@@ -39,7 +39,7 @@ extern u32					Get_GS_ClactResIdx( GAME_SYSTEM* gs, u32 resID );
 #define PLAYICON_FRM_PRI	(0)
 #define TEXT_FRM_PRI		(1)
 #define MASK_FRM_PRI		(0)
-#define PLAYICON_PLTT		(0)
+#define PLAYICON_PLTT		(1)
 #define TEXT_PLTT			(15)
 #define MASK_PLTT			(1)
 #define MAP_PLTT			(1)

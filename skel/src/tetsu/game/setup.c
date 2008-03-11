@@ -263,6 +263,10 @@ static const u32 clactUnitList[] = {
 	CLACT_WKSIZ_STATUS,	//ステータスアイコン
 };
 
+static const GXRgb edgeColorTable[8] = {
+	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
+	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
+};
 //------------------------------------------------------------------
 /**
  * @brief	ローカル宣言
@@ -433,12 +437,14 @@ static void G3DsysSetup( void )
 	G3X_SetShading( GX_SHADING_TOON );
 	G3X_AntiAlias( TRUE );
 	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-	G3X_AlphaBlend(TRUE);
-	G3X_EdgeMarking( FALSE );
+	G3X_AlphaBlend( TRUE );
 	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
 
 	// クリアカラーの設定
 	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
+
+	G3X_SetEdgeColorTable( edgeColorTable ); 
+	G3X_EdgeMarking( TRUE );
 
 	// ビューポートの設定
 	G3_ViewPort(0, 0, 255, 191);
@@ -513,6 +519,9 @@ static void g3d_draw( GAME_SYSTEM* gs )
 #else
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
 	GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
+//TEST
+	Draw3Dmap( gs->sceneMap, gs->g3Dcamera[MAINCAMERA_ID] );
+//TEST
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 #endif
 }

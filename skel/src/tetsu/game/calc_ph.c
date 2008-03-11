@@ -308,7 +308,6 @@ BOOL	CalcMovePHMV( CALC_PH_MV* calcPHMV, VecFx32* posNow )
 
 		//ˆÚ“®ˆÊ’u‚ÌŒvŽZ
 		VEC_Add( posNow, &vecSpeed, &posNext );
-		//GetGroundPlaneHeight( &posNext, &posNext.y );
 		calcPHMV->getGroundHeight_func( &posNext, &posNext.y );
 	} else {
 		//‹ó’†ˆÚ“®
