@@ -20,9 +20,9 @@
  */
 //------------------------------------------------------------------
 
-//#define SHAPE_DIR_CHECK
+#define SHAPE_DIR_CHECK
 
-#define	ROTATE_VALUE	(65536/4)
+#define	ROTATE_VALUE	(65536/16)
 
 #define	MAP_X	(5)
 #define	MAP_Y	(5)
@@ -32,23 +32,28 @@
 
 typedef struct
 {
-	int			seq_no;
-	u16			pos_x;
-	u16			pos_y;
-	u16			pos_z;
-	u16			rotx;
-	u16			roty;
-	u16			rotz;
-	u16			shape;
-	u16			dir;
-	u16			wait;
-	u8			field[MAP_Z+2][MAP_X][MAP_Y];
-	int			tp_flag;
+	int				seq_no;
+	u16				pos_x;
+	u16				pos_y;
+	u16				pos_z;
+	u16				rotx;
+	u16				roty;
+	u16				rotz;
+	u16				shape;
+	u16				dir;
+	u16				wait;
+	GFL_QUATERNION	qt;
+	MtxFx33			mtx;
+	u8				field[MAP_Z+2][MAP_X][MAP_Y];
+	int				tp_flag;
 }BLOCK_OUT;
 
 #ifdef SHAPE_DIR_CHECK
 static	u16	rot_x,rot_y,rot_z;
+static	u32	tp_x,tp_y,tp_on,tp_old_x,tp_old_y;
 #endif
+
+static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z);
 
 //----------------------------------------------------------------------------
 /**
@@ -1684,7 +1689,7 @@ static	const	BLOCK_PARAM	bp[]={
 	},
 };
 
-static	void	DrawBlock(VecFx32 pos,int shape,int dir,int alpha,int tex);
+static	void	DrawBlock(BLOCK_OUT *bo,VecFx32 pos,int shape,int dir,int alpha,int tex);
 static	void	DrawField(void);
 static	void	DrawFieldBlock(BLOCK_OUT *bo);
 static	BOOL	DrawFieldBlockCheck(BLOCK_OUT *bo,int check_x,int check_y,int check_z);
@@ -1713,6 +1718,8 @@ void	YT_InitBlockOut(GAME_PARAM *gp)
 
 	G3X_InitMtxStack();
 
+	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+
 	GX_SetBankForTex(GX_VRAM_TEX_0_A);
 	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G); 
 
@@ -1720,7 +1727,7 @@ void	YT_InitBlockOut(GAME_PARAM *gp)
 	GX_SetVisiblePlane(GX_PLANEMASK_BG0);
 	G2_SetBG0Priority(0);
 
-	G3X_SetShading(GX_SHADING_TOON);
+	G3X_SetShading(GX_SHADING_HIGHLIGHT);
 	G3X_AntiAlias(TRUE);
 
 	G3_SwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
@@ -1764,6 +1771,9 @@ void	YT_InitBlockOut(GAME_PARAM *gp)
 	rot_x=0;
 	rot_y=0;
 	rot_z=0;
+	GFL_QUAT_Identity(&bo->qt);
+	MTX_Identity33(&bo->mtx);
+	tp_x=tp_y=tp_on=tp_old_x=tp_old_y=0;
 #endif
 
 	YT_JobNoSet(gp,YT_MainBlockOutNo);
@@ -1794,29 +1804,41 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	bo->pos_y=2;
 	bo->pos_z=MAP_Z-1;
 	bo->shape=BLOCK_QBLOCK;
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
 		rot_x-=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_B){
 		rot_x+=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
 		rot_y-=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_A){
 		rot_y+=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_L){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
 		rot_z+=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_R){
+	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
 		rot_z-=ROTATE_VALUE;
-		OS_TPrintf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+	}
+	if(GFL_UI_TP_GetPointCont(&tp_x,&tp_y)){
+		if(tp_on){
+			rot_x=(tp_y-tp_old_y)*256;
+			rot_y=(tp_x-tp_old_x)*256;
+		}
+		tp_old_x=tp_x;
+		tp_old_y=tp_y;
+		tp_on=1;
+	}
+	else{
+		tp_on=0;
 	}
 #else
 	switch(bo->seq_no){
@@ -1826,6 +1848,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		bo->pos_z=MAP_Z-1;
 		bo->dir=0;
 		bo->wait=0;
+		GFL_QUAT_Identity(&bo->qt);
 		bo->shape=__GFL_STD_MtRand()%BLOCK_MAX;
 		bo->seq_no=SEQ_BLOCK_FALL;
 		bo->tp_flag=0;
@@ -1888,7 +1911,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	pos.y=((MAP_Y/2)-bo->pos_y)*FX32_ONE;
 	pos.z=(-4-(MAP_Z-bo->pos_z-1))*FX32_ONE;
 
-	DrawBlock(pos,bo->shape,bo->dir,0,0);
+	DrawBlock(bo,pos,bo->shape,bo->dir,0,0);
 #ifndef SHAPE_DIR_CHECK
 	DrawField();
 	DrawFieldBlock(bo);
@@ -1899,7 +1922,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	G3_SwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
 }
 
-static	void	DrawBlock(VecFx32 pos,int shape,int dir,int alpha,int tex)
+static	void	DrawBlock(BLOCK_OUT *bo,VecFx32 pos,int shape,int dir,int alpha,int tex)
 {
 	fx16		*bd=(fx16 *)bp[shape].block_data;
 	BLOCK_SHAPE	*bs=(BLOCK_SHAPE *)bp[shape].block_shape;
@@ -1908,6 +1931,10 @@ static	void	DrawBlock(VecFx32 pos,int shape,int dir,int alpha,int tex)
 	VecFx32		at=	{0,0,0};
 	VecFx32		vUp={0,FX32_ONE,0};
 	VecFx16		vtx;
+#ifdef SHAPE_DIR_CHECK
+	GFL_QUATERNION	qt;
+	MtxFx44		mtx,mtx_x,mtx_y,mtx_z;
+#endif
 
 	G3X_Reset();
 
@@ -1925,9 +1952,17 @@ static	void	DrawBlock(VecFx32 pos,int shape,int dir,int alpha,int tex)
 	G3_Translate(pos.x,pos.y,pos.z);
 
 #ifdef SHAPE_DIR_CHECK
-	G3_RotY(FX_SinIdx(rot_y),FX_CosIdx(rot_y));
-	G3_RotX(FX_SinIdx(rot_x),FX_CosIdx(rot_x));
-	G3_RotZ(FX_SinIdx(rot_z),FX_CosIdx(rot_z));
+//	G3_RotY(FX_SinIdx(rot_y),FX_CosIdx(rot_y));
+//	G3_RotX(FX_SinIdx(rot_x),FX_CosIdx(rot_x));
+//	G3_RotZ(FX_SinIdx(rot_z),FX_CosIdx(rot_z));
+//	GFL_QUAT_MakeQuaternionXYZ(&qt,rot_x,rot_y,rot_z);
+//	GFL_QUAT_Mul(&bo->qt,&bo->qt,&qt);
+//	GFL_QUAT_SetMtx44(&mtx,&bo->qt);
+//	G3_MultMtx44(&mtx);
+	QuaternionRotation(&bo->mtx,rot_x,rot_y,rot_z);
+	MTX_Copy33To44(&bo->mtx,&mtx);
+	G3_MultMtx44(&mtx);
+	rot_x=rot_y=rot_z=0;
 #else
 	G3_RotX(FX_SinIdx(bs[dir].rot_x),FX_CosIdx(bs[dir].rot_x));
 	G3_RotY(FX_SinIdx(bs[dir].rot_y),FX_CosIdx(bs[dir].rot_y));
@@ -2120,7 +2155,7 @@ static	void	DrawFieldBlock(BLOCK_OUT *bo)
 					pos.x=(set_x-(MAP_X/2))*FX32_ONE;
 					pos.y=((MAP_Y/2)-set_y)*FX32_ONE;
 					pos.z=(-4-(MAP_Z-set_z-1))*FX32_ONE;
-					DrawBlock(pos,BLOCK_BLOCK,0,31,set_z);
+					DrawBlock(bo,pos,BLOCK_BLOCK,0,31,set_z);
 				}
 			}
 		}
@@ -2258,5 +2293,45 @@ static	void	SurfaceCheck(BLOCK_OUT *bo)
 		block_count[low]=block_count[high];
 		block_count[high]=0;
 	}
+}
+
+static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z)
+{
+	MtxFx33	dMtx;
+	VecFx32	vec;
+
+	if(rot_x){
+		MTX_RotX33(&dMtx,FX_SinIdx(rot_x),FX_CosIdx(rot_x));
+		MTX_Concat33(mtx,&dMtx,mtx);
+	}
+	if(rot_y){
+		MTX_RotY33(&dMtx,FX_SinIdx(rot_y),FX_CosIdx(rot_y));
+		MTX_Concat33(mtx,&dMtx,mtx);
+	}
+	if(rot_z){
+		MTX_RotZ33(&dMtx,FX_SinIdx(rot_z),FX_CosIdx(rot_z));
+		MTX_Concat33(mtx,&dMtx,mtx);
+	}
+	vec.x=mtx->_00;
+	vec.y=mtx->_01;
+	vec.z=mtx->_02;
+	VEC_Normalize(&vec,&vec);
+	mtx->_00=vec.x;
+	mtx->_01=vec.y;
+	mtx->_02=vec.z;
+	vec.x=mtx->_10;
+	vec.y=mtx->_11;
+	vec.z=mtx->_12;
+	VEC_Normalize(&vec,&vec);
+	mtx->_10=vec.x;
+	mtx->_11=vec.y;
+	mtx->_12=vec.z;
+	vec.x=mtx->_20;
+	vec.y=mtx->_21;
+	vec.z=mtx->_22;
+	VEC_Normalize(&vec,&vec);
+	mtx->_20=vec.x;
+	mtx->_21=vec.y;
+	mtx->_22=vec.z;
 }
 

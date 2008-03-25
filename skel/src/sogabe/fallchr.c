@@ -1272,7 +1272,7 @@ static	void	YT_YossyBirthAnime(GFL_TCB *tcb,void *work)
 	case 2:
 		if(yba->wait==0){
 			if(yba->seq_no==1){
-				GFL_SOUND_PlaySE(SE_YOSSY);
+				GFL_SNDTOOL_PlaySEwithPitch(SE_YOSSY,-64*yba->pat_no);
 			}
 			yba->wait=8;
 			GFL_BMP_Fill(GFL_BMPWIN_GetBmp(yba->gp->yossy_bmpwin),yba->pos_x,yba->pos_y,32,48,0);

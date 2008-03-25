@@ -52,6 +52,8 @@
 #include "particle.h"
 #include "spl.h"
 
+#include "quaternion.h"
+
 /*  */
 
 #endif	/*	__GFLIB_H__ */

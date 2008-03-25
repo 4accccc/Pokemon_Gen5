@@ -87,9 +87,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	gp->heapID=HEAPID_SOGABE_DEBUG;
 
-	YT_JobNoSet(gp,YT_InitTitleNo);
+//	YT_JobNoSet(gp,YT_InitTitleNo);
 //	YT_JobNoSet(gp,YT_Init3DTestNo);
-//	YT_JobNoSet(gp,YT_InitBlockOutNo);
+	YT_JobNoSet(gp,YT_InitBlockOutNo);
 
 	game_init(gp);
 

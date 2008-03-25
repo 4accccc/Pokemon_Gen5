@@ -71,7 +71,8 @@ SRCS			=	initialize.c filesystem.c heap.c heapDTCM.c heapsys.c \
 					sound/sound.c \
 					sound/sound_tool.c \
 					dma/dma.c \
-					particle/particle.c
+					particle/particle.c \
+					quaternion.c
 
 
 # MCS(Multiple Channel Stream)‚ð—LŒø‚É‚·‚éŽž‚ÍUSE_MCS‚ð’è‹`
