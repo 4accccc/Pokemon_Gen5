@@ -132,7 +132,6 @@ static void GFI_UI_TP_Main(UISYS* pUI)
 	}
 
 	TP_GetCalibratedPoint( &tpDisp, &tpTemp );	// 座標を画面座標（０～２５５）にする
-    OS_TPrintf("%d %d\n",tpDisp.x, tpDisp.y);
 
 	if( tpDisp.validity == TP_VALIDITY_VALID  ){		// 座標の有効性をチェック
 		// タッチパネル座標有効
