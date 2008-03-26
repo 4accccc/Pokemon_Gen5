@@ -538,7 +538,7 @@ BOOL
 	u16				anmresID;
 	int i;
 	
-	GF_ASSERT( objIdx < g3Dutil->unit[objUnitIdx].objCount );
+	GF_ASSERT( objUnitIdx + objIdx <  g3Dutil->g3DobjCount );
 	g3Dobj = g3Dutil->g3DobjTbl[ objUnitIdx + objIdx ];
 	g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ); 
  
