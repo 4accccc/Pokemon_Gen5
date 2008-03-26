@@ -132,6 +132,7 @@ static void GFI_UI_TP_Main(UISYS* pUI)
 	}
 
 	TP_GetCalibratedPoint( &tpDisp, &tpTemp );	// 座標を画面座標（０～２５５）にする
+    OS_TPrintf("%d %d\n",tpDisp.x, tpDisp.y);
 
 	if( tpDisp.validity == TP_VALIDITY_VALID  ){		// 座標の有効性をチェック
 		// タッチパネル座標有効
@@ -239,8 +240,8 @@ static BOOL _circle_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 //------------------------------------------------------------------
 static BOOL _rect_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 {
-	if( ((u32)( x - tbl->rect.left) < (u32)(tbl->rect.right - tbl->rect.left))
-	&	((u32)( y - tbl->rect.top) < (u32)(tbl->rect.bottom - tbl->rect.top))
+	if( ((u32)( x - (u32)tbl->rect.left) <= (u32)((u32)tbl->rect.right - (u32)tbl->rect.left))
+	&	((u32)( y - (u32)tbl->rect.top) <= (u32)((u32)tbl->rect.bottom - (u32)tbl->rect.top))
 	){
 		return TRUE;
 	}
