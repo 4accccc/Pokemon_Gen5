@@ -2,181 +2,162 @@
 /**
  * @file	quaternion.h
  * @brief	クォータニオン
- * @author	goto
- * @date	2007.10.09(火)
+ * @author	soga
+ * @date	2008.03.26
  *
  * ここに色々な解説等を書いてもよい
  *
  */
 //==============================================================================
 
-#ifndef __QUATERNION_H__
-#define __QUATERNION_H__
+#ifndef __QUATERNION_H
+#define __QUATERNION_H
 
-#include	<nitro/types.h>
-#include	<nitro/fx/fx.h>
-#include	<nitro/fx/fx_cp.h>
-#include	<nitro/fx/fx_mtx44.h>
-#include	<nitro/fx/fx_trig.h>
+/* クォータニオン構造体 */
+typedef struct _GFL_QUATERNION GFL_QUATERNION;
 
-#if 1
-//FX32計算バージョン
-//
-// -----------------------------------------
-//
-//	クォータニオン
-//
-// -----------------------------------------
-typedef union {
-	
-	struct {		
-		fx32	wr;		///< 実数
-		fx32	xi;		///< 虚数
-		fx32	yi;		///< 虚数
-		fx32	zi;		///< 虚数
-	};
-	fx32 q[ 4 ];
-	
-} GFL_QUATERNION;
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオン初期化（メモリ確保）
+ *
+ * @param[in]	heapID	メモリ確保するヒープID
+ */
+//--------------------------------------------------------------------------------------------
+extern	GFL_QUATERNION *GFL_QUAT_Init(int heapID);
 
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオン破棄
+ *
+ * @param[out]	qt	破棄するクォータニオン構造体へのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Free(GFL_QUATERNION *qt);
 
-// -----------------------------------------
-//
-//	クォータニオンマトリックス ( 4x4 )
-//
-// -----------------------------------------
-typedef union {
-	
-	struct {
-		fx32 _00, _01, _02, _03;
-        fx32 _10, _11, _12, _13;
-        fx32 _20, _21, _22, _23;
-        fx32 _30, _31, _32, _33;
-	};
-	fx32 m[ 4 ][ 4 ];
-	fx32 a[ 16 ];
-	
-} GFL_QUATERNION_MTX44;
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオン初期化（０）
+ *
+ * @param[out]	qt	初期化するクォータニオン構造体へのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Zero(GFL_QUATERNION *qt);
 
-// クォータニオンの初期化
-extern void GFL_QUAT_Identity( GFL_QUATERNION* q );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオン初期化（１）
+ *
+ * @param[out]	qt	初期化するクォータニオン構造体へのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Identity(GFL_QUATERNION *qt);
 
-// クォータニオンのコピー
-extern void GFL_QUAT_Copy( GFL_QUATERNION* q1, GFL_QUATERNION* q2 );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオン初期化（指定された引数）
+ *
+ * @param[out]	qt	初期化するクォータニオン構造体へのポインタ
+ * @param[in]	w	初期化するｗ値
+ * @param[in]	x	初期化するｘ値
+ * @param[in]	y	初期化するｙ値
+ * @param[in]	z	初期化するｚ値
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Assign(GFL_QUATERNION *qt, fx32 w, fx32 x, fx32 y, fx32 z);
 
-// クォータニオンを軸ごとの回転値から生成
-extern	void GFL_QUAT_MakeQuaternionXYZ( GFL_QUATERNION* qt, u16 rot_x, u16 rot_y,u16 rot_z );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオンの加算
+ *
+ * @param[out]	ans		計算結果を返すクォータニオン構造体へのポインタ
+ * @param[in]	qt_a	加算値A
+ * @param[in]	qt_b	加算値B
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Add(GFL_QUATERNION *ans, const GFL_QUATERNION *qt_a, const GFL_QUATERNION *qt_b);
 
-// クォータニオンの積
-extern void GFL_QUAT_Mul( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオンの減算
+ *
+ * @param[out]	ans		計算結果を返すクォータニオン構造体へのポインタ
+ * @param[in]	qt_a	減算値A
+ * @param[in]	qt_b	減算値B
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Sub(GFL_QUATERNION *ans, const GFL_QUATERNION *qt_a, const GFL_QUATERNION *qt_b);
 
-// クォータニオンの加算
-extern void GFL_QUAT_Add( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオンの乗算
+ *
+ * @param[out]	ans		計算結果を返すクォータニオン構造体へのポインタ
+ * @param[in]	qt_a	乗算値A
+ * @param[in]	qt_b	乗算値B
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_Mul(GFL_QUATERNION *ans, const GFL_QUATERNION *qt_a, const GFL_QUATERNION *qt_b);
 
-// クォータニオンの減算
-extern void GFL_QUAT_Sub( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオンと実数の乗算
+ *
+ * @param[out]	ans	計算結果を返すクォータニオン構造体へのポインタ
+ * @param[in]	s	乗算値実数
+ * @param[in]	qt	乗算値クォータニオン
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_MulReal(GFL_QUATERNION *ans, fx32 s, const GFL_QUATERNION *qt);
 
-// クォータニオンのノルム || a || ^ 2
-extern fx32  GFL_QUAT_GetNormSqrt( const GFL_QUATERNION* q );
+//--------------------------------------------------------------------------------------------
+/**
+ * クォータニオンと実数の除算
+ *
+ * @param[out]	ans	計算結果を返すクォータニオン構造体へのポインタ
+ * @param[in]	qt	除算値クォータニオン
+ * @param[in]	s	除算値実数
+ */
+//--------------------------------------------------------------------------------------------
+extern	void GFL_QUAT_DivReal(GFL_QUATERNION *ans, const GFL_QUATERNION *qt, fx32 s);
 
-// クォータニオンのノルム || a ||
-extern fx32  GFL_QUAT_GetNorm( const GFL_QUATERNION* q );
+//--------------------------------------------------------------------------------------------
+/**
+ *	クォータニオンのノルム（ ||a||^2 ）
+ *
+ * @param[in]	qt	計算するクォータニオン構造体のポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	fx32 GFL_QUAT_NormSqr(const GFL_QUATERNION *qt);
 
-// クォータニオンをマトリックスに設定
-extern void GFL_QUAT_SetMtx44( MtxFx44* mtx, const GFL_QUATERNION* q );
+//--------------------------------------------------------------------------------------------
+/**
+ *	クォータニオンのノルム（ ||a|| ）
+ *
+ * @param[in]	qt	計算するクォータニオン構造体のポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	fx32 GFL_QUAT_Norm(const GFL_QUATERNION *qt);
 
-// クォータニオンをマトリックスに設定
-extern void GFL_QUAT_SetQMtx44( GFL_QUATERNION_MTX44* qmtx, const GFL_QUATERNION* q );
+//--------------------------------------------------------------------------------------------
+/**
+ *	各軸の回転量からクォータニオンを生成する
+ *
+ * @param[out]	qt		生成したクォータニオンを格納する構造体へのポインタ
+ * @param[in]	rot_x	X軸の回転量
+ * @param[in]	rot_y	Y軸の回転量
+ * @param[in]	rot_z	Z軸の回転量
+ */
+//--------------------------------------------------------------------------------------------
+extern	void	GFL_QUAT_MakeQuaternionXYZ(GFL_QUATERNION *qt,u16 rot_x,u16 rot_y,u16 rot_z);
 
-// クォータニオンマトリックスをfx32型4x4マトリックスに変換
-extern void GFL_QUAT_SetQMtx44_to_MtxFx44( const GFL_QUATERNION_MTX44* qmtx, MtxFx44* mtx );
-
-// クォータニオンマトリックスをfx32型4x3マトリックスに変換
-extern void GFL_QUAT_SetQMtx44_to_MtxFx43( const GFL_QUATERNION_MTX44* qmtx, MtxFx43* mtx );
-
-// クォータニオンの保持している回転量
-extern u16  GFL_QUAT_GetRotation( const GFL_QUATERNION* q );
-#endif
-
-//f32計算バージョン
-#if 0
-// -----------------------------------------
-//
-//	クォータニオン
-//
-// -----------------------------------------
-typedef union {
-	
-	struct {		
-		f32	wr;		///< 実数
-		f32	xi;		///< 虚数
-		f32	yi;		///< 虚数
-		f32	zi;		///< 虚数
-	};
-	f32 q[ 4 ];
-	
-} GFL_QUATERNION;
-
-
-// -----------------------------------------
-//
-//	クォータニオンマトリックス ( 4x4 )
-//
-// -----------------------------------------
-typedef union {
-	
-	struct {
-		f32 _00, _01, _02, _03;
-        f32 _10, _11, _12, _13;
-        f32 _20, _21, _22, _23;
-        f32 _30, _31, _32, _33;
-	};
-	f32 m[ 4 ][ 4 ];
-	f32 a[ 16 ];
-	
-} GFL_QUATERNION_MTX44;
-
-
-
-
-// クォータニオンの初期化
-extern void GFL_QUAT_Identity( GFL_QUATERNION* q );
-
-// クォータニオンのコピー
-extern void GFL_QUAT_Copy( GFL_QUATERNION* q1, GFL_QUATERNION* q2 );
-
-// クォータニオンを軸ごとの回転値から生成
-extern	void GFL_QUAT_MakeQuaternionXYZ( GFL_QUATERNION* qt, u16 rot_x, u16 rot_y,u16 rot_z );
-
-// クォータニオンの積
-extern void GFL_QUAT_Mul( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
-
-// クォータニオンの加算
-extern void GFL_QUAT_Add( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
-
-// クォータニオンの減算
-extern void GFL_QUAT_Sub( GFL_QUATERNION* q, const GFL_QUATERNION* q1, const GFL_QUATERNION* q2 );
-
-// クォータニオンのノルム || a || ^ 2
-extern f32  GFL_QUAT_GetNormSqrt( const GFL_QUATERNION* q );
-
-// クォータニオンのノルム || a ||
-extern f32  GFL_QUAT_GetNorm( const GFL_QUATERNION* q );
-
-// クォータニオンをマトリックスに設定
-extern void GFL_QUAT_SetMtx44( MtxFx44* mtx, const GFL_QUATERNION* q );
-
-// クォータニオンをマトリックスに設定
-extern void GFL_QUAT_SetQMtx44( GFL_QUATERNION_MTX44* qmtx, const GFL_QUATERNION* q );
-
-// クォータニオンマトリックスをfx32型4x4マトリックスに変換
-extern void GFL_QUAT_SetQMtx44_to_MtxFx44( const GFL_QUATERNION_MTX44* qmtx, MtxFx44* mtx );
-
-// クォータニオンマトリックスをfx32型4x3マトリックスに変換
-extern void GFL_QUAT_SetQMtx44_to_MtxFx43( const GFL_QUATERNION_MTX44* qmtx, MtxFx43* mtx );
-
-// クォータニオンの保持している回転量
-extern u16  GFL_QUAT_GetRotation( const GFL_QUATERNION* q );
-#endif
+//--------------------------------------------------------------------------------------------
+/**
+ *	クォータニオンから回転行列を生成する
+ *
+ * @param[out]	mtx	生成する回転行列構造体へのポインタ
+ * @param[in]	qt	元になるクォータニオン構造体のポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void	GFL_QUAT_MakeRotateMatrix(MtxFx44 *mtx,GFL_QUATERNION *qt);
 
 #endif

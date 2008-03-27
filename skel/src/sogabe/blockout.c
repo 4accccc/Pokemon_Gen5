@@ -20,7 +20,7 @@
  */
 //------------------------------------------------------------------
 
-#define SHAPE_DIR_CHECK
+//#define SHAPE_DIR_CHECK
 
 #define	ROTATE_VALUE	(65536/16)
 
@@ -42,7 +42,7 @@ typedef struct
 	u16				shape;
 	u16				dir;
 	u16				wait;
-	GFL_QUATERNION	qt;
+	GFL_QUATERNION	*qt;
 	MtxFx33			mtx;
 	u8				field[MAP_Z+2][MAP_X][MAP_Y];
 	int				tp_flag;
@@ -54,6 +54,7 @@ static	u32	tp_x,tp_y,tp_on,tp_old_x,tp_old_y;
 #endif
 
 static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z);
+static	void	QuaternionNormarize(MtxFx33 *mtx);
 
 //----------------------------------------------------------------------------
 /**
@@ -1808,7 +1809,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		rot_x-=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_B){
+	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_B){
 		rot_x+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
@@ -1816,7 +1817,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		rot_y-=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_A){
+	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_A){
 		rot_y+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
@@ -1824,7 +1825,7 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		rot_z+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
 		rot_z-=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
@@ -1848,7 +1849,6 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		bo->pos_z=MAP_Z-1;
 		bo->dir=0;
 		bo->wait=0;
-		GFL_QUAT_Identity(&bo->qt);
 		bo->shape=__GFL_STD_MtRand()%BLOCK_MAX;
 		bo->seq_no=SEQ_BLOCK_FALL;
 		bo->tp_flag=0;
@@ -2297,21 +2297,23 @@ static	void	SurfaceCheck(BLOCK_OUT *bo)
 
 static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z)
 {
-	MtxFx33	dMtx;
+	MtxFx33	dMtx_X;
+	MtxFx33	dMtx_Y;
+	MtxFx33	dMtx_Z;
+
+	MTX_RotX33(&dMtx_X,FX_SinIdx(rot_x),FX_CosIdx(rot_x));
+	MTX_RotY33(&dMtx_Y,FX_SinIdx(rot_y),FX_CosIdx(rot_y));
+	MTX_RotZ33(&dMtx_Z,FX_SinIdx(rot_z),FX_CosIdx(rot_z));
+	MTX_Concat33(mtx,&dMtx_X,mtx);
+	MTX_Concat33(mtx,&dMtx_Y,mtx);
+	MTX_Concat33(mtx,&dMtx_Z,mtx);
+	QuaternionNormarize(mtx);
+}
+
+static	void	QuaternionNormarize(MtxFx33 *mtx)
+{
 	VecFx32	vec;
 
-	if(rot_x){
-		MTX_RotX33(&dMtx,FX_SinIdx(rot_x),FX_CosIdx(rot_x));
-		MTX_Concat33(mtx,&dMtx,mtx);
-	}
-	if(rot_y){
-		MTX_RotY33(&dMtx,FX_SinIdx(rot_y),FX_CosIdx(rot_y));
-		MTX_Concat33(mtx,&dMtx,mtx);
-	}
-	if(rot_z){
-		MTX_RotZ33(&dMtx,FX_SinIdx(rot_z),FX_CosIdx(rot_z));
-		MTX_Concat33(mtx,&dMtx,mtx);
-	}
 	vec.x=mtx->_00;
 	vec.y=mtx->_01;
 	vec.z=mtx->_02;
