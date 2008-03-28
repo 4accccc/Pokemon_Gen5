@@ -22,6 +22,10 @@ struct _GFL_QUATERNION{
 };
 
 static	void	MakeQuaternion(GFL_QUATERNION *qt,const GFL_QUATERNION *a,u16 rot);
+static	fx32	CalcPosZ(fx32 x,fx32 y,fx32 radius);
+
+#define	SCREEN_WIDTH	(256<<FX32_SHIFT)
+#define	SCREEN_HEIGHT	(192<<FX32_SHIFT)
 
 //=============================================================================================
 //=============================================================================================
@@ -265,6 +269,81 @@ static	void	MakeQuaternion(GFL_QUATERNION *qt,const GFL_QUATERNION *a,u16 rot)
 	qt->x = FX_Mul(a->x,sss);
 	qt->y = FX_Mul(a->y,sss);
 	qt->z = FX_Mul(a->z,sss);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ *	指定された2点に直行するベクトルを回転軸とするクォータニオンを生成する
+ *
+ * @param[out]	qt		生成したクォータニオンを格納する構造体へのポインタ
+ * @param[in]	pos1_x	指定点１のX座標（0～256）
+ * @param[in]	pos1_y	指定点１のY座標（0～192）
+ * @param[in]	pos2_x	指定点２のX座標（0～256）
+ * @param[in]	pos2_y	指定点２のY座標（0～192）
+ * @param[in]	radius	回転軸の半径
+ */
+//--------------------------------------------------------------------------------------------
+void	GFL_QUAT_MakeQuaternionPos(GFL_QUATERNION *qt,u32 pos1_x,u32 pos1_y,u32 pos2_x,u32 pos2_y,fx32 radius)
+{
+	GFL_QUATERNION	p1,p2,a,d;
+	fx32			s,t,tdiv;
+
+	if((pos1_x==pos2_x)&&(pos1_y==pos2_y)){
+		GFL_QUAT_Identity(qt);
+		return;
+	}
+
+	p1.w=0;
+	p1.x=FX_Mul(FX32_ONE*2,(pos1_x<<FX32_SHIFT));
+	p1.x-=SCREEN_WIDTH;
+	p1.x=FX_Div(p1.x,SCREEN_WIDTH);
+	p1.y=FX_Mul(FX32_ONE*2,(pos1_y<<FX32_SHIFT));
+	p1.y=SCREEN_HEIGHT-p1.y;
+	p1.y=FX_Div(p1.y,SCREEN_HEIGHT);
+	p1.z=CalcPosZ(p1.x,p1.y,radius);
+	p2.w=0;
+	p2.x=FX_Mul(FX32_ONE*2,(pos2_x<<FX32_SHIFT));
+	p2.x-=SCREEN_WIDTH;
+	p2.x=FX_Div(p2.x,SCREEN_WIDTH);
+	p2.y=FX_Mul(FX32_ONE*2,(pos2_y<<FX32_SHIFT));
+	p2.y=SCREEN_HEIGHT-p2.y;
+	p2.y=FX_Div(p2.y,SCREEN_HEIGHT);
+	p2.z=CalcPosZ(p2.x,p2.y,radius);
+
+	GFL_QUAT_Mul(&a,&p1,&p2);
+	a.w=0;
+	s=GFL_QUAT_Norm(&a);
+	GFL_QUAT_DivReal(&a,&a,s);
+
+	GFL_QUAT_Sub(&d,&p1,&p2);
+	t=GFL_QUAT_Norm(&d);
+	tdiv=FX_Mul(FX32_ONE*2,radius);
+	tdiv=FX_Mul(tdiv,FX_InvSqrt(FX32_ONE*2));
+	t=FX_Div(t,tdiv);
+	if(t>FX32_ONE){
+		t=FX32_ONE;
+	}
+
+	qt->w=FX_CosIdx(FX_AsinIdx(t));
+	qt->x=FX_Mul(a.x,t);
+	qt->y=FX_Mul(a.y,t);
+	qt->z=FX_Mul(a.z,t);
+}
+
+static	fx32	CalcPosZ(fx32 x,fx32 y,fx32 radius)
+{
+	fx32	posz;
+	fx32	d_sqr,d;
+
+	d_sqr=FX_Sqrt(x)+FX_Sqrt(y);
+	d=FX_Sqrt(d_sqr);
+	if(d<radius){
+		posz=FX_Sqrt(FX_Mul(FX32_ONE*2,FX_Sqrt(radius))-d_sqr);
+	}
+	else{
+		posz=FX_Div(FX_Sqrt(radius),d);
+	}
+	return posz;
 }
 
 //--------------------------------------------------------------------------------------------

@@ -31,6 +31,11 @@ typedef struct
 	u16				rotx;
 	u16				roty;
 	u16				rotz;
+	u32				tp_x;
+	u32				tp_y;
+	u32				tp_on;
+	u32				tp_old_x;
+	u32				tp_old_y;
 	VecFx32			vec;
 	int				update;
 	MtxFx33			mtx;
@@ -128,6 +133,8 @@ void	YT_Init3DTest(GAME_PARAM *gp)
 
 	G3X_Init();
 
+	GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
+
 	GX_SetBankForTex(GX_VRAM_TEX_0_A);
 	GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0_G);
 
@@ -169,10 +176,15 @@ void	YT_Init3DTest(GAME_PARAM *gp)
 		GFL_STD_MtRandInit(seed);
 	}
 
+	//タッチパネル初期化
+	GFL_UI_TP_Init(gp->heapID);
+
 	gt->vec.x=FX32_ONE;
 	gt->vec.y=FX32_ONE;
 	gt->vec.z=FX32_ONE;
 	gt->update=1;
+
+	gt->tp_x=gt->tp_y=gt->tp_on=gt->tp_old_x=gt->tp_old_y=0;
 
 	MTX_Identity33(&gt->mtx);
 
@@ -224,6 +236,16 @@ void	YT_Main3DTest(GAME_PARAM *gp)
 		gt->rotz=ROTATE_VALUE;
 		gt->update=1;
 	}
+	if(GFL_UI_TP_GetPointCont(&gt->tp_x,&gt->tp_y)){
+		if(!gt->tp_on){
+			gt->tp_old_x=gt->tp_x;
+			gt->tp_old_y=gt->tp_y;
+			gt->tp_on=1;
+		}
+	}
+	else{
+		gt->tp_on=0;
+	}
 
 	if(gt->update){
 		//gt->update=0;
@@ -251,7 +273,10 @@ void	YT_Main3DTest(GAME_PARAM *gp)
 			MtxFx44			mtx;
 			GFL_QUATERNION	*qt_p=GFL_QUAT_Init(gp->heapID);
 
-			GFL_QUAT_MakeQuaternionXYZ(qt_p,gt->rotx,gt->roty,gt->rotz);
+//			GFL_QUAT_MakeQuaternionXYZ(qt_p,gt->rotx,gt->roty,gt->rotz);
+			GFL_QUAT_MakeQuaternionPos(qt_p,gt->tp_old_x,gt->tp_old_y,gt->tp_x,gt->tp_y,FX_F32_TO_FX32(0.7));
+			gt->tp_old_x=gt->tp_x;
+			gt->tp_old_y=gt->tp_y;
 			GFL_QUAT_Mul(gt->qt,qt_p,gt->qt);
 			norm=GFL_QUAT_Norm(gt->qt);
 			GFL_QUAT_DivReal(gt->qt,gt->qt,norm);
@@ -266,16 +291,18 @@ void	YT_Main3DTest(GAME_PARAM *gp)
 		G3_TexImageParam(GX_TEXFMT_PLTT16,GX_TEXGEN_TEXCOORD,GX_TEXSIZE_S8,GX_TEXSIZE_T8,
 						 GX_TEXREPEAT_ST,GX_TEXFLIP_NONE,GX_TEXPLTTCOLOR0_USE,0);
 		G3_TexPlttBase(0,GX_TEXFMT_PLTT16);
-		G3_PolygonAttr(GX_LIGHTMASK_0,GX_POLYGONMODE_MODULATE,GX_CULL_NONE,1,0,GX_POLYGON_ATTR_MISC_NONE);
+		G3_PolygonAttr(GX_LIGHTMASK_0,GX_POLYGONMODE_MODULATE,GX_CULL_NONE,1,31,GX_POLYGON_ATTR_MISC_NONE);
 		G3_Begin(GX_BEGIN_QUADS);
 
 		for(i=0;i<24;i++){
-			G3_TexCoord(0,(i/6)*FX32_ONE);
+			G3_TexCoord(0,(i/4)*FX32_ONE);
 			G3_Vtx(BoxData[i].x,BoxData[i].y,BoxData[i].z);
 		}
 
 		G3_End();
 		G3_PopMtx(1);
+
+		GFL_UI_TP_Main();
 
 		G3_SwapBuffers(GX_SORTMODE_MANUAL,GX_BUFFERMODE_Z);
 	}
