@@ -1786,6 +1786,8 @@ void	YT_InitBlockOut(GAME_PARAM *gp)
 
 	bo->heapID=gp->heapID;
 
+	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN|GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,16,0,-2);
+
 	YT_JobNoSet(gp,YT_MainBlockOutNo);
 }
 

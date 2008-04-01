@@ -34,6 +34,8 @@ static	const	char	*GraphicFileTable[]={
 
 static	void	game_init(GAME_PARAM *gp);
 
+extern	void	YT_InitMenu(GAME_PARAM *gp);
+extern	void	YT_MainMenu(GAME_PARAM *gp);
 extern	void	YT_Init3DTest(GAME_PARAM *gp);
 extern	void	YT_Main3DTest(GAME_PARAM *gp);
 extern	void	YT_InitBlockOut(GAME_PARAM *gp);
@@ -48,6 +50,8 @@ extern	void	YT_MainBlockOut(GAME_PARAM *gp);
 //============================================================================================
 
 static	ytFunc	YT_JobTable[]={
+	YT_InitMenu,
+	YT_MainMenu,
 	YT_InitTitle,
 	YT_MainTitle,
 	YT_InitGame,
@@ -89,7 +93,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit(GFL_PROC * proc, int * seq, void 
 
 //	YT_JobNoSet(gp,YT_InitTitleNo);
 //	YT_JobNoSet(gp,YT_Init3DTestNo);
-	YT_JobNoSet(gp,YT_InitBlockOutNo);
+	YT_JobNoSet(gp,YT_InitMenuNo);
 
 	game_init(gp);
 

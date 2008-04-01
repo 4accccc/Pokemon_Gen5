@@ -21,7 +21,9 @@
 
 //ジョブナンバー定義
 enum{
-	YT_InitTitleNo=0,
+	YT_InitMenuNo=0,
+	YT_MainMenuNo,
+	YT_InitTitleNo,
 	YT_MainTitleNo,
 	YT_InitGameNo,
 	YT_MainGameNo,
