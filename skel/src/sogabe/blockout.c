@@ -30,6 +30,9 @@
 
 #define	FALL_WAIT		(80)
 
+#define	ANM_ROTATE	(1)
+#define	ANM_HIT		(2)
+
 typedef struct
 {
 	int				seq_no;
@@ -43,9 +46,12 @@ typedef struct
 	u16				dir;
 	u16				wait;
 	GFL_QUATERNION	*qt;
-	MtxFx33			mtx;
 	u8				field[MAP_Z+2][MAP_X][MAP_Y];
+	int				fall_wait;
 	int				tp_flag;
+	int				anm_flag;
+	int				anm_cnt;
+	int				heapID;
 }BLOCK_OUT;
 
 #ifdef SHAPE_DIR_CHECK
@@ -53,8 +59,7 @@ static	u16	rot_x,rot_y,rot_z;
 static	u32	tp_x,tp_y,tp_on,tp_old_x,tp_old_y;
 #endif
 
-static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z);
-static	void	QuaternionNormarize(MtxFx33 *mtx);
+static	void	BlockAnimation(BLOCK_OUT *bo);
 
 //----------------------------------------------------------------------------
 /**
@@ -1767,15 +1772,19 @@ void	YT_InitBlockOut(GAME_PARAM *gp)
 
 	GX_DispOn();
 
+	bo->fall_wait=FALL_WAIT;
 
 #ifdef SHAPE_DIR_CHECK
 	rot_x=0;
 	rot_y=0;
 	rot_z=0;
-	GFL_QUAT_Identity(&bo->qt);
-	MTX_Identity33(&bo->mtx);
 	tp_x=tp_y=tp_on=tp_old_x=tp_old_y=0;
 #endif
+
+	bo->qt=GFL_QUAT_Init(gp->heapID);
+	GFL_QUAT_Identity(bo->qt);
+
+	bo->heapID=gp->heapID;
 
 	YT_JobNoSet(gp,YT_MainBlockOutNo);
 }
@@ -1792,6 +1801,7 @@ enum{
 	SEQ_BLOCK_FALL,
 	SEQ_BLOCK_LANDING,
 	SEQ_SURFACE_CHECK,
+	SEQ_BLOCK_GAME_OVER,
 };
 
 void	YT_MainBlockOut(GAME_PARAM *gp)
@@ -1799,34 +1809,37 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	BLOCK_OUT	*bo=(BLOCK_OUT *)gp->job_work;
 	BLOCK_SHAPE	*bs=(BLOCK_SHAPE *)bp[bo->shape].block_shape;
 	VecFx32		pos;
+	BOOL		ret=2;
+
+	BlockAnimation(bo);
 
 #ifdef SHAPE_DIR_CHECK
 	bo->pos_x=2;
 	bo->pos_y=2;
 	bo->pos_z=MAP_Z-1;
 	bo->shape=BLOCK_QBLOCK;
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
-		rot_x-=ROTATE_VALUE;
-		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
-	}
-	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_B){
+	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
 		rot_x+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
-		rot_y-=ROTATE_VALUE;
+	else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B){
+		rot_x-=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_A){
+	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
 		rot_y+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
-		rot_z+=ROTATE_VALUE;
+	else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A){
+		rot_y-=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
-	else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+	if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_L){
 		rot_z-=ROTATE_VALUE;
+		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
+	}
+	else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_R){
+		rot_z+=ROTATE_VALUE;
 		OS_Printf("rotx:%d roty:%d rotz:%d\n",rot_x/ROTATE_VALUE,rot_y/ROTATE_VALUE,rot_z/ROTATE_VALUE);
 	}
 	if(GFL_UI_TP_GetPointCont(&tp_x,&tp_y)){
@@ -1852,45 +1865,69 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 		bo->shape=__GFL_STD_MtRand()%BLOCK_MAX;
 		bo->seq_no=SEQ_BLOCK_FALL;
 		bo->tp_flag=0;
+		GFL_QUAT_Identity(bo->qt);
 		break;
 	case SEQ_BLOCK_FALL:
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_x);
-		}
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_b);
-		}
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_y);
-		}
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_a);
-		}
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_L){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_l);
-		}
-		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_R){
-			CollisionCheck(bo,0,0,0,bs[bo->dir].push_r);
-		}
-		if((GFL_UI_KEY_GetTrg()&PAD_KEY_UP)&&(bo->pos_y)){
-			CollisionCheck(bo,0,-1,0,bo->dir);
-		}
-		if((GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)&&(bo->pos_y<MAP_Y-1)){
-			CollisionCheck(bo,0,1,0,bo->dir);
-		}
-		if((GFL_UI_KEY_GetTrg()&PAD_KEY_LEFT)&&(bo->pos_x)){
-			CollisionCheck(bo,-1,0,0,bo->dir);
-		}
-		if((GFL_UI_KEY_GetTrg()&PAD_KEY_RIGHT)&&(bo->pos_x<MAP_X-1)){
-			CollisionCheck(bo,1,0,0,bo->dir);
-		}
-
 		bo->wait++;
-		if((bo->wait>FALL_WAIT)||((GFL_UI_TP_GetCont())&&bo->tp_flag)){
+		if(CollisionCheck(bo,0,0,0,bo->dir)==TRUE){
+			bo->seq_no=SEQ_BLOCK_GAME_OVER;
+		}
+		else if((bo->wait>bo->fall_wait)||((GFL_UI_TP_GetCont())&&bo->tp_flag)){
 			if(CollisionCheck(bo,0,0,-1,bo->dir)==TRUE){
 				bo->seq_no=SEQ_BLOCK_LANDING;
 			}
 			bo->wait=0;
+		}
+		else{
+			if(bo->anm_flag==0){
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_x);
+					bo->rotx=ROTATE_VALUE;
+				}
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_B){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_b);
+					bo->rotx=-ROTATE_VALUE;
+				}
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_y);
+					bo->roty=ROTATE_VALUE;
+				}
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_a);
+					bo->roty=-ROTATE_VALUE;
+				}
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_L){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_l);
+					bo->rotz=-ROTATE_VALUE;
+				}
+				if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_R){
+					ret=CollisionCheck(bo,0,0,0,bs[bo->dir].push_r);
+					bo->rotz=ROTATE_VALUE;
+				}
+				if((GFL_UI_KEY_GetTrg()&PAD_KEY_UP)&&(bo->pos_y)){
+					CollisionCheck(bo,0,-1,0,bo->dir);
+				}
+				if((GFL_UI_KEY_GetTrg()&PAD_KEY_DOWN)&&(bo->pos_y<MAP_Y-1)){
+					CollisionCheck(bo,0,1,0,bo->dir);
+				}
+				if((GFL_UI_KEY_GetTrg()&PAD_KEY_LEFT)&&(bo->pos_x)){
+					CollisionCheck(bo,-1,0,0,bo->dir);
+				}
+				if((GFL_UI_KEY_GetTrg()&PAD_KEY_RIGHT)&&(bo->pos_x<MAP_X-1)){
+					CollisionCheck(bo,1,0,0,bo->dir);
+				}
+				switch(ret){
+				case 0:
+					bo->anm_flag=ANM_ROTATE;
+					bo->anm_cnt=0;
+					break;
+				case 1:
+					bo->anm_flag=ANM_HIT;
+					bo->anm_cnt=0;
+				default:
+					break;
+				}
+			}
 		}
 		if(!GFL_UI_TP_GetCont()){
 			bo->tp_flag=1;
@@ -1903,6 +1940,22 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	case SEQ_SURFACE_CHECK:
 		SurfaceCheck(bo);
 		bo->seq_no=SEQ_BLOCK_INIT;
+		break;
+	case SEQ_BLOCK_GAME_OVER:
+		if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_START){
+			{
+				int	x,y,z;
+
+				for(z=0;z<MAP_Z+2;z++){
+					for(x=0;x<MAP_X;x++){
+						for(y=0;y<MAP_Y;y++){
+							bo->field[z][x][y]=0;
+						}
+					}
+				}
+			}
+			bo->seq_no=SEQ_BLOCK_INIT;
+		}
 		break;
 	}
 #endif
@@ -1922,6 +1975,50 @@ void	YT_MainBlockOut(GAME_PARAM *gp)
 	G3_SwapBuffers(GX_SORTMODE_AUTO,GX_BUFFERMODE_W);
 }
 
+static	void	BlockAnimation(BLOCK_OUT *bo)
+{
+	GFL_QUATERNION	*qt;
+	u16				rotx,roty,rotz;
+
+	if(bo->anm_flag==0) return;
+
+	switch(bo->anm_flag){
+	case ANM_ROTATE:
+		rotx=bo->rotx;
+		roty=bo->roty;
+		rotz=bo->rotz;
+		break;
+	case ANM_HIT:
+		switch(bo->anm_cnt){
+		case 0:
+		case 3:
+			rotx=bo->rotx;
+			roty=bo->roty;
+			rotz=bo->rotz;
+			break;
+		case 1:
+		case 2:
+			rotx=-bo->rotx;
+			roty=-bo->roty;
+			rotz=-bo->rotz;
+			break;
+		}
+	default:
+		break;
+	}
+	qt=GFL_QUAT_Init(bo->heapID);
+	GFL_QUAT_MakeQuaternionXYZ(qt,rotx,roty,rotz);
+	GFL_QUAT_Mul(bo->qt,qt,bo->qt);
+	GFL_QUAT_Normarize(bo->qt);
+	GFL_QUAT_Free(qt);
+	bo->anm_cnt++;
+	if(bo->anm_cnt>3){
+		bo->anm_flag=0;
+		bo->anm_cnt=0;
+		bo->rotx=bo->roty=bo->rotz=0;
+	}
+}
+
 static	void	DrawBlock(BLOCK_OUT *bo,VecFx32 pos,int shape,int dir,int alpha,int tex)
 {
 	fx16		*bd=(fx16 *)bp[shape].block_data;
@@ -1931,9 +2028,9 @@ static	void	DrawBlock(BLOCK_OUT *bo,VecFx32 pos,int shape,int dir,int alpha,int 
 	VecFx32		at=	{0,0,0};
 	VecFx32		vUp={0,FX32_ONE,0};
 	VecFx16		vtx;
+	MtxFx44		mtx;
 #ifdef SHAPE_DIR_CHECK
-	GFL_QUATERNION	qt;
-	MtxFx44		mtx,mtx_x,mtx_y,mtx_z;
+	GFL_QUATERNION	*qt;
 #endif
 
 	G3X_Reset();
@@ -1955,18 +2052,19 @@ static	void	DrawBlock(BLOCK_OUT *bo,VecFx32 pos,int shape,int dir,int alpha,int 
 //	G3_RotY(FX_SinIdx(rot_y),FX_CosIdx(rot_y));
 //	G3_RotX(FX_SinIdx(rot_x),FX_CosIdx(rot_x));
 //	G3_RotZ(FX_SinIdx(rot_z),FX_CosIdx(rot_z));
-//	GFL_QUAT_MakeQuaternionXYZ(&qt,rot_x,rot_y,rot_z);
-//	GFL_QUAT_Mul(&bo->qt,&bo->qt,&qt);
-//	GFL_QUAT_SetMtx44(&mtx,&bo->qt);
-//	G3_MultMtx44(&mtx);
-	QuaternionRotation(&bo->mtx,rot_x,rot_y,rot_z);
-	MTX_Copy33To44(&bo->mtx,&mtx);
+	qt=GFL_QUAT_Init(bo->heapID);
+	GFL_QUAT_MakeQuaternionXYZ(qt,rot_x,rot_y,rot_z);
+	GFL_QUAT_Mul(bo->qt,qt,bo->qt);
+	GFL_QUAT_Normarize(bo->qt);
+	GFL_QUAT_MakeRotateMatrix(&mtx,bo->qt);
 	G3_MultMtx44(&mtx);
 	rot_x=rot_y=rot_z=0;
+	GFL_QUAT_Free(qt);
 #else
-	G3_RotX(FX_SinIdx(bs[dir].rot_x),FX_CosIdx(bs[dir].rot_x));
-	G3_RotY(FX_SinIdx(bs[dir].rot_y),FX_CosIdx(bs[dir].rot_y));
-	G3_RotZ(FX_SinIdx(bs[dir].rot_z),FX_CosIdx(bs[dir].rot_z));
+	if(alpha==0){
+		GFL_QUAT_MakeRotateMatrix(&mtx,bo->qt);
+		G3_MultMtx44(&mtx);
+	}
 #endif
 
 	G3_MaterialColorDiffAmb(GX_RGB(31,31,31),GX_RGB(16,16,16),FALSE);
@@ -2267,6 +2365,9 @@ static	void	SurfaceCheck(BLOCK_OUT *bo)
 				}
 			}
 			block_count[check_z]=0;
+			if(bo->fall_wait>(FALL_WAIT/2)){
+				bo->fall_wait--;
+			}
 		}
 	}
 
@@ -2293,47 +2394,5 @@ static	void	SurfaceCheck(BLOCK_OUT *bo)
 		block_count[low]=block_count[high];
 		block_count[high]=0;
 	}
-}
-
-static	void	QuaternionRotation(MtxFx33 *mtx,u16 rot_x,u16 rot_y,u16 rot_z)
-{
-	MtxFx33	dMtx_X;
-	MtxFx33	dMtx_Y;
-	MtxFx33	dMtx_Z;
-
-	MTX_RotX33(&dMtx_X,FX_SinIdx(rot_x),FX_CosIdx(rot_x));
-	MTX_RotY33(&dMtx_Y,FX_SinIdx(rot_y),FX_CosIdx(rot_y));
-	MTX_RotZ33(&dMtx_Z,FX_SinIdx(rot_z),FX_CosIdx(rot_z));
-	MTX_Concat33(mtx,&dMtx_X,mtx);
-	MTX_Concat33(mtx,&dMtx_Y,mtx);
-	MTX_Concat33(mtx,&dMtx_Z,mtx);
-	QuaternionNormarize(mtx);
-}
-
-static	void	QuaternionNormarize(MtxFx33 *mtx)
-{
-	VecFx32	vec;
-
-	vec.x=mtx->_00;
-	vec.y=mtx->_01;
-	vec.z=mtx->_02;
-	VEC_Normalize(&vec,&vec);
-	mtx->_00=vec.x;
-	mtx->_01=vec.y;
-	mtx->_02=vec.z;
-	vec.x=mtx->_10;
-	vec.y=mtx->_11;
-	vec.z=mtx->_12;
-	VEC_Normalize(&vec,&vec);
-	mtx->_10=vec.x;
-	mtx->_11=vec.y;
-	mtx->_12=vec.z;
-	vec.x=mtx->_20;
-	vec.y=mtx->_21;
-	vec.z=mtx->_22;
-	VEC_Normalize(&vec,&vec);
-	mtx->_20=vec.x;
-	mtx->_21=vec.y;
-	mtx->_22=vec.z;
 }
 

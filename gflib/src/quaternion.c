@@ -225,6 +225,21 @@ fx32 GFL_QUAT_Norm(const GFL_QUATERNION *qt)
 
 //--------------------------------------------------------------------------------------------
 /**
+ *	クォータニオンを正規化する
+ *
+ * @param[in/out]	qt	正規化するクォータニオン構造体のポインタ
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_QUAT_Normarize(GFL_QUATERNION *qt)
+{
+	fx32	norm;
+
+	norm=GFL_QUAT_Norm(qt);
+	GFL_QUAT_DivReal(qt,qt,norm);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  *	各軸の回転量からクォータニオンを生成する
  *
  * @param[out]	qt		生成したクォータニオンを格納する構造体へのポインタ
@@ -263,9 +278,9 @@ void	GFL_QUAT_MakeQuaternionXYZ(GFL_QUATERNION *qt,u16 rot_x,u16 rot_y,u16 rot_z
 
 static	void	MakeQuaternion(GFL_QUATERNION *qt,const GFL_QUATERNION *a,u16 rot)
 {
-	fx32	sss=FX_SinIdx(rot);
+	fx32	sss=FX_SinIdx(rot/2);
 
-	qt->w = FX_CosIdx(rot);
+	qt->w = FX_CosIdx(rot/2);
 	qt->x = FX_Mul(a->x,sss);
 	qt->y = FX_Mul(a->y,sss);
 	qt->z = FX_Mul(a->z,sss);

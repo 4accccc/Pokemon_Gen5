@@ -150,6 +150,13 @@ void	GFL_BG_Init( HEAPID heapID )
 //--------------------------------------------------------------------------------------------
 void	GFL_BG_Exit( void )
 {
+	u8	frmnum;
+
+	//GFL_BG_SetBGControlで取得したメモリを開放
+	for(frmnum=0;frmnum<GFL_BG_FRAME_MAX;frmnum++){
+		GFL_BG_FreeBGControl( frmnum );
+	}
+
 	//VRAMエリアマネージャ削除
 	GFL_AREAMAN_Delete( bgl->area_m );
 	GFL_AREAMAN_Delete( bgl->area_s );

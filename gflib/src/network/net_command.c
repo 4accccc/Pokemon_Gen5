@@ -120,7 +120,7 @@ void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void
     BOOL bCheck;
     GFL_NETHANDLE* pNetHandle;
 
-    OS_TPrintf("--- call back id=%d co=%d\n", netID, command);
+//    OS_TPrintf("--- call back id=%d co=%d\n", netID, command);
 
     for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
         pNetHandle = GFL_NET_GetNetHandle(i);

@@ -735,7 +735,7 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 //==============================================================================
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
-    OS_TPrintf("GFL_NET_SendData %d \n", pNet->creatureNo);
+//    OS_TPrintf("GFL_NET_SendData %d \n", pNet->creatureNo);
 
     return GFL_NET_SystemSendData(sendCommand, data, 0,
                                   FALSE, pNet->creatureNo ,GFL_NET_SENDID_ALLUSER);

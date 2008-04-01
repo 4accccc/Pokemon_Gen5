@@ -273,8 +273,12 @@ void	YT_Main3DTest(GAME_PARAM *gp)
 			MtxFx44			mtx;
 			GFL_QUATERNION	*qt_p=GFL_QUAT_Init(gp->heapID);
 
-//			GFL_QUAT_MakeQuaternionXYZ(qt_p,gt->rotx,gt->roty,gt->rotz);
-			GFL_QUAT_MakeQuaternionPos(qt_p,gt->tp_old_x,gt->tp_old_y,gt->tp_x,gt->tp_y,FX_F32_TO_FX32(0.7));
+			if(gt->tp_on){
+				GFL_QUAT_MakeQuaternionPos(qt_p,gt->tp_old_x,gt->tp_old_y,gt->tp_x,gt->tp_y,FX_F32_TO_FX32(0.7));
+			}
+			else{
+				GFL_QUAT_MakeQuaternionXYZ(qt_p,gt->rotx,gt->roty,gt->rotz);
+			}
 			gt->tp_old_x=gt->tp_x;
 			gt->tp_old_y=gt->tp_y;
 			GFL_QUAT_Mul(gt->qt,qt_p,gt->qt);
