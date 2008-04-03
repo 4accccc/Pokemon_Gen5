@@ -63,8 +63,6 @@ typedef struct {
 	int				seq;
 	int				mainContSeq;
 	int				timer;
-	int				trg;
-	int				cont;
 //-------------
 	int				totalPlayerCount;
 	int				playNetID;
@@ -109,10 +107,11 @@ static void Debug_Regenerate( void );
 //------------------------------------------------------------------
 BOOL	GameMain( void )
 {
+	GAME_CONT_KEYDATA key;
 	BOOL return_flag = FALSE;
 	int i;
-	gw->timer++;
 
+	gw->timer++;
 	GFL_UI_TP_Main();
 
 	switch( gw->seq ){
@@ -171,9 +170,6 @@ BOOL	GameMain( void )
 
 			gw->totalPlayerCount = pcount;
 		}
-		gw->trg = 0;
-		gw->cont = 0;
-
 		gw->seq++;
 		gw->mainContSeq = 0;
 		break;
@@ -181,14 +177,15 @@ BOOL	GameMain( void )
 	case 3:
 		//MainGameNet();
 		{
-			GAME_CONT_KEYDATA key;
-
 			key.keyTrg	= GFL_UI_KEY_GetTrg();
 			key.keyCont	= GFL_UI_KEY_GetCont();
 
-			key.tpCont = GFL_UI_TP_GetPointCont( &key.tpx, &key.tpy );
 			key.tpTrg  = GFL_UI_TP_GetPointTrg( &key.tpx, &key.tpy );
-
+			if( key.tpTrg == FALSE ){
+				key.tpCont = GFL_UI_TP_GetPointCont( &key.tpx, &key.tpy );
+			} else {
+				key.tpCont = FALSE;
+			}
 			SetGameControlKey( gw->gc, &key );
 		}
 
@@ -197,14 +194,14 @@ BOOL	GameMain( void )
 			GFUser_VIntr_ResetVblankCounter();
 			//---------------
 			{
-				if( gw->trg & PAD_BUTTON_SELECT ){
+				if( key.keyTrg & PAD_BUTTON_SELECT ){
 					gw->playNetID++;
 					gw->playNetID %= gw->totalPlayerCount;
 					ChangeControlPlayer( gw->gc, gw->playNetID );
 				}
 			}
 			//---------------
-			if( GameEndCheck( gw->cont ) == TRUE ){
+			if( GameEndCheck( key.keyCont ) == TRUE ){
 				gw->seq++;
 			}
 			MainGameControl( gw->gc );
@@ -218,6 +215,23 @@ BOOL	GameMain( void )
 			gw->mainContSeq++;
 			break;
 		case 1:
+			key.keyTrg	= GFL_UI_KEY_GetTrg();
+			key.keyCont	= GFL_UI_KEY_GetCont();
+
+			key.tpCont = GFL_UI_TP_GetPointCont( &key.tpx, &key.tpy );
+			key.tpTrg  = GFL_UI_TP_GetPointTrg( &key.tpx, &key.tpy );
+
+			SetGameControlKey( gw->gc, &key );
+			//---------------
+			{
+				if( key.keyTrg & PAD_BUTTON_SELECT ){
+					gw->playNetID++;
+					gw->playNetID %= gw->totalPlayerCount;
+					ChangeControlPlayer( gw->gc, gw->playNetID );
+				}
+			}
+			//---------------
+
 			if( GFUser_VIntr_GetVblankCounter() > 1 ){
 				gw->mainContSeq = 0;
 			}

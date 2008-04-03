@@ -32,7 +32,7 @@ typedef struct {
 	PLAYER_CONTROL*			pc;			//発生させたプレーヤー
 	VecFx32					trans;
 	u16						direction;
-	u32						work[8];
+	u32						work[16];
 }SKILL_WORK;
 
 typedef struct {
@@ -142,7 +142,7 @@ static const SKILL_EFFECT_TBL skillEffectTable[] = {
 	{ skillEffectData3, NELEMS(skillEffectData3) },
 };
 
-static const SKILL_PROC skillProcTable[4];
+static const SKILL_PROC skillProcTable[7];
 static void SkillEffectAdd( SKILL_CONTROL* sc, int* effectID, SKILL_EFFECTID seID, SKILL_WORK* sw );
 static void SkillEffectRemove( SKILL_CONTROL* sc, int* effectID, SKILL_EFFECTID seID );
 //------------------------------------------------------------------
@@ -276,6 +276,13 @@ static void calc_XZtrans( VecFx32* trans, fx32 lenoffs, u16 direction  )
 {
 	trans->x += ( -lenoffs * FX_SinIdx( direction )/ FX16_ONE );
 	trans->z += ( -lenoffs * FX_CosIdx( direction )/ FX16_ONE );
+}
+
+static void calc_VecDir( u16 direction, VecFx32* vecDir )
+{
+	vecDir->x = -FX_SinIdx( direction );
+	vecDir->y = 0;
+	vecDir->z = -FX_CosIdx( direction );
 }
 
 //------------------------------------------------------------------
@@ -473,59 +480,237 @@ static void NopMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
 }
 
 //------------------------------------------------------------------
-//　剣
+//　剣０
 //------------------------------------------------------------------
-#define	SWORD_HITOFS	(FX32_ONE*0)
-#define	SWORD_HITLEN	(FX32_ONE/32)
-#define	SWORD_SPEED		(FX32_ONE*8*2)
-#define	SWORD_LIMITLEN	(FX32_ONE*16)
+#define	SWORD0_HITLEN	(FX32_ONE/32)
 typedef struct {
 	u16		seq;
 	u16		waitTimer;
-	int		effectID;
-	fx32	length;
-}SKILL_SWORD_WORK;
+	VecFx32	vecDir;
+	VecFx32	posTarget;
+}SKILL_SWORD0_WORK;
 
-static void SwordInit( SKILL_CONTROL* sc, SKILL_WORK* sw )
+static void Sword0Init( SKILL_CONTROL* sc, SKILL_WORK* sw )
 {
-	SKILL_SWORD_WORK* sword_w = (SKILL_SWORD_WORK*)sw->work;
+	SKILL_SWORD0_WORK* sword_w = (SKILL_SWORD0_WORK*)sw->work;
 	sword_w->seq = 0;
 	sword_w->waitTimer = 20/2;
-	sword_w->length = 0;
+	calc_VecDir( sw->direction, &sword_w->vecDir );
+	VEC_MultAdd( FX32_ONE*32, &sword_w->vecDir, &sw->trans, &sword_w->posTarget );
 }
 
-static void SwordMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
+static void Sword0Main( SKILL_CONTROL* sc, SKILL_WORK* sw )
 {
-	SKILL_SWORD_WORK* sword_w = (SKILL_SWORD_WORK*)sw->work;
-	BOOL hitResult = FALSE;
-	BOOL deleteFlag = FALSE;
+	SKILL_SWORD0_WORK* sword_w = (SKILL_SWORD0_WORK*)sw->work;
 
 	switch( sword_w->seq ){
 	case 0:
 		if( sword_w->waitTimer ){
 			sword_w->waitTimer--;
 			return;
-		} else {
-//			SkillEffectAdd( sc, &sword_w->effectID, SKILL_EFFECT_TEST1, sw );
-			sword_w->seq++;
 		}
+		sword_w->waitTimer = 20;
+		sword_w->seq = 1;
 		break;
 	case 1:
-		hitResult = DamageSetOne( sc, sw, SWORD_HITLEN, -300, 0, 0, 0 );
-		calc_XZtrans( &sw->trans, SWORD_SPEED, sw->direction );
-		if( hitResult == TRUE ){
-			deleteFlag = TRUE;
+		if( sword_w->waitTimer ){
+			VecFx32 vecNow; 
+			fx32	scalar;
+
+			sword_w->waitTimer--;
+
+			VEC_Subtract( &sword_w->posTarget, &sw->trans, &vecNow );
+			scalar = VEC_DotProduct( &sword_w->vecDir, &vecNow );
+
+			if( scalar > 0 ){
+				VEC_MultAdd( FX32_ONE*16, &sword_w->vecDir, &sw->trans, &sw->trans );
+			}
+			if( DamageSetOne( sc, sw, SWORD0_HITLEN, -100, 0, 0, 0 ) == TRUE ){
+				sword_w->seq = 2;
+			}
 		} else {
-			if( sword_w->length >= SWORD_LIMITLEN ){
-				deleteFlag = TRUE;
-			} else {
-				sword_w->length += SWORD_SPEED;
+			sword_w->seq = 2;
+		}
+		break;
+	case 2:
+		{
+			VecFx32 posFieldChg; 
+
+			//VEC_MultAdd( FX32_ONE*(64+32), &sword_w->vecDir, &sw->trans, &posFieldChg );
+			//SetMapGroundUp( &posFieldChg );
+		}
+		DeleteSkill( sw );
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+//　剣１
+//------------------------------------------------------------------
+#define	SWORD1_HITLEN	(FX32_ONE/32)
+typedef struct {
+	u16		seq;
+	u16		waitTimer;
+	VecFx32	vecDir;
+	VecFx32	posTarget;
+}SKILL_SWORD1_WORK;
+
+static void Sword1Init( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD1_WORK* sword_w = (SKILL_SWORD1_WORK*)sw->work;
+	sword_w->seq = 0;
+	sword_w->waitTimer = 20/2;
+	calc_VecDir( sw->direction, &sword_w->vecDir );
+	VEC_MultAdd( FX32_ONE*16, &sword_w->vecDir, &sw->trans, &sword_w->posTarget );
+}
+
+static void Sword1Main( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD1_WORK* sword_w = (SKILL_SWORD1_WORK*)sw->work;
+
+	switch( sword_w->seq ){
+	case 0:
+		if( sword_w->waitTimer ){
+			sword_w->waitTimer--;
+			return;
+		}
+		SetPlayerMove( sw->pc, &sword_w->vecDir, FX32_ONE*4, 0 );
+		sword_w->seq = 1;
+		break;
+	case 1:
+		{
+			VecFx32 vecNow; 
+			fx32	scalar;
+
+			GetPlayerControlTrans( sw->pc, &sw->trans );
+			VEC_Subtract( &sword_w->posTarget, &sw->trans, &vecNow );
+			scalar = VEC_DotProduct( &sword_w->vecDir, &vecNow );
+
+			if( scalar <= 0 ){
+				SetPlayerMove( sw->pc, &sword_w->vecDir, 0, 0 );
+				sword_w->seq = 2;
+			}
+			if( DamageSetOne( sc, sw, SWORD1_HITLEN, -300, 0, 0, 0 ) == TRUE ){
+				SetPlayerMove( sw->pc, &sword_w->vecDir, 0, 0 );
+				sword_w->seq = 2;
 			}
 		}
-		if( deleteFlag == TRUE ){
-//			SkillEffectRemove( sc, &sword_w->effectID, SKILL_EFFECT_TEST1 );
-			DeleteSkill( sw );
+		break;
+	case 2:
+		DeleteSkill( sw );
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+//　剣２
+//------------------------------------------------------------------
+#define	SWORD2_HITLEN	(FX32_ONE/32)
+typedef struct {
+	u16		seq;
+	u16		waitTimer;
+	VecFx32	vecDir;
+	VecFx32	posTarget;
+}SKILL_SWORD2_WORK;
+
+static void Sword2Init( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD2_WORK* sword_w = (SKILL_SWORD2_WORK*)sw->work;
+	sword_w->seq = 0;
+	sword_w->waitTimer = 20/2;
+	calc_VecDir( sw->direction, &sword_w->vecDir );
+	VEC_MultAdd( FX32_ONE*128, &sword_w->vecDir, &sw->trans, &sword_w->posTarget );
+}
+
+static void Sword2Main( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD2_WORK* sword_w = (SKILL_SWORD2_WORK*)sw->work;
+
+	switch( sword_w->seq ){
+	case 0:
+		if( sword_w->waitTimer ){
+			sword_w->waitTimer--;
+			return;
 		}
+		SetPlayerMove( sw->pc, &sword_w->vecDir, FX32_ONE*16, 0 );
+		sword_w->seq = 1;
+		break;
+	case 1:
+		{
+			VecFx32 vecNow; 
+			fx32	scalar;
+
+			GetPlayerControlTrans( sw->pc, &sw->trans );
+			VEC_Subtract( &sword_w->posTarget, &sw->trans, &vecNow );
+			scalar = VEC_DotProduct( &sword_w->vecDir, &vecNow );
+
+			if( scalar <= 0 ){
+				SetPlayerMove( sw->pc, &sword_w->vecDir, 0, 0 );
+				sword_w->seq = 2;
+			}
+			if( DamageSetOne( sc, sw, SWORD2_HITLEN, -300, 0, 0, 0 ) == TRUE ){
+				SetPlayerMove( sw->pc, &sword_w->vecDir, 0, 0 );
+				sword_w->seq = 2;
+			}
+		}
+		break;
+	case 2:
+		DeleteSkill( sw );
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+//　剣３
+//------------------------------------------------------------------
+#define	SWORD3_HITLEN	(FX32_ONE)
+typedef struct {
+	u16		seq;
+	u16		waitTimer;
+	VecFx32	vecDir;
+}SKILL_SWORD3_WORK;
+
+static void Sword3Init( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD3_WORK* sword_w = (SKILL_SWORD3_WORK*)sw->work;
+	sword_w->seq = 0;
+	sword_w->waitTimer = 20/2;
+	calc_VecDir( sw->direction, &sword_w->vecDir );
+}
+
+static void Sword3Main( SKILL_CONTROL* sc, SKILL_WORK* sw )
+{
+	SKILL_SWORD3_WORK* sword_w = (SKILL_SWORD3_WORK*)sw->work;
+
+	switch( sword_w->seq ){
+	case 0:
+		if( sword_w->waitTimer ){
+			sword_w->waitTimer--;
+			return;
+		}
+		SetPlayerMove( sw->pc, &sword_w->vecDir, FX32_ONE*2, 0x2000 );
+		sword_w->seq = 1;
+		break;
+	case 1:
+		if( CheckPlayerMoveEnd( sw->pc ) == TRUE ){
+			SetPlayerMove( sw->pc, &sword_w->vecDir, 0, 0 );
+			sword_w->seq = 2;
+		}
+		GetPlayerControlTrans( sw->pc, &sw->trans );
+		break;
+	case 2:
+		DamageSetAll( sc, sw, SWORD3_HITLEN, -200, 0, 0, 0 );
+		SetMapGroundDown( &sw->trans );
+		sword_w->seq = 3;
+		sword_w->waitTimer = 6;
+		break;
+	case 3:
+		if( sword_w->waitTimer ){
+			sword_w->waitTimer--;
+			return;
+		}
+		DeleteSkill( sw );
+		break;
 	}
 }
 
@@ -716,9 +901,12 @@ static void StaffMain( SKILL_CONTROL* sc, SKILL_WORK* sw )
  * @brief	スキルテーブル
  */
 //------------------------------------------------------------------
-static const SKILL_PROC skillProcTable[4] = {
+static const SKILL_PROC skillProcTable[7] = {
 	{ NopInit,		NopMain },
-	{ SwordInit,	SwordMain },
+	{ Sword0Init,	Sword0Main },
+	{ Sword1Init,	Sword1Main },
+	{ Sword2Init,	Sword2Main },
+	{ Sword3Init,	Sword3Main },
 	{ ArrowInit,	ArrowMain },
 	{ StaffInit,	StaffMain },
 };

@@ -200,10 +200,8 @@ int RegistPlayer( TEAM_CONTROL* tc, PLAYER_STATUS* ps, int playerObjID, int netI
 
 	for( i=0; i<TEAM_PLAYER_COUNT_MAX; i++ ){
 		if( tc->player[i] == PLAYER_EMPTY ){
-			tc->player[i] = AddPlayerControl(	tc->gs,
-												G3DSCOBJ_PLAYER1 + playerObjID,
-												netID,
-												tc->heapID );
+			tc->player[i] = AddPlayerControl( tc->gs, netID, tc->heapID );
+
 			SetPlayerStatus( tc->player[i], ps ); 
 			SetPlayerControlTrans( tc->player[i], trans );
 			tc->playerCount++;
@@ -518,14 +516,10 @@ void ProcessingAllTeamSummonObject( TEAM_CONTROL* tc, TEAM_SUMMON_CALLBACK* proc
 //------------------------------------------------------------------
 static const SUMMON_TYPETABLE	summonTypeTable[] = {
 	{ 0, 0, 0 },	//dummy
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
-	{ EXMAPOBJ_WALL, 100, 0, 8 },
+	{ EXMAPOBJ_TOWER_RED, 5000, 0, 8 },
+	{ EXMAPOBJ_TOWER_BLUE, 5000, 0, 8 },
+	{ EXMAPOBJ_TOWER_GREEN, 5000, 0, 8 },
+	{ EXMAPOBJ_TOWER_YELLOW, 5000, 0, 8 },
 };
 
 //------------------------------------------------------------------

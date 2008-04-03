@@ -26,6 +26,13 @@
 //------------------------------------------------------------------
 #define NO_HIT_ICON (-1)
 
+typedef struct {
+	u8		startx;
+	u8		starty;
+	u8		nowx;
+	u8		nowy;
+}ATKMODE_STATUS;
+
 struct _MOUSE_EVENT_SYS {
 	HEAPID			heapID;
 	GAME_SYSTEM*	gs;
@@ -37,16 +44,23 @@ struct _MOUSE_EVENT_SYS {
 
 	u16				mouseCursorID;
 	VecFx32			mouseCursorPos;
-	int				eventMode;
 
 	int				selectIcon;
 	u32				eventFlag;
 	BOOL			jumpTrg;
 	u32				jumpTrgEnableCount;
 
-	u32				attackFrameCounter;
+	u32				attackModeFrameCounter;
+	ATKMODE_STATUS	attackStatus;
 	BOOL			scrDrawFlag;
 };
+
+typedef struct {
+	BOOL	trg;
+	BOOL	cont;
+	u32		x;
+	u32		y;
+}TP_STATUS;
 
 enum {
 	EVENT_MODE_NONE = 0,
@@ -73,50 +87,6 @@ typedef struct {
 	BOOL			moveEnable;
 	BOOL			selectMode;
 }ICON_AREA;
-
-static const GFL_UI_TP_HITTBL icontp_data[] = {
-	{ 16, 176-1, 0, 12-1 },		//左
-	{ 16, 176-1, 244, 256-1 },	//右
-
-	{ 8, 24-1, 24, 40-1 },
-	{ 8, 24-1, 40, 56-1 },
-	{ 8, 24-1, 56, 72-1 },
-	{ 8, 24-1, 72, 88-1 },
-	{ 8, 24-1, 88, 104-1 },
-	{ 8, 24-1, 104, 120-1 },
-	{ 8, 24-1, 120, 136-1 },
-	{ 8, 24-1, 136, 152-1 },
-	{ 8, 24-1, 152, 168-1 },
-	{ 8, 24-1, 168, 184-1 },
-	{ 8, 24-1, 184, 200-1 },
-	{ 8, 24-1, 200, 216-1 },
-	{ 8, 24-1, 216, 232-1 },
-
-	{ 168, 184-1, 224, 240-1 },	//メニュー
-
-	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
-};
-
-static const ICON_AREA iconarea_data[] = {	// icontp_dataと対応
-	{ MOUSE_EVENT_CAMERAMOVE_L,		 0,  2,  2, 20, FALSE, FALSE },		//左
-	{ MOUSE_EVENT_CAMERAMOVE_R,		30,  2,  2, 20, FALSE, FALSE },		//右
-
-	{ MOUSE_EVENT_ACTION_1,			 3,  1,  2,  2, FALSE, TRUE },
-	{ MOUSE_EVENT_ACTION_2,			 5,  1,  2,  2, FALSE, TRUE },
-	{ MOUSE_EVENT_ACTION_3,			 7,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_GROUNDMAKE_UP,	 9,  1,  2,  2, FALSE, TRUE },
-	{ MOUSE_EVENT_GROUNDMAKE_DOWN,	11,  1,  2,  2, FALSE, TRUE },
-	{ MOUSE_EVENT_ACTION_6,			13,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_7,			15,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_8,			17,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_9,			19,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_10,		21,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_11,		23,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_12,		25,  1,  2,  2, FALSE, FALSE },
-	{ MOUSE_EVENT_ACTION_13,		27,  1,  2,  2, FALSE, FALSE },
-
-	{ MOUSE_EVENT_OPEN_MENU,		28, 21,  2,  2, FALSE, FALSE },			//メニュー
-};
 
 //------------------------------------------------------------------
 /**
@@ -164,16 +134,16 @@ static const GFL_G3D_SCENEOBJ_DATA mouseCursorData[] = {
 	},
 };
 
-static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes );
-static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes );
-static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes );
+static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
+static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
+static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
 
 static void setMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 static void resetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
-static void clearMouseEvent( MOUSE_EVENT_SYS* mes );
-static void setJumpTrg( MOUSE_EVENT_SYS* mes );
+static BOOL setJumpTrg( MOUSE_EVENT_SYS* mes );
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes );
 static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes );
+static void resetAttackModeStatus( MOUSE_EVENT_SYS* mes );
 
 static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos );
 //------------------------------------------------------------------
@@ -187,7 +157,8 @@ MOUSE_EVENT_SYS* InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID )
 
 	mes->heapID = heapID;
 	mes->gs = gs;
-	mes->eventMode = EVENT_MODE_NONE;
+
+	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, PLAYICON_PLTT );
 	GFL_BG_LoadScreenReq( PLAYICON_FRM );
 
 	mes->selectIcon = -1;
@@ -195,7 +166,7 @@ MOUSE_EVENT_SYS* InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID )
 	mes->scrDrawFlag = FALSE;
 
 	resetJumpTrg( mes );
-	clearMouseEvent( mes );
+	ClearMouseEvent( mes );
 	//３Ｄデータセットアップ
 	{
 		GFL_G3D_SCENE* g3Dscene = Get_GS_G3Dscene( mes->gs );
@@ -227,20 +198,72 @@ void ExitMouseEvent( MOUSE_EVENT_SYS* mes )
  * @brief	マウスイベント判定
  */
 //------------------------------------------------------------------
-void MainMouseEvent( MOUSE_EVENT_SYS* mes )
+// gflib ui.cから引用　※uiが1/30 Frameに対応していないため暫定
+//	円形としての当たり判定（単発）
+static BOOL _circle_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
 {
-	switch( mes->mouseActionMode ){
-		case MOUSE_ACTION_STOP:
-			break;
-		case MOUSE_ACTION_NORMAL:
-			MainMouseEventNormal( mes );
-			break;
-		case MOUSE_ACTION_ATTACK:
-			MainMouseEventAttack( mes );
-			break;
-		case MOUSE_ACTION_GROUND_SELECT:
-			MainMouseEventGroundSelect( mes );
-			break;
+	x = (tbl->circle.x - x) * (tbl->circle.x - x);
+	y = (tbl->circle.y - y) * (tbl->circle.y - y);
+
+	if( x + y < (tbl->circle.r * tbl->circle.r) ) { return TRUE; }
+	return FALSE;
+}
+
+//	矩形としての当たり判定（単発）
+static BOOL _rect_hitcheck( const GFL_UI_TP_HITTBL *tbl, u32 x, u32 y )
+{
+	if( ((u32)( x - tbl->rect.left) < (u32)(tbl->rect.right - tbl->rect.left))
+	&	((u32)( y - tbl->rect.top) < (u32)(tbl->rect.bottom - tbl->rect.top))
+	){ return TRUE; }
+	return FALSE;
+}
+
+//	矩形、円のあたり判定をテーブル分行う
+static int _tblHitCheck( const GFL_UI_TP_HITTBL *tbl, const u16 x, const u16 y )
+{
+    int i;
+
+    for(i = 0; tbl[i].circle.code != GFL_UI_TP_HIT_END; i++){
+        if( tbl[i].circle.code == GFL_UI_TP_USE_CIRCLE ) {
+            if( _circle_hitcheck( &tbl[i], x, y ) ){ return i; }
+        } else {
+            if( _rect_hitcheck( &tbl[i], x, y ) ){ return i; }
+        }
+    }
+    return GFL_UI_TP_HIT_NONE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	マウスイベント判定
+ */
+//------------------------------------------------------------------
+static void MainMouseEventAnyTime( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
+static void MainMouseEventLimited( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
+static void ResetMouseEventLimited( MOUSE_EVENT_SYS* mes );
+
+void MainMouseEvent( MOUSE_EVENT_SYS* mes, BOOL tpTrg, BOOL tpCont, u32 tpX, u32 tpY, BOOL limit )
+{
+	TP_STATUS tp;
+
+	tp.trg = tpTrg;
+	tp.cont = tpCont;
+	if(( tpTrg == FALSE )&&( tpCont == FALSE ) ){
+		tp.x = 0;
+		tp.y = 0;
+	} else {
+		tp.x = tpX;
+		tp.y = tpY;
+	}
+
+	//ClearMouseEvent( mes );
+	MainMouseEventAnyTime( mes, &tp );
+	//if(( mes->eventFlag == 0 )&&( limit == FALSE )){
+	if( limit == FALSE ){
+		//常時判定部でイベント検出されたら限定項目は呼ばない
+		MainMouseEventLimited( mes, &tp );
+	} else { 
+		ResetMouseEventLimited( mes );
 	}
 	if( mes->scrDrawFlag == TRUE ){
 		GFL_BG_LoadScreenReq( PLAYICON_FRM );
@@ -248,7 +271,35 @@ void MainMouseEvent( MOUSE_EVENT_SYS* mes )
 }
 
 //------------------------------------------------------------------
-static void SetMouseCursorSW( MOUSE_EVENT_SYS* mes, BOOL drawSw )
+static void setMouseIconEffect( const GFL_UI_TP_HITTBL *tbl, int tblPos )
+{
+	int	i;
+	u8	px, py, sx, sy, pltt;
+
+    for(i = 0; tbl[i].circle.code != GFL_UI_TP_HIT_END; i++){
+		px = tbl[i].rect.left /8;
+		py = tbl[i].rect.top /8;
+		sx = (tbl[i].rect.right - tbl[i].rect.left) /8;
+		if((tbl[i].rect.right - tbl[i].rect.left) %8){ sx++; }
+		sy = (tbl[i].rect.bottom - tbl[i].rect.top) /8;
+		if((tbl[i].rect.bottom - tbl[i].rect.top) %8){ sy++; }
+
+		if( i == tblPos ){
+			pltt = PLAYICON_PLTT+1;	//点灯
+		} else {
+			pltt = PLAYICON_PLTT;	//消灯
+		}
+		GFL_BG_ChangeScreenPalette( PLAYICON_FRM, px, py, sx, sy, pltt );
+	}
+}
+
+static void clearMouseIconEffect( const GFL_UI_TP_HITTBL *tbl )
+{
+	setMouseIconEffect( tbl, GFL_UI_TP_HIT_NONE );
+}
+
+//------------------------------------------------------------------
+static void setMouseCursorSW( MOUSE_EVENT_SYS* mes, BOOL drawSw )
 {
 	GFL_G3D_SCENEOBJ*	g3DsceneObj;
 
@@ -272,38 +323,102 @@ static void SetMouseCursorSW( MOUSE_EVENT_SYS* mes, BOOL drawSw )
 }
 
 //------------------------------------------------------------------
-static void SetMouseCursorIconOff( MOUSE_EVENT_SYS* mes )
+/**
+ * @brief	マウスイベント判定(常時項目)
+ */
+//------------------------------------------------------------------
+static const GFL_UI_TP_HITTBL tpHitTbl1[] = {
+	{ 16, 176-1, 0, 12-1 },		//左
+	{ 16, 176-1, 244, 256 },	//右
+
+	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
+};
+
+static const MOUSE_EVENT tpHitComTbl1[] = {	//tpHitTbl1と対応
+	MOUSE_EVENT_CAMERAMOVE_L,	//カメラ左移動
+	MOUSE_EVENT_CAMERAMOVE_R,	//カメラ右移動
+};
+
+static void MainMouseEventAnyTime( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 {
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, PLAYICON_PLTT );
+	if( tp->cont == TRUE ){
+		int tblPos = _tblHitCheck( tpHitTbl1, tp->x, tp->y );
+		setMouseIconEffect( tpHitTbl1, tblPos );
+
+		if( tblPos != GFL_UI_TP_HIT_NONE ){
+			setMouseCursorSW( mes, FALSE );
+			setMouseEvent( mes, tpHitComTbl1[ tblPos ] );
+		}
+	} else {
+		clearMouseIconEffect( tpHitTbl1 );
+	}
 	mes->scrDrawFlag = TRUE;
 }
 
-static void SetMouseCursorIconOffSelect( MOUSE_EVENT_SYS* mes )
+//------------------------------------------------------------------
+/**
+ * @brief	マウスイベント判定(限定項目)
+ */
+//------------------------------------------------------------------
+static const GFL_UI_TP_HITTBL icontp_data[] = {
+	{ 8, 24-1, 24, 40-1 },
+	{ 8, 24-1, 40, 56-1 },
+	{ 8, 24-1, 56, 72-1 },
+	{ 8, 24-1, 72, 88-1 },
+	{ 8, 24-1, 88, 104-1 },
+	{ 8, 24-1, 104, 120-1 },
+	{ 8, 24-1, 120, 136-1 },
+	{ 8, 24-1, 136, 152-1 },
+	{ 8, 24-1, 152, 168-1 },
+	{ 8, 24-1, 168, 184-1 },
+	{ 8, 24-1, 184, 200-1 },
+	{ 8, 24-1, 200, 216-1 },
+	{ 8, 24-1, 216, 232-1 },
+
+	{ 168, 184-1, 224, 240-1 },	//メニュー
+
+	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
+};
+
+static const ICON_AREA iconarea_data[] = {	// icontp_dataと対応
+	{ MOUSE_EVENT_ACTION_1,			 3,  1,  2,  2, FALSE, TRUE },
+	{ MOUSE_EVENT_ACTION_2,			 5,  1,  2,  2, FALSE, TRUE },
+	{ MOUSE_EVENT_ACTION_3,			 7,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_GROUNDMAKE_UP,	 9,  1,  2,  2, FALSE, TRUE },
+	{ MOUSE_EVENT_GROUNDMAKE_DOWN,	11,  1,  2,  2, FALSE, TRUE },
+	{ MOUSE_EVENT_ACTION_6,			13,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_7,			15,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_8,			17,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_9,			19,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_10,		21,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_11,		23,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_12,		25,  1,  2,  2, FALSE, FALSE },
+	{ MOUSE_EVENT_ACTION_13,		27,  1,  2,  2, FALSE, FALSE },
+
+	{ MOUSE_EVENT_OPEN_MENU,		28, 21,  2,  2, FALSE, FALSE },			//メニュー
+};
+
+static void MainMouseEventLimited( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 {
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, PLAYICON_PLTT );
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM,
-				iconarea_data[ mes->selectIcon ].px, iconarea_data[ mes->selectIcon ].py,
-				iconarea_data[ mes->selectIcon ].sx, iconarea_data[ mes->selectIcon ].sy,
-				PLAYICON_PLTT+1 );
-	mes->scrDrawFlag = TRUE;
+	switch( mes->mouseActionMode ){
+		case MOUSE_ACTION_STOP:
+			break;
+		case MOUSE_ACTION_NORMAL:
+			MainMouseEventNormal( mes, tp );
+			break;
+		case MOUSE_ACTION_ATTACK:
+			MainMouseEventAttack( mes, tp );
+			break;
+		case MOUSE_ACTION_GROUND_SELECT:
+			MainMouseEventGroundSelect( mes, tp );
+			break;
+	}
 }
 
-static void SetMouseCursorIconOn( MOUSE_EVENT_SYS* mes, u8 px, u8 py, u8 sx, u8 sy )
+static void ResetMouseEventLimited( MOUSE_EVENT_SYS* mes )
 {
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, PLAYICON_PLTT );
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, px, py, sx, sy, PLAYICON_PLTT+1 );
-	mes->scrDrawFlag = TRUE;
-}
-
-static void SetMouseCursorIconOnSelect( MOUSE_EVENT_SYS* mes, u8 px, u8 py, u8 sx, u8 sy )
-{
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, PLAYICON_PLTT );
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM,
-				iconarea_data[ mes->selectIcon ].px, iconarea_data[ mes->selectIcon ].py,
-				iconarea_data[ mes->selectIcon ].sx, iconarea_data[ mes->selectIcon ].sy,
-				PLAYICON_PLTT+1 );
-	GFL_BG_ChangeScreenPalette( PLAYICON_FRM, px, py, sx, sy, PLAYICON_PLTT+1 );
-	mes->scrDrawFlag = TRUE;
+	resetJumpTrg( mes );	//ジャンプ判定削除
+	setMouseCursorSW( mes, FALSE );
 }
 
 //------------------------------------------------------------------
@@ -314,83 +429,69 @@ static const GFL_UI_TP_HITTBL attacktp_data_trg[] = {
 	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
 };
 
-static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes )
+static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 {
-	u32					tpx, tpy;
-	int					tpContTblPos;
+	int	tblPos;
 
-	clearMouseEvent( mes );
+	//アイコン判定
+	if( tp->trg == TRUE ){
+			
+		tblPos = _tblHitCheck( icontp_data, tp->x, tp->y );
+		if( tblPos != GFL_UI_TP_HIT_NONE ){
+			setMouseIconEffect( icontp_data, tblPos );
 
-	if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == FALSE ){
-		mes->eventMode = EVENT_MODE_NONE;
+			resetJumpTrg( mes );	//ジャンプ判定削除
+			mes->selectIcon = tblPos;
+			setMouseCursorSW( mes, FALSE );
 
+			if( iconarea_data[ tblPos ].selectMode == TRUE ){
+				mes->mouseActionMode = MOUSE_ACTION_GROUND_SELECT;	//地形選択モードに移行
+			} else {
+				setMouseEvent( mes, iconarea_data[ tblPos ].me );
+			}
+			return;
+		}
+		mes->selectIcon = -1;
+
+		//攻撃トリガ判定
+		tblPos = _tblHitCheck( attacktp_data_trg, tp->x, tp->y );
+		if( tblPos != GFL_UI_TP_HIT_NONE ){
+			resetJumpTrg( mes );	//ジャンプ判定削除
+	
+			mes->attackModeFrameCounter = 0;
+			resetAttackModeStatus( mes );	//攻撃モードステータス初期化
+
+			setMouseEvent( mes, MOUSE_EVENT_ATTACK_READY );
+			mes->mouseActionMode = MOUSE_ACTION_ATTACK;	//攻撃モードに移行
+
+			setMouseCursorSW( mes, FALSE );
+			return;
+		}
+	}
+	clearMouseIconEffect( icontp_data );
+
+	if( tp->cont == TRUE ){
+		//----暫定回避
+		tblPos = _tblHitCheck( icontp_data, tp->x, tp->y );
+		if( tblPos != GFL_UI_TP_HIT_NONE ){
+			return;
+		}
+		//移動判定
+		if( GetCursorVec( tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
+			if( setJumpTrg( mes ) == TRUE ){
+				setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
+			} else {
+				setMouseEvent( mes, MOUSE_EVENT_MOVE );
+			}
+			setMouseCursorSW( mes, FALSE );
+		}
+	} else {
 		if( checkJumpTrg( mes ) == TRUE ){
 			setMouseEvent( mes, MOUSE_EVENT_JUMP );
 		}
 		resetJumpTrg( mes );
 
-		SetMouseCursorIconOff( mes );
-		SetMouseCursorSW( mes, FALSE );
-		return;
-	}
-	//アイコン判定
-	tpContTblPos = GFL_UI_TP_HitCont( icontp_data );
-	if( tpContTblPos == GFL_UI_TP_HIT_NONE ){
-		mes->selectIcon = -1;
-		SetMouseCursorIconOff( mes );
-	} else {
-		mes->eventMode = EVENT_MODE_ICON;
-		mes->selectIcon = tpContTblPos;
-
-		SetMouseCursorIconOn( mes, 
-				iconarea_data[ tpContTblPos ].px, iconarea_data[ tpContTblPos ].py,
-				iconarea_data[ tpContTblPos ].sx, iconarea_data[ tpContTblPos ].sy );
-		SetMouseCursorSW( mes, FALSE );
-
-		if( iconarea_data[ tpContTblPos ].selectMode == TRUE ){
-			resetJumpTrg( mes );	//ジャンプ判定削除
-			mes->mouseActionMode = MOUSE_ACTION_GROUND_SELECT;	//地形選択モードに移行
-			return;
-		} else {
-			setMouseEvent( mes, iconarea_data[ tpContTblPos ].me );
-		}
-		if( iconarea_data[ tpContTblPos ].moveEnable == FALSE ){
-			resetJumpTrg( mes );	//ジャンプ判定削除
-			return;
-		}
-	}
-#if 1
-	//攻撃トリガ判定
-	tpContTblPos = GFL_UI_TP_HitCont( attacktp_data_trg );
-	if( tpContTblPos != GFL_UI_TP_HIT_NONE ){
-		if( mes->eventMode != EVENT_MODE_MOVE ){
-			resetJumpTrg( mes );	//ジャンプ判定削除
-
-			mes->eventMode = EVENT_MODE_ATTACK;
-			mes->attackFrameCounter = 0;
-			mes->mouseActionMode = MOUSE_ACTION_ATTACK;	//攻撃モードに移行
-
-			SetMouseCursorSW( mes, FALSE );
-			return;
-		}
-	}
-#endif
-	//移動判定
-	if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos ) == TRUE ){
-		mes->eventMode = EVENT_MODE_MOVE;
-
-		if( mes->jumpTrg == TRUE ){
-			if( mes->jumpTrgEnableCount ){
-				mes->jumpTrgEnableCount--;
-				setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
-			} else {
-				setMouseEvent( mes, MOUSE_EVENT_MOVE );
-			}
-		}else{
-			setJumpTrg( mes );
-			setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
-		}
-		SetMouseCursorSW( mes, TRUE );
+		setMouseCursorSW( mes, FALSE );
 	}
 }
 
@@ -416,73 +517,90 @@ static const MOUSE_EVENT attack_data[] = {	//attacktp_data_directと対応
 	MOUSE_EVENT_ATTACK_6,				//右下
 };
 
-static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes )
+static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 {
-	u32		tpx, tpy;
 	int		tpContTblPos;
-	BOOL	tpOnFlag = GFL_UI_TP_GetPointCont( &tpx, &tpy );
 
-	clearMouseEvent( mes );
-
-	if( mes->attackFrameCounter < 4 ){
-		//4の間押しっぱなしかどうか確認
-		if( tpOnFlag == FALSE ){
-			mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
-		}
-		mes->attackFrameCounter++;
+	//モード有効期間１秒間
+	if( mes->attackModeFrameCounter >= 30 ){
+		setMouseEvent( mes, MOUSE_EVENT_ATTACK_END );
+		mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
 		return;
 	}
-	//4wait後方向確認
-	tpContTblPos = GFL_UI_TP_HitCont( attacktp_data_direct );
-	if( tpContTblPos == GFL_UI_TP_HIT_NONE ){
-		tpContTblPos = 0;	//取得エラーの場合0に補正
+	mes->attackModeFrameCounter++;
+	{
+		//仮エフェクト
+		u8 plt = PLAYICON_PLTT;
+
+		if( mes->attackModeFrameCounter & 0x0002 ){
+			plt++;
+		}
+		GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, plt );
+		mes->scrDrawFlag = TRUE;
 	}
-	setMouseEvent( mes, attack_data[ tpContTblPos ] );
-	mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
+	if( tp->cont == TRUE ){
+		if( mes->attackStatus.startx != 0 ){
+			mes->attackStatus.nowx = tp->x;
+			mes->attackStatus.nowy = tp->y;
+		}
+	} else {
+		if( mes->attackStatus.startx != 0 ){
+			VecFx32 diff;
+			u16		theta;
+			int type = 0;
+			{
+				//仮エフェクト終了
+				u8 plt = PLAYICON_PLTT;
+
+				GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, plt );
+				mes->scrDrawFlag = TRUE;
+			}
+
+			if(( mes->attackStatus.nowx == mes->attackStatus.startx)
+				&&( mes->attackStatus.nowy == mes->attackStatus.starty)){
+				setMouseEvent( mes, MOUSE_EVENT_ATTACK_END );
+			} else {
+				diff.x = (mes->attackStatus.nowx - mes->attackStatus.startx) * FX32_ONE;
+				diff.y = (mes->attackStatus.nowy - mes->attackStatus.starty) * FX32_ONE;
+				//VEC_Normalize( &diff, &diff );
+				theta = FX_Atan2Idx( diff.y,  diff.x ); //theta 0 = 右方向となり、時計回りに増加
+
+				if( theta < 0x3000 ){ type = 2; }
+				else if( theta < 0x5000 ){ type = 1; }
+				else if( theta < 0x8000 ){ type = 3; }
+				else if( theta < 0xb000 ){ type = 5; }
+				else if( theta < 0xd000 ){ type = 0; }
+				else { type = 4; }
+
+				setMouseEvent( mes, attack_data[ type ] );
+			}
+			mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
+			return;
+		}
+	}
+	if( tp->trg == TRUE ){
+		mes->attackStatus.startx = tp->x;
+		mes->attackStatus.starty = tp->y;
+		mes->attackStatus.nowx = tp->x;
+		mes->attackStatus.nowy = tp->y;
+	}
+	setMouseEvent( mes, MOUSE_EVENT_ATTACK_READY );
 }
 
 //------------------------------------------------------------------
-// 場所選択モード
-static const GFL_UI_TP_HITTBL pselecttp_data[] = {
-	{ 16, 176-1, 0, 12-1 },		//左
-	{ 16, 176-1, 244, 256-1 },	//右
-
-	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
-};
-
-static const ICON_AREA pselectarea_data[] = {	// pselecttp_dataと対応
-	{ MOUSE_EVENT_CAMERAMOVE_L, 0, 2, 2, 20, TRUE },			//左
-	{ MOUSE_EVENT_CAMERAMOVE_R, 30, 2, 2, 20, TRUE },			//右
-
-	{ MOUSE_EVENT_OPEN_MENU, 28, 21, 2, 2, FALSE },			//メニュー
-};
-
-static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes )
+static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 {
-	u32	tpx, tpy;
 	int tpContTblPos;
 
-	clearMouseEvent( mes );
+	if( tp->trg == TRUE ){
+		if( GetCursorVec( tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
+			setMouseCursorSW( mes, TRUE );
 
-	//アイコン判定
-	tpContTblPos = GFL_UI_TP_HitCont( pselecttp_data );
-	if( tpContTblPos == GFL_UI_TP_HIT_NONE ){
-		SetMouseCursorIconOffSelect( mes );
-		if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) != FALSE ){
-			if( GetCursorVec( tpx, tpy, &mes->mouseCursorPos ) == TRUE ){
-				SetMouseCursorSW( mes, TRUE );
+			setMouseEvent( mes, iconarea_data[ mes->selectIcon ].me );
 
-				setMouseEvent( mes, iconarea_data[ mes->selectIcon ].me );
-				mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
-			}
+			clearMouseIconEffect( icontp_data );
+			mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
 		}
-	} else {
-		SetMouseCursorIconOnSelect( mes,
-				pselectarea_data[ tpContTblPos ].px, pselectarea_data[ tpContTblPos ].py,
-				pselectarea_data[ tpContTblPos ].sx, pselectarea_data[ tpContTblPos ].sy );
-		SetMouseCursorSW( mes, FALSE );
-
-		setMouseEvent( mes, iconarea_data[ tpContTblPos ].me );
 	}
 }
 
@@ -501,16 +619,21 @@ static void resetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID )
 	mes->eventFlag &= setBit;
 }
 
-static void clearMouseEvent( MOUSE_EVENT_SYS* mes )
-{
-	mes->eventFlag = 0;
-}
-
 //------------------------------------------------------------------
-static void setJumpTrg( MOUSE_EVENT_SYS* mes )
+static BOOL setJumpTrg( MOUSE_EVENT_SYS* mes )
 {
-	mes->jumpTrg = TRUE;
-	mes->jumpTrgEnableCount = 2;
+	if( mes->jumpTrg == TRUE ){
+		if( mes->jumpTrgEnableCount ){
+			mes->jumpTrgEnableCount--;
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}else{
+		mes->jumpTrg = TRUE;
+		mes->jumpTrgEnableCount = 2;
+		return TRUE;
+	}
 }
 
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes )
@@ -527,6 +650,19 @@ static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes )
 		}
 	}
 	return FALSE;
+}
+
+//------------------------------------------------------------------
+static void setAttackModeStatus( MOUSE_EVENT_SYS* mes )
+{
+}
+
+static void resetAttackModeStatus( MOUSE_EVENT_SYS* mes )
+{
+	mes->attackStatus.startx = 0;
+	mes->attackStatus.starty = 0;
+	mes->attackStatus.nowx = 0;
+	mes->attackStatus.nowy = 0;
 }
 
 //------------------------------------------------------------------
@@ -553,6 +689,19 @@ BOOL CheckMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID )
 	} else {
 		return FALSE;
 	}
+}
+
+BOOL CheckResetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID )
+{
+	BOOL flg = CheckMouseEvent( mes, checkEventID );
+	resetMouseEvent( mes, checkEventID );
+
+	return flg;
+}
+
+void ClearMouseEvent( MOUSE_EVENT_SYS* mes )
+{
+	mes->eventFlag = 0;
 }
 
 //------------------------------------------------------------------

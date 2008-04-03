@@ -19,10 +19,10 @@ extern void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera );
 
 enum {
 	EXMAPOBJ_WALL = 0,
-	EXMAPOBJ_WALL1,
-	EXMAPOBJ_WALL2,
-	EXMAPOBJ_WALL3,
-	EXMAPOBJ_WALL4,
+	EXMAPOBJ_TOWER_RED,
+	EXMAPOBJ_TOWER_BLUE,
+	EXMAPOBJ_TOWER_GREEN,
+	EXMAPOBJ_TOWER_YELLOW,
 };
 
 extern BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD );

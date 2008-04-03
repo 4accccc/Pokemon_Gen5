@@ -64,12 +64,12 @@ typedef struct {
 }MAP_GRIDMAKE_DATA;
 
 typedef struct {
+	u16		type;
 	VecFx16	vtx0;
 	VecFx16	vtx1;
 	VecFx16	vtx2;
 	VecFx32	vecN;
 	fx32	valD;
-
 }MAP_PLANE_DATA;
 
 typedef struct {
@@ -80,11 +80,13 @@ typedef struct {
 
 static MAP_GRID_DATA*	mapGridData;
 
-#define mapSizeX	(32)
-#define mapSizeZ	(32)
-#define mapGrid		(FX32_ONE*64)
-#define defaultMapX	(-mapGrid*16+mapGrid/2)
-#define defaultMapZ	(-mapGrid*16+mapGrid/2)
+#define mapScale		(FX32_ONE*4)
+#define mapSizeX		(32)
+#define mapSizeZ		(32)
+#define mapGrid			(mapScale*16)
+#define defaultMapX		(-mapGrid*(mapSizeX/2)+mapGrid/2)
+#define defaultMapZ		(-mapGrid*(mapSizeZ/2)+mapGrid/2)
+#define mapHeight		(FX16_ONE/4)
 
 static void	MapDataCreate( SCENE_MAP* sceneMap, const MAPDATA* map, HEAPID heapID );
 static void MapDataDelete( SCENE_MAP* sceneMap );
@@ -108,6 +110,10 @@ enum {
 	G3DRES_EFFECT_WALL,
 	G3DRES_FIELD_TEX1,
 	G3DRES_FIELD_TEX2,
+	G3DRES_TOWER_RED,
+	G3DRES_TOWER_BLUE,
+	G3DRES_TOWER_GREEN,
+	G3DRES_TOWER_YELLOW,
 };
 //３Ｄグラフィックリソーステーブル
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -115,6 +121,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ (u32)g3DarcPath2, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_field_tex1_nsbmd,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath2, NARC_haruka_field_tex2_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_tower_red_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_tower_blue_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_tower_green_nsbmd,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath2, NARC_haruka_tower_yellow_nsbmd,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
@@ -123,6 +133,10 @@ enum {
 	G3DOBJ_EFFECT_WALL,
 	G3DOBJ_FIELD_TEX1,
 	G3DOBJ_FIELD_TEX2,
+	G3DOBJ_TOWER_RED,
+	G3DOBJ_TOWER_BLUE,
+	G3DOBJ_TOWER_GREEN,
+	G3DOBJ_TOWER_YELLOW,
 };
 //３Ｄオブジェクト定義テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -130,6 +144,10 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_EFFECT_WALL, 0, G3DRES_EFFECT_WALL, NULL, 0 },
 	{ G3DRES_FIELD_TEX1, 0, G3DRES_FIELD_TEX1, NULL, 0 },
 	{ G3DRES_FIELD_TEX2, 0, G3DRES_FIELD_TEX2, NULL, 0 },
+	{ G3DRES_TOWER_RED, 0, G3DRES_TOWER_RED, NULL, 0 },
+	{ G3DRES_TOWER_BLUE, 0, G3DRES_TOWER_BLUE, NULL, 0 },
+	{ G3DRES_TOWER_GREEN, 0, G3DRES_TOWER_GREEN, NULL, 0 },
+	{ G3DRES_TOWER_YELLOW, 0, G3DRES_TOWER_YELLOW, NULL, 0 },
 };
 
 //---------------------
@@ -254,8 +272,8 @@ void	Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
 //------------------------------------------------------------------
 BOOL	Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr )
 {
-	fx32 wx = pos->x + mapGrid*16;
-	fx32 wz = pos->z + mapGrid*16;
+	fx32 wx = pos->x + mapGrid*(mapSizeX/2);
+	fx32 wz = pos->z + mapGrid*(mapSizeZ/2);
 	int x = wx/mapGrid;
 	int z = wz/mapGrid;
 	if(( wx < 0 )||( wx >= mapGrid * mapSizeX )||( wz < 0 )||( wz >= mapGrid * mapSizeZ )){
@@ -708,7 +726,7 @@ static const MAPDATA mapDataTbl = {
 	mapData0,
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, 0, 0 },
-			{ FX32_ONE*4, FX32_ONE*4, FX32_ONE*4 },
+			{ mapScale, 0, mapScale },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
@@ -723,12 +741,48 @@ static const GFL_G3D_SCENEOBJ_DATA extraObject1[] = {
 	},
 };
 
+static const GFL_G3D_SCENEOBJ_DATA towerRed[] = {
+	{	G3DOBJ_TOWER_RED, 0, 1, 8, TRUE, TRUE,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveExtraObject,
+	},
+};
+
+static const GFL_G3D_SCENEOBJ_DATA towerBlue[] = {
+	{	G3DOBJ_TOWER_BLUE, 0, 1, 8, TRUE, TRUE,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveExtraObject,
+	},
+};
+
+static const GFL_G3D_SCENEOBJ_DATA towerGreen[] = {
+	{	G3DOBJ_TOWER_GREEN, 0, 1, 8, TRUE, TRUE,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveExtraObject,
+	},
+};
+
+static const GFL_G3D_SCENEOBJ_DATA towerYellow[] = {
+	{	G3DOBJ_TOWER_YELLOW, 0, 1, 8, TRUE, TRUE,
+		{	{ 0, 0, 0 },
+			{ FX32_ONE, FX32_ONE, FX32_ONE },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveExtraObject,
+	},
+};
+
 static const	EXOBJ_DATATABLE extraObjectDataTbl[5] = {
 	{ extraObject1, NELEMS(extraObject1) },
-	{ extraObject1, NELEMS(extraObject1) },
-	{ extraObject1, NELEMS(extraObject1) },
-	{ extraObject1, NELEMS(extraObject1) },
-	{ extraObject1, NELEMS(extraObject1) },
+	{ towerRed, NELEMS(towerRed) },
+	{ towerBlue, NELEMS(towerBlue) },
+	{ towerGreen, NELEMS(towerGreen) },
+	{ towerYellow, NELEMS(towerYellow) },
 };
 
 //------------------------------------------------------------------
@@ -753,20 +807,20 @@ static void CreateMapGridData( HEAPID heapID )
 #if 1
 			i = z * mapSizeX + x;
 
-			if( (x == 0)||(x == 31)||(z == 0)||(z == 31)){
-				int height = 4;
+			if( (x == 0)||(x == mapSizeX-1)||(z == 0)||(z == mapSizeZ-1)){
+				int height = 16;
 
 				if((x == 0)&&(z == 0)){
 					MakeGridData( x, z, height, height, height, 0 ); 
-				} else if((x == 31)&&(z == 0)){
+				} else if((x == mapSizeX-1)&&(z == 0)){
 					MakeGridData( x, z, height, height, 0, height ); 
-				} else if((x == 0)&&(z == 31)){
+				} else if((x == 0)&&(z == mapSizeZ-1)){
 					MakeGridData( x, z, height, 0, height, height ); 
-				} else if((x == 31)&&(z == 31)){
+				} else if((x == mapSizeX-1)&&(z == mapSizeZ-1)){
 					MakeGridData( x, z, 0, height, height, height ); 
 				} else if(x == 0){
 					MakeGridData( x, z, height, 0, height, 0 ); 
-				} else if(x == 31){
+				} else if(x == mapSizeX-1){
 					MakeGridData( x, z, 0, height, 0, height ); 
 				} else if(z == 0){
 					MakeGridData( x, z, height, height, 0, 0 ); 
@@ -819,19 +873,19 @@ static void MakeGridData( int gridx, int gridz, int y0, int y1, int y2, int y3 )
 
 	//法線ベクトル算出用、頂点方向データ作成（描画にも使える）
 	vtx0.x = 0;
-	vtx0.y = y0 * FX16_ONE/4;
+	vtx0.y = y0 * mapHeight;
 	vtx0.z = 0;
 
 	vtx1.x = FX16_ONE;
-	vtx1.y = y1 * FX16_ONE/4;
+	vtx1.y = y1 * mapHeight;
 	vtx1.z = 0;
 
 	vtx2.x = 0;
-	vtx2.y = y2 * FX16_ONE/4;
+	vtx2.y = y2 * mapHeight;
 	vtx2.z = FX16_ONE;
 
 	vtx3.x = FX16_ONE;
-	vtx3.y = y3 * FX16_ONE/4;
+	vtx3.y = y3 * mapHeight;
 	vtx3.z = FX16_ONE;
 
 	if(( y0 == y3 )&&( y1 == y2 )&&( y0 == y1 )){
@@ -1022,8 +1076,10 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 		fx32		s0, t0, s1, t1, s2, t2;
 		GXRgb		vtx0col, vtx1col, vtx2col;
 		fx16		col;
+		fx16		diff0, diff1, diff2;
 		GXTexFmt	texFmt;
 		int			i;
+		VecFx16		vecN;
 
 		G3X_Reset();
 		G3_LookAt( &camPos, &camUp, &target, NULL);
@@ -1036,7 +1092,8 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 		//マテリアル設定
 		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
 		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-		G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 31, 0);
+		G3_PolygonAttr(GX_LIGHTMASK_0, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 31, 0);
+
 		G3_Scale( mapGrid, mapGrid, mapGrid );
 
 		for( z=0; z<mapSizeZ; z++ ){
@@ -1056,8 +1113,35 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 					pVtx0 = &mapGridData[offset].triangle[i].vtx0;
 					pVtx1 = &mapGridData[offset].triangle[i].vtx1;
 					pVtx2 = &mapGridData[offset].triangle[i].vtx2;
-	
+					//vecN.x  = 0;//(fx16)mapGridData[offset].triangle[i].vecN.x;
+					//vecN.y  = FX16_ONE;// (fx16)mapGridData[offset].triangle[i].vecN.y;
+					//vecN.z  = 0;//(fx16)mapGridData[offset].triangle[i].vecN.z;
+#if 0	
 					if(( pVtx0->y == pVtx1->y )&&( pVtx0->y == pVtx2->y )){
+#else
+					if( pVtx0->y > pVtx1->y ){
+						diff0 = pVtx0->y - pVtx1->y;
+					} else if( pVtx0->y < pVtx1->y ){
+						diff0 = pVtx1->y - pVtx0->y;
+					} else {
+						diff0 = 0;
+					}
+					if( pVtx1->y > pVtx2->y ){
+						diff1 = pVtx1->y - pVtx2->y;
+					} else if( pVtx1->y < pVtx2->y ){
+						diff1 = pVtx2->y - pVtx1->y;
+					} else {
+						diff1 = 0;
+					}
+					if( pVtx2->y > pVtx0->y ){
+						diff2 = pVtx2->y - pVtx0->y;
+					} else if( pVtx2->y < pVtx0->y ){
+						diff2 = pVtx0->y - pVtx2->y;
+					} else {
+						diff2 = 0;
+					}
+					if(( diff0 <= mapHeight )&&( diff1 <= mapHeight )&&( diff2 <= mapHeight )){
+#endif
 						//平面（草）
 						texFmt	= GX_TEXFMT_PLTT16;// use 16 colors palette texture
 						texData = texData1;
@@ -1096,14 +1180,17 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 					//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
 					G3_Color( vtx0col );
 					G3_TexCoord( s0, t0 );
+					//G3_Normal( vecN.x, vecN.y, vecN.z );
 					G3_Vtx( pVtx0->x, pVtx0->y, pVtx0->z );
 	
 					G3_Color( vtx1col );
 					G3_TexCoord( s1, t1 );
+					//G3_Normal( vecN.x, vecN.y, vecN.z );
 					G3_Vtx( pVtx1->x, pVtx1->y, pVtx1->z );
 	
 					G3_Color( vtx2col );
 					G3_TexCoord( s2, t2 );
+					//G3_Normal( vecN.x, vecN.y, vecN.z );
 					G3_Vtx( pVtx2->x, pVtx2->y, pVtx2->z );
 				}
 				G3_End();
@@ -1117,7 +1204,7 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 		fx16 waterLine;
 
 		sceneMap->anmTimer += 0x400;
-		waterLine = 2 * FX_SinIdx( sceneMap->anmTimer );
+		waterLine = 1 * FX_SinIdx( sceneMap->anmTimer );
 
 		G3X_Reset();
 		G3_LookAt( &camPos, &camUp, &target, NULL);
@@ -1186,10 +1273,10 @@ static void	GetGridVtxYLen( const int gridx, const int gridz,
 	fx16 fy0, fy1, fy2, fy3;
 
 	GetGridVtxY( gridx, gridz, &fy0, &fy1, &fy2, &fy3 );
-	*y0 = fy0/(FX16_ONE/4);
-	*y1 = fy1/(FX16_ONE/4);
-	*y2 = fy2/(FX16_ONE/4);
-	*y3 = fy3/(FX16_ONE/4);
+	*y0 = fy0/mapHeight;
+	*y1 = fy1/mapHeight;
+	*y2 = fy2/mapHeight;
+	*y3 = fy3/mapHeight;
 }
 
 static void	SetGridAround( const int gridx, const int gridz )

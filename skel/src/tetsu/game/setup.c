@@ -106,7 +106,8 @@ static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_O
 
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
-	{ 0, {{ 0, 0, -(FX16_ONE-1) }, 0x7fff } },
+	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7fff } },
+//	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
 };
 static const GFL_G3D_LIGHT_DATA light1Tbl[] = {
 	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
@@ -452,6 +453,7 @@ static void G3DsysSetup( void )
 }
 
 
+SCENE_ACT* testSceneAct;
 //------------------------------------------------------------------
 /**
  * @brief		３Ｄデータロード
@@ -471,6 +473,9 @@ static void g3d_load( GAME_SYSTEM* gs )
 	gs->sceneActSys = Create3DactSys( gs->g3Dscene, gs->heapID );
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
 
+	//-------------------
+	testSceneAct = Create3DactNPC( gs->g3Dscene, gs->heapID );
+	//-------------------
 	//カメラ作成
 	{
 		fx32 far = 4096 << FX32_SHIFT;	//メインカメラはdefault設定よりfarを伸ばしたいので再設定
@@ -536,6 +541,9 @@ static void g3d_unload( GAME_SYSTEM* gs )
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset[MAINLIGHT_ID] );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera[MAINCAMERA_ID] );
 
+	//-------------------
+	Delete3DactNPC( testSceneAct );
+	//-------------------
 	Delete3Dmap( gs->sceneMap );
 	Delete3DactSys( gs->sceneActSys );
 

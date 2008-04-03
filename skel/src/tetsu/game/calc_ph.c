@@ -114,6 +114,13 @@ static void	GetGroundGravity( CALC_PH_MV* calcPHMV,
 	//重力ベクトルを投影し、かかるべき重力ベクトルを算出
 	vecGravity.y = -gravity;
 	VEC_Proj( &vecGravity, &vecV, vecG ); 
+
+	//かかるべき重力ベクトルが指定マージン以下の場合、平地とみなし、ないこととする
+	if( vecG->y >= calcPHMV->planeMargin ){
+		vecG->x = 0;
+		vecG->y = 0;
+		vecG->z = 0;
+	}
 }
 
 static void	GetGroundVec( CALC_PH_MV* calcPHMV,
@@ -243,9 +250,9 @@ BOOL CheckGroundGravityPHMV( CALC_PH_MV* calcPHMV, VecFx32* pos )
 {
 	VecFx32 vecG;
 
-	GetGroundGravity( calcPHMV, pos, &vecG, FX32_ONE );
+	GetGroundGravity( calcPHMV, pos, &vecG, calcPHMV->gravityMove );
 	if( vecG.y < 0 ){
-		return TRUE;	//空中or地上斜面(重力による仕事が発生している状態)
+		return TRUE;	//空中or地上斜面(重力による仕事が発生している状態※margin以上)
 	} else {
 		return FALSE;	//地上平面
 	}

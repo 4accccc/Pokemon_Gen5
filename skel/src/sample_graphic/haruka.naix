@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-03-10T13:11:52
+	Update:2008-04-02T19:45:26
  *****************************************************************************/
 
 #ifndef NARC_HARUKA_NAIX_
@@ -47,7 +47,13 @@ enum {
 	NARC_haruka_armor2_head_nsbmd = 33,
 	NARC_haruka_armor2_body_nsbmd = 34,
 	NARC_haruka_armor2_arms_nsbmd = 35,
-	NARC_haruka_armor2_legs_nsbmd = 36
+	NARC_haruka_armor2_legs_nsbmd = 36,
+	NARC_haruka_tower_red_nsbmd = 37,
+	NARC_haruka_tower_blue_nsbmd = 38,
+	NARC_haruka_tower_green_nsbmd = 39,
+	NARC_haruka_tower_yellow_nsbmd = 40,
+	NARC_haruka_riz_nsbmd = 41,
+	NARC_haruka_riz_nsbca = 42
 };
 
 /* NARC_HARUKA_NAIX_ */

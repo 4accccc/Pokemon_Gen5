@@ -42,30 +42,37 @@ struct _SCENE_ACT {
 
 typedef struct { 
 	SCENE_ACT*		sceneAct;
-
 }ACT_WORK;//setup.cで指定されているサイズに収めるように注意
 
-static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+enum {
+	ACTANMSEQ_LOOP = 0,
+	ACTANMSEQ_END,
+	ACTANMSEQ_END2,
+	ACTANMSEQ_ENDSTAY,
+	ACTANMSEQ_REFENDSTAY,
+};
 
-//回転マトリクス変換
-static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
+typedef struct {
+	int animeID; 
+	int animeSeq; 
+	int start; 
+	int end; 
+	int rate; 
+}ANMIDATA_TBL;
 
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-}
+#define SYNC_WAIT (2)
 
 #include "src/sample_graphic/haruka.naix"
 static const char g3DarcPath[] = {"src/sample_graphic/haruka.narc"};
 //------------------------------------------------------------------
 /**
+ *
+ *
+ *
  * @brief	システムおよび共通リソースのセットアップと破棄
+ *
+ *
+ *
  */
 //------------------------------------------------------------------
 //３Ｄグラフィックリソーステーブル
@@ -74,6 +81,7 @@ enum {
 	G3DRES_COMMON_SWORD_ATTACK_BCA,
 	G3DRES_COMMON_HUMAN2_SHOOT_BCA,
 	G3DRES_COMMON_HUMAN2_SPELL_BCA,
+	G3DRES_COMMON_NPC_RIZ_BCA,
 };
 
 static const GFL_G3D_UTIL_RES g3DresTblCommon[] = {
@@ -81,22 +89,26 @@ static const GFL_G3D_UTIL_RES g3DresTblCommon[] = {
 	{ (u32)g3DarcPath, NARC_haruka_sword_attack_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_haruka_human2_shoot_nsbca,  GFL_G3D_UTIL_RESPATH },
 	{ (u32)g3DarcPath, NARC_haruka_human2_spell_nsbca,  GFL_G3D_UTIL_RESPATH },
+	{ (u32)g3DarcPath, NARC_haruka_riz_nsbca,  GFL_G3D_UTIL_RESPATH },
 };
 
 //---------------------
 //３Ｄオブジェクトアニメーション定義テーブル
 enum {
-	HUMAN_ANM_COMMON = 0,
-	HUMAN_ANM_SWORD_ATTACK,
-	HUMAN2_ANM_SHOOT,
-	HUMAN2_ANM_SPELL,
+	G3DANM_COMMON_HUMAN_COMMON = 0,
+	G3DANM_COMMON_HUMAN_SWORD_ATTACK,
+	G3DANM_COMMON_HUMAN_SHOOT,
+	G3DANM_COMMON_HUMAN_SPELL,
+
+	G3DANM_COMMON_NPC_RIZ,
 };
 
-static const GFL_G3D_UTIL_ANM g3DhumanAnmTblCommon[] = {
+static const GFL_G3D_UTIL_ANM g3DanmTblCommon[] = {
 	{ G3DRES_COMMON_HUMAN_COMMON_BCA, 0 },
 	{ G3DRES_COMMON_SWORD_ATTACK_BCA, 0 },
 	{ G3DRES_COMMON_HUMAN2_SHOOT_BCA, 0 },
 	{ G3DRES_COMMON_HUMAN2_SPELL_BCA, 0 },
+	{ G3DRES_COMMON_NPC_RIZ_BCA, 0 },
 };
 
 //---------------------
@@ -126,6 +138,368 @@ void			Delete3DactSys( SCENE_ACTSYS* sceneActSys )
 	GFL_HEAP_FreeMemory( sceneActSys );
 }
 
+//------------------------------------------------------------------
+/**
+ *
+ *
+ *
+ * @brief	ローカル共通関数
+ *
+ *
+ *
+ */
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+/**
+ * @brief		回転マトリクス変換
+ */
+//------------------------------------------------------------------
+static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
+{
+	MtxFx33 tmp;
+
+	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
+
+	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+
+	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
+	MTX_Concat33( rotDst, &tmp, rotDst );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		ワーク初期化
+ */
+//------------------------------------------------------------------
+static void initActWork( SCENE_ACT*	sceneAct )
+{
+	ACT_WORK*	work;
+	int i;
+
+	sceneAct->animeCmd		= 0;
+	sceneAct->animeCmdNow	= sceneAct->animeCmd;
+	sceneAct->animeID		= 0;
+	sceneAct->accesoryID	= 0;
+	sceneAct->accesoryIDNow	= sceneAct->accesoryID;
+	sceneAct->busyFlag		= FALSE;
+	sceneAct->anmSetFlag	= TRUE;
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork
+					( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID+i ) ); 
+		work->sceneAct = sceneAct;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		共通アニメを関連付ける
+ */
+//------------------------------------------------------------------
+static void bindCommonAnm
+	( u16 objUnitIdx, u16 objIdx, const GFL_G3D_UTIL_ANM* anmTbl, u32 anmCount )
+{
+	//共通リソースからアニメ設定
+	GFL_G3D_UTIL_SetObjAnotherUnitAnime(	GFL_G3D_SCENE_GetG3Dutil( SceneActSys->g3Dscene ), 
+											objUnitIdx, objIdx,
+											SceneActSys->g3DutilUnitIdx, anmTbl, anmCount );
+	//アニメーションの初期有効設定(0番のアニメーションを有効にする)
+	GFL_G3D_OBJECT_EnableAnime
+		( GFL_G3D_SCENE_GetG3DutilObjHandle( SceneActSys->g3Dscene, objUnitIdx + objIdx ), 0 );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		アニメコントロール
+ */
+//------------------------------------------------------------------
+static void setAnimetion( SCENE_ACT* sceneAct, int anmID, fx32 start )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	int i;
+
+	if( anmID != sceneAct->animeID ){
+		for( i=0; i<sceneAct->actCount; i++ ){
+			g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+			GFL_G3D_SCENEOBJ_DisableAnime( g3DsceneObj, sceneAct->animeID );
+			GFL_G3D_SCENEOBJ_EnableAnime( g3DsceneObj, anmID );
+		}
+		sceneAct->animeID = anmID;
+	}
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetAnimeFrame( g3DsceneObj, anmID, (int*)&start );
+	}
+}
+
+static void setAnimeFrame( SCENE_ACT* sceneAct, int anmID, fx32 frame )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	int i;
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetAnimeFrame( g3DsceneObj, anmID, (int*)&frame );
+	}
+}
+
+static BOOL incAnimetion( SCENE_ACT* sceneAct, int anmID, fx32 end, fx32 rate )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	fx32	nowFrm, setFrm;
+	int		i;
+	BOOL	result = TRUE;;
+
+	g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID );	//0のみ参照
+	if( GFL_G3D_SCENEOBJ_GetAnimeFrame( g3DsceneObj, anmID, (int*)&nowFrm ) == FALSE ){
+		return FALSE;
+	}
+	setFrm = nowFrm + rate;
+	if( setFrm >= end ){
+		setFrm = end;
+		result = FALSE;
+	}
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetAnimeFrame( g3DsceneObj, anmID, (int*)&setFrm );
+	}
+	return result;
+}
+
+//暫定
+static BOOL incAnimetionRef( SCENE_ACT* sceneAct, int anmID, fx32 rate )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	fx32 nowFrm;
+	int i;
+	BOOL result; 
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		result = GFL_G3D_SCENEOBJ_IncAnimeFrame( g3DsceneObj, anmID, rate );
+	}
+	return result;
+}
+
+//------------------------------------------------------------------
+static void animeControl( SCENE_ACT* sceneAct, const ANMIDATA_TBL* anmDataTable )
+{
+	int			anmID;
+	fx32		start, end, rate;
+
+	if( sceneAct->anmSetFlag == TRUE ){	//アニメ更新チェック
+		anmID = anmDataTable[ sceneAct->animeCmd ].animeID;
+		start = FX32_ONE * anmDataTable[ sceneAct->animeCmd ].start;
+		sceneAct->seq = anmDataTable[ sceneAct->animeCmd ].animeSeq;
+		setAnimetion( sceneAct, anmID, start );
+		sceneAct->animeCmdNow = sceneAct->animeCmd;
+		sceneAct->anmSetFlag = FALSE;
+	}
+	start	= FX32_ONE * anmDataTable[ sceneAct->animeCmdNow ].start;
+	end		= FX32_ONE * anmDataTable[ sceneAct->animeCmdNow ].end;
+	rate	= FX32_ONE * anmDataTable[ sceneAct->animeCmdNow ].rate;
+
+	switch( sceneAct->seq ){
+	case ACTANMSEQ_LOOP:
+		if( incAnimetion( sceneAct, sceneAct->animeID, end, rate ) == FALSE ){
+			setAnimeFrame( sceneAct, sceneAct->animeID, start );
+		}
+		sceneAct->busyFlag = FALSE;
+		break;
+
+	case ACTANMSEQ_END:
+		{
+			GFL_G3D_SCENEOBJ* g3DsceneObj;
+			fx32	nowFrm;
+			g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID );
+			GFL_G3D_SCENEOBJ_GetAnimeFrame( g3DsceneObj, sceneAct->animeID, (int*)&nowFrm );
+		}
+		if( incAnimetion( sceneAct, sceneAct->animeID, end, rate ) == FALSE ){
+			//setAnimeFrame( sceneAct, sceneAct->animeID, end );
+			sceneAct->busyFlag = FALSE;
+		} else {
+			sceneAct->busyFlag = TRUE;
+		}
+		break;
+
+	case ACTANMSEQ_END2:
+		if( incAnimetion( sceneAct, sceneAct->animeID, end, rate ) == FALSE ){
+			//setAnimeFrame( sceneAct, sceneAct->animeID, end );
+		}
+		sceneAct->busyFlag = FALSE;
+		break;
+
+	case ACTANMSEQ_ENDSTAY:
+		if( incAnimetion( sceneAct, sceneAct->animeID, end, rate ) == FALSE ){
+			//setAnimeFrame( sceneAct, sceneAct->animeID, end );
+			sceneAct->animeCmd = ACTANM_CMD_STAY;
+			sceneAct->anmSetFlag = TRUE;
+		} else {
+			sceneAct->busyFlag = TRUE;
+		}
+		break;
+	case ACTANMSEQ_REFENDSTAY://暫定
+		if( incAnimetionRef( sceneAct, sceneAct->animeID, rate ) == FALSE ){
+			//setAnimeFrame( sceneAct, sceneAct->animeID, end );
+			sceneAct->animeCmd = ACTANM_CMD_STAY;
+			sceneAct->anmSetFlag = TRUE;
+		} else {
+			sceneAct->busyFlag = TRUE;
+		}
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ *
+ *
+ *
+ * @brief	グローバル共通関数
+ *
+ *
+ *
+ */
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクトハンドルポインタ取得
+ */
+//------------------------------------------------------------------
+GFL_G3D_SCENEOBJ*	Get3DactHandle( SCENE_ACT* sceneAct, u32 idx )
+{
+	return GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + idx );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクトワークポインタ取得
+ */
+//------------------------------------------------------------------
+void*	Get3DactWork( SCENE_ACT* sceneAct, u32 idx )
+{
+	return GFL_G3D_SCENEOBJ_GetWork( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, idx ) );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクト描画ON/OFF
+ */
+//------------------------------------------------------------------
+void	Set3DactDrawSw( SCENE_ACT* sceneAct, BOOL sw )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	int i;
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &sw );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクト座標の設定
+ */
+//------------------------------------------------------------------
+void	Set3DactTrans( SCENE_ACT* sceneAct, VecFx32* trans )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	int i;
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, trans );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクト回転の設定
+ */
+//------------------------------------------------------------------
+void	Set3DactRotate( SCENE_ACT* sceneAct, VecFx32* rotate )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	MtxFx33 rotateMtx;
+	int i;
+
+	sceneAct->rotateVec = *rotate;
+	rotateCalc( &sceneAct->rotateVec, &rotateMtx );
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetRotate( g3DsceneObj, &rotateMtx );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		αブレンドの設定
+ */
+//------------------------------------------------------------------
+void	Set3DactBlendAlpha( SCENE_ACT* sceneAct, u8* alpha )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	int i;
+
+	for( i=0; i<sceneAct->actCount; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
+		GFL_G3D_SCENEOBJ_SetBlendAlpha( g3DsceneObj, alpha );
+	}
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		アニメ設定
+ */
+//------------------------------------------------------------------
+BOOL	Set3DactChrAnimeCmd( SCENE_ACT* sceneAct, u8 animeCmd )
+{
+	if( animeCmd != sceneAct->animeCmdNow ){	//アニメ更新チェック
+		sceneAct->animeCmd = animeCmd;
+		sceneAct->anmSetFlag = TRUE;
+		return TRUE; 
+	} else {
+		return FALSE; 
+	}
+}
+
+void	Set3DactChrAnimeForceCmd( SCENE_ACT* sceneAct, u8 animeCmd )
+{
+	sceneAct->animeCmd = animeCmd;
+	sceneAct->anmSetFlag = TRUE;
+}
+
+BOOL	Check3DactBusy( SCENE_ACT* sceneAct )
+{
+	return sceneAct->busyFlag;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		アクセサリーコントロール
+ */
+//------------------------------------------------------------------
+void	Set3DactChrAccesory( SCENE_ACT* sceneAct, u8 accesoryID )
+{
+	sceneAct->accesoryID = accesoryID;
+}
+
+//------------------------------------------------------------------
+/**
+ *
+ *
+ *
+ * @brief	プレーヤーキャラクター
+ *
+ *
+ *
+ */
+//------------------------------------------------------------------
+static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -167,6 +541,13 @@ static const GFL_G3D_UTIL_RES g3DresTbl[] = {
 };
 
 //---------------------
+enum {
+	HUMAN_ANM_COMMON = 0,
+	HUMAN_ANM_SWORD_ATTACK,
+	HUMAN2_ANM_SHOOT,
+	HUMAN2_ANM_SPELL,
+};
+
 //３Ｄオブジェクトアニメーション定義テーブル
 static const GFL_G3D_UTIL_ANM g3DhumanAnmTbl[] = {
 	{ GFL_G3D_UTIL_NORESOURCE_ID, 0 },
@@ -300,47 +681,23 @@ SCENE_ACT* Create3Dact( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 	objUnitIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sceneAct->g3DutilUnitIdx );
 
 	//プレーヤーキャラ作成
+	sceneAct->actCount = NELEMS(g3DsceneObjData);
 	sceneAct->actID = GFL_G3D_SCENEOBJ_Add
-					( g3Dscene, g3DsceneObjData, NELEMS(g3DsceneObjData), objUnitIdx );
+					( g3Dscene, g3DsceneObjData, sceneAct->actCount, objUnitIdx );
 	sceneAct->g3Dscene = g3Dscene;
 
-	sceneAct->animeCmd		= 0;
-	sceneAct->animeCmdNow	= sceneAct->animeCmd;
-	sceneAct->animeID		= 0;
-	sceneAct->accesoryID	= 0;
-	sceneAct->accesoryIDNow	= sceneAct->accesoryID;
-	sceneAct->busyFlag		= FALSE;
-	sceneAct->anmSetFlag	= TRUE;
-	{
-		ACT_WORK*	work;
-		u16			objID;
+	initActWork( sceneAct );
 
-		for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-			objID = sceneAct->actID + i; 
-			work = (ACT_WORK*)GFL_G3D_SCENEOBJ_GetWork
-						( GFL_G3D_SCENEOBJ_Get( g3Dscene, objID ) ); 
-			work->sceneAct = sceneAct;
-		}
-	}
 	//共通アニメを関連付ける（HEAD,BODY,ARMS,LEGS）
-	for( i=0; i<4; i++ ){
-		GFL_G3D_UTIL_SetObjAnotherUnitAnime
-			( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), objUnitIdx, G3DOBJ_HEAD + i,
-			SceneActSys->g3DutilUnitIdx, g3DhumanAnmTblCommon, NELEMS(g3DhumanAnmTblCommon) );
-		//アニメーションの初期有効設定(0番のアニメーションを有効にする)
-		GFL_G3D_OBJECT_EnableAnime
-			( GFL_G3D_SCENE_GetG3DutilObjHandle( g3Dscene, objUnitIdx + G3DOBJ_HEAD + i), 0 );
-	}
+	for( i=0; i<sceneAct->actCount; i++ ){
+		bindCommonAnm(	objUnitIdx, G3DOBJ_HEAD + i, 
+						&g3DanmTblCommon[ G3DANM_COMMON_HUMAN_COMMON ], NELEMS(g3DhumanAnmTbl) );
+	
 #if 1
-	for( i=0; i<4; i++ ){
-		GFL_G3D_UTIL_SetObjAnotherUnitAnime
-			( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), objUnitIdx, G3DOBJ_TEST_HEAD + i,
-			SceneActSys->g3DutilUnitIdx, g3DhumanAnmTblCommon, NELEMS(g3DhumanAnmTblCommon) );
-		//アニメーションの初期有効設定(0番のアニメーションを有効にする)
-		GFL_G3D_OBJECT_EnableAnime
-			( GFL_G3D_SCENE_GetG3DutilObjHandle( g3Dscene, objUnitIdx + G3DOBJ_TEST_HEAD + i), 0 );
-	}
+		bindCommonAnm( objUnitIdx, G3DOBJ_TEST_HEAD + i,
+						&g3DanmTblCommon[ G3DANM_COMMON_HUMAN_COMMON ], NELEMS(g3DhumanAnmTbl) );
 #endif
+	}
 	return sceneAct;
 }
 	
@@ -358,315 +715,44 @@ void	Delete3Dact( SCENE_ACT* sceneAct )
 
 //------------------------------------------------------------------
 /**
- * @brief		３Ｄオブジェクトハンドルポインタ取得
+ * @brief		動作関数
  */
 //------------------------------------------------------------------
-GFL_G3D_SCENEOBJ*	Get3DactHandle( SCENE_ACT* sceneAct, u32 idx )
-{
-	return GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + idx );
-}
+static const ANMIDATA_TBL playerAnmDataTable[] = {
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_LOOP,		   0,   80, 2 * SYNC_WAIT },//ACTANM_CMD_STAY
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_LOOP,		 100,  180, 2 * SYNC_WAIT },//ACTANM_CMD_WALK
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_LOOP,		 200,  280, 3 * SYNC_WAIT },//ACTANM_CMD_RUN
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 300,  340, 2 * SYNC_WAIT },//ACTANM_CMD_SITDOWN
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 340,  380, 2 * SYNC_WAIT },//ACTANM_CMD_STANDUP
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 300,  380, 2 * SYNC_WAIT },//ACTANM_CMD_TAKE
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 500,  560, 3 * SYNC_WAIT },//ACTANM_CMD_HIT
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 600,  680, 2 * SYNC_WAIT },//ACTANM_CMD_DEAD
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 400,  420, 2 * SYNC_WAIT },//ACTANM_CMD_JUMP_RDY
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END2,		 420,  455, 2 * SYNC_WAIT },//ACTANM_CMD_JUMPUP
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END2,		 455,  475, 1 * SYNC_WAIT },//ACTANM_CMD_JUMPDOWN
+	{ HUMAN_ANM_COMMON,		ACTANMSEQ_END,		 475,  495, 1 * SYNC_WAIT },//ACTANM_CMD_JUMP_END
 
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄオブジェクトワークポインタ取得
- */
-//------------------------------------------------------------------
-void*	Get3DactWork( SCENE_ACT* sceneAct, u32 idx )
-{
-	return GFL_G3D_SCENEOBJ_GetWork( GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, idx ) );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄオブジェクト描画ON/OFF
- */
-//------------------------------------------------------------------
-void	Set3DactDrawSw( SCENE_ACT* sceneAct, BOOL sw )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	int i;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
-		GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &sw );
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄオブジェクト座標の設定
- */
-//------------------------------------------------------------------
-void	Set3DactTrans( SCENE_ACT* sceneAct, VecFx32* trans )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	int i;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
-		GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, trans );
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄオブジェクト回転の設定
- */
-//------------------------------------------------------------------
-void	Set3DactRotate( SCENE_ACT* sceneAct, VecFx32* rotate )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	MtxFx33 rotateMtx;
-	int i;
-
-	sceneAct->rotateVec = *rotate;
-	rotateCalc( &sceneAct->rotateVec, &rotateMtx );
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
-		GFL_G3D_SCENEOBJ_SetRotate( g3DsceneObj, &rotateMtx );
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		αブレンドの設定
- */
-//------------------------------------------------------------------
-void	Set3DactBlendAlpha( SCENE_ACT* sceneAct, u8* alpha )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	int i;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneAct->g3Dscene, sceneAct->actID + i );
-		GFL_G3D_SCENEOBJ_SetBlendAlpha( g3DsceneObj, alpha );
-	}
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄオブジェクト動作コントロール
- */
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-//
-//	プレーヤーキャラ
-//
-//------------------------------------------------------------------
-BOOL	Set3DactPlayerChrAnimeCmd( SCENE_ACT* sceneAct, u8 animeCmd )
-{
-	if( animeCmd != sceneAct->animeCmdNow ){	//アニメ更新チェック
-		sceneAct->animeCmd = animeCmd;
-		sceneAct->anmSetFlag = TRUE;
-		return TRUE; 
-	} else {
-		return FALSE; 
-	}
-}
-
-void	Set3DactPlayerChrAnimeForceCmd( SCENE_ACT* sceneAct, u8 animeCmd )
-{
-	sceneAct->animeCmd = animeCmd;
-	sceneAct->anmSetFlag = TRUE;
-}
-
-void	Set3DactPlayerChrAccesory( SCENE_ACT* sceneAct, u8 accesoryID )
-{
-	sceneAct->accesoryID = accesoryID;
-}
-
-BOOL	Check3DactPlayerBusy( SCENE_ACT* sceneAct )
-{
-	return sceneAct->busyFlag;
-}
-
-//------------------------------------------------------------------
-enum {
-	ACTANMSEQ_PLAYER_LOOP = 0,
-	ACTANMSEQ_PLAYER_END,
-	ACTANMSEQ_PLAYER_END2,
-	ACTANMSEQ_PLAYER_ENDSTAY,
-	ACTANMSEQ_PLAYER_REFENDSTAY,
+	//ACTANM_CMD_SWORD_ATTACK0 ～ ATTACK7
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	  80,  100-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	 300,  500-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	 700,  900-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	 100,  300-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	 500,  700-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	 900, 1100-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	1100, 1300-2, 4 * SYNC_WAIT },
+	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_END,	1300, 1500-2, 4 * SYNC_WAIT },
+//	{ HUMAN2_ANM_SHOOT,		ACTANMSEQ_REFENDSTAY, 0, 0, 12 },//ACTANM_CMD_SHOOT
+//	{ HUMAN2_ANM_SPELL,		ACTANMSEQ_REFENDSTAY, 0, 0, 6 },//ACTANM_CMD_SPELL
 };
-
-typedef struct {
-	int animeID; 
-	int animeSeq; 
-	int start; 
-	int end; 
-	int rate; 
-}PLAYER_ANMIDATA_TBL;
-
-#define SYNC_WAIT (2)
-static const PLAYER_ANMIDATA_TBL anmDataTable[] = {
-	//ACTANM_CMD_STAY
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_LOOP,		0,		80,		2 * SYNC_WAIT },
-	//ACTANM_CMD_WALK
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_LOOP,		100,	180,	2 * SYNC_WAIT },
-	//ACTANM_CMD_RUN
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_LOOP,		200,	280,	3 * SYNC_WAIT },
-	//ACTANM_CMD_SITDOWN
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		300,	340,	2 * SYNC_WAIT },
-	//ACTANM_CMD_STANDUP
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		340,	380,	2 * SYNC_WAIT },
-	//ACTANM_CMD_TAKE
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		300,	380,	2 * SYNC_WAIT },
-	//ACTANM_CMD_HIT
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		500,	560,	2 * SYNC_WAIT },
-	//ACTANM_CMD_DEAD
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		600,	680,	2 * SYNC_WAIT },
-	//ACTANM_CMD_JUMP_RDY
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		400,	420,	2 * SYNC_WAIT },
-	//ACTANM_CMD_JUMPUP
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END2,		420,	455,	2 * SYNC_WAIT },
-	//ACTANM_CMD_JUMPDOWN
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END2,		455,	475,	1 * SYNC_WAIT },
-	//ACTANM_CMD_JUMP_END
-	{ HUMAN_ANM_COMMON,		ACTANMSEQ_PLAYER_END,		475,	495,	1 * SYNC_WAIT },
-
-	//ACTANM_CMD_SWORD_ATTACK1 ～ ATTACK6
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	300,	500,	4 * SYNC_WAIT },
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	700,	900,	4 * SYNC_WAIT },
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	100,	300,	4 * SYNC_WAIT },
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	500,	700,	4 * SYNC_WAIT },
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	900,	1100,	4 * SYNC_WAIT },
-	{ HUMAN_ANM_SWORD_ATTACK,	ACTANMSEQ_PLAYER_END,	1100,	1300,	4 * SYNC_WAIT },
-//	{ HUMAN2_ANM_SHOOT,		ACTANMSEQ_PLAYER_REFENDSTAY,0,		0,		12 },//ACTANM_CMD_SHOOT
-//	{ HUMAN2_ANM_SPELL,		ACTANMSEQ_PLAYER_REFENDSTAY,0,		0,		6 },//ACTANM_CMD_SPELL
-};
-
-static void setAnimetion( SCENE_ACT* sa, int anmID, fx32 start )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	int i;
-
-	if( anmID != sa->animeID ){
-		for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-			g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID + i );
-			GFL_G3D_SCENEOBJ_DisableAnime( g3DsceneObj, sa->animeID );
-			GFL_G3D_SCENEOBJ_EnableAnime( g3DsceneObj, anmID );
-		}
-		sa->animeID = anmID;
-	}
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID + i );
-		GFL_G3D_SCENEOBJ_SetAnimeFrame( g3DsceneObj, anmID, (int*)&start );
-	}
-}
-
-static void setAnimeFrame( SCENE_ACT* sa, int anmID, fx32 frame )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	int i;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID + i );
-		GFL_G3D_SCENEOBJ_SetAnimeFrame( g3DsceneObj, anmID, (int*)&frame );
-	}
-}
-
-static BOOL incAnimetion( SCENE_ACT* sa, int anmID, fx32 end, fx32 rate )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	fx32 nowFrm;
-	int i;
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID + i );
-		GFL_G3D_SCENEOBJ_IncAnimeFrame( g3DsceneObj, anmID, rate );
-	}
-
-	g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID );	//0のみ参照
-	if( GFL_G3D_SCENEOBJ_GetAnimeFrame( g3DsceneObj, anmID, (int*)&nowFrm ) == FALSE ){
-		return FALSE;
-	}
-	if( nowFrm > end ){
-		return FALSE;
-	} else {
-		return TRUE;
-	}
-}
-
-//暫定
-static BOOL incAnimetionRef( SCENE_ACT* sa, int anmID, fx32 rate )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	fx32 nowFrm;
-	int i;
-	BOOL result; 
-
-	for( i=0; i<NELEMS(g3DsceneObjData); i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sa->g3Dscene, sa->actID + i );
-		result = GFL_G3D_SCENEOBJ_IncAnimeFrame( g3DsceneObj, anmID, rate );
-	}
-	return result;
-}
 
 //------------------------------------------------------------------
 static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 {
-	SCENE_ACT*	sa = ((ACT_WORK*)work)->sceneAct;
-	int			anmID;
-	fx32		start, end, rate;
+	SCENE_ACT*	sceneAct = ((ACT_WORK*)work)->sceneAct;
 
-	if( sa->anmSetFlag == TRUE ){	//アニメ更新チェック
-		anmID = anmDataTable[ sa->animeCmd ].animeID;
-		start = FX32_ONE * anmDataTable[ sa->animeCmd ].start;
-		sa->seq = anmDataTable[ sa->animeCmd ].animeSeq;
-		setAnimetion( sa, anmID, start );
-		sa->animeCmdNow = sa->animeCmd;
-		sa->anmSetFlag = FALSE;
-	}
-	start	= FX32_ONE * anmDataTable[ sa->animeCmdNow ].start;
-	end		= FX32_ONE * anmDataTable[ sa->animeCmdNow ].end;
-	rate	= FX32_ONE * anmDataTable[ sa->animeCmdNow ].rate;
+	animeControl( sceneAct, playerAnmDataTable );
 
-	switch( sa->seq ){
-	case ACTANMSEQ_PLAYER_LOOP:
-		if( incAnimetion( sa, sa->animeID, end, rate ) == FALSE ){
-			setAnimeFrame( sa, sa->animeID, start );
-		}
-		sa->busyFlag = FALSE;
-		break;
-
-	case ACTANMSEQ_PLAYER_END:
-		if( incAnimetion( sa, sa->animeID, end, rate ) == FALSE ){
-			setAnimeFrame( sa, sa->animeID, end );
-			sa->busyFlag = FALSE;
-		} else {
-			sa->busyFlag = TRUE;
-		}
-		break;
-
-	case ACTANMSEQ_PLAYER_END2:
-		if( incAnimetion( sa, sa->animeID, end, rate ) == FALSE ){
-			setAnimeFrame( sa, sa->animeID, end );
-		}
-		sa->busyFlag = FALSE;
-		break;
-
-	case ACTANMSEQ_PLAYER_ENDSTAY:
-		if( incAnimetion( sa, sa->animeID, end, rate ) == FALSE ){
-			setAnimeFrame( sa, sa->animeID, end );
-			sa->animeCmd = ACTANM_CMD_STAY;
-			sa->anmSetFlag = TRUE;
-		} else {
-			sa->busyFlag = TRUE;
-		}
-		break;
-	case ACTANMSEQ_PLAYER_REFENDSTAY://暫定
-		if( incAnimetionRef( sa, sa->animeID, rate ) == FALSE ){
-			setAnimeFrame( sa, sa->animeID, end );
-			sa->animeCmd = ACTANM_CMD_STAY;
-			sa->anmSetFlag = TRUE;
-		} else {
-			sa->busyFlag = TRUE;
-		}
-		break;
-	}
-	if( sa->accesoryID != sa->accesoryIDNow ){	//アクセサリー更新チェック
+	if( sceneAct->accesoryID != sceneAct->accesoryIDNow ){	//アクセサリー更新チェック
 		MtxFx33	rotate;
 		VecFx32	rotVec = { 0, 0, 0 };
 		BOOL result;
@@ -676,7 +762,7 @@ static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		//アクセサリーを外す(設定されてない場合はなにもしないで帰ってくる)
 		GFL_G3D_SCENEOBJ_ACCESORY_Remove( sceneObj );
 
-		switch( sa->accesoryID ){
+		switch( sceneAct->accesoryID ){
 		case 0:	//手ぶら
 			break;
 		case 1:	//ハンマー
@@ -708,7 +794,7 @@ static void movePlayer( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 			GFL_G3D_SCENEOBJ_ACCESORY_SetRotate( sceneObj, 0, &rotate );
 			break;
 		}
-		sa->accesoryIDNow = sa->accesoryID;	//アクセサリー更新
+		sceneAct->accesoryIDNow = sceneAct->accesoryID;	//アクセサリー更新
 	}
 }
 
@@ -779,6 +865,132 @@ void	ChangeEquipNum( SCENE_ACT* sceneAct, u16 equipID )
 	}
 	chgObjIdx += objOffsIdx;
 	GFL_G3D_SCENEOBJ_SetObjID( g3DsceneObj, &chgObjIdx );
+}
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+/**
+ *
+ *
+ *
+ * @brief	ＮＰＣ
+ *
+ *
+ *
+ */
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void moveRiz( GFL_G3D_SCENEOBJ* sceneObj, void* work );
+//------------------------------------------------------------------
+/**
+ * @brief	セットアップ
+ */
+//------------------------------------------------------------------
+//３Ｄグラフィックリソーステーブル
+enum {
+	G3DRES_NPC_RIZ_BMD = 0,
+};
+
+static const GFL_G3D_UTIL_RES g3DNPCresTbl[] = {
+	{ (u32)g3DarcPath, NARC_haruka_riz_nsbmd,  GFL_G3D_UTIL_RESPATH },
+};
+
+//---------------------
+enum {
+	NPC_ANM = 0,
+};
+
+//３Ｄオブジェクトアニメーション定義テーブル
+static const GFL_G3D_UTIL_ANM g3DNPCanmTbl[] = {
+	{ GFL_G3D_UTIL_NORESOURCE_ID, 0 },
+};
+
+//---------------------
+//３Ｄオブジェクト定義テーブル
+enum {
+	G3DOBJ_NPC_RIZ = 0,
+};
+
+static const GFL_G3D_UTIL_OBJ g3DNPCobjTbl[] = {
+	{ G3DRES_NPC_RIZ_BMD,0,G3DRES_NPC_RIZ_BMD,g3DNPCanmTbl,NELEMS(g3DNPCanmTbl)},
+};
+
+//---------------------
+//g3Dscene 設定テーブルデータ
+static const GFL_G3D_UTIL_SETUP g3DNPCsetup = {
+	g3DNPCresTbl, NELEMS(g3DNPCresTbl),
+	g3DNPCobjTbl, NELEMS(g3DNPCobjTbl),
+};
+
+//------------------------------------------------------------------
+//g3Dscene オブジェクト設定テーブルデータ プレーヤーキャラ (=PLAYER_SETUP_NUM)
+static const GFL_G3D_SCENEOBJ_DATA g3DsceneObjNPCData[] = {
+	{
+		G3DOBJ_NPC_RIZ, 0, 1, 31, TRUE, FALSE, 
+		{	{ 0, 0, 0 },
+			{ FX32_ONE*2, FX32_ONE*2, FX32_ONE*2 },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveRiz,
+	},
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクト生成
+ */
+//------------------------------------------------------------------
+SCENE_ACT* Create3DactNPC( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
+{
+	SCENE_ACT*	sceneAct = GFL_HEAP_AllocMemory( heapID, sizeof(SCENE_ACT) );
+	u16			objUnitIdx;
+	int			i;
+
+	//３Ｄデータセットアップ
+	sceneAct->g3DutilUnitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3DNPCsetup );
+	objUnitIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sceneAct->g3DutilUnitIdx );
+
+	//ＮＰＣキャラ作成
+	sceneAct->actCount = NELEMS(g3DsceneObjNPCData);
+	sceneAct->actID = GFL_G3D_SCENEOBJ_Add
+					( g3Dscene, g3DsceneObjNPCData, NELEMS(g3DsceneObjNPCData), objUnitIdx );
+	sceneAct->g3Dscene = g3Dscene;
+
+	initActWork( sceneAct );
+
+	//アニメを関連付ける
+	bindCommonAnm( objUnitIdx, G3DOBJ_NPC_RIZ, &g3DanmTblCommon[ G3DANM_COMMON_NPC_RIZ ], 1 );
+	
+	Set3DactDrawSw( sceneAct, TRUE );
+
+	return sceneAct;
+}
+	
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄオブジェクト破棄
+ */
+//------------------------------------------------------------------
+void	Delete3DactNPC( SCENE_ACT* sceneAct )
+{
+	GFL_G3D_SCENEOBJ_Remove( sceneAct->g3Dscene, sceneAct->actID, sceneAct->actCount ); 
+	GFL_G3D_SCENE_DelG3DutilUnit( sceneAct->g3Dscene, sceneAct->g3DutilUnitIdx );
+	GFL_HEAP_FreeMemory( sceneAct );
+}
+
+//------------------------------------------------------------------
+#define SYNC_WAIT (2)
+static const ANMIDATA_TBL rizAnmDataTable[] = {
+	{ NPC_ANM,		ACTANMSEQ_LOOP,		1000, 1200,	 4 * SYNC_WAIT },
+};
+
+//------------------------------------------------------------------
+static void moveRiz( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	SCENE_ACT*	sceneAct = ((ACT_WORK*)work)->sceneAct;
+
+	Set3DactChrAnimeCmd( sceneAct, 0 );
+	animeControl( sceneAct, rizAnmDataTable );
 }
 
 

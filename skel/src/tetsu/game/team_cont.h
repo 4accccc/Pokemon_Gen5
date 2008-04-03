@@ -7,7 +7,7 @@
 //============================================================================================
 #include "player_cont.h"
 
-#define TEAM_SUMMON_COUNT_MAX	(10)
+#define TEAM_SUMMON_COUNT_MAX	(6)
 #define TEAM_PLAYER_COUNT_MAX	(1)
 
 typedef struct _TEAM_CONTROL	TEAM_CONTROL;

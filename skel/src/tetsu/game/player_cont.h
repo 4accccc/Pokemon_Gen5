@@ -27,10 +27,11 @@ typedef enum {
 	PCC_WALK,
 	PCC_RUN,
 	PCC_JUMP,
-	PCC_STAYJUMP,
-	PCC_SLIDE,
 
+	PCC_ATTACK_READY,
 	PCC_ATTACK,
+	PCC_ATTACK_END,
+
 	PCC_SIT,
 	PCC_WEPONCHANGE,
 
@@ -68,7 +69,10 @@ typedef enum {
 
 typedef enum {
 	PSC_NOP = 0,
-	PSC_ATTACK_SWORD,
+	PSC_ATTACK_SWORD0,
+	PSC_ATTACK_SWORD1,
+	PSC_ATTACK_SWORD2,
+	PSC_ATTACK_SWORD3,
 	PSC_ATTACK_BOW,
 	PSC_ATTACK_FIRE,
 
@@ -92,8 +96,7 @@ typedef struct {
 }PLAYER_STATUS_NETWORK;
 
 // プレーヤーコントロールセット
-extern PLAYER_CONTROL* AddPlayerControl
-			( GAME_SYSTEM* gs, int targetAct, int netID, HEAPID heapID );
+extern PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID );
 // プレーヤーコントロールメイン
 extern void MainPlayerControl( PLAYER_CONTROL* pc );
 // プレーヤーコントロールメイン(ネットワーク)
@@ -152,5 +155,10 @@ extern void SetPlayerDamageOnTime
 // リジェネレート値の設定
 extern void SetPlayerRegenerate
 				( PLAYER_CONTROL* pc, const u8 count, const u8 timer, const s8 value );
+// プレーヤー移動開始設定
+extern void SetPlayerMove
+				( PLAYER_CONTROL* pc, VecFx32* mvDir, fx32 speed, u16 theta );
+// プレーヤー移動終了判定
+extern BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc );
 
 
