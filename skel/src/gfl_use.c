@@ -33,6 +33,7 @@ enum {
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
+    GFL_STD_RandContext publicRandContext;
 	GFL_TCBSYS *	TCBSysHintr;
 	void *		TCBMemHintr;
 	GFL_TCBSYS *	TCBSysVintr;
@@ -51,6 +52,8 @@ static const HEAP_INIT_HEADER hih[]={
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;
 static	u8				sndHeap[SOUND_HEAP_SIZE];
+
+static void GFUser_PublicRandInit(void);
 
 //=============================================================================================
 //
@@ -109,7 +112,9 @@ void GFLUser_Init(void)
 	gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
 	gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
-
+    // 汎用乱数初期化
+    GFUser_PublicRandInit();
+    
     //FADEシステム初期化
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
@@ -222,6 +227,37 @@ void GFLUser_VIntr(void)
 GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 {
 	return GFL_TCB_AddTask(gfl_work->TCBSysVintr, func, work, pri);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	GFUser 汎用乱数作成
+ */
+//------------------------------------------------------------------
+static void GFUser_PublicRandInit(void)
+{
+    RTCDate date;
+    RTCTime time;
+    u32 seed;
+    u64 seed64;
+    RTC_GetDateTime(&date, &time);
+    seed = date.year + date.month * 0x100 * date.day * 0x10000
+        + time.hour * 0x10000 + (time.minute + time.second) * 0x1000000;
+
+    GFL_STD_MtRandInit(seed);
+    seed64 = GFL_STD_MtRand( 0 );
+    seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
+    GFL_STD_RandInit( &gfl_work->publicRandContext, seed64 );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	GFUser 汎用乱数を得る
+ */
+//------------------------------------------------------------------
+u32 GFUser_GetPublicRand(u32 max)
+{
+    return GFL_STD_Rand( &gfl_work->publicRandContext, max );
 }
 
 //------------------------------------------------------------------
