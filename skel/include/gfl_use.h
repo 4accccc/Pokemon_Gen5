@@ -40,8 +40,8 @@ extern GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pr
 extern void GFUser_VIntr_ResetVblankCounter( void );
 extern int GFUser_VIntr_GetVblankCounter( void );
 
-// ”Ä—p—”‚ğ“¾‚é
-extern u32 GFUser_GetPublicRand(u32 max);
+// ”Ä—p—”‚ğ“¾‚é  0‚©‚çrange-1 ‚ª•Ô‚è‚Ü‚·
+extern u32 GFUser_GetPublicRand(u32 range);
 
 
 #endif	__GFL_USE_H__

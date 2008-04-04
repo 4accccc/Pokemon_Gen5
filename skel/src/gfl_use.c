@@ -255,9 +255,9 @@ static void GFUser_PublicRandInit(void)
  * @brief	GFUser ”Ä—p—”‚ð“¾‚é
  */
 //------------------------------------------------------------------
-u32 GFUser_GetPublicRand(u32 max)
+u32 GFUser_GetPublicRand(u32 range)
 {
-    return GFL_STD_Rand( &gfl_work->publicRandContext, max );
+    return GFL_STD_Rand( &gfl_work->publicRandContext, range );
 }
 
 //------------------------------------------------------------------

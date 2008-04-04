@@ -69,13 +69,6 @@ static GFL_PROC_RESULT _debugUIProcMain(GFL_PROC * proc, int * seq, void * p_wor
 #if 1
 //    TEST_UI_Main();  //UI TEST
 
-    OS_TPrintf("%d \n",GFUser_GetPublicRand(32));
-    OS_TPrintf("%d \n",GFUser_GetPublicRand(32));
-    OS_TPrintf("%d \n",GFUser_GetPublicRand(32));
-    OS_TPrintf("%d \n",GFUser_GetPublicRand(32));
-    OS_TPrintf("%d \n",GFUser_GetPublicRand(32));
-    
-    
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
 
         RTCDate date;
