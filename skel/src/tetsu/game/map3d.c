@@ -986,6 +986,19 @@ static BOOL	GetGroundTriangleID( const VecFx32* pos, u16* gridOffs, u16* ID )
 	return FALSE;
 }
 
+BOOL	CheckGroundOutRange( const VecFx32* pos )
+{
+	int	gridx, gridz;
+	u16	gridOffs;
+
+	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
+
+	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
+		return FALSE;
+	}
+	return TRUE;
+}
+
 BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
 	u16		gridOffs, triangleID;

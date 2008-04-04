@@ -453,7 +453,8 @@ static void G3DsysSetup( void )
 }
 
 
-SCENE_ACT* testSceneAct;
+SCENE_ACT* testSceneAct[8];
+#define	NPC_SETNUM	(8)
 //------------------------------------------------------------------
 /**
  * @brief		３Ｄデータロード
@@ -474,7 +475,12 @@ static void g3d_load( GAME_SYSTEM* gs )
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
 
 	//-------------------
-	testSceneAct = Create3DactNPC( gs->g3Dscene, gs->heapID );
+	{
+		int i;
+		for( i=0; i<NPC_SETNUM; i++ ){
+			testSceneAct[i] = Create3DactNPC( gs->g3Dscene, gs->heapID );
+		}
+	}
 	//-------------------
 	//カメラ作成
 	{
@@ -542,7 +548,12 @@ static void g3d_unload( GAME_SYSTEM* gs )
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera[MAINCAMERA_ID] );
 
 	//-------------------
-	Delete3DactNPC( testSceneAct );
+	{
+		int i;
+		for( i=0; i<NPC_SETNUM; i++ ){
+			Delete3DactNPC( testSceneAct[i] );
+		}
+	}
 	//-------------------
 	Delete3Dmap( gs->sceneMap );
 	Delete3DactSys( gs->sceneActSys );

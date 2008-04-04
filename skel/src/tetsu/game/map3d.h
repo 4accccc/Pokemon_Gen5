@@ -25,6 +25,7 @@ enum {
 	EXMAPOBJ_TOWER_YELLOW,
 };
 
+extern BOOL	CheckGroundOutRange( const VecFx32* pos );
 extern BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD );
 extern void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN );
 extern void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height );
