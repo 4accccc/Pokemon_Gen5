@@ -210,12 +210,25 @@ void GFL_SOUND_SetVolume( int playerNo, int volume);
 /**
  * ボリュームを取得
  *
- * @param	playerNo	プレイヤー番号
- * @param	volume		取得したボリュームの値を格納するポインタ（0～127）
+ * @param[in]	seq_no	取得するシーケンスナンバー
+ * @param[out]	volume	取得したボリュームの値を格納するポインタ（0～127）
  *
- * @return	TRUE:取得成功　FALSE:取得失敗
+ * @return	none
  */
 //--------------------------------------------------------------------------------------------
-BOOL GFL_SOUND_GetVolume( int playerNo, int *volume);
+void GFL_SOUND_GetDefaultVolume( int seq_no, int *volume);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボリュームを変化
+ *
+ * @param[in]	playerNo	プレイヤー番号
+ * @param[in]	volume		推移するボリュームの値（0～127）
+ * @param[in]	frames		推移するフレーム数
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_SOUND_ChangeVolume( int playerNo, int volume, int frames);
 
 #endif
