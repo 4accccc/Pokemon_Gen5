@@ -352,7 +352,7 @@ void GFL_SOUND_SetPitch( int playerNo, u16 trbitmask, int pitch )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 音程を変更
+ * パンを変更
  *
  * @param	playerNo	プレイヤー番号
  * @param	trbitmask	トラックビットマスク
@@ -364,6 +364,43 @@ void GFL_SOUND_SetPitch( int playerNo, u16 trbitmask, int pitch )
 void GFL_SOUND_SetPan( int playerNo, u16 trbitmask, int pan )
 {
 	NNS_SndPlayerSetTrackPan( &sndHandle[playerNo], trbitmask, pan );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボリュームを変更
+ *
+ * @param	playerNo	プレイヤー番号
+ * @param	volume		ボリュームの値（0～127）
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_SOUND_SetVolume( int playerNo, int volume)
+{
+	NNS_SndPlayerSetVolume( &sndHandle[playerNo], volume );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボリュームを取得
+ *
+ * @param[in]	playerNo	プレイヤー番号
+ * @param[out]	volume		取得したボリュームの値を格納するポインタ（0～127）
+ *
+ * @return	TRUE:取得成功　FALSE:取得失敗
+ */
+//--------------------------------------------------------------------------------------------
+BOOL GFL_SOUND_GetVolume( int playerNo, int *volume)
+{
+	BOOL			ret;
+	SNDPlayerInfo	info;
+
+	ret=NNS_SndPlayerReadDriverPlayerInfo( &sndHandle[playerNo], &info );
+
+	*volume=info.volume;
+
+	return ret;
 }
 
 //SEQARCを用いての再生（現状は未サポート）
