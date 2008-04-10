@@ -569,7 +569,7 @@ static u32 reserveLo_less8bit( GFL_AREAMAN* man, u32 startPos, u32 numBlockArea,
 
 		if( ofc )
 		{
-			u32 p = check_empty_bit_lo( man->area[bytePos], ofc-1, numBlockReserve );
+			u32 p = check_empty_bit_lo( man->area[bytePos], ofc, numBlockReserve );
 			if( p != AREAMAN_POS_NOTFOUND )
 			{
 				returnPos = bytePos*8 + p;
