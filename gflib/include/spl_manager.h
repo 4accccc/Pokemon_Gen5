@@ -46,6 +46,10 @@
 #include "spl_resource.h"
 #include "spl_texture.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 構造体など -------------------------------------------------------------- */
 
 // メモリ確保コールバック
@@ -140,5 +144,9 @@ static inline s32 SPL_GetWholeParticleNum( SPLManager* p_mgr )
 }
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

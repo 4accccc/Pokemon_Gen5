@@ -11,6 +11,10 @@
 #ifndef __NET_COMMAND_H__
 #define __NET_COMMAND_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 //==============================================================================
 //	’è‹`
@@ -112,6 +116,10 @@ extern BOOL GFI_NET_COMMAND_CreateBuffCheck(int command);
 //--------------------------------------------------------------
 
 extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif// __NET_COMMAND_H__
 

@@ -7,6 +7,10 @@
 #ifndef _BMP_WIN_H_
 #define _BMP_WIN_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // BitmapWindowのビットモード
 enum {
 	GFL_BMPWIN_BITMODE_4 = 0,
@@ -278,5 +282,9 @@ extern	void	GFL_BMPWIN_SetScreenSizeY( GFL_BMPWIN * bmpwin, u8 sy );
  */
 //--------------------------------
 extern	void	GFL_BMPWIN_SetPalette( GFL_BMPWIN * bmpwin, u8 palnum );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

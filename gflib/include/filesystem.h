@@ -12,6 +12,10 @@
 #ifndef __FILESYSTEM_H__
 #define __FILESYSTEM_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //------------------------------------------------------------------
 /**
  * @brief	指定ファイルのサイズを返す
@@ -30,6 +34,10 @@ extern int GF_GetFileSize(char *path);
  */
 //------------------------------------------------------------------
 extern int GF_ReadFile(char *path, void *buf);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif	// __FILESYSTEM_H__

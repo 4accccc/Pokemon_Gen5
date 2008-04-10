@@ -10,6 +10,10 @@
 #ifndef __SOUND_H_
 #define __SOUND_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------------------------------
 /**
  * ÉTÉEÉìÉhèâä˙âª
@@ -230,5 +234,9 @@ void GFL_SOUND_GetDefaultVolume( int seq_no, int *volume);
  */
 //--------------------------------------------------------------------------------------------
 void GFL_SOUND_ChangeVolume( int playerNo, int volume, int frames);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

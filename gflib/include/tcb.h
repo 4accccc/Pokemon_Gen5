@@ -15,6 +15,10 @@
 #define	__TCB_H__
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 
 /*====================================================================================*/
@@ -163,5 +167,9 @@ extern void * GFL_TCB_GetWork(GFL_TCB * tcb);
 //------------------------------------------------------------------
 extern u32 GFL_TCB_GetPriority(const GFL_TCB * tcb);
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif /*__TCB_H__*/

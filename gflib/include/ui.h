@@ -10,6 +10,10 @@
 #ifndef __UI_H__
 #define	__UI_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // デバッグ用決まり文句----------------------
 #define GFL_UI_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
@@ -568,6 +572,10 @@ extern u32 GFL_UI_TP_AutoStop( void );
 
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif //__UI_H__
 

@@ -9,6 +9,10 @@
 #ifndef __NET_WIFI_H__
 #define __NET_WIFI_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 //==============================================================================
 /**
@@ -28,5 +32,9 @@ extern void GFL_NET_WifiStart( int heapID, NetErrorFunc errorFunc );
  */
 //==============================================================================
 extern void GFL_NET_WifiUtility( int heapID );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif //__NET_WIFI_H__

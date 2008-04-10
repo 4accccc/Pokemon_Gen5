@@ -9,6 +9,10 @@
 #ifndef _BMP_H_
 #define _BMP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------
 //ビットマップ描画データ構造体
 typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
@@ -168,5 +172,9 @@ extern void GFL_BMP_Fill( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 size_
  */
 //--------------------------------------------------------------------------------------------
 extern	void GFL_BMP_Clear( GFL_BMP_DATA * dest, u8 col_code );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

@@ -59,6 +59,10 @@
 #ifndef __SPL_PARTICLE_H__
 #define __SPL_PARTICLE_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 構造体 ------------------------------------------------------------------ */
 
 // パーティクル構造体
@@ -156,5 +160,9 @@ static inline u16 SPL_GetParticleLife( const SPLParticle* ptcl )
 
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

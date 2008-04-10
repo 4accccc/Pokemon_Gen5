@@ -12,6 +12,10 @@
 #include "bg_sys.h"
 #include "arc_tool.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //------------------------------------------------------------------
 /**
  *  パレット転送先タイプ指定
@@ -404,5 +408,9 @@ extern void* GFL_ARC_UTIL_Load(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID
  */
 //------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadEx(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID heapID, u32* pSize);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

@@ -17,6 +17,10 @@
 #include "heapsys.h"
 #include "gf_overlay.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //===========================================================================
 //
 //		’è‹`
@@ -152,6 +156,10 @@ extern void * GFL_PROC_AllocWork(GFL_PROC * proc, unsigned int size, HEAPID heap
 extern void GFL_PROC_FreeWork(GFL_PROC * proc);
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif /* __PROCSYS_H__ */
 

@@ -11,6 +11,10 @@
 #ifndef __AREAMAN_H__
 #define __AREAMAN_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //#define AREAMAN_DEBUG
 //--------------------------------------------
 // •sŠ®‘SŒ^’è‹`
@@ -152,5 +156,10 @@ extern void
 	GFL_AREAMAN_SetPrintDebug
 		( GFL_AREAMAN* man, BOOL flag );
 #endif
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
+
 
 #endif	// __AREAMAN_H__

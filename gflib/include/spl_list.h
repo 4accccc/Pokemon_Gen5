@@ -24,6 +24,10 @@
 #ifndef __SPL_LIST_H__
 #define __SPL_LIST_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 構造体 ------------------------------------------------------------------ */
 
 // リストの各ノード
@@ -55,5 +59,9 @@ extern SPLNode* spl_pop_front(SPLList* p_list);
 extern SPLNode* spl_del(SPLList* p_list, SPLNode* p_node);
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

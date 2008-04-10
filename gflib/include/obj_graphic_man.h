@@ -14,6 +14,10 @@
 #include "clact.h"
 #include "arc_tool.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //==============================================================
 //	èâä˙âªópç\ë¢ëÃ
 //==============================================================
@@ -79,5 +83,9 @@ extern GFL_CLWK* GFL_OBJGRP_CreateClActVTAffine( GFL_CLUNIT* actUnit, u32 cgrInd
 	  const GFL_CLWK_AFFINEDATA* param, u16 setSerface, u16 heapID );
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif /* #ifndef __OBJMAN_H__ */

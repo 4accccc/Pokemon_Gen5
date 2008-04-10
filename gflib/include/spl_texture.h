@@ -29,6 +29,10 @@
 #ifndef __SPL_TEXTURE_H__
 #define __SPL_TEXTURE_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* 構造体 ------------------------------------------------------------------ */
 
 // テクスチャパラメータ
@@ -88,5 +92,9 @@ typedef struct SPLTexture
 #define SPL_TEX_ID    'SPT '
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

@@ -9,6 +9,10 @@
 #ifndef __NET_H__
 #define __NET_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_WIFI    (0)   ///< WIFI‚ðƒQ[ƒ€‚ÅŽg—p‚·‚éê‡ ON
@@ -665,6 +669,10 @@ extern void debugcheck(u32* data,int size );
 
 #include "net_command.h"
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif // __NET_H__
 

@@ -115,6 +115,10 @@
 
 #include "spl_field.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* ’è”‚È‚Ç ---------------------------------------------------------------- */
 
 // ‰ŠúˆÊ’uŠÖŒW
@@ -528,5 +532,9 @@ static inline u32 SPL_GetResSizeOnResource( const void* p_spa )
 
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

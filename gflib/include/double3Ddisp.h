@@ -7,6 +7,10 @@
 #ifndef	__GFL_DOUBLE3DDISP_H__
 #define	__GFL_DOUBLE3DDISP_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
 ============================================================================================
 
@@ -122,6 +126,10 @@ extern void
 extern void	
 	GFL_G3D_DOUBLE3D_VblankIntrTCB
 		( GFL_TCB* tcb, void* work );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	__GFL_DOUBLE3DDISP_H__
 

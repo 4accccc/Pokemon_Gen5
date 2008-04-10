@@ -44,6 +44,10 @@
 
 #include "spl_particle.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct SPLEmitter ;
 
 /* ç\ë¢ëÃ ------------------------------------------------------------------ */
@@ -140,5 +144,9 @@ extern void spl_calc_convergence(const void* p_obj, SPLParticle* p_ptcl, VecFx32
 
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

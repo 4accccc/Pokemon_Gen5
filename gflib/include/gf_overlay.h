@@ -11,6 +11,10 @@
 
 #include <nitro.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //==============================================================================
 //	íËêîíËã`
 //==============================================================================
@@ -74,6 +78,10 @@ extern BOOL GFL_OVERLAY_Load(const FSOverlayID id);
 extern void GFL_OVERLAY_Unload(const FSOverlayID id);
 
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif	//__GF_OVERLAY_H__

@@ -19,6 +19,10 @@
 #include "assert.h"
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //=============================================================================================
 //	íËêîíËã`
 //=============================================================================================
@@ -181,4 +185,8 @@ GLOBAL s32 CalcTool_CircleVectroDistRotaGet( u16 r, s32 dist );
 
 
 #undef GLOBAL
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
+
 #endif	/*__CALCTOOL_H__*/

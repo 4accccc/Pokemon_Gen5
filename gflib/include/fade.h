@@ -11,6 +11,10 @@
 #ifndef _FADE_H_
 #define _FADE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //=========================================================================
 //	íËêîíËã`
 //=========================================================================
@@ -71,5 +75,9 @@ extern	void	GFL_FADE_SetMasterBrightReq( int mode, int start_evy, int end_evy, i
  */
 //--------------------------------------------------------------------------------------------
 extern	BOOL	GFL_FADE_CheckFade( void );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif //_FADE_H_

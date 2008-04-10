@@ -17,6 +17,10 @@
 #ifndef __SPL_RANDOM_H__
 #define __SPL_RANDOM_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* —”¶¬ ---------------------------------------------------------------- */
 
 extern u32 spl_rndm_seed;
@@ -50,5 +54,9 @@ extern void spl_rndm_get_arb_vec_xy(VecFx32* p_vec);
         (((num) * ((int) (SPL_RNDI() >> 23)) - ((num) << 8)) >> 8)
 
 /* ------------------------------------------------------------------------- */
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

@@ -10,6 +10,10 @@
 
 #include "strbuf.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*==========================================================================================*/
 /*
  *	■メッセージデータの構造
@@ -330,6 +334,10 @@ u32
 	GFL_MSG_GetMessageCountDirect
 		( u32 arcID, u32 datID );
 
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 

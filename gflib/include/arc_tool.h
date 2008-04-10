@@ -11,6 +11,10 @@
 #ifndef	__ARC_TOOL_H_
 #define	__ARC_TOOL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _GFL_ARC_PARAM GFL_ARC_PARAM;
 
 //============================================================================================
@@ -298,6 +302,10 @@ extern	u16		GFL_ARC_GetDataFileCntByHandle(ARCHANDLE* handle);
  */
 //============================================================================================
 extern	void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	__ARC_TOOL_H_
 

@@ -13,6 +13,10 @@
 #ifndef __QUATERNION_H
 #define __QUATERNION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* クォータニオン構造体 */
 typedef struct _GFL_QUATERNION GFL_QUATERNION;
 
@@ -182,5 +186,9 @@ void	GFL_QUAT_MakeQuaternionPos(GFL_QUATERNION *qt,u32 pos1_x,u32 pos1_y,u32 pos
  */
 //--------------------------------------------------------------------------------------------
 extern	void	GFL_QUAT_MakeRotateMatrix(MtxFx44 *mtx,GFL_QUATERNION *qt);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

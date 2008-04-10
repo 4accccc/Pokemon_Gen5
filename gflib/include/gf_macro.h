@@ -10,6 +10,10 @@
 #ifndef	__GF_MACRO_H__
 #define	__GF_MACRO_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //--------------------------------------------------------------------
 /**
  * @brief	配列の要素数を取り出すためのマクロ
@@ -27,5 +31,9 @@
  */
 //--------------------------------------------------------------------
 #define	ROUNDUP(value, base)	((((value) + (base -1)) / (base)) * (base))
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif	/*	__GF_MACRO_H__ */

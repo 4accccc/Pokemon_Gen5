@@ -17,6 +17,10 @@
 #ifndef __HEAP_DTCM_H__
 #define __HEAP_DTCM_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //----------------------------------------------------------------
 /**
  *	íËêî
@@ -73,6 +77,10 @@ extern void*
 extern BOOL
 	GFI_HEAP_DTCM_FreeMemory
 		( void* memory );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif	// __HEAP_DTCM_H__

@@ -7,6 +7,10 @@
 #ifndef _G3D_UTIL_H_
 #define _G3D_UTIL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _GFL_G3D_UTIL	GFL_G3D_UTIL;
 
 typedef enum {
@@ -95,5 +99,9 @@ extern GFL_G3D_OBJ*
 extern u16
 	GFL_G3D_UTIL_GetObjCount
 		( GFL_G3D_UTIL* g3Dutil );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 #endif

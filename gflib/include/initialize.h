@@ -13,8 +13,16 @@
 #define __INITIALIZE_H__
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 extern void InitSystem(void);
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif	// __INITIALIZE_H__

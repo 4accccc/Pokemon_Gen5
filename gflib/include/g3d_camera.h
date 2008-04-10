@@ -8,6 +8,10 @@
 #ifndef _G3D_CAMERA_H_
 #define _G3D_CAMERA_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //=============================================================================================
 //	å^êÈåæ
 //=============================================================================================
@@ -251,6 +255,10 @@ extern fx32
 extern int
 	GFL_G3D_CAMERA_GetDotProductXZfast
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 
 
 #endif
