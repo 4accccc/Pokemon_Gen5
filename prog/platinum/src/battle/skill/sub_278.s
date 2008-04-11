@@ -1,0 +1,56 @@
+
+//============================================================================
+/**
+ *
+ *@file		sub_278.s
+ *@brief	戦闘シーケンス
+ *			先制系のアイテム効果発動チェック
+ *@author	HisashiSogabe
+ *@data		2006.06.22
+ *
+ */
+//============================================================================
+	.text
+
+	.include	"waza_seq_def.h"
+
+SUB_278:
+//2vs2戦のときに、場に４体以内場合はこのチェックではだめなので、プラチナで修正
+//	VALUE_WORK			VAL_GET,BUF_PARA_CLIENT_SET_MAX,BUF_PARA_TEMP_WORK
+//	VALUE				VAL_SUB,BUF_PARA_TEMP_WORK,1
+
+//プラチナでの修正バージョン
+	VALUE_WORK			VAL_SET,BUF_PARA_CALC_WORK,BUF_PARA_CLIENT_WORK		//CLIENT_WORKを退避
+	VALUE				VAL_SET,BUF_PARA_CLIENT_WORK,0
+	VALUE				VAL_SET,BUF_PARA_TEMP_WORK,0
+
+	//HPのあるCLIENTをカウント
+SUB_278_CHECK_LOOP:
+	IF_PSP				IF_FLAG_EQ,SIDE_WORK,ID_PSP_hp,0,SUB_278_CHECK_NEXT
+	VALUE				VAL_ADD,BUF_PARA_TEMP_WORK,1
+SUB_278_CHECK_NEXT:
+	VALUE				VAL_ADD,BUF_PARA_CLIENT_WORK,1
+	CLIENT_SET_MAX_LOOP	BUF_PARA_CLIENT_WORK,SUB_278_CHECK_LOOP	
+
+	VALUE				VAL_SUB,BUF_PARA_TEMP_WORK,1
+	VALUE_WORK			VAL_SET,BUF_PARA_CLIENT_WORK,BUF_PARA_CALC_WORK		//CLIENT_WORKを復帰
+
+	//最後のClientはチェックしない
+	IF_WORK				IF_FLAG_NC,BUF_PARA_TEMP_WORK,BUF_PARA_AGI_CNT,SUB_278_END
+
+	IF_PSP				IF_FLAG_EQ,SIDE_ATTACK,ID_PSP_wkw_sensei_flag,1,SUB_278_NEXT
+	IF_PSP				IF_FLAG_EQ,SIDE_ATTACK,ID_PSP_wkw_once_agi_up,0,SUB_278_END
+SUB_278_NEXT:
+	STATUS_EFFECT		SIDE_ATTACK,STATUS_ITEM_POKE
+	SERVER_WAIT
+	IF_PSP				IF_FLAG_EQ,SIDE_ATTACK,ID_PSP_wkw_once_agi_up,1,SUB_278_ONCE_AGI_UP
+	PSP_VALUE			VAL_SET,SIDE_ATTACK,ID_PSP_wkw_sensei_flag,0
+	BRANCH				SUB_278_END
+SUB_278_ONCE_AGI_UP:
+	MESSAGE				ItemSenseiMineMsg,TAG_NICK_ITEM,SIDE_ATTACK,SIDE_ATTACK
+	SERVER_WAIT
+	WAIT				MSG_WAIT
+	PSP_VALUE			VAL_SET,SIDE_ATTACK,ID_PSP_wkw_once_agi_up,0
+	KILL_ITEM			SIDE_ATTACK
+SUB_278_END:
+	SEQ_END

@@ -1,0 +1,177 @@
+//====================================================================
+//								d34r0101
+//====================================================================
+
+	.text
+
+	.include	"scr_seq_def.h"
+	.include	"../../../include/msgdata/msg_d34r0101.h"
+//	.include	"../eventdata/zone_d34r0101evc.h"
+	.include	"../../field/field_tornworld_def.h"
+	
+//--------------------------------------------------------------------
+//					     スクリプト本体
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+//					     スクリプトテーブル
+//--------------------------------------------------------------------
+_EVENT_DATA		ev_d34r0101_flag_change
+_EVENT_DATA		ev_d34r0101_hole
+_EVENT_DATA		ev_d34r0101_sirona00
+_EVENT_DATA		ev_d34r0101_sirona01
+_EVENT_DATA		ev_d34r0101_sirona02
+_EVENT_DATA_END
+
+
+/********************************************************************/
+/*						FLAG_CHANGE_LABEL 							*/
+/*
+ * 注意！(06.02.09現在)
+ * EV_SCRIPT_WORKを確保していないので、
+ * SCWK_ANSWERなどのワークは使用することが出来ない！
+ * LOCALWORK0などを使用するようにする！
+ *
+ * 共通スクリプトについては現状使用不可！
+ * 対応予定だが、ゾーンをまたいだ時に処理落ちするかも？
+ * あまりつかわないかも？
+ */
+/********************************************************************/
+ev_d34r0101_flag_change:
+	_INIT_TORNWORLD
+	_END
+
+/********************************************************************/
+/*						テンガンザンに戻る							*/
+/********************************************************************/
+ev_d34r0101_hole:
+	_TALK_START
+
+	_TALKMSG		msg_d34r0101_hole_01
+	_YES_NO_WIN		SCWK_ANSWER
+	_IFVAL_JUMP		SCWK_ANSWER,EQ,0,yes_d34r0101_hole
+
+	_TALK_CLOSE
+	_TALK_END
+	_END
+
+/*「はい」*/
+yes_d34r0101_hole:
+	_PLAYER_NAME	0
+	_TALKMSG		msg_d34r0101_hole_02
+	_TALK_CLOSE
+
+	//_MAP_CHANGE_NONE_FADE	ZONE_ID_D05R0115, 0, 31, 33, DIR_DOWN
+	_MAP_CHANGE		ZONE_ID_D05R0115, 0, 31, 33, DIR_DOWN
+	_END
+
+/********************************************************************/
+/*						シロナ00									*/
+/********************************************************************/
+ev_d34r0101_sirona00:
+	_EVENT_START
+	
+	_OBJ_ANIME		FLDOBJ_ID_PLAYER,anm_d34r0101_player_00
+	_OBJ_ANIME_WAIT
+	_OBJ_ANIME		FLDOBJ_ID_PLAYER,anm_d34r0101_player_01
+	_OBJ_ANIME_WAIT
+	
+	_TW_OBJ_ADD		TW_OBJID_0101_SIRONA_00
+	_OBJ_ANIME		TW_OBJID_0101_SIRONA_00,anm_d34r0101_sirona_00
+	_OBJ_ANIME_WAIT
+	
+	_TALK_KEYWAIT	msg_d34r0101_champion_01
+	_TALK_CLOSE_NO_CLEAR
+	
+	_OBJ_ANIME		TW_OBJID_0101_SIRONA_00,anm_d34r0101_sirona_01
+	_OBJ_ANIME_WAIT
+	_TALK_KEYWAIT	msg_d34r0101_champion_02
+	_TALK_CLOSE_NO_CLEAR
+	
+	_OBJ_ANIME		TW_OBJID_0101_SIRONA_00,anm_d34r0101_sirona_02
+	_OBJ_ANIME_WAIT
+	_TALK_KEYWAIT	msg_d34r0101_champion_03
+	_TALK_CLOSE
+	
+	_OBJ_ANIME		FLDOBJ_ID_PLAYER,anm_d34r0101_player_02
+	_OBJ_ANIME		TW_OBJID_0101_SIRONA_00,anm_d34r0101_sirona_03
+	_OBJ_ANIME_WAIT
+	_TW_OBJ_DEL		TW_OBJID_0101_SIRONA_00
+	
+	_LDVAL			SYS_WORK_TW_EVSEQ,TWEVSEQ_01_01
+	
+	_EVENT_END
+	_END
+
+/********************************************************************/
+/*						シロナ01									*/
+/********************************************************************/
+ev_d34r0101_sirona01:
+	_EVENT_START
+	
+	_TALK_KEYWAIT	msg_d34r0101_champion_04
+	_LAST_KEYWAIT
+	_TALK_CLOSE
+	
+	_EVENT_END
+	_END
+	
+/********************************************************************/
+/*						シロナ02									*/
+/********************************************************************/
+ev_d34r0101_sirona02:
+	_TALK_OBJ_START
+	
+	_TALK_KEYWAIT	msg_d34r0101_champion_05
+	_LAST_KEYWAIT
+	_TALK_CLOSE
+	
+	_EVENT_END
+	_END
+	
+//-------------------------------------------------------------
+//	主人公アニメ
+//-------------------------------------------------------------
+_ANIME_LABEL	anm_d34r0101_player_00
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
+	
+_ANIME_LABEL	anm_d34r0101_player_01
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d34r0101_player_02
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//-------------------------------------------------------------
+//	シロナアニメ
+//-------------------------------------------------------------
+_ANIME_LABEL	anm_d34r0101_sirona_00
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_16F,2
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL	anm_d34r0101_sirona_01
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA ACMD_END,0
+	
+_ANIME_LABEL	anm_d34r0101_sirona_02
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA ACMD_END,0
+	
+_ANIME_LABEL	anm_d34r0101_sirona_03
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_L_8F,3
+	_ANIME_DATA AC_WALK_D_8F,3
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_L_8F,6
+	_ANIME_DATA ACMD_END,0

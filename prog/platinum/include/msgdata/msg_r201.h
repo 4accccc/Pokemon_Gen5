@@ -1,0 +1,70 @@
+//==============================================================================
+/**
+ * @file		msg_r201.h
+ * @brief		メッセージID参照用ヘッダファイル
+ *
+ * このファイルはコンバータにより自動生成されています
+ */
+//==============================================================================
+#ifndef __MSG_R201_H__
+#define __MSG_R201_H__
+
+#define	msg_r201_rival_a_01		(0)
+#define	msg_r201_rival_a_02		(1)
+#define	msg_r201_rival_a_03		(2)
+#define	msg_r201_rival_a_04		(3)
+#define	msg_r201_rival_a_05		(4)
+#define	msg_r201_doctor_01		(5)
+#define	msg_r201_doctor_02		(6)
+#define	msg_r201_rival_a_06		(7)
+#define	msg_r201_doctor_03		(8)
+#define	msg_r201_rival_a_07		(9)
+#define	msg_r201_doctor_04		(10)
+#define	msg_r201_doctor_05		(11)
+#define	msg_r201_rival_a_08		(12)
+#define	msg_r201_doctor_06		(13)
+#define	msg_r201_rival_a_09		(14)
+#define	msg_r201_doctor_07		(15)
+#define	msg_r201_heroine_01		(16)
+#define	msg_r201_heroine_02		(17)
+#define	msg_r201_hero_01		(18)
+#define	msg_r201_hero_02		(19)
+#define	msg_r201_doctor_08		(20)
+#define	msg_r201_doctor_09		(21)
+#define	msg_r201_heroine_03		(22)
+#define	msg_r201_hero_03		(23)
+#define	msg_r201_doctor_10		(24)
+#define	msg_r201_doctor_11		(25)
+#define	msg_r201_doctor_12		(26)
+#define	msg_r201_rival_a_10		(27)
+#define	msg_r201_rival_a_11		(28)
+#define	msg_r201_rival_a_12		(29)
+#define	msg_r201_rival_a_20		(30)
+#define	msg_r201_doctor_13		(31)
+#define	msg_r201_doctor_14		(32)
+#define	msg_r201_heroine_04		(33)
+#define	msg_r201_heroine_05		(34)
+#define	msg_r201_hero_04		(35)
+#define	msg_r201_hero_05		(36)
+#define	msg_r201_rival_a_13		(37)
+#define	msg_r201_rival_a_14		(38)
+#define	msg_r201_rival_a_15		(39)
+#define	msg_r201_rival_a_16		(40)
+#define	msg_r201_rival_a_17		(41)
+#define	msg_r201_rival_a_18		(42)
+#define	msg_r201_rival_a_19		(43)
+#define	msg_r201_rival_b_01		(44)
+#define	msg_r201_rival_b_02		(45)
+#define	msg_r201_rival_b_03		(46)
+#define	msg_r201_rival_b_04		(47)
+#define	msg_r201_boy1_01		(48)
+#define	msg_r201_shopman_01		(49)
+#define	msg_r201_shopman_02		(50)
+#define	msg_r201_boy1a_01		(51)
+#define	msg_r201_girl1_01		(52)
+#define	msg_r201_girl1_02		(53)
+#define	msg_r201_sign1_01		(54)
+#define	msg_r201_sign2_01		(55)
+#define	msg_r201_sign3_01		(56)
+
+#endif
