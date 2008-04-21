@@ -13,7 +13,7 @@
 .PHONY : gflib
 
 # GF-Library
-GFLIB_DIR		=	../gflib
+GFLIB_DIR		=	gflib
 LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
@@ -45,7 +45,8 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c
+SRCS			=	system\main.c \
+					system\gfl_use.c
 
 include make_prog_files
 -include overlay/overlay_files
@@ -68,24 +69,11 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定
 #----------------------------------------------------------------------------
-GFLIBGRADIR	= src/gfl_graphic/
-SAMPLE_GRADIR = src/sample_graphic/
-SAMPLE_SNDDIR = src/sample_sound/
-SAMPLE_MBRDIR = src/sample_multi_boot_rom/
+GFLIBGRADIR	= gfl_graphic/
 
 FILE_TREE	= $(GFLIBGRADIR)utility.bin \
 			  $(GFLIBGRADIR)wmi.narc \
-              $(GFLIBGRADIR)gfl_font.dat \
-			  $(SAMPLE_GRADIR)*.narc \
-			  $(SAMPLE_GRADIR)*.NCLR \
-			  $(SAMPLE_GRADIR)*.NCGR \
-			  $(SAMPLE_GRADIR)*.NCER \
-			  $(SAMPLE_GRADIR)*.NANR \
-			  $(SAMPLE_SNDDIR)*.narc \
-			  $(SAMPLE_SNDDIR)*.sdat \
-			  $(SAMPLE_MBRDIR)*.srl \
-			  $(SAMPLE_MBRDIR)*.char \
-			  $(SAMPLE_MBRDIR)*.plt
+              $(GFLIBGRADIR)gfl_font.dat
 			  
 #ロムファイルシステムのルートディレクトリ指定
 MAKEROM_ROMROOT  = ./

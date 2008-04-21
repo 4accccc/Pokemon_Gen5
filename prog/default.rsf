@@ -137,7 +137,7 @@ RomSpec
 	Root		/
 	File		$(MAKEROM_ROMFILES)
 
-	HostRoot	./src/gfl_graphic
+	HostRoot	gfl_graphic
 	Root	/dwc
 	File	utility.bin
 }

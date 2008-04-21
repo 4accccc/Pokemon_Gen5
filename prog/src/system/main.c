@@ -12,17 +12,14 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
-#include "gfl_use.h"
-#include "main.h"
-
-#include "testmode.h"
+#include "include\system\gfl_use.h"
+#include "include\system\main.h"
 
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
 
-extern	void	TestModeSet(void);
 //------------------------------------------------------------------
 /**
  * @brief	メイン処理
@@ -90,9 +87,6 @@ static	void	SkeltonVBlankFunc(void)
 	GFLUser_VIntr();
 }
 
-
-#include "src/tomoya/debug_tomoya.h"
-#include "src/ohno/fatal_error.h"
 //------------------------------------------------------------------
 /**
  * @brief		ゲームごとの初期化処理
@@ -102,10 +96,10 @@ static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
 
-    // 通信ブート処理 VBlank割り込み後に行うためここに記述
-    GFL_NET_Boot( GFL_HEAPID_APP, FatalError_Disp );
+    // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
+    GFL_NET_Boot( GFL_HEAPID_APP, NULL );
 	/* 起動プロセスの設定 */
-	TestModeSet();	//←サンプルデバッグモード
+//	TestModeSet();	//←サンプルデバッグモード
 }
 
 

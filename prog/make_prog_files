@@ -1,37 +1,5 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=		testmode.c \
-				ohno/debug_ohno.c \
-				ohno/test_net.c \
-				ohno/test_beacon.c \
-				ohno/test_rand.c \
-				ohno/test_ui.c \
-				ohno/fatal_error.c \
-                gfl_graphic/net_icondata.c \
-                sogabe/menu.c \
-				sogabe/debug_sogabe.c \
-				sogabe/title.c \
-				sogabe/game.c \
-				sogabe/player.c \
-				sogabe/fallchr.c \
-                sogabe/yt_net.c \
-                sogabe/multi_boot.c \
-                sogabe/3d_test.c \
-				tetsu/game/gamemain.c \
-				tetsu/game/setup.c \
-				tetsu/game/act3d.c \
-				tetsu/game/map3d.c \
-				tetsu/game/util3d.c \
-				tetsu/game/game_cont.c \
-				tetsu/game/team_cont.c \
-				tetsu/game/player_cont.c \
-				tetsu/game/camera_cont.c \
-				tetsu/game/status_cont.c \
-				tetsu/game/text_cont.c \
-				tetsu/game/skill_cont.c \
-				tetsu/game/game_net.c \
-                sogabe/blockout.c \
-				tamada/backup_sample.c \
-				tetsu/debug_watanabe.c
+#SRCS	+=		testmode.c
 				
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -81,20 +49,4 @@ SRCS	+=		testmode.c \
 # 
 # 要望・質問は森にお願いします。
 # 
-
-
-#ともやくんデバッグ用
-#===> main
-SRCS_OVERLAY_DEBUG_TOMOYA =			tomoya/debug_tomoya.c
-
-#
-#===> main
-SRCS_OVERLAY_DEBUG_TAMADA =			tamada/debug_tamada.c \
-				tamada/oamset.c \
-				tamada/data.c \
-				tamada/dispfunc.c \
-				tamada/bg/debug_graphic.c \
-				tamada/bg/loader.c \
-				tamada/d_proc_bg.c \
-				tamada/lifegame.c
 
