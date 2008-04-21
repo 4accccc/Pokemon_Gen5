@@ -729,7 +729,7 @@ BOOL
 	}
 	return FALSE;
 }
-	
+
 
 
 
@@ -934,6 +934,30 @@ BOOL
 //----------------------------------------------------------------------------
 /**
  *
+ *@brief	テクスチャリソースの取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dResTex*
+	GFL_G3D_GetResTex
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+
+	return  NNS_G3dGetTex( header ); 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
  *@brief	テクスチャキーの取得
  *
  *	@param	res		テクスチャリソース参照ポインタ
@@ -1025,6 +1049,65 @@ BOOL
 		return TRUE;
 	}
 	return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	テクスチャキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dTexKey
+	GFL_G3D_GetTextureDataVramKey
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	restex = NNS_G3dGetTex( header ); 
+
+	if( restex->texInfo.flag & NNS_G3D_RESTEX_LOADED ){
+		return restex->texInfo.vramKey;
+	}
+	if( restex->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED ){
+		return restex->tex4x4Info.vramKey;
+	}
+	return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	パレットキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dPlttKey
+	GFL_G3D_GetTexturePlttVramKey
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResFileHeader*	header;
+	NNSG3dResTex*			restex;
+
+	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
+	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX )); 
+
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	restex = NNS_G3dGetTex( header ); 
+
+	if( restex->plttInfo.flag & NNS_G3D_RESPLTT_LOADED ){
+		return restex->plttInfo.vramKey;
+	}
+	return NULL;
 }
 
 
@@ -1378,6 +1461,7 @@ GFL_G3D_OBJ*
 
 	//アニメーション配列作成
 	g3Dobj->anmTbl = GFL_HEAP_AllocClearMemory( g3Dman->heapID, sizeof(GFL_G3D_ANM*) * anmCount );
+
 	for( i=0; i<anmCount; i++ ){
 		g3Danm = anmTbl[i];
 		if( g3Danm != NULL ){
@@ -1473,15 +1557,19 @@ u16
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_EnableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	//レンダリングオブジェクトとの関連付け
 	NNS_G3dRenderObjAddAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1492,15 +1580,19 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_DisableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ) 
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	//レンダリングオブジェクトとの関連付けを解除
 	NNS_G3dRenderObjRemoveAnmObj( g3Dobj->g3Drnd->rndobj, g3Dobj->anmTbl[ anmIdx ]->anmobj );
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1562,14 +1654,18 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	} 
 	g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = 0;
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1581,17 +1677,21 @@ void
  * @param	anmFrm	取得、設定に用いる値格納ポインタ
  */
 //--------------------------------------------------------------------------------------------
-void
+BOOL
 	GFL_G3D_OBJECT_GetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
 {
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	*anmFrm = g3Dobj->anmTbl[ anmIdx ]->anmobj->frame;
+	return TRUE;
 }
 
-void
+BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm )
 {
@@ -1601,6 +1701,9 @@ void
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmFrmMax = NNS_G3dAnmObjGetNumFrame( anmobj );
 
@@ -1609,6 +1712,7 @@ void
 	} else {
 		g3Dobj->anmTbl[ anmIdx ]->anmobj->frame = *anmFrm;
 	}
+	return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1631,9 +1735,12 @@ BOOL
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmobj->frame += count;
-	
+
 	if( anmobj->frame >= NNS_G3dAnmObjGetNumFrame( anmobj )){
 		return FALSE;
 	}
@@ -1660,6 +1767,9 @@ BOOL
 	GF_ASSERT( g3Dobj->magicnum == G3DOBJ_MAGICNUM );
 	GF_ASSERT( anmIdx < g3Dobj->anmCount );
 
+	if( g3Dobj->anmTbl[ anmIdx ] == NULL ){
+		return FALSE;
+	}
 	anmobj = g3Dobj->anmTbl[ anmIdx ]->anmobj;
 	anmobj->frame += count;
 	
@@ -2014,8 +2124,175 @@ static void
 }
 
 
+//=============================================================================================
+/**
+ *
+ *
+ * 計算
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * 平面計算
+ * 　点が平面上にあるかどうかの判定
+ *
+ *		指定された点が平面の方程式 (P - P1).N = 0（内積計算）
+ *			※P1:平面上の任意の点,N:法線ベクトル
+ *		をみたすかどうか判定
+ *
+ * @param	pos			指定位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT			判定結果
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_CheckPointOnPlane
+		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, const fx32 margin )
+{
+	VecFx32	vecP1P0;
+	fx32	scalar_P1P0_N;
+	
+	//pos->posRefベクトルの算出:P1-P0
+	VEC_Subtract( posRef, pos, &vecP1P0 );
+	//posRef->posRayベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	scalar_P1P0_N = VEC_DotProduct( &vecP1P0, vecN );
+	if(( scalar_P1P0_N >= -margin )&&( scalar_P1P0_N <= margin )){
+		return GFL_G3D_CALC_TRUE;
+	} else {
+		return GFL_G3D_CALC_FALSE;
+	}
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P1).N = 0（内積計算）
+ *			※PおよびP1:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ *		両式を連立させ P = P1 + ((P1 - P0 ).N / V.N) * V
+ *		という方程式を得る
+ *
+ * @param	posRay		レイの発射位置
+ * @param	vecRay		レイの進行ベクトル
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT			算出結果
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_GetClossPointRayPlane
+		( const VecFx32* posRay, const VecFx32* vecRay, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin )
+{
+	VecFx32	vecP0R0;
+	fx32	t, scalar_V_N, scalar_P0R0_N;
+	
+	//posRay->posRefベクトルの算出:P0-R0
+	VEC_Subtract( posRef, posRay, &vecP0R0 );
+	//posRay->posRefベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
+	//進行ベクトルと法線ベクトルの内積の算出:VN
+	scalar_V_N = VEC_DotProduct( vecRay, vecN );
 
+	if( scalar_V_N > margin ){
+		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	if( scalar_V_N >= -margin ){
+		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		return GFL_G3D_CALC_FALSE;
+	}
+	//経過オフセットtの算出:(P0-R0)N/VN
+	//t = (scalar_P0R0_N << FX32_SHIFT) / scalar_V_N;
+	t = FX_Div( scalar_P0R0_N, scalar_V_N );
+
+	//交点の算出:R0 + (P0-R0)N/VN * V
+	VEC_MultAdd( t, vecRay, posRay, dest );
+	if( t < 0 ){
+		//交点が後方
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	return GFL_G3D_CALC_TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算（距離制限つき）
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P1).N = 0（内積計算）
+ *			※PおよびP1:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ *		両式を連立させ P = P1 + ((P1 - P0 ).N / V.N) * V
+ *		という方程式を得る
+ *
+ * @param	posRay		レイの発射位置
+ * @param	posRayEnd	レイの最終到達位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT			算出結果
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_GetClossPointRayPlaneLimit
+		( const VecFx32* posRay, const VecFx32* posRayEnd, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin )
+{
+	VecFx32	vecP0R0, vecR1R0;
+	fx32	t, scalar_R1R0_N, scalar_P0R0_N;
+	
+	//posRay->posRefベクトルの算出:P0-R0
+	VEC_Subtract( posRef, posRay, &vecP0R0 );
+	//posRay->posRayEndベクトルの算出:R1-R0
+	VEC_Subtract( posRayEnd, posRay, &vecR1R0 );
+	//posRay->posRefベクトルと法線ベクトルの内積の算出:(P0-R0)N
+	scalar_P0R0_N = VEC_DotProduct( &vecP0R0, vecN );
+	//posRay->posRayEndベクトルと法線ベクトルの内積の算出:(R1-R0)N
+	scalar_R1R0_N = VEC_DotProduct( &vecR1R0, vecN );
+
+	if( scalar_R1R0_N > margin ){
+		//判定対象ではない（進行ベクトルと法線ベクトルが鋭角に交わる = 平面の裏からレイがあたる）
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	if( scalar_R1R0_N >= -margin ){
+		//交点がない（進行ベクトルと法線ベクトルが直交 = レイ進行方向と平面が並行）
+		return GFL_G3D_CALC_FALSE;
+	}
+	//経過オフセットtの算出:(P0-R0)N/(R1-R0)N
+	//t = (scalar_P0R0_N << FX32_SHIFT) / scalar_R1R0_N;
+	t = FX_Div( scalar_P0R0_N, scalar_R1R0_N );
+
+	//交点の算出:R0 + (P0-R0)N/(R1-R0)N * (R1-R0) 
+	VEC_MultAdd( t, &vecR1R0, posRay, dest );
+	if( t < 0 ){
+		//交点が発射地点より後方
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	if( t > FX32_ONE ){
+		//交点が到達地点より前方
+		return GFL_G3D_CALC_OUTRANGE;
+	}
+	return GFL_G3D_CALC_TRUE;
+}
 
 //=============================================================================================
 /**

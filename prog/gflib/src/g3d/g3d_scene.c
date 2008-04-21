@@ -19,6 +19,7 @@ struct _GFL_G3D_SCENEOBJ {
 	void*						sceneObjWorkEx;
 	GFL_G3D_SCENEACCESORY_DATA*	accesory;
 	u16							accesoryCount;
+	u16							objIdxOffset;
 };
 
 struct _GFL_G3D_SCENE {
@@ -213,10 +214,25 @@ void
 
 //--------------------------------------------------------------------------------------------
 /**
- * アクターポインタをＩＮＤＥＸより取得
+ * 依存しているg3Dutilの逆引き
  *
  * @param	g3Dscene		システムポインタ
- * @param	idx				アクター配置ＩＮＤＥＸ
+ */
+//--------------------------------------------------------------------------------------------
+GFL_G3D_UTIL*
+	GFL_G3D_SCENE_GetG3Dutil
+		( GFL_G3D_SCENE* g3Dscene )
+{
+	GF_ASSERT( g3Dscene );
+	return g3Dscene->g3Dutil;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 配置オブジェクトポインタをＩＮＤＥＸより取得
+ *
+ * @param	g3Dscene		システムポインタ
+ * @param	idx				オブジェクト配置ＩＮＤＥＸ
  */
 //--------------------------------------------------------------------------------------------
 GFL_G3D_SCENEOBJ*
@@ -321,6 +337,7 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
  * @param	g3Dscene		システムポインタ
  * @param	sceneObjTbl		配置オブジェクト設定データ
  * @param	sceneObjCount	配置オブジェクト数
+ * @param	objIdxOffset	参照オブジェクトＩＮＤＥＸオフセット
  *
  * @return	idx				配置オブジェクト先頭ＩＮＤＥＸ
  */
@@ -328,7 +345,7 @@ static void objDrawSort( GFL_G3D_SCENE* g3Dscene )
 u32
 	GFL_G3D_SCENEOBJ_Add
 		( GFL_G3D_SCENE* g3Dscene, const GFL_G3D_SCENEOBJ_DATA* sceneObjTbl, 
-			const u16 sceneObjCount )
+			const u16 sceneObjCount, u16 objIdxOffset )
 {
 	GFL_TCBL*			g3DsceneObjTCBL;
 	GFL_G3D_SCENEOBJ*	g3DsceneObj;
@@ -350,9 +367,11 @@ u32
 		g3DsceneObj = GFL_TCBL_GetWork( g3DsceneObjTCBL );
 		g3DsceneObj->g3Dscene = g3Dscene;
 		g3DsceneObj->sceneObjData = sceneObjTbl[i];
+		g3DsceneObj->sceneObjData.objID += objIdxOffset;
 		g3DsceneObj->sceneObjWorkEx	= NULL;
 		g3DsceneObj->accesoryCount = 0;
 		g3DsceneObj->accesory = NULL;
+		g3DsceneObj->objIdxOffset = objIdxOffset;
 #if 0
 		// 半透明処理コールバック設定
 		{
@@ -642,6 +661,7 @@ BOOL
 	//アクセサリー設定配列をコピー
 	for( i=0; i<accesoryCount; i++ ){
 		g3DsceneObj->accesory[i] = accesoryTbl[i];
+		g3DsceneObj->accesory[i].objID = accesoryTbl[i].objID + g3DsceneObj->objIdxOffset;
 	}
 	return TRUE;
 }
