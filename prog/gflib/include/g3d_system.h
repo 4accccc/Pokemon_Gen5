@@ -7,10 +7,6 @@
 #ifndef _G3D_SYSTEM_H_
 #define _G3D_SYSTEM_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //=============================================================================================
 /**
  *
@@ -118,6 +114,13 @@ typedef struct {
 #define GEBUF_SIZE_MAX			(0x1800)	//ジオメトリバッファ最大サイズ。暫定
 
 #define PERSPWAY_COEFFICIENT	0x10000/360	//画角計算係数（度数にこれを掛けるといい感じかも）
+
+//	計算結果定義
+typedef enum {
+	GFL_G3D_CALC_FALSE = 0,	///<失敗
+	GFL_G3D_CALC_TRUE,		///<成功
+	GFL_G3D_CALC_OUTRANGE,	///<範囲外
+}GFL_G3D_CALC_RESULT;
 
 
 
@@ -459,6 +462,18 @@ extern BOOL
 //----------------------------------------------------------------------------
 /**
  *
+ *@brief	テクスチャリソースの取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+NNSG3dResTex*
+	GFL_G3D_GetResTex
+		( GFL_G3D_RES* g3Dres );
+
+//----------------------------------------------------------------------------
+/**
+ *
  *@brief	テクスチャキーが割り振られているかチェック
  *
  *@param	g3Dobj		３Ｄオブジェクトハンドル
@@ -468,6 +483,30 @@ extern BOOL
 //-----------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_CheckTextureKeyLive
+		( GFL_G3D_RES* g3Dres );
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	テクスチャキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+extern NNSG3dTexKey
+	GFL_G3D_GetTextureDataVramKey
+		( GFL_G3D_RES* g3Dres );
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	パレットキーのポインタ取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+extern NNSG3dPlttKey
+	GFL_G3D_GetTexturePlttVramKey
 		( GFL_G3D_RES* g3Dres );
 
 
@@ -694,7 +733,7 @@ extern GFL_G3D_RND*
  * @return	GFL_G3D_ANM*
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_ANM*
+extern GFL_G3D_ANM*
 	GFL_G3D_OBJECT_GetG3Danm
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
 
@@ -707,7 +746,7 @@ GFL_G3D_ANM*
  * @return	u16
  */
 //--------------------------------------------------------------------------------------------
-u16
+extern u16
 	GFL_G3D_OBJECT_GetAnimeCount
 		( GFL_G3D_OBJ* g3Dobj ); 
 
@@ -719,7 +758,7 @@ u16
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+extern BOOL
 	GFL_G3D_OBJECT_EnableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
@@ -731,7 +770,7 @@ void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-void
+extern BOOL
 	GFL_G3D_OBJECT_DisableAnime
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
 
@@ -769,7 +808,7 @@ extern void
  * @param	anmIdx	登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
 
@@ -782,11 +821,11 @@ extern void
  * @param	anmFrm	取得、設定に用いる値格納ポインタ
  */
 //--------------------------------------------------------------------------------------------
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_GetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
 
-extern void
+extern BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
 		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
 
@@ -933,16 +972,95 @@ extern BOOL
 /**
  *
  *
+ * 計算
+ *
+ *
+ */
+//=============================================================================================
+//--------------------------------------------------------------------------------------------
+/**
+ * 平面計算
+ * 　点が平面上にあるかどうかの判定
+ *
+ *		指定された点が平面の方程式 (P - P1).N = 0（内積計算）
+ *			※P1:平面上の任意の点,N:法線ベクトル
+ *		をみたすかどうか判定
+ *
+ * @param	pos			指定位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT		判定結果
+ */
+//--------------------------------------------------------------------------------------------
+extern GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_CheckPointOnPlane
+		( const VecFx32* pos, const VecFx32* posRef, const VecFx32* vecN, const fx32 margin );
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P0).N = 0（内積計算）
+ *			※PおよびP0:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ * @param	posRay		レイの発射位置
+ * @param	vecRay		レイの進行ベクトル
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT		算出結果
+ */
+//--------------------------------------------------------------------------------------------
+extern GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_GetClossPointRayPlane
+		( const VecFx32* posRay, const VecFx32* vecRay, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin );
+//--------------------------------------------------------------------------------------------
+/**
+ * レイトレース計算（距離制限つき）
+ * 　レイと平面の交点ベクトルを算出
+ *
+ *		直線の方程式 P = P0 + t * V		
+ *			※P:現在位置,P0:初期位置,t:経過オフセット（時間）,V:進行ベクトル 
+ *		と平面の方程式 (P - P1).N = 0（内積計算）
+ *			※PおよびP1:平面上の任意の２点,N:法線ベクトル
+ *		を同時にみたす点Pが交点であることを利用して算出
+ *
+ *		両式を連立させ P = P1 + ((P1 - P0 ).N / V.N) * V
+ *		という方程式を得る
+ *
+ * @param	posRay		レイの発射位置
+ * @param	posRayEnd	レイの最終到達位置
+ * @param	posRef		平面上の一点の位置
+ * @param	vecN		平面の法線ベクトル
+ * @param	dest		交点の位置
+ * @param	margin		許容する計算誤差幅
+ *
+ * @return	GFL_G3D_CALC_RESULT		算出結果
+ */
+//--------------------------------------------------------------------------------------------
+extern GFL_G3D_CALC_RESULT
+	GFL_G3D_Calc_GetClossPointRayPlaneLimit
+		( const VecFx32* posRay, const VecFx32* posRayEnd, 
+			const VecFx32* posRef, const VecFx32* vecN, VecFx32* dest, const fx32 margin );
+
+//=============================================================================================
+/**
+ *
+ *
  * データ
  *
  *
  */
 //=============================================================================================
 
-
-#ifdef __cplusplus
-}/* extern "C" */
-#endif
 
 
 #endif

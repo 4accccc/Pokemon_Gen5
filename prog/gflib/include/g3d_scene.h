@@ -7,10 +7,6 @@
 #ifndef _G3D_SCENE_H_
 #define _G3D_SCENE_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //=============================================================================================
 //	型宣言
 //=============================================================================================
@@ -93,13 +89,88 @@ extern void
 
 //--------------------------------------------------------------------------------------------
 /**
+ * 依存しているg3Dutilの逆引き
+ *
+ * @param	g3Dscene		システムポインタ
+ */
+//--------------------------------------------------------------------------------------------
+extern GFL_G3D_UTIL*
+	GFL_G3D_SCENE_GetG3Dutil
+		( GFL_G3D_SCENE* g3Dscene );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * G3Dutil追加セットアップ用インライン
+ *
+ * @param	g3Dscene		システムポインタ
+ * @param	setup			セットアップ配列
+ * @param	unitIdx			ユニットＩＮＤＥＸ
+ * @param	objIdx			オブジェクトＩＮＤＥＸ
+ */
+//--------------------------------------------------------------------------------------------
+inline u16	GFL_G3D_SCENE_AddG3DutilUnit
+		( GFL_G3D_SCENE* g3Dscene, const GFL_G3D_UTIL_SETUP* setup )
+{
+	return GFL_G3D_UTIL_AddUnit( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), setup );
+}
+
+inline void	GFL_G3D_SCENE_DelG3DutilUnit
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	GFL_G3D_UTIL_DelUnit( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitResIdx
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitResIdx( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitResCount
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitResCount( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitObjIdx
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitObjIdx( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilUnitObjCount
+		( GFL_G3D_SCENE* g3Dscene, u16 unitIdx )
+{
+	return GFL_G3D_UTIL_GetUnitObjCount( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), unitIdx );
+}
+
+inline GFL_G3D_RES*	GFL_G3D_SCENE_GetG3DutilResHandle
+		( GFL_G3D_SCENE* g3Dscene, u16 resIdx )
+{
+	return GFL_G3D_UTIL_GetResHandle( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), resIdx );
+}
+
+inline GFL_G3D_OBJ*	GFL_G3D_SCENE_GetG3DutilObjHandle
+		( GFL_G3D_SCENE* g3Dscene, u16 objIdx )
+{
+	return GFL_G3D_UTIL_GetObjHandle( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ), objIdx );
+}
+
+inline u16	GFL_G3D_SCENE_GetG3DutilObjCount
+		( GFL_G3D_SCENE* g3Dscene )
+{
+	return GFL_G3D_UTIL_GetObjCount( GFL_G3D_SCENE_GetG3Dutil( g3Dscene ) );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * 配置オブジェクトポインタをＩＮＤＥＸより取得
  *
  * @param	g3Dscene		システムポインタ
  * @param	idx				オブジェクト配置ＩＮＤＥＸ
  */
 //--------------------------------------------------------------------------------------------
-GFL_G3D_SCENEOBJ*
+extern GFL_G3D_SCENEOBJ*
 	GFL_G3D_SCENEOBJ_Get
 		( GFL_G3D_SCENE* g3Dscene, u32 idx );
 
@@ -127,6 +198,7 @@ extern void
  * @param	g3Dscene		システムポインタ
  * @param	sceneObjTbl		配置オブジェクト設定データ
  * @param	sceneObjCount	配置オブジェクト数
+ * @param	objIdxOffset	参照オブジェクトＩＮＤＥＸオフセット
  *
  * @return	idx				配置オブジェクト先頭ＩＮＤＥＸ
  */
@@ -134,7 +206,7 @@ extern void
 extern u32
 	GFL_G3D_SCENEOBJ_Add
 		( GFL_G3D_SCENE* g3Dscene, const GFL_G3D_SCENEOBJ_DATA* sceneObjTbl, 
-			const u16 sceneObjCount );
+			const u16 sceneObjCount, u16 objIdxOffset );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -267,39 +339,39 @@ extern void GFL_G3D_SCENEOBJ_SetFunc( GFL_G3D_SCENEOBJ* g3DsceneObj, GFL_G3D_SCE
  * @param	anmIdx			登録されているアニメーションインデックス
  */
 //--------------------------------------------------------------------------------------------
-inline void GFL_G3D_SCENEOBJ_EnableAnime
+inline BOOL GFL_G3D_SCENEOBJ_EnableAnime
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	GFL_G3D_OBJECT_EnableAnime( g3Dobj, anmIdx );
+	return GFL_G3D_OBJECT_EnableAnime( g3Dobj, anmIdx );
 }
 
-inline void GFL_G3D_SCENEOBJ_DisableAnime
+inline BOOL GFL_G3D_SCENEOBJ_DisableAnime
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	GFL_G3D_OBJECT_DisableAnime( g3Dobj, anmIdx );
+	return GFL_G3D_OBJECT_DisableAnime( g3Dobj, anmIdx );
 }
 
-inline void GFL_G3D_SCENEOBJ_ResetAnimeFrame
+inline BOOL GFL_G3D_SCENEOBJ_ResetAnimeFrame
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, anmIdx );
+	return GFL_G3D_OBJECT_ResetAnimeFrame( g3Dobj, anmIdx );
 }
 
-inline void GFL_G3D_SCENEOBJ_GetAnimeFrame
+inline BOOL GFL_G3D_SCENEOBJ_GetAnimeFrame
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, int* anmFrm )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, anmIdx, anmFrm );
+	return GFL_G3D_OBJECT_GetAnimeFrame( g3Dobj, anmIdx, anmFrm );
 }
 
-inline void GFL_G3D_SCENEOBJ_SetAnimeFrame
+inline BOOL GFL_G3D_SCENEOBJ_SetAnimeFrame
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 anmIdx, int* anmFrm )
 {
 	GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-	GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, anmIdx, anmFrm );
+	return GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, anmIdx, anmFrm );
 }
 
 inline BOOL GFL_G3D_SCENEOBJ_IncAnimeFrame
@@ -410,10 +482,6 @@ extern void
 		( GFL_G3D_SCENEOBJ* g3DsceneObj, u16 accesoryIdx, MtxFx33* rotate );
 
 
-
-#ifdef __cplusplus
-}/* extern "C" */
-#endif
 
 
 

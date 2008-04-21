@@ -8,10 +8,6 @@
 #ifndef _G3D_LIGHT_H_
 #define _G3D_LIGHT_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 //=============================================================================================
 //	å^êÈåæ
 //=============================================================================================
@@ -95,10 +91,6 @@ extern void GFL_G3D_LIGHT_SetVec( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, VecFx16
 //--------------------------------------------------------------------------------------------
 extern void GFL_G3D_LIGHT_GetColor( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color );
 extern void GFL_G3D_LIGHT_SetColor( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* color );
-
-#ifdef __cplusplus
-}/* extern "C" */
-#endif
 
 #endif
 
