@@ -34,6 +34,8 @@
 #include "g3d_scene.h"
 #include "g3d_camera.h"
 #include "g3d_light.h"
+#include "billboard.h"
+#include "billboard_act.h"
 
 #include "arc_util.h"
 #include "fade.h"
@@ -51,8 +53,6 @@
 
 #include "particle.h"
 #include "spl.h"
-
-#include "quaternion.h"
 
 /*  */
 
