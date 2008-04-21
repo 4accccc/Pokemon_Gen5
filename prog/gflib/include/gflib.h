@@ -53,6 +53,7 @@
 
 #include "particle.h"
 #include "spl.h"
+#include "quaternion.h"
 
 /*  */
 
