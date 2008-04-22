@@ -12,8 +12,8 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
-#include "include\system\gfl_use.h"
-#include "include\system\main.h"
+#include "system\gfl_use.h"
+#include "system\main.h"
 
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);

@@ -12,9 +12,9 @@
 #include "gflib.h"
 //#include "gflib_inter.h"
 
-#include "include\system\main.h"
+#include "system\main.h"
 
-#include "include\system\gfl_use.h"
+#include "system\gfl_use.h"
 #include "procsys.h"
 #include "gf_overlay.h"
 #include "tcb.h"
