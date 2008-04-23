@@ -134,15 +134,17 @@ RomSpec
 	Segment		ALL
 	Padding		0xff
 
-	HostRoot	./
-	Root		/gfl_graphic/
+	## HostRootはパソコン側のディレクトリ
+	## RootはDS側のディレクトリ
+	HostRoot	./gfl_graphic/
+	Root		/
 	File		$(GFL_MAKEROM_ROMFILES)
 
-	HostRoot	./
+	HostRoot	./gfl_graphic/
 	Root	/dwc
-	File	gfl_graphic/utility.bin
+	File	utility.bin
 
-	HostRoot	./
-	Root		/game_graphic/
-	File		$(GAME_MAKEROM_ROMFILES)
+	HostRoot	./graphic_data/
+	Root		/
+	File		$(MAKEROM_ROMFILES)
 }

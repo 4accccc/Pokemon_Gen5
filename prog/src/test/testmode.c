@@ -65,7 +65,7 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/spa.narc",
 };
 
-#include "test_graphic/titledemo.naix"
+#include "../../graphic_data/test_graphic/titledemo.naix"
 #include "testmode.dat"
 
 //‚a‚fİ’èŠÖ”
@@ -376,7 +376,7 @@ static void	g2d_unload( TESTMODE_WORK * testmode )
  * @brief		‚R‚cƒf[ƒ^
  */
 //------------------------------------------------------------------
-static const char g3DarcPath[] = {"src/test/test_graphic/titledemo.narc"};
+static const char g3DarcPath[] = {"test_graphic/titledemo.narc"};
 
 enum {
 	G3DRES_AIR_BMD = 0,

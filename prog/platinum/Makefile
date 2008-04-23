@@ -346,7 +346,7 @@ FILE_TREE	= $(DATABIN)*.* \
               $(PL_ETC_PARTICLEDIR)*.narc
 			  
 #ロムファイルシステムのルートディレクトリ指定
-MAKEROM_ROMROOT  = ./src/
+MAKEROM_ROMROOT  = ./src/../
 
 MAKEROM_ROMFILES = $(subst src/,,$(FILE_TREE))
 

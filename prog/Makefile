@@ -75,18 +75,25 @@ MY_COMPONENT_NAME	= ichneumon
 MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
 #----------------------------------------------------------------------------
-#	ロムに含まれるファイルの指定
+#	ロムに含まれるファイルの指定  default.rsfファイルで使用している
 #----------------------------------------------------------------------------
 #ロムファイル指定(GFL)
-GFL_FILE_TREE	= utility.bin \
-			  wmi.narc \
-              gfl_font.dat
+GFL_FILE_TREE	=	\
+					wmi.narc \
+					gfl_font.dat
+
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
 #ロムファイル指定(GAME)
-GAME_FILE_TREE	= ../src/test/test_graphic/*.narc
+GAME_FILE_TREE	= test_graphic/*.narc
 			  
 MAKEROM_ROMFILES = $(GAME_FILE_TREE)
+
+## ------------------------------------------------------------------------------------------
+## GFL_MAKEROM_ROMFILESの定義をmakerom.exeに渡す MAKEROM_ROMFILESはデフォルトで定義されている
+## makeした後に main.nlfファイルを開けば ファイルが正しく紐付けされたかがわかる
+##-------------------------------------------------------------------------------------------
+MAKEROM_FLAGS += -DGFL_MAKEROM_ROMFILES='$(GFL_MAKEROM_ROMFILES)'
 
 #----------------------------------------------------------------------------
 #	ロムスペックファイル読み込みのため追加
