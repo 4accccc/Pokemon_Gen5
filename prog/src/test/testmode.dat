@@ -4,29 +4,14 @@
  */
 //===================================================================
 static const char	test_index1[] = 
-{"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
+{"ポケモンWB　プログラム　テストモード\n Pokemon WB TestMode"};
 static const char	test_index2[] = {"http://www.gamefreak.co.jp"};
 
 static const char	test_select1[]	= {"わたなべ　てつや　　Tetsuya Watanabe"};
 static const char	test_select2[]	= {"たまだ　そうすけ　　Sousuke Tamada"};
 static const char	test_select3[]	= {"そがべ　ひさし　　Hisashi Sogabe"};
 static const char	test_select4[]	= {"おおの　かつみ　　Katsumi Ohno"};
-
 static const char	test_select5[]	= {"たや　まさお　　Masao Taya"};
-static const char	test_select6[]	= {"なかむら　ひろゆき　　Hiroyuki Nakamura"};
-static const char	test_select7[]	= {"なぎはし　とおる　　Tooru Nagihashi"};
-static const char	test_select8[]	= {"ほさか　げんや　　Genya Hosaka"};
-
-static const char	test_select9[]	= {"まつだ　よしのり　　Yoshinori Matsuda"};
-static const char	test_select10[]	= {"かがや　けいた　　Keita Kagaya"};
-static const char	test_select11[]	= {"のはら　さとし　　Satoshi Nohara"};
-static const char	test_select12[]	= {"ごとう　だいすけ　　Daisuke Gotou"};
-static const char	test_select13[]	= {"たかはし　ともや　　Tomoya Takahashi"};
-
-static const char	test_select14[]	= {"もり　あきと　　Akito Mori"};
-static const char	test_select15[]	= {"おおた　ともみち　　Tomomichi Ohta"};
-static const char	test_select16[]	= {"いわさわ　みゆき　　Miyuki Iwasawa"};
-static const char	test_select17[]	= {"さいとう　のぞむ　　Nozomu Saitou"};
 
 enum {
 	NUM_TITLE = 0,
@@ -44,25 +29,11 @@ enum {
 	NUM_SELECT3,
 	NUM_SELECT4,
 	NUM_SELECT5,
-	NUM_SELECT6,
-	NUM_SELECT7,
-	NUM_SELECT8,
-	NUM_SELECT9,
-	NUM_SELECT10,
-	NUM_SELECT11,
-	NUM_SELECT12,
-	NUM_SELECT13,
-	NUM_SELECT14,
-	NUM_SELECT15,
-	NUM_SELECT16,
-	NUM_SELECT17,
 };
 
 enum {
 	NUM_SELECT_PAGE1 = NUM_SELECT1,
-	NUM_SELECT_PAGE2 = NUM_SELECT9,
-	NUM_COUNT_PAGE1 = NUM_SELECT9 - NUM_SELECT1,
-	NUM_COUNT_PAGE2 = NUM_SELECT17+1 - NUM_SELECT9,
+	NUM_COUNT_PAGE1 = NUM_SELECT5+1 - NUM_SELECT1,
 };
 
 static const TESTMODE_PRINTLIST selectList[] = {
@@ -70,22 +41,7 @@ static const TESTMODE_PRINTLIST selectList[] = {
 	{ test_select2,  4,  7, 24, 1 },
 	{ test_select3,  4,  9, 24, 1 },
 	{ test_select4,  4, 11, 24, 1 },
-
-	{ test_select5,  4, 15, 24, 1 },
-	{ test_select6,  4, 17, 24, 1 },
-	{ test_select7,  4, 19, 24, 1 },
-	{ test_select8,  4, 21, 24, 1 },
-
-	{ test_select9,  4,  1, 24, 1 },
-	{ test_select10, 4,  3, 24, 1 },
-	{ test_select11, 4,  5, 24, 1 },
-	{ test_select12, 4,  7, 24, 1 },
-	{ test_select13, 4,  9, 24, 1 },
-
-	{ test_select14, 4, 13, 24, 1 },
-	{ test_select15, 4, 15, 24, 1 },
-	{ test_select16, 4, 17, 24, 1 },
-	{ test_select17, 4, 19, 24, 1 },
+	{ test_select5,  4, 13, 24, 1 },
 };
 
 enum {
@@ -94,18 +50,6 @@ enum {
 	SELECT_SOGABE,
 	SELECT_OHNO,
 	SELECT_TAYA,
-	SELECT_NAKAMURA,
-	SELECT_NAGIHASHI,
-	SELECT_HOSAKA,
-	SELECT_MATSUDA,
-	SELECT_KAGAYA,
-	SELECT_NOHARA,
-	SELECT_GOTOU,
-	SELECT_TAKAHASHI,
-	SELECT_MORI,
-	SELECT_OHTA,
-	SELECT_IWASAWA,
-	SELECT_SAITOU,
 };
 
 //------------------------------------------------------------------

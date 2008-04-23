@@ -347,9 +347,11 @@ static void g2d_draw( TESTMODE_WORK * testmode )
 		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_URL] );
 
 		//選択項目ビットマップの表示
+#if 0
 		for(i=0;i<NUM_COUNT_PAGE2;i++){
 			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT_PAGE2+i] );
 		}
+#endif
 		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_OFF );
 	}
 	GFL_BG_LoadScreenReq( TEXT_FRM );
@@ -601,15 +603,14 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 }
 	
 //------------------------------------------------------------------
+extern const GFL_PROC_DATA DebugWatanabeMainProcData;
 //------------------------------------------------------------------
-FS_EXTERN_OVERLAY(debug_tomoya);
-FS_EXTERN_OVERLAY(debug_tamada);
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
 	switch( TestModeSelectPosGet(testmode) ) {
 	case SELECT_WATANABE:
 		//わたなべ
-		//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
 		break;
 	case SELECT_TAMADA:
 		//たまだ
@@ -623,24 +624,10 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		//おおの
 		//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 		break;
-	case SELECT_TAKAHASHI:
+	case SELECT_TAYA:
 		//ともや
 		//GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tomoya), &DebugClactProcData, NULL);
 	default:
-	case SELECT_TAYA:
-	case SELECT_NAKAMURA:
-	case SELECT_NAGIHASHI:
-	case SELECT_HOSAKA:
-	case SELECT_MATSUDA:
-	case SELECT_KAGAYA:
-	case SELECT_NOHARA:
-	case SELECT_GOTOU:
-	case SELECT_MORI:
-	case SELECT_OHTA:
-	case SELECT_IWASAWA:
-	case SELECT_SAITOU:
-		//たや
-		//なかむら
 		break;
 	}
 }
