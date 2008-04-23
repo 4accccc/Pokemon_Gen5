@@ -122,7 +122,8 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	pc->slideSeq = 0;
 	pc->status = statusDefault;
 
-	Set3DactDrawSw( pc->sceneAct, TRUE );
+	//Set3DactDrawSw( pc->sceneAct, TRUE );
+	Set3DactDrawSw( pc->sceneAct, FALSE );
 	{
 		PHMV_SETUP setup;
 
