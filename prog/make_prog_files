@@ -1,6 +1,22 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=		test\testmode.c
-				
+SRCS	+=		test/testmode.c \
+				test/tetsu/game/calc_ph.c \
+				test/tetsu/game/gamemain.c \
+				test/tetsu/game/setup.c \
+				test/tetsu/game/act3d.c \
+				test/tetsu/game/map3d.c \
+				test/tetsu/game/game_cont.c \
+				test/tetsu/game/team_cont.c \
+				test/tetsu/game/player_cont.c \
+				test/tetsu/game/camera_cont.c \
+				test/tetsu/game/status_cont.c \
+				test/tetsu/game/text_cont.c \
+				test/tetsu/game/skill_cont.c \
+				test/tetsu/game/game_net.c \
+				test/tetsu/game/mouse_event.c \
+				test/tetsu/game/fld_act.c \
+				test/tetsu/debug_watanabe.c
+	
 #================================================
 # ここから下はオーバーレイプログラム定義
 #================================================
