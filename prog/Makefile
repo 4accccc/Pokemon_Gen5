@@ -77,18 +77,16 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定
 #----------------------------------------------------------------------------
-GFLIBGRADIR	= gfl_graphic/
-TESTGRADIR	= src/test/test_graphic/
+#ロムファイル指定(GFL)
+GFL_FILE_TREE	= utility.bin \
+			  wmi.narc \
+              gfl_font.dat
+GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
-FILE_TREE	= $(GFLIBGRADIR)utility.bin \
-			  $(GFLIBGRADIR)wmi.narc \
-              $(GFLIBGRADIR)gfl_font.dat \
-              $(TESTGRADIR)*.narc
+#ロムファイル指定(GAME)
+GAME_FILE_TREE	= ../src/test/test_graphic/*.narc
 			  
-#ロムファイルシステムのルートディレクトリ指定
-MAKEROM_ROMROOT  = ./
-
-MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
+MAKEROM_ROMFILES = $(GAME_FILE_TREE)
 
 #----------------------------------------------------------------------------
 #	ロムスペックファイル読み込みのため追加

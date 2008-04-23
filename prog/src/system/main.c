@@ -92,6 +92,8 @@ static	void	SkeltonVBlankFunc(void)
  * @brief		ゲームごとの初期化処理
  */
 //------------------------------------------------------------------
+extern void TestModeSet( void );	//←サンプルデバッグモード
+
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
@@ -99,7 +101,7 @@ static	void	GameInit(void)
     // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
     GFL_NET_Boot( GFL_HEAPID_APP, NULL );
 	/* 起動プロセスの設定 */
-//	TestModeSet();	//←サンプルデバッグモード
+	TestModeSet();	//←サンプルデバッグモード
 }
 
 

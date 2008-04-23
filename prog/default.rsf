@@ -133,11 +133,16 @@ RomSpec
 	Offset		0x00000000
 	Segment		ALL
 	Padding		0xff
-	HostRoot	$(MAKEROM_ROMROOT)
-	Root		/
-	File		$(MAKEROM_ROMFILES)
 
-	HostRoot	gfl_graphic
+	HostRoot	./
+	Root		/gfl_graphic/
+	File		$(GFL_MAKEROM_ROMFILES)
+
+	HostRoot	./
 	Root	/dwc
-	File	utility.bin
+	File	gfl_graphic/utility.bin
+
+	HostRoot	./
+	Root		/game_graphic/
+	File		$(GAME_MAKEROM_ROMFILES)
 }

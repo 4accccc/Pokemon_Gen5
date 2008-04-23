@@ -136,7 +136,7 @@ static const GFL_BG_BGCNT_HEADER bgCont0 = {
  * @brief		２Ｄデータコントロール
  */
 //------------------------------------------------------------------
-static const char font_path[] = {"src/gfl_graphic/gfl_font.dat"};
+static const char font_path[] = {"gfl_font.dat"};
 
 #define G2D_BACKGROUND_COL	(0x0000)
 #define G2D_FONT_COL		(0x7fff)

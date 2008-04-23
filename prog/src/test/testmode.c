@@ -115,9 +115,9 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
 
 		//パーティクルリソース読み込み
-		testmode->ptc = GFL_PTC_Create
-					( testmode->spa_work, PARTICLE_LIB_HEAP_SIZE, TRUE, testmode->heapID );
-		GFL_PTC_SetResource(testmode->ptc,GFL_PTC_LoadArcResource(0,0,testmode->heapID),TRUE,NULL);
+//		testmode->ptc = GFL_PTC_Create
+//					( testmode->spa_work, PARTICLE_LIB_HEAP_SIZE, TRUE, testmode->heapID );
+//		GFL_PTC_SetResource(testmode->ptc,GFL_PTC_LoadArcResource(0,0,testmode->heapID),TRUE,NULL);
 
 		//testmode->listPosition = 0;
 		testmode->seq++;
@@ -169,10 +169,10 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		g3d_control_effect(testmode);
 		g2d_draw(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
-		if(GFL_PTC_GetEmitterNum(testmode->ptc)<5){
-			VecFx32	pos={0,0,0};
-			GFL_PTC_CreateEmitter(testmode->ptc,0,&pos);
-		}
+//		if(GFL_PTC_GetEmitterNum(testmode->ptc)<5){
+//			VecFx32	pos={0,0,0};
+//			GFL_PTC_CreateEmitter(testmode->ptc,0,&pos);
+//		}
 		break;
 
 	case 4:
@@ -221,10 +221,10 @@ static void	bg_init( HEAPID heapID )
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ARCシステム初期化
-	GFL_ARC_Init(&GraphicFileTable[0],1);
+	GFL_ARC_Init(&GraphicFileTable[0],NELEMS(GraphicFileTable));
 
 	//パーティクルシステム起動
-	GFL_PTC_Init(heapID);
+//	GFL_PTC_Init(heapID);
 
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -235,7 +235,7 @@ static void	bg_exit( void )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
-	GFL_PTC_Exit();
+//	GFL_PTC_Exit();
 	GFL_ARC_Exit();
 
 	GFL_G3D_DOUBLE3D_Exit();
@@ -376,7 +376,7 @@ static void	g2d_unload( TESTMODE_WORK * testmode )
  * @brief		３Ｄデータ
  */
 //------------------------------------------------------------------
-static const char g3DarcPath[] = {"test_graphic/titledemo.narc"};
+static const char g3DarcPath[] = {"src/test/test_graphic/titledemo.narc"};
 
 enum {
 	G3DRES_AIR_BMD = 0,
@@ -512,7 +512,7 @@ static void g3d_draw( TESTMODE_WORK * testmode )
 #endif
 	GFL_G3D_DRAW_Start();
 
-	GFL_PTC_Main();
+//	GFL_PTC_Main();
 
 #if 0
 	//カメラセット
