@@ -37,9 +37,6 @@ struct _MOUSE_EVENT_SYS {
 	HEAPID			heapID;
 	GAME_SYSTEM*	gs;
 
-	u16				g3DutilUnitIdx;
-	u16				g3DutilObjIdx;
-
 	u16				mouseActionMode;
 
 	u16				mouseCursorID;
@@ -51,7 +48,6 @@ struct _MOUSE_EVENT_SYS {
 	u32				jumpTrgEnableCount;
 
 	u32				attackModeFrameCounter;
-	ATKMODE_STATUS	attackStatus;
 	BOOL			scrDrawFlag;
 };
 
@@ -66,7 +62,6 @@ enum {
 	EVENT_MODE_NONE = 0,
 	EVENT_MODE_MOVE,
 	EVENT_MODE_ICON,
-	EVENT_MODE_ATTACK,
 };
 
 enum {
@@ -88,52 +83,7 @@ typedef struct {
 	BOOL			selectMode;
 }ICON_AREA;
 
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄセットアップデータ
- */
-//------------------------------------------------------------------
-#include "graphic_data/test_graphic/test3d.naix"
-//------------------------------------------------------------------
-enum {
-	G3DRES_MOUSE_CURSOR = 0,
-};
-
-//３Ｄグラフィックリソーステーブル
-static const GFL_G3D_UTIL_RES g3DresTbl[] = {
-	{ ARCID_SAMPLE, NARC_haruka_test_wall_nsbmd, GFL_G3D_UTIL_RESARC },
-};
-
-//------------------------------------------------------------------
-enum {
-	G3DOBJ_MOUSE_CURSOR = 0,
-};
-
-//３Ｄオブジェクト定義テーブル
-static const GFL_G3D_UTIL_OBJ g3DobjTbl[] = {
-	{ G3DRES_MOUSE_CURSOR, 0, G3DRES_MOUSE_CURSOR, NULL, 0 },
-};
-
-//------------------------------------------------------------------
-//設定テーブルデータ
-static const GFL_G3D_UTIL_SETUP g3Dsetup = {
-	g3DresTbl, NELEMS(g3DresTbl),
-	g3DobjTbl, NELEMS(g3DobjTbl),
-};
-
-//------------------------------------------------------------------
-static const GFL_G3D_SCENEOBJ_DATA mouseCursorData[] = {
-	{ 
-		G3DOBJ_MOUSE_CURSOR, 0, 0, 24, FALSE, FALSE, 
-		{	{ 0, 0, 0 },
-			{ FX32_ONE/8 , FX32_ONE/8, FX32_ONE/8 },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},NULL,
-	},
-};
-
 static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
-static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
 static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes, TP_STATUS* tp );
 
 static void setMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
@@ -141,7 +91,6 @@ static void resetMouseEvent( MOUSE_EVENT_SYS* mes, u32 checkEventID );
 static BOOL setJumpTrg( MOUSE_EVENT_SYS* mes );
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes );
 static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes );
-static void resetAttackModeStatus( MOUSE_EVENT_SYS* mes );
 
 static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos );
 //------------------------------------------------------------------
@@ -165,29 +114,11 @@ MOUSE_EVENT_SYS* InitMouseEvent( GAME_SYSTEM* gs, HEAPID heapID )
 
 	resetJumpTrg( mes );
 	ClearMouseEvent( mes );
-	//３Ｄデータセットアップ
-	{
-		GFL_G3D_SCENE* g3Dscene = Get_GS_G3Dscene( mes->gs );
-		mes->g3DutilUnitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3Dsetup );
-		mes->g3DutilObjIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, mes->g3DutilUnitIdx );
-
-
-		mes->mouseCursorID = GFL_G3D_SCENEOBJ_Add( g3Dscene,	
-										mouseCursorData, NELEMS(mouseCursorData),
-										mes->g3DutilObjIdx );
-	}
 	return mes;
 }
 
 void ExitMouseEvent( MOUSE_EVENT_SYS* mes )
 {
-	{
-		GFL_G3D_SCENE* g3Dscene = Get_GS_G3Dscene( mes->gs );
-
-		GFL_G3D_SCENEOBJ_Remove( g3Dscene, mes->mouseCursorID, NELEMS(mouseCursorData) );
-		GFL_G3D_SCENE_DelG3DutilUnit( g3Dscene, mes->g3DutilUnitIdx );
-	}
-
 	GFL_HEAP_FreeMemory( mes );
 }
 
@@ -297,30 +228,6 @@ static void clearMouseIconEffect( const GFL_UI_TP_HITTBL *tbl )
 }
 
 //------------------------------------------------------------------
-static void setMouseCursorSW( MOUSE_EVENT_SYS* mes, BOOL drawSw )
-{
-	GFL_G3D_SCENEOBJ*	g3DsceneObj;
-
-	g3DsceneObj = GFL_G3D_SCENEOBJ_Get( Get_GS_G3Dscene( mes->gs ), mes->mouseCursorID );
-
-	if( drawSw == TRUE ){
-		GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &mes->mouseCursorPos );
-		{
-			GFL_G3D_OBJ* g3Dobj = GFL_G3D_SCENEOBJ_GetG3DobjHandle( g3DsceneObj );
-			NNSG3dRenderObj* renderobj = GFL_G3D_RENDER_GetRenderObj
-										( GFL_G3D_OBJECT_GetG3Drnd(g3Dobj) );
-			NNSG3dResMdl* resMdl = NNS_G3dRenderObjGetResMdl( renderobj );
-
-			//NNS_G3dMdlSetMdlPolygonID( resMdl, 0, 1 );				// ポリゴンIDは1-63に設定
-			//NNS_G3dMdlSetMdlCullMode( resMdl, 0, GX_CULL_NONE );	// 両面描画
-			//NNS_G3dMdlSetMdlAlpha( resMdl, 0, 10 );
-			//NNS_G3dMdlSetMdlPolygonMode( resMdl, 0, GX_POLYGONMODE_SHADOW );// シャドウポリゴン
-		}
-	}
-	GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, &drawSw );
-}
-
-//------------------------------------------------------------------
 /**
  * @brief	マウスイベント判定(常時項目)
  */
@@ -344,7 +251,6 @@ static void MainMouseEventAnyTime( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 		setMouseIconEffect( tpHitTbl1, tblPos );
 
 		if( tblPos != GFL_UI_TP_HIT_NONE ){
-			setMouseCursorSW( mes, FALSE );
 			setMouseEvent( mes, tpHitComTbl1[ tblPos ] );
 		}
 	} else {
@@ -404,9 +310,6 @@ static void MainMouseEventLimited( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 		case MOUSE_ACTION_NORMAL:
 			MainMouseEventNormal( mes, tp );
 			break;
-		case MOUSE_ACTION_ATTACK:
-			MainMouseEventAttack( mes, tp );
-			break;
 		case MOUSE_ACTION_GROUND_SELECT:
 			MainMouseEventGroundSelect( mes, tp );
 			break;
@@ -416,7 +319,6 @@ static void MainMouseEventLimited( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 static void ResetMouseEventLimited( MOUSE_EVENT_SYS* mes )
 {
 	resetJumpTrg( mes );	//ジャンプ判定削除
-	setMouseCursorSW( mes, FALSE );
 }
 
 //------------------------------------------------------------------
@@ -440,7 +342,6 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 
 			resetJumpTrg( mes );	//ジャンプ判定削除
 			mes->selectIcon = tblPos;
-			setMouseCursorSW( mes, FALSE );
 
 			if( iconarea_data[ tblPos ].selectMode == TRUE ){
 				mes->mouseActionMode = MOUSE_ACTION_GROUND_SELECT;	//地形選択モードに移行
@@ -450,21 +351,6 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 			return;
 		}
 		mes->selectIcon = -1;
-
-		//攻撃トリガ判定
-		tblPos = _tblHitCheck( attacktp_data_trg, tp->x, tp->y );
-		if( tblPos != GFL_UI_TP_HIT_NONE ){
-			resetJumpTrg( mes );	//ジャンプ判定削除
-	
-			mes->attackModeFrameCounter = 0;
-			resetAttackModeStatus( mes );	//攻撃モードステータス初期化
-
-			setMouseEvent( mes, MOUSE_EVENT_ATTACK_READY );
-			mes->mouseActionMode = MOUSE_ACTION_ATTACK;	//攻撃モードに移行
-
-			setMouseCursorSW( mes, FALSE );
-			return;
-		}
 	}
 	clearMouseIconEffect( icontp_data );
 
@@ -481,7 +367,6 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 			} else {
 				setMouseEvent( mes, MOUSE_EVENT_MOVE );
 			}
-			setMouseCursorSW( mes, FALSE );
 		}
 	} else {
 		if( checkJumpTrg( mes ) == TRUE ){
@@ -489,100 +374,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 		}
 		resetJumpTrg( mes );
 
-		setMouseCursorSW( mes, FALSE );
 	}
-}
-
-//------------------------------------------------------------------
-// 攻撃モード
-static const GFL_UI_TP_HITTBL attacktp_data_direct[] = {
-	{ 0, 128-1, 104, 152-1 },			//前方
-	{ 128, 192-1, 104, 152-1 },			//後方
-	{ 0, 128-1, 0, 128-1 },				//左上
-	{ 0, 128-1, 128, 256-1 },			//右上
-	{ 128, 192-1, 0, 128-1 },			//左下
-	{ 128, 192-1, 128, 256-1 },			//右下
-
-	{GFL_UI_TP_HIT_END,0,0,0},			//終了データ
-};
-
-static const MOUSE_EVENT attack_data[] = {	//attacktp_data_directと対応
-	MOUSE_EVENT_ATTACK_1,				//前方
-	MOUSE_EVENT_ATTACK_2,				//後方
-	MOUSE_EVENT_ATTACK_3,				//左上
-	MOUSE_EVENT_ATTACK_4,				//右上
-	MOUSE_EVENT_ATTACK_5,				//左下
-	MOUSE_EVENT_ATTACK_6,				//右下
-};
-
-static void MainMouseEventAttack( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
-{
-	int		tpContTblPos;
-
-	//モード有効期間１秒間
-	if( mes->attackModeFrameCounter >= 30 ){
-		setMouseEvent( mes, MOUSE_EVENT_ATTACK_END );
-		mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
-		return;
-	}
-	mes->attackModeFrameCounter++;
-	{
-		//仮エフェクト
-		u8 plt = PLAYICON_PLTT;
-
-		if( mes->attackModeFrameCounter & 0x0002 ){
-			plt++;
-		}
-		GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, plt );
-		mes->scrDrawFlag = TRUE;
-	}
-	if( tp->cont == TRUE ){
-		if( mes->attackStatus.startx != 0 ){
-			mes->attackStatus.nowx = tp->x;
-			mes->attackStatus.nowy = tp->y;
-		}
-	} else {
-		if( mes->attackStatus.startx != 0 ){
-			VecFx32 diff;
-			u16		theta;
-			int type = 0;
-			{
-				//仮エフェクト終了
-				u8 plt = PLAYICON_PLTT;
-
-				GFL_BG_ChangeScreenPalette( PLAYICON_FRM, 0, 0, 32, 24, plt );
-				mes->scrDrawFlag = TRUE;
-			}
-
-			if(( mes->attackStatus.nowx == mes->attackStatus.startx)
-				&&( mes->attackStatus.nowy == mes->attackStatus.starty)){
-				setMouseEvent( mes, MOUSE_EVENT_ATTACK_END );
-			} else {
-				diff.x = (mes->attackStatus.nowx - mes->attackStatus.startx) * FX32_ONE;
-				diff.y = (mes->attackStatus.nowy - mes->attackStatus.starty) * FX32_ONE;
-				//VEC_Normalize( &diff, &diff );
-				theta = FX_Atan2Idx( diff.y,  diff.x ); //theta 0 = 右方向となり、時計回りに増加
-
-				if( theta < 0x3000 ){ type = 2; }
-				else if( theta < 0x5000 ){ type = 1; }
-				else if( theta < 0x8000 ){ type = 3; }
-				else if( theta < 0xb000 ){ type = 5; }
-				else if( theta < 0xd000 ){ type = 0; }
-				else { type = 4; }
-
-				setMouseEvent( mes, attack_data[ type ] );
-			}
-			mes->mouseActionMode = MOUSE_ACTION_NORMAL;	//通常モードに復帰
-			return;
-		}
-	}
-	if( tp->trg == TRUE ){
-		mes->attackStatus.startx = tp->x;
-		mes->attackStatus.starty = tp->y;
-		mes->attackStatus.nowx = tp->x;
-		mes->attackStatus.nowy = tp->y;
-	}
-	setMouseEvent( mes, MOUSE_EVENT_ATTACK_READY );
 }
 
 //------------------------------------------------------------------
@@ -592,8 +384,6 @@ static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 
 	if( tp->trg == TRUE ){
 		if( GetCursorVec( tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
-			setMouseCursorSW( mes, TRUE );
-
 			setMouseEvent( mes, iconarea_data[ mes->selectIcon ].me );
 
 			clearMouseIconEffect( icontp_data );
@@ -648,19 +438,6 @@ static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes )
 		}
 	}
 	return FALSE;
-}
-
-//------------------------------------------------------------------
-static void setAttackModeStatus( MOUSE_EVENT_SYS* mes )
-{
-}
-
-static void resetAttackModeStatus( MOUSE_EVENT_SYS* mes )
-{
-	mes->attackStatus.startx = 0;
-	mes->attackStatus.starty = 0;
-	mes->attackStatus.nowx = 0;
-	mes->attackStatus.nowy = 0;
 }
 
 //------------------------------------------------------------------

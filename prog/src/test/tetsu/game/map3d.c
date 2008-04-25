@@ -80,7 +80,7 @@ typedef struct {
 
 static MAP_GRID_DATA*	mapGridData;
 
-#define mapScale		(FX32_ONE*4)
+#define mapScale		(FX32_ONE*2)
 #define mapSizeX		(32)
 #define mapSizeZ		(32)
 #define mapGrid			(mapScale*16)
@@ -803,7 +803,7 @@ static void CreateMapGridData( HEAPID heapID )
 
 	for( z=0; z<mapSizeZ; z++ ){
 		for( x=0; x<mapSizeX; x++ ){
-#if 0
+#if 1
 			i = z * mapSizeX + x;
 
 			if( (x == 0)||(x == mapSizeX-1)||(z == 0)||(z == mapSizeZ-1)){

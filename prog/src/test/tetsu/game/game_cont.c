@@ -304,7 +304,7 @@ void MainGameControl( GAME_CONTROL* gc )
 		gc->onGameFlag = FALSE;
 		//gc->onGameFlag = TRUE;
 		gc->endGameFlag = FALSE;
-		PutMessageWin( gc->mwc, GMSG_GAME_START_WAIT );
+		PutMessageWin( gc->mwc, GMSG_GAME_INFO );
 		gc->seq = GAME_CASTLE_BUILD_ON;
 		break;
 
@@ -327,7 +327,7 @@ void MainGameControl( GAME_CONTROL* gc )
 
 	case GAME_START:
 		gc->time = 0;
-		PutMessageWin( gc->mwc, GMSG_GAME_START );
+		//PutMessageWin( gc->mwc, GMSG_GAME_START );
 		gc->seq = GAME_ON;
 		break;
 
@@ -458,13 +458,13 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 						if( CreateSummonObject( mccw->tc, mccw->tID+1, &setTrans ) != -1 ){
 							MakeTeamMapAreaMask( mccw->tc );
 						} else {
-							PutMessageWinMine( mccw->gc, GMSG_SUMMON_MAXERROR, pc );
+							//PutMessageWinMine( mccw->gc, GMSG_SUMMON_MAXERROR, pc );
 						}
 					} else {
-						PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREACONFLICT, pc );
+						//PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREACONFLICT, pc );
 					}
 				} else {
-					PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREAOUTRANGE, pc );
+					//PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREAOUTRANGE, pc );
 				}
 			}
 			if( GetPlayerDeadFlag( pc ) == TRUE ){	//死亡時の拠点ダメージ
