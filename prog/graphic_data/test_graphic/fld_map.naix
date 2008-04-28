@@ -1,0 +1,22 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld_map.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2008-04-25T17:46:36
+ *****************************************************************************/
+
+#ifndef NARC_FLD_MAP_NAIX_
+#define NARC_FLD_MAP_NAIX_
+
+enum {
+	NARC_fld_map_map14_16c_nsbmd = 0,
+	NARC_fld_map_map21_18c_nsbmd = 1,
+	NARC_fld_map_map21_19c_nsbmd = 2,
+	NARC_fld_map_map22_18c_nsbmd = 3,
+	NARC_fld_map_map22_19c_nsbmd = 4
+};
+
+/* NARC_FLD_MAP_NAIX_ */
+#endif
