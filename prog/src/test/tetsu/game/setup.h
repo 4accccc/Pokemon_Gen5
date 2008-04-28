@@ -63,6 +63,7 @@ enum {
 	ARCID_MAPOBJ,
 	ARCID_EFFECT,
 	ARCID_FLDACT,
+	ARCID_FLDMAP,
 };
 
 //---------------------

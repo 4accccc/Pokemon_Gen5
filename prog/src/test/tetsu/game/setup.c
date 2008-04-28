@@ -93,6 +93,7 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/mapobj.narc",
 	"test_graphic/spaEffect.narc",
 	"test_graphic/fld_act.narc",
+	"test_graphic/fld_map.narc",
 };
 
 //------------------------------------------------------------------
@@ -452,7 +453,7 @@ static void G3DsysSetup( void )
 
 
 SCENE_ACT* testSceneAct[8];
-#define	NPC_SETNUM	(2)
+#define	NPC_SETNUM	(0)
 //------------------------------------------------------------------
 /**
  * @brief		３Ｄデータロード
@@ -532,7 +533,7 @@ static void g3d_draw( GAME_SYSTEM* gs )
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
 	GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
 //TEST
-	Draw3Dmap( gs->sceneMap, gs->g3Dcamera[MAINCAMERA_ID] );
+	//Draw3Dmap( gs->sceneMap, gs->g3Dcamera[MAINCAMERA_ID] );
 //TEST
 	DrawFieldActSys( gs->fldActSys );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
@@ -649,8 +650,10 @@ static void	g2d_load( GAME_SYSTEM* gs )
 								PLTT_DATSIZ*2, PLAYICON_PLTT * PLTT_DATSIZ );
 			GFL_BG_LoadCharacter( PLAYICON_FRM, GetCharData_for_NitroCharData( playicon_char ),
 								8*16*0x20, 0 );
+#if 0
 			GFL_BG_LoadScreenBuffer( PLAYICON_FRM, GetScrnData_for_NitroScrnData( playicon_scrn ), 
 								0x800 );
+#endif
 			GFL_HEAP_FreeMemory( playicon_scrn );
 			GFL_HEAP_FreeMemory( playicon_char );
 			GFL_HEAP_FreeMemory( playicon_pltt );

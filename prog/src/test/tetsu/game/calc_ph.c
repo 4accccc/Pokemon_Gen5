@@ -38,45 +38,6 @@ struct _CALC_PH_MV {
 	VecFx32	vecMove;
 };
 
-//ベクトルのスカラー乗算（a * b）
-static void	inline VEC_Mult( const fx32 a, const VecFx32* b, VecFx32* dst ) 
-{
-	dst->x = FX_Mul( a, b->x );
-	dst->y = FX_Mul( a, b->y );
-	dst->z = FX_Mul( a, b->z );
-}
-
-//ベクトルのスカラー除算（b / a）
-static void	inline VEC_Divt( const fx32 a, const VecFx32* b, VecFx32* dst ) 
-{
-	GF_ASSERT( a );
-
-	dst->x = FX_Div( b->x, a );
-	dst->y = FX_Div( b->y, a );
-	dst->z = FX_Div( b->z, a );
-}
-
-//ベクトルの投影演算（aをbへ投影）
-static void	inline VEC_Proj( const VecFx32* a, const VecFx32* b, VecFx32* dst ) 
-{
-	// Ｂは正規化済みであること
-	// 　※ＡをＢに投影するのは、Ｂは正規化済みであることを前提で (Ａ・Ｂ)Ｂ
-	// 　　正確には(Ａ・Ｂ)Ｂ／(Ｂの長さ)
-	fx32 scalar = VEC_DotProduct( a, b );
-	VEC_Mult( scalar, b, dst );
-}
-
-//ベクトルの反射演算（aをb軸に対して反射）
-static void	inline VEC_Refrect( const VecFx32* a, const VecFx32* b, VecFx32* dst ) 
-{
-	// Ｂは正規化済みであること
-	VecFx32 vecP;
-
-	VEC_Proj( a, b, &vecP ); 
-	VEC_Set( &vecP, -vecP.x, -vecP.y, -vecP.z );	//負方向に変換
-	VEC_MultAdd( 2 * FX32_ONE, &vecP, a, dst );
-}
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static BOOL	CheckOnGround( CALC_PH_MV* calcPHMV, VecFx32* pos, fx32* y )

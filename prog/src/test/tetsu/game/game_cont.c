@@ -162,7 +162,7 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 			statusSetUp.cc				= gc->cc;
 			statusSetUp.myPc			= gc->myPc;
 
-			gc->stc = AddStatusControl( &statusSetUp );
+			//gc->stc = AddStatusControl( &statusSetUp );
 		}
 	}
 	//マウス（タッチペン）コントローラ登録
@@ -184,7 +184,7 @@ void RemoveGameControl( GAME_CONTROL* gc )
 {
 	int i;
 
-	RemoveStatusControl( gc->stc );
+	//RemoveStatusControl( gc->stc );
 
 	RemoveSkillControl( gc->sc );
 	RemoveCameraControl( gc->cc );
@@ -293,7 +293,7 @@ void MainGameControl( GAME_CONTROL* gc )
 	MainCameraControl( gc->cc );
 	MainSkillControl( gc->sc, gc->onGameFlag );
 
-	MainStatusControl( gc->stc );
+	//MainStatusControl( gc->stc );
 
 	MainMapWinControl( gc->mpwc );
 	SetMapWinMask( Get_GS_BmpWin( gc->gs, G2DBMPWIN_MASK ), gc->myTc );
@@ -849,7 +849,7 @@ void		ChangeControlPlayer( GAME_CONTROL* gc, int playNetID )
 		}
 	}
 	ChangeMapWinControl( gc->mpwc, gc->myPc, gc->myTc );
-	ChangeStatusControl( gc->stc , gc->myPc );
+	//ChangeStatusControl( gc->stc , gc->myPc );
 
 	SetMapAreaMaskDrawFlag( gc->myTc, &sw );
 	GFL_HEAP_FreeMemory( ccw );

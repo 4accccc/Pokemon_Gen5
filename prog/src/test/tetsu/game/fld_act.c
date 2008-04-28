@@ -157,7 +157,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		actWork->work[0]--;
 	}
 	{
-		VecFx32 nowTrans, vecMove, rotVec;
+		VecFx32 nowTrans, nextTrans, vecMove, vecGround, rotVec;
 		u16	 theta = actWork->work[1];
 		fx32 speed = FX32_ONE;
 
@@ -182,9 +182,18 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-		VEC_MultAdd( speed, &vecMove, &nowTrans, &nowTrans );
-		if( CheckGroundOutRange( &nowTrans ) == TRUE ){
-			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nowTrans );
+#if 0
+		VEC_MultAdd( speed, &vecMove, &nowTrans, &nextTrans );
+		GetGroundPlaneHeight( &nextTrans, &nextTrans.y );
+		nextTrans.y += FX32_ONE*7;	//•â³
+#else
+		GetGroundMovePos( &nowTrans, &vecMove, &nextTrans ); 
+		nextTrans.y += FX32_ONE*7;	//•â³
+#endif
+		if( CheckGroundOutRange( &nextTrans ) == TRUE ){
+			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nextTrans );
+		} else {
+			actWork->work[0] = 0;
 		}
 	}
 }
@@ -213,9 +222,13 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 		actData[i].resID = GFUser_GetPublicRand( 10 );
 		actData[i].sizX = FX16_ONE*8-1;
 		actData[i].sizY = FX16_ONE*8-1;
-		actData[i].trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-		actData[i].trans.y = FX32_ONE*7;
-		actData[i].trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+
+		do{
+			actData[i].trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+			actData[i].trans.y = 0;
+			actData[i].trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+		}while( CheckGroundOutRange( &actData[i].trans ) == FALSE );
+		
 		actData[i].alpha = 31;
 		actData[i].drawEnable = TRUE;
 		actData[i].func = testFunc;

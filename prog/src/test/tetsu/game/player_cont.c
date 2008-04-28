@@ -122,15 +122,17 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	pc->slideSeq = 0;
 	pc->status = statusDefault;
 
-	//Set3DactDrawSw( pc->sceneAct, TRUE );
-	Set3DactDrawSw( pc->sceneAct, FALSE );
+	Set3DactDrawSw( pc->sceneAct, TRUE );
+	//Set3DactDrawSw( pc->sceneAct, FALSE );
 	{
 		PHMV_SETUP setup;
 
 		setup.getGroundVecN_func = GetGroundPlaneVecN;
 		setup.getGroundHeight_func = GetGroundPlaneHeight;
 
-		setup.gravityMove = 9.8f * FX32_ONE/30;//86;
+		//setup.gravityMove = 9.8f * FX32_ONE/30;//86;
+		//setup.gravityFall = 9.8f * FX32_ONE/15;
+		setup.gravityMove = 0;
 		setup.gravityFall = 9.8f * FX32_ONE/15;
 		setup.planeMarginTheta = 0x0100;
 		setup.absorbVal = PHMV_FULL_ABSORB;
@@ -605,7 +607,7 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		&&( GetMoveSpeedPHMV( pc->calcPHMV ) < RUN_SPEED / 4 )
 		&&( pc->calcMoveEnable == TRUE )){
 		//ŽÎ–Ê‚É‚¢‚é‚Æ‚«Aˆê’è‘¬“xˆÈ‰º‚È‚ç‚·‚×‚èó‘Ô‚É‚·‚é
-		pc->slideSeq = 1;
+		//pc->slideSeq = 1;
 		return;
 	}
 

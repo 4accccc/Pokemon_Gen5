@@ -29,6 +29,8 @@ extern BOOL	CheckGroundOutRange( const VecFx32* pos );
 extern BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD );
 extern void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN );
 extern void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height );
+extern void	GetGroundMoveVec( const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove );
+extern void	GetGroundMovePos( const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext );
 
 extern void	SetMapGroundUp( VecFx32* pos );
 extern void	SetMapGroundDown( VecFx32* pos );
