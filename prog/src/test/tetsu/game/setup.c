@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include "gflib.h"
+#include "include\system\gfl_use.h"
 #include "textprint.h"
 #include "include/system/gfl_use.h"
 
@@ -453,7 +454,7 @@ static void G3DsysSetup( void )
 
 
 SCENE_ACT* testSceneAct[8];
-#define	NPC_SETNUM	(0)
+#define	NPC_SETNUM	(4)
 //------------------------------------------------------------------
 /**
  * @brief		ÇRÇcÉfÅ[É^ÉçÅ[Éh
@@ -493,8 +494,17 @@ static void g3d_load( GAME_SYSTEM* gs )
 	//ÇmÇoÇbÉeÉXÉg
 	{
 		int i;
+		VecFx32 trans;
+
 		for( i=0; i<NPC_SETNUM; i++ ){
 			testSceneAct[i] = Create3DactNPC( gs->g3Dscene, gs->heapID );
+
+			do{
+				trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+				trans.y = 0;
+				trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+			}while( CheckGroundOutRange( &trans ) == FALSE );
+			Set3DactTrans( testSceneAct[i], &trans );
 		}
 	}
 	//-------------------

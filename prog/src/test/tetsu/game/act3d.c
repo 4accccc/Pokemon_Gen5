@@ -1063,7 +1063,7 @@ static void moveRiz( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		actWork->work[0]--;
 	}
 	{
-		VecFx32 nowTrans, vecMove, rotVec;
+		VecFx32 nowTrans, nextTrans, vecMove, rotVec;
 		u16	 theta = actWork->work[1];
 		fx32 speed = 1 * FX32_ONE;
 
@@ -1072,9 +1072,12 @@ static void moveRiz( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-		VEC_MultAdd( speed, &vecMove, &nowTrans, &nowTrans );
-		if( CheckGroundOutRange( &nowTrans ) == TRUE ){
-			Set3DactTrans( sceneAct, &nowTrans );
+		GetGroundMovePos( &nowTrans, &vecMove, &nextTrans ); 
+
+		if( CheckGroundOutRange( &nextTrans ) == TRUE ){
+			Set3DactTrans( sceneAct, &nextTrans );
+		} else {
+			actWork->work[0] = 0;
 		}
 		rotVec.x = 0;
 		rotVec.y = actWork->work[1];
