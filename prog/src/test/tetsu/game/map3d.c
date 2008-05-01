@@ -22,39 +22,6 @@ typedef struct {
 	u16	count;
 }MAPOBJ_HEADER;
 
-struct _SCENE_MAP {
-	GFL_G3D_SCENE*		g3Dscene;
-	u16					unitIdx;
-	u16					resIdx;
-	u16					objIdx;
-	u16*				mapAttr;
-	MAPOBJ_HEADER		defaultFloor;
-	MAPOBJ_HEADER		extraObject[EXOBJ_MAX];
-	u16					anmTimer;
-};
-
-typedef struct {
-	const char*				data;
-	GFL_G3D_SCENEOBJ_DATA	floor;
-}MAPDATA;
-
-typedef struct {
-	const GFL_G3D_SCENEOBJ_DATA*	data;
-	int								count;
-}EXOBJ_DATATABLE;
-
-typedef struct { 
-	int			seq;
-
-}EXMAPOBJ_WORK;//setup.cで指定されているサイズに収めるように注意
-
-enum {
-	QUAD_TYPE_PLANE = 0,
-	QUAD_TYPE_SLIDE,
-	TRIANGLE_TYPE_021_312,
-	TRIANGLE_TYPE_230_103,
-};
-
 typedef struct {
 	u8	vtxY0;	
 	u8	vtxY1;
@@ -78,8 +45,37 @@ typedef struct {
 
 }MAP_GRID_DATA;
 
-static MAP_GRID_DATA*	mapGridData;
+struct _SCENE_MAP {
+	GFL_G3D_SCENE*		g3Dscene;
+	u16					unitIdx;
+	u16					resIdx;
+	u16					objIdx;
+	MAPOBJ_HEADER		floor;
+	MAP_GRID_DATA*		floorGrid;
+	MAPOBJ_HEADER		extraObject[EXOBJ_MAX];
+	u16					anmTimer;
+};
 
+typedef struct {
+	const GFL_G3D_SCENEOBJ_DATA*	data;
+	u16								dataCount;
+	const char*						attr;
+	const MAP_GRIDMAKE_DATA*		grid;
+}MAPDATA;
+
+typedef struct { 
+	int			seq;
+
+}EXMAPOBJ_WORK;//setup.cで指定されているサイズに収めるように注意
+
+enum {
+	QUAD_TYPE_PLANE = 0,
+	QUAD_TYPE_SLIDE,
+	TRIANGLE_TYPE_021_312,
+	TRIANGLE_TYPE_230_103,
+};
+
+SCENE_MAP*		DEBUG_sceneMap;
 #define mapScale		(FX32_ONE*1)
 #define mapSizeX		(32)
 #define mapSizeZ		(32)
@@ -88,16 +84,17 @@ static MAP_GRID_DATA*	mapGridData;
 #define defaultMapZ		(-mapGrid*(mapSizeZ/2)+mapGrid/2)
 #define mapHeight		(FX16_ONE)
 
-static void	MapDataCreate( SCENE_MAP* sceneMap, const MAPDATA* map, HEAPID heapID );
-static void MapDataDelete( SCENE_MAP* sceneMap );
 static void AddExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj, int objID, VecFx32* trans );
 static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj );
-static const	MAPDATA mapDataTbl;
 static const	GFL_G3D_SCENEOBJ_DATA mapTest[4];
-static const	EXOBJ_DATATABLE extraObjectDataTbl[5];
+static const	MAPDATA extraObjectDataTbl[5];
 
-static void CreateMapGridData( HEAPID heapID );
-static void DeleteMapGridData( void );
+static void	CreateMapGraphicData( SCENE_MAP* sceneMap, int mapID );
+static void	DeleteMapGraphicData( SCENE_MAP* sceneMap );
+static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID );
+static void DeleteMapGridData( SCENE_MAP* sceneMap );
+
+static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -105,6 +102,7 @@ static void DeleteMapGridData( void );
 //------------------------------------------------------------------
 #include "graphic_data/test_graphic/test3d.naix"
 #include "graphic_data/test_graphic/fld_map.naix"
+#include "graphic_data/test_graphic/build_model_id.h"
 
 enum {
 	G3DRES_MAP_FLOOR = 0,
@@ -119,21 +117,37 @@ enum {
 	G3DRES_MAP_FLOOR1,
 	G3DRES_MAP_FLOOR2,
 	G3DRES_MAP_FLOOR3,
+	G3DRES_BLD_BUILD0,
+	G3DRES_BLD_BUILD1,
+	G3DRES_BLD_BUILD2,
+	G3DRES_BLD_BUILD3,
+	G3DRES_BLD_DOOR0,
+	G3DRES_BLD_DOOR1,
+	G3DRES_BLD_DOOR2,
+	G3DRES_BLD_DOOR3,
 };
 //３Ｄグラフィックリソーステーブル
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-	{ ARCID_FLDMAP, NARC_fld_map_map14_16c_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_test_wall_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_field_tex1_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_field_tex2_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_tower_red_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_tower_blue_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_tower_green_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_SAMPLE, NARC_haruka_tower_yellow_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_FLDMAP, NARC_fld_map_map21_18c_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_FLDMAP, NARC_fld_map_map21_19c_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_FLDMAP, NARC_fld_map_map22_18c_nsbmd,  GFL_G3D_UTIL_RESARC },
-	{ ARCID_FLDMAP, NARC_fld_map_map22_19c_nsbmd,  GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map14_16c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_test_wall_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_field_tex1_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_field_tex2_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_tower_red_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_tower_blue_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_tower_green_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_SAMPLE, NARC_haruka_tower_yellow_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map21_18c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map21_19c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map22_18c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map22_19c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_PC, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_T5_S01, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_C4_H01A, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_T5_S02, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_T5_O01, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_T5_O01B, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_C4_DOOR1, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDBLD, BMID_P_DOOR, GFL_G3D_UTIL_RESARC },
 };
 
 //---------------------
@@ -150,6 +164,14 @@ enum {
 	G3DOBJ_MAP_FLOOR1,
 	G3DOBJ_MAP_FLOOR2,
 	G3DOBJ_MAP_FLOOR3,
+	G3DOBJ_BLD_BUILD0,
+	G3DOBJ_BLD_BUILD1,
+	G3DOBJ_BLD_BUILD2,
+	G3DOBJ_BLD_BUILD3,
+	G3DOBJ_BLD_DOOR0,
+	G3DOBJ_BLD_DOOR1,
+	G3DOBJ_BLD_DOOR2,
+	G3DOBJ_BLD_DOOR3,
 };
 //３Ｄオブジェクト定義テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -165,6 +187,14 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_MAP_FLOOR1, 0, G3DRES_MAP_FLOOR1, NULL, 0 },
 	{ G3DRES_MAP_FLOOR2, 0, G3DRES_MAP_FLOOR2, NULL, 0 },
 	{ G3DRES_MAP_FLOOR3, 0, G3DRES_MAP_FLOOR3, NULL, 0 },
+	{ G3DRES_BLD_BUILD0, 0, G3DRES_BLD_BUILD0, NULL, 0 },
+	{ G3DRES_BLD_BUILD1, 0, G3DRES_BLD_BUILD1, NULL, 0 },
+	{ G3DRES_BLD_BUILD2, 0, G3DRES_BLD_BUILD2, NULL, 0 },
+	{ G3DRES_BLD_BUILD3, 0, G3DRES_BLD_BUILD3, NULL, 0 },
+	{ G3DRES_BLD_DOOR0, 0, G3DRES_BLD_DOOR0, NULL, 0 },
+	{ G3DRES_BLD_DOOR1, 0, G3DRES_BLD_DOOR1, NULL, 0 },
+	{ G3DRES_BLD_DOOR2, 0, G3DRES_BLD_DOOR2, NULL, 0 },
+	{ G3DRES_BLD_DOOR3, 0, G3DRES_BLD_DOOR3, NULL, 0 },
 };
 
 //---------------------
@@ -174,362 +204,121 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 	g3Dutil_objTbl, NELEMS(g3Dutil_objTbl),
 };
 
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップ生成
- */
-//------------------------------------------------------------------
-SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
-{
-	SCENE_MAP* sceneMap = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCENE_MAP) );
-	GFL_G3D_SCENEOBJ_DATA* data;
-	int	i;
-
-	//３Ｄデータセットアップ
-	sceneMap->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3Dutil_setup );
-	sceneMap->resIdx = GFL_G3D_SCENE_GetG3DutilUnitResIdx( g3Dscene, sceneMap->unitIdx );
-	sceneMap->objIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sceneMap->unitIdx );
-
-	//マップ作成
-	sceneMap->g3Dscene = g3Dscene;
-	MapDataCreate( sceneMap, &mapDataTbl, heapID );
-
-	for( i=0; i<EXOBJ_MAX; i++ ){
-		sceneMap->extraObject[i].id = EXOBJ_NULL;
-		sceneMap->extraObject[i].count = 0;
-	}
-	sceneMap->anmTimer= 0;
-
-	CreateMapGridData( heapID );
-
-	return sceneMap;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップ破棄
- */
-//------------------------------------------------------------------
-void	Delete3Dmap( SCENE_MAP* sceneMap )
-{
-	int	i;
-
-	DeleteMapGridData();
-
-	for( i=0; i<EXOBJ_MAX; i++ ){
-		if( sceneMap->extraObject[i].id != EXOBJ_NULL ){
-			RemoveExtraObject( sceneMap, &sceneMap->extraObject[i] );
-		}
-	}
-	MapDataDelete( sceneMap );
-	GFL_G3D_SCENE_DelG3DutilUnit( sceneMap->g3Dscene, sceneMap->unitIdx );
-	GFL_HEAP_FreeMemory( sceneMap );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップオブジェクト追加
- */
-//------------------------------------------------------------------
-int		AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans )
-{
-	int	i;
-
-	for( i=0; i<EXOBJ_MAX; i++ ){
-		if( sceneMap->extraObject[i].id == EXOBJ_NULL ){
-			AddExtraObject( sceneMap, &sceneMap->extraObject[i], objID, trans );
-			return i;
-		}
-	}
-	GF_ASSERT(0);
-	return 0;
-}	
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップオブジェクト破棄
- */
-//------------------------------------------------------------------
-void	RemoveObject3Dmap( SCENE_MAP* sceneMap, int mapobjID )
-{
-	if( sceneMap->extraObject[mapobjID].id != EXOBJ_NULL ){
-		RemoveExtraObject( sceneMap, &sceneMap->extraObject[mapobjID] );
-		sceneMap->extraObject[mapobjID].id = EXOBJ_NULL;
-	}
-}	
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップオブジェクト描画スイッチ設定
- */
-//------------------------------------------------------------------
-void	Set3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
-													sceneMap->extraObject[mapobjID].id );
-	GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, sw );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップオブジェクト描画スイッチ取得
- */
-//------------------------------------------------------------------
-void	Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
-{
-	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
-													sceneMap->extraObject[mapobjID].id );
-	GFL_G3D_SCENEOBJ_GetDrawSW( g3DsceneObj, sw );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップアトリビュート取得
- */
-//------------------------------------------------------------------
-BOOL	Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr )
-{
-	fx32 wx = pos->x + mapGrid*(mapSizeX/2);
-	fx32 wz = pos->z + mapGrid*(mapSizeZ/2);
-	int x = wx/mapGrid;
-	int z = wz/mapGrid;
-	if(( wx < 0 )||( wx >= mapGrid * mapSizeX )||( wz < 0 )||( wz >= mapGrid * mapSizeZ )){
-		return FALSE;
-	}
-	*attr = sceneMap->mapAttr[ z * mapSizeX + x ];
-	return TRUE;
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップ生成メイン
- */
-//------------------------------------------------------------------
-static const  GFL_G3D_OBJSTATUS defaultStatus = {
-	{ 0, 0, 0 },
-	{ FX32_ONE, FX32_ONE, FX32_ONE },
-	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+static const GFL_G3D_SCENEOBJ_DATA mapGraphicData0[] = {
+	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
+		{	{ 0, -FX32_ONE*80, 0 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD0, 0, 1, 31, FALSE, TRUE,
+		{	{ 0x89000, 0x21000, 0x93000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD1, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xffff7000, 0x20000, 0xfff29000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xfff34000, 0x20000, 0xfff2d000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xa0000, 0x20000, 0xfff2d000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xfff6d000, 0x20000, 0x99000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_BUILD3, 0, 1, 31, FALSE, TRUE,
+		{	{ 0, 0, 0 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR0, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xfffc8000, 0, 0xfff90000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR1, 0, 1, 31, FALSE, TRUE,
+		{	{ 0x28000, 0, 0xfff90000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0x1000, 0x23000, 0xfff37000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xfff36000, 0x23000, 0xfff3b000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xa2000, 0x23000, 0xfff3b000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
+		{	{ 0xfff6f000, 0x23000, 0xa6000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
+	{	G3DOBJ_BLD_DOOR3, 0, 1, 31, FALSE, TRUE,
+		{	{ 0x88000, 0x23000, 0xa6000 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},NULL,
+	},
 };
-static void GetWallData
-			( GFL_G3D_SCENEOBJ_DATA* data, u16 chkCode, u16 up, u16 down, u16 left, u16 right ); 
 
-static inline u16 GET_MAPCODE( u16* mapdata, int x, int z )
-{
-	u16	tmpdata;
+static const GFL_G3D_SCENEOBJ_DATA mapGraphicData1[] = {
+	{	G3DOBJ_MAP_FLOOR0, 0, 1, 31, FALSE, TRUE,
+		{	{ -FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveMapDebug,
+	},
+	{	G3DOBJ_MAP_FLOOR1, 0, 1, 31, FALSE, TRUE,
+		{	{ -FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveMapDebug,
+	},
+	{	G3DOBJ_MAP_FLOOR2, 0, 1, 31, FALSE, TRUE,
+		{	{ FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveMapDebug,
+	},
+	{	G3DOBJ_MAP_FLOOR3, 0, 1, 31, FALSE, TRUE,
+		{	{ FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
+			{ mapScale, mapScale, mapScale },
+			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
+		},moveMapDebug,
+	},
+};
 
-	if(( x < 0 )||( x >= mapSizeX )||( z < 0 )||( z >= mapSizeZ )){
-		return  '■';
-	}
-	tmpdata = mapdata[ z * mapSizeX + x ];
-	return  (( tmpdata & 0x00ff ) << 8 ) + (( tmpdata & 0xff00 ) >> 8 );
-}
-
-//回転マトリクス変換
-static inline void rotateCalc( VecFx32* rotSrc, MtxFx33* rotDst )
-{
-	MtxFx33 tmp;
-
-	MTX_RotX33(	rotDst, FX_SinIdx((u16)rotSrc->x), FX_CosIdx((u16)rotSrc->x) );
-
-	MTX_RotY33(	&tmp, FX_SinIdx((u16)rotSrc->y), FX_CosIdx((u16)rotSrc->y) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-
-	MTX_RotZ33(	&tmp, FX_SinIdx((u16)rotSrc->z), FX_CosIdx((u16)rotSrc->z) );
-	MTX_Concat33( rotDst, &tmp, rotDst );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄマップデータセットアップ
- */
-//------------------------------------------------------------------
-static void MapDataCreate( SCENE_MAP* sceneMap, const MAPDATA* map, HEAPID heapID )
-{
-	GFL_G3D_SCENEOBJ_DATA*			pdata;
-	GFL_G3D_SCENEOBJ_DATA			data;
-	u16*							mapAttr;
-	int		count = 0;
-	int		x,z;
-	u16*	mapData = (u16*)map->data;	//めんどいので全角のみに制限
-	int		sizeX = mapSizeX;
-	int		sizeZ = mapSizeZ;
-	u16		mapCode;
-
-	mapAttr = GFL_HEAP_AllocMemory( heapID, 2*sizeX*sizeZ );
-	pdata = GFL_HEAP_AllocMemoryLo( heapID, sizeof(GFL_G3D_SCENEOBJ_DATA)*sizeX*sizeZ+1 );
-
-	pdata[ count ] = map->floor;
-	count++;
-
-	for( z=0; z<sizeZ; z++ ){
-		for( x=0; x<sizeX; x++ ){
-			mapCode = GET_MAPCODE( mapData, x, z );
-			switch( mapCode ){
-			default:
-			case '　':
-				mapAttr[ z * sizeX + x ] = 0;
-				break;
-			case '■':	//壁
-				mapAttr[ z * sizeX + x ] = 1;
-				break;
-			case '○':	//配置人物１
-#if 0
-				data.objID = G3DOBJ_HUMAN2_STOP; 
-				data.movePriority = 0;
-				data.drawPriority = 250;
-				data.cullingFlag = TRUE;
-				data.drawSW = TRUE;
-				data.status = defaultStatus;
-				data.blendAlpha = 31;
-				data.status.trans.x = defaultMapX + (mapGrid * x);
-				data.status.trans.z = defaultMapZ + (mapGrid * z);
-				data.status.scale.x = FX32_ONE/4;
-				data.status.scale.y = FX32_ONE/4;
-				data.status.scale.z = FX32_ONE/4;
-				data.func = moveStopHaruka;
-				pdata[ count ] = data;
-				count++;
-#endif
-				mapAttr[z*sizeX+x] = 0;
-				break;
-			case '◎':	//プレーヤー
-#if 0
-				tetsuWork->contPos.x = defaultMapX + (mapGrid * x);
-				tetsuWork->contPos.y = 0;
-				tetsuWork->contPos.z = defaultMapZ + (mapGrid * z);
-#endif
-				mapAttr[z*sizeX+x] = 0;
-				break;
-			}
-		}
-	}
-
-	//マップオブジェクト追加
-#if 1
-	sceneMap->defaultFloor.id = GFL_G3D_SCENEOBJ_Add
-								( sceneMap->g3Dscene, pdata, count, sceneMap->objIdx );
-	sceneMap->defaultFloor.count = count;
-#else
-	sceneMap->defaultFloor.id = GFL_G3D_SCENEOBJ_Add
-								( sceneMap->g3Dscene, mapTest, NELEMS(mapTest), sceneMap->objIdx );
-	sceneMap->defaultFloor.count = NELEMS(mapTest);
-#endif
-	sceneMap->mapAttr = mapAttr;
-
-	//マップオブジェクト設定後、セットアップ用配列は破棄
-	GFL_HEAP_FreeMemory( pdata );
-}
-
-//------------------------------------------------------------------
-static void MapDataDelete( SCENE_MAP* sceneMap )
-{
-	GFL_G3D_SCENEOBJ_Remove
-			(sceneMap->g3Dscene, sceneMap->defaultFloor.id, sceneMap->defaultFloor.count ); 
-	GFL_HEAP_FreeMemory( sceneMap->mapAttr );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄマップオブジェクトデータセットアップ
- */
-//------------------------------------------------------------------
-static void AddExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj, int objID, VecFx32* trans )
-{
-	int	i;
-	GFL_G3D_SCENEOBJ* g3DsceneObj;
-	VecFx32	transTmp;
-
-	exobj->count = extraObjectDataTbl[objID].count;
-	exobj->id = GFL_G3D_SCENEOBJ_Add
-			( sceneMap->g3Dscene, extraObjectDataTbl[objID].data, exobj->count, sceneMap->objIdx );
-
-	for( i=0; i<exobj->count; i++ ){
-		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, exobj->id + i );
-		GFL_G3D_SCENEOBJ_GetPos( g3DsceneObj, &transTmp );
-		transTmp.x = trans->x;
-		transTmp.z = trans->z;
-		GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &transTmp );
-	}
-}
-
-//------------------------------------------------------------------
-static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj )
-{
-	GFL_G3D_SCENEOBJ_Remove( sceneMap->g3Dscene, exobj->id, exobj->count ); 
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief		３Ｄマップオブジェクトデータ動作
- */
-//------------------------------------------------------------------
-static void moveExtraObject( GFL_G3D_SCENEOBJ* sceneObj, void* work )
-{
-	EXMAPOBJ_WORK*	exw = (EXMAPOBJ_WORK*)work;
-
-	if( exw->seq == 3 ){
-		return;
-	}
-	if( exw->seq == 2 ){
-		u8	blendAlphaEnd = 31;
-		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &blendAlphaEnd );
-		exw->seq++;
-	}
-	{
-		VecFx32	transTmp;
-		fx32	heightLimit = 0;
-
-		GFL_G3D_SCENEOBJ_GetPos( sceneObj, &transTmp );
-		if( transTmp.y < heightLimit ){	//高さチェック
-			transTmp.y += FX32_ONE/16;
-			if( transTmp.y >= heightLimit ){
-				transTmp.y = heightLimit;
-				exw->seq++;
-			}
-			GFL_G3D_SCENEOBJ_SetPos( sceneObj, &transTmp );
-		}
-	}
-	{
-		u8	blendAlphaTmp;
-		u8	alphaLimit = 20;
-
-		GFL_G3D_SCENEOBJ_GetBlendAlpha( sceneObj, &blendAlphaTmp );
-		if( blendAlphaTmp < alphaLimit ){	//透明度チェック
-			blendAlphaTmp++;
-			if( blendAlphaTmp >= alphaLimit ){
-				blendAlphaTmp = alphaLimit;
-				exw->seq++;
-			}
-			GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &blendAlphaTmp );
-		}
-	}
-}
-
-static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work )
-{
-	VecFx32	trans;
-
-	if( GFL_UI_KEY_CheckCont( PAD_BUTTON_A ) == TRUE ){
-		GFL_G3D_SCENEOBJ_GetPos( sceneObj, &trans );
-		trans.y -= FX32_ONE;
-		GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
-		OS_Printf("map Y = %x\n", trans.y );
-	} else if( GFL_UI_KEY_CheckCont( PAD_BUTTON_B ) == TRUE ){
-		GFL_G3D_SCENEOBJ_GetPos( sceneObj, &trans );
-		trans.y += FX32_ONE;
-		GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
-		OS_Printf("map Y = %x\n", trans.y );
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		データ
- */
-//------------------------------------------------------------------
-static const char mapData0[] = {
+static const char mapAttr0[] = {
 "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//16
 "■◆◆◆◆２□□□□□２◆◆◆◆◆◆◆２２２２２◆◆◆◆■■■■"	//
 "■◆◆◆◆２□□□□□２◆◆◆◆◆◆◆２２２２２◆◆◆◆■■■■"	//
@@ -564,7 +353,7 @@ static const char mapData0[] = {
 "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//
 };
 
-static const MAP_GRIDMAKE_DATA mapGrid1[] = {
+static const MAP_GRIDMAKE_DATA mapGrid0[] = {
 //0//
 {3,3,3,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},
 {3,3,3,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},{3,3,2,2},
@@ -727,43 +516,280 @@ static const MAP_GRIDMAKE_DATA mapGrid1[] = {
 {2,2,3,3},{2,2,3,3},{2,2,3,3},{2,2,3,3},{2,2,3,3},{2,3,3,3},{3,3,3,3},{3,3,3,3},
 };
 
-static const MAPDATA mapDataTbl = {
-	mapData0,
-	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
-		{	{ 0, -FX32_ONE*80, 0 },
-			{ mapScale, mapScale, mapScale },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},moveMapDebug,
-	},
+static const MAPDATA mapData[] = {
+	{ mapGraphicData0, NELEMS(mapGraphicData0), mapAttr0, mapGrid0 },
+	{ mapGraphicData1, NELEMS(mapGraphicData1), mapAttr0, mapGrid0 },
 };
 
-static const GFL_G3D_SCENEOBJ_DATA mapTest[] = {
-	{	G3DOBJ_MAP_FLOOR0, 0, 1, 31, FALSE, TRUE,
-		{	{ -FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},moveMapDebug,
-	},
-	{	G3DOBJ_MAP_FLOOR1, 0, 1, 31, FALSE, TRUE,
-		{	{ -FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},moveMapDebug,
-	},
-	{	G3DOBJ_MAP_FLOOR2, 0, 1, 31, FALSE, TRUE,
-		{	{ FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},moveMapDebug,
-	},
-	{	G3DOBJ_MAP_FLOOR3, 0, 1, 31, FALSE, TRUE,
-		{	{ FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},moveMapDebug,
-	},
-};
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップ生成
+ */
+//------------------------------------------------------------------
+SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
+{
+	SCENE_MAP* sceneMap = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCENE_MAP) );
+	int	i;
 
+	//３Ｄデータセットアップ
+	sceneMap->g3Dscene = g3Dscene;
+	sceneMap->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( g3Dscene, &g3Dutil_setup );
+	sceneMap->resIdx = GFL_G3D_SCENE_GetG3DutilUnitResIdx( g3Dscene, sceneMap->unitIdx );
+	sceneMap->objIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( g3Dscene, sceneMap->unitIdx );
+
+	//マップ作成
+	{
+		int mapID = 0;
+
+		CreateMapGraphicData( sceneMap, mapID );
+		CreateMapGridData( sceneMap, mapID, heapID );
+	}
+
+	for( i=0; i<EXOBJ_MAX; i++ ){
+		sceneMap->extraObject[i].id = EXOBJ_NULL;
+		sceneMap->extraObject[i].count = 0;
+	}
+	sceneMap->anmTimer = 0;
+
+	DEBUG_sceneMap = sceneMap;
+	return sceneMap;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップ破棄
+ */
+//------------------------------------------------------------------
+void	Delete3Dmap( SCENE_MAP* sceneMap )
+{
+	int	i;
+
+	for( i=0; i<EXOBJ_MAX; i++ ){
+		if( sceneMap->extraObject[i].id != EXOBJ_NULL ){
+			RemoveExtraObject( sceneMap, &sceneMap->extraObject[i] );
+		}
+	}
+	DeleteMapGridData( sceneMap );
+	DeleteMapGraphicData( sceneMap );
+	GFL_G3D_SCENE_DelG3DutilUnit( sceneMap->g3Dscene, sceneMap->unitIdx );
+	GFL_HEAP_FreeMemory( sceneMap );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト追加
+ */
+//------------------------------------------------------------------
+int		AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans )
+{
+	int	i;
+
+	for( i=0; i<EXOBJ_MAX; i++ ){
+		if( sceneMap->extraObject[i].id == EXOBJ_NULL ){
+			AddExtraObject( sceneMap, &sceneMap->extraObject[i], objID, trans );
+			return i;
+		}
+	}
+	GF_ASSERT(0);
+	return 0;
+}	
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト破棄
+ */
+//------------------------------------------------------------------
+void	RemoveObject3Dmap( SCENE_MAP* sceneMap, int mapobjID )
+{
+	if( sceneMap->extraObject[mapobjID].id != EXOBJ_NULL ){
+		RemoveExtraObject( sceneMap, &sceneMap->extraObject[mapobjID] );
+		sceneMap->extraObject[mapobjID].id = EXOBJ_NULL;
+	}
+}	
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト描画スイッチ設定
+ */
+//------------------------------------------------------------------
+void	Set3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
+													sceneMap->extraObject[mapobjID].id );
+	GFL_G3D_SCENEOBJ_SetDrawSW( g3DsceneObj, sw );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップオブジェクト描画スイッチ取得
+ */
+//------------------------------------------------------------------
+void	Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw )
+{
+	GFL_G3D_SCENEOBJ* g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
+													sceneMap->extraObject[mapobjID].id );
+	GFL_G3D_SCENEOBJ_GetDrawSW( g3DsceneObj, sw );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップ生成メイン
+ */
+//------------------------------------------------------------------
+static inline u16 GET_MAPCODE( const u16* mapdata, int x, int z )
+{
+	u16	tmpdata;
+
+	if(( x < 0 )||( x >= mapSizeX )||( z < 0 )||( z >= mapSizeZ )){
+		return  '■';
+	}
+	tmpdata = mapdata[ z * mapSizeX + x ];
+	return  (( tmpdata & 0x00ff ) << 8 ) + (( tmpdata & 0xff00 ) >> 8 );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄマップデータセットアップ
+ */
+//------------------------------------------------------------------
+static void	CreateMapGraphicData( SCENE_MAP* sceneMap, int mapID )
+{
+	GFL_G3D_SCENEOBJ_DATA*	pdata;
+
+	GF_ASSERT( mapID < NELEMS(mapData) );
+
+	sceneMap->floor.count = mapData[mapID].dataCount;
+	sceneMap->floor.id = GFL_G3D_SCENEOBJ_Add(	sceneMap->g3Dscene, mapData[mapID].data,
+												sceneMap->floor.count, sceneMap->objIdx );
+}
+
+//------------------------------------------------------------------
+static void	DeleteMapGraphicData( SCENE_MAP* sceneMap )
+{
+	GFL_G3D_SCENEOBJ_Remove(	sceneMap->g3Dscene, 
+								sceneMap->floor.id, 
+								sceneMap->floor.count ); 
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄマップオブジェクトデータセットアップ
+ */
+//------------------------------------------------------------------
+static void AddExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj, int objID, VecFx32* trans )
+{
+	int	i;
+	GFL_G3D_SCENEOBJ* g3DsceneObj;
+	VecFx32	transTmp;
+
+	exobj->count = extraObjectDataTbl[objID].dataCount;
+	exobj->id = GFL_G3D_SCENEOBJ_Add(	sceneMap->g3Dscene, 
+										extraObjectDataTbl[objID].data,
+										exobj->count, 
+										sceneMap->objIdx );
+
+	for( i=0; i<exobj->count; i++ ){
+		g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, exobj->id + i );
+		GFL_G3D_SCENEOBJ_GetPos( g3DsceneObj, &transTmp );
+		transTmp.x = trans->x;
+		transTmp.z = trans->z;
+		GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &transTmp );
+	}
+}
+
+//------------------------------------------------------------------
+static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj )
+{
+	GFL_G3D_SCENEOBJ_Remove( sceneMap->g3Dscene, exobj->id, exobj->count ); 
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄマップオブジェクトデータ動作
+ */
+//------------------------------------------------------------------
+static void moveExtraObject( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	EXMAPOBJ_WORK*	exw = (EXMAPOBJ_WORK*)work;
+
+	if( exw->seq == 3 ){
+		return;
+	}
+	if( exw->seq == 2 ){
+		u8	blendAlphaEnd = 31;
+		GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &blendAlphaEnd );
+		exw->seq++;
+	}
+	{
+		VecFx32	transTmp;
+		fx32	heightLimit = 0;
+
+		GFL_G3D_SCENEOBJ_GetPos( sceneObj, &transTmp );
+		if( transTmp.y < heightLimit ){	//高さチェック
+			transTmp.y += FX32_ONE/16;
+			if( transTmp.y >= heightLimit ){
+				transTmp.y = heightLimit;
+				exw->seq++;
+			}
+			GFL_G3D_SCENEOBJ_SetPos( sceneObj, &transTmp );
+		}
+	}
+	{
+		u8	blendAlphaTmp;
+		u8	alphaLimit = 20;
+
+		GFL_G3D_SCENEOBJ_GetBlendAlpha( sceneObj, &blendAlphaTmp );
+		if( blendAlphaTmp < alphaLimit ){	//透明度チェック
+			blendAlphaTmp++;
+			if( blendAlphaTmp >= alphaLimit ){
+				blendAlphaTmp = alphaLimit;
+				exw->seq++;
+			}
+			GFL_G3D_SCENEOBJ_SetBlendAlpha( sceneObj, &blendAlphaTmp );
+		}
+	}
+}
+
+static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work )
+{
+	VecFx32	trans;
+	VecFx32	vecMove = { 0, 0, 0 };
+	BOOL mvf = FALSE;
+
+	if( GFL_UI_KEY_CheckCont( PAD_BUTTON_A ) == TRUE ){
+		vecMove.y = -FX32_ONE;
+		mvf = TRUE;
+	} else if( GFL_UI_KEY_CheckCont( PAD_BUTTON_B ) == TRUE ){
+		vecMove.y = FX32_ONE;
+		mvf = TRUE;
+	} else if( GFL_UI_KEY_CheckCont( PAD_KEY_UP ) == TRUE ){
+		vecMove.z = -FX32_ONE;
+		mvf = TRUE;
+	} else if( GFL_UI_KEY_CheckCont( PAD_KEY_DOWN ) == TRUE ){
+		vecMove.z = FX32_ONE;
+		mvf = TRUE;
+	} else if( GFL_UI_KEY_CheckCont( PAD_KEY_LEFT ) == TRUE ){
+		vecMove.x = -FX32_ONE;
+		mvf = TRUE;
+	} else if( GFL_UI_KEY_CheckCont( PAD_KEY_RIGHT ) == TRUE ){
+		vecMove.x = FX32_ONE;
+		mvf = TRUE;
+	}
+	if( mvf == TRUE ){
+		GFL_G3D_SCENEOBJ_GetPos( sceneObj, &trans );
+		VEC_Add( &trans, &vecMove, &trans );
+		GFL_G3D_SCENEOBJ_SetPos( sceneObj, &trans );
+		OS_Printf("mvpos  {%x,%x,%x}\n", trans.x, trans.y, trans.z );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		データ
+ */
+//------------------------------------------------------------------
 static const GFL_G3D_SCENEOBJ_DATA extraObject1[] = {
 	{	G3DOBJ_EFFECT_WALL, 0, 1, 8, TRUE, TRUE,
 		{	{ 0, -FX32_ONE*64, 0 },
@@ -809,7 +835,7 @@ static const GFL_G3D_SCENEOBJ_DATA towerYellow[] = {
 	},
 };
 
-static const	EXOBJ_DATATABLE extraObjectDataTbl[5] = {
+static const	MAPDATA extraObjectDataTbl[5] = {
 	{ extraObject1, NELEMS(extraObject1) },
 	{ towerRed, NELEMS(towerRed) },
 	{ towerBlue, NELEMS(towerBlue) },
@@ -822,28 +848,31 @@ static const	EXOBJ_DATATABLE extraObjectDataTbl[5] = {
  * @brief	３Ｄマップ高さデータ作成
  */
 //------------------------------------------------------------------
-static void MakeGridData( int x, int z, int y0, int y1, int y2, int y3 );
+static void MakeGridData( MAP_GRID_DATA* floor, int gridx, int gridz, 
+							int y0, int y1, int y2, int y3 );
 static void MakeTriangleData
 		( MAP_PLANE_DATA* triData, VecFx32* posRef, VecFx16* vtx0, VecFx16* vtx1, VecFx16* vtx2 );
 static BOOL GetPlaneVtxHeight( u16 mapCode, int* y );
 
-static void CreateMapGridData( HEAPID heapID )
+static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID )
 {
-	int		i, x, z;
-	u16		mapCode;
-	u16*	mapData = (u16*)mapData0;
-	int		height, height2;
+	int	i, x, z;
+	u16	mapCode;
+	int	height, height2;
+	const u16* attr = (const u16*)mapData->attr;
+	const MAP_GRIDMAKE_DATA* grid = mapData->grid;
 
-	mapGridData = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAP_GRID_DATA)*mapSizeX*mapSizeZ );
+	sceneMap->floorGrid = GFL_HEAP_AllocClearMemory( heapID, 
+								sizeof(MAP_GRID_DATA)*mapSizeX*mapSizeZ );
 
 	for( z=0; z<mapSizeZ; z++ ){
 		for( x=0; x<mapSizeX; x++ ){
 			i = z * mapSizeX + x;
-#if 1
-			mapCode = GET_MAPCODE( mapData, x, z );
 
-			MakeGridData( x, z, 
-					mapGrid1[i].vtxY0, mapGrid1[i].vtxY1, mapGrid1[i].vtxY2, mapGrid1[i].vtxY3 );
+			mapCode = GET_MAPCODE( attr, x, z );
+
+			MakeGridData( sceneMap->floorGrid, x, z, 
+					grid[i].vtxY0, grid[i].vtxY1, grid[i].vtxY2, grid[i].vtxY3 );
 
 			switch( mapCode ){
 			default:
@@ -855,28 +884,23 @@ static void CreateMapGridData( HEAPID heapID )
 			case '←':	//階段
 			case '↑':	//階段
 			case '↓':	//階段
-				mapGridData[i].passage = 0;
-				mapGridData[i].passage = 0;
+				sceneMap->floorGrid[i].passage = 0;
+				sceneMap->floorGrid[i].passage = 0;
 				break;
 			case '■':	//崖
 			case '◆':	//家
 			case '□':	//水
-				//MakeGridData( x, z, 0, 0, 0, 0 );
-				mapGridData[i].passage = 1;
+				//MakeGridData( sceneMap->floorGrid, x, z, 0, 0, 0, 0 );
+				sceneMap->floorGrid[i].passage = 1;
 				break;
 			}
-#else
-			MakeGridData(	x, z, 
-							mapGrid1[i].vtxY0, mapGrid1[i].vtxY1,
-							mapGrid1[i].vtxY2, mapGrid1[i].vtxY3 );
-#endif
 		}
 	}
 }
 
-static void DeleteMapGridData( void )
+static void DeleteMapGridData( SCENE_MAP* sceneMap )
 {
-	GFL_HEAP_FreeMemory( mapGridData );
+	GFL_HEAP_FreeMemory( sceneMap->floorGrid );
 }
 
 static void	GetGroundGridData( const VecFx32* pos, int* x, int* z, u16* offset )
@@ -900,9 +924,10 @@ static void inline posGridCalc( int x, int z, VecFx16* vtx, VecFx32* dst )
 	dst->z = FX_Mul( mapGrid, tmp.z );
 }
 
-static void MakeGridData( int gridx, int gridz, int y0, int y1, int y2, int y3 )
+static void MakeGridData( MAP_GRID_DATA* floor, int gridx, int gridz, 
+							int y0, int y1, int y2, int y3 )
 {
-	MAP_GRID_DATA* grid = &mapGridData[ gridz * mapSizeX + gridx ];
+	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
 	VecFx32	posRef;
 	VecFx16	vtx0, vtx1, vtx2, vtx3;
 
@@ -1001,7 +1026,7 @@ static BOOL	CheckGetGroundOutSideData( const int x, const int z )
 	}
 }
 
-static BOOL	GetGroundTriangleID( const VecFx32* pos, u16* gridOffs, u16* ID )
+static BOOL	GetGroundTriangleID( MAP_GRID_DATA* floor, const VecFx32* pos, u16* gridOffs, u16* ID )
 {
 	int		gridx, gridz;
 	fx32	fx, fz;
@@ -1014,7 +1039,7 @@ static BOOL	GetGroundTriangleID( const VecFx32* pos, u16* gridOffs, u16* ID )
 		return FALSE;
 	}
 	//グリッド内三角形の判定
-	if( mapGridData[ *gridOffs ].planeType == TRIANGLE_TYPE_021_312 ){
+	if( floor[ *gridOffs ].planeType == TRIANGLE_TYPE_021_312 ){
 		//0-2-1,3-1-2のパターン
 		if( fx + fz < mapGrid ){
 			*ID = 0;
@@ -1036,7 +1061,7 @@ static BOOL	GetGroundTriangleID( const VecFx32* pos, u16* gridOffs, u16* ID )
 	return FALSE;
 }
 
-BOOL	CheckGroundOutRange( const VecFx32* pos )
+BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 {
 	int	gridx, gridz;
 	u16	gridOffs;
@@ -1046,61 +1071,62 @@ BOOL	CheckGroundOutRange( const VecFx32* pos )
 	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
 		return FALSE;
 	}
-	if( mapGridData[ gridOffs ].passage != 0 ){
+	if( sceneMap->floorGrid[ gridOffs ].passage != 0 ){
 		return FALSE;
 	}
 	return TRUE;
 }
 
-BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD )
+BOOL	GetGroundPlaneData( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
 	u16		gridOffs, triangleID;
 
-	if( GetGroundTriangleID( pos, &gridOffs, &triangleID ) == FALSE ){
+	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
 		return FALSE;
 	}
-	*vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
-	*valD	= mapGridData[ gridOffs ].triangle[ triangleID ].valD;
+	*vecN	= sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
+	*valD	= sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].valD;
 
 	return TRUE;
 }
 
-void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN )
+void	GetGroundPlaneVecN( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN )
 {
 	u16		gridOffs, triangleID;
 
-	if( GetGroundTriangleID( pos, &gridOffs, &triangleID ) == FALSE ){
+	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
 		vecN->x = 0;
 		vecN->y = FX32_ONE;
 		vecN->z = 0;
 		return;
 	}
-	*vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
+	*vecN = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
 }
 
-void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height ) 
+void	GetGroundPlaneHeight( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height ) 
 {
 	u16		gridOffs, triangleID;
 	VecFx32 vecN;
 	fx32	by, valD;
 
-	if( GetGroundTriangleID( pos, &gridOffs, &triangleID ) == FALSE ){
+	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
 		*height = 0;
 		return;
 	}
-	vecN	= mapGridData[ gridOffs ].triangle[ triangleID ].vecN;
-	valD	= mapGridData[ gridOffs ].triangle[ triangleID ].valD;
+	vecN = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
+	valD = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].valD;
 
 	by = -( FX_Mul( vecN.x, pos->x ) + FX_Mul( vecN.z, pos->z ) + valD );
 	*height = FX_Div( by, vecN.y );
 }
 
-void	GetGroundMoveVec( const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove )
+void	GetGroundMoveVec
+	( SCENE_MAP* sceneMap, const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove )
 {
 	VecFx32 vecN, vecH, vecV;
 
 	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
-	GetGroundPlaneVecN( pos, &vecN );				//平面の法線を取得
+	GetGroundPlaneVecN( sceneMap, pos, &vecN );				//平面の法線を取得
 	VEC_CrossProduct( &vecN, vecDir, &vecH );		//平面上の水平ベクトル算出
 	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
 
@@ -1113,17 +1139,40 @@ void	GetGroundMoveVec( const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMo
 	VEC_Normalize( vecMove, vecMove );
 }
 
-void	GetGroundMovePos( const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext ) 
+void	GetGroundMovePos
+	( SCENE_MAP* sceneMap, const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext ) 
 {
 	VecFx32	vecMove;
 
 	//移動方向の地形に沿った単位ベクトル取得
-	GetGroundMoveVec( posNow, vecMoveXZ, &vecMove );
+	GetGroundMoveVec( sceneMap, posNow, vecMoveXZ, &vecMove );
 	//移動ベクトル取得
 	VEC_Mult( VEC_Mag( vecMoveXZ ), &vecMove, &vecMove );
 	//移動位置の計算
 	VEC_Add( posNow, &vecMove, posNext );
-	GetGroundPlaneHeight( posNext, &posNext->y );
+	GetGroundPlaneHeight( sceneMap, posNext, &posNext->y );
+}
+
+//------------------------------------------------------------------
+//仮。いずれ消す
+BOOL	DEBUG_CheckGroundOutRange( const VecFx32* pos )
+{
+	return CheckGroundOutRange( DEBUG_sceneMap, pos );
+}
+BOOL	DEBUG_CheckGroundMove( const VecFx32* posNow, const VecFx32* vecMove, VecFx32* posNext )
+{
+	GetGroundMovePos( DEBUG_sceneMap, posNow, vecMove, posNext ); 
+	//範囲外コントロール（本当は外部関数でやる）
+	return CheckGroundOutRange( DEBUG_sceneMap, posNext );
+}
+void	GLOBAL_GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN )
+{
+	GetGroundPlaneVecN( DEBUG_sceneMap, pos, vecN );
+}
+
+void	GLOBAL_GetGroundPlaneHeight( const VecFx32* pos, fx32* height )
+{
+	GetGroundPlaneHeight( DEBUG_sceneMap, pos, height );
 }
 
 //------------------------------------------------------------------
@@ -1211,12 +1260,12 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
 				G3_Begin( GX_BEGIN_TRIANGLES );
 	
 				for( i=0; i<2; i++ ){
-					pVtx0 = &mapGridData[offset].triangle[i].vtx0;
-					pVtx1 = &mapGridData[offset].triangle[i].vtx1;
-					pVtx2 = &mapGridData[offset].triangle[i].vtx2;
-					//vecN.x  = 0;//(fx16)mapGridData[offset].triangle[i].vecN.x;
-					//vecN.y  = FX16_ONE;// (fx16)mapGridData[offset].triangle[i].vecN.y;
-					//vecN.z  = 0;//(fx16)mapGridData[offset].triangle[i].vecN.z;
+					pVtx0 = &sceneMap->floorGrid[offset].triangle[i].vtx0;
+					pVtx1 = &sceneMap->floorGrid[offset].triangle[i].vtx1;
+					pVtx2 = &sceneMap->floorGrid[offset].triangle[i].vtx2;
+					//vecN.x  = 0;//(fx16)sceneMap->floorGrid[offset].triangle[i].vecN.x;
+					//vecN.y  = FX16_ONE;// (fx16)sceneMap->floorGrid[offset].triangle[i].vecN.y;
+					//vecN.z  = 0;//(fx16)sceneMap->floorGrid[offset].triangle[i].vecN.z;
 #if 0	
 					if(( pVtx0->y == pVtx1->y )&&( pVtx0->y == pVtx2->y )){
 #else
@@ -1343,10 +1392,10 @@ void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
  * @brief	３Ｄマップ高さ変更
  */
 //------------------------------------------------------------------
-static void	GetGridVtxY( const int gridx, const int gridz, 
+static void	GetGridVtxY( MAP_GRID_DATA* floor, const int gridx, const int gridz, 
 							fx16* y0, fx16* y1, fx16* y2, fx16* y3 )
 {
-	MAP_GRID_DATA* grid = &mapGridData[ gridz * mapSizeX + gridx ];
+	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
 
 	if( grid->planeType == TRIANGLE_TYPE_021_312 ){
 		*y0 = grid->triangle[0].vtx0.y;
@@ -1361,67 +1410,67 @@ static void	GetGridVtxY( const int gridx, const int gridz,
 	}
 }
 
-static u32	GetGridPlaneData( const int gridx, const int gridz )
+static u32	GetGridPlaneData( MAP_GRID_DATA* floor, const int gridx, const int gridz )
 {
-	MAP_GRID_DATA* grid = &mapGridData[ gridz * mapSizeX + gridx ];
+	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
 
 	return  grid->planeType;
 }
 
-static void	GetGridVtxYLen( const int gridx, const int gridz, 
+static void	GetGridVtxYLen( MAP_GRID_DATA* floor, const int gridx, const int gridz, 
 							int* y0, int* y1, int* y2, int* y3 )
 {
 	fx16 fy0, fy1, fy2, fy3;
 
-	GetGridVtxY( gridx, gridz, &fy0, &fy1, &fy2, &fy3 );
+	GetGridVtxY( floor, gridx, gridz, &fy0, &fy1, &fy2, &fy3 );
 	*y0 = fy0/mapHeight;
 	*y1 = fy1/mapHeight;
 	*y2 = fy2/mapHeight;
 	*y3 = fy3/mapHeight;
 }
 
-static void	SetGridAround( const int gridx, const int gridz )
+static void	SetGridAround( MAP_GRID_DATA* floor, const int gridx, const int gridz )
 {
 	int y0, y1, y2, y3;
 	int ty0, ty1, ty2, ty3;
 
-	GetGridVtxYLen( gridx, gridz, &y0, &y1, &y2, &y3 );
+	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
 
 	if( CheckGetGroundOutSideData( gridx-1, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( gridx-1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx-1, gridz-1, ty0, ty1, ty2, y0 );
+		GetGridVtxYLen( floor, gridx-1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx-1, gridz-1, ty0, ty1, ty2, y0 );
 	}
 	if( CheckGetGroundOutSideData( gridx, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( gridx, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx, gridz-1, ty0, ty1, y0, y1 );
+		GetGridVtxYLen( floor, gridx, gridz-1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx, gridz-1, ty0, ty1, y0, y1 );
 	}
 	if( CheckGetGroundOutSideData( gridx+1, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( gridx+1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx+1, gridz-1, ty0, ty1, y1, ty3 );
+		GetGridVtxYLen( floor, gridx+1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx+1, gridz-1, ty0, ty1, y1, ty3 );
 	}
 	if( CheckGetGroundOutSideData( gridx-1, gridz ) == FALSE ){
-		GetGridVtxYLen( gridx-1, gridz, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx-1, gridz, ty0, y0, ty2, y2 );
+		GetGridVtxYLen( floor, gridx-1, gridz, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx-1, gridz, ty0, y0, ty2, y2 );
 	}
 	if( CheckGetGroundOutSideData( gridx+1, gridz ) == FALSE ){
-		GetGridVtxYLen( gridx+1, gridz, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx+1, gridz, y1, ty1, y3, ty3 );
+		GetGridVtxYLen( floor, gridx+1, gridz, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx+1, gridz, y1, ty1, y3, ty3 );
 	}
 	if( CheckGetGroundOutSideData( gridx-1, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( gridx-1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx-1, gridz+1, ty0, y2, ty2, ty3 );
+		GetGridVtxYLen( floor, gridx-1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx-1, gridz+1, ty0, y2, ty2, ty3 );
 	}
 	if( CheckGetGroundOutSideData( gridx, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( gridx, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx, gridz+1, y2, y3, ty2, ty3 );
+		GetGridVtxYLen( floor, gridx, gridz+1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx, gridz+1, y2, y3, ty2, ty3 );
 	}
 	if( CheckGetGroundOutSideData( gridx+1, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( gridx+1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( gridx+1, gridz+1, y3, ty1, ty2, ty3 );
+		GetGridVtxYLen( floor, gridx+1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
+		MakeGridData( floor, gridx+1, gridz+1, y3, ty1, ty2, ty3 );
 	}
 }
 
-static void	SetGridUp( const int gridx, const int gridz,
+static void	SetGridUp( MAP_GRID_DATA* floor, const int gridx, const int gridz,
 							const int y0, const int y1, const int y2, const int y3 )
 {
 	int	ymax;
@@ -1432,16 +1481,16 @@ static void	SetGridUp( const int gridx, const int gridz,
 	if( ymax < y2 ){ ymax = y2; }
 	if( ymax < y3 ){ ymax = y3; }
 
-	if( GetGridPlaneData( gridx, gridz ) == QUAD_TYPE_PLANE ){
+	if( GetGridPlaneData( floor, gridx, gridz ) == QUAD_TYPE_PLANE ){
 		if( ymax < (32-1) ){
 			ymax++;	//有効値は、fx16上位が3bit幅なので(fx16/4)単位だと-32<y<32
 		}
 	}
-	MakeGridData( gridx, gridz, ymax, ymax, ymax, ymax );
-	SetGridAround( gridx, gridz );
+	MakeGridData( floor, gridx, gridz, ymax, ymax, ymax, ymax );
+	SetGridAround( floor, gridx, gridz );
 }
 
-static void	SetGridDown( const fx32 gridx, const fx32 gridz,
+static void	SetGridDown( MAP_GRID_DATA* floor, const fx32 gridx, const fx32 gridz,
 							const int y0, const int y1, const int y2, const int y3 )
 {
 	int	ymin;
@@ -1452,21 +1501,21 @@ static void	SetGridDown( const fx32 gridx, const fx32 gridz,
 	if( ymin > y2 ){ ymin = y2; }
 	if( ymin > y3 ){ ymin = y3; }
 
-	if( GetGridPlaneData( gridx, gridz ) == QUAD_TYPE_PLANE ){
+	if( GetGridPlaneData( floor, gridx, gridz ) == QUAD_TYPE_PLANE ){
 		if( ymin > -(32-1) ){
 			ymin--;	//有効値は、fx16上位が3bit幅なので(fx16/4)単位だと-32<y<32
 		}
 	}
-	MakeGridData( gridx, gridz, ymin, ymin, ymin, ymin );
-	SetGridAround( gridx, gridz );
+	MakeGridData( floor, gridx, gridz, ymin, ymin, ymin, ymin );
+	SetGridAround( floor, gridx, gridz );
 }
 
-static BOOL	CheckGridVtxUp( const int gridx, const int gridz )
+static BOOL	CheckGridVtxUp( MAP_GRID_DATA* floor, const int gridx, const int gridz )
 {
 	int		ymax, y0, y1, y2, y3;
 	BOOL	result = TRUE;
 
-	GetGridVtxYLen( gridx, gridz, &y0, &y1, &y2, &y3 );
+	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
 	ymax = y0;
 	if( ymax < y1 ){ ymax = y1; }
 	if( ymax < y2 ){ ymax = y2; }
@@ -1489,18 +1538,18 @@ static BOOL	CheckGridVtxUp( const int gridx, const int gridz )
 		result = FALSE;
 	}
 	if( result == FALSE ){
-		MakeGridData( gridx, gridz, y0, y1, y2, y3 );
-		SetGridAround( gridx, gridz );
+		MakeGridData( floor, gridx, gridz, y0, y1, y2, y3 );
+		SetGridAround( floor, gridx, gridz );
 	}
 	return 	result;
 }
 
-static BOOL	CheckGridVtxDown( const int gridx, const int gridz )
+static BOOL	CheckGridVtxDown( MAP_GRID_DATA* floor, const int gridx, const int gridz )
 {
 	int		ymin, y0, y1, y2, y3;
 	BOOL	result = TRUE;
 
-	GetGridVtxYLen( gridx, gridz, &y0, &y1, &y2, &y3 );
+	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
 	ymin = y0;
 	if( ymin > y1 ){ ymin = y1; }
 	if( ymin > y2 ){ ymin = y2; }
@@ -1523,13 +1572,13 @@ static BOOL	CheckGridVtxDown( const int gridx, const int gridz )
 		result = FALSE;
 	}
 	if( result == FALSE ){
-		MakeGridData( gridx, gridz, y0, y1, y2, y3 );
-		SetGridAround( gridx, gridz );
+		MakeGridData( floor, gridx, gridz, y0, y1, y2, y3 );
+		SetGridAround( floor, gridx, gridz );
 	}
 	return 	result;
 }
 
-void	SetMapGroundUp( VecFx32* pos )
+void	SetMapGroundUp( SCENE_MAP* sceneMap, VecFx32* pos )
 {
 	int		gridx, gridz;
 	int		y0, y1, y2, y3;
@@ -1537,9 +1586,9 @@ void	SetMapGroundUp( VecFx32* pos )
 
 //	OS_Printf("地形アップ\n");
 	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
-	GetGridVtxYLen( gridx, gridz, &y0, &y1, &y2, &y3 );
+	GetGridVtxYLen( sceneMap->floorGrid, gridx, gridz, &y0, &y1, &y2, &y3 );
 
-	SetGridUp( gridx, gridz, y0, y1, y2, y3 );
+	SetGridUp( sceneMap->floorGrid, gridx, gridz, y0, y1, y2, y3 );
 #if 0
 	{
 		BOOL endFlag = FALSE;
@@ -1560,7 +1609,7 @@ void	SetMapGroundUp( VecFx32* pos )
 #endif
 }
 
-void	SetMapGroundDown( VecFx32* pos )
+void	SetMapGroundDown( SCENE_MAP* sceneMap, VecFx32* pos )
 {
 	int		gridx, gridz;
 	int		y0, y1, y2, y3;
@@ -1568,9 +1617,9 @@ void	SetMapGroundDown( VecFx32* pos )
 
 //	OS_Printf("地形ダウン\n");
 	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
-	GetGridVtxYLen( gridx, gridz, &y0, &y1, &y2, &y3 );
+	GetGridVtxYLen( sceneMap->floorGrid, gridx, gridz, &y0, &y1, &y2, &y3 );
 
-	SetGridDown( gridx, gridz, y0, y1, y2, y3 );
+	SetGridDown( sceneMap->floorGrid, gridx, gridz, y0, y1, y2, y3 );
 #if 0
 	{
 		BOOL endFlag = FALSE;
@@ -1627,7 +1676,8 @@ static BOOL checkOnTriangle( VecFx32* pos,
 	return FALSE;
 }
 
-BOOL GetRayPosOnMap( const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst )
+BOOL GetRayPosOnMap
+	( SCENE_MAP* sceneMap, const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst )
 {
 	VecFx32 vecRayXZ, vecLength, posStart, pos;
 	fx32	limitLength;
@@ -1657,7 +1707,7 @@ BOOL GetRayPosOnMap( const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst 
 		if( CheckGetGroundOutSideData( x, z ) == FALSE ){
 
 			if( offset != prevOffset ){	//同じデータ(offset)はパス
-				MAP_GRID_DATA*	grid = &mapGridData[ offset ];
+				MAP_GRID_DATA*	grid = &sceneMap->floorGrid[ offset ];
 				VecFx32 posRef0, posRef1, posRef2, vecN, posCalc;
 				BOOL result;
 				int i;

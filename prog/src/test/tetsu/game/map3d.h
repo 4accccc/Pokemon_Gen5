@@ -25,16 +25,32 @@ enum {
 	EXMAPOBJ_TOWER_YELLOW,
 };
 
-extern BOOL	CheckGroundOutRange( const VecFx32* pos );
-extern BOOL	GetGroundPlaneData( const VecFx32* pos, VecFx32* vecN, fx32* valD );
-extern void	GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN );
-extern void	GetGroundPlaneHeight( const VecFx32* pos, fx32* height );
-extern void	GetGroundMoveVec( const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove );
-extern void	GetGroundMovePos( const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext );
+extern BOOL	CheckGroundOutRange
+	( SCENE_MAP* sceneMap, const VecFx32* pos );
+extern BOOL	GetGroundPlaneData
+	( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN, fx32* valD );
+extern void	GetGroundPlaneVecN
+	( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN );
+extern void	GetGroundPlaneHeight
+	( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height );
+extern void	GetGroundMoveVec
+	( SCENE_MAP* sceneMap, const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove );
+extern void	GetGroundMovePos
+	( SCENE_MAP* sceneMap, const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext );
 
-extern void	SetMapGroundUp( VecFx32* pos );
-extern void	SetMapGroundDown( VecFx32* pos );
+extern void	SetMapGroundUp( SCENE_MAP* sceneMap, VecFx32* pos );
+extern void	SetMapGroundDown( SCENE_MAP* sceneMap, VecFx32* pos );
 
-extern BOOL GetRayPosOnMap( const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst );
+extern BOOL GetRayPosOnMap
+	( SCENE_MAP* sceneMap, const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst );
 
+//‰¼
+extern BOOL	DEBUG_CheckGroundOutRange
+	( const VecFx32* pos );
+extern BOOL	DEBUG_CheckGroundMove
+	( const VecFx32* posNow, const VecFx32* vecMove, VecFx32* posNext );
+extern void	GLOBAL_GetGroundPlaneVecN
+	( const VecFx32* pos, VecFx32* vecN );
+extern void	GLOBAL_GetGroundPlaneHeight
+	( const VecFx32* pos, fx32* height );
 

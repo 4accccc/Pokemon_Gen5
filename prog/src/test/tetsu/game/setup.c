@@ -95,6 +95,7 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/spaEffect.narc",
 	"test_graphic/fld_act.narc",
 	"test_graphic/fld_map.narc",
+	"test_graphic/build_model.narc",
 };
 
 //------------------------------------------------------------------
@@ -110,7 +111,9 @@ static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_O
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
 	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7fff } },
-//	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
+	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
+	{ 2, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
+	{ 3, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
 };
 static const GFL_G3D_LIGHT_DATA light1Tbl[] = {
 	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
@@ -503,7 +506,7 @@ static void g3d_load( GAME_SYSTEM* gs )
 				trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
 				trans.y = 0;
 				trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-			}while( CheckGroundOutRange( &trans ) == FALSE );
+			}while( CheckGroundOutRange( gs->sceneMap, &trans ) == FALSE );
 			Set3DactTrans( testSceneAct[i], &trans );
 		}
 	}

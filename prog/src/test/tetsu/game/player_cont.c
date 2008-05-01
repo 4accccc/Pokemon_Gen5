@@ -127,8 +127,8 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	{
 		PHMV_SETUP setup;
 
-		setup.getGroundVecN_func = GetGroundPlaneVecN;
-		setup.getGroundHeight_func = GetGroundPlaneHeight;
+		setup.getGroundVecN_func = GLOBAL_GetGroundPlaneVecN;
+		setup.getGroundHeight_func = GLOBAL_GetGroundPlaneHeight;
 
 		//setup.gravityMove = 9.8f * FX32_ONE/30;//86;
 		//setup.gravityFall = 9.8f * FX32_ONE/15;

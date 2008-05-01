@@ -17,6 +17,7 @@
  */
 //------------------------------------------------------------------
 struct _SCENE_ACTSYS {
+	GAME_SYSTEM*	gs;
 	GFL_G3D_SCENE*	g3Dscene;
 	u16				g3DutilUnitIdx;
 	int				actID;
@@ -1072,9 +1073,9 @@ static void moveRiz( GFL_G3D_SCENEOBJ* sceneObj, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-		GetGroundMovePos( &nowTrans, &vecMove, &nextTrans ); 
 
-		if( CheckGroundOutRange( &nextTrans ) == TRUE ){
+		//範囲外コントロール（本当は外部関数でやる）
+		if( DEBUG_CheckGroundMove( &nowTrans, &vecMove, &nextTrans ) == TRUE ){
 			Set3DactTrans( sceneAct, &nextTrans );
 		} else {
 			actWork->work[0] = 0;

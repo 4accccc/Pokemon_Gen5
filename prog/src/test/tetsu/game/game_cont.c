@@ -731,13 +731,13 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_UP ) == TRUE ){
 		VecFx32 pos;
 		GetMousePos( gc->mes, &pos );
-		SetMapGroundUp( &pos );
+		SetMapGroundUp( Get_GS_SceneMap( gc->gs ), &pos );
 		SetPlayerControlCommand( pc, PCC_TAKEOFF );
 		return;
 	} else if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_DOWN ) == TRUE ){
 		VecFx32 pos;
 		GetMousePos( gc->mes, &pos );
-		SetMapGroundDown( &pos );
+		SetMapGroundDown( Get_GS_SceneMap( gc->gs ), &pos );
 		SetPlayerControlCommand( pc, PCC_PUTON );
 		return;
 	}

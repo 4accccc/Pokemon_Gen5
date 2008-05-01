@@ -92,7 +92,7 @@ static BOOL setJumpTrg( MOUSE_EVENT_SYS* mes );
 static void resetJumpTrg( MOUSE_EVENT_SYS* mes );
 static BOOL checkJumpTrg( MOUSE_EVENT_SYS* mes );
 
-static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos );
+static BOOL GetCursorVec( MOUSE_EVENT_SYS* mes, u32 tpx, u32 tpy, VecFx32* cursorPos );
 //------------------------------------------------------------------
 /**
  * @brief	マウスイベント判定システム起動と終了
@@ -361,7 +361,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 			return;
 		}
 		//移動判定
-		if( GetCursorVec( tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
+		if( GetCursorVec( mes, tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
 			if( setJumpTrg( mes ) == TRUE ){
 				setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
 			} else {
@@ -383,7 +383,7 @@ static void MainMouseEventGroundSelect( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 	int tpContTblPos;
 
 	if( tp->trg == TRUE ){
-		if( GetCursorVec( tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
+		if( GetCursorVec( mes, tp->x, tp->y, &mes->mouseCursorPos ) == TRUE ){
 			setMouseEvent( mes, iconarea_data[ mes->selectIcon ].me );
 
 			clearMouseIconEffect( icontp_data );
@@ -494,7 +494,7 @@ void GetMousePos( MOUSE_EVENT_SYS* mes, VecFx32* pos )
  * @brief	マウスカーソル地形あたり判定
  */
 //------------------------------------------------------------------
-static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
+static BOOL GetCursorVec( MOUSE_EVENT_SYS* mes, u32 tpx, u32 tpy, VecFx32* cursorPos )
 {
 	VecFx32 posRay, vecRay, posRef, vecN;
 	VecFx32 pNear, pFar;
@@ -510,6 +510,6 @@ static BOOL GetCursorVec( u32 tpx, u32 tpy, VecFx32* cursorPos )
 	VEC_Subtract( &pFar, &pNear, &vecRay );
 	VEC_Normalize( &vecRay, &vecRay );	//正規化
 
-	return GetRayPosOnMap( &posRay, &vecRay, cursorPos );
+	return GetRayPosOnMap( Get_GS_SceneMap( mes->gs ), &posRay, &vecRay, cursorPos );
 }
 

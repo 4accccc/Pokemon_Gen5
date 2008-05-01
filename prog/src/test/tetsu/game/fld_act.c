@@ -29,6 +29,7 @@ typedef struct {
 
 struct _FLD_ACTSYS {
 	HEAPID					heapID;
+	GAME_SYSTEM*			gs;
 	GFL_G3D_CAMERA*			g3Dcamera;
 	u16						cameraRotate;
 	GFL_BBDACT_SYS*			bbdActSys;
@@ -182,15 +183,8 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-#if 0
-		VEC_MultAdd( speed, &vecMove, &nowTrans, &nextTrans );
-		GetGroundPlaneHeight( &nextTrans, &nextTrans.y );
-		nextTrans.y += FX32_ONE*7;	//•â³
-#else
-		GetGroundMovePos( &nowTrans, &vecMove, &nextTrans ); 
-		nextTrans.y += FX32_ONE*7;	//•â³
-#endif
-		if( CheckGroundOutRange( &nextTrans ) == TRUE ){
+		if( DEBUG_CheckGroundMove( &nowTrans, &vecMove, &nextTrans ) == TRUE ){ 
+			nextTrans.y += FX32_ONE*7;	//•â³
 			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nextTrans );
 		} else {
 			actWork->work[0] = 0;
@@ -227,7 +221,7 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 			actData[i].trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
 			actData[i].trans.y = 0;
 			actData[i].trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-		}while( CheckGroundOutRange( &actData[i].trans ) == FALSE );
+		}while( DEBUG_CheckGroundOutRange( &actData[i].trans ) == FALSE );
 		
 		actData[i].alpha = 31;
 		actData[i].drawEnable = TRUE;
