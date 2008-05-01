@@ -633,6 +633,7 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 			//return;
 		}
 	}
+#if 0
 	{
 		//テスト
 		//武器の変更
@@ -749,6 +750,7 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
 		return;
 	}
+#endif
 	//移動
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_MOVESTART) == TRUE ){
 		VecFx32 mvDir;
