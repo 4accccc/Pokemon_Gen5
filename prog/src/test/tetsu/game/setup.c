@@ -476,7 +476,8 @@ static void g3d_load( GAME_SYSTEM* gs )
 
 	//カメラ作成
 	{
-		fx32 far = 4096 << FX32_SHIFT;	//メインカメラはdefault設定よりfarを伸ばしたいので再設定
+		//fx32 far = 4096 << FX32_SHIFT;	//メインカメラはdefault設定よりfarを伸ばしたいので再設定
+		fx32 far = 768 << FX32_SHIFT;	//メインカメラはdefault設定よりfarを伸ばしたいので再設定
 
 		gs->g3Dcamera[MAINCAMERA_ID] = GFL_G3D_CAMERA_CreateDefault
 									( &camera0Pos, &cameraTarget, gs->heapID );

@@ -15,8 +15,6 @@ extern void			Set3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw );
 extern void			Get3DmapDrawSw( SCENE_MAP* sceneMap, int mapobjID, BOOL* sw );
 extern BOOL			Get3DmapAttr( SCENE_MAP* sceneMap, VecFx32* pos, u16* attr );
 
-extern void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera );
-
 enum {
 	EXMAPOBJ_WALL = 0,
 	EXMAPOBJ_TOWER_RED,
@@ -37,9 +35,6 @@ extern void	GetGroundMoveVec
 	( SCENE_MAP* sceneMap, const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove );
 extern void	GetGroundMovePos
 	( SCENE_MAP* sceneMap, const VecFx32* posNow, const VecFx32* vecMoveXZ, VecFx32* posNext );
-
-extern void	SetMapGroundUp( SCENE_MAP* sceneMap, VecFx32* pos );
-extern void	SetMapGroundDown( SCENE_MAP* sceneMap, VecFx32* pos );
 
 extern BOOL GetRayPosOnMap
 	( SCENE_MAP* sceneMap, const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst );

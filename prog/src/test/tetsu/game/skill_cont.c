@@ -699,7 +699,6 @@ static void Sword3Main( SKILL_CONTROL* sc, SKILL_WORK* sw )
 		break;
 	case 2:
 		DamageSetAll( sc, sw, SWORD3_HITLEN, -200, 0, 0, 0 );
-		SetMapGroundDown( Get_GS_SceneMap( sc->gs ), &sw->trans );
 		sword_w->seq = 3;
 		sword_w->waitTimer = 6;
 		break;

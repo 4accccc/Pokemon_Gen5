@@ -200,7 +200,7 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 	VecFx32	trans;
 	u8		alpha;
 	BOOL	drawEnable;
-	u16		setActNum = FLD_BBDACT_ACTMAX;
+	u16		setActNum = 250;
 
 	//リソースセットアップ
 	fldActSys->bbdActResCount = NELEMS(testResTable);

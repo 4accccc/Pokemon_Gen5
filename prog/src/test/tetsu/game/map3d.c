@@ -14,8 +14,9 @@
  * @brief	型宣言
  */
 //------------------------------------------------------------------
-#define EXOBJ_MAX	(64)
-#define EXOBJ_NULL	(0xffff)
+#define MAP_BLOCK_COUNT	(4)
+#define EXOBJ_MAX		(64)
+#define EXOBJ_NULL		(0xffff)
 
 typedef struct {
 	u16	id;
@@ -42,16 +43,23 @@ typedef struct {
 	MAP_PLANE_DATA	triangle[2];
 	u32				planeType;
 	u8				passage;
-
 }MAP_GRID_DATA;
+
+typedef struct {
+	int					idx;
+	MAPOBJ_HEADER		floor;
+	MAP_GRID_DATA*		floorGrid;
+	VecFx32				trans;
+}MAP_BLOCK_DATA;
 
 struct _SCENE_MAP {
 	GFL_G3D_SCENE*		g3Dscene;
 	u16					unitIdx;
 	u16					resIdx;
 	u16					objIdx;
-	MAPOBJ_HEADER		floor;
-	MAP_GRID_DATA*		floorGrid;
+	MAP_BLOCK_DATA		mapBlock[MAP_BLOCK_COUNT];
+//	MAPOBJ_HEADER		floor;
+//	MAP_GRID_DATA*		floorGrid;
 	MAPOBJ_HEADER		extraObject[EXOBJ_MAX];
 	u16					anmTimer;
 };
@@ -89,10 +97,10 @@ static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj );
 static const	GFL_G3D_SCENEOBJ_DATA mapTest[4];
 static const	MAPDATA extraObjectDataTbl[5];
 
-static void	CreateMapGraphicData( SCENE_MAP* sceneMap, int mapID );
-static void	DeleteMapGraphicData( SCENE_MAP* sceneMap );
-static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID );
-static void DeleteMapGridData( SCENE_MAP* sceneMap );
+static void	CreateMapGraphicData( SCENE_MAP* sceneMap, MAP_BLOCK_DATA* mapBlock, int mapID );
+static void	DeleteMapGraphicData( SCENE_MAP* sceneMap, MAP_BLOCK_DATA* mapBlock );
+static void CreateMapGridData( MAP_BLOCK_DATA* mapBlock, int mapID, HEAPID heapID );
+static void DeleteMapGridData( MAP_BLOCK_DATA* mapBlock );
 
 static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 //------------------------------------------------------------------
@@ -521,6 +529,13 @@ static const MAPDATA mapData[] = {
 	{ mapGraphicData1, NELEMS(mapGraphicData1), mapAttr0, mapGrid0 },
 };
 
+static const VecFx32 mapTransOffs[] = {
+	{ -FX32_ONE*256, 0, -FX32_ONE*256 },
+	{  FX32_ONE*256, 0, -FX32_ONE*256 },
+	{ -FX32_ONE*256, 0,  FX32_ONE*256 },
+	{  FX32_ONE*256, 0,  FX32_ONE*256 },
+};
+
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップ生成
@@ -541,8 +556,27 @@ SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID )
 	{
 		int mapID = 0;
 
-		CreateMapGraphicData( sceneMap, mapID );
-		CreateMapGridData( sceneMap, mapID, heapID );
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			sceneMap->mapBlock[i].idx = i;
+			CreateMapGraphicData( sceneMap, &sceneMap->mapBlock[i], mapID );
+			CreateMapGridData( &sceneMap->mapBlock[i], mapID, heapID );
+			sceneMap->mapBlock[i].trans.x = mapTransOffs[i].x;
+			sceneMap->mapBlock[i].trans.y = mapTransOffs[i].y;
+			sceneMap->mapBlock[i].trans.z = mapTransOffs[i].z;
+			{
+				GFL_G3D_SCENEOBJ* g3DsceneObj;
+				VecFx32 trans;
+				int j;
+
+				for( j=0; j<sceneMap->mapBlock[i].floor.count; j++ ){
+					g3DsceneObj = GFL_G3D_SCENEOBJ_Get( sceneMap->g3Dscene, 
+													sceneMap->mapBlock[i].floor.id + j );
+					GFL_G3D_SCENEOBJ_GetPos( g3DsceneObj, &trans );
+					VEC_Add( &trans, &sceneMap->mapBlock[i].trans, &trans );
+					GFL_G3D_SCENEOBJ_SetPos( g3DsceneObj, &trans );
+				}
+			}
+		}
 	}
 
 	for( i=0; i<EXOBJ_MAX; i++ ){
@@ -569,8 +603,10 @@ void	Delete3Dmap( SCENE_MAP* sceneMap )
 			RemoveExtraObject( sceneMap, &sceneMap->extraObject[i] );
 		}
 	}
-	DeleteMapGridData( sceneMap );
-	DeleteMapGraphicData( sceneMap );
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		DeleteMapGridData( &sceneMap->mapBlock[i] );
+		DeleteMapGraphicData( sceneMap, &sceneMap->mapBlock[i] );
+	}
 	GFL_G3D_SCENE_DelG3DutilUnit( sceneMap->g3Dscene, sceneMap->unitIdx );
 	GFL_HEAP_FreeMemory( sceneMap );
 }
@@ -652,23 +688,25 @@ static inline u16 GET_MAPCODE( const u16* mapdata, int x, int z )
  * @brief		３Ｄマップデータセットアップ
  */
 //------------------------------------------------------------------
-static void	CreateMapGraphicData( SCENE_MAP* sceneMap, int mapID )
+static void	CreateMapGraphicData( SCENE_MAP* sceneMap, MAP_BLOCK_DATA* mapBlock, int mapID )
 {
 	GFL_G3D_SCENEOBJ_DATA*	pdata;
 
 	GF_ASSERT( mapID < NELEMS(mapData) );
 
-	sceneMap->floor.count = mapData[mapID].dataCount;
-	sceneMap->floor.id = GFL_G3D_SCENEOBJ_Add(	sceneMap->g3Dscene, mapData[mapID].data,
-												sceneMap->floor.count, sceneMap->objIdx );
+	mapBlock->floor.count = mapData[mapID].dataCount;
+	mapBlock->floor.id = GFL_G3D_SCENEOBJ_Add(	sceneMap->g3Dscene, 
+												mapData[mapID].data,
+												mapData[mapID].dataCount,
+												sceneMap->objIdx );
 }
 
 //------------------------------------------------------------------
-static void	DeleteMapGraphicData( SCENE_MAP* sceneMap )
+static void	DeleteMapGraphicData( SCENE_MAP* sceneMap, MAP_BLOCK_DATA* mapBlock )
 {
 	GFL_G3D_SCENEOBJ_Remove(	sceneMap->g3Dscene, 
-								sceneMap->floor.id, 
-								sceneMap->floor.count ); 
+								mapBlock->floor.id, 
+								mapBlock->floor.count ); 
 }
 
 
@@ -854,16 +892,16 @@ static void MakeTriangleData
 		( MAP_PLANE_DATA* triData, VecFx32* posRef, VecFx16* vtx0, VecFx16* vtx1, VecFx16* vtx2 );
 static BOOL GetPlaneVtxHeight( u16 mapCode, int* y );
 
-static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID )
+static void CreateMapGridData( MAP_BLOCK_DATA* mapBlock, int mapID, HEAPID heapID )
 {
 	int	i, x, z;
 	u16	mapCode;
 	int	height, height2;
-	const u16* attr = (const u16*)mapData->attr;
-	const MAP_GRIDMAKE_DATA* grid = mapData->grid;
+	const u16* attr = (const u16*)mapData[mapID].attr;
+	const MAP_GRIDMAKE_DATA* grid = mapData[mapID].grid;
 
-	sceneMap->floorGrid = GFL_HEAP_AllocClearMemory( heapID, 
-								sizeof(MAP_GRID_DATA)*mapSizeX*mapSizeZ );
+	mapBlock->floorGrid = GFL_HEAP_AllocClearMemory( heapID, 
+												sizeof(MAP_GRID_DATA)*mapSizeX*mapSizeZ );
 
 	for( z=0; z<mapSizeZ; z++ ){
 		for( x=0; x<mapSizeX; x++ ){
@@ -871,7 +909,7 @@ static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID )
 
 			mapCode = GET_MAPCODE( attr, x, z );
 
-			MakeGridData( sceneMap->floorGrid, x, z, 
+			MakeGridData( mapBlock->floorGrid, x, z, 
 					grid[i].vtxY0, grid[i].vtxY1, grid[i].vtxY2, grid[i].vtxY3 );
 
 			switch( mapCode ){
@@ -884,29 +922,47 @@ static void CreateMapGridData( SCENE_MAP* sceneMap, int mapID, HEAPID heapID )
 			case '←':	//階段
 			case '↑':	//階段
 			case '↓':	//階段
-				sceneMap->floorGrid[i].passage = 0;
-				sceneMap->floorGrid[i].passage = 0;
+				mapBlock->floorGrid[i].passage = 0;
+				mapBlock->floorGrid[i].passage = 0;
 				break;
 			case '■':	//崖
 			case '◆':	//家
 			case '□':	//水
-				//MakeGridData( sceneMap->floorGrid, x, z, 0, 0, 0, 0 );
-				sceneMap->floorGrid[i].passage = 1;
+				mapBlock->floorGrid[i].passage = 1;
 				break;
 			}
 		}
 	}
 }
 
-static void DeleteMapGridData( SCENE_MAP* sceneMap )
+static void DeleteMapGridData( MAP_BLOCK_DATA* mapBlock )
 {
-	GFL_HEAP_FreeMemory( sceneMap->floorGrid );
+	GFL_HEAP_FreeMemory( mapBlock->floorGrid );
 }
 
-static void	GetGroundGridData( const VecFx32* pos, int* x, int* z, u16* offset )
+static void	GetGroundGridData( const VecFx32* pos, int* blockID, int* x, int* z, u16* offset )
 {
-	*x = (pos->x + mapGrid * mapSizeX/2)/mapGrid;
-	*z = (pos->z + mapGrid * mapSizeZ/2)/mapGrid;
+	if((pos->x < 0 )&&(pos->z < 0 )){
+		*blockID = 0;
+		*x = (pos->x + mapSizeX*mapGrid)/mapGrid;
+		*z = (pos->z + mapSizeZ*mapGrid)/mapGrid;
+	} else if((pos->x >= 0 )&&(pos->z < 0 )){
+		*blockID = 1;
+		*x = pos->x/mapGrid;
+		*z = (pos->z + mapSizeZ*mapGrid)/mapGrid;
+	} else if((pos->x < 0 )&&(pos->z >= 0 )){
+		*blockID = 2;
+		*x = (pos->x + mapSizeX*mapGrid)/mapGrid;
+		*z = pos->z/mapGrid;
+	} else {
+		*blockID = 3;
+		*x = pos->x/mapGrid;
+		*z = pos->z/mapGrid;
+	}
+	//GF_ASSERT_MSG( *x >= 0, "posx = %x, x = %x\n", pos->x, *x );
+	//GF_ASSERT_MSG( *x < mapSizeX, "posx = %x, x = %x\n", pos->x, *x );
+	//GF_ASSERT_MSG( *z >= 0, "posz = %x, z = %x\n", pos->z, *z );
+	//GF_ASSERT_MSG( *z < mapSizeZ, "posz = %x, z = %x\n", pos->z, *z );
 	*offset = *z * mapSizeX + *x;
 }
 
@@ -918,6 +974,9 @@ static void inline posGridCalc( int x, int z, VecFx16* vtx, VecFx32* dst )
 	tmp.x = (x - mapSizeX/2) * FX16_ONE + vtx->x;
 	tmp.y = vtx->y;
 	tmp.z = (z - mapSizeZ/2) * FX16_ONE + vtx->z;
+	//tmp.x = x * FX16_ONE + vtx->x;
+	//tmp.y = vtx->y;
+	//tmp.z = z * FX16_ONE + vtx->z;
 
 	dst->x = FX_Mul( mapGrid, tmp.x );
 	dst->y = FX_Mul( mapGrid, tmp.y );
@@ -960,17 +1019,17 @@ static void MakeGridData( MAP_GRID_DATA* floor, int gridx, int gridz,
 	//データ格納(法線が上の場合は左回りに頂点設定)
 	if( grid->planeType == TRIANGLE_TYPE_021_312 ){
 		//0-2-1 triangle設定
-		posGridCalc( gridx, gridz, &vtx0, &posRef );	//vtx0の実座標計算
+		posGridCalc( gridx, gridz, &vtx0, &posRef );	//vtx0のローカル実座標計算
 		MakeTriangleData( &grid->triangle[0], &posRef, &vtx0, &vtx2, &vtx1 );
 		//3-1-2 triangle設定
-		posGridCalc( gridx, gridz, &vtx3, &posRef );	//vtx3の実座標計算
+		posGridCalc( gridx, gridz, &vtx3, &posRef );	//vtx3のローカル実座標計算
 		MakeTriangleData( &grid->triangle[1], &posRef, &vtx3, &vtx1, &vtx2 );
 	} else {
 		//2-3-0 triangle設定
-		posGridCalc( gridx, gridz, &vtx2, &posRef );	//vtx2の実座標計算
+		posGridCalc( gridx, gridz, &vtx2, &posRef );	//vtx2のローカル実座標計算
 		MakeTriangleData( &grid->triangle[0], &posRef, &vtx2, &vtx3, &vtx0 );
 		//1-0-3 triangle設定
-		posGridCalc( gridx, gridz, &vtx1, &posRef );	//vtx1の実座標計算
+		posGridCalc( gridx, gridz, &vtx1, &posRef );	//vtx1のローカル実座標計算
 		MakeTriangleData( &grid->triangle[1], &posRef, &vtx1, &vtx0, &vtx3 );
 	}
 }
@@ -1026,52 +1085,39 @@ static BOOL	CheckGetGroundOutSideData( const int x, const int z )
 	}
 }
 
-static BOOL	GetGroundTriangleID( MAP_GRID_DATA* floor, const VecFx32* pos, u16* gridOffs, u16* ID )
+static void	GetGroundTriangleID( MAP_GRID_DATA* floor, int gridx, int gridz, fx32 fx, fx32 fz, 
+									u16* gridOffs, u16* ID )
 {
-	int		gridx, gridz;
-	fx32	fx, fz;
-
-	GetGroundGridData( pos, &gridx, &gridz, gridOffs );
-	fx = ( pos->x + mapGrid * mapSizeX/2 )%mapGrid;
-	fz = ( pos->z + mapGrid * mapSizeZ/2 )%mapGrid;
-
-	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
-		return FALSE;
-	}
 	//グリッド内三角形の判定
 	if( floor[ *gridOffs ].planeType == TRIANGLE_TYPE_021_312 ){
 		//0-2-1,3-1-2のパターン
 		if( fx + fz < mapGrid ){
 			*ID = 0;
-			return TRUE;	//0-1-2三角形内
 		} else {
 			*ID = 1;
-			return TRUE;	//3-2-1三角形内
 		}
 	} else {
 		//2-3-0,1-0-3のパターン
 		if( fx < fz ){
 			*ID = 0;
-			return TRUE;	//2-0-3三角形内
 		} else {
 			*ID = 1;
-			return TRUE;	//1-3-0三角形内
 		}
 	}
-	return FALSE;
 }
 
 BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 {
 	int	gridx, gridz;
 	u16	gridOffs;
+	int blockID;
 
-	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
+	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
 
 	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
 		return FALSE;
 	}
-	if( sceneMap->floorGrid[ gridOffs ].passage != 0 ){
+	if( sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].passage != 0 ){
 		return FALSE;
 	}
 	return TRUE;
@@ -1079,44 +1125,78 @@ BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 
 BOOL	GetGroundPlaneData( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
+	int		gridx, gridz;
+	fx32	fx, fz;
 	u16		gridOffs, triangleID;
+	int		blockID;
 
-	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
+	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
+
+	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
 		return FALSE;
 	}
-	*vecN	= sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
-	*valD	= sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].valD;
+	fx = pos->x%mapGrid;
+	fz = pos->z%mapGrid;
+
+	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
+							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+
+	*vecN	= sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
+	*valD	= sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].valD;
 
 	return TRUE;
 }
 
 void	GetGroundPlaneVecN( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN )
 {
+	int		gridx, gridz;
+	fx32	fx, fz;
 	u16		gridOffs, triangleID;
+	int		blockID;
 
-	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
+	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
+
+	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
 		vecN->x = 0;
 		vecN->y = FX32_ONE;
 		vecN->z = 0;
 		return;
 	}
-	*vecN = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
+	fx = pos->x%mapGrid;
+	fz = pos->z%mapGrid;
+
+	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
+							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+
+	*vecN = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
 }
 
 void	GetGroundPlaneHeight( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height ) 
 {
+	int		gridx, gridz;
+	fx32	fx, fz;
 	u16		gridOffs, triangleID;
-	VecFx32 vecN;
+	int		blockID;
+	VecFx32 posTmp, vecN;
 	fx32	by, valD;
 
-	if( GetGroundTriangleID( sceneMap->floorGrid, pos, &gridOffs, &triangleID ) == FALSE ){
+	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
+
+	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
 		*height = 0;
 		return;
 	}
-	vecN = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
-	valD = sceneMap->floorGrid[ gridOffs ].triangle[ triangleID ].valD;
+	fx = pos->x%mapGrid;
+	fz = pos->z%mapGrid;
 
-	by = -( FX_Mul( vecN.x, pos->x ) + FX_Mul( vecN.z, pos->z ) + valD );
+	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
+							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+
+	vecN = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
+	valD = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].valD;
+
+	VEC_Subtract( pos, &sceneMap->mapBlock[blockID].trans, &posTmp );
+	by = -( FX_Mul( vecN.x, posTmp.x ) + FX_Mul( vecN.z, posTmp.z ) + valD );
 	*height = FX_Div( by, vecN.y );
 }
 
@@ -1173,471 +1253,7 @@ void	GLOBAL_GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN )
 void	GLOBAL_GetGroundPlaneHeight( const VecFx32* pos, fx32* height )
 {
 	GetGroundPlaneHeight( DEBUG_sceneMap, pos, height );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップリソースデータ取得
- */
-//------------------------------------------------------------------
-static void GetMapTexAddress
-			( const SCENE_MAP* sceneMap, const u16 idx, u32* texData, u32* texPltt )
-{
-	NNSG3dTexKey	texKey;
-	NNSG3dPlttKey	plttKey;
-
-	texKey = GFL_G3D_GetTextureDataVramKey
-		( GFL_G3D_SCENE_GetG3DutilResHandle( sceneMap->g3Dscene, idx + sceneMap->resIdx ) );
-	plttKey = GFL_G3D_GetTexturePlttVramKey
-		( GFL_G3D_SCENE_GetG3DutilResHandle( sceneMap->g3Dscene, idx + sceneMap->resIdx ) );
-
-	*texData = NNS_GfdGetTexKeyAddr( texKey );
-	*texPltt = NNS_GfdGetPlttKeyAddr( plttKey );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップディスプレイ
- */
-//------------------------------------------------------------------
-void	Draw3Dmap( SCENE_MAP* sceneMap, GFL_G3D_CAMERA* g3Dcamera )
-{
-	u32			texData, texPltt, texData1, texPltt1, texData2, texPltt2;
-	VecFx32		camPos, camUp, target;
-
-	//テクスチャ設定取得
-	GetMapTexAddress( sceneMap, G3DRES_FIELD_TEX1, &texData1, &texPltt1 );
-	GetMapTexAddress( sceneMap, G3DRES_FIELD_TEX2, &texData2, &texPltt2 );
-	//カメラ設定取得
-	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
-	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-	//地形描画
-	{
-		int			x, z;
-		fx32		px, pz;
-		int			offset;
-		VecFx16		*pVtx0, *pVtx1, *pVtx2, *pVtx3;
-		fx32		s0, t0, s1, t1, s2, t2;
-		GXRgb		vtx0col, vtx1col, vtx2col;
-		fx16		col;
-		fx16		diff0, diff1, diff2;
-		GXTexFmt	texFmt;
-		int			i;
-		VecFx16		vecN;
-
-		G3X_Reset();
-		G3_LookAt( &camPos, &camUp, &target, NULL);
-#if 0
-		{
-			G3_MtxMode(GX_MTXMODE_TEXTURE);
-			G3_Identity();
-			// Use an identity matrix for the texture matrix for simplicity
-			G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
-		}
-#endif
-		//マテリアル設定
-		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
-		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-		G3_PolygonAttr(GX_LIGHTMASK_0, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 31, 0);
-
-		G3_Scale( mapGrid, mapGrid, mapGrid );
-
-		for( z=0; z<mapSizeZ; z++ ){
-			for( x=0; x<mapSizeX; x++ ){
-	
-				px = (x - mapSizeX/2) * FX16_ONE; 
-				pz = (z - mapSizeZ/2) * FX16_ONE;
-				offset = z * mapSizeX + x;
-	
-				G3_PushMtx();
-	
-				G3_Translate( px, 0, pz );
-	
-				//G3_MultMtx33(const MtxFx33* m);
-				
-				G3_Begin( GX_BEGIN_TRIANGLES );
-	
-				for( i=0; i<2; i++ ){
-					pVtx0 = &sceneMap->floorGrid[offset].triangle[i].vtx0;
-					pVtx1 = &sceneMap->floorGrid[offset].triangle[i].vtx1;
-					pVtx2 = &sceneMap->floorGrid[offset].triangle[i].vtx2;
-					//vecN.x  = 0;//(fx16)sceneMap->floorGrid[offset].triangle[i].vecN.x;
-					//vecN.y  = FX16_ONE;// (fx16)sceneMap->floorGrid[offset].triangle[i].vecN.y;
-					//vecN.z  = 0;//(fx16)sceneMap->floorGrid[offset].triangle[i].vecN.z;
-#if 0	
-					if(( pVtx0->y == pVtx1->y )&&( pVtx0->y == pVtx2->y )){
-#else
-					if( pVtx0->y > pVtx1->y ){
-						diff0 = pVtx0->y - pVtx1->y;
-					} else if( pVtx0->y < pVtx1->y ){
-						diff0 = pVtx1->y - pVtx0->y;
-					} else {
-						diff0 = 0;
-					}
-					if( pVtx1->y > pVtx2->y ){
-						diff1 = pVtx1->y - pVtx2->y;
-					} else if( pVtx1->y < pVtx2->y ){
-						diff1 = pVtx2->y - pVtx1->y;
-					} else {
-						diff1 = 0;
-					}
-					if( pVtx2->y > pVtx0->y ){
-						diff2 = pVtx2->y - pVtx0->y;
-					} else if( pVtx2->y < pVtx0->y ){
-						diff2 = pVtx0->y - pVtx2->y;
-					} else {
-						diff2 = 0;
-					}
-					if(( diff0 <= mapHeight )&&( diff1 <= mapHeight )&&( diff2 <= mapHeight )){
-#endif
-						//平面（草）
-						texFmt	= GX_TEXFMT_PLTT16;// use 16 colors palette texture
-						texData = texData1;
-						texPltt = texPltt1;
-						s0 = 0;
-						t0 = 0;
-						s1 = 0;
-						t1 = 64 * FX32_ONE;
-						s2 = 64 * FX32_ONE;
-						t2 = 0;
-					} else {
-						//斜面（土）
-						texFmt	= GX_TEXFMT_PLTT4;// use 4 colors palette texture
-						texData = texData2;
-						texPltt = texPltt2;
-						s0 = 0;
-						t0 = 0;
-						s1 = 0;
-						t1 = 64 * FX32_ONE;
-						s2 = 64 * FX32_ONE;
-						t2 = 0;
-					}
-					G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD,// use texcoord
-										GX_TEXSIZE_S64, GX_TEXSIZE_T64,// 64 pixels
-										GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-										GX_TEXPLTTCOLOR0_USE, texData );
-					G3_TexPlttBase( texPltt, texFmt );
-	
-					//gxSt0 = GX_ST( pVtx0->x * 64, pVtx0->z * 64 );
-					//gxSt1 = GX_ST( pVtx1->x * 64, pVtx1->z * 64 );
-					//gxSt2 = GX_ST( pVtx2->x * 64, pVtx2->z * 64 );
-					vtx0col = GX_RGB(16, 16, 16);
-					vtx1col = GX_RGB(24, 24, 24);
-					vtx2col = GX_RGB(31, 31, 31);
-	
-					//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
-					G3_Color( vtx0col );
-					G3_TexCoord( s0, t0 );
-					//G3_Normal( vecN.x, vecN.y, vecN.z );
-					G3_Vtx( pVtx0->x, pVtx0->y, pVtx0->z );
-	
-					G3_Color( vtx1col );
-					G3_TexCoord( s1, t1 );
-					//G3_Normal( vecN.x, vecN.y, vecN.z );
-					G3_Vtx( pVtx1->x, pVtx1->y, pVtx1->z );
-	
-					G3_Color( vtx2col );
-					G3_TexCoord( s2, t2 );
-					//G3_Normal( vecN.x, vecN.y, vecN.z );
-					G3_Vtx( pVtx2->x, pVtx2->y, pVtx2->z );
-				}
-				G3_End();
-	
-				G3_PopMtx(1);
-			}
-		}
-	}
-	//水平線描画
-	{
-		fx16 waterLine;
-
-		sceneMap->anmTimer += 0x400;
-		waterLine = 1 * FX_SinIdx( sceneMap->anmTimer );
-
-		G3X_Reset();
-		G3_LookAt( &camPos, &camUp, &target, NULL);
-
-		//マテリアル設定
-		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
-		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-		G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_BACK, 63, 8, 0);
-	
-		G3_Scale( FX32_ONE*64*32, FX32_ONE, FX32_ONE*64*32 );
-		G3_PushMtx();
-		G3_Translate( 0, -FX16_ONE*4, 0 );
-	
-		G3_Begin( GX_BEGIN_QUADS );
-	
-		//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
-		G3_Color( GX_RGB(0, 0, 16) );
-		G3_Vtx( -FX16_ONE, waterLine, FX16_ONE );
-		G3_Color( GX_RGB(0, 0, 31) );
-		G3_Vtx( FX16_ONE, waterLine, FX16_ONE );
-		G3_Color( GX_RGB(0, 0, 16) );
-		G3_Vtx( FX16_ONE, waterLine, -FX16_ONE );
-		G3_Color( GX_RGB(0, 0, 31) );
-		G3_Vtx( -FX16_ONE, waterLine, -FX16_ONE );
-	
-		G3_End();
-		G3_PopMtx(1);
-	}
-	//↓後にG3D_Systemで行うので、ここではやらない
-	//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_W);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップ高さ変更
- */
-//------------------------------------------------------------------
-static void	GetGridVtxY( MAP_GRID_DATA* floor, const int gridx, const int gridz, 
-							fx16* y0, fx16* y1, fx16* y2, fx16* y3 )
-{
-	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
-
-	if( grid->planeType == TRIANGLE_TYPE_021_312 ){
-		*y0 = grid->triangle[0].vtx0.y;
-		*y1 = grid->triangle[0].vtx2.y;
-		*y2 = grid->triangle[1].vtx2.y;
-		*y3 = grid->triangle[1].vtx0.y;
-	} else {
-		*y0 = grid->triangle[0].vtx2.y;
-		*y1 = grid->triangle[1].vtx0.y;
-		*y2 = grid->triangle[0].vtx0.y;
-		*y3 = grid->triangle[1].vtx2.y;
-	}
-}
-
-static u32	GetGridPlaneData( MAP_GRID_DATA* floor, const int gridx, const int gridz )
-{
-	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
-
-	return  grid->planeType;
-}
-
-static void	GetGridVtxYLen( MAP_GRID_DATA* floor, const int gridx, const int gridz, 
-							int* y0, int* y1, int* y2, int* y3 )
-{
-	fx16 fy0, fy1, fy2, fy3;
-
-	GetGridVtxY( floor, gridx, gridz, &fy0, &fy1, &fy2, &fy3 );
-	*y0 = fy0/mapHeight;
-	*y1 = fy1/mapHeight;
-	*y2 = fy2/mapHeight;
-	*y3 = fy3/mapHeight;
-}
-
-static void	SetGridAround( MAP_GRID_DATA* floor, const int gridx, const int gridz )
-{
-	int y0, y1, y2, y3;
-	int ty0, ty1, ty2, ty3;
-
-	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
-
-	if( CheckGetGroundOutSideData( gridx-1, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx-1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx-1, gridz-1, ty0, ty1, ty2, y0 );
-	}
-	if( CheckGetGroundOutSideData( gridx, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx, gridz-1, ty0, ty1, y0, y1 );
-	}
-	if( CheckGetGroundOutSideData( gridx+1, gridz-1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx+1, gridz-1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx+1, gridz-1, ty0, ty1, y1, ty3 );
-	}
-	if( CheckGetGroundOutSideData( gridx-1, gridz ) == FALSE ){
-		GetGridVtxYLen( floor, gridx-1, gridz, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx-1, gridz, ty0, y0, ty2, y2 );
-	}
-	if( CheckGetGroundOutSideData( gridx+1, gridz ) == FALSE ){
-		GetGridVtxYLen( floor, gridx+1, gridz, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx+1, gridz, y1, ty1, y3, ty3 );
-	}
-	if( CheckGetGroundOutSideData( gridx-1, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx-1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx-1, gridz+1, ty0, y2, ty2, ty3 );
-	}
-	if( CheckGetGroundOutSideData( gridx, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx, gridz+1, y2, y3, ty2, ty3 );
-	}
-	if( CheckGetGroundOutSideData( gridx+1, gridz+1 ) == FALSE ){
-		GetGridVtxYLen( floor, gridx+1, gridz+1, &ty0, &ty1, &ty2, &ty3 );
-		MakeGridData( floor, gridx+1, gridz+1, y3, ty1, ty2, ty3 );
-	}
-}
-
-static void	SetGridUp( MAP_GRID_DATA* floor, const int gridx, const int gridz,
-							const int y0, const int y1, const int y2, const int y3 )
-{
-	int	ymax;
-
-	//OS_Printf("対象地形 y0 = %x, y1 = %x, y2 = %x, y3 = %x\n", y0, y1, y2, y3 );
-	ymax = y0;
-	if( ymax < y1 ){ ymax = y1; }
-	if( ymax < y2 ){ ymax = y2; }
-	if( ymax < y3 ){ ymax = y3; }
-
-	if( GetGridPlaneData( floor, gridx, gridz ) == QUAD_TYPE_PLANE ){
-		if( ymax < (32-1) ){
-			ymax++;	//有効値は、fx16上位が3bit幅なので(fx16/4)単位だと-32<y<32
-		}
-	}
-	MakeGridData( floor, gridx, gridz, ymax, ymax, ymax, ymax );
-	SetGridAround( floor, gridx, gridz );
-}
-
-static void	SetGridDown( MAP_GRID_DATA* floor, const fx32 gridx, const fx32 gridz,
-							const int y0, const int y1, const int y2, const int y3 )
-{
-	int	ymin;
-
-	//OS_Printf("対象地形 y0 = %x, y1 = %x, y2 = %x, y3 = %x\n", y0, y1, y2, y3 );
-	ymin = y0;
-	if( ymin > y1 ){ ymin = y1; }
-	if( ymin > y2 ){ ymin = y2; }
-	if( ymin > y3 ){ ymin = y3; }
-
-	if( GetGridPlaneData( floor, gridx, gridz ) == QUAD_TYPE_PLANE ){
-		if( ymin > -(32-1) ){
-			ymin--;	//有効値は、fx16上位が3bit幅なので(fx16/4)単位だと-32<y<32
-		}
-	}
-	MakeGridData( floor, gridx, gridz, ymin, ymin, ymin, ymin );
-	SetGridAround( floor, gridx, gridz );
-}
-
-static BOOL	CheckGridVtxUp( MAP_GRID_DATA* floor, const int gridx, const int gridz )
-{
-	int		ymax, y0, y1, y2, y3;
-	BOOL	result = TRUE;
-
-	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
-	ymax = y0;
-	if( ymax < y1 ){ ymax = y1; }
-	if( ymax < y2 ){ ymax = y2; }
-	if( ymax < y3 ){ ymax = y3; }
-
-	if( y0 < (ymax - 1) ){
-		y0 = ymax - 1;
-		result = FALSE;
-	}
-	if( y1 < (ymax - 1) ){
-		y1 = ymax - 1;
-		result = FALSE;
-	}
-	if( y2 < (ymax - 1) ){
-		y2 = ymax - 1;
-		result = FALSE;
-	}
-	if( y3 < (ymax - 1) ){
-		y3 = ymax - 1;
-		result = FALSE;
-	}
-	if( result == FALSE ){
-		MakeGridData( floor, gridx, gridz, y0, y1, y2, y3 );
-		SetGridAround( floor, gridx, gridz );
-	}
-	return 	result;
-}
-
-static BOOL	CheckGridVtxDown( MAP_GRID_DATA* floor, const int gridx, const int gridz )
-{
-	int		ymin, y0, y1, y2, y3;
-	BOOL	result = TRUE;
-
-	GetGridVtxYLen( floor, gridx, gridz, &y0, &y1, &y2, &y3 );
-	ymin = y0;
-	if( ymin > y1 ){ ymin = y1; }
-	if( ymin > y2 ){ ymin = y2; }
-	if( ymin > y3 ){ ymin = y3; }
-
-	if( y0 > (ymin + 1) ){
-		y0 = ymin + 1;
-		result = FALSE;
-	}
-	if( y1 > (ymin + 1) ){
-		y1 = ymin + 1;
-		result = FALSE;
-	}
-	if( y2 > (ymin + 1) ){
-		y2 = ymin + 1;
-		result = FALSE;
-	}
-	if( y3 > (ymin + 1) ){
-		y3 = ymin + 1;
-		result = FALSE;
-	}
-	if( result == FALSE ){
-		MakeGridData( floor, gridx, gridz, y0, y1, y2, y3 );
-		SetGridAround( floor, gridx, gridz );
-	}
-	return 	result;
-}
-
-void	SetMapGroundUp( SCENE_MAP* sceneMap, VecFx32* pos )
-{
-	int		gridx, gridz;
-	int		y0, y1, y2, y3;
-	u16		gridOffs;
-
-//	OS_Printf("地形アップ\n");
-	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
-	GetGridVtxYLen( sceneMap->floorGrid, gridx, gridz, &y0, &y1, &y2, &y3 );
-
-	SetGridUp( sceneMap->floorGrid, gridx, gridz, y0, y1, y2, y3 );
-#if 0
-	{
-		BOOL endFlag = FALSE;
-
-		while( endFlag == FALSE ){
-			int x, z;
-			endFlag = TRUE;
-
-			for( z=0; z<mapSizeZ; z++ ){
-				for( x=0; x<mapSizeX; x++ ){
-					if( CheckGridVtxUp( x, z ) == FALSE ){
-						endFlag = FALSE;
-					}
-				}
-			}
-		}
-	}
-#endif
-}
-
-void	SetMapGroundDown( SCENE_MAP* sceneMap, VecFx32* pos )
-{
-	int		gridx, gridz;
-	int		y0, y1, y2, y3;
-	u16		gridOffs;
-
-//	OS_Printf("地形ダウン\n");
-	GetGroundGridData( pos, &gridx, &gridz, &gridOffs );
-	GetGridVtxYLen( sceneMap->floorGrid, gridx, gridz, &y0, &y1, &y2, &y3 );
-
-	SetGridDown( sceneMap->floorGrid, gridx, gridz, y0, y1, y2, y3 );
-#if 0
-	{
-		BOOL endFlag = FALSE;
-
-		while( endFlag == FALSE ){
-			int x, z;
-			endFlag = TRUE;
-
-			for( z=0; z<mapSizeZ; z++ ){
-				for( x=0; x<mapSizeX; x++ ){
-					if( CheckGridVtxDown( x, z ) == FALSE ){
-						endFlag = FALSE;
-					}
-				}
-			}
-		}
-	}
-#endif
+	//*height = FX32_ONE*40;
 }
 
 //------------------------------------------------------------------
@@ -1683,12 +1299,14 @@ BOOL GetRayPosOnMap
 	fx32	limitLength;
 	int		x, z;
 	u16		offset, prevOffset; 
+	int		blockID, prevBlockID;
 
 	//レイの方向成分をXZ方向だけ抜き出して正規化
 	VEC_Set( &vecRayXZ, vecRay->x, 0, vecRay->z );
 	VEC_Normalize( &vecRayXZ, &vecRayXZ );
 
 	VEC_Set( &posStart, posRay->x, 0, posRay->z );		//検出開始地点
+	prevBlockID = 0xffff;	//検出初期化
 	prevOffset = 0xffff;	//検出初期化
 	vecLength.x = 0;
 	vecLength.y = 0;
@@ -1703,12 +1321,14 @@ BOOL GetRayPosOnMap
 	while( VEC_Mag( &vecLength ) <= limitLength ){
 		VEC_Add( &posStart, &vecLength, &pos );
 
-		GetGroundGridData( &pos, &x, &z, &offset );
+		GetGroundGridData( &pos, &blockID, &x, &z, &offset );
+	
 		if( CheckGetGroundOutSideData( x, z ) == FALSE ){
 
-			if( offset != prevOffset ){	//同じデータ(offset)はパス
-				MAP_GRID_DATA*	grid = &sceneMap->floorGrid[ offset ];
+			if(( blockID != prevBlockID )||( offset != prevOffset )){	//同じデータはパス
+				MAP_GRID_DATA*	grid = &sceneMap->mapBlock[blockID].floorGrid[offset];
 				VecFx32 posRef0, posRef1, posRef2, vecN, posCalc;
+				VecFx32* transOffs =  &sceneMap->mapBlock[blockID].trans;
 				BOOL result;
 				int i;
 
@@ -1718,16 +1338,22 @@ BOOL GetRayPosOnMap
 					posGridCalc( x, z, &grid->triangle[i].vtx1, &posRef1 );
 					posGridCalc( x, z, &grid->triangle[i].vtx2, &posRef2 );
 					vecN = grid->triangle[i].vecN;
+					VEC_Add( &posRef0, transOffs, &posRef0 );
+					VEC_Add( &posRef1, transOffs, &posRef1 );
+					VEC_Add( &posRef2, transOffs, &posRef2 );
 	
 					result = GFL_G3D_Calc_GetClossPointRayPlane
 								( posRay, vecRay, &posRef0, &vecN, &posCalc, 0 );
 					if( result == GFL_G3D_CALC_TRUE ){
 						if( checkOnTriangle(&posCalc, &posRef0, &posRef1, &posRef2, &vecN)==TRUE ){
 							*dst = posCalc;
+							//OS_Printf("pos {%x,%x,%x}, blockID %x, gridx %x, gridz %x\n", 
+							//			pos.x, pos.y, pos.z, blockID, x, z );
 							return TRUE;
 						}
 					}
 				}
+				prevBlockID = blockID;
 				prevOffset = offset;
 			}
 		}
