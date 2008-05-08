@@ -7,7 +7,6 @@
 //============================================================================================
 #include "map3d.h"
 #include "act3d.h"
-#include "fld_act.h"
 
 #define PLAYER_SETUP_MAX	(8)		//ç°ÇÃÇ∆Ç±ÇÎÇ±ÇÍà»è„ï\é¶Ç≥ÇπÇÈÇÃÇÕìÔÇµÇ¢Ç©Ç‡ÅAÉâÉCÉì
 #define PLAYER_SETUP_NUM	(8)
@@ -27,7 +26,7 @@ extern GFL_BMPWIN*			Get_GS_BmpWin( GAME_SYSTEM* gs, int bmpwinID );
 extern GFL_PTC_PTR			Get_GS_Perticle( GAME_SYSTEM* gs );
 extern SCENE_ACTSYS*		Get_GS_SceneActSys( GAME_SYSTEM* gs );
 extern SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs );
-extern FLD_ACTSYS*			Get_GS_FldActSys( GAME_SYSTEM* gs );
+extern GFL_BBDACT_SYS*		Get_GS_BillboardActSys( GAME_SYSTEM* gs );
 extern GFL_CLUNIT*			Get_GS_ClactUnit( GAME_SYSTEM* gs, u32 unitID );
 extern u32					Get_GS_ClactResIdx( GAME_SYSTEM* gs, u32 resID );
 

@@ -5,7 +5,7 @@ typedef struct _FLD_ACTSYS		FLD_ACTSYS;
  * @brief	フィールドアクトシステム作成
  */
 //------------------------------------------------------------------
-extern FLD_ACTSYS*	CreateFieldActSys( GFL_G3D_CAMERA* g3Dcamera, HEAPID heapID );
+extern FLD_ACTSYS*	CreateFieldActSys( GAME_SYSTEM* gs, HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * @brief	フィールドアクトシステム破棄
@@ -18,10 +18,4 @@ extern void	DeleteFieldActSys( FLD_ACTSYS* fldActSys );
  */
 //------------------------------------------------------------------
 extern void	MainFieldActSys( FLD_ACTSYS* fldActSys );
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクト描画関数
- */
-//------------------------------------------------------------------
-extern void	DrawFieldActSys( FLD_ACTSYS* fldActSys );
 

@@ -9,6 +9,7 @@
 #include "setup.h"
 #include "include\system\gfl_use.h"
 
+#include "fld_act.h"
 //注）GFL_G3D_SYSTEM, GFL_BBD上での動作
 
 //------------------------------------------------------------------
@@ -18,8 +19,7 @@
  *
  */
 //------------------------------------------------------------------
-#define FLD_BBDACT_RESMAX	(64)
-#define FLD_BBDACT_ACTMAX	(256)
+#define FLD_BBDACT_ACTMAX	(253)
 #define WORK_SIZ			(8)
 
 typedef struct {
@@ -30,9 +30,7 @@ typedef struct {
 struct _FLD_ACTSYS {
 	HEAPID					heapID;
 	GAME_SYSTEM*			gs;
-	GFL_G3D_CAMERA*			g3Dcamera;
 	u16						cameraRotate;
-	GFL_BBDACT_SYS*			bbdActSys;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	u16						bbdActResCount;
 	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
@@ -51,10 +49,8 @@ static void	calcCameraRotate( FLD_ACTSYS* fldActSys );
  *
  */
 //------------------------------------------------------------------
-static GFL_BBDACT_RESUNIT_ID testResUnitID;
-static GFL_BBDACT_ACTUNIT_ID testActUnitID;
-
 static const GFL_BBDACT_RESDATA testResTable[] = {
+{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32 },
 { ARCID_FLDACT, NARC_fld_act_achamo_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32 },
 { ARCID_FLDACT, NARC_fld_act_artist_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32 },
 { ARCID_FLDACT, NARC_fld_act_badman_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32 },
@@ -147,7 +143,8 @@ static const GFL_BBDACT_ANM* testAnmTable[] = { walkUAnm, walkDAnm, walkLAnm, wa
 static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 {
 	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	FLD_ACT_WORK*	actWork = (FLD_ACT_WORK*)work;
+	FLD_ACTSYS*		fldActSys = (FLD_ACTSYS*)work;
+	FLD_ACT_WORK*	actWork = &fldActSys->actWork[actIdx];
 
 	if( actWork->work[0] == 0 ){
 		u32	timer = GFUser_GetPublicRand(8);
@@ -161,6 +158,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		VecFx32 nowTrans, nextTrans, vecMove, vecGround, rotVec;
 		u16	 theta = actWork->work[1];
 		fx32 speed = FX32_ONE;
+		BOOL mvf;
 
 		{
 			u16	 dir = actWork->work[1] - actWork->fldActSys->cameraRotate;
@@ -183,7 +181,11 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-		if( DEBUG_CheckGroundMove( &nowTrans, &vecMove, &nextTrans ) == TRUE ){ 
+
+		GetGroundMovePos( Get_GS_SceneMap( fldActSys->gs ), &nowTrans, &vecMove, &nextTrans ); 
+		//範囲外コントロール
+		mvf = CheckGroundOutRange( Get_GS_SceneMap( fldActSys->gs ), &nextTrans );
+		if( mvf == TRUE ){ 
 			nextTrans.y += FX32_ONE*7;	//補正
 			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nextTrans );
 		} else {
@@ -192,61 +194,68 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 	}
 }
 
+#define TEST_NPC_SETNUM	(250)
 static void testSetUp( FLD_ACTSYS* fldActSys )
 {
+	GFL_BBDACT_SYS* bbdActSys = Get_GS_BillboardActSys( fldActSys->gs );	
 	GFL_BBDACT_ACTDATA* actData;
 	GFL_BBDACT_ACTUNIT_ID actUnitID;
 	int		i, objIdx;
 	VecFx32	trans;
 	u8		alpha;
 	BOOL	drawEnable;
-	u16		setActNum = 250;
+	u16		setActNum;
 
 	//リソースセットアップ
 	fldActSys->bbdActResCount = NELEMS(testResTable);
-	fldActSys->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	fldActSys->bbdActSys, 
+	fldActSys->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	bbdActSys, 
 																testResTable, 
 																fldActSys->bbdActResCount );
-	//アクターセットアップ
 	fldActSys->bbdActActCount = FLD_BBDACT_ACTMAX;
-	actData = GFL_HEAP_AllocClearMemory( fldActSys->heapID, 
-										fldActSys->bbdActActCount*sizeof(GFL_BBDACT_ACTDATA) );
 
-	for( i=0; i<setActNum; i++ ){
-		actData[i].resID = GFUser_GetPublicRand( 10 );
-		actData[i].sizX = FX16_ONE*8-1;
-		actData[i].sizY = FX16_ONE*8-1;
-
-		do{
-			actData[i].trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-			actData[i].trans.y = 0;
-			actData[i].trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-		}while( DEBUG_CheckGroundOutRange( &actData[i].trans ) == FALSE );
+	//ＮＰＣアクターセットアップ
+	{
+		u16	setActNum = TEST_NPC_SETNUM;
+		GFL_BBDACT_ACTDATA* actData = GFL_HEAP_AllocClearMemory( fldActSys->heapID,
+													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
+		for( i=0; i<setActNum; i++ ){
+			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
+			actData[i].sizX = FX16_ONE*8-1;
+			actData[i].sizY = FX16_ONE*8-1;
+	
+			do{
+				actData[i].trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+				actData[i].trans.y = 0;
+				actData[i].trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+			}while
+			( CheckGroundOutRange(Get_GS_SceneMap(fldActSys->gs), &actData[i].trans) == FALSE );
 		
-		actData[i].alpha = 31;
-		actData[i].drawEnable = TRUE;
-		actData[i].func = testFunc;
-		actData[i].work = &fldActSys->actWork[i];
+			
+			actData[i].alpha = 31;
+			actData[i].drawEnable = TRUE;
+			actData[i].func = testFunc;
+			actData[i].work = fldActSys;
+		}
+		fldActSys->bbdActActUnitID = GFL_BBDACT_AddAct(	bbdActSys, fldActSys->bbdActResUnitID,
+														actData, setActNum );
+		for( i=0; i<setActNum; i++ ){
+			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActSys->bbdActActUnitID+i, 
+										testAnmTable, NELEMS(testAnmTable) );
+			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActSys->bbdActActUnitID+i, 0 );
+		}
+		GFL_HEAP_FreeMemory( actData );
 	}
-	fldActSys->bbdActActUnitID = GFL_BBDACT_AddAct( fldActSys->bbdActSys, 
-													testResUnitID, 
-													actData,
-													fldActSys->bbdActActCount );
-	for( i=0; i<setActNum; i++ ){
-		GFL_BBDACT_SetAnimeTable( fldActSys->bbdActSys, fldActSys->bbdActResUnitID+i, 
-									testAnmTable, NELEMS(testAnmTable) );
-		GFL_BBDACT_SetAnimeIdxOn( fldActSys->bbdActSys, fldActSys->bbdActActUnitID+i, 0 );
-	}
-
-	GFL_HEAP_FreeMemory( actData );
 }
 
 static void testRelease( FLD_ACTSYS* fldActSys )
 {
+	GFL_BBDACT_SYS* bbdActSys = Get_GS_BillboardActSys( fldActSys->gs );	
 	u16	setActNum = FLD_BBDACT_ACTMAX;
 
-	GFL_BBDACT_RemoveAct( fldActSys->bbdActSys, testActUnitID, setActNum );
-	GFL_BBDACT_RemoveResourceUnit( fldActSys->bbdActSys, testResUnitID, NELEMS(testResTable) );
+	GFL_BBDACT_RemoveAct( bbdActSys, fldActSys->bbdActActUnitID, TEST_NPC_SETNUM );
+		
+	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, 
+									fldActSys->bbdActResUnitID, fldActSys->bbdActResCount );
 }
 
 //------------------------------------------------------------------
@@ -254,16 +263,14 @@ static void testRelease( FLD_ACTSYS* fldActSys )
  * @brief	フィールドアクトシステム作成
  */
 //------------------------------------------------------------------
-FLD_ACTSYS*	CreateFieldActSys( GFL_G3D_CAMERA* g3Dcamera, HEAPID heapID )
+FLD_ACTSYS*	CreateFieldActSys( GAME_SYSTEM* gs, HEAPID heapID )
 {
 	FLD_ACTSYS* fldActSys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTSYS) );
 	int	i;
 
 	fldActSys->heapID = heapID;
-	fldActSys->g3Dcamera = g3Dcamera;
-	fldActSys->bbdActSys = GFL_BBDACT_CreateSys( FLD_BBDACT_RESMAX, FLD_BBDACT_ACTMAX, heapID );
+	fldActSys->gs = gs;
 
-	calcCameraRotate( fldActSys );
 	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActSys, &fldActSys->actWork[i] ); }
 
 	testSetUp( fldActSys );	//テスト
@@ -279,7 +286,6 @@ FLD_ACTSYS*	CreateFieldActSys( GFL_G3D_CAMERA* g3Dcamera, HEAPID heapID )
 void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
 {
 	testRelease( fldActSys );	//テスト
-	GFL_BBDACT_DeleteSys( fldActSys->bbdActSys );
 	GFL_HEAP_FreeMemory( fldActSys ); 
 }
 
@@ -290,18 +296,15 @@ void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
 //------------------------------------------------------------------
 void	MainFieldActSys( FLD_ACTSYS* fldActSys )
 {
-	calcCameraRotate( fldActSys );
-	GFL_BBDACT_Main( fldActSys->bbdActSys );
-}
+	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
+	VecFx32 vec, camPos, target;
 
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクト描画関数
- */
-//------------------------------------------------------------------
-void	DrawFieldActSys( FLD_ACTSYS* fldActSys )
-{
-	GFL_BBDACT_Draw( fldActSys->bbdActSys, fldActSys->g3Dcamera );
+	GFL_G3D_CAMERA_GetPos( Get_GS_G3Dcamera( fldActSys->gs, MAINCAMERA_ID ), &camPos );
+	GFL_G3D_CAMERA_GetTarget( Get_GS_G3Dcamera( fldActSys->gs, MAINCAMERA_ID ), &target );
+
+	VEC_Subtract( &target, &camPos, &vec );
+	
+	fldActSys->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
 }
 
 //------------------------------------------------------------------
@@ -320,20 +323,4 @@ static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork )
 	}
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
- */
-//------------------------------------------------------------------
-static void	calcCameraRotate( FLD_ACTSYS* fldActSys )
-{
-	VecFx32 vec, camPos, target;
-
-	GFL_G3D_CAMERA_GetPos( fldActSys->g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetTarget( fldActSys->g3Dcamera, &target );
-
-	VEC_Subtract( &target, &camPos, &vec );
-
-	fldActSys->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-}
 

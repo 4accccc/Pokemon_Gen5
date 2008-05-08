@@ -85,8 +85,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
-    NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
-    NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
+    NULL,//NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
+    NULL,//NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
     _netGetSSID,  // 親子接続時に認証する為のバイト列  
     1,  //gsid
     2,  //ggid  DP=0x333,RANGER=0x178,WII=0x346

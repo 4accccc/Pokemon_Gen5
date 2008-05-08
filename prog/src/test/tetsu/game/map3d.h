@@ -40,8 +40,6 @@ extern BOOL GetRayPosOnMap
 	( SCENE_MAP* sceneMap, const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst );
 
 //‰¼
-extern BOOL	DEBUG_CheckGroundOutRange
-	( const VecFx32* pos );
 extern BOOL	DEBUG_CheckGroundMove
 	( const VecFx32* posNow, const VecFx32* vecMove, VecFx32* posNext );
 extern void	GLOBAL_GetGroundPlaneVecN

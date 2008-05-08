@@ -288,11 +288,6 @@ static void animeControl( GFL_BBDACT_SYS* bbdActSys, BBD_ACT* bbdAct )
 	}
 	actAnm = &bbdAct->animeTable[bbdAct->animeIdx][bbdAct->animeFrmIdx];
 
-	if( actAnm->comData.command == GFL_BBDACT_ANMCOM_END ){
-		return;
-	}
-	bbdAct->animeFrmIdx++;
-
 	switch( actAnm->comData.command ){
 		case GFL_BBDACT_ANMCOM_END:
 			return;
@@ -304,7 +299,8 @@ static void animeControl( GFL_BBDACT_SYS* bbdActSys, BBD_ACT* bbdAct )
 				bbdAct->animeIdx = animeIdx;
 				GFL_BBDACT_InitActAnm( bbdAct );
 			}
-			return;
+			actAnm = &bbdAct->animeTable[bbdAct->animeIdx][bbdAct->animeFrmIdx];
+			//return;
 		case GFL_BBDACT_ANMCOM_LOOP:
 			{
 				//ãˆÊ8bit‚ª‰ñ”A‰ºˆÊ8bit‚ªƒ‹[ƒvæ“ªfrmIdx
@@ -319,12 +315,15 @@ static void animeControl( GFL_BBDACT_SYS* bbdActSys, BBD_ACT* bbdAct )
 					bbdAct->animeLpCnt = 0;
 				}
 			}
-			return;
+			actAnm = &bbdAct->animeTable[bbdAct->animeIdx][bbdAct->animeFrmIdx];
+			//return;
 		case GFL_BBDACT_ANMCOM_JMP:
 			bbdAct->animeFrmIdx = actAnm->comData.param;
 			bbdAct->animeWait = 0;
-			return;
+			actAnm = &bbdAct->animeTable[bbdAct->animeIdx][bbdAct->animeFrmIdx];
+			//return;
 	}
+	bbdAct->animeFrmIdx++;
 	{
 		u16 celIdx = actAnm->anmData.celIdx;
 		u16 wait = actAnm->anmData.wait;

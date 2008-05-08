@@ -10,6 +10,8 @@
 #include "calc_ph.h"
 
 #include "setup.h"
+#include "include\system\gfl_use.h"
+
 #include "player_cont.h"
 
 //============================================================================================
@@ -67,20 +69,31 @@ struct _PLAYER_CONTROL {
 #if 0
 	GFL_CLWK*				statusObj;
 #endif
-	SCENE_ACT*				sceneAct;
+	//SCENE_ACT*				sceneAct;
 	CALC_PH_MV*				calcPHMV;
 	BOOL					calcMoveEnable;
+
+	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
+	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
 
 	u16						work[8];
 };
 
 #define WALK_SPEED	(4 << FX32_SHIFT)
 #define RUN_SPEED	(4 << FX32_SHIFT)
-#define JUMP_SPEED	(4 << FX32_SHIFT)
-#define HITOFS		(16)
+#define JUMP_SPEED	(2 << FX32_SHIFT)
+
+enum {
+	ANMTYPE_STOP = 0,
+	ANMTYPE_WALK,
+	ANMTYPE_RUN,
+};
 
 static const PLAYER_STATUS	statusDefault = { {"Null"},1000, 100, 1000, 100, 50, 50, 50, 50, 50 };
-static const GFL_CLWK_DATA clwkData = { 0, 0, 0, 0, 0 }; 
+
+static void playerBBDactSetUp( PLAYER_CONTROL* pc );
+static void playerBBDactRelease( PLAYER_CONTROL* pc );
+static void playerBBDactSetAnm( PLAYER_CONTROL* pc, int type );
 //------------------------------------------------------------------
 /**
  * @brief	プレーヤーコントロール起動
@@ -91,7 +104,8 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	PLAYER_CONTROL* pc = GFL_HEAP_AllocClearMemory( heapID, sizeof(PLAYER_CONTROL) );
 	pc->gs = gs;
 	pc->netID = netID;
-	pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
+	playerBBDactSetUp( pc );
+	//pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
 
 	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
@@ -123,7 +137,7 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	pc->status = statusDefault;
 
 	//Set3DactDrawSw( pc->sceneAct, TRUE );
-	Set3DactDrawSw( pc->sceneAct, FALSE );
+	//Set3DactDrawSw( pc->sceneAct, FALSE );
 	{
 		PHMV_SETUP setup;
 
@@ -158,7 +172,8 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 void RemovePlayerControl( PLAYER_CONTROL* pc )
 {
 	DeleteCalcPhisicsMoving( pc->calcPHMV );
-	Delete3Dact( pc->sceneAct );
+	//Delete3Dact( pc->sceneAct );
+	playerBBDactRelease( pc );
 	GFL_HEAP_FreeMemory( pc ); 
 }
 
@@ -166,10 +181,6 @@ void RemovePlayerControl( PLAYER_CONTROL* pc )
 /**
  * @brief	プレーヤーメインコントロール
  */
-//------------------------------------------------------------------
-static int dirOffsTable[] = 
-	{ 0x0000, 0x8000, 0x4000,-0x4000, 0x2000,-0x2000, 0x6000,-0x6000, };
-
 //------------------------------------------------------------------
 static void anmReset( PLAYER_CONTROL* pc )
 {
@@ -180,16 +191,16 @@ static void anmReset( PLAYER_CONTROL* pc )
 //------------------------------------------------------------------
 static void anmSet( PLAYER_CONTROL* pc, int anmID )
 {
-	if( Set3DactChrAnimeCmd( pc->sceneAct, anmID ) == TRUE ){
+	//if( Set3DactChrAnimeCmd( pc->sceneAct, anmID ) == TRUE ){
 		pc->anmSetFlag = TRUE;
 		pc->anmSetID = anmID;
-	}
+	//}
 }
 
 //------------------------------------------------------------------
 static void anmSetForce( PLAYER_CONTROL* pc, int anmID )
 {
-	Set3DactChrAnimeForceCmd( pc->sceneAct, anmID );
+	//Set3DactChrAnimeForceCmd( pc->sceneAct, anmID );
 	pc->anmSetFlag = TRUE;
 	pc->anmSetID = anmID;
 }
@@ -203,7 +214,7 @@ static void directionSetRAD( PLAYER_CONTROL* pc, u16 direction )
 	rotVec.x = 0;
 	rotVec.y = direction + 0x8000;
 	rotVec.z = 0;
-	Set3DactRotate( pc->sceneAct, &rotVec );
+	//Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -218,7 +229,7 @@ static void directionSetPHMV( PLAYER_CONTROL* pc )
 	rotVec.z = 0;
 
 	pc->nowDirection = rotVec.y - 0x8000;
-	Set3DactRotate( pc->sceneAct, &rotVec );
+	//Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -232,7 +243,7 @@ static void directionSetVEC( PLAYER_CONTROL* pc )
 	rotVec.z = 0;
 
 	pc->nowDirection = rotVec.y - 0x8000;
-	Set3DactRotate( pc->sceneAct, &rotVec );
+	//Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -296,7 +307,7 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 
 			anmSetForce( pc, ACTANM_CMD_STAY );
 			pc->recoverTimer = 0;	//復帰待ちカウンタ初期化
-			Set3DactBlendAlpha( pc->sceneAct, &alpha );
+			//Set3DactBlendAlpha( pc->sceneAct, &alpha );
 			pc->status.hp = pc->status.hpMax;	//復帰
 			pc->deadFlag = FALSE;
 		}
@@ -310,16 +321,16 @@ static BOOL damageControl( PLAYER_CONTROL* pc )
 				u8 alpha = 20;	//半透明演出
 				//死亡
 				anmSetForce( pc, ACTANM_CMD_DEAD );
-				Set3DactBlendAlpha( pc->sceneAct, &alpha );
+				//Set3DactBlendAlpha( pc->sceneAct, &alpha );
 				pc->deadFlag = TRUE;
 				pc->hitEnableFlag = FALSE;	//死亡時はヒット判定をしない
 				pc->recoverTimer = 10;	//復帰待ちカウンタ開始
 			}
 		} else {
 			//行動処理
-			if( Check3DactBusy( pc->sceneAct ) == TRUE ){
-				return FALSE;	//強制アニメ中
-			}
+			//if( Check3DactBusy( pc->sceneAct ) == TRUE ){
+			//	return FALSE;	//強制アニメ中
+			//}
 			if( pc->skillBusyFlag ){
 				return FALSE;	//スキル実行中
 			}
@@ -423,7 +434,7 @@ static void moveControl( PLAYER_CONTROL* pc )
 	//移動制御
 	if( pc->calcMoveEnable == TRUE ){
 		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
-		Set3DactTrans( pc->sceneAct, &pc->contTrans );
+		//Set3DactTrans( pc->sceneAct, &pc->contTrans );
 	}
 }
 
@@ -450,7 +461,8 @@ static void commandControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_STAY:
 		ResetMovePHMV( pc->calcPHMV );
-		anmSet( pc, ACTANM_CMD_STAY );
+		//anmSet( pc, ACTANM_CMD_STAY );
+		playerBBDactSetAnm( pc, ANMTYPE_STOP );
 		break;
 	case PCC_JUMP:
 		pc->jumpSeq = 1;
@@ -459,7 +471,8 @@ static void commandControl( PLAYER_CONTROL* pc )
 		pc->calcMoveEnable = TRUE;
 		StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
 		directionSetPHMV( pc );
-		anmSet( pc, ACTANM_CMD_WALK );
+		//anmSet( pc, ACTANM_CMD_WALK );
+		playerBBDactSetAnm( pc, ANMTYPE_WALK );
 		break;
 	case PCC_RUN:
 		pc->calcMoveEnable = TRUE;
@@ -478,32 +491,33 @@ static void commandControl( PLAYER_CONTROL* pc )
 				keepSpeed( pc, RUN_SPEED, speed, RUN_SPEED/32 );
 			}
 		}
-		anmSet( pc, ACTANM_CMD_RUN );
+		//anmSet( pc, ACTANM_CMD_RUN );
+		playerBBDactSetAnm( pc, ANMTYPE_RUN );
 		break;
 	case PCC_BUILD:
-		anmSet( pc, ACTANM_CMD_TAKE );
+		//anmSet( pc, ACTANM_CMD_TAKE );
 		pc->buildCommand = PBC_BUILD_CASTLE;
 		break;
 	case PCC_SUMMON:
-		anmSet( pc, ACTANM_CMD_TAKE );
+		//anmSet( pc, ACTANM_CMD_TAKE );
 		pc->buildCommand = PBC_SUMMON;
 		break;
 	case PCC_SIT:
-		anmSet( pc, ACTANM_CMD_SITDOWN );
+		//anmSet( pc, ACTANM_CMD_SITDOWN );
 		pc->sitDownFlag = TRUE;
 		break;
 	case PCC_PUTON:		
-		anmSetForce( pc, ACTANM_CMD_TAKE );
+		//anmSetForce( pc, ACTANM_CMD_TAKE );
 		break;
 	case PCC_TAKEOFF:		
-		anmSetForce( pc, ACTANM_CMD_TAKE );
+		//anmSetForce( pc, ACTANM_CMD_TAKE );
 		break;
 	case PCC_ATTACK_READY:
 		directionSetRAD( pc, pc->contDirection );	//カメラ方向に向き直り
-		anmSet( pc, ACTANM_CMD_SWORD_ATTACK0 );
+		//anmSet( pc, ACTANM_CMD_SWORD_ATTACK0 );
 		break;
 	case PCC_ATTACK_END:
-		anmSet( pc, ACTANM_CMD_STAY );
+		//anmSet( pc, ACTANM_CMD_STAY );
 		break;
 	case PCC_ATTACK:
 		//武器によってモーション変化
@@ -531,27 +545,27 @@ static void commandControl( PLAYER_CONTROL* pc )
 #else
 		switch( pc->attackID ){
 		case 0:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 );
 			pc->skillCommand = PSC_ATTACK_SWORD0;
 			break;
 		case 1:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK2 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK2 );
 			pc->skillCommand = PSC_ATTACK_SWORD0;//1;
 			break;
 		case 2:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK3 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK3 );
 			pc->skillCommand = PSC_ATTACK_SWORD0;//1;
 			break;
 		case 3:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK4 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK4 );
 			pc->skillCommand = PSC_ATTACK_SWORD0;
 			break;
 		case 4:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK5 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK5 );
 			pc->skillCommand = PSC_ATTACK_SWORD2;
 			break;
 		case 5:
-			anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK7 );
+			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK7 );
 			pc->skillCommand = PSC_ATTACK_SWORD3;
 			break;
 		}
@@ -561,13 +575,13 @@ static void commandControl( PLAYER_CONTROL* pc )
 		//ナンバー切り替え
 		pc->nowAccesary++;
 		pc->nowAccesary&= 3;
-		Set3DactChrAccesory( pc->sceneAct, pc->nowAccesary );
+		//Set3DactChrAccesory( pc->sceneAct, pc->nowAccesary );
 		break;
 	case PCC_TEST:		
 		pc->work[0]++;
 		pc->work[0]&=3;
-		ChangeEquipNum( pc->sceneAct, pc->work[0] );
-		anmSetForce( pc, ACTANM_CMD_STAY );
+		//ChangeEquipNum( pc->sceneAct, pc->work[0] );
+		//anmSetForce( pc, ACTANM_CMD_STAY );
 		break;
 	}
 	//pc->contCommand = PCC_NOP;
@@ -626,7 +640,7 @@ void MainNetWorkPlayerControl( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* psn )
 		return;
 	}
 	if( psn->anmSetFlag == TRUE ){
-		Set3DactChrAnimeForceCmd( pc->sceneAct, psn->anmSetID );
+		//Set3DactChrAnimeForceCmd( pc->sceneAct, psn->anmSetID );
 		psn->anmSetFlag = FALSE;
 	}
 }
@@ -654,7 +668,7 @@ void GetPlayerControlTrans( PLAYER_CONTROL* pc, VecFx32* trans )
 void SetPlayerControlTrans( PLAYER_CONTROL* pc, const VecFx32* trans )
 {
 	pc->contTrans = *trans;
-	Set3DactTrans( pc->sceneAct, &pc->contTrans );
+	//Set3DactTrans( pc->sceneAct, &pc->contTrans );
 }
 
 //------------------------------------------------------------------
@@ -692,9 +706,9 @@ BOOL CheckPlayerControlEnable( PLAYER_CONTROL* pc )
 	if( pc->forceMovingFlag == TRUE ){
 		return FALSE;	//強制移動中
 	}
-	if( Check3DactBusy( pc->sceneAct ) == TRUE ){
-		return FALSE;	//強制アニメ中
-	}
+	//if( Check3DactBusy( pc->sceneAct ) == TRUE ){
+	//	return FALSE;	//強制アニメ中
+	//}
 	if( pc->skillBusyFlag ){
 		return FALSE;	//スキル実行中
 	}
@@ -938,4 +952,216 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
 		return FALSE;
 	}
 }
+
+
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	ビルボード
+ *
+ */
+//------------------------------------------------------------------
+#include "graphic_data/test_graphic/fld_act.naix"
+
+static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
+{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32 },
+};
+
+static const GFL_BBDACT_ANM stopLAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM stopRAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM stopUAnm[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM stopDAnm[] = {
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM walkLAnm[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkRAnm[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkUAnm[] = {
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 20, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkDAnm[] = {
+	{ 22, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 23, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM runLAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM runRAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM runUAnm[] = {
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM runDAnm[] = {
+	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+enum {
+	ACTSTOP_UP = 0,
+	ACTSTOP_DOWN,
+	ACTSTOP_LEFT,
+	ACTSTOP_RIGHT,
+
+	ACTWALK_UP,
+	ACTWALK_DOWN,
+	ACTWALK_LEFT,
+	ACTWALK_RIGHT,
+
+	ACTRUN_UP,
+	ACTRUN_DOWN,
+	ACTRUN_LEFT,
+	ACTRUN_RIGHT,
+};
+
+static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
+	stopUAnm, stopDAnm, stopLAnm, stopRAnm,
+	walkUAnm, walkDAnm, walkLAnm, walkRAnm,
+	runUAnm, runDAnm, runLAnm, runRAnm,
+};
+
+static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+{
+	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
+	PLAYER_CONTROL*	pc = (PLAYER_CONTROL*)work;
+	VecFx32	trans = pc->contTrans;
+
+	trans.x = pc->contTrans.x;
+	trans.y = pc->contTrans.y + FX32_ONE*7;	//補正
+	trans.z = pc->contTrans.z;
+	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
+}
+
+static void playerBBDactSetUp( PLAYER_CONTROL* pc )
+{
+	GFL_BBDACT_SYS* bbdActSys = Get_GS_BillboardActSys( pc->gs );	
+	GFL_BBDACT_ACTDATA actData;
+	GFL_BBDACT_ACTUNIT_ID actUnitID;
+	int		i, objIdx;
+	VecFx32	trans;
+	u8		alpha;
+	BOOL	drawEnable;
+	u16		setActNum;
+
+	//リソースセットアップ
+	pc->bbdActResUnitID = GFL_BBDACT_AddResourceUnit( bbdActSys, playerBBDactResTable,
+														NELEMS(playerBBDactResTable) );
+	actData.resID = 0;
+	actData.sizX = FX16_ONE*8-1;
+	actData.sizY = FX16_ONE*8-1;
+	
+	do{
+		actData.trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+		actData.trans.y = 0;
+		actData.trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
+	}while( CheckGroundOutRange( Get_GS_SceneMap(pc->gs), &actData.trans ) == FALSE );
+
+	actData.alpha = 31;
+	actData.drawEnable = TRUE;
+	actData.func = testFunc;
+	actData.work = pc;
+
+	pc->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, pc->bbdActResUnitID, &actData, 1 );
+
+	GFL_BBDACT_SetAnimeTable( bbdActSys, pc->bbdActActUnitID, 
+								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
+	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pc->bbdActActUnitID, 0 );
+}
+
+static void playerBBDactRelease( PLAYER_CONTROL* pc )
+{
+	GFL_BBDACT_SYS* bbdActSys = Get_GS_BillboardActSys( pc->gs );	
+
+	GFL_BBDACT_RemoveAct( bbdActSys, pc->bbdActActUnitID, 1 );
+	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, pc->bbdActResUnitID, NELEMS(playerBBDactResTable) );
+}
+
+static void playerBBDactSetAnm( PLAYER_CONTROL* pc, int type )
+{
+	u16 dir = pc->contDirection - pc->nowDirection;
+	int	anmBase, anmOffs;
+
+	if( (dir > 0x2000)&&(dir < 0x6000)){
+		anmOffs = ACTSTOP_RIGHT - ACTSTOP_UP;
+	} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
+		anmOffs = ACTSTOP_DOWN - ACTSTOP_UP;
+	} else if( (dir > 0xa000)&&(dir < 0xe000)){
+		anmOffs = ACTSTOP_LEFT - ACTSTOP_UP;
+	} else {
+		anmOffs = ACTSTOP_UP - ACTSTOP_UP;
+	}
+	switch( type ){
+	default:
+	case ANMTYPE_STOP:
+		anmBase = ACTSTOP_UP;
+		break;
+	case ANMTYPE_WALK:
+		anmBase = ACTWALK_UP;
+		break;
+	case ANMTYPE_RUN:
+		anmBase = ACTRUN_UP;
+		break;
+	}
+	
+	GFL_BBDACT_SetAnimeIdxContinue( Get_GS_BillboardActSys( pc->gs ), 
+									pc->bbdActActUnitID, anmBase + anmOffs );
+}
+
 

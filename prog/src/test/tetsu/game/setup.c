@@ -18,7 +18,6 @@
 
 #include "setup.h"
 
-//#define	DOUBLE_DISP_ENABLE
 //============================================================================================
 //
 //
@@ -56,7 +55,7 @@ struct _GAME_SYSTEM {
 
 	SCENE_ACTSYS*			sceneActSys;	//３Ｄアクターシステム設定ハンドル
 	SCENE_MAP*				sceneMap;		//３Ｄマップ設定ハンドル
-	FLD_ACTSYS*				fldActSys;		//フィールドアクトシステム設定ハンドル
+	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
 	HEAPID					heapID;
 };
@@ -132,34 +131,14 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
 #define G3D_SCENE_OBJCOUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
 #define G3D_OBJWORK_SZ		(64)		//g3Dsceneで使用するsceneObjのワークサイズ
 #define G3D_ACC_COUNT		(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
+#define G3D_BBDACT_RESMAX	(64)		//billboardActで使用するリソースの最大設定可能数
+#define G3D_BBDACT_ACTMAX	(256)		//billboardActで使用するオブジェクトの最大設定可能数
 
 //------------------------------------------------------------------
 /**
  * @brief		２Ｄリソースデータ
  */
 //------------------------------------------------------------------
-#if 0
-#ifdef	DOUBLE_DISP_ENABLE
-#define TEXT_FRM			(GFL_BG_FRAME3_M)
-#define MASK_FRM			(GFL_BG_FRAME2_M)
-#else
-#define TEXT_FRM			(GFL_BG_FRAME3_S)
-#define MASK_FRM			(GFL_BG_FRAME2_S)
-#endif
-#define PLAYICON_FRM_PRI	(0)
-#define TEXT_FRM_PRI		(1)
-#define MASK_FRM_PRI		(0)
-#define PLAYICON_PLTT		(0)
-#define TEXT_PLTT			(15)
-#define MASK_PLTT			(1)
-#define MAP_PLTT			(1)
-#define G2D_FONT_COL		(0x7fff)
-#define G2D_FONTSELECT_COL	(0x001f)
-#define PLTT_DATSIZ			(16*2)
-#define CLACT_WKSIZ_MAPOBJ	(64)
-#define CLACT_WKSIZ_STATUS	(64)
-#endif
-
 static const char font_path[] = {"gfl_font.dat"};
 
 static const GFL_BG_BGCNT_HEADER playiconBGcont = {
@@ -325,10 +304,7 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 	g2d_load( gs );
 	gs->g2dVintr = GFUser_VIntr_CreateTCB( g2d_vblank, NULL, 0 );
 	g2dVintrEnable = FALSE;
-#ifdef	DOUBLE_DISP_ENABLE
-	//両面３Ｄ用vIntrTask設定
-	gs->dbl3DdispVintr = GFUser_VIntr_CreateTCB( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
-#endif
+
 	return gs;
 }
 
@@ -339,9 +315,6 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 //------------------------------------------------------------------
 void	RemoveGameSystem( GAME_SYSTEM* gs )
 {
-#ifdef	DOUBLE_DISP_ENABLE
-	GFL_TCB_DeleteTask( gs->dbl3DdispVintr );
-#endif
 	GFL_TCB_DeleteTask( gs->g2dVintr );
 	g2d_unload( gs );	//２Ｄデータ破棄
 	g3d_unload( gs );	//３Ｄデータ破棄
@@ -410,9 +383,6 @@ static void	bg_init( GAME_SYSTEM* gs )
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
-#ifdef	DOUBLE_DISP_ENABLE
-	GFL_G3D_DOUBLE3D_Init( gs->heapID );	//両面３Ｄ用の初期化
-#endif
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
@@ -423,9 +393,7 @@ static void	bg_init( GAME_SYSTEM* gs )
 static void	bg_exit( GAME_SYSTEM* gs )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
-#ifdef	DOUBLE_DISP_ENABLE
-	GFL_G3D_DOUBLE3D_Exit();
-#endif
+
 	GFL_G3D_Exit();
 	GFL_BMPWIN_Exit();
 	GFL_BG_FreeBGControl( MASK_FRM );
@@ -492,7 +460,7 @@ static void g3d_load( GAME_SYSTEM* gs )
 
 	gs->sceneActSys = Create3DactSys( gs->g3Dscene, gs->heapID );
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
-	gs->fldActSys = CreateFieldActSys( gs->g3Dcamera[MAINCAMERA_ID], gs->heapID );
+	gs->bbdActSys = GFL_BBDACT_CreateSys( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, gs->heapID );
 
 	//-------------------
 	//ＮＰＣテスト
@@ -526,32 +494,17 @@ static void g3d_load( GAME_SYSTEM* gs )
 static void g3d_control( GAME_SYSTEM* gs )
 {
 	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
-	MainFieldActSys( gs->fldActSys ); 
+	GFL_BBDACT_Main( gs->bbdActSys );
 }
 
 //描画
 static void g3d_draw( GAME_SYSTEM* gs )
 {
-#ifdef	DOUBLE_DISP_ENABLE
-	//フラグによって描画を切り替える
-	if( GFL_G3D_DOUBLE3D_GetFlip() ){
-		GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
-		GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
-	} else {
-		GFL_G3D_CAMERA_Switching( gs->g3Dcamera[SUBCAMERA_ID] );
-		GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, FALSE );
-	}
-	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
-	GFL_G3D_DOUBLE3D_SetSwapFlag();
-#else
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
 	GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
-//TEST
-	//Draw3Dmap( gs->sceneMap, gs->g3Dcamera[MAINCAMERA_ID] );
-//TEST
-	DrawFieldActSys( gs->fldActSys );
+
+	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera[MAINCAMERA_ID] );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
-#endif
 }
 
 //破棄
@@ -569,7 +522,7 @@ static void g3d_unload( GAME_SYSTEM* gs )
 		}
 	}
 	//-------------------
-	DeleteFieldActSys( gs->fldActSys );
+	GFL_BBDACT_DeleteSys( gs->bbdActSys );
 	Delete3Dmap( gs->sceneMap );
 	Delete3DactSys( gs->sceneActSys );
 
@@ -775,25 +728,6 @@ static void g2d_control( GAME_SYSTEM* gs )
 
 static void g2d_draw( GAME_SYSTEM* gs )
 {
-#if 0
-	int	i;
-
-#ifdef	DOUBLE_DISP_ENABLE
-	GFL_BG_ClearScreen( TEXT_FRM );
-
-	if( GFL_G3D_DOUBLE3D_GetFlip() ){
-		for( i=0; i<NELEMS(textBitmapWinList); i++ ){
-			GFL_BMPWIN_MakeScreen( gs->bitmapWin[i] );
-		}
-	} else {
-	}
-#else
-	for( i=0; i<NELEMS(textBitmapWinList); i++ ){
-		GFL_BMPWIN_MakeScreen( gs->bitmapWin[i] );
-	}
-#endif
-	GFL_BG_LoadScreenReq( TEXT_FRM );
-#endif
 	GFL_CLACT_Main();
 }
 
@@ -919,9 +853,9 @@ SCENE_MAP*			Get_GS_SceneMap( GAME_SYSTEM* gs )
 	return gs->sceneMap;
 }
 
-FLD_ACTSYS*		Get_GS_FldActSys( GAME_SYSTEM* gs )
+GFL_BBDACT_SYS*		Get_GS_BillboardActSys( GAME_SYSTEM* gs )	
 {
-	return gs->fldActSys;
+	return gs->bbdActSys;
 }
 
 GFL_CLUNIT*			Get_GS_ClactUnit( GAME_SYSTEM* gs, u32 unitID )

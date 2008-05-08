@@ -14,6 +14,7 @@
 
 #include "mouse_event.h"
 
+#include "fld_act.h"
 #include "text_cont.h"
 #include "camera_cont.h"
 #include "skill_cont.h"
@@ -40,6 +41,7 @@ struct _GAME_CONTROL {
 	GAME_SYSTEM*			gs;
 	int						seq;
 
+	FLD_ACTSYS*				fldActSys;
 	MOUSE_EVENT_SYS*		mes;
 
 	PLAYER_CONTROL*			myPc;
@@ -82,6 +84,9 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->myPc = NULL;
 	gc->time = 0;
 	gc->tp_blank = 0;
+
+	//アクターシステム作成
+	gc->fldActSys = CreateFieldActSys( gc->gs, gc->heapID );
 
 	//チームコントローラ登録
 	for( i=0; i<setup->teamCount; i++ ){
@@ -184,6 +189,7 @@ void RemoveGameControl( GAME_CONTROL* gc )
 {
 	int i;
 
+	ExitMouseEvent( gc->mes );
 	//RemoveStatusControl( gc->stc );
 
 	RemoveSkillControl( gc->sc );
@@ -196,7 +202,7 @@ void RemoveGameControl( GAME_CONTROL* gc )
 	for( i=0; i<gc->teamCount; i++ ){
 		RemoveTeamControl( gc->tc[i] );
 	}
-	ExitMouseEvent( gc->mes );
+	DeleteFieldActSys( gc->fldActSys );
 
 	GFL_HEAP_FreeMemory( gc ); 
 }
@@ -257,6 +263,7 @@ enum {
 void MainGameControl( GAME_CONTROL* gc )
 {
 	int i;
+
 	{
 		VecFx32 cTrans;
 		GetCameraControlTrans( gc->cc, &cTrans );
@@ -294,6 +301,7 @@ void MainGameControl( GAME_CONTROL* gc )
 	MainSkillControl( gc->sc, gc->onGameFlag );
 
 	//MainStatusControl( gc->stc );
+	MainFieldActSys( gc->fldActSys );
 
 	MainMapWinControl( gc->mpwc );
 	SetMapWinMask( Get_GS_BmpWin( gc->gs, G2DBMPWIN_MASK ), gc->myTc );

@@ -41,7 +41,7 @@ typedef struct {
 
 typedef struct {
 	MAP_PLANE_DATA	triangle[2];
-	u32				planeType;
+	u8				planeType;
 	u8				passage;
 }MAP_GRID_DATA;
 
@@ -886,15 +886,15 @@ static const	MAPDATA extraObjectDataTbl[5] = {
  * @brief	３Ｄマップ高さデータ作成
  */
 //------------------------------------------------------------------
-static void MakeGridData( MAP_GRID_DATA* floor, int gridx, int gridz, 
+static void MakeGridData( MAP_GRID_DATA* floor, u16 gridx, u16 gridz, 
 							int y0, int y1, int y2, int y3 );
 static void MakeTriangleData
 		( MAP_PLANE_DATA* triData, VecFx32* posRef, VecFx16* vtx0, VecFx16* vtx1, VecFx16* vtx2 );
-static BOOL GetPlaneVtxHeight( u16 mapCode, int* y );
 
 static void CreateMapGridData( MAP_BLOCK_DATA* mapBlock, int mapID, HEAPID heapID )
 {
-	int	i, x, z;
+	int	i;
+	u16	x, z;
 	u16	mapCode;
 	int	height, height2;
 	const u16* attr = (const u16*)mapData[mapID].attr;
@@ -940,50 +940,21 @@ static void DeleteMapGridData( MAP_BLOCK_DATA* mapBlock )
 	GFL_HEAP_FreeMemory( mapBlock->floorGrid );
 }
 
-static void	GetGroundGridData( const VecFx32* pos, int* blockID, int* x, int* z, u16* offset )
-{
-	if((pos->x < 0 )&&(pos->z < 0 )){
-		*blockID = 0;
-		*x = (pos->x + mapSizeX*mapGrid)/mapGrid;
-		*z = (pos->z + mapSizeZ*mapGrid)/mapGrid;
-	} else if((pos->x >= 0 )&&(pos->z < 0 )){
-		*blockID = 1;
-		*x = pos->x/mapGrid;
-		*z = (pos->z + mapSizeZ*mapGrid)/mapGrid;
-	} else if((pos->x < 0 )&&(pos->z >= 0 )){
-		*blockID = 2;
-		*x = (pos->x + mapSizeX*mapGrid)/mapGrid;
-		*z = pos->z/mapGrid;
-	} else {
-		*blockID = 3;
-		*x = pos->x/mapGrid;
-		*z = pos->z/mapGrid;
-	}
-	//GF_ASSERT_MSG( *x >= 0, "posx = %x, x = %x\n", pos->x, *x );
-	//GF_ASSERT_MSG( *x < mapSizeX, "posx = %x, x = %x\n", pos->x, *x );
-	//GF_ASSERT_MSG( *z >= 0, "posz = %x, z = %x\n", pos->z, *z );
-	//GF_ASSERT_MSG( *z < mapSizeZ, "posz = %x, z = %x\n", pos->z, *z );
-	*offset = *z * mapSizeX + *x;
-}
-
 //------------------------------------------------------------------
-static void inline posGridCalc( int x, int z, VecFx16* vtx, VecFx32* dst )
+static void inline posGridCalc( u16 x, u16 z, VecFx16* vtx, VecFx32* dst )
 {
 	VecFx32	tmp;
 
-	tmp.x = (x - mapSizeX/2) * FX16_ONE + vtx->x;
+	tmp.x = x * FX16_ONE + vtx->x;
 	tmp.y = vtx->y;
-	tmp.z = (z - mapSizeZ/2) * FX16_ONE + vtx->z;
-	//tmp.x = x * FX16_ONE + vtx->x;
-	//tmp.y = vtx->y;
-	//tmp.z = z * FX16_ONE + vtx->z;
+	tmp.z = z * FX16_ONE + vtx->z;
 
 	dst->x = FX_Mul( mapGrid, tmp.x );
 	dst->y = FX_Mul( mapGrid, tmp.y );
 	dst->z = FX_Mul( mapGrid, tmp.z );
 }
 
-static void MakeGridData( MAP_GRID_DATA* floor, int gridx, int gridz, 
+static void MakeGridData( MAP_GRID_DATA* floor, u16 gridx, u16 gridz, 
 							int y0, int y1, int y2, int y3 )
 {
 	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
@@ -1057,66 +1028,89 @@ static void MakeTriangleData
 }
 
 //------------------------------------------------------------------
-static BOOL GetPlaneVtxHeight( u16 mapCode, int* y )
-{
-	switch( mapCode ){
-	case '０':
-	case '１':
-	case '２':
-	case '３':
-		*y = mapCode - '０';
-		return TRUE;
-	}
-	*y = 0;
-	return FALSE;
-}
-
-//------------------------------------------------------------------
 /**
  * @brief	３Ｄマップ高さデータ取得
  */
 //------------------------------------------------------------------
-static BOOL	CheckGetGroundOutSideData( const int x, const int z )
+static BOOL	GetGroundGridPos( const VecFx32* pos, u16* blockID, VecFx32* blockPos )
 {
-	if(( x < 0 )||( x >= mapSizeX )||( z < 0 )||( z >= mapSizeZ ) ){ 
-		return TRUE;
-	} else {
+	VecFx32 vecTop, vecGrid;
+	VecFx32 vecDefault = {0,0,0};
+	fx32	mapLengthX = mapSizeX*mapGrid;
+	fx32	mapLengthZ = mapSizeZ*mapGrid;
+
+	if((pos->x < -mapLengthX)||(pos->z < -mapLengthZ)||
+			(pos->x > mapLengthX)||(pos->z > mapLengthZ )){
 		return FALSE;
 	}
+	if((pos->x < 0 )&&(pos->z < 0 )){
+		*blockID = 0;
+		vecTop.x = -mapLengthX;
+		vecTop.z = -mapLengthZ;
+	} else if((pos->x >= 0 )&&(pos->z < 0 )){
+		*blockID = 1;
+		vecTop.x = 0;
+		vecTop.z = -mapLengthZ;
+	} else if((pos->x < 0 )&&(pos->z >= 0 )){
+		*blockID = 2;
+		vecTop.x = -mapLengthX;
+		vecTop.z = 0;
+	} else {
+		*blockID = 3;
+		vecTop.x = 0;
+		vecTop.z = 0;
+	}
+	VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+	VEC_Add( &vecGrid, pos, blockPos );
+
+	return TRUE;
 }
 
-static void	GetGroundTriangleID( MAP_GRID_DATA* floor, int gridx, int gridz, fx32 fx, fx32 fz, 
-									u16* gridOffs, u16* ID )
+static void	GetGroundGridData( const VecFx32* blockPos, u16* gridx, u16* gridz, u16* offset )
 {
+	*gridx = blockPos->x/mapGrid;
+	*gridz = blockPos->z/mapGrid;
+	*offset = *gridz * mapSizeX + *gridx;
+}
+
+static void	GetGroundTriangleID( const VecFx32* pos, const MAP_GRID_DATA* floor, u16* ID )
+{
+	fx32 fx, fz;
+
+	fx = pos->x%mapGrid;
+	fz = pos->z%mapGrid;
+
 	//グリッド内三角形の判定
-	if( floor[ *gridOffs ].planeType == TRIANGLE_TYPE_021_312 ){
+	if( floor->planeType == TRIANGLE_TYPE_021_312 ){
 		//0-2-1,3-1-2のパターン
 		if( fx + fz < mapGrid ){
 			*ID = 0;
 		} else {
 			*ID = 1;
 		}
-	} else {
+	} else if( floor->planeType == TRIANGLE_TYPE_230_103 ){
 		//2-3-0,1-0-3のパターン
 		if( fx < fz ){
 			*ID = 0;
 		} else {
 			*ID = 1;
 		}
+	} else {
+		//平面
+		*ID = 0;
 	}
 }
 
 BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 {
-	int	gridx, gridz;
-	u16	gridOffs;
-	int blockID;
+	u16		blockID, gridx, gridz, gridOffs;
+	VecFx32 blockPos;
 
-	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
-
-	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
+	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
 		return FALSE;
 	}
+	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
+
 	if( sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].passage != 0 ){
 		return FALSE;
 	}
@@ -1125,21 +1119,14 @@ BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 
 BOOL	GetGroundPlaneData( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN, fx32* valD )
 {
-	int		gridx, gridz;
-	fx32	fx, fz;
-	u16		gridOffs, triangleID;
-	int		blockID;
+	u16		blockID, gridx, gridz, gridOffs, triangleID;
+	VecFx32 blockPos;
 
-	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
-
-	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
+	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
 		return FALSE;
 	}
-	fx = pos->x%mapGrid;
-	fz = pos->z%mapGrid;
-
-	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
-							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
+	GetGroundTriangleID( &blockPos, &sceneMap->mapBlock[blockID].floorGrid[gridOffs], &triangleID );
 
 	*vecN	= sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
 	*valD	= sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].valD;
@@ -1149,54 +1136,39 @@ BOOL	GetGroundPlaneData( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN,
 
 void	GetGroundPlaneVecN( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN )
 {
-	int		gridx, gridz;
-	fx32	fx, fz;
-	u16		gridOffs, triangleID;
-	int		blockID;
+	u16		blockID, gridx, gridz, gridOffs, triangleID;
+	VecFx32 blockPos;
 
-	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
-
-	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
+	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
 		vecN->x = 0;
 		vecN->y = FX32_ONE;
 		vecN->z = 0;
 		return;
 	}
-	fx = pos->x%mapGrid;
-	fz = pos->z%mapGrid;
-
-	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
-							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
+	GetGroundTriangleID( &blockPos, &sceneMap->mapBlock[blockID].floorGrid[gridOffs], &triangleID );
 
 	*vecN = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
 }
 
 void	GetGroundPlaneHeight( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height ) 
 {
-	int		gridx, gridz;
-	fx32	fx, fz;
-	u16		gridOffs, triangleID;
-	int		blockID;
-	VecFx32 posTmp, vecN;
+	u16		blockID, gridx, gridz, gridOffs, triangleID;
+	VecFx32 blockPos;
+	VecFx32 vecN;
 	fx32	by, valD;
 
-	GetGroundGridData( pos, &blockID, &gridx, &gridz, &gridOffs );
-
-	if( CheckGetGroundOutSideData( gridx, gridz ) == TRUE ){
+	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
 		*height = 0;
 		return;
 	}
-	fx = pos->x%mapGrid;
-	fz = pos->z%mapGrid;
-
-	GetGroundTriangleID( sceneMap->mapBlock[blockID].floorGrid, 
-							gridx, gridz, fx, fz, &gridOffs, &triangleID );
+	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
+	GetGroundTriangleID( &blockPos, &sceneMap->mapBlock[blockID].floorGrid[gridOffs], &triangleID );
 
 	vecN = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].vecN;
 	valD = sceneMap->mapBlock[blockID].floorGrid[ gridOffs ].triangle[ triangleID ].valD;
 
-	VEC_Subtract( pos, &sceneMap->mapBlock[blockID].trans, &posTmp );
-	by = -( FX_Mul( vecN.x, posTmp.x ) + FX_Mul( vecN.z, posTmp.z ) + valD );
+	by = -( FX_Mul( vecN.x, blockPos.x ) + FX_Mul( vecN.z, blockPos.z ) + valD );
 	*height = FX_Div( by, vecN.y );
 }
 
@@ -1235,10 +1207,6 @@ void	GetGroundMovePos
 
 //------------------------------------------------------------------
 //仮。いずれ消す
-BOOL	DEBUG_CheckGroundOutRange( const VecFx32* pos )
-{
-	return CheckGroundOutRange( DEBUG_sceneMap, pos );
-}
 BOOL	DEBUG_CheckGroundMove( const VecFx32* posNow, const VecFx32* vecMove, VecFx32* posNext )
 {
 	GetGroundMovePos( DEBUG_sceneMap, posNow, vecMove, posNext ); 
@@ -1253,7 +1221,6 @@ void	GLOBAL_GetGroundPlaneVecN( const VecFx32* pos, VecFx32* vecN )
 void	GLOBAL_GetGroundPlaneHeight( const VecFx32* pos, fx32* height )
 {
 	GetGroundPlaneHeight( DEBUG_sceneMap, pos, height );
-	//*height = FX32_ONE*40;
 }
 
 //------------------------------------------------------------------
@@ -1261,6 +1228,19 @@ void	GLOBAL_GetGroundPlaneHeight( const VecFx32* pos, fx32* height )
  * @brief	３Ｄマップとレイとの当たり座標取得
  */
 //------------------------------------------------------------------
+static void inline posGridCalc2( int x, int z, VecFx16* vtx, VecFx32* dst )
+{
+	VecFx32	tmp;
+
+	tmp.x = (x - mapSizeX/2) * FX16_ONE + vtx->x;
+	tmp.y = vtx->y;
+	tmp.z = (z - mapSizeZ/2) * FX16_ONE + vtx->z;
+
+	dst->x = FX_Mul( mapGrid, tmp.x );
+	dst->y = FX_Mul( mapGrid, tmp.y );
+	dst->z = FX_Mul( mapGrid, tmp.z );
+}
+
 static BOOL checkOnTriangle( VecFx32* pos, 
 		VecFx32* posRef0, VecFx32* posRef1, VecFx32* posRef2, VecFx32* vecN )
 {
@@ -1295,11 +1275,9 @@ static BOOL checkOnTriangle( VecFx32* pos,
 BOOL GetRayPosOnMap
 	( SCENE_MAP* sceneMap, const VecFx32* posRay, const VecFx32* vecRay, VecFx32* dst )
 {
-	VecFx32 vecRayXZ, vecLength, posStart, pos;
+	VecFx32 vecRayXZ, vecLength, posStart, pos, blockPos;
 	fx32	limitLength;
-	int		x, z;
-	u16		offset, prevOffset; 
-	int		blockID, prevBlockID;
+	u16		x, z, offset, prevOffset, blockID, prevBlockID;
 
 	//レイの方向成分をXZ方向だけ抜き出して正規化
 	VEC_Set( &vecRayXZ, vecRay->x, 0, vecRay->z );
@@ -1321,10 +1299,9 @@ BOOL GetRayPosOnMap
 	while( VEC_Mag( &vecLength ) <= limitLength ){
 		VEC_Add( &posStart, &vecLength, &pos );
 
-		GetGroundGridData( &pos, &blockID, &x, &z, &offset );
+		if( GetGroundGridPos( &pos, &blockID, &blockPos ) == TRUE ){
+			GetGroundGridData( &blockPos, &x, &z, &offset );
 	
-		if( CheckGetGroundOutSideData( x, z ) == FALSE ){
-
 			if(( blockID != prevBlockID )||( offset != prevOffset )){	//同じデータはパス
 				MAP_GRID_DATA*	grid = &sceneMap->mapBlock[blockID].floorGrid[offset];
 				VecFx32 posRef0, posRef1, posRef2, vecN, posCalc;
@@ -1334,9 +1311,9 @@ BOOL GetRayPosOnMap
 
 				for( i=0; i<2; i++ ){
 					//グリッド内三角形１が作る平面との交差判定
-					posGridCalc( x, z, &grid->triangle[i].vtx0, &posRef0 );
-					posGridCalc( x, z, &grid->triangle[i].vtx1, &posRef1 );
-					posGridCalc( x, z, &grid->triangle[i].vtx2, &posRef2 );
+					posGridCalc2( x, z, &grid->triangle[i].vtx0, &posRef0 );
+					posGridCalc2( x, z, &grid->triangle[i].vtx1, &posRef1 );
+					posGridCalc2( x, z, &grid->triangle[i].vtx2, &posRef2 );
 					vecN = grid->triangle[i].vecN;
 					VEC_Add( &posRef0, transOffs, &posRef0 );
 					VEC_Add( &posRef1, transOffs, &posRef1 );

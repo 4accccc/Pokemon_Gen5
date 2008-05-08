@@ -85,6 +85,7 @@ static const GX_SIZ_TBL GX_sizTbl[] = {
 	{ GX_TEXSIZE_S1024,	GX_TEXSIZE_T512,	1024,	512		}, 
 	{ GX_TEXSIZE_S1024,	GX_TEXSIZE_T1024,	1024,	1024	}, 
 	{ GX_TEXSIZE_S32,	GX_TEXSIZE_T512,	32,		512		}, 
+	{ GX_TEXSIZE_S32,	GX_TEXSIZE_T1024,	32,		1024	}, 
 };
 
 //------------------------------------------------------------------
