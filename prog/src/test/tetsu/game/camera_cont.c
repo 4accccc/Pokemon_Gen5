@@ -18,8 +18,8 @@
 //
 //
 //============================================================================================
-#define	MAINCAMERA_POFS_LENGTH	(64)
-#define	MAINCAMERA_POFS_HEIGHT	(40)
+#define	MAINCAMERA_POFS_LENGTH	(128)
+#define	MAINCAMERA_POFS_HEIGHT	(64)
 #define	MAINCAMERA_TOFS_LENGTH	(0)
 #define	MAINCAMERA_TOFS_HEIGHT	(16)
 

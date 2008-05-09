@@ -25,47 +25,6 @@ extern void		Set3DactChrAccesory( SCENE_ACT* sceneAct, u8 accesoryID );
 extern BOOL		Check3DactBusy( SCENE_ACT* sceneAct );
 
 //--------------------------------------------------------------------------------------
-//プレーヤー
-extern SCENE_ACT*		Create3Dact( GFL_G3D_SCENE* g3Dscene, HEAPID heapID );
-extern void				Delete3Dact( SCENE_ACT* sceneAct );
-
-enum {
-	ACTANM_CMD_STAY = 0,
-	ACTANM_CMD_WALK,
-	ACTANM_CMD_RUN,
-	ACTANM_CMD_SITDOWN,
-	ACTANM_CMD_STANDUP,
-	ACTANM_CMD_TAKE,
-	ACTANM_CMD_HIT,
-	ACTANM_CMD_DEAD,
-	ACTANM_CMD_JUMP_RDY,
-	ACTANM_CMD_JUMPUP,
-	ACTANM_CMD_JUMPDOWN,
-	ACTANM_CMD_JUMP_END,
-
-	ACTANM_CMD_SWORD_ATTACK0,
-	ACTANM_CMD_SWORD_ATTACK1,
-	ACTANM_CMD_SWORD_ATTACK2,
-	ACTANM_CMD_SWORD_ATTACK3,
-	ACTANM_CMD_SWORD_ATTACK4,
-	ACTANM_CMD_SWORD_ATTACK5,
-	ACTANM_CMD_SWORD_ATTACK6,
-	ACTANM_CMD_SWORD_ATTACK7,
-	ACTANM_CMD_SHOOT,
-	ACTANM_CMD_SPELL,
-};
-
-//---------------------
-//g3Dscene オブジェクト設定テーブルデータＩＮＤＥＸ
-//enum {
-//	G3DSCOBJ_PLAYER1 = 0,
-//	G3DSCOBJ_PLAYER2,
-//};
-
-// テスト
-extern void	ChangeEquipNum( SCENE_ACT* sceneAct, u16 equipID );
-
-//--------------------------------------------------------------------------------------
 //ＮＰＣ
 extern SCENE_ACT*		Create3DactNPC( GFL_G3D_SCENE* g3Dscene, HEAPID heapID );
 extern void				Delete3DactNPC( SCENE_ACT* sceneAct );

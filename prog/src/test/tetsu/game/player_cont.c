@@ -38,38 +38,23 @@ struct _PLAYER_CONTROL {
 	int						netID;
 
 	u16						jumpSeq;
-	u16						slideSeq;
 
-	PLAYER_MOVE_DIR			moveDir;
 	PLAYER_CONTROL_COMMAND	contCommand;
 	PLAYER_SKILL_COMMAND	skillCommand;
-	PLAYER_BUILD_COMMAND	buildCommand;
-	s16						damage;
-	HP_INCDEC_ONTIME		dotStatus;
-	HP_INCDEC_ONTIME		regenerateStatus;
 
 	BOOL					forceMovingFlag;
-	BOOL					sitDownFlag;
 	BOOL					skillBusyFlag;
 	BOOL					hitEnableFlag;
-	BOOL					deadFlag;
-	BOOL					slideFlag;
 
 	u16						contDirection;
 	u16						nowDirection;
 	VecFx32					contTrans;
-	u16						nowAccesary;
-	u16						recoverTimer;
 	VecFx32					moveVec;
-	int						attackID;
 
 	PLAYER_STATUS			status;
-	BOOL					anmSetFlag;	//通信用
-	int						anmSetID;	//通信用
-#if 0
-	GFL_CLWK*				statusObj;
-#endif
-	//SCENE_ACT*				sceneAct;
+	BOOL					anmSetFlag;
+	int						anmSetID;
+
 	CALC_PH_MV*				calcPHMV;
 	BOOL					calcMoveEnable;
 
@@ -80,20 +65,21 @@ struct _PLAYER_CONTROL {
 };
 
 #define WALK_SPEED	(4 << FX32_SHIFT)
-#define RUN_SPEED	(4 << FX32_SHIFT)
+#define RUN_SPEED	(6 << FX32_SHIFT)
 #define JUMP_SPEED	(2 << FX32_SHIFT)
 
 enum {
 	ANMTYPE_STOP = 0,
 	ANMTYPE_WALK,
 	ANMTYPE_RUN,
+	ANMTYPE_JUMP,
 };
 
 static const PLAYER_STATUS	statusDefault = { {"Null"},1000, 100, 1000, 100, 50, 50, 50, 50, 50 };
 
 static void playerBBDactSetUp( PLAYER_CONTROL* pc );
 static void playerBBDactRelease( PLAYER_CONTROL* pc );
-static void playerBBDactSetAnm( PLAYER_CONTROL* pc, int type );
+static void playerBBDactSetAnm( PLAYER_CONTROL* pc );
 //------------------------------------------------------------------
 /**
  * @brief	プレーヤーコントロール起動
@@ -105,21 +91,13 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	pc->gs = gs;
 	pc->netID = netID;
 	playerBBDactSetUp( pc );
-	//pc->sceneAct = Create3Dact( Get_GS_G3Dscene(gs), heapID );
 
-	pc->moveDir = 0;
 	pc->contCommand = PCC_NOP;
 	pc->skillCommand = PSC_NOP;
-	pc->buildCommand = PBC_NOP;
-	pc->damage = 0;
-	pc->dotStatus.count = 0;
-	pc->regenerateStatus.count = 0;
 
 	pc->forceMovingFlag = FALSE;
-	pc->sitDownFlag = FALSE;
 	pc->skillBusyFlag = FALSE;
 	pc->hitEnableFlag = FALSE;
-	pc->deadFlag = FALSE;
 
 	pc->contDirection = 0;
 	pc->nowDirection = 0;
@@ -128,16 +106,12 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 	pc->contTrans.y = 0;
 	pc->contTrans.z = 0;
 
-	pc->nowAccesary = 0;
-	pc->recoverTimer = 0;
-	pc->attackID = 0;
+	pc->anmSetFlag = TRUE;
+	pc->anmSetID = ANMTYPE_STOP;
 
 	pc->jumpSeq = 0;
-	pc->slideSeq = 0;
 	pc->status = statusDefault;
 
-	//Set3DactDrawSw( pc->sceneAct, TRUE );
-	//Set3DactDrawSw( pc->sceneAct, FALSE );
 	{
 		PHMV_SETUP setup;
 
@@ -172,7 +146,6 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 void RemovePlayerControl( PLAYER_CONTROL* pc )
 {
 	DeleteCalcPhisicsMoving( pc->calcPHMV );
-	//Delete3Dact( pc->sceneAct );
 	playerBBDactRelease( pc );
 	GFL_HEAP_FreeMemory( pc ); 
 }
@@ -184,25 +157,26 @@ void RemovePlayerControl( PLAYER_CONTROL* pc )
 //------------------------------------------------------------------
 static void anmReset( PLAYER_CONTROL* pc )
 {
-	pc->anmSetFlag = FALSE;
-	pc->anmSetID = ACTANM_CMD_STAY;	//=0
 }
 
 //------------------------------------------------------------------
 static void anmSet( PLAYER_CONTROL* pc, int anmID )
 {
-	//if( Set3DactChrAnimeCmd( pc->sceneAct, anmID ) == TRUE ){
+	if( pc->anmSetID != anmID ){
 		pc->anmSetFlag = TRUE;
 		pc->anmSetID = anmID;
-	//}
+
+		playerBBDactSetAnm( pc );
+	}
 }
 
 //------------------------------------------------------------------
 static void anmSetForce( PLAYER_CONTROL* pc, int anmID )
 {
-	//Set3DactChrAnimeForceCmd( pc->sceneAct, anmID );
 	pc->anmSetFlag = TRUE;
 	pc->anmSetID = anmID;
+
+	playerBBDactSetAnm( pc );
 }
 
 //------------------------------------------------------------------
@@ -214,7 +188,6 @@ static void directionSetRAD( PLAYER_CONTROL* pc, u16 direction )
 	rotVec.x = 0;
 	rotVec.y = direction + 0x8000;
 	rotVec.z = 0;
-	//Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -229,7 +202,6 @@ static void directionSetPHMV( PLAYER_CONTROL* pc )
 	rotVec.z = 0;
 
 	pc->nowDirection = rotVec.y - 0x8000;
-	//Set3DactRotate( pc->sceneAct, &rotVec );
 }
 
 //------------------------------------------------------------------
@@ -243,102 +215,6 @@ static void directionSetVEC( PLAYER_CONTROL* pc )
 	rotVec.z = 0;
 
 	pc->nowDirection = rotVec.y - 0x8000;
-	//Set3DactRotate( pc->sceneAct, &rotVec );
-}
-
-//------------------------------------------------------------------
-static BOOL damageSet( PLAYER_CONTROL* pc )
-{
-	if( pc->status.hp == 0 ){
-		return TRUE;
-	}
-
-	//ＨＰ増減処理
-	if( pc->dotStatus.count ){	//ＤＯＴ判定
-		if( pc->dotStatus.timerTmp ){
-			pc->dotStatus.timerTmp--;
-		} else {
-			pc->dotStatus.timerTmp = pc->dotStatus.timer;
-			pc->dotStatus.count--;
-			pc->status.hp += pc->dotStatus.value;
-			if( pc->status.hp < 0 ){
-				pc->status.hp = 1;
-			}
-		}
-	}
-	if( pc->regenerateStatus.count ){	//リジェネレート判定
-		if( pc->regenerateStatus.timerTmp ){
-			pc->regenerateStatus.timerTmp--;
-		} else {
-			pc->regenerateStatus.timerTmp = pc->regenerateStatus.timer;
-			pc->regenerateStatus.count--;
-			pc->status.hp += pc->regenerateStatus.value;
-			if( pc->status.hp > pc->status.hpMax ){
-				pc->status.hp = pc->status.hpMax;
-			}
-		}
-	}
-	if( pc->damage < 0 ){	//直接ダメージ
-		pc->status.hp += pc->damage;
-		if( pc->status.hp < 0 ) {
-			pc->status.hp = 0;
-		}
-		pc->damage = 0;
-		return TRUE;	//ダメージくらい発生
-	}
-	if( pc->damage > 0 ){	//回復
-		pc->status.hp += pc->damage;
-		if( pc->status.hp > pc->status.hpMax ) {
-			pc->status.hp = pc->status.hpMax;
-		}
-		pc->damage = 0;
-	}
-	return FALSE;
-}
-
-//------------------------------------------------------------------
-static BOOL damageControl( PLAYER_CONTROL* pc )
-{
-	if( pc->recoverTimer ){
-		if( pc->recoverTimer < 10 + 10*30 ){	//復帰待ち１０秒
-			pc->recoverTimer++;
-		} else {
-			u8 alpha = 31;
-
-			anmSetForce( pc, ACTANM_CMD_STAY );
-			pc->recoverTimer = 0;	//復帰待ちカウンタ初期化
-			//Set3DactBlendAlpha( pc->sceneAct, &alpha );
-			pc->status.hp = pc->status.hpMax;	//復帰
-			pc->deadFlag = FALSE;
-		}
-	} else {
-		if( damageSet(pc) == TRUE ){
-			if( pc->status.hp ){
-				//ダメージくらった
-				anmSetForce( pc, ACTANM_CMD_HIT );
-				pc->hitEnableFlag = FALSE;	//やられモーション中はヒット判定をしない（暫定）
-			} else {
-				u8 alpha = 20;	//半透明演出
-				//死亡
-				anmSetForce( pc, ACTANM_CMD_DEAD );
-				//Set3DactBlendAlpha( pc->sceneAct, &alpha );
-				pc->deadFlag = TRUE;
-				pc->hitEnableFlag = FALSE;	//死亡時はヒット判定をしない
-				pc->recoverTimer = 10;	//復帰待ちカウンタ開始
-			}
-		} else {
-			//行動処理
-			//if( Check3DactBusy( pc->sceneAct ) == TRUE ){
-			//	return FALSE;	//強制アニメ中
-			//}
-			if( pc->skillBusyFlag ){
-				return FALSE;	//スキル実行中
-			}
-			pc->hitEnableFlag = TRUE;
-		}
-		return TRUE;
-	}
-	return FALSE;
 }
 
 //------------------------------------------------------------------
@@ -353,21 +229,21 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 		pc->forceMovingFlag = TRUE;	//コマンド受け入れ不可
 
 		directionSetVEC( pc );
-		anmSet( pc, ACTANM_CMD_JUMP_RDY );
+		anmSet( pc, ANMTYPE_STOP );
 		pc->calcMoveEnable = FALSE;
 		pc->jumpSeq++;
 		break;
 	case 2:
 		StartMovePHMV( pc->calcPHMV, &pc->moveVec, JUMP_SPEEDY, 0x2000 );
 		pc->calcMoveEnable = TRUE;
-		anmSet( pc, ACTANM_CMD_JUMPUP );
+		anmSet( pc, ANMTYPE_JUMP );
 		pc->jumpSeq++;
 		break;
 	case 3:
 		if( GetMoveSpeedPHMV( pc->calcPHMV ) == 0 ){
 			ResetMovePHMV( pc->calcPHMV );
 			pc->calcMoveEnable = FALSE;
-			anmSet( pc, ACTANM_CMD_JUMP_END );
+			anmSet( pc, ANMTYPE_STOP );
 			pc->forceMovingFlag = FALSE;	//コマンド受け入れ復帰
 			pc->jumpSeq++;
 		}
@@ -382,59 +258,11 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
-static BOOL slideControl( PLAYER_CONTROL* pc )
-{
-	switch( pc->slideSeq ){
-	case 0:
-		return TRUE;
-	case 1:
-		//pc->forceMovingFlag = TRUE;	//コマンド受け入れ不可
-
-		ResetMovePHMV( pc->calcPHMV );
-		anmSet( pc, ACTANM_CMD_JUMPDOWN );
-		pc->slideSeq++;
-		break;
-	case 2:
-		{
-			BOOL slideEndFlag = FALSE;
-			VecFx32	vecMove;
-
-			if( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == FALSE ){
-				slideEndFlag = TRUE;
-			} else {
-				GetMoveVecPHMV( pc->calcPHMV, &vecMove );
-				if( vecMove.y >= 0 ){
-					//すべり中にもかかわらず上に進んでいるとき
-					//次のアクションがあるまで、ループ回避のため一時的に計算を止める
-					pc->calcMoveEnable = FALSE;
-					slideEndFlag = TRUE;
-				}
-			}
-			if( slideEndFlag == TRUE ){
-				if( GetMoveSpeedPHMV( pc->calcPHMV ) >= RUN_SPEED/2 ){
-					//着地時一定以上のスピードが出ている場合は着地アニメを入れる
-					anmSet( pc, ACTANM_CMD_JUMP_END );
-				}
-				ResetMovePHMV( pc->calcPHMV );
-				pc->slideSeq++;
-			}
-		}
-		break;
-	case 3:
-		//pc->forceMovingFlag = FALSE;	//コマンド受け入れ復帰
-		pc->slideSeq = 0;
-		break;
-	}
-	return FALSE;
-}
-
-//------------------------------------------------------------------
 static void moveControl( PLAYER_CONTROL* pc )
 {
 	//移動制御
 	if( pc->calcMoveEnable == TRUE ){
 		CalcMovePHMV( pc->calcPHMV, &pc->contTrans );
-		//Set3DactTrans( pc->sceneAct, &pc->contTrans );
 	}
 }
 
@@ -461,8 +289,7 @@ static void commandControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_STAY:
 		ResetMovePHMV( pc->calcPHMV );
-		//anmSet( pc, ACTANM_CMD_STAY );
-		playerBBDactSetAnm( pc, ANMTYPE_STOP );
+		anmSet( pc, ANMTYPE_STOP );
 		break;
 	case PCC_JUMP:
 		pc->jumpSeq = 1;
@@ -471,8 +298,7 @@ static void commandControl( PLAYER_CONTROL* pc )
 		pc->calcMoveEnable = TRUE;
 		StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
 		directionSetPHMV( pc );
-		//anmSet( pc, ACTANM_CMD_WALK );
-		playerBBDactSetAnm( pc, ANMTYPE_WALK );
+		anmSet( pc, ANMTYPE_WALK );
 		break;
 	case PCC_RUN:
 		pc->calcMoveEnable = TRUE;
@@ -491,100 +317,9 @@ static void commandControl( PLAYER_CONTROL* pc )
 				keepSpeed( pc, RUN_SPEED, speed, RUN_SPEED/32 );
 			}
 		}
-		//anmSet( pc, ACTANM_CMD_RUN );
-		playerBBDactSetAnm( pc, ANMTYPE_RUN );
-		break;
-	case PCC_BUILD:
-		//anmSet( pc, ACTANM_CMD_TAKE );
-		pc->buildCommand = PBC_BUILD_CASTLE;
-		break;
-	case PCC_SUMMON:
-		//anmSet( pc, ACTANM_CMD_TAKE );
-		pc->buildCommand = PBC_SUMMON;
-		break;
-	case PCC_SIT:
-		//anmSet( pc, ACTANM_CMD_SITDOWN );
-		pc->sitDownFlag = TRUE;
-		break;
-	case PCC_PUTON:		
-		//anmSetForce( pc, ACTANM_CMD_TAKE );
-		break;
-	case PCC_TAKEOFF:		
-		//anmSetForce( pc, ACTANM_CMD_TAKE );
-		break;
-	case PCC_ATTACK_READY:
-		directionSetRAD( pc, pc->contDirection );	//カメラ方向に向き直り
-		//anmSet( pc, ACTANM_CMD_SWORD_ATTACK0 );
-		break;
-	case PCC_ATTACK_END:
-		//anmSet( pc, ACTANM_CMD_STAY );
-		break;
-	case PCC_ATTACK:
-		//武器によってモーション変化
-#if 0
-		switch( pc->nowAccesary ){
-		defasult:
-			anmSetForce( pc, ACTANM_CMD_STAY );
-			break;
-		case 1:
-			directionSetRAD( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSetForce( pc, ACTANM_CMD_ATTACK );
-			pc->skillCommand = PSC_ATTACK_SWORD;
-			break;
-		case 2:
-			directionSetRAD( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSetForce( pc, ACTANM_CMD_SHOOT );
-			pc->skillCommand = PSC_ATTACK_BOW;
-			break;
-		case 3:
-			directionSetRAD( pc, pc->contDirection );	//カメラ方向に向き直り
-			anmSetForce( pc, ACTANM_CMD_SPELL );
-			pc->skillCommand = PSC_ATTACK_FIRE;
-			break;
-		}
-#else
-		switch( pc->attackID ){
-		case 0:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK1 );
-			pc->skillCommand = PSC_ATTACK_SWORD0;
-			break;
-		case 1:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK2 );
-			pc->skillCommand = PSC_ATTACK_SWORD0;//1;
-			break;
-		case 2:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK3 );
-			pc->skillCommand = PSC_ATTACK_SWORD0;//1;
-			break;
-		case 3:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK4 );
-			pc->skillCommand = PSC_ATTACK_SWORD0;
-			break;
-		case 4:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK5 );
-			pc->skillCommand = PSC_ATTACK_SWORD2;
-			break;
-		case 5:
-			//anmSetForce( pc, ACTANM_CMD_SWORD_ATTACK7 );
-			pc->skillCommand = PSC_ATTACK_SWORD3;
-			break;
-		}
-#endif
-		break;
-	case PCC_WEPONCHANGE:		
-		//ナンバー切り替え
-		pc->nowAccesary++;
-		pc->nowAccesary&= 3;
-		//Set3DactChrAccesory( pc->sceneAct, pc->nowAccesary );
-		break;
-	case PCC_TEST:		
-		pc->work[0]++;
-		pc->work[0]&=3;
-		//ChangeEquipNum( pc->sceneAct, pc->work[0] );
-		//anmSetForce( pc, ACTANM_CMD_STAY );
+		anmSet( pc, ANMTYPE_RUN );
 		break;
 	}
-	//pc->contCommand = PCC_NOP;
 }
 
 //------------------------------------------------------------------
@@ -594,9 +329,6 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 
 	moveControl( pc );
 
-	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
-		return;
-	}
 	if( jumpControl( pc ) == FALSE ){
 		if( pc->contCommand == PCC_JUMP ){
 			pc->jumpSeq = 1;
@@ -604,27 +336,6 @@ void MainPlayerControl( PLAYER_CONTROL* pc )
 		}
 		return;
 	}
-	if( slideControl( pc ) == FALSE ){
-		if( pc->contCommand == PCC_JUMP ){
-			pc->jumpSeq = 1;
-			pc->slideSeq = 0;
-			pc->contCommand = PCC_NOP;
-		}
-		return;
-	}
-	if(( pc->contCommand != PCC_SIT )&&( pc->sitDownFlag == TRUE )){	//しゃがみ中立ち判定処理
-		anmSetForce( pc, ACTANM_CMD_STANDUP );
-		pc->sitDownFlag = FALSE;
-		return;
-	}
-	if(( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == TRUE )
-		&&( GetMoveSpeedPHMV( pc->calcPHMV ) < RUN_SPEED / 4 )
-		&&( pc->calcMoveEnable == TRUE )){
-		//斜面にいるとき、一定速度以下ならすべり状態にする
-		//pc->slideSeq = 1;
-		return;
-	}
-
 	commandControl( pc );
 }
 
@@ -634,13 +345,11 @@ void MainNetWorkPlayerControl( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* psn )
 	SetPlayerControlTrans( pc, &psn->trans );
 	directionSetRAD( pc, psn->direction );
 	pc->skillCommand = psn->skillCommand;
-	pc->buildCommand = psn->buildCommand;
 
-	if( damageControl( pc ) == FALSE ){	//ダメージ判定実行中かどうか
-		return;
-	}
 	if( psn->anmSetFlag == TRUE ){
-		//Set3DactChrAnimeForceCmd( pc->sceneAct, psn->anmSetID );
+		pc->anmSetID = psn->anmSetID;
+		playerBBDactSetAnm( pc );
+
 		psn->anmSetFlag = FALSE;
 	}
 }
@@ -668,7 +377,6 @@ void GetPlayerControlTrans( PLAYER_CONTROL* pc, VecFx32* trans )
 void SetPlayerControlTrans( PLAYER_CONTROL* pc, const VecFx32* trans )
 {
 	pc->contTrans = *trans;
-	//Set3DactTrans( pc->sceneAct, &pc->contTrans );
 }
 
 //------------------------------------------------------------------
@@ -706,9 +414,6 @@ BOOL CheckPlayerControlEnable( PLAYER_CONTROL* pc )
 	if( pc->forceMovingFlag == TRUE ){
 		return FALSE;	//強制移動中
 	}
-	//if( Check3DactBusy( pc->sceneAct ) == TRUE ){
-	//	return FALSE;	//強制アニメ中
-	//}
 	if( pc->skillBusyFlag ){
 		return FALSE;	//スキル実行中
 	}
@@ -738,18 +443,6 @@ void SetPlayerStatus( PLAYER_CONTROL* pc, const PLAYER_STATUS* status )
 void SetPlayerControlCommand( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND command )
 {
 	pc->contCommand = command;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	プレーヤー攻撃コマンドの設定
- */
-//------------------------------------------------------------------
-void SetPlayerAttackCommand
-	( PLAYER_CONTROL* pc, const PLAYER_CONTROL_COMMAND command, int attackID )
-{
-	pc->contCommand = command;
-	pc->attackID = attackID;
 }
 
 //------------------------------------------------------------------
@@ -786,21 +479,6 @@ void ResetPlayerSkillCommand( PLAYER_CONTROL* pc )
 
 //------------------------------------------------------------------
 /**
- * @brief	建築コマンドの取得とリセット
- */
-//------------------------------------------------------------------
-PLAYER_BUILD_COMMAND GetPlayerBuildCommand( PLAYER_CONTROL* pc )
-{
-	return pc->buildCommand;
-}
-
-void ResetPlayerBuildCommand( PLAYER_CONTROL* pc )
-{
-	pc->buildCommand = PBC_NOP;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	スキル実行中フラグの設定とリセット
  */
 //------------------------------------------------------------------
@@ -826,21 +504,6 @@ BOOL GetPlayerHitEnableFlag( PLAYER_CONTROL* pc )
 
 //------------------------------------------------------------------
 /**
- * @brief	死亡フラグの取得とリセット
- */
-//------------------------------------------------------------------
-BOOL GetPlayerDeadFlag( PLAYER_CONTROL* pc )
-{
-	return pc->deadFlag;
-}
-
-void ResetPlayerDeadFlag( PLAYER_CONTROL* pc )
-{
-	pc->deadFlag = FALSE;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	ネットＩＤの取得
  */
 //------------------------------------------------------------------
@@ -861,7 +524,6 @@ void GetPlayerNetStatus( PLAYER_CONTROL* pc, PLAYER_STATUS_NETWORK* pNetStatus )
 	pNetStatus->anmSetFlag = pc->anmSetFlag;
 	pNetStatus->anmSetID = pc->anmSetID;
 	pNetStatus->skillCommand = pc->skillCommand;
-	pNetStatus->buildCommand = pc->buildCommand;
 }
 
 void ResetPlayerNetStatus( PLAYER_STATUS_NETWORK* pNetStatus )
@@ -873,49 +535,6 @@ void ResetPlayerNetStatus( PLAYER_STATUS_NETWORK* pNetStatus )
 	pNetStatus->anmSetFlag = FALSE;
 	pNetStatus->anmSetID = 0;
 	pNetStatus->skillCommand = 0;
-	pNetStatus->buildCommand = 0;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ＨＰ減少値の設定
- */
-//------------------------------------------------------------------
-void SetPlayerDamage( PLAYER_CONTROL* pc, const s16 damage )
-{
-	if( pc->status.hp ){
-		pc->damage = damage;
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ＤＯＴ（時間経過によるＨＰ減少値）の設定
- */
-//------------------------------------------------------------------
-void SetPlayerDamageOnTime( PLAYER_CONTROL* pc, const u8 count, const u8 timer, const s8 value )
-{
-	if(( value < 0 )&&( !pc->dotStatus.count )){
-		pc->dotStatus.count = count;
-		pc->dotStatus.timer = timer;
-		pc->dotStatus.timerTmp = timer;
-		pc->dotStatus.value = value;
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	リジェネレート値の設定
- */
-//------------------------------------------------------------------
-void SetPlayerRegenerate( PLAYER_CONTROL* pc, const u8 count, const u8 timer, const s8 value )
-{
-	if( value > 0 ){
-		pc->regenerateStatus.count = count;
-		pc->regenerateStatus.timer = timer;
-		pc->regenerateStatus.timerTmp = timer;
-		pc->regenerateStatus.value = value;
-	}
 }
 
 //------------------------------------------------------------------
@@ -969,31 +588,19 @@ static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
 
 static const GFL_BBDACT_ANM stopLAnm[] = {
 	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
 };
 static const GFL_BBDACT_ANM stopRAnm[] = {
 	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
 };
 static const GFL_BBDACT_ANM stopUAnm[] = {
 	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
 };
 static const GFL_BBDACT_ANM stopDAnm[] = {
 	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
 };
 
 static const GFL_BBDACT_ANM walkLAnm[] = {
@@ -1054,6 +661,23 @@ static const GFL_BBDACT_ANM runDAnm[] = {
 	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
 };
 
+static const GFL_BBDACT_ANM jumpLAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM jumpRAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM jumpUAnm[] = {
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM jumpDAnm[] = {
+	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 2 },
+	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
+};
+
 enum {
 	ACTSTOP_UP = 0,
 	ACTSTOP_DOWN,
@@ -1069,20 +693,83 @@ enum {
 	ACTRUN_DOWN,
 	ACTRUN_LEFT,
 	ACTRUN_RIGHT,
+
+	ACTJUMP_UP,
+	ACTJUMP_DOWN,
+	ACTJUMP_LEFT,
+	ACTJUMP_RIGHT,
 };
 
 static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
 	stopUAnm, stopDAnm, stopLAnm, stopRAnm,
 	walkUAnm, walkDAnm, walkLAnm, walkRAnm,
 	runUAnm, runDAnm, runLAnm, runRAnm,
+	jumpUAnm, jumpDAnm, jumpLAnm, jumpRAnm,
 };
 
-static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+static const int playerBBDanmOffsTblMine[] = { 
+	ACTSTOP_LEFT - ACTSTOP_UP,
+	ACTSTOP_DOWN - ACTSTOP_UP,
+	ACTSTOP_RIGHT - ACTSTOP_UP,
+	ACTSTOP_UP - ACTSTOP_UP,
+};
+
+static u16 getCameraRotate( GFL_G3D_CAMERA* g3Dcamera )
+{
+	VecFx32 vec, camPos, target;
+	
+	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+
+	VEC_Subtract( &target, &camPos, &vec );
+	return FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
+}
+
+static int getPlayerBBDanm( int anmSetID, u16 dir, const int* anmOffsTable )
+{
+	int	anmBase, datOffs;
+
+	if( (dir > 0x2000)&&(dir < 0x6000)){
+		datOffs = 0;
+	} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
+		datOffs = 1;
+	} else if( (dir > 0xa000)&&(dir < 0xe000)){
+		datOffs = 2;
+	} else {
+		datOffs = 3;
+	}
+	switch( anmSetID ){
+	default:
+	case ANMTYPE_STOP:
+		anmBase = ACTSTOP_UP;
+		break;
+	case ANMTYPE_WALK:
+		anmBase = ACTWALK_UP;
+		break;
+	case ANMTYPE_RUN:
+		anmBase = ACTRUN_UP;
+		break;
+	case ANMTYPE_JUMP:
+		anmBase = ACTJUMP_UP;
+		break;
+	}
+	return anmBase + anmOffsTable[ datOffs ];
+}
+
+static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 {
 	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
 	PLAYER_CONTROL*	pc = (PLAYER_CONTROL*)work;
 	VecFx32	trans = pc->contTrans;
+	int		anmID;
+	u16		dir;
 
+	dir = pc->nowDirection - getCameraRotate( Get_GS_G3Dcamera( pc->gs, MAINCAMERA_ID ) );
+	anmID = getPlayerBBDanm( pc->anmSetID, dir, playerBBDanmOffsTblMine );
+
+	//カメラ補正(アニメ向きの変更をするのに参照)
+	GFL_BBDACT_SetAnimeIdxContinue( Get_GS_BillboardActSys( pc->gs ), actIdx, anmID );
+	//位置補正
 	trans.x = pc->contTrans.x;
 	trans.y = pc->contTrans.y + FX32_ONE*7;	//補正
 	trans.z = pc->contTrans.z;
@@ -1115,7 +802,7 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 
 	actData.alpha = 31;
 	actData.drawEnable = TRUE;
-	actData.func = testFunc;
+	actData.func = playerBBDactFunc;
 	actData.work = pc;
 
 	pc->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, pc->bbdActResUnitID, &actData, 1 );
@@ -1133,35 +820,14 @@ static void playerBBDactRelease( PLAYER_CONTROL* pc )
 	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, pc->bbdActResUnitID, NELEMS(playerBBDactResTable) );
 }
 
-static void playerBBDactSetAnm( PLAYER_CONTROL* pc, int type )
+static void playerBBDactSetAnm( PLAYER_CONTROL* pc )
 {
-	u16 dir = pc->contDirection - pc->nowDirection;
-	int	anmBase, anmOffs;
+	int		anmID;
+	u16		dir;
 
-	if( (dir > 0x2000)&&(dir < 0x6000)){
-		anmOffs = ACTSTOP_RIGHT - ACTSTOP_UP;
-	} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
-		anmOffs = ACTSTOP_DOWN - ACTSTOP_UP;
-	} else if( (dir > 0xa000)&&(dir < 0xe000)){
-		anmOffs = ACTSTOP_LEFT - ACTSTOP_UP;
-	} else {
-		anmOffs = ACTSTOP_UP - ACTSTOP_UP;
-	}
-	switch( type ){
-	default:
-	case ANMTYPE_STOP:
-		anmBase = ACTSTOP_UP;
-		break;
-	case ANMTYPE_WALK:
-		anmBase = ACTWALK_UP;
-		break;
-	case ANMTYPE_RUN:
-		anmBase = ACTRUN_UP;
-		break;
-	}
-	
-	GFL_BBDACT_SetAnimeIdxContinue( Get_GS_BillboardActSys( pc->gs ), 
-									pc->bbdActActUnitID, anmBase + anmOffs );
+	dir = pc->nowDirection - getCameraRotate( Get_GS_G3Dcamera( pc->gs, MAINCAMERA_ID ) );
+	anmID = getPlayerBBDanm( pc->anmSetID, dir, playerBBDanmOffsTblMine );
+
+	GFL_BBDACT_SetAnimeIdx( Get_GS_BillboardActSys( pc->gs ), pc->bbdActActUnitID, anmID );
 }
-
 

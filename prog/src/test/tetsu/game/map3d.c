@@ -531,9 +531,9 @@ static const MAPDATA mapData[] = {
 
 static const VecFx32 mapTransOffs[] = {
 	{ -FX32_ONE*256, 0, -FX32_ONE*256 },
-	{  FX32_ONE*256, 0, -FX32_ONE*256 },
+	{  FX32_ONE*256, 0, -FX32_ONE*256 + FX32_ONE*32 },
 	{ -FX32_ONE*256, 0,  FX32_ONE*256 },
-	{  FX32_ONE*256, 0,  FX32_ONE*256 },
+	{  FX32_ONE*256, 0,  FX32_ONE*256 + FX32_ONE*32 },
 };
 
 //------------------------------------------------------------------
@@ -1032,38 +1032,30 @@ static void MakeTriangleData
  * @brief	３Ｄマップ高さデータ取得
  */
 //------------------------------------------------------------------
-static BOOL	GetGroundGridPos( const VecFx32* pos, u16* blockID, VecFx32* blockPos )
+static BOOL	GetGroundGridPos
+		( SCENE_MAP* sceneMap, const VecFx32* pos, u16* blockID, VecFx32* blockPos )
 {
 	VecFx32 vecTop, vecGrid;
 	VecFx32 vecDefault = {0,0,0};
 	fx32	mapLengthX = mapSizeX*mapGrid;
 	fx32	mapLengthZ = mapSizeZ*mapGrid;
+	int i;
 
-	if((pos->x < -mapLengthX)||(pos->z < -mapLengthZ)||
-			(pos->x > mapLengthX)||(pos->z > mapLengthZ )){
-		return FALSE;
-	}
-	if((pos->x < 0 )&&(pos->z < 0 )){
-		*blockID = 0;
-		vecTop.x = -mapLengthX;
-		vecTop.z = -mapLengthZ;
-	} else if((pos->x >= 0 )&&(pos->z < 0 )){
-		*blockID = 1;
-		vecTop.x = 0;
-		vecTop.z = -mapLengthZ;
-	} else if((pos->x < 0 )&&(pos->z >= 0 )){
-		*blockID = 2;
-		vecTop.x = -mapLengthX;
-		vecTop.z = 0;
-	} else {
-		*blockID = 3;
-		vecTop.x = 0;
-		vecTop.z = 0;
-	}
-	VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-	VEC_Add( &vecGrid, pos, blockPos );
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		vecTop.x = sceneMap->mapBlock[i].trans.x - mapLengthX/2;
+		vecTop.y = 0;
+		vecTop.z = sceneMap->mapBlock[i].trans.z - mapLengthZ/2;
 
-	return TRUE;
+		if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x+mapLengthX)
+			&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z+mapLengthZ) ){
+
+			*blockID = i;
+			VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+			VEC_Add( &vecGrid, pos, blockPos );
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 static void	GetGroundGridData( const VecFx32* blockPos, u16* gridx, u16* gridz, u16* offset )
@@ -1106,7 +1098,7 @@ BOOL	CheckGroundOutRange( SCENE_MAP* sceneMap, const VecFx32* pos )
 	u16		blockID, gridx, gridz, gridOffs;
 	VecFx32 blockPos;
 
-	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
+	if( GetGroundGridPos( sceneMap, pos, &blockID, &blockPos ) == FALSE ){
 		return FALSE;
 	}
 	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
@@ -1122,7 +1114,7 @@ BOOL	GetGroundPlaneData( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN,
 	u16		blockID, gridx, gridz, gridOffs, triangleID;
 	VecFx32 blockPos;
 
-	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
+	if( GetGroundGridPos( sceneMap, pos, &blockID, &blockPos ) == FALSE ){
 		return FALSE;
 	}
 	GetGroundGridData( &blockPos, &gridx, &gridz, &gridOffs );
@@ -1139,7 +1131,7 @@ void	GetGroundPlaneVecN( SCENE_MAP* sceneMap, const VecFx32* pos, VecFx32* vecN 
 	u16		blockID, gridx, gridz, gridOffs, triangleID;
 	VecFx32 blockPos;
 
-	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
+	if( GetGroundGridPos( sceneMap, pos, &blockID, &blockPos ) == FALSE ){
 		vecN->x = 0;
 		vecN->y = FX32_ONE;
 		vecN->z = 0;
@@ -1158,7 +1150,7 @@ void	GetGroundPlaneHeight( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height
 	VecFx32 vecN;
 	fx32	by, valD;
 
-	if( GetGroundGridPos( pos, &blockID, &blockPos ) == FALSE ){
+	if( GetGroundGridPos( sceneMap, pos, &blockID, &blockPos ) == FALSE ){
 		*height = 0;
 		return;
 	}
@@ -1299,7 +1291,7 @@ BOOL GetRayPosOnMap
 	while( VEC_Mag( &vecLength ) <= limitLength ){
 		VEC_Add( &posStart, &vecLength, &pos );
 
-		if( GetGroundGridPos( &pos, &blockID, &blockPos ) == TRUE ){
+		if( GetGroundGridPos( sceneMap, &pos, &blockID, &blockPos ) == TRUE ){
 			GetGroundGridData( &blockPos, &x, &z, &offset );
 	
 			if(( blockID != prevBlockID )||( offset != prevOffset )){	//同じデータはパス

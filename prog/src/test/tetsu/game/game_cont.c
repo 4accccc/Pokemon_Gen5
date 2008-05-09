@@ -10,6 +10,7 @@
 
 #include "setup.h"
 
+#include "game_net.h"
 #include "game_cont.h"
 
 #include "mouse_event.h"
@@ -18,7 +19,6 @@
 #include "text_cont.h"
 #include "camera_cont.h"
 #include "skill_cont.h"
-#include "status_cont.h"
 
 //============================================================================================
 //
@@ -57,10 +57,7 @@ struct _GAME_CONTROL {
 	MSGWIN_CONTROL*			mwc; 
 	MAPWIN_CONTROL*			mpwc; 
 
-	STATUS_CONTROL*			stc; 
-
 	BOOL					onGameFlag;
-	BOOL					endGameFlag;
 	int						time;
 
 	GAME_CONT_KEYDATA		key;
@@ -155,21 +152,6 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 		skillcontSetUp.teamCount	= gc->teamCount;
 		gc->sc = AddSkillControl( &skillcontSetUp );
 	}
-	//ＯＢＪコントローラ登録
-	{
-		{//ステータスバー
-			STATUS_SETUP statusSetUp;
-
-			statusSetUp.heapID			= gc->heapID;
-			statusSetUp.gs				= gc->gs;
-			statusSetUp.p_tc			= gc->tc;
-			statusSetUp.teamCount		= gc->teamCount;
-			statusSetUp.cc				= gc->cc;
-			statusSetUp.myPc			= gc->myPc;
-
-			//gc->stc = AddStatusControl( &statusSetUp );
-		}
-	}
 	//マウス（タッチペン）コントローラ登録
 	{
 		gc->mes = InitMouseEvent( gs, heapID );
@@ -190,7 +172,6 @@ void RemoveGameControl( GAME_CONTROL* gc )
 	int i;
 
 	ExitMouseEvent( gc->mes );
-	//RemoveStatusControl( gc->stc );
 
 	RemoveSkillControl( gc->sc );
 	RemoveCameraControl( gc->cc );
@@ -248,28 +229,13 @@ typedef struct {
 
 static void	MainGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int num, void* work );
 static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work );
-static void CalcCastleDamage( GAME_CONTROL* gc, int castleID, int* damage );
-static void SetMapWinMask( GFL_BMPWIN* targetBmpwin, TEAM_CONTROL* tc );
-
-enum {
-	GAME_CASTLE_BUILD_START = 0,
-	GAME_CASTLE_BUILD_ON,
-	GAME_START,
-	GAME_ON,
-	GAME_END,
-};
-
 //------------------------------------------------------------------
 void MainGameControl( GAME_CONTROL* gc )
 {
 	int i;
 
-	{
-		VecFx32 cTrans;
-		GetCameraControlTrans( gc->cc, &cTrans );
+	//OS_Printf("myPcID = %x, ", GetPlayerNetID( gc->myPc ) );
 
-		//MainMouseEvent( gc->mes, gc->key.tpTrg, gc->key.tpCont, gc->key.tpx, gc->key.tpy );
-	}
 	//チーム別メイン処理
 	{
 		MAINCONT_CALLBACK_WORK* mccw = GFL_HEAP_AllocClearMemory
@@ -292,7 +258,6 @@ void MainGameControl( GAME_CONTROL* gc )
 		u16		direction;
 
 		GetPlayerControlTrans( gc->myPc, &trans );
-	//	trans.y = 0;
 		SetCameraControlTrans( gc->cc, &trans );
 		GetPlayerControlDirection( gc->myPc, &direction );
 		SetCameraControlDirection( gc->cc, &direction );
@@ -300,97 +265,9 @@ void MainGameControl( GAME_CONTROL* gc )
 	MainCameraControl( gc->cc );
 	MainSkillControl( gc->sc, gc->onGameFlag );
 
-	//MainStatusControl( gc->stc );
 	MainFieldActSys( gc->fldActSys );
 
 	MainMapWinControl( gc->mpwc );
-	SetMapWinMask( Get_GS_BmpWin( gc->gs, G2DBMPWIN_MASK ), gc->myTc );
-
-	switch( gc->seq ){
-
-	case GAME_CASTLE_BUILD_START:
-		gc->onGameFlag = FALSE;
-		//gc->onGameFlag = TRUE;
-		gc->endGameFlag = FALSE;
-		PutMessageWin( gc->mwc, GMSG_GAME_INFO );
-		gc->seq = GAME_CASTLE_BUILD_ON;
-		break;
-
-	case GAME_CASTLE_BUILD_ON:
-		{
-			int hp, hpMax;
-			BOOL onGameCheckFlag = TRUE;
-
-			for( i=0; i<gc->teamCount; i++ ){
-				if( GetCastleHP( gc->tc[i], &hp, &hpMax ) == FALSE ){
-					onGameCheckFlag = FALSE;
-				}
-			}
-			if( onGameCheckFlag == TRUE ){
-				gc->onGameFlag = TRUE;
-				gc->seq = GAME_START;
-			}
-		}
-		break;
-
-	case GAME_START:
-		gc->time = 0;
-		//PutMessageWin( gc->mwc, GMSG_GAME_START );
-		gc->seq = GAME_ON;
-		break;
-
-	case GAME_ON:
-		gc->time++;
-		if( !(gc->time%60) ){
-			int j, damage, hp, hpMax;
-
-			for( i=0; i<gc->teamCount; i++ ){
-				GetCastleAreaDamage( gc->tc[i], &damage );
-				for( j=0; j<gc->teamCount; j++ ){
-					if( i != j ){
-						SetCastleDamage( gc->tc[j], &damage );
-					}
-				}
-			}
-		}
-		{
-			int hp, hpMax;
-			BOOL myCastleExistFlag = TRUE;
-			int castleCount = gc->teamCount;
-
-			for( i=0; i<gc->teamCount; i++ ){
-				if( GetCastleHP( gc->tc[i], &hp, &hpMax ) == TRUE ){
-					if( hp <= 0 ){
-						if( gc->tc[i] == gc->myTc ){
-							myCastleExistFlag = FALSE;
-						}
-						castleCount--;
-					}
-				} else {
-					castleCount--;
-				}
-			}
-			if( castleCount <= 1 ){
-				if( castleCount == 1 ){
-					if( myCastleExistFlag == TRUE ){
-						//PutMessageWin( gc->mwc, GMSG_GAME_WIN );
-					} else {
-						//PutMessageWin( gc->mwc, GMSG_GAME_LOSE );
-					}
-				} else {
-					//PutMessageWin( gc->mwc, GMSG_GAME_EVEN );
-				}
-				gc->onGameFlag = FALSE;
-				gc->endGameFlag = TRUE;
-				gc->seq = GAME_END;
-			}
-		}
-		break;
-
-	case GAME_END:
-		break;
-	}
-
 	MainMessageWinControl( gc->mwc );
 	MainStatusWinControl( gc->swc );
 	SetStatusWinReload( gc->swc );
@@ -401,21 +278,8 @@ static void	MainGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int n
 {
 	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
 	VecFx32 trans;
-	BOOL cullingFlag;
-	int hp, hpMax;
+	BOOL	cullingFlag;
 
-	if( mccw->gc->endGameFlag == FALSE ){
-		if( mccw->gc->onGameFlag == TRUE ){
-			GetSummonObjectHP( tc, summonID, &hp, &hpMax );
-			if( hp == 0 ){
-				DeleteSummonObject( tc, summonID );
-				MakeTeamMapAreaMask( tc );
-			}
-		}
-	} else {
-		DeleteSummonObject( tc, summonID );
-		MakeTeamMapAreaMask( tc );
-	}
 	GetSummonObjectTrans( tc, summonID, &trans );
 //	//カメラとのスカラー値によるカリング
 //	cullingFlag = CullingCameraScalar( mccw->cc, &trans, 0x0000 );
@@ -428,11 +292,8 @@ static void	MainGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int n
 static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
 {
 	MAINCONT_CALLBACK_WORK* mccw = (MAINCONT_CALLBACK_WORK*)work;
-	BOOL cullingFlag;
-	PLAYER_BUILD_COMMAND buildCommand;
 	VecFx32 setTrans;
-	int i,netID;
-	BOOL buildFlag;
+	int		netID;
 
 	netID = GetPlayerNetID( pc );
 
@@ -447,52 +308,6 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 #endif
 	}
 	SetSkillControlCommand( mccw->gc->sc, mccw->tc, pc, GetPlayerSkillCommand( pc ));
-	buildCommand = GetPlayerBuildCommand( pc );
-
-	if( mccw->gc->endGameFlag == FALSE ){
-		if( mccw->gc->onGameFlag == TRUE ){
-			if( buildCommand == PBC_SUMMON ){
-				GetPlayerControlTrans( pc, &setTrans );
-				if( GetMapAreaMaskStatus( mccw->tc, &setTrans ) == TRUE ){
-					buildFlag = TRUE;
-					for( i=0; i<mccw->gc->teamCount; i++ ){
-						if( mccw->gc->tc[i] != mccw->tc ){
-							if( GetMapAreaMaskStatus( mccw->gc->tc[i], &setTrans ) == TRUE ){
-								buildFlag = FALSE;
-							}
-						}
-					}
-					if( buildFlag == TRUE ){
-						if( CreateSummonObject( mccw->tc, mccw->tID+1, &setTrans ) != -1 ){
-							MakeTeamMapAreaMask( mccw->tc );
-						} else {
-							//PutMessageWinMine( mccw->gc, GMSG_SUMMON_MAXERROR, pc );
-						}
-					} else {
-						//PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREACONFLICT, pc );
-					}
-				} else {
-					//PutMessageWinMine( mccw->gc, GMSG_SUMMON_AREAOUTRANGE, pc );
-				}
-			}
-			if( GetPlayerDeadFlag( pc ) == TRUE ){	//死亡時の拠点ダメージ
-				int deadDamage = 100;
-	
-				SetCastleDamage( mccw->tc, &deadDamage );
-				ResetPlayerDeadFlag( pc );
-			}
-		} else {
-			if( buildCommand == PBC_BUILD_CASTLE ){
-				GetPlayerControlTrans( pc, &setTrans );
-				if( CreateCastle( mccw->tc, &setTrans ) != -1 ){
-					MakeTeamMapAreaMask( mccw->tc );
-				}
-			}
-		}
-	}
-//	ResetPlayerBuildCommand( pc );
-//	ResetPlayerDeadFlag( pc );
-//	ResetPlayerSkillCommand( pc );
 }
 
 //------------------------------------------------------------------
@@ -520,8 +335,6 @@ static void	ResetGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int 
 
 static void	ResetGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
 {
-	ResetPlayerBuildCommand( pc );
-	ResetPlayerDeadFlag( pc );
 	ResetPlayerSkillCommand( pc );
 }
 
@@ -581,40 +394,6 @@ void ResetAllGameNetWorkPlayData( GAME_CONTROL* gc )
 //------------------------------------------------------------------
 #define CAMERA_MOVE_SPEED	(0x0200*2)
 
-static BOOL checkMoveDirection( int cont, PLAYER_MOVE_DIR* dir )
-{
-	if( cont & PAD_KEY_UP ){
-		if( cont & PAD_KEY_LEFT ){
-			*dir = PMV_FRONT_LEFT;
-		} else if( cont & PAD_KEY_RIGHT ){
-			*dir = PMV_FRONT_RIGHT;
-		} else {
-			*dir = PMV_FRONT;
-		}
-		return TRUE;
-	}
-	if( cont & PAD_KEY_DOWN ){
-		if( cont & PAD_KEY_LEFT ){
-			*dir = PMV_BACK_LEFT;
-		} else if( cont & PAD_KEY_RIGHT ){
-			*dir = PMV_BACK_RIGHT;
-		} else {
-			*dir = PMV_BACK;
-		}
-		return TRUE;
-	}
-	if( cont & PAD_KEY_LEFT ){
-		*dir = PMV_LEFT;
-		return TRUE;
-	}
-	if( cont & PAD_KEY_RIGHT ){
-		*dir = PMV_RIGHT;
-		return TRUE;
-	}
-	return FALSE;
-}
-
-//------------------------------------------------------------------
 static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 {
 	BOOL contLimit = TRUE;
@@ -641,115 +420,6 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 			//return;
 		}
 	}
-#if 0
-	{
-		//テスト
-		//武器の変更
-		if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_6 ) == TRUE ){
-			if( !gc->tp_blank ){
-				SetPlayerControlCommand( pc, PCC_WEPONCHANGE );
-				gc->tp_blank = 8;
-			} else {
-				SetPlayerControlCommand( pc, PCC_STAY );
-				gc->tp_blank--;
-			}
-			return;
-		}
-		//装備の変更
-		if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_7 ) == TRUE ){
-			if( !gc->tp_blank ){
-				SetPlayerControlCommand( pc, PCC_TEST );
-				gc->tp_blank = 8;
-			} else {
-				SetPlayerControlCommand( pc, PCC_STAY );
-				gc->tp_blank--;
-			}
-			return;
-		}
-		gc->tp_blank = 0;
-	}
-	//建設
-	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_1 ) == TRUE ){
-		SetPlayerControlCommand( pc, PCC_BUILD );
-		return;
-	}
-	//召喚
-	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_2 ) == TRUE ){
-		SetPlayerControlCommand( pc, PCC_SUMMON );
-		return;
-	}
-	//攻撃
-	{
-		if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_END ) == TRUE ){
-			//攻撃終了
-			ClearMouseEvent( gc->mes );
-			SetPlayerAttackCommand( pc, PCC_ATTACK_END, 0 );
-			return;
-		}
-		{
-			if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_3 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 0 );
-				return;
-			} else if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_5 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 1 );
-				return;
-			} else if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_4 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 2 );
-				return;
-			} else if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_6 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 3 );
-				return;
-			} else if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_2 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 4 );
-				return;
-			} else if(	CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_1 ) == TRUE ){
-				ClearMouseEvent( gc->mes );
-				SetPlayerAttackCommand( pc, PCC_ATTACK, 5 );
-				return;
-			}
-		}
-		if(	CheckMouseEvent( gc->mes, MOUSE_EVENT_ATTACK_READY ) == TRUE ){
-			//攻撃準備
-			SetPlayerAttackCommand( pc, PCC_ATTACK_READY, 0 );
-			return;
-		}
-	}
-	//座る
-	if( CheckMouseEvent( gc->mes, MOUSE_EVENT_ACTION_3 ) == TRUE ){
-		if( gc->key.tpCont == TRUE ){
-			SetPlayerControlCommand( pc, PCC_SIT );
-			return;
-		} 
-	}
-	//拾う
-	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_4 ) == TRUE ){
-		SetPlayerControlCommand( pc, PCC_TAKEOFF );
-		return;
-	}
-	//置く
-	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_ACTION_5 ) == TRUE ){
-		SetPlayerControlCommand( pc, PCC_PUTON );
-		return;
-	}
-	//地形ＵＰＤＯＷＮ
-	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_UP ) == TRUE ){
-		VecFx32 pos;
-		GetMousePos( gc->mes, &pos );
-		SetMapGroundUp( Get_GS_SceneMap( gc->gs ), &pos );
-		SetPlayerControlCommand( pc, PCC_TAKEOFF );
-		return;
-	} else if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_GROUNDMAKE_DOWN ) == TRUE ){
-		VecFx32 pos;
-		GetMousePos( gc->mes, &pos );
-		SetMapGroundDown( Get_GS_SceneMap( gc->gs ), &pos );
-		SetPlayerControlCommand( pc, PCC_PUTON );
-		return;
-	}
 	//ジャンプ
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_JUMP) == TRUE ){
 		VecFx32 mvDir;
@@ -758,7 +428,6 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
 		return;
 	}
-#endif
 	//移動
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_MOVESTART) == TRUE ){
 		VecFx32 mvDir;
@@ -802,32 +471,6 @@ int			GetTeamCount( GAME_CONTROL* gc )
 
 //------------------------------------------------------------------
 /**
- * @brief	領域マスク反映
- */
-//------------------------------------------------------------------
-static void SetMapWinMask( GFL_BMPWIN* targetBmpwin, TEAM_CONTROL* tc )
-{
-	GFL_BMP_DATA *srcBmp, *dstBmp;
-	u32	*src, *dst;
-	u32 siz;
-	BOOL sw = FALSE;
-
-	if( GetMapAreaMaskDrawFlag( tc ) == TRUE ){
-		GetMapAreaMask( tc, &srcBmp );
-		dstBmp = GFL_BMPWIN_GetBmp( targetBmpwin );
-
-		src = (u32*)GFL_BMP_GetCharacterAdrs( srcBmp );
-		dst = (u32*)GFL_BMP_GetCharacterAdrs( dstBmp );
-		siz = (GFL_BMP_GetSizeX( dstBmp )/8) * (GFL_BMP_GetSizeY( dstBmp )/8) * 0x20;
-		GFL_STD_MemCopy32( srcBmp, dstBmp, siz );
-
-		GFL_BMPWIN_TransVramCharacter( targetBmpwin );
-		SetMapAreaMaskDrawFlag( tc, &sw );
-	}
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	プレーヤー切り替え（デバッグ用）
  */
 //------------------------------------------------------------------
@@ -859,7 +502,6 @@ void		ChangeControlPlayer( GAME_CONTROL* gc, int playNetID )
 		}
 	}
 	ChangeMapWinControl( gc->mpwc, gc->myPc, gc->myTc );
-	//ChangeStatusControl( gc->stc , gc->myPc );
 
 	SetMapAreaMaskDrawFlag( gc->myTc, &sw );
 	GFL_HEAP_FreeMemory( ccw );
