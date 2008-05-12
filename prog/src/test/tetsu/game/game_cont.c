@@ -397,6 +397,7 @@ void ResetAllGameNetWorkPlayData( GAME_CONTROL* gc )
 static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 {
 	BOOL contLimit = TRUE;
+	VecFx32 mvDir;
 
 	//コントロール可否判定
 	if( CheckPlayerControlEnable( pc ) == TRUE ){
@@ -422,22 +423,16 @@ static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc )
 	}
 	//ジャンプ
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_JUMP) == TRUE ){
-		VecFx32 mvDir;
-
 		GetMousePos( gc->mes, &mvDir );
 		SetPlayerMoveCommand( pc, PCC_JUMP, &mvDir );
 		return;
 	}
 	//移動
 	if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_MOVESTART) == TRUE ){
-		VecFx32 mvDir;
-
 		GetMousePos( gc->mes, &mvDir );
 		SetPlayerMoveCommand( pc, PCC_WALK, &mvDir );
 		return;
 	} else if( CheckResetMouseEvent( gc->mes, MOUSE_EVENT_MOVE) == TRUE ){
-		VecFx32 mvDir;
-
 		GetMousePos( gc->mes, &mvDir );
 		SetPlayerMoveCommand( pc, PCC_RUN, &mvDir );
 		return;

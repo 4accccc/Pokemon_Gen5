@@ -26,13 +26,6 @@
 //------------------------------------------------------------------
 #define NO_HIT_ICON (-1)
 
-typedef struct {
-	u8		startx;
-	u8		starty;
-	u8		nowx;
-	u8		nowy;
-}ATKMODE_STATUS;
-
 struct _MOUSE_EVENT_SYS {
 	HEAPID			heapID;
 	GAME_SYSTEM*	gs;
@@ -365,7 +358,16 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 			if( setJumpTrg( mes ) == TRUE ){
 				setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
 			} else {
-				setMouseEvent( mes, MOUSE_EVENT_MOVE );
+				u32	lenX = tp->x - 128;//(256/2)
+				u32	lenY = tp->y - 120;//(192/2) + 24
+				u32 len = (lenX*lenX) + (lenY*lenY);
+
+				//OS_Printf("x = %d, y = %d, len = %d\n",lenX, lenY, len);
+				if( len > 2000 ){
+					setMouseEvent( mes, MOUSE_EVENT_MOVE );
+				} else {
+					setMouseEvent( mes, MOUSE_EVENT_MOVESTART );
+				}
 			}
 		}
 	} else {

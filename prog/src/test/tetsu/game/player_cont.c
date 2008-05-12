@@ -64,9 +64,9 @@ struct _PLAYER_CONTROL {
 	u16						work[8];
 };
 
-#define WALK_SPEED	(4 << FX32_SHIFT)
-#define RUN_SPEED	(6 << FX32_SHIFT)
-#define JUMP_SPEED	(2 << FX32_SHIFT)
+#define WALK_SPEED	(FX32_ONE*2)
+#define RUN_SPEED	(FX32_ONE*4)
+#define JUMP_SPEED	(FX32_ONE*6)
 
 enum {
 	ANMTYPE_STOP = 0,
@@ -118,8 +118,6 @@ PLAYER_CONTROL* AddPlayerControl( GAME_SYSTEM* gs, int netID, HEAPID heapID )
 		setup.getGroundVecN_func = GLOBAL_GetGroundPlaneVecN;
 		setup.getGroundHeight_func = GLOBAL_GetGroundPlaneHeight;
 
-		//setup.gravityMove = 9.8f * FX32_ONE/30;//86;
-		//setup.gravityFall = 9.8f * FX32_ONE/15;
 		setup.gravityMove = 0;
 		setup.gravityFall = 9.8f * FX32_ONE/15;
 		setup.planeMarginTheta = 0x0100;
@@ -218,8 +216,6 @@ static void directionSetVEC( PLAYER_CONTROL* pc )
 }
 
 //------------------------------------------------------------------
-#define JUMP_SPEEDY (FX32_ONE*6)
-
 static BOOL jumpControl( PLAYER_CONTROL* pc )
 {
 	switch( pc->jumpSeq ){
@@ -234,7 +230,7 @@ static BOOL jumpControl( PLAYER_CONTROL* pc )
 		pc->jumpSeq++;
 		break;
 	case 2:
-		StartMovePHMV( pc->calcPHMV, &pc->moveVec, JUMP_SPEEDY, 0x2000 );
+		StartMovePHMV( pc->calcPHMV, &pc->moveVec, JUMP_SPEED, 0x3000 );
 		pc->calcMoveEnable = TRUE;
 		anmSet( pc, ANMTYPE_JUMP );
 		pc->jumpSeq++;
@@ -296,27 +292,14 @@ static void commandControl( PLAYER_CONTROL* pc )
 		break;
 	case PCC_WALK:
 		pc->calcMoveEnable = TRUE;
-		StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
+		StartMovePHMV( pc->calcPHMV, &pc->moveVec, WALK_SPEED, 0 );
 		directionSetPHMV( pc );
 		anmSet( pc, ANMTYPE_WALK );
 		break;
 	case PCC_RUN:
 		pc->calcMoveEnable = TRUE;
-		{
-			fx32 speed = GetMoveSpeedPHMV( pc->calcPHMV );
-
-			if( speed ){
-				SetMoveVecPHMV( pc->calcPHMV, &pc->moveVec );
-			} else {
-				StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
-			}
-			directionSetPHMV( pc );
-
-			//平地時はなるべく速度を保つようにする
-			if( CheckGroundGravityPHMV( pc->calcPHMV, &pc->contTrans ) == FALSE ){
-				keepSpeed( pc, RUN_SPEED, speed, RUN_SPEED/32 );
-			}
-		}
+		StartMovePHMV( pc->calcPHMV, &pc->moveVec, RUN_SPEED, 0 );
+		directionSetPHMV( pc );
 		anmSet( pc, ANMTYPE_RUN );
 		break;
 	}
@@ -459,6 +442,7 @@ void SetPlayerMoveCommand
 	//進行ベクトルの算出
 	VEC_Subtract( mvDir, &pc->contTrans, &tmpVec );
 	tmpVec.y = 0;	//XZ軸についての精度をあげるため0固定
+
 	VEC_Normalize( &tmpVec, &pc->moveVec );	//正規化
 }
 
