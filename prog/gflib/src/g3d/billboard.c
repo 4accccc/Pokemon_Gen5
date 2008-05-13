@@ -40,9 +40,10 @@ typedef struct {
 	fx16	sizX;
 	fx16	sizY;
 	u8		alpha;
-	u8		drawSw:1;
+	u8		drawEnable:1;
 	u8		flipS:1;
 	u8		flipT:1;
+	u8		lightMask:4;
 }BILLBOARD_OBJ;
 
 struct _GFL_BBD_SYS {
@@ -348,7 +349,7 @@ void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys )
 //------------------------------------------------------------------
 int		GFL_BBD_AddObject
 		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
-			const VecFx32* trans, const u8 alpha )
+			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask )
 {
 	int objIdx;
 	GF_ASSERT_MSG( sizX < FX16_ONE*8, "billboard sizX over" );	//	Xサイズオーバー
@@ -361,7 +362,8 @@ int		GFL_BBD_AddObject
 			billboardSys->obj[objIdx].sizY = sizY;
 			billboardSys->obj[objIdx].trans = *trans;
 			billboardSys->obj[objIdx].alpha = alpha;
-			billboardSys->obj[objIdx].drawSw = 0;
+			billboardSys->obj[objIdx].drawEnable = 0;
+			billboardSys->obj[objIdx].lightMask = lightMask;
 			billboardSys->obj[objIdx].flipS = 0;
 			billboardSys->obj[objIdx].flipT = 0;
 			billboardSys->obj[objIdx].celIdx = 0; 
@@ -480,13 +482,26 @@ void	GFL_BBD_SetObjectAlpha
 	billboardSys->obj[objIdx].alpha = *alpha;
 }
 
-//drawSw
-void	GFL_BBD_SetObjectDrawSw
-			( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* drawSw )
+//drawEnable
+void	GFL_BBD_SetObjectDrawEnable
+			( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* drawEnable )
 {
 	GF_ASSERT( objIdx < billboardSys->setup.objCountMax );
 
-	billboardSys->obj[objIdx].drawSw = *drawSw;
+	if( *drawEnable == TRUE ){
+		billboardSys->obj[objIdx].drawEnable = 1;
+	} else {
+		billboardSys->obj[objIdx].drawEnable = 0;
+	}
+}
+
+//lightMask
+void	GFL_BBD_SetObjectLightMask
+			( GFL_BBD_SYS* billboardSys, int objIdx, const GFL_BBD_LIGHTMASK* lightMask )
+{
+	GF_ASSERT( objIdx < billboardSys->setup.objCountMax );
+
+	billboardSys->obj[objIdx].lightMask = *lightMask;
 }
 
 //flipS
@@ -514,12 +529,14 @@ void	GFL_BBD_SetObjectFlipT
  *
  */
 //------------------------------------------------------------------
-void	GFL_BBD_Draw( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera )
+void	GFL_BBD_Draw
+		( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset )
 {
 	GFL_BBD_SETUP*	p_setup = &billboardSys->setup;
 	BILLBOARD_RES*		res;
 	BILLBOARD_OBJ*		obj;
 	MtxFx33				mtxBillboard;
+	VecFx16				vecN;
 	fx32				s0, t0, s1, t1, tmp;
 	int					objIdx, resIdx;
 
@@ -527,7 +544,7 @@ void	GFL_BBD_Draw( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera )
 
 	//カメラ設定取得
 	{
-		VecFx32		camPos, camUp, target;
+		VecFx32		camPos, camUp, target, vecNtmp;
 		MtxFx43		mtxCamera, mtxCameraInv;
 
 		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
@@ -537,14 +554,20 @@ void	GFL_BBD_Draw( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera )
 		G3_LookAt( &camPos, &camUp, &target, &mtxCamera );	//mtxCameraには行列計算結果が返る
 		MTX_Inverse43( &mtxCamera, &mtxCameraInv );			//カメラ逆行列取得
 		MTX_Copy43To33( &mtxCameraInv, &mtxBillboard );		//カメラ逆行列から回転行列を取り出す
+
+		VEC_Subtract( &camPos, &target, &vecNtmp );
+		VEC_Normalize( &vecNtmp, &vecNtmp );
+		VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
 	}
+	GFL_G3D_LIGHT_Switching( g3Dlightset );
+
 	//グローバルスケール設定
 	G3_Scale( p_setup->scale.x, p_setup->scale.y, p_setup->scale.z );
 
 	for( objIdx=0; objIdx<p_setup->objCountMax; objIdx++ ){
 		obj = &billboardSys->obj[objIdx];
 
-		if(( obj->resIdx != OBJ_NULL )&&( obj->drawSw == TRUE )){
+		if(( obj->resIdx != OBJ_NULL )&&( obj->drawEnable )){
 			res = &billboardSys->res[obj->resIdx];
 
 			if( obj->flipS ){
@@ -579,25 +602,26 @@ void	GFL_BBD_Draw( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera )
 			//マテリアル設定
 			G3_MaterialColorDiffAmb( p_setup->diffuse, p_setup->ambient, TRUE );
 			G3_MaterialColorSpecEmi( p_setup->specular, p_setup->emission, FALSE );
-			G3_PolygonAttr(		GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
+			G3_PolygonAttr(		obj->lightMask, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
 								p_setup->polID, obj->alpha, 0 );
 	
 			G3_Begin( GX_BEGIN_QUADS );
 
-			//ライトを使用しないのでNormal(法線ベクトル設定)コマンドは発行しない
-			//G3_Color( GX_RGB(16, 0, 0) );
+			//平面ポリゴンなので法線ベクトルは4頂点で共用
+			if( obj->lightMask ){
+				G3_Normal( vecN.x, vecN.y, vecN.z );
+			} else {
+				G3_Color( GX_RGB( 31, 31, 31 ) );
+			}
 			G3_TexCoord( s0, t0 );
 			G3_Vtx( -obj->sizX, obj->sizY, 0 );
 
-			//G3_Color( GX_RGB(31, 0, 0) );
 			G3_TexCoord( s0, t1 );
 			G3_Vtx( -obj->sizX, -obj->sizY, 0 );
 
-			//G3_Color( GX_RGB(16, 0, 0) );
 			G3_TexCoord( s1, t1 );
 			G3_Vtx( obj->sizX, -obj->sizY, 0 );
 
-			//G3_Color( GX_RGB(31, 0, 0) );
 			G3_TexCoord( s1, t0 );
 			G3_Vtx( obj->sizX, obj->sizY, 0 );
 

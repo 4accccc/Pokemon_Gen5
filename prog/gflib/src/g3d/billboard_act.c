@@ -224,12 +224,13 @@ GFL_BBDACT_ACTUNIT_ID GFL_BBDACT_AddAct( GFL_BBDACT_SYS* bbdActSys,
 		resIdx = bbdActSys->bbdRes[resUnitID+actData->resID];
 		objIdx = GFL_BBD_AddObject(	bbdActSys->bbdSys, resIdx, 
 									actData->sizX, actData->sizY, 
-									&actData->trans, actData->alpha ); 
+									&actData->trans, actData->alpha,
+									actData->lightMask );
 		bbdAct->billboardIdx = objIdx;
 		bbdAct->resIdx = resIdx;
 		bbdAct->func = actData->func;
 		bbdAct->work = actData->work;
-		GFL_BBD_SetObjectDrawSw( bbdActSys->bbdSys, objIdx, &actData->drawEnable );
+		GFL_BBD_SetObjectDrawEnable( bbdActSys->bbdSys, objIdx, &actData->drawEnable );
 	}
 	return (GFL_BBDACT_ACTUNIT_ID)idx;
 }
@@ -357,9 +358,10 @@ static void animeControl( GFL_BBDACT_SYS* bbdActSys, BBD_ACT* bbdAct )
  *
  */
 //------------------------------------------------------------------
-void	GFL_BBDACT_Draw( GFL_BBDACT_SYS* bbdActSys, GFL_G3D_CAMERA* g3Dcamera )
+void	GFL_BBDACT_Draw
+		( GFL_BBDACT_SYS* bbdActSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset )
 {
-	GFL_BBD_Draw( bbdActSys->bbdSys, g3Dcamera );
+	GFL_BBD_Draw( bbdActSys->bbdSys, g3Dcamera, g3Dlightset );
 }
 
 //------------------------------------------------------------------
@@ -370,13 +372,13 @@ void	GFL_BBDACT_Draw( GFL_BBDACT_SYS* bbdActSys, GFL_G3D_CAMERA* g3Dcamera )
  */
 //------------------------------------------------------------------
 //	描画スイッチ設定
-void	GFL_BBDACT_SetDrawSw( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL drawEnable )
+void	GFL_BBDACT_SetDrawEnable( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL drawEnable )
 {
 	GF_ASSERT( actIdx < bbdActSys->bbdActMax );
 	GF_ASSERT( bbdActSys->bbdAct[actIdx].billboardIdx != ACT_NULL );
 
-	GFL_BBD_SetObjectDrawSw(	bbdActSys->bbdSys, 
-								bbdActSys->bbdAct[actIdx].billboardIdx, &drawEnable );
+	GFL_BBD_SetObjectDrawEnable(	bbdActSys->bbdSys, 
+									bbdActSys->bbdAct[actIdx].billboardIdx, &drawEnable );
 }
 
 //	アニメ設定
