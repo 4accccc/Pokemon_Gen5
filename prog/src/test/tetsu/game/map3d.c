@@ -84,13 +84,8 @@ enum {
 };
 
 SCENE_MAP*		DEBUG_sceneMap;
-#define mapScale		(FX32_ONE*1)
-#define mapSizeX		(32)
-#define mapSizeZ		(32)
-#define mapGrid			(mapScale*16)
-#define defaultMapX		(-mapGrid*(mapSizeX/2)+mapGrid/2)
-#define defaultMapZ		(-mapGrid*(mapSizeZ/2)+mapGrid/2)
-#define mapHeight		(FX16_ONE)
+
+#define MAP3D_HEIGHT_ONE	(FX16_ONE)
 
 static void AddExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj, int objID, VecFx32* trans );
 static void RemoveExtraObject( SCENE_MAP* sceneMap, MAPOBJ_HEADER* exobj );
@@ -215,85 +210,85 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 static const GFL_G3D_SCENEOBJ_DATA mapGraphicData0[] = {
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, -FX32_ONE*80, 0 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD0, 0, 1, 31, FALSE, TRUE,
 		{	{ 0x89000, 0x21800, 0x93000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD1, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xffff7000, 0x21800, 0xfff29000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xfff34000, 0x21800, 0xfff2d000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xa0000, 0x21800, 0xfff2d000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xfff6d000, 0x21800, 0x99000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_BUILD3, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, 0x1000, 0 },
-			{ mapScale/2, mapScale/2, mapScale/2 },
+			{ MAP3D_SCALE/2, MAP3D_SCALE/2, MAP3D_SCALE/2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR0, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xfffc8000, 0, 0xfff90000 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR1, 0, 1, 31, FALSE, TRUE,
 		{	{ 0x28000, 0, 0xfff90000 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0x1000, 0x22000, 0xfff36000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xfff36000, 0x22000, 0xfff3a000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xa2000, 0x22000, 0xfff3a000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR2, 0, 1, 31, FALSE, TRUE,
 		{	{ 0xfff6f000, 0x22000, 0xa6000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
 	{	G3DOBJ_BLD_DOOR3, 0, 1, 31, FALSE, TRUE,
 		{	{ 0x88000, 0x22000, 0xa6000 },
-			{ mapScale, mapScale/2, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE/2, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
@@ -302,25 +297,25 @@ static const GFL_G3D_SCENEOBJ_DATA mapGraphicData0[] = {
 static const GFL_G3D_SCENEOBJ_DATA mapGraphicData1[] = {
 	{	G3DOBJ_MAP_FLOOR0, 0, 1, 31, FALSE, TRUE,
 		{	{ -FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveMapDebug,
 	},
 	{	G3DOBJ_MAP_FLOOR1, 0, 1, 31, FALSE, TRUE,
 		{	{ -FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveMapDebug,
 	},
 	{	G3DOBJ_MAP_FLOOR2, 0, 1, 31, FALSE, TRUE,
 		{	{ FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveMapDebug,
 	},
 	{	G3DOBJ_MAP_FLOOR3, 0, 1, 31, FALSE, TRUE,
 		{	{ FX32_ONE*256, -FX32_ONE*32, FX32_ONE*256 },
-			{ mapScale, mapScale, mapScale },
+			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},moveMapDebug,
 	},
@@ -676,10 +671,10 @@ static inline u16 GET_MAPCODE( const u16* mapdata, int x, int z )
 {
 	u16	tmpdata;
 
-	if(( x < 0 )||( x >= mapSizeX )||( z < 0 )||( z >= mapSizeZ )){
+	if(( x < 0 )||( x >= MAP3D_GRID_SIZEX )||( z < 0 )||( z >= MAP3D_GRID_SIZEZ )){
 		return  '■';
 	}
-	tmpdata = mapdata[ z * mapSizeX + x ];
+	tmpdata = mapdata[ z * MAP3D_GRID_SIZEX + x ];
 	return  (( tmpdata & 0x00ff ) << 8 ) + (( tmpdata & 0xff00 ) >> 8 );
 }
 
@@ -901,11 +896,11 @@ static void CreateMapGridData( MAP_BLOCK_DATA* mapBlock, int mapID, HEAPID heapI
 	const MAP_GRIDMAKE_DATA* grid = mapData[mapID].grid;
 
 	mapBlock->floorGrid = GFL_HEAP_AllocClearMemory( heapID, 
-												sizeof(MAP_GRID_DATA)*mapSizeX*mapSizeZ );
+								sizeof(MAP_GRID_DATA) * MAP3D_GRID_SIZEX * MAP3D_GRID_SIZEZ );
 
-	for( z=0; z<mapSizeZ; z++ ){
-		for( x=0; x<mapSizeX; x++ ){
-			i = z * mapSizeX + x;
+	for( z=0; z<MAP3D_GRID_SIZEZ; z++ ){
+		for( x=0; x<MAP3D_GRID_SIZEX; x++ ){
+			i = z * MAP3D_GRID_SIZEX + x;
 
 			mapCode = GET_MAPCODE( attr, x, z );
 
@@ -949,33 +944,33 @@ static void inline posGridCalc( u16 x, u16 z, VecFx16* vtx, VecFx32* dst )
 	tmp.y = vtx->y;
 	tmp.z = z * FX16_ONE + vtx->z;
 
-	dst->x = FX_Mul( mapGrid, tmp.x );
-	dst->y = FX_Mul( mapGrid, tmp.y );
-	dst->z = FX_Mul( mapGrid, tmp.z );
+	dst->x = FX_Mul( MAP3D_GRID_LEN, tmp.x );
+	dst->y = FX_Mul( MAP3D_GRID_LEN, tmp.y );
+	dst->z = FX_Mul( MAP3D_GRID_LEN, tmp.z );
 }
 
 static void MakeGridData( MAP_GRID_DATA* floor, u16 gridx, u16 gridz, 
 							int y0, int y1, int y2, int y3 )
 {
-	MAP_GRID_DATA* grid = &floor[ gridz * mapSizeX + gridx ];
+	MAP_GRID_DATA* grid = &floor[ gridz * MAP3D_GRID_SIZEX + gridx ];
 	VecFx32	posRef;
 	VecFx16	vtx0, vtx1, vtx2, vtx3;
 
 	//法線ベクトル算出用、頂点方向データ作成（描画にも使える）
 	vtx0.x = 0;
-	vtx0.y = y0 * mapHeight;
+	vtx0.y = y0 * MAP3D_HEIGHT_ONE;
 	vtx0.z = 0;
 
 	vtx1.x = FX16_ONE;
-	vtx1.y = y1 * mapHeight;
+	vtx1.y = y1 * MAP3D_HEIGHT_ONE;
 	vtx1.z = 0;
 
 	vtx2.x = 0;
-	vtx2.y = y2 * mapHeight;
+	vtx2.y = y2 * MAP3D_HEIGHT_ONE;
 	vtx2.z = FX16_ONE;
 
 	vtx3.x = FX16_ONE;
-	vtx3.y = y3 * mapHeight;
+	vtx3.y = y3 * MAP3D_HEIGHT_ONE;
 	vtx3.z = FX16_ONE;
 
 	if(( y0 == y3 )&&( y1 == y2 )&&( y0 == y1 )){
@@ -1037,8 +1032,8 @@ static BOOL	GetGroundGridPos
 {
 	VecFx32 vecTop, vecGrid;
 	VecFx32 vecDefault = {0,0,0};
-	fx32	mapLengthX = mapSizeX*mapGrid;
-	fx32	mapLengthZ = mapSizeZ*mapGrid;
+	fx32	mapLengthX = MAP3D_GRID_SIZEX*MAP3D_GRID_LEN;
+	fx32	mapLengthZ = MAP3D_GRID_SIZEZ*MAP3D_GRID_LEN;
 	int i;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -1060,22 +1055,22 @@ static BOOL	GetGroundGridPos
 
 static void	GetGroundGridData( const VecFx32* blockPos, u16* gridx, u16* gridz, u16* offset )
 {
-	*gridx = blockPos->x/mapGrid;
-	*gridz = blockPos->z/mapGrid;
-	*offset = *gridz * mapSizeX + *gridx;
+	*gridx = blockPos->x/MAP3D_GRID_LEN;
+	*gridz = blockPos->z/MAP3D_GRID_LEN;
+	*offset = *gridz * MAP3D_GRID_SIZEX + *gridx;
 }
 
 static void	GetGroundTriangleID( const VecFx32* pos, const MAP_GRID_DATA* floor, u16* ID )
 {
 	fx32 fx, fz;
 
-	fx = pos->x%mapGrid;
-	fz = pos->z%mapGrid;
+	fx = pos->x%MAP3D_GRID_LEN;
+	fz = pos->z%MAP3D_GRID_LEN;
 
 	//グリッド内三角形の判定
 	if( floor->planeType == TRIANGLE_TYPE_021_312 ){
 		//0-2-1,3-1-2のパターン
-		if( fx + fz < mapGrid ){
+		if( fx + fz < MAP3D_GRID_LEN ){
 			*ID = 0;
 		} else {
 			*ID = 1;
@@ -1224,13 +1219,13 @@ static void inline posGridCalc2( int x, int z, VecFx16* vtx, VecFx32* dst )
 {
 	VecFx32	tmp;
 
-	tmp.x = (x - mapSizeX/2) * FX16_ONE + vtx->x;
+	tmp.x = (x - MAP3D_GRID_SIZEX/2) * FX16_ONE + vtx->x;
 	tmp.y = vtx->y;
-	tmp.z = (z - mapSizeZ/2) * FX16_ONE + vtx->z;
+	tmp.z = (z - MAP3D_GRID_SIZEZ/2) * FX16_ONE + vtx->z;
 
-	dst->x = FX_Mul( mapGrid, tmp.x );
-	dst->y = FX_Mul( mapGrid, tmp.y );
-	dst->z = FX_Mul( mapGrid, tmp.z );
+	dst->x = FX_Mul( MAP3D_GRID_LEN, tmp.x );
+	dst->y = FX_Mul( MAP3D_GRID_LEN, tmp.y );
+	dst->z = FX_Mul( MAP3D_GRID_LEN, tmp.z );
 }
 
 static BOOL checkOnTriangle( VecFx32* pos, 
@@ -1282,11 +1277,11 @@ BOOL GetRayPosOnMap
 	vecLength.y = 0;
 	vecLength.z = 0;
 	{
-		fx32 x_x = FX_Mul( mapSizeX * FX32_ONE, mapSizeX * FX32_ONE ); 
-		fx32 z_z = FX_Mul( mapSizeZ * FX32_ONE, mapSizeZ * FX32_ONE ); 
+		fx32 x_x = FX_Mul( MAP3D_GRID_SIZEX * FX32_ONE, MAP3D_GRID_SIZEX * FX32_ONE ); 
+		fx32 z_z = FX_Mul( MAP3D_GRID_SIZEZ * FX32_ONE, MAP3D_GRID_SIZEZ * FX32_ONE ); 
 		fx32 xz = FX_Sqrt( x_x + z_z );
 
-		limitLength = FX_Mul( mapGrid, xz );
+		limitLength = FX_Mul( MAP3D_GRID_LEN, xz );
 	}
 	while( VEC_Mag( &vecLength ) <= limitLength ){
 		VEC_Add( &posStart, &vecLength, &pos );

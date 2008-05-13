@@ -109,10 +109,13 @@ static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_O
 
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
-	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x7fff } },
-	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
-	{ 2, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
-	{ 3, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, 0x7fff } },
+	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+	{ 1, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+	{ 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+	{ 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+//	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, GX_RGB(31,0,0) } },
+//	{ 2, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, GX_RGB(0,31,0) } },
+//	{ 3, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, GX_RGB(0,0,31) } },
 };
 static const GFL_G3D_LIGHT_DATA light1Tbl[] = {
 	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, 0x001f } },
@@ -503,7 +506,7 @@ static void g3d_draw( GAME_SYSTEM* gs )
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera[MAINCAMERA_ID] );
 	GFL_G3D_SCENE_SetDrawParticleSW( gs->g3Dscene, TRUE );
 
-	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera[MAINCAMERA_ID] );
+	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera[MAINCAMERA_ID], gs->g3Dlightset[MAINLIGHT_ID] );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 

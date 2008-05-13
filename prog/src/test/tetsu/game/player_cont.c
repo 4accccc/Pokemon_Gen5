@@ -786,6 +786,7 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 
 	actData.alpha = 31;
 	actData.drawEnable = TRUE;
+	actData.lightMask = GFL_BBD_LIGHTMASK_1;
 	actData.func = playerBBDactFunc;
 	actData.work = pc;
 

@@ -7,6 +7,11 @@
 //============================================================================================
 typedef struct _SCENE_MAP		SCENE_MAP;
 
+#define MAP3D_SCALE			(FX32_ONE*1)
+#define MAP3D_GRID_LEN		(MAP3D_SCALE*16)
+#define MAP3D_GRID_SIZEX	(32)
+#define MAP3D_GRID_SIZEZ	(32)
+
 extern SCENE_MAP*	Create3Dmap( GFL_G3D_SCENE* g3Dscene, HEAPID heapID );
 extern void			Delete3Dmap( SCENE_MAP* sceneMap );
 extern int			AddObject3Dmap( SCENE_MAP* sceneMap, int objID, VecFx32* trans );

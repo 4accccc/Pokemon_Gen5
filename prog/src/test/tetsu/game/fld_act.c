@@ -233,6 +233,7 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 			
 			actData[i].alpha = 31;
 			actData[i].drawEnable = TRUE;
+			actData[i].lightMask = GFL_BBD_LIGHTMASK_0;
 			actData[i].func = testFunc;
 			actData[i].work = fldActSys;
 		}
