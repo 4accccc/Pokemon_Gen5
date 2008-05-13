@@ -35,6 +35,25 @@ typedef enum {
 	GFL_BBD_TEXSIZ_ERROR,
 }GFL_BBD_TEXSIZ;
 
+typedef enum {
+	GFL_BBD_LIGHT_NONE = 0,
+	GFL_BBD_LIGHTMASK_0,	// = 1
+	GFL_BBD_LIGHTMASK_1,	// = 2
+	GFL_BBD_LIGHTMASK_01,
+	GFL_BBD_LIGHTMASK_2,	// = 4
+	GFL_BBD_LIGHTMASK_02,
+	GFL_BBD_LIGHTMASK_12,
+	GFL_BBD_LIGHTMASK_012,
+	GFL_BBD_LIGHTMASK_3,	// = 8
+	GFL_BBD_LIGHTMASK_03,
+	GFL_BBD_LIGHTMASK_13,
+	GFL_BBD_LIGHTMASK_013,
+	GFL_BBD_LIGHTMASK_23,
+	GFL_BBD_LIGHTMASK_023,
+	GFL_BBD_LIGHTMASK_123,
+	GFL_BBD_LIGHTMASK_0123,
+}GFL_BBD_LIGHTMASK;
+
 typedef struct {
 	u16							resCountMax;
 	u16							objCountMax;
@@ -93,7 +112,7 @@ extern void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys );
 //	ビルボードオブジェクト追加  (return objIdx)
 extern int	GFL_BBD_AddObject
 		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
-			const VecFx32* trans, const u8 alpha );
+			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask );
 //	ビルボードオブジェクト破棄
 extern void	GFL_BBD_RemoveObject( GFL_BBD_SYS* billboardSys, int objIdx );
 //------------------------------------------------------------------
@@ -121,12 +140,14 @@ extern void	GFL_BBD_GetObjectAlpha
 				( GFL_BBD_SYS* billboardSys, int objIdx, u8* alpha );
 extern void	GFL_BBD_SetObjectAlpha
 				( GFL_BBD_SYS* billboardSys, int objIdx, const u8* alpha );
-extern void	GFL_BBD_SetObjectDrawSw
-				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* drawSw );
+extern void	GFL_BBD_SetObjectDrawEnable
+				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* drawEnable );
+extern void	GFL_BBD_SetObjectLightMask
+				( GFL_BBD_SYS* billboardSys, int objIdx, const GFL_BBD_LIGHTMASK* lightMask );
 extern void	GFL_BBD_SetObjectFlipS
-			( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipS );
+				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipS );
 extern void	GFL_BBD_SetObjectFlipT
-			( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipT );
+				( GFL_BBD_SYS* billboardSys, int objIdx, const BOOL* flipT );
 
 //------------------------------------------------------------------
 /**
@@ -135,7 +156,8 @@ extern void	GFL_BBD_SetObjectFlipT
  *
  */
 //------------------------------------------------------------------
-extern void	GFL_BBD_Draw( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera );
+extern void	GFL_BBD_Draw
+		( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 
 
 //------------------------------------------------------------------

@@ -21,14 +21,15 @@ typedef const GFL_BBDACT_RESDATA*	GFL_BBDACT_RES_SETTBL;
 typedef u16		GFL_BBDACT_RESUNIT_ID;
 
 typedef struct {
-	u16		resID;
-	fx16	sizX;		// 0 < sizX < FX16_ONE*8-1
-	fx16	sizY;		// 0 < sizY < FX16_ONE*8-1
-	u8		alpha;
-	BOOL	drawEnable;
-	VecFx32	trans;
+	u16					resID;
+	fx16				sizX;		// 0 < sizX < FX16_ONE*8-1
+	fx16				sizY;		// 0 < sizY < FX16_ONE*8-1
+	u8					alpha;
+	BOOL				drawEnable; 
+	GFL_BBD_LIGHTMASK	lightMask;
+	VecFx32				trans;
 	GFL_BBDACT_FUNC*	func;	//動作関数
-	void*	work;
+	void*				work;
 }GFL_BBDACT_ACTDATA;
 
 typedef const GFL_BBDACT_ACTDATA*	GFL_BBDACT_ACT_SETTBL;
@@ -75,7 +76,8 @@ extern GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys
 //	ビルボードアクトメイン
 extern void	GFL_BBDACT_Main( GFL_BBDACT_SYS* bbdActSys );
 //	ビルボードアクト描画
-extern void	GFL_BBDACT_Draw( GFL_BBDACT_SYS* bbdActSys, GFL_G3D_CAMERA* g3Dcamera );
+extern void	GFL_BBDACT_Draw
+		( GFL_BBDACT_SYS* bbdActSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 //	ビルボードアクトシステム破棄
 extern void	GFL_BBDACT_DeleteSys( GFL_BBDACT_SYS* bbdActSys );
 //	ビルボードシステムポインタ取得
@@ -107,7 +109,10 @@ extern void GFL_BBDACT_RemoveAct
 
 //------------------------------------------------------------------
 //	ビルボードアクト描画フラグ設定
-extern void	GFL_BBDACT_SetDrawSw( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL drawSw );
+extern void	GFL_BBDACT_SetDrawEnable( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL drawEnable );
+//	ビルボードアクトライト反映フラグ設定
+extern void	GFL_BBDACT_SetLightEnable
+				( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL lightEnable, u8 lightNum );
 //	ビルボードアクトアニメ設定
 extern void	GFL_BBDACT_SetAnimeEnable( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, BOOL animeEnable );
 extern void	GFL_BBDACT_SetAnimeTable( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, 
