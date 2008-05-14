@@ -109,6 +109,9 @@ extern void	GFL_BBD_RemoveResource( GFL_BBD_SYS* billboardSys, int resIdx );
 //		２）全破棄
 extern void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys );
 
+//	ビルボードリソースデータカット
+extern void	GFL_BBD_CutResourceData( GFL_BBD_SYS* billboardSys, int resIdx );
+
 //	ビルボードオブジェクト追加  (return objIdx)
 extern int	GFL_BBD_AddObject
 		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
@@ -159,13 +162,4 @@ extern void	GFL_BBD_SetObjectFlipT
 extern void	GFL_BBD_Draw
 		( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 
-
-//------------------------------------------------------------------
-/**
- *
- * @brief	テスト関数
- *
- */
-//------------------------------------------------------------------
-extern void GFL_BBD_TestObject( GFL_BBD_SYS* billboardSys, int objIdx );
 

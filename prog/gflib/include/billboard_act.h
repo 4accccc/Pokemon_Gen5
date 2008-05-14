@@ -7,6 +7,7 @@
 //============================================================================================
 typedef struct _GFL_BBDACT_SYS		GFL_BBDACT_SYS;
 typedef void		(GFL_BBDACT_FUNC)( GFL_BBDACT_SYS*, int actID, void* work );
+typedef void		(GFL_BBDACT_TRANSFUNC)( u32 dst, void* src, u32* siz );
 
 typedef struct {
 	u32		arcID;
@@ -15,6 +16,7 @@ typedef struct {
 	u8		texSiz;		//GFL_BBD_TEXSIZ
 	u8		celSizX;
 	u8		celSizY;
+	BOOL	dataCut;
 }GFL_BBDACT_RESDATA;
 
 typedef const GFL_BBDACT_RESDATA*	GFL_BBDACT_RES_SETTBL;
@@ -72,7 +74,7 @@ typedef const GFL_BBDACT_ANM**	GFL_BBDACT_ANMTBL;
 //------------------------------------------------------------------
 //	ビルボードアクトシステム作成 (return bbdActSys)
 extern GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys
-							( const u16 bbdResMax, const u16 bbdActMax, HEAPID heapID );
+	( const u16 bbdResMax, const u16 bbdActMax, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID );
 //	ビルボードアクトメイン
 extern void	GFL_BBDACT_Main( GFL_BBDACT_SYS* bbdActSys );
 //	ビルボードアクト描画
