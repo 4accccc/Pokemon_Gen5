@@ -32,14 +32,15 @@ typedef struct {
 }BBD_ACT;
 
 struct _GFL_BBDACT_SYS {
-	HEAPID			heapID;
-	GFL_BBD_SYS*	bbdSys;
-	u16*			bbdRes;
-	u16				bbdResMax;
-	GFL_AREAMAN*	bbdResAreaman;
-	BBD_ACT*		bbdAct;
-	u16				bbdActMax;
-	GFL_AREAMAN*	bbdActAreaman;
+	HEAPID					heapID;
+	GFL_BBD_SYS*			bbdSys;
+	GFL_BBDACT_TRANSFUNC*	transFunc;		//“]‘—ŠÖ”
+	u16*					bbdRes;
+	u16						bbdResMax;
+	GFL_AREAMAN*			bbdResAreaman;
+	BBD_ACT*				bbdAct;
+	u16						bbdActMax;
+	GFL_AREAMAN*			bbdActAreaman;
 };
 
 static void	GFL_BBDACT_InitAct( BBD_ACT* bbdAct );
@@ -56,12 +57,14 @@ static void	GFL_BBDACT_InitAct( BBD_ACT* bbdAct );
  * @brief	ƒrƒ‹ƒ{[ƒhƒAƒNƒgƒVƒXƒeƒ€ì¬
  */
 //------------------------------------------------------------------
-GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys( const u16 bbdResMax, const u16 bbdActMax, HEAPID heapID )
+GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys
+	( const u16 bbdResMax, const u16 bbdActMax, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID )
 {
 	GFL_BBDACT_SYS* bbdActSys = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_BBDACT_SYS) );
 	int	i;
 
 	bbdActSys->heapID = heapID;
+	bbdActSys->transFunc = transFunc;
 	bbdActSys->bbdResMax = bbdResMax;
 	bbdActSys->bbdActMax = bbdActMax;
 	{
@@ -164,7 +167,7 @@ GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceUnit
 {
 	const GFL_BBDACT_RESDATA* resData;
 	u32 idx;
-	int i;
+	int i, resIdx;
 
 	//”z’u‚h‚m‚c‚d‚wŠm•Û
 	idx = GFL_AREAMAN_ReserveAuto( bbdActSys->bbdResAreaman, resCount );
@@ -173,10 +176,14 @@ GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceUnit
 
 	for( i=0; i<resCount; i++ ){
 		resData = &resTbl[i];
-		bbdActSys->bbdRes[idx+i] = GFL_BBD_AddResourceArc(	bbdActSys->bbdSys, 
-															resData->arcID, resData->datID,
-															resData->texFmt, resData->texSiz,
-															resData->celSizX, resData->celSizY );
+		resIdx = GFL_BBD_AddResourceArc(	bbdActSys->bbdSys, 
+											resData->arcID, resData->datID,
+											resData->texFmt, resData->texSiz,
+											resData->celSizX, resData->celSizY );
+		if( resData->dataCut == TRUE ){
+			GFL_BBD_CutResourceData( bbdActSys->bbdSys, resIdx );
+		}
+		bbdActSys->bbdRes[idx+i] = resIdx;
 	}
 	return (GFL_BBDACT_RESUNIT_ID)idx;
 }

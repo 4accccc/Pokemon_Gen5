@@ -316,6 +316,22 @@ int GFL_BBD_AddResourcePath( GFL_BBD_SYS* billboardSys, const char* path, int da
 
 //------------------------------------------------------------------
 /**
+ * @brief	ビルボードリソースデータカット
+ */
+//------------------------------------------------------------------
+void	GFL_BBD_CutResourceData( GFL_BBD_SYS* billboardSys, int resIdx )
+{
+	GFL_G3D_RES*			g3DresTex = billboardSys->res[resIdx].g3DresTex;
+	NNSG3dResFileHeader*	file = GFL_G3D_GetResourceFileHeader( g3DresTex ); 
+	NNSG3dResTex*			texfile = GFL_G3D_GetResTex( g3DresTex );
+	u32						texData = (u32)((u8*)texfile + texfile->texInfo.ofsTex);
+	u32						dataSize = texData - (u32)file;
+
+	GFL_HEAP_ResizeMemory( (void*)file, dataSize );
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ビルボードリソース破棄
  */
 //------------------------------------------------------------------

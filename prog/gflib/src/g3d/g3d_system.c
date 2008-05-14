@@ -557,13 +557,10 @@ static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
  * @return	g3Dres	３Ｄリソースポインタ(失敗=NULL)
  */
 //--------------------------------------------------------------------------------------------
-static GFL_G3D_RES*
+static void
 	GFL_G3D_CreateResource
-		( NNSG3dResFileHeader* header )
+		( GFL_G3D_RES* g3Dres, const NNSG3dResFileHeader* header )
 {
-	//リソース管理ハンドル作成
-	GFL_G3D_RES* g3Dres = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RES) );
-
 	//OS_Printf("3D_resource check now...\n");
 	//ファイルタイプの判別
 	switch( *(u32*)&header[0] )
@@ -599,8 +596,6 @@ static GFL_G3D_RES*
 	//ファイルポインタの設定
 	g3Dres->file = ( void* )header;
 	//OS_Printf("3D_resource is loaded\n");
-
-	return g3Dres;
 }
 
 //-------------------------------
@@ -610,14 +605,19 @@ GFL_G3D_RES*
 		( int arcID, int datID ) 
 {
 	NNSG3dResFileHeader* header;
+	GFL_G3D_RES* g3Dres;
 
 	GF_ASSERT( g3Dman != NULL );
+
+	//リソース管理ハンドル作成
+	g3Dres = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RES) );
 
 	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_LoadDataAlloc( arcID, datID, g3Dman->heapID );
 
-	return GFL_G3D_CreateResource( header );
+	GFL_G3D_CreateResource( g3Dres, header );
+	return g3Dres;
 }
 
 //-------------------------------
@@ -627,14 +627,19 @@ GFL_G3D_RES*
 		( const char* path, int datID ) 
 {
 	NNSG3dResFileHeader* header;
+	GFL_G3D_RES* g3Dres;
 
 	GF_ASSERT( g3Dman != NULL );
+
+	//リソース管理ハンドル作成
+	g3Dres = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RES) );
 
 	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブファイルからヘッダデータを読み込み
 	header = GFL_ARC_LoadDataFilePathAlloc( path, datID, g3Dman->heapID );
 
-	return GFL_G3D_CreateResource( header );
+	GFL_G3D_CreateResource( g3Dres, header );
+	return g3Dres;
 }
 
 //--------------------------------------------------------------------------------------------

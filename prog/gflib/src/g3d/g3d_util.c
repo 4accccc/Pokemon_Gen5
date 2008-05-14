@@ -349,7 +349,7 @@ static void addObject
 			} else {
 				g3DresTex = g3Dutil->g3DresTbl[ resIdx+objTbl->texresID ];
 				GFL_G3D_TransVramTexture( g3DresTex );
-				transTexture( g3DresTex );
+				//transTexture( g3DresTex );
 			}
 		} else {
 			//モデルリソースと同じ指定の場合はモデル依存で共有
