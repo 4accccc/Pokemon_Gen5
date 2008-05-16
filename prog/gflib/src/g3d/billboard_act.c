@@ -542,7 +542,7 @@ void	GFL_BBDACT_SetFunc( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, GFL_BBDACT_FUNC*
 	bbdAct->func = func;
 }
 
-//	転送リソース関連付け
+//	転送リソース関連付け（既にリソースとして読み込まれている場合に使用）
 void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 resIdx )
 {
 	BBDACT_RES	*bbdResSrc, *bbdResDst;
@@ -558,5 +558,23 @@ void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 resIdx
 
 	bbdResDst->dataSrc = bbdResSrc->dataSrc;
 	plttTrans( bbdActSys, bbdResDst );
+}
+
+//	転送リソースロード＆設定（リソースとして読み込まれていない場合に使用）
+void	GFL_BBDACT_BindActTexResLoad
+			( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u32 arcID, u32 datID )
+{
+	BBDACT_RES* bbdRes;
+	BBDACT_ACT* bbdAct;
+	GF_ASSERT( actIdx < bbdActSys->bbdActMax );
+	bbdAct = &bbdActSys->bbdAct[actIdx];
+	GF_ASSERT( bbdAct->bbdActIdx != ACT_NULL );
+
+	bbdRes = &bbdActSys->bbdRes[bbdAct->resIdx];
+	if( bbdRes->dataSrc != NULL ){
+		GFL_G3D_DeleteResource( bbdRes->dataSrc );
+	}
+	bbdRes->dataSrc = GFL_G3D_CreateResourceArc( arcID, datID );
+	plttTrans( bbdActSys, bbdRes );
 }
 

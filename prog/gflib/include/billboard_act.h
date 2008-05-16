@@ -146,7 +146,10 @@ inline void GFL_BBDACT_SetFrmIdxOn( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 a
 }
 //	動作関数設定
 extern void	GFL_BBDACT_SetFunc( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, GFL_BBDACT_FUNC* func );
-//	転送リソース関連付け
+//	転送リソース関連付け（既にリソースとして読み込まれている場合に使用）
 extern void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 resIdx );
+//	転送リソースロード＆設定（リソースとして読み込まれていない場合に使用）
+extern void	GFL_BBDACT_BindActTexResLoad
+			( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u32 arcID, u32 datID );
 
 
