@@ -69,7 +69,7 @@ static void GFUser_PublicRandInit(void);
 //------------------------------------------------------------------
 void GFLUser_Init(void)
 {
-	InitSystem();
+	//InitSystem();
 #if 0
 #ifdef USE_MAINEXMEMORY
   OS_EnableMainExArena();

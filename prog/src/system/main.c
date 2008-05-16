@@ -12,6 +12,7 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
+#include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
 
@@ -27,7 +28,9 @@ static	void	GameMain(void);
 //------------------------------------------------------------------
 void NitroMain(void)
 {
-	// 初期化して…
+	// ハード環境システム郡を初期化する関数
+	MachineSystem_Init();
+	// ＧＦＬ初期化
 	GFLUser_Init();
 
 	//HBLANK割り込み許可
@@ -46,6 +49,7 @@ void NitroMain(void)
 	GameInit();
 
 	while(TRUE){
+		MachineSystem_Main();
 		// メイン処理して…
 		GFLUser_Main();
 		GameMain();
@@ -84,6 +88,7 @@ static	void	SkeltonVBlankFunc(void)
 
 	MI_WaitDma(GX_DEFAULT_DMAID);
 
+	MachineSystem_VIntr();
 	GFLUser_VIntr();
 }
 
