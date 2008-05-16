@@ -96,6 +96,10 @@ extern void	GFL_BBD_GetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 extern void	GFL_BBD_SetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 
 //------------------------------------------------------------------
+/**
+ * @brief	ビルボードリソース
+ */
+//------------------------------------------------------------------
 //	ビルボードリソース追加
 //		１）アーカイブＩＤによる読み込み(return resIdx)
 extern int GFL_BBD_AddResourceArc( GFL_BBD_SYS* billboardSys, int arcID, int datID,
@@ -109,15 +113,42 @@ extern void	GFL_BBD_RemoveResource( GFL_BBD_SYS* billboardSys, int resIdx );
 //		２）全破棄
 extern void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys );
 
+//	ビルボードリソースデータポインタ取得
+extern u32	GFL_BBD_GetResourceData( GFL_BBD_SYS* billboardSys, int resIdx );
 //	ビルボードリソースデータカット
 extern void	GFL_BBD_CutResourceData( GFL_BBD_SYS* billboardSys, int resIdx );
 
+//------------------------------------------------------------------
+/**
+ * @brief	ビルボードリソース各種パラメータの取得
+ */
+//------------------------------------------------------------------
+//texDataAdrs
+extern void	GFL_BBD_GetResourceTexDataAdrs
+				( GFL_BBD_SYS* billboardSys, int resIdx, u32* texDataAdrs );
+//texPlttAdrs
+extern void	GFL_BBD_GetResourceTexPlttAdrs
+				( GFL_BBD_SYS* billboardSys, int resIdx, u32* texPlttAdrs );
+//cel計算
+enum {
+	CEL_OFFS_1D = 0,
+	CEL_OFFS_2D,
+};
+extern void	GFL_BBD_GetResourceCelOffset( GFL_BBD_SYS* billboardSys, int resIdx, 
+								const u16 celIdx, u32* dataOffs, u32* celDataSiz, u8 type );
+
+//------------------------------------------------------------------
+/**
+ * @brief	ビルボードオブジェクト
+ */
+//------------------------------------------------------------------
 //	ビルボードオブジェクト追加  (return objIdx)
 extern int	GFL_BBD_AddObject
 		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
 			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask );
 //	ビルボードオブジェクト破棄
 extern void	GFL_BBD_RemoveObject( GFL_BBD_SYS* billboardSys, int objIdx );
+
 //------------------------------------------------------------------
 /**
  * @brief	ビルボードオブジェクト各種パラメータの取得と変更
