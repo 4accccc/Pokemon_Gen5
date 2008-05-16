@@ -51,7 +51,7 @@ struct _GAME_SYSTEM {
 	u32						clactResCount;	//clact リソース数
 	GFL_CLUNIT*				clactUnit[8];	//clact ユニット
 	GFL_TCB*				g2dVintr;		//2D用vIntrTaskハンドル
-//	BOOL					g2dVintrEnable;	//2D用vIntrTask呼び出し許可
+	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
 
 	SCENE_ACTSYS*			sceneActSys;	//３Ｄアクターシステム設定ハンドル
 	SCENE_MAP*				sceneMap;		//３Ｄマップ設定ハンドル
@@ -60,7 +60,6 @@ struct _GAME_SYSTEM {
 	HEAPID					heapID;
 };
 
-BOOL g2dVintrEnable;
 //------------------------------------------------------------------
 /**
  * @brief	ディスプレイ環境データ
@@ -110,7 +109,7 @@ static const VecFx32 camera1Pos	= { (FX32_ONE * 100 ), (FX32_ONE * 100), (FX32_O
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
 	{ 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
-	{ 1, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
+	{ 1, {{  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
 	{ 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
 	{ 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
 //	{ 1, {{ (FX16_ONE-1)/2, (FX16_ONE-1)/2, (FX16_ONE-1)/2 }, GX_RGB(31,0,0) } },
@@ -143,6 +142,7 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
  */
 //------------------------------------------------------------------
 static const char font_path[] = {"gfl_font.dat"};
+static const char bbdarc_path[] = {"bbdact_base.narc"};
 
 static const GFL_BG_BGCNT_HEADER playiconBGcont = {
 	0, 0, 0x800, 0,
@@ -271,6 +271,8 @@ static void g2d_control( GAME_SYSTEM* gs );
 static void g2d_draw( GAME_SYSTEM* gs );
 static void	g2d_unload( GAME_SYSTEM* gs );
 static void	g2d_vblank( GFL_TCB* tcb, void* work );
+static void	g3d_vblank( GFL_TCB* tcb, void* work );
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 
 static void* GetScrnData_for_NitroScrnData( void* scrnFile );
 static void* GetCharData_for_NitroCharData( void* charFile );
@@ -303,10 +305,10 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 
 	//３Ｄデータのロード
 	g3d_load( gs );
+	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
 	//２Ｄデータのロード
 	g2d_load( gs );
-	gs->g2dVintr = GFUser_VIntr_CreateTCB( g2d_vblank, NULL, 0 );
-	g2dVintrEnable = FALSE;
+	gs->g2dVintr = GFUser_VIntr_CreateTCB( g2d_vblank, (void*)gs, 0 );
 
 	return gs;
 }
@@ -320,9 +322,10 @@ void	RemoveGameSystem( GAME_SYSTEM* gs )
 {
 	GFL_TCB_DeleteTask( gs->g2dVintr );
 	g2d_unload( gs );	//２Ｄデータ破棄
+	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
-	bg_exit( gs );
 
+	bg_exit( gs );
 	GFL_ARC_Exit();
 
 	GFL_HEAP_FreeMemory( gs );
@@ -463,8 +466,8 @@ static void g3d_load( GAME_SYSTEM* gs )
 
 	gs->sceneActSys = Create3DactSys( gs->g3Dscene, gs->heapID );
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
-	gs->bbdActSys = GFL_BBDACT_CreateSys( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, gs->heapID );
-
+	gs->bbdActSys = GFL_BBDACT_CreateSys( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, 
+											bbdarc_path, g3d_trans_BBD, gs->heapID );
 	//-------------------
 	//ＮＰＣテスト
 	{
@@ -538,6 +541,24 @@ static void g3d_unload( GAME_SYSTEM* gs )
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
 }
 	
+static void	g3d_vblank( GFL_TCB* tcb, void* work )
+{
+	GAME_SYSTEM* gs =  (GAME_SYSTEM*)work;
+}
+
+//BBD用VRAM転送関数
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz )
+{
+	NNS_GFD_DST_TYPE transType;
+
+	if( type == GFL_BBDACT_TRANSTYPE_DATA ){
+		transType = NNS_GFD_DST_3D_TEX_VRAM;
+	} else {
+		transType = NNS_GFD_DST_3D_TEX_PLTT;
+	}
+	NNS_GfdRegisterNewVramTransferTask( transType, dst, (void*)src, siz );
+}
+
 //------------------------------------------------------------------
 /**
  * @brief		２Ｄデータコントロール
@@ -770,14 +791,12 @@ static void	g2d_unload( GAME_SYSTEM* gs )
 	}
 }
 
-//------------------------------------------------------------------
-//TCB用
-
 static void	g2d_vblank( GFL_TCB* tcb, void* work )
 {
+	GAME_SYSTEM* gs =  (GAME_SYSTEM*)work;
+
 	GFL_CLACT_VBlankFuncTransOnly();
 }
-
 
 //------------------------------------------------------------------
 /**

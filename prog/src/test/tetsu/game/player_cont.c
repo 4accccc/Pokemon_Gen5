@@ -567,7 +567,8 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
 #include "graphic_data/test_graphic/fld_act.naix"
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
-{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32 },
+	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANS },
 };
 
 static const GFL_BBDACT_ANM stopLAnm[] = {
@@ -786,7 +787,7 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 
 	actData.alpha = 31;
 	actData.drawEnable = TRUE;
-	actData.lightMask = GFL_BBD_LIGHTMASK_1;
+	actData.lightMask = GFL_BBD_LIGHTMASK_01;
 	actData.func = playerBBDactFunc;
 	actData.work = pc;
 
