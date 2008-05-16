@@ -6,6 +6,7 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/game/act3d.c \
 				test/tetsu/game/map3d.c \
 				test/tetsu/game/game_cont.c \
+				test/tetsu/game/map_cont.c \
 				test/tetsu/game/team_cont.c \
 				test/tetsu/game/player_cont.c \
 				test/tetsu/game/camera_cont.c \

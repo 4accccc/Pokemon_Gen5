@@ -54,6 +54,7 @@ TARGET_BIN		=	main.bin
 
 # ソースファイル
 SRCS			=	system\main.c \
+					system\machine_use.c \
 					system\gfl_use.c
 
 include make_prog_files
@@ -80,6 +81,7 @@ MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM
 #ロムファイル指定(GFL)
 GFL_FILE_TREE	=	\
 					wmi.narc \
+					bbdact_base.narc \
 					gfl_font.dat
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
