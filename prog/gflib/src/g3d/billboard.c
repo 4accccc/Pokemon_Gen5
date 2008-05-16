@@ -316,6 +316,21 @@ int GFL_BBD_AddResourcePath( GFL_BBD_SYS* billboardSys, const char* path, int da
 
 //------------------------------------------------------------------
 /**
+ * @brief	ビルボードリソースデータポインタ取得
+ */
+//------------------------------------------------------------------
+u32		GFL_BBD_GetResourceData( GFL_BBD_SYS* billboardSys, int resIdx )
+{
+	GFL_G3D_RES*			g3DresTex = billboardSys->res[resIdx].g3DresTex;
+	NNSG3dResFileHeader*	file = GFL_G3D_GetResourceFileHeader( g3DresTex ); 
+	NNSG3dResTex*			texfile = GFL_G3D_GetResTex( g3DresTex );
+	u32						texData = (u32)((u8*)texfile + texfile->texInfo.ofsTex);
+
+	return texData;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	ビルボードリソースデータカット
  */
 //------------------------------------------------------------------
@@ -355,6 +370,55 @@ void	GFL_BBD_RemoveResourceAll( GFL_BBD_SYS* billboardSys )
 
 	for( i=0; i<billboardSys->setup.resCountMax; i++ ){
 		GFL_BBD_RemoveResource( billboardSys, i );
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	ビルボードリソース各種パラメータの取得
+ */
+//------------------------------------------------------------------
+//texDataAdrs
+void	GFL_BBD_GetResourceTexDataAdrs( GFL_BBD_SYS* billboardSys, int resIdx, u32* texDataAdrs )
+{
+	GF_ASSERT( resIdx < billboardSys->setup.resCountMax );
+
+	*texDataAdrs = billboardSys->res[resIdx].texDataAdrs;
+}
+
+//texPlttAdrs
+void	GFL_BBD_GetResourceTexPlttAdrs( GFL_BBD_SYS* billboardSys, int resIdx, u32* texPlttAdrs )
+{
+	GF_ASSERT( resIdx < billboardSys->setup.resCountMax );
+
+	*texPlttAdrs = billboardSys->res[resIdx].texPlttAdrs;
+}
+
+//cel計算
+void	GFL_BBD_GetResourceCelOffset( GFL_BBD_SYS* billboardSys, int resIdx, 
+								const u16 celIdx, u32* dataOffs, u32* celDataSiz, u8 type )
+{
+	BILLBOARD_RES*	res;
+
+	GF_ASSERT( resIdx < billboardSys->setup.resCountMax );
+
+	res = &billboardSys->res[resIdx];
+
+	switch( res->texFmt ){
+	case GX_TEXFMT_PLTT16:
+		*celDataSiz = 0x20 * res->celSizX/8 * res->celSizY/8;
+		break;
+	case GX_TEXFMT_PLTT256:
+		*celDataSiz = 0x40 * res->celSizX/8 * res->celSizY/8;
+		break;
+	case GX_TEXFMT_PLTT4:
+		*celDataSiz = 0x10 * res->celSizX/8 * res->celSizY/8;
+		break;
+	}
+	if( type == CEL_OFFS_1D ){
+		*dataOffs = celIdx * *celDataSiz;
+	} else {
+		*dataOffs = ( (celIdx/res->texSizX)*(*celDataSiz) ) + (celIdx%res->texSizX)*res->celSizX;
 	}
 }
 
