@@ -360,7 +360,7 @@ static void MainMouseEventNormal( MOUSE_EVENT_SYS* mes, TP_STATUS* tp )
 			} else {
 				u32	lenX = tp->x - 128;//(256/2)
 				u32	lenY = tp->y - 120;//(192/2) + 24
-				u32 len = (lenX*lenX) + (lenY*lenY);
+				u32 len = (lenX*lenX)/2 + (lenY*lenY);
 
 				//OS_Printf("x = %d, y = %d, len = %d\n",lenX, lenY, len);
 				if( len > 2000 ){
