@@ -567,8 +567,10 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
 #include "graphic_data/test_graphic/fld_act.naix"
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
+	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANS },
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
 };
 
 static const GFL_BBDACT_ANM stopLAnm[] = {
@@ -779,11 +781,9 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	
-	do{
-		actData.trans.x = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-		actData.trans.y = 0;
-		actData.trans.z = (GFUser_GetPublicRand( 32 ) - ( 32/2 )) * FX32_ONE*16;
-	}while( CheckGroundOutRange( Get_GS_SceneMap(pc->gs), &actData.trans ) == FALSE );
+	actData.trans.x = 0;
+	actData.trans.y = 0;
+	actData.trans.z = 0;
 
 	actData.alpha = 31;
 	actData.drawEnable = TRUE;
@@ -792,6 +792,7 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 	actData.work = pc;
 
 	pc->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, pc->bbdActResUnitID, &actData, 1 );
+	GFL_BBDACT_BindActTexRes( bbdActSys, pc->bbdActActUnitID, pc->bbdActResUnitID+1 );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pc->bbdActActUnitID, 
 								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );

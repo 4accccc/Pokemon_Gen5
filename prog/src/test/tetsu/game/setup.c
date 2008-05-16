@@ -142,7 +142,6 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
  */
 //------------------------------------------------------------------
 static const char font_path[] = {"gfl_font.dat"};
-static const char bbdarc_path[] = {"bbdact_base.narc"};
 
 static const GFL_BG_BGCNT_HEADER playiconBGcont = {
 	0, 0, 0x800, 0,
@@ -466,8 +465,8 @@ static void g3d_load( GAME_SYSTEM* gs )
 
 	gs->sceneActSys = Create3DactSys( gs->g3Dscene, gs->heapID );
 	gs->sceneMap = Create3Dmap( gs->g3Dscene, gs->heapID );
-	gs->bbdActSys = GFL_BBDACT_CreateSys( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, 
-											bbdarc_path, g3d_trans_BBD, gs->heapID );
+	gs->bbdActSys = GFL_BBDACT_CreateSys
+					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
 	//-------------------
 	//‚m‚o‚bƒeƒXƒg
 	{
