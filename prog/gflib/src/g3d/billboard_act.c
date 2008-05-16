@@ -40,7 +40,6 @@ struct _GFL_BBDACT_SYS {
 	HEAPID					heapID;
 	GFL_BBD_SYS*			bbdSys;
 	GFL_BBDACT_TRANSFUNC*	transFunc;		//転送関数
-	const char*				baseArcPath;	//転送用BASEアーカイブpath
 
 	BBDACT_RES*				bbdRes;
 	u16						bbdResMax;
@@ -63,28 +62,13 @@ static void plttTrans( GFL_BBDACT_SYS* bbdActSys, BBDACT_RES* bbdRes );
  *
  */
 //------------------------------------------------------------------
-//転送用ベースリソースデータ
-typedef struct {
-	u8		celSizX;
-	u8		celSizY;
-	u16		datID;
-}BBDACT_TRANS_RES;
-
-//アーカイブ内容とデータＩＤを対応させる
-static const BBDACT_TRANS_RES BBDACT_TransBase_File[] = {
-	{  8,  8, 0 },
-	{ 16, 16, 1 },
-	{ 32, 32, 2 },
-	{ 64, 64, 3 },
-};
-
 //------------------------------------------------------------------
 /**
  * @brief	ビルボードアクトシステム作成
  */
 //------------------------------------------------------------------
-GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys( const u16 bbdResMax, const u16 bbdActMax, 
-				const char* baseArcPath, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID )
+GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys
+	( const u16 bbdResMax, const u16 bbdActMax, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID )
 {
 	GFL_BBDACT_SYS* bbdActSys = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_BBDACT_SYS) );
 	int	i;
@@ -93,7 +77,6 @@ GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys( const u16 bbdResMax, const u16 bbdActMax,
 	bbdActSys->transFunc = transFunc;
 	bbdActSys->bbdResMax = bbdResMax;
 	bbdActSys->bbdActMax = bbdActMax;
-	bbdActSys->baseArcPath = baseArcPath;
 	{
 		//システムセットアップ
 		GFL_BBD_SETUP billboardSetup = {	0, 0, 
@@ -201,6 +184,7 @@ GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceUnit
 			( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_RES_SETTBL resTbl, u32 resCount )
 {
 	const GFL_BBDACT_RESDATA* resData;
+	GFL_G3D_RES* g3DresTex;
 	u32 idx;
 	int i, resIdx;
 
@@ -230,29 +214,11 @@ GFL_BBDACT_RESUNIT_ID GFL_BBDACT_AddResourceUnit
 			bbdActSys->bbdRes[idx+i].bbdResIdx = resIdx;
 			bbdActSys->bbdRes[idx+i].dataSrc = NULL;
 			break;
-		case GFL_BBDACT_RESTYPE_TRANS:
-			{
-				int		j, datID;
-				GFL_G3D_RES* g3DresTex = NULL;
+		case GFL_BBDACT_RESTYPE_TRANSSRC:
+			g3DresTex = GFL_G3D_CreateResourceArc( resData->arcID, resData->datID );
 
-				for( j=0; j<NELEMS(BBDACT_TransBase_File); j++ ){
-					if( (BBDACT_TransBase_File[j].celSizX == resData->celSizX)
-						&&(BBDACT_TransBase_File[j].celSizY == resData->celSizY) ){
-
-						datID = BBDACT_TransBase_File[j].datID;
-						resIdx = GFL_BBD_AddResourcePath(	bbdActSys->bbdSys, 
-															bbdActSys->baseArcPath, datID,
-															resData->texFmt, resData->texSiz,
-															resData->celSizX, resData->celSizY );
-						g3DresTex = GFL_G3D_CreateResourceArc( resData->arcID, resData->datID );
-
-						bbdActSys->bbdRes[idx+i].bbdResIdx = resIdx;
-						bbdActSys->bbdRes[idx+i].dataSrc = g3DresTex;
-						plttTrans( bbdActSys, &bbdActSys->bbdRes[idx+i] );
-					}
-				}
-				GF_ASSERT( g3DresTex );
-			}
+			bbdActSys->bbdRes[idx+i].bbdResIdx = RES_NULL;
+			bbdActSys->bbdRes[idx+i].dataSrc = g3DresTex;
 			break;
 		}
 	}
@@ -270,7 +236,9 @@ void GFL_BBDACT_RemoveResourceUnit
 	int i;
 
 	for( i=0; i<resCount; i++ ){
-		GFL_BBD_RemoveResource( bbdActSys->bbdSys, bbdActSys->bbdRes[idx+i].bbdResIdx );
+		if( bbdActSys->bbdRes[idx+i].bbdResIdx != RES_NULL ){
+			GFL_BBD_RemoveResource( bbdActSys->bbdSys, bbdActSys->bbdRes[idx+i].bbdResIdx );
+		}
 		if( bbdActSys->bbdRes[idx+i].dataSrc ){
 			GFL_G3D_DeleteResource( bbdActSys->bbdRes[idx+i].dataSrc );
 		}
@@ -302,13 +270,14 @@ GFL_BBDACT_ACTUNIT_ID GFL_BBDACT_AddAct( GFL_BBDACT_SYS* bbdActSys,
 
 		actData = &actTbl[i];
 		GFL_BBDACT_InitAct( bbdAct );
-		resIdx = bbdActSys->bbdRes[resUnitID+actData->resID].bbdResIdx;
+		bbdAct->resIdx = resUnitID+actData->resID;
+
+		resIdx = bbdActSys->bbdRes[ bbdAct->resIdx ].bbdResIdx;
 		objIdx = GFL_BBD_AddObject(	bbdActSys->bbdSys, resIdx, 
 									actData->sizX, actData->sizY, 
 									&actData->trans, actData->alpha,
 									actData->lightMask );
 		bbdAct->bbdActIdx = objIdx;
-		bbdAct->resIdx = resIdx;
 		bbdAct->func = actData->func;
 		bbdAct->work = actData->work;
 		GFL_BBD_SetObjectDrawEnable( bbdActSys->bbdSys, objIdx, &actData->drawEnable );
@@ -571,5 +540,23 @@ void	GFL_BBDACT_SetFunc( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, GFL_BBDACT_FUNC*
 	GF_ASSERT( bbdAct->bbdActIdx != ACT_NULL );
 
 	bbdAct->func = func;
+}
+
+//	転送リソース関連付け
+void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 resIdx )
+{
+	BBDACT_RES	*bbdResSrc, *bbdResDst;
+	BBDACT_ACT* bbdAct;
+	GF_ASSERT( actIdx < bbdActSys->bbdActMax );
+	bbdAct = &bbdActSys->bbdAct[actIdx];
+	GF_ASSERT( bbdAct->bbdActIdx != ACT_NULL );
+
+	bbdResDst = &bbdActSys->bbdRes[bbdAct->resIdx];
+	bbdResSrc = &bbdActSys->bbdRes[resIdx];
+	
+	GF_ASSERT( bbdResSrc->dataSrc );
+
+	bbdResDst->dataSrc = bbdResSrc->dataSrc;
+	plttTrans( bbdActSys, bbdResDst );
 }
 
