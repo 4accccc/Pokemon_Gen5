@@ -569,8 +569,8 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
 	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
+//	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
+//		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
 };
 
 static const GFL_BBDACT_ANM stopLAnm[] = {
@@ -792,7 +792,9 @@ static void playerBBDactSetUp( PLAYER_CONTROL* pc )
 	actData.work = pc;
 
 	pc->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, pc->bbdActResUnitID, &actData, 1 );
-	GFL_BBDACT_BindActTexRes( bbdActSys, pc->bbdActActUnitID, pc->bbdActResUnitID+1 );
+	//GFL_BBDACT_BindActTexRes( bbdActSys, pc->bbdActActUnitID, pc->bbdActResUnitID+1 );
+	GFL_BBDACT_BindActTexResLoad
+		( bbdActSys, pc->bbdActActUnitID, ARCID_FLDACT, NARC_fld_act_hero_nsbtx );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pc->bbdActActUnitID, 
 								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
