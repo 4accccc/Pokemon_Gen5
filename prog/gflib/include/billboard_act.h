@@ -8,7 +8,7 @@
 typedef enum {
 	GFL_BBDACT_RESTYPE_DEFAULT = 0,	//リソースデータをVRAM転送後も存続
 	GFL_BBDACT_RESTYPE_DATACUT,		//リソースデータをVRAM転送後に破棄
-	GFL_BBDACT_RESTYPE_TRANS,		//VRAM転送アニメ用リソースデータ
+	GFL_BBDACT_RESTYPE_TRANSSRC,	//VRAM転送アニメ用リソース
 }GFL_BBDACT_RESTYPE;
 
 typedef struct {
@@ -84,8 +84,8 @@ typedef const GFL_BBDACT_ANM**	GFL_BBDACT_ANMTBL;
  */
 //------------------------------------------------------------------
 //	ビルボードアクトシステム作成 (return bbdActSys)
-extern GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys( const u16 bbdResMax, const u16 bbdActMax, 
-				const char* baseArcPath, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID );
+extern GFL_BBDACT_SYS*	GFL_BBDACT_CreateSys
+	( const u16 bbdResMax, const u16 bbdActMax, GFL_BBDACT_TRANSFUNC transFunc, HEAPID heapID );
 //	ビルボードアクトメイン
 extern void	GFL_BBDACT_Main( GFL_BBDACT_SYS* bbdActSys );
 //	ビルボードアクト描画
@@ -146,4 +146,7 @@ inline void GFL_BBDACT_SetFrmIdxOn( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 a
 }
 //	動作関数設定
 extern void	GFL_BBDACT_SetFunc( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, GFL_BBDACT_FUNC* func );
+//	転送リソース関連付け
+extern void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 resIdx );
+
 
