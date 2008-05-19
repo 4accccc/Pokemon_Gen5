@@ -13,8 +13,6 @@
 #include "setup.h"
 #include "game_net.h"
 #include "game_cont.h"
-#include "camera_cont.h"
-//#include "text_cont.h"
 
 //#define NET_WORK_ON
 void	GameBoot( HEAPID heapID );
