@@ -428,7 +428,7 @@ static void G3DsysSetup( void )
 }
 
 
-SCENE_ACT* testSceneAct[8];
+static SCENE_ACT* testSceneAct[8];
 #define	NPC_SETNUM	(4)
 //------------------------------------------------------------------
 /**
