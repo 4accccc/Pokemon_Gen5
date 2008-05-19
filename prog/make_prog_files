@@ -16,6 +16,7 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/game/game_net.c \
 				test/tetsu/game/mouse_event.c \
 				test/tetsu/game/fld_act.c \
+				test/tetsu/test_prog1.c \
 				test/tetsu/debug_watanabe.c
 	
 #================================================
