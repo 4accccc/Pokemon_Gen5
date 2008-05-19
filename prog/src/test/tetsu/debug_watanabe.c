@@ -10,9 +10,9 @@
 
 #include "include\system\main.h"
 
-extern void	GameBoot( HEAPID heapID );
-extern void	GameEnd( void );
-extern BOOL	GameMain( void );
+extern void	SampleBoot( HEAPID heapID );
+extern void	SampleEnd( void );
+extern BOOL	SampleMain( void );
 //============================================================================================
 //
 //
@@ -33,7 +33,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
-	GameBoot( HEAPID_WATANABE_DEBUG );
+	SampleBoot( HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -46,7 +46,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcInit
 static GFL_PROC_RESULT DebugWatanabeMainProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	if( GameMain() == TRUE ){
+	if( SampleMain() == TRUE ){
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -65,7 +65,7 @@ static GFL_PROC_RESULT DebugWatanabeMainProcMain
 static GFL_PROC_RESULT DebugWatanabeMainProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GameEnd();
+	SampleEnd();
 	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
