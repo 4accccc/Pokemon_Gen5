@@ -176,6 +176,37 @@ u16	GFL_BMP_GetSizeY( GFL_BMP_DATA *bmp )
 }
 
 //--------------------------------------------------------------------------------------------
+/*
+ * ビットマップ実データサイズを取得
+ *
+ * @param	bmp		システムワークエリアへのポインタ
+ */
+//--------------------------------------------------------------------------------------------
+u32	GFL_BMP_GetBmpDataSize( const GFL_BMP_DATA *bmp )
+{
+	return bmp->size_x/8 * bmp->size_y/8 * bmp->col;
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+ * ビットマップデータのコピー
+ *
+ * @param	src		コピー元
+ * @param	dst		コピー先
+ */
+//--------------------------------------------------------------------------------------------
+void GFL_BMP_Copy( const GFL_BMP_DATA *src, GFL_BMP_DATA *dst )
+{
+	u32 dataSizeSrc = GFL_BMP_GetBmpDataSize( src );
+	u32 dataSizeDst = GFL_BMP_GetBmpDataSize( dst );
+
+	if( dataSizeDst < dataSizeSrc ){
+		dataSizeSrc = dataSizeDst;
+	}
+	GFL_STD_MemCopy32( src->adrs, dst->adrs, dataSizeSrc );
+}
+
+//--------------------------------------------------------------------------------------------
 /**
  * BMPキャラロード（BMPデータの元データ作成）
  *
@@ -603,5 +634,38 @@ static	void GFL_BMP_Fill256( GFL_BMP_DATA * dest, s16 pos_dx, s16 pos_dy, u16 si
 			}
 		}
 	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * データコンバート（Chrデータフォーマット→BMPデータフォーマット）
+ *
+ * @param	src			読み込み元キャラデータヘッダー構造体ポインタ
+ * @param	mode		新規にファイル用メモリをアロケートするかどうか
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+GFL_BMP_DATA * GFL_BMP_DataConv_to_BMPformat( GFL_BMP_DATA * src, BOOL mode, HEAPID heapID )
+{
+	u16	size_x = src->size_x/8;	///<画像データのXdotサイズ
+	u16	size_y = src->size_y/8;	///<画像データのYdotサイズ
+	u16	col = src->col;			///<カラーモード＆データサイズ
+	u16	size_cx = col/8;		///<キャラクタデータXサイズ
+	GFL_BMP_DATA* dst = GFL_BMP_Create( size_x, size_y, col, heapID );
+	int	i, cx, cy, x, y, bx, by;
+
+	for( i=0; i<size_x * size_y * col; i++ ){
+		y = i/(size_x * size_cx);
+		x = i%(size_x * size_cx);
+		dst->adrs[i] = 
+			src->adrs[ ((y/8)*size_x + (x/size_cx))*col + ((y%8)*size_cx + (x%size_cx)) ];
+	}
+	if( mode == FALSE ){
+		GFL_BMP_Copy( dst, src );
+		GFL_BMP_Delete( dst );
+		dst = NULL;
+	}
+	return dst;
 }
 
