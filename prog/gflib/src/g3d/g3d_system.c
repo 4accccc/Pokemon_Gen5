@@ -553,6 +553,8 @@ static inline BOOL G3DRES_FILE_CHECK( GFL_G3D_RES* g3Dres )
  *
  * @param	arcID or path	アーカイブＩＤ or ファイルパス
  * @param	datID			データＩＤ
+ * @param	(g3Dres)		g3Dリソースヘッダ読み込みポインタ(NULLの場合はアロケートする)
+ * @param	(header)		binリソースヘッダ読み込みポインタ(NULLの場合はアロケートする)
  *
  * @return	g3Dres	３Ｄリソースポインタ(失敗=NULL)
  */
@@ -612,7 +614,6 @@ GFL_G3D_RES*
 	//リソース管理ハンドル作成
 	g3Dres = GFL_HEAP_AllocMemory( g3Dman->heapID, sizeof(GFL_G3D_RES) );
 
-	//OS_Printf("3D_resource loading...\n");
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_LoadDataAlloc( arcID, datID, g3Dman->heapID );
 
@@ -620,7 +621,6 @@ GFL_G3D_RES*
 	return g3Dres;
 }
 
-//-------------------------------
 // アーカイブファイルパスによる読み込み
 GFL_G3D_RES*
 	GFL_G3D_CreateResourcePath
@@ -655,10 +655,39 @@ void
 {
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
 
-	GFL_HEAP_FreeMemory( g3Dres->file );
+	if( g3Dres->file != NULL ){
+		GFL_HEAP_FreeMemory( g3Dres->file );
+	}
 	GFL_HEAP_FreeMemory( g3Dres );
 }
-	
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ３Ｄリソースを指定領域に読み込み
+ * 　　領域は外部管理。ファイルデータはG3DRESヘッダの直後に置かれる
+ *
+ * @param	arcID or path	アーカイブＩＤ or ファイルパス
+ * @param	datID			データＩＤ
+ * @param	g3Dres			g3Dリソース読み込みポインタ
+ */
+//--------------------------------------------------------------------------------------------
+void
+	GFL_G3D_LoadResourceArc
+		( int arcID, int datID, GFL_G3D_RES* g3Dres ) 
+{
+	NNSG3dResFileHeader* header;
+
+	GF_ASSERT( g3Dman != NULL );
+	GF_ASSERT( g3Dres != NULL );
+
+	header = (NNSG3dResFileHeader*)((u32)g3Dres + sizeof(GFL_G3D_RES));
+
+	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
+	GFL_ARC_LoadData( header, arcID, datID );
+
+	GFL_G3D_CreateResource( g3Dres, header );
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * ３Ｄリソースヘッダポインタの取得
@@ -910,30 +939,41 @@ BOOL
 	NNSG3dResTex*			texture;
 	NNSGfdTexKey			texKey, tex4x4Key;
 	NNSGfdPlttKey			plttKey;
+	GFL_G3D_VMAN_MODE		texmanMode = GFL_G3D_GetTextureManagerMode();
+	GFL_G3D_VMAN_MODE		plttmanMode = GFL_G3D_GetPaletteManagerMode();
 
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
 	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
 
-	//ＶＲＡＭ転送済みかどうか確認
-	if( GFL_G3D_CheckTextureKeyLive( g3Dres ) == TRUE ){
+	//テクスチャリソースポインタの取得
+	header = (NNSG3dResFileHeader*)g3Dres->file;
+	texture = NNS_G3dGetTex( header ); 
 
-		//テクスチャリソースポインタの取得
-		header = (NNSG3dResFileHeader*)g3Dres->file;
-		texture = NNS_G3dGetTex( header ); 
+	{
+		BOOL texFreeFlag = FALSE;
+		BOOL tex4x4FreeFlag = FALSE;
 
+		if( texture->texInfo.flag & NNS_G3D_RESTEX_LOADED ){
+			texFreeFlag = TRUE;
+		}
+		if( texture->tex4x4Info.flag & NNS_G3D_RESTEX4x4_LOADED ){
+			tex4x4FreeFlag = TRUE;
+		}
 		//ＶＲＡＭキーの放棄フラグをリソースに設定
 		NNS_G3dTexReleaseTexKey( texture, &texKey, &tex4x4Key );
-		plttKey = NNS_G3dPlttReleasePlttKey( texture );
 
-		if( NNS_GfdFreePlttVram( plttKey ) ){
-			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		if( texFreeFlag ){
+			NNS_GfdFreeTexVram( texKey );
 		}
-		if( NNS_GfdFreeLnkTexVram( tex4x4Key )&& NNS_GfdFreeLnkTexVram( texKey ) ){
-			OS_Printf("Vramkey cannot free (GFL_G3D_VramUnloadTex)\n");
+		if( tex4x4FreeFlag ){
+			NNS_GfdFreeTexVram( tex4x4Key );
 		}
-		return TRUE;
 	}
-	return FALSE;
+	if( texture->plttInfo.flag & NNS_G3D_RESPLTT_LOADED ){
+		plttKey = NNS_G3dPlttReleasePlttKey( texture );
+		NNS_GfdFreePlttVram( plttKey );
+	}
+	return TRUE;
 }
 
 //----------------------------------------------------------------------------

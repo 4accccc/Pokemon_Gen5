@@ -133,6 +133,7 @@ extern	void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int o
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
+extern	void	GFL_ARC_LoadDataPath(void *data, const char* name, int datID);
 extern	void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID heapID);
 
 //============================================================================================

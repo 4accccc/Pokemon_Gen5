@@ -328,6 +328,20 @@ void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
+void	GFL_ARC_LoadDataPath(void *data, const char* name, int datID)
+{
+	FSFile		p_file;
+	u32			size=0;
+
+	FS_InitFile(&p_file);
+	FS_OpenFile(&p_file,name);
+	size=ArchiveMoveImageTop(&p_file,datID,OFS_NO_SET,SIZE_NO_SET);
+
+	FS_ReadFile(&p_file,data,size);									///<データをロード
+
+	FS_CloseFile(&p_file);
+}
+
 void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID heapID)
 {
 	FSFile		p_file;
