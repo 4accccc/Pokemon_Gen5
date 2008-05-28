@@ -270,3 +270,30 @@ int
 	return viewVecX * objVecX + viewVecZ * objVecZ;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラ方向をXZ軸radianで返す(x=0,z<0の方向が0。反時計回りに増加)
+ *
+ * @param	g3Dcamera	カメラハンドル
+ */
+//--------------------------------------------------------------------------------------------
+u16
+	GFL_G3D_CAMERA_GetRadianXZ
+		( GFL_G3D_CAMERA* g3Dcamera )
+{
+	VecFx32	viewVec;
+	fx32	direction;
+
+	GF_ASSERT( g3Dcamera );
+
+	//視界ベクトル計算
+	VEC_Subtract( &g3Dcamera->lookAt.target, &g3Dcamera->lookAt.camPos, &viewVec );
+	viewVec.y = 0;
+	VEC_Normalize( &viewVec, &viewVec );
+
+	direction = FX_Atan2Idx( -viewVec.z, viewVec.x ) - 0x4000;
+
+	return (u16)direction;
+}
+
+

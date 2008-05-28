@@ -252,6 +252,16 @@ extern int
 	GFL_G3D_CAMERA_GetDotProductXZfast
 		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * カメラ方向をXZ軸radianで返す(x=0,z<0の方向が0。反時計回りに増加)
+ *
+ * @param	g3Dcamera	カメラハンドル
+ */
+//--------------------------------------------------------------------------------------------
+extern u16
+	GFL_G3D_CAMERA_GetRadianXZ
+		( GFL_G3D_CAMERA* g3Dcamera );
 
 #endif
 
