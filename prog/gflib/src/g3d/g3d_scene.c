@@ -155,6 +155,7 @@ void
 		//”¼“§–¾Ý’è
 		g3Drnd = GFL_G3D_OBJECT_GetG3Drnd( g3Dobj );
 		pMdl = NNS_G3dRenderObjGetResMdl( GFL_G3D_RENDER_GetRenderObj( g3Drnd ) );
+#if 0
 		if( g3DsceneObj->sceneObjData.blendAlpha == GFL_G3D_SCENEOBJ_ALPHA_OFF ){
 			NNS_G3dMdlUseMdlPolygonID( pMdl );
 			NNS_G3dMdlUseMdlAlpha( pMdl );
@@ -164,7 +165,13 @@ void
 			NNS_G3dMdlUseGlbPolygonID( pMdl );	//ˆêŽž“I‚É‚h‚c‚ð•ÏXi”¼“§–¾‚Ì‚½‚ßj
 			NNS_G3dMdlUseGlbAlpha( pMdl );		//”½‰f‚µ‚Ä‚¢‚é‚Ì‚Íƒ¿Ý’è‚¾‚¯
 		}
-
+#else
+		NNS_G3dGlbPolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE,
+								GX_CULL_NONE, i, g3DsceneObj->sceneObjData.blendAlpha, 
+								GX_POLYGON_ATTR_MISC_FOG );
+		NNS_G3dMdlUseGlbPolygonID( pMdl );	//ˆêŽž“I‚É‚h‚c‚ð•ÏXi”¼“§–¾‚Ì‚½‚ßj
+		NNS_G3dMdlUseGlbAlpha( pMdl );		//”½‰f‚µ‚Ä‚¢‚é‚Ì‚Íƒ¿Ý’è‚¾‚¯
+#endif
 		if( g3DsceneObj->sceneObjData.cullingFlag == TRUE ){
 			//–{‘Ì‚Ì•`‰æ
 			cullResult = GFL_G3D_DRAW_DrawObjectCullingON

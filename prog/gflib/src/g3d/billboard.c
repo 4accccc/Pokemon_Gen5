@@ -683,7 +683,7 @@ void	GFL_BBD_Draw
 			G3_MaterialColorDiffAmb( p_setup->diffuse, p_setup->ambient, TRUE );
 			G3_MaterialColorSpecEmi( p_setup->specular, p_setup->emission, FALSE );
 			G3_PolygonAttr(		obj->lightMask, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
-								p_setup->polID, obj->alpha, 0 );
+								p_setup->polID, obj->alpha, GX_POLYGON_ATTR_MISC_FOG );
 	
 			G3_Begin( GX_BEGIN_QUADS );
 
