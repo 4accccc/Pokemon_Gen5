@@ -24,7 +24,7 @@
 //
 //
 //============================================================================================
-#define BACKGROUND_COL	(GX_RGB(20,20,31))		//背景色
+#define BACKGROUND_COL	(GX_RGB(31,31,31))		//背景色
 #define DTCM_SIZE		(0x1000)				//DTCMエリアのサイズ
 //------------------------------------------------------------------
 /**
@@ -414,7 +414,21 @@ static void G3DsysSetup( void )
 	G3X_AntiAlias( TRUE );
 	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
 	G3X_AlphaBlend( TRUE );
-	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+
+	// フォグセットアップ
+    {
+        u32     fog_table[8];
+        int     i;
+
+        G3X_SetFog(TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x0800, 0x0e00 );
+
+		G3X_SetFogColor(BACKGROUND_COL, 0);
+
+        for ( i=0; i<8; i++ ){
+            fog_table[i] = (u32)(((i*16)<<0) | ((i*16+4)<<8) | ((i*16+8)<<16) | ((i*16+12)<<24));
+        }
+        G3X_SetFogTable(&fog_table[0]);
+	}
 
 	// クリアカラーの設定
 	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog

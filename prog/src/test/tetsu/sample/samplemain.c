@@ -39,6 +39,7 @@ static void				MainGameSystem( SAMPLE_SETUP* gs );
 enum {
 	ARCID_TEST3D = 0,
 	ARCID_FLDACT,
+	ARCID_FLDMAP,
 };
 
 typedef struct _CURSOR_CONT	CURSOR_CONT;
@@ -192,13 +193,15 @@ static BOOL GameEndCheck( int cont )
  *
  */
 //============================================================================================
-#define BACKGROUND_COL	(GX_RGB(20,20,31))		//背景色
+#define BACKGROUND_COL	(GX_RGB(31,31,31))		//背景色
 #define DTCM_SIZE		(0x1000)				//DTCMエリアのサイズ
 
 typedef struct _SAMPLE_MAP		SAMPLE_MAP;
 static SAMPLE_MAP*	Create3Dmap( HEAPID heapID );
 static void			Delete3Dmap( SAMPLE_MAP* sampleMap );
 static void			Draw3Dmap( SAMPLE_MAP* sampleMap, GFL_G3D_CAMERA* g3Dcamera );
+static void			Draw3Dmap2( SAMPLE_MAP* sampleMap, GFL_G3D_CAMERA* g3Dcamera );
+static void			Load3Dmap( SAMPLE_MAP* sampleMap );
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -210,6 +213,7 @@ struct _SAMPLE_SETUP {
 	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
 	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
+	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
 
 	SAMPLE_MAP*				sampleMap;
 
@@ -243,6 +247,7 @@ static const GFL_BG_DISPVRAM dispVram = {
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/test3d.narc",
 	"test_graphic/fld_act.narc",
+	"test_graphic/fld_map.narc",
 };
 
 static const char font_path[] = {"gfl_font.dat"};
@@ -292,6 +297,7 @@ static void g3d_load( SAMPLE_SETUP* gs );
 static void g3d_control( SAMPLE_SETUP* gs );
 static void g3d_draw( SAMPLE_SETUP* gs );
 static void	g3d_unload( SAMPLE_SETUP* gs );
+static void	g3d_vblank( GFL_TCB* tcb, void* work );
 
 //------------------------------------------------------------------
 /**
@@ -300,7 +306,7 @@ static void	g3d_unload( SAMPLE_SETUP* gs );
 //------------------------------------------------------------------
 static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 {
-	SAMPLE_SETUP*	gs = GFL_HEAP_AllocMemory( heapID, sizeof(SAMPLE_SETUP) );
+	SAMPLE_SETUP*	gs = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_SETUP) );
 	gs->heapID = heapID;
 
 	//乱数初期化
@@ -319,6 +325,7 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 
 	//３Ｄデータのロード
 	g3d_load( gs );
+	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
 
 	return gs;
 }
@@ -330,6 +337,7 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 //------------------------------------------------------------------
 static void	RemoveGameSystem( SAMPLE_SETUP* gs )
 {
+	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
 
 	bg_exit( gs );
@@ -408,8 +416,25 @@ static void G3DsysSetup( void )
 	G3X_AntiAlias( TRUE );
 	G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
 	G3X_AlphaBlend( TRUE );
-	G3X_SetFog( FALSE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
+#if 1
+	// フォグセットアップ
+    {
+        u32     fog_table[8];
+        int     i;
 
+        G3X_SetFog(TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x1000, 0x01000 );
+
+        G3X_SetFogColor(BACKGROUND_COL, 0);
+
+        for ( i=0; i<8; i++ ){
+            fog_table[i] = (u32)(((i*16)<<0) | ((i*16+4)<<8) | ((i*16+8)<<16) | ((i*16+12)<<24));
+        }
+        G3X_SetFogTable(&fog_table[0]);
+	}
+
+#else
+	G3X_SetFog( FALSE, 0, 0, 0 );
+#endif
 	// クリアカラーの設定
 	G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
 
@@ -441,7 +466,8 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	//カメラ作成
 	gs->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, gs->heapID );
 	{
-		fx32 far = 4096 << FX32_SHIFT;
+		fx32 far = 1500 << FX32_SHIFT;
+		//fx32 far = 1024 << FX32_SHIFT;
 
 		GFL_G3D_CAMERA_SetFar( gs->g3Dcamera, &far );
 	}
@@ -459,6 +485,7 @@ static void g3d_load( SAMPLE_SETUP* gs )
 static void g3d_control( SAMPLE_SETUP* gs )
 {
 	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
+	Load3Dmap( gs->sampleMap );
 }
 
 //描画
@@ -466,7 +493,7 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 {
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
-	Draw3Dmap( gs->sampleMap, gs->g3Dcamera );
+	Draw3Dmap2( gs->sampleMap, gs->g3Dcamera );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
@@ -482,6 +509,12 @@ static void g3d_unload( SAMPLE_SETUP* gs )
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
 }
 	
+static void	g3d_vblank( GFL_TCB* tcb, void* work )
+{
+	SAMPLE_SETUP* gs =  (SAMPLE_SETUP*)work;
+
+	//Load3Dmap( gs->sampleMap );
+}
 
 //============================================================================================
 /**
@@ -493,15 +526,31 @@ static void g3d_unload( SAMPLE_SETUP* gs )
  * @brief	型宣言
  */
 //------------------------------------------------------------------
-#define MAP_BLOCK_COUNT	(4)
+#define MAP_BLOCK_COUNT	(9)
 #define MAPID_NULL	(0xffffffff)
+#define	MAPDATA_SIZE	(0x18000) 
+#define	MAPTEX_SIZE		(0x4000) 
+#define	MAPTRANS_SIZE	(0x18000/16) 
+
+#define	MAPSCALE_WIDTH		(512) 
+#define MAP_WIDTH			(MAPSCALE_WIDTH*2)
 
 typedef struct {
-	u32					idx;
-	VecFx32				trans;
-	u32					texDataAdrs;
-	u32					texPlttAdrs;
-	u8					g3DresTex[0x1000];
+	u32				idx;
+	VecFx32			trans;
+	ARCHANDLE*		arc;
+	BOOL			dataLoadReq;
+	u32				dataLoadCount;
+	u32				dataID;
+	GFL_G3D_RES*	g3DresMdl;	//地形モデルリソース
+	u8				data[MAPDATA_SIZE];
+	GFL_G3D_RES*	g3DresTex;	//地形テクスチャリソース
+	u8				tex[MAPTEX_SIZE];
+	GFL_G3D_RND*	g3Drnd;		//地形レンダー
+
+	//↓テスト用
+	u32				texDataAdrs;
+	u32				texPlttAdrs;
 }MAP_BLOCK_DATA;
 
 struct _SAMPLE_MAP {
@@ -519,6 +568,7 @@ static void	DeleteMapGraphicData( SAMPLE_MAP* sampleMap );
  */
 //------------------------------------------------------------------
 #include "graphic_data/test_graphic/fld_act.naix"
+#include "graphic_data/test_graphic/fld_map.naix"
 
 //------------------------------------------------------------------
 /**
@@ -530,8 +580,8 @@ static SAMPLE_MAP*	Create3Dmap( HEAPID heapID )
 	SAMPLE_MAP* sampleMap = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_MAP) );
 
 	sampleMap->heapID = heapID;
-	CreateMapGraphicData( sampleMap );
 
+	CreateMapGraphicData( sampleMap );
 	return sampleMap;
 }
 
@@ -543,6 +593,7 @@ static SAMPLE_MAP*	Create3Dmap( HEAPID heapID )
 static void	Delete3Dmap( SAMPLE_MAP* sampleMap )
 {
 	DeleteMapGraphicData( sampleMap );
+
 	GFL_HEAP_FreeMemory( sampleMap );
 }
 
@@ -553,29 +604,44 @@ static void	Delete3Dmap( SAMPLE_MAP* sampleMap )
 //------------------------------------------------------------------
 static void	CreateMapGraphicData( SAMPLE_MAP* sampleMap )
 {
-	GFL_G3D_RES*	g3DresTex;
-	NNSG3dTexKey	texDataKey;
-	NNSG3dPlttKey	texPlttKey;
 	MAP_BLOCK_DATA*	mapBlock;
 	int				i;
+	u32				g3DresHeaderSize = GFL_G3D_GetResourceHeaderSize();
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &sampleMap->mapBlock[i];
 
+		//初期化
 		mapBlock->idx = MAPID_NULL;
 		VEC_Set( &mapBlock->trans, 0, 0, 0 );
+		mapBlock->dataLoadReq = FALSE;
+		mapBlock->dataLoadCount = 0;
+		mapBlock->dataID = 0;
+		mapBlock->g3Drnd = NULL;
+		//アーカイブハンドル作成
+		mapBlock->arc = GFL_ARC_OpenDataHandle( ARCID_FLDMAP, sampleMap->heapID );
+		//モデルリソースヘッダ作成
+		mapBlock->g3DresMdl = GFL_HEAP_AllocClearMemory( sampleMap->heapID, g3DresHeaderSize );
+		//テクスチャリソースヘッダ作成
+		mapBlock->g3DresTex = GFL_HEAP_AllocClearMemory( sampleMap->heapID, g3DresHeaderSize );
 
-		g3DresTex = (GFL_G3D_RES*)&mapBlock->g3DresTex[0];
-		GFL_G3D_LoadResourceArc( ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx, g3DresTex ); 
+		//サンプル用
+		{
+			GFL_G3D_RES*	g3DresTex;
+			NNSG3dTexKey	texDataKey;
+			NNSG3dPlttKey	texPlttKey;
 
-		if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){
-			GF_ASSERT(0);
+			g3DresTex = (GFL_G3D_RES*)&mapBlock->tex[0];
+			//GFL_G3D_LoadResourceArc( ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx, g3DresTex ); 
+			GFL_G3D_LoadResourceArc( ARCID_FLDMAP, NARC_fld_map_map23_09c_nsbtx, g3DresTex ); 
+			if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){ GF_ASSERT(0); }
+
+			texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
+			texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
+
+			mapBlock->texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
+			mapBlock->texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
 		}
-		texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
-		texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
-
-		mapBlock->texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
-		mapBlock->texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
 #if 0
 		OS_Printf("mapGraphic block%x is Created id=%x, tAdrs=%x, pAdrs=%x\n", 
 					blockID, mapBlock->idx, mapBlock->texDataAdrs, mapBlock->texPlttAdrs );
@@ -586,17 +652,25 @@ static void	CreateMapGraphicData( SAMPLE_MAP* sampleMap )
 //------------------------------------------------------------------
 static void	DeleteMapGraphicData( SAMPLE_MAP* sampleMap )
 {
-	GFL_G3D_RES*	g3DresTex;
 	MAP_BLOCK_DATA*	mapBlock;
 	int				i;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &sampleMap->mapBlock[i];
 
-		mapBlock->idx = MAPID_NULL;
-		g3DresTex = (GFL_G3D_RES*)&mapBlock->g3DresTex[0];
-		if( GFL_G3D_FreeVramTexture( g3DresTex ) == FALSE ){
-			GF_ASSERT(0);
+		if( mapBlock->g3Drnd != NULL ){
+			GFL_G3D_RENDER_Delete( mapBlock->g3Drnd );
+		}
+		GFL_HEAP_FreeMemory( mapBlock->g3DresTex );
+		GFL_HEAP_FreeMemory( mapBlock->g3DresMdl );
+		GFL_ARC_CloseDataHandle( mapBlock->arc );
+
+		//サンプル用
+		{
+			GFL_G3D_RES*	g3DresTex;
+
+			g3DresTex = (GFL_G3D_RES*)&mapBlock->tex[0];
+			if( GFL_G3D_FreeVramTexture( g3DresTex ) == FALSE ){ GF_ASSERT(0); }
 		}
 #if 0
 	OS_Printf("mapGraphic block%x is Deleted id=%x, tAdrs=%x, pAdrs=%x\n", 
@@ -607,11 +681,219 @@ static void	DeleteMapGraphicData( SAMPLE_MAP* sampleMap )
 
 //------------------------------------------------------------------
 /**
- * @brief	３Ｄマップデータ作成
+ * @brief	３Ｄマップロード
+ */
+static void	Make3Dmap( SAMPLE_MAP* sampleMap, const int blockID, const u32 mapID );
+//------------------------------------------------------------------
+static void	Load3Dmap( SAMPLE_MAP* sampleMap )
+{
+	MAP_BLOCK_DATA*	mapBlock;
+	int				i;
+
+	GF_ASSERT( sampleMap );
+
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		mapBlock = &sampleMap->mapBlock[i];
+
+		if( mapBlock->dataLoadReq == TRUE ){
+			if( mapBlock->dataLoadCount == 0 ){
+				//ロード開始
+				//OS_Printf(" map loaded start arcID = %x\n", mapBlock->arc );
+#if 0
+				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->dataID, 
+												0, MAPTRANS_SIZE, (void*)mapBlock->data );
+#else
+				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, NARC_fld_map_map23_09c_nsbmd,
+												0, MAPTRANS_SIZE, (void*)&mapBlock->data[0] );
+#endif
+				//OS_Printf(" map loaded block = %x, div = %x \n", i, mapBlock->dataLoadCount );
+				mapBlock->dataLoadCount++;
+			} else {
+				u32	dataAdrs = mapBlock->dataLoadCount * MAPTRANS_SIZE;
+
+				if( (dataAdrs + MAPTRANS_SIZE) < MAPDATA_SIZE){
+					//ロード継続
+					GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPTRANS_SIZE, 
+														(void*)&mapBlock->data[dataAdrs] );
+					//OS_Printf(" map loaded block = %x, div = %x \n", i, mapBlock->dataLoadCount );
+					mapBlock->dataLoadCount++;
+				} else {
+					//最終ロード
+					GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPDATA_SIZE - dataAdrs,
+														(void*)&mapBlock->data[dataAdrs] );
+					//OS_Printf(" map loaded block = %x, div = %x \n", i, mapBlock->dataLoadCount );
+
+					//モデルリソースハンドル内容作成
+					GFL_G3D_CreateResource( mapBlock->g3DresMdl, 
+											(NNSG3dResFileHeader*)&mapBlock->data[0] );
+					//テクスチャリソースハンドル内容作成
+					GFL_G3D_CreateResource( mapBlock->g3DresTex, 
+											(NNSG3dResFileHeader*)&mapBlock->tex[0] );
+					OS_Printf(" map resTex block = %x, tex = %x \n", i, mapBlock->g3DresTex );
+					//レンダー作成
+					if( mapBlock->g3Drnd != NULL ){
+						GFL_G3D_RENDER_Delete( mapBlock->g3Drnd );
+					}
+					mapBlock->g3Drnd = GFL_G3D_RENDER_Create(	mapBlock->g3DresMdl, 0, 
+																//mapBlock->g3DresTex );
+																(GFL_G3D_RES*)&mapBlock->tex[0] );
+					OS_Printf(" map render block = %x, rnd = %x \n", i, mapBlock->g3Drnd );
+
+					//Make3Dmap( sampleMap, i, mapBlock->dataID );
+					mapBlock->dataLoadReq = FALSE;
+					mapBlock->dataLoadCount = 0;
+				}
+			}
+		}
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップロードリクエスト設定
  */
 //------------------------------------------------------------------
-static void	Make3Dmap
-	( SAMPLE_MAP* sampleMap, const int blockID, const VecFx32* trans, const u32 mapID )
+static void	Set3DmapLoadReq
+	( SAMPLE_MAP* sampleMap, const int blockID, const VecFx32* trans, const u32 dataID )
+{
+	MAP_BLOCK_DATA* mapBlock;
+
+	GF_ASSERT( blockID < MAP_BLOCK_COUNT );
+
+	mapBlock = &sampleMap->mapBlock[blockID];
+
+	mapBlock->dataLoadReq = FALSE;	//割り込み処理防止のため一旦停止
+
+	mapBlock->dataLoadCount = 0;
+	mapBlock->dataID = dataID;
+	mapBlock->dataLoadReq = TRUE;
+
+	mapBlock->idx = dataID;
+	VEC_Set( &mapBlock->trans, trans->x, trans->y, trans->z );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップディスプレイ
+ */
+//------------------------------------------------------------------
+static void	Draw3Dmap( SAMPLE_MAP* sampleMap, GFL_G3D_CAMERA* g3Dcamera )
+{
+	MAP_BLOCK_DATA* mapBlock;
+	int				i;
+
+	G3X_Reset();
+
+	//カメラ設定
+	{
+		VecFx32		camPos, camUp, target;
+
+		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+		G3_LookAt( &camPos, &camUp, &target, NULL );
+	}
+	//マテリアル設定
+	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
+	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
+	G3_PolygonAttr(	GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, 
+					GX_CULL_NONE, 63, 31, GX_POLYGON_ATTR_MISC_FOG);
+
+	G3_Scale( FX32_ONE*MAPSCALE_WIDTH, FX32_ONE*MAPSCALE_WIDTH, FX32_ONE*MAPSCALE_WIDTH );
+
+
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		mapBlock = &sampleMap->mapBlock[i];
+		//if(( mapBlock->idx != MAPID_NULL )&&( mapBlock->dataLoadReq == FALSE )){
+		if( mapBlock->idx != MAPID_NULL ){
+#if 0
+#else
+			int		x, z, d;
+			fx16	vtx0x, vtx0z, len;
+
+			G3_PushMtx();
+
+			G3_Translate(	mapBlock->trans.x/MAPSCALE_WIDTH,
+							mapBlock->trans.y/MAPSCALE_WIDTH,
+							mapBlock->trans.z/MAPSCALE_WIDTH );
+
+			G3_TexImageParam(	GX_TEXFMT_PLTT16, GX_TEXGEN_TEXCOORD, 
+								GX_TEXSIZE_S32, GX_TEXSIZE_T32,
+								GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
+								GX_TEXPLTTCOLOR0_TRNS, mapBlock->texDataAdrs );
+			G3_TexPlttBase( mapBlock->texPlttAdrs, GX_TEXFMT_PLTT16 );
+
+			G3_Begin( GX_BEGIN_QUADS );
+
+			d = 32;
+			len = FX16_ONE*2/d;
+
+			for( z=0; z<d; z++ ){
+				for( x=0; x<d; x++ ){
+					vtx0x = -FX16_ONE + x*len;
+					vtx0z = -FX16_ONE + z*len;
+
+					G3_TexCoord( 0, FX32_ONE*32 );
+					G3_Vtx( vtx0x, 0, vtx0z + len );
+
+					G3_TexCoord( FX32_ONE*32, FX32_ONE*32 );
+					G3_Vtx( vtx0x + len, 0, vtx0z + len );
+
+					G3_TexCoord( FX32_ONE*32, 0 );
+					G3_Vtx( vtx0x + len, 0, vtx0z );
+
+					G3_TexCoord( 0, 0 );
+					G3_Vtx( vtx0x, 0, vtx0z );
+				}
+			}
+			G3_End();
+			G3_PopMtx(1);
+#endif
+		}
+	}
+}
+
+static void	Draw3Dmap2( SAMPLE_MAP* sampleMap, GFL_G3D_CAMERA* g3Dcamera )
+{
+	MAP_BLOCK_DATA* mapBlock;
+	BOOL			cullResult; 
+	VecFx32			scale = { FX32_ONE*2, FX32_ONE, FX32_ONE*2 };
+	MtxFx33			rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
+	int				i;
+
+	//描画開始
+	GFL_G3D_DRAW_Start();
+	//カメラグローバルステート設定		
+ 	GFL_G3D_DRAW_SetLookAt();
+
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		mapBlock = &sampleMap->mapBlock[i];
+		if(		( mapBlock->idx != MAPID_NULL )
+				&&( mapBlock->dataLoadReq == FALSE )
+				&&( mapBlock->g3Drnd != NULL )){
+			// 位置設定
+			NNS_G3dGlbSetBaseTrans( &mapBlock->trans );
+			// 角度設定
+			NNS_G3dGlbSetBaseRot( &rotate );
+			// スケール設定
+			NNS_G3dGlbSetBaseScale( &scale );
+			//グローバルステート反映
+			NNS_G3dGlbFlush();
+
+			//cullResult = GFL_G3D_DRAW_CheckCulling( g3Dobj );
+			NNS_G3dDraw( GFL_G3D_RENDER_GetRenderObj(mapBlock->g3Drnd) );
+		}
+	}
+	//描画終了（バッファスワップ）
+	//GFL_G3D_DRAW_End();							
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップデータ作成（サンプル用）
+ */
+//------------------------------------------------------------------
+static void	Make3Dmap( SAMPLE_MAP* sampleMap, const int blockID, const u32 mapID )
 {
 	GFL_G3D_RES*		g3DresTex;
 	MAP_BLOCK_DATA*		mapBlock;
@@ -619,9 +901,7 @@ static void	Make3Dmap
 	GF_ASSERT( blockID < MAP_BLOCK_COUNT );
 
 	mapBlock = &sampleMap->mapBlock[blockID];
-	mapBlock->idx = mapID;
-	g3DresTex = (GFL_G3D_RES*)&mapBlock->g3DresTex[0];
-	VEC_Set( &mapBlock->trans, trans->x, trans->y, trans->z );
+	g3DresTex = (GFL_G3D_RES*)&mapBlock->tex[0];
 
 	if( mapID != MAPID_NULL ){
 		//テクスチャデータ作成
@@ -660,69 +940,8 @@ static void	Make3Dmap
 										mapBlock->texDataAdrs, (void*)texData, texSize );
 		GFL_BMP_Delete( bmpTex );
 	}
-	OS_Printf("mapGraphic block%x is maked id=%x, tAdrs=%x, pAdrs=%x\n", 
-				blockID, mapBlock->idx, mapBlock->texDataAdrs, mapBlock->texPlttAdrs );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	３Ｄマップディスプレイ
- */
-//------------------------------------------------------------------
-static void	Draw3Dmap( SAMPLE_MAP* sampleMap, GFL_G3D_CAMERA* g3Dcamera )
-{
-	MAP_BLOCK_DATA* mapBlock;
-	int				i;
-
-	G3X_Reset();
-
-	//カメラ設定
-	{
-		VecFx32		camPos, camUp, target;
-
-		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-		G3_LookAt( &camPos, &camUp, &target, NULL );
-	}
-	//マテリアル設定
-	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), GX_RGB(16, 16, 16), TRUE );
-	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE );
-	G3_PolygonAttr(GX_LIGHTMASK_NONE, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 63, 31, 0);
-
-	G3_Scale( FX32_ONE*256, FX32_ONE*256, FX32_ONE*256 );
-
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		mapBlock = &sampleMap->mapBlock[i];
-		if( mapBlock->idx != MAPID_NULL ){
-			G3_PushMtx();
-	
-			G3_Translate( mapBlock->trans.x/256, mapBlock->trans.y/256, mapBlock->trans.z/256 );
-
-			G3_TexImageParam(	GX_TEXFMT_PLTT16, GX_TEXGEN_TEXCOORD, 
-								GX_TEXSIZE_S32, GX_TEXSIZE_T32,
-								GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-								GX_TEXPLTTCOLOR0_TRNS, mapBlock->texDataAdrs );
-			G3_TexPlttBase( mapBlock->texPlttAdrs, GX_TEXFMT_PLTT16 );
-
-			G3_Begin( GX_BEGIN_QUADS );
-
-			G3_TexCoord( 0, FX32_ONE*32 );
-			G3_Vtx( -FX16_ONE, 0, FX16_ONE );
-
-			G3_TexCoord( FX32_ONE*32, FX32_ONE*32 );
-			G3_Vtx( FX16_ONE, 0, FX16_ONE );
-
-			G3_TexCoord( FX32_ONE*32, 0 );
-			G3_Vtx( FX16_ONE, 0, -FX16_ONE );
-
-			G3_TexCoord( 0, 0 );
-			G3_Vtx( -FX16_ONE, 0, -FX16_ONE );
-	
-			G3_End();
-			G3_PopMtx(1);
-		}
-	}
+	//OS_Printf("mapGraphic block%x is maked id=%x, tAdrs=%x, pAdrs=%x\n", 
+	//			blockID, mapBlock->idx, mapBlock->texDataAdrs, mapBlock->texPlttAdrs );
 }
 
 
@@ -763,6 +982,7 @@ struct _CURSOR_CONT {
 
 	u16					cursorIdx;
 	VecFx32				trans;
+	fx32				cameraHeight;
 	u16					direction;
 };
 
@@ -799,7 +1019,7 @@ static const GFL_G3D_UTIL_SETUP cursor_g3Dsetup = {
 static const GFL_G3D_SCENEOBJ_DATA cursorObject[] = {
 	{	G3DOBJ_CURSOR, 0, 1, 16, TRUE, TRUE,
 		{	{ 0, -FX32_ONE*64, 0 },
-			{ FX32_ONE/8, FX32_ONE/8, FX32_ONE/8 },
+			{ FX32_ONE/4, FX32_ONE/4, FX32_ONE/4 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
@@ -819,6 +1039,7 @@ static CURSOR_CONT*	CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID )
 	cursor->trans.x = FX32_ONE*1024;//0;
 	cursor->trans.y = FX32_ONE*1024;//0;
 	cursor->trans.z = FX32_ONE*1024;//0;
+	cursor->cameraHeight = 0;
 	cursor->direction = 0;
 
 	//３Ｄデータセットアップ
@@ -852,7 +1073,10 @@ static void	DeleteCursor( CURSOR_CONT* cursor )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MV_SPEED	(FX32_ONE*4)
+#define MV_SPEED		(8)
+#define RT_SPEED		(FX32_ONE/4)
+#define	CAMERA_LENGTH	(128)
+#define	CAMERA_TARGET_HEIGHT	(128)
 static void	MainCursor( CURSOR_CONT* cursor )
 {
 	VecFx32	pos, target;
@@ -861,34 +1085,49 @@ static void	MainCursor( CURSOR_CONT* cursor )
 
 	key = GFL_UI_KEY_GetCont();
 
-	if( key & PAD_BUTTON_A ){
-		vecMove.y = -MV_SPEED;
-	}
 	if( key & PAD_BUTTON_B ){
-		vecMove.y = MV_SPEED;
+		vecMove.y = -MV_SPEED * FX32_ONE;
+	}
+	if( key & PAD_BUTTON_X ){
+		vecMove.y = MV_SPEED * FX32_ONE;
 	}
 	if( key & PAD_KEY_UP ){
-		vecMove.z = -MV_SPEED;
+		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x8000) );
+		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x8000) );
 	}
 	if( key & PAD_KEY_DOWN ){
-		vecMove.z = MV_SPEED;
+		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x0000) );
+		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x0000) );
 	}
 	if( key & PAD_KEY_LEFT ){
-		vecMove.x = -MV_SPEED;
+		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0xc000) );
+		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0xc000) );
 	}
 	if( key & PAD_KEY_RIGHT ){
-		vecMove.x = MV_SPEED;
+		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x4000) );
+		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x4000) );
+	}
+	if( key & PAD_BUTTON_R ){
+		cursor->direction -= RT_SPEED;
+	}
+	if( key & PAD_BUTTON_L ){
+		cursor->direction += RT_SPEED;
 	}
 	VEC_Add( &cursor->trans, &vecMove, &cursor->trans );
-	VEC_Add( &cursor->trans, &cameraPos, &pos );
-	target.x = cursor->trans.x;
-	target.y = 0;
-	target.z = cursor->trans.z;
+	cursor->trans.y = 0;
+	cursor->cameraHeight += vecMove.y;
+
+	VEC_Set( &target, cursor->trans.x, CAMERA_TARGET_HEIGHT*FX32_ONE, cursor->trans.z );
+	pos.x = cursor->trans.x + CAMERA_LENGTH * FX_SinIdx(cursor->direction);
+	pos.y = cursor->cameraHeight;
+	pos.z = cursor->trans.z + CAMERA_LENGTH * FX_CosIdx(cursor->direction);
 
 	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
-								&target );
+								&cursor->trans );
 	GFL_G3D_CAMERA_SetTarget( cursor->gs->g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( cursor->gs->g3Dcamera, &pos );
+
+	//OS_Printf(" pos {%x,%x,%x}\n", cursor->trans.x, cursor->trans.y, cursor->trans.z );
 }
 
 //------------------------------------------------------------------
@@ -912,6 +1151,8 @@ static void	GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans )
  * @brief	型宣言
  */
 //------------------------------------------------------------------
+#define MAP_BLOCK_SET_COUNT	(9)//(4)
+
 typedef struct {
 	u32			mapID;
 	VecFx32		trans;
@@ -923,15 +1164,15 @@ struct _MAP_CONT {
 	MAP_BLOCK_IDX	mapBlockIdx[MAP_BLOCK_COUNT];
 };
 
-#define MAP3D_SCALE			(FX32_ONE*1)
-#define MAP3D_GRID_LEN		(MAP3D_SCALE*16)
-#define MAP3D_GRID_SIZEX	(32)
-#define MAP3D_GRID_SIZEZ	(32)
-#define MAP_BLOCK_LENX		(MAP3D_GRID_LEN * MAP3D_GRID_SIZEX)
-#define MAP_BLOCK_LENZ		(MAP3D_GRID_LEN * MAP3D_GRID_SIZEZ)
+#define MAP_BLOCK_LENX		(FX32_ONE * MAP_WIDTH)
+#define MAP_BLOCK_LENZ		(FX32_ONE * MAP_WIDTH)
 #define MAP_BLOCK_SIZX		(32)
 #define MAP_BLOCK_SIZZ		(32)
 #define MAP_BLOCK_IDXMAX	(MAP_BLOCK_SIZX * MAP_BLOCK_SIZZ)
+#define MAP3D_GRID_SIZEX	(32)
+#define MAP3D_GRID_SIZEZ	(32)
+#define MAP3D_GRID_LENX		(MAP_BLOCK_LENX / MAP3D_GRID_SIZEX)
+#define MAP3D_GRID_LENZ		(MAP_BLOCK_LENZ / MAP3D_GRID_SIZEZ)
 
 static void GetMapperBlockIndex
 		( const VecFx32* pos, MAP_BLOCK_IDX* mapBlockIdx, GFL_G3D_CAMERA* g3Dcamera );
@@ -942,23 +1183,6 @@ static BOOL	CheckMapperBlockReload( MAP_BLOCK_IDX* resist, MAP_BLOCK_IDX* now, M
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-static const u32 mapIdxData[] = {
-	  9, 10, 11, 12, 13, 14, 15,
-	 31, 32, 33, 34, 35, 36, 37,
-	 66, 67, 68, 69, 70, 71, 72,
-	 22, 23, 24, 25, 26, 27, 28,
-	 45, 46, 47, 48, 49, 50, 51,
-	 87, 88, 89, 90, 91, 92, 93,
-	 53, 54, 55, 56, 57, 58, 59,
-};
-
-static const VecFx32 mapTransOffs[] = {
-	{  FX32_ONE*256, 0,  FX32_ONE*256 },
-	{  FX32_ONE*(256+512), 0,  FX32_ONE*256 },
-	{  FX32_ONE*256, 0,  FX32_ONE*(256+512) },
-	{  FX32_ONE*(256+512), 0,  FX32_ONE*(256+512) },
-};
-
 //------------------------------------------------------------------
 /**
  * @brief	初期化
@@ -995,11 +1219,11 @@ static void	DeleteMapper( MAP_CONT* mapper )
 //------------------------------------------------------------------
 static void	MainMapper( MAP_CONT* mapper, VecFx32* pos )
 {
-	MAP_BLOCK_IDX nowBlockIdx[MAP_BLOCK_COUNT];
+	MAP_BLOCK_IDX nowBlockIdx[MAP_BLOCK_SET_COUNT];
 
  	GetMapperBlockIndex( pos, &nowBlockIdx[0], mapper->gs->g3Dcamera );
 	if( ReloadMapperBlock( mapper, &nowBlockIdx[0] ) == TRUE ){
-		OS_Printf("map reloaded\n");
+		//OS_Printf("map reloaded\n");
 	}
 }
 
@@ -1009,36 +1233,117 @@ static void	MainMapper( MAP_CONT* mapper, VecFx32* pos )
  * @brief	マップブロック取得
  */
 //------------------------------------------------------------------
-#if 1
-static const int blockIdxOffs[][MAP_BLOCK_COUNT][2] = {
-	{ {-1,-1},{-1, 0},{ 0,-1},{ 0, 0} },	//自分のいるブロックから左上方向に４ブロックとる
-	{ {-1, 0},{-1, 1},{ 0, 0},{ 0, 1} },	//自分のいるブロックから右上方向に４ブロックとる
-	{ { 0,-1},{ 0, 0},{ 1,-1},{ 1, 0} },	//自分のいるブロックから左下方向に４ブロックとる
-	{ { 0, 0},{ 0, 1},{ 1, 0},{ 1, 1} },	//自分のいるブロックから右下方向に４ブロックとる
+typedef struct {
+	s16	z;
+	s16	x;
+}BLOCK_OFFS;
+
+static const BLOCK_OFFS blockPat_U[] = {
+	{-1,-1},{-1, 0},{-1, 1},{ 0, 0},	//自分のいるブロックから前方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_UL[] = {
+	{-1,-1},{-1, 0},{ 0,-1},{ 0, 0},	//自分のいるブロックから左前方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_L[] = {
+	{-1,-1},{ 0,-1},{ 0, 0},{ 1,-1},	//自分のいるブロックから左方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_DL[] = {
+	{ 0,-1},{ 0, 0},{ 1,-1},{ 1, 0},	//自分のいるブロックから左後方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_D[] = {
+	{ 0, 0},{ 1,-1},{ 1, 0},{ 1, 1},	//自分のいるブロックから後方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_DR[] = {
+	{ 0, 0},{ 0, 1},{ 1, 0},{ 1, 1},	//自分のいるブロックから右後方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_R[] = {
+	{-1, 1},{ 0, 0},{ 0, 1},{ 1, 1},	//自分のいるブロックから右方向に４ブロックとる
+};
+static const BLOCK_OFFS blockPat_UR[] = {
+	{-1, 0},{-1, 1},{ 0, 0},{ 0, 1},	//自分のいるブロックから右前方向に４ブロックとる
+};
+
+static const BLOCK_OFFS blockPat_Around[] = {
+	{-1,-1},{-1, 0},{-1, 1},{ 0,-1},{ 0, 0},{ 0, 1},{ 1,-1},{ 1, 0},{ 1, 1},
+};
+
+static const BLOCK_OFFS* blockIdxOffs_FL[] = {
+	blockPat_UL, blockPat_UL, blockPat_UL, blockPat_UL, 
+	blockPat_UL, blockPat_UL, blockPat_UL, blockPat_UL, 
+	blockPat_UL, blockPat_UL, blockPat_UL, blockPat_UL, 
+	blockPat_UL, blockPat_UL, blockPat_UL, blockPat_UL, 
+};
+static const BLOCK_OFFS* blockIdxOffs_FR[] = {
+	blockPat_UR, blockPat_UR, blockPat_UR, blockPat_UR, 
+	blockPat_UR, blockPat_UR, blockPat_UR, blockPat_UR, 
+	blockPat_UR, blockPat_UR, blockPat_UR, blockPat_UR, 
+	blockPat_UR, blockPat_UR, blockPat_UR, blockPat_UR, 
+};
+static const BLOCK_OFFS* blockIdxOffs_BL[] = {
+	blockPat_DL, blockPat_DL, blockPat_DL, blockPat_DL, 
+	blockPat_DL, blockPat_DL, blockPat_DL, blockPat_DL, 
+	blockPat_DL, blockPat_DL, blockPat_DL, blockPat_DL, 
+	blockPat_DL, blockPat_DL, blockPat_DL, blockPat_DL, 
+};
+static const BLOCK_OFFS* blockIdxOffs_BR[] = {
+	blockPat_DR, blockPat_DR, blockPat_DR, blockPat_DR, 
+	blockPat_DR, blockPat_DR, blockPat_DR, blockPat_DR, 
+	blockPat_DR, blockPat_DR, blockPat_DR, blockPat_DR, 
+	blockPat_DR, blockPat_DR, blockPat_DR, blockPat_DR, 
+};
+
+static const BLOCK_OFFS* blockIdxOffs_All[] = {
+	blockPat_Around, blockPat_Around, blockPat_Around, blockPat_Around, 
+	blockPat_Around, blockPat_Around, blockPat_Around, blockPat_Around, 
+	blockPat_Around, blockPat_Around, blockPat_Around, blockPat_Around, 
+	blockPat_Around, blockPat_Around, blockPat_Around, blockPat_Around, 
+};
+
+static const BLOCK_OFFS** blockIdxOffs[] = {
+//	blockIdxOffs_FL, blockIdxOffs_FR, blockIdxOffs_BL, blockIdxOffs_BR,
+	blockIdxOffs_All, blockIdxOffs_All, blockIdxOffs_All, blockIdxOffs_All,
 };
 
 static void GetMapperBlockIndex
 		( const VecFx32* pos, MAP_BLOCK_IDX* mapBlockIdx, GFL_G3D_CAMERA* g3Dcamera )
 {
 	u32		blockIdx, blockx, blockz;
-	fx32	posx, posz;
-	int		i, offsx, offsz, blockPat = 0;
+	fx32	posx, posz, scalar;
+	int		i, offsx, offsz;
+	u16		direction;
+	u8		blockPat, dirPat;
+	VecFx32	center;
+	const BLOCK_OFFS** idxTbl;
 	
+	//現在ブロックのXZindex取得
 	blockx = FX_Whole( FX_Div( pos->x, MAP_BLOCK_LENX ) );
 	blockz = FX_Whole( FX_Div( pos->z, MAP_BLOCK_LENZ ) );
-
 	posx = FX_Mod( pos->x, MAP_BLOCK_LENX );
 	posz = FX_Mod( pos->z, MAP_BLOCK_LENZ );
 
+	//現在カメラ方向によるパターン取得
+	direction = GFL_G3D_CAMERA_GetRadianXZ( g3Dcamera );
+	dirPat = (direction >> 12)&0x000f;
+
+	//現在ブロックの中心座標算出
+	VEC_Set( &center,	(blockx * MAP_WIDTH + MAP_WIDTH/2) * FX32_ONE, 
+						0, 
+						(blockz * MAP_WIDTH + MAP_WIDTH/2) * FX32_ONE );
+	//scalar = GFL_G3D_CAMERA_GetDotProduct( g3Dcamera, &center );
+
+	//現在ブロック内位置によるパターンテーブル取得
+	blockPat = 0;
 	if( posx > (MAP_BLOCK_LENX/2) ){
 		blockPat += 1;
 	}
 	if( posz > (MAP_BLOCK_LENZ/2) ){
 		blockPat += 2;
 	}
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		offsx = blockx + blockIdxOffs[blockPat][i][1];
-		offsz = blockz + blockIdxOffs[blockPat][i][0];
+	idxTbl = blockIdxOffs[blockPat];
+
+	for( i=0; i<MAP_BLOCK_SET_COUNT; i++ ){
+		offsx = blockx + idxTbl[dirPat][i].x;
+		offsz = blockz + idxTbl[dirPat][i].z;
 
 		if((offsx < 0)||(offsx >= MAP_BLOCK_SIZX)||(offsz < 0)||(offsz >= MAP_BLOCK_SIZZ)){
 			blockIdx = MAPID_NULL;
@@ -1050,67 +1355,11 @@ static void GetMapperBlockIndex
 			}
 		}
 		mapBlockIdx[i].mapID = blockIdx;
-		mapBlockIdx[i].trans.x = FX32_ONE*(256 + offsx*512);
+		mapBlockIdx[i].trans.x = (offsx * MAP_WIDTH + MAP_WIDTH/2) * FX32_ONE;
 		mapBlockIdx[i].trans.y = 0;
-		mapBlockIdx[i].trans.z = FX32_ONE*(256 + offsz*512);
+		mapBlockIdx[i].trans.z = (offsz * MAP_WIDTH + MAP_WIDTH/2) * FX32_ONE;
 	}
 }
-#else
-static const int blockIdxOffs[][MAP_BLOCK_COUNT][2] = {
-	{ {-1,-1},{-1, 0},{ 0,-1},{ 0, 0} },	//自分のいるブロックから左上方向に４ブロックとる
-	{ {-1, 0},{-1, 1},{ 0, 0},{ 0, 1} },	//自分のいるブロックから右上方向に４ブロックとる
-	{ { 0,-1},{ 0, 0},{ 1,-1},{ 1, 0} },	//自分のいるブロックから左下方向に４ブロックとる
-	{ { 0, 0},{ 0, 1},{ 1, 0},{ 1, 1} },	//自分のいるブロックから右下方向に４ブロックとる
-};
-
-static void GetMapperBlockIndex
-		( const VecFx32* pos, MAP_BLOCK_IDX* mapBlockIdx, GFL_G3D_CAMERA* g3Dcamera )
-{
-	u32		blockIdx, blockx, blockz;
-	fx32	posx, posz;
-	int		i, offsx, offsz, blockPat = 0;
-	
-	blockx = FX_Whole( FX_Div( pos->x, MAP_BLOCK_LENX ) );
-	blockz = FX_Whole( FX_Div( pos->z, MAP_BLOCK_LENZ ) );
-
-	//カメラ設定
-	{
-		VecFx32	camPos, target;
-
-		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-		VEC_Subtract( &target, &campos, )
-		G3_LookAt( &camPos, &camUp, &target, NULL );
-	}
-	posx = FX_Mod( pos->x, MAP_BLOCK_LENX );
-	posz = FX_Mod( pos->z, MAP_BLOCK_LENZ );
-
-	if( posx > (MAP_BLOCK_LENX/2) ){
-		blockPat += 1;
-	}
-	if( posz > (MAP_BLOCK_LENZ/2) ){
-		blockPat += 2;
-	}
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		offsx = blockx + blockIdxOffs[blockPat][i][1];
-		offsz = blockz + blockIdxOffs[blockPat][i][0];
-
-		if((offsx < 0)||(offsx >= MAP_BLOCK_SIZX)||(offsz < 0)||(offsz >= MAP_BLOCK_SIZZ)){
-			blockIdx = MAPID_NULL;
-		} else {
-			blockIdx = offsz * MAP_BLOCK_SIZX + offsx;
-
-			if( blockIdx >= MAP_BLOCK_IDXMAX ){
-				blockIdx = MAPID_NULL;
-			}
-		}
-		mapBlockIdx[i].mapID = blockIdx;
-		mapBlockIdx[i].trans.x = FX32_ONE*(256 + offsx*512);
-		mapBlockIdx[i].trans.y = 0;
-		mapBlockIdx[i].trans.z = FX32_ONE*(256 + offsz*512);
-	}
-}
-#endif
 
 //------------------------------------------------------------------
 /**
@@ -1120,7 +1369,7 @@ static void GetMapperBlockIndex
 static BOOL	ReloadMapperBlock( MAP_CONT* mapper, MAP_BLOCK_IDX* new )
 {
 	BOOL addFlag, delFlag, delProcFlag, addProcFlag, reloadFlag;
-	int i, j;
+	int i, j, c;
 
 	reloadFlag = FALSE;
 
@@ -1129,7 +1378,7 @@ static BOOL	ReloadMapperBlock( MAP_CONT* mapper, MAP_BLOCK_IDX* new )
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		if( mapper->mapBlockIdx[i].mapID != MAPID_NULL ){
 			delFlag = FALSE;
-			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
+			for( j=0; j<MAP_BLOCK_SET_COUNT; j++ ){
 				if(( mapper->mapBlockIdx[i].mapID == new[j].mapID )&&(delFlag == FALSE )){
 					new[j].mapID = MAPID_NULL;
 					delFlag = TRUE;
@@ -1141,21 +1390,15 @@ static BOOL	ReloadMapperBlock( MAP_CONT* mapper, MAP_BLOCK_IDX* new )
 			}
 		}
 	}
-#if 0
-	if( delProcFlag == TRUE ){
-		OS_Printf(" del mapID b0 = %x, b1 = %x, b2 = %x, b3 = %x\n",
-				mapper->mapBlockIdx[0].mapID, mapper->mapBlockIdx[1].mapID,
-				mapper->mapBlockIdx[2].mapID, mapper->mapBlockIdx[3].mapID );
-	}
-#endif
 	//更新
 	addProcFlag = FALSE;
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+	c = 0;
+	for( i=0; i<MAP_BLOCK_SET_COUNT; i++ ){
 		if( new[i].mapID != MAPID_NULL ){
 			addFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
 				if(( mapper->mapBlockIdx[j].mapID == MAPID_NULL )&&(addFlag == FALSE )){
-					Make3Dmap( mapper->gs->sampleMap, j, &new[i].trans, new[i].mapID );
+					Set3DmapLoadReq( mapper->gs->sampleMap, j, &new[i].trans, new[i].mapID );
 					mapper->mapBlockIdx[j] = new[i];
 					addFlag = TRUE;
 					addProcFlag = TRUE;
@@ -1167,11 +1410,6 @@ static BOOL	ReloadMapperBlock( MAP_CONT* mapper, MAP_BLOCK_IDX* new )
 		}
 	}
 	if( addProcFlag == TRUE ){
-#if 0
-		OS_Printf(" add mapID b0 = %x, b1 = %x, b2 = %x, b3 = %x\n",
-				mapper->mapBlockIdx[0].mapID, mapper->mapBlockIdx[1].mapID,
-				mapper->mapBlockIdx[2].mapID, mapper->mapBlockIdx[3].mapID );
-#endif
 		reloadFlag = TRUE;
 	}
 	return reloadFlag;

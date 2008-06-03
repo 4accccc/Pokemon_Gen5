@@ -211,6 +211,7 @@ static const GFL_G3D_SCENEOBJ_DATA mapGraphicData0[] = {
 	{	G3DOBJ_MAP_FLOOR, 0, 1, 31, FALSE, TRUE,
 		{	{ 0, -FX32_ONE*80, 0 },
 			{ MAP3D_SCALE, MAP3D_SCALE, MAP3D_SCALE },
+			//{ FX32_ONE*2, FX32_ONE, FX32_ONE*2 },
 			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
 		},NULL,
 	},
@@ -525,10 +526,22 @@ static const MAPDATA mapData[] = {
 };
 
 static const VecFx32 mapTransOffs[] = {
-	{ -FX32_ONE*256, 0, -FX32_ONE*256 },
-	{  FX32_ONE*256, 0, -FX32_ONE*256 + FX32_ONE*32 },
-	{ -FX32_ONE*256, 0,  FX32_ONE*256 },
-	{  FX32_ONE*256, 0,  FX32_ONE*256 + FX32_ONE*32 },
+#if 1
+	{ (FX32_ONE*512)*0, 0, (FX32_ONE*512)*0 },
+	{ (FX32_ONE*512)*1, 0, (FX32_ONE*512)*0 },
+	{ (FX32_ONE*512)*0, 0, (FX32_ONE*512)*1 },
+	{ (FX32_ONE*512)*1, 0, (FX32_ONE*512)*1 },
+#else
+	{ (FX32_ONE*512)*0, 0, (FX32_ONE*512)*0 },
+	{ (FX32_ONE*512)*1, 0, (FX32_ONE*512)*0 },
+	{ (FX32_ONE*512)*2, 0, (FX32_ONE*512)*0 },
+	{ (FX32_ONE*512)*0, 0, (FX32_ONE*512)*1 },
+	{ (FX32_ONE*512)*1, 0, (FX32_ONE*512)*1 },
+	{ (FX32_ONE*512)*2, 0, (FX32_ONE*512)*1 },
+	{ (FX32_ONE*512)*0, 0, (FX32_ONE*512)*2 },
+	{ (FX32_ONE*512)*1, 0, (FX32_ONE*512)*2 },
+	{ (FX32_ONE*512)*2, 0, (FX32_ONE*512)*2 },
+#endif
 };
 
 //------------------------------------------------------------------
