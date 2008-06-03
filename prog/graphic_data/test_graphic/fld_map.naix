@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-04-25T17:46:36
+	Update:2008-05-30T19:42:50
  *****************************************************************************/
 
 #ifndef NARC_FLD_MAP_NAIX_
@@ -15,7 +15,9 @@ enum {
 	NARC_fld_map_map21_18c_nsbmd = 1,
 	NARC_fld_map_map21_19c_nsbmd = 2,
 	NARC_fld_map_map22_18c_nsbmd = 3,
-	NARC_fld_map_map22_19c_nsbmd = 4
+	NARC_fld_map_map22_19c_nsbmd = 4,
+	NARC_fld_map_map23_09c_nsbmd = 5,
+	NARC_fld_map_map23_09c_nsbtx = 6
 };
 
 /* NARC_FLD_MAP_NAIX_ */
