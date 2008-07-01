@@ -109,6 +109,7 @@ static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work );
 
 enum {
 	G3DRES_MAP_FLOOR = 0,
+	G3DRES_MAP_FLOOR_TEX,
 	G3DRES_EFFECT_WALL,
 	G3DRES_FIELD_TEX1,
 	G3DRES_FIELD_TEX2,
@@ -132,6 +133,7 @@ enum {
 //３Ｄグラフィックリソーステーブル
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 	{ ARCID_FLDMAP, NARC_fld_map_map14_16c_nsbmd, GFL_G3D_UTIL_RESARC },
+	{ ARCID_FLDMAP, NARC_fld_map_map14_16c_nsbtx, GFL_G3D_UTIL_RESARC },
 	{ ARCID_SAMPLE, NARC_haruka_test_wall_nsbmd, GFL_G3D_UTIL_RESARC },
 	{ ARCID_SAMPLE, NARC_haruka_field_tex1_nsbmd, GFL_G3D_UTIL_RESARC },
 	{ ARCID_SAMPLE, NARC_haruka_field_tex2_nsbmd, GFL_G3D_UTIL_RESARC },
@@ -178,7 +180,7 @@ enum {
 };
 //３Ｄオブジェクト定義テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
-	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR, NULL, 0 },
+	{ G3DRES_MAP_FLOOR, 0, G3DRES_MAP_FLOOR_TEX, NULL, 0 },
 	{ G3DRES_EFFECT_WALL, 0, G3DRES_EFFECT_WALL, NULL, 0 },
 	{ G3DRES_FIELD_TEX1, 0, G3DRES_FIELD_TEX1, NULL, 0 },
 	{ G3DRES_FIELD_TEX2, 0, G3DRES_FIELD_TEX2, NULL, 0 },
@@ -186,10 +188,10 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
 	{ G3DRES_TOWER_BLUE, 0, G3DRES_TOWER_BLUE, NULL, 0 },
 	{ G3DRES_TOWER_GREEN, 0, G3DRES_TOWER_GREEN, NULL, 0 },
 	{ G3DRES_TOWER_YELLOW, 0, G3DRES_TOWER_YELLOW, NULL, 0 },
-	{ G3DRES_MAP_FLOOR0, 0, G3DRES_MAP_FLOOR0, NULL, 0 },
-	{ G3DRES_MAP_FLOOR1, 0, G3DRES_MAP_FLOOR1, NULL, 0 },
-	{ G3DRES_MAP_FLOOR2, 0, G3DRES_MAP_FLOOR2, NULL, 0 },
-	{ G3DRES_MAP_FLOOR3, 0, G3DRES_MAP_FLOOR3, NULL, 0 },
+	{ G3DRES_MAP_FLOOR0, 0, G3DRES_MAP_FLOOR_TEX, NULL, 0 },
+	{ G3DRES_MAP_FLOOR1, 0, G3DRES_MAP_FLOOR_TEX, NULL, 0 },
+	{ G3DRES_MAP_FLOOR2, 0, G3DRES_MAP_FLOOR_TEX, NULL, 0 },
+	{ G3DRES_MAP_FLOOR3, 0, G3DRES_MAP_FLOOR_TEX, NULL, 0 },
 	{ G3DRES_BLD_BUILD0, 0, G3DRES_BLD_BUILD0, NULL, 0 },
 	{ G3DRES_BLD_BUILD1, 0, G3DRES_BLD_BUILD1, NULL, 0 },
 	{ G3DRES_BLD_BUILD2, 0, G3DRES_BLD_BUILD2, NULL, 0 },
@@ -294,7 +296,7 @@ static const GFL_G3D_SCENEOBJ_DATA mapGraphicData0[] = {
 		},NULL,
 	},
 };
-
+#if 0
 static const GFL_G3D_SCENEOBJ_DATA mapGraphicData1[] = {
 	{	G3DOBJ_MAP_FLOOR0, 0, 1, 31, FALSE, TRUE,
 		{	{ -FX32_ONE*256, -FX32_ONE*32, -FX32_ONE*256 },
@@ -321,6 +323,7 @@ static const GFL_G3D_SCENEOBJ_DATA mapGraphicData1[] = {
 		},moveMapDebug,
 	},
 };
+#endif
 
 static const char mapAttr0[] = {
 "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"	//16
@@ -522,7 +525,7 @@ static const MAP_GRIDMAKE_DATA mapGrid0[] = {
 
 static const MAPDATA mapData[] = {
 	{ mapGraphicData0, NELEMS(mapGraphicData0), mapAttr0, mapGrid0 },
-	{ mapGraphicData1, NELEMS(mapGraphicData1), mapAttr0, mapGrid0 },
+//	{ mapGraphicData1, NELEMS(mapGraphicData1), mapAttr0, mapGrid0 },
 };
 
 static const VecFx32 mapTransOffs[] = {
