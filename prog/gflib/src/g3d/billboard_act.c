@@ -407,11 +407,8 @@ static void animeControl( GFL_BBDACT_SYS* bbdActSys, BBDACT_ACT* bbdAct )
 //データ転送
 static void animeTrans( GFL_BBDACT_SYS* bbdActSys, BBDACT_RES* bbdRes, u16 celIdx )
 {
-	GFL_G3D_RES*			g3DresTex = bbdRes->dataSrc;
-	NNSG3dResFileHeader*	file = GFL_G3D_GetResourceFileHeader( g3DresTex ); 
-	NNSG3dResTex*			texfile = GFL_G3D_GetResTex( g3DresTex );
-	u32						src = (u32)((u8*)texfile + texfile->texInfo.ofsTex);
-	u32						dst, srcOffs, dataSiz;
+	u32 src = GFL_G3D_GetAdrsTextureData( bbdRes->dataSrc );
+	u32 dst, srcOffs, dataSiz;
 	
 	GFL_BBD_GetResourceTexDataAdrs( bbdActSys->bbdSys, bbdRes->bbdResIdx, &dst );
 	GFL_BBD_GetResourceCelOffset( bbdActSys->bbdSys, bbdRes->bbdResIdx, 
@@ -426,11 +423,8 @@ static void animeTrans( GFL_BBDACT_SYS* bbdActSys, BBDACT_RES* bbdRes, u16 celId
 //パレット転送
 static void plttTrans( GFL_BBDACT_SYS* bbdActSys, BBDACT_RES* bbdRes )
 {
-	GFL_G3D_RES*			g3DresTex = bbdRes->dataSrc;
-	NNSG3dResFileHeader*	file = GFL_G3D_GetResourceFileHeader( g3DresTex ); 
-	NNSG3dResTex*			texfile = GFL_G3D_GetResTex( g3DresTex );
-	u32						src = (u32)((u8*)texfile + texfile->plttInfo.ofsPlttData);
-	u32						dst, dataSiz;
+	u32 src = GFL_G3D_GetAdrsTexturePltt( bbdRes->dataSrc );
+	u32 dst, dataSiz;
 	
 	GFL_BBD_GetResourceTexPlttAdrs( bbdActSys->bbdSys, bbdRes->bbdResIdx, &dst );
 	dataSiz = 0x20;

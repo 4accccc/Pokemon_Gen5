@@ -571,11 +571,35 @@ u32
 //--------------------------------------------------------------------------------------------
 void
 	GFL_G3D_CreateResource
-		( GFL_G3D_RES* g3Dres, const NNSG3dResFileHeader* header )
+		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE resType, void* header )
+{
+	switch( resType )
+	{
+		default:
+			GF_ASSERT(0);
+			break;
+		case GFL_G3D_RES_CHKTYPE_MDL:
+			g3Dres->type = GFL_G3D_RES_TYPE_MDL;	//モデリングデータ内包
+			break;
+		case GFL_G3D_RES_CHKTYPE_TEX:
+			g3Dres->type = GFL_G3D_RES_TYPE_TEX;	//モデリングデータ内包
+			break;
+		case GFL_G3D_RES_CHKTYPE_ANM:
+			g3Dres->type = GFL_G3D_RES_TYPE_ANM;	//モデリングデータ内包
+			break;
+	}
+	g3Dres->magicnum = G3DRES_MAGICNUM;
+	//ファイルポインタの設定
+	g3Dres->file = header;
+}
+
+void
+	GFL_G3D_CreateResourceAuto
+		( GFL_G3D_RES* g3Dres, void* header )
 {
 	//OS_Printf("3D_resource check now...\n");
 	//ファイルタイプの判別
-	switch( *(u32*)&header[0] )
+	switch( *(u32*)header )
 	{
 		case NNS_G3D_SIGNATURE_NSBMD:
 			//OS_Printf("nsbmd file check...\n");
@@ -606,7 +630,7 @@ void
 	}
 	g3Dres->magicnum = G3DRES_MAGICNUM;
 	//ファイルポインタの設定
-	g3Dres->file = ( void* )header;
+	g3Dres->file = header;
 	//OS_Printf("3D_resource is loaded\n");
 }
 
@@ -625,7 +649,7 @@ GFL_G3D_RES*
 	GFL_G3D_CreateResourceArc
 		( int arcID, int datID ) 
 {
-	NNSG3dResFileHeader* header;
+	void* header;
 	GFL_G3D_RES* g3Dres;
 
 	GF_ASSERT( g3Dman != NULL );
@@ -636,7 +660,7 @@ GFL_G3D_RES*
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	header = GFL_ARC_LoadDataAlloc( arcID, datID, g3Dman->heapID );
 
-	GFL_G3D_CreateResource( g3Dres, header );
+	GFL_G3D_CreateResourceAuto( g3Dres, header );
 	return g3Dres;
 }
 
@@ -645,7 +669,7 @@ GFL_G3D_RES*
 	GFL_G3D_CreateResourcePath
 		( const char* path, int datID ) 
 {
-	NNSG3dResFileHeader* header;
+	void* header;
 	GFL_G3D_RES* g3Dres;
 
 	GF_ASSERT( g3Dman != NULL );
@@ -657,7 +681,7 @@ GFL_G3D_RES*
 	//対象アーカイブファイルからヘッダデータを読み込み
 	header = GFL_ARC_LoadDataFilePathAlloc( path, datID, g3Dman->heapID );
 
-	GFL_G3D_CreateResource( g3Dres, header );
+	GFL_G3D_CreateResourceAuto( g3Dres, header );
 	return g3Dres;
 }
 
@@ -694,7 +718,7 @@ void
 	GFL_G3D_LoadResourceArc
 		( int arcID, int datID, GFL_G3D_RES* g3Dres ) 
 {
-	NNSG3dResFileHeader* header;
+	void* header;
 
 	GF_ASSERT( g3Dman != NULL );
 	GF_ASSERT( g3Dres != NULL );
@@ -704,7 +728,7 @@ void
 	//対象アーカイブＩＮＤＥＸからヘッダデータを読み込み
 	GFL_ARC_LoadData( header, arcID, datID );
 
-	GFL_G3D_CreateResource( g3Dres, header );
+	GFL_G3D_CreateResourceAuto( g3Dres, header );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -958,8 +982,6 @@ BOOL
 	NNSG3dResTex*			texture;
 	NNSGfdTexKey			texKey, tex4x4Key;
 	NNSGfdPlttKey			plttKey;
-	GFL_G3D_VMAN_MODE		texmanMode = GFL_G3D_GetTextureManagerMode();
-	GFL_G3D_VMAN_MODE		plttmanMode = GFL_G3D_GetPaletteManagerMode();
 
 	GF_ASSERT( g3Dres->magicnum == G3DRES_MAGICNUM );
 	GF_ASSERT(( g3Dres->type==GFL_G3D_RES_TYPE_MDLTEX )||( g3Dres->type==GFL_G3D_RES_TYPE_TEX ));
@@ -1172,6 +1194,40 @@ NNSG3dPlttKey
 		return restex->plttInfo.vramKey;
 	}
 	return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	テクスチャの実データアドレス取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+u32
+	GFL_G3D_GetAdrsTextureData
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResTex* restex = GFL_G3D_GetResTex( g3Dres );
+
+	return (u32)((u8*)restex + restex->texInfo.ofsTex);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	パレットの実データアドレス取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+u32
+	GFL_G3D_GetAdrsTexturePltt
+		( GFL_G3D_RES* g3Dres )
+{
+	NNSG3dResTex* restex = GFL_G3D_GetResTex( g3Dres );
+
+	return (u32)((u8*)restex + restex->plttInfo.ofsPlttData);
 }
 
 
