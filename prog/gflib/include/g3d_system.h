@@ -343,7 +343,11 @@ extern u32
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_CreateResource
-		( GFL_G3D_RES* g3Dres, const NNSG3dResFileHeader* header );
+		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE resType, void* header );
+
+extern void
+	GFL_G3D_CreateResourceAuto
+		( GFL_G3D_RES* g3Dres, void* header );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -542,6 +546,30 @@ extern NNSG3dTexKey
 //-----------------------------------------------------------------------------
 extern NNSG3dPlttKey
 	GFL_G3D_GetTexturePlttVramKey
+		( GFL_G3D_RES* g3Dres );
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	テクスチャの実データアドレス取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+extern u32
+	GFL_G3D_GetAdrsTextureData
+		( GFL_G3D_RES* g3Dres );
+
+//----------------------------------------------------------------------------
+/**
+ *
+ *@brief	パレットの実データアドレス取得
+ *
+ *	@param	res		テクスチャリソース参照ポインタ
+ */
+//-----------------------------------------------------------------------------
+extern u32
+	GFL_G3D_GetAdrsTexturePltt
 		( GFL_G3D_RES* g3Dres );
 
 
