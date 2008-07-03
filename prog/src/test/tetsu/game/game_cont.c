@@ -16,9 +16,7 @@
 #include "mouse_event.h"
 
 #include "fld_act.h"
-#include "text_cont.h"
 #include "camera_cont.h"
-#include "skill_cont.h"
 
 //============================================================================================
 //
@@ -28,7 +26,6 @@
 //
 //============================================================================================
 static void ControlKey( PLAYER_CONTROL* pc, GAME_CONTROL* gc );
-static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc );
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -274,18 +271,6 @@ static void	ResetGameControlSummonCallBack( TEAM_CONTROL* tc, int summonID, int 
 static void	ResetGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* work )
 {
 	ResetPlayerSkillCommand( pc );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	自機挙動メッセージ表示
- */
-//------------------------------------------------------------------
-static void PutMessageWinMine( GAME_CONTROL* gc, MSGID msgID, PLAYER_CONTROL* pc )
-{
-	if( pc == gc->myPc ){
-		//PutMessageWin( gc->mwc, msgID );
-	}
 }
 
 //------------------------------------------------------------------
