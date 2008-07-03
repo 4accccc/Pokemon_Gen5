@@ -10,14 +10,11 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/game/team_cont.c \
 				test/tetsu/game/player_cont.c \
 				test/tetsu/game/camera_cont.c \
-				test/tetsu/game/status_cont.c \
-				test/tetsu/game/text_cont.c \
-				test/tetsu/game/skill_cont.c \
 				test/tetsu/game/game_net.c \
 				test/tetsu/game/mouse_event.c \
 				test/tetsu/game/fld_act.c \
-				test/tetsu/test_prog1.c \
 				test/tetsu/sample/samplemain.c \
+				test/tetsu/test_prog1.c \
 				test/tetsu/debug_watanabe.c
 	
 #================================================
