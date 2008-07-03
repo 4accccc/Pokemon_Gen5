@@ -1110,6 +1110,8 @@ static void	MainCursor( CURSOR_CONT* cursor )
 		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x4000) );
 		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x4000) );
 	}
+	//vecMove.x /= 2;
+	//vecMove.z /= 2;
 	if( key & PAD_BUTTON_R ){
 		cursor->direction -= RT_SPEED;
 	}
