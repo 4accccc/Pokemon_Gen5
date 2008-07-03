@@ -51,11 +51,6 @@ struct _GAME_CONTROL {
 
 	TEAM_CONTROL*			tc[TEAM_COUNT_MAX]; 
 	CAMERA_CONTROL*			cc; 
-	SKILL_CONTROL*			sc; 
-
-	STATUSWIN_CONTROL*		swc; 
-	MSGWIN_CONTROL*			mwc; 
-	MAPWIN_CONTROL*			mpwc; 
 
 	BOOL					onGameFlag;
 	int						time;
@@ -105,53 +100,9 @@ GAME_CONTROL* AddGameControl( GAME_SYSTEM* gs, GAME_CONT_SETUP* setup, HEAPID he
 	gc->teamCount = setup->teamCount;
 	GF_ASSERT( gc->myPc != NULL );
 
-	//テキストウインドウ登録
-	{
-		{//ステータスウインドウ
-			STATUSWIN_SETUP statuswinSetUp;
-
-			statuswinSetUp.heapID		= gc->heapID;
-			statuswinSetUp.targetBmpwin	= Get_GS_BmpWin( gc->gs, G2DBMPWIN_STATUS ); 
-			statuswinSetUp.p_tc			= gc->tc;
-			statuswinSetUp.teamCount	= gc->teamCount;
-
-			gc->swc = AddStatusWinControl( &statuswinSetUp );
-		}
-		{//メッセージウインドウ
-			MSGWIN_SETUP msgwinSetUp;
-
-			msgwinSetUp.heapID			= gc->heapID;
-			msgwinSetUp.targetBmpwin	= Get_GS_BmpWin( gc->gs, G2DBMPWIN_MSG ); 
-
-			gc->mwc = AddMessageWinControl( &msgwinSetUp );
-		}
-		{//マップウインドウ
-			MAPWIN_SETUP mapwinSetUp;
-
-			mapwinSetUp.heapID			= gc->heapID;
-			mapwinSetUp.targetBmpwin	= Get_GS_BmpWin( gc->gs, G2DBMPWIN_MAP ); 
-			mapwinSetUp.gs				= gc->gs;
-			mapwinSetUp.p_tc			= gc->tc;
-			mapwinSetUp.teamCount		= gc->teamCount;
-			mapwinSetUp.myPc			= gc->myPc;
-			mapwinSetUp.myTc			= gc->myTc;
-
-			gc->mpwc = AddMapWinControl( &mapwinSetUp );
-		}
-	}
 	//カメラコントローラ登録
 	gc->cc = AddCameraControl( gc->gs, gc->heapID );
 
-	//スキルコントローラ登録
-	{
-		SKILLCONT_SETUP skillcontSetUp;
-
-		skillcontSetUp.heapID		= gc->heapID;
-		skillcontSetUp.gs			= gc->gs;
-		skillcontSetUp.p_tc			= gc->tc;
-		skillcontSetUp.teamCount	= gc->teamCount;
-		gc->sc = AddSkillControl( &skillcontSetUp );
-	}
 	//マウス（タッチペン）コントローラ登録
 	{
 		gc->mes = InitMouseEvent( gs, heapID );
@@ -173,12 +124,7 @@ void RemoveGameControl( GAME_CONTROL* gc )
 
 	ExitMouseEvent( gc->mes );
 
-	RemoveSkillControl( gc->sc );
 	RemoveCameraControl( gc->cc );
-
-	RemoveMapWinControl( gc->mpwc );
-	RemoveMessageWinControl( gc->mwc );
-	RemoveStatusWinControl( gc->swc );
 
 	for( i=0; i<gc->teamCount; i++ ){
 		RemoveTeamControl( gc->tc[i] );
@@ -263,14 +209,7 @@ void MainGameControl( GAME_CONTROL* gc )
 		SetCameraControlDirection( gc->cc, &direction );
 	}
 	MainCameraControl( gc->cc );
-	MainSkillControl( gc->sc, gc->onGameFlag );
-
 	MainFieldActSys( gc->fldActSys );
-
-	MainMapWinControl( gc->mpwc );
-	MainMessageWinControl( gc->mwc );
-	MainStatusWinControl( gc->swc );
-	SetStatusWinReload( gc->swc );
 }
 
 //------------------------------------------------------------------
@@ -307,7 +246,6 @@ static void	MainGameControlPlayerCallBack( PLAYER_CONTROL* pc, int num, void* wo
 		MainPlayerControl( pc );
 #endif
 	}
-	SetSkillControlCommand( mccw->gc->sc, mccw->tc, pc, GetPlayerSkillCommand( pc ));
 }
 
 //------------------------------------------------------------------
@@ -496,9 +434,6 @@ void		ChangeControlPlayer( GAME_CONTROL* gc, int playNetID )
 			break;
 		}
 	}
-	ChangeMapWinControl( gc->mpwc, gc->myPc, gc->myTc );
-
-	SetMapAreaMaskDrawFlag( gc->myTc, &sw );
 	GFL_HEAP_FreeMemory( ccw );
 }
 
