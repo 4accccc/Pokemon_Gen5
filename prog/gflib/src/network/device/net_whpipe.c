@@ -37,9 +37,41 @@
 #define _BEACON_SSIDHEAD_SIZE (4)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
-//一人でテストを行う場合、ここの数を他の人とわける
+// プログラマは基本他の人とつながらない  常に自分のマシンと接続して開発できるように
+// デバッグメニューか何かでで切り替えたら全員とつながることにする
+// 全員とつながる番号は０
 #ifdef DEBUG_ONLY_FOR_ohno
+#define _DEBUG_ALONETEST (1)
+#elif DEBUG_ONLY_FOR_sogabe
 #define _DEBUG_ALONETEST (2)
+#elif DEBUG_ONLY_FOR_matsuda
+#define _DEBUG_ALONETEST (3)
+#elif DEBUG_ONLY_FOR_gotou
+#define _DEBUG_ALONETEST (4)
+#elif DEBUG_ONLY_FOR_tomoya_takahashi
+#define _DEBUG_ALONETEST (5)
+#elif DEBUG_ONLY_FOR_tamada
+#define _DEBUG_ALONETEST (6)
+#elif DEBUG_ONLY_FOR_kagaya
+#define _DEBUG_ALONETEST (7)
+#elif DEBUG_ONLY_FOR_nohara
+#define _DEBUG_ALONETEST (8)
+#elif DEBUG_ONLY_FOR_taya
+#define _DEBUG_ALONETEST (9)
+#elif DEBUG_ONLY_FOR_hiro_nakamura
+#define _DEBUG_ALONETEST (10)
+#elif DEBUG_ONLY_FOR_mituhara
+#define _DEBUG_ALONETEST (11)
+#elif DEBUG_ONLY_FOR_watanabe
+#define _DEBUG_ALONETEST (12)
+#elif DEBUG_ONLY_FOR_genya_hosaka
+#define _DEBUG_ALONETEST (13)
+#elif DEBUG_ONLY_FOR_toru_nagihashi
+#define _DEBUG_ALONETEST (14)
+#elif DEBUG_ONLY_FOR_mori
+#define _DEBUG_ALONETEST (15)
+#elif DEBUG_ONLY_FOR_iwasawa
+#define _DEBUG_ALONETEST (16)
 #else
 #define _DEBUG_ALONETEST (0)
 #endif
@@ -94,16 +126,17 @@ struct _NET_WL_WORK{
     u32 ggid;
     u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
     u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
+    u8 mineDebugNo;       ///< 通信識別子、デバッグ用 本番では０
     u8 channel;
     u8 disconnectType;    ///< 切断状況
     u8 bSetReceiver;
     u8 bEndScan;  // endscan
     u8 bPauseConnect;   ///< 子機の受付中止状態
-    u8 bErrorState:1;   ///< エラーを引き起こしている場合その状態をもちます
-    u8 bErrorCheck:1;   ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
-    u8 bTGIDChange:1;
-    u8 bAutoExit:1;
-    u8 bEntry:1;        ///< 子機の新規参入
+    u8 bErrorState;   ///< エラーを引き起こしている場合その状態をもちます
+    u8 bErrorCheck;   ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
+    u8 bTGIDChange;
+    u8 bAutoExit;
+    u8 bEntry;        ///< 子機の新規参入
 } ;
 
 //==============================================================================
@@ -188,6 +221,7 @@ void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSiz
     _whInitialize(heapID, pNetWL);
 
     pNetWL->disconnectType = _DISCONNECT_NONE;
+    pNetWL->mineDebugNo = _DEBUG_ALONETEST;
 }
 
 //==============================================================================
@@ -258,10 +292,14 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
         return FALSE;  // ポーズ中の親機はBEACON無視
     }
     OS_TPrintf("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
-    if(pGF->debugAloneTest != _DEBUG_ALONETEST){
-        return FALSE;
-    }
 
+#if PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
+    if(pNetWL->mineDebugNo!=0){
+        if(pGF->debugAloneTest != pNetWL->mineDebugNo){
+            return FALSE;
+        }
+    }
+#endif
     if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
         OS_TPrintf("beacon不一致\n");
         return FALSE;
@@ -920,7 +958,11 @@ void GFI_NET_BeaconSetInfo( void )
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
     pGF->serviceNo = pNetWL->serviceNo;    // ゲームの番号
+#if PM_DEBUG
     pGF->debugAloneTest = _DEBUG_ALONETEST;
+#else
+    pGF->debugAloneTest = 0;
+#endif
     GFL_STD_MemCopy( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE);
 
     pGF->pause = pNetWL->bPauseConnect;
@@ -1603,5 +1645,33 @@ u16 GFL_NET_WL_GetBitmap(void)
 u16 GFL_NET_WL_GetCurrentAid(void)
 {
     return WH_GetCurrentAid();
+}
+
+//==============================================================================
+/**
+ * @brief   この親機がいくつとコネクションをもっているのかを得る
+ * @param   index   親のリストのindex
+ * @retval  コネクション数 0-16
+ */
+//==============================================================================
+
+BOOL GFL_NET_WL_ParentConnect(void)
+{
+    int state = WH_GetSystemState();
+    u16 mode[]={WH_CONNECTMODE_DS_PARENT,WH_CONNECTMODE_MP_PARENT};
+
+    if(WH_SYSSTATE_MEASURECHANNEL == state){
+        u16 channel;
+        GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
+        
+        channel = WH_GetMeasureChannel();
+        if(pInit->bTGIDChange){
+            _sTgid = WM_GetNextTgid();
+        }
+        GFI_NET_BeaconSetInfo();
+        WH_ParentConnect(mode[pInit->bMPMode], _sTgid, channel, pInit->maxConnectNum-1 );
+        return TRUE;
+    }
+    return FALSE;
 }
 

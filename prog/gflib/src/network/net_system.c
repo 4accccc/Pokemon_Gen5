@@ -85,9 +85,6 @@ typedef enum{   // 送信状態
 
 
 static _COMM_WORK_SYSTEM* _pComm = NULL;  ///<　ワーク構造体のポインタ
-// 親機になる場合のTGID 構造体に入れていないのは
-// 通信ライブラリーを切ったとしてもインクリメントしたいため
-static u16 _sTgid = 0;
 
 // 送信したことを確認するためのフラグ
 static volatile u8 _sendServerCallBack = _SEND_CB_FIRST_SENDEND;
@@ -427,22 +424,7 @@ BOOL GFI_NET_SystemParentModeInit(BOOL bChangeTGID, int packetSizeMax)
 //==============================================================================
 BOOL GFI_NET_SystemParentModeInitProcess(void)
 {
-    int state = WH_GetSystemState();
-    u16 mode[]={WH_CONNECTMODE_DS_PARENT,WH_CONNECTMODE_MP_PARENT};
-
-    if(WH_SYSSTATE_MEASURECHANNEL == state){
-        u16 channel;
-        GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
-        
-        channel = WH_GetMeasureChannel();
-        if(pInit->bTGIDChange){
-            _sTgid++;
-        }
-        GFI_NET_BeaconSetInfo();
-        WH_ParentConnect(mode[pInit->bMPMode], _sTgid, channel, pInit->maxConnectNum-1 );
-        return TRUE;
-    }
-    return FALSE;
+    return GFL_NET_WL_ParentConnect();
 }
 
 
@@ -817,9 +799,8 @@ static void _dataDsStep(void)
                     continue;
                 }
                 {
-                    u16 crc = GFL_STD_CrcCalc(&pHeader[_DS_CRC_MAX], mcSize-_DS_CRC_MAX);
-                    GF_ASSERT(pHeader[_DS_CRCNO1] == (crc & 0xff));
-                    GF_ASSERT(pHeader[_DS_CRCNO2] == ((crc & 0xff00) >> 8));
+                    u16 crc = GFL_STD_CrcCalc(pHeader, mcSize);
+                    GF_ASSERT(crc == 0);
                 }
                 GFL_NET_RingPuts(&_pComm->recvServerRing[index], adr, mcSize-3);
                 _pComm->bFirstCatch[index] = FALSE;
@@ -1274,6 +1255,7 @@ static BOOL _setSendData(u8* pSendBuff)
         }
         {
             u16 crc = GFL_STD_CrcCalc(&pSendBuff[_DS_CRC_MAX], mcSize - _DS_CRC_MAX);
+            GF_ASSERT(crc != 0);
             pSendBuff[_DS_CRCNO1] = crc & 0xff;
             pSendBuff[_DS_CRCNO2] = (crc & 0xff00) >> 8;
         }
