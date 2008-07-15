@@ -287,6 +287,17 @@ extern GFL_G3D_VMAN_MODE
 	GFL_G3D_GetPaletteManagerMode
 		( void );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アロケーターポインタの取得
+ *
+ * return NNSFndAllocator	メモリアロケータ(NNSで使用)
+ */
+//--------------------------------------------------------------------------------------------
+extern NNSFndAllocator*
+	GFL_G3D_GetAllocaterPointer
+		( void );
+
 
 
 
