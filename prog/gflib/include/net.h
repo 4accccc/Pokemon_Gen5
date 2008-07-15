@@ -9,10 +9,8 @@
 #ifndef __NET_H__
 #define __NET_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
+#include "ui.h"
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
@@ -27,7 +25,7 @@ extern "C" {
 //#endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
@@ -37,7 +35,7 @@ extern "C" {
 #ifndef NET_PRINT
 #if GFL_NET_DEBUG
 #define NET_PRINT(...) \
-  (void) ((OS_Printf(__VA_ARGS__)))
+  (void) ((OS_TPrintf(__VA_ARGS__)))
 #else   //GFL_NET_DEBUG
 #define NET_PRINT(...)           ((void) 0)
 #endif  // GFL_NET_DEBUG
@@ -52,8 +50,6 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #endif
 
 
-/// @brief 通信管理構造体
-typedef struct _GFL_NETSYS GFL_NETSYS;
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
@@ -67,6 +63,30 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 #define GFL_WICON_POSX (240)   ///< ワイヤレスアイコンのデフォルトＸＹ位置
 #define GFL_WICON_POSY (0)
 
+// 無線で使用するDMA番号
+#define _NETWORK_DMA_NO                 (1)
+//WMのパワーモード
+#define _NETWORK_POWERMODE       (1)
+//SSL処理のスレッド優先順位
+#define _NETWORK_SSL_PRIORITY     (20)
+
+
+
+// 親機を選択できる数。
+#define  SCAN_PARENT_COUNT_MAX ( 16 )
+
+// 子機最大数
+#define  GFL_NET_CHILD_MAX  ( 15 )
+
+// ありえないID
+#define COMM_INVALID_ID  (0xff)
+
+
+/// 機最大数
+#define  GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)
+
+///   通信ハンドル最大数  子機全部＋親機 分
+#define  GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1)
 
 
 /// @brief  コマンド関連の定義
@@ -117,24 +137,34 @@ typedef u8 NetID;          ///< 通信ID  0-16 まで
 /// @brief 送信完了を受け取るコールバック型
 typedef void (*CBSendEndFunc)(u16 command);
 
+/// イクニューモンの終了を待つ
+typedef void (*PTRIchneumonCallback)(void* pWork, BOOL bSuccess);
 /// @brief 常に送る送信データを得る
 typedef u8* (*CBGetEveryTimeData)(void);
 /// @brief 常に送られる受信データを得る 送られていないとpWorkにNULLが入る
 typedef void (*CBRecvEveryTimeData)(int netID, void* pWork, int size);
 
-
-typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される
-typedef void* (*NetBeaconGetFunc)(void);    ///< ビーコンデータ取得関数
-typedef int (*NetBeaconGetSizeFunc)(void);    ///< ビーコンデータサイズ取得関数
+// こちらは接続完了後に交換し合うデータ
+typedef void* (*NetInfomationGetFunc)(void);    ///< ユーザー同士が交換するデータのポインタ取得関数
+typedef int (*NetInfomationGetSizeFunc)(void);  ///< ユーザー同士が交換するデータのサイズ取得関数型
+// こちらは親機から子機に一方的に送られるデータ
+typedef void* (*NetBeaconGetFunc)(void);        ///< ビーコンデータ取得関数        上と同じでかまわない
+typedef int (*NetBeaconGetSizeFunc)(void);      ///< ビーコンデータサイズ取得関数  上と同じでかまわない
 typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
+
+typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される関数 
+
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
+
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiユーザーデータをセーブする時に呼ぶ関数
 typedef void (*NetWifiMargeFrinedDataFunc)(int baseFrinedNo, int delFriendNo);  ///< WiFiフレンドデータをマージする状況時に呼ぶ関数
 typedef const char** (*NetIconGraTableFunc)(void);     ///< 通信アイコンのファイルARCテーブルを返す関数
 typedef void (*NetIconGraNoBuffFunc)(int* pNoBuff);  ///< 通信アイコンのファイルARCの番号を返す関数
+//typedef void (*NetKeyMainFunc)(UI_KEYSYS* pKey, u16 keyData);  ///< キー内部処理
 
+typedef void (*NetModeChangeFunc)(void* pWork, BOOL bResult);   ///< 通信形態変更時に呼ばれるコールバック
 
 
 #if GFL_NET_WIFI
@@ -146,6 +176,8 @@ typedef struct{
   const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
   int recvFuncTableNum;              ///< 受信関数テーブル項目数 NELEMS
   void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
+  NetInfomationGetFunc infoFunc;             ///<ユーザー同士が交換するデータのポインタ取得関数
+  NetInfomationGetSizeFunc infoSizeFunc;         ///< ユーザー同士が交換するデータのサイズ取得関数
   NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
   NetBeaconGetSizeFunc beaconGetSizeFunc;   ///< ビーコンデータサイズ取得関数
   NetBeaconCompFunc beaconCompFunc;  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
@@ -171,9 +203,12 @@ typedef struct{
   u8 maxConnectNum;         ///< 最大接続人数
   u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
-  u8 bMPMode;               ///< MP通信モードかどうか
-  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
-  u8 bNetwork;              ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+  u8 bCRC:1;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
+  u8 bMPMode:1;               ///< MP通信モードかどうか
+//  u8 bRequestOnly:1;          ///< 通信要求があったときだけ送信するかどうか  WIFIでは必ずON  WLのDS通信だと必ずOFF
+  u8 bWiFi:1;                 ///< Wi-Fi通信をするかどうか
+//  u8 bNetwork:1;            ///< 通信を開始するかどうか FALSEだとOFFLINE動作
+  u8 bTGIDChange:1;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
 } GFLNetInitializeStruct;
 
 //-------------------------------
@@ -216,10 +251,11 @@ extern BOOL GFL_NET_Exit(void);
 //==============================================================================
 /**
  * @brief   通信のメイン実行関数
- * @return  none
+ * @retval  TRUE  処理を行ってよい場合
+ * @retval  FALSE 同期が取れていないので処理を行わない場合
  */
 //==============================================================================
-extern void GFL_NET_Main(void);
+extern BOOL GFL_NET_Main(void);
 
 //-----ビーコン関連
 //==============================================================================
@@ -252,13 +288,6 @@ extern u8* GFL_NET_GetBeaconMacAddress(int index);
 //-----通信ハンドル管理
 //==============================================================================
 /**
- * @brief   通信ハンドルを作る   通信一個単位のワークエリアの事
- * @return  GFL_NETHANDLE*  通信ハンドルのポインタ
- */
-//==============================================================================
-extern GFL_NETHANDLE* GFL_NET_CreateHandle(void);
-//==============================================================================
-/**
  * @brief   このハンドルの通信番号を得る
  * @param   pNetHandle    通信ハンドルのポインタ
  * @retval  NetID         通信ID
@@ -285,7 +314,7 @@ extern void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macA
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
+extern void GFL_NET_ConnectToParent(u8* macAddress);
 //==============================================================================
 /**
  * @brief   子機になりビーコンを集める
@@ -293,7 +322,7 @@ extern void GFL_NET_ConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_StartBeaconScan(void);
 //==============================================================================
 /**
  * @brief    親機になり待ち受ける
@@ -301,7 +330,7 @@ extern void GFL_NET_StartBeaconScan(GFL_NETHANDLE* pHandle);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_InitServer(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_InitServer(void);
 //==============================================================================
 /**
  * @brief    親機になる
@@ -309,7 +338,7 @@ extern void GFL_NET_InitServer(GFL_NETHANDLE* pHandle);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_CreateServer(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_CreateServer(void);
 //==============================================================================
 /**
  * @brief    親機子機を繰り返し、誰でもいいので接続する
@@ -327,7 +356,7 @@ extern void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_WifiLogin(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_WifiLogin(void);
 
 //==============================================================================
 /**
@@ -352,31 +381,30 @@ extern void GFL_NET_Disconnect(void);
 // 認証に関する関数
 //==============================================================================
 /**
+ * @brief   通信ハンドルを得る
+ * @param   netID  通信ID
+ * @return  GFL_NET_HANDLE  ハンドル
+ */
+//==============================================================================
+extern const GFL_NETHANDLE* GFL_NET_HANDLE_Get(int netID);
+
+//==============================================================================
+/**
+ * @brief   通信可能状態かどうか
+ * @param   GFL_NET_HANDLE  ハンドル
+ * @return  BOOL 通信可能ならTRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_HANDLE_IsConnect(const GFL_NETHANDLE* pHandle);
+
+//==============================================================================
+/**
  * @brief       自分のネゴシエーションがすんでいるかどうか
  * @param       pHandle   通信ハンドル
  * @return      すんでいる場合TRUE   まだの場合FALSE
  */
 //==============================================================================
 extern BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle);
-
-//==============================================================================
-/**
- * @brief   ネゴシエーション済み人数を得る
- * @param[in,out]   NetHandle* pNet     通信ハンドルのポインタ
- * @return   人数
- */
-//==============================================================================
-extern int GFL_NET_GetNegotiationConnectNum(GFL_NETHANDLE* pNet);
-
-//==============================================================================
-/**
- * @brief       ネゴシエーション開始を親に送信する
- * @param[in]   pHandle   通信ハンドル
- * @return      送信に成功したらTRUE
- */
-//==============================================================================
-extern BOOL GFL_NET_RequestNegotiation(GFL_NETHANDLE* pHandle);
-
 
 //==============================================================================
 /**
@@ -394,7 +422,7 @@ extern int GFL_NET_GetConnectNum(void);
  * @retval  BOOL  接続していたらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_IsConnectMember(GFL_NETHANDLE* pNet,NetID id);
+extern BOOL GFL_NET_IsConnectMember(NetID id);
 
 //==============================================================================
 /**
@@ -453,7 +481,7 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const voi
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat);
+extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat);
 
 //==============================================================================
 /**
@@ -493,18 +521,20 @@ extern BOOL GFL_NET_IsTimingSync(GFL_NETHANDLE* pNet, const u8 no);
 /**
  * @brief   DSモードへ通信を切り替える
  * @param   NetHandle* pNet     通信ハンドルのポインタ
- * @retval  none
+ * @param   NetModeChangeFunc   変更した際に呼ばれるコールバック関数
+ * @retval  成功したかどうか TRUEで成功
  */
 //==============================================================================
-extern void GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet);
+extern BOOL GFL_NET_ChangeDsMode(GFL_NETHANDLE* pNet,NetModeChangeFunc func);
 //==============================================================================
 /**
  * @brief   MPモードへ通信を切り替える
  * @param   NetHandle* pNet     通信ハンドルのポインタ
- * @retval  none
+ * @param   NetModeChangeFunc   変更した際に呼ばれるコールバック関数
+ * @retval  成功したかどうか TRUEで成功
  */
 //==============================================================================
-extern void GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet);
+extern BOOL GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet,NetModeChangeFunc func);
 
 //==============================================================================
 /**
@@ -545,14 +575,6 @@ extern BOOL GFL_NET_IsParentMachine(void);
 //==============================================================================
 extern BOOL GFL_NET_IsParentHandle(GFL_NETHANDLE* pNetHandle);
 
-//==============================================================================
-/**
- * @brief     VBlank時に行う処理を実行  (通信アイコンの表示)
- * @param     none
- * @return    none
- */
-//==============================================================================
-extern void GFL_NET_VBlankFunc(void);
 
 #if GFL_NET_WIFI
 //==============================================================================
@@ -614,7 +636,7 @@ extern void GFL_NET_SetUserWork(void* pWork);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto);
+extern void GFL_NET_SetAutoErrorCheck(BOOL bAuto);
 //==============================================================================
 /**
  * @brief   子機がいない場合にエラーにするかどうかを設定する
@@ -623,7 +645,7 @@ extern void GFL_NET_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg);
+extern void GFL_NET_SetNoChildErrorCheck(BOOL bFlg);
 
 
 //==============================================================================
@@ -632,24 +654,21 @@ extern void GFL_NET_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_InitIchneumon(void);
-
-//==============================================================================
-/**
- * @brief    イクニューモンライブラリの初期化が終わったかどうか
- * @retval   TREU   終了
- * @retval   FALSE  まだ終わっていない
- */
-//==============================================================================
-extern BOOL GFL_NET_IsInitIchneumon(void);
-
+extern void GFL_NET_InitIchneumon(PTRIchneumonCallback callback,void* pWork);
 //==============================================================================
 /**
  * @brief    イクニューモンライブラリの終了をしらせる
  * @retval   none
  */
 //==============================================================================
-extern void GFL_NET_ExitIchneumon(void);
+extern void GFL_NET_ExitIchneumon(PTRIchneumonCallback callback,void* pWork);
+//==============================================================================
+/**
+ * @brief    イクニューモンライブラリが動いているかどうかを得る
+ * @retval   TRUE なら動作中
+ */
+//==============================================================================
+extern BOOL GFL_NET_IsIchneumon(void);
 //==============================================================================
 /**
  * @brief    ビーコン強度を得る
@@ -658,6 +677,15 @@ extern void GFL_NET_ExitIchneumon(void);
  */
 //==============================================================================
 extern u16 GFL_NET_WL_GetRssi(int index);
+//==============================================================================
+/**
+ * @brief   データシェアリングが成功したかどうか
+ * @retval  TRUE  データシェアリング成功
+ * @retval  FALSE データシェアリング失敗
+ */
+//==============================================================================
+extern BOOL GFL_NET_SystemCheckDataSharing(void);
+
 
 
 extern void debugcheck(u32* data,int size );
@@ -668,11 +696,8 @@ extern void debugcheck(u32* data,int size );
 #endif //GFL_NET_WIFI
 
 #include "net_command.h"
+#include "net_handle.h"
 
-
-#ifdef __cplusplus
-}/* extern "C" */
-#endif
 
 #endif // __NET_H__
 

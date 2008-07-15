@@ -107,6 +107,7 @@ typedef struct
 	int sendbufflag;
 	
 	int op_aid;			// 相手のaid
+    u32 backupBitmap;
 	
 	int heapID;
 	
@@ -122,18 +123,31 @@ typedef struct
 	
 	int sendintervaltime;		// 前回データを送信してからのフレーム数。
 	
-	int myvchaton;				// 自分のボイスチャットがオンかオフか
-	int opvchaton;				// 相手のボイスチャットがオンかオフか
+	int myvchaton;				// 自分のボイスチャットがオンかオフか 型変更禁止
+    int opvchaton;				// 相手のボイスチャットがオンかオフか 型変更禁止
 	
 	u8 myseqno;				// 自分が送信するパケットのシーケンスNo
 	u8 opseqno;				// 相手が最後に送ってきたパケットのシーケンスNo
     u8 bHeapError;  // HEAP確保失敗の場合
+    u8 pausevchat; //vchat一時停止
+    u8 blockClient;   // クライアントを接続禁止にする
+    u32 BlockUse_BackupBitmap;  // ビットマップ
 	
 	u16 firstflag;
 	
 	// テスト用
 	int s_param;
 } MYDWC_WORK;
+
+
+// 親機のAID
+#define _WIFI_PARENT_AID (0)
+
+enum  _blockStatus{
+    _BLOCK_NONE,
+    _BLOCK_START,
+    _BLOCK_CALLBACK,
+};
 
 // ボイスチャットのトークンと混合しないようにするため、
 // ボイスチャットと違う３２バイトの数字をパケットの先頭につける。
@@ -257,6 +271,8 @@ int mydwc_startConnect(DWCUserData* pMyUserData, DWCFriendData* pFriendList, HEA
 	_dWork->friendindex = -1;
 	_dWork->friendupdate_index = 0;
     _dWork->op_aid = -1;
+    _dWork->backupBitmap = 0;
+    _dWork->BlockUse_BackupBitmap = 0;
     _dWork->newFriendConnect = -1;
     _dWork->bDelay = FALSE;
     _dWork->bVChat = TRUE;
@@ -1330,7 +1346,7 @@ int mydwc_step()
 #ifdef YOSHIHARA_VCHAT_ONOFFTEST		
 		vchat_onoff();
 #endif		
-		if( _dWork->myvchaton == 1 && _dWork->opvchaton == 1 )
+		if( (_dWork->myvchaton == 1) && (_dWork->opvchaton == 1) )
 		{
 			myvct_onVchat();
 		}
@@ -1340,6 +1356,13 @@ int mydwc_step()
 		}
 				
 		myvct_main();
+        if(_dWork->backupBitmap != DWC_GetAIDBitmap()){
+            if(!_dWork->pausevchat && _dWork->bVChat){
+                if(myvct_AddConference(DWC_GetAIDBitmap(), DWC_GetMyAID())){
+                    _dWork->backupBitmap = DWC_GetAIDBitmap();
+                }
+            }
+        }
 	}
 #endif
 	if( _dWork->state == MDSTATE_TIMEOUT ) return 1;
@@ -1389,19 +1412,19 @@ void mydwc_startvchat()
 {
 	switch( _dWork->vchatcodec ){
 		case VCHAT_G711_ULAW:
-			myvct_init( _dWork->heapID, VCT_CODEC_G711_ULAW );
+			myvct_init( _dWork->heapID, VCT_CODEC_G711_ULAW, 1);
 		break;
 		case VCHAT_2BIT_ADPCM:
-			myvct_init( _dWork->heapID, VCT_CODEC_2BIT_ADPCM );
+			myvct_init( _dWork->heapID, VCT_CODEC_2BIT_ADPCM, 1 );
 		break;
 		case VCHAT_3BIT_ADPCM:
-			myvct_init( _dWork->heapID, VCT_CODEC_3BIT_ADPCM );
+			myvct_init( _dWork->heapID, VCT_CODEC_3BIT_ADPCM, 1 );
 		break;
 		case VCHAT_4BIT_ADPCM:		
-			myvct_init( _dWork->heapID, VCT_CODEC_4BIT_ADPCM );
+			myvct_init( _dWork->heapID, VCT_CODEC_4BIT_ADPCM, 1 );
 		break;
 		default:
-			myvct_init( _dWork->heapID, VCT_CODEC_4BIT_ADPCM );   //VCT_CODEC_8BIT_RAW
+			myvct_init( _dWork->heapID, VCT_CODEC_4BIT_ADPCM, 1 );   //VCT_CODEC_8BIT_RAW
 		break;
 	}
 	myvct_setDisconnectCallback( vct_endcallback );
@@ -1798,6 +1821,14 @@ static void SetupGameServerCallback(DWCError error,
             // ネットワークに新規クライアントが加わった
             OS_TPrintf("友達が接続してきました。（インデックス＝%d）\n", index);
 			_dWork->friendindex = index;
+
+            if (_dWork->blockClient){
+                u32 bitmap = ~_dWork->BlockUse_BackupBitmap & DWC_GetAIDBitmap();
+                DWC_CloseConnectionHardBitmap(&bitmap);
+                MYDWC_DEBUGPRINT("受け付けた子機を切断 %x\n",bitmap);
+                return;
+            }
+
             // バッファの確保
             setConnectionBuffer();
         }
@@ -2087,5 +2118,68 @@ void mydwc_VChatRestart()
 		sendPacket();
 	}
 }
+
+static void _blockCallback(void* param)
+{
+   _dWork->blockClient = _BLOCK_CALLBACK;
+}
+
+//==============================================================================
+/**
+ * @brief   クライアント接続を一時的に中止します
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+int mydwc_SetClientBlock(void)
+{
+    if(_dWork->blockClient==_BLOCK_NONE){
+	    _dWork->blockClient = _BLOCK_START;
+        DWC_StopSCMatchingAsync(_blockCallback,NULL);
+    }
+    return (_dWork->blockClient==_BLOCK_CALLBACK);
+}
+
+//==============================================================================
+/**
+ * @brief   クライアント接続を許可に戻します
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+void mydwc_ResetClientBlock(void)
+{
+    _dWork->blockClient = _BLOCK_NONE;
+}
+
+
+//==============================================================================
+/**
+ * @brief   ボイスチャットを停止します
+ * @param   void
+ * @retval  void
+ */
+//==============================================================================
+
+void mydwc_stopvchat(void)
+{
+    myvct_free();
+    _dWork->isvchat = 0;
+    _dWork->backupBitmap = 0;
+}
+
+//==============================================================================
+/**
+ * @brief   MYDWCが初期化済みかどうか
+ * @param   void
+ * @retval  TRUE  初期化済み
+ */
+//==============================================================================
+
+BOOL GFL_NET_DWC_IsInit(void)
+{
+    return (_dWork != NULL);
+}
+
 
 #endif //GFL_NET_WIFI

@@ -75,6 +75,10 @@ CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimp
 MY_COMPONENT_NAME	= ichneumon
 MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
+# 任天堂Cryptライブラリを追加 by mituhara 2006.07.05
+LLIBRARY_DIRS	+= ./library/crypto/$(NITRO_BUILDTYPE)
+LLIBRARIES	+= ./libcrypto.a
+
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定  default.rsfファイルで使用している
 #----------------------------------------------------------------------------

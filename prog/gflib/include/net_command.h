@@ -11,10 +11,6 @@
 #ifndef __NET_COMMAND_H__
 #define __NET_COMMAND_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 //==============================================================================
 //	定義
@@ -37,8 +33,6 @@ enum CommCommand_e {
   GFL_NET_CMD_NEGOTIATION,  ///< 初期化時のネゴシエーション
   GFL_NET_CMD_NEGOTIATION_RETURN,  ///< ネゴシエーションの返事
   GFL_NET_CMD_DSMP_CHANGE,            ///< DSモード通信かMPモード通信かに切り替える許可を得る
-  GFL_NET_CMD_DSMP_CHANGE_REQ,        ///< DSモード通信かMPモード通信かに切り替える指示を出す
-  GFL_NET_CMD_DSMP_CHANGE_END,        ///< DSモード通信かMPモード通信かに切り替え完了したことを通知
   GFL_NET_CMD_TIMING_SYNC,            ///< 同期を取るコマンド  8
   GFL_NET_CMD_TIMING_SYNC_END,        ///< 同期が取れたことを返すコマンド
 #if GFL_NET_WIFI
@@ -93,7 +87,7 @@ extern int GFI_NET_COMMAND_GetPacketSize(int command);
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFI_NET_COMMAND_CallBack(int netID, int sendID, int command, int size, void* pData);
+extern void GFI_NET_COMMAND_CallBack(int netID, int sendID, int command, int size, void* pData,GFL_NETHANDLE* pNetHandle);
 
 //--------------------------------------------------------------
 /**
@@ -116,10 +110,6 @@ extern BOOL GFI_NET_COMMAND_CreateBuffCheck(int command);
 //--------------------------------------------------------------
 
 extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
-
-#ifdef __cplusplus
-}/* extern "C" */
-#endif
 
 #endif// __NET_COMMAND_H__
 

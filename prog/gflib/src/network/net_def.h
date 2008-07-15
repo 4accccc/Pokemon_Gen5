@@ -30,43 +30,16 @@ typedef void (*PTRCommRecvLocalFunc)(u16 aid, u16 *data, u16 size);
 /// @brief 送信完了コールバック
 typedef void (*PTRSendDataCallback)(BOOL result);
 
-/// コールバック関数の書式 内部ステート遷移用
-typedef void (*PTRStateFunc)(GFL_NETHANDLE* pNetHandle);
-
 /// ビーコンを拾ったときに呼ばれるコールバック関数
-typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
+typedef void (*_PARENTFIND_CALLBACK)(void);
 
 
 #define _SCAN_ALL_CHANNEL  (0)  ///< スキャンするチャンネルをランダムで行う場合０に設定する
 
 
-// 無線で使用するDMA番号
-#define _NETWORK_DMA_NO                 (1)
-//WMのパワーモード
-#define _NETWORK_POWERMODE       (1)
-//SSL処理のスレッド優先順位
-#define _NETWORK_SSL_PRIORITY     (20)
-
-
-
-// 親機を選択できる数。
-#define  SCAN_PARENT_COUNT_MAX ( 16 )
-
-// 子機最大数
-#define  GFL_NET_CHILD_MAX  ( 15 )
-
-// ありえないID
-#define COMM_INVALID_ID  (0xff)
-
-
-/// 機最大数
-#define  GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)
-
-///   通信ハンドル最大数  子機全部＋親機 分
-#define  GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1)
 
 /// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
-#define GFL_NET_DATA_HEADER            (4)
+#define GFL_NET_DATA_HEADER            (6)
 //#define GFL_NET_CHILD_DATA_SIZE           (40)
 //#define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
 
@@ -80,7 +53,7 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 
 // 親のID
-#define COMM_PARENT_ID    (0)
+#define GFL_NET_PARENT_NETID    (0)
 
 // 通信でメニューを出した場合の戻り値
 #define  COMM_RETVAL_NULL    (0)     ///< 選択中
@@ -101,38 +74,6 @@ typedef void (*_PARENTFIND_CALLBACK)(GFL_NETHANDLE* pHandle);
 
 
 
-
-/// ネットワークハンドル
-struct _GFL_NETHANDLE{
-  NET_TOOLSYS* pTool;      ///< netTool
-  NET_PARENTSYS* pParent;  ///< 親の情報を保持するポインタ
-  PTRStateFunc state;      ///< ハンドルのプログラム状態
-  GFL_STD_RandContext sRand; ///< 親子機ネゴシエーション用乱数キー
-  HEAPID baseHeapID;       ///< 通信がcreateするためのID
-  HEAPID netHeapID;        ///< 通信libが使用するID
-  HEAPID wifiHeapID;       ///< wifiLibが使用するID
-  u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ
-  u8 negotiationID[GFL_NET_HANDLE_MAX]; ///< 接続しているハンドルの状態
-  s8 wifiTargetNo;    ///< 接続再起番号(wifi用)
-  u8 disconnectType;  ///< 切断時のタイプ(wifi)
-  u8 bWifiDisconnect;  ///< 切断フラグ(wifi)
-  u8 bDisconnectError; ///< 切断エラー(wifi)
-  u8 errorCode;       ///< 最新エラーコード保存
-  u8 machineNo;       ///< マシン番号
-  u8 serviceNo;       ///< 通信サービス番号
-  u16 timer;          ///< 進行タイマー
-  u8 bFirstParent;    ///< 繰り返し親子切り替えを行う場合の最初の親状態
-  u8 limitNum;        ///< 受付制限したい場合のLIMIT数
-  u8 negoCount;  ///< 通信受付の状態
-  u8 negotiation;     ///< 通信受付の状態
-  u8 creatureNo;     ///< 子機としての
-  u8 stateError;
-  u8 bErrorAuto;
-  u8 dsmpChange;        ///< 通信モード変更
-  u8 dsmpChangeType;    ///< 通信モード変更タイプ
-  u8 bDisconnectState;  ///< 切断状態に入っている場合TRUE
-  u8 ResetStateType;   ///< 通信リセットがかかるときの種類
-};
 
 enum _negotiationType {
     _NEGOTIATION_CHECK,   // 接続確認中
@@ -174,11 +115,7 @@ extern NET_TOOLSYS* _NETHANDLE_GetTOOLSYS(GFL_NETHANDLE* pNetHandle);
 
 extern GFL_NETWL* _GFL_NET_GetNETWL(void);
 
-extern GFL_NETSYS* _GFL_NET_GetNETSYS(void);
-
 extern GFLNetInitializeStruct* _GFL_NET_GetNETInitStruct(void);
-
-extern PTRStateFunc GFL_NET_GetStateFunc(GFL_NETHANDLE* pHandle);
 
 extern void _GFL_NET_SetNETWL(GFL_NETWL* pWL);
 
@@ -186,7 +123,7 @@ extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
 
 extern void GFI_NET_DeleteNetHandle(GFL_NETHANDLE* pHandle);
 
-extern void GFI_NET_FatalErrorFunc(GFL_NETHANDLE* pNetHandle,int errorNo);
+extern void GFI_NET_FatalErrorFunc(int errorNo);
 
 extern int GFI_NET_GetConnectNumMax(void);
 

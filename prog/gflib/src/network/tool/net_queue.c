@@ -125,31 +125,20 @@ static void _setSendData(SEND_BUFF_DATA* pSendBuff ,u8 byte)
 
 static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
 {
-    int cs = GFI_NET_COMMAND_GetPacketSize(pQueue->command);
-
-    if( cs == GFL_NET_COMMAND_SIZE_VARIABLE ){
-        if(pSendBuff->size < _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS){
-            pQueue->bHeadSet = FALSE;
-            return TRUE;
-        }
-    }
-    else{
-        if(pSendBuff->size < _GFL_NET_QUEUE_HEADERBYTE){
-            pQueue->bHeadSet = FALSE;
-            return TRUE;
-        }
-    }
+    // 1byte コマンド番号
     _setSendData(pSendBuff,pQueue->command);
-    if(cs == GFL_NET_COMMAND_SIZE_VARIABLE){
-        _setSendData(pSendBuff,(u8)((pQueue->size >> 8)  & 0xff));
+
+    // 1-2byte サイズ
+    if(pQueue->size < 127){  // １２７未満は普通に格納
+        _setSendData(pSendBuff,(u8)(pQueue->size));
+    }
+    else{   //１２７以上は最上位BITを立てて２バイトで格納
+        _setSendData(pSendBuff,(u8)((pQueue->size >> 8)  & 0xff) | 0x80);
         _setSendData(pSendBuff,(u8)(pQueue->size & 0xff));
     }
-    else{
-        pQueue->size = (u16)cs;
-    }
-    _setSendData(pSendBuff,(u8)(pQueue->sendNo));
-    _setSendData(pSendBuff,(u8)(pQueue->recvNo));
-    pQueue->bHeadSet = TRUE;
+    // 1byte 受け取りBIT
+    _setSendData(pSendBuff,(u8)(pQueue->recvBit));
+
     return FALSE;
 }
 
@@ -159,60 +148,39 @@ static BOOL _dataHeadSet(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff)
  * @param   pQueue  キュー
  * @param   pSendBuff   送信バッファ
  * @param   pSendRing   送信リングバッファ
- * @param   bNextPlus   データ末尾にヘッダーだけを含めるかどうか
  * @retval  FALSE ヘッダーが入らなかった場合
  * @retval  TRUE  はいった
  */
 //==============================================================================
 
 static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
-                           RingBuffWork* pSendRing, BOOL bNextPlus)
+                           RingBuffWork* pSendRing)
 {
     int i;
-    int size;
-    int cs = GFI_NET_COMMAND_GetPacketSize(pQueue->command);
-    if( cs == GFL_NET_COMMAND_SIZE_VARIABLE){
-        size = _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS;
-    }
-    else{
-        size = _GFL_NET_QUEUE_HEADERBYTE;
-    }
-    if((pSendBuff->size < (pQueue->size + size)) && (!bNextPlus)){  // キューのほうがでかい場合
+    int size ;
+    if(pSendBuff->size < (pQueue->size + _GFL_NET_QUEUE_HEADERBYTE) ){  // キューのほうがでかい場合
         return FALSE;
     }
-    if(pQueue->bHeadSet != TRUE){
-        if(_dataHeadSet(pQueue, pSendBuff)){
-            return FALSE;
-        }
-    }
-//    if((pSendBuff->size < pQueue->size) && (!bNextPlus)){  // キューのほうがでかい場合
-//        return FALSE;  // 前に移動
-//    }
+    _dataHeadSet(pQueue, pSendBuff);
+
     if(pSendBuff->size < pQueue->size){  // キューのほうがでかい場合
-        if(pQueue->bRing){
+        if(pQueue->pQData==NULL){
             GFL_NET_RingGets(pSendRing, pSendBuff->pData, pSendBuff->size);
         }
         else{
-          //  NET_PRINT("-----%x-%x--%d\n",(int)pQueue->pData, (int)pSendBuff->pData , pSendBuff->size);
-//            MI_CpuCopy8( pQueue->pData, pSendBuff->pData, pSendBuff->size);
-            
-            for(i = 0;i < pSendBuff->size;i++){
-                pSendBuff->pData[i] = pQueue->pData[i];
-            }
+            MI_CpuCopy8(pQueue->pQData,pSendBuff->pData, pSendBuff->size);
+            pQueue->pQData += pSendBuff->size;  // アドレスを進める
         }
-//        NET_PRINT("-----%d-%d--\n",pQueue->command, pQueue->size);
-        
-        pQueue->pData += pSendBuff->size;  // アドレスを進める
         pQueue->size -= pSendBuff->size;  // 送信サイズ減らす
         pSendBuff->size = -1;  // 残りを-1にする
         return TRUE;
     }
     // 同じもしくは小さい場合
-    if(pQueue->bRing){
+    if(pQueue->pQData==NULL){
         GFL_NET_RingGets(pSendRing, pSendBuff->pData, pQueue->size);
     }
     else{
-        MI_CpuCopy8( pQueue->pData, pSendBuff->pData, pQueue->size);
+        MI_CpuCopy8( pQueue->pQData, pSendBuff->pData, pQueue->size);
     }
     pSendBuff->pData += pQueue->size;  // アドレスを進める
     pSendBuff->size -= pQueue->size; // サイズは減らす
@@ -229,14 +197,13 @@ static BOOL _dataCopyQueue(SEND_QUEUE* pQueue, SEND_BUFF_DATA* pSendBuff,
  * @param   size      サイズ
  * @param   bFast     優先度が高いデータ?
  * @param   bSave     保存するかどうか
- * @param   sendNo      送る人
- * @param   recvNo      受け取る人
+ * @param   recvNo    受け取るBIT
  * @retval  TRUE      蓄えた
  * @retval  FALSE     キューに入らなかった
  */
 //==============================================================================
 
-BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int sendNo,int recvNo)
+BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int recvBit)
 {
     SEND_QUEUE* pLast;
     SEND_QUEUE* pFree = _freeQueue(pQueueMgr);
@@ -245,32 +212,28 @@ BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, 
 
     bFast = TRUE;
     if(pFree== NULL){
-        OS_TPanic("no free queue\n");  //多く取ってあるはずのキューが足りない 送信しすぎ
+        GF_ASSERT( 0 );  // 多く取ってあるはずのキューが足りない 通信の設計を見直す必要がある
         return FALSE;
     }
     
-    GF_ASSERT(size < 65534 && "65534以上は分割");
-//    cSize = GFL_NET_COMMAND_GetPacketSize(command);
-
-  //  if(GFL_NET_COMMAND_SIZE_VARIABLE == cSize){
-//        cSize = size;
-//    }
+    GF_ASSERT((u16)size < (0xffff/2));
     if(bSave){
         int rest = GFL_NET_RingDataRestSize(pQueueMgr->pSendRing);
-        if((cSize+_GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS) >= rest){  // 送信バッファをオーバーしてしまう
-            OS_TPanic("送信バッファオーバー\n");  //同じく送信しすぎ
-//            NET_PRINT("送信バッファオーバー com = %d size = %d / %d\n", command, cSize, rest);
+        if((cSize+_GFL_NET_QUEUE_HEADERBYTE) >= rest){  // 送信バッファをオーバーしてしまう  通信の設計を見直す必要がある
+            GF_ASSERT( 0 );
             return FALSE;
         }
         GFL_NET_RingPuts(pQueueMgr->pSendRing, pDataArea, cSize);
         GFL_NET_RingEndChange(pQueueMgr->pSendRing);
-        pFree->bRing = TRUE;
+        pFree->pQData = NULL;
+    }
+    else{
+        pFree->pQData = pDataArea;
     }
     pFree->size = cSize;
     pFree->command = command;
-    pFree->pData = pDataArea;
-    pFree->sendNo = sendNo;
-    pFree->recvNo = recvNo;
+    pFree->recvBit = recvBit;
+    
     if(bFast == TRUE){
         pTerm = &pQueueMgr->fast;
     }
@@ -348,11 +311,10 @@ static void _queueNext(SEND_QUEUE_MANAGER* pQueueMgr)
  */
 //==============================================================================
 
-BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, BOOL bNextPlus)
+BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff)
 {
     int ret;
     int i;
-    int bNextPlusFirst = TRUE;
 
     while(pSendBuff->size > 0){
         SEND_QUEUE* pQueue = _queueGet(pQueueMgr);
@@ -361,7 +323,7 @@ BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBu
         }
         _queueNext(pQueueMgr);
         // ヘッダー送信できない
-        if(!_dataCopyQueue(pQueue, pSendBuff, pQueueMgr->pSendRing, bNextPlusFirst)){
+        if(!_dataCopyQueue(pQueue, pSendBuff, pQueueMgr->pSendRing)){
             pQueueMgr->pNow = pQueue;  // 次の最初で送信できるようにセット
             break;
         }
@@ -372,7 +334,6 @@ BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBu
         else{
             MI_CpuFill8(pQueue, 0, sizeof(SEND_QUEUE));  // キューを消す
         }
-        bNextPlusFirst = bNextPlus;
     }
     for(i = 0 ; i < pSendBuff->size; i++){
         *pSendBuff->pData = GFL_NET_CMD_NONE;
@@ -397,9 +358,8 @@ BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBu
 void GFL_NET_QueueManagerInitialize(SEND_QUEUE_MANAGER* pQueueMgr, int queueMax, RingBuffWork* pSendRing, HEAPID heapid)
 {
     MI_CpuFill8(pQueueMgr, 0 ,sizeof(SEND_QUEUE_MANAGER));
-    pQueueMgr->heapTop = GFL_HEAP_AllocMemory(heapid,
+    pQueueMgr->heapTop = GFL_HEAP_AllocClearMemory(heapid,
                                          sizeof(SEND_QUEUE)*queueMax);
-    MI_CpuFill8(pQueueMgr->heapTop, 0 ,sizeof(SEND_QUEUE)*queueMax);
     pQueueMgr->max = queueMax;
     pQueueMgr->pSendRing = pSendRing;
 }

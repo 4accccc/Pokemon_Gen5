@@ -2,13 +2,32 @@
   Project:  NitroSDK - wireless_shared - demos - wh
   File:     wh.h
 
-  Copyright 2003-2005 Nintendo.  All rights reserved.
+  Copyright 2003-2007 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
   Company Ltd., and are protected by Federal copyright law.  They may
   not be disclosed to third parties or copied or duplicated in any form,
   in whole or in part, without the prior written consent of Nintendo.
+
+  $Log: wh.h,v $
+  Revision 1.25  2007/10/02 09:06:05  yosizaki
+  small fix about const-cast.
+
+  Revision 1.24  2007/02/20 00:28:08  kitase_hirotake
+  indent source
+
+  Revision 1.23  2006/10/26 06:56:01  kitase_hirotake
+  WH_SetIndCallback の追加
+
+  Revision 1.22  2006/07/19 09:07:33  yosizaki
+  add WH_SetSsid.
+
+  Revision 1.21  2006/04/10 13:19:13  yosizaki
+  support WH_MP_FREQUENCY.
+
+  Revision 1.20  2006/01/18 02:12:39  kitase_hirotake
+  do-indent
 
   Revision 1.19  2005/04/26 02:35:02  terui
   Fix comment
@@ -69,6 +88,7 @@
   Revision 1.1  2004/10/21 00:41:50  yosizaki
   Initial upload.
 
+  $NoKeywords$
  */
 
 /*
@@ -93,6 +113,7 @@
 */
 
 /*
+  Log : (from dataShare-model)
   Revision 1.15  2004/10/06 05:11:35  sasakis
   グラフ表示の追加など。
 
@@ -144,20 +165,47 @@
 #ifndef __WMHIGH_H__
 #define __WMHIGH_H__
 
-#include "wh_config.h"
+#include "../net_def.h"
 
+// 無線で使用するDMA番号
+#define WH_DMA_NO                 _NETWORK_DMA_NO
 
-typedef struct _WM_INFO_STRUCT  GFL_NETWM;
+// 子機最大数（親機を含まない数）
+//#define WH_CHILD_MAX              15
 
+// シェア出来るデータの最大サイズ
+//#define WH_DS_DATA_SIZE           12//128//12
 
-// 使用する GGID
-#if 0
-#define _DP_GGID       (0x333)   // メインのGGID
-#define _MYSTERY_GGID  (0x333)
-#define	_RANGER_GGID   (0x00000178)
-#define	_WII_GGID      (0x346)   //
-#define _BCON_DOWNLOAD_GGID (0x345)
-#endif
+// 1回の通信で送れるデータの最大サイズ
+// データシェアリングに加えて通常の通信をする場合は、その分だけ
+// ここの値を増やしてください。その際は、複数パケット送信による追加の
+// ヘッダフッタ分を加算する必要があります。
+// 詳しくは docs/TechnicalNotes/WirelessManager.doc を参照してください。
+// GUIDELINE : ガイドライン準拠ポイント(6.3.2)
+// リファレンスのワイヤレスマネージャ(WM)→図表・情報→無線通信時間計算シート
+// で計算した MP 通信1回分の所要時間が 5600 μ秒以下となることを推奨しています。
+//#define WH_PARENT_MAX_SIZE      (WH_DS_DATA_SIZE * (1 + WH_CHILD_MAX) + WM_SIZE_DS_PARENT_HEADER)
+//#define WH_CHILD_MAX_SIZE       (WH_DS_DATA_SIZE)
+
+// 1ピクチャーフレームあたりのMP通信回数上限
+// データシェアリングとブロック転送など複数のプロトコルを並行する場合は
+// この値を1より大きく(または無制限を示す0に)設定する必要があります。
+// そうでない場合、もっとも優先度の高い1つのプロトコル以外は
+// MP通信を一切実行できなくなってしまいます。
+#define WH_MP_FREQUENCY           2
+
+// 通常の MP 通信で使用するポート
+#define WH_DATA_PORT              14
+
+// 通常の MP 通信で使用する優先度
+#define WH_DATA_PRIO              WM_PRIORITY_NORMAL
+
+// データシェアリングで使用するポート
+#define WH_DS_PORT                13
+
+// ネゴシエーションポート
+#define WH_NG_PORT                12
+
 
 // WM_Initializeを使用して初期化する場合はOFF
 // WM_Init, WM_Enable, WM_PowerOnを個別に使用して細かく制御する必要がある場合にはONに設定する。
@@ -171,7 +219,7 @@ enum
     WH_SYSSTATE_BUSY,                  // 接続作業中
     WH_SYSSTATE_CONNECTED,             // 接続完了（この状態で通信可能）
     WH_SYSSTATE_DATASHARING,           // data-sharing有効で接続完了
-    WH_SYSSTATE_KEYSHARING,            // key-sharing有効で接続完了
+    WH_SYSSTATE_KEYSHARING_NONE,       // key-sharing有効で接続完了  (使っていない)
     WH_SYSSTATE_MEASURECHANNEL,        // チャンネルの電波使用率をチェック
     WH_SYSSTATE_CONNECT_FAIL,          // 親機への接続失敗
     WH_SYSSTATE_ERROR,                 // エラー発生
@@ -192,17 +240,39 @@ enum
 
 enum
 {
+  WH_NEGO_NONE,   // ネゴシエーションまだの状態
+  WH_NEGO_REQ,    // リクエストを子機が送信
+  WH_NEGO_REQOK,  // リクエストを受けた事を親機が送信
+  WH_NEGO_START,  // 子機を開始したことを子機が送信
+  WH_NEGO_REJECT, // 拒否する事を親機から送信
+};
+
+enum
+{
     // 自前のエラーコード
     WH_ERRCODE_DISCONNECTED = WM_ERRCODE_MAX,   // 親から切断された
     WH_ERRCODE_PARENT_NOT_FOUND,       // 親がいない
     WH_ERRCODE_NO_RADIO,               // 無線使用不可
     WH_ERRCODE_LOST_PARENT,            // 親を見失った
     WH_ERRCODE_NOMORE_CHANNEL,         // すべてのチャンネルの調査を終えた
-    WH_ERRCODE_FATAL,
+    WH_ERRCODE_FATAL,   //FATALエラー
     WH_ERRCODE_MAX
 };
 
 typedef BOOL (*WHStartScanCallbackFunc) (WMBssDesc *bssDesc);
+
+/* 親機受信バッファのサイズ */
+//#define WH_PARENT_RECV_BUFFER_SIZE  WM_SIZE_MP_PARENT_RECEIVE_BUFFER( WH_CHILD_MAX_SIZE, WH_CHILD_MAX, FALSE )
+/* 親機送信バッファのサイズ */
+//#define WH_PARENT_SEND_BUFFER_SIZE  WM_SIZE_MP_PARENT_SEND_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
+
+/* 子機受信バッファのサイズ */
+//#define WH_CHILD_RECV_BUFFER_SIZE   WM_SIZE_MP_CHILD_RECEIVE_BUFFER( WH_PARENT_MAX_SIZE, FALSE )
+/* 子機送信バッファのサイズ */
+//#define WH_CHILD_SEND_BUFFER_SIZE   WM_SIZE_MP_CHILD_SEND_BUFFER( WH_CHILD_MAX_SIZE, FALSE )
+
+/* SDK のサンプルデモ用に予約された GGID を定義するマクロ */
+#define SDK_MAKEGGID_SYSTEM(num)    (0x003FFF00 | (num))
 
 /* 未接続, または親機しかいない状態を示すビットマップ値 */
 #define WH_BITMAP_EMPTY           1
@@ -213,38 +283,17 @@ typedef void (*WHSendCallbackFunc) (BOOL result);
 // 接続許可判定関数型 (for multiboot model)
 typedef BOOL (*WHJudgeAcceptFunc) (WMStartParentCallback *);
 
-// ggidスキャンコールバック
-typedef void (*fGGIDCallBack) (u32 ggid, int serviceNo);
-
 // 受信コールバック型
 typedef void (*WHReceiverFunc) (u16 aid, u16 *data, u16 size);
 
+/// 非接続時に呼ばれるコールバック定義
+typedef void (*WHDisconnectCallBack) (int aid);
+// ビーコンを集めている際のコールバック
+typedef BOOL (*WHBeaconScanCallBack)(WMBssDesc* bd);
+
 // WEP Key 生成関数
-typedef u16 (*WHParentWEPKeyGeneratorFunc) (u16* wepkey, const WMParentParam* parentParam);
-typedef u16 (*WHChildWEPKeyGeneratorFunc) (u16* wepkey, const WMBssDesc* bssDesc);
-
-/// 接続や非接続時に呼ばれるコールバック定義
-typedef void (*WHdisconnectCallBack) (int aid);
-
-extern void WHSetDisconnectCallBack(WHdisconnectCallBack callBack);
-
-extern void WHSetConnectCallBack(WHdisconnectCallBack callBack);
-
-/// 接続確認時に呼ばれるコールバック定義
-typedef BOOL (*WHConnectCheckCallBack) (int aid, void* pData);
-/// 接続確認時に呼ばれるコールバック登録
-extern void WHSetConnectCheckCallBack(WHConnectCheckCallBack callBack);
-
-/// エラー時に呼ばれるコールバック定義
-typedef void (*WHErrorCallBack) (int aid, int errorNo);
-/// エラー時に呼ばれるコールバック登録
-extern void WHSetErrorCallBack(WHErrorCallBack callBack);
-
-/// SSID取得コールバック定義
-typedef u8* (*WHGetSSIDDataCallBack)(void);
-/// SSID取得コールバック登録
-extern void WHSetSSIDGetCallBack(WHGetSSIDDataCallBack callBack);
-
+typedef u16 (*WHParentWEPKeyGeneratorFunc) (u16 *wepkey, const WMParentParam *parentParam);
+typedef u16 (*WHChildWEPKeyGeneratorFunc) (u16 *wepkey, const WMBssDesc *bssDesc);
 
 
 
@@ -265,6 +314,21 @@ extern void WHSetSSIDGetCallBack(WHGetSSIDDataCallBack callBack);
 extern void WH_SetGgid(u32 ggid);
 
 /*---------------------------------------------------------------------------*
+  Name:         WH_SetSsid
+
+  Description:  子機接続時に指定するSSIDを設定します。
+                子機からの接続前に呼び出します。
+
+  Arguments:    ssid    設定するSSIDが格納されたバッファ。
+                length  設定するSSIDのデータ長。
+                        WM_SIZE_CHILD_SSID(24バイト)に満たない場合は
+                        後続する余白を0で埋め、上回る場合には切り捨てます。
+
+  Returns:      None.
+ *---------------------------------------------------------------------------*/
+extern void WH_SetSsid(const void *ssid, u32 length);
+
+/*---------------------------------------------------------------------------*
   Name:         WH_SetUserGameInfo
 
   Description:  ユーザ定義の親機情報を設定します。
@@ -275,7 +339,7 @@ extern void WH_SetGgid(u32 ggid);
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-extern void WH_SetUserGameInfo( u16* userGameInfo, u16 length );
+extern void WH_SetUserGameInfo(u16 *userGameInfo, u16 length);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_SetDebugOutput
@@ -286,7 +350,7 @@ extern void WH_SetUserGameInfo( u16* userGameInfo, u16 length );
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-void WH_SetDebugOutput(void (*func) (const char *, ...));
+void    WH_SetDebugOutput(void (*func) (const char *, ...));
 
 /*---------------------------------------------------------------------------*
   Name:         WH_SetParentWEPKeyGenerator
@@ -320,6 +384,20 @@ extern void WH_SetParentWEPKeyGenerator(WHParentWEPKeyGeneratorFunc func);
  *---------------------------------------------------------------------------*/
 extern void WH_SetChildWEPKeyGenerator(WHChildWEPKeyGeneratorFunc func);
 
+/*---------------------------------------------------------------------------*
+  Name:         WH_SetIndCallback
+
+  Description:  WH_Initialize 関数で呼び出している WM_SetIndCallback 関数に指定する
+                コールバック関数を指定します。
+                この関数は WH_Initialize 関数の前に呼ぶようにしてください。
+                この関数でコールバック関数を指定していない場合はデフォルトの
+                WH_IndicateHandler がコールバックに設定されます。
+
+  Arguments:    callback    WM_SetIndCallback で指定する Indication 通知用コールバックです。
+
+  Returns:      None.
+ *---------------------------------------------------------------------------*/
+void    WH_SetIndCallback(WMCallbackFunc callback);
 
 /**************************************************************************
  * 以下は、低レイヤ WM ライブラリの状態を取得するラッパー関数です。
@@ -427,36 +505,14 @@ extern u16 WH_GetMeasureChannel(void);
  * 以下は、無線を初期化して通信可能状態まで遷移する関数です。
  **************************************************************************/
 
-
 /* ----------------------------------------------------------------------
-   Name:        WH_CreateHandle
-   Description: メモリーを確保し初期化します
-   Arguments:   作業領域.
-   Returns:     メモリー
+   Name:        WH_Initialize
+   Description: 初期化作業を行い、初期化シーケンスを開始します。
+   Arguments:   None.
+   Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-extern GFL_NETWM* WH_CreateHandle(HEAPID heapID, void* pHeap, int maxNum, int maxByte);
+extern BOOL WH_Initialize(HEAPID heapID);
 
-/* ----------------------------------------------------------------------
-   Name:        WH_DestroyHandle
-   Description: メモリーを開放処理します
-   Arguments:   作業領域.
-   Returns:     メモリー
-   ---------------------------------------------------------------------- */
-extern void WH_DestroyHandle(GFL_NETWM* pWmInfo);
-
-/** ----------------------------------------------------------------------
- *
- * @brief    初期化作業を行い、初期化シーケンスを開始します。
- * @param    heapID  ヒープID
- * @param    pHeap   GFL_NETWMのポインタ
- * @return   
-   ---------------------------------------------------------------------- */
-extern BOOL WH_Initialize(void* pHeap, BOOL bNet);
-//extern BOOL WH_Initialize(void* pHeap);
-/* ----------------------------------------------------------------------
-   ヒープ領域サイズを返す
-   ---------------------------------------------------------------------- */
-extern int WH_GetHeapSize(void);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_TurnOnPictoCatch
@@ -501,7 +557,6 @@ extern void WH_TurnOffPictoCatch(void);
  *---------------------------------------------------------------------------*/
 extern BOOL WH_StartScan(WHStartScanCallbackFunc callback, const u8 *macAddr, u16 channel);
 
-
 /*---------------------------------------------------------------------------*
   Name:         WH_EndScan
 
@@ -521,11 +576,10 @@ extern BOOL WH_EndScan(void);
                          WH_CONNECTMODE_KS_PARENT ならば親機としてKeySharing開始。
                tgid    - 親機通信tgid
                channel - 親機通信channel
-               maxEntry - 最大受付子機数
-               beaconPeriod - ビーコン間隔 サービスによって指定する
   Returns:     接続シーケンス開始に成功すれば真。
   ---------------------------------------------------------------------- */
-extern BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry, u16 beaconPeriod,BOOL bEntry);
+//extern BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel);
+extern BOOL WH_ParentConnect(int mode, u16 tgid, u16 channel,u16 maxEntry);
 
 /* ----------------------------------------------------------------------
   Name:        WH_ChildConnect
@@ -556,7 +610,7 @@ extern BOOL WH_ChildConnect(int mode, WMBssDesc *bssDesc);
 
   Returns:     接続シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
-extern BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel,WHStartScanCallbackFunc sScanCallback);
+extern BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_SetJudgeAcceptFunc
@@ -578,10 +632,9 @@ extern void WH_SetJudgeAcceptFunc(WHJudgeAcceptFunc func);
    Name:        WH_SetReceiver
    Description: WH_DATA_PORT ポートにデータ受信コールバックを設定します。
    Arguments:   proc - データ受信コールバック
-                port   データ送信ポート
    Returns:     none.
    ---------------------------------------------------------------------- */
-extern void WH_SetReceiver(WHReceiverFunc proc, int port);
+extern void WH_SetReceiver(WHReceiverFunc proc);
 
 /* ----------------------------------------------------------------------
    Name:        WH_SendData
@@ -590,7 +643,23 @@ extern void WH_SetReceiver(WHReceiverFunc proc, int port);
    Arguments:   size - データサイズ
    Returns:     送信開始に成功すれば真。
    ---------------------------------------------------------------------- */
-extern BOOL WH_SendData(void *data, u16 datasize, int port, WHSendCallbackFunc callback);
+extern BOOL WH_SendData(const void *data, u16 datasize, WHSendCallbackFunc callback);
+
+/* ----------------------------------------------------------------------
+   Name:        WH_SetNGReceiver
+   Description: WH_NG_PORT ポートにデータ受信コールバックを設定します。ネゴシエーション用
+   Arguments:   proc - データ受信コールバック
+   Returns:     none.
+   ---------------------------------------------------------------------- */
+extern void WH_SetNGReceiver(WHReceiverFunc proc);
+
+/* ----------------------------------------------------------------------
+   Name:        WH_SendNGData
+   Description: WH_NG_PORT ポートにデータ送信を開始します。ネゴシエーション専用
+   Arguments:   data = ネゴシエーションタイプ
+   Returns:     送信開始に成功すれば真。
+   ---------------------------------------------------------------------- */
+extern BOOL WH_SendNGData(const u16 data, WHSendCallbackFunc callback);
 
 
 /**************************************************************************
@@ -622,7 +691,7 @@ extern u16 *WH_GetSharedDataAdr(u16 aid);
    Arguments:   data - 送信するデータ
    Returns:     成功すれば真。
    ---------------------------------------------------------------------- */
-extern BOOL WH_StepDS(void *data);
+extern BOOL WH_StepDS(const void *data);
 
 
 /**************************************************************************
@@ -674,59 +743,48 @@ extern BOOL WH_End(void);
 extern u16 WH_GetCurrentAid(void);
 
 /*---------------------------------------------------------------------------*
-  Name:         WH_IsSysStateIdle
-  Description:  アイドル状態になったのを確認して
-                次の状態に進むので、その確認のために必要  k.ohno追加
-  Arguments:    none
-  Returns:      WH_SYSSTATE_IDLEならTRUE
+  Name:         WH_SetScanCallback
+  Description:  スキャンコールバック設定
+  Arguments:    コールバック
+  Returns:      none
  *---------------------------------------------------------------------------*/
-extern BOOL WH_IsSysStateIdle(void);
-extern BOOL WH_IsSysStateBusy(void);
-extern BOOL WH_IsSysStateScan(void);
+extern void WH_SetScanCallback(WHStartScanCallbackFunc callback);
+
+/*---------------------------------------------------------------------------*
+  Name:         WHSetGameInfo
+  Description:  ビーコンの中身を変更する
+                接続時にしか働かない
+  Arguments:
+  Returns:      none
+ *---------------------------------------------------------------------------*/
 
 extern void WHSetGameInfo(void* pBuff, int size, int ggid, int tgid);
 
-extern BOOL WHSetEntry(BOOL bEnable);
+/*---------------------------------------------------------------------------*
+  Name:         WHGetBeaconSendNum
+  Description:  ビーコンを何回送ったかを得る
+  Arguments:    none
+  Returns:      送った回数
+ *---------------------------------------------------------------------------*/
 
-extern BOOL WHIsSetEntryEnd(void);
-
-extern void WHSetLifeTime(BOOL bMinimum);
-
-extern BOOL WHIsParentBeaconSent(void);
-
-extern void WH_ParentDataInit(void);
-
-extern void WH_SetMaxEntry(int maxEntry);
-
-extern BOOL WH_IsSysStateError(void);
+extern u16 WHGetBeaconSendNum(void);
 
 /*---------------------------------------------------------------------------*
-  Name:         WHSetGGIDScanCallback
-  Description:  GGIDを検索する為のコールバックセット
+  Name:         WHSetDisconnectCallBack
+  Description:  接続が切れた際に呼ばれるコールバック関数登録
   Arguments:    コールバック
   Returns:      none
  *---------------------------------------------------------------------------*/
-
-extern void WHSetGGIDScanCallback(fGGIDCallBack callback);
-
-extern void WHParentConnectPause(BOOL bPause);
+extern void WHSetDisconnectCallBack(WHDisconnectCallBack callBack);
 
 /*---------------------------------------------------------------------------*
-  Name:         WHChildConnectPause
-  Description:  親機に入ってくるものを切断する
-  Arguments:    コールバック
-  Returns:      none
- *---------------------------------------------------------------------------*/
-extern void WHChildConnectPause(BOOL bPause);
-extern BOOL WHGetParentConnectPause(void);
-
-/*---------------------------------------------------------------------------*
-  Name:         WHParentConnectPauseSystem  システム専用
-  Description:  親機にくる接続を止める もしくは解除
-  Arguments:    止める もしくは解除
+  Name:         WHSetConnectCallBack
+  Description:  子機接続時のコールバック登録関数
+  Arguments:    callBack コールバック関数
   Returns:      none
  *---------------------------------------------------------------------------*/
 
-extern void WHParentConnectPauseSystem(BOOL bPause);
+extern void WHSetConnectCallBack(WHDisconnectCallBack callBack);
+
 
 #endif

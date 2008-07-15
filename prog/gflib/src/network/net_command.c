@@ -13,7 +13,7 @@
 #include "net_system.h"
 #include "net_command.h"
 #include "net_state.h"
-#include "tool/net_tool.h"
+#include "net_handle.h"
 
 //==============================================================================
 //  static定義
@@ -22,26 +22,25 @@
 
 //==============================================================================
 //	テーブル宣言
-//  comm_shar.h の enum と同じならびにしてください
+//  enum と同じならびにしてください
 //  CALLBACKを呼ばれたくない場合はNULLを書いてください
-//  コマンドのサイズを返す関数を書いてもらうか、固定バイトならば
-//  GFL_NET_COMMAND_SIZE(size) マクロを書いてもらうと、
-//  サイズを通信で送らないので少し軽くなります
+//  コマンドのサイズを返す関数を書いてもらうか
+//  固定バイトならば GFL_NET_COMMAND_SIZE(size) マクロを書いてください
 //  GFL_NET_COMMAND_VARIABLE は可変データ使用時に使います
 //==============================================================================
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {NULL,                        GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {GFL_NET_StateRecvExit,                GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {NULL,                                  GFL_NET_COMMAND_SIZE( 0 ), NULL},
+    {GFL_NET_StateRecvExit,                 GFL_NET_COMMAND_SIZE( 0 ), NULL},
     {GFL_NET_StateRecvExitStart,            GFL_NET_COMMAND_SIZE( 0 ), NULL},
-    {GFL_NET_StateRecvNegotiation,         GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_StateRecvNegotiationReturn,   GFL_NET_COMMAND_SIZE( 2 ), NULL},
-    {GFL_NET_StateRecvDSMPChange,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_StateRecvDSMPChangeReq,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_StateRecvDSMPChangeEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_TOOL_RecvTimingSync,          GFL_NET_COMMAND_SIZE( 1 ), NULL},
-    {GFL_NET_TOOL_RecvTimingSyncEnd,       GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_HANDLE_RecvNegotiation,        GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_HANDLE_RecvNegotiationReturn,  GFL_NET_COMMAND_SIZE( 2 ), NULL},
+    {GFL_NET_StateRecvDSMPChange,           GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_HANDLE_RecvTimingSync,         GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_HANDLE_RecvTimingSyncEnd,      GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    //メニュー用
+    //汎用送信用
 #if GFL_NET_WIFI
-    {GFL_NET_StateRecvWifiExit,            GFL_NET_COMMAND_SIZE( 1 ), NULL},
+    {GFL_NET_StateRecvWifiExit,             GFL_NET_COMMAND_SIZE( 1 ), NULL},
 #endif
 };
 
@@ -71,7 +70,7 @@ void GFL_NET_COMMAND_Init(const NetRecvFuncTable* pCommPacketLocal,int listNum,v
     int i;
     
     if(!_pCommandWork){
-        _pCommandWork = GFL_HEAP_AllocMemory(GFL_HEAPID_SYSTEM, sizeof(_COMM_COMMAND_WORK));
+        _pCommandWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_SYSTEM, sizeof(_COMM_COMMAND_WORK));
     }
     _pCommandWork->pCommPacket = pCommPacketLocal;
     _pCommandWork->listNum = listNum;
@@ -113,51 +112,50 @@ void GFL_NET_COMMAND_Exit( void )
  */
 //--------------------------------------------------------------
 
-void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void* pData)
+void GFI_NET_COMMAND_CallBack(int netID, int recvID, int command, int size, void* pData,GFL_NETHANDLE* pNetHandle)
 {
     int i;
     PTRCommRecvFunc func;
     BOOL bCheck;
-    GFL_NETHANDLE* pNetHandle;
+    ;
 
-//    OS_TPrintf("--- call back id=%d co=%d\n", netID, command);
 
-    for(i = 0;i < GFL_NET_HANDLE_MAX;i++){
-        pNetHandle = GFL_NET_GetNetHandle(i);
-        if(!pNetHandle){
-            continue;
+    if(recvID == GFL_NET_SENDID_ALLUSER){
+    }
+    else if( (GFL_NET_SystemGetCurrentID()+1) == recvID ){
+    }
+    else if((GFL_NET_SystemGetCurrentID()==GFL_NET_PARENT_NETID) && (recvID==GFL_NET_PARENT_NETID) ){  // 受信者が違う場合return
+    }
+    else{
+        return;
+    }
+
+    bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
+    if(!GFL_NET_HANDLE_IsNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
+        if( command >= GFL_NET_CMD_COMMAND_MAX ){
+            bCheck=FALSE;
         }
-        if((recvID != GFL_NET_SENDID_ALLUSER) && (i != recvID)){  // 受信者が違う場合continue
-            continue;
+    }
+    if(bCheck){
+        if( command < GFL_NET_CMD_COMMAND_MAX ){
+            func = _CommPacketTbl[command].callbackFunc;
         }
-        bCheck=TRUE;  // ネゴシエーションコマンド以外解析しない
-        if(!GFL_NET_IsNegotiation(pNetHandle)){  // ネゴシエーションがすんでない場合
-            OS_TPrintf("--- %d ", i);
-            if(!((command == GFL_NET_CMD_NEGOTIATION) || (command == GFL_NET_CMD_NEGOTIATION_RETURN))){
-                bCheck=FALSE;
+        else{
+            if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
+                NET_PRINT("command %d \n", command);
+                OS_Panic("no command");
+                GFL_NET_SystemSetError();
+                return;  // 本番ではコマンドなし扱い
             }
+            func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
         }
-        if(bCheck){
-            if( command < GFL_NET_CMD_COMMAND_MAX ){
-                func = _CommPacketTbl[command].callbackFunc;
+        if(func != NULL){
+            //NET_PRINT("command %d recvID %d\n", command,i);
+            if(_pCommandWork){
+                func(netID, size, pData, _pCommandWork->pWork, pNetHandle);
             }
             else{
-                if((_pCommandWork==NULL) || (command > (_pCommandWork->listNum + GFL_NET_CMD_COMMAND_MAX))){
-                    NET_PRINT("command %d \n", command);
-                    OS_Panic("no command");
-                    GFL_NET_SystemSetError();
-                    return;  // 本番ではコマンドなし扱い
-                }
-                func = _pCommandWork->pCommPacket[command - GFL_NET_CMD_COMMAND_MAX].callbackFunc;
-            }
-            if(func != NULL){
-                //NET_PRINT("command %d recvID %d\n", command,i);
-                if(_pCommandWork){
-                    func(netID, size, pData, _pCommandWork->pWork, pNetHandle);
-                }
-                else{
-                    func(netID, size, pData, NULL, pNetHandle);
-                }
+                func(netID, size, pData, NULL, pNetHandle);
             }
         }
     }

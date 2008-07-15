@@ -93,6 +93,8 @@ void GFLUser_Init(void)
 	GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0);	//メインアリーナ
 	GFL_HEAP_DTCM_Init( 0x2000 );				//ＤＴＣＭアリーナ
 
+    //STD 標準ライブラリ初期化（乱数やCRC）
+    GFL_STD_Init(GFL_HEAPID_SYSTEM);
 	//アーカイブシステム初期化
 	//GFL_ARC_SysInit(...);
 
@@ -213,7 +215,7 @@ void GFLUser_VIntr(void)
 	// 割り込みないで呼ばないほうが良いかもしれません。
 	//GFL_CLACT_VBlankFunc();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
-    GFL_NET_VBlankFunc();
+    //GFL_NET_VBlankFunc();
 
 	GFL_DMA_Main();
 	GFL_USE_VintrCounter++;

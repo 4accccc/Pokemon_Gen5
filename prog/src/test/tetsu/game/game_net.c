@@ -79,6 +79,8 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     1,//NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,   // ワークポインタ
+    NULL,   // ユーザー同士が交換するデータのポインタ取得関数
+    NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する

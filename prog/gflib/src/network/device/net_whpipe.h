@@ -11,8 +11,7 @@
 #ifndef __NET_WIRELESS_H__
 #define __NET_WIRELESS_H__
 
-#include "wh.h"
-#include "wh_config.h"
+#include "wih.h"
 
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*GFL_NET_ConnectionCallBack) (int aid);
@@ -37,7 +36,7 @@ extern void* GFL_NET_WLGetHandle(HEAPID heapID, GameServiceID serviceNo, u8 num)
  * @retval  _COMM_WORKのポインタ
  */
 //==============================================================================
-extern void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp, BOOL bConnect);
+extern void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSizeFunc getSize, NetBeaconCompFunc getComp);
 
 //==============================================================================
 /**
@@ -175,7 +174,8 @@ extern int GFL_NET_WLGetNextConnectIndex(void);
  */
 //==============================================================================
 extern BOOL GFL_NET_WLChildIndexConnect(u16 index, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
-extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback, GFL_NETHANDLE* pNetHandle);
+extern BOOL GFL_NET_WLChildMacAddressConnect(u8* macAddress, _PARENTFIND_CALLBACK pCallback);
+extern void GFI_NET_BeaconSetScanCallback(_PARENTFIND_CALLBACK pCallback);
 
 //==============================================================================
 /**
@@ -452,6 +452,17 @@ extern u16 GFL_NET_WL_GetCurrentAid(void);
  */
 //------------------------------------------------------
 extern GFL_NETWM* _GFL_NET_WLGetNETWH(void);
+
+//==============================================================================
+/**
+ *  @brief   ユーザ定義の親機情報を設定します。
+ *  _GF_BSS_DATA_INFO構造体の中身を送ります
+ *  @param   userGameInfo  ユーザ定義の親機情報へのポインタ
+ *  @param   length        ユーザ定義の親機情報のサイズ
+ *  @retval  none
+ */
+//==============================================================================
+extern void GFI_NET_BeaconSetInfo( void );
 
 
 #endif  //__NET_WIRELESS_H__

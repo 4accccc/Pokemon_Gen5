@@ -10,6 +10,11 @@
 #ifndef _NET_SYSTEM_H_
 #define _NET_SYSTEM_H_
 
+#include "tool/net_ring_buff.h"
+#include "tool/net_queue.h"
+#include "net_handle.h"
+
+
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
 /**
@@ -32,15 +37,21 @@ extern int GFL_NET_SystemWifiApplicationStart( int target );
 //==============================================================================
 /**
  * @brief   親機の初期化を行う
- * @param   work_area 　システムで使うメモリー領域
- *                      NULLの場合すでに初期化済みとして動作
- * @param   regulationNo  ゲームの種類
- * @param   bTGIDChange  新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
- * @param   bEntry  子機を受け入れるかどうか
+ * @param   work_area     システムで使うメモリー領域
+ *                        NULLの場合すでに初期化済みとして動作
+ * @param   bTGIDChange   新規のゲームの初期化の場合TRUE 古いビーコンでの誤動作を防ぐため用
+ * @param   packetSizeMax パケットサイズ
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax, BOOL bEntry);
+extern BOOL GFI_NET_SystemParentModeInit(BOOL bTGIDChange, int packetSizeMax);
+//==============================================================================
+/**
+ * @brief   親機の確立を行う
+ * @retval  初期化に成功したらTRUE
+ */
+//==============================================================================
+extern BOOL GFI_NET_SystemParentModeInitProcess(void);
 //==============================================================================
 /**
  * @brief   子機の初期化を行う
@@ -62,37 +73,7 @@ extern BOOL GFL_NET_SystemChildModeInit(BOOL bBconInit, int packetSizeMax);
  * @retval  初期化に成功したらTRUE
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemChildModeInitAndConnect(int packetSizeMax,_PARENTFIND_CALLBACK pCallback,GFL_NETHANDLE* pHandle);
-//==============================================================================
-/**
- * @brief   DSモードに切り替える
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_SystemSetTransmissonTypeDS(void);
-//==============================================================================
-/**
- * @brief   MPモードに切り替える
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_SystemSetTransmissonTypeMP(void);
-//==============================================================================
-/**
- * @brief   指定モードに切り替える
- * @param   DSかMPかの指定モード
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_SystemSetTransmissonType(int type);
-//==============================================================================
-/**
- * @brief   現在 DSモードかどうか
- * @param   none
- * @retval  TRUEならDS
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemIsTransmissonDSType(void);
+extern BOOL GFL_NET_SystemChildModeInitAndConnect(BOOL bInit,u8* pMacAddr,int packetSizeMax,_PARENTFIND_CALLBACK pCallback);
 //==============================================================================
 /**
  * @brief   通信切断を行う
@@ -449,8 +430,94 @@ extern void GFL_NET_SystemResetQueue_Server(void);
  */
 //==============================================================================
 extern void GFL_NET_SystemRecvStop(BOOL bFlg);
+//==============================================================================
+/**
+ * @brief   キーシェアリング機能でキーを得る
+ * @retval  TRUE  データシェアリング成功
+ * @retval  FALSE データシェアリング失敗
+ */
+//==============================================================================
 
+extern BOOL GFL_NET_SystemGetKey(int no, u16* key);
+//==============================================================================
+/**
+ * @brief   指定されたIDのハンドルを返す
+ * @param   NetID  ネットＩＤ
+ * @retval  GFL_NETHANDLE
+ */
+//==============================================================================
 extern GFL_NETHANDLE* GFL_NET_SystemGetHandle(int NetID);
+
+//extern void _commRecvCallback(u16 aid, u16 *data, u16 size);
+//extern BOOL _commSystemInit(int packetSizeMax, HEAPID heapID);
+
+
+
+typedef struct{
+    int dataPoint; // 受信バッファ予約があるコマンドのスタート位置
+    u8* pRecvBuff; // 受信バッファ予約があるコマンドのスタート位置
+    u16 realSize;   /// 通信上にあったこのパケットのサイズ
+    u16 tblSize;   /// テーブル上の登録サイズ
+    u8 valCommand;  /// コマンド
+    u8 sendID;      /// 送信者ID
+    u8 recvBit;      /// 受信ID
+} _RECV_COMMAND_PACK;
+
+typedef struct{
+    /// ----------------------------子機用＆親機用BUFF
+    u8* sSendBuf;          ///<  子機の送信用バッファ
+    u8* sSendBufRing;  ///<  子機の送信リングバッファ
+    u8* sSendServerBuf;          ///<  親機の送信用バッファ
+    u8* sSendServerBufRing;
+    u8* pServerRecvBufRing;       ///< 親機側受信バッファ
+    u8* pRecvBufRing;             ///< 子機が受け取るバッファ
+    u8* pTmpBuff;                 ///< 受信受け渡しのための一時バッファポインタ
+    //----ringbuff manager
+    RingBuffWork sendRing;
+    RingBuffWork recvRing;                      ///< 子機の受信リングバッファ
+    RingBuffWork sendServerRing;
+    RingBuffWork recvServerRing[GFL_NET_MACHINE_MAX];
+    ///---quemanager 関連
+    SEND_QUEUE_MANAGER sendQueueMgr;
+    SEND_QUEUE_MANAGER sendQueueMgrServer;
+    ///---受信関連
+    _RECV_COMMAND_PACK recvCommServer[GFL_NET_MACHINE_MAX];
+    _RECV_COMMAND_PACK recvCommClient;
+    
+    //---------  同期関連
+    BOOL bWifiSendRecv;   // WIFIの場合同期を取る時ととらないときが必要なので 切り分ける
+    volatile int countSendRecv;   // 送ったら＋受け取ったら－ 回数
+    volatile int countSendRecvServer[GFL_NET_MACHINE_MAX];   // 送ったら＋受け取ったら－ 回数
+
+    //-------
+    int packetSizeMax;
+    u16 bitmap;   // 接続している機器をBIT管理
+    
+    //-------------------
+//    NET_TOOLSYS* pTool;  ///< netTOOLのワーク
+//    GFL_NETHANDLE* pNetHandle[GFL_NET_MACHINE_MAX];
+  //  u16 key[GFL_NET_MACHINE_MAX];
+//    UI_KEYSYS* pKey[GFL_NET_MACHINE_MAX];       ///<  キーシェアリングポインタ
+//    u8 device;   ///< デバイス切り替え wifi<>wi
+
+#if _COUNT_TEST
+    u8 DSCount; // コマンドの順番が正しいかどうか確認用
+    u8 DSCountRecv[GFL_NET_MACHINE_MAX];
+#endif
+//    u8 recvDSCatchFlg[GFL_NET_MACHINE_MAX];  // 通信をもらったことを記憶 DS同期用
+
+    u8 bFirstCatch[GFL_NET_MACHINE_MAX];  // コマンドをはじめてもらった時用
+    u8 bFirstCatchP2C;    ///< 最初のデータを受信したタイミングでTRUEになるフラグ
+
+    u8 bNextSendData;  ///
+    u8 bNextSendDataServer;  ///
+    u8 bAlone;    // 一人で通信できるようにするモードの時TRUE
+    u8 bWifiConnect; //WIFI通信可能になったらTRUE
+    u8 bResetState;
+    u8 bError;  // 復旧不可能な時はTRUE
+    u8 bShutDown;
+    u8 bDSSendOK;   //DS通信で次を送信してよい場合TRUE 前回エラーで前のを送る場合FALSE
+} _COMM_WORK_SYSTEM;
 
 
 #endif // _NET_SYSTEM_H_

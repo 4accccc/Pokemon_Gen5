@@ -30,7 +30,7 @@
 void GFL_NET_WifiStart( int heapID , NetErrorFunc errorFunc)
 {
     if( DWC_INIT_RESULT_DESTROY_OTHER_SETTING == mydwc_init(heapID) ){ //dwcèâä˙âª
-        errorFunc(NULL, 0);
+        errorFunc(NULL, 0, NULL);
     }
 }
 

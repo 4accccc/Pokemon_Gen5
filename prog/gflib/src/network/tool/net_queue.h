@@ -15,23 +15,19 @@
 /// @brief キュー構造体定義
 typedef struct _SEND_QUEUE SEND_QUEUE;
 
-/// @brief キュー構造体
+/// @brief キュー構造体  16byte
 struct _SEND_QUEUE{
-    u8* pData;     ///< データアドレス
+    u8* pQData;     ///< データアドレス
     SEND_QUEUE* prev;      ///< 手前のキュー
     SEND_QUEUE* next;      ///< 次のキュー
-    int size;     ///< サイズ
+    u16 size;     ///< サイズ
     u8 command;   ///< コマンド
-    u8 sendNo;    ///< 送る人
-    u8 recvNo;    ///< 受け取る人
-    u8 bHeadSet;  ///< ヘッダーを送信した場合１ まだの場合０
-    u8 bRing;     ///< リングバッファ使用の場合１
+    u8 recvBit;    ///< 受け取る人
 } ;
 
-///  @brief  サイズを含んだキューのヘッダ
-#define _GFL_NET_QUEUE_HEADERBYTE_SIZEPLUS (5)
-///  @brief  サイズを含まないキューのヘッダ
-#define _GFL_NET_QUEUE_HEADERBYTE (3)
+///  @brief  サイズを必ず含むようになります  最大４バイトヘッダー
+#define _GFL_NET_QUEUE_HEADERBYTE (4)
+// |--- commnand 1 --|--size 1-2--| recvBIT --| |
 
 
 
@@ -109,13 +105,12 @@ extern void GFL_NET_QueueManagerFinalize(SEND_QUEUE_MANAGER* pQueueMgr);
  * @param   size    サイズ
  * @param   bFast  優先度が高いデータ?
  * @param   bSave  保存するかどうか
- * @param   send      送る人
- * @param   recv      受け取る人
+ * @param   recvBit      受け取る人
  * @retval  TRUE 蓄えた
  * @retval  FALSE キューに入らなかった
  */
 //==============================================================================
-extern BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int send,int recv);
+extern BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDataArea, int size, BOOL bFast, BOOL bSave,int recvBit);
 
 //==============================================================================
 /**
@@ -127,7 +122,7 @@ extern BOOL GFL_NET_QueuePut(SEND_QUEUE_MANAGER* pQueueMgr,int command, u8* pDat
  * @retval  FALSE データが連続している場合
  */
 //==============================================================================
-extern BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff, BOOL bNextPlus);
+extern BOOL GFL_NET_QueueGetData(SEND_QUEUE_MANAGER* pQueueMgr, SEND_BUFF_DATA *pSendBuff);
 
 //==============================================================================
 /**

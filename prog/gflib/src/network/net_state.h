@@ -21,16 +21,16 @@
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateDeviceInitialize(GFL_NETHANDLE* pNetHandle);
+extern void GFL_NET_StateDeviceInitialize(HEAPID heapID);
 //==============================================================================
 /**
  * @brief   マックアドレスを指定して子機接続開始
- * @param   connectIndex 接続する親機のIndex
- * @param   bAlloc       メモリーの確保
+ * @param   macAddress    アドレス
+ * @param   bInit         初期化するのかどうか
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit);
+extern void GFL_NET_StateConnectMacAddress(u8* macAddress,  BOOL bInit);
 //==============================================================================
 /**
  * @brief   子機開始  ビーコンの収集に入る
@@ -38,7 +38,7 @@ extern void GFL_NET_StateConnectMacAddress(GFL_NETHANDLE* pNetHandle,BOOL bInit)
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle);
+extern void GFL_NET_StateBeaconScan(void);
 //==============================================================================
 /**
  * @brief   通信管理ステートの処理
@@ -46,7 +46,7 @@ extern void GFL_NET_StateBeaconScan(GFL_NETHANDLE* pNetHandle);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_StateMainProc(void);
 //==============================================================================
 /**
  * @brief   親としての通信処理開始
@@ -55,8 +55,8 @@ extern void GFL_NET_StateMainProc(GFL_NETHANDLE* pHandle);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateCreateParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
-extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
+extern void GFL_NET_StateCreateParent(HEAPID heapID);
+extern void GFL_NET_StateConnectParent(HEAPID heapID);
 //==============================================================================
 /**
  * @brief   親子自動切り替え通信処理開始
@@ -65,7 +65,7 @@ extern void GFL_NET_StateConnectParent(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateChangeoverConnect(GFL_NETHANDLE* pNetHandle,HEAPID heapID);
+extern void GFL_NET_StateChangeoverConnect(HEAPID heapID);
 //==============================================================================
 /**
  * @brief   終了コマンド 子機が親機にやめるように送信  全員の子機に送り返すGFL_NET_CMD_EXIT_REQ
@@ -84,36 +84,12 @@ extern void GFL_NET_StateRecvExit(const int netID, const int size, const void* p
 extern void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
- * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_StateRecvNegotiation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-//==============================================================================
-/**
- * @brief   ネゴシエーション用コールバック CS_COMM_NEGOTIATION_RETURN
- * @param   callback用引数
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_StateRecvNegotiationReturn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-//==============================================================================
-/**
  * @brief   通信処理終了手続き開始
  * @param   none
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateExit(GFL_NETHANDLE* pNetHandle);
-//==============================================================================
-/**
- * @brief   DSMPモード変更のMain関数
- * @param   pNet  通信ハンドル
- * @return  noen
- */
-//==============================================================================
-extern void GFL_NET_StateTransmissonMain(GFL_NETHANDLE* pNet);
+extern void GFL_NET_StateExit(void);
 //==============================================================================
 /**
  * @brief   DS通信MP通信の切り替え  GFL_NET_CMD_DSMP_CHANGE
@@ -250,13 +226,12 @@ extern BOOL GFL_NET_StateIsWifiError(GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * @brief   wifiマッチング状態へログインする
- * @param   pNetHandle  GFL_NETHANDLE
  * @param   netHeapID   netLibで確保使用するID
  * @param   wifiHeapID  NitroWifi&NitroDWC&VCTで確保するメモリ
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHeapID, HEAPID wifiHeapID);
+extern void GFL_NET_StateWifiEnterLogin(HEAPID netHeapID, HEAPID wifiHeapID);
 //--------------------------errfunc------------------------------------------------
 
 //==============================================================================
@@ -267,7 +242,7 @@ extern void GFL_NET_StateWifiEnterLogin(GFL_NETHANDLE* pNetHandle, HEAPID netHea
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto);
+extern void GFL_NET_STATE_SetAutoErrorCheck(BOOL bAuto);
 //==============================================================================
 /**
  * @brief   子機がいない場合にエラーにするかどうかを設定する
@@ -276,7 +251,7 @@ extern void GFL_NET_STATE_SetAutoErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bAuto
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_STATE_SetNoChildErrorCheck(GFL_NETHANDLE* pNetHandle,BOOL bFlg);
+extern void GFL_NET_STATE_SetNoChildErrorCheck(BOOL bFlg);
 
 
 #define _ERR_DEFINE  (0)
