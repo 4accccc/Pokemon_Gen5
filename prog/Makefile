@@ -55,7 +55,8 @@ TARGET_BIN		=	main.bin
 # ソースファイル
 SRCS			=	system\main.c \
 					system\machine_use.c \
-					system\gfl_use.c
+					system\gfl_use.c \
+					system\net_define.c
 
 include make_prog_files
 -include overlay/overlay_files

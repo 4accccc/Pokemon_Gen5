@@ -53,6 +53,7 @@ typedef struct{
     RingBuffWork* pSendRing;  ///< リングバッファワークポインタ
     void* heapTop;   ///< キューHEAP
     int max;         ///< キューの数
+    int incNo;   // 送信時のインクリメント番号
 } SEND_QUEUE_MANAGER;
 
 
@@ -143,6 +144,16 @@ extern BOOL GFL_NET_QueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command);
  */
 //==============================================================================
 extern int GFL_NET_QueueGetNowNum(SEND_QUEUE_MANAGER* pQueueMgr);
+
+//==============================================================================
+/**
+ * @brief   送信回数をインクリメント
+ * @param   pQueueMgr  キューマネージャーのポインタ
+ * @param   inc        送信回数を入れるポインタ
+ */
+//==============================================================================
+
+extern void GFL_NET_QueueInc(SEND_QUEUE_MANAGER* pQueueMgr, u8* inc);
 
 #ifdef PM_DEBUG
 extern void GFL_NET_QueueDebugTest(void);

@@ -420,3 +420,17 @@ BOOL GFL_NET_QueueIsCommand(SEND_QUEUE_MANAGER* pQueueMgr, int command)
     return FALSE;
 }
 
+//==============================================================================
+/**
+ * @brief   送信回数をインクリメント
+ * @param   pQueueMgr  キューマネージャーのポインタ
+ * @param   inc        送信回数を入れるポインタ
+ */
+//==============================================================================
+
+void GFL_NET_QueueInc(SEND_QUEUE_MANAGER* pQueueMgr, u8* inc)
+{
+    *inc = (u8)pQueueMgr->incNo;
+    pQueueMgr->incNo++;
+}
+

@@ -38,10 +38,6 @@ typedef void (*_PARENTFIND_CALLBACK)(void);
 
 
 
-/// 通信のデータサイズ  GFL_NET_MACHINE_MAX台を基本に構成
-#define GFL_NET_DATA_HEADER            (6)
-//#define GFL_NET_CHILD_DATA_SIZE           (40)
-//#define GFL_NET_PARENT_DATA_SIZE          (GFL_NET_CHILD_DATA_SIZE * GFL_NET_MACHINE_MAX + GFL_NET_DATA_HEADER)
 
 
 
@@ -131,7 +127,6 @@ extern int GFI_NET_GetSendSizeMax(void);
 
 extern void GFI_NET_AutoParentConnectFunc(void);
 
-extern u8* GFI_NET_GetSSID(void);
 
 
 #if GFL_NET_WIFI //wifi

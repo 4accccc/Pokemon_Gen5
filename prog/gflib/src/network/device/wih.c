@@ -1104,8 +1104,7 @@ static void WH_StateOutStartParent(void *arg)
             if (_pWmInfo->sJudgeAcceptFunc != NULL){
                 bConnect = _pWmInfo->sJudgeAcceptFunc(cb);
             }
-            if (!bConnect ||
-                (0 != GFL_STD_MemComp(GFI_NET_GetSSID(), cb->ssid, GFL_STD_StrLen( cb->ssid ) ))){
+            if (!bConnect){
                 WMErrCode result;
                 // Ú‘±‚ğØ’f‚µ‚Ü‚·B
                 result = WM_Disconnect(NULL, cb->aid);

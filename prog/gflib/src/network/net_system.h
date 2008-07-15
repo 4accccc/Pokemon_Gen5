@@ -157,10 +157,11 @@ extern void GFL_NET_SystemActionCommandSet(void);
  * @param   bFast       送信量    コマンドだけの場合0
  * @param   myID       送信する人のハンドルno
  * @param   sendID     送る相手のID   全員なら0xff
+ * @param   bSendBuffLock 送信バッファを固定して大容量データを送信する
  * @retval  送信キューに入ったかどうか
  */
 //==============================================================================
-extern BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast, int myID, int sendID);
+extern BOOL GFL_NET_SystemSendData(int command, const void* data, int size, BOOL bFast, int myID, int sendID, BOOL bSendBuffLock);
 //==============================================================================
 /**
  * 送信バッファ残り容量
@@ -254,32 +255,6 @@ extern void GFL_NET_SystemRecvDSMPChangeEnd(const int netID, const int size, con
  */
 //==============================================================================
 extern u16 GFL_NET_SystemGetCurrentID(void);
-//==============================================================================
-/**
- * 汎用送信メソッド  送信サイズ固定でしかも大きい場合
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendFixHugeSizeData(int command, const void* data);
-//==============================================================================
-/**
- * 汎用送信メソッド  送信サイズ固定の場合
- * @param   command    comm_sharing.hに定義したラベル
- * @param   data       送信したいデータ ない時はNULL
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendFixSizeData(int command, const void* data);
-//==============================================================================
-/**
- * 汎用送信メソッド  コマンド以外存在しない場合
- * @param   command    comm_sharing.hに定義したラベル
- * @retval  送信キューに入ったかどうか
- */
-//==============================================================================
-extern BOOL GFL_NET_SystemSendFixData(int command);
 //==============================================================================
 /**
  * WHライブラリで　通信状態のBITを確認

@@ -61,13 +61,6 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 	return TRUE;
 }
 
-#define SSID "GF_TETSU"
-
-static u8* _netGetSSID(void)
-{
-    return (u8*)SSID;
-}
-
 static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 {
 	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
@@ -89,9 +82,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     NULL,  // オート接続で親になった場合
     NULL,//NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
     NULL,//NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
-    _netGetSSID,  // 親子接続時に認証する為のバイト列  
-    1,  //gsid
-    2,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -99,9 +90,11 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
+    TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか
-    TRUE,     // 通信を開始するかどうか
+    TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
+    1,  //GameServiceID
 };
 
 void InitGameNet(void)

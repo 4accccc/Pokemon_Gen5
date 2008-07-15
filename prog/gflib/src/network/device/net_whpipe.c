@@ -30,13 +30,6 @@
 //==============================================================================
 
 
-/**
- *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
- */
-#define _BEACON_SIZE_FIX (10)
-#define _BEACON_SSIDHEAD_SIZE (4)
-#define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
-
 // プログラマは基本他の人とつながらない  常に自分のマシンと接続して開発できるように
 // デバッグメニューか何かでで切り替えたら全員とつながることにする
 // 全員とつながる番号は０
@@ -77,17 +70,24 @@
 #endif
 
 /**
+ *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
+ */
+#define _BEACON_SIZE_FIX (4)
+#define _BEACON_FIXHEAD_SIZE (6)
+#define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
+
+/**
  *  @brief ビーコン構造体
  */
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
-    u8        ssidHead[_BEACON_SSIDHEAD_SIZE];         ///< SSIDの４バイト部分
+    u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた６バイト部分
     GameServiceID  		serviceNo; ///< 通信サービス番号
     u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
-    u8  		connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
+    u8  	  connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
     u8        pause;               ///< 接続を禁止したい時に使用する
-    u8       aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
+    u8        aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
 
 
@@ -119,13 +119,11 @@ struct _NET_WL_WORK{
     void* _pWHWork;                           ///whライブラリが使用するワークのポインタ
     _PARENTFIND_CALLBACK pCallback;
     HEAPID heapID;
-    u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
-  //  u8 regulationNo;   ///< ゲームレギュレーション
-    GameServiceID serviceNo;
-    u8 maxConnectNum;
     u32 ggid;
-    u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
+    u16 _sTgid;
     u16 errCheckBitmap;      ///< このBITMAPが食い違うとエラーになる
+    u8 gameInfoBuff[WM_SIZE_USER_GAMEINFO];  //送信するビーコンデータ
+    u8 maxConnectNum;
     u8 mineDebugNo;       ///< 通信識別子、デバッグ用 本番では０
     u8 channel;
     u8 disconnectType;    ///< 切断状況
@@ -137,6 +135,8 @@ struct _NET_WL_WORK{
     u8 bTGIDChange;
     u8 bAutoExit;
     u8 bEntry;        ///< 子機の新規参入
+    u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
+    GameServiceID serviceNo;
 } ;
 
 //==============================================================================
@@ -149,7 +149,6 @@ struct _NET_WL_WORK{
 // 親機になる場合のTGID 構造体に入れていないのは
 // 通信ライブラリーを切ったとしてもインクリメントしたいため
 /// TGID管理
-static u16 _sTgid = 0;
 
 
 // コンポーネント転送終了の確認用
@@ -222,6 +221,9 @@ void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSiz
 
     pNetWL->disconnectType = _DISCONNECT_NONE;
     pNetWL->mineDebugNo = _DEBUG_ALONETEST;
+    pNetWL->_sTgid = WM_GetNextTgid();
+
+    GF_ASSERT(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
 }
 
 //==============================================================================
@@ -285,6 +287,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
     int serviceNo = pNetWL->serviceNo;
+    u8 sBuff[_BEACON_FIXHEAD_SIZE];
 
     // catchした親データ
     pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
@@ -300,7 +303,8 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
         }
     }
 #endif
-    if(0!=GFL_STD_MemComp( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE)){
+    GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+    if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
         OS_TPrintf("beacon不一致\n");
         return FALSE;
     }
@@ -939,6 +943,7 @@ void GFL_NET_WLParentBconCheck(void)
 void GFI_NET_BeaconSetInfo( void )
 {
     u8 macBuff[6];
+    u8 sBuff[_BEACON_FIXHEAD_SIZE];
     _GF_BSS_DATA_INFO* pGF;
     int size;
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
@@ -963,7 +968,8 @@ void GFI_NET_BeaconSetInfo( void )
 #else
     pGF->debugAloneTest = 0;
 #endif
-    GFL_STD_MemCopy( pInit->getSSID(), pGF->ssidHead, _BEACON_SSIDHEAD_SIZE);
+    GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+    GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);
 
     pGF->pause = pNetWL->bPauseConnect;
     GFL_STD_MemCopy( pNetWL->beaconGetFunc(), pGF->aBeaconDataBuff, size);
@@ -997,7 +1003,7 @@ static void _funcBconDataChange( void )
         DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
         WH_SetUserGameInfo((u16*)pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
         WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
-                      pNetWL->ggid,_sTgid);
+                      pNetWL->ggid,pNetWL->_sTgid);
     }
 }
 
@@ -1499,7 +1505,7 @@ void GFL_NET_WLFlashMyBss(void)
 
     GFI_NET_BeaconSetInfo();
     WHSetGameInfo(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX,
-                  pNetWL->ggid,_sTgid);
+                  pNetWL->ggid,pNetWL->_sTgid);
 }
 
 //==============================================================================
@@ -1659,6 +1665,7 @@ BOOL GFL_NET_WL_ParentConnect(void)
 {
     int state = WH_GetSystemState();
     u16 mode[]={WH_CONNECTMODE_DS_PARENT,WH_CONNECTMODE_MP_PARENT};
+    GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
 
     if(WH_SYSSTATE_MEASURECHANNEL == state){
         u16 channel;
@@ -1666,10 +1673,10 @@ BOOL GFL_NET_WL_ParentConnect(void)
         
         channel = WH_GetMeasureChannel();
         if(pInit->bTGIDChange){
-            _sTgid = WM_GetNextTgid();
+            pNetWL->_sTgid = WM_GetNextTgid();
         }
         GFI_NET_BeaconSetInfo();
-        WH_ParentConnect(mode[pInit->bMPMode], _sTgid, channel, pInit->maxConnectNum-1 );
+        WH_ParentConnect(mode[pInit->bMPMode], pNetWL->_sTgid, channel, pInit->maxConnectNum-1 );
         return TRUE;
     }
     return FALSE;

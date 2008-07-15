@@ -489,7 +489,7 @@ BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet)
 BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data)
 {
     return GFL_NET_SystemSendData(sendCommand, data, 0,
-                                  FALSE, GFL_NET_HANDLE_GetNetHandleID(pNet) ,GFL_NET_SENDID_ALLUSER);
+                                  FALSE, GFL_NET_HANDLE_GetNetHandleID(pNet) ,GFL_NET_SENDID_ALLUSER, FALSE);
 }
 
 //==============================================================================
@@ -502,11 +502,12 @@ BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data
  * @param[in]   data                       送信データポインタ
  * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
  * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
+ * @param[in]   bSendBuffLock              送信バッファを呼ぶ側が保持する場合（通信側のメモリを消費しないので大きいデータを送信できます）
  * @retval  TRUE   成功した
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat)
+BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock)
 {
     if((GFL_NET_IsSendEnable(pNet)==FALSE) && (sendCommand >= GFL_NET_CMD_COMMAND_MAX)){
         // 認証が終わらないのに、メイン以外のコマンドを送ることはできない
@@ -515,9 +516,8 @@ BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendComm
     if(bRepeat && GFL_NET_SystemIsSendCommand(sendCommand,GFL_NET_HANDLE_GetNetHandleID(pNet))){
         return FALSE;
     }
-    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, GFL_NET_HANDLE_GetNetHandleID(pNet) ,sendID);
+    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, GFL_NET_HANDLE_GetNetHandleID(pNet) , sendID, bSendBuffLock);
 }
-
 
 //==============================================================================
 /**
@@ -845,22 +845,6 @@ void GFI_NET_FatalErrorFunc(int errorNo)
     if(pNet->aNetInit.errorFunc != NULL){
         pNet->aNetInit.errorFunc(GFL_NET_HANDLE_GetCurrentHandle(), errorNo, pNet->aNetInit.pWork);
     }
-}
-
-//==============================================================================
-/**
- * @brief    SSIDを得る関数
- * @return   SSID
- */
-//==============================================================================
-
-u8* GFI_NET_GetSSID(void)
-{
-    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    if(pNet->aNetInit.getSSID != NULL){
-        return pNet->aNetInit.getSSID();
-    }
-    return NULL;
 }
 
 //==============================================================================

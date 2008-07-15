@@ -97,6 +97,11 @@ typedef void (*PTRCommRecvFunc)(const int netID, const int size, const void* pDa
 typedef int (*PTRCommRecvSizeFunc)(void);
 /// 受信バッファを外部で持っている場合そのポインタ
 typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
+/// 送信した場合に呼ばれるコールバック
+typedef u8* (*GFL_NET_SendCallbackType)(int netID, int command, void* pWork);
+
+
+
 
 /// コマンドパケットテーブル定義
 typedef struct {
@@ -192,9 +197,7 @@ typedef struct{
   DWCFriendData *keyList;   ///< DWC形式の友達リスト	
   DWCUserData *myUserData;  ///< DWCのユーザデータ（自分のデータ）
 #endif  //GFL_NET_WIFI
-  NetGetSSID getSSID;       ///< 親子接続時に認証する為のバイト列  自由に決めて良いがゲームのタイトルがわかるような文字列
-  int gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
-  int ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう
+  u32 ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう
   HEAPID baseHeapID;        ///< 元となるHEAPID
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
@@ -203,12 +206,11 @@ typedef struct{
   u8 maxConnectNum;         ///< 最大接続人数
   u8 maxSendSize;           ///< 送信サイズ
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
-  u8 bCRC:1;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
-  u8 bMPMode:1;               ///< MP通信モードかどうか
-//  u8 bRequestOnly:1;          ///< 通信要求があったときだけ送信するかどうか  WIFIでは必ずON  WLのDS通信だと必ずOFF
-  u8 bWiFi:1;                 ///< Wi-Fi通信をするかどうか
-//  u8 bNetwork:1;            ///< 通信を開始するかどうか FALSEだとOFFLINE動作
-  u8 bTGIDChange:1;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
+  u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
+  u8 bMPMode;               ///< MP通信モードかどうか
+  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
+  u8 bTGIDChange;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
+  GameServiceID gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
 } GFLNetInitializeStruct;
 
 //-------------------------------
@@ -477,11 +479,30 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const voi
  * @param[in]   data                       送信データポインタ
  * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
  * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
+ * @param[in]   bSendBuffLock              送信バッファを呼ぶ側が保持する場合（通信側のメモリを消費しないので大きいデータを送信できます）
  * @retval  TRUE   成功した
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat);
+extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
+
+//==============================================================================
+/**
+ * @brief     送信開始  送信終了時にコールバックが呼ばれるので、
+              それまでバッファの中身を書き換えないでください
+ * @param[in,out]  pNet  通信ハンドル
+ * @param[in]   sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
+ * @param[in]   sendCommand                送信するコマンド
+ * @param[in]   size                       送信データサイズ
+ * @param[in]   data                       送信データポインタ
+ * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
+ * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
+ * @param[in]   GFL_NET_SendCallbackType       送信終了時に呼ばれるコールバック
+ * @retval  TRUE   成功した
+ * @retval  FALSE  失敗の場合
+ */
+//==============================================================================
+extern BOOL GFL_NET_SendDataCallback(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const GFL_NET_SendCallbackType* pCallback);
 
 //==============================================================================
 /**
@@ -686,6 +707,15 @@ extern u16 GFL_NET_WL_GetRssi(int index);
 //==============================================================================
 extern BOOL GFL_NET_SystemCheckDataSharing(void);
 
+//==============================================================================
+/**
+ * @brief   この関数はライブラリ外に作成する関数
+ *          ビーコンのヘッダーを文字列で定義 sizeバイト分必要 (６バイト)
+ * @param   pHeader  文字列を入れる関数
+ * @param   size     サイズ
+ */
+//==============================================================================
+extern void GFLR_NET_GetBeaconHeader(u8* pHeader, int size);
 
 
 extern void debugcheck(u32* data,int size );
