@@ -284,7 +284,7 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 			DirectDraw3Dmapper( g3Dmapper, mapBlock, g3Dcamera );
 		}
 	}
-	OS_Printf("objectDrawCount = %x\n",count);
+//	OS_Printf("objectDrawCount = %x\n",count);
 	//描画終了（バッファスワップ）
 	//GFL_G3D_DRAW_End();							
 }
@@ -1214,7 +1214,12 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
  *
  */
 //============================================================================================
-typedef void	(DIRECT_DRAW_FUNC)( void );
+typedef void	(DIRECT_DRAW_FUNC)( VecFx16* vecN );
+
+enum {
+	DRAW_NORMAL = 0,
+	DRAW_YBILLBOARD,
+};
 
 typedef struct {
 	GXTexFmt			texFmt;				//SDK用データフォーマット定義
@@ -1226,6 +1231,7 @@ typedef struct {
     GXRgb				emission;
 	u8					polID;
 	u8					alpha;
+	u8					drawType;	
 	DIRECT_DRAW_FUNC*	func;
 
 }DIRECT_DRAW_DATA;
@@ -1253,24 +1259,21 @@ static void	DirectDraw3Dmapper
 	//カメラ設定取得
 	{
 		VecFx32		camPos, camUp, target, vecNtmp;
-		MtxFx43		mtxCamera, mtxCameraInv;
 
 		GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
 		GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
 		GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
 
-		G3_LookAt( &camPos, &camUp, &target, &mtxCamera );	//mtxCameraには行列計算結果が返る
-		MTX_Inverse43( &mtxCamera, &mtxCameraInv );			//カメラ逆行列取得
-
-		MTX_Identity33( &mtxBillboard );					//カメラ逆行列から回転行列を取り出す
-		mtxBillboard._00 = mtxCameraInv._00;				//（Ｙ軸回転要素のみ）
-		mtxBillboard._02 = mtxCameraInv._02;
-		mtxBillboard._20 = mtxCameraInv._20;
-		mtxBillboard._22 = mtxCameraInv._22;
+		G3_LookAt( &camPos, &camUp, &target, NULL );
 
 		VEC_Subtract( &camPos, &target, &vecNtmp );
 		VEC_Normalize( &vecNtmp, &vecNtmp );
 		VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
+
+		vecNtmp.y = 0;
+		VEC_Normalize( &vecNtmp, &vecNtmp );
+		MTX_Identity33( &mtxBillboard );
+		MTX_RotY33( &mtxBillboard, vecNtmp.x, vecNtmp.z );
 	}
 	//GFL_G3D_LIGHT_Switching( g3Dlightset );
 
@@ -1292,7 +1295,11 @@ static void	DirectDraw3Dmapper
 				trans.x = ddObject->trans.x / scaleVal;
 				trans.y = ddObject->trans.y / scaleVal;
 				trans.z = ddObject->trans.z / scaleVal;
-				G3_MultTransMtx33( &mtxBillboard, &trans );
+				if( ddData->drawType == DRAW_YBILLBOARD ){
+					G3_MultTransMtx33( &mtxBillboard, &trans );
+				} else {
+					G3_Translate( trans.x, trans.y, trans.z );
+				}
 
 				G3_TexImageParam(	ddData->texFmt, GX_TEXGEN_TEXCOORD, ddData->s, ddData->t,
 									GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
@@ -1306,7 +1313,7 @@ static void	DirectDraw3Dmapper
 							ddData->polID, ddData->alpha, GX_POLYGON_ATTR_MISC_FOG );
 
 				if( ddData->func != NULL ){
-					ddData->func();
+					ddData->func( &vecN );
 				}
 
 				G3_PopMtx(1);
@@ -1324,7 +1331,7 @@ static void	DirectDraw3Dmapper
  *
  */
 //------------------------------------------------------------------
-static void	_drawTree0( void )
+static void	_drawTree0( VecFx16* vecN )
 {
 	fx32 smax = 64 * FX32_ONE;
 	fx32 tmax = 64 * FX32_ONE;
@@ -1381,7 +1388,7 @@ static void	_drawTree0( void )
 static const DIRECT_DRAW_DATA drawTreeData = {
 	GX_TEXFMT_PLTT16, GX_TEXSIZE_S64, GX_TEXSIZE_T64,
 	GX_RGB(31,31,31), GX_RGB(16,16,16), GX_RGB(16,16,16), GX_RGB(0,0,0),
-	63, 31,
+	63, 31, DRAW_YBILLBOARD,
 	_drawTree0,
 };
 
