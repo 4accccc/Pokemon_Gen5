@@ -32,17 +32,23 @@ typedef struct {
 
 }G3D_MAPPER_RESIST;
 
+#define	NON_LOWQ	(0xffff)
 typedef struct {
-	u32			arcID;		//アーカイブＩＤ
-	const u32*	mdlID;		//モデル＆テクスチャデータＩＤ
-	u32			count;		//モデル数
+	u16 highQ_ID;
+	u16 lowQ_ID;
+}G3D_MAPPEROBJ_DATA;
+
+typedef struct {
+	u32							arcID;	//アーカイブＩＤ
+	const G3D_MAPPEROBJ_DATA*	data;	//実マップデータ
+	u32							count;		//モデル数
 
 }G3D_MAPPEROBJ_RESIST;
 
-#define	MAPDATA_SIZE	(0x10000)	//モデルデータ用メモリ確保サイズ 
+#define	MAPDATA_SIZE	(0x0f000)	//モデルデータ用メモリ確保サイズ 
 #define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
 #define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
-#define	MAPATTR_SIZE	(0x7000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
+#define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
 #define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
 #define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
 
@@ -103,6 +109,7 @@ extern void SetPos3Dmapper( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
  */
 //------------------------------------------------------------------
 extern void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
+extern void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
 //------------------------------------------------------------------
 /**
  * @brief	現在位置地形の高さ取得
@@ -110,4 +117,20 @@ extern void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32*
 //------------------------------------------------------------------
 extern void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
 extern void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
+//------------------------------------------------------------------
+/**
+ * @brief	移動方向の地形に沿ったベクトル取得
+ */
+//------------------------------------------------------------------
+extern void Get3DmapperGroundMoveVec
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
+extern void Get3DmapperGroundMoveVec_fromROM
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
+//------------------------------------------------------------------
+/**
+ * @brief	範囲外チェック
+ */
+//------------------------------------------------------------------
+extern BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+
 

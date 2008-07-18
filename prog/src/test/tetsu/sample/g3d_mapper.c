@@ -30,9 +30,10 @@
 #define MAP_BLOCK_COUNT		(9)
 #define MAPID_NULL			(0xffffffff)
 #define MAPARC_NULL			(0xffffffff)
-#define LOCAL_OBJID_NULL	(0)
-#define DDRAW_OBJID_NULL	(0)
+#define LOCAL_OBJID_NULL	(0xffffffff)
+#define DDRAW_OBJID_NULL	(0xffffffff)
 
+#define GROBAL_OBJ_COUNT	(64)
 #define COMMON_OBJ_RESCOUNT	(64)
 #define LOCAL_OBJRES_COUNT	(16)
 #define LOCAL_OBJRND_COUNT	(32)
@@ -46,7 +47,6 @@ typedef struct {
 }BLOCK_IDX;
 
 typedef struct {
-	NNSG3dRenderObj*	NNSrnd;	//レンダー
 	u32					id;
 	VecFx32				trans;
 }MAP_OBJECT_DATA;
@@ -55,6 +55,13 @@ typedef struct {
 	u32			id;
 	VecFx32		trans;
 }DIRECT_OBJ;
+
+typedef struct {
+	NNSG3dRenderObj*	NNSrnd_H;	//レンダー(High Q)
+	GFL_G3D_RES*		g3Dres_H;	//リソース(High Q)
+	NNSG3dRenderObj*	NNSrnd_L;	//レンダー(Low Q)
+	GFL_G3D_RES*		g3Dres_L;	//リソース(High Q)
+}MAP_GROBAL_OBJECT_DATA;
 
 typedef struct {
 	u32				idx;
@@ -76,9 +83,9 @@ typedef struct {
 	GFL_G3D_RES*	g3DgroundResTex;	//ローカル地形テクスチャリソース
 	u8				tex[MAPTEX_SIZE];
 
-//	BOOL			attrLoadReq;
-//	u32				attrID;
-//	u8				attr[MAPATTR_SIZE];
+	BOOL			attrLoadReq;
+	u32				attrID;
+	u8				attr[MAPATTR_SIZE];
 
 	NNSGfdTexKey	groundTexKey;
 	NNSGfdPlttKey	groundPlttKey;
@@ -111,6 +118,8 @@ struct _G3D_MAPPER {
 
 	GFL_G3D_RES*		objectG3DresMdl[COMMON_OBJ_RESCOUNT];	//共通オブジェクトモデルリソース
 	u32					objectG3DresCount;
+
+	MAP_GROBAL_OBJECT_DATA grobalObject[GROBAL_OBJ_COUNT];	//共通オブジェクト
 	//-----------------
 	GFL_G3D_RES*	tree_g3Dres;
 	u32				tree_texDataAdrs;
@@ -122,6 +131,8 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper );
 
 static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper );
 static void	DeleteMapGraphicResource( G3D_MAPPER* g3Dmapper );
+
+static void MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RES* tex );
 
 static void GetMapperBlockIndex( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new );
@@ -169,6 +180,12 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	for( i=0; i<COMMON_OBJ_RESCOUNT; i++ ){
 		g3Dmapper->objectG3DresMdl[i] = NULL;
 	}
+	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
+		g3Dmapper->grobalObject[i].NNSrnd_H = NULL;
+		g3Dmapper->grobalObject[i].g3Dres_H = NULL;
+		g3Dmapper->grobalObject[i].NNSrnd_L = NULL;
+		g3Dmapper->grobalObject[i].g3Dres_L = NULL;
+	}
 
 	//---------------------
 	{
@@ -196,6 +213,8 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	//---------------------
 	OS_Printf("g3DmapperSize = %x\n", sizeof(G3D_MAPPER));
 	OS_Printf("mapBlockDataSize = %x\n", sizeof(MAP_BLOCK_DATA));
+	OS_Printf("rndObjSize = %x\n", sizeof(NNSG3dRenderObj));
+	
 	return g3Dmapper;
 }
 
@@ -230,23 +249,26 @@ void	Main3Dmapper( G3D_MAPPER* g3Dmapper )
 /**
  * @brief	３Ｄマップコントロールシステムディスプレイ
  */
-static BOOL CheckCullingBoxTest( NNSG3dRenderObj* rnd );
-static BOOL CheckCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos );
+static BOOL checkCullingBoxTest( NNSG3dRenderObj* rnd );
+static BOOL checkCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos );
+static fx32 getCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos );
 //------------------------------------------------------------------
 void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 {
-	MAP_BLOCK_DATA* mapBlock;
-	BOOL			cullResult; 
-	VecFx32			scale = { FX32_ONE, FX32_ONE, FX32_ONE };
-	MtxFx33			rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
-	int				i, j, count;
+	MAP_BLOCK_DATA*		mapBlock;
+	BOOL				cullResult; 
+	VecFx32*			trans;
+	VecFx32				scale = { FX32_ONE, FX32_ONE, FX32_ONE };
+	MtxFx33				rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
+	NNSG3dRenderObj		*NNSrnd, *NNSrnd_L;
+	int					i, j;
+	fx32				length, limitLength = 512 * FX32_ONE;
 
 	//描画開始
 	GFL_G3D_DRAW_Start();
 	//カメラグローバルステート設定		
  	GFL_G3D_DRAW_SetLookAt();
 
-	count = 0;
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 		if( NNS_G3dRenderObjGetResMdl( mapBlock->NNSrnd ) != NULL ){
@@ -256,35 +278,42 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 			NNS_G3dGlbSetBaseScale( &scale );	// スケール設定
 			NNS_G3dGlbFlush();					//グローバルステート反映
 
-			if( CheckCullingBoxTest( mapBlock->NNSrnd ) == TRUE ){
+			if( checkCullingBoxTest( mapBlock->NNSrnd ) == TRUE ){
 				//地形描画
 				NNS_G3dDraw( mapBlock->NNSrnd );	
 
 				//配置オブジェクト描画
 				for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
 					if(	mapBlock->object[j].id != LOCAL_OBJID_NULL ){
-						if( NNS_G3dRenderObjGetResMdl( mapBlock->object[j].NNSrnd ) != NULL){
-							VecFx32* transp = &mapBlock->object[j].trans;	// 位置設定
-						
-							NNS_G3dGlbSetBaseTrans( transp );		// 位置設定
-							NNS_G3dGlbSetBaseRot( &rotate );		// 角度設定
-							NNS_G3dGlbSetBaseScale( &scale );		// スケール設定
-							NNS_G3dGlbFlush();						//グローバルステート反映
+//						if( checkCullingLength(g3Dcamera, &mapBlock->object[j].trans) == TRUE){
+							length = getCullingLength( g3Dcamera, &mapBlock->object[j].trans );
+				
+							NNSrnd = g3Dmapper->grobalObject[ mapBlock->object[j].id ].NNSrnd_H;
+							NNSrnd_L = g3Dmapper->grobalObject[ mapBlock->object[j].id ].NNSrnd_L;
 
-							if( ( CheckCullingBoxTest(mapBlock->object[j].NNSrnd) == TRUE )
-							  &&( CheckCullingLength(g3Dcamera, transp) == TRUE ) ){
-								//オブジェクト描画
-								count++;
-								NNS_G3dDraw( mapBlock->object[j].NNSrnd );
+							if( ( length > limitLength )&&( NNSrnd_L != NULL ) ){
+								NNSrnd = NNSrnd_L;
 							}
-						}
+
+//							if( ( checkCullingBoxTest( NNSrnd ) == TRUE )
+//								&&( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ) ){
+							if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
+	
+								NNS_G3dGlbSetBaseTrans( &mapBlock->object[j].trans );// 位置設定
+								NNS_G3dGlbSetBaseRot( &rotate );		// 角度設定
+								NNS_G3dGlbSetBaseScale( &scale );		// スケール設定
+								NNS_G3dGlbFlush();						//グローバルステート反映
+
+								//オブジェクト描画
+								NNS_G3dDraw( NNSrnd );
+							}
+//						}
 					}
 				}
+				DirectDraw3Dmapper( g3Dmapper, mapBlock, g3Dcamera );
 			}
-			DirectDraw3Dmapper( g3Dmapper, mapBlock, g3Dcamera );
 		}
 	}
-//	OS_Printf("objectDrawCount = %x\n",count);
 	//描画終了（バッファスワップ）
 	//GFL_G3D_DRAW_End();							
 }
@@ -292,9 +321,9 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 //--------------------------------------------------------------------------------------------
 //ボックス視体積内外テストによるカリングチェック
 //（オブジェクトのグローバルステータス反映後に呼ぶこと）
-static s32 TestBoundingBox( const GXBoxTestParam* boundingBox );
+static s32 testBoundingBox( const GXBoxTestParam* boundingBox );
 
-static BOOL CheckCullingBoxTest( NNSG3dRenderObj* rnd )
+static BOOL checkCullingBoxTest( NNSG3dRenderObj* rnd )
 {
 	NNSG3dResMdlInfo*	modelInfo;		// モデルデータからのボックステスト用パラメータ取得用
 	BOOL				result = TRUE;
@@ -316,7 +345,7 @@ static BOOL CheckCullingBoxTest( NNSG3dRenderObj* rnd )
 	NNS_G3dGeScale( modelInfo->boxPosScale, modelInfo->boxPosScale, modelInfo->boxPosScale );
 	
 	//チェック
-	if( !TestBoundingBox( &boundingBox ) ){
+	if( !testBoundingBox( &boundingBox ) ){
 		result = FALSE;
 	}
 	NNS_G3dGePopMtx(1);
@@ -324,7 +353,7 @@ static BOOL CheckCullingBoxTest( NNSG3dRenderObj* rnd )
 	return result;
 }
 
-static s32 TestBoundingBox( const GXBoxTestParam* boundingBox )
+static s32 testBoundingBox( const GXBoxTestParam* boundingBox )
 {
 	s32 testResult = 1;
 
@@ -348,16 +377,26 @@ static s32 TestBoundingBox( const GXBoxTestParam* boundingBox )
 
 //--------------------------------------------------------------------------------------------
 // カメラとの距離によるカリングチェック
-static BOOL CheckCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos )
+static fx32 getCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos )
 {
 	VecFx32 camPos, vecLength;
-	fx32 limitLength;
 
 	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetFar( g3Dcamera, &limitLength );
 
 	VEC_Subtract( pos, &camPos, &vecLength );
-	if( VEC_Mag( &vecLength ) < limitLength ){
+
+	return VEC_Mag( &vecLength );
+}
+
+static BOOL checkCullingLength( GFL_G3D_CAMERA* g3Dcamera, VecFx32* pos )
+{
+	fx32 limitLength, length;
+
+	GFL_G3D_CAMERA_GetFar( g3Dcamera, &limitLength );
+
+	length = getCullingLength( g3Dcamera, pos );
+
+	if( length < limitLength ){
 		return TRUE;
 	}
 	return FALSE;
@@ -411,8 +450,8 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 		mapBlock->dataID = 0;
 		mapBlock->texLoadReq = FALSE;
 		mapBlock->texID = 0;
-//		mapBlock->attrLoadReq = FALSE;
-//		mapBlock->attrID = 0;
+		mapBlock->attrLoadReq = FALSE;
+		mapBlock->attrID = 0;
 		mapBlock->objLoadReq = FALSE;
 		mapBlock->objID = 0;
 
@@ -447,15 +486,34 @@ void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* re
 {
 	int i;
 
-	GF_ASSERT( resistData->count <= COMMON_OBJ_RESCOUNT );
+	GF_ASSERT( resistData->count <= GROBAL_OBJ_COUNT );
 	
 	ReleaseObjRes3Dmapper( g3Dmapper );
 
-	g3Dmapper->objectG3DresCount = resistData->count;
-	for( i=0; i< g3Dmapper->objectG3DresCount; i++ ){
-		g3Dmapper->objectG3DresMdl[i] = 
-			GFL_G3D_CreateResourceArc( resistData->arcID, resistData->mdlID[i] );
-		GFL_G3D_TransVramTexture( g3Dmapper->objectG3DresMdl[i] ); 
+	for( i=0; i< resistData->count; i++ ){
+		g3Dmapper->grobalObject[i].g3Dres_H = GFL_G3D_CreateResourceArc
+										( resistData->arcID, resistData->data[i].highQ_ID );
+		GFL_G3D_TransVramTexture( g3Dmapper->grobalObject[i].g3Dres_H ); 
+
+		g3Dmapper->grobalObject[i].NNSrnd_H = NNS_G3dAllocRenderObj
+												( GFL_G3D_GetAllocaterPointer() );
+
+		MakeMapRender(	g3Dmapper->grobalObject[i].NNSrnd_H,
+						g3Dmapper->grobalObject[i].g3Dres_H,
+						g3Dmapper->grobalObject[i].g3Dres_H );
+
+		if( resistData->data[i].lowQ_ID != NON_LOWQ ){
+			g3Dmapper->grobalObject[i].g3Dres_L = GFL_G3D_CreateResourceArc
+											( resistData->arcID, resistData->data[i].lowQ_ID );
+			GFL_G3D_TransVramTexture( g3Dmapper->grobalObject[i].g3Dres_L ); 
+
+			g3Dmapper->grobalObject[i].NNSrnd_L = NNS_G3dAllocRenderObj
+													( GFL_G3D_GetAllocaterPointer() );
+
+			MakeMapRender(	g3Dmapper->grobalObject[i].NNSrnd_L,
+							g3Dmapper->grobalObject[i].g3Dres_L,
+							g3Dmapper->grobalObject[i].g3Dres_L );
+		}
 	}
 }
 
@@ -463,15 +521,27 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 {
 	int i;
 
-	if( g3Dmapper->objectG3DresCount ){
-		for( i=0; i<g3Dmapper->objectG3DresCount; i++ ){
-			if( g3Dmapper->objectG3DresMdl[i] != NULL ){
-				GFL_G3D_FreeVramTexture( g3Dmapper->objectG3DresMdl[i] ); 
-				GFL_G3D_DeleteResource( g3Dmapper->objectG3DresMdl[i] ); 
-				g3Dmapper->objectG3DresMdl[i] = NULL;
-			}
+	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
+		if( g3Dmapper->grobalObject[i].NNSrnd_L != NULL ){
+			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
+									g3Dmapper->grobalObject[i].NNSrnd_L );
+			g3Dmapper->grobalObject[i].NNSrnd_L = NULL;
 		}
-		g3Dmapper->objectG3DresCount = 0;
+		if( g3Dmapper->grobalObject[i].g3Dres_L != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObject[i].g3Dres_L );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalObject[i].g3Dres_L );
+			g3Dmapper->grobalObject[i].g3Dres_L = NULL;
+		}
+		if( g3Dmapper->grobalObject[i].NNSrnd_H != NULL ){
+			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
+									g3Dmapper->grobalObject[i].NNSrnd_H );
+			g3Dmapper->grobalObject[i].NNSrnd_H = NULL;
+		}
+		if( g3Dmapper->grobalObject[i].g3Dres_H != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObject[i].g3Dres_H );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalObject[i].g3Dres_H );
+			g3Dmapper->grobalObject[i].g3Dres_H = NULL;
+		}
 	}
 }
 
@@ -509,8 +579,8 @@ static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper )
 		mapBlock->dataID = 0;
 		mapBlock->texLoadReq = FALSE;
 		mapBlock->texID = 0;
-//		mapBlock->attrLoadReq = FALSE;
-//		mapBlock->attrID = 0;
+		mapBlock->attrLoadReq = FALSE;
+		mapBlock->attrID = 0;
 
 		mapBlock->NNSrnd = NNS_G3dAllocRenderObj( GFL_G3D_GetAllocaterPointer() );
 		mapBlock->NNSrnd->resMdl = NULL; 
@@ -541,7 +611,6 @@ static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper )
 
 		for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
 			mapBlock->object[j].id = LOCAL_OBJID_NULL;
-			mapBlock->object[j].NNSrnd = NNS_G3dAllocRenderObj( GFL_G3D_GetAllocaterPointer() );
 			VEC_Set( &mapBlock->object[j].trans, 0, 0, 0 );
 		}
 		for( j=0; j<LOCAL_DIRECTDRAW_OBJ_COUNT; j++ ){
@@ -560,9 +629,6 @@ static void	DeleteMapGraphicResource( G3D_MAPPER* g3Dmapper )
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 
-		for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
-			NNS_G3dFreeRenderObj( GFL_G3D_GetAllocaterPointer(), mapBlock->object[j].NNSrnd );
-		}
 		NNS_G3dFreeRenderObj( GFL_G3D_GetAllocaterPointer(), mapBlock->NNSrnd );
 
 		NNS_GfdFreePlttVram( mapBlock->groundPlttKey );
@@ -701,13 +767,16 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 
 					cOffs = -g3Dmapper->width/2;
 					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
-
-					for( j=0; j<8; j++ ){
-						mapBlock->object[j].id = 1;
-
-						MakeMapRender(	mapBlock->object[j].NNSrnd,
-										g3Dmapper->objectG3DresMdl[0],
-										g3Dmapper->objectG3DresMdl[0] );
+#if 1
+					for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
+						mapBlock->object[j].id = LOCAL_OBJID_NULL;
+					}
+					for( j=0; j<4; j++ ){
+						if( i<4 ){
+							mapBlock->object[j].id = 0;
+						} else {
+							mapBlock->object[j].id = 1;
+						}
 
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
 						mapBlock->object[j].trans.x = mapBlock->trans.x + rOffs + cOffs;
@@ -718,7 +787,7 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 													&mapBlock->object[j].trans, 
 													&mapBlock->object[j].trans.y );
 					}
-					for( j=0; j<LOCAL_DIRECTDRAW_OBJ_COUNT; j++ ){
+					for( j=0; j<32; j++ ){
 						mapBlock->directDrawObject[j].id = 1;
 
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
@@ -730,6 +799,7 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 													&mapBlock->directDrawObject[j].trans,
 													&mapBlock->directDrawObject[j].trans.y );
 					}
+#endif
 				}
 				//--------------------
 				mapBlock->loadCount = 0;
@@ -761,10 +831,9 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 						NNS_GfdGetPlttKeyAddr( mapBlock->groundPlttKey ),
 						(void*)GFL_G3D_GetAdrsTexturePltt( mapBlock->g3DgroundResTex ),
 						MAPPLTT_SIZE );
-				//mapBlock->loadSeq = ATTR_LOAD_START;
-				mapBlock->loadSeq = LOAD_END;
+				mapBlock->loadSeq = ATTR_LOAD_START;
+				//mapBlock->loadSeq = LOAD_END;
 				break;
-#if 0
 			case ATTR_LOAD_START:
 				//アトリビュートデータロード開始
 				if( mapBlock->attrID == NON_ATTR ){
@@ -793,11 +862,10 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 													(void*)&mapBlock->attr[dataAdrs] );
 				mapBlock->loadSeq = LOAD_END;
 				break;
-#endif
 			case LOAD_END:
 				mapBlock->dataLoadReq = FALSE;
 				mapBlock->texLoadReq = FALSE;
-//				mapBlock->attrLoadReq = FALSE;
+				mapBlock->attrLoadReq = FALSE;
 				mapBlock->loadSeq = 0;
 				break;
 			}
@@ -823,8 +891,8 @@ static void	Set3DmapLoadReq( G3D_MAPPER* g3Dmapper, const int blockID, const Vec
 		mapBlock->texID = texID;
 		mapBlock->texLoadReq = TRUE;
 	}
-//	mapBlock->attrID = attrID;
-//	mapBlock->attrLoadReq = TRUE;
+	mapBlock->attrID = attrID;
+	mapBlock->attrLoadReq = TRUE;
 	mapBlock->dataID = datID;
 	mapBlock->dataLoadReq = TRUE;
 
@@ -952,7 +1020,7 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
  */
 //------------------------------------------------------------------
 static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockIdx, fx32* inBlockx, fx32* inBlockz ) 
+							u32* blockNum, fx32* inBlockx, fx32* inBlockz ) 
 {
 	u32		blockx, blockz;
 	fx32	width;
@@ -970,14 +1038,14 @@ static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos,
 
 	VEC_Subtract( pos, &mapTop, &vecInBlock );
 
-	*blockIdx = blockz * g3Dmapper->sizex + blockx;
+	*blockNum = blockz * g3Dmapper->sizex + blockx;
 	*inBlockx = vecInBlock.x;
 	*inBlockz = vecInBlock.z;
 
 	//OS_Printf("pos {%x,%x,%x}, blockNum = %x, blockx = %x, blockz = %x\n", 
 	//			pos->x, pos->y, pos->z, *blockIdx, blockx, blockz );
 
-	if( *blockIdx >= g3Dmapper->sizex * g3Dmapper->sizez ){
+	if( *blockNum >= g3Dmapper->sizex * g3Dmapper->sizez ){
 		return FALSE;
 	}
 	return TRUE;
@@ -1075,7 +1143,6 @@ static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper,
 //------------------------------------------------------------------
 void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
 {
-#if 0
 	u32		blockIdx;
 	fx32	inBlockx, inBlockz;
 	u32		gridIdx;
@@ -1101,7 +1168,44 @@ void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
 		vecN->y = mapData->vecN2_y; 
 		vecN->z = -mapData->vecN2_z; 
 	}
-#endif
+}
+
+//------------------------------------------------------------------
+void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
+{
+	u32		blockNum;
+	fx32	inBlockx, inBlockz;
+	u32		gridIdx;
+	fx32	inGridx, inGridz;
+	NormalVtxSt mapData;
+	u16		attrID;
+
+	vecN->x = 0; 
+	vecN->y = FX32_ONE;
+	vecN->z = 0; 
+
+	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz )  == FALSE ){
+		return;
+	}
+	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
+
+	attrID = g3Dmapper->data[blockNum].attrID;
+
+	if( attrID == NON_ATTR ){
+		return;
+	}
+	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
+							sizeof(NormalVtxSt)*gridIdx, sizeof(NormalVtxSt) );
+
+	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData.tryangleType ) == 0 ){
+		vecN->x = mapData.vecN1_x; 
+		vecN->y = mapData.vecN1_y; 
+		vecN->z = -mapData.vecN1_z; 
+	} else {
+		vecN->x = mapData.vecN2_x; 
+		vecN->y = mapData.vecN2_y; 
+		vecN->z = -mapData.vecN2_z; 
+	}
 }
 
 //------------------------------------------------------------------
@@ -1111,17 +1215,18 @@ void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
 //------------------------------------------------------------------
 void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
 {
-#if 0
 	u32		blockIdx, blockNum;
 	fx32	inBlockx, inBlockz;
 	u32		gridIdx;
 	fx32	inGridx, inGridz;
 	NormalVtxSt* mapData;
 	fx32	by, valD;
-	VecFx32 vecN, posLocalMap;
+	VecFx32 vecN, posMap, posLocalMap;
+	u16		attrID;
+
+	*height = 0;
 
 	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz )  == FALSE ){
-		*height = 0;
 		return;
 	}
 	blockNum = g3Dmapper->mapBlock[blockIdx].idx;
@@ -1143,13 +1248,8 @@ void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height 
 	}
 	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
 	*height = FX_Div( by, vecN.y );
-#endif
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	現在位置地形の高さ取得２
- */
 //------------------------------------------------------------------
 void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
 {
@@ -1162,8 +1262,9 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
 	VecFx32 vecN, posMap, posLocalMap;
 	u16		attrID;
 
+	*height = 0;
+
 	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz )  == FALSE ){
-		*height = 0;
 		return;
 	}
 	width = g3Dmapper->width;
@@ -1178,7 +1279,6 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
 	attrID = g3Dmapper->data[blockNum].attrID;
 
 	if( attrID == NON_ATTR ){
-		*height = 0;
 		return;
 	}
 	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
@@ -1199,6 +1299,67 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
 	*height = FX_Div( by, vecN.y );
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief	移動方向の地形に沿ったベクトル取得
+ */
+//------------------------------------------------------------------
+void Get3DmapperGroundMoveVec
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
+{
+	VecFx32 vecN, vecH, vecV;
+
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	Get3DmapperVecN( g3Dmapper, pos, &vecN );	//平面の法線を取得
+	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+
+	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
+		//逆方向へのベクトルが出てしまった場合修正
+		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
+	} else {
+		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
+	}
+	VEC_Normalize( vecResult, vecResult );
+}
+
+void Get3DmapperGroundMoveVec_fromROM
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
+{
+	VecFx32 vecN, vecH, vecV;
+
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	Get3DmapperVecN_fromROM( g3Dmapper, pos, &vecN );	//平面の法線を取得
+	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+
+	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
+		//逆方向へのベクトルが出てしまった場合修正
+		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
+	} else {
+		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
+	}
+	VEC_Normalize( vecResult, vecResult );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	範囲外チェック
+ */
+//------------------------------------------------------------------
+BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
+{
+	fx32 widthx, widthz;
+
+	widthx = g3Dmapper->sizex * g3Dmapper->width;
+	widthz = g3Dmapper->sizez * g3Dmapper->width;
+
+	if( ( pos->x >= 0 )&&( pos->x < widthx )&&( pos->z >= 0 )&&( pos->z < widthz ) ){
+		return FALSE;
+	}
+	return TRUE;
+}
+
 
 
 
@@ -1214,7 +1375,7 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
  *
  */
 //============================================================================================
-typedef void	(DIRECT_DRAW_FUNC)( VecFx16* vecN );
+typedef void (DIRECT_DRAW_FUNC)( u32 texDataAdrs, u32 texPlttAdrs, VecFx16* vecN, BOOL lodSt );
 
 enum {
 	DRAW_NORMAL = 0,
@@ -1222,9 +1383,6 @@ enum {
 };
 
 typedef struct {
-	GXTexFmt			texFmt;				//SDK用データフォーマット定義
-	GXTexSizeS			s;					//SDK用データサイズX定義
-	GXTexSizeT			t;					//SDK用データサイズY定義
 	GXRgb				diffuse;
     GXRgb				ambient;
 	GXRgb				specular;
@@ -1286,7 +1444,7 @@ static void	DirectDraw3Dmapper
 		if( ddObject->id != DDRAW_OBJID_NULL ){
 			GF_ASSERT( ddObject->id  < NELEMS(directDrawDataTable) );
 
-			if( CheckCullingLength( g3Dcamera, &ddObject->trans ) == TRUE ){
+			if( checkCullingLength( g3Dcamera, &ddObject->trans ) == TRUE ){
 				G3_PushMtx();
 
 				ddData = directDrawDataTable[ ddObject->id ]; 
@@ -1301,11 +1459,6 @@ static void	DirectDraw3Dmapper
 					G3_Translate( trans.x, trans.y, trans.z );
 				}
 
-				G3_TexImageParam(	ddData->texFmt, GX_TEXGEN_TEXCOORD, ddData->s, ddData->t,
-									GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
-									GX_TEXPLTTCOLOR0_TRNS, g3Dmapper->tree_texDataAdrs );
-				G3_TexPlttBase( g3Dmapper->tree_texPlttAdrs, ddData->texFmt );
-
 				//マテリアル設定
 				G3_MaterialColorDiffAmb( ddData->diffuse, ddData->ambient, TRUE );
 				G3_MaterialColorSpecEmi( ddData->specular, ddData->emission, FALSE );
@@ -1313,7 +1466,11 @@ static void	DirectDraw3Dmapper
 							ddData->polID, ddData->alpha, GX_POLYGON_ATTR_MISC_FOG );
 
 				if( ddData->func != NULL ){
-					ddData->func( &vecN );
+					fx32 limitLength = 512 * FX32_ONE;
+					fx32 length = getCullingLength( g3Dcamera, &ddObject->trans );
+				
+					ddData->func(	g3Dmapper->tree_texDataAdrs, g3Dmapper->tree_texPlttAdrs, 
+									&vecN, ( length < limitLength) );
 				}
 
 				G3_PopMtx(1);
@@ -1331,62 +1488,98 @@ static void	DirectDraw3Dmapper
  *
  */
 //------------------------------------------------------------------
-static void	_drawTree0( VecFx16* vecN )
+static void	_drawTree0( u32 texDataAdrs, u32 texPlttAdrs, VecFx16* vecN, BOOL lodSt )
 {
-	fx32 smax = 64 * FX32_ONE;
-	fx32 tmax = 64 * FX32_ONE;
+	GXTexFmt	texFmt = GX_TEXFMT_PLTT16;
+	GXTexSizeS	s;
+	GXTexSizeT	t;
+	fx32		smax, tmax;
 
-	G3_Begin( GX_BEGIN_QUADS );
+	if( lodSt == TRUE ){
+		s = GX_TEXSIZE_S64;
+		t = GX_TEXSIZE_T64;
+		smax = 64 * FX32_ONE;
+		tmax = 64 * FX32_ONE;
 
-	G3_Normal( 0.000 * FX16_ONE, 1.000 * FX16_ONE, 0.000 * FX16_ONE );
-	G3_Color( GX_RGB( 31, 31, 31 ) );
-	G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-	G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx0
-	G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-	G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );	//vtx2
-	G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-	G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );		//vtx3
-	G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-	G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx1
+		G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD, s, t, GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
+						GX_TEXPLTTCOLOR0_TRNS, texDataAdrs + 0x200 );
+		G3_TexPlttBase( texPlttAdrs + 0x20, texFmt );
 
-	G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-	G3_Color( GX_RGB( 31, 31, 31 ) );
-	G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-	G3_Vtx( -2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx0
-	G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-	G3_Vtx( -2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );	//vtx2
-	G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-	G3_Vtx( 2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );		//vtx3
-	G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
-	G3_Vtx( 2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx1
+		G3_Begin( GX_BEGIN_QUADS );
 
-	G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-	G3_Color( GX_RGB( 31, 31, 31 ) );
-	G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-	G3_Vtx( -1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx0
-	G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
-	G3_Vtx( -1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );	//vtx2
-	G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
-	G3_Vtx( 1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );		//vtx3
-	G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
-	G3_Vtx( 1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx1
+		G3_Normal( 0.000 * FX16_ONE, 1.000 * FX16_ONE, 0.000 * FX16_ONE );
+		G3_Color( GX_RGB( 31, 31, 31 ) );
+		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx0
+		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
+		G3_Vtx( -1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );	//vtx2
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
+		G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, 1.500 * FX16_ONE );	//vtx3
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( 1.600 * FX16_ONE, 0.200/*0.091*/ * FX16_ONE, -1.500 * FX16_ONE );	//vtx1
 
-	G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
-	G3_Color( GX_RGB( 31, 31, 31 ) );
-	G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
-	G3_Vtx( -1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx0
-	G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-	G3_Vtx( -1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );	//vtx2
-	G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
-	G3_Vtx( 1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );		//vtx3
-	G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
-	G3_Vtx( 1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx1
+		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
+		G3_Color( GX_RGB( 31, 31, 31 ) );
+		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
+		G3_Vtx( -2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx0
+		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( -2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );	//vtx2
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( 2.000 * FX16_ONE, 0.725 * FX16_ONE, 0.993 * FX16_ONE );		//vtx3
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.437 * FX32_ONE,tmax) );
+		G3_Vtx( 2.000 * FX16_ONE, 2.675 * FX16_ONE, -1.793 * FX16_ONE );	//vtx1
 
-	G3_End();
+		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
+		G3_Color( GX_RGB( 31, 31, 31 ) );
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( -1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx0
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
+		G3_Vtx( -1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );	//vtx2
+		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.469 * FX32_ONE,tmax) );
+		G3_Vtx( 1.650 * FX16_ONE, 1.840 * FX16_ONE, 0.729 * FX16_ONE );		//vtx3
+		G3_TexCoord( FX_Mul(0.531 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( 1.650 * FX16_ONE, 3.560 * FX16_ONE, -1.729 * FX16_ONE );	//vtx1
+
+		G3_Normal( 0.000 * FX16_ONE, 0.819 * FX16_ONE, 0.574 * FX16_ONE );
+		G3_Color( GX_RGB( 31, 31, 31 ) );
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
+		G3_Vtx( -1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx0
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( -1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );	//vtx2
+		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( 1.100 * FX16_ONE, 2.969 * FX16_ONE, 0.201 * FX16_ONE );		//vtx3
+		G3_TexCoord( FX_Mul(0.344 * FX32_ONE,smax), FX_Mul(0.656 * FX32_ONE,tmax) );
+		G3_Vtx( 1.100 * FX16_ONE, 4.231 * FX16_ONE, -1.601 * FX16_ONE );	//vtx1
+
+		G3_End();
+	} else {
+		s = GX_TEXSIZE_S32;
+		t = GX_TEXSIZE_T32;
+		smax = 32 * FX32_ONE;
+		tmax = 32 * FX32_ONE;
+
+		G3_TexImageParam(	texFmt, GX_TEXGEN_TEXCOORD, s, t, GX_TEXREPEAT_NONE, GX_TEXFLIP_NONE,
+						GX_TEXPLTTCOLOR0_TRNS, texDataAdrs + 0x000 );
+		G3_TexPlttBase( texPlttAdrs + 0x00, texFmt );
+
+		G3_Begin( GX_BEGIN_QUADS );
+
+		G3_Normal( 0.000 * FX16_ONE, 1.000 * FX16_ONE, 0.000 * FX16_ONE );
+		G3_Color( GX_RGB( 31, 31, 31 ) );
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( -2.000 * FX16_ONE, 4.231 * FX16_ONE, 0 * FX16_ONE );	//vtx0
+		G3_TexCoord( FX_Mul(0.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( -2.000 * FX16_ONE, 0.000 * FX16_ONE, 0 * FX16_ONE );	//vtx2
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(1.000 * FX32_ONE,tmax) );
+		G3_Vtx( 2.000 * FX16_ONE, 0.000 * FX16_ONE, 0 * FX16_ONE );	//vtx3
+		G3_TexCoord( FX_Mul(1.000 * FX32_ONE,smax), FX_Mul(0.000 * FX32_ONE,tmax) );
+		G3_Vtx( 2.000 * FX16_ONE, 4.231 * FX16_ONE, 0 * FX16_ONE );	//vtx1
+
+		G3_End();
+	}
 }
 
 static const DIRECT_DRAW_DATA drawTreeData = {
-	GX_TEXFMT_PLTT16, GX_TEXSIZE_S64, GX_TEXSIZE_T64,
 	GX_RGB(31,31,31), GX_RGB(16,16,16), GX_RGB(16,16,16), GX_RGB(0,0,0),
 	63, 31, DRAW_YBILLBOARD,
 	_drawTree0,

@@ -1180,16 +1180,8 @@ static const SCENE_DATA	resistMapTbl[] = {
 {{  2,  1, MAP_WIDTH, ARCID_FLDMAP, DPc11Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
 };
 
-#include "graphic_data/test_graphic/build_model_id.h"
-
-static const u32	resistObjTbl[] = {
-	BMID_PC,
-	BMID_T5_S01,
-	BMID_C4_H01A,
-	BMID_T5_S02,
-	BMID_T5_O01,
-	BMID_T5_O01B,
-	BMID_C4_DOOR1,
-	BMID_P_DOOR,
+static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
+	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
+	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
 };
 

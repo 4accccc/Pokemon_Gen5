@@ -43,7 +43,6 @@ enum {
 	ARCID_FLDACT,
 	ARCID_FLDMAP,
 	ARCID_SAMPLEMAP,
-	ARCID_FLDBLD,
 };
 
 typedef struct _CURSOR_CONT	CURSOR_CONT;
@@ -52,6 +51,11 @@ static void				DeleteCursor( CURSOR_CONT* cursor );
 static void				MainCursor( CURSOR_CONT* cursor);
 static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
 static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
+
+typedef struct _FLD_ACTSYS		FLD_ACTSYS;
+static FLD_ACTSYS*		CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID );
+static void				DeleteFieldActSys( FLD_ACTSYS* fldActSys );
+static void				MainFieldActSys( FLD_ACTSYS* fldActSys );
 
 #include "samplemain.h"
 
@@ -67,6 +71,7 @@ typedef struct {
 
 	SAMPLE_SETUP*	gs;
 	CURSOR_CONT*	cursor;
+	FLD_ACTSYS*		fldActSys;
 	int				mapNum;
 
 }SAMPLE_WORK;
@@ -129,8 +134,8 @@ BOOL	SampleMain( void )
 		{
 			G3D_MAPPEROBJ_RESIST resistData;
 
-			resistData.arcID = ARCID_FLDBLD;
-			resistData.mdlID = resistObjTbl; 
+			resistData.arcID = ARCID_SAMPLEMAP;
+			resistData.data = resistObjTbl; 
 			resistData.count = NELEMS(resistObjTbl); 
 			ResistObjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistData );
 		}
@@ -140,6 +145,8 @@ BOOL	SampleMain( void )
 	case 2:
 		ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
 							&resistMapTbl[sampleWork->mapNum].mapperData );
+		sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
+
 		SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
 		sampleWork->seq++;
 		break;
@@ -171,11 +178,13 @@ BOOL	SampleMain( void )
 			MainCursor( sampleWork->cursor );
 			GetCursorTrans( sampleWork->cursor, &pos );
 			SetPos3Dmapper( GetG3Dmapper(sampleWork->gs), &pos );
+			MainFieldActSys( sampleWork->fldActSys );
 		}
 		MainGameSystem( sampleWork->gs );
 		break;
 
 	case 4:
+		DeleteFieldActSys( sampleWork->fldActSys );
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		DeleteCursor( sampleWork->cursor );
 		sampleWork->seq++;
@@ -242,6 +251,7 @@ struct _SAMPLE_SETUP {
 	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
 	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
+	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
 	G3D_MAPPER*				g3Dmapper;
 
@@ -277,7 +287,6 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/fld_act.narc",
 	"test_graphic/fld_map.narc",
 	"test_graphic/sample_map.narc",
-	"test_graphic/build_model.narc",
 };
 
 static const char font_path[] = {"gfl_font.dat"};
@@ -309,6 +318,8 @@ static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl)
 #define G3D_SCENE_OBJCOUNT	(256)		//g3Dsceneで使用するsceneObjの最大設定可能数
 #define G3D_OBJWORK_SZ		(64)		//g3Dsceneで使用するsceneObjのワークサイズ
 #define G3D_ACC_COUNT		(32)		//g3Dsceneで使用するsceneObjAccesaryの最大設定可能数
+#define G3D_BBDACT_RESMAX	(64)		//billboardActで使用するリソースの最大設定可能数
+#define G3D_BBDACT_ACTMAX	(256)		//billboardActで使用するオブジェクトの最大設定可能数
 
 static const GXRgb edgeColorTable[8] = {
 	GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),GX_RGB(10,10,10),
@@ -483,6 +494,7 @@ static void G3DsysSetup( void )
 /**
  * @brief		３Ｄデータロード
  */
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 //------------------------------------------------------------------
 //作成
 static void g3d_load( SAMPLE_SETUP* gs )
@@ -494,6 +506,10 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	//g3Dsceneを使用し管理をする
 	gs->g3Dscene = GFL_G3D_SCENE_Create( gs->g3Dutil, 
 						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
+
+	gs->g3Dmapper = Create3Dmapper( gs->heapID );
+	gs->bbdActSys = GFL_BBDACT_CreateSys
+					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
 
 	//カメラ作成
 	gs->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, gs->heapID );
@@ -507,8 +523,6 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	//ライト作成
 	gs->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, gs->heapID );
 
-	gs->g3Dmapper = Create3Dmapper( gs->heapID );
-
 	//カメラライト0反映
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
@@ -519,6 +533,7 @@ static void g3d_control( SAMPLE_SETUP* gs )
 {
 	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
 	Main3Dmapper( gs->g3Dmapper );
+	GFL_BBDACT_Main( gs->bbdActSys );
 }
 
 //描画
@@ -527,6 +542,7 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
 	Draw3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
+	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
@@ -536,6 +552,7 @@ static void g3d_unload( SAMPLE_SETUP* gs )
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera );
 
+	GFL_BBDACT_DeleteSys( gs->bbdActSys );
 	Delete3Dmapper( gs->g3Dmapper );
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
@@ -547,16 +564,39 @@ static void	g3d_vblank( GFL_TCB* tcb, void* work )
 	SAMPLE_SETUP* gs =  (SAMPLE_SETUP*)work;
 }
 
+//BBD用VRAM転送関数
+static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz )
+{
+	NNS_GFD_DST_TYPE transType;
+
+	if( type == GFL_BBDACT_TRANSTYPE_DATA ){
+		transType = NNS_GFD_DST_3D_TEX_VRAM;
+	} else {
+		transType = NNS_GFD_DST_3D_TEX_PLTT;
+	}
+	NNS_GfdRegisterNewVramTransferTask( transType, dst, (void*)src, siz );
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	システム取得
  */
 //------------------------------------------------------------------
+static GFL_G3D_CAMERA* GetG3Dcamera( SAMPLE_SETUP* gs )
+{
+	return gs->g3Dcamera;
+}
+
 static G3D_MAPPER* GetG3Dmapper( SAMPLE_SETUP* gs )
 {
 	return gs->g3Dmapper;
 }
 
+static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
+{
+	return gs->bbdActSys;
+}
+	
 
 
 //============================================================================================
@@ -594,7 +634,7 @@ struct _CURSOR_CONT {
 	u16					cursorIdx;
 	VecFx32				trans;
 	fx32				cameraHeight;
-	u16				cameraLength;
+	u16					cameraLength;
 	u16					direction;
 };
 
@@ -746,7 +786,8 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	}
 	//if( mvFlag == TRUE ){
 		VEC_Add( &cursor->trans, &vecMove, &cursor->trans );
-		Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
+		//Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
+		Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
 	//}
 	cursor->cameraHeight += vecMove.y;
 
@@ -776,4 +817,334 @@ static void	GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans )
 {
 	*trans = cursor->trans;
 }
+
+//============================================================================================
+/**
+ * @brief	フィールドアクター
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	型宣言
+ *
+ */
+//------------------------------------------------------------------
+#define FLD_BBDACT_ACTMAX	(253)
+#define WORK_SIZ			(8)
+
+typedef struct {
+	FLD_ACTSYS*	fldActSys;
+	u16			work[WORK_SIZ];
+}FLD_ACT_WORK;
+
+struct _FLD_ACTSYS {
+	HEAPID					heapID;
+	SAMPLE_SETUP*			gs;
+	u16						cameraRotate;
+	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
+	u16						bbdActResCount;
+	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
+	u16						bbdActActCount;
+	FLD_ACT_WORK			actWork[FLD_BBDACT_ACTMAX];
+};
+
+#include "graphic_data/test_graphic/fld_act.naix"
+
+static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork );
+static void	calcCameraRotate( FLD_ACTSYS* fldActSys );
+//------------------------------------------------------------------
+/**
+ *
+ * @brief	セットアップデータ
+ *
+ */
+//------------------------------------------------------------------
+static const GFL_BBDACT_RESDATA testResTable[] = {
+	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, 
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_achamo_nsbtx, 
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_artist_nsbtx, 
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_badman_nsbtx, 
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_beachgirl_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_idol_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_lady_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_oldman1_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_policeman_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_rivel_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+	{ ARCID_FLDACT, NARC_fld_act_waiter_nsbtx,
+		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+};
+
+ 
+
+static const GFL_BBDACT_ANM walkLAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkRAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkUAnm[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM walkDAnm[] = {
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM testAnm1[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 5, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 6, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM testAnm2[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 16 },
+	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 24 },
+	{ 4, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 32 },
+	{ 5, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 48 },
+	{ 6, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 7, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 8, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 9, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 10, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ GFL_BBDACT_ANMCOM_LOOP, 0, 0, GFL_BBDACT_ANMLOOPPARAM( 4, 5 ) },
+	{ 11, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 64 },
+	{ GFL_BBDACT_ANMCOM_CHG, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM testAnm3[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 32, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ 64, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 1 },
+};
+
+enum {
+	ACTWALK_UP = 0,
+	ACTWALK_DOWN,
+	ACTWALK_LEFT,
+	ACTWALK_RIGHT,
+};
+
+static const GFL_BBDACT_ANM* testAnmTable[] = { walkUAnm, walkDAnm, walkLAnm, walkRAnm };
+
+static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
+{
+	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
+	FLD_ACTSYS*		fldActSys = (FLD_ACTSYS*)work;
+	FLD_ACT_WORK*	actWork = &fldActSys->actWork[actIdx];
+
+	if( actWork->work[0] == 0 ){
+		u32	timer = GFUser_GetPublicRand(8);
+
+		actWork->work[0] = (timer+2) * 30;
+		actWork->work[1] = GFUser_GetPublicRand( 0x10000 );
+	} else {
+		actWork->work[0]--;
+	}
+	{
+		VecFx32 nowTrans, nextTrans, vecMove, vecGround, rotVec;
+		u16	 theta = actWork->work[1];
+		fx32 speed = FX32_ONE;
+
+		{
+			u16	 dir = actWork->work[1] - actWork->fldActSys->cameraRotate;
+			if( (dir > 0x2000)&&(dir < 0x6000)){
+				//OS_Printf("右　rotate = %x\n", dir );
+				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_RIGHT );
+			} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
+				//OS_Printf("上　rotate = %x\n", dir );
+				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_UP );
+			} else if( (dir > 0xa000)&&(dir < 0xe000)){
+				//OS_Printf("左　rotate = %x\n", dir );
+				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_LEFT );
+			} else {
+				//OS_Printf("下　rotate = %x\n", dir );
+				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_DOWN );
+			}
+		}
+		GFL_BBD_GetObjectTrans( bbdSys, actIdx, &nowTrans );
+
+		vecMove.x = FX_SinIdx( theta );
+		vecMove.y = 0;
+		vecMove.z = FX_CosIdx( theta );
+		{
+			VecFx32 mv;
+
+			Get3DmapperGroundMoveVec
+				( GetG3Dmapper( fldActSys->gs ), &nowTrans, &vecMove, &mv );
+			VEC_Add( &nowTrans, &mv, &nextTrans );
+		}
+		//範囲外コントロール
+		if( Check3DmapperOutRange( GetG3Dmapper( fldActSys->gs ), &nextTrans ) == FALSE ){
+			Get3DmapperHeight( GetG3Dmapper( fldActSys->gs ), &nextTrans, &nextTrans.y );
+			nextTrans.y += FX32_ONE*7;	//補正
+			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nextTrans );
+		} else {
+			actWork->work[0] = 0;
+		}
+	}
+}
+
+#define TEST_NPC_SETNUM	(250)
+static void testSetUp( FLD_ACTSYS* fldActSys )
+{
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActSys->gs );	
+	GFL_BBDACT_ACTDATA* actData;
+	GFL_BBDACT_ACTUNIT_ID actUnitID;
+	int		i, objIdx;
+	VecFx32	trans;
+	u8		alpha;
+	BOOL	drawEnable;
+	u16		setActNum;
+
+	//リソースセットアップ
+	fldActSys->bbdActResCount = NELEMS(testResTable);
+	fldActSys->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	bbdActSys, 
+																testResTable, 
+																fldActSys->bbdActResCount );
+	fldActSys->bbdActActCount = FLD_BBDACT_ACTMAX;
+
+	//ＮＰＣアクターセットアップ
+	{
+		u16	setActNum = TEST_NPC_SETNUM;
+		GFL_BBDACT_ACTDATA* actData = GFL_HEAP_AllocClearMemory( fldActSys->heapID,
+													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
+		for( i=0; i<setActNum; i++ ){
+			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
+			actData[i].sizX = FX16_ONE*8-1;
+			actData[i].sizY = FX16_ONE*8-1;
+	
+			actData[i].trans.x = (GFUser_GetPublicRand(32*4) ) * MAP_WIDTH/32;
+			actData[i].trans.y = 0;
+			actData[i].trans.z = (GFUser_GetPublicRand(32*4) ) * MAP_WIDTH/32;
+			
+			actData[i].alpha = 31;
+			actData[i].drawEnable = TRUE;
+			actData[i].lightMask = GFL_BBD_LIGHTMASK_01;
+			actData[i].func = testFunc;
+			actData[i].work = fldActSys;
+		}
+		fldActSys->bbdActActUnitID = GFL_BBDACT_AddAct(	bbdActSys, fldActSys->bbdActResUnitID,
+														actData, setActNum );
+		for( i=0; i<setActNum; i++ ){
+			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActSys->bbdActActUnitID+i, 
+										testAnmTable, NELEMS(testAnmTable) );
+			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActSys->bbdActActUnitID+i, 0 );
+		}
+		GFL_HEAP_FreeMemory( actData );
+	}
+}
+
+static void testRelease( FLD_ACTSYS* fldActSys )
+{
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActSys->gs );	
+	u16	setActNum = FLD_BBDACT_ACTMAX;
+
+	GFL_BBDACT_RemoveAct( bbdActSys, fldActSys->bbdActActUnitID, TEST_NPC_SETNUM );
+		
+	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, 
+									fldActSys->bbdActResUnitID, fldActSys->bbdActResCount );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	フィールドアクトシステム作成
+ */
+//------------------------------------------------------------------
+static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
+{
+	FLD_ACTSYS* fldActSys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTSYS) );
+	int	i;
+
+	fldActSys->heapID = heapID;
+	fldActSys->gs = gs;
+
+	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActSys, &fldActSys->actWork[i] ); }
+
+	testSetUp( fldActSys );	//テスト
+
+	return fldActSys;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	フィールドアクトシステム破棄
+ */
+//------------------------------------------------------------------
+static void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
+{
+	testRelease( fldActSys );	//テスト
+	GFL_HEAP_FreeMemory( fldActSys ); 
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	フィールドアクト動作関数
+ */
+//------------------------------------------------------------------
+static void	MainFieldActSys( FLD_ACTSYS* fldActSys )
+{
+	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
+	VecFx32 vec, camPos, target;
+	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActSys->gs );
+
+	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+
+	VEC_Subtract( &target, &camPos, &vec );
+	
+	fldActSys->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	フィールドアクトワーク初期化
+ */
+//------------------------------------------------------------------
+static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork )
+{
+	int i;
+
+	actWork->fldActSys = fldActSys;
+
+	for( i=0; i<WORK_SIZ; i++ ){
+		actWork->work[i] = 0;
+	}
+}
+
 
