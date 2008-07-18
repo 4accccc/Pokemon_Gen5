@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-07-11T20:09:34
+	Update:2008-07-18T18:17:47
  *****************************************************************************/
 
 #ifndef NARC_SAMPLE_MAP_NAIX_
@@ -59,7 +59,11 @@ enum {
 	NARC_sample_map_map_d2_bin = 45,
 	NARC_sample_map_map_d3_bin = 46,
 	NARC_sample_map_map_d4_bin = 47,
-	NARC_sample_map_sample_tree_nsbtx = 48
+	NARC_sample_map_sample_tree_nsbtx = 48,
+	NARC_sample_map_pc_01_h_nsbmd = 49,
+	NARC_sample_map_pc_01_l_nsbmd = 50,
+	NARC_sample_map_buil_01_h_nsbmd = 51,
+	NARC_sample_map_buil_01_l_nsbmd = 52
 };
 
 /* NARC_SAMPLE_MAP_NAIX_ */
