@@ -1,4 +1,0 @@
-CONVSRCS	=\
-	breeder.c	\
-	con_clip.c	\
-	judge.c	
