@@ -22,6 +22,7 @@ struct _GFL_NETSYS{
     UI_KEYSYS* pKey[GFL_NET_HANDLE_MAX];  ///< キーバッファ
     GFL_NETWL* pNetWL;                    ///<  ワイヤレスマネージャーポインタ
     NetModeChangeFunc pNetModeChangeFunc;
+    NetEndCallback pNetEndCallback;     ///< ネットワーク終了コールバック
 };
 
 
@@ -33,6 +34,7 @@ struct _GFL_NETSYS{
  */
 //==============================================================================
 extern GFL_NETSYS* _GFL_NET_GetNETSYS(void);
+
 //==============================================================================
 /**
  * @brief       netHandleを全て消す

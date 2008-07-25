@@ -1,6 +1,8 @@
 #こんな感じで各自のソースを追加してください
 SRCS	+=		test/testmode.c \
 				test/tetsu/game/calc_ph.c \
+				test/ohno/debug_ohno.c \
+				test/ohno/debug_field.c \
 				test/tetsu/game/gamemain.c \
 				test/tetsu/game/setup.c \
 				test/tetsu/game/act3d.c \
@@ -66,4 +68,12 @@ SRCS	+=		test/testmode.c \
 # 
 # 要望・質問は森にお願いします。
 # 
+
+
+
+##xx## #WIRELESS MAINプログラム
+##xx## #===> main
+##xx## #LIB=>					libwm.a
+##xx## SRCS_OVERLAY_WIRELESS		=  test/ohno/debug_field.c
+
 

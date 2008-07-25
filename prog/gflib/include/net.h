@@ -170,6 +170,11 @@ typedef void (*NetIconGraNoBuffFunc)(int* pNoBuff);  ///< 通信アイコンのファイル
 //typedef void (*NetKeyMainFunc)(UI_KEYSYS* pKey, u16 keyData);  ///< キー内部処理
 
 typedef void (*NetModeChangeFunc)(void* pWork, BOOL bResult);   ///< 通信形態変更時に呼ばれるコールバック
+typedef void (*NetEndCallback)(void* pWork);   ///< 通信終了時に呼ばれるコールバック
+
+typedef void (*NetStepEndCallback)(void* pWork);   ///< 通信の区切りに呼ばれる汎用コールバック型
+
+
 
 
 #if GFL_NET_WIFI
@@ -233,7 +238,8 @@ extern void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc);
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit);
+extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallback callback);
+
 //==============================================================================
 /**
  * @brief 通信初期化が完了したかどうかを確認する
@@ -245,11 +251,10 @@ extern BOOL GFL_NET_IsInit(void);
 //==============================================================================
 /**
  * @brief   通信終了
- * @retval  TRUE  終了しました
- * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
+ * @param   netEndCallback    通信が終了した際に呼ばれるコールバックです
  */
 //==============================================================================
-extern BOOL GFL_NET_Exit(void);
+extern void GFL_NET_Exit(NetEndCallback netEndCallback);
 //==============================================================================
 /**
  * @brief   通信のメイン実行関数
@@ -302,12 +307,11 @@ extern NetID GFL_NET_GetNetID(GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
  * @brief   子機初期化を行い指定した親機に接続する
- * @param   pHandle        通信ハンドルのポインタ
  * @param   macAddress     マックアドレスのバッファ
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress);
+extern void GFL_NET_InitClientAndConnectToParent(u8* macAddress);
 //==============================================================================
 /**
  * @brief   指定した親機に接続する（子機初期化済み）
@@ -348,7 +352,7 @@ extern void GFL_NET_CreateServer(void);
  * @return   none
  */
 //==============================================================================
-extern void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle);
+extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
 
 //==============================================================================
 /**
@@ -370,13 +374,6 @@ extern void GFL_NET_WifiLogin(void);
 //==============================================================================
 extern BOOL GFL_NET_IsWifiLobby(GFL_NETHANDLE* pNetHandle);
 
-//==============================================================================
-/**
- * @brief 通信切断する
- * @retval  none
- */
-//==============================================================================
-extern void GFL_NET_Disconnect(void);
 
 
 
@@ -486,23 +483,6 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const voi
 //==============================================================================
 extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
 
-//==============================================================================
-/**
- * @brief     送信開始  送信終了時にコールバックが呼ばれるので、
-              それまでバッファの中身を書き換えないでください
- * @param[in,out]  pNet  通信ハンドル
- * @param[in]   sendID                     送信相手 全員へ送信する場合 NET_SENDID_ALLUSER
- * @param[in]   sendCommand                送信するコマンド
- * @param[in]   size                       送信データサイズ
- * @param[in]   data                       送信データポインタ
- * @param[in]   bFast                      優先順位を高くして送信する場合TRUE
- * @param[in]   bRepeat                    このコマンドがキューにないときだけ送信
- * @param[in]   GFL_NET_SendCallbackType       送信終了時に呼ばれるコールバック
- * @retval  TRUE   成功した
- * @retval  FALSE  失敗の場合
- */
-//==============================================================================
-extern BOOL GFL_NET_SendDataCallback(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const GFL_NET_SendCallbackType* pCallback);
 
 //==============================================================================
 /**

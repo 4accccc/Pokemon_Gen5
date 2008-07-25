@@ -220,3 +220,28 @@ u16 GFL_STD_CrcCalc( const void* pData, u32 dataLength )
     return MATH_CalcCRC16CCITT(&_pSTDSys->crcTable, pData, dataLength);
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  線形合同法による32bit乱数コンテキストを初期化します。
+            初期化シードはRTCにそった乱数です
+ *  @param  context 乱数構造体のポインタ
+ *  @return none
+ */
+//----------------------------------------------------------------------------
+
+void GFL_STD_RandGeneralInit(GFL_STD_RandContext *context)
+{
+    RTCDate date;
+    RTCTime time;
+    u32 seed;
+    u64 seed64;
+    RTC_GetDateTime(&date, &time);
+    seed = date.year + date.month * 0x100 * date.day * 0x10000
+        + time.hour * 0x10000 + (time.minute + time.second) * 0x1000000;
+
+    GFL_STD_MtRandInit(seed);
+    seed64 = GFL_STD_MtRand( 0 );
+    seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
+    GFL_STD_RandInit( context, seed64 );
+}

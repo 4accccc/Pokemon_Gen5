@@ -812,12 +812,15 @@ static void _dataDsStep(void)
                     NET_PRINT("連続データ parent %d \n",index);
                     continue;
                 }
-                {
-                    u16 crc = GFL_STD_CrcCalc(&pHeader[_DS_HEADERNO], mcSize-_DS_HEADERNO);
+                {//_DS_CRC_MAX
+                    u16 crc = GFL_STD_CrcCalc(&pHeader[_DS_CRC_MAX], mcSize-_DS_CRC_MAX);
                     GF_ASSERT(pHeader[_DS_CRCNO1] == (crc & 0xff));
                     GF_ASSERT(pHeader[_DS_CRCNO2] == ((crc & 0xff00) >> 8));
                 }
-                GFL_NET_RingPuts(&_pComm->recvServerRing[index], adr, mcSize-3);
+                GFL_NET_RingPuts(&_pComm->recvServerRing[index], adr, mcSize - _DS_HEADER_MAX);
+
+
+                
                 _pComm->bFirstCatch[index] = FALSE;
             }
         }

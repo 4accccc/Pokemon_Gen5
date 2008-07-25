@@ -238,18 +238,7 @@ GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 //------------------------------------------------------------------
 static void GFUser_PublicRandInit(void)
 {
-    RTCDate date;
-    RTCTime time;
-    u32 seed;
-    u64 seed64;
-    RTC_GetDateTime(&date, &time);
-    seed = date.year + date.month * 0x100 * date.day * 0x10000
-        + time.hour * 0x10000 + (time.minute + time.second) * 0x1000000;
-
-    GFL_STD_MtRandInit(seed);
-    seed64 = GFL_STD_MtRand( 0 );
-    seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
-    GFL_STD_RandInit( &gfl_work->publicRandContext, seed64 );
+    GFL_STD_RandGeneralInit( &gfl_work->publicRandContext );
 }
 
 //------------------------------------------------------------------

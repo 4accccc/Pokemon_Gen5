@@ -10,6 +10,8 @@
  */
 //=============================================================================
 
+#include "gflib.h"
+
 #ifndef __NET_STATE_H__
 #define __NET_STATE_H__
 
@@ -21,7 +23,7 @@
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateDeviceInitialize(HEAPID heapID);
+extern void GFL_NET_StateDeviceInitialize(HEAPID heapID, NetStepEndCallback callback);
 //==============================================================================
 /**
  * @brief   マックアドレスを指定して子機接続開始
@@ -65,7 +67,7 @@ extern void GFL_NET_StateConnectParent(HEAPID heapID);
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateChangeoverConnect(HEAPID heapID);
+extern void GFL_NET_StateChangeoverConnect(HEAPID heapID, NetStepEndCallback callback);
 //==============================================================================
 /**
  * @brief   終了コマンド 子機が親機にやめるように送信  全員の子機に送り返すGFL_NET_CMD_EXIT_REQ
@@ -85,11 +87,11 @@ extern void GFL_NET_StateRecvExitStart(const int netID, const int size, const vo
 //==============================================================================
 /**
  * @brief   通信処理終了手続き開始
- * @param   none
+ * @param   接続終了時に呼ばれるコールバック
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_StateExit(void);
+extern void GFL_NET_StateExit(NetEndCallback netEndCallback);
 //==============================================================================
 /**
  * @brief   DS通信MP通信の切り替え  GFL_NET_CMD_DSMP_CHANGE

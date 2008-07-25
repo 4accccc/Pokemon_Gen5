@@ -72,7 +72,7 @@
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
  */
-#define _BEACON_SIZE_FIX (4)
+#define _BEACON_SIZE_FIX (12)
 #define _BEACON_FIXHEAD_SIZE (6)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
@@ -87,6 +87,8 @@ typedef struct{
     u8        debugAloneTest;      ///< デバッグ用 同じゲームでもビーコンを拾わないように
     u8  	  connectNum;    	   ///< つながっている台数  --> 本親かどうか識別
     u8        pause;               ///< 接続を禁止したい時に使用する
+    u8 dummy1;
+    u8 dummy2;
     u8        aBeaconDataBuff[_BEACON_USER_SIZE_MAX];
 } _GF_BSS_DATA_INFO;
 
@@ -222,6 +224,8 @@ void GFL_NET_WLInitialize(HEAPID heapID,NetBeaconGetFunc getFunc,NetBeaconGetSiz
     pNetWL->disconnectType = _DISCONNECT_NONE;
     pNetWL->mineDebugNo = _DEBUG_ALONETEST;
     pNetWL->_sTgid = WM_GetNextTgid();
+
+    NET_PRINT("%d %d\n",WM_SIZE_USER_GAMEINFO , sizeof(_GF_BSS_DATA_INFO) );
 
     GF_ASSERT(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
 }
@@ -524,11 +528,14 @@ BOOL GFL_NET_WLSwitchParentChild(void)
 {
     GFL_NETWL* pNetWL = _GFL_NET_GetNETWL();
     if(!pNetWL){
+        NET_PRINT("pNetWLNONE\n");
         return TRUE;
     }
     if(pNetWL->disconnectType == _DISCONNECT_STEALTH){
+        NET_PRINT("_DISCONNECT_STEALTH\n");
         return TRUE;
     }
+    NET_PRINT("scan %d\n",pNetWL->bEndScan);
     switch(pNetWL->bEndScan){
       case 0:
         if(WH_SYSSTATE_SCANNING == WH_GetSystemState()){
@@ -540,6 +547,7 @@ BOOL GFL_NET_WLSwitchParentChild(void)
         else if(WH_SYSSTATE_BUSY == WH_GetSystemState()){  //しばらく待つ
         }
         else{
+            NET_PRINT("scan %d\n",pNetWL->bEndScan);
             WH_Finalize();
             pNetWL->bEndScan = 2;
         }
@@ -1655,9 +1663,8 @@ u16 GFL_NET_WL_GetCurrentAid(void)
 
 //==============================================================================
 /**
- * @brief   この親機がいくつとコネクションをもっているのかを得る
- * @param   index   親のリストのindex
- * @retval  コネクション数 0-16
+ * @brief   親機開始
+ * @retval  TRUE = 成功 FALSE = 失敗
  */
 //==============================================================================
 
@@ -1671,6 +1678,11 @@ BOOL GFL_NET_WL_ParentConnect(void)
         u16 channel;
         GFLNetInitializeStruct* pInit = _GFL_NET_GetNETInitStruct();
         
+        pNetWL->bPauseConnect = FALSE;
+        pNetWL->bScanCallBack = FALSE;
+        pNetWL->bAutoExit = FALSE;
+        pNetWL->bEndScan = 0;
+        pNetWL->bSetReceiver = FALSE;
         channel = WH_GetMeasureChannel();
         if(pInit->bTGIDChange){
             pNetWL->_sTgid = WM_GetNextTgid();

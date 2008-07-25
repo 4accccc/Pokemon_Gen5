@@ -25,6 +25,17 @@
 #include "tool/net_queue.h"
 #include "net_handle.h"
 
+#define  GFL_NET_OVERLAY  (0)
+
+
+
+
+#if GFL_NET_WIFI
+FS_EXTERN_OVERLAY(wifi);
+#endif
+FS_EXTERN_OVERLAY(wireless);
+
+
 // 通信で使用するCreateHEAP量
 
 #define _HEAPSIZE_NET              (0xE000)          ///< NET関連のメモリ領域
@@ -60,10 +71,22 @@ void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc)
  * @return none
  */
 //==============================================================================
-void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
+void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit,NetStepEndCallback callback)
 {
     int index;
     // 通信ヒープ作成
+
+#if GFL_NET_OVERLAY
+    if(!pNetInit->bWiFi){
+        GFL_OVERLAY_Load( FS_OVERLAY_ID( wireless ) );
+    }
+#if GFL_NET_WIFI
+    else{
+        GFL_OVERLAY_Load( FS_OVERLAY_ID( wifi ) );
+    }
+#endif
+#endif
+    
     GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->netHeapID, _HEAPSIZE_NET );
     if(pNetInit->bWiFi){
         GFL_HEAP_CreateHeap( pNetInit->baseHeapID, pNetInit->wifiHeapID, _HEAPSIZE_WIFI);
@@ -72,17 +95,18 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit)
         GFL_NETSYS* pNet = GFL_HEAP_AllocClearMemory(pNetInit->netHeapID, sizeof(GFL_NETSYS));
         _pNetSys = pNet;
 
-        NET_PRINT("size %d addr %x",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
+        NET_PRINT("size %d addr %x\n",sizeof(GFLNetInitializeStruct),(u32)&pNet->aNetInit);
 
         GFL_STD_MemCopy(pNetInit, &pNet->aNetInit, sizeof(GFLNetInitializeStruct));
-        GFL_NET_StateDeviceInitialize(pNetInit->netHeapID);
-        for(index = 0; index < pNet->aNetInit.maxConnectNum; index++){
-            _pNetSys->pKey[index] = GFL_UI_KEY_Init(pNet->aNetInit.netHeapID);
-        }
+        GFL_NET_StateDeviceInitialize(pNetInit->netHeapID, callback);
+      //  for(index = 0; index < pNet->aNetInit.maxConnectNum; index++){
+        //    _pNetSys->pKey[index] = GFL_UI_KEY_Init(pNet->aNetInit.netHeapID);
+       // }
 
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
     GFL_NET_WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
+    NET_PRINT("GFL_NET_Init\n");
 }
 
 //==============================================================================
@@ -96,27 +120,28 @@ BOOL GFL_NET_IsInit(void)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
-    if(pNet->aNetInit.bWiFi){
-#if GFL_NET_WIFI
-        return GFL_NET_DWC_IsInit();
-#endif
+    if(pNet==NULL){
+        return FALSE;
     }
-    else{
+    if(!pNet->aNetInit.bWiFi){
         if( _GFL_NET_GetNETWL()){
             return TRUE;
         }
     }
+#if GFL_NET_WIFI
+    else{
+        return GFL_NET_DWC_IsInit();
+    }
+#endif
     return FALSE;
 }
 
 //==============================================================================
 /**
- * @brief  通信終了
- * @retval  TRUE  終了しました
- * @retval  FALSE 終了しません 時間を空けてもう一回呼んでください
+ * @brief   通信終了コールバック
  */
 //==============================================================================
-BOOL GFL_NET_Exit(void)
+static void _netEndCallback(void* pWork)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
     HEAPID netHeapID = pNet->aNetInit.netHeapID;
@@ -124,13 +149,11 @@ BOOL GFL_NET_Exit(void)
     BOOL bWiFi = pNet->aNetInit.bWiFi;
     int index;
 
-    if(GFL_NET_SystemIsInitialize()){
-        return FALSE;
-    }
+    pNet->pNetEndCallback(pNet->aNetInit.pWork);
+    
     for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
         GFL_HEAP_FreeMemory(pNet->pKey[index]);
     }
-    GFL_NET_WirelessIconEasyEnd();
     GFL_NET_HANDLE_DeleteAll(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;
@@ -139,7 +162,31 @@ BOOL GFL_NET_Exit(void)
         GFL_HEAP_DeleteHeap(wifiHeapID);
     }
     GFL_HEAP_DeleteHeap(netHeapID);
-    return TRUE;
+
+#if GFL_NET_OVERLAY
+    if(!bWiFi){
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wireless ) );
+    }
+#if GFL_NET_WIFI
+    else{
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID( wifi ) );
+    }
+#endif
+#endif
+}
+
+//==============================================================================
+/**
+ * @brief   通信終了
+ * @param   netEndCallback    通信が終了した際に呼ばれるコールバックです
+ */
+//==============================================================================
+void GFL_NET_Exit(NetEndCallback netEndCallback)
+{
+    GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+    pNet->pNetEndCallback = netEndCallback;
+    GFL_NET_StateExit(_netEndCallback);
+    GFL_NET_WirelessIconEasyEnd();
 }
 
 //-----ビーコン関連
@@ -219,7 +266,7 @@ BOOL GFL_NET_Main(void)
  * @return  none
  */
 //==============================================================================
-void GFL_NET_InitClientAndConnectToParent(GFL_NETHANDLE* pHandle,u8* macAddress)
+void GFL_NET_InitClientAndConnectToParent(u8* macAddress)
 {
     GFL_NET_StateConnectMacAddress(macAddress,TRUE);
 }
@@ -288,14 +335,14 @@ void GFL_NET_CreateServer(void)
 //==============================================================================
 /**
  * @brief    親機子機を繰り返し、誰でもいいので接続する
- * @param    GFL_NETHANDLE  通信ハンドルのポインタ
+ * @param    none
  * @return   none
  */
 //==============================================================================
-void GFL_NET_ChangeoverConnect(GFL_NETHANDLE* pHandle)
+void GFL_NET_ChangeoverConnect(NetStepEndCallback callback)
 {
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-    GFL_NET_StateChangeoverConnect(pNet->aNetInit.netHeapID);
+    GFL_NET_StateChangeoverConnect(pNet->aNetInit.netHeapID, callback);
 }
 
 //==============================================================================
@@ -349,18 +396,6 @@ BOOL GFL_NET_IsConnectMember(NetID id)
 {
     return GFL_NET_HANDLE_IsNegotiation(GFL_NET_GetNetHandle(id));
 }
-
-//==============================================================================
-/**
- * @brief 通信切断する
- * @retval  none
- */
-//==============================================================================
-void GFL_NET_Disconnect(void)
-{
-    GFL_NET_StateExit();
-}
-
 
 //==============================================================================
 /**

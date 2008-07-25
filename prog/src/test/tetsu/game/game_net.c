@@ -67,6 +67,11 @@ static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 	OS_TPrintf("通信不能エラーが発生 ErrorNo = %d\n",errNo);
 }
 
+
+static void _initCallback(void* pWork)
+{
+}
+
 // 通信初期化構造体  wifi用
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
@@ -100,7 +105,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 void InitGameNet(void)
 {
 #ifdef NET_WORK_ON
-    GFL_NET_Init(&aGFLNetInit);
+    GFL_NET_Init(&aGFLNetInit, _initCallback);
 #endif
 	gNetSys._connectSeqNo = 0;
 	gNetSys._exitSeqNo = 0;
@@ -138,19 +143,19 @@ BOOL ConnectGameNet(void)
 		break;
 
 	case _CONNECT:
-		gNetSys._pHandle = GFL_NET_CreateHandle();
-		GFL_NET_ChangeoverConnect( gNetSys._pHandle ); // 自動接続
+		GFL_NET_ChangeoverConnect(); // 自動接続
 		gNetSys._connectSeqNo = _CONNECT_NEGO;
 		break;
 
 	case _CONNECT_NEGO:
-		if( GFL_NET_RequestNegotiation( gNetSys._pHandle ) == TRUE ){
+		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
 			gNetSys._connectSeqNo = _CONNECT_NEGOCHECK;
 		}
 		break;
 
 	case _CONNECT_NEGOCHECK:
-		if( GFL_NET_IsNegotiation( gNetSys._pHandle ) == TRUE ){
+        gNetSys._pHandle = GFL_NET_HANDLE_GetCurrentHandle();
+		if( GFL_NET_HANDLE_IsNegotiation( gNetSys._pHandle ) == TRUE ){
 			if( GFL_NET_IsParentMachine() == FALSE ){
 				//子機の場合モードセット可能(defaultはDSモード)
 				//GFL_NET_ChangeMpMode(gNetSys._pHandle);
@@ -195,8 +200,8 @@ BOOL ExitGameNet(void)
 	switch( gNetSys._exitSeqNo ){
 
 	case _EXIT_START:
-		if( GFL_NET_IsParentMachine() == TRUE ){
-			GFL_NET_Disconnect();
+		if( GFL_NET_IsParentMachine() == FALSE ){
+			GFL_NET_Exit(NULL);
 		}else{
 			GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
 		}
@@ -204,7 +209,7 @@ BOOL ExitGameNet(void)
 		break;
 
 	case _EXIT_END:
-		GFL_NET_Exit();
+		GFL_NET_Exit(NULL);
 		result = TRUE;
 		break;
 	}

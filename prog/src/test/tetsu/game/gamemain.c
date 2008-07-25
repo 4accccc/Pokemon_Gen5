@@ -14,7 +14,7 @@
 #include "game_net.h"
 #include "game_cont.h"
 
-//#define NET_WORK_ON
+#define NET_WORK_ON
 void	GameBoot( HEAPID heapID );
 void	GameEnd( void );
 BOOL	GameMain( void );

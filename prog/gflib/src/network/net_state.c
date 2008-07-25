@@ -48,6 +48,8 @@ struct _NET_WORK_STATE{
   PTRStateFunc state;      ///< ハンドルのプログラム状態
   GFL_STD_RandContext sRand; ///< 親子機ネゴシエーション用乱数キー
   PSyncroCallback pSCallBack;  ///< 自動接続時に同期が完了した場合呼ばれる
+  NetEndCallback pNetEndCallback;  ///< 通信終了した時によばれるコールバック
+  NetStepEndCallback pNetStepEndCallback;   ///< 汎用的に呼ばれるコールバック
   u8 aMacAddress[6];       ///< 接続先MACアドレス格納バッファ  アライメントが必要!!
   u16 timer;           ///< 進行タイマー
   u8 autoConnectNum;     ///< 自動接続に必要な人数
@@ -87,11 +89,7 @@ static void _changeoverChildSearching(GFL_NETSTATE* pState);
 static void _errorDispCheck(GFL_NETSTATE* pState);
 
 #ifdef GFL_NET_DEBUG
-#if 1
 #define   _CHANGE_STATE(state, time)  _changeStateDebug(_pNetState ,state, time, __LINE__)
-#else
-#define   _CHANGE_STATE(state, time)  _changeState(_pNetState ,state, time)
-#endif
 #else  //GFL_NET_DEBUG
 #define   _CHANGE_STATE(state, time)  _changeState(_pNetState ,state, time)
 #endif //GFL_NET_DEBUG
@@ -101,6 +99,7 @@ static void _errorDispCheck(GFL_NETSTATE* pState);
 static void _stateEnd(GFL_NETSTATE* pState);             // 終了処理
 static void _stateConnectEnd(GFL_NETSTATE* pState);      // 切断処理開始
 static void _stateNone(GFL_NETSTATE* pState);            // 何もしない
+static void _stateConnectError(GFL_NETSTATE* pState);   // エラー状態
 
 
 //==============================================================================
@@ -148,12 +147,16 @@ static void _commStateInitialize(HEAPID heapID)
     _pNetState = GFL_HEAP_AllocClearMemory( heapID, sizeof(GFL_NETSTATE));
     _pNetState->timer = _START_TIME;
     _pNetState->bFirstParent = TRUE;  // 親の初めての起動の場合TRUE
+    GFL_STD_RandGeneralInit(&_pNetState->sRand);
     GFL_NET_COMMAND_Init(NULL, 0, NULL);
 }
 
 static void _endIchneumon(void* pWork, BOOL bRet)
 {
-
+    NetEndCallback pNetEndCallback = _pNetState->pNetEndCallback;
+    GFL_HEAP_FreeMemory(_pNetState);
+    _pNetState = NULL;
+    pNetEndCallback(NULL);
 }
 
 //==============================================================================
@@ -166,15 +169,16 @@ static void _endIchneumon(void* pWork, BOOL bRet)
 
 static void _stateFinalize(GFL_NETSTATE* pState)
 {
-    if(pState==NULL){  // すでに終了している
+
+    int state = WH_GetSystemState();
+
+    if(WH_SYSSTATE_STOP != state){
         return;
     }
     GFL_NET_COMMAND_Exit();
     GFL_NET_WirelessIconEasyEnd();
     GFL_NET_ExitIchneumon(_endIchneumon,NULL);
     _GFL_NET_SetNETWL(NULL);
-    GFL_HEAP_FreeMemory(_pNetState);
-    _pNetState = NULL;
 }
 
 //==============================================================================
@@ -219,8 +223,10 @@ static void _deviceInitialize(GFL_NETSTATE* pState)
                              pNetIni->beaconCompFunc);
     }
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
-
-    NET_PRINT("再起動    -- \n");
+    if(pState->pNetStepEndCallback){
+        pState->pNetStepEndCallback(pNetIni->pWork);
+        pState->pNetStepEndCallback=NULL;
+    }
     _CHANGE_STATE(_stateNone, 0);
 }
 
@@ -228,6 +234,9 @@ static void _initIchneumon(void* pWork, BOOL bRet)
 {
     if(bRet){
         _CHANGE_STATE(_deviceInitialize, 0);
+    }
+    else{
+        _CHANGE_STATE(_stateConnectError, 0);  // イクニューモン初期化に失敗
     }
 }
 
@@ -239,12 +248,12 @@ static void _initIchneumon(void* pWork, BOOL bRet)
  */
 //==============================================================================
 
-void GFL_NET_StateDeviceInitialize(HEAPID heapID)
+void GFL_NET_StateDeviceInitialize(HEAPID heapID, NetStepEndCallback callback)
 {
     GFL_UI_SleepDisable(GFL_UI_SLEEP_NET);  // スリープ禁止
-
-    GFL_NET_InitIchneumon(_initIchneumon, NULL);
     _commStateInitialize(heapID);
+    _pNetState->pNetStepEndCallback = callback;
+    GFL_NET_InitIchneumon(_initIchneumon, NULL);
 }
 
 //==============================================================================
@@ -558,6 +567,7 @@ static BOOL _getErrorCheck(GFL_NETSTATE* pState)
 //==============================================================================
 static void _changeoverParentConnect(GFL_NETSTATE* pState)
 {
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
 
     if(!_getErrorCheck(pState)){
         if(!GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながってないばあいもう一回
@@ -572,6 +582,15 @@ static void _changeoverParentConnect(GFL_NETSTATE* pState)
             NET_PRINT("------エラーの場合Reset\n");
 //            _CHANGE_STATE(_ChildReset, 0);   //@@OO
             return;
+        }
+    }
+    if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
+        if(GFL_NET_HANDLE_RequestNegotiation()){
+            if(pState->pNetStepEndCallback){
+                pState->pNetStepEndCallback(pNetIni->pWork);
+                pState->pNetStepEndCallback=NULL;
+            }
+            _CHANGE_STATE(_stateNone, 0);
         }
     }
 }
@@ -617,6 +636,22 @@ static void _changeoverParentWait(GFL_NETSTATE* pState)
     _CHANGE_STATE(_changeoverParentRestart, 0);
 }
 
+//==============================================================================
+/**
+ * @brief   親機開始
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _changeoverParentStart(GFL_NETSTATE* pState)
+{
+    if(WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL){
+        if(GFI_NET_SystemParentModeInitProcess()){
+            _CHANGE_STATE(_changeoverParentWait, 30);
+        }
+    }
+}
 
 //==============================================================================
 /**
@@ -635,7 +670,28 @@ static void _changeoverParentInit(GFL_NETSTATE* pState)
     if(GFI_NET_SystemParentModeInit(FALSE,  _PACKETSIZE_DEFAULT))  {
         pState->bFirstParent = FALSE;
         NET_PRINT("親機\n");
-        _CHANGE_STATE(_changeoverParentWait, 30);
+        _CHANGE_STATE(_changeoverParentStart, 30);
+    }
+}
+
+//==============================================================================
+/**
+ * @brief   ネゴシエーション接続待ち
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _stateChildNegotiation(GFL_NETSTATE* pState)
+{
+    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+
+    if(GFL_NET_HANDLE_RequestNegotiation()){
+        if(pState->pNetStepEndCallback){
+            pState->pNetStepEndCallback(pNetIni->pWork);
+            pState->pNetStepEndCallback=NULL;
+        }
+        _CHANGE_STATE(_stateNone, 0);
     }
 }
 
@@ -652,19 +708,16 @@ static void _changeoverChildSearching(GFL_NETSTATE* pState)
     int realParent;
 
     GFL_NET_WLParentBconCheck();  // bconの検査
-
     if(GFL_NET_SystemGetCurrentID()!=GFL_NET_PARENT_NETID){  // 子機として接続が完了した
         NET_PRINT("子機になった\n");
-        _CHANGE_STATE(_stateNone, 0);
+        _CHANGE_STATE(_stateChildNegotiation, 0);
         return;
     }
-
     if(pState->timer != 0){
         NET_PRINT("time %d\n",pState->timer);
         pState->timer--;
         return;
     }
-
     if(!GFL_NET_WLSwitchParentChild()){
         return;
     }
@@ -681,9 +734,10 @@ static void _changeoverChildSearching(GFL_NETSTATE* pState)
  */
 //==============================================================================
 
-void GFL_NET_StateChangeoverConnect(HEAPID heapID)
+void GFL_NET_StateChangeoverConnect(HEAPID heapID, NetStepEndCallback callback)
 {
     GFL_NET_SystemChildModeInitAndConnect(TRUE, NULL,_PACKETSIZE_DEFAULT,_parentFindCallback);
+    _pNetState->pNetStepEndCallback = callback;
     _CHANGE_STATE(_changeoverChildSearching, 30);
 }
 
@@ -744,7 +798,7 @@ void GFL_NET_StateRecvExit(const int netID, const int size, const void* pData, v
 void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
     if(GFL_NET_SystemGetCurrentID() != GFL_NET_PARENT_NETID){
-        GFL_NET_Disconnect();
+        GFL_NET_Exit(NULL);
     }
 }
 
@@ -758,10 +812,15 @@ void GFL_NET_StateRecvExitStart(const int netID, const int size, const void* pDa
 
 static void _stateEnd(GFL_NETSTATE* pState)
 {
-    if(GFL_NET_SystemIsInitialize()){
-        return;
+    int state = WH_GetSystemState();
+    
+    if(WH_SYSSTATE_IDLE == state){
+        WH_End();
+        _stateFinalize(pState);
     }
-    _stateFinalize(pState);
+    else if(WH_SYSSTATE_STOP == state){
+        _stateFinalize(pState);
+    }
 }
 
 //==============================================================================
@@ -773,15 +832,6 @@ static void _stateEnd(GFL_NETSTATE* pState)
 //==============================================================================
 static void _stateConnectEnd(GFL_NETSTATE* pState)
 {
-    if(pState->timer != 0){
-        pState->timer--;
-    }
-    if(!GFL_NET_WLSwitchParentChild()){
-        return;
-    }
-    if(pState->timer != 0){
-        return;
-    }
     NET_PRINT("切断する");
     GFL_NET_SystemFinalize();
     _CHANGE_STATE(_stateEnd, 0);
@@ -795,11 +845,12 @@ static void _stateConnectEnd(GFL_NETSTATE* pState)
  */
 //==============================================================================
 
-void GFL_NET_StateExit(void)
+void GFL_NET_StateExit(NetEndCallback netEndCallback)
 {
     if(_pNetState && _pNetState->bDisconnectState){
         return;
     }
+    _pNetState->pNetEndCallback = netEndCallback;
     _pNetState->bDisconnectState = TRUE;
     _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
@@ -817,6 +868,17 @@ static void _stateNone(GFL_NETSTATE* pState)
     // なにもしていない
 }
 
+//==============================================================================
+/**
+ * @brief エラー処理
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+
+static void _stateConnectError(GFL_NETSTATE* pState)
+{
+}
 
 ///< DSMP状態遷移の定義
 enum{

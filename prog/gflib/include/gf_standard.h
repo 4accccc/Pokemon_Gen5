@@ -242,4 +242,14 @@ static inline u32 GFL_STD_Rand(GFL_STD_RandContext *context, u32 max)
 
 extern u16 GFL_STD_CrcCalc( const void* pData, u32 dataLength );
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  線形合同法による32bit乱数コンテキストを初期化します。
+            初期化シードはRTCにそった乱数です
+ *  @param  context 乱数構造体のポインタ
+ *  @return none
+ */
+//----------------------------------------------------------------------------
+extern void GFL_STD_RandGeneralInit(GFL_STD_RandContext *context);
+
 #endif	/*	__GF_STANDARD_H__ */

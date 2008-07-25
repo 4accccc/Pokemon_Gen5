@@ -9,7 +9,6 @@
 #ifndef __NET_HANDLE_H__
 #define __NET_HANDLE_H__
 
-
 typedef struct _GFL_NETHANDLE2 GFL_NETHANDLE2;
 
 

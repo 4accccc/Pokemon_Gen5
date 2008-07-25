@@ -358,7 +358,7 @@ static void _UI_ResetLoop(int resetNo)
 {
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0,16, _GFI_FADE_BASESPEED );
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB, 0,16, _GFI_FADE_BASESPEED );
-    GFL_NET_Disconnect();  // 通信リセットへ移行
+    GFL_NET_Exit(NULL);  // 通信リセットへ移行
 #if 0  //後日追加 @@OO
     // もしセーブしてたらキャンセルしておかないとリセットできない
     SaveData_DivSave_Cancel(SaveData_GetPointer());

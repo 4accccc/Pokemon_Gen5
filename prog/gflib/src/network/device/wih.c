@@ -947,30 +947,30 @@ static void WH_ChangeSysState(int state)
 
 static void _memoryAlloc(BOOL bParent)
 {
-    int size = GFI_NET_GetSendSizeMax();
-    int num = GFI_NET_GetConnectNumMax()-1;
-    int _PARENT_MAX_SIZE  =    ((size * num) + WM_SIZE_DS_PARENT_HEADER);
-    int _CHILD_MAX_SIZE   =    (size);
-    int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE )*3;
-    int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
-    int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
-    int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE )*3;
+    if(_pWmInfo->sRecvBufferOrg==NULL){
+        int size = GFI_NET_GetSendSizeMax();
+        int num = GFI_NET_GetConnectNumMax()-1;
+        int _PARENT_MAX_SIZE  =    ((size * num) + WM_SIZE_DS_PARENT_HEADER);
+        int _CHILD_MAX_SIZE   =    (size);
+        int _PARENT_RECV_BUFFER_SIZE  = WM_SIZE_MP_PARENT_RECEIVE_BUFFER( _CHILD_MAX_SIZE, num, FALSE )*3;
+        int _PARENT_SEND_BUFFER_SIZE  = WM_SIZE_MP_PARENT_SEND_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
+        int _CHILD_RECV_BUFFER_SIZE =  WM_SIZE_MP_CHILD_RECEIVE_BUFFER( _PARENT_MAX_SIZE, FALSE )*3;
+        int _CHILD_SEND_BUFFER_SIZE =  WM_SIZE_MP_CHILD_SEND_BUFFER( _CHILD_MAX_SIZE, FALSE )*3;
 
-    if(bParent){
-        _pWmInfo->sRecvBufferSize = _PARENT_RECV_BUFFER_SIZE;
-        _pWmInfo->sSendBufferSize = _PARENT_SEND_BUFFER_SIZE;
+        if(bParent){
+            _pWmInfo->sRecvBufferSize = _PARENT_RECV_BUFFER_SIZE;
+            _pWmInfo->sSendBufferSize = _PARENT_SEND_BUFFER_SIZE;
+        }
+        else{
+            _pWmInfo->sRecvBufferSize = _CHILD_RECV_BUFFER_SIZE;
+            _pWmInfo->sSendBufferSize = _CHILD_SEND_BUFFER_SIZE;
+        }
+        _pWmInfo->sRecvBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
+        _pWmInfo->sSendBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
+    
+        _pWmInfo->sRecvBuffer = (u8 *)( ((u32)_pWmInfo->sRecvBufferOrg + 31) / 32 * 32 );
+        _pWmInfo->sSendBuffer = (u8 *)( ((u32)_pWmInfo->sSendBufferOrg + 31) / 32 * 32 );
     }
-    else{
-        _pWmInfo->sRecvBufferSize = _CHILD_RECV_BUFFER_SIZE;
-        _pWmInfo->sSendBufferSize = _CHILD_SEND_BUFFER_SIZE;
-    }
-    
-    _pWmInfo->sRecvBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
-    _pWmInfo->sSendBufferOrg = GFL_HEAP_AllocMemory(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
-    
-    _pWmInfo->sRecvBuffer = (u8 *)( ((u32)_pWmInfo->sRecvBufferOrg + 31) / 32 * 32 );
-    _pWmInfo->sSendBuffer = (u8 *)( ((u32)_pWmInfo->sSendBufferOrg + 31) / 32 * 32 );
-    
 }
 
 static void WH_SetError(int code)
@@ -1371,16 +1371,14 @@ BOOL WH_ChildConnectAuto(int mode, const u8 *macAddr, u16 channel)
     WH_TRACE("recv buffer size = %d\n", _pWmInfo->sRecvBufferSize);
     WH_TRACE("send buffer size = %d\n", _pWmInfo->sSendBufferSize);
 
-    WH_TRACE(" Connect: MAC=%02x%02x%02x%02x%02x%02x ",
-             macAddr[0], macAddr[1], macAddr[2],
-             macAddr[3], macAddr[4], macAddr[5]);
-
-    
     WH_ChangeSysState(WH_SYSSTATE_SCANNING);
 
     // 子機モードで検索開始。
     if (macAddr != NULL)
     {
+        WH_TRACE(" Connect: MAC=%02x%02x%02x%02x%02x%02x ",
+                 macAddr[0], macAddr[1], macAddr[2],
+                 macAddr[3], macAddr[4], macAddr[5]);
         *(u16 *)(&_pWmInfo->sScanExParam.bssid[4]) = *(u16 *)(macAddr + 4);
         *(u16 *)(&_pWmInfo->sScanExParam.bssid[2]) = *(u16 *)(macAddr + 2);
         *(u16 *)(&_pWmInfo->sScanExParam.bssid[0]) = *(u16 *)(macAddr + 0);
