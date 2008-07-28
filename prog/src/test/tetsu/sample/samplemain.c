@@ -131,6 +131,10 @@ BOOL	SampleMain( void )
 	case 1:
 		//セットアップ
 		sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
+		sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
+
+		ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
+							&resistMapTbl[sampleWork->mapNum].mapperData );
 		{
 			G3D_MAPPEROBJ_RESIST resistData;
 
@@ -139,21 +143,13 @@ BOOL	SampleMain( void )
 			resistData.count = NELEMS(resistObjTbl); 
 			ResistObjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistData );
 		}
-		sampleWork->seq++;
-		break;
-
-	case 2:
-		ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
-							&resistMapTbl[sampleWork->mapNum].mapperData );
-		sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
-
 		SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
 		sampleWork->seq++;
 		break;
 
-	case 3:
+	case 2:
 		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			sampleWork->seq++;
+			sampleWork->seq = 4;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
@@ -161,7 +157,7 @@ BOOL	SampleMain( void )
 			if( sampleWork->mapNum >= NELEMS(resistMapTbl) ){
 				sampleWork->mapNum = 0;
 			}
-			sampleWork->seq = 2;
+			sampleWork->seq = 3;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
@@ -169,7 +165,7 @@ BOOL	SampleMain( void )
 			if( sampleWork->mapNum < 0 ){
 				sampleWork->mapNum = NELEMS(resistMapTbl)-1;
 			}
-			sampleWork->seq = 2;
+			sampleWork->seq = 3;
 			break;
 		}
 		{
@@ -183,14 +179,17 @@ BOOL	SampleMain( void )
 		MainGameSystem( sampleWork->gs );
 		break;
 
-	case 4:
-		DeleteFieldActSys( sampleWork->fldActSys );
+	case 3:
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
+		DeleteFieldActSys( sampleWork->fldActSys );
 		DeleteCursor( sampleWork->cursor );
-		sampleWork->seq++;
+		sampleWork->seq = 1;
 		break;
 
-	case 5:
+	case 4:
+		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
+		DeleteFieldActSys( sampleWork->fldActSys );
+		DeleteCursor( sampleWork->cursor );
 		RemoveGameSystem( sampleWork->gs );
 		return_flag = TRUE;
 		break;
@@ -727,7 +726,7 @@ static void	DeleteCursor( CURSOR_CONT* cursor )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MV_SPEED		(1)//(2)
+#define MV_SPEED		(2)
 #define RT_SPEED		(FX32_ONE/8)
 #define	CAMERA_TARGET_HEIGHT	(4)//(8)
 static void	MainCursor( CURSOR_CONT* cursor )
@@ -744,11 +743,13 @@ static void	MainCursor( CURSOR_CONT* cursor )
 		if( cursor->cameraLength > 8 ){
 			cursor->cameraLength -= 8;
 		}
+		//vecMove.y = -MV_SPEED * FX32_ONE;
 	}
 	if( key & PAD_BUTTON_A ){
 		if( cursor->cameraLength < 4096 ){
 			cursor->cameraLength += 8;
 		}
+		//vecMove.y = MV_SPEED * FX32_ONE;
 	}
 	if( key & PAD_BUTTON_Y ){
 		cursor->cameraHeight -= MV_SPEED * FX32_ONE;
@@ -784,11 +785,16 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	if( key & PAD_BUTTON_L ){
 		cursor->direction += RT_SPEED;
 	}
-	//if( mvFlag == TRUE ){
-		VEC_Add( &cursor->trans, &vecMove, &cursor->trans );
+	{
+		VecFx32	moveData;
+
+		Get3DmapperGroundMoveVec( GetG3Dmapper( cursor->gs ), &cursor->trans, &vecMove, &moveData );
+		VEC_Add( &cursor->trans, &moveData, &cursor->trans );
+		//OS_Printf("vecMove.y  = %x, ", moveData.y);
 		//Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
 		Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
-	//}
+		//OS_Printf("hit blockIdx = %x\n", debugData);
+	}
 	cursor->cameraHeight += vecMove.y;
 
 	VEC_Set(&target,cursor->trans.x,cursor->trans.y+CAMERA_TARGET_HEIGHT*FX32_ONE,cursor->trans.z);
@@ -800,8 +806,6 @@ static void	MainCursor( CURSOR_CONT* cursor )
 								&cursor->trans );
 	GFL_G3D_CAMERA_SetTarget( cursor->gs->g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( cursor->gs->g3Dcamera, &pos );
-
-	//OS_Printf(" pos {%x,%x,%x}\n", cursor->trans.x, cursor->trans.y, cursor->trans.z );
 }
 
 //------------------------------------------------------------------
@@ -1096,7 +1100,7 @@ static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
 
 	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActSys, &fldActSys->actWork[i] ); }
 
-	testSetUp( fldActSys );	//テスト
+//	testSetUp( fldActSys );	//テスト
 
 	return fldActSys;
 }
@@ -1108,7 +1112,7 @@ static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
 //------------------------------------------------------------------
 static void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
 {
-	testRelease( fldActSys );	//テスト
+//	testRelease( fldActSys );	//テスト
 	GFL_HEAP_FreeMemory( fldActSys ); 
 }
 

@@ -20,6 +20,47 @@ static const G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_sample_map_map_d4_nsbmd, NARC_sample_map_map_d4_nsbtx, NARC_sample_map_map_d4_bin },
 };
 
+static const G3D_MAPPER_DATA sample2Map[] = {
+	{ NARC_sample_map_m_test_01_01c_nsbmd, NARC_sample_map_m_test_01_01c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_01c_nsbmd, NARC_sample_map_m_test_02_01c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_01_02c_nsbmd, NARC_sample_map_m_test_01_02c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_02c_nsbmd, NARC_sample_map_m_test_02_02c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_01_03c_nsbmd, NARC_sample_map_m_test_01_03c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_03c_nsbmd, NARC_sample_map_m_test_02_03c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_01_04c_nsbmd, NARC_sample_map_m_test_01_04c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_04c_nsbmd, NARC_sample_map_m_test_02_04c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_01_05c_nsbmd, NARC_sample_map_m_test_01_05c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_05c_nsbmd, NARC_sample_map_m_test_02_05c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_01_06c_nsbmd, NARC_sample_map_m_test_01_06c_nsbtx, NON_ATTR }, 
+	{ NARC_sample_map_m_test_02_06c_nsbmd, NARC_sample_map_m_test_02_06c_nsbtx, NON_ATTR }, 
+};
+
+static const G3D_MAPPER_DATA rasenMap[] = {
+	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
+		NARC_sample_map_map_rasen_bin },
+	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
+		NARC_sample_map_map_rasen_bin },
+	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
+		NARC_sample_map_map_rasen_bin },
+	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
+		NARC_sample_map_map_rasen_bin },
+	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
+		NARC_sample_map_map_rasen_bin },
+};
+
+static const G3D_MAPPER_DATA rasen2Map[] = {
+	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
+		NARC_sample_map_map_rasen2_bin },
+	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
+		NARC_sample_map_map_rasen2_bin },
+	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
+		NARC_sample_map_map_rasen2_bin },
+	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
+		NARC_sample_map_map_rasen2_bin },
+	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
+		NARC_sample_map_map_rasen2_bin },
+};
+
 //	NARC_fld_map_ro_treec_nsbmd = 178,
 //	NARC_fld_map_ro_tree2c_nsbmd = 179,
 //	NARC_fld_map_ro_tree3c_nsbmd = 180,
@@ -1163,21 +1204,68 @@ typedef struct {
 }SCENE_DATA;
 
 #define MAP_WIDTH (512 * FX32_ONE)
+#define MAP_HEIGHT (128 * FX32_ONE)
 static const SCENE_DATA	resistMapTbl[] = {
-{{  4,  4, MAP_WIDTH, ARCID_SAMPLEMAP, sampleMap }, { MAP_WIDTH*2, 0, MAP_WIDTH*2 }},
-{{ 32, 32, MAP_WIDTH, ARCID_FLDMAP, DPworldMap }, { MAP_WIDTH*16, 0, MAP_WIDTH*16 }},
-
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc01Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  1,  2, MAP_WIDTH, ARCID_FLDMAP, DPc02Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc03Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc04Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc05Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc06Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc07Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc08Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  1,  2, MAP_WIDTH, ARCID_FLDMAP, DPc09Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  1,  1, MAP_WIDTH, ARCID_FLDMAP, DPc10Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-{{  2,  1, MAP_WIDTH, ARCID_FLDMAP, DPc11Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{
+		{	
+			4,  4, NELEMS(sampleMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_SAMPLEMAP, sampleMap 
+		}, 
+		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+	},
+	{
+		{	
+			1,  1, NELEMS(rasenMap), MAP_WIDTH, 92*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
+			ARCID_SAMPLEMAP, rasenMap 
+		}, 
+		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+	},
+	{
+		{	
+			1,  1, NELEMS(rasen2Map), MAP_WIDTH, 128*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
+			ARCID_SAMPLEMAP, rasen2Map 
+		}, 
+		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+	},
+	{
+		{	
+			2,  6, NELEMS(sample2Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
+			ARCID_SAMPLEMAP, sample2Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*5 }
+	},
+	{
+		{ 
+			32, 32, NELEMS(DPworldMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
+			ARCID_FLDMAP, DPworldMap 
+		}, 
+		{ MAP_WIDTH*16, 0, MAP_WIDTH*16 }
+	},
+	{
+		{  
+			2,  2, NELEMS(DPc01Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
+			ARCID_FLDMAP, DPc01Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+	},
+	{
+		{  
+			1,  2, NELEMS(DPc02Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
+			ARCID_FLDMAP, DPc02Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+	},
+#if 0
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc03Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc04Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc05Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc06Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc07Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc08Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  1,  2, MAP_WIDTH, ARCID_FLDMAP, DPc09Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  1,  1, MAP_WIDTH, ARCID_FLDMAP, DPc10Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  1, MAP_WIDTH, ARCID_FLDMAP, DPc11Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+#endif
 };
 
 static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {

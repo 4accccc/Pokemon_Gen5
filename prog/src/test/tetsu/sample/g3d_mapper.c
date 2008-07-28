@@ -107,13 +107,15 @@ struct _G3D_MAPPER {
 	HEAPID				heapID;
 	MAP_BLOCK_DATA		mapBlock[MAP_BLOCK_COUNT];
 
-	BLOCK_IDX			mapBlockIdx[MAP_BLOCK_COUNT];
 	u32					nowBlockIdx;				
 	VecFx32				posCont;
-	u16					sizex;	//â°ÉuÉçÉbÉNêî
-	u16					sizez;	//ècÉuÉçÉbÉNêî
-	fx32				width;	//ÉuÉçÉbÉNÇPï”ÇÃïù
-	u32					arcID;	//ÉOÉâÉtÉBÉbÉNÉAÅ[ÉJÉCÉuÇhÇc
+	u16					sizex;		//â°ÉuÉçÉbÉNêî
+	u16					sizez;		//ècÉuÉçÉbÉNêî
+	u32					totalSize;	//îzóÒÉTÉCÉY
+	fx32				width;		//ÉuÉçÉbÉNÇPï”ÇÃïù
+	fx32				height;		//ÉuÉçÉbÉNçÇÇ≥
+	G3D_MAPPER_MODE		mode;		//ìÆçÏÉÇÅ[Éh
+	u32					arcID;		//ÉOÉâÉtÉBÉbÉNÉAÅ[ÉJÉCÉuÇhÇc
 	const G3D_MAPPER_DATA*	data;	//é¿É}ÉbÉvÉfÅ[É^
 
 	GFL_G3D_RES*		objectG3DresMdl[COMMON_OBJ_RESCOUNT];	//ã§í ÉIÉuÉWÉFÉNÉgÉÇÉfÉãÉäÉ\Å[ÉX
@@ -134,7 +136,9 @@ static void	DeleteMapGraphicResource( G3D_MAPPER* g3Dmapper );
 
 static void MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RES* tex );
 
-static void GetMapperBlockIndex( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxAll( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxXZ( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxY( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new );
 
 static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
@@ -166,13 +170,13 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 
 	CreateMapGraphicResource( g3Dmapper );
 
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		g3Dmapper->mapBlockIdx[i].blockIdx = MAPID_NULL;
-	}
 	VEC_Set( &g3Dmapper->posCont, 0, 0, 0 );
 	g3Dmapper->sizex = 0;
 	g3Dmapper->sizez = 0;
+	g3Dmapper->totalSize = 0;
 	g3Dmapper->width = 0;
+	g3Dmapper->height = 0;
+	g3Dmapper->mode = G3D_MAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
 	
@@ -226,23 +230,39 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 void	Main3Dmapper( G3D_MAPPER* g3Dmapper )
 {
 	BLOCK_IDX nowBlockIdx[MAP_BLOCK_COUNT];
+	int i;
 
 	GF_ASSERT( g3Dmapper );
 
 	if( g3Dmapper->data == NULL ){
 		return;
 	}
- 	GetMapperBlockIndex( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
-	if( ReloadMapperBlock( g3Dmapper, &nowBlockIdx[0] ) == TRUE ){
-#if 0
-		BLOCK_IDX*	p = g3Dmapper->mapBlockIdx;
-		OS_Printf("---------------\n" );
-		OS_Printf("%x, %x, %x \n", p[0].blockIdx,p[1].blockIdx,p[2].blockIdx );
-		OS_Printf("%x, %x, %x \n", p[3].blockIdx,p[4].blockIdx,p[5].blockIdx );
-		OS_Printf("%x, %x, %x \n", p[6].blockIdx,p[7].blockIdx,p[8].blockIdx );
-#endif
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		nowBlockIdx[i].blockIdx = MAPID_NULL;
 	}
+
+	switch( g3Dmapper->mode ){
+	case G3D_MAPPER_MODE_SCROLL_NONE: 
+		GetMapperBlockIdxAll( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		break;
+	default:
+	case G3D_MAPPER_MODE_SCROLL_XZ: 
+		GetMapperBlockIdxXZ( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		break;
+	case G3D_MAPPER_MODE_SCROLL_Y: 
+		GetMapperBlockIdxY( g3Dmapper, &g3Dmapper->posCont, &nowBlockIdx[0] );
+		break;
+	}
+	ReloadMapperBlock( g3Dmapper, &nowBlockIdx[0] );
 	Load3Dmap( g3Dmapper );
+
+	//åªç›ÉuÉçÉbÉNÇÃindexéÊìæ
+	{
+		u32 blockx = FX_Whole( FX_Div( g3Dmapper->posCont.x, g3Dmapper->width ) );
+		u32 blockz = FX_Whole( FX_Div( g3Dmapper->posCont.z, g3Dmapper->width ) );
+
+		g3Dmapper->nowBlockIdx = blockz * g3Dmapper->sizex + blockx;
+	}
 }
 
 //------------------------------------------------------------------
@@ -257,7 +277,7 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 {
 	MAP_BLOCK_DATA*		mapBlock;
 	BOOL				cullResult; 
-	VecFx32*			trans;
+	VecFx32				trans;
 	VecFx32				scale = { FX32_ONE, FX32_ONE, FX32_ONE };
 	MtxFx33				rotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
 	NNSG3dRenderObj		*NNSrnd, *NNSrnd_L;
@@ -271,7 +291,8 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
-		if( NNS_G3dRenderObjGetResMdl( mapBlock->NNSrnd ) != NULL ){
+		if( (mapBlock->idx != MAPID_NULL)
+		  &&(NNS_G3dRenderObjGetResMdl( mapBlock->NNSrnd ) != NULL )){
 			
 			NNS_G3dGlbSetBaseTrans( &mapBlock->trans );	// à íuê›íË
 			NNS_G3dGlbSetBaseRot( &rotate );	// äpìxê›íË
@@ -286,7 +307,9 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 				for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
 					if(	mapBlock->object[j].id != LOCAL_OBJID_NULL ){
 //						if( checkCullingLength(g3Dcamera, &mapBlock->object[j].trans) == TRUE){
-							length = getCullingLength( g3Dcamera, &mapBlock->object[j].trans );
+							VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &trans );
+
+							length = getCullingLength( g3Dcamera, &trans );
 				
 							NNSrnd = g3Dmapper->grobalObject[ mapBlock->object[j].id ].NNSrnd_H;
 							NNSrnd_L = g3Dmapper->grobalObject[ mapBlock->object[j].id ].NNSrnd_L;
@@ -299,7 +322,7 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 //								&&( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ) ){
 							if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
 	
-								NNS_G3dGlbSetBaseTrans( &mapBlock->object[j].trans );// à íuê›íË
+								NNS_G3dGlbSetBaseTrans( &trans );// à íuê›íË
 								NNS_G3dGlbSetBaseRot( &rotate );		// äpìxê›íË
 								NNS_G3dGlbSetBaseScale( &scale );		// ÉXÉPÅ[Éãê›íË
 								NNS_G3dGlbFlush();						//ÉOÉçÅ[ÉoÉãÉXÉeÅ[ÉgîΩâf
@@ -436,13 +459,31 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 
 	g3Dmapper->sizex = resistData->sizex;
 	g3Dmapper->sizez = resistData->sizez;
+	g3Dmapper->totalSize = resistData->totalSize;
 	g3Dmapper->width = resistData->width;
+	g3Dmapper->height = resistData->height;
+	g3Dmapper->mode = resistData->mode;
+	switch( g3Dmapper->mode ){
+	case G3D_MAPPER_MODE_SCROLL_NONE:
+		if( g3Dmapper->totalSize > MAP_BLOCK_COUNT ){
+			OS_Printf("mapper mode set Error\n");
+			g3Dmapper->mode = G3D_MAPPER_MODE_SCROLL_XZ;
+		}
+		break;
+	case G3D_MAPPER_MODE_SCROLL_Y:
+		if( g3Dmapper->sizex * g3Dmapper->sizez > MAP_BLOCK_COUNT/2 ){
+			OS_Printf("mapper mode set Error\n");
+			g3Dmapper->mode = G3D_MAPPER_MODE_SCROLL_XZ;
+		}
+		break;
+	}
 	g3Dmapper->arcID = resistData->arcID;
 	g3Dmapper->data = resistData->data;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 
+		mapBlock->idx = MAPID_NULL;
 		//ì«Ç›çûÇ›ÉXÉeÅ[É^ÉXÉäÉZÉbÉg
 		mapBlock->loadSeq = 0;
 		mapBlock->loadCount = 0;
@@ -471,9 +512,6 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 			mapBlock->directDrawObject[j].id = DDRAW_OBJID_NULL;
 			VEC_Set( &mapBlock->directDrawObject[j].trans, 0, 0, 0 );
 		}
-	}
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		g3Dmapper->mapBlockIdx[i].blockIdx = MAPID_NULL;
 	}
 }
 
@@ -764,6 +802,7 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 					int j, r;
 					fx32 randTransx, randTransz;
 					fx32 cOffs, rOffs, gWidth;
+					VecFx32 pWorld;
 
 					cOffs = -g3Dmapper->width/2;
 					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
@@ -772,32 +811,33 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 						mapBlock->object[j].id = LOCAL_OBJID_NULL;
 					}
 					for( j=0; j<4; j++ ){
-						if( i<4 ){
+						if( j<2 ){
 							mapBlock->object[j].id = 0;
 						} else {
 							mapBlock->object[j].id = 1;
 						}
 
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.x = mapBlock->trans.x + rOffs + cOffs;
+						mapBlock->object[j].trans.x = rOffs + cOffs;
 						mapBlock->object[j].trans.y = 0;
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.z = mapBlock->trans.z + rOffs + cOffs;
-						Get3DmapperHeight_fromROM(	g3Dmapper, 
-													&mapBlock->object[j].trans, 
-													&mapBlock->object[j].trans.y );
+						mapBlock->object[j].trans.z = rOffs + cOffs;
+
+						VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &pWorld );
+						Get3DmapperHeight_fromROM
+							( g3Dmapper, &pWorld, &mapBlock->object[j].trans.y );
 					}
 					for( j=0; j<32; j++ ){
 						mapBlock->directDrawObject[j].id = 1;
 
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.x = mapBlock->trans.x + rOffs + cOffs;
+						mapBlock->directDrawObject[j].trans.x = rOffs + cOffs;
 						mapBlock->directDrawObject[j].trans.y = 0;
 						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.z = mapBlock->trans.z + rOffs + cOffs;
-						Get3DmapperHeight_fromROM(	g3Dmapper, 
-													&mapBlock->directDrawObject[j].trans,
-													&mapBlock->directDrawObject[j].trans.y );
+						mapBlock->directDrawObject[j].trans.z = rOffs + cOffs;
+						VEC_Add( &mapBlock->directDrawObject[j].trans, &mapBlock->trans, &pWorld );
+						Get3DmapperHeight_fromROM
+							( g3Dmapper, &pWorld, &mapBlock->directDrawObject[j].trans.y );
 					}
 #endif
 				}
@@ -899,7 +939,6 @@ static void	Set3DmapLoadReq( G3D_MAPPER* g3Dmapper, const int blockID, const Vec
 	mapBlock->loadCount = 0;
 	mapBlock->loadSeq = 0;
 
-	mapBlock->idx = datID;
 	VEC_Set( &mapBlock->trans, trans->x, trans->y, trans->z );
 }
 
@@ -908,6 +947,40 @@ static void	Set3DmapLoadReq( G3D_MAPPER* g3Dmapper, const int blockID, const Vec
 /**
  * @brief	É}ÉbÉvçXêVÉuÉçÉbÉNéÊìæ
  */
+//------------------------------------------------------------------
+static void GetMapperBlockIdxAll( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+{
+	u32		idx, county, countxz;
+	fx32	width, height;
+	int		i, j, offsx, offsz;
+
+	countxz = g3Dmapper->sizex * g3Dmapper->sizez;
+	county = g3Dmapper->totalSize / countxz;
+	if( g3Dmapper->totalSize % countxz ){
+		county++;
+	}
+	width = g3Dmapper->width;
+	height = g3Dmapper->height;
+
+	idx = 0;
+
+	for( i=0; i<county; i++ ){
+		for( j=0; j<countxz; j++ ){
+			offsx = j % g3Dmapper->sizex;
+			offsz = j / g3Dmapper->sizex;
+
+			if( idx >= g3Dmapper->totalSize ){
+				idx = MAPID_NULL;
+			}
+			blockIdx[idx].blockIdx = idx;
+			blockIdx[idx].trans.x = offsx * width + width/2;
+			blockIdx[idx].trans.y = i * height;
+			blockIdx[idx].trans.z = offsz * width + width/2;
+			idx++;
+		}
+	}
+}
+
 //------------------------------------------------------------------
 typedef struct {
 	s16	z;
@@ -918,20 +991,18 @@ static const BLOCK_OFFS blockPat_Around[] = {//é©ï™ÇÃÇ¢ÇÈÉuÉçÉbÉNÇ©ÇÁé¸àÕï˚å¸Ç…Ç
 	{-1,-1},{-1, 0},{-1, 1},{ 0,-1},{ 0, 0},{ 0, 1},{ 1,-1},{ 1, 0},{ 1, 1},
 };
 
-static void GetMapperBlockIndex( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxXZ( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
 {
-	u16		sizex, sizez, idxmax;
-	u32		idx, blockx, blockz;
+	u16		sizex, sizez;
+	u32		idx, idxmax, blockx, blockz;
 	fx32	inBlockx, inBlockz, width;
 	int		i, offsx, offsz;
-	
+
 	sizex = g3Dmapper->sizex;
 	sizez = g3Dmapper->sizez;
 	idxmax = sizex * sizez;
 	width = g3Dmapper->width;
 
-	//åªç›ÉuÉçÉbÉNÇÃXZindexéÊìæ
-	GetMapBlockInMap( g3Dmapper, pos, &g3Dmapper->nowBlockIdx, &inBlockx, &inBlockz );
 	blockx = FX_Whole( FX_Div( pos->x, width ) );
 	blockz = FX_Whole( FX_Div( pos->z, width ) );
 
@@ -956,6 +1027,60 @@ static void GetMapperBlockIndex( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOC
 }
 
 //------------------------------------------------------------------
+static void GetMapperBlockIdxY( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+{
+	u16		sizex, sizez;
+	u32		idx, blocky, countxz;
+	fx32	width, height;
+	int		i, p, offsx, offsy, offsz;
+
+	sizex = g3Dmapper->sizex;
+	sizez = g3Dmapper->sizez;
+	countxz = sizex * sizez;
+	width = g3Dmapper->width;
+	height = g3Dmapper->height;
+
+	blocky = FX_Whole( FX_Div( pos->y, height ) );
+	if( pos->y - ( blocky * height ) > height/2 ){
+		offsy = 1;
+	} else {
+		offsy = -1;
+	}
+	p = 0;
+
+	for( i=0; i<countxz; i++ ){
+		offsx = i % g3Dmapper->sizex;
+		offsz = i / g3Dmapper->sizex;
+
+		idx = blocky * countxz + offsz * sizex + offsx;
+
+		if( idx >= g3Dmapper->totalSize ){
+			idx = MAPID_NULL;
+		}
+		blockIdx[p].blockIdx = idx;
+		blockIdx[p].trans.x = offsx * width + width/2;
+		blockIdx[p].trans.y = blocky * height;
+		blockIdx[p].trans.z = offsz * width + width/2;
+		p++;
+	}
+	for( i=0; i<countxz; i++ ){
+		offsx = i % g3Dmapper->sizex;
+		offsz = i / g3Dmapper->sizex;
+
+		idx = (blocky + offsy) * countxz + offsz * sizex + offsx;
+
+		if( idx >= g3Dmapper->totalSize ){
+			idx = MAPID_NULL;
+		}
+		blockIdx[p].blockIdx = idx;
+		blockIdx[p].trans.x = offsx * width + width/2;
+		blockIdx[p].trans.y = (blocky + offsy) * height;
+		blockIdx[p].trans.z = offsz * width + width/2;
+		p++;
+	}
+}
+
+//------------------------------------------------------------------
 /**
  * @brief	É}ÉbÉvÉuÉçÉbÉNçXêVÉ`ÉFÉbÉN
  */
@@ -970,16 +1095,16 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 	//çXêVÉuÉçÉbÉNÉ`ÉFÉbÉN
 	delProcFlag = FALSE;
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		if( g3Dmapper->mapBlockIdx[i].blockIdx != MAPID_NULL ){
+		if( g3Dmapper->mapBlock[i].idx != MAPID_NULL ){
 			delFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
-				if(( g3Dmapper->mapBlockIdx[i].blockIdx == new[j].blockIdx )&&(delFlag == FALSE )){
+				if(( g3Dmapper->mapBlock[i].idx == new[j].blockIdx )&&(delFlag == FALSE )){
 					new[j].blockIdx = MAPID_NULL;
 					delFlag = TRUE;
 				}
 			}
 			if( delFlag == FALSE ){
-				g3Dmapper->mapBlockIdx[i].blockIdx = MAPID_NULL;
+				g3Dmapper->mapBlock[i].idx = MAPID_NULL;
 				delProcFlag = TRUE;
 			}
 		}
@@ -991,13 +1116,13 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 		if( new[i].blockIdx != MAPID_NULL ){
 			addFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
-				if(( g3Dmapper->mapBlockIdx[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
+				if(( g3Dmapper->mapBlock[j].idx == MAPID_NULL )&&(addFlag == FALSE )){
 
 					Set3DmapLoadReq( g3Dmapper, j, &new[i].trans, 
 										(u32)g3Dmapper->data[new[i].blockIdx].datID,
 										(u32)g3Dmapper->data[new[i].blockIdx].texID,
 										(u32)g3Dmapper->data[new[i].blockIdx].attrID );
-					g3Dmapper->mapBlockIdx[j] = new[i];
+					g3Dmapper->mapBlock[j].idx = new[i].blockIdx;
 					addFlag = TRUE;
 					addProcFlag = TRUE;
 				}
@@ -1062,22 +1187,49 @@ static BOOL	GetMapBlockInBuffer( G3D_MAPPER* g3Dmapper, const VecFx32* pos,
 	VecFx32 vecTop, vecGrid, inBlockPos;
 	VecFx32 vecDefault = {0,0,0};
 	fx32	width = g3Dmapper->width;
+	fx32	height = g3Dmapper->height;
 	int i;
 
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
-		vecTop.y = 0;
-		vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
+	if( g3Dmapper->mode  == G3D_MAPPER_MODE_SCROLL_Y ){
+		int count = 0;
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
+			vecTop.y = g3Dmapper->mapBlock[i].trans.y;
+			vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
+	
+			if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
+				&&(pos->y >= vecTop.y)&&(pos->y <= vecTop.y + height)
+				&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
 
-		if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
-			&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
-
-			*blockIdx = i;
-			VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-			VEC_Add( &vecGrid, pos, &inBlockPos );
-			*inBlockx = inBlockPos.x;
-			*inBlockz = inBlockPos.z;
+				*blockIdx = i;
+				VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+				VEC_Add( &vecGrid, pos, &inBlockPos );
+				*inBlockx = inBlockPos.x;
+				*inBlockz = inBlockPos.z;
+				count++;
+			}
+		}
+		if( count ){
+			OS_Printf("count = %x\n", count);
 			return TRUE;
+		}
+
+	} else {
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
+			vecTop.y = g3Dmapper->mapBlock[i].trans.y;
+			vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
+	
+			if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
+				&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
+
+				*blockIdx = i;
+				VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+				VEC_Add( &vecGrid, pos, &inBlockPos );
+				*inBlockx = inBlockPos.x;
+				*inBlockz = inBlockPos.z;
+				return TRUE;
+			}
 		}
 	}
 	*blockIdx = 0;
@@ -1100,7 +1252,7 @@ static void	GetMapGrid( G3D_MAPPER* g3Dmapper, const fx32 inBlockx, const fx32 i
 	gridx = inBlockx / gridWidth;
 	gridz = inBlockz / gridWidth;
 	*inGridx = inBlockx % gridWidth;
-	*inGridz = inBlockz & gridWidth;
+	*inGridz = inBlockz % gridWidth;
 
 	*gridIdx = gridz * MAP_GRIDCOUNT + gridx;
 
@@ -1149,10 +1301,14 @@ void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
 	fx32	inGridx, inGridz;
 	NormalVtxSt* mapData;
 
-	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz )  == FALSE ){
-		vecN->x = 0; 
-		vecN->y = FX32_ONE;
-		vecN->z = 0; 
+	vecN->x = 0; 
+	vecN->y = FX32_ONE;
+	vecN->z = 0; 
+
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
 		return;
 	}
 	mapData = (NormalVtxSt*)&g3Dmapper->mapBlock[blockIdx].attr;
@@ -1160,14 +1316,15 @@ void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
 	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
 
 	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData->tryangleType ) == 0 ){
-		vecN->x = mapData->vecN1_x; 
-		vecN->y = mapData->vecN1_y; 
-		vecN->z = -mapData->vecN1_z; 
+		vecN->x = mapData[gridIdx].vecN1_x; 
+		vecN->y = mapData[gridIdx].vecN1_y; 
+		vecN->z = -mapData[gridIdx].vecN1_z; 
 	} else {
-		vecN->x = mapData->vecN2_x; 
-		vecN->y = mapData->vecN2_y; 
-		vecN->z = -mapData->vecN2_z; 
+		vecN->x = mapData[gridIdx].vecN2_x; 
+		vecN->y = mapData[gridIdx].vecN2_y; 
+		vecN->z = -mapData[gridIdx].vecN2_z; 
 	}
+	//OS_Printf("vecN{ %x, %x, %x }\n", vecN->x, vecN->y, vecN->z);
 }
 
 //------------------------------------------------------------------
@@ -1184,7 +1341,10 @@ void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32
 	vecN->y = FX32_ONE;
 	vecN->z = 0; 
 
-	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz )  == FALSE ){
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
 		return;
 	}
 	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
@@ -1226,7 +1386,10 @@ void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height 
 
 	*height = 0;
 
-	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz )  == FALSE ){
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
 		return;
 	}
 	blockNum = g3Dmapper->mapBlock[blockIdx].idx;
@@ -1247,7 +1410,7 @@ void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height 
 		valD = mapData[gridIdx].vecN2_D;		//é≤ÇÃéÊÇËï˚Ç™à·Ç§ÇÃÇ≈îΩì]
 	}
 	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
-	*height = FX_Div( by, vecN.y );
+	*height = FX_Div( by, vecN.y ) + g3Dmapper->mapBlock[blockIdx].trans.y;
 }
 
 //------------------------------------------------------------------
@@ -1264,7 +1427,10 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
 
 	*height = 0;
 
-	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz )  == FALSE ){
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
 		return;
 	}
 	width = g3Dmapper->width;
@@ -1297,6 +1463,7 @@ void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32*
 	}
 	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
 	*height = FX_Div( by, vecN.y );
+	//é¿îzíuÇ≥ÇÍÇΩèÍçáÇÃYç¿ïWÇë´ÇµÇ±ÇﬁÅiñ¢é¿ëïÅj
 }
 
 //------------------------------------------------------------------
@@ -1407,7 +1574,7 @@ static void	DirectDraw3Dmapper
 	const DIRECT_DRAW_DATA* ddData;
 	DIRECT_OBJ*		ddObject;
 	MtxFx33	mtxBillboard;
-	VecFx32	trans;
+	VecFx32	trans, gTrans;
 	VecFx16	vecN;
 	int		scaleVal = 8;
 	int		i;
@@ -1444,15 +1611,17 @@ static void	DirectDraw3Dmapper
 		if( ddObject->id != DDRAW_OBJID_NULL ){
 			GF_ASSERT( ddObject->id  < NELEMS(directDrawDataTable) );
 
-			if( checkCullingLength( g3Dcamera, &ddObject->trans ) == TRUE ){
+			VEC_Add( &ddObject->trans, &mapBlock->trans, &gTrans );
+
+			if( checkCullingLength( g3Dcamera, &gTrans ) == TRUE ){
 				G3_PushMtx();
 
 				ddData = directDrawDataTable[ ddObject->id ]; 
 
 				//âÒì]ÅAïΩçsà⁄ìÆÉpÉâÉÅÅ[É^ê›íË
-				trans.x = ddObject->trans.x / scaleVal;
-				trans.y = ddObject->trans.y / scaleVal;
-				trans.z = ddObject->trans.z / scaleVal;
+				trans.x = gTrans.x / scaleVal;
+				trans.y = gTrans.y / scaleVal;
+				trans.z = gTrans.z / scaleVal;
 				if( ddData->drawType == DRAW_YBILLBOARD ){
 					G3_MultTransMtx33( &mtxBillboard, &trans );
 				} else {
@@ -1467,7 +1636,7 @@ static void	DirectDraw3Dmapper
 
 				if( ddData->func != NULL ){
 					fx32 limitLength = 512 * FX32_ONE;
-					fx32 length = getCullingLength( g3Dcamera, &ddObject->trans );
+					fx32 length = getCullingLength( g3Dcamera, &gTrans );
 				
 					ddData->func(	g3Dmapper->tree_texDataAdrs, g3Dmapper->tree_texPlttAdrs, 
 									&vecN, ( length < limitLength) );

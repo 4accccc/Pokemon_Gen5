@@ -23,12 +23,21 @@ typedef struct {
 	u16 attrID;
 }G3D_MAPPER_DATA;
 
+typedef enum {
+	G3D_MAPPER_MODE_SCROLL_NONE = 0,
+	G3D_MAPPER_MODE_SCROLL_XZ,
+	G3D_MAPPER_MODE_SCROLL_Y,
+}G3D_MAPPER_MODE;
+
 typedef struct {
-	u16						sizex;	//横ブロック数
-	u16						sizez;	//縦ブロック数
-	fx32					width;	//ブロック１辺の幅
-	u32						arcID;	//グラフィックアーカイブＩＤ
-	const G3D_MAPPER_DATA*	data;	//実マップデータ
+	u16						sizex;		//横ブロック数
+	u16						sizez;		//縦ブロック数
+	u32						totalSize;	//配列サイズ
+	fx32					width;		//ブロック１辺の幅
+	fx32					height;		//ブロック高さ
+	G3D_MAPPER_MODE			mode;		//動作モード
+	u32						arcID;		//グラフィックアーカイブＩＤ
+	const G3D_MAPPER_DATA*	data;		//実マップデータ
 
 }G3D_MAPPER_RESIST;
 
