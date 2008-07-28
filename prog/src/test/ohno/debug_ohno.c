@@ -28,6 +28,10 @@ static void _RecvTalkData(const int netID, const int size, const void* pData, vo
 
 
 static BOOL NetTestNone(void* pCtl);
+static BOOL NetTestSendTiming(void* pCtl);
+static BOOL NetTestRecvTiming(void* pCtl);
+static BOOL NetTestEndStart(void* pCtl);
+
 static void _connectCallBack(void* pWork);
 static void* _netBeaconGetFunc(void);
 static int _netBeaconGetSizeFunc(void);
@@ -207,7 +211,7 @@ static void _connectCallBack(void* pWork)
 {
     DEBUG_OHNO_CONTROL* pDOC = pWork;
     OS_TPrintf("ネゴシエーション完了\n");
-    _CHANGE_STATE( NetTestEnd );
+    _CHANGE_STATE( NetTestSendTiming );
 }
 
 //--------------------------------------------------------------
@@ -224,6 +228,73 @@ static BOOL NetTestAutoConnect(void* pCtl)
     GFL_NET_ChangeoverConnect(_connectCallBack); // 自動接続
     _CHANGE_STATE( NetTestNone );
 
+    return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   自動接続
+ * @param   pCtl    デバッグワーク
+ * @retval  PROC終了時にはTRUE
+ */
+//--------------------------------------------------------------
+static BOOL NetTestSendTiming(void* pCtl)
+{
+    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+    
+    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+
+    _CHANGE_STATE( NetTestRecvTiming );
+    
+    return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   自動接続
+ * @param   pCtl    デバッグワーク
+ * @retval  PROC終了時にはTRUE
+ */
+//--------------------------------------------------------------
+static BOOL NetTestRecvTiming(void* pCtl)
+{
+    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+    
+    if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
+        NET_PRINT("TIMOK\n");
+        _CHANGE_STATE( NetTestEndStart );
+    }
+    
+    return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   初期化完了コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _endCallBack(void* pWork)
+{
+    DEBUG_OHNO_CONTROL* pDOC = pWork;
+    NET_PRINT("endCallBack終了\n");
+    _CHANGE_STATE( NetTestEnd );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   自動接続
+ * @param   pCtl    デバッグワーク
+ * @retval  PROC終了時にはTRUE
+ */
+//--------------------------------------------------------------
+static BOOL NetTestEndStart(void* pCtl)
+{
+    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+    GFL_NET_Exit(_endCallBack);
+    _CHANGE_STATE( NetTestNone );
     return FALSE;
 }
 
@@ -288,10 +359,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * 
 	GFL_STD_MemClear(testmode, sizeof(DEBUG_OHNO_CONTROL));
 	testmode->debug_heap_id = heapID;
 
-    if( GFL_NET_IsInit() == TRUE ){  // もう通信している場合終了処理
-//        testmode->funcNet = NetTestEnd;
-    }
-    else{                            // まだ通信していない場合開始処理
+    if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
         aGFLNetInit.pWork = testmode;
         GFL_NET_Init(&aGFLNetInit, _initCallBack);
     }
@@ -321,7 +389,6 @@ static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * 
 static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
     GFL_PROC_FreeWork(proc);
-    NET_PRINT("おわりー\n");
 	return GFL_PROC_RES_FINISH;
 }
 

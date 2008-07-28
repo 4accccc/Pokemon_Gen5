@@ -19,7 +19,7 @@ typedef struct _GFL_NETSYS GFL_NETSYS;
 struct _GFL_NETSYS{
     GFLNetInitializeStruct aNetInit;              ///< 初期化構造体のコピー
     GFL_NETHANDLE aNetHandle[GFL_NET_HANDLE_MAX]; ///< 通信ハンドル
-    UI_KEYSYS* pKey[GFL_NET_HANDLE_MAX];  ///< キーバッファ
+    //UI_KEYSYS* pKey[GFL_NET_HANDLE_MAX];  ///< キーバッファ
     GFL_NETWL* pNetWL;                    ///<  ワイヤレスマネージャーポインタ
     NetModeChangeFunc pNetModeChangeFunc;
     NetEndCallback pNetEndCallback;     ///< ネットワーク終了コールバック

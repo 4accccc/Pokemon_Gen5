@@ -466,6 +466,7 @@ extern void GFI_NET_BeaconSetInfo( void );
 
 
 extern BOOL GFL_NET_WL_ParentConnect(void);
+extern void GFL_NET_WHPipeFree(void);
 
 
 #endif  //__NET_WIRELESS_H__

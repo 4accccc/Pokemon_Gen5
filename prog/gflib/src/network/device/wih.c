@@ -2535,6 +2535,9 @@ u16 WH_GetBitmap(void)
    ---------------------------------------------------------------------- */
 int WH_GetSystemState(void)
 {
+    if(_pWmInfo==NULL){
+        return WH_SYSSTATE_STOP;
+    }
     return _pWmInfo->sSysState;
 }
 
@@ -2895,6 +2898,17 @@ BOOL WH_Initialize(HEAPID heapID)
 
     return TRUE;
 }
+
+
+void WH_FreeMemory(void)
+{
+    GFL_HEAP_FreeMemory(_pWmInfo->sRecvBufferOrg);
+    GFL_HEAP_FreeMemory(_pWmInfo->sSendBufferOrg);
+    _pWmInfo = NULL;
+    GFL_HEAP_FreeMemory(_dWork_temp);
+}
+
+
 
 /* ----------------------------------------------------------------------
    Indicate handler
@@ -3448,10 +3462,6 @@ BOOL WH_End(void)
 
         return FALSE;
     }
-
-    _pWmInfo = NULL;
-    GFL_HEAP_FreeMemory(_dWork_temp);
-
     return TRUE;
 }
 

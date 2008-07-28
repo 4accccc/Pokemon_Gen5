@@ -631,6 +631,11 @@ static void _commEnd(void)
     _GFL_NET_SetNETWL( NULL );
 }
 
+void GFL_NET_WHPipeFree(void)
+{
+    _commEnd();
+}
+
 //==============================================================================
 /**
  * @brief   ’T‚·‚±‚Æ‚ª‚Å‚«‚½e‚Ì”‚ğ•Ô‚·

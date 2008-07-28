@@ -151,9 +151,9 @@ static void _netEndCallback(void* pWork)
 
     pNet->pNetEndCallback(pNet->aNetInit.pWork);
     
-    for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
-        GFL_HEAP_FreeMemory(pNet->pKey[index]);
-    }
+//    for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
+  //      GFL_HEAP_FreeMemory(pNet->pKey[index]);
+    //}
     GFL_NET_HANDLE_DeleteAll(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;

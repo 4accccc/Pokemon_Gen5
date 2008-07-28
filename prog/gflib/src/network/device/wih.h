@@ -512,6 +512,7 @@ extern u16 WH_GetMeasureChannel(void);
    Returns:     シーケンス開始に成功すれば真。
    ---------------------------------------------------------------------- */
 extern BOOL WH_Initialize(HEAPID heapID);
+extern void WH_FreeMemory(void);
 
 
 /*---------------------------------------------------------------------------*

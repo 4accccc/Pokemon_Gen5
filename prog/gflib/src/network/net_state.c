@@ -178,7 +178,8 @@ static void _stateFinalize(GFL_NETSTATE* pState)
     GFL_NET_COMMAND_Exit();
     GFL_NET_WirelessIconEasyEnd();
     GFL_NET_ExitIchneumon(_endIchneumon,NULL);
-    _GFL_NET_SetNETWL(NULL);
+    GFL_NET_WHPipeFree();
+//    _GFL_NET_SetNETWL(NULL);
 }
 
 //==============================================================================
@@ -816,10 +817,12 @@ static void _stateEnd(GFL_NETSTATE* pState)
     
     if(WH_SYSSTATE_IDLE == state){
         WH_End();
-        _stateFinalize(pState);
+//        _stateFinalize(pState);
     }
     else if(WH_SYSSTATE_STOP == state){
+        WH_FreeMemory();
         _stateFinalize(pState);
+        _CHANGE_STATE(_stateNone, 0);
     }
 }
 
