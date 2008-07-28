@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-07-18T18:17:47
+	Update:2008-07-25T19:50:46
  *****************************************************************************/
 
 #ifndef NARC_SAMPLE_MAP_NAIX_
@@ -63,7 +63,37 @@ enum {
 	NARC_sample_map_pc_01_h_nsbmd = 49,
 	NARC_sample_map_pc_01_l_nsbmd = 50,
 	NARC_sample_map_buil_01_h_nsbmd = 51,
-	NARC_sample_map_buil_01_l_nsbmd = 52
+	NARC_sample_map_buil_01_l_nsbmd = 52,
+	NARC_sample_map_m_test_01_01c_nsbmd = 53,
+	NARC_sample_map_m_test_01_02c_nsbmd = 54,
+	NARC_sample_map_m_test_01_03c_nsbmd = 55,
+	NARC_sample_map_m_test_01_04c_nsbmd = 56,
+	NARC_sample_map_m_test_01_05c_nsbmd = 57,
+	NARC_sample_map_m_test_01_06c_nsbmd = 58,
+	NARC_sample_map_m_test_02_01c_nsbmd = 59,
+	NARC_sample_map_m_test_02_02c_nsbmd = 60,
+	NARC_sample_map_m_test_02_03c_nsbmd = 61,
+	NARC_sample_map_m_test_02_04c_nsbmd = 62,
+	NARC_sample_map_m_test_02_05c_nsbmd = 63,
+	NARC_sample_map_m_test_02_06c_nsbmd = 64,
+	NARC_sample_map_m_test_01_01c_nsbtx = 65,
+	NARC_sample_map_m_test_01_02c_nsbtx = 66,
+	NARC_sample_map_m_test_01_03c_nsbtx = 67,
+	NARC_sample_map_m_test_01_04c_nsbtx = 68,
+	NARC_sample_map_m_test_01_05c_nsbtx = 69,
+	NARC_sample_map_m_test_01_06c_nsbtx = 70,
+	NARC_sample_map_m_test_02_01c_nsbtx = 71,
+	NARC_sample_map_m_test_02_02c_nsbtx = 72,
+	NARC_sample_map_m_test_02_03c_nsbtx = 73,
+	NARC_sample_map_m_test_02_04c_nsbtx = 74,
+	NARC_sample_map_m_test_02_05c_nsbtx = 75,
+	NARC_sample_map_m_test_02_06c_nsbtx = 76,
+	NARC_sample_map_map_rasen_nsbmd = 77,
+	NARC_sample_map_map_rasen_nsbtx = 78,
+	NARC_sample_map_map_rasen_bin = 79,
+	NARC_sample_map_map_rasen2_nsbmd = 80,
+	NARC_sample_map_map_rasen2_nsbtx = 81,
+	NARC_sample_map_map_rasen2_bin = 82
 };
 
 /* NARC_SAMPLE_MAP_NAIX_ */
