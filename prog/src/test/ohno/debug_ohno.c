@@ -14,6 +14,7 @@
 #include "debug_ohno.h"
 #include "debug_field.h"
 #include "system/main.h"
+#include "include\net\network_define.h"
 
 static DEBUG_OHNO_CONTROL * DebugOhnoControl;
 
@@ -48,7 +49,7 @@ typedef struct{
     int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
 
-static _testBeaconStruct _testBeacon = { 1 };
+static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_OHNO_SERVICEID };
 
 
 static GFLNetInitializeStruct aGFLNetInit = {
@@ -77,7 +78,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FALSE,     // MP通信＝親子型通信モードかどうか
     FALSE,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
-    1,  //GameServiceID
+    WB_NET_DEBUG_OHNO_SERVICEID,  //GameServiceID
 };
 
 //--------------------------------------------------------------
@@ -106,8 +107,10 @@ static int _netBeaconGetSizeFunc(void)
 ///< ビーコンデータ取得関数
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 {
-	OS_TPrintf("比較してます%d\n",beaconNo);
-	return TRUE;
+    if(myNo != beaconNo){
+        return FALSE;
+    }
+    return TRUE;
 }
 
 //--------------------------------------------------------------
