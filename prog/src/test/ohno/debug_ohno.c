@@ -389,7 +389,9 @@ static GFL_PROC_RESULT DebugOhnoMainProcMain(GFL_PROC * proc, int * seq, void * 
 static GFL_PROC_RESULT DebugOhnoMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
     GFL_PROC_FreeWork(proc);
-	return GFL_PROC_RES_FINISH;
+	GFL_HEAP_DeleteHeap( HEAPID_OHNO_DEBUG );
+
+    return GFL_PROC_RES_FINISH;
 }
 
 

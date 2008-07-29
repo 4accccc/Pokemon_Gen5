@@ -113,11 +113,6 @@ void InitGameNet(void)
 }
 
 
-//------------------------------------------------------------------
-// 
-//	接続
-//
-//------------------------------------------------------------------
 enum{
     _CONNECT_START = 0,
     _CONNECT,
@@ -127,6 +122,27 @@ enum{
     _CONNECT_TIMINGSTART,
     _CONNECT_TIMINGCHECK,
 };
+
+//--------------------------------------------------------------
+/**
+ * @brief   接続完了コールバック
+ * @param   pCtl    デバッグワーク
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+static void _connectCallBack(void* pWork)
+{
+    OS_TPrintf("ネゴシエーション完了\n");
+    gNetSys._connectSeqNo = _CONNECT_TIMINGSTART;
+}
+
+//------------------------------------------------------------------
+// 
+//	接続
+//
+//------------------------------------------------------------------
+
 
 BOOL ConnectGameNet(void)
 {
@@ -143,7 +159,7 @@ BOOL ConnectGameNet(void)
 		break;
 
 	case _CONNECT:
-		GFL_NET_ChangeoverConnect(); // 自動接続
+		GFL_NET_ChangeoverConnect(_connectCallBack); // 自動接続
 		gNetSys._connectSeqNo = _CONNECT_NEGO;
 		break;
 
@@ -165,6 +181,7 @@ BOOL ConnectGameNet(void)
 		break;
 
 	case _CONNECT_TIMINGSTART:
+        gNetSys._pHandle = GFL_NET_HANDLE_GetCurrentHandle();
 		GFL_NET_TimingSyncStart(gNetSys._pHandle, _TEST_TIMING);
 		gNetSys._connectSeqNo = _CONNECT_TIMINGCHECK;
 		break;
