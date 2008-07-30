@@ -547,7 +547,6 @@ BOOL GFL_NET_WLSwitchParentChild(void)
         else if(WH_SYSSTATE_BUSY == WH_GetSystemState()){  //‚µ‚Î‚ç‚­‘Ò‚Â
         }
         else{
-            NET_PRINT("scan %d\n",pNetWL->bEndScan);
             WH_Finalize();
             pNetWL->bEndScan = 2;
         }

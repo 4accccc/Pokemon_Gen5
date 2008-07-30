@@ -1606,7 +1606,7 @@ static void WH_StateOutStartScan(void *arg)
             _pWmInfo->sScanCallback(&_pWmInfo->sBssDesc);
         }
 
-        if (_pWmInfo->sAutoConnectFlag){
+        if (_pWmInfo->sAutoConnectFlag && found){
             if (!WH_StateInEndScan()){
                 WH_ChangeSysState(WH_SYSSTATE_ERROR);
             }
