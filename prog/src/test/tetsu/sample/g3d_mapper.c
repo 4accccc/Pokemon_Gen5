@@ -118,6 +118,8 @@ struct _G3D_MAPPER {
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const G3D_MAPPER_DATA*	data;	//実マップデータ
 
+	G3D_MAPPER_GRIDINFO		gridInfo;	//グリッドデータ取得ワーク
+
 	GFL_G3D_RES*		objectG3DresMdl[COMMON_OBJ_RESCOUNT];	//共通オブジェクトモデルリソース
 	u32					objectG3DresCount;
 
@@ -141,16 +143,10 @@ static void GetMapperBlockIdxXZ( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOC
 static void GetMapperBlockIdxY( G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new );
 
-static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockIdx, fx32* inBlockx, fx32* inBlockz ); 
-static BOOL	GetMapBlockInBuffer( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockIdx, fx32* inBlockx, fx32* inBlockz );
-static void	GetMapGrid( G3D_MAPPER* g3Dmapper, const fx32 inBlockx, const fx32 inBlockz,
-						u32* gridIdx, fx32* inGridx, fx32* inGridz );
-static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper, 
-					const fx32 inGridx, const fx32 inGridz, const u32 gridTryPattern );
 static void	DirectDraw3Dmapper
 	( G3D_MAPPER* g3Dmapper, MAP_BLOCK_DATA* mapBlock, GFL_G3D_CAMERA* g3Dcamera );
+
+static void InitMapGridInfo( G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -180,6 +176,8 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
 	
+	InitMapGridInfo( g3Dmapper );
+
 	g3Dmapper->objectG3DresCount = 0;
 	for( i=0; i<COMMON_OBJ_RESCOUNT; i++ ){
 		g3Dmapper->objectG3DresMdl[i] = NULL;
@@ -797,51 +795,6 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 				//レンダー作成
 				MakeMapRender
 					( mapBlock->NNSrnd, mapBlock->g3DgroundResMdl, mapBlock->g3DgroundResTex );
-				//--------------------
-				{
-					int j, r;
-					fx32 randTransx, randTransz;
-					fx32 cOffs, rOffs, gWidth;
-					VecFx32 pWorld;
-
-					cOffs = -g3Dmapper->width/2;
-					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
-#if 1
-					for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
-						mapBlock->object[j].id = LOCAL_OBJID_NULL;
-					}
-					for( j=0; j<4; j++ ){
-						if( j<2 ){
-							mapBlock->object[j].id = 0;
-						} else {
-							mapBlock->object[j].id = 1;
-						}
-
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.x = rOffs + cOffs;
-						mapBlock->object[j].trans.y = 0;
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.z = rOffs + cOffs;
-
-						VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &pWorld );
-						Get3DmapperHeight_fromROM
-							( g3Dmapper, &pWorld, &mapBlock->object[j].trans.y );
-					}
-					for( j=0; j<32; j++ ){
-						mapBlock->directDrawObject[j].id = 1;
-
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.x = rOffs + cOffs;
-						mapBlock->directDrawObject[j].trans.y = 0;
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.z = rOffs + cOffs;
-						VEC_Add( &mapBlock->directDrawObject[j].trans, &mapBlock->trans, &pWorld );
-						Get3DmapperHeight_fromROM
-							( g3Dmapper, &pWorld, &mapBlock->directDrawObject[j].trans.y );
-					}
-#endif
-				}
-				//--------------------
 				mapBlock->loadCount = 0;
 				mapBlock->loadSeq = TEX_TRANS;
 				break;
@@ -903,6 +856,50 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 				mapBlock->loadSeq = LOAD_END;
 				break;
 			case LOAD_END:
+				//--------------------
+				{
+					int j, r;
+					fx32 randTransx, randTransz;
+					fx32 cOffs, rOffs, gWidth;
+					VecFx32 pWorld;
+
+					cOffs = -g3Dmapper->width/2;
+					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
+#if 1
+					for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
+						mapBlock->object[j].id = LOCAL_OBJID_NULL;
+					}
+					for( j=0; j<4; j++ ){
+						if( j<2 ){
+							mapBlock->object[j].id = 0;
+						} else {
+							mapBlock->object[j].id = 1;
+						}
+
+						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+						mapBlock->object[j].trans.x = rOffs + cOffs;
+						mapBlock->object[j].trans.y = 0;
+						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+						mapBlock->object[j].trans.z = rOffs + cOffs;
+
+						VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &pWorld );
+						Get3DmapperHeight( g3Dmapper, &pWorld, &mapBlock->object[j].trans.y );
+					}
+					for( j=0; j<32; j++ ){
+						mapBlock->directDrawObject[j].id = 1;
+
+						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+						mapBlock->directDrawObject[j].trans.x = rOffs + cOffs;
+						mapBlock->directDrawObject[j].trans.y = 0;
+						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+						mapBlock->directDrawObject[j].trans.z = rOffs + cOffs;
+						VEC_Add( &mapBlock->directDrawObject[j].trans, &mapBlock->trans, &pWorld );
+						Get3DmapperHeight
+							( g3Dmapper, &pWorld, &mapBlock->directDrawObject[j].trans.y );
+					}
+#endif
+				}
+				//--------------------
 				mapBlock->dataLoadReq = FALSE;
 				mapBlock->texLoadReq = FALSE;
 				mapBlock->attrLoadReq = FALSE;
@@ -1139,395 +1136,6 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 }
 
 
-//------------------------------------------------------------------
-/**
- * @brief	ブロック情報取得１
- */
-//------------------------------------------------------------------
-static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockNum, fx32* inBlockx, fx32* inBlockz ) 
-{
-	u32		blockx, blockz;
-	fx32	width;
-	VecFx32	mapTop, vecInBlock;
-	
-	width = g3Dmapper->width;
-
-	//現在ブロックのXZindex取得
-	blockx = FX_Whole( FX_Div( pos->x, width ) );
-	blockz = FX_Whole( FX_Div( pos->z, width ) );
-
-	mapTop.x = blockx * width;
-	mapTop.y = 0;
-	mapTop.z = blockz * width;
-
-	VEC_Subtract( pos, &mapTop, &vecInBlock );
-
-	*blockNum = blockz * g3Dmapper->sizex + blockx;
-	*inBlockx = vecInBlock.x;
-	*inBlockz = vecInBlock.z;
-
-	//OS_Printf("pos {%x,%x,%x}, blockNum = %x, blockx = %x, blockz = %x\n", 
-	//			pos->x, pos->y, pos->z, *blockIdx, blockx, blockz );
-
-	if( *blockNum >= g3Dmapper->sizex * g3Dmapper->sizez ){
-		return FALSE;
-	}
-	return TRUE;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	ブロック情報取得２
- */
-//------------------------------------------------------------------
-static BOOL	GetMapBlockInBuffer( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockIdx, fx32* inBlockx, fx32* inBlockz ) 
-{
-	VecFx32 vecTop, vecGrid, inBlockPos;
-	VecFx32 vecDefault = {0,0,0};
-	fx32	width = g3Dmapper->width;
-	fx32	height = g3Dmapper->height;
-	int i;
-
-	if( g3Dmapper->mode  == G3D_MAPPER_MODE_SCROLL_Y ){
-		int count = 0;
-		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-			vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
-			vecTop.y = g3Dmapper->mapBlock[i].trans.y;
-			vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
-	
-			if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
-				&&(pos->y >= vecTop.y)&&(pos->y <= vecTop.y + height)
-				&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
-
-				*blockIdx = i;
-				VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-				VEC_Add( &vecGrid, pos, &inBlockPos );
-				*inBlockx = inBlockPos.x;
-				*inBlockz = inBlockPos.z;
-				count++;
-			}
-		}
-		if( count ){
-			OS_Printf("count = %x\n", count);
-			return TRUE;
-		}
-
-	} else {
-		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-			vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
-			vecTop.y = g3Dmapper->mapBlock[i].trans.y;
-			vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
-	
-			if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
-				&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
-
-				*blockIdx = i;
-				VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-				VEC_Add( &vecGrid, pos, &inBlockPos );
-				*inBlockx = inBlockPos.x;
-				*inBlockz = inBlockPos.z;
-				return TRUE;
-			}
-		}
-	}
-	*blockIdx = 0;
-	*inBlockx = 0;
-	*inBlockz = 0;
-	return FALSE;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド情報取得
- */
-//------------------------------------------------------------------
-static void	GetMapGrid( G3D_MAPPER* g3Dmapper, const fx32 inBlockx, const fx32 inBlockz,
-						u32* gridIdx, fx32* inGridx, fx32* inGridz ) 
-{
-	u32		gridx, gridz;
-	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
-
-	gridx = inBlockx / gridWidth;
-	gridz = inBlockz / gridWidth;
-	*inGridx = inBlockx % gridWidth;
-	*inGridz = inBlockz % gridWidth;
-
-	*gridIdx = gridz * MAP_GRIDCOUNT + gridx;
-
-	//OS_Printf("gridIdx = %x, gridx = %x, gridz = %x\n", *gridIdx, gridx, gridz );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド内三角形パターン取得
- */
-//------------------------------------------------------------------
-static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper, 
-					const fx32 inGridx, const fx32 inGridz, const u32 gridTryPattern )
-{
-	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
-
-	//グリッド内三角形の判定
-	if( gridTryPattern == 0 ){
-		//0-2-1,3-1-2のパターン
-		if( inGridx + inGridz < gridWidth ){
-			return 0;
-		} else {
-			return 1;
-		}
-	} else {
-		//2-3-0,1-0-3のパターン
-		if( inGridx > inGridz ){
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	現在位置地形の法線ベクトル取得
- */
-//------------------------------------------------------------------
-void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
-{
-	u32		blockIdx;
-	fx32	inBlockx, inBlockz;
-	u32		gridIdx;
-	fx32	inGridx, inGridz;
-	NormalVtxSt* mapData;
-
-	vecN->x = 0; 
-	vecN->y = FX32_ONE;
-	vecN->z = 0; 
-
-	if( g3Dmapper->data == NULL ){
-		return;
-	}
-	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
-		return;
-	}
-	mapData = (NormalVtxSt*)&g3Dmapper->mapBlock[blockIdx].attr;
-
-	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
-
-	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData->tryangleType ) == 0 ){
-		vecN->x = mapData[gridIdx].vecN1_x; 
-		vecN->y = mapData[gridIdx].vecN1_y; 
-		vecN->z = -mapData[gridIdx].vecN1_z; 
-	} else {
-		vecN->x = mapData[gridIdx].vecN2_x; 
-		vecN->y = mapData[gridIdx].vecN2_y; 
-		vecN->z = -mapData[gridIdx].vecN2_z; 
-	}
-	//OS_Printf("vecN{ %x, %x, %x }\n", vecN->x, vecN->y, vecN->z);
-}
-
-//------------------------------------------------------------------
-void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
-{
-	u32		blockNum;
-	fx32	inBlockx, inBlockz;
-	u32		gridIdx;
-	fx32	inGridx, inGridz;
-	NormalVtxSt mapData;
-	u16		attrID;
-
-	vecN->x = 0; 
-	vecN->y = FX32_ONE;
-	vecN->z = 0; 
-
-	if( g3Dmapper->data == NULL ){
-		return;
-	}
-	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
-		return;
-	}
-	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
-
-	attrID = g3Dmapper->data[blockNum].attrID;
-
-	if( attrID == NON_ATTR ){
-		return;
-	}
-	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
-							sizeof(NormalVtxSt)*gridIdx, sizeof(NormalVtxSt) );
-
-	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData.tryangleType ) == 0 ){
-		vecN->x = mapData.vecN1_x; 
-		vecN->y = mapData.vecN1_y; 
-		vecN->z = -mapData.vecN1_z; 
-	} else {
-		vecN->x = mapData.vecN2_x; 
-		vecN->y = mapData.vecN2_y; 
-		vecN->z = -mapData.vecN2_z; 
-	}
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	現在位置地形の高さ取得
- */
-//------------------------------------------------------------------
-void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
-{
-	u32		blockIdx, blockNum;
-	fx32	inBlockx, inBlockz;
-	u32		gridIdx;
-	fx32	inGridx, inGridz;
-	NormalVtxSt* mapData;
-	fx32	by, valD;
-	VecFx32 vecN, posMap, posLocalMap;
-	u16		attrID;
-
-	*height = 0;
-
-	if( g3Dmapper->data == NULL ){
-		return;
-	}
-	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
-		return;
-	}
-	blockNum = g3Dmapper->mapBlock[blockIdx].idx;
-	mapData = (NormalVtxSt*)&g3Dmapper->mapBlock[blockIdx].attr;
-	VEC_Subtract( pos, &g3Dmapper->mapBlock[blockIdx].trans, &posLocalMap );
-
-	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
-
-	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData[gridIdx].tryangleType ) == 0 ){
-		vecN.x = mapData[gridIdx].vecN1_x; 
-		vecN.y = mapData[gridIdx].vecN1_y; 
-		vecN.z = -mapData[gridIdx].vecN1_z;
-		valD = mapData[gridIdx].vecN1_D;		//軸の取り方が違うので反転
-	} else {
-		vecN.x = mapData[gridIdx].vecN2_x; 
-		vecN.y = mapData[gridIdx].vecN2_y; 
-		vecN.z = -mapData[gridIdx].vecN2_z;
-		valD = mapData[gridIdx].vecN2_D;		//軸の取り方が違うので反転
-	}
-	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
-	*height = FX_Div( by, vecN.y ) + g3Dmapper->mapBlock[blockIdx].trans.y;
-}
-
-//------------------------------------------------------------------
-void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
-{
-	u32		blockNum;
-	fx32	inBlockx, inBlockz;
-	u32		gridIdx;
-	fx32	inGridx, inGridz;
-	NormalVtxSt mapData;
-	fx32	by, valD, width;
-	VecFx32 vecN, posMap, posLocalMap;
-	u16		attrID;
-
-	*height = 0;
-
-	if( g3Dmapper->data == NULL ){
-		return;
-	}
-	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
-		return;
-	}
-	width = g3Dmapper->width;
-	posMap.x = FX_Whole( FX_Div( pos->x, width ) ) * width + width/2;
-	posMap.y = 0;
-	posMap.z = FX_Whole( FX_Div( pos->z, width ) ) * width + width/2;
-	VEC_Subtract( pos, &posMap, &posLocalMap );
-	//OS_Printf("blockNum = %x, inBlockx = %x, inBlockz = %x ", blockNum, inBlockx, inBlockz );
-
-	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
-
-	attrID = g3Dmapper->data[blockNum].attrID;
-
-	if( attrID == NON_ATTR ){
-		return;
-	}
-	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
-							sizeof(NormalVtxSt)*gridIdx, sizeof(NormalVtxSt) );
-
-	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData.tryangleType ) == 0 ){
-		vecN.x = mapData.vecN1_x; 
-		vecN.y = mapData.vecN1_y; 
-		vecN.z = -mapData.vecN1_z;
-		valD = mapData.vecN1_D;		//軸の取り方が違うので反転
-	} else {
-		vecN.x = mapData.vecN2_x; 
-		vecN.y = mapData.vecN2_y; 
-		vecN.z = -mapData.vecN2_z;
-		valD = mapData.vecN2_D;		//軸の取り方が違うので反転
-	}
-	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
-	*height = FX_Div( by, vecN.y );
-	//実配置された場合のY座標を足しこむ（未実装）
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	移動方向の地形に沿ったベクトル取得
- */
-//------------------------------------------------------------------
-void Get3DmapperGroundMoveVec
-	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
-{
-	VecFx32 vecN, vecH, vecV;
-
-	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
-	Get3DmapperVecN( g3Dmapper, pos, &vecN );	//平面の法線を取得
-	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
-	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
-
-	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
-		//逆方向へのベクトルが出てしまった場合修正
-		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
-	} else {
-		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
-	}
-	VEC_Normalize( vecResult, vecResult );
-}
-
-void Get3DmapperGroundMoveVec_fromROM
-	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
-{
-	VecFx32 vecN, vecH, vecV;
-
-	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
-	Get3DmapperVecN_fromROM( g3Dmapper, pos, &vecN );	//平面の法線を取得
-	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
-	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
-
-	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
-		//逆方向へのベクトルが出てしまった場合修正
-		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
-	} else {
-		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
-	}
-	VEC_Normalize( vecResult, vecResult );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	範囲外チェック
- */
-//------------------------------------------------------------------
-BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
-{
-	fx32 widthx, widthz;
-
-	widthx = g3Dmapper->sizex * g3Dmapper->width;
-	widthz = g3Dmapper->sizez * g3Dmapper->width;
-
-	if( ( pos->x >= 0 )&&( pos->x < widthx )&&( pos->z >= 0 )&&( pos->z < widthz ) ){
-		return FALSE;
-	}
-	return TRUE;
-}
-
-
 
 
 
@@ -1753,4 +1361,573 @@ static const DIRECT_DRAW_DATA drawTreeData = {
 	63, 31, DRAW_YBILLBOARD,
 	_drawTree0,
 };
+
+
+
+
+
+//============================================================================================
+/**
+ *
+ *
+ *
+ * @brief	３Ｄマップ情報取得
+ *
+ *
+ *
+ */
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	ワーク初期化
+ */
+//------------------------------------------------------------------
+static void InitMapGridInfo( G3D_MAPPER* g3Dmapper )
+{
+	int i;
+
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		VEC_Set( &g3Dmapper->gridInfo.gridData[i].vecN, 0, 0, 0 );
+		g3Dmapper->gridInfo.gridData[i].height = 0;
+		g3Dmapper->gridInfo.gridData[i].attr = 0;
+	}
+	g3Dmapper->gridInfo.count = 0;
+}
+
+#if 0
+//------------------------------------------------------------------
+/**
+ * @brief	ブロック情報取得１
+ */
+//------------------------------------------------------------------
+static BOOL	GetMapBlockInMap( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
+							u32* blockNum, fx32* inBlockx, fx32* inBlockz ) 
+{
+	u32		blockx, blockz;
+	fx32	width;
+	VecFx32	blockTop, vecInBlock;
+	
+	width = g3Dmapper->width;
+
+	//現在ブロックのXZindex取得
+	blockx = FX_Whole( FX_Div( pos->x, width ) );
+	blockz = FX_Whole( FX_Div( pos->z, width ) );
+
+	blockTop.x = blockx * width;
+	blockTop.y = 0;
+	blockTop.z = blockz * width;
+
+	VEC_Subtract( pos, &blockTop, &vecInBlock );
+
+	*blockNum = blockz * g3Dmapper->sizex + blockx;
+	*inBlockx = vecInBlock.x;
+	*inBlockz = vecInBlock.z;
+
+	//OS_Printf("pos {%x,%x,%x}, blockNum = %x, blockx = %x, blockz = %x\n", 
+	//			pos->x, pos->y, pos->z, *blockIdx, blockx, blockz );
+
+	if( *blockNum >= g3Dmapper->sizex * g3Dmapper->sizez ){
+		return FALSE;
+	}
+	return TRUE;
+}
+#endif
+
+//------------------------------------------------------------------
+/**
+ * @brief	ブロック情報取得２
+ */
+//------------------------------------------------------------------
+static BOOL	GetMapBlockInBuffer( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
+							u32* blockIdx, fx32* inBlockx, fx32* inBlockz ) 
+{
+	VecFx32 vecTop, vecGrid, inBlockPos;
+	VecFx32 vecDefault = {0,0,0};
+	fx32	width = g3Dmapper->width;
+	fx32	height = g3Dmapper->height;
+	int i;
+
+	if( g3Dmapper->mode == G3D_MAPPER_MODE_SCROLL_Y ){
+		int count = 0;
+		int data = 0;
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
+				vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
+				//vecTop.y = g3Dmapper->mapBlock[i].trans.y;
+				vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
+	
+				if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
+					&&(pos->y >= vecTop.y)&&(pos->y < vecTop.y + height)
+					&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
+	
+					*blockIdx = i;
+					VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+					VEC_Add( &vecGrid, pos, &inBlockPos );
+					*inBlockx = inBlockPos.x;
+					*inBlockz = inBlockPos.z;
+					count++;
+				}
+				data++;
+			}
+		}
+		if( count ){
+			//OS_Printf("data = %x, count = %x\n", data, count);
+			return TRUE;
+		}
+
+	} else {
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
+				vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
+				vecTop.y = g3Dmapper->mapBlock[i].trans.y;
+				vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
+	
+				if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
+					&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
+	
+					*blockIdx = i;
+					VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
+					VEC_Add( &vecGrid, pos, &inBlockPos );
+					*inBlockx = inBlockPos.x;
+					*inBlockz = inBlockPos.z;
+					return TRUE;
+				}
+			}
+		}
+	}
+	*blockIdx = 0;
+	*inBlockx = 0;
+	*inBlockz = 0;
+	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報取得
+ */
+//------------------------------------------------------------------
+static void	GetMapGrid( G3D_MAPPER* g3Dmapper, const fx32 inBlockx, const fx32 inBlockz,
+						u32* gridIdx, fx32* inGridx, fx32* inGridz ) 
+{
+	u32		gridx, gridz;
+	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
+
+	gridx = inBlockx / gridWidth;
+	gridz = inBlockz / gridWidth;
+	*inGridx = inBlockx % gridWidth;
+	*inGridz = inBlockz % gridWidth;
+
+	*gridIdx = gridz * MAP_GRIDCOUNT + gridx;
+
+	//OS_Printf("gridIdx = %x, gridx = %x, gridz = %x\n", *gridIdx, gridx, gridz );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド内三角形パターン取得
+ */
+//------------------------------------------------------------------
+static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper, 
+					const fx32 inGridx, const fx32 inGridz, const u32 gridTryPattern )
+{
+	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
+
+	//グリッド内三角形の判定
+	if( gridTryPattern == 0 ){
+		//0-2-1,3-1-2のパターン
+		if( inGridx + inGridz < gridWidth ){
+			return 0;
+		} else {
+			return 1;
+		}
+	} else {
+		//2-3-0,1-0-3のパターン
+		if( inGridx > inGridz ){
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+#if 0
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報取得
+ */
+//------------------------------------------------------------------
+static GetGridInfoData( G3D_MAPPER_INFODATA* gridInfo, MAP_BLOCK_DATA* mapBlock )
+{
+	fx32 block_hw = g3Dmapper->width / 2;
+	fx32 grid_w = g3Dmapper->width / MAP_GRIDCOUNT;
+
+	//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
+	if(	(pos->x >= (mapBlock->trans.x - block_hw ))&&(pos->x < (mapBlock->trans.x + block_hw ))
+	  &&(pos->z >= (mapBlock->trans.z - block_hw ))&&(pos->z < (mapBlock->trans.z + block_hw )) ){
+
+		fx32	block_x, block_z, grid_x, grid_z, pLocal_x, pLocal_z;
+		u32		block_idx, grid_idx;
+		fx32	by, valD, height;
+		NormalVtxSt* nvs;
+		G3D_MAPPER_INFODATA* gridInfo;
+
+		//ブロック内情報取得
+		block_idx = g3Dmapper->mapBlock[i].idx;
+		block_x = pos->x - ( mapTrans->x - block_hw );
+		block_z = pos->z - ( mapTrans->z - block_hw );
+
+		//グリッド内情報取得
+		grid_idx = (block_z/grid_w) * MAP_GRIDCOUNT + (block_x/grid_w);
+		grid_x = block_x % grid_w;
+		grid_z = block_z % grid_w;
+
+		//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
+		nvs = (NormalVtxSt*)&g3Dmapper->mapBlock[i].attr[grid_idx];
+		gridInfo = &g3Dmapper->gridInfo.gridData[p];
+
+		if( GetMapTriangleID( g3Dmapper, grid_x, grid_z, nvs->tryangleType ) == 0 ){
+			VEC_Set( &gridInfo->vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
+			valD = nvs->vecN1_D;
+		} else {
+			VEC_Set( &gridInfo->vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
+			valD = nvs->vecN2_D;
+		}
+		by = -( FX_Mul( gridInfo->vecN.x, pos->x - mapTrans->x )
+				+ FX_Mul( gridInfo->vecN.z, pos->z - mapTrans->z ) + valD );
+		gridInfo->height = FX_Div( by, gridInfo->vecN.y ) + mapTrans->y;
+		gridInfo->attr = nvs->attr;
+		return TRUE;
+	}
+	return FALSE;
+}
+#endif
+	
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報ポインタ取得
+ */
+//------------------------------------------------------------------
+G3D_MAPPER_GRIDINFO* Get3DmapperGridInfo( G3D_MAPPER* g3Dmapper )
+{
+	return &g3Dmapper->gridInfo;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報更新
+ */
+//------------------------------------------------------------------
+void Reload3DmapperGridInfo( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
+{
+	fx32	block_hw, grid_w;
+	int		i, p;
+
+	InitMapGridInfo( g3Dmapper );
+
+	block_hw = g3Dmapper->width / 2;
+	grid_w = g3Dmapper->width / MAP_GRIDCOUNT;
+	p = 0;
+
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
+
+			VecFx32* mapTrans = &g3Dmapper->mapBlock[i].trans;
+
+			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
+			if(	(pos->x >= (mapTrans->x - block_hw ))&&(pos->x < (mapTrans->x + block_hw ))
+				&&(pos->z >= (mapTrans->z - block_hw ))&&(pos->z < (mapTrans->z + block_hw )) ){
+
+				fx32	block_x, block_z, grid_x, grid_z, pLocal_x, pLocal_z;
+				u32		block_idx, grid_idx;
+				fx32	by, valD, height;
+				NormalVtxSt* nvs;
+				G3D_MAPPER_INFODATA* gridInfo;
+
+				//ブロック内情報取得
+				block_idx = g3Dmapper->mapBlock[i].idx;
+				block_x = pos->x - ( mapTrans->x - block_hw );
+				block_z = pos->z - ( mapTrans->z - block_hw );
+
+				//グリッド内情報取得
+				grid_idx = (block_z/grid_w) * MAP_GRIDCOUNT + (block_x/grid_w);
+				grid_x = block_x % grid_w;
+				grid_z = block_z % grid_w;
+
+				//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
+				nvs = (NormalVtxSt*)&g3Dmapper->mapBlock[i].attr[grid_idx];
+				gridInfo = &g3Dmapper->gridInfo.gridData[p];
+
+				if( GetMapTriangleID( g3Dmapper, grid_x, grid_z, nvs->tryangleType ) == 0 ){
+					VEC_Set( &gridInfo->vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
+					valD = nvs->vecN1_D;
+				} else {
+					VEC_Set( &gridInfo->vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
+					valD = nvs->vecN2_D;
+				}
+				by = -( FX_Mul( gridInfo->vecN.x, pos->x - mapTrans->x )
+						+ FX_Mul( gridInfo->vecN.z, pos->z - mapTrans->z ) + valD );
+				gridInfo->height = FX_Div( by, gridInfo->vecN.y ) + mapTrans->y;
+				gridInfo->attr = nvs->attr;
+				p++;
+			}
+		}
+	}
+	OS_Printf("count = %x height = ", p );
+	for( i=0; i<p; i++ ){
+		OS_Printf("%x, ", g3Dmapper->gridInfo.gridData[i].height );
+	}
+	OS_Printf("\n");
+	g3Dmapper->gridInfo.count = p;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	現在位置地形の法線ベクトル取得
+ */
+//------------------------------------------------------------------
+void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
+{
+	u32		blockIdx;
+	fx32	inBlockx, inBlockz;
+	u32		gridIdx;
+	fx32	inGridx, inGridz;
+	NormalVtxSt* mapData;
+
+	vecN->x = 0; 
+	vecN->y = FX32_ONE;
+	vecN->z = 0; 
+
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
+		return;
+	}
+	mapData = (NormalVtxSt*)&g3Dmapper->mapBlock[blockIdx].attr;
+
+	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
+
+	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData[gridIdx].tryangleType ) == 0 ){
+		vecN->x = mapData[gridIdx].vecN1_x; 
+		vecN->y = mapData[gridIdx].vecN1_y; 
+		vecN->z = -mapData[gridIdx].vecN1_z; 
+	} else {
+		vecN->x = mapData[gridIdx].vecN2_x; 
+		vecN->y = mapData[gridIdx].vecN2_y; 
+		vecN->z = -mapData[gridIdx].vecN2_z; 
+	}
+	//OS_Printf("vecN{ %x, %x, %x }\n", vecN->x, vecN->y, vecN->z);
+}
+
+//------------------------------------------------------------------
+#if 0
+void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN )
+{
+	u32		blockNum;
+	fx32	inBlockx, inBlockz;
+	u32		gridIdx;
+	fx32	inGridx, inGridz;
+	NormalVtxSt mapData;
+	u16		attrID;
+
+	vecN->x = 0; 
+	vecN->y = FX32_ONE;
+	vecN->z = 0; 
+
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
+		return;
+	}
+	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
+
+	attrID = g3Dmapper->data[blockNum].attrID;
+
+	if( attrID == NON_ATTR ){
+		return;
+	}
+	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
+							sizeof(NormalVtxSt)*gridIdx, sizeof(NormalVtxSt) );
+
+	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData.tryangleType ) == 0 ){
+		vecN->x = mapData.vecN1_x; 
+		vecN->y = mapData.vecN1_y; 
+		vecN->z = -mapData.vecN1_z; 
+	} else {
+		vecN->x = mapData.vecN2_x; 
+		vecN->y = mapData.vecN2_y; 
+		vecN->z = -mapData.vecN2_z; 
+	}
+}
+#endif
+
+//------------------------------------------------------------------
+/**
+ * @brief	現在位置地形の高さ取得
+ */
+//------------------------------------------------------------------
+void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
+{
+	u32		blockIdx, blockNum;
+	fx32	inBlockx, inBlockz;
+	u32		gridIdx;
+	fx32	inGridx, inGridz;
+	NormalVtxSt* mapData;
+	fx32	by, valD;
+	VecFx32 vecN, posMap, posLocalMap;
+	u16		attrID;
+
+	*height = 0;
+
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInBuffer( g3Dmapper, pos, &blockIdx, &inBlockx, &inBlockz ) == FALSE ){
+		return;
+	}
+	blockNum = g3Dmapper->mapBlock[blockIdx].idx;
+	mapData = (NormalVtxSt*)&g3Dmapper->mapBlock[blockIdx].attr;
+	VEC_Subtract( pos, &g3Dmapper->mapBlock[blockIdx].trans, &posLocalMap );
+
+	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
+
+	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData[gridIdx].tryangleType ) == 0 ){
+		vecN.x = mapData[gridIdx].vecN1_x; 
+		vecN.y = mapData[gridIdx].vecN1_y; 
+		vecN.z = -mapData[gridIdx].vecN1_z;
+		valD = mapData[gridIdx].vecN1_D;		//軸の取り方が違うので反転
+	} else {
+		vecN.x = mapData[gridIdx].vecN2_x; 
+		vecN.y = mapData[gridIdx].vecN2_y; 
+		vecN.z = -mapData[gridIdx].vecN2_z;
+		valD = mapData[gridIdx].vecN2_D;		//軸の取り方が違うので反転
+	}
+	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
+	*height = FX_Div( by, vecN.y ) + g3Dmapper->mapBlock[blockIdx].trans.y;
+}
+
+//------------------------------------------------------------------
+#if 0
+void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height )
+{
+	u32		blockNum;
+	fx32	inBlockx, inBlockz;
+	u32		gridIdx;
+	fx32	inGridx, inGridz;
+	NormalVtxSt mapData;
+	fx32	by, valD, width;
+	VecFx32 vecN, posMap, posLocalMap;
+	u16		attrID;
+
+	*height = 0;
+
+	if( g3Dmapper->data == NULL ){
+		return;
+	}
+	if( GetMapBlockInMap( g3Dmapper, pos, &blockNum, &inBlockx, &inBlockz ) == FALSE ){
+		return;
+	}
+	width = g3Dmapper->width;
+	posMap.x = FX_Whole( FX_Div( pos->x, width ) ) * width + width/2;
+	posMap.y = 0;
+	posMap.z = FX_Whole( FX_Div( pos->z, width ) ) * width + width/2;
+	VEC_Subtract( pos, &posMap, &posLocalMap );
+	//OS_Printf("blockNum = %x, inBlockx = %x, inBlockz = %x ", blockNum, inBlockx, inBlockz );
+
+	GetMapGrid( g3Dmapper, inBlockx, inBlockz, &gridIdx, &inGridx, &inGridz ); 
+
+	attrID = g3Dmapper->data[blockNum].attrID;
+
+	if( attrID == NON_ATTR ){
+		return;
+	}
+	GFL_ARC_LoadDataOfs( (void*)&mapData, g3Dmapper->arcID, (u32)attrID,
+							sizeof(NormalVtxSt)*gridIdx, sizeof(NormalVtxSt) );
+
+	if( GetMapTriangleID( g3Dmapper, inGridx, inGridz, mapData.tryangleType ) == 0 ){
+		vecN.x = mapData.vecN1_x; 
+		vecN.y = mapData.vecN1_y; 
+		vecN.z = -mapData.vecN1_z;
+		valD = mapData.vecN1_D;		//軸の取り方が違うので反転
+	} else {
+		vecN.x = mapData.vecN2_x; 
+		vecN.y = mapData.vecN2_y; 
+		vecN.z = -mapData.vecN2_z;
+		valD = mapData.vecN2_D;		//軸の取り方が違うので反転
+	}
+	by = -( FX_Mul( vecN.x, posLocalMap.x ) + FX_Mul( vecN.z, posLocalMap.z ) + valD );
+	*height = FX_Div( by, vecN.y );
+	//実配置された場合のY座標を足しこむ（未実装）
+}
+#endif
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	移動方向の地形に沿ったベクトル取得
+ */
+//------------------------------------------------------------------
+void Get3DmapperGroundMoveVec
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
+{
+	VecFx32 vecN, vecH, vecV;
+
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	Get3DmapperVecN( g3Dmapper, pos, &vecN );	//平面の法線を取得
+	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+
+	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
+		//逆方向へのベクトルが出てしまった場合修正
+		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
+	} else {
+		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
+	}
+	VEC_Normalize( vecResult, vecResult );
+}
+
+#if 0
+void Get3DmapperGroundMoveVec_fromROM
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult )
+{
+	VecFx32 vecN, vecH, vecV;
+
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	Get3DmapperVecN_fromROM( g3Dmapper, pos, &vecN );	//平面の法線を取得
+	VEC_CrossProduct( &vecN, vecMove, &vecH );		//平面上の水平ベクトル算出
+	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+
+	if( VEC_DotProduct( &vecV, vecMove ) < 0 ){
+		//逆方向へのベクトルが出てしまった場合修正
+		VEC_Set( vecResult, -vecV.x, -vecV.y, -vecV.z );
+	} else {
+		VEC_Set( vecResult, vecV.x, vecV.y, vecV.z );
+	}
+	VEC_Normalize( vecResult, vecResult );
+}
+#endif
+
+//------------------------------------------------------------------
+/**
+ * @brief	範囲外チェック
+ */
+//------------------------------------------------------------------
+BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
+{
+	fx32 widthx, widthz;
+
+	widthx = g3Dmapper->sizex * g3Dmapper->width;
+	widthz = g3Dmapper->sizez * g3Dmapper->width;
+
+	if( ( pos->x >= 0 )&&( pos->x < widthx )&&( pos->z >= 0 )&&( pos->z < widthz ) ){
+		return FALSE;
+	}
+	return TRUE;
+}
+
+
+
+
 

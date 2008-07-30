@@ -788,12 +788,15 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	{
 		VecFx32	moveData;
 
-		Get3DmapperGroundMoveVec( GetG3Dmapper( cursor->gs ), &cursor->trans, &vecMove, &moveData );
-		VEC_Add( &cursor->trans, &moveData, &cursor->trans );
+		//Get3DmapperGroundMoveVec
+		//			( GetG3Dmapper( cursor->gs ), &cursor->trans, &vecMove, &moveData );
+		//VEC_Add( &cursor->trans, &moveData, &cursor->trans );
+		VEC_Add( &cursor->trans, &vecMove, &cursor->trans );
 		//OS_Printf("vecMove.y  = %x, ", moveData.y);
 		//Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
 		Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
 		//OS_Printf("hit blockIdx = %x\n", debugData);
+		Reload3DmapperGridInfo( GetG3Dmapper( cursor->gs ), &cursor->trans );
 	}
 	cursor->cameraHeight += vecMove.y;
 
@@ -1100,7 +1103,7 @@ static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
 
 	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActSys, &fldActSys->actWork[i] ); }
 
-//	testSetUp( fldActSys );	//テスト
+	testSetUp( fldActSys );	//テスト
 
 	return fldActSys;
 }
@@ -1112,7 +1115,7 @@ static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
 //------------------------------------------------------------------
 static void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
 {
-//	testRelease( fldActSys );	//テスト
+	testRelease( fldActSys );	//テスト
 	GFL_HEAP_FreeMemory( fldActSys ); 
 }
 

@@ -1,3 +1,19 @@
+#define MAP_BLOCK_COUNT		(9)
+
+#define	MAPDATA_SIZE	(0x0f000)	//モデルデータ用メモリ確保サイズ 
+#define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
+#define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
+#define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
+#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
+#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
+
+#define	MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
+#define	MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
+
+#define MAP_GRIDCOUNT	(32)		//マップ内縦横グリッド数
+
+typedef struct _G3D_MAPPER G3D_MAPPER;
+
 typedef struct {
 	fx16	vecN1_x;
 	fx16	vecN1_y;
@@ -10,11 +26,20 @@ typedef struct {
 	fx32	vecN1_D;
 	fx32	vecN2_D;
 
-	u32		tryangleType:1;
 	u32		attr:31;
+	u32		tryangleType:1;
 }NormalVtxSt;
 
-typedef struct _G3D_MAPPER G3D_MAPPER;
+typedef struct {
+	VecFx32 vecN;
+	fx32	height;
+	u32		attr;
+}G3D_MAPPER_INFODATA;
+
+typedef struct {
+	G3D_MAPPER_INFODATA		gridData[MAP_BLOCK_COUNT];	//グリッドデータ取得ワーク
+	u16						count;
+}G3D_MAPPER_GRIDINFO;
 
 #define	NON_ATTR	(0xffff)
 typedef struct {
@@ -53,18 +78,6 @@ typedef struct {
 	u32							count;		//モデル数
 
 }G3D_MAPPEROBJ_RESIST;
-
-#define	MAPDATA_SIZE	(0x0f000)	//モデルデータ用メモリ確保サイズ 
-#define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
-#define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
-#define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
-#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
-#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
-
-#define	MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
-#define	MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
-
-#define MAP_GRIDCOUNT	(32)		//マップ内縦横グリッド数
 
 //------------------------------------------------------------------
 /**
@@ -112,20 +125,35 @@ extern void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper );
  */
 //------------------------------------------------------------------
 extern void SetPos3Dmapper( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報ポインタ取得
+ */
+//------------------------------------------------------------------
+extern G3D_MAPPER_GRIDINFO* Get3DmapperGridInfo( G3D_MAPPER* g3Dmapper );
+//------------------------------------------------------------------
+/**
+ * @brief	グリッド情報更新
+ */
+//------------------------------------------------------------------
+extern void Reload3DmapperGridInfo( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+
 //------------------------------------------------------------------
 /**
  * @brief	現在位置地形の法線ベクトル取得
  */
 //------------------------------------------------------------------
 extern void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
-extern void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
+//extern void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
 //------------------------------------------------------------------
 /**
  * @brief	現在位置地形の高さ取得
  */
 //------------------------------------------------------------------
 extern void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
-extern void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
+//extern void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
 //------------------------------------------------------------------
 /**
  * @brief	移動方向の地形に沿ったベクトル取得
@@ -133,8 +161,8 @@ extern void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos
 //------------------------------------------------------------------
 extern void Get3DmapperGroundMoveVec
 	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
-extern void Get3DmapperGroundMoveVec_fromROM
-	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
+//extern void Get3DmapperGroundMoveVec_fromROM
+//	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
 //------------------------------------------------------------------
 /**
  * @brief	範囲外チェック
