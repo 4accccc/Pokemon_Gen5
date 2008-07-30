@@ -156,7 +156,9 @@ static void _endIchneumon(void* pWork, BOOL bRet)
     NetEndCallback pNetEndCallback = _pNetState->pNetEndCallback;
     GFL_HEAP_FreeMemory(_pNetState);
     _pNetState = NULL;
-    pNetEndCallback(NULL);
+    if(pNetEndCallback){
+        pNetEndCallback(NULL);
+    }
 }
 
 //==============================================================================
@@ -753,9 +755,11 @@ void GFL_NET_StateChangeoverConnect(HEAPID heapID, NetStepEndCallback callback)
 static void _stateEndParentWait(GFL_NETSTATE* pState)
 {
     if(!GFL_NET_WLIsChildsConnecting()){
-        _stateFinalize(pState);
+        GFL_NET_Exit(NULL);
+//        _CHANGE_STATE(_stateNone, 0);
+        //     _stateFinalize(pState);
     }
-    _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
+//    _CHANGE_STATE(_stateConnectEnd, _EXIT_SENDING_TIME);
 }
 
 //==============================================================================

@@ -17,6 +17,7 @@
 
 #include "fld_act.h"
 #include "camera_cont.h"
+#include "include/net/network_define.h"
 
 //============================================================================================
 //

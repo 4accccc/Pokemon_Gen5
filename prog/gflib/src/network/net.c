@@ -149,11 +149,9 @@ static void _netEndCallback(void* pWork)
     BOOL bWiFi = pNet->aNetInit.bWiFi;
     int index;
 
-    pNet->pNetEndCallback(pNet->aNetInit.pWork);
-    
-//    for(index = 0; index < pNet->aNetInit.maxConnectNum;index++){
-  //      GFL_HEAP_FreeMemory(pNet->pKey[index]);
-    //}
+    if(pNet->pNetEndCallback){
+        pNet->pNetEndCallback(pNet->aNetInit.pWork);
+    }
     GFL_NET_HANDLE_DeleteAll(pNet);
     GFL_HEAP_FreeMemory(pNet);
     _pNetSys = NULL;

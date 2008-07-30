@@ -8,6 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 #include "include/system/gfl_use.h"
+#include "include/net/network_define.h"
 #include "textprint.h"
 
 void	SampleBoot( HEAPID heapID );
@@ -15,6 +16,7 @@ void	SampleEnd( void );
 BOOL	SampleMain( void );
 
 #include "g3d_mapper.h"
+#include "sample_net.h"
 //============================================================================================
 /**
  *
@@ -49,6 +51,7 @@ typedef struct _CURSOR_CONT	CURSOR_CONT;
 static CURSOR_CONT*		CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID );
 static void				DeleteCursor( CURSOR_CONT* cursor );
 static void				MainCursor( CURSOR_CONT* cursor);
+static void             FriendCursor( CURSOR_CONT* cursor );
 static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
 static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
 
@@ -56,6 +59,8 @@ typedef struct _FLD_ACTSYS		FLD_ACTSYS;
 static FLD_ACTSYS*		CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID );
 static void				DeleteFieldActSys( FLD_ACTSYS* fldActSys );
 static void				MainFieldActSys( FLD_ACTSYS* fldActSys );
+
+static void _sendGamePlay( VecFx32* pVec  );
 
 #include "samplemain.h"
 
@@ -65,12 +70,14 @@ static void				MainFieldActSys( FLD_ACTSYS* fldActSys );
  */
 //------------------------------------------------------------------
 typedef struct {
+    VecFx32         recvWork;
 	HEAPID			heapID;
 	int				seq;
 	int				timer;
 
 	SAMPLE_SETUP*	gs;
 	CURSOR_CONT*	cursor;
+	CURSOR_CONT*	cursorFriend;
 	FLD_ACTSYS*		fldActSys;
 	int				mapNum;
 
@@ -113,7 +120,7 @@ static void Debug_Regenerate( void );
 //------------------------------------------------------------------
 BOOL	SampleMain( void )
 {
-	BOOL return_flag = FALSE;
+	BOOL return_flag = FALSE,bSkip = FALSE;
 	int i;
 
 	sampleWork->timer++;
@@ -126,25 +133,45 @@ BOOL	SampleMain( void )
 		sampleWork->gs = SetupGameSystem( sampleWork->heapID );
 		sampleWork->mapNum = 0;
 		sampleWork->seq++;
-		break;
+#ifdef NET_WORK_ON
+        InitSampleGameNet();
+#endif
+        break;
 
 	case 1:
-		//セットアップ
-		sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
-		sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
+#ifdef NET_WORK_ON
+        bSkip = ConnectSampleGameNet();  // 通信処理
+        if( !bSkip && GFL_UI_KEY_GetTrg() ){  // キーが押されたら通信を待たずに開始
+            ExitSampleGameNet();
+            bSkip = TRUE;
+        }
+#else
+        bSkip = TRUE;
+#endif
+		if( bSkip ){
+            //セットアップ
+#ifdef NET_WORK_ON
+            sampleWork->cursorFriend = CreateCursor( sampleWork->gs, sampleWork->heapID );
+#endif
+            sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
+            sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
 
-		ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
-							&resistMapTbl[sampleWork->mapNum].mapperData );
-		{
-			G3D_MAPPEROBJ_RESIST resistData;
-
-			resistData.arcID = ARCID_SAMPLEMAP;
-			resistData.data = resistObjTbl; 
-			resistData.count = NELEMS(resistObjTbl); 
-			ResistObjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistData );
-		}
-		SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
-		sampleWork->seq++;
+            ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
+                                &resistMapTbl[sampleWork->mapNum].mapperData );
+            {
+                G3D_MAPPEROBJ_RESIST resistData;
+                
+                resistData.arcID = ARCID_SAMPLEMAP;
+                resistData.data = resistObjTbl; 
+                resistData.count = NELEMS(resistObjTbl); 
+                ResistObjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistData );
+            }
+#ifdef NET_WORK_ON
+            SetCursorTrans( sampleWork->cursorFriend, &resistMapTbl[sampleWork->mapNum].startPos );
+#endif
+            SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
+            sampleWork->seq++;
+        }
 		break;
 
 	case 2:
@@ -172,6 +199,9 @@ BOOL	SampleMain( void )
 			VecFx32 pos;
 
 			MainCursor( sampleWork->cursor );
+#ifdef NET_WORK_ON
+			FriendCursor( sampleWork->cursorFriend );
+#endif
 			GetCursorTrans( sampleWork->cursor, &pos );
 			SetPos3Dmapper( GetG3Dmapper(sampleWork->gs), &pos );
 			MainFieldActSys( sampleWork->fldActSys );
@@ -183,7 +213,10 @@ BOOL	SampleMain( void )
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		DeleteFieldActSys( sampleWork->fldActSys );
 		DeleteCursor( sampleWork->cursor );
-		sampleWork->seq = 1;
+#ifdef NET_WORK_ON
+		DeleteCursor( sampleWork->cursorFriend );
+#endif
+        sampleWork->seq = 1;
 		break;
 
 	case 4:
@@ -779,6 +812,7 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	}
 	//vecMove.x /= 2;
 	//vecMove.z /= 2;
+    
 	if( key & PAD_BUTTON_R ){
 		cursor->direction -= RT_SPEED;
 	}
@@ -800,6 +834,10 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	}
 	cursor->cameraHeight += vecMove.y;
 
+#ifdef NET_WORK_ON
+    _sendGamePlay( &cursor->trans  );  // 自分の位置を相手に送信
+#endif
+    
 	VEC_Set(&target,cursor->trans.x,cursor->trans.y+CAMERA_TARGET_HEIGHT*FX32_ONE,cursor->trans.z);
 	pos.x = cursor->trans.x + cursor->cameraLength * FX_SinIdx(cursor->direction);
 	pos.y = cursor->trans.y + cursor->cameraHeight;
@@ -809,6 +847,17 @@ static void	MainCursor( CURSOR_CONT* cursor )
 								&cursor->trans );
 	GFL_G3D_CAMERA_SetTarget( cursor->gs->g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( cursor->gs->g3Dcamera, &pos );
+
+}
+
+
+
+static void	FriendCursor( CURSOR_CONT* cursor )
+{
+    
+    GFL_STD_MemCopy((const void*)&sampleWork->recvWork ,&cursor->trans, sizeof(VecFx32));
+	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
+								&cursor->trans );
 }
 
 //------------------------------------------------------------------
@@ -1155,3 +1204,55 @@ static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork )
 }
 
 
+//============================================================================================
+//
+//
+//	通信関数
+//
+//
+//============================================================================================
+#ifdef NET_WORK_ON
+//------------------------------------------------------------------
+/**
+ * @brief	受信ワーク初期化
+ */
+//------------------------------------------------------------------
+static void _initRecvBuffer( void )
+{
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	受信関数
+ */
+//------------------------------------------------------------------
+// ローカル通信コマンドの定義
+enum _gameCommand_e {
+	_GAME_COM_PLAY = GFL_NET_CMD_COMMAND_MAX,
+};
+
+//------------------------------------------------------------------
+// _GAME_COM_PLAY　ゲーム情報送受信
+
+static void _sendGamePlay( VecFx32* pVec  )
+{
+    SendSampleGameNet( _GAME_COM_PLAY, pVec );
+}
+
+static void _recvGamePlay
+	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+    SAMPLE_WORK* psw = sampleWork;
+
+    if(GetSampleNetID() != netID){
+        GFL_STD_MemCopy(pData, &psw->recvWork, sizeof(VecFx32));
+    }
+}
+
+//------------------------------------------------------------------
+// ローカル通信テーブル
+const NetRecvFuncTable NetSamplePacketTbl[] = {
+    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(VecFx32)), NULL },
+};
+
+#endif
