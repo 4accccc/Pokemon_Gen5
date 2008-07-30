@@ -686,12 +686,12 @@ static BOOL _sendDataSet(BOOL bDataShare)
     BOOL bSend = FALSE;
 
     if(_sendCallBack != _SEND_CB_FIRST_SENDEND){  // 1個送ったが送信完了していない
-        OS_TPrintf("うけとってない %d _sendCallBack\n",_sendCallBack);
+        NET_PRINT("うけとってない %d _sendCallBack\n",_sendCallBack);
         return FALSE;
     }
     if(bDataShare){
         if( _pComm->countSendRecv > _SENDRECV_LIMIT ){  //送りすぎ
-            OS_TPrintf("親の同期待ち\n");
+            NET_PRINT("親の同期待ち\n");
             return FALSE;
         }
         _setSendDataSystem(_pComm->sSendBuf);  // 送るデータをリングバッファから差し替える
@@ -951,7 +951,7 @@ static void _updateMpDataServer(void)
                                     _getUserMaxSendByteParent(),
                                     _sendServerCallback)){
                 _sendServerCallBack = _SEND_CB_DSDATA_PACK;
-                OS_TPrintf("送信失敗%d\n",__LINE__);
+                NET_PRINT("送信失敗%d\n",__LINE__);
             }
         }
         // 送信完了

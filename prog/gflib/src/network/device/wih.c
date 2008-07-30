@@ -1548,10 +1548,10 @@ static void WH_StateOutStartScan(void *arg)
         return;
     }
 
-    OS_TPrintf("%d",state);
+    NET_PRINT("WH_StateOutStartScan %d",state);
     switch (state) {
       case WM_STATECODE_PARENT_NOT_FOUND:
-        OS_TPrintf("å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩ\n");
+        NET_PRINT("å©Ç¬Ç©ÇÁÇ»Ç©Ç¡ÇΩ\n");
         break;
       case WM_STATECODE_PARENT_FOUND:
         // êeã@Ç™å©Ç¬Ç©Ç¡ÇΩèÍçá

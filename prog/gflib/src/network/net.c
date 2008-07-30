@@ -106,7 +106,7 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit,NetStepEndCallback call
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
     GFL_NET_WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
-    NET_PRINT("GFL_NET_Init\n");
+    OS_TPrintf("GFL_NET_Init 通信開始\n");
 }
 
 //==============================================================================
@@ -171,6 +171,7 @@ static void _netEndCallback(void* pWork)
     }
 #endif
 #endif
+    OS_TPrintf("通信終了\n");
 }
 
 //==============================================================================

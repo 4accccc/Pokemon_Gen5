@@ -298,7 +298,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     if(pGF->pause){
         return FALSE;  // ポーズ中の親機はBEACON無視
     }
-    OS_TPrintf("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
+    NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
 
 #if PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
     if(pNetWL->mineDebugNo!=0){
@@ -309,7 +309,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 #endif
     GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
     if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
-        OS_TPrintf("beacon不一致\n");
+        NET_PRINT("beacon不一致\n");
         return FALSE;
     }
     if(FALSE == pNetWL->beaconCompFunc(serviceNo, pGF->serviceNo)){
@@ -354,7 +354,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
         }
         if (0==GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
             // もう一度拾った場合にタイマー加算
-            OS_TPrintf("もう一度拾った場合にタイマー加算\n");
+            NET_PRINT("もう一度拾った場合にタイマー加算\n");
             pNetWL->bconUnCatchTime[i] = _DEFAULT_TIMEOUT_FRAME;
             // 新しい親情報を保存しておく。
             MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));

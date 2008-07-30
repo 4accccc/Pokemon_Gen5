@@ -25,7 +25,7 @@
 //#endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #undef GFL_NET_DEBUG
