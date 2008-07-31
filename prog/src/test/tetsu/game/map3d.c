@@ -1178,19 +1178,18 @@ void	GetGroundPlaneHeight( SCENE_MAP* sceneMap, const VecFx32* pos, fx32* height
 void	GetGroundMoveVec
 	( SCENE_MAP* sceneMap, const VecFx32* pos, const VecFx32* vecDir, VecFx32* vecMove )
 {
-	VecFx32 vecN, vecH, vecV;
+	VecFx32 vecN, posNext;
+	fx32 by, valD;
 
-	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
 	GetGroundPlaneVecN( sceneMap, pos, &vecN );				//平面の法線を取得
-	VEC_CrossProduct( &vecN, vecDir, &vecH );		//平面上の水平ベクトル算出
-	VEC_CrossProduct( &vecN, &vecH, &vecV );		//平面上の斜面ベクトル算出
+	VEC_Add( pos, vecDir, &posNext );
 
-	if( VEC_DotProduct( &vecV, vecDir ) < 0 ){
-		//逆方向へのベクトルが出てしまった場合修正
-		VEC_Set( vecMove, -vecV.x, -vecV.y, -vecV.z );
-	} else {
-		VEC_Set( vecMove, vecV.x, vecV.y, vecV.z );
-	}
+	valD = -( FX_Mul(vecN.x,pos->x) + FX_Mul(vecN.y,pos->y) + FX_Mul(vecN.z,pos->z) ); 
+	by = -( FX_Mul( vecN.x, posNext.x ) + FX_Mul( vecN.z, posNext.z ) + valD );
+	posNext.y = FX_Div( by, vecN.y );
+
+	VEC_Subtract( &posNext, pos, vecMove );
+
 	VEC_Normalize( vecMove, vecMove );
 }
 
