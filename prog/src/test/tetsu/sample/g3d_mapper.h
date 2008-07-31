@@ -32,8 +32,8 @@ typedef struct {
 
 typedef struct {
 	VecFx32 vecN;
-	fx32	height;
 	u32		attr;
+	fx32	height;
 }G3D_MAPPER_INFODATA;
 
 typedef struct {
@@ -129,16 +129,18 @@ extern void SetPos3Dmapper( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
 
 //------------------------------------------------------------------
 /**
- * @brief	グリッド情報ポインタ取得
+ * @brief	グリッド情報ワーク初期化
  */
 //------------------------------------------------------------------
-extern G3D_MAPPER_GRIDINFO* Get3DmapperGridInfo( G3D_MAPPER* g3Dmapper );
+extern void InitGet3DmapperGridInfoData( G3D_MAPPER_INFODATA* gridInfoData );
+extern void InitGet3DmapperGridInfo( G3D_MAPPER_GRIDINFO* gridInfo );
 //------------------------------------------------------------------
 /**
- * @brief	グリッド情報更新
+ * @brief	グリッド情報取得
  */
 //------------------------------------------------------------------
-extern void Reload3DmapperGridInfo( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+extern void Get3DmapperGridInfo
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_GRIDINFO* gridInfo );
 
 //------------------------------------------------------------------
 /**

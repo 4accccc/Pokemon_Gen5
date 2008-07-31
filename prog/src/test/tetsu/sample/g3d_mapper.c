@@ -118,8 +118,6 @@ struct _G3D_MAPPER {
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const G3D_MAPPER_DATA*	data;	//実マップデータ
 
-	G3D_MAPPER_GRIDINFO		gridInfo;	//グリッドデータ取得ワーク
-
 	GFL_G3D_RES*		objectG3DresMdl[COMMON_OBJ_RESCOUNT];	//共通オブジェクトモデルリソース
 	u32					objectG3DresCount;
 
@@ -135,6 +133,7 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper );
 
 static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper );
 static void	DeleteMapGraphicResource( G3D_MAPPER* g3Dmapper );
+static void	InitMapGraphicResource( MAP_BLOCK_DATA*	mapBlock );
 
 static void MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RES* tex );
 
@@ -146,7 +145,6 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new );
 static void	DirectDraw3Dmapper
 	( G3D_MAPPER* g3Dmapper, MAP_BLOCK_DATA* mapBlock, GFL_G3D_CAMERA* g3Dcamera );
 
-static void InitMapGridInfo( G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -176,8 +174,6 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
 	
-	InitMapGridInfo( g3Dmapper );
-
 	g3Dmapper->objectG3DresCount = 0;
 	for( i=0; i<COMMON_OBJ_RESCOUNT; i++ ){
 		g3Dmapper->objectG3DresMdl[i] = NULL;
@@ -451,7 +447,7 @@ void	Delete3Dmapper( G3D_MAPPER* g3Dmapper )
 void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistData )
 {
 	MAP_BLOCK_DATA*	mapBlock;
-	int i, j;
+	int i;
 
 	GF_ASSERT( g3Dmapper );
 
@@ -481,18 +477,8 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 
-		mapBlock->idx = MAPID_NULL;
-		//読み込みステータスリセット
-		mapBlock->loadSeq = 0;
-		mapBlock->loadCount = 0;
-		mapBlock->dataLoadReq = FALSE;
-		mapBlock->dataID = 0;
-		mapBlock->texLoadReq = FALSE;
-		mapBlock->texID = 0;
-		mapBlock->attrLoadReq = FALSE;
-		mapBlock->attrID = 0;
-		mapBlock->objLoadReq = FALSE;
-		mapBlock->objID = 0;
+		//初期化
+		InitMapGraphicResource( mapBlock );
 
 		//アーカイブハンドル作成
 		if( mapBlock->arc != NULL ){
@@ -501,15 +487,6 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 		mapBlock->NNSrnd->resMdl = NULL; 
 		mapBlock->arc = GFL_ARC_OpenDataHandle( g3Dmapper->arcID, g3Dmapper->heapID );
 		GF_ASSERT( mapBlock->arc );
-
-		for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
-			mapBlock->object[j].id = LOCAL_OBJID_NULL;
-			VEC_Set( &mapBlock->object[j].trans, 0, 0, 0 );
-		}
-		for( j=0; j<LOCAL_DIRECTDRAW_OBJ_COUNT; j++ ){
-			mapBlock->directDrawObject[j].id = DDRAW_OBJID_NULL;
-			VEC_Set( &mapBlock->directDrawObject[j].trans, 0, 0, 0 );
-		}
 	}
 }
 
@@ -599,24 +576,14 @@ void SetPos3Dmapper( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
 static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper )
 {
 	MAP_BLOCK_DATA*	mapBlock;
-	int				i, j;
+	int				i;
 	u32				g3DresHeaderSize = GFL_G3D_GetResourceHeaderSize();
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 
 		//初期化
-		mapBlock->idx = MAPID_NULL;
-		VEC_Set( &mapBlock->trans, 0, 0, 0 );
-		mapBlock->loadSeq = 0;
-		mapBlock->loadCount = 0;
-
-		mapBlock->dataLoadReq = FALSE;
-		mapBlock->dataID = 0;
-		mapBlock->texLoadReq = FALSE;
-		mapBlock->texID = 0;
-		mapBlock->attrLoadReq = FALSE;
-		mapBlock->attrID = 0;
+		InitMapGraphicResource( mapBlock );
 
 		mapBlock->NNSrnd = NNS_G3dAllocRenderObj( GFL_G3D_GetAllocaterPointer() );
 		mapBlock->NNSrnd->resMdl = NULL; 
@@ -644,15 +611,6 @@ static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper )
 
 		GF_ASSERT( mapBlock->groundTexKey != NNS_GFD_ALLOC_ERROR_TEXKEY );
 		GF_ASSERT( mapBlock->groundPlttKey != NNS_GFD_ALLOC_ERROR_PLTTKEY );
-
-		for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
-			mapBlock->object[j].id = LOCAL_OBJID_NULL;
-			VEC_Set( &mapBlock->object[j].trans, 0, 0, 0 );
-		}
-		for( j=0; j<LOCAL_DIRECTDRAW_OBJ_COUNT; j++ ){
-			mapBlock->directDrawObject[j].id = DDRAW_OBJID_NULL;
-			VEC_Set( &mapBlock->directDrawObject[j].trans, 0, 0, 0 );
-		}
 	}
 }
 
@@ -676,6 +634,38 @@ static void	DeleteMapGraphicResource( G3D_MAPPER* g3Dmapper )
 			GFL_ARC_CloseDataHandle( mapBlock->arc );
 		}
 	}
+}
+
+//------------------------------------------------------------------
+static void	InitMapGraphicData( MAP_BLOCK_DATA*	mapBlock )
+{
+	int i;
+
+	for( i=0; i<LOCAL_OBJRND_COUNT; i++ ){
+		mapBlock->object[i].id = LOCAL_OBJID_NULL;
+		VEC_Set( &mapBlock->object[i].trans, 0, 0, 0 );
+	}
+	for( i=0; i<LOCAL_DIRECTDRAW_OBJ_COUNT; i++ ){
+		mapBlock->directDrawObject[i].id = DDRAW_OBJID_NULL;
+		VEC_Set( &mapBlock->directDrawObject[i].trans, 0, 0, 0 );
+	}
+}
+
+static void	InitMapGraphicResource( MAP_BLOCK_DATA*	mapBlock )
+{
+	mapBlock->idx = MAPID_NULL;
+	VEC_Set( &mapBlock->trans, 0, 0, 0 );
+	mapBlock->loadSeq = 0;
+	mapBlock->loadCount = 0;
+
+	mapBlock->dataLoadReq = FALSE;
+	mapBlock->dataID = 0;
+	mapBlock->texLoadReq = FALSE;
+	mapBlock->texID = 0;
+	mapBlock->attrLoadReq = FALSE;
+	mapBlock->attrID = 0;
+
+	InitMapGraphicData( mapBlock );
 }
 
 //------------------------------------------------------------------
@@ -735,6 +725,7 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 			switch( mapBlock->loadSeq ){
 			case MDL_LOAD_START:
 				mapBlock->NNSrnd->resMdl = NULL; 
+				InitMapGraphicData( mapBlock );
 
 				//モデルデータロード開始
 				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->dataID, 
@@ -856,8 +847,9 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 				mapBlock->loadSeq = LOAD_END;
 				break;
 			case LOAD_END:
+#if 1
 				//--------------------
-				{
+				if( mapBlock->trans.y == 0 ){
 					int j, r;
 					fx32 randTransx, randTransz;
 					fx32 cOffs, rOffs, gWidth;
@@ -865,10 +857,6 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 
 					cOffs = -g3Dmapper->width/2;
 					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
-#if 1
-					for( j=0; j<LOCAL_OBJRND_COUNT; j++ ){
-						mapBlock->object[j].id = LOCAL_OBJID_NULL;
-					}
 					for( j=0; j<4; j++ ){
 						if( j<2 ){
 							mapBlock->object[j].id = 0;
@@ -897,9 +885,9 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 						Get3DmapperHeight
 							( g3Dmapper, &pWorld, &mapBlock->directDrawObject[j].trans.y );
 					}
-#endif
 				}
 				//--------------------
+#endif
 				mapBlock->dataLoadReq = FALSE;
 				mapBlock->texLoadReq = FALSE;
 				mapBlock->attrLoadReq = FALSE;
@@ -1382,16 +1370,21 @@ static const DIRECT_DRAW_DATA drawTreeData = {
  * @brief	ワーク初期化
  */
 //------------------------------------------------------------------
-static void InitMapGridInfo( G3D_MAPPER* g3Dmapper )
+void InitGet3DmapperGridInfoData( G3D_MAPPER_INFODATA* gridInfoData )
+{
+	VEC_Set( &gridInfoData->vecN, 0, 0, 0 );
+	gridInfoData->attr = 0;
+	gridInfoData->height = 0;
+}
+
+void InitGet3DmapperGridInfo( G3D_MAPPER_GRIDINFO* gridInfo )
 {
 	int i;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		VEC_Set( &g3Dmapper->gridInfo.gridData[i].vecN, 0, 0, 0 );
-		g3Dmapper->gridInfo.gridData[i].height = 0;
-		g3Dmapper->gridInfo.gridData[i].attr = 0;
+		InitGet3DmapperGridInfoData( &gridInfo->gridData[i] );
 	}
-	g3Dmapper->gridInfo.count = 0;
+	gridInfo->count = 0;
 }
 
 #if 0
@@ -1551,134 +1544,99 @@ static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper,
 	return 0;
 }
 
-#if 0
 //------------------------------------------------------------------
 /**
  * @brief	グリッド情報取得
  */
 //------------------------------------------------------------------
-static GetGridInfoData( G3D_MAPPER_INFODATA* gridInfo, MAP_BLOCK_DATA* mapBlock )
+static void GetGridInfoData( G3D_MAPPER_INFODATA* gridInfo, const MAP_BLOCK_DATA* mapBlock,
+								const VecFx32* pos, const fx32 map_width )
 {
-	fx32 block_hw = g3Dmapper->width / 2;
-	fx32 grid_w = g3Dmapper->width / MAP_GRIDCOUNT;
+	const VecFx32*	mapTrans;
+	fx32			block_hw, grid_w, block_x, block_z, grid_x, grid_z;
+	u32				grid_idx;
+	fx32			by, valD;
+	NormalVtxSt*	nvs;
+	u8				triangleType;
 
-	//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
-	if(	(pos->x >= (mapBlock->trans.x - block_hw ))&&(pos->x < (mapBlock->trans.x + block_hw ))
-	  &&(pos->z >= (mapBlock->trans.z - block_hw ))&&(pos->z < (mapBlock->trans.z + block_hw )) ){
+	mapTrans = &mapBlock->trans;
+	block_hw = map_width / 2;			//マップ幅の半分
+	grid_w = map_width / MAP_GRIDCOUNT;	//マップ幅をグリッド数で分割
 
-		fx32	block_x, block_z, grid_x, grid_z, pLocal_x, pLocal_z;
-		u32		block_idx, grid_idx;
-		fx32	by, valD, height;
-		NormalVtxSt* nvs;
-		G3D_MAPPER_INFODATA* gridInfo;
+	//ブロック内情報取得
+	block_x = pos->x - ( mapTrans->x - block_hw );
+	block_z = pos->z - ( mapTrans->z - block_hw );
 
-		//ブロック内情報取得
-		block_idx = g3Dmapper->mapBlock[i].idx;
-		block_x = pos->x - ( mapTrans->x - block_hw );
-		block_z = pos->z - ( mapTrans->z - block_hw );
+	//グリッド内情報取得
+	grid_idx = ( block_z / grid_w ) * MAP_GRIDCOUNT + ( block_x / grid_w );
+	grid_x = block_x % grid_w;
+	grid_z = block_z % grid_w;
 
-		//グリッド内情報取得
-		grid_idx = (block_z/grid_w) * MAP_GRIDCOUNT + (block_x/grid_w);
-		grid_x = block_x % grid_w;
-		grid_z = block_z % grid_w;
+	//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
+	nvs = &((NormalVtxSt*)&mapBlock->attr)[grid_idx];
 
-		//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
-		nvs = (NormalVtxSt*)&g3Dmapper->mapBlock[i].attr[grid_idx];
-		gridInfo = &g3Dmapper->gridInfo.gridData[p];
-
-		if( GetMapTriangleID( g3Dmapper, grid_x, grid_z, nvs->tryangleType ) == 0 ){
-			VEC_Set( &gridInfo->vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
-			valD = nvs->vecN1_D;
+	//グリッド内三角形の判定
+	if( nvs->tryangleType == 0 ){
+		//0-2-1,3-1-2のパターン
+		if( grid_x + grid_z < grid_w ){
+			triangleType = 0;
 		} else {
-			VEC_Set( &gridInfo->vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
-			valD = nvs->vecN2_D;
+			triangleType = 1;
 		}
-		by = -( FX_Mul( gridInfo->vecN.x, pos->x - mapTrans->x )
-				+ FX_Mul( gridInfo->vecN.z, pos->z - mapTrans->z ) + valD );
-		gridInfo->height = FX_Div( by, gridInfo->vecN.y ) + mapTrans->y;
-		gridInfo->attr = nvs->attr;
-		return TRUE;
+	} else {
+		//2-3-0,1-0-3のパターン
+		if( grid_x > grid_z ){
+			triangleType = 0;
+		} else {
+			triangleType = 1;
+		}
 	}
-	return FALSE;
+	if( triangleType == 0 ){
+		VEC_Set( &gridInfo->vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
+		valD = nvs->vecN1_D;
+	} else {
+		VEC_Set( &gridInfo->vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
+		valD = nvs->vecN2_D;
+	}
+	by = -( FX_Mul( gridInfo->vecN.x, pos->x - mapTrans->x )
+			+ FX_Mul( gridInfo->vecN.z, pos->z - mapTrans->z ) + valD );
+	gridInfo->attr = nvs->attr;
+
+	gridInfo->height = FX_Div( by, gridInfo->vecN.y ) + mapTrans->y;
 }
-#endif
 	
 //------------------------------------------------------------------
 /**
- * @brief	グリッド情報ポインタ取得
+ * @brief	グリッド情報取得
  */
 //------------------------------------------------------------------
-G3D_MAPPER_GRIDINFO* Get3DmapperGridInfo( G3D_MAPPER* g3Dmapper )
+void Get3DmapperGridInfo
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_GRIDINFO* gridInfo )
 {
-	return &g3Dmapper->gridInfo;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド情報更新
- */
-//------------------------------------------------------------------
-void Reload3DmapperGridInfo( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
-{
-	fx32	block_hw, grid_w;
 	int		i, p;
 
-	InitMapGridInfo( g3Dmapper );
-
-	block_hw = g3Dmapper->width / 2;
-	grid_w = g3Dmapper->width / MAP_GRIDCOUNT;
+	InitGet3DmapperGridInfo( gridInfo );
+	
 	p = 0;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
 
-			VecFx32* mapTrans = &g3Dmapper->mapBlock[i].trans;
+			fx32 min_x = g3Dmapper->mapBlock[i].trans.x - g3Dmapper->width/2;
+			fx32 min_z = g3Dmapper->mapBlock[i].trans.z - g3Dmapper->width/2;
+			fx32 max_x = g3Dmapper->mapBlock[i].trans.x + g3Dmapper->width/2;
+			fx32 max_z = g3Dmapper->mapBlock[i].trans.z + g3Dmapper->width/2;
 
 			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
-			if(	(pos->x >= (mapTrans->x - block_hw ))&&(pos->x < (mapTrans->x + block_hw ))
-				&&(pos->z >= (mapTrans->z - block_hw ))&&(pos->z < (mapTrans->z + block_hw )) ){
+			if(	(pos->x >= min_x)&&(pos->x < max_x)&&(pos->z >= min_z)&&(pos->z < max_z) ){
 
-				fx32	block_x, block_z, grid_x, grid_z, pLocal_x, pLocal_z;
-				u32		block_idx, grid_idx;
-				fx32	by, valD, height;
-				NormalVtxSt* nvs;
-				G3D_MAPPER_INFODATA* gridInfo;
-
-				//ブロック内情報取得
-				block_idx = g3Dmapper->mapBlock[i].idx;
-				block_x = pos->x - ( mapTrans->x - block_hw );
-				block_z = pos->z - ( mapTrans->z - block_hw );
-
-				//グリッド内情報取得
-				grid_idx = (block_z/grid_w) * MAP_GRIDCOUNT + (block_x/grid_w);
-				grid_x = block_x % grid_w;
-				grid_z = block_z % grid_w;
-
-				//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
-				nvs = (NormalVtxSt*)&g3Dmapper->mapBlock[i].attr[grid_idx];
-				gridInfo = &g3Dmapper->gridInfo.gridData[p];
-
-				if( GetMapTriangleID( g3Dmapper, grid_x, grid_z, nvs->tryangleType ) == 0 ){
-					VEC_Set( &gridInfo->vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
-					valD = nvs->vecN1_D;
-				} else {
-					VEC_Set( &gridInfo->vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
-					valD = nvs->vecN2_D;
-				}
-				by = -( FX_Mul( gridInfo->vecN.x, pos->x - mapTrans->x )
-						+ FX_Mul( gridInfo->vecN.z, pos->z - mapTrans->z ) + valD );
-				gridInfo->height = FX_Div( by, gridInfo->vecN.y ) + mapTrans->y;
-				gridInfo->attr = nvs->attr;
+				GetGridInfoData( &gridInfo->gridData[p], &g3Dmapper->mapBlock[i],
+									pos, g3Dmapper->width );
 				p++;
 			}
 		}
 	}
-	OS_Printf("count = %x height = ", p );
-	for( i=0; i<p; i++ ){
-		OS_Printf("%x, ", g3Dmapper->gridInfo.gridData[i].height );
-	}
-	OS_Printf("\n");
-	g3Dmapper->gridInfo.count = p;
+	gridInfo->count = p;
 }
 
 //------------------------------------------------------------------

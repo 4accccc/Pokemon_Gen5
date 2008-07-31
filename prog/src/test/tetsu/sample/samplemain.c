@@ -647,6 +647,42 @@ static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
  *
  */
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	移動方向の地形に沿ったベクトル取得
+ */
+//------------------------------------------------------------------
+static void GetGroundMoveVec
+		( const VecFx32* vecN, const VecFx32* pos, const VecFx32* vecMove, VecFx32* result )
+{
+#if 0
+	VecFx32 vec1, vec2;
+
+	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
+	VEC_CrossProduct( vecN, vecMove, &vec1 );
+	//平面上の移動ベクトル算出
+	VEC_CrossProduct( vecN, &vec1, &vec2 );	
+
+	if( VEC_DotProduct( &vec2, vecMove ) < 0 ){
+		VEC_Set( result, -vec2.x, -vec2.y, -vec2.z );//逆方向へのベクトルが出た場合修正
+	} else {
+		VEC_Set( result, vec2.x, vec2.y, vec2.z );
+	}
+#else
+	VecFx32 posNext;
+	fx32 by, valD;
+
+	VEC_Add( pos, vecMove, &posNext );
+
+	valD = -( FX_Mul(vecN->x,pos->x) + FX_Mul(vecN->y,pos->y) + FX_Mul(vecN->z,pos->z) ); 
+	by = -( FX_Mul( vecN->x, posNext.x ) + FX_Mul( vecN->z, posNext.z ) + valD );
+	posNext.y = FX_Div( by, vecN->y );
+
+	VEC_Subtract( &posNext, pos, result );
+#endif
+	VEC_Normalize( result, result );
+}
+
 //============================================================================================
 /**
  * @brief	カーソル
@@ -669,6 +705,8 @@ struct _CURSOR_CONT {
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
+
+	G3D_MAPPER_INFODATA gridInfoData;
 };
 
 //------------------------------------------------------------------
@@ -728,6 +766,7 @@ static CURSOR_CONT*	CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID )
 	cursor->cameraHeight = 0;
 	cursor->cameraLength = CAMERA_LENGTH;
 	cursor->direction = 0;
+	InitGet3DmapperGridInfoData( &cursor->gridInfoData );
 
 	//３Ｄデータセットアップ
 	cursor->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( cursor->gs->g3Dscene, &cursor_g3Dsetup );
@@ -760,7 +799,7 @@ static void	DeleteCursor( CURSOR_CONT* cursor )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MV_SPEED		(2)
+#define MV_SPEED		(2*FX32_ONE)
 #define RT_SPEED		(FX32_ONE/8)
 #define	CAMERA_TARGET_HEIGHT	(4)//(8)
 static void	MainCursor( CURSOR_CONT* cursor )
@@ -777,42 +816,41 @@ static void	MainCursor( CURSOR_CONT* cursor )
 		if( cursor->cameraLength > 8 ){
 			cursor->cameraLength -= 8;
 		}
-		//vecMove.y = -MV_SPEED * FX32_ONE;
+		//vecMove.y = -MV_SPEED;
 	}
 	if( key & PAD_BUTTON_A ){
 		if( cursor->cameraLength < 4096 ){
 			cursor->cameraLength += 8;
 		}
-		//vecMove.y = MV_SPEED * FX32_ONE;
+		//vecMove.y = MV_SPEED;
 	}
 	if( key & PAD_BUTTON_Y ){
-		cursor->cameraHeight -= MV_SPEED * FX32_ONE;
+		cursor->cameraHeight -= MV_SPEED;
 	}
 	if( key & PAD_BUTTON_X ){
-		cursor->cameraHeight += MV_SPEED * FX32_ONE;
+		cursor->cameraHeight += MV_SPEED;
 	}
 	if( key & PAD_KEY_UP ){
 		mvFlag = TRUE;
-		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x8000) );
-		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x8000) );
+		vecMove.x = FX_SinIdx( (u16)(cursor->direction + 0x8000) );
+		vecMove.z = FX_CosIdx( (u16)(cursor->direction + 0x8000) );
 	}
 	if( key & PAD_KEY_DOWN ){
 		mvFlag = TRUE;
-		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x0000) );
-		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x0000) );
+		vecMove.x = FX_SinIdx( (u16)(cursor->direction + 0x0000) );
+		vecMove.z = FX_CosIdx( (u16)(cursor->direction + 0x0000) );
 	}
 	if( key & PAD_KEY_LEFT ){
 		mvFlag = TRUE;
-		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0xc000) );
-		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0xc000) );
+		vecMove.x = FX_SinIdx( (u16)(cursor->direction + 0xc000) );
+		vecMove.z = FX_CosIdx( (u16)(cursor->direction + 0xc000) );
 	}
 	if( key & PAD_KEY_RIGHT ){
 		mvFlag = TRUE;
-		vecMove.x = MV_SPEED * FX_SinIdx( (u16)(cursor->direction + 0x4000) );
-		vecMove.z = MV_SPEED * FX_CosIdx( (u16)(cursor->direction + 0x4000) );
+		vecMove.x = FX_SinIdx( (u16)(cursor->direction + 0x4000) );
+		vecMove.z = FX_CosIdx( (u16)(cursor->direction + 0x4000) );
 	}
-	//vecMove.x /= 2;
-	//vecMove.z /= 2;
+
     
 	if( key & PAD_BUTTON_R ){
 		cursor->direction -= RT_SPEED;
@@ -820,20 +858,54 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	if( key & PAD_BUTTON_L ){
 		cursor->direction += RT_SPEED;
 	}
-	{
+	if( mvFlag == TRUE ){
 		VecFx32	moveData;
+		G3D_MAPPER_GRIDINFO gridInfo;
 
+		VEC_Normalize( &vecMove, &vecMove );
+		GetGroundMoveVec( &cursor->gridInfoData.vecN, &cursor->trans, &vecMove, &moveData );
 		//Get3DmapperGroundMoveVec
 		//			( GetG3Dmapper( cursor->gs ), &cursor->trans, &vecMove, &moveData );
 		//VEC_Add( &cursor->trans, &moveData, &cursor->trans );
-		VEC_Add( &cursor->trans, &vecMove, &cursor->trans );
+		VEC_MultAdd( MV_SPEED, &moveData, &cursor->trans, &cursor->trans );
 		//OS_Printf("vecMove.y  = %x, ", moveData.y);
 		//Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
-		Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
+		//Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
 		//OS_Printf("hit blockIdx = %x\n", debugData);
-		Reload3DmapperGridInfo( GetG3Dmapper( cursor->gs ), &cursor->trans );
+		Get3DmapperGridInfo( GetG3Dmapper( cursor->gs ), &cursor->trans, &gridInfo );
+
+		if( gridInfo.count ){
+			int i = 0, p;
+			fx32 h1, h2, diff1, diff2;
+
+			h1 = gridInfo.gridData[0].height;
+			p = 0;
+			i++;
+			for( ; i<gridInfo.count; i++ ){
+				h2 = gridInfo.gridData[i].height;
+
+				diff1 = h1 - cursor->trans.y;
+				diff2 = h2 - cursor->trans.y;
+
+				if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
+					h1 = h2;
+					p = i;
+				}
+			}
+			cursor->gridInfoData = gridInfo.gridData[p];	//グリッドデータ保存
+
+			if( cursor->trans.y != h1 ){
+				OS_Printf("h_count = %x, height = ", gridInfo.count);
+				for( i=0; i<gridInfo.count; i++ ){
+					OS_Printf("%x, ", gridInfo.gridData[i].height);
+				}
+				OS_Printf("selected %x, ", h1);
+				OS_Printf("saved %x\n", cursor->gridInfoData.height);
+				cursor->trans.y = h1;
+			}
+		}
 	}
-	cursor->cameraHeight += vecMove.y;
+	//cursor->cameraHeight += vecMove.y;
 
 #ifdef NET_WORK_ON
     _sendGamePlay( &cursor->trans  );  // 自分の位置を相手に送信
