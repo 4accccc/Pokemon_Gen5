@@ -47,6 +47,10 @@ struct _VINTR_WIRELESS_ICON {
 };
 
 
+//アイコンの位置
+static VINTR_WIRELESS_ICON *VintrWirelessIconPtr = NULL;
+
+
 //==============================================================
 // Prototype
 //==============================================================
@@ -75,21 +79,16 @@ static int calc_anime_index( int targetVram, int anime_ptn );
  * @param   x			表示位置X
  * @param   y			表示位置Y
  * @param   bWifi		DS通信アイコンか？wifi通信アイコンか？
- * @param   tbl[]		アニメテーブル（消すかも）
  *
  * @retval  VINTR_WIRELESS_ICON *		
  */
 //==============================================================================
-static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, int y, BOOL bWifi, const VOamAnm *tbl,VINTR_WIRELESS_ICON* pVwi)
+static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, int y, BOOL bWifi,VINTR_WIRELESS_ICON* pVwi)
 {
 	VINTR_WIRELESS_ICON *vwi;
 
-	// パレット読み込みメイン14番に転送
-	//trans_palette_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, WM_ICON_PAL_OFFSET, HeapId );
-
-	// VRAMの最後にCGXデータ転送
-	//trans_cgx_data( NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId );
-
+    GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
     transIconData(NNS_G2D_VRAM_TYPE_2DMAIN, bWifi, HeapId);
     
     vwi = pVwi;
@@ -102,7 +101,6 @@ static VINTR_WIRELESS_ICON *AddWirelessIconOAM(u32 objVRAM, u32 HeapId, int x, i
 	vwi->y     = y;
 	vwi->anime_seq = 0;
     vwi->anime     = 3;		// 0:3本 1:2本 2:1本 0:切断 (の通信アイコン）
-//	vwi->table     = tbl;
     vwi->bWifi     = bWifi;
     vwi->sub_wrote_flag = FALSE;
     vwi->main_sub_mode = MAIN_SUB_MODE_DEFAULT;
@@ -134,7 +132,6 @@ static void WirelessIconAnimeFunc( void *work )
 	pOam = ( targetVram == NNS_G2D_VRAM_TYPE_2DMAIN )? WM_ICON_MAIN_OAM_ADRS : WM_ICON_SUB_OAM_ADRS;
 
 	G2_SetOBJAttr(
-//    	(GXOamAttr *)(HW_OAM + sizeof(GXOamAttr)*127),		
 		pOam,
     	vwi->x,
     	vwi->y,
@@ -214,14 +211,18 @@ static int calc_anime_index( int targetVram, int anime_ptn )
 	{
 		bank = GX_GetBankForSubOBJ();
 	}
-	switch( bank ){
+
+#if 1
+    return 4*anime_ptn;
+#else
+    switch( bank ){
       case GX_VRAM_OBJ_16_F:  	//OBJに16KBytes確保します。VRAM-Fを割り当てます。
       case GX_VRAM_OBJ_16_G: 	//OBJに16KBytes確保します。VRAM-Gを割り当てます。
         return 512-16+4*anime_ptn;
       case GX_VRAM_OBJ_32_FG: 	//OBJに32KBytes確保します。VRAM-F,Gを割り当てます。
         return 1024-16+4*anime_ptn;
       case GX_VRAM_OBJ_64_E: 	//OBJに64KBytes確保します。VRAM-Eを割り当てます。
-		return 512-4+1*anime_ptn;
+		return 1024-16+4*anime_ptn;
       case GX_VRAM_OBJ_80_EF: 	//OBJに80KBytes確保します。VRAM-E,Fを割り当てます。
       case GX_VRAM_OBJ_80_EG: 	//OBJに80KBytes確保します。VRAM-E,Gを割り当てます。
         return 640-4+1*anime_ptn;
@@ -233,6 +234,7 @@ static int calc_anime_index( int targetVram, int anime_ptn )
       default:
 		return 1024-8+2*anime_ptn;
     }
+#endif
 }
 //------------------------------------------------------------------
 /**
@@ -357,7 +359,9 @@ static int _getCharOffset(int vramType)
     else{
         objBank = GX_GetBankForSubOBJ();
     }
-
+#if 1
+    return 0;
+#else
 	switch( objBank ){
       case GX_VRAM_OBJ_16_F:  	//OBJに16KBytes確保します。VRAM-Fを割り当てます。
       case GX_VRAM_OBJ_16_G: 	//OBJに16KBytes確保します。VRAM-Gを割り当てます。
@@ -383,6 +387,7 @@ static int _getCharOffset(int vramType)
         offset = WM_ICON_CHAR_OFFSET64;
     }
     return offset;
+#endif
 }
 
 //==============================================================================
@@ -399,6 +404,10 @@ static void transIconData(int vramType,BOOL bWifi, int heapID)
     GFLNetInitializeStruct* pNetInit = _GFL_NET_GetNETInitStruct();
     GFL_ARC_PARAM* pArcBackup = GFL_HEAP_AllocMemory(heapID, GFL_ARC_GetArchiveTableSize());
 
+    if(!pNetInit->iconGetTable){
+        return;
+    }
+    
     GFL_ARC_GetArchiveTableAddress(pArcBackup);   //arcテーブル退避
 
     GFL_ARC_Init(pNetInit->iconGetTable(), 1);
@@ -422,28 +431,21 @@ static void transIconData(int vramType,BOOL bWifi, int heapID)
     else{
         charNo = GFL_NET_ICON_WMNCGR;
     }
+#if 0
 
+    {
+        ARCHANDLE* pHandle = GFL_ARC_OpenDataHandle( 0, heapID );
+        u32 index = GFL_OBJGRP_RegisterCGR(pHandle, charType, FALSE, GFL_VRAM_2D_MAIN, heapID);
+        void* pAdd = GFL_OBJGRP_GetVramTransCGRPointer(index);
+    }
+#else    
     GFL_ARC_UTIL_TransVramObjCharacter(0,aNoBuff[charNo],charType,
                                        _getCharOffset(vramType),
                                        0,FALSE,heapID);
-
+#endif
     GFL_ARC_SetArchiveTableAddress(pArcBackup); //arcテーブル復帰
     GFL_HEAP_FreeMemory(pArcBackup);
 }
-
-
-
-
-
-//アイコンの位置
-static const VOamAnm WM_IconAnimTbl[]={
-	{512-16   },
-	{512-16+4 },
-	{512-16+8 },
-    {512-16+12},
-};
-static VINTR_WIRELESS_ICON *VintrWirelessIconPtr = NULL;
-
 
 //==============================================================================
 /**
@@ -474,7 +476,7 @@ void GFL_NET_WirelessIconEasyXY(int x,int y, BOOL bWifi,HEAPID heapID)
         return ;
     }
     GFL_NET_WirelessIconEasyEnd();
-    VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, WM_IconAnimTbl,VintrWirelessIconPtr);
+    VintrWirelessIconPtr = AddWirelessIconOAM(0,heapID, x, y, bWifi, VintrWirelessIconPtr);
 }
 
 

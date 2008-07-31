@@ -168,6 +168,7 @@ BOOL	SampleMain( void )
             }
 #ifdef NET_WORK_ON
             SetCursorTrans( sampleWork->cursorFriend, &resistMapTbl[sampleWork->mapNum].startPos );
+            GFL_NET_ReloadIcon();
 #endif
             SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
             sampleWork->seq++;

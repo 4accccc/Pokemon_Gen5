@@ -64,13 +64,6 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
     return TRUE;
 }
 
-static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
-{
-	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-	OS_TPrintf("通信不能エラーが発生 ErrorNo = %d\n",errNo);
-}
-
-
 static void _initCallback(void* pWork)
 {
 }

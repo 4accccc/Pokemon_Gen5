@@ -23,7 +23,7 @@
 //OBJ32Kモードの時
 #define WM_ICON_CHAR_OFFSET32  ( (1024-16)*32 )	
 //OBJ64Kモードの時
-#define WM_ICON_CHAR_OFFSET64 ( (2048-16)*32 )	
+#define WM_ICON_CHAR_OFFSET64 ( (1024-16)*32 )	
 //OBJ80Kモードの時
 #define WM_ICON_CHAR_OFFSET80 ( (2560-16)*32 )	
 //OBJ128Kモードの時

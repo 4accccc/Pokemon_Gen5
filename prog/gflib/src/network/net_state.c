@@ -210,26 +210,27 @@ static BOOL _stateIsMove(GFL_NETSTATE* pState)
 
 static void _deviceInitialize(GFL_NETSTATE* pState)
 {
-    GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+    GFLNetInitializeStruct* pNetInit = _GFL_NET_GetNETInitStruct();
     GFL_NETWL* pWL;
     
     if(!GFL_NET_IsIchneumon()){
         return;  //
     }
 
-    NET_PRINT("%x - %x %x\n",(u32)pNetIni,(u32)pNetIni->beaconGetFunc,(u32)pNetIni->beaconGetSizeFunc);
-    if(!pNetIni->bWiFi){
-        pWL = GFL_NET_WLGetHandle(pNetIni->netHeapID, pNetIni->gsid, pNetIni->maxConnectNum);
+    NET_PRINT("%x - %x %x\n",(u32)pNetInit,(u32)pNetInit->beaconGetFunc,(u32)pNetInit->beaconGetSizeFunc);
+    if(!pNetInit->bWiFi){
+        pWL = GFL_NET_WLGetHandle(pNetInit->netHeapID, pNetInit->gsid, pNetInit->maxConnectNum);
         _GFL_NET_SetNETWL(pWL);
 
-        GFL_NET_WLInitialize(pNetIni->netHeapID, pNetIni->beaconGetFunc, pNetIni->beaconGetSizeFunc,
-                             pNetIni->beaconCompFunc);
+        GFL_NET_WLInitialize(pNetInit->netHeapID, pNetInit->beaconGetFunc, pNetInit->beaconGetSizeFunc,
+                             pNetInit->beaconCompFunc);
     }
     GFL_NET_SystemReset();         // 今までの通信バッファをクリーンにする
     if(pState->pNetStepEndCallback){
-        pState->pNetStepEndCallback(pNetIni->pWork);
+        pState->pNetStepEndCallback(pNetInit->pWork);
         pState->pNetStepEndCallback=NULL;
     }
+    GFL_NET_WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
     _CHANGE_STATE(_stateNone, 0);
 }
 

@@ -105,7 +105,6 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit,NetStepEndCallback call
 
         GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNetInit->pWork);
     }
-    GFL_NET_WirelessIconEasyXY(pNetInit->iconX,pNetInit->iconY,pNetInit->bWiFi, pNetInit->netHeapID);
     OS_TPrintf("GFL_NET_Init ’ÊMŠJn\n");
 }
 
