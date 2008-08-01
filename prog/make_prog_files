@@ -22,7 +22,9 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/sample/g3d_mapper.c \
 				test/tetsu/sample/sample_net.c \
 				test/tetsu/test_prog1.c \
-				test/tetsu/debug_watanabe.c
+				test/tetsu/debug_watanabe.c \
+				test/taya/d_taya.c
+
 	
 #================================================
 # ここから下はオーバーレイプログラム定義

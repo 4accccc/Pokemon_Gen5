@@ -606,6 +606,8 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 extern const GFL_PROC_DATA DebugWatanabeMainProcData;
 extern const GFL_PROC_DATA TestProg1MainProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
+extern const GFL_PROC_DATA DebugTayaMainProcData;
+
 //------------------------------------------------------------------
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
@@ -628,7 +630,8 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_TAYA:
 		//‚½‚â
-		//GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_taya), &DebugClactProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTayaMainProcData, NULL);
+		break;
 	case SELECT_TEST1:
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
 	default:
