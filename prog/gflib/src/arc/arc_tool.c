@@ -31,6 +31,7 @@ static	void	ArchiveLoadDataIndex(void *data,int arcID,int datID,int ofs,int ofs_
 static	void*	ArchiveLoadDataIndexMalloc(int arcID,int datID,HEAPID heapID,int ofs,int ofs_size);
 static	void	ArchiveFileOpen(FSFile *p_file,int arcID);
 static	u32		ArchiveMoveImageTop(FSFile *p_file,int datID,int ofs,int ofs_size);
+static void initArcHandleCore_( ARCHANDLE* handle );
 
 //============================================================================================
 //	アーカイブテーブル格納変数
@@ -175,7 +176,7 @@ static	void*	ArchiveLoadDataIndexMalloc(int arcID,int datID,HEAPID heapID,int of
 /**
  * ファイルモードにあわせてファイルオープン処理を行う
  *
- * @param[in]	p_file	ファイルポインタ
+ * @param[out]	p_file	ファイルポインタ
  * @param[in]	arcID	読み込むアーカイブファイルの種類インデックスナンバー
  */
 //============================================================================================
@@ -417,6 +418,24 @@ u32	GFL_ARC_GetDataSize(int arcID,int datID)
 	return size;
 }
 
+//==============================================================================================
+/**
+ *	
+ *
+ */
+//==============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------------
 /**
  * アーカイブファイルのハンドル管理構造体
@@ -424,48 +443,84 @@ u32	GFL_ARC_GetDataSize(int arcID,int datID)
 //--------------------------------------------------------
 struct _ARCHANDLE{
 	FSFile  file;
-	u32     fat_top;
 	u32     img_top;
+	u16     fat_top;
 	u16		file_cnt;
 };
 
+
+//--------------------------------------------------------------------------------------
+/**
+ * アーカイブデータハンドルオープン（パス指定）
+ *
+ * @param   filePath		アーカイブファイルパス
+ * @param   heapID			使用ヒープID
+ *
+ * @retval  ARCHANDLE*		オープンされたハンドル（失敗ならNULL）
+ */
+//--------------------------------------------------------------------------------------
+ARCHANDLE* GFL_ARC_OpenDataHandleByFilePath( const char* filePath, HEAPID heapID )
+{
+	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapID, sizeof(ARCHANDLE) );
+
+	FS_InitFile( &handle->file );
+	FS_OpenFile( &handle->file, filePath );
+
+	initArcHandleCore_( handle );
+
+	return handle;
+}
 //------------------------------------------------------------------
 /**
- * アーカイブデータのファイルハンドルオープン
+ * アーカイブデータのファイルハンドルオープン（ID指定）
  *
  * @param   arcID		アーカイブデータインデックス
  * @param   heapID		管理用ヒープＩＤ
  *
- * @retval  ARCHANDLE	オープンされたハンドルのポインタ（失敗ならNULL）
+ * @retval  ARCHANDLE	オープンされたハンドル（失敗ならNULL）
  */
 //------------------------------------------------------------------
 ARCHANDLE* GFL_ARC_OpenDataHandle( u32 arcID, HEAPID heapID )
 {
-	ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapID, sizeof(ARCHANDLE) );
-
 	GF_ASSERT(gap.ArchiveFileTable!=NULL);
 
-	if( handle )
 	{
-		u32 fnt_top, tmp;
+		ARCHANDLE* handle = GFL_HEAP_AllocMemory( heapID, sizeof(ARCHANDLE) );
 
-		// ２バイトを読み込んだ時にゴミが入らないようにしておく
-		handle->fat_top = 0;
+		ArchiveFileOpen( &(handle->file) ,arcID );
+		initArcHandleCore_( handle );
 
-		ArchiveFileOpen( &(handle->file) ,arcID);
-		FS_SeekFile( &(handle->file), ARC_HEAD_SIZE_POS, FS_SEEK_SET );
-		FS_ReadFile( &(handle->file), &(handle->fat_top), 2 );
-		FS_SeekFile( &(handle->file), handle->fat_top+SIZE_OFFSET, FS_SEEK_SET );
-		FS_ReadFile( &(handle->file), &tmp, 4 );
-		FS_ReadFile( &(handle->file), &(handle->file_cnt), 2 );
-		fnt_top = handle->fat_top + tmp;
-		FS_SeekFile( &(handle->file), fnt_top+SIZE_OFFSET, FS_SEEK_SET );
-		FS_ReadFile( &(handle->file), &tmp, 4 );
-		handle->img_top = fnt_top + tmp;
-
+		return handle;
 	}
-	return handle;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * アーカイブハンドル情報の初期化
+ *
+ * @param[io]   handle		初期化するハンドル実体データのアドレス
+ *							実体の内、fileメンバは正しく初期化，オープンされている必要がある。
+ *
+ */
+//--------------------------------------------------------------------------
+static void initArcHandleCore_( ARCHANDLE* handle )
+{
+	u32 fnt_top, tmp;
+
+// ２バイトを読み込んだ時にゴミが入らないようにしておく
+	handle->fat_top = 0;
+
+	FS_SeekFile( &(handle->file), ARC_HEAD_SIZE_POS, FS_SEEK_SET );
+	FS_ReadFile( &(handle->file), &(handle->fat_top), 2 );
+	FS_SeekFile( &(handle->file), handle->fat_top+SIZE_OFFSET, FS_SEEK_SET );
+	FS_ReadFile( &(handle->file), &tmp, 4 );
+	FS_ReadFile( &(handle->file), &(handle->file_cnt), 2 );
+	fnt_top = handle->fat_top + tmp;
+	FS_SeekFile( &(handle->file), fnt_top+SIZE_OFFSET, FS_SEEK_SET );
+	FS_ReadFile( &(handle->file), &tmp, 4 );
+	handle->img_top = fnt_top + tmp;
+}
+
 
 //------------------------------------------------------------------
 /**
