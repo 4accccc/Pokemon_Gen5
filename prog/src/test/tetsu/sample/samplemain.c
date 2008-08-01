@@ -55,10 +55,10 @@ static void             FriendCursor( CURSOR_CONT* cursor );
 static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
 static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
 
-typedef struct _FLD_ACTSYS		FLD_ACTSYS;
-static FLD_ACTSYS*		CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID );
-static void				DeleteFieldActSys( FLD_ACTSYS* fldActSys );
-static void				MainFieldActSys( FLD_ACTSYS* fldActSys );
+typedef struct _FLD_ACTCONT		FLD_ACTCONT;
+static FLD_ACTCONT*		CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID );
+static void				DeleteFieldActSys( FLD_ACTCONT* fldActCont );
+static void				MainFieldActSys( FLD_ACTCONT* fldActCont );
 
 static void _sendGamePlay( VecFx32* pVec  );
 
@@ -78,7 +78,7 @@ typedef struct {
 	SAMPLE_SETUP*	gs;
 	CURSOR_CONT*	cursor;
 	CURSOR_CONT*	cursorFriend;
-	FLD_ACTSYS*		fldActSys;
+	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
 
 }SAMPLE_WORK;
@@ -154,7 +154,7 @@ BOOL	SampleMain( void )
             sampleWork->cursorFriend = CreateCursor( sampleWork->gs, sampleWork->heapID );
 #endif
             sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
-            sampleWork->fldActSys = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
+            sampleWork->fldActCont = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
 
             ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
                                 &resistMapTbl[sampleWork->mapNum].mapperData );
@@ -205,14 +205,14 @@ BOOL	SampleMain( void )
 #endif
 			GetCursorTrans( sampleWork->cursor, &pos );
 			SetPos3Dmapper( GetG3Dmapper(sampleWork->gs), &pos );
-			MainFieldActSys( sampleWork->fldActSys );
+			MainFieldActSys( sampleWork->fldActCont );
 		}
 		MainGameSystem( sampleWork->gs );
 		break;
 
 	case 3:
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
-		DeleteFieldActSys( sampleWork->fldActSys );
+		DeleteFieldActSys( sampleWork->fldActCont );
 		DeleteCursor( sampleWork->cursor );
 #ifdef NET_WORK_ON
 		DeleteCursor( sampleWork->cursorFriend );
@@ -222,7 +222,7 @@ BOOL	SampleMain( void )
 
 	case 4:
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
-		DeleteFieldActSys( sampleWork->fldActSys );
+		DeleteFieldActSys( sampleWork->fldActCont );
 		DeleteCursor( sampleWork->cursor );
 		RemoveGameSystem( sampleWork->gs );
 		return_flag = TRUE;
@@ -653,36 +653,72 @@ static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
  */
 //------------------------------------------------------------------
 static void GetGroundMoveVec
-		( const VecFx32* vecN, const VecFx32* pos, const VecFx32* vecMove, VecFx32* result )
+		( const VecFx16* vecN, const VecFx32* pos, const VecFx32* vecMove, VecFx32* result )
 {
-#if 0
-	VecFx32 vec1, vec2;
-
-	//平面の法線ベクトルにより移動ベクトルに垂直で斜面に並行なベクトルを算出
-	VEC_CrossProduct( vecN, vecMove, &vec1 );
-	//平面上の移動ベクトル算出
-	VEC_CrossProduct( vecN, &vec1, &vec2 );	
-
-	if( VEC_DotProduct( &vec2, vecMove ) < 0 ){
-		VEC_Set( result, -vec2.x, -vec2.y, -vec2.z );//逆方向へのベクトルが出た場合修正
-	} else {
-		VEC_Set( result, vec2.x, vec2.y, vec2.z );
-	}
-#else
-	VecFx32 posNext;
-	fx32 by, valD;
+	VecFx32	vecN32, posNext;
+	fx32	by, valD;
 
 	VEC_Add( pos, vecMove, &posNext );
 
-	valD = -( FX_Mul(vecN->x,pos->x) + FX_Mul(vecN->y,pos->y) + FX_Mul(vecN->z,pos->z) ); 
-	by = -( FX_Mul( vecN->x, posNext.x ) + FX_Mul( vecN->z, posNext.z ) + valD );
-	posNext.y = FX_Div( by, vecN->y );
+	VEC_Set( &vecN32, vecN->x, vecN->y, vecN->z );
+	valD = -( FX_Mul(vecN32.x,pos->x) + FX_Mul(vecN32.y,pos->y) + FX_Mul(vecN32.z,pos->z) ); 
+	by = -( FX_Mul( vecN32.x, posNext.x ) + FX_Mul( vecN32.z, posNext.z ) + valD );
+	posNext.y = FX_Div( by, vecN32.y );
 
 	VEC_Subtract( &posNext, pos, result );
-#endif
 	VEC_Normalize( result, result );
 }
 
+static BOOL CalcSetGroundMove( G3D_MAPPER* g3Dmapper, G3D_MAPPER_INFODATA* gridInfoData, 
+								VecFx32* pos, VecFx32* vecMove, fx32 speed )
+{
+	VecFx32	posNext, vecGround;
+	G3D_MAPPER_GRIDINFO gridInfo;
+
+	//VEC_Normalize( &vecMove, &vecMove );
+	GetGroundMoveVec( &gridInfoData->vecN, pos, vecMove, &vecGround );
+	VEC_MultAdd( speed, &vecGround, pos, &posNext );
+
+	if( Check3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
+		return FALSE;
+	}
+
+	Get3DmapperGridInfo( g3Dmapper, &posNext, &gridInfo );
+
+	if( gridInfo.count ){
+		int i = 0, p;
+		fx32 h1, h2, diff1, diff2;
+
+		h1 = gridInfo.gridData[0].height;
+		p = 0;
+		i++;
+		for( ; i<gridInfo.count; i++ ){
+			h2 = gridInfo.gridData[i].height;
+
+			diff1 = h1 - pos->y;
+			diff2 = h2 - pos->y;
+
+			if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
+				h1 = h2;
+				p = i;
+			}
+		}
+		if( pos->y != h1 ){
+			//OS_Printf("h_count = %x, height = ", gridInfo.count);
+			//for( i=0; i<gridInfo.count; i++ ){
+			//	OS_Printf("%x, ", gridInfo.gridData[i].height);
+			//}
+			//OS_Printf("selected %x, ", h1);
+		}
+		posNext.y = h1;
+
+		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
+		*pos = posNext;							//位置情報更新
+	}
+	//OS_Printf("saved %x\n", gridInfoData->height);
+	return TRUE;
+}
+	
 //============================================================================================
 /**
  * @brief	カーソル
@@ -858,53 +894,8 @@ static void	MainCursor( CURSOR_CONT* cursor )
 	if( key & PAD_BUTTON_L ){
 		cursor->direction += RT_SPEED;
 	}
-	if( mvFlag == TRUE ){
-		VecFx32	moveData;
-		G3D_MAPPER_GRIDINFO gridInfo;
-
-		VEC_Normalize( &vecMove, &vecMove );
-		GetGroundMoveVec( &cursor->gridInfoData.vecN, &cursor->trans, &vecMove, &moveData );
-		//Get3DmapperGroundMoveVec
-		//			( GetG3Dmapper( cursor->gs ), &cursor->trans, &vecMove, &moveData );
-		//VEC_Add( &cursor->trans, &moveData, &cursor->trans );
-		VEC_MultAdd( MV_SPEED, &moveData, &cursor->trans, &cursor->trans );
-		//OS_Printf("vecMove.y  = %x, ", moveData.y);
-		//Get3DmapperHeight_fromROM( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
-		//Get3DmapperHeight( GetG3Dmapper( cursor->gs ), &cursor->trans, &cursor->trans.y );
-		//OS_Printf("hit blockIdx = %x\n", debugData);
-		Get3DmapperGridInfo( GetG3Dmapper( cursor->gs ), &cursor->trans, &gridInfo );
-
-		if( gridInfo.count ){
-			int i = 0, p;
-			fx32 h1, h2, diff1, diff2;
-
-			h1 = gridInfo.gridData[0].height;
-			p = 0;
-			i++;
-			for( ; i<gridInfo.count; i++ ){
-				h2 = gridInfo.gridData[i].height;
-
-				diff1 = h1 - cursor->trans.y;
-				diff2 = h2 - cursor->trans.y;
-
-				if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
-					h1 = h2;
-					p = i;
-				}
-			}
-			cursor->gridInfoData = gridInfo.gridData[p];	//グリッドデータ保存
-
-			if( cursor->trans.y != h1 ){
-				OS_Printf("h_count = %x, height = ", gridInfo.count);
-				for( i=0; i<gridInfo.count; i++ ){
-					OS_Printf("%x, ", gridInfo.gridData[i].height);
-				}
-				OS_Printf("selected %x, ", h1);
-				OS_Printf("saved %x\n", cursor->gridInfoData.height);
-				cursor->trans.y = h1;
-			}
-		}
-	}
+	CalcSetGroundMove( GetG3Dmapper(cursor->gs), &cursor->gridInfoData, 
+								&cursor->trans, &vecMove, MV_SPEED );
 	//cursor->cameraHeight += vecMove.y;
 
 #ifdef NET_WORK_ON
@@ -963,11 +954,12 @@ static void	GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans )
 #define WORK_SIZ			(8)
 
 typedef struct {
-	FLD_ACTSYS*	fldActSys;
-	u16			work[WORK_SIZ];
-}FLD_ACT_WORK;
+	//FLD_ACTCONT*			fldActCont;
+	G3D_MAPPER_INFODATA		gridInfoData;
+	u16						work[WORK_SIZ];
+}FLD_ACTWORK;
 
-struct _FLD_ACTSYS {
+struct _FLD_ACTCONT {
 	HEAPID					heapID;
 	SAMPLE_SETUP*			gs;
 	u16						cameraRotate;
@@ -975,13 +967,13 @@ struct _FLD_ACTSYS {
 	u16						bbdActResCount;
 	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
 	u16						bbdActActCount;
-	FLD_ACT_WORK			actWork[FLD_BBDACT_ACTMAX];
+	FLD_ACTWORK				actWork[FLD_BBDACT_ACTMAX];
 };
 
 #include "graphic_data/test_graphic/fld_act.naix"
 
-static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork );
-static void	calcCameraRotate( FLD_ACTSYS* fldActSys );
+static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork );
+static void	calcCameraRotate( FLD_ACTCONT* fldActCont );
 //------------------------------------------------------------------
 /**
  *
@@ -1094,8 +1086,8 @@ static const GFL_BBDACT_ANM* testAnmTable[] = { walkUAnm, walkDAnm, walkLAnm, wa
 static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 {
 	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	FLD_ACTSYS*		fldActSys = (FLD_ACTSYS*)work;
-	FLD_ACT_WORK*	actWork = &fldActSys->actWork[actIdx];
+	FLD_ACTCONT*	fldActCont = (FLD_ACTCONT*)work;
+	FLD_ACTWORK*	actWork = &fldActCont->actWork[actIdx];
 
 	if( actWork->work[0] == 0 ){
 		u32	timer = GFUser_GetPublicRand(8);
@@ -1109,9 +1101,9 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		VecFx32 nowTrans, nextTrans, vecMove, vecGround, rotVec;
 		u16	 theta = actWork->work[1];
 		fx32 speed = FX32_ONE;
-
+		BOOL mvf;
 		{
-			u16	 dir = actWork->work[1] - actWork->fldActSys->cameraRotate;
+			u16	 dir = actWork->work[1] - fldActCont->cameraRotate;
 			if( (dir > 0x2000)&&(dir < 0x6000)){
 				//OS_Printf("右　rotate = %x\n", dir );
 				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_RIGHT );
@@ -1131,18 +1123,14 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.x = FX_SinIdx( theta );
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
-		{
-			VecFx32 mv;
 
-			Get3DmapperGroundMoveVec
-				( GetG3Dmapper( fldActSys->gs ), &nowTrans, &vecMove, &mv );
-			VEC_Add( &nowTrans, &mv, &nextTrans );
-		}
-		//範囲外コントロール
-		if( Check3DmapperOutRange( GetG3Dmapper( fldActSys->gs ), &nextTrans ) == FALSE ){
-			Get3DmapperHeight( GetG3Dmapper( fldActSys->gs ), &nextTrans, &nextTrans.y );
-			nextTrans.y += FX32_ONE*7;	//補正
-			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &nextTrans );
+		mvf = CalcSetGroundMove( GetG3Dmapper( fldActCont->gs ), &actWork->gridInfoData, 
+									&nowTrans, &vecMove, FX32_ONE );
+		if( mvf == TRUE ){
+			VecFx32 setTrans;
+
+			VEC_Set( &setTrans, nowTrans.x, nowTrans.y + FX32_ONE*7, nowTrans.z );
+			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &setTrans );
 		} else {
 			actWork->work[0] = 0;
 		}
@@ -1150,9 +1138,9 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 }
 
 #define TEST_NPC_SETNUM	(250)
-static void testSetUp( FLD_ACTSYS* fldActSys )
+static void testSetUp( FLD_ACTCONT* fldActCont )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActSys->gs );	
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
 	GFL_BBDACT_ACTDATA* actData;
 	GFL_BBDACT_ACTUNIT_ID actUnitID;
 	int		i, objIdx;
@@ -1162,16 +1150,16 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 	u16		setActNum;
 
 	//リソースセットアップ
-	fldActSys->bbdActResCount = NELEMS(testResTable);
-	fldActSys->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	bbdActSys, 
+	fldActCont->bbdActResCount = NELEMS(testResTable);
+	fldActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	bbdActSys, 
 																testResTable, 
-																fldActSys->bbdActResCount );
-	fldActSys->bbdActActCount = FLD_BBDACT_ACTMAX;
+																fldActCont->bbdActResCount );
+	fldActCont->bbdActActCount = FLD_BBDACT_ACTMAX;
 
 	//ＮＰＣアクターセットアップ
 	{
 		u16	setActNum = TEST_NPC_SETNUM;
-		GFL_BBDACT_ACTDATA* actData = GFL_HEAP_AllocClearMemory( fldActSys->heapID,
+		GFL_BBDACT_ACTDATA* actData = GFL_HEAP_AllocClearMemory( fldActCont->heapID,
 													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
 		for( i=0; i<setActNum; i++ ){
 			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
@@ -1186,28 +1174,28 @@ static void testSetUp( FLD_ACTSYS* fldActSys )
 			actData[i].drawEnable = TRUE;
 			actData[i].lightMask = GFL_BBD_LIGHTMASK_01;
 			actData[i].func = testFunc;
-			actData[i].work = fldActSys;
+			actData[i].work = fldActCont;
 		}
-		fldActSys->bbdActActUnitID = GFL_BBDACT_AddAct(	bbdActSys, fldActSys->bbdActResUnitID,
+		fldActCont->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, fldActCont->bbdActResUnitID,
 														actData, setActNum );
 		for( i=0; i<setActNum; i++ ){
-			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActSys->bbdActActUnitID+i, 
+			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActCont->bbdActActUnitID+i, 
 										testAnmTable, NELEMS(testAnmTable) );
-			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActSys->bbdActActUnitID+i, 0 );
+			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActCont->bbdActActUnitID+i, 0 );
 		}
 		GFL_HEAP_FreeMemory( actData );
 	}
 }
 
-static void testRelease( FLD_ACTSYS* fldActSys )
+static void testRelease( FLD_ACTCONT* fldActCont )
 {
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActSys->gs );	
+	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
 	u16	setActNum = FLD_BBDACT_ACTMAX;
 
-	GFL_BBDACT_RemoveAct( bbdActSys, fldActSys->bbdActActUnitID, TEST_NPC_SETNUM );
+	GFL_BBDACT_RemoveAct( bbdActSys, fldActCont->bbdActActUnitID, TEST_NPC_SETNUM );
 		
 	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, 
-									fldActSys->bbdActResUnitID, fldActSys->bbdActResCount );
+									fldActCont->bbdActResUnitID, fldActCont->bbdActResCount );
 }
 
 //------------------------------------------------------------------
@@ -1215,19 +1203,19 @@ static void testRelease( FLD_ACTSYS* fldActSys )
  * @brief	フィールドアクトシステム作成
  */
 //------------------------------------------------------------------
-static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
+static FLD_ACTCONT*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
 {
-	FLD_ACTSYS* fldActSys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTSYS) );
+	FLD_ACTCONT* fldActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTCONT) );
 	int	i;
 
-	fldActSys->heapID = heapID;
-	fldActSys->gs = gs;
+	fldActCont->heapID = heapID;
+	fldActCont->gs = gs;
 
-	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActSys, &fldActSys->actWork[i] ); }
+	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActCont, &fldActCont->actWork[i] ); }
 
-	testSetUp( fldActSys );	//テスト
+	testSetUp( fldActCont );	//テスト
 
-	return fldActSys;
+	return fldActCont;
 }
 
 //------------------------------------------------------------------
@@ -1235,10 +1223,10 @@ static FLD_ACTSYS*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
  * @brief	フィールドアクトシステム破棄
  */
 //------------------------------------------------------------------
-static void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
+static void	DeleteFieldActSys( FLD_ACTCONT* fldActCont )
 {
-	testRelease( fldActSys );	//テスト
-	GFL_HEAP_FreeMemory( fldActSys ); 
+	testRelease( fldActCont );	//テスト
+	GFL_HEAP_FreeMemory( fldActCont ); 
 }
 
 //------------------------------------------------------------------
@@ -1246,18 +1234,18 @@ static void	DeleteFieldActSys( FLD_ACTSYS* fldActSys )
  * @brief	フィールドアクト動作関数
  */
 //------------------------------------------------------------------
-static void	MainFieldActSys( FLD_ACTSYS* fldActSys )
+static void	MainFieldActSys( FLD_ACTCONT* fldActCont )
 {
 	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
 	VecFx32 vec, camPos, target;
-	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActSys->gs );
+	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActCont->gs );
 
 	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
 	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
 
 	VEC_Subtract( &target, &camPos, &vec );
 	
-	fldActSys->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
+	fldActCont->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
 }
 
 //------------------------------------------------------------------
@@ -1265,11 +1253,12 @@ static void	MainFieldActSys( FLD_ACTSYS* fldActSys )
  * @brief	フィールドアクトワーク初期化
  */
 //------------------------------------------------------------------
-static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork )
+static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
 {
 	int i;
 
-	actWork->fldActSys = fldActSys;
+	//actWork->fldActCont = fldActCont;
+	InitGet3DmapperGridInfoData( &actWork->gridInfoData );
 
 	for( i=0; i<WORK_SIZ; i++ ){
 		actWork->work[i] = 0;

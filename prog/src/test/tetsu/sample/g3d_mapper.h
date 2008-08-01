@@ -31,7 +31,7 @@ typedef struct {
 }NormalVtxSt;
 
 typedef struct {
-	VecFx32 vecN;
+	VecFx16 vecN;
 	u32		attr;
 	fx32	height;
 }G3D_MAPPER_INFODATA;
@@ -139,32 +139,11 @@ extern void InitGet3DmapperGridInfo( G3D_MAPPER_GRIDINFO* gridInfo );
  * @brief	グリッド情報取得
  */
 //------------------------------------------------------------------
-extern void Get3DmapperGridInfo
+extern BOOL Get3DmapperGridInfoData
+	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_INFODATA* gridInfoData );
+extern BOOL Get3DmapperGridInfo
 	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_GRIDINFO* gridInfo );
 
-//------------------------------------------------------------------
-/**
- * @brief	現在位置地形の法線ベクトル取得
- */
-//------------------------------------------------------------------
-extern void Get3DmapperVecN( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
-//extern void Get3DmapperVecN_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, VecFx32* vecN );
-//------------------------------------------------------------------
-/**
- * @brief	現在位置地形の高さ取得
- */
-//------------------------------------------------------------------
-extern void Get3DmapperHeight( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
-//extern void Get3DmapperHeight_fromROM( G3D_MAPPER* g3Dmapper, const VecFx32* pos, fx32* height );
-//------------------------------------------------------------------
-/**
- * @brief	移動方向の地形に沿ったベクトル取得
- */
-//------------------------------------------------------------------
-extern void Get3DmapperGroundMoveVec
-	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
-//extern void Get3DmapperGroundMoveVec_fromROM
-//	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, const VecFx32* vecMove, VecFx32* vecResult );
 //------------------------------------------------------------------
 /**
  * @brief	範囲外チェック

@@ -1208,7 +1208,7 @@ typedef struct {
 static const SCENE_DATA	resistMapTbl[] = {
 	{
 		{	
-			4,  4, NELEMS(sampleMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ, 
+			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_SAMPLEMAP, sampleMap 
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
