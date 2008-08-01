@@ -245,6 +245,7 @@ BOOL GFL_NET_Main(void)
     int i;
     GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
+    
     if(pNet==NULL){
         return TRUE;
     }

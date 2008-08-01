@@ -15,6 +15,9 @@
 #include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
+#ifdef PM_DEBUG
+#include "test/ohno/performance.h"
+#endif //PM_DEBUG
 
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
@@ -49,7 +52,11 @@ void NitroMain(void)
 	GameInit();
 
 	while(TRUE){
-		MachineSystem_Main();
+#ifdef PM_DEBUG
+    DEBUG_PerformanceStart();
+#endif //PM_DEBUG
+
+        MachineSystem_Main();
 		// メイン処理して…
 		GFLUser_Main();
 		GameMain();
@@ -61,8 +68,11 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
-		// VBLANK待ち
+        // VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
+#ifdef PM_DEBUG
+        DEBUG_PerformanceDisp();
+#endif //PM_DEBUG
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	}
 }
