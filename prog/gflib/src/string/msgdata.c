@@ -22,15 +22,9 @@ typedef struct {
 /** 文字列データヘッダ                                        */
 /*------------------------------------------------------------*/
 struct _MSGDATA_HEADER{
-	#ifndef MSGDATA_CODED
-	u16					numMsgs;
-	u16					randValue;
-	#else
-	union {
-		u32				numMsgs;
-		u32				randValue;
-	};
-	#endif
+	u16					numMsgs;		// 格納メッセージ数
+	u16					randValue;		// 暗号解除乱数
+	u32					numStrKinds;	// 文字列タイプごとの文字列（ex. かな＆漢字が混在ならnumMsgs/2）
 	MSG_PARAM_BLOCK		params[];
 };
 
@@ -98,6 +92,59 @@ static inline void DecodeStr( STRCODE* str, u32 len, u32 strID, u16 rand )
 #endif
 }
 
+/*============================================================================================*/
+/*                                                                                            */
+/*  文字列タイプ切り替え                                                                      */
+/*                                                                                            */
+/*  同一の文字列IDを使って、実際に読み出される文字列を切り替えるための仕組み。                */
+/*  日本語版の『ひらがな－漢字』切り替えとか、                                                */
+/*  欧州版の『英・仏・独・伊・西』５ヶ国語切り替えとかに使ってもらうことを想定。              */
+/*                                                                                            */
+/*============================================================================================*/
+static u32 StrKindID_ = 0;
+
+//--------------------------------------------------------------------------------------
+/**
+ * 文字列タイプを設定する。
+ * 以降、文字列取得関数を介して取得できる文字列が切り替わる。
+ *
+ * @param   kindID		文字列タイプ（デフォルトで0，以下連番）
+ *
+ */
+//--------------------------------------------------------------------------------------
+void GFL_MSG_SetKindID( u32 kindID )
+{
+	StrKindID_ = kindID;
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ * 設定された文字列タイプを取得。
+ *
+ * @retval  u32		設定されている文字列タイプ
+ */
+//--------------------------------------------------------------------------------------
+u32 GFL_MSG_GetKindID( void )
+{
+	return StrKindID_;
+}
+
+
+//--------------------------------------------------------------------------
+/**
+ * アプリ側から指定された文字列IDを、設定文字列タイプに合わせて実際の文字列IDに変換
+ *
+ * @param   strID		アプリ指定文字列ID
+ *
+ * @retval  u32			実際の文字列ID
+ */
+//--------------------------------------------------------------------------
+static inline u32 convertActualStrID( const MSGDATA_HEADER* msgdat, u32 strID )
+{
+	return strID + (msgdat->numStrKinds * StrKindID_);
+}
+
+
 
 /*============================================================================================*/
 /*                                                                                            */
@@ -155,6 +202,8 @@ void
 	GFL_MSG_GetString
 		( const MSGDATA_HEADER* msgdat, u32 strID, STRBUF* dst )
 {
+	strID = convertActualStrID( msgdat, strID );
+
 	if( strID < msgdat->numMsgs )
 	{
 		MSG_PARAM_BLOCK param;
@@ -200,6 +249,8 @@ STRBUF*
 	GFL_MSG_CreateString
 		( const MSGDATA_HEADER* msgdat, u32 strID, HEAPID heapID )
 {
+	strID = convertActualStrID( msgdat, strID );
+
 	if( strID < msgdat->numMsgs )
 	{
 		MSG_PARAM_BLOCK param;
@@ -249,6 +300,7 @@ void
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID, STRBUF* dst )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
+
 	GFL_MSG_GetStringDirectByHandle( arcHandle, datID, strID, heapID, dst );
 	GFL_ARC_CloseDataHandle( arcHandle );
 }
@@ -276,6 +328,7 @@ void
 	u32 size;
 
 	GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	strID = convertActualStrID( &header, strID );
 
 	if( strID < header.numMsgs )
 	{
@@ -319,6 +372,7 @@ STRBUF*
 		( u32 arcID, u32 datID, u32 strID, HEAPID heapID )
 {
 	ARCHANDLE*  arcHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
+
 	STRBUF* ret = GFL_MSG_CreateStringDirectByHandle( arcHandle, datID, strID, heapID );
 	GFL_ARC_CloseDataHandle( arcHandle );
 
@@ -351,6 +405,7 @@ STRBUF*
 	u32	size;
 
 	GFL_ARC_LoadDataOfsByHandle( arcHandle, datID, 0, sizeof(MSGDATA_HEADER), &header );
+	strID = convertActualStrID( &header, strID );
 
 	if( strID < header.numMsgs )
 	{
@@ -373,7 +428,7 @@ STRBUF*
 	}
 	else
 	{
-		GF_ASSERT_MSG(0, "datID:%d strID:%d", datID, strID);
+		GF_ASSERT_MSG(0, "datID:%d strID:%d numMsgs=%d", datID, strID, header.numMsgs);
 		return NULL;
 	}
 }
@@ -584,5 +639,9 @@ u32
 	}
 	return 0;
 }
+
+
+
+
 
 
