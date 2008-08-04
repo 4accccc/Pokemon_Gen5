@@ -2,7 +2,7 @@
 
 SET LANG=C-SJIS
 SET HOME=c:\home
-SET PROJECT_ROOT=%HOME%\pokemon_wb
+SET PROJECT_ROOT=%~p0%
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
