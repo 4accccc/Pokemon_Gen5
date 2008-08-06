@@ -36,7 +36,7 @@ typedef enum {
 /**
  * フォントデータマネージャ作成
  *
- * @param   arcID			フォントデータが格納されているアーカイブID
+ * @param   arcHandle		フォントデータを含むアーカイブハンドル
  * @param   datID			フォントデータが格納されているアーカイブ内ファイルID
  * @param   loadType		フォントデータの読み出し方式
  * @param   fixedFontFlag	TRUEなら等幅フォントとして扱う
@@ -47,7 +47,7 @@ typedef enum {
  * @li  loadType が FONTDATA_LOADTYPE_ON_MEMORY の場合、マネージャと同じヒープ領域にフォントデータを読み込む
  */
 //==============================================================================================
-extern GFL_FONT* GFL_FONT_CreateHandle( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID );
+extern GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID );
 
 
 //==============================================================================================

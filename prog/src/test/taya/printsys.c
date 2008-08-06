@@ -123,7 +123,7 @@ static struct {
 /*--------------------------------------------------------------------------*/
 static void initPrintWork( PRINT_WORK* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
 static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BMP_DATA* dst );
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, u32 charCode, u16* charWidth, u16* charHeight );
+static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, u16* charWidth, u16* charHeight );
 static const STRCODE* ctrlGeneralTag( PRINT_WORK* wk, const STRCODE* sp );
 static const STRCODE* ctrlSystemTag( PRINT_WORK* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
@@ -171,6 +171,8 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
 	initPrintWork( wk, font, dst, xpos, ypos );
 	sp = GFL_STR_GetStringCodePointer( str );
 
+	GF_ASSERT(dst);
+
 	while( *sp != EOM_CODE )
 	{
 		sp = print_next_char( wk, sp, dst );
@@ -214,6 +216,7 @@ static void initPrintWork( PRINT_WORK* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u1
 //------------------------------------------------------------------
 static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BMP_DATA* dst )
 {
+	GF_ASSERT(dst);
 	while( 1 )
 	{
 		switch( *sp ){
@@ -270,7 +273,7 @@ static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BM
  *
  */
 //------------------------------------------------------------------
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, u32 charCode, u16* charWidth, u16* charHeight )
+static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, u16* charWidth, u16* charHeight )
 {
 	GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), charWidth, charHeight );
 	GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos, ypos, *charWidth, *charHeight, 0x0f );

@@ -10,7 +10,6 @@
 #include	"gf_font.h"
 #include	"arc_tool.h"
 
-extern void GFL_ARC_SeekAndRead( ARCHANDLE* handle, u32 seekOfs, u32 readSize, void* buffer );
 
 typedef u8 (*pWidthGetFunc)(const GFL_FONT*, u32);
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, u16*, u16* );
@@ -136,7 +135,7 @@ struct  _GFL_FONT	{
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void load_font_header( GFL_FONT* wk, u32 arcID, u32 datID, BOOL fixedFontFlag, u32 heapID );
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 heapID );
 static void unload_font_header( GFL_FONT* wk );
 static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID );
 static void setup_type_on_memory( GFL_FONT* wk, u32 heapID );
@@ -173,12 +172,13 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
  * @li  loadType が FONTDATA_LOADTYPE_ON_MEMORY の場合、マネージャと同じヒープ領域にフォントデータを読み込む
  */
 //==============================================================================================
-GFL_FONT* GFL_FONT_CreateHandle( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
+GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
 {
 	GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
 	if( wk )
 	{
-		load_font_header( wk, arcID, datID, fixedFontFlag, heapID );
+		wk->fileHandle = arcHandle;
+		load_font_header( wk, datID, fixedFontFlag, heapID );
 		setup_font_datas( wk, loadType, heapID );
 	}
 	return wk;
@@ -221,16 +221,14 @@ void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 h
  * 両タイプで共有するヘッダデータを読み込み・構築
  *
  * @param   wk				ワークポインタ
- * @param   arcID			フォントファイルのアーカイブID
  * @param   datID			フォントファイルのデータID
  * @param   fixedFontFlag	固定フォントフラグ
  * @param   heapID			ヒープID
  *
  */
 //------------------------------------------------------------------
-static void load_font_header( GFL_FONT* wk, u32 arcID, u32 datID, BOOL fixedFontFlag, u32 heapID )
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 heapID )
 {
-	wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
 	if( wk->fileHandle )
 	{
 		GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, 24, sizeof(wk->fontHeader), &(wk->fontHeader) );
@@ -331,8 +329,8 @@ static void unload_font_header( GFL_FONT* wk )
 static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID )
 {
 	static void (* const setup_func[])( GFL_FONT*, u32 ) = {
-		setup_type_on_memory,
 		setup_type_read_file,
+		setup_type_on_memory,
 	};
 
 	GF_ASSERT(loadType == GFL_FONT_LOADTYPE_FILE);
@@ -360,6 +358,8 @@ static void setup_type_on_memory( GFL_FONT* wk, u32 heapID )
 
 	GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->fileDatID, wk->fontHeader.bitDataOffs,
 						bit_data_size, wk->fontBitData );
+	#else
+	wk->GetBitmapFunc = GetBitmapFileRead;
 	#endif
 }
 //------------------------------------------------------------------
@@ -527,9 +527,10 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
 			break;
 
 			default:
+				GF_ASSERT(0);
 				break;
 			}
-//			GF_ASSERT(0);
+
 			return 461;
 		}
 		else if( pMap->nextOfs )
@@ -611,29 +612,13 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, u16* si
 {
 	u32 ofsTop = wk->ofsGlyphTop + index * wk->glyphInfo.cellSize;
 
-
-//	GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
-//	GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
-	GFL_ARC_SeekAndRead( wk->fileHandle, wk->fontDataImgOfs+ofsTop, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
-
-//	GFL_ARC_LoadDataOfsByHandle(
-//		wk->fileHandle, wk->fileDatID, ofsTop, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf)
-//	);
+	GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
+	GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
+//	GFL_ARC_SeekAndRead( wk->fileHandle, wk->fontDataImgOfs+ofsTop, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
 
 	#ifdef GLOBAL_PRINT_FLAG
 	PRINTFLG = ((index==332)||(index==322));
 	#endif
-/*
-	expand_ntr_glyph_block( wk->glyphBuf, 0, wk->glyphInfo.cellWidth, FALSE, (u8*)(&wk->readBuffer[0x08*0]) );
-	expand_ntr_glyph_block( wk->glyphBuf, 1, wk->glyphInfo.cellWidth, TRUE,  (u8*)(&wk->readBuffer[0x08*1]) );
-	expand_ntr_glyph_block( wk->glyphBuf, 2, wk->glyphInfo.cellWidth, FALSE, (u8*)(&wk->readBuffer[0x08*2]) );
-	expand_ntr_glyph_block( wk->glyphBuf, 3, wk->glyphInfo.cellWidth, TRUE,  (u8*)(&wk->readBuffer[0x08*3]) );
-
-	ExpandFontData( (&(wk->readBuffer[0x08*0])), (u8*)dst+0x20*0 );
-	ExpandFontData( (&(wk->readBuffer[0x08*1])), (u8*)dst+0x20*1 );
-	ExpandFontData( (&(wk->readBuffer[0x08*2])), (u8*)dst+0x20*2 );
-	ExpandFontData( (&(wk->readBuffer[0x08*3])), (u8*)dst+0x20*3 );
-*/
 
 	expand_ntr_glyph_2bit( wk->glyphBuf, wk->glyph2ndCharBits, wk->glyph2ndCharShift, (u16*)dst, (u16*)((u8*)dst+0x20) );
 
@@ -684,18 +669,11 @@ static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 
 	{
 		byte = startBit / 8;
 		bit  = startBit & 7;
-//		TAYA_PrintfEx(PRINTFLG,"start:%3d->%3dbyte,%3dbit .. 0x%02x, 0x%02x ->",
-//				startBit, byte, bit, srcData[byte], srcData[byte+1]);
 		dst[i] = srcData[byte] & ptbl[bit].mask1;
-//		TAYA_PrintfEx(PRINTFLG,"%02x->", dst[i]);
 		dst[i] <<= ptbl[bit].shift1;
-//		TAYA_PrintfEx(PRINTFLG,"%02x->", dst[i]);
 		dst[i] |= ((srcData[byte+1] & ptbl[bit].mask2) >> (8 - ptbl[bit].shift1));
-//		TAYA_PrintfEx(PRINTFLG,"%02x", dst[i]);
 		startBit += cellWidth;
-//		TAYA_PrintfEx(PRINTFLG,"\n");
 	}
-//	TAYA_PrintfEx(PRINTFLG,"\n");
 
 	if( maskFlag )
 	{
@@ -708,25 +686,6 @@ static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 
 		}
 	}
 
-	#if 0
-	for(i=0; i<8; i++)
-	{
-		for(bit=0; bit<8; bit++)
-		{
-			if( (*dst)&(0x80>>bit) )
-			{
-				TAYA_PrintfEx(PRINTFLG,"*");
-			}
-			else
-			{
-				TAYA_PrintfEx(PRINTFLG," ");
-			}
-		}
-		TAYA_PrintfEx(PRINTFLG,"\n");
-		dst++;
-	}
-//	TAYA_PrintfEx(PRINTFLG,"-----------------------\n");
-	#endif
 }
 
 //==============================================================================================
@@ -746,13 +705,6 @@ u16 GFL_FONT_GetWidth( const GFL_FONT* wk, u32 code )
 
 	index = get_glyph_index( wk, code );
 	ret =  wk->WidthGetFunc( wk, index );
-
-#if 0
-	if( code == 0x3000 )
-	{
-		TAYA_Printf("code=%04x, index=%d, width=%d\n", code, index, ret);
-	}
-#endif
 
 	return ret;
 }
