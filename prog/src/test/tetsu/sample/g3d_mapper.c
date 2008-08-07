@@ -33,12 +33,83 @@
 #define LOCAL_OBJID_NULL	(0xffffffff)
 #define DDRAW_OBJID_NULL	(0xffffffff)
 
-#define GROBAL_OBJ_COUNT	(64)
+#define GROBAL_OBJ_COUNT	(32)
+#define GROBAL_DDOBJ_COUNT	(32)
 #define COMMON_OBJ_RESCOUNT	(64)
 #define LOCAL_OBJRES_COUNT	(16)
 #define LOCAL_OBJRND_COUNT	(32)
 #define LOCAL_DIRECTDRAW_OBJ_COUNT	(64)
 
+//------------------------------------------------------------------
+//高さデータ取得用
+typedef struct {
+	fx16	vecN1_x;
+	fx16	vecN1_y;
+	fx16	vecN1_z;
+
+	fx16	vecN2_x;
+	fx16	vecN2_y;
+	fx16	vecN2_z;
+
+	fx32	vecN1_D;
+	fx32	vecN2_D;
+
+	u32		attr:31;
+	u32		tryangleType:1;
+}NormalVtxSt;
+
+//ポリゴンデータ部
+typedef struct SPLIT_GRID_DATA_tag{
+	u16		NumX;		//グリッドＸ数
+	u16		NumZ;		//グリッドＺ数
+
+	fx32	StartX;		//始点位置Ｘ
+	fx32	StartZ;		//始点位置Ｚ
+	fx32	EndX;		//終点位置Ｘ
+	fx32	EndZ;		//終点位置Ｚ
+	fx32	SizeX;		//グリッドＸサイズ
+	fx32	SizeZ;		//グリッドＺサイズ
+}SPLIT_GRID_DATA;
+
+typedef struct POLYGON_DATA_tag{
+	u16 vtx_idx0;
+	u16 vtx_idx1;
+	u16 vtx_idx2;	//3角ポリゴンを形成する、頂点データ配列へのインデックスNo
+	u16	nrm_idx;	//法線データ配列(正規化済み)へのインデックスNo
+	
+	fx32	paramD;		//平面の方程式から導いた、補正値D
+}POLYGON_DATA;
+
+typedef struct HEIGHT_ARRAY_tag
+{
+	fx32 Height;
+	int Prev;
+	int Next;
+}HEIGHT_ARRAY;
+
+typedef struct MAP_HEIGHT_INFO_tag{
+	SPLIT_GRID_DATA	*SplitGridData;
+	POLYGON_DATA	*PolygonData;
+	u16				*GridDataTbl;
+	u16				*LineDataTbl;
+	VecFx32			*VertexArray;
+	VecFx32			*NormalArray;
+	u16				*PolyIDList;
+//	BOOL			LoadOK;
+	BOOL			DataValid;		//データ有効有無
+}MAP_HEIGHT_INFO;
+
+typedef struct {
+	int VtxNum;
+	int NrmNum;
+	int PolygonNum;
+	int GridNum;
+	int TotalPolyIDListSize;
+	int TotalLineListSize;
+	int LineEntryMax;
+}READ_INFO;
+
+//------------------------------------------------------------------
 //#define MAP_BLOCK_LEN		(FX32_ONE * 256 * 2 )
 
 typedef struct {
@@ -47,8 +118,8 @@ typedef struct {
 }BLOCK_IDX;
 
 typedef struct {
-	u32					id;
-	VecFx32				trans;
+	u32			id;
+	VecFx32		trans;
 }MAP_OBJECT_DATA;
 
 typedef struct {
@@ -62,6 +133,12 @@ typedef struct {
 	NNSG3dRenderObj*	NNSrnd_L;	//レンダー(Low Q)
 	GFL_G3D_RES*		g3Dres_L;	//リソース(High Q)
 }MAP_GROBAL_OBJECT_DATA;
+
+typedef struct {
+	GFL_G3D_RES*	g3Dres;
+	u32				texDataAdrs;
+	u32				texPlttAdrs;
+}MAP_GROBAL_DDOBJECT_DATA;
 
 typedef struct {
 	u32				idx;
@@ -91,7 +168,7 @@ typedef struct {
 	NNSGfdPlttKey	groundPlttKey;
 
 	MAP_OBJECT_DATA	object[LOCAL_OBJRND_COUNT];	//配置オブジェクト
-
+#if 0
 	BOOL			objLoadReq;
 	u32				objID;
 	GFL_G3D_RES*	g3DobjectResMdl[LOCAL_OBJRES_COUNT];//ローカルオブジェクトモデルリソース
@@ -99,7 +176,7 @@ typedef struct {
 
 	NNSGfdTexKey	objectTexKey;
 	NNSGfdPlttKey	objectPlttKey;
-
+#endif
 	DIRECT_OBJ		directDrawObject[LOCAL_DIRECTDRAW_OBJ_COUNT];
 }MAP_BLOCK_DATA;
 
@@ -118,17 +195,25 @@ struct _G3D_MAPPER {
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const G3D_MAPPER_DATA*	data;	//実マップデータ
 
-	GFL_G3D_RES*		objectG3DresMdl[COMMON_OBJ_RESCOUNT];	//共通オブジェクトモデルリソース
-	u32					objectG3DresCount;
-
-	MAP_GROBAL_OBJECT_DATA grobalObject[GROBAL_OBJ_COUNT];	//共通オブジェクト
-	//-----------------
-	GFL_G3D_RES*	tree_g3Dres;
-	u32				tree_texDataAdrs;
-	u32				tree_texPlttAdrs;
-	//-----------------
+	MAP_GROBAL_OBJECT_DATA		grobalObject[GROBAL_OBJ_COUNT];	//共通オブジェクト
+	MAP_GROBAL_DDOBJECT_DATA	grobalDDobject[GROBAL_DDOBJ_COUNT];	//共通オブジェクト(直書き)
 };
 
+enum {
+	LOAD_IDLING = 0,
+	MDL_LOAD_START,
+	MDL_LOAD,
+	TEX_LOAD_START,
+	TEX_LOAD,
+	RND_CREATE,
+	TEX_TRANS,
+	PLTT_TRANS,
+	ATTR_LOAD_START,
+	ATTR_LOAD,
+	LOAD_END,
+};
+
+//------------------------------------------------------------------
 static void	Load3Dmap( G3D_MAPPER* g3Dmapper );
 
 static void	CreateMapGraphicResource( G3D_MAPPER* g3Dmapper );
@@ -174,41 +259,18 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
 	
-	g3Dmapper->objectG3DresCount = 0;
-	for( i=0; i<COMMON_OBJ_RESCOUNT; i++ ){
-		g3Dmapper->objectG3DresMdl[i] = NULL;
-	}
 	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
 		g3Dmapper->grobalObject[i].NNSrnd_H = NULL;
 		g3Dmapper->grobalObject[i].g3Dres_H = NULL;
 		g3Dmapper->grobalObject[i].NNSrnd_L = NULL;
 		g3Dmapper->grobalObject[i].g3Dres_L = NULL;
 	}
+	for( i=0; i<GROBAL_DDOBJ_COUNT; i++ ){
+		g3Dmapper->grobalDDobject[i].g3Dres = NULL;
+		g3Dmapper->grobalDDobject[i].texDataAdrs = 0;
+		g3Dmapper->grobalDDobject[i].texPlttAdrs = 0;
+	}
 
-	//---------------------
-	{
-		NNSG3dTexKey	texDataKey;
-		NNSG3dPlttKey	texPlttKey;
-		u32				arcID = 3;	//ARCID_SAMPLEMAP
-		u32				datID = 48;	//NARC_sample_map_sample_tree_nsbtx
-
-		GFL_G3D_RES* g3DresTex = GFL_G3D_CreateResourceArc( arcID, datID ); 
-
-		g3Dmapper->tree_g3Dres = g3DresTex;
-
-		if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){
-			GF_ASSERT(0);
-		}
-		texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
-		texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
-
-		g3Dmapper->tree_texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
-		g3Dmapper->tree_texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
-
-		//OS_Printf("tree_texDataAdrs = %x, tree_texPlttAdrs = %x\n",
-		//			g3Dmapper->tree_texDataAdrs, g3Dmapper->tree_texPlttAdrs );
-	}	
-	//---------------------
 	OS_Printf("g3DmapperSize = %x\n", sizeof(G3D_MAPPER));
 	OS_Printf("mapBlockDataSize = %x\n", sizeof(MAP_BLOCK_DATA));
 	OS_Printf("rndObjSize = %x\n", sizeof(NNSG3dRenderObj));
@@ -277,6 +339,8 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 	NNSG3dRenderObj		*NNSrnd, *NNSrnd_L;
 	int					i, j;
 	fx32				length, limitLength = 512 * FX32_ONE;
+
+	GF_ASSERT( g3Dmapper );
 
 	//描画開始
 	GFL_G3D_DRAW_Start();
@@ -428,10 +492,6 @@ void	Delete3Dmapper( G3D_MAPPER* g3Dmapper )
 {
 	GF_ASSERT( g3Dmapper );
 
-	//---------------------
-	GFL_G3D_FreeVramTexture( g3Dmapper->tree_g3Dres );
-	GFL_G3D_DeleteResource( g3Dmapper->tree_g3Dres );
-	//---------------------
 	ReleaseObjRes3Dmapper( g3Dmapper );	//登録されたままの場合を想定して削除
 	DeleteMapGraphicResource( g3Dmapper );
 
@@ -441,7 +501,7 @@ void	Delete3Dmapper( G3D_MAPPER* g3Dmapper )
 
 //------------------------------------------------------------------
 /**
- * @brief	マップデータセット
+ * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
 void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistData )
@@ -492,13 +552,15 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 
 //------------------------------------------------------------------
 /**
- * @brief	オブジェクトリソースセット
+ * @brief	オブジェクトリソース登録
  */
 //------------------------------------------------------------------
+//通常MDL
 void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* resistData )
 {
 	int i;
 
+	GF_ASSERT( g3Dmapper );
 	GF_ASSERT( resistData->count <= GROBAL_OBJ_COUNT );
 	
 	ReleaseObjRes3Dmapper( g3Dmapper );
@@ -534,6 +596,7 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 {
 	int i;
 
+	GF_ASSERT( g3Dmapper );
 	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
 		if( g3Dmapper->grobalObject[i].NNSrnd_L != NULL ){
 			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
@@ -559,12 +622,58 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 }
 
 //------------------------------------------------------------------
+//DirectDraw
+void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPERDDOBJ_RESIST* resistData )
+{
+	GFL_G3D_RES*	g3DresTex;
+	NNSG3dTexKey	texDataKey;
+	NNSG3dPlttKey	texPlttKey;
+	int i;
+
+	GF_ASSERT( g3Dmapper );
+	GF_ASSERT( resistData->count <= GROBAL_DDOBJ_COUNT );
+	
+	ReleaseDDobjRes3Dmapper( g3Dmapper );
+
+	for( i=0; i< resistData->count; i++ ){
+		g3DresTex = GFL_G3D_CreateResourceArc( resistData->arcID, resistData->data[i] );
+
+		g3Dmapper->grobalDDobject[i].g3Dres = g3DresTex;
+										
+		if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){
+			GF_ASSERT(0);
+		}
+		texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
+		texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
+
+		g3Dmapper->grobalDDobject[i].texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
+		g3Dmapper->grobalDDobject[i].texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
+	}
+}
+
+void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper )
+{
+	int i;
+
+	GF_ASSERT( g3Dmapper );
+	for( i=0; i<GROBAL_DDOBJ_COUNT; i++ ){
+		if( g3Dmapper->grobalDDobject[i].g3Dres != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalDDobject[i].g3Dres );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalDDobject[i].g3Dres );
+			g3Dmapper->grobalDDobject[i].g3Dres = NULL;
+		}
+	}
+}
+
+//------------------------------------------------------------------
 /**
  * @brief	マップ位置セット
  */
 //------------------------------------------------------------------
 void SetPos3Dmapper( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
 {
+	GF_ASSERT( g3Dmapper );
+
 	VEC_Set( &g3Dmapper->posCont, pos->x, pos->y, pos->z );
 }
 
@@ -655,7 +764,7 @@ static void	InitMapGraphicResource( MAP_BLOCK_DATA*	mapBlock )
 {
 	mapBlock->idx = MAPID_NULL;
 	VEC_Set( &mapBlock->trans, 0, 0, 0 );
-	mapBlock->loadSeq = 0;
+	mapBlock->loadSeq = LOAD_IDLING;
 	mapBlock->loadCount = 0;
 
 	mapBlock->dataLoadReq = FALSE;
@@ -697,19 +806,6 @@ static void MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RE
  * @brief	３Ｄマップロード
  */
 //------------------------------------------------------------------
-enum {
-	MDL_LOAD_START = 0,
-	MDL_LOAD,
-	TEX_LOAD_START,
-	TEX_LOAD,
-	RND_CREATE,
-	TEX_TRANS,
-	PLTT_TRANS,
-	ATTR_LOAD_START,
-	ATTR_LOAD,
-	LOAD_END,
-};
-
 static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 {
 	MAP_BLOCK_DATA*	mapBlock;
@@ -721,182 +817,179 @@ static void	Load3Dmap( G3D_MAPPER* g3Dmapper )
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		mapBlock = &g3Dmapper->mapBlock[i];
 
-		if( mapBlock->dataLoadReq == TRUE ){
-			switch( mapBlock->loadSeq ){
-			case MDL_LOAD_START:
-				mapBlock->NNSrnd->resMdl = NULL; 
-				InitMapGraphicData( mapBlock );
+		switch( mapBlock->loadSeq ){
+		case LOAD_IDLING:
+			break;
 
-				//モデルデータロード開始
-				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->dataID, 
-												0, MAPLOAD_SIZE, (void*)mapBlock->data );
-				mapBlock->loadCount = 0;
-				mapBlock->loadCount++;
-				mapBlock->loadSeq = MDL_LOAD;
-				break;
-			case MDL_LOAD:
-				dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
+		case MDL_LOAD_START:
+			mapBlock->NNSrnd->resMdl = NULL; 
+			InitMapGraphicData( mapBlock );
 
-				if( (dataAdrs + MAPLOAD_SIZE) < MAPDATA_SIZE){
-					//ロード継続
-					GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
-														(void*)&mapBlock->data[dataAdrs] );
-					mapBlock->loadCount++;
-					break;
-				}
-				//最終ロード
-				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPDATA_SIZE - dataAdrs,
+			//モデルデータロード開始
+			GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->dataID, 
+											0, MAPLOAD_SIZE, (void*)mapBlock->data );
+			mapBlock->loadCount = 0;
+			mapBlock->loadCount++;
+			mapBlock->loadSeq = MDL_LOAD;
+			break;
+		case MDL_LOAD:
+			dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
+
+			if( (dataAdrs + MAPLOAD_SIZE) < MAPDATA_SIZE){
+				//ロード継続
+				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
 													(void*)&mapBlock->data[dataAdrs] );
-				mapBlock->loadSeq = TEX_LOAD_START;
-				break;
-			case TEX_LOAD_START:
-				if( mapBlock->texLoadReq == FALSE ){
-					mapBlock->loadSeq = RND_CREATE;
-					break;
-				}
-				//テクスチャロード開始
-				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->texID, 
-												0, MAPLOAD_SIZE, (void*)mapBlock->tex );
-				mapBlock->loadCount = 0;
 				mapBlock->loadCount++;
-				mapBlock->loadSeq = TEX_LOAD;
-				break;
-			case TEX_LOAD:
-				dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
-
-				if( (dataAdrs + MAPLOAD_SIZE) < MAPTEX_SIZE){
-					//ロード継続
-					GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
-														(void*)&mapBlock->tex[dataAdrs] );
-					mapBlock->loadCount++;
-					break;
-				}
-				//最終ロード
-				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPTEX_SIZE - dataAdrs,
-													(void*)&mapBlock->tex[dataAdrs] );
-				//テクスチャリソースへのＶＲＡＭキーの設定
-				NNS_G3dTexSetTexKey( GFL_G3D_GetResTex(mapBlock->g3DgroundResTex), 
-										mapBlock->groundTexKey, 0 );
-				NNS_G3dPlttSetPlttKey( GFL_G3D_GetResTex(mapBlock->g3DgroundResTex), 
-										mapBlock->groundPlttKey );
-
-				mapBlock->loadSeq = RND_CREATE;
-				break;
-			case RND_CREATE:
-				//レンダー作成
-				MakeMapRender
-					( mapBlock->NNSrnd, mapBlock->g3DgroundResMdl, mapBlock->g3DgroundResTex );
-				mapBlock->loadCount = 0;
-				mapBlock->loadSeq = TEX_TRANS;
-				break;
-			case TEX_TRANS:
-				dataAdrs = mapBlock->loadCount * MAPTRANS_SIZE;
-
-				if( (dataAdrs + MAPTRANS_SIZE) < MAPTEX_SIZE){
-					NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
-						NNS_GfdGetTexKeyAddr( mapBlock->groundTexKey ) + dataAdrs,
-						(void*)(GFL_G3D_GetAdrsTextureData
-									( mapBlock->g3DgroundResTex ) + dataAdrs),
-						MAPTRANS_SIZE );
-					//転送継続
-					mapBlock->loadCount++;
-					break;
-				}
-				//最終転送
-				NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
-						NNS_GfdGetTexKeyAddr( mapBlock->groundTexKey ) + dataAdrs,
-						(void*)(GFL_G3D_GetAdrsTextureData
-									( mapBlock->g3DgroundResTex ) + dataAdrs),
-						MAPTEX_SIZE - dataAdrs );
-				mapBlock->loadSeq = PLTT_TRANS;
-				break;
-			case PLTT_TRANS:
-				NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, 
-						NNS_GfdGetPlttKeyAddr( mapBlock->groundPlttKey ),
-						(void*)GFL_G3D_GetAdrsTexturePltt( mapBlock->g3DgroundResTex ),
-						MAPPLTT_SIZE );
-				mapBlock->loadSeq = ATTR_LOAD_START;
-				//mapBlock->loadSeq = LOAD_END;
-				break;
-			case ATTR_LOAD_START:
-				//アトリビュートデータロード開始
-				if( mapBlock->attrID == NON_ATTR ){
-					GFL_STD_MemClear32( (void*)mapBlock->attr, MAPATTR_SIZE );
-					mapBlock->loadSeq = LOAD_END;
-					break;
-				}
-				GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->attrID, 
-												0, MAPLOAD_SIZE, (void*)mapBlock->attr );
-				mapBlock->loadCount = 0;
-				mapBlock->loadCount++;
-				mapBlock->loadSeq = ATTR_LOAD;
-				break;
-			case ATTR_LOAD:
-				dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
-
-				if( (dataAdrs + MAPLOAD_SIZE) < MAPATTR_SIZE){
-					//ロード継続
-					GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
-														(void*)&mapBlock->attr[dataAdrs] );
-					mapBlock->loadCount++;
-					break;
-				}
-				//最終ロード
-				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPATTR_SIZE - dataAdrs,
-													(void*)&mapBlock->attr[dataAdrs] );
-				mapBlock->loadSeq = LOAD_END;
-				break;
-			case LOAD_END:
-#if 1
-				//--------------------
-				if( mapBlock->trans.y == 0 ){
-					int j, r;
-					fx32 randTransx, randTransz;
-					fx32 cOffs, rOffs, gWidth;
-					VecFx32 pWorld;
-					G3D_MAPPER_INFODATA gridInfoData;
-					BOOL f;
-
-					cOffs = -g3Dmapper->width/2;
-					gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
-					for( j=0; j<4; j++ ){
-						if( j<2 ){
-							mapBlock->object[j].id = 0;
-						} else {
-							mapBlock->object[j].id = 1;
-						}
-
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.x = rOffs + cOffs;
-						mapBlock->object[j].trans.y = 0;
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->object[j].trans.z = rOffs + cOffs;
-
-						VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &pWorld );
-						Get3DmapperGridInfoData( g3Dmapper, &pWorld, &gridInfoData );
-						mapBlock->object[j].trans.y = gridInfoData.height;
-					}
-					for( j=0; j<32; j++ ){
-						mapBlock->directDrawObject[j].id = 1;
-
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.x = rOffs + cOffs;
-						mapBlock->directDrawObject[j].trans.y = 0;
-						rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-						mapBlock->directDrawObject[j].trans.z = rOffs + cOffs;
-						VEC_Add( &mapBlock->directDrawObject[j].trans, &mapBlock->trans, &pWorld );
-						Get3DmapperGridInfoData( g3Dmapper, &pWorld, &gridInfoData );
-						mapBlock->directDrawObject[j].trans.y = gridInfoData.height;
-					}
-				}
-				//--------------------
-#endif
-				mapBlock->dataLoadReq = FALSE;
-				mapBlock->texLoadReq = FALSE;
-				mapBlock->attrLoadReq = FALSE;
-				mapBlock->loadSeq = 0;
 				break;
 			}
+			//最終ロード
+			GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPDATA_SIZE - dataAdrs,
+												(void*)&mapBlock->data[dataAdrs] );
+			mapBlock->dataLoadReq = FALSE;
+			mapBlock->loadSeq = TEX_LOAD_START;
+			break;
+		case TEX_LOAD_START:
+			if( mapBlock->texLoadReq == FALSE ){
+				mapBlock->loadSeq = RND_CREATE;
+				break;
+			}
+			//テクスチャロード開始
+			GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->texID, 
+											0, MAPLOAD_SIZE, (void*)mapBlock->tex );
+			mapBlock->loadCount = 0;
+			mapBlock->loadCount++;
+			mapBlock->loadSeq = TEX_LOAD;
+			break;
+		case TEX_LOAD:
+			dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
+
+			if( (dataAdrs + MAPLOAD_SIZE) < MAPTEX_SIZE){
+				//ロード継続
+				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
+													(void*)&mapBlock->tex[dataAdrs] );
+				mapBlock->loadCount++;
+				break;
+			}
+			//最終ロード
+			GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPTEX_SIZE - dataAdrs,
+												(void*)&mapBlock->tex[dataAdrs] );
+			mapBlock->texLoadReq = FALSE;
+			//テクスチャリソースへのＶＲＡＭキーの設定
+			NNS_G3dTexSetTexKey( GFL_G3D_GetResTex(mapBlock->g3DgroundResTex), 
+									mapBlock->groundTexKey, 0 );
+			NNS_G3dPlttSetPlttKey( GFL_G3D_GetResTex(mapBlock->g3DgroundResTex), 
+									mapBlock->groundPlttKey );
+			mapBlock->loadSeq = RND_CREATE;
+			break;
+		case RND_CREATE:
+			//レンダー作成
+			MakeMapRender
+				( mapBlock->NNSrnd, mapBlock->g3DgroundResMdl, mapBlock->g3DgroundResTex );
+			mapBlock->loadCount = 0;
+			mapBlock->loadSeq = TEX_TRANS;
+			break;
+		case TEX_TRANS:
+			dataAdrs = mapBlock->loadCount * MAPTRANS_SIZE;
+
+			if( (dataAdrs + MAPTRANS_SIZE) < MAPTEX_SIZE){
+				NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
+					NNS_GfdGetTexKeyAddr( mapBlock->groundTexKey ) + dataAdrs,
+					(void*)(GFL_G3D_GetAdrsTextureData( mapBlock->g3DgroundResTex ) + dataAdrs),
+					MAPTRANS_SIZE );
+				//転送継続
+				mapBlock->loadCount++;
+				break;
+			}
+			//最終転送
+			NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
+					NNS_GfdGetTexKeyAddr( mapBlock->groundTexKey ) + dataAdrs,
+					(void*)(GFL_G3D_GetAdrsTextureData( mapBlock->g3DgroundResTex ) + dataAdrs),
+					MAPTEX_SIZE - dataAdrs );
+			mapBlock->loadSeq = PLTT_TRANS;
+			break;
+		case PLTT_TRANS:
+			NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, 
+					NNS_GfdGetPlttKeyAddr( mapBlock->groundPlttKey ),
+					(void*)GFL_G3D_GetAdrsTexturePltt( mapBlock->g3DgroundResTex ),
+					MAPPLTT_SIZE );
+			mapBlock->loadSeq = ATTR_LOAD_START;
+			break;
+		case ATTR_LOAD_START:
+			//アトリビュートデータロード開始
+			if( mapBlock->attrID == NON_ATTR ){
+				GFL_STD_MemClear32( (void*)mapBlock->attr, MAPATTR_SIZE );
+				mapBlock->loadSeq = LOAD_END;
+				break;
+			}
+			GFL_ARC_LoadDataOfsByHandle( mapBlock->arc, mapBlock->attrID, 
+											0, MAPLOAD_SIZE, (void*)mapBlock->attr );
+			mapBlock->loadCount = 0;
+			mapBlock->loadCount++;
+			mapBlock->loadSeq = ATTR_LOAD;
+			break;
+		case ATTR_LOAD:
+			dataAdrs = mapBlock->loadCount * MAPLOAD_SIZE;
+
+			if( (dataAdrs + MAPLOAD_SIZE) < MAPATTR_SIZE){
+				//ロード継続
+				GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPLOAD_SIZE, 
+													(void*)&mapBlock->attr[dataAdrs] );
+				mapBlock->loadCount++;
+				break;
+			}
+			//最終ロード
+			GFL_ARC_LoadDataByHandleContinue(	mapBlock->arc, MAPATTR_SIZE - dataAdrs,
+												(void*)&mapBlock->attr[dataAdrs] );
+			mapBlock->attrLoadReq = FALSE;
+			mapBlock->loadSeq = LOAD_END;
+			break;
+		case LOAD_END:
+#if 1
+			//--------------------
+			if( mapBlock->trans.y == 0 ){
+				int j, r;
+				fx32 randTransx, randTransz;
+				fx32 cOffs, rOffs, gWidth;
+				VecFx32 pWorld;
+				G3D_MAPPER_INFODATA gridInfoData;
+				BOOL f;
+
+				cOffs = -g3Dmapper->width/2;
+				gWidth = g3Dmapper->width/MAP_GRIDCOUNT;
+				for( j=0; j<4; j++ ){
+					if( j<2 ){
+						mapBlock->object[j].id = 0;
+					} else {
+						mapBlock->object[j].id = 1;
+					}
+
+					rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+					mapBlock->object[j].trans.x = rOffs + cOffs;
+					mapBlock->object[j].trans.y = 0;
+					rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+					mapBlock->object[j].trans.z = rOffs + cOffs;
+
+					VEC_Add( &mapBlock->object[j].trans, &mapBlock->trans, &pWorld );
+					Get3DmapperGridInfoData( g3Dmapper, &pWorld, &gridInfoData );
+					mapBlock->object[j].trans.y = gridInfoData.height;
+				}
+				for( j=0; j<32; j++ ){
+					mapBlock->directDrawObject[j].id = 0;
+
+					rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+					mapBlock->directDrawObject[j].trans.x = rOffs + cOffs;
+					mapBlock->directDrawObject[j].trans.y = 0;
+					rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
+					mapBlock->directDrawObject[j].trans.z = rOffs + cOffs;
+					VEC_Add( &mapBlock->directDrawObject[j].trans, &mapBlock->trans, &pWorld );
+					Get3DmapperGridInfoData( g3Dmapper, &pWorld, &gridInfoData );
+					mapBlock->directDrawObject[j].trans.y = gridInfoData.height;
+				}
+			}
+			//--------------------
+#endif
+			mapBlock->loadSeq = LOAD_IDLING;
+			break;
 		}
 	}
 }
@@ -925,7 +1018,7 @@ static void	Set3DmapLoadReq( G3D_MAPPER* g3Dmapper, const int blockID, const Vec
 	mapBlock->dataLoadReq = TRUE;
 
 	mapBlock->loadCount = 0;
-	mapBlock->loadSeq = 0;
+	mapBlock->loadSeq = MDL_LOAD_START;
 
 	VEC_Set( &mapBlock->trans, trans->x, trans->y, trans->z );
 }
@@ -1163,7 +1256,6 @@ typedef struct {
 static const DIRECT_DRAW_DATA drawTreeData;
 
 static const DIRECT_DRAW_DATA* directDrawDataTable[] = {
-	NULL,
 	&drawTreeData,
 };
 
@@ -1175,6 +1267,7 @@ static void	DirectDraw3Dmapper
 	MtxFx33	mtxBillboard;
 	VecFx32	trans, gTrans;
 	VecFx16	vecN;
+	u32		texDataAdrs, texPlttAdrs;
 	int		scaleVal = 8;
 	int		i;
 
@@ -1210,6 +1303,9 @@ static void	DirectDraw3Dmapper
 		if( ddObject->id != DDRAW_OBJID_NULL ){
 			GF_ASSERT( ddObject->id  < NELEMS(directDrawDataTable) );
 
+			texDataAdrs = g3Dmapper->grobalDDobject[ ddObject->id ].texDataAdrs;
+			texPlttAdrs = g3Dmapper->grobalDDobject[ ddObject->id ].texPlttAdrs;
+
 			VEC_Add( &ddObject->trans, &mapBlock->trans, &gTrans );
 
 			if( checkCullingLength( g3Dcamera, &gTrans ) == TRUE ){
@@ -1237,8 +1333,7 @@ static void	DirectDraw3Dmapper
 					fx32 limitLength = 512 * FX32_ONE;
 					fx32 length = getCullingLength( g3Dcamera, &gTrans );
 				
-					ddData->func(	g3Dmapper->tree_texDataAdrs, g3Dmapper->tree_texPlttAdrs, 
-									&vecN, ( length < limitLength) );
+					ddData->func(	texDataAdrs, texPlttAdrs, &vecN, ( length < limitLength) );
 				}
 
 				G3_PopMtx(1);
@@ -1392,124 +1487,6 @@ void InitGet3DmapperGridInfo( G3D_MAPPER_GRIDINFO* gridInfo )
 
 //------------------------------------------------------------------
 /**
- * @brief	ブロック情報取得２
- */
-//------------------------------------------------------------------
-static BOOL	GetMapBlockInBuffer( G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
-							u32* blockIdx, fx32* inBlockx, fx32* inBlockz ) 
-{
-	VecFx32 vecTop, vecGrid, inBlockPos;
-	VecFx32 vecDefault = {0,0,0};
-	fx32	width = g3Dmapper->width;
-	fx32	height = g3Dmapper->height;
-	int i;
-
-	if( g3Dmapper->mode == G3D_MAPPER_MODE_SCROLL_Y ){
-		int count = 0;
-		int data = 0;
-		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-			if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
-				vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
-				//vecTop.y = g3Dmapper->mapBlock[i].trans.y;
-				vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
-	
-				if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
-					&&(pos->y >= vecTop.y)&&(pos->y < vecTop.y + height)
-					&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
-	
-					*blockIdx = i;
-					VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-					VEC_Add( &vecGrid, pos, &inBlockPos );
-					*inBlockx = inBlockPos.x;
-					*inBlockz = inBlockPos.z;
-					count++;
-				}
-				data++;
-			}
-		}
-		if( count ){
-			//OS_Printf("data = %x, count = %x\n", data, count);
-			return TRUE;
-		}
-
-	} else {
-		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-			if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
-				vecTop.x = g3Dmapper->mapBlock[i].trans.x - width/2;
-				vecTop.y = g3Dmapper->mapBlock[i].trans.y;
-				vecTop.z = g3Dmapper->mapBlock[i].trans.z - width/2;
-	
-				if(	(pos->x >= vecTop.x)&&(pos->x < vecTop.x + width)
-					&&(pos->z >= vecTop.z)&&(pos->z < vecTop.z + width) ){
-	
-					*blockIdx = i;
-					VEC_Subtract( &vecDefault, &vecTop, &vecGrid );
-					VEC_Add( &vecGrid, pos, &inBlockPos );
-					*inBlockx = inBlockPos.x;
-					*inBlockz = inBlockPos.z;
-					return TRUE;
-				}
-			}
-		}
-	}
-	*blockIdx = 0;
-	*inBlockx = 0;
-	*inBlockz = 0;
-	return FALSE;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド情報取得
- */
-//------------------------------------------------------------------
-static void	GetMapGrid( G3D_MAPPER* g3Dmapper, const fx32 inBlockx, const fx32 inBlockz,
-						u32* gridIdx, fx32* inGridx, fx32* inGridz ) 
-{
-	u32		gridx, gridz;
-	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
-
-	gridx = inBlockx / gridWidth;
-	gridz = inBlockz / gridWidth;
-	*inGridx = inBlockx % gridWidth;
-	*inGridz = inBlockz % gridWidth;
-
-	*gridIdx = gridz * MAP_GRIDCOUNT + gridx;
-
-	//OS_Printf("gridIdx = %x, gridx = %x, gridz = %x\n", *gridIdx, gridx, gridz );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド内三角形パターン取得
- */
-//------------------------------------------------------------------
-static u32 GetMapTriangleID( G3D_MAPPER* g3Dmapper, 
-					const fx32 inGridx, const fx32 inGridz, const u32 gridTryPattern )
-{
-	fx32	gridWidth = g3Dmapper->width / MAP_GRIDCOUNT;
-
-	//グリッド内三角形の判定
-	if( gridTryPattern == 0 ){
-		//0-2-1,3-1-2のパターン
-		if( inGridx + inGridz < gridWidth ){
-			return 0;
-		} else {
-			return 1;
-		}
-	} else {
-		//2-3-0,1-0-3のパターン
-		if( inGridx > inGridz ){
-			return 0;
-		} else {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-//------------------------------------------------------------------
-/**
  * @brief	グリッド情報計算
  */
 //------------------------------------------------------------------
@@ -1578,26 +1555,31 @@ static void CalcGridInfoData( G3D_MAPPER_INFODATA* gridInfo, const MAP_BLOCK_DAT
 BOOL Get3DmapperGridInfoData
 	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_INFODATA* gridInfoData )
 {
+	MAP_BLOCK_DATA* mapBlock;
 	int		i;
 
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->data == NULL ){
+		return FALSE;
+	}
 	InitGet3DmapperGridInfoData( gridInfoData );
 	
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
-
-			fx32 min_x = g3Dmapper->mapBlock[i].trans.x - g3Dmapper->width/2;
-			fx32 min_y = g3Dmapper->mapBlock[i].trans.y;
-			fx32 min_z = g3Dmapper->mapBlock[i].trans.z - g3Dmapper->width/2;
-			fx32 max_x = g3Dmapper->mapBlock[i].trans.x + g3Dmapper->width/2;
-			fx32 max_y = g3Dmapper->mapBlock[i].trans.y + g3Dmapper->height;
-			fx32 max_z = g3Dmapper->mapBlock[i].trans.z + g3Dmapper->width/2;
+		mapBlock = &g3Dmapper->mapBlock[i];
+		if( (mapBlock->idx != MAPID_NULL)&&( mapBlock->attrLoadReq == FALSE)){
+			fx32 min_x = mapBlock->trans.x - g3Dmapper->width/2;
+			fx32 min_y = mapBlock->trans.y;
+			fx32 min_z = mapBlock->trans.z - g3Dmapper->width/2;
+			fx32 max_x = mapBlock->trans.x + g3Dmapper->width/2;
+			fx32 max_y = mapBlock->trans.y + g3Dmapper->height;
+			fx32 max_z = mapBlock->trans.z + g3Dmapper->width/2;
 
 			//ブロック範囲内チェック
 			if(	(pos->x >= min_x)&&(pos->x < max_x)
 				&&(pos->y >= min_y)&&(pos->y < max_y)
 				&&(pos->z >= min_z)&&(pos->z < max_z) ){
 
-				CalcGridInfoData( gridInfoData, &g3Dmapper->mapBlock[i], pos, g3Dmapper->width );
+				CalcGridInfoData( gridInfoData, mapBlock, pos, g3Dmapper->width );
 				return TRUE;
 			}
 		}
@@ -1613,25 +1595,31 @@ BOOL Get3DmapperGridInfoData
 BOOL Get3DmapperGridInfo
 	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_GRIDINFO* gridInfo )
 {
+	MAP_BLOCK_DATA* mapBlock;
 	int		i, p;
+
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->data == NULL ){
+		return FALSE;
+	}
 
 	InitGet3DmapperGridInfo( gridInfo );
 	
 	p = 0;
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		if( g3Dmapper->mapBlock[i].idx != MAPID_NULL){
+		mapBlock = &g3Dmapper->mapBlock[i];
+		if( (mapBlock->idx != MAPID_NULL)&&( mapBlock->attrLoadReq == FALSE)){
 
-			fx32 min_x = g3Dmapper->mapBlock[i].trans.x - g3Dmapper->width/2;
-			fx32 min_z = g3Dmapper->mapBlock[i].trans.z - g3Dmapper->width/2;
-			fx32 max_x = g3Dmapper->mapBlock[i].trans.x + g3Dmapper->width/2;
-			fx32 max_z = g3Dmapper->mapBlock[i].trans.z + g3Dmapper->width/2;
+			fx32 min_x = mapBlock->trans.x - g3Dmapper->width/2;
+			fx32 min_z = mapBlock->trans.z - g3Dmapper->width/2;
+			fx32 max_x = mapBlock->trans.x + g3Dmapper->width/2;
+			fx32 max_z = mapBlock->trans.z + g3Dmapper->width/2;
 
 			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
 			if(	(pos->x >= min_x)&&(pos->x < max_x)&&(pos->z >= min_z)&&(pos->z < max_z) ){
 
-				CalcGridInfoData( &gridInfo->gridData[p], &g3Dmapper->mapBlock[i],
-									pos, g3Dmapper->width );
+				CalcGridInfoData( &gridInfo->gridData[p], mapBlock, pos, g3Dmapper->width );
 				p++;
 			}
 		}
@@ -1652,6 +1640,11 @@ BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
 {
 	fx32 widthx, widthz;
 
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->data == NULL ){
+		return TRUE;
+	}
+
 	widthx = g3Dmapper->sizex * g3Dmapper->width;
 	widthz = g3Dmapper->sizez * g3Dmapper->width;
 
@@ -1659,6 +1652,24 @@ BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos )
 		return FALSE;
 	}
 	return TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	サイズ取得
+ */
+//------------------------------------------------------------------
+void Get3DmapperSize( G3D_MAPPER* g3Dmapper, fx32* x, fx32* z )
+{
+	GF_ASSERT( g3Dmapper );
+	if( g3Dmapper->data == NULL ){
+		*x = 0;
+		*z = 0;
+		return;
+	}
+	*x = g3Dmapper->sizex * g3Dmapper->width;
+	*z = g3Dmapper->sizez * g3Dmapper->width;
+	return;
 }
 
 

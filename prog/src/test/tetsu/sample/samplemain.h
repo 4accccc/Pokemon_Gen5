@@ -1273,3 +1273,7 @@ static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
 	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
 };
 
+static const u16	resistDDobjTbl[] = {
+	NARC_sample_map_sample_tree_nsbtx,
+};
+

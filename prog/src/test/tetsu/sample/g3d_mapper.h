@@ -15,22 +15,6 @@
 typedef struct _G3D_MAPPER G3D_MAPPER;
 
 typedef struct {
-	fx16	vecN1_x;
-	fx16	vecN1_y;
-	fx16	vecN1_z;
-
-	fx16	vecN2_x;
-	fx16	vecN2_y;
-	fx16	vecN2_z;
-
-	fx32	vecN1_D;
-	fx32	vecN2_D;
-
-	u32		attr:31;
-	u32		tryangleType:1;
-}NormalVtxSt;
-
-typedef struct {
 	VecFx16 vecN;
 	u32		attr;
 	fx32	height;
@@ -79,6 +63,13 @@ typedef struct {
 
 }G3D_MAPPEROBJ_RESIST;
 
+typedef struct {
+	u32			arcID;	//アーカイブＩＤ
+	const u16*	data;	//実マップデータ
+	u32			count;	//テクスチャ数
+
+}G3D_MAPPERDDOBJ_RESIST;
+
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム作成
@@ -113,11 +104,15 @@ extern void	Delete3Dmapper( G3D_MAPPER* g3Dmapper );
 extern void	ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistData );
 //------------------------------------------------------------------
 /**
- * @brief	オブジェクトリソースセット
+ * @brief	オブジェクトリソース登録
  */
 //------------------------------------------------------------------
 extern void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* resistData );
 extern void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper );
+//------------------------------------------------------------------
+extern void ResistDDobjRes3Dmapper
+			( G3D_MAPPER* g3Dmapper, const G3D_MAPPERDDOBJ_RESIST* resistData );
+extern void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper );
 
 //------------------------------------------------------------------
 /**
@@ -150,5 +145,11 @@ extern BOOL Get3DmapperGridInfo
  */
 //------------------------------------------------------------------
 extern BOOL Check3DmapperOutRange( G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+//------------------------------------------------------------------
+/**
+ * @brief	サイズ取得
+ */
+//------------------------------------------------------------------
+extern void Get3DmapperSize( G3D_MAPPER* g3Dmapper, fx32* x, fx32* z );
 
 
