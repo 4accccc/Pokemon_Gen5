@@ -13,7 +13,7 @@
 .PHONY : gflib
 
 # GF-Library
-GFLIB_DIR		=	gflib
+GFLIB_DIR		=	../lib/gflib/
 LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
@@ -33,7 +33,7 @@ LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
 #	インクルードファイルのディレクトリの追加
 #----------------------------------------------------------------------------
 
-LINCLUDES      = ./gflib/include \
+LINCLUDES      = $(GFLIB_DIR)/include \
 				 ./include
 
 #----------------------------------------------------------------------------
