@@ -615,13 +615,10 @@ static void _changeoverParentWait(GFL_NETSTATE* pState)
     if(GFL_NET_SystemIsChildsConnecting()){   // 自分以外がつながったら親機固定
 
         NET_PRINT("親機 -- つながり\n");
-//        pNetHandle->bFirstParent = TRUE;  // 親機として繋がったのでフラグを戻しておく
         //WirelessIconEasy();  //@@OO
         {
-//            GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
-//            GFL_NETHANDLE* pHandleServer;
-  //          pHandleServer = GFL_NET_CreateHandle();
-            GFL_NET_CreateServer();   // サーバ
+            GFLNetInitializeStruct* pNetIni = _GFL_NET_GetNETInitStruct();
+            GFL_NET_StateCreateParent(pNetIni->netHeapID);
             GFI_NET_AutoParentConnectFunc();
         }
         _CHANGE_STATE(_changeoverParentConnect, 0);

@@ -159,23 +159,6 @@ BOOL ConnectGameNet(void)
 		gNetSys._connectSeqNo = _CONNECT_NEGO;
 		break;
 
-	case _CONNECT_NEGO:
-		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE ){
-			gNetSys._connectSeqNo = _CONNECT_NEGOCHECK;
-		}
-		break;
-
-	case _CONNECT_NEGOCHECK:
-        gNetSys._pHandle = GFL_NET_HANDLE_GetCurrentHandle();
-		if( GFL_NET_HANDLE_IsNegotiation( gNetSys._pHandle ) == TRUE ){
-			if( GFL_NET_IsParentMachine() == FALSE ){
-				//子機の場合モードセット可能(defaultはDSモード)
-				//GFL_NET_ChangeMpMode(gNetSys._pHandle);
-			}
-			gNetSys._connectSeqNo = _CONNECT_TIMINGSTART;
-		}
-		break;
-
 	case _CONNECT_TIMINGSTART:
         gNetSys._pHandle = GFL_NET_HANDLE_GetCurrentHandle();
 		GFL_NET_TimingSyncStart(gNetSys._pHandle, _TEST_TIMING);
