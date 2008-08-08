@@ -1,0 +1,28 @@
+@echo off
+
+REM SET USERNAME=none
+SET WBLIBDIR=C:\home\pokemon_wb\lib
+SET CWFOLDER_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
+SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
+SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DS V2.0\license.dat
+SET NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
+SET NITROSYSTEM_ROOT=%WBLIBDIR%\NitroSystem
+SET NITROWIFI_ROOT=%WBLIBDIR%\NitroWifi
+SET NITRODWC_ROOT=%WBLIBDIR%\NitroDwc
+SET NITROVCT_ROOT=%WBLIBDIR%\libVCT
+SET NITROLIBVCT_ROOT=%WBLIBDIR%\libVCT
+SET NITRO_PLATFORM=TS
+
+SET CVSROOT=:pserver:%USERNAME%@dpcvs.gamefreak.co.jp:/Groups/deocvs
+SET CVSEDITOR=c:\tools\vim\gvim
+
+SET SVNROOT=:svn://svn-wb.gamefreak.co.jp/pokemon_wb/
+SET SVN_EDITOR=c:\tools\vim\gvim
+
+PATH=C:\tools;c:\cygwin\bin;%PATH%;c:\tools\vim;C:\home\pokemon_wb\lib\NitroSDK\tools\bin;C:\home\pokemon_wb\lib\NitroSystem\tools\win\bin;C:\home\pokemon_wb\tools
+
+C:
+chdir C:\Cygwin\bin
+
+bash --login -i
+
