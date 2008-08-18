@@ -2,7 +2,8 @@
 
 SET LANG=C-SJIS
 SET HOME=c:\home
-SET PROJECT_ROOT=%~p0%
+REM SET PROJECT_ROOT=%~p0%
+SET PROJECT_ROOT=%HOME%\pokemon_wb
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
@@ -12,15 +13,19 @@ PATH=%PROJECT_ROOT%;c:\cygwin\bin;%PATH%;c:\tools\vim;C:\tools;c:\NitroSDK\tools
 REM ##################################################
 REM		ディレクトリパス定義
 REM ##################################################
+SET WBLIBDIR=%PROJECT_ROOT%\lib
 SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
-SET CW_NITROSDK_ROOT=C:\NEWNitro\NitroSDK
+SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
 SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DS V2.0\license.dat
-SET NITROSYSTEM_ROOT=C:\NitroSystem\
-SET NITROWIFI_ROOT=C:\NitroWifi\
-SET NITRODWC_ROOT=C:\NitroDwc\
-SET NITROVCT_ROOT=C:\libVct\
-SET NITROLIBVCT_ROOT=C:\libVCT\
+SET NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
+SET NITROSYSTEM_ROOT=%WBLIBDIR%\NitroSystem
+SET NITROWIFI_ROOT=%WBLIBDIR%\NitroWifi
+SET NITRODWC_ROOT=%WBLIBDIR%\NitroDWC
+SET NITROVCT_ROOT=%WBLIBDIR%\libVCT
+SET NITROLIBVCT_ROOT=%WBLIBDIR%\libVCT
 
+
+REM SET SVN_EDITOR=c:\tools\vim\gvim
 
 REM ##################################################
 REM		マクロ定義
