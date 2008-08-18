@@ -136,11 +136,11 @@ RomSpec
 
 	## HostRootはパソコン側のディレクトリ
 	## RootはDS側のディレクトリ
-	HostRoot	./gfl_graphic/
+	HostRoot	./filetree/
 	Root		/
 	File		$(GFL_MAKEROM_ROMFILES)
 
-	HostRoot	./gfl_graphic/
+	HostRoot	./filetree/
 	Root	/dwc
 	File	utility.bin
 
