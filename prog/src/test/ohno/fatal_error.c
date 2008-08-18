@@ -11,8 +11,9 @@
 
 #include "gflib.h"
 #include "include/system/gfl_use.h"
-#include "arc/test_graphic/fatal_error.naix"
+#include "test_graphic/fatal_error.naix"
 #include "include\system\main.h"
+#include "fatal_error.h"
 
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/fatal_error.narc",
