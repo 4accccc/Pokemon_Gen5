@@ -8,12 +8,12 @@
 //============================================================================================
 
 #include "gflib.h"
-#include "arc/test_graphic/wmi.naix"
+#include "wmi.naix"
 #include "net_icondata.h"
 
 
 static	const	char	*GraphicFileTable[]={
-    "test_graphic/wmi.narc",
+    "wmi.narc",
 };
 
 //==============================================================================
