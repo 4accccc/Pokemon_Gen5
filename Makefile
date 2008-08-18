@@ -7,18 +7,29 @@
 #----------------------------------------------------------------------------
 
 
+RESOURCE_DIR = ./resource/
 PROG_DIR = ./prog/
 
 
 #  makeした場合にすべて作られるように記述してください
 #--------------------------------------- ----------------------------
 do-build:
+	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(PROG_DIR)
 
 
 # cleanした場合にすべて消えるように記述してください
 #--------------------------------------------------------------------
-.PHONY : clean
+.PHONY : clean	prog resource
+
 clean:
+	$(MAKE) -C $(RESOURCE_DIR) clean
 	$(MAKE) -C $(PROG_DIR) clean
+
+#--------------------------------------------------------------------
+prog:
+	$(MAKE) -C $(PROG_DIR)
+
+resource:
+	$(MAKE) -C $(RESOURCE_DIR)
 
