@@ -4,6 +4,7 @@ SET LANG=C-SJIS
 SET HOME=c:\home
 REM SET PROJECT_ROOT=%~p0%
 SET PROJECT_ROOT=%HOME%\pokemon_wb
+SET PROJECT_ARCDIR=$(PROJECT_ROOT)\prog\arc
 
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
@@ -25,7 +26,7 @@ SET NITROVCT_ROOT=%WBLIBDIR%\libVCT
 SET NITROLIBVCT_ROOT=%WBLIBDIR%\libVCT
 
 
-REM SET SVN_EDITOR=c:\tools\vim\gvim
+SET SVN_EDITOR=c:\tools\vim\gvim
 
 REM ##################################################
 REM		É}ÉNÉçíËã`
