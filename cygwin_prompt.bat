@@ -3,7 +3,8 @@
 REM SET USERNAME=none
 
 REM ディレクトリの場所を変える場合、このファイルをコピーした後に、ここを自由に書き換えて下さい
-SET WBLIBDIR=C:\home\pokemon_wb\lib
+SET PROJECT_ROOT=C:\home\pokemon_wb
+SET WBLIBDIR=$(PROJECT_ROOT)\lib
 
 SET CWFOLDER_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
