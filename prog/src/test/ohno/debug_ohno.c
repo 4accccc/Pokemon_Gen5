@@ -14,7 +14,8 @@
 #include "debug_ohno.h"
 #include "debug_field.h"
 #include "system/main.h"
-#include "include\net\network_define.h"
+#include "net\network_define.h"
+#include "wmi.naix"
 
 static DEBUG_OHNO_CONTROL * DebugOhnoControl;
 
@@ -37,7 +38,7 @@ static void _connectCallBack(void* pWork);
 static void* _netBeaconGetFunc(void);
 static int _netBeaconGetSizeFunc(void);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
-static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
+//static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
     {_RecvMoveData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_MOVE

@@ -34,7 +34,8 @@ LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
 #----------------------------------------------------------------------------
 
 LINCLUDES      = $(GFLIB_DIR)/include \
-				 ./include
+				 ./include \
+				 ./arc
 
 #----------------------------------------------------------------------------
 #	バージョン定義
@@ -95,13 +96,13 @@ LLIBRARIES	+= ./libcrypto.a
 #----------------------------------------------------------------------------
 #ロムファイル指定(GFL)
 GFL_FILE_TREE	=	\
-					wmi.narc \
 					gfl_font.dat
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
 #ロムファイル指定(GAME)
-GAME_FILE_TREE	= test_graphic/*.narc
+GAME_FILE_TREE	= test_graphic/*.narc \
+					*.narc
 			  
 MAKEROM_ROMFILES = $(GAME_FILE_TREE)
 
@@ -150,6 +151,8 @@ overlay/overlay_files:	make_prog_files
 	ruby overlay/overlaytool.rb
 
 #--------------------------------------- ----------------------------
+programs = $(TARGETS)
+
 do-build:		$(TARGETS)
 
 #-----

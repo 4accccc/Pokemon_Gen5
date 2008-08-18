@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: wmi.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-05-29T19:03:48
+ *****************************************************************************/
+
+#ifndef NARC_WMI_NAIX_
+#define NARC_WMI_NAIX_
+
+enum {
+	NARC_wmi_wifi_ncgr = 0,
+	NARC_wmi_wm_ncgr = 1,
+	NARC_wmi_wm_nclr = 2
+};
+
+/* NARC_WMI_NAIX_ */
+#endif
