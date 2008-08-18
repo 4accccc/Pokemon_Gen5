@@ -83,8 +83,8 @@ static const GFL_BG_DISPVRAM dispVram = {
  * @brief	アーカイブテーブル
  */
 //------------------------------------------------------------------
-#include "graphic_data/test_graphic/test3d.naix"
-#include "graphic_data/test_graphic/mapobj.naix"
+#include "arc/test_graphic/test3d.naix"
+#include "arc/test_graphic/mapobj.naix"
 
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/test3d.narc",

@@ -65,7 +65,7 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/spa.narc",
 };
 
-#include "../../graphic_data/test_graphic/titledemo.naix"
+#include "../../arc/test_graphic/titledemo.naix"
 #include "testmode.dat"
 
 //‚a‚fİ’èŠÖ”

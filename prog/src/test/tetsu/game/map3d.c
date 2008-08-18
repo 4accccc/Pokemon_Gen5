@@ -103,9 +103,9 @@ static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work );
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-#include "graphic_data/test_graphic/test3d.naix"
-#include "graphic_data/test_graphic/fld_map.naix"
-#include "graphic_data/test_graphic/build_model_id.h"
+#include "arc/test_graphic/test3d.naix"
+#include "arc/test_graphic/fld_map.naix"
+#include "arc/test_graphic/build_model_id.h"
 
 enum {
 	G3DRES_MAP_FLOOR = 0,

@@ -8,7 +8,7 @@
 //============================================================================================
 
 #include "gflib.h"
-#include "graphic_data/test_graphic/wmi.naix"
+#include "arc/test_graphic/wmi.naix"
 #include "net_icondata.h"
 
 

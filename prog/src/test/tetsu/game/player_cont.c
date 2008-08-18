@@ -564,7 +564,7 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
  *
  */
 //------------------------------------------------------------------
-#include "graphic_data/test_graphic/fld_act.naix"
+#include "arc/test_graphic/fld_act.naix"
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
 	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,

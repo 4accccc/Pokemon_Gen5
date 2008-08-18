@@ -11,7 +11,7 @@
 
 #include "gflib.h"
 #include "include/system/gfl_use.h"
-#include "graphic_data/test_graphic/fatal_error.naix"
+#include "arc/test_graphic/fatal_error.naix"
 #include "include\system\main.h"
 
 static	const	char	*GraphicFileTable[]={

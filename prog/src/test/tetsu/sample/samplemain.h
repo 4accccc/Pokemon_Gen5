@@ -1,5 +1,5 @@
-#include "graphic_data/test_graphic/sample_map.naix"
-#include "graphic_data/test_graphic/fld_map.naix"
+#include "arc/test_graphic/sample_map.naix"
+#include "arc/test_graphic/fld_map.naix"
 
 static const G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_sample_map_map_a1_nsbmd, NARC_sample_map_map_a1_nsbtx, NARC_sample_map_map_a1_bin },

@@ -38,7 +38,7 @@ struct _FLD_ACTSYS {
 	FLD_ACT_WORK			actWork[FLD_BBDACT_ACTMAX];
 };
 
-#include "graphic_data/test_graphic/fld_act.naix"
+#include "arc/test_graphic/fld_act.naix"
 
 static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork );
 static void	calcCameraRotate( FLD_ACTSYS* fldActSys );

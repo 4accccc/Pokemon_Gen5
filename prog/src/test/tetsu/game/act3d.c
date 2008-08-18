@@ -70,7 +70,7 @@ typedef struct {
 
 #define SYNC_WAIT (1)
 
-#include "graphic_data/test_graphic/test3d.naix"
+#include "arc/test_graphic/test3d.naix"
 //------------------------------------------------------------------
 /**
  *
