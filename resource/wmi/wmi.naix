@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-08-19T15:18:52
+	Update:2008-08-19T18:37:02
  *****************************************************************************/
 
 #ifndef NARC_WMI_NAIX_
@@ -12,8 +12,8 @@
 
 enum {
 	NARC_wmi_wm_NCLR = 0,
-	NARC_wmi_wm_NCGR = 1,
-	NARC_wmi_wifi_NCGR = 2
+	NARC_wmi_wifi_NCGR = 1,
+	NARC_wmi_wm_NCGR = 2
 };
 
 /* NARC_WMI_NAIX_ */
