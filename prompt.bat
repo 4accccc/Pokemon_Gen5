@@ -9,7 +9,6 @@ SET PROJECT_ARCDIR=$(PROJECT_ROOT)\prog\arc
 REM SET PATH=%CYGNUSDIR%/native-99r1/H-i686-cygwin32/bin;%AGBDIR%/bin;%PATH%;.
 REM SET PATH=%CYGNUSDIR%/thumbelf-000512/H-i686-cygwin32/bin;%PATH%
 REM SET PATH=%AGBDIR%/bin;%PATH%
-PATH=%PROJECT_ROOT%;c:\cygwin\bin;%PATH%;c:\tools\vim;C:\tools;c:\NitroSDK\tools\bin;c:\NitroSystem\tools\win\bin;
 
 REM ##################################################
 REM		ディレクトリパス定義
@@ -27,6 +26,11 @@ SET NITROLIBVCT_ROOT=%WBLIBDIR%\libVCT
 
 
 SET SVN_EDITOR=c:\tools\vim\gvim
+
+REM ##################################################
+REM		パスの追加
+REM ##################################################
+PATH=%PROJECT_ROOT%;c:\cygwin\bin;%PATH%;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;
 
 REM ##################################################
 REM		マクロ定義
