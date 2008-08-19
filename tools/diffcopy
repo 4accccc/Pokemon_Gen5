@@ -1,0 +1,29 @@
+#! /bin/bash
+
+#ファイルの比較を行ってからコピーします
+#
+#制限：
+#・今のところ、1対1のコピーにしか対応していません
+#・cygwin上でしか動作チェックしていません
+#
+
+if [ $# -eq 2 ] ; then
+    if [ -e $2 ] ; then
+	diff -q $1 $2
+	if [ $? -ne 0 ] ; then
+	    # コピー元とコピー先の内容が異なるので、コピーする
+	    echo "cp $1 $2"
+	    cp -f $1 $2
+	else
+	    echo "Not copy because file $1 is same as $2."
+	fi
+    else
+	# コピー先ファイルが存在しない場合は、無条件でコピーする
+	echo "cp $1 $2"
+	cp -f $1 $2
+    fi
+else
+    echo "Illigal argment."
+    echo "Usage : dfcopy <srcFileName> <dstFileName>"
+    exit 1    # 異常終了
+fi
