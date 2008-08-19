@@ -1,0 +1,24 @@
+#------------------------------------------------------------------------------
+#	再帰的なMake呼び出しマクロ
+#
+#	SUBDIRSに定義したディレクトリそれぞれについて再帰的にMakeを行う
+#
+#------------------------------------------------------------------------------
+AND	=	&&
+ECHO	:= echo
+define MAKE_SUBDIR
+    +$(foreach DIR,$(SUBDIRS),$(MAKE) $(SUBDIR_FLAGS) -C $(DIR) $(MAKECMDGOALS) $(AND)) true
+    +$(foreach FILE,$(SUBMAKES),$(MAKE) $(SUBDIR_FLAGS) -C $(dir $(FILE)) -f $(notdir $(FILE)) $(MAKECMDGOALS) $(AND)) true
+endef
+
+ifeq ($(MAKEFILE),Makefile)
+MAKEFILE_	=
+else
+MAKEFILE_	= /$(MAKEFILE)
+endif
+
+define ECHO_CURDIR
+	$(ECHO) "==== $(CURDIR)$(MAKEFILE_)";
+endef
+
+
