@@ -28,19 +28,14 @@ COPY = cp
 .ncg.NCGR:
 	g2dcvtr $< -bg
 
-# コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects)
-	nnsarc -r -l -n -i $(targetname) $^
-	make install
-
 # narc のコピーだけ実行する
 $(PROJECT_ARCDIR)/$(targetname).narc: $(targetname).narc
-	make install
-
-install:
 	$(COPY) $(targetname).narc $(PROJECT_ARCDIR)
 	$(COPY) $(targetname).naix $(PROJECT_ARCDIR) 
 
+# コピー先のnarcが古い場合実行する
+$(targetname).narc: $(lobjects) $(gobjects)
+	nnsarc -r -l -n -i $(targetname) $^
 
 # 削除ファイルを書く
 clean:
@@ -51,4 +46,9 @@ clean:
 	rm -rf $(PROJECT_ARCDIR)/$(targetname).narc
 	rm -rf $(PROJECT_ARCDIR)/$(targetname).naix
 
+
+# 削除ファイルを書く
+clean2:
+	rm -rf $(PROJECT_ARCDIR)/$(targetname).narc
+	rm -rf $(PROJECT_ARCDIR)/$(targetname).naix
 
