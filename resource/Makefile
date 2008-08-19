@@ -9,6 +9,8 @@ RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 SUBDIRS	= wmi test_graphic
 
 include $(RESOURCE_MACRO)
+
+.PHONY:	do-build	clean
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 do-build:
