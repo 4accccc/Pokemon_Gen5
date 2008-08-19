@@ -17,6 +17,7 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 
 # コピーの方法を記述
 DIFFCOPY = ruby $(PROJECT_ROOT)/tools/diffcopy.rb
+NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
 COPY = cp
 
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -36,6 +37,7 @@ $(PROJECT_ARCDIR)/$(targetname).narc: $(targetname).narc
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(lobjects) $(gobjects)
 	nnsarc -r -l -n -i $(targetname) $^
+	$(NAIXCUT) $(targetname).naix
 
 # 削除ファイルを書く
 clean:
