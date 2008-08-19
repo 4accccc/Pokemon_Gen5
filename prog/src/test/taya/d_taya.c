@@ -17,6 +17,8 @@
 #include "d_taya.naix"
 #include "msg_d_taya.h"
 
+#include "arc/arc_def.h"
+
 
 typedef struct {
 
@@ -62,12 +64,14 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
 	};
 
+#if 0
 	static const char* arcFiles[] = {
 		"test_graphic/d_taya.narc",
 	};
 	enum {
 		ARCID_DEFAULT,
 	};
+#endif
 
 
 	KANJI_WORK* wk;
@@ -76,7 +80,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	wk = GFL_PROC_AllocWork( proc, sizeof(KANJI_WORK), HEAPID_TAYA_DEBUG );
 	wk->heapID = HEAPID_TAYA_DEBUG;
 
-	GFL_ARC_Init( arcFiles, NELEMS(arcFiles) );
+//	GFL_ARC_Init( arcFiles, NELEMS(arcFiles) );	gfl_use.cで1回だけ初期化に変更
 
 	GFL_DISP_SetBank( &vramBank );
 

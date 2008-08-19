@@ -15,9 +15,11 @@
 #include "include\system\main.h"
 #include "fatal_error.h"
 
-static	const	char	*GraphicFileTable[]={
-	"test_graphic/fatal_error.narc",
-};
+#include "arc/arc_def.h"
+
+//static	const	char	*GraphicFileTable[]={
+//	"test_graphic/fatal_error.narc",
+//};
 
 //----------------------------------------------------------------------------
 /**
@@ -30,7 +32,7 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 	GFL_BG_Init(GFL_HEAPID_APP);
 
     //ARCシステム初期化
-	GFL_ARC_Init(&GraphicFileTable[0],1);
+//	GFL_ARC_Init(&GraphicFileTable[0],1);	gfl_use.cで1回だけ初期化に変更
 
 	//VRAM設定
 	{
@@ -114,9 +116,9 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 	}
 
 	//画面生成
-	GFL_ARC_UTIL_TransVramBgCharacter(0,NARC_fatal_error_fatal_error_lz_NCGR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UTIL_TransVramScreen(0,NARC_fatal_error_fatal_error_lz_NSCR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
-	GFL_ARC_UTIL_TransVramPalette(0,NARC_fatal_error_fatal_error_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramBgCharacter(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_lz_NCGR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramScreen(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_lz_NSCR,GFL_BG_FRAME2_M,0,0,1,GFL_HEAPID_APP);
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FATAL_ERROR,NARC_fatal_error_fatal_error_NCLR,PALTYPE_MAIN_BG,0,0x100,GFL_HEAPID_APP);
 
 	GFL_DISP_SetDispOn();
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );

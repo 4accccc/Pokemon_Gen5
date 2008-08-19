@@ -10,6 +10,7 @@
 #include "include/system/gfl_use.h"
 #include "include/net/network_define.h"
 #include "textprint.h"
+#include "arc/arc_def.h"
 
 void	SampleBoot( HEAPID heapID );
 void	SampleEnd( void );
@@ -39,6 +40,7 @@ static void				RemoveGameSystem( SAMPLE_SETUP* gs );
 static void				MainGameSystem( SAMPLE_SETUP* gs );
 static G3D_MAPPER*		GetG3Dmapper( SAMPLE_SETUP* gs );
 
+#if 0
 //アーカイブＩＮＤＥＸ
 enum {
 	ARCID_TEST3D = 0,
@@ -46,6 +48,7 @@ enum {
 	ARCID_FLDMAP,
 	ARCID_SAMPLEMAP,
 };
+#endif
 
 typedef struct _CURSOR_CONT	CURSOR_CONT;
 static CURSOR_CONT*		CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID );
@@ -326,12 +329,14 @@ static const GFL_BG_DISPVRAM dispVram = {
 //------------------------------------------------------------------
 #include "arc/test_graphic/fld_act.naix"
 
+#if 0
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/test3d.narc",
 	"test_graphic/fld_act.narc",
 	"test_graphic/fld_map.narc",
 	"test_graphic/sample_map.narc",
 };
+#endif
 
 static const char font_path[] = {"gfl_font.dat"};
 //------------------------------------------------------------------
@@ -398,7 +403,7 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 	GFL_STD_MtRandInit(0);
 
 	//ARCシステム初期化
-	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );
+//	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );		gfl_use.cで1回だけ初期化に変更
 
 	//VRAMクリア
 	GFL_DISP_ClearVRAM( GX_VRAM_D );
@@ -426,7 +431,7 @@ static void	RemoveGameSystem( SAMPLE_SETUP* gs )
 	g3d_unload( gs );	//３Ｄデータ破棄
 
 	bg_exit( gs );
-	GFL_ARC_Exit();
+//	GFL_ARC_Exit();
 
 	GFL_HEAP_FreeMemory( gs );
 }

@@ -19,6 +19,8 @@
 #include "gf_overlay.h"
 #include "tcb.h"
 #include "backup_system.h"
+#include "arc/arc_def.h"
+#include "arc/arc_file.h"
 
 
 //=============================================================================================
@@ -96,7 +98,7 @@ void GFLUser_Init(void)
     //STD 標準ライブラリ初期化（乱数やCRC）
     GFL_STD_Init(GFL_HEAPID_SYSTEM);
 	//アーカイブシステム初期化
-	//GFL_ARC_SysInit(...);
+	GFL_ARC_Init(&ArchiveFileTable[0],ARCID_TABLE_MAX);
 
 	//UIシステム初期化
 	GFL_UI_Boot(GFL_HEAPID_SYSTEM);

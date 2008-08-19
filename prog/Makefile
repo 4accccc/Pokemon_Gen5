@@ -95,15 +95,19 @@ LLIBRARIES	+= ./libcrypto.a
 #	ロムに含まれるファイルの指定  default.rsfファイルで使用している
 #----------------------------------------------------------------------------
 #ロムファイル指定(GFL)
-GFL_FILE_TREE	=	\
+GFL_FILE_TREE	=	titledemo.narc \
 					gfl_font.dat
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
 #ロムファイル指定(GAME)
-GAME_FILE_TREE	= test_graphic/*.narc \
-					*.narc
-			  
+#GAME_FILE_TREE	= test_graphic/*.narc \
+#					*.narc
+#ロムファイル指定は、arc/arc_tool.lstに記述してください
+#その記述内容から、file_tree.incを自動生成します
+
+-include file_tree.inc
+
 MAKEROM_ROMFILES = $(GAME_FILE_TREE)
 
 ## ------------------------------------------------------------------------------------------
@@ -153,13 +157,12 @@ overlay/overlay_files:	make_prog_files
 #--------------------------------------- ----------------------------
 programs = $(TARGETS)
 
-do-build:		$(TARGETS)
+do-build: $(TARGETS)
 
 #-----
 #  gflibをmakeする
 gflib:
 	$(MAKE) -C $(GFLIB_DIR)
-
 
 #----------------------------------------------------------------------------
 #	ソースのみのリコンパイル

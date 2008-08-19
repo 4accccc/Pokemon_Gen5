@@ -144,7 +144,7 @@ RomSpec
 	Root	/dwc
 	File	utility.bin
 
-	HostRoot	./arc/
+	HostRoot	./filetree/
 	Root		/
 	File		$(MAKEROM_ROMFILES)
 }

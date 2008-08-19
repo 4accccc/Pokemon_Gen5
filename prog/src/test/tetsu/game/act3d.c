@@ -10,6 +10,7 @@
 
 #include "setup.h"
 #include "include\system\gfl_use.h"
+#include "arc\arc_def.h"
 
 //------------------------------------------------------------------
 /**

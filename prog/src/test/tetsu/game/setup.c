@@ -17,6 +17,8 @@
 
 #include "setup.h"
 
+#include "arc/arc_def.h"
+
 //============================================================================================
 //
 //
@@ -86,6 +88,7 @@ static const GFL_BG_DISPVRAM dispVram = {
 #include "arc/test_graphic/test3d.naix"
 #include "arc/test_graphic/mapobj.naix"
 
+#if 0
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/test3d.narc",
 	"test_graphic/mapobj.narc",
@@ -94,6 +97,7 @@ static	const	char	*GraphicFileTable[]={
 	"test_graphic/fld_map.narc",
 	"test_graphic/build_model.narc",
 };
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -289,7 +293,7 @@ GAME_SYSTEM*	SetupGameSystem( HEAPID heapID )
 	GFL_STD_MtRandInit(0);
 
 	//ARCシステム初期化
-	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );
+//	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );	gfl_use.cで1回だけ初期化に変更
 
 	//VRAMクリア
 	GFL_DISP_ClearVRAM( GX_VRAM_D );
@@ -324,7 +328,7 @@ void	RemoveGameSystem( GAME_SYSTEM* gs )
 	g3d_unload( gs );	//３Ｄデータ破棄
 
 	bg_exit( gs );
-	GFL_ARC_Exit();
+//	GFL_ARC_Exit();
 
 	GFL_HEAP_FreeMemory( gs );
 }

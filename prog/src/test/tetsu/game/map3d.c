@@ -8,6 +8,7 @@
 
 #include "setup.h"
 #include "calc_ph.h"
+#include "arc/arc_def.h"
 
 //------------------------------------------------------------------
 /**

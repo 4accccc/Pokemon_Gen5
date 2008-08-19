@@ -8,6 +8,7 @@
 
 #include "setup.h"
 #include "include\system\gfl_use.h"
+#include "arc/arc_def.h"
 
 #include "fld_act.h"
 //’jGFL_G3D_SYSTEM, GFL_BBDã‚Å‚Ì“®ì

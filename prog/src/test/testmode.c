@@ -61,9 +61,11 @@ enum {
 	MSG_RED,
 };
 
+#if 0
 static	const	char	*GraphicFileTable[]={
 	"test_graphic/spa.narc",
 };
+#endif
 
 #include "../../arc/test_graphic/titledemo.naix"
 #include "testmode.dat"
@@ -221,7 +223,7 @@ static void	bg_init( HEAPID heapID )
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ARCシステム初期化
-	GFL_ARC_Init(&GraphicFileTable[0],NELEMS(GraphicFileTable));
+//	GFL_ARC_Init(&GraphicFileTable[0],NELEMS(GraphicFileTable));	gfl_use.cで1回だけ初期化に変更
 
 	//パーティクルシステム起動
 //	GFL_PTC_Init(heapID);
@@ -236,7 +238,7 @@ static void	bg_exit( void )
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
 //	GFL_PTC_Exit();
-	GFL_ARC_Exit();
+//	GFL_ARC_Exit();
 
 	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
@@ -378,7 +380,7 @@ static void	g2d_unload( TESTMODE_WORK * testmode )
  * @brief		３Ｄデータ
  */
 //------------------------------------------------------------------
-static const char g3DarcPath[] = {"test_graphic/titledemo.narc"};
+static const char g3DarcPath[] = {"titledemo.narc"};
 
 enum {
 	G3DRES_AIR_BMD = 0,
