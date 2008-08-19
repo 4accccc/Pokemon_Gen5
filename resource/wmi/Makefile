@@ -2,6 +2,8 @@
 ##  コピーしてtargetnameを書き換えれば汎用的に使えます
 ##  2008.08.19
 
+include	$(PROJECT_RSCDIR)\macro_define
+
 ##ここに作成するnarc名を書く
 ##
 targetname = wmi
@@ -15,10 +17,6 @@ gsources:=$(wildcard *.ncg)
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 
-# コピーの方法を記述
-DIFFCOPY = ruby $(PROJECT_ROOT)/tools/diffcopy.rb
-NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
-COPY = cp
 
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NCLR .ncl .NCGR .ncg
@@ -28,6 +26,10 @@ COPY = cp
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+
+.PHONY:	do-build	clean
+
+do-build:	$(PROJECT_ARCDIR)/$(targetname).narc
 
 # narc のコピーだけ実行する
 $(PROJECT_ARCDIR)/$(targetname).narc: $(targetname).narc

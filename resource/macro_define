@@ -22,3 +22,10 @@ define ECHO_CURDIR
 endef
 
 
+#------------------------------------------------------------------------------
+# コピーの方法を記述
+#------------------------------------------------------------------------------
+DIFFCOPY = ruby $(PROJECT_ROOT)/tools/diffcopy.rb
+NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
+COPY = cp
+
