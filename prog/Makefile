@@ -61,7 +61,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 #endif
 
 # 最終的に出力されるファイル(lib/ARM9-xx/xxx/gflib.a)
-TARGET_BIN		=	main.bin
+#TARGET_BIN		=	main.bin
 
 # ソースファイル
 SRCS			=	system\main.c \
