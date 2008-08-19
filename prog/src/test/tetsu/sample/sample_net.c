@@ -7,7 +7,6 @@
 #include "gflib.h"
 #include "include\net\network_define.h"
 #include "include\system\main.h"
-#include "..\..\ohno\net_icondata.h"
 #include "sample_net.h"
 //------------------------------------------------------------------
 // 
@@ -80,8 +79,6 @@ static GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
-    NET_ICONDATA_GetTableData,   // 通信アイコンのファイルARCテーブルを返す関数
-    NET_ICONDATA_GetNoBuff,      // 通信アイコンのファイルARCの番号を返す関数
     0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID

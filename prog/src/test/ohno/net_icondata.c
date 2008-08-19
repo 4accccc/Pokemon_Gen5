@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file	net_icondata.c
- * @brief	通信アイコンデータ部分の定義
+ * @brief	通信アイコンデータ部分の定義 gflibに置けないので外部に定義してある
  * @author	ohno
  * @date	2007.05.29
  */
@@ -10,23 +10,20 @@
 #include "gflib.h"
 #include "wmi.naix"
 #include "net_icondata.h"
+#include "arc_def.h"
 
-
-static	const	char	*GraphicFileTable[]={
-    "wmi.narc",
-};
 
 //==============================================================================
 /**
- * @brief    通信アイコングラフィックテーブルポインタを得る
+ * @brief    通信アイコングラフィックARCIDを得る
  * @param    none
- * @return   グラフィックテーブルポインタ
+ * @return   グラフィックARCID
  */
 //==============================================================================
 
-const char** NET_ICONDATA_GetTableData(void)
+const u32 NET_ICONDATA_GetTableID(void)
 {
-    return GraphicFileTable;
+    return ARCID_WMI;
 }
 
 

@@ -48,3 +48,4 @@
 	ARCID_FLDBLD		"test_graphic/build_model.narc"	#
 	ARCID_TEST3D		"test_graphic/test3d.narc"		#
 	ARCID_SAMPLEMAP		"test_graphic/sample_map.narc"	#
+	ARCID_WMI			"wmi.narc"	# 通信アイコン

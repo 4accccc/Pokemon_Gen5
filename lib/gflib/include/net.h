@@ -194,8 +194,6 @@ typedef struct{
   NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetAutoParentConnect autoParentConnect; ///< 自動接続したときに親になったマシンで呼び出される
-  NetIconGraTableFunc iconGetTable;     ///< 通信アイコンのファイルARCテーブルを返す関数
-  NetIconGraNoBuffFunc iconGetNoBuff;   ///< 通信アイコンのファイルARCの番号を返す関数
 #if GFL_NET_WIFI
   NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
   NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
@@ -707,7 +705,7 @@ extern void debugcheck(u32* data,int size );
 
 #include "net_command.h"
 #include "net_handle.h"
-
+#include "net_icondata.h"
 
 #endif // __NET_H__
 
