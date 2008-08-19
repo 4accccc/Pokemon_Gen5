@@ -49,8 +49,3 @@ clean:
 	rm -rf $(PROJECT_ARCDIR)/$(targetname).naix
 
 
-# íœƒtƒ@ƒCƒ‹‚ğ‘‚­
-clean2:
-	rm -rf $(PROJECT_ARCDIR)/$(targetname).narc
-	rm -rf $(PROJECT_ARCDIR)/$(targetname).naix
-
