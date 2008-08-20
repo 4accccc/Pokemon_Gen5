@@ -6,10 +6,7 @@ SUBDIRS	=	sample_map
 .PHONY:	do-build clean
 
 do-build:
-	$(MAKE_SUBDIR)
-	@echo	"resource build"
-
+	@$(MAKE_SUBDIR)
 
 clean:
-	$(MAKE_SUBDIR)
-	@echo	"resource clean"
+	@$(MAKE_SUBDIR)

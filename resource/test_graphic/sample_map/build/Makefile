@@ -15,6 +15,6 @@ $(DUMMY_TARGET):	$(wildcard *.imd)
 	mv *.nsbtx ..
 	touch $(DUMMY_TARGET)
 
-
 clean:
-	-rm $(DUMMY_TARGET)
+	-rm -f $(DUMMY_TARGET)
+

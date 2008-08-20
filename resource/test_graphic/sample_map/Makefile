@@ -31,14 +31,13 @@ MAPMDLS = $(subst .imd,.nsbmd,$(MAPIMDS))
 do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
-	$(MAKE_SUBDIR)
+	@$(MAKE_SUBDIR)
 
 clean:
-	$(MAKE_SUBDIR)
-	-rm *.nsbtx
-	-rm *.nsbmd
-	-rm $(targetname).narc
-	-rm $(targetname).naix
+	@$(MAKE_SUBDIR)
+	-rm -f *.nsbtx *.nsbmd
+	-rm -f $(targetname).narc
+	-rm -f $(targetname).naix
 
 $(TARGETDIR)/$(targetname).narc:	$(targetname).narc
 	$(COPY)	$(targetname).narc $(TARGETDIR)
