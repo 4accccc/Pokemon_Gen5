@@ -8,7 +8,7 @@
 #----------------------------------------------------------------------------
 
 #Make‚Å¶¬‚³‚ê‚éarc_def.h arc_file.h‚Ímake clean‚Ìíœ‘ÎÛ‚É‚·‚é
-LDIRT_CLEAN	= arc_def.h arc_file.h file_tree.inc
+LDIRT_CLEAN	= arc_def.h arc_file.h file_tree.inc ../file_tree.inc
 
 #----------------------------------------------------------------------------
 VER_FILE	= ../version
