@@ -153,9 +153,6 @@ BOOL	SampleMain( void )
 #endif
 		if( bSkip ){
             //セットアップ
-#ifdef NET_WORK_ON
-            sampleWork->cursorFriend = CreateCursor( sampleWork->gs, sampleWork->heapID );
-#endif
             ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
                                 &resistMapTbl[sampleWork->mapNum].mapperData );
             {
@@ -176,11 +173,12 @@ BOOL	SampleMain( void )
             }
             sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
             sampleWork->fldActCont = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
+            SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
 #ifdef NET_WORK_ON
+            sampleWork->cursorFriend = CreateCursor( sampleWork->gs, sampleWork->heapID );
             SetCursorTrans( sampleWork->cursorFriend, &resistMapTbl[sampleWork->mapNum].startPos );
             GFL_NET_ReloadIcon();
 #endif
-            SetCursorTrans( sampleWork->cursor, &resistMapTbl[sampleWork->mapNum].startPos );
             sampleWork->seq++;
         }
 		break;
@@ -236,6 +234,9 @@ BOOL	SampleMain( void )
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeleteCursor( sampleWork->cursor );
+#ifdef NET_WORK_ON
+		DeleteCursor( sampleWork->cursorFriend );
+#endif
 		RemoveGameSystem( sampleWork->gs );
 		return_flag = TRUE;
 		break;

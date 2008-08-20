@@ -209,10 +209,12 @@ BOOL ExitSampleGameNet(void)
 #ifdef NET_WORK_ON
 
     gNetSys._connectSeqNo = _CONNECT_NONE;
-    if( GFL_NET_IsParentMachine() == FALSE ){
-        GFL_NET_Exit(NULL);
-    }else{
-        GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
+    if(GFL_NET_IsInit()){
+        if( GFL_NET_IsParentMachine() == FALSE ){
+            GFL_NET_Exit(NULL);
+        }else{
+            GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
+        }
     }
 	return TRUE;
 #else
