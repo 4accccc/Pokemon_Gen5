@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	watanabe # tamada
+USERS	=	watanabe tamada
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -36,7 +36,7 @@ include $(PROJECT_RSCDIR)\macro_define
 MAPIMDS	:= $(wildcard *.imd)
 MAPMDLS = $(subst .imd,.nsbmd,$(MAPIMDS))
 
-ifneq	(,$(findstring $(USERNAME),$(USERS)))
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.nsbmd .imd
 
 #imdデータからの生成ルール
@@ -71,10 +71,10 @@ clean:
 	@$(MAKE_SUBDIR)
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
-ifneq	(,$(findstring $(USERNAME),$(USERS)))
-	-rm -f *.nsbtx *.nsbmd
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	-rm -f *.nsbtx *.nsbmd
 endif
 
 
