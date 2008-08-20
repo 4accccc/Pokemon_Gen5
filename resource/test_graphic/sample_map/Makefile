@@ -5,28 +5,40 @@
 #	2008.08.19	tamada@gamefreak
 #------------------------------------------------------------------------------
 
-include $(PROJECT_RSCDIR)\macro_define
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	watanabe # tamada
 
-#	コンバート作業が必要なユーザーの名前を記述する
-USERS	=	watanabe tamada
-
+#------------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#------------------------------------------------------------------------------
 targetname	= sample_map
 NARCNAME	= $(targetname).narc
 NAIXNAME	= $(targetname).naix
 
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
 TARGETDIR	= $(PROJECT_ARCDIR)/test_graphic
 
-
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
 SUBDIRS	=	build
+
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
 
 
 #とりあえず直下の*.imdを依存対象とする
 MAPIMDS	:= $(wildcard *.imd)
 MAPMDLS = $(subst .imd,.nsbmd,$(MAPIMDS))
 
+ifneq	(,$(findstring $(USERNAME),$(USERS)))
 .SUFFIXES:	.nsbmd .imd
 
-ifneq	(,$(findstring $(USERNAME),$(USERS)))
 #imdデータからの生成ルール
 .imd.nsbmd:
 	g3dcvtr $< -emdl
@@ -34,8 +46,11 @@ ifneq	(,$(findstring $(USERNAME),$(USERS)))
 endif
 
 
-.PHONY:	do-build clean subdir clean-local
+.PHONY:	do-build clean subdir
 
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
 do-build:	subdir $(TARGETDIR)/$(NARCNAME)
 
 subdir:
@@ -49,15 +64,17 @@ $(NARCNAME):	$(MAPMDLS) $(wildcard *.bin) build/dummy_file
 	nnsarc -c -l -n -i $(NARCNAME) -S datalist.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
-clean-local:
+#------------------------------------------------------------------------------
+#	make cleanルール
+#------------------------------------------------------------------------------
+clean:
+	@$(MAKE_SUBDIR)
+	-rm -f $(TARGETDIR)/$(NARCNAME)
+	-rm -f $(TARGETDIR)/$(NAIXNAME)
 ifneq	(,$(findstring $(USERNAME),$(USERS)))
 	-rm -f *.nsbtx *.nsbmd
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
 
-clean:	clean-local
-	@$(MAKE_SUBDIR)
-	-rm -f $(TARGETDIR)/$(NARCNAME)
-	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
