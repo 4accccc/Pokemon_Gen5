@@ -14,6 +14,15 @@ USERS	= ohno #tamada
 #------------------------------------------------------------------------------
 targetname = wmi
 
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR = $(PROJECT_ARCDIR)
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -38,17 +47,20 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $< -bg
 endif
 
-.PHONY:	do-build	clean
+.PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(PROJECT_ARCDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc
+
+subdir:
+	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(PROJECT_ARCDIR)/$(targetname).narc: $(targetname).narc
-	$(COPY) $(targetname).narc $(PROJECT_ARCDIR)
-	$(COPY) $(targetname).naix $(PROJECT_ARCDIR) 
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc
+	$(COPY) $(targetname).narc $(TARGETDIR)
+	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -63,6 +75,7 @@ endif
 #※生成ファイルを削除するように記述を変更してください
 #------------------------------------------------------------------------------
 clean:
+	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR
@@ -71,7 +84,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif
-	rm -f $(PROJECT_ARCDIR)/$(targetname).narc
-	rm -f $(PROJECT_ARCDIR)/$(targetname).naix
+	rm -f $(TARGETDIR)/$(targetname).narc
+	rm -f $(TARGETDIR)/$(targetname).naix
 
 
