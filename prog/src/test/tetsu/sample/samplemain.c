@@ -145,6 +145,7 @@ BOOL	SampleMain( void )
 #ifdef NET_WORK_ON
         bSkip = ConnectSampleGameNet();  // 通信処理
         if( !bSkip && GFL_UI_KEY_GetTrg() ){  // キーが押されたら通信を待たずに開始
+            EndSampleGameNet();
             ExitSampleGameNet();
             bSkip = TRUE;
         }
@@ -234,12 +235,21 @@ BOOL	SampleMain( void )
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeleteCursor( sampleWork->cursor );
-#ifdef NET_WORK_ON
-		DeleteCursor( sampleWork->cursorFriend );
-#endif
+#ifndef NET_WORK_ON
 		RemoveGameSystem( sampleWork->gs );
 		return_flag = TRUE;
-		break;
+        break;
+#else
+		DeleteCursor( sampleWork->cursorFriend );
+        EndSampleGameNet();
+        sampleWork->seq++;
+    case 5:
+        if(ExitSampleGameNet()){
+            RemoveGameSystem( sampleWork->gs );
+            return_flag = TRUE;
+        }
+        break;
+#endif
 	}
 	return return_flag;
 }

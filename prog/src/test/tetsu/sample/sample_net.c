@@ -107,6 +107,7 @@ enum{
 
 enum{
     _EXIT_START = 0,
+    _EXIT_WAIT,
     _EXIT_END,
     _EXIT_NONE,
 };
@@ -204,19 +205,41 @@ BOOL ConnectSampleGameNet(void)
 //
 //------------------------------------------------------------------
 
+void EndSampleGameNet(void)
+{
+#ifdef NET_WORK_ON
+    if(GFL_NET_IsInit()){
+        gNetSys._connectSeqNo = _CONNECT_NONE;
+        gNetSys._exitSeqNo = _EXIT_START;
+    }
+    else{
+        gNetSys._exitSeqNo = _EXIT_END;
+    }
+#endif
+}
+
+static void _endCallback(void* work)
+{
+    gNetSys._exitSeqNo = _EXIT_END;
+}
+
+
 BOOL ExitSampleGameNet(void)
 {
 #ifdef NET_WORK_ON
 
-    gNetSys._connectSeqNo = _CONNECT_NONE;
-    if(GFL_NET_IsInit()){
-        if( GFL_NET_IsParentMachine() == FALSE ){
-            GFL_NET_Exit(NULL);
-        }else{
-            GFL_NET_SendData(gNetSys._pHandle, GFL_NET_CMD_EXIT_REQ, NULL);
-        }
+    switch(gNetSys._exitSeqNo){
+      case _EXIT_START:
+        GFL_NET_Exit(_endCallback);
+        gNetSys._exitSeqNo = _EXIT_WAIT;
+        break;
+      case _EXIT_WAIT:
+        break;
+      case _EXIT_END:
+        return TRUE;
+        break;
     }
-	return TRUE;
+	return FALSE;
 #else
 	return TRUE;
 #endif

@@ -13,6 +13,7 @@
 
 void InitSampleGameNet(void);
 BOOL ConnectSampleGameNet(void);
+void EndSampleGameNet(void);
 BOOL ExitSampleGameNet(void);
 void SendSampleGameNet( int comm, void* commWork );
 NetID GetSampleNetID(void);
