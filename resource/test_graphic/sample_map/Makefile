@@ -8,7 +8,10 @@
 include $(PROJECT_RSCDIR)\macro_define
 
 targetname	= sample_map
-TARGETDIR	= $(PROJECT_RSCDIR)\test_graphic
+NARCNAME	= $(targetname).narc
+NAIXNAME	= $(targetname).naix
+
+TARGETDIR	= $(PROJECT_ARCDIR)\test_graphic
 
 
 SUBDIRS	=	build
@@ -28,22 +31,24 @@ MAPMDLS = $(subst .imd,.nsbmd,$(MAPIMDS))
 
 .PHONY:	do-build clean subdir
 
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(NARCNAME)
 
 subdir:
 	@$(MAKE_SUBDIR)
 
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
+
+$(NARCNAME):	$(MAPMDLS) $(wildcard *.bin) build/dummy_file
+	nnsarc -c -l -n -i $(NARCNAME) -S datalist.scr > error
+	$(NAIXCUT) $(NAIXNAME)
+
 clean:
 	@$(MAKE_SUBDIR)
 	-rm -f *.nsbtx *.nsbmd
-	-rm -f $(targetname).narc
-	-rm -f $(targetname).naix
-
-$(TARGETDIR)/$(targetname).narc:	$(targetname).narc
-	$(COPY)	$(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR)
-
-$(targetname).narc:	$(MAPMDLS) $(wildcard *.bin) build/dummy_file
-	nnsarc -c -l -n -i $(targetname).narc -S datalist.scr > error
-	$(NAIXCUT) $(targetname).naix
+	-rm -f $(NARCNAME)
+	-rm -f $(NAIXNAME)
+	-rm -f $(TARGETDIR)/$(NARCNAME)
+	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
