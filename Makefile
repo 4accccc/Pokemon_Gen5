@@ -11,6 +11,7 @@ RESOURCE_DIR = ./resource/
 PROG_DIR = ./prog/
 ARC_DIR = ./prog/arc
 
+.PHONY : do-build clean	prog resource arc
 
 #  makeした場合にすべて作られるように記述してください
 #--------------------------------------- ----------------------------
@@ -22,13 +23,11 @@ do-build:
 
 # cleanした場合にすべて消えるように記述してください
 #--------------------------------------------------------------------
-.PHONY : clean	prog resource arc
-
 clean:
 	$(MAKE) -C $(RESOURCE_DIR) clean
 	$(MAKE) -C $(PROG_DIR) clean
 	$(MAKE) -C $(ARC_DIR) clean
-	rm -r ./prog/filetree/a
+	rm -rf ./prog/filetree/a
 
 #--------------------------------------------------------------------
 prog:
