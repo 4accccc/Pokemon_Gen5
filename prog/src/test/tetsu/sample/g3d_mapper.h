@@ -1,16 +1,10 @@
 #define MAP_BLOCK_COUNT		(9)
 
-#define	MAPDATA_SIZE	(0x0f000)	//モデルデータ用メモリ確保サイズ 
+#define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
 #define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
-#define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
 #define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
-#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
-#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
-
-#define	MAPLOAD_SIZE	(0x800)		//分割データロードサイズ(ROM→RAM) 
-#define	MAPTRANS_SIZE	(0x2000) 	//分割データ転送サイズ(RAM→VRAM) 
-
-#define MAP_GRIDCOUNT	(32)		//マップ内縦横グリッド数
+//#define	MAPOBJ_SIZE		(0x18000)//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
+//#define	MAPOBJTEX_SIZE	(0x4000) //ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
 
 typedef struct _G3D_MAPPER G3D_MAPPER;
 
