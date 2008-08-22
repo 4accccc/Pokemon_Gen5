@@ -43,4 +43,9 @@ doskey vi=c:\tools\vim\gvim $*
 doskey he=c:\progra~1\hidemaru\hidemaru $*
 doskey ms = make ./bin/ARM9-TS/Release/main.srl
 
+REM ##################################################
+REM		ユーザー個別設定の呼び出し
+REM ##################################################
+if exist "tools\personal\%USERNAME%_prompt.bat" call tools\personal\%USERNAME%_prompt.bat
+
 cmd /F:ON
