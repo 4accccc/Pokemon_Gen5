@@ -64,7 +64,7 @@ typedef struct _PC_ACTCONT PC_ACTCONT;
 static PC_ACTCONT*		CreatePlayerAct( SAMPLE_SETUP* gs, HEAPID heapID );
 static void				DeletePlayerAct( PC_ACTCONT* pcActCont );
 static void				MainPlayerAct( PC_ACTCONT* pcActCont );
-static void				MainFiriendPlayerAct( PC_ACTCONT* pcActCont );
+static void				MainFriendPlayerAct( PC_ACTCONT* pcActCont );
 static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
 static void				SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans );
 static void				GetPlayerActTrans( PC_ACTCONT* pcActCont, VecFx32* trans );
@@ -236,7 +236,7 @@ BOOL	SampleMain( void )
 		MainPlayerAct( sampleWork->pcActCont );
 #ifdef NET_WORK_ON
 		//FriendCursor( sampleWork->cursorFriend );
-		MainFriendPlayerAct( sampleWork->friendActCont )
+		MainFriendPlayerAct( sampleWork->friendActCont );
 #endif
 		MainFieldActSys( sampleWork->fldActCont );
 		{
@@ -1333,7 +1333,7 @@ static void	MainPlayerAct( PC_ACTCONT* pcActCont )
 	CalcSetGroundMove( GetG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
 								&pcActCont->trans, &vecMove, MV_SPEED );
 #ifdef NET_WORK_ON
-    _sendGamePlay( &cursor->trans  );  // 自分の位置を相手に送信
+    _sendGamePlay( &pcActCont->trans  );  // 自分の位置を相手に送信
 #endif
     
 	if( mvFlag == TRUE ){
