@@ -2,12 +2,14 @@
 
 REM SET USERNAME=none
 
-REM ディレクトリの場所を変える場合、このファイルをコピーした後に、ここを自由に書き換えて下さい
-SET PROJECT_ROOT=C:\home\pokemon_wb
-SET WBLIBDIR=%PROJECT_ROOT%\lib
-SET PROJECT_PROGDIR=%PROJECT_ROOT%\prog
-SET PROJECT_RSCDIR=%PROJECT_ROOT%\resource
-SET PROJECT_ARCDIR=%PROJECT_ROOT%\prog\arc
+SET HOME_TMP=%~dp0
+SET HOME=%HOME_TMP:\=/%
+
+SET PROJECT_ROOT=%HOME%
+SET WBLIBDIR=%PROJECT_ROOT%lib
+SET PROJECT_PROGDIR=%PROJECT_ROOT%prog
+SET PROJECT_RSCDIR=%PROJECT_ROOT%resource
+SET PROJECT_ARCDIR=%PROJECT_ROOT%prog\arc
 
 SET CWFOLDER_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
@@ -28,8 +30,8 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 
 PATH=C:\tools;c:\cygwin\bin;%PATH%;c:\tools\vim;%WBLIBDIR%\NitroSDK\tools\bin;%WBLIBDIR%\NitroSystem\tools\win\bin;%WBLIBDIR%\..\tools
 
-C:
-chdir C:\Cygwin\bin
+REM C:
+REM chdir C:\Cygwin\bin
 
 bash --login -i
 
