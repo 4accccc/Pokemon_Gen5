@@ -20,7 +20,9 @@ use Switch;
 	open( ARC_DEF, "> arc_def.h");
 	open( ARC_FILE, "> arc_file.h");
 	open( ARC_TREE, "> file_tree.inc");
-
+	
+	print ARC_DEF "#ifndef __ARC_DEF_H__\n";
+	print ARC_DEF "#define __ARC_DEF_H__\n\n";
 	print ARC_DEF "enum{\n";
 	print ARC_FILE "static	const char *ArchiveFileTable[]={\n";
 	print ARC_TREE "GAME_FILE_TREE=";
@@ -68,6 +70,7 @@ use Switch;
 	}
 
 	print ARC_DEF "\tARCID_TABLE_MAX\n};\n";
+	print ARC_DEF "\n#endif __ARC_DEF_H__\n";
 	print ARC_FILE "};\n";
 	close( ARC_DEF );
 	close( ARC_FILE );
