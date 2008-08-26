@@ -10,6 +10,8 @@
 RESOURCE_DIR = ./resource/
 PROG_DIR = ./prog/
 ARC_DIR = ./prog/arc
+LIB_DIR = ./lib
+
 
 .PHONY : do-build clean	prog resource arc
 
@@ -27,6 +29,7 @@ clean:
 	$(MAKE) -C $(RESOURCE_DIR) clean
 	$(MAKE) -C $(PROG_DIR) clean
 	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(LIB_DIR) clean
 	rm -rf ./prog/filetree/a
 
 #--------------------------------------------------------------------
