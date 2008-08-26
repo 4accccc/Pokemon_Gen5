@@ -1219,7 +1219,6 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 
 	dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->gs) );
 	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-	OS_Printf("anmID = %x\n", anmID);
 
 	//カメラ補正(アニメ向きの変更をするのに参照)
 	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->gs ), actIdx, anmID );
