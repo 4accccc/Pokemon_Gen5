@@ -67,7 +67,7 @@ typedef enum {
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UTIL_TransVramBgCharacter(u32 arcID, u32 datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern u32 GFL_ARC_UTIL_TransVramBgCharacter(ARCID arcID, ARCDATID datID, u32 frm, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -83,7 +83,7 @@ extern u32 GFL_ARC_UTIL_TransVramBgCharacter(u32 arcID, u32 datID, u32 frm, u32 
  * @return  転送した位置
  */
 //------------------------------------------------------------------
-extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(u32 arcID, u32 datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(ARCID arcID, ARCDATID datID, u32 frm, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -100,7 +100,7 @@ extern	u32 GFL_ARC_UTIL_TransVramBgCharacterAreaMan(u32 arcID, u32 datID, u32 fr
  * @return  転送したデータサイズ（バイト）
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UTIL_TransVramObjCharacter( u32 arcID, u32 datID, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
+extern u32 GFL_ARC_UTIL_TransVramObjCharacter( ARCID arcID, ARCDATID datID, OBJTYPE objType, u32 offs, u32 transSize, BOOL compressedFlag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -135,7 +135,7 @@ extern void GFL_ARC_UTIL_TransVramScreen(u32 arcFile, u32 dataIdx, u32 frm, u32 
  *
  */
 //--------------------------------------------------------------------------------------------
-extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(u32 arcID, u32 datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
+extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(ARCID arcID, ARCDATID datID, u32 frm, u32 offs, u32 chr_ofs, u32 transSize, BOOL compressedFlag, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -150,7 +150,7 @@ extern	void GFL_ARC_UTIL_TransVramScreenCharOfs(u32 arcID, u32 datID, u32 frm, u
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UTIL_TransVramPalette( u32 arcID, u32 datID, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
+extern void GFL_ARC_UTIL_TransVramPalette( ARCID arcID, ARCDATID datID, PALTYPE palType, u32 offs, u32 transSize, HEAPID heapID );
 
 
 //------------------------------------------------------------------
@@ -167,7 +167,7 @@ extern void GFL_ARC_UTIL_TransVramPalette( u32 arcID, u32 datID, PALTYPE palType
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UTIL_TransVramPaletteEx( u32 arcID, u32 datID, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
+extern void GFL_ARC_UTIL_TransVramPaletteEx( ARCID arcID, ARCDATID datID, PALTYPE palType, u32 srcOfs, u32 dstOfs, u32 transSize, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -188,7 +188,7 @@ extern void GFL_ARC_UTIL_TransVramPaletteEx( u32 arcID, u32 datID, PALTYPE palTy
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( u32 arcID, u32 datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
+extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID arcID, ARCDATID datID, NNS_G2D_VRAM_TYPE type, u32 offs, HEAPID heapID, NNSG2dImagePaletteProxy* proxy );
 
 //------------------------------------------------------------------
 /**
@@ -221,7 +221,7 @@ extern void GFL_ARC_UTIL_TransVramPaletteMakeProxy( u32 arcID, u32 datID, NNS_G2
  *
  */
 //------------------------------------------------------------------
-extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( u32 arcID, u32 datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
+extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID arcID, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType,
 	u32 transSize, NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 
@@ -256,7 +256,7 @@ extern u32 GFL_ARC_UTIL_TransVramCharacterMakeProxy( u32 arcID, u32 datID, BOOL 
  *
  */
 //------------------------------------------------------------------
-extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( u32 arcID, u32 datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
+extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( ARCID arcID, ARCDATID datID, BOOL compressedFlag, CHAR_MAPPING_TYPE mapType, u32 transSize,
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy );
 
 //------------------------------------------------------------------
@@ -285,7 +285,7 @@ extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( u32 arcID
  *
  */
 //------------------------------------------------------------------
-extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( u32 arcID, u32 datID, BOOL compressedFlag, 
+extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( ARCID arcID, ARCDATID datID, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
 
 
@@ -302,7 +302,7 @@ extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( u32 arcID, u32 
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadCharacter( u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -317,7 +317,7 @@ extern void* GFL_ARC_UTIL_LoadCharacter( u32 arcID, u32 datID, BOOL compressedFl
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadScreen(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadScreen(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dScreenData** scrnData, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
@@ -331,7 +331,7 @@ extern void* GFL_ARC_UTIL_LoadScreen(u32 arcID, u32 datID, BOOL compressedFlag, 
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadPalette( u32 arcID, u32 datID, NNSG2dPaletteData** palData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadPalette( ARCID arcID, ARCDATID datID, NNSG2dPaletteData** palData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -346,7 +346,7 @@ extern void* GFL_ARC_UTIL_LoadPalette( u32 arcID, u32 datID, NNSG2dPaletteData**
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadCellBank(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadCellBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCellDataBank** cellBank, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -361,7 +361,7 @@ extern void* GFL_ARC_UTIL_LoadCellBank(u32 arcID, u32 datID, BOOL compressedFlag
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //--------------------------------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadAnimeBank(u32 arcID, u32 datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadAnimeBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
 
 
 //------------------------------------------------------------------
@@ -375,7 +375,7 @@ extern void* GFL_ARC_UTIL_LoadAnimeBank(u32 arcID, u32 datID, BOOL compressedFla
  * @retval  void*		解凍後のデータ保存先アドレス
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadUnCompress(u32 arcID, u32 datID, HEAPID heapID);
+extern void* GFL_ARC_UTIL_LoadUnCompress(ARCID arcID, ARCDATID datID, HEAPID heapID);
 
 
 //------------------------------------------------------------------
@@ -391,7 +391,7 @@ extern void* GFL_ARC_UTIL_LoadUnCompress(u32 arcID, u32 datID, HEAPID heapID);
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_Load(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID heapID );
+extern void* GFL_ARC_UTIL_Load(ARCID arcID, ARCDATID datID, BOOL compressedFlag, HEAPID heapID );
 
 //------------------------------------------------------------------
 /**
@@ -407,7 +407,7 @@ extern void* GFL_ARC_UTIL_Load(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID
  * @retval  void*			読み出し領域ポインタ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadEx(u32 arcID, u32 datID, BOOL compressedFlag, HEAPID heapID, u32* pSize);
+extern void* GFL_ARC_UTIL_LoadEx(ARCID arcID, ARCDATID datID, BOOL compressedFlag, HEAPID heapID, u32* pSize);
 
 #ifdef __cplusplus
 }/* extern "C" */

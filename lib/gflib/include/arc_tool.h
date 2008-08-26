@@ -16,6 +16,8 @@ extern "C" {
 #endif
 
 typedef struct _GFL_ARC_PARAM GFL_ARC_PARAM;
+typedef u32	ARCID;
+typedef u32	ARCDATID;
 
 //============================================================================================
 /**
@@ -74,7 +76,7 @@ extern int	GFL_ARC_GetArchiveTableSize(void);
  * @param[in]	datID		読み込むデータのアーカイブファイル上のインデックスナンバー
  */
 //============================================================================================
-extern	void	GFL_ARC_LoadData(void *data, int arcID, int datID);
+extern	void	GFL_ARC_LoadData(void *data, ARCID arcID, ARCDATID datID);
 
 //============================================================================================
 /**
@@ -89,7 +91,7 @@ extern	void	GFL_ARC_LoadData(void *data, int arcID, int datID);
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-extern	void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID);
+extern	void*	GFL_ARC_LoadDataAlloc(ARCID arcID, ARCDATID datID, HEAPID heapID);
 
 //============================================================================================
 /**
@@ -102,7 +104,7 @@ extern	void*	GFL_ARC_LoadDataAlloc(int arcID, int datID, HEAPID heapID);
  * @param[in]	size		読み込むデータサイズ
  */
 //============================================================================================
-extern	void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int size);
+extern	void	GFL_ARC_LoadDataOfs(void *data, ARCID arcID, ARCDATID datID, int ofs, int size);
 
 //============================================================================================
 /**
@@ -119,7 +121,7 @@ extern	void	GFL_ARC_LoadDataOfs(void *data, int arcID, int datID, int ofs, int s
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-extern	void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int ofs, int size);
+extern	void*	GFL_ARC_LoadDataAllocOfs(ARCID arcID, ARCDATID datID, HEAPID heapID, int ofs, int size);
 
 //============================================================================================
 /**
@@ -133,8 +135,8 @@ extern	void*	GFL_ARC_LoadDataAllocOfs(int arcID, int datID, HEAPID heapID, int o
  * @retval	関数内で確保したデータ格納ワークのアドレス
  */
 //============================================================================================
-extern	void	GFL_ARC_LoadDataPath(void *data, const char* name, int datID);
-extern	void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID heapID);
+extern	void	GFL_ARC_LoadDataPath(void *data, const char* name, ARCDATID datID);
+extern	void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,ARCDATID datID,HEAPID heapID);
 
 //============================================================================================
 /**
@@ -146,7 +148,7 @@ extern	void*	GFL_ARC_LoadDataFilePathAlloc(const char *name,int datID,HEAPID hea
  * @retval	アーカイブファイルデータのファイル数
  */
 //============================================================================================
-extern	u16	GFL_ARC_GetDataFileCnt(int arcID, int datID);
+extern	u16	GFL_ARC_GetDataFileCnt(ARCID arcID, ARCDATID datID);
 
 //============================================================================================
 /**
@@ -160,7 +162,7 @@ extern	u16	GFL_ARC_GetDataFileCnt(int arcID, int datID);
  * @retval	アーカイブファイルデータのサイズ
  */
 //============================================================================================
-extern	u32	GFL_ARC_GetDataSize(int arcID,int datID);
+extern	u32	GFL_ARC_GetDataSize(ARCID arcID,ARCDATID datID);
 
 /*====================================================================================*/
 /*
@@ -316,7 +318,7 @@ extern	u16		GFL_ARC_GetDataFileCntByHandle(ARCHANDLE* handle);
  * @param[out]	p_file		データを書き込むFSFile構造体のポインタ
  */
 //============================================================================================
-extern	void	GFL_ARC_OpenFileTopPosWrite(int arcID,int datID,FSFile *p_file);
+extern	void	GFL_ARC_OpenFileTopPosWrite(ARCID arcID,ARCDATID datID,FSFile *p_file);
 
 #ifdef __cplusplus
 }/* extern "C" */
