@@ -1,14 +1,18 @@
 #! make -f
 #----------------------------------------------------------------------------
-# Project:  Nintendo DS  Development environment 'skelton'
+# Project:  Nintendo DS  Development environment 'pokemon_wb'
 # File:     Makefile
 #
 # Copyright 2006 GameFreak.inc  All rights reserved.
 #
-# $LastChangedDate$
-# $Id$
-#
 #----------------------------------------------------------------------------
+
+#export	NITRO_DEBUG=TRUE
+export MAKEROM_ROMSPEED=1TROM
+#export MAKEROM_ROMSPEED=MROM
+
+# NITROSDK3.0付属ののプリコンパイルを読み込まない
+NITRO_NO_STD_PCHDR = True
 
 .PHONY : gflib
 
@@ -157,12 +161,32 @@ overlay/overlay_files:	make_prog_files
 #--------------------------------------- ----------------------------
 programs = $(TARGETS)
 
-do-build: $(TARGETS)
+do-build: precompile $(TARGETS)
 
-#-----
-#  gflibをmakeする
-gflib:
-	$(MAKE) -C $(GFLIB_DIR)
+
+#----------------------------------------------------------------------------
+# precompile
+#----------------------------------------------------------------------------
+PRECOMPILE_SRC		 =	include/precompile/precompile.pch
+PRECOMPILE_CC_MCH	 =	$(OBJDIR)/precompile_cc.mch
+PRECOMPILE_CCFLAGS	:=	$(CCFLAGS)
+CCFLAGS			+=	-prefix $(PRECOMPILE_CC_MCH)
+
+precompile: $(PRECOMPILE_CC_MCH)
+
+#バージョン定義ファイルが更新されたらプリコンパイルヘッダも更新する
+$(PRECOMPILE_CC_MCH):	$(VER_FILE)
+
+-include $(PRECOMPILE_CC_MCH).d
+$(PRECOMPILE_CC_MCH):%_cc.mch:
+		$(CC) $(PRECOMPILE_CCFLAGS) $(INCLUDES) $(PRECOMPILE_SRC) -MD -precompile $(PRECOMPILE_CC_MCH)
+		$(MOVE_SRC_DEPEND)
+		$(MV) $(DEPENDDIR)/$(*F).d $@.d
+$(OBJS):  $(PRECOMPILE_CC_MCH)
+
+CCFLAGS +=	-thumb
+
+
 
 #----------------------------------------------------------------------------
 #	ソースのみのリコンパイル

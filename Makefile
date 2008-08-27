@@ -29,7 +29,6 @@ clean:
 	$(MAKE) -C $(RESOURCE_DIR) clean
 	$(MAKE) -C $(PROG_DIR) clean
 	$(MAKE) -C $(ARC_DIR) clean
-	$(MAKE) -C $(LIB_DIR) clean
 	rm -rf ./prog/filetree/a
 
 #--------------------------------------------------------------------
