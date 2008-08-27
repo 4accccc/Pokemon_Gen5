@@ -3,9 +3,7 @@
 REM SET USERNAME=none
 
 SET HOME_TMP=%~dp0
-SET HOME=%HOME_TMP:\=/%
-
-SET PROJECT_ROOT=%HOME%
+SET PROJECT_ROOT=%HOME_TMP:\=/%
 SET WBLIBDIR=%PROJECT_ROOT%lib
 SET PROJECT_PROGDIR=%PROJECT_ROOT%prog
 SET PROJECT_RSCDIR=%PROJECT_ROOT%resource
@@ -33,5 +31,6 @@ PATH=C:\tools;c:\cygwin\bin;%PATH%;c:\tools\vim;%WBLIBDIR%\NitroSDK\tools\bin;%W
 REM C:
 REM chdir C:\Cygwin\bin
 
-bash --login -i
+
+bash --login -i -s
 
