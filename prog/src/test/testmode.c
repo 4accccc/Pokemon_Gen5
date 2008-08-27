@@ -26,6 +26,7 @@ typedef struct {
 	HEAPID					heapID;
 	int						seq;
 	u16						listPosition;
+	u16 					select_mode;
 	void*					chrbuf;
 	GFL_BMP_DATA*			bmpHeader;
 	GFL_TEXT_PRINTPARAM*	textParam;
@@ -79,9 +80,16 @@ static void msg_bmpwin_make(TESTMODE_WORK * testmode, u8 bmpwinNum, const char* 
 static void msg_bmpwin_trush( TESTMODE_WORK * testmode, u8 bmpwinNum );
 static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal );
 //２ＤＢＧ作成関数
-static void	g2d_load( TESTMODE_WORK * testmode );
-static void g2d_draw( TESTMODE_WORK * testmode );
-static void	g2d_unload( TESTMODE_WORK * testmode );
+static void	g2d_load_title( TESTMODE_WORK * testmode );
+static void g2d_draw_title( TESTMODE_WORK * testmode );
+static void	g2d_unload_title( TESTMODE_WORK * testmode );
+static void	g2d_load_startsel( TESTMODE_WORK * testmode );
+static void g2d_draw_startsel( TESTMODE_WORK * testmode );
+static void	g2d_unload_startsel( TESTMODE_WORK * testmode );
+static void	g2d_load_testmode( TESTMODE_WORK * testmode );
+static void g2d_draw_testmode( TESTMODE_WORK * testmode );
+static void	g2d_unload_testmode( TESTMODE_WORK * testmode );
+
 //３ＤＢＧ作成関数
 static void	g3d_load( TESTMODE_WORK * testmode );
 static void g3d_draw( TESTMODE_WORK * testmode );
@@ -104,6 +112,204 @@ static u16	TestModeSelectPosGet( TESTMODE_WORK * testmode )
  * @brief	リスト選択
  */
 //------------------------------------------------------------------
+static BOOL TitleControl( TESTMODE_WORK *testmode )
+{
+	BOOL return_flag = FALSE;
+	
+	switch( testmode->seq ){
+	case 0:
+		bg_init( testmode->heapID );
+		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
+						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
+		//パーティクルリソース読み込み
+//		testmode->ptc = GFL_PTC_Create
+//					( testmode->spa_work, PARTICLE_LIB_HEAP_SIZE, TRUE, testmode->heapID );
+//		GFL_PTC_SetResource(testmode->ptc,GFL_PTC_LoadArcResource(0,0,testmode->heapID),TRUE,NULL);
+
+		//testmode->listPosition = 0;
+		testmode->seq++;
+		break;
+	case 1:
+		//タイトル画面作成
+		g2d_load_title(testmode);	//２Ｄデータ作成
+		g3d_load(testmode);	//３Ｄデータ作成
+		testmode->seq++;
+		break;
+	case 2:
+		{
+			int pad = GFL_UI_KEY_GetTrg();
+			if( pad == PAD_BUTTON_A || pad == PAD_BUTTON_START ){
+				testmode->select_mode = NUM_TITLESELECT_START;
+				testmode->seq++;
+			}else if( pad == PAD_BUTTON_SELECT ){
+				testmode->select_mode = NUM_TITLESELECT_DEBUG;
+				testmode->seq++;
+			}
+		}
+		
+		//パレットチェンジによるカーソル描画
+		msg_bmpwin_palset( testmode, NUM_TITLE_0, MSG_WHITE);
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE_0] );
+		msg_bmpwin_palset( testmode, NUM_TITLE_1, MSG_WHITE);
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE_1] );
+		msg_bmpwin_palset( testmode, NUM_TITLE_2, MSG_RED );
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE_2] );
+		g3d_control_effect(testmode);
+		g2d_draw_title(testmode);		//２Ｄデータ描画
+		g3d_draw(testmode);		//３Ｄデータ描画
+		
+		break;
+	case 3:
+		//タイトル抜け
+		g2d_unload_title(testmode);	//２Ｄデータ破棄
+		testmode->seq = 0;
+		return_flag = TRUE;
+		break;
+	}
+	
+	return return_flag;
+}
+
+static BOOL	StartSelectControl( TESTMODE_WORK * testmode )
+{
+	BOOL return_flag = FALSE;
+	int i;
+
+	switch( testmode->seq ){
+	case 0:
+		//初期化
+		testmode->seq++;
+		break;
+	case 1:
+		//テストモード作成
+		g2d_load_startsel(testmode);	//２Ｄデータ作成
+		testmode->seq++;
+		break;
+	case 2:
+		//パレットチェンジによるカーソル描画
+		for(i=0;i<NELEMS(startselList);i++){
+			if( i == testmode->listPosition ){
+				//現在のカーソル位置を赤文字で表現
+				msg_bmpwin_palset( testmode, NUM_STARTSEL_0+i, MSG_RED );
+			}else{
+				msg_bmpwin_palset( testmode, NUM_STARTSEL_0+i, MSG_WHITE );
+			}
+			//ビットマップスクリーン再描画
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_STARTSEL_0+i] );
+		}
+		testmode->seq++;
+
+		g3d_control_effect(testmode);
+		g2d_draw_startsel(testmode);		//２Ｄデータ描画
+		g3d_draw(testmode);		//３Ｄデータ描画
+		break;
+
+	case 3:
+		//キー判定
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ) {
+			testmode->seq++;
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ){
+			if( testmode->listPosition > 0 ){
+				testmode->listPosition--;
+				testmode->seq--;
+			}
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ){
+			if( testmode->listPosition < NELEMS(startselList)-1 ){
+				testmode->listPosition++;
+				testmode->seq--;
+			}
+		}
+		g3d_control_effect(testmode);
+		g2d_draw_startsel(testmode);		//２Ｄデータ描画
+		g3d_draw(testmode);		//３Ｄデータ描画
+		break;
+
+	case 4:
+		//終了
+		GFL_TCB_DeleteTask( testmode->dbl3DdispVintr );
+		g3d_unload(testmode);	//３Ｄデータ破棄
+		g2d_unload_startsel(testmode);	//２Ｄデータ破棄
+		testmode->seq = 0;
+		testmode->listPosition = 0;
+		bg_exit();
+		return_flag = TRUE;
+		break;
+	}
+	return return_flag;
+}
+
+static BOOL	TestModeControl( TESTMODE_WORK * testmode )
+{
+	BOOL return_flag = FALSE;
+	int i;
+
+	switch( testmode->seq ){
+	case 0:
+		//初期化
+		testmode->seq++;
+		break;
+	case 1:
+		//テストモード作成
+		g2d_load_testmode(testmode);	//２Ｄデータ作成
+		testmode->seq++;
+		break;
+	case 2:
+		//パレットチェンジによるカーソル描画
+		for(i=0;i<NELEMS(selectList);i++){
+			if( i == testmode->listPosition ){
+				//現在のカーソル位置を赤文字で表現
+				msg_bmpwin_palset( testmode, NUM_SELECT1+i, MSG_RED );
+			}else{
+				msg_bmpwin_palset( testmode, NUM_SELECT1+i, MSG_WHITE );
+			}
+			//ビットマップスクリーン再描画
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_SELECT1+i] );
+		}
+		//ＢＧスクリーン転送リクエスト発行
+		//GFL_BG_LoadScreenReq( TEXT_FRM );
+		testmode->seq++;
+		g3d_control_effect(testmode);
+		g2d_draw_testmode(testmode);		//２Ｄデータ描画
+		g3d_draw(testmode);		//３Ｄデータ描画
+		break;
+
+	case 3:
+		//キー判定
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ) {
+			testmode->seq++;
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ){
+			if( testmode->listPosition > 0 ){
+				testmode->listPosition--;
+				testmode->seq--;
+			}
+		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ){
+			if( testmode->listPosition < NELEMS(selectList)-1 ){
+				testmode->listPosition++;
+				testmode->seq--;
+			}
+		}
+		g3d_control_effect(testmode);
+		g2d_draw_testmode(testmode);		//２Ｄデータ描画
+		g3d_draw(testmode);		//３Ｄデータ描画
+//		if(GFL_PTC_GetEmitterNum(testmode->ptc)<5){
+//			VecFx32	pos={0,0,0};
+//			GFL_PTC_CreateEmitter(testmode->ptc,0,&pos);
+//		}
+		break;
+
+	case 4:
+		//終了
+		GFL_TCB_DeleteTask( testmode->dbl3DdispVintr );
+		g3d_unload(testmode);	//３Ｄデータ破棄
+		g2d_unload_testmode(testmode);	//２Ｄデータ破棄
+		bg_exit();
+		return_flag = TRUE;
+		break;
+	}
+	return return_flag;
+}
+
+#if 0
 static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 {
 	BOOL return_flag = FALSE;
@@ -127,8 +333,8 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		break;
 
 	case 1:
-		//画面作成
-		g2d_load(testmode);	//２Ｄデータ作成
+		//タイトル画面作成
+		g2d_load_title(testmode);	//２Ｄデータ作成
 		g3d_load(testmode);	//３Ｄデータ作成
 		testmode->seq++;
 		break;
@@ -189,6 +395,7 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 	}
 	return return_flag;
 }
+#endif
 
 //------------------------------------------------------------------
 /**
@@ -287,10 +494,15 @@ static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
  * @brief		２Ｄデータコントロール
  */
 //------------------------------------------------------------------
-static void	g2d_load( TESTMODE_WORK * testmode )
+
+//--------------------------------------------------------------
+//	タイトル
+//--------------------------------------------------------------
+static void	g2d_load_title( TESTMODE_WORK * testmode )
 {
 	//フォント読み込み
 	GFL_TEXT_CreateSystem( font_path );
+	
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
@@ -299,7 +511,146 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 0 );
 		plt[1] = G2D_FONTSELECT_COL;
 		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 16*2 );
+	
+		GFL_HEAP_FreeMemory( plt );
+	}
+	
+	//文字表示パラメータワーク作成
+	{
+		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocClearMemoryLo
+						(testmode->heapID,sizeof(GFL_TEXT_PRINTPARAM));
+		*param = default_param;
+		testmode->textParam = param;
+	}
+	
+	//文字表示ビットマップの作成
+	{
+		int i;
+		//選択項目ビットマップの作成
+		for(i=0;i<NELEMS(titleList);i++){
+			msg_bmpwin_make( testmode, i, titleList[i].msg,
+				titleList[i].posx, titleList[i].posy,
+				titleList[i].sizx, titleList[i].sizy );
+		}
+	}
+}
 
+static void g2d_draw_title( TESTMODE_WORK * testmode )
+{
+	int	i;
+	
+	GFL_BG_ClearScreen( TEXT_FRM );
+	
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		//表題ビットマップの表示
+		GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE_0] );
+		
+		//選択項目ビットマップの表示
+		for(i=0;i<NUM_TITLE_MAX;i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_TITLE_0+i] );
+		}
+		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+	}
+	GFL_BG_LoadScreenReq( TEXT_FRM );
+}
+
+static void	g2d_unload_title( TESTMODE_WORK * testmode )
+{
+	int i;
+
+	//選択項目ビットマップの破棄
+	for(i=0;i<NELEMS(titleList);i++){
+		msg_bmpwin_trush( testmode, NUM_TITLE_0+i );
+	}
+	GFL_HEAP_FreeMemory( testmode->textParam );
+	GFL_TEXT_DeleteSystem();
+}
+
+//--------------------------------------------------------------
+//	さいしょから　つづきから
+//--------------------------------------------------------------
+static void	g2d_load_startsel( TESTMODE_WORK * testmode )
+{
+	//フォント読み込み
+	GFL_TEXT_CreateSystem( font_path );
+	
+	//パレット作成＆転送
+	{
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
+		plt[0] = G2D_BACKGROUND_COL;
+		plt[1] = G2D_FONT_COL;
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 0 );
+		plt[1] = G2D_FONTSELECT_COL;
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 16*2 );
+	
+		GFL_HEAP_FreeMemory( plt );
+	}
+	
+	//文字表示パラメータワーク作成
+	{
+		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocClearMemoryLo
+						(testmode->heapID,sizeof(GFL_TEXT_PRINTPARAM));
+		*param = default_param;
+		testmode->textParam = param;
+	}
+	
+	//文字表示ビットマップの作成
+	{
+		int i;
+		//選択項目ビットマップの作成
+		for(i=0;i<NELEMS(startselList);i++){
+			msg_bmpwin_make( testmode, i, startselList[i].msg,
+				startselList[i].posx, startselList[i].posy,
+				startselList[i].sizx, startselList[i].sizy );
+		}
+	}
+}
+
+static void g2d_draw_startsel( TESTMODE_WORK * testmode )
+{
+	int	i;
+	
+	GFL_BG_ClearScreen( TEXT_FRM );
+	
+	if( GFL_G3D_DOUBLE3D_GetFlip() ){
+		//選択項目ビットマップの表示
+		for(i=0;i<NUM_STARTSEL_MAX;i++){
+			GFL_BMPWIN_MakeScreen( testmode->bmpwin[NUM_STARTSEL_0+i] );
+		}
+		//GFL_BG_SetVisible( TEXT_FRM, VISIBLE_ON );
+	}
+	GFL_BG_LoadScreenReq( TEXT_FRM );
+}
+
+static void	g2d_unload_startsel( TESTMODE_WORK * testmode )
+{
+	int i;
+	
+	//選択項目ビットマップの破棄
+	for(i=0;i<NELEMS(startselList);i++){
+		msg_bmpwin_trush( testmode, NUM_STARTSEL_0+i );
+	}
+	GFL_HEAP_FreeMemory( testmode->textParam );
+	GFL_TEXT_DeleteSystem();
+}
+
+//--------------------------------------------------------------
+//	テストモード
+//--------------------------------------------------------------
+static void	g2d_load_testmode( TESTMODE_WORK * testmode )
+{
+	//フォント読み込み
+	GFL_TEXT_CreateSystem( font_path );
+	
+	//パレット作成＆転送
+	{
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
+		plt[0] = G2D_BACKGROUND_COL;
+		plt[1] = G2D_FONT_COL;
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 0 );
+		plt[1] = G2D_FONTSELECT_COL;
+		GFL_BG_LoadPalette( TEXT_FRM, plt, 16*2, 16*2 );
+	
 		GFL_HEAP_FreeMemory( plt );
 	}
 	//文字表示パラメータワーク作成
@@ -330,7 +681,7 @@ static void	g2d_load( TESTMODE_WORK * testmode )
 	//GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
-static void g2d_draw( TESTMODE_WORK * testmode )
+static void g2d_draw_testmode( TESTMODE_WORK * testmode )
 {
 	int	i;
 
@@ -360,7 +711,7 @@ static void g2d_draw( TESTMODE_WORK * testmode )
 	GFL_BG_LoadScreenReq( TEXT_FRM );
 }
 
-static void	g2d_unload( TESTMODE_WORK * testmode )
+static void	g2d_unload_testmode( TESTMODE_WORK * testmode )
 {
 	int i;
 
@@ -613,6 +964,8 @@ extern const GFL_PROC_DATA DebugTayaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaMainProcData;
 extern const GFL_PROC_DATA DebugGotoMainProcData;
 
+extern const GFL_PROC_DATA DebugFieldProcData;
+
 //------------------------------------------------------------------
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
@@ -700,6 +1053,59 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode = mywk;
+	
+	switch( *seq ) {
+	case 0:
+		(*seq) ++;
+		break;
+	case 1:	//タイトル制御
+		if( TitleControl(testmode) == TRUE ){
+			if( testmode->select_mode == NUM_TITLESELECT_DEBUG ){
+				(*seq) = 3;
+			}else{
+				(*seq)++;
+			}
+		}
+		break;
+	case 2:	//ロード制御
+		if( StartSelectControl(testmode) == TRUE ){
+			switch( TestModeSelectPosGet(testmode) ) {
+			case NUM_STARTSEL_CONTINUE:
+			case NUM_STARTSEL_START:
+				GFL_PROC_SysCallProc(
+					NO_OVERLAY_ID, &DebugFieldProcData, NULL);
+				(*seq) = 4;
+				break;
+			}
+		}
+		break;
+	case 3:	//テストモード制御
+		if( TestModeControl(testmode) == TRUE ){
+			CallSelectProc(testmode);
+			(*seq) ++;
+			//return GFL_PROC_RES_FINISH;
+		}
+		break;
+	case 4:	//終了
+		{
+			HEAPID heapID_backup = testmode->heapID;
+			u16 pos_backup = testmode->listPosition;
+
+			GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+
+			testmode->listPosition = pos_backup;
+			testmode->heapID = heapID_backup;
+		}
+		*seq = 0;
+		break;
+	}
+	return GFL_PROC_RES_CONTINUE;
+}
+
+#if 0
+static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	TESTMODE_WORK * testmode = mywk;
 
 	switch( *seq ) {
 	case 0:
@@ -727,6 +1133,7 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 	}
 	return GFL_PROC_RES_CONTINUE;
 }
+#endif
 
 //------------------------------------------------------------------
 /**

@@ -35,7 +35,6 @@ enum {
 	NUM_SELECT6,
 	NUM_SELECT7,
 	NUM_SELECT8,
-
 	NUM_SELECT_END,
 };
 
@@ -62,6 +61,7 @@ enum {
 	SELECT_OHNO,
 	SELECT_TAYA,
 	SELECT_TEST1,
+	SELECT_START,
 	SELECT_MATSUDA,
 	SELECT_GOTO,
 };
@@ -138,6 +138,55 @@ static const GFL_G3D_LOOKAT cameraLookAt = {	{ 0, (FX32_ONE * 58), (FX32_ONE * 2
 #define g3DanmFrameSpeed	( FX32_ONE )
 	
 
+//------------------------------------------------------------------
+//　タイトル
+//------------------------------------------------------------------
+static const char title_0[] = 
+{"ポケットモンスター"};
+static const char title_1[] = 
+{"ホワイト　か　ブラック"};
+static const char title_2[] = 
+{"PUSH START BUTTON"};
 
+enum {
+	NUM_TITLE_0 = 0,
+	NUM_TITLE_1,
+	NUM_TITLE_2,
+	NUM_TITLE_MAX,
+};
 
+enum {
+	NUM_TITLESELECT_START,
+	NUM_TITLESELECT_DEBUG,
+};
+
+static const TESTMODE_PRINTLIST titleList[] = {
+	{ title_0, 8, 10, 24, 2 },
+	{ title_1, 14, 12, 24, 2 },
+	{ title_2, 10, 16, 24, 2 },
+};
+
+//------------------------------------------------------------------
+//　セーブロード
+//------------------------------------------------------------------
+static const char	startsel_0[] = 
+{"つづきから　はじめる"};
+static const char	startsel_1[] = 
+{"さいしょから　はじめる"};
+
+enum {
+	NUM_STARTSEL_0 = 0,
+	NUM_STARTSEL_1,
+	NUM_STARTSEL_MAX,
+};
+
+enum {
+	NUM_STARTSEL_CONTINUE = 0,
+	NUM_STARTSEL_START,
+};
+
+static const TESTMODE_PRINTLIST startselList[] = {
+	{ startsel_0, 2, 1, 24, 2 },
+	{ startsel_1, 2, 3, 24, 2 },
+};
 

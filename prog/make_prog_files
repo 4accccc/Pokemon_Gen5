@@ -28,8 +28,11 @@ SRCS	+=		test/testmode.c \
 				test/taya/printsys.c \
 				test/taya/gf_font.c \
 				test/matsuda/d_matsu.c \
-				test/goto/d_goto.c
-
+				test/goto/d_goto.c \
+				test/field/field_proc.c \
+				test/field/field_main.c \
+				test/field/field_g3d_map.c \
+				test/field/field_g3d_mapper.c
 	
 #================================================
 # ここから下はオーバーレイプログラム定義
