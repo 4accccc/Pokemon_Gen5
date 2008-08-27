@@ -89,9 +89,8 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	{
 		GFL_G3D_MAP_SETUP setup;
 
-		setup.mdlHeapSize = MAPMDL_SIZE;
-		setup.texHeapSize = MAPTEX_SIZE;
-		setup.attrHeapSize = MAPATTR_SIZE;
+		setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
+		setup.texVramSize = MAPTEX_SIZE;
 
 		//ブロック制御ハンドル作成
 		for( i=0; i<MAP_BLOCK_COUNT; i++ ){

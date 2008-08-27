@@ -14,6 +14,7 @@ typedef struct _GFL_G3D_MAP GFL_G3D_MAP;
 typedef void (GFL_G3D_MAP_DDOBJ_FUNC)
 					( u32 texDataAdrs, u32 texPlttAdrs, VecFx16* vecView, BOOL lodSt );
 
+#define	NON_TEX		(0xffff)
 #define	NON_ATTR	(0xffff)
 
 enum {
@@ -64,9 +65,8 @@ typedef struct {
 }GFL_G3D_MAP_ATTRINFO;
 
 typedef struct {
-	u32	mdlHeapSize;
-	u32	texHeapSize;
-	u32	attrHeapSize;
+	u32	mapDataHeapSize;
+	u32	texVramSize;
 
 }GFL_G3D_MAP_SETUP;
 
@@ -115,6 +115,13 @@ extern void	GFL_G3D_MAP_EndDraw( void );
 //------------------------------------------------------------------
 extern void	GFL_G3D_MAP_ResistArc( GFL_G3D_MAP* g3Dmap, const u32 arcID, HEAPID heapID );
 extern void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap );
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップグローバルテクスチャリソース登録
+ */
+//------------------------------------------------------------------
+extern void	GFL_G3D_MAP_ResistGrobalTex( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* grobalResTex );
+extern void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップロードリクエスト設定

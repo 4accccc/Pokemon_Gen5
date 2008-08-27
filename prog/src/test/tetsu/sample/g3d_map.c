@@ -108,32 +108,39 @@ typedef struct {
 	VecFx32		trans;
 }MAP_OBJECT_DATA;
 
+typedef struct {
+	u16			seq;
+	u16			loadCount;
+	u32			mOffs;
+	u32			fOffs;
+	u32			fSize;
+	u32			tOffs;
+	u32			tSize;
+
+	BOOL		mdlLoaded;
+	BOOL		texLoaded;
+	BOOL		attrLoaded;
+}LOAD_STATUS;
+
 struct _GFL_G3D_MAP 
 {
 	BOOL				drawSw;
 	VecFx32				trans;
 	ARCHANDLE*			arc;
 
-	u32					mdlHeapSize;
-	u32					texHeapSize;
-	u32					attrHeapSize;
-
-	u32					loadSeq;
-	u32					loadCount;
+	u32					mapDataHeapSize;
+	u32					texVramSize;
 
 	NNSG3dRenderObj*	NNSrnd;	//地形レンダー
 
-	BOOL				mdlLoadReq;
 	u32					mdlID;
 	GFL_G3D_RES*		groundResMdl;	//地形モデルリソース
 	u8*					mdl;
 
-	BOOL				texLoadReq;
 	u32					texID;
 	GFL_G3D_RES*		groundResTex;	//ローカル地形テクスチャリソース
 	u8*					tex;
 
-	BOOL				attrLoadReq;
 	u32					attrID;
 	u8*					attr;
 
@@ -143,6 +150,10 @@ struct _GFL_G3D_MAP
 	MAP_OBJECT_DATA		object[OBJ_COUNT];	//配置オブジェクト
 	MAP_OBJECT_DATA		directDrawObject[DDOBJ_COUNT];
 
+	LOAD_STATUS			ldst;
+	void*				mapData;
+
+	GFL_G3D_RES*		grobalResTex;	//グローバル地形テクスチャリソース
 #if 0
 	BOOL				objLoadReq;
 	u32					objID;
@@ -162,7 +173,6 @@ enum {
 	TEX_LOAD,
 	RND_CREATE,
 	TEX_TRANS,
-	PLTT_TRANS,
 	ATTR_LOAD_START,
 	ATTR_LOAD,
 	LOAD_END,
@@ -182,7 +192,12 @@ static void		getYbillboardMtx( GFL_G3D_CAMERA* g3Dcamera, MtxFx33* result );
 
 static void		InitMapObject( GFL_G3D_MAP* g3Dmap );
 static void		InitWork( GFL_G3D_MAP* g3Dmap );
+static void		StartFileLoad( GFL_G3D_MAP* g3Dmap, u32 datID );
+static BOOL		ContinueFileLoad( GFL_G3D_MAP* g3Dmap );
+static void		SetTransVramParam( GFL_G3D_MAP* g3Dmap );
+static BOOL		TransVram( GFL_G3D_MAP* g3Dmap );
 static void		MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RES* tex );
+static void		TrashMapRender( NNSG3dRenderObj* rndObj );
 static s32		testBoundingBox( const GXBoxTestParam* boundingBox );
 static BOOL		checkCullingBoxTest( NNSG3dRenderObj* rnd );
 
@@ -200,12 +215,8 @@ GFL_G3D_MAP*	GFL_G3D_MAP_Create( GFL_G3D_MAP_SETUP* setup, HEAPID heapID )
 	InitWork( g3Dmap );
 
 	//データ格納エリア確保
-	g3Dmap->mdlHeapSize = setup->mdlHeapSize;
-	g3Dmap->texHeapSize = setup->texHeapSize;
-	g3Dmap->attrHeapSize = setup->attrHeapSize;
-	g3Dmap->mdl = GFL_HEAP_AllocClearMemory( heapID, g3Dmap->mdlHeapSize );
-	g3Dmap->tex = GFL_HEAP_AllocClearMemory( heapID, g3Dmap->texHeapSize );
-	g3Dmap->attr = GFL_HEAP_AllocClearMemory( heapID, g3Dmap->attrHeapSize );
+	g3Dmap->mapDataHeapSize = setup->mapDataHeapSize;
+	g3Dmap->mapData = GFL_HEAP_AllocClearMemory( heapID, setup->mapDataHeapSize );
 
 	//レンダー作成
 	g3Dmap->NNSrnd = NNS_G3dAllocRenderObj( GFL_G3D_GetAllocaterPointer() );
@@ -216,16 +227,14 @@ GFL_G3D_MAP*	GFL_G3D_MAP_Create( GFL_G3D_MAP_SETUP* setup, HEAPID heapID )
 
 	//モデルリソースヘッダ作成
 	g3Dmap->groundResMdl = GFL_HEAP_AllocClearMemory( heapID, g3DresHeaderSize );
-	GFL_G3D_CreateResource( g3Dmap->groundResMdl, 
-								GFL_G3D_RES_CHKTYPE_MDL,(void*)g3Dmap->mdl );
 
 	//テクスチャリソースヘッダ作成
 	g3Dmap->groundResTex = GFL_HEAP_AllocClearMemory( heapID, g3DresHeaderSize );
-	GFL_G3D_CreateResource( g3Dmap->groundResTex, 
-								GFL_G3D_RES_CHKTYPE_TEX, (void*)g3Dmap->tex );
+	g3Dmap->grobalResTex = NULL;
 
 	//テクスチャ＆パレットＶＲＡＭ確保
-	g3Dmap->groundTexKey = NNS_GfdAllocTexVram( g3Dmap->texHeapSize, FALSE, 0 );
+	g3Dmap->texVramSize = setup->texVramSize;
+	g3Dmap->groundTexKey = NNS_GfdAllocTexVram( setup->texVramSize, FALSE, 0 );
 	g3Dmap->groundPlttKey = NNS_GfdAllocPlttVram( MAPPLTT_SIZE, FALSE, 0 );
 
 	GF_ASSERT( g3Dmap->groundTexKey != NNS_GFD_ALLOC_ERROR_TEXKEY );
@@ -254,9 +263,7 @@ void	GFL_G3D_MAP_Delete( GFL_G3D_MAP* g3Dmap )
 
 	NNS_G3dFreeRenderObj( GFL_G3D_GetAllocaterPointer(), g3Dmap->NNSrnd );
 
-	GFL_HEAP_FreeMemory( g3Dmap->attr );
-	GFL_HEAP_FreeMemory( g3Dmap->tex );
-	GFL_HEAP_FreeMemory( g3Dmap->mdl );
+	GFL_HEAP_FreeMemory( g3Dmap->mapData );
 
 	GFL_HEAP_FreeMemory( g3Dmap );
 }
@@ -269,138 +276,103 @@ void	GFL_G3D_MAP_Delete( GFL_G3D_MAP* g3Dmap )
 //------------------------------------------------------------------
 void	GFL_G3D_MAP_Main( GFL_G3D_MAP* g3Dmap )
 {
-	u32	dataAdrs;
-
 	GF_ASSERT( g3Dmap );
 
-	switch( g3Dmap->loadSeq ){
+	switch( g3Dmap->ldst.seq ){
 	case LOAD_IDLING:
 		break;
 
 	case MDL_LOAD_START:
-		g3Dmap->NNSrnd->resMdl = NULL; 
+		TrashMapRender( g3Dmap->NNSrnd );
 		InitMapObject( g3Dmap );
+		g3Dmap->ldst.mOffs = 0;
+		g3Dmap->ldst.tOffs = 0;
+		g3Dmap->ldst.mdlLoaded = FALSE;
+		g3Dmap->ldst.texLoaded = FALSE;
+		g3Dmap->ldst.attrLoaded = FALSE;
 
 		//モデルデータロード開始
-		GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, g3Dmap->mdlID, 
-										0, MAPLOAD_SIZE, (void*)g3Dmap->mdl );
-		g3Dmap->loadCount = 0;
-		g3Dmap->loadCount++;
-		g3Dmap->loadSeq = MDL_LOAD;
+		g3Dmap->mdl = (u8*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+
+		StartFileLoad( g3Dmap, g3Dmap->mdlID );
+		g3Dmap->ldst.seq = MDL_LOAD;
 		break;
 	case MDL_LOAD:
-		dataAdrs = g3Dmap->loadCount * MAPLOAD_SIZE;
+		if( ContinueFileLoad(g3Dmap) == FALSE ){
+			g3Dmap->ldst.mdlLoaded = TRUE;
 
-		if( (dataAdrs + MAPLOAD_SIZE) < g3Dmap->mdlHeapSize){
-			//ロード継続
-			GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, MAPLOAD_SIZE, 
-												(void*)((u32)g3Dmap->mdl + dataAdrs) );
-			g3Dmap->loadCount++;
-			break;
+			GFL_G3D_CreateResource
+				( g3Dmap->groundResMdl, GFL_G3D_RES_CHKTYPE_MDL,(void*)g3Dmap->mdl );
+
+			g3Dmap->ldst.seq = TEX_LOAD_START;
 		}
-		//最終ロード
-		GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, g3Dmap->mdlHeapSize - dataAdrs,
-											(void*)((u32)g3Dmap->mdl + dataAdrs) );
-		g3Dmap->mdlLoadReq = FALSE;
-		g3Dmap->loadSeq = TEX_LOAD_START;
 		break;
+
 	case TEX_LOAD_START:
-		if( g3Dmap->texLoadReq == FALSE ){
-			g3Dmap->loadSeq = RND_CREATE;
-			break;
+		if( g3Dmap->texID == NON_TEX ){
+			g3Dmap->tex = NULL;
+			g3Dmap->ldst.seq = RND_CREATE;
 		}
 		//テクスチャロード開始
-		GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, g3Dmap->texID, 
-										0, MAPLOAD_SIZE, (void*)g3Dmap->tex );
-		g3Dmap->loadCount = 0;
-		g3Dmap->loadCount++;
-		g3Dmap->loadSeq = TEX_LOAD;
+		g3Dmap->tex = (u8*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+
+		StartFileLoad( g3Dmap, g3Dmap->texID );
+		g3Dmap->ldst.seq = TEX_LOAD;
 		break;
 	case TEX_LOAD:
-		dataAdrs = g3Dmap->loadCount * MAPLOAD_SIZE;
+		if( ContinueFileLoad(g3Dmap) == FALSE ){
+			g3Dmap->ldst.texLoaded = TRUE;
 
-		if( (dataAdrs + MAPLOAD_SIZE) < g3Dmap->texHeapSize){
-			//ロード継続
-			GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, MAPLOAD_SIZE, 
-												(void*)((u32)g3Dmap->tex + dataAdrs) );
-			g3Dmap->loadCount++;
-			break;
+			GFL_G3D_CreateResource
+				( g3Dmap->groundResTex, GFL_G3D_RES_CHKTYPE_TEX, (void*)g3Dmap->tex );
+
+			//テクスチャリソースへのＶＲＡＭキーの設定
+			NNS_G3dTexSetTexKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), g3Dmap->groundTexKey, 0 );
+			NNS_G3dPlttSetPlttKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), g3Dmap->groundPlttKey );
+			SetTransVramParam( g3Dmap );	//テクスチャ転送設定
+
+			g3Dmap->ldst.seq = TEX_TRANS;
 		}
-		//最終ロード
-		GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, g3Dmap->texHeapSize - dataAdrs,
-											(void*)((u32)g3Dmap->tex + dataAdrs) );
-		g3Dmap->texLoadReq = FALSE;
-		//テクスチャリソースへのＶＲＡＭキーの設定
-		NNS_G3dTexSetTexKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), 
-								g3Dmap->groundTexKey, 0 );
-		NNS_G3dPlttSetPlttKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), 
-								g3Dmap->groundPlttKey );
-		g3Dmap->loadSeq = RND_CREATE;
 		break;
+
+	case TEX_TRANS:
+		if( TransVram(g3Dmap) == FALSE ){
+			g3Dmap->ldst.seq = RND_CREATE;
+		}
+		break;
+
 	case RND_CREATE:
 		//レンダー作成
-		MakeMapRender
-			( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->groundResTex );
-		g3Dmap->loadCount = 0;
-		g3Dmap->loadSeq = TEX_TRANS;
+		if( g3Dmap->texID == NON_TEX ){
+			MakeMapRender( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->grobalResTex );
+		} else {
+			MakeMapRender( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->groundResTex );
+		}
+		g3Dmap->ldst.seq = ATTR_LOAD_START;
 		break;
-	case TEX_TRANS:
-		dataAdrs = g3Dmap->loadCount * MAPTRANS_SIZE;
 
-		if( (dataAdrs + MAPTRANS_SIZE) < g3Dmap->texHeapSize){
-			NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
-				NNS_GfdGetTexKeyAddr( g3Dmap->groundTexKey ) + dataAdrs,
-				(void*)(GFL_G3D_GetAdrsTextureData( g3Dmap->groundResTex ) + dataAdrs),
-				MAPTRANS_SIZE );
-			//転送継続
-			g3Dmap->loadCount++;
-			break;
-		}
-		//最終転送
-		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, 
-				NNS_GfdGetTexKeyAddr( g3Dmap->groundTexKey ) + dataAdrs,
-				(void*)(GFL_G3D_GetAdrsTextureData( g3Dmap->groundResTex ) + dataAdrs),
-				g3Dmap->texHeapSize - dataAdrs );
-		g3Dmap->loadSeq = PLTT_TRANS;
-		break;
-	case PLTT_TRANS:
-		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, 
-				NNS_GfdGetPlttKeyAddr( g3Dmap->groundPlttKey ),
-				(void*)GFL_G3D_GetAdrsTexturePltt( g3Dmap->groundResTex ),
-				MAPPLTT_SIZE );
-		g3Dmap->loadSeq = ATTR_LOAD_START;
-		break;
 	case ATTR_LOAD_START:
-		//アトリビュートデータロード開始
 		if( g3Dmap->attrID == NON_ATTR ){
-			GFL_STD_MemClear32( (void*)g3Dmap->attr, g3Dmap->attrHeapSize );
-			g3Dmap->loadSeq = LOAD_END;
+			g3Dmap->attr = NULL;
+			g3Dmap->ldst.seq = LOAD_END;
 			break;
 		}
-		GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, g3Dmap->attrID, 
-										0, MAPLOAD_SIZE, (void*)g3Dmap->attr );
-		g3Dmap->loadCount = 0;
-		g3Dmap->loadCount++;
-		g3Dmap->loadSeq = ATTR_LOAD;
+		//アトリビュートデータロード開始
+		g3Dmap->attr = (u8*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+
+		StartFileLoad( g3Dmap, g3Dmap->attrID );
+		g3Dmap->ldst.seq = ATTR_LOAD;
 		break;
 	case ATTR_LOAD:
-		dataAdrs = g3Dmap->loadCount * MAPLOAD_SIZE;
-
-		if( (dataAdrs + MAPLOAD_SIZE) < g3Dmap->attrHeapSize){
-			//ロード継続
-			GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, MAPLOAD_SIZE, 
-												(void*)((u32)g3Dmap->attr + dataAdrs) );
-			g3Dmap->loadCount++;
-			break;
+		if( ContinueFileLoad(g3Dmap) == FALSE ){
+			g3Dmap->ldst.attrLoaded = TRUE;
+			g3Dmap->ldst.seq = LOAD_END;
 		}
-		//最終ロード
-		GFL_ARC_LoadDataByHandleContinue(	g3Dmap->arc, g3Dmap->attrHeapSize - dataAdrs,
-											(void*)((u32)g3Dmap->attr + dataAdrs) );
-		g3Dmap->attrLoadReq = FALSE;
-		g3Dmap->loadSeq = LOAD_END;
 		break;
+
 	case LOAD_END:
-		g3Dmap->loadSeq = LOAD_IDLING;
+//		OS_Printf(" mapDataTop(%x), mdl(%x), tex(%x), attr(%x)\n ", 
+//					g3Dmap->mapData, g3Dmap->mdl, g3Dmap->tex, g3Dmap->attr );
 #if 1
 		//--------------------
 		if( g3Dmap->trans.y == 0 ){
@@ -446,6 +418,7 @@ void	GFL_G3D_MAP_Main( GFL_G3D_MAP* g3Dmap )
 		}
 		//--------------------
 #endif
+		g3Dmap->ldst.seq = LOAD_IDLING;
 		break;
 	}
 }
@@ -525,6 +498,21 @@ void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap )
 
 //------------------------------------------------------------------
 /**
+ * @brief	３Ｄマップグローバルテクスチャリソース登録
+ */
+//------------------------------------------------------------------
+void	GFL_G3D_MAP_ResistGrobalTex( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* grobalResTex )
+{
+	g3Dmap->grobalResTex = grobalResTex;
+}
+
+void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap )
+{
+	g3Dmap->grobalResTex = NULL;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	３Ｄマップロードリクエスト設定
  */
 //------------------------------------------------------------------
@@ -534,17 +522,11 @@ void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap,
 	GF_ASSERT( g3Dmap );
 	GF_ASSERT( g3Dmap->arc );
 
-	if( g3Dmap->texID != texID ){
-		g3Dmap->texID = texID;
-		g3Dmap->texLoadReq = TRUE;
-	}
-	g3Dmap->attrID = attrID;
-	g3Dmap->attrLoadReq = TRUE;
 	g3Dmap->mdlID = datID;
-	g3Dmap->mdlLoadReq = TRUE;
+	g3Dmap->texID = texID;
+	g3Dmap->attrID = attrID;
 
-	g3Dmap->loadCount = 0;
-	g3Dmap->loadSeq = MDL_LOAD_START;
+	g3Dmap->ldst.seq = MDL_LOAD_START;
 }
 
 //------------------------------------------------------------------
@@ -788,7 +770,7 @@ void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, const GFL_G3D_MAP* g3D
 	NormalVtxSt*	nvs;
 	u8				triangleType;
 
-	if( g3Dmap->attrLoadReq == TRUE ){
+	if( g3Dmap->ldst.attrLoaded == FALSE ){
 		VEC_Fx16Set( &attrInfo->vecN, 0, 0, 0 );
 		attrInfo->height = 0;
 		attrInfo->attr = 0;
@@ -878,17 +860,104 @@ static void	InitWork( GFL_G3D_MAP* g3Dmap )
 {
 	g3Dmap->drawSw = FALSE;
 	VEC_Set( &g3Dmap->trans, 0, 0, 0 );
-	g3Dmap->loadSeq = LOAD_IDLING;
-	g3Dmap->loadCount = 0;
 
-	g3Dmap->mdlLoadReq = FALSE;
+	g3Dmap->ldst.seq = LOAD_IDLING;
 	g3Dmap->mdlID = 0;
-	g3Dmap->texLoadReq = FALSE;
-	g3Dmap->texID = 0;
-	g3Dmap->attrLoadReq = FALSE;
-	g3Dmap->attrID = 0;
+	g3Dmap->texID = NON_TEX;
+	g3Dmap->attrID = NON_ATTR;
 
 	InitMapObject( g3Dmap );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	読み込み関数
+ */
+//------------------------------------------------------------------
+static void StartFileLoad( GFL_G3D_MAP* g3Dmap, u32 datID )
+{
+	void* dst = (void*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+
+	GF_ASSERT( (g3Dmap->ldst.mOffs + MAPLOAD_SIZE) <= g3Dmap->mapDataHeapSize );
+
+	//ロード開始
+	g3Dmap->ldst.fSize = GFL_ARC_GetDataSizeByHandle( g3Dmap->arc, datID );
+	g3Dmap->ldst.fOffs = 0;
+
+	GFL_ARC_LoadDataOfsByHandle( g3Dmap->arc, datID, 0, MAPLOAD_SIZE, dst ); 
+
+	g3Dmap->ldst.mOffs += MAPLOAD_SIZE;
+	g3Dmap->ldst.fOffs += MAPLOAD_SIZE;
+}
+
+static BOOL ContinueFileLoad( GFL_G3D_MAP* g3Dmap )
+{
+	void*	dst = (void*)((u32)g3Dmap->mapData + g3Dmap->ldst.mOffs);
+	u32		rest;
+
+	if( g3Dmap->ldst.fSize < g3Dmap->ldst.fOffs){
+		return FALSE;
+	}
+	rest = g3Dmap->ldst.fSize - g3Dmap->ldst.fOffs;
+
+	if( rest > MAPLOAD_SIZE ){ 
+		GF_ASSERT( (g3Dmap->ldst.mOffs + MAPLOAD_SIZE) <= g3Dmap->mapDataHeapSize );
+
+		//ロード継続
+		GFL_ARC_LoadDataByHandleContinue( g3Dmap->arc, MAPLOAD_SIZE, dst ); 
+
+		g3Dmap->ldst.mOffs += MAPLOAD_SIZE;
+		g3Dmap->ldst.fOffs += MAPLOAD_SIZE;
+		return TRUE;
+	}
+	GF_ASSERT( (g3Dmap->ldst.mOffs + rest) <= g3Dmap->mapDataHeapSize );
+
+	//最終ロード
+	GFL_ARC_LoadDataByHandleContinue( g3Dmap->arc, rest, dst );
+
+	g3Dmap->ldst.mOffs += rest;
+	return FALSE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	転送関数
+ */
+//------------------------------------------------------------------
+static void SetTransVramParam( GFL_G3D_MAP* g3Dmap )
+{
+	//g3Dmap->ldst.tSize = g3Dmap->ldst.fSize;
+	g3Dmap->ldst.tSize = g3Dmap->texVramSize;	//テクスチャ転送量設定
+	g3Dmap->ldst.tOffs = 0;
+}
+
+static BOOL TransVram( GFL_G3D_MAP* g3Dmap )
+{
+	void*	src;
+	u32		dst;
+	u32		rest;
+
+	if( g3Dmap->ldst.tOffs >= g3Dmap->ldst.tSize ){
+		src = (void*)GFL_G3D_GetAdrsTexturePltt(g3Dmap->groundResTex);
+		dst = NNS_GfdGetPlttKeyAddr( g3Dmap->groundPlttKey );
+
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, dst, src, MAPPLTT_SIZE );
+		return FALSE;
+	}
+	src = (void*)(GFL_G3D_GetAdrsTextureData(g3Dmap->groundResTex) + g3Dmap->ldst.tOffs );
+	dst = NNS_GfdGetTexKeyAddr( g3Dmap->groundTexKey ) + g3Dmap->ldst.tOffs;
+	rest = g3Dmap->ldst.tSize - g3Dmap->ldst.tOffs;
+
+	if( rest > MAPTRANS_SIZE){
+		//転送継続
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, dst, src, MAPTRANS_SIZE );
+		g3Dmap->ldst.tOffs += MAPTRANS_SIZE;
+	} else {
+		//最終転送
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_VRAM, dst, src, rest );
+		g3Dmap->ldst.tOffs = g3Dmap->ldst.tSize;
+	}
+	return TRUE;
 }
 
 //------------------------------------------------------------------
@@ -913,6 +982,11 @@ static void MakeMapRender( NNSG3dRenderObj* rndObj, GFL_G3D_RES* mdl, GFL_G3D_RE
 	}
 	//レンダリングオブジェクト初期化
 	NNS_G3dRenderObjInit( rndObj, pMdl );
+}
+
+static void TrashMapRender( NNSG3dRenderObj* rndObj )
+{
+	rndObj->resMdl = NULL; 
 }
 
 //--------------------------------------------------------------------------------------------
