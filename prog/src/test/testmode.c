@@ -611,6 +611,7 @@ extern const GFL_PROC_DATA TestProg1MainProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugTayaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaMainProcData;
+extern const GFL_PROC_DATA DebugGotoMainProcData;
 
 //------------------------------------------------------------------
 static void CallSelectProc( TESTMODE_WORK * testmode )
@@ -642,6 +643,10 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	case SELECT_MATSUDA:
 		//‚Ü‚Â‚¾
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaMainProcData, NULL);
+		break;		
+	case SELECT_GOTO:
+		//‚²‚Æ‚¤
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
 		break;
 	default:
 		break;

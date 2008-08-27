@@ -28,6 +28,7 @@ SRCS	+=		test/testmode.c \
 				test/taya/printsys.c \
 				test/taya/gf_font.c \
 				test/matsuda/d_matsu.c \
+				test/goto/d_goto.c
 
 	
 #================================================
