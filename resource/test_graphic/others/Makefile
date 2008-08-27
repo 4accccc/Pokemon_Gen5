@@ -22,7 +22,9 @@ TARGET_NAMES	= \
 	test3d.naix \
 	test3d.narc \
 	titledemo.naix \
-	titledemo.narc
+	titledemo.narc \
+	d_goto.naix \
+	d_goto.narc \
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 
