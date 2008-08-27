@@ -8,7 +8,7 @@
 
 #include "setup.h"
 #include "calc_ph.h"
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 //------------------------------------------------------------------
 /**
@@ -104,9 +104,9 @@ static void moveMapDebug( GFL_G3D_SCENEOBJ* sceneObj, void* work );
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/test3d.naix"
-#include "arc/test_graphic/fld_map.naix"
-#include "arc/test_graphic/build_model_id.h"
+#include "test_graphic/test3d.naix"
+#include "test_graphic/fld_map.naix"
+#include "test_graphic/build_model_id.h"
 
 enum {
 	G3DRES_MAP_FLOOR = 0,

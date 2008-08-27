@@ -7,8 +7,8 @@
  */
 //============================================================================================
 #include "gflib.h"
-#include "include/system/gfl_use.h"
-#include "include/net/network_define.h"
+#include "system/gfl_use.h"
+#include "net/network_define.h"
 #include "textprint.h"
 
 #include "setup.h"

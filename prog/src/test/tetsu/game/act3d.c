@@ -9,8 +9,8 @@
 #include "gflib.h"
 
 #include "setup.h"
-#include "include\system\gfl_use.h"
-#include "arc\arc_def.h"
+#include "system\gfl_use.h"
+#include "arc_def.h"
 
 //------------------------------------------------------------------
 /**
@@ -71,7 +71,7 @@ typedef struct {
 
 #define SYNC_WAIT (1)
 
-#include "arc/test_graphic/test3d.naix"
+#include "test_graphic/test3d.naix"
 //------------------------------------------------------------------
 /**
  *

@@ -9,13 +9,14 @@
 //============================================================================================
 
 
-#include "gflib.h"
-#include "include/system/gfl_use.h"
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system\main.h"
+
 #include "test_graphic/fatal_error.naix"
-#include "include\system\main.h"
 #include "fatal_error.h"
 
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 //static	const	char	*GraphicFileTable[]={
 //	"test_graphic/fatal_error.narc",

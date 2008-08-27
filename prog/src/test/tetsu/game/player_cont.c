@@ -10,11 +10,11 @@
 #include "calc_ph.h"
 
 #include "setup.h"
-#include "include\system\gfl_use.h"
+#include "system\gfl_use.h"
 
 #include "player_cont.h"
 
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 //============================================================================================
 //
@@ -566,7 +566,7 @@ BOOL CheckPlayerMoveEnd( PLAYER_CONTROL* pc )
  *
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/fld_act.naix"
+#include "test_graphic/fld_act.naix"
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
 	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,

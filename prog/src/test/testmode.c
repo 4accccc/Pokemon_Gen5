@@ -3,12 +3,13 @@
  * @file	testmode.c
  */
 //===================================================================
-#include "gflib.h"
-#include "include\system\gfl_use.h"
-#include "include\system\main.h"
-#include "textprint.h"
+#include <gflib.h>
+#include <textprint.h>
 
-#include "include\test\testmode.h"
+#include "system\gfl_use.h"
+#include "system\main.h"
+
+#include "test\testmode.h"
 
 void	TestModeSet(void);
 

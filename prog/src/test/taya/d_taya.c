@@ -17,7 +17,7 @@
 #include "d_taya.naix"
 #include "msg_d_taya.h"
 
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 
 typedef struct {

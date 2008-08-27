@@ -7,7 +7,7 @@
  */
 //============================================================================================
 #include "gflib.h"
-#include "include\system\gfl_use.h"	//—”—p
+#include "system\gfl_use.h"	//—”—p
 
 #include "g3d_map.h"
 #include "g3d_mapper.h"

@@ -7,10 +7,10 @@
  */
 //============================================================================================
 #include "gflib.h"
-#include "include/system/gfl_use.h"
-#include "include/net/network_define.h"
+#include "system/gfl_use.h"
+#include "net/network_define.h"
 #include "textprint.h"
-#include "arc/arc_def.h"
+#include "arc_def.h"
 #include "../../ohno/test_flashread.h"
 
 void	SampleBoot( HEAPID heapID );
@@ -371,7 +371,7 @@ static const GFL_BG_DISPVRAM dispVram = {
  * @brief	アーカイブテーブル
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/fld_act.naix"
+#include "test_graphic/fld_act.naix"
 
 #if 0
 static	const	char	*GraphicFileTable[]={
@@ -826,7 +826,7 @@ struct _CURSOR_CONT {
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/test3d.naix"
+#include "test_graphic/test3d.naix"
 
 enum {
 	G3DRES_CURSOR = 0,

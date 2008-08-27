@@ -6,7 +6,7 @@
 //============================================================================================
 #include "gflib.h"
 
-#include "include\system\main.h"
+#include "system\main.h"
 
 extern void	GameBoot( HEAPID heapID );
 extern void	GameEnd( void );

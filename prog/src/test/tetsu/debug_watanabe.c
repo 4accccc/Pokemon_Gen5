@@ -8,7 +8,7 @@
 //============================================================================================
 #include "gflib.h"
 
-#include "include\system\main.h"
+#include "system\main.h"
 
 extern void	SampleBoot( HEAPID heapID );
 extern void	SampleEnd( void );

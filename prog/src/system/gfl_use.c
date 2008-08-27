@@ -9,18 +9,19 @@
 //=============================================================================================
 
 #include <nitro.h>
-#include "gflib.h"
+
+#include <gflib.h>
+#include <procsys.h>
+#include <gf_overlay.h>
+#include <tcb.h>
+#include <backup_system.h>
+
 //#include "gflib_inter.h"
 
 #include "system\main.h"
-
 #include "system\gfl_use.h"
-#include "procsys.h"
-#include "gf_overlay.h"
-#include "tcb.h"
-#include "backup_system.h"
-#include "arc/arc_def.h"
-#include "arc/arc_file.h"
+#include "arc_def.h"
+#include "arc_file.h"
 
 
 //=============================================================================================

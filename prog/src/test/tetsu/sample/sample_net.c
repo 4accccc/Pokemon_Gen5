@@ -5,8 +5,8 @@
  */
 //============================================================================================
 #include "gflib.h"
-#include "include\net\network_define.h"
-#include "include\system\main.h"
+#include "net\network_define.h"
+#include "system\main.h"
 #include "sample_net.h"
 //------------------------------------------------------------------
 // 

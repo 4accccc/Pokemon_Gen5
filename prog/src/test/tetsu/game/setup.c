@@ -6,18 +6,18 @@
  * @date	
  */
 //============================================================================================
-#include "gflib.h"
-#include "include\system\gfl_use.h"
-#include "textprint.h"
+#include <gflib.h>
+#include <textprint.h>
 
-#include "include/system/main.h"
+#include "system\gfl_use.h"
+#include "system/main.h"
 //#include "testmode.h"
 
 #include "double3Ddisp.h"
 
 #include "setup.h"
 
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 //============================================================================================
 //
@@ -85,8 +85,8 @@ static const GFL_BG_DISPVRAM dispVram = {
  * @brief	アーカイブテーブル
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/test3d.naix"
-#include "arc/test_graphic/mapobj.naix"
+#include "test_graphic/test3d.naix"
+#include "test_graphic/mapobj.naix"
 
 #if 0
 static	const	char	*GraphicFileTable[]={

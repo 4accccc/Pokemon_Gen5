@@ -7,8 +7,8 @@
 #include "gflib.h"
 
 #include "setup.h"
-#include "include\system\gfl_use.h"
-#include "arc/arc_def.h"
+#include "system\gfl_use.h"
+#include "arc_def.h"
 
 #include "fld_act.h"
 //íçÅjGFL_G3D_SYSTEM, GFL_BBDè„Ç≈ÇÃìÆçÏ
@@ -39,7 +39,7 @@ struct _FLD_ACTSYS {
 	FLD_ACT_WORK			actWork[FLD_BBDACT_ACTMAX];
 };
 
-#include "arc/test_graphic/fld_act.naix"
+#include "test_graphic/fld_act.naix"
 
 static void	initActWork( FLD_ACTSYS* fldActSys, FLD_ACT_WORK* actWork );
 static void	calcCameraRotate( FLD_ACTSYS* fldActSys );
