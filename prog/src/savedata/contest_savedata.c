@@ -50,9 +50,8 @@ u32	CONDATA_GetWorkSize(void)
  * @param	condata		コンテストセーブデータへのポインタ
  */
 //---------------------------------------------------------------------------
-void CONDATA_Init(void *work)
+void CONDATA_Init(CONTEST_DATA *condata)
 {
-	CONTEST_DATA *condata = work;
 	int ranking, type;
 	
 	for(type = 0; type < CONTYPE_MAX; type++){
@@ -60,11 +59,6 @@ void CONDATA_Init(void *work)
 			condata->TuushinRecord[type][ranking] = 0;
 		}
 	}
-#if MATSU_MAKE_DEL
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_CONTEST)
-	SVLD_SetCrc(GMDATA_ID_CONTEST);
-#endif //CRC_LOADCHECK
-#endif
 }
 
 //--------------------------------------------------------------
@@ -81,11 +75,6 @@ void CONDATA_RecordAdd(CONTEST_DATA *condata, int type, int ranking)
 	if(condata->TuushinRecord[type][ranking] < CON_RECORD_COUNT_MAX){
 		condata->TuushinRecord[type][ranking]++;
 	}
-#if MATSU_MAKE_DEL
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_CONTEST)
-	SVLD_SetCrc(GMDATA_ID_CONTEST);
-#endif //CRC_LOADCHECK
-#endif
 }
 
 //--------------------------------------------------------------
@@ -101,11 +90,6 @@ void CONDATA_RecordAdd(CONTEST_DATA *condata, int type, int ranking)
 //--------------------------------------------------------------
 u16 CONDATA_GetValue(CONTEST_DATA *condata, int type, int ranking)
 {
-#if MATSU_MAKE_DEL
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_CONTEST)
-	SVLD_CheckCrc(GMDATA_ID_CONTEST);
-#endif //CRC_LOADCHECK
-#endif
 	return condata->TuushinRecord[type][ranking];
 }
 

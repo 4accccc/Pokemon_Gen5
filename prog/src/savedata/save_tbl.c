@@ -10,6 +10,7 @@
 #include <backup_system.h>
 #include "savedata/save_tbl.h"
 #include "savedata/contest_savedata.h"
+#include "savedata/test_savedata.h"
 
 
 //==============================================================================
@@ -33,6 +34,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 //		SVBLK_ID_NORMAL,
 		(FUNC_GET_SIZE)CONDATA_GetWorkSize,
 		(FUNC_INIT_WORK)CONDATA_Init,
+	},
+	{	//松田デバッグ機能用セーブ
+		GMDATA_ID_MATSU_DEBUG,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
 	},
 };
 

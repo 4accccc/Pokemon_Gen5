@@ -24,7 +24,7 @@ typedef struct _CONTEST_DATA CONTEST_DATA;
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 extern u32	CONDATA_GetWorkSize(void);
-extern void CONDATA_Init(void *work);
+extern void CONDATA_Init(CONTEST_DATA *condata);
 extern void CONDATA_RecordAdd(CONTEST_DATA *condata, int type, int ranking);
 extern u16 CONDATA_GetValue(CONTEST_DATA *condata, int type, int ranking);
 
