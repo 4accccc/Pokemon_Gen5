@@ -6,18 +6,35 @@
  * @date	2008.08.26(火)
  */
 //==============================================================================
-#include "gflib.h"
-#include "procsys.h"
-#include "tcbl.h"
+#include <gflib.h>
+#include <procsys.h>
+#include <tcbl.h>
 #include "system\main.h"
+#include <backup_system.h>
+#include "savedata/contest_savedata.h"
+#include "savedata/save_tbl.h"
+#include "savedata/save_control.h"
 
 
+//==============================================================================
+//	構造体定義
+//==============================================================================
 typedef struct {
 
 	u16		seq;
 	HEAPID	heapID;
-
+	int debug_mode;
+	
+	//セーブ関連
+	GFL_SAVEDATA *sv_normal;	///<ノーマルセーブデータへのポインタ
 }D_MATSU_WORK;
+
+
+//==============================================================================
+//	プロトタイプ宣言
+//==============================================================================
+static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk);
+static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk);
 
 
 
@@ -117,12 +134,22 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	D_MATSU_WORK* wk = mywk;
-
-	GF_ASSERT(wk);
-
-	switch( wk->seq ){
-	case 0:
+	BOOL ret = 0;
+	
+	wk->debug_mode = 1;
+	switch(wk->debug_mode){
+	case 0:		//セーブシステムの作成テスト
+		ret = DebugMatsuda_SaveSystemTest(wk);
 		break;
+	case 1:		//メインで作成されているセーブシステムを使用してセーブテスト
+		ret = DebugMatsuda_SaveTest(wk);
+		break;
+	default:
+		ret = TRUE;
+	}
+	
+	if(ret == TRUE){
+		return GFL_PROC_RES_FINISH;
 	}
 
 	return GFL_PROC_RES_CONTINUE;
@@ -134,13 +161,186 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_PROC_FreeWork(mywk);
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
+
+	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_MATSUDA_DEBUG);
 	
 	return GFL_PROC_RES_FINISH;
 }
 
 
+
+//==============================================================================
+//	
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   セーブテスト(セーブシステムそのものを作る所からのテスト)
+ *
+ * @param   wk		
+ *
+ * @retval  TRUE:終了。　FALSE:処理継続中
+ */
+//--------------------------------------------------------------
+static BOOL DebugMatsuda_SaveSystemTest(D_MATSU_WORK *wk)
+{
+	LOAD_RESULT load_ret;
+	SAVE_RESULT save_ret;
+	
+	GF_ASSERT(wk);
+
+	switch( wk->seq ){
+	case 0:
+		//ノーマルセーブ領域作成
+		OS_TPrintf("ノーマルセーブ領域作成\n");
+		wk->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal);
+		wk->seq++;
+		break;
+	case 1:
+		//コンテストデータを引っ張ってきて中身を表示
+		load_ret = GFL_BACKUP_Load(wk->sv_normal);
+		switch(load_ret){
+		case LOAD_RESULT_NULL:		///<データなし
+			OS_TPrintf("LOAD:データが存在しない\n");
+			GFL_SAVEDATA_Clear(wk->sv_normal);
+			break;
+		case LOAD_RESULT_OK:				///<データ正常読み込み
+			OS_TPrintf("LOAD:正常読み込み\n");
+			{
+				CONTEST_DATA *condata;
+				u16 value;
+				
+				condata = GFL_SAVEDATA_Get(wk->sv_normal, GMDATA_ID_CONTEST);
+				value = CONDATA_GetValue(condata, 0,0);
+				OS_TPrintf("value = %d\n", value);
+			}
+			break;
+		case LOAD_RESULT_NG:				///<データ異常
+			OS_TPrintf("LOAD:データ異常\n");
+			GFL_SAVEDATA_Clear(wk->sv_normal);
+			break;
+		case LOAD_RESULT_BREAK:			///<破壊、復旧不能
+			OS_TPrintf("LOAD:データ破壊\n");
+			GFL_SAVEDATA_Clear(wk->sv_normal);
+			break;
+		case LOAD_RESULT_ERROR:			///<機器故障などで読み取り不能
+			OS_TPrintf("LOAD:読み取り不能\n");
+			GFL_SAVEDATA_Clear(wk->sv_normal);
+			break;
+		default:
+			GF_ASSERT("LOAD:例外エラー！");
+			break;
+		}
+		wk->seq++;
+		break;
+	case 2:
+		//コンテストデータの中身を変更してセーブ実行
+		//次回起動した時に中身が変わっているか確認！
+		{
+			CONTEST_DATA *condata;
+			u16 value;
+			
+			condata = GFL_SAVEDATA_Get(wk->sv_normal, GMDATA_ID_CONTEST);
+			value = CONDATA_GetValue(condata, 0,0);
+			CONDATA_RecordAdd(condata, 0, 0);
+			OS_TPrintf("セーブ実行\n");
+			OS_TPrintf("before value = %d, after value = %d\n", value, value+1);
+			save_ret = GFL_BACKUP_Save(wk->sv_normal);
+			switch(save_ret){
+			case SAVE_RESULT_CONTINUE:		///<セーブ処理継続中
+				OS_TPrintf("SAVE:継続中\n");
+				break;
+			case SAVE_RESULT_LAST:			///<セーブ処理継続中、最後の一つ前
+				OS_TPrintf("SAVE:継続中 最後の1つ前\n");
+				break;
+			case SAVE_RESULT_OK:			///<セーブ正常終了
+				OS_TPrintf("SAVE:正常終了\n");
+				break;
+			case SAVE_RESULT_NG:			///<セーブ失敗終了
+				OS_TPrintf("SAVE:失敗\n");
+				break;
+			}
+		}
+		wk->seq++;
+		break;
+	case 3:
+		OS_TPrintf("セーブシステム破棄\n");
+		GFL_SAVEDATA_Delete(wk->sv_normal);
+		
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   セーブテスト(セーブシステムはメインで作られているものを使用)
+ *
+ * @param   wk		
+ *
+ * @retval  TRUE:終了。　FALSE:処理継続中
+ */
+//--------------------------------------------------------------
+static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk)
+{
+	LOAD_RESULT load_ret;
+	SAVE_RESULT save_ret;
+	
+	GF_ASSERT(wk);
+	GF_ASSERT(wk->sv_normal == NULL);
+	
+	switch( wk->seq ){
+	case 0:
+		//コンテストデータを引っ張ってきて中身を表示
+		{
+			CONTEST_DATA *condata;
+			u16 value;
+			
+			condata = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_CONTEST);
+			value = CONDATA_GetValue(condata, 0,0);
+			OS_TPrintf("value = %d\n", value);
+		}
+		wk->seq++;
+		break;
+	case 1:
+		//コンテストデータの中身を変更してセーブ実行
+		//次回起動した時に中身が変わっているか確認！
+		{
+			CONTEST_DATA *condata;
+			u16 value;
+			
+			condata = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_CONTEST);
+			value = CONDATA_GetValue(condata, 0,0);
+			CONDATA_RecordAdd(condata, 0, 0);
+			OS_TPrintf("セーブ実行\n");
+			OS_TPrintf("before value = %d, after value = %d\n", value, value+1);
+			save_ret = SaveControl_Save(SaveControl_GetPointer());
+			switch(save_ret){
+			case SAVE_RESULT_CONTINUE:		///<セーブ処理継続中
+				OS_TPrintf("SAVE:継続中\n");
+				break;
+			case SAVE_RESULT_LAST:			///<セーブ処理継続中、最後の一つ前
+				OS_TPrintf("SAVE:継続中 最後の1つ前\n");
+				break;
+			case SAVE_RESULT_OK:			///<セーブ正常終了
+				OS_TPrintf("SAVE:正常終了\n");
+				break;
+			case SAVE_RESULT_NG:			///<セーブ失敗終了
+				OS_TPrintf("SAVE:失敗\n");
+				break;
+			}
+		}
+		wk->seq++;
+		break;
+	default:
+		return TRUE;
+	}
+	
+	return FALSE;
+}
 
 
 //----------------------------------------------------------
@@ -153,7 +353,4 @@ const GFL_PROC_DATA DebugMatsudaMainProcData = {
 	DebugMatsudaMainProcMain,
 	DebugMatsudaMainProcEnd,
 };
-
- 
-
 

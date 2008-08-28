@@ -15,6 +15,8 @@
 #include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
+#include "savedata/save_control.h"
+
 #ifdef PM_DEBUG
 #include "test/ohno/performance.h"
 #endif //PM_DEBUG
@@ -113,6 +115,9 @@ static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */
 
+	//セーブ関連初期化
+	SaveControl_SystemInit(GFL_HEAPID_APP);	//※check 使用しているヒープIDは暫定
+	
     // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
     GFL_NET_Boot( GFL_HEAPID_APP, NULL );
 	/* 起動プロセスの設定 */

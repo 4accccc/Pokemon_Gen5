@@ -13,7 +13,7 @@
 #ifndef	__SAVEDATA_H__
 #define	__SAVEDATA_H__
 
-#include "savedata/savedata_def.h"
+#include "savedata_def.h"
 
 //---------------------------------------------------------------------------
 ///	セーブに使用しているセクタ数
@@ -44,6 +44,9 @@ typedef enum {
 //---------------------------------------------------------------------------
 typedef enum {
 	//ノーマルデータグループ
+	GMDATA_ID_CONTEST,
+
+#if 0
 	GMDATA_ID_SYSTEM_DATA,
 	GMDATA_ID_PLAYER_DATA,
 	GMDATA_ID_TEMOTI_POKE,
@@ -81,6 +84,7 @@ typedef enum {
 	GMDATA_ID_PMS,
 	GMDATA_ID_EMAIL,
 	GMDATA_ID_WFHIROBA,
+#endif
 
 	//ボックスデータグループ
 	GMDATA_ID_BOXDATA,

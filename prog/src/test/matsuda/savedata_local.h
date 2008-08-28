@@ -9,7 +9,7 @@
 #ifndef	__SAVEDATA_LOCAL_H__
 #define	__SAVEDATA_LOCAL_H__
 
-#include "savedata/savedata.h"
+#include "savedata.h"
 
 #ifdef	PM_DEBUG
 //この定義を有効にするとフラッシュのエラーチェックが無効になる

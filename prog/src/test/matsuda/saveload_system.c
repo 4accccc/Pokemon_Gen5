@@ -6,15 +6,20 @@
  * @date	2008.08.26(火)
  */
 //==============================================================================
-#include "common.h"
-#include "gflib/system.h"
+#include "gflib.h"
 
-#include "savedata/savedata.h"
+#include "d_matsu.h"
+
+#include "savedata.h"
 #include "savedata_local.h"
+#include "backup/backup.h"
 
+#if MATSU_MAKE_DEL
 #include "application/backup.h"	//SaveErrorWarningCall
 
 #include "savedata/misc.h"	//extra_init_flag
+#endif
+
 
 
 //=============================================================================
@@ -22,7 +27,7 @@
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-#define MAGIC_NUMBER	(0x20060623)
+#define MAGIC_NUMBER	(0x31053527)
 #define	SECTOR_SIZE		(SAVE_SECTOR_SIZE)
 #define SECTOR_MAX		(SAVE_PAGE_MAX)
 
@@ -210,7 +215,7 @@ SAVEDATA * SaveData_System_Init(void)
 	SAVEDATA * sv;
 	LOAD_RESULT sv_result;
 
-	sv = sys_AllocMemory(HEAPID_BASE_SAVE, sizeof(SAVEDATA));
+	sv = GFL_HEAP_AllocClearMemory(HEAPID_BASE_SAVE, sizeof(SAVEDATA));
 	MI_CpuClearFast(sv, sizeof(SAVEDATA));
 	SvPointer = sv;
 	sv->flash_exists = PMSVLD_Init();
@@ -342,8 +347,10 @@ const void * SaveData_GetReadOnlyData(const SAVEDATA * sv, GMDATA_ID gmdataID)
 BOOL SaveData_Erase(SAVEDATA * sv)
 {
 	int i, j;
-	u8 * buf = sys_AllocMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE);
+	u8 * buf = GFL_HEAP_AllocClearMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE);
+#if MATSU_MAKE_DEL
 	sys_SleepNG(SLEEPTYPE_SAVELOAD);
+#endif
 
 	//各ブロックのフッタ部分だけを先行して削除する
 	EraseFlashFooter(sv, SVBLK_ID_NORMAL, !sv->current_side[SVBLK_ID_NORMAL]);
@@ -359,8 +366,9 @@ BOOL SaveData_Erase(SAVEDATA * sv)
 	sys_FreeMemoryEz(buf);
 	SaveData_ClearData(sv);
 	sv->data_exists = FALSE;
+#if MATSU_MAKE_DEL
 	sys_SleepOK(SLEEPTYPE_SAVELOAD);
-
+#endif
 	return TRUE;
 }
 
@@ -415,7 +423,9 @@ SAVE_RESULT SaveData_Save(SAVEDATA * sv)
 	}
 #if	AFTERMASTER_070112_REPORT_WARNING_FIX
 	if (sv->new_data_flag) {
+	#if MATSU_MAKE_DEL
 		sys_SleepNG(SLEEPTYPE_SAVELOAD);
+	#endif
 
 		//各ブロックのフッタ部分だけを先行して削除する
 		EraseFlashFooter(sv, SVBLK_ID_NORMAL, !sv->current_side[SVBLK_ID_NORMAL]);
@@ -423,7 +433,9 @@ SAVE_RESULT SaveData_Save(SAVEDATA * sv)
 		EraseFlashFooter(sv, SVBLK_ID_NORMAL, sv->current_side[SVBLK_ID_NORMAL]);
 		EraseFlashFooter(sv, SVBLK_ID_BOX, sv->current_side[SVBLK_ID_BOX]);
 
+	#if MATSU_MAKE_DEL
 		sys_SleepOK(SLEEPTYPE_SAVELOAD);
+	#endif
 	}
 #endif
 
@@ -967,8 +979,8 @@ static LOAD_RESULT NewCheckLoadData(SAVEDATA * sv)
 	int nres, bres;
 	int n_main, b_main, n_sub, b_sub;
 
-	buffer1 = sys_AllocMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE * SECTOR_MAX);
-	buffer2 = sys_AllocMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE * SECTOR_MAX);
+	buffer1 = GFL_HEAP_AllocClearMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE * SECTOR_MAX);
+	buffer2 = GFL_HEAP_AllocClearMemoryLo(HEAPID_SAVE_TEMP, SECTOR_SIZE * SECTOR_MAX);
 
 	if(PMSVLD_Load(FIRST_MIRROR_START * SECTOR_SIZE, buffer1, SECTOR_SIZE * SECTOR_MAX)) {
 		_checkBlockInfo(&ndata[MIRROR1ST], sv, (u32)buffer1, SVBLK_ID_NORMAL);
@@ -1278,7 +1290,9 @@ static void NEWSVLD_DivSaveInit(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, int block_i
 		ndsw->block_current = block_id;
 		ndsw->block_end = block_id + 1;
 	}
+#if MATSU_MAKE_DEL
 	sys_SleepNG(SLEEPTYPE_SAVELOAD);
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1402,7 +1416,9 @@ static void NEWSVLD_DivSaveEnd(SAVEDATA * sv, NEWDIVSV_WORK * ndsw, SAVE_RESULT 
 		sv->new_data_flag = FALSE;		//新規データではない
 		sv->total_save_flag = FALSE;	//全体セーブは必要ない
 	}
+#if MATSU_MAKE_DEL
 	sys_SleepOK(SLEEPTYPE_SAVELOAD);
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1430,7 +1446,9 @@ static void NEWSVLD_DivSaveCancel(SAVEDATA * sv, NEWDIVSV_WORK * ndsw)
         OS_ReleaseLockID(ndsw->lock_id);
         ndsw->lock_flg = FALSE;
     }
+#if MATSU_MAKE_DEL
 	sys_SleepOK(SLEEPTYPE_SAVELOAD);
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1746,7 +1764,9 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 	u32 data_size;
 	BOOL result;
 
+#if MATSU_MAKE_DEL
 	sys_SleepNG(SLEEPTYPE_SAVELOAD);
+#endif
 	GF_ASSERT(id < ExtraSaveDataTableMax);
 	extbl = &ExtraSaveDataTable[id];
 	GF_ASSERT(extbl->id == id);
@@ -1769,10 +1789,14 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 	}
 	if (result == TRUE) {
+	#if MATSU_MAKE_DEL
 		sys_SleepOK(SLEEPTYPE_SAVELOAD);
+	#endif
 		return SAVE_RESULT_OK;
 	} else {
+	#if MATSU_MAKE_DEL
 		sys_SleepOK(SLEEPTYPE_SAVELOAD);
+	#endif
 		return SAVE_RESULT_NG;
 	}
 }
@@ -1794,6 +1818,7 @@ SAVE_RESULT SaveData_Extra_Save(const SAVEDATA * sv, EXDATA_ID id, void * data)
 //---------------------------------------------------------------------------
 SAVE_RESULT SaveData_Extra_Mirror_Save(SAVEDATA * sv, EXDATA_ID id, void * data)
 {
+#if MATSU_MAKE_DEL
 	const EXSAVEDATA_TABLE * extbl;
 	u32 data_size;
 	BOOL result;
@@ -1824,12 +1849,19 @@ SAVE_RESULT SaveData_Extra_Mirror_Save(SAVEDATA * sv, EXDATA_ID id, void * data)
 		GF_ASSERT(IsCorrectExtraCheckData(sv, data, id, extbl->get_size()) == TRUE);
 	}
 	if (result == TRUE) {
+	#if MATSU_MAKE_DEL
 		sys_SleepOK(SLEEPTYPE_SAVELOAD);
+	#endif
 		return SAVE_RESULT_OK;
 	} else {
+	#if MATSU_MAKE_DEL
 		sys_SleepOK(SLEEPTYPE_SAVELOAD);
+	#endif
 		return SAVE_RESULT_NG;
 	}
+#else
+	return 0;
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -1877,7 +1909,7 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, int heap_id, EXDATA_ID id, LOAD_RE
 	extbl = &ExtraSaveDataTable[id];
 	GF_ASSERT(extbl->id == id);
 	data_size = extbl->get_size() + sizeof(CHECK_TAIL_DATA);
-	buf = sys_AllocMemory(heap_id, data_size);
+	buf = GFL_HEAP_AllocClearMemory(heap_id, data_size);
 
 	PMSVLD_Load((FIRST_MIRROR_START + extbl->sector) * SECTOR_SIZE, buf, data_size);
 	res1 = IsCorrectExtraCheckData(sv, buf, id, extbl->get_size());
@@ -1940,6 +1972,7 @@ void * SaveData_Extra_LoadAlloc(SAVEDATA *sv, int heap_id, EXDATA_ID id, LOAD_RE
 //---------------------------------------------------------------------------
 void * SaveData_Extra_Mirror_LoadAlloc(SAVEDATA *sv, int heap_id, EXDATA_ID id, LOAD_RESULT * result, BOOL *old)
 {
+#if MATSU_MAKE_DEL
 	const EXSAVEDATA_TABLE * extbl;
 	void * buf;
 	u32 data_size;
@@ -1955,7 +1988,7 @@ void * SaveData_Extra_Mirror_LoadAlloc(SAVEDATA *sv, int heap_id, EXDATA_ID id, 
 	extbl = &ExtraSaveDataTable[id];
 	GF_ASSERT(extbl->id == id);
 	data_size = extbl->get_size() + sizeof(CHECK_TAIL_DATA);
-	buf = sys_AllocMemory(heap_id, data_size);
+	buf = GFL_HEAP_AllocClearMemory(heap_id, data_size);
 
 	Extra_SaveKeyGet(sv, id, &key, &old_key, &flag);
 
@@ -2034,6 +2067,9 @@ void * SaveData_Extra_Mirror_LoadAlloc(SAVEDATA *sv, int heap_id, EXDATA_ID id, 
 	*result = LOAD_RESULT_NG;
 	MISC_ExtraSaveKeySet(misc, extbl->id, EX_CERTIFY_SAVE_KEY_NO_DATA, EX_CERTIFY_SAVE_KEY_NO_DATA,  0);
 	return buf;
+#else
+	return 0;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2188,7 +2224,9 @@ BOOL PMSVLD_Load(u32 src, void * dst, u32 len)
 #ifndef	DISABLE_FLASH_CHECK		//バックアップフラッシュなしでも動作
 	if (!result) {
 		sys_FreeMemoryEz(SvPointer);
+	#if MATSU_MAKE_DEL
 		BackupErrorWarningCall(HEAPID_BASE_SAVE);
+	#endif
 	}
 #endif
 
@@ -2282,7 +2320,9 @@ static void PMSVLD_SaveError(s32 lock_id, int error_msg_id)
 	sys_FreeMemoryEz(SvPointer);
 
 	//セーブ失敗画面呼び出し
+#if MATSU_MAKE_DEL
 	SaveErrorWarningCall(HEAPID_BASE_SAVE, error_msg_id);
+#endif
 }
 
 #if CRC_LOADCHECK
