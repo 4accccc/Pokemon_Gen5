@@ -22,6 +22,18 @@ void	TestModeSet(void);
 //============================================================================================
 #define G3DUTIL_USE
 
+enum{
+	STARTSELECT_RET_NON = 0,
+	STARTSELECT_RET_FIX,
+	STARTSELECT_RET_BACK,
+};
+
+enum{
+	TESTMODE_RET_NON = 0,
+	TESTMODE_RET_FIX,
+	TESTMODE_RET_BACK,
+};
+
 typedef struct {
 	HEAPID					heapID;
 	int						seq;
@@ -130,12 +142,15 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 		testmode->seq++;
 		break;
 	case 1:
-		//タイトル画面作成
-		g2d_load_title(testmode);	//２Ｄデータ作成
+		//タイトル画面作成 3D
 		g3d_load(testmode);	//３Ｄデータ作成
 		testmode->seq++;
-		break;
 	case 2:
+		//タイトル画面作成 2D
+		g2d_load_title(testmode);	//２Ｄデータ作成
+		testmode->seq++;
+		break;
+	case 3:
 		{
 			int pad = GFL_UI_KEY_GetTrg();
 			if( pad == PAD_BUTTON_A || pad == PAD_BUTTON_START ){
@@ -159,7 +174,7 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 		g3d_draw(testmode);		//３Ｄデータ描画
 		
 		break;
-	case 3:
+	case 4:
 		//タイトル抜け
 		g2d_unload_title(testmode);	//２Ｄデータ破棄
 		testmode->seq = 0;
@@ -170,11 +185,11 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 	return return_flag;
 }
 
-static BOOL	StartSelectControl( TESTMODE_WORK * testmode )
+static int StartSelectControl( TESTMODE_WORK * testmode )
 {
-	BOOL return_flag = FALSE;
+	int return_flag = STARTSELECT_RET_NON;
 	int i;
-
+	
 	switch( testmode->seq ){
 	case 0:
 		//初期化
@@ -203,27 +218,31 @@ static BOOL	StartSelectControl( TESTMODE_WORK * testmode )
 		g2d_draw_startsel(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
 		break;
-
 	case 3:
-		//キー判定
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ) {
-			testmode->seq++;
-		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ){
-			if( testmode->listPosition > 0 ){
-				testmode->listPosition--;
-				testmode->seq--;
-			}
-		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ){
-			if( testmode->listPosition < NELEMS(startselList)-1 ){
-				testmode->listPosition++;
-				testmode->seq--;
+		{	//キー判定
+			int trg = GFL_UI_KEY_GetTrg();
+			
+			if( trg == PAD_BUTTON_A ){
+				testmode->seq++;
+			}else if( trg == PAD_BUTTON_B ){
+				testmode->seq = 5;
+			}else if( trg == PAD_KEY_UP ){
+				if( testmode->listPosition > 0 ){
+					testmode->listPosition--;
+					testmode->seq--;
+				}
+			}else if( trg == PAD_KEY_DOWN ){
+				if( testmode->listPosition < NELEMS(startselList)-1 ){
+					testmode->listPosition++;
+					testmode->seq--;
+				}
 			}
 		}
+		
 		g3d_control_effect(testmode);
 		g2d_draw_startsel(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
 		break;
-
 	case 4:
 		//終了
 		GFL_TCB_DeleteTask( testmode->dbl3DdispVintr );
@@ -232,15 +251,22 @@ static BOOL	StartSelectControl( TESTMODE_WORK * testmode )
 		testmode->seq = 0;
 		testmode->listPosition = 0;
 		bg_exit();
-		return_flag = TRUE;
+		return_flag = STARTSELECT_RET_FIX;
+		break;
+	case 5:
+		//タイトルに戻る
+		g2d_unload_startsel( testmode );
+		testmode->listPosition = 0;
+		return_flag = STARTSELECT_RET_BACK;
 		break;
 	}
+	
 	return return_flag;
 }
 
-static BOOL	TestModeControl( TESTMODE_WORK * testmode )
+static int TestModeControl( TESTMODE_WORK * testmode )
 {
-	BOOL return_flag = FALSE;
+	BOOL return_flag = TESTMODE_RET_NON;
 	int i;
 
 	switch( testmode->seq ){
@@ -275,17 +301,23 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 
 	case 3:
 		//キー判定
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ) {
-			testmode->seq++;
-		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP ){
-			if( testmode->listPosition > 0 ){
-				testmode->listPosition--;
-				testmode->seq--;
-			}
-		} else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN ){
-			if( testmode->listPosition < NELEMS(selectList)-1 ){
-				testmode->listPosition++;
-				testmode->seq--;
+		{
+			int trg = GFL_UI_KEY_GetTrg();
+			
+			if( trg == PAD_BUTTON_A ) {
+				testmode->seq++;
+			}else if( trg == PAD_BUTTON_B ){
+				testmode->seq = 5;
+			}else if( trg == PAD_KEY_UP ){
+				if( testmode->listPosition > 0 ){
+					testmode->listPosition--;
+					testmode->seq--;
+				}
+			}else if( trg == PAD_KEY_DOWN ){
+				if( testmode->listPosition < NELEMS(selectList)-1 ){
+					testmode->listPosition++;
+					testmode->seq--;
+				}
 			}
 		}
 		g3d_control_effect(testmode);
@@ -303,9 +335,16 @@ static BOOL	TestModeControl( TESTMODE_WORK * testmode )
 		g3d_unload(testmode);	//３Ｄデータ破棄
 		g2d_unload_testmode(testmode);	//２Ｄデータ破棄
 		bg_exit();
-		return_flag = TRUE;
+		return_flag = TESTMODE_RET_FIX;
+		break;
+	case 5:
+		//タイトルへ戻る
+		g2d_unload_testmode(testmode);	//２Ｄデータ破棄
+		testmode->listPosition = 0;
+		return_flag = TESTMODE_RET_BACK;
 		break;
 	}
+	
 	return return_flag;
 }
 
@@ -1068,22 +1107,37 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 		}
 		break;
 	case 2:	//ロード制御
-		if( StartSelectControl(testmode) == TRUE ){
-			switch( TestModeSelectPosGet(testmode) ) {
-			case NUM_STARTSEL_CONTINUE:
-			case NUM_STARTSEL_START:
-				GFL_PROC_SysCallProc(
-					NO_OVERLAY_ID, &DebugFieldProcData, NULL);
-				(*seq) = 4;
+		{
+			int ret = StartSelectControl( testmode );
+			
+			if( ret == STARTSELECT_RET_FIX ){
+				switch( TestModeSelectPosGet(testmode) ) {
+				case NUM_STARTSEL_CONTINUE:
+				case NUM_STARTSEL_START:
+					GFL_PROC_SysCallProc(
+						NO_OVERLAY_ID, &DebugFieldProcData, NULL);
+					(*seq) = 4;
+					break;
+				}
+			}else if( ret == STARTSELECT_RET_BACK ){ //タイトルへ戻る
+				testmode->seq = 2; //2D初期化から
+				(*seq) = 1;
 				break;
 			}
 		}
 		break;
 	case 3:	//テストモード制御
-		if( TestModeControl(testmode) == TRUE ){
-			CallSelectProc(testmode);
-			(*seq) ++;
-			//return GFL_PROC_RES_FINISH;
+		{
+			int ret = TestModeControl( testmode );
+			
+			if( ret == TESTMODE_RET_FIX ){
+				CallSelectProc(testmode);
+				(*seq) ++;
+				//return GFL_PROC_RES_FINISH;
+			}else if( ret == TESTMODE_RET_BACK ){	//タイトルへ戻る
+				testmode->seq = 2; //2D初期化から
+				(*seq) = 1;
+			}
 		}
 		break;
 	case 4:	//終了
@@ -1099,6 +1153,7 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 		*seq = 0;
 		break;
 	}
+	
 	return GFL_PROC_RES_CONTINUE;
 }
 

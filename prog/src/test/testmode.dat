@@ -144,7 +144,7 @@ static const GFL_G3D_LOOKAT cameraLookAt = {	{ 0, (FX32_ONE * 58), (FX32_ONE * 2
 static const char title_0[] = 
 {"ポケットモンスター"};
 static const char title_1[] = 
-{"ホワイト　か　ブラック"};
+{"ホワイト　ブラック"};
 static const char title_2[] = 
 {"PUSH START BUTTON"};
 
