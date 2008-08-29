@@ -6,7 +6,7 @@
 RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
-SUBDIRS	= wmi test_graphic
+SUBDIRS	= wmi test_graphic message
 
 include $(RESOURCE_MACRO)
 
