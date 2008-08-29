@@ -13,7 +13,7 @@ ARC_DIR = ./prog/arc
 LIB_DIR = ./lib
 
 
-.PHONY : do-build clean	prog resource arc
+.PHONY : do-build clean	prog resource arc test
 
 #  make‚µ‚½ê‡‚É‚·‚×‚Äì‚ç‚ê‚é‚æ‚¤‚É‹Lq‚µ‚Ä‚­‚¾‚³‚¢
 #--------------------------------------- ----------------------------
@@ -41,3 +41,8 @@ resource:
 arc:
 	$(MAKE) -C $(ARC_DIR)
 
+test:
+	$(MAKE) CONVERTUSER=true clean
+	$(MAKE) CONVERTUSER=true
+	$(MAKE) CONVERTUSER=false clean
+	$(MAKE) CONVERTUSER=false
