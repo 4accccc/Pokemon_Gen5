@@ -134,6 +134,7 @@ sub output_header {
 
 		close(HEADER_FILE);
 		check_update_copy( $tmp_file, $output_file );
+		unlink( $tmp_file );
 #		print &tool::enc_sjis("-> $output_file\n");
 	}
 	else
