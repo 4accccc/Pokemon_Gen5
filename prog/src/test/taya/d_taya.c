@@ -24,7 +24,7 @@
 // archive includes -------------------
 #include "arc_def.h"
 #include "d_taya.naix"
-
+#include "message.naix"
 
 
 typedef BOOL (*pSubProc)( GFL_PROC*, int*, void*, void* );
@@ -91,7 +91,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 		"test_graphic/d_taya.narc",
 	};
 	enum {
-		ARCID_DEFAULT,
+		ARCID_D_TAYA,
 	};
 #endif
 
@@ -140,20 +140,26 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
+		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
+
 //		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
-		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
-		GFL_ARC_UTIL_TransVramPalette( ARCID_DEFAULT, NARC_d_taya_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
-
+		GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
 //		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
+		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
 		GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0x00, 1, 0 );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
+		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0xff, 1, 0 );
 		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	}
 
 	// ã‰º‰æ–ÊÝ’è
-	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
 
 	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
 	wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
@@ -162,20 +168,23 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 
 	wk->subProc = NULL;
 
+	GFL_BMPWIN_TransVramCharacter( wk->win );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-	wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEFAULT, NARC_d_taya_d_taya_dat, wk->heapID );
+	wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
 	wk->seq = 0;
 
 	wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
 //	GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
-	wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_DEFAULT, wk->heapID );
+	wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, wk->heapID );
 	wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	PRINTSYS_Init( wk->heapID );
+
+	
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -191,13 +200,25 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 	switch( *seq ){
 	case 0:
 		{
-			
+			u16 key = GFL_UI_KEY_GetTrg();
+
+			if( key & PAD_BUTTON_A )
+			{
+				wk->subProc = SUBPROC_PrintTest;
+			}
+
+			if( wk->subProc != NULL )
+			{
+				wk->subSeq = 0;
+				(*seq)++;
+			}
 		}
 		break;
 
 	case 1:
 		if( wk->subProc( proc, &(wk->subSeq), pwk, mywk ) )
 		{
+			wk->subProc = NULL;
 			*seq = 0;
 		}
 		break;
@@ -329,6 +350,6 @@ const GFL_PROC_DATA		DebugTayaMainProcData = {
 	DebugTayaMainProcEnd,
 };
 
- 
+
 
 
