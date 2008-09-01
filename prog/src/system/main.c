@@ -19,6 +19,7 @@
 
 #ifdef PM_DEBUG
 #include "test/ohno/performance.h"
+#include "test/goto/comm_error.h"
 #endif //PM_DEBUG
 
 static	void	SkeltonHBlankFunc(void);
@@ -124,7 +125,6 @@ static	void	GameInit(void)
 	TestModeSet();	//←サンプルデバッグモード
 }
 
-
 //------------------------------------------------------------------
 /**
  * @brief		ゲームごとのメイン処理
@@ -133,6 +133,11 @@ static	void	GameInit(void)
 static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
+
+#ifdef PM_DEBUG
+
+	CommErrorSys_SampleView();
+	
+#endif	// PM_DEBUG
+
 }
-
-
