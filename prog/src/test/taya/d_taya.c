@@ -6,19 +6,28 @@
  * @date	2008.08.01
  */
 //============================================================================================
-#include "gflib.h"
-#include "procsys.h"
-#include "tcbl.h"
+
+// lib includes -----------------------
+#include <gflib.h>
+#include <procsys.h>
+#include <tcbl.h>
+#include <msgdata.h>
+
+// global includes --------------------
 #include "system\main.h"
 
+// local includes ---------------------
 #include "gf_font.h"
 #include "printsys.h"
-
-#include "d_taya.naix"
 #include "msg_d_taya.h"
 
+// archive includes -------------------
 #include "arc_def.h"
+#include "d_taya.naix"
 
+
+
+typedef BOOL (*pSubProc)( GFL_PROC*, int*, void*, void* );
 
 typedef struct {
 
@@ -30,7 +39,7 @@ typedef struct {
 
 	GFL_BMPWIN*			win;
 	GFL_BMP_DATA*		bmp;
-	MSGDATA_MANAGER*	mm;
+	GFL_MSGDATA*		mm;
 	STRBUF*				strbuf;
 	GFL_TCBLSYS*		tcbl;
 
@@ -38,9 +47,22 @@ typedef struct {
 	GFL_FONT*				fontHandle;
 	PRINT_STREAM_HANDLE		printStream;
 
+	pSubProc		subProc;
+	int				subSeq;
+
 //	PRINT_STREAM_HANDLE	psHandle;
 
 }KANJI_WORK;
+
+
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
+static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+
 
 
 
@@ -138,9 +160,11 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	GFL_BMP_Clear( wk->bmp, 0xff );
 	GFL_BMPWIN_MakeScreen( wk->win );
 
+	wk->subProc = NULL;
+
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-	wk->mm = GFL_MSG_MANAGER_Create( MSGMAN_TYPE_NORMAL, ARCID_DEFAULT, NARC_d_taya_d_taya_dat, wk->heapID );
+	wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEFAULT, NARC_d_taya_d_taya_dat, wk->heapID );
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
 	wk->seq = 0;
 
@@ -162,6 +186,30 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	KANJI_WORK* wk = mywk;
+
+	switch( *seq ){
+	case 0:
+		{
+			
+		}
+		break;
+
+	case 1:
+		if( wk->subProc( proc, &(wk->subSeq), pwk, mywk ) )
+		{
+			*seq = 0;
+		}
+		break;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
+}
+//------------------------------------------------------
+// スタンドアロン状態での漢字PrintTest
+//------------------------------------------------------
+static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
 	static const u16 strID[] = {
 		DEBUG_TAYA_STR01,
 		DEBUG_TAYA_STR02,
@@ -178,54 +226,50 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 
 	GFL_TCBL_Main( wk->tcbl );
 
-	GF_ASSERT(wk);
-	GF_ASSERT(wk->bmp);
-
-
-	switch( wk->seq ){
+	switch( *seq ){
 	case 0:
-		GFL_MSG_MANAGER_GetString( wk->mm, DEBUG_TAYA_STR00, wk->strbuf );
+		GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR00, wk->strbuf );
 		GFL_BMP_Clear( wk->bmp, 0xff );
 		PRINTSYS_Print( wk->bmp, 0, 0, wk->strbuf, wk->fontHandle );
 		GFL_BMPWIN_TransVramCharacter( wk->win );
-		wk->seq++;
+		(*seq)++;
 		break;
 
 	case 1:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
 		{
 			u64 t1, t2;
-			GFL_MSG_MANAGER_GetString( wk->mm, DEBUG_TAYA_STR10, wk->strbuf );
+			GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR10, wk->strbuf );
 			GFL_BMP_Clear( wk->bmp, 0xff );
 			t1 = OS_GetTick();
 			PRINTSYS_Print( wk->bmp, 0, 0, wk->strbuf, 0 );
 			t2 = OS_GetTick();
 			OS_TPrintf("[TICK] AllScreenWrite = %ld\n", t2-t1);
 			GFL_BMPWIN_TransVramCharacter( wk->win );
-			wk->seq = 10;
+			(*seq) = 10;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 		{
 			wk->strNum = 0;
 			wk->yofs = 30;
-			wk->seq++;
+			(*seq)++;
 			break;
 		}
 		break;
 
 	case 2:
-		GFL_MSG_MANAGER_GetString( wk->mm, strID[wk->strNum], wk->strbuf );
+		GFL_MSG_GetString( wk->mm, strID[wk->strNum], wk->strbuf );
 		wk->printStream = PRINTSYS_PrintStream( wk->win, 0, wk->yofs,
 						wk->strbuf, wk->fontHandle, 0, wk->tcbl, 0, wk->heapID, 0xff, NULL );
-		wk->seq++;
+		(*seq)++;
 		break;
 
 	case 3:
 		if( PRINTSYS_PrintStreamGetState(wk->printStream) == PRINTSTREAM_STATE_DONE )
 		{
 			PRINTSYS_PrintStreamDelete( wk->printStream );
-			wk->seq++;
+			(*seq)++;
 		}
 		break;
 
@@ -239,13 +283,13 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 				{
 					wk->yofs += 16;
 				}
-				wk->seq = 2;
+				(*seq) = 2;
 			}
 			else
 			{
 				wk->kanjiMode = !(wk->kanjiMode);
-				GFL_MSG_SetKindID( wk->kanjiMode );
-				wk->seq = 0;
+				GFL_MSG_SetLangID( wk->kanjiMode );
+				(*seq) = 0;
 			}
 		}
 		break;
@@ -253,13 +297,13 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 	case 10:
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
 		{
-			wk->seq = 0;
+			(*seq) = 0;
 		}
 		break;
 
 	}
 
-	return GFL_PROC_RES_CONTINUE;
+	return FALSE;
 }
 //--------------------------------------------------------------------------
 /**
