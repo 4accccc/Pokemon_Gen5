@@ -100,6 +100,8 @@ static GFL_PROC_RESULT DebugGotoMainProcInit( GFL_PROC * proc, int * seq, void *
 	}		
 	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+
 #if 0
 	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
 	wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
