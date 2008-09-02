@@ -20,7 +20,7 @@ include $(VER_FILE)
 
 do-build: narc_tree.inc file_tree.inc
 
-narc_tree.inc: arc_tool.lst
+narc_tree.inc: narc_tree.pl arc_tool.lst $(VER_FILE)
 	perl narc_tree.pl arc_tool.lst $(PM_VERSION)
 
 file_tree.inc: narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
