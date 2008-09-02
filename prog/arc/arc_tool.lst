@@ -54,3 +54,6 @@
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_D_GOTO		"test_graphic/d_goto.narc"		#
 	ARCID_MESSAGE		"message.narc"		# メッセージデータ
+	ARCID_FLDMAP_SAMPLE "test_graphic/fieldmap_sample.narc" #
+	ARCID_FLDMAP_MAPDATA "test_graphic/fieldmap_map.narc"   #
+	ARCID_FLDMAP_ACTOR   "test_graphic/fieldmap_act.narc"   #
