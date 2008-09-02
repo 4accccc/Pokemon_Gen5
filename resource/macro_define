@@ -26,8 +26,13 @@ endef
 # コピーの方法を記述
 #------------------------------------------------------------------------------
 DIFFCOPY = ruby $(PROJECT_ROOT)/tools/diffcopy.rb
-NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
 COPY = cp
+
+# naixの時間部分を消去する
+NAIXCUT = ruby $(PROJECT_ROOT)/tools/naixcutstamp.rb
+# バイナリファイルを結合する
+BINLINKER = ruby $(PROJECT_ROOT)/tools/binlinker.rb
+
 
 #------------------------------------------------------------------------------
 #	ユーザーごとの動作切り替え用
