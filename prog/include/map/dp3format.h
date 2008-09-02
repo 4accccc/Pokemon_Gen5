@@ -39,8 +39,12 @@ typedef struct{
     u16 rotate;
     u8 billboard;
     u8 resourceID;
-} LayoutPositionSt;
+} PositionSt;
 
+typedef struct{
+    u32			count;
+	PositionSt* posData;
+} LayoutFormat;
 
 /// 全部をパックしたファイルのヘッダー
 typedef struct {
