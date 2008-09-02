@@ -1195,6 +1195,13 @@ static const G3D_MAPPER_DATA DPc11Map[] = {
 	{ NARC_fld_map_map20_13c_nsbmd, NARC_fld_map_map20_13c_nsbtx, NON_ATTR },
 };
 
+static const G3D_MAPPER_DATA GSMap[] = {
+	{ 50, NON_TEX, NON_ATTR },
+	{ 51, NON_TEX, NON_ATTR },
+	{ 52, NON_TEX, NON_ATTR },
+	{ 53, NON_TEX, NON_ATTR },
+};
+
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
 	G3D_MAPPER_RESIST	mapperData;
@@ -1208,6 +1215,15 @@ typedef struct {
 static const SCENE_DATA	resistMapTbl[] = {
 	{
 		{	
+			FILE_CUSTOM_DATA,
+			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_GSMAP, sampleMap 
+		}, 
+		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+	},
+	{
+		{	
+			FILE_MAPEDITER_DATA,
 			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_SAMPLEMAP, sampleMap 
 		}, 
@@ -1215,6 +1231,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{	
+			FILE_MAPEDITER_DATA,
 			1,  1, NELEMS(rasenMap), MAP_WIDTH, 92*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
 			ARCID_SAMPLEMAP, rasenMap 
 		}, 
@@ -1222,6 +1239,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{	
+			FILE_MAPEDITER_DATA,
 			1,  1, NELEMS(rasen2Map), MAP_WIDTH, 128*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
 			ARCID_SAMPLEMAP, rasen2Map 
 		}, 
@@ -1229,6 +1247,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{	
+			FILE_MAPEDITER_DATA,
 			2,  6, NELEMS(sample2Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
 			ARCID_SAMPLEMAP, sample2Map 
 		}, 
@@ -1236,6 +1255,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{ 
+			FILE_MAPEDITER_DATA,
 			32, 32, NELEMS(DPworldMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
 			ARCID_FLDMAP, DPworldMap 
 		}, 
@@ -1243,6 +1263,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{  
+			FILE_MAPEDITER_DATA,
 			2,  2, NELEMS(DPc01Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
 			ARCID_FLDMAP, DPc01Map 
 		}, 
@@ -1250,6 +1271,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{  
+			FILE_MAPEDITER_DATA,
 			1,  2, NELEMS(DPc02Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
 			ARCID_FLDMAP, DPc02Map 
 		}, 

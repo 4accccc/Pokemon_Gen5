@@ -9,9 +9,10 @@
 #include "gflib.h"
 #include "system\gfl_use.h"	//乱数用
 
-#include "g3d_map.h"
 #include "g3d_mapper.h"
 
+#include "g3dmapfunc\func_mapeditor_file.h"
+#include "g3dmapfunc\func_pmcustom_file.h"
 //============================================================================================
 /**
  *
@@ -74,6 +75,11 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
+static const MAPFILE_FUNC mapFileFuncTbl[] = {
+	{ LoadMapData_MapEditorFile, GetAttr_MapEditorFile },	//FILE_MAPEDITER_DATA
+	{ LoadMapData_PMcustomFile, GetAttr_PMcustomFile },		//FILE_MAPEDITER_DATA
+};
+
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム作成
@@ -91,6 +97,7 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 
 		setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
 		setup.texVramSize = MAPTEX_SIZE;
+		setup.mapFileFunc = mapFileFuncTbl;
 
 		//ブロック制御ハンドル作成
 		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -247,9 +254,12 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 	g3Dmapper->arcID = resistData->arcID;
 	g3Dmapper->data = resistData->data;
 
-	//ブロック制御ハンドルに新アーカイブＩＤを登録
+	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		//新アーカイブＩＤを登録
 		GFL_G3D_MAP_ResistArc( g3Dmapper->g3Dmap[i], g3Dmapper->arcID, g3Dmapper->heapID );
+		//ファイル識別設定（仮）
+		GFL_G3D_MAP_ResistFileType( g3Dmapper->g3Dmap[i], resistData->g3DmapFileType );
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;

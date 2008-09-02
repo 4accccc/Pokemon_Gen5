@@ -1,3 +1,5 @@
+#include "g3d_map.h"
+
 #define MAP_BLOCK_COUNT		(9)
 
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
@@ -33,6 +35,7 @@ typedef enum {
 }G3D_MAPPER_MODE;
 
 typedef struct {
+	GFL_G3D_MAPDATA_FILETYPE	g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	u16						sizex;		//横ブロック数
 	u16						sizez;		//縦ブロック数
 	u32						totalSize;	//配列サイズ
