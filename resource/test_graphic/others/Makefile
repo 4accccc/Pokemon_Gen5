@@ -23,8 +23,10 @@ TARGET_NAMES	= \
 	test3d.narc \
 	titledemo.naix \
 	titledemo.narc \
+	map_tex_set.narc \
+	land_data.narc 
 	d_goto.naix \
-	d_goto.narc \
+	d_goto.narc
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 
