@@ -1,81 +1,75 @@
-##------------------------------------------------------------------------------
-##
-##	サンプルマップコンバート用Makefile
-##
-##	2008.09.02	ohno_katsumi@gamefreak.co.jp
-##------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 #
-##------------------------------------------------------------------------------
-##※コンバート作業が必要なユーザーの名前を記述する
-##------------------------------------------------------------------------------
-USERS	=	watanabe ohno
+#	サンプルマップコンバート用Makefile
 #
-##------------------------------------------------------------------------------
-##※ここに作成するnarc名を書く
-##------------------------------------------------------------------------------
-#TARGETNAME	= test3dp
-#NARCNAME	= $(TARGETNAME).narc
-#NAIXNAME	= $(TARGETNAME).naix
-#
-##------------------------------------------------------------------------------
-##※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
-##------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)/test_graphic
-#
-#
-##共通ルールファイルのインクルード
-#include $(PROJECT_RSCDIR)\macro_define
-#
-#
-##依存対象が複数ある
-#MAPNSBMDS	:= $(wildcard *.nsbmd)
-#MAP3DPPACKS = $(subst .nsbmd,.3dppack,$(MAPNSBMDS))
-#
-#ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-#.SUFFIXES:	 .3dppack .nsbmd
-#
-##imdデータからの生成ルール
-#.nsbmd.3dppack:
-#	echo $<
-##	$(BINLINKER) $< $<
-#endif
-#
-#
-.PHONY:	do-build clean
-#
-##------------------------------------------------------------------------------
-##	make do-build ルール
-##------------------------------------------------------------------------------
-#do-build:	$(TARGETDIR)/$(NARCNAME)
-#
-#subdir:
-#	@$(MAKE_SUBDIR)
-#
-#$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-#	$(COPY)	$(NARCNAME) $(TARGETDIR)
-#	$(COPY) $(NAIXNAME) $(TARGETDIR)
-#
-#$(NARCNAME):	$(MAPMDLS) $(wildcard *.bin)  $(wildcard *.3dmd)
-#	nnsarc -c -l -n -i $(NARCNAME) -S data.list > error
-#	$(NAIXCUT) $(NAIXNAME)
-#
-##------------------------------------------------------------------------------
-##	make cleanルール
-##------------------------------------------------------------------------------
+#	2008.09.02	ohno_katsumi@gamefreak.co.jp
+#------------------------------------------------------------------------------
 
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	watanabe #ohno
+
+#------------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#------------------------------------------------------------------------------
+TARGETNAME	= test3dp
+NARCNAME	= $(TARGETNAME).narc
+NAIXNAME	= $(TARGETNAME).naix
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR	= $(PROJECT_ARCDIR)/test_graphic
 
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
 
-# ただ今仮作成 k.ohno
-do-build:
-	ruby ../../tools/binlinker.rb map_a1.nsbmd map_a1.nsbtx NONE map_a1.bin map_a1.3dmd map_a1.3dppack
-	nnsarc -c -l -n -i test3dp -S data.list
-	ruby ../../tools/naixcutstamp.rb test3dp.naix
-	$(COPY)	test3dp.naix $(TARGETDIR)
-	$(COPY)	test3dp.narc $(TARGETDIR)
+#依存対象が複数ある
+MAPBINS	:= $(wildcard *.bin)
+MAPNSBMDS	:= $(wildcard *.nsbmd)
+MAPNSBTXS	:= $(wildcard *.nsbtx)
+MAPNSBTPS	:= $(wildcard *.nsbtp)
+MAP3DMDS	:= $(wildcard *.3dmd)
+
+MAP3DPPACKS = $(subst .nsbmd,.3dppack,$(MAPNSBMDS))
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+.SUFFIXES:	 .3dppack .nsbmd .nsbtx .nsbtp .3dmd .bin
+
+#データからの生成ルール
+.nsbmd.3dppack:
+.nsbtx.3dppack:
+.nsbtp.3dppack:
+.3dmd.3dppack:
+.bin.3dppack:
+	$(BINLINKER) $*.nsbmd $*.nsbtx $*.nsbtp $*.bin $*.3dmd $*.3dppack
+
+endif
+
+
+.PHONY:	do-build clean
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+do-build:	$(TARGETDIR)/$(NARCNAME)
+
+
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
+
+$(NARCNAME):	$(MAP3DPPACKS) $(MAPBINS)  $(MAP3DMDS) $(MAPNSBMDS) $(MAPNSBTXS) $(MAPNSBTPS)
+	nnsarc -c -l -n -i $(NARCNAME) -S data.list
+	$(NAIXCUT) $(NAIXNAME)
+
+
+#------------------------------------------------------------------------------
+#	make cleanルール
+#------------------------------------------------------------------------------
 
 clean:
 	-rm -f $(TARGETDIR)/test3dp.naix
