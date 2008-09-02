@@ -35,7 +35,13 @@
 typedef struct {
 	u32			id;
 	VecFx32		trans;
-}MAP_OBJECT_DATA;
+	u16			rotate;
+}MAP_OBJ_DATA;
+
+typedef struct {
+	u32			id;
+	VecFx32		trans;
+}MAP_DDOBJ_DATA;
 
 struct _GFL_G3D_MAP 
 {
@@ -61,8 +67,8 @@ struct _GFL_G3D_MAP
 	NNSGfdTexKey				groundTexKey;
 	NNSGfdPlttKey				groundPlttKey;
 
-	MAP_OBJECT_DATA				object[OBJ_COUNT];	//配置オブジェクト
-	MAP_OBJECT_DATA				directDrawObject[DDOBJ_COUNT];
+	MAP_OBJ_DATA				object[OBJ_COUNT];	//配置オブジェクト
+	MAP_DDOBJ_DATA				directDrawObject[DDOBJ_COUNT];
 
 	GFL_G3D_MAP_LOAD_STATUS		ldst;
 	void*						mapData;
@@ -135,13 +141,17 @@ GFL_G3D_MAP*	GFL_G3D_MAP_Create( GFL_G3D_MAP_SETUP* setup, HEAPID heapID )
 	g3Dmap->grobalResTex = NULL;
 
 	//テクスチャ＆パレットＶＲＡＭ確保
-	g3Dmap->texVramSize = setup->texVramSize;
-	g3Dmap->groundTexKey = NNS_GfdAllocTexVram( setup->texVramSize, FALSE, 0 );
-	g3Dmap->groundPlttKey = NNS_GfdAllocPlttVram( MAPPLTT_SIZE, FALSE, 0 );
+	if( setup->texVramSize != 0 ){
+		g3Dmap->texVramSize = setup->texVramSize;
+		g3Dmap->groundTexKey = NNS_GfdAllocTexVram( setup->texVramSize, FALSE, 0 );
+		g3Dmap->groundPlttKey = NNS_GfdAllocPlttVram( MAPPLTT_SIZE, FALSE, 0 );
 
-	GF_ASSERT( g3Dmap->groundTexKey != NNS_GFD_ALLOC_ERROR_TEXKEY );
-	GF_ASSERT( g3Dmap->groundPlttKey != NNS_GFD_ALLOC_ERROR_PLTTKEY );
-
+		GF_ASSERT( g3Dmap->groundTexKey != NNS_GFD_ALLOC_ERROR_TEXKEY );
+		GF_ASSERT( g3Dmap->groundPlttKey != NNS_GFD_ALLOC_ERROR_PLTTKEY );
+	} else {
+		g3Dmap->groundTexKey = 0;
+		g3Dmap->groundPlttKey = 0;
+	}
 	return g3Dmap;
 }
 
@@ -154,12 +164,12 @@ void	GFL_G3D_MAP_Delete( GFL_G3D_MAP* g3Dmap )
 {
 	GF_ASSERT( g3Dmap );
 
-	if( g3Dmap->arc != NULL ){
-		GFL_ARC_CloseDataHandle( g3Dmap->arc );
-	}
-	NNS_GfdFreePlttVram( g3Dmap->groundPlttKey );
-	NNS_GfdFreeTexVram( g3Dmap->groundTexKey );
+	GFL_G3D_MAP_ReleaseArc( g3Dmap );		//アーカイブハンドルを閉じる（保険）
 
+	if( g3Dmap->texVramSize != 0 ){
+		NNS_GfdFreePlttVram( g3Dmap->groundPlttKey );
+		NNS_GfdFreeTexVram( g3Dmap->groundTexKey );
+	}
 	GFL_HEAP_FreeMemory( g3Dmap->groundResTex );
 	GFL_HEAP_FreeMemory( g3Dmap->groundResMdl );
 
@@ -558,6 +568,9 @@ BOOL GFL_G3D_MAP_ContinueFileLoad( GFL_G3D_MAP* g3Dmap )
 //------------------------------------------------------------------
 void GFL_G3D_MAP_SetTransVramParam( GFL_G3D_MAP* g3Dmap )
 {
+	if( g3Dmap->texVramSize == 0 ){
+		return;
+	}
 	//テクスチャリソースへのＶＲＡＭキーの設定
 	NNS_G3dTexSetTexKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), g3Dmap->groundTexKey, 0 );
 	NNS_G3dPlttSetPlttKey( GFL_G3D_GetResTex(g3Dmap->groundResTex), g3Dmap->groundPlttKey );
@@ -572,6 +585,9 @@ BOOL GFL_G3D_MAP_TransVram( GFL_G3D_MAP* g3Dmap )
 	u32		dst;
 	u32		rest;
 
+	if( g3Dmap->texVramSize == 0 ){
+		return FALSE;
+	}
 	if( g3Dmap->ldst.tOffs >= g3Dmap->ldst.tSize ){
 		src = (void*)GFL_G3D_GetAdrsTexturePltt(g3Dmap->groundResTex);
 		dst = NNS_GfdGetPlttKeyAddr( g3Dmap->groundPlttKey );
@@ -700,7 +716,7 @@ static void	DirectDrawObj
 	( GFL_G3D_MAP* g3Dmap, const GFL_G3D_MAP_DDOBJ* ddobj, GFL_G3D_CAMERA* g3Dcamera )
 {
 	const GFL_G3D_MAP_DDOBJ*	objData;
-	MAP_OBJECT_DATA*			ddObject;
+	MAP_DDOBJ_DATA*			ddObject;
 	MtxFx33		mtxBillboard;
 	VecFx32		trans, grobalTrans;
 	VecFx16		vecView;

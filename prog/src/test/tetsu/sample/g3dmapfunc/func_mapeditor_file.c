@@ -33,108 +33,6 @@
  *
  */
 //============================================================================================
-#if 0
-enum {
-	L1_MDL_LOAD_START = LOAD_START,
-	L1_MDL_LOAD,
-	L1_TEX_LOAD_START,
-	L1_TEX_LOAD,
-	L1_RND_CREATE,
-	L1_TEX_TRANS,
-	L1_ATTR_LOAD_START,
-	L1_ATTR_LOAD,
-	L1_LOAD_END,
-};
-
-BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
-{
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
-	void*	mem;
-	u32		datID;
-
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
-	GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
-
-	switch( ldst->seq ){
-	case L1_MDL_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
-		//モデルデータロード開始
-		GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-
-		GFL_G3D_MAP_GetLoadDatIDMdl( g3Dmap, &datID );
-		GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
-
-		ldst->seq = L1_MDL_LOAD;
-		break;
-	case L1_MDL_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->mdlLoaded = TRUE;
-			ldst->seq = L1_TEX_LOAD_START;
-		}
-		break;
-
-	case L1_TEX_LOAD_START:
-		GFL_G3D_MAP_GetLoadDatIDTex( g3Dmap, &datID );
-
-		if( datID == NON_TEX ){
-			ldst->seq = L1_RND_CREATE;
-		} else {
-			//テクスチャロード開始
-			GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
-			ldst->seq = L1_TEX_LOAD;
-		}
-		break;
-	case L1_TEX_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->texLoaded = TRUE;
-			GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
-			ldst->seq = L1_TEX_TRANS;
-		}
-		break;
-
-	case L1_TEX_TRANS:
-		if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE ){
-			ldst->seq = L1_RND_CREATE;
-		}
-		break;
-
-	case L1_RND_CREATE:
-		//レンダー作成
-		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
-		ldst->seq = L1_ATTR_LOAD_START;
-		break;
-
-	case L1_ATTR_LOAD_START:
-		GFL_G3D_MAP_GetLoadDatIDAttr( g3Dmap, &datID );
-
-		if( datID == NON_ATTR ){
-			ldst->seq = L1_LOAD_END;
-		} else {
-		//アトリビュートデータロード開始
-			GFL_G3D_MAP_CreateResourceAttr(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
-			ldst->seq = L1_ATTR_LOAD;
-		}
-		break;
-	case L1_ATTR_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->attrLoaded = TRUE;
-			ldst->seq = L1_LOAD_END;
-		}
-		break;
-
-	case L1_LOAD_END:
-		GFL_G3D_MAP_MakeTestPos(g3Dmap);
-
-		ldst->seq = LOAD_IDLING;
-		return FALSE;
-		break;
-	}
-	return TRUE;
-}
-#else
 enum {
 	FILE_HEADER_LOAD = LOAD_START,
 	FILE_LOAD_START,
@@ -218,7 +116,6 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 	}
 	return TRUE;
 }
-#endif
 
 //============================================================================================
 /**
