@@ -45,9 +45,9 @@ static FLD_G3D_MAPPER*		GetG3Dmapper( SAMPLE_SETUP* gs );
 //アーカイブＩＮＤＥＸ
 enum {
 	ARCID_TEST3D = 0,
-	ARCID_FLDACT,
+	ARCID_FLDMAP_ACTOR,
 	ARCID_FLDMAP,
-	ARCID_SAMPLEMAP,
+	ARCID_FLDMAP_SAMPLE,
 };
 #endif
 
@@ -175,7 +175,7 @@ BOOL	FieldMain( void )
             {
                 FLD_G3D_MAPPEROBJ_RESIST resistObjData;
                 
-                resistObjData.arcID = ARCID_SAMPLEMAP;
+                resistObjData.arcID = ARCID_FLDMAP_SAMPLE;
                 resistObjData.data = resistObjTbl; 
                 resistObjData.count = NELEMS(resistObjTbl); 
                 FieldResistObjRes3Dmapper( GetG3Dmapper(FieldWork->gs), &resistObjData );
@@ -183,7 +183,7 @@ BOOL	FieldMain( void )
             {
                 FLD_G3D_MAPPERDDOBJ_RESIST resistDDobjData;
                 
-                resistDDobjData.arcID = ARCID_SAMPLEMAP;
+                resistDDobjData.arcID = ARCID_FLDMAP_SAMPLE;
                 resistDDobjData.data = resistDDobjTbl; 
                 resistDDobjData.count = NELEMS(resistDDobjTbl); 
                 FieldResistDDobjRes3Dmapper( GetG3Dmapper(FieldWork->gs), &resistDDobjData );
@@ -381,7 +381,7 @@ static const GFL_BG_DISPVRAM dispVram = {
  * @brief	アーカイブテーブル
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/fld_act.naix"
+#include "arc/test_graphic/fieldmap_act.naix"
 
 #if 0
 static	const	char	*GraphicFileTable[]={
@@ -1034,9 +1034,9 @@ enum {
 };
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
-	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-//	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
+//	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx,
 //		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
 };
 
@@ -1268,7 +1268,7 @@ static PC_ACTCONT*	CreatePlayerAct( SAMPLE_SETUP*	gs, HEAPID heapID )
 	//GFL_BBDACT_BindActTexRes
 	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
 	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDACT, NARC_fld_act_hero_nsbtx );
+		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
 								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
@@ -1423,27 +1423,27 @@ static void	calcCameraRotate( FLD_ACTCONT* fldActCont );
  */
 //------------------------------------------------------------------
 static const GFL_BBDACT_RESDATA testResTable[] = {
-	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, 
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_achamo_nsbtx, 
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_achamo_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_artist_nsbtx, 
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_artist_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_badman_nsbtx, 
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_badman_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_beachgirl_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_beachgirl_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_idol_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_idol_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_lady_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_lady_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_oldman1_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_oldman1_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_policeman_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_policeman_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_rivel_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_rivel_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDACT, NARC_fld_act_waiter_nsbtx,
+	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_waiter_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 };
 

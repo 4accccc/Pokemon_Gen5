@@ -1,64 +1,64 @@
-#include "arc/test_graphic/sample_map.naix"
-#include "arc/test_graphic/fld_map.naix"
+#include "arc/test_graphic/fieldmap_sample.naix"
+#include "arc/test_graphic/fieldmap_map.naix"
 
 static const FLD_G3D_MAPPER_DATA sampleMap[] = {
-	{ NARC_sample_map_map_a1_nsbmd, NARC_sample_map_map_a1_nsbtx, NARC_sample_map_map_a1_bin },
-	{ NARC_sample_map_map_a2_nsbmd, NARC_sample_map_map_a2_nsbtx, NARC_sample_map_map_a2_bin },
-	{ NARC_sample_map_map_a3_nsbmd, NARC_sample_map_map_a3_nsbtx, NARC_sample_map_map_a3_bin },
-	{ NARC_sample_map_map_a4_nsbmd, NARC_sample_map_map_a4_nsbtx, NARC_sample_map_map_a4_bin },
-	{ NARC_sample_map_map_b1_nsbmd, NARC_sample_map_map_b1_nsbtx, NARC_sample_map_map_b1_bin },
-	{ NARC_sample_map_map_b2_nsbmd, NARC_sample_map_map_b2_nsbtx, NARC_sample_map_map_b2_bin },
-	{ NARC_sample_map_map_b3_nsbmd, NARC_sample_map_map_b3_nsbtx, NARC_sample_map_map_b3_bin },
-	{ NARC_sample_map_map_b4_nsbmd, NARC_sample_map_map_b4_nsbtx, NARC_sample_map_map_b4_bin },
-	{ NARC_sample_map_map_c1_nsbmd, NARC_sample_map_map_c1_nsbtx, NARC_sample_map_map_c1_bin },
-	{ NARC_sample_map_map_c2_nsbmd, NARC_sample_map_map_c2_nsbtx, NARC_sample_map_map_c2_bin },
-	{ NARC_sample_map_map_c3_nsbmd, NARC_sample_map_map_c3_nsbtx, NARC_sample_map_map_c3_bin },
-	{ NARC_sample_map_map_c4_nsbmd, NARC_sample_map_map_c4_nsbtx, NARC_sample_map_map_c4_bin },
-	{ NARC_sample_map_map_d1_nsbmd, NARC_sample_map_map_d1_nsbtx, NARC_sample_map_map_d1_bin },
-	{ NARC_sample_map_map_d2_nsbmd, NARC_sample_map_map_d2_nsbtx, NARC_sample_map_map_d2_bin },
-	{ NARC_sample_map_map_d3_nsbmd, NARC_sample_map_map_d3_nsbtx, NARC_sample_map_map_d3_bin },
-	{ NARC_sample_map_map_d4_nsbmd, NARC_sample_map_map_d4_nsbtx, NARC_sample_map_map_d4_bin },
+	{ NARC_fieldmap_sample_map_a1_nsbmd, NARC_fieldmap_sample_map_a1_nsbtx, NARC_fieldmap_sample_map_a1_bin },
+	{ NARC_fieldmap_sample_map_a2_nsbmd, NARC_fieldmap_sample_map_a2_nsbtx, NARC_fieldmap_sample_map_a2_bin },
+	{ NARC_fieldmap_sample_map_a3_nsbmd, NARC_fieldmap_sample_map_a3_nsbtx, NARC_fieldmap_sample_map_a3_bin },
+	{ NARC_fieldmap_sample_map_a4_nsbmd, NARC_fieldmap_sample_map_a4_nsbtx, NARC_fieldmap_sample_map_a4_bin },
+	{ NARC_fieldmap_sample_map_b1_nsbmd, NARC_fieldmap_sample_map_b1_nsbtx, NARC_fieldmap_sample_map_b1_bin },
+	{ NARC_fieldmap_sample_map_b2_nsbmd, NARC_fieldmap_sample_map_b2_nsbtx, NARC_fieldmap_sample_map_b2_bin },
+	{ NARC_fieldmap_sample_map_b3_nsbmd, NARC_fieldmap_sample_map_b3_nsbtx, NARC_fieldmap_sample_map_b3_bin },
+	{ NARC_fieldmap_sample_map_b4_nsbmd, NARC_fieldmap_sample_map_b4_nsbtx, NARC_fieldmap_sample_map_b4_bin },
+	{ NARC_fieldmap_sample_map_c1_nsbmd, NARC_fieldmap_sample_map_c1_nsbtx, NARC_fieldmap_sample_map_c1_bin },
+	{ NARC_fieldmap_sample_map_c2_nsbmd, NARC_fieldmap_sample_map_c2_nsbtx, NARC_fieldmap_sample_map_c2_bin },
+	{ NARC_fieldmap_sample_map_c3_nsbmd, NARC_fieldmap_sample_map_c3_nsbtx, NARC_fieldmap_sample_map_c3_bin },
+	{ NARC_fieldmap_sample_map_c4_nsbmd, NARC_fieldmap_sample_map_c4_nsbtx, NARC_fieldmap_sample_map_c4_bin },
+	{ NARC_fieldmap_sample_map_d1_nsbmd, NARC_fieldmap_sample_map_d1_nsbtx, NARC_fieldmap_sample_map_d1_bin },
+	{ NARC_fieldmap_sample_map_d2_nsbmd, NARC_fieldmap_sample_map_d2_nsbtx, NARC_fieldmap_sample_map_d2_bin },
+	{ NARC_fieldmap_sample_map_d3_nsbmd, NARC_fieldmap_sample_map_d3_nsbtx, NARC_fieldmap_sample_map_d3_bin },
+	{ NARC_fieldmap_sample_map_d4_nsbmd, NARC_fieldmap_sample_map_d4_nsbtx, NARC_fieldmap_sample_map_d4_bin },
 };
 
 static const FLD_G3D_MAPPER_DATA sample2Map[] = {
-	{ NARC_sample_map_m_test_01_01c_nsbmd, NARC_sample_map_m_test_01_01c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_01c_nsbmd, NARC_sample_map_m_test_02_01c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_01_02c_nsbmd, NARC_sample_map_m_test_01_02c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_02c_nsbmd, NARC_sample_map_m_test_02_02c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_01_03c_nsbmd, NARC_sample_map_m_test_01_03c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_03c_nsbmd, NARC_sample_map_m_test_02_03c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_01_04c_nsbmd, NARC_sample_map_m_test_01_04c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_04c_nsbmd, NARC_sample_map_m_test_02_04c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_01_05c_nsbmd, NARC_sample_map_m_test_01_05c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_05c_nsbmd, NARC_sample_map_m_test_02_05c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_01_06c_nsbmd, NARC_sample_map_m_test_01_06c_nsbtx, NON_ATTR }, 
-	{ NARC_sample_map_m_test_02_06c_nsbmd, NARC_sample_map_m_test_02_06c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_01c_nsbmd, NARC_fieldmap_sample_m_test_01_01c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_01c_nsbmd, NARC_fieldmap_sample_m_test_02_01c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_02c_nsbmd, NARC_fieldmap_sample_m_test_01_02c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_02c_nsbmd, NARC_fieldmap_sample_m_test_02_02c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_03c_nsbmd, NARC_fieldmap_sample_m_test_01_03c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_03c_nsbmd, NARC_fieldmap_sample_m_test_02_03c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_04c_nsbmd, NARC_fieldmap_sample_m_test_01_04c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_04c_nsbmd, NARC_fieldmap_sample_m_test_02_04c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_05c_nsbmd, NARC_fieldmap_sample_m_test_01_05c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_05c_nsbmd, NARC_fieldmap_sample_m_test_02_05c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_01_06c_nsbmd, NARC_fieldmap_sample_m_test_01_06c_nsbtx, NON_ATTR }, 
+	{ NARC_fieldmap_sample_m_test_02_06c_nsbmd, NARC_fieldmap_sample_m_test_02_06c_nsbtx, NON_ATTR }, 
 };
 
 static const FLD_G3D_MAPPER_DATA rasenMap[] = {
-	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
-		NARC_sample_map_map_rasen_bin },
-	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
-		NARC_sample_map_map_rasen_bin },
-	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
-		NARC_sample_map_map_rasen_bin },
-	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
-		NARC_sample_map_map_rasen_bin },
-	{ NARC_sample_map_map_rasen_nsbmd, NARC_sample_map_map_rasen_nsbtx, 
-		NARC_sample_map_map_rasen_bin },
+	{ NARC_fieldmap_sample_map_rasen_nsbmd, NARC_fieldmap_sample_map_rasen_nsbtx, 
+		NARC_fieldmap_sample_map_rasen_bin },
+	{ NARC_fieldmap_sample_map_rasen_nsbmd, NARC_fieldmap_sample_map_rasen_nsbtx, 
+		NARC_fieldmap_sample_map_rasen_bin },
+	{ NARC_fieldmap_sample_map_rasen_nsbmd, NARC_fieldmap_sample_map_rasen_nsbtx, 
+		NARC_fieldmap_sample_map_rasen_bin },
+	{ NARC_fieldmap_sample_map_rasen_nsbmd, NARC_fieldmap_sample_map_rasen_nsbtx, 
+		NARC_fieldmap_sample_map_rasen_bin },
+	{ NARC_fieldmap_sample_map_rasen_nsbmd, NARC_fieldmap_sample_map_rasen_nsbtx, 
+		NARC_fieldmap_sample_map_rasen_bin },
 };
 
 static const FLD_G3D_MAPPER_DATA rasen2Map[] = {
-	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
-		NARC_sample_map_map_rasen2_bin },
-	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
-		NARC_sample_map_map_rasen2_bin },
-	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
-		NARC_sample_map_map_rasen2_bin },
-	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
-		NARC_sample_map_map_rasen2_bin },
-	{ NARC_sample_map_map_rasen2_nsbmd, NARC_sample_map_map_rasen2_nsbtx, 
-		NARC_sample_map_map_rasen2_bin },
+	{ NARC_fieldmap_sample_map_rasen2_nsbmd, NARC_fieldmap_sample_map_rasen2_nsbtx, 
+		NARC_fieldmap_sample_map_rasen2_bin },
+	{ NARC_fieldmap_sample_map_rasen2_nsbmd, NARC_fieldmap_sample_map_rasen2_nsbtx, 
+		NARC_fieldmap_sample_map_rasen2_bin },
+	{ NARC_fieldmap_sample_map_rasen2_nsbmd, NARC_fieldmap_sample_map_rasen2_nsbtx, 
+		NARC_fieldmap_sample_map_rasen2_bin },
+	{ NARC_fieldmap_sample_map_rasen2_nsbmd, NARC_fieldmap_sample_map_rasen2_nsbtx, 
+		NARC_fieldmap_sample_map_rasen2_bin },
+	{ NARC_fieldmap_sample_map_rasen2_nsbmd, NARC_fieldmap_sample_map_rasen2_nsbtx, 
+		NARC_fieldmap_sample_map_rasen2_bin },
 };
 
 //	NARC_fld_map_ro_treec_nsbmd = 178,
@@ -1269,11 +1269,11 @@ static const SCENE_DATA	resistMapTbl[] = {
 };
 
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
-	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
-	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
+	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
+	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
 };
 
 static const u16	resistDDobjTbl[] = {
-	NARC_sample_map_sample_tree_nsbtx,
+	NARC_fieldmap_sample_sample_tree_nsbtx,
 };
 
