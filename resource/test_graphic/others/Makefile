@@ -24,7 +24,7 @@ TARGET_NAMES	= \
 	titledemo.naix \
 	titledemo.narc \
 	map_tex_set.narc \
-	land_data.narc 
+	land_data.narc \
 	d_goto.naix \
 	d_goto.narc
 
