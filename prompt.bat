@@ -14,7 +14,7 @@ REM SET PATH=%AGBDIR%/bin;%PATH%
 REM ##################################################
 REM		ディレクトリパス定義
 REM ##################################################
-SET WBLIBDIR=%PROJECT_ROOT%\lib
+SET WBLIBDIR=%PROJECT_ROOT%lib
 SET CWFolder_NITRO=C:\Program Files\Freescale\CW for NINTENDO DS V2.0
 SET CW_NITROSDK_ROOT=%WBLIBDIR%\NitroSDK
 SET LM_LICENSE_FILE=C:\Program Files\Freescale\CW for NINTENDO DS V2.0\license.dat
@@ -32,7 +32,7 @@ SET SVN_EDITOR=c:\tools\vim\gvim
 REM ##################################################
 REM		パスの追加
 REM ##################################################
-PATH=%PROJECT_ROOT%;c:\cygwin\bin;%PATH%;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;
+PATH=%PROJECT_ROOT%;c:\cygwin\bin;c:\tools\vim;C:\tools;%NITROSDK_ROOT%\tools\bin;%NITROSYSTEM_ROOT%\tools\win\bin;%PATH%;
 
 REM ##################################################
 REM		マクロ定義

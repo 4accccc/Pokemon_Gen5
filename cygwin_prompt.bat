@@ -30,7 +30,7 @@ SET CVSEDITOR=c:\tools\vim\gvim
 SET SVNROOT=:svn://svn-wb.gamefreak.co.jp/pokemon_wb/
 SET SVN_EDITOR=c:\tools\vim\gvim
 
-PATH=C:\tools;c:\cygwin\bin;%PATH%;c:\tools\vim;%WBLIBDIR%\NitroSDK\tools\bin;%WBLIBDIR%\NitroSystem\tools\win\bin;%WBLIBDIR%\..\tools
+PATH=C:\tools;c:\cygwin\bin;c:\tools\vim;%WBLIBDIR%\NitroSDK\tools\bin;%WBLIBDIR%\NitroSystem\tools\win\bin;%WBLIBDIR%\..\tools;%PATH%;
 
 REM C:
 REM chdir C:\Cygwin\bin
