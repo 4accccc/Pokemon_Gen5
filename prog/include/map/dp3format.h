@@ -29,6 +29,13 @@ typedef struct {
 	u32		tryangleType:1;   //三角形の形のタイプ  
 } NormalVtxSt;
 
+typedef struct{
+    u16			width;
+    u16			height;
+	NormalVtxSt* vtxData;
+} NormalVtxFormat;
+
+
 
 ///ポジションデータ取得
 
