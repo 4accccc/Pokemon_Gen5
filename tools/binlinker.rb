@@ -1,8 +1,9 @@
 #!/usr/bin/ruby -Ks
 # ファイルを連結する ヘッダーには連結したファイルの相対アドレスが入る
-#  > binlinker.rb コピー元ファイル ...    出力するファイル
+#  > binlinker.rb コピー元ファイル ...    出力するファイル + 出力するファイルヘッダー文字
 #    ※ コピー元ファイルは複数指定できる
-# 例  ruby binlinker.rb test1.bin test2.bin test3.bin output.bin
+#    ※ 出力するファイルヘッダー文字は２文字
+# 例  ruby binlinker.rb test1.bin test2.bin test3.bin output.bin MOJI
 # k.ohno   2008.08.29
 
 
@@ -11,6 +12,7 @@ require 'ftools'
 begin
   exit 1 if ARGV.size < 2
 
+  outFileHeaderMsg = ARGV.pop
   outFileName = ARGV.pop
   
   ArrayFile = []
@@ -34,8 +36,12 @@ begin
   end
 
   writer = File::open(outFileName,"wb")
-
-  totalsize = (counter + 1) * 4
+  
+  writer.write(outFileHeaderMsg)
+  writer.putc(0)
+  writer.putc(0)
+  
+  totalsize = (counter + 2) * 4
   ArraySize.each do |size|
     writer.putc(totalsize)
     writer.putc(totalsize / 256)

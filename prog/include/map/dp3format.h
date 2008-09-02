@@ -10,6 +10,8 @@
 #ifndef _DP3FORMAT_H_
 #define _DP3FORMAT_H_
 
+#define DP3PACK_HEADER (0x4433)   //"3D"をひっくり返した
+
 /// 高さデータ取得用
 typedef struct {
 	fx16	vecN1_x;        //１個目の三角形の法線ベクトル
@@ -42,6 +44,8 @@ typedef struct{
 
 /// 全部をパックしたファイルのヘッダー
 typedef struct {
+    u16 DataID;         ////< DP3PACK_HEADER
+    u16 dummy1;
     u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
     u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
     u32 nsbtpOffset;    ///< ファイルの先頭からnsbtpの場所までのOFFSET
