@@ -1673,9 +1673,9 @@ static void _recvGamePlay
 
 //------------------------------------------------------------------
 // ローカル通信テーブル
-const NetRecvFuncTable NetSamplePacketTbl[] = {
-    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(VecFx32)), NULL },
-};
+//const NetRecvFuncTable NetSamplePacketTbl[] = {
+//    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(VecFx32)), NULL },
+//};
 
 //---------------------------------------------------------------------------
 //	ストリーム再生関数

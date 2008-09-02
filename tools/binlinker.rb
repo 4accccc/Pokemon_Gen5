@@ -22,28 +22,40 @@ begin
       ArraySize[counter] = File.size(sfile)
       ArrayFile[counter] = sfile;
       counter = counter + 1
+    else
+      ArraySize[counter] = 0  # ファイルが無い場合０になる
+      ArrayFile[counter] = sfile;
+      counter = counter + 1
     end
   end
   
   if counter == 0
     exit 1
   end
-  
+
   writer = File::open(outFileName,"wb")
-  
-  totalsize = counter * 4
+
+  totalsize = (counter + 1) * 4
   ArraySize.each do |size|
     writer.putc(totalsize)
-    writer.putc(totalsize/256)
-    writer.putc(totalsize/65536)
-    writer.putc(totalsize/16777216)
+    writer.putc(totalsize / 256)
+    writer.putc(totalsize / 65536)
+    writer.putc(totalsize / 16777216)
     totalsize = totalsize + size
   end
-  
+
+  writer.putc(totalsize)
+  writer.putc(totalsize / 256)
+  writer.putc(totalsize / 65536)
+  writer.putc(totalsize / 16777216)
+
+
   ArrayFile.each do |sfile|
-    baseHandle = File::open(sfile)
-    writer.write(baseHandle.read)
-    baseHandle.close
+    if FileTest.exist?(sfile)      # 存在確認
+      baseHandle = File::open(sfile)
+      writer.write(baseHandle.read)
+      baseHandle.close
+    end
   end
   
   writer.close
