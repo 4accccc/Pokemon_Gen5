@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file	func_mapeditor_file.c
+ * @file	func_pmcustom.c
  * @brief	
  * @author	
  * @date	
@@ -9,14 +9,15 @@
 #include "gflib.h"
 
 #include "..\g3d_map.h"
-#include "func_pmcustom_file.h"
+#include "map\dp3format.h"
 
+#include "func_pmcustom_file.h"
 //============================================================================================
 /**
  *
  *
  *
- * @brief	ＧＦマップエディタより作成したデータを処理する関数郡
+ * @brief	ポケモンで使用されたデータを処理する関数郡
  *
  *
  *
@@ -28,23 +29,6 @@
  */
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-//高さデータ取得用
-typedef struct {
-	fx16	vecN1_x;
-	fx16	vecN1_y;
-	fx16	vecN1_z;
-
-	fx16	vecN2_x;
-	fx16	vecN2_y;
-	fx16	vecN2_z;
-
-	fx32	vecN1_D;
-	fx32	vecN2_D;
-
-	u32		attr:31;
-	u32		tryangleType:1;
-}NormalVtxSt;
-
 //ポリゴンデータ部
 typedef struct SPLIT_GRID_DATA_tag{
 	u16		NumX;		//グリッドＸ数
@@ -108,15 +92,12 @@ typedef struct {
  */
 //============================================================================================
 enum {
-	L2_MDL_LOAD_START = LOAD_START,
-	L2_MDL_LOAD,
-	L2_TEX_LOAD_START,
-	L2_TEX_LOAD,
-	L2_RND_CREATE,
-	L2_TEX_TRANS,
-	L2_ATTR_LOAD_START,
-	L2_ATTR_LOAD,
-	L2_LOAD_END,
+	FILE_HEADER_LOAD = LOAD_START,
+	FILE_LOAD_START,
+	FILE_LOAD,
+	LOAD_END,
+	TEX_TRANS,
+	RND_CREATE,
 };
 
 BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
@@ -127,86 +108,64 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 
 	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
 	GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+
 #if 0
-	GFL_G3D_MAP_LOAD_STATUS* ldst;
-	void*	mem;
-	u32		datID;
-
-	GFL_G3D_MAP_GetLoadStatusPointer( g3Dmap, &ldst );
-	GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
-
 	switch( ldst->seq ){
-	case L1_MDL_LOAD_START:
+	case FILE_HEADER_LOAD:
+		{
+			Dp3packHeaderSt	header;
+			ARCHANDLE*		arc;
+
+			GFL_G3D_MAP_GetLoadArcHandle( g3Dmap, &arc );
+			GFL_G3D_MAP_GetLoadDatIDMdl( g3Dmap, &datID );
+			GFL_ARC_LoadDataOfsByHandle( arc, datID, 0, sizeof(Dp3packHeaderSt), &header ); 
+
+			//モデルリソース設定
+			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + header.nsbmdOffset));
+			//テクスチャリソース設定
+			GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + header.nsbtxOffset));
+			//アトリビュートリソース設定
+			GFL_G3D_MAP_CreateResourceAttr(g3Dmap, (void*)((u32)mem + header.vertexOffset));
+			OS_Printf("fileID = %x, ", header.DataID );
+			//OS_Printf("nsbmdOffset = %x, ", header.nsbmdOffset );
+			//OS_Printf("nsbtxOffset = %x, ", header.nsbtxOffset );
+			//OS_Printf("nsbtpOffset = %x, ", header.nsbtpOffset );
+			//OS_Printf("vertexOffset = %x, ", header.vertexOffset );
+			//OS_Printf("positionOffset = %x, ", header.positionOffset );
+			//OS_Printf("endPos = %x\n", header.endPos );
+			ldst->seq = FILE_LOAD_START;
+		}
+		break;
+
+	case FILE_LOAD_START:
 		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 		//モデルデータロード開始
-		GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-
 		GFL_G3D_MAP_GetLoadDatIDMdl( g3Dmap, &datID );
 		GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
 
-		ldst->seq = L1_MDL_LOAD;
+		ldst->seq = FILE_LOAD;
 		break;
-	case L1_MDL_LOAD:
+
+	case FILE_LOAD:
 		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->mdlLoaded = TRUE;
-			ldst->seq = L1_TEX_LOAD_START;
-		}
-		break;
-
-	case L1_TEX_LOAD_START:
-		GFL_G3D_MAP_GetLoadDatIDTex( g3Dmap, &datID );
-
-		if( datID == NON_TEX ){
-			ldst->seq = L1_RND_CREATE;
-		} else {
-			//テクスチャロード開始
-			GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
-			ldst->seq = L1_TEX_LOAD;
-		}
-		break;
-	case L1_TEX_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
 			ldst->texLoaded = TRUE;
+			ldst->attrLoaded = TRUE;
 			GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
-			ldst->seq = L1_TEX_TRANS;
+
+			ldst->seq = TEX_TRANS;
 		}
 		break;
 
-	case L1_TEX_TRANS:
+	case TEX_TRANS:
 		if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE ){
-			ldst->seq = L1_RND_CREATE;
+			ldst->seq = RND_CREATE;
 		}
 		break;
 
-	case L1_RND_CREATE:
+	case RND_CREATE:
 		//レンダー作成
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
-		ldst->seq = L1_ATTR_LOAD_START;
-		break;
-
-	case L1_ATTR_LOAD_START:
-		GFL_G3D_MAP_GetLoadDatIDAttr( g3Dmap, &datID );
-
-		if( datID == NON_ATTR ){
-			ldst->seq = L1_LOAD_END;
-		} else {
-		//アトリビュートデータロード開始
-			GFL_G3D_MAP_CreateResourceAttr(g3Dmap, (void*)((u32)mem + ldst->mOffs));
-			GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
-			ldst->seq = L1_ATTR_LOAD;
-		}
-		break;
-	case L1_ATTR_LOAD:
-		if( GFL_G3D_MAP_ContinueFileLoad(g3Dmap) == FALSE ){
-			ldst->attrLoaded = TRUE;
-			ldst->seq = L1_LOAD_END;
-		}
-		break;
-
-	case L1_LOAD_END:
-		GFL_G3D_MAP_MakeTestPos(g3Dmap);
 
 		ldst->seq = LOAD_IDLING;
 		return FALSE;
@@ -215,13 +174,13 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 	return TRUE;
 #else
 	switch( ldst->seq ){
-	case L2_MDL_LOAD_START:
+	case LOAD_START:
 		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 
-		ldst->seq = L2_MDL_LOAD;
+		ldst->seq++;
 		break;
 
-	case L2_LOAD_END:
+	case LOAD_START+1:
 		ldst->mdlLoaded = TRUE;
 		ldst->texLoaded = TRUE;
 		ldst->attrLoaded = TRUE;

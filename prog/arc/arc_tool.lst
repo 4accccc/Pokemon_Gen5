@@ -50,7 +50,7 @@
 	ARCID_SAMPLEMAP		"test_graphic/sample_map.narc"	#
 	ARCID_GSMAP			"test_graphic/land_data.narc"	#
 	ARCID_GSTEX			"test_graphic/map_tex_set.narc"	#
-#	ARCID_TEST3DP		"test_graphic/test3dp.narc"	#
+	ARCID_TEST3DP		"test_graphic/test3dp.narc"	#
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
 	ARCID_D_GOTO		"test_graphic/d_goto.narc"		#
 	ARCID_MESSAGE		"message.narc"		# メッセージデータ

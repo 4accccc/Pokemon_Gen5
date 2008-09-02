@@ -245,7 +245,13 @@ extern void GFL_G3D_MAP_ResetLoadStatus( GFL_G3D_MAP* g3Dmap );
 extern void GFL_G3D_MAP_GetLoadMemoryPointer( GFL_G3D_MAP* g3Dmap, void** mem );
 //------------------------------------------------------------------
 /**
- * @brief	ロードデータＩＤ取得
+ * @brief	アーカイブハンドル取得
+ */
+//------------------------------------------------------------------
+extern void GFL_G3D_MAP_GetLoadArcHandle( GFL_G3D_MAP* g3Dmap, ARCHANDLE** handle );
+//------------------------------------------------------------------
+/**
+ * @brief	アーカイブ＆ロードデータＩＤ取得
  */
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_GetLoadDatID( GFL_G3D_MAP* g3Dmap, u32* ID );
