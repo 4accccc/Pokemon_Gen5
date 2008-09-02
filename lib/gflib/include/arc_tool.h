@@ -266,9 +266,22 @@ extern void GFL_ARC_LoadDataOfsByHandle( ARCHANDLE* handle, u32 datID, u32 ofs, 
 //------------------------------------------------------------------
 extern void* GFL_ARC_LoadDataAllocByHandle( ARCHANDLE* handle, u32 datID, HEAPID heapID );
 
+//--------------------------------------------------------------------------------------
+/**
+ * アーカイブデータハンドルを使ってデータイメージオフセット取得
+ *
+ * @param   handle		ハンドルポインタ
+ * @param   datID		アーカイブ内のデータインデックス
+ *
+ * @retval  u32			データイメージオフセット（バイト単位）
+ */
+//--------------------------------------------------------------------------------------
+extern u32 GFL_ARC_GetDataOfsByHandle( ARCHANDLE* handle, u32 datID );
+
 //------------------------------------------------------------------
 /**
- * アーカイブデータハンドルを使ってイメージデータオフセット取得
+ * アーカイブデータハンドルを使ってイメージデータオフセット取得（指定変数に代入する版）
+ * ※普通は GFL_ARC_GetDataOfsByHandle を使えば良いと思う。何故これを作ったのか我ながら不明 ... taya
  *
  * @param   handle		ハンドルポインタ
  * @param   datID		アーカイブ内のデータインデックス
@@ -276,6 +289,7 @@ extern void* GFL_ARC_LoadDataAllocByHandle( ARCHANDLE* handle, u32 datID, HEAPID
  */
 //------------------------------------------------------------------
 extern void GFL_ARC_LoadDataImgofsByHandle( ARCHANDLE* handle, u32 datID, u32* offset );
+
 
 //------------------------------------------------------------------
 /**
