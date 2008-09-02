@@ -36,6 +36,7 @@ begin
   end
 
   writer = File::open(outFileName,"wb")
+  totalsize = 0
   
   writer.write(outFileHeaderMsg)
   writer.putc(0)
