@@ -53,6 +53,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 
 	switch( ldst->seq ){
 	case FILE_HEADER_LOAD:
+		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 		{
 			Dp3packHeaderSt	header;
 			ARCHANDLE*		arc;
@@ -79,7 +80,6 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 		break;
 
 	case FILE_LOAD_START:
-		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 		//モデルデータロード開始
 		GFL_G3D_MAP_GetLoadDatIDMdl( g3Dmap, &datID );
 		GFL_G3D_MAP_StartFileLoad( g3Dmap, datID );
