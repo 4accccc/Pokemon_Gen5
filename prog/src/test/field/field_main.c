@@ -17,7 +17,7 @@ void	FieldEnd( void );
 BOOL	FieldMain( void );
 
 #include "field_g3d_mapper.h"
-#include "../tetsu/sample/sample_net.h"
+#include "field_net.h"
 
 //============================================================================================
 /**
@@ -153,16 +153,16 @@ BOOL	FieldMain( void )
 		FieldWork->mapNum = 0;
 		FieldWork->seq++;
 #ifdef NET_WORK_ON
-        InitSampleGameNet();
+        FieldInitGameNet();
 #endif
         break;
 
 	case 1:
 #ifdef NET_WORK_ON
-        bSkip = ConnectSampleGameNet();  // 通信処理
+        bSkip = FieldConnectGameNet();  // 通信処理
         if( !bSkip && GFL_UI_KEY_GetTrg() ){  // キーが押されたら通信を待たずに開始
-            EndSampleGameNet();
-            ExitSampleGameNet();
+            FieldEndGameNet();
+            FieldExitGameNet();
             bSkip = TRUE;
         }
 #else
@@ -284,10 +284,10 @@ BOOL	FieldMain( void )
 		return_flag = TRUE;
         break;
 #else
-        EndSampleGameNet();
+        FieldEndGameNet();
         FieldWork->seq++;
     case 5:
-        if(ExitSampleGameNet()){
+        if(FieldExitGameNet()){
             RemoveGameSystem( FieldWork->gs );
             return_flag = TRUE;
         }
@@ -1743,7 +1743,7 @@ enum _gameCommand_e {
 
 static void _sendGamePlay( VecFx32* pVec  )
 {
-    SendSampleGameNet( _GAME_COM_PLAY, pVec );
+    FieldSendGameNet( _GAME_COM_PLAY, pVec );
 }
 
 static void _recvGamePlay
@@ -1751,7 +1751,7 @@ static void _recvGamePlay
 {
     SAMPLE_WORK* psw = FieldWork;
 
-    if(GetSampleNetID() != netID){
+    if(FieldGetNetID() != netID){
         GFL_STD_MemCopy(pData, &psw->recvWork, sizeof(VecFx32));
     }
 }
