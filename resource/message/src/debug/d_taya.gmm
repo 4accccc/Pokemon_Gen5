@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-08-28T18:30:40"/>
+	<create user="taya" host="W00146" date="2008-09-03T19:35:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -112,7 +112,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -230,6 +230,16 @@
 得、ポケモントレーナーの頂点を目指す。また、多く
 のポケモンを捕まえることでポケモン図鑑の
 完成を目指すなどの目的がある。片田舎に暮らす</language>
+	</row>
+
+	<row id="DEBUG_TAYA_STR_PARENT">
+		<language name="JPN" font=" 2:lcfont12" width="256">わし　おやき　です</language>
+		<language name="JPN_KANJI" width="256">儂、親機です</language>
+	</row>
+
+	<row id="DEBUG_TAYA_STR_CHILD">
+		<language name="JPN" font=" 2:lcfont12" width="256">ぼく　こき　です</language>
+		<language name="JPN_KANJI" width="256">僕、子機です。</language>
 	</row>
 
 	<flowchart-group-list>
