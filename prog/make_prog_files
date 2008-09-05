@@ -6,6 +6,7 @@ SRCS	+=		test/testmode.c \
 				test/ohno/debug_field.c \
 				test/ohno/fatal_error.c \
 				test/ohno/net_icondata.c \
+				test/ohno/test_layout.c \
 				test/tetsu/game/gamemain.c \
 				test/tetsu/game/setup.c \
 				test/tetsu/game/act3d.c \

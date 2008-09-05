@@ -52,6 +52,7 @@
 	ARCID_GSTEX			"test_graphic/map_tex_set.narc"	#
 	ARCID_TEST3DP		"test_graphic/test3dp.narc"	#
 	ARCID_WMI			"wmi.narc"	# 通信アイコン
+	ARCID_LAYOUT		"layout.narc"	# レイアウトエディタから吐き出したもの
 	ARCID_D_GOTO		"test_graphic/d_goto.narc"		#
 	ARCID_MESSAGE		"message.narc"		# メッセージデータ
 	ARCID_FLDMAP_SAMPLE "test_graphic/fieldmap_sample.narc" #
