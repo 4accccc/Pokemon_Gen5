@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: C:\home\layout\layout.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2008-09-05T13:47:38
+ *****************************************************************************/
+
+#ifndef NARC_C__HOME_LAYOUT_LAYOUT_NAIX_
+#define NARC_C__HOME_LAYOUT_LAYOUT_NAIX_
+
+enum {
+	NARC_C__home_layout_layout_kaseki_board1_NSCR = 0,
+	NARC_C__home_layout_layout_kaseki_board2_NSCR = 1,
+	NARC_C__home_layout_layout_kaseki_board_NCLR = 2,
+	NARC_C__home_layout_layout_kaseki_board_NCGR = 3
+};
+
+/* NARC_C__HOME_LAYOUT_LAYOUT_NAIX_ */
+#endif
