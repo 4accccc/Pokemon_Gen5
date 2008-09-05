@@ -151,23 +151,10 @@ BOOL	SampleMain( void )
 		sampleWork->gs = SetupGameSystem( sampleWork->heapID );
 		sampleWork->mapNum = 0;
 		sampleWork->seq++;
-#ifdef NET_WORK_ON
-        InitSampleGameNet();
-#endif
         break;
 
 	case 1:
-#ifdef NET_WORK_ON
-        bSkip = ConnectSampleGameNet();  // 通信処理
-        if( !bSkip && GFL_UI_KEY_GetTrg() ){  // キーが押されたら通信を待たずに開始
-            EndSampleGameNet();
-            ExitSampleGameNet();
-            bSkip = TRUE;
-        }
-#else
-        bSkip = TRUE;
-#endif
-		if( bSkip ){
+		{
             //セットアップ
             ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
                                 &resistMapTbl[sampleWork->mapNum].mapperData );
@@ -199,15 +186,7 @@ BOOL	SampleMain( void )
 				sampleWork->pcActCont = CreatePlayerAct( sampleWork->gs, sampleWork->heapID );
 				SetPlayerActTrans( sampleWork->pcActCont, &pos );
 				SetPlayerActDirection( sampleWork->pcActCont, &dir );
-#ifdef NET_WORK_ON
-				sampleWork->friendActCont = CreatePlayerAct( sampleWork->gs, sampleWork->heapID );
-				SetPlayerActTrans( sampleWork->friendActCont, &pos );
-				SetPlayerActDirection( sampleWork->friendActCont, &dir );
-#endif
 			}
-#ifdef NET_WORK_ON
-            GFL_NET_ReloadIcon();
-#endif
             sampleWork->seq++;
         }
 		break;
@@ -234,10 +213,6 @@ BOOL	SampleMain( void )
 			break;
 		}
 		MainPlayerAct( sampleWork->pcActCont );
-#ifdef NET_WORK_ON
-		//FriendCursor( sampleWork->cursorFriend );
-		MainFriendPlayerAct( sampleWork->friendActCont );
-#endif
 		MainFieldActSys( sampleWork->fldActCont );
 		{
 			VecFx32 pos;
@@ -260,10 +235,6 @@ BOOL	SampleMain( void )
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeletePlayerAct( sampleWork->pcActCont );
 		DeleteCursor( sampleWork->cursor );
-#ifdef NET_WORK_ON
-		//DeleteCursor( sampleWork->cursorFriend );
-		DeletePlayerAct( sampleWork->friendActCont );
-#endif
         sampleWork->seq = 1;
 		break;
 
@@ -273,25 +244,10 @@ BOOL	SampleMain( void )
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeletePlayerAct( sampleWork->pcActCont );
 		DeleteCursor( sampleWork->cursor );
-#ifdef NET_WORK_ON
-		//DeleteCursor( sampleWork->cursorFriend );
-		DeletePlayerAct( sampleWork->friendActCont );
-#endif
 
-#ifndef NET_WORK_ON
 		RemoveGameSystem( sampleWork->gs );
 		return_flag = TRUE;
         break;
-#else
-        EndSampleGameNet();
-        sampleWork->seq++;
-    case 5:
-        if(ExitSampleGameNet()){
-            RemoveGameSystem( sampleWork->gs );
-            return_flag = TRUE;
-        }
-        break;
-#endif
 	}
 	return return_flag;
 }
@@ -1331,9 +1287,6 @@ static void	MainPlayerAct( PC_ACTCONT* pcActCont )
 #endif
 	CalcSetGroundMove( GetG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
 								&pcActCont->trans, &vecMove, MV_SPEED );
-#ifdef NET_WORK_ON
-    _sendGamePlay( &pcActCont->trans  );  // 自分の位置を相手に送信
-#endif
     
 	if( mvFlag == TRUE ){
 		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
@@ -1710,55 +1663,3 @@ static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
 }
 
 
-//============================================================================================
-//
-//
-//	通信関数
-//
-//
-//============================================================================================
-#ifdef NET_WORK_ON
-//------------------------------------------------------------------
-/**
- * @brief	受信ワーク初期化
- */
-//------------------------------------------------------------------
-static void _initRecvBuffer( void )
-{
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	受信関数
- */
-//------------------------------------------------------------------
-// ローカル通信コマンドの定義
-enum _gameCommand_e {
-	_GAME_COM_PLAY = GFL_NET_CMD_COMMAND_MAX,
-};
-
-//------------------------------------------------------------------
-// _GAME_COM_PLAY　ゲーム情報送受信
-
-static void _sendGamePlay( VecFx32* pVec  )
-{
-    SendSampleGameNet( _GAME_COM_PLAY, pVec );
-}
-
-static void _recvGamePlay
-	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    SAMPLE_WORK* psw = sampleWork;
-
-    if(GetSampleNetID() != netID){
-        GFL_STD_MemCopy(pData, &psw->recvWork, sizeof(VecFx32));
-    }
-}
-
-//------------------------------------------------------------------
-// ローカル通信テーブル
-const NetRecvFuncTable NetSamplePacketTbl[] = {
-    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(VecFx32)), NULL },
-};
-
-#endif

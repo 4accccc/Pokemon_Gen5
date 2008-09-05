@@ -10,14 +10,14 @@
 #ifndef __SAMPLE_NET_H__
 #define __SAMPLE_NET_H__
 
-
+#if 0
 void InitSampleGameNet(void);
 BOOL ConnectSampleGameNet(void);
 void EndSampleGameNet(void);
 BOOL ExitSampleGameNet(void);
 void SendSampleGameNet( int comm, void* commWork );
 NetID GetSampleNetID(void);
-
+#endif
 
 #endif //__SAMPLE_NET_H__
 

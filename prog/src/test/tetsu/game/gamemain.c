@@ -116,17 +116,17 @@ BOOL	GameMain( void )
 
 	case 0:
 		//通信初期化
-		InitGameNet();
+//		InitGameNet();
 		_initRecvBuffer();
 		gw->seq++;
 		break;
 
 	case 1:
-		if( ConnectGameNet() == TRUE ){
-			gw->myNetID = ((int)GetNetID() -1 );
+//		if( ConnectGameNet() == TRUE ){
+			gw->myNetID = ((int)1 - 1 );
 			gw->playNetID = gw->myNetID;
 			gw->seq++;
-		}
+//		}
 		break;
 
 	case 2:
@@ -244,9 +244,9 @@ BOOL	GameMain( void )
 		break;
 
 	case 5:
-		if( ExitGameNet() == TRUE ){
+	//	if( ExitGameNet() == TRUE ){
 			gw->seq++;
-		}
+	//	}
 		break;
 
 	case 6:
@@ -305,15 +305,15 @@ enum _gameCommand_e {
 static void _sendGamePlay( void )
 {
 	GAME_NETWORK_PLAYDATA gnd;
-#ifdef NET_WORK_ON
-	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
-	SendGameNet( _GAME_COM_PLAY, &gnd );
-#else
+//#ifdef NET_WORK_ON
+//	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
+//	SendGameNet( _GAME_COM_PLAY, &gnd );
+//#else
 	//GetGameNetWorkPlayData( gw->gc, gw->myNetID, &gnd );
 	//SetGameNetWorkPlayData( gw->gc, gw->myNetID, &gnd );
 	GetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
 	SetGameNetWorkPlayData( gw->gc, gw->playNetID, &gnd );
-#endif
+//#endif
 }
 
 static void _recvGamePlay
@@ -329,7 +329,7 @@ static void _recvGamePlay
 
 //------------------------------------------------------------------
 // ローカル通信テーブル
-const NetRecvFuncTable _CommPacketTbl[] = {
+static const NetRecvFuncTable _CommPacketTbl[] = {
     { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(GAME_NETWORK_PLAYDATA)), NULL },
 };
 

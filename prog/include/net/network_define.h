@@ -17,11 +17,8 @@
 #ifndef __NETWORK_DEFINE_H__
 #define __NETWORK_DEFINE_H__
 
-//#define NET_WORK_ON   // サンプルプログラム上で通信を動かす場合定義　動かさない場合未定義にする
+#define NET_WORK_ON (1)   // サンプルプログラム上で通信を動かす場合定義　動かさない場合未定義にする
 
-#if defined(DEBUG_ONLY_FOR_ohno)
-#define NET_WORK_ON   // サンプルプログラム上で通信を動かす場合定義　動かさない場合未定義にする
-#endif
 
 //==============================================================================
 //	定義

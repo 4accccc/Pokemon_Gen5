@@ -4,6 +4,7 @@
  * @brief	’ÊM“®ì—pŠÖ”
  */
 //============================================================================================
+#if 0
 #include "gflib.h"
 #include "net\network_define.h"
 #include "system\main.h"
@@ -274,4 +275,4 @@ NetID GetSampleNetID(void)
 }
 
 
-
+#endif
