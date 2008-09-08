@@ -57,6 +57,8 @@ struct _G3D_MAPPER {
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const G3D_MAPPER_DATA*	data;	//実マップデータ
 
+	GFL_G3D_RES*		grobalTexture;					//共通地形テクスチャ
+
 	GFL_G3D_MAP_OBJ		grobalObject[GROBAL_OBJ_COUNT];	//共通オブジェクト
 	GFL_G3D_MAP_DDOBJ	grobalDDobject[GROBAL_DDOBJ_COUNT];	//共通オブジェクト(直書き)
 };
@@ -254,16 +256,48 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 	g3Dmapper->arcID = resistData->arcID;
 	g3Dmapper->data = resistData->data;
 
+	//グローバルテクスチャ作成
+	if( resistData->gtexArcID != NON_GROBAL_TEX ){
+		g3Dmapper->grobalTexture = GFL_G3D_CreateResourceArc
+										( resistData->gtexArcID, resistData->gtexDatID );
+		GFL_G3D_TransVramTexture( g3Dmapper->grobalTexture );
+	} else {
+		g3Dmapper->grobalTexture = NULL;
+	}
+
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		//新アーカイブＩＤを登録
 		GFL_G3D_MAP_ResistArc( g3Dmapper->g3Dmap[i], g3Dmapper->arcID, g3Dmapper->heapID );
+		//グローバルテクスチャリソース登録
+		if( g3Dmapper->grobalTexture != NULL ){
+			GFL_G3D_MAP_ResistGrobalTex( g3Dmapper->g3Dmap[i], g3Dmapper->grobalTexture );
+		} else {
+			GFL_G3D_MAP_ReleaseGrobalTex( g3Dmapper->g3Dmap[i] );
+		}
 		//ファイル識別設定（仮）
 		GFL_G3D_MAP_ResistFileType( g3Dmapper->g3Dmap[i], resistData->g3DmapFileType );
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
 		VEC_Set( &g3Dmapper->blockIdx[i].trans, 0, 0, 0 );
+	}
+}
+
+void ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper )
+{
+	int i;
+
+	GF_ASSERT( g3Dmapper );
+
+	//マップブロック制御設定
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		GFL_G3D_MAP_ReleaseArc( g3Dmapper->g3Dmap[i] );
+		GFL_G3D_MAP_ReleaseGrobalTex( g3Dmapper->g3Dmap[i] );
+	}
+	if( g3Dmapper->grobalTexture != NULL ){
+		GFL_G3D_FreeVramTexture( g3Dmapper->grobalTexture );
+		GFL_G3D_DeleteResource( g3Dmapper->grobalTexture );
 	}
 }
 
@@ -595,10 +629,8 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
 				if(( g3Dmapper->blockIdx[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
 
-					GFL_G3D_MAP_SetLoadReq( g3Dmapper->g3Dmap[j],
-										(u32)g3Dmapper->data[new[i].blockIdx].datID,
-										(u32)g3Dmapper->data[new[i].blockIdx].texID,
-										(u32)g3Dmapper->data[new[i].blockIdx].attrID );
+					GFL_G3D_MAP_SetLoadReq
+						( g3Dmapper->g3Dmap[j], (u32)g3Dmapper->data[new[i].blockIdx].datID );
 					GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[j], &new[i].trans );
 					GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[j], TRUE );
 
@@ -758,70 +790,22 @@ void InitGet3DmapperGridInfo( G3D_MAPPER_GRIDINFO* gridInfo )
 {
 	int i;
 
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+	for( i=0; i<G3D_MAPPER_ATTR_MAX; i++ ){
 		InitGet3DmapperGridInfoData( &gridInfo->gridData[i] );
 	}
 	gridInfo->count = 0;
 }
 
-	
 //------------------------------------------------------------------
 /**
- * @brief	グリッド情報取得
- */
-//------------------------------------------------------------------
-BOOL Get3DmapperGridInfoData
-	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_INFODATA* gridInfoData )
-{
-	GFL_G3D_MAP_ATTRINFO attrInfo;
-	VecFx32 trans;
-	int		i;
-
-	GF_ASSERT( g3Dmapper );
-	if( g3Dmapper->data == NULL ){
-		return FALSE;
-	}
-	InitGet3DmapperGridInfoData( gridInfoData );
-	
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		if( GFL_G3D_MAP_GetDrawSw( g3Dmapper->g3Dmap[i] ) == TRUE ){
-			fx32 min_x, min_y, min_z, max_x, max_y, max_z;
-
-			GFL_G3D_MAP_GetTrans( g3Dmapper->g3Dmap[i], &trans );
-
-			min_x = trans.x - g3Dmapper->width/2;
-			min_y = trans.y;
-			min_z = trans.z - g3Dmapper->width/2;
-			max_x = trans.x + g3Dmapper->width/2;
-			max_y = trans.y + g3Dmapper->height;
-			max_z = trans.z + g3Dmapper->width/2;
-
-			//ブロック範囲内チェック
-			if(	(pos->x >= min_x)&&(pos->x < max_x)
-				&&(pos->y >= min_y)&&(pos->y < max_y)
-				&&(pos->z >= min_z)&&(pos->z < max_z) ){
-
-				GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmapper->g3Dmap[i], pos, g3Dmapper->width );
-				gridInfoData->vecN = attrInfo.vecN;
-				gridInfoData->attr = attrInfo.attr;
-				gridInfoData->height = attrInfo.height;
-
-				return TRUE;
-			}
-		}
-	}
-	return FALSE;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッド情報取得（ＸＺ平面上複数）
+ * @brief	アトリビュート情報取得
  */
 //------------------------------------------------------------------
 BOOL Get3DmapperGridInfo
 	( G3D_MAPPER* g3Dmapper, const VecFx32* pos, G3D_MAPPER_GRIDINFO* gridInfo )
 {
 	GFL_G3D_MAP_ATTRINFO attrInfo;
+	u32 infoCount;
 	VecFx32 trans;
 	int		i, p;
 
@@ -849,10 +833,19 @@ BOOL Get3DmapperGridInfo
 			if(	(pos->x >= min_x)&&(pos->x < max_x)&&(pos->z >= min_z)&&(pos->z < max_z) ){
 
 				GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmapper->g3Dmap[i], pos, g3Dmapper->width );
-				gridInfo->gridData[p].vecN = attrInfo.vecN;
-				gridInfo->gridData[p].attr = attrInfo.attr;
-				gridInfo->gridData[p].height = attrInfo.height;
-				p++;
+				if( attrInfo.mapAttrCount ){
+					int j;
+
+					if( (p + attrInfo.mapAttrCount) >= G3D_MAPPER_ATTR_MAX ){
+						GF_ASSERT("height count over\n");
+					}
+					for( j=0; j<attrInfo.mapAttrCount; j++ ){
+						gridInfo->gridData[p].vecN = attrInfo.mapAttr[j].vecN;
+						gridInfo->gridData[p].attr = attrInfo.mapAttr[j].attr;
+						gridInfo->gridData[p].height = attrInfo.mapAttr[j].height;
+					}
+					p += attrInfo.mapAttrCount;
+				}
 			}
 		}
 	}

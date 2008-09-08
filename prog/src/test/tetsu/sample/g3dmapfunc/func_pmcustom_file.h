@@ -20,7 +20,7 @@ extern BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap );
  * @brief	ÇRÇcÉ}ÉbÉvèÓïÒéÊìæ
  */
 //============================================================================================
-extern void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const u8* attr,
-					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height );
-
+extern void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo,
+									const void* mapdata, const VecFx32* posInBlock, 
+									const fx32 map_width, const fx32 map_height );
 

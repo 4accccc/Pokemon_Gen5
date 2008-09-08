@@ -3,22 +3,22 @@
 #include "test_graphic/test3dp.naix"
 
 static const G3D_MAPPER_DATA sampleMap[] = {
-	{ NARC_test3dp_map_a1_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_a2_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_a3_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_a4_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_b1_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_b2_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_b3_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_b4_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_c1_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_c2_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_c3_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_c4_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_d1_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_d2_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_d3_3dppack, NON_TEX, NON_ATTR },
-	{ NARC_test3dp_map_d4_3dppack, NON_TEX, NON_ATTR },
+	{ NARC_test3dp_map_a1_3dppack },
+	{ NARC_test3dp_map_a2_3dppack },
+	{ NARC_test3dp_map_a3_3dppack },
+	{ NARC_test3dp_map_a4_3dppack },
+	{ NARC_test3dp_map_b1_3dppack },
+	{ NARC_test3dp_map_b2_3dppack },
+	{ NARC_test3dp_map_b3_3dppack },
+	{ NARC_test3dp_map_b4_3dppack },
+	{ NARC_test3dp_map_c1_3dppack },
+	{ NARC_test3dp_map_c2_3dppack },
+	{ NARC_test3dp_map_c3_3dppack },
+	{ NARC_test3dp_map_c4_3dppack },
+	{ NARC_test3dp_map_d1_3dppack },
+	{ NARC_test3dp_map_d2_3dppack },
+	{ NARC_test3dp_map_d3_3dppack },
+	{ NARC_test3dp_map_d4_3dppack },
 };
 
 #if 0
@@ -1198,11 +1198,12 @@ static const G3D_MAPPER_DATA DPc11Map[] = {
 };
 #endif
 
+#define DATID_GSMAP_GTEX (6)
 static const G3D_MAPPER_DATA GSMap[] = {
-	{ 50, NON_TEX, NON_ATTR },
-	{ 51, NON_TEX, NON_ATTR },
-	{ 52, NON_TEX, NON_ATTR },
-	{ 53, NON_TEX, NON_ATTR },
+	{ 50 },
+	{ 51 },
+	{ 52 },
+	{ 53 },
 };
 
 typedef struct {
@@ -1220,7 +1221,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 		{	
 			FILE_CUSTOM_DATA,
 			2,  2, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_GSMAP, GSMap 
+			ARCID_GSMAP, ARCID_GSTEX, DATID_GSMAP_GTEX, GSMap 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
 	},
@@ -1228,7 +1229,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 		{	
 			FILE_MAPEDITER_DATA,
 			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_TEST3DP, sampleMap 
+			ARCID_TEST3DP, NON_GROBAL_TEX, NON_GROBAL_TEX, sampleMap 
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
 	},

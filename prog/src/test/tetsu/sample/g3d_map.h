@@ -12,6 +12,7 @@
 #define	NON_TEX		(0xffff)
 #define	NON_ATTR	(0xffff)
 
+#define GFL_G3D_MAP_ATTR_GETMAX	(16)	//アトリビュート取得最大数
 //------------------------------------------------------------------
 //システムハンドル定義
 typedef struct _GFL_G3D_MAP GFL_G3D_MAP;
@@ -98,12 +99,20 @@ typedef struct {
 	VecFx16 vecN;
 	u32		attr;
 	fx32	height;
+}GFL_G3D_MAP_ATTR;
+
+//アトリビュート情報定義
+typedef struct {
+	GFL_G3D_MAP_ATTR	mapAttr[GFL_G3D_MAP_ATTR_GETMAX];
+	u32					mapAttrCount;
 }GFL_G3D_MAP_ATTRINFO;
+
 //------------------------------------------------------------------
 //マップデータファイル処理関数定義
 typedef BOOL (GFL_G3D_MAP_FILELOAD_FUNC)( GFL_G3D_MAP* g3Dmap );
-typedef void (GFL_G3D_MAP_FILEATTR_FUNC)( GFL_G3D_MAP_ATTRINFO* attrInfo, const u8* attr,
-					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height );
+typedef void (GFL_G3D_MAP_FILEATTR_FUNC)( GFL_G3D_MAP_ATTRINFO* attrInfo,
+										const void* mapdata, const VecFx32* posInBlock, 
+										const fx32 map_width, const fx32 map_height );
 //------------------------------------------------------------------
 //マップデータファイル処理関数テーブル定義
 typedef struct {
@@ -188,8 +197,7 @@ extern void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap );
  * @brief	３Ｄマップロードリクエスト設定
  */
 //------------------------------------------------------------------
-extern void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap,
-								const u32 datID, const u32 texID, const u32 attrID );
+extern void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap, const u32 datID );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップ描画ＯＮ／ＯＦＦ＆取得
@@ -210,8 +218,8 @@ extern void	GFL_G3D_MAP_GetTrans( GFL_G3D_MAP* g3Dmap, VecFx32* trans );
  */
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_InitAttr( GFL_G3D_MAP_ATTRINFO* attrInfo );
-extern void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, const GFL_G3D_MAP* g3Dmap,
-									const VecFx32* pos, const fx32 map_width );
+extern void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo,
+								GFL_G3D_MAP* g3Dmap, const VecFx32* pos, const fx32 map_width );
 //------------------------------------------------------------------
 /**
  * @brief	ファイル識別設定（仮）※いずれはデータファイルの中に識別を埋め込む
@@ -255,9 +263,6 @@ extern void GFL_G3D_MAP_GetLoadArcHandle( GFL_G3D_MAP* g3Dmap, ARCHANDLE** handl
  */
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_GetLoadDatID( GFL_G3D_MAP* g3Dmap, u32* ID );
-extern void GFL_G3D_MAP_GetLoadDatIDMdl( GFL_G3D_MAP* g3Dmap, u32* ID );	//仮
-extern void GFL_G3D_MAP_GetLoadDatIDTex( GFL_G3D_MAP* g3Dmap, u32* ID );	//仮
-extern void GFL_G3D_MAP_GetLoadDatIDAttr( GFL_G3D_MAP* g3Dmap, u32* ID );	//仮
 //------------------------------------------------------------------
 /**
  * @brief	モデルリソース設定
@@ -272,13 +277,6 @@ extern void GFL_G3D_MAP_DeleteResourceMdl( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 extern void GFL_G3D_MAP_CreateResourceTex( GFL_G3D_MAP* g3Dmap, void* mem );
 extern void GFL_G3D_MAP_DeleteResourceTex( GFL_G3D_MAP* g3Dmap );
-//------------------------------------------------------------------
-/**
- * @brief	アトリビュートリソース設定
- */
-//------------------------------------------------------------------
-extern void GFL_G3D_MAP_CreateResourceAttr( GFL_G3D_MAP* g3Dmap, void* mem );
-extern void GFL_G3D_MAP_DeleteResourceAttr( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	レンダー作成

@@ -27,7 +27,6 @@
 //------------------------------------------------------------------
 #define OBJID_NULL			(0xffffffff)
 
-//#define LOCAL_OBJRES_COUNT	(16)
 #define OBJ_COUNT	(32)
 #define DDOBJ_COUNT	(64)
 
@@ -48,6 +47,8 @@ struct _GFL_G3D_MAP
 	BOOL						drawSw;
 	VecFx32						trans;
 	ARCHANDLE*					arc;
+	u32							datID;
+
 	GFL_G3D_MAPDATA_FILETYPE	fileType;
 
 	u32							mapDataHeapSize;
@@ -56,13 +57,8 @@ struct _GFL_G3D_MAP
 
 	NNSG3dRenderObj*			NNSrnd;	//地形レンダー
 
-	u32							datID;
-	u32							texID;
-	u32							attrID;
-
-	u8*							attr;
-
 	GFL_G3D_RES*				groundResMdl;	//地形モデルリソース
+	GFL_G3D_RES*				grobalResTex;	//グローバル地形テクスチャリソース
 	GFL_G3D_RES*				groundResTex;	//ローカル地形テクスチャリソース
 	NNSGfdTexKey				groundTexKey;
 	NNSGfdPlttKey				groundPlttKey;
@@ -72,17 +68,6 @@ struct _GFL_G3D_MAP
 
 	GFL_G3D_MAP_LOAD_STATUS		ldst;
 	void*						mapData;
-
-	GFL_G3D_RES*				grobalResTex;	//グローバル地形テクスチャリソース
-#if 0
-	BOOL				objLoadReq;
-	u32					objID;
-	GFL_G3D_RES*		g3DobjectResMdl[LOCAL_OBJRES_COUNT];//ローカルオブジェクトモデルリソース
-	u8					obj[MAPOBJ_SIZE];
-
-	NNSGfdTexKey		objectTexKey;
-	NNSGfdPlttKey		objectPlttKey;
-#endif
 };
 
 typedef BOOL (GFL_G3D_MAPLOAD_FUNC)( GFL_G3D_MAP* g3Dmap );
@@ -271,6 +256,7 @@ void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap )
 
 	if( g3Dmap->arc != NULL ){
 		GFL_ARC_CloseDataHandle( g3Dmap->arc );
+		g3Dmap->arc = NULL;
 	}
 }
 
@@ -294,8 +280,7 @@ void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap )
  * @brief	３Ｄマップロードリクエスト設定
  */
 //------------------------------------------------------------------
-void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap,
-								const u32 datID, const u32 texID, const u32 attrID )
+void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap, const u32 datID )
 {
 	GF_ASSERT( g3Dmap );
 	GF_ASSERT( g3Dmap->arc );
@@ -303,13 +288,10 @@ void	GFL_G3D_MAP_SetLoadReq( GFL_G3D_MAP* g3Dmap,
 	TrashMapRender( g3Dmap->NNSrnd );
 	GFL_G3D_MAP_DeleteResourceMdl( g3Dmap );
 	GFL_G3D_MAP_DeleteResourceTex( g3Dmap );
-	GFL_G3D_MAP_DeleteResourceAttr( g3Dmap );
 
 	InitMapObject( g3Dmap );
 
 	g3Dmap->datID = datID;
-	g3Dmap->texID = texID;
-	g3Dmap->attrID = attrID;
 
 	g3Dmap->ldst.seq = LOAD_START;
 }
@@ -400,27 +382,6 @@ void GFL_G3D_MAP_GetLoadDatID( GFL_G3D_MAP* g3Dmap, u32* ID )
 	*ID = g3Dmap->datID;
 }
 
-void GFL_G3D_MAP_GetLoadDatIDMdl( GFL_G3D_MAP* g3Dmap, u32* ID )	//仮
-{
-	GF_ASSERT( g3Dmap );
-
-	*ID = g3Dmap->datID;
-}
-
-void GFL_G3D_MAP_GetLoadDatIDTex( GFL_G3D_MAP* g3Dmap, u32* ID )	//仮
-{
-	GF_ASSERT( g3Dmap );
-
-	*ID = g3Dmap->texID;
-}
-
-void GFL_G3D_MAP_GetLoadDatIDAttr( GFL_G3D_MAP* g3Dmap, u32* ID )	//仮
-{
-	GF_ASSERT( g3Dmap );
-
-	*ID = g3Dmap->attrID;
-}
-
 //------------------------------------------------------------------
 /**
  * @brief	モデルリソース設定
@@ -457,25 +418,6 @@ void GFL_G3D_MAP_DeleteResourceTex( GFL_G3D_MAP* g3Dmap )
 	GF_ASSERT( g3Dmap );
 
 	GFL_G3D_CreateResource( g3Dmap->groundResTex, GFL_G3D_RES_CHKTYPE_TEX, NULL );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	アトリビュートリソース設定
- */
-//------------------------------------------------------------------
-void GFL_G3D_MAP_CreateResourceAttr( GFL_G3D_MAP* g3Dmap, void* mem )
-{
-	GF_ASSERT( g3Dmap );
-
-	g3Dmap->attr = mem;
-}
-
-void GFL_G3D_MAP_DeleteResourceAttr( GFL_G3D_MAP* g3Dmap )
-{
-	GF_ASSERT( g3Dmap );
-
-	g3Dmap->attr = NULL;
 }
 
 //------------------------------------------------------------------
@@ -806,9 +748,14 @@ static void	DirectDrawObj
 //------------------------------------------------------------------
 void GFL_G3D_MAP_InitAttr( GFL_G3D_MAP_ATTRINFO* attrInfo )
 {
-	VEC_Fx16Set( &attrInfo->vecN, 0, 0, 0 );
-	attrInfo->attr = 0;
-	attrInfo->height = 0;
+	int i;
+
+	for( i=0; i<GFL_G3D_MAP_ATTR_GETMAX; i++ ){
+		VEC_Fx16Set( &attrInfo->mapAttr[i].vecN, 0, 0, 0 );
+		attrInfo->mapAttr[i].attr = 0;
+		attrInfo->mapAttr[i].height = 0;
+	}
+	attrInfo->mapAttrCount = 0;
 }
 
 //------------------------------------------------------------------
@@ -816,7 +763,7 @@ void GFL_G3D_MAP_InitAttr( GFL_G3D_MAP_ATTRINFO* attrInfo )
  * @brief	アトリビュート取得
  */
 //------------------------------------------------------------------
-void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, const GFL_G3D_MAP* g3Dmap,
+void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, GFL_G3D_MAP* g3Dmap,
 							const VecFx32* pos, const fx32 map_width )
 {
 	GFL_G3D_MAP_FILEATTR_FUNC*	attrFunc;
@@ -825,15 +772,14 @@ void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, const GFL_G3D_MAP* g3D
 
 	GF_ASSERT( g3Dmap );
 
-	if(( g3Dmap->attr == NULL )||( g3Dmap->ldst.attrLoaded == FALSE )){
-		VEC_Fx16Set( &attrInfo->vecN, 0, 0, 0 );
-		attrInfo->height = 0;
-		attrInfo->attr = 0;
+	if( g3Dmap->ldst.attrLoaded == FALSE ){
+		attrInfo->mapAttrCount = 0;
 		return;
 	}
 	map_height = g3Dmap->trans.y;
 
 	//ブロック内情報取得
+#if 0
 	{
 		VecFx32 posBlock, mapTopOffs;
 
@@ -841,10 +787,13 @@ void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, const GFL_G3D_MAP* g3D
 		VEC_Add( &g3Dmap->trans, &mapTopOffs, &posBlock );
 		VEC_Subtract( pos, &posBlock, &posInBlock );
 	}
+#else
+	VEC_Subtract( pos, &g3Dmap->trans, &posInBlock );
+#endif
 	attrFunc = g3Dmap->mapFileFunc[g3Dmap->fileType].attrFunc;
 
 	if( attrFunc != NULL ){
-		attrFunc( attrInfo, g3Dmap->attr, &posInBlock, map_width, map_height );
+		attrFunc( attrInfo, g3Dmap->mapData, &posInBlock, map_width, map_height );
 	}
 }
 
@@ -889,8 +838,6 @@ static void	InitWork( GFL_G3D_MAP* g3Dmap )
 
 	g3Dmap->ldst.seq = LOAD_IDLING;
 	g3Dmap->datID = 0;
-	g3Dmap->texID = NON_TEX;
-	g3Dmap->attrID = NON_ATTR;
 
 	InitMapObject( g3Dmap );
 }
@@ -1036,6 +983,7 @@ void GFL_G3D_MAP_MakeTestPos( GFL_G3D_MAP* g3Dmap )
 	fx32 cOffs, rOffs, gWidth, mapWidth;
 	VecFx32 pWorld;
 	GFL_G3D_MAP_ATTRINFO attrInfo;
+	u32	infoCount;
 
 	if( g3Dmap->trans.y == 0 ){
 
@@ -1057,7 +1005,7 @@ void GFL_G3D_MAP_MakeTestPos( GFL_G3D_MAP* g3Dmap )
 
 			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &pWorld );
 			GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmap, &pWorld, mapWidth );
-			g3Dmap->object[i].trans.y = attrInfo.height;
+			g3Dmap->object[i].trans.y = attrInfo.mapAttr[0].height;
 		}
 		for( i=0; i<32; i++ ){
 			g3Dmap->directDrawObject[i].id = 0;
@@ -1069,7 +1017,7 @@ void GFL_G3D_MAP_MakeTestPos( GFL_G3D_MAP* g3Dmap )
 			g3Dmap->directDrawObject[i].trans.z = rOffs + cOffs;
 			VEC_Add( &g3Dmap->directDrawObject[i].trans, &g3Dmap->trans, &pWorld );
 			GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmap, &pWorld, mapWidth );
-			g3Dmap->directDrawObject[i].trans.y = attrInfo.height;
+			g3Dmap->directDrawObject[i].trans.y = attrInfo.mapAttr[0].height;
 		}
 	}
 }

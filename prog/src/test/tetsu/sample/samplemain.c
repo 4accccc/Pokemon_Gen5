@@ -232,6 +232,8 @@ BOOL	SampleMain( void )
 	case 3:
 		ReleaseDDobjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
+        ReleaseData3Dmapper( GetG3Dmapper(sampleWork->gs) );
+
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeletePlayerAct( sampleWork->pcActCont );
 		DeleteCursor( sampleWork->cursor );
@@ -241,6 +243,8 @@ BOOL	SampleMain( void )
 	case 4:
 		ReleaseDDobjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
 		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
+        ReleaseData3Dmapper( GetG3Dmapper(sampleWork->gs) );
+
 		DeleteFieldActSys( sampleWork->fldActCont );
 		DeletePlayerAct( sampleWork->pcActCont );
 		DeleteCursor( sampleWork->cursor );
@@ -321,13 +325,13 @@ struct _SAMPLE_SETUP {
 static const GFL_BG_DISPVRAM dispVram = {
 	GX_VRAM_BG_16_F,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
-	GX_VRAM_SUB_BG_128_C,			//サブ2DエンジンのBGに割り当て
+	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_OBJ_64_E,				//メイン2DエンジンのOBJに割り当て
 	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_SUB_OBJ_16_I,			//サブ2DエンジンのOBJに割り当て
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_01_AB,				//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEX_012_ABC,			//テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G,			//テクスチャパレットスロットに割り当て
 };
 
@@ -489,7 +493,7 @@ static void	bg_init( SAMPLE_SETUP* gs )
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 
 	//３Ｄシステム起動
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
@@ -699,7 +703,6 @@ static void GetGroundMoveVec
 static BOOL CalcSetGroundMove( G3D_MAPPER* g3Dmapper, G3D_MAPPER_INFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
-	G3D_MAPPER_INFODATA gridInfoDataNext;
 	G3D_MAPPER_GRIDINFO gridInfo;
 	VecFx32	posNext, vecGround;
 	fx32	height = 0;
@@ -747,16 +750,18 @@ static BOOL CalcSetGroundMove( G3D_MAPPER* g3Dmapper, G3D_MAPPER_INFODATA* gridI
 				p = i;
 			}
 		}
-		gridInfoDataNext = gridInfo.gridData[p];	//グリッドデータ更新
+#if 0
+		if( initSw == FALSE ){
+			//移動制限テスト
+			if(FX_Mul((height-pos->y),(height-pos->y))
+					>=FX_Mul(WALK_LIMIT_HEIGHT,WALK_LIMIT_HEIGHT)){
+				return FALSE;
+			}
+		} 
+#endif
+		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
+		VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
 	}
-	if( initSw == FALSE ){
-		if(FX_Mul((height-pos->y),(height-pos->y))>=FX_Mul(WALK_LIMIT_HEIGHT,WALK_LIMIT_HEIGHT)){
-			return FALSE;
-		}
-	} 
-	*gridInfoData = gridInfoDataNext;								//グリッドデータ更新
-	VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
-
 	return TRUE;
 }
 	

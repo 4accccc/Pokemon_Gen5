@@ -8,6 +8,8 @@
 //#define	MAPOBJ_SIZE		(0x18000)//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
 //#define	MAPOBJTEX_SIZE	(0x4000) //ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
 
+#define G3D_MAPPER_ATTR_MAX	(16)
+
 typedef struct _G3D_MAPPER G3D_MAPPER;
 
 typedef struct {
@@ -17,15 +19,12 @@ typedef struct {
 }G3D_MAPPER_INFODATA;
 
 typedef struct {
-	G3D_MAPPER_INFODATA		gridData[MAP_BLOCK_COUNT];	//グリッドデータ取得ワーク
+	G3D_MAPPER_INFODATA		gridData[G3D_MAPPER_ATTR_MAX];	//グリッドデータ取得ワーク
 	u16						count;
 }G3D_MAPPER_GRIDINFO;
 
-#define	NON_ATTR	(0xffff)
 typedef struct {
-	u16 datID;
-	u16 texID;
-	u16 attrID;
+	u32 datID;
 }G3D_MAPPER_DATA;
 
 typedef enum {
@@ -34,6 +33,7 @@ typedef enum {
 	G3D_MAPPER_MODE_SCROLL_Y,
 }G3D_MAPPER_MODE;
 
+#define	NON_GROBAL_TEX	(0xffffffff)
 typedef struct {
 	GFL_G3D_MAPDATA_FILETYPE	g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	u16						sizex;		//横ブロック数
@@ -43,6 +43,8 @@ typedef struct {
 	fx32					height;		//ブロック高さ
 	G3D_MAPPER_MODE			mode;		//動作モード
 	u32						arcID;		//グラフィックアーカイブＩＤ
+	u32						gtexArcID;	//グローバルテクスチャアーカイブＩＤ
+	u32						gtexDatID;	//グローバルテクスチャデータＩＤ
 	const G3D_MAPPER_DATA*	data;		//実マップデータ
 
 }G3D_MAPPER_RESIST;
@@ -99,6 +101,7 @@ extern void	Delete3Dmapper( G3D_MAPPER* g3Dmapper );
  */
 //------------------------------------------------------------------
 extern void	ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistData );
+extern void	ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 /**
  * @brief	オブジェクトリソース登録
