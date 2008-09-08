@@ -42,13 +42,6 @@ typedef struct POLYGON_DATA_tag{
 	u16 d_idx;		//Ｄ値配列へのインデックスNo
 }POLYGON_DATA;
 
-typedef struct HEIGHT_ARRAY_tag
-{
-	fx32 Height;
-	int Prev;
-	int Next;
-}HEIGHT_ARRAY;
-
 typedef struct LINE_DATA_tag
 {
 	fx32 LineZ;
@@ -94,6 +87,7 @@ typedef struct {
 
 //データ取得用情報
 typedef struct { 
+	u32				attrAdrs;	//アトリビュート取得用
 	MAP_HEIGHT_INFO heightInfo;	//高さ取得用
 
 }MAP_DATA_INFO;
@@ -169,9 +163,19 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 			dataOffset += (sizeof(SOUND_DATA_HEADER) + soundHeader->size);
 
 			//アトリビュートリソース設定
+			mapdataInfo->attrAdrs = (u32)mem + dataOffset;
+			dataOffset += header->attrSize;
+
+			//配置オブジェクト設定
+			dataOffset += header->objSize;
+			//モデルリソース設定
+			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + dataOffset));
+			dataOffset += header->mapSize;
+
+			//高さリソース設定
 			heightHeader = (HEIGHT_DATA_HEADER*)((u32)mem + dataOffset);
 			{
-				//アトリビュートデータ取得用情報設定
+				//高さデータ取得用情報設定
 				MAP_HEIGHT_INFO* heightInfo = &mapdataInfo->heightInfo;
 				u32 hdataOffset = 0;
 
@@ -198,14 +202,6 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 				heightInfo->PolyIDList = (u16*)((u32)heightHeader + hdataOffset);
 				hdataOffset += sizeof(u16) * heightHeader->PolyIDListNum;
 			}
-			dataOffset += header->attrSize;
-
-			//配置オブジェクト設定
-			dataOffset += header->objSize;
-			//モデルリソース設定
-			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + dataOffset));
-			dataOffset += header->mapSize;
-
 			ldst->seq = RND_CREATE;
 		}
 		break;
@@ -234,16 +230,17 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
  *
  *
  */
-BOOL GetHeightForBlock( const fx32 inX, const fx32 inZ, MAP_HEIGHT_INFO* inMap3DInfo );
+BOOL GetHeightForBlock
+	( GFL_G3D_MAP_ATTRINFO* attrInfo, const VecFx32* pos, const MAP_HEIGHT_INFO* inMap3DInfo );
 //============================================================================================
-void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapodata,
+void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
-	VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, 0, FX16_ONE, 0 );
-	attrInfo->mapAttr[0].attr = 0;
-	attrInfo->mapAttr[0].height = 0;
+	//データ取得用情報設定
+	MAP_DATA_INFO*		mapdataInfo = (MAP_DATA_INFO*)mapdata;
+	MAP_HEIGHT_INFO*	heightInfo = &mapdataInfo->heightInfo;
 
-	attrInfo->mapAttrCount = 1;
+	GetHeightForBlock( attrInfo, posInBlock, heightInfo );
 }
 
 
@@ -304,7 +301,7 @@ static BOOL CheckRectIO
  *	@retval	none
 */
 //------------------------------------------------------------------
-static void GetPolygonVertex(MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, XZ_VERTEX *outVertex)
+static void GetPolygonVertex(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, XZ_VERTEX *outVertex)
 {
 	outVertex[0] = inMap3DInfo->VertexArray[inMap3DInfo->PolygonData[inIdx].vtx_idx0];
 	outVertex[1] = inMap3DInfo->VertexArray[inMap3DInfo->PolygonData[inIdx].vtx_idx1];
@@ -320,7 +317,7 @@ static void GetPolygonVertex(MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, XZ_VERTEX 
  *	@retval	none
 */
 //------------------------------------------------------------------
-static void GetPolygonNrm(MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, VecFx32 *outVertex)
+static void GetPolygonNrm(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, VecFx32 *outVertex)
 {
 	*outVertex = inMap3DInfo->NormalArray[inMap3DInfo->PolygonData[inIdx].nrm_idx];
 }
@@ -335,55 +332,9 @@ static void GetPolygonNrm(MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, VecFx32 *outV
  *	@retval	none
 */
 //------------------------------------------------------------------
-static void GetPolygonD(MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, fx32 *outD)
+static void GetPolygonD(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, fx32 *outD)
 {
 	*outD = inMap3DInfo->DvalArray[inMap3DInfo->PolygonData[inIdx].d_idx];
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-/**
-ソート用配列の初期化
-*/
-static void InitArray(HEIGHT_ARRAY *outArray)
-{
-	int i;
-	for(i=0;i<GFL_G3D_MAP_ATTR_GETMAX;i++){
-		outArray[i].Height = 0;
-		outArray[i].Prev = -1;
-		outArray[i].Next = -1;
-	}
-}
-
-/**
- 高さ配列データのソート(昇順)
-*/
-static void SortArray(int inCount, HEIGHT_ARRAY *ioArray)
-{
-	int i;
-	int prev;
-	for(i=0;i<=inCount-1;i++){
-		if (ioArray[i].Height<ioArray[inCount].Height){
-			prev = ioArray[i].Prev;
-			ioArray[i].Prev = inCount;
-			ioArray[inCount].Next = i;
-			ioArray[inCount].Prev = prev;
-			if (prev>=0){
-				ioArray[prev].Next = inCount;
-			}
-			//FirstIdx = inCount;
-			return;
-		}else{
-			ioArray[inCount].Prev = i;
-			ioArray[i].Next = inCount;
-		}
-	}
-	if (inCount>0){
-		ioArray[inCount].Next = ioArray[i].Next;
-		ioArray[i].Next = inCount;
-		ioArray[inCount].Prev = i;
-	}
-	return;
 }
 
 //------------------------------------------------------------------
@@ -404,7 +355,7 @@ static BOOL	BinSearch
 	u32 data_idx;
 	fx32 z_val;
 	if (inDataSize == 0){
-		OS_Printf("Zソートデータがありません\n");
+	//	OS_Printf("Zソートデータがありません\n");
 		return FALSE;//データなしなので、探索終了
 	}else if (inDataSize == 1){
 		*outIndex = 0;//探索終了
@@ -446,24 +397,22 @@ static BOOL	BinSearch
  *	高さ取得
  *
  *	@param	mode			高さ取得モード
- *	@param	inX				求めたい高さのX座標
- *	@param	inZ				求めたい高さのZ座標
  *	@param	inMap3DInfo		高さ情報
  *	
  *	@retval	BOOL			TRUE:高さを取得できた	FALSE:高さを取得できなかった
 */
 //------------------------------------------------------------------
-BOOL GetHeightForBlock( const fx32 inX, const fx32 inZ, MAP_HEIGHT_INFO* inMap3DInfo )
+BOOL GetHeightForBlock
+	( GFL_G3D_MAP_ATTRINFO* attrInfo, const VecFx32* pos, const MAP_HEIGHT_INFO* inMap3DInfo )
 {
 	XZ_VERTEX vertex[2];
 	XZ_VERTEX target;
-	VecFx32 nrm;
+	VecFx32 vecN;
 	BOOL result;
 	u16 i,pol_index;
 	fx32 d,y;
 	int pol_count;
 	u32 line_num,tbl_idx,tbl_x_idx,tbl_z_idx;
-	HEIGHT_ARRAY height_array[GFL_G3D_MAP_ATTR_GETMAX];
 	fx32 tbl_x,tbl_z;
 
 	u32 offset_idx;
@@ -476,10 +425,9 @@ BOOL GetHeightForBlock( const fx32 inX, const fx32 inZ, MAP_HEIGHT_INFO* inMap3D
 
 	result = FALSE;
 	//ZX平面に射影
-	target.X = inX;
-	target.Z = inZ;
+	target.X = pos->x;
+	target.Z = pos->z;
 	pol_count = 0;
-	InitArray(height_array);
 	
 	line_num = inMap3DInfo->LineNum;
 	
@@ -503,15 +451,14 @@ BOOL GetHeightForBlock( const fx32 inX, const fx32 inZ, MAP_HEIGHT_INFO* inMap3D
 		result = CheckRectIO( &vertex[0], &vertex[1], &target);
 		if (result == TRUE){//四角形内
 			//法線取得
-			GetPolygonNrm(inMap3DInfo,pol_index, &nrm);
+			GetPolygonNrm(inMap3DInfo,pol_index, &vecN);
 			//平面の方程式に必要なデータ（原点を通る平面からのオフセット）を取得
 			GetPolygonD(inMap3DInfo,pol_index, &d);
 			//平面の方程式より高さ取得
-			y = -(FX_Mul(nrm.x, target.X)+FX_Mul(nrm.z, target.Z)+d);
-			y = FX_Div(y, nrm.y);
-			height_array[pol_count].Height = y;
-			//配列のソート（現行では機能してません。対応予定）<<未使用にしました。20060801
-			///SortArray(pol_count,height_array);
+			y = -(FX_Mul(vecN.x, target.X)+FX_Mul(vecN.z, target.Z)+d);
+			y = FX_Div(y, vecN.y);
+			VEC_Fx16Set( &attrInfo->mapAttr[pol_count].vecN, vecN.x, vecN.y, vecN.z );
+			attrInfo->mapAttr[pol_count].height = y;
 			
 			pol_count++;
 			if (pol_count >= GFL_G3D_MAP_ATTR_GETMAX){
@@ -519,7 +466,9 @@ BOOL GetHeightForBlock( const fx32 inX, const fx32 inZ, MAP_HEIGHT_INFO* inMap3D
 			}
 		}
 	}
-	return FALSE;
+	attrInfo->mapAttrCount = pol_count;
+
+	return TRUE;
 }
 
 
