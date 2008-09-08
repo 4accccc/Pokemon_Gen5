@@ -64,6 +64,7 @@ typedef struct {
 	const GFL_SAVEDATA_TABLE * table;	///<セーブデータ定義テーブルのアドレス
 	u32 table_max;						///<セーブデータ定義テーブルの要素数
 	u32 savearea_top_address;			///<使用するバックアップ領域の先頭アドレス
+	u32 savearea_mirror_address;		///<使用するミラーリング領域の先頭アドレス
 	u32 savearea_size;					///<使用するバックアップ領域の大きさ
 	u32 magic_number;					///<使用するマジックナンバー
 	GFL_BACKUP_TYPE backup_type;		///<バックアップの種類を指定するID
@@ -219,6 +220,18 @@ extern void * GFL_SAVEDATA_Get(GFL_SAVEDATA * sv, GFL_SVDT_ID gmdataID);
  */
 //---------------------------------------------------------------------------
 extern const void * GFL_SAVEDATA_GetReadOnly(const GFL_SAVEDATA * sv, GFL_SVDT_ID gmdataID);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ブロックのCRCを現在のデータで更新する
+ *
+ * @param   sv				セーブデータ構造へのポインタ
+ * @param   gmdataid		セーブデータID
+ *
+ * @retval  生成されたCRC値
+ */
+//--------------------------------------------------------------
+extern u16 GFL_BACKUP_BlockCRC_Set(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid);
 
 
 #ifdef __cplusplus

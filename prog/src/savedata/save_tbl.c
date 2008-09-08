@@ -27,6 +27,9 @@
 ///EXTRA2領域で使用するセーブサイズ
 #define SAVESIZE_EXTRA2		(SECTOR_SIZE)
 
+///ミラーリング領域で使用するセーブ開始アドレス
+#define MIRROR_SAVE_ADDRESS		(0x20000)
+
 
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 	{	//コンテスト
@@ -38,6 +41,81 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 	{	//松田デバッグ機能用セーブ
 		GMDATA_ID_MATSU_DEBUG,
 		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_0,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_0,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_1,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_1,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_2,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_2,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_3,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_3,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_4,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_4,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_5,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_5,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_6,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_6,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_7,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_7,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_8,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_8,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_9,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_9,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_a,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_a,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_b,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_b,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_c,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_c,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_d,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_d,
+		(FUNC_INIT_WORK)DebugMatsuSave_Init,
+	},
+	{	//テスト
+		GMDATA_ID_MATSU_DEBUG_e,
+		(FUNC_GET_SIZE)DebugMatsuSave_GetWorkSize_e,
 		(FUNC_INIT_WORK)DebugMatsuSave_Init,
 	},
 };
@@ -52,6 +130,7 @@ const GFL_SVLD_PARAM SaveParam_Normal = {
 	SaveDataTbl_Normal,
 	NELEMS(SaveDataTbl_Normal),
 	0,								//バックアップ領域先頭アドレス
+	MIRROR_SAVE_ADDRESS,			//ミラーリング領域先頭アドレス
 	SAVESIZE_NORMAL,				//使用するバックアップ領域の大きさ
 	MAGIC_NUMBER,
 	GFL_BACKUP_NORMAL_FLASH,
