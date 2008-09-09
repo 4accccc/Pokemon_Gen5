@@ -1535,7 +1535,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 	}
 }
 
-#define TEST_NPC_SETNUM	(0)//(250)
+#define TEST_NPC_SETNUM	(250)
 static void testSetUp( FLD_ACTCONT* fldActCont )
 {
 	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	

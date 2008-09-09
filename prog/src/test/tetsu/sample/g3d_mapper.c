@@ -628,12 +628,13 @@ static BOOL	ReloadMapperBlock( G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 			addFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
 				if(( g3Dmapper->blockIdx[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
+					u32 mapdatID = g3Dmapper->data[new[i].blockIdx].datID;
 
-					GFL_G3D_MAP_SetLoadReq
-						( g3Dmapper->g3Dmap[j], (u32)g3Dmapper->data[new[i].blockIdx].datID );
-					GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[j], &new[i].trans );
-					GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[j], TRUE );
-
+					if( mapdatID != G3D_MAPPER_NOMAP ){
+						GFL_G3D_MAP_SetLoadReq( g3Dmapper->g3Dmap[j], mapdatID );
+						GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[j], &new[i].trans );
+						GFL_G3D_MAP_SetDrawSw( g3Dmapper->g3Dmap[j], TRUE );
+					}
 					g3Dmapper->blockIdx[j] = new[i];
 					addFlag = TRUE;
 					addProcFlag = TRUE;

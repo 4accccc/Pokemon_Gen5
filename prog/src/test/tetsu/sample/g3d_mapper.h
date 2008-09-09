@@ -5,8 +5,6 @@
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
 #define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
 #define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
-//#define	MAPOBJ_SIZE		(0x18000)//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
-//#define	MAPOBJTEX_SIZE	(0x4000) //ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
 
 #define G3D_MAPPER_ATTR_MAX	(16)
 
@@ -23,6 +21,7 @@ typedef struct {
 	u16						count;
 }G3D_MAPPER_GRIDINFO;
 
+#define G3D_MAPPER_NOMAP	(0xffffffff)
 typedef struct {
 	u32 datID;
 }G3D_MAPPER_DATA;

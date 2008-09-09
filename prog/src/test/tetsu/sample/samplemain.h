@@ -1198,12 +1198,14 @@ static const G3D_MAPPER_DATA DPc11Map[] = {
 };
 #endif
 
-#define DATID_GSMAP_GTEX (6)
+#define DATID_GSMAP_GTEX (3)
 static const G3D_MAPPER_DATA GSMap[] = {
-	{ 50 },
-	{ 51 },
-	{ 52 },
-	{ 53 },
+	{ 21 }, { 22 },
+	{ 23 }, { 24 },
+	{ 25 }, { 26 },
+	{ G3D_MAPPER_NOMAP }, { 27 },
+	{ G3D_MAPPER_NOMAP }, { 28 },
+	{ G3D_MAPPER_NOMAP }, { 29 },
 };
 
 typedef struct {
@@ -1220,7 +1222,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 	{
 		{	
 			FILE_CUSTOM_DATA,
-			2,  2, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
+			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, ARCID_GSTEX, DATID_GSMAP_GTEX, GSMap 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
