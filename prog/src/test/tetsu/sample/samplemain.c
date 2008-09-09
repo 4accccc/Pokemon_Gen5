@@ -158,26 +158,7 @@ BOOL	SampleMain( void )
             //セットアップ
             ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
                                 &resistMapTbl[sampleWork->mapNum].mapperData );
-#if 0
-            {
-                G3D_MAPPER_RESIST_OBJ resistObjData;
-                
-                resistObjData.arcID = ARCID_SAMPLEMAP;
-                resistObjData.data = resistObjTbl; 
-                resistObjData.count = NELEMS(resistObjTbl); 
-                ResistObjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistObjData );
-            }
-            {
-                G3D_MAPPERDD_RESIST_DDOBJ resistDDobjData;
-                
-                resistDDobjData.arcID = ARCID_SAMPLEMAP;
-                resistDDobjData.data = resistDDobjTbl; 
-                resistDDobjData.count = NELEMS(resistDDobjTbl); 
-                ResistDDobjRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistDDobjData );
-            }
-#else
-			//ResistObjsetRes3Dmapper( GetG3Dmapper(sampleWork->gs), &resistObjset );
-#endif
+
             sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
             sampleWork->fldActCont = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
 			{
@@ -234,8 +215,6 @@ BOOL	SampleMain( void )
 		break;
 
 	case 3:
-//		ReleaseDDobjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
-//		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
         ReleaseData3Dmapper( GetG3Dmapper(sampleWork->gs) );
 
 		DeleteFieldActSys( sampleWork->fldActCont );
@@ -245,8 +224,6 @@ BOOL	SampleMain( void )
 		break;
 
 	case 4:
-//		ReleaseDDobjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
-//		ReleaseObjRes3Dmapper( GetG3Dmapper(sampleWork->gs) );
         ReleaseData3Dmapper( GetG3Dmapper(sampleWork->gs) );
 
 		DeleteFieldActSys( sampleWork->fldActCont );

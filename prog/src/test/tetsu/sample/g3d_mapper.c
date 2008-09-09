@@ -60,8 +60,8 @@ struct _G3D_MAPPER {
 	GFL_G3D_RES*			grobalTexture;					//共通地形テクスチャ
 	GFL_G3D_MAP_GROBALOBJ	grobalObj;						//共通オブジェクト
 
-	GFL_G3D_MAP_OBJ		grobalObject[GROBAL_OBJ_COUNT];
-	GFL_G3D_MAP_DDOBJ	grobalDDobject[GROBAL_DDOBJ_COUNT];	//共通オブジェクト(直書き)
+//	GFL_G3D_MAP_OBJ		grobalObject[GROBAL_OBJ_COUNT];
+//	GFL_G3D_MAP_DDOBJ	grobalDDobject[GROBAL_DDOBJ_COUNT];	//共通オブジェクト(直書き)
 };
 
 //------------------------------------------------------------------
@@ -118,22 +118,25 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
 	
+	g3Dmapper->grobalObj.gobj = GFL_HEAP_AllocClearMemory
+								( heapID, sizeof(GFL_G3D_MAP_OBJ) * GROBAL_OBJ_COUNT );
+	g3Dmapper->grobalObj.gddobj = GFL_HEAP_AllocClearMemory
+								( heapID, sizeof(GFL_G3D_MAP_DDOBJ) * GROBAL_DDOBJ_COUNT );
+	g3Dmapper->grobalObj.gobjCount = 0;
+	g3Dmapper->grobalObj.gddobjCount = 0;
+
 	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
-		g3Dmapper->grobalObject[i].NNSrnd_H = NULL;
-		g3Dmapper->grobalObject[i].g3Dres_H = NULL;
-		g3Dmapper->grobalObject[i].NNSrnd_L = NULL;
-		g3Dmapper->grobalObject[i].g3Dres_L = NULL;
+		g3Dmapper->grobalObj.gobj[i].NNSrnd_H = NULL;
+		g3Dmapper->grobalObj.gobj[i].g3Dres_H = NULL;
+		g3Dmapper->grobalObj.gobj[i].NNSrnd_L = NULL;
+		g3Dmapper->grobalObj.gobj[i].g3Dres_L = NULL;
 	}
 	for( i=0; i<GROBAL_DDOBJ_COUNT; i++ ){
-		g3Dmapper->grobalDDobject[i].g3Dres = NULL;
-		g3Dmapper->grobalDDobject[i].texDataAdrs = 0;
-		g3Dmapper->grobalDDobject[i].texPlttAdrs = 0;
-		g3Dmapper->grobalDDobject[i].data = NULL;
+		g3Dmapper->grobalObj.gddobj[i].g3Dres = NULL;
+		g3Dmapper->grobalObj.gddobj[i].texDataAdrs = 0;
+		g3Dmapper->grobalObj.gddobj[i].texPlttAdrs = 0;
+		g3Dmapper->grobalObj.gddobj[i].data = NULL;
 	}
-	g3Dmapper->grobalObj.gobj = g3Dmapper->grobalObject;
-	g3Dmapper->grobalObj.gobjCount = 0;
-	g3Dmapper->grobalObj.gddobj = g3Dmapper->grobalDDobject;
-	g3Dmapper->grobalObj.gddobjCount = 0;
 
 	//OS_Printf("g3DmapperSize = %x\n", sizeof(G3D_MAPPER));
 	
@@ -152,6 +155,8 @@ void	Delete3Dmapper( G3D_MAPPER* g3Dmapper )
 	GF_ASSERT( g3Dmapper );
 
 	ReleaseObjRes3Dmapper( g3Dmapper );	//登録されたままの場合を想定して削除
+	GFL_HEAP_FreeMemory( g3Dmapper->grobalObj.gobj );
+	GFL_HEAP_FreeMemory( g3Dmapper->grobalObj.gddobj );
 
 	//ブロック制御ハンドル削除
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -268,7 +273,6 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 	} else {
 		g3Dmapper->grobalTexture = NULL;
 	}
-#if 1
 	//グローバルオブジェクト作成
 	if( resistData->gobjSetType != NON_GROBAL_OBJ ){
 		if( resistData->gobjSetType != SET_BINDATA ){
@@ -278,7 +282,6 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 		} else {
 		}
 	}
-#endif
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		//新アーカイブＩＤを登録
@@ -356,28 +359,28 @@ void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJ* r
 	ReleaseObjRes3Dmapper( g3Dmapper );
 
 	for( i=0; i< resistData->count; i++ ){
-		g3Dmapper->grobalObject[i].g3Dres_H = GFL_G3D_CreateResourceArc
+		g3Dmapper->grobalObj.gobj[i].g3Dres_H = GFL_G3D_CreateResourceArc
 										( resistData->arcID, resistData->data[i].highQ_ID );
-		GFL_G3D_TransVramTexture( g3Dmapper->grobalObject[i].g3Dres_H ); 
+		GFL_G3D_TransVramTexture( g3Dmapper->grobalObj.gobj[i].g3Dres_H ); 
 
-		g3Dmapper->grobalObject[i].NNSrnd_H = NNS_G3dAllocRenderObj
+		g3Dmapper->grobalObj.gobj[i].NNSrnd_H = NNS_G3dAllocRenderObj
 												( GFL_G3D_GetAllocaterPointer() );
 
-		MakeMapRender(	g3Dmapper->grobalObject[i].NNSrnd_H,
-						g3Dmapper->grobalObject[i].g3Dres_H,
-						g3Dmapper->grobalObject[i].g3Dres_H );
+		MakeMapRender(	g3Dmapper->grobalObj.gobj[i].NNSrnd_H,
+						g3Dmapper->grobalObj.gobj[i].g3Dres_H,
+						g3Dmapper->grobalObj.gobj[i].g3Dres_H );
 
 		if( resistData->data[i].lowQ_ID != NON_LOWQ ){
-			g3Dmapper->grobalObject[i].g3Dres_L = GFL_G3D_CreateResourceArc
+			g3Dmapper->grobalObj.gobj[i].g3Dres_L = GFL_G3D_CreateResourceArc
 											( resistData->arcID, resistData->data[i].lowQ_ID );
-			GFL_G3D_TransVramTexture( g3Dmapper->grobalObject[i].g3Dres_L ); 
+			GFL_G3D_TransVramTexture( g3Dmapper->grobalObj.gobj[i].g3Dres_L ); 
 
-			g3Dmapper->grobalObject[i].NNSrnd_L = NNS_G3dAllocRenderObj
+			g3Dmapper->grobalObj.gobj[i].NNSrnd_L = NNS_G3dAllocRenderObj
 													( GFL_G3D_GetAllocaterPointer() );
 
-			MakeMapRender(	g3Dmapper->grobalObject[i].NNSrnd_L,
-							g3Dmapper->grobalObject[i].g3Dres_L,
-							g3Dmapper->grobalObject[i].g3Dres_L );
+			MakeMapRender(	g3Dmapper->grobalObj.gobj[i].NNSrnd_L,
+							g3Dmapper->grobalObj.gobj[i].g3Dres_L,
+							g3Dmapper->grobalObj.gobj[i].g3Dres_L );
 		}
 	}
 	g3Dmapper->grobalObj.gobjCount = resistData->count;
@@ -389,25 +392,25 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 
 	GF_ASSERT( g3Dmapper );
 	for( i=0; i<g3Dmapper->grobalObj.gobjCount; i++ ){
-		if( g3Dmapper->grobalObject[i].NNSrnd_L != NULL ){
+		if( g3Dmapper->grobalObj.gobj[i].NNSrnd_L != NULL ){
 			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
-									g3Dmapper->grobalObject[i].NNSrnd_L );
-			g3Dmapper->grobalObject[i].NNSrnd_L = NULL;
+									g3Dmapper->grobalObj.gobj[i].NNSrnd_L );
+			g3Dmapper->grobalObj.gobj[i].NNSrnd_L = NULL;
 		}
-		if( g3Dmapper->grobalObject[i].g3Dres_L != NULL ){
-			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObject[i].g3Dres_L );
-			GFL_G3D_DeleteResource( g3Dmapper->grobalObject[i].g3Dres_L );
-			g3Dmapper->grobalObject[i].g3Dres_L = NULL;
+		if( g3Dmapper->grobalObj.gobj[i].g3Dres_L != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObj.gobj[i].g3Dres_L );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalObj.gobj[i].g3Dres_L );
+			g3Dmapper->grobalObj.gobj[i].g3Dres_L = NULL;
 		}
-		if( g3Dmapper->grobalObject[i].NNSrnd_H != NULL ){
+		if( g3Dmapper->grobalObj.gobj[i].NNSrnd_H != NULL ){
 			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
-									g3Dmapper->grobalObject[i].NNSrnd_H );
-			g3Dmapper->grobalObject[i].NNSrnd_H = NULL;
+									g3Dmapper->grobalObj.gobj[i].NNSrnd_H );
+			g3Dmapper->grobalObj.gobj[i].NNSrnd_H = NULL;
 		}
-		if( g3Dmapper->grobalObject[i].g3Dres_H != NULL ){
-			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObject[i].g3Dres_H );
-			GFL_G3D_DeleteResource( g3Dmapper->grobalObject[i].g3Dres_H );
-			g3Dmapper->grobalObject[i].g3Dres_H = NULL;
+		if( g3Dmapper->grobalObj.gobj[i].g3Dres_H != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObj.gobj[i].g3Dres_H );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalObj.gobj[i].g3Dres_H );
+			g3Dmapper->grobalObj.gobj[i].g3Dres_H = NULL;
 		}
 	}
 }
@@ -429,7 +432,7 @@ void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_DDOB
 	for( i=0; i< resistData->count; i++ ){
 		g3DresTex = GFL_G3D_CreateResourceArc( resistData->arcID, resistData->data[i] );
 
-		g3Dmapper->grobalDDobject[i].g3Dres = g3DresTex;
+		g3Dmapper->grobalObj.gddobj[i].g3Dres = g3DresTex;
 										
 		if( GFL_G3D_TransVramTexture( g3DresTex ) == FALSE ){
 			GF_ASSERT(0);
@@ -437,9 +440,9 @@ void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_DDOB
 		texDataKey = GFL_G3D_GetTextureDataVramKey( g3DresTex );
 		texPlttKey = GFL_G3D_GetTexturePlttVramKey( g3DresTex );
 
-		g3Dmapper->grobalDDobject[i].texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
-		g3Dmapper->grobalDDobject[i].texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
-		g3Dmapper->grobalDDobject[i].data = &drawTreeData;
+		g3Dmapper->grobalObj.gddobj[i].texDataAdrs = NNS_GfdGetTexKeyAddr( texDataKey );
+		g3Dmapper->grobalObj.gddobj[i].texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
+		g3Dmapper->grobalObj.gddobj[i].data = &drawTreeData;
 	}
 	g3Dmapper->grobalObj.gddobjCount = resistData->count;
 }
@@ -450,10 +453,10 @@ void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 
 	GF_ASSERT( g3Dmapper );
 	for( i=0; i<g3Dmapper->grobalObj.gddobjCount; i++ ){
-		if( g3Dmapper->grobalDDobject[i].g3Dres != NULL ){
-			GFL_G3D_FreeVramTexture( g3Dmapper->grobalDDobject[i].g3Dres );
-			GFL_G3D_DeleteResource( g3Dmapper->grobalDDobject[i].g3Dres );
-			g3Dmapper->grobalDDobject[i].g3Dres = NULL;
+		if( g3Dmapper->grobalObj.gddobj[i].g3Dres != NULL ){
+			GFL_G3D_FreeVramTexture( g3Dmapper->grobalObj.gddobj[i].g3Dres );
+			GFL_G3D_DeleteResource( g3Dmapper->grobalObj.gddobj[i].g3Dres );
+			g3Dmapper->grobalObj.gddobj[i].g3Dres = NULL;
 		}
 	}
 }
