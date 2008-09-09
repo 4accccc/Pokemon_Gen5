@@ -76,10 +76,10 @@ static const VecFx32 defaultScale = { FX32_ONE, FX32_ONE, FX32_ONE };
 static const MtxFx33 defaultRotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
 //------------------------------------------------------------------
 static BOOL	DrawGround( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
-static void	DrawObj
-			( GFL_G3D_MAP* g3Dmap, const GFL_G3D_MAP_OBJ* obj, GFL_G3D_CAMERA* g3Dcamera );
-static void	DirectDrawObj
-			( GFL_G3D_MAP* g3Dmap, const GFL_G3D_MAP_DDOBJ* ddobj, GFL_G3D_CAMERA* g3Dcamera );
+static void	DrawObj( GFL_G3D_MAP* g3Dmap, 
+			const GFL_G3D_MAP_OBJ* obj, const u32 count, GFL_G3D_CAMERA* g3Dcamera );
+static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, 
+			const GFL_G3D_MAP_DDOBJ* ddobj, const u32 count, GFL_G3D_CAMERA* g3Dcamera );
 
 static void		getViewLength( GFL_G3D_CAMERA* g3Dcamera, const VecFx32* pos, fx32* result );
 static void		getYbillboardMtx( GFL_G3D_CAMERA* g3Dcamera, MtxFx33* result );
@@ -208,19 +208,19 @@ void	GFL_G3D_MAP_StartDraw( void )
 	GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 }
 
-void	GFL_G3D_MAP_Draw( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera,
-							const GFL_G3D_MAP_OBJ* obj, const GFL_G3D_MAP_DDOBJ* ddobj )
+void	GFL_G3D_MAP_Draw
+		( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera, const GFL_G3D_MAP_GROBALOBJ* grobalObj )
 {
 	GF_ASSERT( g3Dmap );
 
 	//地形描画
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
 		//配置オブジェクト描画
-		if( obj != NULL ){
-			DrawObj( g3Dmap, obj, g3Dcamera );
+		if( grobalObj->gobjCount != 0 ){
+			DrawObj( g3Dmap, grobalObj->gobj, grobalObj->gobjCount, g3Dcamera );
 		}
-		if( ddobj != NULL ){
-			DirectDrawObj( g3Dmap, ddobj, g3Dcamera );
+		if( grobalObj->gddobjCount != 0 ){
+			DirectDrawObj( g3Dmap, grobalObj->gddobj, grobalObj->gddobjCount, g3Dcamera );
 		}
 	}
 }
@@ -608,8 +608,8 @@ static BOOL	DrawGround( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
  * @brief	配置オブジェクト描画
  */
 //------------------------------------------------------------------
-static void	DrawObj
-	( GFL_G3D_MAP* g3Dmap, const GFL_G3D_MAP_OBJ* obj, GFL_G3D_CAMERA* g3Dcamera )
+static void	DrawObj( GFL_G3D_MAP* g3Dmap, 
+				const GFL_G3D_MAP_OBJ* obj, const u32 count, GFL_G3D_CAMERA* g3Dcamera )
 {
 	NNSG3dRenderObj	*NNSrnd, *NNSrnd_L;
 	VecFx32			grobalTrans;
@@ -617,7 +617,7 @@ static void	DrawObj
 	int				i;
 
 	for( i=0; i<OBJ_COUNT; i++ ){
-		if(	g3Dmap->object[i].id != OBJID_NULL ){
+		if(	(g3Dmap->object[i].id != OBJID_NULL)&&(g3Dmap->object[i].id < count) ){
 
 			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &grobalTrans );
 
@@ -631,7 +631,6 @@ static void	DrawObj
 				if( ( length > LOD_LIMIT )&&( NNSrnd_L != NULL ) ){
 					NNSrnd = NNSrnd_L;
 				}
-
 				if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
 	
 					NNS_G3dGlbSetBaseTrans( &grobalTrans );		// 位置設定
@@ -654,8 +653,8 @@ static void	DrawObj
  * @brief	配置オブジェクト描画(ジオメトリ直書き)
  */
 //------------------------------------------------------------------
-static void	DirectDrawObj
-	( GFL_G3D_MAP* g3Dmap, const GFL_G3D_MAP_DDOBJ* ddobj, GFL_G3D_CAMERA* g3Dcamera )
+static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, 
+					const GFL_G3D_MAP_DDOBJ* ddobj, const u32 count, GFL_G3D_CAMERA* g3Dcamera )
 {
 	const GFL_G3D_MAP_DDOBJ*	objData;
 	MAP_DDOBJ_DATA*			ddObject;
@@ -686,7 +685,7 @@ static void	DirectDrawObj
 	for( i=0; i<DDOBJ_COUNT; i++ ){
 		ddObject = &g3Dmap->directDrawObject[i];
 
-		if( ddObject->id != OBJID_NULL ){
+		if( (ddObject->id != OBJID_NULL)&&(ddObject->id < count) ){
 			objData = &ddobj[ ddObject->id ];
 
 			VEC_Add( &ddObject->trans, &g3Dmap->trans, &grobalTrans );

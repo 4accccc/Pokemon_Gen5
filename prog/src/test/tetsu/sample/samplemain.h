@@ -21,6 +21,144 @@ static const G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_d4_3dppack },
 };
 
+static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
+	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
+	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
+};
+
+static const u16	resistDDobjTbl[] = {
+	NARC_sample_map_sample_tree_nsbtx,
+};
+
+static const G3D_MAPPER_RESIST_OBJSET	resistObjset = {
+		ARCID_SAMPLEMAP,
+		resistObjTbl, 
+		NELEMS(resistObjTbl), 
+
+		ARCID_SAMPLEMAP,
+		resistDDobjTbl, 
+		NELEMS(resistDDobjTbl),
+};
+
+#define DATID_GSMAP_GTEX (3)
+static const G3D_MAPPER_DATA GSMap[] = {
+	{ 21 }, { 22 },
+	{ 23 }, { 24 },
+	{ 25 }, { 26 },
+	{ G3D_MAPPER_NOMAP }, { 27 },
+	{ G3D_MAPPER_NOMAP }, { 28 },
+	{ G3D_MAPPER_NOMAP }, { 29 },
+};
+
+typedef struct {
+	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
+	G3D_MAPPER_RESIST	mapperData;
+	//開始位置
+	VecFx32				startPos;
+
+}SCENE_DATA;
+
+#define MAP_WIDTH (512 * FX32_ONE)
+#define MAP_HEIGHT (128 * FX32_ONE)
+static const SCENE_DATA	resistMapTbl[] = {
+	{
+		{	
+			FILE_CUSTOM_DATA,
+			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_GSMAP, 
+			ARCID_GSTEX, DATID_GSMAP_GTEX, 
+			GSMap, 
+			SET_BINDATA, NULL,
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+	},
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_TEST3DP,
+			NON_GROBAL_TEX,NON_GROBAL_TEX,
+			sampleMap, 
+			SET_TBLDATA, &resistObjset,
+		}, 
+		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+	},
+};
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			1,  1, NELEMS(rasenMap), MAP_WIDTH, 92*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
+			ARCID_SAMPLEMAP, rasenMap 
+		}, 
+		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+	},
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			1,  1, NELEMS(rasen2Map), MAP_WIDTH, 128*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
+			ARCID_SAMPLEMAP, rasen2Map 
+		}, 
+		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+	},
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			2,  6, NELEMS(sample2Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
+			ARCID_SAMPLEMAP, sample2Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*5 }
+	},
+	{
+		{ 
+			FILE_MAPEDITER_DATA,
+			32, 32, NELEMS(DPworldMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
+			ARCID_FLDMAP, DPworldMap 
+		}, 
+		{ MAP_WIDTH*16, 0, MAP_WIDTH*16 }
+	},
+	{
+		{  
+			FILE_MAPEDITER_DATA,
+			2,  2, NELEMS(DPc01Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
+			ARCID_FLDMAP, DPc01Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+	},
+	{
+		{  
+			FILE_MAPEDITER_DATA,
+			1,  2, NELEMS(DPc02Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
+			ARCID_FLDMAP, DPc02Map 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+	},
+#endif
+#if 0
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc03Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc04Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc05Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc06Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc07Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc08Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  1,  2, MAP_WIDTH, ARCID_FLDMAP, DPc09Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  1,  1, MAP_WIDTH, ARCID_FLDMAP, DPc10Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+	{{  2,  1, MAP_WIDTH, ARCID_FLDMAP, DPc11Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
+#endif
+
+
 #if 0
 static const G3D_MAPPER_DATA sample2Map[] = {
 	{ NARC_sample_map_m_test_01_01c_nsbmd, NARC_sample_map_m_test_01_01c_nsbtx, NON_ATTR }, 
@@ -1197,113 +1335,3 @@ static const G3D_MAPPER_DATA DPc11Map[] = {
 	{ NARC_fld_map_map20_13c_nsbmd, NARC_fld_map_map20_13c_nsbtx, NON_ATTR },
 };
 #endif
-
-#define DATID_GSMAP_GTEX (3)
-static const G3D_MAPPER_DATA GSMap[] = {
-	{ 21 }, { 22 },
-	{ 23 }, { 24 },
-	{ 25 }, { 26 },
-	{ G3D_MAPPER_NOMAP }, { 27 },
-	{ G3D_MAPPER_NOMAP }, { 28 },
-	{ G3D_MAPPER_NOMAP }, { 29 },
-};
-
-typedef struct {
-	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
-	G3D_MAPPER_RESIST	mapperData;
-	//開始位置
-	VecFx32				startPos;
-
-}SCENE_DATA;
-
-#define MAP_WIDTH (512 * FX32_ONE)
-#define MAP_HEIGHT (128 * FX32_ONE)
-static const SCENE_DATA	resistMapTbl[] = {
-	{
-		{	
-			FILE_CUSTOM_DATA,
-			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_GSMAP, ARCID_GSTEX, DATID_GSMAP_GTEX, GSMap 
-		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
-	},
-	{
-		{	
-			FILE_MAPEDITER_DATA,
-			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_TEST3DP, NON_GROBAL_TEX, NON_GROBAL_TEX, sampleMap 
-		}, 
-		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
-	},
-#if 0
-	{
-		{	
-			FILE_MAPEDITER_DATA,
-			1,  1, NELEMS(rasenMap), MAP_WIDTH, 92*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
-			ARCID_SAMPLEMAP, rasenMap 
-		}, 
-		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
-	},
-	{
-		{	
-			FILE_MAPEDITER_DATA,
-			1,  1, NELEMS(rasen2Map), MAP_WIDTH, 128*FX32_ONE, G3D_MAPPER_MODE_SCROLL_Y,
-			ARCID_SAMPLEMAP, rasen2Map 
-		}, 
-		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
-	},
-	{
-		{	
-			FILE_MAPEDITER_DATA,
-			2,  6, NELEMS(sample2Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
-			ARCID_SAMPLEMAP, sample2Map 
-		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*5 }
-	},
-	{
-		{ 
-			FILE_MAPEDITER_DATA,
-			32, 32, NELEMS(DPworldMap), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_XZ,
-			ARCID_FLDMAP, DPworldMap 
-		}, 
-		{ MAP_WIDTH*16, 0, MAP_WIDTH*16 }
-	},
-	{
-		{  
-			FILE_MAPEDITER_DATA,
-			2,  2, NELEMS(DPc01Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
-			ARCID_FLDMAP, DPc01Map 
-		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
-	},
-	{
-		{  
-			FILE_MAPEDITER_DATA,
-			1,  2, NELEMS(DPc02Map), MAP_WIDTH, MAP_HEIGHT, G3D_MAPPER_MODE_SCROLL_NONE,
-			ARCID_FLDMAP, DPc02Map 
-		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
-	},
-#endif
-#if 0
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc03Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc04Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc05Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc06Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc07Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc08Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  1,  2, MAP_WIDTH, ARCID_FLDMAP, DPc09Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  1,  1, MAP_WIDTH, ARCID_FLDMAP, DPc10Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-	{{  2,  1, MAP_WIDTH, ARCID_FLDMAP, DPc11Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
-#endif
-};
-
-static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
-	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
-	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
-};
-
-static const u16	resistDDobjTbl[] = {
-	NARC_sample_map_sample_tree_nsbtx,
-};
-

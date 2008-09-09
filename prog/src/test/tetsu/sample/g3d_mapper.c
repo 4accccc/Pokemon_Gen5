@@ -57,9 +57,10 @@ struct _G3D_MAPPER {
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const G3D_MAPPER_DATA*	data;	//実マップデータ
 
-	GFL_G3D_RES*		grobalTexture;					//共通地形テクスチャ
+	GFL_G3D_RES*			grobalTexture;					//共通地形テクスチャ
+	GFL_G3D_MAP_GROBALOBJ	grobalObj;						//共通オブジェクト
 
-	GFL_G3D_MAP_OBJ		grobalObject[GROBAL_OBJ_COUNT];	//共通オブジェクト
+	GFL_G3D_MAP_OBJ		grobalObject[GROBAL_OBJ_COUNT];
 	GFL_G3D_MAP_DDOBJ	grobalDDobject[GROBAL_DDOBJ_COUNT];	//共通オブジェクト(直書き)
 };
 
@@ -129,6 +130,10 @@ G3D_MAPPER*	Create3Dmapper( HEAPID heapID )
 		g3Dmapper->grobalDDobject[i].texPlttAdrs = 0;
 		g3Dmapper->grobalDDobject[i].data = NULL;
 	}
+	g3Dmapper->grobalObj.gobj = g3Dmapper->grobalObject;
+	g3Dmapper->grobalObj.gobjCount = 0;
+	g3Dmapper->grobalObj.gddobj = g3Dmapper->grobalDDobject;
+	g3Dmapper->grobalObj.gddobjCount = 0;
 
 	//OS_Printf("g3DmapperSize = %x\n", sizeof(G3D_MAPPER));
 	
@@ -216,8 +221,7 @@ void	Draw3Dmapper( G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 	GFL_G3D_MAP_StartDraw();
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		GFL_G3D_MAP_Draw( g3Dmapper->g3Dmap[i], g3Dcamera, 
-							g3Dmapper->grobalObject, g3Dmapper->grobalDDobject );
+		GFL_G3D_MAP_Draw( g3Dmapper->g3Dmap[i], g3Dcamera, &g3Dmapper->grobalObj );
 	}
 	GFL_G3D_MAP_EndDraw();
 }
@@ -264,7 +268,17 @@ void ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistD
 	} else {
 		g3Dmapper->grobalTexture = NULL;
 	}
-
+#if 1
+	//グローバルオブジェクト作成
+	if( resistData->gobjSetType != NON_GROBAL_OBJ ){
+		if( resistData->gobjSetType != SET_BINDATA ){
+			if( resistData->gobjSet != NULL ){
+				ResistObjsetRes3Dmapper( g3Dmapper, resistData->gobjSet );
+			}
+		} else {
+		}
+	}
+#endif
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		//新アーカイブＩＤを登録
@@ -290,6 +304,9 @@ void ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper )
 
 	GF_ASSERT( g3Dmapper );
 
+	ReleaseDDobjRes3Dmapper( g3Dmapper );
+	ReleaseObjRes3Dmapper( g3Dmapper );
+
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		GFL_G3D_MAP_ReleaseArc( g3Dmapper->g3Dmap[i] );
@@ -306,8 +323,30 @@ void ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper )
  * @brief	オブジェクトリソース登録
  */
 //------------------------------------------------------------------
+//セット登録
+void ResistObjsetRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJSET* resistObjset )
+{
+	G3D_MAPPER_RESIST_OBJ resistObj;
+	G3D_MAPPER_RESIST_DDOBJ resistDDobj;
+               
+	resistObj.arcID = resistObjset->objArcID;
+	resistObj.data = resistObjset->objData;
+	resistObj.count = resistObjset->objCount;
+	resistDDobj.arcID = resistObjset->ddobjArcID;
+	resistDDobj.data = resistObjset->ddobjData;
+	resistDDobj.count = resistObjset->ddobjCount;
+
+	if( resistObj.count != 0 ){
+		ResistObjRes3Dmapper( g3Dmapper, &resistObj );
+	}
+	if( resistDDobj.count != 0 ){
+		ResistDDobjRes3Dmapper( g3Dmapper, &resistDDobj );
+	}
+}
+
+//------------------------------------------------------------------
 //通常MDL
-void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* resistData )
+void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJ* resistData )
 {
 	int i;
 
@@ -341,6 +380,7 @@ void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* re
 							g3Dmapper->grobalObject[i].g3Dres_L );
 		}
 	}
+	g3Dmapper->grobalObj.gobjCount = resistData->count;
 }
 
 void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
@@ -348,7 +388,7 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 	int i;
 
 	GF_ASSERT( g3Dmapper );
-	for( i=0; i<GROBAL_OBJ_COUNT; i++ ){
+	for( i=0; i<g3Dmapper->grobalObj.gobjCount; i++ ){
 		if( g3Dmapper->grobalObject[i].NNSrnd_L != NULL ){
 			NNS_G3dFreeRenderObj(	GFL_G3D_GetAllocaterPointer(), 
 									g3Dmapper->grobalObject[i].NNSrnd_L );
@@ -374,7 +414,7 @@ void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 
 //------------------------------------------------------------------
 //DirectDraw
-void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPERDDOBJ_RESIST* resistData )
+void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_DDOBJ* resistData )
 {
 	GFL_G3D_RES*	g3DresTex;
 	NNSG3dTexKey	texDataKey;
@@ -401,6 +441,7 @@ void ResistDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPERDDOBJ_RESIST
 		g3Dmapper->grobalDDobject[i].texPlttAdrs = NNS_GfdGetPlttKeyAddr( texPlttKey );
 		g3Dmapper->grobalDDobject[i].data = &drawTreeData;
 	}
+	g3Dmapper->grobalObj.gddobjCount = resistData->count;
 }
 
 void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper )
@@ -408,7 +449,7 @@ void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper )
 	int i;
 
 	GF_ASSERT( g3Dmapper );
-	for( i=0; i<GROBAL_DDOBJ_COUNT; i++ ){
+	for( i=0; i<g3Dmapper->grobalObj.gddobjCount; i++ ){
 		if( g3Dmapper->grobalDDobject[i].g3Dres != NULL ){
 			GFL_G3D_FreeVramTexture( g3Dmapper->grobalDDobject[i].g3Dres );
 			GFL_G3D_DeleteResource( g3Dmapper->grobalDDobject[i].g3Dres );

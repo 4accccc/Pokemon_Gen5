@@ -32,22 +32,6 @@ typedef enum {
 	G3D_MAPPER_MODE_SCROLL_Y,
 }G3D_MAPPER_MODE;
 
-#define	NON_GROBAL_TEX	(0xffffffff)
-typedef struct {
-	GFL_G3D_MAPDATA_FILETYPE	g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
-	u16						sizex;		//横ブロック数
-	u16						sizez;		//縦ブロック数
-	u32						totalSize;	//配列サイズ
-	fx32					width;		//ブロック１辺の幅
-	fx32					height;		//ブロック高さ
-	G3D_MAPPER_MODE			mode;		//動作モード
-	u32						arcID;		//グラフィックアーカイブＩＤ
-	u32						gtexArcID;	//グローバルテクスチャアーカイブＩＤ
-	u32						gtexDatID;	//グローバルテクスチャデータＩＤ
-	const G3D_MAPPER_DATA*	data;		//実マップデータ
-
-}G3D_MAPPER_RESIST;
-
 #define	NON_LOWQ	(0xffff)
 typedef struct {
 	u16 highQ_ID;
@@ -59,14 +43,48 @@ typedef struct {
 	const G3D_MAPPEROBJ_DATA*	data;	//実マップデータ
 	u32							count;		//モデル数
 
-}G3D_MAPPEROBJ_RESIST;
+}G3D_MAPPER_RESIST_OBJ;
 
 typedef struct {
 	u32			arcID;	//アーカイブＩＤ
 	const u16*	data;	//実マップデータ
 	u32			count;	//テクスチャ数
 
-}G3D_MAPPERDDOBJ_RESIST;
+}G3D_MAPPER_RESIST_DDOBJ;
+
+typedef struct {
+	u32							objArcID;	//アーカイブＩＤ
+	const G3D_MAPPEROBJ_DATA*	objData;	//実マップデータ
+	u32							objCount;	//モデル数
+
+	u32							ddobjArcID;	//アーカイブＩＤ
+	const u16*					ddobjData;	//実マップデータ
+	u32							ddobjCount;	//モデル数
+}G3D_MAPPER_RESIST_OBJSET;
+
+#define	NON_GROBAL_TEX	(0xffffffff)
+typedef enum {
+	NON_GROBAL_OBJ = 0,
+	SET_TBLDATA,
+	SET_BINDATA,
+}G3D_MAPPER_GROBAL_OBJSETTYPE;
+
+typedef struct {
+	GFL_G3D_MAPDATA_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
+	u16								sizex;			//横ブロック数
+	u16								sizez;			//縦ブロック数
+	u32								totalSize;		//配列サイズ
+	fx32							width;			//ブロック１辺の幅
+	fx32							height;			//ブロック高さ
+	G3D_MAPPER_MODE					mode;			//動作モード
+	u32								arcID;			//グラフィックアーカイブＩＤ
+	u32								gtexArcID;		//グローバルテクスチャアーカイブＩＤ
+	u32								gtexDatID;		//グローバルテクスチャデータＩＤ
+	const G3D_MAPPER_DATA*			data;			//実マップデータ
+	G3D_MAPPER_GROBAL_OBJSETTYPE	gobjSetType;	//グローバルオブジェクトセットタイプ
+	const G3D_MAPPER_RESIST_OBJSET*	gobjSet;		//グローバルオブジェクトデータセット
+
+}G3D_MAPPER_RESIST;
 
 //------------------------------------------------------------------
 /**
@@ -106,11 +124,16 @@ extern void	ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper );
  * @brief	オブジェクトリソース登録
  */
 //------------------------------------------------------------------
-extern void ResistObjRes3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPEROBJ_RESIST* resistData );
+extern void ResistObjsetRes3Dmapper
+			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJSET* resistObjset );
+extern void ReleaseObjsetRes3Dmapper( G3D_MAPPER* g3Dmapper );
+//------------------------------------------------------------------
+extern void ResistObjRes3Dmapper
+			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJ* resistData );
 extern void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 extern void ResistDDobjRes3Dmapper
-			( G3D_MAPPER* g3Dmapper, const G3D_MAPPERDDOBJ_RESIST* resistData );
+			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_DDOBJ* resistData );
 extern void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper );
 
 //------------------------------------------------------------------

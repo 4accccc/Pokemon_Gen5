@@ -94,6 +94,15 @@ typedef struct {
 	const GFL_G3D_MAP_DDOBJ_DATA*	data;
 }GFL_G3D_MAP_DDOBJ;
 //------------------------------------------------------------------
+//グローバルオブジェクト管理設定定義
+typedef struct {
+	GFL_G3D_MAP_OBJ*	gobj;
+	u32					gobjCount;
+	GFL_G3D_MAP_DDOBJ*	gddobj;
+	u32					gddobjCount;
+}GFL_G3D_MAP_GROBALOBJ;
+
+//------------------------------------------------------------------
 //アトリビュート定義
 typedef struct {
 	VecFx16 vecN;
@@ -168,8 +177,8 @@ extern void	GFL_G3D_MAP_Main( GFL_G3D_MAP* g3Dmap );
  */
 //------------------------------------------------------------------
 extern void	GFL_G3D_MAP_StartDraw( void );
-extern void	GFL_G3D_MAP_Draw( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera,
-								const GFL_G3D_MAP_OBJ* obj, const GFL_G3D_MAP_DDOBJ* ddobj );
+extern void	GFL_G3D_MAP_Draw
+		( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera, const GFL_G3D_MAP_GROBALOBJ* grobalObj );
 extern void	GFL_G3D_MAP_EndDraw( void );
 
 
