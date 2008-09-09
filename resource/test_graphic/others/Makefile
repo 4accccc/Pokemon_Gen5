@@ -25,6 +25,10 @@ TARGET_NAMES	= \
 	titledemo.narc \
 	map_tex_set.narc \
 	land_data.narc \
+	bm_field.narc \
+	bm_field.narc \
+	area_build.narc \
+	areabm_texset.narc \
 	d_goto.naix \
 	d_goto.narc
 
