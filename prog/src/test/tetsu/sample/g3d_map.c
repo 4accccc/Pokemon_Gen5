@@ -37,37 +37,34 @@ typedef struct {
 	u16			rotate;
 }MAP_OBJ_DATA;
 
-typedef struct {
-	u32			id;
-	VecFx32		trans;
-}MAP_DDOBJ_DATA;
-
 struct _GFL_G3D_MAP 
 {
-	BOOL						drawSw;
-	VecFx32						trans;
-	ARCHANDLE*					arc;
-	u32							datID;
+	BOOL							drawSw;
+	VecFx32							trans;
+	ARCHANDLE*						arc;
+	u32								datID;
 
-	GFL_G3D_MAPDATA_FILETYPE	fileType;
+	GFL_G3D_MAPDATA_FILETYPE		fileType;
 
-	u32							mapDataHeapSize;
-	u32							texVramSize;
-	const MAPFILE_FUNC*			mapFileFunc;
+	u32								mapDataHeapSize;
+	u32								texVramSize;
+	const MAPFILE_FUNC*				mapFileFunc;
 
-	NNSG3dRenderObj*			NNSrnd;	//地形レンダー
+	NNSG3dRenderObj*				NNSrnd;	//地形レンダー
 
-	GFL_G3D_RES*				groundResMdl;	//地形モデルリソース
-	GFL_G3D_RES*				grobalResTex;	//グローバル地形テクスチャリソース
-	GFL_G3D_RES*				groundResTex;	//ローカル地形テクスチャリソース
-	NNSGfdTexKey				groundTexKey;
-	NNSGfdPlttKey				groundPlttKey;
+	GFL_G3D_RES*					groundResMdl;	//地形モデルリソース
+	GFL_G3D_RES*					groundResTex;	//地形テクスチャリソース
+	NNSGfdTexKey					groundTexKey;
+	NNSGfdPlttKey					groundPlttKey;
 
-	MAP_OBJ_DATA				object[OBJ_COUNT];	//配置オブジェクト
-	MAP_DDOBJ_DATA				directDrawObject[DDOBJ_COUNT];
+	GFL_G3D_RES*					grobalResTex;	//グローバル地形テクスチャリソース
+	const GFL_G3D_MAP_GROBALOBJ*	grobalResObj;	//配置オブジェクトリソース
 
-	GFL_G3D_MAP_LOAD_STATUS		ldst;
-	void*						mapData;
+	MAP_OBJ_DATA					object[OBJ_COUNT];				//配置オブジェクト配列１
+	MAP_OBJ_DATA					directDrawObject[DDOBJ_COUNT];	//配置オブジェクト配列２
+
+	GFL_G3D_MAP_LOAD_STATUS			ldst;
+	void*							mapData;
 };
 
 typedef BOOL (GFL_G3D_MAPLOAD_FUNC)( GFL_G3D_MAP* g3Dmap );
@@ -76,10 +73,8 @@ static const VecFx32 defaultScale = { FX32_ONE, FX32_ONE, FX32_ONE };
 static const MtxFx33 defaultRotate = { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE };
 //------------------------------------------------------------------
 static BOOL	DrawGround( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
-static void	DrawObj( GFL_G3D_MAP* g3Dmap, 
-			const GFL_G3D_MAP_OBJ* obj, const u32 count, GFL_G3D_CAMERA* g3Dcamera );
-static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, 
-			const GFL_G3D_MAP_DDOBJ* ddobj, const u32 count, GFL_G3D_CAMERA* g3Dcamera );
+static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
+static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
 
 static void		getViewLength( GFL_G3D_CAMERA* g3Dcamera, const VecFx32* pos, fx32* result );
 static void		getYbillboardMtx( GFL_G3D_CAMERA* g3Dcamera, MtxFx33* result );
@@ -208,19 +203,16 @@ void	GFL_G3D_MAP_StartDraw( void )
 	GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 }
 
-void	GFL_G3D_MAP_Draw
-		( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera, const GFL_G3D_MAP_GROBALOBJ* grobalObj )
+void	GFL_G3D_MAP_Draw( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
 	GF_ASSERT( g3Dmap );
 
 	//地形描画
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
 		//配置オブジェクト描画
-		if( grobalObj->gobjCount != 0 ){
-			DrawObj( g3Dmap, grobalObj->gobj, grobalObj->gobjCount, g3Dcamera );
-		}
-		if( grobalObj->gddobjCount != 0 ){
-			DirectDrawObj( g3Dmap, grobalObj->gddobj, grobalObj->gddobjCount, g3Dcamera );
+		if( g3Dmap->grobalResObj != NULL ){
+			DrawObj( g3Dmap, g3Dcamera );
+			DirectDrawObj( g3Dmap, g3Dcamera );
 		}
 	}
 }
@@ -267,12 +259,35 @@ void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap )
 //------------------------------------------------------------------
 void	GFL_G3D_MAP_ResistGrobalTex( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* grobalResTex )
 {
+	GF_ASSERT( g3Dmap );
+
 	g3Dmap->grobalResTex = grobalResTex;
 }
 
 void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap )
 {
+	GF_ASSERT( g3Dmap );
+
 	g3Dmap->grobalResTex = NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップグローバルオブジェクトリソース登録
+ */
+//------------------------------------------------------------------
+void	GFL_G3D_MAP_ResistGrobalObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GROBALOBJ* grobalResObj )
+{
+	GF_ASSERT( g3Dmap );
+
+	g3Dmap->grobalResObj = grobalResObj;
+}
+
+void	GFL_G3D_MAP_ReleaseGrobalObj( GFL_G3D_MAP* g3Dmap )
+{
+	GF_ASSERT( g3Dmap );
+
+	g3Dmap->grobalResObj = NULL;
 }
 
 //------------------------------------------------------------------
@@ -608,13 +623,16 @@ static BOOL	DrawGround( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
  * @brief	配置オブジェクト描画
  */
 //------------------------------------------------------------------
-static void	DrawObj( GFL_G3D_MAP* g3Dmap, 
-				const GFL_G3D_MAP_OBJ* obj, const u32 count, GFL_G3D_CAMERA* g3Dcamera )
+static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
+	GFL_G3D_MAP_OBJ*	obj = g3Dmap->grobalResObj->gobj;
+	u32					count = g3Dmap->grobalResObj->gobjCount;
 	NNSG3dRenderObj	*NNSrnd, *NNSrnd_L;
 	VecFx32			grobalTrans;
 	fx32			length;
 	int				i;
+
+	if( count == 0 ){ return; }
 
 	for( i=0; i<OBJ_COUNT; i++ ){
 		if(	(g3Dmap->object[i].id != OBJID_NULL)&&(g3Dmap->object[i].id < count) ){
@@ -653,16 +671,19 @@ static void	DrawObj( GFL_G3D_MAP* g3Dmap,
  * @brief	配置オブジェクト描画(ジオメトリ直書き)
  */
 //------------------------------------------------------------------
-static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, 
-					const GFL_G3D_MAP_DDOBJ* ddobj, const u32 count, GFL_G3D_CAMERA* g3Dcamera )
+static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
+	GFL_G3D_MAP_DDOBJ*	ddobj = g3Dmap->grobalResObj->gddobj;
+	u32					count = g3Dmap->grobalResObj->gddobjCount;
 	const GFL_G3D_MAP_DDOBJ*	objData;
-	MAP_DDOBJ_DATA*			ddObject;
+	MAP_OBJ_DATA*			ddObject;
 	MtxFx33		mtxBillboard;
 	VecFx32		trans, grobalTrans;
 	VecFx16		vecView;
 	fx32		length;
 	int			i;
+
+	if( count == 0 ){ return; }
 
 	G3X_Reset();
 
@@ -823,10 +844,12 @@ static void	InitMapObject( GFL_G3D_MAP* g3Dmap )
 	for( i=0; i<OBJ_COUNT; i++ ){
 		g3Dmap->object[i].id = OBJID_NULL;
 		VEC_Set( &g3Dmap->object[i].trans, 0, 0, 0 );
+		g3Dmap->object[i].rotate = 0;
 	}
 	for( i=0; i<DDOBJ_COUNT; i++ ){
 		g3Dmap->directDrawObject[i].id = OBJID_NULL;
 		VEC_Set( &g3Dmap->directDrawObject[i].trans, 0, 0, 0 );
+		g3Dmap->object[i].rotate = 0;
 	}
 }
 

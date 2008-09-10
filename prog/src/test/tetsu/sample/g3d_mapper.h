@@ -119,22 +119,6 @@ extern void	Delete3Dmapper( G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 extern void	ResistData3Dmapper( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST* resistData );
 extern void	ReleaseData3Dmapper( G3D_MAPPER* g3Dmapper );
-//------------------------------------------------------------------
-/**
- * @brief	オブジェクトリソース登録
- */
-//------------------------------------------------------------------
-extern void ResistObjsetRes3Dmapper
-			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJSET* resistObjset );
-extern void ReleaseObjsetRes3Dmapper( G3D_MAPPER* g3Dmapper );
-//------------------------------------------------------------------
-extern void ResistObjRes3Dmapper
-			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_OBJ* resistData );
-extern void ReleaseObjRes3Dmapper( G3D_MAPPER* g3Dmapper );
-//------------------------------------------------------------------
-extern void ResistDDobjRes3Dmapper
-			( G3D_MAPPER* g3Dmapper, const G3D_MAPPER_RESIST_DDOBJ* resistData );
-extern void ReleaseDDobjRes3Dmapper( G3D_MAPPER* g3Dmapper );
 
 //------------------------------------------------------------------
 /**
