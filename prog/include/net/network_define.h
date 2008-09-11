@@ -37,6 +37,7 @@ extern u32 GFLR_NET_GetGGID(void);
 enum NetworkServiceID_e {
   WB_NET_FIELDMOVE_SERVICEID = 1,  ///< サンプルのフィールド移動
   WB_NET_DEBUG_OHNO_SERVICEID,
+  WB_NET_SERVICEID_DEBUG_TAYA,
   WB_NET_SERVICEID_MAX   // 終端
 };
 
