@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================
 /**
  * @file	net_handle.h
@@ -189,3 +192,6 @@ extern BOOL GFL_NET_HANDLE_RequestNegotiation(void);
 
 
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

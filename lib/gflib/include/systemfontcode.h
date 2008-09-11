@@ -1,3 +1,7 @@
+#pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
 enum {
 	CR_ = 1,
 	spc_,
@@ -266,3 +270,6 @@ enum {
 	STRCODE_END,
 };
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

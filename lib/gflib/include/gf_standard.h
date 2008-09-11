@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	gf_standard.h
@@ -253,3 +256,6 @@ extern u16 GFL_STD_CrcCalc( const void* pData, u32 dataLength );
 extern void GFL_STD_RandGeneralInit(GFL_STD_RandContext *context);
 
 #endif	/*	__GF_STANDARD_H__ */
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

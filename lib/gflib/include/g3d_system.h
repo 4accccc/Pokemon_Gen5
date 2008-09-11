@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	g3d_system.h
@@ -1137,4 +1140,7 @@ extern GFL_G3D_CALC_RESULT
 
 
 
+#endif
+#ifdef __cplusplus
+} /* extern "C" */
 #endif

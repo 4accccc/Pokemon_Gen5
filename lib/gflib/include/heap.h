@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //==============================================================================
 /**
  *
@@ -368,3 +371,6 @@ extern u32
 
 #endif	// __HEAP_INTER_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

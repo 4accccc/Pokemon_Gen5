@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================
 /**
  * @file	net.h
@@ -699,3 +702,6 @@ extern void debugcheck(u32* data,int size );
 
 #endif // __NET_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

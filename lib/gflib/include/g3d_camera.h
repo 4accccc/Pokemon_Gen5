@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	g3d_camera.h
@@ -265,3 +268,6 @@ extern u16
 
 #endif
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

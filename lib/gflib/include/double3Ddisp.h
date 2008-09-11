@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	double3Ddisp.h
@@ -125,3 +128,6 @@ extern void
 
 #endif	__GFL_DOUBLE3DDISP_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

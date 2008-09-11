@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	g3d_light.h
@@ -95,3 +98,6 @@ extern void GFL_G3D_LIGHT_SetColor( GFL_G3D_LIGHTSET* g3Dlightset, u8 idx, u16* 
 #endif
 
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

@@ -1,3 +1,7 @@
+#pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
 //============================================================================================
 /**
  * @file	net_icondata.h
@@ -36,3 +40,6 @@ extern void NET_ICONDATA_GetNoBuff(int* pNoBuff);
 
 
 #endif //__NET_ICONDATA__
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

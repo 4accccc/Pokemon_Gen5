@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	g3d_scene.h
@@ -485,4 +488,7 @@ extern void
 
 
 
+#endif
+#ifdef __cplusplus
+} /* extern "C" */
 #endif

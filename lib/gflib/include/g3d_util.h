@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================================
 /**
  * @file	g3d_util.h                                                  
@@ -168,4 +171,7 @@ extern BOOL
 		( GFL_G3D_UTIL* g3Dutil, u16 objUnitIdx, u16 objIdx, 
 			u16 anmUnitIdx, const GFL_G3D_UTIL_ANM* anmTbl, u16 anmCount );
 
+#endif
+#ifdef __cplusplus
+} /* extern "C" */
 #endif

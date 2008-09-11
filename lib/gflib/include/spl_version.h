@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*---------------------------------------------------------------------------*
   Project:  simple particle library
   File:     spl_version.h
@@ -39,4 +42,7 @@
 #define SPL_SPA_ID  'SPA '
 #define SPL_SPA_VER '1_21'
 
+#endif
+#ifdef __cplusplus
+} /* extern "C" */
 #endif

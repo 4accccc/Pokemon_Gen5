@@ -1,3 +1,7 @@
+#pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
 //============================================================================================
 /**
  * @file	
@@ -194,3 +198,6 @@ extern void	GFL_BBD_Draw
 		( GFL_BBD_SYS* billboardSys, GFL_G3D_CAMERA* g3Dcamera, GFL_G3D_LIGHTSET* g3Dlightset );
 
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

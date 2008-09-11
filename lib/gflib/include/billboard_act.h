@@ -1,3 +1,7 @@
+#pragma once
+#ifdef __cplusplus
+extern "C" {
+#endif
 //============================================================================================
 /**
  * @file	
@@ -153,3 +157,6 @@ extern void	GFL_BBDACT_BindActTexResLoad
 			( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u32 arcID, u32 datID );
 
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

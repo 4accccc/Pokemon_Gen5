@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================
 /**
  * @file	net_command.h
@@ -113,3 +116,6 @@ extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
 
 #endif// __NET_COMMAND_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
