@@ -24,8 +24,9 @@
 
 // archive includes -------------------
 #include "arc_def.h"
-#include "d_taya.naix"
 #include "message.naix"
+#include "test_graphic\d_taya.naix"
+
 
 
 typedef BOOL (*pSubProc)( GFL_PROC*, int*, void*, void* );
