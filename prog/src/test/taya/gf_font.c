@@ -3,13 +3,15 @@
  * @file	gf_font.c
  * @brief	フォントデータマネージャ
  * @author	taya
- * @date	2005.09.14
+ *
+ * @date	2005.09.14	作成
+ * @date	2008.10.11	従来の独自フォーマットからNitroFontフォーマットに変更
  */
 //=============================================================================================
-#include	"gflib.h"
-#include	"gf_font.h"
-#include	"arc_tool.h"
+#include	<gflib.h>
+#include	<arc_tool.h>
 
+#include	"print\gf_font.h"
 
 typedef u8 (*pWidthGetFunc)(const GFL_FONT*, u32);
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, u16*, u16* );
@@ -114,7 +116,6 @@ struct  _GFL_FONT	{
 	u8                       readBuffer[SRC_CHAR_MAXSIZE];
 
 	ARCHANDLE*               fileHandle;
-	u32                      fileDatID;
 
 	NNSFontInfo              fontHeader;
 	BOOL                     fixedFontFlag;
@@ -208,7 +209,7 @@ void FontDataMan_Delete( GFL_FONT* wk )
 //==============================================================================================
 void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID )
 {
-//	if( wk->loadType != loadType )
+//	未実装
 //	{
 //		cleanup_font_datas( wk );
 //		setup_font_datas( wk, loadType, heapID );
@@ -255,8 +256,8 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 h
 		wk->glyph2ndCharBits = (8 - (16 - wk->glyphInfo.cellWidth)) * 2;
 		wk->glyph2ndCharShift = ((8 - wk->glyph2ndCharBits) / 2) * 4;
 
-		OS_TPrintf("Gl2ndCharBits=%d, Shift=%d, CellSize=%d\n",
-					wk->glyph2ndCharBits, wk->glyph2ndCharShift, wk->glyphInfo.cellSize);
+//		OS_TPrintf("Gl2ndCharBits=%d, Shift=%d, CellSize=%d\n",
+//					wk->glyph2ndCharBits, wk->glyph2ndCharShift, wk->glyphInfo.cellSize);
 
 		wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
 		wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
@@ -281,8 +282,6 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 h
 			wk->letterCharSize = SRC_CHAR_SIZE * wk->fontHeader.letterCharX * wk->fontHeader.letterCharY;
 		}
 		#endif
-
-		wk->fileDatID = datID;
 	}
 }
 //------------------------------------------------------------------
@@ -359,6 +358,8 @@ static void setup_type_on_memory( GFL_FONT* wk, u32 heapID )
 	GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, wk->fileDatID, wk->fontHeader.bitDataOffs,
 						bit_data_size, wk->fontBitData );
 	#else
+	// WBではオンメモリ処理をしないと思われるため未実装。
+	// とりあえずファイル読み込みタイプと同じ処理をしておく
 	wk->GetBitmapFunc = GetBitmapFileRead;
 	#endif
 }
@@ -700,13 +701,8 @@ static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 
 //==============================================================================================
 u16 GFL_FONT_GetWidth( const GFL_FONT* wk, u32 code )
 {
-	u32 index;
-	u16 ret;
-
-	index = get_glyph_index( wk, code );
-	ret =  wk->WidthGetFunc( wk, index );
-
-	return ret;
+	u32 index = get_glyph_index( wk, code );
+	return  wk->WidthGetFunc( wk, index );
 }
 
 //==============================================================================================
@@ -723,38 +719,6 @@ u16 GFL_FONT_GetHeight( const GFL_FONT* wk, u32 index )
 {
 	return wk->fontHeader.linefeed;
 }
-
-#if 0
-//==============================================================================================
-/**
- * 文字列をビットマップ化した時の長さ（ドット）を計算して返す
- *
- * @param   wk		フォントデータマネージャ
- * @param   str		文字列
- * @param   margin	字間（ドット）
- *
- * @retval  u32		長さ
- */
-//==============================================================================================
-u32 FontDataMan_GetStrWidth( const GFL_FONT* wk, const STRCODE* str, u32 margin )
-{
-	u32 len = 0;
-	while( *str != EOM_CODE )
-	{
-		if (*str == _CTRL_TAG )
-		{
-			str = STRCODE_SkipTag(str);
-			if( *str == EOM_CODE )
-			{
-				break;
-			}
-		}
-		len += (wk->WidthGetFunc( wk, (*str)-1 ) + margin);
-		str++;
-	}
-	return len - margin;
-}
-#endif
 
 //------------------------------------------------------------------
 /**

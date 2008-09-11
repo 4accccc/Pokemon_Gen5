@@ -6,18 +6,17 @@
  * @date	2007.02.06
  */
 //=============================================================================================
-#include "gflib.h"
-#include "tcbl.h"
+#include <gflib.h>
+#include <tcbl.h>
 
 #include "system/main.h"
 
+#include "print/printsys.h"
 
-#include "printsys.h"
-
-
-
+//==============================================================
+// Consts
+//==============================================================
 enum {
-	STR_EXPAND_MAXLEN = 500,		///< 文字データ展開用の一時バッファサイズ
 	LINE_DOT_HEIGHT = 16,
 
 	// 汎用コントロールタイプ
@@ -52,30 +51,74 @@ enum {
 	TAGTYPE_STREAM_CTRL = 0xbe,		///< 流れるメッセージ用コントロール処理
 	TAGTYPE_SYSTEM = 0xff,			///< エディタシステムタグ用コントロール処理
 
+
+	// プリントキュー関連定数
+	QUE_DEFAULT_BUFSIZE = 1024,
+	QUE_DEFAULT_TICK = 2200,		///< 通信時、１度の描画処理に使う時間の目安（Tick）デフォルト値
+
 };
 
+
+//==============================================================
+// Typedefs
+//==============================================================
+
+// 文字コード
 typedef u16		STRCODE;
 
 
-typedef struct {
-	u16   org_x;
-	u16   org_y;
-	u16   write_x;
-	u16   write_y;
+//--------------------------------------------------------------------------
+/**
+ *	Print Job
+ *
+ *  Bitmapへの描画処理ワーク
+ */
+//--------------------------------------------------------------------------
+		typedef struct {
+	u16   org_x;		///< 書き込み開始Ｘ座標
+	u16   org_y;		///< 書き込み開始Ｙ座標
+	u16   write_x;		///< 書き込み中のＸ座標
+	u16   write_y;		///< 書き込み中のＹ座標
 
-	u8    colorLetter;
-	u8    colorShadow;
-	u8    colorBackGround;
+	u8    colorLetter;		///< 描画色（文字）
+	u8    colorShadow;		///< 描画色（影）
+	u8    colorBackGround;	///< 描画色（背景）
 
-	GFL_FONT*	fontHandle;
+	GFL_FONT*		fontHandle;	///< フォントハンドル
+	GFL_BMP_DATA*	dst;		///< 書き込み先 Bitmap
 
-	GFL_BMP_DATA*	dst;
+}PRINT_JOB;
 
-}PRINT_WORK;
+//--------------------------------------------------------------------------
+/**
+ *	Print Queue
+ *
+ *	通信時、描画処理を小刻みに実行できるよう、処理内容を蓄積するための機構。
+ */
+//--------------------------------------------------------------------------
+struct _PRINT_QUE {
 
+	PRINT_JOB*		runningJob;
+	const STRCODE*	sp;
 
+	OSTick	limitPerFrame;
 
-struct _PRINT_STREAM_WORK {
+	u16		bufTopPos;
+	u16		bufEndPos;
+	u16		bufSize;
+	u16		dmy;
+
+	u8   buf[0];
+};
+
+//--------------------------------------------------------------------------
+/**
+ *	Print Stream
+ *
+ *	会話ウィンドウ等、１定間隔で１文字ずつ描画，表示を行うための機構。
+ */
+//--------------------------------------------------------------------------
+struct _PRINT_STREAM {
 
 	PRINTSTREAM_STATE		state;
 	PRINTSTREAM_PAUSE_TYPE	pauseType;
@@ -98,41 +141,52 @@ struct _PRINT_STREAM_WORK {
 	u32				current_arg;
 	u32				arg;
 
-	PRINT_WORK	printWork;
+	PRINT_JOB	printJob;
 
-	
+
 
 };
 
-typedef struct _PRINT_STREAM_WORK	PRINT_STREAM_WORK;
 
-
-
-
-
-//======================================================================
-
+//==============================================================================================
+//--------------------------------------------------------------------------
+/**
+ *	SystemWork
+ */
+//--------------------------------------------------------------------------
 static struct {
 	GFL_BMP_DATA*		charBuffer;
-	PRINT_WORK			printWork;
-	STRCODE				expandBuffer[ STR_EXPAND_MAXLEN + 1 ];
+	PRINT_JOB			printJob;
 }SystemWork;
+
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void initPrintWork( PRINT_WORK* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
-static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BMP_DATA* dst );
+static inline BOOL IsNetConnecting( void );
+static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
+static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
 static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, u16* charWidth, u16* charHeight );
-static const STRCODE* ctrlGeneralTag( PRINT_WORK* wk, const STRCODE* sp );
-static const STRCODE* ctrlSystemTag( PRINT_WORK* wk, const STRCODE* sp );
+static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp );
+static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
-static void ctrlStreamTag( PRINT_STREAM_WORK* wk );
+static void ctrlStreamTag( PRINT_STREAM* wk );
 static u32 get_line_width( const STRCODE* sp, GFL_FONT* font, u16 margin, const STRCODE** endPtr );
 static inline u16 STR_TOOL_GetTagType( const STRCODE* sp );
 static inline u16 STR_TOOL_GetTagParam( const STRCODE* sp, u16 paramIndex );
 static inline const STRCODE* STR_TOOL_SkipTag( const STRCODE* sp );
 static inline u16 STR_TOOL_GetTagNumber( const STRCODE* sp );
+static u32 Que_CalcStringBufferSize( const STRBUF* str );
+static u32 Que_CalcUseBufSize( const STRBUF* buf );
+static u32 Que_GetFreeSize( const PRINT_QUE* que );
+static void Que_StoreNewJob( PRINT_QUE* que, PRINT_JOB* printJob, const STRBUF* str );
+static void* Que_WriteDataUnit( PRINT_QUE* que, const u8* src, u16 totalSize, u16 unitSize );
+static PRINT_JOB* Que_ReadNextJobAdrs( const PRINT_QUE* que, const PRINT_JOB* job );
+static inline u16 Que_WriteData( PRINT_QUE* que, const u8* src, u16 pos, u16 size );
+static inline u16 Que_AdrsToBufPos( const PRINT_QUE* que, const void* bufAdrs );
+static inline const void* Que_BufPosToAdrs( const PRINT_QUE* que, u16 bufPos );
+static inline u16 Que_FwdBufPos( const PRINT_QUE* que, u16 pos, u16 fwdSize );
+
 
 
 
@@ -141,20 +195,80 @@ static inline u16 STR_TOOL_GetTagNumber( const STRCODE* sp );
 //==============================================================================================
 /**
  * システム初期化（GFLIB初期化後に１度だけ呼ぶ）
+ *
+ * @param   heapID		
+ *
  */
 //==============================================================================================
 void PRINTSYS_Init( HEAPID heapID )
 {
 	GFL_STR_SetEOMCode( EOM_CODE );
-//	GFL_FONTSYS_Init();
-
 	SystemWork.charBuffer = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heapID );
 }
+//==============================================================================================
+/**
+ * プリントキューをデフォルトのバッファサイズで生成する
+ *
+ * @param   heapID			生成用ヒープID
+ *
+ * @retval  PRINT_QUE*		生成されたプリントキュー
+ */
+//==============================================================================================
+PRINT_QUE* PRINTSYS_QUE_Create( HEAPID heapID )
+{
+	return PRINTSYS_QUE_CreateEx( QUE_DEFAULT_BUFSIZE, heapID );
+}
+//==============================================================================================
+/**
+ * プリントキューをサイズ指定して生成する
+ *
+ * @param   size			バッファサイズ
+ * @param   heapID			生成用ヒープID
+ *
+ * @retval  PRINT_QUE*		
+ */
+//==============================================================================================
+PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
+{
+	PRINT_QUE* que;
+	u16 real_size;
+
+	// リングバッファの終端で構造体が分断されないよう、
+	// 確保サイズに余裕を持たせておく
+	real_size = buf_size + sizeof(PRINT_JOB);
+	while( real_size % 4 ){ real_size++; }
+
+	que = GFL_HEAP_AllocMemory( heapID, sizeof(PRINT_QUE) + real_size );
+
+	que->bufTopPos = 0;
+	que->bufEndPos = buf_size;
+	que->bufSize = buf_size;		// 終端判定は指定のサイズ値で行う
+	que->limitPerFrame = QUE_DEFAULT_TICK;
+	que->runningJob = NULL;
+	que->sp = NULL;
+
+//	GFL_STD_MemClear( que->buf, size );
+
+	return que;
+}
+//--------------------------------------------------------------------------
+/**
+ * 通信中（描画処理を分割する必要がある）かどうか判定
+ *
+ * @retval  BOOL		通信中ならTRUE
+ */
+//--------------------------------------------------------------------------
+static inline BOOL IsNetConnecting( void )
+{
+	return (GFL_NET_GetConnectNum() != 0);
+}
+
 
 //==============================================================================================
 /**
  * BITMAPに対する文字列描画（一括）
  *
+ * @param   que		[out] プリントキュー
  * @param   dst		[out] 描画先Bitmap
  * @param   xpos	[in]  描画開始Ｘ座標（ドット）
  * @param   ypos	[in]  描画開始Ｙ座標（ドット）
@@ -163,21 +277,147 @@ void PRINTSYS_Init( HEAPID heapID )
  *
  */
 //==============================================================================================
-void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
+void PRINTSYS_Print( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
 {
-	const STRCODE* sp;
-	PRINT_WORK* wk = &SystemWork.printWork;
-
-	initPrintWork( wk, font, dst, xpos, ypos );
-	sp = GFL_STR_GetStringCodePointer( str );
-
+	GF_ASSERT(que);
 	GF_ASSERT(dst);
+	GF_ASSERT(str);
+	GF_ASSERT(font);
 
-	while( *sp != EOM_CODE )
 	{
-		sp = print_next_char( wk, sp, dst );
+		PRINT_JOB* job = &SystemWork.printJob;
+		setupPrintJob( job, font, dst, xpos, ypos );
+
+		if( !IsNetConnecting() )
+		{
+			const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+			while( *sp != EOM_CODE )
+			{
+				sp = print_next_char( job, sp );
+			}
+		}
+		else
+		{
+			u32  size = Que_CalcUseBufSize( str );
+
+			if( size <= Que_GetFreeSize( que ) )
+			{
+				Que_StoreNewJob( que, job, str );
+			}
+			else
+			{
+				GF_ASSERT_MSG(0, "[PRINT ACM] not enough buffer ... strsize = %d\n", size);
+			}
+		}
 	}
 }
+//==============================================================================================
+/**
+ * プリントキューに蓄積された文字列描画作業を処理する。
+ * 通信中なら一定時間毎に処理を返す。
+ * 通信中でなければ一気に処理を終える（…のは未実装）
+ *
+ * @param   que		プリントキュー
+ *
+ * @retval  BOOL	処理が終了していればTRUE／それ以外はFALSE
+ */
+//==============================================================================================
+BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
+{
+	if( que->runningJob )
+	{
+		OSTick start, diff;
+		u8 endFlag = FALSE;
+
+		start = OS_GetTick();
+
+		while( que->runningJob )
+		{
+			while( *(que->sp) != EOM_CODE )
+			{
+				que->sp = print_next_char( que->runningJob, que->sp );
+				diff = OS_GetTick() - start;
+				if( diff > que->limitPerFrame )
+				{
+					endFlag = TRUE;
+					break;
+				}
+			}
+			//
+			if( *(que->sp) == EOM_CODE )
+			{
+				u16 pos = Que_AdrsToBufPos( que, que->runningJob );
+
+				que->runningJob = Que_ReadNextJobAdrs( que, que->runningJob );
+				if( que->runningJob )
+				{
+					pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
+					pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB*) );
+					que->sp = Que_BufPosToAdrs( que, pos );
+				}
+			}
+
+			if( endFlag ){ break; }
+
+		}
+
+		if( que->runningJob )
+		{
+			que->bufEndPos = Que_AdrsToBufPos( que, que->sp );
+			return FALSE;
+		}
+
+		que->bufTopPos = 0;
+		que->bufEndPos = que->bufSize;
+
+	}
+
+	return TRUE;
+}
+//==============================================================================================
+/**
+ * プリントキューの処理が全て完了しているかチェック
+ *
+ * @param   que			プリントキュー
+ *
+ * @retval  BOOL		完了していればTRUE
+ */
+//==============================================================================================
+BOOL PRINTSYS_QUE_IsFinished( const PRINT_QUE* que )
+{
+	return (que->runningJob == NULL);
+}
+
+//==============================================================================================
+/**
+ * プリントキューに、指定Bitmapが出力対象の描画処理が残っているかチェック
+ *
+ * @param   que				プリントキュー
+ * @param   targetBmp		描画対象Bitmap
+ *
+ * @retval  BOOL			残っていればTRUE
+ */
+//==============================================================================================
+BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA* targetBmp )
+{
+	if( que->runningJob )
+	{
+		const PRINT_JOB* job = que->runningJob;
+
+		while( job )
+		{
+			if( job->dst == targetBmp )
+			{
+				return TRUE;
+			}
+			job = Que_ReadNextJobAdrs( que, job );
+		}
+
+	}
+	return FALSE;
+}
+
+
 
 
 
@@ -193,7 +433,7 @@ void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, G
  *
  */
 //------------------------------------------------------------------
-static void initPrintWork( PRINT_WORK* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
+static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y )
 {
 	wk->dst = dst;
 	wk->fontHandle = font;
@@ -208,15 +448,12 @@ static void initPrintWork( PRINT_WORK* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u1
  *
  * @param   wk		描画ワークポインタ
  * @param   sp		
- * @param   dst		
- * @param   font		
  *
  * @retval  const STRCODE*		
  */
 //------------------------------------------------------------------
-static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BMP_DATA* dst )
+static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 {
-	GF_ASSERT(dst);
 	while( 1 )
 	{
 		switch( *sp ){
@@ -249,7 +486,7 @@ static const STRCODE* print_next_char( PRINT_WORK* wk, const STRCODE* sp, GFL_BM
 			{
 				u16 w, h;
 
-				put_1char( dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &w, &h );
+				put_1char( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &w, &h );
 				wk->write_x += (w+1);
 				sp++;
 
@@ -288,7 +525,7 @@ static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHand
  * @retval  const STRCODE*		処理後の文字列ポインタ
  */
 //------------------------------------------------------------------
-static const STRCODE* ctrlGeneralTag( PRINT_WORK* wk, const STRCODE* sp )
+static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 {
 	switch( STR_TOOL_GetTagNumber(sp) ){
 	case CTRL_GENERAL_COLOR:
@@ -341,7 +578,6 @@ static const STRCODE* ctrlGeneralTag( PRINT_WORK* wk, const STRCODE* sp )
 
 	return STR_TOOL_SkipTag( sp );
 }
-
 //------------------------------------------------------------------
 /**
  * システムコントロール処理
@@ -352,7 +588,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_WORK* wk, const STRCODE* sp )
  * @retval  const STRCODE*		処理後の文字列ポインタ
  */
 //------------------------------------------------------------------
-static const STRCODE* ctrlSystemTag( PRINT_WORK* wk, const STRCODE* sp )
+static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp )
 {
 	u16 ctrlCode = STR_TOOL_GetTagNumber(sp);
 
@@ -373,6 +609,9 @@ static const STRCODE* ctrlSystemTag( PRINT_WORK* wk, const STRCODE* sp )
 }
 
 
+//==============================================================================================================
+// プリントストリーム関連処理
+//==============================================================================================================
 
 
 //==============================================================================================
@@ -390,24 +629,24 @@ static const STRCODE* ctrlSystemTag( PRINT_WORK* wk, const STRCODE* sp )
  * @param   heapID		使用するヒープID
  * @param   callback	１文字描画ごとのコールバック関数アドレス（不要ならNULL）
  *
- * @retval	PRINT_STREAM_HANDLE	ストリームハンドル
+ * @retval	PRINT_STREAM*	ストリームハンドル
  *
  */
 //==============================================================================================
-PRINT_STREAM_HANDLE PRINTSYS_PrintStream(
+PRINT_STREAM* PRINTSYS_PrintStream(
 		GFL_BMPWIN* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font,
 		u16 wait, GFL_TCBLSYS* tcbsys, u32 tcbpri, u16 heapID, u16 clearColor, pPrintCallBack callback )
 {
-	PRINT_STREAM_WORK* stwk;
+	PRINT_STREAM* stwk;
 	GFL_TCBL* tcb;
 	GFL_BMP_DATA* dstBmp;
 
 	dstBmp = GFL_BMPWIN_GetBmp( dst );;
-	tcb = GFL_TCBL_Create( tcbsys, print_stream_task, sizeof(PRINT_STREAM_WORK), tcbpri );
+	tcb = GFL_TCBL_Create( tcbsys, print_stream_task, sizeof(PRINT_STREAM), tcbpri );
 	stwk = GFL_TCBL_GetWork( tcb );
 	stwk->tcb = tcb;
 
-	initPrintWork( &stwk->printWork, font, dstBmp, xpos, ypos );
+	setupPrintJob( &stwk->printJob, font, dstBmp, xpos, ypos );
 
 	stwk->sp = GFL_STR_GetStringCodePointer( str );
 	stwk->org_wait = wait;
@@ -427,7 +666,6 @@ PRINT_STREAM_HANDLE PRINTSYS_PrintStream(
 
 	return stwk;
 }
-
 //==============================================================================================
 /**
  * プリントストリーム状態取得
@@ -437,11 +675,10 @@ PRINT_STREAM_HANDLE PRINTSYS_PrintStream(
  * @retval  PRINTSTREAM_STATE		状態
  */
 //==============================================================================================
-PRINTSTREAM_STATE PRINTSYS_PrintStreamGetState( PRINT_STREAM_HANDLE handle )
+PRINTSTREAM_STATE PRINTSYS_PrintStreamGetState( PRINT_STREAM* handle )
 {
 	return handle->state;
 }
-
 //==============================================================================================
 /**
  * プリントストリーム停止タイプ取得
@@ -451,11 +688,10 @@ PRINTSTREAM_STATE PRINTSYS_PrintStreamGetState( PRINT_STREAM_HANDLE handle )
  * @retval  PRINTSTREAM_PAUSE_TYPE		停止タイプ
  */
 //==============================================================================================
-PRINTSTREAM_PAUSE_TYPE PRINTSYS_PrintStreamGetPauseType( PRINT_STREAM_HANDLE handle )
+PRINTSTREAM_PAUSE_TYPE PRINTSYS_PrintStreamGetPauseType( PRINT_STREAM* handle )
 {
 	return handle->pauseType;
 }
-
 //==============================================================================================
 /**
  * プリントストリーム停止状態解除
@@ -464,12 +700,10 @@ PRINTSTREAM_PAUSE_TYPE PRINTSYS_PrintStreamGetPauseType( PRINT_STREAM_HANDLE han
  *
  */
 //==============================================================================================
-void PRINTSYS_PrintStreamReleasePause( PRINT_STREAM_HANDLE handle )
+void PRINTSYS_PrintStreamReleasePause( PRINT_STREAM* handle )
 {
 	handle->pauseReleaseFlag = TRUE;
 }
-
-
 //==============================================================================================
 /**
  * プリントストリーム削除
@@ -478,7 +712,7 @@ void PRINTSYS_PrintStreamReleasePause( PRINT_STREAM_HANDLE handle )
  *
  */
 //==============================================================================================
-void PRINTSYS_PrintStreamDelete( PRINT_STREAM_HANDLE handle )
+void PRINTSYS_PrintStreamDelete( PRINT_STREAM* handle )
 {
 	if( handle->tcb )
 	{
@@ -486,7 +720,6 @@ void PRINTSYS_PrintStreamDelete( PRINT_STREAM_HANDLE handle )
 		handle->tcb = NULL;
 	}
 }
-
 //==============================================================================================
 /**
  * プリントストリームウェイト短縮（キー押し中など）
@@ -496,15 +729,13 @@ void PRINTSYS_PrintStreamDelete( PRINT_STREAM_HANDLE handle )
  *
  */
 //==============================================================================================
-void PRINTSYS_PrintStreamShortWait( PRINT_STREAM_HANDLE handle, u16 wait )
+void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait )
 {
 	if( wait < handle->wait )
 	{
 		handle->wait = wait;
 	}
 }
-
-
 
 //------------------------------------------------------------------
 /**
@@ -517,7 +748,7 @@ void PRINTSYS_PrintStreamShortWait( PRINT_STREAM_HANDLE handle, u16 wait )
 //------------------------------------------------------------------
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 {
-	PRINT_STREAM_WORK* wk = wk_adrs;
+	PRINT_STREAM* wk = wk_adrs;
 
 	switch( wk->state ){
 	case PRINTSTREAM_STATE_RUNNING:
@@ -536,7 +767,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 				}
 				/* fallthru */
 			default:
-				wk->sp = print_next_char( &wk->printWork, wk->sp, wk->dstBmp );
+				wk->sp = print_next_char( &wk->printJob, wk->sp );
 
 				if( wk->callback_func )
 				{
@@ -578,8 +809,8 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 					GFL_BMPWIN_TransVramCharacter( wk->dstWin );
 					if( wk->pauseWait == LINE_DOT_HEIGHT )
 					{
-						wk->printWork.write_x = 0;
-						wk->printWork.write_y = LINE_DOT_HEIGHT;
+						wk->printJob.write_x = 0;
+						wk->printJob.write_y = LINE_DOT_HEIGHT;
 						wk->state = PRINTSTREAM_STATE_RUNNING;
 					}
 					else
@@ -608,7 +839,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
  *
  */
 //--------------------------------------------------------------------------
-static void ctrlStreamTag( PRINT_STREAM_WORK* wk )
+static void ctrlStreamTag( PRINT_STREAM* wk )
 {
 	BOOL skipCR = FALSE;	// 直後の改行を無視する
 
@@ -618,8 +849,8 @@ static void ctrlStreamTag( PRINT_STREAM_WORK* wk )
 		wk->pauseType = PRINTSTREAM_PAUSE_LINEFEED;
 		wk->pauseWait = 0;
 		wk->pauseReleaseFlag = FALSE;
-		wk->printWork.write_x = 0;
-		wk->printWork.write_y = 0;
+		wk->printJob.write_x = 0;
+		wk->printJob.write_y = 0;
 		skipCR = TRUE;
 		break;
 	case CTRL_STREAM_PAGE_CLEAR:
@@ -627,8 +858,8 @@ static void ctrlStreamTag( PRINT_STREAM_WORK* wk )
 		wk->pauseType = PRINTSTREAM_PAUSE_CLEAR;
 		wk->pauseWait = 0;
 		wk->pauseReleaseFlag = FALSE;
-		wk->printWork.write_x = 0;
-		wk->printWork.write_y = 0;
+		wk->printJob.write_x = 0;
+		wk->printJob.write_y = 0;
 		skipCR = TRUE;
 		break;
 	case CTRL_STREAM_CHANGE_WAIT:
@@ -831,4 +1062,239 @@ static inline u16 STR_TOOL_GetTagNumber( const STRCODE* sp )
 	return 0xffff;
 }
 
+
+//==============================================================================================================
+// プリントキュー関連処理
+//==============================================================================================================
+
+//--------------------------------------------------------------------------
+/**
+ * 文字列格納に必要なバッファサイズ(byte)を計算。※4の倍数に揃える
+ *
+ * @param   str		[in] 文字列格納バッファ
+ *
+ * @retval  u32		バッファサイズ（byte）
+ */
+//--------------------------------------------------------------------------
+static u32 Que_CalcStringBufferSize( const STRBUF* str )
+{
+	u32 size = sizeof(STRCODE) * (GFL_STR_GetBufferLength(str) + 1);
+	while( size % 4 ){ size++; }
+	return size;
+}
+//--------------------------------------------------------------------------
+/**
+ * １件の書き込み情報を プリントキューに保存するために必要なバッファサイズ（byte）を計算
+ *
+ * @param   buf		[in] 書き込む文字列が格納されている文字列バッファ
+ *
+ * @retval  u32		プリントキューが必要とするバッファサイズ（byte）
+ */
+//--------------------------------------------------------------------------
+static u32 Que_CalcUseBufSize( const STRBUF* buf )
+{
+	return sizeof(PRINT_JOB) + sizeof(PRINT_QUE*) + Que_CalcStringBufferSize(buf);
+}
+
+//--------------------------------------------------------------------------
+/**
+ * プリントキュー のバッファ空きサイズを取得
+ *
+ * @param   que		[in] プリントキュー
+ *
+ * @retval  u32		空きサイズ（byte）
+ */
+//--------------------------------------------------------------------------
+static u32 Que_GetFreeSize( const PRINT_QUE* que )
+{
+	if( que->bufTopPos < que->bufEndPos )
+	{
+		return que->bufEndPos - que->bufTopPos;
+	}
+	else
+	{
+		return (que->bufSize - que->bufTopPos) + que->bufEndPos;
+	}
+}
+
+//--------------------------------------------------------------------------
+/**
+ * プリントキューに新規描画処理を追加
+ *
+ * @param   que			[out] プリントキュー
+ * @param   printJob	[in] 内容設定済みの描画処理ワーク
+ * @param   str			[in] 描画文字列バッファ
+ *
+ */
+//--------------------------------------------------------------------------
+static void Que_StoreNewJob( PRINT_QUE* que, PRINT_JOB* printJob, const STRBUF* str )
+{
+	PRINT_JOB* store_adrs;
+	const STRCODE* sp;
+
+	sp = Que_WriteDataUnit(	que,
+						(const u8*)(GFL_STR_GetStringCodePointer(str)),
+						Que_CalcStringBufferSize(str),
+						sizeof(STRCODE) );
+
+	store_adrs = Que_WriteDataUnit( que, (const u8*)(printJob), sizeof(PRINT_JOB), sizeof(PRINT_JOB) );
+
+
+	// 次に処理する作業内容へのポインタ（新規追加なら次は無いのでNULLにしておく
+	{
+		PRINT_JOB* p = NULL;
+		Que_WriteDataUnit( que, (const u8*)(&p), sizeof(PRINT_JOB*), sizeof(PRINT_JOB*) );
+	}
+
+	if( que->runningJob != NULL )
+	{
+		PRINT_JOB *job, *next;
+		u16 pos;
+
+		job = que->runningJob;
+		while(1)
+		{
+			next = Que_ReadNextJobAdrs( que, job );
+			if( next == NULL )
+			{
+				break;
+			}
+			job = next;
+		}
+		pos = Que_AdrsToBufPos( que, job );
+		pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
+		Que_WriteData( que, (const u8*)(&store_adrs), sizeof(store_adrs), sizeof(store_adrs) );
+	}
+	else
+	{
+		que->runningJob = store_adrs;
+		que->sp = sp;
+	}
+}
+//--------------------------------------------------------------------------
+/**
+ * プリントキューのリングバッファにデータを書き込み、
+ * それに応じて内部の書き込みポインタを移動させる。
+ *
+ * @param   que				[io] プリントキュー （内部書き込みポインタが移動する）
+ * @param   src				[in] 書き込むデータポインタ
+ * @param   totalSize		[in] 書き込みデータ総サイズ
+ * @param   unitSize		[in] アドレス分断せずに書き込む単位
+ *
+ * @retval  void*			格納先頭アドレス
+ */
+//--------------------------------------------------------------------------
+static void* Que_WriteDataUnit( PRINT_QUE* que, const u8* src, u16 totalSize, u16 unitSize )
+{
+	u16 wroteSize = 0;
+	void* topAdrs = &(que->buf[ que->bufTopPos ]);
+
+	GF_ASSERT((que->bufTopPos%4)==0);
+
+	while( wroteSize < totalSize )
+	{
+		que->bufTopPos = Que_WriteData( que, src, que->bufTopPos, unitSize );
+		src += unitSize;
+		wroteSize += unitSize;
+	}
+
+	GF_ASSERT((que->bufTopPos%4)==0);
+
+	return topAdrs;
+}
+//--------------------------------------------------------------------------
+/**
+ * 指定されたJobの次のJobアドレスを返す
+ *
+ * @param   que		[in] プリントキュー
+ * @param   job		[in] プリントキューのバッファに格納されている Job アドレス
+ *
+ * @retval  PRINT_JOB		次のJobアドレス（無ければNULL）
+ */
+//--------------------------------------------------------------------------
+static PRINT_JOB* Que_ReadNextJobAdrs( const PRINT_QUE* que, const PRINT_JOB* job )
+{
+	u32 bufPos = Que_AdrsToBufPos( que, job );
+
+	bufPos = Que_FwdBufPos( que, bufPos, sizeof(PRINT_JOB) );
+
+	{
+		PRINT_JOB** ppjob = (PRINT_JOB**)Que_BufPosToAdrs( que, bufPos );
+		return *ppjob;
+	}
+}
+
+
+//--------------------------------------------------------------------------
+/**
+ * プリントキューのリングバッファにデータを書き込む
+ *
+ * @param   que		[out] プリントキュー
+ * @param   src		[in]  書き込みデータポインタ
+ * @param   pos		[in]  バッファ書き込みポインタ
+ * @param   size	[in]  書き込みデータサイズ
+ *
+ * @retval  u16		次に書き込むときのバッファ書き込みポインタ
+ */
+//--------------------------------------------------------------------------
+static inline u16 Que_WriteData( PRINT_QUE* que, const u8* src, u16 pos, u16 size )
+{
+	GFL_STD_MemCopy( src, &(que->buf[pos]), size );
+	pos += size;
+	if( pos >= que->bufSize )
+	{
+		pos = 0;
+	}
+	return pos;
+}
+//--------------------------------------------------------------------------
+/**
+ * リングバッファ中の任意のアドレスを、書き込みポインタに変換
+ *
+ * @param   que				[in] プリントキュー
+ * @param   bufAdrs			[in] リングバッファ中の任意のアドレス
+ *
+ * @retval  u16				書き込みポインタ
+ */
+//--------------------------------------------------------------------------
+static inline u16 Que_AdrsToBufPos( const PRINT_QUE* que, const void* bufAdrs )
+{
+	u32 pos = ((u32)bufAdrs) - ((u32)que->buf);
+	GF_ASSERT(pos < que->bufSize);
+	return pos;
+}
+//--------------------------------------------------------------------------
+/**
+ * リングバッファの書き込みポインタをアドレスに変換
+ *
+ * @param   que				[in] プリントキュー
+ * @param   bufPos			[in] リングバッファ書き込みポインタ
+ *
+ * @retval  void*			アドレス
+ */
+//--------------------------------------------------------------------------
+static inline const void* Que_BufPosToAdrs( const PRINT_QUE* que, u16 bufPos )
+{
+	return &(que->buf[bufPos]);
+}
+//--------------------------------------------------------------------------
+/**
+ * リングバッファ書き込みポインタを、指定サイズ分進めた値に変換
+ *
+ * @param   que			プリントキュー
+ * @param   pos			書き込みポインタ初期値
+ * @param   fwdSize	 	進めるサイズ（バイト単位）
+ *
+ * @retval  pos を fwdSize 分だけ進めた値
+ */
+//--------------------------------------------------------------------------
+static inline u16 Que_FwdBufPos( const PRINT_QUE* que, u16 pos, u16 fwdSize )
+{
+	pos += fwdSize;
+	if( pos >= que->bufSize )
+	{
+		pos = 0;
+	}
+	return pos;
+}
 
