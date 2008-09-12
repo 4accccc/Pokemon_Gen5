@@ -40,12 +40,12 @@ typedef struct{
 ///ポジションデータ取得
 
 typedef struct{
-    u32 xpos;
-    u32 ypos;
-    u32 zpos;
-    u16 rotate;
-    u8 billboard;
-    u8 resourceID;
+    fx32	xpos;
+    fx32	ypos;
+    fx32	zpos;
+    u16		rotate;
+    u8		billboard;
+    u8		resourceID;
 } PositionSt;
 
 typedef struct{
