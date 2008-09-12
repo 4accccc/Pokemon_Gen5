@@ -110,9 +110,13 @@ GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 #ロムファイル指定は、arc/arc_tool.lstに記述してください
 #その記述内容から、file_tree.incを自動生成します
 
--include file_tree.inc
+-include arc/file_tree.inc
 
 MAKEROM_ROMFILES = $(GAME_FILE_TREE)
+
+#リンク時の依存関係に含めるためにEDEPENDS_BINにFILE_TREEを入れておく
+EDEPENDS_BIN += $(patsubst %, filetree/%, $(GFL_FILE_TREE))
+EDEPENDS_BIN += $(patsubst %, filetree/%, $(GAME_FILE_TREE))
 
 ## ------------------------------------------------------------------------------------------
 ## GFL_MAKEROM_ROMFILESの定義をmakerom.exeに渡す MAKEROM_ROMFILESはデフォルトで定義されている
