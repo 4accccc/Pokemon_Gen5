@@ -18,14 +18,16 @@ include $(VER_FILE)
 
 .PHONY:	do-build clean
 
-do-build: narc_tree.inc file_tree.inc
+do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc
 
 narc_tree.inc: narc_tree.pl arc_tool.lst $(VER_FILE)
 	perl narc_tree.pl arc_tool.lst $(PM_VERSION)
 
+arc_def.h arc_file.h: header.pl arc_tool.lst $(VER_FILE)
+	perl header.pl arc_tool.lst $(PM_VERSION)
+
 file_tree.inc: narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
 	perl narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/
-	cp file_tree.inc ../
 
 clean:
 	rm -f $(LDIRT_CLEAN)

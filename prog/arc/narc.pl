@@ -1,6 +1,6 @@
 #====================================================================================
 #
-#	アーカイブテーブル＆定数定義　生成コンバータ
+#	アーカイブテーブル　生成コンバータ
 #
 #====================================================================================
 
@@ -17,14 +17,8 @@ use Switch;
 	@data = <ARC_F>;
 	close( ARC_F );
 
-	open( ARC_DEF, "> arc_def.h");
-	open( ARC_FILE, "> arc_file.h");
 	open( ARC_TREE, "> file_tree.inc");
 	
-	print ARC_DEF "#ifndef __ARC_DEF_H__\n";
-	print ARC_DEF "#define __ARC_DEF_H__\n\n";
-	print ARC_DEF "enum{\n";
-	print ARC_FILE "static	const char *ArchiveFileTable[]={\n";
 	print ARC_TREE "GAME_FILE_TREE=";
 
 	$data_num	= @data;
@@ -69,11 +63,6 @@ use Switch;
 		$data_num--;
 	}
 
-	print ARC_DEF "\tARCID_TABLE_MAX\n};\n";
-	print ARC_DEF "\n#endif __ARC_DEF_H__\n";
-	print ARC_FILE "};\n";
-	close( ARC_DEF );
-	close( ARC_FILE );
 	close( ARC_TREE );
 
 #===========================================================
@@ -106,9 +95,7 @@ sub FileWrite{
 		print ARC_TREE	" \\\n";
 	}
 
-	print ARC_DEF	"\t$enum,\n";
 	print ARC_TREE	"\t$tree";
-	print ARC_FILE	"\t\"$tree\",\t\t//$file\n";
 
 	$num_1++;
 	my $flag = FALSE;
