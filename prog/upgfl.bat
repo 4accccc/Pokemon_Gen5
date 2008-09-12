@@ -1,3 +1,4 @@
+@echo off
 cd %GFL_MAKE_DIR:/=\%
 make
 if ERRORLEVEL 1 goto MAKE_ERR
