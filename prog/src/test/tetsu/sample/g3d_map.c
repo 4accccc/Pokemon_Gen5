@@ -31,12 +31,6 @@
 #define DDOBJ_COUNT	(64)
 
 //------------------------------------------------------------------
-typedef struct {
-	u32			id;
-	VecFx32		trans;
-	u16			rotate;
-}MAP_OBJ_DATA;
-
 struct _GFL_G3D_MAP 
 {
 	BOOL							drawSw;
@@ -57,11 +51,11 @@ struct _GFL_G3D_MAP
 	NNSGfdTexKey					groundTexKey;
 	NNSGfdPlttKey					groundPlttKey;
 
-	GFL_G3D_RES*					grobalResTex;	//グローバル地形テクスチャリソース
-	const GFL_G3D_MAP_GROBALOBJ*	grobalResObj;	//配置オブジェクトリソース
+	GFL_G3D_RES*					globalResTex;	//グローバル地形テクスチャリソース
+	const GFL_G3D_MAP_GLOBALOBJ*	globalResObj;	//配置オブジェクトリソース
 
-	MAP_OBJ_DATA					object[OBJ_COUNT];				//配置オブジェクト配列１
-	MAP_OBJ_DATA					directDrawObject[DDOBJ_COUNT];	//配置オブジェクト配列２
+	GFL_G3D_MAP_GLOBALOBJ_ST		object[OBJ_COUNT];				//配置オブジェクト配列１
+	GFL_G3D_MAP_GLOBALOBJ_ST		directDrawObject[DDOBJ_COUNT];	//配置オブジェクト配列２
 
 	GFL_G3D_MAP_LOAD_STATUS			ldst;
 	void*							mapData;
@@ -118,7 +112,7 @@ GFL_G3D_MAP*	GFL_G3D_MAP_Create( GFL_G3D_MAP_SETUP* setup, HEAPID heapID )
 
 	//テクスチャリソースヘッダ作成
 	g3Dmap->groundResTex = GFL_HEAP_AllocClearMemory( heapID, g3DresHeaderSize );
-	g3Dmap->grobalResTex = NULL;
+	g3Dmap->globalResTex = NULL;
 
 	//テクスチャ＆パレットＶＲＡＭ確保
 	if( setup->texVramSize != 0 ){
@@ -210,7 +204,7 @@ void	GFL_G3D_MAP_Draw( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	//地形描画
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
 		//配置オブジェクト描画
-		if( g3Dmap->grobalResObj != NULL ){
+		if( g3Dmap->globalResObj != NULL ){
 			DrawObj( g3Dmap, g3Dcamera );
 			DirectDrawObj( g3Dmap, g3Dcamera );
 		}
@@ -257,18 +251,19 @@ void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap )
  * @brief	３Ｄマップグローバルテクスチャリソース登録
  */
 //------------------------------------------------------------------
-void	GFL_G3D_MAP_ResistGrobalTex( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* grobalResTex )
+void	GFL_G3D_MAP_ResistGlobalTexResource
+			( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* globalResTex )
 {
 	GF_ASSERT( g3Dmap );
 
-	g3Dmap->grobalResTex = grobalResTex;
+	g3Dmap->globalResTex = globalResTex;
 }
 
-void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap )
+void	GFL_G3D_MAP_ReleaseGlobalTexResource( GFL_G3D_MAP* g3Dmap )
 {
 	GF_ASSERT( g3Dmap );
 
-	g3Dmap->grobalResTex = NULL;
+	g3Dmap->globalResTex = NULL;
 }
 
 //------------------------------------------------------------------
@@ -276,18 +271,150 @@ void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap )
  * @brief	３Ｄマップグローバルオブジェクトリソース登録
  */
 //------------------------------------------------------------------
-void	GFL_G3D_MAP_ResistGrobalObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GROBALOBJ* grobalResObj )
+void	GFL_G3D_MAP_ResistGlobalObjResource
+			( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ* globalResObj )
 {
 	GF_ASSERT( g3Dmap );
 
-	g3Dmap->grobalResObj = grobalResObj;
+	g3Dmap->globalResObj = globalResObj;
 }
 
-void	GFL_G3D_MAP_ReleaseGrobalObj( GFL_G3D_MAP* g3Dmap )
+void	GFL_G3D_MAP_ReleaseGlobalObjResource( GFL_G3D_MAP* g3Dmap )
 {
 	GF_ASSERT( g3Dmap );
 
-	g3Dmap->grobalResObj = NULL;
+	g3Dmap->globalResObj = NULL;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップグローバルオブジェクト配置登録
+ */
+//------------------------------------------------------------------
+void	GFL_G3D_MAP_ResistGlobalObj
+				( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx )
+{
+	GF_ASSERT( g3Dmap );
+	GF_ASSERT( idx < OBJ_COUNT );
+	GF_ASSERT( status->id < g3Dmap->globalResObj->gobjCount );
+
+	//配列位置指定
+	g3Dmap->object[idx].id = status->id;
+	g3Dmap->object[idx].trans = status->trans;
+	g3Dmap->object[idx].rotate = status->rotate;
+}
+
+u32		GFL_G3D_MAP_ResistAutoGlobalObj
+				( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status )
+{
+	int i;
+
+	GF_ASSERT( g3Dmap );
+
+	//配列位置自動取得
+	for( i=0; i<OBJ_COUNT; i++ ){
+		if( g3Dmap->object[i].id == OBJID_NULL ){
+			GFL_G3D_MAP_ResistGlobalObj( g3Dmap, status, i );
+			return i;
+		}
+	}
+	return GLOBALOBJ_SET_ERROR;
+}
+
+void	GFL_G3D_MAP_ReleaseGlobalObj( GFL_G3D_MAP* g3Dmap, u32 idx )
+{
+	GF_ASSERT( g3Dmap );
+	GF_ASSERT( idx < OBJ_COUNT );
+
+	if( (idx != GLOBALOBJ_SET_ERROR)&&(idx < OBJ_COUNT) ){
+		g3Dmap->object[idx].id = OBJID_NULL;
+		VEC_Set( &g3Dmap->object[idx].trans, 0, 0, 0 );
+		g3Dmap->object[idx].rotate = 0;
+	}
+}
+
+//------------------------------------------------------------------
+void	GFL_G3D_MAP_ResistGlobalDDobj
+				( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx )
+{
+	GF_ASSERT( g3Dmap );
+	GF_ASSERT( idx < DDOBJ_COUNT );
+	GF_ASSERT( status->id < g3Dmap->globalResObj->gddobjCount );
+
+	//配列位置指定
+	g3Dmap->directDrawObject[idx].id = status->id;
+	g3Dmap->directDrawObject[idx].trans = status->trans;
+	g3Dmap->directDrawObject[idx].rotate = status->rotate;
+}
+
+u32		GFL_G3D_MAP_ResistAutoGlobalDDobj
+				( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status )
+{
+	int i;
+
+	GF_ASSERT( g3Dmap );
+
+	//配列位置自動取得
+	for( i=0; i<DDOBJ_COUNT; i++ ){
+		if( g3Dmap->directDrawObject[i].id == OBJID_NULL ){
+			GFL_G3D_MAP_ResistGlobalDDobj( g3Dmap, status, i );
+			return i;
+		}
+	}
+	return GLOBALOBJ_SET_ERROR;
+}
+
+void	GFL_G3D_MAP_ReleaseGlobalDDobj( GFL_G3D_MAP* g3Dmap, u32 idx )
+{
+	GF_ASSERT( g3Dmap );
+	GF_ASSERT( idx < DDOBJ_COUNT );
+
+	if( (idx != GLOBALOBJ_SET_ERROR)&&(idx < DDOBJ_COUNT) ){
+		g3Dmap->directDrawObject[idx].id = OBJID_NULL;
+		VEC_Set( &g3Dmap->directDrawObject[idx].trans, 0, 0, 0 );
+		g3Dmap->directDrawObject[idx].rotate = 0;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	３ＤマップグローバルオブジェクトＩＤ変換
+ */
+//------------------------------------------------------------------
+BOOL	GFL_G3D_MAP_GetGlobalObjectID( GFL_G3D_MAP* g3Dmap, const u32 datID, u32* exchangeID )
+{
+	int i;
+
+	if( g3Dmap->globalResObj->gobjIDexchange == NULL ){
+		*exchangeID = 0;
+		return FALSE;
+	}
+	for( i=0; i<g3Dmap->globalResObj->gobjCount; i++ ){
+		if( datID == g3Dmap->globalResObj->gobjIDexchange[i] ){
+			*exchangeID = i;
+			return TRUE;
+		}
+	}
+	*exchangeID = 0;
+	return FALSE;
+}
+
+BOOL	GFL_G3D_MAP_GetGlobalDDobjectID( GFL_G3D_MAP* g3Dmap, const u32 datID, u32* exchangeID )
+{
+	int i;
+
+	if( g3Dmap->globalResObj->gddobjIDexchange == NULL ){
+		*exchangeID = 0;
+		return FALSE;
+	}
+	for( i=0; i<g3Dmap->globalResObj->gddobjCount; i++ ){
+		if( datID == g3Dmap->globalResObj->gddobjIDexchange[i] ){
+			*exchangeID = i;
+			return TRUE;
+		}
+	}
+	*exchangeID = 0;
+	return FALSE;
 }
 
 //------------------------------------------------------------------
@@ -445,8 +572,8 @@ void GFL_G3D_MAP_MakeRenderObj( GFL_G3D_MAP* g3Dmap )
 	GF_ASSERT( g3Dmap );
 
 	if( (GFL_G3D_GetResourceFileHeader( g3Dmap->groundResTex ) == NULL )
-		&&( g3Dmap->grobalResTex != NULL )){
-		MakeMapRender( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->grobalResTex );
+		&&( g3Dmap->globalResTex != NULL )){
+		MakeMapRender( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->globalResTex );
 	} else {
 		MakeMapRender( g3Dmap->NNSrnd, g3Dmap->groundResMdl, g3Dmap->groundResTex );
 	}
@@ -625,21 +752,21 @@ static BOOL	DrawGround( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 //------------------------------------------------------------------
 static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
-	GFL_G3D_MAP_OBJ*	obj = g3Dmap->grobalResObj->gobj;
-	u32					count = g3Dmap->grobalResObj->gobjCount;
+	GFL_G3D_MAP_OBJ*	obj = g3Dmap->globalResObj->gobj;
+	u32					count = g3Dmap->globalResObj->gobjCount;
 	NNSG3dRenderObj	*NNSrnd, *NNSrnd_L;
-	VecFx32			grobalTrans;
+	VecFx32			globalTrans;
 	fx32			length;
 	int				i;
 
-	if( count == 0 ){ return; }
+	if(( count == 0 )||( obj == NULL )){ return; }
 
 	for( i=0; i<OBJ_COUNT; i++ ){
 		if(	(g3Dmap->object[i].id != OBJID_NULL)&&(g3Dmap->object[i].id < count) ){
 
-			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &grobalTrans );
+			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &globalTrans );
 
-			getViewLength( g3Dcamera, &grobalTrans, &length );
+			getViewLength( g3Dcamera, &globalTrans, &length );
 
 			if( length <= DRAW_LIMIT ){
 	
@@ -651,7 +778,7 @@ static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 				}
 				if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
 	
-					NNS_G3dGlbSetBaseTrans( &grobalTrans );		// 位置設定
+					NNS_G3dGlbSetBaseTrans( &globalTrans );		// 位置設定
 					NNS_G3dGlbSetBaseRot( &defaultRotate );		// 角度設定
 					NNS_G3dGlbSetBaseScale( &defaultScale );	// スケール設定
 					NNS_G3dGlbFlush();							//グローバルステート反映
@@ -673,17 +800,17 @@ static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 //------------------------------------------------------------------
 static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
-	GFL_G3D_MAP_DDOBJ*	ddobj = g3Dmap->grobalResObj->gddobj;
-	u32					count = g3Dmap->grobalResObj->gddobjCount;
+	GFL_G3D_MAP_DDOBJ*	ddobj = g3Dmap->globalResObj->gddobj;
+	u32					count = g3Dmap->globalResObj->gddobjCount;
 	const GFL_G3D_MAP_DDOBJ*	objData;
-	MAP_OBJ_DATA*			ddObject;
+	GFL_G3D_MAP_GLOBALOBJ_ST*	ddObject;
 	MtxFx33		mtxBillboard;
-	VecFx32		trans, grobalTrans;
+	VecFx32		trans, globalTrans;
 	VecFx16		vecView;
 	fx32		length;
 	int			i;
 
-	if( count == 0 ){ return; }
+	if(( count == 0 )||( ddobj == NULL )){ return; }
 
 	G3X_Reset();
 
@@ -708,39 +835,49 @@ static void	DirectDrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 
 		if( (ddObject->id != OBJID_NULL)&&(ddObject->id < count) ){
 			objData = &ddobj[ ddObject->id ];
+			if( objData->g3Dres != NULL ){
 
-			VEC_Add( &ddObject->trans, &g3Dmap->trans, &grobalTrans );
+				VEC_Add( &ddObject->trans, &g3Dmap->trans, &globalTrans );
 
-			getViewLength( g3Dcamera, &grobalTrans, &length );
+				getViewLength( g3Dcamera, &globalTrans, &length );
 
-			if( length <= DRAW_LIMIT ){
-				G3_PushMtx();
+				if( length <= DRAW_LIMIT ){
+					G3_PushMtx();
 
-				//スケール設定
-				G3_Scale(	FX32_ONE * objData->data->scaleVal, 
-							FX32_ONE * objData->data->scaleVal, 
-							FX32_ONE * objData->data->scaleVal );
-				//回転、平行移動パラメータ設定
-				trans.x = grobalTrans.x / objData->data->scaleVal;
-				trans.y = grobalTrans.y / objData->data->scaleVal;
-				trans.z = grobalTrans.z / objData->data->scaleVal;
-				if( objData->data->drawType == DRAW_YBILLBOARD ){
-					G3_MultTransMtx33( &mtxBillboard, &trans );
-				} else {
-					G3_Translate( trans.x, trans.y, trans.z );
+					//スケール設定
+					G3_Scale(	FX32_ONE * objData->data->scaleVal, 
+								FX32_ONE * objData->data->scaleVal, 
+								FX32_ONE * objData->data->scaleVal );
+					//回転、平行移動パラメータ設定
+					trans.x = globalTrans.x / objData->data->scaleVal;
+					trans.y = globalTrans.y / objData->data->scaleVal;
+					trans.z = globalTrans.z / objData->data->scaleVal;
+					if( objData->data->drawType == DRAW_YBILLBOARD ){
+						G3_MultTransMtx33( &mtxBillboard, &trans );
+					} else {
+						G3_Translate( trans.x, trans.y, trans.z );
+					}
+					//マテリアル設定
+					G3_MaterialColorDiffAmb(	objData->data->diffuse, 
+												objData->data->ambient, 
+												TRUE );
+					G3_MaterialColorSpecEmi(	objData->data->specular, 
+												objData->data->emission, 
+												FALSE );
+					G3_PolygonAttr(	objData->data->lightMask, 
+									GX_POLYGONMODE_MODULATE, 
+									GX_CULL_NONE, 
+									objData->data->polID, 
+									objData->data->alpha, 
+									GX_POLYGON_ATTR_MISC_FOG );
+	
+					if( objData->data->func != NULL ){
+						objData->data->func(	ddobj[ ddObject->id ].texDataAdrs, 
+												ddobj[ ddObject->id ].texPlttAdrs, 
+												&vecView, (length < LOD_LIMIT) );
+					}
+					G3_PopMtx(1);
 				}
-				//マテリアル設定
-				G3_MaterialColorDiffAmb( objData->data->diffuse, objData->data->ambient, TRUE );
-				G3_MaterialColorSpecEmi( objData->data->specular, objData->data->emission, FALSE );
-				G3_PolygonAttr(	objData->data->lightMask, GX_POLYGONMODE_MODULATE, GX_CULL_NONE, 
-							objData->data->polID, objData->data->alpha, GX_POLYGON_ATTR_MISC_FOG );
-
-				if( objData->data->func != NULL ){
-					objData->data->func(	ddobj[ ddObject->id ].texDataAdrs, 
-											ddobj[ ddObject->id ].texPlttAdrs, 
-											&vecView, (length < LOD_LIMIT) );
-				}
-				G3_PopMtx(1);
 			}
 		}
 	}
@@ -799,17 +936,8 @@ void GFL_G3D_MAP_GetAttr( GFL_G3D_MAP_ATTRINFO* attrInfo, GFL_G3D_MAP* g3Dmap,
 	map_height = g3Dmap->trans.y;
 
 	//ブロック内情報取得
-#if 0
-	{
-		VecFx32 posBlock, mapTopOffs;
-
-		VEC_Set( &mapTopOffs, -map_width/2, -map_height, -map_width/2 );
-		VEC_Add( &g3Dmap->trans, &mapTopOffs, &posBlock );
-		VEC_Subtract( pos, &posBlock, &posInBlock );
-	}
-#else
 	VEC_Subtract( pos, &g3Dmap->trans, &posInBlock );
-#endif
+
 	attrFunc = g3Dmap->mapFileFunc[g3Dmap->fileType].attrFunc;
 
 	if( attrFunc != NULL ){
@@ -999,47 +1127,47 @@ static void getYbillboardMtx( GFL_G3D_CAMERA* g3Dcamera, MtxFx33* result )
 //============================================================================================
 #include "system\gfl_use.h"	//乱数用
 
+static void makeRandomPos( GFL_G3D_MAP* g3Dmap, u32 idx, GFL_G3D_MAP_GLOBALOBJ_ST* status )
+{
+	fx32	centeringOffs, randomOffs, gridWidth, mapWidth;
+	GFL_G3D_MAP_ATTRINFO attrInfo;
+	VecFx32 pWorld;
+
+	mapWidth = 512 * FX32_ONE;
+	centeringOffs = -mapWidth/2;
+	gridWidth = mapWidth/MAP_GRIDCOUNT;
+
+	status->id = idx;
+	status->rotate = 0;
+
+	randomOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gridWidth;
+	status->trans.x = randomOffs + centeringOffs;
+	status->trans.y = 0;
+	randomOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gridWidth;
+	status->trans.z = randomOffs + centeringOffs;
+
+	VEC_Add( &status->trans, &g3Dmap->trans, &pWorld );
+	GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmap, &pWorld, mapWidth );
+	status->trans.y = attrInfo.mapAttr[0].height;
+}
+
 void GFL_G3D_MAP_MakeTestPos( GFL_G3D_MAP* g3Dmap )
 {
 	int i;
-	fx32 cOffs, rOffs, gWidth, mapWidth;
-	VecFx32 pWorld;
-	GFL_G3D_MAP_ATTRINFO attrInfo;
-	u32	infoCount;
+	GFL_G3D_MAP_GLOBALOBJ_ST status;
 
 	if( g3Dmap->trans.y == 0 ){
-
-		mapWidth = 512 * FX32_ONE;
-		cOffs = -mapWidth/2;
-		gWidth = mapWidth/MAP_GRIDCOUNT;
 		for( i=0; i<4; i++ ){
 			if( i<2 ){
-				g3Dmap->object[i].id = 0;
+				makeRandomPos( g3Dmap, 0, &status );
 			} else {
-				g3Dmap->object[i].id = 1;
+				makeRandomPos( g3Dmap, 1, &status );
 			}
-
-			rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-			g3Dmap->object[i].trans.x = rOffs + cOffs;
-			g3Dmap->object[i].trans.y = 0;
-			rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-			g3Dmap->object[i].trans.z = rOffs + cOffs;
-
-			VEC_Add( &g3Dmap->object[i].trans, &g3Dmap->trans, &pWorld );
-			GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmap, &pWorld, mapWidth );
-			g3Dmap->object[i].trans.y = attrInfo.mapAttr[0].height;
+			GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
 		}
 		for( i=0; i<32; i++ ){
-			g3Dmap->directDrawObject[i].id = 0;
-
-			rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-			g3Dmap->directDrawObject[i].trans.x = rOffs + cOffs;
-			g3Dmap->directDrawObject[i].trans.y = 0;
-			rOffs = GFUser_GetPublicRand( MAP_GRIDCOUNT ) * gWidth;
-			g3Dmap->directDrawObject[i].trans.z = rOffs + cOffs;
-			VEC_Add( &g3Dmap->directDrawObject[i].trans, &g3Dmap->trans, &pWorld );
-			GFL_G3D_MAP_GetAttr( &attrInfo, g3Dmap, &pWorld, mapWidth );
-			g3Dmap->directDrawObject[i].trans.y = attrInfo.mapAttr[0].height;
+			makeRandomPos( g3Dmap, 0, &status );
+			GFL_G3D_MAP_ResistGlobalDDobj( g3Dmap, &status, i );
 		}
 	}
 }

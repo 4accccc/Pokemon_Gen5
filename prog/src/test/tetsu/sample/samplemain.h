@@ -22,25 +22,29 @@ static const G3D_MAPPER_DATA sampleMap[] = {
 };
 
 static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
-	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
-	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
+	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd, NON_TEX },
+	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd, NON_TEX },
 };
 
 static const u16	resistDDobjTbl[] = {
 	NARC_sample_map_sample_tree_nsbtx,
 };
 
-static const G3D_MAPPER_RESIST_OBJSET	resistObjset = {
-		ARCID_SAMPLEMAP,
-		resistObjTbl, 
-		NELEMS(resistObjTbl), 
-
-		ARCID_SAMPLEMAP,
-		resistDDobjTbl, 
-		NELEMS(resistDDobjTbl),
+#define DATID_GSMAP_GTEX (3)
+static const G3D_MAPPER_GLOBAL_TEXTURE	gtexData = {
+	ARCID_GSTEX, DATID_GSMAP_GTEX, 
 };
 
-#define DATID_GSMAP_GTEX (3)
+static const G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
+	ARCID_SAMPLEMAP, resistObjTbl, NELEMS(resistObjTbl), 
+	ARCID_SAMPLEMAP, resistDDobjTbl, NELEMS(resistDDobjTbl),
+};
+
+#define DATID_GSMAP_GOBJ (2)
+static const G3D_MAPPER_GLOBAL_OBJSET_BIN	gobjData_Bin = {
+	ARCID_GSAREAOBJ, DATID_GSMAP_GOBJ, ARCID_GSOBJ, ARCID_GSOBJTEX,
+};
+
 static const G3D_MAPPER_DATA GSMap[] = {
 	{ 21 }, { 22 },
 	{ 23 }, { 24 },
@@ -53,9 +57,7 @@ static const G3D_MAPPER_DATA GSMap[] = {
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
 	G3D_MAPPER_RESIST	mapperData;
-	//開始位置
-	VecFx32				startPos;
-
+	VecFx32				startPos;	//開始位置
 }SCENE_DATA;
 
 #define MAP_WIDTH (512 * FX32_ONE)
@@ -66,9 +68,10 @@ static const SCENE_DATA	resistMapTbl[] = {
 			FILE_CUSTOM_DATA,
 			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
-			ARCID_GSTEX, DATID_GSMAP_GTEX, 
+			USE_GLOBAL_TEX,	(void*)&gtexData, 
+			//USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			USE_GLOBAL_OBJSET_BIN, (void*)&gobjData_Bin,
 			GSMap, 
-			SET_BINDATA, NULL,
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
 	},
@@ -77,9 +80,9 @@ static const SCENE_DATA	resistMapTbl[] = {
 			FILE_MAPEDITER_DATA,
 			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_TEST3DP,
-			NON_GROBAL_TEX,NON_GROBAL_TEX,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			sampleMap, 
-			SET_TBLDATA, &resistObjset,
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
 	},

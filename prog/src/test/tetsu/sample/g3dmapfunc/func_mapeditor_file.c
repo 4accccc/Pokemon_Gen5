@@ -65,9 +65,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 			ldst->mdlLoaded = TRUE;
 			ldst->texLoaded = TRUE;
 			ldst->attrLoaded = TRUE;
-			//---------
-			GFL_G3D_MAP_MakeTestPos(g3Dmap);
-			//---------
+
 			ldst->seq = RND_CREATE;
 		}
 		break;
@@ -77,6 +75,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 		{
 			void*				mem;
 			Dp3packHeaderSt*	fileHeader;
+
 			//ヘッダー設定
 			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
 			fileHeader = (Dp3packHeaderSt*)mem;
@@ -84,6 +83,25 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
 			GFL_G3D_MAP_CreateResourceTex(g3Dmap, (void*)((u32)mem + fileHeader->nsbtxOffset)); 
+			//配置オブジェクト設定
+			if( fileHeader->positionOffset != fileHeader->endPos ){
+				LayoutFormat* layout = (LayoutFormat*)((u32)mem + fileHeader->positionOffset);
+				PositionSt* objStatus = (PositionSt*)&layout->posData;
+				GFL_G3D_MAP_GLOBALOBJ_ST status;
+				int i, count = layout->count;
+
+				for( i=0; i<count; i++ ){
+					status.id = objStatus[i].resourceID;
+					VEC_Set( &status.trans, 
+							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
+					status.rotate = objStatus[i].rotate;
+					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+				}
+			//===========
+			} else {
+				GFL_G3D_MAP_MakeTestPos( g3Dmap );
+			//===========
+			}
 		}
 		GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );

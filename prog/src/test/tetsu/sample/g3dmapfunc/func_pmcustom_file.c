@@ -29,46 +29,54 @@
  */
 //------------------------------------------------------------------
 //XZ頂点データ
-typedef struct XZ_VERTEX_tag
-{
-	fx32 X;
-	fx32 Z;
+typedef struct {
+	fx32 x;
+	fx32 z;
 }XZ_VERTEX;
 
-typedef struct POLYGON_DATA_tag{
+typedef struct {
 	u16 vtx_idx0;
 	u16 vtx_idx1;
 	u16	nrm_idx;	//法線データ配列(正規化済み)へのインデックスNo
 	u16 d_idx;		//Ｄ値配列へのインデックスNo
 }POLYGON_DATA;
 
-typedef struct LINE_DATA_tag
-{
-	fx32 LineZ;
-	u16 EntryNum;
-	u16 ParamIndex;
+typedef struct {
+	fx32	lineZ;
+	u16		entryNum;
+	u16		paramIndex;
 }LINE_DATA;
 
-typedef struct MAP_HEIGHT_INFO_tag{
-	XZ_VERTEX		*VertexArray;
-	VecFx32			*NormalArray;
-	fx32			*DvalArray;
-	POLYGON_DATA	*PolygonData;
-	LINE_DATA		*LineDataTbl;
-	u16				*PolyIDList;
+typedef struct {
+	XZ_VERTEX		*vertexArray;
+	VecFx32			*normalArray;
+	fx32			*valDArray;
+	POLYGON_DATA	*polygonData;
+	LINE_DATA		*lineDataTbl;
+	u16				*polyIDList;
 
-	int				LineNum;
+	int				lineNum;
 }MAP_HEIGHT_INFO;
 
 typedef struct {
 	u32 signature;
-	u16 VtxNum;
-	u16 NrmNum;
-	u16 DNum;
-	u16 PolygonNum;
-	u16 LineNum;
-	u16 PolyIDListNum;
+	u16 vtxNum;
+	u16 nrmNum;
+	u16 valDNum;
+	u16 polygonNum;
+	u16 lineNum;
+	u16 polyIDListNum;
 }HEIGHT_DATA_HEADER;
+
+typedef	struct	{
+	int	id;			//データＩＤ
+
+	VecFx32  global;	//グローバル座標
+	VecFx32  rotate;	//回転
+	VecFx32  scale;		//スケール
+
+	int		dummy[2];	//
+}MAP3D_OBJECT_ST;
 
 //------------------------------------------------------------------
 //ヘッダー情報
@@ -167,6 +175,23 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 			dataOffset += header->attrSize;
 
 			//配置オブジェクト設定
+			{
+				MAP3D_OBJECT_ST* objStatus = (MAP3D_OBJECT_ST*)((u32)mem + dataOffset);
+				GFL_G3D_MAP_GLOBALOBJ_ST status;
+				int i, count = header->objSize/sizeof(MAP3D_OBJECT_ST);
+				u32 id;
+
+				for( i=0; i<count; i++ ){
+					if( GFL_G3D_MAP_GetGlobalObjectID( g3Dmap, objStatus[i].id, &id ) == TRUE ){
+						status.id = id;
+						status.trans = objStatus[i].global;
+						status.rotate = 0;
+						GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
+					} else {
+						OS_Printf("cannot exchange ID = %x\n", objStatus[i].id );
+					}
+				}
+			}
 			dataOffset += header->objSize;
 			//モデルリソース設定
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + dataOffset));
@@ -182,25 +207,25 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 				hdataOffset += sizeof(HEIGHT_DATA_HEADER);
 
 				//ライン総数
-				heightInfo->LineNum = heightHeader->LineNum;
+				heightInfo->lineNum = heightHeader->lineNum;
 				//頂点データポインタ算出
-				heightInfo->VertexArray = (XZ_VERTEX*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(XZ_VERTEX) * heightHeader->VtxNum;
+				heightInfo->vertexArray = (XZ_VERTEX*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(XZ_VERTEX) * heightHeader->vtxNum;
 				//法線データポインタ算出
-				heightInfo->NormalArray = (VecFx32*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(VecFx32) * heightHeader->NrmNum;
+				heightInfo->normalArray = (VecFx32*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(VecFx32) * heightHeader->nrmNum;
 				//Ｄ値データポインタ算出
-				heightInfo->DvalArray = (fx32*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(fx32) * heightHeader->DNum;
+				heightInfo->valDArray = (fx32*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(fx32) * heightHeader->valDNum;
 				//ポリゴンデータポインタ算出
-				heightInfo->PolygonData = (POLYGON_DATA*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(POLYGON_DATA) * heightHeader->PolygonNum;
+				heightInfo->polygonData = (POLYGON_DATA*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(POLYGON_DATA) * heightHeader->polygonNum;
 				//ラインテーブルデータポインタ算出
-				heightInfo->LineDataTbl = (LINE_DATA*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(LINE_DATA) * heightHeader->LineNum;
+				heightInfo->lineDataTbl = (LINE_DATA*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(LINE_DATA) * heightHeader->lineNum;
 				//ライン内ポリゴンＩＤエントリデータポインタ算出
-				heightInfo->PolyIDList = (u16*)((u32)heightHeader + hdataOffset);
-				hdataOffset += sizeof(u16) * heightHeader->PolyIDListNum;
+				heightInfo->polyIDList = (u16*)((u32)heightHeader + hdataOffset);
+				hdataOffset += sizeof(u16) * heightHeader->polyIDListNum;
 			}
 			ldst->seq = RND_CREATE;
 		}
@@ -230,8 +255,8 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
  *
  *
  */
-BOOL GetHeightForBlock
-	( GFL_G3D_MAP_ATTRINFO* attrInfo, const VecFx32* pos, const MAP_HEIGHT_INFO* inMap3DInfo );
+static BOOL CheckRectIO( const XZ_VERTEX* vtx0, const XZ_VERTEX *vtx1, const VecFx32* pos );
+static BOOL	BinSearch( const LINE_DATA *list, const u16 size, const fx32 valZ, u16* idx );
 //============================================================================================
 void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
@@ -239,53 +264,77 @@ void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
 	//データ取得用情報設定
 	MAP_DATA_INFO*		mapdataInfo = (MAP_DATA_INFO*)mapdata;
 	MAP_HEIGHT_INFO*	heightInfo = &mapdataInfo->heightInfo;
+	XZ_VERTEX			*rectVtx0, *rectVtx1;
+	VecFx32				vecN;
+	fx32				valD, by;
+	POLYGON_DATA*		polygon;
+	u32					offsIdx;
+	u16					lineIdx, polIdx, polNum;
+	int					i;
 
-	GetHeightForBlock( attrInfo, posInBlock, heightInfo );
+	attrInfo->mapAttrCount = 0;
+	
+	//ラインデータを2分探索して、対象ポリゴンが存在するラインを検出
+	if( BinSearch(heightInfo->lineDataTbl, heightInfo->lineNum, posInBlock->z, &lineIdx) == FALSE ){
+		return;
+	}
+	polNum = heightInfo->lineDataTbl[lineIdx].entryNum;
+	offsIdx = heightInfo->lineDataTbl[lineIdx].paramIndex;
+
+	//高さ取得用グリッド内ラインデータに登録されているデータ分ループして、対象ポリゴンを検出
+	for( i=0; i<polNum; i++ ){
+		polIdx = heightInfo->polyIDList[offsIdx+i];
+		polygon = &heightInfo->polygonData[polIdx];
+
+		//頂点データ取得
+		rectVtx0 = &heightInfo->vertexArray[polygon->vtx_idx0];
+		rectVtx1 = &heightInfo->vertexArray[polygon->vtx_idx1];
+
+		//四角形の内外判定
+		if( CheckRectIO( rectVtx0, rectVtx1, posInBlock ) == TRUE ){
+			//法線取得
+			vecN = heightInfo->normalArray[polygon->nrm_idx];
+
+			//平面の方程式に必要なデータ（原点を通る平面からのオフセット）を取得
+			valD = heightInfo->valDArray[polygon->d_idx];
+
+			//平面の方程式より高さ取得
+			by = -( FX_Mul(vecN.x, posInBlock->x) + FX_Mul(vecN.z, posInBlock->z) + valD );
+			attrInfo->mapAttr[attrInfo->mapAttrCount].height = FX_Div(by, vecN.y);
+			VEC_Fx16Set( &attrInfo->mapAttr[attrInfo->mapAttrCount].vecN, vecN.x, vecN.y, vecN.z );
+			
+			attrInfo->mapAttrCount++;
+			if (attrInfo->mapAttrCount >= GFL_G3D_MAP_ATTR_GETMAX){
+				return;	//取得オーバーフロー
+			}
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-#define LINE_ONE_DATA	(5)		//2バイトデータが5つで10バイト
-#define Z_VAL_OFFSET_L(data_idx)	( data_idx*LINE_ONE_DATA+1 )
-#define Z_VAL_OFFSET_H(data_idx)	( data_idx*LINE_ONE_DATA+2 )
-
-#define LINE_Z_VAL(list,idx)	( (list[Z_VAL_OFFSET_H(data_idx)]<<16) | list[Z_VAL_OFFSET_L(data_idx)] )
 
 //------------------------------------------------------------------
 /**
- *	四角内外判定
+ *	XZ面上の四角内外判定
 */
 //------------------------------------------------------------------
-static BOOL CheckRectIO
-	( const XZ_VERTEX *inVtx1, const XZ_VERTEX *inVtx2, const XZ_VERTEX * inTarget )
+static BOOL CheckRectIO( const XZ_VERTEX* vtx0, const XZ_VERTEX *vtx1, const VecFx32* pos )
 {
-	const fx32 *small_x, *big_x,*small_z,*big_z;
-	if (inVtx1->X <= inVtx2->X){
-		small_x = &inVtx1->X;
-		big_x = &inVtx2->X;
-	}else{
-		small_x = &inVtx2->X;
-		big_x = &inVtx1->X;
-	}
+	fx32 x0, x1, z0, z1;
 
-	if (inVtx1->Z <= inVtx2->Z){
-		small_z = &inVtx1->Z;
-		big_z = &inVtx2->Z;
+	if( vtx0->x <= vtx1->x ){
+		x0 = vtx0->x;
+		x1 = vtx1->x;
 	}else{
-		small_z = &inVtx2->Z;
-		big_z = &inVtx1->Z;
+		x0 = vtx1->x;
+		x1 = vtx0->x;
 	}
-		
-	if ( ( (*small_x <= inTarget->X)&&(inTarget->X <= *big_x) )&&
-			( (*small_z <= inTarget->Z)&&(inTarget->Z <= *big_z) ) ){
+	if( vtx0->z <= vtx1->z ){
+		z0 = vtx0->z;
+		z1 = vtx1->z;
+	}else{
+		z0 = vtx1->z;
+		z1 = vtx0->z;
+	}
+	if ( (x0 <= pos->x)&&(pos->x <= x1)&&(z0 <= pos->z)&&(pos->z <= z1) ){
 		return TRUE;
 	}
 	return FALSE;
@@ -293,97 +342,48 @@ static BOOL CheckRectIO
 
 //------------------------------------------------------------------
 /**
- *	ポリゴンインデックスからポリゴン頂点データを取得
- *	@param	inMAp3DInfo		マップ高さ情報		
- *	@param	inIdx			ポリゴンデータインデックス
- *	@param	outVertex		頂点データ格納先ポインタ
- *	
- *	@retval	none
-*/
-//------------------------------------------------------------------
-static void GetPolygonVertex(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, XZ_VERTEX *outVertex)
-{
-	outVertex[0] = inMap3DInfo->VertexArray[inMap3DInfo->PolygonData[inIdx].vtx_idx0];
-	outVertex[1] = inMap3DInfo->VertexArray[inMap3DInfo->PolygonData[inIdx].vtx_idx1];
-}
-
-//------------------------------------------------------------------
-/**
- *	ポリゴンインデックスからポリゴンの法線を取得
- *	@param	inMAp3DInfo		マップ高さ情報		
- *	@param	inIdx			ポリゴンデータインデックス
- *	@param	outVertex		法線データ格納先ポインタ
- *	
- *	@retval	none
-*/
-//------------------------------------------------------------------
-static void GetPolygonNrm(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, VecFx32 *outVertex)
-{
-	*outVertex = inMap3DInfo->NormalArray[inMap3DInfo->PolygonData[inIdx].nrm_idx];
-}
-
-//------------------------------------------------------------------
-/**
- *	ポリゴンインデックスからD値を取得
- *	@param	inMAp3DInfo		マップ高さ情報		
- *	@param	inIdx			ポリゴンデータインデックス
- *	@param	outD		Dデータ格納先ポインタ
- *	
- *	@retval	none
-*/
-//------------------------------------------------------------------
-static void GetPolygonD(const MAP_HEIGHT_INFO* inMap3DInfo, u16 inIdx, fx32 *outD)
-{
-	*outD = inMap3DInfo->DvalArray[inMap3DInfo->PolygonData[inIdx].d_idx];
-}
-
-//------------------------------------------------------------------
-/**
  *　Zソートされているデータを2分探索
- *	@param	inDataList		データリスト		
- *	@param	inDataSize		データサイズ
- *	@param	inZ_Val			Z値
- *	@param	outIndex		データインデックス
+ *	@param	list		データリスト		
+ *	@param	size		データサイズ
+ *	@param	valZ		Z値
+ *	@param	idx			データインデックス
  *	
  *	@retval	BOOL	TRUE:データあり　FALSE:データ無し
 */
 //------------------------------------------------------------------
-static BOOL	BinSearch
-		( const LINE_DATA *inDataList, const u16 inDataSize, const fx32 inZ_Val, u16 *outIndex)
+static BOOL	BinSearch( const LINE_DATA *list, const u16 size, const fx32 valZ, u16* idx )
 {
 	int min,max; 
 	u32 data_idx;
-	fx32 z_val;
-	if (inDataSize == 0){
-	//	OS_Printf("Zソートデータがありません\n");
+	fx32 lineZ;
+
+	if( size == 0 ){
 		return FALSE;//データなしなので、探索終了
-	}else if (inDataSize == 1){
-		*outIndex = 0;//探索終了
+	}else if ( size == 1 ){
+		*idx = 0;//探索終了
 		return TRUE;
 	}
-
 	min = 0;
-	max = inDataSize-1;
+	max = size - 1;
 	data_idx = max/2;
 	
 	do{
-///OS_Printf("min_max:%d,%d\n",min,max);
-		z_val = inDataList[data_idx].LineZ;
-///OS_Printf("%d z_val:%x\n",data_idx,z_val);
-		if (z_val>inZ_Val){	//探索継続
-			if (max-1 > min){
-				max = data_idx;
-				data_idx = (min+max)/2;
-			}else{				//探索終了
-				*outIndex = data_idx;
+		lineZ = list[data_idx].lineZ;
+
+		if( lineZ > valZ ){
+			if( max-1 > min ){
+				max = data_idx;		//探索継続
+				data_idx = (min + max)/2;
+			}else{			
+				*idx = data_idx;	//探索終了
 				return TRUE;
 			}
-		}else{					//探索継続
-			if (min+1 < max){
-				min = data_idx;
-				data_idx = (min+max)/2;
-			}else{				//探索終了
-				*outIndex = data_idx+1;
+		} else {				
+			if( min+1 < max ){
+				min = data_idx;		//探索継続
+				data_idx = (min + max)/2;
+			}else{
+				*idx = data_idx+1;	//探索終了
 				return TRUE;
 			}
 		}
@@ -392,83 +392,86 @@ static BOOL	BinSearch
 	return FALSE;
 }
 
-//------------------------------------------------------------------
+
+
+
+
+
+
+#if 0
+#define MAP_READ_OBJ_3D_MAX (32)	//1ブロック32個のＯＢＪ
+//==============================================================================
 /**
- *	高さ取得
+ * 3DOBJロード
  *
- *	@param	mode			高さ取得モード
- *	@param	inMap3DInfo		高さ情報
- *	
- *	@retval	BOOL			TRUE:高さを取得できた	FALSE:高さを取得できなかった
-*/
-//------------------------------------------------------------------
-BOOL GetHeightForBlock
-	( GFL_G3D_MAP_ATTRINFO* attrInfo, const VecFx32* pos, const MAP_HEIGHT_INFO* inMap3DInfo )
+ * @param	inMapResource		マップリソースポインタ
+ * @param	inFileName			ファイル名
+ * @param	outMap3DObjList		3DOBJリストへのポインタ
+ * @param	field_3d_anime_ptr	3Dアニメポインタ
+ *
+ * @return	none
+ */
+//==============================================================================
+void M3DO_LoadArc3DObjData(	ARCHANDLE *ioHandle,
+							const int inDataSize,
+							const MAP_RESOURCE_PTR inMapResource,
+							M3DOL_PTR outMap3DObjList,
+							FLD_3D_ANM_MNG_PTR field_3d_anime_ptr)
 {
-	XZ_VERTEX vertex[2];
-	XZ_VERTEX target;
-	VecFx32 vecN;
-	BOOL result;
-	u16 i,pol_index;
-	fx32 d,y;
-	int pol_count;
-	u32 line_num,tbl_idx,tbl_x_idx,tbl_z_idx;
-	fx32 tbl_x,tbl_z;
-
-	u32 offset_idx;
-
-	u16 line_data_idx;
-	u16 line_index;
-	u16 polygon_num;
-
-	const LINE_DATA *line_list;
-
-	result = FALSE;
-	//ZX平面に射影
-	target.X = pos->x;
-	target.Z = pos->z;
-	pol_count = 0;
-	
-	line_num = inMap3DInfo->LineNum;
-	
-	line_list = inMap3DInfo->LineDataTbl;
-	//ラインデータを2分探索して、自分が立っているポリゴンが存在するラインを検出
-	if ( BinSearch(line_list,line_num,target.Z,&line_index)==FALSE){
-		return FALSE;
+	MAP3D_OBJECT_HEADER * obj_dat = NULL;
+	u32	obj_max;
+	int i;
+	//アーカイブデータ読み込み
+	if (inDataSize != 0){
+		obj_dat = sys_AllocMemoryLo(HEAPID_FIELD, inDataSize);
+		ArchiveDataLoadByHandleContinue( ioHandle, inDataSize, obj_dat );
+		obj_max = inDataSize / sizeof(MAP3D_OBJECT_HEADER);
+	}else{
+		obj_max = 0;
 	}
 
-	polygon_num = line_list[line_index].EntryNum;
-	offset_idx = line_list[line_index].ParamIndex;
+	for(i=0;i<MAP_READ_OBJ_3D_MAX;i++){
+		M3DO_PTR ptr;
+		ptr = &(outMap3DObjList->Map3DObjectData[i]);
+		if(i < obj_max){
+			ptr->id		    = obj_dat[i].id;		//ＩＤ
+			ptr->valid		= TRUE;					//データ有効
+			ptr->RotateFlg  = FALSE;				//回転無効
+			ptr->global	    = obj_dat[i].global;	//座標
+			ptr->rotate	    = obj_dat[i].rotate;	//回転
+			ptr->scale	    = obj_dat[i].scale;		//スケール
 
-	//高さ取得用グリッド内ラインデータに登録されているデータ分ループして、
-	//自分が立っているポリゴンを検出
-	for(i=0;i<polygon_num;i++){
-		pol_index = inMap3DInfo->PolyIDList[offset_idx+i];
-
-		//頂点データ取得
-		GetPolygonVertex(inMap3DInfo,pol_index, vertex);
-		//四角形の内外判定
-		result = CheckRectIO( &vertex[0], &vertex[1], &target);
-		if (result == TRUE){//四角形内
-			//法線取得
-			GetPolygonNrm(inMap3DInfo,pol_index, &vecN);
-			//平面の方程式に必要なデータ（原点を通る平面からのオフセット）を取得
-			GetPolygonD(inMap3DInfo,pol_index, &d);
-			//平面の方程式より高さ取得
-			y = -(FX_Mul(vecN.x, target.X)+FX_Mul(vecN.z, target.Z)+d);
-			y = FX_Div(y, vecN.y);
-			VEC_Fx16Set( &attrInfo->mapAttr[pol_count].vecN, vecN.x, vecN.y, vecN.z );
-			attrInfo->mapAttr[pol_count].height = y;
-			
-			pol_count++;
-			if (pol_count >= GFL_G3D_MAP_ATTR_GETMAX){
-				break;
+			// 読み込んだテクスチャリソースをセット
+			SetMap3DModel(
+					ptr->id,
+					inMapResource,
+					&(ptr->objectdata),
+					&(ptr->objectmodel) );
+			if (CheckResourceEntry(inMapResource, ptr->id) == FALSE){
+				OS_Printf("ダミー表示のため、配置モデルIDを書き換えます%d→0\n",ptr->id);
+				ptr->id = 0;
 			}
+			
+#ifdef FOG_MDL_SET_CHECK
+			NNS_G3dMdlSetMdlFogEnableFlagAll(ptr->objectmodel, TRUE);
+#endif
+			F3DA_SetFld3DAnimeEasy(	ptr->id, &(ptr->objectdata), field_3d_anime_ptr);
+		}else{
+			VecFx32 init_data = {0,0,0};
+
+			ptr->id		    = 0;		// =OFF
+			ptr->valid		= FALSE;	//データ無効
+			ptr->RotateFlg	= FALSE;
+			ptr->global     = init_data;
+			ptr->rotate     = init_data;
+			ptr->scale	    = init_data;
 		}
 	}
-	attrInfo->mapAttrCount = pol_count;
+	if( obj_dat != NULL ){
+		sys_FreeMemoryEz( obj_dat );
+	}
 
-	return TRUE;
 }
+#endif
 
 

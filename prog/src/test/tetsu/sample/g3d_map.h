@@ -81,9 +81,7 @@ typedef struct {
 //グローバルオブジェクト設定定義
 typedef struct {
 	NNSG3dRenderObj*	NNSrnd_H;	//レンダー(High Q)
-	GFL_G3D_RES*		g3Dres_H;	//リソース(High Q)
 	NNSG3dRenderObj*	NNSrnd_L;	//レンダー(Low Q)
-	GFL_G3D_RES*		g3Dres_L;	//リソース(High Q)
 }GFL_G3D_MAP_OBJ;
 //------------------------------------------------------------------
 //ジオメトリ直接書き込みオブジェクト設定定義
@@ -95,12 +93,23 @@ typedef struct {
 }GFL_G3D_MAP_DDOBJ;
 //------------------------------------------------------------------
 //グローバルオブジェクト管理設定定義
+#define	GLOBALOBJ_SET_ERROR		(0xffffffff)
 typedef struct {
 	GFL_G3D_MAP_OBJ*	gobj;
 	u32					gobjCount;
+	u16*				gobjIDexchange;
 	GFL_G3D_MAP_DDOBJ*	gddobj;
 	u32					gddobjCount;
-}GFL_G3D_MAP_GROBALOBJ;
+	u16*				gddobjIDexchange;
+}GFL_G3D_MAP_GLOBALOBJ;
+
+//------------------------------------------------------------------
+//グローバルオブジェクト配置設定定義
+typedef struct {
+	u32			id;
+	VecFx32		trans;
+	u16			rotate;
+}GFL_G3D_MAP_GLOBALOBJ_ST;
 
 //------------------------------------------------------------------
 //アトリビュート定義
@@ -198,15 +207,42 @@ extern void	GFL_G3D_MAP_ReleaseArc( GFL_G3D_MAP* g3Dmap );
  * @brief	３Ｄマップグローバルテクスチャリソース登録
  */
 //------------------------------------------------------------------
-extern void	GFL_G3D_MAP_ResistGrobalTex( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* grobalResTex );
-extern void	GFL_G3D_MAP_ReleaseGrobalTex( GFL_G3D_MAP* g3Dmap );
+extern void	GFL_G3D_MAP_ResistGlobalTexResource
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_RES* globalResTex );
+extern void	GFL_G3D_MAP_ReleaseGlobalTexResource( GFL_G3D_MAP* g3Dmap );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップグローバルオブジェクトリソース登録
  */
 //------------------------------------------------------------------
-extern void	GFL_G3D_MAP_ResistGrobalObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GROBALOBJ* grobalObj );
-extern void	GFL_G3D_MAP_ReleaseGrobalObj( GFL_G3D_MAP* g3Dmap );
+extern void	GFL_G3D_MAP_ResistGlobalObjResource
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ* globalObj );
+extern void	GFL_G3D_MAP_ReleaseGlobalObjResource( GFL_G3D_MAP* g3Dmap );
+//------------------------------------------------------------------
+/**
+ * @brief	３Ｄマップグローバルオブジェクト配置登録
+ */
+//------------------------------------------------------------------
+extern void	GFL_G3D_MAP_ResistGlobalObj
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx );
+extern u32	GFL_G3D_MAP_ResistAutoGlobalObj
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status );
+extern void	GFL_G3D_MAP_ReleaseGlobalObj( GFL_G3D_MAP* g3Dmap, u32 idx );
+//------------------------------------------------------------------
+extern void	GFL_G3D_MAP_ResistGlobalDDobj
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status, u32 idx );
+extern u32	GFL_G3D_MAP_ResistAutoGlobalDDobj
+					( GFL_G3D_MAP* g3Dmap, GFL_G3D_MAP_GLOBALOBJ_ST* status );
+extern void	GFL_G3D_MAP_ReleaseGlobalDDobj( GFL_G3D_MAP* g3Dmap, u32 idx );
+//------------------------------------------------------------------
+/**
+ * @brief	３ＤマップグローバルオブジェクトＩＤ変換
+ */
+//------------------------------------------------------------------
+extern BOOL	GFL_G3D_MAP_GetGlobalObjectID
+					( GFL_G3D_MAP* g3Dmap, const u32 datID, u32* exchangeID );
+extern BOOL	GFL_G3D_MAP_GetGlobalDDobjectID
+					( GFL_G3D_MAP* g3Dmap, const u32 datID, u32* exchangeID );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップロードリクエスト設定

@@ -33,9 +33,11 @@ typedef enum {
 }G3D_MAPPER_MODE;
 
 #define	NON_LOWQ	(0xffff)
+#define	NON_TEX		(0xffff)
 typedef struct {
 	u16 highQ_ID;
 	u16 lowQ_ID;
+	u16 texID;
 }G3D_MAPPEROBJ_DATA;
 
 typedef struct {
@@ -52,22 +54,31 @@ typedef struct {
 
 }G3D_MAPPER_RESIST_DDOBJ;
 
+#define NON_GLOBAL_OBJ	(0xffffffff)
+#define USE_GLOBAL_OBJSET_TBL	(0)
+#define USE_GLOBAL_OBJSET_BIN	(1)
 typedef struct {
 	u32							objArcID;	//アーカイブＩＤ
 	const G3D_MAPPEROBJ_DATA*	objData;	//実マップデータ
 	u32							objCount;	//モデル数
-
 	u32							ddobjArcID;	//アーカイブＩＤ
 	const u16*					ddobjData;	//実マップデータ
 	u32							ddobjCount;	//モデル数
-}G3D_MAPPER_RESIST_OBJSET;
+}G3D_MAPPER_GLOBAL_OBJSET_TBL;
 
-#define	NON_GROBAL_TEX	(0xffffffff)
-typedef enum {
-	NON_GROBAL_OBJ = 0,
-	SET_TBLDATA,
-	SET_BINDATA,
-}G3D_MAPPER_GROBAL_OBJSETTYPE;
+typedef struct {
+	u32							areaObjArcID;	//配置種類アーカイブＩＤ
+	u32							areaObjDatID;	//配置種類データＩＤ
+	u32							objArcID;		//モデルアーカイブＩＤ
+	u32							objtexArcID;	//テクスチャアーカイブＩＤ
+}G3D_MAPPER_GLOBAL_OBJSET_BIN;
+
+#define	NON_GLOBAL_TEX	(0xffffffff)
+#define	USE_GLOBAL_TEX	(0)
+typedef struct {
+	u32 arcID;
+	u32 datID;
+}G3D_MAPPER_GLOBAL_TEXTURE;
 
 typedef struct {
 	GFL_G3D_MAPDATA_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
@@ -78,11 +89,12 @@ typedef struct {
 	fx32							height;			//ブロック高さ
 	G3D_MAPPER_MODE					mode;			//動作モード
 	u32								arcID;			//グラフィックアーカイブＩＤ
-	u32								gtexArcID;		//グローバルテクスチャアーカイブＩＤ
-	u32								gtexDatID;		//グローバルテクスチャデータＩＤ
+	u32								gtexType;		//グローバルテクスチャタイプ
+	void*							gtexData;		//グローバルテクスチャ
+	u32								gobjType;		//グローバルオブジェクトタイプ
+	void*							gobjData;		//グローバルオブジェクト
+
 	const G3D_MAPPER_DATA*			data;			//実マップデータ
-	G3D_MAPPER_GROBAL_OBJSETTYPE	gobjSetType;	//グローバルオブジェクトセットタイプ
-	const G3D_MAPPER_RESIST_OBJSET*	gobjSet;		//グローバルオブジェクトデータセット
 
 }G3D_MAPPER_RESIST;
 
