@@ -17,10 +17,7 @@
 #
 #===============================================================================
 
-
 use XML::Parser;
-use encode;
-use utf8;
 
 use open OUT => ":encoding(shiftjis)";
 
