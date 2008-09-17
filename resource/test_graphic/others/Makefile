@@ -27,6 +27,8 @@ TARGET_NAMES	= \
 	land_data.narc \
 	bm_field.narc \
 	bm_field.narc \
+	bm_info_out.narc \
+	bm_anime.narc \
 	area_build.narc \
 	areabm_texset.narc \
 	d_goto.naix \
