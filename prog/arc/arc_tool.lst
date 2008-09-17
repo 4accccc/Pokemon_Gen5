@@ -59,5 +59,7 @@
 	ARCID_FLDMAP_MAPDATA "test_graphic/fieldmap_map.narc"   #
 	ARCID_FLDMAP_ACTOR   "test_graphic/fieldmap_act.narc"   #
 	ARCID_GSOBJ			"test_graphic/bm_field.narc"	#
+	ARCID_GSOBJANM		"test_graphic/bm_anime.narc"	#
 	ARCID_GSOBJTEX		"test_graphic/areabm_texset.narc"	#
+	ARCID_GSOBJANMTBL	"test_graphic/bm_info_out.narc"	#
 	ARCID_GSAREAOBJ		"test_graphic/area_build.narc"	#
