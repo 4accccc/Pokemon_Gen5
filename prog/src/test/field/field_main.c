@@ -172,6 +172,7 @@ BOOL	FieldMain( void )
             //セットアップ
             FieldResistData3Dmapper( GetG3Dmapper(FieldWork->gs), 
                                 &resistMapTbl[FieldWork->mapNum].mapperData );
+			OS_Printf("MapName: %s\n", resistMapTbl[FieldWork->mapNum].name);
             {
                 FLD_G3D_MAPPEROBJ_RESIST resistObjData;
                 

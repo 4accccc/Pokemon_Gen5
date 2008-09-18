@@ -1200,6 +1200,7 @@ typedef struct {
 	FLD_G3D_MAPPER_RESIST	mapperData;
 	//ŠJŽnˆÊ’u
 	VecFx32				startPos;
+	const char * name;
 
 }SCENE_DATA;
 
@@ -1209,30 +1210,34 @@ static const SCENE_DATA	resistMapTbl[] = {
 	{
 		{	
 			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_SAMPLEMAP, sampleMap 
+			ARCID_FLDMAP_SAMPLE, sampleMap 
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+		,"sampleMap"
 	},
 	{
 		{	
 			1,  1, NELEMS(rasenMap), MAP_WIDTH, 92*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_Y,
-			ARCID_SAMPLEMAP, rasenMap 
+			ARCID_FLDMAP_SAMPLE, rasenMap 
 		}, 
 		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+		,"rasenMap"
 	},
 	{
 		{	
 			1,  1, NELEMS(rasen2Map), MAP_WIDTH, 128*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_Y,
-			ARCID_SAMPLEMAP, rasen2Map 
+			ARCID_FLDMAP_SAMPLE, rasen2Map 
 		}, 
 		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 }
+		,"rasen2Map"
 	},
 	{
 		{	
 			2,  6, NELEMS(sample2Map), MAP_WIDTH, MAP_HEIGHT, FLD_G3D_MAPPER_MODE_SCROLL_XZ,
-			ARCID_SAMPLEMAP, sample2Map 
+			ARCID_FLDMAP_SAMPLE, sample2Map 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*5 }
+		,"sample2Map"
 	},
 	{
 		{ 
@@ -1240,6 +1245,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 			ARCID_FLDMAP, DPworldMap 
 		}, 
 		{ MAP_WIDTH*16, 0, MAP_WIDTH*16 }
+		,"DPworldMap"
 	},
 	{
 		{  
@@ -1247,6 +1253,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 			ARCID_FLDMAP, DPc01Map 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+		,"DPc01Map"
 	},
 	{
 		{  
@@ -1254,6 +1261,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 			ARCID_FLDMAP, DPc02Map 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+		,"DPc02Map"
 	},
 #if 0
 	{{  2,  2, MAP_WIDTH, ARCID_FLDMAP, DPc03Map }, { MAP_WIDTH*1, 0, MAP_WIDTH*1 }},
