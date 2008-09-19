@@ -79,6 +79,7 @@ struct _G3D_MAPPER {
 typedef struct {
 	u32 arcID;
 	u32	datID;
+	u32	inDatNum;
 }MAKE_RES_PARAM;
 
 typedef struct {
@@ -235,15 +236,19 @@ void	Main3Dmapper( G3D_MAPPER* g3Dmapper )
 	//アニメーションコントロール（暫定でフレームループさせているだけ）
 	{
 		GLOBALOBJ_RES* objRes;
-		int j, anmCount;
+		int j;
 
 		for( i=0; i<g3Dmapper->globalObjResCount; i++ ){
 			objRes = &g3Dmapper->globalObjRes[i];
 
 			if( objRes->g3Dobj != NULL ){
+#if 0
 				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
 					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
 				}
+#else
+				GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, 0, FX32_ONE ); 
+#endif
 			}
 		}
 	}
@@ -1029,9 +1034,11 @@ static void CreateGrobalObj_forTbl( G3D_MAPPER* g3Dmapper, const void* resistDat
 
 		objParam.tex.arcID = NON_PARAM;
 		objParam.tex.datID = NON_PARAM;
+		objParam.tex.inDatNum = 0;
 		for( i=0; i<GLOBAL_OBJ_ANMCOUNT; i++ ){
 			objParam.anm[i].arcID = NON_PARAM;
 			objParam.anm[i].datID = NON_PARAM;
+			objParam.anm[i].inDatNum = 0;
 		}
 		g3Dmapper->globalObjRes = GFL_HEAP_AllocClearMemory//HQ,LQ の２つ分確保
 						( g3Dmapper->heapID, sizeof(GLOBALOBJ_RES) * (gobjTbl->objCount*2) );
@@ -1040,6 +1047,7 @@ static void CreateGrobalObj_forTbl( G3D_MAPPER* g3Dmapper, const void* resistDat
 
 		for( i=0, p=0; i<gobjTbl->objCount; i++ ){
 			objParam.mdl.arcID = gobjTbl->objArcID;
+			objParam.mdl.inDatNum = 0;
 
 			objParam.mdl.datID = gobjTbl->objData[i].highQ_ID;
 			CreateGlobalObj( &g3Dmapper->globalObjRes[p], &objParam );
@@ -1126,15 +1134,19 @@ static void CreateGrobalObj_forBin( G3D_MAPPER* g3Dmapper, const void* resistDat
 
 			objParam.mdl.arcID = gobjBin->objArcID;
 			objParam.mdl.datID = gobjList[i];
+			objParam.mdl.inDatNum = 0;
 			objParam.tex.arcID = NON_PARAM;
 			objParam.tex.datID = NON_PARAM;
+			objParam.tex.inDatNum = 0;
 			for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
 				if( j<gobjAnmListHeader.SetNum ){
 					objParam.anm[j].arcID = gobjBin->objanmArcID;
 					objParam.anm[j].datID = gobjAnmListHeader.Code[j];
+					objParam.anm[j].inDatNum = gobjAnmListHeader.AnmNum;
 				} else {
 					objParam.anm[j].arcID = NON_PARAM;
 					objParam.anm[j].datID = NON_PARAM;
+					objParam.anm[j].inDatNum = 0;
 				}
 			}
 
