@@ -8,7 +8,6 @@
 //============================================================================================
 #include "gflib.h"
 
-#include "..\g3d_map.h"
 #include "map\dp3format.h"
 
 #include "func_pmcustom_file.h"
@@ -112,7 +111,7 @@ typedef struct {
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = LOAD_START,
+	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	FILE_HEADER_SET,
 	RND_CREATE,
@@ -238,7 +237,7 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 		ldst->mdlLoaded = TRUE;
 		ldst->attrLoaded = TRUE;
 
-		ldst->seq = LOAD_IDLING;
+		ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
 		return FALSE;
 		break;
 	}

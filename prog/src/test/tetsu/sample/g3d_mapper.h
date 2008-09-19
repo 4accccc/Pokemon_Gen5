@@ -1,5 +1,3 @@
-#include "g3d_map.h"
-
 #define MAP_BLOCK_COUNT		(9)
 
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
@@ -9,6 +7,11 @@
 #define G3D_MAPPER_ATTR_MAX	(16)
 
 typedef struct _G3D_MAPPER G3D_MAPPER;
+
+enum {
+	FILE_MAPEDITER_DATA = 0,
+	FILE_CUSTOM_DATA = 1,
+};
 
 typedef struct {
 	VecFx16 vecN;
@@ -82,20 +85,20 @@ typedef struct {
 }G3D_MAPPER_GLOBAL_TEXTURE;
 
 typedef struct {
-	GFL_G3D_MAPDATA_FILETYPE		g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
-	u16								sizex;			//横ブロック数
-	u16								sizez;			//縦ブロック数
-	u32								totalSize;		//配列サイズ
-	fx32							width;			//ブロック１辺の幅
-	fx32							height;			//ブロック高さ
-	G3D_MAPPER_MODE					mode;			//動作モード
-	u32								arcID;			//グラフィックアーカイブＩＤ
-	u32								gtexType;		//グローバルテクスチャタイプ
-	void*							gtexData;		//グローバルテクスチャ
-	u32								gobjType;		//グローバルオブジェクトタイプ
-	void*							gobjData;		//グローバルオブジェクト
+	u32						g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
+	u16						sizex;			//横ブロック数
+	u16						sizez;			//縦ブロック数
+	u32						totalSize;		//配列サイズ
+	fx32					width;			//ブロック１辺の幅
+	fx32					height;			//ブロック高さ
+	G3D_MAPPER_MODE			mode;			//動作モード
+	u32						arcID;			//グラフィックアーカイブＩＤ
+	u32						gtexType;		//グローバルテクスチャタイプ
+	void*					gtexData;		//グローバルテクスチャ
+	u32						gobjType;		//グローバルオブジェクトタイプ
+	void*					gobjData;		//グローバルオブジェクト
 
-	const G3D_MAPPER_DATA*			data;			//実マップデータ
+	const G3D_MAPPER_DATA*	data;			//実マップデータ
 
 }G3D_MAPPER_RESIST;
 

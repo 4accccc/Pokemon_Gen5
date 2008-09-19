@@ -9,10 +9,10 @@
 #include "gflib.h"
 #include "system\gfl_use.h"	//—”—p
 
-#include "g3d_mapper.h"
-
 #include "g3dmapfunc\func_mapeditor_file.h"
 #include "g3dmapfunc\func_pmcustom_file.h"
+
+#include "g3d_mapper.h"
 //============================================================================================
 /**
  *
@@ -241,8 +241,7 @@ void	Main3Dmapper( G3D_MAPPER* g3Dmapper )
 			objRes = &g3Dmapper->globalObjRes[i];
 
 			if( objRes->g3Dobj != NULL ){
-				anmCount = GFL_G3D_OBJECT_GetAnimeCount( objRes->g3Dobj );
-				for( j=0; j<anmCount; j++ ){
+				for( j=0; j<GLOBAL_OBJ_ANMCOUNT; j++ ){
 					GFL_G3D_OBJECT_LoopAnimeFrame( objRes->g3Dobj, j, FX32_ONE ); 
 				}
 			}
@@ -997,9 +996,9 @@ static void	_drawTree0( u32 texDataAdrs, u32 texPlttAdrs, VecFx16* vecView, BOOL
 }
 
 static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData = {
-	LIGHT_NONE,
+	GFL_G3D_MAP_LIGHT_NONE,
 	GX_RGB(31,31,31), GX_RGB(16,16,16), GX_RGB(16,16,16), GX_RGB(0,0,0),
-	63, 31, DRAW_YBILLBOARD, 8,
+	63, 31, GFL_G3D_MAP_DRAW_YBILLBOARD, 8,
 	_drawTree0,
 };
 
@@ -1147,6 +1146,7 @@ static void CreateGrobalObj_forBin( G3D_MAPPER* g3Dmapper, const void* resistDat
 
 			for( j=0; j<gobjAnmListHeader.SetNum; j++ ){
 				GFL_G3D_OBJECT_EnableAnime( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
+				GFL_G3D_OBJECT_ResetAnimeFrame( g3Dmapper->globalObjRes[i].g3Dobj, j ); 
 			}
 		}
 		g3Dmapper->globalObj.gobjCount = gobjListHeader->count;

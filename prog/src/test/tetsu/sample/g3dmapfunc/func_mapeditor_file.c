@@ -8,7 +8,6 @@
 //============================================================================================
 #include "gflib.h"
 
-#include "..\g3d_map.h"
 #include "map\dp3format.h"
 #include "func_mapeditor_file.h"
 //============================================================================================
@@ -34,7 +33,7 @@
  */
 //============================================================================================
 enum {
-	FILE_LOAD_START = LOAD_START,
+	FILE_LOAD_START = GFL_G3D_MAP_LOAD_START,
 	FILE_LOAD,
 	RND_CREATE,
 	TEX_TRANS,
@@ -99,7 +98,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 				}
 			//===========
 			} else {
-				GFL_G3D_MAP_MakeTestPos( g3Dmap );
+				//GFL_G3D_MAP_MakeTestPos( g3Dmap );
 			//===========
 			}
 		}
@@ -111,7 +110,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 
 	case TEX_TRANS:
 		if( GFL_G3D_MAP_TransVram(g3Dmap) == FALSE ){
-			ldst->seq = LOAD_IDLING;
+			ldst->seq = GFL_G3D_MAP_LOAD_IDLING;
 			return FALSE;
 		}
 		break;
