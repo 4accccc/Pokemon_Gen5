@@ -1,6 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 //=============================================================================================
 /**
  * @file	gflib.h
@@ -37,6 +34,7 @@ extern "C" {
 #include "g3d_scene.h"
 #include "g3d_camera.h"
 #include "g3d_light.h"
+#include "g3d_map.h"
 #include "billboard.h"
 #include "billboard_act.h"
 
@@ -61,6 +59,3 @@ extern "C" {
 /*  */
 
 #endif	/*	__GFLIB_H__ */
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
