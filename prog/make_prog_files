@@ -21,7 +21,6 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/game/fld_act.c \
 				test/tetsu/sample/samplemain.c \
 				test/tetsu/sample/g3d_mapper.c \
-				test/tetsu/sample/g3d_map.c \
 				test/tetsu/sample/sample_net.c \
 				test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
 				test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
@@ -37,8 +36,8 @@ SRCS	+=		test/testmode.c \
 				test/goto/comm_error.c \
 				test/field/field_proc.c \
 				test/field/field_main.c \
-				test/field/field_g3d_map.c \
 				test/field/field_g3d_mapper.c \
+				test/field/field_g3d_map.c \
 				test/field/field_net.c	\
 				print/printsys.c \
 				print/gf_font.c
