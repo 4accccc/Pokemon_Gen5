@@ -37,7 +37,6 @@ typedef enum {
 typedef struct {
 	u16 highQ_ID;
 	u16 lowQ_ID;
-	u16 texID;
 }G3D_MAPPEROBJ_DATA;
 
 typedef struct {
@@ -67,10 +66,12 @@ typedef struct {
 }G3D_MAPPER_GLOBAL_OBJSET_TBL;
 
 typedef struct {
-	u32							areaObjArcID;	//配置種類アーカイブＩＤ
-	u32							areaObjDatID;	//配置種類データＩＤ
-	u32							objArcID;		//モデルアーカイブＩＤ
-	u32							objtexArcID;	//テクスチャアーカイブＩＤ
+	u32							areaObjArcID;		//配置種類アーカイブＩＤ
+	u32							areaObjAnmTblArcID;	//配置種類アニメ付与データアーカイブＩＤ
+	u32							areaObjDatID;		//配置種類データＩＤ
+	u32							objArcID;			//モデルアーカイブＩＤ
+	u32							objtexArcID;		//テクスチャアーカイブＩＤ
+	u32							objanmArcID;		//アニメアーカイブＩＤ
 }G3D_MAPPER_GLOBAL_OBJSET_BIN;
 
 #define	NON_GLOBAL_TEX	(0xffffffff)

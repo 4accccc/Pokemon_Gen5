@@ -754,10 +754,11 @@ static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
 	GFL_G3D_MAP_OBJ*	obj = g3Dmap->globalResObj->gobj;
 	u32					count = g3Dmap->globalResObj->gobjCount;
-	NNSG3dRenderObj	*NNSrnd, *NNSrnd_L;
-	VecFx32			globalTrans;
-	fx32			length;
-	int				i;
+	GFL_G3D_OBJ*		g3Dobj;
+	NNSG3dRenderObj		*NNSrnd, *NNSrnd_L;
+	VecFx32				globalTrans;
+	fx32				length;
+	int					i;
 
 	if(( count == 0 )||( obj == NULL )){ return; }
 
@@ -769,13 +770,13 @@ static void	DrawObj( GFL_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 			getViewLength( g3Dcamera, &globalTrans, &length );
 
 			if( length <= DRAW_LIMIT ){
-	
-				NNSrnd = obj[ g3Dmap->object[i].id ].NNSrnd_H;
-				NNSrnd_L = obj[ g3Dmap->object[i].id ].NNSrnd_L;
-
-				if( ( length > LOD_LIMIT )&&( NNSrnd_L != NULL ) ){
-					NNSrnd = NNSrnd_L;
+				if( (length > LOD_LIMIT)&&(obj[ g3Dmap->object[i].id ].g3DobjLQ != NULL) ){
+					g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjLQ;
+				} else {
+					g3Dobj = obj[ g3Dmap->object[i].id ].g3DobjHQ;
 				}
+				NNSrnd = GFL_G3D_RENDER_GetRenderObj( GFL_G3D_OBJECT_GetG3Drnd( g3Dobj ) ); 
+
 				if( NNS_G3dRenderObjGetResMdl( NNSrnd ) != NULL ){
 	
 					NNS_G3dGlbSetBaseTrans( &globalTrans );		// à íuê›íË

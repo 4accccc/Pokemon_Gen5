@@ -80,8 +80,8 @@ typedef struct {
 //------------------------------------------------------------------
 //グローバルオブジェクト設定定義
 typedef struct {
-	NNSG3dRenderObj*	NNSrnd_H;	//レンダー(High Q)
-	NNSG3dRenderObj*	NNSrnd_L;	//レンダー(Low Q)
+	GFL_G3D_OBJ*	g3DobjHQ;	//オブジェクト(High Q)
+	GFL_G3D_OBJ*	g3DobjLQ;	//オブジェクト(Low Q)
 }GFL_G3D_MAP_OBJ;
 //------------------------------------------------------------------
 //ジオメトリ直接書き込みオブジェクト設定定義

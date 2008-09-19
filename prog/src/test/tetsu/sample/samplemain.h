@@ -22,8 +22,8 @@ static const G3D_MAPPER_DATA sampleMap[] = {
 };
 
 static const G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
-	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd, NON_TEX },
-	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd, NON_TEX },
+	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
+	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
 };
 
 static const u16	resistDDobjTbl[] = {
@@ -42,7 +42,8 @@ static const G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
 
 #define DATID_GSMAP_GOBJ (2)
 static const G3D_MAPPER_GLOBAL_OBJSET_BIN	gobjData_Bin = {
-	ARCID_GSAREAOBJ, DATID_GSMAP_GOBJ, ARCID_GSOBJ, ARCID_GSOBJTEX,
+	ARCID_GSAREAOBJ, ARCID_GSOBJANMTBL, DATID_GSMAP_GOBJ, 
+	ARCID_GSOBJ, ARCID_GSOBJTEX, ARCID_GSOBJANM,
 };
 
 static const G3D_MAPPER_DATA GSMap[] = {
