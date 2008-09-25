@@ -1,3 +1,9 @@
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define	MAPPLTT_SIZE	(0x200) 	//テクスチャパレット用ＶＲＡＭ確保サイズ 
 //#define	MAPOBJ_SIZE		(0x18000) 	//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
 //#define	MAPOBJTEX_SIZE	(0x4000) 	//ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
@@ -350,4 +356,8 @@ extern BOOL GFL_G3D_MAP_TransVram( GFL_G3D_MAP* g3Dmap );
  */
 //============================================================================================
 extern void GFL_G3D_MAP_MakeTestPos( GFL_G3D_MAP* g3Dmap );
+
+#ifdef __cplusplus
+}/* extern "C" */
+#endif
 

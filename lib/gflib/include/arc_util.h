@@ -288,21 +288,35 @@ extern void GFL_ARC_UTIL_TransVramCharacterMakeProxySyncroMappingMode( ARCID arc
 extern const void* GFL_ARC_UTIL_LoadTransTypeCharacterMakeProxy( ARCID arcID, ARCDATID datID, BOOL compressedFlag, 
 	NNS_G2D_VRAM_TYPE vramType, u32 offs, HEAPID heapID, NNSG2dImageProxy* proxy, NNSG2dCharacterData** charData );
 
-
 //------------------------------------------------------------------
 /**
- * ｷｬﾗﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
+ * ｷｬﾗﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。（BG用）
  *
- * @param   arcID				ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
- * @param   datID				ﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
- * @param   compressedFlag		圧縮されているか
- * @param   charData			ｷｬﾗﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
- * @param   heapID				ﾋｰﾌﾟID
+ * @param   arcID				[in] ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID				[in] ﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   compressedFlag		[in] 圧縮されているか
+ * @param   charData			[out] ｷｬﾗﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
+ * @param   heapID				[in] ﾋｰﾌﾟID
  *
  * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
  */
 //------------------------------------------------------------------
-extern void* GFL_ARC_UTIL_LoadCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+extern void* GFL_ARC_UTIL_LoadBGCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
+
+//------------------------------------------------------------------
+/**
+ * ｷｬﾗﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。（OBJ用）
+ *
+ * @param   arcID				[in] ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID				[in] ﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   compressedFlag		[in] 圧縮されているか
+ * @param   charData			[out] ｷｬﾗﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
+ * @param   heapID				[in] ﾋｰﾌﾟID
+ *
+ * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
+ */
+//------------------------------------------------------------------
+void* GFL_ARC_UTIL_LoadOBJCharacter( ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dCharacterData** charData, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -363,6 +377,36 @@ extern void* GFL_ARC_UTIL_LoadCellBank(ARCID arcID, ARCDATID datID, BOOL compres
 //--------------------------------------------------------------------------------------------
 extern void* GFL_ARC_UTIL_LoadAnimeBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dAnimBankData** anmBank, HEAPID heapID);
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ﾏﾙﾁｾﾙﾊﾞﾝｸﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
+ *
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   cellBank		ﾏﾙﾁｾﾙﾊﾞﾝｸﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
+ * @param   heapID			ﾋｰﾌﾟID
+ * @param   pSize			ｾﾙﾊﾞﾝｸのﾊﾞｲﾄｻｲｽﾞを受け取る変数ﾎﾟｲﾝﾀ（要らなければNULLで）
+ *
+ * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void* GFL_ARC_UTIL_LoadMultiCellBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellDataBank** cellBank, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ｱﾆﾒﾊﾞﾝｸﾃﾞｰﾀを ﾛｰﾄﾞして Unpack するだけです。解放は各自で。
+ *
+ * @param   arcID			ｱｰｶｲﾌﾞﾌｧｲﾙｲﾝﾃﾞｯｸｽ
+ * @param   datID			ｱｰｶｲﾌﾞﾃﾞｰﾀｲﾝﾃﾞｯｸｽ
+ * @param   compressedFlag	圧縮されているﾃﾞｰﾀか？
+ * @param   anmBank			ﾏﾙﾁｾﾙｱﾆﾒﾊﾞﾝｸﾃﾞｰﾀｱﾄﾞﾚｽを保持するﾎﾟｲﾝﾀのｱﾄﾞﾚｽ
+ * @param   heapID			ﾋｰﾌﾟID
+ *
+ * @retval  void*		ﾛｰﾄﾞしたﾃﾞｰﾀの先頭ﾎﾟｲﾝﾀ
+ */
+//--------------------------------------------------------------------------------------------
+extern	void* GFL_ARC_UTIL_LoadMultiAnimeBank(ARCID arcID, ARCDATID datID, BOOL compressedFlag, NNSG2dMultiCellAnimBankData** anmBank, HEAPID heapID);
 
 //------------------------------------------------------------------
 /**
