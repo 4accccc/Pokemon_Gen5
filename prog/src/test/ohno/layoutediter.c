@@ -1,0 +1,11 @@
+static int LayoutEditorTableNum[]={
+0, 
+3, 
+5};
+static LAYOUTEDIT_BODY LayoutEditorTable[]={
+	{NARC_C__home_layout_layout_kaseki_board1_NSCR,NARC_C__home_layout_layout_kaseki_board_NCGR,NARC_C__home_layout_layout_kaseki_board_NCLR,GFL_BG_FRAME0_M,2,7},
+	{NARC_C__home_layout_layout_ohnotest_NSCR,NARC_C__home_layout_layout_ohnotest_NCGR,NARC_C__home_layout_layout_ohnolayout_NCLR,GFL_BG_FRAME1_M,1,8},
+	{NARC_C__home_layout_layout_ohnotest_NSCR,NARC_C__home_layout_layout_ohnotest_NCGR,NARC_C__home_layout_layout_ohnolayout_NCLR,GFL_BG_FRAME0_S,0,8},
+	{NARC_C__home_layout_layout_kaseki_board1_NSCR,NARC_C__home_layout_layout_kaseki_board_NCGR,NARC_C__home_layout_layout_kaseki_board_NCLR,GFL_BG_FRAME0_M,0,7},
+	{NARC_C__home_layout_layout_ohnotest2_NSCR,NARC_C__home_layout_layout_ohnotest_NCGR,NARC_C__home_layout_layout_ohnolayout_NCLR,GFL_BG_FRAME0_S,0,8},
+};

@@ -18,13 +18,119 @@
 #include "layout.naix"
 
 
+
+typedef struct{
+    int nscr;
+    int ncgr;
+    int nclr;
+    int frame;
+    int priority;
+    int paletteBit;
+} LAYOUTEDIT_BODY;
+
+
+
+#include "layoutediter.c"
+
+
+
 typedef struct
 {
 	int				heapID;	
 	GFL_BMPWIN*		win;
-	GFL_BMP_DATA*	bmp;	
+	GFL_BMP_DATA*	bmp;
+    int layoutno;
 
 } LAYOUT_WORK;
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	アサートから抜ける
+ *
+ *	L+R+X+Y
+ */
+//-----------------------------------------------------------------------------
+static void GFUser_AssertDispFinishFunc( void )
+{
+	int key_cont;
+
+	
+	while(1){
+
+		GFL_UI_Main();
+		key_cont = GFL_UI_KEY_GetCont();
+		// キーが押されるまでループ
+		if( (key_cont & PAD_BUTTON_L) && (key_cont & PAD_BUTTON_R) &&
+			(key_cont & PAD_BUTTON_X) && (key_cont & PAD_BUTTON_Y) ){
+			return ;
+		}
+
+		// VBlank待ち
+		// (これを有効にすると、デバッカで停止させたときにコールスタックが表示されない)
+//		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	レイアウトデータに従い表示
+ */
+//-----------------------------------------------------------------------------
+
+static void GFL_Layout_Disp(int no, LAYOUTEDIT_BODY* pBody, int* pHead,int heapID)
+{
+    int start = pHead[no];
+    int end = pHead[no+1];
+    int i,p,pal,startpal,endpal;
+    int sizeOffset,addSize;
+    int mainSizeOffset = 0,subSizeOffset = 0;
+
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
+
+    for(i=start;i < end;i++){
+        startpal = endpal = -1;
+        if(pBody[i].frame < GFL_BG_FRAME0_S){
+            sizeOffset = mainSizeOffset;
+            pal = PALTYPE_MAIN_BG;
+        }
+        else{
+            sizeOffset = subSizeOffset;
+            pal = PALTYPE_SUB_BG;
+        }
+        addSize = GFL_ARC_UTIL_TransVramBgCharacter( ARCID_LAYOUT, pBody[i].ncgr , pBody[i].frame, 0, 0, 0, heapID );
+
+        for(p = 0 ; p < 16 ; p++){
+            if( pBody[i].paletteBit & (0x1<<p) ){
+                OS_TPrintf("pal %d %d %d\n",i,startpal,endpal);
+                if(startpal==-1){
+                    startpal = p * 32;
+                }
+                if(endpal < p * 32){
+                    endpal =  p * 32;
+                }
+            }
+        }
+        GFL_ARC_UTIL_TransVramPaletteEx( ARCID_LAYOUT, pBody[i].nclr , pal, startpal, startpal, endpal - startpal + 32, heapID );
+        GFL_ARC_UTIL_TransVramScreen( ARCID_LAYOUT, pBody[i].nscr, pBody[i].frame, sizeOffset, 0, 0, heapID );
+
+        if(pBody[i].frame < GFL_BG_FRAME0_S){
+            mainSizeOffset += addSize;
+        }
+        else{
+            subSizeOffset += addSize;
+        }
+        GFL_BG_SetPriority(pBody[i].frame,  pBody[i].priority);
+		GFL_BG_SetVisible( pBody[i].frame,   VISIBLE_ON );
+    }
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -38,6 +144,7 @@ static GFL_PROC_RESULT DebugLayoutMainProcInit( GFL_PROC * proc, int * seq, void
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_LAYOUT, 0x10000 );
 	wk = GFL_PROC_AllocWork( proc, sizeof( LAYOUT_WORK ), HEAPID_LAYOUT );
 	wk->heapID = HEAPID_LAYOUT;
+    wk->layoutno = 0;
 		
 	{
 		static const GFL_BG_DISPVRAM dispvramBank = {
@@ -67,53 +174,51 @@ static GFL_PROC_RESULT DebugLayoutMainProcInit( GFL_PROC * proc, int * seq, void
 	}
 		
 	{
-		static const GFL_BG_BGCNT_HEADER bgcntText = {
+		static const GFL_BG_BGCNT_HEADER bg0cntText = {
 			0, 0, 0x800, 0,
 			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 			GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
+		static const GFL_BG_BGCNT_HEADER bg1cntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
 
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bg0cntText,   GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bg1cntText,   GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bg0cntText,   GFL_BG_MODE_TEXT );
 
 		///< main
-		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
 		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0x00, 1, 0 );
-		GFL_ARC_UTIL_TransVramBgCharacter( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board_NCGR, GFL_BG_FRAME0_M, 0, 0, 0, wk->heapID );
-		GFL_ARC_UTIL_TransVramPalette( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board_NCLR, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
-		GFL_ARC_UTIL_TransVramScreen( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board1_NSCR, GFL_BG_FRAME0_M, 0, 0, 0, wk->heapID );
+
+
+        //	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board_NCGR, GFL_BG_FRAME0_M, 0, 0, 0, wk->heapID );
+///		GFL_ARC_UTIL_TransVramPalette( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board_NCLR, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
+///		GFL_ARC_UTIL_TransVramScreen( ARCID_LAYOUT, NARC_C__home_layout_layout_kaseki_board1_NSCR, GFL_BG_FRAME0_M, 0, 0, 0, wk->heapID );
 //		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 //		GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
 		///< sub
-		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_ON );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 		
 		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0x00, 1, 0 );
-		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-	}		
+//		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+        GFL_Layout_Disp(wk->layoutno,LayoutEditorTable,LayoutEditorTableNum, wk->heapID);
+
+    }		
 	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 
-#if 0
-	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
-	wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
-	GFL_BMP_Clear( wk->bmp, 0xff );
-	GFL_BMPWIN_MakeScreen( wk->win );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );	
-#endif	
-	OS_TPrintf( "proc Init\n" );
-	
 	CommErrorSys_Setup();
+
+    // アサート回避関数の設定
+    GFL_ASSERT_SetDisplayFunc( NULL, NULL, GFUser_AssertDispFinishFunc );
+
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -132,14 +237,24 @@ static GFL_PROC_RESULT DebugLayoutMainProcMain( GFL_PROC * proc, int * seq, void
 		return GFL_PROC_RES_FINISH;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
 	{
-		///< main
-		CommErrorSys_Init( GFL_BG_FRAME0_M );
-		CommErrorSys_Call();
+        
+        
+        GFL_Layout_Disp(wk->layoutno,LayoutEditorTable,LayoutEditorTableNum,wk->heapID);
+        {
+            int num = sizeof(LayoutEditorTableNum)/sizeof(int)-1;
+            wk->layoutno++;
+            if(wk->layoutno >= num){
+                wk->layoutno = 0;
+            }
+        }
+        ///< main
+//		CommErrorSys_Init( GFL_BG_FRAME0_M );
+//		CommErrorSys_Call();
 	}
 	
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 	{
 		///< sub 
 		CommErrorSys_Init( GFL_BG_FRAME0_S );
