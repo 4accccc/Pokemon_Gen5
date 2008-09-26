@@ -19,7 +19,9 @@
 // Consts
 //==============================================================
 enum {
-	LINE_DOT_HEIGHT = 16,
+	LETTER_CHAR_WIDTH = 2,			///< １文字あたり横キャラ数
+	LETTER_CHAR_HEIGHT = 2,			///< １文字あたり縦キャラ数
+	LINE_DOT_HEIGHT = 16,			///< １行あたりのドット数
 
 	// 汎用コントロールタイプ
 	CTRL_GENERAL_COLOR			= (0x0000),	///< 色変更
@@ -198,15 +200,20 @@ static inline u16 Que_FwdBufPos( const PRINT_QUE* que, u16 pos, u16 fwdSize );
 /**
  * システム初期化（GFLIB初期化後に１度だけ呼ぶ）
  *
- * @param   heapID		
+ * @param   heapID		初期化用ヒープID
  *
  */
 //==============================================================================================
 void PRINTSYS_Init( HEAPID heapID )
 {
 	GFL_STR_SetEOMCode( EOM_CODE );
-	SystemWork.charBuffer = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heapID );
+
+	// １文字分のBitmap領域のみ確保
+	SystemWork.charBuffer = GFL_BMP_Create( LETTER_CHAR_WIDTH, LETTER_CHAR_HEIGHT, GFL_BMP_16_COLOR, heapID );
 }
+
+
+
 //==============================================================================================
 /**
  * プリントキューをデフォルトのバッファサイズで生成する
@@ -252,66 +259,6 @@ PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
 //	GFL_STD_MemClear( que->buf, size );
 
 	return que;
-}
-//--------------------------------------------------------------------------
-/**
- * 通信中（描画処理を分割する必要がある）かどうか判定
- *
- * @retval  BOOL		通信中ならTRUE
- */
-//--------------------------------------------------------------------------
-static inline BOOL IsNetConnecting( void )
-{
-	return (GFL_NET_GetConnectNum() != 0);
-}
-
-
-//==============================================================================================
-/**
- * BITMAPに対する文字列描画（一括）
- *
- * @param   que		[out] プリントキュー
- * @param   dst		[out] 描画先Bitmap
- * @param   xpos	[in]  描画開始Ｘ座標（ドット）
- * @param   ypos	[in]  描画開始Ｙ座標（ドット）
- * @param   str		[in]  文字列
- * @param   font	[in]  フォントタイプ
- *
- */
-//==============================================================================================
-void PRINTSYS_Print( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
-{
-	GF_ASSERT(que);
-	GF_ASSERT(dst);
-	GF_ASSERT(str);
-	GF_ASSERT(font);
-
-	{
-		PRINT_JOB* job = &SystemWork.printJob;
-		setupPrintJob( job, font, dst, xpos, ypos );
-
-		if( !IsNetConnecting() )
-		{
-			const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
-			while( *sp != EOM_CODE )
-			{
-				sp = print_next_char( job, sp );
-			}
-		}
-		else
-		{
-			u32  size = Que_CalcUseBufSize( str );
-
-			if( size <= Que_GetFreeSize( que ) )
-			{
-				Que_StoreNewJob( que, job, str );
-			}
-			else
-			{
-				GF_ASSERT_MSG(0, "[PRINT ACM] not enough buffer ... strsize = %d\n", size);
-			}
-		}
-	}
 }
 //==============================================================================================
 /**
@@ -392,7 +339,7 @@ BOOL PRINTSYS_QUE_IsFinished( const PRINT_QUE* que )
 
 //==============================================================================================
 /**
- * プリントキューに、指定Bitmapが出力対象の描画処理が残っているかチェック
+ * プリントキューに、特定Bitmapが出力対象の描画処理が残っているかチェック
  *
  * @param   que				プリントキュー
  * @param   targetBmp		描画対象Bitmap
@@ -419,8 +366,91 @@ BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA* targe
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------
+/**
+ * 通信中（描画処理を分割する必要がある）かどうか判定
+ *
+ * @retval  BOOL		通信中ならTRUE
+ */
+//--------------------------------------------------------------------------
+static inline BOOL IsNetConnecting( void )
+{
+	return (GFL_NET_GetConnectNum() != 0);
+}
 
 
+//==============================================================================================
+/**
+ * プリントキューを介した文字列描画処理
+ *
+ * @param   que		[out] プリントキュー
+ * @param   dst		[out] 描画先Bitmap
+ * @param   xpos	[in]  描画開始Ｘ座標（ドット）
+ * @param   ypos	[in]  描画開始Ｙ座標（ドット）
+ * @param   str		[in]  文字列
+ * @param   font	[in]  フォントタイプ
+ *
+ */
+//==============================================================================================
+void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
+{
+	GF_ASSERT(que);
+	GF_ASSERT(dst);
+	GF_ASSERT(str);
+	GF_ASSERT(font);
+
+	{
+		PRINT_JOB* job = &SystemWork.printJob;
+		setupPrintJob( job, font, dst, xpos, ypos );
+
+		if( !IsNetConnecting() )
+		{
+			const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+			while( *sp != EOM_CODE )
+			{
+				sp = print_next_char( job, sp );
+			}
+		}
+		else
+		{
+			u32  size = Que_CalcUseBufSize( str );
+
+			if( size <= Que_GetFreeSize( que ) )
+			{
+				Que_StoreNewJob( que, job, str );
+			}
+			else
+			{
+				GF_ASSERT_MSG(0, "[PRINT ACM] not enough buffer ... strsize = %d\n", size);
+			}
+		}
+	}
+}
+
+//==============================================================================================
+/**
+ * Bitmap へ直接の文字列描画
+ *
+ * @param   dst		[out] 描画先Bitmap
+ * @param   xpos	[in]  描画開始Ｘ座標（ドット）
+ * @param   ypos	[in]  描画開始Ｙ座標（ドット）
+ * @param   str		[in]  文字列
+ * @param   font	[in]  フォント
+ *
+ */
+//==============================================================================================
+void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font )
+{
+	PRINT_JOB* job = &SystemWork.printJob;
+	const STRCODE* sp = GFL_STR_GetStringCodePointer( str );
+
+	setupPrintJob( job, font, dst, xpos, ypos );
+
+	while( *sp != EOM_CODE )
+	{
+		sp = print_next_char( job, sp );
+	}
+}
 
 
 //------------------------------------------------------------------

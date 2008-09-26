@@ -6,6 +6,7 @@
  *
  * @date	2007.02.06	作成
  * @date	2008.09.11	通信対応キュー構造を作成
+ * @date	2008.09.26	キュー構造を利用しない文字列描画処理も復活
  */
 //=============================================================================================
 #ifndef __PRINTSYS_H__
@@ -52,7 +53,7 @@ typedef void (*pPrintCallBack)(u32);
 //--------------------------------------------------------------------------
 typedef enum {
 	PRINTSTREAM_STATE_RUNNING = 0,	///< 処理実行中（文字列が流れている）
-	PRINTSTREAM_STATE_PAUSE,		///< 停止中（ページ切り替え待ち等）
+	PRINTSTREAM_STATE_PAUSE,		///< 一時停止中（ページ切り替え待ち等）
 	PRINTSTREAM_STATE_DONE,			///< 文字列終端まで表示完了
 }PRINTSTREAM_STATE;
 
@@ -75,7 +76,7 @@ typedef enum {
 /**
  * システム初期化（プログラム起動時に１度だけ呼び出す）
  *
- * @param   heapID		
+ * @param   heapID		初期化用ヒープID
  *
  */
 //==============================================================================================
@@ -138,10 +139,9 @@ extern BOOL PRINTSYS_QUE_IsFinished( const PRINT_QUE* que );
 //==============================================================================================
 extern BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA* targetBmp );
 
-
 //==============================================================================================
 /**
- * BITMAPに対する文字列描画
+ * プリントキューを介した文字列描画
  *
  * @param   que		[out] 描画処理内容を記録するためのプリントキュー
  * @param   dst		[out] 描画先Bitmap
@@ -152,13 +152,25 @@ extern BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA
  *
  */
 //==============================================================================================
-extern void PRINTSYS_Print( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
-
-
+extern void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
 
 //==============================================================================================
 /**
- * プリントストリーム作成（通常版 - コールバックなし）
+ * Bitmap へ直接の文字列描画
+ *
+ * @param   dst		[out] 描画先Bitmap
+ * @param   xpos	[in]  描画開始Ｘ座標（ドット）
+ * @param   ypos	[in]  描画開始Ｙ座標（ドット）
+ * @param   str		[in]  文字列
+ * @param   font	[in]  フォント
+ *
+ */
+//==============================================================================================
+extern void PRINTSYS_Print( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, const STRBUF* str, GFL_FONT* font );
+
+//==============================================================================================
+/**
+ * プリントストリームを利用した文字列描画（通常版 - コールバックなし）
  *
  * @param   dst			描画先Bitmap
  * @param   xpos		描画開始Ｘ座標（ドット）
@@ -179,7 +191,7 @@ extern PRINT_STREAM* PRINTSYS_PrintStream(
 
 //==============================================================================================
 /**
- * プリントストリーム作成（コールバックあり）
+ * プリントストリームを利用した文字列描画（コールバックあり）
  *
  * @param   dst			描画先Bitmap
  * @param   xpos		描画開始Ｘ座標（ドット）
@@ -326,7 +338,7 @@ inline void PRINT_UTIL_Setup( PRINT_UTIL* wk, GFL_BMPWIN* win )
 //--------------------------------------------------------------------------------------
 inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos, const STRBUF* buf, GFL_FONT* font )
 {
-	PRINTSYS_Print( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font );
+	PRINTSYS_PrintQue( que, GFL_BMPWIN_GetBmp(wk->win), xpos, ypos, buf, font );
 	wk->transReq = TRUE;
 }
 
