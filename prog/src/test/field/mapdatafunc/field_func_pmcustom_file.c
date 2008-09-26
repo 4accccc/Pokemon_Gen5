@@ -10,7 +10,7 @@
 
 #include "map\dp3format.h"
 
-#include "func_pmcustom_file.h"
+#include "field_func_pmcustom_file.h"
 //============================================================================================
 /**
  *
@@ -117,7 +117,7 @@ enum {
 	RND_CREATE,
 };
 
-BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
+BOOL FieldLoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 
@@ -257,7 +257,7 @@ BOOL LoadMapData_PMcustomFile( GFL_G3D_MAP* g3Dmap )
 static BOOL CheckRectIO( const XZ_VERTEX* vtx0, const XZ_VERTEX *vtx1, const VecFx32* pos );
 static BOOL	BinSearch( const LINE_DATA *list, const u16 size, const fx32 valZ, u16* idx );
 //============================================================================================
-void GetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
+void FieldGetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata,
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
 	//データ取得用情報設定

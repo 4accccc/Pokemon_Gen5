@@ -9,7 +9,8 @@
 #include "gflib.h"
 
 #include "map\dp3format.h"
-#include "func_mapeditor_file.h"
+#include "field_func_mapeditor_file.h"
+
 //============================================================================================
 /**
  *
@@ -39,7 +40,7 @@ enum {
 	TEX_TRANS,
 };
 
-BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
+BOOL FieldLoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 {
 	GFL_G3D_MAP_LOAD_STATUS* ldst;
 
@@ -129,7 +130,7 @@ BOOL LoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
  *
  */
 //============================================================================================
-void GetAttr_MapEditorFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
+void FieldGetAttr_MapEditorFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
 	fx32			grid_w, grid_x, grid_z;

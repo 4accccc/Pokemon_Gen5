@@ -9,8 +9,8 @@
 #include <gflib.h>
 #include "system\gfl_use.h"	//óêêîóp
 
-#include "g3dmapfunc\func_mapeditor_file.h"
-#include "g3dmapfunc\func_pmcustom_file.h"
+#include "mapdatafunc\field_func_mapeditor_file.h"
+#include "mapdatafunc\field_func_pmcustom_file.h"
 
 #include "field_g3d_mapper.h"
 
@@ -116,8 +116,8 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  */
 //------------------------------------------------------------------
 static const MAPFILE_FUNC mapFileFuncTbl[] = {
-	{ LoadMapData_MapEditorFile, GetAttr_MapEditorFile },	//FILE_MAPEDITER_DATA
-	{ LoadMapData_PMcustomFile, GetAttr_PMcustomFile },		//FILE_MAPEDITER_DATA
+	{ FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },	//FILE_MAPEDITER_DATA
+	{ FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },		//FILE_MAPEDITER_DATA
 };
 
 //------------------------------------------------------------------
