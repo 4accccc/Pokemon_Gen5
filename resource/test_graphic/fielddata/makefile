@@ -4,9 +4,34 @@
 #	
 #------------------------------------------------------------------------------
 #現状make対象が無いのでファイルコピーのみ
-COPYFILES = fieldmap_act.naix fieldmap_act.narc fieldmap_map.naix fieldmap_map.narc
-TARGETDIR = $(PROJECT_ARCDIR)/test_graphic
 
-do-build: $(COPYFILES)
-	-cp -f $(COPYFILES) $(TARGETDIR)
+include	$(PROJECT_RSCDIR)/macro_define
+
+TARGET_NAMES = \
+	fieldmap_act.naix \
+	fieldmap_act.narc \
+	fieldmap_map.naix \
+	fieldmap_map.narc \
+	menu_gra.naix \
+	menu_gra.narc \
+	winframe.naix \
+	winframe.narc
+
+TARGET_DIR = $(PROJECT_ARCDIR)/test_graphic
+
+TARGETS = $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
+
+.PHONY:	do-build clean install
+
+$(TARGET_DIR)/%.narc:	%.narc
+	$(COPY) $^ $@
+
+$(TARGET_DIR)/%.naix:	%.naix
+	$(COPY) $^ $@
+
+do-build: install
+
+install: $(TARGETS)
+
 clean:
+	rm -f $(TARGETS)
