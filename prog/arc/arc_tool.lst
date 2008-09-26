@@ -63,3 +63,5 @@
 	ARCID_GSOBJTEX		"test_graphic/areabm_texset.narc"	#
 	ARCID_GSOBJANMTBL	"test_graphic/bm_info_out.narc"	#
 	ARCID_GSAREAOBJ		"test_graphic/area_build.narc"	#
+	ARCID_FLDMAP_WINFRAME "test_graphic/winframe.narc"   # ウィンドウフレーム
+	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
