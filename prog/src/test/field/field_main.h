@@ -1,6 +1,9 @@
-#include "test_graphic/sample_map.naix"
-#include "test_graphic/fld_map.naix"
+//#include "test_graphic/sample_map.naix"
+//#include "test_graphic/fld_map.naix"
 #include "test_graphic/test3dp.naix"
+
+#include "test_graphic/fieldmap_sample.naix"
+#include "test_graphic/fieldmap_map.naix"
 
 static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_a1_3dppack },
@@ -22,12 +25,12 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 };
 
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
-	{ NARC_sample_map_pc_01_h_nsbmd, NARC_sample_map_pc_01_l_nsbmd },
-	{ NARC_sample_map_buil_01_h_nsbmd, NARC_sample_map_buil_01_l_nsbmd },
+	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
+	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
 };
 
 static const u16	resistDDobjTbl[] = {
-	NARC_sample_map_sample_tree_nsbtx,
+	NARC_fieldmap_sample_sample_tree_nsbtx,
 };
 
 #define DATID_GSMAP_GTEX (3)
@@ -36,8 +39,8 @@ static const FLD_G3D_MAPPER_GLOBAL_TEXTURE	gtexData = {
 };
 
 static const FLD_G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
-	ARCID_SAMPLEMAP, resistObjTbl, NELEMS(resistObjTbl), 
-	ARCID_SAMPLEMAP, resistDDobjTbl, NELEMS(resistDDobjTbl),
+	ARCID_FLDMAP_SAMPLE, resistObjTbl, NELEMS(resistObjTbl), 
+	ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
 };
 
 #define DATID_GSMAP_GOBJ (2)
