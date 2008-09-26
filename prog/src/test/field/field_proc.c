@@ -1,18 +1,18 @@
 //============================================================================================
 /**
- * @file	debug_watanabe.c
- * @brief	デバッグ＆テスト用アプリ（渡辺さん用）
+ * @file	field_proc.c
+ * @brief	フィールドプロセス (watanabe080926
  * @author	tamada
  * @date	2007.02.01
  */
 //============================================================================================
-#include "gflib.h"
-
-#include "include\system\main.h"
+#include <gflib.h>
+#include "system\main.h"
 
 extern void	FieldBoot( HEAPID heapID );
 extern void	FieldEnd( void );
 extern BOOL	FieldMain( void );
+
 //============================================================================================
 //
 //

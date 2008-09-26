@@ -1,16 +1,18 @@
 //============================================================================================
 /**
- * @file	samplemain.c
+ * @file	field_main.c
  * @brief	
  * @author	
  * @date	
+ *
+ * 元ファイル tetsu/sample/samplemain.c
  */
 //============================================================================================
-#include "gflib.h"
-#include "include/system/gfl_use.h"
-#include "include/net/network_define.h"
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "net/network_define.h"
 #include "textprint.h"
-#include "arc/arc_def.h"
+#include "arc_def.h"
 
 void	FieldBoot( HEAPID heapID );
 void	FieldEnd( void );
@@ -34,25 +36,25 @@ BOOL	FieldMain( void );
  *
  */
 //============================================================================================
-typedef struct _SAMPLE_SETUP SAMPLE_SETUP;
+typedef struct _FIELD_SETUP FIELD_SETUP;
 
-static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID );
-static void				RemoveGameSystem( SAMPLE_SETUP* gs );
-static void				MainGameSystem( SAMPLE_SETUP* gs );
-static FLD_G3D_MAPPER*		GetG3Dmapper( SAMPLE_SETUP* gs );
+static FIELD_SETUP*	SetupGameSystem( HEAPID heapID );
+static void				RemoveGameSystem( FIELD_SETUP* gs );
+static void				MainGameSystem( FIELD_SETUP* gs );
+static FLD_G3D_MAPPER*		GetFieldG3Dmapper( FIELD_SETUP* gs );
 
 #if 0
 //アーカイブＩＮＤＥＸ
 enum {
 	ARCID_TEST3D = 0,
-	ARCID_FLDMAP_ACTOR,
+	ARCID_FLDACT,
 	ARCID_FLDMAP,
-	ARCID_FLDMAP_SAMPLE,
+	ARCID_FIELDMAP,
 };
 #endif
 
 typedef struct _CURSOR_CONT	CURSOR_CONT;
-static CURSOR_CONT*		CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID );
+static CURSOR_CONT*		CreateCursor( FIELD_SETUP*	gs, HEAPID heapID );
 static void				DeleteCursor( CURSOR_CONT* cursor );
 static void				MainCursor( CURSOR_CONT* cursor);
 static void             FriendCursor( CURSOR_CONT* cursor );
@@ -62,7 +64,7 @@ static void				SetCursorDirection( CURSOR_CONT* cursor, u16* direction );
 static void				GetCursorDirection( CURSOR_CONT* cursor, u16* direction );
 
 typedef struct _PC_ACTCONT PC_ACTCONT;
-static PC_ACTCONT*		CreatePlayerAct( SAMPLE_SETUP* gs, HEAPID heapID );
+static PC_ACTCONT*		CreatePlayerAct( FIELD_SETUP* gs, HEAPID heapID );
 static void				DeletePlayerAct( PC_ACTCONT* pcActCont );
 static void				MainPlayerAct( PC_ACTCONT* pcActCont );
 static void				MainFriendPlayerAct( PC_ACTCONT* pcActCont );
@@ -73,7 +75,7 @@ static void				SetPlayerActDirection( PC_ACTCONT* pcActCont, const u16* directio
 static void				GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction );
 
 typedef struct _FLD_ACTCONT		FLD_ACTCONT;
-static FLD_ACTCONT*		CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID );
+static FLD_ACTCONT*		CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID );
 static void				DeleteFieldActSys( FLD_ACTCONT* fldActCont );
 static void				MainFieldActSys( FLD_ACTCONT* fldActCont );
 
@@ -92,7 +94,7 @@ typedef struct {
 	int				seq;
 	int				timer;
 
-	SAMPLE_SETUP*	gs;
+	FIELD_SETUP*	gs;
 	CURSOR_CONT*	cursor;
 //	CURSOR_CONT*	cursorFriend;
 	PC_ACTCONT*		pcActCont;
@@ -100,7 +102,7 @@ typedef struct {
 	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
 
-}SAMPLE_WORK;
+}FIELD_WORK;
 
 //------------------------------------------------------------------
 /**
@@ -109,7 +111,7 @@ typedef struct {
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont );
 
-SAMPLE_WORK* FieldWork;
+FIELD_WORK* fieldWork;
 
 //------------------------------------------------------------------
 /**
@@ -118,17 +120,17 @@ SAMPLE_WORK* FieldWork;
 //------------------------------------------------------------------
 void	FieldBoot( HEAPID heapID )
 {
-	FieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_WORK) );
-	FieldWork->heapID = heapID;
+	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WORK) );
+	fieldWork->heapID = heapID;
 
-	GFL_UI_TP_Init( FieldWork->heapID );
+	GFL_UI_TP_Init( fieldWork->heapID );
 }
 
 void	FieldEnd( void )
 {
 	GFL_UI_TP_Exit();
 
-	GFL_HEAP_FreeMemory( FieldWork );
+	GFL_HEAP_FreeMemory( fieldWork );
 }
 
 //------------------------------------------------------------------
@@ -142,158 +144,98 @@ BOOL	FieldMain( void )
 	BOOL return_flag = FALSE,bSkip = FALSE;
 	int i;
 
-	FieldWork->timer++;
+	fieldWork->timer++;
 	GFL_UI_TP_Main();
 
-	switch( FieldWork->seq ){
+	switch( fieldWork->seq ){
 
 	case 0:
 		//基本システムセットアップ
-		FieldWork->gs = SetupGameSystem( FieldWork->heapID );
-		FieldWork->mapNum = 0;
-		FieldWork->seq++;
-#ifdef NET_WORK_ON
-        FieldInitGameNet();
-#endif
+		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
+		fieldWork->mapNum = 0;
+		fieldWork->seq++;
         break;
 
 	case 1:
-#ifdef NET_WORK_ON
-        bSkip = FieldConnectGameNet();  // 通信処理
-        if( !bSkip && GFL_UI_KEY_GetTrg() ){  // キーが押されたら通信を待たずに開始
-            FieldEndGameNet();
-            FieldExitGameNet();
-            bSkip = TRUE;
-        }
-#else
-        bSkip = TRUE;
-#endif
-		if( bSkip ){
+		{
             //セットアップ
-            FieldResistData3Dmapper( GetG3Dmapper(FieldWork->gs), 
-                                &resistMapTbl[FieldWork->mapNum].mapperData );
-			OS_Printf("MapName: %s\n", resistMapTbl[FieldWork->mapNum].name);
-            {
-                FLD_G3D_MAPPEROBJ_RESIST resistObjData;
-                
-                resistObjData.arcID = ARCID_FLDMAP_SAMPLE;
-                resistObjData.data = resistObjTbl; 
-                resistObjData.count = NELEMS(resistObjTbl); 
-                FieldResistObjRes3Dmapper( GetG3Dmapper(FieldWork->gs), &resistObjData );
-            }
-            {
-                FLD_G3D_MAPPERDDOBJ_RESIST resistDDobjData;
-                
-                resistDDobjData.arcID = ARCID_FLDMAP_SAMPLE;
-                resistDDobjData.data = resistDDobjTbl; 
-                resistDDobjData.count = NELEMS(resistDDobjTbl); 
-                FieldResistDDobjRes3Dmapper( GetG3Dmapper(FieldWork->gs), &resistDDobjData );
-            }
-            FieldWork->cursor = CreateCursor( FieldWork->gs, FieldWork->heapID );
-            FieldWork->fldActCont = CreateFieldActSys( FieldWork->gs, FieldWork->heapID );
+            ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
+                                &resistMapTbl[fieldWork->mapNum].mapperData );
+
+            fieldWork->cursor = CreateCursor( fieldWork->gs, fieldWork->heapID );
+            fieldWork->fldActCont = CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 			{
 				VecFx32 pos;
 				u16		dir;
 
-				pos = resistMapTbl[FieldWork->mapNum].startPos;
+				pos = resistMapTbl[fieldWork->mapNum].startPos;
 				dir = 0;
 					
-				FieldWork->pcActCont = CreatePlayerAct( FieldWork->gs, FieldWork->heapID );
-				SetPlayerActTrans( FieldWork->pcActCont, &pos );
-				SetPlayerActDirection( FieldWork->pcActCont, &dir );
-#ifdef NET_WORK_ON
-				FieldWork->friendActCont = CreatePlayerAct( FieldWork->gs, FieldWork->heapID );
-				SetPlayerActTrans( FieldWork->friendActCont, &pos );
-				SetPlayerActDirection( FieldWork->friendActCont, &dir );
-#endif
+				fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
+				SetPlayerActTrans( fieldWork->pcActCont, &pos );
+				SetPlayerActDirection( fieldWork->pcActCont, &dir );
 			}
-#ifdef NET_WORK_ON
-            GFL_NET_ReloadIcon();
-#endif
-            FieldWork->seq++;
+            fieldWork->seq++;
         }
 		break;
 
 	case 2:
 		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			FieldWork->seq = 4;
+			fieldWork->seq = 4;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-			FieldWork->mapNum++;
-			if( FieldWork->mapNum >= NELEMS(resistMapTbl) ){
-				FieldWork->mapNum = 0;
+			fieldWork->mapNum++;
+			if( fieldWork->mapNum >= NELEMS(resistMapTbl) ){
+				fieldWork->mapNum = 0;
 			}
-			FieldWork->seq = 3;
+			fieldWork->seq = 3;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-			FieldWork->mapNum--;
-			if( FieldWork->mapNum < 0 ){
-				FieldWork->mapNum = NELEMS(resistMapTbl)-1;
+			fieldWork->mapNum--;
+			if( fieldWork->mapNum < 0 ){
+				fieldWork->mapNum = NELEMS(resistMapTbl)-1;
 			}
-			FieldWork->seq = 3;
+			fieldWork->seq = 3;
 			break;
 		}
-		MainPlayerAct( FieldWork->pcActCont );
-#ifdef NET_WORK_ON
-		//FriendCursor( FieldWork->cursorFriend );
-		MainFriendPlayerAct( FieldWork->friendActCont );
-#endif
-		MainFieldActSys( FieldWork->fldActCont );
+		MainPlayerAct( fieldWork->pcActCont );
+		MainFieldActSys( fieldWork->fldActCont );
 		{
 			VecFx32 pos;
 			u16		dir;
 
-			GetPlayerActTrans( FieldWork->pcActCont, &pos );
+			GetPlayerActTrans( fieldWork->pcActCont, &pos );
 
-			SetCursorTrans( FieldWork->cursor, &pos );
-			//SetCursorDirection( FieldWork->cursor, &dir );
-			FieldSetPos3Dmapper( GetG3Dmapper(FieldWork->gs), &pos );
+			SetCursorTrans( fieldWork->cursor, &pos );
+			//SetCursorDirection( fieldWork->cursor, &dir );
+			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
-		MainCursor( FieldWork->cursor );
+		MainCursor( fieldWork->cursor );
 
-		MainGameSystem( FieldWork->gs );
+		MainGameSystem( fieldWork->gs );
 		break;
 
 	case 3:
-		FieldReleaseDDobjRes3Dmapper( GetG3Dmapper(FieldWork->gs) );
-		FieldReleaseObjRes3Dmapper( GetG3Dmapper(FieldWork->gs) );
-		DeleteFieldActSys( FieldWork->fldActCont );
-		DeletePlayerAct( FieldWork->pcActCont );
-		DeleteCursor( FieldWork->cursor );
-#ifdef NET_WORK_ON
-		//DeleteCursor( FieldWork->cursorFriend );
-		DeletePlayerAct( FieldWork->friendActCont );
-#endif
-        FieldWork->seq = 1;
+        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
+
+		DeleteFieldActSys( fieldWork->fldActCont );
+		DeletePlayerAct( fieldWork->pcActCont );
+		DeleteCursor( fieldWork->cursor );
+        fieldWork->seq = 1;
 		break;
 
 	case 4:
-		FieldReleaseDDobjRes3Dmapper( GetG3Dmapper(FieldWork->gs) );
-		FieldReleaseObjRes3Dmapper( GetG3Dmapper(FieldWork->gs) );
-		DeleteFieldActSys( FieldWork->fldActCont );
-		DeletePlayerAct( FieldWork->pcActCont );
-		DeleteCursor( FieldWork->cursor );
-#ifdef NET_WORK_ON
-		//DeleteCursor( FieldWork->cursorFriend );
-		DeletePlayerAct( FieldWork->friendActCont );
-#endif
+        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
-#ifndef NET_WORK_ON
-		RemoveGameSystem( FieldWork->gs );
+		DeleteFieldActSys( fieldWork->fldActCont );
+		DeletePlayerAct( fieldWork->pcActCont );
+		DeleteCursor( fieldWork->cursor );
+
+		RemoveGameSystem( fieldWork->gs );
 		return_flag = TRUE;
         break;
-#else
-        FieldEndGameNet();
-        FieldWork->seq++;
-    case 5:
-        if(FieldExitGameNet()){
-            RemoveGameSystem( FieldWork->gs );
-            return_flag = TRUE;
-        }
-        break;
-#endif
 	}
 	return return_flag;
 }
@@ -344,7 +286,7 @@ static BOOL GameEndCheck( int cont )
  * @brief	構造体定義
  */
 //------------------------------------------------------------------
-struct _SAMPLE_SETUP {
+struct _FIELD_SETUP {
 	GFL_G3D_UTIL*			g3Dutil;		//g3Dutil Lib ハンドル
 	u16						g3DutilUnitIdx;	//g3Dutil Unitインデックス
 	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
@@ -367,13 +309,13 @@ struct _SAMPLE_SETUP {
 static const GFL_BG_DISPVRAM dispVram = {
 	GX_VRAM_BG_16_F,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
-	GX_VRAM_SUB_BG_128_C,			//サブ2DエンジンのBGに割り当て
+	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_OBJ_64_E,				//メイン2DエンジンのOBJに割り当て
 	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_SUB_OBJ_16_I,			//サブ2DエンジンのOBJに割り当て
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_01_AB,				//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEX_012_ABC,			//テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G,			//テクスチャパレットスロットに割り当て
 };
 
@@ -382,7 +324,7 @@ static const GFL_BG_DISPVRAM dispVram = {
  * @brief	アーカイブテーブル
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/fieldmap_act.naix"
+#include "test_graphic/fld_act.naix"
 
 #if 0
 static	const	char	*GraphicFileTable[]={
@@ -435,13 +377,13 @@ static const GXRgb edgeColorTable[8] = {
  */
 //------------------------------------------------------------------
 //ＢＧ設定関数
-static void	bg_init( SAMPLE_SETUP* gs );
-static void	bg_exit( SAMPLE_SETUP* gs );
+static void	bg_init( FIELD_SETUP* gs );
+static void	bg_exit( FIELD_SETUP* gs );
 //３Ｄ関数
-static void g3d_load( SAMPLE_SETUP* gs );
-static void g3d_control( SAMPLE_SETUP* gs );
-static void g3d_draw( SAMPLE_SETUP* gs );
-static void	g3d_unload( SAMPLE_SETUP* gs );
+static void g3d_load( FIELD_SETUP* gs );
+static void g3d_control( FIELD_SETUP* gs );
+static void g3d_draw( FIELD_SETUP* gs );
+static void	g3d_unload( FIELD_SETUP* gs );
 static void	g3d_vblank( GFL_TCB* tcb, void* work );
 
 //------------------------------------------------------------------
@@ -449,9 +391,9 @@ static void	g3d_vblank( GFL_TCB* tcb, void* work );
  * @brief	セットアップ関数
  */
 //------------------------------------------------------------------
-static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
+static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 {
-	SAMPLE_SETUP*	gs = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_SETUP) );
+	FIELD_SETUP*	gs = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_SETUP) );
 	gs->heapID = heapID;
 
 	//乱数初期化
@@ -480,7 +422,7 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
  * @brief	セットアップ関数
  */
 //------------------------------------------------------------------
-static void	RemoveGameSystem( SAMPLE_SETUP* gs )
+static void	RemoveGameSystem( FIELD_SETUP* gs )
 {
 	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
@@ -496,7 +438,7 @@ static void	RemoveGameSystem( SAMPLE_SETUP* gs )
  * @brief	システムメイン関数
  */
 //------------------------------------------------------------------
-static void	MainGameSystem( SAMPLE_SETUP* gs )
+static void	MainGameSystem( FIELD_SETUP* gs )
 {
 	g3d_control( gs );
 	g3d_draw( gs );
@@ -512,7 +454,7 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 };	
 
-static void	bg_init( SAMPLE_SETUP* gs )
+static void	bg_init( FIELD_SETUP* gs )
 {
 	//フォント読み込み
 	GFL_TEXT_CreateSystem( font_path );
@@ -535,7 +477,7 @@ static void	bg_init( SAMPLE_SETUP* gs )
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 
 	//３Ｄシステム起動
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
@@ -544,7 +486,7 @@ static void	bg_init( SAMPLE_SETUP* gs )
 	GFL_DISP_SetDispOn();
 }
 
-static void	bg_exit( SAMPLE_SETUP* gs )
+static void	bg_exit( FIELD_SETUP* gs )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
@@ -601,7 +543,7 @@ static void G3DsysSetup( void )
 static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
 //------------------------------------------------------------------
 //作成
-static void g3d_load( SAMPLE_SETUP* gs )
+static void g3d_load( FIELD_SETUP* gs )
 {
 	//配置物設定
 
@@ -611,7 +553,7 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	gs->g3Dscene = GFL_G3D_SCENE_Create( gs->g3Dutil, 
 						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
 
-	gs->g3Dmapper = FieldCreate3Dmapper( gs->heapID );
+	gs->g3Dmapper = CreateFieldG3Dmapper( gs->heapID );
 	gs->bbdActSys = GFL_BBDACT_CreateSys
 					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
 
@@ -633,31 +575,31 @@ static void g3d_load( SAMPLE_SETUP* gs )
 }
 	
 //動作
-static void g3d_control( SAMPLE_SETUP* gs )
+static void g3d_control( FIELD_SETUP* gs )
 {
 	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
-	FieldMain3Dmapper( gs->g3Dmapper );
+	MainFieldG3Dmapper( gs->g3Dmapper );
 	GFL_BBDACT_Main( gs->bbdActSys );
 }
 
 //描画
-static void g3d_draw( SAMPLE_SETUP* gs )
+static void g3d_draw( FIELD_SETUP* gs )
 {
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
-	FieldDraw3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
+	DrawFieldG3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
 	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
 
 //破棄
-static void g3d_unload( SAMPLE_SETUP* gs )
+static void g3d_unload( FIELD_SETUP* gs )
 {
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera );
 
 	GFL_BBDACT_DeleteSys( gs->bbdActSys );
-	FieldDelete3Dmapper( gs->g3Dmapper );
+	DeleteFieldG3Dmapper( gs->g3Dmapper );
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
@@ -665,7 +607,7 @@ static void g3d_unload( SAMPLE_SETUP* gs )
 	
 static void	g3d_vblank( GFL_TCB* tcb, void* work )
 {
-	SAMPLE_SETUP* gs =  (SAMPLE_SETUP*)work;
+	FIELD_SETUP* gs =  (FIELD_SETUP*)work;
 }
 
 //BBD用VRAM転送関数
@@ -686,17 +628,17 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
  * @brief	システム取得
  */
 //------------------------------------------------------------------
-static GFL_G3D_CAMERA* GetG3Dcamera( SAMPLE_SETUP* gs )
+static GFL_G3D_CAMERA* GetG3Dcamera( FIELD_SETUP* gs )
 {
 	return gs->g3Dcamera;
 }
 
-static FLD_G3D_MAPPER* GetG3Dmapper( SAMPLE_SETUP* gs )
+static FLD_G3D_MAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
 {
 	return gs->g3Dmapper;
 }
 
-static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
+static GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
 {
 	return gs->bbdActSys;
 }
@@ -745,7 +687,6 @@ static void GetGroundMoveVec
 static BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
-	FLD_G3D_MAPPER_INFODATA gridInfoDataNext;
 	FLD_G3D_MAPPER_GRIDINFO gridInfo;
 	VecFx32	posNext, vecGround;
 	fx32	height = 0;
@@ -766,12 +707,12 @@ static BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODAT
 	if( posNext.y < 0 ){
 		posNext.y = 0;	//ベースライン
 	}
-	if( FieldCheck3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
+	if( CheckFieldG3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
 		return FALSE;
 	}
 
 	//プレーヤー用動作。この位置中心に高さデータが存在するため、すべて取得して設定
-	if( FieldGet3DmapperGridInfo( g3Dmapper, &posNext, &gridInfo ) == FALSE ){
+	if( GetFieldG3DmapperGridInfo( g3Dmapper, &posNext, &gridInfo ) == FALSE ){
 		return FALSE;
 	}
 
@@ -793,16 +734,18 @@ static BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODAT
 				p = i;
 			}
 		}
-		gridInfoDataNext = gridInfo.gridData[p];	//グリッドデータ更新
+#if 0
+		if( initSw == FALSE ){
+			//移動制限テスト
+			if(FX_Mul((height-pos->y),(height-pos->y))
+					>=FX_Mul(WALK_LIMIT_HEIGHT,WALK_LIMIT_HEIGHT)){
+				return FALSE;
+			}
+		} 
+#endif
+		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
+		VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
 	}
-	if( initSw == FALSE ){
-		if(FX_Mul((height-pos->y),(height-pos->y))>=FX_Mul(WALK_LIMIT_HEIGHT,WALK_LIMIT_HEIGHT)){
-			return FALSE;
-		}
-	} 
-	*gridInfoData = gridInfoDataNext;								//グリッドデータ更新
-	VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );		//位置情報更新
-
 	return TRUE;
 }
 	
@@ -818,7 +761,7 @@ static BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODAT
 //------------------------------------------------------------------
 struct _CURSOR_CONT {
 	HEAPID				heapID;
-	SAMPLE_SETUP*		gs;
+	FIELD_SETUP*		gs;
 	u16					unitIdx;
 	u16					resIdx;
 	u16					objIdx;
@@ -837,7 +780,7 @@ struct _CURSOR_CONT {
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-#include "arc/test_graphic/test3d.naix"
+#include "test_graphic/test3d.naix"
 
 enum {
 	G3DRES_CURSOR = 0,
@@ -878,7 +821,7 @@ static const GFL_G3D_SCENEOBJ_DATA cursorObject[] = {
  * @brief	初期化
  */
 //------------------------------------------------------------------
-static CURSOR_CONT*	CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID )
+static CURSOR_CONT*	CreateCursor( FIELD_SETUP*	gs, HEAPID heapID )
 {
 	CURSOR_CONT* cursor = GFL_HEAP_AllocClearMemory( heapID, sizeof(CURSOR_CONT) );
 
@@ -889,7 +832,7 @@ static CURSOR_CONT*	CreateCursor( SAMPLE_SETUP*	gs, HEAPID heapID )
 	cursor->cameraHeight = 0;
 	cursor->cameraLength = CAMERA_LENGTH;
 	cursor->direction = 0;
-	FieldInitGet3DmapperGridInfoData( &cursor->gridInfoData );
+	InitGetFieldG3DmapperGridInfoData( &cursor->gridInfoData );
 
 	//３Ｄデータセットアップ
 	cursor->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( cursor->gs->g3Dscene, &cursor_g3Dsetup );
@@ -978,7 +921,7 @@ static void	MainCursor( CURSOR_CONT* cursor )
 static void	FriendCursor( CURSOR_CONT* cursor )
 {
     
-    GFL_STD_MemCopy((const void*)&FieldWork->recvWork ,&cursor->trans, sizeof(VecFx32));
+    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&cursor->trans, sizeof(VecFx32));
 	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
 								&cursor->trans );
 }
@@ -1013,7 +956,7 @@ static void	GetCursorDirection( CURSOR_CONT* cursor, u16* direction )
 //============================================================================================
 struct _PC_ACTCONT {
 	HEAPID					heapID;
-	SAMPLE_SETUP*			gs;
+	FIELD_SETUP*			gs;
 	u16						cameraRotate;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	u16						bbdActResCount;
@@ -1035,9 +978,9 @@ enum {
 };
 
 static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_tex32x32_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-//	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx,
+//	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx,
 //		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
 };
 
@@ -1231,7 +1174,7 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
 }
 
-static PC_ACTCONT*	CreatePlayerAct( SAMPLE_SETUP*	gs, HEAPID heapID )
+static PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
 {
 	PC_ACTCONT*	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
 	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( gs );
@@ -1245,7 +1188,7 @@ static PC_ACTCONT*	CreatePlayerAct( SAMPLE_SETUP*	gs, HEAPID heapID )
 
 	pcActCont->gs = gs;
 	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	FieldInitGet3DmapperGridInfoData( &pcActCont->gridInfoData );
+	InitGetFieldG3DmapperGridInfoData( &pcActCont->gridInfoData );
 	
 	//リソースセットアップ
 	pcActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit( bbdActSys, playerBBDactResTable,
@@ -1269,7 +1212,7 @@ static PC_ACTCONT*	CreatePlayerAct( SAMPLE_SETUP*	gs, HEAPID heapID )
 	//GFL_BBDACT_BindActTexRes
 	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
 	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
+		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDACT, NARC_fld_act_hero_nsbtx );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
 								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
@@ -1331,11 +1274,8 @@ static void	MainPlayerAct( PC_ACTCONT* pcActCont )
 		pcActCont->direction += RT_SPEED;
 	}
 #endif
-	CalcSetGroundMove( GetG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
+	CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
 								&pcActCont->trans, &vecMove, MV_SPEED );
-#ifdef NET_WORK_ON
-    _sendGamePlay( &pcActCont->trans  );  // 自分の位置を相手に送信
-#endif
     
 	if( mvFlag == TRUE ){
 		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
@@ -1346,7 +1286,7 @@ static void	MainPlayerAct( PC_ACTCONT* pcActCont )
 
 static void	MainFriendPlayerAct( PC_ACTCONT* pcActCont )
 {
-    GFL_STD_MemCopy((const void*)&FieldWork->recvWork ,&pcActCont->trans, sizeof(VecFx32));
+    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&pcActCont->trans, sizeof(VecFx32));
 }
 
 static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
@@ -1405,7 +1345,7 @@ typedef struct {
 
 struct _FLD_ACTCONT {
 	HEAPID					heapID;
-	SAMPLE_SETUP*			gs;
+	FIELD_SETUP*			gs;
 	u16						cameraRotate;
 	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
 	u16						bbdActResCount;
@@ -1424,27 +1364,27 @@ static void	calcCameraRotate( FLD_ACTCONT* fldActCont );
  */
 //------------------------------------------------------------------
 static const GFL_BBDACT_RESDATA testResTable[] = {
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx, 
+	{ ARCID_FLDACT, NARC_fld_act_hero_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_achamo_nsbtx, 
+	{ ARCID_FLDACT, NARC_fld_act_achamo_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_artist_nsbtx, 
+	{ ARCID_FLDACT, NARC_fld_act_artist_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_badman_nsbtx, 
+	{ ARCID_FLDACT, NARC_fld_act_badman_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_beachgirl_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_beachgirl_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_idol_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_idol_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_lady_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_lady_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_oldman1_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_oldman1_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_policeman_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_policeman_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_rivel_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_rivel_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_waiter_nsbtx,
+	{ ARCID_FLDACT, NARC_fld_act_waiter_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 };
 
@@ -1566,7 +1506,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		vecMove.y = 0;
 		vecMove.z = FX_CosIdx( theta );
 
-		mvf = CalcSetGroundMove( GetG3Dmapper( fldActCont->gs ), &actWork->gridInfoData, 
+		mvf = CalcSetGroundMove( GetFieldG3Dmapper( fldActCont->gs ), &actWork->gridInfoData, 
 									&nowTrans, &vecMove, FX32_ONE );
 		if( mvf == TRUE ){
 			VecFx32 setTrans;
@@ -1605,7 +1545,7 @@ static void testSetUp( FLD_ACTCONT* fldActCont )
 													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
 		fx32 mapSizex, mapSizez;
 
-		FieldGet3DmapperSize( GetG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
+		GetFieldG3DmapperSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
 
 		for( i=0; i<setActNum; i++ ){
 			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
@@ -1649,7 +1589,7 @@ static void testRelease( FLD_ACTCONT* fldActCont )
  * @brief	フィールドアクトシステム作成
  */
 //------------------------------------------------------------------
-static FLD_ACTCONT*	CreateFieldActSys( SAMPLE_SETUP* gs, HEAPID heapID )
+static FLD_ACTCONT*	CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID )
 {
 	FLD_ACTCONT* fldActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTCONT) );
 	int	i;
@@ -1704,7 +1644,7 @@ static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
 	int i;
 
 	//actWork->fldActCont = fldActCont;
-	FieldInitGet3DmapperGridInfoData( &actWork->gridInfoData );
+	InitGetFieldG3DmapperGridInfoData( &actWork->gridInfoData );
 
 	for( i=0; i<WORK_SIZ; i++ ){
 		actWork->work[i] = 0;
@@ -1712,55 +1652,3 @@ static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
 }
 
 
-//============================================================================================
-//
-//
-//	通信関数
-//
-//
-//============================================================================================
-#ifdef NET_WORK_ON
-//------------------------------------------------------------------
-/**
- * @brief	受信ワーク初期化
- */
-//------------------------------------------------------------------
-static void _initRecvBuffer( void )
-{
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	受信関数
- */
-//------------------------------------------------------------------
-// ローカル通信コマンドの定義
-enum _gameCommand_e {
-	_GAME_COM_PLAY = GFL_NET_CMD_COMMAND_MAX,
-};
-
-//------------------------------------------------------------------
-// _GAME_COM_PLAY　ゲーム情報送受信
-
-static void _sendGamePlay( VecFx32* pVec  )
-{
-    FieldSendGameNet( _GAME_COM_PLAY, pVec );
-}
-
-static void _recvGamePlay
-	(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
-{
-    SAMPLE_WORK* psw = FieldWork;
-
-    if(FieldGetNetID() != netID){
-        GFL_STD_MemCopy(pData, &psw->recvWork, sizeof(VecFx32));
-    }
-}
-
-//------------------------------------------------------------------
-// ローカル通信テーブル
-const NetRecvFuncTable NetSamplePacketTbl[] = {
-    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(VecFx32)), NULL },
-};
-
-#endif

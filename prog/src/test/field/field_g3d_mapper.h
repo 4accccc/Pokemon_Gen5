@@ -3,10 +3,15 @@
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
 #define	MAPTEX_SIZE		(0x4800) 	//テクスチャデータ用ＶＲＡＭ＆メモリ確保サイズ 
 #define	MAPATTR_SIZE	(0x6000) 	//アトリビュート（高さ等）用メモリ確保サイズ 
-//#define	MAPOBJ_SIZE		(0x18000)//ブロック内オブジェクトモデルデータ用メモリ確保サイズ 
-//#define	MAPOBJTEX_SIZE	(0x4000) //ブロック内オブジェクトテクスチャデータ用ＶＲＡＭ確保サイズ 
+
+#define FLD_G3D_MAPPER_ATTR_MAX	(16)
 
 typedef struct _FLD_G3D_MAPPER FLD_G3D_MAPPER;
+
+enum {
+	FILE_MAPEDITER_DATA = 0,
+	FILE_CUSTOM_DATA = 1,
+};
 
 typedef struct {
 	VecFx16 vecN;
@@ -15,15 +20,13 @@ typedef struct {
 }FLD_G3D_MAPPER_INFODATA;
 
 typedef struct {
-	FLD_G3D_MAPPER_INFODATA		gridData[MAP_BLOCK_COUNT];	//グリッドデータ取得ワーク
+	FLD_G3D_MAPPER_INFODATA		gridData[FLD_G3D_MAPPER_ATTR_MAX];	//グリッドデータ取得ワーク
 	u16						count;
 }FLD_G3D_MAPPER_GRIDINFO;
 
-#define	NON_ATTR	(0xffff)
+#define FLD_G3D_MAPPER_NOMAP	(0xffffffff)
 typedef struct {
-	u16 datID;
-	u16 texID;
-	u16 attrID;
+	u32 datID;
 }FLD_G3D_MAPPER_DATA;
 
 typedef enum {
@@ -32,19 +35,8 @@ typedef enum {
 	FLD_G3D_MAPPER_MODE_SCROLL_Y,
 }FLD_G3D_MAPPER_MODE;
 
-typedef struct {
-	u16						sizex;		//横ブロック数
-	u16						sizez;		//縦ブロック数
-	u32						totalSize;	//配列サイズ
-	fx32					width;		//ブロック１辺の幅
-	fx32					height;		//ブロック高さ
-	FLD_G3D_MAPPER_MODE			mode;		//動作モード
-	u32						arcID;		//グラフィックアーカイブＩＤ
-	const FLD_G3D_MAPPER_DATA*	data;		//実マップデータ
-
-}FLD_G3D_MAPPER_RESIST;
-
 #define	NON_LOWQ	(0xffff)
+#define	NON_TEX		(0xffff)
 typedef struct {
 	u16 highQ_ID;
 	u16 lowQ_ID;
@@ -55,39 +47,85 @@ typedef struct {
 	const FLD_G3D_MAPPEROBJ_DATA*	data;	//実マップデータ
 	u32							count;		//モデル数
 
-}FLD_G3D_MAPPEROBJ_RESIST;
+}FLD_G3D_MAPPER_RESIST_OBJ;
 
 typedef struct {
 	u32			arcID;	//アーカイブＩＤ
 	const u16*	data;	//実マップデータ
 	u32			count;	//テクスチャ数
 
-}FLD_G3D_MAPPERDDOBJ_RESIST;
+}FLD_G3D_MAPPER_RESIST_DDOBJ;
+
+#define NON_GLOBAL_OBJ	(0xffffffff)
+#define USE_GLOBAL_OBJSET_TBL	(0)
+#define USE_GLOBAL_OBJSET_BIN	(1)
+typedef struct {
+	u32							objArcID;	//アーカイブＩＤ
+	const FLD_G3D_MAPPEROBJ_DATA*	objData;	//実マップデータ
+	u32							objCount;	//モデル数
+	u32							ddobjArcID;	//アーカイブＩＤ
+	const u16*					ddobjData;	//実マップデータ
+	u32							ddobjCount;	//モデル数
+}FLD_G3D_MAPPER_GLOBAL_OBJSET_TBL;
+
+typedef struct {
+	u32							areaObjArcID;		//配置種類アーカイブＩＤ
+	u32							areaObjAnmTblArcID;	//配置種類アニメ付与データアーカイブＩＤ
+	u32							areaObjDatID;		//配置種類データＩＤ
+	u32							objArcID;			//モデルアーカイブＩＤ
+	u32							objtexArcID;		//テクスチャアーカイブＩＤ
+	u32							objanmArcID;		//アニメアーカイブＩＤ
+}FLD_G3D_MAPPER_GLOBAL_OBJSET_BIN;
+
+#define	NON_GLOBAL_TEX	(0xffffffff)
+#define	USE_GLOBAL_TEX	(0)
+typedef struct {
+	u32 arcID;
+	u32 datID;
+}FLD_G3D_MAPPER_GLOBAL_TEXTURE;
+
+typedef struct {
+	u32						g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
+	u16						sizex;			//横ブロック数
+	u16						sizez;			//縦ブロック数
+	u32						totalSize;		//配列サイズ
+	fx32					width;			//ブロック１辺の幅
+	fx32					height;			//ブロック高さ
+	FLD_G3D_MAPPER_MODE			mode;			//動作モード
+	u32						arcID;			//グラフィックアーカイブＩＤ
+	u32						gtexType;		//グローバルテクスチャタイプ
+	void*					gtexData;		//グローバルテクスチャ
+	u32						gobjType;		//グローバルオブジェクトタイプ
+	void*					gobjData;		//グローバルオブジェクト
+
+	const FLD_G3D_MAPPER_DATA*	data;			//実マップデータ
+
+}FLD_G3D_MAPPER_RESIST;
 
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム作成
  */
 //------------------------------------------------------------------
-extern FLD_G3D_MAPPER*	FieldCreate3Dmapper( HEAPID heapID );
+extern FLD_G3D_MAPPER*	CreateFieldG3Dmapper( HEAPID heapID );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステムメイン
  */
 //------------------------------------------------------------------
-extern void	FieldMain3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
+extern void	MainFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステムディスプレイ
  */
 //------------------------------------------------------------------
-extern void	FieldDraw3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera );
+extern void	DrawFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム破棄
  */
 //------------------------------------------------------------------
-extern void	FieldDelete3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
+extern void	DeleteFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
 
 
 //------------------------------------------------------------------
@@ -95,25 +133,15 @@ extern void	FieldDelete3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-extern void	FieldResistData3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPER_RESIST* resistData );
-//------------------------------------------------------------------
-/**
- * @brief	オブジェクトリソース登録
- */
-//------------------------------------------------------------------
-extern void FieldResistObjRes3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPEROBJ_RESIST* resistData );
-extern void FieldReleaseObjRes3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
-//------------------------------------------------------------------
-extern void FieldResistDDobjRes3Dmapper
-			( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPERDDOBJ_RESIST* resistData );
-extern void FieldReleaseDDobjRes3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
+extern void	ResistDataFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPER_RESIST* resistData );
+extern void	ReleaseDataFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
 
 //------------------------------------------------------------------
 /**
  * @brief	マップ位置セット
  */
 //------------------------------------------------------------------
-extern void FieldSetPos3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+extern void SetPosFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
 
 
 //------------------------------------------------------------------
@@ -121,16 +149,16 @@ extern void FieldSetPos3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos )
  * @brief	グリッド情報ワーク初期化
  */
 //------------------------------------------------------------------
-extern void FieldInitGet3DmapperGridInfoData( FLD_G3D_MAPPER_INFODATA* gridInfoData );
-extern void FieldInitGet3DmapperGridInfo( FLD_G3D_MAPPER_GRIDINFO* gridInfo );
+extern void InitGetFieldG3DmapperGridInfoData( FLD_G3D_MAPPER_INFODATA* gridInfoData );
+extern void InitGetFieldG3DmapperGridInfo( FLD_G3D_MAPPER_GRIDINFO* gridInfo );
 //------------------------------------------------------------------
 /**
  * @brief	グリッド情報取得
  */
 //------------------------------------------------------------------
-extern BOOL FieldGet3DmapperGridInfoData
+extern BOOL GetFieldG3DmapperGridInfoData
 	( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, FLD_G3D_MAPPER_INFODATA* gridInfoData );
-extern BOOL FieldGet3DmapperGridInfo
+extern BOOL GetFieldG3DmapperGridInfo
 	( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, FLD_G3D_MAPPER_GRIDINFO* gridInfo );
 
 //------------------------------------------------------------------
@@ -138,12 +166,12 @@ extern BOOL FieldGet3DmapperGridInfo
  * @brief	範囲外チェック
  */
 //------------------------------------------------------------------
-extern BOOL FieldCheck3DmapperOutRange( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+extern BOOL CheckFieldG3DmapperOutRange( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
 //------------------------------------------------------------------
 /**
  * @brief	サイズ取得
  */
 //------------------------------------------------------------------
-extern void FieldGet3DmapperSize( FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z );
+extern void GetFieldG3DmapperSize( FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z );
 
 
