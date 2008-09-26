@@ -37,6 +37,8 @@ SRCS	+=		test/testmode.c \
 				test/field/field_proc.c \
 				test/field/field_main.c \
 				test/field/field_g3d_mapper.c \
+				test/field/mapdatafunc/field_func_mapeditor_file.c \
+				test/field/mapdatafunc/field_func_pmcustom_file.c \
 				test/field/field_net.c	\
 				print/printsys.c \
 				print/gf_font.c
