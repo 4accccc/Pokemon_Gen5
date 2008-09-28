@@ -24,6 +24,22 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_d4_3dppack },
 };
 
+#include "test_graphic/test3dp2.naix"
+static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
+	{ NARC_test3dp2_m_test_01_01c_3dppack },
+	{ NARC_test3dp2_m_test_01_02c_3dppack },
+	{ NARC_test3dp2_m_test_01_03c_3dppack },
+	{ NARC_test3dp2_m_test_01_04c_3dppack },
+	{ NARC_test3dp2_m_test_01_05c_3dppack },
+	{ NARC_test3dp2_m_test_01_06c_3dppack },
+	{ NARC_test3dp2_m_test_02_01c_3dppack },
+	{ NARC_test3dp2_m_test_02_02c_3dppack },
+	{ NARC_test3dp2_m_test_02_03c_3dppack },
+	{ NARC_test3dp2_m_test_02_04c_3dppack },
+	{ NARC_test3dp2_m_test_02_05c_3dppack },
+	{ NARC_test3dp2_m_test_02_06c_3dppack },
+};
+
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
 	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
 	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
@@ -62,6 +78,7 @@ typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
 	FLD_G3D_MAPPER_RESIST	mapperData;
 	VecFx32				startPos;	//開始位置
+	const char * mapname;			//マップ名
 }SCENE_DATA;
 
 #define MAP_WIDTH (512 * FX32_ONE)
@@ -78,6 +95,7 @@ static const SCENE_DATA	resistMapTbl[] = {
 			GSMap, 
 		}, 
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+		,"GSMap"
 	},
 	{
 		{	
@@ -89,6 +107,19 @@ static const SCENE_DATA	resistMapTbl[] = {
 			sampleMap, 
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
+		,"sampleMap"
+	},
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			2,  6, NELEMS(sampleMap2), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_TEST3DP2,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			sampleMap2, 
+		}, 
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
+		,"sampleMap2"
 	},
 };
 
