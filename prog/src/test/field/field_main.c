@@ -21,6 +21,9 @@ BOOL	FieldMain( void );
 #include "field_g3d_mapper.h"
 #include "field_net.h"
 
+#include "field_common.h"
+#include "field_actor.h"
+#include "field_player.h"
 //============================================================================================
 /**
  *
@@ -36,12 +39,12 @@ BOOL	FieldMain( void );
  *
  */
 //============================================================================================
-typedef struct _FIELD_SETUP FIELD_SETUP;
+//typedef struct _FIELD_SETUP FIELD_SETUP;
 
 static FIELD_SETUP*	SetupGameSystem( HEAPID heapID );
 static void				RemoveGameSystem( FIELD_SETUP* gs );
 static void				MainGameSystem( FIELD_SETUP* gs );
-static FLD_G3D_MAPPER*		GetFieldG3Dmapper( FIELD_SETUP* gs );
+//static FLD_G3D_MAPPER*		GetFieldG3Dmapper( FIELD_SETUP* gs );
 
 #if 0
 //アーカイブＩＮＤＥＸ
@@ -62,22 +65,6 @@ static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
 static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
 static void				SetCursorDirection( CURSOR_CONT* cursor, u16* direction );
 static void				GetCursorDirection( CURSOR_CONT* cursor, u16* direction );
-
-typedef struct _PC_ACTCONT PC_ACTCONT;
-static PC_ACTCONT*		CreatePlayerAct( FIELD_SETUP* gs, HEAPID heapID );
-static void				DeletePlayerAct( PC_ACTCONT* pcActCont );
-static void				MainPlayerAct( PC_ACTCONT* pcActCont );
-static void				MainFriendPlayerAct( PC_ACTCONT* pcActCont );
-static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
-static void				SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans );
-static void				GetPlayerActTrans( PC_ACTCONT* pcActCont, VecFx32* trans );
-static void				SetPlayerActDirection( PC_ACTCONT* pcActCont, const u16* direction );
-static void				GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction );
-
-typedef struct _FLD_ACTCONT		FLD_ACTCONT;
-static FLD_ACTCONT*		CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID );
-static void				DeleteFieldActSys( FLD_ACTCONT* fldActCont );
-static void				MainFieldActSys( FLD_ACTCONT* fldActCont );
 
 static void _sendGamePlay( VecFx32* pVec  );
 
@@ -163,7 +150,7 @@ BOOL	FieldMain( void )
                                 &resistMapTbl[fieldWork->mapNum].mapperData );
 
             fieldWork->cursor = CreateCursor( fieldWork->gs, fieldWork->heapID );
-            fieldWork->fldActCont = CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+            fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 			{
 				VecFx32 pos;
 				u16		dir;
@@ -201,7 +188,7 @@ BOOL	FieldMain( void )
 			break;
 		}
 		MainPlayerAct( fieldWork->pcActCont );
-		MainFieldActSys( fieldWork->fldActCont );
+		FLD_MainFieldActSys( fieldWork->fldActCont );
 		{
 			VecFx32 pos;
 			u16		dir;
@@ -220,7 +207,7 @@ BOOL	FieldMain( void )
 	case 3:
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
-		DeleteFieldActSys( fieldWork->fldActCont );
+		FLD_DeleteFieldActSys( fieldWork->fldActCont );
 		DeletePlayerAct( fieldWork->pcActCont );
 		DeleteCursor( fieldWork->cursor );
         fieldWork->seq = 1;
@@ -229,7 +216,7 @@ BOOL	FieldMain( void )
 	case 4:
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
-		DeleteFieldActSys( fieldWork->fldActCont );
+		FLD_DeleteFieldActSys( fieldWork->fldActCont );
 		DeletePlayerAct( fieldWork->pcActCont );
 		DeleteCursor( fieldWork->cursor );
 
@@ -628,17 +615,17 @@ static void	g3d_trans_BBD( GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz 
  * @brief	システム取得
  */
 //------------------------------------------------------------------
-static GFL_G3D_CAMERA* GetG3Dcamera( FIELD_SETUP* gs )
+GFL_G3D_CAMERA* GetG3Dcamera( FIELD_SETUP* gs )
 {
 	return gs->g3Dcamera;
 }
 
-static FLD_G3D_MAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
+FLD_G3D_MAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
 {
 	return gs->g3Dmapper;
 }
 
-static GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
+GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
 {
 	return gs->bbdActSys;
 }
@@ -684,7 +671,7 @@ static void GetGroundMoveVec
 	VEC_Normalize( result, result );
 }
 
-static BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
+BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
 	FLD_G3D_MAPPER_GRIDINFO gridInfo;
@@ -865,9 +852,9 @@ static void	DeleteCursor( CURSOR_CONT* cursor )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-#define MV_SPEED		(2*FX32_ONE)
-#define RT_SPEED		(FX32_ONE/8)
-#define	CAMERA_TARGET_HEIGHT	(4)//(8)
+//#define MV_SPEED		(2*FX32_ONE)
+//#define RT_SPEED		(FX32_ONE/8)
+//#define	CAMERA_TARGET_HEIGHT	(4)//(8)
 static void	MainCursor( CURSOR_CONT* cursor )
 {
 	VecFx32	pos, target;
@@ -948,707 +935,4 @@ static void	GetCursorDirection( CURSOR_CONT* cursor, u16* direction )
 {
 	*direction = cursor->direction;
 }
-
-//============================================================================================
-/**
- * @brief	プレーヤーアクター
- */
-//============================================================================================
-struct _PC_ACTCONT {
-	HEAPID					heapID;
-	FIELD_SETUP*			gs;
-	u16						cameraRotate;
-	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	u16						bbdActResCount;
-	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
-	u16						bbdActActCount;
-	u16						direction;
-	VecFx32					trans;
-	int						anmSetID;
-	BOOL					anmSetReq;			
-
-	FLD_G3D_MAPPER_INFODATA		gridInfoData;
-};
-
-enum {
-	ANMTYPE_STOP = 0,
-	ANMTYPE_WALK,
-	ANMTYPE_RUN,
-	ANMTYPE_JUMP,
-};
-
-static const GFL_BBDACT_RESDATA playerBBDactResTable[] = {
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-//	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx,
-//		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024, 32, 32, GFL_BBDACT_RESTYPE_TRANSSRC },
-};
-
-static const GFL_BBDACT_ANM PCstopLAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopRAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopUAnm[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCstopDAnm[] = {
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCwalkLAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkRAnm[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkUAnm[] = {
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 20, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCwalkDAnm[] = {
-	{ 22, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 23, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 21, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCrunLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCrunDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-
-static const GFL_BBDACT_ANM PCjumpLAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpRAnm[] = {
-	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpUAnm[] = {
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM PCjumpDAnm[] = {
-	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_END, 0, 0, 0 },
-};
-
-enum {
-	PCACTSTOP_UP = 0,
-	PCACTSTOP_DOWN,
-	PCACTSTOP_LEFT,
-	PCACTSTOP_RIGHT,
-
-	PCACTWALK_UP,
-	PCACTWALK_DOWN,
-	PCACTWALK_LEFT,
-	PCACTWALK_RIGHT,
-
-	PCACTRUN_UP,
-	PCACTRUN_DOWN,
-	PCACTRUN_LEFT,
-	PCACTRUN_RIGHT,
-
-	PCACTJUMP_UP,
-	PCACTJUMP_DOWN,
-	PCACTJUMP_LEFT,
-	PCACTJUMP_RIGHT,
-};
-
-static const GFL_BBDACT_ANM* playerBBDactAnmTable[] = { 
-	PCstopUAnm, PCstopDAnm, PCstopLAnm, PCstopRAnm,
-	PCwalkUAnm, PCwalkDAnm, PCwalkLAnm, PCwalkRAnm,
-	PCrunUAnm, PCrunDAnm, PCrunLAnm, PCrunRAnm,
-	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
-};
-
-static const int playerBBDanmOffsTblMine[] = { 
-	PCACTSTOP_LEFT - PCACTSTOP_UP,
-	PCACTSTOP_DOWN - PCACTSTOP_UP,
-	PCACTSTOP_RIGHT - PCACTSTOP_UP,
-	PCACTSTOP_UP - PCACTSTOP_UP,
-};
-
-static u16 getCameraRotate( GFL_G3D_CAMERA* g3Dcamera )
-{
-	VecFx32 vec, camPos, target;
-	
-	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-	VEC_Subtract( &target, &camPos, &vec );
-	return FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-}
-
-static int getPlayerBBDanm( int anmSetID, u16 dir, const int* anmOffsTable )
-{
-	int	anmBase, datOffs;
-
-	if( (dir > 0x2000)&&(dir < 0x6000)){
-		datOffs = 0;
-	} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
-		datOffs = 1;
-	} else if( (dir > 0xa000)&&(dir < 0xe000)){
-		datOffs = 2;
-	} else {
-		datOffs = 3;
-	}
-	switch( anmSetID ){
-	default:
-	case ANMTYPE_STOP:
-		anmBase = PCACTSTOP_UP;
-		break;
-	case ANMTYPE_WALK:
-		anmBase = PCACTWALK_UP;
-		break;
-	case ANMTYPE_RUN:
-		anmBase = PCACTRUN_UP;
-		break;
-	case ANMTYPE_JUMP:
-		anmBase = PCACTJUMP_UP;
-		break;
-	}
-	return anmBase + anmOffsTable[ datOffs ];
-}
-
-static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
-{
-	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	PC_ACTCONT*	pcActCont = (PC_ACTCONT*)work;
-	VecFx32	trans = pcActCont->trans;
-	u16		anmID;
-	u16		dir;
-
-	dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->gs) );
-	anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-
-	//カメラ補正(アニメ向きの変更をするのに参照)
-	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->gs ), actIdx, anmID );
-	//位置補正
-	trans.x = pcActCont->trans.x;
-	trans.y = pcActCont->trans.y + FX32_ONE*7;	//補正
-	trans.z = pcActCont->trans.z;
-	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
-}
-
-static PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
-{
-	PC_ACTCONT*	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( gs );
-	GFL_BBDACT_ACTDATA actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	int		i, objIdx;
-	VecFx32	trans;
-	u8		alpha;
-	BOOL	drawEnable;
-	u16		setActNum;
-
-	pcActCont->gs = gs;
-	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	InitGetFieldG3DmapperGridInfoData( &pcActCont->gridInfoData );
-	
-	//リソースセットアップ
-	pcActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit( bbdActSys, playerBBDactResTable,
-														NELEMS(playerBBDactResTable) );
-	actData.resID = 0;
-	actData.sizX = FX16_ONE*8-1;
-	actData.sizY = FX16_ONE*8-1;
-	
-	actData.trans.x = 0;
-	actData.trans.y = 0;
-	actData.trans.z = 0;
-
-	actData.alpha = 31;
-	actData.drawEnable = TRUE;
-	actData.lightMask = GFL_BBD_LIGHTMASK_01;
-	actData.func = playerBBDactFunc;
-	actData.work = pcActCont;
-
-	pcActCont->bbdActActUnitID = GFL_BBDACT_AddAct
-									( bbdActSys, pcActCont->bbdActResUnitID, &actData, 1 );
-	//GFL_BBDACT_BindActTexRes
-	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
-	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
-
-	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
-								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
-	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
-	return pcActCont;
-}
-
-static void	DeletePlayerAct( PC_ACTCONT* pcActCont )
-{
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( pcActCont->gs );
-
-	GFL_BBDACT_RemoveAct( bbdActSys, pcActCont->bbdActActUnitID, 1 );
-	GFL_BBDACT_RemoveResourceUnit
-				( bbdActSys, pcActCont->bbdActResUnitID, NELEMS(playerBBDactResTable) );
-
-	GFL_HEAP_FreeMemory( pcActCont );
-}
-
-static void	MainPlayerAct( PC_ACTCONT* pcActCont )
-{
-	VecFx32	vecMove = { 0, 0, 0 };
-	int		key;
-	u16		dir;
-	BOOL	mvFlag = FALSE;
-
-	key = GFL_UI_KEY_GetCont();
-
-	dir = getCameraRotate( GetG3Dcamera(pcActCont->gs) );
-
-	if( key & PAD_KEY_UP ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x8000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x8000) );
-		pcActCont->direction = dir;
-	}
-	if( key & PAD_KEY_DOWN ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x0000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x0000) );
-		pcActCont->direction = dir + 0x8000;
-	}
-	if( key & PAD_KEY_LEFT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0xc000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0xc000) );
-		pcActCont->direction = dir + 0x4000;
-	}
-	if( key & PAD_KEY_RIGHT ){
-		mvFlag = TRUE;
-		vecMove.x = FX_SinIdx( (u16)(dir + 0x4000) );
-		vecMove.z = FX_CosIdx( (u16)(dir + 0x4000) );
-		pcActCont->direction = dir + 0xc000;
-	}
-#if 0
-	if( key & PAD_BUTTON_R ){
-		pcActCont->direction -= RT_SPEED;
-	}
-	if( key & PAD_BUTTON_L ){
-		pcActCont->direction += RT_SPEED;
-	}
-#endif
-	CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
-								&pcActCont->trans, &vecMove, MV_SPEED );
-    
-	if( mvFlag == TRUE ){
-		SetPlayerActAnm( pcActCont, ANMTYPE_WALK );
-	} else {
-		SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	}
-}
-
-static void	MainFriendPlayerAct( PC_ACTCONT* pcActCont )
-{
-    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&pcActCont->trans, sizeof(VecFx32));
-}
-
-static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
-{
-	int		anmID;
-	u16		dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->gs) );
-
-	if( pcActCont->anmSetID != anmSetID ){
-		pcActCont->anmSetID = anmSetID;
-
-		anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-		GFL_BBDACT_SetAnimeIdx( GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
-	}
-}
-
-static void	SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
-{
-	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
-}
-
-static void	GetPlayerActTrans( PC_ACTCONT* pcActCont, VecFx32* trans )
-{
-	VEC_Set( trans, pcActCont->trans.x, pcActCont->trans.y, pcActCont->trans.z );
-}
-
-static void	SetPlayerActDirection( PC_ACTCONT* pcActCont, const u16* direction )
-{
-	pcActCont->direction  = *direction;
-}
-
-static void	GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction )
-{
-	*direction = pcActCont->direction;
-}
-
-//============================================================================================
-/**
- * @brief	フィールドアクター
- */
-//============================================================================================
-//------------------------------------------------------------------
-/**
- *
- * @brief	型宣言
- *
- */
-//------------------------------------------------------------------
-#define FLD_BBDACT_ACTMAX	(253)
-#define WORK_SIZ			(8)
-
-typedef struct {
-	//FLD_ACTCONT*			fldActCont;
-	FLD_G3D_MAPPER_INFODATA		gridInfoData;
-	u16						work[WORK_SIZ];
-}FLD_ACTWORK;
-
-struct _FLD_ACTCONT {
-	HEAPID					heapID;
-	FIELD_SETUP*			gs;
-	u16						cameraRotate;
-	GFL_BBDACT_RESUNIT_ID	bbdActResUnitID;
-	u16						bbdActResCount;
-	GFL_BBDACT_ACTUNIT_ID	bbdActActUnitID;
-	u16						bbdActActCount;
-	FLD_ACTWORK				actWork[FLD_BBDACT_ACTMAX];
-};
-
-static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork );
-static void	calcCameraRotate( FLD_ACTCONT* fldActCont );
-//------------------------------------------------------------------
-/**
- *
- * @brief	セットアップデータ
- *
- */
-//------------------------------------------------------------------
-static const GFL_BBDACT_RESDATA testResTable[] = {
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx, 
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_achamo_nsbtx, 
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_artist_nsbtx, 
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_badman_nsbtx, 
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_beachgirl_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_idol_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_lady_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_oldman1_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_policeman_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_rivel_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_waiter_nsbtx,
-		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
-};
-
- 
-
-static const GFL_BBDACT_ANM walkLAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM walkRAnm[] = {
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM walkUAnm[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM walkDAnm[] = {
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM testAnm1[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 5, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 6, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM testAnm2[] = {
-	{ 1, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 2, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 16 },
-	{ 3, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 24 },
-	{ 4, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 32 },
-	{ 5, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 48 },
-	{ 6, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 7, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 8, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 9, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 10, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ GFL_BBDACT_ANMCOM_LOOP, 0, 0, GFL_BBDACT_ANMLOOPPARAM( 4, 5 ) },
-	{ 11, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 64 },
-	{ GFL_BBDACT_ANMCOM_CHG, 0, 0, 0 },
-};
-static const GFL_BBDACT_ANM testAnm3[] = {
-	{ 0, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 32, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ 64, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 8 },
-	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 1 },
-};
-
-enum {
-	ACTWALK_UP = 0,
-	ACTWALK_DOWN,
-	ACTWALK_LEFT,
-	ACTWALK_RIGHT,
-};
-
-static const GFL_BBDACT_ANM* testAnmTable[] = { walkUAnm, walkDAnm, walkLAnm, walkRAnm };
-
-static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
-{
-	GFL_BBD_SYS*	bbdSys = GFL_BBDACT_GetBBDSystem( bbdActSys );
-	FLD_ACTCONT*	fldActCont = (FLD_ACTCONT*)work;
-	FLD_ACTWORK*	actWork = &fldActCont->actWork[actIdx];
-
-	if( actWork->work[0] == 0 ){
-		u32	timer = GFUser_GetPublicRand(8);
-
-		actWork->work[0] = (timer+2) * 30;
-		actWork->work[1] = GFUser_GetPublicRand( 0x10000 );
-	} else {
-		actWork->work[0]--;
-	}
-	{
-		VecFx32 nowTrans, nextTrans, vecMove, vecGround, rotVec;
-		u16	 theta = actWork->work[1];
-		fx32 speed = FX32_ONE;
-		BOOL mvf;
-		{
-			u16	 dir = actWork->work[1] - fldActCont->cameraRotate;
-			if( (dir > 0x2000)&&(dir < 0x6000)){
-				//OS_Printf("右　rotate = %x\n", dir );
-				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_RIGHT );
-			} else if( (dir >= 0x6000)&&(dir <= 0xa000)){
-				//OS_Printf("上　rotate = %x\n", dir );
-				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_UP );
-			} else if( (dir > 0xa000)&&(dir < 0xe000)){
-				//OS_Printf("左　rotate = %x\n", dir );
-				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_LEFT );
-			} else {
-				//OS_Printf("下　rotate = %x\n", dir );
-				GFL_BBDACT_SetAnimeIdxContinue( bbdActSys, actIdx, ACTWALK_DOWN );
-			}
-		}
-		GFL_BBD_GetObjectTrans( bbdSys, actIdx, &nowTrans );
-
-		vecMove.x = FX_SinIdx( theta );
-		vecMove.y = 0;
-		vecMove.z = FX_CosIdx( theta );
-
-		mvf = CalcSetGroundMove( GetFieldG3Dmapper( fldActCont->gs ), &actWork->gridInfoData, 
-									&nowTrans, &vecMove, FX32_ONE );
-		if( mvf == TRUE ){
-			VecFx32 setTrans;
-
-			VEC_Set( &setTrans, nowTrans.x, nowTrans.y + FX32_ONE*7, nowTrans.z );
-			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &setTrans );
-		} else {
-			actWork->work[0] = 0;
-		}
-	}
-}
-
-#define TEST_NPC_SETNUM	(250)
-static void testSetUp( FLD_ACTCONT* fldActCont )
-{
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
-	GFL_BBDACT_ACTDATA* actData;
-	GFL_BBDACT_ACTUNIT_ID actUnitID;
-	int		i, objIdx;
-	VecFx32	trans;
-	u8		alpha;
-	BOOL	drawEnable;
-	u16		setActNum;
-
-	//リソースセットアップ
-	fldActCont->bbdActResCount = NELEMS(testResTable);
-	fldActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit(	bbdActSys, 
-																testResTable, 
-																fldActCont->bbdActResCount );
-	fldActCont->bbdActActCount = FLD_BBDACT_ACTMAX;
-
-	//ＮＰＣアクターセットアップ
-	{
-		u16	setActNum = TEST_NPC_SETNUM;
-		GFL_BBDACT_ACTDATA* actData = GFL_HEAP_AllocClearMemory( fldActCont->heapID,
-													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
-		fx32 mapSizex, mapSizez;
-
-		GetFieldG3DmapperSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
-
-		for( i=0; i<setActNum; i++ ){
-			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
-			actData[i].sizX = FX16_ONE*8-1;
-			actData[i].sizY = FX16_ONE*8-1;
-	
-			actData[i].trans.x = (GFUser_GetPublicRand(mapSizex) );
-			actData[i].trans.y = 0;
-			actData[i].trans.z = (GFUser_GetPublicRand(mapSizez) );
-			
-			actData[i].alpha = 31;
-			actData[i].drawEnable = TRUE;
-			actData[i].lightMask = GFL_BBD_LIGHTMASK_01;
-			actData[i].func = testFunc;
-			actData[i].work = fldActCont;
-		}
-		fldActCont->bbdActActUnitID = GFL_BBDACT_AddAct( bbdActSys, fldActCont->bbdActResUnitID,
-														actData, setActNum );
-		for( i=0; i<setActNum; i++ ){
-			GFL_BBDACT_SetAnimeTable( bbdActSys, fldActCont->bbdActActUnitID+i, 
-										testAnmTable, NELEMS(testAnmTable) );
-			GFL_BBDACT_SetAnimeIdxOn( bbdActSys, fldActCont->bbdActActUnitID+i, 0 );
-		}
-		GFL_HEAP_FreeMemory( actData );
-	}
-}
-
-static void testRelease( FLD_ACTCONT* fldActCont )
-{
-	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
-	u16	setActNum = FLD_BBDACT_ACTMAX;
-
-	GFL_BBDACT_RemoveAct( bbdActSys, fldActCont->bbdActActUnitID, TEST_NPC_SETNUM );
-		
-	GFL_BBDACT_RemoveResourceUnit(	bbdActSys, 
-									fldActCont->bbdActResUnitID, fldActCont->bbdActResCount );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクトシステム作成
- */
-//------------------------------------------------------------------
-static FLD_ACTCONT*	CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID )
-{
-	FLD_ACTCONT* fldActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_ACTCONT) );
-	int	i;
-
-	fldActCont->heapID = heapID;
-	fldActCont->gs = gs;
-
-	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActCont, &fldActCont->actWork[i] ); }
-
-	testSetUp( fldActCont );	//テスト
-
-	return fldActCont;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクトシステム破棄
- */
-//------------------------------------------------------------------
-static void	DeleteFieldActSys( FLD_ACTCONT* fldActCont )
-{
-	testRelease( fldActCont );	//テスト
-	GFL_HEAP_FreeMemory( fldActCont ); 
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクト動作関数
- */
-//------------------------------------------------------------------
-static void	MainFieldActSys( FLD_ACTCONT* fldActCont )
-{
-	//カメラ回転算出(ビルボードそのものには関係ない。アニメ向きの変更をするのに参照)
-	VecFx32 vec, camPos, target;
-	GFL_G3D_CAMERA* g3Dcamera = GetG3Dcamera( fldActCont->gs );
-
-	GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
-	GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
-
-	VEC_Subtract( &target, &camPos, &vec );
-	
-	fldActCont->cameraRotate = FX_Atan2Idx( -vec.z, vec.x ) - 0x4000;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	フィールドアクトワーク初期化
- */
-//------------------------------------------------------------------
-static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
-{
-	int i;
-
-	//actWork->fldActCont = fldActCont;
-	InitGetFieldG3DmapperGridInfoData( &actWork->gridInfoData );
-
-	for( i=0; i<WORK_SIZ; i++ ){
-		actWork->work[i] = 0;
-	}
-}
-
 
