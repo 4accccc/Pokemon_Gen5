@@ -1,3 +1,5 @@
+#pragma once
+
 #define MAP_BLOCK_COUNT		(9)
 
 #define	MAPMDL_SIZE		(0x0f000)	//モデルデータ用メモリ確保サイズ 
