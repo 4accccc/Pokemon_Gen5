@@ -387,8 +387,8 @@ static void setup_type_read_file( GFL_FONT* wk, u32 heapID )
 static void cleanup_font_datas( GFL_FONT* wk )
 {
 	static void (* const cleanup_func[])( GFL_FONT* ) = {
-		cleanup_type_on_memory,
 		cleanup_type_read_file,
+		cleanup_type_on_memory,
 	};
 
 	cleanup_func[ wk->loadType ]( wk );
