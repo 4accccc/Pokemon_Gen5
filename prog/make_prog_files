@@ -43,7 +43,12 @@ SRCS	+=		test/testmode.c \
 				test/field/mapdatafunc/field_func_pmcustom_file.c \
 				test/field/field_net.c	\
 				print/printsys.c \
-				print/gf_font.c
+				print/gf_font.c \
+				system/bmp_winframe.c \
+				system/bmp_menuwork.c \
+				system/bmp_menu.c \
+				system/bmp_menulist.c \
+				system/bmp_cursor.c
 	
 #================================================
 # ここから下はオーバーレイプログラム定義
