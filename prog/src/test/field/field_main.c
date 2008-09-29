@@ -70,6 +70,7 @@ static void _sendGamePlay( VecFx32* pVec  );
 
 #include "field_main.h"
 
+//#include "field_data.c"
 //------------------------------------------------------------------
 /**
  * @brief	\‘¢‘Ì’è‹`
@@ -173,7 +174,7 @@ BOOL	FieldMain( void )
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
 			fieldWork->mapNum++;
-			if( fieldWork->mapNum >= NELEMS(resistMapTbl) ){
+			if( fieldWork->mapNum >= (resistMapTblCount) ){
 				fieldWork->mapNum = 0;
 			}
 			fieldWork->seq = 3;
@@ -182,7 +183,7 @@ BOOL	FieldMain( void )
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 			fieldWork->mapNum--;
 			if( fieldWork->mapNum < 0 ){
-				fieldWork->mapNum = NELEMS(resistMapTbl)-1;
+				fieldWork->mapNum = (resistMapTblCount)-1;
 			}
 			fieldWork->seq = 3;
 			break;
