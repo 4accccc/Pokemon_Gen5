@@ -1,0 +1,30 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokegra_wb.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_POKEGRA_WB_NAIX_
+#define NARC_POKEGRA_WB_NAIX_
+
+enum {
+	NARC_pokegra_wb_multi_test_NCBR = 0,
+	NARC_pokegra_wb_multi_test_NCLR = 1,
+	NARC_pokegra_wb_multi_test_NCER = 2,
+	NARC_pokegra_wb_multi_test_NANR = 3,
+	NARC_pokegra_wb_multi_test_NMCR = 4,
+	NARC_pokegra_wb_multi_test_NMAR = 5,
+	NARC_pokegra_wb_multi_test2_NCBR = 6,
+	NARC_pokegra_wb_multi_test2_NCLR = 7,
+	NARC_pokegra_wb_multi_test2_NCER = 8,
+	NARC_pokegra_wb_multi_test2_NANR = 9,
+	NARC_pokegra_wb_multi_test2_NMCR = 10,
+	NARC_pokegra_wb_multi_test2_NMAR = 11,
+	NARC_pokegra_wb_batt_testmap01c_nsbmd = 12
+};
+
+/* NARC_POKEGRA_WB_NAIX_ */
+#endif
