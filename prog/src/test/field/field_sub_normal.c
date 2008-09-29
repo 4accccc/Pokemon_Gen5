@@ -30,7 +30,7 @@ static void NormalCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
 //------------------------------------------------------------------
 static void NormalMain( FIELD_WORK* fieldWork, VecFx32 * pos )
 {
-	MainPlayerAct( fieldWork->pcActCont );
+	MainPlayerAct( fieldWork->pcActCont, fieldWork->key_cont );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
@@ -38,7 +38,7 @@ static void NormalMain( FIELD_WORK* fieldWork, VecFx32 * pos )
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 
-	FLD_MainCamera( fieldWork->camera_control );
+	FLD_MainCamera( fieldWork->camera_control, fieldWork->key_cont );
 }
 
 //------------------------------------------------------------------

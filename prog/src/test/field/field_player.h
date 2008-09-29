@@ -13,7 +13,7 @@ typedef struct _PC_ACTCONT PC_ACTCONT;
 
 extern PC_ACTCONT*		CreatePlayerAct( FIELD_SETUP* gs, HEAPID heapID );
 extern void				DeletePlayerAct( PC_ACTCONT* pcActCont );
-extern void				MainPlayerAct( PC_ACTCONT* pcActCont );
+extern void				MainPlayerAct( PC_ACTCONT* pcActCont, int key );
 //static void				MainFriendPlayerAct( PC_ACTCONT* pcActCont );
 //static void				SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID );
 extern void				SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans );

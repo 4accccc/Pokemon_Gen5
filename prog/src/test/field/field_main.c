@@ -75,6 +75,7 @@ typedef struct {
 //	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
+	int				key_cont;
 
 }FIELD_WORK;
 
@@ -145,6 +146,7 @@ BOOL	FieldMain( void )
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
                                 &resistMapTbl[fieldWork->mapNum].mapperData );
 
+			//登録テーブルごとに個別の初期化処理を呼び出し
 			{
 				VecFx32 pos;
 				u16		dir;
@@ -153,21 +155,6 @@ BOOL	FieldMain( void )
 				dir = 0;
 				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 			}
-#if 0
-            fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
-            fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
-			{
-				VecFx32 pos;
-				u16		dir;
-
-				pos = resistMapTbl[fieldWork->mapNum].startPos;
-				dir = 0;
-					
-				fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
-				SetPlayerActTrans( fieldWork->pcActCont, &pos );
-				SetPlayerActDirection( fieldWork->pcActCont, &dir );
-			}
-#endif
             fieldWork->seq++;
         }
 		break;
@@ -194,21 +181,8 @@ BOOL	FieldMain( void )
 			fieldWork->seq = 3;
 			break;
 		}
-#if 0
-		MainPlayerAct( fieldWork->pcActCont );
-		FLD_MainFieldActSys( fieldWork->fldActCont );
-		{
-			VecFx32 pos;
-			u16		dir;
-
-			GetPlayerActTrans( fieldWork->pcActCont, &pos );
-
-			FLD_SetCameraTrans( fieldWork->camera_control, &pos );
-			//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
-			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
-		}
-		FLD_MainCamera( fieldWork->camera_control );
-#endif
+		fieldWork->key_cont = GFL_UI_KEY_GetCont();
+		//登録テーブルごとに個別のメイン処理を呼び出し
 		{
 			VecFx32 pos;
 			fieldWork->ftbl->main_func( fieldWork, &pos );
@@ -222,12 +196,8 @@ BOOL	FieldMain( void )
 	case 3:
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
+		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
-#if 0
-		DeletePlayerAct( fieldWork->pcActCont );
-		FLD_DeleteCamera( fieldWork->camera_control );
-		FLD_DeleteFieldActSys( fieldWork->fldActCont );
-#endif
 
 		if (fieldWork->gamemode != GAMEMODE_FINISH) {
 			fieldWork->seq = 1;
@@ -776,7 +746,7 @@ const DEPEND_FUNCTIONS FieldGridFunctions = {
 
 const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 	NormalCreate,
-	SpecialMain,
+	NoGridMain,
 	NormalDelete,
 };
 

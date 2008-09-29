@@ -293,14 +293,11 @@ void	DeletePlayerAct( PC_ACTCONT* pcActCont )
 	GFL_HEAP_FreeMemory( pcActCont );
 }
 
-void	MainPlayerAct( PC_ACTCONT* pcActCont )
+void	MainPlayerAct( PC_ACTCONT* pcActCont, int key)
 {
 	VecFx32	vecMove = { 0, 0, 0 };
-	int		key;
 	u16		dir;
 	BOOL	mvFlag = FALSE;
-
-	key = GFL_UI_KEY_GetCont();
 
 	dir = getCameraRotate( GetG3Dcamera(pcActCont->gs) );
 

@@ -65,16 +65,13 @@ void	FLD_DeleteCamera( FIELD_CAMERA* camera )
 //#define MV_SPEED		(2*FX32_ONE)
 //#define RT_SPEED		(FX32_ONE/8)
 //#define	CAMERA_TARGET_HEIGHT	(4)//(8)
-void	FLD_MainCamera( FIELD_CAMERA* camera )
+void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 {
 	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->gs);
 	VecFx32	pos, target;
 	VecFx32	vecMove = { 0, 0, 0 };
 	VecFx32	vecUD = { 0, 0, 0 };
-	int		key;
 	BOOL	mvFlag = FALSE;
-
-	key = GFL_UI_KEY_GetCont();
 
 	if( key & PAD_BUTTON_R ){
 		camera->direction -= RT_SPEED;
