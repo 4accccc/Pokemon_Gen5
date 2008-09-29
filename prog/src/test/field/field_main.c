@@ -21,9 +21,11 @@ BOOL	FieldMain( void );
 #include "field_g3d_mapper.h"
 #include "field_net.h"
 
+#include "field_main.h"
 #include "field_common.h"
 #include "field_actor.h"
 #include "field_player.h"
+#include "field_camera.h"
 //============================================================================================
 /**
  *
@@ -39,38 +41,20 @@ BOOL	FieldMain( void );
  *
  */
 //============================================================================================
-//typedef struct _FIELD_SETUP FIELD_SETUP;
 
 static FIELD_SETUP*	SetupGameSystem( HEAPID heapID );
 static void				RemoveGameSystem( FIELD_SETUP* gs );
 static void				MainGameSystem( FIELD_SETUP* gs );
-//static FLD_G3D_MAPPER*		GetFieldG3Dmapper( FIELD_SETUP* gs );
-
-#if 0
-//アーカイブＩＮＤＥＸ
-enum {
-	ARCID_TEST3D = 0,
-	ARCID_FLDMAP_ACTOR,
-	ARCID_FLDMAP,
-	ARCID_FIELDMAP,
-};
-#endif
-
-typedef struct _CURSOR_CONT	CURSOR_CONT;
-static CURSOR_CONT*		CreateCursor( FIELD_SETUP*	gs, HEAPID heapID );
-static void				DeleteCursor( CURSOR_CONT* cursor );
-static void				MainCursor( CURSOR_CONT* cursor);
-static void             FriendCursor( CURSOR_CONT* cursor );
-static void				SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans );
-static void				GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans );
-static void				SetCursorDirection( CURSOR_CONT* cursor, u16* direction );
-static void				GetCursorDirection( CURSOR_CONT* cursor, u16* direction );
 
 static void _sendGamePlay( VecFx32* pVec  );
 
-#include "field_main.h"
 
-//#include "field_data.c"
+
+typedef enum {
+	GAMEMODE_NORMAL = 0,
+	GAMEMODE_FINISH,
+}GAMEMODE;
+
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -79,14 +63,15 @@ static void _sendGamePlay( VecFx32* pVec  );
 typedef struct {
     VecFx32         recvWork;
 	HEAPID			heapID;
+	GAMEMODE		gamemode;
 	int				seq;
 	int				timer;
 
 	FIELD_SETUP*	gs;
-	CURSOR_CONT*	cursor;
+	FIELD_CAMERA*	camera_control;
 //	CURSOR_CONT*	cursorFriend;
 	PC_ACTCONT*		pcActCont;
-	PC_ACTCONT*		friendActCont;
+//	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
 
@@ -110,6 +95,7 @@ void	FieldBoot( HEAPID heapID )
 {
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WORK) );
 	fieldWork->heapID = heapID;
+	fieldWork->gamemode = GAMEMODE_NORMAL;
 
 	GFL_UI_TP_Init( fieldWork->heapID );
 }
@@ -150,7 +136,7 @@ BOOL	FieldMain( void )
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
                                 &resistMapTbl[fieldWork->mapNum].mapperData );
 
-            fieldWork->cursor = CreateCursor( fieldWork->gs, fieldWork->heapID );
+            fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
             fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 			{
 				VecFx32 pos;
@@ -169,7 +155,8 @@ BOOL	FieldMain( void )
 
 	case 2:
 		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			fieldWork->seq = 4;
+			fieldWork->gamemode = GAMEMODE_FINISH;
+			fieldWork->seq = 3;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
@@ -196,11 +183,11 @@ BOOL	FieldMain( void )
 
 			GetPlayerActTrans( fieldWork->pcActCont, &pos );
 
-			SetCursorTrans( fieldWork->cursor, &pos );
-			//SetCursorDirection( fieldWork->cursor, &dir );
+			FLD_SetCameraTrans( fieldWork->camera_control, &pos );
+			//FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
-		MainCursor( fieldWork->cursor );
+		FLD_MainCamera( fieldWork->camera_control );
 
 		MainGameSystem( fieldWork->gs );
 		break;
@@ -210,20 +197,19 @@ BOOL	FieldMain( void )
 
 		FLD_DeleteFieldActSys( fieldWork->fldActCont );
 		DeletePlayerAct( fieldWork->pcActCont );
-		DeleteCursor( fieldWork->cursor );
-        fieldWork->seq = 1;
+		FLD_DeleteCamera( fieldWork->camera_control );
+		if (fieldWork->gamemode != GAMEMODE_FINISH) {
+			fieldWork->seq = 1;
+		} else {
+			fieldWork->seq = 4;
+		}
 		break;
 
 	case 4:
-        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
-
-		FLD_DeleteFieldActSys( fieldWork->fldActCont );
-		DeletePlayerAct( fieldWork->pcActCont );
-		DeleteCursor( fieldWork->cursor );
-
 		RemoveGameSystem( fieldWork->gs );
 		return_flag = TRUE;
-        break;
+		break;
+
 	}
 	return return_flag;
 }
@@ -737,203 +723,5 @@ BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* grid
 	return TRUE;
 }
 	
-//============================================================================================
-/**
- * @brief	カーソル
- */
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	型宣言
- */
-//------------------------------------------------------------------
-struct _CURSOR_CONT {
-	HEAPID				heapID;
-	FIELD_SETUP*		gs;
-	u16					unitIdx;
-	u16					resIdx;
-	u16					objIdx;
 
-	u16					cursorIdx;
-	VecFx32				trans;
-	fx32				cameraHeight;
-	u16					cameraLength;
-	u16					direction;
-
-	FLD_G3D_MAPPER_INFODATA gridInfoData;
-};
-
-//------------------------------------------------------------------
-/**
- * @brief	セットアップ
- */
-//------------------------------------------------------------------
-#include "test_graphic/test3d.naix"
-
-enum {
-	G3DRES_CURSOR = 0,
-};
-//３Ｄグラフィックリソーステーブル
-static const GFL_G3D_UTIL_RES cursor_g3Dutil_resTbl[] = {
-	{ ARCID_TEST3D, NARC_haruka_test_wall_nsbmd, GFL_G3D_UTIL_RESARC },
-};
-
-enum {
-	G3DOBJ_CURSOR = 0,
-};
-//３Ｄオブジェクト定義テーブル
-static const GFL_G3D_UTIL_OBJ cursor_g3Dutil_objTbl[] = {
-	{ G3DRES_CURSOR, 0, G3DRES_CURSOR, NULL, 0 },
-};
-
-//---------------------
-//g3Dscene 初期設定テーブルデータ
-static const GFL_G3D_UTIL_SETUP cursor_g3Dsetup = {
-	cursor_g3Dutil_resTbl, NELEMS(cursor_g3Dutil_resTbl),
-	cursor_g3Dutil_objTbl, NELEMS(cursor_g3Dutil_objTbl),
-};
-
-static const GFL_G3D_SCENEOBJ_DATA cursorObject[] = {
-	{	G3DOBJ_CURSOR, 0, 1, 16, TRUE, TRUE,
-		{	{ 0, 0, 0 },
-			//{ FX32_ONE/8, FX32_ONE/8, FX32_ONE/8 },
-			{ FX32_ONE/64, FX32_ONE/64, FX32_ONE/64 },
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },
-		},NULL,
-	},
-};
-
-#define	CAMERA_LENGTH	(16)
-//------------------------------------------------------------------
-/**
- * @brief	初期化
- */
-//------------------------------------------------------------------
-static CURSOR_CONT*	CreateCursor( FIELD_SETUP*	gs, HEAPID heapID )
-{
-	CURSOR_CONT* cursor = GFL_HEAP_AllocClearMemory( heapID, sizeof(CURSOR_CONT) );
-
-	cursor->heapID = heapID;
-	cursor->gs = gs;
-
-	VEC_Set( &cursor->trans, 0, 0, 0 );
-	cursor->cameraHeight = 0;
-	cursor->cameraLength = CAMERA_LENGTH;
-	cursor->direction = 0;
-	InitGetFieldG3DmapperGridInfoData( &cursor->gridInfoData );
-
-	//３Ｄデータセットアップ
-	cursor->unitIdx = GFL_G3D_SCENE_AddG3DutilUnit( cursor->gs->g3Dscene, &cursor_g3Dsetup );
-	cursor->resIdx = GFL_G3D_SCENE_GetG3DutilUnitResIdx( cursor->gs->g3Dscene, cursor->unitIdx );
-	cursor->objIdx = GFL_G3D_SCENE_GetG3DutilUnitObjIdx( cursor->gs->g3Dscene, cursor->unitIdx );
-	cursor->cursorIdx = GFL_G3D_SCENEOBJ_Add(	cursor->gs->g3Dscene, 
-												cursorObject, NELEMS(cursorObject),
-												cursor->objIdx );
-	
-	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx),
-								&cursor->trans );
-	return cursor;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	終了
- */
-//------------------------------------------------------------------
-static void	DeleteCursor( CURSOR_CONT* cursor )
-{
-	GFL_G3D_SCENEOBJ_Remove( cursor->gs->g3Dscene, cursor->cursorIdx, NELEMS(cursorObject) ); 
-	GFL_G3D_SCENE_DelG3DutilUnit( cursor->gs->g3Dscene, cursor->unitIdx );
-
-	GFL_HEAP_FreeMemory( cursor );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	メイン
- */
-//------------------------------------------------------------------
-//#define MV_SPEED		(2*FX32_ONE)
-//#define RT_SPEED		(FX32_ONE/8)
-//#define	CAMERA_TARGET_HEIGHT	(4)//(8)
-static void	MainCursor( CURSOR_CONT* cursor )
-{
-	VecFx32	pos, target;
-	VecFx32	vecMove = { 0, 0, 0 };
-	VecFx32	vecUD = { 0, 0, 0 };
-	int		key;
-	BOOL	mvFlag = FALSE;
-
-	key = GFL_UI_KEY_GetCont();
-
-	if( key & PAD_BUTTON_R ){
-		cursor->direction -= RT_SPEED;
-	}
-	if( key & PAD_BUTTON_L ){
-		cursor->direction += RT_SPEED;
-	}
-	if( key & PAD_BUTTON_B ){
-		if( cursor->cameraLength > 8 ){
-			cursor->cameraLength -= 8;
-		}
-		//vecMove.y = -MV_SPEED;
-	}
-	if( key & PAD_BUTTON_A ){
-		if( cursor->cameraLength < 4096 ){
-			cursor->cameraLength += 8;
-		}
-		//vecMove.y = MV_SPEED;
-	}
-	if( key & PAD_BUTTON_Y ){
-		cursor->cameraHeight -= MV_SPEED;
-	}
-	if( key & PAD_BUTTON_X ){
-		cursor->cameraHeight += MV_SPEED;
-	}
-	VEC_Set(	&target,
-				cursor->trans.x,
-				cursor->trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-				cursor->trans.z);
-	pos.x = cursor->trans.x + cursor->cameraLength * FX_SinIdx(cursor->direction);
-	pos.y = cursor->trans.y + cursor->cameraHeight;
-	pos.z = cursor->trans.z + cursor->cameraLength * FX_CosIdx(cursor->direction);
-
-	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
-								&cursor->trans );
-	GFL_G3D_CAMERA_SetTarget( cursor->gs->g3Dcamera, &target );
-	GFL_G3D_CAMERA_SetPos( cursor->gs->g3Dcamera, &pos );
-}
-
-
-
-static void	FriendCursor( CURSOR_CONT* cursor )
-{
-    
-    GFL_STD_MemCopy((const void*)&fieldWork->recvWork ,&cursor->trans, sizeof(VecFx32));
-	GFL_G3D_SCENEOBJ_SetPos(	GFL_G3D_SCENEOBJ_Get(cursor->gs->g3Dscene, cursor->cursorIdx), 
-								&cursor->trans );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief	
- */
-//------------------------------------------------------------------
-static void	SetCursorTrans( CURSOR_CONT* cursor, const VecFx32* trans )
-{
-	cursor->trans = *trans;
-}
-static void	GetCursorTrans( CURSOR_CONT* cursor, VecFx32* trans )
-{
-	*trans = cursor->trans;
-}
-
-static void	SetCursorDirection( CURSOR_CONT* cursor, u16* direction )
-{
-	cursor->direction = *direction;
-}
-static void	GetCursorDirection( CURSOR_CONT* cursor, u16* direction )
-{
-	*direction = cursor->direction;
-}
 

@@ -38,6 +38,7 @@ SRCS	+=		test/testmode.c \
 				test/field/field_main.c \
 				test/field/field_actor.c \
 				test/field/field_player.c \
+				test/field/field_camera.c \
 				test/field/field_data.c \
 				test/field/field_g3d_mapper.c \
 				test/field/mapdatafunc/field_func_mapeditor_file.c \
