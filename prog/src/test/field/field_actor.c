@@ -216,7 +216,7 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 }
 
 #define TEST_NPC_SETNUM	(250)
-static void testSetUp( FLD_ACTCONT* fldActCont )
+void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 {
 	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
 	GFL_BBDACT_ACTDATA* actData;
@@ -269,7 +269,7 @@ static void testSetUp( FLD_ACTCONT* fldActCont )
 	}
 }
 
-static void testRelease( FLD_ACTCONT* fldActCont )
+void FLDACT_TestRelease( FLD_ACTCONT* fldActCont )
 {
 	GFL_BBDACT_SYS* bbdActSys = GetBbdActSys( fldActCont->gs );	
 	u16	setActNum = FLD_BBDACT_ACTMAX;
@@ -295,7 +295,7 @@ FLD_ACTCONT*	FLD_CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID )
 
 	for( i=0; i<FLD_BBDACT_ACTMAX; i++ ){ initActWork( fldActCont, &fldActCont->actWork[i] ); }
 
-	testSetUp( fldActCont );	//テスト
+	//testSetUp( fldActCont );	//テスト
 
 	return fldActCont;
 }
@@ -307,7 +307,7 @@ FLD_ACTCONT*	FLD_CreateFieldActSys( FIELD_SETUP* gs, HEAPID heapID )
 //------------------------------------------------------------------
 void	FLD_DeleteFieldActSys( FLD_ACTCONT* fldActCont )
 {
-	testRelease( fldActCont );	//テスト
+	//testRelease( fldActCont );	//テスト
 	GFL_HEAP_FreeMemory( fldActCont ); 
 }
 

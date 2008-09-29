@@ -18,6 +18,7 @@ static void GridMoveCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+	FLDACT_TestSetup( fieldWork->fldActCont );
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
@@ -50,6 +51,7 @@ static void GridMoveDelete( FIELD_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
 	FLD_DeleteCamera( fieldWork->camera_control );
+	FLDACT_TestRelease( fieldWork->fldActCont );
 	FLD_DeleteFieldActSys( fieldWork->fldActCont );
 }
 
