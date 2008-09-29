@@ -11,7 +11,7 @@
 
 #include "include/system/gfl_use.h"
 #include "arc/arc_def.h"
-#include "bmp_cursor.h"
+#include "system/bmp_cursor.h"
 
 //======================================================================
 //	

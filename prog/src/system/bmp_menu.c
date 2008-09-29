@@ -15,9 +15,9 @@
 
 #include "include/system/gfl_use.h"
 #include "arc/arc_def.h"
-#include "bmp_winframe.h"
-#include "bmp_cursor.h"
-#include "bmp_menu.h"
+#include "system/bmp_winframe.h"
+#include "system/bmp_cursor.h"
+#include "system/bmp_menu.h"
 
 //======================================================================
 //	ƒVƒ“ƒ{ƒ‹’è‹`

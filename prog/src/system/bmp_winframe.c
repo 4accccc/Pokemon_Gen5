@@ -11,7 +11,7 @@
 
 #include "include/system/gfl_use.h"
 #include "arc/arc_def.h"
-#include "bmp_winframe.h"
+#include "system/bmp_winframe.h"
 
 #include "arc/test_graphic/winframe.naix"	//test
 #include "arc/test_graphic/menu_gra.naix"	//test
