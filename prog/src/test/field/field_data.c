@@ -93,8 +93,8 @@ const SCENE_DATA	resistMapTbl[] = {
 			USE_GLOBAL_OBJSET_BIN, (void*)&gobjData_Bin,
 			GSMap, 
 		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
-		,"GSMap"
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
+		&FieldBaseFunctions,
 	},
 	{
 		{	
@@ -105,8 +105,8 @@ const SCENE_DATA	resistMapTbl[] = {
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			sampleMap, 
 		}, 
-		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 }
-		,"sampleMap"
+		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 },
+		&FieldGridFunctions,
 	},
 	{
 		{	
@@ -117,8 +117,8 @@ const SCENE_DATA	resistMapTbl[] = {
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			sampleMap2, 
 		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 }
-		,"sampleMap2"
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
+		&FieldNoGridFunctions,
 	},
 };
 

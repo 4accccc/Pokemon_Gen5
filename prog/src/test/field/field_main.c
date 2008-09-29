@@ -67,6 +67,7 @@ typedef struct {
 	int				seq;
 	int				timer;
 
+	const DEPEND_FUNCTIONS * ftbl;
 	FIELD_SETUP*	gs;
 	FIELD_CAMERA*	camera_control;
 //	CURSOR_CONT*	cursorFriend;
@@ -76,6 +77,14 @@ typedef struct {
 	int				mapNum;
 
 }FIELD_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+struct _DEPEND_FUNCTIONS{
+	void (*create_func)(FIELD_WORK*, VecFx32*, u16);
+	void (*main_func)(FIELD_WORK*, VecFx32*);
+	void (*delete_func)(FIELD_WORK*);
+};
 
 //------------------------------------------------------------------
 /**
@@ -111,7 +120,6 @@ void	FieldEnd( void )
 /**
  * @brief	メイン
  */
-static void Debug_Regenerate( void );
 //------------------------------------------------------------------
 BOOL	FieldMain( void )
 {
@@ -131,11 +139,21 @@ BOOL	FieldMain( void )
         break;
 
 	case 1:
+		fieldWork->ftbl = resistMapTbl[fieldWork->mapNum].dep_funcs;
 		{
             //セットアップ
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
                                 &resistMapTbl[fieldWork->mapNum].mapperData );
 
+			{
+				VecFx32 pos;
+				u16		dir;
+
+				pos = resistMapTbl[fieldWork->mapNum].startPos;
+				dir = 0;
+				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
+			}
+#if 0
             fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
             fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 			{
@@ -149,6 +167,7 @@ BOOL	FieldMain( void )
 				SetPlayerActTrans( fieldWork->pcActCont, &pos );
 				SetPlayerActDirection( fieldWork->pcActCont, &dir );
 			}
+#endif
             fieldWork->seq++;
         }
 		break;
@@ -175,6 +194,7 @@ BOOL	FieldMain( void )
 			fieldWork->seq = 3;
 			break;
 		}
+#if 0
 		MainPlayerAct( fieldWork->pcActCont );
 		FLD_MainFieldActSys( fieldWork->fldActCont );
 		{
@@ -188,6 +208,13 @@ BOOL	FieldMain( void )
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
 		FLD_MainCamera( fieldWork->camera_control );
+#endif
+		{
+			VecFx32 pos;
+			fieldWork->ftbl->main_func( fieldWork, &pos );
+			//Mapシステムに位置を渡している。これがないとマップ移動しないので注意
+			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
+		}
 
 		MainGameSystem( fieldWork->gs );
 		break;
@@ -195,9 +222,13 @@ BOOL	FieldMain( void )
 	case 3:
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
-		FLD_DeleteFieldActSys( fieldWork->fldActCont );
+		fieldWork->ftbl->delete_func(fieldWork);
+#if 0
 		DeletePlayerAct( fieldWork->pcActCont );
 		FLD_DeleteCamera( fieldWork->camera_control );
+		FLD_DeleteFieldActSys( fieldWork->fldActCont );
+#endif
+
 		if (fieldWork->gamemode != GAMEMODE_FINISH) {
 			fieldWork->seq = 1;
 		} else {
@@ -724,4 +755,28 @@ BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* grid
 }
 	
 
+
+//============================================================================================
+//============================================================================================
+#include "field_sub_normal.c"
+#include "field_sub_nogrid.c"
+#include "field_sub_grid.c"
+
+const DEPEND_FUNCTIONS FieldBaseFunctions = {
+	NormalCreate,
+	NormalMain,
+	NormalDelete,
+};
+
+const DEPEND_FUNCTIONS FieldGridFunctions = {
+	GridMoveCreate,
+	GridMoveMain,
+	GridMoveDelete,
+};
+
+const DEPEND_FUNCTIONS FieldNoGridFunctions = {
+	NormalCreate,
+	SpecialMain,
+	NormalDelete,
+};
 
