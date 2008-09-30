@@ -45,12 +45,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nsbtp.3dppack:
 .3dmd.3dppack:
 .bin.3dppack:
-	$(BINLINKER) $*.nsbmd $*.nsbtx $*.nsbtp $*.bin $*.3dmd $*.3dppack 3D
+	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.bin $*.3dmd $*.3dppack BR
 
 endif
 
 
-.PHONY:	do-build clean
+.PHONY:	do-build clean height
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -81,3 +81,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 
 
+height:
+	ls *.imd |sed -e 's/\.imd//' > height_data.lst
+	echo \#END >> height_data.lst
+	heightcnv/imdcnv01 height_data.lst
