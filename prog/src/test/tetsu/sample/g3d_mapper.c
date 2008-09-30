@@ -114,9 +114,9 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-static const MAPFILE_FUNC mapFileFuncTbl[] = {
-	{ LoadMapData_MapEditorFile, GetAttr_MapEditorFile },	//FILE_MAPEDITER_DATA
-	{ LoadMapData_PMcustomFile, GetAttr_PMcustomFile },		//FILE_MAPEDITER_DATA
+static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
+	{ DP3PACK_HEADER, LoadMapData_MapEditorFile, GetAttr_MapEditorFile },
+	{ MAPFILE_FUNC_DEFAULT, LoadMapData_PMcustomFile, GetAttr_PMcustomFile },	//TableEnd&default	
 };
 
 //------------------------------------------------------------------

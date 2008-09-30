@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "system\gfl_use.h"	//乱数用
 
+#include "map\dp3format.h"
 #include "mapdatafunc\field_func_mapeditor_file.h"
 #include "mapdatafunc\field_func_pmcustom_file.h"
 
@@ -115,9 +116,11 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  * @brief	セットアップ
  */
 //------------------------------------------------------------------
-static const MAPFILE_FUNC mapFileFuncTbl[] = {
-	{ FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },	//FILE_MAPEDITER_DATA
-	{ FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },		//FILE_MAPEDITER_DATA
+static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
+	//FILE_MAPEDITER_DATA
+	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
+	//TableEnd&default
+	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },
 };
 
 //------------------------------------------------------------------
