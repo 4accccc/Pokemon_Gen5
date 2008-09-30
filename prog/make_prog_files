@@ -44,6 +44,7 @@ SRCS	+=		test/testmode.c \
 				test/field/field_g3d_mapper.c \
 				test/field/mapdatafunc/field_func_mapeditor_file.c \
 				test/field/mapdatafunc/field_func_pmcustom_file.c \
+				test/field/mapdatafunc/field_func_bridge_file.c \
 				test/field/field_net.c	\
 				test/soga/d_soga.c \
 				test/soga/mcss.c \
