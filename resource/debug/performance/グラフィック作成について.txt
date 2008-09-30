@@ -1,0 +1,4 @@
+パフォーマンスメーター(performance_meter.ncg)のグラフィックはg2dcnvではなく、
+NcgOutCharText.exeを使用してキャラデータを作成しています。
+
+パレットは通信アイコンのパレットを使用しています。

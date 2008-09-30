@@ -54,9 +54,15 @@ void NitroMain(void)
 	// 必要なTCBとか登録して…
 	GameInit();
 
+#ifdef PM_DEBUG
+	DEBUG_PerformanceInit();
+#endif
+
 	while(TRUE){
 #ifdef PM_DEBUG
-    DEBUG_PerformanceStart();
+//	DEBUG_PerformanceStart();
+	DEBUG_PerformanceMain();
+	DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
 #endif //PM_DEBUG
 
         MachineSystem_Main();
@@ -71,11 +77,13 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		//G3_SwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);
 
+#ifdef PM_DEBUG
+	//DEBUG_PerformanceDisp();
+	DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
+#endif //PM_DEBUG
+
         // VBLANK待ち
 		// ※gflibに適切な関数が出来たら置き換えてください
-#ifdef PM_DEBUG
-        DEBUG_PerformanceDisp();
-#endif //PM_DEBUG
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	}
 }
@@ -101,8 +109,16 @@ static	void	SkeltonVBlankFunc(void)
 
 	MI_WaitDma(GX_DEFAULT_DMAID);
 
+#ifdef PM_DEBUG
+	DEBUG_PerformanceStartLine(PERFORMANCE_ID_VBLANK);
+#endif
+
 	MachineSystem_VIntr();
 	GFLUser_VIntr();
+
+#ifdef PM_DEBUG
+	DEBUG_PerformanceEndLine(PERFORMANCE_ID_VBLANK);
+#endif
 }
 
 //------------------------------------------------------------------
