@@ -6,10 +6,9 @@
  * @date	
  */
 //============================================================================================
-#include <gflib.h>
+#include "gflib.h"
 #include "system\gfl_use.h"	//óêêîóp
 
-#include "map\dp3format.h"
 #include "mapdatafunc\field_func_mapeditor_file.h"
 #include "mapdatafunc\field_func_pmcustom_file.h"
 
@@ -117,10 +116,8 @@ static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
  */
 //------------------------------------------------------------------
 static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
-	//FILE_MAPEDITER_DATA
 	{ DP3PACK_HEADER, FieldLoadMapData_MapEditorFile, FieldGetAttr_MapEditorFile },
-	//TableEnd&default
-	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },
+	{ MAPFILE_FUNC_DEFAULT, FieldLoadMapData_PMcustomFile, FieldGetAttr_PMcustomFile },	//TableEnd&default	
 };
 
 //------------------------------------------------------------------
