@@ -133,16 +133,18 @@ typedef void (GFL_G3D_MAP_FILEATTR_FUNC)( GFL_G3D_MAP_ATTRINFO* attrInfo,
 										const fx32 map_width, const fx32 map_height );
 //------------------------------------------------------------------
 //マップデータファイル処理関数テーブル定義
+#define MAPFILE_FUNC_DEFAULT	(0xffffffff)	//テーブルの最後に記述設定しておくこと
 typedef struct {
+	u32							signature;
 	GFL_G3D_MAP_FILELOAD_FUNC*	loadFunc; 
 	GFL_G3D_MAP_FILEATTR_FUNC*	attrFunc; 
-}MAPFILE_FUNC;
+}GFL_G3D_MAP_FILE_FUNC;
 //------------------------------------------------------------------
 //セットアップ定義
 typedef struct {
-	u32					mapDataHeapSize;
-	u32					texVramSize;
-	const MAPFILE_FUNC*	mapFileFunc;
+	u32								mapDataHeapSize;
+	u32								texVramSize;
+	const GFL_G3D_MAP_FILE_FUNC*	mapFileFunc;
 
 }GFL_G3D_MAP_SETUP;
 
