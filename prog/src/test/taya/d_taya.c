@@ -225,8 +225,20 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 
 	PRINTSYS_QUE_Main( wk->printQue );
 
+	if( PRINT_UTIL_Trans( wk->printUtil, wk->printQue ) )
+	{
+		return FALSE;
+	}
+
 	switch( *seq ){
 	case 0:
+		GFL_MSG_GetString( wk->mm, DEBUG_TAYA_TITLE, wk->strbuf );
+		GFL_BMP_Clear( wk->bmp, 0xff );
+		PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
+		(*seq)++;
+		break;
+
+	case 1:
 		{
 			u16 key = GFL_UI_KEY_GetTrg();
 
@@ -251,7 +263,7 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 		}
 		break;
 
-	case 1:
+	case 2:
 		if( wk->subProc( proc, &(wk->subSeq), pwk, mywk ) )
 		{
 			wk->subProc = NULL;
@@ -520,6 +532,9 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 
 	switch( *seq ){
 	case 0:
+		GFL_MSG_GetString( wk->mm, DEBUG_TAYA_WAIT, wk->strbuf );
+		GFL_BMP_Clear( wk->bmp, 0xff );
+		PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
 		wk->netInitWork = testNetInitParam;
 		wk->netInitWork.pWork = (void*)wk;
 		wk->netTestSeq = 0;
@@ -556,6 +571,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		break;
 
 	case 4:
+		GFL_BMP_Clear( wk->bmp, 0xff );
 		GFL_MSG_GetString(	wk->mm, (wk->ImParent)? DEBUG_TAYA_STR_PARENT : DEBUG_TAYA_STR_CHILD, wk->strbuf );
 		PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
 //		GFL_BMPWIN_TransVramCharacter( wk->win );
