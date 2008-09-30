@@ -54,7 +54,8 @@ SRCS	+=		test/testmode.c \
 				system/bmp_menu.c \
 				system/bmp_menulist.c \
 				system/bmp_cursor.c \
-				test/field/field_debug.c
+				test/field/field_debug.c \
+				test/field/field_easytp.c
 	
 #================================================
 # ここから下はオーバーレイプログラム定義
