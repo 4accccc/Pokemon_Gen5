@@ -28,6 +28,7 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/debug_watanabe.c \
 				test/taya/d_taya.c \
 				test/matsuda/d_matsu.c \
+				test/matsuda/d_matsu_net.c \
 				savedata/save_tbl.c \
 				savedata/save_control.c \
 				savedata/contest_savedata.c \
