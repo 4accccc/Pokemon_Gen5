@@ -12,7 +12,7 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
-#include "performance.h"
+#include "test/performance.h"
 
 
 //==============================================================================

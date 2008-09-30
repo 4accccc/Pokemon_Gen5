@@ -1,7 +1,7 @@
 #こんな感じで各自のソースを追加してください
 SRCS	+=		test/testmode.c \
 				test/tetsu/game/calc_ph.c \
-				test/ohno/performance.c \
+				test/matsuda/performance.c \
 				test/ohno/debug_ohno.c \
 				test/ohno/debug_field.c \
 				test/ohno/fatal_error.c \

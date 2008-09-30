@@ -18,7 +18,7 @@
 #include "savedata/save_control.h"
 
 #ifdef PM_DEBUG
-#include "test/ohno/performance.h"
+#include "test/performance.h"
 #include "test/goto/comm_error.h"
 #endif //PM_DEBUG
 
