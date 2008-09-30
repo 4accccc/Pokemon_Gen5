@@ -65,7 +65,5 @@ $(NARCNAME):	$(NMCFILE)
 clean:
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
-	-rm -f $(NARCNAME)
-	-rm -f $(NAIXNAME)
 
 
