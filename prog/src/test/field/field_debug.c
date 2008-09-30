@@ -133,11 +133,12 @@ DEBUG_FLDMENU * FldDebugMenu_Init( u32 heapID )
 		
 		GFL_BG_SetBGControl(
 			d_menu->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+
 		GFL_BG_SetVisible( d_menu->bgFrame, VISIBLE_ON );
 		
 		GFL_BG_SetPriority( d_menu->bgFrame, 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );
-		
+
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_D_TAYA, NARC_d_taya_default_nclr,
 			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, d_menu->heapID );
@@ -145,7 +146,7 @@ DEBUG_FLDMENU * FldDebugMenu_Init( u32 heapID )
 		GFL_BG_FillCharacter( d_menu->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( d_menu->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		
+
 		GFL_BG_LoadScreenReq( d_menu->bgFrame );
 	}
 	
@@ -163,6 +164,8 @@ void FldDebugMenu_Delete( DEBUG_FLDMENU *d_menu )
 {
 	{	//‚Æ‚è‚ ‚¦‚¸‚±‚¿‚ç‚Å@‚¢‚¸‚ê‚ÍƒƒCƒ“‘¤
 		GFL_BMPWIN_Exit();
+		GFL_BG_FreeCharacterArea( d_menu->bgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( d_menu->bgFrame );
 	}
 	
 	GFL_HEAP_FreeMemory( d_menu );
