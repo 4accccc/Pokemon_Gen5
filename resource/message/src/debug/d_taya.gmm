@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-09-05T12:46:43"/>
+	<create user="taya" host="W00146" date="2008-09-30T15:33:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -143,14 +143,14 @@
 		<language name="JPN_KANJI" width="80">ダミーデータ</language>
 	</row>
 
-	<row id="DEBUG_TAYA03">
-		<language name="JPN" font=" 2:lcfont12" width="80">漢字の実験</language>
-		<language name="JPN_KANJI" width="80">漢字の実験</language>
+	<row id="DEBUG_TAYA_WAIT">
+		<language name="JPN" font=" 2:lcfont12" width="256">しょうしょう　おまちください</language>
+		<language name="JPN_KANJI" width="256">少々お待ちください</language>
 	</row>
 
-	<row id="DEBUG_TAYA_END">
-		<language name="JPN" font=" 2:lcfont12" width="80">閉じる</language>
-		<language name="JPN_KANJI" width="80">閉じる</language>
+	<row id="DEBUG_TAYA_TITLE">
+		<language name="JPN" font=" 2:lcfont12" width="256">Ｂをおすと　つうしんモード　に　はいります</language>
+		<language name="JPN_KANJI" width="256">Ｂを押すと通信モードに入ります。</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR00">
@@ -236,13 +236,13 @@
 	</row>
 
 	<row id="DEBUG_TAYA_STR_PARENT">
-		<language name="JPN" font=" 2:lcfont12" width="256">わし　おやき　です</language>
-		<language name="JPN_KANJI" width="256">儂、親機です</language>
+		<language name="JPN" font=" 2:lcfont12" width="256">わし　おやき　です。　Ａおすと　うごきます</language>
+		<language name="JPN_KANJI" width="256">儂、親機です。Ａ押すと動きます。</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR_CHILD">
-		<language name="JPN" font=" 2:lcfont12" width="256">ぼく　こき　です</language>
-		<language name="JPN_KANJI" width="256">僕、子機です。</language>
+		<language name="JPN" font=" 2:lcfont12" width="256">ぼく　こき　です。おやきを　そうさしてください。</language>
+		<language name="JPN_KANJI" width="256">僕、子機です。親機を操作してください。</language>
 	</row>
 
 	<flowchart-group-list>
