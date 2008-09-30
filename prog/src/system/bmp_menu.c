@@ -828,4 +828,5 @@ static void BmpWinOn( GFL_BMPWIN *bmpwin )
 void BmpMenu_SetCursorString( BMPMENU_WORK *mw, u32 strID )
 {
 	BmpCursor_SetCursorFontMsg( mw->cursor, mw->hed.msgdata, strID );
+	BmpMenuCursorPut( mw );
 }

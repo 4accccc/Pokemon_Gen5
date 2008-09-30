@@ -26,6 +26,9 @@ BOOL	FieldMain( void );
 #include "field_actor.h"
 #include "field_player.h"
 #include "field_camera.h"
+
+#include "field_debug.h"
+
 //============================================================================================
 /**
  *
@@ -75,8 +78,11 @@ typedef struct {
 //	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
+	
 	int				key_cont;
-
+	
+	int d_menu_flag;
+	DEBUG_FLDMENU *d_menu;
 }FIELD_WORK;
 
 //------------------------------------------------------------------
@@ -95,6 +101,8 @@ struct _DEPEND_FUNCTIONS{
 static BOOL GameEndCheck( int cont );
 
 FIELD_WORK* fieldWork;
+
+static void DebugMenuProc( FIELD_WORK *fldWork );
 
 //------------------------------------------------------------------
 /**
@@ -155,6 +163,11 @@ BOOL	FieldMain( void )
 				dir = 0;
 				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 			}
+			
+			{	//デバッグメニュー
+				fieldWork->d_menu = FldDebugMenu_Init( fieldWork->heapID );
+			}
+
             fieldWork->seq++;
         }
 		break;
@@ -181,8 +194,12 @@ BOOL	FieldMain( void )
 			fieldWork->seq = 3;
 			break;
 		}
+		
+		DebugMenuProc( fieldWork );
+		
 		fieldWork->key_cont = GFL_UI_KEY_GetCont();
 		//登録テーブルごとに個別のメイン処理を呼び出し
+		
 		{
 			VecFx32 pos;
 			fieldWork->ftbl->main_func( fieldWork, &pos );
@@ -204,13 +221,14 @@ BOOL	FieldMain( void )
 		} else {
 			fieldWork->seq = 4;
 		}
+		
+		FldDebugMenu_Delete( fieldWork->d_menu );
 		break;
 
 	case 4:
 		RemoveGameSystem( fieldWork->gs );
 		return_flag = TRUE;
 		break;
-
 	}
 	return return_flag;
 }
@@ -282,7 +300,7 @@ struct _FIELD_SETUP {
 //------------------------------------------------------------------
 ///ＶＲＡＭバンク設定構造体
 static const GFL_BG_DISPVRAM dispVram = {
-	GX_VRAM_BG_16_F,				//メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BG_128_D,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
@@ -750,3 +768,22 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 	NormalDelete,
 };
 
+//======================================================================
+//	debug
+//======================================================================
+//--------------------------------------------------------------
+///	デバッグメニュー処理
+//--------------------------------------------------------------
+static void DebugMenuProc( FIELD_WORK *fldWork )
+{
+	if( fldWork->d_menu_flag == FALSE ){
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
+			FldDebugMenu_Create( fldWork->d_menu );
+			fldWork->d_menu_flag = TRUE;
+		}
+	}else{	//起動中
+		if( FldDebugMenu_Main(fldWork->d_menu) == TRUE ){
+			fldWork->d_menu_flag = FALSE;
+		}
+	}
+}

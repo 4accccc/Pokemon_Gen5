@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2008-09-29T13:22:34"/>
+	<create user="kagaya" host="W00143" date="2008-09-29T22:04:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -150,6 +150,31 @@
 
 	<row id="DEBUG_FIELD_STR03">
 		<language name="JPN" font=" 2:lcfont12" width="80">テスト０２</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR04">
+		<language name="JPN" font=" 2:lcfont12" width="80">テスト０３</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR05">
+		<language name="JPN" font=" 2:lcfont12" width="80">テスト０４</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR06">
+		<language name="JPN" font=" 2:lcfont12" width="80">テスト０５</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR07">
+		<language name="JPN" font=" 2:lcfont12" width="80">テスト０６</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR08">
+		<language name="JPN" font=" 2:lcfont12" width="80">テスト０７</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
