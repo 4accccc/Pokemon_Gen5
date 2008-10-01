@@ -553,6 +553,10 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	gs->g3Dmapper = Create3Dmapper( gs->heapID );
 	gs->bbdActSys = GFL_BBDACT_CreateSys
 					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
+	{
+		VecFx32 bbdScale = { FX32_ONE*2, FX32_ONE*2, FX32_ONE*2 };
+		GFL_BBD_SetScale( GFL_BBDACT_GetBBDSystem(gs->bbdActSys), &bbdScale );
+	}
 
 	//ƒJƒƒ‰ì¬
 	gs->g3Dcamera = GFL_G3D_CAMERA_CreateDefault( &cameraPos, &cameraTarget, gs->heapID );
@@ -1166,7 +1170,8 @@ static void playerBBDactFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work 
 	GFL_BBDACT_SetAnimeIdxContinue( GetBbdActSys( pcActCont->gs ), actIdx, anmID );
 	//ˆÊ’u•â³
 	trans.x = pcActCont->trans.x;
-	trans.y = pcActCont->trans.y + FX32_ONE*7;	//•â³
+	//trans.y = pcActCont->trans.y + FX32_ONE*7;	//•â³
+	trans.y = pcActCont->trans.y + FX32_ONE*16;	//•â³
 	trans.z = pcActCont->trans.z;
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
 }
@@ -1508,7 +1513,8 @@ static void testFunc( GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 		if( mvf == TRUE ){
 			VecFx32 setTrans;
 
-			VEC_Set( &setTrans, nowTrans.x, nowTrans.y + FX32_ONE*7, nowTrans.z );
+			//VEC_Set( &setTrans, nowTrans.x, nowTrans.y + FX32_ONE*7, nowTrans.z );
+			VEC_Set( &setTrans, nowTrans.x, nowTrans.y + FX32_ONE*16, nowTrans.z );
 			GFL_BBD_SetObjectTrans( bbdSys, actIdx, &setTrans );
 		} else {
 			actWork->work[0] = 0;
