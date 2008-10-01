@@ -383,3 +383,4 @@ void	GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction )
 	*direction = pcActCont->direction;
 }
 
+#include "field_player_nogrid.c"
