@@ -117,7 +117,7 @@ const SCENE_DATA	resistMapTbl[] = {
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			sampleMap2, 
 		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
+		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 	},
 };
