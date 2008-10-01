@@ -7,9 +7,28 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include "system\main.h"
 
 #include "field_func_bridge_file.h"
 
+#include "height.h"
+
+/// 全部をパックしたファイルのヘッダー
+typedef struct {
+    u16 DataID;         ////< DP3PACK_HEADER
+    u16 dummy1;
+    u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
+    u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
+    u32 bhcOffset;	    ///< ファイルの先頭からbhcの場所までのOFFSET
+    u32 vertexOffset;   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
+    u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
+    u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
+} BridgePackHeaderSt;
+
+
+void CheckHeightData(const void *mem, MHI_PTR outMHI);
+extern BOOL GetHeightForBlock(const fx32 inNowY, const fx32 inX, const fx32 inZ,
+		MHI_CONST_PTR inMap3DInfo,fx32 *outY);
 //============================================================================================
 /**
  *
@@ -50,6 +69,9 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 	case FILE_LOAD_START:
 		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 
+		//メモリ先頭にはデータ取得用情報を配置するため、読み込みポインタをずらす
+		ldst->mOffs += sizeof(MAP_HEIGHT_INFO);
+
 		//モデルデータロード開始
 		{
 			u32		datID;
@@ -73,11 +95,11 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 		//レンダー作成
 		{
 			void*				mem;
-			Dp3packHeaderSt*	fileHeader;
-
+			BridgePackHeaderSt*	fileHeader;
 			//ヘッダー設定
 			GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
-			fileHeader = (Dp3packHeaderSt*)mem;
+			mem = ((u8*)mem + sizeof(MAP_HEIGHT_INFO));
+			fileHeader = (BridgePackHeaderSt*)mem;
 			//モデルリソース設定
 			GFL_G3D_MAP_CreateResourceMdl(g3Dmap, (void*)((u32)mem + fileHeader->nsbmdOffset));
 			//テクスチャリソース設定
@@ -101,6 +123,20 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 				//GFL_G3D_MAP_MakeTestPos( g3Dmap );
 			//===========
 			}
+#if 0
+    OS_Printf("DataID=%08x\n",fileHeader->DataID);         ////< DP3PACK_HEADER
+    OS_Printf("dummy1=%08x\n",fileHeader->dummy1);
+    OS_Printf("nsbmdOffset=%08x\n",fileHeader->nsbmdOffset);    ///< ファイルの先頭からnsbmdの場所までのOFFSET
+    OS_Printf("nsbtxOffset=%08x\n",fileHeader->nsbtxOffset);    ///< ファイルの先頭からnsbtxの場所までのOFFSET
+    OS_Printf("bhcOffset=%08x\n",fileHeader->bhcOffset);	    ///< ファイルの先頭からbhcの場所までのOFFSET
+    OS_Printf("vertexOffset=%08x\n",fileHeader->vertexOffset);   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
+    OS_Printf("positionOffset=%08x\n",fileHeader->positionOffset); ///< ファイルの先頭からポジションの場所までのOFFSET
+    OS_Printf("endPos=%08x\n",fileHeader->endPos);         ///< ファイルの先頭からポジションの最後までのOFFSET
+#endif
+			CheckHeightData(
+					(void*)((u32)mem + fileHeader->bhcOffset),
+					(MHI_PTR)((u8*)mem - sizeof(MAP_HEIGHT_INFO))
+					);
 		}
 		GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定
 		GFL_G3D_MAP_MakeRenderObj( g3Dmap );
@@ -132,13 +168,17 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
+#if 0
 	fx32			grid_w, grid_x, grid_z;
 	u32				grid_idx;
 	VecFx32			pos, vecN;
 	fx32			by, valD;
 	NormalVtxSt*	nvs;
-	Dp3packHeaderSt* fileHeader = (Dp3packHeaderSt*)mapdata;
-	u32				attrAdrs = (u32)mapdata + fileHeader->vertexOffset;
+	u32				attrAdrs;
+	BridgePackHeaderSt* fileHeader;
+	void * nmapdata = ((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
+	fileHeader = (BridgePackHeaderSt*)nmapdata;
+	attrAdrs = (u32)nmapdata + fileHeader->vertexOffset;
 
 	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
 	//グリッド内情報取得
@@ -170,6 +210,7 @@ void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdat
 			valD = nvs->vecN2_D;
 		}
 	}
+	//vecN = attrInfo->mapAttr[0];...適合する三角形の法線ベクトル
 	VEC_Set( &vecN, 
 			attrInfo->mapAttr[0].vecN.x, attrInfo->mapAttr[0].vecN.y, attrInfo->mapAttr[0].vecN.z );
 	by = -( FX_Mul(vecN.x, posInBlock->x) + FX_Mul(vecN.z, posInBlock->z) + valD );
@@ -178,5 +219,95 @@ void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdat
 	attrInfo->mapAttr[0].height = FX_Div( by, vecN.y ) + map_height;
 
 	attrInfo->mapAttrCount = 1;
+#endif
+	{
+		fx32 outY;
+		BridgePackHeaderSt * fileHeader = (void*)((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
+		MHI_PTR mhi = (MHI_PTR)mapdata;
+		GetHeightForBlock(posInBlock->y, posInBlock->x, posInBlock->z, mhi, &outY);
+		attrInfo->mapAttr[0].attr = 0;
+		attrInfo->mapAttr[0].height = outY + map_height;
+		VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, 0, FX16_ONE, 0 );
+		OS_Printf("Height:%08x\n",outY + map_height);
+		attrInfo->mapAttrCount = 1;
+	}
 }
+
+//============================================================================================
+/**
+ * 以下はポケモンDPからコピペ
+ */
+//============================================================================================
+static inline fx32 Min(fx32 n1,fx32 n2)
+{
+	if(n1 < n2){
+		return n1;
+	}else{
+		return n2;
+	}
+}
+
+static inline fx32 Max(fx32 n1,fx32 n2)
+{
+	if(n1 > n2){
+		return n1;
+	}else{
+		return n2;
+	}
+
+}
+
+//三角形の内外判定ZX射影版
+static inline BOOL BG3D_CheckTriangleIObyZX(const VecFx32 inT_Vtx,const VecFx32 inVtx1,const VecFx32 inVtx2,const VecFx32 inVtx3)
+{
+	//外積を求める（VEC_CrossProduct未使用）
+	fx32 cross;
+	fx32 cross1;
+	fx32 cross2;
+	fx32 cross3;
+	fx32 cross_total;
+	cross = FX_Mul(inVtx3.z,inVtx1.x-inVtx2.x) + FX_Mul(inVtx1.z,inVtx2.x-inVtx3.x) + FX_Mul(inVtx2.z,inVtx3.x-inVtx1.x);
+	cross1 = FX_Mul(inVtx2.z,inT_Vtx.x-inVtx1.x) + FX_Mul(inT_Vtx.z,inVtx1.x-inVtx2.x) + FX_Mul(inVtx1.z,inVtx2.x-inT_Vtx.x);
+	cross2 = FX_Mul(inVtx3.z,inT_Vtx.x-inVtx2.x) + FX_Mul(inT_Vtx.z,inVtx2.x-inVtx3.x) + FX_Mul(inVtx2.z,inVtx3.x-inT_Vtx.x);
+	cross3 = FX_Mul(inVtx1.z,inT_Vtx.x-inVtx3.x) + FX_Mul(inT_Vtx.z,inVtx3.x-inVtx1.x) + FX_Mul(inVtx3.z,inVtx1.x-inT_Vtx.x);
+
+	if (cross < 0){
+///		OS_Printf("out\n");
+		return FALSE;
+	}
+	if (cross1 < 0){
+///		OS_Printf("out1\n");
+		return FALSE;
+	}
+	if (cross2 < 0){
+///		OS_Printf("out2\n");
+		return FALSE;
+	}
+	if (cross3 < 0){
+///		OS_Printf("out3\n");
+		return FALSE;
+	}
+#if 0
+	OS_Printf("cross:%d\n",cross);
+	OS_Printf("cross1:%d\n",cross1);
+	OS_Printf("cross2:%d\n",cross2);
+	OS_Printf("cross3:%d\n",cross3);
+	OS_Printf("cross_total:%d\n",cross_total);
+	OS_Printf("z:%x\n",inT_Vtx.z);
+	OS_Printf("x:%x\n",inT_Vtx.x);
+	OS_Printf("z1:%x\n",inVtx1.z);
+	OS_Printf("x1:%x\n",inVtx1.x);
+	OS_Printf("z2:%x\n",inVtx2.z);
+	OS_Printf("x2:%x\n",inVtx2.x);
+	OS_Printf("z3:%x\n",inVtx3.z);
+	OS_Printf("x3:%x\n",inVtx3.x);
+#endif	
+	return TRUE;
+}
+
+extern VecFx32 MoveRevise(fx32 inMoveVal,VecFx32 inNewVec,VecFx32 inOldVec);
+#include "height_check.c"
+
+extern void SetupHeightData(const char  *path, MHI_PTR outMapHeightInfo, u8 * inHeightMem);
+#include "height_load.c"
 
