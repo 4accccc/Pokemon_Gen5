@@ -31,16 +31,16 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 #include "test_graphic/test3dp2.naix"
 static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 	{ NARC_test3dp2_m_test_01_01c_3dppack },
-	{ NARC_test3dp2_m_test_01_02c_3dppack },
-	{ NARC_test3dp2_m_test_01_03c_3dppack },
-	{ NARC_test3dp2_m_test_01_04c_3dppack },
-	{ NARC_test3dp2_m_test_01_05c_3dppack },
-	{ NARC_test3dp2_m_test_01_06c_3dppack },
 	{ NARC_test3dp2_m_test_02_01c_3dppack },
+	{ NARC_test3dp2_m_test_01_02c_3dppack },
 	{ NARC_test3dp2_m_test_02_02c_3dppack },
+	{ NARC_test3dp2_m_test_01_03c_3dppack },
 	{ NARC_test3dp2_m_test_02_03c_3dppack },
+	{ NARC_test3dp2_m_test_01_04c_3dppack },
 	{ NARC_test3dp2_m_test_02_04c_3dppack },
+	{ NARC_test3dp2_m_test_01_05c_3dppack },
 	{ NARC_test3dp2_m_test_02_05c_3dppack },
+	{ NARC_test3dp2_m_test_01_06c_3dppack },
 	{ NARC_test3dp2_m_test_02_06c_3dppack },
 };
 
