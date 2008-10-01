@@ -232,7 +232,8 @@ BOOL GetHeightForBlock(const fx32 inNowY, const fx32 inX, const fx32 inZ, MHI_CO
 
 	const u16 *line_list;
 
-	if (inMap3DInfo->DataValid == FALSE){
+	if (inMap3DInfo->DataValid != TRUE){
+		OS_Printf("高さデータ構造体ない\n");
 		return FALSE;
 	}
 	result = FALSE;
@@ -526,7 +527,7 @@ u8 HC_DebugCheckHeight(const fx32 inX, const fx32 inZ, MHI_CONST_PTR inMap3DInfo
 
 	VecFx32 vec[3];
 
-	if (inMap3DInfo->DataValid == FALSE){
+	if (inMap3DInfo->DataValid != TRUE){
 		OS_Printf("高さデータ構造体ない\n");
 		return 0;
 	}
