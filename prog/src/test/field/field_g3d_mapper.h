@@ -168,7 +168,7 @@ extern BOOL GetFieldG3DmapperGridInfo
  * @brief	範囲外チェック
  */
 //------------------------------------------------------------------
-extern BOOL CheckFieldG3DmapperOutRange( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
+extern BOOL CheckFieldG3DmapperOutRange( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos );
 //------------------------------------------------------------------
 /**
  * @brief	サイズ取得
