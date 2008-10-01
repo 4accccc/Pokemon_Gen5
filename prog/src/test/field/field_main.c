@@ -102,7 +102,7 @@ static BOOL GameEndCheck( int cont );
 
 FIELD_WORK* fieldWork;
 
-static void DebugMenuProc( FIELD_WORK *fldWork );
+static BOOL DebugMenuProc( FIELD_WORK *fldWork );
 
 //------------------------------------------------------------------
 /**
@@ -186,6 +186,7 @@ BOOL	FieldMain( void )
 			fieldWork->seq = 3;
 			break;
 		}
+#if 0
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 			fieldWork->mapNum--;
 			if( fieldWork->mapNum < 0 ){
@@ -194,14 +195,13 @@ BOOL	FieldMain( void )
 			fieldWork->seq = 3;
 			break;
 		}
+#endif
 		
-		DebugMenuProc( fieldWork );
+		if( !DebugMenuProc( fieldWork ) ) {
 		
-		fieldWork->key_cont = GFL_UI_KEY_GetCont();
-		//登録テーブルごとに個別のメイン処理を呼び出し
-		
-		{
 			VecFx32 pos;
+			fieldWork->key_cont = GFL_UI_KEY_GetCont();
+			//登録テーブルごとに個別のメイン処理を呼び出し
 			fieldWork->ftbl->main_func( fieldWork, &pos );
 			//Mapシステムに位置を渡している。これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
@@ -211,10 +211,10 @@ BOOL	FieldMain( void )
 		break;
 
 	case 3:
-        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
-
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
+
+        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 
 		if (fieldWork->gamemode != GAMEMODE_FINISH) {
 			fieldWork->seq = 1;
@@ -774,10 +774,10 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 //--------------------------------------------------------------
 ///	デバッグメニュー処理
 //--------------------------------------------------------------
-static void DebugMenuProc( FIELD_WORK *fldWork )
+static BOOL DebugMenuProc( FIELD_WORK *fldWork )
 {
 	if( fldWork->d_menu_flag == FALSE ){
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 			FldDebugMenu_Create( fldWork->d_menu );
 			fldWork->d_menu_flag = TRUE;
 		}
@@ -786,4 +786,5 @@ static void DebugMenuProc( FIELD_WORK *fldWork )
 			fldWork->d_menu_flag = FALSE;
 		}
 	}
+	return fldWork->d_menu_flag;
 }
