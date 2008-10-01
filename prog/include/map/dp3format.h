@@ -26,13 +26,13 @@ typedef struct {
 	fx32	vecN2_D;
 
 	u32		attr:31;            //アトリビュートビット
-	u32		tryangleType:1;   //三角形の形のタイプ  
+	u32		tryangleType:1;   //三角形の形のタイプ  ＼ = 0  ／ = 1
 } NormalVtxSt;
 
 typedef struct{
-    u16			width;
-    u16			height;
-	NormalVtxSt* vtxData;
+    u16			width;           // 高さデータの横の個数
+    u16			height;          // 高さデータの縦の個数
+	NormalVtxSt* vtxData;       // 高さデータが配列で横×縦分ある
 } NormalVtxFormat;
 
 
@@ -48,9 +48,10 @@ typedef struct{
     u8		resourceID;
 } PositionSt;
 
+// ポジションデータ全体
 typedef struct{
-    u32			count;
-	PositionSt* posData;
+    u32			count;       ///< ポジションデータ数
+	PositionSt* posData;     ///< ポジションデータ
 } LayoutFormat;
 
 /// 全部をパックしたファイルのヘッダー
