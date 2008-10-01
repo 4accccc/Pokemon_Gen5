@@ -26,6 +26,9 @@ typedef enum{
 	PERFORMANCE_ID_MAX,
 }PERFORMANCE_ID;
 
+///数値の負荷表示をするID(VBLANK負荷計測は未対応)
+#define PERFORMANCE_NUM_PRINT_ID		(PERFORMANCE_ID_MAIN)
+
 
 //==============================================================================
 //	外部関数宣言

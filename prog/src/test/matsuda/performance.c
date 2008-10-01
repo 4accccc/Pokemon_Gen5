@@ -48,6 +48,38 @@ enum{
 #define METER_ICON_CHAR_OFFSET256 ( (8192-METER_ANM_PATERN)*32 )	
 
 
+//--------------------------------------------------------------
+//	数値
+//--------------------------------------------------------------
+///数値の桁数(-%込み)
+#define NUM_KETA			(4)
+///数値のCGXサイズ(桁数分)
+#define NUM_CGX_SIZE		(0x20 * NUM_KETA)
+///数値の履歴表示数
+#define NUM_HISTORY			(5)
+///数値の表示座標X
+#define NUM_X				(8)
+///数値の表示座標Y
+#define NUM_Y				(192-24)
+///数値CGXのキャラクタ毎の種類
+enum{
+	NUMBER_0,
+	NUMBER_1,
+	NUMBER_2,
+	NUMBER_3,
+	NUMBER_4,
+	NUMBER_5,
+	NUMBER_6,
+	NUMBER_7,
+	NUMBER_8,
+	NUMBER_9,
+	NUMBER_MINUS,
+	NUMBER_PAR,
+	
+	NUMBER_MAX,
+};
+
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -55,12 +87,15 @@ enum{
 typedef struct{
 	u32 start_vblank_count;		//計測開始時のVブランクカウンタの値
 	s16 start_vcount;			//計測開始時のVカウンタの値
+	s16 dummy;
 }PFM_APP_WORK;
 
 ///パフォーマンスシステム構造体
 typedef struct{
 	PFM_APP_WORK app[PERFORMANCE_ID_MAX];
 	BOOL on_off;
+	s16 num_oam_pos;				//数値表示ポジション
+	s16 dummy;
 }PERFORMANCE_SYSTEM;
 
 
@@ -107,6 +142,72 @@ static const u16 performance_meter_ncl[] = {
 	0x0000,0x0000,0x0000,0x5ad6,0x5ad6,0x0000,0x18c6,0x7fff,
 };
 
+//数字
+//NcgOutCharTextコンバータ Version:1.01
+//キャラクタ数 = 0xc(12)
+static const u8 performance_num[] = {
+//0x0
+	0x0,0x0,0x0,0x0,0x0,0xee,0xce,0x0,
+	0xe0,0xcc,0xee,0xc,0xee,0xc,0xe0,0xce,
+	0xee,0xc,0xe0,0xce,0xec,0xce,0xe0,0xcc,
+	0xc0,0xee,0xce,0xc,0x0,0xcc,0xcc,0x0,
+//0x1
+	0x0,0x0,0x0,0x0,0x0,0xe0,0xce,0x0,
+	0x0,0xee,0xce,0x0,0x0,0xec,0xce,0x0,
+	0x0,0xe0,0xce,0x0,0x0,0xe0,0xce,0x0,
+	0xe0,0xee,0xee,0xce,0xc0,0xcc,0xcc,0xcc,
+//0x2
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xc,
+	0xee,0xcc,0xec,0xce,0xcc,0xc,0xee,0xce,
+	0xe0,0xee,0xce,0xcc,0xee,0xce,0xcc,0x0,
+	0xee,0xee,0xee,0xce,0xcc,0xcc,0xcc,0xcc,
+//0x3
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xce,
+	0xc0,0xcc,0xee,0xcc,0x0,0xee,0xce,0xc,
+	0x0,0xcc,0xec,0xce,0xee,0x0,0xe0,0xce,
+	0xec,0xee,0xee,0xcc,0xc0,0xcc,0xcc,0xc,
+//0x4
+	0x0,0x0,0x0,0x0,0x0,0xe0,0xee,0xc,
+	0x0,0xee,0xee,0xc,0xe0,0xce,0xee,0xc,
+	0xee,0xc,0xee,0xc,0xee,0xee,0xee,0xce,
+	0xcc,0xcc,0xee,0xcc,0x0,0x0,0xcc,0xc,
+//0x5
+	0x0,0x0,0x0,0x0,0xee,0xee,0xee,0xc,
+	0xee,0xcc,0xcc,0xc,0xee,0xee,0xee,0xc,
+	0xcc,0xcc,0xec,0xce,0xee,0x0,0xe0,0xce,
+	0xec,0xee,0xee,0xcc,0xc0,0xcc,0xcc,0xc,
+//0x6
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xc,
+	0xee,0xcc,0xcc,0xc,0xee,0xee,0xee,0x0,
+	0xee,0xcc,0xec,0xce,0xee,0xc,0xe0,0xce,
+	0xec,0xee,0xee,0xcc,0xc0,0xcc,0xcc,0xc,
+//0x7
+	0x0,0x0,0x0,0x0,0xee,0xee,0xee,0xce,
+	0xee,0xcc,0xec,0xce,0xcc,0xc,0xee,0xcc,
+	0x0,0xe0,0xce,0xc,0x0,0xee,0xcc,0x0,
+	0x0,0xee,0xc,0x0,0x0,0xcc,0xc,0x0,
+//0x8
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xc,
+	0xee,0xcc,0xec,0xce,0xec,0xee,0xee,0xcc,
+	0xee,0xcc,0xec,0xce,0xee,0xc,0xe0,0xce,
+	0xec,0xee,0xee,0xcc,0xc0,0xcc,0xcc,0xc,
+//0x9
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xc,
+	0xee,0xcc,0xec,0xce,0xee,0xc,0xe0,0xce,
+	0xec,0xee,0xee,0xce,0xc0,0xcc,0xec,0xce,
+	0xe0,0xee,0xee,0xcc,0xc0,0xcc,0xcc,0xc,
+//0xa
+	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
+	0x0,0x0,0x0,0x0,0xe0,0xee,0xee,0xe,
+	0xc0,0xcc,0xcc,0xc,0x0,0x0,0x0,0x0,
+	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,
+//0xb
+	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe,
+	0xe0,0x0,0xe0,0xc,0xc0,0x0,0xce,0x0,
+	0x0,0xe0,0xc,0x0,0x0,0xce,0x0,0xe,
+	0xe0,0xc,0x0,0xc,0xc0,0x0,0x0,0x0,
+};
+
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -114,6 +215,8 @@ static const u16 performance_meter_ncl[] = {
 static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOOL delay);
 static void Performance_CGXTrans(void);
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset);
+static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count);
+static void Performance_NumTrans(s32 num);
 
 
 
@@ -168,8 +271,9 @@ void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 	
 	app = &pfm_sys.app[id];
 	app->start_vblank_count = OS_GetVBlankCount();
+	app->start_vcount = GX_GetVCount();
 	
-	Performance_Draw(METER_TYPE_START, id, GX_GetVCount(), FALSE);
+	Performance_Draw(METER_TYPE_START, id, app->start_vcount, FALSE);
 }
 
 //--------------------------------------------------------------
@@ -193,6 +297,10 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	app = &pfm_sys.app[id];
 	end_vblank_count = OS_GetVBlankCount();
 	Performance_Draw(METER_TYPE_END, id, GX_GetVCount(), app->start_vblank_count != end_vblank_count);
+	
+	if(id == PERFORMANCE_NUM_PRINT_ID){
+		Performance_Num(METER_TYPE_END, id, GX_GetVCount(), app->start_vblank_count, end_vblank_count);
+	}
 }
 
 
@@ -203,6 +311,130 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //	
 //
 //==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   数値表示
+ *
+ * @param   meter_type				メータータイプ
+ * @param   id						パフォーマンスメーターID
+ * @param   v_count					Vカウント
+ * @param   start_v_blank_count		開始VBlankカウント
+ * @param   end_v_blank_count		終了VBlankカウント
+ */
+//--------------------------------------------------------------
+static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count)
+{
+	PFM_APP_WORK *app = &pfm_sys.app[id];
+	s32 num, calc_vcount, v_blank_count_offset, end_vcount;
+	u32 offset, anm_offset;
+	
+	if(meter_type != METER_TYPE_END){
+		return;
+	}
+	
+	if(app->start_vcount > 191){
+		calc_vcount = -(262 - app->start_vcount);
+	}
+	else{
+		calc_vcount = 0;
+	}
+	if(v_count > 191){
+		calc_vcount += 262-v_count;
+	}
+	else{
+		calc_vcount += v_count;
+	}
+	v_blank_count_offset = end_v_blank_count - start_v_blank_count;
+	end_vcount = GX_GetVCount();
+	if(id & 1){	//VBlank期間の処理負荷
+		GF_ASSERT("まだ作成していない");
+	}
+	else{	//メインループの処理負荷
+		if(start_v_blank_count < end_v_blank_count){
+			calc_vcount += v_blank_count_offset * 191;
+			if(v_blank_count_offset > 1){
+				calc_vcount += (v_blank_count_offset - 1) * (262-192);
+			}
+			calc_vcount += end_vcount;
+		}
+		num = calc_vcount * 100 / 191;
+	}
+	
+	//グラフィック転送
+	Performance_NumTrans(num);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   数値転送
+ *
+ * @param   num		
+ */
+//--------------------------------------------------------------
+static void Performance_NumTrans(s32 num)
+{
+	u32 offset, anm_offset, first_touch = 0;
+	u32 vram_adrs;
+	s32 k;
+	int i, data, pos = 0, calc_num;
+	
+	MeterCGX_OffsetGet(&offset, &anm_offset);
+	vram_adrs = HW_OBJ_VRAM + offset - (NUM_CGX_SIZE * (pfm_sys.num_oam_pos + 1));
+	
+	calc_num = (num < 0) ? (-num) : num;
+	k = 10;
+	for(i = NUM_KETA-2; i >= 0; i--){
+		data = calc_num % k;
+		calc_num /= 10;
+		if(data >= NUMBER_MAX){
+			data = NUMBER_MINUS;	//保険
+		}
+		GFL_STD_MemCopy32(&performance_num[data*0x20], (void*)(vram_adrs + i*0x20), 0x20);
+		
+		if(calc_num == 0){
+			GFL_STD_MemClear32((void*)vram_adrs, 0x20*i);
+		}
+	}
+	GFL_STD_MemCopy32(&performance_num[NUMBER_PAR*0x20], (void*)(vram_adrs + (NUM_KETA-1)*0x20), 0x20);
+	if(num < 0){
+		GFL_STD_MemCopy32(&performance_num[NUMBER_MINUS*0x20], (void*)vram_adrs, 0x20);
+	}
+
+	//OAMセット
+	{
+		GXOamAttr *meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - pfm_sys.num_oam_pos]);
+		u32 start_charno = (vram_adrs - HW_OBJ_VRAM) / anm_offset;
+		u32 x, y;
+		
+		G2_SetOBJAttr(
+			meter_oam,
+			NUM_X,						//x
+			NUM_Y,						//y
+			0,							//priority
+			GX_OAM_MODE_NORMAL,			//mode
+			0,							//mosaic
+			GX_OAM_EFFECT_NONE,			//effect
+			GX_OAM_SHAPE_32x8,			//shape
+			GX_OAM_COLORMODE_16,		//color
+			start_charno,				//charName
+			METER_PALNO,				//cParam
+			0							//rsParam
+		);
+
+		for(i = 0; i < NUM_HISTORY; i++){
+			if(i != pfm_sys.num_oam_pos){
+				meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - i]);
+				G2_GetOBJPosition(meter_oam, &x, &y);
+				G2_SetOBJPosition(meter_oam, x, y-8);
+			}
+		}
+		pfm_sys.num_oam_pos++;
+		if(pfm_sys.num_oam_pos >= NUM_HISTORY){
+			pfm_sys.num_oam_pos = 0;
+		}
+	}
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   パフォーマンスメーター描画
@@ -233,15 +465,6 @@ static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOO
 	if(id & 1){	//VBlank期間の処理負荷を調べるID
 		if(v_count < 192){
 			delay = TRUE;	//VBlank期間外
-		}
-	}
-	else{	//メインループ内の処理負荷を調べるID
-		if(meter_type == METER_TYPE_START){
-			if(v_count > 191){
-			//	x = 0;	//StartがVBlank期間内の場合は処理負荷の見易さを考慮してX位置は0にする
-						//※VBlank割り込みの処理は、完了後、VBlank期間の終了を見ていないので、
-						//  処理が終わればすぐにメインループの処理が走る
-			}
 		}
 	}
 	
@@ -333,42 +556,6 @@ static void Performance_CGXTrans(void)
 //--------------------------------------------------------------
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 {
-#if 0
-	int objBank;
-	
-	objBank = GX_GetBankForOBJ();
-	switch( objBank ){
-	case GX_VRAM_OBJ_16_F:
-	case GX_VRAM_OBJ_16_G:
-		*offset = METER_ICON_CHAR_OFFSET16;
-		*anm_offset = 0x20;
-		break;
-	case GX_VRAM_OBJ_32_FG:
-		*offset = METER_ICON_CHAR_OFFSET32;
-		*anm_offset = 0x20;
-		break;
-	case GX_VRAM_OBJ_64_E:
-		*offset = METER_ICON_CHAR_OFFSET64;
-		*anm_offset = 0x40;
-		break;
-	case GX_VRAM_OBJ_80_EF:
-	case GX_VRAM_OBJ_80_EG:
-		*offset = METER_ICON_CHAR_OFFSET80;
-		*anm_offset = 0x80;
-		break;
-	case GX_VRAM_OBJ_96_EFG:
-	case GX_VRAM_OBJ_128_A:
-	case GX_VRAM_OBJ_128_B:
-		*offset = METER_ICON_CHAR_OFFSET128;
-		*anm_offset = 0x80;
-		break;
-	case GX_VRAM_OBJ_256_AB:
-	default:
-		*offset = METER_ICON_CHAR_OFFSET256;
-		*anm_offset = 0x100;
-		break;
-	}
-#else
 	int objBank, obj_vram_mode;
 	
 	objBank = GX_GetBankForOBJ();
@@ -426,62 +613,6 @@ static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 		break;
 	}
 	*offset -= (*anm_offset) * METER_ANM_PATERN;
-#endif
 }
-
-
-
-
-
-#if 0
-//------------------------------------------------------------------
-/**
- * @brief		パフォーマンスメーターのスタート 
- */
-//------------------------------------------------------------------
-
-void DEBUG_PerformanceStart(void)
-{
-    int debugButtonTrg = GFL_UI_KEY_GetTrg()&PAD_BUTTON_DEBUG;
-    
-    if(debugButtonTrg){
-        Onoff = Onoff ? FALSE
-            : TRUE;
-        if(Onoff){
-            G2_SetWnd0InsidePlane(0,FALSE);
-            G2_SetWnd1InsidePlane(0,FALSE);
-            G2_SetWndOutsidePlane(0xff,FALSE);
-            G2_SetWnd0Position(0, 0, 3, 192);
-            G2_SetWnd1Position(263/2-1, 178, 263/2+1, 180);
-            GX_SetVisibleWnd(3);
-        }
-    }
-    if(Onoff){
-        CountKeep = OS_GetVBlankCount();
-    }
-}
-
-//------------------------------------------------------------------
-/**
- * @brief		パフォーマンスメーターの表示
- */
-//------------------------------------------------------------------
-
-void DEBUG_PerformanceDisp(void)
-{
-    if(Onoff){
-        u32 vn,cnt;
-
-        cnt = OS_GetVBlankCount() - CountKeep;
-        vn = GX_GetVCount() + (cnt * 263);
-        vn = vn / 2;
-        if(vn > 263){
-            vn = 263;
-        }
-        G2_SetWnd0Position(0, 180, vn, 182);
-//        OS_TPrintf("%d %d\n",vn,CountKeep);
-    }
-}
-#endif
 
 #endif //PM_DEBUG
