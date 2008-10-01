@@ -677,7 +677,7 @@ static void GetGroundMoveVec
 	VEC_Normalize( result, result );
 }
 
-BOOL CalcSetGroundMove( FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
+BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
 	FLD_G3D_MAPPER_GRIDINFO gridInfo;
@@ -763,9 +763,9 @@ const DEPEND_FUNCTIONS FieldGridFunctions = {
 };
 
 const DEPEND_FUNCTIONS FieldNoGridFunctions = {
-	NormalCreate,
+	NoGridCreate,
 	NoGridMain,
-	NormalDelete,
+	NoGridDelete,
 };
 
 //======================================================================
