@@ -15,7 +15,9 @@ TARGET_NAMES = \
 	menu_gra.naix \
 	menu_gra.narc \
 	winframe.naix \
-	winframe.narc
+	winframe.narc \
+	testgridmap_a.narc \
+	testgridmap_a.naix
 
 TARGET_DIR = $(PROJECT_ARCDIR)/test_graphic
 
