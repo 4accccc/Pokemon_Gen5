@@ -103,13 +103,6 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 				camera->trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
 				camera->trans.z);
 	
-	if( !(key&(PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)) ){
-		OS_Printf( "ƒJƒƒ‰ direction = %x, lange = %x, height = %x\n",
-				camera->direction,
-				camera->cameraLength,
-				camera->cameraHeight );
-	}	
-
 	pos.x = camera->trans.x + camera->cameraLength * FX_SinIdx(camera->direction);
 	pos.y = camera->trans.y + camera->cameraHeight;
 	pos.z = camera->trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
