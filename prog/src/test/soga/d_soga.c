@@ -158,8 +158,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	//3D Model Load
 	{
 		NNSG3dResMdl	*model;
-		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_test_battle_nsbmd, wk->heapID );
-//		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_testmap01c_nsbmd, wk->heapID );
+//		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_test_battle_nsbmd, wk->heapID );
+		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_testmap01c_nsbmd, wk->heapID );
 //		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_teststage_nsbmd, wk->heapID );
 		DC_StoreRange( memory, ((NNSG3dResFileHeader*)memory)->fileSize );
 		NNS_G3dResDefaultSetup( memory );
@@ -314,7 +314,7 @@ static	void	StrmBufferCopy(SOGA_WORK *sw,int size)
 	s32		ret;
 
     FS_InitFile(&file);
-	FS_OpenFile(&file,"/mh.swav");
+	FS_OpenFile(&file,"/pm_battle.swav");
 	FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
 
 	if(size){
