@@ -43,8 +43,8 @@ typedef void (* D_MENU_CALLPROC)(void*);
 //--------------------------------------------------------------
 typedef struct
 {
-	u32 str_id;
-	D_MENU_CALLPROC callp;
+	u32 str_id;				//表示する文字列ID
+	D_MENU_CALLPROC callp;	//選択された際に呼び出す関数 NULL=呼び出し無し
 }DEBUG_MENU_LIST;
 
 //--------------------------------------------------------------

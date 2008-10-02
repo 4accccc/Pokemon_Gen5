@@ -98,6 +98,18 @@ const SCENE_DATA	resistMapTbl[] = {
 	},
 	{
 		{	
+			FILE_CUSTOM_DATA,
+			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_GSMAP, 
+			USE_GLOBAL_TEX,	(void*)&gtexData, 
+			//USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			USE_GLOBAL_OBJSET_BIN, (void*)&gobjData_Bin,
+			GSMap, 
+		},
+		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
+		&FieldGridFunctions,
+		#if 0
+		{	
 			FILE_MAPEDITER_DATA,
 			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_TEST3DP,
@@ -107,6 +119,7 @@ const SCENE_DATA	resistMapTbl[] = {
 		}, 
 		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 },
 		&FieldGridFunctions,
+		#endif
 	},
 	{
 		{	

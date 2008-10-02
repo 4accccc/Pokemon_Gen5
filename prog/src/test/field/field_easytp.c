@@ -7,6 +7,7 @@
  * @data	08.09.30
  */
 //======================================================================
+#include <gflib.h>
 #include "field_easytp.h"
 
 //======================================================================
@@ -34,21 +35,15 @@ static const GFL_UI_TP_HITTBL DATA_EasyTpHitTbl[FLDEASYTP_TCHDIR_MAX+1];
 //--------------------------------------------------------------
 FLDEASYTP_TCHDIR FieldEasyTP_TouchDirGet( void )
 {
-	u32 x,y;
-	
-	if( GFL_UI_TP_GetPointCont(&x,&y) == FALSE ){
-		return( FLDEASYTP_TCHDIR_NON );
-	}
-	
-	{
+	if( GFL_UI_TP_GetCont() ){
 		int i = GFL_UI_TP_HitCont( DATA_EasyTpHitTbl );
 		
-		if( i == GFL_UI_TP_HIT_NONE ){
-			return( FLDEASYTP_TCHDIR_NON );
+		if( i != GFL_UI_TP_HIT_NONE ){
+			return( i );
 		}
-		
-		return( i );
 	}
+	
+	return( FLDEASYTP_TCHDIR_NON );
 }
 
 //--------------------------------------------------------------

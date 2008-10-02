@@ -65,6 +65,7 @@ void	FLD_DeleteCamera( FIELD_CAMERA* camera )
 //#define MV_SPEED		(2*FX32_ONE)
 //#define RT_SPEED		(FX32_ONE/8)
 //#define	CAMERA_TARGET_HEIGHT	(4)//(8)
+
 void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 {
 	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->gs);
@@ -101,6 +102,14 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 				camera->trans.x,
 				camera->trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
 				camera->trans.z);
+	
+	if( !(key&(PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)) ){
+		OS_Printf( "ƒJƒƒ‰ direction = %x, lange = %x, height = %x\n",
+				camera->direction,
+				camera->cameraLength,
+				camera->cameraHeight );
+	}	
+
 	pos.x = camera->trans.x + camera->cameraLength * FX_SinIdx(camera->direction);
 	pos.y = camera->trans.y + camera->cameraHeight;
 	pos.z = camera->trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
@@ -143,4 +152,14 @@ void	FLD_GetCameraDirection( FIELD_CAMERA* camera, u16* direction )
 {
 	*direction = camera->direction;
 }
+
+void	FLD_SetCameraLength( FIELD_CAMERA *camera, u16 leng )
+{
+	camera->cameraLength = leng;
+}
+void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height )
+{
+	camera->cameraHeight = height;
+}
+
 

@@ -73,7 +73,7 @@ typedef struct {
 	const DEPEND_FUNCTIONS * ftbl;
 	FIELD_SETUP*	gs;
 	FIELD_CAMERA*	camera_control;
-//	CURSOR_CONT*	cursorFriend;
+//	CURSOR_CONT*	cursorFriend;#endif
 	PC_ACTCONT*		pcActCont;
 //	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
@@ -83,6 +83,8 @@ typedef struct {
 	
 	int d_menu_flag;
 	DEBUG_FLDMENU *d_menu;
+	
+	void *pGridCont;
 }FIELD_WORK;
 
 //------------------------------------------------------------------

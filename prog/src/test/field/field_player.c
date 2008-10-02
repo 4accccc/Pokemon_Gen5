@@ -270,7 +270,7 @@ PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
 	actData.work = pcActCont;
 
 	pcActCont->bbdActActUnitID = GFL_BBDACT_AddAct
-									( bbdActSys, pcActCont->bbdActResUnitID, &actData, 1 );
+				( bbdActSys, pcActCont->bbdActResUnitID, &actData, 1 );
 	//GFL_BBDACT_BindActTexRes
 	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
 	GFL_BBDACT_BindActTexResLoad
@@ -353,13 +353,16 @@ static void	MainFriendPlayerAct( PC_ACTCONT* pcActCont )
 static void	SetPlayerActAnm( PC_ACTCONT* pcActCont, int anmSetID )
 {
 	int		anmID;
-	u16		dir = pcActCont->direction - getCameraRotate( GetG3Dcamera(pcActCont->gs) );
+	u16		dir = pcActCont->direction -
+		getCameraRotate( GetG3Dcamera(pcActCont->gs) );
 
 	if( pcActCont->anmSetID != anmSetID ){
 		pcActCont->anmSetID = anmSetID;
 
-		anmID = getPlayerBBDanm( pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
-		GFL_BBDACT_SetAnimeIdx( GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+		anmID = getPlayerBBDanm(
+			pcActCont->anmSetID, dir, playerBBDanmOffsTblMine );
+		GFL_BBDACT_SetAnimeIdx(
+			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
 	}
 }
 
@@ -384,3 +387,5 @@ void	GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction )
 }
 
 #include "field_player_nogrid.c"
+#include "field_player_grid.c"
+
