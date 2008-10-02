@@ -19,6 +19,14 @@
 
 #define	CAMERA_SPEED		( FX32_ONE * 2 )
 
+#define	INTERVAL		(16)
+#define	CH_MAX			(1)
+#define	STRM_BUF_SIZE	(INTERVAL*2*CH_MAX*32)
+#define	SWAV_HEAD_SIZE	(18)
+
+//32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
+static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
+
 typedef struct
 {
 	int				seq_no;
@@ -27,12 +35,26 @@ typedef struct
 	VecFx32			camPos;					// カメラの位置(＝視点)
 	VecFx32			target;					// カメラの焦点(＝注視点)
 	VecFx32			camUp;			
+	NNSSndStrm		strm;
+	u8				FS_strmBuffer[STRM_BUF_SIZE];
+	int				FSReadPos;
+	u32				strmReadPos;
+	u32				strmWritePos;
 }SOGA_WORK;
 
 static	void	SetCamera( SOGA_WORK *wk );
 
 NNSG3dRenderObj	object;
 void			*memory;
+
+static	void	StrmSetUp(SOGA_WORK *sw);
+static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
+									int numChannels,
+									void *buffer[],
+									u32	len,
+									NNSSndStrmFormat format,
+									void *arg);
+static	void	StrmBufferCopy(SOGA_WORK *sw,int size);
 
 //--------------------------------------------------------------------------
 /**
@@ -42,6 +64,7 @@ void			*memory;
 static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	SOGA_WORK* wk;
+	u8 chNoList[1]={0};
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0x10000 );
 	wk = GFL_PROC_AllocWork( proc, sizeof( SOGA_WORK ), HEAPID_SOGABE_DEBUG );
@@ -110,7 +133,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 	MCSS_Add( wk->mcss_sys,
 //			  0x00040000,0x0001a000,0xfff60000,
-			  0x00040000,0x00030000,0xfff80000,
+//			  0x00040000,0x00038000,0xfff80000,
+			  0x00028000,0x0002a000,0xffff0000,
 			  ARCID_POKEGRA,
 			  NARC_pokegra_wb_multi_test_NCBR,
 			  NARC_pokegra_wb_multi_test_NCLR,
@@ -121,7 +145,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 	MCSS_Add( wk->mcss_sys,
 //			  0xfffd0000,0xfffd8000,0xfff6a000,
-			  0xfffd0000,0x00040000,0xfffc0000,
+//			  0xfffd0000,0x00048000,0xfffc0000,
+			  0xfffd0000,0x0003a000,0x00060000,
 			  ARCID_POKEGRA,
 			  NARC_pokegra_wb_multi_test2_NCBR,
 			  NARC_pokegra_wb_multi_test2_NCLR,
@@ -133,12 +158,23 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	//3D Model Load
 	{
 		NNSG3dResMdl	*model;
-		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_testmap01c_nsbmd, wk->heapID );
+		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_test_battle_nsbmd, wk->heapID );
+//		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_testmap01c_nsbmd, wk->heapID );
+//		memory = GFL_ARC_LoadDataAlloc( ARCID_POKEGRA, NARC_pokegra_wb_batt_teststage_nsbmd, wk->heapID );
 		DC_StoreRange( memory, ((NNSG3dResFileHeader*)memory)->fileSize );
 		NNS_G3dResDefaultSetup( memory );
 		model=NNS_G3dGetMdlByIdx( NNS_G3dGetMdlSet(memory), 0 );
 		NNS_G3dRenderObjInit( &object, model );
 	}
+
+	//ストリーム再生初期化
+    NNS_SndInit();
+    NNS_SndStrmInit( &wk->strm );
+	NNS_SndStrmAllocChannel( &wk->strm, CH_MAX, chNoList);
+
+	StrmSetUp(wk);
+
+	NNS_SndStrmStart(&wk->strm);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -152,6 +188,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 {
 	SOGA_WORK* wk = mywk;
 	int pad = GFL_UI_KEY_GetCont();
+
+	StrmBufferCopy(wk,0);
 
 	if( pad & PAD_KEY_LEFT ){
 		wk->camPos.x -= CAMERA_SPEED;
@@ -192,7 +230,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	MCSS_Main( wk->mcss_sys );
 	MCSS_Draw( wk->mcss_sys );
 
-	NNS_G3dDraw( &object );
+	if( (pad & PAD_BUTTON_Y) == 0 ){
+		NNS_G3dDraw( &object );
+	}
 
 	SetCamera( wk );
 
@@ -242,3 +282,87 @@ static	void	SetCamera( SOGA_WORK *wk )
 
 }
 
+//---------------------------------------------------------------------------
+//	ストリーム再生関数
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+static	void	StrmSetUp(SOGA_WORK *sw)
+{
+	sw->FSReadPos=SWAV_HEAD_SIZE;
+	sw->strmReadPos=0;
+	sw->strmWritePos=0;
+	StrmBufferCopy(sw,STRM_BUF_SIZE);
+    
+	NNS_SndStrmSetup( &sw->strm,
+					  NNS_SND_STRM_FORMAT_PCM8,
+					  &strmBuffer[0],
+					  STRM_BUF_SIZE,
+					  NNS_SND_STRM_TIMER_CLOCK/16000,
+					  INTERVAL,
+					  StrmCBWaveDataStock,
+					  sw);
+}
+
+//---------------------------------------------------------------------------
+// 波形データを補充するコールバックが割り込み禁止で呼ばれるので、
+// FS_～が中から呼べないので、この関数でReadしておく
+//---------------------------------------------------------------------------
+static	void	StrmBufferCopy(SOGA_WORK *sw,int size)
+{
+	FSFile	file;
+	s32		ret;
+
+    FS_InitFile(&file);
+	FS_OpenFile(&file,"/mh.swav");
+	FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
+
+	if(size){
+		ret=FS_ReadFile(&file,&sw->FS_strmBuffer[0],size);
+		sw->FSReadPos+=size;
+	}
+	else{
+		while(sw->strmReadPos!=sw->strmWritePos){
+			ret=FS_ReadFile(&file,&sw->FS_strmBuffer[sw->strmWritePos],32);
+			if(ret==0){
+				sw->FSReadPos=SWAV_HEAD_SIZE;
+				FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
+				continue;
+			}
+			sw->FSReadPos+=32;
+			sw->strmWritePos+=32;
+			if(sw->strmWritePos>=STRM_BUF_SIZE){
+				sw->strmWritePos=0;
+			}
+		}
+	}
+	FS_CloseFile(&file);
+}
+
+//---------------------------------------------------------------------------
+// 波形データを補充するコールバック
+//---------------------------------------------------------------------------
+static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
+									int numChannels,
+									void *buffer[],
+									u32	len,
+									NNSSndStrmFormat format,
+									void *arg)
+{
+	SOGA_WORK *sw=(SOGA_WORK *)arg;
+	int	i;
+	u8	*strBuf;
+
+	strBuf=buffer[0];
+	
+	for(i=0;i<len;i++){
+		strBuf[i]=sw->FS_strmBuffer[i+sw->strmReadPos];
+	}
+
+	sw->strmReadPos+=len;
+	if(sw->strmReadPos>=STRM_BUF_SIZE){
+		sw->strmReadPos=0;
+	}
+
+	DC_FlushRange(strBuf,len);
+}
