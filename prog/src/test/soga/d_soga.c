@@ -298,7 +298,7 @@ static	void	StrmSetUp(SOGA_WORK *sw)
 					  NNS_SND_STRM_FORMAT_PCM8,
 					  &strmBuffer[0],
 					  STRM_BUF_SIZE,
-					  NNS_SND_STRM_TIMER_CLOCK/16000,
+					  NNS_SND_STRM_TIMER_CLOCK/8000,
 					  INTERVAL,
 					  StrmCBWaveDataStock,
 					  sw);
