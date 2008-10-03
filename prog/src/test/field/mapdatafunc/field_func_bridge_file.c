@@ -20,7 +20,6 @@ typedef struct {
     u32 nsbmdOffset;    ///< ファイルの先頭からnsbmdの場所までのOFFSET
     u32 nsbtxOffset;    ///< ファイルの先頭からnsbtxの場所までのOFFSET
     u32 bhcOffset;	    ///< ファイルの先頭からbhcの場所までのOFFSET
-    u32 vertexOffset;   ///< ファイルの先頭から法線＋アトリビュートの場所までのOFFSET
     u32 positionOffset; ///< ファイルの先頭からポジションの場所までのOFFSET
     u32 endPos;         ///< ファイルの先頭からポジションの最後までのOFFSET
 } BridgePackHeaderSt;
@@ -226,10 +225,10 @@ void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdat
 		MHI_PTR mhi = (MHI_PTR)mapdata;
 		GetHeightForBlock(posInBlock->y, posInBlock->x, posInBlock->z, mhi, &outY);
 		attrInfo->mapAttr[0].attr = 0;
-		attrInfo->mapAttr[0].height = outY + map_height;
+		attrInfo->mapAttr[0].height = outY + map_height + 8 * FX32_ONE;
 		VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, 0, FX16_ONE, 0 );
-		OS_Printf("Height:%08x\n",outY + map_height);
 		attrInfo->mapAttrCount = 1;
+		OS_Printf("Height:%08x\n",outY + map_height + 16 * FX32_ONE);
 	}
 }
 

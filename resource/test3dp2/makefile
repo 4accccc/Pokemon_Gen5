@@ -28,7 +28,6 @@ include $(PROJECT_RSCDIR)\macro_define
 
 
 #依存対象が複数ある
-MAPBINS	:= $(wildcard *.bin)
 MAPNSBMDS	:= $(wildcard *.nsbmd)
 MAPNSBTXS	:= $(wildcard *.nsbtx)
 #MAPNSBTPS	:= $(wildcard *.nsbtp)
@@ -38,15 +37,14 @@ MAPBHCS		:= $(wildcard *.bhc)
 MAP3DPPACKS = $(subst .nsbmd,.3dppack,$(MAPNSBMDS))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	 .3dppack .nsbmd .nsbtx .nsbtp .3dmd .bin
+.SUFFIXES:	 .3dppack .nsbmd .nsbtx .nsbtp .3dmd .bhc
 
 #データからの生成ルール
 .nsbmd.3dppack:
 .nsbtx.3dppack:
-.bhc.3dppack:
 .3dmd.3dppack:
-.bin.3dppack:
-	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.bin $*.3dmd $*.3dppack BR
+.bhc.3dppack:
+	$(BINLINKER) $*.nsbmd $*.nsbtx $*.bhc $*.3dmd $*.3dppack BR
 
 endif
 
@@ -63,7 +61,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(MAP3DPPACKS) $(MAPBINS)  $(MAP3DMDS) $(MAPNSBMDS) $(MAPNSBTXS) $(MAPBHCS) #$(MAPNSBTPS)
+$(NARCNAME):	$(MAP3DPPACKS)  $(MAP3DMDS) $(MAPNSBMDS) $(MAPNSBTXS) $(MAPBHCS) #$(MAPNSBTPS)
 	nnsarc -c -l -n -i $(NARCNAME) -S data.list
 	$(NAIXCUT) $(NAIXNAME)
 

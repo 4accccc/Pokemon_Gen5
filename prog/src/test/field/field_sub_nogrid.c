@@ -28,7 +28,7 @@ static void NoGridCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
 //------------------------------------------------------------------
 static void NoGridMain( FIELD_WORK* fieldWork, VecFx32 * pos )
 {
-	MainPlayerAct( fieldWork->pcActCont, fieldWork->key_cont );
+	MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
