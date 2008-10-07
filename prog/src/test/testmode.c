@@ -539,9 +539,6 @@ static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 //--------------------------------------------------------------
 static void	g2d_load_title( TESTMODE_WORK * testmode )
 {
-	//フォント読み込み
-	GFL_TEXT_CreateSystem( font_path );
-	
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
@@ -602,7 +599,6 @@ static void	g2d_unload_title( TESTMODE_WORK * testmode )
 		msg_bmpwin_trush( testmode, NUM_TITLE_0+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
-	GFL_TEXT_DeleteSystem();
 }
 
 //--------------------------------------------------------------
@@ -610,9 +606,6 @@ static void	g2d_unload_title( TESTMODE_WORK * testmode )
 //--------------------------------------------------------------
 static void	g2d_load_startsel( TESTMODE_WORK * testmode )
 {
-	//フォント読み込み
-	GFL_TEXT_CreateSystem( font_path );
-	
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
@@ -670,7 +663,6 @@ static void	g2d_unload_startsel( TESTMODE_WORK * testmode )
 		msg_bmpwin_trush( testmode, NUM_STARTSEL_0+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
-	GFL_TEXT_DeleteSystem();
 }
 
 //--------------------------------------------------------------
@@ -678,9 +670,6 @@ static void	g2d_unload_startsel( TESTMODE_WORK * testmode )
 //--------------------------------------------------------------
 static void	g2d_load_testmode( TESTMODE_WORK * testmode )
 {
-	//フォント読み込み
-	GFL_TEXT_CreateSystem( font_path );
-	
 	//パレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
@@ -763,7 +752,6 @@ static void	g2d_unload_testmode( TESTMODE_WORK * testmode )
 		msg_bmpwin_trush( testmode, NUM_TITLE+i );
 	}
 	GFL_HEAP_FreeMemory( testmode->textParam );
-	GFL_TEXT_DeleteSystem();
 }
 
 //------------------------------------------------------------------
