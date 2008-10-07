@@ -23,6 +23,7 @@
 #include "arc_def.h"
 #include "arc_file.h"
 
+#include "textprint.h"
 
 //=============================================================================================
 //=============================================================================================
@@ -129,6 +130,9 @@ void GFLUser_Init(void)
 	//バックアップシステム初期化
 	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
 
+	//システムフォント初期化
+	GFL_TEXT_CreateSystem( NULL );
+
 	GFL_USE_VintrCounter = 0;
 }
 
@@ -170,17 +174,18 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
+	GFL_TEXT_DeleteSystem();
 	GFL_BACKUP_Exit();
-	GFL_UI_Exit();
-	GFL_PROC_Exit();
-	GFL_OVERLAY_Exit();
+	GFL_SOUND_Exit();
 	GFL_FADE_Exit();
+	GFL_PROC_Exit();
 	GFL_TCB_Exit(gfl_work->TCBSysVintr);
 	GFL_HEAP_FreeMemory(gfl_work->TCBSysVintr);
 	GFL_HEAP_FreeMemory(gfl_work->TCBMemVintr);
+	GFL_OVERLAY_Exit();
+	GFL_UI_Exit();
 	GFL_HEAP_DTCM_Exit();
 	GFL_HEAP_Exit();
-	GFL_SOUND_Exit();
 }
 
 //------------------------------------------------------------------
