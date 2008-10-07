@@ -144,8 +144,6 @@ static const GFL_G3D_LIGHTSET_SETUP light1Setup = { light1Tbl, NELEMS(light1Tbl)
  * @brief		２Ｄリソースデータ
  */
 //------------------------------------------------------------------
-static const char font_path[] = {"gfl_font.dat"};
-
 static const GFL_BG_BGCNT_HEADER playiconBGcont = {
 	0, 0, 0x800, 0,
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -585,8 +583,6 @@ static void	g2d_load( GAME_SYSTEM* gs )
 	int i,p;
 	//ＢＧ関連
 	{
-		//フォント読み込み
-		GFL_TEXT_CreateSystem( font_path );
 		//パレット作成＆転送
 		GFL_BG_LoadPalette( TEXT_FRM, (void*)defaultFontPalette, 
 							PLTT_DATSIZ, TEXT_PLTT * PLTT_DATSIZ );
@@ -803,7 +799,6 @@ static void	g2d_unload( GAME_SYSTEM* gs )
 				GFL_BMPWIN_Delete( gs->bitmapWin[i] );
 			}
 		}
-		GFL_TEXT_DeleteSystem();
 	}
 }
 
