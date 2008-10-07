@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	sample_map others fieldmap fielddata
+SUBDIRS	=	sample_map others fieldmap fielddata loopbridge
 
 .PHONY:	do-build clean
 
