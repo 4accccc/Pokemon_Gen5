@@ -18,6 +18,8 @@ BOOL	SampleMain( void );
 
 #include "g3d_mapper.h"
 #include "sample_net.h"
+
+#include "skb.h"
 //============================================================================================
 /**
  *
@@ -80,6 +82,12 @@ static void _sendGamePlay( VecFx32* pVec  );
 
 #include "samplemain.h"
 
+static const GFL_SKB_SETUP skbData= {
+	NULL, 16,
+	0,
+	GFL_SKB_BGID_M1, GFL_SKB_PALID_14, GFL_SKB_PALID_15,
+	FALSE,
+};
 //------------------------------------------------------------------
 /**
  * @brief	構造体定義
@@ -98,6 +106,9 @@ typedef struct {
 	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
 	int				mapNum;
+
+	GFL_SKB*		gflSkb;
+	BOOL			gflSkbSw;
 
 }SAMPLE_WORK;
 
@@ -154,49 +165,51 @@ BOOL	SampleMain( void )
         break;
 
 	case 1:
+		//セットアップ
+		ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
+							&resistMapTbl[sampleWork->mapNum].mapperData );
+
+		sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
+		sampleWork->fldActCont = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
 		{
-            //セットアップ
-            ResistData3Dmapper( GetG3Dmapper(sampleWork->gs), 
-                                &resistMapTbl[sampleWork->mapNum].mapperData );
+			VecFx32 pos;
+			u16		dir;
 
-            sampleWork->cursor = CreateCursor( sampleWork->gs, sampleWork->heapID );
-            sampleWork->fldActCont = CreateFieldActSys( sampleWork->gs, sampleWork->heapID );
-			{
-				VecFx32 pos;
-				u16		dir;
-
-				pos = resistMapTbl[sampleWork->mapNum].startPos;
-				dir = 0;
-					
-				sampleWork->pcActCont = CreatePlayerAct( sampleWork->gs, sampleWork->heapID );
-				SetPlayerActTrans( sampleWork->pcActCont, &pos );
-				SetPlayerActDirection( sampleWork->pcActCont, &dir );
-			}
-            sampleWork->seq++;
-        }
+			pos = resistMapTbl[sampleWork->mapNum].startPos;
+			dir = 0;
+				
+			sampleWork->pcActCont = CreatePlayerAct( sampleWork->gs, sampleWork->heapID );
+			SetPlayerActTrans( sampleWork->pcActCont, &pos );
+			SetPlayerActDirection( sampleWork->pcActCont, &dir );
+		}
+		sampleWork->gflSkbSw = FALSE;
+		sampleWork->seq++;
 		break;
 
 	case 2:
-		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			sampleWork->seq = 4;
-			break;
-		}
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-			sampleWork->mapNum++;
-			if( sampleWork->mapNum >= NELEMS(resistMapTbl) ){
-				sampleWork->mapNum = 0;
+		if( sampleWork->gflSkbSw == TRUE ){
+			if( GFL_SKB_Main( sampleWork->gflSkb ) == FALSE ){	
+				sampleWork->gflSkbSw = FALSE;
 			}
-			sampleWork->seq = 3;
-			break;
-		}
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-			sampleWork->mapNum--;
-			if( sampleWork->mapNum < 0 ){
-				sampleWork->mapNum = NELEMS(resistMapTbl)-1;
+		} else {
+			if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
+				sampleWork->seq = 4;
+				break;
 			}
-			sampleWork->seq = 3;
-			break;
+			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
+				sampleWork->mapNum--;
+				if( sampleWork->mapNum < 0 ){
+					sampleWork->mapNum = NELEMS(resistMapTbl)-1;
+				}
+				sampleWork->seq = 3;
+				break;
+			}
+			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
+				sampleWork->gflSkb = GFL_SKB_Boot( sampleWork->heapID, &skbData );
+				sampleWork->gflSkbSw = TRUE;
+			}
 		}
+
 		MainPlayerAct( sampleWork->pcActCont );
 		MainFieldActSys( sampleWork->fldActCont );
 		{
@@ -244,7 +257,7 @@ BOOL	SampleMain( void )
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont )
 {
-	int resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START;
+	int resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT;
 
 	if( (cont & resetCont ) == resetCont ){
 		return TRUE;
@@ -289,10 +302,15 @@ struct _SAMPLE_SETUP {
 	GFL_G3D_SCENE*			g3Dscene;		//g3Dscene Lib ハンドル
 	GFL_G3D_CAMERA*			g3Dcamera;		//g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET*		g3Dlightset;	//g3Dlight Lib ハンドル
-	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
 	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
-	G3D_MAPPER*				g3Dmapper;
+	GFL_TCB*				g2dVintr;		//2Dシステム用vIntrTaskハンドル
+	GFL_TCB*				g3dVintr;		//3Dシステム用vIntrTaskハンドル
+
+	G3D_MAPPER*				g3Dmapper;		//マップ表示コントローラ
+
+	GFL_BMPWIN*				bmpwin;			//bitmapWin個別ハンドル
+	GFL_TEXT_PRINTPARAM*	textParam;		//テキスト表示パラメータ
 
 	HEAPID					heapID;
 };
@@ -332,7 +350,6 @@ static	const	char	*GraphicFileTable[]={
 };
 #endif
 
-static const char font_path[] = {"gfl_font.dat"};
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄグラフィック環境データ
@@ -376,6 +393,11 @@ static const GXRgb edgeColorTable[8] = {
 //ＢＧ設定関数
 static void	bg_init( SAMPLE_SETUP* gs );
 static void	bg_exit( SAMPLE_SETUP* gs );
+//２Ｄ関数
+static void	g2d_load( SAMPLE_SETUP* gs );
+static void g2d_draw( SAMPLE_SETUP* gs );
+static void	g2d_unload( SAMPLE_SETUP* gs );
+static void	g2d_vblank( GFL_TCB* tcb, void* work );
 //３Ｄ関数
 static void g3d_load( SAMPLE_SETUP* gs );
 static void g3d_control( SAMPLE_SETUP* gs );
@@ -407,9 +429,8 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 	//BG初期化
 	bg_init( gs );
 
-	//３Ｄデータのロード
-	g3d_load( gs );
-	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
+	g2d_load( gs );	//２Ｄデータのロード
+	g3d_load( gs );	//３Ｄデータのロード
 
 	return gs;
 }
@@ -421,8 +442,8 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 //------------------------------------------------------------------
 static void	RemoveGameSystem( SAMPLE_SETUP* gs )
 {
-	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
+	g2d_unload( gs );	//２Ｄデータ破棄
 
 	bg_exit( gs );
 //	GFL_ARC_Exit();
@@ -439,6 +460,7 @@ static void	MainGameSystem( SAMPLE_SETUP* gs )
 {
 	g3d_control( gs );
 	g3d_draw( gs );
+	g2d_draw( gs );
 }
 
 //------------------------------------------------------------------
@@ -451,11 +473,17 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
 };	
 
+static const GFL_BG_BGCNT_HEADER textBGcont = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x3800, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+#define TEXTBG_FRAME	(GFL_BG_FRAME1_M)
+#define TEXTBG_PAL		(15)
+
 static void	bg_init( SAMPLE_SETUP* gs )
 {
-	//フォント読み込み
-	GFL_TEXT_CreateSystem( font_path );
-
 	//ＢＧシステム起動
 	GFL_BG_Init( gs->heapID );
 
@@ -471,7 +499,13 @@ static void	bg_init( SAMPLE_SETUP* gs )
 	GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ＢＧコントロール設定
-	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
+	GFL_BG_SetBGControl( TEXTBG_FRAME, &textBGcont, GFL_BG_MODE_TEXT );
+	GFL_BG_SetPriority( TEXTBG_FRAME, 0 );
+	GFL_BG_SetVisible( TEXTBG_FRAME, VISIBLE_ON );
+
+	//G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 31, 8 );
+	//２Ｄシステム起動
+	GFL_BMPWIN_Init( gs->heapID );
 
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
@@ -488,8 +522,10 @@ static void	bg_exit( SAMPLE_SETUP* gs )
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
 	GFL_G3D_Exit();
+	GFL_BMPWIN_Exit();
+
+	GFL_BG_FreeBGControl( TEXTBG_FRAME );
 	GFL_BG_Exit();
-	GFL_TEXT_DeleteSystem();
 }
 
 // ３Ｄセットアップコールバック
@@ -531,7 +567,79 @@ static void G3DsysSetup( void )
 	G3_ViewPort(0, 0, 255, 191);
 	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
 }
+//------------------------------------------------------------------
+/**
+ * @brief		２Ｄデータコントロール
+ */
+//------------------------------------------------------------------
+#define FONT_BCOL (0)
+#define FONT_FCOL (0x7fff)
 
+#define BCOL_P (1)
+#define FCOL_P (2)
+
+#define BMPWIN_POS_PX (1)
+#define BMPWIN_POS_PY (20)
+#define BMPWIN_POS_SX (30)
+#define BMPWIN_POS_SY (3)
+static const GFL_TEXT_PRINTPARAM default_param = 
+{ NULL, 0, 0, 1, 1, FCOL_P, BCOL_P, GFL_TEXT_WRITE_16 };
+
+static void	g2d_load( SAMPLE_SETUP* gs )
+{
+	//透明キャラ領域確保
+	GFL_BG_AllocCharacterArea( TEXTBG_FRAME, 1, GFL_BG_CHRAREA_GET_F );
+	//パレット作成＆転送
+	{
+		u16* plt = GFL_HEAP_AllocClearMemoryLo( gs->heapID, 0x20 );
+
+		plt[BCOL_P] = FONT_BCOL;
+		plt[FCOL_P] = FONT_FCOL;
+		GFL_BG_LoadPalette( TEXTBG_FRAME, plt, 0x20, 0x20*TEXTBG_PAL );
+		GFL_HEAP_FreeMemory( plt );
+	}
+	//文字表示ビットマップの作成
+	gs->bmpwin = GFL_BMPWIN_Create( TEXTBG_FRAME,
+									BMPWIN_POS_PX, BMPWIN_POS_PY,
+									BMPWIN_POS_SX, BMPWIN_POS_SY,
+									TEXTBG_PAL, GFL_BG_CHRAREA_GET_F );
+	//文字表示パラメータワーク作成
+	{
+		GFL_TEXT_PRINTPARAM* param = GFL_HEAP_AllocMemory(gs->heapID,sizeof(GFL_TEXT_PRINTPARAM));
+		*param = default_param;
+		param->bmp = GFL_BMPWIN_GetBmp( gs->bmpwin );
+		gs->textParam = param;
+	}
+	//ビットマップキャラクターをアップデート
+	GFL_BG_ClearScreen( TEXTBG_FRAME );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( gs->bmpwin ), BCOL_P );
+	GFL_BMPWIN_TransVramCharacter( gs->bmpwin );
+	GFL_BMPWIN_MakeScreen( gs->bmpwin );
+	GFL_BG_LoadScreenReq( TEXTBG_FRAME );
+
+	gs->g2dVintr = GFUser_VIntr_CreateTCB( g2d_vblank, (void*)gs, 0 );
+}
+
+static void g2d_draw( SAMPLE_SETUP* gs )
+{
+//	GFL_BMPWIN_MakeScreen( gs->bmpwin );
+//	GFL_BG_LoadScreenReq( TEXTBG_FRAME );
+}
+
+static void	g2d_unload( SAMPLE_SETUP* gs )
+{
+	GFL_TCB_DeleteTask( gs->g2dVintr );
+
+	GFL_HEAP_FreeMemory( gs->textParam );
+	GFL_BMPWIN_Delete( gs->bmpwin );
+}
+
+static void	g2d_vblank( GFL_TCB* tcb, void* work )
+{
+	SAMPLE_SETUP* gs =  (SAMPLE_SETUP*)work;
+
+	GFL_CLACT_VBlankFuncTransOnly();
+}
 
 //------------------------------------------------------------------
 /**
@@ -573,6 +681,8 @@ static void g3d_load( SAMPLE_SETUP* gs )
 	//カメラライト0反映
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
+
+	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
 }
 	
 //動作
@@ -596,6 +706,8 @@ static void g3d_draw( SAMPLE_SETUP* gs )
 //破棄
 static void g3d_unload( SAMPLE_SETUP* gs )
 {
+	GFL_TCB_DeleteTask( gs->g3dVintr );
+
 	GFL_G3D_LIGHT_Delete( gs->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera );
 
@@ -644,7 +756,6 @@ static GFL_BBDACT_SYS* GetBbdActSys( SAMPLE_SETUP* gs )
 	return gs->bbdActSys;
 }
 	
-
 
 //============================================================================================
 /**
