@@ -539,7 +539,7 @@ static void msg_bmpwin_palset( TESTMODE_WORK * testmode, u8 bmpwinNum, u8 pal )
 //--------------------------------------------------------------
 static void	g2d_load_title( TESTMODE_WORK * testmode )
 {
-	//パレット作成＆転送
+	//フォントパレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
@@ -606,7 +606,7 @@ static void	g2d_unload_title( TESTMODE_WORK * testmode )
 //--------------------------------------------------------------
 static void	g2d_load_startsel( TESTMODE_WORK * testmode )
 {
-	//パレット作成＆転送
+	//フォントパレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
@@ -670,7 +670,7 @@ static void	g2d_unload_startsel( TESTMODE_WORK * testmode )
 //--------------------------------------------------------------
 static void	g2d_load_testmode( TESTMODE_WORK * testmode )
 {
-	//パレット作成＆転送
+	//フォントパレット作成＆転送
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( testmode->heapID, 16*2 );
 		plt[0] = G2D_BACKGROUND_COL;
