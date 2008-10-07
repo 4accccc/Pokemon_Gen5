@@ -79,6 +79,8 @@ enum{
 	NUMBER_MAX,
 };
 
+///ピーク計測時に維持するウェイト
+#define PEEK_WAIT		(8)
 
 //==============================================================================
 //	構造体定義
@@ -87,7 +89,10 @@ enum{
 typedef struct{
 	u32 start_vblank_count;		//計測開始時のVブランクカウンタの値
 	s16 start_vcount;			//計測開始時のVカウンタの値
-	s16 dummy;
+	s32 peek_vcount;			//ピーク計測時のVカウンタ
+	s32 peek_x;					//ピーク計測時のX座標
+	s8 peek_wait;				//ピーク計測時に維持するウェイト
+	s8 dummy;
 }PFM_APP_WORK;
 
 ///パフォーマンスシステム構造体
@@ -212,7 +217,7 @@ static const u8 performance_num[] = {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOOL delay);
+static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 end_vblank_count);
 static void Performance_CGXTrans(void);
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset);
 static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count);
@@ -250,6 +255,9 @@ void DEBUG_PerformanceMain(void)
 	if(debugButtonTrg){
 		pfm_sys.on_off ^= TRUE;
 	}
+	if(GFL_UI_KEY_GetTrg() == (PAD_BUTTON_L | PAD_BUTTON_R)){
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	}
 }
 
 //--------------------------------------------------------------
@@ -273,7 +281,7 @@ void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 	app->start_vblank_count = OS_GetVBlankCount();
 	app->start_vcount = GX_GetVCount();
 	
-	Performance_Draw(METER_TYPE_START, id, app->start_vcount, FALSE);
+	Performance_Draw(METER_TYPE_START, id, app->start_vcount, app->start_vblank_count);
 }
 
 //--------------------------------------------------------------
@@ -287,6 +295,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 {
 	PFM_APP_WORK *app;
 	u32 end_vblank_count;
+	BOOL peek_update;
 	
 	GF_ASSERT(id < PERFORMANCE_ID_MAX);
 
@@ -296,9 +305,9 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	
 	app = &pfm_sys.app[id];
 	end_vblank_count = OS_GetVBlankCount();
-	Performance_Draw(METER_TYPE_END, id, GX_GetVCount(), app->start_vblank_count != end_vblank_count);
+	peek_update = Performance_Draw(METER_TYPE_END, id, GX_GetVCount(), end_vblank_count);
 	
-	if(id == PERFORMANCE_NUM_PRINT_ID){
+	if(id == PERFORMANCE_NUM_PRINT_ID && peek_update == TRUE){
 		Performance_Num(METER_TYPE_END, id, GX_GetVCount(), app->start_vblank_count, end_vblank_count);
 	}
 }
@@ -442,16 +451,24 @@ static void Performance_NumTrans(s32 num)
  * @param   meter_type			メータータイプ
  * @param   id					パフォーマンスメーターID
  * @param   v_count				Vカウンタ
- * @param   delay				遅延フラグ(TRUE:遅延している)
+ * @param   end_vblank_count	End時のVブランクカウンタ
+ *
+ * @retval  TRUE:ピーク計測更新
  */
 //--------------------------------------------------------------
-static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOOL delay)
+static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 end_vblank_count)
 {
 	GXOamAttr *meter_oam;
 	GXOamEffect effect_type;
 	s32 x, char_no;
 	s32 calc_v_count;
+	s32 check_peek = 0;
+	BOOL delay;
+	PFM_APP_WORK *app;
+	BOOL peek_update = 0;
 	
+	app = &pfm_sys.app[id];
+	delay = app->start_vblank_count != end_vblank_count;
 	meter_oam = &(((GXOamAttr *)HW_OAM)[127 - id*2 - meter_type]);
 	
 	calc_v_count = v_count;
@@ -479,6 +496,34 @@ static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOO
 	if(x > 259){	//ちょっと画面端に食い込んでる方が処理負荷が見やすいので。
 		x %= 256;
 	}
+
+	//ピーク更新確認
+	if(meter_type == METER_TYPE_END){
+		check_peek = (end_vblank_count - app->start_vblank_count) * 1000;
+		if(end_vblank_count != app->start_vblank_count && v_count < 192){
+			check_peek += v_count + 262;
+		}
+		else{
+			check_peek += v_count;
+		}
+		
+		if(check_peek > app->peek_vcount){
+			app->peek_vcount = check_peek;
+			app->peek_wait = 0;
+			app->peek_x = x;
+			peek_update = TRUE;
+		}
+		else{
+			x = app->peek_x;
+			app->peek_wait++;
+			if(app->peek_wait > PEEK_WAIT){
+				app->peek_wait = 0;
+				app->peek_vcount = 0;
+			}
+		}
+	}
+
+
 	char_no = (delay == TRUE) ? METER_DELAY_CHARNO : METER_CHARNO;
 	switch(GX_GetBankForOBJ()){
 	case GX_VRAM_OBJ_16_F:
@@ -528,6 +573,8 @@ static void Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, BOO
 		}
 	}
 #endif
+
+	return peek_update;
 }
 
 //--------------------------------------------------------------
