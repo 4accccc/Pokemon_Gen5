@@ -15,6 +15,7 @@ static const char	test_select5[]	= {"たや　まさお　　Masao Taya"};
 static const char	test_select6[]	= {"Sample1"};
 static const char	test_select7[]	= {"まつだ　よしのり　　Yoshinori Matsuda"};
 static const char	test_select8[]	= {"ごとう　だいすけ　　Daisuke Goto"};
+static const char	test_select9[]	= {"ありいずみ　のぶひこ　Nobuhiko Ariizumi"};
 
 enum {
 	NUM_TITLE = 0,
@@ -35,6 +36,7 @@ enum {
 	NUM_SELECT6,
 	NUM_SELECT7,
 	NUM_SELECT8,
+	NUM_SELECT9,
 	NUM_SELECT_END,
 };
 
@@ -52,6 +54,7 @@ static const TESTMODE_PRINTLIST selectList[] = {
 	{ test_select6,  4, 15, 24, 1 },
 	{ test_select7,  4, 17, 24, 1 },
 	{ test_select8,  4, 19, 24, 1 },
+	{ test_select9,  4, 21, 24, 1 },
 };
 
 enum {
@@ -63,6 +66,7 @@ enum {
 	SELECT_TEST1,
 	SELECT_MATSUDA,
 	SELECT_GOTO,
+	SELECT_ARIIZUMI,
 };
 
 //------------------------------------------------------------------
