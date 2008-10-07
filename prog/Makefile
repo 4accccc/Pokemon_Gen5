@@ -100,6 +100,7 @@ LLIBRARIES	+= ./libcrypto.a
 #----------------------------------------------------------------------------
 #ロムファイル指定(GFL)
 GFL_FILE_TREE	=	titledemo.narc \
+					skb.narc \
 					pm_battle.swav	\
 					mh.swav	\
 					gfl_font.dat
