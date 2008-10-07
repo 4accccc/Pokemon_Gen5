@@ -382,7 +382,7 @@ static	const	char	*GraphicFileTable[]={
 };
 #endif
 
-static const char font_path[] = {"gfl_font.dat"};
+//static const char font_path[] = {"gfl_font.dat"};
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄグラフィック環境データ
@@ -504,7 +504,7 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 static void	bg_init( SAMPLE_SETUP* gs )
 {
 	//フォント読み込み
-	GFL_TEXT_CreateSystem( font_path );
+	GFL_TEXT_CreateSystem( NULL );
 
 	//ＢＧシステム起動
 	GFL_BG_Init( gs->heapID );
