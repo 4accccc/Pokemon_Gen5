@@ -454,7 +454,7 @@ static void	bg_init( FIELD_SETUP* gs )
 {
 	//フォント読み込み
 //	GFL_TEXT_CreateSystem( font_path );
-	GFL_TEXT_CreateSystem( NULL );	//システムフォント使用
+//	GFL_TEXT_CreateSystem( NULL );	//システムフォント使用
 
 	//ＢＧシステム起動
 	GFL_BG_Init( gs->heapID );
@@ -489,7 +489,7 @@ static void	bg_exit( FIELD_SETUP* gs )
 
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
-	GFL_TEXT_DeleteSystem();
+//	GFL_TEXT_DeleteSystem();
 }
 
 // ３Ｄセットアップコールバック

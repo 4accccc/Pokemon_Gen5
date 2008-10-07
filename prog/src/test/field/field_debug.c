@@ -34,9 +34,8 @@
 //======================================================================
 //--------------------------------------------------------------
 ///	メニュー呼び出し関数
-///	呼び出す際、引数void*はDEBUG_FLDMENUが指定されます
 //--------------------------------------------------------------
-typedef void (* D_MENU_CALLPROC)(void*);
+typedef void (* D_MENU_CALLPROC)(DEBUG_FLDMENU*);
 
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LIST
@@ -52,11 +51,10 @@ typedef struct
 //--------------------------------------------------------------
 struct _DEBUG_FLDMENU
 {
+	HEAPID heapID;	//デバッグ用ヒープID
+	
 	int seq_no;
-	
 	u32 bgFrame;
-	HEAPID heapID;
-	
 	GFL_BMP_DATA *bmp;
 	GFL_BMPWIN *bmpwin;
 	
@@ -69,14 +67,13 @@ struct _DEBUG_FLDMENU
 	
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
-	
 	D_MENU_CALLPROC call_proc;
 };
 
 //======================================================================
 //	proto
 //======================================================================
-static void DMenuCallProc_Test( void *wk );
+static void DMenuCallProc_Test( DEBUG_FLDMENU *wk );
 
 //======================================================================
 //	メニューリスト一覧
@@ -87,13 +84,13 @@ static void DMenuCallProc_Test( void *wk );
 static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
 	{ DEBUG_FIELD_STR01, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR02, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR03, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR04, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR05, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR06, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR07, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR08, DMenuCallProc_Test },
+	{ DEBUG_FIELD_STR02, NULL },
+	{ DEBUG_FIELD_STR03, NULL },
+	{ DEBUG_FIELD_STR04, NULL },
+	{ DEBUG_FIELD_STR05, NULL },
+	{ DEBUG_FIELD_STR06, NULL },
+	{ DEBUG_FIELD_STR07, NULL },
+	{ DEBUG_FIELD_STR08, NULL },
 };
 
 //メニュー最大数
@@ -345,7 +342,7 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DMenuCallProc_Test( void *wk )
+static void DMenuCallProc_Test( DEBUG_FLDMENU *wk )
 {
 	DEBUG_FLDMENU *d_menu = wk;
 	HEAPID DebugHeapID = d_menu->heapID;
