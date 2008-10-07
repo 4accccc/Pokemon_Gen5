@@ -42,13 +42,15 @@ void	MainPlayerAct_NoGrid( PC_ACTCONT* pcActCont, int key)
 		VecFx32 newPos = pcActCont->trans;
 		fx32 diff;
 		CalcSetGroundMove( GetFieldG3Dmapper(pcActCont->gs), &pcActCont->gridInfoData, 
-								&newPos, &vecMove, MV_SPEED );
-							//	&pcActCont->trans, &vecMove, MV_SPEED );
+	//							&newPos, &vecMove, MV_SPEED );
+								&pcActCont->trans, &vecMove, MV_SPEED );
+#if 0
 		diff = newPos.y - pcActCont->trans.y;
 		if ((diff >= 0 && diff < FX32_ONE * 32)
 				|| (diff < 0 && diff > FX32_ONE * -32) ){
 			pcActCont->trans = newPos;
 		}
+#endif
 	}
 
     

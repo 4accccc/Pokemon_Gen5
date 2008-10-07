@@ -44,6 +44,26 @@ static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 	{ NARC_test3dp2_m_test_02_06c_3dppack },
 };
 
+#include "test_graphic/loopbridge.naix"
+static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
+	{ NARC_loopbridge_m_test2_01_01c_3dppack },
+	{ NARC_loopbridge_m_test2_02_01c_3dppack },
+	{ NARC_loopbridge_m_test2_03_01c_3dppack },
+	{ NARC_loopbridge_m_test2_04_01c_3dppack },
+	{ NARC_loopbridge_m_test2_01_02c_3dppack },
+	{ NARC_loopbridge_m_test2_02_02c_3dppack },
+	{ NARC_loopbridge_m_test2_03_02c_3dppack },
+	{ NARC_loopbridge_m_test2_04_02c_3dppack },
+	{ NARC_loopbridge_m_test2_01_03c_3dppack },
+	{ NARC_loopbridge_m_test2_02_03c_3dppack },
+	{ NARC_loopbridge_m_test2_03_03c_3dppack },
+	{ NARC_loopbridge_m_test2_04_03c_3dppack },
+	{ NARC_loopbridge_m_test2_01_04c_3dppack },
+	{ NARC_loopbridge_m_test2_02_04c_3dppack },
+	{ NARC_loopbridge_m_test2_03_04c_3dppack },
+	{ NARC_loopbridge_m_test2_04_04c_3dppack },
+};
+
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
 	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
 	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
@@ -83,6 +103,18 @@ static const FLD_G3D_MAPPER_DATA GSMap[] = {
 #define MAP_HEIGHT (128 * FX32_ONE)
 
 const SCENE_DATA	resistMapTbl[] = {
+	{
+		{	
+			FILE_MAPEDITER_DATA,
+			4,  4, NELEMS(loopbridgemap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_LOOPBRIDGE,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			loopbridgemap, 
+		}, 
+		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
+		&FieldNoGridFunctions,
+	},
 	{
 		{	
 			FILE_CUSTOM_DATA,
