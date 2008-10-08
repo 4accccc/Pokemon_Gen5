@@ -3,7 +3,7 @@
  * @file	debug_ariizumi.c
  * @brief	デバッグ 有泉
  * @author	ariizumi
- * @date	2006.11.29
+ * @date	2008.10.8
  */
 //============================================================================================
 #include "gflib.h"
@@ -16,16 +16,14 @@
 //  デバッグ用初期化関数
 //------------------------------------------------------------------
 
+extern void	AriFieldBoot( HEAPID heapID );
+extern void	AriFieldEnd( void );
+extern BOOL	AriFieldMain( void );
+
 static GFL_PROC_RESULT DebugAriizumiMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_OHNO_CONTROL * testmode;
-	HEAPID			heapID = HEAPID_OHNO_DEBUG;
-
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
-
-	testmode = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), heapID );
-	GFL_STD_MemClear(testmode, sizeof(DEBUG_OHNO_CONTROL));
-	testmode->debug_heap_id = heapID;
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
+	AriFieldBoot( HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -36,13 +34,11 @@ static GFL_PROC_RESULT DebugAriizumiMainProcInit(GFL_PROC * proc, int * seq, voi
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugAriizumiMainProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_OHNO_CONTROL * testmode = mywk;
-	if(testmode->funcNet){
-        if(testmode->funcNet(mywk)){
-            return GFL_PROC_RES_FINISH;
-        }
-    }
-    return GFL_PROC_RES_CONTINUE;
+	if( AriFieldMain() == TRUE ){
+		return GFL_PROC_RES_FINISH;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //------------------------------------------------------------------
@@ -51,10 +47,10 @@ static GFL_PROC_RESULT DebugAriizumiMainProcMain(GFL_PROC * proc, int * seq, voi
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugAriizumiMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-    GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap( HEAPID_OHNO_DEBUG );
+	AriFieldEnd();
+	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
-    return GFL_PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
