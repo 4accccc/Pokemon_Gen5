@@ -919,6 +919,98 @@ enum {
 	DEF_ENTRYTEX_MAX =		  3,
 };
 
+/*
+	BlendMagicSDKforDS の実装について
+	-----------------------------------------------------------
+
+	実装のステップとして７つに分けることができます。
+	１．ライブラリの初期化、メモリ確保
+	２．ファイルのロード
+	３．エフェクトの生成
+	４．エフェクトのアップデート
+	５．エフェクトの描画
+	６．エフェクトの開放
+	７．ライブラリの終了処理
+
+	ここで各ステップの詳細・注意事項を記します。
+	■ステップ１．ライブラリの初期化、メモリ確保（ initSystem(),initEffect() ）■■
+	-----------------------------------------------------------
+	インクルードヘッダーは以下のものです。
+	#include "npfx.h"
+	#include "nplibc.h"
+
+	基本的に最初に一回だけコールします。
+	やっていることは表題のとおりライブラリの初期化とメモリ確保です。
+	その際持っていて欲しい３つハンドルがあります。(変数名はサンプルと同じ)
+	void*		pvBuf	エフェクトのメモリを malloc したときのハンドルです。最後に開放する必要があります
+	npSYSTEM	sys		初期化、終了処理のとき必要です
+	npCONTEXT	ctx		初期化、終了処理、ロード、描画のときに必要です
+
+	どれだけメモリが必要かは
+	npU32 npParticleGetUsingComponentSize()
+	npU32 npParticleGetUsingSubjectSize()
+	でどれだけ使っているか確認しながら決めてください。
+	（NP_DEBUG をプリプロセッサで設定してください。現状デバッグバージョンしか使えなくしています。）
+
+	実際の初期化、メモリ確保はサンプルをご覧ください。
+
+	■ステップ２．ファイルのロード（ npUtilParticleLoadBph(),loadBpc() ） ■■
+	-----------------------------------------------------------
+	インクルードヘッダーとして以下があります。
+	#include "npBphImporter.h"
+	#include "npBpcImporter.h"
+
+	読み込むべきファイルは「.bph」「.bpc」です。
+	●エフェクトデータロード
+	まず「.bph」ファイルを読み込みます。これから得られた「.bpc」ファイル名から「.bpc」ファイルをロードします。
+	この際引数に
+	npPARTICLEEMITCYCLE*	pEmit
+	という構造体を引数として渡すのですが、これがエフェクトリソースの素です。
+	ロードの度にnpPARTICLEEMITCYCLE*を作り、いろんなエフェクトのリソースを確保しておくことになります。
+
+	テクスチャのロードでは
+	「.bph」ファイル名から読み込んだテクスチャの名前からテクスチャをロードします。
+	読み込んだテクスチャはnpTEXTURE*で持っておき、各エフェクトごとに使いまわします。
+
+	■ステップ３．エフェクトの生成（ npParticleCreateComposite() ）■■
+	-----------------------------------------------------------
+	エフェクトを生成するにはファイルをロードしたときに作った
+	npPARTICLEEMITCYCLE*	pEmit
+	とそれをもとに描画の時に必要な
+	npPARTICLECOMPOSITE*	pComp
+	という構造体が必要になります。これを使って
+	npParticleCreateComposite( pEmit, &pComp );
+	という関数をコールするだけです。
+	注意：同じエフェクトでも違う npPARTICLECOMPOSITE* が必要になります。一つ一つのエフェクトは区別しなければいけません。
+
+	■ステップ４．エフェクトのアップデート（　effUpdate(npPARTICLECOMPOSITE*, npU32)　）■■
+	-----------------------------------------------------------
+	注意：位置、スケール、回転についてのセットの仕方
+		　スケールに関しては別窓口が用意されています。
+		　npParticleSetScaling( npPARTICLECOMPOSITE* ,npFVECTOR* );
+		　平行移動、回転はマトリックスとして
+		　npParticleSetGlobalFMATRIX( npPARTICLEOBJECT* ,npFMATRIX );
+
+	アップデート関数は以下のものですが、第二引数にフレームレートをセットしてください。
+	（NP_NTSC60 ,NP_NTSC30 または正の整数をセットすることでデルタタイムに対応できます）
+	npParticleUpdateComposite( pComp, NP_NTSC60 );
+
+	■ステップ５．エフェクトの描画（　npParticleRenderComposite()　）■■
+	-----------------------------------------------------------
+	描画関数は以下のものです。この際、テクスチャリストとその数が必要になります。
+	npParticleRenderComposite( &ctx, pComp, &pTex, 1 );
+
+	■ステップ６．エフェクトの開放（　npParticleReleaseComposite()　）■■
+	-----------------------------------------------------------
+	使わなくなったエフェクトはちゃんと開放しましょう。	放っておくとメモリが足りなくなります。
+	npParticleReleaseComposite( pComp );
+
+
+	■ステップ７．ライブラリの終了処理（　releaseEffect()　）■■
+	-----------------------------------------------------------
+	エフェクトメモリの開放とライブラリの終了処理です。
+
+*/
 
 static BOOL SUBPROC_BlendMagic( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
