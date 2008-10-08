@@ -115,7 +115,16 @@ GFL_FILE_TREE	=	titledemo.narc \
 					skb.narc \
 					pm_battle.swav	\
 					mh.swav	\
-					gfl_font.dat
+					gfl_font.dat \
+					BMSample/aura_02.bph \
+					BMSample/aura_02.bpc \
+					BMSample/aura_01.ntft \
+					BMSample/aura_01.ntfp \
+					BMSample/sphere_06.ntft \
+					BMSample/sphere_06.ntfp \
+					BMSample/sphere_hole_01.ntft \
+					BMSample/sphere_hole_01.ntfp
+
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)
 
