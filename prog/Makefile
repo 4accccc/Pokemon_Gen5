@@ -16,9 +16,17 @@ NITRO_NO_STD_PCHDR = True
 
 .PHONY : gflib
 
+#----------------------------------------------------------------------------
+#	インクルードファイルディレクトリ
+#----------------------------------------------------------------------------
+LINCLUDES      = ./include \
+		./arc
+
+#----------------------------------------------------------------------------
 # GF-Library
+#----------------------------------------------------------------------------
 GFLIB_DIR		=	../lib/gflib/
-LINCLUDES		= 	$(GFLIB_DIR)/include
+LINCLUDES		+= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
@@ -34,12 +42,14 @@ LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
 
 #----------------------------------------------------------------------------
-#	インクルードファイルのディレクトリの追加
+# BlendMagic ライブラリ追加  taya
 #----------------------------------------------------------------------------
+LINCLUDES	+= $(BMDS_SDK_ROOT)/include
+LLIBRARY_DIRS	+= $(BMDS_SDK_ROOT)/lib
+LLIBRARIES	+=	npfxd.a \
+			nplibcd.a \
+			nputild.a
 
-LINCLUDES      = $(GFLIB_DIR)/include \
-				 ./include \
-				 ./arc
 
 #----------------------------------------------------------------------------
 #	バージョン定義
