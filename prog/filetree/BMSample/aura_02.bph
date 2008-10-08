@@ -1,0 +1,6 @@
+bph [Ver. 1.0.0 ]
+BPC = aura_02.bpc
+TEX = aura_01.tga
+TEX = sphere_06.tga
+TEX = sphere_hole_01.tga
+PUSH_Z_BUFF = 0
