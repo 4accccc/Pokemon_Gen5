@@ -22,6 +22,7 @@ NITRO_NO_STD_PCHDR = True
 LINCLUDES      = ./include \
 		./arc
 
+
 #----------------------------------------------------------------------------
 # GF-Library
 #----------------------------------------------------------------------------
@@ -44,7 +45,8 @@ LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
 #----------------------------------------------------------------------------
 # BlendMagic ƒ‰ƒCƒuƒ‰ƒŠ’Ç‰Á  taya
 #----------------------------------------------------------------------------
-LINCLUDES	+= $(BMDS_SDK_ROOT)/include
+LINCLUDES	+= $(BMDS_SDK_ROOT)/include \
+		   $(NITROSDK_ROOT)/include/nitro
 LLIBRARY_DIRS	+= $(BMDS_SDK_ROOT)/lib
 LLIBRARIES	+=	npfxd.a \
 			nplibcd.a \
