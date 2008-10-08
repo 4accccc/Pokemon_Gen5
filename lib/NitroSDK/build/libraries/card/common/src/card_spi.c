@@ -11,6 +11,12 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: card_spi.c,v $
+  Revision 1.34.2.1  2008/05/14 05:26:01  yosizaki
+  merge with HEAD.
+
+  Revision 1.35  2008/05/13 06:35:17  yosizaki
+  add CARD_BACKUP_TYPE_EEPROM_1MBITS.
+
   Revision 1.34  2007/11/13 04:22:01  yosizaki
   support erase-SUBSECTOR.
 
@@ -625,13 +631,12 @@ void CARDi_IdentifyBackupCore(CARDBackupType type)
                     p->spec.program_page = 10;
                     p->spec.initial_status = 0x00;
                     break;
-/*
-				case 0x020000:	// CARD_BACKUP_TYPE_EEPROM_1MBITS
-					p->spec.page_size = 0x0080;
+				case 0x020000:	      // CARD_BACKUP_TYPE_EEPROM_1MBITS
+					p->spec.page_size = 0x0100;
 					p->spec.addr_width = 3;
-					p->spec.program_page = 10;
+					p->spec.program_page = 5;
+                    p->spec.initial_status = 0x00;
 					break;
-*/
                 }
                 p->spec.sect_size = p->spec.page_size;
                 p->spec.caps |= CARD_BACKUP_CAPS_READ;

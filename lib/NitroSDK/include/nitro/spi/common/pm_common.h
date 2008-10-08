@@ -11,6 +11,15 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: pm_common.h,v $
+  Revision 1.18.22.2  2008/10/02 09:12:24  yada
+  rewind to 2008/9/18
+
+  Revision 1.18.22.1  2008/09/26 00:48:42  yada
+  applied for branch modifications, mainly PM busy bug
+
+  Revision 1.19  2008/09/24 10:01:10  yada
+  considered for being SPI busy
+
   Revision 1.18  2005/10/26 11:11:11  yada
   add definition for PMIC_BL_CTL register
 

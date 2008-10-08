@@ -11,6 +11,15 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: dma.h,v $
+  Revision 1.48.18.2  2008/10/02 09:12:24  yada
+  rewind to 2008/9/18
+
+  Revision 1.48.18.1  2008/09/26 00:48:42  yada
+  applied for branch modifications, mainly PM busy bug
+
+  Revision 1.49  2008/09/24 10:00:59  yada
+  added MI_StopAllDma()
+
   Revision 1.48  2006/01/18 02:11:19  kitase_hirotake
   do-indent
 

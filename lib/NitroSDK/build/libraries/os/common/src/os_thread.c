@@ -11,6 +11,9 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: os_thread.c,v $
+  Revision 1.112.6.1  2008/10/02 09:17:27  yada
+  fixed ASSERT in OS_SetThreadStackWarningOffset()
+
   Revision 1.112  2007/02/20 00:28:10  kitase_hirotake
   indent source
 
@@ -1948,7 +1951,6 @@ asm u32 OSi_GetCurrentStackPointer( void )
 void OS_SetThreadStackWarningOffset(OSThread *thread, u32 offset)
 {
     SDK_ASSERTMSG((offset & 3) == 0, "Offset must be aligned by 4");
-    SDK_ASSERTMSG(offset > 0, "Cannot set warning level to stack top.");
     SDK_ASSERTMSG(OS_GetThreadContext(thread)->sp > thread->stackTop + offset,
                   "Cannot set warning level below current sp.");
 

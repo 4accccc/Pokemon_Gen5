@@ -503,9 +503,6 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 
 static void	bg_init( SAMPLE_SETUP* gs )
 {
-	//フォント読み込み
-	GFL_TEXT_CreateSystem( NULL );
-
 	//ＢＧシステム起動
 	GFL_BG_Init( gs->heapID );
 
@@ -539,7 +536,6 @@ static void	bg_exit( SAMPLE_SETUP* gs )
 
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
-	GFL_TEXT_DeleteSystem();
 }
 
 // ３Ｄセットアップコールバック

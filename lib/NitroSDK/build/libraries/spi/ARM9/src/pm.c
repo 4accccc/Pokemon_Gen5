@@ -2,7 +2,7 @@
   Project:  NitroSDK - PM
   File:     pm.c
 
-  Copyright 2003-2007 Nintendo.  All rights reserved.
+  Copyright 2003-2008 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -11,6 +11,18 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: pm.c,v $
+  Revision 1.60.2.4  2008/10/03 10:40:38  yada
+  rewind to 1.60
+
+  Revision 1.60.2.3  2008/10/02 09:15:03  yada
+  rewind to 2008/9/18
+
+  Revision 1.60.2.2  2008/09/26 01:48:57  yada
+  just fixed around return value
+
+  Revision 1.60.2.1  2008/09/26 00:48:42  yada
+  applied for branch modifications, mainly PM busy bug
+
   Revision 1.60  2007/10/26 09:24:50  yada
   enable TIMER0 interrupt for tick system while PM_GoSleepMode()
 

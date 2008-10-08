@@ -313,6 +313,7 @@ static	void	StrmBufferCopy(SOGA_WORK *sw,int size)
 	FSFile	file;
 	s32		ret;
 
+    OS_TPrintf("---\n");
     FS_InitFile(&file);
 	FS_OpenFile(&file,"/pm_battle.swav");
 	FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
@@ -363,6 +364,7 @@ static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
 	if(sw->strmReadPos>=STRM_BUF_SIZE){
 		sw->strmReadPos=0;
 	}
+    OS_TPrintf("count %d \n",len);
 
 	DC_FlushRange(strBuf,len);
 }

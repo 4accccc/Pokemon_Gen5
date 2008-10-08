@@ -2,7 +2,7 @@
   Project:  NitroSDK - OS - include
   File:     interrupt.h
 
-  Copyright 2003-2006 Nintendo.  All rights reserved.
+  Copyright 2003-2006,2008 Nintendo.  All rights reserved.
 
   These coded instructions, statements, and computer programs contain
   proprietary information of Nintendo of America Inc. and/or Nintendo
@@ -11,6 +11,24 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: interrupt.h,v $
+  Revision 1.62.10.3  2008/10/03 10:38:01  yada
+  rewind to 1.62
+
+  Revision 1.62.10.2  2008/10/02 09:12:24  yada
+  rewind to 2008/9/18
+
+  Revision 1.62.10.1  2008/09/26 00:48:42  yada
+  applied for branch modifications, mainly PM busy bug
+
+  Revision 1.65  2008/09/24 10:00:38  yada
+  added OS_IE_MASK_ALL
+
+  Revision 1.64  2008/05/08 03:50:58  okubata_ryoma
+  Copyright fix
+
+  Revision 1.63  2008/05/01 08:28:41  okubata_ryoma
+  OS_GetIrq ‚Ì’Ç‰Á
+
   Revision 1.62  2006/07/05 09:13:49  yosizaki
   fix about include header.
 

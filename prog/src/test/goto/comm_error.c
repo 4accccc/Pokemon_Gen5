@@ -310,7 +310,6 @@ void CommErrorSys_PopFrameVram( void )
 void CommErrorSys_Draw( void )
 {
 	///< “K“–‚É‰æ–Ê‚ðì‚é	
-	GFL_TEXT_CreateSystem( NULL );
 	{
 		u16* plt = GFL_HEAP_AllocClearMemoryLo( g_pCommErrorSys.heapID, 0x20 );
 		plt[0] = 0x0000;
@@ -339,7 +338,6 @@ void CommErrorSys_Draw( void )
 	GFL_BG_LoadScreenReq( g_pCommErrorSys.push_frame );
 	
 	GFL_BMPWIN_Delete( g_pCommErrorSys.bmpwin );
-	GFL_TEXT_DeleteSystem();		
 
 	GFL_DISP_GX_SetVisibleControl( g_pCommErrorSys.push_frame, VISIBLE_ON );
 }

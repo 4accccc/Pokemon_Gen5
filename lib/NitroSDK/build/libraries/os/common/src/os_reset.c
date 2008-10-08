@@ -11,6 +11,9 @@
   in whole or in part, without the prior written consent of Nintendo.
 
   $Log: os_reset.c,v $
+  Revision 1.25.2.1  2008/05/13 05:42:14  yada
+  modified OS_ResetSystem(); clear all IF except PXI
+
   Revision 1.25  2007/08/22 05:23:11  yosizaki
   fix about code32.h
 
@@ -291,7 +294,7 @@ void OS_ResetSystem(u32 parameter)
 
     //---- set only pxi interrupt available
     (void)OS_SetIrqMask(OS_IE_FIFO_RECV);
-    (void)OS_ResetRequestIrqMask(0xffffffff /*all request */ );
+    (void)OS_ResetRequestIrqMask(~OS_IE_FIFO_RECV);
 
     //---- save parameter
     *(u32 *)HW_RESET_PARAMETER_BUF = parameter;
