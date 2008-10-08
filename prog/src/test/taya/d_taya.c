@@ -13,6 +13,11 @@
 #include <tcbl.h>
 #include <msgdata.h>
 
+#include <npBphImporter.h>
+#include <npBpcImporter.h>
+#include <nplibc.h>
+
+
 // global includes --------------------
 #include "system\main.h"
 #include "print\printsys.h"
@@ -28,8 +33,26 @@
 #include "test_graphic\d_taya.naix"
 
 
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+	GENERIC_WORK_SIZE = 1024,
+};
 
+/*--------------------------------------------------------------------------*/
+/* Typedefs                                                                 */
+/*--------------------------------------------------------------------------*/
 typedef BOOL (*pSubProc)( GFL_PROC*, int*, void*, void* );
+
+typedef struct _V_MENU_CTRL		V_MENU_CTRL;
+
+struct _V_MENU_CTRL {
+	s16   selPos;
+	s16   writePos;
+	s16   maxLines;
+	s16   maxElems;
+};
 
 typedef struct {
 
@@ -62,6 +85,11 @@ typedef struct {
 	pSubProc		subProc;
 	int				subSeq;
 
+	V_MENU_CTRL		menuCtrl;
+
+
+	u8				genericWork[ GENERIC_WORK_SIZE ];
+
 //	PRINT_STREAM_HANDLE	psHandle;
 
 	GFLNetInitializeStruct		netInitWork;
@@ -71,7 +99,7 @@ typedef struct {
 
 	TEST_PACKET			packet;
 
-}KANJI_WORK;
+}MAIN_WORK;
 
 
 /*--------------------------------------------------------------------------*/
@@ -79,6 +107,12 @@ typedef struct {
 /*--------------------------------------------------------------------------*/
 static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static void VMENU_Init( V_MENU_CTRL* ctrl, u8 maxLines, u8 maxElems );
+static BOOL VMENU_Ctrl( V_MENU_CTRL* ctrl );
+static u8 VMENU_GetSelPos( const V_MENU_CTRL* ctrl );
+static u8 VMENU_GetWritePos( const V_MENU_CTRL* ctrl );
+static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl );
+static void* getGenericWork( MAIN_WORK* mainWork, u32 size );
 static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
@@ -86,9 +120,39 @@ static void* testBeaconGetFunc( void );
 static int testBeaconGetSizeFunc( void );
 static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
+static void autoConnectCallBack( void* pWork );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL SUBPROC_BlendMagic( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static void Bmt_initSystems( void );
+static BOOL Bmt_initEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf);
+static void Bmt_releaseEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf);
+static int Bmt_loadTextures( npCONTEXT* pCtx, npTEXTURE** pTex, npPARTICLEEMITCYCLE** ppEmit, npPARTICLECOMPOSITE** ppComp );
+static void bmt_loadBpc( const char *pszBpc, npPARTICLEEMITCYCLE **ppEmit );
+static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex, npU32* texSize, npU32* palSize );
+static void Bmt_releaseTextures( npPARTICLECOMPOSITE* pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount );
+static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** pTex );
+static void bmt_Mtx43ToMtx44(MtxFx44 *pDst, MtxFx43 *pTrc);
+static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew );
 
 
+
+/*--------------------------------------------------------------------------*/
+/* Menu Table                                                               */
+/*--------------------------------------------------------------------------*/
+static const struct {
+	u32			strID;
+	pSubProc	subProc;
+}MainMenuTbl[] = {
+	{ DEBUG_TAYA_MENU1,		SUBPROC_NetPrintTest },
+	{ DEBUG_TAYA_MENU2,		SUBPROC_BlendMagic   },
+	{ DEBUG_TAYA_MENU3,		SUBPROC_PrintTest    },
+};
+
+enum {
+	MAINMENU_DISP_MAX = 12,
+	MAINMENU_PRINT_OX = 0,
+	MAINMENU_PRINT_OY = 0,
+};
 
 
 //--------------------------------------------------------------------------
@@ -121,10 +185,10 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 #endif
 
 
-	KANJI_WORK* wk;
+	MAIN_WORK* wk;
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TAYA_DEBUG, 0x70000 );
-	wk = GFL_PROC_AllocWork( proc, sizeof(KANJI_WORK), HEAPID_TAYA_DEBUG );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TAYA_DEBUG, 0xb0000 );
+	wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_TAYA_DEBUG );
 	wk->heapID = HEAPID_TAYA_DEBUG;
 
 //	GFL_ARC_Init( arcFiles, NELEMS(arcFiles) );	gfl_use.cで1回だけ初期化に変更
@@ -184,9 +248,9 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	}
 
 	// 上下画面設定
-	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
-	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
 	wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
 	GFL_BMP_Clear( wk->bmp, 0xff );
 	GFL_BMPWIN_MakeScreen( wk->win );
@@ -194,7 +258,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	wk->subProc = NULL;
 
 	GFL_BMPWIN_TransVramCharacter( wk->win );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 
 	wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
@@ -210,10 +274,16 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	PRINTSYS_Init( wk->heapID );
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
+	VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
+
 	PRINT_UTIL_Setup( wk->printUtil, wk->win );
 
 	return GFL_PROC_RES_FINISH;
 }
+
+
+
+
 //--------------------------------------------------------------------------
 /**
  * PROC Main
@@ -221,7 +291,7 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	KANJI_WORK* wk = mywk;
+	MAIN_WORK* wk = mywk;
 
 	PRINTSYS_QUE_Main( wk->printQue );
 
@@ -232,34 +302,31 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 
 	switch( *seq ){
 	case 0:
-		GFL_MSG_GetString( wk->mm, DEBUG_TAYA_TITLE, wk->strbuf );
-		GFL_BMP_Clear( wk->bmp, 0xff );
-		PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
+		print_menu( wk, &wk->menuCtrl );
+		OS_TPrintf("OK?\n");
 		(*seq)++;
 		break;
 
 	case 1:
+		if( VMENU_Ctrl(&wk->menuCtrl) )
 		{
-			u16 key = GFL_UI_KEY_GetTrg();
+			print_menu( wk, &wk->menuCtrl );
+			break;
+		}
 
-			do {
-				if( key & PAD_BUTTON_A )
-				{
-					wk->subProc = SUBPROC_PrintTest; break;
-				}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+		{
+			GFL_MSG_SetLangID( !GFL_MSG_GetLangID() );
+			print_menu( wk, &wk->menuCtrl );
+			break;
+		}
 
-				if( key & PAD_BUTTON_B )
-				{
-					wk->subProc = SUBPROC_NetPrintTest; break;
-				}
-
-			}while(0);
-
-			if( wk->subProc != NULL )
-			{
-				wk->subSeq = 0;
-				(*seq)++;
-			}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			u16 p = VMENU_GetSelPos( &wk->menuCtrl );
+			wk->subProc = MainMenuTbl[p].subProc;
+			wk->subSeq = 0;
+			(*seq)++;
 		}
 		break;
 
@@ -275,9 +342,132 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 	return GFL_PROC_RES_CONTINUE;
 }
 
-//------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+// メニューコントローラ
+//-------------------------------------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+/**
+ * 縦メニューコントローラ初期化
+ *
+ * @param   ctrl			コントローラ
+ * @param   maxLines		表示可能な行数
+ * @param   maxElems		選択可能な項目数
+ *
+ */
+//--------------------------------------------------------------------------
+static void VMENU_Init( V_MENU_CTRL* ctrl, u8 maxLines, u8 maxElems )
+{
+	ctrl->selPos = 0;
+	ctrl->writePos = 0;
+	ctrl->maxElems = maxElems;
+	ctrl->maxLines = maxLines;
+}
+//--------------------------------------------------------------------------
+/**
+ * 縦メニューコントローラ　キーチェック
+ *
+ * @param   ctrl		コントローラ
+ *
+ * @retval  BOOL		選択項目の変更があればTRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL VMENU_Ctrl( V_MENU_CTRL* ctrl )
+{
+	u16 key = GFL_UI_KEY_GetRepeat();
+
+	do {
+
+		if( key & PAD_KEY_DOWN )
+		{
+			if( ctrl->selPos < (ctrl->maxElems-1) )
+			{
+				if( ++(ctrl->selPos) >= (ctrl->writePos + ctrl->maxLines) )
+				{
+					ctrl->writePos++;
+				}
+				break;
+			}
+		}
+
+		if( key & PAD_KEY_UP )
+		{
+			if( ctrl->selPos )
+			{
+				if( --(ctrl->selPos) < ctrl->writePos )
+				{
+					--(ctrl->writePos);
+				}
+				break;
+			}
+		}
+
+		return FALSE;
+
+	}while(0);
+
+	return TRUE;
+}
+
+static u8 VMENU_GetSelPos( const V_MENU_CTRL* ctrl )
+{
+	return ctrl->selPos;
+}
+static u8 VMENU_GetWritePos( const V_MENU_CTRL* ctrl )
+{
+	return ctrl->writePos;
+}
+
+
+//--------------------------------------------------------------------------
+/**
+ * メニュー項目描画
+ *
+ * @param   wk		
+ *
+ */
+//--------------------------------------------------------------------------
+static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
+{
+	u16 selPos, writePos;
+	u16 ypos;
+
+	selPos = VMENU_GetSelPos( menuCtrl );
+	writePos = VMENU_GetWritePos( menuCtrl );
+
+	GFL_BMP_Clear( wk->bmp, 0xff );
+
+	ypos = MAINMENU_PRINT_OY;
+
+	while( writePos < NELEMS(MainMenuTbl) )
+	{
+		GFL_MSG_GetString( wk->mm, MainMenuTbl[writePos].strID, wk->strbuf );
+
+		if( writePos == selPos ){ GFL_FONTSYS_SetColor( 4, 5, 0 ); }
+
+		PRINTSYS_Print( wk->bmp, MAINMENU_PRINT_OX, ypos, wk->strbuf, wk->fontHandle );
+
+		if( writePos == selPos ){ GFL_FONTSYS_SetDefaultColor(); }
+
+		ypos += 16;
+		writePos++;
+	}
+
+	GFL_BMPWIN_TransVramCharacter( wk->win );
+}
+
+//------------------------------------------------------------------------------------------------------
+// メインワーク関数
+//------------------------------------------------------------------------------------------------------
+static void* getGenericWork( MAIN_WORK* mainWork, u32 size )
+{
+	GF_ASSERT(size<GENERIC_WORK_SIZE);
+	return mainWork->genericWork;
+}
+
+//------------------------------------------------------------------------------------------------------
 // スタンドアロン状態での漢字PrintTest
-//------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	static const u16 strID[] = {
@@ -292,7 +482,7 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 		DEBUG_TAYA_STR09,
 	};
 
-	KANJI_WORK* wk = mywk;
+	MAIN_WORK* wk = mywk;
 
 	GFL_TCBL_Main( wk->tcbl );
 
@@ -456,7 +646,7 @@ static const GFLNetInitializeStruct testNetInitParam = {
 
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-	KANJI_WORK* wk = pWork;
+	MAIN_WORK* wk = pWork;
 	const TEST_PACKET* packet = pData;
 
 	wk->netTestSeq = 1;
@@ -494,19 +684,19 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
 
 static void testCallBack(void* pWork)
 {
-	
 }
+
 static void autoConnectCallBack( void* pWork )
 {
-	KANJI_WORK* wk = pWork;
+	MAIN_WORK* wk = pWork;
 	wk->netTestSeq = 1;
 }
 
 
 
-//------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 // 通信状態での漢字PrintTest
-//------------------------------------------------------
+//------------------------------------------------------------------------------------------------------
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	static const u16 strID[] = {
@@ -521,7 +711,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		DEBUG_TAYA_STR09,
 	};
 
-	KANJI_WORK* wk = mywk;
+	MAIN_WORK* wk = mywk;
 
 	GFL_TCBL_Main( wk->tcbl );
 
@@ -716,5 +906,501 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 	}
 
     return FALSE;
+}
+
+//------------------------------------------------------------------------------------------------------
+// BlendMagic 表示テスト
+//------------------------------------------------------------------------------------------------------
+
+#define DEF_BPCFILE "/BMSample/aura_02.bpc"
+
+enum {
+	DEF_NP_TEXTURE_MAX =	 16,
+	DEF_ENTRYTEX_MAX =		  3,
+};
+
+
+static BOOL SUBPROC_BlendMagic( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+	typedef struct {
+		npCONTEXT	ctx;
+		npSYSTEM	sys;
+		void		*pvBuf;
+		int			textureCount;
+
+	 	npPARTICLEEMITCYCLE *pEmit;
+		npPARTICLECOMPOSITE *pComp;
+		npTEXTURE*			pTex[ DEF_NP_TEXTURE_MAX ];
+
+	}SUBWORK;
+
+	MAIN_WORK* mainWork = mywk;
+	SUBWORK* wk = getGenericWork( mainWork, sizeof(SUBWORK) );
+
+	switch( *seq ){
+	case 0:
+		Bmt_initSystems();
+		Bmt_initEffect( &wk->ctx, &wk->sys, &wk->pvBuf );
+		OS_TPrintf("BM init effect OK.\n");
+		wk->textureCount = Bmt_loadTextures( &wk->ctx, &wk->pTex[0], &wk->pEmit, &wk->pComp );
+		OS_TPrintf("BM load texture OK.\n");
+		(*seq)++;
+		break;
+
+	case 1:
+	    GX_DispOn();
+	    GXS_DispOn();
+	  	G3X_SetClearColor(GX_RGB(0, 0, 0), 31, 0x7fff, 63, 0);
+		G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+		npSetPolygonIDMin( &wk->ctx, 30 );
+		npSetPolygonIDMax( &wk->ctx, 50 );
+		(*seq)++;
+		break;
+
+	case 2:
+		Bmt_update( &wk->ctx, wk->pComp, &wk->pTex[0] );
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			(*seq)++;
+		}
+		break;
+
+	case 3:
+		Bmt_releaseTextures( wk->pComp, &wk->ctx, &wk->pTex[0], wk->textureCount );
+		OS_TPrintf("BM init release texture  OK.\n");
+		Bmt_releaseEffect( &wk->ctx, &wk->sys, &wk->pvBuf );
+		OS_TPrintf("BM init release effect  OK.\n");
+		(*seq)++;
+		break;
+
+	case 4:
+		OS_TPrintf("BM initialize OK.\n");
+		return TRUE;
+	}
+	return FALSE;
+}
+
+// DS描画系初期化
+static void Bmt_initSystems( void )
+{
+    G3X_Init();                        // initialize the 3D graphics states
+    G3X_InitMtxStack();                // initialize the matrix stack
+
+    GX_SetBankForTex( GX_VRAM_TEX_0_A );			// VRAM-A for texture images
+    GX_SetBankForTexPltt(GX_VRAM_TEXPLTT_0123_E);	// VRAM-E for texture palettes
+
+	#if 1
+    GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS,    // graphics mode
+                       GX_BGMODE_4,    // BGMODE is 4
+                       GX_BG0_AS_3D);  // BG #0 is for 3D
+
+    GX_SetVisiblePlane(GX_PLANEMASK_BG0);
+    G2_SetBG0Priority(0);
+    #endif
+
+    G3X_SetShading(GX_SHADING_TOON);   // shading mode is toon
+    G3X_AntiAlias(TRUE);               // enable antialias(without additional computing costs)
+	G3X_AlphaBlend(TRUE);
+    G3_ViewPort(0, 0, 255, 191);       // Viewport
+
+	#if 0
+	{
+		void *nstart;
+		void *heapStart;
+		static OSHeapHandle _hdl = NULL;
+
+		nstart = OS_InitAlloc(OS_ARENA_MAIN, OS_GetMainArenaLo(), OS_GetMainArenaHi(), 2);
+		OS_SetMainArenaLo(nstart);
+		
+	    heapStart = OS_AllocFromMainArenaLo(MAIN_HEAP_SIZE, 32);
+		_hdl = OS_CreateHeap(OS_ARENA_MAIN, heapStart, (void *)((u32)heapStart + MAIN_HEAP_SIZE));
+		OS_SetCurrentHeap(OS_ARENA_MAIN, _hdl);
+	}
+	#endif
+}
+
+//--------------------------------------------------
+// BMシステム初期化:成功時TRUE
+//--------------------------------------------------
+static BOOL Bmt_initEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf)
+{
+	enum {
+		TEXTURE_MAX = 			 32,
+		SHADER_MAX = 			 16,
+		EFF_COMPONENT_MAX = 	128,
+		EFF_SUBJECT_MAX = 		128,
+		EFF_FKEY_MAX = 			256,
+	};
+
+	npSYSTEMDESC	sysDesc;
+	npSIZE			nSize	= 0;
+	static npBYTE*			pByte = NP_NULL;
+	npERROR			nResult;
+
+	void *pvNativeWnd = NULL;
+	void *pvNativeDc = NULL;
+	void *pvNativeRc = NULL;
+
+	/* initialize nplibc */
+	MI_CpuClear8(&sysDesc, sizeof(npSYSTEMDESC));
+	sysDesc.MaxContext = 1;
+
+	nSize = npCheckSystemHeapSize( &sysDesc )			+
+		npCheckTextureLibraryHeapSize( TEXTURE_MAX )	+
+		npParticleCheckComponentHeapSize( EFF_COMPONENT_MAX ) +
+		npParticleCheckFKeyHeapSize( EFF_FKEY_MAX )	+ 
+		npParticleCheckSubjectHeapSize( EFF_SUBJECT_MAX );
+
+	OS_TPrintf("BM必要バッファサイズ=0x%x bytes\n", nSize);
+
+	*ppvBuf = GFL_HEAP_AllocMemory( HEAPID_TAYA_DEBUG, nSize );
+	pByte = (npBYTE*)(*ppvBuf);//ポインタを渡しておく
+
+	/* memory size */
+	nSize = npCheckSystemHeapSize( &sysDesc );
+
+	/* initialize system */
+	nResult = npInitSystem( NP_NULL, &sysDesc, pByte, nSize, &pSys );
+
+	if(nResult != NP_SUCCESS) {
+		OS_TPrintf("FAILED : npInitSystem\n");
+		return FALSE;
+	}
+
+	/* create rendering context	*/
+	nResult = npCreateContext( pSys, NP_NULL, &pCtx );
+
+	if(nResult != NP_SUCCESS) {
+		OS_TPrintf("FAILED : npCreateContext\n");
+		return FALSE;
+	}
+
+	pCtx->m_nWidth = 256;
+	pCtx->m_nHeight = 192;
+
+	/* reset rendering context */
+	nResult = npResetEnvironment( pCtx );
+
+	if ( nResult != NP_SUCCESS )
+	{
+		return FALSE;
+	}
+
+	// BackGround Color
+	(void)npSetClearColor(pCtx, 0xFFFF);
+
+	/* set render state */
+	npSetRenderState( pCtx, NP_SHADE_CULLMODE, NP_CULL_NONE );
+
+	pByte += nSize;
+
+	/* initialize texture library */
+	nSize = npCheckTextureLibraryHeapSize( TEXTURE_MAX );
+	nResult = npInitTextureLibrary( pCtx, pByte, nSize );
+	if ( nResult != NP_SUCCESS )
+	{
+		OS_Printf("ERROR: TextureLibrary\n");
+		return FALSE;
+	}
+	pByte += nSize;
+
+	/* initialize particle component */
+	nSize = npParticleCheckComponentHeapSize( EFF_COMPONENT_MAX );
+	nResult = npParticleInitComponentFactory( pByte, nSize );
+	if(nResult != NP_SUCCESS) {
+		OS_Printf("ERROR: ParticleComponent\n");
+		return FALSE;
+	}
+	pByte += nSize;
+
+	/* initialize particle key frame  */
+	nSize = npParticleCheckFKeyHeapSize( EFF_FKEY_MAX );
+	nResult = npParticleInitFKeyFactory( pByte, nSize );
+	if(nResult != NP_SUCCESS) {
+		OS_Printf("ERROR: ParticleComponent\n");
+		return FALSE;
+	}
+	pByte += nSize;
+
+	/* initialize particle subject */
+	nSize = npParticleCheckSubjectHeapSize( EFF_SUBJECT_MAX );
+	nResult = npParticleInitSubjectFactory( pByte, nSize );
+	if(nResult != NP_SUCCESS) {
+		OS_Printf("ERROR: ParticleSubject\n");
+		return FALSE;
+	}
+	pByte += nSize;
+
+	return TRUE;
+}
+//--------------------------------------------------
+// BMシステム解放
+//--------------------------------------------------
+static void Bmt_releaseEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf)
+{
+	// subject memory の開放
+	npParticleExitSubjectFactory();
+	// key frame memory の開放
+	npParticleExitFkeyFactory();
+	// component memory の開放
+	npParticleExitComponentFactory();
+	// texture memory の開放
+	npExitTextureLibrary( pCtx );
+	// context の開放
+	npReleaseContext( pCtx );
+	// system の開放
+	npExitSystem( pSys );
+	
+	GFL_HEAP_FreeMemory( *ppvBuf );
+	*ppvBuf = NULL;
+}
+//--------------------------------------------------
+// テクスチャロード : return = 読み込みテクスチャ数
+//--------------------------------------------------
+static int Bmt_loadTextures( npCONTEXT* pCtx, npTEXTURE** pTex, npPARTICLEEMITCYCLE** ppEmit, npPARTICLECOMPOSITE** ppComp )
+{
+	typedef struct __TEX_LIST
+	{
+		char		cNtftName[32];
+		char		cNtfpName[32];
+		npU32			width;
+		npU32			height;
+		GXTexFmt	fomat;
+	} TEX_LIST;
+
+	static const TEX_LIST texList[] = 
+	{
+		{ "/BmSample/aura_01.ntft"			, "/BmSample/aura_01.ntfp"			, 32, 64,	GX_TEXFMT_A5I3} ,
+		{ "/BmSample/sphere_06.ntft"		, "/BmSample/sphere_06.ntfp"		, 256, 256,	GX_TEXFMT_A5I3} ,
+		{ "/BmSample/sphere_hole_01.ntft"	, "/BmSample/sphere_hole_01.ntfp"	, 32, 32,	GX_TEXFMT_A5I3} ,
+	};
+
+	npU32 ntftAddr = 0;
+	npU32 ntfpAddr = 0;
+	npU32 texSize, palSize;
+	int i;
+
+	bmt_loadBpc( DEF_BPCFILE, ppEmit );
+
+	npParticleCreateComposite( *ppEmit, ppComp );
+
+	// テクスチャファイル・パレットファイルのサイズに注意
+	for(i=0; i<DEF_ENTRYTEX_MAX; i++)
+	{
+		
+		npCreateTextureFromRef( pCtx, NULL, &pTex[i] );
+		npSetTextureParam(pTex[i], texList[i].width, texList[i].height, texList[i].fomat, ntftAddr, ntfpAddr);	
+		bmt_loadTex( texList[i].cNtftName, texList[i].cNtfpName, pTex[i], &texSize, &palSize );
+		ntftAddr += texSize;
+		ntfpAddr += palSize;
+	}
+	return i;
+}
+
+
+static void bmt_loadBpc( const char *pszBpc, npPARTICLEEMITCYCLE **ppEmit )
+{
+	FSFile file;
+	unsigned int uiSize;
+	void *pv;
+
+	NP_BPC_DESC desc;
+	desc.coordinateSystem = NP_BPC_RIGHT_HANDED;
+
+	FS_InitFile(&file);
+	if(!FS_OpenFile(&file, pszBpc)) {
+		OS_Printf("Cannot Open File %s\n", pszBpc);
+		GF_ASSERT(0);
+		return;
+	}
+
+	uiSize = FS_GetLength(&file);
+	pv = GFL_HEAP_AllocMemory( GetHeapLowID(HEAPID_TAYA_DEBUG), uiSize );
+
+	FS_ReadFile( &file, pv, (long)uiSize );
+	FS_CloseFile(&file);
+
+	if( !npUtilParticleLoadBpc(pv, uiSize, &desc, ppEmit))
+	{
+		OS_TPrintf("FAILED: npUtilParticleLoadBpc\n");
+		GF_ASSERT(0);
+		return;
+	}
+
+	GFL_HEAP_FreeMemory( pv );
+}
+
+static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex, npU32* texSize, npU32* palSize )
+{
+	FSFile file;
+	int hasPalette = 0;
+
+	*texSize = *palSize = 0;
+
+	// Open Texture File
+	FS_InitFile(&file);
+	if(FS_OpenFile(&file, pszTex)) {
+		u32 uReadSize = FS_GetLength(&file);
+		u32 uTexSize = ((uReadSize+3)/4)*4;
+		void *pvTex = GFL_HEAP_AllocMemory( GetHeapLowID(HEAPID_TAYA_DEBUG), uTexSize );
+		*texSize = uTexSize;
+		if(pvTex)
+		{
+			FS_ReadFile( &file, pvTex, (long)uReadSize );
+			FS_CloseFile( &file );
+
+			DC_FlushRange(pvTex, uTexSize);
+		    GX_BeginLoadTex();
+			GX_LoadTex(pvTex, pTex->m_TexAddr, uTexSize);
+		    GX_EndLoadTex();
+
+		    GFL_HEAP_FreeMemory( pvTex );
+		    pvTex = NULL;
+		}
+		else
+		{
+    		OS_TPrintf("CANNOT ALLOCATE MEMORY\n");
+    		GF_ASSERT(0);
+		}
+	}
+	else {
+		OS_TPrintf("CANNOT OPEN FILE %s\n", pszTex);
+		GF_ASSERT(0);
+		return;
+	}
+
+	switch(pTex->m_TexFmt) {
+	case GX_TEXFMT_PLTT4:
+	case GX_TEXFMT_PLTT16:
+	case GX_TEXFMT_PLTT256:
+	case GX_TEXFMT_A3I5:
+	case GX_TEXFMT_A5I3:
+		hasPalette = 1;
+		break;
+	default:
+		hasPalette = 0;
+		break;
+	}
+	
+	// Open Palette File
+	if(hasPalette) {
+		FS_InitFile(&file);
+		if(FS_OpenFile(&file, pszPlt)) {
+			u32 uReadSize = FS_GetLength(&file);
+			u32 uPltSize = ((uReadSize+3)/4)*4;
+			void *pvPlt = GFL_HEAP_AllocMemory( GetHeapLowID(HEAPID_TAYA_DEBUG), uPltSize );
+			*palSize = uPltSize;
+			if(pvPlt) {
+				FS_ReadFile(&file, pvPlt, (long)uReadSize);
+				FS_CloseFile(&file);
+
+				// LoadPalette
+				DC_FlushRange(pvPlt, uPltSize);
+				GX_BeginLoadTexPltt();
+			    GX_LoadTexPltt(pvPlt, pTex->m_PltAddr, uPltSize);
+			    GX_EndLoadTexPltt();
+
+			    GFL_HEAP_FreeMemory( pvPlt );
+			    pvPlt = NULL;
+			}
+			else
+			{
+	    		OS_Printf("CANNOT ALLOCATE MEMORY\n");
+	    		GF_ASSERT(0);
+			}
+		}
+		else {
+			OS_Printf("CANNOT OPEN FILE %s\n", pszPlt);
+			GF_ASSERT(0);
+			return;
+		}
+	}
+}
+//--------------------------------------------------
+// テクスチャ解放
+//--------------------------------------------------
+static void Bmt_releaseTextures( npPARTICLECOMPOSITE* pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount )
+{
+	int i;
+
+	npParticleReleaseComposite( pComp );
+
+	for(i=0; i<textureCount; i++)
+	{
+		npReleaseTexture( pCtx, pTex[i] );
+	}
+}
+//--------------------------------------------------
+// 描画更新
+//--------------------------------------------------
+static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** pTex )
+{
+	MtxFx44 matProj, matView;
+	MtxFx43 matView43;
+	npSIZE	nPolyMax = 63;
+	npSIZE	nPolyMin = 0;
+
+	G3X_Reset();
+
+	//---------------------------------------------------------------------------
+	// Set up a camera matrix
+	//---------------------------------------------------------------------------
+	{
+		VecFx32 Eye = { 0*FX32_ONE, 0, 10*FX32_ONE };   // Eye position
+		VecFx32 at = { 0, 0, 0 };  // Viewpoint
+		VecFx32 vUp = { 0, FX32_ONE, 0 };   // Up
+
+		fx32 fovSin = FX_SinIdx(182 * 45);
+		fx32 fovCos = FX_CosIdx(182 * 45);
+		fx32 aspect = FX_F32_TO_FX32(1.33333333f);
+		fx32 n = FX32_ONE;
+		fx32 f = 500 * FX32_ONE;
+
+		G3_Perspective(fovSin, fovCos, aspect, n, f, &matProj);
+		G3_LookAt(&Eye, &vUp, &at, &matView43);
+
+		MTX_Identity44(&matView);
+		bmt_Mtx43ToMtx44(&matView, &matView43);
+	}
+
+    G3_PushMtx();
+    G3_MtxMode(GX_MTXMODE_TEXTURE);
+    G3_Identity();
+    // Use an identity matrix for the texture matrix for simplicity
+    G3_MtxMode(GX_MTXMODE_POSITION_VECTOR);
+
+	npSetTransformFMATRIX( ctx, NP_PROJECTION, (npFMATRIX *)&matProj );
+	npSetTransformFMATRIX( ctx, NP_VIEW, (npFMATRIX *)&matView );
+
+	// UPDATE & RENDER
+	{
+		bmt_updateEffect( pComp, NP_NTSC60 );
+		npParticleRenderComposite( ctx, pComp, pTex, DEF_ENTRYTEX_MAX );
+	}
+
+	G3_PopMtx(1);
+
+	// swapping the polygon list RAM, the vertex RAM, etc.
+	G3_SwapBuffers(GX_SORTMODE_MANUAL, GX_BUFFERMODE_W);
+}
+
+static void bmt_Mtx43ToMtx44(MtxFx44 *pDst, MtxFx43 *pTrc)
+{
+	int i, j;
+	for(i=0; i<4; i++) {
+		for(j=0; j<3; j++) {
+			pDst->m[i][j] = pTrc->m[i][j];
+		}
+	}
+}
+
+
+static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew )
+{
+	// scalingEffect
+	npFMATRIX effMat;
+	npUnitFMATRIX( &effMat );
+	(void)npParticleSetGlobalFMATRIX((npPARTICLEOBJECT *)pComp, &effMat);
+	(void)npParticleUpdateComposite( pComp, renew );
 }
 
