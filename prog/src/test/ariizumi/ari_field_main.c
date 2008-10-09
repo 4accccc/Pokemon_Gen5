@@ -82,7 +82,7 @@ typedef struct {
 	int				key_cont;
 	
 	int d_menu_flag;
-	DEBUG_FLDMENU *d_menu;
+	DEBUG_COMMMENU *d_menu;
 	
 	void *pGridCont;
 }FIELD_WORK;

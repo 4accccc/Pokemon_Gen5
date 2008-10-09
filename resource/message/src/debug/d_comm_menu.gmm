@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-10-08T16:45:45"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-10-09T18:41:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -203,6 +203,18 @@
 		<comment>120</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">たいせん　ルールは　どうします
 か？</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_CHOICE10">
+		<comment>200</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ふつうに　たい</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_CHOICE11">
+		<comment>201</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ルールブックを</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
