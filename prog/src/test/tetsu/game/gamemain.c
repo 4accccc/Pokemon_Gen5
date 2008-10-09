@@ -330,7 +330,8 @@ static void _recvGamePlay
 //------------------------------------------------------------------
 // ローカル通信テーブル
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(GAME_NETWORK_PLAYDATA)), NULL },
+//    { _recvGamePlay, GFL_NET_COMMAND_SIZE(sizeof(GAME_NETWORK_PLAYDATA)), NULL },
+    { _recvGamePlay,  NULL },
 };
 
 

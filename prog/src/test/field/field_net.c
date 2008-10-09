@@ -251,11 +251,11 @@ BOOL FieldExitGameNet(void)
 //	データ送信
 //
 //------------------------------------------------------------------
-void FieldSendGameNet( int comm, void* commWork )
+void FieldSendGameNet( int comm, int size, void* commWork )
 {
 #ifdef NET_WORK_ON
     if(gNetSys._pHandle){
-        GFL_NET_SendData( gNetSys._pHandle, comm, commWork );
+        GFL_NET_SendData( gNetSys._pHandle, comm, size, commWork );
     }
 #endif
 }

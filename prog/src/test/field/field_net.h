@@ -15,7 +15,7 @@ void FieldInitGameNet(void);
 BOOL FieldConnectGameNet(void);
 void FieldEndGameNet(void);
 BOOL FieldExitGameNet(void);
-void FieldSendGameNet( int comm, void* commWork );
+void FieldSendGameNet( int comm, int size, void* commWork );
 NetID FieldGetNetID(void);
 
 

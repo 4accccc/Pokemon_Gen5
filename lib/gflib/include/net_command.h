@@ -77,7 +77,7 @@ extern void GFL_NET_COMMAND_Exit( void );
  * @retval  データのサイズ   可変なら COMM_VARIABLE_SIZEを返します
  */
 //--------------------------------------------------------------
-extern int GFI_NET_COMMAND_GetPacketSize(int command);
+//extern int GFI_NET_COMMAND_GetPacketSize(int command);
 
 //--------------------------------------------------------------
 /**

@@ -190,9 +190,12 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 //	
 //==============================================================================
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {_RecvMoveData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_MOVE
-    {_RecvTalkData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_TALK
-    {_RecvKeyData,         GFL_NET_COMMAND_SIZE( 4 ), NULL},    ///NET_CMD_KEY
+//    {_RecvMoveData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_MOVE
+//    {_RecvTalkData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_TALK
+//    {_RecvKeyData,         GFL_NET_COMMAND_SIZE( 4 ), NULL},    ///NET_CMD_KEY
+    {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
+    {_RecvTalkData,         NULL},    ///NET_CMD_TALK
+    {_RecvKeyData,          NULL},    ///NET_CMD_KEY
 };
 
 enum{
@@ -290,16 +293,16 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		ret = -1;
 		wk->send_key = GFL_UI_KEY_GetTrg();
 		if(wk->send_key & PAD_KEY_UP){
-			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, &wk->send_key);
+			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
 		}
 		if(wk->send_key & PAD_KEY_DOWN){
-			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, &wk->send_key);
+			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
 		}
 		if(wk->send_key & PAD_KEY_LEFT){
-			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, &wk->send_key);
+			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
 		}
 		if(wk->send_key & PAD_KEY_RIGHT){
-			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, &wk->send_key);
+			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
 		}
 		
 		if(ret == FALSE){

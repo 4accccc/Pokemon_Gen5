@@ -41,8 +41,8 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 //static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
-    {_RecvMoveData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_MOVE
-    {_RecvTalkData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_TALK
+    {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
+    {_RecvTalkData,         NULL},    ///NET_CMD_TALK
 };
 
 

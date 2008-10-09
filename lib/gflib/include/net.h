@@ -97,7 +97,7 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 /// コールバック関数の書式
 typedef void (*PTRCommRecvFunc)(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 /// サイズが固定の場合サイズを関数で返す
-typedef int (*PTRCommRecvSizeFunc)(void);
+//typedef int (*PTRCommRecvSizeFunc)(void);
 /// 受信バッファを外部で持っている場合そのポインタ
 typedef u8* (*PTRCommRecvBuffAddr)(int netID, void* pWork, int size);
 /// 送信した場合に呼ばれるコールバック
@@ -109,18 +109,18 @@ typedef u8* (*GFL_NET_SendCallbackType)(int netID, int command, void* pWork);
 /// コマンドパケットテーブル定義
 typedef struct {
     PTRCommRecvFunc callbackFunc;    ///< コマンドがきた時に呼ばれるコールバック関数
-    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
+//    PTRCommRecvSizeFunc getSizeFunc; ///< コマンドの送信データサイズが固定なら書いてください
     PTRCommRecvBuffAddr getAddrFunc;
 } NetRecvFuncTable;
 
 /// 可変データ送信であることを示している
-#define   GFL_NET_COMMAND_SIZE_VARIABLE   (0x00ffffff)
+//#define   GFL_NET_COMMAND_SIZE_VARIABLE   (0x00ffffff)
 /// コマンドのサイズを関数か実数か判断する為の定義 (使用しないでください)
-#define   _GFL_NET_COMMAND_SIZE_H         (0xff000000)
+//#define   _GFL_NET_COMMAND_SIZE_H         (0xff000000)
 /// コマンドのサイズを定義する為のマクロ
-#define   GFL_NET_COMMAND_SIZE( num )     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
+//#define   GFL_NET_COMMAND_SIZE( num )     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + num)
 /// コマンドのサイズを定義する為のマクロ
-#define   GFL_NET_COMMAND_VARIABLE     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + GFL_NET_COMMAND_SIZE_VARIABLE)
+//#define   GFL_NET_COMMAND_VARIABLE     (PTRCommRecvSizeFunc)(_GFL_NET_COMMAND_SIZE_H + GFL_NET_COMMAND_SIZE_VARIABLE)
 
 
 typedef enum {
@@ -450,12 +450,13 @@ extern BOOL GFL_NET_IsSendEnable(GFL_NETHANDLE* pNet);
  *        データは必ずコピーする
  * @param[in,out]   NetHandle* pNet  通信ハンドル
  * @param[in]   u16 sendCommand                送信するコマンド
+ * @param[in]   u16 size                       送信するサイズ
  * @param[in]   void* data                     送信データポインタ
  * @retval  TRUE   成功した
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const void* data);
+extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16 size,const void* data);
 
 //==============================================================================
 /**

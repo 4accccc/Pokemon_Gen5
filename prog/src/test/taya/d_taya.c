@@ -605,7 +605,8 @@ enum {
 };
 
 static const NetRecvFuncTable  testPacketTbl[] = {
-    { testPacketFunc, GFL_NET_COMMAND_SIZE(sizeof(TEST_PACKET)), NULL },
+//    { testPacketFunc, GFL_NET_COMMAND_SIZE(sizeof(TEST_PACKET)), NULL },
+    { testPacketFunc, NULL },
 };
 
 typedef struct{
@@ -775,7 +776,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 			{
-				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, &(wk->packet) );
+				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, sizeof(TEST_PACKET), &(wk->packet) );
 				(*seq)++;
 				break;
 			}
@@ -837,7 +838,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 			{
 				wk->packet.kanjiMode = !(wk->packet.kanjiMode);
 			}
-			GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, &(wk->packet) );
+			GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX,sizeof(TEST_PACKET), &(wk->packet) );
 		}
 		(*seq)++;
 		break;
@@ -875,7 +876,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 			{
-				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, &(wk->packet) );
+				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, sizeof(TEST_PACKET), &(wk->packet) );
 				(*seq)++;
 			}
 			break;
