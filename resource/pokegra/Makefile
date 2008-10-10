@@ -36,12 +36,13 @@ include $(PROJECT_RSCDIR)\macro_define
 NMCFILE	:= $(wildcard *.nmc)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.nmcr .nmc
+.SUFFIXES:	.nmc
 
 #nmcデータからの生成ルール
-do-build: $(NMCFILE)
-.nmc.nmcr:
+do-build: $(NMCFILE:.nmc=.nmcr)
+%.nmcr: %.nmc %.nce %.ncg %.ncl
 	g2dcvtr $< -bmp
+	perl nce.pl $*.nce $*.NCEC
 endif
 
 .PHONY:	do-build clean subdir
@@ -55,7 +56,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(NMCFILE)
+$(NARCNAME):	$(NMCFILE:.nmc=.nmcr)
 	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
