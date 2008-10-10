@@ -96,7 +96,7 @@ clean:
 	-rm -f $(NAIXNAME)
 	
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	-rm -f *.3dppack
+	-rm -f $(MAP_3DPPACKLIST)
 	-rm -f *.nsbmd
 	-rm -f *.nsbtx
 endif

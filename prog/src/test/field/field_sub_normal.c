@@ -9,6 +9,9 @@
  */
 //============================================================================================
 
+#define NORMAL_CM_LENGTH (0x98)
+#define NORMAL_CM_HEIGHT (0x50000)
+
 //------------------------------------------------------------------
 /**
  * @brief	初期化処理（デフォルト）
@@ -22,6 +25,9 @@ static void NormalCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+
+	FLD_SetCameraLength( fieldWork->camera_control, NORMAL_CM_LENGTH );
+	FLD_SetCameraHeight( fieldWork->camera_control, NORMAL_CM_HEIGHT );
 }
 
 //------------------------------------------------------------------
