@@ -42,25 +42,62 @@
 #define D_MSG_STR_TOP	 (0)
 #define D_MSG_STR_LEFT   (0)
 
+#define D_CONNECTTYPE_MENU_CHARSIZE_X (16)		//メニュー横幅
+#define D_CONNECTTYPE_MENU_CHARSIZE_Y ( 6)		//メニュー縦幅
+
 
 //======================================================================
 //	enum
 //======================================================================
-enum ARI_FLDMENU_MAIN_STATE
+
+//メイン分岐用
+enum ARI_COMMMENU_MAIN_STATE
 {
+	CMS_COMM_START_MENU,
+	CMS_COMM_MAIN_MENU,
+	
+	CMS_MAX,
+};
+
+//通信メニュー用(共用)
+enum ARI_COMMMENU_SUB_STATE
+{
+	//通信前メニュー用	
 	FMS_INIT_TOPMENU,	//対戦方法選択
 	FMS_LOOP_TOPMENU,
 	FMS_TERM_TOPMENU,
-	FMS_INIT_RULETOP,	//ルールの使用・不使用選択
-	FMS_LOOP_RULETOP,
-	FMS_TERM_RULETOP,
+	FMS_INIT_REPORT_FIRST,	//最初のレポート
+	FMS_LOOP_REPORT_FIRST,
+	FMS_TERM_REPORT_FIRST,
+	FMS_INIT_REPORT_SECOND,	//次のレポート
+	FMS_LOOP_REPORT_SECOND,
+	FMS_TERM_REPORT_SECOND,
+	FMS_SAVE_WAIT1,
+	FMS_SAVE_WAIT2,
 	
+	FMS_GO_COMM_MAIN,		//通信メインメニューへ切り替え
+		
+	//通信メインメニュー用
+	FMS_INIT_SELECT_TYPE,	//親・子選択
+	FMS_MAIN_SELECT_TYPE,
+	FMS_TERM_SELECT_TYPE,
+	
+	
+	//汎用
 	FMS_END,			//終了時に与えるステート
 
 	FMS_MAX,
-	
 };
 
+//はい・いいえ選択肢用返り値
+enum ARI_COMMMENU_YES_NO_RETURN
+{
+	YNR_WAIT,	//選択中
+	YNR_YES,	//はい
+	YNR_NO,		//いいえ
+
+	YNR_MAX,
+};
 
 //======================================================================
 //	typedef struct
@@ -86,6 +123,7 @@ typedef struct
 struct _DEBUG_COMMMENU
 {
 	int seq_no;
+	int main_seq_no;
 	
 	u32 bgFrame;
 	u32 msgFrame;
@@ -95,13 +133,12 @@ struct _DEBUG_COMMMENU
 	GFL_BMP_DATA *bmp;
 	GFL_BMPWIN *bmpwin;
 	//メッセージウィンドウ用
-	GFL_BMP_DATA *msg_bmp;
-	GFL_BMPWIN *msg_bmpwin;
+	GFL_BMP_DATA *bmp_msg;
+	GFL_BMPWIN *bmpwin_msg;
 	//選択肢用
-	GFL_BMP_DATA *sub_bmp;
-	GFL_BMPWIN *sub_bmpwin;
+	GFL_BMP_DATA *bmp_sub;
+	GFL_BMPWIN *bmpwin_sub;
 	
-	STRBUF *strbuf;
 	GFL_MSGDATA *msgdata;
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
@@ -131,12 +168,22 @@ void	AriCommMenu_SetDefault_BmpMenuHeader( DEBUG_COMMMENU *d_menu, BMPMENU_HEADE
 
 void	AriCommMenu_OpenTopMenu( DEBUG_COMMMENU *d_menu );
 void	AriCommMenu_CloseTopMenu( DEBUG_COMMMENU *d_menu );
-void	AriCommMenu_OpenRuleTopMenu( DEBUG_COMMMENU *d_menu );
-void	AriCommMenu_CloseRuleTopMenu( DEBUG_COMMMENU *d_menu );
+
+void	AriCommMenu_CloseMainMenu( DEBUG_COMMMENU *d_menu );
+void	AriCommMenu_CloseSubMenu( DEBUG_COMMMENU *d_menu );
+void	AriCommMenu_CloseMsgWindow( DEBUG_COMMMENU *d_menu );
+
+void	AriCommMenu_OpenYesNoMenu( DEBUG_COMMMENU *d_menu );
+u8		AriCommMenu_UpdateYesNoMenu( DEBUG_COMMMENU *d_menu );
+void	AriCommMenu_ResetYesNoMenu( DEBUG_COMMMENU *d_menu );
+
+void	AriCommMenu_OpenConnectTypeMenu( DEBUG_COMMMENU *d_menu );
 
 void	AriCommMenu_ChangeExplanation( DEBUG_COMMMENU *d_menu , u32 msgID);
 void	AriCommMenu_ExplanationMain( DEBUG_COMMMENU *d_menu );
 
+BOOL	AriCommMenu_CommStartMenu( DEBUG_COMMMENU *d_menu );
+BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu );
 //======================================================================
 //	メニューリスト一覧
 //======================================================================
@@ -160,15 +207,25 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define D_MENULIST_MAX (NELEMS(DATA_DebugMenuList))
 
 //ルール使用選択用
-static const DEBUG_MENU_LIST DATA_CommRuleTopMenuList[] =
+static const DEBUG_MENU_LIST DATA_CommYesNoMenuList[] =
 {
-	{ DEB_COMM_MENU_CHOICE10, AriFldMenuCallProc_Test },
-	{ DEB_COMM_MENU_CHOICE11, AriFldMenuCallProc_Test },
-	{ DEB_COMM_MENU_END     , AriCommMenuCallProc_CloseMenu },
+	{ DEB_COMM_YES , NULL },
+	{ DEB_COMM_NO  , NULL },
 };
 
 //メニュー最大数
-#define D_RULETOPMENULIST_MAX (NELEMS(DATA_CommRuleTopMenuList))
+#define D_YESNO_MENULIST_MAX (NELEMS(DATA_CommYesNoMenuList))
+
+//接続方法選択
+static const DEBUG_MENU_LIST DATA_CommConnectTypeList[] =
+{
+	{ DEB_COMM_MENU_TYPE_CHILD	, NULL },
+	{ DEB_COMM_MENU_TYPE_PARENT	, NULL },
+	{ DEB_COMM_MENU_END			, NULL },
+};
+
+//メニュー最大数
+#define D_CONNECTTYPE_MENULIST_MAX (NELEMS(DATA_CommConnectTypeList))
 
 //======================================================================
 //	フィールドデバッグメニュー
@@ -191,7 +248,6 @@ DEBUG_COMMMENU *AriFldMenu_Init( u32 heapID )
 	d_menu->subFrame = DEBUG_BGFRAME_SUB;
 	
 	{	//bmp font いずれメイン側で
-		GFL_BMPWIN_Init( d_menu->heapID );
 		GFL_BMPWIN_Init( d_menu->heapID );
 		GFL_FONTSYS_Init();
 	}
@@ -253,6 +309,27 @@ DEBUG_COMMMENU *AriFldMenu_Init( u32 heapID )
 	return( d_menu );
 }
 
+//------------------------------------AriFldMenu_Term--------------------------
+/**
+ * フィールドデバッグメニュー　開放
+ * @param	heapID	ヒープID
+ * @retval	DEBUG_COMMMENU
+ */
+//--------------------------------------------------------------
+void AriFldMenu_Term( DEBUG_COMMMENU *d_menu )
+{
+	{	//とりあえずこちらで　いずれはメイン側
+		GFL_BG_FreeCharacterArea( d_menu->bgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( d_menu->bgFrame );
+		GFL_BG_FreeCharacterArea( d_menu->msgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( d_menu->msgFrame );
+		GFL_BG_FreeCharacterArea( d_menu->subFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( d_menu->subFrame );
+	}
+	GFL_BMPWIN_Exit();
+	GFL_HEAP_FreeMemory( d_menu );
+}
+
 //--------------------------------------------------------------
 /**
  * フィールドデバッグメニュー　削除
@@ -262,17 +339,8 @@ DEBUG_COMMMENU *AriFldMenu_Init( u32 heapID )
 //--------------------------------------------------------------
 void AriFldMenu_Delete( DEBUG_COMMMENU *d_menu )
 {
-	{	//とりあえずこちらで　いずれはメイン側
-		GFL_BMPWIN_Exit();
-		GFL_BG_FreeCharacterArea( d_menu->bgFrame, 0x00, 0x20 );
-		GFL_BG_FreeBGControl( d_menu->bgFrame );
-		GFL_BG_FreeCharacterArea( d_menu->msgFrame, 0x00, 0x20 );
-		GFL_BG_FreeBGControl( d_menu->msgFrame );
-		GFL_BG_FreeCharacterArea( d_menu->subFrame, 0x00, 0x20 );
-		GFL_BG_FreeBGControl( d_menu->subFrame );
-	}
-	
-	GFL_HEAP_FreeMemory( d_menu );
+	FontDataMan_Delete( d_menu->fontHandle );
+	GFL_MSG_Delete( d_menu->msgdata );
 }
 
 //--------------------------------------------------------------
@@ -286,6 +354,7 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 {
 	{	//work
 		d_menu->seq_no = FMS_INIT_TOPMENU;
+		d_menu->main_seq_no = CMS_COMM_START_MENU;
 	}
 	
 	{	//window frame
@@ -311,7 +380,6 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 			NARC_message_d_comm_menu_dat, d_menu->heapID );
 		
-		d_menu->strbuf = GFL_STR_CreateBuffer( 2048, d_menu->heapID );
 		
 		d_menu->arcHandleMsg = GFL_ARC_OpenDataHandle(
 				ARCID_D_TAYA, d_menu->heapID );
@@ -336,21 +404,21 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 
 	//ウィンドウ生成時でも可(たぶん
 	{	//bmpwin
-		d_menu->msg_bmpwin = GFL_BMPWIN_Create( d_menu->msgFrame,
+		d_menu->bmpwin_msg = GFL_BMPWIN_Create( d_menu->msgFrame,
 			D_MSG_CHAR_TOP , D_MSG_CHAR_LEFT , 
 			D_MSG_CHARSIZE_X, D_MSG_CHARSIZE_Y,
 			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
-		d_menu->msg_bmp = GFL_BMPWIN_GetBmp( d_menu->msg_bmpwin );
+		d_menu->bmp_msg = GFL_BMPWIN_GetBmp( d_menu->bmpwin_msg );
 		
-		GFL_BMP_Clear( d_menu->msg_bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( d_menu->msg_bmpwin );
+		GFL_BMP_Clear( d_menu->bmp_msg, 0xff );
+		GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
 		
-		GFL_BMPWIN_TransVramCharacter( d_menu->msg_bmpwin );
+		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
 		GFL_BG_LoadScreenReq( d_menu->bgFrame );
 	}
 
 	{	//msg
-		PRINT_UTIL_Setup( d_menu->printUtilMsg, d_menu->msg_bmpwin );
+		PRINT_UTIL_Setup( d_menu->printUtilMsg, d_menu->bmpwin_msg );
 	}
 	
 	//選択肢ウィンドウ用初期化
@@ -362,21 +430,21 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 	//ウィンドウ生成時でやる
 	/*
 	{	//bmpwin
-		d_menu->sub_bmpwin = GFL_BMPWIN_Create( d_menu->subFrame,
+		d_menu->bmpwin_sub = GFL_BMPWIN_Create( d_menu->subFrame,
 			5, 5, 
 			25, 5,
 			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
-		d_menu->sub_bmp = GFL_BMPWIN_GetBmp( d_menu->sub_bmpwin );
+		d_menu->bmp_sub = GFL_BMPWIN_GetBmp( d_menu->bmpwin_sub );
 		
-		GFL_BMP_Clear( d_menu->sub_bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( d_menu->sub_bmpwin );
+		GFL_BMP_Clear( d_menu->bmp_sub, 0xff );
+		GFL_BMPWIN_MakeScreen( d_menu->bmpwin_sub );
 		
-		GFL_BMPWIN_TransVramCharacter( d_menu->sub_bmpwin );
+		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_sub );
 		GFL_BG_LoadScreenReq( d_menu->subFrame );
 	}
 
 	{	//msg
-		PRINT_UTIL_Setup( d_menu->printUtilSub, d_menu->sub_bmpwin );
+		PRINT_UTIL_Setup( d_menu->printUtilSub, d_menu->bmpwin_sub );
 	}
 	*/
 
@@ -408,6 +476,73 @@ void	AriCommMenu_SetDefault_BmpMenuHeader( DEBUG_COMMMENU *d_menu, BMPMENU_HEADE
 
 //--------------------------------------------------------------
 /**
+ * メインメニュー汎用閉じる
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	void	
+ */
+//--------------------------------------------------------------
+void	AriCommMenu_CloseMainMenu( DEBUG_COMMMENU *d_menu )
+{
+	//クリア周り
+	//終了コマンドの受付後に呼んでたけど、ここに移動
+	GFL_BMP_Clear( d_menu->bmp, 0x00 );
+	GFL_BMPWIN_MakeScreen( d_menu->bmpwin );
+	GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
+	BmpWinFrame_Clear( d_menu->bmpwin, 0 );
+	
+	//開放周り
+	GFL_BMPWIN_Delete( d_menu->bmpwin );
+	BmpMenu_Exit( d_menu->bmpmenu, NULL );
+	BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata );
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ汎用閉じる
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	void	
+ */
+//--------------------------------------------------------------
+void	AriCommMenu_CloseMsgWindow( DEBUG_COMMMENU *d_menu )
+{
+	//クリア周り
+	GFL_BMP_Clear( d_menu->bmp_msg, 0x00 );
+	GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
+	GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
+	BmpWinFrame_Clear( d_menu->bmpwin_msg, 0 );
+
+	//開放周り
+	GFL_BMPWIN_Delete( d_menu->bmpwin_msg );
+}
+
+//--------------------------------------------------------------
+/**
+ * サブメニュー汎用閉じる
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	void	
+ */
+//--------------------------------------------------------------
+void	AriCommMenu_CloseSubMenu( DEBUG_COMMMENU *d_menu )
+{
+	//クリア周り
+	//終了コマンドの受付後に呼んでたけど、ここに移動
+	GFL_BMP_Clear( d_menu->bmp_sub, 0x00 );
+	GFL_BMPWIN_MakeScreen( d_menu->bmpwin_sub );
+	GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_sub );
+	BmpWinFrame_Clear( d_menu->bmpwin_sub, 0 );
+	
+	//開放周り
+	BmpMenu_Exit( d_menu->bmpmenu_sub, NULL );
+	BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata_sub );
+		
+	//プリントユーティリティ削除　いらない
+	PRINTSYS_QUE_Delete( d_menu->printQueSub );
+	GFL_BMPWIN_Delete( d_menu->bmpwin_sub );
+}
+
+
+//--------------------------------------------------------------
+/**
  * トップメニュー(対戦方法選択)開く
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	void	
@@ -418,7 +553,7 @@ void	AriCommMenu_OpenTopMenu( DEBUG_COMMMENU *d_menu )
 	{	//window frame
 		BmpWinFrame_Write( d_menu->bmpwin,
 			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
-		BmpWinFrame_Write( d_menu->msg_bmpwin,
+		BmpWinFrame_Write( d_menu->bmpwin_msg,
 			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
 	}
 		
@@ -479,59 +614,35 @@ void	AriCommMenu_OpenTopMenu( DEBUG_COMMMENU *d_menu )
 //--------------------------------------------------------------
 void	AriCommMenu_CloseTopMenu( DEBUG_COMMMENU *d_menu )
 {
-	//クリア周り
-	//終了コマンドの受付後に呼んでたけど、ここに移動
-	GFL_BMP_Clear( d_menu->bmp, 0x00 );
-	GFL_BMPWIN_MakeScreen( d_menu->bmpwin );
-	GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
-	BmpWinFrame_Clear( d_menu->bmpwin, 0 );
-	
-	GFL_BMP_Clear( d_menu->msg_bmp, 0x00 );
-	GFL_BMPWIN_MakeScreen( d_menu->msg_bmpwin );
-	GFL_BMPWIN_TransVramCharacter( d_menu->msg_bmpwin );
-	BmpWinFrame_Clear( d_menu->msg_bmpwin, 0 );
-
-	//開放周り
-	BmpMenu_Exit( d_menu->bmpmenu, NULL );
-	BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata );
-		
-	//プリントユーティリティ削除　いらない
-	PRINTSYS_QUE_Delete( d_menu->printQue );
-		
-	FontDataMan_Delete( d_menu->fontHandle );
-//	GFL_ARC_CloseDataHandle( d_menu->arcHandleMsg ); //マネージャ側で済み
-	GFL_STR_DeleteBuffer( d_menu->strbuf );
-	GFL_MSG_Delete( d_menu->msgdata );
-	GFL_BMPWIN_Delete( d_menu->bmpwin );
-	GFL_BMPWIN_Delete( d_menu->msg_bmpwin );
+	AriCommMenu_CloseMainMenu( d_menu );
+	AriCommMenu_CloseMsgWindow( d_menu );
 }
 
 //--------------------------------------------------------------
 /**
- * ルール選択トップメニュー(通常か特殊か)開く
+ * はい・いいえ汎用　開く
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	void	
  */
 //--------------------------------------------------------------
-void	AriCommMenu_OpenRuleTopMenu( DEBUG_COMMMENU *d_menu )
+void	AriCommMenu_OpenYesNoMenu( DEBUG_COMMMENU *d_menu )
 {
 	{	//bmpwin
-		d_menu->sub_bmpwin = GFL_BMPWIN_Create( d_menu->subFrame,
-			16, 8, 
-			12, 6,
+		d_menu->bmpwin_sub = GFL_BMPWIN_Create( d_menu->subFrame,
+			25, 13, 6, 4,
 			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
-		d_menu->sub_bmp = GFL_BMPWIN_GetBmp( d_menu->sub_bmpwin );
+		d_menu->bmp_sub = GFL_BMPWIN_GetBmp( d_menu->bmpwin_sub );
 		
-		GFL_BMP_Clear( d_menu->sub_bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( d_menu->sub_bmpwin );
+		GFL_BMP_Clear( d_menu->bmp_sub, 0xff );
+		GFL_BMPWIN_MakeScreen( d_menu->bmpwin_sub );
 		
-		GFL_BMPWIN_TransVramCharacter( d_menu->sub_bmpwin );
+		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_sub );
 		GFL_BG_LoadScreenReq( d_menu->subFrame );
 	}
-	PRINT_UTIL_Setup( d_menu->printUtilSub, d_menu->sub_bmpwin );
+	PRINT_UTIL_Setup( d_menu->printUtilSub, d_menu->bmpwin_sub );
 
 	{	//window frame
-		BmpWinFrame_Write( d_menu->sub_bmpwin,
+		BmpWinFrame_Write( d_menu->bmpwin_sub,
 			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
 	}
 		
@@ -540,16 +651,17 @@ void	AriCommMenu_OpenRuleTopMenu( DEBUG_COMMMENU *d_menu )
 		BMPMENU_HEADER head;
 		const DEBUG_MENU_LIST *d_menu_list;
 			
-		lmax = D_RULETOPMENULIST_MAX;
+		lmax = D_YESNO_MENULIST_MAX;
+
 		AriCommMenu_SetDefault_BmpMenuHeader( d_menu , &head , lmax );
 		head.print_util = d_menu->printUtilSub;
 		head.print_que = d_menu->printQueSub;
-		head.win = d_menu->sub_bmpwin;
+		head.win = d_menu->bmpwin_sub;
 
 		d_menu->menulistdata_sub =
 			BmpMenuWork_ListCreate( lmax, d_menu->heapID );
 			
-		d_menu_list = DATA_CommRuleTopMenuList;
+		d_menu_list = DATA_CommYesNoMenuList;
 			
 		for( i = 0; i < lmax; i++ ){
 				BmpMenuWork_ListAddArchiveString(
@@ -564,34 +676,118 @@ void	AriCommMenu_OpenRuleTopMenu( DEBUG_COMMMENU *d_menu )
 		BmpMenu_SetCursorString( d_menu->bmpmenu_sub, DEB_COMM_MENU_CURSOR );
 	}
 	
-	d_menu->seq_no = FMS_LOOP_RULETOP;
-	AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_20 );
+	d_menu->seq_no = FMS_LOOP_REPORT_FIRST;
 }
-
 
 //--------------------------------------------------------------
 /**
- * ルール選択トップメニュー(通常か特殊か)閉じる
+ * はい・いいえ汎用　更新
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	ARI_COMM_YESNO_RETURN(はい・いいえ・選択中)
+ */
+//--------------------------------------------------------------
+u8		AriCommMenu_UpdateYesNoMenu( DEBUG_COMMMENU *d_menu )
+{
+	const u32 ret = BmpMenu_Main( d_menu->bmpmenu_sub );
+
+	PRINTSYS_QUE_Main( d_menu->printQueSub );
+	if( PRINT_UTIL_Trans(d_menu->printUtilSub,d_menu->printQueSub) ){
+	}
+	
+	switch( ret ){
+	case BMPMENU_NULL:
+		break;
+	case BMPMENU_CANCEL:
+		return YNR_NO;
+		break;
+	default:
+		switch( BmpMenu_CursorPosGet(d_menu->bmpmenu_sub) ){
+		case 0:
+			return YNR_YES;
+			break;
+		case 1:
+			return YNR_NO;
+			break;
+		default:
+			GF_ASSERT("Invalid return value!\n");
+			break;
+		}
+	
+	}
+	
+	return YNR_WAIT;
+}
+
+//--------------------------------------------------------------
+/**
+ * はい・いいえ汎用　リセット
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	ARI_COMM_YESNO_RETURN(はい・いいえ・選択中)
+ */
+//--------------------------------------------------------------
+void	AriCommMenu_ResetYesNoMenu( DEBUG_COMMMENU *d_menu )
+{
+	//とりあえず閉じて、生成しなおす
+	//落ちた・・・
+//	AriCommMenu_CloseSubMenu( d_menu );
+//	AriCommMenu_OpenYesNoMenu( d_menu );
+}
+
+//--------------------------------------------------------------
+/**
+ * 接続方法選択　開く 
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	void	
  */
 //--------------------------------------------------------------
-void	AriCommMenu_CloseRuleTopMenu( DEBUG_COMMMENU *d_menu )
+void	AriCommMenu_OpenConnectTypeMenu( DEBUG_COMMMENU *d_menu )
 {
-	//クリア周り
-	//終了コマンドの受付後に呼んでたけど、ここに移動
-	GFL_BMP_Clear( d_menu->sub_bmp, 0x00 );
-	GFL_BMPWIN_MakeScreen( d_menu->sub_bmpwin );
-	GFL_BMPWIN_TransVramCharacter( d_menu->sub_bmpwin );
-	BmpWinFrame_Clear( d_menu->sub_bmpwin, 0 );
-	
-	//開放周り
-	BmpMenu_Exit( d_menu->bmpmenu_sub, NULL );
-	BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata_sub );
+	//ウィンドウ生成時でも可(たぶん
+	{	//bmpwin
+		d_menu->bmpwin = GFL_BMPWIN_Create( d_menu->bgFrame,
+			1, 1, D_CONNECTTYPE_MENU_CHARSIZE_X, D_CONNECTTYPE_MENU_CHARSIZE_Y,
+			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
+		d_menu->bmp = GFL_BMPWIN_GetBmp( d_menu->bmpwin );
+
+		GFL_BMP_Clear( d_menu->bmp, 0xff );
+		GFL_BMPWIN_MakeScreen( d_menu->bmpwin );
 		
-	//プリントユーティリティ削除　いらない
-	PRINTSYS_QUE_Delete( d_menu->printQueSub );
-	GFL_BMPWIN_Delete( d_menu->sub_bmpwin );
+		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
+		GFL_BG_LoadScreenReq( d_menu->bgFrame );
+	}
+
+	{//window frame
+		BmpWinFrame_Write( d_menu->bmpwin,
+			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+	}
+		
+	{	//menu create
+		u32 i,lmax;
+		BMPMENU_HEADER head;
+		const DEBUG_MENU_LIST *d_menu_list;
+			
+		lmax = D_CONNECTTYPE_MENULIST_MAX;
+		AriCommMenu_SetDefault_BmpMenuHeader( d_menu , &head , lmax );
+		head.print_util = d_menu->printUtil;
+		head.print_que = d_menu->printQue;
+		head.win = d_menu->bmpwin;
+		d_menu->menulistdata =
+			BmpMenuWork_ListCreate( lmax, d_menu->heapID );
+			
+		d_menu_list = DATA_CommConnectTypeList;
+			
+		for( i = 0; i < lmax; i++ ){
+				BmpMenuWork_ListAddArchiveString(
+					d_menu->menulistdata, d_menu->msgdata,
+					d_menu_list[i].str_id, (u32)d_menu_list[i].callp,
+					d_menu->heapID );
+		}
+		
+		head.menu = d_menu->menulistdata;
+		
+		d_menu->bmpmenu = BmpMenu_Add( &head, 0, d_menu->heapID );
+		BmpMenu_SetCursorString( d_menu->bmpmenu, DEB_COMM_MENU_CURSOR );
+	}
 }
 
 //--------------------------------------------------------------
@@ -607,11 +803,11 @@ void	AriCommMenu_ChangeExplanation( DEBUG_COMMMENU *d_menu , u32 msgID)
 	STRBUF *strTemp;
 
 	//前回文字列の消去
-	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(d_menu->msg_bmpwin),
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(d_menu->bmpwin_msg),
 				D_MSG_STR_LEFT, D_MSG_STR_TOP,
 				D_MSG_CHARSIZE_X*8, D_MSG_CHARSIZE_Y*8, 0xff );
 				
-	strTemp = GFL_STR_CreateBuffer( 64, d_menu->heapID );
+	strTemp = GFL_STR_CreateBuffer( 128, d_menu->heapID );
 	GFL_MSG_GetString( d_menu->msgdata , msgID , strTemp );
 
 	PRINT_UTIL_Print(
@@ -629,9 +825,9 @@ void	AriCommMenu_ChangeExplanation( DEBUG_COMMMENU *d_menu , u32 msgID)
 //--------------------------------------------------------------
 void	AriCommMenu_ExplanationMain( DEBUG_COMMMENU *d_menu )
 {
-	u32 msgID;
 	return;
-	
+/*	
+	u32 msgID;
 	//次の文字列の設定
 	switch( BmpMenu_CursorPosGet(d_menu->bmpmenu) ){
 	case 0:
@@ -642,18 +838,22 @@ void	AriCommMenu_ExplanationMain( DEBUG_COMMMENU *d_menu )
 		AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_20 );
 		break;
 	}
+*/
 }
-
 
 //--------------------------------------------------------------
 /**
- * デバッグメニュー　メイン
+ * 通信前メニュー
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	BOOL	TRUE=終了
  */
 //--------------------------------------------------------------
-BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
+BOOL	AriCommMenu_CommStartMenu( DEBUG_COMMMENU *d_menu )
 {
+	PRINTSYS_QUE_Main( d_menu->printQueMsg );
+	if( PRINT_UTIL_Trans(d_menu->printUtilMsg,d_menu->printQueMsg) ){
+	}
+			
 	switch( d_menu->seq_no ){
 	case FMS_INIT_TOPMENU:	//メニュー作成
 		AriCommMenu_OpenTopMenu( d_menu );
@@ -667,10 +867,6 @@ BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
 			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
 			}
 			
-			PRINTSYS_QUE_Main( d_menu->printQueMsg );
-			if( PRINT_UTIL_Trans(d_menu->printUtilMsg,d_menu->printQueMsg) ){
-			}
-			
 			switch( ret ){
 			case BMPMENU_NULL:
 				break;
@@ -681,12 +877,13 @@ BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
 				GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
 				BmpWinFrame_Clear( d_menu->bmpwin, 0 );
 	
-				GFL_BMP_Clear( d_menu->msg_bmp, 0x00 );
-				GFL_BMPWIN_MakeScreen( d_menu->msg_bmpwin );
-				GFL_BMPWIN_TransVramCharacter( d_menu->msg_bmpwin );
+				GFL_BMP_Clear( d_menu->bmp_msg, 0x00 );
+				GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
+				GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
 				*/
 				d_menu->seq_no = FMS_TERM_TOPMENU;
 				break;
+				
 			default:
 				/* //開放処理のところへ移動
 				GFL_BMP_Clear( d_menu->bmp, 0x00 );
@@ -694,10 +891,10 @@ BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
 				GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
 				BmpWinFrame_Clear( d_menu->bmpwin, 0 );
 				
-				GFL_BMP_Clear( d_menu->msg_bmp, 0x00 );
-				GFL_BMPWIN_MakeScreen( d_menu->msg_bmpwin );
-				GFL_BMPWIN_TransVramCharacter( d_menu->msg_bmpwin );
-				BmpWinFrame_Clear( d_menu->msg_bmpwin, 0 );
+				GFL_BMP_Clear( d_menu->bmp_msg, 0x00 );
+				GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
+				GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
+				BmpWinFrame_Clear( d_menu->bmpwin_msg, 0 );
 				*/
 				
 				d_menu->call_proc = (D_MENU_CALLPROC)ret;
@@ -730,67 +927,158 @@ BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
 		}
 		break;
 
-	//	ルール使用選択	
-	case FMS_INIT_RULETOP:	//メニュー作成
-		AriCommMenu_OpenRuleTopMenu( d_menu );
+	//	レポート選択肢１	
+	case FMS_INIT_REPORT_FIRST:	//メニュー作成
+		AriCommMenu_OpenYesNoMenu( d_menu );
+		AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_20 );
 		break;
-	case FMS_LOOP_RULETOP:	//メニュー処理
+	case FMS_LOOP_REPORT_FIRST:	//メニュー処理
+		{
+			{
+				const u32 ret = AriCommMenu_UpdateYesNoMenu( d_menu );
+				switch( ret )
+				{
+				case YNR_YES:
+					d_menu->seq_no = FMS_INIT_REPORT_SECOND;
+					break;
+					
+				case YNR_NO:
+					d_menu->seq_no = FMS_TERM_REPORT_FIRST;
+					break;
+				}
+			}
+		}
+		break;
+
+	case FMS_TERM_REPORT_FIRST:	//削除
+		d_menu->seq_no = FMS_END; 
+		AriCommMenu_CloseSubMenu(d_menu);	
+		AriCommMenu_CloseTopMenu(d_menu);	
+		return( TRUE );
+
+		break;	
+		
+	//	レポート選択肢２
+	case FMS_INIT_REPORT_SECOND:	//メニュー作成
+		AriCommMenu_ResetYesNoMenu( d_menu );
+		AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_30 );
+		d_menu->seq_no = FMS_LOOP_REPORT_SECOND;
+		break;
+	case FMS_LOOP_REPORT_SECOND:	//メニュー処理
+		{
+			{
+				const u32 ret = AriCommMenu_UpdateYesNoMenu( d_menu );
+				switch( ret )
+				{
+				case YNR_YES:
+					AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_40 );
+					AriCommMenu_CloseMainMenu(d_menu);	
+					AriCommMenu_CloseSubMenu(d_menu);	
+					d_menu->seq_no = FMS_SAVE_WAIT1;
+					break;
+					
+				case YNR_NO:
+					d_menu->seq_no = FMS_TERM_REPORT_SECOND;
+					break;
+				}
+			}
+		}
+		break;
+
+	case FMS_TERM_REPORT_SECOND:	//削除
+		d_menu->seq_no = FMS_END; 
+		AriCommMenu_CloseSubMenu(d_menu);	
+		AriCommMenu_CloseTopMenu(d_menu);	
+		return( TRUE );
+
+		break;	
+	case FMS_SAVE_WAIT1:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+		{
+			AriCommMenu_ChangeExplanation( d_menu , DEB_COMM_MENU_STR_50 );
+			d_menu->seq_no = FMS_SAVE_WAIT2;
+		}
+		break;
+	case FMS_SAVE_WAIT2:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+		{
+			d_menu->seq_no = FMS_GO_COMM_MAIN;
+		}
+		break;
+	case FMS_GO_COMM_MAIN:
+		d_menu->seq_no = FMS_INIT_SELECT_TYPE;
+		d_menu->main_seq_no = CMS_COMM_MAIN_MENU;
+		
+		break;
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　メイン
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	BOOL	TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
+{
+	switch( d_menu->seq_no )
+	{
+	case FMS_INIT_SELECT_TYPE:
+		AriCommMenu_OpenConnectTypeMenu( d_menu );
+		d_menu->seq_no = FMS_MAIN_SELECT_TYPE;
+		break;
+	
+	case FMS_MAIN_SELECT_TYPE:
 		{
 			u32 ret;
-			
-			ret = BmpMenu_Main( d_menu->bmpmenu_sub );
-
-		//	PRINTSYS_QUE_Main( d_menu->printQue );
-		//	if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
-		//	}
-			
-			PRINTSYS_QUE_Main( d_menu->printQueMsg );
-			if( PRINT_UTIL_Trans(d_menu->printUtilMsg,d_menu->printQueMsg) ){
+		
+			ret = BmpMenu_Main( d_menu->bmpmenu );
+			PRINTSYS_QUE_Main( d_menu->printQue );
+			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
 			}
-			
-			PRINTSYS_QUE_Main( d_menu->printQueSub );
-			if( PRINT_UTIL_Trans(d_menu->printUtilSub,d_menu->printQueSub) ){
-			}
-			
+		
 			switch( ret ){
 			case BMPMENU_NULL:
 				break;
 			case BMPMENU_CANCEL:
-				d_menu->seq_no = FMS_TERM_RULETOP;
+				d_menu->seq_no = FMS_TERM_SELECT_TYPE;
 				break;
-			default:
 				
-				d_menu->call_proc = (D_MENU_CALLPROC)ret;
-				d_menu->seq_no = FMS_TERM_RULETOP;
+			default:
+				//d_menu->call_proc = (D_MENU_CALLPROC)ret;
+				//d_menu->seq_no = FMS_TERM_TOPMENU;
 				break;
-			}
-			
-			if(	BmpMenu_MoveSiteGet(d_menu->bmpmenu) == BMPMENU_MOVE_UP || 
-				BmpMenu_MoveSiteGet(d_menu->bmpmenu) == BMPMENU_MOVE_DOWN ){
-
-				AriCommMenu_ExplanationMain( d_menu );
 			}
 		}
 		break;
-	case FMS_TERM_RULETOP:	//削除
-		
-		if( d_menu->call_proc != NULL ){
-			d_menu->call_proc( d_menu );
-		}else{
-			d_menu->seq_no = FMS_END;
-		}
-		
-		d_menu->call_proc = NULL;
-		
-		if( d_menu->seq_no == FMS_END ){
-			AriCommMenu_CloseRuleTopMenu(d_menu);	
-			AriCommMenu_CloseTopMenu(d_menu);	
-			return( TRUE );
-		}
-		break;	
-	
+	case FMS_TERM_SELECT_TYPE:
+		AriCommMenu_CloseTopMenu(d_menu);
+		return(TRUE);
+		break;
 	}
-	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　メイン
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	BOOL	TRUE=終了
+ */
+//--------------------------------------------------------------
+BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu )
+{
+	switch( d_menu->main_seq_no ){
+	case CMS_COMM_START_MENU:
+		return AriCommMenu_CommStartMenu( d_menu );
+		break;
+	case CMS_COMM_MAIN_MENU:
+		return AriCommMenu_CommMainMenu( d_menu );
+		break;
+	}
 	return( FALSE );
 }
 
@@ -826,7 +1114,8 @@ static void AriCommMenuCallProc_ToSelectRule( void *wk )
 {
 	DEBUG_COMMMENU *d_menu = wk;
 	OS_TPrintf("go rule select\n");
-	d_menu->seq_no = FMS_INIT_RULETOP;
+
+	d_menu->seq_no = FMS_INIT_REPORT_FIRST;
 }
 
 //--------------------------------------------------------------

@@ -223,8 +223,9 @@ BOOL	AriFieldMain( void )
 		} else {
 			ariFieldWork->seq = 4;
 		}
-		
-		AriFldMenu_Delete( ariFieldWork->d_menu );
+		//ƒƒjƒ…[‚ð•Â‚¶‚éuŠÔ‚ÉˆÚ“®‚³‚¹‚Ü‚·	
+		//AriFldMenu_Delete( ariFieldWork->d_menu );
+		AriFldMenu_Term( ariFieldWork->d_menu );
 		break;
 
 	case 4:
@@ -790,6 +791,8 @@ static BOOL DebugMenuProc( FIELD_WORK *fldWork )
 		}
 	}else{	//‹N“®’†
 		if( AriFldMenu_Main(fldWork->d_menu) == TRUE ){
+			//‚±‚±‚ÉˆÚ“®‚³‚¹‚Ü‚·
+			AriFldMenu_Delete( ariFieldWork->d_menu );
 			fldWork->d_menu_flag = FALSE;
 		}
 	}

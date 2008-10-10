@@ -22,8 +22,9 @@ typedef struct _DEBUG_COMMMENU DEBUG_COMMMENU;
 //	extern
 //======================================================================
 extern DEBUG_COMMMENU * AriFldMenu_Init( u32 heapID );
+extern BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu );
+extern void AriFldMenu_Term( DEBUG_COMMMENU *d_menu ); 
 extern void AriFldMenu_Delete( DEBUG_COMMMENU *d_menu );
 extern void AriFldMenu_Create( DEBUG_COMMMENU *d_menu );
-extern BOOL AriFldMenu_Main( DEBUG_COMMMENU *d_menu );
 
 #endif //ARI_FIELD_MENU_H__

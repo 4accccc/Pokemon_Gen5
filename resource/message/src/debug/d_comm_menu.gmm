@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-10-09T18:41:12"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-10-10T19:12:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="312" top="228" right="1017" bottom="848" maximized="no" rayout="Vertical2">
+	<dialog left="1552" top="235" right="2257" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="888" top="194" right="1235" bottom="592" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -134,87 +134,148 @@
 
 
 	<row id="DEB_COMM_MENU_CURSOR">
-		<comment>0</comment>
+		<comment>0000</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">▲</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_CAPTION1">
-		<comment>10</comment>
+		<comment>0010</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">ふたりでたいせ</language>
-		<language name="JPN_KANJI" width="80">二人で対戦</language>
+		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_CAPTION2">
-		<comment>11</comment>
+		<comment>0011</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">４にんでたいせ</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_2MODE_1">
-		<comment>20</comment>
+		<comment>0020</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">シングルバトル</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_2MODE_2">
-		<comment>21</comment>
+		<comment>0021</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">ダブルバトル</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_2MODE_3">
-		<comment>22</comment>
+		<comment>0022</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">ミックスバトル</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_4MODE_1">
-		<comment>30</comment>
+		<comment>0030</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">マルチバトル</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_4MODE_2">
-		<comment>31</comment>
+		<comment>0031</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">ミックスバトル</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_MANUAL">
-		<comment>40</comment>
+		<comment>0040</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">せつめいをきく</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
-	<row id="DEB_COMM_MENU_END">
-		<comment>41</comment>
-		<language name="JPN" font=" 2:lcfont12" width="80">やめる</language>
+	<row id="DEB_COMM_MENU_TYPE_PARENT">
+		<comment>0050</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">リーダーになる</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_TYPE_CHILD">
+		<comment>0051</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">グループにはい</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_STR_10">
-		<comment>110</comment>
+		<comment>0110</comment>
 		<language name="JPN" font=" 2:lcfont12" width="80">どちらの　たいせんを　しますか？</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
 	<row id="DEB_COMM_MENU_STR_20">
-		<comment>120</comment>
-		<language name="JPN" font=" 2:lcfont12" width="80">たいせん　ルールは　どうします
-か？</language>
+		<comment>0120</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ここまでの　かつやくを
+ポケモンレポートに　かきこみます</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
-	<row id="DEB_COMM_MENU_CHOICE10">
-		<comment>200</comment>
-		<language name="JPN" font=" 2:lcfont12" width="80">ふつうに　たい</language>
+	<row id="DEB_COMM_MENU_STR_30">
+		<comment>0130</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">まえに　かかれた　レポートに
+うえから　かいても　いいですか？</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
-	<row id="DEB_COMM_MENU_CHOICE11">
-		<comment>201</comment>
-		<language name="JPN" font=" 2:lcfont12" width="80">ルールブックを</language>
+	<row id="DEB_COMM_MENU_STR_40">
+		<comment>0140</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ポケモンレポートに　かきこんでいます
+でんげんを　きれないで　ください</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_STR_50">
+		<comment>0150</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ジュンイチ　は
+レポートに　しっかり　かきのこした</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_STR_60">
+		<comment>0160</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">ふたりの　うち　ひとりが
+リーダになる　を　えらび</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_STR_61">
+		<comment>0161</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">もうひとりは　グループにはいるを
+えらんでください</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_STR_70">
+		<comment>0170</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">シングルバトル！　ともだちからの
+れんらくを　まっています</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_STR_80">
+		<comment>0180</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">シングルバトル！
+リーダーを　えらんでください</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_YES">
+		<comment>1000</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">はい</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_NO">
+		<comment>1001</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">いいえ</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEB_COMM_MENU_END">
+		<comment>1002</comment>
+		<language name="JPN" font=" 2:lcfont12" width="80">やめる</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
