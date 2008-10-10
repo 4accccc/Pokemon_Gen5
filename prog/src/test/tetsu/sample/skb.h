@@ -10,9 +10,11 @@ typedef struct _GFL_SKB GFL_SKB;
 
 //グラフィックアーカイブ内容ＩＤ定義
 enum {
-	NARC_skb_skb_NSCR = 0,
-	NARC_skb_skb_NCGR = 1,
-	NARC_skb_skb_NCLR = 2
+	NARC_skb_skb_NCGR = 0,
+	NARC_skb_skb_NCLR = 1,
+	NARC_skb_skb_1_NSCR = 2,
+	NARC_skb_skb_2_NSCR = 3,
+	NARC_skb_skb_3_NSCR = 4
 };
 
 typedef enum {
@@ -46,16 +48,24 @@ typedef enum {
 	GFL_SKB_PALID_NONE = 255,
 }GFL_SKB_PALID;
 
+typedef enum {
+	GFL_SKB_MODE_HIRAGANA = 0,
+	GFL_SKB_MODE_KATAKANA,
+	GFL_SKB_MODE_ENGNUM,
+}GFL_SKB_MODE;
+
 typedef struct {
 	void*			strings;		//文字列格納ポインタ
 	u32				strlen;			//文字列格納長さ
 
+	GFL_SKB_MODE	mode;			//初期モード
+	BOOL			modeChange;		//モード変更可否フラグ
 	u32				cancelKey;		//中断キー判定トリガ
+
 	GFL_SKB_BGID	bgID;			//使用BGVRAMID
 	GFL_SKB_PALID	bgPalID;		//使用BGパレットID
 	GFL_SKB_PALID	bgPalID_on;		//使用BGパレットID
 
-	BOOL			sysfontSetup;	//システムフォントセットアップフラグ
 }GFL_SKB_SETUP;
 
 //============================================================================================
