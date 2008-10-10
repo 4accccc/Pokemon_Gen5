@@ -29,6 +29,7 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 };
 
 #include "test_graphic/test3dp2.naix"
+
 static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 	{ NARC_test3dp2_m_test_01_01c_3dppack },
 	{ NARC_test3dp2_m_test_02_01c_3dppack },
@@ -45,6 +46,7 @@ static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 };
 
 #include "test_graphic/loopbridge.naix"
+
 static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
 	{ NARC_loopbridge_m_test2_01_01c_3dppack },
 	{ NARC_loopbridge_m_test2_02_01c_3dppack },
@@ -62,6 +64,10 @@ static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
 	{ NARC_loopbridge_m_test2_02_04c_3dppack },
 	{ NARC_loopbridge_m_test2_03_04c_3dppack },
 	{ NARC_loopbridge_m_test2_04_04c_3dppack },
+};
+
+static const FLD_G3D_MAPPER_DATA fldmap3dp_test[] = {
+	{ 0 },
 };
 
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
@@ -98,13 +104,12 @@ static const FLD_G3D_MAPPER_DATA GSMap[] = {
 	{ FLD_G3D_MAPPER_NOMAP }, { 29 },
 };
 
-
 #define MAP_WIDTH (512 * FX32_ONE)
 #define MAP_HEIGHT (128 * FX32_ONE)
 
-const SCENE_DATA	resistMapTbl[] = {
-	{
-		{	
+const SCENE_DATA resistMapTbl[] = {
+	{	//実験マップ　橋
+		{
 			FILE_MAPEDITER_DATA,
 			4,  4, NELEMS(loopbridgemap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_LOOPBRIDGE,
@@ -115,7 +120,7 @@ const SCENE_DATA	resistMapTbl[] = {
 		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 	},
-	{
+	{	//サンプルマップ　金銀
 		{	
 			FILE_CUSTOM_DATA,
 			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
@@ -128,10 +133,11 @@ const SCENE_DATA	resistMapTbl[] = {
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
 		&FieldBaseFunctions,
 	},
-	{
+	{	//実験マップ　グリッド移動
 		{	
 			FILE_CUSTOM_DATA,
-			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			2,  6, NELEMS(GSMap), MAP_WIDTH,
+			1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
 			USE_GLOBAL_TEX,	(void*)&gtexData, 
 			//USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
@@ -140,20 +146,8 @@ const SCENE_DATA	resistMapTbl[] = {
 		},
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
 		&FieldGridFunctions,
-		#if 0
-		{	
-			FILE_MAPEDITER_DATA,
-			4,  4, NELEMS(sampleMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_TEST3DP,
-			NON_GLOBAL_TEX, NULL,
-			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
-			sampleMap, 
-		}, 
-		{ MAP_WIDTH*2, 0, MAP_WIDTH*2 },
-		&FieldGridFunctions,
-		#endif
 	},
-	{
+	{	//実験マップ　橋
 		{	
 			FILE_MAPEDITER_DATA,
 			2,  6, NELEMS(sampleMap2), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
@@ -165,18 +159,36 @@ const SCENE_DATA	resistMapTbl[] = {
 		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 	},
+	{	//実験マップ　プランナー作成マップ
+		{	
+			FILE_MAPEDITER_DATA,
+			1,  1, NELEMS(fldmap3dp_test),
+			MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_TEST3DP,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			fldmap3dp_test, 
+		}, 
+		{ MAP_WIDTH/2, FX32_ONE*32, MAP_WIDTH*1 },
+		&FieldBaseFunctions,
+	},
 };
 
 const unsigned int resistMapTblCount = NELEMS(resistMapTbl);
 
-
-
-
-
-
-
-
-
+#if 0
+	{	
+		FILE_MAPEDITER_DATA,
+		4,  4, NELEMS(sampleMap),
+		MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+		ARCID_TEST3DP,
+		NON_GLOBAL_TEX, NULL,
+		USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+		sampleMap, 
+	}, 
+	{ MAP_WIDTH*2, 0, MAP_WIDTH*2 },
+	&FieldGridFunctions,
+#endif
 
 #if 0
 	{
