@@ -164,6 +164,7 @@ GFL_SKB*	GFL_SKB_Boot( HEAPID heapID, const GFL_SKB_SETUP* setup )
 void	GFL_SKB_Exit( GFL_SKB* gflSkb )
 {
 	if( gflSkb != NULL ){
+		GFL_HEAP_FreeMemory( gflSkb->string );
 		GFL_BMP_Delete( gflSkb->strBmp );
 
 		GFL_HEAP_FreeMemory( gflSkb->vramSv.plt );

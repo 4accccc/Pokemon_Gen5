@@ -431,8 +431,6 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 	g2d_load( gs );	//２Ｄデータのロード
 	g3d_load( gs );	//３Ｄデータのロード
 
-	GFL_UI_TP_Init( heapID );
-
 	return gs;
 }
 
@@ -443,8 +441,6 @@ static SAMPLE_SETUP*	SetupGameSystem( HEAPID heapID )
 //------------------------------------------------------------------
 static void	RemoveGameSystem( SAMPLE_SETUP* gs )
 {
-	GFL_UI_TP_Exit();
-
 	g3d_unload( gs );	//３Ｄデータ破棄
 	g2d_unload( gs );	//２Ｄデータ破棄
 
