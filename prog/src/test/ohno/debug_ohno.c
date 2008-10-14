@@ -56,7 +56,6 @@ static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_OHNO_SERVICEID };
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
-    NULL,   // ワークポインタ
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
@@ -362,8 +361,7 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * 
 	testmode->debug_heap_id = heapID;
 
     if( GFL_NET_IsInit() == FALSE ){  // もう通信している場合終了処理
-        aGFLNetInit.pWork = testmode;
-        GFL_NET_Init(&aGFLNetInit, _initCallBack);
+        GFL_NET_Init(&aGFLNetInit, _initCallBack, testmode);
     }
 	return GFL_PROC_RES_FINISH;
 }

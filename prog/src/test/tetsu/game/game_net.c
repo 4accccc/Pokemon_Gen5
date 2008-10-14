@@ -72,7 +72,6 @@ static void _initCallback(void* pWork)
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     1,//NELEMS(_CommPacketTbl), // 受信テーブル要素数
-    NULL,   // ワークポインタ
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
@@ -99,7 +98,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
 void InitGameNet(void)
 {
 #ifdef NET_WORK_ON
-    GFL_NET_Init(&aGFLNetInit, _initCallback);
+    GFL_NET_Init(&aGFLNetInit, _initCallback, NULL);
 #endif
 	gNetSys._connectSeqNo = 0;
 	gNetSys._exitSeqNo = 0;

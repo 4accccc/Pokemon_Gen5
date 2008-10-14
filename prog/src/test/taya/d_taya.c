@@ -620,7 +620,6 @@ static TEST_BCON testBcon = { WB_NET_SERVICEID_DEBUG_TAYA };
 static const GFLNetInitializeStruct testNetInitParam = {
 	testPacketTbl,				// 受信関数テーブル
 	NELEMS(testPacketTbl),		// 受信テーブル要素数
-	NULL,						// ワークポインタ
 	NULL,						// ユーザー同士が交換するデータのポインタ取得関数
 	NULL,						// ユーザー同士が交換するデータのサイズ取得関数
 	testBeaconGetFunc,			// ビーコンデータ取得関数
@@ -727,11 +726,10 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		GFL_BMP_Clear( wk->bmp, 0xff );
 		PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
 		wk->netInitWork = testNetInitParam;
-		wk->netInitWork.pWork = (void*)wk;
 		wk->netTestSeq = 0;
 		wk->kanjiMode = 0;
 		wk->packet.kanjiMode = 0;
-	    GFL_NET_Init(&(wk->netInitWork), testCallBack);
+	    GFL_NET_Init(&(wk->netInitWork), testCallBack, (void*)wk);
 	    (*seq)++;
 	    break;
 

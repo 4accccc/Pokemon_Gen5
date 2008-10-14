@@ -188,7 +188,7 @@ typedef void (*NetStepEndCallback)(void* pWork);   ///< 通信の区切りに呼ばれる汎
 typedef struct{
   const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
   int recvFuncTableNum;              ///< 受信関数テーブル項目数 NELEMS
-  void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
+//  void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
   NetInfomationGetFunc infoFunc;             ///<ユーザー同士が交換するデータのポインタ取得関数
   NetInfomationGetSizeFunc infoSizeFunc;         ///< ユーザー同士が交換するデータのサイズ取得関数
   NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
@@ -236,10 +236,12 @@ extern void GFL_NET_Boot(HEAPID heapID, NetErrorFunc errorFunc);
 /**
  * @brief   通信初期化
  * @param   pNetInit  通信初期化構造体のポインタ
+ * @param   NetStepEndCallback  初期化完了時に呼ばれるコールバック
+ * @param   pWork  使用しているユーザーのワークポインタ コールバックで一緒に渡します
  * @return  none
  */
 //==============================================================================
-extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallback callback);
+extern void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallback callback, void* pWork);
 
 //==============================================================================
 /**

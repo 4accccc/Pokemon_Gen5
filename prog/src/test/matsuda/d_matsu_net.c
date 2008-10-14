@@ -212,7 +212,6 @@ enum{
 static const GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
-    NULL,   // ワークポインタ
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
@@ -257,8 +256,7 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 			GFLNetInitializeStruct net_ini_data;
 			
 			net_ini_data = aGFLNetInit;
-			net_ini_data.pWork = wk;
-			GFL_NET_Init(&net_ini_data, _initCallBack);	//通信初期化
+			GFL_NET_Init(&net_ini_data, _initCallBack, wk);	//通信初期化
 		}
 		wk->seq++;
 		break;
