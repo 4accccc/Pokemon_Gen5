@@ -231,7 +231,7 @@ extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
  */
 //==============================================================================
 
-extern void GFL_UI_TP_Init(const HEAPID heapID);
+extern UI_TPSYS* GFL_UI_TP_Init(const HEAPID heapID);
 
 //==============================================================================
 /**
