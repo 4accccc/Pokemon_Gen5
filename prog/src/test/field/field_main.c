@@ -117,12 +117,12 @@ void	FieldBoot( HEAPID heapID )
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
 
-	GFL_UI_TP_Init( fieldWork->heapID );
+//	GFL_UI_TP_Init( fieldWork->heapID );
 }
 
 void	FieldEnd( void )
 {
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 
 	GFL_HEAP_FreeMemory( fieldWork );
 }
@@ -138,7 +138,7 @@ BOOL	FieldMain( void )
 	int i;
 
 	fieldWork->timer++;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 
 	switch( fieldWork->seq ){
 

@@ -86,12 +86,12 @@ void	GameBoot( HEAPID heapID )
 	gw = GFL_HEAP_AllocClearMemory( heapID, sizeof(GAME_WORK) );
 	gw->heapID = heapID;
 
-	GFL_UI_TP_Init( gw->heapID );
+//	GFL_UI_TP_Init( gw->heapID );
 }
 
 void	GameEnd( void )
 {
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 
 	GFL_HEAP_FreeMemory( gw );
 }
@@ -110,7 +110,7 @@ BOOL	GameMain( void )
 	int i;
 
 	gw->timer++;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 
 	switch( gw->seq ){
 

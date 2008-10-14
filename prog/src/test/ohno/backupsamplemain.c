@@ -131,7 +131,7 @@ void	SampleBoot( HEAPID heapID )
 	sampleWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_WORK) );
 	sampleWork->heapID = heapID;
 
-	GFL_UI_TP_Init( sampleWork->heapID );
+//	GFL_UI_TP_Init( sampleWork->heapID );
     NNS_SndStrmInit( &sampleWork->strm );
 	NNS_SndStrmAllocChannel( &sampleWork->strm, CH_MAX, chNoList);
 
@@ -141,7 +141,7 @@ void	SampleBoot( HEAPID heapID )
 
 void	SampleEnd( void )
 {
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 
 	GFL_HEAP_FreeMemory( sampleWork );
 }
@@ -158,7 +158,7 @@ BOOL	SampleMain( void )
 	int i;
 
 	sampleWork->timer++;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 	StrmBufferCopy(sampleWork,0);
 
 	switch( sampleWork->seq ){

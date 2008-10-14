@@ -117,12 +117,12 @@ void	AriFieldBoot( HEAPID heapID )
 	ariFieldWork->heapID = heapID;
 	ariFieldWork->gamemode = GAMEMODE_NORMAL;
 
-	GFL_UI_TP_Init( ariFieldWork->heapID );
+//	GFL_UI_TP_Init( ariFieldWork->heapID );
 }
 
 void	AriFieldEnd( void )
 {
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 
 	GFL_HEAP_FreeMemory( ariFieldWork );
 }
@@ -138,7 +138,7 @@ BOOL	AriFieldMain( void )
 	int i;
 
 	ariFieldWork->timer++;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 
 	switch( ariFieldWork->seq ){
 

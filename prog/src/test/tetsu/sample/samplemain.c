@@ -130,12 +130,12 @@ void	SampleBoot( HEAPID heapID )
 	sampleWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_WORK) );
 	sampleWork->heapID = heapID;
 
-	GFL_UI_TP_Init( sampleWork->heapID );
+//	GFL_UI_TP_Init( sampleWork->heapID );
 }
 
 void	SampleEnd( void )
 {
-	GFL_UI_TP_Exit();
+//	GFL_UI_TP_Exit();
 
 	GFL_HEAP_FreeMemory( sampleWork );
 }
@@ -152,7 +152,7 @@ BOOL	SampleMain( void )
 	int i;
 
 	sampleWork->timer++;
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 
 	switch( sampleWork->seq ){
 
@@ -457,7 +457,7 @@ static void	RemoveGameSystem( SAMPLE_SETUP* gs )
 //------------------------------------------------------------------
 static void	MainGameSystem( SAMPLE_SETUP* gs )
 {
-	GFL_UI_TP_Main();
+//	GFL_UI_TP_Main();
 
 	g3d_control( gs );
 	g3d_draw( gs );
