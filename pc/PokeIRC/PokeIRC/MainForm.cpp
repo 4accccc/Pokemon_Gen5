@@ -1,0 +1,502 @@
+//=============================================================================
+/**
+ * @file	MainForm.cpp
+ * @brief	メインのフォーム
+ * @author	k.ohno
+ * @date    2008.09.30
+ */
+//=============================================================================
+
+//---------------------------------------------------------
+// include 
+//---------------------------------------------------------
+#include "stdafx.h"
+#include "MainForm.h"
+#include "NetIRC.h"
+
+#include < stdio.h >
+#include < stdlib.h >
+#include < vcclr.h >
+
+
+
+using namespace PokeIRC;
+using namespace System::Windows::Forms;
+using namespace System::Threading;
+
+//--------------------------------------------------------------
+/**
+ * @breif   ファイル->Syncメニューが選択された時の処理
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+//	NetIRC::connect();
+
+	threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::ThreadWork)); //
+
+	threadA->IsBackground = true; // バックグラウンド・スレッドとする
+	threadA->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+
+    threadA->Start(); // 
+
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   フォームがロードされた時の処理 初期化
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e)
+{
+	NetIRC::Init();
+//	timer->Start();
+	webBrowser1->Url= gcnew Uri("http://www.gamefreak.co.jp/");
+
+//	cmBackgroundWorker = gcnew System::ComponentModel::BackgroundWorker();
+//	cmBackgroundWorker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler( this, &MainForm::DoWork );
+//	cmBackgroundWorker->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler( this, &MainForm::RunWorkerCompleted );
+	// スレッド開始
+//	cmBackgroundWorker->RunWorkerAsync();
+
+
+
+
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   タイマーイベント 1/60 のさらに半分で呼ばれる
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::timer_Tick(System::Object^  sender, System::EventArgs^  e)
+{
+	//NetIRC::draw(this);
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   フォームが閉じる時に呼ばれる
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::MainForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e)
+{
+	//timer->Stop();
+	if(threadA != nullptr){
+		threadA->Suspend();
+	}
+	//threadA->Finalize();
+	NetIRC::shutdown();
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   データを送信する
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::sendDataDToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	int index = -1;
+	System::IO::Stream^ myStream;
+	BinaryReader^ userReader;   // ファイルを読み込む為のハンドル
+
+	openFileDialog1->InitialDirectory = "C:\\home";
+	openFileDialog1->Filter = "bin files (*.swav)|*.swav|All files (*.*)|*.*";
+	openFileDialog1->FilterIndex = 1;
+	openFileDialog1->RestoreDirectory = true;
+
+	if ( openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK )
+	{
+		if ( (myStream = openFileDialog1->OpenFile()) != nullptr )
+		{
+			userReader = gcnew BinaryReader(myStream);
+			NetIRC::dataArray = userReader->ReadBytes(myStream->Length);
+			NetIRC::sendData();
+			myStream->Close();
+		}
+	}
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   BackGroundWorkerのタスク処理
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::DoWork( System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e )
+{
+    // ここに、処理を書く
+	NetIRC::draw(this);
+	Thread::Sleep(1); //2msec待つ 
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   スレッドが終了した時に呼ばれる
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::RunWorkerCompleted( System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e )
+{
+    // スレッドが終了したときに呼ばれる
+}
+
+void MainForm::ThreadWork(void)
+{
+	while(1){
+		NetIRC::draw(this);
+		Thread::Sleep(1); //2msec待つ 
+	}
+}
+
+// プロフィールをセットする
+void MainForm::SetProfile(Dpw_Common_Profile* profile)
+{
+	memset(profile, 0, sizeof(*profile));
+	profile->version = 12;
+	profile->language = 1;
+	profile->countryCode = 103;
+	profile->localCode = 1;
+	profile->playerId = 87654322;
+	profile->playerName[0] = 0x66;      // サ
+	profile->playerName[1] = 0x79;      // ト
+	profile->playerName[2] = 0x69;      // シ
+	profile->playerName[3] = 0xffff;    // 終端
+	profile->flag = 0;
+	strcpy(profile->mailAddr, "ohno_katsumi@gamefreak.co.jp");
+	profile->mailAddrAuthPass = DPW_MAIL_ADDR_AUTH_DEBUG_PASSWORD;   // デバッグ用パスワードを使用する。
+	profile->mailAddrAuthVerification = 456;
+	profile->mailRecvFlag = DPW_PROFILE_MAILRECVFLAG_EXCHANGE;
+}
+
+// Dpw_Tr_Dataをセットする
+void MainForm::SetTrData(Dpw_Tr_Data* upload_data)
+{
+	// コクーン
+	u8 data[] = {57,148,138,197,0,0,19,71,0,225,226,116,104,187,11,169,205,198,239,184,227,255,202,161,239,133,127,140,240,161,240,216,218,41,84,70,114,199,108,49,9,11,13,170,10,159,215,139,122,119,196,182,144,222,10,165,255,5,39,199,92,169,30,208,159,170,35,150,233,137,68,57,61,192,222,48,184,97,214,129,199,149,235,2,51,78,168,8,50,63,184,113,88,235,164,121,39,174,75,187,206,137,149,99,23,87,77,12,166,84,227,11,122,23,165,0,177,112,190,172,49,209,41,5,54,142,254,210,176,165,17,74,129,129,171,153,64,114,145,74,27,162,201,134,219,36,246,122,83,172,14,162,147,57,250,245,81,152,113,165,218,37,51,51,228,198,16,92,111,223,224,104,234,160,34,71,70,131,62,212,7,7,90,177,247,109,244,134,227,190,220,50,54,197,124,119,9,133,210,16,1,10,178,178,29,251,90,150,53,231,242,188,35,194,198,246,18,178,21,67,39,33,129,179,97,4,0,76,14,66,18,45,12,186,7,205};
+
+	memset(upload_data, 0, sizeof(*upload_data));
+	memcpy(&upload_data->postData, data, sizeof(upload_data->postData));
+	upload_data->postSimple.characterNo = 14;    // コクーン
+	upload_data->postSimple.gender = DPW_TR_GENDER_FEMALE;
+	upload_data->postSimple.level = 20;
+	upload_data->wantSimple.characterNo = 14;    // コクーン
+	upload_data->wantSimple.gender = DPW_TR_GENDER_FEMALE;
+	upload_data->wantSimple.level_min = 0;
+	upload_data->wantSimple.level_max = 0;
+	upload_data->name[0] = 0x66; // サ
+	upload_data->name[1] = 0x79; // ト
+	upload_data->name[2] = 0x69; // シ
+	upload_data->name[3] = 0xffff;
+	upload_data->trainerID = 1 << 12;
+	upload_data->countryCode = 103;
+	upload_data->langCode = 1;
+	upload_data->localCode = 1;
+	upload_data->trainerType = 3;
+	upload_data->versionCode = 12;
+	upload_data->gender = 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   非同期関数が終了するまで待つ
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+bool MainForm::RequestUpload(void)
+{
+	s32 result = 0;
+
+	// 預ける
+	{
+		Dpw_Tr_Data data;
+		SetTrData(&data);
+		Dpw_Tr_UploadAsync(&data);
+		result = WaitForAsync();
+		if(result == 0 )
+		{
+			// 預けるのを確定
+			Dpw_Tr_UploadFinishAsync();
+			if(WaitForAsync() != 0 )
+			{
+				Debug::WriteLine("Failed to uploadFinish.");
+				return false;
+			}
+		}
+		else if(result == DPW_TR_ERROR_ILLIGAL_REQUEST)
+		{
+			Debug::WriteLine("Already uploaded.");
+		}
+		else
+		{
+			Debug::WriteLine("Failed to upload.");
+			return false;
+		}
+	}
+	return true;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @breif   交換されたものを引き取る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+bool MainForm::RequestPickupTraded(void)
+{
+	s32 result = 0;
+
+	// 交換されたものを引き取る
+	{
+		Dpw_Tr_Data data;
+		Dpw_Tr_GetUploadResultAsync(&data);
+
+		result = WaitForAsync();
+		if(WaitForAsync() == 0 )
+		{
+			puts("Not traded.");
+			return true;
+		}
+		else if(result == 1)
+		{
+			puts("Traded.");
+		}
+		else
+		{
+			puts("Failed to upload result.");
+			return false;
+		}
+
+		Dpw_Tr_DeleteAsync();
+		if(WaitForAsync() != 0 )
+		{
+			puts("Failed to delete.");
+			return false;
+		}
+	}
+	return true;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   非同期関数が終了するまで待つ
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+bool MainForm::RequestSetProfile(void)
+{
+	// プロフィールセット
+	{
+		Dpw_Common_Profile profile;
+		Dpw_Common_ProfileResult profile_result;
+		SetProfile(&profile);
+		Dpw_Tr_SetProfileAsync(&profile, &profile_result);
+		if(WaitForAsync() != 0 )
+		{
+			Debug::WriteLine("Failed to set profile.");
+			return false;
+		}
+	}
+	return true;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   非同期関数が終了するまで待つ
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::WaitForAsync(void)
+{
+	while(!Dpw_Tr_IsAsyncEnd())
+	{
+		Dpw_Tr_Main();
+		Sleep(10);
+	}
+	// リクエストが終わったら再度プロキシをセットしなければならない。
+	SetProxy(s_currentProxy);
+	return Dpw_Tr_GetAsyncResult();
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   サーバステータスチェック
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+bool MainForm::RequestCheckServerState(void)
+{
+	// サーバステータスチェック
+	{
+		Dpw_Tr_GetServerStateAsync();
+		if(WaitForAsync() != DPW_TR_STATUS_SERVER_OK )
+		{
+			Debug::WriteLine("Invalid server status.");
+			return false;
+		}
+	}
+	return true;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   HTTPプロキシをセットする。NULLもしくは""で解除
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void MainForm::SetProxy(String^ proxy)
+{
+	s_currentProxy = proxy;
+	pin_ptr<const wchar_t> wch = PtrToStringChars(s_currentProxy);
+
+	size_t convertedChars = 0;
+	size_t  sizeInBytes = ((s_currentProxy->Length + 1) * 2);
+	errno_t err = 0;
+	char    *ch = (char *)malloc(sizeInBytes);
+
+	err = wcstombs_s(&convertedChars, 
+                    ch, sizeInBytes,
+                    wch, sizeInBytes);
+
+
+	ghttpSetProxy(ch);
+	free(ch);
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @breif   GTS接続テスト
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::TestUploadDownload(int pid,  String^ proxy)
+{
+	static int count = 1;
+	Dpw_Tr_Init(pid, TEST_KEY | pid);
+
+	SetProxy(proxy);
+
+	if(!RequestCheckServerState())
+	{
+		return;
+	}
+
+	if(!RequestSetProfile())
+	{
+		return;
+	}
+
+	if(!RequestUpload())
+	{
+		return;
+	}
+/*
+	if(!RequestPickup())
+	{
+		return;
+	}
+	*/
+	Dpw_Tr_Db_UpdateServer();
+	Dpw_Tr_End();
+
+	Debug::WriteLine("Finished Test\n");
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   GTS接続テスト
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::TestDownload(int pid,  String^ proxy)
+{
+	static int count = 1;
+	Dpw_Tr_Init(pid, TEST_KEY | pid);
+
+	SetProxy(proxy);
+	if(!RequestCheckServerState())
+	{
+		return;
+	}
+	if(!RequestSetProfile())
+	{
+		return;
+	}
+	if(!RequestPickupTraded())
+	{
+		return;
+	}
+	Dpw_Tr_End();
+	Debug::WriteLine("Delete - Finish\n");
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   GTSにあるデータの削除を行う
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::gTSResetToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	String^ proxy = "";
+
+	// 引き取る
+	TestDownload(100000, proxy);
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   GTS接続テスト
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+
+	// HTTPプロキシが必要な場合はプロキシのアドレスを"<server>[:port]"の様に指定してください。
+	//String^ proxy = "proxy.server.com:8080";
+	String^ proxy = "";
+
+	// 預けて引き取る
+	TestUploadDownload(100000, proxy);
+}
+
