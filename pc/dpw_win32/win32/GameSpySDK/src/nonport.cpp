@@ -1020,7 +1020,7 @@ gsi_u32 gsiHasThreadShutdown(GSIThreadID theThreadID)
 
 GSISemaphoreID gsiCreateSemaphore(gsi_i32 theInitialCount, gsi_i32 theMaxCount, char* theName)
 {
-	GSISemaphoreID aSemaphore = CreateSemaphore(NULL, theInitialCount, theMaxCount, theName);
+	GSISemaphoreID aSemaphore = CreateSemaphore(NULL, theInitialCount, theMaxCount, (LPCWSTR)theName);
 	if (aSemaphore == NULL)
 	{
 		gsDebugFormat(GSIDebugCat_Common, GSIDebugType_Misc, GSIDebugLevel_WarmError,

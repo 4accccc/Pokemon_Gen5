@@ -298,7 +298,7 @@ PokeToolCheckResult PokeTool_CheckData(POKEMON_PARAM *pp, const char* absWazaFil
 	}
 
 	// ポケモンの捕獲場所チェック
-    result = PokeTool_CheckCapturePlace(monsno, place, birthPlace);
+    result = (PokeToolCheckResult)PokeTool_CheckCapturePlace(monsno, place, birthPlace);
 	if(result != POKETOOL_CHECKRESULT_OK){
 		return result;
 	}
@@ -419,11 +419,11 @@ void PokeTool_UnifyName(const u16* in, u16* out)
 
 	LCMapStringW(MAKELCID(MAKELANGID(LANG_JAPANESE, SUBLANG_DEFAULT), SORT_DEFAULT),
 		LCMAP_HALFWIDTH | LCMAP_HIRAGANA,
-		in, -1, temp_str, (MONS_NAME_SIZE+EOM_SIZE)*sizeof(u16));
+		(LPCWSTR)in, -1, (LPWSTR)temp_str, (MONS_NAME_SIZE+EOM_SIZE)*sizeof(u16));
 
 	LCMapStringW(MAKELCID(MAKELANGID(LANG_JAPANESE, SUBLANG_DEFAULT), SORT_DEFAULT),
 		LCMAP_LOWERCASE,
-		temp_str, -1, out, (MONS_NAME_SIZE+EOM_SIZE)*sizeof(u16));
+		(LPCWSTR)temp_str, -1, (LPWSTR)out, (MONS_NAME_SIZE+EOM_SIZE)*sizeof(u16));
 }
 
 #endif

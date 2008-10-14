@@ -227,7 +227,7 @@ int 	DWC_PostGHTTPData( const char* url, GHTTPPost* post, DWCGHTTPCompletedCallb
 
     if (DWCi_IsError()) return DWC_GHTTP_IN_ERROR;
     
-    parameter = DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
+    parameter = (DWCGHTTPParam*)DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
     
     if(!parameter){
         DWCi_HandleGHTTPError((DWCGHTTPResult)DWC_GHTTP_INSUFFICIENT_MEMORY);
@@ -275,7 +275,7 @@ int 	DWC_GetGHTTPData( const char* url, DWCGHTTPCompletedCallback completedCallb
 
     if (DWCi_IsError()) return DWC_GHTTP_IN_ERROR;
     
-    parameter = DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
+    parameter = (DWCGHTTPParam*)DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
     
     if(!parameter){
         DWCi_HandleGHTTPError((DWCGHTTPResult)DWC_GHTTP_INSUFFICIENT_MEMORY);
@@ -325,7 +325,7 @@ int 	DWC_GetGHTTPDataEx( const char* url, int bufferlen, BOOL buffer_clear, DWCG
 
     if (DWCi_IsError()) return DWC_GHTTP_IN_ERROR;
     
-    parameter = DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
+    parameter = (DWCGHTTPParam*)DWC_Alloc(DWC_ALLOCTYPE_BASE, sizeof(DWCGHTTPParam));
     
     if(!parameter){
         DWCi_HandleGHTTPError((DWCGHTTPResult)DWC_GHTTP_INSUFFICIENT_MEMORY);

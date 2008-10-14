@@ -33,11 +33,11 @@
 					型・定数宣言
  *-----------------------------------------------------------------------*/
 
-#ifdef DPW_SERVER_PUBLIC
-#define TR_SERVER_URL		"http://gamestats2.gs.nintendowifi.net/pokemondpds/"
-#else
+//#ifdef DPW_SERVER_PUBLIC
+//#define TR_SERVER_URL		"http://gamestats2.gs.nintendowifi.net/pokemondpds/"
+//#else
 #define TR_SERVER_URL		"http://sdkdev.gamespy.com/games/pokemondpds/web/"
-#endif
+//#endif
 
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="shift_jis"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="dpw_pc"
 	ProjectGUID="{657BC809-A1A5-491A-924D-423B8AF5DBD9}"
 	RootNamespace="dpw_pc"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -21,6 +22,7 @@
 			IntermediateDirectory="$(ProjectDir)$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
+			ManagedExtensions="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,13 +44,13 @@
 				Optimization="0"
 				AdditionalIncludeDirectories=".;&quot;$(ProjectDir)\..\GameSpySDK\include&quot;;&quot;$(ProjectDir)\..\common\include&quot;;&quot;$(ProjectDir)\..\GameSpySDK\include\ghttp&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\common\include&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\dpw_bt\include&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\dpw_tr\include&quot;;&quot;$(ProjectDir)\..\..\nitro\demos\numbering\include&quot;;&quot;$(SolutionDir)..\..\tools\poketool\poketool&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
-				MinimalRebuild="true"
-				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				MinimalRebuild="false"
+				BasicRuntimeChecks="0"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4068;4996;4005"
 			/>
 			<Tool
@@ -152,27 +154,27 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\GameSpySDK\src\available.c"
+				RelativePath="..\GameSpySDK\src\available.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\tools\poketool\poketool\base64codec.c"
+				RelativePath="..\..\tools\poketool\poketool\base64codec.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\core.c"
+				RelativePath="..\GameSpySDK\src\core.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\darray.c"
+				RelativePath="..\GameSpySDK\src\darray.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\nitro\libdpw\dpw_bt\src\dpw_bt.c"
+				RelativePath="..\..\nitro\libdpw\dpw_bt\src\dpw_bt.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\common\src\dpw_pcstub.c"
+				RelativePath="..\common\src\dpw_pcstub.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -192,95 +194,95 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\nitro\libdpw\dpw_tr\src\dpw_tr.c"
+				RelativePath="..\..\nitro\libdpw\dpw_tr\src\dpw_tr.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\nitro\libdpw\common\src\dpwi_encrypt.c"
+				RelativePath="..\..\nitro\libdpw\common\src\dpwi_encrypt.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\nitro\libdpw\common\src\dpwi_session.c"
+				RelativePath="..\..\nitro\libdpw\common\src\dpwi_session.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\common\src\dpwi_sha1.c"
+				RelativePath="..\common\src\dpwi_sha1.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\common\src\dwc_ghttp.c"
+				RelativePath="..\common\src\dwc_ghttp.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpBuffer.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpBuffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpCallbacks.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpCallbacks.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpCommon.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpCommon.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpConnection.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpConnection.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpEncryption.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpEncryption.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpMain.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpMain.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpPost.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpPost.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\ghttp\ghttpProcess.c"
+				RelativePath="..\GameSpySDK\src\ghttp\ghttpProcess.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\gsiDebug.c"
+				RelativePath="..\GameSpySDK\src\gsiDebug.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\gsiMemory.c"
+				RelativePath="..\GameSpySDK\src\gsiMemory.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\tools\poketool\poketool\hangeul_pokecode2unicode.c"
+				RelativePath="..\..\tools\poketool\poketool\hangeul_pokecode2unicode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\hashtable.c"
+				RelativePath="..\GameSpySDK\src\hashtable.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\tools\poketool\poketool\illegal_check.c"
+				RelativePath="..\..\tools\poketool\poketool\illegal_check.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\md5c.c"
+				RelativePath="..\GameSpySDK\src\md5c.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\nonport.c"
+				RelativePath="..\GameSpySDK\src\nonport.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\tools\poketool\poketool\poketool.c"
+				RelativePath="..\..\tools\poketool\poketool\poketool.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GameSpySDK\src\stringutil.c"
+				RelativePath="..\GameSpySDK\src\stringutil.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\tools\poketool\poketool\trans_pokecode.c"
+				RelativePath="..\..\tools\poketool\poketool\trans_pokecode.cpp"
 				>
 			</File>
 		</Filter>
