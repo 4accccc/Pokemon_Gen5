@@ -19,7 +19,6 @@ BOOL	SampleMain( void );
 #include "g3d_mapper.h"
 #include "sample_net.h"
 
-#include "skb.h"
 //============================================================================================
 /**
  *
