@@ -200,4 +200,14 @@ extern u8 BmpMenu_MoveSiteGet( BMPMENU_WORK * mw );
 //--------------------------------------------------------------
 extern void BmpMenu_SetCursorString( BMPMENU_WORK *mw, u32 strID );
 
+//ä÷êîí«â¡ÇµÇ‹ÇµÇΩ Ari081015
+//--------------------------------------------------------------
+/**
+ * ÉÅÉjÉÖÅ[çƒï`âÊ
+ * @param	mw	BMPMENU_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+extern void BmpMenu_RedrawString( BMPMENU_WORK *mw );
+
 #endif	/* BMP_MENU_H */

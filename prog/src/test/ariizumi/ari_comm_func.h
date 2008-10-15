@@ -45,9 +45,16 @@ extern FIELD_COMM_DATA *FieldComm_InitData( u32 heapID );
 extern BOOL FieldComm_InitSystem();
 extern void	FieldComm_InitParent();
 extern void	FieldComm_InitChild();
-extern int	FieldComm_UpdateSearchParent();
+extern u8	FieldComm_UpdateSearchParent();
+extern BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name );
+extern BOOL	FieldComm_IsValidParentData( const u8 idx );
+extern void	FieldComm_ConnectParent( u8 idx );
 
+//送受信関数
+extern void	FieldComm_SendSelfData();
 
+//チェック関数
+extern BOOL	FieldComm_IsFinish_ConnectParent();
 
 //各種コールバック
 extern FieldComm_IsFinish_InitSystem();

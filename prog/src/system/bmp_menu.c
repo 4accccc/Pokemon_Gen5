@@ -830,3 +830,17 @@ void BmpMenu_SetCursorString( BMPMENU_WORK *mw, u32 strID )
 	BmpCursor_SetCursorFontMsg( mw->cursor, mw->hed.msgdata, strID );
 	BmpMenuCursorPut( mw );
 }
+
+//ŠÖ”’Ç‰Á‚µ‚Ü‚µ‚½ Ari081015
+//--------------------------------------------------------------
+/**
+ * ƒƒjƒ…[Ä•`‰æ
+ * @param	mw	BMPMENU_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void BmpMenu_RedrawString( BMPMENU_WORK *mw )
+{
+    BmpMenuStrPut( mw );
+    BmpMenuCursorPut( mw );
+}
