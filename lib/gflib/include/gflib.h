@@ -59,6 +59,7 @@ extern "C" {
 #include "spl.h"
 #include "quaternion.h"
 
+#include "skb.h"
 /*  */
 
 #endif	/*	__GFLIB_H__ */
