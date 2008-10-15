@@ -8,14 +8,8 @@
 //============================================================================================
 typedef struct _GFL_SKB GFL_SKB;
 
-//グラフィックアーカイブ内容ＩＤ定義
-enum {
-	NARC_skb_skb_NCGR = 0,
-	NARC_skb_skb_NCLR = 1,
-	NARC_skb_skb_1_NSCR = 2,
-	NARC_skb_skb_2_NSCR = 3,
-	NARC_skb_skb_3_NSCR = 4
-};
+#define GFL_SKB_STRLEN_MAX	(24)	//入力文字列最大数
+#define GFL_SKB_STRBUF_SIZ	(sizeof(u16)*(GFL_SKB_STRLEN_MAX+1))//入力文字列バッファ確保サイズ
 
 typedef enum {
 	GFL_SKB_BGID_M0 = 0,
@@ -54,9 +48,16 @@ typedef enum {
 	GFL_SKB_MODE_ENGNUM,
 }GFL_SKB_MODE;
 
+typedef enum {
+	GFL_SKB_STRTYPE_STRBUF = 0,
+	GFL_SKB_STRTYPE_SJIS,//配列の大きさは長さ*sizeof(u16)にすること
+}GFL_SKB_STRTYPE;
+
+//　設定定義
+//　文字列バッファは文字列長さ*sizeof(u16)を確保すること
 typedef struct {
-	void*			strings;		//文字列格納ポインタ
 	u32				strlen;			//文字列格納長さ
+	GFL_SKB_STRTYPE	strtype;		//文字列格納タイプ
 
 	GFL_SKB_MODE	mode;			//初期モード
 	BOOL			modeChange;		//モード変更可否フラグ
@@ -75,7 +76,12 @@ typedef struct {
  *	
  */
 //============================================================================================
-extern GFL_SKB*		GFL_SKB_Boot( HEAPID heapID, const GFL_SKB_SETUP* setup );
+extern GFL_SKB*		GFL_SKB_Boot( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
 extern void			GFL_SKB_Exit( GFL_SKB* gflSkb );	//強制終了したい場合使用
 extern BOOL			GFL_SKB_Main( GFL_SKB* gflSkb );	//FALSEで終了
+
+//SjisCode格納用文字列バッファ作成
+//GFL_SKB_STRTYPE_SJISを使用する場合、この関数で入力最大配列を確保出来る
+extern void*	GFL_SKB_CreateSjisCodeBuffer( HEAPID heapID );
+extern void		GFL_SKB_DeleteSjisCodeBuffer( void* strbuf );
 

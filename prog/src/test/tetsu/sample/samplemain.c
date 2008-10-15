@@ -83,8 +83,8 @@ static void _sendGamePlay( VecFx32* pVec  );
 #include "samplemain.h"
 
 static const GFL_SKB_SETUP skbData= {
-	NULL, 16,
-	GFL_SKB_MODE_HIRAGANA, TRUE, 0,
+	GFL_SKB_STRLEN_MAX, GFL_SKB_STRTYPE_SJIS,
+	GFL_SKB_MODE_HIRAGANA, TRUE, PAD_BUTTON_START,
 	GFL_SKB_BGID_M1, GFL_SKB_PALID_14, GFL_SKB_PALID_15,
 };
 //------------------------------------------------------------------
@@ -109,6 +109,8 @@ typedef struct {
 	GFL_SKB*		gflSkb;
 	BOOL			gflSkbSw;
 
+	void*			skbStrBuf;
+
 }SAMPLE_WORK;
 
 //------------------------------------------------------------------
@@ -130,12 +132,14 @@ void	SampleBoot( HEAPID heapID )
 	sampleWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SAMPLE_WORK) );
 	sampleWork->heapID = heapID;
 
+	sampleWork->skbStrBuf = GFL_SKB_CreateSjisCodeBuffer( heapID );
 //	GFL_UI_TP_Init( sampleWork->heapID );
 }
 
 void	SampleEnd( void )
 {
 //	GFL_UI_TP_Exit();
+	GFL_SKB_DeleteSjisCodeBuffer( sampleWork->skbStrBuf );
 
 	GFL_HEAP_FreeMemory( sampleWork );
 }
@@ -188,6 +192,8 @@ BOOL	SampleMain( void )
 	case 2:
 		if( sampleWork->gflSkbSw == TRUE ){
 			if( GFL_SKB_Main( sampleWork->gflSkb ) == FALSE ){	
+				OS_Printf( sampleWork->skbStrBuf );
+				OS_Printf("\n");
 				sampleWork->gflSkbSw = FALSE;
 			}
 		} else {
@@ -204,7 +210,8 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-				sampleWork->gflSkb = GFL_SKB_Boot( sampleWork->heapID, &skbData );
+				sampleWork->gflSkb = GFL_SKB_Boot(	sampleWork->skbStrBuf, &skbData,
+													sampleWork->heapID );
 				sampleWork->gflSkbSw = TRUE;
 			}
 		}

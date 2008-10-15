@@ -21,7 +21,17 @@
  *
  */
 //============================================================================================
-typedef struct _GFL_SKB GFL_SKB;
+//=============================================
+//グラフィックアーカイブ内容ＩＤ定義
+enum {
+	NARC_skb_skb_NCGR = 0,
+	NARC_skb_skb_NCLR = 1,
+	NARC_skb_skb_1_NSCR = 2,
+	NARC_skb_skb_2_NSCR = 3,
+	NARC_skb_skb_3_NSCR = 4
+};
+#define CURSOR_CGX (0xfb)
+//=============================================
 
 typedef struct {
 	void*			cgx;
@@ -34,6 +44,8 @@ typedef struct {
 
 struct _GFL_SKB {
 	HEAPID					heapID;
+	void*					strings;
+
 	u32						seq;
 	GFL_SKB_SETUP			setup;
 	u16						wait;
@@ -42,18 +54,21 @@ struct _GFL_SKB {
 	VRAM_SV					vramSv;
 
 	GFL_BMP_DATA*			strBmp;
-	char*					string;
+	char*					stringSjis;
+	u16*					stringUnicode;
 	u32						stringP;
 	u32						stringCnt;
 
 	u32						panelIdx;
+	GFL_BMP_DATA*			cursorBmp;
 };
 
 typedef struct {
-	u16		SjisCode;
+	u16		sjisCode;
 	u16		uniCode;
 }STR_DATA;
 
+#define CHR_SIZ			(0x20)
 #define PLT_SIZ			(0x20)
 #define PUSH_CGX_SIZ	(0x3800)
 #define PUSH_SCR_SIZ	(0x800)
@@ -72,16 +87,19 @@ static void setControl( GFL_SKB_BGID bgID, u16* control );
 static void setScroll( GFL_SKB_BGID bgID, int* x, int* y );
 static void setAlpha( GFL_SKB_BGID bgID );
 
+static void resetStrings( GFL_SKB* gflSkb );
+static void saveStrings( GFL_SKB* gflSkb );
+static void putStrings( GFL_SKB* gflSkb );
+
 static void pushVram
 		( GFL_SKB_BGID bgID, GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, VRAM_SV* vramSv );
 static void popVram
 		( GFL_SKB_BGID bgID, GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, VRAM_SV* vramSv );
-static void makeScreen( GFL_SKB_MODE mode, GFL_SKB_BGID bgID, 
+static void loadScreen( GFL_SKB_MODE mode, GFL_SKB_BGID bgID, 
 						GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, HEAPID heapID );
-static void makeDisplay
+static void loadGraphicData
 	( GFL_SKB_BGID bgID, GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, HEAPID heapID );
 static void resetScrAttr( u16* scr, GFL_SKB_PALID palID );
-static void putStrings( GFL_BMP_DATA* strBmp, const char* string );
 static void lightChangePanel( GFL_SKB_BGID bgID, GFL_SKB_PALID palID, u32 panelIdx );
 static BOOL getTouchPanel( u32* panelOffs );
 
@@ -90,8 +108,10 @@ static BOOL	SKB_Control( GFL_SKB* gflSkb );
 #define BCOL_P (1)
 #define FCOL_P (15)
 
-#define STRBMP_SX	(28)	//入力文字列用bitmap Xsize (キャラ単位)
-#define STRBMP_SY	(1)		//入力文字列用bitmap Ysize (キャラ単位)
+#define STRBMP_SX		(28)	//入力文字列用bitmap Xsize (キャラ単位)
+#define STRBMP_SY		(1)		//入力文字列用bitmap Ysize (キャラ単位)
+#define CURSORBMP_SX	(1)		//カーソル用bitmap Xsize (キャラ単位)
+#define CURSORBMP_SY	(1)		//カーソル用bitmap Ysize (キャラ単位)
 
 #define STRVRAMOFS	(0x3400)		//入力文字列用bitmap キャラアドレスオフセット
 #define STRVRAMSIZ	(STRBMP_SX*0x20)//入力文字列用bitmap データサイズ
@@ -103,9 +123,6 @@ static BOOL	SKB_Control( GFL_SKB* gflSkb );
 #define PANEL_CNTX	(10)	//入力パネルX個数
 #define PANEL_CNTY	(9)		//入力パネルY個数
 #define PANEL_IDX_RESET	(0xffffffff)	//入力パネルIDX初期値
-
-#define STRLEN_MAX	(24)	//入力文字列最大数
-#define STRBUF_SIZ	(sizeof(u16)*STRLEN_MAX +1)	//入力文字列バッファ確保サイズ
 
 enum {
 	END_CODE = 0xffff,
@@ -136,15 +153,20 @@ static const STR_DATA strData3[PANEL_CNTX*PANEL_CNTY];
  *
  */
 //============================================================================================
-GFL_SKB*	GFL_SKB_Boot( HEAPID heapID, const GFL_SKB_SETUP* setup )
+GFL_SKB*	GFL_SKB_Boot( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID )
 {
 	GFL_SKB* gflSkb;
 
 	gflSkb = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), sizeof(GFL_SKB) );
 
 	gflSkb->heapID = heapID;
-	gflSkb->seq = 0;
+	gflSkb->strings = strings;
 	gflSkb->setup = *setup;
+	if( gflSkb->setup.strlen > GFL_SKB_STRLEN_MAX ){
+		gflSkb->setup.strlen = GFL_SKB_STRLEN_MAX;
+	}
+
+	gflSkb->seq = 0;
 	gflSkb->wait = 0;
 	gflSkb->vramSv.cgx = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), PUSH_CGX_SIZ  );
 	gflSkb->vramSv.scr = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), PUSH_SCR_SIZ  );
@@ -152,7 +174,10 @@ GFL_SKB*	GFL_SKB_Boot( HEAPID heapID, const GFL_SKB_SETUP* setup )
 
 	gflSkb->strBmp = GFL_BMP_Create
 						( STRBMP_SX, STRBMP_SY, GFL_BMP_16_COLOR, GetHeapLowID(heapID) );
-	gflSkb->string = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), STRBUF_SIZ );
+	gflSkb->cursorBmp = GFL_BMP_Create
+						( CURSORBMP_SX, CURSORBMP_SY, GFL_BMP_16_COLOR, GetHeapLowID(heapID) );
+	gflSkb->stringSjis = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), GFL_SKB_STRBUF_SIZ );
+	gflSkb->stringUnicode = GFL_HEAP_AllocClearMemory( GetHeapLowID(heapID), GFL_SKB_STRBUF_SIZ );
 	gflSkb->panelIdx = PANEL_IDX_RESET;
 	gflSkb->stringP = 0;
 	gflSkb->stringCnt = 0;
@@ -164,7 +189,9 @@ GFL_SKB*	GFL_SKB_Boot( HEAPID heapID, const GFL_SKB_SETUP* setup )
 void	GFL_SKB_Exit( GFL_SKB* gflSkb )
 {
 	if( gflSkb != NULL ){
-		GFL_HEAP_FreeMemory( gflSkb->string );
+		GFL_HEAP_FreeMemory( gflSkb->stringUnicode );
+		GFL_HEAP_FreeMemory( gflSkb->stringSjis );
+		GFL_BMP_Delete( gflSkb->cursorBmp );
 		GFL_BMP_Delete( gflSkb->strBmp );
 
 		GFL_HEAP_FreeMemory( gflSkb->vramSv.plt );
@@ -173,6 +200,16 @@ void	GFL_SKB_Exit( GFL_SKB* gflSkb )
 		GFL_HEAP_FreeMemory( gflSkb );
 		gflSkb = NULL;
 	}
+}
+
+void*	GFL_SKB_CreateSjisCodeBuffer( HEAPID heapID )
+{
+	return GFL_HEAP_AllocClearMemory( heapID, GFL_SKB_STRBUF_SIZ );
+}
+
+void	GFL_SKB_DeleteSjisCodeBuffer( void* strbuf )
+{
+	GFL_HEAP_FreeMemory( strbuf );
 }
 
 //============================================================================================
@@ -207,10 +244,13 @@ BOOL	GFL_SKB_Main( GFL_SKB* gflSkb )
 		break;
 
 	case SEQ_MAKEDISP:
-		makeDisplay( gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
+		loadGraphicData( gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
 						gflSkb->setup.bgPalID_on, gflSkb->heapID );
-		makeScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
+		loadScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
 						gflSkb->setup.bgPalID_on, gflSkb->heapID );
+		GFL_STD_MemCopy32( (void*)((u32)getCgxPtr(gflSkb->setup.bgID) + CHR_SIZ*CURSOR_CGX),
+							GFL_BMP_GetCharacterAdrs(gflSkb->cursorBmp) , CHR_SIZ );
+		putStrings( gflSkb );
 		gflSkb->seq = SEQ_DISPON;
 		break;
 
@@ -241,6 +281,61 @@ BOOL	GFL_SKB_Main( GFL_SKB* gflSkb )
 		return FALSE;
 	}
 	return TRUE;
+}
+
+//============================================================================================
+static void resetStrings( GFL_SKB* gflSkb )
+{
+	if( gflSkb->strings == NULL ){
+		return;
+	}
+	switch( gflSkb->setup.strtype ){
+	case GFL_SKB_STRTYPE_STRBUF:
+		GFL_STR_ClearBuffer( gflSkb->strings );
+		break;
+	case GFL_SKB_STRTYPE_SJIS:
+		{
+			u16* strings = gflSkb->strings;
+			int i;
+
+			for( i=0; i<gflSkb->setup.strlen; i++ ){
+				strings[i] = 0;
+			}
+		}
+		break;
+	}
+}
+
+static void saveStrings( GFL_SKB* gflSkb )
+{
+	if( gflSkb->strings == NULL ){
+		return;
+	}
+	switch( gflSkb->setup.strtype ){
+	case GFL_SKB_STRTYPE_STRBUF:
+		gflSkb->stringUnicode[gflSkb->stringCnt] = GFL_STR_GetEOMCode();	//終端コード挿入
+		GFL_STR_SetStringCode( gflSkb->strings, gflSkb->stringUnicode );
+		break;
+	case GFL_SKB_STRTYPE_SJIS:
+		GFL_STD_MemCopy( gflSkb->stringSjis, gflSkb->strings, gflSkb->setup.strlen*sizeof(u16) );
+		break;
+	}
+}
+
+static void putStrings( GFL_SKB* gflSkb )
+{
+	GFL_TEXT_PRINTPARAM textParam = { NULL, 0, 0, 1, 1, FCOL_P, BCOL_P, GFL_TEXT_WRITE_16 };
+
+	GFL_BMP_Clear( gflSkb->strBmp, BCOL_P );
+
+	textParam.bmp = gflSkb->strBmp;
+	GFL_TEXT_PrintSjisCode( gflSkb->stringSjis, &textParam );
+
+	if( gflSkb->stringCnt < gflSkb->setup.strlen ){
+		GFL_BMP_Print( gflSkb->cursorBmp, gflSkb->strBmp, 
+						0, 0, textParam.writex, textParam.writey, 8, 8, 0 );
+	}
+	loadCgx(gflSkb->setup.bgID, GFL_BMP_GetCharacterAdrs(gflSkb->strBmp), STRVRAMOFS, STRVRAMSIZ);
 }
 
 //============================================================================================
@@ -283,7 +378,7 @@ static void popVram
 //============================================================================================
 static const char arc_path[] = {"skb.narc"};
 
-static void makeScreen( GFL_SKB_MODE mode, GFL_SKB_BGID bgID, 
+static void loadScreen( GFL_SKB_MODE mode, GFL_SKB_BGID bgID, 
 						GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, HEAPID heapID )
 {
 	NNSG2dScreenData*	scr;
@@ -318,7 +413,7 @@ static void makeScreen( GFL_SKB_MODE mode, GFL_SKB_BGID bgID,
 	GFL_HEAP_FreeMemory( binScr );
 }
 
-static void makeDisplay
+static void loadGraphicData
 	( GFL_SKB_BGID bgID, GFL_SKB_PALID palID, GFL_SKB_PALID palID_on, HEAPID heapID )
 {
 	NNSG2dCharacterData*	cgx;
@@ -352,17 +447,6 @@ static void resetScrAttr( u16* scr, GFL_SKB_PALID palID )
 		scr[i] &= 0x0fff;
 		scr[i] |= palMask;
 	}
-}
-
-//============================================================================================
-static void putStrings( GFL_BMP_DATA* strBmp, const char* string )
-{
-	GFL_TEXT_PRINTPARAM textParam = { NULL, 0, 0, 1, 1, FCOL_P, BCOL_P, GFL_TEXT_WRITE_16 };
-
-	GFL_BMP_Clear( strBmp, BCOL_P );
-
-	textParam.bmp = strBmp;
-	GFL_TEXT_PrintSjisCode( string, &textParam );
 }
 
 //============================================================================================
@@ -795,15 +879,18 @@ static void setAlpha( GFL_SKB_BGID bgID )
  * @brief	メインコントロール	
  *
  */
-static BOOL insertSjisCode( GFL_SKB* gflSkb, u16 code );
+static BOOL insertCode( GFL_SKB* gflSkb, const STR_DATA* strData );
 //============================================================================================
 static BOOL SKB_Control( GFL_SKB* gflSkb )
 {
 	u32 panelIdxNew;
-	u16	code;
+	const STR_DATA* strData;
 
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-		return FALSE;
+	if( gflSkb->setup.cancelKey ){
+		if( GFL_UI_KEY_GetTrg() == gflSkb->setup.cancelKey ){
+			resetStrings( gflSkb );
+			return FALSE;
+		}
 	}
 
 	if( getTouchPanel( &panelIdxNew ) == TRUE ){
@@ -812,75 +899,80 @@ static BOOL SKB_Control( GFL_SKB* gflSkb )
 
 		switch( gflSkb->mode ){
 		case GFL_SKB_MODE_HIRAGANA:
-			code = strData1[gflSkb->panelIdx].SjisCode;
+			strData = strData1;
 			break;
 		case GFL_SKB_MODE_KATAKANA:
-			code = strData2[gflSkb->panelIdx].SjisCode;
+			strData = strData2;
 			break;
 		default:
 		case GFL_SKB_MODE_ENGNUM:
-			code = strData3[gflSkb->panelIdx].SjisCode;
+			strData = strData3;
 			break;
 		}
-		switch( code ){
-		case NON_CODE:
-			break;
-		case END_CODE:
+		lightChangePanel( gflSkb->setup.bgID, gflSkb->setup.bgPalID_on, gflSkb->panelIdx );
+		if( insertCode( gflSkb, &strData[gflSkb->panelIdx] ) == FALSE ){
+			//生成した文字列をモードに合わせてコピー
+			saveStrings( gflSkb );
 			return FALSE;
-
-		case P1_CODE:
-			if( gflSkb->setup.modeChange == TRUE ){
-				gflSkb->mode = GFL_SKB_MODE_HIRAGANA;
-				makeScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
-							gflSkb->setup.bgPalID_on, gflSkb->heapID );
-			}
-			gflSkb->panelIdx = PANEL_IDX_RESET;
-			break;
-		case P2_CODE:
-			if( gflSkb->setup.modeChange == TRUE ){
-				gflSkb->mode = GFL_SKB_MODE_KATAKANA;
-				makeScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
-							gflSkb->setup.bgPalID_on, gflSkb->heapID );
-			}
-			gflSkb->panelIdx = PANEL_IDX_RESET;
-			break;
-		case P3_CODE:
-			if( gflSkb->setup.modeChange == TRUE ){
-				gflSkb->mode = GFL_SKB_MODE_ENGNUM;
-				makeScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
-							gflSkb->setup.bgPalID_on, gflSkb->heapID );
-			}
-			gflSkb->panelIdx = PANEL_IDX_RESET;
-			break;
-
-		default:
-			lightChangePanel( gflSkb->setup.bgID, gflSkb->setup.bgPalID_on, gflSkb->panelIdx );
-			insertSjisCode( gflSkb, code );
-
-			putStrings( gflSkb->strBmp, gflSkb->string );
-			loadCgx( gflSkb->setup.bgID, GFL_BMP_GetCharacterAdrs(gflSkb->strBmp), 
-						STRVRAMOFS, STRVRAMSIZ );
-			break;
 		}
+		putStrings( gflSkb );
 	}
 	return TRUE;
 }
 
 //============================================================================================
-static BOOL insertSjisCode( GFL_SKB* gflSkb, u16 code )
+static BOOL insertCode( GFL_SKB* gflSkb, const STR_DATA* strData )
 {
-	u8 sig;
+	u8	sig;
+	u16 sjisCode;
+	u16 uniCode;
+	int i, p;
 
-	if( code == BS_CODE ){
-		int i, p = 0;
+	sjisCode = strData->sjisCode;
+	uniCode = strData->uniCode;
 
+	switch( sjisCode ){
+	case NON_CODE:
+		break;
+	case END_CODE:
+		return FALSE;
+
+	case P1_CODE:
+		if( gflSkb->setup.modeChange == TRUE ){
+			gflSkb->mode = GFL_SKB_MODE_HIRAGANA;
+			loadScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
+						gflSkb->setup.bgPalID_on, gflSkb->heapID );
+		}
+		gflSkb->panelIdx = PANEL_IDX_RESET;
+		break;
+	case P2_CODE:
+		if( gflSkb->setup.modeChange == TRUE ){
+			gflSkb->mode = GFL_SKB_MODE_KATAKANA;
+			loadScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
+						gflSkb->setup.bgPalID_on, gflSkb->heapID );
+		}
+		gflSkb->panelIdx = PANEL_IDX_RESET;
+		break;
+	case P3_CODE:
+		if( gflSkb->setup.modeChange == TRUE ){
+			gflSkb->mode = GFL_SKB_MODE_ENGNUM;
+			loadScreen( gflSkb->mode, gflSkb->setup.bgID, gflSkb->setup.bgPalID, 
+						gflSkb->setup.bgPalID_on, gflSkb->heapID );
+		}
+		gflSkb->panelIdx = PANEL_IDX_RESET;
+		break;
+
+	case BS_CODE:
+		p = 0;
 		if( gflSkb->stringCnt == 0 ){
-			return FALSE;
+			break;		gflSkb->stringUnicode[gflSkb->stringCnt] = uniCode;
+
 		}
 		gflSkb->stringCnt--;
 
+		//sjisCodeの削除
 		for( i=0; i<gflSkb->stringCnt; i++ ){
-			sig = gflSkb->string[p];
+			sig = gflSkb->stringSjis[p];
 
 			if( ((sig >= 0x81)&&(sig <= 0x9f)) || ((sig >= 0xe0)&&(sig <= 0xff)) ){
 				p++;
@@ -889,29 +981,35 @@ static BOOL insertSjisCode( GFL_SKB* gflSkb, u16 code )
 		}
 		gflSkb->stringP = p;
 
-		while( p<STRBUF_SIZ ){
-			gflSkb->string[p] = 0;
+		while( p<GFL_SKB_STRBUF_SIZ ){
+			gflSkb->stringSjis[p] = 0;
 			p++;
 		}
-		return FALSE;
-	}
-	if( gflSkb->stringCnt >= STRLEN_MAX ){
-		return FALSE;
-	}
-	if( gflSkb->stringP >= STRLEN_MAX * sizeof(u16) ){
-		return FALSE;
-	}
-	sig = (code >>8)&0x00ff;
 
-	if( ((sig >= 0x81)&&(sig <= 0x9f)) || ((sig >= 0xe0)&&(sig <= 0xff)) ){
-		gflSkb->string[gflSkb->stringP] = sig;
+		//uniCodeの削除
+		gflSkb->stringUnicode[gflSkb->stringCnt] = 0;
+		break;
+
+	default:
+		if( gflSkb->stringCnt >= gflSkb->setup.strlen ){
+			break;
+		}
+		//sjisCodeの挿入
+		sig = (sjisCode >>8)&0x00ff;
+
+		if( ((sig >= 0x81)&&(sig <= 0x9f)) || ((sig >= 0xe0)&&(sig <= 0xff)) ){
+			gflSkb->stringSjis[gflSkb->stringP] = sig;
+			gflSkb->stringP++;
+		}
+		gflSkb->stringSjis[gflSkb->stringP] = sjisCode & 0x00ff;
 		gflSkb->stringP++;
+
+		//uniCodeの挿入
+		gflSkb->stringUnicode[gflSkb->stringCnt] = uniCode;
+
+		gflSkb->stringCnt++;
+		break;
 	}
-	gflSkb->string[gflSkb->stringP] = code & 0x00ff;
-	gflSkb->stringP++;
-
-	gflSkb->stringCnt++;
-
 	return TRUE;
 }
 
