@@ -1,10 +1,10 @@
 //======================================================================
 /**
  *
- * @file	field_debug.c
+ * @file	ari_field_name.c
  * @brief	フィールドデバッグ
- * @author	kagaya
- * @data	08.09.29
+ * @author	ariizumi
+ * @data	08.10.07
  */
 //======================================================================
 #include <gflib.h>
@@ -20,6 +20,8 @@
 #include "msg/msg_d_comm_menu.h"
 
 #include "ari_field_menu.h"
+#include "ari_comm_func.h"
+
 
 //======================================================================
 //	define
@@ -81,7 +83,12 @@ enum ARI_COMMMENU_SUB_STATE
 	FMS_INIT_SELECT_TYPE,	//親・子選択
 	FMS_MAIN_SELECT_TYPE,
 	FMS_TERM_SELECT_TYPE,
-	
+	FMS_START_COMM_COMMON,	//通信共通初期化
+	FMS_START_COMM_PARENT,	//親機用初期化	
+	FMS_START_COMM_CHILD,	//子機用初期化
+	FMS_UPDATE_WAIT_CHILD,	    //子機接続待ち
+	FMS_UPDATE_SEARCH_PARENT,   //親機探し中
+
 	
 	//汎用
 	FMS_END,			//終了時に与えるステート
@@ -124,6 +131,7 @@ struct _DEBUG_COMMMENU
 {
 	int seq_no;
 	int main_seq_no;
+	u8  selectItemNo;
 	
 	u32 bgFrame;
 	u32 msgFrame;
@@ -168,13 +176,14 @@ void	AriCommMenu_SetDefault_BmpMenuHeader( DEBUG_COMMMENU *d_menu, BMPMENU_HEADE
 
 void	AriCommMenu_OpenTopMenu( DEBUG_COMMMENU *d_menu );
 void	AriCommMenu_CloseTopMenu( DEBUG_COMMMENU *d_menu );
+void	AriCommMenu_OpenMsgWindow( DEBUG_COMMMENU *d_menu , u32 msgID );
 
 void	AriCommMenu_CloseMainMenu( DEBUG_COMMMENU *d_menu );
 void	AriCommMenu_CloseSubMenu( DEBUG_COMMMENU *d_menu );
 void	AriCommMenu_CloseMsgWindow( DEBUG_COMMMENU *d_menu );
 
 void	AriCommMenu_OpenYesNoMenu( DEBUG_COMMMENU *d_menu );
-u8		AriCommMenu_UpdateYesNoMenu( DEBUG_COMMMENU *d_menu );
+u8	AriCommMenu_UpdateYesNoMenu( DEBUG_COMMMENU *d_menu );
 void	AriCommMenu_ResetYesNoMenu( DEBUG_COMMMENU *d_menu );
 
 void	AriCommMenu_OpenConnectTypeMenu( DEBUG_COMMMENU *d_menu );
@@ -246,7 +255,7 @@ DEBUG_COMMMENU *AriFldMenu_Init( u32 heapID )
 	d_menu->bgFrame = DEBUG_BGFRAME_MENU;
 	d_menu->msgFrame = DEBUG_BGFRAME_MSG;
 	d_menu->subFrame = DEBUG_BGFRAME_SUB;
-	
+
 	{	//bmp font いずれメイン側で
 		GFL_BMPWIN_Init( d_menu->heapID );
 		GFL_FONTSYS_Init();
@@ -309,7 +318,7 @@ DEBUG_COMMMENU *AriFldMenu_Init( u32 heapID )
 	return( d_menu );
 }
 
-//------------------------------------AriFldMenu_Term--------------------------
+//--------------------------------------------------------------
 /**
  * フィールドデバッグメニュー　開放
  * @param	heapID	ヒープID
@@ -396,30 +405,7 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 		PRINT_UTIL_Setup( d_menu->printUtil, d_menu->bmpwin );	
 	}
 
-	//メッセージウィンドウ用初期化
-	{	//window frame
-		BmpWinFrame_GraphicSet( d_menu->msgFrame, 1,
-			DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, d_menu->heapID );
-	}
 
-	//ウィンドウ生成時でも可(たぶん
-	{	//bmpwin
-		d_menu->bmpwin_msg = GFL_BMPWIN_Create( d_menu->msgFrame,
-			D_MSG_CHAR_TOP , D_MSG_CHAR_LEFT , 
-			D_MSG_CHARSIZE_X, D_MSG_CHARSIZE_Y,
-			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
-		d_menu->bmp_msg = GFL_BMPWIN_GetBmp( d_menu->bmpwin_msg );
-		
-		GFL_BMP_Clear( d_menu->bmp_msg, 0xff );
-		GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
-		
-		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
-		GFL_BG_LoadScreenReq( d_menu->bgFrame );
-	}
-
-	{	//msg
-		PRINT_UTIL_Setup( d_menu->printUtilMsg, d_menu->bmpwin_msg );
-	}
 	
 	//選択肢ウィンドウ用初期化
 	{	//window frame
@@ -447,7 +433,7 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 		PRINT_UTIL_Setup( d_menu->printUtilSub, d_menu->bmpwin_sub );
 	}
 	*/
-
+	AriCommMenu_OpenMsgWindow( d_menu , 0 );
 }
 
 //--------------------------------------------------------------
@@ -494,6 +480,44 @@ void	AriCommMenu_CloseMainMenu( DEBUG_COMMMENU *d_menu )
 	GFL_BMPWIN_Delete( d_menu->bmpwin );
 	BmpMenu_Exit( d_menu->bmpmenu, NULL );
 	BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata );
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージウィンドウ汎用開く
+ * @param	d_menu	DEBUG_COMMMENU
+ * @retval	void	
+ */
+//--------------------------------------------------------------
+void	AriCommMenu_OpenMsgWindow( DEBUG_COMMMENU *d_menu , u32 msgID )
+{
+	//メッセージウィンドウ用初期化
+	{	//window frame
+		BmpWinFrame_GraphicSet( d_menu->msgFrame, 1,
+			DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, d_menu->heapID );
+	}
+        //ウィンドウ生成時でも可(たぶん
+	{	//bmpwin
+	    d_menu->bmpwin_msg = GFL_BMPWIN_Create( d_menu->msgFrame,
+	    D_MSG_CHAR_TOP , D_MSG_CHAR_LEFT , 
+	    D_MSG_CHARSIZE_X, D_MSG_CHARSIZE_Y,
+	    DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
+	    d_menu->bmp_msg = GFL_BMPWIN_GetBmp( d_menu->bmpwin_msg );
+
+	    GFL_BMP_Clear( d_menu->bmp_msg, 0xff );
+	    GFL_BMPWIN_MakeScreen( d_menu->bmpwin_msg );
+
+	    GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin_msg );
+	    GFL_BG_LoadScreenReq( d_menu->bgFrame );
+	}
+    
+	{	//msg
+	    PRINT_UTIL_Setup( d_menu->printUtilMsg, d_menu->bmpwin_msg );
+	}
+
+	BmpWinFrame_Write( d_menu->bmpwin_msg,
+	    WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+	AriCommMenu_ChangeExplanation( d_menu , msgID );
 }
 
 //--------------------------------------------------------------
@@ -552,8 +576,6 @@ void	AriCommMenu_OpenTopMenu( DEBUG_COMMMENU *d_menu )
 {
 	{	//window frame
 		BmpWinFrame_Write( d_menu->bmpwin,
-			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
-		BmpWinFrame_Write( d_menu->bmpwin_msg,
 			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
 	}
 		
@@ -818,7 +840,7 @@ void	AriCommMenu_ChangeExplanation( DEBUG_COMMMENU *d_menu , u32 msgID)
 
 //--------------------------------------------------------------
 /**
- * デバッグメニュー　説明文メイン
+ * デバッグメニュー　説明文メインGameServiceID GameServiceID1, GameServiceID GameServiceID2
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	void	
  */
@@ -1006,6 +1028,7 @@ BOOL	AriCommMenu_CommStartMenu( DEBUG_COMMMENU *d_menu )
 		}
 		break;
 	case FMS_GO_COMM_MAIN:
+		AriCommMenu_CloseMsgWindow(d_menu);	
 		d_menu->seq_no = FMS_INIT_SELECT_TYPE;
 		d_menu->main_seq_no = CMS_COMM_MAIN_MENU;
 		
@@ -1024,6 +1047,9 @@ BOOL	AriCommMenu_CommStartMenu( DEBUG_COMMMENU *d_menu )
 //--------------------------------------------------------------
 BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 {
+    PRINTSYS_QUE_Main( d_menu->printQueMsg );
+    if( PRINT_UTIL_Trans(d_menu->printUtilMsg,d_menu->printQueMsg) ){
+    }
 	switch( d_menu->seq_no )
 	{
 	case FMS_INIT_SELECT_TYPE:
@@ -1048,15 +1074,52 @@ BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 				break;
 				
 			default:
-				//d_menu->call_proc = (D_MENU_CALLPROC)ret;
-				//d_menu->seq_no = FMS_TERM_TOPMENU;
+				d_menu->seq_no = FMS_START_COMM_COMMON;
+				d_menu->selectItemNo = BmpMenu_CursorPosGet(d_menu->bmpmenu);
 				break;
 			}
 		}
 		break;
 	case FMS_TERM_SELECT_TYPE:
-		AriCommMenu_CloseTopMenu(d_menu);
+		d_menu->seq_no = FMS_END; 
+		AriCommMenu_CloseMainMenu(d_menu);
 		return(TRUE);
+		break;
+
+	case FMS_START_COMM_COMMON:	//通信共通初期化
+		AriCommMenu_CloseMainMenu(d_menu);
+		FieldComm_InitData( d_menu->heapID );
+		FieldComm_InitSystem();
+		if( d_menu->selectItemNo == 1 ){ d_menu->seq_no = FMS_START_COMM_PARENT; }
+		else			       { d_menu->seq_no = FMS_START_COMM_CHILD;  }
+		break;
+
+	case FMS_START_COMM_PARENT:	//親機用初期化	
+		if( FieldComm_IsFinish_InitSystem() )
+		{
+		    FieldComm_InitParent();
+		    d_menu->seq_no = FMS_UPDATE_WAIT_CHILD;
+		}
+		break;
+
+	case FMS_START_COMM_CHILD:	//子機用初期化
+		if( FieldComm_IsFinish_InitSystem() )
+		{
+		    FieldComm_InitChild();
+		    d_menu->seq_no = FMS_UPDATE_SEARCH_PARENT;
+		    AriCommMenu_OpenMsgWindow( d_menu , DEB_COMM_MENU_STR_80 ); 
+		}
+		break;
+
+	case FMS_UPDATE_WAIT_CHILD:	 //子機接続待ち
+		break;
+	case FMS_UPDATE_SEARCH_PARENT:   //親機探し中
+		{
+		    const int findNum = FieldComm_UpdateSearchParent();
+		    if( findNum > 0 )
+		    {
+		    }
+		}
 		break;
 	}
 	return( FALSE );

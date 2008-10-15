@@ -60,7 +60,8 @@ SRCS	+=		test/testmode.c \
 				test/field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \
 				test/ariizumi/ari_field_main.c \
-				test/ariizumi/ari_field_menu.c
+				test/ariizumi/ari_field_menu.c \
+				test/ariizumi/ari_comm_func.c
 	
 #================================================
 # ここから下はオーバーレイプログラム定義
