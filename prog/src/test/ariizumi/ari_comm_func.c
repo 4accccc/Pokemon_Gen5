@@ -37,6 +37,7 @@ struct _FIELD_COMM_DATA
 
     HEAPID   heapID;
     BOOL isFinishInitSystem;
+    BOOL isError;
 
     FIELD_COMM_TYPE commType;
     FIELD_COMM_MODE commMode;
@@ -65,8 +66,12 @@ void	FieldComm_SendSelfData();
 BOOL	FieldComm_IsFinish_InitSystem(); 
 BOOL	FieldComm_IsFinish_ConnectParent();
 
+BOOL	FieldComm_IsError();
+
 //各種コールバック
 void	InitCommLib_EndCallback( void* pWork );
+void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
+void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
 void*	FieldComm_GetBeaconData(void);
 int	FieldComm_GetBeaconSize(void);
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
@@ -98,6 +103,7 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
     f_comm->commType = FCT_CHILD;
     f_comm->commMode = FCM_2_SINGLE;
     f_comm->isFinishInitSystem = FALSE;
+    f_comm->isError = FALSE;
     
     return f_comm;
 }
@@ -113,25 +119,25 @@ BOOL	FieldComm_InitSystem()
 {
     GFLNetInitializeStruct aGFLNetInit = {
   	FieldCommPostTable,	//NetSamplePacketTbl,  // 受信関数テーブル
-	1,	//NELEMS(_CommPacketTbl), // 受信テーブル要素数
+	NELEMS(FieldCommPostTable), // 受信テーブル要素数
 	NULL,	// ユーザー同士が交換するデータのポインタ取得関数
 	NULL,	// ユーザー同士が交換するデータのサイズ取得関数
 	FieldComm_GetBeaconData,	// ビーコンデータ取得関数  
 	FieldComm_GetBeaconSize,	// ビーコンデータサイズ取得関数 
 	FieldComm_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-	NULL,	//FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-	NULL,	// 通信切断時に呼ばれる関数
+	FieldComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+	FieldComm_DisconnectCallBack,	// 通信切断時に呼ばれる関数
 	NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI
 	NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
 	0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
-	0,	    //元になるheapid
-	0,   //通信用にcreateされるHEAPID
-	0,   //wifi用にGameServiceID GameServiceID1, GameServiceID GameServiceID2createされるHEAPID
+	0,  //下で設定してる //元になるheapid
+	0,  //下で設定してる //通信用にcreateされるHEAPID
+	0,  //下で設定してる //wifi用にGameServiceID GameServiceID1, GameServiceID GameServiceID2createされるHEAPID
 	GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
 	4,//_MAXNUM,	//最大接続人数
-	32,//_MAXSIZE,	//最大送信バイト数
+	48,//_MAXSIZE,	//最大送信バイト数
 	4,//_BCON_GET_NUM,  // 最大ビーコン収集数
 	TRUE,	    // CRC計算
 	FALSE,	    // MP通信＝親子型通信モードかどうか
@@ -303,6 +309,10 @@ BOOL	FieldComm_IsFinish_ConnectParent()
     return FALSE;
 }
 
+BOOL	FieldComm_IsError()
+{
+    return f_comm->isError;
+}
 //--------------------------------------------------------------
 //	以下、各種コールバック
 //--------------------------------------------------------------
@@ -319,7 +329,19 @@ void	InitCommLib_EndCallback( void* pWork )
     f_comm->isFinishInitSystem = TRUE;
 }
 
+//エラー取得コールバック
+void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
+{
+    OS_TPrintf("FieldComm Error!![%d]\n",errNo);
+    f_comm->isError = TRUE;
+}
 
+//切断感知用コールバック
+void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
+{
+    OS_TPrintf("FieldComm Disconnect!!\n");
+    f_comm->isError = TRUE;
+}
 
 //--------------------------------------------------------------
 /**

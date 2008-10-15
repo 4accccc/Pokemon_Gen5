@@ -1358,10 +1358,10 @@ BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 	    case FMS_INIT_WAIT_PARENT:	    //親機開始待ち
 		if( FieldComm_IsFinish_ConnectParent() == TRUE ){
 		    d_menu->seq_no = FMS_LOOP_WAIT_PARENT;
+		    FieldComm_SendSelfData();
 		}
 		break;
 	    case FMS_LOOP_WAIT_PARENT:
-		FieldComm_SendSelfData();
 		break;
 	}
 	return( FALSE );
