@@ -76,8 +76,8 @@ typedef struct {
  *	
  */
 //============================================================================================
-extern GFL_SKB*		GFL_SKB_Boot( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
-extern void			GFL_SKB_Exit( GFL_SKB* gflSkb );	//強制終了したい場合使用
+extern GFL_SKB*		GFL_SKB_Create( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID );
+extern void			GFL_SKB_Delete( GFL_SKB* gflSkb );
 extern BOOL			GFL_SKB_Main( GFL_SKB* gflSkb );	//FALSEで終了
 
 //SjisCode格納用文字列バッファ作成

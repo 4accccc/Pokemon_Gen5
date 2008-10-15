@@ -153,7 +153,7 @@ static const STR_DATA strData3[PANEL_CNTX*PANEL_CNTY];
  *
  */
 //============================================================================================
-GFL_SKB*	GFL_SKB_Boot( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID )
+GFL_SKB*	GFL_SKB_Create( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID )
 {
 	GFL_SKB* gflSkb;
 
@@ -186,7 +186,7 @@ GFL_SKB*	GFL_SKB_Boot( void* strings, const GFL_SKB_SETUP* setup, HEAPID heapID 
 	return gflSkb;
 }
 
-void	GFL_SKB_Exit( GFL_SKB* gflSkb )
+void	GFL_SKB_Delete( GFL_SKB* gflSkb )
 {
 	if( gflSkb != NULL ){
 		GFL_HEAP_FreeMemory( gflSkb->stringUnicode );
@@ -276,8 +276,6 @@ BOOL	GFL_SKB_Main( GFL_SKB* gflSkb )
 
 	case SEQ_END:
 		visibleOn( gflSkb->setup.bgID );
-
-		GFL_SKB_Exit( gflSkb );
 		return FALSE;
 	}
 	return TRUE;

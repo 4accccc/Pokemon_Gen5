@@ -194,6 +194,7 @@ BOOL	SampleMain( void )
 			if( GFL_SKB_Main( sampleWork->gflSkb ) == FALSE ){	
 				OS_Printf( sampleWork->skbStrBuf );
 				OS_Printf("\n");
+				GFL_SKB_Delete(	sampleWork->gflSkb );
 				sampleWork->gflSkbSw = FALSE;
 			}
 		} else {
@@ -210,8 +211,8 @@ BOOL	SampleMain( void )
 				break;
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-				sampleWork->gflSkb = GFL_SKB_Boot(	sampleWork->skbStrBuf, &skbData,
-													sampleWork->heapID );
+				sampleWork->gflSkb = GFL_SKB_Create(	sampleWork->skbStrBuf, &skbData,
+														sampleWork->heapID );
 				sampleWork->gflSkbSw = TRUE;
 			}
 		}
