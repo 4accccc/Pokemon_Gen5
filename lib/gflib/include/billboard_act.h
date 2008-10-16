@@ -156,6 +156,11 @@ extern void	GFL_BBDACT_BindActTexRes( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16
 extern void	GFL_BBDACT_BindActTexResLoad
 			( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u32 arcID, u32 datID );
 
+//------------------------------------------------------------------
+//	ビルボードオブジェクト配列ＩＮＤＥＸ取得
+extern int		GFL_BBDACT_GetBBDActIdxResIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
+//	リソースＩＤＸ取得
+extern u16	GFL_BBDACT_GetResIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
 
 #ifdef __cplusplus
 } /* extern "C" */
