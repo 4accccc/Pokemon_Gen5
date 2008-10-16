@@ -25,6 +25,8 @@
 #define FC_ID			u16
 #define FIELD_COMM_ID_MAX	( 0xFFFE )  //IDの最大値
 #define FIELD_COMM_ID_INVALID	( 0xFFFF )  //IDの無効値
+
+#define FIELD_COMM_MEMBER_MAX	     (4)    //同時にプレイする最大人数
 #define FIELD_COMM_SEARCH_PARENT_NUM (4)    //子機が親機を探して表示する数
 
 #define IS_PARENT		(GFL_NET_IsParentMachine())

@@ -50,6 +50,8 @@
 #define D_SEARCHPARENT_MENU_CHARSIZE_X (16)		//メニュー横幅
 #define D_SEARCHPARENT_MENU_CHARSIZE_Y ((FIELD_COMM_SEARCH_PARENT_NUM+1)*2)		//メニュー縦幅
 
+#define D_WAITCHILD_MENU_CHARSIZE_X (16)		//メニュー横幅
+#define D_WAITCHILD_MENU_CHARSIZE_Y ((FIELD_COMM_MEMBER_MAX+2)*2)		//メニュー縦幅
 
 //======================================================================
 //	enum
@@ -349,6 +351,9 @@ void AriFldMenu_Term( DEBUG_COMMMENU *d_menu )
 	}
 	GFL_BMPWIN_Exit();
 	GFL_HEAP_FreeMemory( d_menu );
+
+	//念のため開放
+	FieldComm_TermSystem();
 }
 
 //--------------------------------------------------------------
@@ -884,7 +889,7 @@ void	AriCommMenu_OpenSearchParentMenu( DEBUG_COMMMENU *d_menu )
 
 //--------------------------------------------------------------
 /**
- * (子機)親機捜索画面生成 
+ * (子機)親機捜索画面更新 
  * @param	d_menu	DEBUG_COMMMENU
  * @retval	void	
  */
@@ -919,7 +924,7 @@ void	AriCommMenu_OpenWaitChildMenu( DEBUG_COMMMENU *d_menu )
 	//ウィンドウ生成時でも可(たぶん
 	{	//bmpwin
 		d_menu->bmpwin = GFL_BMPWIN_Create( d_menu->bgFrame,
-			1, 1, D_SEARCHPARENT_MENU_CHARSIZE_X, D_SEARCHPARENT_MENU_CHARSIZE_Y,
+			1, 1, D_WAITCHILD_MENU_CHARSIZE_X , D_WAITCHILD_MENU_CHARSIZE_Y ,
 			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
 		d_menu->bmp = GFL_BMPWIN_GetBmp( d_menu->bmpwin );
 
@@ -938,7 +943,7 @@ void	AriCommMenu_OpenWaitChildMenu( DEBUG_COMMMENU *d_menu )
 		
 	{	//menu create
 		u32 i;
-		const u32 lmax = FIELD_COMM_SEARCH_PARENT_NUM+2;
+		const u32 lmax = FIELD_COMM_MEMBER_MAX+2;
 		BMPMENU_HEADER head;
 		const DEBUG_MENU_LIST *d_menu_list;
 			
@@ -989,6 +994,30 @@ void	AriCommMenu_OpenWaitChildMenu( DEBUG_COMMMENU *d_menu )
 //--------------------------------------------------------------
 void	AriCommMenu_UpdateWaitChildMenu( DEBUG_COMMMENU *d_menu )
 {
+        BmpMenu_RedrawString( d_menu->bmpmenu );
+	return;
+    if( FieldComm_IsDutyMemberData() == TRUE ){
+	const u8 memberNum = FieldComm_GetMemberNum();
+	u8 i=0;
+        //STRBUF *tempBuf;
+	for( i=0 ; i<memberNum ; i++ )
+        {
+	    //FIXME: IDが実装されたら、ID比較で名前の更新をする
+	    //tempBuf = GFL_STR_CreateBuffer( FIELD_COMM_NAME_LENGTH , d_menu->heapID );
+	    //FieldComm_GetSearchParentData( i , tempBuf );
+	    const BOOL ret = FieldComm_GetMemberName( i , (STRBUF*)d_menu->menulistdata[i].str );
+	    if( ret == FALSE ){
+		//データ取得失敗
+		GFL_MSG_GetString( d_menu->msgdata , DEB_COMM_EMPTYNAME , (STRBUF*)d_menu->menulistdata[i].str );
+	    }
+        }
+	for( ; i< FIELD_COMM_MEMBER_MAX ; i++ )
+	{
+	    GFL_MSG_GetString( d_menu->msgdata , DEB_COMM_EMPTYNAME , (STRBUF*)d_menu->menulistdata[i].str );
+	}
+        BmpMenu_RedrawString( d_menu->bmpmenu );
+	FieldComm_ResetDutyMemberData();
+    }
 }
 
 
