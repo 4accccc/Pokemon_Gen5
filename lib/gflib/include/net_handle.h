@@ -175,13 +175,6 @@ extern void GFL_NET_HANDLE_RecvNegotiation(const int netID, const int size, cons
 extern void GFL_NET_HANDLE_RecvNegotiationReturn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 //==============================================================================
 /**
- * @brief   自分のマシンのハンドルを帰す
- * @retval  GFL_NETHANDLE
- */
-//==============================================================================
-extern GFL_NETHANDLE* GFL_NET_HANDLE_GetCurrentHandle(void);
-//==============================================================================
-/**
  * @brief       ネゴシエーション開始を親に送信する
  * @return      送信に成功したらTRUE
  */

@@ -382,6 +382,14 @@ extern const GFL_NETHANDLE* GFL_NET_HANDLE_Get(int netID);
 
 //==============================================================================
 /**
+ * @brief   自分のマシンのハンドルを帰す
+ * @retval  GFL_NETHANDLE
+ */
+//==============================================================================
+extern GFL_NETHANDLE* GFL_NET_HANDLE_GetCurrentHandle(void);
+
+//==============================================================================
+/**
  * @brief   通信可能状態かどうか
  * @param   GFL_NET_HANDLE  ハンドル
  * @return  BOOL 通信可能ならTRUE

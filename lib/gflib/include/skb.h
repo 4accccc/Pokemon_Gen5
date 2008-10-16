@@ -6,6 +6,13 @@
  * @date	
  */
 //============================================================================================
+//
+//	使用の際にはgraphicフォルダ内のskb.narcをルートに配置してください
+//	（"skb.narc"パス指定で取得できる場所）
+//	また、システムフォント初期化 GFL_TEXT_CreateSystem() も事前に行っておいてください。
+//
+//	使用BG面のコントロールレジスタは呼び出し元で設定された状態に依存します。
+//	
 typedef struct _GFL_SKB GFL_SKB;
 
 #define GFL_SKB_STRLEN_MAX	(24)	//入力文字列最大数
@@ -61,7 +68,7 @@ typedef struct {
 
 	GFL_SKB_MODE	mode;			//初期モード
 	BOOL			modeChange;		//モード変更可否フラグ
-	u32				cancelKey;		//中断キー判定トリガ
+	u32				cancelKey;		//中断キー判定トリガ(0で中断不可)
 
 	GFL_SKB_BGID	bgID;			//使用BGVRAMID
 	GFL_SKB_PALID	bgPalID;		//使用BGパレットID
