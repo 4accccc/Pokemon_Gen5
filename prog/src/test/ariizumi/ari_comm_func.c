@@ -12,6 +12,7 @@
 #include "net/network_define.h"
 #include "textprint.h"
 #include "arc_def.h"
+#include "system/main.h"
 
 
 #include "ari_comm_func.h"
@@ -128,7 +129,7 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
     return f_comm;
 }
 
-//--------------------------------------------------------------
+//-------------------------GFL_NET_HANDLE_RecvNegotiation-------------------------------------
 /**
  * 通信ライブラリ開放
  * @param	heapID	ヒープID
@@ -170,9 +171,9 @@ BOOL	FieldComm_InitSystem()
 	NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
 	0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
-	0,  //下で設定してる //元になるheapid
-	0,  //下で設定してる //通信用にcreateされるHEAPID
-	0,  //下で設定してる //wifi用にGameServiceID GameServiceID1, GameServiceID GameServiceID2createされるHEAPID
+	GFL_HEAPID_APP,  //元になるheapid
+        HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+	HEAPID_WIFI,  //wifi用にcreateされるHEAPID
 	GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
 	4,//_MAXNUM,	//最大接続人数
 	48,//_MAXSIZE,	//最大送信バイト数
@@ -184,9 +185,9 @@ BOOL	FieldComm_InitSystem()
 	1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
     };
 
-    aGFLNetInit.baseHeapID = f_comm->heapID;
-    aGFLNetInit.netHeapID  = f_comm->heapID+1;
-    aGFLNetInit.wifiHeapID = f_comm->heapID+2;
+    //aGFLNetInit.baseHeapID = GFL_HEAPID_APP;
+    //aGFLNetInit.netHeapID  = GFL_HEAPID_APP;
+    //aGFLNetInit.wifiHeapID = GFL_HEAPID_APP;
 
   
 

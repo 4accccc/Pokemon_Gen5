@@ -1376,10 +1376,10 @@ BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 	    case FMS_UPDATE_WAIT_CHILD:	 //Žq‹@Ú‘±‘Ò‚¿
 		{
 		    const u32 ret = BmpMenu_Main( d_menu->bmpmenu );
+		    AriCommMenu_UpdateWaitChildMenu( d_menu );
 		    PRINTSYS_QUE_Main( d_menu->printQue );
 		    if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
 		    }
-		    AriCommMenu_UpdateWaitChildMenu( d_menu );
 		}
 		break;
 
