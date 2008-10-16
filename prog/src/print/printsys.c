@@ -1235,7 +1235,7 @@ static void Que_StoreNewJob( PRINT_QUE* que, PRINT_JOB* printJob, const STRBUF* 
 		}
 		pos = Que_AdrsToBufPos( que, job );
 		pos = Que_FwdBufPos( que, pos, sizeof(PRINT_JOB) );
-		Que_WriteData( que, (const u8*)(&store_adrs), sizeof(store_adrs), sizeof(store_adrs) );
+		Que_WriteData( que, (const u8*)(&store_adrs), pos, sizeof(store_adrs) );
 	}
 	else
 	{
