@@ -47,6 +47,17 @@ typedef struct
 }DEBUG_MENU_LIST;
 
 //--------------------------------------------------------------
+///	DEBUG_MENU_LISTTBL
+//--------------------------------------------------------------
+typedef struct
+{
+	u16 charsize_x;
+	u16 charsize_y;
+	u32 max;
+	const DEBUG_MENU_LIST *list;
+}DEBUG_MENU_LISTTBL;
+
+//--------------------------------------------------------------
 ///	DEBUG_FLDMENU
 //--------------------------------------------------------------
 struct _TAG_DEBUG_FLDMENU
@@ -54,6 +65,8 @@ struct _TAG_DEBUG_FLDMENU
 	HEAPID heapID;	//デバッグ用ヒープID
 	FIELD_MAIN_WORK *fieldWork;
 	
+	u32 menu_num;
+
 	int seq_no;
 	u32 bgFrame;
 	GFL_BMP_DATA *bmp;
@@ -74,29 +87,82 @@ struct _TAG_DEBUG_FLDMENU
 //======================================================================
 //	proto
 //======================================================================
-static void DMenuCallProc_Test( DEBUG_FLDMENU *wk );
-static void DMenuCallProc_Test1( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_GridCamera( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk );
 
 //======================================================================
 //	メニューリスト一覧
 //======================================================================
 //--------------------------------------------------------------
-///	デバッグメニューリスト一覧
+///	デバッグメニューリスト　汎用
 //--------------------------------------------------------------
 static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
-	{ DEBUG_FIELD_STR01, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR02, DMenuCallProc_Test1 },
-	{ DEBUG_FIELD_STR03, NULL },
-	{ DEBUG_FIELD_STR04, NULL },
-	{ DEBUG_FIELD_STR05, NULL },
-	{ DEBUG_FIELD_STR06, NULL },
-	{ DEBUG_FIELD_STR07, NULL },
-	{ DEBUG_FIELD_STR08, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+};
+
+//--------------------------------------------------------------
+///	デバッグメニューリスト	グリッド実験マップ用
+//--------------------------------------------------------------
+static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
+{
+	{ DEBUG_FIELD_STR02, DMenuCallProc_GridCamera },
+	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
+	
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+};
+
+//--------------------------------------------------------------
+///	デバッグメニューリストテーブル
+//--------------------------------------------------------------
+static const DEBUG_MENU_LISTTBL DATA_DebugMenuListTbl[] =
+{
+	{	//実験マップ 橋
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
+		NELEMS(DATA_DebugMenuList),
+		DATA_DebugMenuList
+	},
+	{	//サンプルマップ 金銀
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
+		NELEMS(DATA_DebugMenuList),
+		DATA_DebugMenuList
+	},
+	{	//実験マップ　グリッド移動
+		11,
+		16,
+		NELEMS(DATA_DebugMenuListGrid),
+		DATA_DebugMenuListGrid
+	},
+	{	//実験マップ　橋
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
+		NELEMS(DATA_DebugMenuList),
+		DATA_DebugMenuList
+	},
+	{	//実験マップ　プランナー作成マップ
+		D_MENU_CHARSIZE_X,
+		D_MENU_CHARSIZE_Y,
+		NELEMS(DATA_DebugMenuList),
+		DATA_DebugMenuList
+	},
 };
 
 //メニュー最大数
-#define D_MENULIST_MAX (NELEMS(DATA_DebugMenuList))
+#define D_MENULISTTBL_MAX (NELEMS(DATA_DebugMenuListTbl))
 
 //======================================================================
 //	フィールドデバッグメニュー
@@ -108,7 +174,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
  * @retval	DEBUG_FLDMENU
  */
 //--------------------------------------------------------------
-DEBUG_FLDMENU * FldDebugMenu_Init( FIELD_MAIN_WORK *fieldWork, u32 heapID )
+DEBUG_FLDMENU * FldDebugMenu_Init(
+	FIELD_MAIN_WORK *fieldWork, u32 menu_num, u32 heapID )
 {
 	DEBUG_FLDMENU *d_menu;
 	
@@ -117,6 +184,13 @@ DEBUG_FLDMENU * FldDebugMenu_Init( FIELD_MAIN_WORK *fieldWork, u32 heapID )
 	d_menu->heapID = heapID;
 	d_menu->fieldWork = fieldWork;
 	d_menu->bgFrame = DEBUG_BGFRAME_MENU;
+	
+	if( menu_num >= D_MENULISTTBL_MAX ){
+		OS_Printf( "debug menu number error\n" );
+		menu_num = 0;
+	}
+
+	d_menu->menu_num = menu_num;
 	
 	{	//bmp font いずれメイン側で
 		GFL_BMPWIN_Init( d_menu->heapID );
@@ -190,8 +264,11 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 	}
 	
 	{	//bmpwin
+		const DEBUG_MENU_LISTTBL *d_menu_tbl;
+		d_menu_tbl = &DATA_DebugMenuListTbl[d_menu->menu_num];
+
 		d_menu->bmpwin = GFL_BMPWIN_Create( d_menu->bgFrame,
-			1, 1, D_MENU_CHARSIZE_X, D_MENU_CHARSIZE_Y,
+			1, 1, d_menu_tbl->charsize_x, d_menu_tbl->charsize_y,
 			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
 		d_menu->bmp = GFL_BMPWIN_GetBmp( d_menu->bmpwin );
 		
@@ -243,8 +320,11 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			u32 i,lmax;
 			BMPMENU_HEADER head;
 			const DEBUG_MENU_LIST *d_menu_list;
+			const DEBUG_MENU_LISTTBL *d_menu_tbl;
 			
-			lmax = D_MENULIST_MAX;
+			d_menu_tbl = &DATA_DebugMenuListTbl[d_menu->menu_num];
+			d_menu_list = d_menu_tbl->list;
+			lmax = d_menu_tbl->max;
 			
 			head.x_max = 1;
 			head.y_max = lmax;
@@ -262,8 +342,6 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 
 			d_menu->menulistdata =
 				BmpMenuWork_ListCreate( lmax, d_menu->heapID );
-			
-			d_menu_list = DATA_DebugMenuList;
 			
 			for( i = 0; i < lmax; i++ ){
 				BmpMenuWork_ListAddArchiveString(
@@ -336,7 +414,7 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 }
 
 //======================================================================
-//	デバッグメニュー呼び出し　テスト
+//	デバッグメニュー呼び出し
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -345,7 +423,7 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DMenuCallProc_Test( DEBUG_FLDMENU *wk )
+static void DMenuCallProc_GridCamera( DEBUG_FLDMENU *wk )
 {
 	DEBUG_FLDMENU *d_menu = wk;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
@@ -356,12 +434,12 @@ static void DMenuCallProc_Test( DEBUG_FLDMENU *wk )
 
 //--------------------------------------------------------------
 /**
- * デバッグメニュー呼び出し　テスト
+ * デバッグメニュー呼び出し　グリッド用スケール切り替え
  * @param	wk	DEBUG_FLDMENU*
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DMenuCallProc_Test1( DEBUG_FLDMENU *wk )
+static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk )
 {
 	DEBUG_FLDMENU *d_menu = wk;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;

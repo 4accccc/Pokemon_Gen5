@@ -168,7 +168,8 @@ BOOL	FieldMain( void )
 			}
 			
 			{	//デバッグメニュー
-				fieldWork->d_menu = FldDebugMenu_Init( fieldWork, fieldWork->heapID );
+				fieldWork->d_menu = FldDebugMenu_Init(
+						fieldWork, fieldWork->mapNum, fieldWork->heapID );
 			}
 
             fieldWork->seq++;

@@ -25,7 +25,7 @@ typedef struct _TAG_DEBUG_FLDMENU DEBUG_FLDMENU;
 //	extern
 //======================================================================
 extern DEBUG_FLDMENU * FldDebugMenu_Init(
-		FIELD_MAIN_WORK *fieldWork, u32 heapID );
+		FIELD_MAIN_WORK *fieldWork, u32 menu_num, u32 heapID );
 extern void FldDebugMenu_Delete( DEBUG_FLDMENU *d_menu );
 extern void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu );
 extern BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu );

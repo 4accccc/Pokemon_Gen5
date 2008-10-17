@@ -95,7 +95,7 @@ void BmpMenuWork_ListAddArchiveString( BMP_MENULIST_DATA* list,
 
 	if( list )
 	{
-		u32 len = 16;	//msgdataから引っ張るのが必要
+		u32 len = 32;	//msgdataから引っ張るのが必要
 		list->str = GFL_STR_CreateBuffer( len, heap_id );
 		GFL_MSG_GetString( msgdata, strID, (STRBUF*)list->str );
 		list->param = param;
