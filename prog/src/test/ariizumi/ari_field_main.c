@@ -756,9 +756,11 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 
 //============================================================================================
 //============================================================================================
+#if 0
 #include "test/field/field_sub_normal.c"
 #include "test/field/field_sub_nogrid.c"
 #include "test/field/field_sub_grid.c"
+#endif
 
 #if 0
 const DEPEND_FUNCTIONS FieldBaseFunctions = {
