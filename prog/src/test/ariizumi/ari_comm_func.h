@@ -52,10 +52,13 @@ extern BOOL	FieldComm_IsValidParentData( const u8 idx );
 extern void	FieldComm_ConnectParent( u8 idx );
 extern u8	FieldComm_GetMemberNum();
 extern BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name );
+extern u8	FieldComm_GetSelfIndex();
 
 //送受信関数
 extern void	FieldComm_SendSelfData();
 extern void	FieldComm_SendStartMode();
+extern void FieldComm_SendSelfPosition( const VecFx32 *pos , const u16 *dir );
+extern void FieldComm_PostPlayerPosition( const u8 id , VecFx32 *pos , u16 *dir );
 
 //チェック関数
 extern BOOL	FieldComm_IsFinish_ConnectParent();

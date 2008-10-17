@@ -14,13 +14,17 @@
 #include "arc_def.h"
 #include "system/main.h"
 
-
+#include "ari_debug.h"
 #include "ari_comm_func.h"
 #include "ari_comm_def.h"
 //======================================================================
 //	define
 //======================================================================
+#define FIELD_COMM_PLAYERDATA_POST_BUFFER_NUM ( FIELD_COMM_MEMBER_MAX*5 )
+#define FIELD_COMM_PLAYERDATA_POST_BUFFER_SIZE (sizeof(FIELD_COMM_PLAYER_DATA)*FIELD_COMM_PLAYERDATA_POST_BUFFER_NUM)
 
+#define FIELD_COMM_CONV_DIR_TO_COMMDIR(v) (v/256)
+#define FIELD_COMM_CONV_COMMDIR_TO_DIR(v) (v*256)
 //======================================================================
 //	enum
 //======================================================================
@@ -28,7 +32,14 @@
 //======================================================================
 //	typedef struct
 //======================================================================
-
+typedef struct 
+{
+	u32 posX:12;
+	u32 posZ:12;
+	u32 dir:8;
+	u16 posY;
+	u16 pad2;
+}FIELD_COMM_PLAYER_DATA;
 //======================================================================
 //	FIELD_COMM_DATA
 //======================================================================
@@ -47,7 +58,12 @@ struct _FIELD_COMM_DATA
 
 	//仲間データ
 	u8			memberNum;
-	FIELD_COMM_BEACON	*memberData;
+	FIELD_COMM_BEACON		*memberData;	//名前とID
+	FIELD_COMM_PLAYER_DATA	*playerData;	//座標とか
+
+	u8	playerDataPostBuffIdx;
+	u8	*playerDataPostBuff;
+	FIELD_COMM_PLAYER_DATA selfData;	//送信バッファ代わり
 
 	GFL_NETHANDLE   *selfHandle;	//自身の通信ハンドル
 };
@@ -67,12 +83,15 @@ u8		FieldComm_UpdateSearchParent();
 BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name );
 u8		FieldComm_GetMemberNum();
 BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name );
+u8		FieldComm_GetSelfIndex();
 
 BOOL	FieldComm_IsValidParentData( u8 idx );
 
 //送受信関係
 void	FieldComm_SendSelfData();
 void	FieldComm_SendStartMode();
+void	FieldComm_SendSelfPosition( const VecFx32 *pos , const u16 *dir);
+void	FieldComm_PostPlayerPosition( const u8 id , VecFx32 *pos , u16 *dir);
 
 //チェック関数
 BOOL	FieldComm_IsFinish_InitSystem(); 
@@ -96,10 +115,12 @@ void FieldComm_Post_FirstBeacon(const int netID, const int size, const void* pDa
 void FieldComm_Post_StartMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 void FieldComm_Post_PlayerData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
+u8*	 FieldComm_Post_PlayerData_Buff( int netID, void* pWork , int size );
+
 static const NetRecvFuncTable FieldCommPostTable[] = {
 	{ FieldComm_Post_FirstBeacon , NULL },
 	{ FieldComm_Post_StartMode   , NULL },
-	{ FieldComm_Post_PlayerData  , NULL },
+	{ FieldComm_Post_PlayerData  , FieldComm_Post_PlayerData_Buff},
 };
 //--------------------------------------------------------------
 /**
@@ -125,15 +146,18 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
 
 	f_comm->memberNum = 0;
 	f_comm->memberData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_BEACON ) * FIELD_COMM_MEMBER_MAX );
+	f_comm->playerData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_PLAYER_DATA	) * FIELD_COMM_MEMBER_MAX );
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 	{
 		f_comm->memberData[i].id = FIELD_COMM_ID_INVALID;
 	}
+	f_comm->playerDataPostBuff = GFL_HEAP_AllocClearMemory( heapID , FIELD_COMM_PLAYERDATA_POST_BUFFER_SIZE );
+	f_comm->playerDataPostBuffIdx = 0;
 
 	return f_comm;
 }
 
-//-------------------------GFL_NET_HANDLE_RecvNegotiation-------------------------------------
+//--------------------------------------------------------------
 /**
  * 通信ライブラリ開放
  * @param	heapID	ヒープID
@@ -146,6 +170,8 @@ void	FieldComm_TermSystem()
 		OS_TPrintf("FieldComm System is not init.\n");
 		return;
 	}
+	GFL_HEAP_FreeMemory( f_comm->playerDataPostBuff);
+	GFL_HEAP_FreeMemory( f_comm->playerData );
 	GFL_HEAP_FreeMemory( f_comm->memberData );
 	GFL_HEAP_FreeMemory( f_comm );
 	f_comm = NULL;
@@ -309,6 +335,15 @@ BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name )
 	GFL_STR_SetStringCode( name , f_comm->memberData[idx].name );
 	return TRUE;
 }
+
+//自機番号の取得
+u8		FieldComm_GetSelfIndex()
+{
+	return GFL_NET_GetNetID( f_comm->selfHandle )-1;
+}
+
+
+
 //--------------------------------------------------------------
 /**
  *  親機探し 親機に接続 
@@ -354,6 +389,35 @@ void	FieldComm_SendStartMode()
 				&dummy , FALSE , TRUE , FALSE );
 		if( ret == FALSE ){ OS_TPrintf("FieldComm Data send is failued!!\n"); }
 	}
+}
+
+//自分の座標の送信
+void FieldComm_SendSelfPosition( const VecFx32 *pos , const u16 *dir )
+{
+	f_comm->selfData.posX = (u16)(FX_FX32_TO_F32(pos->x));
+	f_comm->selfData.posZ = (u16)(FX_FX32_TO_F32(pos->z));
+	f_comm->selfData.posY = (u16)(FX_FX32_TO_F32(pos->y));
+	
+	f_comm->selfData.dir = FIELD_COMM_CONV_DIR_TO_COMMDIR(*dir);
+
+	{
+		const BOOL ret = GFL_NET_SendDataEx( f_comm->selfHandle , 
+				GFL_NET_SENDID_ALLUSER , FC_CMD_PLAYER_DATA , sizeof(FIELD_COMM_PLAYER_DATA) ,
+				&f_comm->selfData , FALSE , TRUE , TRUE );
+		if( ret == FALSE ){ OS_TPrintf("FieldComm PlayerData send is failued!!\n"); }
+	}
+
+}
+
+//座標の取得
+void FieldComm_PostPlayerPosition( const u8 id , VecFx32 *pos , u16 *dir)
+{
+	const FIELD_COMM_PLAYER_DATA *data = &f_comm->playerData[id];
+	
+	pos->x = FX32_CONST( data->posX );
+	pos->y = FX32_CONST( data->posY );
+	pos->z = FX32_CONST( data->posZ );
+	*dir   = FIELD_COMM_CONV_COMMDIR_TO_DIR(data->dir);
 }
 
 //--------------------------------------------------------------
@@ -411,6 +475,7 @@ void	FieldComm_ResetDutyMemberData()
 //通信モードが開始しているか？
 BOOL	FieldComm_IsStartCommMode()
 {
+	if( f_comm == NULL ){return FALSE;}
 	return f_comm->isStartMode;
 }
 
@@ -508,8 +573,30 @@ void FieldComm_Post_StartMode(const int netID, const int size, const void* pData
 
 void FieldComm_Post_PlayerData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-	OS_TPrintf("FieldComm getData[PlayerData]\n");
+//	OS_TPrintf("FieldComm getData[PlayerData]\n");
+	
+	if( netID == 0 ) return;
+		//netID=0はとりあえず考慮しない
+	GFL_STD_MemCopy( pData , &f_comm->playerData[netID-1] , sizeof( FIELD_COMM_PLAYER_DATA ) );
+	
+	ARI_TPrintf("FieldComm PostData id[%d] pos[%d][%d][%d]\n",netID-1
+			,f_comm->playerData[netID-1].posX
+			,f_comm->playerData[netID-1].posY
+			,f_comm->playerData[netID-1].posZ);
 }
 
+u8*	 FieldComm_Post_PlayerData_Buff( int netID, void* pWork , int size )
+{
+	u8* pPos = f_comm->playerDataPostBuff + f_comm->playerDataPostBuffIdx*sizeof( FIELD_COMM_PLAYER_DATA);	
+	
+//	ARI_TPrintf("FieldComm PostBuff id[%d] size[%d]->set[%d]\n",netID,size,f_comm->playerDataPostBuffIdx);
+
+	f_comm->playerDataPostBuffIdx++;
+	if( f_comm->playerDataPostBuffIdx >= FIELD_COMM_PLAYERDATA_POST_BUFFER_NUM ){
+		f_comm->playerDataPostBuffIdx = 0;
+	}
+
+	return pPos;
+}
 
 

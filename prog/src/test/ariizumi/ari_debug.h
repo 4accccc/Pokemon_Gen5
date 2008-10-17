@@ -26,4 +26,6 @@
 #define ARI_Printf(...)  ((void)0)
 #endif //DEB_ARI
 
+#define F32_CONST(v)	FX_FX32_TO_F32(v)
+
 #endif //ARI_DEBUG_H__

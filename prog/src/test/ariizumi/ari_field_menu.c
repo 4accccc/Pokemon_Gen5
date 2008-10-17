@@ -19,6 +19,7 @@
 #include "msg/msg_d_field.h"
 #include "msg/msg_d_comm_menu.h"
 
+#include "ari_debug.h"
 #include "ari_field_menu.h"
 #include "ari_comm_func.h"
 #include "ari_comm_def.h"
@@ -383,8 +384,13 @@ void AriFldMenu_Delete( DEBUG_COMMMENU *d_menu )
 void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 {
 	{	//work
+#if DEB_ARI
+		d_menu->seq_no = FMS_INIT_SELECT_TYPE;
+		d_menu->main_seq_no = CMS_COMM_MAIN_MENU;
+#else
 		d_menu->seq_no = FMS_INIT_TOPMENU;
 		d_menu->main_seq_no = CMS_COMM_START_MENU;
+#endif
 	}
 	
 	{	//window frame
@@ -1378,6 +1384,7 @@ BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 	case FMS_UPDATE_WAIT_CHILD:	 //Žq‹@Ú‘±‘Ò‚¿
 		{
 			const u32 ret = BmpMenu_Main( d_menu->bmpmenu );
+			ARI_TPrintf("FieldComm Wait[%d]\n",GFL_NET_GetConnectNum());
 			AriCommMenu_UpdateWaitChildMenu( d_menu );
 			PRINTSYS_QUE_Main( d_menu->printQue );
 			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
@@ -1418,6 +1425,7 @@ BOOL	AriCommMenu_CommMainMenu( DEBUG_COMMMENU *d_menu )
 		break;
 
 	case FMS_LOOP_WAIT_PARENT:
+		ARI_TPrintf("FieldComm Wait[%d]\n",GFL_NET_GetConnectNum());
 		if( FieldComm_IsStartCommMode() == TRUE ){
 			d_menu->seq_no = FMS_WAIT_COMM_MODE;
 		}

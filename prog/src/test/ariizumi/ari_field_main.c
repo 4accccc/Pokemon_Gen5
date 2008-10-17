@@ -14,9 +14,6 @@
 #include "textprint.h"
 #include "arc_def.h"
 
-void	AriFieldBoot( HEAPID heapID );
-void	AriFieldEnd( void );
-BOOL	AriFieldMain( void );
 
 #include "test/field/field_g3d_mapper.h"
 #include "test/field/field_net.h"
@@ -28,6 +25,8 @@ BOOL	AriFieldMain( void );
 #include "test/field/field_camera.h"
 
 #include "ari_field_menu.h"
+#include "ari_comm_def.h"
+#include "ari_comm_func.h"
 #include "ari_debug.h"
 //============================================================================================
 /**
@@ -51,6 +50,10 @@ static void				MainGameSystem( FIELD_SETUP* gs );
 
 static void _sendGamePlay( VecFx32* pVec  );
 
+void	AriFieldBoot( HEAPID heapID );
+void	AriFieldEnd( void );
+BOOL	AriFieldMain( void );
+void	AriFieldCommMain( );
 
 
 typedef enum {
@@ -77,6 +80,7 @@ typedef struct {
 	PC_ACTCONT*		pcActCont;
 //	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
+
 	int				mapNum;
 	
 	int				key_cont;
@@ -87,6 +91,11 @@ typedef struct {
 	void *pGridCont;
 }FIELD_WORK;
 
+typedef struct
+{
+	PC_ACTCONT*	commActCnt[FIELD_COMM_MEMBER_MAX];
+	BOOL			isInitComm;
+}COMM_FIELD_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct _DEPEND_FUNCTIONS{
@@ -103,6 +112,7 @@ struct _DEPEND_FUNCTIONS{
 static BOOL GameEndCheck( int cont );
 
 FIELD_WORK* ariFieldWork;
+COMM_FIELD_WORK* ariCommField = NULL;
 
 static BOOL DebugMenuProc( FIELD_WORK *fldWork );
 
@@ -116,6 +126,9 @@ void	AriFieldBoot( HEAPID heapID )
 	ariFieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WORK) );
 	ariFieldWork->heapID = heapID;
 	ariFieldWork->gamemode = GAMEMODE_NORMAL;
+	
+	ariCommField = GFL_HEAP_AllocClearMemory( heapID , sizeof(COMM_FIELD_WORK));
+	ariCommField->isInitComm = FALSE;
 
 //	GFL_UI_TP_Init( ariFieldWork->heapID );
 }
@@ -208,7 +221,7 @@ BOOL	AriFieldMain( void )
 			//Mapシステムに位置を渡している。これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(ariFieldWork->gs), &pos );
 			
-			ARI_Printf("POS:[%5.2f][%5.2f][%5.2f]\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+			AriFieldCommMain();
 		}
 		MainGameSystem( ariFieldWork->gs );
 		break;
@@ -803,4 +816,50 @@ static BOOL DebugMenuProc( FIELD_WORK *fldWork )
 		}
 	}
 	return fldWork->d_menu_flag;
+}
+
+
+//通信メイン処理
+void	AriFieldCommMain( )
+{
+	if( FieldComm_IsStartCommMode() == FALSE )return;
+	{
+		VecFx32 plPos;
+		u16 plDir;
+		const int plNum = GFL_NET_GetConnectNum();
+
+		GetPlayerActTrans( ariFieldWork->pcActCont , &plPos );
+		GetPlayerActDirection( ariFieldWork->pcActCont , &plDir );
+		
+		if( ariCommField->isInitComm == FALSE ){
+			//初期化処理
+			u8 i;
+			for( i=0 ; i<plNum ; i++ ){
+				ariCommField->commActCnt[i] = CreatePlayerAct( ariFieldWork->gs , ariFieldWork->heapID );
+			}
+
+			ariCommField->isInitComm = TRUE;
+			//初期化が終わったら、一回帰る
+			return;
+		}
+		{
+			u8 i;
+			
+			//自身の座標の送信
+			ARI_Printf("ID[%d/%d] POS:[%5.2f][%5.2f][%5.2f]\n",FieldComm_GetSelfIndex(),plNum,F32_CONST(plPos.x),F32_CONST(plPos.y),F32_CONST(plPos.z));
+			FieldComm_SendSelfPosition( &plPos , &plDir);
+			
+			//プレイヤーの更新
+			for( i=0;i<plNum;i++ ){
+				if( FieldComm_GetSelfIndex() != i )
+				{
+					VecFx32 pos;
+					u16     dir;
+					FieldComm_PostPlayerPosition( i , &pos , &dir );
+					SetPlayerActTrans( ariCommField->commActCnt[i] , &pos );
+					SetPlayerActDirection( ariCommField->commActCnt[i] , &dir );
+				}
+			}
+		}
+	}
 }
