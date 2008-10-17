@@ -34,21 +34,22 @@
 //======================================================================
 struct _FIELD_COMM_DATA 
 {
-    u8	    seqNo;
+	u8		seqNo;
 
-    HEAPID   heapID;
-    BOOL isFinishInitSystem;
-    BOOL isError;
-    BOOL isDutyMemberData;
+	HEAPID   heapID;
+	BOOL isFinishInitSystem;
+	BOOL isError;
+	BOOL isDutyMemberData;
+	BOOL isStartMode;
 
-    FIELD_COMM_TYPE commType;
-    FIELD_COMM_MODE commMode;
+	FIELD_COMM_TYPE commType;
+	FIELD_COMM_MODE commMode;
 
-    //仲間データ
-    u8			memberNum;
-    FIELD_COMM_BEACON	*memberData;
+	//仲間データ
+	u8			memberNum;
+	FIELD_COMM_BEACON	*memberData;
 
-    GFL_NETHANDLE   *selfHandle;    //自身の通信ハンドル
+	GFL_NETHANDLE   *selfHandle;	//自身の通信ハンドル
 };
 
 //======================================================================
@@ -62,15 +63,16 @@ void	FieldComm_TermSystem();
 void	FieldComm_InitParent();
 void	FieldComm_InitChild();
 
-u8	FieldComm_UpdateSearchParent();
+u8		FieldComm_UpdateSearchParent();
 BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name );
-u8	FieldComm_GetMemberNum();
+u8		FieldComm_GetMemberNum();
 BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name );
 
 BOOL	FieldComm_IsValidParentData( u8 idx );
 
 //送受信関係
 void	FieldComm_SendSelfData();
+void	FieldComm_SendStartMode();
 
 //チェック関数
 BOOL	FieldComm_IsFinish_InitSystem(); 
@@ -78,15 +80,16 @@ BOOL	FieldComm_IsFinish_ConnectParent();
 BOOL	FieldComm_IsError();
 BOOL	FieldComm_IsDutyMemberData();
 void	FieldComm_ResetDutyMemberData();
+BOOL	FieldComm_IsStartCommMode();
 
 //各種コールバック
 void	InitCommLib_EndCallback( void* pWork );
 void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
 void*	FieldComm_GetBeaconData(void);
-int	FieldComm_GetBeaconSize(void);
+int		FieldComm_GetBeaconSize(void);
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
-				      GameServiceID GameServiceID2);
+					  GameServiceID GameServiceID2);
 
 //受信用コールバック
 void FieldComm_Post_FirstBeacon(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -94,9 +97,9 @@ void FieldComm_Post_StartMode(const int netID, const int size, const void* pData
 void FieldComm_Post_PlayerData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 static const NetRecvFuncTable FieldCommPostTable[] = {
-    { FieldComm_Post_FirstBeacon , NULL },
-    { FieldComm_Post_StartMode   , NULL },
-    { FieldComm_Post_PlayerData  , NULL },
+	{ FieldComm_Post_FirstBeacon , NULL },
+	{ FieldComm_Post_StartMode   , NULL },
+	{ FieldComm_Post_PlayerData  , NULL },
 };
 //--------------------------------------------------------------
 /**
@@ -107,26 +110,27 @@ static const NetRecvFuncTable FieldCommPostTable[] = {
 //--------------------------------------------------------------
 FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
 {
-    u8 i=0;
+	u8 i=0;
 
-    f_comm = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_DATA ) );
-    
-    f_comm->seqNo  = 0;
-    f_comm->heapID = heapID;
-    f_comm->commType = FCT_CHILD;
-    f_comm->commMode = FCM_2_SINGLE;
-    f_comm->isFinishInitSystem = FALSE;
-    f_comm->isError = FALSE;
-    f_comm->isDutyMemberData = FALSE;
+	f_comm = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_DATA ) );
+	
+	f_comm->seqNo  = 0;
+	f_comm->heapID = heapID;
+	f_comm->commType = FCT_CHILD;
+	f_comm->commMode = FCM_2_SINGLE;
+	f_comm->isFinishInitSystem = FALSE;
+	f_comm->isError = FALSE;
+	f_comm->isDutyMemberData = FALSE;
+	f_comm->isStartMode = FALSE;
 
-    f_comm->memberNum = 0;
-    f_comm->memberData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_BEACON ) * FIELD_COMM_MEMBER_MAX );
-    for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
-    {
-	f_comm->memberData[i].id = FIELD_COMM_ID_INVALID;
-    }
+	f_comm->memberNum = 0;
+	f_comm->memberData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_BEACON ) * FIELD_COMM_MEMBER_MAX );
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		f_comm->memberData[i].id = FIELD_COMM_ID_INVALID;
+	}
 
-    return f_comm;
+	return f_comm;
 }
 
 //-------------------------GFL_NET_HANDLE_RecvNegotiation-------------------------------------
@@ -138,13 +142,13 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
 //--------------------------------------------------------------
 void	FieldComm_TermSystem()
 {
-    if( f_comm == NULL ){
-	OS_TPrintf("FieldComm System is not init.\n");
-	return;
-    }
-    GFL_HEAP_FreeMemory( f_comm->memberData );
-    GFL_HEAP_FreeMemory( f_comm );
-    f_comm = NULL;
+	if( f_comm == NULL ){
+		OS_TPrintf("FieldComm System is not init.\n");
+		return;
+	}
+	GFL_HEAP_FreeMemory( f_comm->memberData );
+	GFL_HEAP_FreeMemory( f_comm );
+	f_comm = NULL;
 }
 
 //--------------------------------------------------------------
@@ -156,43 +160,43 @@ void	FieldComm_TermSystem()
 //--------------------------------------------------------------
 BOOL	FieldComm_InitSystem()
 {
-    GFLNetInitializeStruct aGFLNetInit = {
-  	FieldCommPostTable,	//NetSamplePacketTbl,  // 受信関数テーブル
-	NELEMS(FieldCommPostTable), // 受信テーブル要素数
-	NULL,	// ユーザー同士が交換するデータのポインタ取得関数
-	NULL,	// ユーザー同士が交換するデータのサイズ取得関数
-	FieldComm_GetBeaconData,	// ビーコンデータ取得関数  
-	FieldComm_GetBeaconSize,	// ビーコンデータサイズ取得関数 
-	FieldComm_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-	FieldComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-	FieldComm_DisconnectCallBack,	// 通信切断時に呼ばれる関数
-	NULL,	// オート接続で親になった場合
+	GFLNetInitializeStruct aGFLNetInit = {
+		FieldCommPostTable,	//NetSamplePacketTbl,  // 受信関数テーブル
+		NELEMS(FieldCommPostTable), // 受信テーブル要素数
+		NULL,	// ユーザー同士が交換するデータのポインタ取得関数
+		NULL,	// ユーザー同士が交換するデータのサイズ取得関数
+		FieldComm_GetBeaconData,	// ビーコンデータ取得関数  
+		FieldComm_GetBeaconSize,	// ビーコンデータサイズ取得関数 
+		FieldComm_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
+		FieldComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+		FieldComm_DisconnectCallBack,	// 通信切断時に呼ばれる関数
+		NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI
-	NULL,NULL,NULL,NULL,
+		NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
-	0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
-	GFL_HEAPID_APP,  //元になるheapid
-        HEAPID_NETWORK,  //通信用にcreateされるHEAPID
-	HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-	GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-	4,//_MAXNUM,	//最大接続人数
-	48,//_MAXSIZE,	//最大送信バイト数
-	4,//_BCON_GET_NUM,  // 最大ビーコン収集数
-	TRUE,	    // CRC計算
-	FALSE,	    // MP通信＝親子型通信モードかどうか
-	FALSE,	    //wifi通信を行うかどうか
-	TRUE,	    // 親が再度初期化した場合、つながらないようにする場合TRUE
-	1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
-    };
+		0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
+		GFL_HEAPID_APP,  //元になるheapid
+		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+		HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+		GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
+		4,//_MAXNUM,	//最大接続人数
+		48,//_MAXSIZE,	//最大送信バイト数
+		4,//_BCON_GET_NUM,  // 最大ビーコン収集数
+		TRUE,		// CRC計算
+		FALSE,		// MP通信＝親子型通信モードかどうか
+		FALSE,		//wifi通信を行うかどうか
+		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+		1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
+	};
 
-    //aGFLNetInit.baseHeapID = GFL_HEAPID_APP;
-    //aGFLNetInit.netHeapID  = GFL_HEAPID_APP;
-    //aGFLNetInit.wifiHeapID = GFL_HEAPID_APP;
+	//aGFLNetInit.baseHeapID = GFL_HEAPID_APP;
+	//aGFLNetInit.netHeapID  = GFL_HEAPID_APP;
+	//aGFLNetInit.wifiHeapID = GFL_HEAPID_APP;
 
   
 
-    GFL_NET_Init( &aGFLNetInit , InitCommLib_EndCallback , NULL );
-    return TRUE;
+	GFL_NET_Init( &aGFLNetInit , InitCommLib_EndCallback , NULL );
+	return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -202,8 +206,8 @@ BOOL	FieldComm_InitSystem()
 //--------------------------------------------------------------
 void	FieldComm_InitParent()
 {
-    f_comm->commType = FCT_PARENT;
-    GFL_NET_InitServer();
+	f_comm->commType = FCT_PARENT;
+	GFL_NET_InitServer();
 }
 
 //--------------------------------------------------------------
@@ -213,8 +217,8 @@ void	FieldComm_InitParent()
 //--------------------------------------------------------------
 void	FieldComm_InitChild()
 {
-    f_comm->commType = FCT_CHILD;
-    GFL_NET_StartBeaconScan();
+	f_comm->commType = FCT_CHILD;
+	GFL_NET_StartBeaconScan();
 }
 
 //--------------------------------------------------------------
@@ -226,19 +230,19 @@ void	FieldComm_InitChild()
 //--------------------------------------------------------------
 u8	FieldComm_UpdateSearchParent()
 {   
-    int findNum = 0;
+	int findNum = 0;
 
-    while(TRUE){
-	// TODO:データは変更されるかもしれないので、ここでローカルに保存しておくべきか？
-	FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( findNum );
-	if( b_data != NULL ){
-	    findNum++;
+	while(TRUE){
+		// TODO:データは変更されるかもしれないので、ここでローカルに保存しておくべきか？
+		FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( findNum );
+		if( b_data != NULL ){
+		findNum++;
 	}
 	else break;
-    }
-    
-    OS_TPrintf("ARI_COMM FindParent [%d]\n",findNum);
-    return findNum;
+	}
+	
+	OS_TPrintf("ARI_COMM FindParent [%d]\n",findNum);
+	return findNum;
 }
 
 //--------------------------------------------------------------
@@ -251,14 +255,14 @@ u8	FieldComm_UpdateSearchParent()
 //--------------------------------------------------------------
 BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name )
 {
-    const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
-    if( b_data == NULL )
-    {
-	OS_TPrintf("FieldComm Parent data not found!! idx[%d]\n",idx);
-	return FALSE;
-    }
-    GFL_STR_SetStringCode( name , b_data->name );
-    return TRUE;
+	const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
+	if( b_data == NULL )
+	{
+		OS_TPrintf("FieldComm Parent data not found!! idx[%d]\n",idx);
+		return FALSE;
+	}
+	GFL_STR_SetStringCode( name , b_data->name );
+	return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -270,9 +274,9 @@ BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name )
 //--------------------------------------------------------------
 BOOL	FieldComm_IsValidParentData( const u8 idx )
 {
-    const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
-    if( b_data == NULL ){ return FALSE; }
-    else		{ return TRUE;  }
+	const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
+	if( b_data == NULL ){ return FALSE; }
+	else				{ return TRUE;  }
 }
 
 //--------------------------------------------------------------
@@ -284,7 +288,7 @@ BOOL	FieldComm_IsValidParentData( const u8 idx )
 //--------------------------------------------------------------
 u8	FieldComm_GetMemberNum()
 {
-    return f_comm->memberNum;
+	return f_comm->memberNum;
 }
 
 //--------------------------------------------------------------
@@ -297,13 +301,13 @@ u8	FieldComm_GetMemberNum()
 //--------------------------------------------------------------
 BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name )
 {
-    if( f_comm->memberData[idx].id == FIELD_COMM_ID_INVALID )
-    {
-	OS_TPrintf("FieldComm Member data not found!! idx[%d]\n",idx);
-	return FALSE;
-    }
-    GFL_STR_SetStringCode( name , f_comm->memberData[idx].name );
-    return TRUE;
+	if( f_comm->memberData[idx].id == FIELD_COMM_ID_INVALID )
+	{
+		OS_TPrintf("FieldComm Member data not found!! idx[%d]\n",idx);
+		return FALSE;
+	}
+	GFL_STR_SetStringCode( name , f_comm->memberData[idx].name );
+	return TRUE;
 }
 //--------------------------------------------------------------
 /**
@@ -314,11 +318,11 @@ BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name )
 //--------------------------------------------------------------
 void	FieldComm_ConnectParent( u8 idx )
 {
-    u8* macAddress = GFL_NET_GetBeaconMacAddress( idx );
-    if( macAddress == NULL ){
-	GF_ASSERT("macAddress is not found!!");
-    }
-    GFL_NET_ConnectToParent( macAddress );
+	u8* macAddress = GFL_NET_GetBeaconMacAddress( idx );
+	if( macAddress == NULL ){
+		GF_ASSERT("macAddress is not found!!");
+	}
+	GFL_NET_ConnectToParent( macAddress );
 }
 
 
@@ -328,25 +332,28 @@ void	FieldComm_ConnectParent( u8 idx )
 //自身のデータ(名前・ID)を送る。ビーコンの送信と同等のデータとする
 void	FieldComm_SendSelfData()
 {
-    //とりあえずビーコンを送信
-    void *data = FieldComm_GetBeaconData();
-//  const BOOL ret = GFL_NET_SendData( f_comm->selfHandle , 
-//		    FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() , data );
-    const BOOL ret = GFL_NET_SendDataEx( f_comm->selfHandle , 
-		    GFL_NET_SENDID_ALLUSER , FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() ,
-		    data , FALSE , TRUE , FALSE );
-    if( ret == FALSE ){ OS_TPrintf("FieldComm Data send is failued!!\n"); }
+	//とりあえずビーコンを送信
+	void *data = FieldComm_GetBeaconData();
+//	const BOOL ret = GFL_NET_SendData( f_comm->selfHandle , 
+//	FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() , data );
+	const BOOL ret = GFL_NET_SendDataEx( f_comm->selfHandle , 
+			GFL_NET_SENDID_ALLUSER , FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() ,
+			data , FALSE , TRUE , FALSE );
+	if( ret == FALSE ){ OS_TPrintf("FieldComm Data send is failued!!\n"); }
 
-    #if 1
-    {
-    u8 i;
-    FIELD_COMM_BEACON *beacon = (FIELD_COMM_BEACON*)data;
-    OS_TPrintf("FieldComm SendSelfData Name");
-    for(i=0;i<FIELD_COMM_NAME_LENGTH;i++)
-	{OS_TPrintf("[%d]",beacon->name[i]);}
-    OS_TPrintf(" id[%d]\n",beacon->id);
-    }
-    #endif
+}
+
+//通信モードの開始 現状フラグのみ
+void	FieldComm_SendStartMode()
+{
+	static const u8 dummy = 0;
+	f_comm->selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendDataEx( f_comm->selfHandle , 
+				GFL_NET_SENDID_ALLUSER , FC_CMD_START_MODE , sizeof(u8) ,
+				&dummy , FALSE , TRUE , FALSE );
+		if( ret == FALSE ){ OS_TPrintf("FieldComm Data send is failued!!\n"); }
+	}
 }
 
 //--------------------------------------------------------------
@@ -354,51 +361,57 @@ void	FieldComm_SendSelfData()
 //--------------------------------------------------------------
 BOOL	FieldComm_IsFinish_InitSystem()
 {
-    return f_comm->isFinishInitSystem;
+	return f_comm->isFinishInitSystem;
 }
 
 //  親機への接続が完了し、通信ができる状態になったか？
 BOOL	FieldComm_IsFinish_ConnectParent()
 {
-    switch( f_comm->seqNo )
-    {
-    case 0:
-	if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+	switch( f_comm->seqNo )
 	{
-	    f_comm->seqNo++;
+	case 0:
+		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+		{
+			f_comm->seqNo++;
+		}
+		break;
+	case 1:
+		f_comm->selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+		if( GFL_NET_HANDLE_IsNegotiation( f_comm->selfHandle ) == TRUE )
+		{
+			f_comm->seqNo++;
+		}
+		break;
+	case 2:
+		if( GFL_NET_IsSendEnable( f_comm->selfHandle ) == TRUE )
+		{
+			f_comm->seqNo = 0;
+			return TRUE;
+		}
+		break;
 	}
-	break;
-    case 1:
-	f_comm->selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-	if( GFL_NET_HANDLE_IsNegotiation( f_comm->selfHandle ) == TRUE )
-	{
-	    f_comm->seqNo++;
-	}
-	break;
-    case 2:
-	if( GFL_NET_IsSendEnable( f_comm->selfHandle ) == TRUE )
-	{
-	    f_comm->seqNo = 0;
-	    return TRUE;
-	}
-	break;
-    }
-    return FALSE;
+	return FALSE;
 }
 
 BOOL	FieldComm_IsError()
 {
-    return f_comm->isError;
+	return f_comm->isError;
 }
 
 //メンバーデータに更新があったか？
 BOOL	FieldComm_IsDutyMemberData()
 {
-    return f_comm->isDutyMemberData;
+	return f_comm->isDutyMemberData;
 }
 void	FieldComm_ResetDutyMemberData()
 {
-    f_comm->isDutyMemberData = FALSE;
+	f_comm->isDutyMemberData = FALSE;
+}
+
+//通信モードが開始しているか？
+BOOL	FieldComm_IsStartCommMode()
+{
+	return f_comm->isStartMode;
 }
 
 //--------------------------------------------------------------
@@ -414,21 +427,21 @@ void	FieldComm_ResetDutyMemberData()
 //--------------------------------------------------------------
 void	InitCommLib_EndCallback( void* pWork )
 {
-    f_comm->isFinishInitSystem = TRUE;
+	f_comm->isFinishInitSystem = TRUE;
 }
 
 //エラー取得コールバック
 void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 {
-    OS_TPrintf("FieldComm Error!![%d]\n",errNo);
-    f_comm->isError = TRUE;
+	OS_TPrintf("FieldComm Error!![%d]\n",errNo);
+	f_comm->isError = TRUE;
 }
 
 //切断感知用コールバック
 void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 {
-    OS_TPrintf("FieldComm Disconnect!!\n");
-    f_comm->isError = TRUE;
+	OS_TPrintf("FieldComm Disconnect!!\n");
+	f_comm->isError = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -438,73 +451,64 @@ void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 //--------------------------------------------------------------
 void*	FieldComm_GetBeaconData(void)
 {
-    static FIELD_COMM_BEACON testData = {
-	L"てすとよう" ,
-	0x8000
-    };
+	static FIELD_COMM_BEACON testData = {
+		L"てすとよう" ,
+		0x8000
+	};
 
-    OSOwnerInfo dsData;
-    u8 i;
-    OS_GetOwnerInfo( &dsData );
-    
-    testData.id = 0;
-    for( i=0;i<5;i++ )
-    {
-	testData.name[i] = dsData.nickName[i];
-    }
-    testData.id = (testData.id+dsData.nickName[i])%FIELD_COMM_ID_MAX;
-    //testData.id = FIELD_COMM_ID_INVALID;
-    testData.name[5] = 0xFFFF;
-    
-    return (void*)&testData;
+	OSOwnerInfo dsData;
+	u8 i;
+	OS_GetOwnerInfo( &dsData );
+	
+	testData.id = 0;
+	for( i=0;i<5;i++ )
+	{
+		testData.name[i] = dsData.nickName[i];
+	}
+	testData.id = (testData.id+dsData.nickName[i])%FIELD_COMM_ID_MAX;
+	//testData.id = FIELD_COMM_ID_INVALID;
+	testData.name[5] = 0xFFFF;
+	
+	return (void*)&testData;
 }
 int	FieldComm_GetBeaconSize(void)
 {
-    return sizeof( FIELD_COMM_BEACON );
+	return sizeof( FIELD_COMM_BEACON );
 }
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
-				      GameServiceID GameServiceID2)
+									  GameServiceID GameServiceID2)
 {
-    if( GameServiceID1 == GameServiceID2 ){ return TRUE; }
-    return FALSE;
+	if( GameServiceID1 == GameServiceID2 ){ return TRUE; }
+	return FALSE;
 }
 
 
 //受信用コールバック
 void FieldComm_Post_FirstBeacon(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    //ここでは、親機がつながった子機の情報を収集するだけの物
-    if( IS_PARENT ){
-        const FIELD_COMM_BEACON *postData = (FIELD_COMM_BEACON*)pData;
-	OS_TPrintf("FieldComm getData[FirstBeacon]\n");
-        OS_TPrintf("          id[%d]\n",postData->id);
-    
-	GFL_STD_MemCopy( pData , &f_comm->memberData[f_comm->memberNum] , sizeof( FIELD_COMM_BEACON ) );
-//	f_comm->memberData[f_comm->memberNum] = postData;
-	f_comm->memberNum++;
-	f_comm->isDutyMemberData = TRUE;
-    }
+	//ここでは、親機がつながった子機の情報を収集するだけの物
+	if( IS_PARENT ){
+		const FIELD_COMM_BEACON *postData = (FIELD_COMM_BEACON*)pData;
+		OS_TPrintf("FieldComm getData[FirstBeacon]\n");
+		OS_TPrintf("          id[%d]\n",postData->id);
+	
+		GFL_STD_MemCopy( pData , &f_comm->memberData[f_comm->memberNum] , sizeof( FIELD_COMM_BEACON ) );
+//		f_comm->memberData[f_comm->memberNum] = postData;
+		f_comm->memberNum++;
+		f_comm->isDutyMemberData = TRUE;
+	}
 
-    #if 1
-    {
-    u8 i;
-    FIELD_COMM_BEACON *beacon = (FIELD_COMM_BEACON*)pData;
-    OS_TPrintf("          Name");
-    for(i=0;i<FIELD_COMM_NAME_LENGTH;i++)
-	{OS_TPrintf("[%d]",beacon->name[i]);}
-    OS_TPrintf(" id[%d]\n",beacon->id);
-    }
-    #endif
 }
 
 void FieldComm_Post_StartMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    OS_TPrintf("FieldComm getData[StartMode]\n");
+	OS_TPrintf("FieldComm getData[StartMode]\n");
+	f_comm->isStartMode = TRUE;
 }
 
 void FieldComm_Post_PlayerData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
-    OS_TPrintf("FieldComm getData[PlayerData]\n");
+	OS_TPrintf("FieldComm getData[PlayerData]\n");
 }
 
 

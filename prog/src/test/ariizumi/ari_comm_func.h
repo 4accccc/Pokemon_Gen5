@@ -55,6 +55,7 @@ extern BOOL	FieldComm_GetMemberName( const u8 idx , STRBUF *name );
 
 //送受信関数
 extern void	FieldComm_SendSelfData();
+extern void	FieldComm_SendStartMode();
 
 //チェック関数
 extern BOOL	FieldComm_IsFinish_ConnectParent();
@@ -62,6 +63,7 @@ extern BOOL	FieldComm_IsFinish_InitSystem();
 extern BOOL	FieldComm_IsErro();
 extern BOOL	FieldComm_IsDutyMemberData();
 extern void	FieldComm_ResetDutyMemberData();
+extern BOOL	FieldComm_IsStartCommMode();
 
 //各種コールバック
 

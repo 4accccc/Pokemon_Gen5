@@ -28,7 +28,7 @@ BOOL	AriFieldMain( void );
 #include "test/field/field_camera.h"
 
 #include "ari_field_menu.h"
-
+#include "ari_debug.h"
 //============================================================================================
 /**
  *
@@ -207,8 +207,9 @@ BOOL	AriFieldMain( void )
 			ariFieldWork->ftbl->main_func( ariFieldWork, &pos );
 			//Mapシステムに位置を渡している。これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(ariFieldWork->gs), &pos );
+			
+			ARI_Printf("POS:[%5.2f][%5.2f][%5.2f]\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
 		}
-
 		MainGameSystem( ariFieldWork->gs );
 		break;
 
