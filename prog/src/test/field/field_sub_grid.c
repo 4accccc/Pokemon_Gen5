@@ -1,6 +1,7 @@
 //======================================================================
 /**
- * @file	field_sub_grid.c
+ * @file	field_
+ * return( TRUE );sub_grid.c
  * @brief	フィールドメイン処理サブ（グリッド移動）
  *
  * このソースはfield_main.cにインクルードされています。
@@ -21,6 +22,12 @@ enum
 	DIR_RIGHT,
 	DIR_NOT,
 	DIR_MAX4 = DIR_NOT,
+};
+
+enum
+{
+	GRIDPROC_MAIN = 0,
+	GRIDPROC_DEBUG00,
 };
 
 #define PAD_KEY_BIT (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)
@@ -48,12 +55,14 @@ typedef struct _FGRID_PLAYER	FGRID_PLAYER;
 struct _FGRID_CONT
 {
 	HEAPID heapID;
-	FIELD_WORK *pFieldWork;
+	FIELD_MAIN_WORK *pFieldWork;
 	
 	FGRID_PLAYER *pGridPlayer;
 	
 	u16 *pMapAttr[4];
 	
+	int proc_switch;
+	int scale_num;
 	int debug_camera_num;
 };
 
@@ -89,8 +98,11 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
-static FGRID_CONT * FGridCont_Init( FIELD_WORK *fieldWork );
-static void FGridCont_Delete( FIELD_WORK *fieldWork );
+static FGRID_CONT * FGridCont_Init( FIELD_MAIN_WORK *fieldWork );
+static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork );
+
+static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
+static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 
 static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont );
 static void FGridPlayer_Delete( FGRID_CONT *pGridCont );
@@ -117,6 +129,8 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
 
 #define GRIDCAMERA_MAX (NELEMS(DATA_CameraTbl))
 
+// length 50H height 0x20000H
+
 //======================================================================
 //	フィールドグリッドタイプ　メイン
 //======================================================================
@@ -125,7 +139,7 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
  * @brief	初期化処理（デフォルト）
  */
 //------------------------------------------------------------------
-static void GridMoveCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
+static void GridMoveCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control =
 		FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
@@ -163,14 +177,50 @@ static void GridMoveCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
  * @brief	メイン処理（デフォルト）
  */
 //------------------------------------------------------------------
-static void GridMoveMain( FIELD_WORK* fieldWork, VecFx32 * pos )
+static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 {
-//	MainPlayerAct( fieldWork->pcActCont, fieldWork->key_cont );
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	
+	switch( pGridCont->proc_switch ){
+	case GRIDPROC_MAIN: 
+		GridProc_Main( fieldWork, pos );
+		break;
+	case GRIDPROC_DEBUG00:
+		GridProc_DEBUG00( fieldWork, pos );
+		break;
+	}
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	終了処理（デフォルト）
+ */
+//------------------------------------------------------------------
+static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
+{
+	FGridCont_Delete( fieldWork );
+	
+	DeletePlayerAct( fieldWork->pcActCont );
+	FLD_DeleteCamera( fieldWork->camera_control );
+	FLDACT_TestRelease( fieldWork->fldActCont );
+	FLD_DeleteFieldActSys( fieldWork->fldActCont );
+}
+
+//======================================================================
+//	グリッド　メインプロセス
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * グリッド	メイン
+ */
+//--------------------------------------------------------------
+static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
+{
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
 	
 	FGridPlayer_Move( pGridPlayer, 0, fieldWork->key_cont );
-	
+
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_L) ){
 		pGridCont->debug_camera_num++;
 		pGridCont->debug_camera_num %= GRIDCAMERA_MAX;
@@ -180,7 +230,7 @@ static void GridMoveMain( FIELD_WORK* fieldWork, VecFx32 * pos )
 				DATA_CameraTbl[pGridCont->debug_camera_num].hi );
 		OS_Printf( "テストカメラ　No.%d\n", pGridCont->debug_camera_num );
 	}
-	
+
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
@@ -194,19 +244,87 @@ static void GridMoveMain( FIELD_WORK* fieldWork, VecFx32 * pos )
 	}
 }
 
-//------------------------------------------------------------------
+#define CM_RT_SPEED (FX32_ONE/8)
+#define CM_HEIGHT_MV (FX32_ONE*2)
+
+#define	CAMERA_TARGET_HEIGHT	(4)//(8)
+
+//--------------------------------------------------------------
 /**
- * @brief	終了処理（デフォルト）
+ * グリッド　デバッグ0 カメラ変化
+ * @param
+ * @retval
  */
-//------------------------------------------------------------------
-static void GridMoveDelete( FIELD_WORK* fieldWork )
+//--------------------------------------------------------------
+static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 {
-	FGridCont_Delete( fieldWork );
+	int trg,cont;
+	u16 dir,leng;
+	fx32 height;
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
+	FIELD_CAMERA *camera = fieldWork->camera_control;
+
+	trg = GFL_UI_KEY_GetTrg();
+	cont = GFL_UI_KEY_GetCont();
 	
-	DeletePlayerAct( fieldWork->pcActCont );
-	FLD_DeleteCamera( fieldWork->camera_control );
-	FLDACT_TestRelease( fieldWork->fldActCont );
-	FLD_DeleteFieldActSys( fieldWork->fldActCont );
+	if( trg & PAD_BUTTON_B ){
+		pGridCont->proc_switch = GRIDPROC_MAIN;
+	}else{
+		FLD_GetCameraDirection( camera, &dir );
+		FLD_GetCameraLength( camera, &leng );
+		FLD_GetCameraHeight( camera, &height );
+
+		if( cont & PAD_BUTTON_R ){
+			dir -= CM_RT_SPEED;
+		}
+	
+		if( cont & PAD_BUTTON_L ){
+			dir += CM_RT_SPEED;
+		}
+	
+		if( cont & PAD_KEY_LEFT ){
+			if( leng > 8 ){
+				leng -= 8;
+			}
+		}
+		if( cont & PAD_KEY_RIGHT ){
+			if( leng < 4096 ){
+				leng += 8;
+			}
+		}
+	
+		if( cont & PAD_KEY_UP ){
+			height -= CM_HEIGHT_MV;
+		}
+	
+		if( cont & PAD_KEY_DOWN ){
+			height += CM_HEIGHT_MV;
+		}
+		
+		if( trg & (PAD_BUTTON_A) ){
+			OS_Printf( "Camera dir = %xH, length = %xH, height = %xH\n",
+					dir, leng, height );
+		}
+	
+		FLD_SetCameraDirection( camera, &dir );
+		FLD_SetCameraLength( camera, leng );
+		FLD_SetCameraHeight( camera, height );
+	}
+
+	{
+		FLD_MainFieldActSys( fieldWork->fldActCont );
+		GetPlayerActTrans( fieldWork->pcActCont, pos );
+		FLD_SetCameraTrans( fieldWork->camera_control, pos );
+	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
+	
+		{
+			int key = fieldWork->key_cont;
+	//		key &= ~(PAD_BUTTON_L|PAD_BUTTON_R);
+			key = 0;
+			FLD_MainCamera( fieldWork->camera_control, key );
+		}
+	}
 }
 
 //======================================================================
@@ -215,11 +333,11 @@ static void GridMoveDelete( FIELD_WORK* fieldWork )
 //--------------------------------------------------------------
 /**
  * グリッド処理　初期化
- * @param	fieldWork	FIELD_WORK
+ * @param	fieldWork	FIELD_MAIN_WORK
  * @retval	FGRID_CONT*
  */
 //--------------------------------------------------------------
-static FGRID_CONT * FGridCont_Init( FIELD_WORK *fieldWork )
+static FGRID_CONT * FGridCont_Init( FIELD_MAIN_WORK *fieldWork )
 {
 	FGRID_CONT *pGridCont;
 	
@@ -254,11 +372,11 @@ static FGRID_CONT * FGridCont_Init( FIELD_WORK *fieldWork )
 //--------------------------------------------------------------
 /**
  * グリッド処理　削除
- * @param	fieldWork	FIELD_WORK
+ * @param	fieldWork	FIELD_MAIN_WORK
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void FGridCont_Delete( FIELD_WORK *fieldWork )
+static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork )
 {
 	FGRID_CONT *pGridCont;
 	pGridCont = fieldWork->pGridCont;
@@ -337,14 +455,19 @@ static void FGridPlayer_Move(
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir != DIR_NOT ){
+			fx32 val = GRID_VALUE_FX32;
 			fx32 nx = pJiki->vec_pos.x;
 			fx32 nz = pJiki->vec_pos.z;
 
+			if( pJiki->pGridCont->scale_num != 0 ){
+				val >>= 1;
+			}
+
 			switch( dir ){
-			case DIR_UP:	nz -= GRID_VALUE_FX32; break;
-			case DIR_DOWN:	nz += GRID_VALUE_FX32; break;
-			case DIR_LEFT:	nx -= GRID_VALUE_FX32; break;
-			case DIR_RIGHT:	nx += GRID_VALUE_FX32; break;
+			case DIR_UP:	nz -= val; break;
+			case DIR_DOWN:	nz += val; break;
+			case DIR_LEFT:	nx -= val; break;
+			case DIR_RIGHT:	nx += val; break;
 			}
 			
 			if( (key_cont&PAD_BUTTON_R) ||
@@ -358,6 +481,12 @@ static void FGridPlayer_Move(
 				case DIR_DOWN:	pJiki->move_val.z = NUM_FX32( 2 ); break;
 				case DIR_LEFT:	pJiki->move_val.x = NUM_FX32( -2 ); break;
 				case DIR_RIGHT: pJiki->move_val.x = NUM_FX32( 2 ); break;
+				}
+				
+				if( pJiki->pGridCont->scale_num != 0 ){
+					pJiki->move_val.x >>= 1;
+					pJiki->move_val.y >>= 1;
+					pJiki->move_val.z >>= 1;
 				}
 				
 				if( (key_cont & PAD_BUTTON_B) ){
@@ -403,6 +532,10 @@ static void FGridPlayer_Move(
 		}
 
 //		OS_Printf( "count=%x, MAX %x\n", count, GRID_VALUE_FX32 );
+		
+		if( pJiki->pGridCont->scale_num != 0 ){
+			count <<= 1;
+		}
 
 		if( count >= GRID_VALUE_FX32 ){
 			pJiki->move_flag = FALSE;
@@ -517,6 +650,84 @@ static BOOL GridVecPosMove(
 static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 {
 	u16 attr;
+	VecFx32 pos;
+	const FLD_G3D_MAPPER *mapper;
+	FLD_G3D_MAPPER_GRIDINFO gInfo;
+	
+	pos.x = x;
+	pos.y = 0;
+	pos.z = z;
+	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
+	
+	if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
+		OS_Printf( "アトリビュート異常\n" );
+		return( TRUE );
+	}
+
+	if( ((attr&0x8000)>>15) ){
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * メインをカメラいじりに
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork )
+{
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	pGridCont->proc_switch = GRIDPROC_DEBUG00;
+}
+
+//--------------------------------------------------------------
+/**
+ * スケールきりかえ
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
+{
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	
+	pGridCont->scale_num++;
+	pGridCont->scale_num %= 2;
+	
+	switch( pGridCont->scale_num ){
+	case 0:
+		{
+			fx16 sizeX,sizeY;
+			sizeX=sizeY=FX16_ONE*8-1;
+			PlayerActGrid_ScaleSizeSet( fieldWork->pcActCont,
+					sizeX, sizeY );
+			FLD_SetCameraLength( fieldWork->camera_control,
+					DATA_CameraTbl[pGridCont->debug_camera_num].len );
+			FLD_SetCameraHeight( fieldWork->camera_control,
+					DATA_CameraTbl[pGridCont->debug_camera_num].hi );
+		}
+		break;
+	case 1:
+		{
+			fx16 sizeX,sizeY;
+			sizeX=sizeY=FX16_ONE*4-1;
+			PlayerActGrid_ScaleSizeSet( fieldWork->pcActCont,
+					sizeX, sizeY );
+			FLD_SetCameraLength( fieldWork->camera_control, 0x50 );
+			FLD_SetCameraHeight( fieldWork->camera_control, 0x20000 );
+		}
+		break;
+	}
+}
+
+#if 0	//実データ利用
+static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
+{
+	u16 attr;
 	const u16 *buf = NULL;
 	int gx = SIZE_GRID_FX32(x), gz = SIZE_GRID_FX32(z);
 	
@@ -549,6 +760,7 @@ static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 	
 	return( FALSE );
 }
+#endif
 
 //======================================================================
 //======================================================================

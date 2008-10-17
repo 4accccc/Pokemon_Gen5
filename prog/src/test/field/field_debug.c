@@ -49,9 +49,10 @@ typedef struct
 //--------------------------------------------------------------
 ///	DEBUG_FLDMENU
 //--------------------------------------------------------------
-struct _DEBUG_FLDMENU
+struct _TAG_DEBUG_FLDMENU
 {
 	HEAPID heapID;	//デバッグ用ヒープID
+	FIELD_MAIN_WORK *fieldWork;
 	
 	int seq_no;
 	u32 bgFrame;
@@ -74,6 +75,7 @@ struct _DEBUG_FLDMENU
 //	proto
 //======================================================================
 static void DMenuCallProc_Test( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_Test1( DEBUG_FLDMENU *wk );
 
 //======================================================================
 //	メニューリスト一覧
@@ -84,7 +86,7 @@ static void DMenuCallProc_Test( DEBUG_FLDMENU *wk );
 static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
 	{ DEBUG_FIELD_STR01, DMenuCallProc_Test },
-	{ DEBUG_FIELD_STR02, NULL },
+	{ DEBUG_FIELD_STR02, DMenuCallProc_Test1 },
 	{ DEBUG_FIELD_STR03, NULL },
 	{ DEBUG_FIELD_STR04, NULL },
 	{ DEBUG_FIELD_STR05, NULL },
@@ -106,13 +108,14 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
  * @retval	DEBUG_FLDMENU
  */
 //--------------------------------------------------------------
-DEBUG_FLDMENU * FldDebugMenu_Init( u32 heapID )
+DEBUG_FLDMENU * FldDebugMenu_Init( FIELD_MAIN_WORK *fieldWork, u32 heapID )
 {
 	DEBUG_FLDMENU *d_menu;
 	
 	d_menu = GFL_HEAP_AllocClearMemory( heapID, sizeof(DEBUG_FLDMENU) );
 	
 	d_menu->heapID = heapID;
+	d_menu->fieldWork = fieldWork;
 	d_menu->bgFrame = DEBUG_BGFRAME_MENU;
 	
 	{	//bmp font いずれメイン側で
@@ -337,7 +340,7 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * デバッグメニュー呼び出し　テスト
+ * デバッグメニュー呼び出し　グリッド用カメラ
  * @param	wk	DEBUG_FLDMENU*
  * @retval	nothing
  */
@@ -345,5 +348,25 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 static void DMenuCallProc_Test( DEBUG_FLDMENU *wk )
 {
 	DEBUG_FLDMENU *d_menu = wk;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
 	HEAPID DebugHeapID = d_menu->heapID;
+	
+	DEBUG_FldGridProc_Camera( fieldWork );
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　テスト
+ * @param	wk	DEBUG_FLDMENU*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DMenuCallProc_Test1( DEBUG_FLDMENU *wk )
+{
+	DEBUG_FLDMENU *d_menu = wk;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	HEAPID DebugHeapID = d_menu->heapID;
+	
+	DEBUG_FldGridProc_ScaleChange( fieldWork );
+}
+

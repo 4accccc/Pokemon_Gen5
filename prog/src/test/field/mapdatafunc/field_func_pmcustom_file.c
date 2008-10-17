@@ -474,3 +474,52 @@ void M3DO_LoadArc3DObjData(	ARCHANDLE *ioHandle,
 #endif
 
 
+#define GRID_SIZE (16)
+#define GRID_DATASIZE (sizeof(u16))
+
+//==============================================================================
+/**
+ * マップアトリビュート取得
+ * @param	gridBlockW	グリッド単位でのブロック横幅
+ * @return	u16	マップアトリビュート
+ */
+//==============================================================================
+u16 FieldGetAttrData_PMcustomFile(
+	GFL_G3D_MAP *g3Dmap, const VecFx32 *pos, int gridBlockW )
+{
+	void *mem;
+	int bx,bz;
+	int attrmax,linemax;
+	int x,z,num;
+	const u16 *buf;
+	const MAP_FILE_HEADER *header;
+	const MAP_DATA_INFO *mapdataInfo;
+	
+	GFL_G3D_MAP_GetLoadMemoryPointer( g3Dmap, &mem );
+	mapdataInfo = (MAP_DATA_INFO*)mem;
+	buf = (u16*)mapdataInfo->attrAdrs;
+	
+	header = (MAP_FILE_HEADER*)((u32)mem + sizeof(MAP_FILE_HEADER));
+	attrmax = header->attrSize / GRID_DATASIZE;	//最大要素数
+	
+	x = (pos->x / GRID_SIZE) / FX32_ONE;				//整数グリッド単位
+	z = (pos->z / GRID_SIZE) / FX32_ONE;
+	bx = (x / gridBlockW) * gridBlockW;			//先頭ブロックNo
+	bz = (z / gridBlockW) * gridBlockW;
+	x = x - bx;									//相対位置
+	z = z - bz;
+	num = x + (z * gridBlockW);
+	
+	if( num >= attrmax ){
+#if 0
+		OS_Printf( "GetAttrData GX=%d,GZ=%d, gridBlockW = %d, ERROR!!\n",
+			x, z, gridBlockW );
+#endif
+		return( 0xffff );
+	}
+#if 0
+	OS_Printf( "GetAttrData GX=%d,GZ=%d, gridBlockW = %d, Attr=%xH\n",
+			x, z, gridBlockW, buf[num] );
+#endif
+	return( buf[num] );
+}

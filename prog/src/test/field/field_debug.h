@@ -10,6 +10,8 @@
 #ifndef __FIELD_DEBUG_H__
 #define __FIELD_DEBUG_H__
 
+#include "field_main.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -17,12 +19,13 @@
 //======================================================================
 //	struct
 //======================================================================
-typedef struct _DEBUG_FLDMENU DEBUG_FLDMENU;
+typedef struct _TAG_DEBUG_FLDMENU DEBUG_FLDMENU;
 
 //======================================================================
 //	extern
 //======================================================================
-extern DEBUG_FLDMENU * FldDebugMenu_Init( u32 heapID );
+extern DEBUG_FLDMENU * FldDebugMenu_Init(
+		FIELD_MAIN_WORK *fieldWork, u32 heapID );
 extern void FldDebugMenu_Delete( DEBUG_FLDMENU *d_menu );
 extern void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu );
 extern BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu );

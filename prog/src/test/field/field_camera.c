@@ -150,9 +150,15 @@ void	FLD_SetCameraLength( FIELD_CAMERA *camera, u16 leng )
 {
 	camera->cameraLength = leng;
 }
+void	FLD_GetCameraLength( FIELD_CAMERA *camera, u16 *leng )
+{
+	*leng = camera->cameraLength;
+}
 void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height )
 {
 	camera->cameraHeight = height;
 }
-
-
+void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height )
+{
+	*height = camera->cameraHeight;
+}

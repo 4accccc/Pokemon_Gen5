@@ -63,13 +63,14 @@ typedef enum {
  * @brief	構造体定義
  */
 //------------------------------------------------------------------
-typedef struct {
+struct _FIELD_MAIN_WORK
+{
     VecFx32         recvWork;
 	HEAPID			heapID;
 	GAMEMODE		gamemode;
 	int				seq;
 	int				timer;
-
+	
 	const DEPEND_FUNCTIONS * ftbl;
 	FIELD_SETUP*	gs;
 	FIELD_CAMERA*	camera_control;
@@ -83,16 +84,16 @@ typedef struct {
 	
 	int d_menu_flag;
 	DEBUG_FLDMENU *d_menu;
-	
+
 	void *pGridCont;
-}FIELD_WORK;
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct _DEPEND_FUNCTIONS{
-	void (*create_func)(FIELD_WORK*, VecFx32*, u16);
-	void (*main_func)(FIELD_WORK*, VecFx32*);
-	void (*delete_func)(FIELD_WORK*);
+	void (*create_func)(FIELD_MAIN_WORK*, VecFx32*, u16);
+	void (*main_func)(FIELD_MAIN_WORK*, VecFx32*);
+	void (*delete_func)(FIELD_MAIN_WORK*);
 };
 
 //------------------------------------------------------------------
@@ -102,9 +103,9 @@ struct _DEPEND_FUNCTIONS{
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont );
 
-FIELD_WORK* fieldWork;
+FIELD_MAIN_WORK* fieldWork;
 
-static BOOL DebugMenuProc( FIELD_WORK *fldWork );
+static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
 //------------------------------------------------------------------
 /**
@@ -113,7 +114,7 @@ static BOOL DebugMenuProc( FIELD_WORK *fldWork );
 //------------------------------------------------------------------
 void	FieldBoot( HEAPID heapID )
 {
-	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_WORK) );
+	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
 
@@ -167,7 +168,7 @@ BOOL	FieldMain( void )
 			}
 			
 			{	//デバッグメニュー
-				fieldWork->d_menu = FldDebugMenu_Init( fieldWork->heapID );
+				fieldWork->d_menu = FldDebugMenu_Init( fieldWork, fieldWork->heapID );
 			}
 
             fieldWork->seq++;
@@ -778,7 +779,7 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 //--------------------------------------------------------------
 ///	デバッグメニュー処理
 //--------------------------------------------------------------
-static BOOL DebugMenuProc( FIELD_WORK *fldWork )
+static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork )
 {
 	if( fldWork->d_menu_flag == FALSE ){
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){

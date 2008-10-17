@@ -7,4 +7,6 @@ extern void PlayerActGrid_AnimeSet(
 	PC_ACTCONT *pcActCont, int dir , BOOL move );
 extern FLD_G3D_MAPPER_INFODATA * PlayerActGrid_GridInfoGet(
 		PC_ACTCONT *pcActCont );
+extern void PlayerActGrid_ScaleSizeSet(
+	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY );
 #endif //__FIELD_PLAYER_GRID_H__

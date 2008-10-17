@@ -169,7 +169,7 @@ const SCENE_DATA resistMapTbl[] = {
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			fldmap3dp_test, 
 		}, 
-		{ MAP_WIDTH/2, FX32_ONE*32, MAP_WIDTH*1 },
+		{ MAP_WIDTH/2, FX32_ONE*16, MAP_WIDTH*1 },
 		&FieldBaseFunctions,
 	},
 };

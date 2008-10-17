@@ -72,6 +72,23 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
 								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
 	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
+	
+	//サイズ変更
+	/*
+	{
+		int idx;
+		fx16 sizeX,sizeY;
+
+		sizeX = sizeY = FX16_ONE*4-1;
+		idx = GFL_BBDACT_GetBBDActIdxResIdx(
+			bbdActSys, pcActCont->bbdActActUnitID );
+
+		GFL_BBD_SetObjectSiz(
+			GFL_BBDACT_GetBBDSystem(GetBbdActSys(pcActCont->gs)),
+			idx, &sizeX, &sizeY );
+	}
+	*/
+
 	return pcActCont;
 }
 
@@ -120,3 +137,15 @@ FLD_G3D_MAPPER_INFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
 {
 	return( &pcActCont->gridInfoData );
 }
+
+void PlayerActGrid_ScaleSizeSet(
+	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY )
+{
+	GFL_BBDACT_SYS *bbdActSys = GetBbdActSys( pcActCont->gs );
+	int idx = GFL_BBDACT_GetBBDActIdxResIdx(
+			bbdActSys, pcActCont->bbdActActUnitID );
+	GFL_BBD_SetObjectSiz(
+		GFL_BBDACT_GetBBDSystem(bbdActSys),
+		idx, &sizeX, &sizeY );
+}
+

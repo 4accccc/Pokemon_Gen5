@@ -14,7 +14,7 @@
  * @brief	初期化処理（グリッド無し）
  */
 //------------------------------------------------------------------
-static void NoGridCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
+static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control = FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
 	fieldWork->fldActCont = FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
@@ -26,7 +26,7 @@ static void NoGridCreate( FIELD_WORK * fieldWork, VecFx32 * pos, u16 dir)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void NoGridMain( FIELD_WORK* fieldWork, VecFx32 * pos )
+static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 {
 	MainPlayerAct_NoGrid( fieldWork->pcActCont, fieldWork->key_cont );
 	FLD_MainFieldActSys( fieldWork->fldActCont );
@@ -62,7 +62,7 @@ static void NoGridMain( FIELD_WORK* fieldWork, VecFx32 * pos )
  * @brief	終了処理（グリッド無し）
  */
 //------------------------------------------------------------------
-static void NoGridDelete( FIELD_WORK* fieldWork )
+static void NoGridDelete( FIELD_MAIN_WORK* fieldWork )
 {
 	DeletePlayerAct( fieldWork->pcActCont );
 	FLD_DeleteCamera( fieldWork->camera_control );
