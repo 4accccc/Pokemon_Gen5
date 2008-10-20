@@ -115,7 +115,6 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 {
 	{ DEBUG_FIELD_STR02, DMenuCallProc_GridCamera },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
-	
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
