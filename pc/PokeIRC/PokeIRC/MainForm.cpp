@@ -43,6 +43,12 @@ System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System:
 
     threadA->Start(); // 
 
+	{
+		String^ proxy = "";
+		Dpw_Tr_Init(100000, TEST_KEY | 100000);
+		SetProxy(proxy);
+	}
+
 
 }
 
@@ -164,7 +170,7 @@ void MainForm::ThreadWork(void)
 {
 	while(1){
 		NetIRC::draw(this);
-		Thread::Sleep(1); //2msec待つ 
+		Thread::Sleep(3); //2msec待つ 
 	}
 }
 
@@ -341,7 +347,7 @@ int MainForm::WaitForAsync(void)
 		Sleep(10);
 	}
 	// リクエストが終わったら再度プロキシをセットしなければならない。
-	SetProxy(s_currentProxy);
+	SetProxy("");
 	return Dpw_Tr_GetAsyncResult();
 }
 
@@ -376,21 +382,7 @@ bool MainForm::RequestCheckServerState(void)
 //--------------------------------------------------------------
 void MainForm::SetProxy(String^ proxy)
 {
-	s_currentProxy = proxy;
-	pin_ptr<const wchar_t> wch = PtrToStringChars(s_currentProxy);
-
-	size_t convertedChars = 0;
-	size_t  sizeInBytes = ((s_currentProxy->Length + 1) * 2);
-	errno_t err = 0;
-	char    *ch = (char *)malloc(sizeInBytes);
-
-	err = wcstombs_s(&convertedChars, 
-                    ch, sizeInBytes,
-                    wch, sizeInBytes);
-
-
-	ghttpSetProxy(ch);
-	free(ch);
+	NetIRC::SetProxy(proxy);
 }
 
 
@@ -500,3 +492,19 @@ System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, 
 	TestUploadDownload(100000, proxy);
 }
 
+//--------------------------------------------------------------
+/**
+ * @breif   赤外線通信してDSからGTS操作を行う
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+
+System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	NetIRC::dataArray = gcnew array<unsigned char>(2);
+	NetIRC::dataArray[0] = 'W';
+	NetIRC::dataArray[1] = 'B';
+	NetIRC::sendData();
+}

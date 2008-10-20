@@ -63,8 +63,8 @@ namespace PokeIRC {
 
 	static const unsigned long long TEST_KEY = 0x100000000UL;
 	private: System::Windows::Forms::ToolStripMenuItem^  gTSResetToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  dSGTSSyncTToolStripMenuItem;
 
-			 String^ s_currentProxy;
 
 
 
@@ -93,9 +93,10 @@ namespace PokeIRC {
 			this->sToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sendDataDToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->gTSTestGToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->gTSResetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->timer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
-			this->gTSResetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->dSGTSSyncTToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -108,6 +109,7 @@ namespace PokeIRC {
 			this->webBrowser1->Name = L"webBrowser1";
 			this->webBrowser1->Size = System::Drawing::Size(571, 272);
 			this->webBrowser1->TabIndex = 0;
+			this->webBrowser1->DocumentCompleted += gcnew System::Windows::Forms::WebBrowserDocumentCompletedEventHandler(this, &MainForm::webBrowser1_DocumentCompleted);
 			// 
 			// statusStrip1
 			// 
@@ -142,8 +144,8 @@ namespace PokeIRC {
 			// 
 			// fileFToolStripMenuItem
 			// 
-			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {this->sToolStripMenuItem, 
-				this->sendDataDToolStripMenuItem, this->gTSTestGToolStripMenuItem, this->gTSResetToolStripMenuItem});
+			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {this->sToolStripMenuItem, 
+				this->sendDataDToolStripMenuItem, this->gTSTestGToolStripMenuItem, this->gTSResetToolStripMenuItem, this->dSGTSSyncTToolStripMenuItem});
 			this->fileFToolStripMenuItem->Name = L"fileFToolStripMenuItem";
 			this->fileFToolStripMenuItem->Size = System::Drawing::Size(51, 20);
 			this->fileFToolStripMenuItem->Text = L"File(&F)";
@@ -151,23 +153,30 @@ namespace PokeIRC {
 			// sToolStripMenuItem
 			// 
 			this->sToolStripMenuItem->Name = L"sToolStripMenuItem";
-			this->sToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->sToolStripMenuItem->Size = System::Drawing::Size(153, 22);
 			this->sToolStripMenuItem->Text = L"Sync(&S)";
 			this->sToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::sToolStripMenuItem_Click);
 			// 
 			// sendDataDToolStripMenuItem
 			// 
 			this->sendDataDToolStripMenuItem->Name = L"sendDataDToolStripMenuItem";
-			this->sendDataDToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->sendDataDToolStripMenuItem->Size = System::Drawing::Size(153, 22);
 			this->sendDataDToolStripMenuItem->Text = L"SendData(&D)";
 			this->sendDataDToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::sendDataDToolStripMenuItem_Click);
 			// 
 			// gTSTestGToolStripMenuItem
 			// 
 			this->gTSTestGToolStripMenuItem->Name = L"gTSTestGToolStripMenuItem";
-			this->gTSTestGToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->gTSTestGToolStripMenuItem->Size = System::Drawing::Size(153, 22);
 			this->gTSTestGToolStripMenuItem->Text = L"GTSTest(&G)";
 			this->gTSTestGToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::gTSTestGToolStripMenuItem_Click);
+			// 
+			// gTSResetToolStripMenuItem
+			// 
+			this->gTSResetToolStripMenuItem->Name = L"gTSResetToolStripMenuItem";
+			this->gTSResetToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->gTSResetToolStripMenuItem->Text = L"GTSReset(&R)";
+			this->gTSResetToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::gTSResetToolStripMenuItem_Click);
 			// 
 			// timer
 			// 
@@ -178,12 +187,12 @@ namespace PokeIRC {
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
-			// gTSResetToolStripMenuItem
+			// dSGTSSyncTToolStripMenuItem
 			// 
-			this->gTSResetToolStripMenuItem->Name = L"gTSResetToolStripMenuItem";
-			this->gTSResetToolStripMenuItem->Size = System::Drawing::Size(152, 22);
-			this->gTSResetToolStripMenuItem->Text = L"GTSReset(&R)";
-			this->gTSResetToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::gTSResetToolStripMenuItem_Click);
+			this->dSGTSSyncTToolStripMenuItem->Name = L"dSGTSSyncTToolStripMenuItem";
+			this->dSGTSSyncTToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->dSGTSSyncTToolStripMenuItem->Text = L"DS-GTSSync(&T)";
+			this->dSGTSSyncTToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::dSGTSSyncTToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -229,6 +238,10 @@ private: bool RequestPickupTraded(void);
 private: System::Void gTSTestGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
 private: System::Void gTSResetToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void webBrowser1_DocumentCompleted(System::Object^  sender, System::Windows::Forms::WebBrowserDocumentCompletedEventArgs^  e) {
+		 }
+private: System::Void dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
 };
 }

@@ -20,21 +20,44 @@ namespace PokeIRC {
 	using namespace System::Text::RegularExpressions;
 
 
+
+
 	//==============================================================================
 	/**
 	 * IRCライブラリラッパークラス
 	 */
 	//==============================================================================
+	public enum TR_URL_ENUM : unsigned char {
+		TR_URL_UPLOAD=10,
+		TR_URL_UPLOADFINISH,
+		TR_URL_DOWNLOAD,
+		TR_URL_GETUPLOADRESULT,
+		TR_URL_DELETE,
+		TR_URL_RETURN,
+		TR_URL_DOWNLOADMATCHDATA,
+		TR_URL_TRADE,
+		TR_URL_TRADEFINISH,
+		TR_URL_GETSERVERSTATE,
+		TR_URL_INIT,
+		TR_URL_UPDATE,
+		TR_URL_SHUFFLE,
+		TR_URL_MAX
+	};
+
 
 	public ref class NetIRC
 	{
 	private:
+
 		static bool isEmulate;
+	static const unsigned long long TEST_KEY = 0x100000000UL;
 
 
 		static bool isSend;
 		static bool isDataSend;
 
+		static int URLNo;
+		static String^ s_currentProxy;
 
 
 	public:
@@ -46,8 +69,23 @@ namespace PokeIRC {
 		static bool sendData(void);
 		static bool SendLoop(void);
 		static array<unsigned char>^ dataArray;
+		static array<unsigned char>^ recvdataArray;
+		static void RecvURLCOMMAND(unsigned char * data,int size,unsigned char value);
+		static int WaitForAsync(void);
+	private:
+		static void RequestUpload(void);
+		static void RequestServerState(void);
+		static void RequestPickupTraded(void);
+		static void RequestDownload(void);
+
+
+
 
 	private:
+		static void _resultSend(int value);
+	public:
+		static void SetProxy(String^ proxy);
+
 
 
 	};
