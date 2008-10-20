@@ -12,7 +12,6 @@ extern "C" {
 #ifndef __NET_H__
 #define __NET_H__
 
-
 #include "ui.h"
 
 #if defined(DEBUG_ONLY_FOR_ohno)
@@ -698,6 +697,29 @@ extern BOOL GFL_NET_SystemCheckDataSharing(void);
  */
 //==============================================================================
 extern void GFLR_NET_GetBeaconHeader(u8* pHeader, int size);
+
+
+/*-------------------------------------------------------------------------*
+ * Name        : GFL_NET_Align32Alloc
+ * Description : メモリ確保関数
+ * Arguments   : name  - 確保する名前
+ *             : size  - 確保するサイズ
+ *             : align - 確保するアライメント
+ * Returns     : *void - 確保したポインタ
+ * HEAPは4byte境界で返ってくるため、それを無理やり32byte境界へ
+ * アライメントし直す。
+ * 返すアドレス-4の4byteに元のallocしたアドレスを保存しておいて、
+ * freeする際にはその値を参照してフリーするようにしてある
+ *-------------------------------------------------------------------------*/
+extern void* GFL_NET_Align32Alloc( HEAPID id, u32 size );
+/*-------------------------------------------------------------------------*
+ * Name        : GFL_NET_Align32Free
+ * Description : メモリ開放関数
+ * Arguments   : *ptr - 解放するメモリのポインタ
+ * Returns     : None.
+ *-------------------------------------------------------------------------*/
+extern void GFL_NET_Align32Free( void* ptr );
+
 
 
 extern void debugcheck(u32* data,int size );
