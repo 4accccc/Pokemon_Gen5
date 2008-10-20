@@ -22,7 +22,8 @@ struct _FIELD_CAMERA {
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
-
+	
+	VecFx32				transOffset;
 };
 
 
@@ -69,7 +70,7 @@ void	FLD_DeleteCamera( FIELD_CAMERA* camera )
 void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 {
 	GFL_G3D_CAMERA * g3Dcamera = GetG3Dcamera(camera->gs);
-	VecFx32	pos, target;
+	VecFx32	pos, target, trans;
 	VecFx32	vecMove = { 0, 0, 0 };
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
@@ -98,14 +99,20 @@ void	FLD_MainCamera( FIELD_CAMERA* camera, int key )
 	if( key & PAD_BUTTON_X ){
 		camera->cameraHeight += MV_SPEED;
 	}
-	VEC_Set(	&target,
-				camera->trans.x,
-				camera->trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
-				camera->trans.z);
 	
-	pos.x = camera->trans.x + camera->cameraLength * FX_SinIdx(camera->direction);
-	pos.y = camera->trans.y + camera->cameraHeight;
-	pos.z = camera->trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
+	trans = camera->trans;
+	trans.x += camera->transOffset.x;
+	trans.y += camera->transOffset.y;
+	trans.z += camera->transOffset.z;
+
+	VEC_Set( &target,
+			trans.x,
+			trans.y + CAMERA_TARGET_HEIGHT*FX32_ONE,
+			trans.z);
+
+	pos.x = trans.x + camera->cameraLength * FX_SinIdx(camera->direction);
+	pos.y = trans.y + camera->cameraHeight;
+	pos.z = trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
 
 	GFL_G3D_CAMERA_SetTarget( g3Dcamera, &target );
 	GFL_G3D_CAMERA_SetPos( g3Dcamera, &pos );
@@ -162,3 +169,10 @@ void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height )
 {
 	*height = camera->cameraHeight;
 }
+
+void	FLD_SetCameraTransOffset(
+		FIELD_CAMERA *camera, const VecFx32 *offs )
+{
+	camera->transOffset = *offs;
+}
+

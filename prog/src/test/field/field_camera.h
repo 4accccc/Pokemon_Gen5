@@ -14,3 +14,5 @@ extern void	FLD_SetCameraLength( FIELD_CAMERA *camera, u16 leng );
 extern void	FLD_GetCameraLength( FIELD_CAMERA *camera, u16 *leng );
 extern void	FLD_SetCameraHeight( FIELD_CAMERA *camera, fx32 height );
 extern void	FLD_GetCameraHeight( FIELD_CAMERA *camera, fx32 *height );
+extern void	FLD_SetCameraTransOffset(
+		FIELD_CAMERA *camera, const VecFx32 *offs );

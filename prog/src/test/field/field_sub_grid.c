@@ -216,6 +216,8 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 //--------------------------------------------------------------
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 {
+	VecFx32 offs = { FX32_ONE*8, 0, 0 };
+
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
 	
@@ -234,6 +236,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
+	FLD_SetCameraTransOffset( fieldWork->camera_control, &offs );
 //	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
 	
 	{
