@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: test9ball.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-02-13T18:35:18
+ *****************************************************************************/
+
+#ifndef NARC_TEST9BALL_NAIX_
+#define NARC_TEST9BALL_NAIX_
+
+enum {
+	NARC_test9ball_test1ball_nsbmd = 0,
+	NARC_test9ball_test1ball_nsbtx = 1,
+	NARC_test9ball_test2ball_nsbtx = 2,
+	NARC_test9ball_test3ball_nsbtx = 3,
+	NARC_test9ball_test4ball_nsbtx = 4,
+	NARC_test9ball_test5ball_nsbtx = 5,
+	NARC_test9ball_test6ball_nsbtx = 6,
+	NARC_test9ball_test7ball_nsbtx = 7,
+	NARC_test9ball_test8ball_nsbtx = 8,
+	NARC_test9ball_test9ball_nsbtx = 9
+};
+
+/* NARC_TEST9BALL_NAIX_ */
+#endif

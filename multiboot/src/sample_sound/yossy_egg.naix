@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: yossy_egg.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2007-09-10T15:59:27
+ *****************************************************************************/
+
+#ifndef NARC_YOSSY_EGG_NAIX_
+#define NARC_YOSSY_EGG_NAIX_
+
+enum {
+	NARC_yossy_egg_yossy_egg_sdat = 0
+};
+
+/* NARC_YOSSY_EGG_NAIX_ */
+#endif

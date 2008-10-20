@@ -1,0 +1,2 @@
+ ID 0x0 = debug_tomoya
+ ID 0x1 = debug_tamada

@@ -1,0 +1,185 @@
+//===================================================================
+/**
+ * @file	testmode.dat
+ */
+//===================================================================
+static const char	test_index1[] = 
+{"ゲームフリーク　プログラムライブラリ　テストモード\nGame Freak Libraries TestMode"};
+static const char	test_index2[] = {"http://www.gamefreak.co.jp"};
+
+static const char	test_select1[]	= {"わたなべ　てつや　　Tetsuya Watanabe"};
+static const char	test_select2[]	= {"たまだ　そうすけ　　Sousuke Tamada"};
+static const char	test_select3[]	= {"そがべ　ひさし　　Hisashi Sogabe"};
+static const char	test_select4[]	= {"おおの　かつみ　　Katsumi Ohno"};
+
+static const char	test_select5[]	= {"たや　まさお　　Masao Taya"};
+static const char	test_select6[]	= {"なかむら　ひろゆき　　Hiroyuki Nakamura"};
+static const char	test_select7[]	= {"なぎはし　とおる　　Tooru Nagihashi"};
+static const char	test_select8[]	= {"ほさか　げんや　　Genya Hosaka"};
+
+static const char	test_select9[]	= {"まつだ　よしのり　　Yoshinori Matsuda"};
+static const char	test_select10[]	= {"かがや　けいた　　Keita Kagaya"};
+static const char	test_select11[]	= {"のはら　さとし　　Satoshi Nohara"};
+static const char	test_select12[]	= {"ごとう　だいすけ　　Daisuke Gotou"};
+static const char	test_select13[]	= {"たかはし　ともや　　Tomoya Takahashi"};
+
+static const char	test_select14[]	= {"もり　あきと　　Akito Mori"};
+static const char	test_select15[]	= {"おおた　ともみち　　Tomomichi Ohta"};
+static const char	test_select16[]	= {"いわさわ　みゆき　　Miyuki Iwasawa"};
+static const char	test_select17[]	= {"さいとう　のぞむ　　Nozomu Saitou"};
+
+enum {
+	NUM_TITLE = 0,
+	NUM_URL,
+};
+
+static const TESTMODE_PRINTLIST indexList[] = {
+	{ test_index1, 2, 1, 30, 2 },
+	{ test_index2, 2, 22, 30, 1 },
+};
+
+enum {
+	NUM_SELECT1 = NUM_URL+1,
+	NUM_SELECT2,
+	NUM_SELECT3,
+	NUM_SELECT4,
+	NUM_SELECT5,
+	NUM_SELECT6,
+	NUM_SELECT7,
+	NUM_SELECT8,
+	NUM_SELECT9,
+	NUM_SELECT10,
+	NUM_SELECT11,
+	NUM_SELECT12,
+	NUM_SELECT13,
+	NUM_SELECT14,
+	NUM_SELECT15,
+	NUM_SELECT16,
+	NUM_SELECT17,
+};
+
+enum {
+	NUM_SELECT_PAGE1 = NUM_SELECT1,
+	NUM_SELECT_PAGE2 = NUM_SELECT9,
+	NUM_COUNT_PAGE1 = NUM_SELECT9 - NUM_SELECT1,
+	NUM_COUNT_PAGE2 = NUM_SELECT17+1 - NUM_SELECT9,
+};
+
+static const TESTMODE_PRINTLIST selectList[] = {
+	{ test_select1,  4,  5, 24, 1 },
+	{ test_select2,  4,  7, 24, 1 },
+	{ test_select3,  4,  9, 24, 1 },
+	{ test_select4,  4, 11, 24, 1 },
+
+	{ test_select5,  4, 15, 24, 1 },
+	{ test_select6,  4, 17, 24, 1 },
+	{ test_select7,  4, 19, 24, 1 },
+	{ test_select8,  4, 21, 24, 1 },
+
+	{ test_select9,  4,  1, 24, 1 },
+	{ test_select10, 4,  3, 24, 1 },
+	{ test_select11, 4,  5, 24, 1 },
+	{ test_select12, 4,  7, 24, 1 },
+	{ test_select13, 4,  9, 24, 1 },
+
+	{ test_select14, 4, 13, 24, 1 },
+	{ test_select15, 4, 15, 24, 1 },
+	{ test_select16, 4, 17, 24, 1 },
+	{ test_select17, 4, 19, 24, 1 },
+};
+
+enum {
+	SELECT_WATANABE = 0,
+	SELECT_TAMADA,
+	SELECT_SOGABE,
+	SELECT_OHNO,
+	SELECT_TAYA,
+	SELECT_NAKAMURA,
+	SELECT_NAGIHASHI,
+	SELECT_HOSAKA,
+	SELECT_MATSUDA,
+	SELECT_KAGAYA,
+	SELECT_NOHARA,
+	SELECT_GOTOU,
+	SELECT_TAKAHASHI,
+	SELECT_MORI,
+	SELECT_OHTA,
+	SELECT_IWASAWA,
+	SELECT_SAITOU,
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief		ＢＧ設定
+ */
+//------------------------------------------------------------------
+static const GFL_BG_SYS_HEADER bgsysHeader = {
+	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D
+};	
+
+static const GFL_BG_BGCNT_HEADER bgCont3 = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+
+static const GFL_BG_BGCNT_HEADER bgCont0 = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+
+//------------------------------------------------------------------
+/**
+ * @brief		２Ｄデータコントロール
+ */
+//------------------------------------------------------------------
+static const char font_path[] = {"src/gfl_graphic/gfl_font.dat"};
+
+#define G2D_BACKGROUND_COL	(0x0000)
+#define G2D_FONT_COL		(0x7fff)
+#define G2D_FONTSELECT_COL	(0x001f)
+
+static const GFL_TEXT_PRINTPARAM default_param = 
+{ NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
+
+#define TEXT_FRM			(GFL_BG_FRAME3_M)
+#define TEXT_FRM_PRI		(0)
+//------------------------------------------------------------------
+/**
+ * @brief		３Ｄデータコントロール
+ */
+//------------------------------------------------------------------
+#define DTCM_SIZE		(0x1000)
+#define G3D_FRM_PRI		(1)
+
+static const GFL_G3D_OBJSTATUS status0 = {
+	//{ -FX32_ONE*64, 0, 0 },								//座標
+	{ 0, 0, 0 },								//座標
+	{ FX32_ONE*7/8, FX32_ONE*7/8, FX32_ONE*7/8 },		//スケール
+	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+};
+static const GFL_G3D_OBJSTATUS status1 = {
+	//{ FX32_ONE*64, -FX32_ONE*48, 0 },					//座標
+	{ 0, -FX32_ONE*48, 0 },					//座標
+	{ FX32_ONE*3/5, FX32_ONE*3/5, FX32_ONE*3/5 },		//スケール
+	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	//回転
+};
+
+static const GFL_G3D_LOOKAT cameraLookAt = {	{ 0, (FX32_ONE * 58), (FX32_ONE * 256) },
+												{ 0, FX32_ONE, 0 },
+												{ 0, 0, 0 } };
+#define cameraPerspway	( 0x0b60 )
+#define cameraAspect	( FX32_ONE * 4 / 3 )
+#define cameraNear		( 1 << FX32_SHIFT )
+#define cameraFar		( 1024 << FX32_SHIFT )
+
+#define g3DanmRotateSpeed	( 0x100 )
+#define g3DanmFrameSpeed	( FX32_ONE )
+	
+
+
+
+
