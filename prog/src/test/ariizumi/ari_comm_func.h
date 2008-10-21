@@ -67,6 +67,8 @@ extern BOOL	FieldComm_IsErro();
 extern BOOL	FieldComm_IsDutyMemberData();
 extern void	FieldComm_ResetDutyMemberData();
 extern BOOL	FieldComm_IsStartCommMode();
+extern BOOL	FieldComm_IsActiveUser(const u8 idx);
+extern void	FieldComm_ResetActiveUser(const u8 idx);
 
 //各種コールバック
 

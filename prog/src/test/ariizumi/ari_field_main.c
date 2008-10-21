@@ -826,7 +826,8 @@ void	AriFieldCommMain( )
 	{
 		VecFx32 plPos;
 		u16 plDir;
-		const int plNum = GFL_NET_GetConnectNum();
+		//const int plNum = GFL_NET_GetConnectNum();
+		const int plNum = 4;
 
 		GetPlayerActTrans( ariFieldWork->pcActCont , &plPos );
 		GetPlayerActDirection( ariFieldWork->pcActCont , &plDir );
@@ -853,11 +854,15 @@ void	AriFieldCommMain( )
 			for( i=0;i<plNum;i++ ){
 				if( FieldComm_GetSelfIndex() != i )
 				{
-					VecFx32 pos;
-					u16     dir;
-					FieldComm_PostPlayerPosition( i , &pos , &dir );
-					SetPlayerActTrans( ariCommField->commActCnt[i] , &pos );
-					SetPlayerActDirection( ariCommField->commActCnt[i] , &dir );
+					if( FieldComm_IsActiveUser( i ) == TRUE )
+					{
+						VecFx32 pos;
+						u16     dir;
+						FieldComm_PostPlayerPosition( i , &pos , &dir );
+						SetPlayerActTrans( ariCommField->commActCnt[i] , &pos );
+						SetPlayerActDirection( ariCommField->commActCnt[i] , &dir );
+						FieldComm_ResetActiveUser(i);
+					}
 				}
 			}
 		}

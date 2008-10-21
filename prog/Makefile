@@ -123,7 +123,10 @@ GFL_FILE_TREE	=	titledemo.narc \
 					BMSample/sphere_06.ntft \
 					BMSample/sphere_06.ntfp \
 					BMSample/sphere_hole_01.ntft \
-					BMSample/sphere_hole_01.ntfp
+					BMSample/sphere_hole_01.ntfp \
+					dl_rom/child.srl \
+					dl_rom/icon.char \
+					dl_rom/icon.plt
 
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)

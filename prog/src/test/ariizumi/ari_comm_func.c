@@ -39,6 +39,8 @@ typedef struct
 	u32 dir:8;
 	u16 posY;
 	u16 pad2;
+
+	u32 testData[8];
 }FIELD_COMM_PLAYER_DATA;
 //======================================================================
 //	FIELD_COMM_DATA
@@ -60,6 +62,7 @@ struct _FIELD_COMM_DATA
 	u8			memberNum;
 	FIELD_COMM_BEACON		*memberData;	//名前とID
 	FIELD_COMM_PLAYER_DATA	*playerData;	//座標とか
+	u8			isActiveUser[FIELD_COMM_MEMBER_MAX];	//ビットフラグで管理
 
 	u8	playerDataPostBuffIdx;
 	u8	*playerDataPostBuff;
@@ -100,6 +103,9 @@ BOOL	FieldComm_IsError();
 BOOL	FieldComm_IsDutyMemberData();
 void	FieldComm_ResetDutyMemberData();
 BOOL	FieldComm_IsStartCommMode();
+BOOL	FieldComm_IsActiveUser(const u8 idx);
+void	FieldComm_ResetActiveUser(const u8 idx);
+void	FieldComm_SetActiveUser(const u8 idx);
 
 //各種コールバック
 void	InitCommLib_EndCallback( void* pWork );
@@ -150,6 +156,7 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 	{
 		f_comm->memberData[i].id = FIELD_COMM_ID_INVALID;
+		f_comm->isActiveUser[i] = FALSE;
 	}
 	f_comm->playerDataPostBuff = GFL_HEAP_AllocClearMemory( heapID , FIELD_COMM_PLAYERDATA_POST_BUFFER_SIZE );
 	f_comm->playerDataPostBuffIdx = 0;
@@ -479,6 +486,19 @@ BOOL	FieldComm_IsStartCommMode()
 	return f_comm->isStartMode;
 }
 
+//ユーザーがアクティブ(データ更新があったか？)
+BOOL	FieldComm_IsActiveUser(const u8 idx)
+{
+	return f_comm->isActiveUser[idx];
+}
+void	FieldComm_ResetActiveUser( const u8 idx )
+{
+	f_comm->isActiveUser[idx] = FALSE;
+}
+void	FieldComm_SetActiveUser( const u8 idx )
+{
+	f_comm->isActiveUser[idx] = TRUE;
+}
 //--------------------------------------------------------------
 //	以下、各種コールバック
 //--------------------------------------------------------------
@@ -583,6 +603,7 @@ void FieldComm_Post_PlayerData(const int netID, const int size, const void* pDat
 			,f_comm->playerData[netID-1].posX
 			,f_comm->playerData[netID-1].posY
 			,f_comm->playerData[netID-1].posZ);
+	FieldComm_SetActiveUser( netID-1 );
 }
 
 u8*	 FieldComm_Post_PlayerData_Buff( int netID, void* pWork , int size )
