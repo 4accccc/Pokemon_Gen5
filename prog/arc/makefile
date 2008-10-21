@@ -20,14 +20,14 @@ include $(VER_FILE)
 
 do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc
 
-narc_tree.inc: narc_tree.pl arc_tool.lst $(VER_FILE)
-	perl narc_tree.pl arc_tool.lst $(PM_VERSION)
+narc_tree.inc: ../../tools/arc/narc_tree.pl arc_tool.lst $(VER_FILE)
+	perl ../../tools/arc/narc_tree.pl arc_tool.lst $(PM_VERSION)
 
-arc_def.h arc_file.h: header.pl arc_tool.lst $(VER_FILE)
-	perl header.pl arc_tool.lst $(PM_VERSION)
+arc_def.h arc_file.h: ../../tools/arc/header.pl arc_tool.lst $(VER_FILE)
+	perl ../../tools/arc/header.pl arc_tool.lst $(PM_VERSION)
 
-file_tree.inc: narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
-	perl narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/
+file_tree.inc: ../../tools/arc/narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
+	perl ../../tools/arc/narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/
 
 clean:
 	rm -f $(LDIRT_CLEAN)

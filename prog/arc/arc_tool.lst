@@ -70,3 +70,4 @@
 	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
 	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
 	ARCID_FLDMAP_TEST3DP	"test_graphic/fldmap3dp.narc" #テストマップ
+	ARCID_PTC			"spa.narc" #ニンテンパーティクル
