@@ -15,11 +15,18 @@
 #include <npBpcImporter.h>
 #include <nplibc.h>
 
+#include <nnsys/mcs.h>
+
 #include "system/main.h"
 #include "arc_def.h"
 
+#include "system\gfl_use.h"
 #include "mcss.h"
 #include "pokegra_wb.naix"
+
+#include "test\performance.h"
+
+//#define	 NINTEN_SPL			//ニンテンパーティクル使用
 
 #define	CAMERA_SPEED		( FX32_ONE * 2 )
 #define	ROTATE_SPEED		( 65536 / 100 ) 
@@ -44,8 +51,38 @@ enum {
 	DEF_ENTRYTEX_MAX =		  3,
 };
 
+// Windowsアプリケーションとの識別で使用するチャンネル値です
+//static const u16 MCS_CHANNEL0 = 0;
+//static const u16 MCS_CHANNEL1 = 1;
+
+enum{
+	MCS_CHANNEL0 = 0,
+	MCS_CHANNEL1,
+	MCS_CHANNEL2,
+	MCS_CHANNEL3,
+	MCS_CHANNEL4,
+	MCS_CHANNEL5,
+	MCS_CHANNEL6,
+	MCS_CHANNEL7,
+	MCS_CHANNEL8,
+	MCS_CHANNEL9,
+	MCS_CHANNEL10,
+	MCS_CHANNEL11,
+	MCS_CHANNEL12,
+	MCS_CHANNEL13,
+	MCS_CHANNEL14,
+	MCS_CHANNEL15,
+
+	MCS_CHANNEL_END,
+};
+
+#define	MCS_CH_MAX		( MCS_CHANNEL_END )
+#define	MCS_SEND_SIZE	( 0x1800 )
+
 //32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
 static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
+
+int	bm_flag=0;
 
 typedef struct {
 	npCONTEXT	ctx;
@@ -74,6 +111,15 @@ typedef struct
 
 typedef struct
 {
+	int					phi;
+	int					theta;
+	int					distance;
+	int					pos_x;
+	int					pos_y;
+}MCS_WORK;
+
+typedef struct
+{
 	int					seq_no;
 	MCSS_SYS_WORK		*mcss_sys;
 	MCSS_WORK			*mcss;
@@ -90,15 +136,27 @@ typedef struct
 	u32					strmReadPos;
 	u32					strmWritePos;
 	int					visible_flag;
+	int					timer_flag;
 	int					timer;
+
+	GFL_PTC_PTR			ptc;
+	u8					spa_work[PARTICLE_LIB_HEAP_SIZE];
+
+	//MCS
+    u8*					mcsWorkMem;
+    NNSMcsDeviceCaps	deviceCaps;
+    NNSMcsRecvCBInfo	recvCBInfo;
+	void*				printBuffer;
+	void*				recvBuf;
+	int					mcs_idle;
+	int					mcs_enable;
+	MCS_WORK			mw;
 }SOGA_WORK;
 
 //カメラ
 static	void	InitCamera( CAMERA_WORK *cw, HEAPID heapID );
-static	void	MoveCamera( CAMERA_WORK *cw );
+static	void	MoveCamera( SOGA_WORK *sw );
 static	void	CalcCamera( CAMERA_WORK *cw );
-
-int				rotate=0;
 
 //ストリーム再生
 static	void	StrmSetUp(SOGA_WORK *sw);
@@ -125,6 +183,27 @@ static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex,
 static void bmt_Mtx43ToMtx44(MtxFx44 *pDst, MtxFx43 *pTrc);
 static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew );
 
+//MCS
+static BOOL MCS_Init( SOGA_WORK *sw );
+static void MCS_Exit( SOGA_WORK *sw );
+static void MCS_Read( SOGA_WORK *sw );
+static void MCS_Write( SOGA_WORK *sw );
+static void MCS_DataRecvCallback( const void* pRecv, u32 recvSize, u32 userData, u32 offset, u32 totalSize );
+static void MCS_VBlankIntr( GFL_TCB *tcb, void *work );
+
+//Capture
+static void Capture_VBlankIntr( GFL_TCB *tcb, void *work );
+
+typedef struct
+{
+	s32	x[2];
+	s32	y[2];
+	s32	percent;
+	int	update;
+}PERFORMANCE_PARAM;
+
+extern	PERFORMANCE_PARAM	per_para;
+
 //--------------------------------------------------------------------------
 /**
  * PROC Init
@@ -150,11 +229,13 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
+			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット			
 		};		
 		GFL_DISP_SetBank( &dispvramBank );
 	}	
+
+	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
 	
 	G2_BlendNone();
 	GFL_BG_Init( wk->heapID );
@@ -163,6 +244,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	{
 		static const GFL_BG_SYS_HEADER sysHeader = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+//			GX_DISPMODE_VRAM_C, GX_BGMODE_4, GX_BGMODE_3, GX_BG0_AS_3D,
 		};
 		GFL_BG_SetBGMode( &sysHeader );
 	}
@@ -197,8 +279,6 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 #if 1
 	MCSS_Add( wk->mcss_sys,
-//			  0x00040000,0x0001a000,0xfff60000,
-//			  0x00040000,0x00038000,0xfff80000,
 			  0x00028000,0x0002a000,0xffff0000,
 			  ARCID_POKEGRA,
 			  NARC_pokegra_wb_multi_test_NCBR,
@@ -218,11 +298,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			  NARC_pokegra_wb_multi_test3_NMCR,
 			  NARC_pokegra_wb_multi_test3_NMAR,
 			  NARC_pokegra_wb_multi_test3_NCEC );
-#endif
-#if 1
 	MCSS_Add( wk->mcss_sys,
-//			  0xfffd0000,0xfffd8000,0xfff6a000,
-//			  0xfffd0000,0x00048000,0xfffc0000,
 			  0xfffd0000,0x0003a000,0x00020000,
 			  ARCID_POKEGRA,
 			  NARC_pokegra_wb_multi_test2_NCBR,
@@ -295,9 +371,18 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	NNS_SndStrmStart(&wk->strm);
 	
 	//パーティクル初期化
+#ifdef NINTEN_SPL
+	GFL_PTC_Init( wk->heapID );
+	wk->ptc = GFL_PTC_Create( wk->spa_work, PARTICLE_LIB_HEAP_SIZE, FALSE, wk->heapID );
+	GFL_PTC_SetResource( wk->ptc, GFL_PTC_LoadArcResource( ARCID_PTC, 0, wk->heapID ), TRUE, NULL );
+#else
 	wk->pw = GFL_HEAP_AllocMemory( wk->heapID, sizeof(PARTICLE_WORK) );
 	wk->pw->heapID = wk->heapID;
-	ParticleInit(wk->pw);
+	ParticleInit( wk->pw );
+#endif
+
+	//キャプチャセット
+	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -310,10 +395,19 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	int pad = GFL_UI_KEY_GetCont();
+	int trg = GFL_UI_KEY_GetTrg();
 	SOGA_WORK* wk = mywk;
 
+	if( wk->mcs_enable ){
+		NNS_McsPollingIdle();
+		MCS_Read( wk );
+		MCS_Write( wk );
+	}
+
 	//画面切り替え実験
-	wk->timer++;
+	if( wk->timer_flag ){
+		wk->timer++;
+	}
 	if(wk->timer > SWITCH_TIME ){
 		wk->timer=0;
 		wk->visible_flag ^= 1;
@@ -331,25 +425,56 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 
 	StrmBufferCopy(wk,0);
 
+	if( ( trg & PAD_BUTTON_START ) ||
+		wk->mcs_idle ){
+		if( wk->mcs_enable ){
+			MCS_Exit( wk );
+		}
+		else{
+			wk->mcs_idle = MCS_Init( wk );
+		}
+	}
+
+	if( trg & PAD_BUTTON_SELECT ){
+		wk->timer_flag ^= 1;
+	}
+
+//	if( trg & PAD_BUTTON_START ){
+//		bm_flag++;
+//	}
+
+#if 0
 	if( pad & PAD_BUTTON_A ){
 		wk->mcss->mepachi_flag = 1;
 	}
 	else{
 		wk->mcss->mepachi_flag = 0;
 	}
+#endif
 
-	MoveCamera( &wk->cw );
+	MoveCamera( wk );
 
 	MCSS_Main( wk->mcss_sys );
+
+#ifdef NINTEN_SPL
+	if( GFL_PTC_GetEmitterNum( wk->ptc ) < 20 ){
+		VecFx32	pos={ 0, FX32_ONE * 10, 0 };
+		GFL_PTC_CreateEmitter( wk->ptc, 0, &pos );
+	}
+#endif
 
 	//3D描画
 	{
 		GFL_G3D_DRAW_Start();
-		GFL_G3D_CAMERA_Switching( wk->cw.camera );
+		GFL_G3D_DRAW_SetLookAt();
 		{
 			GFL_G3D_DRAW_DrawObject( wk->model_obj, &wk->model_status );
 			MCSS_Draw( wk->mcss_sys );
+#ifdef NINTEN_SPL
+			GFL_PTC_Main();
+#else
 			ParticleDraw(wk->pw);
+#endif
 		}
 		GFL_G3D_DRAW_End();
 	}
@@ -413,8 +538,9 @@ static	void	InitCamera( CAMERA_WORK *cw, HEAPID heapID )
 //======================================================================
 //	カメラの制御
 //======================================================================
-static	void	MoveCamera( CAMERA_WORK *cw )
+static	void	MoveCamera( SOGA_WORK *wk )
 {
+	CAMERA_WORK	*cw = &wk->cw;
 	int pad = GFL_UI_KEY_GetCont();
 	VecFx32	pos,ofsx,ofsz;
 	fx32	xofs=0,yofs=0,zofs=0;		
@@ -458,6 +584,18 @@ static	void	MoveCamera( CAMERA_WORK *cw )
 		if( pad & PAD_BUTTON_B ){
 			zofs = -FX32_ONE;
 		}
+		if( wk->mw.pos_x ){
+			xofs = FX32_ONE * wk->mw.pos_x;
+			wk->mw.pos_x = 0;
+		}
+		if( wk->mw.pos_y ){
+			yofs = FX32_ONE * wk->mw.pos_y;
+			wk->mw.pos_y = 0;
+		}
+		if( wk->mw.distance ){
+			zofs = FX32_ONE * (wk->mw.distance / 50);
+			wk->mw.distance = 0;
+		}
 		pos.x = cw->camPos.x - cw->target.x;
 		pos.y = 0;
 		pos.z = cw->camPos.z - cw->target.z;
@@ -485,9 +623,27 @@ static	void	MoveCamera( CAMERA_WORK *cw )
 			cw->scale += SCALE_SPEED;
 		}
 	}
+	if( wk->mw.theta ){
+		cw->theta -= wk->mw.theta * 32 ;
+		wk->mw.theta = 0;
+	}
+
+	if( wk->mw.phi ){
+		cw->phi -= wk->mw.phi * 32 ;
+		if( cw->phi <= -PHI_MAX ){
+			cw->phi = -PHI_MAX;
+		}
+		if( cw->phi >= PHI_MAX ){
+			cw->phi = PHI_MAX;
+		}
+		wk->mw.phi = 0;
+	}
+
+
 	CalcCamera( cw );
 	GFL_G3D_CAMERA_SetPos( cw->camera, &cw->camPos );
 	GFL_G3D_CAMERA_SetTarget( cw->camera, &cw->target );
+	GFL_G3D_CAMERA_Switching( cw->camera );
 }
 
 //======================================================================
@@ -540,7 +696,6 @@ static	void	StrmBufferCopy(SOGA_WORK *sw,int size)
 	FSFile	file;
 	s32		ret;
 
-    OS_TPrintf("---\n");
     FS_InitFile(&file);
 	FS_OpenFile(&file,"/pm_battle.swav");
 	FS_SeekFile(&file,sw->FSReadPos,FS_SEEK_SET);
@@ -591,8 +746,6 @@ static	void	StrmCBWaveDataStock(NNSSndStrmCallbackStatus status,
 	if(sw->strmReadPos>=STRM_BUF_SIZE){
 		sw->strmReadPos=0;
 	}
-    OS_TPrintf("count %d \n",len);
-
 	DC_FlushRange(strBuf,len);
 }
 
@@ -697,7 +850,21 @@ static BOOL Bmt_initEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf, HEAP
 
 	OS_TPrintf("BM必要バッファサイズ=0x%x bytes\n", nSize);
 
-	*ppvBuf = GFL_HEAP_AllocMemory( heapID, nSize );
+	*ppvBuf = GFL_HEAP_AllocMemory( heapID, nSize + 32 );
+
+#if 0
+	//32バイトアライメントをしてみる
+	{
+		u32 addr;
+
+		OS_TPrintf("ppvBuf:0x%08x\n",*ppvBuf);
+		addr = (u32)*ppvBuf;
+		addr += ( 32 - ( addr % 32 ) );
+		*ppvBuf = (void*)addr;
+		OS_TPrintf("ppvBuf:0x%08x\n",*ppvBuf);
+	}
+#endif
+
 	pByte = (npBYTE*)(*ppvBuf);//ポインタを渡しておく
 
 	/* memory size */
@@ -1018,6 +1185,8 @@ static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** 
 	npSetTransformFMATRIX( ctx, NP_PROJECTION, (npFMATRIX *)NNS_G3dGlbGetProjectionMtx() );
 	npSetTransformFMATRIX( ctx, NP_VIEW, (npFMATRIX *)NNS_G3dGlbGetCameraMtx() );
 
+    G3_MtxMode(GX_MTXMODE_POSITION);
+
 	// UPDATE & RENDER
 	{
 		bmt_updateEffect( pComp, NP_NTSC60 );
@@ -1046,16 +1215,212 @@ static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew )
 	MtxFx44	mtx,trans;
 	// scalingEffect
 	npFMATRIX effMat;
+	npFVECTOR scale;
 
+#if 1
 	MTX_Scale44( &mtx, FX32_ONE * 12, FX32_ONE * 4, FX32_ONE * 12 );
 	MTX_Identity44( &trans );
-//	MTX_TransApply44( &trans, &trans, FX32_ONE * 6 , FX32_ONE * 2, 0 );
 	MTX_TransApply44( &trans, &trans, 0x00060000,0x00001000,0x00010000 );
 	MTX_Concat44( &mtx, &trans, &mtx );
-//	npUnitFMATRIX( (npFMATRIX *)&trans );
-
-//	npParticleSetScaling( pComp, (npFVECTOR *)&scale );
+#else
+	MTX_Identity44( &mtx );
+	MTX_TransApply44( &mtx, &mtx, 0x00060000,0x00001000,0x00010000 );
+	scale[0] = FX32_ONE * 1;
+	scale[1] = FX32_ONE * 1;
+	scale[2] = FX32_ONE * 1;
+	scale[3] = FX32_ONE * 1;
+	(void)npParticleSetScaling( pComp, &scale );
+#endif
 	(void)npParticleSetGlobalFMATRIX((npPARTICLEOBJECT *)pComp, (npFMATRIX *)&mtx);
 	(void)npParticleUpdateComposite( pComp, renew );
+}
+
+
+//
+//	MCS制御実験
+//
+static BOOL MCS_Init( SOGA_WORK *wk )
+{
+	if(	wk->mcs_enable ) return FALSE;
+
+	wk->mw.phi = 0;
+	wk->mw.theta = 0;
+
+	// mcsの初期化
+	wk->mcsWorkMem = GFL_HEAP_AllocMemory( wk->heapID, NNS_MCS_WORKMEM_SIZE ); // MCSのワーク用メモリを確保
+	NNS_McsInit( wk->mcsWorkMem );
+
+	GFUser_VIntr_CreateTCB( MCS_VBlankIntr, NULL, 0 );
+
+	// デバイスのオープン
+	if( NNS_McsGetMaxCaps() > 0 && NNS_McsOpen( &wk->deviceCaps ) )
+	{
+		wk->printBuffer = GFL_HEAP_AllocMemory( wk->heapID, 1024 );        // プリント用のバッファの確保
+		wk->recvBuf = GFL_HEAP_AllocMemory( wk->heapID, 1024 );       // 受信用バッファの確保
+
+        NNS_NULL_ASSERT(wk->printBuffer);
+        NNS_NULL_ASSERT(wk->recvBuf);
+
+        // OS_Printfによる出力
+        OS_Printf("device open\n");
+
+        // mcs文字列出力の初期化
+		NNS_McsInitPrint( wk->printBuffer, 1024 );
+
+        // NNS_McsPrintfによる出力
+        // このタイミングでmcsサーバが接続していれば、コンソールに表示されます。
+		(void)NNS_McsPrintf("device ID %08X\n", wk->deviceCaps.deviceID );
+
+        // 読み取り用バッファの登録
+		NNS_McsRegisterStreamRecvBuffer(MCS_CHANNEL0, wk->recvBuf, 1024 );
+
+        // 受信コールバック関数の登録
+//		NNS_McsRegisterRecvCallback( &wk->recvCBInfo, MCS_CHANNEL1, MCS_DataRecvCallback, (u32)&wk->mw );
+
+		wk->mcs_enable = 1;
+
+        return FALSE;
+    }
+	OS_Printf("device open fail.\n");
+	return TRUE;
+}
+
+static void MCS_Exit( SOGA_WORK *wk )
+{
+//	NNS_McsUnregisterRecvResource(MCS_CHANNEL1);
+	NNS_McsUnregisterRecvResource(MCS_CHANNEL0);
+
+	GFL_HEAP_FreeMemory( wk->recvBuf );
+	GFL_HEAP_FreeMemory( wk->printBuffer );
+
+	// NNS_McsPutStringによる出力
+	(void)NNS_McsPutString("device close\n");
+
+	// デバイスをクローズ
+	(void)NNS_McsClose();
+
+	wk->mcs_enable = 0;
+	wk->mcs_idle = 0;
+}
+
+static void MCS_Read( SOGA_WORK *wk )
+{
+	int			len;
+	MCS_WORK	buf;
+
+	// 受信可能なデータサイズの取得
+	len = NNS_McsGetStreamReadableSize( MCS_CHANNEL0 );
+
+	if( len > 0 ){
+		u32 readSize;
+		// データの読み取り
+		if( NNS_McsReadStream( MCS_CHANNEL0, &buf, sizeof(MCS_WORK), &readSize)){
+			wk->mw = buf;
+//			OS_TPrintf( "phi:%d\ntheta:%d\ndistance:%d\npos_x:%d\npos_y:%d\n",wk->mw.phi,
+//																			  wk->mw.theta,
+//																			  wk->mw.distance,
+//																			  wk->mw.pos_x,
+//																			  wk->mw.pos_y);
+        }
+	}
+}
+
+static void MCS_Write( SOGA_WORK *wk )
+{
+#if 0 
+	if( per_para.update ){
+		per_para.update = 0;
+		// データの書き込み
+		NNS_McsWriteStream( MCS_CHANNEL0, &per_para, sizeof(PERFORMANCE_PARAM) - 4 );
+	}
+#else
+//	NNS_McsWriteStream( MCS_CHANNEL0, (const void *)HW_LCDC_VRAM_D, 256*192*2 );
+	int ch;
+
+	for( ch = 0 ; ch < MCS_CH_MAX ; ch++ ){
+		NNS_McsWriteStream( MCS_CHANNEL0 + ch, (const void *)(HW_LCDC_VRAM_D + MCS_SEND_SIZE * ch), MCS_SEND_SIZE );
+	}
+#endif
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         DataRecvCallback
+
+  Description:  PC側からデータを受信したときに呼ばれるコールバック関数です。
+
+                登録するコールバック関数内ではデータの送受信を行わないでください。
+                また、割り込みが禁止されている場合があるため、
+                割り込み待ちループも行わないでください。
+
+  Arguments:    recv:       受信したデータの一部あるいは全部を格納している
+                            バッファへのポインタ。
+                recvSize:   recvによって示されるバッファに格納されている
+                            データのサイズ。
+                userData:   NNS_McsRegisterRecvCallback()の引数userDataで
+                            指定した値。
+                offset:     受信したデータの全部がrecvによって示されるバッファに
+                            格納されている場合は0。
+                            受信したデータの一部が格納されている場合は、
+                            受信したデータ全体に対する0を基準としたオフセット位置。
+                totalSize:  受信したデータの全体のサイズ。
+
+  Returns:      なし。
+ *---------------------------------------------------------------------------*/
+static void
+MCS_DataRecvCallback(
+    const void* pRecv,
+    u32         recvSize,
+    u32         userData,
+    u32         offset,
+    u32         totalSize
+)
+{
+    MCS_WORK *mw = (MCS_WORK *)userData;
+
+	OS_Printf( " Callback OK!\n");
+
+	// 受信バッファチェック
+	if (pRecv != NULL && recvSize == sizeof(MCS_WORK) && offset == 0)
+	{
+        mw = (MCS_WORK *)pRecv;
+    }
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         VBlankIntr
+
+  Description:  Vブランク割り込みハンドラです。
+
+  Arguments:    なし。
+
+  Returns:      なし。
+ *---------------------------------------------------------------------------*/
+static void MCS_VBlankIntr( GFL_TCB *tcb, void *work )
+{
+    NNS_McsVBlankInterrupt();
+}
+
+/*---------------------------------------------------------------------------*
+  Name:         VBlankIntr
+
+  Description:  Vブランク割り込みハンドラです。
+
+  Arguments:    なし。
+
+  Returns:      なし。
+ *---------------------------------------------------------------------------*/
+static void Capture_VBlankIntr( GFL_TCB *tcb, void *work )
+{
+	//---------------------------------------------------------------------------
+	// Execute capture
+	// Blend rendered image and displayed image (VRAM), and output to VRAM-C
+	GX_SetCapture(GX_CAPTURE_SIZE_256x192,			// Capture size
+				  GX_CAPTURE_MODE_A,				// Capture mode
+				  GX_CAPTURE_SRCA_2D3D,				// Blend src A
+				  GX_CAPTURE_SRCB_VRAM_0x00000,		// Blend src B
+				  GX_CAPTURE_DEST_VRAM_D_0x00000,	// Output VRAM
+				  16,								// Blend parameter for src A
+				  16);								// Blend parameter for src B
+	//---------------------------------------------------------------------------
 }
 

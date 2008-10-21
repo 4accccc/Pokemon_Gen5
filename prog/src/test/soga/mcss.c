@@ -19,7 +19,7 @@
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera,HEAPID heapID );
+MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera, HEAPID heapID );
 void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 void	MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
@@ -158,9 +158,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			MC_Array = (NNSG2dMCNodeCellAnimArray*)&mcss->mcss_mcanim.multiCellInstance.pCellAnimInstasnces;
 			pos_z_default = -1 << FX32_SHIFT;
 
-			G3_MaterialColorDiffAmb(GX_RGB(31,31,31),GX_RGB(16,16,16),FALSE);
-			G3_MaterialColorSpecEmi(GX_RGB(16,16,16),GX_RGB(0,0,0),FALSE);
-			G3_PolygonAttr(GX_LIGHTMASK_NONE,GX_POLYGONMODE_MODULATE,GX_CULL_NONE,0,31,GX_POLYGON_ATTR_MISC_NONE);
+			MCSS_MaterialSetup();
+			//G3_MaterialColorDiffAmb(GX_RGB(31,31,31),GX_RGB(16,16,16),FALSE);
+			//G3_MaterialColorSpecEmi(GX_RGB(16,16,16),GX_RGB(0,0,0),FALSE);
+			//G3_PolygonAttr(GX_LIGHTMASK_NONE,GX_POLYGONMODE_MODULATE,GX_CULL_NONE,0,31,GX_POLYGON_ATTR_MISC_NONE);
 
 			G3_TexImageParam(image_p->attr.fmt,
 							 GX_TEXGEN_TEXCOORD,
