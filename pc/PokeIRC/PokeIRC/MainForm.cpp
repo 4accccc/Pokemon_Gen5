@@ -13,6 +13,7 @@
 #include "stdafx.h"
 #include "MainForm.h"
 #include "NetIRC.h"
+#include "FileNGC.h"
 
 #include < stdio.h >
 #include < stdlib.h >
@@ -62,16 +63,31 @@ System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System:
 System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e)
 {
 	NetIRC::Init();
-//	timer->Start();
-	webBrowser1->Url= gcnew Uri("http://www.gamefreak.co.jp/");
-
-//	cmBackgroundWorker = gcnew System::ComponentModel::BackgroundWorker();
-//	cmBackgroundWorker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler( this, &MainForm::DoWork );
-//	cmBackgroundWorker->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler( this, &MainForm::RunWorkerCompleted );
-	// スレッド開始
-//	cmBackgroundWorker->RunWorkerAsync();
+//	webBrowser1->Url= gcnew Uri("http://www.gamefreak.co.jp/");
 
 
+	//ウェブブラウザとのリンクテスト
+
+
+	webBrowser1->AllowWebBrowserDrop = false;
+    webBrowser1->IsWebBrowserContextMenuEnabled = false;
+    webBrowser1->WebBrowserShortcutsEnabled = false;
+
+    webBrowser1->ObjectForScripting = this;
+	//フォームをweb1にリンクさせている
+	//
+    // Uncomment the following line when you are finished debugging.
+    //webBrowser1->ScriptErrorsSuppressed = true;
+
+    webBrowser1->DocumentText =
+           "<html><head><script>" +
+            "function test3(message) { alert(message); }" +
+            "</script></head><body><button " +
+            "onclick=\"window.external.CallProg('called from script code')\">" +
+            "このボタンを押すとサウンド転送プログラムをよびます</button>" +
+            "</body></html>";
+
+	webBrowser1->Show();
 
 
 
@@ -130,7 +146,7 @@ System::Void MainForm::sendDataDToolStripMenuItem_Click(System::Object^  sender,
 		if ( (myStream = openFileDialog1->OpenFile()) != nullptr )
 		{
 			userReader = gcnew BinaryReader(myStream);
-			NetIRC::dataArray = userReader->ReadBytes(myStream->Length);
+			NetIRC::dataArray = userReader->ReadBytes((int)myStream->Length);
 			NetIRC::sendData();
 			myStream->Close();
 		}
@@ -507,4 +523,55 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 	NetIRC::dataArray[0] = 'W';
 	NetIRC::dataArray[1] = 'B';
 	NetIRC::sendData();
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   赤外線通信してDSからGTS操作を行う
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::CallProg(String^ message)
+{
+	MessageBox::Show(message, "client code");
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   手持ちポケモン表示
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	array<int>^ putPoke = gcnew array<int>(6);
+
+	putPoke[0]=001;
+	putPoke[1]=101;
+	putPoke[2]=201;
+	putPoke[3]=301;
+	putPoke[4]=401;
+	putPoke[5]=0;
+
+	String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
+	String^ ncgname = dirname + "pmpl_" + putPoke[0].ToString("000") + "_frnt_m.ncg";
+	String^ nclname = dirname + "pmpl_" + putPoke[0].ToString("000") + "_n.ncl";
+	
+
+	FileNCGRead^ fngc = gcnew FileNCGRead;
+
+	fngc->readWithNcl(ncgname,"", nclname);
+	
+	pictureBox1->Image = fngc->PictureWrite(pictureBox1);
+
+	pictureBox1->Dock = DockStyle::Fill;
+	webBrowser1->Dock = DockStyle::Fill;
+
+	webBrowser1->Visible = false;
+	pictureBox1->Visible = true;
+
 }

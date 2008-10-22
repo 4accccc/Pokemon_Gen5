@@ -96,6 +96,7 @@ void NetIRC::draw(Form^ fm)
 {
 	MainForm^ mform = dynamic_cast<MainForm^>(fm);
 	unsigned char data_up[64]={0,1,2,3};
+
 	
 	if(IRC_IsConnectUsb()){
 		String^ coms = gcnew String((wchar_t *)IRC_GetPortName());
@@ -374,6 +375,51 @@ void NetIRC::RequestDownload(void)
 	_resultSend( result );
 }
 
+//--------------------------------------------------------------
+/**
+ * @breif   ぽけもんをさがす
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void NetIRC::RequestDownloadMatchData(void)
+{
+	s32 result = 0;
+	Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
+	// 検索→トレード
+	{
+		// 検索
+		Dpw_Tr_PokemonSearchDataEx* pSearch_data;
+/*		
+		search_data.characterNo = 14;
+		search_data.gender = DPW_TR_GENDER_FEMALE;
+		search_data.level_min = 20;
+		search_data.level_max = 20;	// 0を指定すると、上限は設定しないことになる
+        search_data.maxNum = DPW_TR_DOWNLOADMATCHDATA_MAX;
+        search_data.countryCode = 103;
+*/		
+		pin_ptr<unsigned char> wptr = &recvdataArray[0];
+		pSearch_data = (Dpw_Tr_PokemonSearchDataEx*)wptr;
+
+		Dpw_Tr_DownloadMatchDataExAsync(pSearch_data, match_data_buf);
+		result = WaitForAsync();
+		if(result < 0 )
+		{
+			Debug::WriteLine("Failed to search.");
+		}
+		else if(result == 0)
+		{
+			Debug::WriteLine("No such pokemon.");
+		}
+		else{
+			Debug::WriteLine("Found " + result + " pokemons.\n");
+		}
+	}
+	_resultSend( result );
+
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -420,6 +466,12 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 			case TR_URL_RETURN:
 				break;
 			case TR_URL_DOWNLOADMATCHDATA:
+
+				threadA = gcnew Thread(gcnew ThreadStart(&NetIRC::RequestDownloadMatchData));  //
+				threadA->IsBackground = true;                // バックグラウンド・スレッドとする
+				threadA->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
+			    threadA->Start(); // 
+
 				break;
 			case TR_URL_TRADE:
 				break;

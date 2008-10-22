@@ -77,6 +77,7 @@ namespace PokeIRC {
 		static void RequestServerState(void);
 		static void RequestPickupTraded(void);
 		static void RequestDownload(void);
+		static void RequestDownloadMatchData(void);
 
 
 
