@@ -12,8 +12,8 @@
 #include "gflib.h"
 #include "procsys.h"
 
-#include "main.h"
-#include "gfl_use.h"
+#include "system/main.h"
+#include "system/gfl_use.h"
 #include "sample_graphic/fatal_error.naix"
 #include "fatal_error.h"
 

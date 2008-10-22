@@ -12,10 +12,10 @@
 #include <nitro.h>
 #include <nnsys.h>
 #include "gflib.h"
-#include "gfl_use.h"
-#include "main.h"
+#include "system/gfl_use.h"
+#include "system/main.h"
 
-#include "testmode.h"
+#include "dl_child/dlplay_child_main.h"
 
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
@@ -91,7 +91,6 @@ static	void	SkeltonVBlankFunc(void)
 }
 
 
-#include "src/tomoya/debug_tomoya.h"
 #include "src/ohno/fatal_error.h"
 //------------------------------------------------------------------
 /**
@@ -105,7 +104,7 @@ static	void	GameInit(void)
     // 通信ブート処理 VBlank割り込み後に行うためここに記述
     GFL_NET_Boot( GFL_HEAPID_APP, FatalError_Disp );
 	/* 起動プロセスの設定 */
-	TestModeSet();	//←サンプルデバッグモード
+	DLPlayChild_SetProc();
 }
 
 
@@ -117,6 +116,7 @@ static	void	GameInit(void)
 static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
+
 }
 
 

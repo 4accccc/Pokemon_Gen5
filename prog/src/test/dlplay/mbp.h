@@ -73,7 +73,7 @@ extern "C" {
  * MB ライブラリで MB_StartParentFromIdle() / MB_EndToIdle() を使用するスイッチ.
  * マルチブート処理を IDLE 状態で経由することができます.
  */
-//#define MBP_USING_MB_EX
+#define MBP_USING_MB_EX
 
 /*
  * エントリーして来た子機に対して、あらかじめデータ送信を開始しておくスイッチ.

@@ -40,6 +40,9 @@ DLPLAY_PARENT_DATA *parentData;
 
 
 
+//BG面定義
+#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME3_M)
+#define DLPLAY_MSG_PLANE_PRI		(0)
 //------------------------------------------------------------------
 //	VRAM用定義
 //------------------------------------------------------------------
@@ -89,7 +92,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( parentData->heapID_ );
 
-	GFL_NET_InitIchneumon( DLPlay_InitLibCallBack, (void*)(parentData) );
+//	GFL_NET_InitIchneumon( DLPlay_InitLibCallBack, (void*)(parentData) );
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -120,10 +123,10 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	case DPM_SEND_IMAGE:
 
 		if( parentData->subState_ == 0 ){
-			if( parentData->isInitIchneumon_ == TRUE ){
+			//if( parentData->isInitIchneumon_ == TRUE ){
 				parentData->dlData_ = DLPlaySend_Init( parentData->heapID_ );
 				parentData->subState_++;
-			}
+			//}
 		}
 		else{
 			parentData->nextState_ = DLPlaySend_Loop( parentData->dlData_ );

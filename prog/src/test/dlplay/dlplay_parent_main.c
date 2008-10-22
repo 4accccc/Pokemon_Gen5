@@ -15,6 +15,7 @@
 #include "dlplay_parent_sample.h"
 #include "dlplay_parent_main.h"
 #include "dlplay_func.h"
+#include "dlplay_comm_func.h"
 
 #include "mbp.h"
 
@@ -41,6 +42,7 @@ struct _DLPLAY_SEND_DATA
 	u8 mainSeq_;
 	u16 subSeq_;
 
+	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS *msgSys_;
 };
 
@@ -49,6 +51,8 @@ struct _DLPLAY_SEND_DATA
 //======================================================================
 enum DLPLAY_SEND_STATE
 {
+	DSS_INIT_COMM,
+	DSS_WAIT_INIT_COMM,
 	DSS_WAIT_START,
 	DSS_MAIN_LOOP,
 };
@@ -77,13 +81,13 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	DLPLAY_SEND_DATA *dlData;
 	dlData = GFL_HEAP_AllocClearMemory( heapID , sizeof( DLPLAY_SEND_DATA ) );
 
+	dlData->commSys_ = DLPlayComm_InitData( heapID );
 	dlData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
 
-	dlData->mainSeq_ = DSS_WAIT_START;
+	dlData->mainSeq_ = DSS_INIT_COMM;
 	dlData->subSeq_ = 0xFFFF;
 	DLPlayFunc_PutString("",dlData->msgSys_);
-	DLPlayFunc_PutString("Initialize complete.",dlData->msgSys_);
-	DLPlayFunc_PutString("Press A Button to start.",dlData->msgSys_);
+	DLPlayFunc_PutString("System Initialize complete.",dlData->msgSys_);
 	return dlData;
 }
 
@@ -111,6 +115,19 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 {
 	switch( dlData->mainSeq_ )
 	{
+	case DSS_INIT_COMM:
+		DLPlayComm_InitSystem( dlData->commSys_ );
+		dlData->mainSeq_ = DSS_WAIT_INIT_COMM;
+		break;
+
+	case DSS_WAIT_INIT_COMM:
+		if( DLPlayComm_IsFinish_InitSystem( dlData->commSys_ ) ){
+			DLPlayFunc_PutString("Commnicate system initialize omplete.",dlData->msgSys_);
+			DLPlayFunc_PutString("Press A Button to start.",dlData->msgSys_);
+			dlData->mainSeq_ = DSS_WAIT_START;
+		}
+		break;
+
 	case DSS_WAIT_START:
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
 			MBP_Init( WH_GGID , 127 );	
@@ -238,6 +255,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	            // í êMàŸèÌèIóπ
 	        case MBP_STATE_STOP:
 #ifdef MBP_USING_MB_EX
+				/*
 	            switch (WH_GetSystemState())
 	            {
 	            case WH_SYSSTATE_IDLE:
@@ -250,6 +268,8 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	            default:
 	                OS_Panic("illegal state\n");
 	            }
+				*/
+				break;
 #else
 	            return FALSE;
 #endif

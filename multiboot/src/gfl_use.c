@@ -10,15 +10,16 @@
 
 #include <nitro.h>
 #include "gflib.h"
-//#include "gflib_inter.h"
 
-#include "main.h"
+#include "system/main.h"
 
-#include "gfl_use.h"
+#include "system/gfl_use.h"
 #include "procsys.h"
 #include "gf_overlay.h"
 #include "tcb.h"
 #include "backup_system.h"
+
+#include "textprint.h"
 
 
 //=============================================================================================
@@ -47,7 +48,7 @@ static const HEAP_INIT_HEADER hih[]={
 	{ HEAPSIZE_APP,		OS_ARENA_MAIN },
 };
 
-#define	SOUND_HEAP_SIZE	(0x40000)
+#define	SOUND_HEAP_SIZE	(0x8000)
 
 static GFL_USE_WORK *	gfl_work = NULL;
 static int				GFL_USE_VintrCounter;
@@ -125,7 +126,10 @@ void GFLUser_Init(void)
     GFL_SOUND_Init(&sndHeap[0],SOUND_HEAP_SIZE);
 
 	//バックアップシステム初期化
-	GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
+	//GFL_BACKUP_Init(GFL_HEAPID_APP, GFL_HEAPID_APP);
+
+	//システムフォント初期化
+	GFL_TEXT_CreateSystem( NULL );
 
 	GFL_USE_VintrCounter = 0;
 }
@@ -168,7 +172,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	GFL_BACKUP_Exit();
+	//GFL_BACKUP_Exit();
 	GFL_UI_Exit();
 	GFL_PROC_Exit();
 	GFL_OVERLAY_Exit();

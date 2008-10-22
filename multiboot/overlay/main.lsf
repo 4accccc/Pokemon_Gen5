@@ -35,22 +35,3 @@ Autoload DTCM
 
 #Ç±Ç±Ç©ÇÁâ∫ÇÕoverlaytool.rbÇ≈é©ìÆê∂ê¨Ç≥ÇÍÇƒÇ¢Ç‹Ç∑
 
-Overlay debug_tomoya
-{
-	After	main
-	Object	$(OBJDIR)/debug_tomoya.o
-}
-
-Overlay debug_tamada
-{
-	After	main
-	Object	$(OBJDIR)/debug_tamada.o \
-		$(OBJDIR)/oamset.o \
-		$(OBJDIR)/data.o \
-		$(OBJDIR)/dispfunc.o \
-		$(OBJDIR)/debug_graphic.o \
-		$(OBJDIR)/loader.o \
-		$(OBJDIR)/d_proc_bg.o \
-		$(OBJDIR)/lifegame.o
-}
-

@@ -1,0 +1,1 @@
+copy .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl

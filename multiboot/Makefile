@@ -10,10 +10,15 @@
 #
 #----------------------------------------------------------------------------
 
+#----------------------------------------------------------------------------
+#	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
+#----------------------------------------------------------------------------
+#NITRO_FINALROM = yes
+
 .PHONY : gflib
 
 # GF-Library
-GFLIB_DIR		=	../../gflib/gflib
+GFLIB_DIR		=	../lib/gflib
 LINCLUDES		= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
@@ -77,19 +82,10 @@ SAMPLE_GRADIR = src/sample_graphic/
 SAMPLE_SNDDIR = src/sample_sound/
 SAMPLE_MBRDIR = src/sample_multi_boot_rom/
 
-FILE_TREE	= $(GFLIBGRADIR)utility.bin \
-			  $(GFLIBGRADIR)wmi.narc \
-              $(GFLIBGRADIR)gfl_font.dat \
-			  $(SAMPLE_GRADIR)*.narc \
-			  $(SAMPLE_GRADIR)*.NCLR \
-			  $(SAMPLE_GRADIR)*.NCGR \
-			  $(SAMPLE_GRADIR)*.NCER \
-			  $(SAMPLE_GRADIR)*.NANR \
-			  $(SAMPLE_SNDDIR)*.narc \
-			  $(SAMPLE_SNDDIR)*.sdat \
-			  $(SAMPLE_MBRDIR)*.srl \
-			  $(SAMPLE_MBRDIR)*.char \
-			  $(SAMPLE_MBRDIR)*.plt
+FILE_TREE	=	$(GFLIBGRADIR)utility.bin \
+			$(GFLIBGRADIR)wmi.narc \
+			$(GFLIBGRADIR)gfl_font.dat \
+			$(SAMPLE_GRADIR)*.narc \
 			  
 #ロムファイルシステムのルートディレクトリ指定
 MAKEROM_ROMROOT  = ./
