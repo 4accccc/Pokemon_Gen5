@@ -14,7 +14,7 @@
 #include "system/main.h"
 
 #include "dlplay_func.h"
-
+#include "../ariizumi/ari_debug.h"
 //======================================================================
 //	define
 //======================================================================
@@ -125,6 +125,8 @@ void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys )
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 {
 	u8 i;
+
+	ARI_TPrintf("MsgPut:[%s]\n",str);
 	//GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 
 	msgSys->textParam_[msgSys->line_]->writex	= DLPLAY_FUNC_MSG_X;

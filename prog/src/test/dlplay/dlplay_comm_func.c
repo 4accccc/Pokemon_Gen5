@@ -13,6 +13,7 @@
 
 
 #include "dlplay_comm_func.h"
+#include "../ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -21,11 +22,14 @@
 //======================================================================
 //	enum
 //======================================================================
-
+//送受信関数用
+enum DLPLAY_COMM_COMMAND_TYPE
+{
+    DC_CMD_LARGE_PACKET = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
+};
 //======================================================================
 //	typedef struct
 //======================================================================
-
 //======================================================================
 //	DLPLAY_COMM_DATA
 //======================================================================
@@ -38,6 +42,8 @@ struct _DLPLAY_COMM_DATA
 	BOOL isError_;
 	BOOL isStartMode_;
 
+	DLPLAY_LARGE_PACKET packetBuff_;	//送受信共通のバッファ！取り扱い注意
+
 	GFL_NETHANDLE   *selfHandle_;	//自身の通信ハンドル
 };
 
@@ -47,6 +53,10 @@ struct _DLPLAY_COMM_DATA
 DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
 void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm);
+
+void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
+BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
 
 void*	DLPlayComm_GetBeaconDataDummy(void);
 int		DLPlayComm_GetBeaconSizeDummy(void);
@@ -59,8 +69,16 @@ void	DLPlayComm_InitEndCallback( void* pWork );
 void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
 
+//送受信用関数
+//送
+void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm );
+//受
+void	DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+u8*		DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size );
+
+
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
-	{ NULL , NULL },
+	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
 };
 //--------------------------------------------------------------
 /**
@@ -125,7 +143,7 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 #if GFL_NET_WIFI
 		NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
-		0x3FFF21,//0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
+		0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
 		0,  //元になるheapid
 		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
 		HEAPID_WIFI,  //wifi用にcreateされるHEAPID
@@ -136,7 +154,7 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 		TRUE,		// CRC計算
 		FALSE,		// MP通信＝親子型通信モードかどうか
 		FALSE,		//wifi通信を行うかどうか
-		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+		FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 		1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
 	};
 
@@ -149,6 +167,57 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 	return TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ *  親機接続初期化 
+ */
+//--------------------------------------------------------------
+void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm )
+{
+//	d_comm->commType = FCT_PARENT;
+	GFL_NET_InitServer();
+}
+
+//--------------------------------------------------------------
+/**
+ *	子機接続初期化(いきなり接続をする
+ */
+//--------------------------------------------------------------
+void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress )
+{
+//	d_comm->commType = FCT_PARENT;
+	d_comm->seqNo_ = 0;
+	GFL_NET_InitClientAndConnectToParent( macAddress );
+}
+
+//  親機への接続が完了し、通信ができる状態になったか？
+BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm )
+{
+	switch( d_comm->seqNo_ )
+	{
+	case 0:
+		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+		{
+			d_comm->seqNo_++;
+		}
+		break;
+	case 1:
+		d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+		if( GFL_NET_HANDLE_IsNegotiation( d_comm->selfHandle_ ) == TRUE )
+		{
+			d_comm->seqNo_++;
+		}
+		break;
+	case 2:
+		if( GFL_NET_IsSendEnable( d_comm->selfHandle_ ) == TRUE )
+		{
+			d_comm->seqNo_ = 0;
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -184,12 +253,7 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm )
 //--------------------------------------------------------------
 /**
  * 通信ライブラリ初期化完了用コールバック
- * @param	vo#include "net/network_define.h"
-#include "textprint.h"
-#include "arc_def.h"
-#include "system/main.h"
-
-id	*pWork(*DLPLAY_COMM_DATA)
+ * @param	vo#include
  * @retval	void
  */
 //--------------------------------------------------------------
@@ -215,6 +279,43 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 //	d_comm->isError_ = TRUE;
 }
 
+
+//--------------------------------------------------------------
+//	送受信関数
+//--------------------------------------------------------------
+void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm )
+{
+	GFL_STD_MemCopy( (void*)data , (void*)&d_comm->packetBuff_ , sizeof( DLPLAY_LARGE_PACKET ) );
+	
+	{
+		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
+				1/*親機*/ , DC_CMD_LARGE_PACKET , sizeof(DLPLAY_LARGE_PACKET) ,
+				&d_comm->packetBuff_ , TRUE , TRUE , TRUE );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm LargeData send is failued!!\n"); }
+	}
+	
+}
+
+void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	ARI_TPrintf("DLPlayComm getData[LargeData]\n");
+	{
+		u8 i;
+		for( i=0;i<16;i++)
+		{
+			OS_TPrintf("%2d:%s\n",i,d_comm->packetBuff_.data_[i]);
+		}
+	}
+}
+
+u8*	 DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+
+	ARI_TPrintf("DLPlayComm PostBuff id[%d] size[%d]\n",netID,size);
+	return (u8*)&d_comm->packetBuff_;
+}
 
 
 

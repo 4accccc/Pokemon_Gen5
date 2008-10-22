@@ -55,6 +55,9 @@ enum DLPLAY_SEND_STATE
 	DSS_WAIT_INIT_COMM,
 	DSS_WAIT_START,
 	DSS_MAIN_LOOP,
+
+	DSS_START_SHARE,
+	DSS_WAIT_CHILD,
 };
 
 //============================================================================================
@@ -232,7 +235,8 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	                //BgSetMessage(PLTT_WHITE, " Reconnecting now             ");
 	
 	                OS_WaitVBlankIntr();
-	                return DPM_DATA_SHARE;
+					dlData->mainSeq_ = DSS_START_SHARE;
+	                //return DPM_DATA_SHARE;
 	            }
 	            break;
 	
@@ -277,7 +281,17 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	
 	        // Žq‹@ó‘Ô‚ð•\Ž¦‚·‚é
 	        //PrintChildState();
-	    }		
+	    }
+		break;
+	case DSS_START_SHARE:
+		DLPlayComm_InitParent( dlData->commSys_ );
+		DLPlayFunc_PutString( "Wait child......",dlData->msgSys_); 
+		dlData->mainSeq_ = DSS_WAIT_CHILD;
+		break;
+
+	case DSS_WAIT_CHILD:
+		break;
+
 	
 	}
 	return DPM_SEND_IMAGE;

@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.h"
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
+#include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
 
 
 //======================================================================
@@ -28,6 +29,7 @@ enum DLPLAY_CHILD_STATE
 {
 	DCS_INIT_COMM,
 	DCS_WAIT_INIT_COMM,
+	DCS_WAIT_CONNECT,
 	DCS_MAX,
 	
 };
@@ -41,6 +43,7 @@ typedef struct
 	int	heapID_;
 
 	u8	mainSeq_;
+	u8	parentMacAddress_[WM_SIZE_BSSID];
 
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS	 *msgSys_;
@@ -50,6 +53,8 @@ typedef struct
 //======================================================================
 
 DLPLAY_CHILD_DATA *childData;
+
+
 void	DLPlayChild_SetProc(void);
 void	DLPlayChild_InitBg(void);
 
@@ -79,6 +84,26 @@ void	DLPlayChild_SetProc(void)
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+	u8	parentMacAddress[ WM_SIZE_BSSID ];
+	WMBssDesc desc;		//親機情報
+	//親機の情報を取得してみる
+	if( MB_IsMultiBootChild() == FALSE ){
+#if DEB_ARI
+		//青箱の04080852のMacAddress(手打ち)
+		desc.ssid[0] = 0x00;
+		desc.ssid[1] = 0x09;
+		desc.ssid[2] = 0xBF;
+		desc.ssid[3] = 0x08;
+		desc.ssid[4] = 0x23;
+		desc.ssid[5] = 0x0D;
+#else
+		GF_ASSERT("This DS is not multiboot child!!\n");
+#endif
+	}
+	else{
+		MB_ReadMultiBootParentBssDesc( &desc , 32 , 32 , FALSE , FALSE );
+	}
+
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x200000 );
 
 	DLPlayChild_InitBg();
@@ -91,10 +116,20 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
+	GFL_STD_MemCopy( (void*)&desc.bssid , (void*)childData->parentMacAddress_ , WM_SIZE_BSSID );
 
 	DLPlayFunc_PutString("",childData->msgSys_);
 	DLPlayFunc_PutString("System Initialize complete.",childData->msgSys_);
-	
+
+#if DEB_ARI
+	{
+		char str[128];
+		sprintf(str,"Parent MacAddress is [%02x:%02x:%02x:%02x:%02x:%02x]"
+					,desc.bssid[0]	,desc.bssid[1]	,desc.bssid[2]
+					,desc.bssid[3]	,desc.bssid[4]	,desc.bssid[5]	);
+		DLPlayFunc_PutString( str , childData->msgSys_ );
+	}
+#endif
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -108,15 +143,45 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 	switch( childData->mainSeq_ )
 	{
 	case DCS_INIT_COMM:
-		//DLPlayComm_InitSystem( childData->commSys_ );
-		//childData->mainSeq_ = DCS_WAIT_INIT_COMM;
+		DLPlayComm_InitSystem( childData->commSys_ );
+		childData->mainSeq_ = DCS_WAIT_INIT_COMM;
 		break;
 
 	case DCS_WAIT_INIT_COMM:
 		if( DLPlayComm_IsFinish_InitSystem( childData->commSys_ ) ){
-			DLPlayFunc_PutString("Commnicate system initialize omplete.",childData->msgSys_);
-			DLPlayFunc_PutString("Press A Button to start.",childData->msgSys_);
+			DLPlayComm_InitChild( childData->commSys_ , childData->parentMacAddress_ );
+			DLPlayFunc_PutString("Commnicate system initialize complete.",childData->msgSys_);
+			DLPlayFunc_PutString("Try connect parent.",childData->msgSys_);
+			childData->mainSeq_ = DCS_WAIT_CONNECT;
+		}
+		break;
+	case DCS_WAIT_CONNECT:
+		if( DLPlayComm_IsFinish_ConnectParent( childData->commSys_ ) == TRUE ){
+			DLPlayFunc_PutString("Succsess connect parent!",childData->msgSys_);
+		
 			childData->mainSeq_ = DCS_MAX;
+			//データ送信テスト
+			{
+				u8 i=0;
+				DLPLAY_LARGE_PACKET pak;
+				sprintf(pak.data_[i++],"このデータはテストデータです。");
+				sprintf(pak.data_[i++],"●『新ゲームデザイン』を読んで、良かったところはどこですか？");
+				sprintf(pak.data_[i++],"　色々なゲームが面白いと思われる理由を、要素ごとに分解して書いてあるところ。");
+				sprintf(pak.data_[i++],"　同じようなゲームでも、なぜ後のほうに出たものが面白くないのか？二番煎じと");
+				sprintf(pak.data_[i++],"言われるのかという疑問があったのですが、『新ゲームデザイン』で格闘ゲームや");
+				sprintf(pak.data_[i++],"シューティングで具体例を挙げて出しているので、とても納得できた。");
+				sprintf(pak.data_[i++],"●『新ゲームデザイン』を読んで、不満だったところはどこですか？");
+				sprintf(pak.data_[i++],"　参考にしているゲーム、市場が古いところ。");
+				sprintf(pak.data_[i++],"　十年以上も前の本なので仕方ないとは思うが、やはり今と比べるとゲーム機のス");
+				sprintf(pak.data_[i++],"ペックも市場の価値観も違うと思うので、今のゲーム・市場でこういった内容の本");
+				sprintf(pak.data_[i++],"を読みたいと思う。");
+				sprintf(pak.data_[i++],"●『新ゲームデザイン』から読み取れるゲームフリークらしさは何だと思いますか？");
+				sprintf(pak.data_[i++],"　既存のゲームを模倣するのではなく、何か面白いことをゲームという形にして");
+				sprintf(pak.data_[i++],"表現する事。");
+				sprintf(pak.data_[i++],"●自分にとって、関心の高い書籍とは、どのようなものですか？");
+				sprintf(pak.data_[i++],"　一つの事をトコトン追求している本。");
+				DLPlayComm_Send_LargeData( &pak , childData->commSys_ );
+			}
 		}
 		break;
 	}

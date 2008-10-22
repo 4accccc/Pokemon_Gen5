@@ -1,6 +1,7 @@
 #こんな感じで各自のソースを追加してください
 SRCS	+=	ohno/fatal_error.c \
-                gfl_graphic/net_icondata.c \
+		gfl_graphic/net_icondata.c \
+		net_define.c \
 		dl_child/dlplay_child_main.c \
 		../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.c \
 		../../pokemon_wb/prog/src/test/dlplay/dlplay_func.c

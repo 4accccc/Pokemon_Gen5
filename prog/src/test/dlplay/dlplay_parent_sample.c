@@ -141,6 +141,10 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 
 	case DPM_DATA_SHARE:
 		break;
+	
+	case DPM_ERROR:
+		OS_TPrintf("Error state!!\n");
+		break;
 
 	case DPM_END:
 		return GFL_PROC_RES_FINISH;
