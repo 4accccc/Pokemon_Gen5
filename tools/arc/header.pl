@@ -5,15 +5,23 @@
 #====================================================================================
 
 use Switch;
+use	File::Basename;
+
+use constant ARC_LIST	=> 0;
+use constant VERSION	=> 1;
+use constant MB_FLAG	=> 2;
 
 	$argc = @ARGV;
 
-	if( $argc < 2 ){
-		print "error:perl perl_file read_file pm_version\n";
+	if( $argc < 3 ){
+		print "error:perl perl_file read_file pm_version multi_boot_flag\n";
+		print " read_file:\n  読み込むリストファイル（通常は、arc_tool.lst）\n";
+		print " pm_version:\n  バージョンフラグ（ポケモンなどで２バージョンある時に作成バージョンを指定）\n";
+		print " multi_boot_flag:\n  yesを指定することで、マルチブート子機対応になる\n";
 		exit(1);
 	}
 
-	open( ARC_F, @ARGV[0] ) or die "[@ARGV[0]]", $!;
+	open( ARC_F, @ARGV[ARC_LIST] ) or die "[@ARGV[ARC_LIST]]", $!;
 	@data = <ARC_F>;
 	close( ARC_F );
 
@@ -23,6 +31,14 @@ use Switch;
 	print ARC_DEF "#ifndef __ARC_DEF_H__\n";
 	print ARC_DEF "#define __ARC_DEF_H__\n\n";
 	print ARC_DEF "enum{\n";
+
+#マルチブート対応テーブル作成
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
+#		print ARC_FILE "static	const u8 *ArchiveFileTable[]={\n";
+		open( ARC_EXTERN, "> arc_extern.h");
+		print ARC_FILE "#include \"arc_extern.h\"\n";
+	}
+
 	print ARC_FILE "static	const char *ArchiveFileTable[]={\n";
 
 	$data_num	= @data;
@@ -41,8 +57,8 @@ use Switch;
 					case '$' {
 						$version = @arc_data[$i];
 						$version =~ s/\$//g;
-						$find = index( $version, @ARGV[1] );
-						if( $find >= 0 && length $version == length @ARGV[1] ){
+						$find = index( $version, @ARGV[VERSION] );
+						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
 							&FileWrite($i+1);
 						}
 						$flag = 1;
@@ -69,6 +85,9 @@ use Switch;
 	print ARC_FILE "};\n";
 	close( ARC_DEF );
 	close( ARC_FILE );
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
+		close( ARC_EXTERN );
+	}
 
 #===========================================================
 #
@@ -97,7 +116,18 @@ sub FileWrite{
 	}
 
 	print ARC_DEF	"\t$enum,\n";
-	print ARC_FILE	"\t\"$tree\",\t\t//$file\n";
+
+#マルチブート対応テーブル作成
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
+		my @extlist = ('\.narc');
+		( $name, $dir, $ext ) = fileparse( $file, @extlist );
+		print ARC_FILE	"\t\&_start_$name,\t&_end_$name,\n";
+		print ARC_EXTERN "extern\tchar\t_start_$name;\n";
+		print ARC_EXTERN "extern\tchar\t_end_$name;\n";
+	}
+	else{
+		print ARC_FILE	"\t\"$tree\",\t\t//$file\n";
+	}
 
 	$num_1++;
 	if( $num_1 > 9 ){

@@ -6,14 +6,25 @@
 
 use Switch;
 
+use constant ARC_LIST	=> 0;
+use constant VERSION	=> 1;
+use constant SRC_DIR	=> 2;
+use constant DEST_DIR	=> 3;
+use constant MB_FLAG	=> 4;
+
 	$argc = @ARGV;
 
-	if( $argc < 4 ){
+	if( $argc < 5 ){
 		print "error:perl perl_file read_file pm_version src_dir dest_dir\n";
+		print " read_file:\n  読み込むリストファイル（通常は、arc_tool.lst）\n";
+		print " pm_version:\n  バージョンフラグ（ポケモンなどで２バージョンある時に作成バージョンを指定）\n";
+		print " src_dir:\n  コピー元ファイルの存在するフォルダを指定\n";
+		print " dest_dir:\n  短縮ファイル名のコピー先フォルダを指定\n";
+		print " multi_boot_flag:\n  yesを指定することで、マルチブート子機対応になる\n";
 		exit(1);
 	}
 
-	open( ARC_F, @ARGV[0] ) or die "[@ARGV[0]]", $!;
+	open( ARC_F, @ARGV[ARC_LIST] ) or die "[@ARGV[ARC_LIST]]", $!;
 	@data = <ARC_F>;
 	close( ARC_F );
 
@@ -28,7 +39,12 @@ use Switch;
 	$count		= 0;
 	$write_count= 0;
 
-	&MakeDir;
+#マルチブート対応テーブル作成
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
+	}
+	else{
+		&MakeDir;
+	}
 
 	while($data_num != 0){
 		@arc_data		=	split(/ |\t|\r|\n/,@data[$count]);
@@ -40,8 +56,8 @@ use Switch;
 					case '$' {
 						$version = @arc_data[$i];
 						$version =~ s/\$//g;
-						$find = index( $version, @ARGV[1] );
-						if( $find >= 0 && length $version == length @ARGV[1] ){
+						$find = index( $version, @ARGV[VERSION] );
+						if( $find >= 0 && length $version == length @ARGV[VERSION] ){
 							&FileWrite($i+1);
 						}
 						$flag = 1;
@@ -95,7 +111,13 @@ sub FileWrite{
 		print ARC_TREE	" \\\n";
 	}
 
-	print ARC_TREE	"\t$tree";
+#マルチブート対応テーブル作成
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
+		print ARC_TREE	"\t@arc_data[$file_num]";
+	}
+	else{
+		print ARC_TREE	"\t$tree";
+	}
 
 	$num_1++;
 	my $flag = FALSE;
@@ -112,19 +134,23 @@ sub FileWrite{
 			}
 		}
 	}
-	if( $flag == TRUE ){
-		&MakeDir;
+#マルチブート対応テーブル作成
+	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
 	}
-
-	my $src_file = @ARGV[2];
-	$src_file .= $file;
-	my $dst_file = @ARGV[3];
-	$dst_file .= $tree;
-	my @cmd = ( 'cp', $src_file, $dst_file );
-
-	system @cmd;
-	if( $? >> 8 != 0 ){
-		exit(1);
+	else{
+		if( $flag == TRUE ){
+			&MakeDir;
+		}
+		my $src_file = @ARGV[SRC_DIR];
+		$src_file .= $file;
+		my $dst_file = @ARGV[DEST_DIR];
+		$dst_file .= $tree;
+		my @cmd = ( 'cp', $src_file, $dst_file );
+	
+		system @cmd;
+		if( $? >> 8 != 0 ){
+			exit(1);
+		}
 	}
 
 	$write_count++;
@@ -136,7 +162,7 @@ sub FileWrite{
 #
 #===========================================================
 sub MakeDir{
-	my $dir = "@ARGV[3]a";
+	my $dir = "@ARGV[DEST_DIR]a";
 	if( -d $dir){}
 	else{
 		mkdir ( $dir, 0777) || die "mkdir failed : $!";
@@ -151,7 +177,7 @@ sub MakeDir{
 	else{
 		mkdir ( $dir, 0777) || die "mkdir failed : $!";
 	}
-	$dir = "@ARGV[3]a/$num_100";
+	$dir = "@ARGV[DEST_DIR]a/$num_100";
 	if( -d $dir){}
 	else{
 		mkdir ( $dir, 0777) || die "mkdir failed : $!";
