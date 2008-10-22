@@ -24,10 +24,10 @@ narc_tree.inc: ../../tools/arc/narc_tree.pl arc_tool.lst $(VER_FILE)
 	perl ../../tools/arc/narc_tree.pl arc_tool.lst $(PM_VERSION)
 
 arc_def.h arc_file.h: ../../tools/arc/header.pl arc_tool.lst $(VER_FILE)
-	perl ../../tools/arc/header.pl arc_tool.lst $(PM_VERSION)
+	perl ../../tools/arc/header.pl arc_tool.lst $(PM_VERSION) no
 
 file_tree.inc: ../../tools/arc/narc.pl arc_tool.lst $(VER_FILE) $(NARC_TREE)
-	perl ../../tools/arc/narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/
+	perl ../../tools/arc/narc.pl arc_tool.lst $(PM_VERSION) ./ ../filetree/ no
 
 clean:
 	rm -f $(LDIRT_CLEAN)
