@@ -114,6 +114,17 @@ extern BOOL GFI_NET_COMMAND_CreateBuffCheck(int command);
 
 extern void* GFI_NET_COMMAND_CreateBuffStart(int command, int netID, int size);
 
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドを受け取る人かどうか
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+extern BOOL GFI_NET_COMMAND_RecvCheck(int recvID);
+
+
 #endif// __NET_COMMAND_H__
 
 #ifdef __cplusplus
