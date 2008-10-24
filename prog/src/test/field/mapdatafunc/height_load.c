@@ -458,3 +458,25 @@ BOOL GetInvalidHeightDataFlg(MHI_CONST_PTR inMap3DInfo)
 	return inMap3DInfo->DataValid;
 }
 #endif
+void SetInvalidHeightData(MHI_PTR outMap3DInfo)
+{
+	if (outMap3DInfo == NULL){
+		return;
+	}
+	outMap3DInfo->DataValid = FALSE;		//データ無効
+	//頂点データ
+	outMap3DInfo->VertexArray = NULL;
+	//法線データ
+	outMap3DInfo->NormalArray = NULL;
+	//ポリゴンデータ
+	outMap3DInfo->PolygonData = NULL;
+	//グリッド分割データ
+	outMap3DInfo->SplitGridData = NULL;	
+	//グリッドテーブルデータ
+	outMap3DInfo->GridDataTbl = NULL;
+	//ラインテーブルデータ
+	outMap3DInfo->LineDataTbl = NULL;
+	//グリッド実データ
+	outMap3DInfo->PolyIDList = NULL;
+}
+
