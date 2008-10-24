@@ -814,6 +814,7 @@ BOOL GetFieldG3DmapperGridInfo
 
 	GF_ASSERT( g3Dmapper );
 	if( g3Dmapper->data == NULL ){
+		OS_Printf("データが読み込まれていない\n");
 		return FALSE;
 	}
 
@@ -843,9 +844,9 @@ BOOL GetFieldG3DmapperGridInfo
 						GF_ASSERT("height count over\n");
 					}
 					for( j=0; j<attrInfo.mapAttrCount; j++ ){
-						gridInfo->gridData[p].vecN = attrInfo.mapAttr[j].vecN;
-						gridInfo->gridData[p].attr = attrInfo.mapAttr[j].attr;
-						gridInfo->gridData[p].height = attrInfo.mapAttr[j].height;
+						gridInfo->gridData[p+j].vecN = attrInfo.mapAttr[j].vecN;
+						gridInfo->gridData[p+j].attr = attrInfo.mapAttr[j].attr;
+						gridInfo->gridData[p+j].height = attrInfo.mapAttr[j].height;
 					}
 					p += attrInfo.mapAttrCount;
 				}
@@ -856,6 +857,7 @@ BOOL GetFieldG3DmapperGridInfo
 	if( gridInfo->count ){
 		return TRUE;
 	}
+	OS_Printf("データが存在していない\n");
 	return FALSE;
 }
 
