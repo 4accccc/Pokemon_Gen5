@@ -10,10 +10,12 @@
 #include <gflib.h>
 
 #include "system/main.h"
+
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.h"
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
 #include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
 
+#include "dlplay_data_main.h"
 
 //======================================================================
 //	define
@@ -30,6 +32,9 @@ enum DLPLAY_CHILD_STATE
 	DCS_INIT_COMM,
 	DCS_WAIT_INIT_COMM,
 	DCS_WAIT_CONNECT,
+
+	DCS_LOAD_BACKUP,
+
 	DCS_MAX,
 	
 };
@@ -47,6 +52,7 @@ typedef struct
 
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS	 *msgSys_;
+	DLPLAY_DATA_DATA *dataSys_;
 }DLPLAY_CHILD_DATA;
 //======================================================================
 //	proto
@@ -115,10 +121,12 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 	childData->mainSeq_ = DCS_INIT_COMM;
 
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
+	DLPlayFunc_PutString("",childData->msgSys_);
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
+	childData->dataSys_ = DLPlayData_InitSystem( childData->heapID_ , childData->msgSys_ );
+
 	GFL_STD_MemCopy( (void*)&desc.bssid , (void*)childData->parentMacAddress_ , WM_SIZE_BSSID );
 
-	DLPlayFunc_PutString("",childData->msgSys_);
 	DLPlayFunc_PutString("System Initialize complete.",childData->msgSys_);
 
 #if DEB_ARI
@@ -129,6 +137,10 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 					,desc.bssid[3]	,desc.bssid[4]	,desc.bssid[5]	);
 		DLPlayFunc_PutString( str , childData->msgSys_ );
 	}
+
+//	childData->mainSeq_ = DCS_LOAD_BACKUP;
+//	DLPlayFunc_PutString("Start backup test mode.",childData->msgSys_);
+
 #endif
 	return GFL_PROC_RES_FINISH;
 }
@@ -158,12 +170,22 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 	case DCS_WAIT_CONNECT:
 		if( DLPlayComm_IsFinish_ConnectParent( childData->commSys_ ) == TRUE ){
 			DLPlayFunc_PutString("Succsess connect parent!",childData->msgSys_);
-		
 			childData->mainSeq_ = DCS_MAX;
+			
+			DLPlayComm_Send_ConnectSign(childData->commSys_);
+		}
+		break;
+	case DCS_MAX:
 			//データ送信テスト
+			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
+			{
+				DLPlayComm_Send_ConnectSign(childData->commSys_);
+			}
+			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X )
 			{
 				u8 i=0;
 				DLPLAY_LARGE_PACKET pak;
+#if 1
 				sprintf(pak.data_[i++],"このデータはテストデータです。");
 				sprintf(pak.data_[i++],"●『新ゲームデザイン』を読んで、良かったところはどこですか？");
 				sprintf(pak.data_[i++],"　色々なゲームが面白いと思われる理由を、要素ごとに分解して書いてあるところ。");
@@ -180,10 +202,28 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 				sprintf(pak.data_[i++],"表現する事。");
 				sprintf(pak.data_[i++],"●自分にとって、関心の高い書籍とは、どのようなものですか？");
 				sprintf(pak.data_[i++],"　一つの事をトコトン追求している本。");
+#else
+				for( i=0;i<TEST_DATA_LINE;i++ )
+				{
+					u16 j;
+					for( j=0;j<TEST_DATA_NUM;j++ )
+					{
+						pak.data_[i][j] =('A'+i);
+					}
+					pak.data_[i][TEST_DATA_NUM-1] = '\0';
+				}
+#endif
 				DLPlayComm_Send_LargeData( &pak , childData->commSys_ );
 			}
+
+		break;
+
+	case DCS_LOAD_BACKUP:
+		{
+			DLPlayData_LoadDataFirst( childData->dataSys_ );
 		}
 		break;
+
 	}
 
 	return GFL_PROC_RES_CONTINUE;

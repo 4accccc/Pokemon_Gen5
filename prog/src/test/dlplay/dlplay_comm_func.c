@@ -26,6 +26,7 @@
 enum DLPLAY_COMM_COMMAND_TYPE
 {
     DC_CMD_LARGE_PACKET = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
+	DC_CMD_CONNET_SIGN,		//子機が接続したときに送る
 };
 //======================================================================
 //	typedef struct
@@ -41,10 +42,11 @@ struct _DLPLAY_COMM_DATA
 	BOOL isFinishInitSystem_;
 	BOOL isError_;
 	BOOL isStartMode_;
+	
+	GFL_NETHANDLE   *selfHandle_;	//自身の通信ハンドル
 
 	DLPLAY_LARGE_PACKET packetBuff_;	//送受信共通のバッファ！取り扱い注意
 
-	GFL_NETHANDLE   *selfHandle_;	//自身の通信ハンドル
 };
 
 //======================================================================
@@ -72,13 +74,16 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
 //送受信用関数
 //送
 void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm );
 //受
 void	DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 u8*		DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size );
+void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
 	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
+	{ DLPlayComm_Post_ConnectSign , NULL },
 };
 //--------------------------------------------------------------
 /**
@@ -99,7 +104,20 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->isFinishInitSystem_ = FALSE;
 	d_comm->isError_ = FALSE;
 	d_comm->isStartMode_ = FALSE;
-
+#if 1
+	{
+		u8 i;
+		for( i=0;i<TEST_DATA_LINE;i++ )
+		{
+			u16 j;
+			for( j=0;j<TEST_DATA_NUM;j++ )
+			{
+				d_comm->packetBuff_.data_[i][j] =('A'+i);
+			}
+			d_comm->packetBuff_.data_[i][TEST_DATA_NUM-1] = '\0';
+		}
+	}
+#endif
 	return d_comm;
 }
 
@@ -148,9 +166,9 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
 		HEAPID_WIFI,  //wifi用にcreateされるHEAPID
 		GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-		4,//_MAXNUM,	//最大接続人数
+		2,//_MAXNUM,	//最大接続人数
 		48,//_MAXSIZE,	//最大送信バイト数
-		4,//_BCON_GET_NUM,  // 最大ビーコン収集数
+		2,//_BCON_GET_NUM,  // 最大ビーコン収集数
 		TRUE,		// CRC計算
 		FALSE,		// MP通信＝親子型通信モードかどうか
 		FALSE,		//wifi通信を行うかどうか
@@ -168,7 +186,8 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 }
 
 //--------------------------------------------------------------
-/**
+/**						if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+	
  *  親機接続初期化 
  */
 //--------------------------------------------------------------
@@ -252,7 +271,8 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm )
 
 //--------------------------------------------------------------
 /**
- * 通信ライブラリ初期化完了用コールバック
+ * 通信ライブラリ初期化完了用コールバック						if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+	
  * @param	vo#include
  * @retval	void
  */
@@ -286,7 +306,6 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm )
 {
 	GFL_STD_MemCopy( (void*)data , (void*)&d_comm->packetBuff_ , sizeof( DLPLAY_LARGE_PACKET ) );
-	
 	{
 		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
 				1/*親機*/ , DC_CMD_LARGE_PACKET , sizeof(DLPLAY_LARGE_PACKET) ,
@@ -302,7 +321,7 @@ void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pDat
 	ARI_TPrintf("DLPlayComm getData[LargeData]\n");
 	{
 		u8 i;
-		for( i=0;i<16;i++)
+		for( i=0;i<TEST_DATA_LINE;i++)
 		{
 			OS_TPrintf("%2d:%s\n",i,d_comm->packetBuff_.data_[i]);
 		}
@@ -311,11 +330,29 @@ void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pDat
 
 u8*	 DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size )
 {
-	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
-
-	ARI_TPrintf("DLPlayComm PostBuff id[%d] size[%d]\n",netID,size);
-	return (u8*)&d_comm->packetBuff_;
+	//if( GFL_NET_IsParentMachine() == FALSE ){return (void*)&temp;}
+	//else
+	{
+		DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+		ARI_TPrintf("DLPlayComm PostBuff id[%d] size[%d]\n",netID,size);
+		return (u8*)&d_comm->packetBuff_ ;
+	}
 }
 
+void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm )
+{
+	u8 dummy = 127;
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_CONNET_SIGN , 1 , &dummy );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm ConnectSign send is failued!!\n"); }
+	}
+
+}
+
+void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+	ARI_TPrintf("DLPlayComm getData[ConnectSign]\n");
+}
 
 

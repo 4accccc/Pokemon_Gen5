@@ -290,6 +290,9 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		break;
 
 	case DSS_WAIT_CHILD:
+		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
+			DLPlayComm_Send_ConnectSign( dlData->commSys_ );
+		}
 		break;
 
 	

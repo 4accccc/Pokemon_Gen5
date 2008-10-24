@@ -172,7 +172,7 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
-	//GFL_BACKUP_Exit();
+	GFL_BACKUP_Exit();
 	GFL_UI_Exit();
 	GFL_PROC_Exit();
 	GFL_OVERLAY_Exit();
