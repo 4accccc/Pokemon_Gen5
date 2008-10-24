@@ -54,6 +54,7 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 	d_data->mainSeq_ = 0;
 	d_data->subSeq_	 = 0;
 	d_data->msgSys_	= msgSys;
+	d_data->pBoxData_ = NULL;
 	MATH_CRC16CCITTInitTable( &d_data->crcTable_ );	//CRC‰Šú‰»
 
 	{

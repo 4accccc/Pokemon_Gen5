@@ -27,6 +27,7 @@ struct _DLPLAY_DATA_DATA
 	DLPLAY_MSG_SYS	*msgSys_;	//上から渡して共用
 	u8	*pData_;	//読み出したデータ
 	u8	*pDataMirror_;	//ミラー用データ
+	u8	*pBoxData_;		//読み込み対象のBOXデータアドレス(まだポケモンデータじゃない！
 };	//DLPLAY_DATAのDATA・・・ややこしい・・・
 
 

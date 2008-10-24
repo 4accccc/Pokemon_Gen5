@@ -138,8 +138,8 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 		DLPlayFunc_PutString( str , childData->msgSys_ );
 	}
 
-//	childData->mainSeq_ = DCS_LOAD_BACKUP;
-//	DLPlayFunc_PutString("Start backup test mode.",childData->msgSys_);
+	childData->mainSeq_ = DCS_LOAD_BACKUP;
+	DLPlayFunc_PutString("Start backup test mode.",childData->msgSys_);
 
 #endif
 	return GFL_PROC_RES_FINISH;
