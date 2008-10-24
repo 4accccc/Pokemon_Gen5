@@ -26,8 +26,10 @@ typedef struct {
 
 
 void CheckHeightData(const void *mem, MHI_PTR outMHI);
+void SetInvalidHeightData(MHI_PTR outMap3DInfo);
 extern BOOL GetHeightForBlock(const fx32 inNowY, const fx32 inX, const fx32 inZ,
 		MHI_CONST_PTR inMap3DInfo,fx32 *outY);
+extern int GetDPFormatHeight(const fx32 inX, const fx32 inZ, MHI_CONST_PTR inMap3DInfo, GFL_G3D_MAP_ATTRINFO* attrInfo);
 //============================================================================================
 /**
  *
@@ -68,6 +70,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 	case FILE_LOAD_START:
 		GFL_G3D_MAP_ResetLoadStatus(g3Dmap);
 
+		SetInvalidHeightData((MHI_PTR)ldst->mOffs);
 		//メモリ先頭にはデータ取得用情報を配置するため、読み込みポインタをずらす
 		ldst->mOffs += sizeof(MAP_HEIGHT_INFO);
 
@@ -153,6 +156,7 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 	return TRUE;
 }
 
+#include "../field_easytp.h"
 //============================================================================================
 /**
  *
@@ -167,69 +171,17 @@ BOOL FieldLoadMapData_BridgeFile( GFL_G3D_MAP* g3Dmap )
 void FieldGetAttr_BridgeFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapdata, 
 					const VecFx32* posInBlock, const fx32 map_width, const fx32 map_height )
 {
+	BridgePackHeaderSt * fileHeader = (void*)((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
+	MHI_PTR mhi = (MHI_PTR)mapdata;
+	u32 pol_count;
+	pol_count = GetDPFormatHeight(posInBlock->x, posInBlock->z, mhi, attrInfo);
+	attrInfo->mapAttrCount = pol_count;
 #if 0
-	fx32			grid_w, grid_x, grid_z;
-	u32				grid_idx;
-	VecFx32			pos, vecN;
-	fx32			by, valD;
-	NormalVtxSt*	nvs;
-	u32				attrAdrs;
-	BridgePackHeaderSt* fileHeader;
-	void * nmapdata = ((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
-	fileHeader = (BridgePackHeaderSt*)nmapdata;
-	attrAdrs = (u32)nmapdata + fileHeader->vertexOffset;
-
-	VEC_Set( &pos, posInBlock->x + map_width/2, posInBlock->y, posInBlock->z + map_width/2 );
-	//グリッド内情報取得
-	grid_w = map_width / MAP_GRIDCOUNT;	//マップ幅をグリッド数で分割
-	grid_idx = ( pos.z / grid_w ) * MAP_GRIDCOUNT + ( pos.x / grid_w );
-	grid_x = pos.x % grid_w;
-	grid_z = pos.z % grid_w;
-
-	//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
-	nvs = (NormalVtxSt*)(attrAdrs + grid_idx * sizeof(NormalVtxSt));
-
-	//グリッド内三角形の判定
-	if( nvs->tryangleType == 0 ){
-		//0-2-1,3-1-2のパターン
-		if( grid_x + grid_z < grid_w ){
-			VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
-			valD = nvs->vecN1_D;
-		} else {
-			VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
-			valD = nvs->vecN2_D;
-		}
-	} else {
-		//2-3-0,1-0-3のパターン
-		if( grid_x > grid_z ){
-			VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, nvs->vecN1_x, nvs->vecN1_y, -nvs->vecN1_z );
-			valD = nvs->vecN1_D;
-		} else {
-			VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, nvs->vecN2_x, nvs->vecN2_y, -nvs->vecN2_z );
-			valD = nvs->vecN2_D;
-		}
-	}
-	//vecN = attrInfo->mapAttr[0];...適合する三角形の法線ベクトル
-	VEC_Set( &vecN, 
-			attrInfo->mapAttr[0].vecN.x, attrInfo->mapAttr[0].vecN.y, attrInfo->mapAttr[0].vecN.z );
-	by = -( FX_Mul(vecN.x, posInBlock->x) + FX_Mul(vecN.z, posInBlock->z) + valD );
-	attrInfo->mapAttr[0].attr = nvs->attr;
-
-	attrInfo->mapAttr[0].height = FX_Div( by, vecN.y ) + map_height;
-
-	attrInfo->mapAttrCount = 1;
-#endif
-	{
+	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_UP) {
 		fx32 outY;
-		BridgePackHeaderSt * fileHeader = (void*)((u8*)mapdata + sizeof(MAP_HEIGHT_INFO));
-		MHI_PTR mhi = (MHI_PTR)mapdata;
 		GetHeightForBlock(posInBlock->y, posInBlock->x, posInBlock->z, mhi, &outY);
-		attrInfo->mapAttr[0].attr = 0;
-		attrInfo->mapAttr[0].height = outY + map_height + 8 * FX32_ONE;
-		VEC_Fx16Set( &attrInfo->mapAttr[0].vecN, 0, FX16_ONE, 0 );
-		attrInfo->mapAttrCount = 1;
-		OS_Printf("Height:%08x\n",outY + map_height + 16 * FX32_ONE);
 	}
+#endif
 }
 
 //============================================================================================
@@ -256,6 +208,10 @@ static inline fx32 Max(fx32 n1,fx32 n2)
 
 }
 
+static void DEBUG_PutVector(const VecFx32 * vec)
+{
+	OS_Printf("(%08x,%08x,%08x)",vec->x, vec->y, vec->z);
+}
 //三角形の内外判定ZX射影版
 static inline BOOL BG3D_CheckTriangleIObyZX(const VecFx32 inT_Vtx,const VecFx32 inVtx1,const VecFx32 inVtx2,const VecFx32 inVtx3)
 {
@@ -271,36 +227,17 @@ static inline BOOL BG3D_CheckTriangleIObyZX(const VecFx32 inT_Vtx,const VecFx32 
 	cross3 = FX_Mul(inVtx1.z,inT_Vtx.x-inVtx3.x) + FX_Mul(inT_Vtx.z,inVtx3.x-inVtx1.x) + FX_Mul(inVtx3.z,inVtx1.x-inT_Vtx.x);
 
 	if (cross < 0){
-///		OS_Printf("out\n");
 		return FALSE;
 	}
 	if (cross1 < 0){
-///		OS_Printf("out1\n");
 		return FALSE;
 	}
 	if (cross2 < 0){
-///		OS_Printf("out2\n");
 		return FALSE;
 	}
 	if (cross3 < 0){
-///		OS_Printf("out3\n");
 		return FALSE;
 	}
-#if 0
-	OS_Printf("cross:%d\n",cross);
-	OS_Printf("cross1:%d\n",cross1);
-	OS_Printf("cross2:%d\n",cross2);
-	OS_Printf("cross3:%d\n",cross3);
-	OS_Printf("cross_total:%d\n",cross_total);
-	OS_Printf("z:%x\n",inT_Vtx.z);
-	OS_Printf("x:%x\n",inT_Vtx.x);
-	OS_Printf("z1:%x\n",inVtx1.z);
-	OS_Printf("x1:%x\n",inVtx1.x);
-	OS_Printf("z2:%x\n",inVtx2.z);
-	OS_Printf("x2:%x\n",inVtx2.x);
-	OS_Printf("z3:%x\n",inVtx3.z);
-	OS_Printf("x3:%x\n",inVtx3.x);
-#endif	
 	return TRUE;
 }
 
