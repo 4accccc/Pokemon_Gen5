@@ -9,9 +9,7 @@
 #include <gflib.h>
 #include "system\main.h"
 
-extern void	FieldBoot( HEAPID heapID );
-extern void	FieldEnd( void );
-extern BOOL	FieldMain( void );
+#include "field_main.h"
 
 //============================================================================================
 //

@@ -14,10 +14,6 @@
 #include "textprint.h"
 #include "arc_def.h"
 
-void	FieldBoot( HEAPID heapID );
-void	FieldEnd( void );
-BOOL	FieldMain( void );
-
 #include "field_g3d_mapper.h"
 #include "field_net.h"
 
@@ -683,6 +679,8 @@ static void GetGroundMoveVec
 	VEC_Normalize( result, result );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
@@ -707,6 +705,7 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 		posNext.y = 0;	//ベースライン
 	}
 	if( CheckFieldG3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
+		OS_Printf("マップ範囲外で移動不可\n");
 		return FALSE;
 	}
 

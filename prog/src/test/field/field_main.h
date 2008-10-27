@@ -26,4 +26,8 @@ extern const unsigned int resistMapTblCount;
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork );
 
+extern void	FieldBoot( HEAPID heapID );
+extern void	FieldEnd( void );
+extern BOOL	FieldMain( void );
+
 #endif //__FIELD_MAIN_H__
