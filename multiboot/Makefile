@@ -15,7 +15,7 @@
 #----------------------------------------------------------------------------
 #NITRO_FINALROM = yes
 
-.PHONY : gflib
+.PHONY : gflib installsrl
 
 # GF-Library
 GFLIB_DIR		=	../lib/gflib
@@ -145,3 +145,8 @@ gflib:
 source:
 	-$(RM) $(DEPENDDIR)/*.d
 	$(MAKE)
+
+
+installsrl:
+	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
+
