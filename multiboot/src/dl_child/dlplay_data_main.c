@@ -40,7 +40,8 @@
 DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys );
 void			  DLPlayData_TermSystem( DLPLAY_DATA_DATA *d_data );
 
-void	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
+BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
+BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 
 //初期化
 DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
@@ -91,7 +92,7 @@ void	DLPlayData_TermSystem( DLPLAY_DATA_DATA *d_data )
 }
 
 //セーブデータの読み込み
-void	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data )
+BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data )
 {
 	//自前で読み込む・・・
 	switch( d_data->cardType_ )
@@ -100,16 +101,32 @@ void	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data )
 		break;
 
 	case CARD_TYPE_PT:
-		DLPlayData_PT_LoadData( d_data );
+		return DLPlayData_PT_LoadData( d_data );
 		break;
 
 	case CARD_TYPE_GS:
 		break;
 	}
-
+	return FALSE;
 }
 
+BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data )
+{
+		//自前で書き込む・・・
+	switch( d_data->cardType_ )
+	{
+	case CARD_TYPE_DP:
+		break;
 
+	case CARD_TYPE_PT:
+		return DLPlayData_PT_SaveData( d_data );
+		break;
+
+	case CARD_TYPE_GS:
+		break;
+	}
+	return FALSE;
+}
 
 
 

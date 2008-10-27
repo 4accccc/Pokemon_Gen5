@@ -12,6 +12,11 @@
 #ifndef DLPLAY_CHILD_COMMON_H_
 #define DLPLAY_CHILD_COMMON_H_
 
+enum DLPLAY_DATA_SAVEPOS
+{
+	DDS_FIRST,	//1番データ
+	DDS_SECOND,	//2番データ
+};
 
 struct _DLPLAY_DATA_DATA
 {
@@ -23,6 +28,7 @@ struct _DLPLAY_DATA_DATA
 	MATHCRC16Table	crcTable_;	//CRCチェック用テーブル
 
 	DLPLAY_CARD_TYPE	cardType_;	//本体に刺さっているカードの種類
+	u8					savePos_;	//１と２のどっちから読んだか？
 
 	DLPLAY_MSG_SYS	*msgSys_;	//上から渡して共用
 	u8	*pData_;	//読み出したデータ

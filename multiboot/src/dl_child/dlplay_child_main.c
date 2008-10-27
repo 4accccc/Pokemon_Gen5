@@ -34,7 +34,7 @@ enum DLPLAY_CHILD_STATE
 	DCS_WAIT_CONNECT,
 
 	DCS_LOAD_BACKUP,
-
+	DCS_SAVE_BACKUP,
 	DCS_MAX,
 	
 };
@@ -220,10 +220,13 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 
 	case DCS_LOAD_BACKUP:
 		{
-			DLPlayData_LoadDataFirst( childData->dataSys_ );
+			const BOOL ret = DLPlayData_LoadDataFirst( childData->dataSys_ );
+			if( ret == TRUE ){ childData->mainSeq_ = DCS_SAVE_BACKUP; }
 		}
 		break;
-
+	case DCS_SAVE_BACKUP:
+		DLPlayData_SaveData( childData->dataSys_ );
+		break;
 	}
 
 	return GFL_PROC_RES_CONTINUE;

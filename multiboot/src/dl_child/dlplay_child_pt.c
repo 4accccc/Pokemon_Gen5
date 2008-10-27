@@ -8,6 +8,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include <string.h>
 #include "system/gfl_use.h"
 #include "pt_save.h"
 
@@ -38,6 +39,7 @@
 //======================================================================
 
 BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data );
+BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data );
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id );
 
 void	PT_CalcTool_Decoded(void *data,u32 size,u32 code);
@@ -45,6 +47,7 @@ void	PT_CalcTool_Coded(void *data,u32 size,u32 code);
 static	u16 PT_CodeRand(u32 *code);
 static	u16	PT_PokeParaCheckSum(void *data,u32	size);
 static	void	*PokeParaAdrsGet(PT_POKEMON_PARAM *ppp,u32 rnd,u8 id);
+void	PokePasoParaInit(PT_POKEMON_PARAM *ppp);
 
 //	データの読み込み
 BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
@@ -134,7 +137,8 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 					OS_TPrintf("Data[%d] is invalid MAGIC_NUMBER[%x]\n",footer[i]->magic_number);
 					isCorrect[i] = FALSE;
 				}
-				else{
+				else
+				{
 					const u32 addOfs = ( i%2==0 ? 0 : boxStartAdd );
 					const u16 crc = MATH_CalcCRC16CCITT( &d_data->crcTable_ 
 							, ( i<2 ? d_data->pData_+addOfs : d_data->pDataMirror_+addOfs )
@@ -155,19 +159,23 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 			//両方生きていればb_countの新しいほうが最新
 			if( isCorrect[1] == TRUE && isCorrect[3] == FALSE ){
 				OS_TPrintf("NewData is 1st!\n");
+				d_data->savePos_  = DDS_FIRST;
 				d_data->pBoxData_ = d_data->pData_ + boxStartAdd;
 			}
 			else if( isCorrect[1] == FALSE && isCorrect[3] == TRUE ){
+				d_data->savePos_  = DDS_SECOND;
 				OS_TPrintf("NewData is 2nd!\n");
 				d_data->pBoxData_ = d_data->pDataMirror_ + boxStartAdd;
 			}
 			else if( isCorrect[1] == TRUE && isCorrect[3] == TRUE ){
 				if( footer[1]->b_count > footer[3]->b_count ){
+					d_data->savePos_  = DDS_FIRST;
 					OS_TPrintf("NewData is 1st!\n");
 					d_data->pBoxData_ = d_data->pData_ + boxStartAdd;
 				}
 				else if( footer[1]->b_count < footer[3]->b_count ){
-					OS_TPrintf("NewData is 2md!\n");
+					d_data->savePos_  = DDS_SECOND;
+					OS_TPrintf("NewData is 2nd!\n");
 					d_data->pBoxData_ = d_data->pDataMirror_ + boxStartAdd;
 				}
 				else{ 
@@ -186,6 +194,9 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 		{
 			u8 i;
 			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
+			char name_str[256];
+			u8 num=0;
+			//暗号化解除→名前変換→４つずつ表示
 			OS_TPrintf("BOX curr[%d]\n",pBox->currentTrayNumber);
 
 			OS_TPrintf("POKEMON PARAM DECODE!!!\n");
@@ -196,7 +207,6 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 				PT_CalcTool_Decoded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
 				sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
 				OS_TPrintf("[%2d] sum[%5d][%5d] ",i,sum ,param->checksum);
-				//pBox->ppp[0][i].paradata;
 				{
 					POKEMON_PASO_PARAM1	*ppp1 = (POKEMON_PASO_PARAM1 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA1);
 					POKEMON_PASO_PARAM2	*ppp2 = (POKEMON_PASO_PARAM2 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA2);
@@ -206,20 +216,134 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 						OS_TPrintf("None ");
 					}
 					else{
-						OS_TPrintf("id[%d] ",ppp1->monsno);
+						//名前変換テスト
+						u16 str[MONS_NAME_SIZE+EOM_SIZE];
+						char s_str[(MONS_NAME_SIZE+EOM_SIZE)*2];
+						char s_str_work[(MONS_NAME_SIZE+EOM_SIZE)*2];
+						int j,s_len=(MONS_NAME_SIZE+EOM_SIZE)*2;
+						OS_TPrintf("id[%3d] name:",ppp1->monsno);
+						for( j=0;j<MONS_NAME_SIZE+EOM_SIZE;j++ )
+						{
+							u16 idx;
+							if( ppp3->nickname[j] == 0xffff ){
+								str[j] = 0x0000;
+								break;
+							}
+							for( idx=0;idx<PT_STR_ARR_NUM;idx++ ){
+								if( ppp3->nickname[j] == PT_STR_ARR[idx][1] ){
+									str[j] = PT_STR_ARR[idx][0];
+									break;
+								}
+							}
+							if( idx == PT_STR_ARR_NUM ){
+								//該当文字なし
+								str[j] = 0x0000;
+								break;
+							}
+							//OS_TPrintf("%2x:",ppp3->nickname[j]);
+						}
+						STD_ConvertStringUnicodeToSjis( s_str , &s_len , str , &j , NULL );
+						s_str[s_len] = '\0';
+						sprintf(s_str_work,"[%12s]",s_str);
+						strcat(name_str,s_str_work);
+						num++;
 					}
 				}
-				
+				if( num==4 || i==BOX_MAX_POS-1 ){
+					num=0;
+					DLPlayFunc_PutString( name_str , d_data->msgSys_ );
+					name_str[0] = '\0';
+				}
+
 				OS_TPrintf("\n");
 			}
 		}
-
+		DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
+		DLPlayFunc_PutString("Press A button to start save.",d_data->msgSys_ );
 		d_data->subSeq_++;
+		break;
+	case 5:
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+			d_data->subSeq_ = 0;
+			return TRUE;
+		}
 		break;
 	}
 	return FALSE;
 }
 
+BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
+{
+	switch( d_data->subSeq_ )
+	{
+	case 0:
+		{
+			u8 i;
+			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
+			//ポケモンデータの暗号化
+			for( i=0;i<BOX_MAX_POS;i++ )
+			{
+				PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
+				u16 sum;
+				sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
+				PT_CalcTool_Coded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
+			}
+			
+#if DEB_ARI&0
+			//ポケモンを消す(消した後に暗号化もするので、暗号化の後
+			for( i=0;i<BOX_MAX_POS;i++ ){
+				PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
+				if( i%3==1 ){
+					PokePasoParaInit( param );
+				}
+			}
+#endif
+			d_data->subSeq_++;
+		}
+		break;
+
+	case 1:	//BOXデータのCRCセットからセーブ(footerとか一緒に使うから
+		{
+			void *pData;
+			u16 crc;
+			u32 saveAddress;
+			const u32 boxStartAdd = DLPlayData_PT_GetStartAddress(GMDATA_ID_BOXDATA);
+			SAVE_FOOTER *footer;
+			if( d_data->savePos_ == DDS_FIRST ){
+				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
+			}
+			else{
+				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
+			}
+			footer->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, footer->size - sizeof(SAVE_FOOTER) );
+			
+			//セーブ開始！
+			saveAddress = ( d_data->savePos_ == DDS_FIRST ? 0x00000 : 0x40000 );
+			saveAddress += boxStartAdd;
+
+			d_data->lockID_ = OS_GetLockID();
+			GF_ASSERT( d_data->lockID_ != OS_LOCK_ID_ERROR );
+			CARD_LockBackup( (u16)d_data->lockID_ );
+			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_ , footer->size , NULL , NULL );
+			
+			DLPlayFunc_PutString("save......",d_data->msgSys_ );
+	
+		}
+		d_data->subSeq_++;
+		break;
+	case 2:	//書き込みの完了を待つ
+		if( CARD_TryWaitBackupAsync() == TRUE )
+		{
+			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+			DLPlayFunc_PutString("Save complete.",d_data->msgSys_ );
+			CARD_UnlockBackup( (u16)d_data->lockID_ );
+			OS_ReleaseLockID( (u16)d_data->lockID_ );
+			d_data->subSeq_++;
+		}
+		break;
+	}
+	return FALSE;
+}
 
 //各データブロックの開始位置を求める。PTと違ってフッタも一つのブロックとして計算する
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id )
@@ -572,6 +696,7 @@ static	void	*PokeParaAdrsGet( PT_POKEMON_PARAM *ppp,u32 rnd,u8 id)
 				case ID_POKEPARA2:
 					ret=&PPD31->ppp2;
 					break;
+
 				case ID_POKEPARA3:
 					ret=&PPD31->ppp3;
 					break;
@@ -793,4 +918,20 @@ static	void	*PokeParaAdrsGet( PT_POKEMON_PARAM *ppp,u32 rnd,u8 id)
 	}
 	return	ret;
 }
+//============================================================================================
+/**
+ *	ボックスポケモンパラメータ構造体を初期化する
+ *
+ * @param[in]	ppp	初期化するボックスポケモンパラメータ構造体のポインタ
+ */
+//============================================================================================
+void	PokePasoParaInit(PT_POKEMON_PARAM *ppp)
+{
+	MI_CpuClearFast(ppp,sizeof(PT_POKEMON_PARAM));
+//個性乱数セットしたところで暗号化
+	PT_CalcTool_Coded(ppp->paradata,sizeof(POKEMON_PASO_PARAM1)*4,ppp->checksum);
+}
+
+
+
 
