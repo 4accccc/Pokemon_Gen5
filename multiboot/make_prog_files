@@ -1,5 +1,5 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=	ohno/fatal_error.c \
+SRCS	+=	ohno/dl_fatal_error.c \
 		gfl_graphic/net_icondata.c \
 		net_define.c \
 		dl_child/dlplay_child_main.c \

@@ -13,6 +13,7 @@
 
 
 #include "dlplay_comm_func.h"
+#include "dlplay_func.h"
 #include "../ariizumi/ari_debug.h"
 
 //======================================================================
@@ -27,6 +28,7 @@ enum DLPLAY_COMM_COMMAND_TYPE
 {
     DC_CMD_LARGE_PACKET = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
 	DC_CMD_CONNET_SIGN,		//子機が接続したときに送る
+	DC_CMD_BOX_INDEX,		//最初に送るやつ。名前とポケモンNoのみ？
 };
 //======================================================================
 //	typedef struct
@@ -42,11 +44,17 @@ struct _DLPLAY_COMM_DATA
 	BOOL isFinishInitSystem_;
 	BOOL isError_;
 	BOOL isStartMode_;
+	BOOL isConnect_;
+	BOOL isPostIndex_;
 	
-	GFL_NETHANDLE   *selfHandle_;	//自身の通信ハンドル
+	GFL_NETHANDLE		*selfHandle_;	//自身の通信ハンドル
 
 	DLPLAY_LARGE_PACKET packetBuff_;	//送受信共通のバッファ！取り扱い注意
+	DLPLAY_BOX_INDEX	boxIndexBuff_;	//同上
 
+#if DLPLAY_FUNC_USE_PRINT
+	DLPLAY_MSG_SYS		*msgSys_;
+#endif
 };
 
 //======================================================================
@@ -55,6 +63,9 @@ struct _DLPLAY_COMM_DATA
 DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
 void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm);
+#if DLPLAY_FUNC_USE_PRINT
+void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm );
+#endif
 
 void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
@@ -65,6 +76,10 @@ int		DLPlayComm_GetBeaconSizeDummy(void);
 
 //各種チェック関数
 BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
+const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
 
 //各種コールバック
 void	DLPlayComm_InitEndCallback( void* pWork );
@@ -73,17 +88,23 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
 
 //送受信用関数
 //送
-void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm );
+DLPLAY_LARGE_PACKET* DLPlayComm_GetLargePacketBuff( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm );
+DLPLAY_BOX_INDEX* DLPlayComm_GetBoxIndexBuff( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm );
 //受
 void	DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 u8*		DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size );
 void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+void	DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+u8*		DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size );
 
 
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
 	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
 	{ DLPlayComm_Post_ConnectSign , NULL },
+	{ DLPlayComm_Post_BoxIndex , DLPlayComm_Post_BoxIndex_Buff },
 };
 //--------------------------------------------------------------
 /**
@@ -101,23 +122,15 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	
 	d_comm->seqNo_  = 0;
 	d_comm->heapID_ = heapID;
-	d_comm->isFinishInitSystem_ = FALSE;
-	d_comm->isError_ = FALSE;
-	d_comm->isStartMode_ = FALSE;
-#if 1
-	{
-		u8 i;
-		for( i=0;i<TEST_DATA_LINE;i++ )
-		{
-			u16 j;
-			for( j=0;j<TEST_DATA_NUM;j++ )
-			{
-				d_comm->packetBuff_.data_[i][j] =('A'+i);
-			}
-			d_comm->packetBuff_.data_[i][TEST_DATA_NUM-1] = '\0';
-		}
-	}
-#endif
+	d_comm->isFinishInitSystem_	= FALSE;
+	d_comm->isError_		= FALSE;
+	d_comm->isStartMode_	= FALSE;
+	d_comm->isConnect_		= FALSE;
+	d_comm->isPostIndex_	= FALSE;
+
+	d_comm->packetBuff_.cardType_ = CARD_TYPE_INVALID;
+	MI_CpuClearFast( d_comm->packetBuff_.pokeData_ , LARGEPACKET_POKE_SIZE );
+
 	return d_comm;
 }
 
@@ -184,9 +197,15 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 	aGFLNetInit.netHeapID = d_comm->heapID_;
 	return TRUE;
 }
+#if DLPLAY_FUNC_USE_PRINT
+void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm )
+{
+	d_comm->msgSys_ = msgSys;
+}
+#endif
 
 //--------------------------------------------------------------
-/**						if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+/**						
 	
  *  親機接続初期化 
  */
@@ -261,7 +280,14 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isFinishInitSystem_;
 }
-
+BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isConnect_;
+}
+BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isPostIndex_;
+}
 
 
 
@@ -303,39 +329,104 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 //--------------------------------------------------------------
 //	送受信関数
 //--------------------------------------------------------------
-void	DLPlayComm_Send_LargeData( DLPLAY_LARGE_PACKET *data , DLPLAY_COMM_DATA *d_comm )
+#if DLPLAY_FUNC_USE_PRINT
+static OSTick tickWork = 0;
+#endif
+
+//--------------------------------------------------------------
+//	LargePacket関係
+//--------------------------------------------------------------
+//Bufferを渡す(ここにデータを入れてから送信する
+DLPLAY_LARGE_PACKET* DLPlayComm_GetLargePacketBuff( DLPLAY_COMM_DATA *d_comm )
 {
-	GFL_STD_MemCopy( (void*)data , (void*)&d_comm->packetBuff_ , sizeof( DLPLAY_LARGE_PACKET ) );
+	return &d_comm->packetBuff_;
+}
+void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm )
+{
+	//バッファのポインタを外に渡してセットしてもらうようにしたので、コピーは無し。
+//	GFL_STD_MemCopy( (void*)data , (void*)&d_comm->packetBuff_ , sizeof( DLPLAY_LARGE_PACKET ) );
 	{
 		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
 				1/*親機*/ , DC_CMD_LARGE_PACKET , sizeof(DLPLAY_LARGE_PACKET) ,
 				&d_comm->packetBuff_ , TRUE , TRUE , TRUE );
 		if( ret == FALSE ){ OS_TPrintf("DLPlayComm LargeData send is failued!!\n"); }
 	}
-	
 }
 
+//--------------------------------------------------------------
+//受信コールバック
+//--------------------------------------------------------------
 void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
-	ARI_TPrintf("DLPlayComm getData[LargeData]\n");
+#if DLPLAY_FUNC_USE_PRINT
 	{
-		u8 i;
-		for( i=0;i<TEST_DATA_LINE;i++)
-		{
-			OS_TPrintf("%2d:%s\n",i,d_comm->packetBuff_.data_[i]);
-		}
+		OSTick postTick = OS_GetTick();
+		char str[64];
+		sprintf(str,"LargePacket finish post. tick[%d]",OS_TicksToMilliSeconds(postTick-tickWork));
+		DLPlayFunc_PutString( str , d_comm->msgSys_ );
+	}
+#endif
+}
+u8*	 DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size )
+{
+	{
+		DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+#if DLPLAY_FUNC_USE_PRINT
+		char str[64];
+		sprintf(str,"LargePacket start post size[%d]",size);
+		DLPlayFunc_PutString( str , d_comm->msgSys_ );
+		tickWork = OS_GetTick();
+#endif
+		return (u8*)&d_comm->packetBuff_ ;
 	}
 }
 
-u8*	 DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size )
+//--------------------------------------------------------------
+//BoxIndex系
+//--------------------------------------------------------------
+DLPLAY_BOX_INDEX* DLPlayComm_GetBoxIndexBuff( DLPLAY_COMM_DATA *d_comm )
 {
-	//if( GFL_NET_IsParentMachine() == FALSE ){return (void*)&temp;}
-	//else
+	return &d_comm->boxIndexBuff_;
+}
+void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm )
+{
+	{
+		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
+				1/*親機*/ , DC_CMD_BOX_INDEX , sizeof(DLPLAY_BOX_INDEX) ,
+				&d_comm->boxIndexBuff_ , TRUE , TRUE , TRUE );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm BoxIndexData send is failued!!\n"); }
+	}
+}
+
+//--------------------------------------------------------------
+//	受信コールバック
+//--------------------------------------------------------------
+void DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->isPostIndex_ = TRUE;
+#if DLPLAY_FUNC_USE_PRINT
+	{
+	OSTick postTick = OS_GetTick();
+	char str[64];
+	sprintf(str,"BoxIndex finish post. tick[%d]",OS_TicksToMilliSeconds(postTick-tickWork));
+	DLPlayFunc_PutString( str , d_comm->msgSys_ );
+	}
+#endif
+}
+
+u8*	 DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size )
+{
 	{
 		DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
-		ARI_TPrintf("DLPlayComm PostBuff id[%d] size[%d]\n",netID,size);
-		return (u8*)&d_comm->packetBuff_ ;
+#if DLPLAY_FUNC_USE_PRINT
+		char str[64];
+		sprintf(str,"BoxIndex start post size[%d]",size);
+		tickWork = OS_GetTick();
+		DLPlayFunc_PutString( str , d_comm->msgSys_ );
+#endif
+		return (u8*)&d_comm->boxIndexBuff_ ;
 	}
 }
 
@@ -352,6 +443,8 @@ void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm )
 
 void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->isConnect_ = TRUE;
 	ARI_TPrintf("DLPlayComm getData[ConnectSign]\n");
 }
 

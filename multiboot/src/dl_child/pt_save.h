@@ -46,14 +46,14 @@ typedef enum {
 	GMDATA_ID_POKEPARKDATA,
 	GMDATA_ID_CONTEST,
 	GMDATA_ID_PMS,
-	GMDATA_ID_EMAIL,
-	GMDATA_ID_WFHIROBA,
+	GMDATA_ID_EMAIL,		//PTのみ
+	GMDATA_ID_WFHIROBA,		//PTのみ
 
-	GMDATA_NORMAL_FOTTER,	//WBで追加。セーブのCRCとかカウンタとか入ってる
+	GMDATA_NORMAL_FOOTER,	//WBで追加。セーブのCRCとかカウンタとか入ってる
 	//ボックスデータグループ
 	GMDATA_ID_BOXDATA,
 
-	GMDATA_BOX_FOTTER,		//WBで追加。ボックスのCRCとかカウンタとか入ってる
+	GMDATA_BOX_FOOTER,		//WBで追加。ボックスのCRCとかカウンタとか入ってる
 
 	GMDATA_ID_MAX,
 }PT_GMDATA_ID;
@@ -220,7 +220,6 @@ struct pokemon_paso_param2
 	u32	stylemedal_super		:1;			//	かっこよさ勲章(スーパー)(AGBコンテスト)
 	u32	stylemedal_hyper		:1;			//	かっこよさ勲章(ハイパー)(AGBコンテスト)
 	u32	stylemedal_master		:1;			//	かっこよさ勲章(マスター)(AGBコンテスト)
-#define BOX_TRAYNAME_BUFSIZE	(20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
 	u32	beautifulmedal_normal	:1;			//	うつくしさ勲章(ノーマル)(AGBコンテスト)
 	u32	beautifulmedal_super	:1;			//	うつくしさ勲章(スーパー)(AGBコンテスト)
 	u32	beautifulmedal_hyper	:1;			//	うつくしさ勲章(ハイパー)(AGBコンテスト)
@@ -243,51 +242,7 @@ struct pokemon_paso_param2
 	u32	victory_ribbon	:1;					//		ビクトリーリボン
 	u32	bromide_ribbon	:1;					//		ブロマイドリボン
 	u32	ganba_ribbon	:1;					//		がんばリボン
-	u32	marine_ribbon	:1;				//ポケモンパラメータ取得系の定義
-enum{
-	ID_POKEPARADATA11=0,	//0
-	ID_POKEPARADATA12,		//1
-	ID_POKEPARADATA13,		//2
-	ID_POKEPARADATA14,		//3
-	ID_POKEPARADATA15,		//4
-	ID_POKEPARADATA16,		//5
-	ID_POKEPARADATA21,		//6
-	ID_POKEPARADATA22,		//7
-	ID_POKEPARADATA23,		//8
-	ID_POKEPARADATA24,		//9
-	ID_POKEPARADATA25,		//10
-	ID_POKEPARADATA26,		//11
-	ID_POKEPARADATA31,		//12
-	ID_POKEPARADATA32,		//13
-	ID_POKEPARADATA33,		//14
-	ID_POKEPARADATA34,		//15
-	ID_POKEPARADATA35,		//16
-	ID_POKEPARADATA36,		//17
-	ID_POKEPARADATA41,		//18
-	ID_POKEPARADATA42,		//19
-	ID_POKEPARADATA43,		//20
-	ID_POKEPARADATA44,		//21
-	ID_POKEPARADATA45,		//22
-	ID_POKEPARADATA46,		//23
-
-	ID_POKEPARADATA51,		//24
-	ID_POKEPARADATA52,		//25
-	ID_POKEPARADATA53,		//26
-	ID_POKEPARADATA54,		//27
-	ID_POKEPARADATA55,		//28
-	ID_POKEPARADATA56,		//29
-
-	ID_POKEPARADATA61,		//30
-	ID_POKEPARADATA62,		//31
-};
-
-enum{
-	ID_POKEPARA1=0,
-	ID_POKEPARA2,
-	ID_POKEPARA3,
-	ID_POKEPARA4,
-};
-	//		マリンリボン
+	u32	marine_ribbon	:1;					//		マリンリボン
 	u32	land_ribbon		:1;					//		ランドリボン
 	u32	sky_ribbon		:1;					//		スカイリボン
 	u32	country_ribbon	:1;					//		カントリーリボン

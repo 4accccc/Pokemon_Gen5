@@ -33,8 +33,12 @@ enum DLPLAY_CHILD_STATE
 	DCS_WAIT_INIT_COMM,
 	DCS_WAIT_CONNECT,
 
+	DCS_LOAD_BACKUP_INIT,
 	DCS_LOAD_BACKUP,
 	DCS_SAVE_BACKUP,
+
+	DCS_SEND_BOX_INDEX,
+
 	DCS_MAX,
 	
 };
@@ -121,15 +125,15 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 	childData->mainSeq_ = DCS_INIT_COMM;
 
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
-	DLPlayFunc_PutString("",childData->msgSys_);
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
 	childData->dataSys_ = DLPlayData_InitSystem( childData->heapID_ , childData->msgSys_ );
 
 	GFL_STD_MemCopy( (void*)&desc.bssid , (void*)childData->parentMacAddress_ , WM_SIZE_BSSID );
-
+#if DLPLAY_FUNC_USE_PRINT
+	DLPlayFunc_PutString("",childData->msgSys_);
 	DLPlayFunc_PutString("System Initialize complete.",childData->msgSys_);
-
-#if DEB_ARI
+	DLPlayComm_SetMsgSys( childData->msgSys_ , childData->commSys_ );
+#if DEB_ARI&0
 	{
 		char str[128];
 		sprintf(str,"Parent MacAddress is [%02x:%02x:%02x:%02x:%02x:%02x]"
@@ -138,8 +142,10 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 		DLPlayFunc_PutString( str , childData->msgSys_ );
 	}
 
-	childData->mainSeq_ = DCS_LOAD_BACKUP;
+	childData->mainSeq_ = DCS_LOAD_BACKUP_INIT;
 	DLPlayFunc_PutString("Start backup test mode.",childData->msgSys_);
+	DLPlayFunc_PutString("Y = DP : X = PT",childData->msgSys_);
+#endif
 
 #endif
 	return GFL_PROC_RES_FINISH;
@@ -162,68 +168,68 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 	case DCS_WAIT_INIT_COMM:
 		if( DLPlayComm_IsFinish_InitSystem( childData->commSys_ ) ){
 			DLPlayComm_InitChild( childData->commSys_ , childData->parentMacAddress_ );
+			childData->mainSeq_ = DCS_WAIT_CONNECT;
+			
 			DLPlayFunc_PutString("Commnicate system initialize complete.",childData->msgSys_);
 			DLPlayFunc_PutString("Try connect parent.",childData->msgSys_);
-			childData->mainSeq_ = DCS_WAIT_CONNECT;
 		}
 		break;
 	case DCS_WAIT_CONNECT:
 		if( DLPlayComm_IsFinish_ConnectParent( childData->commSys_ ) == TRUE ){
-			DLPlayFunc_PutString("Succsess connect parent!",childData->msgSys_);
-			childData->mainSeq_ = DCS_MAX;
-			
+			childData->mainSeq_ = DCS_LOAD_BACKUP_INIT;
 			DLPlayComm_Send_ConnectSign(childData->commSys_);
+			
+			DLPlayFunc_PutString("Succsess connect parent!",childData->msgSys_);
+			DLPlayFunc_PutString("Select backup type.",childData->msgSys_);
+			DLPlayFunc_PutString("Y = DP : X = PT",childData->msgSys_);
 		}
 		break;
-	case DCS_MAX:
-			//データ送信テスト
-			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
-			{
-				DLPlayComm_Send_ConnectSign(childData->commSys_);
-			}
-			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X )
-			{
-				u8 i=0;
-				DLPLAY_LARGE_PACKET pak;
-#if 1
-				sprintf(pak.data_[i++],"このデータはテストデータです。");
-				sprintf(pak.data_[i++],"●『新ゲームデザイン』を読んで、良かったところはどこですか？");
-				sprintf(pak.data_[i++],"　色々なゲームが面白いと思われる理由を、要素ごとに分解して書いてあるところ。");
-				sprintf(pak.data_[i++],"　同じようなゲームでも、なぜ後のほうに出たものが面白くないのか？二番煎じと");
-				sprintf(pak.data_[i++],"言われるのかという疑問があったのですが、『新ゲームデザイン』で格闘ゲームや");
-				sprintf(pak.data_[i++],"シューティングで具体例を挙げて出しているので、とても納得できた。");
-				sprintf(pak.data_[i++],"●『新ゲームデザイン』を読んで、不満だったところはどこですか？");
-				sprintf(pak.data_[i++],"　参考にしているゲーム、市場が古いところ。");
-				sprintf(pak.data_[i++],"　十年以上も前の本なので仕方ないとは思うが、やはり今と比べるとゲーム機のス");
-				sprintf(pak.data_[i++],"ペックも市場の価値観も違うと思うので、今のゲーム・市場でこういった内容の本");
-				sprintf(pak.data_[i++],"を読みたいと思う。");
-				sprintf(pak.data_[i++],"●『新ゲームデザイン』から読み取れるゲームフリークらしさは何だと思いますか？");
-				sprintf(pak.data_[i++],"　既存のゲームを模倣するのではなく、何か面白いことをゲームという形にして");
-				sprintf(pak.data_[i++],"表現する事。");
-				sprintf(pak.data_[i++],"●自分にとって、関心の高い書籍とは、どのようなものですか？");
-				sprintf(pak.data_[i++],"　一つの事をトコトン追求している本。");
-#else
-				for( i=0;i<TEST_DATA_LINE;i++ )
-				{
-					u16 j;
-					for( j=0;j<TEST_DATA_NUM;j++ )
-					{
-						pak.data_[i][j] =('A'+i);
-					}
-					pak.data_[i][TEST_DATA_NUM-1] = '\0';
-				}
-#endif
-				DLPlayComm_Send_LargeData( &pak , childData->commSys_ );
-			}
-
+	
+	case DCS_LOAD_BACKUP_INIT:
+		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
+			DLPlayData_SetCardType( childData->dataSys_ , CARD_TYPE_PT ) ;
+			childData->mainSeq_ = DCS_LOAD_BACKUP;
+		}
+		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
+			childData->mainSeq_ = DCS_LOAD_BACKUP;
+			DLPlayData_SetCardType( childData->dataSys_ , CARD_TYPE_DP );
+		}
 		break;
 
 	case DCS_LOAD_BACKUP:
 		{
 			const BOOL ret = DLPlayData_LoadDataFirst( childData->dataSys_ );
-			if( ret == TRUE ){ childData->mainSeq_ = DCS_SAVE_BACKUP; }
+			if( ret == TRUE ){ 
+				childData->mainSeq_ = DCS_SEND_BOX_INDEX;
+				
+				DLPlayFunc_PutString("Data load is complete.",childData->msgSys_);
+				DLPlayFunc_PutString("Press A button to start send data.",childData->msgSys_);
+			}
 		}
 		break;
+	
+	case DCS_SEND_BOX_INDEX:
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+		{
+			DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( childData->commSys_ );
+			DLPlayData_SetBoxIndex( childData->dataSys_ , boxIndex );
+			DLPlayComm_Send_BoxIndex( childData->commSys_ );
+		}
+#if 0
+			//データ送信
+			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+			{
+				DLPLAY_LARGE_PACKET *pak = DLPlayComm_GetLargePacketBuff( childData->commSys_ );
+				pak->cardType_ = DLPlayData_GetCardType( childData->dataSys_ );
+				{
+					const u8* pokeData = DLPlayData_GetPokeSendData( childData->dataSys_ );
+					GFL_STD_MemCopy( (void*)pokeData , (void*)pak->pokeData_ , LARGEPACKET_POKE_SIZE );
+				}
+				DLPlayComm_Send_LargeData( childData->commSys_ );
+			}
+#endif
+		break;
+
 	case DCS_SAVE_BACKUP:
 		DLPlayData_SaveData( childData->dataSys_ );
 		break;

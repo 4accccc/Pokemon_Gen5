@@ -42,6 +42,8 @@ void			  DLPlayData_TermSystem( DLPLAY_DATA_DATA *d_data );
 
 BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
+void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
+u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
 
 //初期化
 DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
@@ -56,6 +58,7 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 	d_data->subSeq_	 = 0;
 	d_data->msgSys_	= msgSys;
 	d_data->pBoxData_ = NULL;
+	d_data->cardType_ = CARD_TYPE_INVALID;
 	MATH_CRC16CCITTInitTable( &d_data->crcTable_ );	//CRC初期化
 
 	{
@@ -75,7 +78,7 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 			DLPlayFunc_PutString(str,d_data->msgSys_);
 		}
 		//FIX ME:正しい判別処理を入れる
-		d_data->cardType_ = CARD_TYPE_PT;
+		//d_data->cardType_ = CARD_TYPE_PT;
 
 
 		//一応カードの種類が確定してから初期化
@@ -98,6 +101,7 @@ BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data )
 	switch( d_data->cardType_ )
 	{
 	case CARD_TYPE_DP:
+		return DLPlayData_PT_LoadData( d_data );
 		break;
 
 	case CARD_TYPE_PT:
@@ -116,6 +120,7 @@ BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data )
 	switch( d_data->cardType_ )
 	{
 	case CARD_TYPE_DP:
+		return DLPlayData_PT_SaveData( d_data );
 		break;
 
 	case CARD_TYPE_PT:
@@ -128,7 +133,38 @@ BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data )
 	return FALSE;
 }
 
+void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex )
+{
+		//自前で書き込む・・・
+	switch( d_data->cardType_ )
+	{
+	case CARD_TYPE_DP:
+		DLPlayData_PT_SetBoxIndex( d_data , boxIndex );
+		break;
 
+	case CARD_TYPE_PT:
+		DLPlayData_PT_SetBoxIndex( d_data , boxIndex );
+		break;
+
+	case CARD_TYPE_GS:
+		break;
+	}
+}
+//刺さっているカードの種類の取得設定(設定はデバッグ用
+const DLPLAY_CARD_TYPE DLPlayData_GetCardType( DLPLAY_DATA_DATA *d_data )
+{
+	return d_data->cardType_;
+}
+
+void DLPlayData_SetCardType( DLPLAY_DATA_DATA *d_data , const DLPLAY_CARD_TYPE type )
+{
+	d_data->cardType_ = type;
+}
+
+u8*	DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data )
+{
+	return (u8*)d_data->pBoxData_;
+}
 
 
 

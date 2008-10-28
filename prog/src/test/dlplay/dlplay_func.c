@@ -49,6 +49,7 @@ void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);
 void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
 
+const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
 
 //======================================================================
 //	DLプレイメッセージシステム初期化
@@ -155,6 +156,39 @@ void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL i
 		GFL_BMPWIN_MakeScreen( msgSys->bmpwin_[line] );
 		GFL_BG_LoadScreenReq( msgSys->bgPlane_ );
 	}
+}
+
+//======================================================================
+//	DPTからUTF-16へ変換
+//	@param  [in] DPTでの文字コード
+//　@param  [out]UTF-16形式を格納するポインタ
+//　@param  [in] 文字列長
+//	@return [out]変換後の文字列
+//======================================================================
+#include "pt_str_arr.dat"
+const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len )
+{
+	static const u16 EomCode = 0x0000;
+	static const u16 UnknownCode = L'?';
+	int i,j;
+	for( i=0;i<len;i++ )
+	{
+		if( dptStr[i] == 0xFFFF ){
+			utfStr[i] = EomCode;
+			break;
+		}
+		for( j=0;j<PT_STR_ARR_NUM;j++ ){
+			if( dptStr[i] == PT_STR_ARR[j][1] ){
+				utfStr[i] = PT_STR_ARR[j][0];
+				break;
+			}
+		}
+		if( j == PT_STR_ARR_NUM ){
+			//該当文字なし
+			utfStr[i] = UnknownCode;
+		}
+	}
+	return i;
 }
 
 

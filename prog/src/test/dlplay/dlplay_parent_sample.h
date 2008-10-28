@@ -17,7 +17,7 @@
 enum DLPLAY_PARENT_MODE
 {
 	DPM_SEND_IMAGE,	//子機にイメージを配布する
-	DPM_DATA_SHARE,	//子機とデータをやり取りする
+	DPM_SELECT_BOX,	//取るボックスを選択する
 	DPM_ERROR,		//とりあえずエラー
 	DPM_END,		//終了用
 };

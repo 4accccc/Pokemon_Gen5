@@ -20,17 +20,17 @@
 #include "mbp.h"
 
 /* このデモで使用する GGID */
-#define WH_GGID                 (0x3FFF21)
+#define WH_GGID				 (0x3FFF21)
 
 /* このデモがダウンロードさせるプログラム情報 */
 const MBGameRegistry mbGameList = {
-    "/dl_rom/child.srl",                      // 子機バイナリコード
-    (u16 *)L"MultiBootTest",           // ゲーム名
-    (u16 *)L"マルチブートテスト by Ariizumi",        // ゲーム内容説明
-    "/dl_rom/icon.char",                 // アイコンキャラクタデータ
-    "/dl_rom/icon.plt",                  // アイコンパレットデータ
-    WH_GGID,                           // GGID
-    MBP_CHILD_MAX + 1,                 // 最大プレイ人数、親機の数も含めた人数
+	"/dl_rom/child.srl",					  // 子機バイナリコード
+	(u16 *)L"MultiBootTest",		   // ゲーム名
+	(u16 *)L"マルチブートテスト by Ariizumi",		// ゲーム内容説明
+	"/dl_rom/icon.char",				 // アイコンキャラクタデータ
+	"/dl_rom/icon.plt",				  // アイコンパレットデータ
+	WH_GGID,						   // GGID
+	MBP_CHILD_MAX + 1,				 // 最大プレイ人数、親機の数も含めた人数
 };
 
 
@@ -58,6 +58,7 @@ enum DLPLAY_SEND_STATE
 
 	DSS_START_SHARE,
 	DSS_WAIT_CHILD,
+	DSS_WAIT_INDEX_DATA,
 };
 
 //============================================================================================
@@ -67,6 +68,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID );
 u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData );
 void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData );
 
+static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData );
 static void OnPreSendMBVolat(u32 ggid);
 
 //============================================================================================
@@ -89,8 +91,11 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 
 	dlData->mainSeq_ = DSS_INIT_COMM;
 	dlData->subSeq_ = 0xFFFF;
+#if DLPLAY_FUNC_USE_PRINT
+	DLPlayComm_SetMsgSys( dlData->msgSys_ , dlData->commSys_ );
 	DLPlayFunc_PutString("",dlData->msgSys_);
 	DLPlayFunc_PutString("System Initialize complete.",dlData->msgSys_);
+#endif
 	return dlData;
 }
 
@@ -141,148 +146,10 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		break;
 
 	case DSS_MAIN_LOOP:
-		{
-			const u16 mbpState = MBP_GetState();
-			BOOL isChangeState = FALSE;
-			if( mbpState != dlData->subSeq_ ){
-				isChangeState = TRUE;
-				dlData->subSeq_ = mbpState;
-			}
-			//以下サンプル流用
-			switch (MBP_GetState())
-	        {
-	            //-----------------------------------------
-	            // アイドル状態
-	        case MBP_STATE_IDLE:
-	            {
-					u16 test = WM_GetAllowedChannel();
-					ARI_TPrintf("[%d][%x]\n",test,test);
-	                MBP_Start(&mbGameList, 1 /*通信チャンネルsChannel*/);
-	                /* ユーザ定義データの送信テスト */
-	                MB_SetSendVolatCallback(OnPreSendMBVolat, MB_SEND_VOLAT_CALLBACK_TIMMING_BEFORE);
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // 子機からのエントリー受付中
-	        case MBP_STATE_ENTRY:
-	            {
-					if( isChangeState == TRUE ){
-						DLPlayFunc_PutString( "Now Accepting",dlData->msgSys_); 
-					}
-	                //BgSetMessage(PLTT_WHITE, " Now Accepting            ");
-	
-	                if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
-	                {
-	                    // Bボタンでマルチブートキャンセル
-	                    MBP_Cancel();
-	                    break;
-	                }
-	
-	                // エントリー中の子機が一台でも存在すれば開始可能とする
-	                if (MBP_GetChildBmp(MBP_BMPTYPE_ENTRY) ||
-	                    MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
-	                    MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
-	                {
-						//if( isChangeState == TRUE ){
-							DLPlayFunc_PutString( "Push START Button to start",dlData->msgSys_); 
-						//}
-	                    //BgSetMessage(PLTT_WHITE, " Push START Button to start   ");
-	
-						if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
-	                    {
-	                        // ダウンロード開始
-	                        MBP_StartDownloadAll();
-	                    }
-	                }
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // プログラム配信処理
-	        case MBP_STATE_DATASENDING:
-	            {
-	
-	                // 全員がダウンロード完了しているならばスタート可能.
-	                if (MBP_IsBootableAll())
-	                {
-	                    // ブート開始
-	                    MBP_StartRebootAll();
-	                }
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // リブート処理
-	        case MBP_STATE_REBOOTING:
-	            {
-					if( isChangeState == TRUE ){
-						DLPlayFunc_PutString( "Rebooting now",dlData->msgSys_); 
-					}
-	                //BgSetMessage(PLTT_WHITE, " Rebooting now                ");
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // 再接続処理
-	        case MBP_STATE_COMPLETE:
-	            {
-					if( isChangeState == TRUE ){
-						DLPlayFunc_PutString( "Reconnecting now",dlData->msgSys_); 
-					}
-	                // 全員無事に接続完了したらマルチブート処理は終了し
-	                // 通常の親機として無線を再起動する。
-	                //BgSetMessage(PLTT_WHITE, " Reconnecting now             ");
-	
-	                OS_WaitVBlankIntr();
-					dlData->mainSeq_ = DSS_START_SHARE;
-	                //return DPM_DATA_SHARE;
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // エラー発生
-	        case MBP_STATE_ERROR:
-	            {
-	                // 通信をキャンセルする
-	                MBP_Cancel();
-	            }
-	            break;
-	
-	            //-----------------------------------------
-	            // 通信キャンセル処理中
-	        case MBP_STATE_CANCEL:
-	            // None
-	            break;
-	
-	            //-----------------------------------------
-	            // 通信異常終了
-	        case MBP_STATE_STOP:
-#ifdef MBP_USING_MB_EX
-				/*
-	            switch (WH_GetSystemState())
-	            {
-	            case WH_SYSSTATE_IDLE:
-	                (void)WH_End();
-	                break;
-	            case WH_SYSSTATE_BUSY:
-	                break;
-	            case WH_SYSSTATE_STOP:
-	                return FALSE;
-	            default:
-	                OS_Panic("illegal state\n");
-	            }
-				*/
-				break;
-#else
-	            return FALSE;
-#endif
-	        }
-	
-	        // 子機状態を表示する
-	        //PrintChildState();
-	    }
+		DLPlaySend_MBPLoop( dlData );
+		//↑この中でmainSeqを変えてる
 		break;
+
 	case DSS_START_SHARE:
 		DLPlayComm_InitParent( dlData->commSys_ );
 		DLPlayFunc_PutString( "Wait child......",dlData->msgSys_); 
@@ -290,56 +157,195 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		break;
 
 	case DSS_WAIT_CHILD:
-		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
-			DLPlayComm_Send_ConnectSign( dlData->commSys_ );
+		if ( DLPlayComm_IsConnect( dlData->commSys_ ) == TRUE ){
+			DLPlayFunc_PutString( "Child connect.",dlData->msgSys_); 
+			dlData->mainSeq_ = DSS_WAIT_INDEX_DATA;
 		}
 		break;
 
-	
+	case DSS_WAIT_INDEX_DATA:
+		if(	DLPlayComm_IsPostIndex( dlData->commSys_ ) == TRUE ){
+			DLPlayFunc_PutString( "Post box index data complete.",dlData->msgSys_); 
+			return DPM_SELECT_BOX;
+		}
+		break;
 	}
 	return DPM_SEND_IMAGE;
-	
-#if 0
-	static u16 val = 0;
-	char str[32];
-	val++;
-	sprintf(str,"No.%d",val);
+}
 
-	if( val%60 == 0 )
-		DLPlayFunc_PutString( str , dlData->msgSys_ );
-	return DPM_SEND_IMAGE;
+static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
+{
+
+	const u16 mbpState = MBP_GetState();
+	BOOL isChangeState = FALSE;
+	if( mbpState != dlData->subSeq_ ){
+		isChangeState = TRUE;
+		dlData->subSeq_ = mbpState;
+	}
+	//以下サンプル流用
+	switch (MBP_GetState())
+	{
+		//-----------------------------------------
+		// アイドル状態
+	case MBP_STATE_IDLE:
+		{
+			u16 test = WM_GetAllowedChannel();
+			ARI_TPrintf("[%d][%x]\n",test,test);
+			MBP_Start(&mbGameList, 1 /*通信チャンネルsChannel*/);
+			/* ユーザ定義データの送信テスト */
+			MB_SetSendVolatCallback(OnPreSendMBVolat, MB_SEND_VOLAT_CALLBACK_TIMMING_BEFORE);
+		}
+		break;
+
+		//-----------------------------------------
+		// 子機からのエントリー受付中
+	case MBP_STATE_ENTRY:
+		{
+			if( isChangeState == TRUE ){
+				DLPlayFunc_PutString( "Now Accepting",dlData->msgSys_); 
+			}
+			//BgSetMessage(PLTT_WHITE, " Now Accepting			");
+
+			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+			{
+				// Bボタンでマルチブートキャンセル
+				MBP_Cancel();
+				break;
+			}
+
+			// エントリー中の子機が一台でも存在すれば開始可能とする
+			if (MBP_GetChildBmp(MBP_BMPTYPE_ENTRY) ||
+				MBP_GetChildBmp(MBP_BMPTYPE_DOWNLOADING) ||
+				MBP_GetChildBmp(MBP_BMPTYPE_BOOTABLE))
+			{
+				//if( isChangeState == TRUE ){
+					DLPlayFunc_PutString( "Find child. send RomImage start.",dlData->msgSys_); 
+				//}
+				//BgSetMessage(PLTT_WHITE, " Push START Button to start   ");
+				//子機が来たらとりあえず始めてしまう
+				//if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+				{
+					// ダウンロード開始
+					MBP_StartDownloadAll();
+				}
+			}
+		}
+		break;
+
+		//-----------------------------------------
+		// プログラム配信処理
+	case MBP_STATE_DATASENDING:
+		{
+
+			// 全員がダウンロード完了しているならばスタート可能.
+			if (MBP_IsBootableAll())
+			{
+				// ブート開始
+				MBP_StartRebootAll();
+			}
+		}
+		break;
+
+		//-----------------------------------------
+		// リブート処理
+	case MBP_STATE_REBOOTING:
+		{
+			if( isChangeState == TRUE ){
+				DLPlayFunc_PutString( "Rebooting now",dlData->msgSys_); 
+			}
+			//BgSetMessage(PLTT_WHITE, " Rebooting now				");
+		}
+		break;
+
+		//-----------------------------------------
+		// 再接続処理
+	case MBP_STATE_COMPLETE:
+		{
+			if( isChangeState == TRUE ){
+				DLPlayFunc_PutString( "Reconnecting now",dlData->msgSys_); 
+			}
+			// 全員無事に接続完了したらマルチブート処理は終了し
+			// 通常の親機として無線を再起動する。
+			//BgSetMessage(PLTT_WHITE, " Reconnecting now			 ");
+
+			OS_WaitVBlankIntr();
+			dlData->mainSeq_ = DSS_START_SHARE;
+			//return DPM_DATA_SHARE;
+		}
+		break;
+
+		//-----------------------------------------
+		// エラー発生
+	case MBP_STATE_ERROR:
+		{
+			// 通信をキャンセルする
+			MBP_Cancel();
+		}
+		break;
+
+		//-----------------------------------------
+		// 通信キャンセル処理中
+	case MBP_STATE_CANCEL:
+		// None
+		break;
+
+		//-----------------------------------------
+		// 通信異常終了
+	case MBP_STATE_STOP:
+#ifdef MBP_USING_MB_EX
+		/*
+		switch (WH_GetSystemState())
+		{
+		case WH_SYSSTATE_IDLE:
+			(void)WH_End();
+			break;
+		case WH_SYSSTATE_BUSY:
+			break;
+		case WH_SYSSTATE_STOP:
+			return FALSE;
+		default:
+			OS_Panic("illegal state\n");
+		}
+		*/
+		break;
+#else
+		return FALSE;
 #endif
-	
+	}
+
+	// 子機状態を表示する
+	//PrintChildState();
+	return TRUE;
 }
 
 
 /*---------------------------------------------------------------------------*
-  Name:         OnPreSendMBVolat
+  Name:		 OnPreSendMBVolat
 
   Description:  親機がMBビーコンを送信する前に通知されるコールバック関数
 
-  Arguments:    ggid    送信するゲーム情報のGGID.
+  Arguments:	ggid	送信するゲーム情報のGGID.
 
-  Returns:      None.
+  Returns:	  None.
  *---------------------------------------------------------------------------*/
 static void OnPreSendMBVolat(u32 ggid)
 {
-    /*
-     * 複数のゲームを登録し個々のゲームごとに設定値を切り替える場合は
-     * 以下のように引数の ggid でゲーム情報を判定します.
-     */
-    if (ggid == mbGameList.ggid)
-    {
-        /*
-         * 送信可能なユーザ定義データは最大 8 BYTE です.
-         * この例ではインクリメンタルな 64bit 値を送信しています.
-         * 動的に更新されたデータ内容を、子機側では必ずしもただちに
-         * 受信できるわけではないという点に注意してください.
-         */
-        static u64 count ATTRIBUTE_ALIGN(8);
-        SDK_COMPILER_ASSERT(sizeof(count) <= MB_USER_VOLAT_DATA_SIZE);
-        SDK_COMPILER_ASSERT(MB_USER_VOLAT_DATA_SIZE == 8);
-        ++count;
-        MB_SetUserVolatData(ggid, (u8 *)&count, sizeof(count));
-    }
+	/*
+	 * 複数のゲームを登録し個々のゲームごとに設定値を切り替える場合は
+	 * 以下のように引数の ggid でゲーム情報を判定します.
+	 */
+	if (ggid == mbGameList.ggid)
+	{
+		/*
+		 * 送信可能なユーザ定義データは最大 8 BYTE です.
+		 * この例ではインクリメンタルな 64bit 値を送信しています.
+		 * 動的に更新されたデータ内容を、子機側では必ずしもただちに
+		 * 受信できるわけではないという点に注意してください.
+		 */
+		static u64 count ATTRIBUTE_ALIGN(8);
+		SDK_COMPILER_ASSERT(sizeof(count) <= MB_USER_VOLAT_DATA_SIZE);
+		SDK_COMPILER_ASSERT(MB_USER_VOLAT_DATA_SIZE == 8);
+		++count;
+		MB_SetUserVolatData(ggid, (u8 *)&count, sizeof(count));
+	}
 }

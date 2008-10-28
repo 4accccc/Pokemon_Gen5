@@ -91,7 +91,7 @@ static	void	SkeltonVBlankFunc(void)
 }
 
 
-#include "src/ohno/fatal_error.h"
+#include "src/ohno/dl_fatal_error.h"
 //------------------------------------------------------------------
 /**
  * @brief		ƒQ[ƒ€‚²‚Æ‚Ì‰Šú‰»ˆ—

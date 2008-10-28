@@ -14,4 +14,6 @@
 extern BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data );
 extern BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data );
 
+extern void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idxData );
+
 #endif //DLPLAY_CHILD_PT_H__

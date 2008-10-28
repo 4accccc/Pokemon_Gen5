@@ -139,7 +139,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 		}
 		break;
 
-	case DPM_DATA_SHARE:
+	case DPM_SELECT_BOX:
 		break;
 	
 	case DPM_ERROR:

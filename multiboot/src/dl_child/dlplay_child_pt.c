@@ -20,6 +20,7 @@
 #include "dlplay_child_common.h"
 
 #include "pt_save.dat"	//dlplay_child_pt.c 以外で読むな
+#include "dp_save.dat"	//dlplay_child_pt.c 以外で読むな
 
 #define PT_SAVE_SIZE (SECTOR_SIZE * SECTOR_MAX)
 //======================================================================
@@ -40,7 +41,11 @@
 
 BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data );
+void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idxData );
+
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id );
+u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id );
+u32		DLPlayData_DPPT_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type );
 
 void	PT_CalcTool_Decoded(void *data,u32 size,u32 code);
 void	PT_CalcTool_Coded(void *data,u32 size,u32 code);
@@ -49,27 +54,33 @@ static	u16	PT_PokeParaCheckSum(void *data,u32	size);
 static	void	*PokeParaAdrsGet(PT_POKEMON_PARAM *ppp,u32 rnd,u8 id);
 void	PokePasoParaInit(PT_POKEMON_PARAM *ppp);
 
+const u32 DLPlayData_GetSavedataSize( const DLPLAY_CARD_TYPE type );
+const u32 DLPlayData_GetBoxDataSize( const DLPLAY_CARD_TYPE type );
+const u32 DLPlayData_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type );
+
+
 //	データの読み込み
 BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 {
+	const u32 saveSize = DLPlayData_GetSavedataSize( d_data->cardType_ );
 	switch( d_data->subSeq_ )
 	{
 	case 0:	//初期化およびデータ読み込み
 		{
-
+#if DLPLAY_FUNC_USE_PRINT
 		char str[256];
-		sprintf(str,"Start load data with PT size:[%d]",PT_SAVE_SIZE);
+		sprintf(str,"Start load data. size:[%d]", saveSize );
 		DLPlayFunc_PutString(str,d_data->msgSys_ );
-
-		d_data->pData_		= GFL_HEAP_AllocClearMemory(  d_data->heapID_, PT_SAVE_SIZE );
-		d_data->pDataMirror_= GFL_HEAP_AllocClearMemory(  d_data->heapID_, PT_SAVE_SIZE );
+#endif
+		d_data->pData_		= GFL_HEAP_AllocClearMemory(  d_data->heapID_, saveSize );
+		d_data->pDataMirror_= GFL_HEAP_AllocClearMemory(  d_data->heapID_, saveSize );
 	
 		d_data->lockID_ = OS_GetLockID();
 		GF_ASSERT( d_data->lockID_ != OS_LOCK_ID_ERROR );
 		//プラチナは4MBフラッシュ
 		CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
 		CARD_LockBackup( (u16)d_data->lockID_ );
-		CARD_ReadFlashAsync( 0x0000 , d_data->pData_ , PT_SAVE_SIZE , NULL , NULL );
+		CARD_ReadFlashAsync( 0x0000 , d_data->pData_ , saveSize , NULL , NULL );
 		d_data->subSeq_++;
 		}
 		break;
@@ -78,9 +89,10 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 		if( CARD_TryWaitBackupAsync() == TRUE )
 		{
 			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
-			DLPlayFunc_PutString("Data1 load complete.",d_data->msgSys_ );
-			CARD_ReadFlashAsync( 0x40000 , d_data->pDataMirror_ ,PT_SAVE_SIZE, NULL , NULL );
+			CARD_ReadFlashAsync( 0x40000 , d_data->pDataMirror_ , saveSize , NULL , NULL );
 			d_data->subSeq_++;
+			
+			DLPlayFunc_PutString("Data1 load complete.",d_data->msgSys_ );
 		}
 
 		break;
@@ -88,37 +100,25 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 		if( CARD_TryWaitBackupAsync() == TRUE )
 		{
 			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
-			DLPlayFunc_PutString("Data2 load complete.",d_data->msgSys_ );
 			CARD_UnlockBackup( (u16)d_data->lockID_ );
 			OS_ReleaseLockID( (u16)d_data->lockID_ );
-			/*
-			{
-				//ここからCRCチェック
-				const u16 crc1 = MATH_CalcCRC16CCITT( &d_data->crcTable_ , d_data->pData_ , PT_SAVE_SIZE );
-				const u16 crc2 = MATH_CalcCRC16CCITT( &d_data->crcTable_ , d_data->pDataMirror_ , PT_SAVE_SIZE );
-
-				{
-					char str[128];
-					sprintf(str,"Check crc [%d][%d]",crc1,crc2);
-					DLPlayFunc_PutString(str,d_data->msgSys_);
-				}
-			//	GF_ASSERT(crc1==crc2);
-			}
-			*/
 			d_data->subSeq_++;
+			
+			DLPlayFunc_PutString("Data2 load complete.",d_data->msgSys_ );
 		}
 		break;
 	case 3:	//各ブロックのCRCチェック
 		{
+			//おそらくGSでは処理が変わる
 			//各ブロックのCRCをチェック(一応通常データも見ておく
 			u8 i;
 			BOOL isCorrect[4];	//データ成否チェック
-			const u32 boxStartAdd = DLPlayData_PT_GetStartAddress(GMDATA_ID_BOXDATA);
+			const u32 boxStartAdd = DLPlayData_DPPT_GetStartAddress(GMDATA_ID_BOXDATA , d_data->cardType_ );
 			SAVE_FOOTER *footer[4];
-			footer[0] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_NORMAL_FOTTER) ];
-			footer[1] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
-			footer[2] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_NORMAL_FOTTER) ];
-			footer[3] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
+			footer[0] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_DPPT_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[1] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_DPPT_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[2] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_DPPT_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[3] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_DPPT_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
 #if DEB_ARI
 			for( i=0;i<4;i++ ){
 				OS_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
@@ -191,82 +191,11 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 		break;
 	
  	case 4:	//BOXの解析(本当は親でやる？
-		{
-			u8 i;
-			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
-			char name_str[256];
-			u8 num=0;
-			//暗号化解除→名前変換→４つずつ表示
-			OS_TPrintf("BOX curr[%d]\n",pBox->currentTrayNumber);
-
-			OS_TPrintf("POKEMON PARAM DECODE!!!\n");
-			for( i=0;i<BOX_MAX_POS;i++ )
-			{
-				PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
-				u16 sum;
-				PT_CalcTool_Decoded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
-				sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
-				OS_TPrintf("[%2d] sum[%5d][%5d] ",i,sum ,param->checksum);
-				{
-					POKEMON_PASO_PARAM1	*ppp1 = (POKEMON_PASO_PARAM1 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA1);
-					POKEMON_PASO_PARAM2	*ppp2 = (POKEMON_PASO_PARAM2 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA2);
-					POKEMON_PASO_PARAM3	*ppp3 = (POKEMON_PASO_PARAM3 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA3);
-					POKEMON_PASO_PARAM4	*ppp4 = (POKEMON_PASO_PARAM4 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA4);
-					if( ppp1->monsno == 0 ){
-						OS_TPrintf("None ");
-					}
-					else{
-						//名前変換テスト
-						u16 str[MONS_NAME_SIZE+EOM_SIZE];
-						char s_str[(MONS_NAME_SIZE+EOM_SIZE)*2];
-						char s_str_work[(MONS_NAME_SIZE+EOM_SIZE)*2];
-						int j,s_len=(MONS_NAME_SIZE+EOM_SIZE)*2;
-						OS_TPrintf("id[%3d] name:",ppp1->monsno);
-						for( j=0;j<MONS_NAME_SIZE+EOM_SIZE;j++ )
-						{
-							u16 idx;
-							if( ppp3->nickname[j] == 0xffff ){
-								str[j] = 0x0000;
-								break;
-							}
-							for( idx=0;idx<PT_STR_ARR_NUM;idx++ ){
-								if( ppp3->nickname[j] == PT_STR_ARR[idx][1] ){
-									str[j] = PT_STR_ARR[idx][0];
-									break;
-								}
-							}
-							if( idx == PT_STR_ARR_NUM ){
-								//該当文字なし
-								str[j] = 0x0000;
-								break;
-							}
-							//OS_TPrintf("%2x:",ppp3->nickname[j]);
-						}
-						STD_ConvertStringUnicodeToSjis( s_str , &s_len , str , &j , NULL );
-						s_str[s_len] = '\0';
-						sprintf(s_str_work,"[%12s]",s_str);
-						strcat(name_str,s_str_work);
-						num++;
-					}
-				}
-				if( num==4 || i==BOX_MAX_POS-1 ){
-					num=0;
-					DLPlayFunc_PutString( name_str , d_data->msgSys_ );
-					name_str[0] = '\0';
-				}
-
-				OS_TPrintf("\n");
-			}
-		}
-		DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
-		DLPlayFunc_PutString("Press A button to start save.",d_data->msgSys_ );
 		d_data->subSeq_++;
 		break;
 	case 5:
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
-			d_data->subSeq_ = 0;
-			return TRUE;
-		}
+		d_data->subSeq_ = 0;
+		return TRUE;
 		break;
 	}
 	return FALSE;
@@ -310,10 +239,10 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			const u32 boxStartAdd = DLPlayData_PT_GetStartAddress(GMDATA_ID_BOXDATA);
 			SAVE_FOOTER *footer;
 			if( d_data->savePos_ == DDS_FIRST ){
-				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
+				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOOTER) ];
 			}
 			else{
-				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOTTER) ];
+				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOOTER) ];
 			}
 			footer->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, footer->size - sizeof(SAVE_FOOTER) );
 			
@@ -345,6 +274,58 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 	return FALSE;
 }
 
+void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idxData )
+{
+	u8 i,bi;
+	PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
+	char name_str[256];
+	u8 num=0;
+	//暗号化解除→名前変換→４つずつ表示
+	OS_TPrintf("BOX curr[%d]\n",pBox->currentTrayNumber);
+
+	OS_TPrintf("POKEMON PARAM DECODE!!!\n");
+	for( bi=0;bi<BOX_MAX_TRAY;bi++)
+	{
+		for( i=0;i<BOX_MAX_POS;i++ )
+		{
+			DLPLAY_MONS_INDEX *pokeData = &idxData->pokeData_[bi][i];
+			PT_POKEMON_PARAM *param = &pBox->ppp[bi][i];
+			u16 sum;
+			PT_CalcTool_Decoded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
+			sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
+			//FIXME:サムチェエエエック
+			OS_TPrintf("[%2d-%2d] sum[%5d][%5d] ",bi,i,sum ,param->checksum);
+			{
+				POKEMON_PASO_PARAM1	*ppp1 = (POKEMON_PASO_PARAM1 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA1);
+				POKEMON_PASO_PARAM2	*ppp2 = (POKEMON_PASO_PARAM2 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA2);
+				POKEMON_PASO_PARAM3	*ppp3 = (POKEMON_PASO_PARAM3 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA3);
+				POKEMON_PASO_PARAM4	*ppp4 = (POKEMON_PASO_PARAM4 *)PokeParaAdrsGet(param,param->personal_rnd,ID_POKEPARA4);
+				if( ppp1->monsno == 0 ){
+					pokeData->name_[0] = 0xffff;
+					pokeData->pokeNo_ = 0;
+					pokeData->lv_ = 0;
+					pokeData->sex_ = 0;
+					pokeData->form_ = 0;
+					pokeData->color_ = 0;
+					OS_TPrintf("None\n");
+				}
+				else
+				{
+					pokeData->pokeNo_	= ppp1->monsno;
+					pokeData->lv_		= 0;//FIXME
+					pokeData->sex_		= ppp2->sex;
+					pokeData->form_		= ppp2->form_no;
+					pokeData->color_	= 0;//FIXME
+					DLPlayFunc_DPTStrCode_To_UTF16( ppp3->nickname , pokeData->name_ , MONS_NAME_SIZE+EOM_SIZE );
+					OS_TPrintf("No[%3d]\n",ppp1->monsno);
+				}
+			}
+		}
+	}
+	DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
+
+}
+
 //各データブロックの開始位置を求める。PTと違ってフッタも一つのブロックとして計算する
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id )
 {
@@ -356,6 +337,33 @@ u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id )
 	return temp;
 }
 
+//各データブロックの開始位置を求める。PTと違ってフッタも一つのブロックとして計算する
+u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id )
+{
+	u32 temp = 0;
+	u8 i;
+	//EMAIL以降になるとPT専用のIDが2個入っているので、ここで調整
+	PT_GMDATA_ID max = id;
+	if( max >= GMDATA_ID_EMAIL ){ max-=2; }
+	for( i=0;i<max;i++ ){
+		temp += DLPLAY_DP_SAVESIZETABLE[i];
+	}
+	return temp;
+}
+
+//ダイパプラチナで共通化するための関数
+u32		DLPlayData_DPPT_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type )
+{
+	if( type == CARD_TYPE_DP ){
+		return DLPlayData_DP_GetStartAddress( id );
+	}
+	else if( type == CARD_TYPE_PT ){
+		return DLPlayData_PT_GetStartAddress( id );
+	}
+	
+	GF_ASSERT( NULL );
+	return 0;
+}
 
 //パラメータ暗号化系
 //============================================================================================
@@ -373,6 +381,7 @@ void	PT_CalcTool_Coded(void *data,u32 size,u32 code)
 	u16	*data_p=(u16 *)data;
 
 	//暗号は、乱数暗号キーでマスク
+
 	for(i=0;i<size/2;i++){
 		data_p[i]^=PT_CodeRand(&code);
 	}
@@ -933,5 +942,51 @@ void	PokePasoParaInit(PT_POKEMON_PARAM *ppp)
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+//	各種ROMごとの数値取得関数
+//////////////////////////////////////////////////////////////////////////////////////////////
+const u32 DLPlayData_GetSavedataSize( const DLPLAY_CARD_TYPE type )
+{
+	GF_ASSERT( type < CARD_TYPE_INVALID );
+	{
+		const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , PT_SAVE_SIZE };
+		return sizeArr[type];
+	}
+}
 
+const u32 DLPlayData_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
+{
+	GF_ASSERT( type < CARD_TYPE_INVALID );
+	switch( type )
+	{
+	case CARD_TYPE_DP:
+		return DLPlayData_PT_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		break;
+	case CARD_TYPE_PT:
+		return DLPlayData_DP_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		break;
+	case CARD_TYPE_GS:
+		return 0;
+		break;
+	}
+	return 0;
+}
+
+const u32 DLPlayData_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
+{
+	GF_ASSERT( type < CARD_TYPE_INVALID );
+	switch( type )
+	{
+	case CARD_TYPE_DP:
+		return DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		break;
+	case CARD_TYPE_PT:
+		return DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		break;
+	case CARD_TYPE_GS:
+		return 0;
+		break;
+	}
+	return 0;
+}
 
