@@ -17,6 +17,19 @@
 
 .PHONY : gflib installsrl
 
+
+#MAKE環境設定ファイルの読み込み
+MAKE_ENV_FILE	=	make.env
+include		$(MAKE_ENV_FILE)
+
+ifeq	($(MULTI_BOOT_MAKE),yes)
+MACRO_FLAGS	+=	-DMULTI_BOOT_MAKE
+endif
+
+LINCLUDES	=	./include \
+				./arc
+
+
 # GF-Library
 GFLIB_DIR		=	../lib/gflib
 LINCLUDES		= 	$(GFLIB_DIR)/include
@@ -82,15 +95,19 @@ SAMPLE_GRADIR = src/sample_graphic/
 SAMPLE_SNDDIR = src/sample_sound/
 SAMPLE_MBRDIR = src/sample_multi_boot_rom/
 
-FILE_TREE	=	$(GFLIBGRADIR)utility.bin \
-			$(GFLIBGRADIR)wmi.narc \
-			$(GFLIBGRADIR)gfl_font.dat \
-			$(SAMPLE_GRADIR)*.narc \
+#FILE_TREE	=	$(GFLIBGRADIR)utility.bin \
+#			$(GFLIBGRADIR)wmi.narc \
+#			$(GFLIBGRADIR)gfl_font.dat \
+#			$(SAMPLE_GRADIR)*.narc \
 			  
 #ロムファイルシステムのルートディレクトリ指定
 MAKEROM_ROMROOT  = ./
 
-MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
+##MAKEROM_ROMFILES = $(subst ,,$(FILE_TREE))
+
+-include arc/file_tree.inc
+EDEPENDS_BIN += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
+
 
 #----------------------------------------------------------------------------
 #	ロムスペックファイル読み込みのため追加
@@ -114,8 +131,8 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #----------------------------------------------------------------------------
 #include	$(NITRODWC_ROOT)/build/buildtools/commondefs
 #include	$(NITRODWC_ROOT)/build/buildtools/modulerules
-include	$(NITROVCT_ROOT)/build/buildtools/commondefs
-include	$(NITROVCT_ROOT)/build/buildtools/modulerules
+#include	$(NITROVCT_ROOT)/build/buildtools/commondefs
+#include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした
@@ -130,13 +147,34 @@ overlay/main.lsf:	make_prog_files
 overlay/overlay_files:	make_prog_files
 	ruby overlay/overlaytool.rb
 
-#--------------------------------------- ----------------------------
-do-build:		$(TARGETS)
 
-#-----
-#  gflibをmakeする
-gflib:
-	$(MAKE) -C $(GFLIB_DIR)
+#マルチブート対応のMAKEをするかどうかをフラグで判定
+
+#ワイルドカードで指定されているファイル名を展開しておく
+#MAKEROM_MB:=$(wildcard $(GFL_MAKEROM_ROMFILES))
+#EXT_OBJS+=$(wildcard $(GFL_MAKEROM_ROMFILES:.narc=.o))
+
+#----------------------------------------------------------------------------
+#	.narcから.oを生成するためのファイルツリー作成
+#----------------------------------------------------------------------------
+MAKEROM_MB = $(patsubst %, arc/%, $(GAME_FILE_TREE))
+
+#----------------------------------------------------------------------------
+#	.narcから.oを生成
+#----------------------------------------------------------------------------
+#do-build: $(MAKEROM_MB:.narc=.o)
+%.o	: %.narc
+	$(BIN2OBJ) -b _start_%b -e _end_%b $< $*.o
+	touch -c makefile
+
+#----------------------------------------------------------------------------
+#	.narcから生成された.oをリンクに含めるための記述
+#----------------------------------------------------------------------------
+EXT_OBJS += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
+
+
+#--------------------------------------- ----------------------------
+do-build: $(MAKEROM_MB:.narc=.o) $(TARGETS)
 
 
 #----------------------------------------------------------------------------
@@ -146,6 +184,9 @@ source:
 	-$(RM) $(DEPENDDIR)/*.d
 	$(MAKE)
 
+#----------------------------------------------------------------------------
+#	子機srlを親機側に移動
+#----------------------------------------------------------------------------
 
 installsrl:
 	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
