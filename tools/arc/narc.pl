@@ -113,7 +113,7 @@ sub FileWrite{
 
 #マルチブート対応テーブル作成
 	if( @ARGV[MB_FLAG] =~ m/^yes/i ){
-		print ARC_TREE	"\t@arc_data[$file_num]";
+		print ARC_TREE	"\t$file";
 	}
 	else{
 		print ARC_TREE	"\t$tree";
