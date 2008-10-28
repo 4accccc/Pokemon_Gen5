@@ -4,6 +4,7 @@
 #include "MainForm.h"
 
 using namespace PokeIRC;
+using namespace System::Threading;
 
 [STAThreadAttribute]
 int main(array<System::String ^> ^args)
@@ -13,6 +14,15 @@ int main(array<System::String ^> ^args)
 	Application::SetCompatibleTextRenderingDefault(false); 
 
 	// メイン ウィンドウを作成して、実行します認証
-	Application::Run(gcnew MainForm());
+	//Application::Run(gcnew MainForm());
+
+	MainForm^ form = gcnew MainForm();
+
+	form->Show();
+
+	while( form->Created ){
+		Thread::Sleep( 10 );
+		Application::DoEvents();
+	}
 	return 0;
 }

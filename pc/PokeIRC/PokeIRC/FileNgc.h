@@ -98,6 +98,7 @@ namespace PokeIRC {
 		void setNCLHandle(FileNCLRead^ ncl);
 		String^ getNCLName(void);
 		void Write1Char(PictureBox^ pict,Bitmap^ bmp, int dotNo, int palNo,int XOf, int YOf);
+		Bitmap^ PictureWriteOffset(Bitmap^ bmp,PictureBox^ pict, int xini, int yini ,int width, int height);
 
 
 	private:

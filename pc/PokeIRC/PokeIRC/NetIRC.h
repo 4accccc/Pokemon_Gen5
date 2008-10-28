@@ -50,7 +50,7 @@ namespace PokeIRC {
 	private:
 
 		static bool isEmulate;
-	static const unsigned long long TEST_KEY = 0x100000000UL;
+		static const unsigned long long TEST_KEY = 0x100000000UL;
 
 
 		static bool isSend;
@@ -58,6 +58,7 @@ namespace PokeIRC {
 
 		static int URLNo;
 		static String^ s_currentProxy;
+		static u8 SendValue;   //通信コマンド
 
 
 	public:
@@ -66,7 +67,7 @@ namespace PokeIRC {
 		static void draw(Form^ fm);
 		static void connect(void);
 		static void shutdown(void);
-		static bool sendData(void);
+		static bool sendData(u8 value);
 		static bool SendLoop(void);
 		static array<unsigned char>^ dataArray;
 		static array<unsigned char>^ recvdataArray;

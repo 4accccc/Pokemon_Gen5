@@ -316,6 +316,38 @@ Bitmap^ FileNCGRead::PictureWrite(PictureBox^ pict)
 	return bmp;
 }
 
+//--------------------------------------------------------------
+/**
+ * PictureBox‚É”½‰f
+ * @param   filename
+ * @retval  StreamReader^
+ */
+//--------------------------------------------------------------
+
+Bitmap^ FileNCGRead::PictureWriteOffset(Bitmap^ bmp, PictureBox^ pict, int xini, int yini ,int width, int height)
+{
+	//Bitmap^ bmp = gcnew Bitmap(ngcData->CharWidth * 16, ngcData->CharHeight * 16);
+
+	int dotNo = 0;
+	int attrIndex=0;
+	for(unsigned int YOf = 0; YOf < ngcData->CharHeight; YOf++){
+		for(unsigned int XOf = 0; XOf < ngcData->CharWidth; XOf++){
+			int palNo = ngcAttr->AttrData[attrIndex];
+			attrIndex++;
+			if(YOf < width && XOf < height){
+				Write1Char(pict, bmp, dotNo, palNo, XOf+xini, YOf+yini);
+			}
+			dotNo+=64;
+		}
+	}
+	//pict->Image = bmp;
+	pict->Size.Width = ngcData->CharWidth * 16;
+	pict->Size.Height = ngcData->CharHeight * 16;
+
+	
+	return bmp;
+}
+
 
 //--------------------------------------------------------------
 /**

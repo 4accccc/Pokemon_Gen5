@@ -31,6 +31,8 @@ using namespace System::Threading;
 #define COMMAND_SNDV (3)
 #define COMMAND_SNDE (9)
 
+
+
 //--------------------------------------------------------------
 /**
  * @breif   コールバック
@@ -50,7 +52,7 @@ static void callback(u8 *data, u8 size, u8 command, u8 value)
 	unsigned char data_up[64]={0};
 
 	switch(command){
-	case 0x02: // センダー は2を受け取る
+	case 0x02: // センダーは2を受け取る
 		IRC_Send((u8*)data_up, 64, 0x04, (u8)1);
 		break;
 	case 0x04: // レシーバー は4を受け取る
@@ -168,11 +170,12 @@ void NetIRC::shutdown(void)
  * @retval  none
  */
 //--------------------------------------------------------------
-bool NetIRC::sendData(void)
+bool NetIRC::sendData(u8 value)
 {
 	if(isDataSend){
 		return false;
 	}
+	SendValue = value;
 	isDataSend = true;
 	connect();
 	return true;
@@ -199,9 +202,9 @@ bool NetIRC::SendLoop(void)
 	int length = dataArray->GetLength(0);
 
 	pin_ptr<unsigned char> wptr = &dataArray[0];
-
-	if(length > SENDBYTE_TEST){
-		IRC_Send(wptr, SENDBYTE_TEST, COMMAND_SND, COMMAND_SNDV);
+ 
+	if(length > SENDBYTE_TEST){  //でかい時はSendValue
+		IRC_Send(wptr, SENDBYTE_TEST, COMMAND_SND, SendValue);
 		array<unsigned char>^ dummyArray = {};
 		Array::Resize(dummyArray,length-SENDBYTE_TEST);
 		Array::ConstrainedCopy(dataArray,SENDBYTE_TEST,dummyArray,0,length-SENDBYTE_TEST);
@@ -209,7 +212,7 @@ bool NetIRC::SendLoop(void)
 		dataArray = dummyArray;
 	}
 	else{
-		IRC_Send(wptr, length, COMMAND_SND, COMMAND_SNDE);
+		IRC_Send(wptr, length, COMMAND_SND, SendValue+1);  //送れる時はSendValue+1
 		isDataSend=false;
 	}
 	Debug::WriteLine("snd送信"+length);
@@ -358,6 +361,13 @@ void NetIRC::RequestPickupTraded(void)
 	return ;
 }
 
+//--------------------------------------------------------------
+/**
+ * @breif   ぽけもんをさがす
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
 
 void NetIRC::RequestDownload(void)
 {
@@ -512,11 +522,9 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 
 void NetIRC::_resultSend(int value)
 {
-	NetIRC::dataArray = gcnew array<unsigned char>(3);
-	NetIRC::dataArray[0] = 'R';
-	NetIRC::dataArray[1] = 'T';
-	NetIRC::dataArray[2] = (unsigned char)value;
-	NetIRC::sendData();
+	NetIRC::dataArray = gcnew array<unsigned char>(1);
+	NetIRC::dataArray[0] = (unsigned char)value;
+	NetIRC::sendData('R');
 }
 
 

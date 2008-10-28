@@ -63,7 +63,7 @@ System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System:
 System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e)
 {
 	NetIRC::Init();
-//	webBrowser1->Url= gcnew Uri("http://www.gamefreak.co.jp/");
+	webBrowser1->Url= gcnew Uri("http://wb.gamefreak.co.jp/ando/world/index.php");
 
 
 	//ウェブブラウザとのリンクテスト
@@ -78,7 +78,7 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 	//
     // Uncomment the following line when you are finished debugging.
     //webBrowser1->ScriptErrorsSuppressed = true;
-
+/*
     webBrowser1->DocumentText =
            "<html><head><script>" +
             "function test3(message) { alert(message); }" +
@@ -86,8 +86,28 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
             "onclick=\"window.external.CallProg('called from script code')\">" +
             "このボタンを押すとサウンド転送プログラムをよびます</button>" +
             "</body></html>";
-
+*/
 	webBrowser1->Show();
+	pictureBox1->Hide();
+
+
+	this->Width = 10 * 8 * 6 + 10;
+	this->Height = 10 * 8 * 6 + 30;
+
+//	button1->Hide();
+//	button2->Hide();
+//	button3->Hide();
+	splitContainer1->Panel1->Hide();
+
+	splitContainer1->SplitterDistance = 0;  //最初ボタンは見せない
+
+	{
+		putPoke = gcnew array<int>(POKMEON_BOX_NUM);
+		int i;
+		for(i=0;i < POKMEON_BOX_NUM;i++){
+			putPoke[i]=i+101;
+		}
+	}
 
 
 
@@ -147,7 +167,7 @@ System::Void MainForm::sendDataDToolStripMenuItem_Click(System::Object^  sender,
 		{
 			userReader = gcnew BinaryReader(myStream);
 			NetIRC::dataArray = userReader->ReadBytes((int)myStream->Length);
-			NetIRC::sendData();
+			NetIRC::sendData('A');
 			myStream->Close();
 		}
 	}
@@ -519,10 +539,9 @@ System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, 
 
 System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	NetIRC::dataArray = gcnew array<unsigned char>(2);
+	NetIRC::dataArray = gcnew array<unsigned char>(1);
 	NetIRC::dataArray[0] = 'W';
-	NetIRC::dataArray[1] = 'B';
-	NetIRC::sendData();
+	NetIRC::sendData('W');
 }
 
 //--------------------------------------------------------------
@@ -535,8 +554,56 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 
 void MainForm::CallProg(String^ message)
 {
-	MessageBox::Show(message, "client code");
+	if(message =="PokeSend"){
+		pokemonListDisp();
+	}
+	else{
+		MessageBox::Show(message, "client code");
+	}
+
 }
+
+void MainForm::pokemonListDisp(void)
+{
+
+	array<int>^ putPoke = gcnew array<int>(POKMEON_BOX_NUM);
+	int i;
+
+
+	for(i=0;i < POKMEON_BOX_NUM;i++){
+		putPoke[i]=i+101;
+	}
+
+	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
+
+	for(i=0;i < POKMEON_BOX_NUM;i++){
+		if(putPoke[i]==0){
+			continue;
+		}
+		int no = PokeGraNoTable[putPoke[i]].no;
+
+		String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
+		String^ ncgname = dirname + "pmpl_" + no.ToString("000") + "_frnt_m.ncg";
+		String^ nclname = dirname + "pmpl_" + no.ToString("000") + "_n.ncl";
+	
+		FileNCGRead^ fngc = gcnew FileNCGRead;
+
+		fngc->readWithNcl(ncgname,"", nclname);
+	
+		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1,10*(i%6), 10*(i/6),10,10);
+
+		pictureBox1->Dock = DockStyle::Fill;
+		webBrowser1->Dock = DockStyle::Fill;
+
+		webBrowser1->Visible = false;
+		pictureBox1->Visible = true;
+	}
+	splitContainer1->Panel1->Show();
+	button1->Width = this->Width / 5;
+	button2->Width = (this->Width / 5) * 3;
+	button3->Width = this->Width / 5;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -548,30 +615,30 @@ void MainForm::CallProg(String^ message)
 
 System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	array<int>^ putPoke = gcnew array<int>(6);
+	pokemonListDisp();
 
-	putPoke[0]=001;
-	putPoke[1]=101;
-	putPoke[2]=201;
-	putPoke[3]=301;
-	putPoke[4]=401;
-	putPoke[5]=0;
+}
 
-	String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
-	String^ ncgname = dirname + "pmpl_" + putPoke[0].ToString("000") + "_frnt_m.ncg";
-	String^ nclname = dirname + "pmpl_" + putPoke[0].ToString("000") + "_n.ncl";
-	
+//--------------------------------------------------------------
+/**
+ * @breif   マウス移動時にポケモンの名前などをTipで表示
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
 
-	FileNCGRead^ fngc = gcnew FileNCGRead;
 
-	fngc->readWithNcl(ncgname,"", nclname);
-	
-	pictureBox1->Image = fngc->PictureWrite(pictureBox1);
+System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	static int backupPoke = -1;
+	int i = e->X  / (10*8);
+	int j = (e->Y)  / (10*8);
+	i = i + j * 6;
 
-	pictureBox1->Dock = DockStyle::Fill;
-	webBrowser1->Dock = DockStyle::Fill;
-
-	webBrowser1->Visible = false;
-	pictureBox1->Visible = true;
-
+	if((i >= 0) && (i <= POKMEON_BOX_NUM) && (backupPoke != i)){
+		char* name = PokeGraNoTable[putPoke[i]].name;
+		String^ pknm = gcnew String(name);
+		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
+		backupPoke = i;
+	}
 }
