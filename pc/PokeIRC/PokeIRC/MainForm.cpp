@@ -100,17 +100,21 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 	splitContainer1->Panel1->Hide();
 
 	splitContainer1->SplitterDistance = 0;  //最初ボタンは見せない
+	dispBoxNo=0;
 
 	{
-		putPoke = gcnew array<int>(POKMEON_BOX_NUM);
-		int i;
-		for(i=0;i < POKMEON_BOX_NUM;i++){
-			putPoke[i]=i+101;
+		putPoke = gcnew array<int,2>(POKMEON_BOX_NUM,POKMEON_BOX_POKENUM);
+		int i,j;
+		for(j=0;j < POKMEON_BOX_NUM;j++){
+			for(i=0;i < POKMEON_BOX_POKENUM;i++){
+				int no = j * POKMEON_BOX_POKENUM + i + 1;
+				if(POKEMON_MAX <= no){
+					no -= 200;
+				}
+				putPoke[j,i] = no;
+			}
 		}
 	}
-
-
-
 }
 
 //--------------------------------------------------------------
@@ -555,7 +559,7 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 void MainForm::CallProg(String^ message)
 {
 	if(message =="PokeSend"){
-		pokemonListDisp();
+		pokemonListDisp(0);
 	}
 	else{
 		MessageBox::Show(message, "client code");
@@ -563,24 +567,26 @@ void MainForm::CallProg(String^ message)
 
 }
 
-void MainForm::pokemonListDisp(void)
+void MainForm::pokemonListDisp(int boxNo)
 {
-
-	array<int>^ putPoke = gcnew array<int>(POKMEON_BOX_NUM);
 	int i;
 
-
-	for(i=0;i < POKMEON_BOX_NUM;i++){
-		putPoke[i]=i+101;
-	}
-
+	dispBoxNo = boxNo;
 	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
 
-	for(i=0;i < POKMEON_BOX_NUM;i++){
-		if(putPoke[i]==0){
+	int printBoxNo = boxNo + 1;
+	button2->Text = "ボックス " + printBoxNo;
+
+	for(i=0;i < POKMEON_BOX_POKENUM;i++){
+		if(putPoke[boxNo,i]==0){
 			continue;
 		}
-		int no = PokeGraNoTable[putPoke[i]].no;
+		int tno = putPoke[boxNo,i];
+		if(tno >= POKEMON_MAX ){
+			continue;
+		}
+
+		int no = PokeGraNoTable[putPoke[boxNo,i]].no;
 
 		String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
 		String^ ncgname = dirname + "pmpl_" + no.ToString("000") + "_frnt_m.ncg";
@@ -615,8 +621,39 @@ void MainForm::pokemonListDisp(void)
 
 System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	pokemonListDisp();
+	pokemonListDisp(0);
 
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   場所からPokemon番号を得る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::getPokemonNumberFromThePlace(int x,int y)
+{
+	int i = x  / (10*8);
+	if(i < 0){
+		return 0;
+	}
+	else if(i >= 6){
+		return 0;
+	}
+	int j = (y)  / (10*8);
+	if(j < 0){
+		return 0;
+	}
+	else if(j >= 5){
+		return 0;
+	}
+	i = i + j * 6;
+	if((i >= 0) && (i < POKMEON_BOX_POKENUM)){
+		return putPoke[dispBoxNo,i];
+	}
+	return 0;
 }
 
 //--------------------------------------------------------------
@@ -631,14 +668,109 @@ System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, S
 System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
 	static int backupPoke = -1;
-	int i = e->X  / (10*8);
-	int j = (e->Y)  / (10*8);
-	i = i + j * 6;
 
-	if((i >= 0) && (i <= POKMEON_BOX_NUM) && (backupPoke != i)){
-		char* name = PokeGraNoTable[putPoke[i]].name;
+	int pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+
+	if((pokeno != 0) && (backupPoke != pokeno)){
+		char* name = PokeGraNoTable[pokeno].name;
 		String^ pknm = gcnew String(name);
 		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
-		backupPoke = i;
+		backupPoke = pokeno;
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   マウスを右ボタンで押した時にメニュー表示
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::pictureBox1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	if((e->Button::get()==System::Windows::Forms::MouseButtons::Right)){
+		contextMenuStrip1->Show(Control::MousePosition::get());
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   マウスをクリックした時にポケモンを預けるかどうか問いあわせる
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	int pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+
+	if(pokeno != 0){
+		String^ nm = gcnew String(PROGRAM_NAME);
+		char* name = PokeGraNoTable[pokeno].name;
+		String^ pknm = gcnew String(name);
+
+		if ( MessageBox::Show(pknm + "を預けますか？", nm,
+			 MessageBoxButtons::OKCancel,
+			 MessageBoxIcon::Question )
+				 == System::Windows::Forms::DialogResult::OK ) {
+
+
+
+
+
+		}
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   ツールを終了する
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::exitEToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	String^ nm = gcnew String(PROGRAM_NAME);
+	if ( MessageBox::Show("アプリケーションを終了しますか？", nm,
+		 MessageBoxButtons::OKCancel,
+		 MessageBoxIcon::Question )
+			 == System::Windows::Forms::DialogResult::OK ) {
+				 this->Close();
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   図鑑切り替え
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+System::Void MainForm::button3_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	dispBoxNo++;
+	if(dispBoxNo>=POKMEON_BOX_NUM){
+		dispBoxNo = 0;
+	}
+	pokemonListDisp(dispBoxNo);
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   図鑑切り替え
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::button1_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if(dispBoxNo <= 0){
+		dispBoxNo = POKMEON_BOX_NUM;
+	}
+	dispBoxNo--;
+	pokemonListDisp(dispBoxNo);
 }

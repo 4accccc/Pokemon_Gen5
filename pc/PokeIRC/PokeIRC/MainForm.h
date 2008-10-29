@@ -15,6 +15,8 @@ namespace PokeIRC {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	static const char PROGRAM_NAME[] = "Global Pokemon FunClub";
+
 	typedef struct{
 		int no;
 		char* name;
@@ -576,9 +578,13 @@ namespace PokeIRC {
 	public: 
 	private: System::Threading::Thread^ threadA;
 
-	static const int POKMEON_BOX_NUM = 30;
-	array<int>^ putPoke;  //ポケモン格納バッファ
+	static const int POKMEON_BOX_NUM = 18;  //BOX18こ
+	static const int POKMEON_BOX_POKENUM = 30; //ポケモン３０体
+	int dispBoxNo;
+	array<int,2>^ putPoke;  //ポケモン格納バッファ
 	static const unsigned long long TEST_KEY = 0x100000000UL;
+	static const int POKEMON_MAX = 494;
+
 	private: System::Windows::Forms::ToolStripMenuItem^  gTSResetToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripContainer^  toolStripContainer1;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
@@ -588,6 +594,10 @@ namespace PokeIRC {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::ToolTip^  toolTip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  exitEToolStripMenuItem;
+	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  sendGTSSToolStripMenuItem;
+
 
 
 
@@ -629,6 +639,7 @@ namespace PokeIRC {
 			this->gTSResetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->dSGTSSyncTToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->pokemonToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exitEToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->timer = (gcnew System::Windows::Forms::Timer(this->components));
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->toolStripContainer1 = (gcnew System::Windows::Forms::ToolStripContainer());
@@ -638,6 +649,8 @@ namespace PokeIRC {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->sendGTSSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->toolStripContainer1->BottomToolStripPanel->SuspendLayout();
@@ -648,6 +661,7 @@ namespace PokeIRC {
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
+			this->contextMenuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// webBrowser1
@@ -694,9 +708,9 @@ namespace PokeIRC {
 			// 
 			// fileFToolStripMenuItem
 			// 
-			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {this->sToolStripMenuItem, 
+			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(7) {this->sToolStripMenuItem, 
 				this->sendDataDToolStripMenuItem, this->gTSTestGToolStripMenuItem, this->gTSResetToolStripMenuItem, this->dSGTSSyncTToolStripMenuItem, 
-				this->pokemonToolStripMenuItem});
+				this->pokemonToolStripMenuItem, this->exitEToolStripMenuItem});
 			this->fileFToolStripMenuItem->Name = L"fileFToolStripMenuItem";
 			this->fileFToolStripMenuItem->Size = System::Drawing::Size(51, 20);
 			this->fileFToolStripMenuItem->Text = L"File(&F)";
@@ -742,6 +756,13 @@ namespace PokeIRC {
 			this->pokemonToolStripMenuItem->Size = System::Drawing::Size(153, 22);
 			this->pokemonToolStripMenuItem->Text = L"PutPokemon(&P)";
 			this->pokemonToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::pokemonToolStripMenuItem_Click);
+			// 
+			// exitEToolStripMenuItem
+			// 
+			this->exitEToolStripMenuItem->Name = L"exitEToolStripMenuItem";
+			this->exitEToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->exitEToolStripMenuItem->Text = L"Exit(&E)";
+			this->exitEToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::exitEToolStripMenuItem_Click);
 			// 
 			// timer
 			// 
@@ -805,6 +826,7 @@ namespace PokeIRC {
 			this->button3->TabIndex = 2;
 			this->button3->Text = L">>";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MainForm::button3_Click);
 			// 
 			// button2
 			// 
@@ -825,6 +847,7 @@ namespace PokeIRC {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"<<";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
 			// 
 			// pictureBox1
 			// 
@@ -836,7 +859,21 @@ namespace PokeIRC {
 			this->toolTip1->SetToolTip(this->pictureBox1, L"ポケモン");
 			this->pictureBox1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox1_MouseMove);
 			this->pictureBox1->DragDrop += gcnew System::Windows::Forms::DragEventHandler(this, &MainForm::pictureBox1_DragDrop);
+			this->pictureBox1->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox1_MouseClick);
+			this->pictureBox1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox1_MouseDown);
 			this->pictureBox1->DragEnter += gcnew System::Windows::Forms::DragEventHandler(this, &MainForm::pictureBox1_DragEnter);
+			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->sendGTSSToolStripMenuItem});
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(133, 26);
+			// 
+			// sendGTSSToolStripMenuItem
+			// 
+			this->sendGTSSToolStripMenuItem->Name = L"sendGTSSToolStripMenuItem";
+			this->sendGTSSToolStripMenuItem->Size = System::Drawing::Size(132, 22);
+			this->sendGTSSToolStripMenuItem->Text = L"SendGTS(&S)";
 			// 
 			// MainForm
 			// 
@@ -864,6 +901,7 @@ namespace PokeIRC {
 			this->splitContainer1->Panel2->ResumeLayout(false);
 			this->splitContainer1->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
+			this->contextMenuStrip1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -886,6 +924,8 @@ private: void SetTrData(Dpw_Tr_Data* upload_data);
 private: void SetProfile(Dpw_Common_Profile* profile);
 private: void TestDownload(int pid,  String^ proxy);
 private: bool RequestPickupTraded(void);
+private: int getPokemonNumberFromThePlace(int x,int y);
+
 
 private: System::Void gTSTestGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
@@ -911,9 +951,12 @@ private: System::Void pictureBox1_DragEnter(System::Object^  sender, System::Win
 				}
 		 }
 
-private: void pokemonListDisp(void);
-
-
+private: void pokemonListDisp(int boxNo);
+private: System::Void button3_Click(System::Object^  sender, System::EventArgs^  e);
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e);
+private: System::Void exitEToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+private: System::Void pictureBox1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+private: System::Void pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 
 };
 }
