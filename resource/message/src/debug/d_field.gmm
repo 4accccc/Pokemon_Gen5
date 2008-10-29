@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2008-10-17T13:47:26"/>
+	<create user="kagaya" host="W00143" date="2008-10-24T16:33:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -150,6 +150,11 @@
 
 	<row id="DEBUG_FIELD_STR03">
 		<language name="JPN" font=" 2:lcfont12" width="80">スケール切替</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR04">
+		<language name="JPN" font=" 2:lcfont12" width="80">スケール調節</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 

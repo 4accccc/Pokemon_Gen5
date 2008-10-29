@@ -28,6 +28,7 @@ enum
 {
 	GRIDPROC_MAIN = 0,
 	GRIDPROC_DEBUG00,
+	GRIDPROC_DEBUG01,
 };
 
 #define PAD_KEY_BIT (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)
@@ -77,6 +78,8 @@ struct _FGRID_PLAYER
 	s16 gz;
 	VecFx32 vec_pos;
 	
+	fx16 scale_size;	//FX16_ONE*8
+
 	u16 move_flag;
 	s16 move_dir;
 	VecFx32 move_val;
@@ -103,11 +106,14 @@ static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork );
 
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
+static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 
 static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont );
 static void FGridPlayer_Delete( FGRID_CONT *pGridCont );
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont );
+static void FGridPlayer_ScaleSet( FGRID_PLAYER *pJiki, fx16 scale );
+static fx16 FGridPlayer_ScaleGet( FGRID_PLAYER *pJiki );
 
 static BOOL GridVecPosMove(
 	const FLD_G3D_MAPPER *g3Dmapper,
@@ -130,6 +136,12 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
 #define GRIDCAMERA_MAX (NELEMS(DATA_CameraTbl))
 
 // length 50H height 0x20000H
+
+#define GRIDCAMERA_LENGTH_HALF (0x50)
+#define GRIDCAMERA_HEIGHT_HALF (0x20000)
+#define BBDSCALE_ONE (FX16_ONE*8-1)
+#define BBDSCALE_HALF (BBDSCALE_ONE/2)
+#define BBDSCALE_PER1 ((BBDSCALE_ONE-BBDSCALE_HALF)/100)
 
 //======================================================================
 //	フィールドグリッドタイプ　メイン
@@ -187,6 +199,9 @@ static void GridMoveMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 		break;
 	case GRIDPROC_DEBUG00:
 		GridProc_DEBUG00( fieldWork, pos );
+		break;
+	case GRIDPROC_DEBUG01:
+		GridProc_DEBUG01( fieldWork, pos );
 		break;
 	}
 }
@@ -330,6 +345,81 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	}
 }
 
+//--------------------------------------------------------------
+/**
+ * グリッド　デバッグ1 スケール調節
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
+{
+	int trg,cont;
+	u16 dir,leng;
+	fx32 height;
+	fx32 scale;
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
+	FIELD_CAMERA *camera = fieldWork->camera_control;
+
+	trg = GFL_UI_KEY_GetTrg();
+	cont = GFL_UI_KEY_GetCont();
+	scale = FGridPlayer_ScaleGet( pGridPlayer );
+	
+	if( trg & PAD_BUTTON_B ){
+		pGridCont->proc_switch = GRIDPROC_MAIN;
+	}else{
+		if( cont & (PAD_KEY_UP|PAD_KEY_DOWN) ){
+			fx16 val = 0x80;	//1=0x1000
+		
+			if( cont & PAD_KEY_UP ){
+				scale -= val;
+				
+				if( scale < BBDSCALE_HALF ){
+					scale = BBDSCALE_HALF;
+				}
+			}else if( cont & PAD_KEY_DOWN ){
+				scale += val;
+				
+				if( scale > BBDSCALE_ONE ){
+					scale = BBDSCALE_ONE;
+				}
+			}
+		
+			{
+				u16 length;
+				int pcent;
+				fx32 p_scale;
+				fx32 p_height_1,p_height,height;
+				fx32 p_length_1,p_length;
+				
+				p_scale = (scale - BBDSCALE_HALF);
+				pcent = p_scale / BBDSCALE_PER1;
+				
+				p_length_1 = NUM_FX32(0x78 - 0x50) / 100;
+				p_length = p_length_1 * pcent;
+				length = 0x50 + FX32_NUM(p_length);
+				
+				p_height_1 = (0xd8000 - 0x20000) / 100;
+				p_height = p_height_1 * pcent;
+				height = 0x20000 + p_height;
+				
+				FLD_SetCameraLength( fieldWork->camera_control, length );
+				FLD_SetCameraHeight( fieldWork->camera_control, height );
+				
+				OS_Printf( "scale = %xH, %dパーセント\n", scale, pcent );
+			}
+
+			FGridPlayer_ScaleSet( pGridPlayer, scale );
+		}
+	}
+	
+	FLD_MainFieldActSys( fieldWork->fldActCont );
+	GetPlayerActTrans( fieldWork->pcActCont, pos );
+	FLD_SetCameraTrans( fieldWork->camera_control, pos );
+	FLD_MainCamera( fieldWork->camera_control, 0 );
+}
+
 //======================================================================
 //	グリッド処理
 //======================================================================
@@ -418,7 +508,8 @@ static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont )
 	pJiki->pActCont = pGridCont->pFieldWork->pcActCont;
 
 	pJiki->vec_pos = pos;
-	
+	pJiki->scale_size = FX16_ONE*8-1;
+
 	SetPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
 	return( pJiki );
 }
@@ -465,7 +556,7 @@ static void FGridPlayer_Move(
 			if( pJiki->pGridCont->scale_num != 0 ){
 				val >>= 1;
 			}
-
+			
 			switch( dir ){
 			case DIR_UP:	nz -= val; break;
 			case DIR_DOWN:	nz += val; break;
@@ -533,7 +624,7 @@ static void FGridPlayer_Move(
 		if( count < 0 ){
 			count = -count;
 		}
-
+		
 //		OS_Printf( "count=%x, MAX %x\n", count, GRID_VALUE_FX32 );
 		
 		if( pJiki->pGridCont->scale_num != 0 ){
@@ -580,6 +671,33 @@ static void FGridPlayer_Move(
 			OS_Printf( "\n" );
 		}
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機 スケール変更
+ * @param	pJiki	FGRID_PLAYER
+ * @param	size
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void FGridPlayer_ScaleSet( FGRID_PLAYER *pJiki, fx16 scale )
+{
+	pJiki->scale_size = scale;
+	PlayerActGrid_ScaleSizeSet( pJiki->pActCont, scale, scale );
+}
+
+//--------------------------------------------------------------
+/**
+ * グリッド自機 スケール取得
+ * @param	pJiki	FGRID_PLAYER
+ * @param	size
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static fx16 FGridPlayer_ScaleGet( FGRID_PLAYER *pJiki )
+{
+	return( pJiki->scale_size );
 }
 
 //======================================================================
@@ -697,17 +815,16 @@ void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork )
 void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
 {
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
-	
+	FGRID_PLAYER *pJiki = pGridCont->pGridPlayer;
+
 	pGridCont->scale_num++;
 	pGridCont->scale_num %= 2;
 	
 	switch( pGridCont->scale_num ){
 	case 0:
 		{
-			fx16 sizeX,sizeY;
-			sizeX=sizeY=FX16_ONE*8-1;
-			PlayerActGrid_ScaleSizeSet( fieldWork->pcActCont,
-					sizeX, sizeY );
+			fx16 size = FX16_ONE * 8 - 1;
+			FGridPlayer_ScaleSet( pJiki, size );
 			FLD_SetCameraLength( fieldWork->camera_control,
 					DATA_CameraTbl[pGridCont->debug_camera_num].len );
 			FLD_SetCameraHeight( fieldWork->camera_control,
@@ -716,15 +833,30 @@ void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
 		break;
 	case 1:
 		{
-			fx16 sizeX,sizeY;
-			sizeX=sizeY=FX16_ONE*4-1;
-			PlayerActGrid_ScaleSizeSet( fieldWork->pcActCont,
-					sizeX, sizeY );
-			FLD_SetCameraLength( fieldWork->camera_control, 0x50 );
-			FLD_SetCameraHeight( fieldWork->camera_control, 0x20000 );
+			fx16 size = FX16_ONE * 4 - 1;
+			FGridPlayer_ScaleSet( pJiki, size );
+			FLD_SetCameraLength(
+				fieldWork->camera_control, GRIDCAMERA_LENGTH_HALF );
+			FLD_SetCameraHeight(
+				fieldWork->camera_control, GRIDCAMERA_HEIGHT_HALF );
 		}
 		break;
 	}
+}
+
+
+//--------------------------------------------------------------
+/**
+ * スケール調節
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork )
+{
+	fx16 scale;
+	FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	pGridCont->proc_switch = GRIDPROC_DEBUG01;
 }
 
 #if 0	//実データ利用

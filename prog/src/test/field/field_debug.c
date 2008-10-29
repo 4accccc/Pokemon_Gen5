@@ -89,6 +89,7 @@ struct _TAG_DEBUG_FLDMENU
 //======================================================================
 static void DMenuCallProc_GridCamera( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk );
 
 //======================================================================
 //	メニューリスト一覧
@@ -115,7 +116,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 {
 	{ DEBUG_FIELD_STR02, DMenuCallProc_GridCamera },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -445,5 +446,21 @@ static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk )
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleChange( fieldWork );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　グリッド用スケール調節
+ * @param	wk	DEBUG_FLDMENU*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk )
+{
+	DEBUG_FLDMENU *d_menu = wk;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	HEAPID DebugHeapID = d_menu->heapID;
+	
+	DEBUG_FldGridProc_ScaleControl( fieldWork );
 }
 
