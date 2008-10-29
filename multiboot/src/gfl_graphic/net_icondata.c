@@ -36,8 +36,8 @@ const u32 NET_ICONDATA_GetTableID(void)
 
 void NET_ICONDATA_GetNoBuff(int* pNoBuff)
 {
-    pNoBuff[GFL_NET_ICON_WIFINCGR] = NARC_wmi_wifi_ncgr;
-    pNoBuff[GFL_NET_ICON_WMNCGR] = NARC_wmi_wm_ncgr;
-    pNoBuff[GFL_NET_ICON_WMNCLR] = NARC_wmi_wm_nclr;
+    pNoBuff[GFL_NET_ICON_WIFINCGR] = NARC_wmi_wifi_NCGR;
+    pNoBuff[GFL_NET_ICON_WMNCGR] = NARC_wmi_wm_NCGR;
+    pNoBuff[GFL_NET_ICON_WMNCLR] = NARC_wmi_wm_NCLR;
 }
 

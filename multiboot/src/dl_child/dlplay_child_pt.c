@@ -11,6 +11,7 @@
 #include <string.h>
 #include "system/gfl_use.h"
 #include "pt_save.h"
+#include "arc_def.h"
 
 #include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
@@ -45,13 +46,14 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id );
 u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id );
-u32		DLPlayData_DPPT_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type );
+u32		DLPlayData_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type );
 
 void	PT_CalcTool_Decoded(void *data,u32 size,u32 code);
 void	PT_CalcTool_Coded(void *data,u32 size,u32 code);
 static	u16 PT_CodeRand(u32 *code);
 static	u16	PT_PokeParaCheckSum(void *data,u32	size);
 static	void	*PokeParaAdrsGet(PT_POKEMON_PARAM *ppp,u32 rnd,u8 id);
+static	u8		PokeRareGetPara(u32 id,u32 rnd);
 void	PokePasoParaInit(PT_POKEMON_PARAM *ppp);
 
 const u32 DLPlayData_GetSavedataSize( const DLPLAY_CARD_TYPE type );
@@ -113,12 +115,12 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 			//各ブロックのCRCをチェック(一応通常データも見ておく
 			u8 i;
 			BOOL isCorrect[4];	//データ成否チェック
-			const u32 boxStartAdd = DLPlayData_DPPT_GetStartAddress(GMDATA_ID_BOXDATA , d_data->cardType_ );
+			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA , d_data->cardType_ );
 			SAVE_FOOTER *footer[4];
-			footer[0] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_DPPT_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[1] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_DPPT_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
-			footer[2] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_DPPT_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[3] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_DPPT_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[0] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[1] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[2] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[3] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
 #if DEB_ARI
 			for( i=0;i<4;i++ ){
 				OS_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
@@ -207,23 +209,30 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 	{
 	case 0:
 		{
-			u8 i;
+			u8 i,bi;
 			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
 			//ポケモンデータの暗号化
-			for( i=0;i<BOX_MAX_POS;i++ )
+			for( bi=0;bi<BOX_MAX_TRAY;bi++)
 			{
-				PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
-				u16 sum;
-				sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
-				PT_CalcTool_Coded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
+				for( i=0;i<BOX_MAX_POS;i++ )
+				{
+					PT_POKEMON_PARAM *param = &pBox->ppp[bi][i];
+					u16 sum;
+					sum = PT_PokeParaCheckSum( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 );
+					PT_CalcTool_Coded( &param->paradata , sizeof(POKEMON_PASO_PARAM1)*4 , param->checksum );
+				}
 			}
 			
 #if DEB_ARI&0
 			//ポケモンを消す(消した後に暗号化もするので、暗号化の後
-			for( i=0;i<BOX_MAX_POS;i++ ){
-				PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
-				if( i%3==1 ){
-					PokePasoParaInit( param );
+			for( bi=0;bi<BOX_MAX_TRAY;bi++)
+			{
+				for( i=0;i<BOX_MAX_POS;i++ )
+				{
+					PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
+					if( i%3==1 ){
+						PokePasoParaInit( param );
+					}
 				}
 			}
 #endif
@@ -236,13 +245,13 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			void *pData;
 			u16 crc;
 			u32 saveAddress;
-			const u32 boxStartAdd = DLPlayData_PT_GetStartAddress(GMDATA_ID_BOXDATA);
+			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
 			SAVE_FOOTER *footer;
 			if( d_data->savePos_ == DDS_FIRST ){
-				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOOTER) ];
+				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
 			}
 			else{
-				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_PT_GetStartAddress(GMDATA_BOX_FOOTER) ];
+				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
 			}
 			footer->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, footer->size - sizeof(SAVE_FOOTER) );
 			
@@ -280,12 +289,19 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 	PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
 	char name_str[256];
 	u8 num=0;
-	//暗号化解除→名前変換→４つずつ表示
-	OS_TPrintf("BOX curr[%d]\n",pBox->currentTrayNumber);
+
+	//レベル解読用にパーソナルデータとレベルテーブル
+	POKEMON_PERSONAL_DATA* perData;
+	u32	expTbl[101];
+	//メモリの取得開放はまとめてやっちゃう
+	perData = GFL_HEAP_AllocMemory( d_data->heapID_ , sizeof(POKEMON_PERSONAL_DATA));
+
 
 	OS_TPrintf("POKEMON PARAM DECODE!!!\n");
 	for( bi=0;bi<BOX_MAX_TRAY;bi++)
 	{
+		DLPlayFunc_DPTStrCode_To_UTF16( pBox->trayName[bi] , idxData->boxName_[bi] , BOX_MONS_NAME_LEN );
+		OS_TPrintf("------BOX[%d]------\n",bi);
 		for( i=0;i<BOX_MAX_POS;i++ )
 		{
 			DLPLAY_MONS_INDEX *pokeData = &idxData->pokeData_[bi][i];
@@ -306,24 +322,52 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 					pokeData->lv_ = 0;
 					pokeData->sex_ = 0;
 					pokeData->form_ = 0;
-					pokeData->color_ = 0;
-					OS_TPrintf("None\n");
+					pokeData->rare_ = 0;
+					OS_TPrintf("None");
 				}
 				else
 				{
+					u8 lv;
 					pokeData->pokeNo_	= ppp1->monsno;
-					pokeData->lv_		= 0;//FIXME
 					pokeData->sex_		= ppp2->sex;
 					pokeData->form_		= ppp2->form_no;
-					pokeData->color_	= 0;//FIXME
 					DLPlayFunc_DPTStrCode_To_UTF16( ppp3->nickname , pokeData->name_ , MONS_NAME_SIZE+EOM_SIZE );
-					OS_TPrintf("No[%3d]\n",ppp1->monsno);
+					OS_TPrintf("No[%3d]",ppp1->monsno);
+					//レベル計算
+					GFL_ARC_LoadData( perData , ARCID_POKE_PERSONAL , ppp1->monsno );
+					GFL_ARC_LoadData( expTbl , ARCID_GRAWTBL , perData->grow );
+					for( lv=1;lv<101;lv++ ){
+						if( expTbl[lv] > ppp1->exp){break;}
+					}
+					pokeData->lv_ = lv-1;
+					OS_TPrintf("lv[%2d]",lv-1);
+					//レアチェック
+					if( PokeRareGetPara(ppp1->id_no,param->personal_rnd) == TRUE ){
+						pokeData->rare_		= 1;
+						OS_TPrintf("Rare!! ");
+					}
+					else{
+						pokeData->rare_		= 0;
+					}
+					//タマゴチェック
+					if( ppp2->tamago_flag == 1 ||
+						param->fusei_tamago_flag == 1 ){
+						pokeData->isEgg_ = 1;
+						OS_TPrintf("Egg!! ");
+					}
+					else{
+						pokeData->isEgg_ = 0;
+					}
+
+					
 				}
+				OS_TPrintf("\n");
 			}
 		}
 	}
 	DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
-
+	
+	GFL_HEAP_FreeMemory( perData );
 }
 
 //各データブロックの開始位置を求める。PTと違ってフッタも一つのブロックとして計算する
@@ -352,7 +396,7 @@ u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id )
 }
 
 //ダイパプラチナで共通化するための関数
-u32		DLPlayData_DPPT_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type )
+u32		DLPlayData_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type )
 {
 	if( type == CARD_TYPE_DP ){
 		return DLPlayData_DP_GetStartAddress( id );
@@ -438,6 +482,11 @@ static	u16	PT_PokeParaCheckSum(void *data,u32	size)
 	return sum;
 }
 
+//ID(pokenoじゃない！)と乱数でレアかどうか求める
+static u8		PokeRareGetPara(u32 id,u32 rnd)
+{
+	return((((id&0xffff0000)>>16)^(id&0xffff)^((rnd&0xffff0000)>>16)^(rnd&0xffff))<8);
+}
 
 //============================================================================================
 /**
@@ -960,10 +1009,10 @@ const u32 DLPlayData_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
 	switch( type )
 	{
 	case CARD_TYPE_DP:
-		return DLPlayData_PT_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_DP_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_DP_GetStartAddress( GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_PT:
-		return DLPlayData_DP_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_PT_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_GS:
 		return 0;
@@ -978,7 +1027,7 @@ const u32 DLPlayData_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
 	switch( type )
 	{
 	case CARD_TYPE_DP:
-		return DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_DP_GetStartAddress( GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_PT:
 		return DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );

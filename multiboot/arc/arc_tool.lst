@@ -38,5 +38,7 @@
 #
 #==================================================================================================
 
-	ARCID_FATAL_ERROR	"fatal_error.narc"	#fatalエラー画面表示
-	ARCID_WMI			"wmi.narc"	# 通信アイコン
+	ARCID_FATAL_ERROR		"fatal_error.narc"	#fatalエラー画面表示
+	ARCID_WMI				"wmi.narc"	# 通信アイコン
+	ARCID_GRAWTBL			"pl_growtbl.narc"	#成長テーブル
+	ARCID_POKE_PERSONAL	"personal.narc"		#パーソナルデータ

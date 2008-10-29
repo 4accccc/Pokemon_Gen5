@@ -18,6 +18,10 @@ include $(VER_FILE)
 
 .PHONY:	do-build clean
 
+#¬’·‹Èüƒe[ƒuƒ‹¶¬
+do-build: pl_growtbl.narc
+pl_growtbl.narc: grow_*.bin
+	nnsarc -c -l -n pl_growtbl.narc grow_*.bin
 do-build: narc_tree.inc arc_def.h arc_file.h file_tree.inc
 
 narc_tree.inc: ../../tools/arc/narc_tree.pl arc_tool.lst $(VER_FILE)

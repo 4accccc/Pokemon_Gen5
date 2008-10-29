@@ -63,8 +63,6 @@ typedef struct
 //======================================================================
 
 DLPLAY_CHILD_DATA *childData;
-
-
 void	DLPlayChild_SetProc(void);
 void	DLPlayChild_InitBg(void);
 
@@ -215,6 +213,12 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPlayData_SetBoxIndex( childData->dataSys_ , boxIndex );
 			DLPlayComm_Send_BoxIndex( childData->commSys_ );
 		}
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
+		{
+			//セーブテスト用
+			//childData->mainSeq_ = DCS_SAVE_BACKUP;
+		}
+
 #if 0
 			//データ送信
 			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
@@ -298,6 +302,7 @@ void	DLPlayChild_InitBg(void)
 	//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( HEAPID_ARIIZUMI_DEBUG );
 
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , VISIBLE_ON );
 }
 
 

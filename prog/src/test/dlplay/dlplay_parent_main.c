@@ -6,6 +6,7 @@
  * @date	2008.10.8
  */
 //============================================================================================
+#include "string.h"
 #include "gflib.h"
 #include "procsys.h"
 #include "ui.h"
@@ -41,6 +42,7 @@ struct _DLPLAY_SEND_DATA
 {
 	u8 mainSeq_;
 	u16 subSeq_;
+	int	currTray_;
 
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS *msgSys_;
@@ -59,6 +61,7 @@ enum DLPLAY_SEND_STATE
 	DSS_START_SHARE,
 	DSS_WAIT_CHILD,
 	DSS_WAIT_INDEX_DATA,
+	DSS_SELECT_BOX_TEMP,
 };
 
 //============================================================================================
@@ -166,9 +169,90 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	case DSS_WAIT_INDEX_DATA:
 		if(	DLPlayComm_IsPostIndex( dlData->commSys_ ) == TRUE ){
 			DLPlayFunc_PutString( "Post box index data complete.",dlData->msgSys_); 
-			return DPM_SELECT_BOX;
+			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
+			dlData->currTray_ = 0xFF;
+			//return DPM_SELECT_BOX;
 		}
 		break;
+	case DSS_SELECT_BOX_TEMP:
+		{
+			u8 i;
+			BOOL isUpdate = FALSE;
+			if( dlData->currTray_ == 0xFF )
+			{
+				isUpdate = TRUE;
+				dlData->currTray_ = 0;
+			}
+			if( GFL_UI_KEY_GetTrg() == PAD_KEY_RIGHT )
+			{
+				isUpdate = TRUE;
+				dlData->currTray_++;
+				if( dlData->currTray_ >= 18 )
+				{
+					dlData->currTray_ = 0;
+				}
+			}
+			if( GFL_UI_KEY_GetTrg() == PAD_KEY_LEFT )
+			{
+				isUpdate = TRUE;
+				dlData->currTray_--;
+				if( dlData->currTray_ < 0 )
+				{
+					dlData->currTray_ = 17;
+				}
+			}
+			if( isUpdate == TRUE )
+			{
+				const char sexStr[3][8] ={"M","F","?"};
+				const int bi = dlData->currTray_;
+				u16 i;
+				int	strLen = 64;
+				char str[128],w1Str[64],w2Str[64];
+				DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
+
+				DLPlayFunc_ClearString( dlData->msgSys_ );
+
+				STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
+				w1Str[strLen] = '\0';
+				sprintf(str,"BoxName[%s]",w1Str);
+				DLPlayFunc_PutStringLine( 0,str,dlData->msgSys_ );
+
+				for( i=0;i<30;i++ )
+				{
+					DLPLAY_MONS_INDEX *pokeData = &boxIndex->pokeData_[bi][i];
+					if( pokeData->pokeNo_ == 0 )
+					{
+						sprintf(w2Str,"[---][----------]");
+					}
+					else
+					{
+						strLen = 64;
+						STD_ConvertStringUnicodeToSjis( w1Str , &strLen , pokeData->name_ , NULL , NULL );
+						w1Str[strLen] = '\0';
+						sprintf(w2Str,"[%3d][%s:%s][%d]",pokeData->pokeNo_,w1Str,sexStr[pokeData->sex_],pokeData->lv_);
+						if( pokeData->isEgg_ == 1 )
+						{
+							strcat( w2Str , "[E]" );
+						}
+						if( pokeData->rare_ == 1 )
+						{
+							strcat( w2Str , "[R]" );
+						}
+						strcat(w2Str,"      ");
+					}
+					if( i%2==1 )
+					{
+						DLPlayFunc_PutStringLineDiv( i/2+1,str,w2Str,dlData->msgSys_ );
+					}
+					else
+					{
+						strcpy(str,w2Str);
+					}
+				}
+			}
+		}
+		break;
+
 	}
 	return DPM_SEND_IMAGE;
 }

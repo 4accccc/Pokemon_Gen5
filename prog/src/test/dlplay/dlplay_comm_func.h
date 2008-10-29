@@ -37,12 +37,14 @@ typedef struct
 	u16 pokeNo_:9;
 	u16	lv_:7;
 	u8	sex_:2;
-	u8	form_:6;
-	u8	color_;
+	u8	form_:5;
+	u8	isEgg_:1;	//この段階では不正な卵かどうかは判断しない
+	u8	rare_:1;	//レアかどうか？
+	u8	padding_:7;
 }DLPLAY_MONS_INDEX;
 typedef struct
 {
-	u16	boxName_[BOX_TRAY_NAME_LEN];
+	u16	boxName_[BOX_TRAY_NUM][BOX_TRAY_NAME_LEN];
 	DLPLAY_MONS_INDEX pokeData_[BOX_TRAY_NUM][BOX_MONS_NUM];
 }DLPLAY_BOX_INDEX;
 

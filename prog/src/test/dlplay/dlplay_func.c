@@ -47,6 +47,9 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane );
 void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
 
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);
+void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys );
+void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys );
+
 void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
 
 const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
@@ -125,8 +128,6 @@ void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys )
 //======================================================================
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 {
-	u8 i;
-
 	ARI_TPrintf("MsgPut:[%s]\n",str);
 	//GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 
@@ -143,6 +144,37 @@ void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 	GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 	DLPlayFunc_MsgUpdate( msgSys , msgSys->line_ , TRUE );
 	
+}
+
+void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys )
+{
+	ARI_TPrintf("MsgPut:[%d][%s]\n",line,str);
+	GFL_BMP_Clear( msgSys->textParam_[line]->bmp , 0x0000 );
+	DLPlayFunc_MsgUpdate( msgSys , line , FALSE );
+	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X;
+	msgSys->textParam_[line]->writey	= 0;
+	GFL_TEXT_PrintSjisCode( str , msgSys->textParam_[line] );
+	DLPlayFunc_MsgUpdate( msgSys , line , TRUE );
+}
+
+void DLPlayFunc_PutStringLineDiv( u8 line , char* str1 , char* str2 , DLPLAY_MSG_SYS *msgSys )
+{
+	ARI_TPrintf("MsgPut:[%d][%32s][%32s]\n",line,str1,str2);
+	GFL_BMP_Clear( msgSys->textParam_[line]->bmp , 0x0000 );
+	DLPlayFunc_MsgUpdate( msgSys , line , FALSE );
+	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X;
+	msgSys->textParam_[line]->writey	= 0;
+	GFL_TEXT_PrintSjisCode( str1 , msgSys->textParam_[line] );
+	msgSys->textParam_[line]->writex	= DLPLAY_FUNC_MSG_X+128;
+	GFL_TEXT_PrintSjisCode( str2 , msgSys->textParam_[line] );
+	DLPlayFunc_MsgUpdate( msgSys , line , TRUE );
+}
+
+void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys )
+{
+	u8 i;
+	for(i=0;i<DLPLAY_FUNC_MSG_LINE_NUM;i++)
+		GFL_BMP_Clear( msgSys->textParam_[i]->bmp , 0x0000 );
 }
 
 //======================================================================
