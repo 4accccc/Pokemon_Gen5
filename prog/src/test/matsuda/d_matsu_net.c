@@ -220,17 +220,18 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
-    0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
+    0x532,//0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    HEAPID_IRC,   //※check　赤外線通信用にcreateされるHEAPID
     GFL_WICON_POSX, GFL_WICON_POSY,        // 通信アイコンXY位置
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    FALSE,  //wifi通信を行うかどうか	※check　ここに赤外線フラグを追加
+    GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか	※check　ここに赤外線フラグを追加
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
 };
@@ -250,6 +251,14 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 	
 	GF_ASSERT(wk);
 
+	if(aGFLNetInit.bNetType == GFL_NET_TYPE_IRC && wk->seq > 3){
+		static u8 shut_print = 0;
+		if(IRC_IsConnect() == FALSE && shut_print == 0){
+			OS_TPrintf("赤外線切断\n");
+			shut_print++;
+		}
+	}
+	
 	switch( wk->seq ){
 	case 0:
 		{
@@ -276,6 +285,8 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		break;
 	case 4:		//タイミングコマンド発行
+		wk->seq = 6;
+		break;
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
 		wk->seq++;
 		break;
@@ -378,6 +389,7 @@ static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 //--------------------------------------------------------------
 static void _initCallBack(void* pWork)
 {
+	OS_TPrintf("初期化完了コールバックが呼び出された\n");
 	return;
 }
 

@@ -16,8 +16,13 @@ extern "C" {
 
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
+#elif defined(DEBUG_ONLY_FOR_matsuda)
+#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
 #endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
@@ -27,7 +32,7 @@ extern "C" {
 //#endif
 
 // デバッグ用決まり文句----------------------
-#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
 //#undef GFL_NET_DEBUG
@@ -49,6 +54,18 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #define DEBUG_DUMP(a,l,s)  GFL_NET_SystemDump_Debug(a,l,s)
 #else
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
+#endif
+
+// デバッグ用決まり文句----------------------
+#define GFL_IRC_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+
+#ifndef IRC_PRINT
+#if GFL_IRC_DEBUG
+#define IRC_PRINT(...) \
+  (void) ((OS_TPrintf(__VA_ARGS__)))
+#else   //GFL_IRC_DEBUG
+#define IRC_PRINT(...)           ((void) 0)
+#endif  // GFL_IRC_DEBUG
 #endif
 
 
@@ -89,6 +106,10 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 ///   通信ハンドル最大数  子機全部＋親機 分
 #define  GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1)
+
+
+///赤外線通信での一度に遅れる最大バイト数
+#define GFL_NET_IRC_SEND_MAX		(128)	//132byte中の残り4バイトはIRCライブラリのヘッダが使用
 
 
 /// @brief  コマンド関連の定義
@@ -135,7 +156,11 @@ typedef enum {
   GFL_NET_ICON_WMNCLR,     ///< パレットのデータ
 } GFL_NET_ICON_ENUM;       /// 通信アイコンファイルを外部からもらうときの識別番号
 
-
+enum {
+	GFL_NET_TYPE_WIRELESS,	///<ワイヤレス通信
+	GFL_NET_TYPE_WIFI,		///<WIFI通信
+	GFL_NET_TYPE_IRC,		///<赤外線通信
+};
 
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
 typedef u8 ConnectID;      ///< 接続するためのID  0-16 まで
@@ -206,6 +231,7 @@ typedef struct{
   HEAPID baseHeapID;        ///< 元となるHEAPID
   HEAPID netHeapID;         ///< 通信用にcreateされるHEAPID
   HEAPID wifiHeapID;        ///< wifi用にcreateされるHEAPID
+  HEAPID ircHeapID;         ///< IRC用にcreateされるHEAPID	※check
   u16 iconX;                ///< 通信アイコンX位置
   u16 iconY;                ///< 通信アイコンY位置
   u8 maxConnectNum;         ///< 最大接続人数
@@ -213,7 +239,11 @@ typedef struct{
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
   u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
   u8 bMPMode;               ///< MP通信モードかどうか
+#if 0
   u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
+#else
+  u8 bNetType;              ///< 使用する通信を指定(GFL_NET_TYPE_???)	※check
+#endif
   u8 bTGIDChange;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
   GameServiceID gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
 } GFLNetInitializeStruct;
@@ -728,6 +758,10 @@ extern void debugcheck(u32* data,int size );
 #if GFL_NET_WIFI
 #include "net_wifi.h"
 #endif //GFL_NET_WIFI
+
+#if GFL_NET_IRC
+#include "net_irc.h"
+#endif	//GFL_NET_IRC
 
 #include "net_command.h"
 #include "net_handle.h"
