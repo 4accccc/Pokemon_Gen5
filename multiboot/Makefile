@@ -32,7 +32,7 @@ LINCLUDES	=	./include \
 
 # GF-Library
 GFLIB_DIR		=	../lib/gflib
-LINCLUDES		= 	$(GFLIB_DIR)/include
+LINCLUDES		+= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
 LLIBRARIES		=  	gflib.a
 
@@ -67,7 +67,7 @@ MACRO_FLAGS += -DDEBUG_ONLY_FOR_$(USERNAME)
 TARGET_BIN		=	main.bin
 
 # ソースファイル
-SRCS			=	main.c gfl_use.c
+SRCS			=	main.c gfl_use.c machine_use.c
 
 include make_prog_files
 -include overlay/overlay_files

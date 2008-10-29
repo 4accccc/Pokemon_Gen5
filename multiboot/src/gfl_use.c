@@ -19,8 +19,10 @@
 #include "tcb.h"
 #include "backup_system.h"
 
-#include "textprint.h"
+#include "arc_def.h"
+#include "arc_file.h"
 
+#include "textprint.h"
 
 //=============================================================================================
 //=============================================================================================
@@ -55,7 +57,6 @@ static int				GFL_USE_VintrCounter;
 static	u8				sndHeap[SOUND_HEAP_SIZE];
 
 static void GFUser_PublicRandInit(void);
-
 //=============================================================================================
 //
 //			関数
@@ -71,7 +72,7 @@ static void GFUser_PublicRandInit(void);
 //------------------------------------------------------------------
 void GFLUser_Init(void)
 {
-	InitSystem();
+	//InitSystem();
 #if 0
 #ifdef USE_MAINEXMEMORY
   OS_EnableMainExArena();
@@ -97,9 +98,8 @@ void GFLUser_Init(void)
 
     //STD 標準ライブラリ初期化（乱数やCRC）
     GFL_STD_Init(GFL_HEAPID_SYSTEM);
-
 	//アーカイブシステム初期化
-	//GFL_ARC_SysInit(...);
+	GFL_ARC_InitMultiBoot(&ArchiveFileTable[0],ARCID_TABLE_MAX);
 
 	//UIシステム初期化
 	GFL_UI_Boot(GFL_HEAPID_SYSTEM);
@@ -116,9 +116,10 @@ void GFLUser_Init(void)
 	gfl_work->TCBMemVintr = GFL_HEAP_AllocMemory(
 		  GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
 	gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
-    // 汎用乱数初期化
+
+   // 汎用乱数初期化
     GFUser_PublicRandInit();
-    
+
     //FADEシステム初期化
     GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
@@ -172,17 +173,18 @@ void GFLUser_Display(void)
 //------------------------------------------------------------------
 void GFLUser_Exit(void)
 {
+	GFL_TEXT_DeleteSystem();
 	GFL_BACKUP_Exit();
-	GFL_UI_Exit();
-	GFL_PROC_Exit();
-	GFL_OVERLAY_Exit();
+	GFL_SOUND_Exit();
 	GFL_FADE_Exit();
+	GFL_PROC_Exit();
 	GFL_TCB_Exit(gfl_work->TCBSysVintr);
 	GFL_HEAP_FreeMemory(gfl_work->TCBSysVintr);
 	GFL_HEAP_FreeMemory(gfl_work->TCBMemVintr);
+	GFL_OVERLAY_Exit();
+	GFL_UI_Exit();
 	GFL_HEAP_DTCM_Exit();
 	GFL_HEAP_Exit();
-	GFL_SOUND_Exit();
 }
 
 //------------------------------------------------------------------
@@ -214,6 +216,13 @@ void GFLUser_VIntr(void)
 {
 	GFL_TCB_Main(gfl_work->TCBSysVintr);
 	GFL_BG_VBlankFunc();
+	// Vブランク期間で実行します。
+	// ただ、ユニットの描画が行われていないのに
+	// この関数を実行すると、描画しているOBJが消えてしまうため
+	// 割り込みないで呼ばないほうが良いかもしれません。
+	//GFL_CLACT_VBlankFunc();
+    // 通信アイコンの描画のためにあります。通信自体は行っていません
+    //GFL_NET_VBlankFunc();
 
 	GFL_DMA_Main();
 	GFL_USE_VintrCounter++;
@@ -236,18 +245,7 @@ GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 //------------------------------------------------------------------
 static void GFUser_PublicRandInit(void)
 {
-    RTCDate date;
-    RTCTime time;
-    u32 seed;
-    u64 seed64;
-    RTC_GetDateTime(&date, &time);
-    seed = date.year + date.month * 0x100 * date.day * 0x10000
-        + time.hour * 0x10000 + (time.minute + time.second) * 0x1000000;
-
-    GFL_STD_MtRandInit(seed);
-    seed64 = GFL_STD_MtRand( 0 );
-    seed64 = (seed64 << 32) + GFL_STD_MtRand( 0 );
-    GFL_STD_RandInit( &gfl_work->publicRandContext, seed64 );
+    GFL_STD_RandGeneralInit( &gfl_work->publicRandContext );
 }
 
 //------------------------------------------------------------------

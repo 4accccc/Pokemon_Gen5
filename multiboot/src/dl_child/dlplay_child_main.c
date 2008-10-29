@@ -285,6 +285,7 @@ void	DLPlayChild_InitBg(void)
 	//VRAMê›íË
 	GX_SetBankForBG( GX_VRAM_BG_128_A );
 	GX_SetBankForOBJ( GX_VRAM_OBJ_128_B );
+	GX_SetBankForSubOBJ( GX_VRAM_SUB_OBJ_16_I );
 
 	//BGÉÇÅ[Éhê›íË
 	GFL_BG_SetBGMode( &bgsysHeader );
