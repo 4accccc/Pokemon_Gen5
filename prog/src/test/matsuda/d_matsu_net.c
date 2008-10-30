@@ -285,8 +285,8 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		break;
 	case 4:		//タイミングコマンド発行
-		wk->seq = 6;
-		break;
+//		wk->seq = 6;
+//		break;
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
 		wk->seq++;
 		break;
