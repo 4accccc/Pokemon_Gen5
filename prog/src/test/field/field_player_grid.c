@@ -70,7 +70,7 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
-								playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
+					playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
 	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
 	
 	//サイズ変更
@@ -103,24 +103,22 @@ void PlayerActGrid_AnimeSet(
 	PC_ACTCONT *pcActCont, int dir , int move )
 {
 	int anmBase,anmID;
-	VecFx32	trans = pcActCont->trans;
+//	VecFx32	trans = pcActCont->trans;
 	
-	if( pcActCont->anmSetID == move ){
-		return;
-	}
-
-	pcActCont->anmSetID = move;
-
 	if( move == FALSE ){
 		anmBase = PCACTSTOP_UP;
 	}else{
 		anmBase = PCACTWALK_UP;
 	}
 	
-	anmID = anmBase + playerBBDanmOffsTblMine[dir];
+	anmID = anmBase + dir;
 	
-	GFL_BBDACT_SetAnimeIdx(
-		GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+	if( pcActCont->anmSetID != anmID ){
+		OS_Printf( "自機アニメセット dir=%d, anmID=%d\n", dir, anmID );
+		pcActCont->anmSetID = anmID;
+		GFL_BBDACT_SetAnimeIdx(
+			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+	}
 	
 #if 0
 	trans.x = pcActCont->trans.x;

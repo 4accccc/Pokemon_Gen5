@@ -595,6 +595,17 @@ static void FGridPlayer_Move(
 			}
 		}
 	}
+
+	{
+		int dir = 0;
+		switch( pJiki->dir ){
+		case DIR_UP:	dir = 0; break;
+		case DIR_DOWN:	dir = 1; break;
+		case DIR_LEFT:	dir = 2; break;
+		case DIR_RIGHT:	dir = 3; break;
+		}
+		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->move_flag );
+	}
 	
 	if( pJiki->move_flag == TRUE ){
 		fx32 count = 0;
@@ -643,22 +654,10 @@ static void FGridPlayer_Move(
 		}
 	}
 	
-	{
-		int dir = 0;
-		
-		switch( pJiki->dir ){
-		case DIR_UP:	dir = 3; break;
-		case DIR_DOWN:	dir = 1; break;
-		case DIR_LEFT:	dir = 0; break;
-		case DIR_RIGHT:	dir = 2; break;
-		}
-		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->move_flag );
-	}
-	
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_X) ){
 		fx32 x = pJiki->vec_pos.x;
 		fx32 z = pJiki->vec_pos.z;
-
+		
 		OS_Printf(
 			"é©ã@èÓïÒ GridX %d(%d,%xH), GridZ %d(%d,%xH), Y=%xH",
 			SIZE_GRID_FX32(x), x, x,
