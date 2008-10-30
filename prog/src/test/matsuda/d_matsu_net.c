@@ -33,6 +33,10 @@ typedef struct {
 	//通信
 	BOOL connect_ok;
 	int send_key;
+	
+	u8 huge_data[0x1000];
+	u8 receive_huge_data[2][0x1000];
+	volatile u16 cs;
 }D_MATSU_WORK;
 
 
@@ -47,8 +51,9 @@ static void _initCallBack(void* pWork);
 static void _connectCallBack(void* pWork);
 static void _endCallBack(void* pWork);
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _RecvTalkData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _RecvHugeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvKeyData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 
 
 
@@ -85,7 +90,30 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 	wk = GFL_PROC_AllocWork( proc, sizeof(D_MATSU_WORK), HEAPID_MATSUDA_DEBUG );
 	MI_CpuClear8(wk, sizeof(D_MATSU_WORK));
 	wk->heapID = HEAPID_MATSUDA_DEBUG;
-
+	{
+		int i;
+		volatile u16 cs = 0;
+		u8 maca[6];
+		OS_GetMacAddress(maca);
+		for(i = 0; i < 6; i++){
+			OS_TPrintf("mac addrs = %x %x %x %x %x %x\n", maca[0], maca[1], maca[2], maca[3], maca[4], maca[5]);
+		}
+		for(i = 0; i < 0x1000; i++){
+			if(i < 0x5000){
+				wk->huge_data[i] = maca[1];
+			}
+			else{
+				wk->huge_data[i] = maca[2];
+			}
+			cs += wk->huge_data[i];
+			if(i % 0x100 == 0 || i == 0x1000-1 || i == 0x1000-2){
+				OS_TPrintf("cs = %x, huge %x %x\n", cs, i, wk->huge_data[i]);
+			}
+		}
+		wk->cs = cs;
+		OS_TPrintf("巨大データチェックサム = 0x%x\n", wk->cs);
+	}
+	
 //	GFL_ARC_Init( arcFiles, NELEMS(arcFiles) );	gfl_use.cで1回だけ初期化に変更
 
 	GFL_DISP_SetBank( &vramBank );
@@ -191,21 +219,21 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 //==============================================================================
 static const NetRecvFuncTable _CommPacketTbl[] = {
 //    {_RecvMoveData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_MOVE
-//    {_RecvTalkData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_TALK
+//    {_RecvHugeData,        GFL_NET_COMMAND_SIZE( 0 ), NULL},    ///NET_CMD_HUGE
 //    {_RecvKeyData,         GFL_NET_COMMAND_SIZE( 4 ), NULL},    ///NET_CMD_KEY
     {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
-    {_RecvTalkData,         NULL},    ///NET_CMD_TALK
+    {_RecvHugeData,         _RecvHugeBuffer},    ///NET_CMD_HUGE
     {_RecvKeyData,          NULL},    ///NET_CMD_KEY
 };
 
 enum{
 	NET_CMD_MOVE = GFL_NET_CMD_COMMAND_MAX,
-	NET_CMD_TALK,
+	NET_CMD_HUGE,
 	NET_CMD_KEY,
 };
 
 #define _MAXNUM   (4)         // 最大接続人数
-#define _MAXSIZE  (32)        // 最大送信バイト数
+#define _MAXSIZE  (GFL_NET_IRC_SEND_MAX)	//(32)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 
@@ -312,6 +340,10 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		if(wk->send_key & PAD_KEY_RIGHT){
 			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
+		}
+		
+		if(wk->send_key & PAD_BUTTON_B){
+			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_HUGE, 0x1000, &wk->huge_data);
 		}
 		
 		if(ret == FALSE){
@@ -441,7 +473,7 @@ static void _RecvMoveData(const int netID, const int size, const void* pData, vo
 
 //--------------------------------------------------------------
 /**
- * @brief   会話コマンド受信関数
+ * @brief   巨大データコマンド受信関数
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -451,9 +483,30 @@ static void _RecvMoveData(const int netID, const int size, const void* pData, vo
  */
 //--------------------------------------------------------------
 
-static void _RecvTalkData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _RecvHugeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
+	D_MATSU_WORK *wk = pWork;
+	int i;
+	const u8 *data = pData;
+	u16 cs = 0;
+	
+	OS_TPrintf("巨大データ受信 netid = %d, size = 0x%x\n", netID, size);
+	for(i = 0; i < size; i++){
+		cs += data[i];
+		//OS_TPrintf("%d, ", data[i]);
+	//	if(i % 32 == 0){
+	//		OS_TPrintf("\n");
+	//	}
+	}
+	OS_TPrintf("巨大データ受信チェックサム=0x%x\n", cs);
 }
+
+u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
+{
+	D_MATSU_WORK *wk = pWork;
+	return wk->receive_huge_data[netID - 1];
+}
+
 
 //--------------------------------------------------------------
 /**
