@@ -22,7 +22,7 @@ extern "C" {
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
-#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
+#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
