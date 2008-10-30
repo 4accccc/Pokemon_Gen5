@@ -143,13 +143,19 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
 }
 
 //------------------------------------------------------------------
+/**
+ * @return BOOL	TRUEのとき、プロセス終了
+ */
 //------------------------------------------------------------------
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
 	//	PlayerController/Event
-	GFL_PROC_LOCAL_Main(gsys->procsys);
-	return FALSE;
+	if (GFL_PROC_LOCAL_Main(gsys->procsys)) {
+		return FALSE;
+	} else {
+		return TRUE;
+	}
 }
 
 //------------------------------------------------------------------

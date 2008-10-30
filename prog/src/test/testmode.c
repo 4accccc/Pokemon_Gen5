@@ -997,6 +997,7 @@ extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 
 extern const GFL_PROC_DATA DebugFieldProcData;
+extern const GFL_PROC_DATA GameMainProcData;
 
 //------------------------------------------------------------------
 static void CallSelectProc( TESTMODE_WORK * testmode )
@@ -1118,7 +1119,8 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 				case NUM_STARTSEL_CONTINUE:
 				case NUM_STARTSEL_START:
 					GFL_PROC_SysCallProc(
-						NO_OVERLAY_ID, &DebugFieldProcData, NULL);
+						NO_OVERLAY_ID, &GameMainProcData, NULL);
+						//NO_OVERLAY_ID, &DebugFieldProcData, NULL);
 					(*seq) = 4;
 					break;
 				}
