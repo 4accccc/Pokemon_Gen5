@@ -1,6 +1,7 @@
 #ifndef __FIELD_MAIN_H__
 #define __FIELD_MAIN_H__
 
+#include "gamesystem/gamesystem.h"
 #include "field_g3d_mapper.h"
 #include "field_player.h"			//PC_ACT_FUNC
 
@@ -27,7 +28,7 @@ extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork );
 
-extern void	FieldBoot( HEAPID heapID );
+extern void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID );
 extern void	FieldEnd( void );
 extern BOOL	FieldMain( void );
 

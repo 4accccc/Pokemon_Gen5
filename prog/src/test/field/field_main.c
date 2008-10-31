@@ -25,6 +25,8 @@
 
 #include "field_debug.h"
 
+#include "gamesystem/gamesystem.h"
+
 //============================================================================================
 /**
  *
@@ -61,6 +63,7 @@ typedef enum {
 //------------------------------------------------------------------
 struct _FIELD_MAIN_WORK
 {
+	GAMESYS_WORK*	gsys;
     VecFx32         recvWork;
 	HEAPID			heapID;
 	GAMEMODE		gamemode;
@@ -108,7 +111,7 @@ static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
  * @brief	ƒ[ƒN‚ÌŠm•Û‚Æ”jŠü
  */
 //------------------------------------------------------------------
-void	FieldBoot( HEAPID heapID )
+void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 {
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;

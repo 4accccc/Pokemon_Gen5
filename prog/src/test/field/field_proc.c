@@ -10,6 +10,7 @@
 #include "system\main.h"
 
 #include "field_main.h"
+#include "gamesystem/gamesystem.h"
 
 //============================================================================================
 //
@@ -30,8 +31,9 @@
 static GFL_PROC_RESULT DebugFieldProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	GAMESYS_WORK * gsys = pwk;
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
-	FieldBoot( HEAPID_WATANABE_DEBUG );
+	FieldBoot(gsys, HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
