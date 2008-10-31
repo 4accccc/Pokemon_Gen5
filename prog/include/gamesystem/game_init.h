@@ -29,7 +29,7 @@ typedef struct {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern GAME_INIT_WORK TestGameInitWork;
+extern GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid);
 
 #ifdef	__cplusplus
 }	//extern "C" {

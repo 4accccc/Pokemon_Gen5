@@ -15,6 +15,8 @@
 #include "gamesystem/playerwork.h"
 #include "game_event.h"	//local
 
+#include "gamesystem/game_init.h"
+
 //============================================================================================
 //============================================================================================
 enum {
@@ -33,12 +35,13 @@ enum {
 //------------------------------------------------------------------
 static GAMESYS_WORK * GameSysWork;
 
+static GAME_INIT_WORK TestGameInitWork;
 
 //============================================================================================
 //============================================================================================
 extern const GFL_PROC_DATA DebugFieldProcData;
 
-static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk);
+static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param);
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
@@ -104,6 +107,18 @@ const GFL_PROC_DATA GameMainProcData = {
 };
 
 
+//------------------------------------------------------------------
+/**
+ * @file	ゲーム開始初期化用ワーク取得
+ */
+//------------------------------------------------------------------
+GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid)
+{
+	TestGameInitWork.mode = mode;
+	TestGameInitWork.mapid = mapid;
+	return &TestGameInitWork;
+}
+
 
 //============================================================================================
 //============================================================================================
@@ -133,15 +148,19 @@ static u32 GAMESYS_WORK_GetSize(void)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
+static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
 	int i;
 	gsys->heapID = heapID;
-	gsys->parent_work = pwk;
+	gsys->parent_work = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
 
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gsys->playerWork[i]);
+	}
+	{
+		PLAYER_WORK * me = &gsys->playerWork[0];
+		PLAYERWORK_setZoneID(me, init_param->mapid);
 	}
 }
 //------------------------------------------------------------------
@@ -173,9 +192,9 @@ void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
+static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param)
 {
-	GAMESYS_WORK_Init(gsys, heapID, pwk);
+	GAMESYS_WORK_Init(gsys, heapID, init_param);
 }
 
 //------------------------------------------------------------------
