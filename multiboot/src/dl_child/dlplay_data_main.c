@@ -8,6 +8,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#include <string.h>
 #include <backup_system.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
@@ -74,10 +75,20 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 		OS_ReleaseLockID( (u16)lockID );
 		{
 			char str[64];
-			sprintf(str,"name:[%12s] code:[%08x]",headerData->game_name ,headerData->game_code);
+			sprintf(str,"name:[%s] code:[%x]",headerData->game_name ,headerData->game_code);
 			DLPlayFunc_PutString(str,d_data->msgSys_);
 		}
 		//FIX ME:³‚µ‚¢”»•Êˆ—‚ð“ü‚ê‚é
+		if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+			STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 )
+		{
+			d_data->cardType_ = CARD_TYPE_DP;
+		}
+		else if( STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 )
+		{
+			d_data->cardType_ = CARD_TYPE_PT;
+		}
+
 		//d_data->cardType_ = CARD_TYPE_PT;
 
 

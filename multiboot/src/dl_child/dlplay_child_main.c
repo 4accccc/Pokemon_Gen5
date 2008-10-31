@@ -198,6 +198,12 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPlayFunc_PutString("Select backup type.",childData->msgSys_);
 			DLPlayFunc_PutString("Y = DP : X = PT",childData->msgSys_);
 			DLPlayFunc_ChangeBgMsg( MSG_CONNECTED_PARENT , DLPLAY_STR_PLANE );
+			//カードタイプがROMヘッダから確定していたら即ロード
+			if( DLPlayData_GetCardType( childData->dataSys_ ) != CARD_TYPE_INVALID )
+			{
+				childData->mainSeq_ = DCS_LOAD_BACKUP;
+				DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
+			}
 		}
 		break;
 	
