@@ -56,7 +56,7 @@ static void callback(u8 *data, u8 size, u8 command, u8 value)
 		IRC_Send((u8*)data_up, 64, 0x04, (u8)1);
 		break;
 	case 0x04: // レシーバー は4を受け取る
-		NetIRC::RecvURLCOMMAND(data,size,value);
+		NetIRC::RecvURLCOMMAND(data,size-4,value);
 		if(NetIRC::SendLoop()){
 			IRC_Send(data_up, 64, 2, (u8)1 ); 
 		}
@@ -99,7 +99,7 @@ void NetIRC::draw(Form^ fm)
 	MainForm^ mform = dynamic_cast<MainForm^>(fm);
 	unsigned char data_up[64]={0,1,2,3};
 
-	
+	/*
 	if(IRC_IsConnectUsb()){
 		String^ coms = gcnew String((wchar_t *)IRC_GetPortName());
 		mform->StripStatusLabel->Text = "USB認識中" + coms;
@@ -118,6 +118,7 @@ void NetIRC::draw(Form^ fm)
 	if(dataArray!=nullptr){
 		mform->StripStatusLabelCenter->Text = dataArray->Length.ToString();
 	}
+	*/
 
 	{
 		bool tmp;
@@ -175,6 +176,8 @@ bool NetIRC::sendData(u8 value)
 	if(isDataSend){
 		return false;
 	}
+	recvDataSize=0;
+	isRecv = false;
 	SendValue = value;
 	isDataSend = true;
 	connect();
@@ -215,7 +218,7 @@ bool NetIRC::SendLoop(void)
 		IRC_Send(wptr, length, COMMAND_SND, SendValue+1);  //送れる時はSendValue+1
 		isDataSend=false;
 	}
-	Debug::WriteLine("snd送信"+length);
+	Debug::WriteLine("送信" + SendValue + "サイズ"+length);
 	return false;
 	
 }
@@ -444,10 +447,25 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 	int i;
 	System::Threading::Thread^ threadA;
 
-	if((value < TR_URL_UPLOAD) || (value >= TR_URL_MAX)){
+	if(value != 0){
+		Debug::WriteLine("command "+value);
 		if(URLNo == 0){
-			return;
+			URLNo = value;
+			recvdataArray = gcnew array<unsigned char>(10000);
+			Array::Resize(recvdataArray, 100000);
+			recvDataSize=0;
 		}
+		for(i=0;i<size;i++){
+			recvdataArray[recvDataSize + i] = data[i];
+		}
+		recvDataSize+=size;
+
+		if((value == IRC_COMMAND_BOXLISTEND) || (value == IRC_COMMAND_BOXPOKEEND)){
+			isRecv = true;
+		}
+	}
+
+	if((value >= TR_URL_UPLOAD) && (value < TR_URL_MAX)){
 		switch(URLNo){
 			case TR_URL_UPLOAD:
 
@@ -505,18 +523,6 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 		URLNo=0;
 		return;
 	}
-	else{
-		Debug::WriteLine("command "+value);
-		if(URLNo == 0){
-			URLNo = value;
-			recvdataArray = gcnew array<unsigned char>(10000);
-			Array::Resize(recvdataArray, 100000);
-		}
-		for(i=0;i<size;i++){
-			recvdataArray[i] = data[i];
-		}
-	}
-
 
 }
 
@@ -553,3 +559,27 @@ void NetIRC::SetProxy(String^ proxy)
 	ghttpSetProxy(ch);
 	free(ch);
 }
+
+//--------------------------------------------------------------
+/**
+ * @breif   ポケモンボックスリスト要求
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+/*
+void NetIRC::GetPokeBoxList(void)
+{
+	isRecv = false;
+	NetIRC::dataArray = gcnew array<unsigned char>(1);
+	NetIRC::dataArray[0] = IRC_COMMAND_BOXLIST;
+	NetIRC::sendData(IRC_COMMAND_BOXLIST);
+
+
+	while(!isRecv){
+		Sleep(10);
+	}
+	MessageBox::Show("図鑑リストうけとり");
+
+}
+*/

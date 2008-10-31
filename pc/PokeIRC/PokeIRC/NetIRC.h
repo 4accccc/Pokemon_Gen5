@@ -43,6 +43,15 @@ namespace PokeIRC {
 		TR_URL_SHUFFLE,
 		TR_URL_MAX
 	};
+	typedef enum {
+	    IRC_COMMAND_BOXLIST = 50,
+	    IRC_COMMAND_BOXLISTEND,
+	    IRC_COMMAND_BOXPOKE,
+	    IRC_COMMAND_BOXPOKEEND,
+	    IRC_COMMAND_SNDV,
+	    IRC_COMMAND_SNDEND,
+	} IRC_COMMAND_e;
+
 
 
 	public ref class NetIRC
@@ -70,9 +79,18 @@ namespace PokeIRC {
 		static bool sendData(u8 value);
 		static bool SendLoop(void);
 		static array<unsigned char>^ dataArray;
+
 		static array<unsigned char>^ recvdataArray;
+		static int recvDataSize;
+	private:
+		static bool isRecv;   //ƒRƒ}ƒ“ƒh‚ðŽó‚¯Žæ‚èŠ®—¹
+	public:
+		static bool isRecvFlg(void){ return isRecv; }
+
+
 		static void RecvURLCOMMAND(unsigned char * data,int size,unsigned char value);
 		static int WaitForAsync(void);
+
 	private:
 		static void RequestUpload(void);
 		static void RequestServerState(void);

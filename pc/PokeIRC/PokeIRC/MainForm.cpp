@@ -25,6 +25,9 @@ using namespace PokeIRC;
 using namespace System::Windows::Forms;
 using namespace System::Threading;
 
+static BoxTrayData GPokeBoxList[BOX_MAX_TRAY];
+
+
 //--------------------------------------------------------------
 /**
  * @breif   ファイル->Syncメニューが選択された時の処理
@@ -35,7 +38,7 @@ using namespace System::Threading;
 
 System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-//	NetIRC::connect();
+	NetIRC::connect();
 
 	threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::ThreadWork)); //
 
@@ -44,11 +47,6 @@ System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System:
 
     threadA->Start(); // 
 
-	{
-		String^ proxy = "";
-		Dpw_Tr_Init(100000, TEST_KEY | 100000);
-		SetProxy(proxy);
-	}
 
 
 }
@@ -92,6 +90,7 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 
 
 	this->Width = 10 * 8 * 6 + 10;
+	this->Width *= 2;
 	this->Height = 10 * 8 * 6 + 30;
 
 //	button1->Hide();
@@ -103,18 +102,12 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 	dispBoxNo=0;
 
 	{
-		putPoke = gcnew array<int,2>(POKMEON_BOX_NUM,POKMEON_BOX_POKENUM);
-		int i,j;
-		for(j=0;j < POKMEON_BOX_NUM;j++){
-			for(i=0;i < POKMEON_BOX_POKENUM;i++){
-				int no = j * POKMEON_BOX_POKENUM + i + 1;
-				if(POKEMON_MAX <= no){
-					no -= 200;
-				}
-				putPoke[j,i] = no;
-			}
-		}
+		String^ proxy = "";
+		Dpw_Tr_Init(100000, TEST_KEY | 100000);
+		SetProxy(proxy);
 	}
+
+
 }
 
 //--------------------------------------------------------------
@@ -139,9 +132,9 @@ System::Void MainForm::timer_Tick(System::Object^  sender, System::EventArgs^  e
 System::Void MainForm::MainForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e)
 {
 	//timer->Stop();
-	if(threadA != nullptr){
-		threadA->Suspend();
-	}
+//	if(threadA != nullptr){
+//		threadA->Suspend();
+//	}
 	//threadA->Finalize();
 	NetIRC::shutdown();
 
@@ -223,9 +216,9 @@ void MainForm::SetProfile(Dpw_Common_Profile* profile)
 	profile->countryCode = 103;
 	profile->localCode = 1;
 	profile->playerId = 87654322;
-	profile->playerName[0] = 0x66;      // サ
-	profile->playerName[1] = 0x79;      // ト
-	profile->playerName[2] = 0x69;      // シ
+	profile->playerName[0] = 0x64;      // サ
+	profile->playerName[1] = 0x77;      // ト
+	profile->playerName[2] = 0x62;      // シ
 	profile->playerName[3] = 0xffff;    // 終端
 	profile->flag = 0;
 	strcpy(profile->mailAddr, "ohno_katsumi@gamefreak.co.jp");
@@ -235,23 +228,25 @@ void MainForm::SetProfile(Dpw_Common_Profile* profile)
 }
 
 // Dpw_Tr_Dataをセットする
-void MainForm::SetTrData(Dpw_Tr_Data* upload_data)
+void MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
 {
-	// コクーン
-	u8 data[] = {57,148,138,197,0,0,19,71,0,225,226,116,104,187,11,169,205,198,239,184,227,255,202,161,239,133,127,140,240,161,240,216,218,41,84,70,114,199,108,49,9,11,13,170,10,159,215,139,122,119,196,182,144,222,10,165,255,5,39,199,92,169,30,208,159,170,35,150,233,137,68,57,61,192,222,48,184,97,214,129,199,149,235,2,51,78,168,8,50,63,184,113,88,235,164,121,39,174,75,187,206,137,149,99,23,87,77,12,166,84,227,11,122,23,165,0,177,112,190,172,49,209,41,5,54,142,254,210,176,165,17,74,129,129,171,153,64,114,145,74,27,162,201,134,219,36,246,122,83,172,14,162,147,57,250,245,81,152,113,165,218,37,51,51,228,198,16,92,111,223,224,104,234,160,34,71,70,131,62,212,7,7,90,177,247,109,244,134,227,190,220,50,54,197,124,119,9,133,210,16,1,10,178,178,29,251,90,150,53,231,242,188,35,194,198,246,18,178,21,67,39,33,129,179,97,4,0,76,14,66,18,45,12,186,7,205};
-
+	int i;
 	memset(upload_data, 0, sizeof(*upload_data));
-	memcpy(&upload_data->postData, data, sizeof(upload_data->postData));
-	upload_data->postSimple.characterNo = 14;    // コクーン
+
+	for(i=0;i < 0x88;i++){
+		upload_data->postData.data[i] = NetIRC::recvdataArray[i+2];
+	}
+
+	upload_data->postSimple.characterNo = pokeNo;
 	upload_data->postSimple.gender = DPW_TR_GENDER_FEMALE;
 	upload_data->postSimple.level = 20;
-	upload_data->wantSimple.characterNo = 14;    // コクーン
+	upload_data->wantSimple.characterNo = 101;
 	upload_data->wantSimple.gender = DPW_TR_GENDER_FEMALE;
 	upload_data->wantSimple.level_min = 0;
 	upload_data->wantSimple.level_max = 0;
-	upload_data->name[0] = 0x66; // サ
-	upload_data->name[1] = 0x79; // ト
-	upload_data->name[2] = 0x69; // シ
+	upload_data->name[0] = 0x64; // サ
+	upload_data->name[1] = 0x77; // ト
+	upload_data->name[2] = 0x62; // シ
 	upload_data->name[3] = 0xffff;
 	upload_data->trainerID = 1 << 12;
 	upload_data->countryCode = 103;
@@ -269,14 +264,36 @@ void MainForm::SetTrData(Dpw_Tr_Data* upload_data)
  * @retval  none
  */
 //--------------------------------------------------------------
-bool MainForm::RequestUpload(void)
+void MainForm::RequestUpload(void)
 {
 	s32 result = 0;
+	int pid = 100000;
+	String^ proxy = "";
 
-	// 預ける
-	{
+
+
+
+	while(!NetIRC::isRecvFlg()){
+		Sleep(10);
+	}
+
+
+
+	SetProxy(proxy);
+	if(!RequestCheckServerState()){
+		return;
+	}
+	if(!RequestSetProfile()){
+		return;
+	}
+	if(!RequestPickupTraded()){
+		Debug::WriteLine("引取りに失敗");
+		return;
+	}
+
+	{	// 預ける
 		Dpw_Tr_Data data;
-		SetTrData(&data);
+		SetTrData(&data, targetPoke);
 		Dpw_Tr_UploadAsync(&data);
 		result = WaitForAsync();
 		if(result == 0 )
@@ -286,7 +303,7 @@ bool MainForm::RequestUpload(void)
 			if(WaitForAsync() != 0 )
 			{
 				Debug::WriteLine("Failed to uploadFinish.");
-				return false;
+				return;
 			}
 		}
 		else if(result == DPW_TR_ERROR_ILLIGAL_REQUEST)
@@ -296,10 +313,11 @@ bool MainForm::RequestUpload(void)
 		else
 		{
 			Debug::WriteLine("Failed to upload.");
-			return false;
+			return;
 		}
 	}
-	return true;
+	MessageBox::Show("あずけました");
+	return;
 }
 
 
@@ -321,25 +339,39 @@ bool MainForm::RequestPickupTraded(void)
 		Dpw_Tr_GetUploadResultAsync(&data);
 
 		result = WaitForAsync();
-		if(WaitForAsync() == 0 )
+		if(result == 0 )
 		{
-			puts("Not traded.");
-			return true;
+			Debug::WriteLine("Not traded.");
+		//	return true;
 		}
 		else if(result == 1)
 		{
-			puts("Traded.");
+			Debug::WriteLine("Traded.");
 		}
 		else
 		{
-			puts("Failed to upload result.");
+			Debug::WriteLine("Failed to upload result.");
 			return false;
 		}
 
-		Dpw_Tr_DeleteAsync();
+//		Dpw_Tr_DownloadAsync(&data);
+
+//		if(WaitForAsync() != 0 )
+//		{
+//			puts("Failed to delete.");
+//			return false;
+//		}
+
+		if(result == 1){
+			Dpw_Tr_DeleteAsync();
+		}
+		else{
+			Debug::WriteLine("RETURN ");
+			Dpw_Tr_ReturnAsync();
+		}
 		if(WaitForAsync() != 0 )
 		{
-			puts("Failed to delete.");
+			Debug::WriteLine("Failed to delete.");
 			return false;
 		}
 	}
@@ -437,7 +469,7 @@ void MainForm::SetProxy(String^ proxy)
 void MainForm::TestUploadDownload(int pid,  String^ proxy)
 {
 	static int count = 1;
-	Dpw_Tr_Init(pid, TEST_KEY | pid);
+	//Dpw_Tr_Init(pid, TEST_KEY | pid);
 
 	SetProxy(proxy);
 
@@ -451,10 +483,7 @@ void MainForm::TestUploadDownload(int pid,  String^ proxy)
 		return;
 	}
 
-	if(!RequestUpload())
-	{
-		return;
-	}
+	RequestUpload();
 /*
 	if(!RequestPickup())
 	{
@@ -478,7 +507,7 @@ void MainForm::TestUploadDownload(int pid,  String^ proxy)
 void MainForm::TestDownload(int pid,  String^ proxy)
 {
 	static int count = 1;
-	Dpw_Tr_Init(pid, TEST_KEY | pid);
+	//Dpw_Tr_Init(pid, TEST_KEY | pid);
 
 	SetProxy(proxy);
 	if(!RequestCheckServerState())
@@ -559,6 +588,15 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 void MainForm::CallProg(String^ message)
 {
 	if(message =="PokeSend"){
+		bBoxListRecv = false;
+		threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
+		threadA->IsBackground = true; // バックグラウンド・スレッドとする
+		threadA->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+	    threadA->Start(); // 
+
+
+		threadA->Join();
+
 		pokemonListDisp(0);
 	}
 	else{
@@ -578,15 +616,16 @@ void MainForm::pokemonListDisp(int boxNo)
 	button2->Text = "ボックス " + printBoxNo;
 
 	for(i=0;i < POKMEON_BOX_POKENUM;i++){
-		if(putPoke[boxNo,i]==0){
+		if(GPokeBoxList[boxNo].pokeno[i]==0){
+//		if(putPoke[boxNo,i]==0){
 			continue;
 		}
-		int tno = putPoke[boxNo,i];
+		int tno = GPokeBoxList[boxNo].pokeno[i];
 		if(tno >= POKEMON_MAX ){
 			continue;
 		}
 
-		int no = PokeGraNoTable[putPoke[boxNo,i]].no;
+		int no = PokeGraNoTable[tno].no;
 
 		String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
 		String^ ncgname = dirname + "pmpl_" + no.ToString("000") + "_frnt_m.ncg";
@@ -625,6 +664,39 @@ System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, S
 
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @breif   場所からPokemonBOXの場所番号を得る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::getBoxPositionFromThePlace(int x,int y)
+{
+	int i = x  / (10*8);
+	if(i < 0){
+		return -1;
+	}
+	else if(i >= 6){
+		return -1;
+	}
+	int j = (y)  / (10*8);
+	if(j < 0){
+		return -1;
+	}
+	else if(j >= 5){
+		return -1;
+	}
+	i = i + j * 6;
+	if((i >= 0) && (i < POKMEON_BOX_POKENUM)){
+		return i;
+	}
+	return -1;
+}
+
+
 //--------------------------------------------------------------
 /**
  * @breif   場所からPokemon番号を得る
@@ -635,23 +707,9 @@ System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, S
 
 int MainForm::getPokemonNumberFromThePlace(int x,int y)
 {
-	int i = x  / (10*8);
-	if(i < 0){
-		return 0;
-	}
-	else if(i >= 6){
-		return 0;
-	}
-	int j = (y)  / (10*8);
-	if(j < 0){
-		return 0;
-	}
-	else if(j >= 5){
-		return 0;
-	}
-	i = i + j * 6;
-	if((i >= 0) && (i < POKMEON_BOX_POKENUM)){
-		return putPoke[dispBoxNo,i];
+	int no = getBoxPositionFromThePlace(x, y);
+	if(no != -1){
+		return GPokeBoxList[dispBoxNo].pokeno[no];
 	}
 	return 0;
 }
@@ -715,10 +773,18 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 			 MessageBoxButtons::OKCancel,
 			 MessageBoxIcon::Question )
 				 == System::Windows::Forms::DialogResult::OK ) {
+				targetPoke = pokeno;
 
+				// 赤外線コマンド発行
+				NetIRC::dataArray = gcnew array<unsigned char>(2);
+				NetIRC::dataArray[0] = dispBoxNo;
+				NetIRC::dataArray[1] = getBoxPositionFromThePlace(e->X,e->Y);
+				NetIRC::sendData(IRC_COMMAND_BOXPOKE);
 
-
-
+				threadA = gcnew Thread(gcnew ThreadStart(&RequestUpload));  //
+				threadA->IsBackground = true;                // バックグラウンド・スレッドとする
+				threadA->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
+			    threadA->Start(); // 
 
 		}
 	}
@@ -773,4 +839,46 @@ System::Void MainForm::button1_Click(System::Object^  sender, System::EventArgs^
 	}
 	dispBoxNo--;
 	pokemonListDisp(dispBoxNo);
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @breif   ポケモンボックスリスト要求
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::GetPokeBoxList(void)
+{
+	//isRecv = false;
+	int i,j,k=0;
+
+	NetIRC::dataArray = gcnew array<unsigned char>(1);
+	NetIRC::dataArray[0] = IRC_COMMAND_BOXLIST;
+	NetIRC::sendData(IRC_COMMAND_BOXLIST);
+
+
+	while(!NetIRC::isRecvFlg()){
+		Sleep(10);
+	}
+	
+	
+	k=2;
+	for(i=0;i < BOX_MAX_TRAY;i++){
+		for(j = 0;j < BOX_MAX_POS;j++){
+			GPokeBoxList[i].pokeno[j] = NetIRC::recvdataArray[k]+NetIRC::recvdataArray[k+1]*0x100;
+			k+=2;
+		}
+		for(j = 0;j < BOX_MAX_POS;j++){
+			GPokeBoxList[i].pokelv[j] = NetIRC::recvdataArray[k]+NetIRC::recvdataArray[k+1]*0x100;
+			k+=2;
+		}
+		for(j = 0;j < BOX_TRAYNAME_BUFSIZE+2;j++){
+			GPokeBoxList[i].trayName[j] = NetIRC::recvdataArray[k]+NetIRC::recvdataArray[k+1]*0x100;
+			k+=2;
+		}
+	}
+	bBoxListRecv = true;
 }

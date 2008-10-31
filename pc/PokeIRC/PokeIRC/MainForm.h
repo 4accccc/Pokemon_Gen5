@@ -15,12 +15,28 @@ namespace PokeIRC {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+#define BOX_MAX_RAW				(5)
+#define BOX_MAX_COLUMN			(6)
+#define BOX_MAX_TRAY			(18)
+#define BOX_TRAYNAME_MAXLEN		(8)
+#define BOX_TRAYNAME_BUFSIZE	(20)	// 日本語８文字＋EOM。海外版用の余裕も見てこの程度。
+#define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)
+
+
 	static const char PROGRAM_NAME[] = "Global Pokemon FunClub";
 
 	typedef struct{
 		int no;
 		char* name;
 	} PokeData;
+
+	// ボックスリスト
+	typedef struct {
+	    short pokeno[BOX_MAX_POS];
+	    short pokelv[BOX_MAX_POS];
+	    unsigned short trayName[BOX_TRAYNAME_BUFSIZE+2];
+	} BoxTrayData;
+
 
 	static const	PokeData	PokeGraNoTable[]={
 	0,			"０オリジン",
@@ -581,9 +597,10 @@ namespace PokeIRC {
 	static const int POKMEON_BOX_NUM = 18;  //BOX18こ
 	static const int POKMEON_BOX_POKENUM = 30; //ポケモン３０体
 	int dispBoxNo;
-	array<int,2>^ putPoke;  //ポケモン格納バッファ
+	static int targetPoke;   // 今選択しているポケモンNo
 	static const unsigned long long TEST_KEY = 0x100000000UL;
 	static const int POKEMON_MAX = 494;
+	bool bBoxListRecv;
 
 	private: System::Windows::Forms::ToolStripMenuItem^  gTSResetToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripContainer^  toolStripContainer1;
@@ -719,7 +736,7 @@ namespace PokeIRC {
 			// 
 			this->sToolStripMenuItem->Name = L"sToolStripMenuItem";
 			this->sToolStripMenuItem->Size = System::Drawing::Size(153, 22);
-			this->sToolStripMenuItem->Text = L"Sync(&S)";
+			this->sToolStripMenuItem->Text = L"DSと接続(&S)";
 			this->sToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::sToolStripMenuItem_Click);
 			// 
 			// sendDataDToolStripMenuItem
@@ -837,6 +854,7 @@ namespace PokeIRC {
 			this->button2->TabIndex = 1;
 			this->button2->Text = L"ボックス１";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
 			// button1
 			// 
@@ -915,16 +933,20 @@ private: System::Void DoWork( System::Object^ sender, System::ComponentModel::Do
 private: System::Void RunWorkerCompleted( System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e );
 private: void ThreadWork(void);
 private: void TestUploadDownload(int pid, String^ proxy);
-private: void SetProxy(String^ proxy);
-private: bool RequestCheckServerState(void);
-private: int WaitForAsync(void);
-private: bool RequestSetProfile(void);
-private: bool RequestUpload(void);
-private: void SetTrData(Dpw_Tr_Data* upload_data);
-private: void SetProfile(Dpw_Common_Profile* profile);
+private: static void SetProxy(String^ proxy);
+private: static bool RequestCheckServerState(void);
+private: static int WaitForAsync(void);
+private: static bool RequestSetProfile(void);
+private: static void RequestUpload(void);
+private: static void SetTrData(Dpw_Tr_Data* upload_data, int pokeNo);
+private: static void SetProfile(Dpw_Common_Profile* profile);
 private: void TestDownload(int pid,  String^ proxy);
-private: bool RequestPickupTraded(void);
+private: static bool RequestPickupTraded(void);
 private: int getPokemonNumberFromThePlace(int x,int y);
+private: int getBoxPositionFromThePlace(int x,int y);
+private: void GetPokeBoxList(void);
+
+
 
 
 private: System::Void gTSTestGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
@@ -958,6 +980,8 @@ private: System::Void exitEToolStripMenuItem_Click(System::Object^  sender, Syst
 private: System::Void pictureBox1_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 private: System::Void pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
 };
 }
 
