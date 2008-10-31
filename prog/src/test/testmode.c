@@ -1038,9 +1038,13 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaMainProcData, NULL);
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaNetProcData, NULL);
 		break;		
-	case SELECT_GOTO:
-		//‚²‚Æ‚¤
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
+	case SELECT_KAGAYA:
+		//‚©‚ª‚â
+		{
+			GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 2);
+			GFL_PROC_SysCallProc(
+				NO_OVERLAY_ID, &GameMainProcData, init_param);
+		}
 		break;
 	case SELECT_ARIIZUMI:
 		//‚ ‚è‚¢‚¸‚Ý

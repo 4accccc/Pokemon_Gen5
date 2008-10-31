@@ -14,7 +14,7 @@ static const char	test_select4[]	= {"おおの　かつみ　　Katsumi Ohno"};
 static const char	test_select5[]	= {"たや　まさお　　Masao Taya"};
 static const char	test_select6[]	= {"Sample1"};
 static const char	test_select7[]	= {"まつだ　よしのり　　Yoshinori Matsuda"};
-static const char	test_select8[]	= {"ごとう　だいすけ　　Daisuke Goto"};
+static const char	test_select8[]	= {"かがや　けいた　　　Keita Kagaya"};
 static const char	test_select9[]	= {"ありいずみ　のぶひこ　Nobuhiko Ariizumi"};
 static const char	test_select10[]	= {"DownloadPlay Sample"};
 
@@ -68,7 +68,7 @@ enum {
 	SELECT_TAYA,
 	SELECT_TEST1,
 	SELECT_MATSUDA,
-	SELECT_GOTO,
+	SELECT_KAGAYA,
 	SELECT_ARIIZUMI,
 	SELECT_DLPLAY,
 };
