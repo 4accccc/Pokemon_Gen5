@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+#include "gamesystem/playerwork.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -21,6 +22,8 @@ extern "C" {
  */
 //------------------------------------------------------------------
 typedef struct _GAMESYS_WORK GAMESYS_WORK;
+
+typedef struct _GMEVENT_CONTROL GMEVENT_CONTROL;
 
 
 //============================================================================================
@@ -42,6 +45,15 @@ extern void GameSystem_SetNextProc(GAMESYS_WORK * gsys,
 //------------------------------------------------------------------
 extern void GameSystem_CallProc(GAMESYS_WORK * gsys,
 		FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void * pwk);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
+extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event);
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys);
 
 #ifdef	__cplusplus
 } /* extern "C" */

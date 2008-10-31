@@ -13,6 +13,7 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
+#include "game_event.h"	//local
 
 //============================================================================================
 //============================================================================================
@@ -40,7 +41,7 @@ extern const GFL_PROC_DATA DebugFieldProcData;
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk);
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
-static u32 GameSystem_GetGameSysWorkSize(void);
+static u32 GAMESYS_WORK_GetSize(void);
 
 
 //============================================================================================
@@ -60,7 +61,7 @@ static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	GAMESYS_WORK * gsys;
-	u32 work_size = GameSystem_GetGameSysWorkSize();
+	u32 work_size = GAMESYS_WORK_GetSize();
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYS, HEAPSIZE_GAMESYS );
 	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_GAMESYS);
 	GameSysWork = gsys;
@@ -120,17 +121,19 @@ struct _GAMESYS_WORK {
 
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 	PLAYER_WORK playerWork[PLAYER_MAX];
+
+	GMEVENT_CONTROL * event;
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static u32 GameSystem_GetGameSysWorkSize(void)
+static u32 GAMESYS_WORK_GetSize(void)
 {
 	return sizeof(GAMESYS_WORK);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
+static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
 {
 	int i;
 	gsys->heapID = heapID;
@@ -140,6 +143,39 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gsys->playerWork[i]);
 	}
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
+{
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys)
+{
+	return &gsys->playerWork[0];
+}
+HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
+{
+	return gsys->heapID;
+}
+GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
+{
+	return gsys->event;
+}
+void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
+{
+	GF_ASSERT(gsys->event == NULL);
+	gsys->event = event;
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, void * pwk)
+{
+	GAMESYS_WORK_Init(gsys, heapID, pwk);
 }
 
 //------------------------------------------------------------------
@@ -163,6 +199,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 static void GameSystem_End(GAMESYS_WORK * gsys)
 {
 	GFL_PROC_LOCAL_Exit(gsys->procsys);
+	GAMESYS_WORK_Delete(gsys);
 }
 
 //============================================================================================
