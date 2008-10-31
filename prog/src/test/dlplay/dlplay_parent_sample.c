@@ -10,13 +10,14 @@
 #include "procsys.h"
 #include "ui.h"
 #include "system/main.h"
-
+#include "arc_def.h"
 #include "net.h"
 
 #include "test/ariizumi/ari_debug.h"
 #include "dlplay_parent_sample.h"
 #include "dlplay_parent_main.h"
 
+#include "test_graphic/mb_test.naix"
 
 //------------------------------------------------------------------
 //	typedef struct
@@ -40,9 +41,13 @@ DLPLAY_PARENT_DATA *parentData;
 
 
 
-//BG面定義
-#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME3_M)
-#define DLPLAY_MSG_PLANE_PRI		(0)
+//BG面定義(ヘッダに定義
+//#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME3_S)
+//#define DLPLAY_MSG_PLANE_PRI		(0)
+//#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
+//#define DLPLAY_MSGWIN_PLANE_PRI		(1)
+//#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
+//#define DLPLAY_STR_PLANE_PRI		(0)
 //------------------------------------------------------------------
 //	VRAM用定義
 //------------------------------------------------------------------
@@ -54,6 +59,18 @@ static const GFL_BG_BGCNT_HEADER bgCont3 = {
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 	GX_BG_SCRBASE_0x2800, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+};
+static const GFL_BG_BGCNT_HEADER bgContStrWin = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, DLPLAY_MSGWIN_PLANE_PRI, 0, 0, FALSE
+};
+static const GFL_BG_BGCNT_HEADER bgContStrMsg = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0,//GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, DLPLAY_STR_PLANE_PRI, 0, 0, FALSE
 };
 
 void	DLPlay_InitLibCallBack( void* pWork , BOOL isSuccess );
@@ -80,16 +97,34 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	//VRAM設定
 	GX_SetBankForBG( GX_VRAM_BG_128_A );
 	GX_SetBankForOBJ( GX_VRAM_OBJ_128_B );
+	GX_SetBankForSubBG( GX_VRAM_BG_128_C );
 
 	//BGモード設定
 	GFL_BG_SetBGMode( &bgsysHeader );
 
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl( DLPLAY_MSG_PLANE, &bgCont3, GFL_BG_MODE_TEXT );
-	GFL_BG_SetPriority( DLPLAY_MSG_PLANE, DLPLAY_MSG_PLANE_PRI );
 	GFL_BG_SetVisible( DLPLAY_MSG_PLANE, VISIBLE_ON );
 
-	//ビットマップウインドウシステムの起動
+	GFL_BG_SetBGControl( DLPLAY_MSGWIN_PLANE, &bgContStrWin, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( DLPLAY_MSGWIN_PLANE, VISIBLE_ON );
+
+	GFL_BG_SetBGControl( DLPLAY_STR_PLANE, &bgContStrMsg, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( DLPLAY_STR_PLANE, VISIBLE_ON );
+
+	//BG読み込み開始
+	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,
+			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
+	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg_NSCR ,
+			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
+	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg2_NSCR ,
+			DLPLAY_STR_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_MB_TEST , NARC_mb_test_test_bg_NCLR ,
+			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_ARIIZUMI_DEBUG );
+	
+
+
+//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( parentData->heapID_ );
 
 //	GFL_NET_InitIchneumon( DLPlay_InitLibCallBack, (void*)(parentData) );

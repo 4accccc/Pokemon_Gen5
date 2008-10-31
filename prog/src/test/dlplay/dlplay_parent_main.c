@@ -17,6 +17,7 @@
 #include "dlplay_parent_main.h"
 #include "dlplay_func.h"
 #include "dlplay_comm_func.h"
+#include "dlplay_disp_sys.h"
 
 #include "mbp.h"
 
@@ -44,8 +45,9 @@ struct _DLPLAY_SEND_DATA
 	u16 subSeq_;
 	int	currTray_;
 
-	DLPLAY_COMM_DATA *commSys_;
-	DLPLAY_MSG_SYS *msgSys_;
+	DLPLAY_COMM_DATA	*commSys_;
+	DLPLAY_MSG_SYS		*msgSys_;
+	DLPLAY_DISP_SYS		*dispSys_;
 };
 
 //======================================================================
@@ -60,6 +62,7 @@ enum DLPLAY_SEND_STATE
 
 	DSS_START_SHARE,
 	DSS_WAIT_CHILD,
+	DSS_WAIT_START_POST_INDEX,
 	DSS_WAIT_INDEX_DATA,
 	DSS_SELECT_BOX_TEMP,
 };
@@ -76,6 +79,10 @@ static void OnPreSendMBVolat(u32 ggid);
 
 //============================================================================================
 
+#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
+#define DLPLAY_MSGWIN_PLANE_PRI		(1)
+#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
+#define DLPLAY_STR_PLANE_PRI		(0)
 
 //--------------------------------------------------------------
 /**
@@ -91,6 +98,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 
 	dlData->commSys_ = DLPlayComm_InitData( heapID );
 	dlData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
+	dlData->dispSys_ = DLPlayDispSys_InitSystem( heapID );
 
 	dlData->mainSeq_ = DSS_INIT_COMM;
 	dlData->subSeq_ = 0xFFFF;
@@ -112,6 +120,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 //--------------------------------------------------------------
 void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData )
 {
+	DLPlayDispSys_TermSystem( dlData->dispSys_ );
 	DLPlayFunc_MsgTerm( dlData->msgSys_ );
 }
 
@@ -127,6 +136,10 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	switch( dlData->mainSeq_ )
 	{
 	case DSS_INIT_COMM:
+#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
+#define DLPLAY_MSGWIN_PLANE_PRI		(1)
+#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
+#define DLPLAY_STR_PLANE_PRI		(0)
 		DLPlayComm_InitSystem( dlData->commSys_ );
 		dlData->mainSeq_ = DSS_WAIT_INIT_COMM;
 		break;
@@ -140,12 +153,12 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		break;
 
 	case DSS_WAIT_START:
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+		//if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
 			MBP_Init( WH_GGID , 127 );	
 
 			dlData->mainSeq_ = DSS_MAIN_LOOP;
 			DLPlayFunc_PutString( "MultiBoot is start."  ,dlData->msgSys_ );
-		}
+		//}
 		break;
 
 	case DSS_MAIN_LOOP:
@@ -161,7 +174,16 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 
 	case DSS_WAIT_CHILD:
 		if ( DLPlayComm_IsConnect( dlData->commSys_ ) == TRUE ){
+			DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_PROC , DLPLAY_STR_PLANE );
+			
 			DLPlayFunc_PutString( "Child connect.",dlData->msgSys_); 
+			dlData->mainSeq_ = DSS_WAIT_START_POST_INDEX;
+		}
+		break;
+	case DSS_WAIT_START_POST_INDEX:
+		if ( DLPlayComm_IsStartPostIndex( dlData->commSys_ ) == TRUE ){
+			DLPlayFunc_ChangeBgMsg( MSG_POST_DATA_CHILD , DLPLAY_STR_PLANE );
+			
 			dlData->mainSeq_ = DSS_WAIT_INDEX_DATA;
 		}
 		break;
@@ -169,6 +191,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	case DSS_WAIT_INDEX_DATA:
 		if(	DLPlayComm_IsPostIndex( dlData->commSys_ ) == TRUE ){
 			DLPlayFunc_PutString( "Post box index data complete.",dlData->msgSys_); 
+			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , DLPLAY_STR_PLANE );
 			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
 			dlData->currTray_ = 0xFF;
 			//return DPM_SELECT_BOX;
@@ -203,6 +226,11 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 			}
 			if( isUpdate == TRUE )
 			{
+#if 1
+				DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
+				DLPlayDispSys_DispBoxIcon( boxIndex , dlData->currTray_ , dlData->dispSys_ );
+//#else
+				{
 				const char sexStr[3][8] ={"M","F","?"};
 				const int bi = dlData->currTray_;
 				u16 i;
@@ -249,11 +277,14 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 						strcpy(str,w2Str);
 					}
 				}
+				}
+#endif
 			}
 		}
 		break;
 
 	}
+	DLPlayDispSys_UpdateDraw( dlData->dispSys_ );
 	return DPM_SEND_IMAGE;
 }
 
@@ -304,6 +335,7 @@ static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 			{
 				//if( isChangeState == TRUE ){
 					DLPlayFunc_PutString( "Find child. send RomImage start.",dlData->msgSys_); 
+					DLPlayFunc_ChangeBgMsg( MSG_FIND_CHILD , DLPLAY_STR_PLANE );
 				//}
 				//BgSetMessage(PLTT_WHITE, " Push START Button to start   ");
 				//Žq‹@‚ª—ˆ‚½‚ç‚Æ‚è‚ ‚¦‚¸Žn‚ß‚Ä‚µ‚Ü‚¤
@@ -336,6 +368,7 @@ static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 		{
 			if( isChangeState == TRUE ){
 				DLPlayFunc_PutString( "Rebooting now",dlData->msgSys_); 
+				DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_CONNECT , DLPLAY_STR_PLANE );
 			}
 			//BgSetMessage(PLTT_WHITE, " Rebooting now				");
 		}

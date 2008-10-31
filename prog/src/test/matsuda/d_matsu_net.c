@@ -281,10 +281,10 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 
 	if(aGFLNetInit.bNetType == GFL_NET_TYPE_IRC && wk->seq > 3){
 		static u8 shut_print = 0;
-		if(IRC_IsConnect() == FALSE && shut_print == 0){
-			OS_TPrintf("ÔŠOüØ’f\n");
-			shut_print++;
-		}
+//		if(IRC_IsConnect() == FALSE && shut_print == 0){
+//			OS_TPrintf("ÔŠOüØ’f\n");
+//			shut_print++;
+//		}
 	}
 	
 	switch( wk->seq ){

@@ -45,6 +45,7 @@ struct _DLPLAY_COMM_DATA
 	BOOL isError_;
 	BOOL isStartMode_;
 	BOOL isConnect_;
+	BOOL isStartPostIndex_;
 	BOOL isPostIndex_;
 	
 	GFL_NETHANDLE		*selfHandle_;	//自身の通信ハンドル
@@ -77,6 +78,7 @@ int		DLPlayComm_GetBeaconSizeDummy(void);
 //各種チェック関数
 BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
@@ -126,6 +128,7 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->isError_		= FALSE;
 	d_comm->isStartMode_	= FALSE;
 	d_comm->isConnect_		= FALSE;
+	d_comm->isStartPostIndex_ = FALSE;
 	d_comm->isPostIndex_	= FALSE;
 
 	d_comm->packetBuff_.cardType_ = CARD_TYPE_INVALID;
@@ -178,13 +181,14 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 		0,  //元になるheapid
 		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
 		HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+		HEAPID_WIFI,  //赤外線用にcreateされるHEAPID
 		GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
 		2,//_MAXNUM,	//最大接続人数
 		48,//_MAXSIZE,	//最大送信バイト数
 		2,//_BCON_GET_NUM,  // 最大ビーコン収集数
 		TRUE,		// CRC計算
 		FALSE,		// MP通信＝親子型通信モードかどうか
-		FALSE,		//wifi通信を行うかどうか
+		GFL_NET_TYPE_WIRELESS,		//	NET通信タイプ ← wifi通信を行うかどうか
 		FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 		1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
 	};
@@ -283,6 +287,10 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm )
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isConnect_;
+}
+BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isStartPostIndex_;
 }
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
@@ -426,6 +434,7 @@ u8*	 DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size )
 		tickWork = OS_GetTick();
 		DLPlayFunc_PutString( str , d_comm->msgSys_ );
 #endif
+		d_comm->isStartPostIndex_ = TRUE;
 		return (u8*)&d_comm->boxIndexBuff_ ;
 	}
 }

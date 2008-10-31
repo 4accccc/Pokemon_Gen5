@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mb_test.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MB_TEST_NAIX_
+#define NARC_MB_TEST_NAIX_
+
+enum {
+	NARC_mb_test_test_bg_NCLR = 0,
+	NARC_mb_test_test_obj_NCLR = 1,
+	NARC_mb_test_test_bg_NCGR = 2,
+	NARC_mb_test_test_obj_NCGR = 3,
+	NARC_mb_test_test_bg_NSCR = 4,
+	NARC_mb_test_test_bg2_NSCR = 5,
+	NARC_mb_test_test_obj_NCER = 6,
+	NARC_mb_test_test_obj_NANR = 7
+};
+
+/* NARC_MB_TEST_NAIX_ */
+#endif

@@ -36,7 +36,6 @@ struct _DLPLAY_MSG_SYS
 
 	GFL_BMPWIN			*bmpwin_[DLPLAY_FUNC_MSG_LINE_NUM ];
 	GFL_TEXT_PRINTPARAM	*textParam_[DLPLAY_FUNC_MSG_LINE_NUM ];
-
 };
 
 
@@ -53,6 +52,8 @@ void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys );
 void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
 
 const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
+
+void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane );
 
 //======================================================================
 //	DLプレイメッセージシステム初期化
@@ -224,4 +225,34 @@ const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , cons
 }
 
 
+//メッセージ用BGの切り替え
+//メッセージの縦幅
+static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2};
+void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
+{
+	u8 startLen = 0;
+	u8 i,x,y;
+	for( i=0;i<msgIdx;i++ )
+	{
+		startLen += msgHeightNum[i];
+	}
+	for( y=0;y<msgHeightNum[i];y++ )
+	{
+		for( x=0;x<24;x++ )
+		{
+			GFL_BG_FillScreen( plane , 0x20*(y+startLen)+x ,
+					x,(19+y),1,1,2);
+		}
+	}
+	for( y;y<4;y++ )
+	{
+		for( x=0;x<24;x++ )
+		{
+			GFL_BG_FillScreen( plane , 0x17 ,
+					x,(19+y),1,1,2);
+		}
+	}
+
+	GFL_BG_LoadScreenReq( plane );
+}
 

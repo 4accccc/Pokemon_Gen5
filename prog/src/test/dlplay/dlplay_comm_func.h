@@ -67,6 +67,7 @@ extern void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
 extern BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
+extern BOOL DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 
 extern DLPLAY_LARGE_PACKET*	DLPlayComm_GetLargePacketBuff( DLPLAY_COMM_DATA *d_comm );
