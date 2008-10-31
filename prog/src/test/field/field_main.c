@@ -22,6 +22,7 @@
 #include "field_actor.h"
 #include "field_player.h"
 #include "field_camera.h"
+#include "field_data.h"
 
 #include "field_debug.h"
 
@@ -114,16 +115,25 @@ static int GetSceneID(GAMESYS_WORK * gsys)
 	ZONEID id = PLAYERWORK_getZoneID(pw);
 	return id;
 }
-static const SCENE_DATA * GetSceneData(GAMESYS_WORK *gsys)
+static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 {
-	return &resistMapTbl[GetSceneID(gsys)];
+	return FIELDDATA_GetStartPosition(GetSceneID(gsys));
 }
+static const DEPEND_FUNCTIONS * GetDependFunctions(GAMESYS_WORK * gsys)
+{
+	return FIELDDATA_GetFieldFunctions(GetSceneID(gsys));
+}
+static const FLD_G3D_MAPPER_RESIST * GetMapperData(GAMESYS_WORK * gsys)
+{
+	return FIELDDATA_GetMapperData(GetSceneID(gsys));
+}
+
 static void SetNextScene(GAMESYS_WORK * gsys)
 {
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 	ZONEID id = PLAYERWORK_getZoneID(pw);
 	id ++;
-	if( id >= resistMapTblCount ){
+	if( id >= FIELDDATA_GetMapIDMax() ){
 		id = 0;
 	}
 	PLAYERWORK_setZoneID(pw, id);
@@ -156,7 +166,6 @@ void	FieldEnd( void )
 //------------------------------------------------------------------
 BOOL	FieldMain( GAMESYS_WORK * gsys )
 {
-	const SCENE_DATA * sceneData;
 	BOOL return_flag = FALSE,bSkip = FALSE;
 	int i;
 
@@ -172,19 +181,19 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
         break;
 
 	case 1:
-		sceneData = GetSceneData(gsys);
-		fieldWork->ftbl = sceneData->dep_funcs;
+		fieldWork->ftbl = GetDependFunctions(gsys);
+		//fieldWork->ftbl = sceneData->dep_funcs;
 		{
             //セットアップ
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
-                                &sceneData->mapperData );
+                                GetMapperData(gsys));
 
 			//登録テーブルごとに個別の初期化処理を呼び出し
 			{
 				VecFx32 pos;
 				u16		dir;
 
-				pos = sceneData->startPos;
+				pos = *GetStartPos(gsys);
 				dir = 0;
 				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 			}

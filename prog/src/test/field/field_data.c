@@ -1,6 +1,10 @@
+//============================================================================================
+//============================================================================================
 #include <gflib.h>
 #include "field_main.h"
 #include "arc_def.h"
+#include "field_debug.h"
+#include "field_data.h"
 
 //#include "test_graphic/sample_map.naix"
 //#include "test_graphic/fld_map.naix"
@@ -9,6 +13,45 @@
 #include "test_graphic/fieldmap_sample.naix"
 #include "test_graphic/fieldmap_map.naix"
 
+typedef struct {
+	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
+	FLD_G3D_MAPPER_RESIST	mapperData;
+	VecFx32				startPos;	//開始位置
+	const DEPEND_FUNCTIONS * dep_funcs;
+}SCENE_DATA;
+
+const SCENE_DATA	resistMapTbl[];
+const unsigned int resistMapTblCount;
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
+{
+	GF_ASSERT(mapid < resistMapTblCount);
+	return &resistMapTbl[mapid].mapperData;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
+{
+	GF_ASSERT(mapid < resistMapTblCount);
+	return resistMapTbl[mapid].dep_funcs;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const VecFx32 * FIELDDATA_GetStartPosition(u16 mapid)
+{
+	GF_ASSERT(mapid < resistMapTblCount);
+	return &resistMapTbl[mapid].startPos;
+}
+u16 FIELDDATA_GetMapIDMax(void)
+{
+	return resistMapTblCount;
+}
+
+//============================================================================================
+//============================================================================================
 static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_a1_3dppack },
 	{ NARC_test3dp_map_a2_3dppack },

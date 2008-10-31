@@ -23,6 +23,7 @@
 #include "test/field/field_actor.h"
 #include "test/field/field_player.h"
 #include "test/field/field_camera.h"
+#include "test/field/field_data.h"
 
 #include "ari_field_menu.h"
 #include "ari_comm_def.h"
@@ -163,18 +164,18 @@ BOOL	AriFieldMain( void )
         break;
 
 	case 1:
-		ariFieldWork->ftbl = resistMapTbl[ariFieldWork->mapNum].dep_funcs;
+		ariFieldWork->ftbl = FIELDDATA_GetFieldFunctions(ariFieldWork->mapNum);
 		{
             //セットアップ
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(ariFieldWork->gs), 
-                                &resistMapTbl[ariFieldWork->mapNum].mapperData );
+                                FIELDDATA_GetMapperData(ariFieldWork->mapNum));
 
 			//登録テーブルごとに個別の初期化処理を呼び出し
 			{
 				VecFx32 pos;
 				u16		dir;
 
-				pos = resistMapTbl[ariFieldWork->mapNum].startPos;
+				pos = *FIELDDATA_GetStartPosition(ariFieldWork->mapNum);
 				dir = 0;
 				ariFieldWork->ftbl->create_func( ariFieldWork, &pos, dir );
 			}
@@ -195,7 +196,7 @@ BOOL	AriFieldMain( void )
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
 			ariFieldWork->mapNum++;
-			if( ariFieldWork->mapNum >= (resistMapTblCount) ){
+			if( ariFieldWork->mapNum >= FIELDDATA_GetMapIDMax() ){
 				ariFieldWork->mapNum = 0;
 			}
 			ariFieldWork->seq = 3;
