@@ -26,6 +26,7 @@
 #include "field_debug.h"
 
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/playerwork.h"
 
 //============================================================================================
 /**
@@ -77,7 +78,6 @@ struct _FIELD_MAIN_WORK
 	PC_ACTCONT*		pcActCont;
 //	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
-	int				mapNum;
 	
 	int				key_cont;
 	
@@ -108,20 +108,25 @@ static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+int GetSceneID(GAMESYS_WORK * gsys)
+{
+	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+	ZONEID id = PLAYERWORK_getZoneID(pw);
+	return id;
+}
 const SCENE_DATA * GetSceneData(GAMESYS_WORK *gsys)
 {
-	return &resistMapTbl[fieldWork->mapNum];
+	return &resistMapTbl[GetSceneID(gsys)];
 }
 void SetNextScene(GAMESYS_WORK * gsys)
 {
-	fieldWork->mapNum ++;
-	if( fieldWork->mapNum >= (resistMapTblCount) ){
-		fieldWork->mapNum = 0;
+	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+	ZONEID id = PLAYERWORK_getZoneID(pw);
+	id ++;
+	if( id >= resistMapTblCount ){
+		id = 0;
 	}
-}
-int GetSceneID(GAMESYS_WORK * gsys)
-{
-	return fieldWork->mapNum;
+	PLAYERWORK_setZoneID(pw, id);
 }
 //------------------------------------------------------------------
 /**
@@ -163,7 +168,6 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 	case 0:
 		//基本システムセットアップ
 		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
-		fieldWork->mapNum = 0;
 		fieldWork->seq++;
         break;
 
