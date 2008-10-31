@@ -108,17 +108,17 @@ static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-int GetSceneID(GAMESYS_WORK * gsys)
+static int GetSceneID(GAMESYS_WORK * gsys)
 {
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 	ZONEID id = PLAYERWORK_getZoneID(pw);
 	return id;
 }
-const SCENE_DATA * GetSceneData(GAMESYS_WORK *gsys)
+static const SCENE_DATA * GetSceneData(GAMESYS_WORK *gsys)
 {
 	return &resistMapTbl[GetSceneID(gsys)];
 }
-void SetNextScene(GAMESYS_WORK * gsys)
+static void SetNextScene(GAMESYS_WORK * gsys)
 {
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 	ZONEID id = PLAYERWORK_getZoneID(pw);
