@@ -107,6 +107,23 @@ FIELD_MAIN_WORK* fieldWork;
 static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+const SCENE_DATA * GetSceneData(GAMESYS_WORK *gsys)
+{
+	return &resistMapTbl[fieldWork->mapNum];
+}
+void SetNextScene(GAMESYS_WORK * gsys)
+{
+	fieldWork->mapNum ++;
+	if( fieldWork->mapNum >= (resistMapTblCount) ){
+		fieldWork->mapNum = 0;
+	}
+}
+int GetSceneID(GAMESYS_WORK * gsys)
+{
+	return fieldWork->mapNum;
+}
+//------------------------------------------------------------------
 /**
  * @brief	ワークの確保と破棄
  */
@@ -132,8 +149,9 @@ void	FieldEnd( void )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-BOOL	FieldMain( void )
+BOOL	FieldMain( GAMESYS_WORK * gsys )
 {
+	const SCENE_DATA * sceneData;
 	BOOL return_flag = FALSE,bSkip = FALSE;
 	int i;
 
@@ -150,25 +168,26 @@ BOOL	FieldMain( void )
         break;
 
 	case 1:
-		fieldWork->ftbl = resistMapTbl[fieldWork->mapNum].dep_funcs;
+		sceneData = GetSceneData(gsys);
+		fieldWork->ftbl = sceneData->dep_funcs;
 		{
             //セットアップ
             ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
-                                &resistMapTbl[fieldWork->mapNum].mapperData );
+                                &sceneData->mapperData );
 
 			//登録テーブルごとに個別の初期化処理を呼び出し
 			{
 				VecFx32 pos;
 				u16		dir;
 
-				pos = resistMapTbl[fieldWork->mapNum].startPos;
+				pos = sceneData->startPos;
 				dir = 0;
 				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 			}
 			
 			{	//デバッグメニュー
 				fieldWork->d_menu = FldDebugMenu_Init(
-						fieldWork, fieldWork->mapNum, fieldWork->heapID );
+						fieldWork, GetSceneID(gsys), fieldWork->heapID );
 			}
 
             fieldWork->seq++;
@@ -182,23 +201,10 @@ BOOL	FieldMain( void )
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-			fieldWork->mapNum++;
-			if( fieldWork->mapNum >= (resistMapTblCount) ){
-				fieldWork->mapNum = 0;
-			}
+			SetNextScene(gsys);
 			fieldWork->seq = 3;
 			break;
 		}
-#if 0
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-			fieldWork->mapNum--;
-			if( fieldWork->mapNum < 0 ){
-				fieldWork->mapNum = (resistMapTblCount)-1;
-			}
-			fieldWork->seq = 3;
-			break;
-		}
-#endif
 		
 		if( !DebugMenuProc( fieldWork ) ) {
 		

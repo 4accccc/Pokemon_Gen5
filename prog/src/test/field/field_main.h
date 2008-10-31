@@ -30,6 +30,6 @@ extern void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork );
 
 extern void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID );
 extern void	FieldEnd( void );
-extern BOOL	FieldMain( void );
+extern BOOL	FieldMain( GAMESYS_WORK * gsys );
 
 #endif //__FIELD_MAIN_H__

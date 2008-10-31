@@ -46,7 +46,8 @@ static GFL_PROC_RESULT DebugFieldProcInit
 static GFL_PROC_RESULT DebugFieldProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	if( FieldMain() == TRUE ){
+	GAMESYS_WORK * gsys = pwk;
+	if( FieldMain(pwk) == TRUE ){
 		return GFL_PROC_RES_FINISH;
 	}
 
