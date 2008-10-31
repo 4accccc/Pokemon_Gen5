@@ -15,7 +15,7 @@
 #include "dlplay_comm_func.h"
 #include "dlplay_disp_sys.h"
 
-#include "test_graphic/poke_icon_pl.naix"
+#include "poke_icon_pl.naix"
 
 //======================================================================
 //	define

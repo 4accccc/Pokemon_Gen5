@@ -136,10 +136,6 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	switch( dlData->mainSeq_ )
 	{
 	case DSS_INIT_COMM:
-#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
-#define DLPLAY_MSGWIN_PLANE_PRI		(1)
-#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
-#define DLPLAY_STR_PLANE_PRI		(0)
 		DLPlayComm_InitSystem( dlData->commSys_ );
 		dlData->mainSeq_ = DSS_WAIT_INIT_COMM;
 		break;

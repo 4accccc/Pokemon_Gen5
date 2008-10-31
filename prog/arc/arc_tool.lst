@@ -71,5 +71,5 @@
 	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
 	ARCID_FLDMAP_TEST3DP	"test_graphic/fldmap3dp.narc" #テストマップ
 	ARCID_PTC			"spa.narc" #ニンテンパーティクル
-	ARCID_ICON_PL		"test_graphic/poke_icon_pl.narc" #プラチナのアイコンAriizumi
+	ARCID_ICON_PL		"poke_icon_pl.narc" #プラチナのアイコンAriizumi
 	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親

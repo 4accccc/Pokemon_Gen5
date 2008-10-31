@@ -17,7 +17,8 @@ targetname = mb_test
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR = $(PROJECT_ARCDIR)/test_graphic
+TARGETDIR = $(PROJECT_ARCDIR)/test_graphic/
+TARGETDIR_MB = $(PROJECT_ROOT)/multiboot/arc/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -72,7 +73,11 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
+	$(COPY) $(targetname).naix $(TARGETDIR)
+#↓動かない・・・
+#$(TARGETDIR_MB)/$(targetname).narc: $(targetname).narc
+	$(COPY) $(targetname).narc $(TARGETDIR_MB)
+	$(COPY) $(targetname).naix $(TARGETDIR_MB)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -98,5 +103,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
+	rm -f $(TARGETDIR_MB)/$(targetname).narc
+	rm -f $(TARGETDIR_MB)/$(targetname).naix
 
 

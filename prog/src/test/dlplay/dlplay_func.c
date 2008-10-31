@@ -244,7 +244,7 @@ void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 					x,(19+y),1,1,2);
 		}
 	}
-	for( y;y<4;y++ )
+	for( ;y<4;y++ )
 	{
 		for( x=0;x<24;x++ )
 		{
