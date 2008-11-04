@@ -9,6 +9,7 @@
  */
 //============================================================================================
 
+#include "field_easytp.h"
 //------------------------------------------------------------------
 /**
  * @brief	初期化処理（グリッド無し）
@@ -22,6 +23,16 @@ static void NoGridCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	fieldWork->pcActCont = CreatePlayerAct( fieldWork->gs, fieldWork->heapID );
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
+	{
+		u16 len;
+		fx32 height;
+		FLD_GetCameraLength(fieldWork->camera_control, &len);
+		len += 0x0080;
+		FLD_SetCameraLength(fieldWork->camera_control, len);
+		FLD_GetCameraHeight(fieldWork->camera_control, &height);
+		height += 0x0003a000;
+		FLD_SetCameraHeight(fieldWork->camera_control, height);
+	}
 }
 
 //------------------------------------------------------------------
@@ -55,6 +66,17 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 		GFL_G3D_CAMERA_SetPos( g3Dcamera, &c_pos );
 	}
 #endif
+	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_DOWN) {
+		VecFx32 trans;
+		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		int i;
+		GetPlayerActTrans(fieldWork->pcActCont, &trans);
+		GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &trans, &gridInfo);
+		OS_Printf("gridInfo.count = %d\n", gridInfo.count);
+		for (i = 0; i < gridInfo.count; i++) {
+			OS_Printf("[%02d]%08x\n",i, gridInfo.gridData[i].height);
+		}
+	}
 }
 
 //------------------------------------------------------------------
