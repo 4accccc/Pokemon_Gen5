@@ -69,12 +69,15 @@ extern BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
+extern const u8 DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
 
 extern DLPLAY_LARGE_PACKET*	DLPlayComm_GetLargePacketBuff( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm );
 extern DLPLAY_BOX_INDEX* DLPlayComm_GetBoxIndexBuff( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm );
+extern void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm );
+extern void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm );
 
 #endif // DLPALY_COMM_FUNC__
 

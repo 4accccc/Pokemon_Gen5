@@ -18,6 +18,7 @@
 #include "dlplay_func.h"
 #include "dlplay_comm_func.h"
 #include "dlplay_disp_sys.h"
+#include "test/performance.h"
 
 #include "mbp.h"
 
@@ -44,6 +45,7 @@ struct _DLPLAY_SEND_DATA
 	u8 mainSeq_;
 	u16 subSeq_;
 	int	currTray_;
+	u8	errorState_;
 
 	DLPLAY_COMM_DATA	*commSys_;
 	DLPLAY_MSG_SYS		*msgSys_;
@@ -65,6 +67,9 @@ enum DLPLAY_SEND_STATE
 	DSS_WAIT_START_POST_INDEX,
 	DSS_WAIT_INDEX_DATA,
 	DSS_SELECT_BOX_TEMP,
+
+	DSS_ERROR_INIT,
+	DSS_ERROR_LOOP,
 };
 
 //============================================================================================
@@ -99,6 +104,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	dlData->commSys_ = DLPlayComm_InitData( heapID );
 	dlData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
 	dlData->dispSys_ = DLPlayDispSys_InitSystem( heapID );
+	dlData->errorState_ = DES_NONE;
 
 	dlData->mainSeq_ = DSS_INIT_COMM;
 	dlData->subSeq_ = 0xFFFF;
@@ -107,6 +113,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	DLPlayFunc_PutString("",dlData->msgSys_);
 	DLPlayFunc_PutString("System Initialize complete.",dlData->msgSys_);
 #endif
+	DEBUG_PerformanceSetActive( FALSE );
 	return dlData;
 }
 
@@ -133,6 +140,20 @@ void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData )
 //--------------------------------------------------------------
 u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 {
+	if( dlData->errorState_ != DSS_ERROR_INIT &&
+		dlData->errorState_ != DSS_ERROR_LOOP )
+	{
+		if( dlData->errorState_ != DES_NONE )
+		{
+			dlData->mainSeq_ = DSS_ERROR_INIT;
+		}
+		else
+		if( DLPlayComm_GetPostErrorState( dlData->commSys_ ) != DES_NONE )
+		{
+			dlData->errorState_ = DLPlayComm_GetPostErrorState( dlData->commSys_ );
+			dlData->mainSeq_ = DSS_ERROR_INIT;
+		}
+	}
 	switch( dlData->mainSeq_ )
 	{
 	case DSS_INIT_COMM:
@@ -220,6 +241,10 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 					dlData->currTray_ = 17;
 				}
 			}
+			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+			{
+				DLPlayComm_Send_BoxNumber( dlData->currTray_ , dlData->commSys_ );
+			}
 			if( isUpdate == TRUE )
 			{
 #if 1
@@ -227,57 +252,78 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 				DLPlayDispSys_DispBoxIcon( boxIndex , dlData->currTray_ , dlData->dispSys_ );
 //#else
 				{
-				const char sexStr[3][8] ={"M","F","?"};
-				const int bi = dlData->currTray_;
-				u16 i;
-				int	strLen = 64;
-				char str[128],w1Str[64],w2Str[64];
-				DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
-
-				DLPlayFunc_ClearString( dlData->msgSys_ );
-
-				STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
-				w1Str[strLen] = '\0';
-				sprintf(str,"BoxName[%s]",w1Str);
-				DLPlayFunc_PutStringLine( 0,str,dlData->msgSys_ );
-
-				for( i=0;i<30;i++ )
-				{
-					DLPLAY_MONS_INDEX *pokeData = &boxIndex->pokeData_[bi][i];
-					if( pokeData->pokeNo_ == 0 )
+					const char sexStr[3][8] ={"M","F","?"};
+					const int bi = dlData->currTray_;
+					u16 i;
+					int	strLen = 64;
+					char str[128],w1Str[64],w2Str[64];
+					DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
+	
+					DLPlayFunc_ClearString( dlData->msgSys_ );
+	
+					STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
+					w1Str[strLen] = '\0';
+					sprintf(str,"BoxName[%s]",w1Str);
+					DLPlayFunc_PutStringLine( 0,str,dlData->msgSys_ );
+	
+					for( i=0;i<30;i++ )
 					{
-						sprintf(w2Str,"[---][----------]");
-					}
-					else
-					{
-						strLen = 64;
-						STD_ConvertStringUnicodeToSjis( w1Str , &strLen , pokeData->name_ , NULL , NULL );
-						w1Str[strLen] = '\0';
-						sprintf(w2Str,"[%3d][%s:%s][%d]",pokeData->pokeNo_,w1Str,sexStr[pokeData->sex_],pokeData->lv_);
-						if( pokeData->isEgg_ == 1 )
+						DLPLAY_MONS_INDEX *pokeData = &boxIndex->pokeData_[bi][i];
+						if( pokeData->pokeNo_ == 0 )
 						{
-							strcat( w2Str , "[E]" );
+							sprintf(w2Str,"[---][----------]");
 						}
-						if( pokeData->rare_ == 1 )
+						else
 						{
-							strcat( w2Str , "[R]" );
+							strLen = 64;
+							STD_ConvertStringUnicodeToSjis( w1Str , &strLen , pokeData->name_ , NULL , NULL );
+							w1Str[strLen] = '\0';
+							sprintf(w2Str,"[%3d][%s:%s][%d]",pokeData->pokeNo_,w1Str,sexStr[pokeData->sex_],pokeData->lv_);
+							if( pokeData->isEgg_ == 1 )
+							{
+								strcat( w2Str , "[E]" );
+							}
+							if( pokeData->rare_ == 1 )
+							{
+								strcat( w2Str , "[R]" );
+							}
+							strcat(w2Str,"      ");
 						}
-						strcat(w2Str,"      ");
+						if( i%2==1 )
+						{
+							DLPlayFunc_PutStringLineDiv( i/2+1,str,w2Str,dlData->msgSys_ );
+						}
+						else
+						{
+							strcpy(str,w2Str);
+						}
 					}
-					if( i%2==1 )
-					{
-						DLPlayFunc_PutStringLineDiv( i/2+1,str,w2Str,dlData->msgSys_ );
-					}
-					else
-					{
-						strcpy(str,w2Str);
-					}
-				}
 				}
 #endif
 			}
 		}
 		break;
+		
+	case DSS_ERROR_INIT:
+		dlData->mainSeq_ = DSS_ERROR_LOOP;
+		if( dlData->errorState_ == DES_MISS_LOAD_BACKUP )
+		{
+			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , DLPLAY_STR_PLANE );
+		}
+		else
+		{
+			DLPlayFunc_ChangeBgMsg( MSG_ERROR , DLPLAY_STR_PLANE );
+		}
+		if( DLPlayComm_GetPostErrorState( dlData->commSys_ ) == DES_NONE )
+		{
+			//ŽóM‚µ‚ÄƒGƒ‰[‚É—ˆ‚½‚Æ‚«‚Í‘—‚ç‚È‚¢
+			DLPlayComm_Send_ErrorState( dlData->errorState_ , dlData->commSys_ );
+		}
+		break;
+
+	case DSS_ERROR_LOOP:
+		break;
+		
 
 	}
 	DLPlayDispSys_UpdateDraw( dlData->dispSys_ );

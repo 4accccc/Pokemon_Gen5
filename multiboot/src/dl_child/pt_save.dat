@@ -54,5 +54,6 @@ static const u32 DLPLAY_PT_SAVESIZETABLE[] =
 	20,		//通常フッタ
 	74192,  
 	20,		//ボックスフッタ
+	0,		//ダミー(最大サイズ取得の際に
 };
 

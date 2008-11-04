@@ -45,6 +45,7 @@ BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
 u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
+u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data );
 
 //‰Šú‰»
 DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
@@ -59,6 +60,7 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 	d_data->subSeq_	 = 0;
 	d_data->msgSys_	= msgSys;
 	d_data->pBoxData_ = NULL;
+	d_data->errorState_ = DES_NONE;
 	d_data->cardType_ = CARD_TYPE_INVALID;
 	MATH_CRC16CCITTInitTable( &d_data->crcTable_ );	//CRC‰Šú‰»
 
@@ -175,6 +177,11 @@ void DLPlayData_SetCardType( DLPLAY_DATA_DATA *d_data , const DLPLAY_CARD_TYPE t
 u8*	DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data )
 {
 	return (u8*)d_data->pBoxData_;
+}
+
+u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data )
+{
+	return d_data->errorState_;
 }
 
 

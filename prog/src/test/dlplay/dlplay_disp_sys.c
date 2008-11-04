@@ -56,6 +56,7 @@ void	DLPlayDispSys_UpdateDraw( DLPLAY_DISP_SYS *dispSys );
 void	DLPlayDispSys_DispBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );
 
 static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys );
+static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys );
 static	u8		DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 offs , HEAPID heapID , const u16 pokeNo , const u8 formNo ,const u8 isEgg);
@@ -84,8 +85,7 @@ DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID )
 
 void	DLPlayDispSys_TermSystem( DLPLAY_DISP_SYS *dispSys )
 {
-	GFL_CLACT_UNIT_Delete( dispSys->cellUnit_ );
-	GFL_CLACT_Exit();
+	DLPlayDispSys_TermObj( dispSys );
 	GFL_HEAP_FreeMemory( dispSys );
 }
 
@@ -128,6 +128,25 @@ static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys )
 	GFL_CLACT_UNIT_SetDefaultRend( dispSys->cellUnit_ );
 
 	dispSys->isInit_ = TRUE;
+}
+
+static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys )
+{
+	if( dispSys->isInit_ == TRUE )
+	{
+		if( dispSys->isInitBox_ == TRUE )
+		{
+			DLPlayDispSys_TermBoxIcon( dispSys );
+			GFL_HEAP_FreeMemory( dispSys->boxCellRes_ );
+			GFL_HEAP_FreeMemory( dispSys->boxAnmRes_ );
+		}
+		
+		GFL_CLACT_UNIT_Delete( dispSys->cellUnit_ );
+		GFL_CLACT_Exit();
+
+		dispSys->isInit_ = FALSE;
+	}
+
 }
 
 void	DLPlayDispSys_DispBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys )

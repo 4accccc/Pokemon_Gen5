@@ -43,6 +43,9 @@ enum DLPLAY_CHILD_STATE
 	DCS_SAVE_BACKUP,
 
 	DCS_SEND_BOX_INDEX,
+	
+	DCS_ERROR_INIT,
+	DCS_ERROR_LOOP,
 
 	DCS_MAX,
 	
@@ -58,6 +61,7 @@ typedef struct
 
 	u8	mainSeq_;
 	u8	parentMacAddress_[WM_SIZE_BSSID];
+	u8	errorState_;
 
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS	 *msgSys_;
@@ -134,6 +138,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 
 	childData->heapID_ = HEAPID_ARIIZUMI_DEBUG;
 	childData->mainSeq_ = DCS_INIT_COMM;
+	childData->errorState_ = DES_NONE;
 
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
@@ -172,6 +177,24 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+	if( childData->mainSeq_ != DCS_ERROR_LOOP &&
+		childData->mainSeq_ != DCS_ERROR_INIT )
+	{
+		if(	childData->errorState_ != DES_NONE )
+		{
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
+		else if( DLPlayData_GetErrorState( childData->dataSys_ ) != DES_NONE )
+		{
+			childData->errorState_ = DLPlayData_GetErrorState( childData->dataSys_ );
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
+		else if( DLPlayComm_GetPostErrorState( childData->commSys_ ) != DES_NONE )
+		{
+			childData->errorState_ = DLPlayComm_GetPostErrorState( childData->commSys_ );
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
+	}
 	switch( childData->mainSeq_ )
 	{
 	case DCS_INIT_COMM:
@@ -213,7 +236,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			childData->mainSeq_ = DCS_LOAD_BACKUP;
 			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
 		}
-	if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
+		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
 			childData->mainSeq_ = DCS_LOAD_BACKUP;
 			DLPlayData_SetCardType( childData->dataSys_ , CARD_TYPE_DP );
 			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
@@ -264,6 +287,25 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 
 	case DCS_SAVE_BACKUP:
 		DLPlayData_SaveData( childData->dataSys_ );
+		break;
+	case DCS_ERROR_INIT:
+		childData->mainSeq_ = DCS_ERROR_LOOP;
+		if( childData->errorState_ == DES_MISS_LOAD_BACKUP )
+		{
+			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , DLPLAY_STR_PLANE );
+		}
+		else
+		{
+			DLPlayFunc_ChangeBgMsg( MSG_ERROR , DLPLAY_STR_PLANE );
+		}
+		if( DLPlayComm_GetPostErrorState( childData->commSys_ ) == DES_NONE )
+		{
+			//ŽóM‚µ‚ÄƒGƒ‰[‚É—ˆ‚½‚Æ‚«‚Í‘—‚ç‚È‚¢
+			DLPlayComm_Send_ErrorState( childData->errorState_ , childData->commSys_ );
+		}
+		break;
+
+	case DCS_ERROR_LOOP:
 		break;
 	}
 #if DLC_OBJ_TEST

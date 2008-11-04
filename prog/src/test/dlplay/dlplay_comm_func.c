@@ -29,6 +29,10 @@ enum DLPLAY_COMM_COMMAND_TYPE
     DC_CMD_LARGE_PACKET = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
 	DC_CMD_CONNET_SIGN,		//子機が接続したときに送る
 	DC_CMD_BOX_INDEX,		//最初に送るやつ。名前とポケモンNoのみ？
+	DC_CMD_POST_INDEX,		//↑の受信完了確認
+	DC_CMD_BOX_NUMBER,		//決定したボックスの番号を送る
+
+	DC_CMD_ERROR,			//エラー発生
 };
 //======================================================================
 //	typedef struct
@@ -46,12 +50,16 @@ struct _DLPLAY_COMM_DATA
 	BOOL isStartMode_;
 	BOOL isConnect_;
 	BOOL isStartPostIndex_;
-	BOOL isPostIndex_;
+	BOOL isPostIndex_;	//親機が子機からデータをもらう
+	BOOL isSendIndex_;	//子機側が親機からデータの受信完了をもらう
 	
 	GFL_NETHANDLE		*selfHandle_;	//自身の通信ハンドル
 
 	DLPLAY_LARGE_PACKET packetBuff_;	//送受信共通のバッファ！取り扱い注意
 	DLPLAY_BOX_INDEX	boxIndexBuff_;	//同上
+
+	u8					selectBoxNumber_;
+	u8					postErrorState_;	//受け取ったエラー状態
 
 #if DLPLAY_FUNC_USE_PRINT
 	DLPLAY_MSG_SYS		*msgSys_;
@@ -82,6 +90,7 @@ BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
+const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
 
 //各種コールバック
 void	DLPlayComm_InitEndCallback( void* pWork );
@@ -95,18 +104,28 @@ void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm );
 DLPLAY_BOX_INDEX* DLPlayComm_GetBoxIndexBuff( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_PostBoxIndex( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm );
+
 //受
 void	DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 u8*		DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size );
 void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 void	DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 u8*		DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size );
-
+void	DLPlayComm_Post_PostBoxIndex( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	DLPlayComm_Post_BoxNumber( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	DLPlayComm_Post_ErrorState( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
 	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
 	{ DLPlayComm_Post_ConnectSign , NULL },
 	{ DLPlayComm_Post_BoxIndex , DLPlayComm_Post_BoxIndex_Buff },
+	{ DLPlayComm_Post_PostBoxIndex , NULL },
+	{ DLPlayComm_Post_BoxNumber , NULL },
+
+	{ DLPlayComm_Post_ErrorState , NULL },
 };
 //--------------------------------------------------------------
 /**
@@ -296,6 +315,10 @@ BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isPostIndex_;
 }
+const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->postErrorState_;
+}
 
 
 
@@ -422,6 +445,8 @@ void DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData
 	DLPlayFunc_PutString( str , d_comm->msgSys_ );
 	}
 #endif
+	//受信確認を即送る
+	DLPlayComm_Send_PostBoxIndex( d_comm );
 }
 
 u8*	 DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size )
@@ -457,4 +482,57 @@ void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pD
 	ARI_TPrintf("DLPlayComm getData[ConnectSign]\n");
 }
 
+void	DLPlayComm_Send_PostBoxIndex( DLPLAY_COMM_DATA *d_comm )
+{
+	u8 dummy = 127;
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_POST_INDEX , 1 , &dummy );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm PostBoxData send is failued!!\n"); }
+	}
+}
+
+void	DLPlayComm_Post_PostBoxIndex( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->isSendIndex_ = TRUE;
+	ARI_TPrintf("DLPlayComm getData[postBoxData]\n");
+	if( GFL_NET_IsParentMachine() == FALSE )
+	{
+		DLPlayFunc_ChangeBgMsg( MSG_PARENT_SELECT_BOX , GFL_BG_FRAME1_M );
+	}
+}
+
+void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm )
+{
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_BOX_NUMBER , 1 , &idx );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm SelectBoxIndex send is failued!!\n"); }
+	}
+}
+
+void	DLPlayComm_Post_BoxNumber( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->selectBoxNumber_ = *(u8*)pData;
+	ARI_TPrintf("DLPlayComm getData[SelectBoxNumber:%d]\n",d_comm->selectBoxNumber_);
+}
+
+void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm )
+{
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_ERROR , 1 , &type );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm ErrorState send is failued!!\n"); }
+	}
+}
+
+
+void	DLPlayComm_Post_ErrorState( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->postErrorState_ = *(u8*)pData;
+	ARI_TPrintf("DLPlayComm getData[ErrorState:%d]\n",d_comm->postErrorState_);
+}
 

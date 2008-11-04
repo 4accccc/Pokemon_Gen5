@@ -227,20 +227,20 @@ const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , cons
 
 //メッセージ用BGの切り替え
 //メッセージの縦幅
-static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2};
+static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2,2,2,2};
 void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 {
-	u8 startLen = 0;
+	u8 startLine = 1;	//絵の枠素材分
 	u8 i,x,y;
 	for( i=0;i<msgIdx;i++ )
 	{
-		startLen += msgHeightNum[i];
+		startLine += msgHeightNum[i];
 	}
 	for( y=0;y<msgHeightNum[i];y++ )
 	{
 		for( x=0;x<24;x++ )
 		{
-			GFL_BG_FillScreen( plane , 0x20*(y+startLen)+x ,
+			GFL_BG_FillScreen( plane , 0x18*(y+startLine )+x ,
 					x,(19+y),1,1,2);
 		}
 	}
@@ -248,7 +248,7 @@ void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 	{
 		for( x=0;x<24;x++ )
 		{
-			GFL_BG_FillScreen( plane , 0x17 ,
+			GFL_BG_FillScreen( plane , 0x07 ,
 					x,(19+y),1,1,2);
 		}
 	}

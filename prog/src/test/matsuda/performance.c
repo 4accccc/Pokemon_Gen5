@@ -312,6 +312,18 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	}
 }
 
+//追加 Ari081104
+//--------------------------------------------------------------
+/**
+ * @brief   パフォーマンスメーターのON/OFF切り替え
+ *
+ * @param   isActive	ON/OFF
+ */
+//--------------------------------------------------------------
+void DEBUG_PerformanceSetActive(BOOL isActive)
+{
+	pfm_sys.on_off = isActive;
+}
 
 
 

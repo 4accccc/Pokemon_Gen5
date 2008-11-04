@@ -31,6 +31,13 @@
 //======================================================================
 //	enum
 //======================================================================
+enum PT_SAVE_TYPE
+{
+	PT_MAIN_FIRST	= 0,
+	PT_BOX_FIRST	= 1,
+	PT_MAIN_SECOND = 2,
+	PT_BOX_SECOND	= 3,
+};
 
 //======================================================================
 //	typedef struct
@@ -47,6 +54,10 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id );
 u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id );
 u32		DLPlayData_GetStartAddress( const PT_GMDATA_ID id , DLPLAY_CARD_TYPE type );
+static	BOOL DLPlayData_CheckDataCorrect( SAVE_FOOTER **pFooterArr , DLPLAY_DATA_DATA *d_data );
+static u8	DLPlayData_PT_CompareFooterData( SAVE_FOOTER *fData , BOOL fCorr ,
+											 SAVE_FOOTER *sData , BOOL sCorr ,
+											 u8	*pos );
 
 void	PT_CalcTool_Decoded(void *data,u32 size,u32 code);
 void	PT_CalcTool_Coded(void *data,u32 size,u32 code);
@@ -114,13 +125,12 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 			//おそらくGSでは処理が変わる
 			//各ブロックのCRCをチェック(一応通常データも見ておく
 			u8 i;
-			BOOL isCorrect[4];	//データ成否チェック
 			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA , d_data->cardType_ );
 			SAVE_FOOTER *footer[4];
-			footer[0] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[1] = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
-			footer[2] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[3] = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[PT_MAIN_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[PT_BOX_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[PT_MAIN_SECOND]  = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[PT_BOX_SECOND]	= (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
 #if DEB_ARI
 			for( i=0;i<4;i++ ){
 				OS_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
@@ -128,67 +138,28 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 							,footer[i]->magic_number ,footer[i]->blk_id ,footer[i]->crc);
 			}
 #endif
-			for( i=0;i<4;i++ )
 			{
-				//データフッタから整合性をチェック
-				if( footer[i]->magic_number == -1 ){
-					OS_TPrintf("Data[%d] is blank\n");
-					isCorrect[i] = FALSE;
-				}
-				else if( footer[i]->magic_number != MAGIC_NUMBER_PT ){
-					OS_TPrintf("Data[%d] is invalid MAGIC_NUMBER[%x]\n",footer[i]->magic_number);
-					isCorrect[i] = FALSE;
+				const BOOL isCorrectData = DLPlayData_CheckDataCorrect( &footer[0] , d_data );
+				if( isCorrectData == TRUE )
+				{
+					if( d_data->boxSavePos_ == DDS_FIRST )
+					{
+						d_data->pBoxData_ = d_data->pData_ + boxStartAdd;
+					}
+					else
+					{
+						d_data->pBoxData_ = d_data->pDataMirror_ + boxStartAdd;
+					}
 				}
 				else
 				{
-					const u32 addOfs = ( i%2==0 ? 0 : boxStartAdd );
-					const u16 crc = MATH_CalcCRC16CCITT( &d_data->crcTable_ 
-							, ( i<2 ? d_data->pData_+addOfs : d_data->pDataMirror_+addOfs )
-							, footer[i]->size - sizeof(SAVE_FOOTER) );
-					OS_TPrintf("Data[%d] crc[%d]:[%d]",i,footer[i]->crc,crc);
-					if( footer[i]->crc == crc ){
-						OS_TPrintf(" crc check is ok!!\n");
-						isCorrect[i] = TRUE;
-					}
-					else{
-						OS_TPrintf(" crc check is NG!!\n");
-						isCorrect[i] = FALSE;
-					}
+					d_data->errorState_ = DES_MISS_LOAD_BACKUP;
 				}
+
 			}
 
-	   		//最新データのチェック。生きてるほうが片方ならそっち。
-			//両方生きていればb_countの新しいほうが最新
-			if( isCorrect[1] == TRUE && isCorrect[3] == FALSE ){
-				OS_TPrintf("NewData is 1st!\n");
-				d_data->savePos_  = DDS_FIRST;
-				d_data->pBoxData_ = d_data->pData_ + boxStartAdd;
-			}
-			else if( isCorrect[1] == FALSE && isCorrect[3] == TRUE ){
-				d_data->savePos_  = DDS_SECOND;
-				OS_TPrintf("NewData is 2nd!\n");
-				d_data->pBoxData_ = d_data->pDataMirror_ + boxStartAdd;
-			}
-			else if( isCorrect[1] == TRUE && isCorrect[3] == TRUE ){
-				if( footer[1]->b_count > footer[3]->b_count ){
-					d_data->savePos_  = DDS_FIRST;
-					OS_TPrintf("NewData is 1st!\n");
-					d_data->pBoxData_ = d_data->pData_ + boxStartAdd;
-				}
-				else if( footer[1]->b_count < footer[3]->b_count ){
-					d_data->savePos_  = DDS_SECOND;
-					OS_TPrintf("NewData is 2nd!\n");
-					d_data->pBoxData_ = d_data->pDataMirror_ + boxStartAdd;
-				}
-				else{ 
-					OS_TPrintf("NewData is ......?\n");
-				}
-			}
-			else{
-				OS_TPrintf("NewData is ......?\n");
-			}
 		}
-		GF_ASSERT( d_data->pBoxData_ != NULL );
+		//GF_ASSERT( d_data->pBoxData_ != NULL );
 		d_data->subSeq_++;
 		break;
 	
@@ -247,16 +218,16 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			u32 saveAddress;
 			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
 			SAVE_FOOTER *footer;
-			if( d_data->savePos_ == DDS_FIRST ){
+			if( d_data->boxSavePos_ == DDS_FIRST ){
 				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
 			}
 			else{
 				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
 			}
 			footer->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, footer->size - sizeof(SAVE_FOOTER) );
-			
+			footer->crc = 0;
 			//セーブ開始！
-			saveAddress = ( d_data->savePos_ == DDS_FIRST ? 0x00000 : 0x40000 );
+			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x00000 : 0x40000 );
 			saveAddress += boxStartAdd;
 
 			d_data->lockID_ = OS_GetLockID();
@@ -368,6 +339,192 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 	DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
 	
 	GFL_HEAP_FreeMemory( perData );
+}
+
+//データの関連性、整合性をチェックする
+static	BOOL DLPlayData_CheckDataCorrect( SAVE_FOOTER **pFooterArr , DLPLAY_DATA_DATA *d_data )
+{
+	u8 i;
+	u8	mainDataNum,boxDataNum;
+	BOOL isCorrect[4];	//データ成否チェック
+	//まずデータ単体のチェック
+	for( i=0;i<4;i++ )
+	{
+		const u32 mainEndAdd = DLPlayData_GetStartAddress( GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
+		const u32 boxEndAdd = DLPlayData_GetStartAddress( GMDATA_BOX_FOOTER+1 , d_data->cardType_ );
+		const u32 saveSize = ( i%2==0 ? mainEndAdd : boxEndAdd - mainEndAdd );
+		const u32 addOfs = ( i%2==0 ? 0 : mainEndAdd );
+		//データフッタから整合性をチェック
+		//マジックナンバー
+		if( pFooterArr[i]->magic_number == -1 ){
+			OS_TPrintf("Data[%d] is blank\n");
+			isCorrect[i] = FALSE;
+			continue;
+		}
+		else if( pFooterArr[i]->magic_number != MAGIC_NUMBER_PT ){
+			OS_TPrintf("Data[%d] is invalid MAGIC_NUMBER[%x]\n",pFooterArr[i]->magic_number);
+			isCorrect[i] = FALSE;
+			continue;
+		}
+		//ブロックID(MAINは0 BOXは1
+		if( pFooterArr[i]->blk_id != ( i%2==0 ? 0 : 1 ) )
+		{
+			OS_TPrintf(" BlockID is NG!!\n");
+			isCorrect[i] = FALSE;
+			continue;
+		}
+
+		//サイズのチェック
+		if( pFooterArr[i]->size != saveSize )
+		{
+			OS_TPrintf(" Datasize is NG!!\n");
+			isCorrect[i] = FALSE;
+			continue;
+		}
+		//CRCチェック
+		{
+			//サイズが正しいのを確認してからやらないとマズイ
+			const u16 crc = MATH_CalcCRC16CCITT( &d_data->crcTable_ 
+					, ( i<2 ? d_data->pData_+addOfs : d_data->pDataMirror_+addOfs )
+					, pFooterArr[i]->size - sizeof(SAVE_FOOTER) );
+			OS_TPrintf("Data[%d] crc[%d]:[%d]",i,pFooterArr[i]->crc,crc);
+			if( pFooterArr[i]->crc != crc ){
+				OS_TPrintf(" crc check is NG!!\n");
+				isCorrect[i] = FALSE;
+				continue;
+			}
+		}
+
+		isCorrect[i] = TRUE;
+	}
+	mainDataNum = DLPlayData_PT_CompareFooterData( pFooterArr[ PT_MAIN_FIRST ] ,isCorrect[ PT_MAIN_FIRST ],
+												   pFooterArr[ PT_MAIN_SECOND ] ,isCorrect[ PT_MAIN_SECOND ] ,
+												   &d_data->mainSavePos_ );
+	boxDataNum = DLPlayData_PT_CompareFooterData(  pFooterArr[ PT_BOX_FIRST ] ,isCorrect[ PT_BOX_FIRST ],
+												   pFooterArr[ PT_BOX_SECOND ] ,isCorrect[ PT_BOX_SECOND ] ,
+												   &d_data->boxSavePos_ );
+	if( mainDataNum == 0 || boxDataNum == 0 )
+	{
+		return FALSE;
+	}
+	else if( mainDataNum == 1 && boxDataNum == 1 )
+	{
+		if( d_data->mainSavePos_ == d_data->boxSavePos_ )
+		{
+			//初回セーブ
+			return TRUE;
+		}
+		else
+		{
+			//片側破壊
+			return FALSE;
+		}
+	}
+	else if( mainDataNum == 1 && boxDataNum == 2 )
+	{
+		//進行データ破壊
+		return FALSE;
+	}
+	else if( mainDataNum == 2 && boxDataNum == 1 )
+	{
+		if( pFooterArr[ d_data->mainSavePos_*2 ]->g_count ==
+			pFooterArr[ d_data->boxSavePos_*2+1]->g_count )
+		{
+			//初回セーブ後、全体セーブなし
+			return TRUE;
+		}
+		else
+		{
+			//BOXデータ破壊
+			return FALSE;
+		}
+	}
+	else
+	{
+		if( pFooterArr[ d_data->mainSavePos_*2 ]->g_count ==
+			pFooterArr[ d_data->boxSavePos_*2+1]->g_count )
+		{
+			//問題なし
+			return TRUE;
+		}
+		else
+		{
+			//進行とBOXの間でセーブ中断
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+//データの新しいほうと、正しい個数を取得
+static u8	DLPlayData_PT_CompareFooterData( SAVE_FOOTER *fData , BOOL fCorr ,
+											 SAVE_FOOTER *sData , BOOL sCorr ,
+											 u8 *pos )
+{
+	if( fCorr == TRUE && sCorr == TRUE )
+	{
+		//両方正しい
+		if( fData->g_count != sData->g_count )
+		{
+			//グローバルが違うので全体セーブ後
+			if( fData->b_count > sData->b_count )
+			{
+				GF_ASSERT( fData->g_count > sData->g_count );
+				*pos = DDS_FIRST;
+			}
+			else if( fData->b_count < sData->b_count )
+			{
+				GF_ASSERT( fData->g_count < sData->g_count );
+				*pos = DDS_SECOND;
+			}
+			else
+			{
+				//ありえないエラー(一応2Mフラッシュがあるらしい・・・
+				GF_ASSERT( FALSE );
+				*pos = DDS_FIRST;
+				return 0;
+			}
+		}
+		else
+		{
+			//グローバルが一緒な時は部分セーブ
+			if( fData->b_count > sData->b_count )
+			{
+				*pos = DDS_FIRST;
+			}
+			else if( fData->b_count < sData->b_count )
+			{
+				*pos = DDS_SECOND;
+			}
+			else
+			{
+				//ありえないエラー(一応2Mフラッシュがあるらしい・・・
+				GF_ASSERT( FALSE );
+				*pos = DDS_FIRST;
+				return 0;
+			}
+		}
+		return 2;
+	}
+	else
+	if( fCorr == TRUE && sCorr == FALSE )
+	{
+		//片方だけ生きてる
+		*pos = DDS_FIRST;
+		return 1;
+	}
+	else if( fCorr == FALSE && sCorr == TRUE )
+	{
+		//片方だけ生きてる
+		*pos = DDS_SECOND;
+		return 1;
+	}
+	else
+	{
+		//両方アウト
+		*pos = DDS_ERROR;
+		return 0;
+	}
 }
 
 //各データブロックの開始位置を求める。PTと違ってフッタも一つのブロックとして計算する
