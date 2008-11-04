@@ -14,7 +14,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
-#include "game_event.h"	//local
+#include "gamesystem/game_event.h"
 
 #include "gamesystem/game_init.h"
 
@@ -41,6 +41,7 @@ static GAME_INIT_WORK TestGameInitWork;
 //============================================================================================
 //============================================================================================
 extern const GFL_PROC_DATA DebugFieldProcData;
+extern void DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
 
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param);
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
@@ -71,7 +72,8 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GameSysWork = gsys;
 	GameSystem_Init(gsys, HEAPID_GAMESYS, pwk);
 #if 1		/* Žb’è“I‚ÉƒvƒƒZƒX“o˜^ */
-	GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+	DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+	//GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
 #endif
 	return GFL_PROC_RES_FINISH;
 }
@@ -159,10 +161,18 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 
+#if 0
 	{
 		PLAYER_WORK * me = GAMEDATA_GetMyPlayerWork(gsys->gamedata);
 		PLAYERWORK_setZoneID(me, init_param->mapid);
 	}
+#endif
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
+{
+	return gsys->proc_result;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -172,10 +182,19 @@ static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+GAMEDATA * GAMESYSTEM_GetGameData(GAMESYS_WORK * gsys)
+{
+	return gsys->gamedata;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys)
 {
 	return GAMEDATA_GetMyPlayerWork(gsys->gamedata);
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
 {
 	return gsys->heapID;
@@ -244,37 +263,3 @@ void GameSystem_CallProc(GAMESYS_WORK * gsys,
 }
 
 
-//============================================================================================
-//============================================================================================
-extern const GFL_PROC_DATA TestProg1MainProcData;
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void * work)
-{
-	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-
-	switch(*seq) {
-	case 0:
-		if (gsys->proc_result) break;
-		(*seq) ++;
-		break;
-	case 1:
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
-		(*seq) ++;
-		break;
-	case 2:
-		if (gsys->proc_result) break;
-		(*seq) ++;
-		break;
-	case 3:
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
-		return GMEVENT_RES_FINISH;
-		
-	}
-	return GMEVENT_RES_CONTINUE;
-}
-
-void DEBUG_EventStart(void)
-{
-	GAMESYSTEM_EVENT_Set(GameSysWork, GameChangeEvent, 0);
-}

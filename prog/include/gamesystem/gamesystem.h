@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+#include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 //============================================================================================
 //============================================================================================
@@ -32,7 +33,6 @@ typedef struct _GMEVENT_CONTROL GMEVENT_CONTROL;
 //------------------------------------------------------------------
 extern const GFL_PROC_DATA GameMainProcData;
 
-extern void DEBUG_EventStart(void);
 //------------------------------------------------------------------
 /**
  */
@@ -53,7 +53,15 @@ extern GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
 extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event);
 
 //------------------------------------------------------------------
+/**
+ * @brief	プロセス起動中かどうかを返す
+ * @return	BOOL	TRUEのとき、プロセスが存在する
+ */
 //------------------------------------------------------------------
+extern BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys);
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+extern GAMEDATA * GAMESYSTEM_GetGameData(GAMESYS_WORK * gsys);
 extern PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys);
 
 #ifdef	__cplusplus

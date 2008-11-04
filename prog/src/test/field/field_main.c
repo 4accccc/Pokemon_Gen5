@@ -29,6 +29,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 
+extern void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
+extern void DEBUG_EventStart(GAMESYS_WORK * gsys);
 //============================================================================================
 /**
  *
@@ -115,29 +117,27 @@ static int GetSceneID(GAMESYS_WORK * gsys)
 	ZONEID id = PLAYERWORK_getZoneID(pw);
 	return id;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 {
-	return FIELDDATA_GetStartPosition(GetSceneID(gsys));
+	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+	return PLAYERWORK_getPosition(pw);
+	//return FIELDDATA_GetStartPosition(GetSceneID(gsys));
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static const DEPEND_FUNCTIONS * GetDependFunctions(GAMESYS_WORK * gsys)
 {
 	return FIELDDATA_GetFieldFunctions(GetSceneID(gsys));
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static const FLD_G3D_MAPPER_RESIST * GetMapperData(GAMESYS_WORK * gsys)
 {
 	return FIELDDATA_GetMapperData(GetSceneID(gsys));
 }
 
-static void SetNextScene(GAMESYS_WORK * gsys)
-{
-	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
-	ZONEID id = PLAYERWORK_getZoneID(pw);
-	id ++;
-	if( id >= FIELDDATA_GetMapIDMax() ){
-		id = 0;
-	}
-	PLAYERWORK_setZoneID(pw, id);
-}
 //------------------------------------------------------------------
 /**
  * @brief	ワークの確保と破棄
@@ -209,12 +209,15 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
 	case 2:
 		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
+			DEBUG_EventStart(gsys);
 			fieldWork->gamemode = GAMEMODE_FINISH;
 			fieldWork->seq = 3;
 			break;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-			SetNextScene(gsys);
+			DEBUG_EVENT_ChangeToNextMap(gsys);
+			fieldWork->gamemode = GAMEMODE_FINISH;
+			//SetNextScene(gsys);
 			fieldWork->seq = 3;
 			break;
 		}
@@ -233,6 +236,13 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 		break;
 
 	case 3:
+		{
+			VecFx32 player_pos;
+			PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+			GetPlayerActTrans(fieldWork->pcActCont, &player_pos);
+			PLAYERWORK_setPosition(pw, &player_pos);
+
+		}
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
 
