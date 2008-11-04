@@ -137,6 +137,7 @@ struct _GAMESYS_WORK {
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 	PLAYER_WORK playerWork[PLAYER_MAX];
 
+	BOOL proc_result;
 	GMEVENT_CONTROL * event;
 };
 
@@ -154,6 +155,8 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->heapID = heapID;
 	gsys->parent_work = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
+	gsys->proc_result = FALSE;
+	gsys->event = NULL;
 
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gsys->playerWork[i]);
@@ -184,7 +187,6 @@ GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
 }
 void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
 {
-	GF_ASSERT(gsys->event == NULL);
 	gsys->event = event;
 }
 
@@ -204,12 +206,11 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 //------------------------------------------------------------------
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
-	BOOL proc_result;
 	//Game Server Proccess
 	GAMESYSTEM_EVENT_Main(gsys);
 	//	PlayerController/Event
-	proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
-	if (proc_result == FALSE && gsys->event == NULL) {
+	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
+	if (gsys->proc_result == FALSE && gsys->event == NULL) {
 		//プロセスもイベントも存在しないとき、ゲーム終了
 		return TRUE;
 	} else {
@@ -299,3 +300,37 @@ u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 	return player->direction;
 }
 
+//============================================================================================
+//============================================================================================
+extern const GFL_PROC_DATA TestProg1MainProcData;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void * work)
+{
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+
+	switch(*seq) {
+	case 0:
+		if (gsys->proc_result) break;
+		(*seq) ++;
+		break;
+	case 1:
+		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		(*seq) ++;
+		break;
+	case 2:
+		if (gsys->proc_result) break;
+		(*seq) ++;
+		break;
+	case 3:
+		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+		return GMEVENT_RES_FINISH;
+		
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+void DEBUG_EventStart(void)
+{
+	GAMESYSTEM_EVENT_Set(GameSysWork, GameChangeEvent, 0);
+}

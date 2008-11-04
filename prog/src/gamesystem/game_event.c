@@ -89,6 +89,8 @@ static GMEVENT_CONTROL * Event_Delete(GMEVENT_CONTROL * event)
 GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
 {
 	GMEVENT_CONTROL * event;
+	
+	GF_ASSERT(GAMESYSTEM_EVENT_IsExists(repw) == FALSE);
 	//GF_ASSERT(repw->event == NULL);
 //	GF_ASSERT((sys_GetHeapState(HEAPID_LOCAL) >> 32) == 0);
 	event = Event_Create(repw, event_func, work_size);

@@ -32,6 +32,7 @@ typedef struct _GMEVENT_CONTROL GMEVENT_CONTROL;
 //------------------------------------------------------------------
 extern const GFL_PROC_DATA GameMainProcData;
 
+extern void DEBUG_EventStart(void);
 //------------------------------------------------------------------
 /**
  */
