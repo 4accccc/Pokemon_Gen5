@@ -14,6 +14,8 @@
 #include "MainForm.h"
 #include "NetIRC.h"
 #include "FileNGC.h"
+#include "PokemonSearch.h"
+#include "pokemontbl.h"
 
 #include < stdio.h >
 #include < stdlib.h >
@@ -26,7 +28,20 @@ using namespace System::Windows::Forms;
 using namespace System::Threading;
 
 static BoxTrayData GPokeBoxList[BOX_MAX_TRAY];
+static Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
 
+
+void MainForm::connectIRC(void)
+{
+	if(NetIRC::connect()){
+		threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::ThreadWork)); //
+
+		threadA->IsBackground = true; // バックグラウンド・スレッドとする
+		threadA->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+
+		threadA->Start(); // 
+	}
+}
 
 //--------------------------------------------------------------
 /**
@@ -38,16 +53,7 @@ static BoxTrayData GPokeBoxList[BOX_MAX_TRAY];
 
 System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	NetIRC::connect();
-
-	threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::ThreadWork)); //
-
-	threadA->IsBackground = true; // バックグラウンド・スレッドとする
-	threadA->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
-
-    threadA->Start(); // 
-
-
+	connectIRC();
 
 }
 
@@ -89,13 +95,10 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 	pictureBox1->Hide();
 
 
-	this->Width = 10 * 8 * 6 + 10;
-	this->Width *= 2;
-	this->Height = 10 * 8 * 6 + 30;
+	this->Width = 670;
+	this->Height = 770;
+	GTSDispMode=0;
 
-//	button1->Hide();
-//	button2->Hide();
-//	button3->Hide();
 	splitContainer1->Panel1->Hide();
 
 	splitContainer1->SplitterDistance = 0;  //最初ボタンは見せない
@@ -238,16 +241,15 @@ void MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
 	}
 
 	upload_data->postSimple.characterNo = pokeNo;
-	upload_data->postSimple.gender = DPW_TR_GENDER_FEMALE;
-	upload_data->postSimple.level = 20;
+	upload_data->postSimple.gender = sendPokeSex;
+	upload_data->postSimple.level = sendPokeLv;
 	upload_data->wantSimple.characterNo = 101;
-	upload_data->wantSimple.gender = DPW_TR_GENDER_FEMALE;
+	upload_data->wantSimple.gender = DPW_TR_GENDER_MALE;
 	upload_data->wantSimple.level_min = 0;
 	upload_data->wantSimple.level_max = 0;
-	upload_data->name[0] = 0x64; // サ
-	upload_data->name[1] = 0x77; // ト
-	upload_data->name[2] = 0x62; // シ
-	upload_data->name[3] = 0xffff;
+	upload_data->name[0] = 0x30;
+	upload_data->name[1] = 0x31;
+	upload_data->name[2] = 0xffff;
 	upload_data->trainerID = 1 << 12;
 	upload_data->countryCode = 103;
 	upload_data->langCode = 1;
@@ -316,7 +318,13 @@ void MainForm::RequestUpload(void)
 			return;
 		}
 	}
-	MessageBox::Show("あずけました");
+	//DS側を消す
+	NetIRC::dataArray = gcnew array<unsigned char>(2);
+	NetIRC::dataArray[0] = sendBoxNo;
+	NetIRC::dataArray[1] = sendBoxPoke;
+	NetIRC::sendData(IRC_COMMAND_BOXPOKEDEL);
+
+	MessageBox::Show("あずけました" + sendBoxNo + " " + sendBoxPoke);
 	return;
 }
 
@@ -544,7 +552,7 @@ System::Void MainForm::gTSResetToolStripMenuItem_Click(System::Object^  sender, 
 
 //--------------------------------------------------------------
 /**
- * @breif   GTS接続テスト
+ * @breif   ボックス選択等からメインHTMLにもどる
  * @param   none
  * @retval  none
  */
@@ -555,10 +563,16 @@ System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, 
 
 	// HTTPプロキシが必要な場合はプロキシのアドレスを"<server>[:port]"の様に指定してください。
 	//String^ proxy = "proxy.server.com:8080";
-	String^ proxy = "";
+	//String^ proxy = "";
 
 	// 預けて引き取る
-	TestUploadDownload(100000, proxy);
+	//TestUploadDownload(100000, proxy);
+
+
+	webBrowser1->Show();
+	pictureBox1->Hide();
+
+
 }
 
 //--------------------------------------------------------------
@@ -579,6 +593,29 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 
 //--------------------------------------------------------------
 /**
+ * @breif   ポケモン名から番号を得る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::PokemonName2No(String^ spokename)
+{
+	for(int i=0;i< POKEMON_MAX;i++){
+		char* name = PokemonDataTable::getPokemonName(i);
+		String^ pknm = gcnew String(name);
+		if(pknm == spokename){
+			return i;
+		}
+	}
+	return 0;
+}
+
+
+
+
+//--------------------------------------------------------------
+/**
  * @breif   赤外線通信してDSからGTS操作を行う
  * @param   none
  * @retval  none
@@ -588,22 +625,90 @@ System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender
 void MainForm::CallProg(String^ message)
 {
 	if(message =="PokeSend"){
+		connectIRC();
 		bBoxListRecv = false;
-		threadA = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
-		threadA->IsBackground = true; // バックグラウンド・スレッドとする
-		threadA->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
-	    threadA->Start(); // 
-
-
-		threadA->Join();
-
+		threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
+		threadB->IsBackground = true; // バックグラウンド・スレッドとする
+		threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+	    threadB->Start(); // 
+		threadB->Join();
 		pokemonListDisp(0);
+	}
+	else if(message =="PokeSearch"){
+		PokemonSearch^ pPoke = gcnew PokemonSearch;
+		pPoke->listBox1->SelectedIndex = 2;
+		if(pPoke->ShowDialog() == System::Windows::Forms::DialogResult::OK){
+
+			targetPoke = PokemonName2No(pPoke->textBox1->Text);
+			sendPokeSex = pPoke->listBox1->SelectedIndex + 1;
+			sendPokeLvMax = System::Decimal::ToInt32(pPoke->numericUpDown3->Value);
+			sendPokeLv = System::Decimal::ToInt32(pPoke->numericUpDown2->Value);
+
+			//サーチスレッド起動
+			
+			threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::RequestSearch)); //
+			threadB->IsBackground = true; // バックグラウンド・スレッドとする
+			threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+		    threadB->Start(); // 
+			threadB->Join();
+			pokemonSearchDisp();
+
+
+
+
+		}
 	}
 	else{
 		MessageBox::Show(message, "client code");
 	}
 
 }
+
+//--------------------------------------------------------------
+/**
+ * @breif   探してきたポケモンの表示
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::pokemonSearchDisp(void)
+{
+	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
+
+	for(int i=0;i < DownloadMatchNum;i++){
+		Dpw_Tr_Data     *dtp = &match_data_buf[i];
+
+		int no = PokemonDataTable::getPokemonNo(dtp->postSimple.characterNo);
+
+		String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
+		String^ ncgname = dirname + "pmpl_" + no.ToString("000") + "_frnt_m.ncg";
+		String^ nclname = dirname + "pmpl_" + no.ToString("000") + "_n.ncl";
+	
+		FileNCGRead^ fngc = gcnew FileNCGRead;
+
+		fngc->readWithNcl(ncgname,"", nclname);
+	
+		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1, 10*(i%6), 10*(i/6),10,10);
+
+
+	}
+
+	pictureBox1->Dock = DockStyle::Fill;
+	webBrowser1->Dock = DockStyle::Fill;
+
+	webBrowser1->Visible = false;
+	pictureBox1->Visible = true;
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   ボックスのポケモンを表示する
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
 
 void MainForm::pokemonListDisp(int boxNo)
 {
@@ -625,7 +730,7 @@ void MainForm::pokemonListDisp(int boxNo)
 			continue;
 		}
 
-		int no = PokeGraNoTable[tno].no;
+		int no = PokemonDataTable::getPokemonNo(tno);
 
 		String^ dirname = "C:\\home\\wb\\pokemon_wb\\pc\\PokeIRC\\PokeIRC\\pokegra\\";
 		String^ ncgname = dirname + "pmpl_" + no.ToString("000") + "_frnt_m.ncg";
@@ -637,18 +742,64 @@ void MainForm::pokemonListDisp(int boxNo)
 	
 		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1,10*(i%6), 10*(i/6),10,10);
 
-		pictureBox1->Dock = DockStyle::Fill;
-		webBrowser1->Dock = DockStyle::Fill;
-
-		webBrowser1->Visible = false;
-		pictureBox1->Visible = true;
 	}
 	splitContainer1->Panel1->Show();
 	button1->Width = this->Width / 5;
 	button2->Width = (this->Width / 5) * 3;
 	button3->Width = this->Width / 5;
+
+	pictureBox1->Dock = DockStyle::Fill;
+	webBrowser1->Dock = DockStyle::Fill;
+
+	webBrowser1->Visible = false;
+	pictureBox1->Visible = true;
 }
 
+
+
+//--------------------------------------------------------------
+/**
+ * @breif   ポケモンを探す
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::RequestSearch(void)
+{
+	s32 result = 0;
+	//Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
+	// 検索→トレード
+	{
+		// 検索
+		Dpw_Tr_PokemonSearchData search_data;
+		
+		search_data.characterNo = targetPoke;
+		search_data.gender = sendPokeSex;
+		search_data.level_min = sendPokeLv;
+		search_data.level_max = sendPokeLvMax;	// 0を指定すると、上限は設定しないことになる
+//        search_data.maxNum = DPW_TR_DOWNLOADMATCHDATA_MAX;
+//        search_data.countryCode = 103;
+		
+		Dpw_Tr_DownloadMatchDataAsync(&search_data,DPW_TR_DOWNLOADMATCHDATA_MAX, match_data_buf);
+		result = WaitForAsync();
+		if(result < 0 )
+		{
+			Debug::WriteLine("Failed to search.");
+			return;
+		}
+		else if(result == 0)
+		{
+			Debug::WriteLine("No such pokemon.");
+			return;
+		}
+
+		MessageBox::Show(result + "件みつかりました");
+		Debug::WriteLine("Found pokemons." + result);
+		DownloadMatchNum = result;
+	}
+	return;
+}
 
 //--------------------------------------------------------------
 /**
@@ -714,6 +865,41 @@ int MainForm::getPokemonNumberFromThePlace(int x,int y)
 	return 0;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * @breif   場所からPokemonsexを得る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::getPokemonSexFromThePlace(int x,int y)
+{
+	int no = getBoxPositionFromThePlace(x, y);
+	if(no != -1){
+		return GPokeBoxList[dispBoxNo].pokesex[no];
+	}
+	return 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   場所からPokemonsexを得る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+int MainForm::getPokemonLvFromThePlace(int x,int y)
+{
+	int no = getBoxPositionFromThePlace(x, y);
+	if(no != -1){
+		return GPokeBoxList[dispBoxNo].pokelv[no];
+	}
+	return 0;
+}
+
 //--------------------------------------------------------------
 /**
  * @breif   マウス移動時にポケモンの名前などをTipで表示
@@ -725,16 +911,62 @@ int MainForm::getPokemonNumberFromThePlace(int x,int y)
 
 System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
-	static int backupPoke = -1;
+	int pokeno;
+	int pokesex;
+	int pokelv;
+	String^ sexs = "ふめい";
+	String^ comment="\n ";
+	String^ pknm="";
 
-	int pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
 
-	if((pokeno != 0) && (backupPoke != pokeno)){
-		char* name = PokeGraNoTable[pokeno].name;
-		String^ pknm = gcnew String(name);
-		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
-		backupPoke = pokeno;
+	switch(GTSDispMode){
+	case MODE_SEARCHPOKE:
+		{
+			int no = getBoxPositionFromThePlace(e->X,e->Y);
+			if((no == -1)  || (no >= DownloadMatchNum)){
+				return;
+			}
+			Dpw_Tr_Data *dtp = &match_data_buf[no];
+			pokeno = dtp->postSimple.characterNo;
+			pokesex = dtp->postSimple.gender;
+			pokelv = dtp->postSimple.level;
+
+			comment = comment + PokemonDataTable::DPSpellConv(dtp->name, DPW_TR_NAME_SIZE);
+
+		}
+		break;
+	case MODE_BOXDISP:
+		pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+		pokesex = getPokemonSexFromThePlace(e->X,e->Y);
+		pokelv = getPokemonLvFromThePlace(e->X,e->Y);
+		break;
+	default:
+		return;
 	}
+
+
+	if(pokeno != 0){
+		switch(pokesex){
+			case 1:
+				sexs = "オス";
+				break;
+			case 2:
+				sexs = "メス";
+				break;
+		}
+		char* name = PokemonDataTable::getPokemonName(pokeno);
+		pknm = gcnew String(name);
+		pknm = pknm + " " + sexs + " LV" + pokelv + comment; 
+	}
+	else{
+		return;
+	}
+	if(BackupToolTipMsg != pknm){
+		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
+		BackupToolTipMsg = pknm;
+	}
+
+
 }
 
 //--------------------------------------------------------------
@@ -766,7 +998,8 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 
 	if(pokeno != 0){
 		String^ nm = gcnew String(PROGRAM_NAME);
-		char* name = PokeGraNoTable[pokeno].name;
+//		char* name = PokeGraNoTable[pokeno].name;
+		char* name = PokemonDataTable::getPokemonName(pokeno);
 		String^ pknm = gcnew String(name);
 
 		if ( MessageBox::Show(pknm + "を預けますか？", nm,
@@ -774,11 +1007,15 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 			 MessageBoxIcon::Question )
 				 == System::Windows::Forms::DialogResult::OK ) {
 				targetPoke = pokeno;
+				sendBoxNo = dispBoxNo;
+				sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
+				sendPokeSex = getPokemonSexFromThePlace(e->X,e->Y);
+				sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
 
 				// 赤外線コマンド発行
 				NetIRC::dataArray = gcnew array<unsigned char>(2);
-				NetIRC::dataArray[0] = dispBoxNo;
-				NetIRC::dataArray[1] = getBoxPositionFromThePlace(e->X,e->Y);
+				NetIRC::dataArray[0] = sendBoxNo;
+				NetIRC::dataArray[1] = sendBoxPoke;
 				NetIRC::sendData(IRC_COMMAND_BOXPOKE);
 
 				threadA = gcnew Thread(gcnew ThreadStart(&RequestUpload));  //
@@ -873,6 +1110,10 @@ void MainForm::GetPokeBoxList(void)
 		}
 		for(j = 0;j < BOX_MAX_POS;j++){
 			GPokeBoxList[i].pokelv[j] = NetIRC::recvdataArray[k]+NetIRC::recvdataArray[k+1]*0x100;
+			k+=2;
+		}
+		for(j = 0;j < BOX_MAX_POS;j++){
+			GPokeBoxList[i].pokesex[j] = NetIRC::recvdataArray[k]+NetIRC::recvdataArray[k+1]*0x100;
 			k+=2;
 		}
 		for(j = 0;j < BOX_TRAYNAME_BUFSIZE+2;j++){

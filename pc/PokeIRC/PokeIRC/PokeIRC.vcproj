@@ -230,6 +230,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PokemonSearch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\pokemontbl.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -291,6 +299,20 @@
 			</File>
 			<File
 				RelativePath=".\NetIRC.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PokemonSearch.h"
+				FileType="3"
+				>
+				<File
+					RelativePath=".\PokemonSearch.resx"
+					SubType="Designer"
+					>
+				</File>
+			</File>
+			<File
+				RelativePath=".\pokemontbl.h"
 				>
 			</File>
 			<File

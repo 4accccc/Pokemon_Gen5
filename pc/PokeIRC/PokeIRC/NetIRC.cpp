@@ -146,9 +146,13 @@ void NetIRC::draw(Form^ fm)
  * @retval  none
  */
 //--------------------------------------------------------------
-void NetIRC::connect(void)
+bool NetIRC::connect(void)
 {
+	if(isEmulate){
+		return false;
+	}
 	isEmulate = true;
+	return true;
 }
 
 //--------------------------------------------------------------
