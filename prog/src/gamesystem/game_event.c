@@ -91,10 +91,8 @@ GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_f
 	GMEVENT_CONTROL * event;
 	
 	GF_ASSERT(GAMESYSTEM_EVENT_IsExists(repw) == FALSE);
-	//GF_ASSERT(repw->event == NULL);
-//	GF_ASSERT((sys_GetHeapState(HEAPID_LOCAL) >> 32) == 0);
 	event = Event_Create(repw, event_func, work_size);
-	GAMESYSTEM_SetEvent(repw, event);//repw->event = event;
+	GAMESYSTEM_SetEvent(repw, event);
 	return event;
 }
 //------------------------------------------------------------------
@@ -130,7 +128,7 @@ GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, 
 	GMEVENT_CONTROL * event;
 	event = Event_Create(parent->repw, sub_func, work_size);
 	event->parent = parent;
-	GAMESYSTEM_SetEvent(parent->repw, event);//parent->repw->event = event;
+	GAMESYSTEM_SetEvent(parent->repw, event);
 	return event;
 }
 
@@ -171,7 +169,6 @@ BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
 {
 	return (GAMESYSTEM_GetEvent(gsys) != NULL);
-	//return (gsys->event != NULL);
 }
 
 //=============================================================================
@@ -281,12 +278,12 @@ void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_da
 //=============================================================================
 //------------------------------------------------------------------
 /**
- * @brief	フィールド制御ワークへのポインタ取得
+ * @brief	ゲームシステム制御ワークへのポインタ取得
  * @param	event		イベント制御ワークへのポインタ
- * @return	GAMESYS_WORK	フィールド制御ワークへのポインタ
+ * @return	GAMESYS_WORK	ゲームシステム制御ワークへのポインタ
  *
- * フィールド制御ワークはフィールドでは最上位のワークエリアとなる。
- * この領域に直接参照することは「フィールド内でのグローバル変数へのアクセス」と
+ * ゲームシステム制御ワークはポケモンゲーム内では最上位のワークエリアとなる。
+ * この領域に直接参照することは「ゲームシステム内でのグローバル変数へのアクセス」と
  * 等しい。グローバル変数へのアクセスはなるべく避けるべきなので、この関数は
  * なるべく使用しないようにしたい。
  *

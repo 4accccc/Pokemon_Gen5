@@ -12,6 +12,7 @@
 #include "system/main.h"		//HEAPIDの参照用
 
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 #include "game_event.h"	//local
 
@@ -122,9 +123,6 @@ GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid)
 
 //============================================================================================
 //============================================================================================
-enum {
-	PLAYER_MAX = 5,
-};
 //------------------------------------------------------------------
 /**
  * @brief	ゲーム制御システム用ワーク定義
@@ -135,10 +133,11 @@ struct _GAMESYS_WORK {
 	void * parent_work;		///<親（呼び出し元）から引き継いだワークへのポインタ
 
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
-	PLAYER_WORK playerWork[PLAYER_MAX];
 
 	BOOL proc_result;
 	GMEVENT_CONTROL * event;
+
+	GAMEDATA * gamedata;
 };
 
 //------------------------------------------------------------------
@@ -158,11 +157,10 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->proc_result = FALSE;
 	gsys->event = NULL;
 
-	for (i = 0; i < PLAYER_MAX; i++) {
-		PLAYERWORK_init(&gsys->playerWork[i]);
-	}
+	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
+
 	{
-		PLAYER_WORK * me = &gsys->playerWork[0];
+		PLAYER_WORK * me = GAMEDATA_GetMyPlayerWork(gsys->gamedata);
 		PLAYERWORK_setZoneID(me, init_param->mapid);
 	}
 }
@@ -170,12 +168,13 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
+	GAMEDATA_Delete(gsys->gamedata);
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys)
 {
-	return &gsys->playerWork[0];
+	return GAMEDATA_GetMyPlayerWork(gsys->gamedata);
 }
 HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
 {
@@ -244,61 +243,6 @@ void GameSystem_CallProc(GAMESYS_WORK * gsys,
 	GFL_PROC_LOCAL_CallProc(gsys->procsys, ov_id, procdata, pwk);
 }
 
-
-//============================================================================================
-//============================================================================================
-//------------------------------------------------------------------
-/**
- * @brief	PLAYER_WORK初期化
- */
-//------------------------------------------------------------------
-void PLAYERWORK_init(PLAYER_WORK * player)
-{
-	player->zoneID = 0;
-	player->position.x = 0;
-	player->position.y = 0;
-	player->position.z = 0;
-	player->direction = 0;
-	player->mystatus.id = 0;
-	player->mystatus.sex = 0;
-	player->mystatus.region_code = 0;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void PLAYERWORK_setPosition(PLAYER_WORK * player, const VecFx32 * pos)
-{
-	player->position = *pos;
-}
-
-const VecFx32 * PLAYERWORK_getPosition(const PLAYER_WORK * player)
-{
-	return &player->position;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void PLAYERWORK_setZoneID(PLAYER_WORK * player, ZONEID zoneid)
-{
-	player->zoneID = zoneid;
-}
-
-ZONEID PLAYERWORK_getZoneID(const PLAYER_WORK * player)
-{
-	return player->zoneID;
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void PLAYERWORK_setDirection(PLAYER_WORK * player, u16 direction)
-{
-	player->direction = direction;
-}
-
-u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
-{
-	return player->direction;
-}
 
 //============================================================================================
 //============================================================================================
