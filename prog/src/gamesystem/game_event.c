@@ -26,12 +26,10 @@ enum {
  */
 //-----------------------------------------------------------------------------
 struct _GMEVENT_CONTROL{
-	GMEVENT_CONTROL * parent;
+	GMEVENT_CONTROL * parent;	///<親（呼び出し元）のイベントへのポインタ
 	GMEVENT_FUNC	func;	///<制御関数へのポインタ
 	int seq;				///<シーケンスワーク
 	void * work;			///<制御関数毎に固有ワークへのポインタ
-	int lwk_size;
-	void * lwk;
 	GAMESYS_WORK * repw;	///<フィールド全体制御ワークへのポインタ（なるべく参照したくない）
 };
 
@@ -47,18 +45,36 @@ struct _GMEVENT_CONTROL{
  *
  */
 //------------------------------------------------------------------
-static GMEVENT_CONTROL * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, void * work)
+static GMEVENT_CONTROL * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
 {
 	GMEVENT_CONTROL * event;
 	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT_CONTROL));
 	event->parent = NULL;
 	event->func = event_func;
 	event->seq = 0;
-	event->work = work;
-	event->lwk_size = 0;
-	event->lwk = NULL;
+	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
 	event->repw = repw;
 	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT Event_Call(GMEVENT_CONTROL * event)
+{
+	return event->func(event, &event->seq, event->work);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_CONTROL * Event_Delete(GMEVENT_CONTROL * event)
+{
+	GMEVENT_CONTROL * parent;
+	parent = event->parent;
+	if (event->work) {
+		GFL_HEAP_FreeMemory(event->work);
+	}
+	GFL_HEAP_FreeMemory(event);
+	return parent;
 }
 
 //------------------------------------------------------------------
@@ -66,16 +82,16 @@ static GMEVENT_CONTROL * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_fu
  * @brief	イベント設定
  * @param	repw
  * @param	event_func	イベント制御関数へのポインタ
- * @param	work		イベント制御関数の使用するワークへのポインタ
+ * @param	work_size	イベント制御関数の使用するワークのサイズ
  * @return	GMEVENT_CONTROL	生成したイベント
  */
 //------------------------------------------------------------------
-GMEVENT_CONTROL * GMEVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, void * work)
+GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
 {
 	GMEVENT_CONTROL * event;
 	//GF_ASSERT(repw->event == NULL);
 //	GF_ASSERT((sys_GetHeapState(HEAPID_LOCAL) >> 32) == 0);
-	event = Event_Create(repw, event_func, work);
+	event = Event_Create(repw, event_func, work_size);
 	GAMESYSTEM_SetEvent(repw, event);//repw->event = event;
 	return event;
 }
@@ -84,35 +100,33 @@ GMEVENT_CONTROL * GMEVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, void
  * @brief	イベント切替
  * @param	event		イベント制御ワークへのポインタ
  * @param	next_func	次のイベント制御関数へのポインタ
- * @param	work		次のイベント制御関数の使用するワークへのポインタ
+ * @param	work_size	次のイベント制御関数の使用するワークのサイズ
  */
 //------------------------------------------------------------------
-void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, void * work)
+void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, u32 work_size)
 {
 	event->func = next_func;
 	event->seq = 0;
-	event->work = work;
-	if (event->lwk != 0 || event->lwk != NULL) {
-		GFL_HEAP_FreeMemory(event->lwk);
-		event->lwk_size = 0;
-		event->lwk = NULL;
+	if (event->work) {
+		GFL_HEAP_FreeMemory(event->work);
 	}
+	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
 }
 //------------------------------------------------------------------
 /**
  * @brief	サブイベント呼び出し
  * @param	parent		親イベントへのポインタ
  * @param	event_func	イベント制御関数へのポインタ
- * @param	work		イベント制御関数の使用するワークへのポインタ
+ * @param	work_size	イベント制御関数の使用するワークへのポインタ
  * @return	GMEVENT_CONTROL	生成したイベント
  *
  * イベントからサブイベントのコールを呼び出す
  */
 //------------------------------------------------------------------
-GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, void * work)
+GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, u32 work_size)
 {
 	GMEVENT_CONTROL * event;
-	event = Event_Create(parent->repw, sub_func, work);
+	event = Event_Create(parent->repw, sub_func, work_size);
 	event->parent = parent;
 	GAMESYSTEM_SetEvent(parent->repw, event);//parent->repw->event = event;
 	return event;
@@ -128,23 +142,16 @@ GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, 
  * @retval	FALSE	イベント継続中
  */
 //------------------------------------------------------------------
-BOOL GMEVENT_Main(GAMESYS_WORK * gsys)
+BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 {
 	GMEVENT_CONTROL * event = GAMESYSTEM_GetEvent(gsys);
-	//if (gsys->event == NULL) {
 	if (event == NULL) {
 		return FALSE;
 	}
-	while (event->func(event, event->work) == TRUE) {
-		GMEVENT_CONTROL * parent;
-		parent = event->parent;
-		if (event->lwk) {
-			GFL_HEAP_FreeMemory(event->lwk);
-		}
-		GFL_HEAP_FreeMemory(event);
-		GAMESYSTEM_SetEvent(gsys, parent);//gsys->event = parent;
+	while (Event_Call(event) == GMEVENT_RES_FINISH) {
+		GMEVENT_CONTROL * parent = Event_Delete(event);
+		GAMESYSTEM_SetEvent(gsys, parent);
 		if (parent == NULL) {
-//			GF_ASSERT((sys_GetHeapState(HEAPID_LOCAL) >> 32) == 0);
 			return TRUE;
 		}
 	}
@@ -159,7 +166,7 @@ BOOL GMEVENT_Main(GAMESYS_WORK * gsys)
  * @retval	FALSE	イベントなし
  */
 //------------------------------------------------------------------
-BOOL GMEVENT_IsExists(GAMESYS_WORK * gsys)
+BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
 {
 	return (GAMESYSTEM_GetEvent(gsys) != NULL);
 	//return (gsys->event != NULL);
@@ -300,7 +307,7 @@ GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT_CONTROL * event)
  * @return	各イベント用ワーク
  */
 //------------------------------------------------------------------
-void * GMEVENT_GetSpecialWork(GMEVENT_CONTROL * event)
+void * GMEVENT_GetEventWork(GMEVENT_CONTROL * event)
 {
 	return event->work;
 }
@@ -316,28 +323,4 @@ int * GMEVENT_GetSequenceWork(GMEVENT_CONTROL * event)
 {
 	return &event->seq;
 }
-//------------------------------------------------------------------
-/**
- * @brief	ローカルワークの取得
- * @param	event		イベント制御ワークへのポインタ
- * @param	size		ローカルワークのサイズ指定	
- * @return	void*		ローカルワークへのポインタ
- *
- * そのイベントから抜けたときに自動解放されるワークを取得できる。
- * イベント終了時、およびイベント切替（FieldEvent_Change）のタイミングで
- * 解放される。
- */
-//------------------------------------------------------------------
-void * GMEVENT_GetLocalWork(GMEVENT_CONTROL * event, int size)
-{
-	if (event->lwk == NULL && event->lwk_size == 0) {
-		event->lwk_size = size;
-		event->lwk = GFL_HEAP_AllocMemory(HEAPID_LOCAL, size);
-		MI_CpuClear8(event->lwk, size);
-	} else {
-		GF_ASSERT(event->lwk_size == size);
-	}
-	return event->lwk;
-}
-
 

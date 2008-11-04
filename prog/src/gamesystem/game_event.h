@@ -21,12 +21,16 @@
 //	型定義
 //
 //=============================================================================
+typedef enum {
+	GMEVENT_RES_CONTINUE = 0,
+	GMEVENT_RES_FINISH,
+}GMEVENT_RESULT;
 //-----------------------------------------------------------------------------
 /**
  * @brief	フィールドイベント制御関数の型定義
  */
 //-----------------------------------------------------------------------------
-typedef BOOL (*GMEVENT_FUNC)(GMEVENT_CONTROL *, void *);
+typedef GMEVENT_RESULT (*GMEVENT_FUNC)(GMEVENT_CONTROL *, int *, void *);
 
 //=============================================================================
 //
@@ -34,17 +38,15 @@ typedef BOOL (*GMEVENT_FUNC)(GMEVENT_CONTROL *, void *);
 //
 //=============================================================================
 
-extern GMEVENT_CONTROL * GMEVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, void * work);
-extern void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, void * work);
-extern GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, void * work);
-
-extern BOOL GMEVENT_Main(GAMESYS_WORK * repw);
-extern BOOL GMEVENT_IsExists(GAMESYS_WORK * gsys);
+extern BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys);
+extern BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys);
+extern GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size);
+extern void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, u32 work_size);
+extern GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, u32 work_size);
 
 extern GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT_CONTROL * event);
 extern int * GMEVENT_GetSequenceWork(GMEVENT_CONTROL * event);
-extern void * GMEVENT_GetSpecialWork(GMEVENT_CONTROL * event);
-extern void * GMEVENT_GetLocalWork(GMEVENT_CONTROL * event, int size);
+extern void * GMEVENT_GetEventWork(GMEVENT_CONTROL * event);
 
 
 //extern BOOL FieldEvent_Cmd_WaitSubProcEnd(GAMESYS_WORK * gsys);
