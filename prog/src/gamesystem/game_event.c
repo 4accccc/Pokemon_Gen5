@@ -3,17 +3,15 @@
  * @file	game_event.c
  * @brief	イベント制御
  * @author	tamada
- * @date	2005.07.22
+ * @date	2008.10.30	DPから移植（original 2005.07.22)
  */
 //=============================================================================
 #include <gflib.h>
 
-//#include "common.h"
-//#include "fieldsys.h"
-#include "system/main.h"
+#include "system/main.h"	//HEAPID参照のため
 
 #include "gamesystem/gamesystem.h"
-#include "game_event.h"
+#include "gamesystem/game_event.h"
 
 //=============================================================================
 //=============================================================================
@@ -180,6 +178,12 @@ BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 
 #if 0
+//extern BOOL FieldEvent_Cmd_WaitSubProcEnd(GAMESYS_WORK * gsys);
+//extern void FieldEvent_Cmd_SetMapProc(GAMESYS_WORK * gsys);
+//extern BOOL FieldEvent_Cmd_WaitMapProcStart(GAMESYS_WORK * gsys);
+
+//extern void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_data, void * param);
+
 //------------------------------------------------------------------
 /**
  * @brief	サブプロセス動作終了待ち

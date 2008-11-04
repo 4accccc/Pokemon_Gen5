@@ -3,7 +3,7 @@
  * @file	game_event.h
  * @brief	イベント制御用ヘッダ
  * @author	tamada
- * @date	2005.07.22
+ * @date	2008.10.30	DPから移植（original 2005.07.22)
  */
 //============================================================================================
 
@@ -11,9 +11,6 @@
 #define	__GAME_EVENT_H__
 
 #include <gflib.h>
-//#include "field_common.h"
-//#include "fieldobj.h"
-//#include "system/procsys.h"
 #include "gamesystem/gamesystem.h"
 
 //=============================================================================
@@ -48,12 +45,6 @@ extern GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT_CONTROL * event);
 extern int * GMEVENT_GetSequenceWork(GMEVENT_CONTROL * event);
 extern void * GMEVENT_GetEventWork(GMEVENT_CONTROL * event);
 
-
-//extern BOOL FieldEvent_Cmd_WaitSubProcEnd(GAMESYS_WORK * gsys);
-//extern void FieldEvent_Cmd_SetMapProc(GAMESYS_WORK * gsys);
-//extern BOOL FieldEvent_Cmd_WaitMapProcStart(GAMESYS_WORK * gsys);
-
-//extern void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_data, void * param);
 
 
 #endif /* __GAME_EVENT_H__ */
