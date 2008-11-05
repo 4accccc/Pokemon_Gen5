@@ -53,7 +53,12 @@ void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL i
 
 const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
 
+//背景bg文字変換用
 void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane );
+
+//セーブ処理用ウェイト関数
+void DLPlayFunc_InitCounter( u16 *cnt );
+const BOOL DLPlayFunc_UpdateCounter( u16 *cnt , const u16 time );
 
 //======================================================================
 //	DLプレイメッセージシステム初期化
@@ -227,7 +232,7 @@ const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , cons
 
 //メッセージ用BGの切り替え
 //メッセージの縦幅
-static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2,2,2,2};
+static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2,2,2,2,3};
 void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 {
 	u8 startLine = 1;	//絵の枠素材分
@@ -252,7 +257,24 @@ void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 					x,(19+y),1,1,2);
 		}
 	}
-
 	GFL_BG_LoadScreenReq( plane );
+}
+
+//セーブ処理用ウェイト関数
+void DLPlayFunc_InitCounter( u16 *cnt )
+{
+	*cnt = 0;
+}
+const BOOL DLPlayFunc_UpdateCounter( u16 *cnt , const u16 time )
+{
+	if( *cnt < time )
+	{
+		*cnt += 1;
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;	
+	}
 }
 

@@ -16,6 +16,8 @@
 #define TEST_DATA_LINE (16)
 #define TEST_DATA_NUM  (256)
 
+#define SELECT_BOX_INVALID (0xFF)
+
 //DP・PTのサイズに合わせる( pt_save.h sizeof(pt_box_data))
 #define LARGEPACKET_POKE_SIZE (0x1000)
 typedef struct _DLPLAY_COMM_DATA DLPLAY_COMM_DATA;
@@ -56,6 +58,14 @@ typedef enum {
 	CARD_TYPE_INVALID,
 }DLPLAY_CARD_TYPE;
 
+//汎用フラグ送信用フラグ
+enum DLPLAY_COMMAND_FLG_TYPE
+{
+	DC_FLG_FINISH_SAVE1_PARENT,	//親機第1セーブ完了
+	DC_FLG_FINISH_SAVE1_CHILD,	//子機第1セーブ完了
+	DC_FLG_PERMIT_LASTBIT_SAVE,	//最終ビットセーブ開始
+};
+
 extern DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
 extern void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm);
@@ -69,7 +79,9 @@ extern BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
+extern const u8 DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
 extern const u8 DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
+extern const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm );
 
 extern DLPLAY_LARGE_PACKET*	DLPlayComm_GetLargePacketBuff( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm );
@@ -78,6 +90,7 @@ extern void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm );
+extern void	DLPlayComm_Send_CommonFlg( u8 flg , u16 value , DLPLAY_COMM_DATA *d_comm );
 
 #endif // DLPALY_COMM_FUNC__
 

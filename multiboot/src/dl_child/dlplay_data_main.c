@@ -44,8 +44,14 @@ void			  DLPlayData_TermSystem( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
+void	DLPlayData_SetSelectBoxNumber( u8 num , DLPLAY_DATA_DATA *d_data );
 u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
 u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data );
+
+BOOL	DLPlayData_IsFinishSaveFirst( DLPLAY_DATA_DATA *d_data );
+BOOL	DLPlayData_IsFinishSaveSecond( DLPLAY_DATA_DATA *d_data );
+void	DLPlayData_PermitLastSaveFirst( DLPLAY_DATA_DATA *d_data );
+void	DLPlayData_PermitLastSaveSecond( DLPLAY_DATA_DATA *d_data );
 
 //初期化
 DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
@@ -62,6 +68,11 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 	d_data->pBoxData_ = NULL;
 	d_data->errorState_ = DES_NONE;
 	d_data->cardType_ = CARD_TYPE_INVALID;
+	d_data->selectBoxNumber_ = SELECT_BOX_INVALID;
+	d_data->isFinishSaveFirst_ = FALSE;
+	d_data->isFinishSaveSecond_ = FALSE;
+	d_data->permitLastSaveFirst_ = FALSE;
+	d_data->permitLastSaveSecond_ = FALSE;
 	MATH_CRC16CCITTInitTable( &d_data->crcTable_ );	//CRC初期化
 
 	{
@@ -163,6 +174,12 @@ void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxInd
 		break;
 	}
 }
+
+void	DLPlayData_SetSelectBoxNumber( u8 num , DLPLAY_DATA_DATA *d_data )
+{
+	d_data->selectBoxNumber_ = num;
+}
+
 //刺さっているカードの種類の取得設定(設定はデバッグ用
 const DLPLAY_CARD_TYPE DLPlayData_GetCardType( DLPLAY_DATA_DATA *d_data )
 {
@@ -184,5 +201,29 @@ u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data )
 	return d_data->errorState_;
 }
 
+BOOL	DLPlayData_IsFinishSaveFirst( DLPLAY_DATA_DATA *d_data )
+{
+	return d_data->isFinishSaveFirst_;
+}
+
+BOOL	DLPlayData_IsFinishSaveSecond( DLPLAY_DATA_DATA *d_data )
+{
+	return d_data->isFinishSaveSecond_;
+}
+
+BOOL	DLPlayData_IsFinishSaveAll( DLPLAY_DATA_DATA *d_data )
+{
+	return d_data->isFinishSaveAll_;
+}
+
+void	DLPlayData_PermitLastSaveFirst( DLPLAY_DATA_DATA *d_data )
+{
+	d_data->permitLastSaveFirst_ = TRUE;
+}
+
+void	DLPlayData_PermitLastSaveSecond( DLPLAY_DATA_DATA *d_data )
+{
+	d_data->permitLastSaveSecond_ = TRUE;
+}
 
 

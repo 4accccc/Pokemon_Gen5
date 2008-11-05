@@ -32,6 +32,8 @@ enum DLPLAY_COMM_COMMAND_TYPE
 	DC_CMD_POST_INDEX,		//↑の受信完了確認
 	DC_CMD_BOX_NUMBER,		//決定したボックスの番号を送る
 
+	DC_CMD_SEND_FLG,		//汎用フラグ送信
+
 	DC_CMD_ERROR,			//エラー発生
 };
 //======================================================================
@@ -52,6 +54,10 @@ struct _DLPLAY_COMM_DATA
 	BOOL isStartPostIndex_;
 	BOOL isPostIndex_;	//親機が子機からデータをもらう
 	BOOL isSendIndex_;	//子機側が親機からデータの受信完了をもらう
+	BOOL isFinishSaveFirst_;	//相手が終わったか？
+	BOOL isFinishSaveSecond_;
+	BOOL permitLastSaveFirst_;	//最終セーブ許可
+	BOOL permitLastSaveSecond_;
 	
 	GFL_NETHANDLE		*selfHandle_;	//自身の通信ハンドル
 
@@ -59,6 +65,7 @@ struct _DLPLAY_COMM_DATA
 	DLPLAY_BOX_INDEX	boxIndexBuff_;	//同上
 
 	u8					selectBoxNumber_;
+	u16					waitCount_;			//同期セーブ用待ち時間
 	u8					postErrorState_;	//受け取ったエラー状態
 
 #if DLPLAY_FUNC_USE_PRINT
@@ -90,7 +97,10 @@ BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
+const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
 const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
+const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm );
+
 
 //各種コールバック
 void	DLPlayComm_InitEndCallback( void* pWork );
@@ -107,6 +117,7 @@ void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_PostBoxIndex( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_Send_CommonFlg( u8 flg , u16 value , DLPLAY_COMM_DATA *d_comm );
 
 //受
 void	DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -117,6 +128,7 @@ u8*		DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size );
 void	DLPlayComm_Post_PostBoxIndex( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 void	DLPlayComm_Post_BoxNumber( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 void	DLPlayComm_Post_ErrorState( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
 	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
@@ -124,6 +136,8 @@ static const NetRecvFuncTable DLPlayCommPostTable[] = {
 	{ DLPlayComm_Post_BoxIndex , DLPlayComm_Post_BoxIndex_Buff },
 	{ DLPlayComm_Post_PostBoxIndex , NULL },
 	{ DLPlayComm_Post_BoxNumber , NULL },
+	
+	{ DLPlayComm_Post_CommonFlg , NULL },
 
 	{ DLPlayComm_Post_ErrorState , NULL },
 };
@@ -149,6 +163,13 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->isConnect_		= FALSE;
 	d_comm->isStartPostIndex_ = FALSE;
 	d_comm->isPostIndex_	= FALSE;
+	d_comm->isFinishSaveFirst_ = FALSE;		//相手が終わったか？
+	d_comm->isFinishSaveSecond_ = FALSE;
+	d_comm->permitLastSaveFirst_ = FALSE;	//最終セーブ許可
+	d_comm->permitLastSaveSecond_ = FALSE;
+	
+	d_comm->selectBoxNumber_ = SELECT_BOX_INVALID;
+	d_comm->waitCount_		= 0;
 
 	d_comm->packetBuff_.cardType_ = CARD_TYPE_INVALID;
 	MI_CpuClearFast( d_comm->packetBuff_.pokeData_ , LARGEPACKET_POKE_SIZE );
@@ -315,9 +336,33 @@ BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isPostIndex_;
 }
+const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->selectBoxNumber_;
+}
 const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->postErrorState_;
+}
+//関数増えるのいやだったのでまとめた・・・
+//フラグは送信と一緒のやつ
+const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm )
+{
+	switch( flg )
+	{
+	case DC_FLG_FINISH_SAVE1_PARENT:	//親機第1セーブ完了
+	case DC_FLG_FINISH_SAVE1_CHILD:		//子機第1セーブ完了
+		return d_comm->isFinishSaveFirst_;
+		break;
+	case DC_FLG_PERMIT_LASTBIT_SAVE:	//最終ビットセーブ開始
+		if( d_comm->permitLastSaveFirst_ == TRUE )
+		{
+			return d_comm->waitCount_;
+		}
+		return 0;
+		break;
+	}
+	return 0;
 }
 
 
@@ -328,7 +373,7 @@ const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm )
 
 //--------------------------------------------------------------
 /**
- * 通信ライブラリ初期化完了用コールバック						if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START )
+ * 通信ライブラリ初期化完了用コールバック						
 	
  * @param	vo#include
  * @retval	void
@@ -433,6 +478,7 @@ void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm )
 //--------------------------------------------------------------
 //	受信コールバック
 //--------------------------------------------------------------
+//ボックスのインデックスデータ関係
 void DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
@@ -464,6 +510,7 @@ u8*	 DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size )
 	}
 }
 
+//子機再接続時の合図
 void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm )
 {
 	u8 dummy = 127;
@@ -472,7 +519,6 @@ void	DLPlayComm_Send_ConnectSign( DLPLAY_COMM_DATA *d_comm )
 		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_CONNET_SIGN , 1 , &dummy );
 		if( ret == FALSE ){ OS_TPrintf("DLPlayComm ConnectSign send is failued!!\n"); }
 	}
-
 }
 
 void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
@@ -482,6 +528,7 @@ void	DLPlayComm_Post_ConnectSign(const int netID, const int size, const void* pD
 	ARI_TPrintf("DLPlayComm getData[ConnectSign]\n");
 }
 
+//ボックスインデックス受信確認用フラグ
 void	DLPlayComm_Send_PostBoxIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	u8 dummy = 127;
@@ -503,6 +550,7 @@ void	DLPlayComm_Post_PostBoxIndex( const int netID, const int size , const void*
 	}
 }
 
+//選択ボックス番号送信用
 void	DLPlayComm_Send_BoxNumber( u8 idx , DLPLAY_COMM_DATA *d_comm )
 {
 	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
@@ -519,6 +567,7 @@ void	DLPlayComm_Post_BoxNumber( const int netID, const int size , const void* pD
 	ARI_TPrintf("DLPlayComm getData[SelectBoxNumber:%d]\n",d_comm->selectBoxNumber_);
 }
 
+//エラー発生同期用
 void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm )
 {
 	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
@@ -528,11 +577,53 @@ void	DLPlayComm_Send_ErrorState( u8 type , DLPLAY_COMM_DATA *d_comm )
 	}
 }
 
-
 void	DLPlayComm_Post_ErrorState( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
 	d_comm->postErrorState_ = *(u8*)pData;
 	ARI_TPrintf("DLPlayComm getData[ErrorState:%d]\n",d_comm->postErrorState_);
+}
+
+//汎用フラグ処理(u8数値つき
+typedef struct
+{
+	u8 flg;
+	u16 value;
+}DLPLAY_COMM_FLG;
+void	DLPlayComm_Send_CommonFlg( u8 flg , u16 value , DLPLAY_COMM_DATA *d_comm )
+{
+	DLPLAY_COMM_FLG sendData;
+	sendData.flg = flg;
+	sendData.value = value;
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , DC_CMD_SEND_FLG , 3 , &sendData );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm CommonFlg send is failued!!\n"); }
+	}
+}
+
+void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	const DLPLAY_COMM_FLG *sendData = (DLPLAY_COMM_FLG*)pData;
+	ARI_TPrintf("DLPlayComm getData[CommonFlg:%d:%d]\n",sendData->flg,sendData->value);
+	
+	
+	switch( sendData->flg )
+	{	
+	case DC_FLG_FINISH_SAVE1_PARENT:	//親機第1セーブ完了
+	case DC_FLG_FINISH_SAVE1_CHILD:		//子機第1セーブ完了
+		if( netID != GFL_NET_GetNetID( d_comm->selfHandle_ ) )
+		{
+			d_comm->isFinishSaveFirst_ = TRUE;
+		}
+		break;
+	case DC_FLG_PERMIT_LASTBIT_SAVE:	//最終ビットセーブ開始
+		//こいつは親→子しか無いので一緒に処理
+		d_comm->permitLastSaveFirst_ = TRUE;
+		d_comm->waitCount_ = sendData->value;
+		break;
+	}
+	
 }
 

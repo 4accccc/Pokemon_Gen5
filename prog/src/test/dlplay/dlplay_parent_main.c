@@ -46,6 +46,8 @@ struct _DLPLAY_SEND_DATA
 	u16 subSeq_;
 	int	currTray_;
 	u8	errorState_;
+	u16	waitCounter_;
+	u16	waitTimer_;
 
 	DLPLAY_COMM_DATA	*commSys_;
 	DLPLAY_MSG_SYS		*msgSys_;
@@ -67,9 +69,14 @@ enum DLPLAY_SEND_STATE
 	DSS_WAIT_START_POST_INDEX,
 	DSS_WAIT_INDEX_DATA,
 	DSS_SELECT_BOX_TEMP,
+	DSS_SELECT_BOX_CONFIRM,
+	
+	DSS_SAVE_MAIN,
 
 	DSS_ERROR_INIT,
 	DSS_ERROR_LOOP,
+
+	DSS_MAX,
 };
 
 //============================================================================================
@@ -81,6 +88,7 @@ void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData );
 
 static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData );
 static void OnPreSendMBVolat(u32 ggid);
+static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData );
 
 //============================================================================================
 
@@ -243,7 +251,8 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 			}
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
 			{
-				DLPlayComm_Send_BoxNumber( dlData->currTray_ , dlData->commSys_ );
+				dlData->mainSeq_ = DSS_SELECT_BOX_CONFIRM;
+				DLPlayFunc_ChangeBgMsg( MSG_CONFIRM , DLPLAY_STR_PLANE );
 			}
 			if( isUpdate == TRUE )
 			{
@@ -304,6 +313,25 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		}
 		break;
 		
+	case DSS_SELECT_BOX_CONFIRM:
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+		{
+			DLPlayComm_Send_BoxNumber( dlData->currTray_ , dlData->commSys_ );
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE , DLPLAY_STR_PLANE );
+			dlData->mainSeq_ = DSS_SAVE_MAIN;
+			dlData->subSeq_ = 0;
+		}
+		else if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+		{
+			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , DLPLAY_STR_PLANE );
+			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
+		}
+		break;
+	
+	case DSS_SAVE_MAIN:
+		DLPlaySend_SaveMain( dlData );
+		break;
+
 	case DSS_ERROR_INIT:
 		dlData->mainSeq_ = DSS_ERROR_LOOP;
 		if( dlData->errorState_ == DES_MISS_LOAD_BACKUP )
@@ -477,6 +505,66 @@ static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 	return TRUE;
 }
 
+static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
+{
+	switch( dlData->subSeq_ )
+	{
+	case 0:
+		//セーブ前準備
+		DLPlayFunc_ClearString( dlData->msgSys_ );
+		DLPlayFunc_PutString("Save Ready.",dlData->msgSys_);
+		dlData->subSeq_++;
+		break;
+	case 1:
+		//セーブ開始
+		DLPlayFunc_PutString("Save Start.",dlData->msgSys_);
+		dlData->waitTimer_ = 600;
+		DLPlayFunc_InitCounter( &dlData->waitCounter_ );
+		dlData->subSeq_++;
+		break;
+	case 2:
+		//セーブ完了待ち
+		if( DLPlayFunc_UpdateCounter( &dlData->waitCounter_ , dlData->waitTimer_ ) == TRUE )
+		{
+			DLPlayFunc_PutString("Save end. Wait child.",dlData->msgSys_);
+			DLPlayComm_Send_CommonFlg( DC_FLG_FINISH_SAVE1_PARENT , 0 , dlData->commSys_ );
+			dlData->subSeq_++;
+		}
+		break;
+	case 3:
+		//向こうもセーブ待ちになった
+		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_FINISH_SAVE1_CHILD , dlData->commSys_ ) == TRUE )
+		{
+			u16 waitTime = GFL_STD_MtRand(60)+30;
+			DLPlayFunc_PutString("Send flg last save wait.",dlData->msgSys_);
+			DLPlayComm_Send_CommonFlg( DC_FLG_PERMIT_LASTBIT_SAVE , waitTime , dlData->commSys_ );
+			dlData->subSeq_++;
+		}
+		break;
+	case 4:
+		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_PERMIT_LASTBIT_SAVE , dlData->commSys_ ) > 0 )
+		{
+			DLPlayFunc_PutString("Start last save wait.",dlData->msgSys_);
+			dlData->waitTimer_ = DLPlayComm_IsFinishSaveFlg( DC_FLG_PERMIT_LASTBIT_SAVE , dlData->commSys_ );
+			DLPlayFunc_InitCounter( &dlData->waitCounter_ );
+			dlData->subSeq_++;
+		}
+		break;
+	case 5:
+		if( DLPlayFunc_UpdateCounter( &dlData->waitCounter_ , dlData->waitTimer_ ) == TRUE )
+		{
+			//最終ビットセーブ
+			DLPlayFunc_PutString("Last save.",dlData->msgSys_);
+			dlData->subSeq_++;
+		}
+		break;
+	case 6:
+		DLPlayFunc_PutString("Save Complete!!.",dlData->msgSys_);
+		DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , DLPLAY_STR_PLANE );
+		dlData->mainSeq_ = DSS_MAX;
+		break;
+	}
+}
 
 /*---------------------------------------------------------------------------*
   Name:		 OnPreSendMBVolat

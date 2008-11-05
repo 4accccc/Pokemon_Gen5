@@ -174,11 +174,12 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 	return FALSE;
 }
 
+//セーブは１つの関数で、セーブ→同期待ち→ラストセーブを行う。
 BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 {
 	switch( d_data->subSeq_ )
 	{
-	case 0:
+	case 0:	//データの加工
 		{
 			u8 i,bi;
 			PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
@@ -194,60 +195,140 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 				}
 			}
 			
-#if DEB_ARI&0
 			//ポケモンを消す(消した後に暗号化もするので、暗号化の後
-			for( bi=0;bi<BOX_MAX_TRAY;bi++)
+			GF_ASSERT( d_data->selectBoxNumber_ != SELECT_BOX_INVALID );
+			for( i=0;i<BOX_MAX_POS;i++ )
 			{
-				for( i=0;i<BOX_MAX_POS;i++ )
-				{
-					PT_POKEMON_PARAM *param = &pBox->ppp[0][i];
-					if( i%3==1 ){
-						PokePasoParaInit( param );
-					}
+				PT_POKEMON_PARAM *param = &pBox->ppp[d_data->selectBoxNumber_][i];
+				PokePasoParaInit( param );
+			}
+			//footerの加工
+			//BOX
+			{
+				SAVE_FOOTER *boxFooter,*mainFooter;
+				if( d_data->boxSavePos_ == DDS_FIRST ){
+					boxFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
 				}
-			}
-#endif
-			d_data->subSeq_++;
-		}
-		break;
+				else{
+					boxFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
+				}
 
-	case 1:	//BOXデータのCRCセットからセーブ(footerとか一緒に使うから
-		{
-			void *pData;
-			u16 crc;
-			u32 saveAddress;
-			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
-			SAVE_FOOTER *footer;
-			if( d_data->boxSavePos_ == DDS_FIRST ){
-				footer = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
-			}
-			else{
-				footer = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
-			}
-			footer->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, footer->size - sizeof(SAVE_FOOTER) );
-			footer->crc = 0;
-			//セーブ開始！
-			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x00000 : 0x40000 );
-			saveAddress += boxStartAdd;
+				if( d_data->mainSavePos_ == DDS_FIRST ){
+					mainFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
+					mainFooter->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pData_, mainFooter->size - sizeof(SAVE_FOOTER) );
+				}
+				else{
+					mainFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
+					mainFooter->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pDataMirror_, mainFooter->size - sizeof(SAVE_FOOTER) );
+				}
 
+				boxFooter->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pBoxData_, boxFooter->size - sizeof(SAVE_FOOTER) );
+				GF_ASSERT( boxFooter->g_count == mainFooter->g_count );
+				boxFooter->g_count++;
+				mainFooter->g_count++;
+				boxFooter->b_count++;
+				mainFooter->b_count++;
+			}
+			
+			//カードのロック
 			d_data->lockID_ = OS_GetLockID();
 			GF_ASSERT( d_data->lockID_ != OS_LOCK_ID_ERROR );
 			CARD_LockBackup( (u16)d_data->lockID_ );
-			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_ , footer->size , NULL , NULL );
+			d_data->subSeq_++;
 			
-			DLPlayFunc_PutString("save......",d_data->msgSys_ );
-	
 		}
-		d_data->subSeq_++;
 		break;
-	case 2:	//書き込みの完了を待つ
+
+	case 1:	//進行データのセーブ
+		{
+			//読み込んだほうとは反対側に書く
+			const u32 saveAddress = ( d_data->mainSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
+			const u32 saveSize = DLPlayData_GetStartAddress( GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
+			void *pData;
+			if( d_data->mainSavePos_ == DDS_FIRST ){
+				pData = d_data->pData_;
+			}
+			else{
+				pData = d_data->pDataMirror_;
+			}
+			//セーブ開始！
+
+			CARD_WriteAndVerifyFlashAsync( saveAddress , pData , saveSize , NULL , NULL );
+			
+			DLPlayFunc_PutString("saveMain......",d_data->msgSys_ );
+			d_data->subSeq_++;
+		}
+
+		break;
+
+	case 2:	//BOXデータのCRCセットからセーブ(footerとか一緒に使うから
+		if( CARD_TryWaitBackupAsync() == TRUE )
+		{
+			u32 saveAddress;
+			const u32 saveSize = DLPlayData_GetBoxDataSize( d_data->cardType_ )+sizeof( SAVE_FOOTER );
+			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+
+			//セーブ開始！
+			//読み込んだほうとは反対側に書く
+			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
+			saveAddress += DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
+
+			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_ , saveSize-1 , NULL , NULL );
+			
+			OS_TPrintf("[[%d]]\n",saveSize);
+			DLPlayFunc_PutString("saveBox......",d_data->msgSys_);
+			d_data->subSeq_++;
+
+		}
+		break;
+	case 3:	//書き込みの完了を待つ
 		if( CARD_TryWaitBackupAsync() == TRUE )
 		{
 			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 			DLPlayFunc_PutString("Save complete.",d_data->msgSys_ );
+			//ここでLockは保持したまま
+//			CARD_UnlockBackup( (u16)d_data->lockID_ );
+//			OS_ReleaseLockID( (u16)d_data->lockID_ );
+			d_data->isFinishSaveFirst_ = TRUE;
+			d_data->subSeq_++;
+		}
+		break;
+	case 4:	//最後の同期を待つ
+		if( d_data->permitLastSaveFirst_ == TRUE )
+		{
+			d_data->subSeq_++;
+		}
+		break;
+	case 5:	//最後のセーブ
+		{
+			u32 saveAddress;
+			const u32 saveSize = DLPlayData_GetBoxDataSize( d_data->cardType_ )+sizeof( SAVE_FOOTER );
+			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+
+			//セーブ開始！
+			//読み込んだほうとは反対側に書く
+			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
+			saveAddress += DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
+			saveAddress += saveSize-1;
+
+			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_+saveSize-1 , 1 , NULL , NULL );
+			
+			DLPlayFunc_PutString("saveBox......",d_data->msgSys_ );
+			d_data->subSeq_++;
+		}
+		break;
+
+	case 6:	//最終確認
+		if( CARD_TryWaitBackupAsync() == TRUE )
+		{
+			GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+			DLPlayFunc_PutString("Save complete!!.",d_data->msgSys_ );
+			//ここでLockは保持したまま
 			CARD_UnlockBackup( (u16)d_data->lockID_ );
 			OS_ReleaseLockID( (u16)d_data->lockID_ );
 			d_data->subSeq_++;
+			d_data->isFinishSaveSecond_ = TRUE;	//2番目は無い
+			d_data->isFinishSaveAll_ = TRUE;
 		}
 		break;
 	}
@@ -266,7 +347,6 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 	u32	expTbl[101];
 	//メモリの取得開放はまとめてやっちゃう
 	perData = GFL_HEAP_AllocMemory( d_data->heapID_ , sizeof(POKEMON_PERSONAL_DATA));
-
 
 	OS_TPrintf("POKEMON PARAM DECODE!!!\n");
 	for( bi=0;bi<BOX_MAX_TRAY;bi++)

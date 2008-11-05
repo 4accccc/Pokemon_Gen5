@@ -41,8 +41,11 @@ enum DLPLAY_CHILD_STATE
 	DCS_LOAD_BACKUP_INIT,
 	DCS_LOAD_BACKUP,
 	DCS_SAVE_BACKUP,
+	DCS_SAVE_WAIT,
+	DCS_SYNCSAVE_WAIT,
 
 	DCS_SEND_BOX_INDEX,
+	DCS_WAIT_SELECT_BOX,
 	
 	DCS_ERROR_INIT,
 	DCS_ERROR_LOOP,
@@ -60,8 +63,12 @@ typedef struct
 	int	heapID_;
 
 	u8	mainSeq_;
+	u8	subSeq_;
 	u8	parentMacAddress_[WM_SIZE_BSSID];
 	u8	errorState_;
+	u16	waitCounter_;
+	u16	waitTime_;
+
 
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS	 *msgSys_;
@@ -83,6 +90,7 @@ DLPLAY_CHILD_DATA *childData;
 void	DLPlayChild_SetProc(void);
 static void	DLPlayChild_InitBg(void);
 static void	DLPlayChild_InitObj(void);
+static void DLPlayChild_SaveMain(void);
 //============================================================================================
 //
 //
@@ -262,32 +270,30 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( childData->commSys_ );
 			DLPlayData_SetBoxIndex( childData->dataSys_ , boxIndex );
 			DLPlayComm_Send_BoxIndex( childData->commSys_ );
-			childData->mainSeq_ = DCS_MAX;
+			childData->mainSeq_ = DCS_WAIT_SELECT_BOX;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
 		{
 			//セーブテスト用
 			//childData->mainSeq_ = DCS_SAVE_BACKUP;
 		}
-
-#if 0
-			//データ送信
-			if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
-			{
-				DLPLAY_LARGE_PACKET *pak = DLPlayComm_GetLargePacketBuff( childData->commSys_ );
-				pak->cardType_ = DLPlayData_GetCardType( childData->dataSys_ );
-	DLC_OBJ_TEST			{
-					const u8* pokeData = DLPlayData_GetPokeSendData( childData->dataSys_ );
-					GFL_STD_MemCopy( (void*)pokeData , (void*)pak->pokeData_ , LARGEPACKET_POKE_SIZE );
-				}
-				DLPlayComm_Send_LargeData( childData->commSys_ );
-			}
-#endif
+		break;
+	
+	case DCS_WAIT_SELECT_BOX:
+		if( DLPlayComm_GetSelectBoxNumber(childData->commSys_) != SELECT_BOX_INVALID )
+		{
+			DLPlayData_SetSelectBoxNumber( DLPlayComm_GetSelectBoxNumber(childData->commSys_),
+											childData->dataSys_ );
+			childData->mainSeq_ = DCS_SAVE_BACKUP;
+			childData->subSeq_ = 0;
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE , DLPLAY_STR_PLANE );
+		}
 		break;
 
 	case DCS_SAVE_BACKUP:
-		DLPlayData_SaveData( childData->dataSys_ );
+		DLPlayChild_SaveMain();
 		break;
+
 	case DCS_ERROR_INIT:
 		childData->mainSeq_ = DCS_ERROR_LOOP;
 		if( childData->errorState_ == DES_MISS_LOAD_BACKUP )
@@ -486,4 +492,55 @@ static void	DLPlayChild_InitObj(void)
 
 }
 
+static void DLPlayChild_SaveMain(void)
+{
+	DLPlayData_SaveData( childData->dataSys_ );
+	
+	switch( childData->subSeq_ )
+	{
+	case 0:	//最初のセーブ待ち
+		if( DLPlayData_IsFinishSaveFirst( childData->dataSys_ ) == TRUE )
+		{
+			DLPlayComm_Send_CommonFlg( DC_FLG_FINISH_SAVE1_CHILD , 0 , childData->commSys_ );
+			childData->subSeq_++;
+		}
+		break;
+	case 1:	//同期待ち
+		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_PERMIT_LASTBIT_SAVE , childData->commSys_ ) > 0 )
+		{
+			childData->waitTime_ = DLPlayComm_IsFinishSaveFlg( DC_FLG_PERMIT_LASTBIT_SAVE , childData->commSys_ );
+			DLPlayFunc_InitCounter( &childData->waitCounter_ );
+			childData->subSeq_++;
+		}
+		break;
+	case 2:
+		if( DLPlayFunc_UpdateCounter( &childData->waitCounter_ , childData->waitTime_ ) == TRUE )
+		{
+			DLPlayData_PermitLastSaveFirst( childData->dataSys_ );
+			childData->subSeq_++;
+		}
+		break;
+	case 3:	//次のセーブ待ち
+		if( DLPlayData_IsFinishSaveSecond( childData->dataSys_ ) == TRUE )
+		{
+			childData->subSeq_++;
+		}
+		break;
+	case 4:	//同期待ち
+		if( TRUE )
+		{
+			DLPlayData_PermitLastSaveSecond( childData->dataSys_ );
+			childData->subSeq_++;
+		}
+		break;
+	case 5:
+		if( DLPlayData_IsFinishSaveAll( childData->dataSys_ ) == TRUE )
+		{
+			childData->subSeq_  = 0;
+			childData->mainSeq_ = DCS_MAX;
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , DLPLAY_STR_PLANE );
+		}
+		break;
+	}
+}
 

@@ -22,8 +22,14 @@ extern void		DLPlayData_SetCardType( DLPLAY_DATA_DATA *d_data , const DLPLAY_CAR
 extern	BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 extern	BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 extern	void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
+extern	void	DLPlayData_SetSelectBoxNumber( u8 num , DLPLAY_DATA_DATA *d_data );
 extern	u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
 extern	u8		DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data );
 
+extern	BOOL	DLPlayData_IsFinishSaveFirst( DLPLAY_DATA_DATA *d_data );
+extern	BOOL	DLPlayData_IsFinishSaveSecond( DLPLAY_DATA_DATA *d_data );
+extern	BOOL	DLPlayData_IsFinishSaveAll( DLPLAY_DATA_DATA *d_data );
+extern	void	DLPlayData_PermitLastSaveFirst( DLPLAY_DATA_DATA *d_data );
+extern	void	DLPlayData_PermitLastSaveSecond( DLPLAY_DATA_DATA *d_data );
 #endif // DLPLAY_DATA_MAIN_H__
 

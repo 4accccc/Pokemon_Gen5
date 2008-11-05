@@ -64,7 +64,7 @@ extern "C" {
  */
 
 /* 接続可能な子機最大数 */
-#define MBP_CHILD_MAX       (15)
+#define MBP_CHILD_MAX       (1)
 
 /* MB ライブラリに割り当てる DMA 番号 */
 #define MBP_DMA_NO          (1)

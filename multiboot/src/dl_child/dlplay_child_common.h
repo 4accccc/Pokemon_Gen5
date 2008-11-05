@@ -25,6 +25,12 @@ struct _DLPLAY_DATA_DATA
 	u8	mainSeq_;
 	u8	subSeq_;
 	u8	errorState_;
+	u8	selectBoxNumber_;
+	BOOL	isFinishSaveFirst_;
+	BOOL	isFinishSaveSecond_;
+	BOOL	permitLastSaveFirst_;
+	BOOL	permitLastSaveSecond_;
+	BOOL	isFinishSaveAll_;
 
 	s32	lockID_;	//カードロック用ID
 	MATHCRC16Table	crcTable_;	//CRCチェック用テーブル

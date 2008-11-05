@@ -34,6 +34,7 @@ enum DLPLAY_BG_MSG
 	MSG_PARENT_SELECT_BOX,
 	MSG_MISS_LOAD_BACKUP,
 	MSG_ERROR,
+	MSG_CONFIRM,
 	DLPLAY_MSG_MAX,
 };
 
@@ -56,6 +57,9 @@ extern void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys );
 extern void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
 
 extern void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane );
+//セーブ処理用ウェイト関数
+extern void DLPlayFunc_InitCounter( u16 *cnt );
+extern const BOOL DLPlayFunc_UpdateCounter( u16 *cnt , const u16 time );
 
 extern const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16 *utfStr , const u16 len );
 #endif //DLPLAY_FUNC_H__
