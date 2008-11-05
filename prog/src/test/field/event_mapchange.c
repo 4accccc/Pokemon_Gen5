@@ -158,7 +158,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void *
 	return GMEVENT_RES_CONTINUE;
 }
 
-void DEBUG_EventStart(GAMESYS_WORK * gsys)
+void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys)
 {
 	GAMESYSTEM_EVENT_Set(gsys, GameChangeEvent, 0);
 }

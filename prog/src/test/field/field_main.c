@@ -30,7 +30,7 @@
 #include "gamesystem/playerwork.h"
 
 extern void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
-extern void DEBUG_EventStart(GAMESYS_WORK * gsys);
+extern void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys);
 //============================================================================================
 /**
  *
@@ -209,7 +209,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
 	case 2:
 		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			DEBUG_EventStart(gsys);
+			DEBUG_EVENT_FieldSample(gsys);
 			fieldWork->gamemode = GAMEMODE_FINISH;
 			fieldWork->seq = 3;
 			break;
