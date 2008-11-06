@@ -11,6 +11,8 @@
 #include "procsys.h"
 #include "ui.h"
 #include "system/main.h"
+#include "arc_def.h"
+#include "mbp.h"
 
 #include "test/ariizumi/ari_debug.h"
 #include "dlplay_parent_sample.h"
@@ -20,7 +22,8 @@
 #include "dlplay_disp_sys.h"
 #include "test/performance.h"
 
-#include "mbp.h"
+#include "message.naix"
+#include "test_graphic/d_taya.naix"
 
 /* ‚±‚Ìƒfƒ‚‚ÅŽg—p‚·‚é GGID */
 #define WH_GGID				 (0x3FFF21)
@@ -92,11 +95,6 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData );
 
 //============================================================================================
 
-#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
-#define DLPLAY_MSGWIN_PLANE_PRI		(1)
-#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
-#define DLPLAY_STR_PLANE_PRI		(0)
-
 //--------------------------------------------------------------
 /**
  * ‰Šú‰»
@@ -112,6 +110,11 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	dlData->commSys_ = DLPlayComm_InitData( heapID );
 	dlData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
 	dlData->dispSys_ = DLPlayDispSys_InitSystem( heapID );
+	DLPlayFunc_FontInit( ARCID_D_TAYA , NARC_d_taya_lc12_2bit_nftr ,
+					ARCID_MESSAGE , NARC_message_d_dlplay_dat ,
+					ARCID_D_TAYA , NARC_d_taya_default_nclr , 
+					DLPLAY_FONT_MSG_PLANE , dlData->msgSys_ );
+
 	dlData->errorState_ = DES_NONE;
 
 	dlData->mainSeq_ = DSS_INIT_COMM;
@@ -148,6 +151,7 @@ void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData )
 //--------------------------------------------------------------
 u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 {
+	DLPlayFunc_UpdateFont( dlData->msgSys_ );
 	if( dlData->errorState_ != DSS_ERROR_INIT &&
 		dlData->errorState_ != DSS_ERROR_LOOP )
 	{
@@ -259,7 +263,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 #if 1
 				DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
 				DLPlayDispSys_DispBoxIcon( boxIndex , dlData->currTray_ , dlData->dispSys_ );
-//#else
+//#else 
 				{
 					const char sexStr[3][8] ={"M","F","?"};
 					const int bi = dlData->currTray_;
@@ -269,7 +273,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 					DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
 	
 					DLPlayFunc_ClearString( dlData->msgSys_ );
-	
+	 
 					STD_ConvertStringUnicodeToSjis( w1Str , &strLen , boxIndex->boxName_[bi] , NULL , NULL );
 					w1Str[strLen] = '\0';
 					sprintf(str,"BoxName[%s]",w1Str);
@@ -360,9 +364,9 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 
 static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 {
-
 	const u16 mbpState = MBP_GetState();
 	BOOL isChangeState = FALSE;
+
 	if( mbpState != dlData->subSeq_ ){
 		isChangeState = TRUE;
 		dlData->subSeq_ = mbpState;

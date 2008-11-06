@@ -41,13 +41,6 @@ DLPLAY_PARENT_DATA *parentData;
 
 
 
-//BG面定義(ヘッダに定義
-//#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME3_S)
-//#define DLPLAY_MSG_PLANE_PRI		(0)
-//#define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
-//#define DLPLAY_MSGWIN_PLANE_PRI		(1)
-//#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
-//#define DLPLAY_STR_PLANE_PRI		(0)
 //------------------------------------------------------------------
 //	VRAM用定義
 //------------------------------------------------------------------
@@ -71,6 +64,12 @@ static const GFL_BG_BGCNT_HEADER bgContStrMsg = {
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
 	GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0,//GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, DLPLAY_STR_PLANE_PRI, 0, 0, FALSE
+};
+static const GFL_BG_BGCNT_HEADER bgContFontMsg = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, DLPLAY_FONT_MSG_PLANE_PRI, 0, 0, FALSE
 };
 
 void	DLPlay_InitLibCallBack( void* pWork , BOOL isSuccess );
@@ -111,6 +110,9 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	GFL_BG_SetBGControl( DLPLAY_STR_PLANE, &bgContStrMsg, GFL_BG_MODE_TEXT );
 	GFL_BG_SetVisible( DLPLAY_STR_PLANE, VISIBLE_ON );
+	
+	GFL_BG_SetBGControl( DLPLAY_FONT_MSG_PLANE, &bgContFontMsg, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( DLPLAY_FONT_MSG_PLANE, VISIBLE_ON );
 
 	//BG読み込み開始
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,

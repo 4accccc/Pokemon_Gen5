@@ -6,7 +6,9 @@ SRCS	+=	ohno/dl_fatal_error.c \
 		dl_child/dlplay_data_main.c \
 		dl_child/dlplay_child_pt.c \
 		../../pokemon_wb/prog/src/test/dlplay/dlplay_comm_func.c \
-		../../pokemon_wb/prog/src/test/dlplay/dlplay_func.c
+		../../pokemon_wb/prog/src/test/dlplay/dlplay_func.c \
+		../../pokemon_wb/prog/src/print/gf_font.c \
+		../../pokemon_wb/prog/src/print/printsys.c 
 				
 #================================================
 # ここから下はオーバーレイプログラム定義

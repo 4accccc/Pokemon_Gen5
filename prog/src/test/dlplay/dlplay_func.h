@@ -48,7 +48,12 @@ enum DLPLAY_ERROR_STATE
 };
 
 extern DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane );
+//メインのROMとDL子機で同じ関数を使うためにファイル系ID全指定・・・
+extern void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFileID ,
+				 u8 pltArcID , u8 pltFileID , u8 msgPlane , DLPLAY_MSG_SYS *msgSys );
 extern void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
+
+extern void	DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys );
 
 extern void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);
 extern void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys );

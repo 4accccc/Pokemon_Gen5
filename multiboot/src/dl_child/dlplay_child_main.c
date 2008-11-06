@@ -17,11 +17,15 @@
 #include "dlplay_data_main.h"
 
 #include "mb_test.naix"
+#include "message_dl.naix"
+#include "d_taya.naix"
 //======================================================================
 //	define
 //======================================================================
 //BGñ íËã`
-#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME3_M)
+#define DLPLAY_FONT_MSG_PLANE		(GFL_BG_FRAME3_M)
+#define DLPLAY_FONT_MSG_PLANE_PRI	(3) 
+#define DLPLAY_MSG_PLANE			(GFL_BG_FRAME0_M)
 #define DLPLAY_MSG_PLANE_PRI		(2) 
 #define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
 #define DLPLAY_MSGWIN_PLANE_PRI		(1)
@@ -151,6 +155,10 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
 	childData->dataSys_ = DLPlayData_InitSystem( childData->heapID_ , childData->msgSys_ );
+	DLPlayFunc_FontInit( ARCID_FONT_DL , NARC_d_taya_lc12_2bit_nftr ,
+						ARCID_MESSAGE_DL , NARC_message_dl_d_dlplay_dat ,
+						ARCID_FONT_DL , NARC_d_taya_default_nclr , 
+						DLPLAY_FONT_MSG_PLANE , childData->msgSys_ );
 
 	GFL_STD_MemCopy( (void*)&desc.bssid , (void*)childData->parentMacAddress_ , WM_SIZE_BSSID );
 #if DLPLAY_FUNC_USE_PRINT
@@ -185,6 +193,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
+	DLPlayFunc_UpdateFont( childData->msgSys_ );
 	if( childData->mainSeq_ != DCS_ERROR_LOOP &&
 		childData->mainSeq_ != DCS_ERROR_INIT )
 	{
@@ -375,6 +384,12 @@ static const GFL_BG_BGCNT_HEADER bgContStrMsg = {
 	GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0,//GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, DLPLAY_STR_PLANE_PRI, 0, 0, FALSE
 };
+static const GFL_BG_BGCNT_HEADER bgContFontMsg = {
+	0, 0, 0x800, 0,
+	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+	GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
+	GX_BG_EXTPLTT_01, DLPLAY_FONT_MSG_PLANE_PRI, 0, 0, FALSE
+};
 
 
 static void	DLPlayChild_InitBg(void)
@@ -403,6 +418,10 @@ static void	DLPlayChild_InitBg(void)
 	GFL_BG_SetBGControl( DLPLAY_STR_PLANE, &bgContStrMsg, GFL_BG_MODE_TEXT );
 	//GFL_BG_SetPriority( DLPLAY_MSGWIN_PLANE, DLPLAY_MSGWIN_PLANE_PRI );
 	GFL_BG_SetVisible( DLPLAY_STR_PLANE, VISIBLE_ON );
+	
+	GFL_BG_SetBGControl( DLPLAY_FONT_MSG_PLANE, &bgContFontMsg, GFL_BG_MODE_TEXT );
+	//GFL_BG_SetPriority( DLPLAY_MSGWIN_PLANE, DLPLAY_MSGWIN_PLANE_PRI );
+	GFL_BG_SetVisible( DLPLAY_FONT_MSG_PLANE, VISIBLE_ON );
 
 	//BGì«Ç›çûÇ›äJén
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,

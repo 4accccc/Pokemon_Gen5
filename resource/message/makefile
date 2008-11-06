@@ -11,6 +11,12 @@ ARCHIVE_HEADER_NAME	= $(ARCHIVE_NAME_BODY).naix
 ARCHIVE_DATA_PATH	= $(PROJECT_ARCDIR)$(ARCHIVE_DATA_NAME)
 ARCHIVE_HEADER_PATH	= $(PROJECT_ARCDIR)$(ARCHIVE_HEADER_NAME)
 
+ARCHIVE_NAME_BODY_DL	= message_dl
+ARCHIVE_DATA_NAME_DL	= $(ARCHIVE_NAME_BODY_DL).narc
+ARCHIVE_HEADER_NAME_DL	= $(ARCHIVE_NAME_BODY_DL).naix
+ARCHIVE_DATA_PATH_DL	= $(PROJECT_ROOT)multiboot/arc/$(ARCHIVE_DATA_NAME_DL)
+ARCHIVE_HEADER_PATH_DL	= $(PROJECT_ROOT)multiboot/arc/$(ARCHIVE_HEADER_NAME_DL)
+
 #=========================================================
 #	プロジェクト言語コード -> 変換対象言語指定
 #=========================================================
@@ -31,6 +37,7 @@ no-rule:
 	$(MAKE)	depend
 	$(MAKE)	datfiles
 	$(MAKE)	$(ARCHIVE_DATA_PATH)
+	$(MAKE)	$(ARCHIVE_DATA_PATH_DL)
 
 
 #=========================================================
@@ -61,6 +68,11 @@ $(ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/*.dat)
 	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME) $(DST_ROOT_DIR)/*.dat
 	cp -u $(ARCHIVE_DATA_NAME) $(ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME) $(ARCHIVE_HEADER_PATH)
+
+$(ARCHIVE_DATA_PATH_DL) : $(DST_ROOT_DIR)/d_dlplay.dat
+	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL) $(DST_ROOT_DIR)/d_dlplay.dat
+	cp -u $(ARCHIVE_DATA_NAME_DL) $(ARCHIVE_DATA_PATH_DL)
+	perl naixcopy.pl $(ARCHIVE_HEADER_NAME_DL) $(ARCHIVE_HEADER_PATH_DL)
 
 
 #=========================================================

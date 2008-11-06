@@ -9,12 +9,14 @@
 //======================================================================
 #include <gflib.h>
 #include <textprint.h>
+#include <tcbl.h>
 
 #include "system/gfl_use.h"
 #include "system/main.h"
 
 #include "dlplay_func.h"
 #include "../ariizumi/ari_debug.h"
+#include "print/printsys.h"
 //======================================================================
 //	define
 //======================================================================
@@ -22,6 +24,13 @@
 #define DLPLAY_FUNC_MSG_X (16)
 #define DLPLAY_FUNC_MSG_LINE_NUM (24)
 #define DLPLAY_FUNC_MSG_LINE_MAX (20)
+
+#define DLPLAY_MSG_TOP (19)
+#define DLPLAY_MSG_LEFT (1)
+#define DLPLAY_MSG_WIDTH (30)
+#define DLPLAY_MSG_HEIGHT (4)
+#define DLPLAY_MSG_FONT_PLT (15)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -33,9 +42,18 @@ struct _DLPLAY_MSG_SYS
 {
 	u8	line_;
 	u8	bgPlane_;
+	int heapID_;
 
 	GFL_BMPWIN			*bmpwin_[DLPLAY_FUNC_MSG_LINE_NUM ];
+	GFL_BMPWIN			*bmpwinMsg_;
 	GFL_TEXT_PRINTPARAM	*textParam_[DLPLAY_FUNC_MSG_LINE_NUM ];
+
+	GFL_MSGDATA		*msgData_;
+	ARCHANDLE		*arcHandle_;
+	GFL_FONT		*fontHandle_;
+	PRINT_QUE		*printQue_;
+	PRINT_UTIL		printUtil_[1];
+
 };
 
 
@@ -43,13 +61,17 @@ struct _DLPLAY_MSG_SYS
 //	proto
 //======================================================================
 DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane );
+void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFileID , 
+				u8 pltArcID , u8 pltFileID , u8 msgPlane , DLPLAY_MSG_SYS *msgSys );
 void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
 
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);
 void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys );
 void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys );
+void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys );
 
 void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
+void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys );
 
 const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
 
@@ -69,6 +91,7 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane )
 	u8 i;
 
 	msgSys = GFL_HEAP_AllocClearMemory( heapID , sizeof( DLPLAY_MSG_SYS ) );
+	msgSys->heapID_ = heapID;
 	msgSys->bgPlane_ = bgPlane;
 	msgSys->line_ = 0;
 
@@ -113,8 +136,39 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane )
 		}
 	}
 
-
 	return msgSys;
+}
+
+//メインのROMとDL子機で同じ関数を使うためにファイル系ID全指定・・・
+void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFileID ,
+				 u8 pltArcID , u8 pltFileID , u8 msgPlane , DLPLAY_MSG_SYS *msgSys )
+{
+	//MSG周り初期化
+	GFL_ARC_UTIL_TransVramPalette( pltArcID , pltFileID ,
+					PALTYPE_MAIN_BG, DLPLAY_MSG_FONT_PLT*32, 32, msgSys->heapID_ );
+	msgSys->bmpwinMsg_ = GFL_BMPWIN_Create( msgPlane ,
+					DLPLAY_MSG_LEFT , DLPLAY_MSG_TOP ,
+					DLPLAY_MSG_WIDTH , DLPLAY_MSG_HEIGHT ,
+					DLPLAY_MSG_FONT_PLT , GFL_BG_CHRAREA_GET_F );
+	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( msgSys->bmpwinMsg_ ), 0x0000 );
+	GFL_BMPWIN_MakeScreen( msgSys->bmpwinMsg_ );
+		
+	GFL_BMPWIN_TransVramCharacter( msgSys->bmpwinMsg_ );
+	GFL_BG_LoadScreenReq( msgPlane );
+	
+	msgSys->arcHandle_ = GFL_ARC_OpenDataHandle( fontArcID , msgSys->heapID_ );
+	msgSys->fontHandle_ = GFL_FONT_CreateHandle( msgSys->arcHandle_ , 
+					fontFileID , GFL_FONT_LOADTYPE_FILE ,
+					FALSE , msgSys->heapID_ );
+	msgSys->msgData_ = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , msgArcID ,
+					msgFileID , msgSys->heapID_ );
+	
+	PRINTSYS_Init( msgSys->heapID_ );
+	msgSys->printQue_ = PRINTSYS_QUE_Create( msgSys->heapID_ );
+	PRINT_UTIL_Setup( msgSys->printUtil_ , msgSys->bmpwinMsg_ );
+	
+
 }
 
 //======================================================================
@@ -182,6 +236,43 @@ void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys )
 	for(i=0;i<DLPLAY_FUNC_MSG_LINE_NUM;i++)
 		GFL_BMP_Clear( msgSys->textParam_[i]->bmp , 0x0000 );
 }
+
+//======================================================================
+//	DLプレイメッセージ描画
+//======================================================================
+void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys )
+{
+	//文字列取得用
+	STRBUF *strTemp;
+	
+	//前回文字列の消去
+//	static u16 val = 0;
+//	val += 0x1E;
+//	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(msgSys->bmpwinMsg_) , val );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(msgSys->bmpwinMsg_) , 0x0000 );
+
+	strTemp = GFL_STR_CreateBuffer( 256 , msgSys->heapID_ );
+	GFL_MSG_GetString( msgSys->msgData_ , msgID , strTemp );
+	PRINT_UTIL_Print( msgSys->printUtil_ , msgSys->printQue_ ,
+				0 , 0 , (void*)strTemp , msgSys->fontHandle_ );
+//	PRINTSYS_PrintQue( msgSys->printQue_ , GFL_BMPWIN_GetBmp(msgSys->printUtil_->win)
+//			, 0, 0, (void*)strTemp, msgSys->fontHandle_ );
+	GFL_STR_DeleteBuffer( strTemp );
+}
+
+void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys )
+{
+	if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
+	{
+		DLPlayFunc_DispMsgID( 1 , msgSys );
+	}
+
+  	PRINTSYS_QUE_Main( msgSys->printQue_ );
+	if( PRINT_UTIL_Trans( msgSys->printUtil_ , msgSys->printQue_ ) )
+	{
+	}
+}
+
 
 //======================================================================
 //	DLプレイメッセージシステム描画
