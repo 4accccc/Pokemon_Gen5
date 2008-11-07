@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-06T18:32:13"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-07T11:22:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="165" top="237" right="870" bottom="865" maximized="no" rayout="Vertical2">
+	<dialog left="258" top="351" right="963" bottom="979" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="888" top="194" right="1235" bottom="592" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -139,8 +139,8 @@
 	</row>
 
 	<row id="DLPLAY_MSG_FIND_CHILD">
-		<language name="JPN" font=" 2:lcfont12" width="80">ABC123通信相手が見つかりました。
-ROMを送信します。</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">子機が見つかりました。
+ROMを送信しています。</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
@@ -165,8 +165,7 @@ ROMを送信します。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONNECTED_PARENT">
-		<language name="JPN" font=" 2:lcfont12" width="80">親機に接続しました。
-データの種類を選んでください。
+		<language name="JPN" font=" 2:lcfont12" width="80">データの種類を選んでください。
 Y:DP　X:PT</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
@@ -223,8 +222,8 @@ Aボタンで決定します。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONFIRM">
-		<language name="JPN" font=" 2:lcfont12" width="80">もうひとりは　グループにはいるを
-えらんでください</language>
+		<language name="JPN" font=" 2:lcfont12" width="80">このボックスを取得しますか？
+A:はい　B:いいえ</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 

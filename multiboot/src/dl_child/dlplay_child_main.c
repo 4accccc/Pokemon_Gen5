@@ -24,13 +24,11 @@
 //======================================================================
 //BG面定義
 #define DLPLAY_FONT_MSG_PLANE		(GFL_BG_FRAME3_M)
-#define DLPLAY_FONT_MSG_PLANE_PRI	(3) 
+#define DLPLAY_FONT_MSG_PLANE_PRI	(0) 
 #define DLPLAY_MSG_PLANE			(GFL_BG_FRAME0_M)
 #define DLPLAY_MSG_PLANE_PRI		(2) 
 #define DLPLAY_MSGWIN_PLANE			(GFL_BG_FRAME2_M)
 #define DLPLAY_MSGWIN_PLANE_PRI		(1)
-#define DLPLAY_STR_PLANE			(GFL_BG_FRAME1_M)
-#define DLPLAY_STR_PLANE_PRI		(0)
 
 #define DLC_OBJ_TEST (0)
 //======================================================================
@@ -49,6 +47,7 @@ enum DLPLAY_CHILD_STATE
 	DCS_SYNCSAVE_WAIT,
 
 	DCS_SEND_BOX_INDEX,
+	DCS_WAIT_POST_BOX_INDEX,
 	DCS_WAIT_SELECT_BOX,
 	
 	DCS_ERROR_INIT,
@@ -226,7 +225,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			
 			DLPlayFunc_PutString("Commnicate system initialize complete.",childData->msgSys_);
 			DLPlayFunc_PutString("Try connect parent.",childData->msgSys_);
-			DLPlayFunc_ChangeBgMsg( MSG_CONNECT_PARENT , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_CONNECT_PARENT , childData->msgSys_ );
 		}
 		break;
 	case DCS_WAIT_CONNECT:
@@ -237,12 +236,12 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPlayFunc_PutString("Succsess connect parent!",childData->msgSys_);
 			DLPlayFunc_PutString("Select backup type.",childData->msgSys_);
 			DLPlayFunc_PutString("Y = DP : X = PT",childData->msgSys_);
-			DLPlayFunc_ChangeBgMsg( MSG_CONNECTED_PARENT , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_CONNECTED_PARENT , childData->msgSys_ );
 			//カードタイプがROMヘッダから確定していたら即ロード
 			if( DLPlayData_GetCardType( childData->dataSys_ ) != CARD_TYPE_INVALID )
 			{
 				childData->mainSeq_ = DCS_LOAD_BACKUP;
-				DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
+				DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , childData->msgSys_ );
 			}
 		}
 		break;
@@ -251,12 +250,12 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
 			DLPlayData_SetCardType( childData->dataSys_ , CARD_TYPE_PT ) ;
 			childData->mainSeq_ = DCS_LOAD_BACKUP;
-			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , childData->msgSys_ );
 		}
 		if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y ){
 			childData->mainSeq_ = DCS_LOAD_BACKUP;
 			DLPlayData_SetCardType( childData->dataSys_ , CARD_TYPE_DP );
-			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_WAIT_LOAD , childData->msgSys_ );
 		}
 		break;
      
@@ -268,7 +267,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 				
 				DLPlayFunc_PutString("Data load is complete.",childData->msgSys_);
 				DLPlayFunc_PutString("Press A button to start send data.",childData->msgSys_);
-				DLPlayFunc_ChangeBgMsg( MSG_SEND_DATA_PARENT , DLPLAY_STR_PLANE );
+				DLPlayFunc_ChangeBgMsg( MSG_SEND_DATA_PARENT , childData->msgSys_ );
 			}
 		}
 		break;
@@ -279,7 +278,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( childData->commSys_ );
 			DLPlayData_SetBoxIndex( childData->dataSys_ , boxIndex );
 			DLPlayComm_Send_BoxIndex( childData->commSys_ );
-			childData->mainSeq_ = DCS_WAIT_SELECT_BOX;
+			childData->mainSeq_ = DCS_WAIT_POST_BOX_INDEX;
 		}
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
 		{
@@ -288,6 +287,15 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		}
 		break;
 	
+	case DCS_WAIT_POST_BOX_INDEX:
+		if( DLPlayComm_IsPost_SendIndex( childData->commSys_ ) == TRUE )
+		{
+			childData->mainSeq_ = DCS_WAIT_SELECT_BOX;
+			DLPlayFunc_ChangeBgMsg( MSG_PARENT_SELECT_BOX , childData->msgSys_ );
+		}
+		break;
+	
+
 	case DCS_WAIT_SELECT_BOX:
 		if( DLPlayComm_GetSelectBoxNumber(childData->commSys_) != SELECT_BOX_INVALID )
 		{
@@ -295,7 +303,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 											childData->dataSys_ );
 			childData->mainSeq_ = DCS_SAVE_BACKUP;
 			childData->subSeq_ = 0;
-			DLPlayFunc_ChangeBgMsg( MSG_SAVE , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE , childData->msgSys_ );
 		}
 		break;
 
@@ -307,11 +315,11 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		childData->mainSeq_ = DCS_ERROR_LOOP;
 		if( childData->errorState_ == DES_MISS_LOAD_BACKUP )
 		{
-			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , childData->msgSys_ );
 		}
 		else
 		{
-			DLPlayFunc_ChangeBgMsg( MSG_ERROR , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_ERROR , childData->msgSys_ );
 		}
 		if( DLPlayComm_GetPostErrorState( childData->commSys_ ) == DES_NONE )
 		{
@@ -378,12 +386,6 @@ static const GFL_BG_BGCNT_HEADER bgContStrWin = {
 	GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, DLPLAY_MSGWIN_PLANE_PRI, 0, 0, FALSE
 };
-static const GFL_BG_BGCNT_HEADER bgContStrMsg = {
-	0, 0, 0x800, 0,
-	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-	GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x08000, 0,//GFL_BG_CHRSIZ_256x256,
-	GX_BG_EXTPLTT_01, DLPLAY_STR_PLANE_PRI, 0, 0, FALSE
-};
 static const GFL_BG_BGCNT_HEADER bgContFontMsg = {
 	0, 0, 0x800, 0,
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -408,28 +410,31 @@ static void	DLPlayChild_InitBg(void)
 
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl( DLPLAY_MSG_PLANE, &bgContStr, GFL_BG_MODE_TEXT );
-	//GFL_BG_SetPriority( DLPLAY_MSG_PLANE, DLPLAY_MSG_PLANE_PRI );
-	GFL_BG_SetVisible( DLPLAY_MSG_PLANE, VISIBLE_ON );
-	
 	GFL_BG_SetBGControl( DLPLAY_MSGWIN_PLANE, &bgContStrWin, GFL_BG_MODE_TEXT );
-	//GFL_BG_SetPriority( DLPLAY_MSGWIN_PLANE, DLPLAY_MSGWIN_PLANE_PRI );
-	GFL_BG_SetVisible( DLPLAY_MSGWIN_PLANE, VISIBLE_ON );
-
-	GFL_BG_SetBGControl( DLPLAY_STR_PLANE, &bgContStrMsg, GFL_BG_MODE_TEXT );
-	//GFL_BG_SetPriority( DLPLAY_MSGWIN_PLANE, DLPLAY_MSGWIN_PLANE_PRI );
-	GFL_BG_SetVisible( DLPLAY_STR_PLANE, VISIBLE_ON );
-	
 	GFL_BG_SetBGControl( DLPLAY_FONT_MSG_PLANE, &bgContFontMsg, GFL_BG_MODE_TEXT );
-	//GFL_BG_SetPriority( DLPLAY_MSGWIN_PLANE, DLPLAY_MSGWIN_PLANE_PRI );
+	GFL_BG_SetVisible( DLPLAY_MSG_PLANE, VISIBLE_ON );
+	GFL_BG_SetVisible( DLPLAY_MSGWIN_PLANE, VISIBLE_ON );
 	GFL_BG_SetVisible( DLPLAY_FONT_MSG_PLANE, VISIBLE_ON );
+	GFL_BG_FillCharacter( DLPLAY_MSG_PLANE, 0x00, 1, 0 );
+	GFL_BG_FillCharacter( DLPLAY_MSGWIN_PLANE , 0x00, 1, 0 );
+	GFL_BG_FillCharacter( DLPLAY_FONT_MSG_PLANE , 0x00, 1, 0 );
+	GFL_BG_FillScreen( DLPLAY_MSG_PLANE,
+		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( DLPLAY_MSGWIN_PLANE,
+		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( DLPLAY_FONT_MSG_PLANE,
+		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_LoadScreenReq( DLPLAY_MSG_PLANE );
+	GFL_BG_LoadScreenReq( DLPLAY_MSGWIN_PLANE );
+	GFL_BG_LoadScreenReq( DLPLAY_FONT_MSG_PLANE );
+
+
 
 	//BG読み込み開始
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,
 			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
 	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg_NSCR ,
 			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
-	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg2_NSCR ,
-			DLPLAY_STR_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MB_TEST , NARC_mb_test_test_bg_NCLR ,
 			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_ARIIZUMI_DEBUG );
 	
@@ -557,7 +562,7 @@ static void DLPlayChild_SaveMain(void)
 		{
 			childData->subSeq_  = 0;
 			childData->mainSeq_ = DCS_MAX;
-			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , childData->msgSys_ );
 		}
 		break;
 	}

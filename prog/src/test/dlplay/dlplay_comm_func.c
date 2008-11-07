@@ -95,6 +95,7 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsPost_SendIndex( DLPLAY_COMM_DATA *d_comm );
 const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
 const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
@@ -336,6 +337,11 @@ BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isPostIndex_;
 }
+BOOL	DLPlayComm_IsPost_SendIndex( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isSendIndex_;
+}
+
 const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->selectBoxNumber_;
@@ -544,10 +550,6 @@ void	DLPlayComm_Post_PostBoxIndex( const int netID, const int size , const void*
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
 	d_comm->isSendIndex_ = TRUE;
 	ARI_TPrintf("DLPlayComm getData[postBoxData]\n");
-	if( GFL_NET_IsParentMachine() == FALSE )
-	{
-		DLPlayFunc_ChangeBgMsg( MSG_PARENT_SELECT_BOX , GFL_BG_FRAME1_M );
-	}
 }
 
 //選択ボックス番号送信用

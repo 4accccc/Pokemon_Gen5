@@ -61,7 +61,7 @@ extern void DLPlayFunc_PutStringLineDiv( u8 line , char* str1 , char* str2 , DLP
 extern void DLPlayFunc_ClearString( DLPLAY_MSG_SYS *msgSys );
 extern void DLPlayFunc_MsgUpdate( DLPLAY_MSG_SYS *msgSys , const u8 line , const BOOL isRefresh );
 
-extern void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane );
+extern void DLPlayFunc_ChangeBgMsg( u8 msgIdx , DLPLAY_MSG_SYS *msgSys );
 //セーブ処理用ウェイト関数
 extern void DLPlayFunc_InitCounter( u16 *cnt );
 extern const BOOL DLPlayFunc_UpdateCounter( u16 *cnt , const u16 time );

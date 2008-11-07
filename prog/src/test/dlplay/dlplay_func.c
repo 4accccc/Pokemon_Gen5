@@ -76,7 +76,7 @@ void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys );
 const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , const u16 len );
 
 //背景bg文字変換用
-void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane );
+void DLPlayFunc_ChangeBgMsg( u8 msgIdx , DLPLAY_MSG_SYS *msgSys );
 
 //セーブ処理用ウェイト関数
 void DLPlayFunc_InitCounter( u16 *cnt );
@@ -164,6 +164,7 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 	msgSys->msgData_ = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , msgArcID ,
 					msgFileID , msgSys->heapID_ );
 	
+	GFL_FONTSYS_Init();
 	PRINTSYS_Init( msgSys->heapID_ );
 	msgSys->printQue_ = PRINTSYS_QUE_Create( msgSys->heapID_ );
 	PRINT_UTIL_Setup( msgSys->printUtil_ , msgSys->bmpwinMsg_ );
@@ -323,9 +324,11 @@ const u16 DLPlayFunc_DPTStrCode_To_UTF16( const u16 *dptStr , u16* utfStr , cons
 
 //メッセージ用BGの切り替え
 //メッセージの縦幅
-static const u8 msgHeightNum[DLPLAY_MSG_MAX]={2,3,2,2,2,2,4,2,2,2,2,3,2,2,2,2,2,3};
-void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
+void DLPlayFunc_ChangeBgMsg( u8 msgIdx , DLPLAY_MSG_SYS *msgSys )
 {
+	//互換のためそのまま使用
+	DLPlayFunc_DispMsgID( msgIdx , msgSys );
+	/*
 	u8 startLine = 1;	//絵の枠素材分
 	u8 i,x,y;
 	for( i=0;i<msgIdx;i++ )
@@ -349,6 +352,7 @@ void DLPlayFunc_ChangeBgMsg( u8 msgIdx , u8 plane )
 		}
 	}
 	GFL_BG_LoadScreenReq( plane );
+	*/
 }
 
 //セーブ処理用ウェイト関数

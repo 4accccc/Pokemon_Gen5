@@ -125,6 +125,7 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	DLPlayFunc_PutString("System Initialize complete.",dlData->msgSys_);
 #endif
 	DEBUG_PerformanceSetActive( FALSE );
+	DLPlayFunc_ChangeBgMsg( MSG_SEARCH_CHILD , dlData->msgSys_ );
 	return dlData;
 }
 
@@ -203,7 +204,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 
 	case DSS_WAIT_CHILD:
 		if ( DLPlayComm_IsConnect( dlData->commSys_ ) == TRUE ){
-			DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_PROC , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_PROC , dlData->msgSys_ );
 			
 			DLPlayFunc_PutString( "Child connect.",dlData->msgSys_); 
 			dlData->mainSeq_ = DSS_WAIT_START_POST_INDEX;
@@ -211,7 +212,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		break;
 	case DSS_WAIT_START_POST_INDEX:
 		if ( DLPlayComm_IsStartPostIndex( dlData->commSys_ ) == TRUE ){
-			DLPlayFunc_ChangeBgMsg( MSG_POST_DATA_CHILD , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_POST_DATA_CHILD , dlData->msgSys_ );
 			
 			dlData->mainSeq_ = DSS_WAIT_INDEX_DATA;
 		}
@@ -220,7 +221,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 	case DSS_WAIT_INDEX_DATA:
 		if(	DLPlayComm_IsPostIndex( dlData->commSys_ ) == TRUE ){
 			DLPlayFunc_PutString( "Post box index data complete.",dlData->msgSys_); 
-			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , dlData->msgSys_ );
 			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
 			dlData->currTray_ = 0xFF;
 			//return DPM_SELECT_BOX;
@@ -256,7 +257,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 			if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
 			{
 				dlData->mainSeq_ = DSS_SELECT_BOX_CONFIRM;
-				DLPlayFunc_ChangeBgMsg( MSG_CONFIRM , DLPLAY_STR_PLANE );
+				DLPlayFunc_ChangeBgMsg( MSG_CONFIRM , dlData->msgSys_ );
 			}
 			if( isUpdate == TRUE )
 			{
@@ -321,13 +322,13 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
 		{
 			DLPlayComm_Send_BoxNumber( dlData->currTray_ , dlData->commSys_ );
-			DLPlayFunc_ChangeBgMsg( MSG_SAVE , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE , dlData->msgSys_ );
 			dlData->mainSeq_ = DSS_SAVE_MAIN;
 			dlData->subSeq_ = 0;
 		}
 		else if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
 		{
-			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_SELECT_BOX , dlData->msgSys_ );
 			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
 		}
 		break;
@@ -340,11 +341,11 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		dlData->mainSeq_ = DSS_ERROR_LOOP;
 		if( dlData->errorState_ == DES_MISS_LOAD_BACKUP )
 		{
-			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_MISS_LOAD_BACKUP , dlData->msgSys_ );
 		}
 		else
 		{
-			DLPlayFunc_ChangeBgMsg( MSG_ERROR , DLPLAY_STR_PLANE );
+			DLPlayFunc_ChangeBgMsg( MSG_ERROR , dlData->msgSys_ );
 		}
 		if( DLPlayComm_GetPostErrorState( dlData->commSys_ ) == DES_NONE )
 		{
@@ -409,7 +410,7 @@ static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 			{
 				//if( isChangeState == TRUE ){
 					DLPlayFunc_PutString( "Find child. send RomImage start.",dlData->msgSys_); 
-					DLPlayFunc_ChangeBgMsg( MSG_FIND_CHILD , DLPLAY_STR_PLANE );
+					DLPlayFunc_ChangeBgMsg( MSG_FIND_CHILD , dlData->msgSys_ );
 				//}
 				//BgSetMessage(PLTT_WHITE, " Push START Button to start   ");
 				//Žq‹@‚ª—ˆ‚½‚ç‚Æ‚è‚ ‚¦‚¸Žn‚ß‚Ä‚µ‚Ü‚¤
@@ -442,7 +443,7 @@ static BOOL DLPlaySend_MBPLoop( DLPLAY_SEND_DATA *dlData )
 		{
 			if( isChangeState == TRUE ){
 				DLPlayFunc_PutString( "Rebooting now",dlData->msgSys_); 
-				DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_CONNECT , DLPLAY_STR_PLANE );
+				DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_CONNECT , dlData->msgSys_ );
 			}
 			//BgSetMessage(PLTT_WHITE, " Rebooting now				");
 		}
@@ -564,7 +565,7 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 		break;
 	case 6:
 		DLPlayFunc_PutString("Save Complete!!.",dlData->msgSys_);
-		DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , DLPLAY_STR_PLANE );
+		DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , dlData->msgSys_ );
 		dlData->mainSeq_ = DSS_MAX;
 		break;
 	}

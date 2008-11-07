@@ -13,8 +13,7 @@
 enum {
 	NARC_mb_test_test_bg_NCLR = 0,
 	NARC_mb_test_test_bg_NCGR = 1,
-	NARC_mb_test_test_bg_NSCR = 2,
-	NARC_mb_test_test_bg2_NSCR = 3
+	NARC_mb_test_test_bg_NSCR = 2
 };
 
 /* NARC_MB_TEST_NAIX_ */
