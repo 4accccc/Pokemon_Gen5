@@ -23,7 +23,7 @@ extern	BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 extern	BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 extern	void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
 extern	void	DLPlayData_SetSelectBoxNumber( u8 num , DLPLAY_DATA_DATA *d_data );
-extern	u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
+extern	void	DLPlayData_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data );
 extern	u8		DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data );
 
 extern	BOOL	DLPlayData_IsFinishSaveFirst( DLPLAY_DATA_DATA *d_data );

@@ -22,12 +22,16 @@
 #include "dlplay_disp_sys.h"
 #include "test/performance.h"
 
+#include "savedata/save_tbl.h"
+#include "savedata/save_control.h"
+#include "savedata/box_savedata.h"
+
 #include "message.naix"
 #include "test_graphic/d_taya.naix"
 
 /* このデモで使用する GGID */
 #define WH_GGID				 (0x3FFF21)
-
+ 
 /* このデモがダウンロードさせるプログラム情報 */
 const MBGameRegistry mbGameList = {
 	"/dl_rom/child.srl",					  // 子機バイナリコード
@@ -74,6 +78,8 @@ enum DLPLAY_SEND_STATE
 	DSS_SELECT_BOX_TEMP,
 	DSS_SELECT_BOX_CONFIRM,
 	
+	DSS_WAIT_POST_BOXDATA,
+
 	DSS_SAVE_MAIN,
 
 	DSS_ERROR_INIT,
@@ -322,8 +328,8 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
 		{
 			DLPlayComm_Send_BoxNumber( dlData->currTray_ , dlData->commSys_ );
-			DLPlayFunc_ChangeBgMsg( MSG_SAVE , dlData->msgSys_ );
-			dlData->mainSeq_ = DSS_SAVE_MAIN;
+			DLPlayFunc_ChangeBgMsg( MSG_POST_DATA_CHILD , dlData->msgSys_ );
+			dlData->mainSeq_ = DSS_WAIT_POST_BOXDATA;
 			dlData->subSeq_ = 0;
 		}
 		else if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
@@ -332,9 +338,20 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 			dlData->mainSeq_ = DSS_SELECT_BOX_TEMP;
 		}
 		break;
+	case DSS_WAIT_POST_BOXDATA:
+		if( DLPlayComm_IsPostData( dlData->commSys_ ) == TRUE )
+		{
+			DLPlayComm_Send_CommonFlg( DC_FLG_POST_BOX_DATA , 0 , dlData->commSys_ );
+			dlData->mainSeq_ = DSS_SAVE_MAIN;
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE , dlData->msgSys_ );
+		}
+		break;
 	
 	case DSS_SAVE_MAIN:
-		DLPlaySend_SaveMain( dlData );
+		if( DLPlayComm_IsPost_SendData( dlData->commSys_ ) == TRUE )
+		{
+			DLPlaySend_SaveMain( dlData );
+		}
 		break;
 
 	case DSS_ERROR_INIT:
@@ -515,25 +532,40 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 	switch( dlData->subSeq_ )
 	{
 	case 0:
+		{
+		BOX_DATA *pBoxData;
+		DLPLAY_LARGE_PACKET *lPacket;
 		//セーブ前準備
 		DLPlayFunc_ClearString( dlData->msgSys_ );
 		DLPlayFunc_PutString("Save Ready.",dlData->msgSys_);
+
+		lPacket = DLPlayComm_GetLargePacketBuff( dlData->commSys_ );
+		pBoxData = SaveControl_DataPtrGet( SaveControl_GetPointer() , GMDATA_ID_BOXDATA );
+		BOXDAT_SetPPPData_Tray( DLPlayComm_GetSelectBoxNumber( dlData->commSys_ ) ,
+						(void*)lPacket->pokeData_ , pBoxData );
+								
 		dlData->subSeq_++;
+		}
 		break;
 	case 1:
 		//セーブ開始
 		DLPlayFunc_PutString("Save Start.",dlData->msgSys_);
-		dlData->waitTimer_ = 600;
-		DLPlayFunc_InitCounter( &dlData->waitCounter_ );
+		//dlData->waitTimer_ = 600;
+		//DLPlayFunc_InitCounter( &dlData->waitCounter_ );
+		SaveControl_SaveAsyncInit( SaveControl_GetPointer() );
 		dlData->subSeq_++;
 		break;
 	case 2:
-		//セーブ完了待ち
-		if( DLPlayFunc_UpdateCounter( &dlData->waitCounter_ , dlData->waitTimer_ ) == TRUE )
 		{
-			DLPlayFunc_PutString("Save end. Wait child.",dlData->msgSys_);
-			DLPlayComm_Send_CommonFlg( DC_FLG_FINISH_SAVE1_PARENT , 0 , dlData->commSys_ );
-			dlData->subSeq_++;
+			//セーブ完了待ち
+			const SAVE_RESULT ret = SaveControl_SaveAsyncMain( SaveControl_GetPointer() );
+			//if( DLPlayFunc_UpdateCounter( &dlData->waitCounter_ , dlData->waitTimer_ ) == TRUE )
+			if( ret == SAVE_RESULT_LAST )
+			{
+				DLPlayFunc_PutString("Save end. Wait child.",dlData->msgSys_);
+				DLPlayComm_Send_CommonFlg( DC_FLG_FINISH_SAVE1_PARENT , 0 , dlData->commSys_ );
+				dlData->subSeq_++;
+			}
 		}
 		break;
 	case 3:
@@ -564,10 +596,24 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 		}
 		break;
 	case 6:
-		DLPlayFunc_PutString("Save Complete!!.",dlData->msgSys_);
-		DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , dlData->msgSys_ );
-		dlData->mainSeq_ = DSS_MAX;
+		{
+			//セーブ完了待ち
+			const SAVE_RESULT ret = SaveControl_SaveAsyncMain( SaveControl_GetPointer() );
+			//if( DLPlayFunc_UpdateCounter( &dlData->waitCounter_ , dlData->waitTimer_ ) == TRUE )
+			if( ret == SAVE_RESULT_OK )
+			{
+				DLPlayComm_Send_CommonFlg( DC_FLG_FINISH_SAVE_ALL , 0 , dlData->commSys_ );
+				dlData->subSeq_++;
+			}
+		}	
 		break;
+	case 7:
+		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_FINISH_SAVE_ALL , dlData->commSys_ ) > 0 )
+		{
+			DLPlayFunc_PutString("Save Complete!!.",dlData->msgSys_);
+			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , dlData->msgSys_ );
+			dlData->mainSeq_ = DSS_MAX;
+		}
 	}
 }
 

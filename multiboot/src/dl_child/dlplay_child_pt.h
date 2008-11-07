@@ -13,6 +13,7 @@
 
 extern BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data );
 extern BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data );
+extern void	DLPlayData_PT_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data );
 
 extern void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idxData );
 

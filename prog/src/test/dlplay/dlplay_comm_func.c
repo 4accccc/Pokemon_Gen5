@@ -54,8 +54,11 @@ struct _DLPLAY_COMM_DATA
 	BOOL isStartPostIndex_;
 	BOOL isPostIndex_;	//親機が子機からデータをもらう
 	BOOL isSendIndex_;	//子機側が親機からデータの受信完了をもらう
+	BOOL isPostBoxData_;
+	BOOL isSendBoxData_;
 	BOOL isFinishSaveFirst_;	//相手が終わったか？
 	BOOL isFinishSaveSecond_;
+
 	BOOL permitLastSaveFirst_;	//最終セーブ許可
 	BOOL permitLastSaveSecond_;
 	
@@ -96,6 +99,8 @@ BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPost_SendIndex( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsPostData( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsPost_SendData( DLPLAY_COMM_DATA *d_comm );
 const	DLPLAY_CARD_TYPE DLPlayComm_GetCardType( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_SetCardType( DLPLAY_COMM_DATA *d_comm , const DLPLAY_CARD_TYPE type );
 const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
@@ -164,6 +169,9 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->isConnect_		= FALSE;
 	d_comm->isStartPostIndex_ = FALSE;
 	d_comm->isPostIndex_	= FALSE;
+	d_comm->isSendIndex_	= FALSE;
+	d_comm->isPostBoxData_	= FALSE;
+	d_comm->isSendBoxData_	= FALSE;
 	d_comm->isFinishSaveFirst_ = FALSE;		//相手が終わったか？
 	d_comm->isFinishSaveSecond_ = FALSE;
 	d_comm->permitLastSaveFirst_ = FALSE;	//最終セーブ許可
@@ -172,12 +180,10 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->selectBoxNumber_ = SELECT_BOX_INVALID;
 	d_comm->waitCount_		= 0;
 
-	d_comm->packetBuff_.cardType_ = CARD_TYPE_INVALID;
 	MI_CpuClearFast( d_comm->packetBuff_.pokeData_ , LARGEPACKET_POKE_SIZE );
 
 	return d_comm;
 }
-
 //--------------------------------------------------------------
 /**
  * 通信ライブラリ開放
@@ -341,6 +347,14 @@ BOOL	DLPlayComm_IsPost_SendIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isSendIndex_;
 }
+BOOL	DLPlayComm_IsPostData( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isPostBoxData_;
+}
+BOOL	DLPlayComm_IsPost_SendData( DLPLAY_COMM_DATA *d_comm )
+{
+	return d_comm->isSendBoxData_;
+}
 
 const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm )
 {
@@ -366,6 +380,9 @@ const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm )
 			return d_comm->waitCount_;
 		}
 		return 0;
+		break;
+	case DC_FLG_FINISH_SAVE_ALL:
+		return d_comm->isFinishSaveSecond_;
 		break;
 	}
 	return 0;
@@ -441,6 +458,7 @@ void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm )
 void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	d_comm->isPostBoxData_ = TRUE;
 #if DLPLAY_FUNC_USE_PRINT
 	{
 		OSTick postTick = OS_GetTick();
@@ -450,6 +468,7 @@ void DLPlayComm_Post_LargeData(const int netID, const int size, const void* pDat
 	}
 #endif
 }
+
 u8*	 DLPlayComm_Post_LargeData_Buff( int netID, void* pWork , int size )
 {
 	{
@@ -624,6 +643,16 @@ void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pD
 		//こいつは親→子しか無いので一緒に処理
 		d_comm->permitLastSaveFirst_ = TRUE;
 		d_comm->waitCount_ = sendData->value;
+		break;
+	case DC_FLG_FINISH_SAVE_ALL:
+		//このフラグは親からしか来ないので、OK
+		//if( netID != GFL_NET_GetNetID( d_comm->selfHandle_ ) )
+		{
+			d_comm->isFinishSaveSecond_ = TRUE;
+		}
+		break;
+	case DC_FLG_POST_BOX_DATA:	//親→子ボックスデータ受信確認(セーブ開始合図
+		d_comm->isSendBoxData_ = TRUE;
 		break;
 	}
 	

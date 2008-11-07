@@ -37,6 +37,7 @@ SRCS	+=		test/testmode.c \
 				savedata/save_control.c \
 				savedata/contest_savedata.c \
 				savedata/test_savedata.c \
+				savedata/box_savedata.c \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
 				test/field/field_proc.c \

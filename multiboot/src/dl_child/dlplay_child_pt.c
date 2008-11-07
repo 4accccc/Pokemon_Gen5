@@ -50,6 +50,7 @@ enum PT_SAVE_TYPE
 BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data );
 void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idxData );
+void	DLPlayData_PT_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data );
 
 u32		DLPlayData_PT_GetStartAddress( const PT_GMDATA_ID id );
 u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id );
@@ -419,6 +420,16 @@ void	DLPlayData_PT_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *idx
 	DLPlayFunc_PutString("Data load & decode is complete.",d_data->msgSys_ );
 	
 	GFL_HEAP_FreeMemory( perData );
+}
+
+void	DLPlayData_PT_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data )
+{
+	PT_BOX_DATA *pBox = (PT_BOX_DATA*)d_data->pBoxData_;
+	GF_ASSERT( sizeof(PT_POKEMON_PARAM)*BOX_MAX_POS <= LARGEPACKET_POKE_SIZE );
+	GFL_STD_MemCopy( (void*)&pBox->ppp[trayIdx] , (void*)&packetData->pokeData_ , sizeof( PT_POKEMON_PARAM )*BOX_MAX_POS );
+
+//	return (u8*)d_data->pBoxData_;
+	
 }
 
 //データの関連性、整合性をチェックする

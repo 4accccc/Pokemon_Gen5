@@ -18,13 +18,12 @@
 
 #define SELECT_BOX_INVALID (0xFF)
 
-//DP・PTのサイズに合わせる( pt_save.h sizeof(pt_box_data))
-#define LARGEPACKET_POKE_SIZE (0x1000)
+//ボックス1個分のPPPデータサイズ
+#define LARGEPACKET_POKE_SIZE (30*0x88)
 typedef struct _DLPLAY_COMM_DATA DLPLAY_COMM_DATA;
 //送信用データ
 typedef struct
 {
-	u8	cardType_;
 	u8 pokeData_[LARGEPACKET_POKE_SIZE];
 }DLPLAY_LARGE_PACKET;
 
@@ -64,6 +63,8 @@ enum DLPLAY_COMMAND_FLG_TYPE
 	DC_FLG_FINISH_SAVE1_PARENT,	//親機第1セーブ完了
 	DC_FLG_FINISH_SAVE1_CHILD,	//子機第1セーブ完了
 	DC_FLG_PERMIT_LASTBIT_SAVE,	//最終ビットセーブ開始
+	DC_FLG_FINISH_SAVE_ALL,		//全セーブ完了
+	DC_FLG_POST_BOX_DATA,		//親→子ボックスデータ受信確認
 };
 
 extern DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
@@ -80,6 +81,8 @@ extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_IsPost_SendIndex( DLPLAY_COMM_DATA *d_comm );
+extern BOOL	DLPlayComm_IsPostData( DLPLAY_COMM_DATA *d_comm );
+extern BOOL	DLPlayComm_IsPost_SendData( DLPLAY_COMM_DATA *d_comm );
 extern const u8 DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
 extern const u8 DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
 extern const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm );

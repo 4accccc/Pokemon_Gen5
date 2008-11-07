@@ -49,6 +49,9 @@ enum DLPLAY_CHILD_STATE
 	DCS_SEND_BOX_INDEX,
 	DCS_WAIT_POST_BOX_INDEX,
 	DCS_WAIT_SELECT_BOX,
+
+	DCS_SEND_BOX_DATA,
+	DCS_WAIT_SEND_BOX_DATA,
 	
 	DCS_ERROR_INIT,
 	DCS_ERROR_LOOP,
@@ -301,10 +304,30 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		{
 			DLPlayData_SetSelectBoxNumber( DLPlayComm_GetSelectBoxNumber(childData->commSys_),
 											childData->dataSys_ );
+			childData->mainSeq_ = DCS_SEND_BOX_DATA;
+			DLPlayFunc_ChangeBgMsg( MSG_SEND_DATA_PARENT , childData->msgSys_ );
+		}
+		break;
+	case DCS_SEND_BOX_DATA:
+		{
+			DLPLAY_LARGE_PACKET *lPacket;
+			lPacket = DLPlayComm_GetLargePacketBuff( childData->commSys_ );
+			DLPlayData_GetPokeSendData( lPacket , 
+					DLPlayComm_GetSelectBoxNumber( childData->commSys_ ),
+					childData->dataSys_ );
+			DLPlayComm_Send_LargeData( childData->commSys_ );
+			childData->mainSeq_ = DCS_WAIT_SEND_BOX_DATA;
+		}
+		break;
+		
+	case DCS_WAIT_SEND_BOX_DATA:
+		if( DLPlayComm_IsPost_SendData( childData->commSys_ ) )
+		{
 			childData->mainSeq_ = DCS_SAVE_BACKUP;
 			childData->subSeq_ = 0;
 			DLPlayFunc_ChangeBgMsg( MSG_SAVE , childData->msgSys_ );
 		}
+
 		break;
 
 	case DCS_SAVE_BACKUP:
@@ -560,11 +583,18 @@ static void DLPlayChild_SaveMain(void)
 	case 5:
 		if( DLPlayData_IsFinishSaveAll( childData->dataSys_ ) == TRUE )
 		{
+			//子機からフラグは送らない・・・
+			childData->subSeq_++;
+		}
+		break;
+	case 6:
+		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_FINISH_SAVE_ALL , childData->commSys_ ) > 0 )
+		{
 			childData->subSeq_  = 0;
 			childData->mainSeq_ = DCS_MAX;
 			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , childData->msgSys_ );
 		}
-		break;
+
 	}
 }
 

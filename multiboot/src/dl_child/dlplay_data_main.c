@@ -45,7 +45,7 @@ BOOL	DLPlayData_LoadDataFirst( DLPLAY_DATA_DATA *d_data );
 BOOL	DLPlayData_SaveData( DLPLAY_DATA_DATA *d_data );
 void	DLPlayData_SetBoxIndex( DLPLAY_DATA_DATA *d_data , DLPLAY_BOX_INDEX *boxIndex );
 void	DLPlayData_SetSelectBoxNumber( u8 num , DLPLAY_DATA_DATA *d_data );
-u8*		DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data );
+void	DLPlayData_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data );
 u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data );
 
 BOOL	DLPlayData_IsFinishSaveFirst( DLPLAY_DATA_DATA *d_data );
@@ -191,9 +191,23 @@ void DLPlayData_SetCardType( DLPLAY_DATA_DATA *d_data , const DLPLAY_CARD_TYPE t
 	d_data->cardType_ = type;
 }
 
-u8*	DLPlayData_GetPokeSendData( DLPLAY_DATA_DATA *d_data )
+void	DLPlayData_GetPokeSendData( DLPLAY_LARGE_PACKET *packetData , u8 trayIdx , DLPLAY_DATA_DATA *d_data )
 {
-	return (u8*)d_data->pBoxData_;
+		//自前で書き込む・・・
+	switch( d_data->cardType_ )
+	{
+	case CARD_TYPE_DP:
+		DLPlayData_PT_GetPokeSendData( packetData , trayIdx , d_data );
+		break;
+
+	case CARD_TYPE_PT:
+		DLPlayData_PT_GetPokeSendData( packetData , trayIdx , d_data );
+		break;
+
+	case CARD_TYPE_GS:
+		break;
+	}
+
 }
 
 u8	DLPlayData_GetErrorState( DLPLAY_DATA_DATA *d_data )
