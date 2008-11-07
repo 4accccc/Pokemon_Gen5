@@ -39,6 +39,8 @@ extern SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id);
 extern SAVE_CONTROL_WORK * SaveControl_GetPointer(void);
 extern LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl);
+extern void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
+extern SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
 extern void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id);
 
 

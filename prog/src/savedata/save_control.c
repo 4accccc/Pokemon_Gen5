@@ -169,6 +169,30 @@ SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
 
 //--------------------------------------------------------------
 /**
+ * @brief   通常データの分割セーブ初期化
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl)
+{
+	GFL_BACKUP_SAVEASYNC_Init(ctrl->sv_normal);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   通常データの分割セーブメイン処理
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
+{
+	return GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   通常セーブデータの各セーブワークのポインタを取得する
  *
  * @param   ctrl		セーブデータ管理ワークへのポインタ
