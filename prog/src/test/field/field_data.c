@@ -166,7 +166,7 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//サンプルマップ　金銀
 		{	
 			FILE_CUSTOM_DATA,
-			2,  6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			2, 6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
 			USE_GLOBAL_TEX,	(void*)&gtexData, 
 			//USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,

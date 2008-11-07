@@ -29,6 +29,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 
+#include "map_matrix.h"
+
 extern void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
 extern void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys);
 //============================================================================================
@@ -52,8 +54,6 @@ static void				RemoveGameSystem( FIELD_SETUP* gs );
 static void				MainGameSystem( FIELD_SETUP* gs );
 
 static void _sendGamePlay( VecFx32* pVec  );
-
-
 
 typedef enum {
 	GAMEMODE_NORMAL = 0,
@@ -88,6 +88,7 @@ struct _FIELD_MAIN_WORK
 	DEBUG_FLDMENU *d_menu;
 
 	void *pGridCont;
+	void *pMapMatrixBuf;
 };
 
 //------------------------------------------------------------------
@@ -106,6 +107,9 @@ struct _DEPEND_FUNCTIONS{
 static BOOL GameEndCheck( int cont );
 
 FIELD_MAIN_WORK* fieldWork;
+
+static void ResistMatrixFieldG3Dmapper(
+	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fldWork );
 
 static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
@@ -182,11 +186,16 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
 	case 1:
 		fieldWork->ftbl = GetDependFunctions(gsys);
+
 		//fieldWork->ftbl = sceneData->dep_funcs;
 		{
             //セットアップ
-            ResistDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), 
-                                GetMapperData(gsys));
+			if( GetSceneID(gsys) == 4 ){ //プランナー確認マップ
+				ResistMatrixFieldG3Dmapper( gsys, fieldWork );
+			}else{
+          	  ResistDataFieldG3Dmapper(
+				 GetFieldG3Dmapper(fieldWork->gs), GetMapperData(gsys) );
+			}
 
 			//登録テーブルごとに個別の初期化処理を呼び出し
 			{
@@ -247,6 +256,11 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 		fieldWork->ftbl->delete_func(fieldWork);
 
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
+		
+		if( fieldWork->pMapMatrixBuf != NULL ){
+			GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
+			fieldWork->pMapMatrixBuf = NULL;
+		}
 
 		if (fieldWork->gamemode != GAMEMODE_FINISH) {
 			fieldWork->seq = 1;
@@ -737,7 +751,7 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 		posNext.y = 0;	//ベースライン
 	}
 	if( CheckFieldG3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
-		OS_Printf("マップ範囲外で移動不可\n");
+	//	OS_Printf("マップ範囲外で移動不可\n");
 		return FALSE;
 	}
 
@@ -804,6 +818,46 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 	NoGridMain,
 	NoGridDelete,
 };
+
+//======================================================================
+//	map matrix
+//======================================================================
+//--------------------------------------------------------------
+//	マトリクス情報からマップ登録
+//--------------------------------------------------------------
+static void ResistMatrixFieldG3Dmapper(
+	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork )
+{
+	u8 *tbl;
+	ARCHANDLE *arcH;
+	FLD_G3D_MAPPER_RESIST map_res;
+	const FLD_G3D_MAPPER_RESIST *base_map_res;
+	const MAP_MATRIX_HEADER *matH;
+	FLD_G3D_MAPPER_DATA *testMap[] = { {0} };
+	
+	arcH = GFL_ARC_OpenDataHandle(
+		ARCID_FLDMAP_MAPMATRIX, fieldWork->heapID );
+	
+	fieldWork->pMapMatrixBuf = GFL_ARC_LoadDataAllocByHandle(
+		arcH, NARC_map_matrix_wb_mat_bin, fieldWork->heapID );
+	matH = fieldWork->pMapMatrixBuf;
+	tbl = (u8*)fieldWork->pMapMatrixBuf;
+	tbl = &tbl[sizeof(MAP_MATRIX_HEADER)];
+	
+	base_map_res = GetMapperData( gsys );
+	map_res = *base_map_res;
+	
+	map_res.sizex = matH->size_h;
+	map_res.sizez = matH->size_v;
+	map_res.totalSize = matH->size_h * matH->size_v;
+	map_res.arcID = ARCID_FLDMAP_LANDDATA;
+	map_res.data = (const FLD_G3D_MAPPER_DATA *)tbl;
+	
+	OS_Printf( "マップサイズ X %d, Z %d\n", map_res.sizex, map_res.sizez );
+	
+	ResistDataFieldG3Dmapper(
+		GetFieldG3Dmapper(fieldWork->gs), &map_res );
+}
 
 //======================================================================
 //	debug
