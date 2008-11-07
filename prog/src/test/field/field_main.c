@@ -857,6 +857,8 @@ static void ResistMatrixFieldG3Dmapper(
 	
 	ResistDataFieldG3Dmapper(
 		GetFieldG3Dmapper(fieldWork->gs), &map_res );
+	
+	GFL_ARC_CloseDataHandle( arcH );
 }
 
 //======================================================================
