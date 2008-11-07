@@ -1,0 +1,4 @@
+CONCAT_TARGET = \
+	$(DIR_LANDRES)/map00_00c.bin $(DIR_LANDRES)/map00_00c.imd \
+	$(DIR_LANDRES)/map01_00c.bin $(DIR_LANDRES)/map01_00c.imd \
+	$(DIR_LANDRES)/map01_01c.bin $(DIR_LANDRES)/map01_01c.imd
