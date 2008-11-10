@@ -6,6 +6,7 @@
 #		sousuke tamada	GAME FREAK Inc.
 #
 #		2005.10.12	仮完成
+#		2008.11.10	tamada	WB環境に移植開始
 #
 #
 ###############################################################
@@ -400,16 +401,14 @@ end
 #
 ###############################################################
 def convert
-	#idfile = ZoneIDFile.new("zone_id.h")
 	idfile = ZoneIDFile.new("temp_zone_id.h")
 	datafile = ZoneDataFile.new("zonetable.dat")
-	namefile = ZoneNameFile.new("mapname.dat")
-	namebinfile = ZoneNameBinaryFile.new("mapname.bin")
-	eventfile = ZoneEventFile.new("eventlist.txt")
-	evarcfile = ZoneEventArcFile.new("eventarc.txt")
-	#doorheader = ZoneEventDoorHeader.new("doorevent.h")
-	doorheader = ZoneEventDoorHeader.new("temp_doorevent.h")
-	msgheader = ZoneMsgHeader.new("temp_msgheader.h")
+#	namefile = ZoneNameFile.new("mapname.dat")
+#	namebinfile = ZoneNameBinaryFile.new("mapname.bin")
+#	eventfile = ZoneEventFile.new("eventlist.txt")
+# #	#evarcfile = ZoneEventArcFile.new("eventarc.txt")
+# #	#doorheader = ZoneEventDoorHeader.new("temp_doorevent.h")
+# #	#msgheader = ZoneMsgHeader.new("temp_msgheader.h")
 
 	firstline = gets
 	cl = ColumnID.new
@@ -427,33 +426,33 @@ def convert
 			break
 		end
 		datafile.putLine cl, linecount, column
-		namefile.putLine id
-		namebinfile.put id
+		#namefile.putLine id
+		#namebinfile.put id
 		idfile.putLine id, linecount
 		if column[cl.cEVENT] == "○" then
-			eventfile.putLine id
-			evarcfile.putLine id
-			doorheader.putLine id
+			#eventfile.putLine id
+			#evarcfile.putLine id
+			#doorheader.putLine id
 		end
 		if column[cl.cMSG] == "○" then
-			msgheader.putLine id
+			#msgheader.putLine id
 		end
 		linecount += 1
 	end
 
 
 	datafile.close
-	namefile.close
-	namebinfile.close
+	#namefile.close
+	#namebinfile.close
 	idfile.close
-	eventfile.close
-	evarcfile.close
-	doorheader.close
-	msgheader.close
+	#eventfile.close
+	#evarcfile.close
+	#doorheader.close
+	#msgheader.close
 
 	diff_overwrite "temp_zone_id.h", "zone_id.h"
-	diff_overwrite "temp_doorevent.h", "doorevent.h"
-	diff_overwrite "temp_msgheader.h", "msg_header.h"
+	#diff_overwrite "temp_doorevent.h", "doorevent.h"
+	#diff_overwrite "temp_msgheader.h", "msg_header.h"
 
 	STDERR.puts "zonetable.xlsをコンバートしました\n"
 end
