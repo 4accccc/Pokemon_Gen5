@@ -37,13 +37,14 @@ clean:
 #------------------------------------------------
 #------------------------------------------------
 cp_output:
-	$(foreach AFILE,$(OUTPUT),cp $(AFILE) $(AFILE).old $(AND)) true
+	-$(foreach AFILE,$(OUTPUT),cp $(AFILE) $(AFILE).old $(AND)) true
 
 diff_output:
-	$(foreach AFILE,$(OUTPUT),diff $(AFILE) $(AFILE).old >> diff.txt $(AND)) true
+	-$(foreach AFILE,$(OUTPUT),diff $(AFILE) $(AFILE).old >> diff.txt $(AND)) true
 
 diff:
 	$(MAKE) cp_output
+	$(EXCEL2TAB)	$(DATAFILE)
 	$(MAKE) convert
 	-echo "#diff result" > diff.txt
 	$(MAKE) diff_output

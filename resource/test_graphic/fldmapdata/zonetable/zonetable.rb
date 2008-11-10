@@ -94,30 +94,75 @@ end
 
 
 ###############################################################
+###############################################################
+def filediff file1,file2
+	f1 = File.open(file1,"r")
+	l1 = f1.read
+	f1.close
+	f2 = File.open(file2,"r")
+	l2 = f2.read
+	f2.close
+	return (l1 != l2)
+end
+
+def diff_overwrite new_file, old_file
+	if FileTest.exist? old_file then
+		if filediff(old_file,new_file) == true then
+			#差分があった場合は更新
+			File.delete old_file
+			File.rename new_file, old_file
+		else
+			#差分がなかった場合はnew_fileを削除
+			File.delete new_file
+		end
+	else
+		#存在しない場合はnew_fileをold_fileにリネーム
+		File.rename new_file, old_file
+	end
+end
+
+###############################################################
 #
 #
 #
 ###############################################################
 
 class OutputFile
-	def initialize fname
-		@fp = File.open(fname, "w")
-		@name = fname
+	def initialize cl, fname, check_flag
+		@cl = cl
+		@check_before_write = check_flag
+		if check_flag == true then
+			@fp = File.open("temp_"+fname, "w")
+		else
+			@fp = File.open(fname, "w")
+		end
+		@filename = fname
 		putHeader
+	end
+
+	def getID column
+		column[@cl.cZONE_ID].upcase
+	end
+
+	def putLine linecount, column
 	end
 
 	def putHeader
 		@fp.puts "//#{Time.now.ctime}"
-		@fp.puts "//#{@name}"
+		@fp.puts "//#{@filename}"
 	end
 
 	def putFooter
-		@fp.puts "//#{@name}"
+		@fp.puts "//#{@filename}"
 	end
 
 	def close
 		putFooter
 		@fp.close
+		if @check_before_write == true then
+			temp_file = File::basename(@fp.path)
+			diff_overwrite temp_file, @filename
+		end
 	end
 
 end
@@ -156,52 +201,48 @@ class ZoneDataFile < OutputFile
 	#	ゾーンごとのデータ出力
 	#
 	#------------------------------------------------
-	def putLine cl, linecount, column
-		id = column[cl.cZONE_ID]
+	def putLine linecount, column
+		id = column[@cl.cZONE_ID]
 		if id == "END"
 			return "END"
 		end
-		area = column[cl.cAREA_ID]
+		area = column[@cl.cAREA_ID]
 		if !(area =~ /^AREA_ID_/) then
 			STDERR.puts "エリアの指定がおかしい!:#{area}:\n"
 			exit 1
 		end
-		movemodel = column[cl.cMOVEMODEL]
-		matrix = "MATRIX_ID_#{column[cl.cMATRIX]}".upcase
+		movemodel = column[@cl.cMOVEMODEL]
+		matrix = "MATRIX_ID_#{column[@cl.cMATRIX]}".upcase
 
-		event_id = if column[cl.cEVENT] != "○" then
-				"NARC_zone_event_zone_dummy_total_bin" 
-			else
-				"NARC_zone_event_zone_#{id.downcase}_total_bin"
-			end
-		script = column[cl.cSCRIPT] == "○" ? "NARC_scr_seq_#{id.downcase}_bin" : "scr_dummy"
-		sp_script = column[cl.cSCRIPT] == "○" ? "NARC_scr_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
-		msg = column[cl.cMSG] == "○" ? "NARC_msg_#{id.downcase}_dat" : "msg_dummy"
-		bgm_day = column[cl.cBGM_DAY]
-		bgm_night = column[cl.cBGM_NIGHT]
-		weather = "WEATHER_SYS_#{column[cl.cWEATHER].upcase}"
-		camera = "#{column[cl.cCAMERA]}"
-		battle_bg = "#{column[cl.cBATTLEBG]}"
+		event_id = column[@cl.cEVENT] == "○" ? "NARC_zone_event_zone_#{id.downcase}_total_bin" : "event_dummy"
+		script = column[@cl.cSCRIPT] == "○" ? "NARC_scr_seq_#{id.downcase}_bin" : "scr_dummy"
+		sp_script = column[@cl.cSCRIPT] == "○" ? "NARC_scr_seq_sp_#{id.downcase}_bin" : "sp_scr_dummy"
+		msg = column[@cl.cMSG] == "○" ? "NARC_msg_#{id.downcase}_dat" : "msg_dummy"
+		bgm_day = column[@cl.cBGM_DAY]
+		bgm_night = column[@cl.cBGM_NIGHT]
+		weather = "WEATHER_SYS_#{column[@cl.cWEATHER].upcase}"
+		camera = "#{column[@cl.cCAMERA]}"
+		battle_bg = "#{column[@cl.cBATTLEBG]}"
 		if !(battle_bg =~ /^BG_ID_/) then
 			STDERR.puts "戦闘背景の指定がおかしい！:#{battle_bg}:#{id.upcase}\n"
 			exit 1
 		end
-		name = column[cl.cNAME].upcase
-		encount_id = case column[cl.cENCOUNT]
+		name = column[@cl.cNAME].upcase
+		encount_id = case column[@cl.cENCOUNT]
 			when "○"
 				"NARC_enc_data_#{id.downcase}enc_bin"
 			else
 				"enc_dummy"
 			end
-		window = column[cl.cWINDOW].upcase
-		maptype = column[cl.cMAPTYPE]
+		window = column[@cl.cWINDOW].upcase
+		maptype = column[@cl.cMAPTYPE]
 		if !(maptype =~ /^MAPTYPE_/) then
 			STDERR.puts "マップタイプの指定がおかしい!:#{maptype}:\n"
 		end
-		dash_flag = ox2bool column[cl.cDASH], id
-		bicycle_flag = ox2bool column[cl.cBICYCLE], id
-		escape_flag = ox2bool column[cl.cESCAPE], id
-		fly_flag = ox2bool column[cl.cFLY], id
+		dash_flag = ox2bool column[@cl.cDASH], id
+		bicycle_flag = ox2bool column[@cl.cBICYCLE], id
+		escape_flag = ox2bool column[@cl.cESCAPE], id
+		fly_flag = ox2bool column[@cl.cFLY], id
 
 
 	@fp.puts <<DOCUMENT
@@ -245,7 +286,8 @@ class ZoneNameFile < OutputFile
 	def putFooter
 		@fp.puts "};\n"
 	end
-	def putLine zone_id
+	def putLine linecount, column
+		zone_id = getID(column)
 		@fp.puts "\t\"#{zone_id}\",\n"
 	end
 end
@@ -267,7 +309,7 @@ class ZoneIDFile < OutputFile
 	end
 
 	def putFooter
-		#	@fp.puts "};\n"
+		@fp.puts "#define ZONE_ID_MAX	(#{@linecount_last + 1})\n"
 		@fp.puts "\#endif // __ZONE_ID_H__\n"
 		@fp.puts "\n"
 	end
@@ -275,9 +317,10 @@ class ZoneIDFile < OutputFile
 	#----------------------------------------
 	#	ゾーンごとのID
 	#----------------------------------------
-	def putLine zone_id, linecount
+	def putLine linecount, column
+		@linecount_last = linecount
+		zone_id = getID(column)
 		@fp.puts "\#define ZONE_ID_#{zone_id} (#{linecount})\n"
-		#@fp.puts "\tZONE_ID_#{zone_id} = #{linecount},\n"
 	end
 
 end
@@ -293,8 +336,14 @@ class ZoneEventFile < OutputFile
 		@fp.puts "CONVSRCS	=	\\\n"
 		@fp.puts "	zone_dummy_total.c \\\n"
 	end
-	def putLine	id
+	def put	id
 		@fp.puts "	zone_#{id.downcase}_total.c \\\n"
+	end
+	def putLine linecount, column
+		#イベントファイルがあるときだけ生成する
+		if column[cl.cEVENT] == "○" then
+			put getID(column)
+		end
 	end
 	def putFooter
 		@fp.puts "\n"
@@ -306,8 +355,14 @@ class ZoneEventArcFile < OutputFile
 	def putHeader
 		@fp.puts "\"zone_dummy_total.bin\"\n"
 	end
-	def putLine id
+	def put id
 		@fp.puts "\"zone_#{id.downcase}_total.bin\"\n"
+	end
+	def putLine linecount, column
+		#イベントファイルがあるときだけ生成する
+		if column[cl.cEVENT] == "○" then
+			put getID(column)
+		end
 	end
 	def putFooter
 	end
@@ -320,8 +375,14 @@ class ZoneEventDoorHeader < OutputFile
 	def putHeader
 		@fp.puts "//#{@name}"
 	end
-	def putLine id
+	def put id
 		@fp.puts "#include \"zone_#{id.downcase}evd.h\"\n"
+	end
+	def putLine linecount, column
+		#イベントファイルがあるときだけ生成する
+		if column[cl.cEVENT] == "○" then
+			put getID(column)
+		end
 	end
 end
 
@@ -332,36 +393,14 @@ class ZoneMsgHeader < OutputFile
 	def putHeader
 		@fp.puts "/* convert header file */"
 	end
-	def putLine id
+	def put id
 		@fp.puts "#include \"../../../include/msgdata/msg_#{id.downcase}.h\"\n"
 	end
-end
-
-###############################################################
-###############################################################
-def filediff file1,file2
-	f1 = File.open(file1,"r")
-	l1 = f1.read
-	f1.close
-	f2 = File.open(file2,"r")
-	l2 = f2.read
-	f2.close
-	return (l1 != l2)
-end
-
-def diff_overwrite new_file, old_file
-	if FileTest.exist? old_file then
-		if filediff(old_file,new_file) == true then
-			#差分があった場合は更新
-			File.delete old_file
-			File.rename new_file, old_file
-		else
-			#差分がなかった場合はnew_fileを削除
-			File.delete new_file
+	def putLine linecount, column
+		#イベントファイルがあるときだけ生成する
+		if column[cl.cMSG] == "○" then
+			put getID(column)
 		end
-	else
-		#zone_id.hが存在しない場合はnew_fileをold_fileにリネーム
-		File.rename new_file, old_file
 	end
 end
 
@@ -392,6 +431,9 @@ class ZoneNameBinaryFile < OutputFile
 			@fp.syswrite blank
 		end
 	end
+	def putLine linecount, column
+		put getID(column)
+	end
 end
 
 
@@ -401,20 +443,22 @@ end
 #
 ###############################################################
 def convert
-	idfile = ZoneIDFile.new("temp_zone_id.h")
-	datafile = ZoneDataFile.new("zonetable.dat")
-#	namefile = ZoneNameFile.new("mapname.dat")
-#	namebinfile = ZoneNameBinaryFile.new("mapname.bin")
-#	eventfile = ZoneEventFile.new("eventlist.txt")
-# #	#evarcfile = ZoneEventArcFile.new("eventarc.txt")
-# #	#doorheader = ZoneEventDoorHeader.new("temp_doorevent.h")
-# #	#msgheader = ZoneMsgHeader.new("temp_msgheader.h")
 
 	firstline = gets
 	cl = ColumnID.new
 	cl.setup firstline.split
-	#setup cl, firstline.split
 
+	files = [
+		#カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
+		ZoneIDFile.new(cl, "zone_id.h", true),
+		ZoneDataFile.new(cl, "zonetable.dat", false),
+	#	ZoneNameFile.new(cl, "mapname.dat", false),
+	#	ZoneNameBinaryFile.new(cl, "mapname.bin", false),
+	#	ZoneEventFile.new(cl, "eventlist.txt", false),
+	#	ZoneEventArcFile.new(cl, "eventarc.txt", false),
+	#	ZoneEventDoorHeader.new(cl, "doorevent.h", true),
+	#	ZoneMsgHeader.new(cl, "msg_header.h", true),
+	]
 
 	linecount = 0
 	while line = gets
@@ -422,37 +466,14 @@ def convert
 		id = column[cl.cZONE_ID].upcase
 		if id == "END"
 			#終端定義
-			idfile.putLine "MAX", linecount
+			STDERR.puts "終端"
 			break
 		end
-		datafile.putLine cl, linecount, column
-		#namefile.putLine id
-		#namebinfile.put id
-		idfile.putLine id, linecount
-		if column[cl.cEVENT] == "○" then
-			#eventfile.putLine id
-			#evarcfile.putLine id
-			#doorheader.putLine id
-		end
-		if column[cl.cMSG] == "○" then
-			#msgheader.putLine id
-		end
+		files.each{|file| file.putLine linecount, column}
 		linecount += 1
 	end
 
-
-	datafile.close
-	#namefile.close
-	#namebinfile.close
-	idfile.close
-	#eventfile.close
-	#evarcfile.close
-	#doorheader.close
-	#msgheader.close
-
-	diff_overwrite "temp_zone_id.h", "zone_id.h"
-	#diff_overwrite "temp_doorevent.h", "doorevent.h"
-	#diff_overwrite "temp_msgheader.h", "msg_header.h"
+	files.each{|file| file.close}
 
 	STDERR.puts "zonetable.xlsをコンバートしました\n"
 end
