@@ -53,9 +53,7 @@ struct _DLPLAY_MSG_SYS
 	GFL_FONT		*fontHandle_;
 	PRINT_QUE		*printQue_;
 	PRINT_UTIL		printUtil_[1];
-
 };
-
 
 //======================================================================
 //	proto
@@ -168,8 +166,6 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 	PRINTSYS_Init( msgSys->heapID_ );
 	msgSys->printQue_ = PRINTSYS_QUE_Create( msgSys->heapID_ );
 	PRINT_UTIL_Setup( msgSys->printUtil_ , msgSys->bmpwinMsg_ );
-	
-
 }
 
 //======================================================================
@@ -201,10 +197,8 @@ void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys)
 	if( msgSys->line_ >= DLPLAY_FUNC_MSG_LINE_MAX )
 		msgSys->line_ = 0;
 	//次のラインをクリアしておく:
-	//
 	GFL_BMP_Clear( msgSys->textParam_[msgSys->line_]->bmp , 0x0000 );
 	DLPlayFunc_MsgUpdate( msgSys , msgSys->line_ , TRUE );
-	
 }
 
 void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys )
@@ -247,31 +241,20 @@ void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys )
 	STRBUF *strTemp;
 	
 	//前回文字列の消去
-//	static u16 val = 0;
-//	val += 0x1E;
-//	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(msgSys->bmpwinMsg_) , val );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(msgSys->bmpwinMsg_) , 0x0000 );
 
 	strTemp = GFL_STR_CreateBuffer( 256 , msgSys->heapID_ );
 	GFL_MSG_GetString( msgSys->msgData_ , msgID , strTemp );
 	PRINT_UTIL_Print( msgSys->printUtil_ , msgSys->printQue_ ,
 				0 , 0 , (void*)strTemp , msgSys->fontHandle_ );
-//	PRINTSYS_PrintQue( msgSys->printQue_ , GFL_BMPWIN_GetBmp(msgSys->printUtil_->win)
-//			, 0, 0, (void*)strTemp, msgSys->fontHandle_ );
 	GFL_STR_DeleteBuffer( strTemp );
 }
 
 void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys )
 {
-	if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
-	{
-		DLPlayFunc_DispMsgID( 1 , msgSys );
-	}
-
   	PRINTSYS_QUE_Main( msgSys->printQue_ );
 	if( PRINT_UTIL_Trans( msgSys->printUtil_ , msgSys->printQue_ ) )
-	{
-	}
+	{}
 }
 
 
@@ -372,4 +355,3 @@ const BOOL DLPlayFunc_UpdateCounter( u16 *cnt , const u16 time )
 		return TRUE;	
 	}
 }
-

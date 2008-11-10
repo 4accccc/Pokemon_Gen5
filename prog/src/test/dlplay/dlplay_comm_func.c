@@ -11,7 +11,6 @@
 #include "net/network_define.h"
 #include "system/main.h"
 
-
 #include "dlplay_comm_func.h"
 #include "dlplay_func.h"
 #include "../ariizumi/ari_debug.h"
@@ -70,7 +69,6 @@ struct _DLPLAY_COMM_DATA
 	u8					selectBoxNumber_;
 	u16					waitCount_;			//同期セーブ用待ち時間
 	u8					postErrorState_;	//受け取ったエラー状態
-
 #if DLPLAY_FUNC_USE_PRINT
 	DLPLAY_MSG_SYS		*msgSys_;
 #endif
@@ -107,8 +105,6 @@ const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm );
 const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
 const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm );
 
-
-//各種コールバック
 void	DLPlayComm_InitEndCallback( void* pWork );
 void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
@@ -137,15 +133,13 @@ void	DLPlayComm_Post_ErrorState( const int netID, const int size , const void* p
 void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 static const NetRecvFuncTable DLPlayCommPostTable[] = {
-	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },
-	{ DLPlayComm_Post_ConnectSign , NULL },
-	{ DLPlayComm_Post_BoxIndex , DLPlayComm_Post_BoxIndex_Buff },
-	{ DLPlayComm_Post_PostBoxIndex , NULL },
-	{ DLPlayComm_Post_BoxNumber , NULL },
-	
-	{ DLPlayComm_Post_CommonFlg , NULL },
-
-	{ DLPlayComm_Post_ErrorState , NULL },
+	{ DLPlayComm_Post_LargeData , DLPlayComm_Post_LargeData_Buff },	//ボックスデータ
+	{ DLPlayComm_Post_ConnectSign , NULL },							//接続確認
+	{ DLPlayComm_Post_BoxIndex , DLPlayComm_Post_BoxIndex_Buff },	//インデックスデータ
+	{ DLPlayComm_Post_PostBoxIndex , NULL },	//↑受信確認
+	{ DLPlayComm_Post_BoxNumber , NULL },		//親機決定ボックス番号
+	{ DLPlayComm_Post_CommonFlg , NULL },		//セーブ完了フラグ汎用
+	{ DLPlayComm_Post_ErrorState , NULL },		//エラー処理
 };
 //--------------------------------------------------------------
 /**
@@ -181,7 +175,6 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 	d_comm->waitCount_		= 0;
 
 	MI_CpuClearFast( d_comm->packetBuff_.pokeData_ , LARGEPACKET_POKE_SIZE );
-
 	return d_comm;
 }
 //--------------------------------------------------------------
@@ -241,9 +234,6 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 	};
 
 	aGFLNetInit.baseHeapID = d_comm->heapID_;
-//	aGFLNetInit.netHeapID = d_comm->heapID_;
-
-
 	GFL_NET_Init( &aGFLNetInit , DLPlayComm_InitEndCallback , (void*)d_comm );
 	aGFLNetInit.netHeapID = d_comm->heapID_;
 	return TRUE;
@@ -257,13 +247,11 @@ void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm )
 
 //--------------------------------------------------------------
 /**						
-	
  *  親機接続初期化 
  */
 //--------------------------------------------------------------
 void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm )
 {
-//	d_comm->commType = FCT_PARENT;
 	GFL_NET_InitServer();
 }
 
@@ -310,7 +298,7 @@ BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm )
 
 //--------------------------------------------------------------
 /**
- *	各種ビーコン用コールバック関数 
+ *	各種ビーコン用コールバック関数(ダミー
  */
 //--------------------------------------------------------------
 void*	DLPlayComm_GetBeaconDataDummy(void)
@@ -322,7 +310,6 @@ int	DLPlayComm_GetBeaconSizeDummy(void)
 {
 	return sizeof(u8)*2;
 }
-
 
 //--------------------------------------------------------------
 //	各種チェック関数
@@ -355,7 +342,6 @@ BOOL	DLPlayComm_IsPost_SendData( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isSendBoxData_;
 }
-
 const u8	DLPlayComm_GetSelectBoxNumber( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->selectBoxNumber_;
@@ -388,8 +374,6 @@ const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm )
 	return 0;
 }
 
-
-
 //--------------------------------------------------------------
 //	以下、各種コールバック
 //--------------------------------------------------------------
@@ -415,7 +399,6 @@ void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 	OS_TPrintf("FieldComm Error!![%d]\n",errNo);
 	d_comm->isError_ = TRUE;
 }
-
 //切断感知用コールバック
 void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 {
@@ -424,14 +407,12 @@ void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
 //	d_comm->isError_ = TRUE;
 }
 
-
 //--------------------------------------------------------------
 //	送受信関数
 //--------------------------------------------------------------
 #if DLPLAY_FUNC_USE_PRINT
 static OSTick tickWork = 0;
 #endif
-
 //--------------------------------------------------------------
 //	LargePacket関係
 //--------------------------------------------------------------
@@ -522,17 +503,15 @@ void DLPlayComm_Post_BoxIndex(const int netID, const int size, const void* pData
 
 u8*	 DLPlayComm_Post_BoxIndex_Buff( int netID, void* pWork , int size )
 {
-	{
-		DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
 #if DLPLAY_FUNC_USE_PRINT
-		char str[64];
-		sprintf(str,"BoxIndex start post size[%d]",size);
-		tickWork = OS_GetTick();
-		DLPlayFunc_PutString( str , d_comm->msgSys_ );
+	char str[64];
+	sprintf(str,"BoxIndex start post size[%d]",size);
+	tickWork = OS_GetTick();
+	DLPlayFunc_PutString( str , d_comm->msgSys_ );
 #endif
-		d_comm->isStartPostIndex_ = TRUE;
-		return (u8*)&d_comm->boxIndexBuff_ ;
-	}
+	d_comm->isStartPostIndex_ = TRUE;
+	return (u8*)&d_comm->boxIndexBuff_ ;
 }
 
 //子機再接続時の合図
@@ -629,7 +608,6 @@ void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pD
 	const DLPLAY_COMM_FLG *sendData = (DLPLAY_COMM_FLG*)pData;
 	ARI_TPrintf("DLPlayComm getData[CommonFlg:%d:%d]\n",sendData->flg,sendData->value);
 	
-	
 	switch( sendData->flg )
 	{	
 	case DC_FLG_FINISH_SAVE1_PARENT:	//親機第1セーブ完了
@@ -655,6 +633,5 @@ void	DLPlayComm_Post_CommonFlg( const int netID, const int size , const void* pD
 		d_comm->isSendBoxData_ = TRUE;
 		break;
 	}
-	
 }
 

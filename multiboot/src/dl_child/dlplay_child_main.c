@@ -36,28 +36,26 @@
 //======================================================================
 enum DLPLAY_CHILD_STATE
 {
-	DCS_INIT_COMM,
-	DCS_WAIT_INIT_COMM,
-	DCS_WAIT_CONNECT,
+	DCS_INIT_COMM,		//通信初期化
+	DCS_WAIT_INIT_COMM,	//初期化完了待ち
+	DCS_WAIT_CONNECT,	//親機に接続
 
-	DCS_LOAD_BACKUP_INIT,
-	DCS_LOAD_BACKUP,
-	DCS_SAVE_BACKUP,
-	DCS_SAVE_WAIT,
-	DCS_SYNCSAVE_WAIT,
+	DCS_LOAD_BACKUP_INIT,	//データ読み込み
+	DCS_LOAD_BACKUP,		//
+	DCS_SAVE_BACKUP,		//データ保存
+	DCS_SAVE_WAIT,			//
 
-	DCS_SEND_BOX_INDEX,
-	DCS_WAIT_POST_BOX_INDEX,
-	DCS_WAIT_SELECT_BOX,
+	DCS_SEND_BOX_INDEX,		//インデックス送信
+	DCS_WAIT_POST_BOX_INDEX,//送信連絡待ち
+	DCS_WAIT_SELECT_BOX,	//親機選択中
 
-	DCS_SEND_BOX_DATA,
-	DCS_WAIT_SEND_BOX_DATA,
+	DCS_SEND_BOX_DATA,		//ボックスデータ送信
+	DCS_WAIT_SEND_BOX_DATA,	//送信連絡待ち
 	
 	DCS_ERROR_INIT,
 	DCS_ERROR_LOOP,
 
 	DCS_MAX,
-	
 };
 
 
@@ -75,7 +73,6 @@ typedef struct
 	u16	waitCounter_;
 	u16	waitTime_;
 
-
 	DLPLAY_COMM_DATA *commSys_;
 	DLPLAY_MSG_SYS	 *msgSys_;
 	DLPLAY_DATA_DATA *dataSys_;
@@ -86,22 +83,19 @@ typedef struct
 	GFL_CLUNIT		*cellUnit_;
 	GFL_CLWK		*cellData_[3];
 #endif
-
 }DLPLAY_CHILD_DATA;
 //======================================================================
 //	proto
 //======================================================================
-
 DLPLAY_CHILD_DATA *childData;
 void	DLPlayChild_SetProc(void);
 static void	DLPlayChild_InitBg(void);
 static void	DLPlayChild_InitObj(void);
 static void DLPlayChild_SaveMain(void);
+
 //============================================================================================
 //
-//
 //	プロセスコントロール
-//
 //
 //============================================================================================
 static const	GFL_PROC_DATA DLPlayChild_ProcData;
@@ -182,9 +176,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 #endif
 
 #endif
-
 	DLPlayChild_InitObj();
-
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -196,24 +188,6 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	DLPlayFunc_UpdateFont( childData->msgSys_ );
-	if( childData->mainSeq_ != DCS_ERROR_LOOP &&
-		childData->mainSeq_ != DCS_ERROR_INIT )
-	{
-		if(	childData->errorState_ != DES_NONE )
-		{
-			childData->mainSeq_ = DCS_ERROR_INIT;
-		}
-		else if( DLPlayData_GetErrorState( childData->dataSys_ ) != DES_NONE )
-		{
-			childData->errorState_ = DLPlayData_GetErrorState( childData->dataSys_ );
-			childData->mainSeq_ = DCS_ERROR_INIT;
-		}
-		else if( DLPlayComm_GetPostErrorState( childData->commSys_ ) != DES_NONE )
-		{
-			childData->errorState_ = DLPlayComm_GetPostErrorState( childData->commSys_ );
-			childData->mainSeq_ = DCS_ERROR_INIT;
-		}
-	}
 	switch( childData->mainSeq_ )
 	{
 	case DCS_INIT_COMM:
@@ -276,17 +250,11 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		break;
 	
 	case DCS_SEND_BOX_INDEX:
-		//if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
 		{
 			DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( childData->commSys_ );
 			DLPlayData_SetBoxIndex( childData->dataSys_ , boxIndex );
 			DLPlayComm_Send_BoxIndex( childData->commSys_ );
 			childData->mainSeq_ = DCS_WAIT_POST_BOX_INDEX;
-		}
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y )
-		{
-			//セーブテスト用
-			//childData->mainSeq_ = DCS_SAVE_BACKUP;
 		}
 		break;
 	
@@ -297,7 +265,6 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			DLPlayFunc_ChangeBgMsg( MSG_PARENT_SELECT_BOX , childData->msgSys_ );
 		}
 		break;
-	
 
 	case DCS_WAIT_SELECT_BOX:
 		if( DLPlayComm_GetSelectBoxNumber(childData->commSys_) != SELECT_BOX_INVALID )
@@ -327,7 +294,6 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 			childData->subSeq_ = 0;
 			DLPlayFunc_ChangeBgMsg( MSG_SAVE , childData->msgSys_ );
 		}
-
 		break;
 
 	case DCS_SAVE_BACKUP:
@@ -353,6 +319,24 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 
 	case DCS_ERROR_LOOP:
 		break;
+	}
+	if( childData->mainSeq_ != DCS_ERROR_LOOP &&
+		childData->mainSeq_ != DCS_ERROR_INIT )
+	{
+		if(	childData->errorState_ != DES_NONE )
+		{
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
+		else if( DLPlayData_GetErrorState( childData->dataSys_ ) != DES_NONE )
+		{
+			childData->errorState_ = DLPlayData_GetErrorState( childData->dataSys_ );
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
+		else if( DLPlayComm_GetPostErrorState( childData->commSys_ ) != DES_NONE )
+		{
+			childData->errorState_ = DLPlayComm_GetPostErrorState( childData->commSys_ );
+			childData->mainSeq_ = DCS_ERROR_INIT;
+		}
 	}
 #if DLC_OBJ_TEST
 	GFL_CLACT_UNIT_Draw( childData->cellUnit_ );
@@ -385,7 +369,6 @@ const GFL_PROC_DATA DLPlayChild_ProcData = {
 	DLPlayChild_ProcEnd,
 };
 
-
 //------------------------------------------------------------------
 //BG初期化
 //------------------------------------------------------------------
@@ -402,7 +385,6 @@ static const GFL_BG_BGCNT_HEADER bgContStr = {
 	GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, DLPLAY_MSG_PLANE_PRI, 0, 0, FALSE
 };
-
 static const GFL_BG_BGCNT_HEADER bgContStrWin = {
 	0, 0, 0x800, 0,
 	GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -415,7 +397,6 @@ static const GFL_BG_BGCNT_HEADER bgContFontMsg = {
 	GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,
 	GX_BG_EXTPLTT_01, DLPLAY_FONT_MSG_PLANE_PRI, 0, 0, FALSE
 };
-
 
 static void	DLPlayChild_InitBg(void)
 {
@@ -451,8 +432,6 @@ static void	DLPlayChild_InitBg(void)
 	GFL_BG_LoadScreenReq( DLPLAY_MSGWIN_PLANE );
 	GFL_BG_LoadScreenReq( DLPLAY_FONT_MSG_PLANE );
 
-
-
 	//BG読み込み開始
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,
 			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
@@ -461,7 +440,6 @@ static void	DLPlayChild_InitBg(void)
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MB_TEST , NARC_mb_test_test_bg_NCLR ,
 			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_ARIIZUMI_DEBUG );
 	
-
 	//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( HEAPID_ARIIZUMI_DEBUG );
 
@@ -534,9 +512,7 @@ static void	DLPlayChild_InitObj(void)
 		GFL_CLACT_WK_SetWldPos( childData->cellData_[2] , &pos );
 		GFL_CLACT_WK_SetAutoAnmFlag( childData->cellData_[2] , TRUE );
 	}
-
 #endif
-
 }
 
 static void DLPlayChild_SaveMain(void)
@@ -594,7 +570,6 @@ static void DLPlayChild_SaveMain(void)
 			childData->mainSeq_ = DCS_MAX;
 			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , childData->msgSys_ );
 		}
-
 	}
 }
 

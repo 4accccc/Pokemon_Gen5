@@ -3,6 +3,7 @@
  *
  * @file	dlplay_data_main.c
  * @brief	セーブデータを読み込むところ
+ *			基本的にバージョンごとの処理を分けるラッパー
  * @author	ariizumi
  * @data	
  */

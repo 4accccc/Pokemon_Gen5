@@ -135,7 +135,6 @@ DLPLAY_SEND_DATA* DLPlaySend_Init( int heapID )
 	return dlData;
 }
 
-
 //--------------------------------------------------------------
 /**
  * 開放
@@ -159,20 +158,6 @@ void	DLPlaySend_Term( DLPLAY_SEND_DATA *dlData )
 u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 {
 	DLPlayFunc_UpdateFont( dlData->msgSys_ );
-	if( dlData->errorState_ != DSS_ERROR_INIT &&
-		dlData->errorState_ != DSS_ERROR_LOOP )
-	{
-		if( dlData->errorState_ != DES_NONE )
-		{
-			dlData->mainSeq_ = DSS_ERROR_INIT;
-		}
-		else
-		if( DLPlayComm_GetPostErrorState( dlData->commSys_ ) != DES_NONE )
-		{
-			dlData->errorState_ = DLPlayComm_GetPostErrorState( dlData->commSys_ );
-			dlData->mainSeq_ = DSS_ERROR_INIT;
-		}
-	}
 	switch( dlData->mainSeq_ )
 	{
 	case DSS_INIT_COMM:
@@ -237,6 +222,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 		{
 			u8 i;
 			BOOL isUpdate = FALSE;
+			//初回更新を有効にするため0xffの時に初回とみなしている。
 			if( dlData->currTray_ == 0xFF )
 			{
 				isUpdate = TRUE;
@@ -270,7 +256,7 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 #if 1
 				DLPLAY_BOX_INDEX *boxIndex = DLPlayComm_GetBoxIndexBuff( dlData->commSys_ );
 				DLPlayDispSys_DispBoxIcon( boxIndex , dlData->currTray_ , dlData->dispSys_ );
-//#else 
+//#else		//文字表示用のデバッグ(した画面に別途表示したいといわれたので通してます
 				{
 					const char sexStr[3][8] ={"M","F","?"};
 					const int bi = dlData->currTray_;
@@ -373,8 +359,21 @@ u8		DLPlaySend_Loop( DLPLAY_SEND_DATA *dlData )
 
 	case DSS_ERROR_LOOP:
 		break;
-		
-
+	}
+	//エラー処理
+	if( dlData->errorState_ != DSS_ERROR_INIT &&
+		dlData->errorState_ != DSS_ERROR_LOOP )
+	{
+		if( dlData->errorState_ != DES_NONE )
+		{
+			dlData->mainSeq_ = DSS_ERROR_INIT;
+		}
+		else
+		if( DLPlayComm_GetPostErrorState( dlData->commSys_ ) != DES_NONE )
+		{
+			dlData->errorState_ = DLPlayComm_GetPostErrorState( dlData->commSys_ );
+			dlData->mainSeq_ = DSS_ERROR_INIT;
+		}
 	}
 	DLPlayDispSys_UpdateDraw( dlData->dispSys_ );
 	return DPM_SEND_IMAGE;
@@ -531,7 +530,7 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 {
 	switch( dlData->subSeq_ )
 	{
-	case 0:
+	case 0:	
 		{
 		BOX_DATA *pBoxData;
 		DLPLAY_LARGE_PACKET *lPacket;
@@ -578,7 +577,7 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 			dlData->subSeq_++;
 		}
 		break;
-	case 4:
+	case 4:	//最終ビットのセーブ
 		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_PERMIT_LASTBIT_SAVE , dlData->commSys_ ) > 0 )
 		{
 			DLPlayFunc_PutString("Start last save wait.",dlData->msgSys_);
@@ -607,7 +606,7 @@ static void	DLPlaySend_SaveMain( DLPLAY_SEND_DATA *dlData )
 			}
 		}	
 		break;
-	case 7:
+	case 7:	//両方のセーブが終わるまで完了表示を出さない
 		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_FINISH_SAVE_ALL , dlData->commSys_ ) > 0 )
 		{
 			DLPlayFunc_PutString("Save Complete!!.",dlData->msgSys_);

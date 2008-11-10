@@ -126,12 +126,12 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 			//おそらくGSでは処理が変わる
 			//各ブロックのCRCをチェック(一応通常データも見ておく
 			u8 i;
-			const u32 boxStartAdd = DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA , d_data->cardType_ );
+			const u32 boxStartAdd = DLPlayData_GetStartAddress(PT_GMDATA_ID_BOXDATA , d_data->cardType_ );
 			SAVE_FOOTER *footer[4];
-			footer[PT_MAIN_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[PT_BOX_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
-			footer[PT_MAIN_SECOND]  = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
-			footer[PT_BOX_SECOND]	= (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[PT_MAIN_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[PT_BOX_FIRST]	= (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(PT_GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
+			footer[PT_MAIN_SECOND]  = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , d_data->cardType_ ) ];
+			footer[PT_BOX_SECOND]	= (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(PT_GMDATA_BOX_FOOTER , d_data->cardType_ ) ];
 #if DEB_ARI
 			for( i=0;i<4;i++ ){
 				OS_TPrintf("footer[%d] g_count[%2d] b_count[%2d] size[%5d] MGNo[%d] blkID[%02x] crc[%d]\n"
@@ -208,18 +208,18 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			{
 				SAVE_FOOTER *boxFooter,*mainFooter;
 				if( d_data->boxSavePos_ == DDS_FIRST ){
-					boxFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
+					boxFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(PT_GMDATA_BOX_FOOTER,d_data->cardType_) ];
 				}
 				else{
-					boxFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_BOX_FOOTER,d_data->cardType_) ];
+					boxFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(PT_GMDATA_BOX_FOOTER,d_data->cardType_) ];
 				}
 
 				if( d_data->mainSavePos_ == DDS_FIRST ){
-					mainFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
+					mainFooter = (SAVE_FOOTER*)&d_data->pData_[ DLPlayData_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
 					mainFooter->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pData_, mainFooter->size - sizeof(SAVE_FOOTER) );
 				}
 				else{
-					mainFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
+					mainFooter = (SAVE_FOOTER*)&d_data->pDataMirror_[ DLPlayData_GetStartAddress(PT_GMDATA_NORMAL_FOOTER,d_data->cardType_) ];
 					mainFooter->crc = MATH_CalcCRC16CCITT( &d_data->crcTable_, d_data->pDataMirror_, mainFooter->size - sizeof(SAVE_FOOTER) );
 				}
 
@@ -244,7 +244,7 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 		{
 			//読み込んだほうとは反対側に書く
 			const u32 saveAddress = ( d_data->mainSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
-			const u32 saveSize = DLPlayData_GetStartAddress( GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
+			const u32 saveSize = DLPlayData_GetStartAddress( PT_GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
 			void *pData;
 			if( d_data->mainSavePos_ == DDS_FIRST ){
 				pData = d_data->pData_;
@@ -272,7 +272,7 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			//セーブ開始！
 			//読み込んだほうとは反対側に書く
 			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
-			saveAddress += DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
+			saveAddress += DLPlayData_GetStartAddress(PT_GMDATA_ID_BOXDATA,d_data->cardType_);
 
 			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_ , saveSize-1 , NULL , NULL );
 			
@@ -309,7 +309,7 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			//セーブ開始！
 			//読み込んだほうとは反対側に書く
 			saveAddress = ( d_data->boxSavePos_ == DDS_FIRST ? 0x40000 : 0x00000 );
-			saveAddress += DLPlayData_GetStartAddress(GMDATA_ID_BOXDATA,d_data->cardType_);
+			saveAddress += DLPlayData_GetStartAddress(PT_GMDATA_ID_BOXDATA,d_data->cardType_);
 			saveAddress += saveSize-1;
 
 			CARD_WriteAndVerifyFlashAsync( saveAddress , d_data->pBoxData_+saveSize-1 , 1 , NULL , NULL );
@@ -441,8 +441,8 @@ static	BOOL DLPlayData_CheckDataCorrect( SAVE_FOOTER **pFooterArr , DLPLAY_DATA_
 	//まずデータ単体のチェック
 	for( i=0;i<4;i++ )
 	{
-		const u32 mainEndAdd = DLPlayData_GetStartAddress( GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
-		const u32 boxEndAdd = DLPlayData_GetStartAddress( GMDATA_BOX_FOOTER+1 , d_data->cardType_ );
+		const u32 mainEndAdd = DLPlayData_GetStartAddress( PT_GMDATA_NORMAL_FOOTER+1 , d_data->cardType_ );
+		const u32 boxEndAdd = DLPlayData_GetStartAddress( PT_GMDATA_BOX_FOOTER+1 , d_data->cardType_ );
 		const u32 saveSize = ( i%2==0 ? mainEndAdd : boxEndAdd - mainEndAdd );
 		const u32 addOfs = ( i%2==0 ? 0 : mainEndAdd );
 		//データフッタから整合性をチェック
@@ -636,7 +636,7 @@ u32		DLPlayData_DP_GetStartAddress( const PT_GMDATA_ID id )
 	u8 i;
 	//EMAIL以降になるとPT専用のIDが2個入っているので、ここで調整
 	PT_GMDATA_ID max = id;
-	if( max >= GMDATA_ID_EMAIL ){ max-=2; }
+	if( max >= PT_GMDATA_ID_EMAIL ){ max-=2; }
 	for( i=0;i<max;i++ ){
 		temp += DLPLAY_DP_SAVESIZETABLE[i];
 	}
@@ -1257,10 +1257,10 @@ const u32 DLPlayData_GetBoxDataSize( const DLPLAY_CARD_TYPE type )
 	switch( type )
 	{
 	case CARD_TYPE_DP:
-		return DLPlayData_DP_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_DP_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_DP_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - DLPlayData_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_PT:
-		return DLPlayData_PT_GetStartAddress( GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_PT_GetStartAddress( PT_GMDATA_BOX_FOOTER ) - DLPlayData_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_GS:
 		return 0;
@@ -1275,10 +1275,10 @@ const u32 DLPlayData_GetBoxDataStartAddress( const DLPLAY_CARD_TYPE type )
 	switch( type )
 	{
 	case CARD_TYPE_DP:
-		return DLPlayData_DP_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_DP_GetStartAddress( PT_GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_PT:
-		return DLPlayData_PT_GetStartAddress( GMDATA_ID_BOXDATA );
+		return DLPlayData_PT_GetStartAddress( PT_GMDATA_ID_BOXDATA );
 		break;
 	case CARD_TYPE_GS:
 		return 0;

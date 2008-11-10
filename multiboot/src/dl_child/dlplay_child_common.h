@@ -3,7 +3,7 @@
  *
  * @file	dlplay_child_common.h
  * @brief	セーブデータがらみの共通ファイル
- *			バージョン別コードと、dlplay_data_main以外で読むな
+ *			バージョン別コードと、dlplay_data_main・各バージョンのソース以外で読むな
  * @author	ariizumi
  * @data	
  */
@@ -44,7 +44,5 @@ struct _DLPLAY_DATA_DATA
 	u8	*pDataMirror_;	//ミラー用データ
 	u8	*pBoxData_;		//読み込み対象のBOXデータアドレス(まだポケモンデータじゃない！
 };	//DLPLAY_DATAのDATA・・・ややこしい・・・
-
-
 #endif //DLPLAY_CHILD_COMMON_H_
 

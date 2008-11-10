@@ -31,15 +31,12 @@ typedef struct
 	u8	subState_;
 	BOOL	isInitIchneumon_;
 	DLPLAY_SEND_DATA *dlData_;
-
 }DLPLAY_PARENT_DATA;
 
 //------------------------------------------------------------------
 //	local
 //------------------------------------------------------------------
 DLPLAY_PARENT_DATA *parentData;
-
-
 
 //------------------------------------------------------------------
 //	VRAM用定義
@@ -81,7 +78,6 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	parentData->nextState_ = DPM_SEND_IMAGE;
 	parentData->subState_ = 0;
 	parentData->isInitIchneumon_ = FALSE;
-
 	
 	//VRAM系初期化
 	//BGシステム起動
@@ -97,12 +93,10 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl( DLPLAY_MSG_PLANE, &bgCont3, GFL_BG_MODE_TEXT );
-	GFL_BG_SetVisible( DLPLAY_MSG_PLANE, VISIBLE_ON );
-
 	GFL_BG_SetBGControl( DLPLAY_MSGWIN_PLANE, &bgContStrWin, GFL_BG_MODE_TEXT );
-	GFL_BG_SetVisible( DLPLAY_MSGWIN_PLANE, VISIBLE_ON );
-
 	GFL_BG_SetBGControl( DLPLAY_FONT_MSG_PLANE, &bgContFontMsg, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( DLPLAY_MSG_PLANE, VISIBLE_ON );
+	GFL_BG_SetVisible( DLPLAY_MSGWIN_PLANE, VISIBLE_ON );
 	GFL_BG_SetVisible( DLPLAY_FONT_MSG_PLANE, VISIBLE_ON );
 
 	GFL_BG_FillCharacter( DLPLAY_MSG_PLANE, 0x00, 1, 0 );
@@ -119,15 +113,12 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	GFL_BG_LoadScreenReq( DLPLAY_FONT_MSG_PLANE );
 	
 	//BG読み込み開始
-	
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MB_TEST , NARC_mb_test_test_bg_NCGR ,
 			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
 	GFL_ARC_UTIL_TransVramScreen( ARCID_MB_TEST , NARC_mb_test_test_bg_NSCR ,
 			DLPLAY_MSGWIN_PLANE , 0 , 0 , FALSE , HEAPID_ARIIZUMI_DEBUG );
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MB_TEST , NARC_mb_test_test_bg_NCLR ,
 			PALTYPE_MAIN_BG , 0 , 0 , HEAPID_ARIIZUMI_DEBUG );
-	
-
 
 //ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( parentData->heapID_ );
@@ -161,7 +152,6 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	switch( parentData->mainState_ )
 	{
 	case DPM_SEND_IMAGE:
-
 		if( parentData->subState_ == 0 ){
 			//if( parentData->isInitIchneumon_ == TRUE ){
 				parentData->dlData_ = DLPlaySend_Init( parentData->heapID_ );
@@ -189,13 +179,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	case DPM_END:
 		return GFL_PROC_RES_FINISH;
 		break;
-
 	}
-
-	if( FALSE ){
-		return GFL_PROC_RES_FINISH;
-	}
-
 	return GFL_PROC_RES_CONTINUE;
 }
 
