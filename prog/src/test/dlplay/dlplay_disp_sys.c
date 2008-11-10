@@ -132,6 +132,7 @@ static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys )
 
 static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys )
 {
+	u8 i;
 	if( dispSys->isInit_ == TRUE )
 	{
 		if( dispSys->isInitBox_ == TRUE )

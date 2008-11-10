@@ -78,8 +78,9 @@ struct _DLPLAY_COMM_DATA
 //	proto
 //======================================================================
 DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
-void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
+void	DLPlayComm_TermData( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm);
+void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
 #if DLPLAY_FUNC_USE_PRINT
 void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm );
 #endif
@@ -93,6 +94,7 @@ int		DLPlayComm_GetBeaconSizeDummy(void);
 
 //各種チェック関数
 BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsFinish_TermSystem( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );
@@ -106,8 +108,9 @@ const u8	DLPlayComm_GetPostErrorState( DLPLAY_COMM_DATA *d_comm );
 const u16	DLPlayComm_IsFinishSaveFlg( u8 flg , DLPLAY_COMM_DATA *d_comm );
 
 void	DLPlayComm_InitEndCallback( void* pWork );
+void	DLPlayComm_TermEndCallback( void* pWork );
 void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
-void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
+void	DLPlayComm_DisconnectCallBack( void* pWork);
 
 //送受信用関数
 //送
@@ -176,7 +179,8 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
 
 	MI_CpuClearFast( d_comm->packetBuff_.pokeData_ , LARGEPACKET_POKE_SIZE );
 	return d_comm;
-}
+}	
+
 //--------------------------------------------------------------
 /**
  * 通信ライブラリ開放
@@ -184,7 +188,7 @@ DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID )
  * @retval	DLPLAY_COMM_DATA
  */
 //--------------------------------------------------------------
-void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm )
+void	DLPlayComm_TermData( DLPLAY_COMM_DATA *d_comm )
 {
 	if( d_comm == NULL ){
 		OS_TPrintf("FieldComm System is not init.\n");
@@ -238,6 +242,16 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 	aGFLNetInit.netHeapID = d_comm->heapID_;
 	return TRUE;
 }
+void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm )
+{
+	u8 dummy = 127;
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	{
+		const BOOL ret = GFL_NET_SendData( d_comm->selfHandle_ , GFL_NET_CMD_EXIT_REQ , 1 , &dummy );
+		if( ret == FALSE ){ OS_TPrintf("DLPlayComm ConnectSign send is failued!!\n"); }
+	}
+}
+
 #if DLPLAY_FUNC_USE_PRINT
 void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm )
 {
@@ -318,6 +332,10 @@ BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isFinishInitSystem_;
 }
+BOOL	DLPlayComm_IsFinish_TermSystem( DLPLAY_COMM_DATA *d_comm )
+{
+	return !d_comm->isFinishInitSystem_;
+}
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isConnect_;
@@ -391,6 +409,14 @@ void	DLPlayComm_InitEndCallback( void* pWork )
 	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
 	d_comm->isFinishInitSystem_ = TRUE;
 }
+//終了待ちコールバック
+void	DLPlayComm_TermEndCallback( void* pWork )
+{
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	GF_ASSERT( d_comm->isFinishInitSystem_ == TRUE );
+	d_comm->isFinishInitSystem_ = FALSE;
+}
+
 
 //エラー取得コールバック
 void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
@@ -400,11 +426,13 @@ void	DLPlayComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 	d_comm->isError_ = TRUE;
 }
 //切断感知用コールバック
-void	DLPlayComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
+void	DLPlayComm_DisconnectCallBack( void* pWork )
 {
-//	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
+	DLPLAY_COMM_DATA *d_comm = (DLPLAY_COMM_DATA*)pWork;
 	OS_TPrintf("FieldComm Disconnect!!\n");
-//	d_comm->isError_ = TRUE;
+//	GFL_NET_Exit( DLPlayComm_TermEndCallback );
+	GF_ASSERT( d_comm->isFinishInitSystem_ == TRUE );
+	d_comm->isFinishInitSystem_ = FALSE;
 }
 
 //--------------------------------------------------------------

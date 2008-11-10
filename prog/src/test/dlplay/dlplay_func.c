@@ -62,6 +62,8 @@ DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane );
 void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFileID , 
 				u8 pltArcID , u8 pltFileID , u8 msgPlane , DLPLAY_MSG_SYS *msgSys );
 void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
+BOOL	DLPlayFunc_CanFontTerm( DLPLAY_MSG_SYS *msgSys );
+void	DLPlayFunc_FontTerm( DLPLAY_MSG_SYS *msgSys );
 
 void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);
 void DLPlayFunc_PutStringLine( u8 line , char* str , DLPLAY_MSG_SYS *msgSys );
@@ -163,7 +165,7 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 					msgFileID , msgSys->heapID_ );
 	
 	GFL_FONTSYS_Init();
-	PRINTSYS_Init( msgSys->heapID_ );
+	PRINTSYS_Init( GFL_HEAPID_APP );
 	msgSys->printQue_ = PRINTSYS_QUE_Create( msgSys->heapID_ );
 	PRINT_UTIL_Setup( msgSys->printUtil_ , msgSys->bmpwinMsg_ );
 }
@@ -176,7 +178,24 @@ void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys )
 	u8 i;
 	for( i=0;i<DLPLAY_FUNC_MSG_LINE_NUM;i++ ){
 		GFL_BMPWIN_Delete( msgSys->bmpwin_[i] );
+		GFL_HEAP_FreeMemory( msgSys->textParam_[i] );
 	}
+	GFL_HEAP_FreeMemory( msgSys );
+
+}
+
+BOOL	DLPlayFunc_CanFontTerm( DLPLAY_MSG_SYS *msgSys )
+{
+	return PRINTSYS_QUE_IsFinished( msgSys->printQue_ );
+}
+
+void	DLPlayFunc_FontTerm( DLPLAY_MSG_SYS *msgSys )
+{
+	GFL_BMPWIN_Delete( msgSys->bmpwinMsg_ );
+	PRINTSYS_QUE_Delete( msgSys->printQue_ );
+	GFL_MSG_Delete( msgSys->msgData_ );
+	FontDataMan_Delete( msgSys->fontHandle_ );
+	//GFL_ARC_CloseDataHandle( msgSys->arcHandle_ );
 }
 
 //======================================================================

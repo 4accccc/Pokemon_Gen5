@@ -35,6 +35,7 @@ enum DLPLAY_BG_MSG
 	MSG_MISS_LOAD_BACKUP,
 	MSG_ERROR,
 	MSG_CONFIRM,
+	MSG_CHILD_END,
 	DLPLAY_MSG_MAX,
 };
 
@@ -52,7 +53,8 @@ extern DLPLAY_MSG_SYS*	DLPlayFunc_MsgInit( int	heapID , u8 bgPlane );
 extern void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFileID ,
 				 u8 pltArcID , u8 pltFileID , u8 msgPlane , DLPLAY_MSG_SYS *msgSys );
 extern void	DLPlayFunc_MsgTerm( DLPLAY_MSG_SYS *msgSys );
-
+extern void	DLPlayFunc_FontTerm( DLPLAY_MSG_SYS *msgSys );
+extern BOOL	DLPlayFunc_CanFontTerm( DLPLAY_MSG_SYS *msgSys );
 extern void	DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys );
 
 extern void DLPlayFunc_PutString( char* str , DLPLAY_MSG_SYS *msgSys);

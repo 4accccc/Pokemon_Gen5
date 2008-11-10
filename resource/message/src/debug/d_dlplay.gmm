@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-07T11:22:18"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-10T19:33:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="258" top="351" right="963" bottom="979" maximized="no" rayout="Vertical2">
+	<dialog left="126" top="351" right="831" bottom="979" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="888" top="194" right="1235" bottom="592" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -224,6 +224,11 @@ Aボタンで決定します。</language>
 	<row id="DLPLAY_MSG_CONFIRM">
 		<language name="JPN" font=" 2:lcfont12" width="80">このボックスを取得しますか？
 A:はい　B:いいえ</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DLPLAY_MSG_CHILD_END">
+		<language name="JPN" font=" 2:lcfont12" width="80">電源を切って終了してください。</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 

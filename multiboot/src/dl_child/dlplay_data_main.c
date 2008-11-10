@@ -116,7 +116,9 @@ DLPLAY_DATA_DATA* DLPlayData_InitSystem( int heapID , DLPLAY_MSG_SYS *msgSys )
 //開放
 void	DLPlayData_TermSystem( DLPLAY_DATA_DATA *d_data )
 {
-
+	GFL_HEAP_FreeMemory( d_data->pData_ );
+	GFL_HEAP_FreeMemory( d_data->pDataMirror_ );
+	GFL_HEAP_FreeMemory( d_data );
 }
 
 //セーブデータの読み込み

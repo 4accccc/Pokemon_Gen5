@@ -175,6 +175,11 @@ BOOL	DLPlayData_PT_LoadData( DLPLAY_DATA_DATA *d_data )
 	return FALSE;
 }
 
+#define DLPLAY_CHECK_SAVE_TICK 1
+#if DLPLAY_CHECK_SAVE_TICK
+static OSTick dlplaySaveTick;
+#endif
+
 //セーブは１つの関数で、セーブ→同期待ち→ラストセーブを行う。
 BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 {
@@ -254,10 +259,14 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			}
 			//セーブ開始！
 
+			OS_TPrintf("[[%d]]\n",saveSize);
 			CARD_WriteAndVerifyFlashAsync( saveAddress , pData , saveSize , NULL , NULL );
 			
 			DLPlayFunc_PutString("saveMain......",d_data->msgSys_ );
 			d_data->subSeq_++;
+#if DLPLAY_CHECK_SAVE_TICK
+			dlplaySaveTick = OS_GetTick();
+#endif
 		}
 
 		break;
@@ -279,6 +288,12 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			OS_TPrintf("[[%d]]\n",saveSize);
 			DLPlayFunc_PutString("saveBox......",d_data->msgSys_);
 			d_data->subSeq_++;
+#if DLPLAY_CHECK_SAVE_TICK
+			{
+				const OSTick nowTick = OS_GetTick();
+				OS_TPrintf("-SAVE TICK CHECK- SAVE_MAIN[%d]\n",OS_TicksToMilliSeconds( nowTick - dlplaySaveTick ));
+			}
+#endif
 
 		}
 		break;
@@ -292,6 +307,12 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 //			OS_ReleaseLockID( (u16)d_data->lockID_ );
 			d_data->isFinishSaveFirst_ = TRUE;
 			d_data->subSeq_++;
+#if DLPLAY_CHECK_SAVE_TICK
+			{
+				const OSTick nowTick = OS_GetTick();
+				OS_TPrintf("-SAVE TICK CHECK- SAVE_WAIT[%d]\n",OS_TicksToMilliSeconds( nowTick - dlplaySaveTick ));
+			}
+#endif
 		}
 		break;
 	case 4:	//最後の同期を待つ
@@ -316,6 +337,12 @@ BOOL	DLPlayData_PT_SaveData( DLPLAY_DATA_DATA *d_data )
 			
 			DLPlayFunc_PutString("saveBox......",d_data->msgSys_ );
 			d_data->subSeq_++;
+#if DLPLAY_CHECK_SAVE_TICK
+			{
+				const OSTick nowTick = OS_GetTick();
+				OS_TPrintf("-SAVE TICK CHECK- SAVE_LAST[%d]\n",OS_TicksToMilliSeconds( nowTick - dlplaySaveTick ));
+			}
+#endif
 		}
 		break;
 

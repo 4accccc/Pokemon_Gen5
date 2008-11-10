@@ -187,7 +187,7 @@ typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID Ga
 typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される関数 
 
 typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-typedef void (*NetConnectEndFunc)(GFL_NETHANDLE* pNet);  ///< 通信切断時に呼ばれる関数
+typedef void (*NetConnectEndFunc)(void* pWork);  ///< 通信切断時に呼ばれる関数
 
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
 typedef void (*NetWifiSaveUserDataFunc)(void);  ///< WiFiユーザーデータをセーブする時に呼ぶ関数

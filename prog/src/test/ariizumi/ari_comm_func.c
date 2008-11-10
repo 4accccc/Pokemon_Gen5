@@ -110,7 +110,7 @@ void	FieldComm_SetActiveUser(const u8 idx);
 //各種コールバック
 void	InitCommLib_EndCallback( void* pWork );
 void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
-void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet);
+void	FieldComm_DisconnectCallBack(void* pWork);
 void*	FieldComm_GetBeaconData(void);
 int		FieldComm_GetBeaconSize(void);
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
@@ -523,7 +523,7 @@ void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 }
 
 //切断感知用コールバック
-void	FieldComm_DisconnectCallBack(GFL_NETHANDLE* pNet)
+void	FieldComm_DisconnectCallBack(void *pWork)
 {
 	OS_TPrintf("FieldComm Disconnect!!\n");
 	f_comm->isError = TRUE;

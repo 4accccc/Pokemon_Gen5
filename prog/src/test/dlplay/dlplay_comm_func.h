@@ -68,8 +68,9 @@ enum DLPLAY_COMMAND_FLG_TYPE
 };
 
 extern DLPLAY_COMM_DATA* DLPlayComm_InitData( u32 heapID );
-extern void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
+extern void	DLPlayComm_TermData( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm);
+extern void	DLPlayComm_TermSystem( DLPLAY_COMM_DATA *d_comm );
 #if DLPLAY_FUNC_USE_PRINT
 extern void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm );
 #endif
@@ -77,6 +78,7 @@ extern void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
 extern BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
+extern BOOL	DLPlayComm_IsFinish_TermSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm );

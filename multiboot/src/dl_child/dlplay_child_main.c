@@ -51,6 +51,9 @@ enum DLPLAY_CHILD_STATE
 
 	DCS_SEND_BOX_DATA,		//ボックスデータ送信
 	DCS_WAIT_SEND_BOX_DATA,	//送信連絡待ち
+
+	DCS_DISCONNECT,			//切断
+	DCS_DISCONNECT_WAIT,			//切断
 	
 	DCS_ERROR_INIT,
 	DCS_ERROR_LOOP,
@@ -143,18 +146,22 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 
 
 	childData = GFL_HEAP_AllocClearMemory( HEAPID_ARIIZUMI_DEBUG, sizeof( DLPLAY_CHILD_DATA ) );
-
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 	childData->heapID_ = HEAPID_ARIIZUMI_DEBUG;
 	childData->mainSeq_ = DCS_INIT_COMM;
 	childData->errorState_ = DES_NONE;
 
 	childData->msgSys_	= DLPlayFunc_MsgInit( childData->heapID_ , DLPLAY_MSG_PLANE );	 
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 	childData->commSys_ = DLPlayComm_InitData( childData->heapID_ );
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 	childData->dataSys_ = DLPlayData_InitSystem( childData->heapID_ , childData->msgSys_ );
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 	DLPlayFunc_FontInit( ARCID_FONT_DL , NARC_d_taya_lc12_2bit_nftr ,
 						ARCID_MESSAGE_DL , NARC_message_dl_d_dlplay_dat ,
 						ARCID_FONT_DL , NARC_d_taya_default_nclr , 
 						DLPLAY_FONT_MSG_PLANE , childData->msgSys_ );
+	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 
 	GFL_STD_MemCopy( (void*)&desc.bssid , (void*)childData->parentMacAddress_ , WM_SIZE_BSSID );
 #if DLPLAY_FUNC_USE_PRINT
@@ -179,6 +186,33 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 	DLPlayChild_InitObj();
 	return GFL_PROC_RES_FINISH;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief		終了
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT DLPlayChild_ProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	
+	DLPlayFunc_FontTerm( childData->msgSys_ );
+	DLPlayComm_TermData( childData->commSys_ );
+	DLPlayFunc_MsgTerm( childData->msgSys_ );
+	DLPlayData_TermSystem( childData->dataSys_ );
+
+	GFL_BMPWIN_Exit();
+	GFL_BG_FreeBGControl( DLPLAY_MSG_PLANE );
+	GFL_BG_FreeBGControl( DLPLAY_MSGWIN_PLANE );
+	GFL_BG_FreeBGControl( DLPLAY_FONT_MSG_PLANE );
+	GFL_BG_Exit();
+
+	GFL_HEAP_FreeMemory( childData );
+
+	GFL_HEAP_DeleteHeap( HEAPID_ARIIZUMI_DEBUG );
+
+	return GFL_PROC_RES_FINISH;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -299,6 +333,21 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 	case DCS_SAVE_BACKUP:
 		DLPlayChild_SaveMain();
 		break;
+	
+	case DCS_DISCONNECT:
+		DLPlayComm_TermSystem( childData->commSys_ );
+		childData->mainSeq_ = DCS_DISCONNECT_WAIT;
+		DLPlayFunc_ChangeBgMsg( MSG_CHILD_END , childData->msgSys_ );
+		break;
+
+	case DCS_DISCONNECT_WAIT:
+		if( DLPlayComm_IsFinish_TermSystem( childData->commSys_ ) == TRUE &&
+			DLPlayFunc_CanFontTerm( childData->msgSys_ ) == TRUE )
+		{
+			OS_TPrintf("END.\n");
+			return GFL_PROC_RES_FINISH;
+		}
+		break;
 
 	case DCS_ERROR_INIT:
 		childData->mainSeq_ = DCS_ERROR_LOOP;
@@ -345,19 +394,6 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 #endif
 	return GFL_PROC_RES_CONTINUE;
 }
-
-//------------------------------------------------------------------
-/**
- * @brief		終了
- */
-//------------------------------------------------------------------
-static GFL_PROC_RESULT DLPlayChild_ProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
-{
-//	GFL_CLACT_USERREND_Delete( childData->renderSys_ );
-	GFL_CLACT_Exit();
-	return GFL_PROC_RES_FINISH;
-}
-
 //------------------------------------------------------------------
 /**
  * @brief		プロセス関数テーブル
@@ -567,7 +603,7 @@ static void DLPlayChild_SaveMain(void)
 		if( DLPlayComm_IsFinishSaveFlg( DC_FLG_FINISH_SAVE_ALL , childData->commSys_ ) > 0 )
 		{
 			childData->subSeq_  = 0;
-			childData->mainSeq_ = DCS_MAX;
+			childData->mainSeq_ = DCS_DISCONNECT;
 			DLPlayFunc_ChangeBgMsg( MSG_SAVE_END , childData->msgSys_ );
 		}
 	}
