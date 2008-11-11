@@ -929,39 +929,14 @@ static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork )
 //--------------------------------------------------------------
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 {
-	GAMESYS_WORK *gsys = fieldWork->gsys;
+	int i;
 	
-	if( gsys != NULL ){
-		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-		
-		if( gdata != NULL ){
-			u32 id;
-			int i,dir;
-			const VecFx32 *pos;
-			PLAYER_WORK *player;
-			FLD_COMM_ACTOR **acttbl = fieldWork->commActorTbl;
-			
-			for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
-				if( acttbl[i] != NULL ){
-					FldCommActor_Update( acttbl[i] );
-				}
-			}
+	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
+		if( fieldWork->commActorTbl[i] != NULL ){
+			FldCommActor_Update( fieldWork->commActorTbl[i] );
 		}
 	}
 }
-
-#if 0
-					id = FldCommActor_GetActID( acttbl[i] );
-					player = GAMEDATA_GetPlayerWork( gdata, id );
-					pos = PLAYERWORK_getPosition( player );
-					dir = PLAYERWORK_getDirection( player );
-					FldCommActor_Update( acttbl[i], pos, dir );
-				}
-			}
-		}
-	}
-}
-#endif
 
 //======================================================================
 //	debug
