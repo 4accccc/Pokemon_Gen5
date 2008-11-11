@@ -386,6 +386,11 @@ void	GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction )
 	*direction = pcActCont->direction;
 }
 
+GFL_BBDACT_RESUNIT_ID GetPlayerBBdActResUnitID( PC_ACTCONT *pcActCont )
+{
+	return( pcActCont->bbdActResUnitID );
+}
+
 #include "field_player_nogrid.c"
 #include "field_player_grid.c"
 

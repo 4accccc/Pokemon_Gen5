@@ -5,6 +5,19 @@
 #include "field_g3d_mapper.h"
 #include "field_player.h"			//PC_ACT_FUNC
 
+#define FLD_COMM_PLAYER_MAX (4)
+#define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
+
+enum
+{
+	DIR_UP = 0,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
+	DIR_NOT,
+	DIR_MAX4 = DIR_NOT,
+};
+
 typedef struct _FIELD_MAIN_WORK FIELD_MAIN_WORK;
 
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );

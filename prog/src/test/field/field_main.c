@@ -31,6 +31,8 @@
 
 #include "map_matrix.h"
 
+#include "field_comm_actor.h"
+
 extern void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
 extern void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys);
 //============================================================================================
@@ -86,9 +88,11 @@ struct _FIELD_MAIN_WORK
 	
 	int d_menu_flag;
 	DEBUG_FLDMENU *d_menu;
-
+	
 	void *pGridCont;
 	void *pMapMatrixBuf;
+	
+	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
 };
 
 //------------------------------------------------------------------
@@ -110,6 +114,9 @@ FIELD_MAIN_WORK* fieldWork;
 
 static void ResistMatrixFieldG3Dmapper(
 	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fldWork );
+
+static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
+static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
 
 static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
@@ -235,9 +242,15 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 		
 			VecFx32 pos;
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
+			
 			//登録テーブルごとに個別のメイン処理を呼び出し
 			fieldWork->ftbl->main_func( fieldWork, &pos );
-			//Mapシステムに位置を渡している。これがないとマップ移動しないので注意
+			
+			//通信用アクター更新
+			fieldMainCommActorProc( fieldWork );
+
+			//Mapシステムに位置を渡している。
+			//これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
 
@@ -250,8 +263,10 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 			PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 			GetPlayerActTrans(fieldWork->pcActCont, &player_pos);
 			PLAYERWORK_setPosition(pw, &player_pos);
-
 		}
+		//通信用アクター削除
+		fieldMainCommActorFree( fieldWork );
+		
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
 
@@ -859,6 +874,82 @@ static void ResistMatrixFieldG3Dmapper(
 		GetFieldG3Dmapper(fieldWork->gs), &map_res );
 	
 	GFL_ARC_CloseDataHandle( arcH );
+}
+
+//======================================================================
+//	comm actor
+//======================================================================
+//--------------------------------------------------------------
+///	通信アクターを追加する
+//--------------------------------------------------------------
+static void fieldMainCommActorAdd(
+	FIELD_MAIN_WORK *fieldWork, PLAYER_WORK *player, u32 player_no )
+{
+	int i;
+	FIELD_SETUP *fup;
+	GFL_BBDACT_SYS *bbdActSys;
+	GFL_BBDACT_RESUNIT_ID unitID;
+	
+	fup = fieldWork->gs;
+	bbdActSys = GetBbdActSys( fup );
+	unitID = GetPlayerBBdActResUnitID( fieldWork->pcActCont );
+	
+	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
+		if( fieldWork->commActorTbl[i] == NULL ){
+			fieldWork->commActorTbl[i] =
+				FldCommActor_Init(
+					bbdActSys, unitID, player_no,
+					PLAYERWORK_getPosition(player),
+					PLAYERWORK_getDirection(player),
+					fieldWork->heapID );
+			return;
+		}
+	}
+}
+
+//--------------------------------------------------------------
+///	通信アクター全削除
+//--------------------------------------------------------------
+static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork )
+{
+	int i;
+	
+	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
+		if( fieldWork->commActorTbl[i] != NULL ){
+			FldCommActor_Delete( fieldWork->commActorTbl[i] );
+			fieldWork->commActorTbl[i] = NULL;
+		}
+	}
+}
+
+//--------------------------------------------------------------
+///	通信アクター更新
+//--------------------------------------------------------------
+static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
+{
+	GAMESYS_WORK *gsys = fieldWork->gsys;
+	
+	if( gsys != NULL ){
+		GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+		
+		if( gdata != NULL ){
+			u32 id;
+			int i,dir;
+			const VecFx32 *pos;
+			PLAYER_WORK *player;
+			FLD_COMM_ACTOR **acttbl = fieldWork->commActorTbl;
+			
+			for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
+				if( acttbl[i] != NULL ){
+					id = FldCommActor_GetActID( acttbl[i] );
+					player = GAMEDATA_GetPlayerWork( gdata, id );
+					pos = PLAYERWORK_getPosition( player );
+					dir = PLAYERWORK_getDirection( player );
+					FldCommActor_Update( acttbl[i], pos, dir );
+				}
+			}
+		}
+	}
 }
 
 //======================================================================

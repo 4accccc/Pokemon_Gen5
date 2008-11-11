@@ -16,16 +16,6 @@
 //======================================================================
 enum
 {
-	DIR_UP = 0,
-	DIR_DOWN,
-	DIR_LEFT,
-	DIR_RIGHT,
-	DIR_NOT,
-	DIR_MAX4 = DIR_NOT,
-};
-
-enum
-{
 	GRIDPROC_MAIN = 0,
 	GRIDPROC_DEBUG00,
 	GRIDPROC_DEBUG01,

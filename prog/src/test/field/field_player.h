@@ -21,5 +21,6 @@ extern void				SetPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans );
 extern void				GetPlayerActTrans( PC_ACTCONT* pcActCont, VecFx32* trans );
 extern void				SetPlayerActDirection( PC_ACTCONT* pcActCont, const u16* direction );
 extern void				GetPlayerActDirection( PC_ACTCONT* pcActCont, u16* direction );
+extern GFL_BBDACT_RESUNIT_ID GetPlayerBBdActResUnitID( PC_ACTCONT *pcActCont );
 
 #include "field_player_grid.h"
