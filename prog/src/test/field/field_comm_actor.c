@@ -59,10 +59,11 @@ enum
 //--------------------------------------------------------------
 struct _TAG_FLD_COMM_ACTOR
 {
-	u32 act_id;
+	const PLAYER_WORK *player;
+
 	HEAPID heapID;
-	int dir;
-	int old_dir;
+	u16 dir;
+	u16 old_dir;
 	int anm_id;
 	VecFx32 pos;
 	VecFx32 old_pos;
@@ -86,25 +87,28 @@ static const GFL_BBDACT_ANM *playerBBDactAnmTable[PCACTANMNO_MAX];
 //--------------------------------------------------------------
 /**
  * 通信用アクター　初期化
+ * @param	player		参照するPLAYER_WORK *
  * @param	bbdActSys	使用するGFL_BBDACT_SYS
  * @param	resUnitID	使用するGFL_BBDACT_RESUNIT_ID
- * @param	act_id		追加したアクターを識別するID
- * @param	pos			表示座標
- * @param	dir			方向 DIR_UP等
  * @param	heapID		リソース確保用ヒープID
  * @retval	FLD_COMM_ACTOR	追加されたFLD_COMM_ACTOR *
  */
 //--------------------------------------------------------------
 FLD_COMM_ACTOR * FldCommActor_Init(
-	GFL_BBDACT_SYS *bbdActSys, GFL_BBDACT_RESUNIT_ID resUnitID,
-	u32 act_id, const VecFx32 *pos, int dir, HEAPID heapID )
+	const PLAYER_WORK *player,
+	GFL_BBDACT_SYS *bbdActSys,
+	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID )
 {
+	u32 dir;
 	FLD_COMM_ACTOR *act;
 	GFL_BBDACT_ACTDATA actData;
+	const VecFx32 *pos;
 	
+	pos = PLAYERWORK_getPosition( player );
+	dir = PLAYERWORK_getDirection( player );
+
 	act = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_COMM_ACTOR) );
 	act->heapID = heapID;
-	act->act_id = act_id;
 	act->dir = dir;
 	act->old_dir = DIR_NOT;
 	act->pos = *pos;
@@ -155,19 +159,6 @@ void FldCommActor_Delete( FLD_COMM_ACTOR *act )
 //======================================================================
 //--------------------------------------------------------------
 /**
- *
- * @param
- * @retval
- *
- */
-//--------------------------------------------------------------
-u32 FldCommActor_GetActID( const FLD_COMM_ACTOR *act )
-{
-	return( act->act_id );
-}
-
-//--------------------------------------------------------------
-/**
  * フィールド通信用アクター　更新
  * @param	act	FLD_COMM_ACTOR *
  * @param	pos 表示座標
@@ -175,10 +166,14 @@ u32 FldCommActor_GetActID( const FLD_COMM_ACTOR *act )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FldCommActor_Update(
-	FLD_COMM_ACTOR *act, const VecFx32 *pos, int dir )
+void FldCommActor_Update( FLD_COMM_ACTOR *act )
 {
+	u16 dir;
 	int anmBase,anmID;
+	const VecFx32 *pos;
+	
+	pos = PLAYERWORK_getPosition( act->player );
+	dir = PLAYERWORK_getDirection( act->player );
 	
 	act->old_pos = act->pos;
 	act->pos = *pos;

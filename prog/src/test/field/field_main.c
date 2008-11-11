@@ -159,6 +159,7 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
+	fieldWork->gsys = gsys;
 
 //	GFL_UI_TP_Init( fieldWork->heapID );
 }
@@ -880,10 +881,15 @@ static void ResistMatrixFieldG3Dmapper(
 //	comm actor
 //======================================================================
 //--------------------------------------------------------------
-///	通信アクターを追加する
+/**
+ * フィールド通信用アクターの追加
+ * @param	fieldWork	FIELD_MAIN_WORK
+ * @param	player		参照するPLAYER_WORK
+ * @retval	nothing
+ */
 //--------------------------------------------------------------
-static void fieldMainCommActorAdd(
-	FIELD_MAIN_WORK *fieldWork, PLAYER_WORK *player, u32 player_no )
+void FieldMain_AddCommActor(
+	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player )
 {
 	int i;
 	FIELD_SETUP *fup;
@@ -896,12 +902,8 @@ static void fieldMainCommActorAdd(
 	
 	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
 		if( fieldWork->commActorTbl[i] == NULL ){
-			fieldWork->commActorTbl[i] =
-				FldCommActor_Init(
-					bbdActSys, unitID, player_no,
-					PLAYERWORK_getPosition(player),
-					PLAYERWORK_getDirection(player),
-					fieldWork->heapID );
+			fieldWork->commActorTbl[i] = FldCommActor_Init(
+				player, bbdActSys, unitID, fieldWork->heapID );
 			return;
 		}
 	}
@@ -941,6 +943,14 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 			
 			for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
 				if( acttbl[i] != NULL ){
+					FldCommActor_Update( acttbl[i] );
+				}
+			}
+		}
+	}
+}
+
+#if 0
 					id = FldCommActor_GetActID( acttbl[i] );
 					player = GAMEDATA_GetPlayerWork( gdata, id );
 					pos = PLAYERWORK_getPosition( player );
@@ -951,6 +961,7 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 		}
 	}
 }
+#endif
 
 //======================================================================
 //	debug

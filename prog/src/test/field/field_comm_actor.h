@@ -13,6 +13,7 @@
 
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "gamesystem/playerwork.h"
 
 //======================================================================
 //	define
@@ -28,11 +29,10 @@ typedef struct _TAG_FLD_COMM_ACTOR FLD_COMM_ACTOR;
 //	通信用アクター
 //======================================================================
 extern FLD_COMM_ACTOR * FldCommActor_Init(
-	GFL_BBDACT_SYS *bbdActSys, GFL_BBDACT_RESUNIT_ID resUnitID,
-	u32 act_id, const VecFx32 *pos, int dir, HEAPID heapID );
+	const PLAYER_WORK *player,
+	GFL_BBDACT_SYS *bbdActSysm,
+	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID );
 extern void FldCommActor_Delete( FLD_COMM_ACTOR *act );
-extern u32 FldCommActor_GetActID( const FLD_COMM_ACTOR *act );
-extern void FldCommActor_Update(
-	FLD_COMM_ACTOR *act, const VecFx32 *pos, int dir );
+extern void FldCommActor_Update( FLD_COMM_ACTOR *act );
 
 #endif //__FIELD_COMM_ACTOR_H__

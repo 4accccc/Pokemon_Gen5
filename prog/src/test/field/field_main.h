@@ -31,4 +31,7 @@ extern void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID );
 extern void	FieldEnd( void );
 extern BOOL	FieldMain( GAMESYS_WORK * gsys );
 
+extern void FieldMain_AddCommActor(
+	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
+
 #endif //__FIELD_MAIN_H__
