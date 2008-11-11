@@ -33,8 +33,9 @@ struct _GFL_NETHANDLE2{
 struct _GFL_NETHANDLE{
     void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
     int infomationSize;      ///< ユーザー同士が交換するデータのサイズ
-    u8 timing[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
-    u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
+    void* negoBuff[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
+  //  u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
+    u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
     u8 timingRecv;       ///< 通信で受け取った番号
     u8 timingSyncEnd;    ///< 同期コマンド用
     u8 timingSendFlg;      ///< 送ったかどうか
@@ -43,6 +44,7 @@ struct _GFL_NETHANDLE{
     u8 negotiationSendFlg;      ///< 送ったかどうか
     u8 serviceNo;              ///< 通信サービス番号
     u8 version;                ///< 通信相手の通信バージョン番号
+    u8 timingR[(GFL_NET_HANDLE_MAX / 4) * 4];       ///< 子機からの受け取り記録padding
 };
 
 
@@ -180,6 +182,14 @@ extern void GFL_NET_HANDLE_RecvNegotiationReturn(const int netID, const int size
  */
 //==============================================================================
 extern BOOL GFL_NET_HANDLE_RequestNegotiation(void);
+//==============================================================================
+/**
+ * @brief       idに沿ったnetHandleを出す  非公開関数
+ * @param       netID    id
+ * @return      netHandle
+ */
+//==============================================================================
+extern GFL_NETHANDLE* GFL_NET_GetNetHandle(int netID);
 
 #endif //__NET_HANDLE_H__
 

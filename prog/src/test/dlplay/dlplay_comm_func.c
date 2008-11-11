@@ -455,7 +455,7 @@ void	DLPlayComm_Send_LargeData( DLPLAY_COMM_DATA *d_comm )
 //	GFL_STD_MemCopy( (void*)data , (void*)&d_comm->packetBuff_ , sizeof( DLPLAY_LARGE_PACKET ) );
 	{
 		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
-				1/*親機*/ , DC_CMD_LARGE_PACKET , sizeof(DLPLAY_LARGE_PACKET) ,
+				0/*親機*/ , DC_CMD_LARGE_PACKET , sizeof(DLPLAY_LARGE_PACKET) ,
 				&d_comm->packetBuff_ , TRUE , TRUE , TRUE );
 		if( ret == FALSE ){ OS_TPrintf("DLPlayComm LargeData send is failued!!\n"); }
 	}
@@ -503,7 +503,7 @@ void	DLPlayComm_Send_BoxIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	{
 		const BOOL ret = GFL_NET_SendDataEx( d_comm->selfHandle_ , 
-				1/*親機*/ , DC_CMD_BOX_INDEX , sizeof(DLPLAY_BOX_INDEX) ,
+				0/*親機*/ , DC_CMD_BOX_INDEX , sizeof(DLPLAY_BOX_INDEX) ,
 				&d_comm->boxIndexBuff_ , TRUE , TRUE , TRUE );
 		if( ret == FALSE ){ OS_TPrintf("DLPlayComm BoxIndexData send is failued!!\n"); }
 	}

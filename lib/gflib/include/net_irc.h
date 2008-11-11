@@ -45,6 +45,8 @@ extern int GFL_NET_IRC_GetCurrentAid(void);
 extern int GFL_NET_IRC_System_GetCurrentAid(void);
 extern void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command, u8 value);
 extern void GFL_NET_IRC_CommandContinue(void);
+extern void GFL_NET_IRC_ParentMacAddressSet(const u8 *mac_address);
+extern u8 * GFL_NET_IRC_ParentMacAddressGet(void);
 
 
 #endif	//__NET_IRC_H__

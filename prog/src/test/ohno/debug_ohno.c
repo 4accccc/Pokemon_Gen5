@@ -33,6 +33,7 @@ static BOOL NetTestNone(void* pCtl);
 static BOOL NetTestSendTiming(void* pCtl);
 static BOOL NetTestRecvTiming(void* pCtl);
 static BOOL NetTestEndStart(void* pCtl);
+static BOOL NetTestMoveSend(void* pCtl);
 
 static void _connectCallBack(void* pWork);
 static void* _netBeaconGetFunc(void);
@@ -49,6 +50,14 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 typedef struct{
     int gameNo;   ///< ゲーム種類
 } _testBeaconStruct;
+
+typedef struct{
+    int x;
+    int y;
+    int z;
+    int rot;
+    int anm;
+} _testMoveStruct;
 
 static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_OHNO_SERVICEID };
 
@@ -68,13 +77,14 @@ static GFLNetInitializeStruct aGFLNetInit = {
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
     HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+    HEAPID_NETWORK,  //IRC用にcreateされるHEAPID
     GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
     _MAXNUM,     // 最大接続人数
     _MAXSIZE,  //最大送信バイト数
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    FALSE,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_WIRELESS,  //通信種別
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_OHNO_SERVICEID,  //GameServiceID
 };
@@ -143,6 +153,9 @@ static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
+    DEBUG_OHNO_CONTROL* pDOC = pWork;
+
+    pDOC->bMoveRecv = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -207,14 +220,14 @@ static void _changeStateDebug(DEBUG_OHNO_CONTROL* pDOC,NetTestFunc state, int li
  * @retval  none
  */
 //--------------------------------------------------------------
-
-static void _connectCallBack(void* pWork)
+#if 0
+static BOOL _connectCallBack(void* pCtl)
 {
     DEBUG_OHNO_CONTROL* pDOC = pWork;
-    OS_TPrintf("ネゴシエーション完了\n");
+ //   OS_TPrintf("GFL_NET_ChangeoverConnect OK\n");
     _CHANGE_STATE( NetTestSendTiming );
 }
-
+#endif
 //--------------------------------------------------------------
 /**
  * @brief   自動接続
@@ -226,8 +239,8 @@ static BOOL NetTestAutoConnect(void* pCtl)
 {
     DEBUG_OHNO_CONTROL* pDOC = pCtl;
     
-    GFL_NET_ChangeoverConnect(_connectCallBack); // 自動接続
-    _CHANGE_STATE( NetTestNone );
+    GFL_NET_ChangeoverConnect(NULL); // 自動接続
+    _CHANGE_STATE( NetTestSendTiming );
 
     return FALSE;
 }
@@ -242,11 +255,14 @@ static BOOL NetTestAutoConnect(void* pCtl)
 static BOOL NetTestSendTiming(void* pCtl)
 {
     DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    
-    GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
 
-    _CHANGE_STATE( NetTestRecvTiming );
-    
+    if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
+        int id = 1 - GFL_NET_HANDLE_GetNetHandleID( GFL_NET_HANDLE_GetCurrentHandle());
+        if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(id) ) ){
+            GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
+            _CHANGE_STATE( NetTestRecvTiming );
+        }
+    }
     return FALSE;
 }
 
@@ -262,12 +278,33 @@ static BOOL NetTestRecvTiming(void* pCtl)
     DEBUG_OHNO_CONTROL* pDOC = pCtl;
     
     if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),15)){
+        _testMoveStruct test={1,2,3,4,5};
         NET_PRINT("TIMOK\n");
-        _CHANGE_STATE( NetTestEndStart );
+        GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),NET_CMD_MOVE, sizeof(_testMoveStruct),&test);
+        _CHANGE_STATE( NetTestMoveSend );
     }
-    
     return FALSE;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   構造体転送テスト
+ * @param   pCtl    デバッグワーク
+ * @retval  PROC終了時にはTRUE
+ */
+//--------------------------------------------------------------
+static BOOL NetTestMoveSend(void* pCtl)
+{
+    DEBUG_OHNO_CONTROL* pDOC = pCtl;
+    
+    if(pDOC->bMoveRecv){
+        NET_PRINT(" MOVE Recv\n");
+        _CHANGE_STATE( NetTestEndStart );
+    }
+    return FALSE;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -294,7 +331,9 @@ static void _endCallBack(void* pWork)
 static BOOL NetTestEndStart(void* pCtl)
 {
     DEBUG_OHNO_CONTROL* pDOC = pCtl;
-    GFL_NET_Exit(_endCallBack);
+//    GFL_NET_Exit(_endCallBack);
+    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ, 0, NULL);
+//    GFL_NET_SendData();
     _CHANGE_STATE( NetTestNone );
     return FALSE;
 }

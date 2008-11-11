@@ -19,9 +19,10 @@ typedef BOOL (*NetTestFunc)(void* pCtl);
 
 //------------------------------------------------------------------
 typedef struct {
-	u32 debug_heap_id;
-	GFL_PROCSYS * psys;
-    NetTestFunc funcNet;
+  u32 debug_heap_id;
+  GFL_PROCSYS * psys;
+  NetTestFunc funcNet;
+  int bMoveRecv;
 }DEBUG_OHNO_CONTROL;
 
 

@@ -32,7 +32,11 @@ extern "C" {
 //#endif
 
 // デバッグ用決まり文句----------------------
+#if defined(DEBUG_ONLY_FOR_ohno)
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
 //#undef GFL_NET_DEBUG
@@ -74,8 +78,18 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 
 // define 
-#define GFL_NET_NETID_SERVER (0xfe)   ///< NetID:サーバーの場合これ 後は0からClientID
+#define GFL_NET_NETID_SERVER (0xff)    ///< NetID:サーバーの場合これ 後は0からClientID
 #define GFL_NET_SENDID_ALLUSER (0x10)  ///< NetID:全員へ送信する場合
+#define GFL_NET_NETID_INVALID  (0xfe)  ///< ありえないID
+//#define GFL_NET_PARENT_NETID    (0)    ///< 親のID
+#define GFL_NET_NO_PARENTMACHINE (0)  ///< 親機の番号
+
+
+#define GFL_NET_CHILD_MAX  ( 15 )    ///<  子機最大数
+#define GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)  ///< 機最大数
+#define GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1) ///<   通信ハンドル最大数  子機全部＋親機 分
+
+
 
 #define GFL_NET_TOOL_INVALID_LIST_NO  (-1) ///<無効な選択ID
 
@@ -93,19 +107,6 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 // 親機を選択できる数。
 #define  SCAN_PARENT_COUNT_MAX ( 16 )
-
-// 子機最大数
-#define  GFL_NET_CHILD_MAX  ( 15 )
-
-// ありえないID
-#define COMM_INVALID_ID  (0xff)
-
-
-/// 機最大数
-#define  GFL_NET_MACHINE_MAX  (GFL_NET_CHILD_MAX+1)
-
-///   通信ハンドル最大数  子機全部＋親機 分
-#define  GFL_NET_HANDLE_MAX  (GFL_NET_MACHINE_MAX+1)
 
 
 ///赤外線通信での一度に遅れる最大バイト数
@@ -157,9 +158,10 @@ typedef enum {
 } GFL_NET_ICON_ENUM;       /// 通信アイコンファイルを外部からもらうときの識別番号
 
 enum {
-	GFL_NET_TYPE_WIRELESS,	///<ワイヤレス通信
-	GFL_NET_TYPE_WIFI,		///<WIFI通信
-	GFL_NET_TYPE_IRC,		///<赤外線通信
+	GFL_NET_TYPE_WIRELESS,		///<ワイヤレス通信
+	GFL_NET_TYPE_WIFI,			///<WIFI通信
+	GFL_NET_TYPE_IRC,			///<赤外線通信
+	GFL_NET_TYPE_IRC_WIRELESS,	///<赤外線通信でマッチング後、ワイヤレス通信へ移行
 };
 
 typedef u8 GameServiceID;  ///< ゲームサービスID  通信の種類
@@ -727,6 +729,15 @@ extern BOOL GFL_NET_SystemCheckDataSharing(void);
  */
 //==============================================================================
 extern void GFLR_NET_GetBeaconHeader(u8* pHeader, int size);
+
+//==============================================================================
+/**
+ * @brief   この関数はライブラリ外に作成する関数
+ *          GGID  ゲームの通信IDを取得る関数
+ * @retval  GGID
+ */
+//==============================================================================
+extern u32 GFLR_NET_GetGGID(void);
 
 
 /*-------------------------------------------------------------------------*
