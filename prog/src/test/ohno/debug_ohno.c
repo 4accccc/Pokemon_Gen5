@@ -40,6 +40,10 @@ static void* _netBeaconGetFunc(void);
 static int _netBeaconGetSizeFunc(void);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 //static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
+static void _netConnectFunc(void* pWork,int hardID);    ///< ハードで接続した時に呼ばれる
+static void _netNegotiationFunc(void* pWork,int hardID);    ///< ネゴシエーション完了時にコール
+
+
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
     {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
@@ -65,8 +69,8 @@ static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_OHNO_SERVICEID };
 static GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
-    NULL,    ///< ハードで接続した時に呼ばれる
-    NULL,    ///< ネゴシエーション完了時にコール
+    _netConnectFunc,    ///< ハードで接続した時に呼ばれる
+    _netNegotiationFunc,    ///< ネゴシエーション完了時にコール
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
@@ -444,3 +448,34 @@ const GFL_PROC_DATA DebugOhnoMainProcData = {
 	DebugOhnoMainProcEnd,
 };
 
+
+
+   ///< 
+//--------------------------------------------------------------
+/**
+ * @brief   ハードで接続した時に呼ばれる
+ * @param   pWork    デバッグワーク
+ * @param   つながった機器のID
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void _netConnectFunc(void* pWork,int hardID)
+{
+    NET_PRINT("_netConnectFunc %d\n", hardID);
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ネゴシエーション完了時にコール
+ * @param   pWork    デバッグワーク
+ * @param   つながった機器のID
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void _netNegotiationFunc(void* pWork,int NetID)
+{
+
+    NET_PRINT("_netNegotiationFunc %d\n", NetID);
+
+}
