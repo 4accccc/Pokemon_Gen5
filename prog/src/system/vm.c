@@ -2,30 +2,27 @@
 /**
  * @file	vm.c
  * @brief	仮想インタープリタマシン　メイン部分(スクリプトコマンド実行に使用される)
- * @author	Sousuke Tamada
+ * @author	tamada GAME FREAK inc.
  * @date	01.11.07
- *
- * 03.04.15	Satoshi Nohara
- * 05.04.25 Hiroyuki Nakamura
- *
- * エメラルドのファイルがベース ( R/S -> FR/LG -> EME -> D/P )
  *
  * 08.11.12	tamada	DPから持ってきて汎用性・拡張性を持たせるよう改造開始
  */
 //============================================================================================
 
-#include "vm.h"
+#include <gflib.h>
+#include "system/vm.h"
+#include "system/vm_cmd.h"
 
 
 //============================================================================================
 //	定義
 //============================================================================================
 // 仮想マシンの動作状態定義
-enum{
-	VMSTAT_READY,		// 停止(動作終了）
-	VMSTAT_RUN,			// 動作中
-	VMSTAT_WAIT,		// 待ち状態（チェックルーチン呼び出し）
-};
+typedef enum{
+	VMSTAT_HALT,		///< 停止(動作終了）
+	VMSTAT_RUN,			///< 動作中
+	VMSTAT_WAIT,		///< 待ち状態（チェックルーチン呼び出し）
+}VMSTATUS;
 
 
 //============================================================================================
@@ -34,13 +31,58 @@ enum{
 //const u32 ScriptBreakPoint = 0;
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	仮想マシンワークの初期化
+ */
+//--------------------------------------------------------------------------------------------
+static void clear(VMHANDLE * core)
+{
+	core->adrs = NULL;
+	core->cmp_flag = 0;
+	core->status = VMSTAT_HALT;
+	core->routine = NULL;
+	//スタッククリア
+	core->stackcount = 0;
+	GFL_STD_MemFill(core->stack, sizeof(VM_VALUE) * core->init_value.stack_size, 0);
+	//レジスタクリア
+	GFL_STD_MemFill(core->vm_register, sizeof(VM_VALUE) * core->init_value.reg_size, 0);
+}
+
 //============================================================================================
 //
 //
-// 仮想マシン用関数
+// 仮想マシン制御用関数
 //
 //
 //============================================================================================
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+VMHANDLE * VM_Create(HEAPID heapID, const VM_INITIALIZER * init)
+{
+	VMHANDLE * core;
+	u32 size;
+	u8 * ptr;
+
+	size = sizeof(VMHANDLE)
+		+ sizeof(u32) * init->reg_size
+		+ sizeof(u32) * init->stack_size;
+	core = GFL_HEAP_AllocMemory(heapID, size);
+	GFL_STD_MemFill(core, size, 0);
+	core->init_value = * init;
+	ptr = (u8*)core;
+	core->vm_register = (u32 *)(ptr + sizeof(VMHANDLE));
+	core->stack = (u32*)(ptr + sizeof(VMHANDLE) + sizeof(u32) * init->reg_size);
+
+	return core;
+}
+
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+void VM_Delete(VMHANDLE * core)
+{
+	GFL_HEAP_FreeMemory(core);
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -53,37 +95,11 @@ enum{
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void VM_Init( VM_MACHINE * core, const VM_CMD * cmd_tbl, u32 cmd_max)
+void VM_Init(VMHANDLE * core, void * context_work)
 {
-	u32	i;
-
-	core->status = VMSTAT_READY;
-	core->PC = NULL;
-	core->SP = 0;
-	core->routine = NULL;
-	core->command_table = cmd_tbl;
-	core->cmd_max = cmd_max;
-	for( i=0; i<VM_REG_MAX; i++ ){
-		core->reg[i] = 0;
-	}
-	for( i=0; i<VM_STACK_MAX; i++ ){
-		core->array[i] = NULL;
-	}
-
-#ifdef OLD_MSG_SYS
-	core->pMsg = NULL;
-#endif
-
-#if 0
-	//script.c EV_SCRIPT_WORKへ移動
-	for( i=0; i<VM_WORK_MAX; i++ ){
-		core->scr_work[i] = 0;
-	}
-#endif
-
-	core->event_work = NULL;		//(06.07.20)
+	clear(core);
+	core->context = context_work;
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -95,30 +111,12 @@ void VM_Init( VM_MACHINE * core, const VM_CMD * cmd_tbl, u32 cmd_max)
  * @return	常にTRUE
  */
 //--------------------------------------------------------------------------------------------
-u8 VM_Start( VM_MACHINE * core, const VM_CODE * start )
+void VM_Start( VMHANDLE * core, const VM_CODE * start )
 {
-	core->PC = start;
+	GF_ASSERT(core->status == VMSTAT_HALT);
+	clear(core);
+	core->adrs = start;
 	core->status = VMSTAT_RUN;
-
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 仮想マシンをウェイト状態に設定
- *
- * @param	core		仮想マシン制御構造体へのポインタ
- * @param	func		ウェイト関数
- *
- * @return	none
- *
- * @li	TRUEが返ってくるまでウェイト関数を毎回呼びだす
- */
-//--------------------------------------------------------------------------------------------
-void VM_SetWait( VM_MACHINE * core, VM_WAIT_FUNC func )
-{
-	core->status = VMSTAT_WAIT;
-	core->routine = func;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -130,25 +128,10 @@ void VM_SetWait( VM_MACHINE * core, VM_WAIT_FUNC func )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void VM_End( VM_MACHINE * core )
+void VM_End( VMHANDLE * core )
 {
-	core->status = VMSTAT_READY;
-	core->PC = NULL;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * コマンドなどで参照するワークをセット
- *
- * @param	core		仮想マシン制御構造体へのポインタ
- * @param	work		ワークのポインタ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-void VM_SetWork( VM_MACHINE * core, void * work )
-{
-	core->event_work = work;
+	core->status = VMSTAT_HALT;
+	core->adrs = NULL;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -161,34 +144,36 @@ void VM_SetWork( VM_MACHINE * core, void * work )
  * @retval	"FALSE = 停止中・実行終了"
  */
 //--------------------------------------------------------------------------------------------
-u8 VM_Control( VM_MACHINE * core )
+BOOL VM_Control( VMHANDLE * core )
 {
 	u16 code;
 
-	if( core->status == VMSTAT_READY ){ return FALSE; }
-
-	switch( core->status ){
-	case VMSTAT_READY:
+	switch( (VMSTATUS)core->status ){
+	case VMSTAT_HALT:
 		return FALSE;
 
 	case VMSTAT_WAIT:
-		if( core->routine != NULL ){
-			if( core->routine(core) == TRUE ){
+		if( core->routine ){
+			if( core->routine(core, core->context) == TRUE ){
+				core->routine = NULL;
 				core->status = VMSTAT_RUN;
 			}
 			return TRUE;
+		} else {
+			GF_ASSERT_MSG(0, "vm wait routine error\n");
+			core->status = VMSTAT_RUN;
 		}
-		core->status = VMSTAT_RUN;
 		/* FALL THROUGH */
 
 	case VMSTAT_RUN:
 		while( TRUE ){
-			if( core->PC == NULL ){
-				core->status = VMSTAT_READY;
+			if( core->adrs == NULL ){
+				GF_ASSERT_MSG(0, "vm adrs null error\n");
+				core->status = VMSTAT_HALT;
 				return FALSE;
 			}
 /*	デバッグ処理
-			if( core->PC == (VM_CODE *)ScriptBreakPoint ){
+			if( core->adrs == (VM_CODE *)ScriptBreakPoint ){
 				while( TRUE ){
 					Halt();
 				}
@@ -197,15 +182,19 @@ u8 VM_Control( VM_MACHINE * core )
 
 			code = VMGetU16( core );
 
-			if( code >= core->cmd_max ) {
-				GF_ASSERT_MSG(0, "command error %04x:%08x\n",code, core->PC - 2);
-				core->status = VMSTAT_READY;
+			if( code >= core->init_value.command_max ) {
+				GF_ASSERT_MSG(0, "vm command error %04x:%08x\n",code, core->adrs - 2);
+				core->status = VMSTAT_HALT;
 				return FALSE;
 			}
-			if( core->command_table[code]( core ) == 1 ){
+			if( core->init_value.command_table[code]( core, core->context )
+					== VMCMD_RESULT_SUSPEND ){
 				break;
 			}
 		}
+	default:
+		GF_ASSERT_MSG(0, "vm error status %02x\n", core->status);
+		core->status = VMSTAT_HALT;
 	}
 	return TRUE;
 }
@@ -226,11 +215,14 @@ u8 VM_Control( VM_MACHINE * core )
  * @retval	"1 = エラー"
  */
 //--------------------------------------------------------------------------------------------
-u8 VMStackPush( VM_MACHINE * core, const VM_CODE * val )
+u8 VMCMD_Push( VMHANDLE * core, VM_VALUE value)
 {
-	if( core->SP + 1 >= VM_STACK_MAX ){ return 1; }
-	core->array[core->SP] = val;
-	core->SP ++;
+	if( core->stackcount + 1 >= core->init_value.stack_size ){
+		GF_ASSERT_MSG(0, "vm stack overflow(%d)\n",core->stackcount);
+		return 1;
+	}
+	core->stack[core->stackcount] = value;
+	core->stackcount ++;
 
 	return 0;
 }
@@ -244,12 +236,15 @@ u8 VMStackPush( VM_MACHINE * core, const VM_CODE * val )
  * @return
  */
 //--------------------------------------------------------------------------------------------
-const VM_CODE * VMStackPop( VM_MACHINE * core )
+VM_VALUE VMCMD_Pop( VMHANDLE * core )
 {
-	if( core->SP == 0 ){ return NULL; }
-	core->SP --;
+	if( core->stackcount == 0 ){
+		GF_ASSERT_MSG(0, "vm stack pop error\n");
+		return NULL;
+	}
+	core->stackcount --;
 
-	return core->array[core->SP];
+	return core->stack[core->stackcount];
 }
 
 //--------------------------------------------------------------------------------------------
@@ -262,9 +257,9 @@ const VM_CODE * VMStackPop( VM_MACHINE * core )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void VMJump( VM_MACHINE * core, VM_CODE * adrs )
+void VMCMD_Jump( VMHANDLE * core, const VM_CODE * adrs )
 {
-	core->PC = adrs;
+	core->adrs = adrs;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -277,10 +272,10 @@ void VMJump( VM_MACHINE * core, VM_CODE * adrs )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void VMCall( VM_MACHINE * core, VM_CODE * adrs )
+void VMCMD_Call( VMHANDLE * core, const VM_CODE * adrs )
 {
-	VMStackPush( core, core->PC );
-	core->PC = adrs;
+	VMCMD_Push( core, (VM_VALUE)core->adrs );
+	core->adrs = adrs;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -292,22 +287,40 @@ void VMCall( VM_MACHINE * core, VM_CODE * adrs )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void VMRet( VM_MACHINE * core )
+void VMCMD_Return( VMHANDLE * core )
 {
-	core->PC = VMStackPop( core );
+	core->adrs = (const VM_CODE *)VMCMD_Pop( core );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 仮想マシンをウェイト状態に設定
+ *
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param	func		ウェイト関数
+ *
+ * @return	none
+ *
+ * @li	TRUEが返ってくるまでウェイト関数を毎回呼びだす
+ */
+//--------------------------------------------------------------------------------------------
+void VMCMD_SetWait( VMHANDLE * core, VM_WAIT_FUNC func )
+{
+	core->status = VMSTAT_WAIT;
+	core->routine = func;
 }
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * PCのアドレスから16bit(2byte)データ取得
+ * adrsのアドレスから16bit(2byte)データ取得
  *
  * @param	core		仮想マシン制御構造体へのポインタ
  *
  * @return	取得データ
  */
 //--------------------------------------------------------------------------------------------
-u16 VMGetU16( VM_MACHINE * core )
+u16 VMGetU16( VMHANDLE * core )
 {
 	u16	val;
 
@@ -319,14 +332,14 @@ u16 VMGetU16( VM_MACHINE * core )
 
 //--------------------------------------------------------------------------------------------
 /**
- * PCのアドレスから32bit(4byte)データ取得
+ * adrsのアドレスから32bit(4byte)データ取得
  *
  * @param	core		仮想マシン制御構造体へのポインタ
  *
  * @return	取得データ
  */
 //--------------------------------------------------------------------------------------------
-u32 VMGetU32( VM_MACHINE * core )
+u32 VMGetU32( VMHANDLE * core )
 {
 	u32	val;
 	u8	a,b,c,d;
