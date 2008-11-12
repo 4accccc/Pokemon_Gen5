@@ -75,3 +75,5 @@
 	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親
 	ARCID_FLDMAP_LANDDATA "test_graphic/map_land_data.narc" #フィールドマップ地形データ
 	ARCID_FLDMAP_MAPMATRIX "test_graphic/map_matrix.narc" #フィールドマップマトリクス
+	ARCID_ZONEDATA		"fieldmap/zonedata.narc"		#ゾーン毎データ
+
