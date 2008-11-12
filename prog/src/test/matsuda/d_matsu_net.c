@@ -232,7 +232,7 @@ enum{
 	NET_CMD_KEY,
 };
 
-#define _MAXNUM   (4)         // 最大接続人数
+#define _MAXNUM   2//(4)         // 最大接続人数
 #define _MAXSIZE  (GFL_NET_IRC_SEND_MAX)	//(32)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
@@ -246,7 +246,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-    NULL,  // 通信切断時に呼ばれる関数
+    _endCallBack,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
     0x532,//0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
@@ -259,7 +259,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか	※check　ここに赤外線フラグを追加
+    GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
 };
@@ -309,6 +309,7 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 	case 3:
 		//自動接続待ち
 		if(wk->connect_ok == TRUE){
+			OS_TPrintf("接続した\n");
 			wk->seq++;
 		}
 		break;
@@ -355,8 +356,8 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		break;
 	case 7:	//通信終了
-		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
-			GFL_NET_Exit(_endCallBack);	//通信終了
+		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_CMD_EXIT_REQ, 0, NULL)){
+			//GFL_NET_Exit(_endCallBack);	//通信終了
 			wk->seq++;
 		}
 		break;
