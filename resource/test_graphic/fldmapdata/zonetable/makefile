@@ -82,7 +82,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 %.bin: %.c
 	echo "//" > temp.c
 #	echo "#include \"$(NITROSDK_ROOT)/include/nitro/types.h\"" > temp.c
-	cat zonetableformat.h $< |unix2dos > temp.c
+	cat dummy_define.h zonetableformat.h $< |unix2dos > temp.c
 #	cat dummy.h $< >> temp.c
 	$(CC) $(CCFLAGS) $(INCLUDES)  -c temp.c -MD -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
