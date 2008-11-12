@@ -57,7 +57,8 @@ struct _FLD_G3D_MAPPER {
 	HEAPID				heapID;
 	GFL_G3D_MAP*		g3Dmap[MAP_BLOCK_COUNT];
 	BLOCK_IDX			blockIdx[MAP_BLOCK_COUNT];
-
+	
+	u32					g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
 	u32					nowBlockIdx;				
 	VecFx32				posCont;
 	u16					sizex;		//横ブロック数
@@ -330,6 +331,7 @@ void ResistDataFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPER_R
 
 		//ファイル識別設定（仮）
 		GFL_G3D_MAP_ResistFileType( g3Dmapper->g3Dmap[i], resistData->g3DmapFileType );
+		g3Dmapper->g3DmapFileType = resistData->g3DmapFileType;
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
@@ -857,7 +859,7 @@ BOOL GetFieldG3DmapperGridInfo
 	if( gridInfo->count ){
 		return TRUE;
 	}
-	OS_Printf("データが存在していない\n");
+//	OS_Printf("データが存在していない\n");
 	return FALSE;
 }
 
@@ -902,9 +904,21 @@ void GetFieldG3DmapperSize( FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z )
 	return;
 }
 
+//--------------------------------------------------------------
+/**
+ * マップデータファイルタイプを取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u32 GetFieldG3DmapperFileType( const FLD_G3D_MAPPER *g3Dmapper )
+{
+	return( g3Dmapper->g3DmapFileType );
+}
+
 //------------------------------------------------------------------
 /**
- * @brief	アトリビュート情報取得
+ * @brief	グリッドマップ　アトリビュート情報取得
  */
 //------------------------------------------------------------------
 BOOL GetFieldG3DmapperGridAttr(
@@ -916,6 +930,7 @@ BOOL GetFieldG3DmapperGridAttr(
 	GF_ASSERT( g3Dmapper );
 	
 	if( g3Dmapper->data == NULL ){
+		OS_Printf( "G3DMapper ERROR: Nothing GridAttributeData\n" );
 		return FALSE;
 	}
 	

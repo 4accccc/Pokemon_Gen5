@@ -154,7 +154,8 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{
 			FILE_MAPEDITER_DATA,
-			4,  4, NELEMS(loopbridgemap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			4,  4, NELEMS(loopbridgemap),
+			MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
 			ARCID_LOOPBRIDGE,
 			NON_GLOBAL_TEX, NULL,
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
@@ -163,20 +164,34 @@ const SCENE_DATA resistMapTbl[] = {
 		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 	},
-	{	//サンプルマップ　金銀
-		{	
-			FILE_CUSTOM_DATA,
-			2, 6, NELEMS(GSMap), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_GSMAP, 
-			USE_GLOBAL_TEX,	(void*)&gtexData, 
-			//USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
-			USE_GLOBAL_OBJSET_BIN, (void*)&gobjData_Bin,
+	{	//実験マップ グリッド移動
+		{
+			FILE_MAPEDITER_DATA,
+			1,  1, NELEMS(fldmap3dp_test),
+			MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_FLDMAP_TEST3DP,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
 			GSMap, 
-		}, 
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
-		&FieldBaseFunctions,
+		},
+		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 },
+		&FieldGridFunctions,
 	},
-	{	//実験マップ　グリッド移動
+	{	//実験マップ　橋
+		{	
+			FILE_MAPEDITER_DATA,
+			2,  6, NELEMS(sampleMap2), MAP_WIDTH,
+			1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			ARCID_TEST3DP2,
+			NON_GLOBAL_TEX, NULL,
+			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
+			sampleMap2, 
+		}, 
+		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
+		&FieldNoGridFunctions,
+	},
+	{
+		//実験マップ　グリッド移動 金銀
 		{	
 			FILE_CUSTOM_DATA,
 			2,  6, NELEMS(GSMap), MAP_WIDTH,
@@ -189,31 +204,6 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
 		&FieldGridFunctions,
-	},
-	{	//実験マップ　橋
-		{	
-			FILE_MAPEDITER_DATA,
-			2,  6, NELEMS(sampleMap2), MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_TEST3DP2,
-			NON_GLOBAL_TEX, NULL,
-			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
-			sampleMap2, 
-		}, 
-		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
-		&FieldNoGridFunctions,
-	},
-	{	//実験マップ　プランナー作成マップ
-		{	
-			FILE_MAPEDITER_DATA,
-			1,  1, NELEMS(fldmap3dp_test),
-			MAP_WIDTH, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
-			ARCID_FLDMAP_TEST3DP,
-			NON_GLOBAL_TEX, NULL,
-			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
-			fldmap3dp_test, 
-		}, 
-		{ MAP_WIDTH/2, FX32_ONE*16, MAP_WIDTH*1 },
-		&FieldBaseFunctions,
 	},
 };
 

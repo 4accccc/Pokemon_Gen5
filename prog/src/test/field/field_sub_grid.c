@@ -488,7 +488,7 @@ static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork )
 static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont )
 {
 	FGRID_PLAYER *pJiki;
-	VecFx32 pos = { GRID_SIZE_FX32(32), 0x30000, GRID_SIZE_FX32(37) };
+	VecFx32 pos = { GRID_SIZE_FX32(16), 0x30000, GRID_SIZE_FX32(16) };
 
 	pJiki = GFL_HEAP_AllocClearMemory(
 			pGridCont->heapID, sizeof(FGRID_PLAYER) );
@@ -759,7 +759,7 @@ static BOOL GridVecPosMove(
 //--------------------------------------------------------------
 static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 {
-	u16 attr;
+	u16 attr = 0;
 	VecFx32 pos;
 	const FLD_G3D_MAPPER *mapper;
 	FLD_G3D_MAPPER_GRIDINFO gInfo;
@@ -769,9 +769,10 @@ static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 	pos.z = z;
 	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
 	
-	if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
-		OS_Printf( "アトリビュート異常\n" );
-		return( TRUE );
+	if( GetFieldG3DmapperFileType(mapper) == FILE_CUSTOM_DATA ){
+		if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
+			return( TRUE );
+		}
 	}
 
 	if( ((attr&0x8000)>>15) ){

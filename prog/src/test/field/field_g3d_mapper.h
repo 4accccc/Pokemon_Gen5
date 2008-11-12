@@ -163,6 +163,7 @@ extern BOOL GetFieldG3DmapperGridInfoData
 extern BOOL GetFieldG3DmapperGridInfo
 	( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, FLD_G3D_MAPPER_GRIDINFO* gridInfo );
 
+extern u32 GetFieldG3DmapperFileType( const FLD_G3D_MAPPER *g3Dmapper );
 extern BOOL GetFieldG3DmapperGridAttr(
 	const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, u16 *attr );
 

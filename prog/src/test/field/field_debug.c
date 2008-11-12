@@ -135,12 +135,6 @@ static const DEBUG_MENU_LISTTBL DATA_DebugMenuListTbl[] =
 		NELEMS(DATA_DebugMenuList),
 		DATA_DebugMenuList
 	},
-	{	//サンプルマップ 金銀
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuList),
-		DATA_DebugMenuList
-	},
 	{	//実験マップ　グリッド移動
 		11,
 		16,
@@ -153,16 +147,17 @@ static const DEBUG_MENU_LISTTBL DATA_DebugMenuListTbl[] =
 		NELEMS(DATA_DebugMenuList),
 		DATA_DebugMenuList
 	},
-	{	//実験マップ　プランナー作成マップ
-		D_MENU_CHARSIZE_X,
-		D_MENU_CHARSIZE_Y,
-		NELEMS(DATA_DebugMenuList),
-		DATA_DebugMenuList
+	{	//実験マップ　グリッド移動
+		11,
+		16,
+		NELEMS(DATA_DebugMenuListGrid),
+		DATA_DebugMenuListGrid
 	},
 };
 
 //メニュー最大数
 #define D_MENULISTTBL_MAX (NELEMS(DATA_DebugMenuListTbl))
+//#define DEBUG_HEAPERROR
 
 //======================================================================
 //	フィールドデバッグメニュー
@@ -259,11 +254,14 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 	}
 	
 	{	//window frame
+		#ifndef DEBUG_HEAPERROR
 		BmpWinFrame_GraphicSet( d_menu->bgFrame, 1,
 			DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, d_menu->heapID );
+		#endif
 	}
 	
 	{	//bmpwin
+		#ifndef DEBUG_HEAPERROR
 		const DEBUG_MENU_LISTTBL *d_menu_tbl;
 		d_menu_tbl = &DATA_DebugMenuListTbl[d_menu->menu_num];
 
@@ -277,6 +275,7 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 		
 		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
 		GFL_BG_LoadScreenReq( d_menu->bgFrame );
+		#endif
 	}
 	
 	{	//msg
@@ -300,6 +299,8 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 	}
 }
 
+extern void PRINTSYS_Delete( void );
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー　メイン
@@ -312,10 +313,12 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 	switch( d_menu->seq_no ){
 	case 0:	//メニュー作成
 		{	//window frame
+			#ifndef DEBUG_HEAPERROR
 			BmpWinFrame_Write( d_menu->bmpwin,
 				WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+			#endif	
 		}
-		
+
 		{	//menu create
 			u32 i,lmax;
 			BMPMENU_HEADER head;
@@ -340,6 +343,7 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			head.font_handle = d_menu->fontHandle;
 			head.win = d_menu->bmpwin;
 
+			#ifndef DEBUG_HEAPERROR
 			d_menu->menulistdata =
 				BmpMenuWork_ListCreate( lmax, d_menu->heapID );
 			
@@ -354,11 +358,16 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			
 			d_menu->bmpmenu = BmpMenu_Add( &head, 0, d_menu->heapID );
 			BmpMenu_SetCursorString( d_menu->bmpmenu, DEBUG_FIELD_STR00 );
+			#endif
 		}
 		
 		d_menu->seq_no++;
 		break;
 	case 1:	//メニュー処理
+		#ifdef DEBUG_HEAPERROR
+		d_menu->seq_no++;
+		break;
+		#else
 		{
 			u32 ret;
 			
@@ -389,19 +398,26 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			}
 		}
 		break;
+		#endif
 	case 2:	//削除
+		#ifndef DEBUG_HEAPERROR
 		BmpMenu_Exit( d_menu->bmpmenu, NULL );
-		BmpMenuWork_ListSTRBUFDelete( d_menu->menulistdata );
-		
+		BmpMenuWork_ListDelete( d_menu->menulistdata );	//freeheap
+		#endif
+
 		//プリントユーティリティ削除　いらない
 		PRINTSYS_QUE_Delete( d_menu->printQue );
-		
+		#ifdef DEBUG_HEAPERROR
+		PRINTSYS_Delete();	//freeheap
+		#endif
+
 		FontDataMan_Delete( d_menu->fontHandle );
 //		GFL_ARC_CloseDataHandle( d_menu->arcHandleMsg ); //マネージャ側で済み
 		GFL_STR_DeleteBuffer( d_menu->strbuf );
 		GFL_MSG_Delete( d_menu->msgdata );
+		#ifndef DEBUG_HEAPERROR
 		GFL_BMPWIN_Delete( d_menu->bmpwin );
-		
+		#endif
 		if( d_menu->call_proc != NULL ){
 			d_menu->call_proc( d_menu );
 		}
