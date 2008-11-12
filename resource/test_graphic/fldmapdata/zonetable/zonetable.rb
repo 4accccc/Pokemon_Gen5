@@ -320,7 +320,8 @@ class ZoneIDFile < OutputFile
 	def putLine linecount, column
 		@linecount_last = linecount
 		zone_id = getID(column)
-		@fp.puts "\#define ZONE_ID_#{zone_id} (#{linecount})\n"
+		idstr = "ZONE_ID_#{zone_id}"
+		@fp.printf("#define %-24s (%3d)\n", idstr, linecount)
 	end
 
 end
@@ -407,10 +408,12 @@ end
 ###############################################################
 ###############################################################
 class ZoneNameBinaryFile < OutputFile
+=begin
 	def initialize fname
 		@fp = File.open(fname, "w")
 		@name = fname
 	end
+=end
 
 	def putHeader
 	end
@@ -453,7 +456,7 @@ def convert
 		ZoneIDFile.new(cl, "zone_id.h", true),
 		ZoneDataFile.new(cl, "zonetable.c", false),
 	#	ZoneNameFile.new(cl, "mapname.dat", false),
-	#	ZoneNameBinaryFile.new(cl, "mapname.bin", false),
+		ZoneNameBinaryFile.new(cl, "zonename.bin", false),
 	#	ZoneEventFile.new(cl, "eventlist.txt", false),
 	#	ZoneEventArcFile.new(cl, "eventarc.txt", false),
 	#	ZoneEventDoorHeader.new(cl, "doorevent.h", true),

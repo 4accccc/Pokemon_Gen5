@@ -11,7 +11,8 @@
 #define NARC_ZONEDATA_NAIX_
 
 enum {
-	NARC_zonedata_zonetable_bin = 0
+	NARC_zonedata_zonename_bin = 0,
+	NARC_zonedata_zonetable_bin = 1
 };
 
 /* NARC_ZONEDATA_NAIX_ */

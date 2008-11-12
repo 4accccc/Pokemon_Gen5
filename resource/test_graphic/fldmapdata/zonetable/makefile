@@ -44,16 +44,24 @@ CONVERTER	= ruby zonetable.rb
 
 CONVSRCS	= zonetable.c
 DATAFILE	= zonetable.xls
+
+#コンバート結果のテキストファイル一覧（比較対象となるもの）
 OUTPUT		= zonetable.c zone_id.h #eventlist.txt
 #OUTPUT	+=	mapname.bin mapname.dat msg_header.h eventarc.txt doorevent.h
-TEMP_OUTPUT	= zonetable.txt arc_result.txt diff.txt
+
+#確認用などのテンポラリファイル一覧
+TEMP_FILES	= zonetable.txt arc_result.txt diff.txt
+
+#arcディレクトリにコピーする必要があるファイルの一覧
+RESULTS		= $(NARCNAME) $(NAIXNAME) zone_id.h
 
 #----------------------------------------------------------------------------
 #
 #----------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(TEMP_OUTPUT)
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-LDIRT_CLEAN	+= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(NARCNAME) $(NARCNAME:.narc=.naix)
+LDIRT_CLEAN = $(TEMP_FILES) $(addprefix $(TARGETDIR)/, $(RESULTS))
+ifeq	($(CONVERTUSER),true)
+#コンバート対象者のみ、中間ファイル削除
+LDIRT_CLEAN	+= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(RESULTS)
 endif
 #Makeで生成される*.binはmake cleanの削除対象にする
 
@@ -93,8 +101,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 do-build: subdir $(TARGETDIR)/$(NARCNAME)
 
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
-	$(COPY) $(NAIXNAME) $(TARGETDIR)
+	$(foreach AFILE,$(RESULTS),$(COPY) $(AFILE) $(TARGETDIR) $(AND)) true
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #zonetable.xls
