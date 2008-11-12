@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: zonedata.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_ZONEDATA_NAIX_
+#define NARC_ZONEDATA_NAIX_
+
+enum {
+	NARC_zonedata_zonetable_bin = 0
+};
+
+/* NARC_ZONEDATA_NAIX_ */
+#endif

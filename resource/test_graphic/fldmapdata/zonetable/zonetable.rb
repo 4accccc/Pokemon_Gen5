@@ -451,7 +451,7 @@ def convert
 	files = [
 		#カラム内容指定ID定義、ファイル名、上書き前に確認するかどうか
 		ZoneIDFile.new(cl, "zone_id.h", true),
-		ZoneDataFile.new(cl, "zonetable.dat", false),
+		ZoneDataFile.new(cl, "zonetable.c", false),
 	#	ZoneNameFile.new(cl, "mapname.dat", false),
 	#	ZoneNameBinaryFile.new(cl, "mapname.bin", false),
 	#	ZoneEventFile.new(cl, "eventlist.txt", false),
@@ -466,7 +466,7 @@ def convert
 		id = column[cl.cZONE_ID].upcase
 		if id == "END"
 			#終端定義
-			STDERR.puts "終端"
+			#STDERR.puts "終端"
 			break
 		end
 		files.each{|file| file.putLine linecount, column}
@@ -475,7 +475,7 @@ def convert
 
 	files.each{|file| file.close}
 
-	STDERR.puts "zonetable.xlsをコンバートしました\n"
+	#STDERR.puts "zonetable.xlsをコンバートしました\n"
 end
 
 convert

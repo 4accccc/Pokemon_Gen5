@@ -1,7 +1,7 @@
 
 include $(PROJECT_RSCDIR)\macro_define
 
-SUBDIRS	=	land_data map_matrix
+SUBDIRS	=	land_data map_matrix zonetable
 
 .PHONY:	do-build clean
 

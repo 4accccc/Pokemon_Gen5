@@ -1,16 +1,64 @@
-#! make -f
 #----------------------------------------------------------------------------
 # Project:  Cソース->バイナリー
 # File:     Makefile
 #
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #
+#	2008.11.10	tamada	WB環境に移植開始
+#
 #----------------------------------------------------------------------------
 
-SUBDIRS		=
-TARGET_ARC		=	zonetable.narc
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	tamada
 
-#include	sourcefile.lst
+#----------------------------------------------------------------------------
+#※ここに作成するnarc名を書く
+#----------------------------------------------------------------------------
+targetname	= zonedata
+NARCNAME	= $(targetname).narc
+NAIXNAME	= $(targetname).naix
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
+
+#------------------------------------------------------------------------------
+#※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
+#------------------------------------------------------------------------------
+SUBDIRS		=
+
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)macro_define
+
+#----------------------------------------------------------------------------
+#	ツールへのパス指定
+#----------------------------------------------------------------------------
+
+EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
+ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
+
+CONVERTER	= ruby zonetable.rb
+
+CONVSRCS	= zonetable.c
+DATAFILE	= zonetable.xls
+OUTPUT		= zonetable.c zone_id.h #eventlist.txt
+#OUTPUT	+=	mapname.bin mapname.dat msg_header.h eventarc.txt doorevent.h
+TEMP_OUTPUT	= zonetable.txt arc_result.txt diff.txt
+
+#----------------------------------------------------------------------------
+#
+#----------------------------------------------------------------------------
+LDIRT_CLEAN = $(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(TEMP_OUTPUT)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+LDIRT_CLEAN	+= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(NARCNAME) $(NARCNAME:.narc=.naix)
+endif
+#Makeで生成される*.binはmake cleanの削除対象にする
+
+LINCLUDES	= $(NITROSDK_ROOT)/include
+LINCLUDES	+= $(dir $<)
 
 #----------------------------------------------------------------------------
 #	Ｃソース→バイナリ変換を可能にするための設定
@@ -37,41 +85,31 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #----------------------------------------------------------------------------
 #
-#----------------------------------------------------------------------------
-OUTPUT	=	zonetable.dat zone_id.h	#eventlist.txt
-#OUTPUT	+=	mapname.bin mapname.dat msg_header.h eventarc.txt doorevent.h
-#Makeで生成される*.binはmake cleanの削除対象にする
-LDIRT_CLEAN	= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(TARGET_ARC) $(TARGET_ARC:.narc=.naix)
-
-LINCLUDES		= $(NITROSDK_ROOT)/include
-#LINCLUDES		+= $(DP_ROOT)/src/field
-
-LINCLUDES	+= $(dir $<)
-
-#----------------------------------------------------------------------------
-#	ツールへのパス指定
-#----------------------------------------------------------------------------
-
-
-CONVSRCS	= zonetable.c
-DATAFILE	= zonetable.xls
-EXCEL2TAB	=	$(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
-DP_ROOT		= c:/home/ds_pokemon/pokemon_dp
-ELF2BIN		= $(DP_ROOT)/convert/eventdata/celf2bin.exe
-#----------------------------------------------------------------------------
-#
 #	ルール定義
 #
 #----------------------------------------------------------------------------
-do-build: $(TARGET_ARC)
+.PHONY:	subdir	do-build clean
 
-$(TARGET_ARC): $(DATAFILE)
+do-build: subdir $(TARGETDIR)/$(NARCNAME)
+
+$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
+	$(COPY)	$(NARCNAME) $(TARGETDIR)
+	$(COPY) $(NAIXNAME) $(TARGETDIR)
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+#zonetable.xls
+#	--(EXCEL2TAB)-->	zonetable.txt
+#	--(zonetable.rb)-->	zonetable.c（＋その他）
+#	--(コンパイル＆elf2bin)-->	zonetable.bin
+#	--(nnsarc)-->	zonedata.narc/.naix
+$(NARCNAME): $(DATAFILE)
 	$(EXCEL2TAB) $(DATAFILE)
 	#$(MAKE) convert
-	ruby zonetable.rb $(DATAFILE:.xls=.txt)
-	cat zonetable.dat > zonetable.c
+	$(CONVERTER) $(DATAFILE:.xls=.txt)
 	$(MAKE) makebin				#Ｃソース→バイナリ変換して
-	nnsarc -i -c -l -n $(TARGET_ARC) *.bin > arc_result.txt	#アーカイブ作成
+	nnsarc -i -c -l -n $(NARCNAME) *.bin > arc_result.txt	#アーカイブ作成
+	$(NAIXCUT) $(NAIXNAME)
+endif
 
 
 
@@ -87,6 +125,26 @@ test:
 	echo $(LDIRT_CLEAN)
 
 #echo $(foreach types,$(FILETYPES),$(wildcard *$(types)*))
+
+
+#----------------------------------------------------------------------------
+#	差分表示
+#----------------------------------------------------------------------------
+cp_output:
+	-$(foreach AFILE,$(OUTPUT),cp $(AFILE) $(AFILE).old $(AND)) true
+
+diff_output:
+	-$(foreach AFILE,$(OUTPUT),diff $(AFILE) $(AFILE).old >> diff.txt $(AND)) true
+
+diff:
+	@$(MAKE) cp_output
+	@echo コンバート
+	@$(EXCEL2TAB) $(DATAFILE)
+	@$(CONVERTER) $(DATAFILE:.xls=.txt)
+	@-echo "#差分は以下の通り" > diff.txt
+	@$(MAKE) diff_output
+	@cat diff.txt
+	@-rm $(addsuffix .old, $(OUTPUT))
 
 
 
