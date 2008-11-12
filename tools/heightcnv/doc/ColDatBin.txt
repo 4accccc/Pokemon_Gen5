@@ -1,0 +1,180 @@
+*_sc.bsc
+
+フォーマット
+------------
+
+_sc.bscファイルは3Dオブジェクトのコリジョンデータを構成する
+
+	GRID_DATA(グリッドデータ)、
+	SEG_COLLISON(セグメントコリジョンデータ)
+	GRID_ENTRY(グリッドエントリーデータ)、
+	の3種類のデータの実体を持ち、ヘッダを含めた4つのブロックで構成されています。
+
+サポートしているポリゴン数は 0x3FFF(16383) ポリゴンまでです。
+
+	┌───────────┐
+	│　　　  HEADER　　　　│
+	├───────────┤
+	│　　   GRID_DATA  　　│
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　 SEG_COLLISION 　 │
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　　 GRID_ENTRY   　│
+	│　　　　　：　　　　　│
+	└───────────┘
+	  Fig.1  ファイル全体構造
+
+HEADER
+------
+
+HEADER部はデータの構造に関する情報を持った 20byte のデータです。
+
+　　　　┌───────────┐
+　　　　│　        ID        　│
+　　　　├───────────┤
+　　　　│　   HEADER_SIZE    　│
+　　　　├─────┬─────┤
+　　　　│ scol_num │scol_size │
+　　　　├─────┼─────┤
+　　　　│grid_entry│gird_size │
+　　　　├─────┼─────┤
+　　　　│　  grid entry size　 │
+　　　　└─────┴─────┘
+	   Fig.2  HEADERの構造
+
+	ID:	4BYTEのファイルIDです。"BDSC"です
+
+	HEADER_SIZE: ファイルヘッダのサイズです(ID、サイズを示す先頭8byteを除く)
+	SCOL_SIZ;	u16型：1つのセグメントコリジョンデータのサイズ
+	SCOL_NUM;	u16型：セグメントコリジョンデータの数
+	grid_size;	u16型：グリッドデータサイズ(byte単位)
+	grid_entry;	u16型：1つのグリッドエントリーデータのサイズ(byte単位)
+	grid_entryeize;	u32型：グリッドエントリーデータの総サイズ(byte単位)
+
+
+GRID_DATA
+---------
+
+GRID部はシーンを分割するグリッドデータ情報を格納した
+28byte のデータテーブルです。
+
+	u16 グリッドX分割サイズ
+	u16 グリッドZ分割サイズ	
+
+	FX32	グリッド始点X座標
+	FX32	グリッド始点Z座標
+	FX32	グリッド終点X座標
+	FX32	グリッド終点Z座標
+	FX32	1グリッドXサイズ
+	FX32	1グリッドZサイズ
+
+SEG_COLLISION
+------
+
+SEG_COLLISION部はセグメントコリジョンデータ表す構造体の配列です。１つの構造体のフォーマットを次に示します。
+
+　　 MSB                          LSB
+	┌───────┬───────┐
+	│　　　　　　START_X　	      　│
+	├───────┼───────┤
+	│　　　　　　START_Z　	      　│
+	├───────┼───────┤
+	│　　　　　　 END_X　	      　│
+	├───────┼───────┤
+	│　　　　　　 END_Z　	      　│
+	├───────┼───────┤
+	│　　　　　　START_Y　	      　│
+	├───────┼───────┤
+	│　　　　　　 END_Y　	      　│
+	└───────┴───────┘
+     Fig.1  SegCollision構造体
+		セグメントを構成する値（FX32型：32bit固定小数点）
+
+		START_X;	FX32型：セグメントのスタート座標X
+		START_Z;	FX32型：セグメントのスタート座標Z
+		END_X;		FX32型：セグメントのエンド座標X
+		END_Z;		FX32型：セグメントのエンド座標Z
+		START_Y;	FX32型：セグメントのスタート座標Y
+		END_Y;		FX32型：セグメントのエンド座標Y
+
+GRID_ENTRY
+-----------
+GRID_ENTRY部は各グリッドにエントリーしているグリッドエントリーデータの配列です
+GRID_ENTRY部にはヘッダ部とデータ部が存在します。
+
+●GRID_ENTRY_HEADER
+
+	(各エントリデータのサイズ&GRID_ENTRY_DATA部からのオフセット)*グリッド数
+	┌───────┬───────┐
+	│　　    EntryData Size      　│
+	├───────┼───────┤
+	│　　   EntryData Offset     　│
+	└───────┴───────┘
+
+	EntryData Size:		u32:各グリッドに登録されているパラメータの数です。
+	EntryData Offset:	u32:各グリッドエントリーデータ配列へのGRID_ENTRY部先頭位置からのオフセット
+
+
+●GRID_ENTRY_DATA
+	GRID_ENTRYパラメータの純粋データ配列の集合です。
+
+	エントリーパラメータ：u16型、セグメントコリジョンデータ配列のINDEXを示す不定要素数の配列です。
+						　上位2bit：セグメントのタイプ(0:front,1:back,2:both)
+						　下位14bit：セグメントコリジョンデータへのIndexNo
+
+						  各グリッドに登録されているパラメータ数、各グリッド登録データへのオフセットは
+						  GRID_ENTRY_HEADER部に記述されます。
+
+/*----------------------------------------------------------------------------*/
+C言語方式 ASCII TEXT format
+	改行コードは0x0D0Aです
+
+//Header部
+const u32 "オリジナルimdファイル名"_cpos_scale = 6;			//モデルスケール
+const u16 "オリジナルimdファイル名"_collision_siz = 708;	//コリジョンデータの総数
+
+//グリッドパラメータ部
+struct SCENE_SPLIT{
+ u16		num;	//ポリゴンを含むBOXの数
+ INDEX3		sub;	//シーンの分割数(XYZ)
+ VecFx32	start;	//シーンのスタート座標(-X,-Y,-Z)
+ VecFx32	end;	//シーンのEND座標(+X,+Y,+Z)
+ VecFx32	size;	//1BOXのサイズ(XYZ)
+}SCENE_SPLIT;
+
+	例）
+	const SCENE_SPLIT "オリジナルimdファイル名"_SceneSplit = {
+		boxParamNum,{SubX,SubY,SubZ},
+		{StartX,StartY,StartZ},
+		{EndX,EndY,EndZ},
+		{SizeX,SizeY,SizeZ},
+	};
+
+//セグメントコリジョンデータ部
+struct SEGMENT_COLLISION{
+	FX32　x1,z1,x2,z2,y1,y2;
+};
+
+//グリッド分割パラメータ部
+struct BOX_PARAM{
+ u16	num;	//リストのパラメータ数
+ const u16* const pList;	//パラメータリストへのポインタ
+}BOX_PARAM;
+
+	例）
+	const u16 "オリジナルimdファイル名"_SColList001[] = {
+	 0,1,2,3,
+	};
+	const u16 "オリジナルimdファイル名"_SColList002[] = {
+	 4,5,6,7,
+	};
+
+	const BOX_PARAM "オリジナルimdファイル名"_SColParam[16*16] = {
+	 16,"オリジナルimdファイル名"_PList001,	//0
+	 1,"オリジナルimdファイル名"_PList002,	//1
+	 2,"オリジナルimdファイル名"_PList003,	//2
+	 0,NULL,	//要素がないときはNULLポインタを格納
+	};
+

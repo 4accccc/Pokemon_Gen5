@@ -1,0 +1,337 @@
+*_hc.dat
+
+フォーマット
+------------
+
+_hc.datファイルは3Dオブジェクトの高さデータを構成する
+
+	PRIMITIVE、
+	VERTEX(頂点)、
+	NORMAL(法線)、
+	GRID(グリッドデータ)、
+	GRID_ENTRY(グリッドエントリーデータ)、
+	の5種類のデータの実体を持ち、6つのブロックで構成されています。
+
+サポートしているポリゴン数は 0xFFFF(65535) ポリゴンまでです。
+
+	┌───────────┐
+	│　　　  HEADER　　　　│
+	├───────────┤
+	│　　  GRID_DATA     　│
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　　　VERTEX　　　　│
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　　　NORMAL　　　　│
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　   PRIMITIVE  　　│
+	│　　　　　：　　　　　│
+	├───────────┤
+	│　　　 GRID_ENTRY   　│
+	│　　　　　：　　　　　│
+	└───────────┘
+	  Fig.1  ファイル全体構造
+
+HEADER
+------
+
+HEADER部はデータの構造に関する情報を持った 32byte(IDとSIZEを除く) のデータです。
+IDとサイズ込み40byteです。
+
+	  MSB						MLB
+　　　　┌───────────┐
+　　　　│　        ID        　│
+　　　　├───────────┤
+　　　　│　   HEADER_SIZE    　│
+　　　　├─────┬─────┤
+　　　　│vertex_num│vertex_siz│
+　　　　├─────┼─────┤
+　　　　│normal_num│normal_siz│
+　　　　├─────┼─────┤
+　　　　│prim num  │Packet siz│
+　　　　├─────┼─────┤
+　　　　│grid_entry│gird_size │
+　　　　├─────┼─────┤
+　　　　│ line siz │gird_num  │
+　　　　├─────┼─────┤
+　　　　│line PMax │grid LMax │
+　　　　├─────┼─────┤
+　　　　│　  line total size　 │
+　　　　├─────┼─────┤
+　　　　│　  gridparam  size　 │
+　　　　└─────┴─────┘
+	   Fig.2  HEADERの構造
+
+	ID:	4BYTEのファイルIDです。"DSHC"です
+
+	HEADER_SIZE: ファイルヘッダのサイズです(ID、サイズを示す先頭8byteを除く)
+	VERTEX_SIZ;	u16型：1つのVertexデータのサイズ(FX32*3=)
+	VERTEX_NUM;	u16型のデータで、記述された頂点数を示します
+	NORMAL_SIZ;	u16型：1つのNormalデータのサイズ
+	NORMAL_NUM;	u16型のデータで、記述された法線数を示します
+
+	packet_size;	16bit長のデータでひとつのプリミティブを構成する
+					データテーブルのサイズです(byte単位)
+
+	prim num;	u16型：プリミティブの数
+	grid_size;	u16型：グリッドデータ部のサイズ(byte単位)
+	grid_entry;	u16型：1つのグリッドエントリーデータのサイズ(byte単位)
+	grid_num;	u16型：グリッド数
+	line siz;	u16型：ラインエントリーヘッダのサイズ
+	grid LMax;	u16型：1グリッドにエントリーしているライン数の最大値
+	line NMax;	u16型：1ライン内にエントリーしたグリッドエントリーデータ数の最大値
+	dmy;	    u16型：アラインメントダミー
+
+	line total num;	u32型：ラインエントリーヘッダの総サイズ(byte)
+	grid_entryeize;		u32型：グリッドエントリーデータの総サイズ(byte単位)
+
+	
+
+GRID_DATA
+---------
+
+GRID部はシーンを分割するグリッドデータ情報を格納した
+28byte のデータテーブルです。
+
+	u16 グリッドX分割サイズ
+	u16 グリッドZ分割サイズ	
+
+	FX32	グリッド始点X座標
+	FX32	グリッド始点Z座標
+	FX32	グリッド終点X座標
+	FX32	グリッド終点Z座標
+	FX32	1グリッドXサイズ
+	FX32	1グリッドZサイズ
+
+VERTEX
+------
+
+VERTEX部は頂点を表す構造体の列です。１つの構造体のフォーマットを次に示します。
+
+　　 MSB                          LSB
+	┌───────┬───────┐
+	│　　　		VX　	      　│
+	├───────┼───────┤
+	│　　　		VY　	      　│
+	├───────┼───────┤
+	│　　　		VZ　	      　│
+	└───────┴───────┘
+	            Fig.6  VERTEX構造体
+                           VX, VY, XZ : 頂点座標のx,y,z値（32bit固定小数点）
+
+
+NORMAL
+------
+
+NORMAL部は法線を表す構造体の列です。１つの構造体のフォーマットを次に示します。
+
+　　 MSB                          LSB
+	┌───────┬───────┐
+	│　　　		NX　	      　│
+	├───────┼───────┤
+	│　　　		NY　	      　│
+	├───────┼───────┤
+	│　　　		NZ　	      　│
+	└───────┴───────┘
+                     Fig.7  NORMAL構造体
+                            NX, NY, NZ : 法線のx,y,z成分（32bit固定小数点）
+
+PRIMITIVE
+---------
+
+PRIMITIVE部は、オブジェクトの構成要素（プリミティブ）の描画パケットが並んだもので、
+１つのパケットで１個のプリミティブを表します。
+
+●Packet data 構成一覧
+
+プリミティブの種類別に各Packet data構成の一覧を示します。
+
+Packet data部に含まれるパラメータには以下のようなものがあります。
+
+Vertex(n) :	VERTEXをポイントする16bit長のインデックス値で、
+			そのポリゴンが属するオブジェクトのVERTEX部先頭
+			から何番めの要素であるかを表します。
+		
+Normal(n) : NORMALをポイントする16bit長のインデックス値で、Vertexと同様。
+
+D値:平面の方程式を導くのに用いるパラメータD(FX32)
+
+┌─────┬─────┐	
+│ Vertex1　│ Vertex0  │
+├─────┼─────┤
+│ Normal0　│ Vertex2  │
+├─────┼─────┤
+│    　FX32型のD値		│
+└─────┴─────┘
+
+GRID_ENTRY
+-----------
+GRID_ENTRY部は各グリッドにエントリーしているグリッドエントリーデータの配列です
+GRID_ENTRY部にはヘッダ部とデータ部が存在します。
+
+	○ラインエントリー総サイズ
+	○グリッドIndexパラメータの総サイズ
+
+●GRID_ENTRY_HEADER
+	■6byte,各グリッドエントリーパラメータのヘッダ
+	┌───────┬───────┐
+	│LineDataIndex │LineData Size │
+	└───────┴───────┘
+
+	LineData Size:		u16:各グリッドに登録されているラインパラメータの数です。
+	LineDataIndex:		u16:各ラインエントリーデータ配列へのIndexNo
+
+●GRID_ENTRY_DATA
+	■10byte,ラインエントリーパラメータの集合です。
+
+	param num			u16型、ライン内に収まっているエントリーデータの数
+	LineZ max			fx32型、分割ラインZのマキシマム値
+	param offs			u32型グリッドIndexパラメータ群のIndexNo
+>
+	┌───────┬───────┐
+	│  LineZ max L │  param num   │
+	├───────┼───────┤
+	│ param IndexL │  LineZ max H │
+	├───────┼───────┤
+	│　　 ……　　 │ param IndexL │
+	└───────┴───────┘
+
+	■GRID_ENTRYパラメータの純粋データ配列の集合です。
+
+
+	param0～			u16型、プリミティブデータ配列のINDEXを示す不定要素数の配列です。
+						  各グリッドに登録されているパラメータ数、各グリッド登録データへのオフセットは
+						  GRID_ENTRY_HEADER部に記述されます。
+>
+	┌───────┬───────┐
+	│　　 param1   │    param0  　│
+	├───────┼───────┤
+	│　　  ……    │    param2  　│
+	└───────┴───────┘
+	┌───────┬───────┐
+	│　　 param1   │    param0  　│
+	├───────┼───────┤
+	│　　  ……    │    param2  　│
+	└───────┴───────┘
+	┌───────┬───────┐
+	│　　 param1   │    param0  　│
+	├───────┼───────┤
+	│　　  ……    │    param2  　│
+	└───────┴───────┘
+	┌───────┬───────┐
+	│　　 param1   │    param0  　│
+	├───────┼───────┤
+	│　　  ……    │    param2  　│
+	└───────┴───────┘
+
+/*----------------------------------------------------------------------------*/
+C言語方式 ASCII TEXT format
+	改行コードは0x0D0Aです
+
+//Header部
+const u32 "オリジナルimdファイル名"_spos_scale = 6;		//モデルスケール
+const u16 "オリジナルimdファイル名"_spoly_siz = 708;	//総ポリゴン数
+const u16 "オリジナルimdファイル名"_svtx_siz = 1062;	//総頂点数
+const u16 "オリジナルimdファイル名"_snrm_siz = 153;		//総法線数
+
+//Vertex部
+const VecFx32 "オリジナルimdファイル名"_VtxArray[] = {
+ {v0x,v0y,v0z},
+ {v1x,v1y,v1z},
+};
+
+//グリッドパラメータ部
+struct SCENE_SPLIT{
+ u16		num;	//ポリゴンを含むBOXの数
+ INDEX3		sub;	//シーンの分割数(XYZ)
+ VecFx32	start;	//シーンのスタート座標(-X,-Y,-Z)
+ VecFx32	end;	//シーンのEND座標(+X,+Y,+Z)
+ VecFx32	size;	//1BOXのサイズ(XYZ)
+}SCENE_SPLIT;
+
+	例）
+	const SCENE_SPLIT "オリジナルimdファイル名"_SceneSplit = {
+		boxParamNum,{SubX,SubY,SubZ},
+		{StartX,StartY,StartZ},
+		{EndX,EndY,EndZ},
+		{SizeX,SizeY,SizeZ},
+	};
+
+//法線部
+const VecFx32 "オリジナルimdファイル名"_NrmArray[] = {
+ {n0x,n0y,n.z},
+ {n1x,n1y,n1z},
+};
+
+//ポリゴンデータ部
+struct INDEX3{
+	u16 v0,v1,v2;
+}INDEX3;
+
+struct POLYGON_PARAM{
+ INDEX3 vtx_idx;	//3角ポリゴンを形成する、頂点データ配列へのインデックスNo(v0,v1,v2)
+ u16	nrm_idx;	//法線データ配列(正規化済み)へのインデックスNo
+ FX32	paramD;		//平面の方程式から導いた、補正値D
+};
+	例）
+	const POLYGON_PARAM "オリジナルimdファイル名"_PolygonParam[] = {
+		 {{vi0,vi1,vi2},nrm_idx0,D0},
+ 		{{vi3,vi4,vi5},nrm_idx1,D1},
+	};
+
+struct LINE_PARAM{
+	u32		num;	//パラメータ数
+	fx32	z_min;	//Z_min
+	fx32	z_max;	//Z_max
+	const u16* const pList;	//パラメータリストへのポインタ
+};
+
+struct BOX_PARAM{
+	u16	num;	//ラインパラメータの数
+	const LINE_PARAM* const pLineParam;
+};
+
+
+	例）
+	const u16 "オリジナルimdファイル名"_PList0001_000[] = {
+	 0,1,2,3,
+	};
+	const u16 "オリジナルimdファイル名"_PList0002_001[] = {
+	 4,5,6,7,
+	};
+
+	const LINE_PARAM "オリジナルimdファイル名"_LineParam0000[] = {
+		{
+			10,
+			0x00010000,0x00020000,
+			"オリジナルimdファイル名"_PList0000_000
+		},
+		{
+			5,
+			0x00010000,0x00020000,
+			"オリジナルimdファイル名"_PList0000_001
+		},
+	};
+	const LINE_PARAM "オリジナルimdファイル名"_LineParam0001[] = {
+		{
+			10,
+			0x00010000,0x00020000,
+			"オリジナルimdファイル名"_PList0001_000
+		},
+		{
+			5,
+			0x00010000,0x00020000,
+			"オリジナルimdファイル名"_PList0001_001
+		},
+	};
+
+	const BOX_PARAM "オリジナルimdファイル名"_BoxParam[] = {
+	 16,"オリジナルimdファイル名"_LineParam0000,	//0
+	 1,"オリジナルimdファイル名"_LineParam0001,	//1
+	 2,"オリジナルimdファイル名"_LineParam0002,	//2
+	 0,NULL,	//要素がないときはNULLポインタを格納
+	};
+
+	
