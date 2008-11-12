@@ -29,6 +29,7 @@ SRCS	+=		test/testmode.c \
 				test/taya/d_taya.c \
 				test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
+				system/vm.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
 				gamesystem/game_data.c \
