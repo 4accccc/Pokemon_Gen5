@@ -196,7 +196,9 @@ BOOL	FieldComm_InitSystem()
 	GFLNetInitializeStruct aGFLNetInit = {
 		FieldCommPostTable,	//NetSamplePacketTbl,  // 受信関数テーブル
 		NELEMS(FieldCommPostTable), // 受信テーブル要素数
-		NULL,	// ユーザー同士が交換するデータのポインタ取得関数
+        NULL,    ///< ハードで接続した時に呼ばれる
+        NULL,    ///< ネゴシエーション完了時にコール
+        NULL,	// ユーザー同士が交換するデータのポインタ取得関数
 		NULL,	// ユーザー同士が交換するデータのサイズ取得関数
 		FieldComm_GetBeaconData,	// ビーコンデータ取得関数  
 		FieldComm_GetBeaconSize,	// ビーコンデータサイズ取得関数 

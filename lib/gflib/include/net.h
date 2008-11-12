@@ -203,6 +203,9 @@ typedef void (*NetEndCallback)(void* pWork);   ///< 通信終了時に呼ばれるコールバ
 
 typedef void (*NetStepEndCallback)(void* pWork);   ///< 通信の区切りに呼ばれる汎用コールバック型
 
+typedef void (*NetConnectHardware)(void* pWork,int hardID);  ///< 機械的に接続した時に呼ばれる
+typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ネゴシエーションがすんだら呼ばれる
+
 
 
 
@@ -214,7 +217,8 @@ typedef void (*NetStepEndCallback)(void* pWork);   ///< 通信の区切りに呼ばれる汎
 typedef struct{
   const NetRecvFuncTable* recvFuncTable;  ///< 受信関数テーブルのポインタ
   int recvFuncTableNum;              ///< 受信関数テーブル項目数 NELEMS
-//  void* pWork;                       ///< この通信ゲームで使用しているユーザーのワーク
+  NetConnectHardware connectHardFunc;    ///< ハードで接続した時に呼ばれる
+  NetConnectNegotiation  connectNegotiationFunc;  ///<  ネゴシエーション完了時にコール
   NetInfomationGetFunc infoFunc;             ///<ユーザー同士が交換するデータのポインタ取得関数
   NetInfomationGetSizeFunc infoSizeFunc;         ///< ユーザー同士が交換するデータのサイズ取得関数
   NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
