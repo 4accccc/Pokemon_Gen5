@@ -16,6 +16,7 @@
 #include "system\gfl_use.h"
 #include "system\main.h"
 #include "savedata/save_control.h"
+#include "print/printsys.h"
 
 #ifdef PM_DEBUG
 #include "test/performance.h"
@@ -139,6 +140,9 @@ static	void	GameInit(void)
     GFL_NET_Boot( GFL_HEAPID_APP, NULL );
 	/* 起動プロセスの設定 */
 	TestModeSet();	//←サンプルデバッグモード
+
+	/* 文字描画システム初期化 */
+	PRINTSYS_Init( GFL_HEAPID_SYSTEM );
 }
 
 //------------------------------------------------------------------
