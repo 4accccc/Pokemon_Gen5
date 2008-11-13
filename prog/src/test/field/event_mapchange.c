@@ -12,9 +12,10 @@
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
-extern const GFL_PROC_DATA DebugFieldProcData;
 
 #include "field_data.h"
+
+#include "event_mapchange.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -47,7 +48,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT_CONTROL * event, int *seq, void *
 		break;
 	case 1:
 #if 1		/* ébíËìIÇ…ÉvÉçÉZÉXìoò^ */
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+		GameSystem_CallFieldProc(gsys);
 #endif
 		return GMEVENT_RES_FINISH;
 	}
@@ -96,7 +97,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT_CONTROL * event, int *seq, void*wo
 			PLAYERWORK_setPosition(mywork, start_pos);
 			PLAYERWORK_setDirection(mywork, 0);
 		}
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+		GameSystem_CallFieldProc(gsys);
 		(*seq)++;
 		break;
 	case 2:
@@ -151,7 +152,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void *
 		(*seq) ++;
 		break;
 	case 3:
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+		GameSystem_CallFieldProc(gsys);
 		return GMEVENT_RES_FINISH;
 		
 	}

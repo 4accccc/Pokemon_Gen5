@@ -18,6 +18,8 @@
 
 #include "gamesystem/game_init.h"
 
+#include "src/test/field/event_mapchange.h"
+
 //============================================================================================
 //============================================================================================
 enum {
@@ -41,7 +43,6 @@ static GAME_INIT_WORK TestGameInitWork;
 //============================================================================================
 //============================================================================================
 extern const GFL_PROC_DATA DebugFieldProcData;
-extern void DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
 
 static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK * init_param);
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
@@ -73,7 +74,6 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GameSystem_Init(gsys, HEAPID_GAMESYS, pwk);
 #if 1		/* 暫定的にプロセス登録 */
 	DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
-	//GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
 #endif
 	return GFL_PROC_RES_FINISH;
 }
@@ -160,14 +160,8 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->event = NULL;
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
-
-#if 0
-	{
-		PLAYER_WORK * me = GAMEDATA_GetMyPlayerWork(gsys->gamedata);
-		PLAYERWORK_setZoneID(me, init_param->mapid);
-	}
-#endif
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
@@ -225,8 +219,8 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
+	//PlayerController/Event Trigger
 	GAMESYSTEM_EVENT_Main(gsys);
-	//	PlayerController/Event
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
 	if (gsys->proc_result == FALSE && gsys->event == NULL) {
 		//プロセスもイベントも存在しないとき、ゲーム終了
@@ -262,4 +256,10 @@ void GameSystem_CallProc(GAMESYS_WORK * gsys,
 	GFL_PROC_LOCAL_CallProc(gsys->procsys, ov_id, procdata, pwk);
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GameSystem_CallFieldProc(GAMESYS_WORK * gsys)
+{
+	GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+}
 
