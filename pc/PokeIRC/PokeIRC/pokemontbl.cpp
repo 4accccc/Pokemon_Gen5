@@ -538,7 +538,7 @@ char* PokemonDataTable::getPokemonName(int i)
 }
 
 
-static DP2UTFCONV dp2utfconvtbl[]={
+static DP2UTFCONV dp2utfconvtbl_z[]={
  {spc_,'@'},
  {a_,'‚ '},
  {i_,'‚¢'},
@@ -779,6 +779,8 @@ static DP2UTFCONV dp2utfconvtbl[]={
  {z__,'‚š'},
  {cursor_,'„'},
  {colon_,'F'},
+ };
+static DP2UTFCONV dp2utfconvtbl_h[]={
  {spc_,'_'},
  {n0_,'0'},
  {n1_,'1'},
@@ -798,11 +800,11 @@ static DP2UTFCONV dp2utfconvtbl[]={
  {ten_,','},
  {times_,'*'},
  {sura_,'/'},
-/* {A__,'‚`'},
- {B__,'‚a'},
- {C__,'‚b'},
- {D__,'‚c'},
- {E__,' E'},
+ {A__,'A'},
+ {B__,'B'},
+ {C__,'C'},
+ {D__,'D'},
+ {E__,'E'},
  {F__,'F'},
  {G__,'G'},
  {H__,'H'},
@@ -851,7 +853,69 @@ static DP2UTFCONV dp2utfconvtbl[]={
  {y__,'y'},
  {z__,'z'},
  {cursor_,'>'},
- {colon_,':'},  */
+ {colon_,':'},
+{	h_n0_, 		'0'},
+{	h_n1_, 		'1'},
+{	h_n2_, 		'2'},
+{	h_n3_, 		'3'},
+{	h_n4_, 		'4'},
+{	h_n5_, 		'5'},
+{	h_n6_, 		'6'},
+{	h_n7_, 		'7'},
+{	h_n8_, 		'8'},
+{	h_n9_, 		'9'},
+{	h_A__, 		'A'},
+{	h_B__, 		'B'},
+{	h_C__, 		'C'},
+{	h_D__, 		'D'},
+{	h_E__, 		'E'},
+{	h_F__, 		'F'},
+{	h_G__, 		'G'},
+{	h_H__, 		'H'},
+{	h_I__, 		'I'},
+{	h_J__, 		'J'},
+{	h_K__, 		'K'},
+{	h_L__, 		'L'},
+{	h_M__, 		'M'},
+{	h_N__, 		'N'},
+{	h_O__, 		'O'},
+{	h_P__, 		'P'},
+{	h_Q__, 		'Q'},
+{	h_R__, 		'R'},
+{	h_S__, 		'S'},
+{	h_T__, 		'T'},
+{	h_U__, 		'U'},
+{	h_V__, 		'V'},
+{	h_W__, 		'W'},
+{	h_X__, 		'X'},
+{	h_Y__, 		'Y'},
+{	h_Z__, 		'Z'},
+{	h_a__, 		'a'},
+{	h_b__, 		'b'},
+{	h_c__, 		'c'},
+{	h_d__, 		'd'},
+{	h_e__, 		'e'},
+{	h_f__, 		'f'},
+{	h_g__, 		'g'},
+{	h_h__, 		'h'},
+{	h_i__, 		'i'},
+{	h_j__, 		'j'},
+{	h_k__, 		'k'},
+{	h_l__, 		'l'},
+{	h_m__, 		'm'},
+{	h_n__, 		'n'},
+{	h_o__, 		'o'},
+{	h_p__, 		'p'},
+{	h_q__, 		'q'},
+{	h_r__, 		'r'},
+{	h_s__, 		's'},
+{	h_t__, 		't'},
+{	h_u__, 		'u'},
+{	h_v__, 		'v'},
+{	h_w__, 		'w'},
+{	h_x__, 		'x'},
+{	h_y__, 		'y'},
+{	h_z__, 		'z'},
 };
 
 //---------------------------------------------------------------------------------------------
@@ -868,20 +932,26 @@ String^ PokemonDataTable::DPSpellConv(unsigned short* strcodebuff,int size)
 	for(j=0;j<100;j++){
 		tmpbuff[j]=0;
 	}
-
+	mes = (char*)tmpbuff;
 
 	for(j = 0;j < size;j++){
 		if(strcodebuff[j] == 0xffff){
 			break;
 		}
-		for(i = 0; i < sizeof(dp2utfconvtbl)/sizeof(DP2UTFCONV) ; i++){
-			if(dp2utfconvtbl[i].dp_code == strcodebuff[j]){
-				tmpbuff[j] = ((dp2utfconvtbl[i].sjis_code >> 8) & 0xff) + ((dp2utfconvtbl[i].sjis_code << 8)&0xff00);
+		for(i = 0; i < sizeof(dp2utfconvtbl_z)/sizeof(DP2UTFCONV) ; i++){
+			if(dp2utfconvtbl_z[i].dp_code == strcodebuff[j]){
+				tmpbuff[j] = ((dp2utfconvtbl_z[i].sjis_code >> 8) & 0xff) + ((dp2utfconvtbl_z[i].sjis_code << 8)&0xff00);
+				break;
+			}
+		}
+		for(i = 0; i < sizeof(dp2utfconvtbl_h)/sizeof(DP2UTFCONV) ; i++){
+			if(dp2utfconvtbl_h[i].dp_code == strcodebuff[j]){
+				mes[j] = (char)dp2utfconvtbl_h[i].sjis_code;
 				break;
 			}
 		}
 	}
-	mes = (char*)tmpbuff;
+
 	spell = gcnew String(mes);
 	return spell;
 }

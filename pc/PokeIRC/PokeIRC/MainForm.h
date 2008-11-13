@@ -105,6 +105,9 @@ namespace PokeIRC {
 	static int targetPoke;   // ¡‘I‘ð‚µ‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“No
 	static int sendPokeLv;
 	static int sendPokeLvMax;
+	static int searchPokeIndex;
+	static int SoundBarTotalSize;
+	static int SoundBarSize;
 
 	static int sendPokeSex;
 	static const unsigned long long TEST_KEY = 0x100000000UL;
@@ -116,6 +119,7 @@ namespace PokeIRC {
 
 	static const int MODE_SEARCHPOKE = 0;
 	static const int MODE_BOXDISP = 1;
+	static const int MODE_SEARCHPOKE_BOXDISP = 2;
 
 
 	private: System::Windows::Forms::ToolStripMenuItem^  gTSResetToolStripMenuItem;
@@ -130,18 +134,11 @@ namespace PokeIRC {
 	private: System::Windows::Forms::ToolStripMenuItem^  exitEToolStripMenuItem;
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  sendGTSSToolStripMenuItem;
-
-
-
-
-
-
-
+	private: System::Windows::Forms::PictureBox^  pictureBox2;
+	private: System::Windows::Forms::PictureBox^  pictureBox3;
 
 
 	private: System::Windows::Forms::ToolStripMenuItem^  dSGTSSyncTToolStripMenuItem;
-
-
 
 
 	protected: 
@@ -160,6 +157,7 @@ namespace PokeIRC {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->webBrowser1 = (gcnew System::Windows::Forms::WebBrowser());
 			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
 			this->StripStatusLabel = (gcnew System::Windows::Forms::ToolStripStatusLabel());
@@ -180,6 +178,8 @@ namespace PokeIRC {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
@@ -193,6 +193,8 @@ namespace PokeIRC {
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
 			this->contextMenuStrip1->SuspendLayout();
 			this->SuspendLayout();
@@ -344,6 +346,9 @@ namespace PokeIRC {
 			// 
 			// splitContainer1.Panel2
 			// 
+			this->splitContainer1->Panel2->BackColor = System::Drawing::Color::White;
+			this->splitContainer1->Panel2->Controls->Add(this->pictureBox3);
+			this->splitContainer1->Panel2->Controls->Add(this->pictureBox2);
 			this->splitContainer1->Panel2->Controls->Add(this->webBrowser1);
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox1);
 			this->splitContainer1->Size = System::Drawing::Size(638, 452);
@@ -382,6 +387,28 @@ namespace PokeIRC {
 			this->button1->Text = L"<<";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
+			// 
+			// pictureBox3
+			// 
+			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"pictureBox3.Image")));
+			this->pictureBox3->Location = System::Drawing::Point(317, 61);
+			this->pictureBox3->Name = L"pictureBox3";
+			this->pictureBox3->Size = System::Drawing::Size(237, 32);
+			this->pictureBox3->TabIndex = 3;
+			this->pictureBox3->TabStop = false;
+			this->pictureBox3->DragDrop += gcnew System::Windows::Forms::DragEventHandler(this, &MainForm::pictureBox3_DragDrop);
+			this->pictureBox3->DragEnter += gcnew System::Windows::Forms::DragEventHandler(this, &MainForm::pictureBox3_DragEnter);
+			// 
+			// pictureBox2
+			// 
+			this->pictureBox2->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"pictureBox2.Image")));
+			this->pictureBox2->Location = System::Drawing::Point(268, 151);
+			this->pictureBox2->Name = L"pictureBox2";
+			this->pictureBox2->Size = System::Drawing::Size(258, 148);
+			this->pictureBox2->SizeMode = System::Windows::Forms::PictureBoxSizeMode::CenterImage;
+			this->pictureBox2->TabIndex = 2;
+			this->pictureBox2->TabStop = false;
+			this->pictureBox2->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox2_MouseClick);
 			// 
 			// pictureBox1
 			// 
@@ -434,6 +461,8 @@ namespace PokeIRC {
 			this->splitContainer1->Panel1->ResumeLayout(false);
 			this->splitContainer1->Panel2->ResumeLayout(false);
 			this->splitContainer1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
 			this->contextMenuStrip1->ResumeLayout(false);
 			this->ResumeLayout(false);
@@ -467,6 +496,9 @@ private: void connectIRC(void);
 private: void RequestSearch(void);
 private: void pokemonSearchDisp(void);
 private: int PokemonName2No(String^ name);
+private: static void RequestChange(void);
+public: void Draw(void);
+
 
 
 
@@ -503,6 +535,15 @@ private: System::Void pictureBox1_MouseClick(System::Object^  sender, System::Wi
 
 private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 		 }
+private: System::Void pictureBox2_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+private: System::Void pictureBox3_DragEnter(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e) {
+
+			 if ( e->Data->GetDataPresent(DataFormats::FileDrop) ){
+					 e->Effect = DragDropEffects::All;
+				}
+
+		 }
+private: System::Void pictureBox3_DragDrop(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e);
 };
 }
 

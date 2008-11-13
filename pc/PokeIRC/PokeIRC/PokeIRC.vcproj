@@ -23,6 +23,7 @@
 			ConfigurationType="1"
 			CharacterSet="1"
 			ManagedExtensions="1"
+			EnableManagedIncrementalBuild="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -61,7 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="&quot;libpokemon.lib&quot; &quot;dpw_pc.lib&quot;"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="C:\home\wb\pokemon_wb\pc\PokeIRC\PokeIRC\lib"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
@@ -101,7 +102,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
-			ManagedExtensions="2"
+			ManagedExtensions="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -121,6 +122,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="C:\home\wb\pokemon_wb\pc\PokeIRC\PokeIRC\lib"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -138,8 +140,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="&quot;C:\home\wb\PokeIRC\PokeIRC\lib\libpokemon.lib&quot; $(NOINHERIT)"
+				AdditionalDependencies="$(InputDir)lib\release\libpokemon.lib $(InputDir)lib\release\dpw_pc.lib $(NOINHERIT)"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="C:\home\wb\pokemon_wb\pc\PokeIRC\PokeIRC\lib\release"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				EntryPointSymbol="main"

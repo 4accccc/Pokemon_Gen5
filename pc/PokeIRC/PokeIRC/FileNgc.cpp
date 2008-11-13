@@ -330,8 +330,8 @@ Bitmap^ FileNCGRead::PictureWriteOffset(Bitmap^ bmp, PictureBox^ pict, int xini,
 
 	int dotNo = 0;
 	int attrIndex=0;
-	for(unsigned int YOf = 0; YOf < ngcData->CharHeight; YOf++){
-		for(unsigned int XOf = 0; XOf < ngcData->CharWidth; XOf++){
+	for(int YOf = 0; YOf < (int)ngcData->CharHeight; YOf++){
+		for(int XOf = 0; XOf < (int)ngcData->CharWidth; XOf++){
 			int palNo = ngcAttr->AttrData[attrIndex];
 			attrIndex++;
 			if(YOf < width && XOf < height){

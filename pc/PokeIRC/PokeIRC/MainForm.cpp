@@ -93,11 +93,14 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 */
 	webBrowser1->Show();
 	pictureBox1->Hide();
-
+	pictureBox2->Hide();
+	pictureBox3->Hide();
 
 	this->Width = 670;
 	this->Height = 770;
 	GTSDispMode=0;
+	SoundBarSize = pictureBox3->Width;
+	SoundBarTotalSize = 0;
 
 	splitContainer1->Panel1->Hide();
 
@@ -173,6 +176,28 @@ System::Void MainForm::sendDataDToolStripMenuItem_Click(System::Object^  sender,
 	}
 
 }
+
+
+System::Void MainForm::pictureBox3_DragDrop(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e)
+{
+//	System::IO::Stream^ myStream;
+	BinaryReader^ userReader;   // ファイルを読み込む為のハンドル
+	array<String^>^ files = dynamic_cast<array<String^>^>(e->Data->GetData(DataFormats::FileDrop));
+		 
+	for each(String^ filename in files){
+		if( IO::Path::GetExtension(filename) == ".swav" ){
+			FileStream^ fs = File::OpenRead( filename );
+			userReader = gcnew BinaryReader(fs);
+			SoundBarTotalSize = (int)fs->Length;
+			NetIRC::dataArray = userReader->ReadBytes((int)fs->Length);
+			NetIRC::sendData(IRC_COMMAND_SNDV);
+			fs->Close();
+			break;
+		}
+	}
+}
+
+
 
 //--------------------------------------------------------------
 /**
@@ -327,6 +352,86 @@ void MainForm::RequestUpload(void)
 	MessageBox::Show("あずけました" + sendBoxNo + " " + sendBoxPoke);
 	return;
 }
+
+
+
+//--------------------------------------------------------------
+/**
+ * @breif   ポケモンを交換する
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void MainForm::RequestChange(void)
+{
+	s32 result = 0;
+	int pid = 100000;
+	String^ proxy = "";
+
+	while(!NetIRC::isRecvFlg()){
+		Sleep(10);
+	}
+	SetProxy(proxy);
+	if(!RequestCheckServerState()){
+		return;
+	}
+	if(!RequestSetProfile()){
+		return;
+	}
+//	if(!RequestPickupTraded()){
+//		Debug::WriteLine("引取りに失敗");
+//		return;
+//	}
+
+
+
+	{
+		// トレード
+		Dpw_Tr_Data trade_data;
+		Dpw_Tr_Data download_buf;
+		int retNo;
+
+		trade_data.wantSimple.characterNo = targetPoke;
+		trade_data.wantSimple.level_max = sendPokeLvMax;
+		trade_data.wantSimple.level_min = sendPokeLv;
+		trade_data.wantSimple.gender = sendPokeSex;
+
+
+		SetTrData(&trade_data, targetPoke);
+		Dpw_Tr_TradeAsync(match_data_buf[searchPokeIndex].id, &trade_data, &download_buf);
+		retNo = WaitForAsync();
+		if(retNo < 0 ){
+			Debug::WriteLine("Failed to trade." + retNo);
+			return;
+		}
+		
+		//DSに交換したポケモンを送る
+
+		NetIRC::dataArray = gcnew array<unsigned char>(2+sizeof(Dpw_Tr_PokemonData));
+		NetIRC::dataArray[0] = sendBoxNo;
+		NetIRC::dataArray[1] = sendBoxPoke;
+
+		pin_ptr<unsigned char> wptr = &NetIRC::dataArray[2];
+		memcpy(wptr, &download_buf.postData, sizeof(Dpw_Tr_PokemonData));
+
+		NetIRC::sendData(IRC_COMMAND_CHANGEPOKE_SEND);
+
+		Dpw_Tr_TradeFinishAsync();
+		if(WaitForAsync() != 0 )
+		{
+			Debug::WriteLine("Failed to trade finish.");
+			return ;
+		}
+
+	}
+
+
+
+	MessageBox::Show("こうかんしました" + sendBoxNo + " " + sendBoxPoke);
+	return;
+}
+
+
 
 
 //--------------------------------------------------------------
@@ -625,6 +730,7 @@ int MainForm::PokemonName2No(String^ spokename)
 void MainForm::CallProg(String^ message)
 {
 	if(message =="PokeSend"){
+		GTSDispMode = MODE_BOXDISP;
 		connectIRC();
 		bBoxListRecv = false;
 		threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
@@ -638,25 +744,34 @@ void MainForm::CallProg(String^ message)
 		PokemonSearch^ pPoke = gcnew PokemonSearch;
 		pPoke->listBox1->SelectedIndex = 2;
 		if(pPoke->ShowDialog() == System::Windows::Forms::DialogResult::OK){
+			GTSDispMode = MODE_SEARCHPOKE;
 
 			targetPoke = PokemonName2No(pPoke->textBox1->Text);
 			sendPokeSex = pPoke->listBox1->SelectedIndex + 1;
 			sendPokeLvMax = System::Decimal::ToInt32(pPoke->numericUpDown3->Value);
 			sendPokeLv = System::Decimal::ToInt32(pPoke->numericUpDown2->Value);
-
 			//サーチスレッド起動
-			
 			threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::RequestSearch)); //
 			threadB->IsBackground = true; // バックグラウンド・スレッドとする
 			threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
 		    threadB->Start(); // 
 			threadB->Join();
 			pokemonSearchDisp();
-
-
-
-
 		}
+	}
+	else if(message =="PokeSound"){
+		pictureBox2->Dock = DockStyle::Fill;
+		webBrowser1->Hide();
+		pictureBox1->Hide();
+		pictureBox2->Show();
+		pictureBox3->Show();
+
+		int pictX = 588;
+		int pictY = 549;
+		pictureBox3->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
+		pictureBox3->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
+		pictureBox3->AllowDrop = true;
+
 	}
 	else{
 		MessageBox::Show(message, "client code");
@@ -921,6 +1036,7 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 
 	switch(GTSDispMode){
 	case MODE_SEARCHPOKE:
+	case MODE_SEARCHPOKE_BOXDISP:
 		{
 			int no = getBoxPositionFromThePlace(e->X,e->Y);
 			if((no == -1)  || (no >= DownloadMatchNum)){
@@ -940,6 +1056,7 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 		pokesex = getPokemonSexFromThePlace(e->X,e->Y);
 		pokelv = getPokemonLvFromThePlace(e->X,e->Y);
 		break;
+
 	default:
 		return;
 	}
@@ -994,37 +1111,112 @@ System::Void MainForm::pictureBox1_MouseDown(System::Object^  sender, System::Wi
 
 System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
-	int pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+	String^ nm = gcnew String(PROGRAM_NAME);
+	int pokeno = 0;
 
-	if(pokeno != 0){
-		String^ nm = gcnew String(PROGRAM_NAME);
-//		char* name = PokeGraNoTable[pokeno].name;
-		char* name = PokemonDataTable::getPokemonName(pokeno);
-		String^ pknm = gcnew String(name);
+	switch(GTSDispMode){
+	case MODE_BOXDISP:
 
-		if ( MessageBox::Show(pknm + "を預けますか？", nm,
+		pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+
+		// 預ける場合
+		if(pokeno != 0){
+			char* name = PokemonDataTable::getPokemonName(pokeno);
+			String^ pknm = gcnew String(name);
+
+			if ( MessageBox::Show(pknm + "を預けますか？", nm,
+				 MessageBoxButtons::OKCancel,
+				 MessageBoxIcon::Question )
+					 == System::Windows::Forms::DialogResult::OK ) {
+					targetPoke = pokeno;
+					sendBoxNo = dispBoxNo;
+					sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
+					sendPokeSex = getPokemonSexFromThePlace(e->X,e->Y);
+					sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
+
+					// 赤外線コマンド発行
+					NetIRC::dataArray = gcnew array<unsigned char>(2);
+					NetIRC::dataArray[0] = sendBoxNo;
+					NetIRC::dataArray[1] = sendBoxPoke;
+					NetIRC::sendData(IRC_COMMAND_BOXPOKE);
+
+					threadA = gcnew Thread(gcnew ThreadStart(&RequestUpload));  //
+					threadA->IsBackground = true;                // バックグラウンド・スレッドとする
+					threadA->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
+				    threadA->Start(); // 
+	
+			}
+		}
+		break;
+	case MODE_SEARCHPOKE:	//交換する場合
+		if ( MessageBox::Show("このポケモンと交換しますか？", nm,
 			 MessageBoxButtons::OKCancel,
 			 MessageBoxIcon::Question )
 				 == System::Windows::Forms::DialogResult::OK ) {
-				targetPoke = pokeno;
-				sendBoxNo = dispBoxNo;
-				sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
-				sendPokeSex = getPokemonSexFromThePlace(e->X,e->Y);
-				sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
 
-				// 赤外線コマンド発行
-				NetIRC::dataArray = gcnew array<unsigned char>(2);
-				NetIRC::dataArray[0] = sendBoxNo;
-				NetIRC::dataArray[1] = sendBoxPoke;
-				NetIRC::sendData(IRC_COMMAND_BOXPOKE);
 
-				threadA = gcnew Thread(gcnew ThreadStart(&RequestUpload));  //
-				threadA->IsBackground = true;                // バックグラウンド・スレッドとする
-				threadA->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
-			    threadA->Start(); // 
+				// ボックス一覧を出す
+				 searchPokeIndex = getBoxPositionFromThePlace(e->X,e->Y);
+			
+
+				GTSDispMode = MODE_SEARCHPOKE_BOXDISP;
+
+				connectIRC();
+				bBoxListRecv = false;
+				threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
+				threadB->IsBackground = true; // バックグラウンド・スレッドとする
+				threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
+			    threadB->Start(); // 
+				threadB->Join();
+				pokemonListDisp(0);
+
+
 
 		}
+
+
+
+		break;
+
+	case MODE_SEARCHPOKE_BOXDISP:	//交換する場合その２
+		pokeno = getPokemonNumberFromThePlace(e->X,e->Y);
+
+		if(pokeno != 0){
+			char* name = PokemonDataTable::getPokemonName(pokeno);
+			String^ pknm = gcnew String(name);
+
+			if ( MessageBox::Show(pknm + "と交換しますか？", nm,
+				 MessageBoxButtons::OKCancel,
+				 MessageBoxIcon::Question )
+					 == System::Windows::Forms::DialogResult::OK ) {
+					targetPoke = pokeno;
+					sendBoxNo = dispBoxNo;
+					sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
+					sendPokeSex = getPokemonSexFromThePlace(e->X,e->Y);
+					sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
+
+					// 赤外線コマンド発行
+					NetIRC::dataArray = gcnew array<unsigned char>(2);
+					NetIRC::dataArray[0] = sendBoxNo;
+					NetIRC::dataArray[1] = sendBoxPoke;
+					NetIRC::sendData(IRC_COMMAND_CHANGE_BOXPOKE);
+
+					threadA = gcnew Thread(gcnew ThreadStart(&RequestChange));  //
+					threadA->IsBackground = true;                // バックグラウンド・スレッドとする
+					threadA->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
+				    threadA->Start(); // 
+	
+			}
+		}
+
+
+
+	default:
+		break;
 	}
+
+
+
 }
 
 //--------------------------------------------------------------
@@ -1122,4 +1314,50 @@ void MainForm::GetPokeBoxList(void)
 		}
 	}
 	bBoxListRecv = true;
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   サウンドの絵がクリックされた
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::pictureBox2_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	int pictX = 588;
+	int pictY = 549;
+
+	pictX = (this->splitContainer1->Panel2->Width - pictX) / 2;
+	pictY = (this->splitContainer1->Panel2->Height - pictY) / 2;
+
+	if((e->X > (321+pictX)) && (e->X < (558+pictX))){
+		if((e->Y > (192+pictY)) && (e->Y < (236+pictY))){
+			webBrowser1->Show();
+			pictureBox1->Hide();
+			pictureBox2->Hide();
+			pictureBox3->Hide();
+		}
+	}
+}
+
+
+void MainForm::Draw(void)
+{
+	if(SoundBarTotalSize != 0){
+		if(NetIRC::dataArray == nullptr){
+			SoundBarTotalSize = 0;
+		}
+		else{
+			int lest = NetIRC::dataArray->GetLength(0);
+			if(lest == 0){
+				SoundBarTotalSize = 0;
+				return;
+			}
+			lest = (lest * SoundBarSize) / SoundBarTotalSize;
+			pictureBox3->Width = lest;
+		}
+	}
+
 }

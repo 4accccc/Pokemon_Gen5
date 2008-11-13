@@ -23,6 +23,7 @@ int main(array<System::String ^> ^args)
 	while( form->Created ){
 		Thread::Sleep( 10 );
 		Application::DoEvents();
+		form->Draw();
 	}
 	return 0;
 }
