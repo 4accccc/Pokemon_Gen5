@@ -28,13 +28,14 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
+#include "gamesystem/game_event.h"
+
+#include "event_mapchange.h"
 
 #include "map_matrix.h"
 
 #include "field_comm_actor.h"
 
-extern void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
-extern void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys);
 //============================================================================================
 /**
  *
@@ -109,6 +110,8 @@ struct _DEPEND_FUNCTIONS{
  */
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont );
+static BOOL FieldEventCheck(GAMESYS_WORK * gsys);
+extern void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys);
 
 FIELD_MAIN_WORK* fieldWork;
 
@@ -118,7 +121,6 @@ static void ResistMatrixFieldG3Dmapper(
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
 
-static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -160,15 +162,12 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
 	fieldWork->gsys = gsys;
-
-//	GFL_UI_TP_Init( fieldWork->heapID );
 }
 
 void	FieldEnd( void )
 {
-//	GFL_UI_TP_Exit();
-
 	GFL_HEAP_FreeMemory( fieldWork );
+	fieldWork = NULL;
 }
 
 //------------------------------------------------------------------
@@ -189,57 +188,39 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 	case 0:
 		//基本システムセットアップ
 		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
+		fieldWork->ftbl = GetDependFunctions(gsys);
 		fieldWork->seq++;
         break;
 
 	case 1:
-		fieldWork->ftbl = GetDependFunctions(gsys);
 
-		//fieldWork->ftbl = sceneData->dep_funcs;
+		//セットアップ
+		if( GetSceneID(gsys) == 1 ){ //プランナー確認マップ
+			ResistMatrixFieldG3Dmapper( gsys, fieldWork );
+		}else{
+		  ResistDataFieldG3Dmapper(
+			 GetFieldG3Dmapper(fieldWork->gs), GetMapperData(gsys) );
+		}
+
+		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
-            //セットアップ
-			if( GetSceneID(gsys) == 1 ){ //プランナー確認マップ
-				ResistMatrixFieldG3Dmapper( gsys, fieldWork );
-			}else{
-          	  ResistDataFieldG3Dmapper(
-				 GetFieldG3Dmapper(fieldWork->gs), GetMapperData(gsys) );
-			}
+			VecFx32 pos;
+			u16		dir;
 
-			//登録テーブルごとに個別の初期化処理を呼び出し
-			{
-				VecFx32 pos;
-				u16		dir;
-
-				pos = *GetStartPos(gsys);
-				dir = 0;
-				fieldWork->ftbl->create_func( fieldWork, &pos, dir );
-			}
-			
-			{	//デバッグメニュー
-				fieldWork->d_menu = FldDebugMenu_Init(
-						fieldWork, GetSceneID(gsys), fieldWork->heapID );
-			}
-
-            fieldWork->seq++;
-        }
+			pos = *GetStartPos(gsys);
+			dir = 0;
+			fieldWork->ftbl->create_func( fieldWork, &pos, dir );
+		}
+		
+		fieldWork->seq++;
 		break;
 
 	case 2:
-		if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-			DEBUG_EVENT_FieldSample(gsys);
-			fieldWork->gamemode = GAMEMODE_FINISH;
-			fieldWork->seq = 3;
-			break;
-		}
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-			DEBUG_EVENT_ChangeToNextMap(gsys);
-			fieldWork->gamemode = GAMEMODE_FINISH;
-			//SetNextScene(gsys);
-			fieldWork->seq = 3;
+		if( FieldEventCheck(gsys) == TRUE ){
 			break;
 		}
 		
-		if( !DebugMenuProc( fieldWork ) ) {
+		if( GAMESYSTEM_GetEvent(gsys) == NULL ){
 		
 			VecFx32 pos;
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
@@ -260,6 +241,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
 	case 3:
 		{
+			//アクターが持つプレイヤー現在位置をPLAYER_WORKに反映する
 			VecFx32 player_pos;
 			PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 			GetPlayerActTrans(fieldWork->pcActCont, &player_pos);
@@ -278,13 +260,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 			fieldWork->pMapMatrixBuf = NULL;
 		}
 
-		if (fieldWork->gamemode != GAMEMODE_FINISH) {
-			fieldWork->seq = 1;
-		} else {
-			fieldWork->seq = 4;
-		}
-		
-		FldDebugMenu_Delete( fieldWork->d_menu );
+		fieldWork->seq = 4;
 		break;
 
 	case 4:
@@ -312,7 +288,29 @@ static BOOL GameEndCheck( int cont )
 }
 
 
-
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL FieldEventCheck(GAMESYS_WORK * gsys)
+{
+	if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
+		DEBUG_EVENT_FieldSample(gsys);
+		fieldWork->gamemode = GAMEMODE_FINISH;
+		fieldWork->seq = 3;
+		return TRUE;
+	}
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
+		DEBUG_EVENT_ChangeToNextMap(gsys);
+		fieldWork->gamemode = GAMEMODE_FINISH;
+		fieldWork->seq = 3;
+		return TRUE;
+	}
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
+		DEBUG_EVENT_DebugMenu(gsys);
+		//return TRUE;
+		return FALSE;
+	}
+	return FALSE;
+}
 
 
 //============================================================================================
@@ -942,19 +940,50 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 //	debug
 //======================================================================
 //--------------------------------------------------------------
-///	デバッグメニュー処理
 //--------------------------------------------------------------
-static BOOL DebugMenuProc( FIELD_MAIN_WORK *fldWork )
+typedef struct {
+	FIELD_MAIN_WORK * fieldWork;
+	u16 map_id;
+}DEBUG_MENU_EVENT_WORK;
+//--------------------------------------------------------------
+///	イベント：デバッグメニュー処理
+//--------------------------------------------------------------
+static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * work)
 {
-	if( fldWork->d_menu_flag == FALSE ){
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-			FldDebugMenu_Create( fldWork->d_menu );
-			fldWork->d_menu_flag = TRUE;
+	DEBUG_MENU_EVENT_WORK * dmew = work;
+	switch (*seq) {
+	case 0:
+		fieldWork->d_menu = FldDebugMenu_Init(
+				fieldWork, dmew->map_id, fieldWork->heapID );
+		++ *seq;
+		break;
+	case 1:
+		FldDebugMenu_Create( fieldWork->d_menu );
+		fieldWork->d_menu_flag = TRUE;
+		++ *seq;
+		break;
+	case 2:
+		if( FldDebugMenu_Main(fieldWork->d_menu) == TRUE ){
+			fieldWork->d_menu_flag = FALSE;
+			++ *seq;
 		}
-	}else{	//起動中
-		if( FldDebugMenu_Main(fldWork->d_menu) == TRUE ){
-			fldWork->d_menu_flag = FALSE;
-		}
+		break;
+	case 3:
+		FldDebugMenu_Delete(fieldWork->d_menu);
+		return GMEVENT_RES_FINISH;
 	}
-	return fldWork->d_menu_flag;
+	return GMEVENT_RES_CONTINUE;
 }
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys)
+{
+	DEBUG_MENU_EVENT_WORK * dmew;
+	GMEVENT_CONTROL * event;
+	event = GAMESYSTEM_EVENT_Set(gsys, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
+	dmew = GMEVENT_GetEventWork(event);
+	dmew->fieldWork = fieldWork;
+	dmew->map_id = GetSceneID(fieldWork->gsys);
+}
+
+
