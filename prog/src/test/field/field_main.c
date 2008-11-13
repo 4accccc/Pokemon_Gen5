@@ -87,9 +87,6 @@ struct _FIELD_MAIN_WORK
 	
 	int				key_cont;
 	
-	int d_menu_flag;
-	DEBUG_FLDMENU *d_menu;
-	
 	void *pGridCont;
 	void *pMapMatrixBuf;
 	
@@ -216,11 +213,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 		break;
 
 	case 2:
-		if( FieldEventCheck(gsys) == TRUE ){
-			break;
-		}
-		
-		if( GAMESYSTEM_GetEvent(gsys) == NULL ){
+		if( FieldEventCheck(gsys) == FALSE ){
 		
 			VecFx32 pos;
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
@@ -292,6 +285,9 @@ static BOOL GameEndCheck( int cont )
 //------------------------------------------------------------------
 static BOOL FieldEventCheck(GAMESYS_WORK * gsys)
 {
+	if( GAMESYSTEM_GetEvent(gsys)) {
+		return TRUE;
+	}
 	if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
 		DEBUG_EVENT_FieldSample(gsys);
 		fieldWork->gamemode = GAMEMODE_FINISH;
@@ -306,8 +302,7 @@ static BOOL FieldEventCheck(GAMESYS_WORK * gsys)
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		DEBUG_EVENT_DebugMenu(gsys);
-		//return TRUE;
-		return FALSE;
+		return TRUE;
 	}
 	return FALSE;
 }
@@ -942,7 +937,9 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef struct {
+	DEBUG_FLDMENU *d_menu;
 	FIELD_MAIN_WORK * fieldWork;
+	HEAPID heapID;
 	u16 map_id;
 }DEBUG_MENU_EVENT_WORK;
 //--------------------------------------------------------------
@@ -953,23 +950,21 @@ static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * 
 	DEBUG_MENU_EVENT_WORK * dmew = work;
 	switch (*seq) {
 	case 0:
-		fieldWork->d_menu = FldDebugMenu_Init(
-				fieldWork, dmew->map_id, fieldWork->heapID );
+		dmew->d_menu = FldDebugMenu_Init(
+				dmew->fieldWork, dmew->map_id, dmew->heapID );
 		++ *seq;
 		break;
 	case 1:
-		FldDebugMenu_Create( fieldWork->d_menu );
-		fieldWork->d_menu_flag = TRUE;
+		FldDebugMenu_Create( dmew->d_menu );
 		++ *seq;
 		break;
 	case 2:
-		if( FldDebugMenu_Main(fieldWork->d_menu) == TRUE ){
-			fieldWork->d_menu_flag = FALSE;
+		if( FldDebugMenu_Main(dmew->d_menu) == TRUE ){
 			++ *seq;
 		}
 		break;
 	case 3:
-		FldDebugMenu_Delete(fieldWork->d_menu);
+		FldDebugMenu_Delete(dmew->d_menu);
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -982,7 +977,9 @@ void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys)
 	GMEVENT_CONTROL * event;
 	event = GAMESYSTEM_EVENT_Set(gsys, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
 	dmew = GMEVENT_GetEventWork(event);
+	dmew->d_menu = NULL;
 	dmew->fieldWork = fieldWork;
+	dmew->heapID = fieldWork->heapID;
 	dmew->map_id = GetSceneID(fieldWork->gsys);
 }
 
