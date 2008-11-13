@@ -385,6 +385,14 @@ extern void GFL_NET_InitServer(void);
 extern void GFL_NET_ChangeoverConnect(NetStepEndCallback callback);
 //==============================================================================
 /**
+ * @brief    親機子機を繰り返す
+ * @param    pHandle  通信ハンドルのポインタ
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_Changeover(NetStepEndCallback callback);
+//==============================================================================
+/**
  * @brief    Wi-Fiロビーへ接続する
  * @param    GFL_NETHANDLE        通信ハンドルのポインタ
  * @param    GFL_WIFI_FRIENDLIST  フレンドリスト構造体のポインタ
