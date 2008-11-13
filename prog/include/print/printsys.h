@@ -12,6 +12,8 @@
 #ifndef __PRINTSYS_H__
 #define __PRINTSYS_H__
 
+#include <tcbl.h>
+
 #include "print\gf_font.h"
 
 
