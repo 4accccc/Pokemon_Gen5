@@ -148,7 +148,7 @@ void FieldGetAttr_MapEditorFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* map
 	grid_z = pos.z % grid_w;
 
 	//情報取得(軸の取り方が違うので法線ベクトルはZ反転)
-	nvs = (NormalVtxSt*)(attrAdrs + grid_idx * sizeof(NormalVtxSt));
+	nvs = (NormalVtxSt*)(attrAdrs + sizeof(NormalVtxFormat) + grid_idx * sizeof(NormalVtxSt));
 
 	//グリッド内三角形の判定
 	if( nvs->tryangleType == 0 ){

@@ -32,7 +32,7 @@ typedef struct {
 typedef struct{
     u16			width;           // 高さデータの横の個数
     u16			height;          // 高さデータの縦の個数
-	NormalVtxSt* vtxData;       // 高さデータが配列で横×縦分ある
+//	NormalVtxSt* vtxData;     // 高さデータが配列で横×縦分ある 現在不要の為、コメント化 081113 kaga
 } NormalVtxFormat;
 
 
