@@ -53,7 +53,7 @@ static void _endCallBack(void* pWork);
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvHugeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvKeyData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
+static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 
 
 
@@ -504,7 +504,7 @@ static void _RecvHugeData(const int netID, const int size, const void* pData, vo
 	OS_TPrintf("巨大データ受信チェックサム=0x%x\n", cs);
 }
 
-u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
+static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 {
 	D_MATSU_WORK *wk = pWork;
 	return wk->receive_huge_data[netID - 1];
