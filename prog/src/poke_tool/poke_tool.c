@@ -391,8 +391,9 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 	}
 	PokePasoParaPut( ppp, ID_PARA_id_no, (u8 *) & id );
 	
+#warning CasetteLanguage Nothing
 //国コード
-	PokePasoParaPut( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
+//	PokePasoParaPut( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
 
 //ポケモンナンバーセット
 	PokePasoParaPut( ppp, ID_PARA_monsno, (u8 *)&mons_no );
@@ -410,7 +411,8 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 
 //捕獲データセット
 	PokePasoParaPut( ppp, ID_PARA_get_level, ( u8 * )&level );
-	PokePasoParaPut( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
+#warning CasetteVersion Nothing
+//	PokePasoParaPut( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
 	i = ITEM_MONSUTAABOORU;	//デフォルトはモンスターボールにしておく	
 	PokePasoParaPut( ppp, ID_PARA_get_ball, ( u8 * )&i );
 
