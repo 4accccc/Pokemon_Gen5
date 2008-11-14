@@ -6,7 +6,7 @@
 RESOURCE_MACRO	= $(PROJECT_RSCDIR)\macro_define
 
 
-SUBDIRS	= wmi test_graphic message test3dp test3dp2 pokegra
+SUBDIRS	= wmi test_graphic message test3dp test3dp2 pokegra personal waza_tbl
 
 include $(RESOURCE_MACRO)
 

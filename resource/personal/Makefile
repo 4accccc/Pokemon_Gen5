@@ -13,13 +13,14 @@ USERS	=	sogabe
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname	= personal
-NARCNAME	= $(targetname).narc
+PERSONAL	= personal.narc
+GROWTBL		= growtbl.narc
+WOTBL		= wotbl.narc
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)
+TARGETDIR	= $(PROJECT_ARCDIR)/personal/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -39,14 +40,22 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME)
+do-build:	$(TARGETDIR)/$(PERSONAL) $(TARGETDIR)/$(GROWTBL) $(TARGETDIR)/$(WOTBL)
 
-$(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
-	$(COPY)	$(NARCNAME) $(TARGETDIR)
+$(TARGETDIR)/$(PERSONAL):	$(PERSONAL)
+	$(COPY)	$(PERSONAL) $(TARGETDIR)
+
+$(TARGETDIR)/$(GROWTBL):	$(GROWTBL)
+	$(COPY)	$(GROWTBL) $(TARGETDIR)
+
+$(TARGETDIR)/$(WOTBL):	$(WOTBL)
+	$(COPY)	$(WOTBL) $(TARGETDIR)
 
 #------------------------------------------------------------------------------
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
-	-rm -f $(TARGETDIR)/$(NARCNAME)
+	-rm -f $(TARGETDIR)/$(PERSONAL)
+	-rm -f $(TARGETDIR)/$(GROWTBL)
+	-rm -f $(TARGETDIR)/$(WOTBL)
 

@@ -20,7 +20,7 @@ NAIXNAME	= $(targetname).naix
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)
+TARGETDIR	= $(PROJECT_ARCDIR)/pokegra/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -31,21 +31,46 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
 
+#リソースファイルの存在するディレクトリを指定
+RES_DIR = ../../../pokemon_wb_doc/pokegra/
 
-#とりあえず直下の*.nmcを依存対象とする
-NMCFILE	:= $(wildcard *.nmc)
+#コンバートしたファイルを格納するディレクトリを指定
+CNV_DIR = ./
 
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.nmc
-
-#nmcデータからの生成ルール
-do-build: $(NMCFILE:.nmc=.nmcr)
-%.nmcr: %.nmc %.nce %.ncg %.ncl
-	g2dcvtr $< -bmp
-	perl nce.pl $*.nce $*.NCEC
-endif
+#コンバート対象のファイルツリーを生成
+NCGFILE	:= $(wildcard $(RES_DIR)????_???_?.ncg)
+NCGCFILE	:= $(wildcard $(RES_DIR)????_???c_?.ncg)
+NMCFILE	:= $(wildcard $(RES_DIR)*.nmc)
+NCLNFILE	:= $(wildcard $(RES_DIR)*_n.ncl)
+NCLRFILE	:= $(wildcard $(RES_DIR)*_r.ncl)
 
 .PHONY:	do-build clean subdir
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+.SUFFIXES:	.nmc.nmcr.ncl.nclr
+
+#nmcデータからの生成ルール
+do-build: $(notdir $(NCGFILE:.ncg=.NCGR))
+%.NCGR: $(RES_DIR)%.ncg
+	perl ncg.pl $< $(CNV_DIR)
+
+do-build: $(notdir $(NMCFILE:.nmc=.NMCR))
+%.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
+	g2dcvtr $< -bmp -cr/0_0_32_16 -o/$(CNV_DIR)
+	perl nce.pl $(RES_DIR)$*.nce $(CNV_DIR)
+
+do-build: $(notdir $(NCGCFILE:.ncg=.NCBR))
+%.NCBR: $(RES_DIR)%.ncg
+	perl ncgc.pl $< $(CNV_DIR)
+
+do-build: $(notdir $(NCLNFILE:.ncl=.NCLR))
+%.NCLR: $(RES_DIR)%.ncl
+	g2dcvtr $< -o/$(CNV_DIR)
+
+do-build: $(notdir $(NCLRFILE:.ncl=.NCLR))
+%.NCLR: $(RES_DIR)%.ncl
+	g2dcvtr $< -o/$(CNV_DIR)
+endif
 
 #------------------------------------------------------------------------------
 #	make do-build ルール
@@ -56,7 +81,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(NMCFILE:.nmc=.nmcr)
+$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR))
 	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
