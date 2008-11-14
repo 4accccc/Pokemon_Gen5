@@ -22,11 +22,20 @@
 
 typedef struct
 {
+
 	u16		char_no;	//セルで使用するキャラクタNo
 	u8		size_x;		//セルサイズX
 	u8		size_y;		//セルサイズY
 	s32		pos_x;		//セル描画X座標
 	s32		pos_y;		//セル描画Y座標
+
+	//以下、メパチ用キャラ
+	u16		mepachi_char_no;	//セルで使用するキャラクタNo
+	u8		mepachi_size_x;		//セルサイズX
+	u8		mepachi_size_y;		//セルサイズY
+	s32		mepachi_pos_x;		//セル描画X座標
+	s32		mepachi_pos_y;		//セル描画Y座標
+
 }MCSS_NCEC;
 
 typedef struct
@@ -51,6 +60,8 @@ typedef struct
 	NNSG2dImageProxy			mcss_image_proxy;	//テクスチャプロキシ
 	NNSG2dImagePaletteProxy		mcss_palette_proxy;	//パレットプロキシ
 	VecFx32						pos;				//マルチセルのポジション
+	fx32						scale_x;
+	fx32						scale_y;
 	int							mepachi_flag;		//メパチフラグ（暫定）
 	int							index;				//登録INDEX
 	int							heapID;				//使用するヒープID
@@ -60,9 +71,13 @@ typedef struct
 {
 	int						max;				//登録数MAX
 	MCSS_WORK				**mcss;				//登録マルチセル構造体
+#ifdef USE_RENDER
 	NNSG2dRendererInstance	mcss_render;		//描画用 Render　
 	NNSG2dRenderSurface		mcss_surface;		//メイン画面 Surface
+#endif //USE_RENDER
 	GFL_G3D_CAMERA			*camera;			//カメラへのポインタ
+	int						texAdrs;			//テクスチャ転送開始アドレス
+	int						palAdrs;			//テクスチャパレット転送開始アドレス
 	int						heapID;				//使用するヒープID
 }MCSS_SYS_WORK;
 
@@ -83,4 +98,6 @@ extern	MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys,
 					  ARCDATID		nmar,
 					  ARCDATID		ncec);
 extern	void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+extern	void	MCSS_SetScaleX( MCSS_WORK *mcss, fx32 scale_x );
+extern	void	MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y );
 

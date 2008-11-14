@@ -56,6 +56,9 @@ SRCS	+=		test/testmode.c \
 				test/field/field_net.c	\
 				test/soga/d_soga.c \
 				test/soga/mcss.c \
+				poke_tool/poke_tool.c \
+				poke_tool/pokeparty.c \
+				waza_tool/waza_tool.c \
 				print/printsys.c \
 				print/gf_font.c \
 				system/bmp_winframe.c \

@@ -22,18 +22,22 @@
 
 #include "system\gfl_use.h"
 #include "mcss.h"
-#include "pokegra_wb.naix"
+#include "pokegra/pokegra_wb.naix"
+#include "battgra/battgra_wb.naix"
+#include "spa.naix"
 
-#include "test\performance.h"
+//#define MCS_ENABLE		//MCSを使用する
 
-//#define	 NINTEN_SPL			//ニンテンパーティクル使用
+#define	 NINTEN_SPL			//ニンテンパーティクル使用
+#define	 NIN_SPL_MAX	(3)
 
 #define	CAMERA_SPEED		( FX32_ONE * 2 )
-#define	ROTATE_SPEED		( 65536 / 100 ) 
+#define	MOVE_SPEED			( FX32_ONE >> 2 )
+#define	ROTATE_SPEED		( 65536 / 128 ) 
 #define	PHI_MAX				( ( 65536 / 360 ) * 89 )
-#define	DEFAULT_PHI			( 0 )
+#define	DEFAULT_PHI			( 65536 / 12 )
 #define	DEFAULT_THETA		( 65536 / 4 )
-#define	DEFAULT_SCALE		( FX32_ONE * 50 )
+#define	DEFAULT_SCALE		( FX32_ONE * 16  )
 #define	SCALE_SPEED			( FX32_ONE )
 #define	SCALE_MAX			( FX32_ONE * 200 )
 
@@ -44,11 +48,25 @@
 #define	STRM_BUF_SIZE	(INTERVAL*2*CH_MAX*32)
 #define	SWAV_HEAD_SIZE	(18)
 
-#define DEF_BPCFILE "/BMSample/aura_02.bpc"
+//#define DEF_BPCFILE "/BMSample/aura_02.bpc"
+#define DEF_BPCFILE "/BMSample/tornado.bpc"
+
+static	const	VecFx32	poke_pos[]={
+//	{ 0x00002000, 0x00001000, 0xffffe000 },
+//	{ 0xffffe000, 0x00001000, 0xffffe000 },
+//	{ 0xffffe000, 0x00001000, 0x00002000 },
+	{ FX_F32_TO_FX32( 3.0f ),	FX_F32_TO_FX32( 0.5f ), FX_F32_TO_FX32( -9.0f ) },
+	{ FX_F32_TO_FX32( 6.0f ),	FX_F32_TO_FX32( 0.5f ), FX_F32_TO_FX32( -7.0f ) },
+//	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.0f ) },
+	{ FX_F32_TO_FX32( -3.5f ),	FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.0f ) },
+	{ FX_F32_TO_FX32( -1.5f ),	FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 8.0f ) },
+};
+
 
 enum {
 	DEF_NP_TEXTURE_MAX =	 16,
-	DEF_ENTRYTEX_MAX =		  3,
+//	DEF_ENTRYTEX_MAX =		  3,
+	DEF_ENTRYTEX_MAX =		  1,
 };
 
 // Windowsアプリケーションとの識別で使用するチャンネル値です
@@ -79,6 +97,8 @@ enum{
 #define	MCS_CH_MAX		( MCS_CHANNEL_END )
 #define	MCS_SEND_SIZE	( 0x1800 )
 
+#define	NP_COMP_MAX		( 3 )
+
 //32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
 static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
 
@@ -91,7 +111,7 @@ typedef struct {
 	int			textureCount;
 
  	npPARTICLEEMITCYCLE *pEmit;
-	npPARTICLECOMPOSITE *pComp;
+	npPARTICLECOMPOSITE *pComp[ NP_COMP_MAX ];
 	npTEXTURE*			pTex[ DEF_NP_TEXTURE_MAX ];
 
 	HEAPID		heapID;
@@ -122,12 +142,16 @@ typedef struct
 {
 	int					seq_no;
 	MCSS_SYS_WORK		*mcss_sys;
-	MCSS_WORK			*mcss;
+	MCSS_WORK			*mcss[4];
 	HEAPID				heapID;
 	GFL_G3D_RES			*model_resource;
 	GFL_G3D_RND			*model_render;
 	GFL_G3D_OBJ			*model_obj;
 	GFL_G3D_OBJSTATUS	model_status;
+	GFL_G3D_RES			*stage_resource;
+	GFL_G3D_RND			*stage_render;
+	GFL_G3D_OBJ			*stage_obj;
+	GFL_G3D_OBJSTATUS	stage_status[2];
 	PARTICLE_WORK		*pw;
 	CAMERA_WORK			cw;
 	NNSSndStrm			strm;
@@ -151,6 +175,9 @@ typedef struct
 	int					mcs_idle;
 	int					mcs_enable;
 	MCS_WORK			mw;
+	GFL_BBD_SYS			*bbd_sys;
+	int					bbd_res_idx;
+	int					bbd_obj_idx;
 }SOGA_WORK;
 
 //カメラ
@@ -175,13 +202,13 @@ static void ParticleExit( PARTICLE_WORK *pw );
 static void Bmt_initSystems( void );
 static BOOL Bmt_initEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf, HEAPID heapID);
 static int Bmt_loadTextures( npCONTEXT* pCtx, npTEXTURE** pTex, npPARTICLEEMITCYCLE** ppEmit, npPARTICLECOMPOSITE** ppComp, HEAPID heapID );
-static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** pTex );
-static void Bmt_releaseTextures( npPARTICLECOMPOSITE* pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount );
+static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE** pComp, npTEXTURE** pTex );
+static void Bmt_releaseTextures( npPARTICLECOMPOSITE** pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount );
 static void Bmt_releaseEffect( npCONTEXT *pCtx, npSYSTEM *pSys, void **ppvBuf);
 static void bmt_loadBpc( const char *pszBpc, npPARTICLEEMITCYCLE **ppEmit, HEAPID heapID );
 static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex, npU32* texSize, npU32* palSize, HEAPID heapID );
 static void bmt_Mtx43ToMtx44(MtxFx44 *pDst, MtxFx43 *pTrc);
-static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew );
+static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp, npU32 renew, int comp_no );
 
 //MCS
 static BOOL MCS_Init( SOGA_WORK *sw );
@@ -203,6 +230,10 @@ typedef struct
 }PERFORMANCE_PARAM;
 
 extern	PERFORMANCE_PARAM	per_para;
+
+static	void	EmitScaleSet(GFL_EMIT_PTR emit);
+
+int	emit_angle;
 
 //--------------------------------------------------------------------------
 /**
@@ -271,52 +302,86 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	{
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, wk->heapID, NULL );
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+		G3X_EdgeMarking( TRUE );
 		InitCamera( &wk->cw, wk->heapID );
 	}
 
 	wk->seq_no = 0;
-	wk->mcss_sys = MCSS_Init( 3, wk->cw.camera, wk->heapID );
+	wk->mcss_sys = MCSS_Init( 4, wk->cw.camera, wk->heapID );
 
-#if 1
-	MCSS_Add( wk->mcss_sys,
-			  0x00028000,0x0002a000,0xffff0000,
+	wk->mcss[0] = MCSS_Add( wk->mcss_sys,
+			  poke_pos[0].x, poke_pos[0].y, poke_pos[0].z,
 			  ARCID_POKEGRA,
-			  NARC_pokegra_wb_multi_test_NCBR,
-			  NARC_pokegra_wb_multi_test_NCLR,
-			  NARC_pokegra_wb_multi_test_NCER,
-			  NARC_pokegra_wb_multi_test_NANR,
-			  NARC_pokegra_wb_multi_test_NMCR,
-			  NARC_pokegra_wb_multi_test_NMAR,
-			  NARC_pokegra_wb_multi_test_NCEC );
-	wk->mcss = MCSS_Add( wk->mcss_sys,
-			  0x00060000,0x00018000,0x00010000,
-			  ARCID_POKEGRA,
-			  NARC_pokegra_wb_multi_test3_NCBR,
-			  NARC_pokegra_wb_multi_test3_NCLR,
-			  NARC_pokegra_wb_multi_test3_NCER,
-			  NARC_pokegra_wb_multi_test3_NANR,
-			  NARC_pokegra_wb_multi_test3_NMCR,
-			  NARC_pokegra_wb_multi_test3_NMAR,
-			  NARC_pokegra_wb_multi_test3_NCEC );
-	MCSS_Add( wk->mcss_sys,
-			  0xfffd0000,0x0003a000,0x00020000,
-			  ARCID_POKEGRA,
-			  NARC_pokegra_wb_multi_test2_NCBR,
-			  NARC_pokegra_wb_multi_test2_NCLR,
-			  NARC_pokegra_wb_multi_test2_NCER,
-			  NARC_pokegra_wb_multi_test2_NANR,
-			  NARC_pokegra_wb_multi_test2_NMCR,
-			  NARC_pokegra_wb_multi_test2_NMAR,
-			  NARC_pokegra_wb_multi_test2_NCEC );
+			  NARC_pokegra_wb_pfwb_001c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_001_n_NCLR,
+			  NARC_pokegra_wb_pfwb_001_NCER,
+			  NARC_pokegra_wb_pfwb_001_NANR,
+			  NARC_pokegra_wb_pfwb_001_NMCR,
+			  NARC_pokegra_wb_pfwb_001_NMAR,
+			  NARC_pokegra_wb_pfwb_001_NCEC );
+#if 0
+			  NARC_pokegra_wb_pfwb_122c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_122_n_NCLR,
+			  NARC_pokegra_wb_pfwb_122_NCER,
+			  NARC_pokegra_wb_pfwb_122_NANR,
+			  NARC_pokegra_wb_pfwb_122_NMCR,
+			  NARC_pokegra_wb_pfwb_122_NMAR,
+			  NARC_pokegra_wb_pfwb_122_NCEC );
 #endif
+	MCSS_SetScaleX( wk->mcss[0], FX_F32_TO_FX32( 1.2f ) );
+	MCSS_SetScaleY( wk->mcss[0], FX_F32_TO_FX32( 1.2f ) );
+	wk->mcss[1] = MCSS_Add( wk->mcss_sys,
+			  poke_pos[1].x, poke_pos[1].y, poke_pos[1].z,
+			  ARCID_POKEGRA,
+			  NARC_pokegra_wb_pfwb_053c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_053_n_NCLR,
+			  NARC_pokegra_wb_pfwb_053_NCER,
+			  NARC_pokegra_wb_pfwb_053_NANR,
+			  NARC_pokegra_wb_pfwb_053_NMCR,
+			  NARC_pokegra_wb_pfwb_053_NMAR,
+			  NARC_pokegra_wb_pfwb_053_NCEC );
+#if 0
+			  NARC_pokegra_wb_pfwb_006c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_006_n_NCLR,
+			  NARC_pokegra_wb_pfwb_006_NCER,
+			  NARC_pokegra_wb_pfwb_006_NANR,
+			  NARC_pokegra_wb_pfwb_006_NMCR,
+			  NARC_pokegra_wb_pfwb_006_NMAR,
+			  NARC_pokegra_wb_pfwb_006_NCEC );
+#endif
+	MCSS_SetScaleX( wk->mcss[1], FX_F32_TO_FX32( 1.1f ) );
+	MCSS_SetScaleY( wk->mcss[1], FX_F32_TO_FX32( 1.1f ) );
+	wk->mcss[2] = MCSS_Add( wk->mcss_sys,
+			  poke_pos[2].x, poke_pos[2].y, poke_pos[2].z,
+			  ARCID_POKEGRA,
+			  NARC_pokegra_wb_pbwb_006c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_006_n_NCLR,
+			  NARC_pokegra_wb_pbwb_006_NCER,
+			  NARC_pokegra_wb_pbwb_006_NANR,
+			  NARC_pokegra_wb_pbwb_006_NMCR,
+			  NARC_pokegra_wb_pbwb_006_NMAR,
+			  NARC_pokegra_wb_pbwb_006_NCEC );
+	MCSS_SetScaleX( wk->mcss[2], FX_F32_TO_FX32( 0.8f ) );
+	MCSS_SetScaleY( wk->mcss[2], FX_F32_TO_FX32( 0.8f ) );
+	wk->mcss[3] = MCSS_Add( wk->mcss_sys,
+			  poke_pos[3].x, poke_pos[3].y, poke_pos[3].z,
+			  ARCID_POKEGRA,
+			  NARC_pokegra_wb_pbwb_006c_m_NCBR,
+			  NARC_pokegra_wb_pmwb_006_n_NCLR,
+			  NARC_pokegra_wb_pbwb_006_NCER,
+			  NARC_pokegra_wb_pbwb_006_NANR,
+			  NARC_pokegra_wb_pbwb_006_NMCR,
+			  NARC_pokegra_wb_pbwb_006_NMAR,
+			  NARC_pokegra_wb_pbwb_006_NCEC );
+	MCSS_SetScaleX( wk->mcss[3], FX_F32_TO_FX32( 0.8f ) );
+	MCSS_SetScaleY( wk->mcss[3], FX_F32_TO_FX32( 0.8f ) );
 
 	//3D Model Load
 	{
 		BOOL	ret;
 
 		//リソース読み込み
-//		wk->model_resource = GFL_G3D_CreateResourceArc( ARCID_POKEGRA, NARC_pokegra_wb_batt_testmap01c_nsbmd );
-		wk->model_resource = GFL_G3D_CreateResourceArc( ARCID_POKEGRA, NARC_pokegra_wb_test_battle_nsbmd );
+		wk->model_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_field01_nsbmd );
 		ret = GFL_G3D_TransVramTexture( wk->model_resource );
 		GF_ASSERT( ret == TRUE );
 		//RENDER生成
@@ -331,6 +396,51 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		wk->model_status.scale.x = FX32_ONE;
 		wk->model_status.scale.y = FX32_ONE;
 		wk->model_status.scale.z = FX32_ONE;
+
+		//リソース読み込み
+		wk->stage_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, NARC_battgra_wb_batt_stage01_nsbmd );
+		ret = GFL_G3D_TransVramTexture( wk->stage_resource );
+		GF_ASSERT( ret == TRUE );
+		//RENDER生成
+		wk->stage_render = GFL_G3D_RENDER_Create( wk->stage_resource, 0, wk->stage_resource );
+		//OBJ生成
+		wk->stage_obj = GFL_G3D_OBJECT_Create( wk->stage_render, NULL, 0 );
+
+		wk->stage_status[0].trans.x = FX_F32_TO_FX32( 4.5f );
+		wk->stage_status[0].trans.y = 0;
+		wk->stage_status[0].trans.z = FX_F32_TO_FX32( -10.0f );
+		MTX_Identity33(&wk->stage_status[0].rotate);
+		wk->stage_status[0].scale.x = FX_F32_TO_FX32( 0.5f );
+		wk->stage_status[0].scale.y = FX_F32_TO_FX32( 0.5f );
+		wk->stage_status[0].scale.z = FX_F32_TO_FX32( 0.5f );
+
+		wk->stage_status[1].trans.x = FX_F32_TO_FX32( -2.5f );
+		wk->stage_status[1].trans.y = 0;
+		wk->stage_status[1].trans.z = FX_F32_TO_FX32( 4.6f );
+		MTX_Identity33(&wk->stage_status[1].rotate);
+		wk->stage_status[1].scale.x = FX_F32_TO_FX32( 0.5f );
+		wk->stage_status[1].scale.y = FX_F32_TO_FX32( 0.5f );
+		wk->stage_status[1].scale.z = FX_F32_TO_FX32( 0.5f );
+	}
+
+	//ビルボード初期化
+	{
+		static const GFL_BBD_SETUP setup = {
+			64, 128, 
+			{ FX32_ONE * 32, FX32_ONE * 32, FX32_ONE * 32 },
+			GX_RGB(31, 31, 31),
+			GX_RGB(16, 16, 16),
+			GX_RGB(16, 16, 16), 
+			GX_RGB(0, 0, 0),
+			63,
+		};
+		VecFx32 pos = { 0, 0, FX_F32_TO_FX32( -47.0f ) };
+		static	const BOOL	flag = TRUE;
+
+		wk->bbd_sys = GFL_BBD_CreateSys( &setup, wk->heapID );
+		wk->bbd_res_idx = GFL_BBD_AddResourceArc( wk->bbd_sys, ARCID_BATTGRA, NARC_battgra_wb_batt_bg01_nsbtx, GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x32, 32, 32 );
+		wk->bbd_obj_idx = GFL_BBD_AddObject( wk->bbd_sys, wk->bbd_res_idx, FX16_ONE * 2 , FX16_ONE , &pos, 31, GFL_BBD_LIGHT_NONE );
+		GFL_BBD_SetObjectDrawEnable( wk->bbd_sys, wk->bbd_obj_idx, &flag );
 	}
 
 	//2D画面初期化
@@ -354,11 +464,11 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
 
-		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_POKEGRA,NARC_pokegra_wb_batt_bg1_NCGR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
-		GFL_ARC_UTIL_TransVramScreen(ARCID_POKEGRA,NARC_pokegra_wb_batt_bg1_NSCR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
-		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_POKEGRA,NARC_pokegra_wb_batt_bg2_NCGR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
-		GFL_ARC_UTIL_TransVramScreen(ARCID_POKEGRA,NARC_pokegra_wb_batt_bg2_NSCR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
-		GFL_ARC_UTIL_TransVramPalette(ARCID_POKEGRA,NARC_pokegra_wb_batt_bg_NCLR,PALTYPE_MAIN_BG,0,0x100,wk->heapID);
+		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NCGR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
+		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NSCR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
+		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NCGR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
+		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NSCR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
+		GFL_ARC_UTIL_TransVramPalette(ARCID_BATTGRA,NARC_battgra_wb_batt_bg_NCLR,PALTYPE_MAIN_BG,0,0x100,wk->heapID);
 	}
 
 	//ストリーム再生初期化
@@ -374,9 +484,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 #ifdef NINTEN_SPL
 	GFL_PTC_Init( wk->heapID );
 	wk->ptc = GFL_PTC_Create( wk->spa_work, PARTICLE_LIB_HEAP_SIZE, FALSE, wk->heapID );
-	GFL_PTC_SetResource( wk->ptc, GFL_PTC_LoadArcResource( ARCID_PTC, 0, wk->heapID ), TRUE, NULL );
+	GFL_PTC_SetResource( wk->ptc, GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_467_spa, wk->heapID ), TRUE, NULL );
 #else
-	wk->pw = GFL_HEAP_AllocMemory( wk->heapID, sizeof(PARTICLE_WORK) );
+	wk->pw = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(PARTICLE_WORK) );
 	wk->pw->heapID = wk->heapID;
 	ParticleInit( wk->pw );
 #endif
@@ -401,7 +511,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	if( wk->mcs_enable ){
 		NNS_McsPollingIdle();
 		MCS_Read( wk );
-		MCS_Write( wk );
+//		MCS_Write( wk );
 	}
 
 	//画面切り替え実験
@@ -425,6 +535,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 
 	StrmBufferCopy(wk,0);
 
+#ifdef MCS_ENABLE
 	if( ( trg & PAD_BUTTON_START ) ||
 		wk->mcs_idle ){
 		if( wk->mcs_enable ){
@@ -434,6 +545,11 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			wk->mcs_idle = MCS_Init( wk );
 		}
 	}
+#else
+	if( trg & PAD_BUTTON_START ){
+		InitCamera( &wk->cw, wk->heapID );
+	}
+#endif
 
 	if( trg & PAD_BUTTON_SELECT ){
 		wk->timer_flag ^= 1;
@@ -443,39 +559,65 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 //		bm_flag++;
 //	}
 
-#if 0
 	if( pad & PAD_BUTTON_A ){
-		wk->mcss->mepachi_flag = 1;
+		wk->mcss[0]->mepachi_flag = 1;
+		wk->mcss[1]->mepachi_flag = 1;
+		wk->mcss[2]->mepachi_flag = 1;
+		wk->mcss[3]->mepachi_flag = 1;
 	}
 	else{
-		wk->mcss->mepachi_flag = 0;
+		wk->mcss[0]->mepachi_flag = 0;
+		wk->mcss[1]->mepachi_flag = 0;
+		wk->mcss[2]->mepachi_flag = 0;
+		wk->mcss[3]->mepachi_flag = 0;
 	}
-#endif
 
 	MoveCamera( wk );
 
 	MCSS_Main( wk->mcss_sys );
 
 #ifdef NINTEN_SPL
-	if( GFL_PTC_GetEmitterNum( wk->ptc ) < 20 ){
-		VecFx32	pos={ 0, FX32_ONE * 10, 0 };
-		GFL_PTC_CreateEmitter( wk->ptc, 0, &pos );
+	if( GFL_PTC_GetEmitterNum( wk->ptc ) == 0 ){
+		GFL_PTC_CreateEmitter( wk->ptc, 0, &poke_pos[0] );
+		GFL_PTC_CreateEmitter( wk->ptc, 0, &poke_pos[1] );
+		GFL_PTC_CreateEmitter( wk->ptc, 0, &poke_pos[2] );
+		GFL_PTC_CreateEmitter( wk->ptc, 0, &poke_pos[3] );
+//		GFL_PTC_CreateEmitterCallback( wk->ptc, 0, EmitScaleSet, NULL );
+//		GFL_PTC_CreateEmitter( wk->ptc, 1, &poke_pos[1] );
+//		GFL_PTC_CreateEmitterCallback( wk->ptc, 0, EmitScaleSet, &poke_pos[1] );
+//		GFL_PTC_CreateEmitterCallback( wk->ptc, 1, EmitScaleSet, &poke_pos[1] );
 	}
 #endif
 
 	//3D描画
 	{
+		GFL_BBD_Draw( wk->bbd_sys, wk->cw.camera, NULL );
 		GFL_G3D_DRAW_Start();
 		GFL_G3D_DRAW_SetLookAt();
 		{
 			GFL_G3D_DRAW_DrawObject( wk->model_obj, &wk->model_status );
+//			GFL_G3D_DRAW_DrawObject( wk->model_obj, &wk->stage_status[0] );
+//			GFL_G3D_DRAW_DrawObject( wk->model_obj, &wk->stage_status[1] );
+			GFL_G3D_DRAW_DrawObject( wk->stage_obj, &wk->stage_status[0] );
+			GFL_G3D_DRAW_DrawObject( wk->stage_obj, &wk->stage_status[1] );
 			MCSS_Draw( wk->mcss_sys );
 #ifdef NINTEN_SPL
-			GFL_PTC_Main();
+			{
+				s32	particle_count;
+
+				particle_count = G3X_GetPolygonListRamCount();
+
+				GFL_PTC_Main();
+
+				particle_count = G3X_GetPolygonListRamCount() - particle_count;
+
+				OS_TPrintf("poly:%d\n",particle_count);
+			}
 #else
 			ParticleDraw(wk->pw);
 #endif
 		}
+
 		GFL_G3D_DRAW_End();
 	}
 
@@ -508,31 +650,37 @@ const GFL_PROC_DATA		DebugSogabeMainProcData = {
 //======================================================================
 static	void	InitCamera( CAMERA_WORK *cw, HEAPID heapID )
 {
-	cw->target.x = 0;
-	cw->target.y = 0;
-	cw->target.z = 0;
+//	VecFx32	cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 16.5f ), FX_F32_TO_FX32( 38.0f ) };
+	VecFx32	cam_pos = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 7.0f ), FX_F32_TO_FX32( 18.6f ) };
+
+	cw->target.x = FX_F32_TO_FX32( 0.0f );
+	cw->target.y = FX_F32_TO_FX32( 2.6f );
+	cw->target.z = FX_F32_TO_FX32( 0.0f );
 	cw->camUp.x	= 0;
 	cw->camUp.y	= FX32_ONE;
 	cw->camUp.z	= 0;
 
-	cw->phi		= DEFAULT_PHI;
-	cw->theta	= DEFAULT_THETA;
-	cw->scale	= DEFAULT_SCALE;
+	cw->phi		= FX_Atan2Idx( cam_pos.y, cam_pos.z );
+	cw->theta	= FX_Atan2Idx( cam_pos.y, cam_pos.x );
+	cw->scale	= VEC_Mag( &cam_pos );
 
 	CalcCamera( cw );
 
-	cw->camera = GFL_G3D_CAMERA_Create( GFL_G3D_PRJPERS, 
-										FX32_SIN30,
-										FX32_COS30,
-										FX32_ONE * 4 / 3,
-										NULL,
-										FX32_ONE,
-										FX32_ONE * 1000,
-										NULL,
-										&cw->camPos,
-										&cw->camUp,
-										&cw->target,
-										heapID );
+	if( cw->camera == NULL ){
+		cw->camera = GFL_G3D_CAMERA_Create( GFL_G3D_PRJPERS, 
+											FX32_SIN13,
+											FX32_COS13,
+//											FX32_ONE * 4 / 3,
+											FX_F32_TO_FX32( 1.33f ),
+											NULL,
+											FX32_ONE,
+											FX32_ONE * 1000,
+											NULL,
+											&cw->camPos,
+											&cw->camUp,
+											&cw->target,
+											heapID );
+	}
 }
 
 //======================================================================
@@ -567,33 +715,33 @@ static	void	MoveCamera( SOGA_WORK *wk )
 	}
 	else{
 		if( pad & PAD_KEY_LEFT ){
-			xofs = -FX32_ONE;
+			xofs = -MOVE_SPEED;
 		}
 		if( pad & PAD_KEY_RIGHT ){
-			xofs = FX32_ONE;
+			xofs = MOVE_SPEED;
 		}
 		if( pad & PAD_KEY_UP ){
-			yofs = FX32_ONE;
+			yofs = MOVE_SPEED;
 		}
 		if( pad & PAD_KEY_DOWN ){
-			yofs = -FX32_ONE;
+			yofs = -MOVE_SPEED;
 		}
 		if( pad & PAD_BUTTON_X ){
-			zofs = FX32_ONE;
+			zofs = MOVE_SPEED;
 		}
 		if( pad & PAD_BUTTON_B ){
-			zofs = -FX32_ONE;
+			zofs = -MOVE_SPEED;
 		}
 		if( wk->mw.pos_x ){
-			xofs = FX32_ONE * wk->mw.pos_x;
+			xofs = MOVE_SPEED * wk->mw.pos_x;
 			wk->mw.pos_x = 0;
 		}
 		if( wk->mw.pos_y ){
-			yofs = FX32_ONE * wk->mw.pos_y;
+			yofs = MOVE_SPEED * wk->mw.pos_y;
 			wk->mw.pos_y = 0;
 		}
 		if( wk->mw.distance ){
-			zofs = FX32_ONE * (wk->mw.distance / 50);
+			zofs = MOVE_SPEED * (wk->mw.distance / 50);
 			wk->mw.distance = 0;
 		}
 		pos.x = cw->camPos.x - cw->target.x;
@@ -639,7 +787,6 @@ static	void	MoveCamera( SOGA_WORK *wk )
 		wk->mw.phi = 0;
 	}
 
-
 	CalcCamera( cw );
 	GFL_G3D_CAMERA_SetPos( cw->camera, &cw->camPos );
 	GFL_G3D_CAMERA_SetTarget( cw->camera, &cw->target );
@@ -661,7 +808,7 @@ static	void	CalcCamera( CAMERA_WORK *cw )
 	MTX_Scale43( &scale, cw->scale, cw->scale, cw->scale );
 	MTX_MultVec43( &pos, &scale, &pos );
 	MTX_Identity43( &trans );
-	MTX_TransApply43( &trans, &trans, cw->target.x,	cw->target.y, cw->target.z );
+//	MTX_TransApply43( &trans, &trans, cw->target.x,	cw->target.y, cw->target.z );
 	MTX_MultVec43( &pos, &trans, &cw->camPos );
 }
 
@@ -758,7 +905,9 @@ static void ParticleInit( PARTICLE_WORK *pw )
 	Bmt_initSystems();
 	Bmt_initEffect( &pw->ctx, &pw->sys, &pw->pvBuf, pw->heapID );
 	OS_TPrintf("BM init effect OK.\n");
-	pw->textureCount = Bmt_loadTextures( &pw->ctx, &pw->pTex[0], &pw->pEmit, &pw->pComp, pw->heapID );
+	pw->textureCount = Bmt_loadTextures( &pw->ctx, &pw->pTex[0], &pw->pEmit, &pw->pComp[0], pw->heapID );
+	pw->textureCount = Bmt_loadTextures( &pw->ctx, &pw->pTex[0], &pw->pEmit, &pw->pComp[1], pw->heapID );
+	pw->textureCount = Bmt_loadTextures( &pw->ctx, &pw->pTex[0], &pw->pEmit, &pw->pComp[2], pw->heapID );
 	OS_TPrintf("BM load texture OK.\n");
 	npSetPolygonIDMin( &pw->ctx, 30 );
 	npSetPolygonIDMax( &pw->ctx, 50 );
@@ -766,12 +915,12 @@ static void ParticleInit( PARTICLE_WORK *pw )
 
 static void ParticleDraw( PARTICLE_WORK *pw )
 {
-	Bmt_update( &pw->ctx, pw->pComp, &pw->pTex[0] );
+	Bmt_update( &pw->ctx, &pw->pComp[0], &pw->pTex[0] );
 }
 
 static void ParticleExit( PARTICLE_WORK *pw )
 {
-	Bmt_releaseTextures( pw->pComp, &pw->ctx, &pw->pTex[0], pw->textureCount );
+	Bmt_releaseTextures( &pw->pComp[0], &pw->ctx, &pw->pTex[0], pw->textureCount );
 	OS_TPrintf("BM init release texture  OK.\n");
 	Bmt_releaseEffect( &pw->ctx, &pw->sys, &pw->pvBuf );
 	OS_TPrintf("BM init release effect  OK.\n");
@@ -981,9 +1130,7 @@ static int Bmt_loadTextures( npCONTEXT* pCtx, npTEXTURE** pTex, npPARTICLEEMITCY
 
 	static const TEX_LIST texList[] = 
 	{
-		{ "/BmSample/aura_01.ntft"			, "/BmSample/aura_01.ntfp"			, 32, 64,	GX_TEXFMT_A5I3} ,
-		{ "/BmSample/sphere_06.ntft"		, "/BmSample/sphere_06.ntfp"		, 256, 256,	GX_TEXFMT_A5I3} ,
-		{ "/BmSample/sphere_hole_01.ntft"	, "/BmSample/sphere_hole_01.ntfp"	, 32, 32,	GX_TEXFMT_A5I3} ,
+		{ "/BmSample/kemuri2.ntft"		, "/BmSample/kemuri2.ntfp"		, 64, 64,	GX_TEXFMT_A5I3} ,
 	};
 
 	npU32 ntftAddr = 0x1c000;
@@ -1130,11 +1277,15 @@ static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex,
 //--------------------------------------------------
 // テクスチャ解放
 //--------------------------------------------------
-static void Bmt_releaseTextures( npPARTICLECOMPOSITE* pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount )
+static void Bmt_releaseTextures( npPARTICLECOMPOSITE** pComp, npCONTEXT* pCtx, npTEXTURE** pTex, int textureCount )
 {
 	int i;
 
-	npParticleReleaseComposite( pComp );
+	for( i = 0 ; i < NP_COMP_MAX ; i++ ){
+		if( pComp[i] != NULL ){
+			npParticleReleaseComposite( pComp[i] );
+		}
+	}
 
 	for(i=0; i<textureCount; i++)
 	{
@@ -1144,7 +1295,7 @@ static void Bmt_releaseTextures( npPARTICLECOMPOSITE* pComp, npCONTEXT* pCtx, np
 //--------------------------------------------------
 // 描画更新
 //--------------------------------------------------
-static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** pTex )
+static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE** pComp, npTEXTURE** pTex )
 {
 	MtxFx44 matProj, matView;
 	MtxFx43 matView43;
@@ -1189,8 +1340,12 @@ static void Bmt_update( npCONTEXT* ctx, npPARTICLECOMPOSITE* pComp, npTEXTURE** 
 
 	// UPDATE & RENDER
 	{
-		bmt_updateEffect( pComp, NP_NTSC60 );
-		npParticleRenderComposite( ctx, pComp, pTex, DEF_ENTRYTEX_MAX );
+		int	i;
+
+		for( i = 0 ; i < NP_COMP_MAX ; i++ ){
+			bmt_updateEffect( pComp[i], NP_NTSC60, i );
+			npParticleRenderComposite( ctx, pComp[i], pTex, DEF_ENTRYTEX_MAX );
+		}
 	}
 
 	G3_PopMtx(1);
@@ -1210,18 +1365,25 @@ static void bmt_Mtx43ToMtx44(MtxFx44 *pDst, MtxFx43 *pTrc)
 }
 
 
-static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp,npU32 renew )
+static void bmt_updateEffect( npPARTICLECOMPOSITE* pComp, npU32 renew, int comp_no )
 {
 	MtxFx44	mtx,trans;
 	// scalingEffect
 	npFMATRIX effMat;
 	npFVECTOR scale;
+	VecFx32	pos[]={
+		{ 0x00028000, 0x00001000, 0xffff0000 },
+		{ 0x00060000, 0x00001000, 0x00010000 },
+		{ 0xfffd0000, 0x00001000, 0x00020000 },
+	};
 
 #if 1
-	MTX_Scale44( &mtx, FX32_ONE * 12, FX32_ONE * 4, FX32_ONE * 12 );
+//	MTX_Scale44( &mtx, FX32_ONE * 12, FX32_ONE * 4, FX32_ONE * 12 );
+//	MTX_Identity44( &trans );
+//	MTX_TransApply44( &trans, &trans, pos[ comp_no ].x, pos[ comp_no ].y, pos[ comp_no ].z );
+//	MTX_Concat44( &mtx, &trans, &mtx );
 	MTX_Identity44( &trans );
-	MTX_TransApply44( &trans, &trans, 0x00060000,0x00001000,0x00010000 );
-	MTX_Concat44( &mtx, &trans, &mtx );
+	MTX_TransApply44( &trans, &mtx, poke_pos[ comp_no ].x, poke_pos[ comp_no ].y, poke_pos[ comp_no ].z );
 #else
 	MTX_Identity44( &mtx );
 	MTX_TransApply44( &mtx, &mtx, 0x00060000,0x00001000,0x00010000 );
@@ -1316,11 +1478,6 @@ static void MCS_Read( SOGA_WORK *wk )
 		// データの読み取り
 		if( NNS_McsReadStream( MCS_CHANNEL0, &buf, sizeof(MCS_WORK), &readSize)){
 			wk->mw = buf;
-//			OS_TPrintf( "phi:%d\ntheta:%d\ndistance:%d\npos_x:%d\npos_y:%d\n",wk->mw.phi,
-//																			  wk->mw.theta,
-//																			  wk->mw.distance,
-//																			  wk->mw.pos_x,
-//																			  wk->mw.pos_y);
         }
 	}
 }
@@ -1422,5 +1579,27 @@ static void Capture_VBlankIntr( GFL_TCB *tcb, void *work )
 				  16,								// Blend parameter for src A
 				  16);								// Blend parameter for src B
 	//---------------------------------------------------------------------------
+}
+
+static	void	EmitScaleSet(GFL_EMIT_PTR emit)
+{
+	VecFx16	vec;
+	VecFx32	pos;
+
+	pos.x = poke_pos[2].x;
+	pos.y = poke_pos[2].y + FX32_ONE * 4;
+	pos.z = poke_pos[2].z - FX32_HALF;
+
+	GFL_PTC_SetEmitterPosition( emit, &pos );
+
+	vec.x = poke_pos[ emit_angle ].x - poke_pos[2].x;
+	vec.y = poke_pos[ emit_angle ].y - poke_pos[2].y;
+	vec.z = poke_pos[ emit_angle ].z - poke_pos[2].z;
+
+	VEC_Fx16Normalize( &vec, &vec );
+
+	emit_angle ^= 1;
+
+	GFL_PTC_SetEmitterAxis( emit, &vec );
 }
 

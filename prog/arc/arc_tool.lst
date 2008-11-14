@@ -65,7 +65,7 @@
 	ARCID_GSOBJTEX		"test_graphic/areabm_texset.narc"	#
 	ARCID_GSOBJANMTBL	"test_graphic/bm_info_out.narc"	#
 	ARCID_GSAREAOBJ		"test_graphic/area_build.narc"	#
-	ARCID_POKEGRA		"pokegra_wb.narc"	#
+	ARCID_POKEGRA		"pokegra/pokegra_wb.narc"	#
 	ARCID_FLDMAP_WINFRAME "test_graphic/winframe.narc"   # ウィンドウフレーム
 	ARCID_FLDMAP_MENU_GRA "test_graphic/menu_gra.narc"   # メニューグラフィック
 	ARCID_FLDMAP_TESTGRIDMAP_ATTR "test_graphic/testgridmap_a.narc" #テストマップ
@@ -75,5 +75,10 @@
 	ARCID_MB_TEST		"test_graphic/mb_test.narc"		#マルチブートテスト用(親
 	ARCID_FLDMAP_LANDDATA "test_graphic/map_land_data.narc" #フィールドマップ地形データ
 	ARCID_FLDMAP_MAPMATRIX "test_graphic/map_matrix.narc" #フィールドマップマトリクス
+	ARCID_BATTGRA		"battgra/battgra_wb.narc"	#
 	ARCID_ZONEDATA		"fieldmap/zonedata.narc"		#ゾーン毎データ
+	ARCID_PERSONAL		"personal/personal.narc"		#パーソナルデータ
+	ARCID_GROW_TBL		"personal/growtbl.narc"			#成長曲線テーブル
+	ARCID_WOTBL			"personal/wotbl.narc"			#技覚えテーブル
+	ARCID_WAZA_TBL		"waza_tbl/waza_tbl.narc"			#技テーブル
 
