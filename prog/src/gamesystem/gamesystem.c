@@ -38,6 +38,12 @@ enum {
 //------------------------------------------------------------------
 static GAMESYS_WORK * GameSysWork;
 
+//------------------------------------------------------------------
+/**
+ * @brief	ゲーム初期化パラメータ保持変数
+ *
+ */
+//------------------------------------------------------------------
 static GAME_INIT_WORK TestGameInitWork;
 
 //============================================================================================
@@ -161,46 +167,13 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
 }
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
-{
-	return gsys->proc_result;
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
 	GAMEDATA_Delete(gsys->gamedata);
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-GAMEDATA * GAMESYSTEM_GetGameData(GAMESYS_WORK * gsys)
-{
-	return gsys->gamedata;
-}
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys)
-{
-	return GAMEDATA_GetMyPlayerWork(gsys->gamedata);
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
-{
-	return gsys->heapID;
-}
-GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
-{
-	return gsys->event;
-}
-void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
-{
-	gsys->event = event;
-}
 
 //============================================================================================
 //============================================================================================
@@ -239,10 +212,13 @@ static void GameSystem_End(GAMESYS_WORK * gsys)
 }
 
 //============================================================================================
+//
+//		外部インターフェイス関数
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GameSystem_SetNextProc(GAMESYS_WORK * gsys,
+void GAMESYSTEM_SetNextProc(GAMESYS_WORK * gsys,
 		FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void * pwk)
 {
 	GFL_PROC_LOCAL_SetNextProc(gsys->procsys, ov_id, procdata, pwk);
@@ -250,7 +226,7 @@ void GameSystem_SetNextProc(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GameSystem_CallProc(GAMESYS_WORK * gsys,
+void GAMESYSTEM_CallProc(GAMESYS_WORK * gsys,
 		FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void * pwk)
 {
 	GFL_PROC_LOCAL_CallProc(gsys->procsys, ov_id, procdata, pwk);
@@ -258,8 +234,54 @@ void GameSystem_CallProc(GAMESYS_WORK * gsys,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GameSystem_CallFieldProc(GAMESYS_WORK * gsys)
+void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys)
 {
-	GameSystem_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+	GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &DebugFieldProcData, gsys);
+}
+
+//------------------------------------------------------------------
+//	プロセス存在チェック
+//------------------------------------------------------------------
+BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys)
+{
+	return gsys->proc_result;
+}
+//------------------------------------------------------------------
+//	ゲームデータ取得
+//------------------------------------------------------------------
+GAMEDATA * GAMESYSTEM_GetGameData(GAMESYS_WORK * gsys)
+{
+	return gsys->gamedata;
+}
+
+//------------------------------------------------------------------
+//	自分プレイヤーワーク取得
+//------------------------------------------------------------------
+PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys)
+{
+	return GAMEDATA_GetMyPlayerWork(gsys->gamedata);
+}
+//------------------------------------------------------------------
+//	ヒープID取得
+//------------------------------------------------------------------
+HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
+{
+	return gsys->heapID;
+}
+
+//------------------------------------------------------------------
+//	イベント取得
+//------------------------------------------------------------------
+GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
+{
+	return gsys->event;
+}
+
+//------------------------------------------------------------------
+//	イベント設定
+//------------------------------------------------------------------
+void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
+{
+	gsys->event = event;
 }
 

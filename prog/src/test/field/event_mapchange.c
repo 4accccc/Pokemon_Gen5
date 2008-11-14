@@ -16,7 +16,11 @@
 #include "field_data.h"
 
 #include "event_mapchange.h"
+
 //============================================================================================
+//
+//	イベント：ゲーム開始
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -31,7 +35,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT_CONTROL * event, int *seq, void *
 {
 	FIRST_MAPIN_WORK * fmw = work;
 	GAMESYS_WORK * gsys = fmw->gsys;
-	GAME_INIT_WORK * game_init_work = ((FIRST_MAPIN_WORK *)work)->game_init_work;
+	GAME_INIT_WORK * game_init_work = fmw->game_init_work;
 	switch (*seq) {
 	case 0:
 		{
@@ -48,7 +52,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT_CONTROL * event, int *seq, void *
 		break;
 	case 1:
 #if 1		/* 暫定的にプロセス登録 */
-		GameSystem_CallFieldProc(gsys);
+		GAMESYSTEM_CallFieldProc(gsys);
 #endif
 		return GMEVENT_RES_FINISH;
 	}
@@ -68,6 +72,10 @@ void DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_w
 }
 
 //============================================================================================
+//
+//	イベント：デバッグ用マップ切り替え
+//	※マップIDをインクリメントしている。最大値になったら先頭に戻る
+//
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -97,7 +105,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT_CONTROL * event, int *seq, void*wo
 			PLAYERWORK_setPosition(mywork, start_pos);
 			PLAYERWORK_setDirection(mywork, 0);
 		}
-		GameSystem_CallFieldProc(gsys);
+		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq)++;
 		break;
 	case 2:
@@ -130,6 +138,9 @@ void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 	}
 }
 //============================================================================================
+//
+//	イベント：別画面呼び出し
+//
 //============================================================================================
 extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
@@ -144,7 +155,7 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void *
 		(*seq) ++;
 		break;
 	case 1:
-		GameSystem_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
 		(*seq) ++;
 		break;
 	case 2:
@@ -152,13 +163,15 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void *
 		(*seq) ++;
 		break;
 	case 3:
-		GameSystem_CallFieldProc(gsys);
+		GAMESYSTEM_CallFieldProc(gsys);
 		return GMEVENT_RES_FINISH;
 		
 	}
 	return GMEVENT_RES_CONTINUE;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys)
 {
 	GAMESYSTEM_EVENT_Set(gsys, GameChangeEvent, 0);

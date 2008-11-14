@@ -36,10 +36,13 @@ typedef struct _GMEVENT_CONTROL GMEVENT_CONTROL;
 //============================================================================================
 //------------------------------------------------------------------
 /**
+ * @brief	ゲームメインプロセス定義データ
  */
 //------------------------------------------------------------------
 extern const GFL_PROC_DATA GameMainProcData;
 
+//============================================================================================
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	ゲーム内プロセスの呼び出し（分岐）
@@ -49,7 +52,7 @@ extern const GFL_PROC_DATA GameMainProcData;
  * @param	pwk			上位プロセスから渡すワーク
  */
 //------------------------------------------------------------------
-extern void GameSystem_SetNextProc(GAMESYS_WORK * gsys,
+extern void GAMESYSTEM_SetNextProc(GAMESYS_WORK * gsys,
 		FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void * pwk);
 
 //------------------------------------------------------------------
@@ -61,7 +64,7 @@ extern void GameSystem_SetNextProc(GAMESYS_WORK * gsys,
  * @param	pwk			上位プロセスから渡すワーク
  */
 //------------------------------------------------------------------
-extern void GameSystem_CallProc(GAMESYS_WORK * gsys,
+extern void GAMESYSTEM_CallProc(GAMESYS_WORK * gsys,
 		FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void * pwk);
 
 //------------------------------------------------------------------
@@ -70,7 +73,7 @@ extern void GameSystem_CallProc(GAMESYS_WORK * gsys,
  * @param	gsys		ゲーム制御ワークへのポインタ
  */
 //------------------------------------------------------------------
-extern void GameSystem_CallFieldProc(GAMESYS_WORK * gsys);
+extern void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**
@@ -98,6 +101,14 @@ extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event);
  */
 //------------------------------------------------------------------
 extern BOOL GAMESYSTEM_IsProcExists(const GAMESYS_WORK * gsys);
+
+//------------------------------------------------------------------
+/**
+ * @brief	ゲームシステム用ヒープIDの取得
+ * @param	gsys	ゲーム制御ワークへのポインタ
+ */
+//------------------------------------------------------------------
+extern HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**
