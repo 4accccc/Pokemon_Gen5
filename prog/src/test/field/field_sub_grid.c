@@ -62,14 +62,14 @@ struct _FGRID_CONT
 //--------------------------------------------------------------
 struct _FGRID_PLAYER
 {
-	s16 dir;
+	u16 dir;
 	s16 gx;
 	s16 gy;
 	s16 gz;
 	VecFx32 vec_pos;
 	
 	fx16 scale_size;	//FX16_ONE*8
-
+	
 	u16 move_flag;
 	s16 move_dir;
 	VecFx32 move_val;
@@ -848,6 +848,25 @@ void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork )
 	fx16 scale;
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	pGridCont->proc_switch = GRIDPROC_DEBUG01;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自機の方向を返す
+ * @param	fieldWork	FIELD_MAIN_WORK
+ * @retval	u16			DIR_UP等
+ */
+//--------------------------------------------------------------
+u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork )
+{
+	const FGRID_CONT *pGridCont = fieldWork->pGridCont;
+	
+	if( pGridCont != NULL ){
+		const FGRID_PLAYER *pJiki = pGridCont->pGridPlayer;
+		return( pJiki->dir );
+	}
+
+	return( DIR_NOT );
 }
 
 #if 0	//実データ利用

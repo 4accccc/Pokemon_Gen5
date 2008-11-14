@@ -183,9 +183,9 @@ void FldCommActor_Update( FLD_COMM_ACTOR *act )
 	if( act->pos.x != act->old_pos.x ||
 		act->pos.y != act->old_pos.y ||
 		act->pos.z != act->old_pos.z ){
-		anmBase = 0;
-	}else{
 		anmBase = 4;
+	}else{
+		anmBase = 0;
 	}
 	
 	anmID = anmBase + dir;

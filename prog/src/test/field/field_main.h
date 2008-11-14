@@ -34,4 +34,6 @@ extern BOOL	FieldMain( GAMESYS_WORK * gsys );
 extern void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
 
+extern u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork );
+
 #endif //__FIELD_MAIN_H__
