@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2008-10-24T16:33:07"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-11T15:52:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,9 +105,9 @@
 		</language>
 	</columns>
 
-	<dialog left="207" top="176" right="912" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="241" top="153" right="946" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="933" top="204" right="1280" bottom="602" visible="yes"/>
+		<tag-palette left="933" top="204" right="1280" bottom="602" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -155,6 +155,48 @@
 
 	<row id="DEBUG_FIELD_STR04">
 		<language name="JPN" font=" 2:lcfont12" width="80">スケール調節</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE00">
+		<language name="JPN" font=" 2:lcfont12" width="80">通信開始</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE01">
+		<language name="JPN" font=" 2:lcfont12" width="80">侵入開始</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE02">
+		<language name="JPN" font=" 2:lcfont12" width="80">はい</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE03">
+		<language name="JPN" font=" 2:lcfont12" width="80">いいえ</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_STR00">
+		<language name="JPN" font=" 2:lcfont12" width="80">通信を開始します。
+よろしいですか？</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_STR01">
+		<language name="JPN" font=" 2:lcfont12" width="80">侵入を開始します。
+よろしいですか？</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_STR02">
+		<language name="JPN" font=" 2:lcfont12" width="80">誰かが接続してきました。</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_STR03">
+		<language name="JPN" font=" 2:lcfont12" width="80">誰かに接続しました。</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 

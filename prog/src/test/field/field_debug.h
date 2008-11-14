@@ -33,4 +33,6 @@ extern BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu );
 extern GMEVENT * DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys,
 		FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id);
 
+extern void FldDebugMenu_SetCommSystem( void* commSys , DEBUG_FLDMENU *d_menu );
+
 #endif //__FIELD_DEBUG_H__

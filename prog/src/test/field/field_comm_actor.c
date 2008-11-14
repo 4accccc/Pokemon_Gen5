@@ -115,6 +115,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	act->old_pos = *pos;
 	act->bbdActSys = bbdActSys;
 	act->bbdActResUnitID = resUnitID;
+	act->player = player;	//’Ç‰Á‚µ‚Ü‚µ‚½Ari1114
 	act->anm_id = -1;
 
 	actData.resID = 0;

@@ -43,9 +43,9 @@ typedef struct
 	u32 testData[8];
 }FIELD_COMM_PLAYER_DATA;
 //======================================================================
-//	FIELD_COMM_DATA
+//	FIELD_COMM_DATA_OLD
 //======================================================================
-struct _FIELD_COMM_DATA 
+struct _FIELD_COMM_DATA_OLD 
 {
 	u8		seqNo;
 
@@ -74,9 +74,9 @@ struct _FIELD_COMM_DATA
 //======================================================================
 //	proto
 //======================================================================
-FIELD_COMM_DATA	*f_comm = NULL;
+FIELD_COMM_DATA_OLD	*f_comm = NULL;
 
-FIELD_COMM_DATA *FieldComm_InitData( u32 heapID );
+FIELD_COMM_DATA_OLD *FieldComm_InitData( u32 heapID );
 BOOL	FieldComm_InitSystem();
 void	FieldComm_TermSystem();
 void	FieldComm_InitParent();
@@ -132,14 +132,14 @@ static const NetRecvFuncTable FieldCommPostTable[] = {
 /**
  * 通信用データ初期化
  * @param	heapID	ヒープID
- * @retval	FIELD_COMM_DATA
+ * @retval	FIELD_COMM_DATA_OLD
  */
 //--------------------------------------------------------------
-FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
+FIELD_COMM_DATA_OLD *FieldComm_InitData( u32 heapID )
 {
 	u8 i=0;
 
-	f_comm = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_DATA ) );
+	f_comm = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_DATA_OLD ) );
 	
 	f_comm->seqNo  = 0;
 	f_comm->heapID = heapID;
@@ -168,7 +168,7 @@ FIELD_COMM_DATA *FieldComm_InitData( u32 heapID )
 /**
  * 通信ライブラリ開放
  * @param	heapID	ヒープID
- * @retval	FIELD_COMM_DATA
+ * @retval	FIELD_COMM_DATA_OLD
  */
 //--------------------------------------------------------------
 void	FieldComm_TermSystem()
@@ -188,7 +188,7 @@ void	FieldComm_TermSystem()
 /**
  * 通信ライブラリ初期化
  * @param	heapID	ヒープID
- * @retval	FIELD_COMM_DATA
+ * @retval	FIELD_COMM_DATA_OLD
  */
 //--------------------------------------------------------------
 BOOL	FieldComm_InitSystem()

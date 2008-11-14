@@ -165,7 +165,6 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 					msgFileID , msgSys->heapID_ );
 	
 	GFL_FONTSYS_Init();
-	PRINTSYS_Init( GFL_HEAPID_APP );
 	msgSys->printQue_ = PRINTSYS_QUE_Create( msgSys->heapID_ );
 	PRINT_UTIL_Setup( msgSys->printUtil_ , msgSys->bmpwinMsg_ );
 }

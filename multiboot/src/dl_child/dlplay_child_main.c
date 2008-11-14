@@ -15,6 +15,7 @@
 #include "../../pokemon_wb/prog/src/test/dlplay/dlplay_func.h"
 #include "../../pokemon_wb/prog/src/test/ariizumi/ari_debug.h"
 #include "dlplay_data_main.h"
+#include "print/printsys.h"
 
 #include "mb_test.naix"
 #include "message_dl.naix"
@@ -142,6 +143,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG  , 0x200000 );
 
+	PRINTSYS_Init( HEAPID_ARIIZUMI_DEBUG );
 	DLPlayChild_InitBg();
 
 

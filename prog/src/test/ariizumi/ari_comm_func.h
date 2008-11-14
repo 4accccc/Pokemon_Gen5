@@ -36,12 +36,12 @@ typedef enum
 //======================================================================
 //	struct
 //======================================================================
-typedef struct _FIELD_COMM_DATA FIELD_COMM_DATA;
+typedef struct _FIELD_COMM_DATA_OLD FIELD_COMM_DATA_OLD;
 
 //======================================================================
 //	extern
 //======================================================================
-extern FIELD_COMM_DATA *FieldComm_InitData( u32 heapID );
+extern FIELD_COMM_DATA_OLD *FieldComm_InitData( u32 heapID );
 extern BOOL FieldComm_InitSystem();
 extern void FieldComm_TermSystem();
 extern void	FieldComm_InitParent();

@@ -18,11 +18,13 @@
 #include "msg/msg_d_field.h"
 
 #include "field_debug.h"
+#include "field_comm/field_comm_main.h"
 
 //======================================================================
 //	define
 //======================================================================
 #define DEBUG_BGFRAME_MENU (GFL_BG_FRAME1_M)	//使用フレーム
+#define DEBUG_BGFRAME_MSG  (GFL_BG_FRAME2_M)	//使用フレーム
 #define DEBUG_MENU_PANO	(14)
 #define DEBUG_FONT_PANO	(15)
 
@@ -82,6 +84,10 @@ struct _TAG_DEBUG_FLDMENU
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
 	D_MENU_CALLPROC call_proc;
+
+	//通信メニュー用
+	int commSeq;	//追加 Ari1111
+	FIELD_COMM_MAIN	*commSys;
 };
 
 //======================================================================
@@ -90,6 +96,8 @@ struct _TAG_DEBUG_FLDMENU
 static void DMenuCallProc_GridCamera( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_OpenStartComm( DEBUG_FLDMENU *wk );
+static void DMenuCallProc_OpenStartInvasion( DEBUG_FLDMENU *wk );
 
 //======================================================================
 //	メニューリスト一覧
@@ -99,8 +107,8 @@ static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk );
 //--------------------------------------------------------------
 static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
-	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
+	{ DEBUG_FIELD_C_CHOICE01, DMenuCallProc_OpenStartInvasion },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -121,7 +129,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
+//	{ DEBUG_FIELD_STR01, NULL },
 };
 
 //--------------------------------------------------------------
@@ -206,7 +215,7 @@ DEBUG_FLDMENU * FldDebugMenu_Init(
 		GFL_BG_SetVisible( d_menu->bgFrame, VISIBLE_ON );
 		
 		GFL_BG_SetPriority( d_menu->bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
 
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_D_TAYA, NARC_d_taya_default_nclr,
@@ -218,6 +227,31 @@ DEBUG_FLDMENU * FldDebugMenu_Init(
 
 		GFL_BG_LoadScreenReq( d_menu->bgFrame );
 	}
+	{
+		//もう１面追加します Ari1113
+		GFL_BG_BGCNT_HEADER msgBgcntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x18000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
+		const u8 msgBgFrame = DEBUG_BGFRAME_MSG;
+		
+		GFL_BG_SetBGControl(
+			msgBgFrame, &msgBgcntText, GFL_BG_MODE_TEXT );
+
+		GFL_BG_SetVisible( msgBgFrame, VISIBLE_ON );
+		
+		GFL_BG_SetPriority( msgBgFrame, 1 );
+
+		GFL_BG_FillCharacter( msgBgFrame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( msgBgFrame,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+
+		GFL_BG_LoadScreenReq( msgBgFrame );
+	}
+
+	d_menu->commSys = (FIELD_COMM_MAIN*)FieldMain_GetCommSys( fieldWork );
 	
 	return( d_menu );
 }
@@ -416,13 +450,62 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 		if( d_menu->call_proc != NULL ){
 			d_menu->call_proc( d_menu );
 		}
-		
 		d_menu->call_proc = NULL;
-		return( TRUE );
+		//通信に行くときはそのままにしたいので
+		if( d_menu->seq_no == 2 ){
+			return( TRUE );
+		}
+
+		//通信メニュー用処理
+	case 10:
+		switch( d_menu->commSeq )
+		{
+		case 0:
+			FieldCommMain_InitStartCommMenu( d_menu->commSys );
+			d_menu->commSeq++;
+			break;
+		case 1:
+			if( FieldCommMain_LoopStartCommMenu( d_menu->commSys ) == TRUE ){
+				d_menu->commSeq++;
+			}
+			break;
+		case 2:
+			FieldCommMain_TermStartCommMenu( d_menu->commSys );
+			d_menu->commSeq++;
+			return (TRUE);
+			break;
+		}
+		break;
+	case 11:
+		switch( d_menu->commSeq )
+		{
+		case 0:
+			FieldCommMain_InitStartInvasionMenu( d_menu->commSys );
+			d_menu->commSeq++;
+			break;
+		case 1:
+			if( FieldCommMain_LoopStartInvasionMenu( d_menu->commSys ) == TRUE ){
+				d_menu->commSeq++;
+			}
+			break;
+		case 2:
+			FieldCommMain_TermStartInvasionMenu( d_menu->commSys );
+			d_menu->commSeq++;
+			return (TRUE);
+			break;
+		}
+		break;
+		break;
 	}
 	
 	return( FALSE );
 }
+
+void FldDebugMenu_SetCommSystem( void* commSys , DEBUG_FLDMENU *d_menu )
+{
+	d_menu->commSys = (FIELD_COMM_MAIN*)commSys;
+}
+
 
 //======================================================================
 //	デバッグメニュー呼び出し
@@ -473,5 +556,31 @@ static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk )
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleControl( fieldWork );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　通信開始メニュー
+ * @param	wk	DEBUG_FLDMENU*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DMenuCallProc_OpenStartComm( DEBUG_FLDMENU *wk )
+{
+	wk->seq_no = 10;
+	wk->commSeq = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　侵入開始メニュー
+ * @param	wk	DEBUG_FLDMENU*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DMenuCallProc_OpenStartInvasion( DEBUG_FLDMENU *wk )
+{
+	wk->seq_no = 11;
+	wk->commSeq = 0;
 }
 

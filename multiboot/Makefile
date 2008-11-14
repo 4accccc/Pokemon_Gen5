@@ -188,6 +188,8 @@ source:
 #	子機srlを親機側に移動
 #----------------------------------------------------------------------------
 
-installsrl:
+installsrl:..\prog\filetree\dl_rom\child.srl
+
+..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS\Release\main.srl
 	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
 

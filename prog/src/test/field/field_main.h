@@ -33,6 +33,7 @@ extern BOOL	FieldMain( GAMESYS_WORK * gsys );
 
 extern void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
+extern void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork);
 
 extern u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork );
 

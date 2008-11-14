@@ -80,7 +80,13 @@ SRCS	+=		test/testmode.c \
 				test/dlplay/mbp.c \
 				test/dlplay/dlplay_comm_func.c \
 				test/dlplay/dlplay_disp_sys.c \
-				test/field/field_comm_actor.c
+				test/field/field_comm_actor.c \
+				test/field/field_comm/field_comm_main.c \
+				test/field/field_comm/field_comm_menu.c \
+				test/field/field_comm/field_comm_data.c \
+				test/field/field_comm/field_comm_func.c
+
+
 
 #================================================
 # ここから下はオーバーレイプログラム定義

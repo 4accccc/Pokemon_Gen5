@@ -35,6 +35,7 @@
 #include "map_matrix.h"
 
 #include "field_comm_actor.h"
+#include "field_comm/field_comm_main.h"
 
 //============================================================================================
 /**
@@ -90,6 +91,7 @@ struct _FIELD_MAIN_WORK
 	void *pGridCont;
 	void *pMapMatrixBuf;
 	
+	FIELD_COMM_MAIN *commSys;
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
 };
 
@@ -158,10 +160,23 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
 	fieldWork->gsys = gsys;
+
+	//通信用処理
+	fieldWork->commSys = FieldCommMain_InitSystem( heapID );
+
+//	GFL_UI_TP_Init( fieldWork->heapID );
 }
+
+void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
+{
+	return (void*)fieldWork->commSys;
+}
+
 
 void	FieldEnd( void )
 {
+//	GFL_UI_TP_Exit();
+	FieldCommMain_TermSystem( fieldWork->commSys );
 	GFL_HEAP_FreeMemory( fieldWork );
 	fieldWork = NULL;
 }
@@ -223,6 +238,9 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 			//登録テーブルごとに個別のメイン処理を呼び出し
 			fieldWork->ftbl->main_func( fieldWork, &pos );
 			
+			//通信用処理(プレイヤーの座標の設定とか
+			FieldCommMain_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
+
 			//通信用アクター更新
 			fieldMainCommActorProc( fieldWork );
 
@@ -358,8 +376,9 @@ struct _FIELD_SETUP {
  */
 //------------------------------------------------------------------
 ///ＶＲＡＭバンク設定構造体
+//通信のため メイン2D　D→C　テクスチャイメージスロットABC→AB	Ari081113
 static const GFL_BG_DISPVRAM dispVram = {
-	GX_VRAM_BG_128_D,				//メイン2DエンジンのBGに割り当て 
+	GX_VRAM_BG_128_C,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
 	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
@@ -367,7 +386,7 @@ static const GFL_BG_DISPVRAM dispVram = {
 	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_SUB_OBJ_16_I,			//サブ2DエンジンのOBJに割り当て
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_012_ABC,			//テクスチャイメージスロットに割り当て
+	GX_VRAM_TEX_01_AB,				//テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G,			//テクスチャパレットスロットに割り当て
 };
 
