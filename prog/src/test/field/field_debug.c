@@ -292,14 +292,11 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 			d_menu->arcHandleMsg, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
 
-		PRINTSYS_Init( d_menu->heapID );
+//		PRINTSYS_Init( d_menu->heapID );	//メイン側で呼ぶようになった
 		d_menu->printQue = PRINTSYS_QUE_Create( d_menu->heapID );
-	
 		PRINT_UTIL_Setup( d_menu->printUtil, d_menu->bmpwin );	
 	}
 }
-
-extern void PRINTSYS_Delete( void );
 
 //--------------------------------------------------------------
 /**
@@ -405,14 +402,12 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 		BmpMenuWork_ListDelete( d_menu->menulistdata );	//freeheap
 		#endif
 
-		//プリントユーティリティ削除　いらない
+		//プリントユーティリティ削除はいらない
 		PRINTSYS_QUE_Delete( d_menu->printQue );
-		#ifdef DEBUG_HEAPERROR
-		PRINTSYS_Delete();	//freeheap
-		#endif
-
+	//	PRINTSYS_Delete();	//freeheap
 		FontDataMan_Delete( d_menu->fontHandle );
 //		GFL_ARC_CloseDataHandle( d_menu->arcHandleMsg ); //マネージャ側で済み
+		
 		GFL_STR_DeleteBuffer( d_menu->strbuf );
 		GFL_MSG_Delete( d_menu->msgdata );
 		#ifndef DEBUG_HEAPERROR
