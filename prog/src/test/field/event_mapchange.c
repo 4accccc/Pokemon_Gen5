@@ -60,15 +60,17 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
+GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 {
 	FIRST_MAPIN_WORK * fmw;
 	GMEVENT * event;
-	event = GAMESYSTEM_EVENT_Set(gsys, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
+	//event = GAMESYSTEM_EVENT_Set(gsys, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
+	event = GMEVENT_Create(gsys, NULL, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
 	fmw = GMEVENT_GetEventWork(event);
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
+	return event;
 }
 
 //============================================================================================
@@ -119,11 +121,12 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
+GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
-	event = GAMESYSTEM_EVENT_Set(gsys, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	//event = GAMESYSTEM_EVENT_Set(gsys, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
 	mcw->gsys = gsys;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -136,6 +139,7 @@ void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 		}
 		mcw->next_map = next;
 	}
+	return event;
 }
 //============================================================================================
 //
@@ -172,7 +176,8 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys)
+GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys)
 {
-	GAMESYSTEM_EVENT_Set(gsys, GameChangeEvent, 0);
+	return GMEVENT_Create(gsys, NULL, GameChangeEvent, 0);
+	//GAMESYSTEM_EVENT_Set(gsys, GameChangeEvent, 0);
 }

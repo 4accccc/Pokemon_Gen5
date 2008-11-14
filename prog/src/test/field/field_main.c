@@ -107,7 +107,7 @@ struct _DEPEND_FUNCTIONS{
  */
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont );
-static BOOL FieldEventCheck(GAMESYS_WORK * gsys);
+static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work);
 
 FIELD_MAIN_WORK* fieldWork;
 
@@ -207,12 +207,15 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 			dir = 0;
 			fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 		}
+
+		//フィールドマップ用イベント起動チェックをセットする
+		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, FieldEventCheck, fieldWork);
 		
 		fieldWork->seq++;
 		break;
 
 	case 2:
-		if( FieldEventCheck(gsys) == FALSE ){
+		if( GAMESYSTEM_GetEvent(gsys) == FALSE) {
 		
 			VecFx32 pos;
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
@@ -232,6 +235,8 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 		break;
 
 	case 3:
+		//イベント起動チェックを停止する
+		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);
 		{
 			//アクターが持つプレイヤー現在位置をPLAYER_WORKに反映する
 			VecFx32 player_pos;
@@ -282,29 +287,28 @@ static BOOL GameEndCheck( int cont )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static BOOL FieldEventCheck(GAMESYS_WORK * gsys)
+static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 {
+	FIELD_MAIN_WORK * fieldWork = work;
+
 	if( GAMESYSTEM_GetEvent(gsys)) {
-		return TRUE;
+		return NULL;
 	}
 	if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-		DEBUG_EVENT_FieldSample(gsys);
 		fieldWork->gamemode = GAMEMODE_FINISH;
 		fieldWork->seq = 3;
-		return TRUE;
+		return DEBUG_EVENT_FieldSample(gsys);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-		DEBUG_EVENT_ChangeToNextMap(gsys);
 		fieldWork->gamemode = GAMEMODE_FINISH;
 		fieldWork->seq = 3;
-		return TRUE;
+		return DEBUG_EVENT_ChangeToNextMap(gsys);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-		DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
+		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, GetSceneID(fieldWork->gsys));
-		return TRUE;
 	}
-	return FALSE;
+	return NULL;
 }
 
 
@@ -930,58 +934,4 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 		}
 	}
 }
-
-//======================================================================
-//	debug
-//======================================================================
-#if 0
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef struct {
-	DEBUG_FLDMENU *d_menu;
-	FIELD_MAIN_WORK * fieldWork;
-	HEAPID heapID;
-	u16 page_id;
-}DEBUG_MENU_EVENT_WORK;
-//--------------------------------------------------------------
-///	イベント：デバッグメニュー処理
-//--------------------------------------------------------------
-static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * work)
-{
-	DEBUG_MENU_EVENT_WORK * dmew = work;
-	switch (*seq) {
-	case 0:
-		dmew->d_menu = FldDebugMenu_Init(
-				dmew->fieldWork, dmew->page_id, dmew->heapID );
-		++ *seq;
-		break;
-	case 1:
-		FldDebugMenu_Create( dmew->d_menu );
-		++ *seq;
-		break;
-	case 2:
-		if( FldDebugMenu_Main(dmew->d_menu) == TRUE ){
-			++ *seq;
-		}
-		break;
-	case 3:
-		FldDebugMenu_Delete(dmew->d_menu);
-		return GMEVENT_RES_FINISH;
-	}
-	return GMEVENT_RES_CONTINUE;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id)
-{
-	DEBUG_MENU_EVENT_WORK * dmew;
-	GMEVENT_CONTROL * event;
-	event = GAMESYSTEM_EVENT_Set(gsys, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
-	dmew = GMEVENT_GetEventWork(event);
-	dmew->d_menu = NULL;
-	dmew->fieldWork = fieldWork;
-	dmew->heapID = fieldWork->heapID;
-	dmew->page_id = GetSceneID(fieldWork->gsys);
-}
-#endif
 

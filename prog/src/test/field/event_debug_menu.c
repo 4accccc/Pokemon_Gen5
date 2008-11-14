@@ -52,15 +52,16 @@ static GMEVENT_RESULT DebugMenuEvent(GMEVENT * event, int * seq, void * work)
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id)
+GMEVENT * DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id)
 {
 	DEBUG_MENU_EVENT_WORK * dmew;
 	GMEVENT * event;
-	event = GAMESYSTEM_EVENT_Set(gsys, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
+	event = GMEVENT_Create(gsys, NULL, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
 	dmew = GMEVENT_GetEventWork(event);
 	dmew->d_menu = NULL;
 	dmew->fieldWork = fieldWork;
 	dmew->heapID = heapID;
 	dmew->page_id = page_id;
+	return event;
 }
 

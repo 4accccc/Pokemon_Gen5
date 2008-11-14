@@ -79,7 +79,10 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GameSysWork = gsys;
 	GameSystem_Init(gsys, HEAPID_GAMESYS, pwk);
 #if 1		/* 暫定的にプロセス登録 */
-	DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+	{
+		GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+		GAMESYSTEM_SetEvent(gsys, event);
+	}
 #endif
 	return GFL_PROC_RES_FINISH;
 }
@@ -143,6 +146,9 @@ struct _GAMESYS_WORK {
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 
 	BOOL proc_result;
+
+	EVCHECK_FUNC evcheck_func;
+	void * evcheck_context;
 	GMEVENT * event;
 
 	GAMEDATA * gamedata;
@@ -163,6 +169,8 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->parent_work = init_param;
 	gsys->procsys = GFL_PROC_LOCAL_boot(gsys->heapID);
 	gsys->proc_result = FALSE;
+	gsys->evcheck_func = NULL;
+	gsys->evcheck_context = NULL;
 	gsys->event = NULL;
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
@@ -193,6 +201,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
 	//PlayerController/Event Trigger
+	//イベント起動チェック処理（シチュエーションにより分岐）
+	GAMESYSTEM_EVENT_CheckSet(gsys, gsys->evcheck_func, gsys->evcheck_context);
+	//イベント実行処理
 	GAMESYSTEM_EVENT_Main(gsys);
 	gsys->proc_result = GFL_PROC_LOCAL_Main(gsys->procsys);
 	if (gsys->proc_result == FALSE && gsys->event == NULL) {
@@ -209,6 +220,14 @@ static void GameSystem_End(GAMESYS_WORK * gsys)
 {
 	GFL_PROC_LOCAL_Exit(gsys->procsys);
 	GAMESYS_WORK_Delete(gsys);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GAMESYSTEM_EVENT_EntryCheckFunc(GAMESYS_WORK * gsys, EVCHECK_FUNC evcheck_func, void * context)
+{
+	gsys->evcheck_func = evcheck_func;
+	gsys->evcheck_context = context;
 }
 
 //============================================================================================

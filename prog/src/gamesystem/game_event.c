@@ -28,7 +28,7 @@ struct _GMEVENT_CONTROL{
 	GMEVENT_FUNC	func;	///<制御関数へのポインタ
 	int seq;				///<シーケンスワーク
 	void * work;			///<制御関数毎に固有ワークへのポインタ
-	GAMESYS_WORK * repw;	///<フィールド全体制御ワークへのポインタ（なるべく参照したくない）
+	GAMESYS_WORK * gsys;	///<フィールド全体制御ワークへのポインタ（なるべく参照したくない）
 };
 
 //=============================================================================
@@ -36,14 +36,15 @@ struct _GMEVENT_CONTROL{
 //------------------------------------------------------------------
 /**
  * @brief	イベント生成
- * @param	repw
+ * @param	gsys
+ * @param	parent		親イベントへのポインタ
  * @param	event_func	イベント制御関数へのポインタ
  * @param	work		イベント制御関数の使用するワークへのポインタ
  * @return	GMEVENT	生成したイベントへのポインタ
  *
  */
 //------------------------------------------------------------------
-static GMEVENT * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
+GMEVENT * GMEVENT_Create(GAMESYS_WORK * gsys, GMEVENT * parent, GMEVENT_FUNC event_func, u32 work_size)
 {
 	GMEVENT * event;
 	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT));
@@ -51,48 +52,27 @@ static GMEVENT * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 
 	event->func = event_func;
 	event->seq = 0;
 	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
-	event->repw = repw;
+	event->gsys = gsys;
 	return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT Event_Call(GMEVENT * event)
+GMEVENT_RESULT GMEVENT_Run(GMEVENT * event)
 {
 	return event->func(event, &event->seq, event->work);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT * Event_Delete(GMEVENT * event)
+void GMEVENT_Delete(GMEVENT * event)
 {
-	GMEVENT * parent;
-	parent = event->parent;
 	if (event->work) {
 		GFL_HEAP_FreeMemory(event->work);
 	}
 	GFL_HEAP_FreeMemory(event);
-	return parent;
 }
 
-//------------------------------------------------------------------
-/**
- * @brief	イベント設定
- * @param	repw
- * @param	event_func	イベント制御関数へのポインタ
- * @param	work_size	イベント制御関数の使用するワークのサイズ
- * @return	GMEVENT	生成したイベント
- */
-//------------------------------------------------------------------
-GMEVENT * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
-{
-	GMEVENT * event;
-	
-	GF_ASSERT(GAMESYSTEM_EVENT_IsExists(repw) == FALSE);
-	event = Event_Create(repw, event_func, work_size);
-	GAMESYSTEM_SetEvent(repw, event);
-	return event;
-}
 //------------------------------------------------------------------
 /**
  * @brief	イベント切替
@@ -121,12 +101,11 @@ void GMEVENT_Change(GMEVENT * event, GMEVENT_FUNC next_func, u32 work_size)
  * イベントからサブイベントのコールを呼び出す
  */
 //------------------------------------------------------------------
-GMEVENT * GMEVENT_Call(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size)
+GMEVENT * GMEVENT_CallSubEvent(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size)
 {
 	GMEVENT * event;
-	event = Event_Create(parent->repw, sub_func, work_size);
-	event->parent = parent;
-	GAMESYSTEM_SetEvent(parent->repw, event);
+	event = GMEVENT_Create(parent->gsys, parent, sub_func, work_size);
+	GAMESYSTEM_SetEvent(parent->gsys, event);
 	return event;
 }
 
@@ -135,7 +114,7 @@ GMEVENT * GMEVENT_Call(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size)
 //------------------------------------------------------------------
 /**
  * @brief	イベント制御
- * @param	repw
+ * @param	gsys
  * @retval	TRUE	イベント終了
  * @retval	FALSE	イベント継続中
  */
@@ -146,8 +125,9 @@ BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 	if (event == NULL) {
 		return FALSE;
 	}
-	while (Event_Call(event) == GMEVENT_RES_FINISH) {
-		GMEVENT * parent = Event_Delete(event);
+	while (GMEVENT_Run(event) == GMEVENT_RES_FINISH) {
+		GMEVENT * parent = GMEVENT_GetParentEvent(event);
+		GMEVENT_Delete(event);
 		GAMESYSTEM_SetEvent(gsys, parent);
 		if (parent == NULL) {
 			return TRUE;
@@ -167,6 +147,24 @@ BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
 {
 	return (GAMESYSTEM_GetEvent(gsys) != NULL);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL GAMESYSTEM_EVENT_CheckSet(GAMESYS_WORK * gsys, EVCHECK_FUNC ev_check, void * context)
+{
+	GMEVENT * event;
+	if (GAMESYSTEM_GetEvent(gsys) != NULL){
+		return FALSE;
+	}
+	if (ev_check == NULL) {
+		return FALSE;
+	}
+	event = ev_check(gsys, context);
+	if (event != NULL) {
+		GAMESYSTEM_SetEvent(gsys, event);
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //=============================================================================
@@ -300,7 +298,7 @@ void EventCmd_CallSubProc(GMEVENT * event, const GFL_PROC_DATA * proc_data, void
 //------------------------------------------------------------------
 GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT * event)
 {
-	return event->repw;
+	return event->gsys;
 }
 
 //------------------------------------------------------------------
@@ -325,5 +323,13 @@ void * GMEVENT_GetEventWork(GMEVENT * event)
 int * GMEVENT_GetSequenceWork(GMEVENT * event)
 {
 	return &event->seq;
+}
+//------------------------------------------------------------------
+/**
+ */
+//------------------------------------------------------------------
+GMEVENT * GMEVENT_GetParentEvent(GMEVENT * event)
+{
+	return event->parent;
 }
 
