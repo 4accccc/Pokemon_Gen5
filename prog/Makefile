@@ -124,9 +124,6 @@ GFL_FILE_TREE	=	titledemo.narc \
 					BMSample/sphere_06.ntfp \
 					BMSample/sphere_hole_01.ntft \
 					BMSample/sphere_hole_01.ntfp \
-					BMSample/tornado.bpc \
-					BMSample/kemuri2.ntft \
-					BMSample/kemuri2.ntfp \
 					dl_rom/child.srl \
 					dl_rom/icon.char \
 					dl_rom/icon.plt
