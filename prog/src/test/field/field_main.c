@@ -108,7 +108,6 @@ struct _DEPEND_FUNCTIONS{
 //------------------------------------------------------------------
 static BOOL GameEndCheck( int cont );
 static BOOL FieldEventCheck(GAMESYS_WORK * gsys);
-extern void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys);
 
 FIELD_MAIN_WORK* fieldWork;
 
@@ -301,7 +300,8 @@ static BOOL FieldEventCheck(GAMESYS_WORK * gsys)
 		return TRUE;
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-		DEBUG_EVENT_DebugMenu(gsys);
+		DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
+				fieldWork->heapID, GetSceneID(fieldWork->gsys));
 		return TRUE;
 	}
 	return FALSE;
@@ -934,13 +934,14 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 //======================================================================
 //	debug
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef struct {
 	DEBUG_FLDMENU *d_menu;
 	FIELD_MAIN_WORK * fieldWork;
 	HEAPID heapID;
-	u16 map_id;
+	u16 page_id;
 }DEBUG_MENU_EVENT_WORK;
 //--------------------------------------------------------------
 ///	イベント：デバッグメニュー処理
@@ -951,7 +952,7 @@ static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * 
 	switch (*seq) {
 	case 0:
 		dmew->d_menu = FldDebugMenu_Init(
-				dmew->fieldWork, dmew->map_id, dmew->heapID );
+				dmew->fieldWork, dmew->page_id, dmew->heapID );
 		++ *seq;
 		break;
 	case 1:
@@ -971,7 +972,7 @@ static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * 
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys)
+void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id)
 {
 	DEBUG_MENU_EVENT_WORK * dmew;
 	GMEVENT_CONTROL * event;
@@ -980,7 +981,7 @@ void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys)
 	dmew->d_menu = NULL;
 	dmew->fieldWork = fieldWork;
 	dmew->heapID = fieldWork->heapID;
-	dmew->map_id = GetSceneID(fieldWork->gsys);
+	dmew->page_id = GetSceneID(fieldWork->gsys);
 }
-
+#endif
 

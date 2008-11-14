@@ -1,7 +1,7 @@
 //======================================================================
 /**
  *
- * @file	field_debug.c
+ * @file	field_debug.h
  * @brief	フィールドデバッグ
  * @author	kagaya
  * @data	08.09.29
@@ -29,5 +29,8 @@ extern DEBUG_FLDMENU * FldDebugMenu_Init(
 extern void FldDebugMenu_Delete( DEBUG_FLDMENU *d_menu );
 extern void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu );
 extern BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu );
+
+extern void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys,
+		FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id);
 
 #endif //__FIELD_DEBUG_H__
