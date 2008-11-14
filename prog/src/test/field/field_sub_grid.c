@@ -221,13 +221,14 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 //--------------------------------------------------------------
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 {
-	VecFx32 offs = { FX32_ONE*8, 0, 0 };
-
+//	VecFx32 offs = { FX32_ONE*8, 0, 0 };
+	VecFx32 offs = { 0, 0, 0 };
+	
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
 	
 	FGridPlayer_Move( pGridPlayer, 0, fieldWork->key_cont );
-
+	
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_L) ){
 		pGridCont->debug_camera_num++;
 		pGridCont->debug_camera_num %= GRIDCAMERA_MAX;
@@ -237,7 +238,7 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 				DATA_CameraTbl[pGridCont->debug_camera_num].hi );
 		OS_Printf( "テストカメラ　No.%d\n", pGridCont->debug_camera_num );
 	}
-
+	
 	FLD_MainFieldActSys( fieldWork->fldActCont );
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
