@@ -402,7 +402,7 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 	PokePasoParaPut( ppp, ID_PARA_default_name, NULL );
 
 //経験値セット
-	//i = PokeLevelExpGet( mons_no, level );
+	i = PokeLevelExpGet( mons_no, FORM_NO_NONE, level );
 	PokePasoParaPut( ppp, ID_PARA_exp, (u8 *)&i );
 
 //友好値セット
