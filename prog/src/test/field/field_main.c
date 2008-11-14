@@ -191,7 +191,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 	case 1:
 
 		//セットアップ
-		if( GetSceneID(gsys) == 1 ){ //プランナー確認マップ
+		if( FIELDDATA_IsMatrixMap(GetSceneID(gsys)) == TRUE ){ //プランナー確認マップ
 			ResistMatrixFieldG3Dmapper( gsys, fieldWork );
 		}else{
 		  ResistDataFieldG3Dmapper(

@@ -18,6 +18,7 @@ typedef struct {
 	FLD_G3D_MAPPER_RESIST	mapperData;
 	VecFx32				startPos;	//開始位置
 	const DEPEND_FUNCTIONS * dep_funcs;
+	BOOL isMatrixMapFlag;
 }SCENE_DATA;
 
 const SCENE_DATA	resistMapTbl[];
@@ -45,6 +46,15 @@ const VecFx32 * FIELDDATA_GetStartPosition(u16 mapid)
 	GF_ASSERT(mapid < resistMapTblCount);
 	return &resistMapTbl[mapid].startPos;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL FIELDDATA_IsMatrixMap(u16 mapid)
+{
+	GF_ASSERT(mapid < resistMapTblCount);
+	return resistMapTbl[mapid].isMatrixMapFlag;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u16 FIELDDATA_GetMapIDMax(void)
 {
 	return resistMapTblCount;
@@ -163,6 +173,7 @@ const SCENE_DATA resistMapTbl[] = {
 		}, 
 		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
+		FALSE,
 	},
 	{	//実験マップ グリッド移動
 		{
@@ -176,6 +187,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 },
 		&FieldGridFunctions,
+		TRUE,
 	},
 	{	//実験マップ　橋
 		{	
@@ -189,6 +201,7 @@ const SCENE_DATA resistMapTbl[] = {
 		}, 
 		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
+		FALSE,
 	},
 	{
 		//実験マップ　グリッド移動 金銀
@@ -204,6 +217,7 @@ const SCENE_DATA resistMapTbl[] = {
 		},
 		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
 		&FieldGridFunctions,
+		FALSE,
 	},
 };
 
