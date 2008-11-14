@@ -275,7 +275,6 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 	wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-	PRINTSYS_Init( wk->heapID );
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
 	VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
