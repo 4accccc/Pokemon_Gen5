@@ -31,7 +31,7 @@ typedef struct {
 }FIRST_MAPIN_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT_CONTROL * event, int *seq, void *work)
+static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 {
 	FIRST_MAPIN_WORK * fmw = work;
 	GAMESYS_WORK * gsys = fmw->gsys;
@@ -63,7 +63,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT_CONTROL * event, int *seq, void *
 void DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 {
 	FIRST_MAPIN_WORK * fmw;
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 	event = GAMESYSTEM_EVENT_Set(gsys, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
 	fmw = GMEVENT_GetEventWork(event);
 	fmw->gsys = gsys;
@@ -86,7 +86,7 @@ typedef struct {
 }MAPCHANGE_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChange(GMEVENT_CONTROL * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 {
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
@@ -122,7 +122,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT_CONTROL * event, int *seq, void*wo
 void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 {
 	MAPCHANGE_WORK * mcw;
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 	event = GAMESYSTEM_EVENT_Set(gsys, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
 	mcw->gsys = gsys;
@@ -145,7 +145,7 @@ void DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT GameChangeEvent(GMEVENT_CONTROL * event, int * seq, void * work)
+static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 {
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 

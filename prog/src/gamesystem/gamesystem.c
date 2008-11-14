@@ -143,7 +143,7 @@ struct _GAMESYS_WORK {
 	GFL_PROCSYS * procsys;	///<使用しているPROCシステムへのポインタ
 
 	BOOL proc_result;
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 
 	GAMEDATA * gamedata;
 };
@@ -272,7 +272,7 @@ HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 //	イベント取得
 //------------------------------------------------------------------
-GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
+GMEVENT * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
 {
 	return gsys->event;
 }
@@ -280,7 +280,7 @@ GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 //	イベント設定
 //------------------------------------------------------------------
-void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event)
+void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event)
 {
 	gsys->event = event;
 }

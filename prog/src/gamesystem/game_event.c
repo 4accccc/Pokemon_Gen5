@@ -24,7 +24,7 @@ enum {
  */
 //-----------------------------------------------------------------------------
 struct _GMEVENT_CONTROL{
-	GMEVENT_CONTROL * parent;	///<親（呼び出し元）のイベントへのポインタ
+	GMEVENT * parent;	///<親（呼び出し元）のイベントへのポインタ
 	GMEVENT_FUNC	func;	///<制御関数へのポインタ
 	int seq;				///<シーケンスワーク
 	void * work;			///<制御関数毎に固有ワークへのポインタ
@@ -39,14 +39,14 @@ struct _GMEVENT_CONTROL{
  * @param	repw
  * @param	event_func	イベント制御関数へのポインタ
  * @param	work		イベント制御関数の使用するワークへのポインタ
- * @return	GMEVENT_CONTROL	生成したイベントへのポインタ
+ * @return	GMEVENT	生成したイベントへのポインタ
  *
  */
 //------------------------------------------------------------------
-static GMEVENT_CONTROL * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
+static GMEVENT * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
 {
-	GMEVENT_CONTROL * event;
-	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT_CONTROL));
+	GMEVENT * event;
+	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT));
 	event->parent = NULL;
 	event->func = event_func;
 	event->seq = 0;
@@ -57,16 +57,16 @@ static GMEVENT_CONTROL * Event_Create(GAMESYS_WORK * repw, GMEVENT_FUNC event_fu
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_RESULT Event_Call(GMEVENT_CONTROL * event)
+static GMEVENT_RESULT Event_Call(GMEVENT * event)
 {
 	return event->func(event, &event->seq, event->work);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT_CONTROL * Event_Delete(GMEVENT_CONTROL * event)
+static GMEVENT * Event_Delete(GMEVENT * event)
 {
-	GMEVENT_CONTROL * parent;
+	GMEVENT * parent;
 	parent = event->parent;
 	if (event->work) {
 		GFL_HEAP_FreeMemory(event->work);
@@ -81,12 +81,12 @@ static GMEVENT_CONTROL * Event_Delete(GMEVENT_CONTROL * event)
  * @param	repw
  * @param	event_func	イベント制御関数へのポインタ
  * @param	work_size	イベント制御関数の使用するワークのサイズ
- * @return	GMEVENT_CONTROL	生成したイベント
+ * @return	GMEVENT	生成したイベント
  */
 //------------------------------------------------------------------
-GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
+GMEVENT * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_func, u32 work_size)
 {
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 	
 	GF_ASSERT(GAMESYSTEM_EVENT_IsExists(repw) == FALSE);
 	event = Event_Create(repw, event_func, work_size);
@@ -101,7 +101,7 @@ GMEVENT_CONTROL * GAMESYSTEM_EVENT_Set(GAMESYS_WORK * repw, GMEVENT_FUNC event_f
  * @param	work_size	次のイベント制御関数の使用するワークのサイズ
  */
 //------------------------------------------------------------------
-void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, u32 work_size)
+void GMEVENT_Change(GMEVENT * event, GMEVENT_FUNC next_func, u32 work_size)
 {
 	event->func = next_func;
 	event->seq = 0;
@@ -116,14 +116,14 @@ void GMEVENT_Change(GMEVENT_CONTROL * event, GMEVENT_FUNC next_func, u32 work_si
  * @param	parent		親イベントへのポインタ
  * @param	event_func	イベント制御関数へのポインタ
  * @param	work_size	イベント制御関数の使用するワークへのポインタ
- * @return	GMEVENT_CONTROL	生成したイベント
+ * @return	GMEVENT	生成したイベント
  *
  * イベントからサブイベントのコールを呼び出す
  */
 //------------------------------------------------------------------
-GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, u32 work_size)
+GMEVENT * GMEVENT_Call(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size)
 {
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 	event = Event_Create(parent->repw, sub_func, work_size);
 	event->parent = parent;
 	GAMESYSTEM_SetEvent(parent->repw, event);
@@ -142,12 +142,12 @@ GMEVENT_CONTROL * GMEVENT_Call(GMEVENT_CONTROL * parent, GMEVENT_FUNC sub_func, 
 //------------------------------------------------------------------
 BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 {
-	GMEVENT_CONTROL * event = GAMESYSTEM_GetEvent(gsys);
+	GMEVENT * event = GAMESYSTEM_GetEvent(gsys);
 	if (event == NULL) {
 		return FALSE;
 	}
 	while (Event_Call(event) == GMEVENT_RES_FINISH) {
-		GMEVENT_CONTROL * parent = Event_Delete(event);
+		GMEVENT * parent = Event_Delete(event);
 		GAMESYSTEM_SetEvent(gsys, parent);
 		if (parent == NULL) {
 			return TRUE;
@@ -182,7 +182,7 @@ BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
 //extern void FieldEvent_Cmd_SetMapProc(GAMESYS_WORK * gsys);
 //extern BOOL FieldEvent_Cmd_WaitMapProcStart(GAMESYS_WORK * gsys);
 
-//extern void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_data, void * param);
+//extern void EventCmd_CallSubProc(GMEVENT * event, const GFL_PROC_DATA * proc_data, void * param);
 
 //------------------------------------------------------------------
 /**
@@ -237,7 +237,7 @@ typedef struct {
  * @retval	FALSE		サブイベント継続中
  */
 //------------------------------------------------------------------
-static BOOL GMEVENT_Sub_CallSubProc(GMEVENT_CONTROL * event)
+static BOOL GMEVENT_Sub_CallSubProc(GMEVENT * event)
 {
 	GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
 	EV_SUBPROC_WORK * esw = GMEVENT_GetSpecialWork(event);
@@ -265,7 +265,7 @@ static BOOL GMEVENT_Sub_CallSubProc(GMEVENT_CONTROL * event)
  * サブプロセスを呼び出して終了を待つ
  */
 //------------------------------------------------------------------
-void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_data, void * param)
+void EventCmd_CallSubProc(GMEVENT * event, const GFL_PROC_DATA * proc_data, void * param)
 {
 	EV_SUBPROC_WORK * esw = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(EV_SUBPROC_WORK));
 	esw->seq = 0;
@@ -298,7 +298,7 @@ void EventCmd_CallSubProc(GMEVENT_CONTROL * event, const GFL_PROC_DATA * proc_da
  *
  */
 //------------------------------------------------------------------
-GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT_CONTROL * event)
+GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT * event)
 {
 	return event->repw;
 }
@@ -310,7 +310,7 @@ GAMESYS_WORK * GMEVENT_GetGameSysWork(GMEVENT_CONTROL * event)
  * @return	各イベント用ワーク
  */
 //------------------------------------------------------------------
-void * GMEVENT_GetEventWork(GMEVENT_CONTROL * event)
+void * GMEVENT_GetEventWork(GMEVENT * event)
 {
 	return event->work;
 }
@@ -322,7 +322,7 @@ void * GMEVENT_GetEventWork(GMEVENT_CONTROL * event)
  * @return	シーケンスワークへのポインタ
  */
 //------------------------------------------------------------------
-int * GMEVENT_GetSequenceWork(GMEVENT_CONTROL * event)
+int * GMEVENT_GetSequenceWork(GMEVENT * event)
 {
 	return &event->seq;
 }

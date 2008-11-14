@@ -29,7 +29,7 @@ typedef struct _GAMESYS_WORK GAMESYS_WORK;
  * @brief
  */
 //------------------------------------------------------------------
-typedef struct _GMEVENT_CONTROL GMEVENT_CONTROL;
+typedef struct _GMEVENT_CONTROL GMEVENT;
 
 
 //============================================================================================
@@ -79,10 +79,10 @@ extern void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys);
 /**
  * @brief	イベントの取得
  * @param	gsys			ゲーム制御ワークへのポインタ
- * @return	GMEVENT_CONTROL	イベントへのポインタ
+ * @return	GMEVENT			イベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
+extern GMEVENT * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**
@@ -91,7 +91,7 @@ extern GMEVENT_CONTROL * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
  * @param	event	イベントへのポインタ
  */
 //------------------------------------------------------------------
-extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT_CONTROL * event);
+extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event);
 
 //------------------------------------------------------------------
 /**

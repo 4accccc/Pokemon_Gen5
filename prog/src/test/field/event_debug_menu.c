@@ -26,7 +26,7 @@ typedef struct {
 //--------------------------------------------------------------
 ///	イベント：デバッグメニュー処理
 //--------------------------------------------------------------
-static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * work)
+static GMEVENT_RESULT DebugMenuEvent(GMEVENT * event, int * seq, void * work)
 {
 	DEBUG_MENU_EVENT_WORK * dmew = work;
 	switch (*seq) {
@@ -55,7 +55,7 @@ static GMEVENT_RESULT DebugMenuEvent(GMEVENT_CONTROL * event, int * seq, void * 
 void DEBUG_EVENT_DebugMenu(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id)
 {
 	DEBUG_MENU_EVENT_WORK * dmew;
-	GMEVENT_CONTROL * event;
+	GMEVENT * event;
 	event = GAMESYSTEM_EVENT_Set(gsys, DebugMenuEvent, sizeof(DEBUG_MENU_EVENT_WORK));
 	dmew = GMEVENT_GetEventWork(event);
 	dmew->d_menu = NULL;
