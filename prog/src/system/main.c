@@ -17,6 +17,8 @@
 #include "system\main.h"
 #include "savedata/save_control.h"
 #include "print/printsys.h"
+#include "poke_tool/poke_tool.h"
+
 
 #ifdef PM_DEBUG
 #include "test/performance.h"
@@ -143,6 +145,10 @@ static	void	GameInit(void)
 
 	/* 文字描画システム初期化 */
 	PRINTSYS_Init( GFL_HEAPID_SYSTEM );
+
+	/* poketoolシステム初期化 */
+	POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
+
 }
 
 //------------------------------------------------------------------
