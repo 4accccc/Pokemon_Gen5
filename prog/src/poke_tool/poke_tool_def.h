@@ -432,52 +432,6 @@ struct	pokemon_param
 	POKEMON_CALC_PARAM	pcp;				//dch 220
 };
 
-///<ƒ|ƒPƒ‚ƒ“ƒp[ƒ\ƒiƒ‹ƒf[ƒ^‚Ì\‘¢‘ÌéŒ¾
-struct	pokemon_personal_data
-{
-	u8		basic_hp;			//Šî–{‚g‚o
-	u8		basic_pow;			//Šî–{UŒ‚—Í
-	u8		basic_def;			//Šî–{–hŒä—Í
-	u8		basic_agi;			//Šî–{‘f‘‚³
-
-	u8		basic_spepow;		//Šî–{“ÁŽêUŒ‚—Í
-	u8		basic_spedef;		//Šî–{“ÁŽê–hŒä—Í
-	u8		type1;				//‘®«‚P
-	u8		type2;				//‘®«‚Q
-
-	u8		get_rate;			//•ßŠl—¦
-	u8		give_exp;			//‘¡—^ŒoŒ±’l
-
-	u16		pains_hp	:2;		//‘¡—^“w—Í’l‚g‚o
-	u16		pains_pow	:2;		//‘¡—^“w—Í’lUŒ‚—Í
-	u16		pains_def	:2;		//‘¡—^“w—Í’l–hŒä—Í
-	u16		pains_agi	:2;		//‘¡—^“w—Í’l‘f‘‚³
-	u16		pains_spepow:2;		//‘¡—^“w—Í’l“ÁŽêUŒ‚—Í
-	u16		pains_spedef:2;		//‘¡—^“w—Í’l“ÁŽê–hŒä—Í
-	u16					:4;		//‘¡—^“w—Í’l—\”õ
-
-	u16		item1;				//ƒAƒCƒeƒ€‚P
-	u16		item2;				//ƒAƒCƒeƒ€‚Q
-
-	u8		sex;				//«•ÊƒxƒNƒgƒ‹
-	u8		egg_birth;			//ƒ^ƒ}ƒS‚Ì›z‰»•à”
-	u8		friend;				//‚È‚Â‚«“x‰Šú’l
-	u8		grow;				//¬’·‹ÈüŽ¯•Ê
-
-	u8		egg_group1;			//‚±‚Ã‚­‚èƒOƒ‹[ƒv1
-	u8		egg_group2;			//‚±‚Ã‚­‚èƒOƒ‹[ƒv2
-	u8		speabi1;			//“ÁŽê”\—Í‚P
-	u8		speabi2;			//“ÁŽê”\—Í‚Q
-
-	u8		escape;				//“¦‚°‚é—¦
-	u8		color	:7;			//Fi}ŠÓ‚ÅŽg—pj
-	u8		reverse	:1;			//”½“]ƒtƒ‰ƒO
-	u32		machine1;			//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚P
-	u32		machine2;			//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
-	u32		machine3;			//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
-	u32		machine4;			//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
-};
-
 struct pokemon_shinka_data{
 	u16	ShinkaCond;
 	u16	ShinkaData;

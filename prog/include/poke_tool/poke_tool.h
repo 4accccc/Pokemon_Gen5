@@ -1,4 +1,3 @@
-
 //============================================================================================
 /**
  * @file	poke_tool.h
@@ -11,9 +10,12 @@
 #ifndef	__POKE_TOOL_H_
 #define	__POKE_TOOL_H_
 
-#define	PARA_MALE		(0)		///<オス
-#define	PARA_FEMALE		(1)		///<メス
-#define	PARA_UNK		(2)		///<性別なし
+// 性別
+#define	PTL_SEX_MALE	(0)		///<オス
+#define	PTL_SEX_FEMALE	(1)		///<メス
+#define	PTL_SEX_UNKNOWN	(2)		///<性別なし
+
+
 
 #define	POKE_LEVEL_MAX		(100)		//レベルMAX
 #define	WAZA_TEMOTI_MAX		(4)			///<1体のポケモンがもてる技の最大値
@@ -415,50 +417,6 @@ enum{
 	ID_PARA_end									//パラメータを追加するときは、ここから上に追加
 };
 
-///<ポケモンパーソナルデータの構造体
-typedef struct pokemon_personal_data POKEMON_PERSONAL_DATA;
-
-///<ポケモンパーソナルデータ取得のためのインデックス
-enum{
-	ID_PER_basic_hp=0,			//基本ＨＰ
-	ID_PER_basic_pow,			//基本攻撃力
-	ID_PER_basic_def,			//基本防御力
-	ID_PER_basic_agi,			//基本素早さ
-	ID_PER_basic_spepow,		//基本特殊攻撃力
-	ID_PER_basic_spedef,		//基本特殊防御力
-	ID_PER_type1,				//属性１
-	ID_PER_type2,				//属性２
-	ID_PER_get_rate,			//捕獲率
-	ID_PER_give_exp,			//贈与経験値
-	ID_PER_pains_hp,			//贈与努力値ＨＰ
-	ID_PER_pains_pow,			//贈与努力値攻撃力
-	ID_PER_pains_def,			//贈与努力値防御力
-	ID_PER_pains_agi,			//贈与努力値素早さ
-	ID_PER_pains_spepow,		//贈与努力値特殊攻撃力
-	ID_PER_pains_spedef,		//贈与努力値特殊防御力
-	ID_PER_item1,				//アイテム１
-	ID_PER_item2,				//アイテム２
-	ID_PER_sex,					//性別ベクトル
-	ID_PER_egg_birth,			//タマゴの孵化歩数
-	ID_PER_friend,				//なつき度初期値
-	ID_PER_grow,				//成長曲線識別
-	ID_PER_egg_group1,			//こづくりグループ1
-	ID_PER_egg_group2,			//こづくりグループ2
-	ID_PER_speabi1,				//特殊能力１
-	ID_PER_speabi2,				//特殊能力２
-	ID_PER_escape,				//逃げる率
-	ID_PER_color,				//色（図鑑で使用）
-	ID_PER_reverse,				//反転フラグ
-	ID_PER_machine1,			//技マシンフラグ１
-	ID_PER_machine2,			//技マシンフラグ２
-	ID_PER_machine3,			//技マシンフラグ３
-	ID_PER_machine4				//技マシンフラグ４
-};
-
-//	ポケモンの性別定義（パーソナル上のオスメス比率）(1～253でオスメスの比率が変わる）
-#define	MONS_MALE		(0)				///<オスのみ
-#define	MONS_FEMALE		(254)			///<メスのみ
-#define	MONS_UNKNOWN	(255)			///<性別なし
 
 #define	POW_RND			(32)		//PokeParaSetを使うときにパワー乱数をランダムでとるための値
 #define	RND_NO_SET		(0)			//PokeParaSetを使うときに個性乱数をランダムでセットするための値
@@ -584,8 +542,7 @@ extern	void	PokePasoParaAdd( POKEMON_PASO_PARAM *ppp, int id, int value);
 extern	BOOL	PokeRareCheck( u32 id, u32 rnd );
 extern	u8		PokeSexGet( POKEMON_PARAM *pp );
 extern	u8		PokePasoSexGet( POKEMON_PASO_PARAM *ppp );
-extern	u8		PokeSexGetMonsNo( u16 mons_no, int form_no, u32 rnd );
-extern	u8		PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
+
 extern	void	PokeWazaOboe( POKEMON_PARAM *pp );
 extern	void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp );
 extern	u16		PokeWazaSet( POKEMON_PARAM *pp, u16 wazano );
@@ -596,19 +553,26 @@ extern	void	PokeWazaSetPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 extern	void	PokePasoWazaSetPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
 extern	u32		PokeParaLevelCalc( POKEMON_PARAM *pp );
 extern	u32		PokePasoLevelCalc( POKEMON_PASO_PARAM *ppp );
-extern	u32		PokeLevelCalc( u16 mons_no, int form_no, u32 exp );
-extern	u32		PokePersonal_LevelCalc( POKEMON_PERSONAL_DATA* personalData, u32 exp );
 extern	u32		PokeParaLevelExpGet(POKEMON_PARAM *pp);
-extern	u32		PokeLevelExpGet( int mons_no, int form_no, int level );
 extern	u8		PokeSeikakuGet( POKEMON_PARAM *pp );
 extern	u8		PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp );
-extern	u8		PokeSeikakuGetRnd( u32 rnd );
 
-//ポケモンパーソナル操作関数系
-extern	u32		PokePersonalParaGet( int mons_no, int form_no, int para );
-extern	POKEMON_PERSONAL_DATA *PokePersonalPara_Open( int mons_no, int form_no, HEAPID HeapID );
-extern	u32		PokePersonalPara_Get( POKEMON_PERSONAL_DATA *ppd, int para );
-extern	void	PokePersonalPara_Close( POKEMON_PERSONAL_DATA *ppd );
+
+
+
+
+extern	void	POKETOOL_InitSystem( HEAPID heapID );
+extern	u32		POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp );
+extern	u32		POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
+extern	u8		POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
+extern	u8		POKETOOL_GetSeikaku( u32 personal_rnd );
+
+
+
+
+
+
+
 
 #endif	__POKE_TOOL_H_
 
@@ -1198,7 +1162,6 @@ extern	u32		PokeParaPersonalParaGet(POKEMON_PARAM *pp,int para);
 extern	u32		PokePasoParaPersonalParaGet(POKEMON_PASO_PARAM *ppp,int para);
 extern	u32		PokeFormNoPersonalParaGet(int mons_no,int form_no,int para);
 
-extern	u32		PokePersonalParaGet(int mons_no,int para);
 
 extern POKEMON_PERSONAL_DATA *PokeFormNoPersonalPara_Open( int mons_no, int form_no, int HeapID );
 extern POKEMON_PERSONAL_DATA *PokePersonalPara_Open( int mons_no, int HeapID );
@@ -1355,8 +1318,6 @@ extern	s8		PokeChrAbiTableGet(u8 chr,u8 cond);
 
 extern	void	FriendCalc(POKEMON_PARAM *pp,u8 id,u16 placeID);
 
-extern	u32		PokePersonal_LevelCalc( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 exp );
-extern	u8		PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
 
 extern	u32		No2Bit(int no);
 extern	int		Bit2No(u32 bit);

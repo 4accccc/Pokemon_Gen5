@@ -1,4 +1,3 @@
-
 //============================================================================================
 /**
  * @file	poke_tool.c
@@ -7,27 +6,18 @@
  * @date	08.11.12
  */
 //============================================================================================
+#include    <gflib.h>
 
-#include    "gflib.h"
 #include    "poke_tool/poke_tool.h"
 #include    "poke_tool/monsno_def.h"
 #include    "poke_tool/tokusyu_def.h"
 #include    "waza_tool/waza_tool.h"
+
 #include    "poke_tool_def.h"
+#include    "poke_personal_local.h"
 
 #include    "arc_def.h"
 
-//============================================================================================
-/**
- * 定数宣言
- */
-//============================================================================================
-
-#define	DEOKISISU_OTHER_FORM_PERSONAL	(496-1)	//デオキシスの別フォルムパーソナルの開始ナンバー
-#define	MINOMESU_OTHER_FORM_PERSONAL	(499-1)	//ミノメスの別フォルムパーソナルの開始ナンバー
-#define	GIRATINA_OTHER_FORM_PERSONAL	(501-1)	//ギラティナの別フォルムパーソナルの開始ナンバー
-#define	SHEIMI_OTHER_FORM_PERSONAL		(502-1)	//シェイミの別フォルムパーソナルの開始ナンバー
-#define	ROTOMU_OTHER_FORM_PERSONAL		(503-1)	//ロトムの別フォルムパーソナルの開始ナンバー
 
 //============================================================================================
 /**
@@ -74,13 +64,10 @@ void	PokeWazaSetPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 void	PokePasoWazaSetPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
 u32		PokeParaLevelCalc( POKEMON_PARAM *pp );
 u32		PokePasoLevelCalc( POKEMON_PASO_PARAM *ppp );
-u32		PokeLevelCalc( u16 mons_no, int form_no, u32 exp );
 u32		PokePersonal_LevelCalc( POKEMON_PERSONAL_DATA* personalData, u32 exp );
 u32		PokeParaLevelExpGet(POKEMON_PARAM *pp);
-u32		PokeLevelExpGet( int mons_no, int form_no, int level );
 u8		PokeSeikakuGet( POKEMON_PARAM *pp );
 u8		PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp );
-u8		PokeSeikakuGetRnd( u32 rnd );
 
 static	BOOL	PokeParaDecodedAct( POKEMON_PARAM *pp );
 static	BOOL	PokePasoParaDecodedAct( POKEMON_PASO_PARAM *ppp );
@@ -99,31 +86,42 @@ static	void	PokeParaCoded( void *data, u32 size, u32 code );
 static	u16		CodeRand( u32 *code );
 static	u16		PokeParaMakeCheckSum( void *data, u32 size );
 static	u16		PokeChrAbiCalc( u8 chr, u16 para, u8 cond );
-static	void	PokeGrowDataGet( int para, u32 *grow_tbl );
+static	void	load_grow_table( int para, u32 *GrowTable );
 static	u32		PokeGrowParaGet( int para, int level );
 static	void	*PokeParaAdrsGet( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
 
 #define	PokeParaDecoded( data, size, code )		PokeParaCoded( data, size, code );
 
 //ポケモンパーソナル操作関数系
-u32		PokePersonalParaGet( int mons_no, int form_no, int para );
-POKEMON_PERSONAL_DATA *PokePersonalPara_Open( int mons_no, int form_no, HEAPID HeapID );
-u32		PokePersonalPara_Get( POKEMON_PERSONAL_DATA *ppd, int para );
-void	PokePersonalPara_Close( POKEMON_PERSONAL_DATA *ppd );
-
-static	void	PokePersonalDataGet( int mons_no, int form_no, POKEMON_PERSONAL_DATA *ppd );
-static	void	PokeWazaOboeDataGet( int mons_no, int form_no, u16 *wot );
-static	int		PokeOtherFormMonsNoGet( int mons_no, int form_no );
+u32	PokePersonalParaGet( u16 mons_no, u16 form_no, int para );
 
 //============================================================================================
 /**
  *	スタティック変数
  */
 //============================================================================================
+static	POKEMON_PERSONAL_DATA	PersonalDataWork;	//ポケモン１体分のパーソナルデータ構造体
+static	u32 GrowTable[ GROW_TBL_SIZE ];				//成長曲線テーブル
 
-static	POKEMON_PERSONAL_DATA ppd;			//ポケモン１体分のパーソナルデータ構造体
-static	u16	wot[ LEVELUPWAZA_OBOE_MAX ];	//技覚えテーブル
-static	u32 grow_tbl[ GROW_TBL_SIZE ];		//成長曲線テーブル
+
+
+
+//=============================================================================================
+/**
+ * システム初期化（プログラム起動後に１度だけ呼び出す）
+ *
+ * @param   heapID		システム初期化用ヒープID
+ *
+ */
+//=============================================================================================
+void POKETOOL_InitSystem( HEAPID heapID )
+{
+	POKE_PERSONAL_InitSystem( heapID );
+}
+
+
+
+
 
 //============================================================================================
 /**
@@ -316,7 +314,9 @@ void	PokeParaSet( POKEMON_PARAM *pp, int mons_no, int level, int pow, int rndfla
 {
 	u32			i;
 //メールとカスタムボール対応がまだです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MAIL_DATA and CB_CORE nothing
+#endif
 //	MAIL_DATA	*mail_data;
 //	CB_CORE		cb_core;
 
@@ -364,15 +364,20 @@ void	PokeParaSet( POKEMON_PARAM *pp, int mons_no, int level, int pow, int rndfla
  * @param[in]	id		idflagがID_SETの時にセットされる値
  */
 //============================================================================================
-void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id )
+void PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id )
 {
-	u16		sum;
-	u32		i,j;
 	BOOL	flag;
+	u32		i,j;
+	POKEMON_PERSONAL_DATA* ppd;
+	u16		sum;
 
 	PokePasoParaInit( ppp );
 
 	flag = PokePasoParaFastModeOn( ppp );
+
+// パーソナルデータをロードしておく
+	POKE_PERSONAL_LoadData( mons_no, FORM_NO_NONE, &PersonalDataWork );
+	ppd = &PersonalDataWork;
 
 //個性乱数セット
 	if( !rndflag ){
@@ -390,8 +395,11 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 		id = 0;
 	}
 	PokePasoParaPut( ppp, ID_PARA_id_no, (u8 *) & id );
-	
+
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning CasetteLanguage Nothing
+#endif
+
 //国コード
 //	PokePasoParaPut( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
 
@@ -402,16 +410,20 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 	PokePasoParaPut( ppp, ID_PARA_default_name, NULL );
 
 //経験値セット
-	i = PokeLevelExpGet( mons_no, FORM_NO_NONE, level );
+	i = POKETOOL_GetMinExp( mons_no, FORM_NO_NONE, level );
 	PokePasoParaPut( ppp, ID_PARA_exp, (u8 *)&i );
 
 //友好値セット
-	i = PokePersonalParaGet( mons_no, FORM_NO_NONE, ID_PER_friend );
+	i = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_friend );
 	PokePasoParaPut( ppp, ID_PARA_friend, ( u8 * )&i );
 
 //捕獲データセット
 	PokePasoParaPut( ppp, ID_PARA_get_level, ( u8 * )&level );
+
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning CasetteVersion Nothing
+#endif
+
 //	PokePasoParaPut( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
 	i = ITEM_MONSUTAABOORU;	//デフォルトはモンスターボールにしておく	
 	PokePasoParaPut( ppp, ID_PARA_get_ball, ( u8 * )&i );
@@ -442,8 +454,8 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 	}
 
 //特殊能力セット
-	i = PokePersonalParaGet( mons_no, FORM_NO_NONE, ID_PER_speabi1 );
-	j = PokePersonalParaGet( mons_no, FORM_NO_NONE, ID_PER_speabi2 );
+	i = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_speabi1 );
+	j = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_speabi2 );
 	if( j != 0 ){
 		if( rnd & 1 ){
 			PokePasoParaPut( ppp, ID_PARA_speabino, ( u8 * )&j );
@@ -507,6 +519,7 @@ void	PokeParaCalcLevelUp( POKEMON_PARAM *pp )
 	int	form_no;
 	int	speabi1,speabi2,rnd;
 	BOOL	flag;
+	POKEMON_PERSONAL_DATA* ppd;
 
 	flag = PokeParaFastModeOn( pp );
 
@@ -529,34 +542,35 @@ void	PokeParaCalcLevelUp( POKEMON_PARAM *pp )
 
 	monsno = PokeParaGet( pp, ID_PARA_monsno, 0 );
 
-	PokePersonalDataGet( monsno, form_no, &ppd );
+	POKE_PERSONAL_LoadData( monsno, form_no, &PersonalDataWork );
+	ppd = &PersonalDataWork;
 
 	if( monsno == MONSNO_NUKENIN ){
 		hpmax = 1;
 	}
 	else{
-		hpmax = ( ( 2 * ppd.basic_hp + hp_rnd + hp_exp / 4 ) * level / 100 + level + 10 );
+		hpmax = ( ( 2 * ppd->basic_hp + hp_rnd + hp_exp / 4 ) * level / 100 + level + 10 );
 	}
 
 	PokeParaPut( pp, ID_PARA_hpmax, ( u8 * )&hpmax );
 
-	pow = ( ( 2 * ppd.basic_pow + pow_rnd + pow_exp / 4 ) * level / 100 + 5 );
+	pow = ( ( 2 * ppd->basic_pow + pow_rnd + pow_exp / 4 ) * level / 100 + 5 );
 	pow = PokeChrAbiCalc( PokeSeikakuGet( pp ), pow, ABILITY_POW );
 	PokeParaPut( pp, ID_PARA_pow, ( u8 * )&pow );
 
-	def = ( ( 2 * ppd.basic_def + def_rnd + def_exp / 4 ) * level / 100 + 5 );
+	def = ( ( 2 * ppd->basic_def + def_rnd + def_exp / 4 ) * level / 100 + 5 );
 	def = PokeChrAbiCalc( PokeSeikakuGet( pp ), def, ABILITY_DEF );
 	PokeParaPut( pp, ID_PARA_def, ( u8 * )&def );
 
-	agi = ( ( 2 * ppd.basic_agi + agi_rnd + agi_exp / 4 ) * level / 100 + 5 );
+	agi = ( ( 2 * ppd->basic_agi + agi_rnd + agi_exp / 4 ) * level / 100 + 5 );
 	agi = PokeChrAbiCalc( PokeSeikakuGet( pp ), agi, ABILITY_AGI );
 	PokeParaPut( pp, ID_PARA_agi, ( u8 * )&agi );
 
-	spepow = ( ( 2 * ppd.basic_spepow + spepow_rnd + spepow_exp / 4 ) * level / 100 + 5 );
+	spepow = ( ( 2 * ppd->basic_spepow + spepow_rnd + spepow_exp / 4 ) * level / 100 + 5 );
 	spepow = PokeChrAbiCalc( PokeSeikakuGet( pp ), spepow, ABILITY_SPEPOW );
 	PokeParaPut( pp, ID_PARA_spepow, ( u8 * )&spepow );
 
-	spedef = ( ( 2 * ppd.basic_spedef + spedef_rnd + spedef_exp / 4 ) * level / 100 + 5 );
+	spedef = ( ( 2 * ppd->basic_spedef + spedef_rnd + spedef_exp / 4 ) * level / 100 + 5 );
 	spedef = PokeChrAbiCalc( PokeSeikakuGet( pp ), spedef, ABILITY_SPEDEF );
 	PokeParaPut( pp, ID_PARA_spedef, ( u8 * )&spedef );
 	
@@ -723,7 +737,7 @@ BOOL	PokeRareCheck( u32 id, u32 rnd )
  *
  * @param[in]	pp		ポケモンパラメータ構造体
  *
- * @retval	PARA_MALE:♂　PARA_FEMALE:♀　PARA_UNK:性別不明
+ * @retval	PTL_SEX_MALE:♂　PTL_SEX_FEMALE:♀　PTL_SEX_UNK:性別不明
  */
 //============================================================================================
 u8	PokeSexGet( POKEMON_PARAM *pp )
@@ -736,7 +750,7 @@ u8	PokeSexGet( POKEMON_PARAM *pp )
  *
  * @param[in]	pp		ポケモンパラメータ構造体
  *
- * @retval	PARA_MALE:♂　PARA_FEMALE:♀　PARA_UNK:性別不明
+ * @retval	PTL_SEX_MALE:♂　PTL_SEX_FEMALE:♀　PTL_SEX_UNK:性別不明
  */
 //============================================================================================
 u8	PokePasoSexGet( POKEMON_PASO_PARAM *ppp )
@@ -762,48 +776,38 @@ u8	PokePasoSexGet( POKEMON_PASO_PARAM *ppp )
  * @param[in]	form_no	性別を取得するポケモンのフォルムナンバー
  * @param[in]	rnd		性別を取得するポケモンの個性乱数
  *
- * @retval	PARA_MALE:♂　PARA_FEMALE:♀　PARA_UNK:性別不明
+ * @retval	PTL_SEX_MALE:♂　PTL_SEX_FEMALE:♀　PTL_SEX_UNK:性別不明
  */
 //============================================================================================
-u8	PokeSexGetMonsNo( u16 mons_no, int form_no, u32 rnd )
+u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
 {
-	u8 sex;
+	u8 sex_param;
 
-	PokePersonalDataGet( mons_no, form_no, &ppd );
-	sex = PokePersonal_SexGet( &ppd, mons_no, rnd );
+	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
+	sex_param = POKE_PERSONAL_GetParam( &PersonalDataWork, POKE_PER_ID_sex );
 
-	return sex;
-}
-//============================================================================================
-/**
- *	ポケモンの性別を取得（ロード済みパーソナルデータを利用する）
- *
- * @param[in]	personalData	パーソナルデータへのポインタ
- * @param[in]	monsno			性別を取得するポケモンナンバー
- * @param[in]	rnd				性別を取得するポケモンの個性乱数
- *
- * @retval	PARA_MALE:♂　PARA_FEMALE:♀　PARA_UNK:性別不明
- */
-//============================================================================================
-u8 PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd )
-{
-	u8 sex = PokePersonalPara_Get( personalData, ID_PER_sex );
-
-	switch( sex ){
-		case MONS_MALE:
-			return PARA_MALE;
-		case MONS_FEMALE:
-			return PARA_FEMALE;
-		case MONS_UNKNOWN:
-			return PARA_UNK;
+// 性別固定のケース
+	switch( sex_param ){
+	case POKEPER_SEX_MALE:
+		return PTL_SEX_MALE;
+	case POKEPER_SEX_FEMALE:
+		return PTL_SEX_FEMALE;
+	case POKEPER_SEX_UNKNOWN:
+		return PTL_SEX_UNKNOWN;
 	}
-	if( sex > ( rnd & 0xff ) ){
-		return PARA_FEMALE;
+
+// 個性乱数により性別が決まるケース
+	if( sex_param > ( personal_rnd & 0xff ) )
+	{
+		return PTL_SEX_FEMALE;
 	}
-	else{
-		return PARA_MALE;
+	else
+	{
+		return PTL_SEX_MALE;
 	}
 }
+
+
 
 //============================================================================================
 /**
@@ -826,6 +830,8 @@ void	PokeWazaOboe( POKEMON_PARAM *pp )
 //============================================================================================
 void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp )
 {
+	static	u16	wot[ LEVELUPWAZA_OBOE_MAX ];	//技覚えテーブル
+
 	BOOL	flag;
 	int	i;
 	u16	mons_no;
@@ -839,7 +845,7 @@ void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp )
 	mons_no = PokePasoParaGet( ppp, ID_PARA_monsno, 0 );
 	form_no = PokePasoParaGet( ppp, ID_PARA_form_no, 0 );
 	level = PokePasoLevelCalc( ppp );
-	PokeWazaOboeDataGet( mons_no, form_no, &wot[0] );
+	POKE_PERSONAL_LoadWazaOboeTable( mons_no, form_no, wot );
 
 	i = 0;
 	while( wot[ i ] != 0xffff ){
@@ -1042,7 +1048,7 @@ u32	PokePasoLevelCalc( POKEMON_PASO_PARAM *ppp )
 
 	PokePasoParaFastModeOff( ppp, flag );
 
-	return PokeLevelCalc( mons_no, form_no, exp );
+	return POKETOOL_CalcLevel( mons_no, form_no, exp );
 
 }
 //============================================================================================
@@ -1057,41 +1063,37 @@ u32	PokePasoLevelCalc( POKEMON_PASO_PARAM *ppp )
  * @return	取得したレベル
  */
 //============================================================================================
-u32	PokeLevelCalc( u16 mons_no, int form_no, u32 exp )
+u32	POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp )
 {
-	int	grow;
-	u32	level;
+	u16 growType, level;
 
-	PokePersonalDataGet( mons_no, form_no, &ppd );
-	level = PokePersonal_LevelCalc( &ppd, exp );
-
-	return level;
-}
-
-//============================================================================================
-/**
- *	ポケモンナンバー、経験値からポケモンのレベルを計算
- *	（ロード済みパーソナルデータを利用する）
- *
- * @param[in]	personalData	ポケモンパーソナルデータ
- * @param[in]	exp				経験値
- *
- * @return	取得したレベル
- */
-//============================================================================================
-u32 PokePersonal_LevelCalc( POKEMON_PERSONAL_DATA* personalData, u32 exp )
-{
-	int grow, level;
-
-	grow = PokePersonalPara_Get( personalData, ID_PER_grow );
-	PokeGrowDataGet( grow, &grow_tbl[0] );
+	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
+	growType = POKE_PERSONAL_GetParam( &PersonalDataWork, POKE_PER_ID_grow );
+	load_grow_table( growType, &GrowTable[0] );
 
 	for( level = 1 ; level < 101 ; level++ ){
-		if( grow_tbl[ level ] > exp ) break;
+		if( GrowTable[ level ] > exp ) break;
 	}
 
 	return level - 1;
 }
+//============================================================================================
+/**
+ *	ポケモンナンバーとレベルから、そのレベルになるための最小経験値を取得
+ *
+ * @param[in]	mons_no		取得するモンスターナンバー
+ * @param[in]	form_no		取得するモンスターのフォルムナンバー
+ * @param[in]	level		取得するレベル
+ *
+ * @retval	u32		指定レベルに達するための最小経験値
+ */
+//============================================================================================
+u32	POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level )
+{
+	return	PokeGrowParaGet( PokePersonalParaGet(mons_no, form_no, POKE_PER_ID_grow), level );
+}
+
+
 
 //============================================================================================
 /**
@@ -1102,25 +1104,10 @@ u32 PokePersonal_LevelCalc( POKEMON_PERSONAL_DATA* personalData, u32 exp )
 //============================================================================================
 u32	PokeParaLevelExpGet( POKEMON_PARAM *pp )
 {
-	return PokeLevelExpGet( PokeParaGet( pp, ID_PARA_monsno, NULL ), 
+	return POKETOOL_GetMinExp( PokeParaGet( pp, ID_PARA_monsno, NULL ), 
 							PokeParaGet( pp, ID_PARA_form_no, NULL ),
 							PokeParaGet( pp, ID_PARA_level, NULL ) );
 }
-
-//============================================================================================
-/**
- *	ポケモンナンバーとレベルから経験値データを取得
- *
- * @param[in]	mons_no		取得するモンスターナンバー
- * @param[in]	form_no		取得するモンスターのフォルムナンバー
- * @param[in]	level		取得するレベル
- */
-//============================================================================================
-u32	PokeLevelExpGet( int mons_no, int form_no, int level )
-{
-	return	PokeGrowParaGet( PokePersonalParaGet( mons_no, form_no, ID_PER_grow ), level );
-}
-
 //============================================================================================
 /**
  *	ポケモンの性格を取得（引数がPOKEMON_PARAM)
@@ -1134,7 +1121,6 @@ u8	PokeSeikakuGet( POKEMON_PARAM *pp )
 {
 	return	PokePasoSeikakuGet( &pp->ppp );
 }
-
 //============================================================================================
 /**
  *	ポケモンの性格を取得（引数がPOKEMON_PASO_PARAM)
@@ -1151,11 +1137,10 @@ u8	PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp )
 
 	flag = PokePasoParaFastModeOn( ppp );
 	rnd = PokePasoParaGet( ppp, ID_PARA_personal_rnd, 0 );
-	PokePasoParaFastModeOff( ppp, flag);
+	PokePasoParaFastModeOff( ppp, flag );
 
-	return PokeSeikakuGetRnd( rnd );
+	return POKETOOL_GetSeikaku( rnd );
 }
-
 //============================================================================================
 /**
  *	ポケモンの性格を取得
@@ -1167,10 +1152,17 @@ u8	PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp )
  * @return	取得した性格
  */
 //============================================================================================
-u8	PokeSeikakuGetRnd( u32 rnd )
+u8 POKETOOL_GetSeikaku( u32 personal_rnd )
 {
-	return ( u8 )( rnd % 25 );
+	return ( u8 )( personal_rnd % 25 );
 }
+
+
+
+
+
+
+
 
 //============================================================================================
 /**
@@ -1190,7 +1182,6 @@ static	BOOL	PokeParaDecodedAct( POKEMON_PARAM *pp )
 	}
 	return ret;
 }
-
 //============================================================================================
 /**
  *	ポケモンパラメータ構造体を復号してチェックサムをチェックして不正ならダメタマゴにする
@@ -1216,7 +1207,6 @@ static	BOOL	PokePasoParaDecodedAct( POKEMON_PASO_PARAM *ppp )
 	}
 	return ret;
 }
-
 //============================================================================================
 /**
  *	ポケモンパラメータ構造体を暗号化する
@@ -1267,8 +1257,9 @@ static	u32	PokeParaGetAct( POKEMON_PARAM *pp, int id, void *buf )
 	u32	ret = 0;
 
 //メールとカスタムボール対応がまだです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MAIL_DATA and CB_CORE nothing
-
+#endif
 	switch( id ){
 	case ID_PARA_condition:
 		ret = pp->pcp.condition;
@@ -1381,7 +1372,7 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 			}
 			break;
 		case ID_PARA_level:
-			ret = PokeLevelCalc( ppp1->monsno, ppp2->form_no, ppp1->exp );
+			ret = POKETOOL_CalcLevel( ppp1->monsno, ppp2->form_no, ppp1->exp );
 			break;
 //PARAM1
 		case ID_PARA_monsno:
@@ -1594,7 +1585,9 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_nickname:
 			if( ppp->fusei_tamago_flag ){
 //ダメタマゴ処理がないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning DAMETAMAGO Name Nothing
+#endif
 //				MSGDAT_MonsNameGet( MONSNO_DAMETAMAGO, HEAPID_BASE_SYSTEM, buf );
 			}
 			else{
@@ -1612,7 +1605,9 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 			ret = ppp2->nickname_flag;
 		case ID_PARA_nickname_buf:
 //STRBUF処理がないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning STRBUF Nothing
+#endif
 			if( ppp->fusei_tamago_flag ){
 //				STRBUF*  default_monsname = MSGDAT_UTIL_GetMonsName( MONSNO_DAMETAMAGO, HEAPID_BASE_SYSTEM );
 //				STRBUF_Copy( ( STRBUF * )buf, default_monsname );
@@ -1666,7 +1661,9 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 
 		case ID_PARA_oyaname_buf:
 //STRBUF処理がないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning STRBUF Nothing
+#endif
 //			STRBUF_SetStringCode( ( STRBUF * )buf, ppp4->oyaname );
 			break;
 
@@ -1752,16 +1749,20 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_type2:
 			if( ( ppp1->monsno == MONSNO_AUSU ) && ( ppp1->speabino == TOKUSYU_MARUTITAIPU ) ){
 //アイテム処理系がないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning ITEM_PRM_EQUIP Nothing
+#endif
 //				ret = AusuTypeGet( ItemParamGet( ppp1->item, ITEM_PRM_EQUIP, HEAPID_BASE_SYSTEM ) );
 			}
 			else{
-				ret = PokePersonalParaGet( ppp1->monsno, ppp2->form_no, ID_PER_type1 + ( id - ID_PARA_type1 ) );
+				ret = PokePersonalParaGet( ppp1->monsno, ppp2->form_no, POKE_PER_ID_type1 + ( id - ID_PARA_type1 ) );
 			}
 			break;
 		case ID_PARA_default_name:						//ポケモンのデフォルト名
 //MSGDAT処理がないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MSGDAT Nothing
+#endif
 //			MSGDAT_MonsNameGet( ppp1->monsno, HEAPID_BASE_SYSTEM, buf );
 			break;
 	}
@@ -1817,12 +1818,16 @@ static	void	PokeParaPutAct( POKEMON_PARAM *pp, int id, const void *buf )
 		break;
 	case ID_PARA_mail_data:
 //メール処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MAIL_DATA Nothing
+#endif
 //		MailData_Copy( ( MAIL_DATA * )buf, &pp->pcp.mail_data );
 		break;
 	case ID_PARA_cb_core:
 //カスタムボール処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning CB_CORE Nothing
+#endif
 //		CB_Tool_CoreData_Copy( ( CB_CORE * )buf, &pp->pcp.cb_core );
 		break;
 	default:
@@ -2086,7 +2091,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_nickname_code_flag:
 			{
 //メッセージ処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MSGDAT Nothing
+#endif
 //				STRCODE	def_name[ MONS_NAME_SIZE + EOM_SIZE ];
 
 				//デフォルト名と比較して、デフォルト名だったら、ニックネームフラグを落とす
@@ -2102,7 +2109,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_nickname_buf_flag:
 			{
 //メッセージ処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning MSGDAT Nothing
+#endif
 //				STRCODE	def_name[ MONS_NAME_SIZE + EOM_SIZE ];
 //				STRCODE	buf_name[ MONS_NAME_SIZE + EOM_SIZE ];
 
@@ -2114,7 +2123,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 			}
 		case ID_PARA_nickname_buf:
 //メッセージ処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning STRBUF Nothing
+#endif
 //			STRBUF_GetStringCode( ( STRBUF * )buf, ppp3->nickname, NELEMS( ppp3->nickname ) );
 			break;
 		case ID_PARA_pref_code:
@@ -2159,7 +2170,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 			break;
 		case ID_PARA_oyaname_buf:
 //メッセージ処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning STRBUF Nothing
+#endif
 //			STRBUF_GetStringCode( ( STRBUF * )buf, ppp4->oyaname, NELEMS( ppp4->oyaname ) );
 			break;
 
@@ -2184,7 +2197,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_get_place:							//捕まえた場所
 		case ID_PARA_new_get_place:						//捕まえた場所
 //処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning PlaceName_RangeCheckDP Nothing
+#endif
 #if 0
 			//DPにもあった場所なら、新領域と旧領域にその地名IDを書き込む
 			if( buf16[0] == 0 || PlaceName_RangeCheckDP( buf16[0] ) == TRUE ){
@@ -2203,7 +2218,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_birth_place:						//生まれた場所
 		case ID_PARA_new_birth_place:					//生まれた場所
 //処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning PlaceName_RangeCheckDP Nothing
+#endif
 #if 0
 			//DPにもあった場所なら、新領域と旧領域にその地名IDを書き込む
 			if( buf16[0] == 0 || PlaceName_RangeCheckDP( buf16[0] ) == TRUE ){
@@ -2255,7 +2272,9 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_default_name:						//ポケモンのデフォルト名
 			{
 //メッセージ処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning STRBUF Nothing
+#endif
 //				STRBUF	*name_buf;
 
 //				name_buf = MSGDAT_UTIL_GetMonsName( ppp1->monsno, HEAPID_BASE_SYSTEM );
@@ -2332,11 +2351,16 @@ static	void	PokePasoParaAddAct( POKEMON_PASO_PARAM *ppp, int id, int value )
 
 	switch( id ){
 		case ID_PARA_exp:
-			if( ( ppp1->exp + value ) > PokeLevelExpGet( ppp1->monsno, ppp2->form_no, POKE_LEVEL_MAX ) ){
-				ppp1->exp = PokeLevelExpGet( ppp1->monsno, ppp2->form_no, POKE_LEVEL_MAX );
-			}
-			else{
-				ppp1->exp += value;
+			{
+				u32 max_exp = POKETOOL_GetMinExp( ppp1->monsno, ppp2->form_no, POKE_LEVEL_MAX );
+				if( ( ppp1->exp + value ) > max_exp )
+				{
+					ppp1->exp = max_exp;
+				}
+				else
+				{
+					ppp1->exp += value;
+				}
 			}
 			break;
 		case ID_PARA_friend:
@@ -2697,13 +2721,13 @@ static	u16	PokeChrAbiCalc( u8 chr, u16 para, u8 cond)
  *	ポケモン成長テーブルデータを取得
  *
  * @param[in]	para		取得する成長テーブルのインデックス（0～7）
- * @param[out]	grow_tbl	取得した成長テーブルの格納先
+ * @param[out]	GrowTable	取得した成長テーブルの格納先
  */
 //============================================================================================
-static	void	PokeGrowDataGet( int para, u32 *grow_tbl )
+static	void	load_grow_table( int para, u32 *GrowTable )
 {
-	GF_ASSERT_MSG( para < 8, "PokeGrowDataGet:TableIndexOver!\n" );
-	GFL_ARC_LoadData( grow_tbl, ARCID_GROW_TBL, para );
+	GF_ASSERT_MSG( para < 8, "load_grow_table:TableIndexOver!\n" );
+	GFL_ARC_LoadData( GrowTable, ARCID_GROW_TBL, para );
 }
 
 //============================================================================================
@@ -2718,16 +2742,12 @@ static	void	PokeGrowDataGet( int para, u32 *grow_tbl )
 //============================================================================================
 static	u32	PokeGrowParaGet( int para, int level )
 {
-	u32	exp;
-
 	GF_ASSERT_MSG( para < 8, "PokeGrowParaGet:TableIndexOver!\n" );
 	GF_ASSERT_MSG( level <= 101, "PokeGrowParaGet:Level Over!\n" );
 
-	PokeGrowDataGet( para, &grow_tbl[0] );
+	load_grow_table( para, &GrowTable[0] );
 
-	exp = grow_tbl[ level ];
-
-	return	exp;
+	return GrowTable[ level ];
 }
 
 //============================================================================================
@@ -2819,262 +2839,15 @@ static	void	*PokeParaAdrsGet( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
  * @return	取得したデータ
  */
 //============================================================================================
-u32	PokePersonalParaGet( int mons_no, int form_no, int para )
+u32	PokePersonalParaGet( u16 mons_no, u16 form_no, int para )
 {
 	u32	ret;
 
-	mons_no = PokeOtherFormMonsNoGet( mons_no, form_no );
+	mons_no = POKE_PERSONAL_GetPersonalID( mons_no, form_no );
 
-	PokePersonalDataGet( mons_no, form_no, &ppd );
-	ret = PokePersonalPara_Get( &ppd, para );
+	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
+	ret = POKE_PERSONAL_GetParam( &PersonalDataWork, para );
 
 	return ret;
-}
-
-//==============================================================================
-/**
- * パーソナルデータオープン（フォルム指定あり）
- *
- * この関数でオープンしたデータをPokePersonalPara_Getで取得します
- * PokePersonalPara_Closeで解放
- *
- * @param   mons_no		
- * @param   form_no		
- * @param   HeapID		
- *
- * @retval  POKEMON_PERSONAL_DATA *		
- */
-//==============================================================================
-POKEMON_PERSONAL_DATA *PokePersonalPara_Open( int mons_no, int form_no, HEAPID HeapID )
-{
-	POKEMON_PERSONAL_DATA *ppd;
-	
-	ppd = GFL_HEAP_AllocMemory( HeapID, sizeof(POKEMON_PERSONAL_DATA) );
-	PokePersonalDataGet( mons_no, form_no, ppd );
-	
-	return ppd;
-}
-
-//==============================================================================
-/**
- * パーソナルデータ取得
- *
- * PokePersonalPara_Openで関数で準備してからデータを取得します
- * PokePersonalPara_Closeで解放
- *
- * @param   ppd		
- * @param   para		
- *
- * @retval  u32		
- */
-//==============================================================================
-u32 PokePersonalPara_Get( POKEMON_PERSONAL_DATA *ppd, int para )
-{
-	u32 ret;
-
-	GF_ASSERT( ppd );
-	
-	switch( para ){
-	case ID_PER_basic_hp:		//基本ＨＰ
-		ret = ppd->basic_hp;
-		break;
-	case ID_PER_basic_pow:		//基本攻撃力
-		ret = ppd->basic_pow;
-		break;
-	case ID_PER_basic_def:		//基本防御力
-		ret = ppd->basic_def;
-		break;
-	case ID_PER_basic_agi:		//基本素早さ
-		ret = ppd->basic_agi;
-		break;
-	case ID_PER_basic_spepow:	//基本特殊攻撃力
-		ret = ppd->basic_spepow;
-		break;
-	case ID_PER_basic_spedef:	//基本特殊防御力
-		ret = ppd->basic_spedef;
-		break;
-	case ID_PER_type1:			//属性１
-		ret = ppd->type1;
-		break;
-	case ID_PER_type2:			//属性２
-		ret = ppd->type2;
-		break;
-	case ID_PER_get_rate:		//捕獲率
-		ret = ppd->get_rate;
-		break;
-	case ID_PER_give_exp:		//贈与経験値
-		ret = ppd->give_exp;
-		break;
-	case ID_PER_pains_hp:		//贈与努力値ＨＰ
-		ret = ppd->pains_hp;
-		break;
-	case ID_PER_pains_pow:		//贈与努力値攻撃力
-		ret = ppd->pains_pow;
-		break;
-	case ID_PER_pains_def:		//贈与努力値防御力
-		ret = ppd->pains_def;
-		break;
-	case ID_PER_pains_agi:		//贈与努力値素早さ
-		ret = ppd->pains_agi;
-		break;
-	case ID_PER_pains_spepow:	//贈与努力値特殊攻撃力
-		ret = ppd->pains_spepow;
-		break;
-	case ID_PER_pains_spedef:	//贈与努力値特殊防御力
-		ret = ppd->pains_spedef;
-		break;
-	case ID_PER_item1:			//アイテム１
-		ret = ppd->item1;
-		break;
-	case ID_PER_item2:			//アイテム２
-		ret = ppd->item2;
-		break;
-	case ID_PER_sex:			//性別ベクトル
-		ret = ppd->sex;
-		break;
-	case ID_PER_egg_birth:		//タマゴの孵化歩数
-		ret = ppd->egg_birth;
-		break;
-	case ID_PER_friend:			//なつき度初期値
-		ret = ppd->friend;
-		break;
-	case ID_PER_grow:			//成長曲線識別
-		ret = ppd->grow;
-		break;
-	case ID_PER_egg_group1:		//こづくりグループ1
-		ret = ppd->egg_group1;
-		break;
-	case ID_PER_egg_group2:		//こづくりグループ2
-		ret = ppd->egg_group2;
-		break;
-	case ID_PER_speabi1:		//特殊能力１
-		ret = ppd->speabi1;
-		break;
-	case ID_PER_speabi2:		//特殊能力２
-		ret = ppd->speabi2;
-		break;
-	case ID_PER_escape:			//逃げる率
-		ret = ppd->escape;
-		break;
-	case ID_PER_color:			//色（図鑑で使用）
-		ret = ppd->color;
-		break;
-	case ID_PER_reverse:		//反転フラグ
-		ret = ppd->reverse;
-		break;
-	case ID_PER_machine1:		//技マシンフラグ１
-		ret = ppd->machine1;
-		break;
-	case ID_PER_machine2:		//技マシンフラグ２
-		ret = ppd->machine2;
-		break;
-	case ID_PER_machine3:		//技マシンフラグ３
-		ret = ppd->machine3;
-		break;
-	case ID_PER_machine4:		//技マシンフラグ４
-		ret = ppd->machine4;
-		break;
-	}
-	return ret;
-}
-
-//==============================================================================
-/**
- * パーソナルデータ解放
- *
- * PokePersonalPara_Openで確保したメモリを解放します
- *
- * @param   ppd		
- *
- * @retval  none		
- */
-//==============================================================================
-void PokePersonalPara_Close( POKEMON_PERSONAL_DATA *ppd )
-{
-	GF_ASSERT( ppd );
-
-	GFL_HEAP_FreeMemory( ppd );
-	
-}
-
-//============================================================================================
-/**
- *	ポケモンパーソナル構造体データを取得
- *
- * @param[in]	mons_no	取得したいポケモンナンバー
- * @param[in]	form_no	取得したいポケモンのフォルムナンバー
- * @param[out]	ppd		取得したパーソナルデータの格納先を指定
- */
-//============================================================================================
-static	void	PokePersonalDataGet( int mons_no, int form_no, POKEMON_PERSONAL_DATA *ppd )
-{
-	mons_no = PokeOtherFormMonsNoGet( mons_no, form_no );
-
-	GFL_ARC_LoadData( ppd, ARCID_PERSONAL, mons_no );
-}
-
-//============================================================================================
-/**
- *	技覚えテーブルデータを取得
- *
- * @param[in]	monsno		取得するポケモンナンバー
- * @param[in]	form_no		取得するポケモンのフォルムナンバー
- * @param[out]	wot			取得した技覚えテーブルの格納先
- */
-//============================================================================================
-static	void	PokeWazaOboeDataGet( int mons_no, int form_no, u16 *wot )
-{
-	mons_no = PokeOtherFormMonsNoGet( mons_no, form_no );
-
-	GFL_ARC_LoadData( wot, ARCID_WOTBL, mons_no );
-}
-
-//--------------------------------------------------------------
-/**
- * @brief	別フォルムのモンスターナンバーの取得
- *
- * @param[in]	mons_no	取得するモンスターナンバー
- * @param[in]	form_no	取得するフォルムナンバー
- *
- * @retval	mons_no	
- */
-//--------------------------------------------------------------
-static	int	PokeOtherFormMonsNoGet( int mons_no, int form_no )
-{
-	//フォルムによって、パーソナルが変化するものをチェック
-	switch( mons_no ){
-	case MONSNO_DEOKISISU:
-		if( ( form_no ) && ( form_no <= FORMNO_DEOKISISU_MAX ) ){
-			mons_no = DEOKISISU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_MINOMESU:
-		if( ( form_no ) && ( form_no <= FORMNO_MINOMUTTI_MAX ) ){
-			mons_no = MINOMESU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-		
-	//↓以下、プラチナから追加
-	case MONSNO_KIMAIRAN:
-		if( ( form_no ) && ( form_no <= FORMNO_GIRATINA_MAX ) ){
-			mons_no = GIRATINA_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_EURISU:
-		if( ( form_no ) && ( form_no <= FORMNO_SHEIMI_MAX ) ){
-			mons_no = SHEIMI_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	case MONSNO_PURAZUMA:
-		if( ( form_no ) && ( form_no <= FORMNO_ROTOMU_MAX ) ){
-			mons_no = ROTOMU_OTHER_FORM_PERSONAL + form_no;
-		}
-		break;
-	
-	default:
-		break;
-	}
-
-	return mons_no;
 }
 
