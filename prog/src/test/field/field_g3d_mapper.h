@@ -88,9 +88,6 @@ typedef struct {
 
 typedef struct {
 	u32						g3DmapFileType;	//g3Dmapファイル識別タイプ（仮）
-	u16						sizex;			//横ブロック数
-	u16						sizez;			//縦ブロック数
-	u32						totalSize;		//配列サイズ
 	fx32					width;			//ブロック１辺の幅
 	fx32					height;			//ブロック高さ
 	FLD_G3D_MAPPER_MODE			mode;			//動作モード
@@ -100,6 +97,9 @@ typedef struct {
 	u32						gobjType;		//グローバルオブジェクトタイプ
 	void*					gobjData;		//グローバルオブジェクト
 
+	u16						sizex;			//横ブロック数
+	u16						sizez;			//縦ブロック数
+	u32						totalSize;		//配列サイズ
 	const FLD_G3D_MAPPER_DATA*	data;			//実マップデータ
 
 }FLD_G3D_MAPPER_RESIST;
