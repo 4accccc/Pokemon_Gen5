@@ -117,8 +117,8 @@ static void* getGenericWork( MAIN_WORK* mainWork, u32 size );
 static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT DebugTayaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
-static void* testBeaconGetFunc( void );
-static int testBeaconGetSizeFunc( void );
+static void* testBeaconGetFunc( void* pWork );
+static int testBeaconGetSizeFunc( void* pWork );
 static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
@@ -685,12 +685,12 @@ static void testPacketFunc( const int netID, const int size, const void* pData, 
 }
 
 ///< ビーコンデータ取得関数
-static void* testBeaconGetFunc( void )
+static void* testBeaconGetFunc( void* pWork )
 {
 	return &testBcon;
 }
 ///< ビーコンデータサイズ取得関数
-static int testBeaconGetSizeFunc( void )
+static int testBeaconGetSizeFunc( void* pWork )
 {
 	return sizeof(testBcon);
 }

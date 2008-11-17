@@ -89,8 +89,8 @@ void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
 BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
 
-void*	DLPlayComm_GetBeaconDataDummy(void);
-int		DLPlayComm_GetBeaconSizeDummy(void);
+void*	DLPlayComm_GetBeaconDataDummy(void* pWork);
+int		DLPlayComm_GetBeaconSizeDummy(void* pWork);
 
 //各種チェック関数
 BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
@@ -317,12 +317,12 @@ BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm )
  *	各種ビーコン用コールバック関数(ダミー
  */
 //--------------------------------------------------------------
-void*	DLPlayComm_GetBeaconDataDummy(void)
+void*	DLPlayComm_GetBeaconDataDummy(void* pWork)
 {
 	static u8 dummy[2];
 	return (void*)&dummy;
 }
-int	DLPlayComm_GetBeaconSizeDummy(void)
+int	DLPlayComm_GetBeaconSizeDummy(void* pWork)
 {
 	return sizeof(u8)*2;
 }

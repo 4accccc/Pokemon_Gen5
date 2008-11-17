@@ -111,8 +111,8 @@ void	FieldComm_SetActiveUser(const u8 idx);
 void	InitCommLib_EndCallback( void* pWork );
 void	FieldComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 void	FieldComm_DisconnectCallBack(void* pWork);
-void*	FieldComm_GetBeaconData(void);
-int		FieldComm_GetBeaconSize(void);
+void*	FieldComm_GetBeaconData(void* pWork);
+int		FieldComm_GetBeaconSize(void* pWork);
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
 					  GameServiceID GameServiceID2);
 
@@ -377,11 +377,11 @@ void	FieldComm_ConnectParent( u8 idx )
 void	FieldComm_SendSelfData()
 {
 	//とりあえずビーコンを送信
-	void *data = FieldComm_GetBeaconData();
+	void *data = FieldComm_GetBeaconData(NULL);
 //	const BOOL ret = GFL_NET_SendData( f_comm->selfHandle , 
 //	FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() , data );
 	const BOOL ret = GFL_NET_SendDataEx( f_comm->selfHandle , 
-			GFL_NET_SENDID_ALLUSER , FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize() ,
+			GFL_NET_SENDID_ALLUSER , FC_CMD_FIRST_BEACON , FieldComm_GetBeaconSize(NULL) ,
 			data , FALSE , TRUE , FALSE );
 	if( ret == FALSE ){ OS_TPrintf("FieldComm Data send is failued!!\n"); }
 
@@ -536,7 +536,7 @@ void	FieldComm_DisconnectCallBack(void *pWork)
  *	各種ビーコン用コールバック関数 
  */
 //--------------------------------------------------------------
-void*	FieldComm_GetBeaconData(void)
+void*	FieldComm_GetBeaconData(void* pWork)
 {
 	static FIELD_COMM_BEACON testData = {
 		L"てすとよう" ,
@@ -558,7 +558,7 @@ void*	FieldComm_GetBeaconData(void)
 	
 	return (void*)&testData;
 }
-int	FieldComm_GetBeaconSize(void)
+int	FieldComm_GetBeaconSize(void* pWork)
 {
 	return sizeof( FIELD_COMM_BEACON );
 }

@@ -135,8 +135,8 @@ static void Local_EntryAdd(D_MATSU_WORK *wk, IRC_MATCH_ENTRY_PARAM *profile);
 static void Local_ParentProfileSet(D_MATSU_WORK *wk, IRC_MATCH_ENTRY_PARAM *profile);
 static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, int x, int y);
 
-static void* _netBeaconGetFunc(void);
-static int _netBeaconGetSizeFunc(void);
+static void* _netBeaconGetFunc(void* pWork);
+static int _netBeaconGetSizeFunc(void* pWork);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 static void _initCallBack(void* pWork);
 static void _connectCallBack(void* pWork);
@@ -908,13 +908,13 @@ static _testBeaconStruct _testBeacon = { WB_NET_DEBUG_MATSUDA_SERVICEID };
  */
 //--------------------------------------------------------------
 
-static void* _netBeaconGetFunc(void)
+static void* _netBeaconGetFunc(void* pWork)
 {
 	return &_testBeacon;
 }
 
 ///< ビーコンデータサイズ取得関数
-static int _netBeaconGetSizeFunc(void)
+static int _netBeaconGetSizeFunc(void* pWork)
 {
 	return sizeof(_testBeacon);
 }

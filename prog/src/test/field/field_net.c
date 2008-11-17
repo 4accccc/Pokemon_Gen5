@@ -42,13 +42,13 @@ typedef struct{
 static _testBeaconStruct _testBeacon = { WB_NET_FIELDMOVE_SERVICEID };
 
 ///< ビーコンデータ取得関数
-static void* _netBeaconGetFunc(void)
+static void* _netBeaconGetFunc(void* pWork)
 {
 	return &_testBeacon;
 }
 
 ///< ビーコンデータサイズ取得関数
-static int _netBeaconGetSizeFunc(void)
+static int _netBeaconGetSizeFunc(void* pWork)
 {
 	return sizeof(_testBeacon);
 }

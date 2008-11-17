@@ -36,8 +36,8 @@ static BOOL NetTestEndStart(void* pCtl);
 static BOOL NetTestMoveSend(void* pCtl);
 
 static void _connectCallBack(void* pWork);
-static void* _netBeaconGetFunc(void);
-static int _netBeaconGetSizeFunc(void);
+static void* _netBeaconGetFunc(void* pWork);
+static int _netBeaconGetSizeFunc(void* pWork);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 //static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void _netConnectFunc(void* pWork,int hardID);    ///< ハードで接続した時に呼ばれる
@@ -107,13 +107,13 @@ static GFLNetInitializeStruct aGFLNetInit = {
  */
 //--------------------------------------------------------------
 
-static void* _netBeaconGetFunc(void)
+static void* _netBeaconGetFunc(void* pWork)
 {
 	return &_testBeacon;
 }
 
 ///< ビーコンデータサイズ取得関数
-static int _netBeaconGetSizeFunc(void)
+static int _netBeaconGetSizeFunc(void* pWork)
 {
 	return sizeof(_testBeacon);
 }
