@@ -32,8 +32,6 @@
 
 #include "event_mapchange.h"
 
-#include "map_matrix.h"
-
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
 
@@ -130,32 +128,13 @@ static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 	return PLAYERWORK_getPosition(pw);
 }
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void MakeG3DresistDataFromMatrix(FLD_G3D_MAPPER_RESIST *map_res, void * pMapMatrixBuf)
-{
-	u8 *tbl;
-	const MAP_MATRIX_HEADER *matH;
-	
-	GFL_ARC_LoadData(pMapMatrixBuf,
-		ARCID_FLDMAP_MAPMATRIX, NARC_map_matrix_wb_mat_bin);
-	matH = pMapMatrixBuf;
-	tbl = (u8*)pMapMatrixBuf + sizeof(MAP_MATRIX_HEADER);
-	
-	map_res->sizex = matH->size_h;
-	map_res->sizez = matH->size_v;
-	map_res->totalSize = matH->size_h * matH->size_v;
-	map_res->arcID = ARCID_FLDMAP_LANDDATA;
-	map_res->data = (const FLD_G3D_MAPPER_DATA *)tbl;
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void GetMapperData(u16 map_id, FLD_G3D_MAPPER_RESIST * map_res)
+static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
 {
-	*map_res = *FIELDDATA_GetMapperData(map_id);
-	if( FIELDDATA_IsMatrixMap(map_id) == TRUE ){ //プランナー確認マップ
-		MakeG3DresistDataFromMatrix(map_res, fieldWork->pMapMatrixBuf);
-	}
+	FIELDDATA_SetMapperData(fieldWork->map_id,
+			&fieldWork->map_res,
+			fieldWork->pMapMatrixBuf);
 }
 
 
@@ -221,7 +200,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 	case 1:
 
 		//セットアップ
-		GetMapperData(fieldWork->map_id, &fieldWork->map_res);
+		SetMapperData(fieldWork);
 		ResistDataFieldG3Dmapper(
 			 GetFieldG3Dmapper(fieldWork->gs), &fieldWork->map_res );
 

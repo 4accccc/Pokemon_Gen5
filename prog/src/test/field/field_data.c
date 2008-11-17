@@ -6,6 +6,8 @@
 #include "field_debug.h"
 #include "field_data.h"
 
+#include "map_matrix.h"
+
 //#include "test_graphic/sample_map.naix"
 //#include "test_graphic/fld_map.naix"
 #include "test_graphic/test3dp.naix"
@@ -25,6 +27,37 @@ const SCENE_DATA	resistMapTbl[];
 const unsigned int resistMapTblCount;
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void FIELDDATA_SetMapperData(u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
+{
+	GF_ASSERT(mapid < resistMapTblCount);
+	*map_res = resistMapTbl[mapid].mapperData;
+	if (resistMapTbl[mapid].isMatrixMapFlag){
+		u8 *tbl;
+		const MAP_MATRIX_HEADER *matH;
+		
+		GFL_ARC_LoadData(matrix_buf,
+			ARCID_FLDMAP_MAPMATRIX, NARC_map_matrix_wb_mat_bin);
+		matH = matrix_buf;
+		tbl = (u8*)matrix_buf + sizeof(MAP_MATRIX_HEADER);
+		
+		map_res->sizex = matH->size_h;
+		map_res->sizez = matH->size_v;
+		map_res->totalSize = matH->size_h * matH->size_v;
+		map_res->data = (const FLD_G3D_MAPPER_DATA *)tbl;
+	}
+	{
+		int x,z;
+		for (z = 0; z < map_res->sizez; z++) {
+			for (x = 0; x < map_res->sizex; x++) {
+				OS_Printf("%08x ",map_res->data[map_res->sizex * z + x]);
+			}
+			OS_Printf("\n");
+		}
+	}
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
