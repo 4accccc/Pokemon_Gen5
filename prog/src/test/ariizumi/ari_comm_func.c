@@ -60,7 +60,7 @@ struct _FIELD_COMM_DATA_OLD
 
 	//仲間データ
 	u8			memberNum;
-	FIELD_COMM_BEACON		*memberData;	//名前とID
+	FIELD_COMM_BEACON_OLD		*memberData;	//名前とID
 	FIELD_COMM_PLAYER_DATA	*playerData;	//座標とか
 	u8			isActiveUser[FIELD_COMM_MEMBER_MAX];	//ビットフラグで管理
 
@@ -151,7 +151,7 @@ FIELD_COMM_DATA_OLD *FieldComm_InitData( u32 heapID )
 	f_comm->isStartMode = FALSE;
 
 	f_comm->memberNum = 0;
-	f_comm->memberData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_BEACON ) * FIELD_COMM_MEMBER_MAX );
+	f_comm->memberData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_BEACON_OLD ) * FIELD_COMM_MEMBER_MAX );
 	f_comm->playerData = GFL_HEAP_AllocClearMemory( heapID , sizeof( FIELD_COMM_PLAYER_DATA	) * FIELD_COMM_MEMBER_MAX );
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 	{
@@ -269,7 +269,7 @@ u8	FieldComm_UpdateSearchParent()
 
 	while(TRUE){
 		// TODO:データは変更されるかもしれないので、ここでローカルに保存しておくべきか？
-		FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( findNum );
+		FIELD_COMM_BEACON_OLD *b_data = GFL_NET_GetBeaconData( findNum );
 		if( b_data != NULL ){
 		findNum++;
 	}
@@ -290,7 +290,7 @@ u8	FieldComm_UpdateSearchParent()
 //--------------------------------------------------------------
 BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name )
 {
-	const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
+	const FIELD_COMM_BEACON_OLD *b_data = GFL_NET_GetBeaconData( idx );
 	if( b_data == NULL )
 	{
 		OS_TPrintf("FieldComm Parent data not found!! idx[%d]\n",idx);
@@ -309,7 +309,7 @@ BOOL	FieldComm_GetSearchParentName( const u8 idx , STRBUF *name )
 //--------------------------------------------------------------
 BOOL	FieldComm_IsValidParentData( const u8 idx )
 {
-	const FIELD_COMM_BEACON *b_data = GFL_NET_GetBeaconData( idx );
+	const FIELD_COMM_BEACON_OLD *b_data = GFL_NET_GetBeaconData( idx );
 	if( b_data == NULL ){ return FALSE; }
 	else				{ return TRUE;  }
 }
@@ -538,7 +538,7 @@ void	FieldComm_DisconnectCallBack(void *pWork)
 //--------------------------------------------------------------
 void*	FieldComm_GetBeaconData(void* pWork)
 {
-	static FIELD_COMM_BEACON testData = {
+	static FIELD_COMM_BEACON_OLD testData = {
 		L"てすとよう" ,
 		0x8000
 	};
@@ -560,7 +560,7 @@ void*	FieldComm_GetBeaconData(void* pWork)
 }
 int	FieldComm_GetBeaconSize(void* pWork)
 {
-	return sizeof( FIELD_COMM_BEACON );
+	return sizeof( FIELD_COMM_BEACON_OLD );
 }
 BOOL	FieldComm_CheckConnectService(GameServiceID GameServiceID1, 
 									  GameServiceID GameServiceID2)
@@ -575,11 +575,11 @@ void FieldComm_Post_FirstBeacon(const int netID, const int size, const void* pDa
 {
 	//ここでは、親機がつながった子機の情報を収集するだけの物
 	if( IS_PARENT ){
-		const FIELD_COMM_BEACON *postData = (FIELD_COMM_BEACON*)pData;
+		const FIELD_COMM_BEACON_OLD *postData = (FIELD_COMM_BEACON_OLD*)pData;
 		OS_TPrintf("FieldComm getData[FirstBeacon]\n");
 		OS_TPrintf("          id[%d]\n",postData->id);
 	
-		GFL_STD_MemCopy( pData , &f_comm->memberData[f_comm->memberNum] , sizeof( FIELD_COMM_BEACON ) );
+		GFL_STD_MemCopy( pData , &f_comm->memberData[f_comm->memberNum] , sizeof( FIELD_COMM_BEACON_OLD ) );
 //		f_comm->memberData[f_comm->memberNum] = postData;
 		f_comm->memberNum++;
 		f_comm->isDutyMemberData = TRUE;

@@ -128,8 +128,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
+	{ DEBUG_FIELD_C_CHOICE01, DMenuCallProc_OpenStartInvasion },
+//	{ DEBUG_FIELD_STR01, NULL },
 //	{ DEBUG_FIELD_STR01, NULL },
 };
 
@@ -265,10 +266,13 @@ DEBUG_FLDMENU * FldDebugMenu_Init(
 //--------------------------------------------------------------
 void FldDebugMenu_Delete( DEBUG_FLDMENU *d_menu )
 {
+	const u8 msgBgFrame = DEBUG_BGFRAME_MSG;
 	{	//‚Æ‚è‚ ‚¦‚¸‚±‚¿‚ç‚Å@‚¢‚¸‚ê‚ÍƒƒCƒ“‘¤
 		GFL_BMPWIN_Exit();
 		GFL_BG_FreeCharacterArea( d_menu->bgFrame, 0x00, 0x20 );
 		GFL_BG_FreeBGControl( d_menu->bgFrame );
+		GFL_BG_FreeCharacterArea( msgBgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( msgBgFrame );
 	}
 	
 	GFL_HEAP_FreeMemory( d_menu );

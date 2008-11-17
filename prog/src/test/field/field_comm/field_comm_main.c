@@ -42,8 +42,8 @@ struct _FIELD_COMM_MAIN
 //	proto
 //======================================================================
 
-FIELD_COMM_MAIN* FieldCommMain_InitSystem( int heapID );
-void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys );
+FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID );
+void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
 void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
 
@@ -58,25 +58,31 @@ void	FieldCommMain_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 const BOOL	FieldCommMain_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 
 //--------------------------------------------------------------
-// フィールド通信システム初期化
+//	フィールド通信システム初期化
+//	@param	commHeapID 通信用に常駐するヒープID
+//			通信が有効な間中開放されないHeapを指定してください
 //--------------------------------------------------------------
-FIELD_COMM_MAIN* FieldCommMain_InitSystem( int heapID )
+FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID )
 {
 	FIELD_COMM_MAIN *commSys;
 	commSys = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_MAIN) );
 	commSys->heapID_ = heapID;
 	commSys->commFunc_ = FieldCommFunc_InitSystem( heapID );
 	
-	FieldCommData_InitSystem( heapID );
+	FieldCommData_InitSystem( commHeapID );
 	return commSys;
 }
 
 //--------------------------------------------------------------
 // フィールド通信システム開放
+// @param isTermAll TRUEでデータ領域のヒープも開放
 //--------------------------------------------------------------
-void FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys )
+void FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
 {
-	FieldCommData_TermSystem();
+	if( isTermAll == TRUE )
+	{
+		FieldCommData_TermSystem();
+	}
 	FieldCommFunc_TermSystem( commSys->commFunc_ );
 	GFL_HEAP_FreeMemory( commSys );
 }
@@ -113,7 +119,7 @@ void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 			FieldCommFunc_Send_SelfData( commSys->commFunc_ );
 		}
 			//届いたデータのチェック
-		for( i=0;i<FIELD_COMM_CHARA_MAX;i++ )
+		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 		{
 			if( i != FieldCommFunc_GetSelfIndex(commSys->commFunc_) &&
 				FieldCommData_GetCharaData_IsValid(i) == TRUE )

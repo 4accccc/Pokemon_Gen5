@@ -12,6 +12,7 @@
 #include "net/network_define.h"
 
 #include "gamesystem/playerwork.h"
+#include "field_comm_main.h"
 #include "field_comm_func.h"
 #include "field_comm_data.h"
 #include "test/ariizumi/ari_debug.h"
@@ -52,7 +53,7 @@ struct _FIELD_COMM_FUNC
 typedef struct
 {
 	u8	mode_:1;	//0:待機 1:探索
-	u8	member_:3;	//人数
+	u8	memberNum_:3;	//人数
 
 	u8	pad_:4;
 }FIELD_COMM_BEACON;
@@ -66,6 +67,7 @@ void	FieldCommFunc_TermSystem( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_InitCommSystem( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_TermCommSystem( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc );
+static	u8	FieldCommFunc_CompareBeacon( const FIELD_COMM_BEACON *firstBcn , const FIELD_COMM_BEACON *secondBcn );
 
 void	FieldCommFunc_StartCommWait( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_StartCommSearch( FIELD_COMM_FUNC *commFunc );
@@ -108,6 +110,9 @@ FIELD_COMM_FUNC* FieldCommFunc_InitSystem( HEAPID heapID )
 	//commFunc->isInitCommSystem_ = FALSE;
 	commFunc->isInitCommSystem_ = GFL_NET_IsInit();
 	commFunc->commMode_ = FIELD_COMM_MODE_NONE;
+	//通信が初期化されていたならアイコンをリロードする
+	if( commFunc->isInitCommSystem_ == TRUE )
+		GFL_NET_ReloadIcon();
 	return commFunc;
 }
 
@@ -174,6 +179,8 @@ void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 {
 	//待ち受け側でもビーコンをチェックしてみる
 	//if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH )
+	if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH ||
+		commFunc->commMode_ == FIELD_COMM_MODE_WAIT	)
 	{
 		u8 bcnIdx = 0;
 		int targetIdx = -1;
@@ -184,10 +191,62 @@ void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 			bcnData = GFL_NET_GetBeaconData( bcnIdx );
 			if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
 			{
-				//
+				//接続条件を満たした。
+				if( targetIdx == -1 )
+				{
+					targetIdx = bcnIdx;
+				}
+				else
+				{
+					//すでに他のビーコンが接続候補にあるので比較
+					const FIELD_COMM_BEACON *compBcn = GFL_NET_GetBeaconData(targetIdx);
+					const u8 result = FieldCommFunc_CompareBeacon( bcnData , compBcn );
+					if( result == 1 )
+					{
+						targetIdx = bcnIdx;
+					}
+				}
+			}
+			bcnIdx++;
+		}
+
+		if( targetIdx != -1 )
+		{
+			//ビーコンがあった
+			u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
+			if( macAdr != NULL )
+			{
+				GFL_NET_InitClientAndConnectToParent( macAdr ); 
+				commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
 			}
 		}
 	}
+}
+
+//--------------------------------------------------------------
+//	ビーコンの比較(人数が多い・共に待ち受け中を優先する
+//	@return 0:エラー 1:第１引数のビーコン 2:第２引数のビーコン
+//--------------------------------------------------------------
+static	u8	FieldCommFunc_CompareBeacon( const FIELD_COMM_BEACON *firstBcn , const FIELD_COMM_BEACON *secondBcn )
+{
+	//人数マックスチェック
+	if( firstBcn->memberNum_ == FIELD_COMM_MEMBER_MAX &&
+		secondBcn->memberNum_ == FIELD_COMM_MEMBER_MAX )
+		return 0;
+	
+	if(	secondBcn->memberNum_ == FIELD_COMM_MEMBER_MAX ||
+		firstBcn->memberNum_ > secondBcn->memberNum_ )
+		return 1;
+	if( firstBcn->memberNum_ == FIELD_COMM_MEMBER_MAX ||
+		firstBcn->memberNum_ < secondBcn->memberNum_ )
+		return 2;
+	
+	if( firstBcn->mode_ > secondBcn->mode_ )
+		return 1;
+	if( firstBcn->mode_ < secondBcn->mode_ )
+		return 2;
+
+	return (GFUser_GetPublicRand(2)+1);
 }
 
 //--------------------------------------------------------------
@@ -362,7 +421,7 @@ void*	FieldCommFunc_GetBeaconData(void* pWork)
 		beacon.mode_ = 0;
 	else
 		beacon.mode_ = 1;
-	beacon.member_ = GFL_NET_GetConnectNum();
+	beacon.memberNum_ = GFL_NET_GetConnectNum();
 
 	return (void*)&beacon;
 }

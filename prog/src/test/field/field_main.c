@@ -10,6 +10,7 @@
 //============================================================================================
 #include <gflib.h>
 #include "system/gfl_use.h"
+#include "system/main.h"		//GFL_HEAPID_APP
 #include "net/network_define.h"
 #include "textprint.h"
 #include "arc_def.h"
@@ -154,7 +155,7 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
 			heapID, sizeof(FLD_G3D_MAPPER_DATA) * 32 * 32);
 	//通信用処理
-	fieldWork->commSys = FieldCommMain_InitSystem( heapID );
+	fieldWork->commSys = FieldCommMain_InitSystem( heapID , GFL_HEAPID_APP );
 
 //	GFL_UI_TP_Init( fieldWork->heapID );
 }
@@ -171,7 +172,8 @@ void	FieldEnd( void )
 {
 	GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
 //	GFL_UI_TP_Exit();
-	FieldCommMain_TermSystem( fieldWork->commSys );
+	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
+	FieldCommMain_TermSystem( fieldWork->commSys , FALSE );
 	GFL_HEAP_FreeMemory( fieldWork );
 	fieldWork = NULL;
 }

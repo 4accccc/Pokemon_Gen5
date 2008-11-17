@@ -53,7 +53,7 @@ typedef struct
 {
     STRCODE name[FIELD_COMM_NAME_LENGTH];
     u16	    id;
-}FIELD_COMM_BEACON;
+}FIELD_COMM_BEACON_OLD;
 
 
 #endif //ARI_COMM_DEF_H__

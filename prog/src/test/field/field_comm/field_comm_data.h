@@ -15,7 +15,6 @@
 //======================================================================
 //	define
 //======================================================================
-#define FIELD_COMM_CHARA_MAX (4)
 
 //======================================================================
 //	enum
@@ -30,6 +29,7 @@
 //======================================================================
 extern void FieldCommData_InitSystem( HEAPID heapID );
 extern void	FieldCommData_TermSystem();
+extern BOOL	FieldCommData_IsExistSystem(void);
 
 extern void	FieldCommData_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir );
 extern PLAYER_WORK*	FieldCommData_GetSelfData_PlayerWork(void);

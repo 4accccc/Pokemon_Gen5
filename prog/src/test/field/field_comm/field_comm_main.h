@@ -17,6 +17,7 @@
 //======================================================================
 //	define
 //======================================================================
+#define FIELD_COMM_MEMBER_MAX (4)
 
 //======================================================================
 //	enum
@@ -30,8 +31,8 @@ typedef struct _FIELD_COMM_MAIN FIELD_COMM_MAIN;
 //======================================================================
 //	proto
 //======================================================================
-extern FIELD_COMM_MAIN* FieldCommMain_InitSystem( int heapID );
-extern void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys );
+extern FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID );
+extern void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
 extern void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
 extern void	FieldCommMain_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
 extern void	FieldCommMain_TermStartCommMenu( FIELD_COMM_MAIN *commSys );

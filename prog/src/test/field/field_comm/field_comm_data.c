@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 
 #include "gamesystem/playerwork.h"
+#include "field_comm_main.h"
 #include "field_comm_data.h"
 
 //======================================================================
@@ -34,7 +35,7 @@ typedef struct
 typedef struct 
 {
 	FIELD_COMM_CHARA_DATA selfData_;	//自身のデータ。
-	FIELD_COMM_CHARA_DATA charaData_[FIELD_COMM_CHARA_MAX];
+	FIELD_COMM_CHARA_DATA charaData_[FIELD_COMM_MEMBER_MAX];
 }FIELD_COMM_DATA;
 
 //あえて独立して確保させる
@@ -44,7 +45,8 @@ FIELD_COMM_DATA *commData = NULL;
 //	proto
 //======================================================================
 void	FieldCommData_InitSystem( HEAPID heapID );
-void	FieldCommData_TermSystem();
+void	FieldCommData_TermSystem(void);
+BOOL	FieldCommData_IsExistSystem(void);
 
 void	FieldCommData_SetSelfData_PlayerWork( const PLAYER_WORK *plWork );
 void	FieldCommData_SetSelfDataPos( const ZONEID zoneID , const VecFx32 *pos , const u16 *dir );
@@ -64,22 +66,42 @@ static void FieldCommData_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData );
 void FieldCommData_InitSystem( HEAPID heapID )
 {
 	u8 i;
-	GF_ASSERT( commData == NULL );
-	commData = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_DATA) );
-	for( i=0;i<FIELD_COMM_CHARA_MAX;i++ )
+	//GF_ASSERT( commData == NULL );
+	if( commData == NULL )
 	{
-		FieldCommData_InitOneCharaData( &commData->charaData_[i] );
+		//最初はヒープの確保と全初期化
+		commData = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_DATA) );
+		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+		{
+			FieldCommData_InitOneCharaData( &commData->charaData_[i] );
+		}
+	}
+	else
+	{
+		//データがすでにあるときはexistだけ切っておく(COMM_ACTOR再生成のため
+		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+		{
+			commData->charaData_[i].isExist_ = FALSE;
+		}
 	}
 }
 
 //--------------------------------------------------------------
 //	通信用データ管理初期化
 //--------------------------------------------------------------
-void	FieldCommData_TermSystem( )
+void	FieldCommData_TermSystem( void )
 {
 	GF_ASSERT( commData != NULL );
 	GFL_HEAP_FreeMemory( commData );
 	commData = NULL;
+}
+
+//--------------------------------------------------------------
+//	データが存在するか？
+//--------------------------------------------------------------
+BOOL	FieldCommData_IsExistSystem(void)
+{
+	return( commData != NULL );
 }
 
 //--------------------------------------------------------------
