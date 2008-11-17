@@ -8,11 +8,14 @@
 //============================================================================================
 #include	<gflib.h>
 
-#include	"waza_tool/waza_tool.h"
-#include	"waza_tool_def.h"
-#include	"poke_tool/wazano_def.h"
-
 #include	"arc_def.h"
+
+#include	"waza_tool/waza_tool.h"
+#include	"waza_tool/wazano_def.h"
+
+#include	"waza_tool_def.h"
+
+
 
 //============================================================================================
 /**
