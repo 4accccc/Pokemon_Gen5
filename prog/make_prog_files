@@ -63,6 +63,7 @@ SRCS	+=		test/testmode.c \
 				waza_tool/waza_tool.c \
 				print/printsys.c \
 				print/gf_font.c \
+				print/wordset.c \
 				system/bmp_winframe.c \
 				system/bmp_menuwork.c \
 				system/bmp_menu.c \

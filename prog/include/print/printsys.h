@@ -292,12 +292,6 @@ extern void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait );
 //==============================================================================================
 extern u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin );
 
-
-
-
-
-
-
 //--------------------------------------------------------------
 /**
  * プリントキュー用ユーティリティ
@@ -382,5 +376,11 @@ inline BOOL PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
 
 
 
+
+
+extern STRCODE PRINTSYS_GetTagStartCode( void );
+extern BOOL PRINTSYS_IsWordSetTagType( const STRCODE* sp );
+extern u16 PRINTSYS_GetTagParam( const STRCODE* sp, u16 paramIdx );
+extern const STRCODE* PRINTSYS_SkipTag( const STRCODE* sp );
 
 #endif

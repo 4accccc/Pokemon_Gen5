@@ -21,6 +21,10 @@ enum {
 	LETTER_CHAR_HEIGHT = 2,			///< １文字あたり縦キャラ数
 	LINE_DOT_HEIGHT = 16,			///< １行あたりのドット数
 
+	// 改行コード、終端コード
+	EOM_CODE			= 0xffff,
+	CR_CODE				= 0xfffe,
+
 	// 汎用コントロールタイプ
 	CTRL_GENERAL_COLOR			= (0x0000),	///< 色変更
 	CTRL_GENERAL_RESET_COLOR	= (0x0001),	///< 色変更
@@ -42,13 +46,10 @@ enum {
 	// システムコントロール
 	CTRL_SYSTEM_COLOR			= (0x0000),
 
-	EOM_CODE			= 0xffff,
-	CR_CODE				= 0xfffe,
+	// タグ開始コード
 	SPCODE_TAG_START_	= 0xf000,
-
 	TAGTYPE_WORD = 0,				///< 文字列挿入
 	TAGTYPE_NUMBER = 1,				///< 数値挿入
-	TAGTYPE_PARTY = 2,				///< パーティ用文字列
 	TAGTYPE_GENERAL_CTRL = 0xbd,	///< 汎用コントロール処理
 	TAGTYPE_STREAM_CTRL = 0xbe,		///< 流れるメッセージ用コントロール処理
 	TAGTYPE_SYSTEM = 0xff,			///< エディタシステムタグ用コントロール処理
@@ -225,6 +226,7 @@ PRINT_QUE* PRINTSYS_QUE_Create( HEAPID heapID )
 {
 	return PRINTSYS_QUE_CreateEx( QUE_DEFAULT_BUFSIZE, heapID );
 }
+
 //==============================================================================================
 /**
  * プリントキューをサイズ指定して生成する
@@ -1041,6 +1043,65 @@ u32 PRINTSYS_GetStrWidth( const STRBUF* str, GFL_FONT* font, u16 margin )
 
 	return max;
 }
+
+
+//=============================================================================================
+/**
+ * タグ開始コードを取得
+ *
+ * @retval  STRCODE		
+ */
+//=============================================================================================
+STRCODE PRINTSYS_GetTagStartCode( void )
+{
+	return SPCODE_TAG_START_;
+}
+//=============================================================================================
+/**
+ * タグコードが単語セット用タグコードかどうか判定
+ *
+ * @param   sp		文字列ポインタ（タグ開始コードをポイントしていること）
+ *
+ * @retval  BOOL		単語セット用タグコードならTRUE
+ */
+//=============================================================================================
+BOOL PRINTSYS_IsWordSetTagType( const STRCODE* sp )
+{
+	u16 type = STR_TOOL_GetTagType( sp );
+	return (type == TAGTYPE_WORD) || (type==TAGTYPE_NUMBER);
+}
+
+//=============================================================================================
+/**
+ * タグパラメータ取得
+ *
+ * @param   sp		
+ * @param   paramIdx		
+ *
+ * @retval  u16		
+ */
+//=============================================================================================
+u16 PRINTSYS_GetTagParam( const STRCODE* sp, u16 paramIdx )
+{
+	return STR_TOOL_GetTagParam( sp, paramIdx );
+}
+
+//=============================================================================================
+/**
+ * タグ部分をスキップ
+ *
+ * @param   sp		
+ *
+ * @retval  const STRCODE*		
+ */
+//=============================================================================================
+const STRCODE* PRINTSYS_SkipTag( const STRCODE* sp )
+{
+	return STR_TOOL_SkipTag( sp );
+}
+
+
+
 
 
 
