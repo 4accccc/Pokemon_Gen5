@@ -57,7 +57,6 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID );
 static void				RemoveGameSystem( FIELD_SETUP* gs );
 static void				MainGameSystem( FIELD_SETUP* gs );
 
-static void _sendGamePlay( VecFx32* pVec  );
 
 typedef enum {
 	GAMEMODE_NORMAL = 0,
@@ -78,18 +77,18 @@ struct _FIELD_MAIN_WORK
 	int				seq;
 	int				timer;
 	
+	u16				map_id;
 	const DEPEND_FUNCTIONS * ftbl;
 	FIELD_SETUP*	gs;
 	FIELD_CAMERA*	camera_control;
-//	CURSOR_CONT*	cursorFriend;#endif
 	PC_ACTCONT*		pcActCont;
-//	PC_ACTCONT*		friendActCont;
 	FLD_ACTCONT*	fldActCont;
 	
 	int				key_cont;
 	
 	void *pGridCont;
 	void *pMapMatrixBuf;
+	FLD_G3D_MAPPER_RESIST map_res;
 	
 	FIELD_COMM_MAIN *commSys;
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
@@ -108,13 +107,9 @@ struct _DEPEND_FUNCTIONS{
  * @brief	ローカル宣言
  */
 //------------------------------------------------------------------
-static BOOL GameEndCheck( int cont );
 static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work);
 
 FIELD_MAIN_WORK* fieldWork;
-
-static void ResistMatrixFieldG3Dmapper(
-	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fldWork );
 
 static void fieldMainCommActorFree( FIELD_MAIN_WORK *fieldWork );
 static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork );
@@ -134,20 +129,35 @@ static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 {
 	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
 	return PLAYERWORK_getPosition(pw);
-	//return FIELDDATA_GetStartPosition(GetSceneID(gsys));
 }
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static const DEPEND_FUNCTIONS * GetDependFunctions(GAMESYS_WORK * gsys)
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void MakeG3DresistDataFromMatrix(FLD_G3D_MAPPER_RESIST *map_res, void * pMapMatrixBuf)
 {
-	return FIELDDATA_GetFieldFunctions(GetSceneID(gsys));
+	u8 *tbl;
+	const MAP_MATRIX_HEADER *matH;
+	
+	GFL_ARC_LoadData(pMapMatrixBuf,
+		ARCID_FLDMAP_MAPMATRIX, NARC_map_matrix_wb_mat_bin);
+	matH = pMapMatrixBuf;
+	tbl = (u8*)pMapMatrixBuf + sizeof(MAP_MATRIX_HEADER);
+	
+	map_res->sizex = matH->size_h;
+	map_res->sizez = matH->size_v;
+	map_res->totalSize = matH->size_h * matH->size_v;
+	map_res->arcID = ARCID_FLDMAP_LANDDATA;
+	map_res->data = (const FLD_G3D_MAPPER_DATA *)tbl;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const FLD_G3D_MAPPER_RESIST * GetMapperData(GAMESYS_WORK * gsys)
+static void GetMapperData(u16 map_id, FLD_G3D_MAPPER_RESIST * map_res)
 {
-	return FIELDDATA_GetMapperData(GetSceneID(gsys));
+	*map_res = *FIELDDATA_GetMapperData(map_id);
+	if( FIELDDATA_IsMatrixMap(map_id) == TRUE ){ //プランナー確認マップ
+		MakeG3DresistDataFromMatrix(map_res, fieldWork->pMapMatrixBuf);
+	}
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -160,13 +170,18 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->heapID = heapID;
 	fieldWork->gamemode = GAMEMODE_NORMAL;
 	fieldWork->gsys = gsys;
-
+	fieldWork->map_id = GetSceneID(gsys);
+	//サイズは暫定。DPでの最大サイズは30x30
+	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
+			heapID, sizeof(FLD_G3D_MAPPER_DATA) * 32 * 32);
 	//通信用処理
 	fieldWork->commSys = FieldCommMain_InitSystem( heapID );
 
 //	GFL_UI_TP_Init( fieldWork->heapID );
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 {
 	return (void*)fieldWork->commSys;
@@ -175,6 +190,7 @@ void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 
 void	FieldEnd( void )
 {
+	GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
 //	GFL_UI_TP_Exit();
 	FieldCommMain_TermSystem( fieldWork->commSys );
 	GFL_HEAP_FreeMemory( fieldWork );
@@ -192,26 +208,22 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 	int i;
 
 	fieldWork->timer++;
-//	GFL_UI_TP_Main();
 
 	switch( fieldWork->seq ){
 
 	case 0:
 		//基本システムセットアップ
 		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
-		fieldWork->ftbl = GetDependFunctions(gsys);
+		fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
 		fieldWork->seq++;
         break;
 
 	case 1:
 
 		//セットアップ
-		if( FIELDDATA_IsMatrixMap(GetSceneID(gsys)) == TRUE ){ //プランナー確認マップ
-			ResistMatrixFieldG3Dmapper( gsys, fieldWork );
-		}else{
-		  ResistDataFieldG3Dmapper(
-			 GetFieldG3Dmapper(fieldWork->gs), GetMapperData(gsys) );
-		}
+		GetMapperData(fieldWork->map_id, &fieldWork->map_res);
+		ResistDataFieldG3Dmapper(
+			 GetFieldG3Dmapper(fieldWork->gs), &fieldWork->map_res );
 
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
@@ -270,12 +282,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
 		
-		if( fieldWork->pMapMatrixBuf != NULL ){
-			GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
-			fieldWork->pMapMatrixBuf = NULL;
-		}
-
-		fieldWork->seq = 4;
+		fieldWork->seq ++;
 		break;
 
 	case 4:
@@ -324,7 +331,7 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
-				fieldWork->heapID, GetSceneID(fieldWork->gsys));
+				fieldWork->heapID, fieldWork->map_id);
 	}
 	return NULL;
 }
@@ -850,48 +857,6 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 	NoGridMain,
 	NoGridDelete,
 };
-
-//======================================================================
-//	map matrix
-//======================================================================
-//--------------------------------------------------------------
-//	マトリクス情報からマップ登録
-//--------------------------------------------------------------
-static void ResistMatrixFieldG3Dmapper(
-	GAMESYS_WORK *gsys, FIELD_MAIN_WORK *fieldWork )
-{
-	u8 *tbl;
-	ARCHANDLE *arcH;
-	FLD_G3D_MAPPER_RESIST map_res;
-	const FLD_G3D_MAPPER_RESIST *base_map_res;
-	const MAP_MATRIX_HEADER *matH;
-	FLD_G3D_MAPPER_DATA *testMap[] = { {0} };
-	
-	arcH = GFL_ARC_OpenDataHandle(
-		ARCID_FLDMAP_MAPMATRIX, fieldWork->heapID );
-	
-	fieldWork->pMapMatrixBuf = GFL_ARC_LoadDataAllocByHandle(
-		arcH, NARC_map_matrix_wb_mat_bin, fieldWork->heapID );
-	matH = fieldWork->pMapMatrixBuf;
-	tbl = (u8*)fieldWork->pMapMatrixBuf;
-	tbl = &tbl[sizeof(MAP_MATRIX_HEADER)];
-	
-	base_map_res = GetMapperData( gsys );
-	map_res = *base_map_res;
-	
-	map_res.sizex = matH->size_h;
-	map_res.sizez = matH->size_v;
-	map_res.totalSize = matH->size_h * matH->size_v;
-	map_res.arcID = ARCID_FLDMAP_LANDDATA;
-	map_res.data = (const FLD_G3D_MAPPER_DATA *)tbl;
-	
-	OS_Printf( "マップサイズ X %d, Z %d\n", map_res.sizex, map_res.sizez );
-	
-	ResistDataFieldG3Dmapper(
-		GetFieldG3Dmapper(fieldWork->gs), &map_res );
-	
-	GFL_ARC_CloseDataHandle( arcH );
-}
 
 //======================================================================
 //	comm actor
