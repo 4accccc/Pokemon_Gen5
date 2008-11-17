@@ -42,7 +42,7 @@
 // 一応、全部偶数でそろえています
 
 #define BUFLEN_EOM_SIZE					(GLOBAL_MSGLEN)		// EOMサイズ
-#define BUFLEN_PERSON_NAME				(8)		// 人物名（プレイヤー含む）（海外でも７文字まで+EOM）
+#define BUFLEN_PERSON_NAME				(16)	// 人物名（プレイヤー含む）（海外14文字まで+EOM）
 #define BUFLEN_POKEMON_NAME				(12)	// ポケモン名（海外でも10文字＋EOM）
 #define BUFLEN_WAZA_NAME				(16)	// 技名（日本語７文字→海外14文字想定＋EOM）
 #define BUFLEN_ITEM_NAME				(18)	// アイテム名（日本語８文字→海外16文字想定＋EOM）
