@@ -14,6 +14,7 @@
  */
 //------------------------------------------------------------------
 typedef struct{
+	u8 maprsc_id;						///<マップ種別指定（新規）
 	u8 area_id;							///<AREA_IDの指定
 	u8 movemodel_id;					///<動作モデルの指定
 	u16 matrix_id;						///<マップマトリックスの指定
@@ -34,5 +35,5 @@ typedef struct{
 	u16 dash_flag:1;						///<ダッシュできるかどうか
 	u16 escape_flag:1;					///<あなぬけできるかどうか
 	u16 fly_flag:1;
-}ZONE_DATA;
+}ZONEDATA;
 

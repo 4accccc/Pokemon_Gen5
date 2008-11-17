@@ -43,3 +43,10 @@ enum {
 	PLACE_WIN_CITY	=	0x81
 };
 
+enum {
+	NO_GRID_SAMPLE = 0,
+	GRID_DEFAULT = 1,
+	//NO_GRID_SAMPLE = 2,
+	GRID_GS_SAMPLE = 3
+};
+

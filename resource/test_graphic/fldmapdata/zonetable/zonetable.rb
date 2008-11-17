@@ -16,6 +16,7 @@
 class ColumnID
 
 	attr :cZONE_ID, true
+	attr :cMAPRSC_ID, true
 	attr :cAREA_ID, true
 	attr :cMOVEMODEL, true
 	attr :cMATRIX, true
@@ -44,6 +45,8 @@ class ColumnID
 			when "ID"
 				@cZONE_ID = c_count
 			when "MAPRESOURCE"
+				@cMAPRSC_ID = c_count
+			when "AREA_ID"
 				@cAREA_ID = c_count
 			when "MOVE_MODEL"
 				@cMOVEMODEL = c_count
@@ -177,7 +180,7 @@ class ZoneDataFile < OutputFile
 	#------------------------------------------------
 	#------------------------------------------------
 	def putHeader
-		@fp.puts "static const ZONE_DATA ZoneData[] = {\n"
+		@fp.puts "static const ZONEDATA ZoneData[] = {\n"
 	end
 
 	def putFooter
@@ -206,6 +209,8 @@ class ZoneDataFile < OutputFile
 		if id == "END"
 			return "END"
 		end
+
+		maprsc = column[@cl.cMAPRSC_ID]
 		area = column[@cl.cAREA_ID]
 		if !(area =~ /^AREA_ID_/) then
 			STDERR.puts "エリアの指定がおかしい!:#{area}:\n"
@@ -247,6 +252,7 @@ class ZoneDataFile < OutputFile
 
 	@fp.puts <<DOCUMENT
 	{//ZONE_ID_#{id.upcase} = #{linecount}
+		#{maprsc.upcase},
 		#{area.upcase},
 		#{movemodel.upcase},
 		#{matrix},
@@ -464,9 +470,16 @@ def convert
 	]
 
 	linecount = 0
+	id_store = Hash.new
 	while line = gets
 		column = line.split
 		id = column[cl.cZONE_ID].upcase
+		if id_store.has_key? id then
+			STDERR.puts "#{id}:重複したIDです！\n"
+			exit 1
+		else
+			id_store[id] = column
+		end
 		if id == "END"
 			#終端定義
 			#STDERR.puts "終端"
