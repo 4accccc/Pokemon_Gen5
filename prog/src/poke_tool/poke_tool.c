@@ -43,8 +43,6 @@ void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, 
 void	PokeParaCalc( POKEMON_PARAM *pp );
 void	PokeParaCalcLevelUp( POKEMON_PARAM *pp );
 
-u32		PokeParaGet( POKEMON_PARAM *pp, int id, void *buf);
-u32		PokePasoParaGet( POKEMON_PASO_PARAM *ppp, int id, void *buf);
 void	PokeParaPut( POKEMON_PARAM *pp, int id, const void *buf);
 void	PokePasoParaPut( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
 void	PokeParaAdd( POKEMON_PARAM *pp, int id, int value);
@@ -607,15 +605,15 @@ void	PokeParaCalcLevelUp( POKEMON_PARAM *pp )
  * @return		取得したデータ
  */
 //============================================================================================
-u32	PokeParaGet( POKEMON_PARAM *pp, int id, void *buf )
+u32	PokeParaGet( const POKEMON_PARAM *pp, int id, void *buf )
 {
 	u32	ret;
 
-	PokeParaDecodedAct( pp );
+	PokeParaDecodedAct( (POKEMON_PARAM*)pp );
 
-	ret = PokeParaGetAct( pp, id, buf );
+	ret = PokeParaGetAct( (POKEMON_PARAM*)pp, id, buf );
 
-	PokeParaCodedAct( pp );
+	PokeParaCodedAct( (POKEMON_PARAM*)pp );
 
 	return ret;
 }
@@ -667,15 +665,15 @@ void	PokeParaAdd( POKEMON_PARAM *pp, int id, int value )
  * @return		取得したデータ
  */
 //============================================================================================
-u32	PokePasoParaGet( POKEMON_PASO_PARAM *ppp, int id, void *buf )
+u32	PokePasoParaGet( const POKEMON_PASO_PARAM *ppp, int id, void *buf )
 {
 	u32	ret;
 
-	PokePasoParaDecodedAct( ppp );
+	PokePasoParaDecodedAct( (POKEMON_PASO_PARAM*)ppp );
 
-	ret = PokePasoParaGetAct( ppp, id, buf );
+	ret = PokePasoParaGetAct( (POKEMON_PASO_PARAM*)ppp, id, buf );
 
-	PokePasoParaCodedAct( ppp );
+	PokePasoParaCodedAct( (POKEMON_PASO_PARAM*)ppp );
 
 	return ret;
 }

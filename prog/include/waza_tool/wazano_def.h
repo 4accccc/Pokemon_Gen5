@@ -932,13 +932,6 @@
 #define	WAZANO_AYASIIKAZE			(466)
 //シャドーダイブ
 #define	WAZANO_SYADOODAIBU			(467)
+
 #define	WAZANO_MAX	(467)
 
-#define	FLAG_DAGEKI			0x01
-#define	FLAG_MAMORU			0x02
-#define	FLAG_MAGICCORT		0x04
-#define	FLAG_YOKODORI		0x08
-#define	FLAG_OUMUGAESI		0x10
-#define	FLAG_OUZYANOSIRUSI	0x20
-#define	FLAG_PUT_GAUGE		0x40
-#define	FLAG_DEL_SHADOW		0x80

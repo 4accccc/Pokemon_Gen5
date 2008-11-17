@@ -533,8 +533,8 @@ extern	void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, in
 extern	void	PokeParaCalc( POKEMON_PARAM *pp );
 extern	void	PokeParaCalcLevelUp( POKEMON_PARAM *pp );
 
-extern	u32		PokeParaGet( POKEMON_PARAM *pp, int id, void *buf);
-extern	u32		PokePasoParaGet( POKEMON_PASO_PARAM *ppp, int id, void *buf);
+extern	u32		PokeParaGet( const POKEMON_PARAM *pp, int id, void *buf);
+extern	u32		PokePasoParaGet( const POKEMON_PASO_PARAM *ppp, int id, void *buf);
 extern	void	PokeParaPut( POKEMON_PARAM *pp, int id, const void *buf);
 extern	void	PokePasoParaPut( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
 extern	void	PokeParaAdd( POKEMON_PARAM *pp, int id, int value);
@@ -562,6 +562,7 @@ extern	u8		PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp );
 
 
 extern	void	POKETOOL_InitSystem( HEAPID heapID );
+
 extern	u32		POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp );
 extern	u32		POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
 extern	u8		POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );

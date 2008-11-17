@@ -26,6 +26,16 @@
 #define	ID_WTD_contype			(11)			//コンテスト用パラメータ　コンテスト技タイプ
 #define	ID_WTD_end				(12)
 
+// 
+#define	WDT_FLAG_DAGEKI			0x01
+#define	WDT_FLAG_MAMORU			0x02
+#define	WDT_FLAG_MAGICCORT		0x04
+#define	WDT_FLAG_YOKODORI		0x08
+#define	WDT_FLAG_OUMUGAESI		0x10
+#define	WDT_FLAG_OUZYANOSIRUSI	0x20
+#define	WDT_FLAG_PUT_GAUGE		0x40
+#define	WDT_FLAG_DEL_SHADOW		0x80
+
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
 
