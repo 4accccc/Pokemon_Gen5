@@ -50,7 +50,6 @@ void	PokePasoParaAdd( POKEMON_PASO_PARAM *ppp, int id, int value);
 BOOL	PokeRareCheck( u32 id, u32 rnd );
 u8		PokeSexGet( POKEMON_PARAM *pp );
 u8		PokePasoSexGet( POKEMON_PASO_PARAM *ppp );
-u8		PokeSexGetMonsNo( u16 mons_no, int form_no, u32 rnd );
 u8		PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
 void	PokeWazaOboe( POKEMON_PARAM *pp );
 void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp );
@@ -764,7 +763,7 @@ u8	PokePasoSexGet( POKEMON_PASO_PARAM *ppp )
 	rnd = PokePasoParaGet( ppp, ID_PARA_personal_rnd, 0 );
 	PokePasoParaFastModeOff( ppp, flag );
 
-	return	PokeSexGetMonsNo( mons_no, form_no, rnd );
+	return	POKETOOL_GetSex( mons_no, form_no, rnd );
 }
 //============================================================================================
 /**
@@ -1564,7 +1563,7 @@ static	u32	PokePasoParaGetAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 			break;
 		case ID_PARA_sex:
 			//必ずパラメータから計算して返すようする
-			ret = PokeSexGetMonsNo( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
+			ret = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
 			//再計算したものを代入しておく
 			ppp2->sex = ret;
 			//チェックサムを再計算
@@ -2073,7 +2072,7 @@ static	void	PokePasoParaPutAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf
 		case ID_PARA_sex:
 			//ppp2->sex=buf8[0];
 			//必ずパラメータから計算して代入する
-			ppp2->sex = PokeSexGetMonsNo( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
+			ppp2->sex = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
 			GF_ASSERT_MSG( ( buf8[0] == ppp2->sex ), "Disagreement personal_rnd <> ID_PARA_sex\n");
 			break;
 		case ID_PARA_form_no:
@@ -2840,8 +2839,6 @@ static	void	*PokeParaAdrsGet( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id )
 u32	PokePersonalParaGet( u16 mons_no, u16 form_no, int para )
 {
 	u32	ret;
-
-	mons_no = POKE_PERSONAL_GetPersonalID( mons_no, form_no );
 
 	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
 	ret = POKE_PERSONAL_GetParam( &PersonalDataWork, para );
