@@ -27,15 +27,15 @@
 typedef enum
 {
 	FIELD_COMM_MODE_NONE,	//通信なし
-	FIELD_COMM_MODE_PARENT,	//親機(侵入待ち・侵入後
-	FIELD_COMM_MODE_CHILD,	//子機(侵入後
-	FIELD_COMM_MODE_SEARCH,	//探索中(侵入先探し中
+	FIELD_COMM_MODE_WAIT,		//侵入待ち
+	FIELD_COMM_MODE_SEARCH,		//侵入先探し中
+	FIELD_COMM_MODE_CONNECT,	//侵入後
 }FIELD_COMM_MODE;
 
 //送受信関数用
 enum FIELD_COMM_COMMAND_TYPE
 {
-    FC_CMD_SELFDATA = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
+    FC_CMD_SELFDATA = GFL_NET_CMD_COMMAND_MAX,	//自機データ
 };
 
 //======================================================================
@@ -47,8 +47,15 @@ struct _FIELD_COMM_FUNC
 	FIELD_COMM_MODE commMode_;
 	
 	BOOL	isInitCommSystem_;
-
 };
+
+typedef struct
+{
+	u8	mode_:1;	//0:待機 1:探索
+	u8	member_:3;	//人数
+
+	u8	pad_:4;
+}FIELD_COMM_BEACON;
 
 //======================================================================
 //	proto
@@ -58,14 +65,16 @@ FIELD_COMM_FUNC* FieldCommFunc_InitSystem( HEAPID heapID );
 void	FieldCommFunc_TermSystem( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_InitCommSystem( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_TermCommSystem( FIELD_COMM_FUNC *commFunc );
+void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc );
 
-void	FieldCommFunc_StartCommChild( FIELD_COMM_FUNC *commFunc );
-void	FieldCommFunc_StartCommParent( FIELD_COMM_FUNC *commFunc );
+void	FieldCommFunc_StartCommWait( FIELD_COMM_FUNC *commFunc );
+void	FieldCommFunc_StartCommSearch( FIELD_COMM_FUNC *commFunc );
 void	FieldCommFunc_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
 
 //各種チェック関数
 const BOOL FieldCommFunc_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
 const BOOL FieldCommFunc_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
+const int	FieldCommFunc_GetMemberNum( FIELD_COMM_FUNC *commFunc );
 const int	FieldCommFunc_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
 
 //送受信関数
@@ -75,8 +84,8 @@ void	FieldCommFunc_Post_SelfData( const int netID, const int size , const void* 
 //各種コールバック
 void	FieldCommFunc_FinishInitCallback( void* pWork );
 void	FieldCommFunc_FinishTermCallback( void* pWork );
-void*	FieldCommFunc_GetBeaconData(void);		// ビーコンデータ取得関数  
-int		FieldCommFunc_GetBeaconSize(void);		// ビーコンデータサイズ取得関数 
+void*	FieldCommFunc_GetBeaconData(void* pWork);		// ビーコンデータ取得関数  
+int		FieldCommFunc_GetBeaconSize(void* pWork);		// ビーコンデータサイズ取得関数 
 BOOL	FieldCommFunc_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 ); // ビーコンのサービスを比較して繋いで良いかどうか判断する
 void	FieldCommFunc_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);		// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
 void	FieldCommFunc_DisconnectCallBack(void* pWork);	// 通信切断時に呼ばれる関数(終了時
@@ -98,6 +107,7 @@ FIELD_COMM_FUNC* FieldCommFunc_InitSystem( HEAPID heapID )
 	commFunc->heapID_ = heapID;
 	//commFunc->isInitCommSystem_ = FALSE;
 	commFunc->isInitCommSystem_ = GFL_NET_IsInit();
+	commFunc->commMode_ = FIELD_COMM_MODE_NONE;
 	return commFunc;
 }
 
@@ -158,27 +168,58 @@ void	FieldCommFunc_TermCommSystem( FIELD_COMM_FUNC *commFunc )
 }
 
 //--------------------------------------------------------------
-//	親機通信の開始
+//	通信システム更新(ビーコンの待ちうけ
 //--------------------------------------------------------------
-void	FieldCommFunc_StartCommParent( FIELD_COMM_FUNC *commFunc )
+void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 {
-	GFL_NET_InitServer();
+	//待ち受け側でもビーコンをチェックしてみる
+	//if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH )
+	{
+		u8 bcnIdx = 0;
+		int targetIdx = -1;
+		FIELD_COMM_BEACON *bcnData;
+		const FIELD_COMM_BEACON *selfBcn = FieldCommFunc_GetBeaconData((void*)commFunc);
+		while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
+		{
+			bcnData = GFL_NET_GetBeaconData( bcnIdx );
+			if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
+			{
+				//
+			}
+		}
+	}
 }
 
 //--------------------------------------------------------------
-//	子機通信の開始
+//	通信の開始(侵入受付状態
 //--------------------------------------------------------------
-void	FieldCommFunc_StartCommChild( FIELD_COMM_FUNC *commFunc )
+void	FieldCommFunc_StartCommWait( FIELD_COMM_FUNC *commFunc )
 {
-	GFL_NET_StartBeaconScan();
+	if( commFunc->commMode_ == FIELD_COMM_MODE_NONE )
+	{
+		GFL_NET_ChangeoverConnect(NULL);
+	}
+	commFunc->commMode_ = FIELD_COMM_MODE_WAIT;
 }
 
 //--------------------------------------------------------------
-//	探索通信の開始(親子交互通信
+//	通信の開始(侵入先探索状態
+//--------------------------------------------------------------
+void	FieldCommFunc_StartCommSearch( FIELD_COMM_FUNC *commFunc )
+{
+	if( commFunc->commMode_ == FIELD_COMM_MODE_NONE )
+	{
+		GFL_NET_ChangeoverConnect(NULL);
+	}
+	commFunc->commMode_ = FIELD_COMM_MODE_SEARCH;
+}
+
+//--------------------------------------------------------------
+//	探索通信の開始(親子交互通信・未使用
 //--------------------------------------------------------------
 void	FieldCommFunc_StartCommChangeover( FIELD_COMM_FUNC *commFunc )
 {
-	GFL_NET_ChangeoverConnect(NULL);
+	//GFL_NET_ChangeoverConnect(NULL);
 }
 
 
@@ -195,6 +236,14 @@ const BOOL FieldCommFunc_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc )
 const BOOL FieldCommFunc_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc )
 {
 	return !commFunc->isInitCommSystem_;
+}
+
+//--------------------------------------------------------------
+//	接続人数を取得  
+//--------------------------------------------------------------
+const int	FieldCommFunc_GetMemberNum( FIELD_COMM_FUNC *commFunc )
+{
+	return GFL_NET_GetConnectNum();
 }
 
 //--------------------------------------------------------------
@@ -304,18 +353,26 @@ void	FieldCommFunc_FinishTermCallback( void* pWork )
 //--------------------------------------------------------------
 // ビーコンデータ取得関数  
 //--------------------------------------------------------------
-void*	FieldCommFunc_GetBeaconData(void)
+void*	FieldCommFunc_GetBeaconData(void* pWork)
 {
-	static u8 dummyData[2] = {1,27};
-	return (void*)&dummyData;
+	static FIELD_COMM_BEACON beacon;
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
+	
+	if( commFunc->commMode_ == FIELD_COMM_MODE_WAIT )
+		beacon.mode_ = 0;
+	else
+		beacon.mode_ = 1;
+	beacon.member_ = GFL_NET_GetConnectNum();
+
+	return (void*)&beacon;
 }
 
 //--------------------------------------------------------------
 // ビーコンデータサイズ取得関数 
 //--------------------------------------------------------------
-int		FieldCommFunc_GetBeaconSize(void)
+int		FieldCommFunc_GetBeaconSize(void *pWork)
 {
-	return 2;
+	return sizeof( FIELD_COMM_BEACON );
 }
 
 //--------------------------------------------------------------
@@ -323,7 +380,7 @@ int		FieldCommFunc_GetBeaconSize(void)
 //--------------------------------------------------------------
 BOOL	FieldCommFunc_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
 {
-	return TRUE;
+	return (GameServiceID1==GameServiceID2);
 }
 
 //--------------------------------------------------------------

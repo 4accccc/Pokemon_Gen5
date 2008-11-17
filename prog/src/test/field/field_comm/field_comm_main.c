@@ -95,21 +95,24 @@ void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 {
 	if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE )
 	{
-		ZONEID zoneID;
-		VecFx32 pos;
-		u16 dir;
 		u8 i;
-		PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
-		//自キャラ座標を更新
-		zoneID = PLAYERWORK_getZoneID( plWork );
-		GetPlayerActTrans( pcActor , &pos );
-		//GetPlayerActDirection( pcActor , &dir );
-		dir = FieldMainGrid_GetPlayerDir( fieldWork );
-		FieldCommData_SetSelfData_Pos( &zoneID , &pos , &dir );
-
-		FieldCommFunc_Send_SelfData( commSys->commFunc_ );
-
-		//届いたデータのチェック
+		FieldCommFunc_UpdateSystem( commSys->commFunc_ );
+		if( FieldCommFunc_GetMemberNum( commSys->commFunc_ ) > 1 )
+		{
+			ZONEID zoneID;
+			VecFx32 pos;
+			u16 dir;
+			PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+			//自キャラ座標を更新
+			zoneID = PLAYERWORK_getZoneID( plWork );
+			GetPlayerActTrans( pcActor , &pos );
+			//GetPlayerActDirection( pcActor , &dir );
+			dir = FieldMainGrid_GetPlayerDir( fieldWork );
+			FieldCommData_SetSelfData_Pos( &zoneID , &pos , &dir );
+	
+			FieldCommFunc_Send_SelfData( commSys->commFunc_ );
+		}
+			//届いたデータのチェック
 		for( i=0;i<FIELD_COMM_CHARA_MAX;i++ )
 		{
 			if( i != FieldCommFunc_GetSelfIndex(commSys->commFunc_) &&
@@ -184,7 +187,7 @@ const BOOL	FieldCommMain_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 		break;
 	case 2:
 		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
-			FieldCommFunc_StartCommChangeover( commSys->commFunc_ );
+			FieldCommFunc_StartCommWait( commSys->commFunc_ );
 			commSys->menuSeq_++;
 			return (TRUE);
 		}
@@ -244,7 +247,7 @@ const BOOL	FieldCommMain_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 		break;
 	case 2:
 		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
-			FieldCommFunc_StartCommChangeover( commSys->commFunc_ );
+			FieldCommFunc_StartCommSearch( commSys->commFunc_ );
 			commSys->menuSeq_++;
 			return (TRUE);
 		}
