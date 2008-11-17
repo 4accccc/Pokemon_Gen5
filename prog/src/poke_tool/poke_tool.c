@@ -8,6 +8,7 @@
 //============================================================================================
 #include    <gflib.h>
 
+#include    "poke_tool/poke_personal.h"
 #include    "poke_tool/poke_tool.h"
 #include    "poke_tool/monsno_def.h"
 #include    "poke_tool/tokusyu_def.h"
@@ -47,10 +48,12 @@ void	PokeParaPut( POKEMON_PARAM *pp, int id, const void *buf);
 void	PokePasoParaPut( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
 void	PokeParaAdd( POKEMON_PARAM *pp, int id, int value);
 void	PokePasoParaAdd( POKEMON_PASO_PARAM *ppp, int id, int value);
+BOOL	PokeParaRareCheck( POKEMON_PARAM *pp );
+BOOL	PokePasoParaRareCheck( POKEMON_PASO_PARAM *ppp );
 BOOL	PokeRareCheck( u32 id, u32 rnd );
 u8		PokeSexGet( POKEMON_PARAM *pp );
 u8		PokePasoSexGet( POKEMON_PASO_PARAM *ppp );
-u8		PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
+u8		POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 rnd );
 void	PokeWazaOboe( POKEMON_PARAM *pp );
 void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp );
 u16		PokeWazaSet( POKEMON_PARAM *pp, u16 wazano );
@@ -711,6 +714,37 @@ void	PokePasoParaAdd( POKEMON_PASO_PARAM *ppp, int id, int value )
 	}
 
 	PokePasoParaCodedAct( ppp );
+}
+
+//==============================================================================
+/**
+ * @brief   POKEMON_PARAMからレアかどうかを判定する
+ *
+ * @param[in]	pp		ポケモンパラメータ構造体のポインタ
+ *
+ * @retval  FALSE:レアじゃない	TRUE:レア
+ */
+//==============================================================================
+BOOL	PokeParaRareCheck( POKEMON_PARAM *pp )
+{
+	return PokePasoParaRareCheck( &pp->ppp );
+}
+
+//==============================================================================
+/**
+ * @brief   POKEMON_PASO_PARAMからレアかどうかを判定する
+ *
+ * @param[in]	ppp		ボックスポケモンパラメータ構造体のポインタ
+ *
+ * @retval  FALSE:レアじゃない	TRUE:レア
+ */
+//==============================================================================
+BOOL	PokePasoParaRareCheck( POKEMON_PASO_PARAM *ppp )
+{
+	u32	id  = PokePasoParaGet( ppp, ID_PARA_id_no,			NULL );
+	u32	rnd = PokePasoParaGet( ppp, ID_PARA_personal_rnd,	NULL );
+
+	return PokeRareCheck( id, rnd );
 }
 
 //==============================================================================
