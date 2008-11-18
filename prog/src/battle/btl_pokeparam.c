@@ -111,6 +111,8 @@ struct _BTL_POKEPARAM {
 
 	u8	wazaCnt;
 	u8	myID;
+
+	const POKEMON_PARAM*	ppSrc;
 };
 
 
@@ -176,6 +178,8 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->hp = bpp->baseParam.hpMax;
 	bpp->myID = pokeID;
 
+	bpp->ppSrc = pp;
+
 	return bpp;
 }
 
@@ -231,6 +235,11 @@ BOOL BTL_POKEPARAM_IsMatchType( const BTL_POKEPARAM* pp, PokeType type )
 {
 	PokeTypePair pair = PokeTypePair_Make( pp->baseParam.type1, pp->baseParam.type2 );
 	return PokeTypePair_IsMatch( pair, type );
+}
+
+const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp )
+{
+	return bpp->ppSrc;
 }
 
 

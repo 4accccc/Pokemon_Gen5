@@ -77,6 +77,7 @@ SRCS	+=		test/testmode.c \
 				battle/btl_event.c \
 				battle/btl_calc.c \
 				battle/btl_net.c \
+				battle/btl_string.c \
 				test/field/field_debug.c \
 				test/field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \

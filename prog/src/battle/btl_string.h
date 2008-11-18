@@ -49,6 +49,8 @@ typedef enum {
 
 
 extern void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, HEAPID heapID );
+extern void BTL_STR_QuitSystem( void );
+
 extern void BTL_STR_MakeStringGeneric( STRBUF* buf, BtlGenStrID strID );
 extern void BTL_STR_MakeStringSpecific( STRBUF* buf, BtlSpStrID strID, const int* args );
 

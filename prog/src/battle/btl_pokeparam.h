@@ -24,6 +24,7 @@
 typedef struct _BTL_POKEPARAM	BTL_POKEPARAM;
 
 
+
 //--------------------------------------------------------------
 /**
  *	取得できる値
@@ -38,16 +39,16 @@ typedef enum {
 	BPP_AGILITY,
 	BPP_HIT_RATIO,
 	BPP_AVOID_RATIO,
-	BPP_CRITICAL_RATIO,
 
 	//--- ここまでランクアップ／ダウン効果の引数としても用いる ---
+	BPP_CRITICAL_RATIO,
 
 	BPP_HP,
 	BPP_MAX_HP,
 	BPP_LEVEL,
 	BPP_TOKUSEI,
 
-	BPP_RANKTYPE_MAX = BPP_CRITICAL_RATIO,
+	BPP_RANKTYPE_MAX = BPP_AVOID_RATIO+1,
 
 }BppValueID;
 
@@ -55,6 +56,7 @@ typedef enum {
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 
 extern u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp );
+extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );
 
 extern u16 BTL_POKEPARAM_GetMonsNo( const BTL_POKEPARAM* pp );
 extern u8 BTL_POKEPARAM_GetWazaCount( const BTL_POKEPARAM* pp );

@@ -345,6 +345,20 @@ BtlRule BTL_MAIN_GetRule( const BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
+ * 対戦相手タイプを返す
+ *
+ * @param   wk		
+ *
+ * @retval  BtlCompetitor		
+ */
+//=============================================================================================
+BtlCompetitor BTL_MAIN_GetCompetitor( const BTL_MAIN_MODULE* wk )
+{
+	return wk->setupParam->competitor;
+}
+
+//=============================================================================================
+/**
  * 特殊クライアントID指定子を、実際の対象クライアントIDに変換
  *
  * @param   wk						メインモジュールハンドラ
@@ -469,6 +483,21 @@ u8 BTL_MAIN_GetFriendClientID( const BTL_MAIN_MODULE* wk, u8 clientID, u8 idx )
 	}
 }
 
+//=============================================================================================
+/**
+ * ２つのクライアントIDが対戦相手同士のものかどうかを判別
+ *
+ * @param   wk		
+ * @param   clientID1		
+ * @param   clientID2		
+ *
+ * @retval  BOOL		対戦相手同士ならTRUE
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 clientID2 )
+{
+	return (clientID1&1) != (clientID2&1);
+}
 
 
 
