@@ -49,7 +49,7 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
 //	GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
 
 	{
-		wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, GetHeapLowID(heapID) );
+		wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, heapID );
 		wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	}
@@ -64,6 +64,8 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
 
 void BTLV_SCU_Delete( BTLV_SCU* wk )
 {
+	PRINTSYS_QUE_Delete( wk->printQue );
+	FontDataMan_Delete( wk->fontHandle );
 	GFL_HEAP_FreeMemory( wk );
 }
 
