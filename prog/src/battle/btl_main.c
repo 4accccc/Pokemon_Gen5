@@ -9,6 +9,7 @@
 //=============================================================================================
 #include <gflib.h>
 
+#include "system/main.h"
 #include "battle/battle.h"
 
 #include "btl_common.h"
@@ -24,13 +25,9 @@
 #include "btl_main.h"
 
 enum {
-	PARENT_HEAP_ID = 0,
-	SYS_HEAP_ID = 115,
-	VIEW_HEAP_ID,
-	NET_HEAP_ID,
+	PARENT_HEAP_ID = GFL_HEAPID_APP,
 
 	BTL_COMMITMENT_POKE_MAX = BTL_CLIENT_MAX * TEMOTI_POKEMAX,
-
 };
 
 
@@ -104,14 +101,15 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_MAIN_MODULE* wk;
 			const BATTLE_SETUP_PARAM* setup_param = pwk;
 
-			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, SYS_HEAP_ID, 0x68000 );
-			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, NET_HEAP_ID, 0x8000 );
+			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x28000 );
+			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_NET,     0x8000 );
+			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xa0000 );
 
-			wk = GFL_PROC_AllocWork( proc, SYS_HEAP_ID, sizeof(BTL_MAIN_MODULE) );
-			wk->heapID = SYS_HEAP_ID;
+			wk = GFL_PROC_AllocWork( proc, HEAPID_BTL_SYSTEM, sizeof(BTL_MAIN_MODULE) );
+			wk->heapID = HEAPID_BTL_SYSTEM;
 			wk->setupParam = setup_param;
 
-			BTL_NET_InitSystem( setup_param->netHandle, NET_HEAP_ID );
+			BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
 			BTL_ADAPTER_InitSystem();
 
 			setupInitializeProc( &wk->subProc, wk, setup_param );
@@ -171,8 +169,10 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-	BTL_Printf("btl quit called\n");
-	GFL_HEAP_DeleteHeap( SYS_HEAP_ID );
+//	BTL_Printf("btl quit called\n");
+	GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
+	GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
+	GFL_HEAP_DeleteHeap( HEAPID_BTL_SYSTEM );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -210,7 +210,7 @@ static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, con
 	BTL_PARTY_Initialize( dstParty );
 	for(i=0; i<max; i++)
 	{
-		dstParams[i] = BTL_POKEPARAM_Create( PokeParty_GetMemberPointer(party, i), pokeID_Origin+i, SYS_HEAP_ID );
+		dstParams[i] = BTL_POKEPARAM_Create( PokeParty_GetMemberPointer(party, i), pokeID_Origin+i, HEAPID_BTL_SYSTEM );
 		BTL_PARTY_AddMember( dstParty, dstParams[i] );
 	}
 }
@@ -249,7 +249,7 @@ static BOOL initialize_alone_single( int* seq, void* work )
 	BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), &wk->partyForServerCalc[1], 1 );
 
 	// 描画エンジン生成
-	wk->viewCore = BTLV_Create( wk, wk->client[0], VIEW_HEAP_ID );
+	wk->viewCore = BTLV_Create( wk, wk->client[0], HEAPID_BTL_VIEW );
 
 	// プレイヤークライアントに描画エンジンを関連付ける
 	BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
@@ -304,6 +304,8 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 	{
 		BTL_CLIENT_Main( wk->client[i] );
 	}
+
+	BTLV_CORE_Main( wk->viewCore );
 
 	return FALSE;
 }

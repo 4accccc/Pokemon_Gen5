@@ -7,11 +7,17 @@
  * @date	2008.10.02	作成
  */
 //=============================================================================================
+#include <tcbl.h>
+
+#include "print/gf_font.h"
 
 #include "btl_common.h"
 #include "btl_main.h"
 #include "btl_action.h"
 #include "btl_calc.h"
+
+#include "btlv_scu.h"
+#include "btlv_scd.h"
 
 #include "btlv_core.h"
 
@@ -21,6 +27,7 @@
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
 enum {
+	STR_BUFFER_SIZE = 384,
 	GENERIC_WORK_SIZE = 128,
 };
 
@@ -46,6 +53,11 @@ struct _BTLV_CORE {
 	BTL_ACTION_PARAM	actionParam;
 	STRBUF*				strBuf;
 
+	GFL_TCBLSYS*	tcbl;
+	BTLV_SCU*		scrnU;
+	BTLV_SCD*		scrnD;
+
+
 	HEAPID	heapID;
 };
 
@@ -56,6 +68,7 @@ static int getch_upr( void );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
+static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 
 
 //---------------------------------------
@@ -86,13 +99,16 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 {
 	BTLV_CORE* core = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_CORE) );
 
-
 	core->mainModule = mainModule;
 	core->myClient = client;
 	core->myClientID = BTL_CLIENT_GetClientID( client );
 	core->processingCmd = BTLV_CMD_NULL;
 	core->heapID = heapID;
-	core->strBuf = GFL_STR_CreateBuffer( 1024, heapID );
+	core->strBuf = GFL_STR_CreateBuffer( STR_BUFFER_SIZE, heapID );
+
+	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
+	core->scrnU = BTLV_SCU_Create( core, heapID );
+	core->scrnD = BTLV_SCD_Create( core, heapID );
 
 	core->mainProc = NULL;
 	core->mainSeq = 0;
@@ -101,6 +117,36 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
 	return core;
 }
+
+//=============================================================================================
+/**
+ * 描画メインモジュールの破棄
+ *
+ * @param   core		描画メインモジュール
+ *
+ */
+//=============================================================================================
+void BTLV_Delete( BTLV_CORE* core )
+{
+	BTLV_SCD_Delete( core->scrnD );
+	BTLV_SCU_Delete( core->scrnU );
+	GFL_HEAP_FreeMemory( core );
+}
+
+//=============================================================================================
+/**
+ * 描画メインループ
+ *
+ * @param   core		
+ *
+ */
+//=============================================================================================
+void BTLV_CORE_Main( BTLV_CORE* core )
+{
+	
+}
+
+
 //=============================================================================================
 /**
   * 描画コマンド発行
@@ -167,25 +213,43 @@ BOOL BTLV_WaitCommand( BTLV_CORE* core )
 
 //=============================================================================================
 /**
- * 
+ * プレイヤー選択アクション内容を取得
  *
- * @param   core		
- * @param   dst			
+ * @param   core		描画メインモジュールハンドラ
+ * @param   dst			[out] アクション内容取得構造体アドレス
  *
  */
 //=============================================================================================
 void BTLV_GetActionParam( const BTLV_CORE* core, BTL_ACTION_PARAM* dst )
 {
 	*dst = core->actionParam;
-	BTL_Printf("*** action param copied cmd=%d ... core[%08x]\n", dst->gen.cmd, (u32)core);
 }
 
 
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 {
-	BTL_STR_MakeStringGeneric( core->strBuf, BTL_STRFMT_ENCOUNT );
-	printf( core->strBuf );
-	return TRUE;
+	switch( *seq ){
+	case 0:
+		setup_core( core, core->heapID );
+		BTLV_SCU_Setup( core->scrnU );
+		BTLV_SCD_Setup( core->scrnD );
+		(*seq)++;
+		break;
+
+	case 1:
+		BTLV_SCU_StartBtlIn( core->scrnU );
+		(*seq)++;
+		break;
+
+	case 2:
+		if( BTLV_SCU_WaitBtlIn( core->scrnU ) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
 }
 
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
@@ -210,203 +274,26 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	BOOL ret = FALSE;
 
 	switch( *seq ){
-	case SEQ_INIT:
+	case 0:
 		BTL_STR_MakeStringGeneric( core->strBuf, BTL_STRFMT_SELECT_ACTION_READY );
-		printf( core->strBuf );
-		printf("[A]たたかう  [B]どうぐ  [C]ポケモン  [D]にげる\n");
-		(*seq) = SEQ_SELECT_MAIN;
-		break;
-	case SEQ_SELECT_MAIN:
-		switch( getch_upr() ){
-		case 'A':
-			printf("闘うのね\n");
-			(*seq) = SEQ_SEL_FIGHT;
-			break;
-
-		case 'B':
-			printf("アイテムね\n");
-			(*seq) = SEQ_SEL_ITEM;
-			break;
-
-		case 'C':
-			printf("交替すんのね\n");
-			(*seq) = SEQ_SEL_CHANGE;
-			break;
-
-		case 'D':
-			printf("逃げんのね\n");
-			(*seq) = SEQ_SEL_ESCAPE;
-			break;
-
-		default:
-			return FALSE;
-		}
-		break;
-
-	case SEQ_SEL_FIGHT:
-		{
-			const BTL_POKEPARAM* p = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
-			int i, max = BTL_POKEPARAM_GetWazaCount( p );
-			printf("ワザを選んで\n");
-			for(i=0; i<max; i++)
-			{
-				printf("[%c]%s  ", 'A'+i, BTRSTR_GetWazaName( BTL_POKEPARAM_GetWazaNumber(p, i) ));
-			}
-			printf("[R]もどる\n");
-			printf("\n");
-		}
+		BTLV_SCU_StartMsg( core->scrnU, core->strBuf );
 		(*seq)++;
-		/* fallthru */
-	case SEQ_SEL_FIGHT+1:
+		break;
+	case 1:
+		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
-			int key = getch_upr();
-
-			if( key == 'R' )
-			{
-				(*seq) = SEQ_INIT;
-				break;
-			}
-
-			if( key >= 'A' && key <= 'D' )
-			{
-				wk->idx1 = (key - 'A');
-				if( BTL_MAIN_GetRule(core->mainModule) == BTL_RULE_SINGLE )
-				{
-					// シングル戦なら対象選択シーケンス不要
-					BTL_ACTION_SetFightParam( &core->actionParam, wk->idx1, 0 );
-					return TRUE;
-				}
-				else
-				{
-					(*seq)++;
-					break;
-				}
-			}
+			BTLV_SCD_StartActionSelect( core->scrnD, NULL );
+			(*seq)++;
 		}
 		break;
-	case SEQ_SEL_FIGHT+2:
-		printf("そのワザを誰に使う？  A:あいて B:あいつ C:そいつ D:ドイツ R:もどる\n");
-		(*seq)++;
-		/* fallthru */
-	case SEQ_SEL_FIGHT+3:
+	case 2:
+		if( BTLV_SCD_WaitActionSelect(core->scrnD) )
 		{
-			int key = getch_upr();
-
-			if( key == 'R' )
-			{
-				(*seq) = SEQ_SEL_FIGHT;
-				break;
-			}
-
-			if( key >= 'A' && key <= 'D' )
-			{
-				wk->idx2 = (key - 'A');
-				BTL_ACTION_SetFightParam( &core->actionParam, wk->idx1, wk->idx2 );
-				ret = TRUE;
-			}
+			return TRUE;
 		}
-		break;
-
-	case SEQ_SEL_ITEM:
-		printf("なに使う？ A:きずぐすり B:やくそう C:ひのきのぼう D:おにぎり R:もどる\n");
-		(*seq)++;
-		/* fallthru */
-	case SEQ_SEL_ITEM+1:
-		{
-			int key = getch_upr();
-
-			if( key == 'R' )
-			{
-				(*seq) = SEQ_INIT;
-				break;
-			}
-
-			if( key >= 'A' && key <= 'D' )
-			{
-				wk->idx1 = (key - 'A');
-				(*seq)++;
-				break;
-			}
-		}
-		break;
-	case SEQ_SEL_ITEM+2:
-		printf("だれに使う？ A:じぶん  B:なかま  C:あいて  D:あなた  R:もどる\n");
-		(*seq)++;
-		/* fallthru */
-	case SEQ_SEL_ITEM+3:
-		{
-			int key = getch_upr();
-
-			if( key == 'R' )
-			{
-				(*seq) = SEQ_SEL_ITEM;
-				break;
-			}
-
-			if( key >= 'A' && key <= 'D' )
-			{
-				wk->idx2 = (key - 'A');
-				BTL_ACTION_SetItemParam( &core->actionParam, wk->idx1, wk->idx2 );
-				ret = TRUE;
-			}
-		}
-		break;
-
-	case SEQ_SEL_CHANGE:
-		printf("ポケモンを選んでね\n");
-		{
-			const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( core->mainModule, core->myClientID );
-			int i;
-
-			wk->maxElems = BTL_PARTY_GetMemberCount( party );
-			for(i=0; i<wk->maxElems; i++)
-			{
-				const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst( party, i );
-				printf("[%c]%s  ", 'A'+i, BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)));
-			}
-			printf("[R]もどる\n");
-		}
-		(*seq)++;
-		/* fallthru */
-	case SEQ_SEL_CHANGE+1:
-		{
-			int key = getch_upr();
-
-			if( key == 'R' )
-			{
-				(*seq) = SEQ_INIT;
-				break;
-			}
-
-			if( key >= 'A' && key < 'A'+wk->maxElems )
-			{
-				u16 idx = (key - 'A');
-
-				if( idx != BTL_MAIN_GetFrontMemberIdx(core->mainModule, core->myClientID) )
-				{
-					BTL_ACTION_SetChangeParam( &core->actionParam, idx );
-					return TRUE;
-				}
-				else
-				{
-					const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
-					printf("%sはもう出てるよ\n", BTRSTR_GetMonsName(BTL_POKEPARAM_GetMonsNo(pp)));
-					(*seq)=SEQ_SEL_CHANGE;
-				}
-			}
-		}
-		break;
-
-	case SEQ_SEL_ESCAPE:
-		core->actionParam.escape.cmd = BTL_ACTION_ESCAPE;
-		ret = TRUE;
-		break;
-
 	}
-
-	return ret;
+	return FALSE;
 }
-
 //--------------------------------------------------------------------------
 /**
  * ポケモン選択
@@ -420,65 +307,6 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 //--------------------------------------------------------------------------
 static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
 {
-	typedef struct {
-		u16 idx1;
-		u16 idx2;
-		u16 maxElems;
-	}SEQ_WORK;
-
-	SEQ_WORK* wk = workBufer;
-
-	switch( *seq ){
-
-	case 0:
-		printf("ポケモンを選んでね\n");
-		{
-			const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( core->mainModule, core->myClientID );
-			int i;
-
-			wk->maxElems = BTL_PARTY_GetMemberCount( party );
-			for(i=0; i<wk->maxElems; i++)
-			{
-				const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst( party, i );
-				printf("[%c]%s  ", 'A'+i, BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)));
-			}
-		}
-		(*seq)++;
-		/* fallthru */
-	case 1:
-		{
-			int key = getch_upr();
-
-			if( key >= 'A' && key < 'A'+wk->maxElems )
-			{
-				u16 idx = (key - 'A');
-
-				if( idx == BTL_MAIN_GetFrontMemberIdx(core->mainModule, core->myClientID) )
-				{
-					const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
-					printf("%sはもう出てるよ\n", BTRSTR_GetMonsName(BTL_POKEPARAM_GetMonsNo(pp)));
-					(*seq)=0;
-				}
-				else
-				{
-					const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( core->mainModule, core->myClientID );
-					const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst( party, idx );
-					if( BTL_POKEPARAM_GetValue(pp, BPP_HP) == 0 )
-					{
-						printf("%sはたたかえません！\n", BTRSTR_GetMonsName(BTL_POKEPARAM_GetMonsNo(pp)));
-						(*seq)=0;
-					}
-					else
-					{
-						BTL_ACTION_SetChangeParam( &core->actionParam, idx );
-						return TRUE;
-					}
-				}
-			}
-		}
-		break;
-	}
-
 	return FALSE;
 }
 
@@ -496,7 +324,7 @@ static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
 void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, WazaID waza, BtlTypeAff affinity )
 {
 //	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
-
+/*
 	if( affinity < BTL_TYPEAFF_100 )
 	{
 		printf("こうかは いまひとつのようだ\n");
@@ -505,6 +333,7 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, WazaID waz
 	{
 		printf("こうかは ばつぐんだ！\n");
 	}
+*/
 }
 
 //=============================================================================================
@@ -520,7 +349,7 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, WazaID waz
 void BTLV_StartMemberChangeAct( BTLV_CORE* wk, u8 clientID, u8 memberIdx )
 {
 	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
-	printf("ゆけっ！%s！\n", BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)) );
+//	printf("ゆけっ！%s！\n", BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)) );
 }
 
 BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk )
@@ -540,7 +369,7 @@ BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk )
 void BTLV_StartMsgSpecific( BTLV_CORE* wk, BtlSpStrID strID, const int* args )
 {
 	BTL_STR_MakeStringSpecific( wk->strBuf, strID, args );
-	printf( wk->strBuf );
+//	printf( wk->strBuf );
 }
 
 
@@ -561,9 +390,9 @@ void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID )
 	u16 tok = BTL_POKEPARAM_GetValue( pp, BPP_TOKUSEI );
 	u16 monsno = BTL_POKEPARAM_GetMonsNo( pp );
 
-	printf("□■%sの%s！■□\n",
-		BTRSTR_GetMonsName(monsno), BTRSTR_GetTokuseiName(tok)
-	);
+//	printf("□■%sの%s！■□\n",
+//		BTRSTR_GetMonsName(monsno), BTRSTR_GetTokuseiName(tok)
+//	);
 }
 
 void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID )
@@ -574,5 +403,48 @@ void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID )
 
 void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType )
 {
-	printf("↓↓↓ひゅるる…\n");
+//	printf("↓↓↓ひゅるる…\n");
 }
+
+
+//-------------------------------------------
+
+static void setup_core( BTLV_CORE* wk, HEAPID heapID )
+{
+	static const GFL_BG_DISPVRAM vramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+	};
+
+	// BGsystem初期化
+	GFL_BG_Init( heapID );
+	GFL_BMPWIN_Init( heapID );
+	GFL_FONTSYS_Init();
+
+	// VRAMバンク設定
+	GFL_DISP_SetBank( &vramBank );
+
+	// 各種効果レジスタ初期化
+	G2_BlendNone();
+	G2S_BlendNone();
+
+	// 上下画面設定
+	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
+
+	//ＢＧモード設定
+	{
+		static const GFL_BG_SYS_HEADER sysHeader = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_3D,
+		};
+		GFL_BG_SetBGMode( &sysHeader );
+	}
+}
+
