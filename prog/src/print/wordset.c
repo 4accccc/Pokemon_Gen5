@@ -60,9 +60,6 @@ struct _WORDSET{
 /*--------------------------------------------------------------------------*/
 static void InitParam(WORDSET_PARAM* param);
 static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const WORDSET_PARAM* param );
-extern WORDSET*  WORDSET_Create( u32 heapID );
-
-
 
 
 
@@ -79,7 +76,7 @@ extern WORDSET*  WORDSET_Create( u32 heapID );
  * @retval  WORDSET*		単語セット
  */
 //------------------------------------------------------------------
-WORDSET*  WORDSET_Create( u32 heapID )
+WORDSET*  WORDSET_Create( HEAPID heapID )
 {
 	return WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_DEFAULT_BUFLEN, heapID );
 }
@@ -95,7 +92,7 @@ WORDSET*  WORDSET_Create( u32 heapID )
  * @retval  WORDSET*		
  */
 //------------------------------------------------------------------
-WORDSET* WORDSET_CreateEx( u32 word_max, u32 buflen, u32 heapID )
+WORDSET* WORDSET_CreateEx( u32 word_max, u32 buflen, HEAPID heapID )
 {
 	GF_ASSERT(word_max);
 	GF_ASSERT(buflen);
@@ -262,7 +259,7 @@ void WORDSET_RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* word, u32 
  *
  */
 //------------------------------------------------------------------
-void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, POKEMON_PASO_PARAM* ppp )
+void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp )
 {
 	GFL_MSGDATA* mdat;
 	u32 monsno;
@@ -270,7 +267,7 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, POKEMON_PASO_PAR
 	mdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GetHeapLowID(wordset->heapID) );
 
 	// [[[ここでポケモンの性別等をチェックできる]]]
-	monsno = PokePasoParaGet( ppp, ID_PARA_monsno, NULL );
+	monsno = PokeParaGet( pp, ID_PARA_monsno, NULL );
 	GFL_MSG_GetString( mdat, monsno, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 
@@ -285,10 +282,10 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, POKEMON_PASO_PAR
  *
  */
 //------------------------------------------------------------------
-void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, POKEMON_PASO_PARAM* ppp )
+void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここでポケモンの性別等をチェックできる]]]
-	PokePasoParaGet( ppp, ID_PARA_nickname_buf, wordset->tmpBuf );
+	PokeParaGet( pp, ID_PARA_nickname_buf, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
 //------------------------------------------------------------------
@@ -300,10 +297,10 @@ void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, POKEMON_PASO_PAR
  *
  */
 //------------------------------------------------------------------
-void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, POKEMON_PASO_PARAM* ppp )
+void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここで親の性別もチェックできる]]]
-	PokePasoParaGet( ppp, ID_PARA_oyaname_buf, wordset->tmpBuf );
+	PokeParaGet( pp, ID_PARA_oyaname_buf, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 
 }
