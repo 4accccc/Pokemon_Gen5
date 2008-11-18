@@ -34,7 +34,7 @@ struct _GFL_NETHANDLE{
     void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
     int infomationSize;      ///< ユーザー同士が交換するデータのサイズ
     void* negoBuff[GFL_NET_HANDLE_MAX];       ///< 子機からの受け取り記録
-  //  u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
+    u16 negotiationBit;  ///< 他の接続を許すかどうか 0なら許可
     u16 negotiationReturn;  ///< 他の接続を許すかどうか 0なら許可
     u8 timingRecv;       ///< 通信で受け取った番号
     u8 timingSyncEnd;    ///< 同期コマンド用
