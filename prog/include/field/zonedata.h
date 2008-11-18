@@ -63,3 +63,12 @@ extern u16 ZONEDATA_GetAreaID(u16 zone_id);
 //------------------------------------------------------------------
 extern u16 ZONEDATA_GetMapRscID(u16 zone_id);
 
+//------------------------------------------------------------------
+/**
+ * @brief	マップ開始位置の取得（デバッグ用）
+ * @param	zone_id	ゾーン指定ID
+ * @param	pos		開始位置を受け取るためのfx32型ポインタ
+ */
+//------------------------------------------------------------------
+extern void ZONEDATA_DEBUG_GetStartPos(u16 zone_id, VecFx32 * pos);
+

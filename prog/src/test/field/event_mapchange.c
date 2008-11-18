@@ -13,6 +13,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 
+#include "field/zonedata.h"
 #include "field_data.h"
 
 #include "event_mapchange.h"
@@ -41,11 +42,11 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		{
 			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(fmw->gamedata);
 			ZONEID start_id;
-			const VecFx32 *start_pos;
+			VecFx32 start_pos;
 			start_id = game_init_work->mapid;
 			PLAYERWORK_setZoneID(mywork, start_id);
-			start_pos = FIELDDATA_GetStartPosition(start_id);
-			PLAYERWORK_setPosition(mywork, start_pos);
+			ZONEDATA_DEBUG_GetStartPos(start_id, &start_pos);
+			PLAYERWORK_setPosition(mywork, &start_pos);
 			PLAYERWORK_setDirection(mywork, 0);
 		}
 		(*seq)++;
@@ -101,10 +102,10 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	case 1:
 		{
 			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
-			const VecFx32 *start_pos;
+			VecFx32 start_pos;
 			PLAYERWORK_setZoneID(mywork, mcw->next_map);
-			start_pos = FIELDDATA_GetStartPosition(mcw->next_map);
-			PLAYERWORK_setPosition(mywork, start_pos);
+			ZONEDATA_DEBUG_GetStartPos(mcw->next_map, &start_pos);
+			PLAYERWORK_setPosition(mywork, &start_pos);
 			PLAYERWORK_setDirection(mywork, 0);
 		}
 		GAMESYSTEM_CallFieldProc(gsys);

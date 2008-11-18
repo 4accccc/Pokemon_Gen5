@@ -6,6 +6,7 @@
 typedef unsigned char u8;
 typedef unsigned short int u16;
 typedef unsigned long u32;
+typedef signed long s32;
 
 #ifndef	TRUE
 #define	TRUE	1
@@ -33,14 +34,19 @@ enum {
 
 enum {
 	AREA_ID_FIELD	=	0,
-	MATRIX_ID_SINOU	=	1,
 	BG_ID_FOREST	=	3,
 	MMLID_NOENTRY	=	5,
 	MAPTYPE_NOWHERE	=	0xff,
 	MAPNAME_NOTHING	=	0x33,
 	WEATHER_SYS_SUNNY	=	0x11,
 	PLACE_WIN_SEE	=	0x80,
-	PLACE_WIN_CITY	=	0x81
+	PLACE_WIN_CITY	=	0x81,
+
+	MATRIX_ID_SINOU	=	1,
+	MATRIX_ID_TEST0 =	0,
+	MATRIX_ID_TEST1 =	1,
+	MATRIX_ID_TEST2 =	2,
+	MATRIX_ID_TEST3 =	3,
 };
 
 enum {

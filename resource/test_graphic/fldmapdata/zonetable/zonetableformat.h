@@ -35,5 +35,6 @@ typedef struct{
 	u16 dash_flag:1;						///<ダッシュできるかどうか
 	u16 escape_flag:1;					///<あなぬけできるかどうか
 	u16 fly_flag:1;
+	s32 sx, sy, sz;			///<デフォルトスタート位置（デバッグ用）
 }ZONEDATA;
 

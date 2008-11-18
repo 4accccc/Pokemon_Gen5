@@ -20,6 +20,9 @@ class ColumnID
 	attr :cAREA_ID, true
 	attr :cMOVEMODEL, true
 	attr :cMATRIX, true
+	attr :cSX, true
+	attr :cSY, true
+	attr :cSZ, true
 	attr :cEVENT, true
 	attr :cSCRIPT, true
 	attr :cMSG, true
@@ -52,6 +55,12 @@ class ColumnID
 				@cMOVEMODEL = c_count
 			when "MATRIX"
 				@cMATRIX = c_count
+			when "SX"
+				@cSX = c_count
+			when "SY"
+				@cSY = c_count
+			when "SZ"
+				@cSZ = c_count
 			when "event"
 				@cEVENT = c_count
 			when "script"
@@ -273,6 +282,9 @@ class ZoneDataFile < OutputFile
 		#{dash_flag},
 		#{escape_flag},
 		#{fly_flag},
+		#{column[@cl.cSX]},
+		#{column[@cl.cSY]},
+		#{column[@cl.cSZ]},
 	},
 DOCUMENT
 		return id.upcase
