@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-10-08T12:24:37"/>
+	<create user="taya" host="W00146" date="2008-11-18T21:20:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -83,10 +83,8 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:system" position="4" width="109">
-				<list entry="0" file="X:\font\system.nftr"/>
-				<list entry="1" file="X:\font\lcfont.nftr"/>
-				<list entry="2" file="..\lcfont12.nftr"/>
+			<font default=" 0:lc12_2bit" position="4" width="109">
+				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -95,8 +93,8 @@
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:lcfont12" position="5" width="106">
-				<list entry="0" file="X:\font\lcfont12.nftr"/>
+			<font default=" 0:lc12_2bit" position="5" width="106">
+				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -112,7 +110,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -134,84 +132,89 @@
 
 
 	<row id="DEBUG_TAYA_MENU1">
-		<language name="JPN" font=" 2:lcfont12" width="256">つうしん　しながら　かんじテスト</language>
-		<language name="JPN_KANJI" width="80">通信しながら漢字テスト</language>
+		<language name="JPN" width="256">あたらしいバトルシステム</language>
+		<language name="JPN_KANJI" width="80">新しいバトルシステム</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU2">
-		<language name="JPN" font=" 2:lcfont12" width="256">BlendMagic どうさテスト</language>
-		<language name="JPN_KANJI" width="80">BlendMagic 動作テスト</language>
+		<language name="JPN" width="256">つうしん　しながら　かんじテスト</language>
+		<language name="JPN_KANJI" width="80">通信しながら漢字テスト</language>
 	</row>
 
 	<row id="DEBUG_TAYA_MENU3">
-		<language name="JPN" font=" 2:lcfont12" width="256">スタンドアロンかんじテスト</language>
+		<language name="JPN" width="256">BlendMagic どうさテスト</language>
+		<language name="JPN_KANJI" width="80">BlendMagic 動作テスト</language>
+	</row>
+
+	<row id="DEBUG_TAYA_MENU4">
+		<language name="JPN" width="256">スタンドアロンかんじテスト</language>
 		<language name="JPN_KANJI" width="80">スタンドアロン漢字テスト</language>
 	</row>
 
 	<row id="DEBUG_TAYA_WAIT">
-		<language name="JPN" font=" 2:lcfont12" width="256">しょうしょう　おまちください</language>
+		<language name="JPN" width="256">しょうしょう　おまちください</language>
 		<language name="JPN_KANJI" width="256">少々お待ちください</language>
 	</row>
 
 	<row id="DEBUG_TAYA_TITLE">
-		<language name="JPN" font=" 2:lcfont12" width="256">Ｂをおすと　つうしんモード　に　はいります</language>
+		<language name="JPN" width="256">Ｂをおすと　つうしんモード　に　はいります</language>
 		<language name="JPN_KANJI" width="256">Ｂを押すと通信モードに入ります。</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR00">
-		<language name="JPN" font=" 2:lcfont12" width="256">Ａボタンを　おすと　メッセージおくり　です</language>
+		<language name="JPN" width="256">Ａボタンを　おすと　メッセージおくり　です</language>
 		<language name="JPN_KANJI" width="256">Ａボタンを押すと　メッセージ送りです</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR01">
-		<language name="JPN" font=" 2:lcfont12" width="256">ポケモンの　テキストが　うまれかわります！</language>
+		<language name="JPN" width="256">ポケモンの　テキストが　うまれかわります！</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　テキストが　生まれ変わります！</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR02">
-		<language name="JPN" font=" 2:lcfont12" width="256">やせいの　ピカチュウが　とびだした！！</language>
+		<language name="JPN" width="256">やせいの　ピカチュウが　とびだした！！</language>
 		<language name="JPN_KANJI" width="256">野生のピカチュウが飛び出した！！</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR03">
-		<language name="JPN" font=" 2:lcfont12" width="256">かがくの　ちからって　すげー！</language>
+		<language name="JPN" width="256">かがくの　ちからって　すげー！</language>
 		<language name="JPN_KANJI" width="256">科学の力って凄ぇ！</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR04">
-		<language name="JPN" font=" 2:lcfont12" width="256">このほかにも…</language>
+		<language name="JPN" width="256">このほかにも…</language>
 		<language name="JPN_KANJI" width="256">この他にも…</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR05">
-		<language name="JPN" font=" 2:lcfont12" width="256">きんきじゃくやく　とか</language>
+		<language name="JPN" width="256">きんきじゃくやく　とか</language>
 		<language name="JPN_KANJI" width="256">欣喜雀躍　とか</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR06">
-		<language name="JPN" font=" 2:lcfont12" width="256">じんかんばんじさいおうがうま　とか</language>
+		<language name="JPN" width="256">じんかんばんじさいおうがうま　とか</language>
 		<language name="JPN_KANJI" width="256">人間万事塞翁が馬　とか</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR07">
-		<language name="JPN" font=" 2:lcfont12" width="256">てんもうかいかいそにしてもらさず　とか</language>
+		<language name="JPN" width="256">てんもうかいかいそにしてもらさず　とか</language>
 		<language name="JPN_KANJI" width="256">天網恢々疎にして漏らさず　とか</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR08">
-		<language name="JPN" font=" 2:lcfont12" width="256">むずかしい　かんじも
+		<language name="JPN" width="256">むずかしい　かんじも
 バンバン　つかえちゃいます！</language>
 		<language name="JPN_KANJI" width="256">難しい漢字も
 バンバン使えちゃいます！</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR09">
-		<language name="JPN" font=" 2:lcfont12" width="256">いい　かんじ～</language>
+		<language name="JPN" width="256">いい　かんじ～</language>
 		<language name="JPN_KANJI" width="256">良い感じ～</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR10">
-		<language name="JPN" font=" 2:lcfont12" width="256">『ポケットモンスター』シリーズは「ポケットモンス
+		<language name="JPN" width="256">『ポケットモンスター』シリーズは「ポケットモンス
 ター（以下ポケモン）」という　ふしぎないきものが
 せいそくするせかいにおいて ポケモンを みず
 からのパートナーとして　ポケモンどうしのバトル
@@ -241,12 +244,12 @@
 	</row>
 
 	<row id="DEBUG_TAYA_STR_PARENT">
-		<language name="JPN" font=" 2:lcfont12" width="256">わし　おやき　です。　Ａおすと　うごきます</language>
+		<language name="JPN" width="256">わし　おやき　です。　Ａおすと　うごきます</language>
 		<language name="JPN_KANJI" width="256">儂、親機です。Ａ押すと動きます。</language>
 	</row>
 
 	<row id="DEBUG_TAYA_STR_CHILD">
-		<language name="JPN" font=" 2:lcfont12" width="256">ぼく　こき　です。おやきを　そうさしてください。</language>
+		<language name="JPN" width="256">ぼく　こき　です。おやきを　そうさしてください。</language>
 		<language name="JPN_KANJI" width="256">僕、子機です。親機を操作してください。</language>
 	</row>
 
