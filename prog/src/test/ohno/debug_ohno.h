@@ -12,7 +12,7 @@
 #define __DEBUG_OHNO_H__
 
 
-#include "map/dp3format.h"
+//#include "map/dp3format.h"
 
 typedef BOOL (*NetTestFunc)(void* pCtl);
 
