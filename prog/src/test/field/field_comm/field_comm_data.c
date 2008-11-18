@@ -44,26 +44,26 @@ FIELD_COMM_DATA *commData = NULL;
 //======================================================================
 //	proto
 //======================================================================
-void	FieldCommData_InitSystem( HEAPID heapID );
-void	FieldCommData_TermSystem(void);
-BOOL	FieldCommData_IsExistSystem(void);
+void	FIELD_COMM_DATA_InitSystem( HEAPID heapID );
+void	FIELD_COMM_DATA_TermSystem(void);
+BOOL	FIELD_COMM_DATA_IsExistSystem(void);
 
-void	FieldCommData_SetSelfData_PlayerWork( const PLAYER_WORK *plWork );
-void	FieldCommData_SetSelfDataPos( const ZONEID zoneID , const VecFx32 *pos , const u16 *dir );
-PLAYER_WORK* FieldCommData_GetSelfData_PlayerWork(void);
+void	FIELD_COMM_DATA_SetSelfData_PlayerWork( const PLAYER_WORK *plWork );
+void	FIELD_COMM_DATA_SetSelfDataPos( const ZONEID zoneID , const VecFx32 *pos , const u16 *dir );
+PLAYER_WORK* FIELD_COMM_DATA_GetSelfData_PlayerWork(void);
 
-void	FieldCommData_SetCharaData_IsExist( const idx , const BOOL );
-void	FieldCommData_SetCharaData_IsValid( const idx , const BOOL );
-const BOOL	FieldCommData_GetCharaData_IsExist( const idx );
-const BOOL	FieldCommData_GetCharaData_IsValid( const idx );
-PLAYER_WORK* FieldCommData_GetCharaData_PlayerWork( const idx);
+void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL );
+void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL );
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx );
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx );
+PLAYER_WORK* FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx);
 
-static void FieldCommData_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData );
+static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData );
 
 //--------------------------------------------------------------
 //	通信用データ管理初期化
 //--------------------------------------------------------------
-void FieldCommData_InitSystem( HEAPID heapID )
+void FIELD_COMM_DATA_InitSystem( HEAPID heapID )
 {
 	u8 i;
 	//GF_ASSERT( commData == NULL );
@@ -73,7 +73,7 @@ void FieldCommData_InitSystem( HEAPID heapID )
 		commData = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_DATA) );
 		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 		{
-			FieldCommData_InitOneCharaData( &commData->charaData_[i] );
+			FIELD_COMM_DATA_InitOneCharaData( &commData->charaData_[i] );
 		}
 	}
 	else
@@ -89,7 +89,7 @@ void FieldCommData_InitSystem( HEAPID heapID )
 //--------------------------------------------------------------
 //	通信用データ管理初期化
 //--------------------------------------------------------------
-void	FieldCommData_TermSystem( void )
+void	FIELD_COMM_DATA_TermSystem( void )
 {
 	GF_ASSERT( commData != NULL );
 	GFL_HEAP_FreeMemory( commData );
@@ -99,7 +99,7 @@ void	FieldCommData_TermSystem( void )
 //--------------------------------------------------------------
 //	データが存在するか？
 //--------------------------------------------------------------
-BOOL	FieldCommData_IsExistSystem(void)
+BOOL	FIELD_COMM_DATA_IsExistSystem(void)
 {
 	return( commData != NULL );
 }
@@ -107,7 +107,7 @@ BOOL	FieldCommData_IsExistSystem(void)
 //--------------------------------------------------------------
 //	自分のデータセット
 //--------------------------------------------------------------
-void	FieldCommData_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir )
+void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir )
 {
 	GF_ASSERT( commData != NULL );
 	PLAYERWORK_setZoneID( &commData->selfData_.plWork_ , *zoneID );
@@ -117,7 +117,7 @@ void	FieldCommData_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , 
 //--------------------------------------------------------------
 //	自分のデータ取得
 //--------------------------------------------------------------
-PLAYER_WORK*	FieldCommData_GetSelfData_PlayerWork( void )
+PLAYER_WORK*	FIELD_COMM_DATA_GetSelfData_PlayerWork( void )
 {
 	GF_ASSERT( commData != NULL );
 	return &commData->selfData_.plWork_;
@@ -126,19 +126,19 @@ PLAYER_WORK*	FieldCommData_GetSelfData_PlayerWork( void )
 //--------------------------------------------------------------
 //	指定番号のフラグ取得・設定
 //--------------------------------------------------------------
-void	FieldCommData_SetCharaData_IsExist( const idx , const BOOL flg)
+void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL flg)
 {
 	commData->charaData_[idx].isExist_ = flg;
 }
-void	FieldCommData_SetCharaData_IsValid( const idx , const BOOL flg)
+void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL flg)
 {
 	commData->charaData_[idx].isValid_ = flg;
 }
-const BOOL	FieldCommData_GetCharaData_IsExist( const idx )
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx )
 {
 	return commData->charaData_[idx].isExist_;
 }
-const BOOL	FieldCommData_GetCharaData_IsValid( const idx )
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx )
 {
 	return commData->charaData_[idx].isValid_;
 }
@@ -146,7 +146,7 @@ const BOOL	FieldCommData_GetCharaData_IsValid( const idx )
 //--------------------------------------------------------------
 //	指定番号のデータ取得
 //--------------------------------------------------------------
-PLAYER_WORK*	FieldCommData_GetCharaData_PlayerWork( const idx )
+PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx )
 {
 	GF_ASSERT( commData != NULL );
 	return &commData->charaData_[idx].plWork_;
@@ -155,7 +155,7 @@ PLAYER_WORK*	FieldCommData_GetCharaData_PlayerWork( const idx )
 //--------------------------------------------------------------
 //	通信用データ管理初期化
 //--------------------------------------------------------------
-static void FieldCommData_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData )
+static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData )
 {
 	charaData->isExist_ = FALSE;
 	charaData->isValid_ = FALSE;

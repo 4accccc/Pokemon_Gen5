@@ -27,18 +27,18 @@
 //======================================================================
 //	proto
 //======================================================================
-extern void FieldCommData_InitSystem( HEAPID heapID );
-extern void	FieldCommData_TermSystem();
-extern BOOL	FieldCommData_IsExistSystem(void);
+extern void FIELD_COMM_DATA_InitSystem( HEAPID heapID );
+extern void	FIELD_COMM_DATA_TermSystem();
+extern BOOL	FIELD_COMM_DATA_IsExistSystem(void);
 
-extern void	FieldCommData_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir );
-extern PLAYER_WORK*	FieldCommData_GetSelfData_PlayerWork(void);
+extern void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir );
+extern PLAYER_WORK*	FIELD_COMM_DATA_GetSelfData_PlayerWork(void);
 
-extern void	FieldCommData_SetCharaData_IsExist( const idx , const BOOL );
-extern void	FieldCommData_SetCharaData_IsValid( const idx , const BOOL );
-extern const BOOL	FieldCommData_GetCharaData_IsExist( const idx );
-extern const BOOL	FieldCommData_GetCharaData_IsValid( const idx );
-extern PLAYER_WORK*	FieldCommData_GetCharaData_PlayerWork( const idx );
+extern void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL );
+extern void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL );
+extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx );
+extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx );
+extern PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx );
 
 
 

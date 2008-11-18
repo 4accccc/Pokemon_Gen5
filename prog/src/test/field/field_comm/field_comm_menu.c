@@ -76,22 +76,22 @@ struct _FIELD_COMM_MENU
 //======================================================================
 //	proto
 //======================================================================
-FIELD_COMM_MENU* FieldCommMenu_InitCommMenu( HEAPID heapID );
-void	FieldCommMenu_TermCommMenu( FIELD_COMM_MENU *commMenu );
+FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID );
+void	FIELD_COMM_MENU_TermCommMenu( FIELD_COMM_MENU *commMenu );
 
-void	FieldCommMenu_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
-const u8 FieldCommMenu_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
-void	FieldCommMenu_CloseYesNoMenu( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
+const u8 FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_CloseYesNoMenu( FIELD_COMM_MENU *commMenu );
 
-void	FieldCommMenu_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu );
-void	FieldCommMenu_CloseMessageWindow( FIELD_COMM_MENU *commMenu );
-void	FieldCommMenu_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu );
-void	FieldCommMenu_UpdateMessageWindow( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_UpdateMessageWindow( FIELD_COMM_MENU *commMenu );
 
 //--------------------------------------------------------------
 //	通信用メニュー作業領域　初期化
 //--------------------------------------------------------------
-FIELD_COMM_MENU* FieldCommMenu_InitCommMenu( HEAPID heapID )
+FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID )
 {
 	FIELD_COMM_MENU *commMenu;
 	ARCHANDLE *arcHandle;
@@ -113,7 +113,7 @@ FIELD_COMM_MENU* FieldCommMenu_InitCommMenu( HEAPID heapID )
 //--------------------------------------------------------------
 //	通信用メニュー作業領域　開放
 //--------------------------------------------------------------
-void	FieldCommMenu_TermCommMenu( FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_TermCommMenu( FIELD_COMM_MENU *commMenu )
 {
 	GFL_MSG_Delete( commMenu->msgData_ );
 	FontDataMan_Delete( commMenu->fontHandle_ );
@@ -123,7 +123,7 @@ void	FieldCommMenu_TermCommMenu( FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	はい・いいえ汎用　開く
 //--------------------------------------------------------------
-void	FieldCommMenu_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 {
 	{	//bmpwin
 		commMenu->ynMenuBmpWin_ = GFL_BMPWIN_Create( bgPlane,
@@ -185,7 +185,7 @@ void	FieldCommMenu_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	はい・いいえ汎用閉じる
 //--------------------------------------------------------------
-void	FieldCommMenu_CloseYesNoMenu( FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_CloseYesNoMenu( FIELD_COMM_MENU *commMenu )
 {
 	PRINTSYS_QUE_Delete( commMenu->ynMenuPrintQue_ );
 	//クリア周り
@@ -205,7 +205,7 @@ void	FieldCommMenu_CloseYesNoMenu( FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	はい・いいえ汎用　更新
 //--------------------------------------------------------------
-const u8	FieldCommMenu_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
+const u8	FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
 {
 	const u32 ret = BmpMenu_Main( commMenu->ynMenuWork_ );
 
@@ -242,7 +242,7 @@ const u8	FieldCommMenu_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
 //	メッセージウィンドウ　開く
 //		初期メッセージの設定は各自で。
 //--------------------------------------------------------------
-void	FieldCommMenu_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 {
 	{	//bmpwin
 		commMenu->msgWinBmpWin_ = GFL_BMPWIN_Create( bgPlane,
@@ -272,7 +272,7 @@ void	FieldCommMenu_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	メッセージウィンドウ　閉じる
 //--------------------------------------------------------------
-void	FieldCommMenu_CloseMessageWindow( FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu )
 {
 	PRINTSYS_QUE_Delete( commMenu->msgWinPrintQue_ );
 	//クリア周り
@@ -291,7 +291,7 @@ void	FieldCommMenu_CloseMessageWindow( FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	メッセージウィンドウ　メッセージ設定
 //--------------------------------------------------------------
-void	FieldCommMenu_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu )
 {
 	//文字列をメッセージデータから引き出すためのバッファ
 	STRBUF *strTemp;
@@ -313,7 +313,7 @@ void	FieldCommMenu_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 //	メッセージウィンドウ　更新	
 //--------------------------------------------------------------
-void	FieldCommMenu_UpdateMessageWindow( FIELD_COMM_MENU *commMenu )
+void	FIELD_COMM_MENU_UpdateMessageWindow( FIELD_COMM_MENU *commMenu )
 {
 	if( commMenu->isInitMsgWin_ == TRUE )
 	{

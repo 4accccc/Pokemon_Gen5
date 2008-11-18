@@ -27,24 +27,24 @@ typedef struct _FIELD_COMM_FUNC FIELD_COMM_FUNC;
 //	proto
 //======================================================================
 
-extern FIELD_COMM_FUNC* FieldCommFunc_InitSystem( HEAPID heapID );
-extern void	FieldCommFunc_TermSystem( FIELD_COMM_FUNC *commFunc );
-extern void	FieldCommFunc_InitCommSystem( FIELD_COMM_FUNC *commFunc );
-extern void	FieldCommFunc_TermCommSystem( FIELD_COMM_FUNC *commFunc );
-extern void	FieldCommFunc_UpdateSystem( FIELD_COMM_FUNC *commFunc );
+extern FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID );
+extern void	FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_TermCommSystem( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc );
 
-extern void	FieldCommFunc_StartCommWait( FIELD_COMM_FUNC *commFunc );
-extern void	FieldCommFunc_StartCommSearch( FIELD_COMM_FUNC *commFunc );
-extern void	FieldCommFunc_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_StartCommWait( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_StartCommSearch( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
 
 //送信用関数
-extern void	FieldCommFunc_Send_SelfData( FIELD_COMM_FUNC *commFunc );
+extern void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
 
 //各種チェック関数
-extern const BOOL FieldCommFunc_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
-extern const BOOL FieldCommFunc_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
-extern const int	FieldCommFunc_GetMemberNum( FIELD_COMM_FUNC *commFunc );
-extern const int	FieldCommFunc_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
+extern const BOOL FIELD_COMM_FUNC_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
+extern const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
+extern const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc );
+extern const int	FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
 
 
 

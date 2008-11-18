@@ -155,7 +155,7 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
 			heapID, sizeof(FLD_G3D_MAPPER_DATA) * 32 * 32);
 	//通信用処理
-	fieldWork->commSys = FieldCommMain_InitSystem( heapID , GFL_HEAPID_APP );
+	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
 
 //	GFL_UI_TP_Init( fieldWork->heapID );
 }
@@ -173,7 +173,7 @@ void	FieldEnd( void )
 	GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
 //	GFL_UI_TP_Exit();
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
-	FieldCommMain_TermSystem( fieldWork->commSys , FALSE );
+	FIELD_COMM_MAIN_TermSystem( fieldWork->commSys , FALSE );
 	GFL_HEAP_FreeMemory( fieldWork );
 	fieldWork = NULL;
 }
@@ -232,7 +232,7 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 			fieldWork->ftbl->main_func( fieldWork, &pos );
 			
 			//通信用処理(プレイヤーの座標の設定とか
-			FieldCommMain_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
+			FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
 			//通信用アクター更新
 			fieldMainCommActorProc( fieldWork );

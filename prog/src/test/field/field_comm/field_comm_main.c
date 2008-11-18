@@ -42,34 +42,34 @@ struct _FIELD_COMM_MAIN
 //	proto
 //======================================================================
 
-FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID );
-void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
-void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
+FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID );
+void	FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
+void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
 
 //接続開始用メニュー処理
 //開始時
-void	FieldCommMain_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
-void	FieldCommMain_TermStartCommMenu( FIELD_COMM_MAIN *commSys );
-const BOOL	FieldCommMain_LoopStartCommMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_TermStartCommMenu( FIELD_COMM_MAIN *commSys );
+const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys );
 //橋の時
-void	FieldCommMain_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
-void	FieldCommMain_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
-const BOOL	FieldCommMain_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 
 //--------------------------------------------------------------
 //	フィールド通信システム初期化
 //	@param	commHeapID 通信用に常駐するヒープID
 //			通信が有効な間中開放されないHeapを指定してください
 //--------------------------------------------------------------
-FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID )
+FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 {
 	FIELD_COMM_MAIN *commSys;
 	commSys = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_MAIN) );
 	commSys->heapID_ = heapID;
-	commSys->commFunc_ = FieldCommFunc_InitSystem( heapID );
+	commSys->commFunc_ = FIELD_COMM_FUNC_InitSystem( heapID );
 	
-	FieldCommData_InitSystem( commHeapID );
+	FIELD_COMM_DATA_InitSystem( commHeapID );
 	return commSys;
 }
 
@@ -77,13 +77,13 @@ FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID )
 // フィールド通信システム開放
 // @param isTermAll TRUEでデータ領域のヒープも開放
 //--------------------------------------------------------------
-void FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
+void FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
 {
 	if( isTermAll == TRUE )
 	{
-		FieldCommData_TermSystem();
+		FIELD_COMM_DATA_TermSystem();
 	}
-	FieldCommFunc_TermSystem( commSys->commFunc_ );
+	FIELD_COMM_FUNC_TermSystem( commSys->commFunc_ );
 	GFL_HEAP_FreeMemory( commSys );
 }
 
@@ -96,14 +96,14 @@ void FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
 //	自分のキャラの数値を取得して通信用に保存
 //	他キャラの情報を取得し、通信から設定
 //--------------------------------------------------------------
-void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
+void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys )
 {
-	if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE )
+	if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE )
 	{
 		u8 i;
-		FieldCommFunc_UpdateSystem( commSys->commFunc_ );
-		if( FieldCommFunc_GetMemberNum( commSys->commFunc_ ) > 1 )
+		FIELD_COMM_FUNC_UpdateSystem( commSys->commFunc_ );
+		if( FIELD_COMM_FUNC_GetMemberNum( commSys->commFunc_ ) > 1 )
 		{
 			ZONEID zoneID;
 			VecFx32 pos;
@@ -114,29 +114,29 @@ void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 			GetPlayerActTrans( pcActor , &pos );
 			//GetPlayerActDirection( pcActor , &dir );
 			dir = FieldMainGrid_GetPlayerDir( fieldWork );
-			FieldCommData_SetSelfData_Pos( &zoneID , &pos , &dir );
+			FIELD_COMM_DATA_SetSelfData_Pos( &zoneID , &pos , &dir );
 	
-			FieldCommFunc_Send_SelfData( commSys->commFunc_ );
+			FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );
 		}
 			//届いたデータのチェック
 		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 		{
-			if( i != FieldCommFunc_GetSelfIndex(commSys->commFunc_) &&
-				FieldCommData_GetCharaData_IsValid(i) == TRUE )
+			if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) &&
+				FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
 			{
 				//有効なデータが入っている
 				GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
 				PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i+1 );	//0には自分が入っているから
-				PLAYER_WORK *charaWork = FieldCommData_GetCharaData_PlayerWork(i);
+				PLAYER_WORK *charaWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(i);
 				GFL_STD_MemCopy( (void*)charaWork , (void*)setPlWork , sizeof(PLAYER_WORK) );
-				if( FieldCommData_GetCharaData_IsExist(i) == FALSE )
+				if( FIELD_COMM_DATA_GetCharaData_IsExist(i) == FALSE )
 				{
 					//未初期化なキャラなので、初期化する
 					FieldMain_AddCommActor( fieldWork , setPlWork );
-					FieldCommData_SetCharaData_IsExist(i,TRUE);
+					FIELD_COMM_DATA_SetCharaData_IsExist(i,TRUE);
 				}
 				
-				FieldCommData_SetCharaData_IsValid(i,FALSE);
+				FIELD_COMM_DATA_SetCharaData_IsValid(i,FALSE);
 			}
 		}
 	}
@@ -145,55 +145,55 @@ void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 //--------------------------------------------------------------
 // 通信開始メニュー初期化
 //--------------------------------------------------------------
-void	FieldCommMain_InitStartCommMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
-	commSys->commMenu_ = FieldCommMenu_InitCommMenu( commSys->heapID_ );
-	FieldCommMenu_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
-	FieldCommMenu_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
-	FieldCommMenu_SetMessage( DEBUG_FIELD_C_STR00 , commSys->commMenu_ );
+	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	FIELD_COMM_MENU_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR00 , commSys->commMenu_ );
 	commSys->menuSeq_ = 0;
 }
 
 //--------------------------------------------------------------
 //	通信開始メニュー 開放 
 //--------------------------------------------------------------
-void	FieldCommMain_TermStartCommMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_TermStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
-	FieldCommMenu_CloseMessageWindow( commSys->commMenu_ );
-	FieldCommMenu_TermCommMenu( commSys->commMenu_ );
+	FIELD_COMM_MENU_CloseMessageWindow( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermCommMenu( commSys->commMenu_ );
 }
 
 //--------------------------------------------------------------
 // 通信開始メニュー更新
 //--------------------------------------------------------------
-const BOOL	FieldCommMain_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
+const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
-	FieldCommMenu_UpdateMessageWindow( commSys->commMenu_ );
+	FIELD_COMM_MENU_UpdateMessageWindow( commSys->commMenu_ );
 	switch( commSys->menuSeq_ )
 	{
 	case 0:
 		{
-			const u8 ret = FieldCommMenu_UpdateYesNoMenu( commSys->commMenu_ );
+			const u8 ret = FIELD_COMM_MENU_UpdateYesNoMenu( commSys->commMenu_ );
 			if( ret == YNR_YES ){
-				FieldCommMenu_CloseYesNoMenu( commSys->commMenu_ );
+				FIELD_COMM_MENU_CloseYesNoMenu( commSys->commMenu_ );
 				commSys->menuSeq_++;
 			}
 			else if( ret == YNR_NO ){
-				FieldCommMenu_CloseYesNoMenu( commSys->commMenu_ );
+				FIELD_COMM_MENU_CloseYesNoMenu( commSys->commMenu_ );
 				return (TRUE);
 			}
 		}
 		break;
 	case 1:
 		//未初期化のときだけ初期化する
-		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
-			FieldCommFunc_InitCommSystem( commSys->commFunc_ );
+		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
+			FIELD_COMM_FUNC_InitCommSystem( commSys->commFunc_ );
 		}
 		commSys->menuSeq_++;
 		break;
 	case 2:
-		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
-			FieldCommFunc_StartCommWait( commSys->commFunc_ );
+		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
+			FIELD_COMM_FUNC_StartCommWait( commSys->commFunc_ );
 			commSys->menuSeq_++;
 			return (TRUE);
 		}
@@ -205,55 +205,55 @@ const BOOL	FieldCommMain_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 //--------------------------------------------------------------
 // 侵入開始メニュー 初期化
 //--------------------------------------------------------------
-void	FieldCommMain_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
-	commSys->commMenu_ = FieldCommMenu_InitCommMenu( commSys->heapID_ );
-	FieldCommMenu_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
-	FieldCommMenu_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
-	FieldCommMenu_SetMessage( DEBUG_FIELD_C_STR01 , commSys->commMenu_ );
+	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	FIELD_COMM_MENU_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR01 , commSys->commMenu_ );
 	commSys->menuSeq_ = 0;
 }
 
 //--------------------------------------------------------------
 // 侵入開始メニュー開放
 //--------------------------------------------------------------
-void	FieldCommMain_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
-	FieldCommMenu_CloseMessageWindow( commSys->commMenu_ );
-	FieldCommMenu_TermCommMenu( commSys->commMenu_ );
+	FIELD_COMM_MENU_CloseMessageWindow( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermCommMenu( commSys->commMenu_ );
 }
 
 //--------------------------------------------------------------
 // 侵入開始メニュー更新
 //--------------------------------------------------------------
-const BOOL	FieldCommMain_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
+const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
-	FieldCommMenu_UpdateMessageWindow( commSys->commMenu_ );
+	FIELD_COMM_MENU_UpdateMessageWindow( commSys->commMenu_ );
 	switch( commSys->menuSeq_ )
 	{
 	case 0:
 		{
-			const u8 ret = FieldCommMenu_UpdateYesNoMenu( commSys->commMenu_ );
+			const u8 ret = FIELD_COMM_MENU_UpdateYesNoMenu( commSys->commMenu_ );
 			if( ret == YNR_YES ){
-				FieldCommMenu_CloseYesNoMenu( commSys->commMenu_ );
+				FIELD_COMM_MENU_CloseYesNoMenu( commSys->commMenu_ );
 				commSys->menuSeq_++;
 			}
 			else if( ret == YNR_NO ){
-				FieldCommMenu_CloseYesNoMenu( commSys->commMenu_ );
+				FIELD_COMM_MENU_CloseYesNoMenu( commSys->commMenu_ );
 				return (TRUE);
 			}
 		}
 		break;
 	case 1:
 		//未初期化のときだけ初期化する
-		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
-			FieldCommFunc_InitCommSystem( commSys->commFunc_ );
+		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == FALSE ){
+			FIELD_COMM_FUNC_InitCommSystem( commSys->commFunc_ );
 		}
 		commSys->menuSeq_++;
 		break;
 	case 2:
-		if( FieldCommFunc_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
-			FieldCommFunc_StartCommSearch( commSys->commFunc_ );
+		if( FIELD_COMM_FUNC_IsFinishInitCommSystem( commSys->commFunc_ ) == TRUE ){
+			FIELD_COMM_FUNC_StartCommSearch( commSys->commFunc_ );
 			commSys->menuSeq_++;
 			return (TRUE);
 		}

@@ -465,16 +465,16 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 		switch( d_menu->commSeq )
 		{
 		case 0:
-			FieldCommMain_InitStartCommMenu( d_menu->commSys );
+			FIELD_COMM_MAIN_InitStartCommMenu( d_menu->commSys );
 			d_menu->commSeq++;
 			break;
 		case 1:
-			if( FieldCommMain_LoopStartCommMenu( d_menu->commSys ) == TRUE ){
+			if( FIELD_COMM_MAIN_LoopStartCommMenu( d_menu->commSys ) == TRUE ){
 				d_menu->commSeq++;
 			}
 			break;
 		case 2:
-			FieldCommMain_TermStartCommMenu( d_menu->commSys );
+			FIELD_COMM_MAIN_TermStartCommMenu( d_menu->commSys );
 			d_menu->commSeq++;
 			return (TRUE);
 			break;
@@ -484,16 +484,16 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 		switch( d_menu->commSeq )
 		{
 		case 0:
-			FieldCommMain_InitStartInvasionMenu( d_menu->commSys );
+			FIELD_COMM_MAIN_InitStartInvasionMenu( d_menu->commSys );
 			d_menu->commSeq++;
 			break;
 		case 1:
-			if( FieldCommMain_LoopStartInvasionMenu( d_menu->commSys ) == TRUE ){
+			if( FIELD_COMM_MAIN_LoopStartInvasionMenu( d_menu->commSys ) == TRUE ){
 				d_menu->commSeq++;
 			}
 			break;
 		case 2:
-			FieldCommMain_TermStartInvasionMenu( d_menu->commSys );
+			FIELD_COMM_MAIN_TermStartInvasionMenu( d_menu->commSys );
 			d_menu->commSeq++;
 			return (TRUE);
 			break;

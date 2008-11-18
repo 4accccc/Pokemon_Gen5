@@ -31,15 +31,15 @@ typedef struct _FIELD_COMM_MAIN FIELD_COMM_MAIN;
 //======================================================================
 //	proto
 //======================================================================
-extern FIELD_COMM_MAIN* FieldCommMain_InitSystem( HEAPID heapID , HEAPID commHeapID );
-extern void	FieldCommMain_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
-extern void	FieldCommMain_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
-extern void	FieldCommMain_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
-extern void	FieldCommMain_TermStartCommMenu( FIELD_COMM_MAIN *commSys );
-extern const BOOL	FieldCommMain_LoopStartCommMenu( FIELD_COMM_MAIN *commSys );
-extern void	FieldCommMain_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
-extern void	FieldCommMain_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
-extern const BOOL	FieldCommMain_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+extern FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID );
+extern void	FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
+extern void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
+extern void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
+extern void	FIELD_COMM_MAIN_TermStartCommMenu( FIELD_COMM_MAIN *commSys );
+extern const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys );
+extern void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+extern void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+extern const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 
 
 
