@@ -464,7 +464,7 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 		}
 		recvDataSize+=size;
 
-		if((value == IRC_COMMAND_BOXLISTEND) || (value == IRC_COMMAND_BOXPOKEEND)){
+		if((value == IRC_COMMAND_BOXLISTEND) || (value == IRC_COMMAND_BOXPOKEEND) || (value == IRC_COMMAND_POKEBOX_MOVEEND)){
 			isRecv = true;
 		}
 	}

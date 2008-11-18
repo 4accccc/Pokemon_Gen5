@@ -248,10 +248,12 @@ void FileNCGRead::Write1Char(PictureBox^ pict,Bitmap^ bmp, int dotNo, int palNo,
 			else{
 				dot = ngcData->CharData[dotNo];
 			}
-			int palr = nclClass->getPaletteR(palNo,dot);
-			int palg = nclClass->getPaletteG(palNo,dot);
-			int palb = nclClass->getPaletteB(palNo,dot);
-			bmp->SetPixel((XOf*8)+x, (YOf*8)+y, Color::FromArgb(palr,palg,palb)) ;  // ピクセルデータの設定
+			if(dot!=0){
+				int palr = nclClass->getPaletteR(palNo,dot);
+				int palg = nclClass->getPaletteG(palNo,dot);
+				int palb = nclClass->getPaletteB(palNo,dot);
+				bmp->SetPixel(XOf+x, YOf+y, Color::FromArgb(palr,palg,palb)) ;  // ピクセルデータの設定
+			}
 			dotNo++;
 		}
 	}
@@ -335,7 +337,7 @@ Bitmap^ FileNCGRead::PictureWriteOffset(Bitmap^ bmp, PictureBox^ pict, int xini,
 			int palNo = ngcAttr->AttrData[attrIndex];
 			attrIndex++;
 			if(YOf < width && XOf < height){
-				Write1Char(pict, bmp, dotNo, palNo, XOf+xini, YOf+yini);
+				Write1Char(pict, bmp, dotNo, palNo, XOf*8+xini, YOf*8+yini);
 			}
 			dotNo+=64;
 		}

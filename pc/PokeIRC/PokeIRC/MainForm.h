@@ -24,6 +24,8 @@ namespace PokeIRC {
 #define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)
 
 
+
+
 	static const char PROGRAM_NAME[] = "Global Pokemon FunClub";
 
 
@@ -116,6 +118,8 @@ namespace PokeIRC {
 	static int DownloadMatchNum;  // —‚Æ‚µ‚Ä‚«‚½”
 	int GTSDispMode;   //‚f‚s‚r‚Ì‰æ–Ê‘JˆÚó‘Ô
 	String^ BackupToolTipMsg;
+	static int POKEBOX_OFFSETX;
+	static int POKEBOX_OFFSETY;
 
 	static const int MODE_SEARCHPOKE = 0;
 	static const int MODE_BOXDISP = 1;

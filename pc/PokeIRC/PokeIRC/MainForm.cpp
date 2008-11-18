@@ -96,8 +96,12 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
 	pictureBox2->Hide();
 	pictureBox3->Hide();
 
-	this->Width = 670;
+	this->Width = 1070;
 	this->Height = 770;
+
+	POKEBOX_OFFSETX = 50;
+	POKEBOX_OFFSETY = 105;
+
 	GTSDispMode=0;
 	SoundBarSize = pictureBox3->Width;
 	SoundBarTotalSize = 0;
@@ -789,7 +793,17 @@ void MainForm::CallProg(String^ message)
 
 void MainForm::pokemonSearchDisp(void)
 {
-	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
+	int xof = POKEBOX_OFFSETX;
+	int yof = POKEBOX_OFFSETY;
+
+	//dispBoxNo = boxNo;
+	Bitmap^ bmp = gcnew Bitmap("boximage.bmp"); 
+
+	pictureBox1->Width = bmp->Width;
+	pictureBox1->Height = bmp->Height;
+	pictureBox1->Left = this->Width / 2 - bmp->Width / 2;
+
+
 
 	for(int i=0;i < DownloadMatchNum;i++){
 		Dpw_Tr_Data     *dtp = &match_data_buf[i];
@@ -809,7 +823,7 @@ void MainForm::pokemonSearchDisp(void)
 
 	}
 
-	pictureBox1->Dock = DockStyle::Fill;
+	//pictureBox1->Dock = DockStyle::Fill;
 	webBrowser1->Dock = DockStyle::Fill;
 
 	webBrowser1->Visible = false;
@@ -828,9 +842,18 @@ void MainForm::pokemonSearchDisp(void)
 void MainForm::pokemonListDisp(int boxNo)
 {
 	int i;
+	int xof = POKEBOX_OFFSETX;
+	int yof = POKEBOX_OFFSETY;
 
 	dispBoxNo = boxNo;
-	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
+//	Bitmap^ bmp = gcnew Bitmap(10 * 6 * 16, 10 * 16 * 5);
+	Bitmap^ bmp = gcnew Bitmap("boximage.bmp"); 
+
+
+	pictureBox1->Width = bmp->Width;
+	pictureBox1->Height = bmp->Height;
+	pictureBox1->Left = this->Width / 2 - bmp->Width / 2;
+
 
 	int printBoxNo = boxNo + 1;
 	button2->Text = "ボックス " + printBoxNo;
@@ -855,7 +878,7 @@ void MainForm::pokemonListDisp(int boxNo)
 
 		fngc->readWithNcl(ncgname,"", nclname);
 	
-		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1,10*(i%6), 10*(i/6),10,10);
+		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1, xof+80*(i%6), yof+80*(i/6),10,10);
 
 	}
 	splitContainer1->Panel1->Show();
@@ -863,7 +886,10 @@ void MainForm::pokemonListDisp(int boxNo)
 	button2->Width = (this->Width / 5) * 3;
 	button3->Width = this->Width / 5;
 
-	pictureBox1->Dock = DockStyle::Fill;
+
+
+
+//	pictureBox1->Dock = DockStyle::Fill;
 	webBrowser1->Dock = DockStyle::Fill;
 
 	webBrowser1->Visible = false;
@@ -883,6 +909,14 @@ void MainForm::pokemonListDisp(int boxNo)
 void MainForm::RequestSearch(void)
 {
 	s32 result = 0;
+
+
+	{
+		NetIRC::dataArray = gcnew array<unsigned char>(1);
+		NetIRC::dataArray[0] = IRC_COMMAND_POKEBOX_MOVE;
+		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE);
+	}
+
 	//Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
 	// 検索→トレード
 	{
@@ -941,14 +975,17 @@ System::Void MainForm::pokemonToolStripMenuItem_Click(System::Object^  sender, S
 
 int MainForm::getBoxPositionFromThePlace(int x,int y)
 {
-	int i = x  / (10*8);
+	int xo = x - POKEBOX_OFFSETX;
+	int yo = y - POKEBOX_OFFSETY;
+
+	int i = xo  / (10*8);
 	if(i < 0){
 		return -1;
 	}
 	else if(i >= 6){
 		return -1;
 	}
-	int j = (y)  / (10*8);
+	int j = (yo)  / (10*8);
 	if(j < 0){
 		return -1;
 	}
@@ -1029,16 +1066,17 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 	int pokeno;
 	int pokesex;
 	int pokelv;
+	int no;
 	String^ sexs = "ふめい";
 	String^ comment="\n ";
 	String^ pknm="";
+	no = getBoxPositionFromThePlace(e->X,e->Y);
 
 
 	switch(GTSDispMode){
 	case MODE_SEARCHPOKE:
 	case MODE_SEARCHPOKE_BOXDISP:
 		{
-			int no = getBoxPositionFromThePlace(e->X,e->Y);
 			if((no == -1)  || (no >= DownloadMatchNum)){
 				return;
 			}
@@ -1046,9 +1084,7 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 			pokeno = dtp->postSimple.characterNo;
 			pokesex = dtp->postSimple.gender;
 			pokelv = dtp->postSimple.level;
-
 			comment = comment + PokemonDataTable::DPSpellConv(dtp->name, DPW_TR_NAME_SIZE);
-
 		}
 		break;
 	case MODE_BOXDISP:
@@ -1081,6 +1117,12 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 	if(BackupToolTipMsg != pknm){
 		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
 		BackupToolTipMsg = pknm;
+
+		NetIRC::dataArray = gcnew array<unsigned char>(2);
+		NetIRC::dataArray[0] = IRC_COMMAND_MOUSE;
+		NetIRC::dataArray[1] = no;
+		NetIRC::sendData(IRC_COMMAND_MOUSE);
+
 	}
 
 
@@ -1283,6 +1325,16 @@ void MainForm::GetPokeBoxList(void)
 {
 	//isRecv = false;
 	int i,j,k=0;
+
+	{
+		NetIRC::dataArray = gcnew array<unsigned char>(1);
+		NetIRC::dataArray[0] = IRC_COMMAND_POKEBOX_MOVE;
+		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE);
+	}
+	while(!NetIRC::isRecvFlg()){
+		Sleep(10);
+	}
+
 
 	NetIRC::dataArray = gcnew array<unsigned char>(1);
 	NetIRC::dataArray[0] = IRC_COMMAND_BOXLIST;
