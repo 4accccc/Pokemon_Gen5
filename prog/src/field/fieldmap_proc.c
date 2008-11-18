@@ -1,16 +1,16 @@
 //============================================================================================
 /**
- * @file	field_proc.c
- * @brief	フィールドプロセス (watanabe080926
+ * @file	fieldmap_proc.c
+ * @brief	フィールドプロセス 
  * @author	tamada
- * @date	2007.02.01
+ * @date	2008.11.18
  */
 //============================================================================================
 #include <gflib.h>
-#include "system\main.h"
+#include "system/main.h"				//HEAPID参照のため
 
-#include "field_main.h"
 #include "gamesystem/gamesystem.h"
+#include "field/fieldmap.h"
 
 //============================================================================================
 //
@@ -33,15 +33,15 @@ typedef struct {
  * 以降は確保したワークのアドレスとなる。
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugFieldProcInit
+static GFL_PROC_RESULT FieldMapProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	FIELD_MAIN_WORK * fieldWork;
 	FPROC_WORK * fpwk;
 	GAMESYS_WORK * gsys = pwk;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
-	fpwk = GFL_PROC_AllocWork(proc, sizeof(FPROC_WORK), HEAPID_WATANABE_DEBUG);
-	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_WATANABE_DEBUG );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x200000 );
+	fpwk = GFL_PROC_AllocWork(proc, sizeof(FPROC_WORK), HEAPID_FIELDMAP);
+	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -51,7 +51,7 @@ static GFL_PROC_RESULT DebugFieldProcInit
  * @brief	プロセスのメイン
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugFieldProcMain
+static GFL_PROC_RESULT FieldMapProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GAMESYS_WORK * gsys = pwk;
@@ -72,23 +72,23 @@ static GFL_PROC_RESULT DebugFieldProcMain
  * 処理が遷移する。
  */
 //------------------------------------------------------------------
-static GFL_PROC_RESULT DebugFieldProcEnd
+static GFL_PROC_RESULT FieldMapProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	FPROC_WORK * fpwk = mywk;
 	FIELDMAP_Delete(fpwk->fieldWork);
 	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+	GFL_HEAP_DeleteHeap( HEAPID_FIELDMAP );
 
 	return GFL_PROC_RES_FINISH;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const GFL_PROC_DATA DebugFieldProcData = {
-	DebugFieldProcInit,
-	DebugFieldProcMain,
-	DebugFieldProcEnd,
+const GFL_PROC_DATA FieldMapProcData = {
+	FieldMapProcInit,
+	FieldMapProcMain,
+	FieldMapProcEnd,
 };
 
 
