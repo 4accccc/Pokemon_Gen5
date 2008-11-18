@@ -14,6 +14,7 @@
 #include "gamesystem/game_data.h"
 
 #include "field/zonedata.h"
+#include "field/fieldmap.h"
 #include "field_data.h"
 
 #include "event_mapchange.h"
@@ -85,6 +86,7 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
+	FIELD_MAIN_WORK * fieldmap;
 	ZONEID next_map;
 }MAPCHANGE_WORK;
 //------------------------------------------------------------------
@@ -96,10 +98,14 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
 	case 0:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		FIELDMAP_Close(mcw->fieldmap);
 		(*seq)++;
 		break;
 	case 1:
+		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		(*seq)++;
+		break;
+	case 2:
 		{
 			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
 			VecFx32 start_pos;
@@ -111,7 +117,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq)++;
 		break;
-	case 2:
+	case 3:
 		if (!GAMESYSTEM_IsProcExists(gsys)) break;
 
 		return GMEVENT_RES_FINISH;
@@ -122,7 +128,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
+GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -130,6 +136,7 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
 	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	{
 		PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
@@ -150,24 +157,35 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys)
 extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+typedef struct {
+	GAMESYS_WORK * gsys;
+	FIELD_MAIN_WORK * fieldmap;
+}CHANGE_SAMPLE_WORK;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 {
-	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	CHANGE_SAMPLE_WORK * csw = work;
+	GAMESYS_WORK *gsys = csw->gsys;
 
 	switch(*seq) {
 	case 0:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		FIELDMAP_Close(csw->fieldmap);
 		(*seq) ++;
 		break;
 	case 1:
-		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
-		(*seq) ++;
-		break;
-	case 2:
 		if (GAMESYSTEM_IsProcExists(gsys)) break;
 		(*seq) ++;
 		break;
+	case 2:
+		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		(*seq) ++;
+		break;
 	case 3:
+		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		(*seq) ++;
+		break;
+	case 4:
 		GAMESYSTEM_CallFieldProc(gsys);
 		return GMEVENT_RES_FINISH;
 		
@@ -177,8 +195,11 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys)
+GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 {
-	return GMEVENT_Create(gsys, NULL, GameChangeEvent, 0);
-	//GAMESYSTEM_EVENT_Set(gsys, GameChangeEvent, 0);
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameChangeEvent, sizeof(CHANGE_SAMPLE_WORK));
+	CHANGE_SAMPLE_WORK * csw = GMEVENT_GetEventWork(event);
+	csw->gsys = gsys;
+	csw->fieldmap = fieldmap;
+	return event;
 }

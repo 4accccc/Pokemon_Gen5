@@ -20,6 +20,11 @@
 //
 //============================================================================================
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct {
+	FIELD_MAIN_WORK * fieldWork;
+}FPROC_WORK;
+//------------------------------------------------------------------
 /**
  * @brief	ƒvƒƒZƒX‚Ì‰Šú‰»
  *
@@ -31,9 +36,12 @@
 static GFL_PROC_RESULT DebugFieldProcInit
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	FIELD_MAIN_WORK * fieldWork;
+	FPROC_WORK * fpwk;
 	GAMESYS_WORK * gsys = pwk;
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WATANABE_DEBUG, 0x200000 );
-	FieldBoot(gsys, HEAPID_WATANABE_DEBUG );
+	fpwk = GFL_PROC_AllocWork(proc, sizeof(FPROC_WORK), HEAPID_WATANABE_DEBUG);
+	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -47,7 +55,8 @@ static GFL_PROC_RESULT DebugFieldProcMain
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	GAMESYS_WORK * gsys = pwk;
-	if( FieldMain(pwk) == TRUE ){
+	FPROC_WORK * fpwk = mywk;
+	if( FIELDMAP_Main(gsys, fpwk->fieldWork) == TRUE ){
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -66,7 +75,9 @@ static GFL_PROC_RESULT DebugFieldProcMain
 static GFL_PROC_RESULT DebugFieldProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	FieldEnd();
+	FPROC_WORK * fpwk = mywk;
+	FIELDMAP_Delete(fpwk->fieldWork);
+	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
 
 	return GFL_PROC_RES_FINISH;

@@ -144,7 +144,7 @@ static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
  * @brief	ワークの確保と破棄
  */
 //------------------------------------------------------------------
-void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
+FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 {
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;
@@ -157,7 +157,7 @@ void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID )
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
 
-//	GFL_UI_TP_Init( fieldWork->heapID );
+	return fieldWork;
 }
 
 //------------------------------------------------------------------
@@ -168,13 +168,15 @@ void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 }
 
 
-void	FieldEnd( void )
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 {
-	GFL_HEAP_FreeMemory( fieldWork->pMapMatrixBuf );
+	GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
 //	GFL_UI_TP_Exit();
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
-	FIELD_COMM_MAIN_TermSystem( fieldWork->commSys , FALSE );
-	GFL_HEAP_FreeMemory( fieldWork );
+	FIELD_COMM_MAIN_TermSystem( fldWork->commSys , FALSE );
+	GFL_HEAP_FreeMemory( fldWork );
 	fieldWork = NULL;
 }
 
@@ -183,7 +185,7 @@ void	FieldEnd( void )
  * @brief	メイン
  */
 //------------------------------------------------------------------
-BOOL	FieldMain( GAMESYS_WORK * gsys )
+BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 {
 	BOOL return_flag = FALSE,bSkip = FALSE;
 	int i;
@@ -276,6 +278,17 @@ BOOL	FieldMain( GAMESYS_WORK * gsys )
 
 //------------------------------------------------------------------
 /**
+ * @brief	終了リクエスト
+ */
+//------------------------------------------------------------------
+void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork )
+{
+	fieldWork->gamemode = GAMEMODE_FINISH;
+	fieldWork->seq = 3;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief	終了チェック
  */
 //------------------------------------------------------------------
@@ -301,14 +314,12 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		return NULL;
 	}
 	if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-		fieldWork->gamemode = GAMEMODE_FINISH;
-		fieldWork->seq = 3;
-		return DEBUG_EVENT_FieldSample(gsys);
+		FIELDMAP_Close(fieldWork);
+		return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-		fieldWork->gamemode = GAMEMODE_FINISH;
-		fieldWork->seq = 3;
-		return DEBUG_EVENT_ChangeToNextMap(gsys);
+		FIELDMAP_Close(fieldWork);
+		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 

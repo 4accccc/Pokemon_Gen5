@@ -9,7 +9,8 @@
 #pragma once
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
+#include "field/fieldmap.h"
 
 extern GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work);
-extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys);
-extern GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys);
+extern GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *fieldmap);
+extern GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK *fieldmap);

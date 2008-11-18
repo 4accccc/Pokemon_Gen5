@@ -5,6 +5,8 @@
 #include "field_g3d_mapper.h"
 #include "field_player.h"			//PC_ACT_FUNC
 
+#include "field/fieldmap.h"
+
 #define FLD_COMM_PLAYER_MAX (4)
 #define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
 
@@ -27,9 +29,6 @@ extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork );
 
-extern void	FieldBoot(GAMESYS_WORK * gsys, HEAPID heapID );
-extern void	FieldEnd( void );
-extern BOOL	FieldMain( GAMESYS_WORK * gsys );
 
 extern void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
