@@ -20,8 +20,6 @@ enum
 	DIR_MAX4 = DIR_NOT,
 };
 
-typedef struct _FIELD_MAIN_WORK FIELD_MAIN_WORK;
-
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 
 //field_sub_grid.c
