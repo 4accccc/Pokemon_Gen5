@@ -6,6 +6,7 @@
 #include "field_debug.h"
 #include "field_data.h"
 
+#include "field/zonedata.h"
 #include "map_matrix.h"
 
 //#include "test_graphic/sample_map.naix"
@@ -28,8 +29,16 @@ const unsigned int resistMapTblCount;
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static int MapID2ResistID(u16 mapid)
+{
+	GF_ASSERT(mapid < ZONEDATA_GetZoneIDMax());
+	return ZONEDATA_GetMapRscID(mapid);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 void FIELDDATA_SetMapperData(u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
 {
+	mapid = MapID2ResistID(mapid);
 	GF_ASSERT(mapid < resistMapTblCount);
 	*map_res = resistMapTbl[mapid].mapperData;
 	if (resistMapTbl[mapid].isMatrixMapFlag){
@@ -61,6 +70,7 @@ void FIELDDATA_SetMapperData(u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * 
 //------------------------------------------------------------------
 const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
 {
+	mapid = MapID2ResistID(mapid);
 	GF_ASSERT(mapid < resistMapTblCount);
 	return &resistMapTbl[mapid].mapperData;
 }
@@ -68,15 +78,9 @@ const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
 //------------------------------------------------------------------
 const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 {
+	mapid = MapID2ResistID(mapid);
 	GF_ASSERT(mapid < resistMapTblCount);
 	return resistMapTbl[mapid].dep_funcs;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-BOOL FIELDDATA_IsMatrixMap(u16 mapid)
-{
-	GF_ASSERT(mapid < resistMapTblCount);
-	return resistMapTbl[mapid].isMatrixMapFlag;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------

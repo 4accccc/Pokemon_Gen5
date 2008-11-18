@@ -15,7 +15,6 @@
 
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
-#include "field_data.h"
 
 #include "event_mapchange.h"
 
@@ -53,9 +52,12 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 		(*seq)++;
 		break;
 	case 1:
-#if 1		/* 暫定的にプロセス登録 */
 		GAMESYSTEM_CallFieldProc(gsys);
-#endif
+		(*seq)++;
+		break;
+	case 2:
+		if (!GAMESYSTEM_IsProcExists(gsys)) break;
+
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -78,7 +80,6 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 //============================================================================================
 //
 //	イベント：デバッグ用マップ切り替え
-//	※マップIDをインクリメントしている。最大値になったら先頭に戻る
 //
 //============================================================================================
 //------------------------------------------------------------------
@@ -98,14 +99,17 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
 	case 0:
+		//フィールドマップを終了する
 		FIELDMAP_Close(mcw->fieldmap);
 		(*seq)++;
 		break;
 	case 1:
+		//フィールドマップを終了待ち
 		if (GAMESYSTEM_IsProcExists(gsys)) break;
 		(*seq)++;
 		break;
 	case 2:
+		//新しいマップID、初期位置をセット
 		{
 			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
 			VecFx32 start_pos;
@@ -114,10 +118,12 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 			PLAYERWORK_setPosition(mywork, &start_pos);
 			PLAYERWORK_setDirection(mywork, 0);
 		}
+		//フィールドマップを開始リクエスト
 		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq)++;
 		break;
 	case 3:
+		//フィールドマップを開始待ち
 		if (!GAMESYSTEM_IsProcExists(gsys)) break;
 
 		return GMEVENT_RES_FINISH;
@@ -128,26 +134,33 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, u16 mapid)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
-	//event = GAMESYSTEM_EVENT_Set(gsys, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
 	mcw = GMEVENT_GetEventWork(event);
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	{
-		PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
-		ZONEID next = PLAYERWORK_getZoneID(myplayer);
-		next ++;
-		if (next >= FIELDDATA_GetMapIDMax()) {
-			next = 0;
-		}
-		mcw->next_map = next;
-	}
+	mcw->next_map = mapid;
 	return event;
+}
+
+//------------------------------------------------------------------
+//	※マップIDをインクリメントしている。最大値になったら先頭に戻る
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
+	ZONEID next = PLAYERWORK_getZoneID(myplayer);
+	next ++;
+	if (next >= ZONEDATA_GetZoneIDMax()) {
+		next = 0;
+	}
+	return DEBUG_EVENT_ChangeMap(gsys, fieldmap, next);
 }
 //============================================================================================
 //
