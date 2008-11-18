@@ -18,7 +18,6 @@
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
 	FLD_G3D_MAPPER_RESIST	mapperData;
-	VecFx32				startPos;	//開始位置
 	const DEPEND_FUNCTIONS * dep_funcs;
 	BOOL isMatrixMapFlag;
 }SCENE_DATA;
@@ -71,13 +70,6 @@ const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 {
 	GF_ASSERT(mapid < resistMapTblCount);
 	return resistMapTbl[mapid].dep_funcs;
-}
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-const VecFx32 * FIELDDATA_GetStartPosition(u16 mapid)
-{
-	GF_ASSERT(mapid < resistMapTblCount);
-	return &resistMapTbl[mapid].startPos;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -205,7 +197,6 @@ const SCENE_DATA resistMapTbl[] = {
 			4,  4, NELEMS(loopbridgemap),
 			loopbridgemap, 
 		}, 
-		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 		FALSE,
 	},
@@ -220,7 +211,6 @@ const SCENE_DATA resistMapTbl[] = {
 			1,  1, NELEMS(fldmap3dp_test),
 			NULL, 
 		},
-		{ MAP_WIDTH/2, 0, MAP_WIDTH/2 },
 		&FieldGridFunctions,
 		TRUE,
 	},
@@ -235,7 +225,6 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  6, NELEMS(sampleMap2),
 			sampleMap2, 
 		}, 
-		{ MAP_WIDTH*1, MAP_WIDTH/2, MAP_WIDTH*1 },
 		&FieldNoGridFunctions,
 		FALSE,
 	},
@@ -251,7 +240,6 @@ const SCENE_DATA resistMapTbl[] = {
 			2,  6, NELEMS(GSMap),
 			GSMap, 
 		},
-		{ MAP_WIDTH*1, 0, MAP_WIDTH*1 },
 		&FieldGridFunctions,
 		FALSE,
 	},

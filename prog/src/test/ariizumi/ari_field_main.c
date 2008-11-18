@@ -25,6 +25,8 @@
 #include "test/field/field_camera.h"
 #include "test/field/field_data.h"
 
+#include "field/zonedata.h"
+
 #include "ari_field_menu.h"
 #include "ari_comm_def.h"
 #include "ari_comm_func.h"
@@ -175,7 +177,7 @@ BOOL	AriFieldMain( void )
 				VecFx32 pos;
 				u16		dir;
 
-				pos = *FIELDDATA_GetStartPosition(ariFieldWork->mapNum);
+				ZONEDATA_DEBUG_GetStartPos(ariFieldWork->mapNum, &pos);
 				dir = 0;
 				ariFieldWork->ftbl->create_func( ariFieldWork, &pos, dir );
 			}
