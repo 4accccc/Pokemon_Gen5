@@ -171,7 +171,8 @@ static	void	GameMain(void)
 #endif	// PM_DEBUG
 
 	NetErr_Main();
-	if(0){//GFL_UI_KEY_GetTrg() == PAD_BUTTON_START){//PAD_BUTTON_DEBUG){
+	NetErr_App_ErrorCheck();
+	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DEBUG){
 		NetErr_ErrorSet();
 	}
 }

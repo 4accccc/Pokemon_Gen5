@@ -48,15 +48,15 @@
 #define MESSAGE_Y_LEN			(16)
 
 ///メッセージのパレット展開位置
-#define MESSAGE_PALNO			(1)
+#define MESSAGE_PALNO			(0)
 
 ///背景BGグラフィック(ncg)のデータサイズ
 #define BG_DATA_SIZE			(32 * 0x20)
 ///メッセージ描画開始キャラクタNo
 #define MESSAGE_START_CHARNO	(BG_DATA_SIZE / 0x20)
 
-//背景BG＋メッセージデータでキャラクタ領域0x4000をオーバーしていないかチェック
-SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= 0x4000);
+//背景BG＋メッセージデータでキャラクタ領域PUSH_CHARVRAM_SIZEをオーバーしていないかチェック
+SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= PUSH_CHARVRAM_SIZE);
 
 
 //==============================================================================
@@ -181,7 +181,7 @@ NET_ERR_STATUS NetErr_Main(void)
 	if(nes->status == NET_ERR_STATUS_REQ){
 		//エラー画面描画
 		Local_ErrDispInit();
-		nes->status = NET_ERR_STATUS_DISP;
+		nes->status = NET_ERR_STATUS_ERROR;
 		
 //		OS_SpinWait(10000);
 		
@@ -196,7 +196,6 @@ NET_ERR_STATUS NetErr_Main(void)
 		//エラー画面終了
 		Local_ErrDispExit();
 		nes->key_timer = 0;
-		nes->status = NET_ERR_STATUS_NULL;
 	}
 	
 	return nes->status;
@@ -217,6 +216,29 @@ void NetErr_ErrorSet(void)
 		return;
 	}
 	nes->status = NET_ERR_STATUS_REQ;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   アプリ用：エラーが発生したか調べる
+ *
+ * @retval  エラー画面システムの状況
+ *
+ * アプリ側はこの関数を使用してエラーが発生しているか調べ、
+ * エラーが発生していた場合(NET_ERR_STATUS_ERROR)は、各アプリ毎のエラー用処理へ移行してください
+ *
+ * 　※NET_ERR_STATUS_ERRORが取得出来た場合は、既にエラー画面から復帰している時です。
+ */
+//--------------------------------------------------------------
+NET_ERR_STATUS NetErr_App_ErrorCheck(void)
+{
+	NET_ERR_STATUS status;
+	
+	status = NetErrSystem.status;
+	if(status == NET_ERR_STATUS_ERROR){
+		NetErrSystem.status = NET_ERR_STATUS_NULL;
+	}
+	return status;
 }
 
 //--------------------------------------------------------------
@@ -262,7 +284,7 @@ static void Local_ErrDispInit(void)
 
 	//フォントカラー退避
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
-	GFL_FONTSYS_SetDefaultColor();
+	GFL_FONTSYS_SetColor(4, 0xb, 7);
 
 	//エラー画面描画
 	Local_ErrDispDraw();
@@ -350,6 +372,8 @@ static void Local_ErrDispDraw(void)
 	BOOL  cmpFlag;
 	NNSG2dPaletteCompressInfo*  cmpInfo;
 	
+	GFL_STD_MemClear32(G2_GetBG1CharPtr(), PUSH_CHARVRAM_SIZE);
+
 	//キャラクタ
 	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, GFL_HEAPID_APP);
 	if(NNS_G2dGetUnpackedBGCharacterData(arcData, &charData)){
@@ -373,8 +397,8 @@ static void Local_ErrDispDraw(void)
 	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, GFL_HEAPID_APP);
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 	if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) ){
-		DC_FlushRange( palData->pRawData, 0x20 );
-		GFL_STD_MemCopy16(palData->pRawData, (void*)HW_BG_PLTT, 0x20);
+		DC_FlushRange( palData->pRawData, PUSH_PLTTVRAM_SIZE );
+		GFL_STD_MemCopy16(palData->pRawData, (void*)HW_BG_PLTT, PUSH_PLTTVRAM_SIZE);
 	}
 	GFL_HEAP_FreeMemory( arcData );
 }
