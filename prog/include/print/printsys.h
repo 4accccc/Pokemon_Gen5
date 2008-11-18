@@ -13,6 +13,8 @@
 #define __PRINTSYS_H__
 
 #include <tcbl.h>
+#include <bmp_win.h>
+#include <strbuf.h>
 
 #include "print\gf_font.h"
 
