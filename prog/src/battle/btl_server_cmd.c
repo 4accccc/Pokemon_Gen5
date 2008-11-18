@@ -24,8 +24,6 @@ void SCQUE_PUT_MsgSpecial( BTL_SERVER_CMD_QUE* que, u16 strID, u8 arg1, u8 arg2 
 
 void SCQUE_PUT_MsgBody( BTL_SERVER_CMD_QUE* que, u16 strID, ... )
 {
-	printf("MSGBODY in");
-
 	{
 		va_list   list;
 		ScMsgArg   arg;
@@ -40,18 +38,14 @@ void SCQUE_PUT_MsgBody( BTL_SERVER_CMD_QUE* que, u16 strID, ... )
 			scque_put1byte( que, arg );
 		}while( arg != MSGARG_TERMINATOR );
 
-		printf("MSGBODY term...");
-
 		va_end( list );
-
-		printf("MSGBODY out");
 	}
 }
 
 void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args )
 {
 	args[0] = scque_read2byte( que );
-	printf("MSG[%d] read Args..", args[0]);
+
 	{
 		int i = 0;
 		do {
@@ -59,7 +53,6 @@ void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args )
 			if( i < BTL_SERVERCMD_ARG_MAX )
 			{
 				args[i] = scque_read1byte( que );
-				printf("%d ", args[i]);
 			}
 			else
 			{
@@ -68,6 +61,5 @@ void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args )
 			}
 		}while( args[i] != MSGARG_TERMINATOR );
 	}
-	printf("\n ");
 }
 

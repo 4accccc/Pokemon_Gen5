@@ -71,6 +71,7 @@ SRCS	+=		test/testmode.c \
 				system/bmp_cursor.c \
 				battle/btl_main.c \
 				battle/btl_server.c \
+				battle/btl_server_cmd.c \
 				battle/btl_client.c \
 				battle/btl_adapter.c \
 				battle/btl_pokeparam.c \
@@ -78,6 +79,7 @@ SRCS	+=		test/testmode.c \
 				battle/btl_calc.c \
 				battle/btl_net.c \
 				battle/btl_string.c \
+				battle/btl_util.c \
 				test/field/field_debug.c \
 				test/field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \

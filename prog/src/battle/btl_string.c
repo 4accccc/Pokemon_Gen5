@@ -11,8 +11,6 @@
 
 #include "print/wordset.h"
 
-#include "btl_str.h"
-
 #include "btl_common.h"
 #include "btl_string.h"
 
