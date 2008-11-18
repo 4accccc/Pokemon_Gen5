@@ -774,6 +774,9 @@ extern void* GFL_NET_Align32Alloc( HEAPID id, u32 size );
 extern void GFL_NET_Align32Free( void* ptr );
 
 
+extern void GFL_NET_BG1PosSet(int x, int y);
+extern void GFL_NET_BG1PosGet(int *x, int *y);
+
 
 extern void debugcheck(u32* data,int size );
 

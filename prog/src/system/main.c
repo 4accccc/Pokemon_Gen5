@@ -18,6 +18,7 @@
 #include "savedata/save_control.h"
 #include "print/printsys.h"
 #include "poke_tool/poke_tool.h"
+#include "system/net_err.h"
 
 
 #ifdef PM_DEBUG
@@ -145,10 +146,13 @@ static	void	GameInit(void)
 
 	/* 文字描画システム初期化 */
 	PRINTSYS_Init( GFL_HEAPID_SYSTEM );
+	
+	//通信エラー画面管理システム初期化
+	NetErr_SystemInit();
+	NetErr_SystemCreate(GFL_HEAPID_APP);//※check　とりあえずゲーム中、ずっとシステムが存在するようにしている
 
 	/* poketoolシステム初期化 */
 	POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
-
 }
 
 //------------------------------------------------------------------
@@ -166,4 +170,8 @@ static	void	GameMain(void)
 	
 #endif	// PM_DEBUG
 
+	NetErr_Main();
+	if(0){//GFL_UI_KEY_GetTrg() == PAD_BUTTON_START){//PAD_BUTTON_DEBUG){
+		NetErr_ErrorSet();
+	}
 }

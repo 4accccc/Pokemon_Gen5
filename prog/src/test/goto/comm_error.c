@@ -292,8 +292,8 @@ void CommErrorSys_PopFrameVram( void )
 	
 	CommErrorSys_PopFrameParam();
 	
-	g_pCommErrorSys.active = FALSE;
-	g_pCommErrorSys.push_frame = COMM_ERROR_IRREAGULARITY;
+//	g_pCommErrorSys.active = FALSE;
+//	g_pCommErrorSys.push_frame = COMM_ERROR_IRREAGULARITY;
 }
 
 

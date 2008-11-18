@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: net_err.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_NET_ERR_NAIX_
+#define NARC_NET_ERR_NAIX_
+
+enum {
+	NARC_net_err_net_err_NCLR = 0,
+	NARC_net_err_net_err_NCGR = 1,
+	NARC_net_err_net_err_NSCR = 2
+};
+
+/* NARC_NET_ERR_NAIX_ */
+#endif

@@ -30,17 +30,47 @@ typedef struct	_GFL_BMP_DATA	GFL_BMP_DATA;
 
 //--------------------------------------------------------------------------------------------
 /**
- * BMP領域生成
+ * Bitmap生成（通常版：ヒープ上に必要な領域を確保する）
  *
  * @param	sizex	Xサイズ（キャラ単位）
  * @param	sizey	Yサイズ（キャラ単位）
  * @param	col		カラーモード
  * @param	heapID	ヒープＩＤ
  *
- * @return	取得したメモリのアドレス
+ * @return	生成されたBitmapハンドラ
  */
 //--------------------------------------------------------------------------------------------
 extern	GFL_BMP_DATA * GFL_BMP_Create( int sizex, int sizey, int col, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * Bitmap生成（既に確保されているキャラクタデータ領域をBitmapとして利用する）
+ *
+ * @param	adrs	利用するキャラクタデータ領域アドレス
+ * @param	sizex	Xサイズ
+ * @param	sizey	Yサイズ
+ * @param	col		カラーコード
+ * @param	heapID	ヒープID
+ *
+ * @return	生成されたBitmapハンドラ
+ */
+//--------------------------------------------------------------------------------------------
+extern	GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * Bitmap生成（VRAM領域を直接,Bitmapとして利用する）
+ *
+ * @param	adrs	利用するVRAMアドレス
+ * @param	sizex	Xサイズ
+ * @param	sizey	Yサイズ
+ * @param	col		カラーコード
+ * @param	heapID	ヒープID
+ *
+ * @return	生成されたBitmapハンドラ
+ */
+//--------------------------------------------------------------------------------------------
+extern	GFL_BMP_DATA * GFL_BMP_CreateInVRAM( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -52,21 +82,6 @@ extern	GFL_BMP_DATA * GFL_BMP_Create( int sizex, int sizey, int col, HEAPID heap
 extern	void	GFL_BMP_Delete( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
-/**
- * BMP領域生成（GFL_BMP_DATAポインタを生成して、それ以外は引数のものをメンバに代入
- *
- * @param	adrs	キャラエリアへのポインタ
- * @param	sizex	Xサイズ
- * @param	sizey	Yサイズ
- * @param	col		カラーコード
- * @param	heapID	ヒープID
- *
- * @return	取得したメモリのアドレス
- */
-//--------------------------------------------------------------------------------------------
-extern	GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int col, HEAPID heapID );
-
-//--------------------------------------------------------------------------------------------
 /*
  * GFL_BMP_DATA構造体のサイズを取得
  *
@@ -74,15 +89,6 @@ extern	GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int
  */
 //--------------------------------------------------------------------------------------------
 extern	int		GFL_BMP_GetGFL_BMP_DATASize( void );
-
-//--------------------------------------------------------------------------------------------
-/*
- * ビットマップアドレスを取得
- *
- * @param	bmp		BMP領域へのポインタ
- */
-//--------------------------------------------------------------------------------------------
-extern	GFL_BMP_DATA	*GFL_BMP_GetBmpAdrs( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*

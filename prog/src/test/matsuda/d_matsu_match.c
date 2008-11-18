@@ -286,7 +286,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-		PRINTSYS_Init( wk->heapID );
+//		PRINTSYS_Init( wk->heapID );
 		wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
 		wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, wk->heapID );

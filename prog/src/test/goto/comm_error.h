@@ -8,7 +8,6 @@
 #define COMM_ERROR_BG_PLTT_ADRS_MAIN	( HW_BG_PLTT + ( 0x20 * COMM_ERROR_PALETTE_POS ) )
 #define COMM_ERROR_BG_PLTT_ADRS_SUB		( HW_DB_BG_PLTT + ( 0x20 * COMM_ERROR_PALETTE_POS ) )
 
-static u16* CommErrorSys_GetBgPaletteAdrs( void );
 extern void CommErrorSys_Setup( void );
 extern void CommErrorSys_Init( int push_frame );
 extern void CommErrorSys_Call( void );

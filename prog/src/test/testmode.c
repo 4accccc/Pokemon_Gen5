@@ -994,6 +994,7 @@ extern const GFL_PROC_DATA DebugTayaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaNetProcData;
 extern const GFL_PROC_DATA DebugMatsudaIrcMatchProcData;
+extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
 extern const GFL_PROC_DATA DebugGotoMainProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
@@ -1024,9 +1025,9 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_OHNO:
 		//‚¨‚¨‚Ì
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+	//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
-	//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
         break;
 	case SELECT_TAYA:
 		//‚½‚â
@@ -1039,7 +1040,8 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		//‚Ü‚Â‚¾
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaMainProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaNetProcData, NULL);
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
+//		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaErrorProcData, NULL);
 		break;		
 	case SELECT_KAGAYA:
 		//‚©‚ª‚â

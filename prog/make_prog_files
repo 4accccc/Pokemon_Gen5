@@ -2,6 +2,7 @@
 SRCS	+=		test/testmode.c \
 				test/tetsu/game/calc_ph.c \
 				test/matsuda/performance.c \
+				system/net_err.c \
 				test/ohno/debug_ohno.c \
 				test/ohno/debug_field.c \
 				test/ohno/fatal_error.c \
@@ -30,6 +31,7 @@ SRCS	+=		test/testmode.c \
 				test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
 				test/matsuda/d_matsu_match.c \
+				test/matsuda/d_matsu_error.c \
 				system/vm.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
