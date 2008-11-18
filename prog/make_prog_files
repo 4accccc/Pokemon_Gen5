@@ -36,7 +36,7 @@ SRCS	+=		test/testmode.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
 				gamesystem/game_data.c \
-				map/zonedata.c \
+				field/zonedata.c \
 				test/field/event_mapchange.c \
 				test/field/event_debug_menu.c \
 				savedata/save_tbl.c \

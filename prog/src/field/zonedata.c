@@ -13,7 +13,7 @@
 #include "arc/fieldmap/zonedata.naix"
 #include "arc/fieldmap/zone_id.h"
 
-#include "map/zonedata.h"
+#include "field/zonedata.h"
 #include "zonetableformat.h"
 
 //============================================================================================
