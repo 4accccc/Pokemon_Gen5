@@ -24,20 +24,12 @@
 //======================================================================
 //	enum
 //======================================================================
-//通信状態
-typedef enum
-{
-	FIELD_COMM_MODE_NONE,	//通信なし
-	FIELD_COMM_MODE_WAIT,		//侵入待ち
-	FIELD_COMM_MODE_SEARCH,		//侵入先探し中
-	FIELD_COMM_MODE_CONNECT,	//侵入後
-	FIELD_COMM_MODE_TRY_CONNECT,	//子機となり親へ接続を試みる
-}FIELD_COMM_MODE;
-
 //送受信関数用
 enum FIELD_COMM_COMMAND_TYPE
 {
     FC_CMD_SELFDATA = GFL_NET_CMD_COMMAND_MAX,	//自機データ
+	FC_CMD_REQUEST_DATA,	//データ要求
+	FC_CMD_SELF_PROFILE,	//キャラの基本情報
 };
 
 //======================================================================
@@ -50,8 +42,6 @@ struct _FIELD_COMM_FUNC
 	
 	u8	seqNo_;
 	BOOL	isInitCommSystem_;
-
-	GFL_NETHANDLE	*selfHandle_;
 };
 
 typedef struct
@@ -71,6 +61,7 @@ void	FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_TermCommSystem( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc );
+static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc );
 static	u8	FIELD_COMM_FUNC_CompareBeacon( const FIELD_COMM_BEACON *firstBcn , const FIELD_COMM_BEACON *secondBcn );
 
 void	FIELD_COMM_FUNC_StartCommWait( FIELD_COMM_FUNC *commFunc );
@@ -80,12 +71,17 @@ void	FIELD_COMM_FUNC_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
 //各種チェック関数
 const BOOL FIELD_COMM_FUNC_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
 const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
+const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc );
 const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc );
 const int	FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
 
 //送受信関数
 void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc );
+void	FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc );
+void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 //各種コールバック
 void	FIELD_COMM_FUNC_FinishInitCallback( void* pWork );
@@ -97,7 +93,9 @@ void	FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);	
 void	FIELD_COMM_FUNC_DisconnectCallBack(void* pWork);	// 通信切断時に呼ばれる関数(終了時
 
 static const NetRecvFuncTable FieldCommRecvTable[] = {
-	{ FIELD_COMM_FUNC_Post_SelfData ,NULL }
+	{ FIELD_COMM_FUNC_Post_SelfData ,NULL },
+	{ FIELD_COMM_FUNC_Post_RequestData ,NULL },
+	{ FIELD_COMM_FUNC_Post_SelfProfile ,NULL },
 };
 
 
@@ -111,9 +109,12 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 	
 	commFunc = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_FUNC) );
 	commFunc->heapID_ = heapID;
-	//commFunc->isInitCommSystem_ = FALSE;
 	commFunc->isInitCommSystem_ = GFL_NET_IsInit();
-	commFunc->commMode_ = FIELD_COMM_MODE_NONE;
+	//通信ステートのバックアップをチェック
+	if( FIELD_COMM_DATA_IsExistSystem() == TRUE )
+		commFunc->commMode_ = (FIELD_COMM_MODE)FIELD_COMM_DATA_GetFieldCommMode();
+	else
+		commFunc->commMode_ = FIELD_COMM_MODE_NONE;
 	//通信が初期化されていたならアイコンをリロードする
 	if( commFunc->isInitCommSystem_ == TRUE )
 		GFL_NET_ReloadIcon();
@@ -125,6 +126,9 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 //--------------------------------------------------------------
 void	FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc )
 {
+	//通信のステートを保存
+	if( FIELD_COMM_DATA_IsExistSystem() == TRUE )
+		FIELD_COMM_DATA_SetFieldCommMode(commFunc->commMode_);
 	GFL_HEAP_FreeMemory( commFunc );
 }
 
@@ -175,6 +179,7 @@ void	FIELD_COMM_FUNC_TermCommSystem( FIELD_COMM_FUNC *commFunc )
 {
 	GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
 }
+extern void FIELD_COMM_DATA_SetCharaData_State( const idx , const F_COMM_CHARA_STATE state );
 
 //--------------------------------------------------------------
 //	通信システム更新(ビーコンの待ちうけ
@@ -184,48 +189,22 @@ void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 	//待ち受け側でもビーコンをチェックしてみる
 	//if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH )
 	//	待ちうけ・探索中で親機ではない時
-	if( (commFunc->commMode_ == FIELD_COMM_MODE_SEARCH ||
-		commFunc->commMode_ == FIELD_COMM_MODE_WAIT	) &&
-		GFL_NET_IsParentMachine() == FALSE )
+	if( commFunc->commMode_ == FIELD_COMM_MODE_SEARCH ||
+		commFunc->commMode_ == FIELD_COMM_MODE_WAIT	)
 	{
-		u8 bcnIdx = 0;
-		int targetIdx = -1;
-		FIELD_COMM_BEACON *bcnData;
-		const FIELD_COMM_BEACON *selfBcn = FIELD_COMM_FUNC_GetBeaconData((void*)commFunc);
-		while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
+		//子機と親機で処理を分ける←見分ける方法が無いので断念・・・
+	//	if( GFL_NET_IsParentMachine() == FALSE )
 		{
-			bcnData = GFL_NET_GetBeaconData( bcnIdx );
-			if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
-			{
-				//接続条件を満たした。
-				if( targetIdx == -1 )
-				{
-					targetIdx = bcnIdx;
-				}
-				else
-				{
-					//すでに他のビーコンが接続候補にあるので比較
-					const FIELD_COMM_BEACON *compBcn = GFL_NET_GetBeaconData(targetIdx);
-					const u8 result = FIELD_COMM_FUNC_CompareBeacon( bcnData , compBcn );
-					if( result == 1 )
-					{
-						targetIdx = bcnIdx;
-					}
-				}
-			}
-			bcnIdx++;
+			//子機の場合はビーコンのチェック
+			FIELD_COMM_FUNC_UpdateSearchParent( commFunc );
 		}
-
-		if( targetIdx != -1 )
+	//	else
 		{
-			//ビーコンがあった
-			u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
-			if( macAdr != NULL )
+			if( FIELD_COMM_FUNC_GetMemberNum(commFunc) > 1 )
 			{
-				GFL_NET_ConnectToParent( macAdr ); 
-				commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
-				commFunc->seqNo_ = 0;
-				ARI_TPrintf("Connect!!!!!!!!!\n");
+				//親機の場合は子機が来たら接続状態に
+				ARI_TPrintf("Connect!(Parent)\n");
+				commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
 			}
 		}
 	}
@@ -240,22 +219,73 @@ void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 			}
 			break;
 		case 1:
-			commFunc->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
-			if( GFL_NET_HANDLE_IsNegotiation( commFunc->selfHandle_ ) == TRUE )
 			{
-				commFunc->seqNo_++;
+				GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+				if( GFL_NET_HANDLE_IsNegotiation( selfHandle ) == TRUE )
+				{
+					commFunc->seqNo_++;
+				}
 			}
 			break;
 		case 2:
-			if( GFL_NET_IsSendEnable( commFunc->selfHandle_ ) == TRUE )
 			{
-				commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
+				GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+				if( GFL_NET_IsSendEnable( selfHandle ) == TRUE )
+				{
+					commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
+				}
 			}
 		}
 	}
 }
+
+//--------------------------------------------------------------
+//	子機で親機を探している状態
+//--------------------------------------------------------------
+static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc )
+{
+	u8 bcnIdx = 0;
+	int targetIdx = -1;
+	FIELD_COMM_BEACON *bcnData;
+	const FIELD_COMM_BEACON *selfBcn = FIELD_COMM_FUNC_GetBeaconData((void*)commFunc);
+	while( GFL_NET_GetBeaconData(bcnIdx) != NULL )
+	{
+		bcnData = GFL_NET_GetBeaconData( bcnIdx );
+		if( selfBcn->mode_ == 1 || bcnData->mode_ == 1 )
+		{
+			//接続条件を満たした。
+			if( targetIdx == -1 )
+			{
+				targetIdx = bcnIdx;
+			}
+			else
+			{
+				//すでに他のビーコンが接続候補にあるので比較
+				const FIELD_COMM_BEACON *compBcn = GFL_NET_GetBeaconData(targetIdx);
+				const u8 result = FIELD_COMM_FUNC_CompareBeacon( bcnData , compBcn );
+				if( result == 1 )
+				{
+					targetIdx = bcnIdx;
+				}
+			}
+		}
+		bcnIdx++;
+	}
+		if( targetIdx != -1 )
+	{
+		//ビーコンがあった
+		u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
+		if( macAdr != NULL )
+		{
+			GFL_NET_ConnectToParent( macAdr ); 
+			commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
+			commFunc->seqNo_ = 0;
+			ARI_TPrintf("Connect!(Child)\n");
+		}
+	}
+}
 	
-//-	-------------------------------------------------------------
+//--------------------------------------------------------------
 //	ビーコンの比較(人数が多い・共に待ち受け中を優先する
 //	@return 0:エラー 1:第１引数のビーコン 2:第２引数のビーコン
 //--------------------------------------------------------------
@@ -330,11 +360,26 @@ const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc )
 }
 
 //--------------------------------------------------------------
+//	通信状態？を取得  
+//--------------------------------------------------------------
+const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc )
+{
+	return commFunc->commMode_;
+}
+//--------------------------------------------------------------
 //	接続人数を取得  
 //--------------------------------------------------------------
 const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc )
 {
-	return GFL_NET_GetConnectNum();
+	u8 i;
+	u8 num = 1;//自分の分
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		if( FIELD_COMM_DATA_GetCharaData_State(i) != FCCS_NONE )
+			num++;
+	}
+	return num;
+//	return GFL_NET_GetConnectNum();
 }
 
 //--------------------------------------------------------------
@@ -382,7 +427,7 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	//plPkt.dir_ = dir>>8;
 	plPkt.dir_ = dir;
 
-	ARI_TPrintf("SEND[ ][%d][%d][%d][%d]\n",plPkt.posX_,plPkt.posY_,plPkt.posZ_,dir);
+//	ARI_TPrintf("SEND[ ][%d][%d][%d][%d]\n",plPkt.posX_,plPkt.posY_,plPkt.posZ_,dir);
 	{
 		GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 		const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
@@ -395,7 +440,7 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 }
 
 //--------------------------------------------------------------
-// 自分のデータ受信(用は他のプレイヤーの受信  
+// 自分のデータ受信(要は他のプレイヤーの受信  
 //--------------------------------------------------------------
 void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
@@ -412,7 +457,7 @@ void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void
 	//dir	= pkt->dir_<<8;
 	dir = pkt->dir_;
 
-	ARI_TPrintf("POST[%d][%d][%d][%d][%d]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
+//	ARI_TPrintf("POST[%d][%d][%d][%d][%d]\n",netID,pkt->posX_,pkt->posY_,pkt->posZ_,dir);
 	
 	//set
 	plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(netID);
@@ -421,7 +466,83 @@ void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void
 	PLAYERWORK_setZoneID( plWork , pkt->zoneID_ );
 	FIELD_COMM_DATA_SetCharaData_IsValid( netID , TRUE );
 
-	ARI_TPrintf("FieldComm PostSelfData[%d]\n",netID);
+//	ARI_TPrintf("FieldComm PostSelfData[%d]\n",netID);
+}
+
+//--------------------------------------------------------------
+// 他のプレイヤーにデータを要求する
+// Postの関数でそのまま"要求されたキャラだけに"データを送る
+// @param charaIdx キャラ番号(=netID)
+//--------------------------------------------------------------
+void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc )
+{
+	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	u8	type = reqType;
+	const BOOL ret = GFL_NET_SendDataEx( selfHandle , charaIdx , 
+			FC_CMD_REQUEST_DATA , 1 , 
+			(void*)&type , FALSE , FALSE , FALSE );
+		ARI_TPrintf("FieldComm Send RequestData[%d:%d].\n",charaIdx,type);
+	if( ret == FALSE ){
+		ARI_TPrintf("FieldComm SendRequestData is failue!\n");
+	}
+}
+void	FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
+	const u8 type = *(u8*)pData;
+	ARI_TPrintf("FieldComm PostReqData[%d:%d]\n",netID,type);
+	switch( type )
+	{
+	case FCRT_PROFILE:
+		FIELD_COMM_FUNC_Send_SelfProfile( netID , commFunc );
+		break;
+	default:
+		OS_TPrintf("Invalid Type[%d]!\n!",type);
+		GF_ASSERT( NULL );
+		break;
+	}
+}
+
+//--------------------------------------------------------------
+// 自分のプロフィールの送信(最初に送る物 IDとかキャラの基本情報
+// 要求された相手だけに送る
+//--------------------------------------------------------------
+typedef struct
+{
+	u16 ID_;
+	u8	sex_:1;
+	u8	regionCode_:7;
+}FIELD_COMM_CHARA_PROFILE;
+void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc )
+{
+	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	FIELD_COMM_CHARA_PROFILE profile;
+	//FIXME:IDとかの正しい持って来る方法がわからないので仮処理
+	profile.ID_ = 1000+GFL_NET_GetNetID( selfHandle );
+	profile.sex_ = 0;
+	profile.regionCode_ = 0;
+	{
+		const BOOL ret = GFL_NET_SendDataEx( selfHandle , sendNetID , 
+				FC_CMD_SELF_PROFILE , sizeof( FIELD_COMM_CHARA_PROFILE ) , 
+				(void*)&profile , FALSE , FALSE , FALSE );
+		ARI_TPrintf("FieldComm Send SelfProfile[%d:%d].\n",sendNetID,profile.ID_);
+		if( ret == FALSE ){
+			ARI_TPrintf("FieldComm Send SelfProfile is failue!\n");
+		}
+	}
+}
+void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
+	const FIELD_COMM_CHARA_PROFILE *prof = (FIELD_COMM_CHARA_PROFILE*)pData;
+	PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( netID );
+	ARI_TPrintf("FieldComm Post SelfProfile[%d:%d]\n",netID,prof->ID_);
+	
+	plWork->mystatus.id = prof->ID_;
+	plWork->mystatus.sex = prof->sex_;
+	plWork->mystatus.region_code = prof->regionCode_;
+	FIELD_COMM_DATA_SetCharaData_State( netID , FCCS_EXIST_DATA );
+
 }
 
 //======================================================================
@@ -453,7 +574,7 @@ void*	FIELD_COMM_FUNC_GetBeaconData(void* pWork)
 		beacon.mode_ = 0;
 	else
 		beacon.mode_ = 1;
-	beacon.memberNum_ = GFL_NET_GetConnectNum();
+	beacon.memberNum_ = FIELD_COMM_FUNC_GetMemberNum(commFunc);
 
 	return (void*)&beacon;
 }

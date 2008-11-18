@@ -46,6 +46,8 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 void	FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
 void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
+static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork , 
+				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 
 //接続開始用メニュー処理
 //開始時
@@ -103,7 +105,8 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 	{
 		u8 i;
 		FIELD_COMM_FUNC_UpdateSystem( commSys->commFunc_ );
-		if( FIELD_COMM_FUNC_GetMemberNum( commSys->commFunc_ ) > 1 )
+		//if( FIELD_COMM_FUNC_GetMemberNum( commSys->commFunc_ ) > 1 )
+		if( FIELD_COMM_FUNC_GetCommMode( commSys->commFunc_ ) == FIELD_COMM_MODE_CONNECT )
 		{
 			ZONEID zoneID;
 			VecFx32 pos;
@@ -118,30 +121,56 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 	
 			FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );
 		}
-			//届いたデータのチェック
-		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+		FIELD_COMM_MAIN_UpdateCharaData( fieldWork , gameSys , commSys );
+	}
+}
+
+//--------------------------------------------------------------
+// アップデートで他のキャラの更新
+//--------------------------------------------------------------
+static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork , 
+				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
+{
+	u8 i;
+	//届いたデータのチェック
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) &&
+			FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
 		{
-			if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) &&
-				FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
+			//有効なデータが入っている
+			switch( FIELD_COMM_DATA_GetCharaData_State( i ) )
 			{
-				//有効なデータが入っている
-				GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
-				PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i+1 );	//0には自分が入っているから
-				PLAYER_WORK *charaWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(i);
-				GFL_STD_MemCopy( (void*)charaWork , (void*)setPlWork , sizeof(PLAYER_WORK) );
-				if( FIELD_COMM_DATA_GetCharaData_IsExist(i) == FALSE )
+			case FCCS_NONE:
+			case FCCS_CONNECT:
+				//詳細データが無いので、データをリクエスト
+				FIELD_COMM_FUNC_Send_RequestData( i , FCRT_PROFILE , commSys->commFunc_ );
+				FIELD_COMM_DATA_SetCharaData_State( i , FCCS_REQ_DATA );
+				break;
+			case FCCS_REQ_DATA:
+				//データ受信中なので待ち
+				break;
+			case FCCS_EXIST_DATA:
+				FIELD_COMM_DATA_SetCharaData_State( i , FCCS_FIELD );
+				//break through
+			case FCCS_FIELD:
 				{
-					//未初期化なキャラなので、初期化する
-					FieldMain_AddCommActor( fieldWork , setPlWork );
-					FIELD_COMM_DATA_SetCharaData_IsExist(i,TRUE);
+					GAMEDATA *gameData = GAMESYSTEM_GetGameData( gameSys );
+					PLAYER_WORK *setPlWork = GAMEDATA_GetPlayerWork( gameData , i+1 );	//0には自分が入っているから
+					PLAYER_WORK *charaWork = FIELD_COMM_DATA_GetCharaData_PlayerWork(i);
+					GFL_STD_MemCopy( (void*)charaWork , (void*)setPlWork , sizeof(PLAYER_WORK) );
+					if( FIELD_COMM_DATA_GetCharaData_IsExist(i) == FALSE )
+					{
+						//未初期化なキャラなので、初期化する
+						FieldMain_AddCommActor( fieldWork , setPlWork );
+						FIELD_COMM_DATA_SetCharaData_IsExist(i,TRUE);
+					}
+					FIELD_COMM_DATA_SetCharaData_IsValid(i,FALSE);
 				}
-				
-				FIELD_COMM_DATA_SetCharaData_IsValid(i,FALSE);
 			}
 		}
 	}
 }
-
 //--------------------------------------------------------------
 // 通信開始メニュー初期化
 //--------------------------------------------------------------
