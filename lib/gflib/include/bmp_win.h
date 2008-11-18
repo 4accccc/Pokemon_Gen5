@@ -7,6 +7,8 @@
 #ifndef _BMP_WIN_H_
 #define _BMP_WIN_H_
 
+#include <bmp.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
