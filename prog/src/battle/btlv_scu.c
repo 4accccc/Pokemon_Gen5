@@ -31,7 +31,6 @@ struct _BTLV_SCU {
 
 	PRINT_QUE*			printQue;
 	PRINT_UTIL			printUtil;
-	ARCHANDLE*			arcHandle;
 	GFL_FONT*			fontHandle;
 
 	const BTLV_CORE*	vcore;
@@ -46,13 +45,8 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
 	wk->vcore = vcore;
 	wk->heapID = heapID;
 
-//	GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
-
-	{
-		wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, heapID );
-		wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-	}
+	wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	PRINT_UTIL_Setup( &wk->printUtil, wk->win );
@@ -65,7 +59,7 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
 void BTLV_SCU_Delete( BTLV_SCU* wk )
 {
 	PRINTSYS_QUE_Delete( wk->printQue );
-	FontDataMan_Delete( wk->fontHandle );
+	GFL_FONT_Delete( wk->fontHandle );
 	GFL_HEAP_FreeMemory( wk );
 }
 

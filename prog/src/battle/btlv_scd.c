@@ -86,10 +86,6 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
 	wk->seq = 0;
 
 
-//	GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
-	wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, wk->heapID );
-	wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	PRINT_UTIL_Setup( wk->printUtil, wk->win );
