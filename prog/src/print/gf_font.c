@@ -8,7 +8,9 @@
  * @date	2008.10.11	従来の独自フォーマットからNitroFontフォーマットに変更
  */
 //=============================================================================================
-#include	<gflib.h>
+#include	<assert.h>
+#include	<heap.h>
+#include	<heapsys.h>
 #include	<arc_tool.h>
 
 #include	"print\gf_font.h"
