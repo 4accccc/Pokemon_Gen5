@@ -37,3 +37,4 @@ void GLOBALMSG_Init( HEAPID heapID )
 	GlobalMsg_Poke = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
 }
 
+
