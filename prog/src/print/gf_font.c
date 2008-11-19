@@ -193,67 +193,6 @@ void GFL_FONT_Delete( GFL_FONT* wk )
 	GFL_HEAP_FreeMemory( wk );
 }
 
-
-//==============================================================================================
-/**
- * フォントデータマネージャ作成
- *
- * @param   arcID			フォントデータが格納されているアーカイブID
- * @param   datID			フォントデータが格納されているアーカイブ内ファイルID
- * @param   loadType		フォントデータの読み出し方式
- * @param   fixedFontFlag	TRUEなら等幅フォントとして扱う
- * @param   heapID			マネージャ作成先ヒープID
- *
- * @retval  GFL_FONT*	フォントデータマネージャポインタ
- *
- * @li  loadType が FONTDATA_LOADTYPE_ON_MEMORY の場合、マネージャと同じヒープ領域にフォントデータを読み込む
- */
-//==============================================================================================
-GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID )
-{
-	GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
-	if( wk )
-	{
-		wk->fileHandle = arcHandle;
-		load_font_header( wk, datID, fixedFontFlag, heapID );
-		setup_font_datas( wk, loadType, heapID );
-	}
-	return wk;
-}
-//==============================================================================================
-/**
- * フォントデータマネージャ削除
- *
- * @param   wk		フォントデータマネージャのポインタ
- *
- */
-//==============================================================================================
-void FontDataMan_Delete( GFL_FONT* wk )
-{
-	cleanup_font_datas( wk );
-	unload_font_header( wk );
-	GFL_HEAP_FreeMemory( wk );
-}
-
-//==============================================================================================
-/**
- * フォントビットデータの読み込みタイプを変更する
- *
- * @param   wk			フォントデータマネージャポインタ
- * @param   loadType	変更後の読み込みタイプ
- *
- */
-//==============================================================================================
-void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID )
-{
-//	未実装
-//	{
-//		cleanup_font_datas( wk );
-//		setup_font_datas( wk, loadType, heapID );
-//	}
-}
-
-
 //------------------------------------------------------------------
 /**
  * 両タイプで共有するヘッダデータを読み込み・構築
