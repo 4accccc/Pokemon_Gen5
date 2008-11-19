@@ -106,7 +106,6 @@ typedef struct {
 	s32 msg_pos_x[ENTRY_MAX];
 	s32 msg_pos_y[ENTRY_MAX];
 	
-	ARCHANDLE		*arcHandle;
 	GFL_FONT		*fontHandle;
 	PRINT_QUE		*printQue;
 	PRINT_STREAM	*printStream;
@@ -282,8 +281,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, wk->heapID );
-		wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
+		wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 //		PRINTSYS_Init( wk->heapID );
@@ -358,8 +356,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 {
 	D_MATSU_WORK* wk = mywk;
 
-	GFL_ARC_CloseDataHandle(wk->arcHandle);
-	FontDataMan_Delete(wk->fontHandle);
+	GFL_FONT_Delete(wk->fontHandle);
 	GFL_TCBL_Exit(wk->tcbl);
 	
 	GFL_BG_Exit();

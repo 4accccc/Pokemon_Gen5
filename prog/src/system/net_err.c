@@ -447,13 +447,11 @@ static void Local_ErrMessagePrint(void)
 	
 	//メッセージOPEN
 	{
-		ARCHANDLE		*arcHandle;
 		GFL_FONT		*fontHandle;
 		GFL_MSGDATA		*mm;
 		STRBUF *strbuf;
 
-		arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, HEAPID_NET_ERR );
-		fontHandle = GFL_FONT_CreateHandle( arcHandle, NARC_d_taya_lc12_2bit_nftr,
+		fontHandle = GFL_FONT_Create(ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_ERR );
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
@@ -464,7 +462,6 @@ static void Local_ErrMessagePrint(void)
 		GFL_STR_DeleteBuffer(strbuf);
 		GFL_MSG_Delete(mm);
 		
-		FontDataMan_Delete(fontHandle);
-	//	GFL_ARC_CloseDataHandle(arcHandle);
+		GFL_FONT_Delete(fontHandle);
 	}
 }
