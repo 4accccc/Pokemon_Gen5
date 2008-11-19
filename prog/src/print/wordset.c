@@ -10,6 +10,7 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "str_tool_local.h"
 
 #include "arc_def.h"
 #include "message.naix"
