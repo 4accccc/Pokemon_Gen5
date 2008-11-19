@@ -301,6 +301,7 @@ static void Local_ErrDispInit(void)
 	
 	//表示ON
 	GX_SetMasterBrightness(0);
+	GXS_SetMasterBrightness(16);	//サブ画面は真っ白
 }
 
 //--------------------------------------------------------------
