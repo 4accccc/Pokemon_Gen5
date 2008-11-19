@@ -414,7 +414,7 @@ struct _DEBUG_FLDMENU
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
 	PRINT_UTIL printUtil[1];
-	ARCHANDLE *arcHandleMsg;
+//	ARCHANDLE *arcHandleMsg;
 	
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
@@ -552,11 +552,8 @@ void LayoutDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 		
 		d_menu->strbuf = GFL_STR_CreateBuffer( 1024, d_menu->heapID );
 		
-		d_menu->arcHandleMsg = GFL_ARC_OpenDataHandle(
-				ARCID_D_TAYA, d_menu->heapID );
-		
-		d_menu->fontHandle = GFL_FONT_CreateHandle(
-			d_menu->arcHandleMsg, NARC_d_taya_lc12_2bit_nftr,
+		d_menu->fontHandle = GFL_FONT_Create( ARCID_D_TAYA,
+			 NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
 
 		PRINTSYS_Init( d_menu->heapID );
@@ -661,8 +658,7 @@ BOOL LayoutDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 		//プリントユーティリティ削除　いらない
 		PRINTSYS_QUE_Delete( d_menu->printQue );
 		
-		FontDataMan_Delete( d_menu->fontHandle );
-//		GFL_ARC_CloseDataHandle( d_menu->arcHandleMsg ); //マネージャ側で済み
+		GFL_FONT_Delete( d_menu->fontHandle );
 		GFL_STR_DeleteBuffer( d_menu->strbuf );
 		GFL_MSG_Delete( d_menu->msgdata );
 		GFL_BMPWIN_Delete( d_menu->bmpwin );
