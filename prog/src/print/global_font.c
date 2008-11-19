@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include <assert.h>
+#include <heapsys.h>
 
 #include "print/global_font.h"
 
@@ -33,9 +34,12 @@ void GLOBALFONT_Init( HEAPID heapID )
 {
 	GF_ASSERT(GlobalFont_Default == NULL);
 
+	OS_TPrintf("GLOBANFONT_Init : HeapSize = %08x ->", GFL_HEAP_GetHeapFreeSize( heapID ));
+
 	{
-		ARCHANDLE* arc = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, heapID );
-		GFL_FONT_CreateHandle( arc, NARC_d_taya_lc12_2bit_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+		GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 	}
+
+	OS_TPrintf(" %08x\n", GFL_HEAP_GetHeapFreeSize( heapID ));
 }
 
