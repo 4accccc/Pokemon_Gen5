@@ -10,7 +10,8 @@
 #ifndef __GF_FONT_H__
 #define __GF_FONT_H__
 
-#include <heap.h>
+#include <nnsys.h>
+#include <heapsys.h>
 #include <arc_tool.h>
 
 //--------------------------------------------------------------
