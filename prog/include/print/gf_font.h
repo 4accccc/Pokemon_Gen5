@@ -10,7 +10,7 @@
 #ifndef __GF_FONT_H__
 #define __GF_FONT_H__
 
-#include <nnsys.h>
+
 #include <heapsys.h>
 #include <arc_tool.h>
 
