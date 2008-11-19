@@ -8,7 +8,7 @@
 //============================================================================================
 
 #include "print/printsys.h"
-#include "print/str_tool.h"
+#include "str_tool_local.h"
 
 enum {
 	n0_ = 0xff10,

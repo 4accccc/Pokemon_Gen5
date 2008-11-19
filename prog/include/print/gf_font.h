@@ -49,7 +49,6 @@ typedef enum {
 //==============================================================================================
 extern GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID );
 
-
 //==============================================================================================
 /**
  * フォントデータマネージャ削除
