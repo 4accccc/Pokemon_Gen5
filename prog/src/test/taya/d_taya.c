@@ -303,7 +303,7 @@ static void createTemporaryModules( MAIN_WORK* wk )
 static void deleteTemporaryModules( MAIN_WORK* wk )
 {
 	PRINTSYS_QUE_Delete( wk->printQue );
-	FontDataMan_Delete( wk->fontHandle );
+	GFL_FONT_Delete( wk->fontHandle );
 
 	GFL_TCBL_Exit( wk->tcbl );
 	GFL_STR_DeleteBuffer( wk->strbuf );
