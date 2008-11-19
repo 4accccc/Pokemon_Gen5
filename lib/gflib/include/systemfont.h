@@ -9,7 +9,7 @@
 #ifndef __SYSFONT_H__
 #define __SYSFONT_H__
 
-#include "strbuf.h"
+#include <strbuf.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,7 +37,7 @@ typedef struct {
 	u8	data[SYSTEMFONT_DATA_SIZE];
 	u8	sizex;
 	u8	sizey;
-}GFL_FONT_DATA;
+}GFL_SYSTEMFONT_DATA;
 
 //------------------------------------------------------------------
 /**
@@ -47,7 +47,7 @@ typedef struct {
  *
  */
 //------------------------------------------------------------------
-extern void GFL_FONT_Create( const char* fontDataPath );
+extern void GFL_SYSTEMFONT_Init( const char* fontDataPath );
 
 //------------------------------------------------------------------
 /**
@@ -57,7 +57,8 @@ extern void GFL_FONT_Create( const char* fontDataPath );
  *
  */
 //------------------------------------------------------------------
-extern void GFL_FONT_Delete( void );
+extern void GFL_SYSTEMFONT_Quit( void );
+
 //------------------------------------------------------------------
 /**
  *
@@ -67,7 +68,8 @@ extern void GFL_FONT_Delete( void );
  * @param   dst		取得用データポインタ
  */
 //------------------------------------------------------------------
-extern void GFL_FONT_GetData( STRCODE fcode, GFL_FONT_DATA* dst );
+extern void GFL_SYSTEMFONT_GetData( STRCODE fcode, GFL_SYSTEMFONT_DATA* dst );
+
 //------------------------------------------------------------------
 /**
  *
@@ -75,7 +77,8 @@ extern void GFL_FONT_GetData( STRCODE fcode, GFL_FONT_DATA* dst );
  *
  */
 //------------------------------------------------------------------
-extern u8	GFL_FONT_GetSizeMaxX( void );
+extern u8	GFL_SYSTEMFONT_GetSizeMaxX( void );
+
 //------------------------------------------------------------------
 /**
  *
@@ -83,7 +86,8 @@ extern u8	GFL_FONT_GetSizeMaxX( void );
  *
  */
 //------------------------------------------------------------------
-extern u8	GFL_FONT_GetSizeMaxY( void );
+extern u8	GFL_SYSTEMFONT_GetSizeMaxY( void );
+
 //------------------------------------------------------------------
 /**
  *
@@ -91,7 +95,8 @@ extern u8	GFL_FONT_GetSizeMaxY( void );
  *
  */
 //------------------------------------------------------------------
-extern u8 GFL_FONT_GetSizeSPC( void );
+extern u8 GFL_SYSTEMFONT_GetSizeSPC( void );
+
 //------------------------------------------------------------------
 /**
  *
@@ -101,7 +106,7 @@ extern u8 GFL_FONT_GetSizeSPC( void );
  * @param   baseCol	背景色
  */
 //------------------------------------------------------------------
-extern void	GFL_FONT_SetColor( int fontCol, int baseCol );
+extern void	GFL_SYSTEMFONT_SetColor( int fontCol, int baseCol );
 
 
 #ifdef __cplusplus
