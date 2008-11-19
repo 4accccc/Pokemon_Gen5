@@ -158,6 +158,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 
 
 
+
 //==============================================================================================
 /**
  * フォントデータマネージャ作成
@@ -173,7 +174,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
  * @li  loadType が FONTDATA_LOADTYPE_ON_MEMORY の場合、マネージャと同じヒープ領域にフォントデータを読み込む
  */
 //==============================================================================================
-GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
+GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID )
 {
 	GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
 	if( wk )
