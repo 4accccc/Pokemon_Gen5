@@ -9,7 +9,8 @@
 #ifndef __HEAPSYS_H__
 #define __HEAPSYS_H__
 
-#include "heap.h"	//©‚±‚Ì’†‚ÌŠÖ”‚ğ’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹Ö~
+#include <gf_standard.h>
+#include <heap.h>	//©‚±‚Ì’†‚ÌŠÖ”‚ğ’¼ÚŒÄ‚Ño‚·‚Ì‚Í‹Ö~
 
 #ifdef __cplusplus
 extern "C" {

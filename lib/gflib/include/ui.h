@@ -10,6 +10,8 @@
 #ifndef __UI_H__
 #define	__UI_H__
 
+#include <heap.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
