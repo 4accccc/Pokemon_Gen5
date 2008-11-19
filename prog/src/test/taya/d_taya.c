@@ -39,6 +39,9 @@
 /*--------------------------------------------------------------------------*/
 enum {
 	GENERIC_WORK_SIZE = 1024,
+
+	HEAPID_CORE = HEAPID_TAYA_DEBUG,
+	HEAPID_TEMP = HEAPID_TAYA_DEBUG_SUB,
 };
 
 /*--------------------------------------------------------------------------*/
@@ -88,7 +91,6 @@ typedef struct {
 
 	V_MENU_CTRL		menuCtrl;
 
-
 	u8				genericWork[ GENERIC_WORK_SIZE ];
 
 //	PRINT_STREAM_HANDLE	psHandle;
@@ -107,6 +109,11 @@ typedef struct {
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static void initGraphicSystems( MAIN_WORK* wk );
+static void quitGraphicSystems( MAIN_WORK* wk );
+static void startView( MAIN_WORK* wk );
+static void createTemporaryModules( MAIN_WORK* wk );
+static void deleteTemporaryModules( MAIN_WORK* wk );
 static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void VMENU_Init( V_MENU_CTRL* ctrl, u8 maxLines, u8 maxElems );
 static BOOL VMENU_Ctrl( V_MENU_CTRL* ctrl );
@@ -122,6 +129,7 @@ static int testBeaconGetSizeFunc( void* pWork );
 static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
+static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void* bmt_alloc( HEAPID heapID, u32 size );
 static void bmt_free( void* adrs );
@@ -146,9 +154,10 @@ static const struct {
 	u32			strID;
 	pSubProc	subProc;
 }MainMenuTbl[] = {
-	{ DEBUG_TAYA_MENU1,		SUBPROC_NetPrintTest },
-	{ DEBUG_TAYA_MENU2,		SUBPROC_BlendMagic   },
-	{ DEBUG_TAYA_MENU3,		SUBPROC_PrintTest    },
+	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle },
+	{ DEBUG_TAYA_MENU2,		SUBPROC_NetPrintTest },
+	{ DEBUG_TAYA_MENU3,		SUBPROC_BlendMagic   },
+	{ DEBUG_TAYA_MENU4,		SUBPROC_PrintTest    },
 };
 
 enum {
@@ -165,6 +174,28 @@ enum {
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	MAIN_WORK* wk;
+
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CORE,    0x4000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
+
+	wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_CORE );
+	wk->heapID = HEAPID_TEMP;
+
+	initGraphicSystems( wk );
+	createTemporaryModules( wk );
+	startView( wk );
+
+	VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
+	wk->seq = 0;
+	wk->subProc = NULL;
+
+	return GFL_PROC_RES_FINISH;
+
+}
+
+static void initGraphicSystems( MAIN_WORK* wk )
+{
 	static const GFL_BG_DISPVRAM vramBank = {
 		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
@@ -178,34 +209,17 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
 	};
 
-#if 0
-	static const char* arcFiles[] = {
-		"test_graphic/d_taya.narc",
-	};
-	enum {
-		ARCID_D_TAYA,
-	};
-#endif
-
-
-	MAIN_WORK* wk;
-
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TAYA_DEBUG, 0xb0000 );
-	wk = GFL_PROC_AllocWork( proc, sizeof(MAIN_WORK), HEAPID_TAYA_DEBUG );
-//	GFL_STD_MemClear( wk, sizeof(MAIN_WORK) );
-	wk->heapID = HEAPID_TAYA_DEBUG;
-
-//	GFL_ARC_Init( arcFiles, NELEMS(arcFiles) );	gfl_use.cで1回だけ初期化に変更
-
 	GFL_DISP_SetBank( &vramBank );
 
 	// 各種効果レジスタ初期化
 	G2_BlendNone();
+	G2S_BlendNone();
 
-	// BGsystem初期化
+	// 上下画面設定
+	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+
 	GFL_BG_Init( wk->heapID );
 	GFL_BMPWIN_Init( wk->heapID );
-
 	GFL_FONTSYS_Init();
 
 	//ＢＧモード設定
@@ -250,42 +264,55 @@ static GFL_PROC_RESULT DebugTayaMainProcInit( GFL_PROC * proc, int * seq, void *
 		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	}
+}
 
-	// 上下画面設定
-	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+static void quitGraphicSystems( MAIN_WORK* wk )
+{
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 
-	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
-	wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
+}
+
+static void startView( MAIN_WORK* wk )
+{
 	GFL_BMP_Clear( wk->bmp, 0xff );
 	GFL_BMPWIN_MakeScreen( wk->win );
 
-	wk->subProc = NULL;
-
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+}
+
+static void createTemporaryModules( MAIN_WORK* wk )
+{
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
+	wk->bmp = GFL_BMPWIN_GetBmp(wk->win);
 
 	wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
-	wk->seq = 0;
-
 	wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
-//	GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID )
 	wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, wk->heapID );
 	wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
-	VMENU_Init( &wk->menuCtrl, MAINMENU_DISP_MAX, NELEMS(MainMenuTbl) );
-
 	PRINT_UTIL_Setup( wk->printUtil, wk->win );
-
-//	GFL_ASSERT_SetLCDMode();
-
-	return GFL_PROC_RES_FINISH;
 }
 
+static void deleteTemporaryModules( MAIN_WORK* wk )
+{
+	PRINTSYS_QUE_Delete( wk->printQue );
+	FontDataMan_Delete( wk->fontHandle );
+
+	GFL_TCBL_Exit( wk->tcbl );
+	GFL_STR_DeleteBuffer( wk->strbuf );
+	GFL_MSG_Delete( wk->mm );
+
+	GFL_BMPWIN_Delete( wk->win );
+}
 
 
 
@@ -320,7 +347,7 @@ static GFL_PROC_RESULT DebugTayaMainProcMain( GFL_PROC * proc, int * seq, void *
 
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
 		{
-			GFL_MSG_SetLangID( !GFL_MSG_GetLangID() );
+			GFL_MSGSYS_SetLangID( !GFL_MSGSYS_GetLangID() );
 			print_menu( wk, &wk->menuCtrl );
 			break;
 		}
@@ -569,7 +596,7 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			else
 			{
 				wk->kanjiMode = !(wk->kanjiMode);
-				GFL_MSG_SetLangID( wk->kanjiMode );
+				GFL_MSGSYS_SetLangID( wk->kanjiMode );
 				(*seq) = 0;
 			}
 		}
@@ -715,8 +742,53 @@ static void autoConnectCallBack( void* pWork )
 	wk->netTestSeq = 1;
 }
 
+//------------------------------------------------------------------------------------------------------
+// バトル画面へ                  
+//------------------------------------------------------------------------------------------------------
+
+#include "battle/battle.h"
+
+static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+	MAIN_WORK* wk = mywk;
+
+	switch( *seq ){
+	case 0:
+		deleteTemporaryModules( wk );
+		quitGraphicSystems( wk );
+		GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+		(*seq)++;
+		break;
+	case 1:
+		{
+			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+
+			para->engine = BTL_ENGINE_ALONE;
+			para->rule = BTL_RULE_SINGLE;
+			para->competitor = BTL_COMPETITOR_WILD;
+
+			para->netHandle = NULL;
+			para->commMode = BTL_COMM_NONE;
+			para->commPos = 0;
+			para->netID = 0;
 
 
+			para->partyPlayer = NULL;	///< プレイヤーのパーティ
+			para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
+			para->partyEnemy1 = NULL;	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+			para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
+
+			GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, para );
+			(*seq)++;
+		}
+		break;
+	case 2:
+		break;
+	}
+
+	return FALSE;
+
+}
 //------------------------------------------------------------------------------------------------------
 // 通信状態での漢字PrintTest
 //------------------------------------------------------------------------------------------------------
@@ -884,7 +956,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 			if( wk->kanjiMode != wk->packet.kanjiMode )
 			{
 				wk->kanjiMode = wk->packet.kanjiMode;
-				GFL_MSG_SetLangID( wk->kanjiMode );
+				GFL_MSGSYS_SetLangID( wk->kanjiMode );
 
 				GFL_BMP_Clear( wk->bmp, 0xff );
 				GFL_BMPWIN_TransVramCharacter( wk->win );
@@ -1196,7 +1268,7 @@ static BOOL Bmt_initEffect( npCONTEXT **pCtx, npSYSTEM **pSys, void **ppvBuf)
 
 	OS_TPrintf("BM必要バッファサイズ=0x%x bytes\n", nSize);
 
-	*ppvBuf = bmt_alloc( HEAPID_TAYA_DEBUG, nSize );
+	*ppvBuf = bmt_alloc( HEAPID_TEMP, nSize );
 	pByte = (npBYTE*)(*ppvBuf);//ポインタを渡しておく
 
 	/* memory size */
@@ -1368,7 +1440,7 @@ static void bmt_loadBpc( const char *pszBpc, npPARTICLEEMITCYCLE **ppEmit )
 	}
 
 	uiSize = FS_GetLength(&file);
-	pv = bmt_alloc( GetHeapLowID(HEAPID_TAYA_DEBUG), uiSize );
+	pv = bmt_alloc( GFL_HEAP_LOWID(HEAPID_TEMP), uiSize );
 
 	FS_ReadFile( &file, pv, (long)uiSize );
 	FS_CloseFile(&file);
@@ -1395,7 +1467,7 @@ static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex,
 	if(FS_OpenFile(&file, pszTex)) {
 		u32 uReadSize = FS_GetLength(&file);
 		u32 uTexSize = ((uReadSize+3)/4)*4;
-		void *pvTex = bmt_alloc( GetHeapLowID(HEAPID_TAYA_DEBUG), uTexSize );
+		void *pvTex = bmt_alloc( GFL_HEAP_LOWID(HEAPID_TEMP), uTexSize );
 		*texSize = uTexSize;
 		if(pvTex)
 		{
@@ -1441,7 +1513,7 @@ static void bmt_loadTex(const char *pszTex, const char *pszPlt, npTEXTURE *pTex,
 		if(FS_OpenFile(&file, pszPlt)) {
 			u32 uReadSize = FS_GetLength(&file);
 			u32 uPltSize = ((uReadSize+3)/4)*4;
-			void *pvPlt = bmt_alloc( GetHeapLowID(HEAPID_TAYA_DEBUG), uPltSize );
+			void *pvPlt = bmt_alloc( GFL_HEAP_LOWID(HEAPID_TEMP), uPltSize );
 			*palSize = uPltSize;
 			if(pvPlt) {
 				FS_ReadFile(&file, pvPlt, (long)uReadSize);
