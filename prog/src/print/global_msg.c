@@ -20,7 +20,7 @@
  *	グローバルメッセージデータ
  */
 //--------------------------------------------------------------
-const GFL_MSGDATA* GlobalMsg_Poke = NULL;
+const GFL_MSGDATA* GlobalMsg_PokeName = NULL;
 
 
 //=============================================================================================
@@ -32,9 +32,9 @@ const GFL_MSGDATA* GlobalMsg_Poke = NULL;
 //=============================================================================================
 void GLOBALMSG_Init( HEAPID heapID )
 {
-	GF_ASSERT(GlobalMsg_Poke == NULL);
+	GF_ASSERT(GlobalMsg_PokeName == NULL);
 
-	GlobalMsg_Poke = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
+	GlobalMsg_PokeName = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
 }
 
 
