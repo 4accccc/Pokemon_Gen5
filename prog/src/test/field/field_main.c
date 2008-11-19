@@ -1,11 +1,10 @@
 //============================================================================================
 /**
  * @file	field_main.c
- * @brief	
+ * @brief	フィールドマップ描画メイン
  * @author	
  * @date	
  *
- * 元ファイル tetsu/sample/samplemain.c
  */
 //============================================================================================
 #include <gflib.h>
@@ -173,7 +172,7 @@ void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 {
 	GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
-//	GFL_UI_TP_Exit();
+
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fldWork->commSys , FALSE );
 	GFL_HEAP_FreeMemory( fldWork );
@@ -289,36 +288,18 @@ void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork )
 
 //------------------------------------------------------------------
 /**
- * @brief	終了チェック
+ * @brief	イベント起動チェック（暫定）
  */
-//------------------------------------------------------------------
-static BOOL GameEndCheck( int cont )
-{
-	int resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START;
-
-	if( (cont & resetCont ) == resetCont ){
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-
-
-//------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 {
+	enum { resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START };
 	FIELD_MAIN_WORK * fieldWork = work;
 
-	if( GAMESYSTEM_GetEvent(gsys)) {
-		return NULL;
-	}
-	if( GameEndCheck( GFL_UI_KEY_GetCont() ) == TRUE ){
-		FIELDMAP_Close(fieldWork);
+	if( ( GFL_UI_KEY_GetCont() & resetCont ) == resetCont ){
 		return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
-		FIELDMAP_Close(fieldWork);
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
@@ -470,9 +451,6 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 	//乱数初期化
 	GFL_STD_MtRandInit(0);
 
-	//ARCシステム初期化
-//	GFL_ARC_Init( &GraphicFileTable[0], NELEMS(GraphicFileTable) );		gfl_use.cで1回だけ初期化に変更
-
 	//VRAMクリア
 	GFL_DISP_ClearVRAM( GX_VRAM_D );
 	//VRAM設定
@@ -499,7 +477,6 @@ static void	RemoveGameSystem( FIELD_SETUP* gs )
 	g3d_unload( gs );	//３Ｄデータ破棄
 
 	bg_exit( gs );
-//	GFL_ARC_Exit();
 
 	GFL_HEAP_FreeMemory( gs );
 }
@@ -527,10 +504,6 @@ static const GFL_BG_SYS_HEADER bgsysHeader = {
 
 static void	bg_init( FIELD_SETUP* gs )
 {
-	//フォント読み込み
-//	GFL_TEXT_CreateSystem( font_path );
-//	GFL_TEXT_CreateSystem( NULL );	//システムフォント使用
-
 	//ＢＧシステム起動
 	GFL_BG_Init( gs->heapID );
 
@@ -564,7 +537,6 @@ static void	bg_exit( FIELD_SETUP* gs )
 
 	GFL_G3D_Exit();
 	GFL_BG_Exit();
-//	GFL_TEXT_DeleteSystem();
 }
 
 // ３Ｄセットアップコールバック
