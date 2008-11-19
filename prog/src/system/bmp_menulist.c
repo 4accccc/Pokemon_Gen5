@@ -1265,3 +1265,16 @@ static void BmpWinDataShift(
 		BmpWinDataShift256( bmp, direct, offset, data );
 	}
 }
+
+//--------------------------------------------------------------
+/**
+ * カーソル文字列セット
+ */
+//--------------------------------------------------------------
+void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID )
+{
+	BmpCursor_SetCursorFontMsg( lw->cursor, lw->hed.msgdata, strID );
+	ListCursorPut( lw );
+}
+
+

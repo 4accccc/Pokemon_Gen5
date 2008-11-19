@@ -12,6 +12,7 @@
 #include "arc_def.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_winframe.h"
+#include "system/bmp_menulist.h"
 #include "message.naix"
 
 #include "test_graphic/d_taya.naix"
@@ -19,6 +20,8 @@
 
 #include "field_debug.h"
 #include "field_comm/field_comm_main.h"
+
+#include "field/zonedata.h"
 
 //======================================================================
 //	define
@@ -79,7 +82,7 @@ struct _TAG_DEBUG_FLDMENU
 	GFL_FONT *fontHandle;
 	PRINT_QUE *printQue;
 	PRINT_UTIL printUtil[1];
-	ARCHANDLE *arcHandleMsg;
+//	ARCHANDLE *arcHandleMsg;
 	
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
@@ -88,6 +91,8 @@ struct _TAG_DEBUG_FLDMENU
 	//通信メニュー用
 	int commSeq;	//追加 Ari1111
 	FIELD_COMM_MAIN	*commSys;
+	
+	void *pUserWork;
 };
 
 //======================================================================
@@ -96,8 +101,15 @@ struct _TAG_DEBUG_FLDMENU
 static void DMenuCallProc_GridCamera( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_GridScaleSwitch( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_GridScaleControl( DEBUG_FLDMENU *wk );
+
 static void DMenuCallProc_OpenStartComm( DEBUG_FLDMENU *wk );
 static void DMenuCallProc_OpenStartInvasion( DEBUG_FLDMENU *wk );
+
+static void DMenuCallProc_MapZoneSelect( DEBUG_FLDMENU *wk );
+static int DMenuZoneSelect_Main( DEBUG_FLDMENU *wk );
+
+static void DEBUG_SetMenuWorkZoneIDName(
+		BMP_MENULIST_DATA *list, HEAPID heapID );
 
 //======================================================================
 //	メニューリスト一覧
@@ -125,6 +137,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR02, DMenuCallProc_GridCamera },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
 	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
+	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -167,7 +180,6 @@ static const DEBUG_MENU_LISTTBL DATA_DebugMenuListTbl[] =
 
 //メニュー最大数
 #define D_MENULISTTBL_MAX (NELEMS(DATA_DebugMenuListTbl))
-//#define DEBUG_HEAPERROR
 
 //======================================================================
 //	フィールドデバッグメニュー
@@ -217,11 +229,11 @@ DEBUG_FLDMENU * FldDebugMenu_Init(
 		
 		GFL_BG_SetPriority( d_menu->bgFrame, 0 );
 		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
-
+		
 		GFL_ARC_UTIL_TransVramPalette(
 			ARCID_D_TAYA, NARC_d_taya_default_nclr,
 			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, d_menu->heapID );
-
+		
 		GFL_BG_FillCharacter( d_menu->bgFrame, 0x00, 1, 0 );
 		GFL_BG_FillScreen( d_menu->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
@@ -292,14 +304,11 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 	}
 	
 	{	//window frame
-		#ifndef DEBUG_HEAPERROR
 		BmpWinFrame_GraphicSet( d_menu->bgFrame, 1,
 			DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, d_menu->heapID );
-		#endif
 	}
 	
 	{	//bmpwin
-		#ifndef DEBUG_HEAPERROR
 		const DEBUG_MENU_LISTTBL *d_menu_tbl;
 		d_menu_tbl = &DATA_DebugMenuListTbl[d_menu->menu_num];
 
@@ -313,7 +322,6 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 		
 		GFL_BMPWIN_TransVramCharacter( d_menu->bmpwin );
 		GFL_BG_LoadScreenReq( d_menu->bgFrame );
-		#endif
 	}
 	
 	{	//msg
@@ -322,14 +330,22 @@ void FldDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 			NARC_message_d_field_dat, d_menu->heapID );
 		
 		d_menu->strbuf = GFL_STR_CreateBuffer( 1024, d_menu->heapID );
-		
+		#if 0		
 		d_menu->arcHandleMsg = GFL_ARC_OpenDataHandle(
 				ARCID_D_TAYA, d_menu->heapID );
 		
 		d_menu->fontHandle = GFL_FONT_CreateHandle(
 			d_menu->arcHandleMsg, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
+		#else
+			d_menu->fontHandle = GFL_FONT_Create(
+				ARCID_D_TAYA,
+				NARC_d_taya_lc12_2bit_nftr,
+				GFL_FONT_LOADTYPE_FILE,
+				FALSE,
+				d_menu->heapID );
 
+		#endif
 //		PRINTSYS_Init( d_menu->heapID );	//メイン側で呼ぶようになった
 		d_menu->printQue = PRINTSYS_QUE_Create( d_menu->heapID );
 		PRINT_UTIL_Setup( d_menu->printUtil, d_menu->bmpwin );	
@@ -348,10 +364,8 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 	switch( d_menu->seq_no ){
 	case 0:	//メニュー作成
 		{	//window frame
-			#ifndef DEBUG_HEAPERROR
 			BmpWinFrame_Write( d_menu->bmpwin,
 				WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
-			#endif	
 		}
 
 		{	//menu create
@@ -378,7 +392,6 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			head.font_handle = d_menu->fontHandle;
 			head.win = d_menu->bmpwin;
 
-			#ifndef DEBUG_HEAPERROR
 			d_menu->menulistdata =
 				BmpMenuWork_ListCreate( lmax, d_menu->heapID );
 			
@@ -393,16 +406,11 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			
 			d_menu->bmpmenu = BmpMenu_Add( &head, 0, d_menu->heapID );
 			BmpMenu_SetCursorString( d_menu->bmpmenu, DEBUG_FIELD_STR00 );
-			#endif
 		}
 		
 		d_menu->seq_no++;
 		break;
 	case 1:	//メニュー処理
-		#ifdef DEBUG_HEAPERROR
-		d_menu->seq_no++;
-		break;
-		#else
 		{
 			u32 ret;
 			
@@ -433,31 +441,34 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			}
 		}
 		break;
-		#endif
 	case 2:	//削除
-		#ifndef DEBUG_HEAPERROR
 		BmpMenu_Exit( d_menu->bmpmenu, NULL );
 		BmpMenuWork_ListDelete( d_menu->menulistdata );	//freeheap
-		#endif
 
 		//プリントユーティリティ削除はいらない
 		PRINTSYS_QUE_Delete( d_menu->printQue );
-	//	PRINTSYS_Delete();	//freeheap
-		FontDataMan_Delete( d_menu->fontHandle );
+//		PRINTSYS_Delete();	//freeheap
+//		FontDataMan_Delete( d_menu->fontHandle );
+		GFL_FONT_Delete( d_menu->fontHandle );
 //		GFL_ARC_CloseDataHandle( d_menu->arcHandleMsg ); //マネージャ側で済み
 		
 		GFL_STR_DeleteBuffer( d_menu->strbuf );
 		GFL_MSG_Delete( d_menu->msgdata );
-		#ifndef DEBUG_HEAPERROR
 		GFL_BMPWIN_Delete( d_menu->bmpwin );
-		#endif
+
 		if( d_menu->call_proc != NULL ){
 			d_menu->call_proc( d_menu );
 		}
+		
 		d_menu->call_proc = NULL;
+		
 		//通信に行くときはそのままにしたいので
 		if( d_menu->seq_no == 2 ){
 			return( TRUE );
+		}
+		
+		if( d_menu->seq_no == 20 ){
+			break;
 		}
 
 		//通信メニュー用処理
@@ -499,6 +510,13 @@ BOOL FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			break;
 		}
 		break;
+	case 20:	//何処でもジャンプ
+		{
+			if( DMenuZoneSelect_Main(d_menu) == TRUE ){
+				GFL_HEAP_FreeMemory( d_menu->pUserWork );
+				return( TRUE );
+			}
+		}
 		break;
 	}
 	
@@ -586,5 +604,352 @@ static void DMenuCallProc_OpenStartInvasion( DEBUG_FLDMENU *wk )
 {
 	wk->seq_no = 11;
 	wk->commSeq = 0;
+}
+
+//======================================================================
+//	デバッグメニュー どこでもジャンプ
+//======================================================================
+//--------------------------------------------------------------
+///	DEBUG_ZONESEL どこでもジャンプ処理用ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+	int seq_no;
+	HEAPID heapID;
+	
+	GFL_BMP_DATA *bmp;
+	GFL_BMPWIN *bmpwin;
+	BMP_MENULIST_DATA *pMenuList;
+	BMPMENULIST_WORK *pMenuListWork;
+
+	STRBUF *strbuf;
+	GFL_MSGDATA *msgdata;
+	GFL_FONT *fontHandle;
+	PRINT_QUE *printQue;
+	PRINT_UTIL printUtil[1];
+//	ARCHANDLE *arcHandleMsg;
+}DEBUG_ZONESEL;
+
+//--------------------------------------------------------------
+///	どこでもジャンプ　メニューヘッダー
+//--------------------------------------------------------------
+static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
+{
+	NULL,	//表示文字データポインタ
+	NULL,	//カーソル移動ごとのコールバック関数
+	NULL,	//一列表示ごとのコールバック関数
+	NULL,	//GFL_BMPWIN
+
+	1,		//リスト項目数
+	12,		//表示最大項目数
+	0,		//ラベル表示Ｘ座標
+	11,		//項目表示Ｘ座標
+	0,		//カーソル表示Ｘ座標
+	0,		//表示Ｙ座標
+	1,		//表示文字色
+	15,		//表示背景色
+	2,		//表示文字影色
+	0,		//文字間隔Ｘ
+	1,		//文字間隔Ｙ
+	BMPMENULIST_LRKEY_SKIP,	//ページスキップタイプ
+	0,		//文字指定(本来はu8だけどそんなに作らないと思うので)
+	0,		//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+	
+	NULL,	//ワークポインタ
+	
+	12,		//文字サイズX(ドット
+	12,		//文字サイズY(ドット
+	
+	NULL,	//表示に使用するメッセージバッファ
+	NULL,	//表示に使用するプリントユーティリティ
+	NULL,	//表示に使用するプリントキュー
+	NULL,	//表示に使用するフォントハンドル
+};
+
+//--------------------------------------------------------------
+///	どこでもジャンプメニューリスト　仮
+//--------------------------------------------------------------
+#if 0
+static const DEBUG_MENU_LIST DATA_DebugMenuListZoneSel[] =
+{
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR01, NULL },
+};
+#endif
+
+static void DMenuZoneSelect_Init( DEBUG_ZONESEL *work, HEAPID heap_id );
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　どこでもジャンプ
+ * @param	wk	DEBUG_FLDMENU*
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DMenuCallProc_MapZoneSelect( DEBUG_FLDMENU *wk )
+{
+	wk->pUserWork = GFL_HEAP_AllocClearMemory(
+			wk->heapID, sizeof(DEBUG_ZONESEL) );
+	DMenuZoneSelect_Init( wk->pUserWork, wk->heapID );
+	wk->seq_no = 20;
+}
+
+//--------------------------------------------------------------
+/**
+ * どこでもジャンプ　初期化
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void DMenuZoneSelect_Init( DEBUG_ZONESEL *work, HEAPID heap_id )
+{
+	work->heapID = heap_id;
+	
+	{	//window frame
+		BmpWinFrame_GraphicSet( DEBUG_BGFRAME_MENU, 1,
+				DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, work->heapID );
+	}
+	
+	{	//bmp window
+		work->bmpwin = GFL_BMPWIN_Create(
+			DEBUG_BGFRAME_MENU,
+			1, 1, 11, 16,
+			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
+		work->bmp = GFL_BMPWIN_GetBmp( work->bmpwin );
+		
+		GFL_BMP_Clear( work->bmp, 0xff );
+		GFL_BMPWIN_MakeScreen( work->bmpwin );
+		
+		GFL_BMPWIN_TransVramCharacter( work->bmpwin );
+		GFL_BG_LoadScreenReq( DEBUG_BGFRAME_MENU );
+	}
+	
+	{	//message
+		work->msgdata = GFL_MSG_Create(
+			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
+			NARC_message_d_field_dat, work->heapID );
+		
+		work->strbuf = GFL_STR_CreateBuffer( 1024, work->heapID );
+
+		#if 0
+		work->arcHandleMsg = GFL_ARC_OpenDataHandle(
+				ARCID_D_TAYA, work->heapID );
+		work->fontHandle = GFL_FONT_CreateHandle(
+			work->arcHandleMsg, NARC_d_taya_lc12_2bit_nftr,
+			GFL_FONT_LOADTYPE_FILE, FALSE, work->heapID );
+		#else
+			work->fontHandle = GFL_FONT_Create(
+				ARCID_D_TAYA,
+				NARC_d_taya_lc12_2bit_nftr,
+				GFL_FONT_LOADTYPE_FILE,
+				FALSE,
+				work->heapID );
+		#endif
+		work->printQue = PRINTSYS_QUE_Create( work->heapID );
+		PRINT_UTIL_Setup( work->printUtil, work->bmpwin );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * どこでもジャンプ　メイン
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static int DMenuZoneSelect_Main( DEBUG_FLDMENU *wk )
+{
+	DEBUG_ZONESEL *work = wk->pUserWork;
+	
+	switch( work->seq_no ){
+	case 0:
+		{	//Menu List
+			int i;
+			u32 max = ZONEDATA_GetZoneIDMax();
+			BMPMENULIST_HEADER head = DATA_DebugMenuList_ZoneSel;
+//			const DEBUG_MENU_LIST *d_menu_list;
+			
+			BmpWinFrame_Write( work->bmpwin,
+				WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+			
+			work->pMenuList = BmpMenuWork_ListCreate( max, work->heapID );
+//			d_menu_list = DATA_DebugMenuListZoneSel;
+			DEBUG_SetMenuWorkZoneIDName( work->pMenuList, work->heapID );
+			
+			head.count = max;
+			head.msgdata = work->msgdata;
+			head.print_util = work->printUtil;
+			head.print_que = work->printQue;
+			head.font_handle = work->fontHandle;
+			head.win = work->bmpwin;
+			head.list = work->pMenuList;
+			
+			work->pMenuListWork =
+				BmpMenuList_Set( &head, 0, 0, work->heapID );
+			BmpMenuList_SetCursorString( work->pMenuListWork, 0 );
+		}
+		
+		work->seq_no++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = BmpMenuList_Main( work->pMenuListWork );
+			PRINTSYS_QUE_Main( work->printQue );
+			
+			if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
+			}
+
+			switch( ret ){
+			case BMPMENULIST_NULL:
+				break;
+			case BMPMENULIST_CANCEL:	//キャンセル
+				work->seq_no++;
+				break;
+			default:					//決定
+				//ret == zoneID
+				work->seq_no++;
+				break;
+			}
+		}
+		break;
+	case 2:
+		BmpWinFrame_Clear( work->bmpwin, 0 );
+
+		BmpMenuList_Exit( work->pMenuListWork, NULL, NULL );
+		BmpMenuWork_ListDelete( work->pMenuList );
+		
+		PRINTSYS_QUE_Delete( work->printQue );
+//		FontDataMan_Delete( work->fontHandle );
+		GFL_FONT_Delete( work->fontHandle );
+		GFL_STR_DeleteBuffer( work->strbuf );
+		GFL_MSG_Delete( work->msgdata );
+		GFL_BMPWIN_Delete( work->bmpwin );
+		
+		return( TRUE );
+	}
+
+	return( FALSE );
+}
+
+//======================================================================
+//	デバッグ用文字列変換
+//======================================================================
+#define ASCII_EOM (0x00)
+#define ASCII_0 (0x30)
+#define ASCII_9 (0x39)
+#define ASCII_A (0x41)
+#define ASCII_Z (0x5a)
+
+//半角
+#define UTF16_U8_0 (0x0030)
+#define UTF16_U8_9 (0x0039)
+#define UTF16_U8_A (0x0041)
+#define UTF16_U8_Z (0x005a)
+
+//全角
+#define UTF16_0 (0xff10)
+#define UTF16_9 (0xff19)
+#define UTF16_A (0xff21)
+#define UTF16_Z (0xff3a)
+
+//--------------------------------------------------------------
+/**
+ * ASCII->UTF-16
+ * @param	str	ASCII 半角英数字
+ * @retval	u16 ASCII->UTF-16
+ */
+//--------------------------------------------------------------
+static u16 DEBUG_ASCIICODE_UTF16( u8 code )
+{
+	if( code == ASCII_EOM ){
+		return( GFL_STR_GetEOMCode() );
+	}
+	
+	if( code >= ASCII_0 && code <= ASCII_9 ){
+		code -= ASCII_0;
+		return( UTF16_0 + code );
+	}
+	
+	if( code >= ASCII_A && code <= ASCII_Z ){
+		code -= ASCII_A;
+		return( UTF16_A + code );
+	}
+	
+	GF_ASSERT( 0 ); //未対応文字
+	return( GFL_STR_GetEOMCode() );
+}
+
+//--------------------------------------------------------------
+/**
+ * ZONE_ID->STRCODE
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static u16 * DEBUG_GetZoneNameUTF16( u32 heapID, u32 zoneID )
+{
+	int i;
+	u16 utf16,utf16_eom;
+	u16 *pStrBuf;
+	char name8[128];
+	
+	pStrBuf = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16)*128 );
+	ZONEDATA_GetZoneName( heapID, name8, zoneID );
+	utf16_eom = GFL_STR_GetEOMCode();
+	OS_Printf( "変換 %s\n", name8 );
+	
+	for( i = 0; i < 128; i++ ){
+		utf16 = DEBUG_ASCIICODE_UTF16( name8[i] );
+		pStrBuf[i] = utf16;
+		
+		if( utf16 == utf16_eom ){
+			return( pStrBuf );
+		}
+	}
+	
+	pStrBuf[i-1] = utf16_eom;	//文字数オーバー
+	GF_ASSERT( 0 );
+	return( pStrBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * Zone ID Name -> BMP_MENULIST_DATA 
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetSTRBUF_ZoneIDName(
+		u32 heapID, u32 zoneID, STRBUF *strBuf )
+{
+	u16 *str = DEBUG_GetZoneNameUTF16( heapID, zoneID );
+	GFL_STR_SetStringCode( strBuf, str );
+	GFL_HEAP_FreeMemory( str );
+}
+
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetMenuWorkZoneIDName(
+		BMP_MENULIST_DATA *list, HEAPID heapID )
+{
+	int id,max = ZONEDATA_GetZoneIDMax();
+	STRBUF *strBuf = GFL_STR_CreateBuffer( 128, heapID );
+	
+	for( id = 0; id < max; id++ ){
+		GFL_STR_ClearBuffer( strBuf );
+		DEBUG_SetSTRBUF_ZoneIDName( heapID, id, strBuf );
+		BmpMenuWork_ListAddString( list, strBuf, id, heapID );
+	}
+	
+	GFL_HEAP_FreeMemory( strBuf );
 }
 

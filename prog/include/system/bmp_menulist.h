@@ -398,4 +398,11 @@ extern u32	BmpListParamGet( BMPMENULIST_WORK * lw, u8 mode );
 //--------------------------------------------------------------------------------------------
 extern void BmpMenuList_ParamSet( BMPMENULIST_WORK * lw, u8 mode, u32 param );
 
+//--------------------------------------------------------------
+/**
+ * カーソル文字列セット
+ */
+//--------------------------------------------------------------
+extern void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID );
+
 #endif //__BMP_LIST_H__
