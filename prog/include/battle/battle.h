@@ -14,6 +14,9 @@
 #include "ds_types.h"
 #endif
 
+#include <net.h>
+#include <procsys.h>
+
 #include "poke_tool/pokeparty.h"
 
 //--------------------------------------------------------------
