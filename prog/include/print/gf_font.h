@@ -10,11 +10,12 @@
 #ifndef __GF_FONT_H__
 #define __GF_FONT_H__
 
+#include <heap.h>
 #include <arc_tool.h>
 
 //--------------------------------------------------------------
 /**
- * マネージャオブジェクト不完全型宣言
+ * フォントハンドラ型定義
  */
 //--------------------------------------------------------------
 typedef struct _GFL_FONT  GFL_FONT;
@@ -47,7 +48,7 @@ typedef enum {
  * @li  loadType が FONTDATA_LOADTYPE_ON_MEMORY の場合、マネージャと同じヒープ領域にフォントデータを読み込む
  */
 //==============================================================================================
-extern GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, u32 heapID );
+extern GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID );
 
 //==============================================================================================
 /**
