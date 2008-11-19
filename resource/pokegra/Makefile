@@ -57,6 +57,9 @@ do-build: $(notdir $(NCGFILE:.ncg=.NCGR))
 do-build: $(notdir $(NMCFILE:.nmc=.NMCR))
 %.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
 	g2dcvtr $< -bmp -cr/0_0_32_16 -o/$(CNV_DIR)
+
+do-build: $(notdir $(NMCFILE:.nmc=.NCEC))
+%.NCEC: $(RES_DIR)%.nce
 	perl nce.pl $(RES_DIR)$*.nce $(CNV_DIR)
 
 do-build: $(notdir $(NCGCFILE:.ncg=.NCBR))
@@ -82,7 +85,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR))
+$(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR))
 	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 endif

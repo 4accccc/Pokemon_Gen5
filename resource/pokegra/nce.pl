@@ -217,9 +217,68 @@ use constant OBJ_SIZE		=>	OAM_POS_X +		OAM_POS_Y +			 OAM_RS_MODE +		OAM_RS_PARA
 		$min_y *= -1;
 		$mepachi_min_y *= -1;
 
+=pod
 		#セルの情報を書き出す
-		$write = pack "S C C l l S C C l l",$char_name, $size_x, $size_y, $min_x, $min_y, $mepachi_char, $mepachi_size_x, $mepachi_size_y, $mepachi_min_x, $mepachi_min_y;
+		$write = pack "S C C l l S C C l l", $char_name, $size_x, $size_y, $min_x, $min_y, $mepachi_char, $mepachi_size_x, $mepachi_size_y, $mepachi_min_x, $mepachi_min_y;
 		print WRITE_NCE $write;
+=cut
+
+#前もって計算をしておくコンバート処理
+#=pod
+=pod
+		if( $min_x > 0 ){
+			$min_x = $min_x * ( ( 1 << 8 ) + 0.5 );
+		}
+		else{
+			$min_x = $min_x * ( ( 1 << 8 ) - 0.5 );
+		}
+		if( $min_y > 0 ){
+			$min_y = $min_y * ( ( 1 << 8 ) + 0.5 );
+		}
+		else{
+			$min_y = $min_y * ( ( 1 << 8 ) - 0.5 );
+		}
+		$size_x = $size_x * ( ( 1 << 12 ) + 0.5 );
+		$size_y = $size_y * ( ( 1 << 12 ) + 0.5 );
+		$tex_s = ( ( $char_name % 32 ) * 8 ) * ( ( 1 << 12 ) + 0.5 );
+		$tex_t = ( ( $char_name / 32 ) * 8 ) * ( ( 1 << 12 ) + 0.5 );
+=cut
+		$min_x = $min_x << 8;
+		$min_y = $min_y << 8;
+		$size_x = $size_x << 12;
+		$size_y = $size_y << 12;
+		$tex_s = ( ( $char_name % 32 ) * 8 ) << 12;
+		$tex_t = ( ( $char_name >> 5 ) * 8 ) << 12;
+
+=pod
+		if( $mepachi_min_x > 0 ){
+			$mepachi_min_x = $mepachi_min_x * ( ( 1 << 8 ) + 0.5 );
+		}
+		else{
+			$mepachi_min_x = $mepachi_min_x * ( ( 1 << 8 ) - 0.5 );
+		}
+		if( $mepachi_min_y > 0 ){
+			$mepachi_min_y = $mepachi_min_y * ( ( 1 << 8 ) + 0.5 );
+		}
+		else{
+			$mepachi_min_y = $mepachi_min_y * ( ( 1 << 8 ) - 0.5 );
+		}
+		$mepachi_size_x = $mepachi_size_x * ( ( 1 << 12 ) + 0.5 );
+		$mepachi_size_y = $mepachi_size_y * ( ( 1 << 12 ) + 0.5 );
+		$mepachi_tex_s = ( ( $mepachi_char % 32 ) * 8 ) * ( ( 1 << 12 ) + 0.5 );
+		$mepachi_tex_t = ( ( $mepachi_char / 32 ) * 8 ) * ( ( 1 << 12 ) + 0.5 );
+=cut
+		$mepachi_min_x = $mepachi_min_x << 8;
+		$mepachi_min_y = $mepachi_min_y << 8;
+		$mepachi_size_x = $mepachi_size_x << 12;
+		$mepachi_size_y = $mepachi_size_y << 12;
+		$mepachi_tex_s = ( ( $mepachi_char % 32 ) * 8 ) << 12;
+		$mepachi_tex_t = ( ( $mepachi_char >> 5 ) * 8 ) << 12;
+
+		#セルの情報を書き出す
+		$write = pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
+		print WRITE_NCE $write;
+#=cut
 	}
 
 	close READ_NCE;
