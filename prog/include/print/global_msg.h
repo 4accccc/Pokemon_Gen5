@@ -19,7 +19,7 @@
  *	グローバルメッセージデータ
  */
 //--------------------------------------------------------------
-extern const GFL_MSGDATA*	GlobalMsg_Poke;		///< ポケモン名
+extern const GFL_MSGDATA*	GlobalMsg_PokeName;		///< ポケモン名
 
 
 
