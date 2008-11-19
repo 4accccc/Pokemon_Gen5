@@ -80,7 +80,6 @@ typedef struct {
 	STRBUF*				strbuf;
 	GFL_TCBLSYS*		tcbl;
 
-	ARCHANDLE*				arcHandle;
 	GFL_FONT*				fontHandle;
 	PRINT_STREAM*			printStream;
 	PRINT_QUE*				printQue;
@@ -293,8 +292,7 @@ static void createTemporaryModules( MAIN_WORK* wk )
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
 	wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
-	wk->arcHandle = GFL_ARC_OpenDataHandle( ARCID_D_TAYA, wk->heapID );
-	wk->fontHandle = GFL_FONT_CreateHandle( wk->arcHandle, NARC_d_taya_lc12_2bit_nftr,
+	wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
