@@ -1,6 +1,6 @@
 //=============================================================================================
 /**
- * @file	fct_tokusei.c
+ * @file	hand_tokusei.c
  * @brief	ポケモンWB バトルシステム	イベントファクター[とくせい]追加処理
  * @author	taya
  *
@@ -8,24 +8,26 @@
  */
 //=============================================================================================
 
+#include "poke_tool/poketype.h"
 
 #include "../btl_common.h"
 #include "../btl_event_factor.h"
-#include "../poketype.h"
 
-#include "fct_tokusei.h"
+#include "hand_tokusei.h"
 
-#include "fct_tokusei_common.h"
+#include "tokusei/hand_tokusei_common.h"
 
 
-BTL_EVENT_FACTOR*  BTL_FCT_TOKUSEI_Add( const BTL_POKEPARAM* pp )
+
+
+BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 {
 	static const struct {
 		PokeTokusei				tokusei;
 		pTokuseiEventAddFunc	func;
 	}funcTbl[] = {
-		{ POKETOKUSEI_IKAKU,		FCT_TOK_ADD_Ikaku },
-		{ POKETOKUSEI_KURIABODY,	FCT_TOK_ADD_ClearBody },
+		{ POKETOKUSEI_IKAKU,		HAND_TOK_ADD_Ikaku },
+		{ POKETOKUSEI_KURIABODY,	HAND_TOK_ADD_ClearBody },
 	};
 
 	int i;
@@ -43,6 +45,7 @@ BTL_EVENT_FACTOR*  BTL_FCT_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 	}
 
 	BTL_Printf("とくせい(%d)は未実装\n", tokusei);
+	return NULL;
 
 //	BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, agi, pokeID, 
 }
