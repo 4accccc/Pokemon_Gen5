@@ -71,17 +71,6 @@ extern void GFL_MSGSYS_SetLangID( u8 langID );
 extern u8 GFL_MSGSYS_GetLangID( void );
 
 
-//---- «‹Œ–¼Ì«  ‚¢‚¸‚êíœ‚µ‚Ü‚· ----
-
-static inline void GFL_MSG_SetLangID( u8 langID )
-{
-	GFL_MSGSYS_SetLangID( langID );
-}
-
-
-
-
-
 
 
 
