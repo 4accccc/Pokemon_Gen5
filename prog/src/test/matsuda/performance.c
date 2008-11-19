@@ -61,6 +61,8 @@ enum{
 #define NUM_X				(8)
 ///数値の表示座標Y
 #define NUM_Y				(192-24)
+///数値の表示座標X(ピーク値)
+#define PEEK_NUM_X			(NUM_X + 40)
 ///数値CGXのキャラクタ毎の種類
 enum{
 	NUMBER_0,
@@ -93,6 +95,8 @@ typedef struct{
 	s32 peek_x;					//ピーク計測時のX座標
 	s8 peek_wait;				//ピーク計測時に維持するウェイト
 	s8 dummy;
+	
+	s32 peek_num;				//現在までの最大ピーク値
 }PFM_APP_WORK;
 
 ///パフォーマンスシステム構造体
@@ -221,7 +225,7 @@ static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32
 static void Performance_CGXTrans(void);
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset);
 static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count);
-static void Performance_NumTrans(s32 num);
+static void Performance_NumTrans(s32 num, int peek_oam);
 
 
 
@@ -256,7 +260,12 @@ void DEBUG_PerformanceMain(void)
 		pfm_sys.on_off ^= TRUE;
 	}
 	if(GFL_UI_KEY_GetTrg() == (PAD_BUTTON_L | PAD_BUTTON_R)){
+		int id;
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		//ピーク値のリセットもかける
+		for(id = 0; id < PERFORMANCE_ID_MAX; id++){
+			pfm_sys.app[id].peek_num = -1000;
+		}
 	}
 }
 
@@ -382,7 +391,11 @@ static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 
 	}
 	
 	//グラフィック転送
-	Performance_NumTrans(num);
+	Performance_NumTrans(num, FALSE);
+	if(num > app->peek_num){
+		app->peek_num = num;
+		Performance_NumTrans(num, TRUE);
+	}
 }
 
 //--------------------------------------------------------------
@@ -390,17 +403,29 @@ static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 
  * @brief   数値転送
  *
  * @param   num		
+ * @param   peek_oam		TRUE:ピーク計測用のOAMを使用。　FALSE:通常の履歴を流していくOAM
  */
 //--------------------------------------------------------------
-static void Performance_NumTrans(s32 num)
+static void Performance_NumTrans(s32 num, int peek_oam)
 {
 	u32 offset, anm_offset, first_touch = 0;
 	u32 vram_adrs;
 	s32 k;
 	int i, data, pos = 0, calc_num;
+	int oam_pos;
+	int pos_x;
+	
+	if(peek_oam == TRUE){
+		oam_pos = NUM_HISTORY;
+		pos_x = PEEK_NUM_X;
+	}
+	else{
+		oam_pos = pfm_sys.num_oam_pos;
+		pos_x = NUM_X;
+	}
 	
 	MeterCGX_OffsetGet(&offset, &anm_offset);
-	vram_adrs = HW_OBJ_VRAM + offset - (NUM_CGX_SIZE * (pfm_sys.num_oam_pos + 1));
+	vram_adrs = HW_OBJ_VRAM + offset - (NUM_CGX_SIZE * (oam_pos + 1));
 	
 	calc_num = (num < 0) ? (-num) : num;
 	k = 10;
@@ -423,13 +448,13 @@ static void Performance_NumTrans(s32 num)
 
 	//OAMセット
 	{
-		GXOamAttr *meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - pfm_sys.num_oam_pos]);
+		GXOamAttr *meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - oam_pos]);
 		u32 start_charno = (vram_adrs - HW_OBJ_VRAM) / anm_offset;
 		u32 x, y;
 		
 		G2_SetOBJAttr(
 			meter_oam,
-			NUM_X,						//x
+			pos_x,						//x
 			NUM_Y,						//y
 			0,							//priority
 			GX_OAM_MODE_NORMAL,			//mode
@@ -442,16 +467,18 @@ static void Performance_NumTrans(s32 num)
 			0							//rsParam
 		);
 
-		for(i = 0; i < NUM_HISTORY; i++){
-			if(i != pfm_sys.num_oam_pos){
-				meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - i]);
-				G2_GetOBJPosition(meter_oam, &x, &y);
-				G2_SetOBJPosition(meter_oam, x, y-8);
+		if(peek_oam == FALSE){
+			for(i = 0; i < NUM_HISTORY; i++){
+				if(i != oam_pos){
+					meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - i]);
+					G2_GetOBJPosition(meter_oam, &x, &y);
+					G2_SetOBJPosition(meter_oam, x, y-8);
+				}
 			}
-		}
-		pfm_sys.num_oam_pos++;
-		if(pfm_sys.num_oam_pos >= NUM_HISTORY){
-			pfm_sys.num_oam_pos = 0;
+			pfm_sys.num_oam_pos++;
+			if(pfm_sys.num_oam_pos >= NUM_HISTORY){
+				pfm_sys.num_oam_pos = 0;
+			}
 		}
 	}
 }
