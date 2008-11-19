@@ -74,6 +74,7 @@ typedef struct{
 	int master_brightness_sub;	///<サブ画面マスター輝度
 	s32 h_intr;					///<Hブランク割り込み許可
 	s32 v_intr;					///<Vブランク割り込み許可
+	GXVRamBG bg_bank;			///<BG VRAMバンク情報
 	
 	u8 font_letter;
 	u8 font_shadow;
@@ -264,6 +265,11 @@ static void Local_ErrDispInit(void)
 	nes->h_intr = GX_HBlankIntr(FALSE);
 	nes->v_intr = GX_VBlankIntr(FALSE);
 	
+	//VRAMバンク情報退避
+	nes->bg_bank = GX_ResetBankForBG();
+	GX_SetBankForBG(GX_VRAM_BG_128_C);
+	OS_TPrintf("VRAM BANK = %d\n", nes->bg_bank);
+
 	//dispcnt退避
 	nes->dispcnt = GX_GetDispCnt();
 	GX_SetGraphicsMode(GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_2D);
@@ -285,7 +291,7 @@ static void Local_ErrDispInit(void)
 	//フォントカラー退避
 	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
 	GFL_FONTSYS_SetColor(4, 0xb, 7);
-
+	
 	//エラー画面描画
 	Local_ErrDispDraw();
 	Local_ErrMessagePrint();
@@ -331,6 +337,10 @@ static void Local_ErrDispExit(void)
 	GX_SetGraphicsMode(nes->dispcnt.dispMode, nes->dispcnt.bgMode, nes->dispcnt.bg0_2d3d);
 	GX_SetVisiblePlane(nes->dispcnt.visiblePlane);
 	GX_SetVisibleWnd(nes->dispcnt.visibleWnd);
+
+	//VRAMバンク情報退避
+	GX_ResetBankForBG();
+	GX_SetBankForBG(nes->bg_bank);
 
 	//割り込み復帰
 	GX_HBlankIntr(nes->h_intr);
