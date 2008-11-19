@@ -297,7 +297,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 
 		wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
-		GFL_MSG_SetLangID( 1 );	//JPN_KANJI
+		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 	}
 
 	return GFL_PROC_RES_FINISH;
