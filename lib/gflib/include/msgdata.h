@@ -36,10 +36,9 @@ typedef enum {
 
 extern GFL_MSGDATA* GFL_MSG_Create( GflMsgLoadType loadType, u16 ArcID, u16 datID, HEAPID heapID );
 extern void GFL_MSG_Delete( GFL_MSGDATA* handle );
-extern void GFL_MSG_GetString( GFL_MSGDATA* handle, u32 strID, STRBUF* dst );
-extern STRBUF* GFL_MSG_CreateString( GFL_MSGDATA* handle, u32 strID );
-extern u32 GFL_MSG_GetStrCount( GFL_MSGDATA* handle );
-extern void GFL_MSG_CheckTargetLang( GFL_MSGDATA* handle );
+extern void GFL_MSG_GetString( const GFL_MSGDATA* handle, u32 strID, STRBUF* dst );
+extern STRBUF* GFL_MSG_CreateString( const GFL_MSGDATA* handle, u32 strID );
+extern u32 GFL_MSG_GetStrCount( const GFL_MSGDATA* handle );
 
 
 /*============================================================================================*/
@@ -60,7 +59,7 @@ extern void GFL_MSG_CheckTargetLang( GFL_MSGDATA* handle );
  * @param   langID		åæåÍID
  */
 //--------------------------------------------------------------------------------------
-extern void GFL_MSG_SetLangID( u8 langID );
+extern void GFL_MSGSYS_SetLangID( u8 langID );
 
 //--------------------------------------------------------------------------------------
 /**
@@ -69,7 +68,16 @@ extern void GFL_MSG_SetLangID( u8 langID );
  * @retval  u8		ê›íËÇ≥ÇÍÇƒÇ¢ÇÈåæåÍID
  */
 //--------------------------------------------------------------------------------------
-extern u8 GFL_MSG_GetLangID( void );
+extern u8 GFL_MSGSYS_GetLangID( void );
+
+
+//---- Å´ãåñºèÃÅ´  Ç¢Ç∏ÇÍçÌèúÇµÇ‹Ç∑ ----
+
+static inline void GFL_MSG_SetLangID( u8 langID )
+{
+	GFL_MSGSYS_SetLangID( langID );
+}
+
 
 
 
