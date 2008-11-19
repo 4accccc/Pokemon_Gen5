@@ -90,7 +90,7 @@ void PokeParty_Init( POKEPARTY * party, int max )
 	party->PokeCount = 0;
 	party->PokeCountMax = max;
 	for (i = 0; i < TEMOTI_POKEMAX; i++) {
-		PokeParaInit( &party->member[i] );
+		PP_Clear( &party->member[i] );
 	}
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
 	SVLD_SetCrc(GMDATA_ID_TEMOTI_POKE);
@@ -139,7 +139,7 @@ BOOL PokeParty_Delete( POKEPARTY * party, int pos )
 	for ( i = pos ;i < party->PokeCount - 1; i ++ ) {
 		party->member[i] = party->member[i + 1];
 	}
-	PokeParaInit( &party->member[i] );
+	PP_Clear( &party->member[i] );
 	party->PokeCount--;
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
@@ -204,7 +204,7 @@ void PokeParty_SetMemberData( POKEPARTY* party, int pos, POKEMON_PARAM* pp )
 
 	PARTY_POS_ASSERT(party, pos);
 
-	cnt = PokeParaGet(&(party->member[pos]), ID_PARA_poke_exist, NULL) - PokeParaGet(pp, ID_PARA_poke_exist, NULL);
+	cnt = PP_Get(&(party->member[pos]), ID_PARA_poke_exist, NULL) - PP_Get(pp, ID_PARA_poke_exist, NULL);
 	party->member[pos] = *pp;
 	party->PokeCount += cnt;
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)
@@ -269,7 +269,7 @@ BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no)
 	int				i;
 
 	for(i=0;i<ppt->PokeCount;i++){
-		if(PokeParaGet((POKEMON_PARAM*)&ppt->member[i],ID_PARA_monsno,NULL)==mons_no){
+		if(PP_Get((POKEMON_PARAM*)&ppt->member[i],ID_PARA_monsno,NULL)==mons_no){
 			break;
 		}
 	}
@@ -312,8 +312,8 @@ void Debug_PokeParty_MakeParty(POKEPARTY * party)
 	int i;
 	PokeParty_Init(party, TEMOTI_POKEMAX);
 	for (i = 0; i < 3; i++) {
-		PokeParaInit(&poke);
-		PokeParaSet(&poke, 392 + i, 99, POW_RND, RND_NO_SET, 0, ID_NO_SET, 0);
+		PP_Clear(&poke);
+		PP_Setup(&poke, 392 + i, 99, POW_RND, RND_NO_SET, 0, ID_NO_SET, 0);
 		PokeParty_Add(party, &poke);
 	}
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)

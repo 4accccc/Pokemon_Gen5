@@ -83,9 +83,9 @@ struct pokemon_paso_param1
 	
 struct pokemon_paso_param2
 {
-	u16	waza[WAZA_TEMOTI_MAX];				//08h	Š‹Z
-	u8	pp[WAZA_TEMOTI_MAX];				//0ch	Š‹ZPP
-	u8	pp_count[WAZA_TEMOTI_MAX];			//10h	Š‹ZPP_COUNT
+	u16	waza[PTL_WAZA_MAX];					//08h	Š‹Z
+	u8	pp[PTL_WAZA_MAX];					//0ch	Š‹ZPP
+	u8	pp_count[PTL_WAZA_MAX];				//10h	Š‹ZPP_COUNT
 	u32	hp_rnd			:5;					//		HP—”
 	u32	pow_rnd			:5;					//		UŒ‚—Í—”
 	u32	def_rnd			:5;					//		–hŒä—Í—”
@@ -489,9 +489,9 @@ struct rec_pokepara{
 	//--------------------------------------------------------------
 	//	pokemon_paso_param2
 	//--------------------------------------------------------------
-	u16	waza[WAZA_TEMOTI_MAX];				//08h	Š‹Z
-	u8	pp[WAZA_TEMOTI_MAX];				//0ch	Š‹ZPP
-	u8	pp_count[WAZA_TEMOTI_MAX];			//10h	Š‹ZPP_COUNT
+	u16	waza[PTL_WAZA_MAX];				//08h	Š‹Z
+	u8	pp[PTL_WAZA_MAX];				//0ch	Š‹ZPP
+	u8	pp_count[PTL_WAZA_MAX];			//10h	Š‹ZPP_COUNT
 	u32	hp_rnd			:5;					//		HP—”
 	u32	pow_rnd			:5;					//		UŒ‚—Í—”
 	u32	def_rnd			:5;					//		–hŒä—Í—”
@@ -638,9 +638,9 @@ struct pokemon_paso_param1
 	
 struct pokemon_paso_param2
 {
-	u16	waza[WAZA_TEMOTI_MAX];				//08h	Š‹Z
-	u8	pp[WAZA_TEMOTI_MAX];				//0ch	Š‹ZPP
-	u8	pp_count[WAZA_TEMOTI_MAX];			//10h	Š‹ZPP_COUNT
+	u16	waza[PTL_WAZA_MAX];				//08h	Š‹Z
+	u8	pp[PTL_WAZA_MAX];				//0ch	Š‹ZPP
+	u8	pp_count[PTL_WAZA_MAX];			//10h	Š‹ZPP_COUNT
 	u32	hp_rnd			:5;					//		HP—”
 	u32	pow_rnd			:5;					//		UŒ‚—Í—”
 	u32	def_rnd			:5;					//		–hŒä—Í—”
@@ -1132,9 +1132,9 @@ struct rec_pokepara{
 	//--------------------------------------------------------------
 	//	pokemon_paso_param2
 	//--------------------------------------------------------------
-	u16	waza[WAZA_TEMOTI_MAX];				//08h	Š‹Z
-	u8	pp[WAZA_TEMOTI_MAX];				//0ch	Š‹ZPP
-	u8	pp_count[WAZA_TEMOTI_MAX];			//10h	Š‹ZPP_COUNT
+	u16	waza[PTL_WAZA_MAX];				//08h	Š‹Z
+	u8	pp[PTL_WAZA_MAX];				//0ch	Š‹ZPP
+	u8	pp_count[PTL_WAZA_MAX];			//10h	Š‹ZPP_COUNT
 	u32	hp_rnd			:5;					//		HP—”
 	u32	pow_rnd			:5;					//		UŒ‚—Í—”
 	u32	def_rnd			:5;					//		–hŒä—Í—”

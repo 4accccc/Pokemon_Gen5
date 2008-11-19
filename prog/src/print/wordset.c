@@ -10,6 +10,7 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "print/global_msg.h"
 #include "str_tool_local.h"
 
 #include "arc_def.h"
@@ -262,17 +263,12 @@ void WORDSET_RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* word, u32 
 //------------------------------------------------------------------
 void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp )
 {
-	GFL_MSGDATA* mdat;
 	u32 monsno;
 
-	mdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GetHeapLowID(wordset->heapID) );
-
 	// [[[ここでポケモンの性別等をチェックできる]]]
-	monsno = PokeParaGet( pp, ID_PARA_monsno, NULL );
-	GFL_MSG_GetString( mdat, monsno, wordset->tmpBuf );
+	monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+	GFL_MSG_GetString( GlobalMsg_PokeName, monsno, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
-
-	GFL_MSG_Delete( mdat );
 }
 //------------------------------------------------------------------
 /**
@@ -286,7 +282,7 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここでポケモンの性別等をチェックできる]]]
-	PokeParaGet( pp, ID_PARA_nickname_buf, wordset->tmpBuf );
+	PP_Get( pp, ID_PARA_nickname_buf, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
 //------------------------------------------------------------------
@@ -301,7 +297,7 @@ void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここで親の性別もチェックできる]]]
-	PokeParaGet( pp, ID_PARA_oyaname_buf, wordset->tmpBuf );
+	PP_Get( pp, ID_PARA_oyaname_buf, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 
 }

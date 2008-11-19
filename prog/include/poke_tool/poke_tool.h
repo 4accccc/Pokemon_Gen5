@@ -9,8 +9,7 @@
 #ifndef	__POKE_TOOL_H_
 #define	__POKE_TOOL_H_
 
-#include <heap.h>
-
+#include <heapsys.h>
 
 
 // 性別
@@ -20,9 +19,9 @@
 
 
 
-#define	POKE_LEVEL_MAX		(100)		//レベルMAX
-#define	WAZA_TEMOTI_MAX		(4)			///<1体のポケモンがもてる技の最大値
-#define	PP_COUNT_MAX		(3)			//pp_countMAX値
+#define	PTL_LEVEL_MAX			(100)		//レベルMAX
+#define	PTL_WAZA_MAX			(4)			///<1体のポケモンがもてる技の最大値
+#define	PTL_WAZAPP_COUNT_MAX	(3)			//pp_countMAX値
 #define	FRIEND_MAX			(255)		//なつき度MAX値
 #define	STYLE_MAX			(255)		//かっこよさMAX値
 #define	BEAUTIFUL_MAX		(255)		//うつくしさMAX値
@@ -427,8 +426,9 @@ enum{
 #define	ID_NO_SET		(0)			//PokeParaSetを使うときにIDをランダムでセットするための値
 #define	ID_SET			(1)			//PokeParaSetを使うときにIDを固定値でセットするための値
 #define	ID_NO_RARE		(2)			//PokeParaSetを使うときにIDを個性乱数との組み合わせでレアが出ないようにするの値
-#define	NO_WAZA_SET		(0xffff)	//技のセットができなかったときの返り値
-#define	SAME_WAZA_SET	(0xfffe)	//すでに覚えていた技のときの返り値
+
+#define	POKETOOL_WAZASET_FAIL		(0xffff)	//技のセットができなかったときの返り値
+#define	POKETOOL_WAZASET_SAME		(0xfffe)	//すでに覚えていた技のときの返り値
 
 ///<ポケモン進化データの構造体
 typedef struct pokemon_shinka_data POKEMON_SHINKA_DATA;
@@ -518,62 +518,61 @@ enum{
 	UNK_END
 };
 
-//ポケモンパラメータ操作関数系
-extern	void	PokeParaInit( POKEMON_PARAM *pp );
-extern	void	PokePasoParaInit( POKEMON_PASO_PARAM *ppp );
-
-extern	int				PokemonParam_GetWorkSize( void );
-extern	POKEMON_PARAM	*PokemonParam_AllocWork( HEAPID heapID );
-
-extern	BOOL	PokeParaFastModeOn( POKEMON_PARAM *pp );
-extern	BOOL	PokeParaFastModeOff( POKEMON_PARAM *pp, BOOL flag );
-extern	BOOL	PokePasoParaFastModeOn( POKEMON_PASO_PARAM *ppp );
-extern	BOOL	PokePasoParaFastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag );
-
-extern	void	PokeParaSet( POKEMON_PARAM *pp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id );
-extern	void	PokePasoParaSet( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id );
-
-extern	void	PokeParaCalc( POKEMON_PARAM *pp );
-extern	void	PokeParaCalcLevelUp( POKEMON_PARAM *pp );
-
-extern	u32		PokeParaGet( const POKEMON_PARAM *pp, int id, void *buf);
-extern	u32		PokePasoParaGet( const POKEMON_PASO_PARAM *ppp, int id, void *buf);
-extern	void	PokeParaPut( POKEMON_PARAM *pp, int id, const void *buf);
-extern	void	PokePasoParaPut( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
-extern	void	PokeParaAdd( POKEMON_PARAM *pp, int id, int value);
-extern	void	PokePasoParaAdd( POKEMON_PASO_PARAM *ppp, int id, int value);
-extern	BOOL	PokeRareCheck( u32 id, u32 rnd );
-extern	u8		PokeSexGet( POKEMON_PARAM *pp );
-extern	u8		PokePasoSexGet( POKEMON_PASO_PARAM *ppp );
-
-extern	void	PokeWazaOboe( POKEMON_PARAM *pp );
-extern	void	PokePasoWazaOboe( POKEMON_PASO_PARAM *ppp );
-extern	u16		PokeWazaSet( POKEMON_PARAM *pp, u16 wazano );
-extern	u16		PokePasoWazaSet( POKEMON_PASO_PARAM *ppp, u16 wazano );
-extern	void	PokeWazaOboeOshidashi( POKEMON_PARAM *pp, u16 wazano );
-extern	void	PokePasoWazaOboeOshidashi( POKEMON_PASO_PARAM *ppp, u16 wazano );
-extern	void	PokeWazaSetPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
-extern	void	PokePasoWazaSetPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
-extern	u32		PokeParaLevelCalc( POKEMON_PARAM *pp );
-extern	u32		PokePasoLevelCalc( POKEMON_PASO_PARAM *ppp );
-extern	u32		PokeParaLevelExpGet(POKEMON_PARAM *pp);
-extern	u8		PokeSeikakuGet( POKEMON_PARAM *pp );
-extern	u8		PokePasoSeikakuGet( POKEMON_PASO_PARAM *ppp );
-
-
-
-
-
 extern	void	POKETOOL_InitSystem( HEAPID heapID );
+
+
+extern	void	PP_Renew( POKEMON_PARAM *pp );
+
+//ポケモンパラメータ操作関数系
+extern	void	PP_Clear( POKEMON_PARAM *pp );
+extern	void	PPP_Clear( POKEMON_PASO_PARAM *ppp );
+
+extern	BOOL	PP_FastModeOn( POKEMON_PARAM *pp );
+extern	BOOL	PP_FastModeOff( POKEMON_PARAM *pp, BOOL flag );
+extern	BOOL	PPP_FastModeOn( POKEMON_PASO_PARAM *ppp );
+extern	BOOL	PPP_FastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag );
+
+extern	void	PP_Setup( POKEMON_PARAM *pp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id );
+extern	void	PPP_Setup( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id );
+
+extern	u32		PP_Get( const POKEMON_PARAM *pp, int id, void *buf);
+extern	u32		PPP_Get( const POKEMON_PASO_PARAM *ppp, int id, void *buf);
+extern	u32		PP_CalcLevel( const POKEMON_PARAM *pp );
+extern	u32		PPP_CalcLevel( const POKEMON_PASO_PARAM *ppp );
+extern	u8		PP_GetSex( const POKEMON_PARAM *pp );
+extern	u8		PPP_GetSex( const POKEMON_PASO_PARAM *ppp );
+extern	u32		PP_GetMinExp( const POKEMON_PARAM *pp );
+extern	u32		PPP_GetMinExp( const POKEMON_PASO_PARAM *ppp );
+extern	u8		PP_GetSeikaku( const POKEMON_PARAM *pp );
+extern	u8		PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp );
+extern	BOOL	PP_CheckRare( const POKEMON_PARAM *pp );
+extern	BOOL	PPP_CheckRare( const POKEMON_PASO_PARAM *pp );
+
+
+extern	void	PP_Put( POKEMON_PARAM *pp, int id, const void *buf);
+extern	void	PPP_Put( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
+extern	void	PP_Add( POKEMON_PARAM *pp, int id, int value);
+extern	void	PPP_Add( POKEMON_PASO_PARAM *ppp, int id, int value);
+
+extern	u16		PP_SetWaza( POKEMON_PARAM *pp, u16 wazano );
+extern	u16		PPP_SetWaza( POKEMON_PASO_PARAM *ppp, u16 wazano );
+extern	void	PP_SetWazaDefault( POKEMON_PARAM *pp );
+extern	void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp );
+extern	void	PP_SetWazaPush( POKEMON_PARAM *pp, u16 wazano );
+extern	void	PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano );
+extern	void	PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
+extern	void	PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
+
 
 extern	u32		POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp );
 extern	u32		POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level );
 extern	u8		POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd );
 extern	u8		POKETOOL_GetSeikaku( u32 personal_rnd );
+extern	BOOL	POKETOOL_CheckRare( u32 id, u32 personal_rnd );
+extern	u32		POKETOOL_GetPersonalParam( u16 mons_no, u16 form_no, int param );
 
 
-
-
+extern	int				PokemonParam_GetWorkSize( void );
 
 
 

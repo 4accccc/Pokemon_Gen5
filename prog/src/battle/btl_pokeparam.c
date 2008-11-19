@@ -142,16 +142,16 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	u16 monsno;
 
 	// 基本パラメタ初期化
-	monsno = PokeParaGet( pp, ID_PARA_monsno, 0 );
+	monsno = PP_Get( pp, ID_PARA_monsno, 0 );
 	bpp->baseParam.monsno = monsno;
-	bpp->baseParam.hpMax = PokeParaGet( pp, ID_PARA_hpmax, 0 );
-	bpp->baseParam.attack = PokeParaGet( pp, ID_PARA_pow, 0 );
-	bpp->baseParam.defence = PokeParaGet( pp, ID_PARA_def, 0 );
-	bpp->baseParam.sp_attack = PokeParaGet( pp, ID_PARA_spepow, 0 );
-	bpp->baseParam.sp_defence = PokeParaGet( pp, ID_PARA_spedef, 0 );
-	bpp->baseParam.agility = PokeParaGet( pp, ID_PARA_agi, 0 );
-	bpp->baseParam.type1 = PokeParaGet( pp, ID_PARA_type1, 0 );
-	bpp->baseParam.type2 = PokeParaGet( pp, ID_PARA_type2, 0 );
+	bpp->baseParam.hpMax = PP_Get( pp, ID_PARA_hpmax, 0 );
+	bpp->baseParam.attack = PP_Get( pp, ID_PARA_pow, 0 );
+	bpp->baseParam.defence = PP_Get( pp, ID_PARA_def, 0 );
+	bpp->baseParam.sp_attack = PP_Get( pp, ID_PARA_spepow, 0 );
+	bpp->baseParam.sp_defence = PP_Get( pp, ID_PARA_spedef, 0 );
+	bpp->baseParam.agility = PP_Get( pp, ID_PARA_agi, 0 );
+	bpp->baseParam.type1 = PP_Get( pp, ID_PARA_type1, 0 );
+	bpp->baseParam.type2 = PP_Get( pp, ID_PARA_type2, 0 );
 
 	// ランク効果初期化
 	Effrank_Init( &bpp->varyParam );
@@ -167,14 +167,14 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->wazaCnt = POKE_WAZA_MAX;
 	for(i=0; i<bpp->wazaCnt; i++)
 	{
-		bpp->waza[i].number = PokeParaGet( pp, ID_PARA_waza1 + i, 0 );
-		bpp->waza[i].pp = PokeParaGet( pp, ID_PARA_pp1 + 1, 0 );
-		bpp->waza[i].ppMax = PokeParaGet( pp, ID_PARA_pp_max1 + 1, 0 );
+		bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1 + i, 0 );
+		bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1 + 1, 0 );
+		bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1 + 1, 0 );
 	}
 
 
 	bpp->item = 0;
-	bpp->tokusei = PokeParaGet( pp, ID_PARA_speabino, 0 );
+	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
 	bpp->hp = bpp->baseParam.hpMax;
 	bpp->myID = pokeID;
 
