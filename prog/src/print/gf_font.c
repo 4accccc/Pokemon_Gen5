@@ -24,13 +24,6 @@ enum {
 	SRC_CHAR_MAXSIZE = SRC_CHAR_SIZE*SRC_CHAR_MAX,
 };
 
-// １文字あたりのキャラサイズ
-enum {
-	LETTERSIZE_1x1 = 0,
-	LETTERSIZE_1x2,
-	LETTERSIZE_2x1,
-	LETTERSIZE_2x2,
-};
 
 /// デフォルトカラー設定
 enum {
@@ -136,11 +129,11 @@ struct  _GFL_FONT	{
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 heapID );
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPID heapID );
 static void unload_font_header( GFL_FONT* wk );
-static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID );
-static void setup_type_on_memory( GFL_FONT* wk, u32 heapID );
-static void setup_type_read_file( GFL_FONT* wk, u32 heapID );
+static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID );
+static void setup_type_on_memory( GFL_FONT* wk, HEAPID heapID );
+static void setup_type_read_file( GFL_FONT* wk, HEAPID heapID );
 static void cleanup_font_datas( GFL_FONT* wk );
 static void cleanup_type_on_memory( GFL_FONT* wk );
 static void cleanup_type_read_file( GFL_FONT* wk );
@@ -157,6 +150,46 @@ static u8 BitReader_Read( BIT_READER* br, u8 bits );
 static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16 gl2ndCharShift, u16* dst1st, u16* dst2nd );
 
 
+
+//=============================================================================================
+/**
+ * フォントデータハンドラ作成
+ *
+ * @param   arcID			フォントデータが含まれるアーカイブID
+ * @param   datID			フォントデータのアーカイブ内ID
+ * @param   loadType		フォントデータ読み出し方式
+ * @param   fixedFontFlag	等幅フォントとして扱うためのフラグ（TRUEなら等幅）
+ * @param   heapID			ハンドラ生成用ヒープID
+ *
+ * @retval  GFL_FONT*		フォントデータハンドラ
+ */
+//=============================================================================================
+GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID )
+{
+	GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
+	if( wk )
+	{
+		wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, datID );
+		load_font_header( wk, datID, fixedFontFlag, heapID );
+		setup_font_datas( wk, loadType, heapID );
+	}
+	return wk;
+}
+
+//=============================================================================================
+/**
+ * フォントデータハンドラ削除
+ *
+ * @param   wk		フォントデータハンドラ
+ *
+ */
+//=============================================================================================
+void GFL_FONT_Delete( GFL_FONT* wk )
+{
+	cleanup_font_datas( wk );
+	unload_font_header( wk );
+	GFL_HEAP_FreeMemory( wk );
+}
 
 
 //==============================================================================================
@@ -199,6 +232,7 @@ void FontDataMan_Delete( GFL_FONT* wk )
 	unload_font_header( wk );
 	GFL_HEAP_FreeMemory( wk );
 }
+
 //==============================================================================================
 /**
  * フォントビットデータの読み込みタイプを変更する
@@ -208,7 +242,7 @@ void FontDataMan_Delete( GFL_FONT* wk )
  *
  */
 //==============================================================================================
-void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID )
+void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID )
 {
 //	未実装
 //	{
@@ -229,7 +263,7 @@ void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 h
  *
  */
 //------------------------------------------------------------------
-static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 heapID )
+static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPID heapID )
 {
 	if( wk->fileHandle )
 	{
@@ -245,6 +279,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 h
 		else
 		{
 			u32 widthTblSize = wk->fontHeader.ofsMap - wk->fontHeader.ofsWidth;
+			OS_TPrintf("[FONT WIDTH TBL=%08x bytes]", widthTblSize);
 			wk->widthTblTop = GFL_HEAP_AllocMemory( heapID, widthTblSize );
 			wk->WidthGetFunc = GetWidthProportionalFont;
 
@@ -261,6 +296,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 h
 //					wk->glyph2ndCharBits, wk->glyph2ndCharShift, wk->glyphInfo.cellSize);
 
 		wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
+		OS_TPrintf("[FONT GLYPH BUF=%08x bytes]", wk->glyphInfo.cellSize);
 		wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
 
 		{
@@ -269,20 +305,6 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, u32 h
 			GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
 						mapTblSize, (void*)(wk->codeMapTop) );
 		}
-
-		#if 0
-		{
-			static const u8 charShapeTbl[2][2] = {
-				{  LETTERSIZE_1x1, LETTERSIZE_1x2 },
-				{  LETTERSIZE_2x1, LETTERSIZE_2x2 },
-			};
-
-			GF_ASSERT( wk->fontHeader.letterCharX <= 2 && wk->fontHeader.letterCharY <= 2 );
-
-			wk->charShape = charShapeTbl[ wk->fontHeader.letterCharX-1 ][ wk->fontHeader.letterCharY-1 ];
-			wk->letterCharSize = SRC_CHAR_SIZE * wk->fontHeader.letterCharX * wk->fontHeader.letterCharY;
-		}
-		#endif
 	}
 }
 //------------------------------------------------------------------
@@ -326,9 +348,9 @@ static void unload_font_header( GFL_FONT* wk )
  *
  */
 //------------------------------------------------------------------
-static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID )
+static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID )
 {
-	static void (* const setup_func[])( GFL_FONT*, u32 ) = {
+	static void (* const setup_func[])( GFL_FONT*, HEAPID ) = {
 		setup_type_read_file,
 		setup_type_on_memory,
 	};
@@ -347,7 +369,7 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heap
  * @param   heapID			ビットデータ領域確保用のヒープID
  */
 //------------------------------------------------------------------
-static void setup_type_on_memory( GFL_FONT* wk, u32 heapID )
+static void setup_type_on_memory( GFL_FONT* wk, HEAPID heapID )
 {
 	#if 0
 //	void* fontData = ArcUtil_Load( arcID, datID, FALSE, heapID, ALLOC_TOP );
@@ -372,7 +394,7 @@ static void setup_type_on_memory( GFL_FONT* wk, u32 heapID )
  * @param   heapID			使用しない
  */
 //------------------------------------------------------------------
-static void setup_type_read_file( GFL_FONT* wk, u32 heapID )
+static void setup_type_read_file( GFL_FONT* wk, HEAPID heapID )
 {
 	wk->GetBitmapFunc = GetBitmapFileRead;
 }

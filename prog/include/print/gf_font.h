@@ -15,7 +15,7 @@
 
 //--------------------------------------------------------------
 /**
- * フォントハンドラ型定義
+ * フォントデータハンドラ型定義
  */
 //--------------------------------------------------------------
 typedef struct _GFL_FONT  GFL_FONT;
@@ -31,6 +31,30 @@ typedef enum {
 	GFL_FONT_LOADTYPE_MEMORY,	///< 全文字をメモリに常駐させておき、そこから読み出す
 }GFL_FONT_LOADTYPE;
 
+
+//=============================================================================================
+/**
+ * フォントデータハンドラ作成
+ *
+ * @param   arcID			フォントデータが含まれるアーカイブID
+ * @param   datID			フォントデータのアーカイブ内ID
+ * @param   loadType		フォントデータ読み出し方式
+ * @param   fixedFontFlag	等幅フォントとして扱うためのフラグ（TRUEなら等幅）
+ * @param   heapID			ハンドラ生成用ヒープID
+ *
+ * @retval  GFL_FONT*		フォントデータハンドラ
+ */
+//=============================================================================================
+extern GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID );
+
+//=============================================================================================
+/**
+ * フォントデータハンドラ削除
+ *
+ * @param   wk			フォントデータハンドラ
+ */
+//=============================================================================================
+extern void GFL_FONT_Delete( GFL_FONT* wk );
 
 
 //==============================================================================================
@@ -49,6 +73,7 @@ typedef enum {
  */
 //==============================================================================================
 extern GFL_FONT* GFL_FONT_CreateHandle( ARCHANDLE* arcHandle, u32 datID, GFL_FONT_LOADTYPE loadType, BOOL fixedFontFlag, HEAPID heapID );
+
 
 //==============================================================================================
 /**
@@ -71,7 +96,7 @@ extern void FontDataMan_Delete( GFL_FONT* wk );
  *
  */
 //==============================================================================================
-extern void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, u32 heapID );
+extern void FontDataMan_ChangeLoadType( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID );
 
 
 //------------------------------------------------------------------
