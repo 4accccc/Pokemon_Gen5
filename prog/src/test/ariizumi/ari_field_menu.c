@@ -170,7 +170,6 @@ struct _DEBUG_COMMMENU
 	PRINT_UTIL printUtilMsg[1];
 	PRINT_QUE *printQueSub;
 	PRINT_UTIL printUtilSub[1];
-	ARCHANDLE *arcHandleMsg;
 	
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
@@ -370,7 +369,7 @@ void AriFldMenu_Term( DEBUG_COMMMENU *d_menu )
 //--------------------------------------------------------------
 void AriFldMenu_Delete( DEBUG_COMMMENU *d_menu )
 {
-	FontDataMan_Delete( d_menu->fontHandle );
+	GFL_FONT_Delete( d_menu->fontHandle );
 	GFL_MSG_Delete( d_menu->msgdata );
 }
 
@@ -416,12 +415,8 @@ void AriFldMenu_Create( DEBUG_COMMMENU *d_menu )
 			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
 			NARC_message_d_comm_menu_dat, d_menu->heapID );
 		
-		
-		d_menu->arcHandleMsg = GFL_ARC_OpenDataHandle(
-				ARCID_D_TAYA, d_menu->heapID );
-		
-		d_menu->fontHandle = GFL_FONT_CreateHandle(
-			d_menu->arcHandleMsg, NARC_d_taya_lc12_2bit_nftr,
+		d_menu->fontHandle = GFL_FONT_Create(
+			ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, d_menu->heapID );
 		
 		PRINTSYS_Init( d_menu->heapID );

@@ -179,7 +179,6 @@ void	FIELD_COMM_FUNC_TermCommSystem( FIELD_COMM_FUNC *commFunc )
 {
 	GFL_NET_Exit( FIELD_COMM_FUNC_FinishTermCallback );
 }
-extern void FIELD_COMM_DATA_SetCharaData_State( const idx , const F_COMM_CHARA_STATE state );
 
 //--------------------------------------------------------------
 //	通信システム更新(ビーコンの待ちうけ
@@ -371,6 +370,7 @@ const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc )
 //--------------------------------------------------------------
 const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc )
 {
+	/*
 	u8 i;
 	u8 num = 1;//自分の分
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
@@ -379,7 +379,8 @@ const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc )
 			num++;
 	}
 	return num;
-//	return GFL_NET_GetConnectNum();
+	*/
+	return GFL_NET_GetConnectNum();
 }
 
 //--------------------------------------------------------------
@@ -398,7 +399,7 @@ typedef struct
 {
 	u16 posX_;
 	u16 posZ_;
-	u8	posY_;		//マックス不明なので。場合によってはなしでOK？
+	s8	posY_;		//マックス不明なので。場合によってはなしでOK？
 	u8	dir_;
 	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
 }FIELD_COMM_PLAYER_PACKET;
@@ -422,7 +423,7 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	//パケットにセット
 	plPkt.zoneID_ = zoneID;
 	plPkt.posX_ = F32_CONST( pos->x );
-	plPkt.posY_ = F32_CONST( pos->y );
+	plPkt.posY_ = (int)F32_CONST( pos->y );
 	plPkt.posZ_ = F32_CONST( pos->z );
 	//plPkt.dir_ = dir>>8;
 	plPkt.dir_ = dir;

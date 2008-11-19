@@ -106,7 +106,8 @@ SRCS	+=		test/testmode.c \
 				test/field/field_comm/field_comm_main.c \
 				test/field/field_comm/field_comm_menu.c \
 				test/field/field_comm/field_comm_data.c \
-				test/field/field_comm/field_comm_func.c
+				test/field/field_comm/field_comm_func.c \
+				test/field/field_comm/field_comm_event.c
 
 
 

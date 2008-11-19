@@ -34,6 +34,7 @@
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
+#include "field_comm/field_comm_event.h"
 
 //============================================================================================
 /**
@@ -232,9 +233,6 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			//登録テーブルごとに個別のメイン処理を呼び出し
 			fieldWork->ftbl->main_func( fieldWork, &pos );
 			
-			//通信用処理(プレイヤーの座標の設定とか
-			FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
-
 			//通信用アクター更新
 			fieldMainCommActorProc( fieldWork );
 
@@ -242,6 +240,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			//これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
+		//通信用処理(プレイヤーの座標の設定とか
+		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
 		MainGameSystem( fieldWork->gs );
 		break;
@@ -305,6 +305,12 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, fieldWork->map_id);
+	}
+	//通信用会話処理(仮
+	if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+			return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork->commSys );
+		}
 	}
 	return NULL;
 }

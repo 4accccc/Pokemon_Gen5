@@ -49,7 +49,6 @@ struct _DLPLAY_MSG_SYS
 	GFL_TEXT_PRINTPARAM	*textParam_[DLPLAY_FUNC_MSG_LINE_NUM ];
 
 	GFL_MSGDATA		*msgData_;
-	ARCHANDLE		*arcHandle_;
 	GFL_FONT		*fontHandle_;
 	PRINT_QUE		*printQue_;
 	PRINT_UTIL		printUtil_[1];
@@ -157,8 +156,7 @@ void	DLPlayFunc_FontInit( u8 fontArcID , u8 fontFileID , u8 msgArcID , u8 msgFil
 	GFL_BMPWIN_TransVramCharacter( msgSys->bmpwinMsg_ );
 	GFL_BG_LoadScreenReq( msgPlane );
 	
-	msgSys->arcHandle_ = GFL_ARC_OpenDataHandle( fontArcID , msgSys->heapID_ );
-	msgSys->fontHandle_ = GFL_FONT_CreateHandle( msgSys->arcHandle_ , 
+	msgSys->fontHandle_ = GFL_FONT_Create( fontArcID , 
 					fontFileID , GFL_FONT_LOADTYPE_FILE ,
 					FALSE , msgSys->heapID_ );
 	msgSys->msgData_ = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , msgArcID ,
@@ -193,8 +191,7 @@ void	DLPlayFunc_FontTerm( DLPLAY_MSG_SYS *msgSys )
 	GFL_BMPWIN_Delete( msgSys->bmpwinMsg_ );
 	PRINTSYS_QUE_Delete( msgSys->printQue_ );
 	GFL_MSG_Delete( msgSys->msgData_ );
-	FontDataMan_Delete( msgSys->fontHandle_ );
-	//GFL_ARC_CloseDataHandle( msgSys->arcHandle_ );
+	GFL_FONT_Delete( msgSys->fontHandle_ );
 }
 
 //======================================================================

@@ -10,10 +10,12 @@
 #include "system/gfl_use.h"
 
 #include "gamesystem/gamesystem.h"
+#include "test/ariizumi/ari_debug.h"
 #include "field_comm_main.h"
 #include "field_comm_menu.h"
 #include "field_comm_func.h"
 #include "field_comm_data.h"
+#include "test/performance.h"
 
 #include "msg/msg_d_field.h"
 
@@ -46,8 +48,12 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 void	FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll );
 void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
+static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork , 
+				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys );
 static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+
+const BOOL	FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys );
 
 //接続開始用メニュー処理
 //開始時
@@ -72,6 +78,9 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 	commSys->commFunc_ = FIELD_COMM_FUNC_InitSystem( heapID );
 	
 	FIELD_COMM_DATA_InitSystem( commHeapID );
+#if DEB_ARI
+	DEBUG_PerformanceSetActive( FALSE );
+#endif
 	return commSys;
 }
 
@@ -105,28 +114,41 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 	{
 		u8 i;
 		FIELD_COMM_FUNC_UpdateSystem( commSys->commFunc_ );
-		//if( FIELD_COMM_FUNC_GetMemberNum( commSys->commFunc_ ) > 1 )
-		if( FIELD_COMM_FUNC_GetCommMode( commSys->commFunc_ ) == FIELD_COMM_MODE_CONNECT )
+		if( FIELD_COMM_FUNC_GetMemberNum( commSys->commFunc_ ) > 1 )
+		//if( FIELD_COMM_FUNC_GetCommMode( commSys->commFunc_ ) == FIELD_COMM_MODE_CONNECT )
 		{
-			ZONEID zoneID;
-			VecFx32 pos;
-			u16 dir;
-			PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
-			//自キャラ座標を更新
-			zoneID = PLAYERWORK_getZoneID( plWork );
-			GetPlayerActTrans( pcActor , &pos );
-			//GetPlayerActDirection( pcActor , &dir );
-			dir = FieldMainGrid_GetPlayerDir( fieldWork );
-			FIELD_COMM_DATA_SetSelfData_Pos( &zoneID , &pos , &dir );
-	
-			FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );
+			FIELD_COMM_MAIN_UpdateSelfData( fieldWork , gameSys , pcActor , commSys );
+			FIELD_COMM_MAIN_UpdateCharaData( fieldWork , gameSys , commSys );
 		}
-		FIELD_COMM_MAIN_UpdateCharaData( fieldWork , gameSys , commSys );
+#if DEB_ARI
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X )
+			FIELD_COMM_MENU_SwitchDebugWindow( BGPLANE_MSG_WINDOW );
+		FIELD_COMM_MENU_UpdateDebugWindow( );
+#endif	//DEB_ARI
 	}
 }
 
 //--------------------------------------------------------------
-// アップデートで他のキャラの更新
+// 自分ののキャラの更新
+//--------------------------------------------------------------
+static void FIELD_COMM_MAIN_UpdateSelfData( FIELD_MAIN_WORK *fieldWork , 
+				GAMESYS_WORK *gameSys , PC_ACTCONT *pcActor , FIELD_COMM_MAIN *commSys )
+{
+	ZONEID zoneID;
+	VecFx32 pos;
+	u16 dir;
+	PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gameSys );
+	//自キャラ座標を更新
+	zoneID = PLAYERWORK_getZoneID( plWork );
+	GetPlayerActTrans( pcActor , &pos );
+	//GetPlayerActDirection( pcActor , &dir );
+	dir = FieldMainGrid_GetPlayerDir( fieldWork );
+	FIELD_COMM_DATA_SetSelfData_Pos( &zoneID , &pos , &dir );
+	FIELD_COMM_FUNC_Send_SelfData( commSys->commFunc_ );
+}
+
+//--------------------------------------------------------------
+// 他のキャラの更新
 //--------------------------------------------------------------
 static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork , 
 				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
@@ -171,6 +193,15 @@ static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 		}
 	}
 }
+
+//--------------------------------------------------------------
+// 通信常態か？(接続して他のプレイヤーが居るか？
+//--------------------------------------------------------------
+const BOOL	FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
+{
+	return (FIELD_COMM_FUNC_GetCommMode(commSys->commFunc_) == FIELD_COMM_MODE_CONNECT);
+}
+
 //--------------------------------------------------------------
 // 通信開始メニュー初期化
 //--------------------------------------------------------------
@@ -292,4 +323,13 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 }
 
 
+//======================================================================
+//	以下 field_comm_event 用。extern定義も該当ソースに書く
+//======================================================================
+const int	FIELD_COMM_MAIN_GetWorkSize(void);
+
+const int	FIELD_COMM_MAIN_GetWorkSize(void)
+{
+	return sizeof(FIELD_COMM_MAIN);
+}
 

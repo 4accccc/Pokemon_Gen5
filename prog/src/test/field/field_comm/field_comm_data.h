@@ -15,6 +15,8 @@
 //======================================================================
 //	define
 //======================================================================
+//自キャラのデータ用インデックス
+#define FCD_SELF_INDEX (0xFF)
 
 //======================================================================
 //	enum
@@ -27,6 +29,17 @@ typedef enum
 	FCCS_EXIST_DATA,	//キャラ個別データ受信後
 	FCCS_FIELD,		//フィールド中
 }F_COMM_CHARA_STATE;
+
+//会話管理用
+typedef enum
+{
+	FCTS_NONE,
+	FCTS_REQUEST_TALK,	//会話希望(ボタンを押す
+	FCTS_REPLY_TALK,	//会話の返事
+	FCTS_WAIT_TALK,		//会話相手の停止待ち
+	FCTS_RESERVE_TALK,	//会話予約
+	FCTS_TALKING,		//会話中
+}F_COMM_TALK_STATE;
 
 //======================================================================
 //	typedef struct
@@ -44,13 +57,17 @@ extern const u8 FIELD_COMM_DATA_GetFieldCommMode(void);
 extern void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos , const u16 *dir );
 extern PLAYER_WORK*	FIELD_COMM_DATA_GetSelfData_PlayerWork(void);
 
-extern void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL );
-extern void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL );
-extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx );
-extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx );
-extern const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const idx );
-extern void FIELD_COMM_DATA_SetCharaData_State( const idx , const F_COMM_CHARA_STATE state );
-extern PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx );
+extern void	FIELD_COMM_DATA_SetCharaData_IsExist( const u8 idx , const BOOL );
+extern void	FIELD_COMM_DATA_SetCharaData_IsValid( const u8 idx , const BOOL );
+extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const u8 idx );
+extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const u8 idx );
+extern void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE state );
+extern const F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx );
+
+
+extern const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx );
+extern void FIELD_COMM_DATA_SetCharaData_State( const u8 idx , const F_COMM_CHARA_STATE state );
+extern PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const u8 idx );
 
 
 

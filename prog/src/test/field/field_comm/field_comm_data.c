@@ -30,8 +30,10 @@ typedef struct
 	BOOL	isExist_;	//キャラが存在する
 	BOOL	isValid_;	//データが有効
 	F_COMM_CHARA_STATE	state_;
+	F_COMM_TALK_STATE	talkState_;
 	PLAYER_WORK plWork_;
 }FIELD_COMM_CHARA_DATA;
+
 
 typedef struct 
 {
@@ -57,15 +59,20 @@ void	FIELD_COMM_DATA_SetSelfData_PlayerWork( const PLAYER_WORK *plWork );
 void	FIELD_COMM_DATA_SetSelfDataPos( const ZONEID zoneID , const VecFx32 *pos , const u16 *dir );
 PLAYER_WORK* FIELD_COMM_DATA_GetSelfData_PlayerWork(void);
 
-void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL );
-void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL );
-const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx );
-const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx );
-const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const idx );
-void FIELD_COMM_DATA_SetCharaData_State( const idx , const F_COMM_CHARA_STATE state );
-PLAYER_WORK* FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx);
+void	FIELD_COMM_DATA_SetCharaData_IsExist( const u8 idx , const BOOL );
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const u8 idx );
+void	FIELD_COMM_DATA_SetCharaData_IsValid( const u8 idx , const BOOL );
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const u8 idx );
+void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE state );
+const	F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx );
+void	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ );
+
+const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx );
+void FIELD_COMM_DATA_SetCharaData_State( const u8 idx , const F_COMM_CHARA_STATE state );
+PLAYER_WORK* FIELD_COMM_DATA_GetCharaData_PlayerWork( const u8 idx);
 
 static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData );
+static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx );
 
 //--------------------------------------------------------------
 //	通信用データ管理初期化
@@ -140,49 +147,75 @@ void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos 
 //--------------------------------------------------------------
 PLAYER_WORK*	FIELD_COMM_DATA_GetSelfData_PlayerWork( void )
 {
-	GF_ASSERT( commData != NULL );
-	return &commData->selfData_.plWork_;
+	return FIELD_COMM_DATA_GetCharaData_PlayerWork( FCD_SELF_INDEX );
+//	GF_ASSERT( commData != NULL );
+//	return &commData->selfData_.plWork_;
 }
 
 //--------------------------------------------------------------
 //	指定番号のフラグ取得・設定
 //--------------------------------------------------------------
-void	FIELD_COMM_DATA_SetCharaData_IsExist( const idx , const BOOL flg)
+void	FIELD_COMM_DATA_SetCharaData_IsExist( const u8 idx , const BOOL flg)
 {
-	commData->charaData_[idx].isExist_ = flg;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	pData->isExist_ = flg;
 }
-void	FIELD_COMM_DATA_SetCharaData_IsValid( const idx , const BOOL flg)
+void	FIELD_COMM_DATA_SetCharaData_IsValid( const u8 idx , const BOOL flg)
 {
-	commData->charaData_[idx].isValid_ = flg;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	pData->isValid_ = flg;
 }
-const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const idx )
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const u8 idx )
 {
-	return commData->charaData_[idx].isExist_;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	return pData->isExist_;
 }
-const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const idx )
+const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const u8 idx )
 {
-	return commData->charaData_[idx].isValid_;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	return pData->isValid_;
+}
+
+//--------------------------------------------------------------
+//	会話系：会話ステートの取得・設定
+//--------------------------------------------------------------
+void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE state )
+{
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	pData->talkState_ = state;
+}
+const	F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx )
+{
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	return pData->talkState_;
+}
+void	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ )
+{
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+
 }
 
 //--------------------------------------------------------------
 //	指定番号のステータス取得
 //--------------------------------------------------------------
-const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const idx )
-{
-	return commData->charaData_[idx].state_;
+const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx )
+{	
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	return pData->state_;
 }
-void FIELD_COMM_DATA_SetCharaData_State( const idx , const F_COMM_CHARA_STATE state )
+void FIELD_COMM_DATA_SetCharaData_State( const u8 idx , const F_COMM_CHARA_STATE state )
 {
-	commData->charaData_[idx].state_ = state;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	pData->state_ = state;
 }
 
 //--------------------------------------------------------------
 //	指定番号のデータ取得
 //--------------------------------------------------------------
-PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const idx )
+PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const u8 idx )
 {
-	GF_ASSERT( commData != NULL );
-	return &commData->charaData_[idx].plWork_;
+	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
+	return &pData->plWork_;
 }
 
 //--------------------------------------------------------------
@@ -193,6 +226,19 @@ static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData )
 	charaData->isExist_ = FALSE;
 	charaData->isValid_ = FALSE;
 	charaData->state_ = FCCS_NONE;
+	charaData->talkState_ = FCTS_NONE;
 	PLAYERWORK_init( &charaData->plWork_ );
+}
+
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx )
+{
+	GF_ASSERT( commData != NULL );
+	if( idx == FCD_SELF_INDEX )
+		return &commData->selfData_;
+	GF_ASSERT( idx < FIELD_COMM_MEMBER_MAX );
+	return &commData->charaData_[idx];
 }
 

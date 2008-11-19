@@ -46,4 +46,9 @@ extern void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_UpdateMessageWindow( FIELD_COMM_MENU *commMenu );
 
+#if DEB_ARI
+extern void	FIELD_COMM_MENU_SwitchDebugWindow( u8 bgPlane );
+extern void	FIELD_COMM_MENU_UpdateDebugWindow( void );
+#endif
+
 #endif //FIELD_COMM_MENU_H__
