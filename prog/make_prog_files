@@ -86,6 +86,9 @@ SRCS	+=		test/testmode.c \
 				battle/btlv_core.c \
 				battle/btlv_scu.c \
 				battle/btlv_scd.c \
+				battle/handler/hand_tokusei.c \
+				battle/handler/tokusei/hand_tok_ikaku.c \
+				battle/handler/tokusei/hand_tok_clearbody.c \
 				test/field/field_debug.c \
 				test/field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \
