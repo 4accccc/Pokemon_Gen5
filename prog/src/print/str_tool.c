@@ -111,3 +111,54 @@ void STRTOOL_SetNumber( STRBUF* dst, int number, u32 keta, StrNumberDispType dis
 	}
 }
 
+//=============================================================================================
+/**
+ * 生文字配列間コピー
+ *
+ * @param[in]	src			コピー元文字列（EOM終端）
+ * @param[out]	dst			コピー先文字配列
+ * @param		dstElems	コピー先文字配列要素数
+ *
+ */
+//=============================================================================================
+void STRTOOL_Copy( const STRCODE* src, STRCODE* dst, u32 dstElems )
+{
+	u32 i;
+	STRCODE EOMCODE = GFL_STR_GetEOMCode();
+
+	for(i=0; i<dstElems; i++)
+	{
+		dst[i] = src[i];
+		if( dst[i] == EOMCODE )
+		{
+			break;
+		}
+	}
+
+	dst[ dstElems-1 ] = EOMCODE;
+}
+
+//=============================================================================================
+/**
+ * 生文字列の一致判定
+ *
+ * @param   src		
+ * @param   dst		
+ *
+ * @retval  BOOL	一致していたらTRUE
+ */
+//=============================================================================================
+BOOL STRTOOL_Comp( const STRCODE* src, const STRCODE* dst )
+{
+	STRCODE EOMCODE = GFL_STR_GetEOMCode();
+
+	while( *src != EOMCODE )
+	{
+		if( *src != *dst ){ return FALSE; }
+		src++;
+		dst++;
+	}
+	return TRUE;
+}
+
+

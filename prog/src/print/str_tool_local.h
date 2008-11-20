@@ -12,7 +12,7 @@
 #define __STR_TOOL_LOCAL_H__
 
 
-extern void STRTOOL_SetNumber( STRBUF* dst, int number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType );
+
 
 
 

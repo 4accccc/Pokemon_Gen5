@@ -44,6 +44,9 @@ typedef enum {
 
 }StrNumberCodeType;
 
+extern void STRTOOL_SetNumber( STRBUF* dst, int number, u32 keta, StrNumberDispType dispType, StrNumberCodeType codeType );
+extern void STRTOOL_Copy( const STRCODE* src, STRCODE* dst, u32 dstElems );
+extern BOOL STRTOOL_Comp( const STRCODE* src, const STRCODE* dst );
 
 
 #endif
