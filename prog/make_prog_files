@@ -3,6 +3,7 @@ SRCS	+=		test/testmode.c \
 				test/tetsu/game/calc_ph.c \
 				test/matsuda/performance.c \
 				system/net_err.c \
+				system/debug_print.c \
 				test/ohno/debug_ohno.c \
 				test/ohno/debug_field.c \
 				test/ohno/fatal_error.c \
