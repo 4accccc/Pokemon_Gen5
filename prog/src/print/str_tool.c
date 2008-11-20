@@ -6,9 +6,11 @@
  * @date	2008.11.17
  */
 //============================================================================================
+#include <heapsys.h>
+#include <strbuf.h>
 
 #include "print/printsys.h"
-#include "str_tool_local.h"
+#include "print/str_tool.h"
 
 enum {
 	n0_ = 0xff10,
@@ -25,18 +27,18 @@ enum {
 	bou_  = 0x30fc,
 	hate_ = 0xff1f,
 
-	h_n0 = 0x0030,
-	h_n1,
-	h_n2,
-	h_n3,
-	h_n4,
-	h_n5,
-	h_n6,
-	h_n7,
-	h_n8,
-	h_n9,
-	h_spc   = 0x0020,
-	h_bou   = 0x002d,
+	h_n0_ = 0x0030,
+	h_n1_,
+	h_n2_,
+	h_n3_,
+	h_n4_,
+	h_n5_,
+	h_n6_,
+	h_n7_,
+	h_n8_,
+	h_n9_,
+	h_spc_  = 0x0020,
+	h_bou_  = 0x002d,
 	h_hate_ = 0x003f,
 };
 
@@ -62,16 +64,15 @@ void STRTOOL_SetNumber( STRBUF* dst, int number, u32 keta, StrNumberDispType dis
     static const STRCODE sc_zen[] = {n0_,n1_,n2_,n3_,n4_,n5_,n6_,n7_,n8_,n9_,hate_};
     static const STRCODE sc_han[] = {h_n0_,h_n1_,h_n2_,h_n3_,h_n4_,h_n5_,h_n6_,h_n7_,h_n8_,h_n9_,h_hate_};
 
-	int minus;
+	const STRCODE* sctbl = (codeType==STR_NUM_CODE_ZENKAKU)? sc_zen : sc_han;
+
+	u32  num_f, num_i, i;
+	u16 minus;
 
 	minus = (number < 0);
 
-	if( dst->size > (keta+minus) )
 	{
-		u32  num_f, num_i, i;
-		const STRCODE* sctbl = (codeType==STR_NUM_CODE_ZENKAKU)? sc_zen : sc_han;
-
-		STRBUF_Clear(dst);
+		GFL_STR_ClearBuffer(dst);
 
 		if(minus)
 		{
@@ -90,7 +91,7 @@ void STRTOOL_SetNumber( STRBUF* dst, int number, u32 keta, StrNumberDispType dis
 				num_i = 10;
 			}
 
-			if( dispType == NUMBER_DISPTYPE_ZERO )
+			if( dispType == STR_NUM_DISP_ZERO )
 			{
 				GFL_STR_AddCode( dst, sctbl[num_i] );
 			}
