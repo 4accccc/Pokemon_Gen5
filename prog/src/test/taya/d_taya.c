@@ -774,6 +774,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			para->commPos = 0;
 			para->netID = 0;
 
+
 			para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
 			para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
 			para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
@@ -798,6 +799,7 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
 {
 	va_list  list;
 	int monsno;
+	POKEMON_PARAM* pp;
 
 	va_start( list, party );
 	while( 1 )
@@ -805,7 +807,9 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
 		monsno = va_arg( list, int );
 		if( monsno )
 		{
-			
+			TAYA_Printf("Create MonsNo=%d\n", monsno);
+			pp = PP_Create( monsno, 50, 3594, heapID );
+			PokeParty_Add( party, pp );
 		}
 		else
 		{
