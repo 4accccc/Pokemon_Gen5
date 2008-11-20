@@ -101,9 +101,16 @@ u32		POKETOOL_GetWorkSize( void )
  * ポケモンパラメータ操作関数系
  */
 //============================================================================================
-POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )	///< 
+POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )
 {
-	return NULL;
+	POKEMON_PARAM* pp = GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
+
+	if( pp )
+	{
+		PP_Setup( pp, mons_no, level, id );
+	}
+
+	return pp;
 }
 
 //============================================================================================
