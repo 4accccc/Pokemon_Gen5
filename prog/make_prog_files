@@ -68,6 +68,7 @@ SRCS	+=		test/testmode.c \
 				print/wordset.c \
 				print/global_msg.c \
 				print/global_font.c \
+				print/str_tool.c \
 				system/bmp_winframe.c \
 				system/bmp_menuwork.c \
 				system/bmp_menu.c \
