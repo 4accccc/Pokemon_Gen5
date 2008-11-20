@@ -73,6 +73,14 @@ extern u8 GFL_MSGSYS_GetLangID( void );
 
 
 
+/*============================================================================================*/
+/*                                                                                            */
+/*  以下の関数はSTRBUFで隠蔽されていない生の文字配列を扱う。使用個所は限定＆許可制。          */
+/*                                                                                            */
+/*============================================================================================*/
+extern void GFL_MSG_GetStringRaw( const GFL_MSGDATA* handle, u32 strID, STRCODE* dstAry, u32 aryElems );
+
+
 
 #ifdef __cplusplus
 }/* extern "C" */

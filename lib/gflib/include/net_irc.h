@@ -41,7 +41,6 @@ extern void GFL_NET_IRC_SendTurnSet(void);
 extern BOOL GFL_NET_IRC_SendTurnGet(void);
 extern BOOL GFL_NET_IRC_SendLockFlagGet(void);
 extern BOOL GFL_NET_IRC_SendCheck(void);
-extern int GFL_NET_IRC_GetCurrentAid(void);
 extern int GFL_NET_IRC_System_GetCurrentAid(void);
 extern void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command, u8 value);
 extern void GFL_NET_IRC_CommandContinue(void);
