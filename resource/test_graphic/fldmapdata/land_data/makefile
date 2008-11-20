@@ -30,7 +30,7 @@ include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-include land_list
+#include land_list
 include land_model_list
 G3D_NSBMD = $(G3D_IMD:.imd=.nsbmd)
 G3D_NSBTX = $(G3D_IMD:.imd=.nsbtx)
