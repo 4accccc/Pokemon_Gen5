@@ -1,6 +1,6 @@
 //======================================================================
 /**
- * @file	event_debug_menu.c
+ * @file	event_debug_menu.h
  * @brief	フィールドデバッグメニューの制御イベント
  * @author	kagaya
  * @date	2008.11.13

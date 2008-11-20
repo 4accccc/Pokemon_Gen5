@@ -50,6 +50,12 @@ typedef enum
 //	typedef struct
 //======================================================================
 //--------------------------------------------------------------
+///	メニュー呼び出し関数
+///	BOOL TRUE=イベント継続 FALSE==デバッグメニューイベント終了
+//--------------------------------------------------------------
+typedef BOOL (* D_MENU_CALLPROC)(DEBUG_FLDMENU*);
+
+//--------------------------------------------------------------
 ///	DEBUG_MENU_EVENT_WORK
 //--------------------------------------------------------------
 typedef struct {
@@ -58,12 +64,6 @@ typedef struct {
 	HEAPID heapID;
 	u16 page_id;
 }DEBUG_MENU_EVENT_WORK;
-
-//--------------------------------------------------------------
-///	メニュー呼び出し関数
-///	BOOL TRUE=イベント継続 FALSE==デバッグメニューイベント終了
-//--------------------------------------------------------------
-typedef BOOL (* D_MENU_CALLPROC)(DEBUG_FLDMENU*);
 
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LIST
@@ -86,6 +86,27 @@ typedef struct
 }DEBUG_MENU_LISTTBL;
 
 //--------------------------------------------------------------
+///	DMENU_COMMON_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+	u32 bgFrame;
+	u32 heapID;
+
+	GFL_BMP_DATA *bmp;
+	GFL_BMPWIN *bmpwin;
+
+	STRBUF *strbuf;
+	GFL_MSGDATA *msgdata;
+	GFL_FONT *fontHandle;
+	PRINT_QUE *printQue;
+	PRINT_UTIL printUtil[1];
+	
+	BMP_MENULIST_DATA *menulistdata;
+	BMPMENULIST_WORK *pMenuListWork;
+}DMENU_COMMON_WORK;
+
+//--------------------------------------------------------------
 ///	DEBUG_FLDMENU
 //--------------------------------------------------------------
 struct _TAG_DEBUG_FLDMENU
@@ -95,7 +116,7 @@ struct _TAG_DEBUG_FLDMENU
 	FIELD_MAIN_WORK *fieldWork;
 	
 	u32 menu_num;
-
+	
 	int seq_no;
 	u32 bgFrame;
 	GFL_BMP_DATA *bmp;
@@ -110,7 +131,7 @@ struct _TAG_DEBUG_FLDMENU
 	BMP_MENULIST_DATA *menulistdata;
 	BMPMENU_WORK *bmpmenu;
 	D_MENU_CALLPROC call_proc;
-
+	
 	//通信メニュー用
 	int commSeq;	//追加 Ari1111
 	FIELD_COMM_MAIN	*commSys;
@@ -138,6 +159,15 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_FLDMENU *wk );
 
 static void DEBUG_SetMenuWorkZoneIDName(
 		BMP_MENULIST_DATA *list, HEAPID heapID );
+
+static void DebugMenu_InitCommonMenu(
+	DMENU_COMMON_WORK *work,
+	const BMPMENULIST_HEADER *pMenuHead,
+	const BMP_MENULIST_DATA *pMenuList, int menuCount,
+	int bmpsize_x, int bmpsize_y,
+	int arcDatIDmsg, HEAPID heapID );
+static void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work );
+static u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work );
 
 //======================================================================
 //	メニューリスト一覧
@@ -693,29 +723,25 @@ static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_FLDMENU *wk )
 //	デバッグメニュー どこでもジャンプ
 //======================================================================
 //--------------------------------------------------------------
-///	DEBUG_ZONESEL どこでもジャンプ処理用ワーク
+///	EVWORK_DEBUG_ZONESEL どこでもジャンプ処理用ワーク
 //--------------------------------------------------------------
 typedef struct
 {
 	int seq_no;
 	HEAPID heapID;
 	FIELD_MAIN_WORK *fieldWork;
-
-	GFL_BMP_DATA *bmp;
-	GFL_BMPWIN *bmpwin;
+	
 	BMP_MENULIST_DATA *pMenuList;
-	BMPMENULIST_WORK *pMenuListWork;
-
-	STRBUF *strbuf;
-	GFL_MSGDATA *msgdata;
-	GFL_FONT *fontHandle;
-	PRINT_QUE *printQue;
-	PRINT_UTIL printUtil[1];
-}DEBUG_ZONESEL;
+	DMENU_COMMON_WORK menuCommonWork;
+}EVWORK_DEBUG_ZONESEL;
 
 //--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuZoneSelectEvent(
+		GMEVENT *event, int *seq, void *work );
+
 ///	どこでもジャンプ　メニューヘッダー
-//--------------------------------------------------------------
 static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
 {
 	NULL,	//表示文字データポインタ
@@ -750,15 +776,6 @@ static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
 };
 
 //--------------------------------------------------------------
-///	proto
-//--------------------------------------------------------------
-static GMEVENT_RESULT DMenuZoneSelectEvent(
-		GMEVENT *event, int *seq, void *work );
-
-static void DMenuZoneSelect_Init( DEBUG_ZONESEL *work );
-static int DMenuZoneSelect_Main( DEBUG_ZONESEL *work );
-
-//--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　どこでもジャンプ
  * @param	wk	DEBUG_FLDMENU*
@@ -768,13 +785,14 @@ static int DMenuZoneSelect_Main( DEBUG_ZONESEL *work );
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_FLDMENU *wk )
 {
 	GMEVENT *event;
-	DEBUG_ZONESEL *work;
+	EVWORK_DEBUG_ZONESEL *work;
 	
 	event = wk->gmEvent;
-	GMEVENT_Change( event, DMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL) );
+	GMEVENT_Change( event,
+		DMenuZoneSelectEvent, sizeof(EVWORK_DEBUG_ZONESEL) );
 	
 	work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(DEBUG_ZONESEL) );
+	MI_CpuClear8( work, sizeof(EVWORK_DEBUG_ZONESEL) );
 
 	work->heapID = wk->heapID;
 	work->fieldWork = wk->fieldWork;
@@ -793,173 +811,44 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_FLDMENU *wk )
 static GMEVENT_RESULT DMenuZoneSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_ZONESEL *work = wk;
+	EVWORK_DEBUG_ZONESEL *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
-		DMenuZoneSelect_Init( work );
-		(*seq)++;
-		break;
-	case 1:
-		if( DMenuZoneSelect_Main(work) == TRUE ){
-			return( GMEVENT_RES_FINISH );
-		}
-		break;
-	}
-
-	return( GMEVENT_RES_CONTINUE );
-}
-
-//--------------------------------------------------------------
-/**
- * どこでもジャンプ　初期化
- */
-//--------------------------------------------------------------
-static void DMenuZoneSelect_Init( DEBUG_ZONESEL *work )
-{
-	{	//graphic init
-		u32 bgFrame = DEBUG_BGFRAME_MENU;
-		
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl(
-			bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-
-		GFL_BG_SetVisible( bgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
-		
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_D_TAYA, NARC_d_taya_default_nclr,
-			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, work->heapID );
-		
-		GFL_BG_FillCharacter( bgFrame, 0x00, 1, 0 );
-		GFL_BG_FillScreen( bgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( bgFrame );
-	}
-
-	{	//window frame
-		BmpWinFrame_GraphicSet( DEBUG_BGFRAME_MENU, 1,
-				DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, work->heapID );
-	}
-	
-	{	//bmp window
-		work->bmpwin = GFL_BMPWIN_Create(
-			DEBUG_BGFRAME_MENU,
-			1, 1, 11, 16,
-			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
-		work->bmp = GFL_BMPWIN_GetBmp( work->bmpwin );
-		
-		GFL_BMP_Clear( work->bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( work->bmpwin );
-		
-		GFL_BMPWIN_TransVramCharacter( work->bmpwin );
-		GFL_BG_LoadScreenReq( DEBUG_BGFRAME_MENU );
-	}
-	
-	{	//message
-		work->msgdata = GFL_MSG_Create(
-			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-			NARC_message_d_field_dat, work->heapID );
-		
-		work->strbuf = GFL_STR_CreateBuffer( 1024, work->heapID );
-
-		work->fontHandle = GFL_FONT_Create(
-			ARCID_D_TAYA,
-			NARC_d_taya_lc12_2bit_nftr,
-			GFL_FONT_LOADTYPE_FILE,
-			FALSE,
-			work->heapID );
-
-		work->printQue = PRINTSYS_QUE_Create( work->heapID );
-		PRINT_UTIL_Setup( work->printUtil, work->bmpwin );
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * どこでもジャンプ　メイン
- */
-//--------------------------------------------------------------
-static int DMenuZoneSelect_Main( DEBUG_ZONESEL *work )
-{
-	switch( work->seq_no ){
-	case 0:
-		{	//Menu List
-			int i;
+		{
 			u32 max = ZONEDATA_GetZoneIDMax();
-			BMPMENULIST_HEADER head = DATA_DebugMenuList_ZoneSel;
-			BmpWinFrame_Write( work->bmpwin,
-				WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+			BMPMENULIST_HEADER menuH = DATA_DebugMenuList_ZoneSel;
 			work->pMenuList = BmpMenuWork_ListCreate( max, work->heapID );
 			DEBUG_SetMenuWorkZoneIDName( work->pMenuList, work->heapID );
 			
-			head.count = max;
-			head.msgdata = work->msgdata;
-			head.print_util = work->printUtil;
-			head.print_que = work->printQue;
-			head.font_handle = work->fontHandle;
-			head.win = work->bmpwin;
-			head.list = work->pMenuList;
-			
-			work->pMenuListWork =
-				BmpMenuList_Set( &head, 0, 0, work->heapID );
-			BmpMenuList_SetCursorString( work->pMenuListWork, 0 );
+			DebugMenu_InitCommonMenu( &work->menuCommonWork,
+				&menuH, work->pMenuList, max,
+				11, 16, NARC_message_d_field_dat, work->heapID );
 		}
 		
-		work->seq_no++;
+		(*seq)++;
 		break;
 	case 1:
 		{
-			u32 ret;
-			ret = BmpMenuList_Main( work->pMenuListWork );
-			PRINTSYS_QUE_Main( work->printQue );
+			u32 ret = DebugMenu_ProcCommonMenu( &work->menuCommonWork );
 			
-			if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
-			}
-
-			switch( ret ){
-			case BMPMENULIST_NULL:
+			if( ret == BMPMENULIST_NULL ){	//操作無し
 				break;
-			case BMPMENULIST_CANCEL:	//キャンセル
-				work->seq_no++;
-				break;
-			default:					//決定
+			}else if( BMPMENULIST_CANCEL ){	//キャンセル
+				(*seq)++;
+			}else{							//決定
 				//ret == zoneID
-				work->seq_no++;
-				break;
+				(*seq)++;
 			}
 		}
 		break;
 	case 2:
-		BmpWinFrame_Clear( work->bmpwin, 0 );
-
-		BmpMenuList_Exit( work->pMenuListWork, NULL, NULL );
+		DebugMenu_DeleteCommonMenu( &work->menuCommonWork );
 		BmpMenuWork_ListDelete( work->pMenuList );
-		
-		PRINTSYS_QUE_Delete( work->printQue );
-		GFL_FONT_Delete( work->fontHandle );
-		GFL_STR_DeleteBuffer( work->strbuf );
-		GFL_MSG_Delete( work->msgdata );
-		GFL_BMPWIN_Delete( work->bmpwin );
-		
-		{
-			u32 bgFrame = DEBUG_BGFRAME_MENU;
-			GFL_BG_FreeCharacterArea( bgFrame, 0x00, 0x20 );
-			GFL_BG_FreeBGControl( bgFrame );
-		}
-
-		return( TRUE );
+		return( GMEVENT_RES_FINISH );
 	}
 
-	return( FALSE );
+	return( GMEVENT_RES_CONTINUE );
 }
 
 //======================================================================
@@ -975,10 +864,10 @@ static int DMenuZoneSelect_Main( DEBUG_ZONESEL *work )
 #define ASCII_Z (0x5a)
 
 //半角
-#define UTF16_U8_0 (0x0030)
-#define UTF16_U8_9 (0x0039)
-#define UTF16_U8_A (0x0041)
-#define UTF16_U8_Z (0x005a)
+#define UTF16H_0 (0x0030)
+#define UTF16H_9 (0x0039)
+#define UTF16H_A (0x0041)
+#define UTF16H_Z (0x005a)
 
 //全角
 #define UTF16_0 (0xff10)
@@ -1001,12 +890,12 @@ static u16 DEBUG_ASCIICODE_UTF16( u8 code )
 	
 	if( code >= ASCII_0 && code <= ASCII_9 ){
 		code -= ASCII_0;
-		return( UTF16_U8_0 + code );
+		return( UTF16H_0 + code );
 	}
 	
 	if( code >= ASCII_A && code <= ASCII_Z ){
 		code -= ASCII_A;
-		return( UTF16_U8_A + code );
+		return( UTF16H_A + code );
 	}
 	
 	GF_ASSERT( 0 ); 					//未対応文字
@@ -1087,3 +976,157 @@ static void DEBUG_SetMenuWorkZoneIDName(
 	GFL_HEAP_FreeMemory( strBuf );
 }
 
+//======================================================================
+//	parts
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー用　共通メニュー初期化
+ * @param	work	DMENU_COMMON_WORK
+ * @param	pMenuHead	BMPMENULIST_HEADER
+ * @param	pMenuList	BMP_MENULIST_DATA
+ * @param	menuCount	メニュー項目数
+ * @param	bmpsize_x	ビットマップサイズX　キャラ単位
+ * @param	bmpsize_y	ビットマップサイズY　キャラ単位
+ * @param	arcDatIDMsg	メッセージアーカイブデータインデックスID
+ * @param	heapID		使用するHEAPID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DebugMenu_InitCommonMenu(
+	DMENU_COMMON_WORK *work,
+	const BMPMENULIST_HEADER *pMenuHead,
+	const BMP_MENULIST_DATA *pMenuList, int menuCount,
+	int bmpsize_x, int bmpsize_y,
+	int arcDatIDmsg, HEAPID heapID )
+{
+	BMPMENULIST_HEADER menuH = *pMenuHead;
+	
+	work->heapID = heapID;
+	work->bgFrame = DEBUG_BGFRAME_MENU;
+	
+	{	//BG初期化 いずれメイン側のを利用する形へ
+		GFL_BG_BGCNT_HEADER bgcntText = {
+			0, 0, 0x800, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		};
+		
+		GFL_BG_SetBGControl( work->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
+		
+		GFL_BG_SetPriority( work->bgFrame, 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
+		
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_D_TAYA, NARC_d_taya_default_nclr,
+			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, work->heapID );
+		
+		GFL_BG_FillCharacter( work->bgFrame, 0x00, 1, 0 );
+		GFL_BG_FillScreen( work->bgFrame,
+			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	
+		GFL_BG_LoadScreenReq( work->bgFrame );
+	}
+	
+	{	//window frame
+		BmpWinFrame_GraphicSet( work->bgFrame, 1,
+			DEBUG_MENU_PANO, MENU_TYPE_SYSTEM, heapID );
+	}
+	
+	{	//bmpwin
+		work->bmpwin = GFL_BMPWIN_Create(
+			work->bgFrame, 1, 1, bmpsize_x, bmpsize_y,
+			DEBUG_FONT_PANO, GFL_BMP_CHRAREA_GET_B );
+		work->bmp = GFL_BMPWIN_GetBmp( work->bmpwin );
+		
+		GFL_BMP_Clear( work->bmp, 0xff );
+		GFL_BMPWIN_MakeScreen( work->bmpwin );
+		
+		GFL_BMPWIN_TransVramCharacter( work->bmpwin );
+		GFL_BG_LoadScreenReq( work->bgFrame );
+	}
+	
+	{	//message
+		work->msgdata = GFL_MSG_Create(
+			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arcDatIDmsg, work->heapID );
+		
+		work->strbuf = GFL_STR_CreateBuffer( 512, work->heapID );
+		
+		work->fontHandle = GFL_FONT_Create(
+			ARCID_D_TAYA,
+			NARC_d_taya_lc12_2bit_nftr,
+			GFL_FONT_LOADTYPE_FILE,
+			FALSE,
+			work->heapID );
+		
+		work->printQue = PRINTSYS_QUE_Create( work->heapID );
+		PRINT_UTIL_Setup( work->printUtil, work->bmpwin );
+	}
+	
+	{	//	menu window
+		BmpWinFrame_Write( work->bmpwin,
+			WINDOW_TRANS_ON, 1, DEBUG_MENU_PANO );
+	}
+	
+	{	//menu
+		menuH.count = menuCount;
+		menuH.msgdata = work->msgdata;
+		menuH.print_util = work->printUtil;
+		menuH.print_que = work->printQue;
+		menuH.font_handle = work->fontHandle;
+		menuH.win = work->bmpwin;
+		menuH.list = pMenuList;
+		
+		work->pMenuListWork =
+			BmpMenuList_Set( &menuH, 0, 0, work->heapID );
+		BmpMenuList_SetCursorString( work->pMenuListWork, 0 );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー用　共通メニュー削除
+ * @param	work	DMENU_COMMON_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work )
+{
+	BmpWinFrame_Clear( work->bmpwin, 0 );
+	BmpMenuList_Exit( work->pMenuListWork, NULL, NULL );
+//	BmpMenuWork_ListDelete( work->pMenuList );
+	
+	PRINTSYS_QUE_Delete( work->printQue );
+	GFL_FONT_Delete( work->fontHandle );
+	GFL_STR_DeleteBuffer( work->strbuf );
+	GFL_MSG_Delete( work->msgdata );
+	GFL_BMPWIN_Delete( work->bmpwin );
+	
+	{	//とりあえずこちらで　いずれはメイン側
+		GFL_BG_FreeCharacterArea( work->bgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( work->bgFrame );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー用　共通メニュー処理
+ * @param	work	DEBUG_COMMON_WORK
+ * @retval	u32		メニューリスト選択番号
+ * BMPMENULIST_NULL = 選択中 BMPMENULIST_CANCEL	= キャンセル
+ */
+//--------------------------------------------------------------
+static u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
+{
+	u32 ret;
+	
+	ret = BmpMenuList_Main( work->pMenuListWork );
+	PRINTSYS_QUE_Main( work->printQue );
+	
+	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
+	}
+	
+	return( ret );
+}
