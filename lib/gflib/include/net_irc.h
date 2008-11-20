@@ -37,15 +37,19 @@ extern void GFL_NET_IRC_Init(void);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
 extern void GFL_NET_IRC_InitializeFlagSet(void);
 extern BOOL GFL_NET_IRC_InitializeFlagGet(void);
-extern void GFL_NET_IRC_SendTurnSet(void);
 extern BOOL GFL_NET_IRC_SendTurnGet(void);
 extern BOOL GFL_NET_IRC_SendLockFlagGet(void);
 extern BOOL GFL_NET_IRC_SendCheck(void);
 extern int GFL_NET_IRC_System_GetCurrentAid(void);
-extern void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command, u8 value);
+extern void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command);
 extern void GFL_NET_IRC_CommandContinue(void);
 extern void GFL_NET_IRC_ParentMacAddressSet(const u8 *mac_address);
 extern u8 * GFL_NET_IRC_ParentMacAddressGet(void);
+extern void GFL_NET_IRC_FirstConnect(void);
+extern BOOL GFL_NET_IRC_IsSender(void);
+extern BOOL GFL_NET_IRC_IsConnect(void);
+extern BOOL GFL_NET_IRC_IsConnectSystem(void);
+extern void GFL_NET_IRC_Move(void);
 
 
 #endif	//__NET_IRC_H__

@@ -32,6 +32,7 @@ typedef struct {
 	
 	//通信
 	BOOL connect_ok;
+	int connect_count;
 	int send_key;
 	
 	u8 huge_data[0x1000];
@@ -48,7 +49,7 @@ static void* _netBeaconGetFunc(void* pWork);
 static int _netBeaconGetSizeFunc(void* pWork);
 static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
 static void _initCallBack(void* pWork);
-static void _connectCallBack(void* pWork);
+static void _connectCallBack(void* pWork, int netID);
 static void _endCallBack(void* pWork);
 static void _RecvMoveData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvHugeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -241,7 +242,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _CommPacketTbl,  // 受信関数テーブル
     NELEMS(_CommPacketTbl), // 受信テーブル要素数
     NULL,    ///< ハードで接続した時に呼ばれる
-    NULL,    ///< ネゴシエーション完了時にコール
+    _connectCallBack,    ///< ネゴシエーション完了時にコール
     NULL,   // ユーザー同士が交換するデータのポインタ取得関数
     NULL,   // ユーザー同士が交換するデータのサイズ取得関数
     _netBeaconGetFunc,  // ビーコンデータ取得関数
@@ -261,7 +262,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     _BCON_GET_NUM,    // 最大ビーコン収集数
     TRUE,     // CRC計算
     FALSE,     // MP通信＝親子型通信モードかどうか
-    GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
+    GFL_NET_TYPE_IRC,	//GFL_NET_TYPE_IRC_WIRELESS,//GFL_NET_TYPE_WIRELESS,//GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_DEBUG_MATSUDA_SERVICEID,  //GameServiceID
 };
@@ -305,7 +306,7 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		break;
 	case 2:
-		GFL_NET_ChangeoverConnect(_connectCallBack); // 自動接続
+		GFL_NET_ChangeoverConnect(NULL); // 自動接続
 		wk->seq++;
 		break;
 	case 3:
@@ -316,8 +317,8 @@ static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk)
 		}
 		break;
 	case 4:		//タイミングコマンド発行
-//		wk->seq = 6;
-//		break;
+		wk->seq = 6;
+		break;
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,15);
 		wk->seq++;
 		break;
@@ -438,12 +439,15 @@ static void _initCallBack(void* pWork)
  * @retval  none
  */
 //--------------------------------------------------------------
-static void _connectCallBack(void* pWork)
+static void _connectCallBack(void* pWork, int netID)
 {
 	D_MATSU_WORK *wk = pWork;
 	
-    OS_TPrintf("ネゴシエーション完了\n");
-    wk->connect_ok = TRUE;
+    OS_TPrintf("ネゴシエーション完了 netID = %d\n", netID);
+    wk->connect_count++;
+    if(wk->connect_count >= 2){
+		wk->connect_ok = TRUE;
+	}
 }
 
 static void _endCallBack(void* pWork)
@@ -507,7 +511,7 @@ static void _RecvHugeData(const int netID, const int size, const void* pData, vo
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
 {
 	D_MATSU_WORK *wk = pWork;
-	return wk->receive_huge_data[netID - 1];
+	return wk->receive_huge_data[netID];
 }
 
 
