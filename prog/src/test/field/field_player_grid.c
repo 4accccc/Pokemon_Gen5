@@ -19,7 +19,7 @@ static void playerBBDactFuncGrid(
 	#endif
 
 	//ˆÊ’u•â³
-	trans.x = pcActCont->trans.x + FX32_ONE*8;	//•â³
+	trans.x = pcActCont->trans.x + (FX32_ONE*8) + (FX32_ONE*8);	//•â³
 	trans.y = pcActCont->trans.y + FX32_ONE*10;	//•â³
 	trans.z = pcActCont->trans.z;
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );

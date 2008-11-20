@@ -221,8 +221,7 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 //--------------------------------------------------------------
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 {
-//	VecFx32 offs = { FX32_ONE*8, 0, 0 };
-	VecFx32 offs = { 0, 0, 0 };
+	VecFx32 offs = { FX32_ONE*8, 0, 0 };
 	
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
