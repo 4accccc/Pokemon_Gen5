@@ -282,7 +282,7 @@ void WORDSET_RegisterPokeMonsName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここでポケモンの性別等をチェックできる]]]
-	PP_Get( pp, ID_PARA_nickname_buf, wordset->tmpBuf );
+	PP_Get( pp, ID_PARA_nickname, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 }
 //------------------------------------------------------------------
@@ -297,7 +297,7 @@ void WORDSET_RegisterPokeNickName( WORDSET* wordset, u32 bufID, const POKEMON_PA
 void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PARAM* pp )
 {
 	// [[[ここで親の性別もチェックできる]]]
-	PP_Get( pp, ID_PARA_oyaname_buf, wordset->tmpBuf );
+	PP_Get( pp, ID_PARA_oyaname, wordset->tmpBuf );
 	RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
 
 }

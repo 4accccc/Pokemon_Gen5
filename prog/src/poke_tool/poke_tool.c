@@ -14,21 +14,20 @@
 #include    "poke_tool/tokusyu_def.h"
 #include    "waza_tool/waza_tool.h"
 #include    "print/global_msg.h"
+#include    "print/str_tool.h"
 
 #include    "poke_tool_def.h"
 #include    "poke_personal_local.h"
 
 #include    "arc_def.h"
 
-
-//============================================================================================
-/**
- * プロトタイプ宣言
- */
-//============================================================================================
-
-//ポケモンパラメータ操作関数系
-
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+	// 親名，ポケモン名などの処理で使い回す文字列バッファサイズ（海外版も考慮して長めに）
+	STRBUFFER_LEN = 32,
+};
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -42,8 +41,8 @@ static	void	ppp_encode_act( POKEMON_PASO_PARAM *ppp );
 
 static	u32		pp_getAct( POKEMON_PARAM *pp, int id, void *buf);
 static	u32		ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf);
-static	void	pp_putAct( POKEMON_PARAM *pp, int id, const void *buf);
-static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf);
+static	void	pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg );
+static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg );
 static	void	pp_addAct( POKEMON_PARAM *pp, int id, int value);
 static	void	ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value);
 
@@ -55,6 +54,7 @@ static	u16		calc_abi_seikaku( u8 chr, u16 para, u8 cond );
 static	void	load_grow_table( int para, u32 *GrowTable );
 static	u32		get_growtbl_param( int para, int level );
 static	void	*ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
+static	BOOL	pppAct_check_nickname( POKEMON_PASO_PARAM* ppp );
 
 #define	decord_data( data, size, code )		encode_data( data, size, code );
 
@@ -65,7 +65,7 @@ static	void	*ppp_get_param_block( POKEMON_PASO_PARAM *ppp, u32 rnd, u8 id );
 //============================================================================================
 static	POKEMON_PERSONAL_DATA	PersonalDataWork;	//ポケモン１体分のパーソナルデータ構造体
 static	u32 GrowTable[ GROW_TBL_SIZE ];				//成長曲線テーブル
-
+static	STRCODE	StrBuffer[STRBUFFER_LEN];			//文字列バッファ
 
 
 
@@ -90,12 +90,10 @@ void POKETOOL_InitSystem( HEAPID heapID )
  * @retval	POKEMON_PARAM構造体のサイズ
  */
 //============================================================================================
-int		PokemonParam_GetWorkSize( void )
+u32		POKETOOL_GetWorkSize( void )
 {
 	return sizeof( POKEMON_PARAM );
 }
-
-
 
 
 //============================================================================================
@@ -103,10 +101,14 @@ int		PokemonParam_GetWorkSize( void )
  * ポケモンパラメータ操作関数系
  */
 //============================================================================================
+POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )	///< 
+{
+	return NULL;
+}
 
 //============================================================================================
 /**
- *	ポケモンパラメータ構造体を初期化する
+ *	ポケモンパラメータ構造体領域を初期化する
  *
  * @param[in]	pp	初期化するポケモンパラメータ構造体のポインタ
  */
@@ -114,13 +116,14 @@ int		PokemonParam_GetWorkSize( void )
 void	PP_Clear( POKEMON_PARAM *pp )
 {
 	MI_CpuClearFast( pp, sizeof( POKEMON_PARAM ) );
-//パラメータを暗号化
+
+// パラメータを暗号化
 	encode_data( &pp->ppp.paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, pp->ppp.checksum );
 	encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
 }
 //============================================================================================
 /**
- *	ボックスポケモンパラメータ構造体を初期化する
+ *	ボックスポケモンパラメータ構造体領域を初期化する
  *
  * @param[in]	ppp	初期化するボックスポケモンパラメータ構造体のポインタ
  */
@@ -128,8 +131,220 @@ void	PP_Clear( POKEMON_PARAM *pp )
 void	PPP_Clear( POKEMON_PASO_PARAM *ppp )
 {
 	MI_CpuClearFast( ppp, sizeof( POKEMON_PASO_PARAM ) );
-//個性乱数セットしたところで暗号化
+
+// 個性乱数セットしたところで暗号化
 	encode_data( ppp->paradata, sizeof( POKEMON_PASO_PARAM1 ) * POKE_PARA_BLOCK_MAX, ppp->checksum );
+}
+
+//=============================================================================================
+/**
+ *	ポケモンパラメータ構造体の内容を構築
+ *
+ * @param[out]	pp		構築先構造体アドレス
+ * @param[in]	mons_no	ポケモンナンバー
+ * @param[in]	level	レベル
+ * @param[in]	id		ID
+ *
+ */
+//=============================================================================================
+void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u32 ID )
+{
+	PP_SetupEx( pp, mons_no, level, ID, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
+}
+
+//============================================================================================
+/**
+ *	ポケモンパラメータ構造体にポケモンパラメータを構築【拡張版】
+ *
+ * @param[out]	pp			パラメータを生成するポケモンパラメータ構造体のポインタ
+ * @param[in]	mons_no		ポケモンナンバー
+ * @param[in]	level		レベル
+ * @param[in]	ID			ID指定（PTL_SETUP_ID_AUTO でランダム）
+ * @param[in]	pow			個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
+ * @param[in]	rnd			個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
+ */
+//============================================================================================
+void	PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow pow, u64 rnd )
+{
+	u32			i;
+//メールとカスタムボール対応がまだです
+#ifdef DEBUG_ONLY_FOR_sogabe
+#warning MAIL_DATA and CB_CORE nothing
+#endif
+//	MAIL_DATA	*mail_data;
+//	CB_CORE		cb_core;
+
+	PP_Clear( pp );
+
+	PPP_SetupEx( ( POKEMON_PASO_PARAM * )&pp->ppp, mons_no, level, ID, pow, rnd );
+
+//個性乱数がきまったら、PCPを再暗号化
+	encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), 0 );
+	encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
+
+//レベルセット
+	PP_Put( pp, ID_PARA_level, level );
+
+#if 0
+//メールデータ
+	mail_data = MailData_CreateWork( HEAPID_BASE_SYSTEM );
+	PP_Put( pp, ID_PARA_mail_data, mail_data );
+	GFL_HEAP_FreeMemory( mail_data );
+
+//カスタムボールID
+	i = 0;
+	PP_Put( pp, ID_PARA_cb_id, (u8 *)&i );
+
+//カスタムボール
+	MI_CpuClearFast( &cb_core, sizeof( CB_CORE ) );
+	PP_Put( pp, ID_PARA_cb_core, ( CB_CORE * )&cb_core );							
+#endif
+
+	PP_Renew( pp );
+}
+
+//=============================================================================================
+/**
+ *	ボックスポケモンパラメータ構造体の内容を構築
+ *
+ * @param[out]	pp		構築先構造体アドレス
+ * @param[in]	mons_no	ポケモンナンバー
+ * @param[in]	level	レベル
+ * @param[in]	id		ID
+ *
+ */
+//=============================================================================================
+void	PPP_Setup( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u32 id )
+{
+	PPP_SetupEx( ppp, mons_no, level, id, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
+}
+
+//============================================================================================
+/**
+ *	ボックスポケモンパラメータ構造体にポケモンパラメータを構築【拡張版】
+ *
+ * @param[out]	ppp			パラメータを生成するボックスポケモンパラメータ構造体のポインタ
+ * @param[in]	mons_no		ポケモンナンバー
+ * @param[in]	level		レベル
+ * @param[in]	id			ID指定（PTL_SETUP_ID_AUTO でランダム）
+ * @param[in]	pow			個体値指定（PTL_SETUP_POW_AUTO でランダム／詳しくはpoke_tool.h 参照）
+ * @param[in]	rnd			個性乱数指定（PTL_SETUP_RND_AUTOでランダム／詳しくはpoke_tool.h 参照）
+ */
+//============================================================================================
+void	PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlSetupPow pow, u64 rnd )
+{
+	POKEMON_PERSONAL_DATA* ppd;
+	u32		val;
+	BOOL	flag;
+	u16		sum;
+
+	PPP_Clear( ppp );
+
+	flag = PPP_FastModeOn( ppp );
+
+// パーソナルデータをロードしておく
+	POKE_PERSONAL_LoadData( mons_no, PTL_FORM_NO_NONE, &PersonalDataWork );
+	ppd = &PersonalDataWork;
+
+//IDナンバーセット
+	if( id == PTL_SETUP_ID_AUTO )
+	{
+		id = __GFL_STD_MtRand();
+	}
+	PPP_Put( ppp, ID_PARA_id_no, (int)id );
+
+//個性乱数セット
+	if( rnd == PTL_SETUP_RND_AUTO )
+	{
+		rnd = __GFL_STD_MtRand();;
+	}
+	else if( rnd == PTL_SETUP_RND_AUTO )
+	{
+		rnd = id;
+	}
+	else if( rnd == PTL_SETUP_RND_NOT_RARE )
+	{
+		rnd = (u32)(id+1);
+		while( POKETOOL_CheckRare( id, rnd ) ){ rnd = (rnd+1)&0xffffffff; }
+	}
+	PPP_Put( ppp, ID_PARA_personal_rnd, (u32)rnd );
+
+
+#ifdef DEBUG_ONLY_FOR_sogabe
+#warning CasetteLanguage Nothing
+#endif
+
+//国コード
+//	PPP_Put( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
+
+//ポケモンナンバーセット
+	PPP_Put( ppp, ID_PARA_monsno, mons_no );
+
+//ニックネームセット
+	GFL_MSG_GetStringRaw( GlobalMsg_PokeName, mons_no, StrBuffer, NELEMS(StrBuffer) );
+	PPP_Put( ppp, ID_PARA_nickname_raw, (u32)StrBuffer );
+
+//経験値セット
+	val = POKETOOL_GetMinExp( mons_no, PTL_FORM_NO_NONE, level );
+	PPP_Put( ppp, ID_PARA_exp, val );
+
+//友好値セット
+	val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_friend );
+	PPP_Put( ppp, ID_PARA_friend, val );
+
+//捕獲データセット
+	PPP_Put( ppp, ID_PARA_get_level, level );
+
+#ifdef DEBUG_ONLY_FOR_sogabe
+#warning CasetteVersion Nothing
+#endif
+//	PPP_Put( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
+	//デフォルトはモンスターボールにしておく	
+	PPP_Put( ppp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
+
+//パワー乱数セット
+	if( pow == PTL_SETUP_POW_AUTO )
+	{
+		PPP_Put( ppp, ID_PARA_hp_rnd,		GFL_STD_MtRand(32) );
+		PPP_Put( ppp, ID_PARA_pow_rnd,		GFL_STD_MtRand(32) );
+		PPP_Put( ppp, ID_PARA_def_rnd,		GFL_STD_MtRand(32) );
+		PPP_Put( ppp, ID_PARA_spepow_rnd,	GFL_STD_MtRand(32) );
+		PPP_Put( ppp, ID_PARA_spedef_rnd,	GFL_STD_MtRand(32) );
+		PPP_Put( ppp, ID_PARA_agi_rnd,		GFL_STD_MtRand(32) );
+	}
+	else
+	{
+		PPP_Put( ppp, ID_PARA_hp_rnd,		PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_HP) );
+		PPP_Put( ppp, ID_PARA_pow_rnd,		PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_ATK) );
+		PPP_Put( ppp, ID_PARA_def_rnd,		PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_DEF) );
+		PPP_Put( ppp, ID_PARA_spepow_rnd,	PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_SPATK) );
+		PPP_Put( ppp, ID_PARA_spedef_rnd,	PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_SPDEF) );
+		PPP_Put( ppp, ID_PARA_agi_rnd,		PTL_SETUP_POW_UNPACK(pow, PTL_ABILITY_AGI) );
+	}
+
+//特殊能力セット
+	val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
+	if( val )
+	{
+		if( !(rnd&1) )
+		{
+			val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
+		}
+	}
+	else
+	{
+		val = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
+	}
+	PPP_Put( ppp, ID_PARA_speabino, val );
+
+//性別セット
+	val = PPP_GetSex( ppp );
+	PPP_Put( ppp, ID_PARA_sex, val );
+
+//技セット
+	PPP_SetWazaDefault( ppp );
+
+	PPP_FastModeOff( ppp, flag );
 }
 
 
@@ -240,306 +455,6 @@ BOOL	PPP_FastModeOff( POKEMON_PASO_PARAM *ppp, BOOL flag )
 
 	return ret;
 }
-
-//============================================================================================
-/**
- *	ポケモンパラメータ構造体にポケモンパラメータを生成
- *
- * @param[in]	pp		パラメータを生成するポケモンパラメータ構造体のポインタ
- * @param[in]	mons_no	パラメータを生成するポケモンナンバー
- * @param[in]	level	生成するレベル
- * @param[in]	pow		POW_RND以外:セットするパワー乱数　POW_RND:パワー乱数をランダムでセット
- * @param[in]	rndflag	個性乱数セットフラグ（RND_NO_SET:個性乱数をランダムでセット RND_SET:引数rndの値をセット
- * @param[in]	rnd		rndflagがRND_SETの時にセットされる値
- * @param[in]	idflag	IDNoセットフラグ（ID_NO_SET:プレイヤーのIDをセット ID_SET:引数idの値をセット
- *										　ID_NO_RARE:個性乱数との組み合わせでレアポケモンにならないように値を調整してセット）
- * @param[in]	id		idflagがID_SETの時にセットされる値
- */
-//============================================================================================
-void	PP_Setup( POKEMON_PARAM *pp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id )
-{
-	u32			i;
-//メールとカスタムボール対応がまだです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MAIL_DATA and CB_CORE nothing
-#endif
-//	MAIL_DATA	*mail_data;
-//	CB_CORE		cb_core;
-
-	PP_Clear( pp );
-
-	PPP_Setup( ( POKEMON_PASO_PARAM * )&pp->ppp, mons_no, level, pow, rndflag, rnd, idflag, id );
-
-//個性乱数がきまったら、PCPを再暗号化
-	encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), 0 );
-	encode_data( &pp->pcp, sizeof( POKEMON_CALC_PARAM ), pp->ppp.personal_rnd );
-
-//レベルセット
-	PP_Put( pp, ID_PARA_level, (u8 *)&level );
-
-#if 0
-//メールデータ
-	mail_data = MailData_CreateWork( HEAPID_BASE_SYSTEM );
-	PP_Put( pp, ID_PARA_mail_data, mail_data );
-	GFL_HEAP_FreeMemory( mail_data );
-
-//カスタムボールID
-	i = 0;
-	PP_Put( pp, ID_PARA_cb_id, (u8 *)&i );
-
-//カスタムボール
-	MI_CpuClearFast( &cb_core, sizeof( CB_CORE ) );
-	PP_Put( pp, ID_PARA_cb_core, ( CB_CORE * )&cb_core );							
-#endif
-
-	PP_Renew( pp );
-}
-
-//============================================================================================
-/**
- *	ボックスポケモンパラメータ構造体にポケモンパラメータを生成
- *
- * @param[in]	ppp		パラメータを生成するボックスポケモンパラメータ構造体のポインタ
- * @param[in]	mons_no	パラメータを生成するポケモンナンバー
- * @param[in]	level	生成するレベル
- * @param[in]	pow		POW_RND以外:セットするパワー乱数　POW_RND:パワー乱数をランダムでセット
- * @param[in]	rndflag	個性乱数セットフラグ（RND_NO_SET:個性乱数をランダムでセット RND_SET:引数rndの値をセット
- * @param[in]	rnd		rndflagがRND_SETの時にセットされる値
- * @param[in]	idflag	IDNoセットフラグ（ID_NO_SET:プレイヤーのIDをセット ID_SET:引数idの値をセット
- *										　ID_NO_RARE:個性乱数との組み合わせでレアポケモンにならないように値を調整してセット）
- * @param[in]	id		idflagがID_SETの時にセットされる値
- */
-//============================================================================================
-void	PPP_Setup( POKEMON_PASO_PARAM *ppp, int mons_no, int level, int pow, int rndflag, u32 rnd, int idflag, u32 id )
-{
-	BOOL	flag;
-	u32		i,j;
-	POKEMON_PERSONAL_DATA* ppd;
-	u16		sum;
-
-	PPP_Clear( ppp );
-
-	flag = PPP_FastModeOn( ppp );
-
-// パーソナルデータをロードしておく
-	POKE_PERSONAL_LoadData( mons_no, FORM_NO_NONE, &PersonalDataWork );
-	ppd = &PersonalDataWork;
-
-//個性乱数セット
-	if( !rndflag ){
-		rnd = __GFL_STD_MtRand();
-	}
-	PPP_Put( ppp, ID_PARA_personal_rnd, (u8 *)&rnd );
-
-//IDナンバーセット
-	if( idflag == ID_NO_RARE ){
-		do{
-			id = __GFL_STD_MtRand();
-		}while( POKETOOL_CheckRare( id, rnd ) == TRUE );
-	}
-	else if( idflag != ID_SET ){
-		id = 0;
-	}
-	PPP_Put( ppp, ID_PARA_id_no, (u8 *) & id );
-
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CasetteLanguage Nothing
-#endif
-
-//国コード
-//	PPP_Put( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
-
-//ポケモンナンバーセット
-	PPP_Put( ppp, ID_PARA_monsno, (u8 *)&mons_no );
-
-//ニックネームセット
-	PPP_Put( ppp, ID_PARA_default_name, NULL );
-
-//経験値セット
-	i = POKETOOL_GetMinExp( mons_no, FORM_NO_NONE, level );
-	PPP_Put( ppp, ID_PARA_exp, (u8 *)&i );
-
-//友好値セット
-	i = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_friend );
-	PPP_Put( ppp, ID_PARA_friend, ( u8 * )&i );
-
-//捕獲データセット
-	PPP_Put( ppp, ID_PARA_get_level, ( u8 * )&level );
-
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CasetteVersion Nothing
-#endif
-
-//	PPP_Put( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
-	i = ITEM_MONSUTAABOORU;	//デフォルトはモンスターボールにしておく	
-	PPP_Put( ppp, ID_PARA_get_ball, ( u8 * )&i );
-
-//パワー乱数セット
-	if( pow < POW_RND ){
-		PPP_Put( ppp, ID_PARA_hp_rnd,		( u8 * )&pow );
-		PPP_Put( ppp, ID_PARA_pow_rnd,		( u8 * )&pow );
-		PPP_Put( ppp, ID_PARA_def_rnd,		( u8 * )&pow );
-		PPP_Put( ppp, ID_PARA_agi_rnd,		( u8 * )&pow );
-		PPP_Put( ppp, ID_PARA_spepow_rnd,	( u8 * )&pow );
-		PPP_Put( ppp, ID_PARA_spedef_rnd,	( u8 * )&pow );
-	}
-	else{
-		i = __GFL_STD_MtRand();
-		j = ( i & ( 0x0000001f <<  0 ) ) >>  0;
-		PPP_Put( ppp, ID_PARA_hp_rnd,		( u8 * )&j );
-		j = ( i & ( 0x0000001f <<  5 ) ) >>  5;
-		PPP_Put( ppp, ID_PARA_pow_rnd,		( u8 * )&j );
-		j = ( i & ( 0x0000001f << 10 ) ) >> 10;
-		PPP_Put( ppp, ID_PARA_def_rnd,		( u8 * )&j );
-		j = ( i & ( 0x0000001f << 15 ) ) >> 15;
-		PPP_Put( ppp, ID_PARA_agi_rnd,		( u8 * )&j );
-		j = ( i & ( 0x0000001f << 20 ) ) >> 20;
-		PPP_Put( ppp, ID_PARA_spepow_rnd,	( u8 * )&j );
-		j = ( i & ( 0x0000001f << 25 ) ) >> 25;
-		PPP_Put( ppp, ID_PARA_spedef_rnd,	( u8 * )&j );
-	}
-
-//特殊能力セット
-	i = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_speabi1 );
-	j = POKE_PERSONAL_GetParam( ppd, POKE_PER_ID_speabi2 );
-	if( j != 0 ){
-		if( rnd & 1 ){
-			PPP_Put( ppp, ID_PARA_speabino, ( u8 * )&j );
-		}
-		else{
-			PPP_Put( ppp, ID_PARA_speabino, ( u8 * )&i );
-		}
-	}
-	else{
-		PPP_Put( ppp, ID_PARA_speabino, ( u8 * )&i );
-	}
-
-//性別セット
-	i = PPP_GetSex( ppp );
-	PPP_Put( ppp, ID_PARA_sex, ( u8 * )&i );
-
-//技セット
-	PPP_SetWazaDefault( ppp );
-
-	PPP_FastModeOff( ppp, flag );
-}
-
-
-//=============================================================================================
-/**
- * 内包するPPPデータを基に、PPデータ部を更新する
- *
- * @param   pp		更新するPPデータポインタ
- */
-//=============================================================================================
-void	PP_Renew( POKEMON_PARAM *pp )
-{
-	int		level;
-	BOOL	flag;
-
-	flag = PP_FastModeOn( pp );
-
-//レベルセット
-	level = PP_CalcLevel( pp );
-	PP_Put( pp, ID_PARA_level, ( u8 * )&level );
-
-	calc_renew_core( pp );
-
-	PP_FastModeOff( pp, flag );
-}
-//--------------------------------------------------------------------------
-/**
- * PPPデータ部からPP独自データ部を再計算
- *
- * @param[io]   pp		
- *
- */
-//--------------------------------------------------------------------------
-static void  calc_renew_core( POKEMON_PARAM *pp )
-{
-	int	oldhpmax, hp, hpmax;
-	int	pow, def, agi, spepow, spedef;
-	int	hp_rnd, pow_rnd, def_rnd, agi_rnd, spepow_rnd, spedef_rnd;
-	int	hp_exp, pow_exp, def_exp, agi_exp, spepow_exp, spedef_exp;
-	int	monsno;
-	int	level;
-	int	form_no;
-	int	speabi1,speabi2,rnd;
-	POKEMON_PERSONAL_DATA* ppd;
-
-	level =			PP_Get( pp, ID_PARA_level,			0);
-	oldhpmax =		PP_Get( pp, ID_PARA_hpmax,			0);
-	hp =			PP_Get( pp, ID_PARA_hp,			0);
-	hp_rnd =		PP_Get( pp, ID_PARA_hp_rnd,		0);
-	hp_exp =		PP_Get( pp, ID_PARA_hp_exp,		0);
-	pow_rnd =		PP_Get( pp, ID_PARA_pow_rnd,		0);
-	pow_exp =		PP_Get( pp, ID_PARA_pow_exp,		0);
-	def_rnd =		PP_Get( pp, ID_PARA_def_rnd,		0);
-	def_exp =		PP_Get( pp, ID_PARA_def_exp,		0);
-	agi_rnd =		PP_Get( pp, ID_PARA_agi_rnd,		0);
-	agi_exp =		PP_Get( pp, ID_PARA_agi_exp,		0);
-	spepow_rnd =	PP_Get( pp, ID_PARA_spepow_rnd,	0);
-	spepow_exp =	PP_Get( pp, ID_PARA_spepow_exp,	0);
-	spedef_rnd =	PP_Get( pp, ID_PARA_spedef_rnd,	0);
-	spedef_exp =	PP_Get( pp, ID_PARA_spedef_exp,	0);
-	form_no =		PP_Get( pp, ID_PARA_form_no,		0);
-
-	monsno = PP_Get( pp, ID_PARA_monsno, 0 );
-
-	POKE_PERSONAL_LoadData( monsno, form_no, &PersonalDataWork );
-	ppd = &PersonalDataWork;
-
-	if( monsno == MONSNO_NUKENIN ){
-		hpmax = 1;
-	}
-	else{
-		hpmax = ( ( 2 * ppd->basic_hp + hp_rnd + hp_exp / 4 ) * level / 100 + level + 10 );
-	}
-
-	PP_Put( pp, ID_PARA_hpmax, ( u8 * )&hpmax );
-
-	pow = ( ( 2 * ppd->basic_pow + pow_rnd + pow_exp / 4 ) * level / 100 + 5 );
-	pow = calc_abi_seikaku( PP_GetSeikaku( pp ), pow, ABILITY_POW );
-	PP_Put( pp, ID_PARA_pow, ( u8 * )&pow );
-
-	def = ( ( 2 * ppd->basic_def + def_rnd + def_exp / 4 ) * level / 100 + 5 );
-	def = calc_abi_seikaku( PP_GetSeikaku( pp ), def, ABILITY_DEF );
-	PP_Put( pp, ID_PARA_def, ( u8 * )&def );
-
-	agi = ( ( 2 * ppd->basic_agi + agi_rnd + agi_exp / 4 ) * level / 100 + 5 );
-	agi = calc_abi_seikaku( PP_GetSeikaku( pp ), agi, ABILITY_AGI );
-	PP_Put( pp, ID_PARA_agi, ( u8 * )&agi );
-
-	spepow = ( ( 2 * ppd->basic_spepow + spepow_rnd + spepow_exp / 4 ) * level / 100 + 5 );
-	spepow = calc_abi_seikaku( PP_GetSeikaku( pp ), spepow, ABILITY_SPEPOW );
-	PP_Put( pp, ID_PARA_spepow, ( u8 * )&spepow );
-
-	spedef = ( ( 2 * ppd->basic_spedef + spedef_rnd + spedef_exp / 4 ) * level / 100 + 5 );
-	spedef = calc_abi_seikaku( PP_GetSeikaku( pp ), spedef, ABILITY_SPEDEF );
-	PP_Put( pp, ID_PARA_spedef, ( u8 * )&spedef );
-	
-	if( ( hp == 0 ) && ( oldhpmax != 0 ) ){
-		;
-	}
-	else{
-		if( monsno == MONSNO_NUKENIN ){
-			hp = 1;
-		}
-		else if( hp == 0 ){
-			hp = hpmax;
-		}
-		else{
-			hp += ( hpmax - oldhpmax );
-		}
-	}
-
-	if( hp ){
-		PP_Put( pp, ID_PARA_hp, ( u8 * )&hp );
-	}
-}
-
-
-
 //============================================================================================
 /**
  *	ポケモンパラメータ構造体から任意で値を取得（暗号／復号／チェックサムチェックあり）
@@ -568,18 +483,36 @@ u32	PP_Get( const POKEMON_PARAM *pp, int id, void *buf )
 /**
  *	ポケモンパラメータ構造体に任意で値を格納（暗号／復号／チェックサムチェックあり）
  *
- * @param[in]	pp	格納したいポケモンパラメータ構造体のポインタ
- * @param[in]	id	格納したいデータのインデックス（poke_tool.hに定義）
- * @param[in]	buf	格納したいデータのポインタ
+ * @param[out]	ppp			格納したいボックスポケモンパラメータ構造体のポインタ
+ * @param[in]	paramID		格納したいデータのインデックス（poke_tool.hに定義）
+ * @param[in]	arg			格納したいデータ値／配列等のアドレスとしても利用可（paramIDの指定による）
  */
 //============================================================================================
-void	PP_Put( POKEMON_PARAM *pp, int id, const void *buf )
+void	PP_Put( POKEMON_PARAM *pp, int paramID, u32 arg )
 {
-	if( pp_decordAct( pp ) == TRUE ){
-		pp_putAct( pp, id, buf );
+	if( pp_decordAct( pp ) == TRUE )
+	{
+		pp_putAct( pp, paramID, arg );
 	}
 
 	pp_encode_act( pp );
+}
+//============================================================================================
+/**
+ *	ボックスポケモンパラメータ構造体に任意で値を格納（暗号／復号／チェックサムチェックあり）
+ *
+ * @param[out]	ppp			格納したいボックスポケモンパラメータ構造体のポインタ
+ * @param[in]	paramID		格納したいデータのインデックス（poke_tool.hに定義）
+ * @param[in]	arg			格納したいデータ値／配列等のアドレスとしても利用可（paramIDの指定による）
+ */
+//============================================================================================
+void	PPP_Put( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
+{
+	if( ppp_decordAct( ppp ) == TRUE )
+	{
+		ppp_putAct( ppp, paramID, arg );
+	}
+	ppp_encode_act( ppp );
 }
 
 //============================================================================================
@@ -622,24 +555,6 @@ u32	PPP_Get( const POKEMON_PASO_PARAM *ppp, int id, void *buf )
 	ppp_encode_act( (POKEMON_PASO_PARAM*)ppp );
 
 	return ret;
-}
-
-//============================================================================================
-/**
- *	ボックスポケモンパラメータ構造体に任意で値を格納（暗号／復号／チェックサムチェックあり）
- *
- * @param[in]	ppp	格納したいボックスポケモンパラメータ構造体のポインタ
- * @param[in]	id	格納したいデータのインデックス（poke_tool.hに定義）
- * @param[in]	buf	格納したいデータのポインタ
- */
-//============================================================================================
-void	PPP_Put( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
-{
-	if( ppp_decordAct( ppp ) == TRUE ){
-		ppp_putAct( ppp, id, buf );
-	}
-
-	ppp_encode_act( ppp );
 }
 
 //============================================================================================
@@ -760,7 +675,7 @@ u8 POKETOOL_GetSex( u16 mons_no, u16 form_no, u32 personal_rnd )
 	u8 sex_param;
 
 	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
-	sex_param = POKE_PERSONAL_GetParam( &PersonalDataWork, POKE_PER_ID_sex );
+	sex_param = POKE_PERSONAL_GetParam( &PersonalDataWork, POKEPER_ID_sex );
 
 // 性別固定のケース
 	switch( sex_param ){
@@ -828,7 +743,7 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 		if( ( wot[ i ] & 0xfe00 ) <= ( level << 9 ) ){
 			waza_no = wot[ i ] & 0x1ff;
 			ret = PPP_SetWaza( ppp, waza_no );
-			if( ret == POKETOOL_WAZASET_FAIL ){
+			if( ret == PTL_WAZASET_FAIL ){
 				PPP_SetWazaPush( ppp, waza_no );
 			}
 		}
@@ -848,9 +763,9 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
  *	@param[in]	pp		セットするポケモンパラメータ構造体のポインタ
  *	@param[in]	wazano	セットする技ナンバー
  *
- *	@retvl	wazano			正常終了
- *			POKETOOL_WAZASET_SAME	すでに覚えている技と同じ技を覚えようとした
- *			POKETOOL_WAZASET_FAIL		場所が空いていない
+ *	@retvl	wazano				正常終了
+ *			PTL_WAZASET_SAME	すでに覚えている技と同じ技を覚えようとした
+ *			PTL_WAZASET_FAIL	場所が空いていない
  */
 //============================================================================================
 u16	PP_SetWaza( POKEMON_PARAM *pp, u16 wazano )
@@ -878,7 +793,7 @@ u16	PPP_SetWaza( POKEMON_PASO_PARAM *ppp, u16 wazano )
 	u16	ret;
 	BOOL	flag;
 
-	ret = POKETOOL_WAZASET_FAIL;
+	ret = PTL_WAZASET_FAIL;
 
 	flag = PPP_FastModeOn( ppp );
 
@@ -891,7 +806,7 @@ u16	PPP_SetWaza( POKEMON_PASO_PARAM *ppp, u16 wazano )
 		else{
 			//同じ技を覚えちゃだめ
 			if( waza == wazano ){
-				ret = POKETOOL_WAZASET_SAME;
+				ret = PTL_WAZASET_SAME;
 				break;
 			}
 		}
@@ -946,9 +861,9 @@ void	PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano )
 	ppcnt[LAST_IDX] = 0;
 
 	for( i=0 ; i < PTL_WAZA_MAX ; i++ ){
-		PPP_Put( ppp, ID_PARA_waza1 + i,	 ( u8 * )&waza[i] );
-		PPP_Put( ppp, ID_PARA_pp1 + i,		 ( u8 * )&pp[i] );
-		PPP_Put( ppp, ID_PARA_pp_count1 + i, ( u8 * )&ppcnt[i] );
+		PPP_Put( ppp, ID_PARA_waza1 + i,	 waza[i] );
+		PPP_Put( ppp, ID_PARA_pp1 + i,		 pp[i] );
+		PPP_Put( ppp, ID_PARA_pp_count1 + i, ppcnt[i] );
 	}
 
 	PPP_FastModeOff( ppp, flag );
@@ -985,11 +900,11 @@ void	PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
 		u8	pp;
 		u8	pp_count;
 
-		PPP_Put( ppp, ID_PARA_waza1 + pos, ( u8 * )&wazano );
+		PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
 		pp_count = 0;
-		PPP_Put( ppp, ID_PARA_pp_count1 + pos, &pp_count );
+		PPP_Put( ppp, ID_PARA_pp_count1 + pos, pp_count );
 		pp = WT_PPMaxGet( wazano, 0 );
-		PPP_Put( ppp, ID_PARA_pp1 + pos, ( u8 * )&pp );
+		PPP_Put( ppp, ID_PARA_pp1 + pos, pp );
 	}
 }
 
@@ -1049,7 +964,7 @@ u32	POKETOOL_CalcLevel( u16 mons_no, u16 form_no, u32 exp )
 	u16 growType, level;
 
 	POKE_PERSONAL_LoadData( mons_no, form_no, &PersonalDataWork );
-	growType = POKE_PERSONAL_GetParam( &PersonalDataWork, POKE_PER_ID_grow );
+	growType = POKE_PERSONAL_GetParam( &PersonalDataWork, POKEPER_ID_grow );
 	load_grow_table( growType, &GrowTable[0] );
 
 	for( level = 1 ; level < 101 ; level++ ){
@@ -1100,7 +1015,7 @@ u32	PPP_GetMinExp( const POKEMON_PASO_PARAM *ppp )
 //============================================================================================
 u32	POKETOOL_GetMinExp( u16 mons_no, u16 form_no, u16 level )
 {
-	return	get_growtbl_param( POKETOOL_GetPersonalParam(mons_no, form_no, POKE_PER_ID_grow), level );
+	return	get_growtbl_param( POKETOOL_GetPersonalParam(mons_no, form_no, POKEPER_ID_grow), level );
 }
 
 
@@ -1157,11 +1072,122 @@ u8 POKETOOL_GetSeikaku( u32 personal_rnd )
 
 
 
+//=============================================================================================
+/**
+ * 内包するPPPデータを基に、PPデータ部を更新する
+ *
+ * @param   pp		更新するPPデータポインタ
+ */
+//=============================================================================================
+void	PP_Renew( POKEMON_PARAM *pp )
+{
+	int		level;
+	BOOL	flag;
+
+	flag = PP_FastModeOn( pp );
+
+//レベルセット
+	level = PP_CalcLevel( pp );
+	PP_Put( pp, ID_PARA_level, level );
+
+	calc_renew_core( pp );
+
+	PP_FastModeOff( pp, flag );
+}
+//--------------------------------------------------------------------------
+/**
+ * PPPデータ部からPP独自データ部を再計算
+ *
+ * @param[io]   pp		
+ *
+ */
+//--------------------------------------------------------------------------
+static void  calc_renew_core( POKEMON_PARAM *pp )
+{
+	int	oldhpmax, hp, hpmax;
+	int	pow, def, agi, spepow, spedef;
+	int	hp_rnd, pow_rnd, def_rnd, agi_rnd, spepow_rnd, spedef_rnd;
+	int	hp_exp, pow_exp, def_exp, agi_exp, spepow_exp, spedef_exp;
+	int	monsno;
+	int	level;
+	int	form_no;
+	int	speabi1,speabi2,rnd;
+	POKEMON_PERSONAL_DATA* ppd;
+
+	level =			PP_Get( pp, ID_PARA_level,			0);
+	oldhpmax =		PP_Get( pp, ID_PARA_hpmax,			0);
+	hp =			PP_Get( pp, ID_PARA_hp,			0);
+	hp_rnd =		PP_Get( pp, ID_PARA_hp_rnd,		0);
+	hp_exp =		PP_Get( pp, ID_PARA_hp_exp,		0);
+	pow_rnd =		PP_Get( pp, ID_PARA_pow_rnd,		0);
+	pow_exp =		PP_Get( pp, ID_PARA_pow_exp,		0);
+	def_rnd =		PP_Get( pp, ID_PARA_def_rnd,		0);
+	def_exp =		PP_Get( pp, ID_PARA_def_exp,		0);
+	agi_rnd =		PP_Get( pp, ID_PARA_agi_rnd,		0);
+	agi_exp =		PP_Get( pp, ID_PARA_agi_exp,		0);
+	spepow_rnd =	PP_Get( pp, ID_PARA_spepow_rnd,	0);
+	spepow_exp =	PP_Get( pp, ID_PARA_spepow_exp,	0);
+	spedef_rnd =	PP_Get( pp, ID_PARA_spedef_rnd,	0);
+	spedef_exp =	PP_Get( pp, ID_PARA_spedef_exp,	0);
+	form_no =		PP_Get( pp, ID_PARA_form_no,		0);
+
+	monsno = PP_Get( pp, ID_PARA_monsno, 0 );
+
+	POKE_PERSONAL_LoadData( monsno, form_no, &PersonalDataWork );
+	ppd = &PersonalDataWork;
+
+	if( monsno == MONSNO_NUKENIN ){
+		hpmax = 1;
+	}
+	else{
+		hpmax = ( ( 2 * ppd->basic_hp + hp_rnd + hp_exp / 4 ) * level / 100 + level + 10 );
+	}
+
+	PP_Put( pp, ID_PARA_hpmax, hpmax );
+
+	pow = ( ( 2 * ppd->basic_pow + pow_rnd + pow_exp / 4 ) * level / 100 + 5 );
+	pow = calc_abi_seikaku( PP_GetSeikaku( pp ), pow, PTL_ABILITY_ATK );
+	PP_Put( pp, ID_PARA_pow, pow );
+
+	def = ( ( 2 * ppd->basic_def + def_rnd + def_exp / 4 ) * level / 100 + 5 );
+	def = calc_abi_seikaku( PP_GetSeikaku( pp ), def, PTL_ABILITY_DEF );
+	PP_Put( pp, ID_PARA_def, def );
+
+	agi = ( ( 2 * ppd->basic_agi + agi_rnd + agi_exp / 4 ) * level / 100 + 5 );
+	agi = calc_abi_seikaku( PP_GetSeikaku( pp ), agi, PTL_ABILITY_AGI );
+	PP_Put( pp, ID_PARA_agi, agi );
+
+	spepow = ( ( 2 * ppd->basic_spepow + spepow_rnd + spepow_exp / 4 ) * level / 100 + 5 );
+	spepow = calc_abi_seikaku( PP_GetSeikaku( pp ), spepow, PTL_ABILITY_SPATK );
+	PP_Put( pp, ID_PARA_spepow, spepow );
+
+	spedef = ( ( 2 * ppd->basic_spedef + spedef_rnd + spedef_exp / 4 ) * level / 100 + 5 );
+	spedef = calc_abi_seikaku( PP_GetSeikaku( pp ), spedef, PTL_ABILITY_SPDEF );
+	PP_Put( pp, ID_PARA_spedef, spedef );
+	
+	if( ( hp == 0 ) && ( oldhpmax != 0 ) ){
+		;
+	}
+	else{
+		if( monsno == MONSNO_NUKENIN ){
+			hp = 1;
+		}
+		else if( hp == 0 ){
+			hp = hpmax;
+		}
+		else{
+			hp += ( hpmax - oldhpmax );
+		}
+	}
+
+	if( hp ){
+		PP_Put( pp, ID_PARA_hp, hp );
+	}
+}
 
 
 
-
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ポケモンパラメータ構造体を復号してチェックサムをチェックして不正ならダメタマゴにする
  *
@@ -1169,7 +1195,7 @@ u8 POKETOOL_GetSeikaku( u32 personal_rnd )
  *
  * @return		FALSE:不正データ　TRUE:正常データ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	BOOL	pp_decordAct( POKEMON_PARAM *pp )
 {
 	BOOL	ret = TRUE;
@@ -1179,7 +1205,7 @@ static	BOOL	pp_decordAct( POKEMON_PARAM *pp )
 	}
 	return ret;
 }
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ポケモンパラメータ構造体を復号してチェックサムをチェックして不正ならダメタマゴにする
  *
@@ -1187,7 +1213,7 @@ static	BOOL	pp_decordAct( POKEMON_PARAM *pp )
  *
  * @return		FALSE:不正データ　TRUE:正常データ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	BOOL	ppp_decordAct( POKEMON_PASO_PARAM *ppp )
 {
 	BOOL	ret = TRUE;
@@ -1204,15 +1230,13 @@ static	BOOL	ppp_decordAct( POKEMON_PASO_PARAM *ppp )
 	}
 	return ret;
 }
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ポケモンパラメータ構造体を暗号化する
  *
- * @param[in]	ppp		復号するボックスポケモンパラメータ構造体のポインタ
- *
- * @retval	なし
+ * @param[io]	ppp		復号するボックスポケモンパラメータ構造体のポインタ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	void	pp_encode_act( POKEMON_PARAM *pp )
 {
 	if( pp->ppp.pp_fast_mode == 0 ){
@@ -1221,15 +1245,13 @@ static	void	pp_encode_act( POKEMON_PARAM *pp )
 	}
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ボックスポケモンパラメータ構造体を暗号化する
  *
- * @param[in]	ppp		復号するボックスポケモンパラメータ構造体のポインタ
- *
- * @retval	なし
+ * @param[io]	ppp		復号するボックスポケモンパラメータ構造体のポインタ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	void	ppp_encode_act( POKEMON_PASO_PARAM *ppp )
 {
 	if( ppp->ppp_fast_mode == 0 ){
@@ -1238,7 +1260,7 @@ static	void	ppp_encode_act( POKEMON_PASO_PARAM *ppp )
 	}
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ポケモンパラメータ構造体から任意で値を取得
  *
@@ -1248,7 +1270,7 @@ static	void	ppp_encode_act( POKEMON_PASO_PARAM *ppp )
  *
  * @return		取得したデータ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	u32	pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
 {
 	u32	ret = 0;
@@ -1303,7 +1325,7 @@ static	u32	pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
 	return	ret;
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ボックスポケモンパラメータ構造体から任意で値を取得
  *
@@ -1313,7 +1335,7 @@ static	u32	pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
  *
  * @return		取得したデータ
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 {
 	u32	ret = 0;
@@ -1581,39 +1603,19 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 //PARAM3
 		case ID_PARA_nickname:
 			if( ppp->fusei_tamago_flag ){
-//ダメタマゴ処理がないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning DAMETAMAGO Name Nothing
-#endif
-//				MSGDAT_MonsNameGet( MONSNO_DAMETAMAGO, HEAPID_BASE_SYSTEM, buf );
-			}
-			else{
-				{
-					u16	*buf16 = buf;
-
-					for( ret = 0 ; ret < MONS_NAME_SIZE ; ret++ ){
-						buf16[ ret ] = ppp3->nickname[ ret ];
-					}
-					buf16[ret] = EOM_;
-				}
-			}
-			break;
-		case ID_PARA_nickname_buf_flag:
-			ret = ppp2->nickname_flag;
-			/* fallthru */
-		case ID_PARA_nickname_buf:
-//STRBUF処理がないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning STRBUF Nothing
-#endif
-			if( ppp->fusei_tamago_flag ){
-//				STRBUF*  default_monsname = MSGDAT_UTIL_GetMonsName( MONSNO_DAMETAMAGO, HEAPID_BASE_SYSTEM );
-//				STRBUF_Copy( ( STRBUF * )buf, default_monsname );
-//				STRBUF_Delete( default_monsname );
 				GFL_MSG_GetString( GlobalMsg_PokeName, MONSNO_DAMETAMAGO, (STRBUF*)buf );
 			}
 			else{
 				GFL_STR_SetStringCode( (STRBUF*)buf, ppp3->nickname );
+			}
+			break;
+
+		case ID_PARA_nickname_raw:
+			if( ppp->fusei_tamago_flag ){
+				GFL_MSG_GetStringRaw( GlobalMsg_PokeName, MONSNO_DAMETAMAGO, (STRCODE*)buf, NELEMS(ppp3->nickname) );
+			}
+			else{
+				STRTOOL_Copy( ppp3->nickname, (STRCODE*)buf, NELEMS(ppp3->nickname) );
 			}
 			break;
 
@@ -1649,21 +1651,11 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 			break;
 //PARAM4
 		case ID_PARA_oyaname:
-		{
-			u16 *buf16 = buf;
-			for( ret = 0 ; ret < PERSON_NAME_SIZE ; ret++ ){
-				buf16[ ret ] = ppp4->oyaname[ ret ];
-			}
-			buf16[ ret ] = EOM_;
+			GFL_STR_SetStringCode( (STRBUF*)buf, ppp4->oyaname );
 			break;
-		}
 
-		case ID_PARA_oyaname_buf:
-//STRBUF処理がないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning STRBUF Nothing
-#endif
-//			STRBUF_SetStringCode( ( STRBUF * )buf, ppp4->oyaname );
+		case ID_PARA_oyaname_raw:
+			STRTOOL_Copy( ppp4->oyaname, (STRCODE*)buf, NELEMS(ppp4->oyaname) );
 			break;
 
 		case ID_PARA_get_year:							//捕まえた年
@@ -1754,66 +1746,54 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 //				ret = AusuTypeGet( ItemParamGet( ppp1->item, ITEM_PRM_EQUIP, HEAPID_BASE_SYSTEM ) );
 			}
 			else{
-				ret = POKETOOL_GetPersonalParam( ppp1->monsno, ppp2->form_no, POKE_PER_ID_type1 + ( id - ID_PARA_type1 ) );
+				ret = POKETOOL_GetPersonalParam( ppp1->monsno, ppp2->form_no, POKEPER_ID_type1 + ( id - ID_PARA_type1 ) );
 			}
 			break;
-		case ID_PARA_default_name:						//ポケモンのデフォルト名
-//MSGDAT処理がないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MSGDAT Nothing
-#endif
-//			MSGDAT_MonsNameGet( ppp1->monsno, HEAPID_BASE_SYSTEM, buf );
-			break;
 	}
-
 	return	ret;
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
- *	ポケモンパラメータ構造体に任意で値を格納
+ *	復号済みポケモンパラメータ構造体に任意で値を格納
  *
- * @param[in]	pp	格納したいポケモンパラメータ構造体のポインタ
- * @param[in]	id	格納したいデータのインデックス（poke_tool.hに定義）
- * @param[in]	buf	格納したいデータのポインタ
+ * @param[out]	pp			格納したいポケモンパラメータ構造体のポインタ
+ * @param[in]	paramID		格納したいデータのインデックス（poke_tool.hに定義）
+ * @param[in]	arg			格納したいデータ／配列アドレス等としても利用（paramIDによる）
  */
-//============================================================================================
-static	void	pp_putAct( POKEMON_PARAM *pp, int id, const void *buf )
+//--------------------------------------------------------------------------
+static	void	pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
 {
-	u32	*buf32 = (u32 *)buf;
-	u16	*buf16 = (u16 *)buf;
-	u8	*buf8 = (u8 *)buf;
-
-	switch( id ){
+	switch( paramID ){
 	case ID_PARA_condition:
-		pp->pcp.condition = buf32[0];
+		pp->pcp.condition = arg;
 		break;
 	case ID_PARA_level:
-		pp->pcp.level = buf8[0];
+		pp->pcp.level = arg;
 		break;
 	case ID_PARA_cb_id:
-		pp->pcp.cb_id = buf8[0];	
+		pp->pcp.cb_id = arg;	
 		break;
 	case ID_PARA_hp:
-		pp->pcp.hp = buf16[0];
+		pp->pcp.hp = arg;
 		break;
 	case ID_PARA_hpmax:
-		pp->pcp.hpmax = buf16[0];
+		pp->pcp.hpmax = arg;
 		break;
 	case ID_PARA_pow:
-		pp->pcp.pow = buf16[0];
+		pp->pcp.pow = arg;
 		break;
 	case ID_PARA_def:
-		pp->pcp.def = buf16[0];
+		pp->pcp.def = arg;
 		break;
 	case ID_PARA_agi:
-		pp->pcp.agi = buf16[0];
+		pp->pcp.agi = arg;
 		break;
 	case ID_PARA_spepow:
-		pp->pcp.spepow = buf16[0];
+		pp->pcp.spepow = arg;
 		break;
 	case ID_PARA_spedef:
-		pp->pcp.spedef = buf16[0];
+		pp->pcp.spedef = arg;
 		break;
 	case ID_PARA_mail_data:
 //メール処理ないです
@@ -1829,29 +1809,27 @@ static	void	pp_putAct( POKEMON_PARAM *pp, int id, const void *buf )
 #endif
 //		CB_Tool_CoreData_Copy( ( CB_CORE * )buf, &pp->pcp.cb_core );
 		break;
+
 	default:
-		ppp_putAct( ( POKEMON_PASO_PARAM * )&pp->ppp, id, buf );
+		ppp_putAct( ( POKEMON_PASO_PARAM * )&pp->ppp, paramID, arg );
 		break;
 	}
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
- *	ボックスポケモンパラメータ構造体に任意で値を格納
+ *	復号済みボックスポケモンパラメータ構造体に任意で値を格納
  *
- * @param[in]	ppp	格納したいボックスポケモンパラメータ構造体のポインタ
- * @param[in]	id	格納したいデータのインデックス（poke_tool.hに定義）
- * @param[in]	buf	格納したいデータのポインタ
+ * @param[out]	pp			格納したいポケモンパラメータ構造体のポインタ
+ * @param[in]	paramID		格納したいデータのインデックス（poke_tool.hに定義）
+ * @param[in]	arg			格納したいデータ／配列アドレス等としても利用（paramIDによる）
  */
-//============================================================================================
-static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
+//--------------------------------------------------------------------------
+static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
 {
 	int	i;
 	u64	bit;
 	u16	sum;
-	u32	*buf32 = ( u32 * )buf;
-	u16	*buf16 = ( u16 * )buf;
-	u8	*buf8 = ( u8 * )buf;
 	POKEMON_PASO_PARAM1	*ppp1;
 	POKEMON_PASO_PARAM2	*ppp2;
 	POKEMON_PASO_PARAM3	*ppp3;
@@ -1862,85 +1840,85 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 	ppp3 = ( POKEMON_PASO_PARAM3 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
 	ppp4 = ( POKEMON_PASO_PARAM4 * )ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA4 );
 
-	switch( id ){
+	switch( paramID ){
 //PARAM
 		case ID_PARA_personal_rnd:
-			ppp->personal_rnd = buf32[0];
+			ppp->personal_rnd = arg;
 			break;
 		case ID_PARA_pp_fast_mode:
 			GF_ASSERT_MSG( ( 0 ), "fast_modeへ不正な書き込み\n" );
-			ppp->pp_fast_mode = buf8[0];
+			ppp->pp_fast_mode = arg;
 			break;
 		case ID_PARA_ppp_fast_mode:
 			GF_ASSERT_MSG( ( 0 ), "fast_modeへ不正な書き込み\n" );
-			ppp->ppp_fast_mode = buf8[0];
+			ppp->ppp_fast_mode = arg;
 			break;
 		case ID_PARA_fusei_tamago_flag:
-			ppp->fusei_tamago_flag = buf8[0];
+			ppp->fusei_tamago_flag = arg;
 			break;
 		case ID_PARA_checksum:
-			ppp->checksum = buf16[0];
+			ppp->checksum = arg;
 			break;
 //PARAM1
 		case ID_PARA_monsno:
-			ppp1->monsno = buf16[0];
+			ppp1->monsno = arg;
 			break;
 		case ID_PARA_item:
-			ppp1->item = buf16[0];
+			ppp1->item = arg;
 			break;
 		case ID_PARA_id_no:
-			ppp1->id_no = buf32[0];
+			ppp1->id_no = arg;
 			break;
 		case ID_PARA_exp:
-			ppp1->exp = buf32[0];
+			ppp1->exp = arg;
 			break;
 		case ID_PARA_friend:
-			ppp1->friend = buf8[0];
+			ppp1->friend = arg;
 			break;
 		case ID_PARA_speabino:
-			ppp1->speabino = buf8[0];
+			ppp1->speabino = arg;
 			break;
 		case ID_PARA_mark:
-			ppp1->mark = buf8[0];		
+			ppp1->mark = arg;
 			break;
 		case ID_PARA_country_code:
-			ppp1->country_code = buf8[0];		
+			ppp1->country_code = arg;
 			break;
 		case ID_PARA_hp_exp:
-			ppp1->hp_exp = buf8[0];
+			ppp1->hp_exp = arg;
 			break;
 		case ID_PARA_pow_exp:
-			ppp1->pow_exp = buf8[0];
+			ppp1->pow_exp = arg;
 			break;
 		case ID_PARA_def_exp:
-			ppp1->def_exp = buf8[0];
+			ppp1->def_exp = arg;
 			break;
 		case ID_PARA_agi_exp:
-			ppp1->agi_exp = buf8[0];
+			ppp1->agi_exp = arg;
 			break;
 		case ID_PARA_spepow_exp:
-			ppp1->spepow_exp = buf8[0];
+			ppp1->spepow_exp = arg;
 			break;
 		case ID_PARA_spedef_exp:
-			ppp1->spedef_exp = buf8[0];
+			ppp1->spedef_exp = arg;
 			break;
 		case ID_PARA_style:
-			ppp1->style = buf8[0];
+			ppp1->style = arg;
 			break;
 		case ID_PARA_beautiful:
-			ppp1->beautiful = buf8[0];
+			ppp1->beautiful = arg;
 			break;
 		case ID_PARA_cute:
-			ppp1->cute = buf8[0];
+			ppp1->cute = arg;
 			break;
 		case ID_PARA_clever:
-			ppp1->clever = buf8[0];
+			ppp1->clever = arg;
 			break;
 		case ID_PARA_strong:
-			ppp1->strong = buf8[0];	
+			ppp1->strong = arg;	
 			break;
 		case ID_PARA_fur:
-			ppp1->fur = buf8[0];		
+			ppp1->fur = arg;
 			break;
 		case ID_PARA_sinou_champ_ribbon:				//シンオウチャンプリボン
 		case ID_PARA_sinou_battle_tower_ttwin_first:	//シンオウバトルタワータワータイクーン勝利1回目
@@ -1971,8 +1949,8 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 		case ID_PARA_sinou_classic_ribbon:				//シンオウクラシックリボン
 		case ID_PARA_sinou_premiere_ribbon:				//シンオウプレミアリボン
 		case ID_PARA_sinou_amari_ribbon:				//あまり
-			bit = 1 << ( id - ID_PARA_sinou_champ_ribbon );
-			if( buf8[0] ){
+			bit = 1 << ( paramID - ID_PARA_sinou_champ_ribbon );
+			if( arg ){
 				ppp1->sinou_ribbon |= bit;
 			}
 			else{
@@ -1984,19 +1962,19 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 		case ID_PARA_waza2:
 		case ID_PARA_waza3:
 		case ID_PARA_waza4:
-			ppp2->waza[ id - ID_PARA_waza1 ] = buf16[0];
+			ppp2->waza[ paramID - ID_PARA_waza1 ] = arg;
 			break;
 		case ID_PARA_pp1:
 		case ID_PARA_pp2:
 		case ID_PARA_pp3:
 		case ID_PARA_pp4:
-			ppp2->pp[ id - ID_PARA_pp1 ] = buf8[0];
+			ppp2->pp[ paramID - ID_PARA_pp1 ] = arg;
 			break;
 		case ID_PARA_pp_count1:
 		case ID_PARA_pp_count2:
 		case ID_PARA_pp_count3:
 		case ID_PARA_pp_count4:
-			ppp2->pp_count[ id - ID_PARA_pp_count1 ] = buf8[0];
+			ppp2->pp_count[ paramID - ID_PARA_pp_count1 ] = arg;
 			break;
 		case ID_PARA_pp_max1:
 		case ID_PARA_pp_max2:
@@ -2005,28 +1983,25 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 			OS_Printf("不正な書き込み\n");
 			break;
 		case ID_PARA_hp_rnd:
-			ppp2->hp_rnd = buf8[0];
+			ppp2->hp_rnd = arg;
 			break;
 		case ID_PARA_pow_rnd:
-			ppp2->pow_rnd = buf8[0];
+			ppp2->pow_rnd = arg;
 			break;
 		case ID_PARA_def_rnd:
-			ppp2->def_rnd = buf8[0];
+			ppp2->def_rnd = arg;
 			break;
 		case ID_PARA_agi_rnd:
-			ppp2->agi_rnd = buf8[0];
+			ppp2->agi_rnd = arg;
 			break;
 		case ID_PARA_spepow_rnd:
-			ppp2->spepow_rnd = buf8[0];
+			ppp2->spepow_rnd = arg;
 			break;
 		case ID_PARA_spedef_rnd:
-			ppp2->spedef_rnd = buf8[0];
+			ppp2->spedef_rnd = arg;
 			break;
 		case ID_PARA_tamago_flag:
-			ppp2->tamago_flag = buf8[0];
-			break;
-		case ID_PARA_nickname_flag:
-			ppp2->nickname_flag = buf8[0];
+			ppp2->tamago_flag = arg;
 			break;
 		case ID_PARA_stylemedal_normal:
 		case ID_PARA_stylemedal_super:
@@ -2060,8 +2035,8 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 		case ID_PARA_national_ribbon:
 		case ID_PARA_earth_ribbon:
 		case ID_PARA_world_ribbon:
-			bit = 1 << ( id - ID_PARA_stylemedal_normal );
-			if( buf8[0] ){
+			bit = 1 << ( paramID - ID_PARA_stylemedal_normal );
+			if( arg ){
 				ppp2->old_ribbon |= bit;
 			}
 			else{
@@ -2069,69 +2044,42 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 			}
 			break;
 		case ID_PARA_event_get_flag:
-			ppp2->event_get_flag = buf8[0];
+			ppp2->event_get_flag = arg;
 			break;
 		case ID_PARA_sex:
 			//ppp2->sex=buf8[0];
 			//必ずパラメータから計算して代入する
 			ppp2->sex = POKETOOL_GetSex( ppp1->monsno, ppp2->form_no, ppp->personal_rnd );
-			GF_ASSERT_MSG( ( buf8[0] == ppp2->sex ), "Disagreement personal_rnd <> ID_PARA_sex\n");
+			GF_ASSERT_MSG( ( arg == ppp2->sex ), "Disagreement personal_rnd <> ID_PARA_sex\n");
 			break;
 		case ID_PARA_form_no:
-			ppp2->form_no = buf8[0];
+			ppp2->form_no = arg;
 			break;
 		case ID_PARA_dummy_p2_1:
-			ppp2->dummy_p2_1 = buf8[0];
+			ppp2->dummy_p2_1 = arg;
 			break;
 		case ID_PARA_dummy_p2_2:
-			ppp2->dummy_p2_2 = buf16[0];
+			ppp2->dummy_p2_2 = arg;
+			break;
+
+		case ID_PARA_nickname_flag:
+			GF_ASSERT_MSG(0, "ニックネームフラグを直接セットすることはできません\n");
 			break;
 //PARAM3
-		case ID_PARA_nickname_code_flag:
-			{
-//メッセージ処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MSGDAT Nothing
-#endif
-//				STRCODE	def_name[ MONS_NAME_SIZE + EOM_SIZE ];
-
-				//デフォルト名と比較して、デフォルト名だったら、ニックネームフラグを落とす
-				//海外版からきたポケモンは、ニックネームの変更が不可なので、国コードを見る必要はなし
-//				MSGDAT_MonsNameGet( ppp1->monsno, HEAPID_BASE_SYSTEM, &def_name[0] );
-//				ppp2->nickname_flag = PM_strcmp( def_name, &buf16[0] );
-			}
 		case ID_PARA_nickname:
-			for( i = 0 ; i < NELEMS( ppp3->nickname ) ; i++ ){
-				ppp3->nickname[i] = buf16[i];
-			}
+			GFL_STR_GetStringCode( (STRBUF*)arg, ppp3->nickname, NELEMS(ppp3->nickname) );
+			ppp2->nickname_flag = pppAct_check_nickname( ppp );
 			break;
-		case ID_PARA_nickname_buf_flag:
-			{
-//メッセージ処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MSGDAT Nothing
-#endif
-//				STRCODE	def_name[ MONS_NAME_SIZE + EOM_SIZE ];
-//				STRCODE	buf_name[ MONS_NAME_SIZE + EOM_SIZE ];
+		case ID_PARA_nickname_raw:
+			STRTOOL_Copy( (const STRCODE*)arg, ppp3->nickname, NELEMS(ppp3->nickname) );
+			ppp2->nickname_flag = pppAct_check_nickname( ppp );
+			break;
 
-				//デフォルト名と比較して、デフォルト名だったら、ニックネームフラグを落とす
-				//海外版からきたポケモンは、ニックネームの変更が不可なので、国コードを見る必要はなし
-//				MSGDAT_MonsNameGet( ppp1->monsno, HEAPID_BASE_SYSTEM, &def_name[0] );
-//				STRBUF_GetStringCode( ( STRBUF * )buf, &buf_name[0], NELEMS( buf_name ) );
-//				ppp2->nickname_flag = PM_strcmp( def_name, buf_name );
-			}
-		case ID_PARA_nickname_buf:
-//メッセージ処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning STRBUF Nothing
-#endif
-//			STRBUF_GetStringCode( ( STRBUF * )buf, ppp3->nickname, NELEMS( ppp3->nickname ) );
-			break;
 		case ID_PARA_pref_code:
-			ppp3->pref_code = buf8[0];
+			ppp3->pref_code = arg;
 			break;
 		case ID_PARA_get_cassette:
-			ppp3->get_cassette = buf8[0];
+			ppp3->get_cassette = arg;
 			break;
 		case ID_PARA_trial_stylemedal_normal:
 		case ID_PARA_trial_stylemedal_super:
@@ -2154,8 +2102,8 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 		case ID_PARA_trial_strongmedal_hyper:
 		case ID_PARA_trial_strongmedal_master:
 		case ID_PARA_amari_ribbon:
-			bit = 1 << ( id - ID_PARA_trial_stylemedal_normal );
-			if( buf8[0] ){
+			bit = 1 << ( paramID - ID_PARA_trial_stylemedal_normal );
+			if( arg ){
 				ppp3->new_ribbon |= bit;
 			}
 			else{
@@ -2164,34 +2112,29 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 			break;
 //PARAM4
 		case ID_PARA_oyaname:
-			for( i = 0 ; i < NELEMS( ppp4->oyaname ) ; i++ )
-				ppp4->oyaname[i] = buf16[i];
+			GFL_STR_GetStringCode( (STRBUF*)arg, ppp4->oyaname, NELEMS(ppp4->oyaname) );
 			break;
-		case ID_PARA_oyaname_buf:
-//メッセージ処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning STRBUF Nothing
-#endif
-//			STRBUF_GetStringCode( ( STRBUF * )buf, ppp4->oyaname, NELEMS( ppp4->oyaname ) );
+		case ID_PARA_oyaname_raw:
+			STRTOOL_Copy( (const STRCODE*)arg, ppp4->oyaname, NELEMS(ppp4->oyaname) );
 			break;
 
 		case ID_PARA_get_year:							//捕まえた年
-			ppp4->get_year = buf8[0];
+			ppp4->get_year = arg;
 			break;
 		case ID_PARA_get_month:							//捕まえた月
-			ppp4->get_month = buf8[0];
+			ppp4->get_month = arg;
 			break;
 		case ID_PARA_get_day:							//捕まえた日
-			ppp4->get_day = buf8[0];
+			ppp4->get_day = arg;
 			break;
 		case ID_PARA_birth_year:						//生まれた年
-			ppp4->birth_year = buf8[0];
+			ppp4->birth_year = arg;
 			break;
 		case ID_PARA_birth_month:						//生まれた月
-			ppp4->birth_month = buf8[0];
+			ppp4->birth_month = arg;
 			break;
 		case ID_PARA_birth_day:							//生まれた日
-			ppp4->birth_day = buf8[0];
+			ppp4->birth_day = arg;
 			break;
 		case ID_PARA_get_place:							//捕まえた場所
 		case ID_PARA_new_get_place:						//捕まえた場所
@@ -2236,53 +2179,43 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int id, const void *buf )
 #endif
 			break;
 		case ID_PARA_pokerus:							//ポケルス
-			ppp4->pokerus = buf8[0];
+			ppp4->pokerus = arg;
 			break;
 		case ID_PARA_get_ball:							//捕まえたボール
-			ppp4->get_ball = buf8[0];
+			ppp4->get_ball = arg;
 			break;
 		case ID_PARA_get_level:							//捕まえたレベル
-			ppp4->get_level = buf8[0];
+			ppp4->get_level = arg;
 			break;
 		case ID_PARA_oyasex:							//親の性別
-			ppp4->oyasex = buf8[0];
+			ppp4->oyasex = arg;
 			break;
 		case ID_PARA_get_ground_id:						//捕まえた場所の地形アトリビュート（ミノッチ用）
-			ppp4->get_ground_id = buf8[0];
+			ppp4->get_ground_id = arg;
 			break;
 		case ID_PARA_dummy_p4_1:						//あまり
-			ppp4->dummy_p4_1 = buf16[0];
+			ppp4->dummy_p4_1 = arg;
 			break;
 
 		case ID_PARA_power_rnd:
-			ppp2->hp_rnd	 = ( buf32[0] >>  0 ) & 0x0000001f ;
-			ppp2->pow_rnd	 = ( buf32[0] >>  5 ) & 0x0000001f ;
-			ppp2->def_rnd	 = ( buf32[0] >> 10 ) & 0x0000001f ;
-			ppp2->agi_rnd	 = ( buf32[0] >> 15 ) & 0x0000001f ;
-			ppp2->spepow_rnd = ( buf32[0] >> 20 ) & 0x0000001f ;
-			ppp2->spedef_rnd = ( buf32[0] >> 25 ) & 0x0000001f ;
+			ppp2->hp_rnd	 = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_HP );
+			ppp2->pow_rnd	 = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_ATK );
+			ppp2->def_rnd	 = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_DEF );
+			ppp2->spepow_rnd = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_SPATK );
+			ppp2->spedef_rnd = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_SPDEF );
+			ppp2->agi_rnd	 = PTL_SETUP_POW_UNPACK( arg, PTL_ABILITY_AGI );
 			break;
+
 		//モンスターナンバーがニドランの時にnickname_flagが立っているかチェック
 		case ID_PARA_nidoran_nickname:
 		case ID_PARA_type1:
 		case ID_PARA_type2:
-			OS_Printf("不正な書き込み\n");
-			break;
-		case ID_PARA_default_name:						//ポケモンのデフォルト名
-			{
-//メッセージ処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning STRBUF Nothing
-#endif
-//				STRBUF	*name_buf;
-
-//				name_buf = MSGDAT_UTIL_GetMonsName( ppp1->monsno, HEAPID_BASE_SYSTEM );
-//				STRBUF_GetStringCode( name_buf, ppp3->nickname, NELEMS( ppp3->nickname ) );
-//				STRBUF_Delete( name_buf );
-			}
+			OS_TPrintf("不正な書き込み\n");
 			break;
 	}
 }
+
+
 
 //============================================================================================
 /**
@@ -2363,7 +2296,7 @@ static	void	ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
 			}
 			break;
 		case ID_PARA_friend:
-			round_calc( &ppp1->friend, value, FRIEND_MAX );
+			round_calc( &ppp1->friend, value, PTL_FRIEND_MAX );
 			break;
 		case ID_PARA_hp_exp:
 		case ID_PARA_pow_exp:
@@ -2374,22 +2307,22 @@ static	void	ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
 			GF_ASSERT_MSG( ( 0 ), "不正な加算：努力値は、合計値の上限が決まっているので、個別の加算はサポートしません\n");
 			break;
 		case ID_PARA_style:
-			round_calc( &ppp1->style, value, STYLE_MAX );
+			round_calc( &ppp1->style, value, PTL_STYLE_MAX );
 			break;
 		case ID_PARA_beautiful:
-			round_calc( &ppp1->beautiful, value, BEAUTIFUL_MAX );
+			round_calc( &ppp1->beautiful, value, PTL_BEAUTIFUL_MAX );
 			break;
 		case ID_PARA_cute:
-			round_calc( &ppp1->cute, value, CUTE_MAX );
+			round_calc( &ppp1->cute, value, PTL_CUTE_MAX );
 			break;
 		case ID_PARA_clever:
-			round_calc( &ppp1->clever, value, CLEVER_MAX );
+			round_calc( &ppp1->clever, value, PTL_CLEVER_MAX );
 			break;
 		case ID_PARA_strong:
-			round_calc( &ppp1->strong, value, STRONG_MAX );
+			round_calc( &ppp1->strong, value, PTL_STRONG_MAX );
 			break;
 		case ID_PARA_fur:
-			round_calc( &ppp1->fur, value, FUR_MAX );
+			round_calc( &ppp1->fur, value, PTL_FUR_MAX );
 			break;
 		case ID_PARA_pp1:
 		case ID_PARA_pp2:
@@ -2405,151 +2338,11 @@ static	void	ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
 		case ID_PARA_pp_count4:
 			round_calc( &ppp2->pp_count[ id - ID_PARA_pp_count1 ], value, PTL_WAZAPP_COUNT_MAX );
 			break;
-		case ID_PARA_pp_max1:
-		case ID_PARA_pp_max2:
-		case ID_PARA_pp_max3:
-		case ID_PARA_pp_max4:
-		case ID_PARA_hp_rnd:
-		case ID_PARA_pow_rnd:
-		case ID_PARA_def_rnd:
-		case ID_PARA_agi_rnd:
-		case ID_PARA_spepow_rnd:
-		case ID_PARA_spedef_rnd:
-		case ID_PARA_personal_rnd:
-		case ID_PARA_pp_fast_mode:
-		case ID_PARA_ppp_fast_mode:
-		case ID_PARA_checksum:
-		case ID_PARA_monsno:
-		case ID_PARA_item:
-		case ID_PARA_id_no:
-		case ID_PARA_speabino:
-		case ID_PARA_mark:
-		case ID_PARA_country_code:
-		case ID_PARA_sinou_champ_ribbon:				//シンオウチャンプリボン
-		case ID_PARA_sinou_battle_tower_ttwin_first:	//シンオウバトルタワータワータイクーン勝利1回目
-		case ID_PARA_sinou_battle_tower_ttwin_second:	//シンオウバトルタワータワータイクーン勝利2回目
-		case ID_PARA_sinou_battle_tower_2vs2_win50:		//シンオウバトルタワータワーダブル50連勝
-		case ID_PARA_sinou_battle_tower_aimulti_win50:	//シンオウバトルタワータワーAIマルチ50連勝
-		case ID_PARA_sinou_battle_tower_siomulti_win50:	//シンオウバトルタワータワー通信マルチ50連勝
-		case ID_PARA_sinou_battle_tower_wifi_rank5:		//シンオウバトルタワーWifiランク５入り
-		case ID_PARA_sinou_syakki_ribbon:				//シンオウしゃっきリボン
-		case ID_PARA_sinou_dokki_ribbon:				//シンオウどっきリボン
-		case ID_PARA_sinou_syonbo_ribbon:				//シンオウしょんぼリボン
-		case ID_PARA_sinou_ukka_ribbon:					//シンオウうっかリボン
-		case ID_PARA_sinou_sukki_ribbon:				//シンオウすっきリボン
-		case ID_PARA_sinou_gussu_ribbon:				//シンオウぐっすリボン
-		case ID_PARA_sinou_nikko_ribbon:				//シンオウにっこリボン
-		case ID_PARA_sinou_gorgeous_ribbon:				//シンオウゴージャスリボン
-		case ID_PARA_sinou_royal_ribbon:				//シンオウロイヤルリボン
-		case ID_PARA_sinou_gorgeousroyal_ribbon:		//シンオウゴージャスロイヤルリボン
-		case ID_PARA_sinou_ashiato_ribbon:				//シンオウあしあとリボン
-		case ID_PARA_sinou_record_ribbon:				//シンオウレコードリボン
-		case ID_PARA_sinou_history_ribbon:				//シンオウヒストリーリボン
-		case ID_PARA_sinou_legend_ribbon:				//シンオウレジェンドリボン
-		case ID_PARA_sinou_red_ribbon:					//シンオウレッドリボン
-		case ID_PARA_sinou_green_ribbon:				//シンオウグリーンリボン
-		case ID_PARA_sinou_blue_ribbon:					//シンオウブルーリボン
-		case ID_PARA_sinou_festival_ribbon:				//シンオウフェスティバルリボン
-		case ID_PARA_sinou_carnival_ribbon:				//シンオウカーニバルリボン
-		case ID_PARA_sinou_classic_ribbon:				//シンオウクラシックリボン
-		case ID_PARA_sinou_premiere_ribbon:				//シンオウプレミアリボン
-		case ID_PARA_sinou_amari_ribbon:				//あまり
-		case ID_PARA_waza1:
-		case ID_PARA_waza2:
-		case ID_PARA_waza3:
-		case ID_PARA_waza4:
-		case ID_PARA_tamago_flag:
-		case ID_PARA_nickname_flag:
-		case ID_PARA_stylemedal_normal:
-		case ID_PARA_stylemedal_super:
-		case ID_PARA_stylemedal_hyper:
-		case ID_PARA_stylemedal_master:
-		case ID_PARA_beautifulmedal_normal:
-		case ID_PARA_beautifulmedal_super:
-		case ID_PARA_beautifulmedal_hyper:
-		case ID_PARA_beautifulmedal_master:
-		case ID_PARA_cutemedal_normal:
-		case ID_PARA_cutemedal_super:
-		case ID_PARA_cutemedal_hyper:
-		case ID_PARA_cutemedal_master:
-		case ID_PARA_clevermedal_normal:
-		case ID_PARA_clevermedal_super:
-		case ID_PARA_clevermedal_hyper:
-		case ID_PARA_clevermedal_master:
-		case ID_PARA_strongmedal_normal:
-		case ID_PARA_strongmedal_super:
-		case ID_PARA_strongmedal_hyper:
-		case ID_PARA_strongmedal_master:
-		case ID_PARA_champ_ribbon:
-		case ID_PARA_winning_ribbon:
-		case ID_PARA_victory_ribbon:
-		case ID_PARA_bromide_ribbon:
-		case ID_PARA_ganba_ribbon:
-		case ID_PARA_marine_ribbon:
-		case ID_PARA_land_ribbon:
-		case ID_PARA_sky_ribbon:
-		case ID_PARA_country_ribbon:
-		case ID_PARA_national_ribbon:
-		case ID_PARA_earth_ribbon:
-		case ID_PARA_world_ribbon:
-		case ID_PARA_event_get_flag:
-		case ID_PARA_sex:
-		case ID_PARA_form_no:
-		case ID_PARA_dummy_p2_1:
-		case ID_PARA_dummy_p2_2:
-		case ID_PARA_nickname:
-		case ID_PARA_nickname_buf:
-		case ID_PARA_nickname_buf_flag:
-		case ID_PARA_pref_code:
-		case ID_PARA_get_cassette:
-		case ID_PARA_trial_stylemedal_normal:
-		case ID_PARA_trial_stylemedal_super:
-		case ID_PARA_trial_stylemedal_hyper:
-		case ID_PARA_trial_stylemedal_master:
-		case ID_PARA_trial_beautifulmedal_normal:
-		case ID_PARA_trial_beautifulmedal_super:
-		case ID_PARA_trial_beautifulmedal_hyper:
-		case ID_PARA_trial_beautifulmedal_master:
-		case ID_PARA_trial_cutemedal_normal:
-		case ID_PARA_trial_cutemedal_super:
-		case ID_PARA_trial_cutemedal_hyper:
-		case ID_PARA_trial_cutemedal_master:
-		case ID_PARA_trial_clevermedal_normal:
-		case ID_PARA_trial_clevermedal_super:
-		case ID_PARA_trial_clevermedal_hyper:
-		case ID_PARA_trial_clevermedal_master:
-		case ID_PARA_trial_strongmedal_normal:
-		case ID_PARA_trial_strongmedal_super:
-		case ID_PARA_trial_strongmedal_hyper:
-		case ID_PARA_trial_strongmedal_master:
-		case ID_PARA_amari_ribbon:
-		case ID_PARA_oyaname:
-		case ID_PARA_oyaname_buf:
-		case ID_PARA_get_year:							//捕まえた年
-		case ID_PARA_get_month:							//捕まえた月
-		case ID_PARA_get_day:							//捕まえた日
-		case ID_PARA_birth_year:						//生まれた年
-		case ID_PARA_birth_month:						//生まれた月
-		case ID_PARA_birth_day:							//生まれた日
-		case ID_PARA_get_place:							//捕まえた場所
-		case ID_PARA_birth_place:						//生まれた場所
-		case ID_PARA_pokerus:							//ポケルス
-		case ID_PARA_get_ball:							//捕まえたボール
-		case ID_PARA_get_level:							//捕まえたレベル
-		case ID_PARA_oyasex:							//親の性別
-		case ID_PARA_get_ground_id:						//捕まえた場所の地形アトリビュート（ミノッチ用）
-		case ID_PARA_dummy_p4_1:						//あまり
-		case ID_PARA_power_rnd:
-		case ID_PARA_nidoran_nickname:
-		case ID_PARA_type1:
-		case ID_PARA_type2:
-		case ID_PARA_default_name:						//ポケモンのデフォルト名
 		default:
 			GF_ASSERT_MSG( ( 0 ), "不正な加算\n" );
 			break;
 	}
 }
-
 //--------------------------------------------------------------------------
 /**
  * 数値計算後、0以上～指定上限値以下になるように丸める
@@ -2576,9 +2369,11 @@ static	void	round_calc( u8 *data, int value, int max )
 	*data = ( u8 )work;
 }
 
+
+
 //--------------------------------------------------------------------------
 /**
- * 暗号化処理
+ * 暗号処理
  *
  * @param[io]	data	暗号化するデータのポインタ
  * @param[in]	size	暗号化するデータのサイズ
@@ -2595,37 +2390,36 @@ static	void	encode_data( void *data, u32 size, u32 code )
 		data_p[i] ^= rand_next( &code );
 	}
 }
-
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	復号処理
  *
- * @param[in]	data	復号するデータのポインタ
+ * @param[io]	data	復号するデータのポインタ
  * @param[in]	size	復号するデータのサイズ
  * @param[in]	code	暗号化キーの初期値
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 //static	void	decord_data( void *data, u32 size, u32 code )
 //{
 //	encode_data( data, size, code );
 //}
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	乱数暗号キー生成ルーチン
  *
- * @param[in,out]	code	暗号キー格納ワークのポインタ
+ * @param[io]	code	暗号キー格納ワークのポインタ
  *
  * @return	暗号キー格納ワークの上位2バイトを暗号キーとして返す
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	u16	rand_next( u32 *code )
 {
     code[0] = code[0] *1103515245L + 24691;
     return ( u16 )( code[0] / 65536L ) ;
 }
 
-//============================================================================================
+//--------------------------------------------------------------------------
 /**
  *	ポケモンパラメータのチェックサムを生成
  *
@@ -2634,7 +2428,7 @@ static	u16	rand_next( u32 *code )
  *
  * @return	生成したチェックサム
  */
-//============================================================================================
+//--------------------------------------------------------------------------
 static	u16	make_checksum( const void *data, u32 size )
 {
 	const u16	*data_p = ( u16 * )data;
@@ -2648,38 +2442,59 @@ static	u16	make_checksum( const void *data, u32 size )
 	return sum;
 }
 
+//--------------------------------------------------------------------------
+/**
+ * 復号済みPPPについて、ニックネームが付けられているか判定
+ *
+ * @param   ppp			復号済みPPP
+ *
+ * @retval  BOOL		nicknameフィールドにデフォルト名が入っていない場合はTRUE
+ */
+//--------------------------------------------------------------------------
+static BOOL pppAct_check_nickname( POKEMON_PASO_PARAM* ppp )
+{
+	POKEMON_PASO_PARAM1	*ppp1;
+	POKEMON_PASO_PARAM3	*ppp3;
+
+	ppp1 = (POKEMON_PASO_PARAM1*)ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+	ppp3 = (POKEMON_PASO_PARAM3*)ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+
+	GFL_MSG_GetStringRaw( GlobalMsg_PokeName, ppp1->monsno, StrBuffer, NELEMS(StrBuffer) );
+	return STRTOOL_Comp( StrBuffer, ppp3->nickname );
+}
+
 //============================================================================================
 /**
  *	性格によるパラメータ変化値テーブル
  */
 //============================================================================================
 static	const	s8	SeikakuAbiTbl[][5]={
-//		pow	def	agi	spepow	spedef
-	{	 0,	 0,	 0,	 0,		 0},		//がんばりや
-	{	 1,	-1,	 0,	 0,		 0},		//さみしがり
-	{	 1,	 0,	-1,	 0,		 0},		//ゆうかん
-	{	 1,	 0,	 0,	-1,		 0},		//いじっぱり
-	{	 1,	 0,	 0,	 0,		-1},		//やんちゃ
-	{	-1,	 1,	 0,	 0,		 0},		//ずぶとい
-	{	 0,	 0,	 0,	 0,		 0},		//すなお
-	{	 0,	 1,	-1,	 0,		 0},		//のんき
-	{	 0,	 1,	 0,	-1,		 0},		//わんぱく
-	{	 0,	 1,	 0,	 0,		-1},		//のうてんき
-	{	-1,	 0,	 1,	 0,		 0},		//おくびょう
-	{	 0,	-1,	 1,	 0,		 0},		//せっかち
-	{	 0,	 0,	 0,	 0,		 0},		//まじめ
-	{	 0,	 0,	 1,	-1,		 0},		//ようき
-	{	 0,	 0,	 1,	 0,		-1},		//むじゃき
-	{	-1,	 0,	 0,	 1,		 0},		//ひかえめ
-	{	 0,	-1,	 0,	 1,		 0},		//おっとり
-	{	 0,	 0,	-1,	 1,		 0},		//れいせい
-	{	 0,	 0,	 0,	 0,		 0},		//てれや
-	{	 0,	 0,	 0,	 1,		-1},		//うっかりや
-	{	-1,	 0,	 0,	 0,		 1},		//おだやか
-	{	 0,	-1,	 0,	 0,		 1},		//おとなしい
-	{	 0,	 0,	-1,	 0,		 1},		//なまいき
-	{	 0,	 0,	 0,	-1,		 1},		//しんちょう
-	{	 0,	 0,	 0,	 0,		 0},		//きまぐれ
+//		atk	def	sat	sdf	agi
+	{	 0,	 0,	 0,	 0,	 0,	},	// がんばりや
+	{	 1,	-1,	 0,	 0,	 0,	},	// さみしがり
+	{	 1,	 0,	 0,	 0,	-1,	},	// ゆうかん
+	{	 1,	 0,	-1,	 0,	 0,	},	// いじっぱり
+	{	 1,	 0,	 0,	-1,	 0,	},	// やんちゃ
+	{	-1,	 1,	 0,	 0,	 0,	},	// ずぶとい
+	{	 0,	 0,	 0,	 0,	 0,	},	// すなお
+	{	 0,	 1,	 0,	 0,	-1,	},	// のんき
+	{	 0,	 1,	-1,	 0,	 0,	},	// わんぱく
+	{	 0,	 1,	 0,	-1,	 0,	},	// のうてんき
+	{	-1,	 0,	 0,	 0,	 1,	},	// おくびょう
+	{	 0,	-1,	 0,	 0,	 1,	},	// せっかち
+	{	 0,	 0,	 0,	 0,	 0,	},	// まじめ
+	{	 0,	 0,	-1,	 0,	 1,	},	// ようき
+	{	 0,	 0,	 0,	-1,	 1,	},	// むじゃき
+	{	-1,	 0,	 1,	 0,	 0,	},	// ひかえめ
+	{	 0,	-1,	 1,	 0,	 0,	},	// おっとり
+	{	 0,	 0,	 1,	 0,	-1,	},	// れいせい
+	{	 0,	 0,	 0,	 0,	 0,	},	// てれや
+	{	 0,	 0,	 1,	-1,	 0,	},	// うっかりや
+	{	-1,	 0,	 0,	 1,	 0,	},	// おだやか
+	{	 0,	-1,	 0,	 1,	 0,	},	// おとなしい
+	{	 0,	 0,	 0,	 1,	-1,	},	// なまいき
+	{	 0,	 0,	-1,	 1,	 0,	},	// しんちょう
+	{	 0,	 0,	 0,	 0,	 0,	},	// きまぐれ
 };
 
 //============================================================================================
@@ -2697,7 +2512,11 @@ static	u16	calc_abi_seikaku( u8 chr, u16 para, u8 cond )
 {
 	u16	ret;
 
-	if( ( cond < ABILITY_POW ) || ( cond > ABILITY_SPEDEF ) ) return para;
+	if( cond >= PTL_ABILITY_MAX )
+	{
+		GF_ASSERT(0);
+		return para;
+	}
 
 	switch( SeikakuAbiTbl[ chr ][ cond - 1 ]){
 		case 1:

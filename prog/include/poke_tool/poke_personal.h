@@ -24,42 +24,56 @@ typedef struct pokemon_personal_data	POKEMON_PERSONAL_DATA;
 //--------------------------------------------------------------
 typedef enum {
 
-	POKE_PER_ID_basic_hp=0,			//基本ＨＰ
-	POKE_PER_ID_basic_pow,			//基本攻撃力
-	POKE_PER_ID_basic_def,			//基本防御力
-	POKE_PER_ID_basic_agi,			//基本素早さ
-	POKE_PER_ID_basic_spepow,		//基本特殊攻撃力
-	POKE_PER_ID_basic_spedef,		//基本特殊防御力
-	POKE_PER_ID_type1,				//属性１
-	POKE_PER_ID_type2,				//属性２
-	POKE_PER_ID_get_rate,			//捕獲率
-	POKE_PER_ID_give_exp,			//贈与経験値
-	POKE_PER_ID_pains_hp,			//贈与努力値ＨＰ
-	POKE_PER_ID_pains_pow,			//贈与努力値攻撃力
-	POKE_PER_ID_pains_def,			//贈与努力値防御力
-	POKE_PER_ID_pains_agi,			//贈与努力値素早さ
-	POKE_PER_ID_pains_spepow,		//贈与努力値特殊攻撃力
-	POKE_PER_ID_pains_spedef,		//贈与努力値特殊防御力
-	POKE_PER_ID_item1,				//アイテム１
-	POKE_PER_ID_item2,				//アイテム２
-	POKE_PER_ID_sex,					//性別ベクトル
-	POKE_PER_ID_egg_birth,			//タマゴの孵化歩数
-	POKE_PER_ID_friend,				//なつき度初期値
-	POKE_PER_ID_grow,				//成長曲線識別
-	POKE_PER_ID_egg_group1,			//こづくりグループ1
-	POKE_PER_ID_egg_group2,			//こづくりグループ2
-	POKE_PER_ID_speabi1,				//特殊能力１
-	POKE_PER_ID_speabi2,				//特殊能力２
-	POKE_PER_ID_escape,				//逃げる率
-	POKE_PER_ID_color,				//色（図鑑で使用）
-	POKE_PER_ID_reverse,				//反転フラグ
-	POKE_PER_ID_machine1,			//技マシンフラグ１
-	POKE_PER_ID_machine2,			//技マシンフラグ２
-	POKE_PER_ID_machine3,			//技マシンフラグ３
-	POKE_PER_ID_machine4				//技マシンフラグ４
+	POKEPER_ID_basic_hp=0,			//基本ＨＰ
+	POKEPER_ID_basic_pow,			//基本攻撃力
+	POKEPER_ID_basic_def,			//基本防御力
+	POKEPER_ID_basic_agi,			//基本素早さ
+	POKEPER_ID_basic_spepow,		//基本特殊攻撃力
+	POKEPER_ID_basic_spedef,		//基本特殊防御力
+	POKEPER_ID_type1,				//属性１
+	POKEPER_ID_type2,				//属性２
+	POKEPER_ID_get_rate,			//捕獲率
+	POKEPER_ID_give_exp,			//贈与経験値
+	POKEPER_ID_pains_hp,			//贈与努力値ＨＰ
+	POKEPER_ID_pains_pow,			//贈与努力値攻撃力
+	POKEPER_ID_pains_def,			//贈与努力値防御力
+	POKEPER_ID_pains_agi,			//贈与努力値素早さ
+	POKEPER_ID_pains_spepow,		//贈与努力値特殊攻撃力
+	POKEPER_ID_pains_spedef,		//贈与努力値特殊防御力
+	POKEPER_ID_item1,				//アイテム１
+	POKEPER_ID_item2,				//アイテム２
+	POKEPER_ID_sex,					//性別ベクトル
+	POKEPER_ID_egg_birth,			//タマゴの孵化歩数
+	POKEPER_ID_friend,				//なつき度初期値
+	POKEPER_ID_grow,				//成長曲線識別
+	POKEPER_ID_egg_group1,			//こづくりグループ1
+	POKEPER_ID_egg_group2,			//こづくりグループ2
+	POKEPER_ID_speabi1,				//特殊能力１
+	POKEPER_ID_speabi2,				//特殊能力２
+	POKEPER_ID_escape,				//逃げる率
+	POKEPER_ID_color,				//色（図鑑で使用）
+	POKEPER_ID_reverse,				//反転フラグ
+	POKEPER_ID_machine1,			//技マシンフラグ１
+	POKEPER_ID_machine2,			//技マシンフラグ２
+	POKEPER_ID_machine3,			//技マシンフラグ３
+	POKEPER_ID_machine4				//技マシンフラグ４
 
 }PokePersonalParamID;
 
+
+//パーソナルデータの色定義
+typedef enum {
+	POKEPER_COLOR_RED = 0,		//赤
+	POKEPER_COLOR_BLUE,			//青
+	POKEPER_COLOR_YELLOW,		//黄
+	POKEPER_COLOR_GREEN,		//緑
+	POKEPER_COLOR_BLACK,		//黒
+	POKEPER_COLOR_BROWN,		//茶
+	POKEPER_COLOR_PERPLE,		//紫
+	POKEPER_COLOR_GRAY,			//灰
+	POKEPER_COLOR_WHITE,		//白
+	POKEPER_COLOR_PINK,			//桃
+}PokePersonal_Color;
 
 
 //ポケモンパーソナル操作関数系

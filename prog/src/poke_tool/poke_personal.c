@@ -147,103 +147,103 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
 	GF_ASSERT( ppd );
 
 	switch( paramID ){
-	case POKE_PER_ID_basic_hp:		//Šî–{‚g‚o
+	case POKEPER_ID_basic_hp:		//Šî–{‚g‚o
 		ret = ppd->basic_hp;
 		break;
-	case POKE_PER_ID_basic_pow:		//Šî–{UŒ‚—Í
+	case POKEPER_ID_basic_pow:		//Šî–{UŒ‚—Í
 		ret = ppd->basic_pow;
 		break;
-	case POKE_PER_ID_basic_def:		//Šî–{–hŒä—Í
+	case POKEPER_ID_basic_def:		//Šî–{–hŒä—Í
 		ret = ppd->basic_def;
 		break;
-	case POKE_PER_ID_basic_agi:		//Šî–{‘f‘‚³
+	case POKEPER_ID_basic_agi:		//Šî–{‘f‘‚³
 		ret = ppd->basic_agi;
 		break;
-	case POKE_PER_ID_basic_spepow:	//Šî–{“ÁŽêUŒ‚—Í
+	case POKEPER_ID_basic_spepow:	//Šî–{“ÁŽêUŒ‚—Í
 		ret = ppd->basic_spepow;
 		break;
-	case POKE_PER_ID_basic_spedef:	//Šî–{“ÁŽê–hŒä—Í
+	case POKEPER_ID_basic_spedef:	//Šî–{“ÁŽê–hŒä—Í
 		ret = ppd->basic_spedef;
 		break;
-	case POKE_PER_ID_type1:			//‘®«‚P
+	case POKEPER_ID_type1:			//‘®«‚P
 		ret = ppd->type1;
 		break;
-	case POKE_PER_ID_type2:			//‘®«‚Q
+	case POKEPER_ID_type2:			//‘®«‚Q
 		ret = ppd->type2;
 		break;
-	case POKE_PER_ID_get_rate:		//•ßŠl—¦
+	case POKEPER_ID_get_rate:		//•ßŠl—¦
 		ret = ppd->get_rate;
 		break;
-	case POKE_PER_ID_give_exp:		//‘¡—^ŒoŒ±’l
+	case POKEPER_ID_give_exp:		//‘¡—^ŒoŒ±’l
 		ret = ppd->give_exp;
 		break;
-	case POKE_PER_ID_pains_hp:		//‘¡—^“w—Í’l‚g‚o
+	case POKEPER_ID_pains_hp:		//‘¡—^“w—Í’l‚g‚o
 		ret = ppd->pains_hp;
 		break;
-	case POKE_PER_ID_pains_pow:		//‘¡—^“w—Í’lUŒ‚—Í
+	case POKEPER_ID_pains_pow:		//‘¡—^“w—Í’lUŒ‚—Í
 		ret = ppd->pains_pow;
 		break;
-	case POKE_PER_ID_pains_def:		//‘¡—^“w—Í’l–hŒä—Í
+	case POKEPER_ID_pains_def:		//‘¡—^“w—Í’l–hŒä—Í
 		ret = ppd->pains_def;
 		break;
-	case POKE_PER_ID_pains_agi:		//‘¡—^“w—Í’l‘f‘‚³
+	case POKEPER_ID_pains_agi:		//‘¡—^“w—Í’l‘f‘‚³
 		ret = ppd->pains_agi;
 		break;
-	case POKE_PER_ID_pains_spepow:	//‘¡—^“w—Í’l“ÁŽêUŒ‚—Í
+	case POKEPER_ID_pains_spepow:	//‘¡—^“w—Í’l“ÁŽêUŒ‚—Í
 		ret = ppd->pains_spepow;
 		break;
-	case POKE_PER_ID_pains_spedef:	//‘¡—^“w—Í’l“ÁŽê–hŒä—Í
+	case POKEPER_ID_pains_spedef:	//‘¡—^“w—Í’l“ÁŽê–hŒä—Í
 		ret = ppd->pains_spedef;
 		break;
-	case POKE_PER_ID_item1:			//ƒAƒCƒeƒ€‚P
+	case POKEPER_ID_item1:			//ƒAƒCƒeƒ€‚P
 		ret = ppd->item1;
 		break;
-	case POKE_PER_ID_item2:			//ƒAƒCƒeƒ€‚Q
+	case POKEPER_ID_item2:			//ƒAƒCƒeƒ€‚Q
 		ret = ppd->item2;
 		break;
-	case POKE_PER_ID_sex:			//«•ÊƒxƒNƒgƒ‹
+	case POKEPER_ID_sex:			//«•ÊƒxƒNƒgƒ‹
 		ret = ppd->sex;
 		break;
-	case POKE_PER_ID_egg_birth:		//ƒ^ƒ}ƒS‚Ì›z‰»•à”
+	case POKEPER_ID_egg_birth:		//ƒ^ƒ}ƒS‚Ì›z‰»•à”
 		ret = ppd->egg_birth;
 		break;
-	case POKE_PER_ID_friend:			//‚È‚Â‚«“x‰Šú’l
+	case POKEPER_ID_friend:			//‚È‚Â‚«“x‰Šú’l
 		ret = ppd->friend;
 		break;
-	case POKE_PER_ID_grow:			//¬’·‹ÈüŽ¯•Ê
+	case POKEPER_ID_grow:			//¬’·‹ÈüŽ¯•Ê
 		ret = ppd->grow;
 		break;
-	case POKE_PER_ID_egg_group1:		//‚±‚Ã‚­‚èƒOƒ‹[ƒv1
+	case POKEPER_ID_egg_group1:		//‚±‚Ã‚­‚èƒOƒ‹[ƒv1
 		ret = ppd->egg_group1;
 		break;
-	case POKE_PER_ID_egg_group2:		//‚±‚Ã‚­‚èƒOƒ‹[ƒv2
+	case POKEPER_ID_egg_group2:		//‚±‚Ã‚­‚èƒOƒ‹[ƒv2
 		ret = ppd->egg_group2;
 		break;
-	case POKE_PER_ID_speabi1:		//“ÁŽê”\—Í‚P
+	case POKEPER_ID_speabi1:		//“ÁŽê”\—Í‚P
 		ret = ppd->speabi1;
 		break;
-	case POKE_PER_ID_speabi2:		//“ÁŽê”\—Í‚Q
+	case POKEPER_ID_speabi2:		//“ÁŽê”\—Í‚Q
 		ret = ppd->speabi2;
 		break;
-	case POKE_PER_ID_escape:			//“¦‚°‚é—¦
+	case POKEPER_ID_escape:			//“¦‚°‚é—¦
 		ret = ppd->escape;
 		break;
-	case POKE_PER_ID_color:			//Fi}ŠÓ‚ÅŽg—pj
+	case POKEPER_ID_color:			//Fi}ŠÓ‚ÅŽg—pj
 		ret = ppd->color;
 		break;
-	case POKE_PER_ID_reverse:		//”½“]ƒtƒ‰ƒO
+	case POKEPER_ID_reverse:		//”½“]ƒtƒ‰ƒO
 		ret = ppd->reverse;
 		break;
-	case POKE_PER_ID_machine1:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚P
+	case POKEPER_ID_machine1:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚P
 		ret = ppd->machine1;
 		break;
-	case POKE_PER_ID_machine2:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
+	case POKEPER_ID_machine2:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
 		ret = ppd->machine2;
 		break;
-	case POKE_PER_ID_machine3:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚R
+	case POKEPER_ID_machine3:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚R
 		ret = ppd->machine3;
 		break;
-	case POKE_PER_ID_machine4:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚S
+	case POKEPER_ID_machine4:		//‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚S
 		ret = ppd->machine4;
 		break;
 	default:

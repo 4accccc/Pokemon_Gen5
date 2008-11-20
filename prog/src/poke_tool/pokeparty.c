@@ -6,14 +6,16 @@
  * @date	2005.10.13
  */
 //============================================================================================
+#include	<gflib.h>
 
-#include	"gflib.h"
 #include	"pm_define.h"
 #include	"poke_tool/poke_tool.h"
 #include	"poke_tool_def.h"
 
 //セーブ系処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning	SaveData Nothing
+#endif
 #include	"poke_tool/pokeparty.h"
 #include	"pokeparty_local.h"
 
@@ -278,7 +280,10 @@ BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no)
 }
 
 //セーブ系処理ないです
+#ifdef DEBUG_ONLY_FOR_sogabe
 #warning	SaveData Nothing
+#endif
+
 #if 0
 //============================================================================================
 //============================================================================================
@@ -313,7 +318,7 @@ void Debug_PokeParty_MakeParty(POKEPARTY * party)
 	PokeParty_Init(party, TEMOTI_POKEMAX);
 	for (i = 0; i < 3; i++) {
 		PP_Clear(&poke);
-		PP_Setup(&poke, 392 + i, 99, POW_RND, RND_NO_SET, 0, ID_NO_SET, 0);
+		PP_Setup( &poke, 392+i, 99, 0 );
 		PokeParty_Add(party, &poke);
 	}
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_TEMOTI_POKE)

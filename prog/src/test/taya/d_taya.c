@@ -23,6 +23,8 @@
 #include "system\main.h"
 #include "print\printsys.h"
 #include "print\gf_font.h"
+#include "poke_tool\pokeparty.h"
+#include "poke_tool\poke_tool.h"
 #include "net\network_define.h"
 
 // local includes ---------------------
@@ -129,6 +131,7 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static void setup_party( HEAPID heapID, POKEPARTY* party, ... );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void* bmt_alloc( HEAPID heapID, u32 size );
 static void bmt_free( void* adrs );
@@ -745,6 +748,7 @@ static void autoConnectCallBack( void* pWork )
 //------------------------------------------------------------------------------------------------------
 
 #include "battle/battle.h"
+#include "poke_tool/monsno_def.h"
 
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
@@ -770,11 +774,13 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			para->commPos = 0;
 			para->netID = 0;
 
-
-			para->partyPlayer = NULL;	///< プレイヤーのパーティ
+			para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
+			para->partyEnemy1 = PokeParty_AllocPartyWork( HEAPID_CORE );	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
 			para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
-			para->partyEnemy1 = NULL;	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
 			para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
+
+			setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
 
 			GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, para );
 			(*seq)++;
@@ -787,6 +793,29 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 	return FALSE;
 
 }
+
+static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
+{
+	va_list  list;
+	int monsno;
+
+	va_start( list, party );
+	while( 1 )
+	{
+		monsno = va_arg( list, int );
+		if( monsno )
+		{
+			
+		}
+		else
+		{
+			break;
+		}
+	}
+	va_end( list );
+}
+
+
 //------------------------------------------------------------------------------------------------------
 // 通信状態での漢字PrintTest
 //------------------------------------------------------------------------------------------------------
