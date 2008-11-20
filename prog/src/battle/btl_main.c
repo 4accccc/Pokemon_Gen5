@@ -105,7 +105,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_NET,     0x8000 );
 			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xa0000 );
 
-			wk = GFL_PROC_AllocWork( proc, HEAPID_BTL_SYSTEM, sizeof(BTL_MAIN_MODULE) );
+			wk = GFL_PROC_AllocWork( proc, sizeof(BTL_MAIN_MODULE), HEAPID_BTL_SYSTEM );
 			wk->heapID = HEAPID_BTL_SYSTEM;
 			wk->setupParam = setup_param;
 

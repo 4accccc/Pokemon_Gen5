@@ -32,11 +32,11 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 
 void BTL_NET_StartCommand( BtlNetCommand cmd )
 {
-	// ‚Í‚è‚Ú‚Ä
+	// @@@‚Í‚è‚Ú‚Ä
 }
 BOOL BTL_NET_WaitCommand( void )
 {
-	// ‚Í‚è‚Ú‚Ä
+	// @@@‚Í‚è‚Ú‚Ä
 	return TRUE;
 }
 

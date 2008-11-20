@@ -136,7 +136,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
 	SysWork.heapID = heapID;
 
 	SysWork.wset = WORDSET_Create( heapID );
-	SysWork.tmpBuf = GFL_STR_CreateBuffer( heapID, TMP_STRBUF_SIZE );
+	SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
 
 	for(i=0; i<MSGDATA_MAX; i++)
 	{
