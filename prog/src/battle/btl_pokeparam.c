@@ -103,7 +103,7 @@ struct _BTL_POKEPARAM {
 	BPP_BASE_PARAM		baseParam;
 	BPP_VARIABLE_PARAM	varyParam;
 	BPP_REAL_PARAM		realParam;
-	BPP_WAZA			waza[ 4 ];
+	BPP_WAZA			waza[ PTL_WAZA_MAX ];
 
 	u16  item;
 	u16  tokusei;
@@ -164,18 +164,27 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->realParam.agility = bpp->baseParam.agility;
 
 	// 所有ワザデータ初期化
-	bpp->wazaCnt = POKE_WAZA_MAX;
-	for(i=0; i<bpp->wazaCnt; i++)
+	bpp->wazaCnt = 0;
+	for(i=0; i<PTL_WAZA_MAX; i++)
 	{
 		bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1 + i, 0 );
-		bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1 + 1, 0 );
-		bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1 + 1, 0 );
+		if( bpp->waza[i].number )
+		{
+			bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1 + 1, 0 );
+			bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1 + 1, 0 );
+			bpp->wazaCnt++;
+		}
+		else
+		{
+			bpp->waza[i].pp = 0;
+			bpp->waza[i].ppMax = 0;
+		}
 	}
 
 
 	bpp->item = 0;
 	bpp->tokusei = PP_Get( pp, ID_PARA_speabino, 0 );
-	bpp->hp = bpp->baseParam.hpMax;
+	bpp->hp = PP_Get( pp, ID_PARA_hp, 0 );
 	bpp->myID = pokeID;
 
 	bpp->ppSrc = pp;
@@ -225,6 +234,15 @@ WazaID BTL_POKEPARAM_GetWazaNumber( const BTL_POKEPARAM* pp, u8 idx )
 	GF_ASSERT(idx < pp->wazaCnt);
 	return pp->waza[idx].number;
 }
+
+WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax )
+{
+	GF_ASSERT(idx < pp->wazaCnt);
+	*PP = pp->waza[idx].pp;
+	*PPMax = pp->waza[idx].ppMax;
+	return pp->waza[idx].number;
+}
+
 
 PokeTypePair BTL_POKEPARAM_GetPokeType( const BTL_POKEPARAM* pp )
 {

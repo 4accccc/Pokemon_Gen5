@@ -13,6 +13,7 @@
 
 #include "btl_common.h"
 
+#include "btlv_common.h"
 #include "btlv_core.h"
 #include "btlv_scu.h"
 
@@ -31,22 +32,25 @@ struct _BTLV_SCU {
 
 	PRINT_QUE*			printQue;
 	PRINT_UTIL			printUtil;
-	GFL_FONT*			fontHandle;
+	GFL_FONT*			defaultFont;
+	GFL_TCBLSYS*		tcbl;
+	PRINT_STREAM*		printStream;
 
 	const BTLV_CORE*	vcore;
 	HEAPID				heapID;
 };
 
 
-BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
+BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, HEAPID heapID )
 {
 	BTLV_SCU* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCU) );
 
 	wk->vcore = vcore;
 	wk->heapID = heapID;
 
-	wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	wk->defaultFont = defaultFont;
+	wk->printStream = NULL;
+	wk->tcbl = tcbl;
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	PRINT_UTIL_Setup( &wk->printUtil, wk->win );
@@ -59,7 +63,6 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID )
 void BTLV_SCU_Delete( BTLV_SCU* wk )
 {
 	PRINTSYS_QUE_Delete( wk->printQue );
-	GFL_FONT_Delete( wk->fontHandle );
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -87,6 +90,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+
+	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, 0, GFL_BMP_CHRAREA_GET_F );
 }
 
 
@@ -104,10 +109,22 @@ BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk )
 
 void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str )
 {
-
+	wk->printStream = PRINTSYS_PrintStream(
+				wk->win, 0, 0, str, wk->defaultFont, 0, wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
+				wk->heapID, 0x0f
+	);
 }
 
 BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
 {
+	if( wk->printStream )
+	{
+		if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+		{
+			PRINTSYS_PrintStreamDelete(wk->printStream);
+			wk->printStream = NULL;
+		}
+		return FALSE;
+	}
 	return TRUE;
 }

@@ -1033,6 +1033,12 @@ static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 	// タイプ相性計算
 	fep->realDamage = BTL_CALC_AffDamage( fep->rawDamage, fep->typeAff );
 
+	// 最低、１はダメージを与える
+	if( fep->realDamage == 0 )
+	{
+		fep->realDamage = 1;
+	}
+
 	BTL_Printf("[SV WAZA] ダメージ値：%d\n", fep->realDamage);
 
 	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_PROC2 );

@@ -11,6 +11,9 @@
 
 #include "print/gf_font.h"
 
+#include "arc_def.h"
+#include "test_graphic\d_taya.naix"
+
 #include "btl_common.h"
 #include "btl_main.h"
 #include "btl_action.h"
@@ -52,6 +55,7 @@ struct _BTLV_CORE {
 
 	BTL_ACTION_PARAM	actionParam;
 	STRBUF*				strBuf;
+	GFL_FONT*			fontHandle;
 
 	GFL_TCBLSYS*	tcbl;
 	BTLV_SCU*		scrnU;
@@ -105,15 +109,19 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 	core->processingCmd = BTLV_CMD_NULL;
 	core->heapID = heapID;
 	core->strBuf = GFL_STR_CreateBuffer( STR_BUFFER_SIZE, heapID );
+	core->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+						GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+
 
 	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
-	core->scrnU = BTLV_SCU_Create( core, heapID );
-	core->scrnD = BTLV_SCD_Create( core, heapID );
+	core->scrnU = BTLV_SCU_Create( core, core->tcbl, core->fontHandle, heapID );
+	core->scrnD = BTLV_SCD_Create( core, core->tcbl, core->fontHandle, heapID );
 
 	core->mainProc = NULL;
 	core->mainSeq = 0;
 
 	BTL_STR_InitSystem( mainModule, client, heapID );
+	GFL_UI_TP_Init( heapID );
 
 	return core;
 }
@@ -128,8 +136,13 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 //=============================================================================================
 void BTLV_Delete( BTLV_CORE* core )
 {
+	GFL_UI_TP_Exit();
+
 	BTLV_SCD_Delete( core->scrnD );
 	BTLV_SCU_Delete( core->scrnU );
+	GFL_TCBL_Exit( core->tcbl );
+	GFL_STR_DeleteBuffer( core->strBuf );
+	GFL_FONT_Delete( core->fontHandle );
 	GFL_HEAP_FreeMemory( core );
 }
 
@@ -143,7 +156,8 @@ void BTLV_Delete( BTLV_CORE* core )
 //=============================================================================================
 void BTLV_CORE_Main( BTLV_CORE* core )
 {
-	
+	GFL_UI_TP_Main();
+	GFL_TCBL_Main( core->tcbl );
 }
 
 
@@ -282,13 +296,15 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	case 1:
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
-			BTLV_SCD_StartActionSelect( core->scrnD, NULL );
+			const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
+			BTLV_SCD_StartActionSelect( core->scrnD, bpp );
 			(*seq)++;
 		}
 		break;
 	case 2:
 		if( BTLV_SCD_WaitActionSelect(core->scrnD) )
 		{
+			BTLV_SCD_GetSelectAction( core->scrnD, &core->actionParam );
 			return TRUE;
 		}
 	}
@@ -446,5 +462,7 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		};
 		GFL_BG_SetBGMode( &sysHeader );
 	}
+
+	GFL_BMPWIN_Init( heapID );
 }
 

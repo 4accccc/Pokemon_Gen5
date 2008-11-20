@@ -18,10 +18,13 @@
 typedef struct _BTLV_SCU	BTLV_SCU;
 
 
+
+#include <tcbl.h>
+#include "print/gf_font.h"
 #include  "btlv_core.h"
 
 
-extern BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, HEAPID heapID );
+extern BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, GFL_TCBLSYS* tcbl, GFL_FONT* defaultFont, HEAPID heapID );
 extern void BTLV_SCU_Delete( BTLV_SCU* wk );
 extern void BTLV_SCU_Setup( BTLV_SCU* wk );
 extern void BTLV_SCU_StartBtlIn( BTLV_SCU* wk );

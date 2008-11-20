@@ -19,6 +19,8 @@
 #include "msg/msg_btl_std.h"
 #include "msg/msg_btl_set.h"
 #include "msg/msg_btl_attack.h"
+#include "msg/msg_btl_ui.h"
+#include "msg/msg_wazaname.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -65,6 +67,7 @@ typedef enum {
 	MSGSRC_STD = 0,
 	MSGSRC_SET,
 	MSGSRC_ATK,
+	MSGSRC_UI,
 
 	MSGDATA_MAX,
 }MsgSrcID;
@@ -127,6 +130,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
 		NARC_message_btl_std_dat,
 		NARC_message_btl_set_dat,
 		NARC_message_btl_attack_dat,
+		NARC_message_btl_ui_dat,
 	};
 
 	int i;
@@ -210,6 +214,8 @@ static inline u16 get_setPtnStrID( u8 targetClientID, u16 originStrID, u8 ptnNum
 
 //--------------------------------------------------------------------------------------
 
+
+//--------------------------------------------------------------------------------------
 
 //=============================================================================================
 /**
@@ -391,6 +397,36 @@ static void ms_rankdown_fail( STRBUF* dst, const int* args )
 	strID = get_setStrID( args[0], BTLMSG_SET_RANKDOWN_FAIL_M );
 
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+
+
+
+
+
+//=============================================================================================
+/**
+ * 
+ *
+ * @param   dst			
+ * @param   strID		
+ *
+ */
+//=============================================================================================
+void BTL_STR_GetUIString( STRBUF* dst, u16 strID )
+{
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, dst );
+}
+
+
+void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax )
+{
+	WORDSET_RegisterWazaName( SysWork.wset, 0, wazaID );
+	WORDSET_RegisterNumber( SysWork.wset, 1, wazaPP, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( SysWork.wset, 2, wazaPPMax, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLMSG_UI_SEL_WAZA, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 

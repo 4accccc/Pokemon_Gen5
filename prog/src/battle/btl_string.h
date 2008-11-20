@@ -54,6 +54,8 @@ extern void BTL_STR_QuitSystem( void );
 extern void BTL_STR_MakeStringGeneric( STRBUF* buf, BtlGenStrID strID );
 extern void BTL_STR_MakeStringSpecific( STRBUF* buf, BtlSpStrID strID, const int* args );
 
+extern void BTL_STR_GetUIString( STRBUF* dst, u16 strID );
+extern void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax );
 
 #endif
 

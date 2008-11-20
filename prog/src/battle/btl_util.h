@@ -27,14 +27,15 @@ typedef struct {
 }BTL_PROC;
 
 
-inline void BTL_UTIL_SetupProc( BTL_PROC* proc, void* work, BPFunc init, BPFunc loop )
+static inline void BTL_UTIL_SetupProc( BTL_PROC* proc, void* work, BPFunc init, BPFunc loop )
 {
 	proc->initFunc = init;
 	proc->loopFunc = loop;
 	proc->work = work;
 	proc->seq = 0;
 }
-inline BOOL BTL_UTIL_CallProc( BTL_PROC* proc )
+
+static inline BOOL BTL_UTIL_CallProc( BTL_PROC* proc )
 {
 	if( proc->initFunc )
 	{

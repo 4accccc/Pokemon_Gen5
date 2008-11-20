@@ -10,8 +10,15 @@
 #ifndef __BTLV_COMMON_H__
 #define __BTLV_COMMON_H__
 
-#include <tcbl.h>
+/**
+ *	描画処理用タスクプライオリティ
+ */
+typedef enum {
 
+	BTLV_TASKPRI_MAIN_WINDOW = 0,
+
+
+}BtlvTaskPri;
 
 
 #endif
