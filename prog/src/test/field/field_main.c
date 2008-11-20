@@ -14,7 +14,8 @@
 #include "textprint.h"
 #include "arc_def.h"
 
-#include "field_g3d_mapper.h"
+#include "print/gf_font.h"
+
 #include "field_net.h"
 
 #include "field_main.h"
@@ -24,13 +25,13 @@
 #include "field_camera.h"
 #include "field_data.h"
 
-#include "field_debug.h"
-
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
 
 #include "event_mapchange.h"
+
+#include "event_debug_menu.h"
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
@@ -464,7 +465,13 @@ static FIELD_SETUP*	SetupGameSystem( HEAPID heapID )
 
 	//BG初期化
 	bg_init( gs );
-
+	
+	//BMP初期化
+	GFL_BMPWIN_Init( heapID );
+	
+	//FONT初期化
+	GFL_FONTSYS_Init();
+	
 	//３Ｄデータのロード
 	g3d_load( gs );
 	gs->g3dVintr = GFUser_VIntr_CreateTCB( g3d_vblank, (void*)gs, 0 );
@@ -481,6 +488,8 @@ static void	RemoveGameSystem( FIELD_SETUP* gs )
 {
 	GFL_TCB_DeleteTask( gs->g3dVintr );
 	g3d_unload( gs );	//３Ｄデータ破棄
+	
+	GFL_BMPWIN_Exit();
 
 	bg_exit( gs );
 

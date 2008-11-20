@@ -3,7 +3,6 @@
 #include <gflib.h>
 #include "field_main.h"
 #include "arc_def.h"
-#include "field_debug.h"
 #include "field_data.h"
 
 #include "field/zonedata.h"
@@ -36,7 +35,8 @@ static int MapID2ResistID(u16 mapid)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void FIELDDATA_SetMapperData(u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
+void FIELDDATA_SetMapperData(
+	u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
 {
 	mapid = MapID2ResistID(mapid);
 	GF_ASSERT(mapid < resistMapTblCount);
