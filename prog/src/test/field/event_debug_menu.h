@@ -23,7 +23,8 @@
 //--------------------------------------------------------------
 ///	DEBUG_FLDMENU
 //--------------------------------------------------------------
-typedef struct _TAG_DEBUG_FLDMENU DEBUG_FLDMENU;
+//typedef struct _TAG_DEBUG_FLDMENU DEBUG_FLDMENU;
+typedef struct _TAG_DEBUG_MENU_EVENT_WORK DEBUG_MENU_EVENT_WORK;
 
 //======================================================================
 //	extern
@@ -32,6 +33,6 @@ extern GMEVENT * DEBUG_EVENT_DebugMenu( GAMESYS_WORK * gsys,
 		FIELD_MAIN_WORK * fieldWork, HEAPID heapID, u16 page_id );
 
 extern void FldDebugMenu_SetCommSystem(
-	void *commSys , DEBUG_FLDMENU *d_menu );
+	void *commSys , DEBUG_MENU_EVENT_WORK *d_menu );
 
 #endif //__FIELD_DEBUG_H__
