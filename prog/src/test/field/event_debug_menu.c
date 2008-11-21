@@ -388,7 +388,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 				}
 			}
 			
-			
+			return( GMEVENT_RES_FINISH );
 		}
 		break;
 	}
@@ -772,6 +772,29 @@ static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
 	return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　通信デバッグ子メニュー
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GMEVENT *event = wk->gmEvent;
+	const HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELD_COMM_DEBUG_WORK *work;
+	
+	GMEVENT_Change( event,
+		FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
+	
+	work = GMEVENT_GetEventWork( event );
+	FIELD_COMM_DEBUG_InitWork( heapID , fieldWork , event , work );
+
+	return( TRUE );
+}
+
 //======================================================================
 //	デバッグメニュー どこでもジャンプ
 //======================================================================
@@ -857,30 +880,6 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 	work->fieldWork = fieldWork;
 	return( TRUE );
 }
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　通信デバッグ子メニュー
- * @param	wk	DEBUG_MENU_EVENT_WORK*
- * @retval	BOOL	TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
-{
-	GMEVENT *event = wk->gmEvent;
-	const HEAPID heapID = wk->heapID;
-	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
-	FIELD_COMM_DEBUG_WORK *work;
-	
-	GMEVENT_Change( event,
-		FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
-	
-	work = GMEVENT_GetEventWork( event );
-	FIELD_COMM_DEBUG_InitWork( heapID , fieldWork , event , work );
-
-	return( TRUE );
-}
-
 
 //--------------------------------------------------------------
 /**
@@ -1066,7 +1065,7 @@ static void DEBUG_SetMenuWorkZoneIDName(
 }
 
 //======================================================================
-//	parts
+//	デバッグメニュー専用共通メニュー
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -1240,6 +1239,7 @@ u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
 
 	return( ret );
 }
+
 //--------------------------------------------------------------
 //	ワークサイズの取得
 //--------------------------------------------------------------
