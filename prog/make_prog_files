@@ -38,6 +38,7 @@ SRCS	+=		test/testmode.c \
 				gamesystem/game_event.c \
 				gamesystem/game_data.c \
 				field/zonedata.c \
+				field/location.c \
 				field/fieldmap_proc.c \
 				test/field/eventdata_system.c \
 				test/field/event_mapchange.c \
