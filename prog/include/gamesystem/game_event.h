@@ -78,6 +78,7 @@ extern void GMEVENT_Delete(GMEVENT * event);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void GMEVENT_Change(GMEVENT * event, GMEVENT_FUNC next_func, u32 work_size);
+extern void GMEVENT_ChangeEvent(GMEVENT * now_event, GMEVENT * next_event);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern GMEVENT * GMEVENT_CallSubEvent(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size);

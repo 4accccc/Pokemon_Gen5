@@ -91,6 +91,16 @@ void GMEVENT_Change(GMEVENT * event, GMEVENT_FUNC next_func, u32 work_size)
 	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
 }
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+void GMEVENT_ChangeEvent(GMEVENT * now_event, GMEVENT * next_event)
+{
+	GAMESYS_WORK * gsys = now_event->gsys;
+	next_event->parent = now_event->parent;
+	GMEVENT_Delete(now_event);
+	GAMESYSTEM_SetEvent(gsys, next_event);
+}
+
+//------------------------------------------------------------------
 /**
  * @brief	サブイベント呼び出し
  * @param	parent		親イベントへのポインタ
