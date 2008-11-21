@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2008-11-19T16:09:14" source="map00_00.mb"/>
+	<create user="fuchino" host="W00152" date="2008-11-21T17:08:50" source="map00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2008-11-19T16:09:14" source="map00_00.mb"/>
+<original_create user="fuchino" host="W00152" date="2008-11-21T17:08:50" source="map00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="dansa01a_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/dansa01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/dansa01a.tga"
 	>
 		<bitmap size="128">
 			0606 0606 0606 0606 0606 0606 0606 0606
@@ -60,25 +60,25 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gake01a_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/gake01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/gake01a.tga"
 	>
 		<bitmap size="128">
-			2222 2222 2222 2222 2222 2222 2222 2222
-			2222 2222 2222 2222 2244 2222 2224 4222
-			2441 4424 2244 4442 4411 4444 4411 1444
-			4441 1442 4111 1424 4111 1444 1111 1444
-			1118 1111 1171 1411 1188 8811 1917 1111
-			8888 7818 89a8 1111 8777 7888 8997 6667
-			7767 8788 89a9 6667 7666 8778 89a9 6667
-			8666 8778 89a9 6678 8766 8777 8aa9 6778
-			8876 a877 8aaa 6788 8877 9877 9aaa 7888
+			4444 4444 4444 4444 4442 4444 4422 4444
+			4422 2444 4422 2444 4222 2244 4222 2244
+			222b 2224 2222 2224 22b1 b222 2221 b222
+			22b1 1b22 22b1 1222 2211 1b22 22b1 1222
+			2b18 1122 2211 1b22 b188 8122 2b17 11b2
+			1888 712b 2b18 111b 1777 71bb 2197 6611
+			7767 81b1 b1a9 6661 7666 8711 11a9 6661
+			8666 8711 11a9 6678 8766 8711 81a9 6778
+			8876 a817 8aaa 6788 8877 9817 9aaa 7888
 			9997 989a aaaa 7888 99a7 33aa aaaa 7888
 			aaa7 333a aaa3 8888 aaa7 333a aaa3 9889
-			aaa7 33aa a533 988a 9333 3355 a533 5985
-			9533 3559 5333 a595 8533 3598 5333 5595
-			9533 5599 3333 5895 5535 5999 5335 5985
-			5555 8898 555a 5898 8558 9998 8558 8888
-			0888 8800 8a88 8808 0000 8000 0800 0000
+			1aa7 33a1 a533 911a b133 1351 a531 11b1
+			2b13 b15b 5311 1b21 4bb3 4112 11b2 b441
+			4421 42b2 b122 4444 4441 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 4444
+			0444 4400 4444 4404 0000 4000 0400 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="grass01a"
@@ -86,17 +86,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="grass01a_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/grass01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/grass01a.tga"
 	>
 		<bitmap size="64">
-			3333 4434 3343 3443 3323 3343 3333 3433
-			3333 1333 1130 3333 1333 1332 1101 3333
-			3334 3333 1011 4332 1333 3331 1031 3333
-			1113 3331 1133 2231 1311 4101 1113 1321
-			3311 1110 2321 1133 0123 0130 1321 1133
-			0033 3321 3133 3233 1003 4333 2131 3333
-			3313 3333 3233 3323 4433 1333 2133 3111
-			3433 3333 3334 3133 4333 4444 4444 3344
+			3332 4434 2342 3443 2223 2343 3233 3432
+			3322 2332 2230 2232 1333 2232 2101 3333
+			3324 3233 1011 4322 1323 2322 1032 3233
+			1223 3332 1232 2231 2322 4201 1123 2321
+			3322 1110 2322 2233 0123 0220 1322 2233
+			0022 3321 2132 3232 2003 4323 2232 2232
+			3313 3323 3233 3323 4432 2232 2232 3212
+			3432 2332 3234 3133 4333 4444 4444 2344
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="hashi01a"
@@ -104,7 +104,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="hashi01a_pl"
-		path="C:/mayadata/wb_map_chip/tex/hashi01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/hashi01a.tga"
 	>
 		<bitmap size="128">
 			3333 0033 1110 4443 4444 4444 4444 4444
@@ -130,7 +130,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kaidan01a_pl"
-		path="C:/mayadata/wb_map_chip/tex/kaidan01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/kaidan01a.tga"
 	>
 		<bitmap size="128">
 			2200 2222 2222 2222 2222 2222 2222 0022
@@ -156,7 +156,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ki01a_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/ki01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/ki01a.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 2000 0002 0000 0000 0000
@@ -198,7 +198,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ki01a2_pl"
-		path="C:/mayadata/wb_map_chip/tex/ki01a2.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/ki01a2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 1100 0011 0000 0000 0000
@@ -240,7 +240,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ki01b_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/ki01b.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/ki01b.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 3000 0000 0000 0000 0000
@@ -282,7 +282,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="ki01b2_pl"
-		path="C:/mayadata/wb_map_chip/tex/ki01b2.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/ki01b2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -323,7 +323,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="ki01c_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/ki01c.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/ki01c.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -349,7 +349,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="kusa01a_su_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/kusa01a_su.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/kusa01a_su.tga"
 	>
 		<bitmap size="64">
 			1144 1140 0041 0111 3114 1403 0334 1304
@@ -366,7 +366,7 @@
 		width="16" height="8" original_width="16" original_height="8"
 		format="a3i5"
 		palette_name="kusa01b_su_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/kusa01b_su.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/kusa01b_su.tga"
 	>
 		<bitmap size="64">
 			0303 0303 0303 0303 0303 0303 0303 0303
@@ -384,7 +384,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="michi01a_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/michi01a.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/michi01a.tga"
 	>
 		<bitmap size="128">
 			1322 2222 0202 3233 3230 0032 3323 2032
@@ -410,7 +410,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="michi01b_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/michi01b.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/michi01b.tga"
 	>
 		<bitmap size="32">
 			0145 1550 0001 5640 0015 0501 0556 4015
@@ -424,7 +424,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="mizu_sita2_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/mizu_sita2.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/mizu_sita2.tga"
 	>
 		<bitmap size="256">
 			4fa7 1111 1111 1111 2244 3442 8adf 0005
@@ -466,114 +466,114 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="mori01a_su_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/mori01a_su.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/mori01a_su.tga"
 	>
 		<bitmap size="256">
-			4444 3344 4444 3344 0003 4430 4444 4444
-			4444 4004 4444 4444 0333 0000 4430 4444
-			1244 4004 4444 3444 3444 0333 3000 4444
-			1124 4303 4414 3343 4433 3344 0033 4440
-			3124 4300 4412 0303 4330 4422 0334 4430
-			0044 2433 3412 0033 4300 2422 0344 3400
-			3334 2430 3444 4440 4303 2124 0341 0300
-			3300 3400 4433 3334 4333 1144 0341 0000
-			3300 0003 4330 4300 3344 1444 0331 0330
-			3300 0333 0000 4400 3444 3333 3033 0033
-			0030 0443 0000 4330 4411 0003 3330 3344
-			3330 3443 0000 4433 4114 0033 4430 3444
-			4333 0044 0330 4330 4144 0334 0000 4444
-			4444 3004 3343 4300 1144 3342 4333 3300
-			4444 3334 4444 4433 1110 4422 3444 0333
-			4444 4444 4444 0444 1114 4422 3444 0000
-			4434 1444 4441 4044 1444 0421 3440 0003
-			3434 1114 4442 4044 4444 0004 4444 3434
-			3334 2211 4441 4444 0444 0000 4440 0344
-			3333 2221 4444 4444 0004 0000 2244 4304
-			4333 4221 4434 4433 0004 0000 2144 4334
-			4444 4421 4333 4434 0004 4400 4124 4033
-			4444 3311 4000 3334 0030 4444 3244 4433
-			4444 3304 3000 3344 3333 4244 0334 4330
-			3444 3444 3003 3321 3333 2243 0033 3300
-			3344 4443 3333 2211 3334 4433 0033 3000
-			0033 4443 3334 2114 3444 3440 3303 0000
-			3003 4444 4444 2144 4444 3000 3300 0033
-			3000 4330 3344 1134 4411 0044 3330 3343
-			3000 3333 3343 3333 4433 3344 2433 4444
-			3000 3330 4334 0330 3300 4034 1444 4411
-			3444 0000 0000 0000 0004 4033 4444 4114
+			2222 1122 2222 1122 0001 2210 2222 2222
+			2222 2002 2222 2222 0111 0000 2210 2222
+			3422 2002 2222 1222 1222 0111 1000 2222
+			3342 2101 2232 1121 2211 1122 0011 2220
+			1342 2100 2234 0101 2110 2244 0112 2210
+			0022 4211 1234 0011 2100 4244 0122 1200
+			1112 4210 1222 2220 2101 4342 0123 0100
+			1100 1200 2211 1112 2111 3322 0123 0000
+			1100 0001 2110 2100 1122 3222 0113 0110
+			1100 0111 0000 2200 1222 1111 1011 0011
+			0010 0221 0000 2110 2233 0001 1110 1122
+			1110 1221 0000 2211 2332 0011 2210 1222
+			2111 0022 0110 2110 2322 0112 0000 2222
+			2222 1002 1121 2100 3322 1124 2111 1100
+			2222 1112 2222 2211 3330 2244 1222 0111
+			2222 2222 2222 0222 3332 2244 1222 0000
+			2212 3222 2223 2022 3222 0243 1220 0001
+			1212 3332 2224 2022 2222 0002 2222 1212
+			1112 4433 2223 2222 0222 0000 2220 0122
+			1111 4443 2222 2222 0002 0000 4422 2102
+			2111 2443 2212 2211 0002 0000 4322 2112
+			2222 2243 2111 2212 0002 2200 2342 2011
+			2222 1133 2000 1112 0010 2222 1422 2211
+			2222 1102 1000 1122 1111 2422 0112 2110
+			1222 1222 1001 1143 1111 4421 0011 1100
+			1122 2221 1111 4433 1112 2211 0011 1000
+			0011 2221 1112 4332 1222 1220 1101 0000
+			1001 2222 2222 4322 2222 1000 1100 0011
+			1000 2110 1122 3312 2233 0022 1110 1121
+			1000 1111 1121 1111 2211 1122 4211 2222
+			1000 1110 2112 0110 1100 2012 3222 2233
+			1222 0000 0000 0000 0002 2011 2222 2332
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="mori01b_su"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="mori01b_su_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/mori01b_su.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/mori01b_su.tga"
 	>
 		<bitmap size="512">
-			e4e4 e4e4 e4e4 e2e4 e4e1 e4e4 e4e4 e4e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e1e4 e4e4 e4e4 e2e4 e1e1 e4e4 e4e4 e2e4
-			e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4 e4e4
-			e1e4 e1e1 e4e4 e4e1 e1e4 e4e1 e4e4 e2e4
-			e4e1 e4e4 e4e4 e4e4 e1e4 e1e1 e4e4 e4e4
-			e1e4 e1e2 e1e1 e4e1 e4e4 e1e1 e4e1 e1e2
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e2 e1e1 e1e1
-			e1e4 e2e1 e2e2 e4e1 e4e4 e1e1 e2e1 e1e1
-			e1e4 e2e1 e2e2 e1e1 e1e4 e4e1 e2e2 e1e1
-			e4e4 e1e1 e2e2 e3e3 e4e0 e1e4 e1e2 e1e1
-			e1e4 e2e2 e1e2 e4e4 e1e4 e1e1 e1e2 e4e1
-			e1e4 e1e1 e4e4 e4e1 e1e4 e4e1 e4e4 e2e4
-			e4e1 e4e4 e4e4 e4e4 e1e4 e1e1 e4e4 e4e4
-			e1e4 e1e2 e1e1 e4e1 e4e4 e1e1 e4e1 e1e2
-			e1e1 e1e1 e1e1 e1e1 e1e1 e1e2 e1e1 e1e1
-			e1e4 e2e1 e2e2 e4e1 e4e4 e1e1 e2e1 e1e1
-			e1e4 e2e1 e2e2 e1e1 e1e4 e4e1 e2e2 e1e1
-			e4e4 e1e1 e2e2 e3e3 e4e0 e1e4 e1e2 e1e1
-			e1e4 e2e2 e1e2 e4e4 e1e4 e1e1 e1e2 e4e1
-			e4e4 e1e4 e1e1 e3e3 e4e0 e1e4 e1e1 e4e1
-			e1e4 e2e2 e1e2 e4e4 e3e3 e2e1 e1e2 e4e4
-			e3e0 e4e4 e1e1 e3e4 e3e3 e4e4 e1e1 e4e1
-			e1e4 e1e1 e1e2 e3e4 e0e3 e1e2 e4e1 e3e3
-			e3e0 e4e3 e4e4 e3e4 e3e0 e4e3 e4e4 e4e4
-			e2e2 e1e4 e1e1 e3e3 e0e0 e1e3 e3e1 e0e3
-			e0e0 e3e0 e4e4 e0e4 e3e0 e4e3 e4e4 e1e1
-			e1e2 e4e1 e4e4 e3e3 e3e0 e4e3 e3e4 e0e0
-			e5e0 e0e0 e4e3 e0e0 e0e0 e4e3 e3e4 e1e4
-			e1e2 e3e3 e4e3 e0e3 e0e0 e4e3 e0e4 e0e4
-			e5e0 e0e5 e0e3 e5e0 e5e5 e3e0 e5e3 e4e5
-			e4e4 e3e3 e3e3 e0e0 e5e5 e0e0 e3e4 e3e4
-			e5e5 e5e5 e5e0 e5e5 e5e5 e0e5 e3e5 e4e5
-			e3e4 e3e0 e3e3 e0e0 e5e5 e0e5 e5e0 e3e3
-			e5e8 e5e5 e5e5 e5e5 e5e5 e5e5 e0e5 e5e0
-			e5e5 e0e5 e5e3 e0e0 e5e5 e0e5 e5e5 e3e5
-			e8e8 e5e5 e5e5 e5e5 e5e5 e8e5 e5e5 e5e5
-			e8e8 e5e5 e5e5 e5e5 e5e5 e5e5 e0e5 e0e5
-			e8e8 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8 e8e8
-			e8e8 e8e8 e5e5 e5e5 e5e5 e5e5 e5e5 e5e0
-			e8e8 e5e5 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8
-			e8e8 e5e8 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8
-			e8e9 e5e5 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8
-			e8e8 e5e5 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8
-			e9e9 e8e5 e5e8 e5e5 e5e5 e5e5 e8e5 e8e9
-			e8e9 e5e5 e5e5 e5e5 e5e5 e5e5 e8e5 e8e8
-			e7e7 e8e8 e8e8 e8e8 e8e8 e8e8 e7e5 e9e9
-			e9e9 e8e5 e8e8 e8e8 e5e5 e8e5 e7e8 e9e7
-			e7e7 e6e9 e6e6 e6e8 e6e6 e6e6 e7e5 e7e7
-			e9e9 e5e8 e5e6 e8e8 e8e8 e8e8 e7e8 e7e7
-			e9e9 66e9 e666 e6e6 e6e6 e8e6 e7e8 e7e7
-			e7e7 e6e8 e8e6 e8e8 e8e8 e6e8 e9e9 e7e7
-			e9e9 6669 6666 e6e6 e6e6 e8e9 e9e8 e7e7
-			e9e7 e6e8 e6e6 6868 6868 e9e8 e9e9 e9e9
-			e6e6 6666 6666 e666 e6e6 e8e6 69e9 e767
-			e9e7 e6e9 e6e6 6666 6666 e666 e9e6 e9e9
-			e6e6 6666 6666 6666 e666 e6e6 6969 e767
-			e9e7 e6e9 66e6 6666 6666 6666 6666 e666
-			6666 0666 0606 6666 6666 6666 6969 6767
-			e667 6666 6666 0606 0606 6606 6666 6666
-			6666 0606 0606 6606 0666 0606 0606 6666
-			6666 6666 0606 0606 0606 0606 6606 6666
-			0606 0606 0606 0606 0606 0606 0606 0606
-			0606 0606 0606 0606 0606 0606 0606 0606
+			e7e7 e7e7 e7e7 e9e7 e7e8 e7e7 e7e7 e7e7
+			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
+			e8e7 e7e7 e7e7 e9e7 e8e8 e7e7 e7e7 e9e7
+			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
+			e8e7 e8e8 e7e7 e7e8 e8e7 e7e8 e7e7 e9e7
+			e7e8 e7e7 e7e7 e7e7 e8e7 e8e8 e7e7 e7e7
+			e8e7 e8e9 e8e8 e7e8 e7e7 e8e8 e7e8 e8e9
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e9 e8e8 e8e8
+			e8e7 e9e8 e9e9 e7e8 e7e7 e8e8 e9e8 e8e8
+			e8e7 e9e8 e9e9 e8e8 e8e7 e7e8 e9e9 e8e8
+			e7e7 e8e8 e9e9 e6e6 e7e2 e8e7 e8e9 e8e8
+			e8e7 e9e9 e8e9 e7e7 e8e7 e8e8 e8e9 e7e8
+			e8e7 e8e8 e7e7 e7e8 e8e7 e7e8 e7e7 e9e7
+			e7e8 e7e7 e7e7 e7e7 e8e7 e8e8 e7e7 e7e7
+			e8e7 e8e9 e8e8 e7e8 e7e7 e8e8 e7e8 e8e9
+			e8e8 e8e8 e8e8 e8e8 e8e8 e8e9 e8e8 e8e8
+			e8e8 e9e8 e9e9 e7e8 e7e7 e8e8 e9e8 e8e8
+			e8e7 e9e8 e9e9 e8e8 e8e7 e7e8 e9e9 e8e8
+			e8e8 e8e8 e8e9 e6e7 e7e2 e8e7 e8e9 e8e8
+			e8e8 e8e9 e8e8 e7e7 e8e7 e8e8 e8e9 e8e8
+			e8e8 e8e8 e8e8 e7e7 e7e2 e8e7 e8e8 e8e8
+			e8e8 e9e8 e8e8 e7e7 e6e7 e9e8 e8e9 e8e8
+			e6e2 e7e7 e8e8 e6e7 e7e7 e8e8 e8e8 e8e8
+			e8e8 e8e8 e8e8 e7e7 e7e7 e8e7 e7e8 e7e8
+			e7e7 e7e7 e7e7 e7e7 e7e7 e8e7 e8e8 e8e8
+			e8e8 e8e8 e7e8 e6e7 e2e2 e7e7 e7e7 e7e7
+			e7e2 e7e7 e7e7 e7e7 e7e7 e7e7 e8e7 e8e8
+			e8e8 e8e8 e7e7 e6e6 e6e2 e7e6 e6e7 e2e2
+			e2e2 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e8e7
+			e8e8 e7e7 e7e8 e7e7 e7e7 e2e2 e2e2 e2e2
+			e2e2 e2e2 e2e2 e7e2 e7e7 e7e7 e7e7 e7e7
+			e7e7 e7e7 e7e7 e7e7 e2e7 e2e2 e2e2 e2e2
+			e2e2 e2e2 e2e2 e2e2 e7e2 e7e7 e7e7 e7e7
+			e7e7 e7e7 e7e7 e7e7 e2e2 e2e2 e2e2 e2e2
+			e0e0 e2e0 e2e2 e2e2 e2e2 e7e7 e7e7 e7e7
+			e7e7 e7e7 e2e7 e2e2 e2e2 e2e2 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e2e2 e2e2 e7e2 e7e7
+			e7e7 e7e7 e2e2 e2e2 e0e2 e0e0 e0e0 e0e0
+			e3e3 e0e0 e0e0 e0e0 e0e0 e2e2 e2e2 e7e2
+			e7e7 e2e7 e2e2 e2e2 e0e0 e0e0 e0e0 e0e0
+			e3e3 e0e0 e0e0 e0e0 e0e0 e0e0 e2e2 e2e2
+			e2e2 e2e2 e0e2 e0e0 e0e0 e0e0 e3e0 e3e3
+			e3e5 e0e0 e0e0 e0e0 e0e0 e0e0 e3e0 e3e3
+			e3e3 e0e0 e0e0 e0e0 e0e0 e0e0 e3e0 e3e3
+			e5e5 e3e0 e0e3 e0e0 e0e0 e0e0 e3e0 e3e5
+			e3e5 e0e0 e0e0 e0e0 e0e0 e0e0 e3e0 e3e3
+			e1e1 e3e3 e3e3 e3e3 e3e3 e3e3 e1e0 e5e5
+			e5e5 e3e0 e3e3 e3e3 e0e0 e3e0 e1e3 e5e1
+			e1e1 e4e5 e4e4 e4e3 e4e4 e4e4 e1e0 e1e1
+			e5e5 e0e3 e0e4 e3e3 e3e3 e3e3 e1e3 e1e1
+			e5e5 64e5 e464 e4e4 e4e4 e3e4 e1e3 e1e1
+			e1e1 e4e3 e3e4 e3e3 e3e3 e4e3 e5e5 e1e1
+			e5e5 6465 6464 e4e4 e4e4 e3e5 e5e3 e1e1
+			e5e1 e4e3 e4e4 6363 6363 e5e3 e5e5 e5e5
+			e4e4 6464 6464 e464 e4e4 e3e4 65e5 e161
+			e5e1 e4e5 e4e4 6464 6464 e464 e5e4 e5e5
+			e4e4 6464 6464 6464 e464 e4e4 6565 e161
+			e5e1 e4e5 64e4 6464 6464 6464 6464 e464
+			6464 0464 0404 6464 6464 6464 6565 6161
+			e461 6464 6464 0404 0404 6404 6464 6464
+			6464 0404 0404 6404 0464 0404 0404 6464
+			6464 6464 0404 0404 0404 0404 6404 6464
+			0404 0404 0404 0404 0404 0404 0404 0404
+			0404 0404 0404 0404 0404 0404 0404 0404
 		</bitmap>
 	</tex_image>
 	<tex_image index="17" name="shore01"
@@ -581,18 +581,18 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="shore01_pl"
-		path="C:/home/3dmapinstall/choice/WBchips/shore01.tga"
+		path="C:/mayadata/wb_map_chip/tex_‰Ä/shore01.tga"
 	>
 		<bitmap size="128">
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd ddcc dddd dddc cddd
-			dccf ccdc ddcc cccd ccff cccc ccff fccc
-			cccf fccd cfff fcdc cfff fccc ffff fccc
-			fff6 ffff ff2f fcff ff66 66ff f8f2 ffff
-			6666 26f6 6886 ffff 6222 2666 6882 1112
-			2212 6266 6888 1112 2111 6226 6888 1112
-			6111 6226 6888 1126 6211 6222 6888 1226
-			6621 8622 8888 1266 6622 8622 8888 2666
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cddc cccc cccc
+			cccd dddc cccc ccdc cccd dddc cccc cccd
+			ccdd dddd cccd cddd cddd fddd dcdd dddd
+			dddd fddd dddd dddd ddfd ffdd dddd ddfd
+			ddfd ffdd dddd ddfd dfff fffd dddf ddff
+			df8f 68fd ddff df6f f866 688f fdf8 f662
+			f116 628f fff8 f126 6211 622f 6f88 6226
+			6621 8622 8f88 1266 6622 8622 8888 2666
 			8885 8688 aeee 5666 5aa5 eeaa aaaa 5555
 			aa55 eeea aaae 5555 aaa5 eeea aaae 5555
 			9aa5 eea9 99ee a55a 7bbb bb99 99bb 9779
@@ -609,11 +609,11 @@
 		1d2b 21b1 21d3 25f3 2a36 3257 3278 7fff
 	</tex_palette>
 	<tex_palette index="1" name="gake01a_pl" color_size="16">
-		7c1f 3dec 438f 254b 3af0 1d6d 3ab9 2a36
-		1dd3 1991 194f 7fff 7fff 7fff 7fff 7fff
+		7c1f 35aa 3ee0 254b 4b20 1d6d 3ab9 2a36
+		1dd3 1991 194f 3260 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="grass01a_pl" color_size="8">
-		3f4e 3f6e 436f 438f 478f 7fff 7fff 7fff
+		3ee0 3f00 4300 4720 4b20 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="hashi01a_pl" color_size="16">
 		150b 1d90 21d3 2a14 3257 3677 3ab9 42db
@@ -646,26 +646,26 @@
 		264b 2aae 2dc9 7cd6 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="12" name="michi01a_pl" color_size="16">
-		438f 478f 438f 3f4e 3f4f 3af0 3293 4f5c
-		4f3c 4b1b 3677 46fa 3ab9 42d9 3a98 7fff
+		4b20 4b20 4b20 46e0 3e80 3ea0 3640 4f5c
+		4f3c 4b1b 2a53 46fa 3ab9 42d9 2e95 7fff
 	</tex_palette>
 	<tex_palette index="13" name="michi01b_pl" color_size="4">
 		4f5c 4f3c 4b1b 7fff
 	</tex_palette>
 	<tex_palette index="14" name="mizu_sita2_pl" color_size="16">
-		7753 7bba 7bba 7b99 7bba 7753 7753 7754
-		7754 7755 7775 7776 7777 7b97 7b98 7b98
+		7eca 7f31 7f51 7f10 7f31 7eca 7eca 7eca
+		7ecb 7ecc 7eec 7f0d 7f0d 7f0e 7f0e 7f0f
 	</tex_palette>
 	<tex_palette index="15" name="mori01a_su_pl" color_size="8">
-		1564 1624 1665 19a4 19e4 7fff 7fff 7fff
+		2564 2da4 31e4 3224 3265 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="16" name="mori01b_su_pl" color_size="16">
-		1564 1624 1665 19a4 19e4 1ce2 1d43 21ab
-		2543 2567 7fff 7fff 7fff 7fff 7fff 7fff
+		1cc2 21a9 2564 28e3 2923 2d67 2da4 31e4
+		3224 3265 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="17" name="shore01_pl" color_size="16">
 		7c1f 3ab9 2a36 7753 6b13 4673 1dd3 56b3
-		1991 5ab1 4231 5ab1 3af0 438f 4a2f 3dec
+		1991 5ab1 4231 5ab1 4b20 3ee0 4a2f 35aa
 	</tex_palette>
 </tex_palette_array>
 

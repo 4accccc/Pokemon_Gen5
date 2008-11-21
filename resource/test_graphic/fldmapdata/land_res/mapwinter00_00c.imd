@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2008-11-19T16:31:37" source="map00_00_cf.mb"/>
+	<create user="fuchino" host="W00152" date="2008-11-21T17:09:43" source="map00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2008-11-19T16:31:37" source="map00_00_cf.mb"/>
+<original_create user="fuchino" host="W00152" date="2008-11-21T17:09:43" source="map00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -352,14 +352,14 @@
 		path="C:/mayadata/wb_map_chip/tex_“~/kusa01a_su.tga"
 	>
 		<bitmap size="64">
-			1144 1142 2241 2111 3114 1423 2334 1324
-			3124 2332 3133 1233 4411 2321 3214 1132
-			2444 1224 2244 2232 2232 2222 2242 1122
-			2322 2221 1442 1233 4321 2114 4222 3331
-			4441 2223 4122 3311 3221 2222 2220 1231
-			2324 1102 3204 2234 1332 4121 3444 3242
-			4334 4144 4233 3344 2321 4442 3322 4331
-			2244 4224 3144 4322 4111 1424 2441 1442
+			4433 4432 2234 2444 0443 4320 2003 4023
+			0423 2002 0400 4200 3344 2024 0243 4402
+			2333 4223 2233 2202 2202 2222 2232 4422
+			2022 2224 4332 4200 3024 2443 3222 0004
+			3334 2220 3422 0044 0224 2222 2221 4204
+			2023 4412 0213 2203 4002 3424 0333 0232
+			3003 3433 3200 0033 2024 3332 0022 3004
+			2233 3223 0433 3022 3444 4323 2334 4332
 		</bitmap>
 	</tex_image>
 	<tex_image index="11" name="kusa01b_su"
@@ -372,11 +372,11 @@
 			0303 0303 0303 0303 0303 0303 0303 0303
 			0303 0303 0303 0303 0303 0303 0303 0303
 			0303 0303 0303 0303 0303 0303 0303 0303
-			0303 6161 6103 6103 0361 0303 0303 0303
-			6103 e1e1 e161 e161 61e1 0303 6161 0303
-			e103 e1e2 e2e1 e1e1 e1e2 6103 e1e1 0361
-			e161 e1e0 e0e1 e2e1 e1e0 e161 e2e0 61e1
-			e2e1 e2e0 e0e1 e0e2 e2e0 e2e1 e0e0 e1e2
+			0303 6060 6003 6003 0360 0303 0303 0303
+			6003 e0e0 e060 e060 60e0 0303 6060 0303
+			e003 e0e1 e1e0 e0e0 e0e1 6003 e0e0 0360
+			e060 e0e2 e2e0 e1e0 e0e2 e060 e1e2 60e0
+			e1e0 e1e2 e2e0 e2e1 e1e2 e1e0 e2e2 e0e1
 		</bitmap>
 	</tex_image>
 	<tex_image index="12" name="michi01a"
@@ -642,10 +642,10 @@
 		0000 196f 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="10" name="kusa01a_su_pl" color_size="8">
-		2eeb 3acb 3e6a 462a 4e8a 7fff 7fff 7fff
+		2e33 2e5a 2e76 2e94 3299 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="11" name="kusa01b_su_pl" color_size="8">
-		3acb 3dca 3e6a 64ff 7fff 7fff 7fff 7fff
+		29f1 2e56 2e79 7d8d 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="12" name="michi01a_pl" color_size="16">
 		3a31 3e54 4675 4696 4eb7 52d7 56f8 5719
