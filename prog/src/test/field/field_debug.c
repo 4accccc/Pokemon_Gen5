@@ -139,11 +139,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
 	{ DEBUG_FIELD_C_CHOICE01, DMenuCallProc_OpenStartInvasion },
-//	{ DEBUG_FIELD_STR01, NULL },
-//	{ DEBUG_FIELD_STR01, NULL },
 };
 
 //--------------------------------------------------------------

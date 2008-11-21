@@ -22,8 +22,6 @@
 //======================================================================
 //	define
 //======================================================================
-#define BGPLANE_YESNO_WINDOW (GFL_BG_FRAME1_M)	//使用フレーム(DEBUG_BGFRAME_MENU 
-#define BGPLANE_MSG_WINDOW (GFL_BG_FRAME2_M)	//使用フレーム(DEBUG_BGFRAME_MENU 
 
 //======================================================================
 //	enum
@@ -36,9 +34,13 @@ struct _FIELD_COMM_MAIN
 {
 	u8	menuSeq_;
 	HEAPID	heapID_;
+	u8	talkTrgChara_;
 	FIELD_COMM_MENU *commMenu_;
 	FIELD_COMM_FUNC *commFunc_;
 };
+
+//上下左右に対応したグリッドでのオフセット
+static const s8 FCM_dirOfsArr[4][2]={{0,-1},{0,1},{-1,0},{1,0}};
 
 //======================================================================
 //	proto
@@ -54,7 +56,9 @@ static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 				GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 
 const BOOL	FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys );
-
+static	const u8	FIELD_COMM_MAIN_CheckTalkTarget( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys );
+const BOOL	FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys );
 //接続開始用メニュー処理
 //開始時
 void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
@@ -122,7 +126,7 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 		}
 #if DEB_ARI
 		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X )
-			FIELD_COMM_MENU_SwitchDebugWindow( BGPLANE_MSG_WINDOW );
+			FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW );
 		FIELD_COMM_MENU_UpdateDebugWindow( );
 #endif	//DEB_ARI
 	}
@@ -157,8 +161,12 @@ static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 	//届いたデータのチェック
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 	{
+#if DEB_ARI
+		if(	FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
+#else
 		if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) &&
 			FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
+#endif
 		{
 			//有効なデータが入っている
 			switch( FIELD_COMM_DATA_GetCharaData_State( i ) )
@@ -195,11 +203,109 @@ static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 }
 
 //--------------------------------------------------------------
-// 通信常態か？(接続して他のプレイヤーが居るか？
+// 会話ができるか？(会話ターゲットが居るか？
+// 内部で会話ターゲットを確定してしまい、そのまま保持しておく
+// 現状netID順で近いほうを優先するので・・・
 //--------------------------------------------------------------
 const BOOL	FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
 {
-	return (FIELD_COMM_FUNC_GetCommMode(commSys->commFunc_) == FIELD_COMM_MODE_CONNECT);
+	if( FIELD_COMM_FUNC_GetCommMode(commSys->commFunc_) == FIELD_COMM_MODE_CONNECT)
+	{
+		if( FIELD_COMM_DATA_GetTalkState( FCD_SELF_INDEX ) == FCTS_NONE )
+		{
+			commSys->talkTrgChara_ = FIELD_COMM_MAIN_CheckTalkTarget( commSys );
+			if( commSys->talkTrgChara_ < FIELD_COMM_MEMBER_MAX )
+			{
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+static	const u8 FIELD_COMM_MAIN_CheckTalkTarget( FIELD_COMM_MAIN *commSys )
+{
+	u8 i;
+	const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( FCD_SELF_INDEX );
+	const u8 selfDir = plWork->direction;
+	int selfX,selfZ;
+	FIELD_COMM_DATA_GetGridPos_AfterMove( FCD_SELF_INDEX,&selfX,&selfZ );
+	selfX += FCM_dirOfsArr[selfDir][0];
+	selfZ += FCM_dirOfsArr[selfDir][1];
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) )
+		{
+			int px,pz;
+			FIELD_COMM_DATA_GetGridPos_AfterMove( i,&px,&pz );
+			if( px == selfX && pz == selfZ )
+			{
+				return i;
+			}
+		}
+	}
+	return 0xFF;
+}
+
+//--------------------------------------------------------------
+// 会話開始処理
+//--------------------------------------------------------------
+const BOOL	FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys )
+{
+	if( FIELD_COMM_DATA_GetTalkState( FCD_SELF_INDEX ) == FCTS_RESERVE_TALK )
+	{
+		int selfX,selfZ;
+		u8	postID,postX,postZ;
+		const BOOL isMove = FIELD_COMM_DATA_GetGridPos_AfterMove( FCD_SELF_INDEX ,&selfX,&selfZ);
+		FIELD_COMM_FUNC_GetTalkParterData_ID( &postID , commSys->commFunc_ );
+		FIELD_COMM_FUNC_GetTalkParterData_Pos( &postX , &postZ , commSys->commFunc_ );
+		if( selfX == postX && selfZ == postZ )
+		{
+			if( isMove == FALSE )
+			{
+				return TRUE;
+			}
+			else
+			{
+				//停止するまで待つため
+				return FALSE;
+			}
+		}
+		else
+		{
+			//すでに通り過ぎてしまっているためキャンセル処理
+			FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_NONE );
+			FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_UNPOSSIBLE , 0 , postID );
+			return FALSE;
+		}
+	}
+	return FALSE;
+}
+
+//--------------------------------------------------------------
+// 会話開始処理
+//--------------------------------------------------------------
+void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys )
+{
+	const PLAYER_WORK *plWork = FIELD_COMM_DATA_GetCharaData_PlayerWork( FCD_SELF_INDEX );
+	const u8 selfDir = plWork->direction;
+	int selfX,selfZ;
+	u16	sendValue;
+	FIELD_COMM_DATA_GetGridPos_AfterMove( FCD_SELF_INDEX,&selfX,&selfZ );
+	selfX += FCM_dirOfsArr[selfDir][0];
+	selfZ += FCM_dirOfsArr[selfDir][1];
+	sendValue = selfX + (selfZ<<8);
+	FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_REQUEST , sendValue , commSys->talkTrgChara_ );
+	FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_WAIT_TALK );
+}
+//--------------------------------------------------------------
+// 会話(話しかけられる側)開始処理
+//--------------------------------------------------------------
+void	FIELD_COMM_MAIN_StartTalkPartner( FIELD_COMM_MAIN *commSys )
+{
+	u8	postID;
+	FIELD_COMM_FUNC_GetTalkParterData_ID( &postID , commSys->commFunc_ );
+	FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_ACCEPT , 0 , postID );
+	FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_REPLY_TALK );
 }
 
 //--------------------------------------------------------------
@@ -208,8 +314,8 @@ const BOOL	FIELD_COMM_MAIN_CanTalk( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
 	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
-	FIELD_COMM_MENU_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
-	FIELD_COMM_MENU_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenYesNoMenu( FCM_BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR00 , commSys->commMenu_ );
 	commSys->menuSeq_ = 0;
 }
@@ -268,8 +374,8 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
 	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
-	FIELD_COMM_MENU_OpenMessageWindow( BGPLANE_MSG_WINDOW , commSys->commMenu_ );
-	FIELD_COMM_MENU_OpenYesNoMenu( BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );
+	FIELD_COMM_MENU_OpenYesNoMenu( FCM_BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR01 , commSys->commMenu_ );
 	commSys->menuSeq_ = 0;
 }
@@ -327,9 +433,25 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 //	以下 field_comm_event 用。extern定義も該当ソースに書く
 //======================================================================
 const int	FIELD_COMM_MAIN_GetWorkSize(void);
+FIELD_COMM_FUNC* FIELD_COMM_MAIN_GetCommFuncWork( FIELD_COMM_MAIN *commSys );
+FIELD_COMM_MENU** FIELD_COMM_MAIN_GetCommMenuWork( FIELD_COMM_MAIN *commSys );
+const HEAPID FIELD_COMM_MAIN_GetHeapID( FIELD_COMM_MAIN *commSys );
 
 const int	FIELD_COMM_MAIN_GetWorkSize(void)
 {
 	return sizeof(FIELD_COMM_MAIN);
 }
+FIELD_COMM_FUNC* FIELD_COMM_MAIN_GetCommFuncWork( FIELD_COMM_MAIN *commSys )
+{
+	return commSys->commFunc_;
+}
+FIELD_COMM_MENU** FIELD_COMM_MAIN_GetCommMenuWork( FIELD_COMM_MAIN *commSys )
+{
+	return &commSys->commMenu_;
+}
+const HEAPID FIELD_COMM_MAIN_GetHeapID( FIELD_COMM_MAIN *commSys )
+{
+	return commSys->heapID_;
+}
+
 

@@ -235,12 +235,15 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			fieldWork->ftbl->main_func( fieldWork, &pos );
 			
 			//通信用アクター更新
-			fieldMainCommActorProc( fieldWork );
+			//fieldMainCommActorProc( fieldWork );
 
 			//Mapシステムに位置を渡している。
 			//これがないとマップ移動しないので注意
 			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
 		}
+		//通信用アクター更新
+		fieldMainCommActorProc( fieldWork );
+
 		//通信用処理(プレイヤーの座標の設定とか
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
@@ -307,12 +310,18 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, fieldWork->map_id);
 	}
-	//通信用会話処理(仮
-	if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+	///通信用会話処理(仮
+	//話しかける側
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
+		if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
 			return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork->commSys );
 		}
 	}
+	//話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
+	if( FIELD_COMM_MAIN_CheckReserveTalk( fieldWork->commSys ) == TRUE ){
+		return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork->commSys );
+	}
+
 	return NULL;
 }
 

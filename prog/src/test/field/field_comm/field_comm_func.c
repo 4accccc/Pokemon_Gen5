@@ -30,6 +30,7 @@ enum FIELD_COMM_COMMAND_TYPE
     FC_CMD_SELFDATA = GFL_NET_CMD_COMMAND_MAX,	//自機データ
 	FC_CMD_REQUEST_DATA,	//データ要求
 	FC_CMD_SELF_PROFILE,	//キャラの基本情報
+	FC_CMD_COMMON_FLG,		//汎用フラグ
 };
 
 //======================================================================
@@ -39,9 +40,15 @@ struct _FIELD_COMM_FUNC
 {
 	HEAPID	heapID_;
 	FIELD_COMM_MODE commMode_;
-	
 	u8	seqNo_;
+	
 	BOOL	isInitCommSystem_;
+	
+	//会話関係
+	u8		talkID_;		//会話対象
+	u8		talkPosX_;
+	u8		talkPosZ_;		//会話対象位置
+	
 };
 
 typedef struct
@@ -74,6 +81,10 @@ const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
 const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc );
 const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc );
 const int	FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
+const BOOL FIELD_COMM_FUNC_IsReserveTalk( FIELD_COMM_FUNC *commFunc );
+void FIELD_COMM_FUNC_ResetReserveTalk( FIELD_COMM_FUNC *commFunc );
+void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc );
+void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc );
 
 //送受信関数
 void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
@@ -82,6 +93,8 @@ void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_
 void	FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+void	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
+void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 //各種コールバック
 void	FIELD_COMM_FUNC_FinishInitCallback( void* pWork );
@@ -93,11 +106,11 @@ void	FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);	
 void	FIELD_COMM_FUNC_DisconnectCallBack(void* pWork);	// 通信切断時に呼ばれる関数(終了時
 
 static const NetRecvFuncTable FieldCommRecvTable[] = {
-	{ FIELD_COMM_FUNC_Post_SelfData ,NULL },
-	{ FIELD_COMM_FUNC_Post_RequestData ,NULL },
-	{ FIELD_COMM_FUNC_Post_SelfProfile ,NULL },
+	{ FIELD_COMM_FUNC_Post_SelfData		,NULL },
+	{ FIELD_COMM_FUNC_Post_RequestData	,NULL },
+	{ FIELD_COMM_FUNC_Post_SelfProfile	,NULL },
+	{ FIELD_COMM_FUNC_Post_CommonFlg	,NULL },
 };
-
 
 //--------------------------------------------------------------
 //	システム初期化
@@ -392,6 +405,19 @@ const int	FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc )
 	return GFL_NET_GetNetID( handle );
 }
 
+//--------------------------------------------------------------
+// 会話予約のデータ取得  
+//--------------------------------------------------------------
+void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc )
+{
+	*ID = commFunc->talkID_;
+}
+void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc )
+{
+	*posX = commFunc->talkPosX_;
+	*posZ = commFunc->talkPosZ_;
+}
+
 //======================================================================
 //送受信関数
 //======================================================================
@@ -400,8 +426,9 @@ typedef struct
 	u16 posX_;
 	u16 posZ_;
 	s8	posY_;		//マックス不明なので。場合によってはなしでOK？
-	u8	dir_;
+	u8	dir_;		//グリッドなので上下左右が0～3で入る
 	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
+	u8	talkState_;
 }FIELD_COMM_PLAYER_PACKET;
 //--------------------------------------------------------------
 // 自分のデータ送信  
@@ -413,13 +440,14 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	const VecFx32 *pos;
 	u16 dir;
 	ZONEID zoneID;
+	u8	talkState;
 
 	//データ収集
 	plWork = FIELD_COMM_DATA_GetSelfData_PlayerWork();
 	zoneID = PLAYERWORK_getZoneID( plWork );
 	pos = PLAYERWORK_getPosition( plWork );
 	dir = PLAYERWORK_getDirection( plWork );
-	
+	talkState = FIELD_COMM_DATA_GetTalkState( FCD_SELF_INDEX );
 	//パケットにセット
 	plPkt.zoneID_ = zoneID;
 	plPkt.posX_ = F32_CONST( pos->x );
@@ -427,6 +455,7 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	plPkt.posZ_ = F32_CONST( pos->z );
 	//plPkt.dir_ = dir>>8;
 	plPkt.dir_ = dir;
+	plPkt.talkState_ = talkState;
 
 //	ARI_TPrintf("SEND[ ][%d][%d][%d][%d]\n",plPkt.posX_,plPkt.posY_,plPkt.posZ_,dir);
 	{
@@ -466,6 +495,7 @@ void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void
 	PLAYERWORK_setDirection( plWork , dir );
 	PLAYERWORK_setZoneID( plWork , pkt->zoneID_ );
 	FIELD_COMM_DATA_SetCharaData_IsValid( netID , TRUE );
+	FIELD_COMM_DATA_SetTalkState( netID , pkt->talkState_ );
 
 //	ARI_TPrintf("FieldComm PostSelfData[%d]\n",netID);
 }
@@ -544,6 +574,70 @@ void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const v
 	plWork->mystatus.region_code = prof->regionCode_;
 	FIELD_COMM_DATA_SetCharaData_State( netID , FCCS_EXIST_DATA );
 
+}
+
+//--------------------------------------------------------------
+// 汎用フラグ
+//--------------------------------------------------------------
+typedef struct
+{
+	u8	flg_;
+	u16 value_;
+}FIELD_COMM_COMMONFLG_PACKET;
+void	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID)
+{
+	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	FIELD_COMM_COMMONFLG_PACKET pkt;
+	pkt.flg_ = flg;
+	pkt.value_ = val;
+	{
+		const BOOL ret = GFL_NET_SendDataEx( selfHandle , sendID , 
+				FC_CMD_COMMON_FLG , sizeof( FIELD_COMM_COMMONFLG_PACKET ) , 
+				(void*)&pkt , FALSE , FALSE , FALSE );
+		ARI_TPrintf("FieldComm Send commonFlg[%d:%d:%d].\n",sendID,flg,val);
+		if( ret == FALSE ){
+			ARI_TPrintf("FieldComm Send commonFlg is failue!\n");
+		}
+	}
+}
+void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
+	const FIELD_COMM_COMMONFLG_PACKET *pkt = (FIELD_COMM_COMMONFLG_PACKET*)pData;
+	const F_COMM_TALK_STATE talkState = FIELD_COMM_DATA_GetTalkState( FCD_SELF_INDEX );
+	ARI_TPrintf("FieldComm PostCommonFlg[%d:%d:%d]\n",netID,pkt->flg_,pkt->value_);
+	switch( pkt->flg_ )
+	{
+	case FCCF_TALK_REQUEST:		//会話要求
+		if( talkState == FCTS_NONE )
+		{	
+			FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_RESERVE_TALK );
+			commFunc->talkPosX_ = pkt->value_ & 0x00FF;
+			commFunc->talkPosZ_ = pkt->value_>>8;
+			commFunc->talkID_ = netID;
+		}
+		else
+		{
+			FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_UNPOSSIBLE , 0xf , netID );
+		}
+		break;
+
+	case FCCF_TALK_UNPOSSIBLE:	//要求に対して無理
+		GF_ASSERT( talkState == FCTS_WAIT_TALK );
+		FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_UNPOSSIBLE );
+		break;
+
+	case FCCF_TALK_ACCEPT:		//要求に対して許可
+		GF_ASSERT( talkState == FCTS_WAIT_TALK );
+		FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_ACCEPT );
+		commFunc->talkID_ = netID;
+		break;
+
+	default:
+		OS_TPrintf("Invalid flg[%d]!\n!",pkt->flg_);
+		GF_ASSERT( NULL );
+		break;
+	}
 }
 
 //======================================================================

@@ -215,7 +215,7 @@ static void commActBBDActFunc(
 	FLD_COMM_ACTOR *act = work;
 	
 	pos = act->pos;
-	pos.x += FX32_ONE * 8;
+	pos.x += FX32_ONE * 16;
 	pos.y += FX32_ONE * 10;
 //	pos.z += 1;
 

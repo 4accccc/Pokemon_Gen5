@@ -30,6 +30,7 @@
 //	proto
 //======================================================================
 extern GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+extern GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 
 
 #endif //FIELD_COMM_EVENT_H__

@@ -32,6 +32,15 @@ typedef enum
 	FCRT_PROFILE,	//キャラの基本情報
 }F_COMM_REQUEST_TYPE;
 
+//汎用フラグの送信
+typedef enum
+{
+	FCCF_TALK_REQUEST,		//会話要求
+	FCCF_TALK_UNPOSSIBLE,	//要求に対して無理
+	FCCF_TALK_ACCEPT,		//要求に対して許可
+
+	FCCF_FLG_MAX,			//不正値として使う
+}F_COMM_COMMON_FLG;
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -55,14 +64,17 @@ extern void	FIELD_COMM_FUNC_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
 extern void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
 extern void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc );
 extern void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc );
-
+extern void FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
 //各種チェック関数
 extern const BOOL FIELD_COMM_FUNC_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
 extern const BOOL FIELD_COMM_FUNC_IsFinishTermCommSystem( FIELD_COMM_FUNC *commFunc );
 extern const FIELD_COMM_MODE FIELD_COMM_FUNC_GetCommMode( FIELD_COMM_FUNC *commFunc );
 extern const int	FIELD_COMM_FUNC_GetMemberNum( FIELD_COMM_FUNC *commFunc );
 extern const int	FIELD_COMM_FUNC_GetSelfIndex( FIELD_COMM_FUNC *commFunc );
-
+extern const BOOL FIELD_COMM_FUNC_IsReserveTalk( FIELD_COMM_FUNC *commFunc );
+extern void FIELD_COMM_FUNC_ResetReserveTalk( FIELD_COMM_FUNC *commFunc );
+extern void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc );
+extern void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc );
 
 
 #endif //FIELD_COMM_FUNC_H__

@@ -10,6 +10,7 @@
 #include "system/gfl_use.h"
 
 #include "gamesystem/playerwork.h"
+#include "test/ariizumi/ari_debug.h"
 #include "field_comm_main.h"
 #include "field_comm_data.h"
 
@@ -65,7 +66,7 @@ void	FIELD_COMM_DATA_SetCharaData_IsValid( const u8 idx , const BOOL );
 const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const u8 idx );
 void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE state );
 const	F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx );
-void	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ );
+const BOOL	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ );
 
 const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx );
 void FIELD_COMM_DATA_SetCharaData_State( const u8 idx , const F_COMM_CHARA_STATE state );
@@ -141,6 +142,8 @@ void	FIELD_COMM_DATA_SetSelfData_Pos( const ZONEID *zoneID , const VecFx32 *pos 
 	PLAYERWORK_setZoneID( &commData->selfData_.plWork_ , *zoneID );
 	PLAYERWORK_setPosition( &commData->selfData_.plWork_ , pos );
 	PLAYERWORK_setDirection( &commData->selfData_.plWork_ , *dir );
+	commData->selfData_.isExist_ = TRUE;
+	commData->selfData_.isValid_ = TRUE;	
 }
 //--------------------------------------------------------------
 //	自分のデータ取得
@@ -189,10 +192,62 @@ const	F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx )
 	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
 	return pData->talkState_;
 }
-void	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ )
+
+//--------------------------------------------------------------
+//	キャラの移動後(停止時は現座標)を調べる
+//	@return 移動中であればTRUE
+//--------------------------------------------------------------
+const BOOL	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ )
 {
 	FIELD_COMM_CHARA_DATA *pData = FIELD_COMM_DATA_GetCharaDataWork(idx);
-
+	if( pData->isExist_ == FALSE )
+	{
+		//居ないっ
+		*posX = -1;
+		*posZ = -1;
+		return FALSE;
+	}
+	{
+		PLAYER_WORK	*plWork = &pData->plWork_;
+		//FIXME:正しいグリッドサイズ取得する？
+		const u8 gridSize = 16;
+		const int gridX = F32_CONST( plWork->position.x );
+		const int gridZ = F32_CONST( plWork->position.z );
+		u8	modSize;	//あまりの量
+		*posX = gridX/gridSize;
+		*posZ = gridZ/gridSize;
+		//どれだけ中心位置からずれてるか？ XZ両方ずれていることは無いので片方だけ取る
+		switch( plWork->direction )
+		{
+		case COMMDIR_UP:
+		case COMMDIR_DOWN:
+			modSize = gridZ - (*posZ*gridSize);
+			break;
+		case COMMDIR_LEFT:
+		case COMMDIR_RIGHT:
+			modSize = gridX - (*posX*gridSize);
+			break;
+		}
+		//移動してないのでOK
+		if( modSize == 0 )
+			return FALSE;
+		switch( plWork->direction )
+		{
+		case COMMDIR_UP:
+			//処理なし
+			break;
+		case COMMDIR_DOWN:
+			*posZ += 1;
+			break;
+		case COMMDIR_LEFT:
+			//処理なし
+			break;
+		case COMMDIR_RIGHT:
+			*posX += 1;
+			break;
+		}
+		return TRUE;
+	}
 }
 
 //--------------------------------------------------------------

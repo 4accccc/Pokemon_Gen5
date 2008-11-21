@@ -34,12 +34,24 @@ typedef enum
 typedef enum
 {
 	FCTS_NONE,
-	FCTS_REQUEST_TALK,	//会話希望(ボタンを押す
 	FCTS_REPLY_TALK,	//会話の返事
 	FCTS_WAIT_TALK,		//会話相手の停止待ち
+	FCTS_UNPOSSIBLE,	//↑の返事(無理
+	FCTS_ACCEPT,		//↑の返事(OK
 	FCTS_RESERVE_TALK,	//会話予約
 	FCTS_TALKING,		//会話中
+	FCTS_WAIT_END,		//会話終了待ち
 }F_COMM_TALK_STATE;
+
+//方向定義
+//field_actor.cのACTWALK_に合わせる事
+typedef enum
+{
+	COMMDIR_UP = 0,
+	COMMDIR_DOWN,
+	COMMDIR_LEFT,
+	COMMDIR_RIGHT,
+}FIELD_COMM_ACTER_DIR;
 
 //======================================================================
 //	typedef struct
@@ -63,6 +75,7 @@ extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsExist( const u8 idx );
 extern const BOOL	FIELD_COMM_DATA_GetCharaData_IsValid( const u8 idx );
 extern void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE state );
 extern const F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx );
+extern const BOOL	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ );
 
 
 extern const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx );
