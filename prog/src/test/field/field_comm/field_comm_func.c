@@ -20,6 +20,8 @@
 //======================================================================
 //	define
 //======================================================================
+//通信のパケットバッファ数
+#define F_COMM_PACKET_BUFF_NUM (10)
 
 //======================================================================
 //	enum
@@ -33,9 +35,36 @@ enum FIELD_COMM_COMMAND_TYPE
 	FC_CMD_COMMON_FLG,		//汎用フラグ
 };
 
+//パケットバッファの送信タイプ
+enum FIELD_COMM_PACKET_BUFF_TYPE
+{
+	FCPBT_FLG,
+	FCPBT_REQ_DATA,
+
+	FCPBT_INVALID,
+};
+
 //======================================================================
 //	typedef struct
 //======================================================================
+//毎フレーム共有情報
+typedef struct
+{
+	u16 posX_;
+	u16 posZ_;
+	s8	posY_;		//マックス不明なので。場合によってはなしでOK？
+	u8	dir_;		//グリッドなので上下左右が0～3で入る
+	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
+	u8	talkState_;
+}FIELD_COMM_PLAYER_PACKET;
+
+typedef struct
+{
+	u8	type_;
+	u8	id_;
+	u16	value_;
+}FIELD_COMM_PACKET_BUFF_DATA;
+
 struct _FIELD_COMM_FUNC
 {
 	HEAPID	heapID_;
@@ -44,13 +73,18 @@ struct _FIELD_COMM_FUNC
 	
 	BOOL	isInitCommSystem_;
 	
+	//送受信サポート関係
+	FIELD_COMM_PLAYER_PACKET plPkt_;
+	u8	pktBuffPos_;
+	FIELD_COMM_PACKET_BUFF_DATA pktBuff_[F_COMM_PACKET_BUFF_NUM];
+
 	//会話関係
 	u8		talkID_;		//会話対象
 	u8		talkPosX_;
 	u8		talkPosZ_;		//会話対象位置
 	
 };
-
+//ビーコン
 typedef struct
 {
 	u8	mode_:1;	//0:待機 1:探索
@@ -58,7 +92,6 @@ typedef struct
 
 	u8	pad_:4;
 }FIELD_COMM_BEACON;
-
 //======================================================================
 //	proto
 //======================================================================
@@ -87,13 +120,13 @@ void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc );
 void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc );
 
 //送受信関数
-void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
+const BOOL	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
-void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc );
+const BOOL	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
-void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc );
+const BOOL	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
-void	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
+const BOOL	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
 void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 
 //各種コールバック
@@ -421,21 +454,11 @@ void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUN
 //======================================================================
 //送受信関数
 //======================================================================
-typedef struct
-{
-	u16 posX_;
-	u16 posZ_;
-	s8	posY_;		//マックス不明なので。場合によってはなしでOK？
-	u8	dir_;		//グリッドなので上下左右が0～3で入る
-	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
-	u8	talkState_;
-}FIELD_COMM_PLAYER_PACKET;
 //--------------------------------------------------------------
 // 自分のデータ送信  
 //--------------------------------------------------------------
-void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
+const BOOL	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 {
-	FIELD_COMM_PLAYER_PACKET plPkt;
 	PLAYER_WORK *plWork = NULL;
 	const VecFx32 *pos;
 	u16 dir;
@@ -449,23 +472,25 @@ void	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc )
 	dir = PLAYERWORK_getDirection( plWork );
 	talkState = FIELD_COMM_DATA_GetTalkState( FCD_SELF_INDEX );
 	//パケットにセット
-	plPkt.zoneID_ = zoneID;
-	plPkt.posX_ = F32_CONST( pos->x );
-	plPkt.posY_ = (int)F32_CONST( pos->y );
-	plPkt.posZ_ = F32_CONST( pos->z );
+	commFunc->plPkt_.zoneID_ = zoneID;
+	commFunc->plPkt_.posX_ = F32_CONST( pos->x );
+	commFunc->plPkt_.posY_ = (int)F32_CONST( pos->y );
+	commFunc->plPkt_.posZ_ = F32_CONST( pos->z );
 	//plPkt.dir_ = dir>>8;
-	plPkt.dir_ = dir;
-	plPkt.talkState_ = talkState;
+	commFunc->plPkt_.dir_ = dir;
+	commFunc->plPkt_.talkState_ = talkState;
 
 //	ARI_TPrintf("SEND[ ][%d][%d][%d][%d]\n",plPkt.posX_,plPkt.posY_,plPkt.posZ_,dir);
 	{
 		GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 		const BOOL ret = GFL_NET_SendDataEx( selfHandle , GFL_NET_SENDID_ALLUSER , 
 				FC_CMD_SELFDATA , sizeof(FIELD_COMM_PLAYER_PACKET) , 
-				(void*)&plPkt , FALSE , TRUE , FALSE );
+				(void*)&commFunc->plPkt_ , FALSE , TRUE , TRUE );
 		if( ret == FALSE ){
+			//こいつは再送処理なしで良いかな・・・
 			ARI_TPrintf("FieldComm SendSelfData is failue!\n");
 		}
+		return ret;
 	}
 }
 
@@ -505,7 +530,7 @@ void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void
 // Postの関数でそのまま"要求されたキャラだけに"データを送る
 // @param charaIdx キャラ番号(=netID)
 //--------------------------------------------------------------
-void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc )
+const BOOL	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_TYPE reqType , FIELD_COMM_FUNC *commFunc )
 {
 	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 	u8	type = reqType;
@@ -516,6 +541,7 @@ void	FIELD_COMM_FUNC_Send_RequestData( const u8 charaIdx , const F_COMM_REQUEST_
 	if( ret == FALSE ){
 		ARI_TPrintf("FieldComm SendRequestData is failue!\n");
 	}
+	return ret;
 }
 void	FIELD_COMM_FUNC_Post_RequestData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
@@ -544,7 +570,7 @@ typedef struct
 	u8	sex_:1;
 	u8	regionCode_:7;
 }FIELD_COMM_CHARA_PROFILE;
-void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc )
+const BOOL	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *commFunc )
 {
 	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 	FIELD_COMM_CHARA_PROFILE profile;
@@ -560,6 +586,7 @@ void	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUNC *com
 		if( ret == FALSE ){
 			ARI_TPrintf("FieldComm Send SelfProfile is failue!\n");
 		}
+		return ret;
 	}
 }
 void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
@@ -584,7 +611,7 @@ typedef struct
 	u8	flg_;
 	u16 value_;
 }FIELD_COMM_COMMONFLG_PACKET;
-void	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID)
+const BOOL	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID)
 {
 	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
 	FIELD_COMM_COMMONFLG_PACKET pkt;
@@ -598,6 +625,7 @@ void	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val
 		if( ret == FALSE ){
 			ARI_TPrintf("FieldComm Send commonFlg is failue!\n");
 		}
+		return ret;
 	}
 }
 void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )

@@ -24,11 +24,17 @@
 //======================================================================
 //	typedef struct
 //======================================================================
-
+typedef struct _FIELD_COMM_EVENT FIELD_COMM_EVENT;
 
 //======================================================================
 //	proto
 //======================================================================
+extern const int FIELD_COMM_EVENT_GetWorkSize(void);
+extern void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_COMM_EVENT *commEvent );
+
+extern GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , void *work );
+extern GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work );
+
 extern GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 extern GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 

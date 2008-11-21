@@ -88,6 +88,8 @@ FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID );
 void	FIELD_COMM_MENU_TermCommMenu( FIELD_COMM_MENU *commMenu );
 void	FIELD_COMM_MENU_InitBG_MsgPlane( FIELD_COMM_MENU *commMenu );
 void	FIELD_COMM_MENU_TermBG_MsgPlane( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_InitBG_MenuPlane( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_TermBG_MenuPlane( FIELD_COMM_MENU *commMenu );
 
 void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 const u8 FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
@@ -143,28 +145,23 @@ void	FIELD_COMM_MENU_TermCommMenu( FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 void	FIELD_COMM_MENU_InitBG_MsgPlane( FIELD_COMM_MENU *commMenu )
 {
-	{
-		const u8 msgBgFrame = FCM_BGPLANE_MSG_WINDOW;
-		GFL_BG_BGCNT_HEADER msgBgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x18000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl(
-			msgBgFrame, &msgBgcntText, GFL_BG_MODE_TEXT );
-
-		GFL_BG_SetVisible( msgBgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( msgBgFrame, 1 );
-
-		GFL_BG_FillCharacter( msgBgFrame, 0x00, 1, 0 );
-		GFL_BG_FillScreen( msgBgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-
-		GFL_BG_LoadScreenReq( msgBgFrame );
-	}
+	const u8 msgBgFrame = FCM_BGPLANE_MSG_WINDOW;
+	GFL_BG_BGCNT_HEADER msgBgcntText = {
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x18000, 0x8000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+	};
+	
+	GFL_BG_SetBGControl(
+		msgBgFrame, &msgBgcntText, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( msgBgFrame, VISIBLE_ON );
+	
+	GFL_BG_SetPriority( msgBgFrame, 1 );
+	GFL_BG_FillCharacter( msgBgFrame, 0x00, 1, 0 );
+	GFL_BG_FillScreen( msgBgFrame,
+		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_LoadScreenReq( msgBgFrame );
 }
 void	FIELD_COMM_MENU_TermBG_MsgPlane( FIELD_COMM_MENU *commMenu )
 {
@@ -172,6 +169,38 @@ void	FIELD_COMM_MENU_TermBG_MsgPlane( FIELD_COMM_MENU *commMenu )
 	{	//とりあえずこちらで　いずれはメイン側
 		GFL_BG_FreeCharacterArea( msgBgFrame, 0x00, 0x20 );
 		GFL_BG_FreeBGControl( msgBgFrame );
+	}
+	
+}
+//--------------------------------------------------------------
+//	通信用メニューMENU面BG初期化
+//--------------------------------------------------------------
+void	FIELD_COMM_MENU_InitBG_MenuPlane( FIELD_COMM_MENU *commMenu )
+{
+	const u8 bgFrame = FCM_BGPLANE_YESNO_WINDOW;
+	GFL_BG_BGCNT_HEADER bgcntText = {
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+	};
+	
+	GFL_BG_SetBGControl(
+		bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+	GFL_BG_SetVisible( bgFrame, VISIBLE_ON );
+	
+	GFL_BG_SetPriority( bgFrame, 1 );
+	GFL_BG_FillCharacter( bgFrame, 0x00, 1, 0 );
+	GFL_BG_FillScreen( bgFrame,
+		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_LoadScreenReq( bgFrame );
+}
+void	FIELD_COMM_MENU_TermBG_MenuPlane( FIELD_COMM_MENU *commMenu )
+{
+	const u8 bgFrame = FCM_BGPLANE_YESNO_WINDOW;
+	{	//とりあえずこちらで　いずれはメイン側
+		GFL_BG_FreeCharacterArea( bgFrame, 0x00, 0x20 );
+		GFL_BG_FreeBGControl( bgFrame );
 	}
 	
 }

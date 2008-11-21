@@ -39,6 +39,8 @@ extern FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID );
 extern void	FIELD_COMM_MENU_TermCommMenu( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_InitBG_MsgPlane( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_TermBG_MsgPlane( FIELD_COMM_MENU *commMenu );
+extern void	FIELD_COMM_MENU_InitBG_MenuPlane( FIELD_COMM_MENU *commMenu );
+extern void	FIELD_COMM_MENU_TermBG_MenuPlane( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 extern const u8	FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_CloseYesNoMenu( FIELD_COMM_MENU *commMenu );

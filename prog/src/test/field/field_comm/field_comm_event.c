@@ -30,14 +30,22 @@
 //======================================================================
 //	typedef struct
 //======================================================================
-typedef struct
+struct _FIELD_COMM_EVENT
 {
 	FIELD_COMM_MAIN *commSys_;
-}FIELD_COMM_EVENT;
+};
 
 //======================================================================
 //	proto
 //======================================================================
+const int FIELD_COMM_EVENT_GetWorkSize(void);
+void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_COMM_EVENT *commEvent );
+
+GMEVENT* FIELD_COMM_EVENT_Start_StartCommNormal( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , void *work );
+GMEVENT* FIELD_COMM_EVENT_Start_StartCommInvasion( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work );
+
 GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , void *work );
 GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
@@ -47,6 +55,78 @@ extern const int	FIELD_COMM_MAIN_GetWorkSize(void);
 extern FIELD_COMM_FUNC* FIELD_COMM_MAIN_GetCommFuncWork( FIELD_COMM_MAIN *commSys );
 extern FIELD_COMM_MENU** FIELD_COMM_MAIN_GetCommMenuWork( FIELD_COMM_MAIN *commSys );
 extern const HEAPID FIELD_COMM_MAIN_GetHeapID( FIELD_COMM_MAIN *commSys );
+
+const int FIELD_COMM_EVENT_GetWorkSize(void)
+{
+	return sizeof(FIELD_COMM_EVENT);
+}
+void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_COMM_EVENT *commEvent )
+{
+	commEvent->commSys_ = commSys;
+}
+
+//--------------------------------------------------------------
+//	通信開始イベント	
+//--------------------------------------------------------------
+GMEVENT* FIELD_COMM_EVENT_Start_StartCommNormal( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
+{
+	GF_ASSERT(NULL);
+	return NULL;
+}
+GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , void *work )
+{
+	FIELD_COMM_EVENT *evtWork = work;
+	FIELD_COMM_MAIN *commSys = evtWork->commSys_;
+	switch( *seq )
+	{
+	case 0:
+		FIELD_COMM_MAIN_InitStartCommMenu( commSys );
+		*seq += 1;
+		break;
+	case 1:
+		if( FIELD_COMM_MAIN_LoopStartCommMenu( commSys ) == TRUE ){
+			*seq += 1;
+		}
+		break;
+	case 2:
+		FIELD_COMM_MAIN_TermStartCommMenu( commSys );
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//	侵入開始イベント	
+//--------------------------------------------------------------
+GMEVENT* FIELD_COMM_EVENT_Start_StartCommInvasion( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
+{
+	GF_ASSERT(NULL);
+	return NULL;
+}
+GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work )
+{
+	FIELD_COMM_EVENT *evtWork = work;
+	FIELD_COMM_MAIN *commSys = evtWork->commSys_;
+	switch( *seq )
+	{
+	case 0:
+		FIELD_COMM_MAIN_InitStartInvasionMenu( commSys );
+		*seq += 1;
+		break;
+	case 1:
+		if( FIELD_COMM_MAIN_LoopStartInvasionMenu( commSys ) == TRUE ){
+			*seq += 1;
+		}
+		break;
+	case 2:
+		FIELD_COMM_MAIN_TermStartInvasionMenu( commSys );
+		*seq += 1;
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+
 //--------------------------------------------------------------
 //	話しかけるイベント開始	
 //--------------------------------------------------------------
@@ -54,7 +134,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *co
 {
 	FIELD_COMM_EVENT *evtWork;
 	GMEVENT *event;
-	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEvent, FIELD_COMM_MAIN_GetWorkSize());
+	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEvent, sizeof(FIELD_COMM_EVENT));
 	evtWork = GMEVENT_GetEventWork(event);
 	evtWork->commSys_ = commSys;
 
@@ -134,7 +214,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_M
 {
 	FIELD_COMM_EVENT *evtWork;
 	GMEVENT *event;
-	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEventPartner, FIELD_COMM_MAIN_GetWorkSize());
+	event = GMEVENT_Create(gameSys, NULL, FIELD_COMM_EVENT_TalkEventPartner, sizeof(FIELD_COMM_EVENT));
 	evtWork = GMEVENT_GetEventWork(event);
 	evtWork->commSys_ = commSys;
 

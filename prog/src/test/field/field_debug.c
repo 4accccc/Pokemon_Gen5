@@ -53,13 +53,13 @@ typedef struct
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LISTTBL
 //--------------------------------------------------------------
-typedef struct
+struct _TAG_DEBUG_MENU_LISTTBL
 {
 	u16 charsize_x;
 	u16 charsize_y;
 	u32 max;
 	const DEBUG_MENU_LIST *list;
-}DEBUG_MENU_LISTTBL;
+};
 
 //--------------------------------------------------------------
 ///	DEBUG_FLDMENU

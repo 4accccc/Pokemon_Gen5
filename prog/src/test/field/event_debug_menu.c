@@ -14,7 +14,6 @@
 
 #include "system/bmp_menu.h"
 #include "system/bmp_winframe.h"
-#include "system/bmp_menulist.h"
 #include "message.naix"
 #include "msg/msg_d_field.h"
 #include "test_graphic/d_taya.naix"
@@ -25,10 +24,12 @@
 #include "event_debug_menu.h"
 #include "event_mapchange.h"
 
+#include "field_comm/field_comm_main.h"
+#include "field_comm/field_comm_debug.h"
+
 //======================================================================
 //	define
 //======================================================================
-#define D_MENU_ARIIZUMI
 
 #define DEBUG_BGFRAME_MENU (GFL_BG_FRAME1_M)	//使用フレーム
 #define DEBUG_BGFRAME_MSG  (GFL_BG_FRAME2_M)	//使用フレーム
@@ -60,11 +61,11 @@ typedef BOOL (* D_MENU_CALLPROC)(DEBUG_MENU_EVENT_WORK*);
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LIST
 //--------------------------------------------------------------
-typedef struct
+struct _TAG_DEBUG_MENU_LIST
 {
 	u32 str_id;		//表示する文字列ID
 	void *callp;	//選択された際に返すパラメタ
-}DEBUG_MENU_LIST;
+};
 
 //--------------------------------------------------------------
 ///	DEBUG_MENU_LISTDATA
@@ -80,7 +81,7 @@ typedef struct
 //--------------------------------------------------------------
 ///	DMENU_COMMON_WORK
 //--------------------------------------------------------------
-typedef struct
+struct _TAG_DMENU_COMMON_WORK
 {
 	u32 bgFrame;
 	u32 heapID;
@@ -97,7 +98,7 @@ typedef struct
 	const DEBUG_MENU_LIST *pMenuList;
 	BMP_MENULIST_DATA *pMenuListData;
 	BMPMENULIST_WORK *pMenuListWork;
-}DMENU_COMMON_WORK;
+};
 
 //--------------------------------------------------------------
 ///	DEBUG_MENU_EVENT_WORK
@@ -113,11 +114,6 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 	D_MENU_CALLPROC call_proc;
 	DMENU_COMMON_WORK menuCommonWork;
 	
-#ifdef D_MENU_ARIIZUMI	//通信メニュー用
-	int seq_no;
-	int commSeq;	//追加 Ari1111
-	FIELD_COMM_MAIN	*commSys;
-#endif
 };
 
 //--------------------------------------------------------------
@@ -174,34 +170,29 @@ static BOOL DMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DEBUG_SetMenuWorkZoneIDName(
 		BMP_MENULIST_DATA *list, HEAPID heapID );
 
-static void DebugMenu_InitCommonMenu(
+void DebugMenu_InitCommonMenu(
 	DMENU_COMMON_WORK *work,
 	const BMPMENULIST_HEADER *pMenuHead,
 	BMP_MENULIST_DATA *pMenuListData,
 	const DEBUG_MENU_LIST *pMenuList, int menuCount,
 	int bmpsize_x, int bmpsize_y,
 	int arcDatIDmsg, HEAPID heapID );
-static void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work );
-static u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work );
+void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work );
+u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work );
 
-#ifdef D_MENU_ARIIZUMI
-static BOOL DebugCommMenuCase10( DEBUG_MENU_EVENT_WORK *work );
-static BOOL DebugCommMenuCase11( DEBUG_MENU_EVENT_WORK *work );
-static void DebugCommMenuGraphicInit( HEAPID heapID );
-static void DebugCommMenuGraphicDelete( void );
-#endif
 
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 //--------------------------------------------------------------
 static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 {
-	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
-	{ DEBUG_FIELD_C_CHOICE01, DMenuCallProc_OpenStartInvasion },
+	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
+	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
@@ -222,8 +213,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
-	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenStartComm },
-	{ DEBUG_FIELD_C_CHOICE01, DMenuCallProc_OpenStartInvasion },
+	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
 //	{ DEBUG_FIELD_STR01, NULL },
 //	{ DEBUG_FIELD_STR01, NULL },
 };
@@ -353,9 +343,6 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 	
 	switch (*seq) {
 	case 0:
-#ifdef D_MENU_ARIIZUMI
-		work->commSys = (FIELD_COMM_MAIN*)FieldMain_GetCommSys(work->fieldWork);
-#endif		
 		{
 			u32 i,max;
 			BMPMENULIST_HEADER menuH;
@@ -401,173 +388,13 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 				}
 			}
 			
-#ifdef D_MENU_ARIIZUMI
-			if( work->seq_no == 0 ){
-				return( GMEVENT_RES_FINISH );
-			}
-			
-			(*seq)++;
-#endif
 			
 		}
 		break;
-#ifdef D_MENU_ARIIZUMI
-	case 3:
-		DebugCommMenuGraphicInit( work->heapID );
-		(*seq)++;
-		break;
-	case 4:
-		{
-			BOOL ret = FALSE;
-			
-			switch( work->seq_no ){
-			case 10:
-				ret = DebugCommMenuCase10( work );
-				break;
-			case 11:
-				ret = DebugCommMenuCase11( work );
-				break;
-			}
-			
-			if( ret == TRUE ){
-				DebugCommMenuGraphicDelete();
-				return( GMEVENT_RES_FINISH );
-			}
-		}
-		break;
-#endif
 	}
 
 	return( GMEVENT_RES_CONTINUE );
 }
-
-//--------------------------------------------------------------
-//	case 10 TRUE=終了
-//--------------------------------------------------------------
-#ifdef D_MENU_ARIIZUMI
-static BOOL DebugCommMenuCase10( DEBUG_MENU_EVENT_WORK *work )
-{
-	switch( work->commSeq )
-	{
-	case 0:
-		FIELD_COMM_MAIN_InitStartCommMenu( work->commSys );
-		work->commSeq++;
-		break;
-	case 1:
-		if( FIELD_COMM_MAIN_LoopStartCommMenu( work->commSys ) == TRUE ){
-			work->commSeq++;
-		}
-		break;
-	case 2:
-		FIELD_COMM_MAIN_TermStartCommMenu( work->commSys );
-		work->commSeq++;
-		return ( TRUE );
-	}
-	
-	return( FALSE );
-}
-#endif
-
-//--------------------------------------------------------------
-//	case 11 TRUE=終了
-//--------------------------------------------------------------
-#ifdef D_MENU_ARIIZUMI
-static BOOL DebugCommMenuCase11( DEBUG_MENU_EVENT_WORK *work )
-{
-	switch( work->commSeq )
-	{
-	case 0:
-		FIELD_COMM_MAIN_InitStartInvasionMenu( work->commSys );
-		work->commSeq++;
-		break;
-	case 1:
-		if( FIELD_COMM_MAIN_LoopStartInvasionMenu( work->commSys ) == TRUE ){
-			work->commSeq++;
-		}
-		break;
-	case 2:
-		FIELD_COMM_MAIN_TermStartInvasionMenu( work->commSys );
-		work->commSeq++;
-		return( TRUE );
-	}
-	
-	return( FALSE );
-}
-#endif
-
-//--------------------------------------------------------------
-//	通信用BMP
-//--------------------------------------------------------------
-#ifdef D_MENU_ARIIZUMI
-static void DebugCommMenuGraphicInit( HEAPID heapID )
-{
-	u32 bgFrame = DEBUG_BGFRAME_MENU;
-	
-	{	//BG初期化 いずれメイン側のを利用する形へ
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		
-		GFL_BG_SetBGControl(
-			bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
-
-		GFL_BG_SetVisible( bgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( bgFrame, 0 );
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
-		
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_D_TAYA, NARC_d_taya_default_nclr,
-			PALTYPE_MAIN_BG, DEBUG_FONT_PANO*32, 32, heapID );
-		
-		GFL_BG_FillCharacter( bgFrame, 0x00, 1, 0 );
-		GFL_BG_FillScreen( bgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-
-		GFL_BG_LoadScreenReq( bgFrame );
-	}
-	
-	{
-		//もう１面追加します Ari1113
-		GFL_BG_BGCNT_HEADER msgBgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x18000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		const u8 msgBgFrame = DEBUG_BGFRAME_MSG;
-		
-		GFL_BG_SetBGControl(
-			msgBgFrame, &msgBgcntText, GFL_BG_MODE_TEXT );
-
-		GFL_BG_SetVisible( msgBgFrame, VISIBLE_ON );
-		
-		GFL_BG_SetPriority( msgBgFrame, 1 );
-
-		GFL_BG_FillCharacter( msgBgFrame, 0x00, 1, 0 );
-		GFL_BG_FillScreen( msgBgFrame,
-			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-
-		GFL_BG_LoadScreenReq( msgBgFrame );
-	}
-}
-
-static void DebugCommMenuGraphicDelete( void )
-{
-	const u8 bgFrame = DEBUG_BGFRAME_MENU;
-	const u8 msgBgFrame = DEBUG_BGFRAME_MSG;
-	
-	{	//とりあえずこちらで　いずれはメイン側
-		GFL_BG_FreeCharacterArea( bgFrame, 0x00, 0x20 );
-		GFL_BG_FreeBGControl( bgFrame );
-		GFL_BG_FreeCharacterArea( msgBgFrame, 0x00, 0x20 );
-		GFL_BG_FreeBGControl( msgBgFrame );
-	}
-}
-#endif
 
 //======================================================================
 //	フィールドデバッグメニュー	古い
@@ -891,12 +718,6 @@ static DMENURET FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 }
 #endif
 
-void FldDebugMenu_SetCommSystem(
-	void *commSys , DEBUG_MENU_EVENT_WORK *d_menu )
-{
-	d_menu->commSys = (FIELD_COMM_MAIN*)commSys;
-}
-
 //======================================================================
 //	デバッグメニュー呼び出し
 //======================================================================
@@ -948,34 +769,6 @@ static BOOL DMenuCallProc_GridScaleControl( DEBUG_MENU_EVENT_WORK *wk )
 	HEAPID DebugHeapID = d_menu->heapID;
 	
 	DEBUG_FldGridProc_ScaleControl( fieldWork );
-	return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　通信開始メニュー
- * @param	wk	DEBUG_MENU_EVENT_WORK*
- * @retval	BOOL	TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk )
-{
-	wk->seq_no = 10;
-	wk->commSeq = 0;
-	return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　侵入開始メニュー
- * @param	wk	DEBUG_MENU_EVENT_WORK*
- * @retval	BOOL	TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk )
-{
-	wk->seq_no = 11;
-	wk->commSeq = 0;
 	return( FALSE );
 }
 
@@ -1064,6 +857,30 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 	work->fieldWork = fieldWork;
 	return( TRUE );
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　通信デバッグ子メニュー
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
+{
+	GMEVENT *event = wk->gmEvent;
+	const HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	FIELD_COMM_DEBUG_WORK *work;
+	
+	GMEVENT_Change( event,
+		FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
+	
+	work = GMEVENT_GetEventWork( event );
+	FIELD_COMM_DEBUG_InitWork( heapID , fieldWork , event , work );
+
+	return( TRUE );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -1266,7 +1083,7 @@ static void DEBUG_SetMenuWorkZoneIDName(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DebugMenu_InitCommonMenu(
+void DebugMenu_InitCommonMenu(
 	DMENU_COMMON_WORK *work,
 	const BMPMENULIST_HEADER *pMenuHead,
 	BMP_MENULIST_DATA *pMenuListData,
@@ -1383,7 +1200,7 @@ static void DebugMenu_InitCommonMenu(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work )
+void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work )
 {
 	BmpWinFrame_Clear( work->bmpwin, 0 );
 	BmpMenuList_Exit( work->pMenuListWork, NULL, NULL );
@@ -1412,7 +1229,7 @@ static void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work )
  * BMPMENULIST_NULL = 選択中 BMPMENULIST_CANCEL	= キャンセル
  */
 //--------------------------------------------------------------
-static u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
+u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
 {
 	u32 ret = BmpMenuList_Main( work->pMenuListWork );
 	
@@ -1422,4 +1239,11 @@ static u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
 	}
 
 	return( ret );
+}
+//--------------------------------------------------------------
+//	ワークサイズの取得
+//--------------------------------------------------------------
+const int DebugMenu_GetWorkSize(void)
+{ 
+	return sizeof(DMENU_COMMON_WORK);
 }

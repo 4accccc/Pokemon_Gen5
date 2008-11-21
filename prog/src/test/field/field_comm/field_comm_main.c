@@ -314,6 +314,8 @@ void	FIELD_COMM_MAIN_StartTalkPartner( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
 	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	FIELD_COMM_MENU_InitBG_MsgPlane( commSys->commMenu_ );
+	FIELD_COMM_MENU_InitBG_MenuPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenYesNoMenu( FCM_BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR00 , commSys->commMenu_ );
@@ -327,6 +329,8 @@ void	FIELD_COMM_MAIN_TermStartCommMenu( FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_MENU_CloseMessageWindow( commSys->commMenu_ );
 	FIELD_COMM_MENU_TermCommMenu( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermBG_MsgPlane( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermBG_MenuPlane( commSys->commMenu_ );
 }
 
 //--------------------------------------------------------------
@@ -374,6 +378,8 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
 	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	FIELD_COMM_MENU_InitBG_MsgPlane( commSys->commMenu_ );
+	FIELD_COMM_MENU_InitBG_MenuPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenYesNoMenu( FCM_BGPLANE_YESNO_WINDOW , commSys->commMenu_ );
 	FIELD_COMM_MENU_SetMessage( DEBUG_FIELD_C_STR01 , commSys->commMenu_ );
@@ -387,6 +393,8 @@ void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_MENU_CloseMessageWindow( commSys->commMenu_ );
 	FIELD_COMM_MENU_TermCommMenu( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermBG_MsgPlane( commSys->commMenu_ );
+	FIELD_COMM_MENU_TermBG_MenuPlane( commSys->commMenu_ );
 }
 
 //--------------------------------------------------------------
