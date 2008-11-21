@@ -15,9 +15,12 @@
 
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
+#include "field/location.h"
 
 #include "event_mapchange.h"
 
+static void MakeNextLocation(LOCATION * loc, u16 zone_id);
+static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc);
 //============================================================================================
 //
 //	イベント：ゲーム開始
@@ -29,6 +32,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
 	GAME_INIT_WORK * game_init_work;
+	LOCATION new_loc;
 }FIRST_MAPIN_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -39,16 +43,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	GAME_INIT_WORK * game_init_work = fmw->game_init_work;
 	switch (*seq) {
 	case 0:
-		{
-			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(fmw->gamedata);
-			ZONEID start_id;
-			VecFx32 start_pos;
-			start_id = game_init_work->mapid;
-			PLAYERWORK_setZoneID(mywork, start_id);
-			ZONEDATA_DEBUG_GetStartPos(start_id, &start_pos);
-			PLAYERWORK_setPosition(mywork, &start_pos);
-			PLAYERWORK_setDirection(mywork, 0);
-		}
+		UpdateMapParams(gsys, &fmw->new_loc);
 		(*seq)++;
 		break;
 	case 1:
@@ -68,12 +63,13 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 {
 	FIRST_MAPIN_WORK * fmw;
 	GMEVENT * event;
-	//event = GAMESYSTEM_EVENT_Set(gsys, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
+
 	event = GMEVENT_Create(gsys, NULL, EVENT_FirstMapIn, sizeof(FIRST_MAPIN_WORK));
 	fmw = GMEVENT_GetEventWork(event);
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
+	MakeNextLocation(&fmw->new_loc, game_init_work->mapid);
 	return event;
 }
 
@@ -88,7 +84,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
 	FIELD_MAIN_WORK * fieldmap;
-	ZONEID next_map;
+	LOCATION new_loc;
 }MAPCHANGE_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -110,14 +106,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		break;
 	case 2:
 		//新しいマップID、初期位置をセット
-		{
-			PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(mcw->gamedata);
-			VecFx32 start_pos;
-			PLAYERWORK_setZoneID(mywork, mcw->next_map);
-			ZONEDATA_DEBUG_GetStartPos(mcw->next_map, &start_pos);
-			PLAYERWORK_setPosition(mywork, &start_pos);
-			PLAYERWORK_setDirection(mywork, 0);
-		}
+		UpdateMapParams(gsys, &mcw->new_loc);
 		//フィールドマップを開始リクエスト
 		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq)++;
@@ -130,6 +119,25 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 
 	}
 	return GMEVENT_RES_CONTINUE;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+		u16 mapid, const VecFx32 * pos)
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
+
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
+	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+	LOCATION_Set(&mcw->new_loc, mapid, DOOR_ID_JUMP_CODE, 0/* DIR */,
+			pos->x, pos->y, pos->z);
+	//MakeNextLocation(&mcw->new_loc, mapid);
+	
+	return event;
 }
 
 //------------------------------------------------------------------
@@ -144,7 +152,7 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	mcw->next_map = mapid;
+	MakeNextLocation(&mcw->new_loc, mapid);
 	return event;
 }
 
@@ -184,7 +192,7 @@ void DEBUG_EVENT_ChangeEventMapChange(
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = gamedata;
-	mcw->next_map = zone_id;
+	MakeNextLocation(&mcw->new_loc, zone_id);
 }	
 
 //============================================================================================
@@ -241,3 +249,41 @@ GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldma
 	csw->fieldmap = fieldmap;
 	return event;
 }
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MakeNextLocation(LOCATION * loc, u16 zone_id)
+{
+	LOCATION_Set(loc, zone_id, 0, 0, 0, 0, 0);
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
+{
+	LOCATION loc_tmp;
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
+	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
+	u16 zone_id = new_loc->zone_id;
+
+	//イベント起動データの読み込み
+	EVENTDATA_SYS_Load(evdata, zone_id);
+
+	//開始位置セット
+	if (new_loc->door_id == DOOR_ID_JUMP_CODE) {
+		loc_tmp = *new_loc;
+	} else {
+		//const CONNECT_DATA * cnct = EVENTDATA_GetConnectData
+		//本当はDOOR_IDからデータを引っ張る
+		LOCATION_DEBUG_SetDefaultPos(&loc_tmp, new_loc->zone_id);
+	}
+	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
+	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);
+	PLAYERWORK_setDirection(mywork, loc_tmp.dir_id);
+}
+
+
+
