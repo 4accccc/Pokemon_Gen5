@@ -132,6 +132,7 @@ static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void setup_party( HEAPID heapID, POKEPARTY* party, ... );
+static BOOL SUBPROC_KanjiMode( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void* bmt_alloc( HEAPID heapID, u32 size );
 static void bmt_free( void* adrs );
@@ -157,9 +158,10 @@ static const struct {
 	pSubProc	subProc;
 }MainMenuTbl[] = {
 	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle },
-	{ DEBUG_TAYA_MENU2,		SUBPROC_NetPrintTest },
-	{ DEBUG_TAYA_MENU3,		SUBPROC_BlendMagic   },
-	{ DEBUG_TAYA_MENU4,		SUBPROC_PrintTest    },
+	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode },
+	{ DEBUG_TAYA_MENU3,		SUBPROC_NetPrintTest },
+	{ DEBUG_TAYA_MENU4,		SUBPROC_BlendMagic   },
+	{ DEBUG_TAYA_MENU5,		SUBPROC_PrintTest    },
 };
 
 enum {
@@ -819,6 +821,17 @@ static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
 	va_end( list );
 }
 
+//------------------------------------------------------------------------------------------------------
+// ’ÊMó‘Ô‚Å‚ÌŠ¿šPrintTest
+//------------------------------------------------------------------------------------------------------
+static BOOL SUBPROC_KanjiMode( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+	MAIN_WORK* wk = mywk;
+
+	GFL_MSGSYS_SetLangID( !GFL_MSGSYS_GetLangID() );
+	print_menu( wk, &wk->menuCtrl );
+	return TRUE;
+}
 
 //------------------------------------------------------------------------------------------------------
 // ’ÊMó‘Ô‚Å‚ÌŠ¿šPrintTest
