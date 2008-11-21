@@ -18,6 +18,7 @@
 
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
+#include "field/location.h"
 
 //============================================================================================
 //============================================================================================
@@ -87,4 +88,21 @@ extern PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata);
  */
 //------------------------------------------------------------------
 extern EVENTDATA_SYSTEM * GAMEDATA_GetEventData(GAMEDATA * gamedata);
+
+//------------------------------------------------------------------
+/**
+ * @brief	開始位置の取得
+ * @param	gamedata			GAMEDATAへのポインタ
+ * @return	LOCATION		開始位置情報へのポインタ
+ */
+//------------------------------------------------------------------
+extern const LOCATION * GAMEDATA_GetStartLocation(const GAMEDATA * gamedata);
+//------------------------------------------------------------------
+/**
+ * @brief	開始位置のセット
+ * @param	gamedata
+ * @param	loc
+ */
+//------------------------------------------------------------------
+extern void GAMEDATA_SetStartLocation(GAMEDATA * gamedata, const LOCATION * loc);
 

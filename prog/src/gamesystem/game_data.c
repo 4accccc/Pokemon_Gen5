@@ -32,6 +32,7 @@
 struct _GAMEDATA{
 	PLAYER_WORK playerWork[PLAYER_MAX];
 	EVENTDATA_SYSTEM * evdata;
+	LOCATION start_loc;
 };
 
 //============================================================================================
@@ -49,8 +50,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	GAMEDATA * gd;
 	
 	gd = GFL_HEAP_AllocMemory(heapID, sizeof(GAMEDATA));
-
 	GFL_STD_MemClear(gd, sizeof(GAMEDATA));
+
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gd->playerWork[i]);
 	}
@@ -93,6 +94,18 @@ PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 EVENTDATA_SYSTEM * GAMEDATA_GetEventData(GAMEDATA * gamedata)
 {
 	return gamedata->evdata;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const LOCATION * GAMEDATA_GetStartLocation(const GAMEDATA * gamedata)
+{
+	return &gamedata->start_loc;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GAMEDATA_SetStartLocation(GAMEDATA * gamedata, const LOCATION * loc)
+{
+	gamedata->start_loc = *loc;
 }
 
 //============================================================================================
