@@ -404,13 +404,10 @@ static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args )
 //=============================================================================================
 void BTL_STR_MakeStringWaza( STRBUF* dst, u8 clientID, u16 waza )
 {
-//	const BTL_WAZA_EXE_PARAM* wep;
 	u16 strID;
 
 	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
 
-//	wep = BTL_CLIENT_GetWazaExeParam( SysWork.client, args[0] );
-//	waza = BTL_CLIENT_WEP_GetWazaNumber( wep );
 	strID = get_setStrID( clientID, waza * SETTYPE_MAX );
 	TAYA_Printf(" MAKE STRING WAZA ... client=%d, waza=%d, strID=%d\n", clientID, waza, strID );
 
