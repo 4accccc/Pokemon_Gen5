@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-17T22:37:28"/>
+	<create user="taya" host="W00146" date="2008-11-21T18:41:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -14,7 +14,6 @@
 		<list entry="1" r="FF" g="00" b="00" a="FF"/>
 		<list entry="2" r="00" g="00" b="FF" a="FF"/>
 		<list entry="3" r="00" g="8C" b="00" a="FF"/>
-		<list entry="4" r="FF" g="00" b="FF" a="FF"/>
 	</color>
 
 	<tag-table>
@@ -277,6 +276,61 @@
 				<comment language="japanese">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
 				<comment language="english">文字表示位置を、ウィンドウ内オフセット（ドット単位）で指定する。</comment>
 			</tag>
+			<tag entry="08" japanese="パ:イベントの題名（１６文字）" english="パ:イベントの題名（１６文字）" view="EP" width="192" line="1">
+				<parameter number="0" japanese="数値" english="数値" type="int8"/>
+				<comment language="japanese">パーティ用イベントの題名</comment>
+				<comment language="english">パーティ用イベントの題名</comment>
+			</tag>
+			<tag entry="12" japanese="パ:音楽の題名（１６文字）" english="パ:音楽の題名（１６文字）" view="EP" width="192" line="1">
+				<parameter number="0" japanese="数値" english="数値" type="int8"/>
+				<comment language="japanese">音楽の題名（１６文字）</comment>
+				<comment language="english">音楽の題名（１６文字）</comment>
+			</tag>
+			<tag entry="16" japanese="城：改築題名（１６文字）" english="城：改築題名（１６文字）" view="EP" width="192" line="1">
+				<parameter number="0" japanese="数値" english="数値" type="int8"/>
+				<comment language="japanese">城：改築題名（１６文字）</comment>
+				<comment language="english">城：改築題名（１６文字）</comment>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版です。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版です。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="描画Ｘ座標変更" english="描画Ｘ座標変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="描画Ｙ座標変更" english="描画Ｙ座標変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｙ座標" english="Ｙ座標" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
@@ -294,11 +348,10 @@
 		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
 		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
 		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
-		<set japanese="標準色" english="Black" value="FF:00:色:0"/>
-		<set japanese="色１" english="Red" value="FF:00:色:1"/>
-		<set japanese="色２" english="Green" value="FF:00:色:2"/>
-		<set japanese="色３" english="Blue" value="FF:00:色:3"/>
-		<set japanese="色４" english="色４" value="FF:00:色:4"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
 	</tag-table>
 
 	<columns>
@@ -338,7 +391,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,31 +412,53 @@
 	</lock>
 
 
-	<row id="BTLMSG_STD_NONE">
+	<row id="BTL_STRID_STD_NULL">
 		<language name="JPN" width="216">●よういされていないメッセージ●</language>
 		<language name="JPN_KANJI">●用意されていないメッセージ●</language>
 	</row>
 
-	<row id="BTLMSG_STD_WILD_APPEAR" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_Encount" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あっ！　やせいの　[1:01:ニックネーム:0]　が
 とびだした！</language>
 		<language name="JPN_KANJI">あっ！　野生の　[1:01:ニックネーム:0]　が
 飛び出した！</language>
 	</row>
 
-	<row id="BTLMSG_STD_SELECT_ACTION" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+	<row id="BTL_STRID_STD_PutSingle" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<language name="JPN" width="216">ゆけっ！　[1:00:ポケモン名:0]！</language>
+		<language name="JPN_KANJI">行けっ！　[1:00:ポケモン名:0]！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_SelectAction" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　は　どうする？</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　は　どうする？</language>
 	</row>
 
-	<row id="BTLMSG_STD_WAZA_AVOID">
+	<row id="BTL_STRID_STD_WazaAvoid">
 		<language name="JPN" width="216">はずれた！！</language>
 		<language name="JPN_KANJI">外れた！</language>
 	</row>
 
-	<row id="BTLMSG_STD_ESCAPE">
+	<row id="BTL_STRID_STD_EscapeSuccess">
 		<language name="JPN" width="216">うまく　にげきれた！</language>
 		<language name="JPN_KANJI">うまく　逃げ切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_EscapeFail">
+		<language name="JPN" width="216">にげられない！</language>
+		<language name="JPN_KANJI">逃げられない！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_EscapeCant">
+		<language name="JPN" width="216">ダメだ！　しょうぶのさいちゅうに
+あいてに　せなかを　みせられない！</language>
+		<language name="JPN_KANJI">ダメだ！　勝負の最中に
+相手に背中を見せられない！</language>
+	</row>
+
+	<row id="BTLMSG_STD_ESCAPE0004">
+		<language name="JPN" width="216">ほげほえ</language>
+		<language name="JPN_KANJI">ほげほえ</language>
 	</row>
 
 	<flowchart-group-list>
