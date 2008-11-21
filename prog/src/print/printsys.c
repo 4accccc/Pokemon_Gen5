@@ -28,9 +28,8 @@ enum {
 	// 汎用コントロールタイプ
 	CTRL_GENERAL_COLOR			= (0x0000),	///< 色変更
 	CTRL_GENERAL_RESET_COLOR	= (0x0001),	///< 色変更
-	CTRL_GENERAL_XPOS			= (0x0002),	///< 描画Ｘ座標
-	CTRL_GENERAL_YPOS			= (0x0003),	///< 描画Ｙ座標
-	CTRL_GENERAL_X_CENTERING	= (0x0004),	///< Ｘ座標センタリング
+	CTRL_GENERAL_X_RIGHTFIT		= (0x0002),	///< Ｘ座標右寄せ
+	CTRL_GENERAL_X_CENTERING	= (0x0003),	///< Ｘ座標センタリング
 
 	// 流れるメッセージ中のみ有効なコントロールタイプ
 	CTRL_STREAM_LINE_FEED		= (0x0000),	///< 改ページ（行送り待ち）
@@ -591,12 +590,18 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 		GFL_FONTSYS_SetColor( wk->colorLetter, wk->colorShadow, wk->colorBackGround );
 		break;
 
-	case CTRL_GENERAL_XPOS:
-		wk->write_x = STR_TOOL_GetTagParam( sp, 0 );
-		break;
+	case CTRL_GENERAL_X_RIGHTFIT:
+		{
+			int bmpWidth, strWidth;
 
-	case CTRL_GENERAL_YPOS:
-		wk->write_y = STR_TOOL_GetTagParam( sp, 0 );;
+			bmpWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
+			strWidth = get_line_width( sp, wk->fontHandle, 0, NULL );
+
+			wk->write_x = wk->org_x + ((bmpWidth - strWidth) / 2);
+
+			OS_TPrintf("[PRINTSYS] XfittingR ... bmpW=%d, strW=%d -> wrtX=%d\n",
+						bmpWidth, strWidth, wk->write_x);
+		}
 		break;
 
 	case CTRL_GENERAL_X_CENTERING:
@@ -605,7 +610,6 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 
 			bmpWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
 			strWidth = get_line_width( sp, wk->fontHandle, 0, NULL );
-
 
 			if( strWidth < bmpWidth )
 			{
