@@ -128,7 +128,10 @@ extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
  * @retval  extern void		
  */
 //=============================================================================================
-extern void BTLV_StartMsgSpecific( BTLV_CORE* wk, BtlSpStrID strID, const int* args );
+extern void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args );
+extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
+extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 clientID, u16 waza );
+extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 
 
 
@@ -139,5 +142,10 @@ extern void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID );
 extern void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType );
 
 
+
+//-----------------------------------------------------------
+// äeéÌâ∫êøÇØÇ©ÇÁåƒÇ—èoÇ≥ÇÍÇÈä÷êî
+
+extern u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core );
 
 #endif

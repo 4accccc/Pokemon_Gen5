@@ -34,23 +34,15 @@ typedef enum {
 	SC_DATA_MEMBER_OUT,		///< 【データセット】フロントメンバーアウト[ CliendID ]
 	SC_DATA_MEMBER_IN,		///< 【データセット】フロントメンバーイン[ ClientID, pokeIdx ]
 
-	SC_MSG_ESCAPE,			///< 【メッセージ】 逃げ出した [ClientID]
-	SC_MSG_CONF_ANNOUNCE,	///< 【メッセージ】 ○○はこんらんしている [ClientID]
-	SC_MSG_CONF_ON,			///< 【メッセージ】 わけもわからず自分を攻撃 [ClientID]
-	SC_MSG_DEAD,			///< 【メッセージ】 ○○はたおれた [ClientID]
-	SC_MSG_WAZA_FAIL,		///< 【メッセージ】 ワザが出せなかった[ ClientID, Reason ]
-	SC_MSG_WAZA_AVOID,		///< 【メッセージ】 けど　はずれた！[ ClientID ]
-	SC_MSG_WAZA_HITCOUNT,	///< 【メッセージ】 ○○回あたった！[ hitCount ]
-	SC_MSG_WAZA_ANNOUNCE,	///< 【メッセージ】 ○○の×××こうげき！[ ClientID ]
-	SC_MSG_RANKDOWN_FAIL,	///< 【メッセージ】 ○○ののうりょくはさがらない！[ ClientID ]
-
 	SC_ACT_WAZA_DMG,		///< 【ワザ発動：ダメージ】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
 
 	SC_TOKWIN_IN,			///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
-	SC_MSG,					///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_STD,				///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_SET,				///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
+	SC_MSG_WAZA,			///< ワザメッセージ表示[ ClientID, wazaIdx ]
 
 }ServerCmd;
 
@@ -119,89 +111,6 @@ static inline BOOL SCQUE_IsFinishRead( const BTL_SERVER_CMD_QUE* que )
 
 //----------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------
-static inline void SCQUE_PUT_MSG_Escape( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_ESCAPE );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_Escape( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_ConfAnnounce( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_CONF_ANNOUNCE );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_ConfAnnounce( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_ConfOn( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_CONF_ON );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_ConfOn( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_Dead( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_DEAD );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_Dead( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_WazaFail( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 reason )
-{
-	scque_put2byte( que, SC_MSG_WAZA_FAIL );
-	scque_put1byte( que, clientID );
-	scque_put1byte( que, reason );
-}
-static inline void SCQUE_READ_MSG_WazaFail( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-	args[1] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_WazaAnnounce( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_WAZA_ANNOUNCE );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_WazaAnnounce( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_WazaAvoid( BTL_SERVER_CMD_QUE* que, u8 clientID )
-{
-	scque_put2byte( que, SC_MSG_WAZA_AVOID );
-	scque_put1byte( que, clientID );
-}
-static inline void SCQUE_READ_MSG_WazaAvoid( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-static inline void SCQUE_PUT_MSG_WazaHitCount( BTL_SERVER_CMD_QUE* que, u8 hitCount )
-{
-	scque_put2byte( que, SC_MSG_WAZA_HITCOUNT );
-	scque_put1byte( que, hitCount );
-}
-static inline void SCQUE_READ_MSG_WazaHitCount( BTL_SERVER_CMD_QUE* que, int* args )
-{
-	args[0] = scque_read1byte( que );
-}
-
-
 
 
 //---------------------------------------------
@@ -345,12 +254,30 @@ enum {
 
 #include <stdarg.h>
 
+// ↓こいつらはいずれ消す
 extern void SCQUE_PUT_MsgSpecial( BTL_SERVER_CMD_QUE* que, u16 strID, u8 arg1, u8 arg2 );
 extern void SCQUE_PUT_MsgBody( BTL_SERVER_CMD_QUE* que, u16 strID, ... );
+#define SCQUE_PUT_Msg(que, ...)	SCQUE_PUT_MsgBody(que, __VA_ARGS__, MSGARG_TERMINATOR)
+
+// ↓ 可変部分の最初の引数には必ず文字列IDを渡す。
+extern void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... );
+#define SCQUE_PUT_MSG_STD(que, ...)	SCQUE_PUT_MsgImpl( que, SC_MSG_STD, __VA_ARGS__, MSGARG_TERMINATOR )
+#define SCQUE_PUT_MSG_SET(que, ...)	SCQUE_PUT_MsgImpl( que, SC_MSG_SET, __VA_ARGS__, MSGARG_TERMINATOR )
+
 extern void SCQUE_READ_Msg( BTL_SERVER_CMD_QUE* que, int* args );
 
-#define SCQUE_PUT_Msg(que, ...)	printf("hoge"); SCQUE_PUT_MsgBody(que, __VA_ARGS__, MSGARG_TERMINATOR)
+static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 wazaIdx )
+{
+	scque_put2byte( que, SC_MSG_WAZA );
+	scque_put1byte( que, clientID );
+	scque_put1byte( que, wazaIdx );
+}
 
+static inline void SCQUE_READ_MSG_WAZA( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+}
 
 //=====================================================
 
@@ -364,20 +291,14 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_OP_RANK_DOWN:		SCQUE_READ_OP_RankDown( que, args ); break;
 	case SC_DATA_WAZA_EXE:		SCQUE_READ_DATA_WazaExe( que, args ); break;
 	case SC_DATA_MEMBER_IN:		SCQUE_READ_DATA_MemberIn( que, args ); break;
-	case SC_MSG_ESCAPE:			SCQUE_READ_MSG_Escape( que, args ); break;
-	case SC_MSG_CONF_ANNOUNCE:	SCQUE_READ_MSG_ConfAnnounce( que, args ); break;
-	case SC_MSG_CONF_ON:		SCQUE_READ_MSG_ConfOn( que, args ); break;	
-	case SC_MSG_DEAD:			SCQUE_READ_MSG_Dead( que, args ); break;
-	case SC_MSG_WAZA_FAIL:		SCQUE_READ_MSG_WazaFail( que, args ); break;
-	case SC_MSG_WAZA_ANNOUNCE:	SCQUE_READ_MSG_WazaAnnounce( que, args ); break;
-	case SC_MSG_WAZA_AVOID:		SCQUE_READ_MSG_WazaAvoid( que, args ); break;
-	case SC_MSG_WAZA_HITCOUNT:	SCQUE_READ_MSG_WazaHitCount( que, args ); break;
 	case SC_ACT_WAZA_DMG:		SCQUE_READ_ACT_WazaDamage( que, args ); break;
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
 	case SC_TOKWIN_IN:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_TOKWIN_OUT:			SCQUE_READ_TOKWIN( que, args ); break;
-	case SC_MSG:				SCQUE_READ_Msg( que, args ); break;
+	case SC_MSG_STD:			SCQUE_READ_Msg( que, args ); break;
+	case SC_MSG_SET:			SCQUE_READ_Msg( que, args ); break;
+	case SC_MSG_WAZA:			SCQUE_READ_MSG_WAZA( que, args ); break;
 	default:
 		args[0] = scque_read1byte( que );
 		break;

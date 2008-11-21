@@ -394,11 +394,11 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 		break;
 
 	case 1:
-		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+		if( !PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			return TRUE;
 		}
-		return TRUE;
+		break;
 	}
 	return FALSE;
 }
@@ -457,7 +457,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 		}
 		break;
 	case SEQ_SEL_FIGHT+1:
-		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
+		if( !PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			(*seq)++;
 		}
@@ -468,12 +468,10 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			if( hit != GFL_UI_TP_HIT_NONE )
 			{
 				BTL_ACTION_SetFightParam( &wk->selAction, hit, 0 );
-				TAYA_Printf("ƒƒU‚¦‚ç‚ñ‚¾‚æ %d\n", hit);
 				return TRUE;
 			}
 		}
 		break;
-
 	}
 	return FALSE;
 }

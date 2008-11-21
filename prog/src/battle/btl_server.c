@@ -19,6 +19,7 @@
 #include "btl_event.h"
 #include "btl_server_cmd.h"
 #include "btl_util.h"
+#include "btl_string.h"
 #include "handler/hand_tokusei.h"
 
 #include "btl_server.h"
@@ -653,7 +654,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
-				SCQUE_PUT_MSG_Escape( server->que, clientID );
+				SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_EscapeSuccess, clientID );
 				server->endFlag = TRUE;
 				break;
 			}
@@ -860,10 +861,10 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, co
 			}
 			BTL_POKEPARAM_HpMinus( attacker, fep->confDamage );
 			SCQUE_PUT_OP_HpMinus( server->que, atClient->myID, fep->confDamage );
-			SCQUE_PUT_MSG_ConfOn( server->que, atClient->myID );
+//			SCQUE_PUT_MSG_ConfOn( server->que, atClient->myID );	@@@ メッセージまだです
 			if( deadFlag )
 			{
-				SCQUE_PUT_MSG_Dead( server->que, atClient->myID );
+				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
 				return;
 			}
 		}
@@ -872,8 +873,8 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, co
 	// ワザ出し成功判定
 	if( !scEvent_CheckWazaExecute(server, fep, attacker, atClient ) )
 	{
-		BTL_Printf("WazaFail\n");
-		SCQUE_PUT_MSG_WazaFail( server->que, atClient->myID, fep->wazaFailReason );
+//		SCQUE_PUT_MSG_WazaFail( server->que, atClient->myID, fep->wazaFailReason );
+		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
 		return;
 	}
 	else
@@ -890,7 +891,7 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, co
 			atClient->myID, defClientID, BTL_POKEPARAM_GetWazaNumber(attacker, action->fight.wazaIdx)
 		);
 		SCQUE_PUT_DATA_WazaExe( server->que, atClient->myID, action->fight.wazaIdx, 1, defClient->myID, 0, 0 );
-		SCQUE_PUT_MSG_WazaAnnounce( server->que, atClient->myID );
+		SCQUE_PUT_MSG_WAZA( server->que, atClient->myID, action->fight.wazaIdx );
 
 		scPut_FightSingleDmg( server, fep, atClient, defClient, attacker, defender, waza, action->fight.wazaIdx );
 	}
@@ -906,7 +907,7 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 	// はずれた
 	if( !scEvent_checkHit(server, fep, attacker, defender, waza) )
 	{
-		SCQUE_PUT_MSG_WazaAvoid( server->que, atClient->myID );
+		SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
 		return;
 	}
 	// あたった
@@ -945,12 +946,12 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 
 				if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
 				{
-					SCQUE_PUT_MSG_Dead( server->que, defClient->myID );
+					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, defClient->myID );
 					deadFlag = TRUE;
 				}
 				if( BTL_POKEPARAM_GetValue(attacker, BPP_HP) == 0 )
 				{
-					SCQUE_PUT_MSG_Dead( server->que, atClient->myID );
+					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
 					deadFlag = TRUE;
 				}
 				if( deadFlag ){ break; }
@@ -961,14 +962,13 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 
 			if( pluralHit )
 			{
-				SCQUE_PUT_MSG_WazaHitCount( server->que, i );
+//				SCQUE_PUT_MSG_WazaHitCount( server->que, i );	// @@@ あとで
 			}
 		}
 		// 非ダメージワザ
 		else
 		{
-			BTL_Printf("No Damage Waza Exe\n");
-			SCQUE_PUT_MSG_WazaAvoid( server->que, atClient->myID );
+			SCQUE_PUT_MSG_STD( server->que, BTL_STRID_STD_WazaAvoid );
 			return;
 		}
 	}
@@ -1062,7 +1062,7 @@ static BOOL scEvent_CheckConf( BTL_SERVER* server, FIGHT_EVENT_PARAM* fep, const
 {
 	if( BTL_POKEPARAM_CheckSick(attacker, WAZASICK_KONRAN) )
 	{
-		SCQUE_PUT_MSG_ConfAnnounce( server->que, atClient->myID );
+//		SCQUE_PUT_MSG_ConfAnnounce( server->que, atClient->myID );	// @@@ 
 		fep->confFlag = ( GFL_STD_MtRand(100) < BTL_CALC_CONF_PER );
 		return fep->confFlag;
 	}
@@ -1299,7 +1299,6 @@ static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID 
 
 	if( server->eventArgs[ BTL_EVARG_RANKDOWN_FAIL_FLAG ] == FALSE )
 	{
-		BTL_Printf("のうりょくさげるぜ\n");
 		volume = server->eventArgs[ BTL_EVARG_RANKDOWN_VOLUME ];
 		BTL_POKEPARAM_RankDown(
 				server->client[targetClientID].frontMember,
@@ -1309,12 +1308,7 @@ static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID 
 
 		SCQUE_PUT_OP_RankDown( server->que, targetClientID, statusType, volume );
 		SCQUE_PUT_ACT_RankDown( server->que, targetClientID, statusType, volume );
-		BTL_Printf("ここかな\n");
-//		SCQUE_PUT_Msg( server->que, BTL_STRID_RANKDOWN, targetClientID, statusType );
-		SCQUE_PUT_MsgBody( server->que, BTL_STRID_RANKDOWN, targetClientID, statusType, MSGARG_TERMINATOR );
-//		SCQUE_PUT_MsgSpecial( server->que, BTL_STRID_RANKDOWN, targetClientID, statusType );
-
-		BTL_Printf("ちがった\n");
+		SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Rankdown_ATK, targetClientID, statusType, volume );
 	}
 }
 

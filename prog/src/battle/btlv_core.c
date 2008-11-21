@@ -114,7 +114,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 
 
 	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
-	core->scrnU = BTLV_SCU_Create( core, core->tcbl, core->fontHandle, heapID );
+	core->scrnU = BTLV_SCU_Create( core, core->mainModule, core->tcbl, core->fontHandle, heapID );
 	core->scrnD = BTLV_SCD_Create( core, core->tcbl, core->fontHandle, heapID );
 
 	core->mainProc = NULL;
@@ -272,7 +272,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 		SEQ_INIT=0,
 		SEQ_SELECT_MAIN,
 		SEQ_SEL_FIGHT  = 100,
-		SEQ_SEL_ITEM   = 200 ,
+		SEQ_SEL_ITEM   = 200,
 		SEQ_SEL_CHANGE = 300,
 		SEQ_SEL_ESCAPE = 400,
 	};
@@ -283,13 +283,12 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 		u16 maxElems;
 	}SEQ_WORK;
 
-
 	SEQ_WORK* wk = workBufer;
 	BOOL ret = FALSE;
 
 	switch( *seq ){
 	case 0:
-		BTL_STR_MakeStringGeneric( core->strBuf, BTL_STRFMT_SELECT_ACTION_READY );
+		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction );
 		BTLV_SCU_StartMsg( core->scrnU, core->strBuf );
 		(*seq)++;
 		break;
@@ -382,12 +381,42 @@ BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk )
  *
  */
 //=============================================================================================
-void BTLV_StartMsgSpecific( BTLV_CORE* wk, BtlSpStrID strID, const int* args )
+void BTLV_StartMsgStd( BTLV_CORE* wk, u16 strID, const int* args )
 {
-	BTL_STR_MakeStringSpecific( wk->strBuf, strID, args );
+	BTL_STR_MakeStringStd( wk->strBuf, strID );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 //	printf( wk->strBuf );
 }
 
+
+
+
+//=============================================================================================
+/**
+ * メッセージ表示開始
+ *
+ * @param   wk		
+ * @param   strID		
+ *
+ */
+//=============================================================================================
+void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
+{
+	BTL_STR_MakeStringSet( wk->strBuf, strID, args );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+//	printf( wk->strBuf );
+}
+
+void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 clientID, u16 waza )
+{
+	BTL_STR_MakeStringWaza( wk->strBuf, clientID, waza );
+	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+}
+
+BOOL BTLV_WaitMsg( BTLV_CORE* wk )
+{
+	return BTLV_SCU_WaitMsg( wk->scrnU );
+}
 
 
 
@@ -466,3 +495,9 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 	GFL_BMPWIN_Init( heapID );
 }
 
+
+
+u8 BTLV_CORE_GetPlayerClientID( const BTLV_CORE* core )
+{
+	return core->myClientID;
+}

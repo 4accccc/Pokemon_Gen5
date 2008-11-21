@@ -366,19 +366,27 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 				BTLV_StartMemberChangeAct( wk->viewCore, clientID, memberIdx );
 				(*seq) = 10;
 			}
-			else if( wk->serverCmd >= SC_MSG_ESCAPE && wk->serverCmd <= SC_MSG_WAZA_ANNOUNCE )
-			{
-				u16 msgID = wk->serverCmd - SC_MSG_ESCAPE;
-
-//				BTL_Printf(" MSG PROC .... msg=%d\n", msgID);
-				BTLV_StartMsgSpecific( wk->viewCore, msgID, wk->cmdArgs );
-				(*seq) = 2;
-			}
-			else if( wk->serverCmd == SC_MSG )
+			else if( wk->serverCmd == SC_MSG_STD )
 			{
 				u16 msgID = wk->cmdArgs[0];
-				BTL_Printf(" MSG PROC .... msg=%d\n", msgID);
-				BTLV_StartMsgSpecific( wk->viewCore, msgID, &wk->cmdArgs[1] );
+				BTLV_StartMsgStd( wk->viewCore, msgID, wk->cmdArgs );
+				(*seq) = 2;
+			}
+			else if( wk->serverCmd == SC_MSG_SET )
+			{
+				u16 msgID = wk->cmdArgs[0];
+				BTLV_StartMsgSet( wk->viewCore, msgID, &wk->cmdArgs[1] );
+				(*seq) = 2;
+			}
+			else if( wk->serverCmd == SC_MSG_WAZA )
+			{
+				u8 clientID = wk->cmdArgs[0];
+				u16 wazaIdx = wk->cmdArgs[1];
+				const BTL_POKEPARAM* poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
+				wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
+				TAYA_Printf("WazaMsg : ClientID=%d, wazaIdx=%d, WazaNum=%d\n",
+					clientID, wk->cmdArgs[1], wazaIdx);
+				BTLV_StartMsgWaza( wk->viewCore, clientID, wazaIdx );
 				(*seq) = 2;
 			}
 			else if( wk->serverCmd == SC_ACT_WAZA_DMG )
@@ -445,7 +453,16 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		break;
 
 	case 2:
-		(*seq)=1;
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			(*seq)++;
+		}
+		break;
+	case 3:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			(*seq)=1;
+		}
 		break;
 
 	case 10:

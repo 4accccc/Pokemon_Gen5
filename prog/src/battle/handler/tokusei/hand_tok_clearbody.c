@@ -43,7 +43,7 @@ static void handler_BeforeRankDown( BTL_SERVER* server, u8 pokeID, int* work )
 	{
 		BTL_SERVER_RECEPT_SetEventArg( server, BTL_EVARG_RANKDOWN_FAIL_FLAG, TRUE );
 		BTL_SERVER_RECEPT_TokuseiWinIn( server, clientID );
-		BTL_SERVER_RECTPT_SetMessage( server, BTL_STRID_RANKDOWN_FAIL, clientID );
+		BTL_SERVER_RECTPT_SetMessage( server, BTL_STRID_SET_RankdownFail, clientID );
 		BTL_SERVER_RECEPT_TokuseiWinOut( server, clientID );
 	}
 }

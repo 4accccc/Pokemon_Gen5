@@ -10,52 +10,80 @@
 #ifndef __BTL_STRING_H__
 #define __BTL_STRING_H__
 
-//--------------------------------------------------------------
-/**
- *	対象クライアントを考慮せずに生成できる文字列ID群
- */
-//--------------------------------------------------------------
-typedef enum {
-
-	BTL_STRFMT_ENCOUNT,
-	BTL_STRFMT_SELECT_ACTION_READY,
-
-	BTL_STRID_GEN_MAX,
-
-}BtlGenStrID;
-
-//--------------------------------------------------------------
-/**
- *	対象クライアントにより生成される内容が異なる文字列ID群
- */
-//--------------------------------------------------------------
-typedef enum {
-	BTL_STRID_ESCAPE,			///< 【メッセージ】 逃げ出した [ClientID]
-	BTL_STRID_CONF_ANNOUNCE,	///< 【メッセージ】 こんらんしている [ClientID]
-	BTL_STRID_CONF_ON,			///< 【メッセージ】 わけもわからず [ClientID]
-	BTL_STRID_DEAD,				///< 【メッセージ】 たおれた [ClientID]
-	BTL_STRID_WAZA_FAIL,		///< 【メッセージ】 ワザが出せなかった[ ClientID, Reason ]
-	BTL_STRID_WAZA_AVOID,		///< 【メッセージ】 けど　はずれた！[ ClientID ]
-	BTL_STRID_WAZA_HITCOUNT,	///< 【メッセージ】 ○○回あたった！[ hitCount ]
-	BTL_STRID_WAZA_ANNOUNCE,	///<  ○○の××こうげき！
-	BTL_STRID_RANKDOWN,			///< ○○の××がさがった！[ ClientID, StatusType ]
-	BTL_STRID_RANKUP,			///< ○○の××があがった！[ ClientID, StatusType ]
-	BTL_STRID_RANKDOWN_FAIL,	///< ○○はのうりょくがさがらない！ [ClientID]
-
-}BtlSpStrID;
-
 #include "btl_main.h"
 #include "btl_client.h"
+#include "btl_pokeparam.h"
 
 
 extern void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, HEAPID heapID );
 extern void BTL_STR_QuitSystem( void );
 
-extern void BTL_STR_MakeStringGeneric( STRBUF* buf, BtlGenStrID strID );
-extern void BTL_STR_MakeStringSpecific( STRBUF* buf, BtlSpStrID strID, const int* args );
+//---------------------------------------------------------------------------------------
+/**
+ * 標準メッセージの生成
+ *
+ * 標準メッセージ：対象者なし、あるいは対象が誰であっても一定のフォーマットで生成される文字列
+ */
+//---------------------------------------------------------------------------------------
+
+#include "msg/msg_btl_std.h"
+
+enum {
+	BTL_STRID_STD_MAX = msg_btl_std_max,
+};
+
+typedef u16 BtlStrID_STD;
+
+extern void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID );
+
+//---------------------------------------------------------------------------------------
+/**
+ * セットメッセージの生成
+ *
+ * セットメッセージ：自分側・敵側（やせいの）・敵側（あいての）が必ず３つセットになっている文字列
+ * IDは、自分側のものを指定すれば良い。
+ */
+//---------------------------------------------------------------------------------------
+
+#include "msg/msg_btl_set.h"
+
+typedef u16 BtlStrID_SET;
+
+extern void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args );
+
+
+
+//=============================================================================================
+/**
+ * ワザメッセージの生成
+ * ※ワザメッセージ：○○の××こうげき！とか。セットメッセージと同様、必ず３つセット。
+ *
+ * @param   buf		
+ * @param   strID		
+ * @param   args		
+ *
+ */
+//=============================================================================================
+extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 clientID, u16 waza );
+
+
+
+
 
 extern void BTL_STR_GetUIString( STRBUF* dst, u16 strID );
 extern void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax );
+
+
+extern void GFL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp );
+
+
+
+
+//----------------
+
+extern u16 BTL_STR_GetRankUpStrID( u8 statusType, u8 volume );
+extern u16 BTL_STR_GetRankDownStrID( u8 statusType, u8 volume );
+
 
 #endif
 
