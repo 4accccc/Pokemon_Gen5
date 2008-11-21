@@ -20,6 +20,7 @@
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
+#include "field/eventdata_system.h"
 
 //============================================================================================
 //============================================================================================
@@ -30,6 +31,7 @@
 //------------------------------------------------------------------
 struct _GAMEDATA{
 	PLAYER_WORK playerWork[PLAYER_MAX];
+	EVENTDATA_SYSTEM * evdata;
 };
 
 //============================================================================================
@@ -52,12 +54,16 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gd->playerWork[i]);
 	}
+	gd->evdata = EVENTDATA_SYS_Create(heapID);
+	EVENTDATA_SYS_Clear(gd->evdata);
+
 	return gd;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+	EVENTDATA_SYS_Delete(gamedata->evdata);
 	GFL_HEAP_FreeMemory(gamedata);
 }
 //------------------------------------------------------------------
@@ -73,6 +79,20 @@ PLAYER_WORK * GAMEDATA_GetPlayerWork(GAMEDATA * gamedata, u32 player_id)
 PLAYER_WORK * GAMEDATA_GetMyPlayerWork(GAMEDATA * gamedata)
 {
 	return &gamedata->playerWork[0];
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	イベント起動データシステムへのポインタを取得する
+ * @param	gamedata			GAMEDATAへのポインタ
+ * @return	EVENTDATA_SYSTEM	イベント起動データシステムへのポインタ
+ */
+//------------------------------------------------------------------
+EVENTDATA_SYSTEM * GAMEDATA_GetEventData(GAMEDATA * gamedata)
+{
+	return gamedata->evdata;
 }
 
 //============================================================================================
