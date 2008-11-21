@@ -162,6 +162,31 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 	}
 	return DEBUG_EVENT_ChangeMap(gsys, fieldmap, next);
 }
+
+//------------------------------------------------------------------
+//	※マップID指定型 イベント切り替え
+//------------------------------------------------------------------
+void DEBUG_EVENT_ChangeEventMapChange(
+	GAMESYS_WORK *gsys, GMEVENT *event,
+	FIELD_MAIN_WORK *fieldmap, ZONEID zone_id )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
+	MAPCHANGE_WORK * mcw;
+	
+	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
+		GF_ASSERT( 0 );
+		zone_id = 0;
+	}
+	
+	GMEVENT_Change( event, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+	mcw = GMEVENT_GetEventWork(event);
+	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
+	mcw->gamedata = gamedata;
+	mcw->next_map = zone_id;
+}	
+
 //============================================================================================
 //
 //	イベント：別画面呼び出し

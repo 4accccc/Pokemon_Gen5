@@ -20,10 +20,10 @@
 #include "test_graphic/d_taya.naix"
 
 #include "field/zonedata.h"
+#include "field_comm/field_comm_main.h"
 
 #include "event_debug_menu.h"
-
-#include "field_comm/field_comm_main.h"
+#include "event_mapchange.h"
 
 //======================================================================
 //	define
@@ -107,12 +107,12 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 	u32 page_id;
 	HEAPID heapID;
 	GMEVENT *gmEvent;
+	GAMESYS_WORK *gmSys;
 	FIELD_MAIN_WORK * fieldWork;
 	
 	D_MENU_CALLPROC call_proc;
 	DMENU_COMMON_WORK menuCommonWork;
 	
-
 #ifdef D_MENU_ARIIZUMI	//通信メニュー用
 	int seq_no;
 	int commSeq;	//追加 Ari1111
@@ -323,7 +323,9 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 	
 	dmew = GMEVENT_GetEventWork(event);
 	MI_CpuClear8( dmew, sizeof(DEBUG_MENU_EVENT_WORK) );
-
+	
+	dmew->gmSys = gsys;
+	dmew->gmEvent = event;
 	dmew->fieldWork = fieldWork;
 	dmew->heapID = heapID;
 	dmew->page_id = page_id;
@@ -351,7 +353,6 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 	
 	switch (*seq) {
 	case 0:
-		work->gmEvent = event;
 #ifdef D_MENU_ARIIZUMI
 		work->commSys = (FIELD_COMM_MAIN*)FieldMain_GetCommSys(work->fieldWork);
 #endif		
@@ -399,6 +400,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 					return( GMEVENT_RES_CONTINUE );
 				}
 			}
+			
 #ifdef D_MENU_ARIIZUMI
 			if( work->seq_no == 0 ){
 				return( GMEVENT_RES_FINISH );
@@ -981,17 +983,19 @@ static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk )
 //	デバッグメニュー どこでもジャンプ
 //======================================================================
 //--------------------------------------------------------------
-///	EVWORK_DEBUG_ZONESEL どこでもジャンプ処理用ワーク
+///	DEBUG_ZONSEL_EVENT_WORK どこでもジャンプ処理用ワーク
 //--------------------------------------------------------------
 typedef struct
 {
 	int seq_no;
 	HEAPID heapID;
+	GAMESYS_WORK *gmSys;
+	GMEVENT *gmEvent;
 	FIELD_MAIN_WORK *fieldWork;
 	
 	BMP_MENULIST_DATA *pMenuListData;
 	DMENU_COMMON_WORK menuCommonWork;
-}EVWORK_DEBUG_ZONESEL;
+}DEBUG_ZONSEL_EVENT_WORK;
 
 //--------------------------------------------------------------
 ///	proto
@@ -1042,17 +1046,20 @@ static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
 //--------------------------------------------------------------
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 {
+	GAMESYS_WORK *gsys = wk->gmSys;
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
-	EVWORK_DEBUG_ZONESEL *work;
+	DEBUG_ZONSEL_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuZoneSelectEvent, sizeof(EVWORK_DEBUG_ZONESEL) );
+		DMenuZoneSelectEvent, sizeof(DEBUG_ZONSEL_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(EVWORK_DEBUG_ZONESEL) );
+	MI_CpuClear8( work, sizeof(DEBUG_ZONSEL_EVENT_WORK) );
 	
+	work->gmSys = gsys;
+	work->gmEvent = event;
 	work->heapID = heapID;
 	work->fieldWork = fieldWork;
 	return( TRUE );
@@ -1070,7 +1077,7 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT DMenuZoneSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	EVWORK_DEBUG_ZONESEL *work = wk;
+	DEBUG_ZONSEL_EVENT_WORK *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
@@ -1098,18 +1105,19 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 			
 			if( ret == BMPMENULIST_NULL ){	//操作無し
 				break;
-			}else if( ret == BMPMENULIST_CANCEL ){	//キャンセル
-				(*seq)++;
-			}else{							//決定
-				//ret == zone_id
-				(*seq)++;
 			}
+			
+			DebugMenu_DeleteCommonMenu( &work->menuCommonWork );
+			BmpMenuWork_ListDelete( work->pMenuListData );
+			
+			if( ret == BMPMENULIST_CANCEL ){	//キャンセル
+				return( GMEVENT_RES_FINISH );
+			}
+			
+			DEBUG_EVENT_ChangeEventMapChange(	//決定
+				work->gmSys, work->gmEvent, work->fieldWork, ret );
 		}
 		break;
-	case 2:
-		DebugMenu_DeleteCommonMenu( &work->menuCommonWork );
-		BmpMenuWork_ListDelete( work->pMenuListData );
-		return( GMEVENT_RES_FINISH );
 	}
 
 	return( GMEVENT_RES_CONTINUE );
