@@ -101,6 +101,20 @@ u32		POKETOOL_GetWorkSize( void )
  * ポケモンパラメータ操作関数系
  */
 //============================================================================================
+
+
+//=============================================================================================
+/**
+ * ポケモンパラメータ実体を生成
+ *
+ * @param   mons_no				ポケモンナンバー
+ * @param   level				レベル
+ * @param   id					ID
+ * @param   heapID				実体確保用のヒープID
+ *
+ * @retval  POKEMON_PARAM*		
+ */
+//=============================================================================================
 POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )
 {
 	POKEMON_PARAM* pp = GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
@@ -746,15 +760,17 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 	POKE_PERSONAL_LoadWazaOboeTable( mons_no, form_no, wot );
 
 	i = 0;
-	while( wot[ i ] != 0xffff ){
-		if( ( wot[ i ] & 0xfe00 ) <= ( level << 9 ) ){
-			waza_no = wot[ i ] & 0x1ff;
+	while( wot[i] != 0xffff ){
+		if( ( wot[i] & 0xfe00 ) <= ( level << 9 ) ){
+			waza_no = wot[i] & 0x1ff;
 			ret = PPP_SetWaza( ppp, waza_no );
-			if( ret == PTL_WAZASET_FAIL ){
+			if( ret == PTL_WAZASET_FAIL )
+			{
 				PPP_SetWazaPush( ppp, waza_no );
 			}
 		}
-		else{
+		else
+		{
 			break;
 		}
 		i++;
