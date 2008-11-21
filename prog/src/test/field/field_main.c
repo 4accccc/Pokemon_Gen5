@@ -28,6 +28,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_event.h"
+#include "field/zonedata.h"
 
 #include "event_mapchange.h"
 
@@ -308,7 +309,7 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
-				fieldWork->heapID, fieldWork->map_id);
+				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
 	}
 	///通信用会話処理(仮
 	//話しかける側
