@@ -118,9 +118,17 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 		GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000, 0x8000,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	};
+	// ŒÂ•ÊƒtƒŒ[ƒ€Ý’è
+	static const GFL_BG_BGCNT_HEADER bgcntTok = {
+		0, 0, 0x800, 0,
+		GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000, 0x8000,
+		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+	};
 
 	GFL_BG_SetBGControl( GFL_BG_FRAME1_M,   &bgcntText,   GFL_BG_MODE_TEXT );
-	GFL_BG_SetBGControl( GFL_BG_FRAME2_M,   &bgcntStat,   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME2_M,   &bgcntTok,   GFL_BG_MODE_TEXT );
+	GFL_BG_SetBGControl( GFL_BG_FRAME3_M,   &bgcntStat,   GFL_BG_MODE_TEXT );
 
 	GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
 //		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
@@ -128,8 +136,11 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0x22, 9, 1 );
 	GFL_BG_FillScreen( GFL_BG_FRAME1_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
-	GFL_BG_FillCharacter( GFL_BG_FRAME2_M, 0xff, 1, 0 );
+	GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
+	GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0xff, 1, 1 );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0001, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+
 
 	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, 0, GFL_BMP_CHRAREA_GET_F );
 	wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
@@ -140,11 +151,12 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
 
 	GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON  );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON  );
-	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
 }
 
 
@@ -258,10 +270,10 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 	px = winpos[isPlayer].x;
 	py = winpos[isPlayer].y;
 
-	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, px, py, 10, 4, 0, GFL_BMP_CHRAREA_GET_F );
+	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, 10, 4, 0, GFL_BMP_CHRAREA_GET_F );
 	stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
 
-	GFL_BMP_Clear( stwin->bmp, 3+stwin->clientID*2 );
+	GFL_BMP_Clear( stwin->bmp, 5 );
 	GFL_STR_MakeStatusWinStr( wk->strBuf, stwin->bpp );
 	PRINTSYS_Print( stwin->bmp, 0, 0, wk->strBuf, wk->defaultFont );
 }
@@ -283,7 +295,7 @@ static void statwin_update( STATUS_WIN* stwin )
 {
 	BTLV_SCU* wk = stwin->parentWk;
 
-	GFL_BMP_Clear( stwin->bmp, 3+stwin->clientID*2 );
+	GFL_BMP_Clear( stwin->bmp, 5 );
 	GFL_STR_MakeStatusWinStr( wk->strBuf, stwin->bpp );
 	PRINTSYS_Print( stwin->bmp, 0, 0, wk->strBuf, wk->defaultFont );
 	GFL_BMPWIN_TransVramCharacter( stwin->win );
