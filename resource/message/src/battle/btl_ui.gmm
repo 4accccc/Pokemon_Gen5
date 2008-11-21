@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-20T20:25:17"/>
+	<create user="taya" host="W00146" date="2008-11-20T21:57:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -379,9 +379,16 @@
 		<language name="JPN_KANJI">道具</language>
 	</row>
 
+	<row id="BTLMSG_UI_SEL_WAZA">
+		<language name="JPN" width="216">[1:06:わざ名:0]
+[1:33:数字２桁:1]／[1:33:数字２桁:2]</language>
+		<language name="JPN_KANJI">[1:06:わざ名:0]
+[1:33:数字２桁:1]／[1:33:数字２桁:2]</language>
+	</row>
+
 	<row id="BTLMSG_UI_???">
 		<language name="JPN" width="216">なんでしょう</language>
-		<language name="JPN_KANJI">なんでしょう</language>
+		<language name="JPN_KANJI">どうでしょう</language>
 	</row>
 
 	<flowchart-group-list>
