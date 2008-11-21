@@ -1012,12 +1012,14 @@ static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 		{
 			fep->rawDamage *= 2;
 		}
+
+		BTL_Printf("[SV WAZA] ˆĞ—Í:%d, ‚±‚¤‚°‚«:%d, LV:%d, ‚Ú‚¤‚¬‚å:%d, •ª•ê:%d ... ‘fƒ_ƒ:%d\n",
+				fep->wazaPower, fep->attackerPower, attackerLevel, fep->defenderGuard, fep->damageDenom, fep->rawDamage
+		);
+
 	}
 	BTL_EVENT_CallHandlers( server, BTL_EVENT_DAMAGE_PROC1 );
 
-	BTL_Printf("[SV WAZA] ˆĞ—Í:%d, ‚±‚¤‚°‚«:%d, ‚Ú‚¤‚¬‚å:%d, •ª•ê:%d ... ‘fƒ_ƒ:%d\n",
-			fep->wazaPower, fep->attackerPower, fep->defenderGuard, fep->damageDenom, fep->rawDamage
-	);
 
 	//ƒ‰ƒ“ƒ_ƒ€•â³
 	{
