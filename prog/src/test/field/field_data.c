@@ -41,12 +41,15 @@ void FIELDDATA_SetMapperData(
 	mapid = MapID2ResistID(mapid);
 	GF_ASSERT(mapid < resistMapTblCount);
 	*map_res = resistMapTbl[mapid].mapperData;
+
 	if (resistMapTbl[mapid].isMatrixMapFlag){
 		u8 *tbl;
+		u32 matID;
 		const MAP_MATRIX_HEADER *matH;
 		
-		GFL_ARC_LoadData(matrix_buf,
-			ARCID_FLDMAP_MAPMATRIX, NARC_map_matrix_wb_mat_bin);
+		matID = ZONEDATA_GetMatrixID( mapid );
+		GFL_ARC_LoadData( matrix_buf, ARCID_FLDMAP_MAPMATRIX, matID );
+		
 		matH = matrix_buf;
 		tbl = (u8*)matrix_buf + sizeof(MAP_MATRIX_HEADER);
 		
