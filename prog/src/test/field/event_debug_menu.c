@@ -264,7 +264,7 @@ static const BMPMENULIST_HEADER DATA_DebugMenuListHeader =
 	1,		//リスト項目数
 	12,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
-	11,		//項目表示Ｘ座標
+	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
 	0,		//表示Ｙ座標
 	1,		//表示文字色
@@ -829,7 +829,7 @@ static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
 	1,		//リスト項目数
 	12,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
-	11,		//項目表示Ｘ座標
+	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
 	0,		//表示Ｙ座標
 	1,		//表示文字色
