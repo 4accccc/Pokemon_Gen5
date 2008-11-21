@@ -113,7 +113,6 @@ struct _TAG_DEBUG_MENU_EVENT_WORK
 	
 	D_MENU_CALLPROC call_proc;
 	DMENU_COMMON_WORK menuCommonWork;
-	
 };
 
 //--------------------------------------------------------------

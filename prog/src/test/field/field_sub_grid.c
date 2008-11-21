@@ -91,14 +91,16 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
-static FGRID_CONT * FGridCont_Init( FIELD_MAIN_WORK *fieldWork );
+static FGRID_CONT * FGridCont_Init(
+	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
 static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork );
 
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 
-static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont );
+static FGRID_PLAYER * FGridPlayer_Init(
+	FGRID_CONT *pGridCont, const VecFx32 *pos );
 static void FGridPlayer_Delete( FGRID_CONT *pGridCont );
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont );
@@ -156,7 +158,7 @@ static void GridMoveCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	
-	fieldWork->pGridCont = FGridCont_Init( fieldWork );
+	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos );
 	
 	//ƒJƒƒ‰Ý’è
 	FLD_SetCameraLength( fieldWork->camera_control, DATA_CameraTbl[0].len );
@@ -420,7 +422,8 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
  * @retval	FGRID_CONT*
  */
 //--------------------------------------------------------------
-static FGRID_CONT * FGridCont_Init( FIELD_MAIN_WORK *fieldWork )
+static FGRID_CONT * FGridCont_Init(
+	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos )
 {
 	FGRID_CONT *pGridCont;
 	
@@ -429,7 +432,7 @@ static FGRID_CONT * FGridCont_Init( FIELD_MAIN_WORK *fieldWork )
 	
 	pGridCont->heapID = fieldWork->heapID;
 	pGridCont->pFieldWork = fieldWork;
-	pGridCont->pGridPlayer = FGridPlayer_Init( pGridCont );
+	pGridCont->pGridPlayer = FGridPlayer_Init( pGridCont, pos );
 	
 	{
 		u32 size;
@@ -485,21 +488,22 @@ static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork )
  * @retval	FGRID_PLAYER*
  */
 //--------------------------------------------------------------
-static FGRID_PLAYER * FGridPlayer_Init( FGRID_CONT *pGridCont )
+static FGRID_PLAYER * FGridPlayer_Init(
+	FGRID_CONT *pGridCont, const VecFx32 *pos )
 {
 	FGRID_PLAYER *pJiki;
-	VecFx32 pos = { GRID_SIZE_FX32(16), 0x30000, GRID_SIZE_FX32(16) };
-
+//	VecFx32 orig_pos = { GRID_SIZE_FX32(16), 0x30000, GRID_SIZE_FX32(16) };
+	
 	pJiki = GFL_HEAP_AllocClearMemory(
 			pGridCont->heapID, sizeof(FGRID_PLAYER) );
 	pGridCont->pGridPlayer = pJiki;
 	
 	pJiki->pGridCont = pGridCont;
 	pJiki->pActCont = pGridCont->pFieldWork->pcActCont;
-
-	pJiki->vec_pos = pos;
+	
+	pJiki->vec_pos = *pos;
 	pJiki->scale_size = FX16_ONE*8-1;
-
+	
 	SetPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
 	return( pJiki );
 }
