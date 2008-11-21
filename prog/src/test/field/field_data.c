@@ -38,11 +38,11 @@ static int MapID2ResistID(u16 mapid)
 void FIELDDATA_SetMapperData(
 	u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
 {
-	mapid = MapID2ResistID(mapid);
-	GF_ASSERT(mapid < resistMapTblCount);
-	*map_res = resistMapTbl[mapid].mapperData;
+	u16 resid = MapID2ResistID(mapid);
+	GF_ASSERT(resid < resistMapTblCount);
+	*map_res = resistMapTbl[resid].mapperData;
 
-	if (resistMapTbl[mapid].isMatrixMapFlag){
+	if (resistMapTbl[resid].isMatrixMapFlag){
 		u8 *tbl;
 		u32 matID;
 		const MAP_MATRIX_HEADER *matH;
@@ -73,17 +73,17 @@ void FIELDDATA_SetMapperData(
 //------------------------------------------------------------------
 const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
 {
-	mapid = MapID2ResistID(mapid);
-	GF_ASSERT(mapid < resistMapTblCount);
-	return &resistMapTbl[mapid].mapperData;
+	u16 resid = MapID2ResistID(mapid);
+	GF_ASSERT(resid < resistMapTblCount);
+	return &resistMapTbl[resid].mapperData;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const DEPEND_FUNCTIONS * FIELDDATA_GetFieldFunctions(u16 mapid)
 {
-	mapid = MapID2ResistID(mapid);
-	GF_ASSERT(mapid < resistMapTblCount);
-	return resistMapTbl[mapid].dep_funcs;
+	u16 resid = MapID2ResistID(mapid);
+	GF_ASSERT(resid < resistMapTblCount);
+	return resistMapTbl[resid].dep_funcs;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
