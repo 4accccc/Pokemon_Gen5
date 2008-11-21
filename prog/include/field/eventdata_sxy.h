@@ -13,6 +13,7 @@
 #pragma once
 
 #include "field/eventdata_system.h"
+#include "field/location.h"
 
 //============================================================================================
 //============================================================================================
@@ -80,6 +81,6 @@ struct _POS_EVENT_DATA{
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const CONNECT_DATA * EVENTDATA_GetConnectData(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
-
+extern void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc);
 
 

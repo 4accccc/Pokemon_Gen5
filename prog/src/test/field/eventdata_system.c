@@ -14,6 +14,7 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
+#include "field/location.h"
 
 //============================================================================================
 //============================================================================================
@@ -91,6 +92,19 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 const CONNECT_DATA * EVENTDATA_GetConnectData(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
 {
 	return NULL;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc)
+{
+	GF_ASSERT(connect != NULL);
+	loc->zone_id = connect->link_zone_id;
+	loc->door_id = connect->link_door_id;
+	loc->pos.x = FX32_ONE * connect->x;
+	loc->pos.y = FX32_ONE * connect->height;
+	loc->pos.z = FX32_ONE * connect->z;
+	loc->dir_id = 0;
 }
 
 #if 0
