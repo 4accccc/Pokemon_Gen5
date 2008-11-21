@@ -40,7 +40,7 @@ SRCS	+=		test/testmode.c \
 				field/zonedata.c \
 				field/location.c \
 				field/fieldmap_proc.c \
-				test/field/eventdata_system.c \
+				field/eventdata_system.c \
 				test/field/event_mapchange.c \
 				test/field/event_debug_menu.c \
 				savedata/save_tbl.c \
