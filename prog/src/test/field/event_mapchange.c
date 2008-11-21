@@ -178,21 +178,11 @@ void DEBUG_EVENT_ChangeEventMapChange(
 	GAMESYS_WORK *gsys, GMEVENT *event,
 	FIELD_MAIN_WORK *fieldmap, ZONEID zone_id )
 {
-	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-	PLAYER_WORK * myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
-	MAPCHANGE_WORK * mcw;
-	
 	if (zone_id >= ZONEDATA_GetZoneIDMax()) {
 		GF_ASSERT( 0 );
 		zone_id = 0;
 	}
-	
-	GMEVENT_Change( event, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
-	mcw = GMEVENT_GetEventWork(event);
-	mcw->gsys = gsys;
-	mcw->fieldmap = fieldmap;
-	mcw->gamedata = gamedata;
-	MakeNextLocation(&mcw->new_loc, zone_id);
+	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMap(gsys, fieldmap, zone_id));
 }	
 
 //============================================================================================
@@ -283,6 +273,8 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
 	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
 	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);
 	PLAYERWORK_setDirection(mywork, loc_tmp.dir_id);
+	//開始位置を記憶しておく
+	GAMEDATA_SetStartLocation(gamedata, &loc_tmp);
 }
 
 

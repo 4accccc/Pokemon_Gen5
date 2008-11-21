@@ -16,6 +16,7 @@
 
 #include "field/location.h"
 
+#include "fieldmap/zone_id.h"
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -48,6 +49,8 @@ struct _EVDATA_SYS {
 };
 
 
+extern const CONNECT_DATA SampleConnectData[];
+extern const int SampleConnectDataCount;
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -85,12 +88,28 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
 	EVENTDATA_SYS_Clear(evdata);
+	if (zone_id == ZONE_ID_MAPSPRING) {
+		evdata->connect_count = SampleConnectDataCount;
+		evdata->connect_data = SampleConnectData;
+	}
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const CONNECT_DATA * EVENTDATA_GetConnectData(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
+const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
 {
+	int i;
+	int x,y,z;
+	const CONNECT_DATA * cnct = evdata->connect_data;
+	x = FX_Whole(pos->x);
+	y = FX_Whole(pos->y);
+	z = FX_Whole(pos->z);
+	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
+		if (FX_Whole(cnct->pos.x) != x) continue;
+		if (FX_Whole(cnct->pos.y) != y) continue;
+		if (FX_Whole(cnct->pos.z) != z) continue;
+		return cnct;
+	}
 	return NULL;
 }
 
@@ -101,9 +120,7 @@ void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc)
 	GF_ASSERT(connect != NULL);
 	loc->zone_id = connect->link_zone_id;
 	loc->door_id = connect->link_door_id;
-	loc->pos.x = FX32_ONE * connect->x;
-	loc->pos.y = FX32_ONE * connect->height;
-	loc->pos.z = FX32_ONE * connect->z;
+	loc->pos = connect->pos;
 	loc->dir_id = 0;
 }
 
@@ -122,6 +139,20 @@ BOOL DEBUG_EVENT_GetConnectEvent(GAMESYS_WORK * gsys, const EVENTDATA_SYSTEM * e
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+const CONNECT_DATA SampleConnectData[] = {
+	{
+		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 0},
+		ZONE_ID_MAPSUMMER,	0,
+	},
+#if 0
+	{
+		{FX32_ONE * 256, FX32_ONE * 0, FX32_ONE * 256},
+		ZONE_ID_MAPSUMMER,	0,
+	},
+#endif
+};
+
+const int SampleConnectDataCount = NELEMS(SampleConnectData);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

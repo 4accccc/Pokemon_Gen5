@@ -39,11 +39,9 @@ struct _EVENTDATA_HEADER {
 typedef struct _CONNECT_DATA CONNECT_DATA;
 
 struct _CONNECT_DATA{
-	u16	x;
-	u16	z;
+	VecFx32 pos;
 	u16	link_zone_id;
 	u16	link_door_id;
-	int	height;
 };
 
 //------------------------------------------------------------------
@@ -80,7 +78,7 @@ struct _POS_EVENT_DATA{
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern const CONNECT_DATA * EVENTDATA_GetConnectData(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
+extern const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
 extern void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc);
 
 

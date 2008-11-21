@@ -84,6 +84,7 @@ struct _FIELD_MAIN_WORK
 	FIELD_CAMERA*	camera_control;
 	PC_ACTCONT*		pcActCont;
 	FLD_ACTCONT*	fldActCont;
+	VecFx32			now_pos;
 	
 	int				key_cont;
 	
@@ -229,18 +230,17 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 	case 2:
 		if( GAMESYSTEM_GetEvent(gsys) == FALSE) {
 		
-			VecFx32 pos;
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
 			
 			//登録テーブルごとに個別のメイン処理を呼び出し
-			fieldWork->ftbl->main_func( fieldWork, &pos );
+			fieldWork->ftbl->main_func( fieldWork, &fieldWork->now_pos );
 			
 			//通信用アクター更新
 			//fieldMainCommActorProc( fieldWork );
 
 			//Mapシステムに位置を渡している。
 			//これがないとマップ移動しないので注意
-			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &pos );
+			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
 		//通信用アクター更新
 		fieldMainCommActorProc( fieldWork );
@@ -291,6 +291,19 @@ void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork )
 	fieldWork->seq = 3;
 }
 
+#include "field/eventdata_sxy.h"
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+	EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData(gamedata);
+	const CONNECT_DATA * cnct;
+	cnct = EVENTDATA_SearchConnectByPos(evdata, &fieldWork->now_pos);
+	if (cnct == NULL) return NULL;
+	return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, cnct->link_zone_id, &cnct->pos);
+
+}
 //------------------------------------------------------------------
 /**
  * @brief	イベント起動チェック（暫定）
@@ -300,6 +313,10 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 {
 	enum { resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START };
 	FIELD_MAIN_WORK * fieldWork = work;
+	GMEVENT * event;
+
+	event = ConnectCheck(gsys, fieldWork);
+	if (event != NULL) return event;
 
 	if( ( GFL_UI_KEY_GetCont() & resetCont ) == resetCont ){
 		return DEBUG_EVENT_FieldSample(gsys, fieldWork);
@@ -308,6 +325,10 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
+		OS_Printf("X,Y,Z=%d,%d,%d\n",
+				FX_Whole(fieldWork->now_pos.x),
+				FX_Whole(fieldWork->now_pos.y),
+				FX_Whole(fieldWork->now_pos.z));
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
 	}
