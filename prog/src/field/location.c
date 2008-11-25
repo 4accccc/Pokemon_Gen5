@@ -29,7 +29,7 @@
 void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 {
 	loc->zone_id = zone_id;
-	loc->door_id = DOOR_ID_JUMP_CODE;
+	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
 	ZONEDATA_DEBUG_GetStartPos(zone_id, &loc->pos);
 }

@@ -141,7 +141,7 @@ void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc)
 {
 	GF_ASSERT(connect != NULL);
 	loc->zone_id = connect->link_zone_id;
-	loc->door_id = connect->link_exit_id;
+	loc->exit_id = connect->link_exit_id;
 	loc->pos = connect->pos;
 	loc->dir_id = 0;
 }

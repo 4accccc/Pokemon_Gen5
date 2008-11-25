@@ -16,7 +16,7 @@
 //--------------------------------------------------------------
 typedef struct {
 	int zone_id;
-	s16 door_id;
+	s16 exit_id;
 	s16 dir_id;
 	VecFx32 pos;
 }LOCATION;
@@ -46,7 +46,7 @@ extern void LOCATION_SetGameStart(LOCATION * loc);
 static inline void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z)
 {
 	loc->zone_id = zone;
-	loc->door_id = door;
+	loc->exit_id = door;
 	loc->dir_id = dir;
 	loc->pos.x = x;
 	loc->pos.y = y;

@@ -255,12 +255,12 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 		LOCATION * loc_tmp)
 {
 	//開始位置セット
-	if (loc_prep->door_id == DOOR_ID_JUMP_CODE) {
+	if (loc_prep->exit_id == DOOR_ID_JUMP_CODE) {
 		*loc_tmp = *loc_prep;
 	} else {
-		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_prep->door_id);
+		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_prep->exit_id);
 		if (cnct == NULL) {
-			//本当はDOOR_IDからデータを引っ張る
+			//本当はexit_idからデータを引っ張る
 			OS_Printf("connect: debug default position\n");
 			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_prep->zone_id);
 		} else {
