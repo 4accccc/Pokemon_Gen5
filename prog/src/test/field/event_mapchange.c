@@ -265,6 +265,8 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_prep->zone_id);
 		} else {
 			CONNECTDATA_SetLocation(cnct, loc_tmp);
+			loc_tmp->zone_id = loc_prep->zone_id;
+			loc_tmp->exit_id = loc_prep->exit_id;
 			switch (cnct->exit_type) {
 			case EXIT_TYPE_UP:
 				loc_tmp->pos.z -= FX32_ONE * 16;

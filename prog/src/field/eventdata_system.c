@@ -51,6 +51,8 @@ struct _EVDATA_SYS {
 
 extern const CONNECT_DATA SampleConnectData[];
 extern const int SampleConnectDataCount;
+extern const CONNECT_DATA SampleConnectData_testpc[];
+extern const int SampleConnectDataCount_testpc;
 //============================================================================================
 //
 //	イベント起動データシステム関連
@@ -91,9 +93,18 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
 	EVENTDATA_SYS_Clear(evdata);
-	if (zone_id == ZONE_ID_MAPSUMMER || zone_id == ZONE_ID_MAPSPRING) {
+
+	/* テスト的に接続データを設定 */
+	switch (zone_id) {
+	case ZONE_ID_TESTPC:
+		evdata->connect_count = SampleConnectDataCount_testpc;
+		evdata->connect_data = SampleConnectData_testpc;
+		break;
+	case ZONE_ID_MAPSUMMER:
+	//case ZONE_ID_MAPSPRING:
 		evdata->connect_count = SampleConnectDataCount;
 		evdata->connect_data = SampleConnectData;
+		break;
 	}
 }
 
@@ -117,6 +128,7 @@ const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdat
 		if (FX_Whole(cnct->pos.x) != x) continue;
 		if (FX_Whole(cnct->pos.y) != y) continue;
 		if (FX_Whole(cnct->pos.z) != z) continue;
+		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
 		return cnct;
 	}
 	return NULL;
@@ -172,9 +184,32 @@ const CONNECT_DATA SampleConnectData[] = {
 		ZONE_ID_MAPSUMMER,	0,
 		EXIT_TYPE_RIGHT,
 	},
+	{
+		{FX32_ONE * 704, FX32_ONE * 16, FX32_ONE * 112 },
+		ZONE_ID_TESTPC,	1,
+		EXIT_TYPE_DOWN,
+	},
+};
+const CONNECT_DATA SampleConnectData_testpc[] = {
+	{
+		{FX32_ONE * 128, FX32_ONE * 0, FX32_ONE * 224 },
+		ZONE_ID_MAPSUMMER,	2,
+		EXIT_TYPE_UP,
+	},
+	{
+		{FX32_ONE * 144, FX32_ONE * 0, FX32_ONE * 224 },
+		ZONE_ID_MAPSUMMER,	2,
+		EXIT_TYPE_UP,
+	},
+	{
+		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 224 },
+		ZONE_ID_MAPSUMMER,	2,
+		EXIT_TYPE_UP,
+	},
 };
 
 const int SampleConnectDataCount = NELEMS(SampleConnectData);
+const int SampleConnectDataCount_testpc = NELEMS(SampleConnectData_testpc);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
