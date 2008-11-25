@@ -10,6 +10,9 @@
 #
 #----------------------------------------------------------------------------
 
+# NITROSDK3.0付属ののプリコンパイルを読み込まない
+NITRO_NO_STD_PCHDR = True
+
 #----------------------------------------------------------------------------
 #	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）
 #----------------------------------------------------------------------------
@@ -174,7 +177,7 @@ EXT_OBJS += $(patsubst %, arc/%, $(GAME_FILE_TREE:.narc=.o))
 
 
 #--------------------------------------- ----------------------------
-do-build: $(MAKEROM_MB:.narc=.o) $(TARGETS)
+do-build: precompile $(MAKEROM_MB:.narc=.o) $(TARGETS)
 
 
 #----------------------------------------------------------------------------
@@ -192,4 +195,29 @@ installsrl:..\prog\filetree\dl_rom\child.srl
 
 ..\prog\filetree\dl_rom\child.srl:.\bin\ARM9-TS\Release\main.srl
 	$(CP) .\bin\ARM9-TS\Release\main.srl ..\prog\filetree\dl_rom\child.srl
+
+
+do-build: precompile $(TARGETS)
+
+
+#----------------------------------------------------------------------------
+# precompile
+#----------------------------------------------------------------------------
+PRECOMPILE_SRC		 =	../prog/include/precompile/precompile.pch
+PRECOMPILE_CC_MCH	 =	$(OBJDIR)/precompile_cc.mch
+PRECOMPILE_CCFLAGS	:=	$(CCFLAGS)
+CCFLAGS			+=	-prefix $(PRECOMPILE_CC_MCH)
+
+precompile: $(PRECOMPILE_CC_MCH)
+
+#バージョン定義ファイルが更新されたらプリコンパイルヘッダも更新する
+$(PRECOMPILE_CC_MCH):	$(VER_FILE)
+
+-include $(PRECOMPILE_CC_MCH).d
+$(PRECOMPILE_CC_MCH):%_cc.mch:
+		$(CC) $(PRECOMPILE_CCFLAGS) $(INCLUDES) $(PRECOMPILE_SRC) -MD -precompile $(PRECOMPILE_CC_MCH)
+		$(MOVE_SRC_DEPEND)
+		$(MV) $(DEPENDDIR)/$(*F).d $@.d
+$(OBJS):  $(PRECOMPILE_CC_MCH)
+
 
