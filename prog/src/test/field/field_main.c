@@ -301,7 +301,8 @@ static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	const CONNECT_DATA * cnct;
 	cnct = EVENTDATA_SearchConnectByPos(evdata, &fieldWork->now_pos);
 	if (cnct == NULL) return NULL;
-	return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, cnct->link_zone_id, &cnct->pos);
+	//return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, cnct->link_zone_id, &cnct->pos);
+	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
 
 }
 //------------------------------------------------------------------

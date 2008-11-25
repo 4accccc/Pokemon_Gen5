@@ -23,6 +23,13 @@
 #define	ZONE_ID_SPECIAL		(0x0fff)
 #define	SPECIAL_SPEXIT01	(0x0100)
 
+enum {
+	EXIT_TYPE_NONE = 0,
+	EXIT_TYPE_UP,
+	EXIT_TYPE_DOWN,
+	EXIT_TYPE_LEFT,
+	EXIT_TYPE_RIGHT,
+};
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _EVENTDATA_HEADER EVENTDATA_HEADER;
@@ -41,7 +48,8 @@ typedef struct _CONNECT_DATA CONNECT_DATA;
 struct _CONNECT_DATA{
 	VecFx32 pos;
 	u16	link_zone_id;
-	u16	link_door_id;
+	u16	link_exit_id;
+	s16	exit_type;
 };
 
 //------------------------------------------------------------------
@@ -79,6 +87,7 @@ struct _POS_EVENT_DATA{
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
+extern const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id);
 extern void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc);
 
 

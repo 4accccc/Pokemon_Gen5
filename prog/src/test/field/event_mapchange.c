@@ -16,10 +16,11 @@
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
 #include "field/location.h"
+#include "field/eventdata_sxy.h"
 
 #include "event_mapchange.h"
 
-static void MakeNextLocation(LOCATION * loc, u16 zone_id);
+static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id);
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc);
 //============================================================================================
 //
@@ -69,7 +70,7 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
-	MakeNextLocation(&fmw->new_loc, game_init_work->mapid);
+	MakeNextLocation(&fmw->new_loc, game_init_work->mapid, 0);
 	return event;
 }
 
@@ -123,7 +124,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		u16 mapid, const VecFx32 * pos)
+		u16 zone_id, const VecFx32 * pos)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -133,16 +134,16 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	LOCATION_Set(&mcw->new_loc, mapid, DOOR_ID_JUMP_CODE, 0/* DIR */,
+	LOCATION_Set(&mcw->new_loc, zone_id, DOOR_ID_JUMP_CODE, 0/* DIR */,
 			pos->x, pos->y, pos->z);
-	//MakeNextLocation(&mcw->new_loc, mapid);
 	
 	return event;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap, u16 mapid)
+GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
+		FIELD_MAIN_WORK * fieldmap, u16 zone_id, s16 exit_id)
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -152,7 +153,7 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	MakeNextLocation(&mcw->new_loc, mapid);
+	MakeNextLocation(&mcw->new_loc, zone_id, exit_id);
 	return event;
 }
 
@@ -168,7 +169,7 @@ GMEVENT * DEBUG_EVENT_ChangeToNextMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fie
 	if (next >= ZONEDATA_GetZoneIDMax()) {
 		next = 0;
 	}
-	return DEBUG_EVENT_ChangeMap(gsys, fieldmap, next);
+	return DEBUG_EVENT_ChangeMap(gsys, fieldmap, next, 0);
 }
 
 //------------------------------------------------------------------
@@ -182,7 +183,7 @@ void DEBUG_EVENT_ChangeEventMapChange(
 		GF_ASSERT( 0 );
 		zone_id = 0;
 	}
-	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMap(gsys, fieldmap, zone_id));
+	GMEVENT_ChangeEvent(event, DEBUG_EVENT_ChangeMap(gsys, fieldmap, zone_id, 0));
 }	
 
 //============================================================================================
@@ -244,9 +245,44 @@ GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldma
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNextLocation(LOCATION * loc, u16 zone_id)
+static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id)
 {
-	LOCATION_Set(loc, zone_id, 0, 0, 0, 0, 0);
+	LOCATION_Set(loc, zone_id, exit_id, 0, 0, 0, 0);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * loc_prep,
+		LOCATION * loc_tmp)
+{
+	//開始位置セット
+	if (loc_prep->door_id == DOOR_ID_JUMP_CODE) {
+		*loc_tmp = *loc_prep;
+	} else {
+		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_prep->door_id);
+		if (cnct == NULL) {
+			//本当はDOOR_IDからデータを引っ張る
+			OS_Printf("connect: debug default position\n");
+			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_prep->zone_id);
+		} else {
+			CONNECTDATA_SetLocation(cnct, loc_tmp);
+			switch (cnct->exit_type) {
+			case EXIT_TYPE_UP:
+				loc_tmp->pos.z -= FX32_ONE * 16;
+				break;
+			case EXIT_TYPE_DOWN:
+				loc_tmp->pos.z += FX32_ONE * 16;
+				break;
+			case EXIT_TYPE_LEFT:
+				loc_tmp->pos.x -= FX32_ONE * 16;
+				break;
+			case EXIT_TYPE_RIGHT:
+				loc_tmp->pos.x += FX32_ONE * 16;
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 //------------------------------------------------------------------
@@ -263,13 +299,8 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
 	EVENTDATA_SYS_Load(evdata, zone_id);
 
 	//開始位置セット
-	if (new_loc->door_id == DOOR_ID_JUMP_CODE) {
-		loc_tmp = *new_loc;
-	} else {
-		//const CONNECT_DATA * cnct = EVENTDATA_GetConnectData
-		//本当はDOOR_IDからデータを引っ張る
-		LOCATION_DEBUG_SetDefaultPos(&loc_tmp, new_loc->zone_id);
-	}
+	MakeNewLocation(evdata, new_loc, &loc_tmp);
+
 	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
 	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);
 	PLAYERWORK_setDirection(mywork, loc_tmp.dir_id);
