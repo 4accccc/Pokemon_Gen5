@@ -262,7 +262,7 @@ static const BMPMENULIST_HEADER DATA_DebugMenuListHeader =
 	NULL,	//GFL_BMPWIN
 
 	1,		//リスト項目数
-	12,		//表示最大項目数
+	9,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
 	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標
@@ -827,7 +827,7 @@ static const BMPMENULIST_HEADER DATA_DebugMenuList_ZoneSel =
 	NULL,	//GFL_BMPWIN
 
 	1,		//リスト項目数
-	12,		//表示最大項目数
+	10,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
 	13,		//項目表示Ｘ座標
 	0,		//カーソル表示Ｘ座標

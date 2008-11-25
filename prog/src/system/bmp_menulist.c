@@ -74,6 +74,9 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode );
 static u8 ListMoveUpDownCheck( BMPMENULIST_WORK * lw, u8 print_f, u8 req_line, u8 mode );
 static void CallBackSet( BMPMENULIST_WORK * lw, u8 mode );
 
+static void BmpWinDataShift(
+	GFL_BMPWIN *bmpwin, u8 direct, u8 offset, u8 data );
+
 //--------------------------------------------------------------------------------------------
 /**
  * 設定関数
@@ -967,7 +970,8 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
 			lw->hed.win, GF_BGL_BMPWIN_SHIFT_D,
 			(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
 #else
-		//シフト
+	BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_D, 
+		(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
 #endif
 		ListScreenPut( lw, lw->lp, 0, len );	//追加ライン描画
 
@@ -994,8 +998,9 @@ static void ListScrollMoveUpDown( BMPMENULIST_WORK * lw, u8 len, u8 mode )
 		GF_BGL_BmpWinShift(
 				lw->hed.win, GF_BGL_BMPWIN_SHIFT_U,
 				(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
-#else
-		//シフト
+#else	//wb
+	BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
+		(u8)(len * yblk), (u8)((lw->hed.b_col<<4)|lw->hed.b_col) );
 #endif
 		//追加ライン描画
 		ListScreenPut(
@@ -1276,5 +1281,4 @@ void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID )
 	BmpCursor_SetCursorFontMsg( lw->cursor, lw->hed.msgdata, strID );
 	ListCursorPut( lw );
 }
-
 
