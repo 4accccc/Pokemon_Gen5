@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2008-11-21T21:42:30" source="map00_01n.mb"/>
+	<create user="fuchino" host="W00152" date="2008-11-25T21:41:34" source="map00_01n.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2008-11-21T21:42:30" source="map00_01n.mb"/>
+<original_create user="fuchino" host="W00152" date="2008-11-25T21:41:34" source="map00_01n.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -64,14 +64,14 @@
 		path="C:/mayadata/wb_map_chip/tex_t/grass01a.tga"
 	>
 		<bitmap size="64">
-			5443 5545 3553 5555 3334 3554 4355 5553
-			4533 3453 3340 3353 1555 3343 3101 5554
-			4535 4355 1011 5533 1435 3533 1043 5354
-			1334 5543 1343 3341 3433 5301 1134 3431
-			4533 1110 3532 3355 0134 0330 1433 3355
-			0033 4531 3143 4343 3004 5534 3342 3353
-			5415 5434 4355 5434 5553 3353 3353 4313
-			5553 3553 4355 4145 5455 5555 5555 3455
+			4552 3313 2432 4444 2111 1435 1244 4342
+			1411 0542 0010 1241 0444 0151 0000 4441
+			1423 1244 0000 4421 0114 2420 0010 4241
+			0001 4410 0011 1110 0100 3000 0001 0110
+			1400 0000 1410 0044 0011 0020 0110 0044
+			0022 1410 2011 1152 0001 3411 1010 2141
+			4104 4525 1144 4111 3442 0242 1042 5000
+			4342 1442 5243 1014 3144 3433 3343 2544
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="kaidan01a"
@@ -743,11 +743,11 @@
 
 <tex_palette_array size="19">
 	<tex_palette index="0" name="gake01a_pl" color_size="16">
-		7c1f 3dec 4f6f 256b 3acf 1d6c 3ad8 2a55
+		7c1f 3dec 3bb1 256b 36f3 1d6c 3ad8 2a55
 		1df2 19d0 198e 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="grass01a_pl" color_size="8">
-		472e 474e 4b4e 4b4f 4b6f 4f6f 7fff 7fff
+		3771 3791 3792 3b90 3b91 3b92 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="kaidan01a_pl" color_size="8">
 		4653 4a74 4e96 56f9 5f3b 7fff 7fff 7fff
@@ -786,7 +786,7 @@
 		2eaa 3249 35c9 78df 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="13" name="michi01a_pl" color_size="16">
-		4f6f 4f6f 4b6f 474f 4730 3acf 3274 4f3c
+		3bb1 3bb1 3b92 3772 3b53 36f3 3274 4f3c
 		4f1c 4afb 3657 46da 3a79 42b9 3a78 7fff
 	</tex_palette>
 	<tex_palette index="14" name="michi01b_pl" color_size="4">
@@ -805,7 +805,7 @@
 	</tex_palette>
 	<tex_palette index="18" name="shore01_pl" color_size="16">
 		7c1f 3ad8 2a55 7753 6b13 4673 1df2 56b3
-		19d0 5ab1 4231 5ab1 3acf 4f6f 4a2f 3dec
+		19d0 5ab1 4231 5ab1 36f3 3bb1 4a2f 3dec
 	</tex_palette>
 </tex_palette_array>
 
