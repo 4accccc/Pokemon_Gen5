@@ -149,7 +149,7 @@ static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
 static inline void BitReader_SetNextBit( BIT_READER* br );
 static u8 BitReader_Read( BIT_READER* br, u8 bits );
-static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16 gl2ndCharShift, u16* dst1st, u16* dst2nd );
+static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16* dst1st, u16* dst2nd );
 
 
 
@@ -171,7 +171,7 @@ GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadType, BOO
 	GFL_FONT* wk = GFL_HEAP_AllocMemory( heapID, sizeof(GFL_FONT) );
 	if( wk )
 	{
-		wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, datID );
+		wk->fileHandle = GFL_ARC_OpenDataHandle( arcID, heapID );
 		load_font_header( wk, datID, fixedFontFlag, heapID );
 		setup_font_datas( wk, loadType, heapID );
 	}
@@ -220,7 +220,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 		else
 		{
 			u32 widthTblSize = wk->fontHeader.ofsMap - wk->fontHeader.ofsWidth;
-			OS_TPrintf("[FONT WIDTH TBL=%08x bytes]", widthTblSize);
+
 			wk->widthTblTop = GFL_HEAP_AllocMemory( heapID, widthTblSize );
 			wk->WidthGetFunc = GetWidthProportionalFont;
 
@@ -233,11 +233,7 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 		wk->glyph2ndCharBits = (8 - (16 - wk->glyphInfo.cellWidth)) * 2;
 		wk->glyph2ndCharShift = ((8 - wk->glyph2ndCharBits) / 2) * 4;
 
-//		OS_TPrintf("Gl2ndCharBits=%d, Shift=%d, CellSize=%d\n",
-//					wk->glyph2ndCharBits, wk->glyph2ndCharShift, wk->glyphInfo.cellSize);
-
 		wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
-		OS_TPrintf("[FONT GLYPH BUF=%08x bytes]", wk->glyphInfo.cellSize);
 		wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
 
 		{
@@ -451,11 +447,13 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
 		{
 			switch( pMap->mappingMethod ){
 			case NNS_G2D_MAPMETHOD_DIRECT:
+//				TAYA_Printf( "[ ggi ] code=%04x Method=DIRECT codeBegin=%04x, mapInfo=%d\n", code, pMap->codeBegin, pMap->mapInfo[0] );
 				return ( code - pMap->codeBegin ) + pMap->mapInfo[0];
 
 			case NNS_G2D_MAPMETHOD_TABLE:
 			{
 				u16 aidx = code - pMap->codeBegin;
+//				TAYA_Printf( "[ ggi ] code=%04x Method=TABLE  codeBegin=%04x, tblIdx=%d\n", code, pMap->codeBegin, aidx);
 				return pMap->mapInfo[aidx];
 			}
 
@@ -467,7 +465,7 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
 				numEntries = pMap->mapInfo[0];
 				min = 1;
 				max = numEntries;
-//				TAYA_PrintfEx( PRINTFLAG, "GetGlyphIndex scanMethod code=%04x, numEntries=%d\n", code, numEntries );
+//				TAYA_Printf( "GetGlyphIndex scanMethod code=%04x, numEntries=%d\n", code, numEntries );
 
 				while( min <= max )
 				{
@@ -585,7 +583,7 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, u16* si
 	PRINTFLG = ((index==332)||(index==322));
 	#endif
 
-	expand_ntr_glyph_2bit( wk->glyphBuf, wk->glyph2ndCharBits, wk->glyph2ndCharShift, (u16*)dst, (u16*)((u8*)dst+0x20) );
+	expand_ntr_glyph_2bit( wk->glyphBuf, wk->glyph2ndCharBits, (u16*)dst, (u16*)((u8*)dst+0x20) );
 
 	*sizeX = wk->WidthGetFunc( wk, index );
 	*sizeY = wk->fontHeader.linefeed;
@@ -852,35 +850,84 @@ static inline void BitReader_SetNextBit( BIT_READER* br )
 	br->rem_bits = 8;
 }
 
-static u8 BitReader_Read( BIT_READER* br, u8 bits )
+static inline u8 BitReader_Read( BIT_READER* br, u8 bits )
 {
-	u8 ret;
+	static const u8 bitmask[] = {
+		0x00,
+		0x80,
+		0xc0,
+		0xe0,
+		0xf0,
+		0xf8,
+		0xfc,
+		0xfe,
+		0xff
+	};
 
+
+#if 1
+	u8 ret_u, ret_d, ret, shift;
+
+	if( br->rem_bits < bits )
+	{
+		ret_u = br->read_bit & bitmask[br->rem_bits];
+		shift = br->rem_bits;
+		bits -= br->rem_bits;
+		BitReader_SetNextBit( br );
+	}
+	else
+	{
+		ret_u = 0;
+		shift = 0;
+	}
+
+	ret_d = br->read_bit & bitmask[bits];
+	br->rem_bits -= bits;
+	if( br->rem_bits == 0 )
+	{
+		BitReader_SetNextBit( br );
+	}
+	else
+	{
+		br->read_bit <<= bits;
+	}
+
+	ret = ret_u | (ret_d >> shift);
+	return ret;
+
+#else
+	// ‚±‚Á‚¿‚ÍÄ‹A‚È‚Ì‚Å inline ‚É‚Å‚«‚È‚¢
+	u8 ret;
 	if( br->rem_bits >= bits )
 	{
-		ret = br->read_bit >> (8 - bits);
-		br->read_bit <<= bits;
+		ret = br->read_bit & bitmask[bits];
 		br->rem_bits -= bits;
 		if( br->rem_bits == 0 )
 		{
 			BitReader_SetNextBit( br );
 		}
+		else
+		{
+			br->read_bit <<= bits;
+		}
 	}
 	else
 	{
-		u32 bits2nd = bits - br->rem_bits;
-		ret = (br->read_bit >> (8 - br->rem_bits)) << bits2nd;
+		u32 rem_bits = br->rem_bits;
+		u32 bits2nd = bits - rem_bits;
+		ret = br->read_bit & bitmask[rem_bits];
 		BitReader_SetNextBit( br );
-		ret |= BitReader_Read( br, bits2nd );
+		ret |= (BitReader_Read( br, bits2nd ) >> rem_bits);
 	}
-
 	return ret;
+#endif
+
 }
 
 
 static BIT_READER BitReader = {0};
 
-static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16 gl2ndCharShift, u16* dst1st, u16* dst2nd )
+static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16* dst1st, u16* dst2nd )
 {
 	u8 dots;
 
@@ -958,7 +1005,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, gl2ndCharBits );
-		*dst2nd++ = DotTbl[dots] << gl2ndCharShift;
+		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
 		dots = BitReader_Read( &BitReader, 8 );
@@ -966,7 +1013,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, gl2ndCharBits );
-		*dst2nd++ = DotTbl[dots] << gl2ndCharShift;
+		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
 		dots = BitReader_Read( &BitReader, 8 );
@@ -974,7 +1021,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, gl2ndCharBits );
-		*dst2nd++ = DotTbl[dots] << gl2ndCharShift;
+		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
 		dots = BitReader_Read( &BitReader, 8 );
@@ -982,8 +1029,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, gl2ndCharBits );
-		*dst2nd = DotTbl[dots] << gl2ndCharShift;
-
+		*dst2nd = DotTbl[dots];
 }
 
 
