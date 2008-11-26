@@ -18,7 +18,7 @@
 #include "print\printsys.h"
 #include "print\gf_font.h"
 #include "message.naix"
-#include "test_graphic\d_taya.naix"
+#include "font/font.naix"
 #include "msg\msg_d_matsu.h"
 
 
@@ -451,7 +451,7 @@ static void Local_ErrMessagePrint(void)
 		GFL_MSGDATA		*mm;
 		STRBUF *strbuf;
 
-		fontHandle = GFL_FONT_Create(ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NET_ERR );
 		
 		mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 

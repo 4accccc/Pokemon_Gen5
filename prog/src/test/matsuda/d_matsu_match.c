@@ -24,6 +24,7 @@
 #include "test_graphic\d_taya.naix"
 #include "msg\msg_d_matsu.h"
 #include "test/performance.h"
+#include "font/font.naix"
 
 
 //==============================================================================
@@ -144,7 +145,7 @@ static void _RecvMoveData(const int netID, const int size, const void* pData, vo
 static void _RecvHugeData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _RecvKeyData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _RecvChildProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _RecvMyProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
 
 
@@ -281,7 +282,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+		wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 //		PRINTSYS_Init( wk->heapID );
@@ -380,14 +381,14 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
     {_RecvMoveData,         NULL},    ///NET_CMD_MOVE
     {_RecvHugeData,         _RecvHugeBuffer},    ///NET_CMD_HUGE
     {_RecvKeyData,          NULL},    ///NET_CMD_KEY
-    {_RecvChildProfile,     NULL},    ///NET_CMD_CHILD_PROFILE
+    {_RecvMyProfile,     NULL},    ///NET_CMD_MY_PROFILE
 };
 
 enum{
 	NET_CMD_MOVE = GFL_NET_CMD_COMMAND_MAX,
 	NET_CMD_HUGE,
 	NET_CMD_KEY,
-	NET_CMD_CHILD_PROFILE,
+	NET_CMD_MY_PROFILE,
 };
 
 #define _MAXNUM   (4)         // 最大接続人数
@@ -701,10 +702,11 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 				wk->seq++;
 			}
 		}
+		else{
+			wk->seq++;
+		}
 		break;
 	case 6:		//タイミングコマンド発行
-//		wk->seq = 6;
-//		break;
 		if(wk->oya == MY_PARENT){
 			wk->timer++;
 			if(wk->timer < 30){
@@ -725,18 +727,27 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 		}
 		break;
 	case 8:
-		if(wk->oya == MY_PARENT){
-			if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_CHILD_PROFILE, sizeof(IRC_MATCH_ENTRY_PARAM) * wk->entry_num, wk->child_profile) == TRUE){
-				OS_TPrintf("子のプロフィールを全ての子に送信した\n");
-				wk->seq++;
-			}
+		//netID順に配列に埋め込む為、再度自分自身のプロフィールを全員に送信
+		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_MY_PROFILE, sizeof(IRC_MATCH_ENTRY_PARAM), &wk->my_profile) == TRUE){
+			OS_TPrintf("自分のプロフィールを全てのプレイヤーに送信した\n");
+			wk->seq++;
 		}
 		else{
+			OS_TPrintf("自分プロフィール送信失敗\n");
+		}
+		break;
+	case 9:	//プロフィールを送信しあったので再度同期取り
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,16);
+		wk->seq++;
+		break;
+	case 10:
+		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),16) == TRUE){
+			OS_TPrintf("タイミング取り成功 2回目\n");
 			wk->seq++;
 		}
 		break;
-		
-	case 9:	//キーを送信しあう
+	
+	case 11:	//キーを送信しあう
 		ret = -1;
 		wk->send_key = GFL_UI_KEY_GetTrg();
 		if(wk->send_key & PAD_KEY_UP){
@@ -764,13 +775,13 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 //			wk->seq++;
 		}
 		break;
-	case 10:	//通信終了
+	case 12:	//通信終了
 		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_CMD_EXIT_REQ, 0, NULL)){
 			//GFL_NET_Exit(_endCallBack);	//通信終了
 			wk->seq++;
 		}
 		break;
-	case 11:	//通信終了待ち
+	case 13:	//通信終了待ち
 		if(wk->connect_ok == FALSE){
 			wk->seq++;
 		}
@@ -1085,7 +1096,7 @@ static void _RecvKeyData(const int netID, const int size, const void* pData, voi
  * @retval  none  
  */
 //--------------------------------------------------------------
-static void _RecvChildProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _RecvMyProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
 	D_MATSU_WORK *wk = pWork;
 	const IRC_MATCH_ENTRY_PARAM *recv = pData;
@@ -1097,24 +1108,16 @@ static void _RecvChildProfile(const int netID, const int size, const void* pData
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
 	}
 	
-	if(wk->oya == MY_PARENT){
-		//親の場合は子は既に描画されているので無視してよい
-		//ただ、いいタイミングなので自分自身の情報を描画しておく
-		GFL_STR_SetStringCodeOrderLength(wk->strbuf_entry[0], wk->my_profile.name, wk->my_profile.name_len+1);
-		Local_MessagePut(wk, 0, wk->strbuf_entry[0], 0, 0);
-		return;
+	if(netID == 0){
+		GFL_STD_MemCopy(recv, &wk->parent_profile, size);
 	}
-
-	for(i = 0; i < CHILD_MAX; i++){
-		if(recv[i].name_len == 0){
-			OS_TPrintf("子プロフィール：名前の長さが0\n");
-			break;
-		}
-		OS_TPrintf("子の名前を描画 %d\n", i);
-		GFL_STR_SetStringCodeOrderLength(wk->strbuf_entry[i], recv[i].name, recv[i].name_len+1);
-		Local_MessagePut(wk, 1+i, wk->strbuf_entry[i], 0, 0);
-		GFL_STD_MemCopy(&recv[i], &wk->child_profile[i], sizeof(IRC_MATCH_ENTRY_PARAM));
+	else{
+		GFL_STD_MemCopy(recv, &wk->child_profile[netID - 1], size);
 	}
+	GFL_STR_SetStringCodeOrderLength(
+		wk->strbuf_entry[netID], recv->name, recv->name_len+1);
+	Local_MessagePut(wk, netID, wk->strbuf_entry[netID], 0, 0);
+	GFL_STD_MemCopy(&recv[netID], &wk->child_profile[netID], sizeof(IRC_MATCH_ENTRY_PARAM));
 }
 
 

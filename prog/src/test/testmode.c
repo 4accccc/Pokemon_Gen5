@@ -1039,8 +1039,8 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	case SELECT_MATSUDA:
 		//‚Ü‚Â‚¾
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaMainProcData, NULL);
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaNetProcData, NULL);
-//		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
+//		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaNetProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaErrorProcData, NULL);
 		break;		
 	case SELECT_KAGAYA:
