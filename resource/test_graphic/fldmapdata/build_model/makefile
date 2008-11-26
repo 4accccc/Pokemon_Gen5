@@ -72,7 +72,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
 $(NARCNAME):	$(DEPEND_FILES)
-	nnsarc -c -l -n -i $(NARCNAME) -S $(ARC_LIST) > error
+	nnsarc -c -l -n -i $(NARCNAME) -S $(ARC_LIST) > arc_result.txt
 	$(NAIXCUT) $(NAIXNAME)
 
 
