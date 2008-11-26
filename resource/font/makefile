@@ -72,9 +72,10 @@ $(NARCNAME):	$(NMCFILE:.nmc=.nmcr)
 clean:
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.narc
 	-rm -f *.nftr
 	-rm -f *.NCLR
-
+endif
 
 
