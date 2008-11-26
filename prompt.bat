@@ -42,6 +42,9 @@ doskey alias=doskey /macros:all
 doskey his=doskey /history
 doskey vi=c:\tools\vim\gvim $*
 doskey he=c:\progra~1\hidemaru\hidemaru $*
+doskey gort = cd %PROJECT_ROOT:/=\%
+doskey gopr = cd %PROJECT_PROGDIR:/=\%
+doskey gors = cd %PROJECT_RSCDIR:/=\%
 doskey ms = make ./bin/ARM9-TS/Release/main.srl
 
 REM ##################################################
