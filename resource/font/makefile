@@ -62,7 +62,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(NMCFILE:.nmc=.nmcr)
+$(NARCNAME):	$(IMGFILE:.bmp=.nftr) $(COLFILE:.ncl=.nclr)
 	nnsarc -c -l -n -i $(NARCNAME) -S arclist.txt > error
 	$(NAIXCUT) $(NAIXNAME)
 
