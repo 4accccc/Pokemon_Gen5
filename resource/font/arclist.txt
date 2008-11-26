@@ -1,0 +1,3 @@
+"large.nftr"
+"small.nftr"
+"default.nclr"
