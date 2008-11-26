@@ -351,8 +351,7 @@ BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isStartPostIndex_;
 }
-BOOL	DLPlayComm_IsPostIndex( DLPLAY_Cif( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
-OMM_DATA *d_comm )
+BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isPostIndex_;
 }
