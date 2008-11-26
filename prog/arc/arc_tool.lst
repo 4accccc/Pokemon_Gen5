@@ -77,6 +77,7 @@
 	ARCID_FLDMAP_MAPMATRIX "test_graphic/map_matrix.narc" #フィールドマップマトリクス
 	ARCID_BATTGRA		"battgra/battgra_wb.narc"	#
 	ARCID_ZONEDATA		"fieldmap/zonedata.narc"		#ゾーン毎データ
+	ARCID_ALLBUILDMODEL	"fieldmap/all_build_model.narc"	#全配置モデルデータ
 	ARCID_PERSONAL		"personal/personal.narc"		#パーソナルデータ
 	ARCID_GROW_TBL		"personal/growtbl.narc"			#成長曲線テーブル
 	ARCID_WOTBL			"personal/wotbl.narc"			#技覚えテーブル
