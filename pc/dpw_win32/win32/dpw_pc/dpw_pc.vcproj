@@ -49,7 +49,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4068;4996;4005"
 			/>
@@ -87,6 +87,7 @@
 			IntermediateDirectory="$(ProjectDir)$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
+			ManagedExtensions="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -109,10 +110,10 @@
 				AdditionalIncludeDirectories=".;&quot;$(ProjectDir)\..\GameSpySDK\include&quot;;&quot;$(ProjectDir)\..\common\include&quot;;&quot;$(ProjectDir)\..\GameSpySDK\include\ghttp&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\common\include&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\dpw_bt\include&quot;;&quot;$(ProjectDir)\..\..\nitro\libdpw\dpw_tr\include&quot;;&quot;$(ProjectDir)\..\..\nitro\demos\numbering\include&quot;;&quot;$(SolutionDir)..\..\tools\poketool\poketool&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				BasicRuntimeChecks="0"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4068;4996;4005"
 			/>
