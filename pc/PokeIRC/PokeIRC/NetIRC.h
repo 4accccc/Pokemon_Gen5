@@ -62,6 +62,10 @@ namespace PokeIRC {
 	    IRC_COMMAND_MAIN_MOVEEND,
 	    IRC_COMMAND_MOUSE,
 	    IRC_COMMAND_MOUSEEND,
+		IRC_COMMAND_BOXNO,
+		IRC_COMMAND_BOXNOEND,
+	    IRC_COMMAND_HAND,
+	    IRC_COMMAND_HANDEND,
 	} IRC_COMMAND_e;
 
 
@@ -98,6 +102,7 @@ namespace PokeIRC {
 		static bool isRecv;   //ƒRƒ}ƒ“ƒh‚ðŽó‚¯Žæ‚èŠ®—¹
 	public:
 		static bool isRecvFlg(void){ return isRecv; }
+		static bool IsConnect(void);
 
 
 		static void RecvURLCOMMAND(unsigned char * data,int size,unsigned char value);

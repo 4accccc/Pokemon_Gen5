@@ -29,11 +29,16 @@ namespace PokeIRC {
 	static const char PROGRAM_NAME[] = "Global Pokemon FunClub";
 
 
+	typedef struct {
+		short pokeno;
+		short pokelv;
+		short pokesex;
+	} PokemonData;
+
+
 	// ボックスリスト
 	typedef struct {
-	    short pokeno[BOX_MAX_POS];
-	    short pokelv[BOX_MAX_POS];
-	    short pokesex[BOX_MAX_POS];
+		PokemonData poke[BOX_MAX_POS];
 	    unsigned short trayName[BOX_TRAYNAME_BUFSIZE+2];
 	} BoxTrayData;
 
@@ -85,11 +90,11 @@ namespace PokeIRC {
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileFToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  sToolStripMenuItem;
-	public: System::Windows::Forms::ToolStripStatusLabel^  StripStatusLabel;
+	private: System::Windows::Forms::ToolStripStatusLabel^  StripStatusLabel;
 	private: System::Windows::Forms::Timer^  timer;
 	private: System::Windows::Forms::ToolStripMenuItem^  sendDataDToolStripMenuItem;
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
-	public: System::Windows::Forms::ToolStripStatusLabel^  StripStatusLabelCenter;
+	private: System::Windows::Forms::ToolStripStatusLabel^  StripStatusLabelCenter;
 
 	private: System::ComponentModel::IContainer^  components;
 	public: System::ComponentModel::BackgroundWorker^ cmBackgroundWorker;
@@ -102,6 +107,11 @@ namespace PokeIRC {
 	static const int POKMEON_BOX_POKENUM = 30; //ポケモン３０体
 	int dispBoxNo;
 	int dispBoxPoke;
+	int mouseBoxPoke;  // マウスが指しているポケモンindex
+
+	int handBoxNo;     // つかんでいるポケモンボックス番号
+	int handBoxPoke;   // つかんでいるポケモンindex
+
 	static int sendBoxNo;
 	static int sendBoxPoke;
 	static int targetPoke;   // 今選択しているポケモンNo
@@ -118,6 +128,7 @@ namespace PokeIRC {
 	static int DownloadMatchNum;  // 落としてきた数
 	int GTSDispMode;   //ＧＴＳの画面遷移状態
 	String^ BackupToolTipMsg;
+	int BackupPosNo;
 	static int POKEBOX_OFFSETX;
 	static int POKEBOX_OFFSETY;
 
@@ -140,6 +151,10 @@ namespace PokeIRC {
 	private: System::Windows::Forms::ToolStripMenuItem^  sendGTSSToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
 	private: System::Windows::Forms::PictureBox^  pictureBox3;
+	private: System::Windows::Forms::ToolStripMenuItem^  handHToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  infoIToolStripMenuItem;
+	private: System::Windows::Forms::PictureBox^  pictureBox4;
+	private: System::Windows::Forms::Label^  label1;
 
 
 	private: System::Windows::Forms::ToolStripMenuItem^  dSGTSSyncTToolStripMenuItem;
@@ -182,11 +197,15 @@ namespace PokeIRC {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->toolTip1 = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->handHToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->infoIToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sendGTSSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
@@ -197,6 +216,7 @@ namespace PokeIRC {
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->BeginInit();
@@ -232,8 +252,7 @@ namespace PokeIRC {
 			// StripStatusLabelCenter
 			// 
 			this->StripStatusLabelCenter->Name = L"StripStatusLabelCenter";
-			this->StripStatusLabelCenter->Size = System::Drawing::Size(11, 17);
-			this->StripStatusLabelCenter->Text = L"2";
+			this->StripStatusLabelCenter->Size = System::Drawing::Size(0, 17);
 			// 
 			// menuStrip1
 			// 
@@ -351,6 +370,8 @@ namespace PokeIRC {
 			// splitContainer1.Panel2
 			// 
 			this->splitContainer1->Panel2->BackColor = System::Drawing::Color::White;
+			this->splitContainer1->Panel2->Controls->Add(this->label1);
+			this->splitContainer1->Panel2->Controls->Add(this->pictureBox4);
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox3);
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox2);
 			this->splitContainer1->Panel2->Controls->Add(this->webBrowser1);
@@ -392,6 +413,25 @@ namespace PokeIRC {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"ＭＳ Ｐゴシック", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+				static_cast<System::Byte>(128)));
+			this->label1->Location = System::Drawing::Point(135, 298);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(0, 19);
+			this->label1->TabIndex = 5;
+			// 
+			// pictureBox4
+			// 
+			this->pictureBox4->BackColor = System::Drawing::Color::Transparent;
+			this->pictureBox4->Location = System::Drawing::Point(40, 255);
+			this->pictureBox4->Name = L"pictureBox4";
+			this->pictureBox4->Size = System::Drawing::Size(37, 30);
+			this->pictureBox4->TabIndex = 4;
+			this->pictureBox4->TabStop = false;
+			// 
 			// pictureBox3
 			// 
 			this->pictureBox3->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"pictureBox3.Image")));
@@ -430,15 +470,30 @@ namespace PokeIRC {
 			// 
 			// contextMenuStrip1
 			// 
-			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->sendGTSSToolStripMenuItem});
+			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->handHToolStripMenuItem, 
+				this->infoIToolStripMenuItem, this->sendGTSSToolStripMenuItem});
 			this->contextMenuStrip1->Name = L"contextMenuStrip1";
-			this->contextMenuStrip1->Size = System::Drawing::Size(133, 26);
+			this->contextMenuStrip1->Size = System::Drawing::Size(161, 70);
+			// 
+			// handHToolStripMenuItem
+			// 
+			this->handHToolStripMenuItem->Name = L"handHToolStripMenuItem";
+			this->handHToolStripMenuItem->Size = System::Drawing::Size(160, 22);
+			this->handHToolStripMenuItem->Text = L"つかむ(&H)";
+			this->handHToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::handHToolStripMenuItem_Click);
+			// 
+			// infoIToolStripMenuItem
+			// 
+			this->infoIToolStripMenuItem->Name = L"infoIToolStripMenuItem";
+			this->infoIToolStripMenuItem->Size = System::Drawing::Size(160, 22);
+			this->infoIToolStripMenuItem->Text = L"ようすをみる(&I)";
+			this->infoIToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::infoIToolStripMenuItem_Click);
 			// 
 			// sendGTSSToolStripMenuItem
 			// 
 			this->sendGTSSToolStripMenuItem->Name = L"sendGTSSToolStripMenuItem";
-			this->sendGTSSToolStripMenuItem->Size = System::Drawing::Size(132, 22);
-			this->sendGTSSToolStripMenuItem->Text = L"SendGTS(&S)";
+			this->sendGTSSToolStripMenuItem->Size = System::Drawing::Size(160, 22);
+			this->sendGTSSToolStripMenuItem->Text = L"ＧＰＦへあずける(&S)";
 			// 
 			// MainForm
 			// 
@@ -448,7 +503,7 @@ namespace PokeIRC {
 			this->Controls->Add(this->toolStripContainer1);
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MainForm";
-			this->Text = L"PC-IRC-DS";
+			this->Text = L"GlobalPokemonFanClub";
 			this->Load += gcnew System::EventHandler(this, &MainForm::Form1_Load);
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MainForm::MainForm_FormClosing);
 			this->statusStrip1->ResumeLayout(false);
@@ -464,7 +519,9 @@ namespace PokeIRC {
 			this->toolStripContainer1->PerformLayout();
 			this->splitContainer1->Panel1->ResumeLayout(false);
 			this->splitContainer1->Panel2->ResumeLayout(false);
+			this->splitContainer1->Panel2->PerformLayout();
 			this->splitContainer1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox1))->EndInit();
@@ -481,6 +538,7 @@ private: System::Void sendDataDToolStripMenuItem_Click(System::Object^  sender, 
 private: System::Void DoWork( System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e );
 private: System::Void RunWorkerCompleted( System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e );
 private: void ThreadWork(void);
+private: void pokemonMouse(int pokeNo);
 private: void TestUploadDownload(int pid, String^ proxy);
 private: static void SetProxy(String^ proxy);
 private: static bool RequestCheckServerState(void);
@@ -548,6 +606,9 @@ private: System::Void pictureBox3_DragEnter(System::Object^  sender, System::Win
 
 		 }
 private: System::Void pictureBox3_DragDrop(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e);
+private: System::Void handHToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+private: System::Void infoIToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+
 };
 }
 

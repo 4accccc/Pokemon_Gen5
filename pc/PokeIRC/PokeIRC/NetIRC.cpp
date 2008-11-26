@@ -99,26 +99,6 @@ void NetIRC::draw(Form^ fm)
 	MainForm^ mform = dynamic_cast<MainForm^>(fm);
 	unsigned char data_up[64]={0,1,2,3};
 
-	/*
-	if(IRC_IsConnectUsb()){
-		String^ coms = gcnew String((wchar_t *)IRC_GetPortName());
-		mform->StripStatusLabel->Text = "USB認識中" + coms;
-	}else{
-		mform->StripStatusLabel->Text = "USB切断中";
-	}
-	if(IRC_IsConnect()){
-		if(IRC_IsSender()){
-			mform->StripStatusLabel->Text += "Ir 親";
-		}else{
-			mform->StripStatusLabel->Text += "Ir 子";
-		}
-	}else{
-		mform->StripStatusLabel->Text += "Ir 切";
-	}
-	if(dataArray!=nullptr){
-		mform->StripStatusLabelCenter->Text = dataArray->Length.ToString();
-	}
-	*/
 
 	{
 		bool tmp;
@@ -206,6 +186,10 @@ bool NetIRC::SendLoop(void)
 	if(!IRC_IsConnect()){
 		return true;
 	}
+	if(dataArray==nullptr){
+		return true;
+	}
+
 	int length = dataArray->GetLength(0);
 
 	pin_ptr<unsigned char> wptr = &dataArray[0];
@@ -221,6 +205,8 @@ bool NetIRC::SendLoop(void)
 	else{
 		IRC_Send(wptr, length, COMMAND_SND, SendValue+1);  //送れる時はSendValue+1
 		isDataSend=false;
+		delete dataArray;
+		dataArray = nullptr;
 	}
 	Debug::WriteLine("送信" + SendValue + "サイズ"+length);
 	return false;
@@ -562,6 +548,33 @@ void NetIRC::SetProxy(String^ proxy)
 
 	ghttpSetProxy(ch);
 	free(ch);
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   データを送り終わったかどうか
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+//bool NetIRC::IsDataSend(void)
+//{
+//	return isDataSend;
+//}
+
+//--------------------------------------------------------------
+/**
+ * @breif   つながっているかどうか
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+bool NetIRC::IsConnect(void)
+{
+	if( IRC_IsConnect() ){
+		return true;
+	}	
+	return false;
 }
 
 //--------------------------------------------------------------
