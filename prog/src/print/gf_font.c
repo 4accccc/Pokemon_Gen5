@@ -236,8 +236,9 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 		wk->glyphCharW = wk->glyphInfo.cellWidth  /8  + (wk->glyphInfo.cellWidth  % 8 != 0);
 		wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
 		wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
-//		OS_TPrintf("[FONT] Glyph CharW:%d, CharH:%d, remBits:%d\n",
-//				wk->glyphCharW, wk->glyphCharH, wk->glyphRemBits);
+		if( wk->glyphRemBits == 0 ){ wk->glyphRemBits = 8; }
+		TAYA_Printf("[FONT] Glyph CharW:%d, CharH:%d, remBits:%d\n",
+				wk->glyphCharW, wk->glyphCharH, wk->glyphRemBits);
 
 		wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
 		wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
