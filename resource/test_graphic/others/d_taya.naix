@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-08-06T13:20:41
+	Update:2008-11-25T16:28:29
  *****************************************************************************/
 
 #ifndef NARC_D_TAYA_NAIX_
@@ -12,8 +12,10 @@
 
 enum {
 	NARC_d_taya_default_nclr = 0,
-	NARC_d_taya_lc12_2bit_nftr = 1,
-	NARC_d_taya_d_taya_dat = 2
+	NARC_d_taya_lcfont1_nftr = 1,
+	NARC_d_taya_lc12_2bit_nftr = 2,
+	NARC_d_taya_lcfont2_nftr = 3,
+	NARC_d_taya_d_taya_dat = 4
 };
 
 /* NARC_D_TAYA_NAIX_ */
