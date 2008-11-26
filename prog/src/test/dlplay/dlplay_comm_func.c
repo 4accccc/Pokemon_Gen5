@@ -340,13 +340,19 @@ BOOL	DLPlayComm_IsFinish_TermSystem( DLPLAY_COMM_DATA *d_comm )
 }
 BOOL	DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm )
 {
-	return d_comm->isConnect_;
+	d_comm->selfHandle_ = GFL_NET_HANDLE_GetCurrentHandle();
+	if( GFL_NET_HANDLE_IsNegotiation( d_comm->selfHandle_ ) == TRUE )
+	{
+		return d_comm->isConnect_;
+	}
+	return FALSE;
 }
 BOOL	DLPlayComm_IsStartPostIndex( DLPLAY_COMM_DATA *d_comm )
 {
 	return d_comm->isStartPostIndex_;
 }
-BOOL	DLPlayComm_IsPostIndex( DLPLAY_COMM_DATA *d_comm )
+BOOL	DLPlayComm_IsPostIndex( DLPLAY_Cif( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+OMM_DATA *d_comm )
 {
 	return d_comm->isPostIndex_;
 }

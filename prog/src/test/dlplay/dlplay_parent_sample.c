@@ -266,8 +266,16 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	case DPM_START_SHARE:
 		DLPlayComm_InitParent( parentData->commSys_ );
 		DLPlayFunc_PutString( "Wait child......",parentData->msgSys_); 
-		parentData->mainSeq_ = DPM_WAIT_CHILD;
+		//parentData->mainSeq_ = DPM_WAIT_CHILD;
+		parentData->mainSeq_ = 0xFF;
 		break;
+	case 0xFF:
+		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+		{
+			parentData->mainSeq_ = DPM_WAIT_CHILD;
+		}
+		break;
+
 
 	case DPM_WAIT_CHILD:
 		if ( DLPlayComm_IsConnect( parentData->commSys_ ) == TRUE ){
