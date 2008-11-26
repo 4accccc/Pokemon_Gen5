@@ -15,7 +15,7 @@
 #include "dlplay_comm_func.h"
 #include "dlplay_disp_sys.h"
 
-#include "poke_icon_pl.naix"
+#include "pokeicon/pokeicon.h"
 
 //======================================================================
 //	define
@@ -172,13 +172,13 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 	if( dispSys->isInitBox_ == FALSE )
 	{
 		NNS_G2dInitImagePaletteProxy( &dispSys->boxPltProxy_ );
-		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_ICON_PL , NARC_poke_icon_pl_poke_icon_NCLR , 
+		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_POKEICON , POKEICON_GetPalArcIndex() , 
 				NNS_G2D_VRAM_TYPE_2DMAIN , 0 , dispSys->heapID_ , &dispSys->boxPltProxy_ );
 		
-		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_ICON_PL , NARC_poke_icon_pl_poke_icon_000_NCER , 
+		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_GetAnmCellArcIndex() , 
 					FALSE , &dispSys->boxCellData_ , dispSys->heapID_ );
 	
-		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_ICON_PL , NARC_poke_icon_pl_poke_icon_000_NANR ,
+		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_GetAnmCellAnmArcIndex() ,
 					FALSE , &dispSys->boxAnmData_ , dispSys->heapID_ );
 	}
 	
@@ -203,7 +203,7 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 
 						
 /*
-			GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_ICON_PL , fileNo , FALSE ,
+			GFL_ARC_UTIL_TransVramCharacterMakeProxy( ARCID_POKEICON , fileNo , FALSE ,
 						CHAR_MAP_1D , 0 , NNS_G2D_VRAM_TYPE_2DMAIN , 0x1000+(loadNum*0x400) ,
 						dispSys->heapID_ , &imgProxy );
 */
@@ -242,20 +242,16 @@ static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys )
 
 //ポケモンの番号とフォルムからファイル名を識別し、イメージプロキシを設定。
 //戻り値はパレット番号
-#include "pl_pokeicon.dat"
-#include "pl_monsno.h"
-static	u16	DLPlayDispSys_GetPokemonIconNo( const u16 pokeNo , const u8 formNo ,const u8 isEgg );
 static	u8	DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 offs , HEAPID heapID ,const u16 pokeNo , const u8 formNo , const u8 isEgg )
 {
-	const	ARCID arcID = ARCID_ICON_PL;
+	const	ARCID arcID = ARCID_POKEICON;
 	ARCDATID datID;
 	const	BOOL compressedFlag = FALSE;
 	const	CHAR_MAPPING_TYPE mapType = CHAR_MAP_1D;
 	const	NNS_G2D_VRAM_TYPE vramType = NNS_G2D_VRAM_TYPE_2DMAIN;
 	void* arcData;
 	
-	datID = pokeNo + NARC_poke_icon_pl_poke_icon_000_NCGR;
-	datID = DLPlayDispSys_GetPokemonIconNo( pokeNo , formNo , isEgg );	
+	datID = POKEICON_GetCgxArcIndexByMonsNumber( pokeNo , formNo , isEgg );	
 
 	arcData = GFL_ARC_UTIL_Load( arcID, datID, compressedFlag, GetHeapLowID(heapID) );
 
@@ -269,55 +265,6 @@ static	u8	DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 off
 		}
 		GFL_HEAP_FreeMemory( arcData );
 	}
-	return IconPalAtr_pl[datID-1];	//パレットの分引く
-}
-
-static	u16	DLPlayDispSys_GetPokemonIconNo( const u16 pokeNo , const u8 formNo ,const u8 isEgg)
-{
-	if( isEgg == 1 ){
-		if( pokeNo == MONSNO_MANAFI ){
-			return NARC_poke_icon_pl_poke_icon_mnf_NCGR;
-		}else{
-			return NARC_poke_icon_pl_poke_icon_tam_NCGR;
-		}
-	}
-
-	if( formNo != 0 ){
-		if( pokeNo == MONSNO_DEOKISISU ){
-			return ( NARC_poke_icon_pl_poke_icon_d01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_ANNOON ){
-			return ( NARC_poke_icon_pl_poke_icon_u02_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_MINOMUTTI ){
-			return ( NARC_poke_icon_pl_poke_icon_455_01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_MINOMESU ){
-			return ( NARC_poke_icon_pl_poke_icon_457_01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_SIIUSI ){
-			return ( NARC_poke_icon_pl_poke_icon_458_01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_SIIDORUGO ){
-			return ( NARC_poke_icon_pl_poke_icon_459_01_NCGR + formNo - 1 );
-		}
-/*
-		//ギラティナ・シェイミ・ロトムのフォルムチェンジはアイコン無いので保留
-		if( pokeNo == MONSNO_KIMAIRAN ){
-			return ( NARC_poke_icon_pl_poke_icon_509_01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_EURISU ){
-			return ( NARC_poke_icon_pl_poke_icon_516_01_NCGR + formNo - 1 );
-		}
-		if( pokeNo == MONSNO_PURAZUMA ){
-			return ( NARC_poke_icon_pl_poke_icon_519_01_NCGR + formNo - 1 );
-		}
-*/
-	}
-
-	if( pokeNo > MONSNO_END ){ return 0; }
-
-	return ( NARC_poke_icon_pl_poke_icon_000_NCGR + pokeNo );
-
+	return POKEICON_GetPalNum(pokeNo, formNo, isEgg);
 }
 

@@ -162,7 +162,7 @@ static GFL_PROC_RESULT DebugLayoutMainProcInit( GFL_PROC * proc, int * seq, void
     wk->layoutno = 0;
 		
 	{
-		static const GFL_BG_DISPVRAM dispvramBank = {
+		static const GFL_DISP_VRAM dispvramBank = {
 			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -172,7 +172,9 @@ static GFL_PROC_RESULT DebugLayoutMainProcInit( GFL_PROC * proc, int * seq, void
 			GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 			GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット			
+			GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット			
+			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+			GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
 		};		
 		GFL_DISP_SetBank( &dispvramBank );
 	}	

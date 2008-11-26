@@ -52,7 +52,7 @@ static BOOL DebugMatsuda_SaveTest(D_MATSU_WORK *wk);
 //--------------------------------------------------------------
 static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	static const GFL_BG_DISPVRAM vramBank = {
+	static const GFL_DISP_VRAM vramBank = {
 		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -62,7 +62,9 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
 	};
 
 	D_MATSU_WORK* wk;

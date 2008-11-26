@@ -39,7 +39,9 @@ typedef	struct	{
 	GXVRamSubOBJExtPltt	sub_obj_expltt;		//サブ2DエンジンのOBJ拡張パレットにに割り当て
 	GXVRamTex			teximage;			//テクスチャイメージスロットに割り当て
 	GXVRamTexPltt		texpltt;			//テクスチャパレットスロットに割り当て
-}GFL_BG_DISPVRAM;
+	GXOBJVRamModeChar	main_mapping;		//メインOBJマッピングモード
+	GXOBJVRamModeChar	sub_mapping;		//サブOBJマッピングモード
+}GFL_DISP_VRAM;
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -60,7 +62,7 @@ extern	void	GFL_DISP_ClearVRAM( u16	withoutVRAM );
  * @param	data	設定データ
  */
 //--------------------------------------------------------------------------------------------
-extern void	GFL_DISP_SetBank( const GFL_BG_DISPVRAM* dispvram );
+extern void	GFL_DISP_SetBank( const GFL_DISP_VRAM* dispvram );
 
 //--------------------------------------------------------------------------------------------
 /**

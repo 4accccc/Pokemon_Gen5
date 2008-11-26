@@ -396,7 +396,7 @@ struct _FIELD_SETUP {
 //------------------------------------------------------------------
 ///ＶＲＡＭバンク設定構造体
 //通信のため メイン2D　D→C　テクスチャイメージスロットABC→AB	Ari081113
-static const GFL_BG_DISPVRAM dispVram = {
+static const GFL_DISP_VRAM dispVram = {
 	GX_VRAM_BG_128_C,				//メイン2DエンジンのBGに割り当て 
 	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
 	GX_VRAM_SUB_BG_32_H,			//サブ2DエンジンのBGに割り当て
@@ -407,6 +407,8 @@ static const GFL_BG_DISPVRAM dispVram = {
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
 	GX_VRAM_TEX_01_AB,				//テクスチャイメージスロットに割り当て
 	GX_VRAM_TEXPLTT_0_G,			//テクスチャパレットスロットに割り当て
+	GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 
 //------------------------------------------------------------------

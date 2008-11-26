@@ -37,7 +37,7 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 
 	//VRAM設定
 	{
-		GFL_BG_DISPVRAM vramSetTable = {
+		GFL_DISP_VRAM vramSetTable = {
 			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -47,7 +47,9 @@ void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo,void* pWork)
 			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_0_F				// テクスチャパレットスロット
+			GX_VRAM_TEXPLTT_0_F,			// テクスチャパレットスロット
+			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};
 		GFL_DISP_SetBank( &vramSetTable );
 

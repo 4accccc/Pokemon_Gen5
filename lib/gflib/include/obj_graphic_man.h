@@ -52,7 +52,7 @@ typedef enum {
 
 extern void GFL_OBJGRP_Init( void );
 extern void GFL_OBJGRP_Exit( void );
-extern void GFL_OBJGRP_sysStart( u16 heapID, const GFL_BG_DISPVRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
+extern void GFL_OBJGRP_sysStart( u16 heapID, const GFL_DISP_VRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
 extern void GFL_OBJGRP_sysEnd( void );
 
 

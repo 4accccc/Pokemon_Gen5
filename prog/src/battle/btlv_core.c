@@ -456,7 +456,7 @@ void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType
 
 static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 {
-	static const GFL_BG_DISPVRAM vramBank = {
+	static const GFL_DISP_VRAM vramBank = {
 		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -466,7 +466,9 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
 
 	// BGsystem初期化
