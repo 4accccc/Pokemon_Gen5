@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-26T19:38:13"/>
+	<create user="taya" host="W00146" date="2008-11-26T23:02:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -456,12 +456,12 @@
 相手に背中を見せられない！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_AffBad">
+	<row id="BTL_STRID_STD_AffGood">
 		<language name="JPN" width="216">こうかは　ばつぐんだ！</language>
 		<language name="JPN_KANJI">効果はバツグンだ！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_AffGood">
+	<row id="BTL_STRID_STD_AffBad">
 		<language name="JPN" width="216">こうかは　いまひとつ　のようだ・・・</language>
 		<language name="JPN_KANJI">効果は今ひとつのようだ・・・</language>
 	</row>
