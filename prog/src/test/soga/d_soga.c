@@ -251,7 +251,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	wk->heapID = HEAPID_SOGABE_DEBUG;
 		
 	{
-		static const GFL_BG_DISPVRAM dispvramBank = {
+		static const GFL_DISP_VRAM dispvramBank = {
 			GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 			GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
@@ -261,7 +261,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット			
+			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};		
 		GFL_DISP_SetBank( &dispvramBank );
 	}	
