@@ -74,8 +74,10 @@ namespace PokeIRC {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(PokemonSearch::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->numericUpDown3 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
@@ -88,7 +90,6 @@ namespace PokeIRC {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
 			this->panel1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown2))->BeginInit();
@@ -129,6 +130,16 @@ namespace PokeIRC {
 			this->panel1->Name = L"panel1";
 			this->panel1->Size = System::Drawing::Size(408, 226);
 			this->panel1->TabIndex = 1;
+			// 
+			// listBox1
+			// 
+			this->listBox1->FormattingEnabled = true;
+			this->listBox1->ItemHeight = 12;
+			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) {L"オス", L"メス", L"どちらでも"});
+			this->listBox1->Location = System::Drawing::Point(102, 67);
+			this->listBox1->Name = L"listBox1";
+			this->listBox1->Size = System::Drawing::Size(123, 16);
+			this->listBox1->TabIndex = 15;
 			// 
 			// label6
 			// 
@@ -257,16 +268,6 @@ namespace PokeIRC {
 			this->label2->TabIndex = 0;
 			this->label2->Text = L"ポケモン";
 			// 
-			// listBox1
-			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 12;
-			this->listBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) {L"オス", L"メス", L"どちらでも"});
-			this->listBox1->Location = System::Drawing::Point(102, 67);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(123, 16);
-			this->listBox1->TabIndex = 15;
-			// 
 			// PokemonSearch
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
@@ -276,6 +277,7 @@ namespace PokeIRC {
 			this->ClientSize = System::Drawing::Size(451, 303);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->Name = L"PokemonSearch";
 			this->Text = L"PokemonSearch";
 			this->panel1->ResumeLayout(false);

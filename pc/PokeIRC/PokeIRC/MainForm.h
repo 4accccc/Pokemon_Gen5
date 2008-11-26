@@ -23,6 +23,12 @@ namespace PokeIRC {
 #define BOX_TRAYNAME_BUFSIZE	(20)	// “ú–{Œê‚W•¶Žš{EOMBŠCŠO”Å—p‚Ì—]—T‚àŒ©‚Ä‚±‚Ì’ö“xB
 #define BOX_MAX_POS				(BOX_MAX_RAW*BOX_MAX_COLUMN)
 
+	public enum FORM_DISPMODE_ENUM : int {
+		FORM_DISPMODE_WEB = 0,
+		FORM_DISPMODE_BOX,
+		FORM_DISPMODE_SOUND,
+		FORM_DISPMODE_MAX
+	};
 
 
 
@@ -155,6 +161,7 @@ namespace PokeIRC {
 	private: System::Windows::Forms::ToolStripMenuItem^  infoIToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pictureBox4;
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::PictureBox^  pictureBox5;
 
 
 	private: System::Windows::Forms::ToolStripMenuItem^  dSGTSSyncTToolStripMenuItem;
@@ -197,6 +204,7 @@ namespace PokeIRC {
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->pictureBox5 = (gcnew System::Windows::Forms::PictureBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->pictureBox4 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox3 = (gcnew System::Windows::Forms::PictureBox());
@@ -216,6 +224,7 @@ namespace PokeIRC {
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox5))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox4))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->BeginInit();
@@ -370,6 +379,7 @@ namespace PokeIRC {
 			// splitContainer1.Panel2
 			// 
 			this->splitContainer1->Panel2->BackColor = System::Drawing::Color::White;
+			this->splitContainer1->Panel2->Controls->Add(this->pictureBox5);
 			this->splitContainer1->Panel2->Controls->Add(this->label1);
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox4);
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox3);
@@ -412,6 +422,20 @@ namespace PokeIRC {
 			this->button1->Text = L"<<";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MainForm::button1_Click);
+			// 
+			// pictureBox5
+			// 
+			this->pictureBox5->Cursor = System::Windows::Forms::Cursors::Hand;
+			this->pictureBox5->Image = (cli::safe_cast<System::Drawing::Image^  >(resources->GetObject(L"pictureBox5.Image")));
+			this->pictureBox5->Location = System::Drawing::Point(227, 18);
+			this->pictureBox5->Name = L"pictureBox5";
+			this->pictureBox5->Size = System::Drawing::Size(244, 48);
+			this->pictureBox5->SizeMode = System::Windows::Forms::PictureBoxSizeMode::AutoSize;
+			this->pictureBox5->TabIndex = 6;
+			this->pictureBox5->TabStop = false;
+			this->pictureBox5->MouseLeave += gcnew System::EventHandler(this, &MainForm::pictureBox5_MouseLeave);
+			this->pictureBox5->Click += gcnew System::EventHandler(this, &MainForm::pictureBox5_Click);
+			this->pictureBox5->MouseEnter += gcnew System::EventHandler(this, &MainForm::pictureBox5_MouseEnter);
 			// 
 			// label1
 			// 
@@ -501,6 +525,7 @@ namespace PokeIRC {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(638, 498);
 			this->Controls->Add(this->toolStripContainer1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MainForm";
 			this->Text = L"GlobalPokemonFanClub";
@@ -521,6 +546,7 @@ namespace PokeIRC {
 			this->splitContainer1->Panel2->ResumeLayout(false);
 			this->splitContainer1->Panel2->PerformLayout();
 			this->splitContainer1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox5))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox4))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox3))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBox2))->EndInit();
@@ -560,6 +586,8 @@ private: void pokemonSearchDisp(void);
 private: int PokemonName2No(String^ name);
 private: static void RequestChange(void);
 public: void Draw(void);
+private: void FormDispChange(int mode);
+
 
 
 
@@ -608,6 +636,12 @@ private: System::Void pictureBox3_DragEnter(System::Object^  sender, System::Win
 private: System::Void pictureBox3_DragDrop(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e);
 private: System::Void handHToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 private: System::Void infoIToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void pictureBox5_Click(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void pictureBox5_MouseEnter(System::Object^  sender, System::EventArgs^  e);
+
+private: System::Void pictureBox5_MouseLeave(System::Object^  sender, System::EventArgs^  e);
 
 };
 }

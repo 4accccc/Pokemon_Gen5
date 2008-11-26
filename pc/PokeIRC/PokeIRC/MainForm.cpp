@@ -93,11 +93,8 @@ System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e
             "このボタンを押すとサウンド転送プログラムをよびます</button>" +
             "</body></html>";
 */
-	webBrowser1->Show();
-	pictureBox1->Hide();
-	pictureBox2->Hide();
-	pictureBox3->Hide();
-	pictureBox4->Hide();
+	FormDispChange(FORM_DISPMODE_WEB);
+
 	pictureBox4->BackColor = Color::FromArgb(0, 0, 0, 0);
 	pictureBox1->Controls->Add(pictureBox4);
 
@@ -688,8 +685,7 @@ System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, 
 	//TestUploadDownload(100000, proxy);
 
 
-	webBrowser1->Show();
-	pictureBox1->Hide();
+	FormDispChange(FORM_DISPMODE_WEB);
 
 
 }
@@ -754,6 +750,7 @@ void MainForm::CallProg(String^ message)
 		threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
 	    threadB->Start(); // 
 		threadB->Join();
+		FormDispChange(FORM_DISPMODE_BOX);
 		pokemonListDisp(0);
 	}
 	else if(message =="PokeSearch"){
@@ -772,28 +769,14 @@ void MainForm::CallProg(String^ message)
 			threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
 		    threadB->Start(); // 
 			threadB->Join();
+			FormDispChange(FORM_DISPMODE_BOX);
 			pokemonSearchDisp();
 		}
 	}
 	else if(message =="PokeSound"){
-		pictureBox2->Dock = DockStyle::Fill;
-		webBrowser1->Hide();
-		pictureBox1->Hide();
-		pictureBox2->Show();
-		pictureBox3->Show();
-
-		int pictX = 588;
-		int pictY = 549;
-		pictureBox3->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
-		pictureBox3->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
+		FormDispChange(FORM_DISPMODE_SOUND);
 		pictureBox3->AllowDrop = true;
-
-		pictY = 480;
-		label1->Show();
-		label1->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
-		label1->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
 		label1->Text = "音楽を♪に重ねてください";
-
 
 	}
 	else{
@@ -815,7 +798,6 @@ void MainForm::pokemonSearchDisp(void)
 	int xof = POKEBOX_OFFSETX;
 	int yof = POKEBOX_OFFSETY;
 
-	//dispBoxNo = boxNo;
 	Bitmap^ bmp = gcnew Bitmap("boximage.bmp"); 
 
 	pictureBox1->Width = bmp->Width;
@@ -834,22 +816,10 @@ void MainForm::pokemonSearchDisp(void)
 		FileNCGRead^ fngc = gcnew FileNCGRead;
 
 		fngc->readWithNcl(ncgname,"", nclname);
-	
-//		pictureBox1->Image = fngc->PictureWriteOffset(bmp, pictureBox1, 10*(i%6), 10*(i/6),10,10);
 		fngc->PictureWriteOffset(bmp, pictureBox1, xof+80*(i%6), yof+80*(i/6),10,10);
-
-
 	}
 	pictureBox1->Image = bmp;
-	//pictureBox1->Dock = DockStyle::Fill;
-	webBrowser1->Dock = DockStyle::Fill;
 
-	webBrowser1->Visible = false;
-	pictureBox1->Visible = true;
-	pictureBox4->Visible = false;
-
-//	webBrowser1->Visible = false;
-//	pictureBox1->Visible = true;
 
 }
 
@@ -909,15 +879,8 @@ void MainForm::pokemonListDisp(int boxNo)
 	button2->Width = (this->Width / 5) * 3;
 	button3->Width = this->Width / 5;
 
-
-
-
-//	pictureBox1->Dock = DockStyle::Fill;
-	webBrowser1->Dock = DockStyle::Fill;
-
-	webBrowser1->Visible = false;
-	pictureBox1->Visible = true;
-	pictureBox4->Visible = false;
+	pictureBox5->Top = 600;
+	pictureBox5->Left = 700;
 
 	pokemonMouse(handPoke.pokeno);
 }
@@ -1470,12 +1433,7 @@ System::Void MainForm::pictureBox2_MouseClick(System::Object^  sender, System::W
 
 	if((e->X > (321+pictX)) && (e->X < (558+pictX))){
 		if((e->Y > (192+pictY)) && (e->Y < (236+pictY))){
-			webBrowser1->Show();
-			pictureBox1->Hide();
-			pictureBox2->Hide();
-			pictureBox3->Hide();
-			pictureBox4->Hide();
-			label1->Hide();
+			FormDispChange(FORM_DISPMODE_WEB);
 		}
 	}
 }
@@ -1580,3 +1538,81 @@ System::Void MainForm::infoIToolStripMenuItem_Click(System::Object^  sender, Sys
     this->Region = new Region(path);
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * @breif   表示変更
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+void MainForm::FormDispChange(int mode)
+{
+	switch(mode){
+		case FORM_DISPMODE_WEB:
+			webBrowser1->Visible = true;
+			pictureBox1->Visible = false;
+			pictureBox2->Visible = false;
+			pictureBox3->Visible = false;
+			pictureBox4->Visible = false;
+			pictureBox5->Visible = false;
+			label1->Visible = false;
+			break;
+		case FORM_DISPMODE_BOX:
+			webBrowser1->Dock = DockStyle::Fill;
+			webBrowser1->Visible = false;
+			pictureBox1->Visible = true;
+			pictureBox2->Visible = false;
+			pictureBox3->Visible = false;
+			pictureBox4->Visible = false;
+			pictureBox5->Visible = true;
+			label1->Visible = false;
+			break;
+		case FORM_DISPMODE_SOUND:
+			pictureBox2->Dock = DockStyle::Fill;
+			webBrowser1->Hide();
+			pictureBox1->Hide();
+			pictureBox2->Show();
+			pictureBox3->Show();
+
+			int pictX = 588;
+			int pictY = 549;
+			pictureBox3->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
+			pictureBox3->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
+			pictureBox3->AllowDrop = true;
+
+			pictY = 480;
+			label1->Show();
+			label1->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
+			label1->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
+			pictureBox4->Visible = false;
+			pictureBox5->Visible = false;
+			break;
+	}
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   表示変更
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+
+System::Void MainForm::pictureBox5_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	FormDispChange(FORM_DISPMODE_WEB);
+}
+
+System::Void MainForm::pictureBox5_MouseEnter(System::Object^  sender, System::EventArgs^  e)
+{
+	pictureBox5->Image = gcnew Bitmap("backbuttonhi.bmp"); 
+}
+
+System::Void MainForm::pictureBox5_MouseLeave(System::Object^  sender, System::EventArgs^  e)
+{
+	pictureBox5->Image = gcnew Bitmap("backbutton.bmp"); 
+}
