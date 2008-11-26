@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-21T18:41:30"/>
+	<create user="taya" host="W00146" date="2008-11-26T19:38:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -391,7 +391,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -456,9 +456,14 @@
 相手に背中を見せられない！</language>
 	</row>
 
-	<row id="BTLMSG_STD_ESCAPE0004">
-		<language name="JPN" width="216">ほげほえ</language>
-		<language name="JPN_KANJI">ほげほえ</language>
+	<row id="BTL_STRID_STD_AffBad">
+		<language name="JPN" width="216">こうかは　ばつぐんだ！</language>
+		<language name="JPN_KANJI">効果はバツグンだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_AffGood">
+		<language name="JPN" width="216">こうかは　いまひとつ　のようだ・・・</language>
+		<language name="JPN_KANJI">効果は今ひとつのようだ・・・</language>
 	</row>
 
 	<flowchart-group-list>
