@@ -52,6 +52,9 @@ void MachineSystem_Init(void)
 		p_table = OS_AllocFromMainArenaLo(file_table_size, 4);
 
 		SDK_ASSERT(p_table != NULL);
+
+		OS_EnableIrq();
+		
 		(void)FS_LoadTable(p_table, file_table_size);
 
 		OS_TPrintf("FileTable Size     = 0x%08x bytes.\n", file_table_size);
@@ -60,8 +63,6 @@ void MachineSystem_Init(void)
 	}
 	// ‚u‚q‚`‚l“]‘—ŠÖ”‰Šú‰»
 	NNS_GfdInitVramTransferManager( VRAMtransManTaskArray, VRAMTRANS_MAN_TASKNUM );
-
-	OS_EnableIrq();
 }
 
 //------------------------------------------------------------------
