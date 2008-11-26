@@ -175,10 +175,10 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_POKEICON , POKEICON_GetPalArcIndex() , 
 				NNS_G2D_VRAM_TYPE_2DMAIN , 0 , dispSys->heapID_ , &dispSys->boxPltProxy_ );
 		
-		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_GetAnmCellArcIndex() , 
+		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_Get64kCellArcIndex() , 
 					FALSE , &dispSys->boxCellData_ , dispSys->heapID_ );
 	
-		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_GetAnmCellAnmArcIndex() ,
+		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_Get64kCellAnmArcIndex() ,
 					FALSE , &dispSys->boxAnmData_ , dispSys->heapID_ );
 	}
 	
