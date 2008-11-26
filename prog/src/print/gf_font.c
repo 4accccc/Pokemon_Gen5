@@ -5,7 +5,7 @@
  * @author	taya
  *
  * @date	2005.09.14	作成
- * @date	2008.10.11	従来の独自フォーマットからNitroFontフォーマットに変更
+ * @date	2008.10.11	従来の独自フォーマットからNitroFont(2bit)フォーマットに変更
  */
 //=============================================================================================
 #include	<assert.h>
@@ -13,11 +13,11 @@
 #include	<heapsys.h>
 #include	<arc_tool.h>
 
-#include	"print\gf_font.h"
+#include	"print/gf_font.h"
 
 typedef u8 (*pWidthGetFunc)(const GFL_FONT*, u32);
 typedef void (*pGetBitmapFunc)(const GFL_FONT*, u32, void*, u16*, u16* );
-
+typedef void (*pDotExpandFunc)( const u8* glyphSrc, u16 glyph2ndCharBits, u8* dst );
 
 enum {
 	SRC_CHAR_SIZE = 0x10,
@@ -103,9 +103,7 @@ typedef struct {
 struct  _GFL_FONT	{
 	GFL_FONT_LOADTYPE        loadType;
 	pGetBitmapFunc           GetBitmapFunc;
-
-	u32                      charShape;
-	u32                      letterCharSize;
+	pDotExpandFunc           DotExpandFunc;
 
 	u8*                      fontBitData;
 	u8                       readBuffer[SRC_CHAR_MAXSIZE];
@@ -118,8 +116,9 @@ struct  _GFL_FONT	{
 	pWidthGetFunc            WidthGetFunc;
 
 	NNSGlyphInfo			glyphInfo;
-	u16						glyph2ndCharBits;
-	u16						glyph2ndCharShift;
+	u16						glyphRemBits;
+	u8						glyphCharW;
+	u8						glyphCharH;
 	u32						fontDataImgOfs;
 
 	NNSFontWidth*			widthTblTop;
@@ -134,8 +133,8 @@ struct  _GFL_FONT	{
 static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPID heapID );
 static void unload_font_header( GFL_FONT* wk );
 static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID );
-static void setup_type_on_memory( GFL_FONT* wk, HEAPID heapID );
-static void setup_type_read_file( GFL_FONT* wk, HEAPID heapID );
+static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID );
+static void setup_type_read_file( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID );
 static void cleanup_font_datas( GFL_FONT* wk );
 static void cleanup_type_on_memory( GFL_FONT* wk );
 static void cleanup_type_read_file( GFL_FONT* wk );
@@ -148,8 +147,9 @@ static u8 GetWidthFixedFont( const GFL_FONT* wk, u32 index );
 static inline void ExpandFontData( const void* src_p, void* dst_p );
 static inline void BitReader_Init( BIT_READER* br, const u8* src );
 static inline void BitReader_SetNextBit( BIT_READER* br );
-static u8 BitReader_Read( BIT_READER* br, u8 bits );
-static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16* dst1st, u16* dst2nd );
+static inline u8 BitReader_Read( BIT_READER* br, u8 bits );
+static inline void dotExpand_1x1( const u8* glyphSrc, u16 gl2ndCharBits, u8* dst );
+static inline void dotExpand_2x2( const u8* glyphSrc, u16 gl2ndCharBits, u8* dst );
 
 
 
@@ -212,6 +212,8 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 		GFL_ARC_LoadDataImgofsByHandle( wk->fileHandle, datID, &wk->fontDataImgOfs );
 
 		wk->fixedFontFlag = fixedFontFlag;
+
+		// WidthTable
 		if( fixedFontFlag )
 		{
 			wk->widthTblTop = NULL;
@@ -228,14 +230,19 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 						widthTblSize, (void*)(wk->widthTblTop) );
 		}
 
+		// GlyphInfo
 		GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsGlyph,
 					sizeof(wk->glyphInfo), (void*)(&wk->glyphInfo) );
-		wk->glyph2ndCharBits = (8 - (16 - wk->glyphInfo.cellWidth)) * 2;
-		wk->glyph2ndCharShift = ((8 - wk->glyph2ndCharBits) / 2) * 4;
+		wk->glyphCharW = wk->glyphInfo.cellWidth  /8  + (wk->glyphInfo.cellWidth  % 8 != 0);
+		wk->glyphCharH = wk->glyphInfo.cellHeight /8  + (wk->glyphInfo.cellHeight % 8 != 0);
+		wk->glyphRemBits = (wk->glyphInfo.cellWidth * 2) % 8;
+//		OS_TPrintf("[FONT] Glyph CharW:%d, CharH:%d, remBits:%d\n",
+//				wk->glyphCharW, wk->glyphCharH, wk->glyphRemBits);
 
 		wk->ofsGlyphTop = wk->fontHeader.ofsGlyph + sizeof(NNSGlyphInfo);
 		wk->glyphBuf = GFL_HEAP_AllocMemory( heapID, wk->glyphInfo.cellSize );
 
+		// Glyph index table
 		{
 			u32  mapTblSize = GFL_ARC_GetDataSizeByHandle( wk->fileHandle, datID ) - wk->fontHeader.ofsMap;
 			wk->codeMapTop = GFL_HEAP_AllocMemory( heapID, mapTblSize );
@@ -287,7 +294,7 @@ static void unload_font_header( GFL_FONT* wk )
 //------------------------------------------------------------------
 static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID heapID )
 {
-	static void (* const setup_func[])( GFL_FONT*, HEAPID ) = {
+	static void (* const setup_func[])( GFL_FONT*, u8, u8, HEAPID ) = {
 		setup_type_read_file,
 		setup_type_on_memory,
 	};
@@ -296,17 +303,20 @@ static void setup_font_datas( GFL_FONT* wk, GFL_FONT_LOADTYPE loadType, HEAPID h
 
 	wk->loadType = loadType;
 
-	setup_func[loadType]( wk, heapID );
+	setup_func[loadType]( wk, wk->glyphCharW, wk->glyphCharH, heapID );
 }
-//------------------------------------------------------------------
+//--------------------------------------------------------------------------
 /**
  * 管理するフォントデータの読み込み処理（ビットデータ常駐タイプ）
  *
- * @param   wk				マネージャワークポインタ
- * @param   heapID			ビットデータ領域確保用のヒープID
+ * @param   wk			マネージャワークポインタ
+ * @param   cellW		読み出すビットデータの横キャラ数
+ * @param   cellH		読み出すビットデータの縦キャラ数
+ * @param   heapID		ヒープID
+ *
  */
-//------------------------------------------------------------------
-static void setup_type_on_memory( GFL_FONT* wk, HEAPID heapID )
+//--------------------------------------------------------------------------
+static void setup_type_on_memory( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
 	#if 0
 //	void* fontData = ArcUtil_Load( arcID, datID, FALSE, heapID, ALLOC_TOP );
@@ -320,20 +330,32 @@ static void setup_type_on_memory( GFL_FONT* wk, HEAPID heapID )
 	#else
 	// WBではオンメモリ処理をしないと思われるため未実装。
 	// とりあえずファイル読み込みタイプと同じ処理をしておく
-	wk->GetBitmapFunc = GetBitmapFileRead;
+	setup_type_read_file( wk, cellW, cellH, heapID );
 	#endif
 }
-//------------------------------------------------------------------
+//--------------------------------------------------------------------------
 /**
  * 管理するフォントデータの読み込み処理（ビットデータ逐次読み出しタイプ）
  *
- * @param   wk				マネージャワークポインタ
- * @param   heapID			使用しない
+ * @param   wk			マネージャワークポインタ
+ * @param   cellW		読み出すビットデータの横キャラ数
+ * @param   cellH		読み出すビットデータの縦キャラ数
+ * @param   heapID		ヒープID
+ *
  */
-//------------------------------------------------------------------
-static void setup_type_read_file( GFL_FONT* wk, HEAPID heapID )
+//--------------------------------------------------------------------------
+static void setup_type_read_file( GFL_FONT* wk, u8 cellW, u8 cellH, HEAPID heapID )
 {
 	wk->GetBitmapFunc = GetBitmapFileRead;
+
+	if( cellW==1 && cellH==1 )
+	{
+		wk->DotExpandFunc = dotExpand_1x1;
+	}
+	else if( cellW==2 && cellH==2 )
+	{
+		wk->DotExpandFunc = dotExpand_2x2;
+	}
 }
 
 //------------------------------------------------------------------
@@ -397,28 +419,12 @@ static void cleanup_type_read_file( GFL_FONT* wk )
  *
  */
 //==============================================================================================
-void GFL_FONT_GetBitMap( const GFL_FONT* wk, u32 code, void* dst, u16* sizeX, u16* sizeY )
+void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, u16* sizeX, u16* sizeY )
 {
 	u32 index;
 
 	index = get_glyph_index( wk, code );
 	wk->GetBitmapFunc( wk, index, dst, sizeX, sizeY );
-
-	#if 0
-	{
-		Gtick[4] = Gtick[1] - Gtick[0];
-		Gtick[5] = OS_TicksToMilliSeconds( Gtick[4] );
-		Gtick[6] = Gtick[2] - Gtick[1];
-		Gtick[7] = OS_TicksToMilliSeconds( Gtick[6] );
-
-		OS_TPrintf("[TICK] code=%04x, idx=%d, ", code, index);
-		OS_TPrintf("GetIndex=%ld", Gtick[4]);
-		OS_TPrintf(" (%ld msec)", Gtick[5]);
-		OS_TPrintf(" GetBitmap=%ld", Gtick[6]);
-		OS_TPrintf(" (%ld msec) ", Gtick[7]);
-		OS_TPrintf(" Width=%d\n", *sizeX);
-	}
-	#endif
 }
 
 
@@ -555,12 +561,6 @@ static void GetBitmapOnMemory( const GFL_FONT* wk, u32 index, void* dst, u16* si
 	#endif
 }
 
-//#define GLOBAL_PRINT_FLAG
-
-#ifdef GLOBAL_PRINT_FLAG
-static BOOL PRINTFLG = FALSE;
-#endif
-
 //------------------------------------------------------------------
 /**
  * 文字ビットマップデータ取得処理（ビットデータ逐次読み込みタイプ）
@@ -577,16 +577,34 @@ static void GetBitmapFileRead( const GFL_FONT* wk, u32 index, void* dst, u16* si
 
 	GFL_ARC_SeekDataByHandle( wk->fileHandle, wk->fontDataImgOfs+ofsTop );
 	GFL_ARC_LoadDataByHandleContinue( wk->fileHandle, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
-//	GFL_ARC_SeekAndRead( wk->fileHandle, wk->fontDataImgOfs+ofsTop, wk->glyphInfo.cellSize, (void*)(wk->glyphBuf) );
 
-	#ifdef GLOBAL_PRINT_FLAG
-	PRINTFLG = ((index==332)||(index==322));
-	#endif
-
-	expand_ntr_glyph_2bit( wk->glyphBuf, wk->glyph2ndCharBits, (u16*)dst, (u16*)((u8*)dst+0x20) );
+	wk->DotExpandFunc( wk->glyphBuf, wk->glyphRemBits, dst );
 
 	*sizeX = wk->WidthGetFunc( wk, index );
 	*sizeY = wk->fontHeader.linefeed;
+
+	#if 0
+	{
+		u8 *pp;
+		int i, t;
+
+		TAYA_Printf(" width=%d, height=%d (dots)\n", *sizeX, *sizeY);
+
+		for(t=0; t<4; t++)
+		{
+			pp = (u8*)dst + 0x20*t;
+			for(i=0; i<32; i++)
+			{
+				TAYA_Printf("%d%d", (pp[i]&0x0f)!=0, (pp[i]&0xf0)!=0);
+				if( ((i+1)%4)==0 )
+				{
+					TAYA_Printf("\n");
+				}
+			}
+			TAYA_Printf("\n");
+		}
+	}
+	#endif
 }
 
 //--------------------------------------------------------------------------
@@ -653,15 +671,15 @@ static inline void expand_ntr_glyph_block( const u8* srcData, u16 blockPos, u16 
 
 //==============================================================================================
 /**
- * 
+ * 文字幅（ドット単位）取得
  *
- * @param   wk		
- * @param   index	
+ * @param   wk		フォントデータハンドラ
+ * @param   code	文字コード
  *
  * @retval  u16		
  */
 //==============================================================================================
-u16 GFL_FONT_GetWidth( const GFL_FONT* wk, u32 code )
+u16 GFL_FONT_GetWidth( const GFL_FONT* wk, STRCODE code )
 {
 	u32 index = get_glyph_index( wk, code );
 	return  wk->WidthGetFunc( wk, index );
@@ -669,18 +687,19 @@ u16 GFL_FONT_GetWidth( const GFL_FONT* wk, u32 code )
 
 //==============================================================================================
 /**
- * 
+ * 行の高さ（ドット単位）取得
  *
- * @param   wk		
- * @param   index	
+ * @param   wk		フォントデータハンドラ
  *
  * @retval  u16		
  */
 //==============================================================================================
-u16 GFL_FONT_GetHeight( const GFL_FONT* wk, u32 index )
+u16 GFL_FONT_GetLineHeight( const GFL_FONT* wk )
 {
 	return wk->fontHeader.linefeed;
 }
+
+
 
 //------------------------------------------------------------------
 /**
@@ -927,8 +946,61 @@ static inline u8 BitReader_Read( BIT_READER* br, u8 bits )
 
 static BIT_READER BitReader = {0};
 
-static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits, u16* dst1st, u16* dst2nd )
+// 1x1char (幅5ドット以上）ドット読み取り
+static inline void dotExpand_1x1( const u8* glyphSrc, u16 remBits, u8* dst )
 {
+	u16* dst16 = (u16*)dst;
+	u8 dots;
+
+	BitReader_Init( &BitReader, glyphSrc );
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+	dots = BitReader_Read( &BitReader, 8 );
+	*dst16++ = DotTbl[dots];
+	dots = BitReader_Read( &BitReader, remBits );
+	*dst16++ = DotTbl[dots];
+
+}
+
+// 2x2char (幅13ドット以上）ドット読み取り
+static inline void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst )
+{
+	u16* dst1st = (u16*)dst;
+	u16* dst2nd = (u16*)( dst + 0x20 );
 	u8 dots;
 
 	BitReader_Init( &BitReader, glyphSrc );
@@ -937,7 +1009,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -945,7 +1017,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -953,7 +1025,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -961,7 +1033,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -969,7 +1041,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -977,7 +1049,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -985,7 +1057,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -993,7 +1065,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -1004,7 +1076,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -1012,7 +1084,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -1020,7 +1092,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd++ = DotTbl[dots];
 		dst2nd++;
 
@@ -1028,7 +1100,7 @@ static inline void expand_ntr_glyph_2bit( const u8* glyphSrc, u16 gl2ndCharBits,
 		*dst1st++ = DotTbl[dots];
 		dots = BitReader_Read( &BitReader, 8 );
 		*dst1st++ = DotTbl[dots];
-		dots = BitReader_Read( &BitReader, gl2ndCharBits );
+		dots = BitReader_Read( &BitReader, remBits );
 		*dst2nd = DotTbl[dots];
 }
 

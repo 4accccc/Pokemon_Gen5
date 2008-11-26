@@ -13,6 +13,7 @@
 
 #include <heapsys.h>
 #include <arc_tool.h>
+#include <strbuf.h>
 
 //--------------------------------------------------------------
 /**
@@ -32,6 +33,8 @@ typedef enum {
 	GFL_FONT_LOADTYPE_MEMORY,	///< 全文字をメモリに常駐させておき、そこから読み出す
 }GFL_FONT_LOADTYPE;
 
+
+extern void GFL_FONTSYS_Init( void );
 
 //=============================================================================================
 /**
@@ -57,29 +60,16 @@ extern GFL_FONT* GFL_FONT_Create( u32 arcID, u32 datID, GFL_FONT_LOADTYPE loadTy
 //=============================================================================================
 extern void GFL_FONT_Delete( GFL_FONT* wk );
 
-//=============================================================================================
-/**
- * フォントBitmapデータ取得
- *
- * @param   wk		
- * @param   index		
- * @param   dst		
- * @param   sizeX		
- * @param   sizeY		
- *
- */
-//=============================================================================================
-extern void GFL_FONT_GetBitMap( const GFL_FONT* wk, u32 index, void* dst, u16* sizeX, u16* sizeY );
 
-
-extern u16 GFL_FONT_GetWidth( const GFL_FONT* wk, u32 index );
-extern u16 GFL_FONT_GetHeight( const GFL_FONT* wk, u32 index );
-
-
-extern void GFL_FONTSYS_Init( void );
 extern void GFL_FONTSYS_SetDefaultColor( void );
 extern void GFL_FONTSYS_SetColor( u8 letterColor, u8 shadowColor, u8 backColor );
 extern void GFL_FONTSYS_GetColor( u8* letter, u8* shadow, u8* back );
+
+
+
+extern void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, u16* sizeX, u16* sizeY );
+extern u16 GFL_FONT_GetWidth( const GFL_FONT* wk, STRCODE code );
+extern u16 GFL_FONT_GetLineHeight( const GFL_FONT* wk );
 
 
 #endif
