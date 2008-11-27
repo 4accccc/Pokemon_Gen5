@@ -66,8 +66,20 @@ extern void GFL_FONTSYS_SetColor( u8 letterColor, u8 shadowColor, u8 backColor )
 extern void GFL_FONTSYS_GetColor( u8* letter, u8* shadow, u8* back );
 
 
+//=========================================================================
+//-----------------------------------
+/**
+ *	文字ドットサイズ情報
+ */
+//-----------------------------------
+typedef struct {
+	u8 left_width;		///< 左側余白部分の幅
+	u8 glyph_width;		///< 文字部分の幅
+	u8 width;			///< 余白、文字部分の合計幅
+	u8 height;			///< 高さ
+}GFL_FONT_SIZE;
 
-extern void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, u16* sizeX, u16* sizeY );
+extern void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, GFL_FONT_SIZE* size );
 extern u16 GFL_FONT_GetWidth( const GFL_FONT* wk, STRCODE code );
 extern u16 GFL_FONT_GetLineHeight( const GFL_FONT* wk );
 

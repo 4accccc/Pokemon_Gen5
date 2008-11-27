@@ -168,7 +168,7 @@ static struct {
 static inline BOOL IsNetConnecting( void );
 static void setupPrintJob( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, u16 org_x, u16 org_y );
 static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp );
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, u16* charWidth, u16* charHeight );
+static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size );
 static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp );
 static const STRCODE* ctrlSystemTag( PRINT_JOB* wk, const STRCODE* sp );
 static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs );
@@ -530,10 +530,11 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 
 		default:
 			{
+				GFL_FONT_SIZE	size;
 				u16 w, h;
 
-				put_1char( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &w, &h );
-				wk->write_x += (w+1);
+				put_1char( wk->dst, wk->write_x, wk->write_y, wk->fontHandle, *sp, &size );
+				wk->write_x += size.width;
 				sp++;
 
 				return sp;
@@ -546,20 +547,19 @@ static const STRCODE* print_next_char( PRINT_JOB* wk, const STRCODE* sp )
 /**
  * Bitmap１文字分描画
  *
- * @param   dst				描画先ビットマップ
- * @param   xpos			描画先Ｘ座標（ドット）
- * @param   ypos			描画先Ｙ座標（ドット）
- * @param   fontHandle		描画フォントハンドル
- * @param   charCode		文字コード
- * @param   charWidth		文字幅取得ワーク
- * @param   charHeight		文字高取得ワーク
+ * @param[out]	dst				描画先ビットマップ
+ * @param[in]	xpos			描画先Ｘ座標（ドット）
+ * @param[in]	ypos			描画先Ｙ座標（ドット）
+ * @param[in]	fontHandle		描画フォントハンドル
+ * @param[in]	charCode		文字コード
+ * @param[out]	size			文字サイズ取得ワーク
  *
  */
 //------------------------------------------------------------------
-static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, u16* charWidth, u16* charHeight )
+static void put_1char( GFL_BMP_DATA* dst, u16 xpos, u16 ypos, GFL_FONT* fontHandle, STRCODE charCode, GFL_FONT_SIZE* size )
 {
-	GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), charWidth, charHeight );
-	GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos, ypos, *charWidth, *charHeight, 0x0f );
+	GFL_FONT_GetBitMap( fontHandle, charCode, GFL_BMP_GetCharacterAdrs(SystemWork.charBuffer), size );
+	GFL_BMP_Print( SystemWork.charBuffer, dst, 0, 0, xpos+size->left_width, ypos, size->glyph_width, size->height, 0x0f );
 }
 //------------------------------------------------------------------
 /**
@@ -596,11 +596,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 
 			bmpWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
 			strWidth = get_line_width( sp, wk->fontHandle, 0, NULL );
-
-			wk->write_x = wk->org_x + ((bmpWidth - strWidth) / 2);
-
-			OS_TPrintf("[PRINTSYS] XfittingR ... bmpW=%d, strW=%d -> wrtX=%d\n",
-						bmpWidth, strWidth, wk->write_x);
+			wk->write_x = wk->org_x + (bmpWidth - strWidth) - 1;
 		}
 		break;
 
