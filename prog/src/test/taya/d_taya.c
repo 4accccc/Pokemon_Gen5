@@ -33,8 +33,8 @@
 // archive includes -------------------
 #include "arc_def.h"
 #include "message.naix"
-#include "test_graphic\d_taya.naix"
-
+#include "test_graphic/d_taya.naix"
+#include "font/font.naix"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -259,13 +259,13 @@ static void initGraphicSystems( MAIN_WORK* wk )
 		GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 
 //		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
-		GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0, wk->heapID );
 //		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
 		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
 		GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
 		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0xff, 1, 0 );
 		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
@@ -299,7 +299,13 @@ static void createTemporaryModules( MAIN_WORK* wk )
 	wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
 	wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
-	wk->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+	GFL_HEAP_CheckHeapSafe( wk->heapID );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT,
+	#if 0
+		NARC_d_taya_lc12_2bit_nftr,
+	#else
+		NARC_font_small_nftr,
+	#endif
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
@@ -485,7 +491,7 @@ static void print_menu( MAIN_WORK* wk, const V_MENU_CTRL* menuCtrl )
 
 		if( writePos == selPos ){ GFL_FONTSYS_SetDefaultColor(); }
 
-		ypos += 16;
+		ypos += (GFL_FONT_GetLineHeight(wk->fontHandle)+2);
 		writePos++;
 	}
 
@@ -557,7 +563,6 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			GFL_MSG_GetString( wk->mm, DEBUG_TAYA_STR10, wk->strbuf );
 			GFL_BMP_Clear( wk->bmp, 0xff );
 			PRINT_UTIL_Print( wk->printUtil, wk->printQue, 0, 0, wk->strbuf, wk->fontHandle );
-			GF_ASSERT(0);
 //			GFL_BMPWIN_TransVramCharacter( wk->win );
 			(*seq) = 10;
 			break;
@@ -568,6 +573,10 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			wk->yofs = 30;
 			(*seq)++;
 			break;
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			return TRUE;
 		}
 		break;
 
