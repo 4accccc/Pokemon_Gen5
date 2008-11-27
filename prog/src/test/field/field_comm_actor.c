@@ -60,11 +60,12 @@ enum
 struct _TAG_FLD_COMM_ACTOR
 {
 	const PLAYER_WORK *player;
-
+	
 	HEAPID heapID;
 	u16 dir;
 	u16 old_dir;
 	int anm_id;
+	u32 id;
 	VecFx32 pos;
 	VecFx32 old_pos;
 	
@@ -97,7 +98,7 @@ static const GFL_BBDACT_ANM *playerBBDactAnmTable[PCACTANMNO_MAX];
 FLD_COMM_ACTOR * FldCommActor_Init(
 	const PLAYER_WORK *player,
 	GFL_BBDACT_SYS *bbdActSys,
-	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID )
+	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID, u32 id )
 {
 	u32 dir;
 	FLD_COMM_ACTOR *act;
@@ -106,7 +107,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	
 	pos = PLAYERWORK_getPosition( player );
 	dir = PLAYERWORK_getDirection( player );
-
+	
 	act = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_COMM_ACTOR) );
 	act->heapID = heapID;
 	act->dir = dir;
@@ -117,8 +118,9 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	act->bbdActResUnitID = resUnitID;
 	act->player = player;	//’Ç‰Á‚µ‚Ü‚µ‚½Ari1114
 	act->anm_id = -1;
-
-	actData.resID = 0;
+	act->id = id;
+	
+	actData.resID = id + 1;	//0=Ž©‹@
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	actData.trans.x = 0;
@@ -139,7 +141,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 		bbdActSys, act->bbdActActUnitID,
 		playerBBDactAnmTable, PCACTANMNO_MAX );
 	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, act->bbdActActUnitID, 0 );
-
+	
 	return( act );
 }
 

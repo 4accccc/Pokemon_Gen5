@@ -900,7 +900,7 @@ void FieldMain_AddCommActor(
 	for( i = 0; i < FLD_COMM_ACTOR_MAX; i++ ){
 		if( fieldWork->commActorTbl[i] == NULL ){
 			fieldWork->commActorTbl[i] = FldCommActor_Init(
-				player, bbdActSys, unitID, fieldWork->heapID );
+				player, bbdActSys, unitID, fieldWork->heapID, i );
 			return;
 		}
 	}

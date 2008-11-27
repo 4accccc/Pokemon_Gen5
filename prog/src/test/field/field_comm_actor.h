@@ -30,8 +30,8 @@ typedef struct _TAG_FLD_COMM_ACTOR FLD_COMM_ACTOR;
 //======================================================================
 extern FLD_COMM_ACTOR * FldCommActor_Init(
 	const PLAYER_WORK *player,
-	GFL_BBDACT_SYS *bbdActSysm,
-	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID );
+	GFL_BBDACT_SYS *bbdActSys,
+	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID, u32 id );
 extern void FldCommActor_Delete( FLD_COMM_ACTOR *act );
 extern void FldCommActor_Update( FLD_COMM_ACTOR *act );
 
