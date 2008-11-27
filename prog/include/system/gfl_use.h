@@ -36,6 +36,9 @@ extern void GFLUser_VIntr(void);
 //VBlank中TCBの登録処理を追加
 extern GFL_TCB * GFUser_VIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri);
 
+//VBlank中TCBSYSの取得
+extern	GFL_TCBSYS * GFUser_VIntr_GetTCBSYS( void );
+
 //VBlankカウンター取得とリセット
 extern void GFUser_VIntr_ResetVblankCounter( void );
 extern int GFUser_VIntr_GetVblankCounter( void );
