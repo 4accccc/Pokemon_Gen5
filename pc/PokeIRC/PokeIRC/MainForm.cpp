@@ -31,6 +31,33 @@ static BoxTrayData GPokeBoxList[BOX_MAX_TRAY];
 static PokemonData handPoke; // 手にしているポケモン
 static Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
 
+//--------------------------------------------------------------
+/**
+ * @breif   
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::pokemonDisukiClubDToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	webBrowser1->Url= gcnew Uri("http://www.pokemon.jp/portal/top.cfm");
+}
+
+
+
+System::Void MainForm::globalPokemonFanClubGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	webBrowser1->Url= gcnew Uri("http://wb.gamefreak.co.jp/ando/world/index.php");
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   赤外線接続
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
 
 void MainForm::connectIRC(void)
 {
@@ -743,7 +770,6 @@ void MainForm::CallProg(String^ message)
 	connectIRC();
 
 	if(message =="PokeSend"){
-		GTSDispMode = MODE_BOXDISP;
 		bBoxListRecv = false;
 		threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::GetPokeBoxList)); //
 		threadB->IsBackground = true; // バックグラウンド・スレッドとする
@@ -751,6 +777,7 @@ void MainForm::CallProg(String^ message)
 	    threadB->Start(); // 
 		threadB->Join();
 		FormDispChange(FORM_DISPMODE_BOX);
+		GTSDispMode = MODE_BOXDISP;
 		pokemonListDisp(0);
 	}
 	else if(message =="PokeSearch"){
@@ -1154,7 +1181,7 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 	}
 
 	if(BackupToolTipMsg != pknm){
-		toolTip1->Show(pknm, this, e->X, e->Y+20, 30000);
+		toolTip1->Show(pknm, this, e->X, e->Y+20, 3000);
 		BackupToolTipMsg = pknm;
 	}
 
@@ -1551,6 +1578,7 @@ void MainForm::FormDispChange(int mode)
 {
 	switch(mode){
 		case FORM_DISPMODE_WEB:
+			GTSDispMode = MODE_NONE;
 			webBrowser1->Visible = true;
 			pictureBox1->Visible = false;
 			pictureBox2->Visible = false;
@@ -1570,6 +1598,7 @@ void MainForm::FormDispChange(int mode)
 			label1->Visible = false;
 			break;
 		case FORM_DISPMODE_SOUND:
+			GTSDispMode = MODE_NONE;
 			pictureBox2->Dock = DockStyle::Fill;
 			webBrowser1->Hide();
 			pictureBox1->Hide();
@@ -1587,7 +1616,9 @@ void MainForm::FormDispChange(int mode)
 			label1->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
 			label1->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
 			pictureBox4->Visible = false;
-			pictureBox5->Visible = false;
+			pictureBox5->Visible = true;
+			pictureBox5->Top = 525;
+			pictureBox5->Left = 553;
 			break;
 	}
 
@@ -1615,4 +1646,13 @@ System::Void MainForm::pictureBox5_MouseEnter(System::Object^  sender, System::E
 System::Void MainForm::pictureBox5_MouseLeave(System::Object^  sender, System::EventArgs^  e)
 {
 	pictureBox5->Image = gcnew Bitmap("backbutton.bmp"); 
+}
+
+System::Void MainForm::webBrowser1_NewWindow(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e)
+{
+//	Debug::WriteLine("Already uploaded.");
+	e->Cancel=true;
+//	webBrowser1->Url();
+//	webBrowser1->
+
 }
