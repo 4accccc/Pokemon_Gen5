@@ -81,6 +81,7 @@ struct _TAG_FLD_COMM_ACTOR
 static void commActBBDActFunc(
 	GFL_BBDACT_SYS *bbdActSys, int actIdx, void* work );
 
+static const GFL_BBDACT_RESDATA playerBBDactResData;
 static const GFL_BBDACT_ANM *playerBBDactAnmTable[PCACTANMNO_MAX];
 
 //======================================================================
@@ -99,15 +100,19 @@ static const GFL_BBDACT_ANM *playerBBDactAnmTable[PCACTANMNO_MAX];
 FLD_COMM_ACTOR * FldCommActor_Init(
 	const PLAYER_WORK *player,
 	GFL_BBDACT_SYS *bbdActSys,
-	GFL_BBDACT_RESUNIT_ID resUnitID, HEAPID heapID, u32 id )
+	GFL_BBDACT_RESUNIT_ID TestresUnitID, HEAPID heapID, u32 id )
 {
 	u32 dir;
 	FLD_COMM_ACTOR *act;
 	GFL_BBDACT_ACTDATA actData;
+	GFL_BBDACT_RESUNIT_ID resUnitID;
 	const VecFx32 *pos;
 	
 	pos = PLAYERWORK_getPosition( player );
 	dir = PLAYERWORK_getDirection( player );
+	
+	resUnitID = GFL_BBDACT_AddResourceUnit(
+			bbdActSys, &playerBBDactResData, 1 );
 	
 	act = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_COMM_ACTOR) );
 	act->heapID = heapID;
@@ -116,12 +121,12 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	act->pos = *pos;
 	act->old_pos = *pos;
 	act->bbdActSys = bbdActSys;
-	act->bbdActResUnitID = resUnitID;
 	act->player = player;	//追加しましたAri1114
 	act->anm_id = -1;
 	act->id = id;
-	
-	actData.resID = 0;	//0=自機
+	act->bbdActResUnitID = resUnitID;
+
+	actData.resID = 0;
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	actData.trans.x = 0;
@@ -155,6 +160,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 //--------------------------------------------------------------
 void FldCommActor_Delete( FLD_COMM_ACTOR *act )
 {
+	GFL_BBDACT_RemoveResourceUnit( act->bbdActSys, act->bbdActResUnitID, 1 );
 	GFL_HEAP_FreeMemory( act );
 }
 
@@ -229,6 +235,16 @@ static void commActBBDActFunc(
 //======================================================================
 //	data
 //======================================================================
+//--------------------------------------------------------------
+///	ビルボードリソース
+//--------------------------------------------------------------
+static const GFL_BBDACT_RESDATA playerBBDactResData =
+{
+	ARCID_FLDMAP_ACTOR, NARC_fld_act_tex32x32_nsbtx,
+	GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x1024,
+	32, 32, GFL_BBDACT_RESTYPE_DATACUT 
+};
+
 //--------------------------------------------------------------
 ///	ビルボードアクターアニメ
 //--------------------------------------------------------------
