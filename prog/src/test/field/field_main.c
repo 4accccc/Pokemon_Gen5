@@ -31,8 +31,8 @@
 #include "field/zonedata.h"
 
 #include "event_mapchange.h"
-
 #include "event_debug_menu.h"
+#include "event_fieldmap_menu.h"
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
@@ -324,6 +324,9 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
+	}
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
+		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
 		OS_Printf("X,Y,Z=%d,%d,%d\n",

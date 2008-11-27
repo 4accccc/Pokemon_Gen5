@@ -184,7 +184,6 @@ void DebugMenu_InitCommonMenu(
 void DebugMenu_DeleteCommonMenu( DMENU_COMMON_WORK *work );
 u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work );
 
-
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 //--------------------------------------------------------------
