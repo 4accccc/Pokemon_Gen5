@@ -62,6 +62,12 @@ SRCS	+=		test/testmode.c \
 				test/field/field_net.c	\
 				test/soga/d_soga.c \
 				test/soga/mcss.c \
+				test/soga/poke_mcss.c \
+				test/soga/btl_stage.c \
+				test/soga/btl_field.c \
+				test/soga/btl_camera.c \
+				test/soga/btl_effect.c \
+				test/soga/btl_efftool.c \
 				poke_tool/poke_tool.c \
 				poke_tool/pokeparty.c \
 				poke_tool/poke_personal.c \
