@@ -737,16 +737,16 @@ static BOOL GridVecPosMove(
 
 		for( ; i<gridInfo.count; i++ ){
 			h_tmp = gridInfo.gridData[i].height;
-
+			
 			diff1 = height - pos->y;
 			diff2 = h_tmp - pos->y;
-
+			
 			if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
 				height = h_tmp;
 				p = i;
 			}
 		}
-
+		
 		*gridInfoData = gridInfo.gridData[p];	//グリッドデータ更新
 		VEC_Set( pos, posNext.x, gridInfoData->height, posNext.z );
 	}
@@ -756,31 +756,66 @@ static BOOL GridVecPosMove(
 
 //--------------------------------------------------------------
 /**
- * アトリビュート当り判定
+ * アトリビュート取得
  * @param
  * @retval
  */
 //--------------------------------------------------------------
-static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
+static BOOL GetMapAttr(
+	const FLD_G3D_MAPPER *g3Dmapper, fx32 x, fx32 z, u32 *attr )
 {
-	u16 attr = 0;
 	VecFx32 pos;
-	const FLD_G3D_MAPPER *mapper;
-	FLD_G3D_MAPPER_GRIDINFO gInfo;
+	FLD_G3D_MAPPER_GRIDINFO gridInfo;
 	
 	pos.x = x;
 	pos.y = 0;
 	pos.z = z;
+	
+	if( GetFieldG3DmapperGridInfo(g3Dmapper,&pos,&gridInfo) == TRUE ){
+		*attr = gridInfo.gridData[0].attr;
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * マップヒットチェック
+ * @param
+ * @retval	BOOL	TRUE=ヒット
+ */
+//--------------------------------------------------------------
+static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
+{
+	const FLD_G3D_MAPPER *mapper;
 	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
 	
 	if( GetFieldG3DmapperFileType(mapper) == FILE_CUSTOM_DATA ){
+		VecFx32 pos;
+		u16 attr = 0;
+		pos.x = x;
+		pos.y = 0;
+		pos.z = z;
+		
 		if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
 			return( TRUE );
 		}
-	}
-
-	if( ((attr&0x8000)>>15) ){
-		return( TRUE );
+		
+		if( ((attr&0x8000)>>15) ){
+			return( TRUE );
+		}
+	}else{
+		u32 attr;
+		
+		if( GetMapAttr(mapper,x,z,&attr) == FALSE ){
+			return( TRUE );
+		}
+		
+		/*	attrチェック
+		if( attr ){
+		}
+		*/
 	}
 	
 	return( FALSE );
@@ -837,7 +872,6 @@ void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork )
 		break;
 	}
 }
-
 
 //--------------------------------------------------------------
 /**

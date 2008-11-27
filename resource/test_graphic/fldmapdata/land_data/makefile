@@ -63,6 +63,7 @@ MK_GROUNDTOOL = mkmapdmy.rb
 	@echo create nsbmd $@
 	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
 
+#nsbtx
 %.nsbtx: ../$(DIR_LANDRES)/%.imd
 	@echo create nsbtx $@
 	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbtx=.imd)) -o $@ -etex
