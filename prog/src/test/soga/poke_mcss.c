@@ -1,0 +1,406 @@
+
+//============================================================================================
+/**
+ * @file	poke_mcss.c
+ * @brief	ポケモンMCSS管理
+ * @author	soga
+ * @date	2008.11.14
+ */
+//============================================================================================
+
+#include <gflib.h>
+
+#include "btl_efftool.h"
+#include "poke_mcss.h"
+#include "poke_mcss_def.h"
+
+#include "arc_def.h"
+#include "pokegra/pokegra_wb.naix"
+
+//============================================================================================
+/**
+ *	構造体宣言
+ */
+//============================================================================================
+
+struct _POKE_MCSS_WORK
+{
+	GFL_TCBSYS		*tcb_sys;
+	MCSS_SYS_WORK	*mcss_sys;
+	MCSS_WORK		*mcss[ POKE_MCSS_POS_MAX ];
+	HEAPID			heapID;
+};
+
+typedef struct
+{
+	POKE_MCSS_WORK		*pmw;
+	EFFTOOL_MOVE_WORK	emw;
+}POKE_MCSS_TCB_WORK;
+
+//============================================================================================
+/**
+ *	プロトタイプ宣言
+ */
+//============================================================================================
+
+POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
+void			POKE_MCSS_Exit( POKE_MCSS_WORK *pmw );
+void			POKE_MCSS_Main( POKE_MCSS_WORK *pmw );
+void			POKE_MCSS_Draw( POKE_MCSS_WORK *pmw );
+void			POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position );
+void			POKE_MCSS_Del( POKE_MCSS_WORK *pmw, int position );
+void			POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag );
+void			POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag );
+void			POKE_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
+fx32			POKE_MCSS_GetPokeDefaultScale( int position );
+void			POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
+void			POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
+
+void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int vec, int count );
+void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
+
+static	void	POKE_MCSS_MakeMAW( POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
+
+static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work );
+
+//============================================================================================
+/**
+ *	ポケモンの立ち位置テーブル
+ */
+//============================================================================================
+static	const	VecFx32	poke_pos_table[]={
+	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
+	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
+	{ FX_F32_TO_FX32( -3.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
+	{ FX_F32_TO_FX32(  6.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -7.0f ) },		//POS_B
+	{ FX_F32_TO_FX32( -1.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
+	{ FX_F32_TO_FX32(  3.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_D
+	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
+	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
+};
+
+//============================================================================================
+/**
+ *	ポケモンの立ち位置によるスケール補正テーブル
+ */
+//============================================================================================
+static	const	fx32	poke_scale_table[]={
+	FX_F32_TO_FX32( 0.75f ),	//POS_AA
+	FX_F32_TO_FX32( 1.30f ),	//POS_BB
+	FX_F32_TO_FX32( 0.8f ),		//POS_A
+	FX_F32_TO_FX32( 1.2f ),		//POS_B
+	FX_F32_TO_FX32( 0.8f ),		//POS_C
+	FX_F32_TO_FX32( 1.3f ),		//POS_D
+	FX_F32_TO_FX32( 0.8f ),		//POS_E
+	FX_F32_TO_FX32( 1.4f ),		//POS_F
+};
+
+//============================================================================================
+/**
+ *	システム初期化
+ *
+ * @param[in]	tcb_sys	システム内で使用するTCBSYS構造体へのポインタ
+ * @param[in]	heapID	ヒープID
+ */
+//============================================================================================
+POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS	*tcb_sys, HEAPID heapID )
+{
+	POKE_MCSS_WORK *pmw = GFL_HEAP_AllocClearMemory( heapID, sizeof( POKE_MCSS_WORK ) );
+
+	pmw->mcss_sys = MCSS_Init( POKE_MCSS_MAX, NULL, heapID );
+	pmw->tcb_sys  = tcb_sys;
+
+	return pmw;
+}
+
+//============================================================================================
+/**
+ *	システム終了
+ *
+ * @param[in]	pmw	POKE_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+void	POKE_MCSS_Exit( POKE_MCSS_WORK *pmw )
+{
+	MCSS_Exit( pmw->mcss_sys );
+	GFL_HEAP_FreeMemory( pmw );
+}
+
+//============================================================================================
+/**
+ *	システムメイン
+ *
+ * @param[in]	pmw	POKE_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+void	POKE_MCSS_Main( POKE_MCSS_WORK *pmw )
+{
+	MCSS_Main( pmw->mcss_sys );
+}
+
+//============================================================================================
+/**
+ *	描画
+ *
+ * @param[in]	pmw	POKE_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+void	POKE_MCSS_Draw( POKE_MCSS_WORK *pmw )
+{
+	MCSS_Draw( pmw->mcss_sys );
+}
+
+//============================================================================================
+/**
+ *	POKE_MCSS追加
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	pp			POKEMON_PARAM構造体へのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ */
+//============================================================================================
+void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position )
+{
+	MCSS_ADD_WORK maw;
+
+	GF_ASSERT( position < POKE_MCSS_POS_MAX );
+	GF_ASSERT( pmw->mcss[ position ] == NULL );
+
+	POKE_MCSS_MakeMAW( pp, &maw, position );
+	pmw->mcss[ position ] = MCSS_Add( pmw->mcss_sys,
+									  poke_pos_table[ position ].x,
+									  poke_pos_table[ position ].y,
+									  poke_pos_table[ position ].z,
+									  &maw );
+	MCSS_SetScaleX( pmw->mcss[ position ], poke_scale_table[ position ] );
+	MCSS_SetScaleY( pmw->mcss[ position ], poke_scale_table[ position ] );
+}
+
+//============================================================================================
+/**
+ *	POKE_MCSS削除
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ */
+//============================================================================================
+void	POKE_MCSS_Del( POKE_MCSS_WORK *pmw, int position )
+{
+	MCSS_Del( pmw->mcss_sys, pmw->mcss[ position ] );
+	pmw->mcss[ position ] = NULL;
+}
+
+//============================================================================================
+/**
+ *	メパチ処理
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	メパチさせたいポケモンの立ち位置
+ * @param[in]	flag		メパチフラグ（POKE_MCSS_MEPACHI_ON、POKE_MCSS_MEPACHI_OFF）
+ */
+//============================================================================================
+void	POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag )
+{
+	GF_ASSERT( pmw->mcss[ position ] != NULL );
+	if( flag == POKE_MCSS_MEPACHI_ON ){
+		MCSS_SetMepachiFlag( pmw->mcss[ position ] );
+	}
+	else{
+		MCSS_ResetMepachiFlag( pmw->mcss[ position ] );
+	}
+}
+
+//============================================================================================
+/**
+ *	アニメストップ処理
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	アニメストップさせたいポケモンの立ち位置
+ * @param[in]	flag		アニメストップフラグ（POKE_MCSS_ANM_STOP_ON、POKE_MCSS_ANM_STOP_OFF）
+ */
+//============================================================================================
+void	POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag )
+{
+	GF_ASSERT( pmw->mcss[ position ] != NULL );
+	if( flag == POKE_MCSS_ANM_STOP_ON ){
+		MCSS_SetAnmStopFlag( pmw->mcss[ position ] );
+	}
+	else{
+		MCSS_ResetAnmStopFlag( pmw->mcss[ position ] );
+	}
+}
+
+//============================================================================================
+/**
+ *	ポケモンの初期立ち位置を取得
+ *
+ * @param[out]	pos			初期立ち位置を格納するワークへのポインタ
+ * @param[in]	position	取得するポケモンの立ち位置
+ */
+//============================================================================================
+void	POKE_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position )
+{
+	pos->x = poke_pos_table[ position ].x;
+	pos->y = poke_pos_table[ position ].y;
+	pos->z = poke_pos_table[ position ].z;
+}
+
+//============================================================================================
+/**
+ *	ポケモンの初期拡縮率を取得
+ *
+ * @param[in]	position	取得するポケモンの立ち位置
+ */
+//============================================================================================
+fx32	POKE_MCSS_GetPokeDefaultScale( int position )
+{
+	return poke_scale_table[ position ];
+}
+
+//============================================================================================
+/**
+ *	ポケモンのスケール値を取得
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	取得するポケモンの立ち位置
+ * @param[out]	scale		取得したスケール値を格納するワークへのポインタ
+ */
+//============================================================================================
+void	POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
+{
+	scale->x = MCSS_GetScaleX( pmw->mcss[ position ] );
+	scale->y = MCSS_GetScaleY( pmw->mcss[ position ] );
+}
+
+//============================================================================================
+/**
+ *	ポケモンのスケール値を格納
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	格納するポケモンの立ち位置
+ * @param[in]	scale		格納するスケール値
+ */
+//============================================================================================
+void	POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
+{
+	MCSS_SetScaleX( pmw->mcss[ position ], scale->x );
+	MCSS_SetScaleY( pmw->mcss[ position ], scale->y );
+}
+
+//============================================================================================
+/**
+ *	ポケモン移動
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	格納するポケモンの立ち位置
+ * @param[in]	move_type	移動タイプ
+ * @param[in]	pos			移動タイプにより意味が変化
+ *							POKE_MCSS_MOVETYPE_DIRECT POKE_MCSS_MOVETYPE_INTERPOLATION	移動先
+ *							POKE_MCSS_MOVETYPE_ROUNDTRIP　往復の長さ
+ * @param[in]	vec			移動スピード
+ * @param[in]	count		往復カウント（POKEMCSS_MOVEYUPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int vec, int count )
+{
+	POKE_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( pmw->heapID, sizeof( POKE_MCSS_TCB_WORK ) );
+
+	pmtw->pmw				= pmw;
+	pmtw->emw.position		= position;
+	pmtw->emw.move_type		= move_type;
+	pmtw->emw.vec_time		= vec;
+	pmtw->emw.vec_time_tmp	= vec * 2;
+	pmtw->emw.count			= count;
+	pmtw->emw.end_pos.x		= pos->x;
+	pmtw->emw.end_pos.y		= pos->y;
+	pmtw->emw.end_pos.z		= pos->z;
+
+	MCSS_GetPosition( pmw->mcss[ position ], &pmtw->emw.start_pos );
+
+	switch( move_type ){
+	case EFFTOOL_MOVETYPE_DIRECT:			//直接ポジションに移動
+		break;
+	case EFFTOOL_MOVETYPE_INTERPOLATION:	//移動先までを補間しながら移動
+		BTL_EFFTOOL_CalcMoveVector( &pmtw->emw.start_pos, pos, &pmtw->emw.vector, FX32_CONST( vec ) );
+		break;
+	case EFFTOOL_MOVETYPE_ROUNDTRIP:		//指定した区間を往復移動
+		pmtw->emw.vector.x = FX_Div( pos->x, FX32_CONST( vec ) );
+		pmtw->emw.vector.y = FX_Div( pos->y, FX32_CONST( vec ) );
+		pmtw->emw.vector.z = FX_Div( pos->z, FX32_CONST( vec ) );
+		break;
+	}
+
+	GFL_TCB_AddTask( pmw->tcb_sys, TCB_POKE_MCSS_Move, pmtw, 0 );
+}
+
+//============================================================================================
+/**
+ *	POKEMON_PARAMからMCSS_ADD_WORKを生成する
+ *
+ * @param[in]	pp			POKEMON_PARAM構造体へのポインタ
+ * @param[out]	maw			MCSS_ADD_WORKワークへのポインタ
+ * @param[in]	position	ポケモンの立ち位置
+ */
+//============================================================================================
+static	void	POKE_MCSS_MakeMAW( POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
+{
+	int	mons_no = PP_Get( pp, ID_PARA_monsno,	NULL ) - 1;
+	int	form_no = PP_Get( pp, ID_PARA_form_no, NULL );
+	int	sex		= PP_Get( pp, ID_PARA_sex,		NULL );
+	int	rare	= PP_CheckRare( pp );
+
+	int	file_start = POKEGRA_FILE_MAX * mons_no;						//ポケモンナンバーからファイルのオフセットを計算
+	int	file_offset = ( ( position & 1 ) ) ? 0 : POKEGRA_BACK_M_NCGR;	//向きの計算
+
+	//本来は別フォルム処理を入れる
+#warning Another Form Nothing
+
+	//性別のチェック
+	switch( sex ){
+	case PTL_SEX_MALE:
+		break;
+	case PTL_SEX_FEMALE:
+		//オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
+		sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+		break;
+	case PTL_SEX_UNKNOWN:
+		//性別なしは、オス扱いにする
+		sex = PTL_SEX_MALE;
+		break;
+	default:
+		//ありえない性別
+		GF_ASSERT(0);
+		break;
+	}
+
+	maw->arcID = ARCID_POKEGRA;
+	maw->ncbr = file_start + file_offset + POKEGRA_M_NCBR + sex;
+	maw->nclr = file_start + POKEGRA_NORMAL_NCLR + rare;
+	maw->ncer = file_start + file_offset + POKEGRA_NCER;
+	maw->nanr = file_start + file_offset + POKEGRA_NANR;
+	maw->nmcr = file_start + file_offset + POKEGRA_NMCR;
+	maw->nmar = file_start + file_offset + POKEGRA_NMAR;
+	maw->ncec = file_start + file_offset + POKEGRA_NCEC;
+}
+
+//============================================================================================
+/**
+ *	ポケモン移動タスク
+ */
+//============================================================================================
+static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work )
+{
+	POKE_MCSS_TCB_WORK	*pmtw = ( POKE_MCSS_TCB_WORK * )work;
+	POKE_MCSS_WORK *pmw = pmtw->pmw;
+	VecFx32	now_pos;
+	BOOL	ret;
+
+	MCSS_GetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
+	ret = BTL_EFFTOOL_CalcMove( &pmtw->emw, &now_pos );
+	MCSS_SetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
+	if( ret == TRUE ){
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
+	}
+}
+

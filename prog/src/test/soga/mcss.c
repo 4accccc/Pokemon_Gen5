@@ -1,3 +1,4 @@
+
 //============================================================================================
 /**
  * @file	mcss.c
@@ -10,18 +11,22 @@
 #include <procsys.h>
 #include <tcbl.h>
 
+#define MCSS_DRAW_CALC_FAST	//有効にすることでNCECコンバートの段階で計算を済ませたデータを読み込んで描画
+								//（多少は軽減する）
 //#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
 #include "mcss.h"			//内部でUSE_RENDERを参照しているのでここより上に移動は不可
+#include "mcss_def.h"		//内部でMCSS_DRAW_CALC_FASTを参照しているのでここより上に移動は不可
 
 #define	MCSS_DEFAULT_SHIFT	( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MCSS_DEFAULT_LINE	( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
-#define	MCSS_DEFAULT_Z		( 1 << 8 )
+#define	MCSS_DEFAULT_Z		( 1 << 6 )
+#define	MCSS_TEX_OFS		( FX32_ONE >> 4 )
 
 #define MCSS_CONST(x)	((fx32)(((x) > 0) ? \
 						((x) * (1 << MCSS_DEFAULT_SHIFT) + 0.5f ) : \
 						((x) * (1 << MCSS_DEFAULT_SHIFT) - 0.5f )))
 
-#define	MCSS_TEX_ADRS	(0x10000)
+#define	MCSS_TEX_ADRS	(0x8000)
 #define	MCSS_TEX_SIZE	(0x4000)
 #define	MCSS_PAL_ADRS	(0x0100)
 #define	MCSS_PAL_SIZE	(0x0020)
@@ -32,26 +37,26 @@
  */
 //--------------------------------------------------------------------------
 MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera, HEAPID heapID );
-void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
-void	MCSS_Main( MCSS_SYS_WORK *mcss_sys );
-void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys,
-					  fx32			pos_x,
-					  fx32			pos_y,
-					  fx32			pos_z,
-					  ARCID			arcID,
-					  ARCDATID		ncbr,
-					  ARCDATID		nclr,
-					  ARCDATID		ncer,
-					  ARCDATID		nanr,
-					  ARCDATID		nmcr,
-					  ARCDATID		nmar,
-					  ARCDATID		ncec );
-void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+void		MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
+void		MCSS_Main( MCSS_SYS_WORK *mcss_sys );
+void		MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
+MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
+void		MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 
-void	MCSS_SetScaleX( MCSS_WORK *mcss, fx32 scale_x );
-void	MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y );
+void		MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+void		MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+fx32		MCSS_GetScaleX( MCSS_WORK *mcss );
+void		MCSS_SetScaleX( MCSS_WORK *mcss, fx32 scale_x );
+fx32		MCSS_GetScaleY( MCSS_WORK *mcss );
+void		MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y );
+void		MCSS_SetMepachiFlag( MCSS_WORK *mcss );
+void		MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
+void		MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
+void		MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+void		MCSS_SetVanishFlag( MCSS_WORK *mcss );
+void		MCSS_ResetVanishFlag( MCSS_WORK *mcss );
 
+#ifndef MCSS_DRAW_CALC_FAST
 static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
 							  VecFx32 *pos_p,
 							  VecFx32 *scale,
@@ -62,16 +67,22 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
 							  int cell,
 							  fx32 *pos_z_default );
-static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
-								   int				count,
-								   ARCID			arcID,
-								   ARCDATID			ncbr,
-								   ARCDATID			nclr,
-								   ARCDATID			ncer,
-								   ARCDATID			nanr,
-								   ARCDATID			nmcr,
-								   ARCDATID			nmar,
-								   ARCDATID			ncec );
+#else
+static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
+							  fx32 pos_x,
+							  fx32 pos_y,
+							  fx32 scale_x,
+							  fx32 scale_y,
+							  fx32 tex_s,
+							  fx32 tex_t,
+							  NNSG2dAnimDataSRT *anim_SRT_c,
+							  NNSG2dAnimController *anim_ctrl,
+							  NNSG2dAnimDataSRT *anim_SRT_mc,
+							  int cell,
+							  fx32 *pos_z_default );
+#endif
+
+static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys, int count, MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
@@ -91,11 +102,10 @@ MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera,HEAPID heapID )
 
 	mcss_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_SYS_WORK) );
 
-	mcss_sys->max = max;
+	mcss_sys->mcss_max = max;
 	mcss_sys->camera = camera;
 	mcss_sys->heapID = heapID;
 
-//	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, 4 * max );
 	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_WORK *) * max );
 
 #ifdef USE_RENDER
@@ -103,6 +113,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera,HEAPID heapID )
 #endif //USE_RENDER
 
 	//テクスチャ系の転送先アドレスをセット（可変に出来る予定）
+#warning MCSS TEX PAL ADRS Not Changeability
 	mcss_sys->texAdrs = MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MCSS_PAL_ADRS;
 	
@@ -118,7 +129,7 @@ void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys )
 {
 	int	i;
 
-	for( i = 0 ; i < mcss_sys->max ; i++ ){
+	for( i = 0 ; i < mcss_sys->mcss_max ; i++ ){
 		if( mcss_sys->mcss[i] != NULL ){
 			MCSS_Del( mcss_sys, mcss_sys->mcss[i] );
 		}
@@ -135,8 +146,8 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 {
 	int	index;
 
-	for( index = 0 ; index < mcss_sys->max ; index++ ){
-		if( mcss_sys->mcss[index] != NULL ){
+	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
+		if( ( mcss_sys->mcss[index] != NULL ) && ( mcss_sys->mcss[index]->anm_stop_flag == 0 ) ){
 			// アニメーションを更新します
 			NNS_G2dTickMCAnimation( &mcss_sys->mcss[index]->mcss_mcanim, FX32_ONE );
 		}
@@ -175,8 +186,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	G3_Identity();
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 
-	for( index = 0 ; index < mcss_sys->max ; index++ ){
-		if( mcss_sys->mcss[index] != NULL ){
+	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
+		if( ( mcss_sys->mcss[index] != NULL ) && ( mcss_sys->mcss[index]->vanish_flag == 0 ) ){
 
 			mcss		= mcss_sys->mcss[index];
 			image_p		= &mcss->mcss_image_proxy;
@@ -198,7 +209,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
 			G3_TexPlttBase(palette_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
 						   palette_p->fmt);
-			for( cell = 0 ; cell < mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pMultiCellDataArray->numNodes ; cell++ ){
+//			for( cell = 0 ; cell < mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pMultiCellDataArray->numNodes ; cell++ ){
+			for( cell = 0 ; cell < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].numNodes ; cell++ ){
 				anim_ctrl_c = NNS_G2dGetCellAnimAnimCtrl(&MC_Array->cellAnimArray[cell].cellAnim);
 				switch( anim_ctrl_c->pAnimSequence->animType & 0xffff ){
 				case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
@@ -227,6 +239,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				}
 				ncec = &mcss->mcss_ncec->ncec[anim_SRT.index];
 
+#ifndef MCSS_DRAW_CALC_FAST
 				//メパチ処理
 				if( ncec->mepachi_size_x ){
 					//セルデータから取得した位置で書き出し
@@ -249,96 +262,39 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				scale.y = FX32_CONST( ncec->size_y );
 				tex_s = FX32_CONST( ( ncec->char_no % ( ( 8 << image_p->attr.sizeS ) / 8) ) * 8 );
 				tex_t = FX32_CONST( ( ncec->char_no / ( ( 8 << image_p->attr.sizeS ) / 8) ) * 8 );
-
 				MCSS_DrawAct( mcss, &pos, &scale, tex_s, tex_t, &anim_SRT, anim_ctrl_mc, anim_SRT_mc, cell, &pos_z_default );
-#if 0
-				MTX_Identity44(&mtx_44);
-				MTX_TransApply44( &mtx_44, &mtx_44, pos.x, pos.y, 0 );
-				MTX_RotZ44(&rot_44, -FX_SinIdx( anim_SRT.rotZ ), FX_CosIdx( anim_SRT.rotZ ) );
-				MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
-				pos.x = MCSS_CONST( anim_SRT.px );
-				pos.y = -MCSS_CONST( anim_SRT.py );
-				MTX_Identity44(&mc_mtx_44);
-				MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
-				MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
-				MTX_Scale44( &scale_44, anim_SRT.sx, anim_SRT.sy, FX32_ONE );
-				MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
-
-				switch( anim_ctrl_mc->pAnimSequence->animType & 0xffff ){
-				case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
-					anim_SRT.index	= *( (u16 *)anim_ctrl_mc->pCurrent->pContent );
-					anim_SRT.rotZ	= 0;
-					anim_SRT.sx		= 0x1000;
-					anim_SRT.sy		= 0x1000;
-					anim_SRT.px		= 0;
-					anim_SRT.py		= 0;
-					break;
-				case NNS_G2D_ANIMELEMENT_INDEX_SRT:	// Index + SRT 
-					anim_SRT = *( (NNSG2dAnimDataSRT *)anim_ctrl_mc->pCurrent->pContent );
-					break;
-				case NNS_G2D_ANIMELEMENT_INDEX_T:	// Index + T 
-					anim_T_p		= anim_ctrl_mc->pCurrent->pContent;
-					anim_SRT.index	= anim_T_p->index;
-					anim_SRT.rotZ	= 0;
-					anim_SRT.sx		= 0x1000;
-					anim_SRT.sy		= 0x1000;
-					anim_SRT.px		= anim_T_p->px;
-					anim_SRT.py		= anim_T_p->py;
-					break;
-				default:
-					GF_ASSERT(0);
-					break;
+#else
+				//メパチ処理
+				if( ncec->mepachi_size_x ){
+					if( mcss->mepachi_flag ){
+						MCSS_DrawAct( mcss, 
+									  ncec->mepachi_pos_x,
+									  ncec->mepachi_pos_y,
+									  ncec->mepachi_size_x,
+									  ncec->mepachi_size_y,
+									  ncec->mepachi_tex_s,
+									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
+									  &anim_SRT, anim_ctrl_mc, anim_SRT_mc, cell, &pos_z_default );
+					}
+					else{
+						MCSS_DrawAct( mcss, 
+									  ncec->mepachi_pos_x,
+									  ncec->mepachi_pos_y,
+									  ncec->mepachi_size_x,
+									  ncec->mepachi_size_y,
+									  ncec->mepachi_tex_s,
+									  ncec->mepachi_tex_t,
+									  &anim_SRT, anim_ctrl_mc, anim_SRT_mc, cell, &pos_z_default );
+					}
 				}
-
-				//ビルボード回転
-				{
-					MTX_Inverse43( NNS_G3dGlbGetCameraMtx(), &camera );	//カメラ逆行列取得
-					MTX_Copy43To33( &camera, &rotate );		//カメラ逆行列から回転行列を取り出す
-				}
-
-				//マルチセルデータから取得した位置で書き出し
-				pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pHierarchyDataArray[cell].posX );
-				pos.y = -MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pHierarchyDataArray[cell].posY );
-				MTX_Identity44(&mc_mtx_44);
-				MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
-				MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
-				MTX_RotZ44(&rot_44, -FX_SinIdx( anim_SRT.rotZ ), FX_CosIdx( anim_SRT.rotZ ) );
-				MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
-
-				pos.x = MCSS_CONST( anim_SRT.px );
-				pos.y = -MCSS_CONST( anim_SRT.py );
-				MTX_Identity44(&mc_mtx_44);
-				MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
-				MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
-
-				MTX_Scale44( &scale_44, anim_SRT.sx, anim_SRT.sy, FX32_ONE );
-				MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
-
-				MTX_Copy33To44( &rotate, &rot_44 );
-				MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
-
-				pos.x = mcss->pos.x;
-				pos.y = mcss->pos.y;
-				pos.z = pos_z_default + mcss->pos.z;
-				MTX_Identity44(&mc_mtx_44);
-				MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, pos.z );
-				MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
-
-				//カメラ行列を掛け合わせ
-				G3_LoadMtx43( NNS_G3dGlbGetCameraMtx() );
-				G3_MultMtx44( &mtx_44 );
-				G3_Scale( scale.x, scale.y, FX32_ONE );
-				G3_Begin(GX_BEGIN_QUADS);
-				G3_TexCoord( tex_s,				tex_t );
-				G3_Vtx( 0, 0, 0 );
-				G3_TexCoord( tex_s + scale.x,	tex_t );
-				G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-				G3_TexCoord( tex_s + scale.x,	tex_t + scale.y );
-				G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
-				G3_TexCoord( tex_s,				tex_t + scale.y );
-				G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
-				G3_End();
-				pos_z_default -= MCSS_DEFAULT_Z;
+				MCSS_DrawAct( mcss, 
+							  ncec->pos_x,
+							  ncec->pos_y,
+							  ncec->size_x,
+							  ncec->size_y,
+							  ncec->tex_s,
+							  ncec->tex_t,
+							  &anim_SRT, anim_ctrl_mc, anim_SRT_mc, cell, &pos_z_default );
 #endif
 			}
 		}
@@ -364,7 +320,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	G3_Identity();
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 
-	for( index = 0 ; index < mcss_sys->max ; index++ ){
+	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
 		if( mcss_sys->mcss[index] != NULL ){
 			mcss=mcss_sys->mcss[index];
 			//暫定でRendererを使用しているが、実際は独自で描画処理を作成しなければならない
@@ -384,6 +340,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 }
 #endif
 
+#ifndef MCSS_DRAW_CALC_FAST
 //--------------------------------------------------------------------------
 /**
  * マルチセルを描画
@@ -412,13 +369,12 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	MTX_RotZ44(&rot_44, -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
 	pos.x = MCSS_CONST( anim_SRT_c->px );
-	pos.y = -MCSS_CONST( anim_SRT_c->py );
+	pos.y = MCSS_CONST( -anim_SRT_c->py );
 	MTX_Identity44(&mc_mtx_44);
+	MTX_Scale44( &scale_44, anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+	MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
 	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
 	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
-	MTX_Scale44( &scale_44, anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
-//	MTX_Scale44( &scale_44, FX_Mul( anim_SRT_c->sx, mcss->scale_x ), FX_Mul( anim_SRT_c->sy, mcss->scale_y ), FX32_ONE );
-	MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
 
 	switch( anim_ctrl->pAnimSequence->animType & 0xffff ){
 	case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
@@ -453,8 +409,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	}
 
 	//マルチセルデータから取得した位置で書き出し
-	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pHierarchyDataArray[cell].posX );
-	pos.y = -MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank[anim_SRT_mc->index].pHierarchyDataArray[cell].posY );
+	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank.pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posX );
+	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank.pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posY );
 	MTX_Identity44(&mc_mtx_44);
 	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
 	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
@@ -462,14 +418,14 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
 
 	pos.x = MCSS_CONST( anim_SRT.px );
-	pos.y = -MCSS_CONST( anim_SRT.py );
+	pos.y = MCSS_CONST( -anim_SRT.py );
 	MTX_Identity44(&mc_mtx_44);
-	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
-	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
 
-//	MTX_Scale44( &scale_44, anim_SRT.sx, anim_SRT.sy, FX32_ONE );
 	MTX_Scale44( &scale_44, FX_Mul( anim_SRT.sx, mcss->scale_x ), FX_Mul( anim_SRT.sy, mcss->scale_y ), FX32_ONE );
 	MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
+
+	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
+	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
 
 	MTX_Copy33To44( &rotate, &rot_44 );
 	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
@@ -484,42 +440,145 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	//カメラ行列を掛け合わせ
 	G3_LoadMtx43( NNS_G3dGlbGetCameraMtx() );
 	G3_MultMtx44( &mtx_44 );
-//	G3_Scale( FX_Mul( scale->x , mcss->scale_x ), FX_Mul( scale->y , mcss->scale_y ), FX32_ONE );
 	G3_Scale( scale->x, scale->y, FX32_ONE );
 	G3_Begin(GX_BEGIN_QUADS);
 	G3_TexCoord( tex_s,				tex_t );
 	G3_Vtx( 0, 0, 0 );
-	G3_TexCoord( tex_s + scale->x,	tex_t );
+	G3_TexCoord( tex_s + scale->x - FX32_ONE,	tex_t );
 	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
-	G3_TexCoord( tex_s + scale->x,	tex_t + scale->y );
+	G3_TexCoord( tex_s + scale->x - FX32_ONE,	tex_t + scale->y - FX32_ONE );
 	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
 	G3_TexCoord( tex_s,				tex_t + scale->y );
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 	*pos_z_default -= MCSS_DEFAULT_Z;
 }
+#else
+//--------------------------------------------------------------------------
+/**
+ * マルチセルを描画
+ */
+//--------------------------------------------------------------------------
+static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
+							  fx32 pos_x,
+							  fx32 pos_y,
+							  fx32 scale_x,
+							  fx32 scale_y,
+							  fx32 tex_s,
+							  fx32 tex_t,
+							  NNSG2dAnimDataSRT *anim_SRT_c,
+							  NNSG2dAnimController *anim_ctrl,
+							  NNSG2dAnimDataSRT *anim_SRT_mc,
+							  int cell,
+							  fx32 *pos_z_default )
+{
+	VecFx32						pos;
+	MtxFx44						mtx_44,mc_mtx_44,rot_44,scale_44;
+	NNSG2dAnimDataSRT			anim_SRT;
+	NNSG2dAnimDataT				*anim_T_p;
+	MtxFx43						camera;
+	MtxFx33						rotate;
+
+	MTX_Identity44(&mtx_44);
+	MTX_TransApply44( &mtx_44, &mtx_44, pos_x, pos_y, 0 );
+	MTX_RotZ44(&rot_44, -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
+	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
+	pos.x = MCSS_CONST( anim_SRT_c->px );
+	pos.y = MCSS_CONST( -anim_SRT_c->py );
+	MTX_Identity44(&mc_mtx_44);
+	MTX_Scale44( &scale_44, anim_SRT_c->sx, anim_SRT_c->sy, FX32_ONE );
+	MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
+	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
+	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
+
+	switch( anim_ctrl->pAnimSequence->animType & 0xffff ){
+	case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
+		anim_SRT.index	= *( (u16 *)anim_ctrl->pCurrent->pContent );
+		anim_SRT.rotZ	= 0;
+		anim_SRT.sx		= 0x1000;
+		anim_SRT.sy		= 0x1000;
+		anim_SRT.px		= 0;
+		anim_SRT.py		= 0;
+		break;
+	case NNS_G2D_ANIMELEMENT_INDEX_SRT:	// Index + SRT 
+		anim_SRT = *( (NNSG2dAnimDataSRT *)anim_ctrl->pCurrent->pContent );
+		break;
+	case NNS_G2D_ANIMELEMENT_INDEX_T:	// Index + T 
+		anim_T_p		= anim_ctrl->pCurrent->pContent;
+		anim_SRT.index	= anim_T_p->index;
+		anim_SRT.rotZ	= 0;
+		anim_SRT.sx		= 0x1000;
+		anim_SRT.sy		= 0x1000;
+		anim_SRT.px		= anim_T_p->px;
+		anim_SRT.py		= anim_T_p->py;
+		break;
+	default:
+		GF_ASSERT(0);
+		break;
+	}
+
+	//ビルボード回転
+	{
+		MTX_Inverse43( NNS_G3dGlbGetCameraMtx(), &camera );	//カメラ逆行列取得
+		MTX_Copy43To33( &camera, &rotate );		//カメラ逆行列から回転行列を取り出す
+	}
+
+	//マルチセルデータから取得した位置で書き出し
+	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posX );
+	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posY );
+	MTX_Identity44(&mc_mtx_44);
+	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
+	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
+	MTX_RotZ44(&rot_44, -FX_SinIdx( anim_SRT.rotZ ), FX_CosIdx( anim_SRT.rotZ ) );
+	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
+
+	pos.x = MCSS_CONST( anim_SRT.px );
+	pos.y = MCSS_CONST( -anim_SRT.py );
+	MTX_Identity44(&mc_mtx_44);
+	MTX_Scale44( &scale_44, FX_Mul( anim_SRT.sx, mcss->scale_x ), FX_Mul( anim_SRT.sy, mcss->scale_y ), FX32_ONE );
+	MTX_Concat44(&mtx_44,&scale_44,&mtx_44);
+
+	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, 0 );
+	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
+
+	MTX_Copy33To44( &rotate, &rot_44 );
+	MTX_Concat44(&mtx_44,&rot_44,&mtx_44);
+
+	pos.x = mcss->pos.x;
+	pos.y = mcss->pos.y;
+	pos.z = *pos_z_default + mcss->pos.z;
+	MTX_Identity44(&mc_mtx_44);
+	MTX_TransApply44( &mc_mtx_44, &mc_mtx_44, pos.x, pos.y, pos.z );
+	MTX_Concat44(&mtx_44,&mc_mtx_44,&mtx_44);
+
+	//カメラ行列を掛け合わせ
+	G3_LoadMtx43( NNS_G3dGlbGetCameraMtx() );
+	G3_MultMtx44( &mtx_44 );
+	G3_Scale( scale_x, scale_y, FX32_ONE );
+	G3_Begin(GX_BEGIN_QUADS);
+	G3_TexCoord( tex_s,				tex_t );
+	G3_Vtx( 0, 0, 0 );
+	G3_TexCoord( tex_s + scale_x - MCSS_TEX_OFS,	tex_t );
+	G3_Vtx( MCSS_DEFAULT_LINE, 0, 0 );
+	G3_TexCoord( tex_s + scale_x - MCSS_TEX_OFS,	tex_t + scale_y - MCSS_TEX_OFS );
+	G3_Vtx( MCSS_DEFAULT_LINE, -MCSS_DEFAULT_LINE, 0 );
+	G3_TexCoord( tex_s,				tex_t + scale_y - MCSS_TEX_OFS );
+	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
+	G3_End();
+	*pos_z_default -= MCSS_DEFAULT_Z;
+}
+#endif
 
 //--------------------------------------------------------------------------
 /**
  * マルチセル登録
  */
 //--------------------------------------------------------------------------
-MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys,
-					  fx32			pos_x,
-					  fx32			pos_y,
-					  fx32			pos_z,
-					  ARCID			arcID,
-					  ARCDATID		ncbr,
-					  ARCDATID		nclr,
-					  ARCDATID		ncer,
-					  ARCDATID		nanr,
-					  ARCDATID		nmcr,
-					  ARCDATID		nmar,
-					  ARCDATID		ncec )
+MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw )
 {
 	int			count;
 
-	for( count = 0 ; count < mcss_sys->max ; count++ ){
+	for( count = 0 ; count < mcss_sys->mcss_max ; count++ ){
 		if( mcss_sys->mcss[ count ] == NULL ){
 			mcss_sys->mcss[ count ] = GFL_HEAP_AllocClearMemory( mcss_sys->heapID, sizeof(MCSS_WORK) );
 			mcss_sys->mcss[ count ]->index = count;
@@ -529,21 +588,12 @@ MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys,
 			mcss_sys->mcss[ count ]->pos.z = pos_z;
 			mcss_sys->mcss[ count ]->scale_x = FX32_ONE;
 			mcss_sys->mcss[ count ]->scale_y = FX32_ONE;
-			MCSS_LoadResource( mcss_sys,
-							   count,
-							   arcID,
-							   ncbr,
-							   nclr,
-							   ncer,
-							   nanr,
-							   nmcr,
-							   nmar,
-							   ncec );
+			MCSS_LoadResource( mcss_sys, count, maw );
 			break;
 		}
 	}
 	//登録MAX値をオーバー
-	GF_ASSERT( count < mcss_sys->max );
+	GF_ASSERT( count < mcss_sys->mcss_max );
 
 	return mcss_sys->mcss[ count ];
 }
@@ -567,12 +617,56 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
+ * ポジションゲット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos )
+{
+	pos->x = mcss->pos.x;
+	pos->y = mcss->pos.y;
+	pos->z = mcss->pos.z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * ポジションセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos )
+{
+	mcss->pos.x = pos->x;
+	mcss->pos.y = pos->y;
+	mcss->pos.z = pos->z;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * スケールXゲット
+ */
+//--------------------------------------------------------------------------
+fx32		MCSS_GetScaleX( MCSS_WORK *mcss )
+{
+	return mcss->scale_x;
+}
+
+//--------------------------------------------------------------------------
+/**
  * スケールXセット
  */
 //--------------------------------------------------------------------------
 void	MCSS_SetScaleX( MCSS_WORK *mcss, fx32 scale_x )
 {
 	mcss->scale_x = scale_x;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * スケールXゲット
+ */
+//--------------------------------------------------------------------------
+fx32		MCSS_GetScaleY( MCSS_WORK *mcss )
+{
+	return mcss->scale_y;
 }
 
 //--------------------------------------------------------------------------
@@ -586,6 +680,66 @@ void	MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y )
 }
 
 //--------------------------------------------------------------------------
+/**
+ * メパチフラグセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetMepachiFlag( MCSS_WORK *mcss )
+{
+	mcss->mepachi_flag = MCSS_MEPACHI_ON;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * メパチフラグリセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetMepachiFlag( MCSS_WORK *mcss )
+{
+	mcss->mepachi_flag = MCSS_MEPACHI_OFF;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * アニメストップフラグセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetAnmStopFlag( MCSS_WORK *mcss )
+{
+	mcss->anm_stop_flag = MCSS_ANM_STOP_ON;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * アニメストップフラグリセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetAnmStopFlag( MCSS_WORK *mcss )
+{
+	mcss->anm_stop_flag = MCSS_ANM_STOP_OFF;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * バニッシュフラグセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetVanishFlag( MCSS_WORK *mcss )
+{
+	mcss->vanish_flag = MCSS_VANISH_ON;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * バニッシュフラグリセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
+{
+	mcss->vanish_flag = MCSS_VANISH_OFF;
+}
+
+//--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------
@@ -593,16 +747,7 @@ void	MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y )
  * リソースロード
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
-								   int				count,
-								   ARCID			arcID,
-								   ARCDATID			ncbr,
-								   ARCDATID			nclr,
-								   ARCDATID			ncer,
-								   ARCDATID			nanr,
-								   ARCDATID			nmcr,
-								   ARCDATID			nmar,
-								   ARCDATID			ncec )
+static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys, int count, MCSS_ADD_WORK	*maw )
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
 	int			chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
@@ -614,13 +759,13 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
 
 	// セルデータ、セルアニメーション、マルチセルデータ、
 	// マルチセルアニメーションをロード。
-	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		arcID, ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
+	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
 	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
-	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		arcID, nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
+	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
-	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	arcID, nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
+	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
-	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	arcID, nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
+	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
 
 	//
@@ -634,14 +779,14 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
 		GF_ASSERT( pSequence != NULL );
 
 		// マルチセルアニメーションを構築
-		MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM);
+		MCSS_GetNewMultiCellAnimation( mcss, NNS_G2D_MCTYPE_SHARE_CELLANIM );
 
 		// マルチセルアニメーションに再生するシーケンスをセット
-		NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence);
+		NNS_G2dSetAnimSequenceToMCAnimation( &mcss->mcss_mcanim, pSequence );
 	}
 
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
-	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc(arcID, ncec, mcss->heapID);
+	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
 
     //
     // VRAM 関連の初期化
@@ -675,7 +820,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
 		{
 			NNSG2dCharacterData* pCharData;
 
-			pBuf = GFL_ARC_UTIL_LoadBGCharacter( arcID, ncbr, FALSE, &pCharData, mcss->heapID );
+			pBuf = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &pCharData, mcss->heapID );
 			GF_ASSERT( pBuf != NULL);
 
 			// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
@@ -692,7 +837,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys,
 		{
 			NNSG2dPaletteData* pPlttData;
 
-			pBuf = GFL_ARC_UTIL_LoadPalette( arcID, nclr, &pPlttData, mcss->heapID );
+			pBuf = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &pPlttData, mcss->heapID );
 			GF_ASSERT( pBuf != NULL);
 
 //当面、OAMでの表示はしないのでコメントアウト
