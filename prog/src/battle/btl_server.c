@@ -865,6 +865,7 @@ static void scput_FightRoot( BTL_SERVER* server, const CLIENT_WORK* atClient, co
 			if( deadFlag )
 			{
 				SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
+				SCQUE_PUT_ACT_Dead( server->que, atClient->myID );
 				return;
 			}
 		}
@@ -937,21 +938,35 @@ static void scPut_FightSingleDmg( BTL_SERVER* server,FIGHT_EVENT_PARAM* fep,
 			{
 				fep->realDamage = sc_fight_layer1_single_dmg( server, fep, attacker, defender, waza );
 //				scEvent_WazaDamage( server, fep, attacker, defender , waza );
+
+				// デバッグを簡単にするため必ず大ダメージにする措置
+				#ifdef PM_DEBUG
+				if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+				{
+					if( !(defClient->myID & 1) )
+					{
+						fep->realDamage = 999;
+					}
+				}
+				#endif
+
 				BTL_POKEPARAM_HpMinus( defender, fep->realDamage );
 				SCQUE_PUT_OP_HpMinus( server->que, defClient->myID, fep->realDamage );
-				SCQUE_PUT_ACT_WazaDamage( server->que, atClient->myID, defClient->myID, wazaIdx, fep->typeAff );
+				SCQUE_PUT_ACT_WazaDamage( server->que, atClient->myID, defClient->myID, fep->realDamage, wazaIdx, fep->typeAff );
 				BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_AFTER );
 
-				BTL_Printf("Waza Damage = %d\n", fep->realDamage );
+				BTL_Printf("[SV] Waza Aff=%d, Damage=%d\n", fep->typeAff, fep->realDamage );
 
 				if( BTL_POKEPARAM_GetValue(defender, BPP_HP) == 0 )
 				{
 					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, defClient->myID );
+					SCQUE_PUT_ACT_Dead( server->que, defClient->myID );
 					deadFlag = TRUE;
 				}
 				if( BTL_POKEPARAM_GetValue(attacker, BPP_HP) == 0 )
 				{
 					SCQUE_PUT_MSG_SET( server->que, BTL_STRID_SET_Dead, atClient->myID );
+					SCQUE_PUT_ACT_Dead( server->que, atClient->myID );
 					deadFlag = TRUE;
 				}
 				if( deadFlag ){ break; }
@@ -1041,7 +1056,8 @@ static u16 sc_fight_layer1_single_dmg( BTL_SERVER* server, FIGHT_EVENT_PARAM* fe
 		fep->realDamage = 1;
 	}
 
-	BTL_Printf("[SV WAZA] ダメージ値：%d\n", fep->realDamage);
+
+	BTL_Printf("[SV WAZA] タイプ相性:%02d -> ダメージ値：%d\n", fep->typeAff, fep->realDamage);
 
 	BTL_EVENT_CallHandlers( server, BTL_EVENT_WAZA_DMG_PROC2 );
 

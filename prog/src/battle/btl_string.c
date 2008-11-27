@@ -245,6 +245,8 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 		ms_std_simple,
 		ms_std_simple,
 		ms_std_simple,
+		ms_std_simple,
+		ms_std_simple,
 	};
 
 	TAYA_Printf("MakeStrSTD str=%d\n", strID);
@@ -436,35 +438,6 @@ void BTL_STR_GetUIString( STRBUF* dst, u16 strID )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, dst );
 }
 
-
-void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax )
-{
-	WORDSET_RegisterWazaName( SysWork.wset, 0, wazaID );
-	WORDSET_RegisterNumber( SysWork.wset, 1, wazaPP, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	WORDSET_RegisterNumber( SysWork.wset, 2, wazaPPMax, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-
-	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLMSG_UI_SEL_WAZA, SysWork.tmpBuf );
-	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-
-
-void GFL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp )
-{
-	u16 hp, hpMax;
-
-	hp = BTL_POKEPARAM_GetValue( bpp, BPP_HP );
-	hpMax = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP );
-
-	WORDSET_RegisterPokeNickName( SysWork.wset, 0, BTL_POKEPARAM_GetSrcData(bpp) );
-	WORDSET_RegisterNumber( SysWork.wset, 1, hp, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-	WORDSET_RegisterNumber( SysWork.wset, 2, hpMax, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-
-	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLSTR_UI_StatWinForm, SysWork.tmpBuf );
-	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
-}
-
-
-
 //--------------------------------------------------------------------
 
 
@@ -499,4 +472,32 @@ u16 BTL_STR_GetRankDownStrID( u8 statusType, u8 volume )
 	}
 }
 
+
+
+//--------------------------------------------------------------------
+// Ç±ÇÃâ∫ÇÕÇøÇÂÇ§âºçÏê¨ÅBÇ¢Ç∏ÇÍè¡Ç¶Ç‹Ç∑ÇΩÇ‘ÇÒÅc
+//--------------------------------------------------------------------
+
+void BTL_STR_MakeWazaUIString( STRBUF* dst, u16 wazaID, u8 wazaPP, u8 wazaPPMax )
+{
+	WORDSET_RegisterWazaName( SysWork.wset, 0, wazaID );
+	WORDSET_RegisterNumber( SysWork.wset, 1, wazaPP, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( SysWork.wset, 2, wazaPPMax, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLMSG_UI_SEL_WAZA, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+
+void BTL_STR_MakeStatusWinStr( STRBUF* dst, const BTL_POKEPARAM* bpp, u16 hp )
+{
+	u16 hpMax = BTL_POKEPARAM_GetValue( bpp, BPP_MAX_HP );
+
+	WORDSET_RegisterPokeNickName( SysWork.wset, 0, BTL_POKEPARAM_GetSrcData(bpp) );
+	WORDSET_RegisterNumber( SysWork.wset, 1, hp, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( SysWork.wset, 2, hpMax, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], BTLSTR_UI_StatWinForm, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
 

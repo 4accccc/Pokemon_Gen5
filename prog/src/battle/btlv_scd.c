@@ -19,8 +19,37 @@
 #include "btlv_scd.h"
 
 #include "arc_def.h"
-#include "test_graphic/d_taya.naix"
+#include "font/font.naix"
 #include "msg/msg_btl_ui.h"
+
+
+/*--------------------------------------------------------------------------*/
+/* Consts                                                                   */
+/*--------------------------------------------------------------------------*/
+enum {
+	TEST_SELWIN_COL1 = 0x04,
+	TEST_SELWIN_COL2 = 0x06,
+	TEST_SELWIN_COL3 = 0x07,
+	TEST_SELWIN_COL4 = 0x0A,
+
+	POKEWIN_WIDTH  = 15*8,
+	POKEWIN_HEIGHT = 4*8,
+
+	POKEWIN_1_X = 0,
+	POKEWIN_1_Y = 8,
+	POKEWIN_2_X = 256-POKEWIN_WIDTH,
+	POKEWIN_2_Y = POKEWIN_1_Y,
+
+	POKEWIN_3_X = 0,
+	POKEWIN_3_Y = POKEWIN_1_Y+POKEWIN_HEIGHT+8,
+	POKEWIN_4_X = 256-POKEWIN_WIDTH,
+	POKEWIN_4_Y = POKEWIN_3_Y,
+
+	POKEWIN_5_X = 0,
+	POKEWIN_5_Y = POKEWIN_3_Y+POKEWIN_HEIGHT+8,
+	POKEWIN_6_X = 256-POKEWIN_WIDTH,
+	POKEWIN_6_Y = POKEWIN_5_Y,
+};
 
 //--------------------------------------------------------------
 /**
@@ -43,6 +72,7 @@ struct _BTLV_SCD {
 	BTL_ACTION_PARAM		selAction;
 
 	const BTLV_CORE* vcore;
+	const BTL_MAIN_MODULE* mainModule;
 	HEAPID	heapID;
 };
 
@@ -50,22 +80,27 @@ struct _BTLV_SCD {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
+static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
 static BOOL selectAction_loop( int* seq, void* wk_adrs );
+static BOOL selectPokemon_init( int* seq, void* wk_adrs );
+static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
 
 
 
 
 
 
-BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID )
+BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID )
 {
 	BTLV_SCD* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCD) );
 
 	wk->vcore = vcore;
+	wk->mainModule = mainModule;
 	wk->heapID = heapID;
 	wk->font = font;
-	wk->strbuf = GFL_STR_CreateBuffer( 64, heapID );
+	wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
@@ -98,7 +133,7 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
 	GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_S,   VISIBLE_OFF );
 
-	GFL_ARC_UTIL_TransVramPalette( ARCID_D_TAYA, NARC_d_taya_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
 
 	GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0xff, 1, 0 );
 	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
@@ -385,10 +420,10 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 	case 0:
 		GFL_BMP_Clear( wk->bmp, 0x0f );
 
-		printBtn( wk,   0,  0, 128, 96, 0x09, BTLMSG_UI_SEL_FIGHT );
-		printBtn( wk, 128,  0, 128, 96, 0x0d, BTLMSG_UI_SEL_ITEM );
-		printBtn( wk,   0, 96, 128, 96, 0x07, BTLMSG_UI_SEL_POKEMON );
-		printBtn( wk, 128, 96, 128, 96, 0x08, BTLMSG_UI_SEL_ESCAPE );
+		printBtn( wk,   0,  0, 128, 96, TEST_SELWIN_COL1, BTLMSG_UI_SEL_FIGHT );
+		printBtn( wk, 128,  0, 128, 96, TEST_SELWIN_COL2, BTLMSG_UI_SEL_ITEM );
+		printBtn( wk,   0, 96, 128, 96, TEST_SELWIN_COL3, BTLMSG_UI_SEL_POKEMON );
+		printBtn( wk, 128, 96, 128, 96, TEST_SELWIN_COL4, BTLMSG_UI_SEL_ESCAPE );
 
 		(*seq)++;
 		break;
@@ -421,7 +456,6 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
 			if( hit != GFL_UI_TP_HIT_NONE )
 			{
-				TAYA_Printf("タッチされたよ %d\n", hit);
 				switch( hit ){
 				default:
 				case BTL_ACTION_FIGHT:
@@ -482,75 +516,119 @@ void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action )
 }
 
 
-
-
+//=============================================================================================
+/**
+ * ポケモン選択開始
+ *
+ * @param   wk		
+ *
+ */
+//=============================================================================================
 void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk )
 {
-
+	BTL_UTIL_SetupProc( &wk->subProc, wk, selectPokemon_init, selectPokemon_loop );
 }
 
 BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk )
 {
-#if 0
-	typedef struct {
-		u16 idx1;
-		u16 idx2;
-		u16 maxElems;
-	}SEQ_WORK;
+	return BTL_UTIL_CallProc( &wk->subProc );
+}
 
-	SEQ_WORK* wk = workBufer;
+static BOOL selectPokemon_init( int* seq, void* wk_adrs )
+{
+	static const struct {
+		u8 x;
+		u8 y;
+	}winpos[] = {
+		{ POKEWIN_1_X, POKEWIN_1_Y },
+		{ POKEWIN_2_X, POKEWIN_2_Y },
+		{ POKEWIN_3_X, POKEWIN_3_Y },
+		{ POKEWIN_4_X, POKEWIN_4_Y },
+		{ POKEWIN_5_X, POKEWIN_5_Y },
+		{ POKEWIN_6_X, POKEWIN_6_Y },
+	};
 
-	switch( *seq ){
+	BTLV_SCD* wk = wk_adrs;
 
+	switch(*seq) {
 	case 0:
-		printf("ポケモンを選んでね\n");
 		{
-			const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( core->mainModule, core->myClientID );
-			int i;
+			const BTL_PARTY* party;
+			const BTL_POKEPARAM* bpp;
+			u16 members, hp, i;
+			u8 col;
 
-			wk->maxElems = BTL_PARTY_GetMemberCount( party );
-			for(i=0; i<wk->maxElems; i++)
+			GFL_BMP_Clear( wk->bmp, 0xff );
+
+			party = BTL_MAIN_GetPartyDataConst( wk->mainModule, BTLV_CORE_GetPlayerClientID(wk->vcore) );
+			members = BTL_PARTY_GetMemberCount( party );
+
+			for(i=0; i<members; i++)
 			{
-				const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst( party, i );
-				printf("[%c]%s  ", 'A'+i, BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)));
+				bpp = BTL_PARTY_GetMemberDataConst( party, i );
+				hp = BTL_POKEPARAM_GetValue( bpp, BPP_HP );
+				col = (hp)? 6 : 4;
+				BTL_STR_MakeStatusWinStr( wk->strbuf, bpp, hp );
+				GFL_BMP_Fill( wk->bmp, winpos[i].x, winpos[i].y, POKEWIN_WIDTH, POKEWIN_HEIGHT, col );
+				PRINT_UTIL_Print( &wk->printUtil, wk->printQue, winpos[i].x+2, winpos[i].y+2, wk->strbuf, wk->font );
 			}
+			(*seq)++;
 		}
-		(*seq)++;
-		/* fallthru */
+		break;
+
 	case 1:
+		if( !PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
-			int key = getch_upr();
-
-			if( key >= 'A' && key < 'A'+wk->maxElems )
-			{
-				u16 idx = (key - 'A');
-
-				if( idx == BTL_MAIN_GetFrontMemberIdx(core->mainModule, core->myClientID) )
-				{
-					const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
-					printf("%sはもう出てるよ\n", BTRSTR_GetMonsName(BTL_POKEPARAM_GetMonsNo(pp)));
-					(*seq)=0;
-				}
-				else
-				{
-					const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( core->mainModule, core->myClientID );
-					const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst( party, idx );
-					if( BTL_POKEPARAM_GetValue(pp, BPP_HP) == 0 )
-					{
-						printf("%sはたたかえません！\n", BTRSTR_GetMonsName(BTL_POKEPARAM_GetMonsNo(pp)));
-						(*seq)=0;
-					}
-					else
-					{
-						BTL_ACTION_SetChangeParam( &core->actionParam, idx );
-						return TRUE;
-					}
-				}
-			}
+			return TRUE;
 		}
 		break;
 	}
 
-#endif
-	return TRUE;
+	return FALSE;
 }
+
+static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
+{
+	enum {
+		POKEWIN_1_BTM = POKEWIN_1_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_1_RGT = POKEWIN_1_X+POKEWIN_WIDTH - 1,
+		POKEWIN_2_BTM = POKEWIN_2_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_2_RGT = POKEWIN_2_X+POKEWIN_WIDTH - 1,
+		POKEWIN_3_BTM = POKEWIN_3_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_3_RGT = POKEWIN_3_X+POKEWIN_WIDTH - 1,
+		POKEWIN_4_BTM = POKEWIN_4_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_4_RGT = POKEWIN_4_X+POKEWIN_WIDTH - 1,
+		POKEWIN_5_BTM = POKEWIN_5_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_5_RGT = POKEWIN_5_X+POKEWIN_WIDTH - 1,
+		POKEWIN_6_BTM = POKEWIN_6_Y+POKEWIN_HEIGHT - 1,
+		POKEWIN_6_RGT = POKEWIN_6_X+POKEWIN_WIDTH - 1,
+	};
+	static const GFL_UI_TP_HITTBL hitTbl[] = {
+		{ POKEWIN_1_Y, POKEWIN_1_BTM, POKEWIN_1_X, POKEWIN_1_RGT },
+		{ POKEWIN_2_Y, POKEWIN_2_BTM, POKEWIN_2_X, POKEWIN_2_RGT },
+		{ POKEWIN_3_Y, POKEWIN_3_BTM, POKEWIN_3_X, POKEWIN_3_RGT },
+		{ POKEWIN_4_Y, POKEWIN_4_BTM, POKEWIN_4_X, POKEWIN_4_RGT },
+		{ POKEWIN_5_Y, POKEWIN_5_BTM, POKEWIN_5_X, POKEWIN_5_RGT },
+		{ POKEWIN_6_Y, POKEWIN_6_BTM, POKEWIN_6_X, POKEWIN_6_RGT },
+		{ GFL_UI_TP_HIT_END, 0, 0, 0 },
+	};
+
+	BTLV_SCD* wk = wk_adrs;
+	int hitpos;
+
+	hitpos = GFL_UI_TP_HitTrg( hitTbl );
+	if( hitpos != GFL_UI_TP_HIT_NONE )
+	{
+		const BTL_PARTY* party = BTL_MAIN_GetPartyDataConst( wk->mainModule, BTLV_CORE_GetPlayerClientID(wk->vcore) );
+
+		if( hitpos < BTL_PARTY_GetMemberCount(party) )
+		{
+			BTL_ACTION_SetChangeParam( &wk->selAction, hitpos );
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
+

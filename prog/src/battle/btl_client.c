@@ -242,6 +242,7 @@ static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 			const BTL_POKEPARAM* frontPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, wk->frontPokeIdx );
 			if( BTL_POKEPARAM_GetValue(frontPoke, BPP_HP) == 0 )
 			{
+				BTL_Printf("[CL] myID=%d 先頭ポケが死んだのでポケモン選択\n", wk->myID);
 				BTLV_StartCommand( wk->viewCore, BTLV_CMD_SELECT_POKEMON );
 				(*seq)++;
 			}
@@ -384,31 +385,35 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 				u16 wazaIdx = wk->cmdArgs[1];
 				const BTL_POKEPARAM* poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
 				wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
-				TAYA_Printf("WazaMsg : ClientID=%d, wazaIdx=%d, WazaNum=%d\n",
-					clientID, wk->cmdArgs[1], wazaIdx);
 				BTLV_StartMsgWaza( wk->viewCore, clientID, wazaIdx );
-				(*seq) = 2;
+				(*seq) = 4;
 			}
 			else if( wk->serverCmd == SC_ACT_WAZA_DMG )
 			{
 				WazaID waza;
 				u8 atClientID, defClientID, affinity, wazaIdx;
+				u16 damage;
 				const BTL_PARTY* party;
 				const BTL_POKEPARAM* poke;
 
-				atClientID = wk->cmdArgs[0];
-				defClientID = wk->cmdArgs[1];
-				wazaIdx = wk->cmdArgs[2];
-				affinity = wk->cmdArgs[3];
-
-				BTL_Printf(" WAZA ACT affinity=%d\n", affinity);
+				atClientID	= wk->cmdArgs[0];
+				defClientID	= wk->cmdArgs[1];
+				damage		= wk->cmdArgs[2];
+				wazaIdx		= wk->cmdArgs[3];
+				affinity	= wk->cmdArgs[4];
 
 				party = BTL_MAIN_GetPartyDataConst( wk->mainModule, atClientID );
 				poke = BTL_PARTY_GetMemberDataConst( party, 0 );
 				waza = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
 
-				BTLV_StartWazaAct( wk->viewCore, atClientID, defClientID, waza, affinity );
-				(*seq) = 2;
+				BTL_Printf("[CL] WazaAct aff=%d, damage=%d\n", affinity, damage);
+
+				BTLV_StartWazaAct( wk->viewCore, atClientID, defClientID, damage, waza, affinity );
+				(*seq) = 5;
+			}
+			else if( wk->serverCmd == SC_ACT_DEAD )
+			{
+				BTLV_StartDeadAct( wk->viewCore, wk->cmdArgs[0] );
 			}
 			else if( wk->serverCmd == SC_TOKWIN_IN )
 			{
@@ -462,6 +467,23 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 		{
 			(*seq)=1;
+		}
+		break;
+
+	case 4:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			(*seq) = 1;
+		}
+		break;
+
+	case 5:
+		if( BTLV_WaitWazaAct(wk->viewCore) )
+		{
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+			{
+				(*seq)=1;
+			}
 		}
 		break;
 

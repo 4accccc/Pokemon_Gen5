@@ -133,9 +133,11 @@ extern void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args );
 extern void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 clientID, u16 waza );
 extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 
+extern void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage, WazaID waza, BtlTypeAff affinity );
+extern BOOL BTLV_WaitWazaAct( BTLV_CORE* wk );
+extern void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID );
+extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID );
 
-
-extern void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, WazaID waza, BtlTypeAff affinity );
 
 extern void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID );
 extern void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID );

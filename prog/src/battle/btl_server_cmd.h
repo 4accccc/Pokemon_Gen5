@@ -30,6 +30,7 @@ typedef enum {
 	SC_OP_PP_PLUS,			///< 【計算】PPプラス    [ClientID, プラス量]
 	SC_OP_RANK_UP,			///< 【計算】ステータスランクアップ  [ClientID, StatusType, プラス量]
 	SC_OP_RANK_DOWN,		///< 【計算】ステータスランクダウン  [ClientID, StatusType, マイナス量]
+
 	SC_DATA_WAZA_EXE,		///< 【データセット】ワザ発動 [ AtClientID, wazaIdx, DefPokeNum, DefClientID1, ... ]
 	SC_DATA_MEMBER_OUT,		///< 【データセット】フロントメンバーアウト[ CliendID ]
 	SC_DATA_MEMBER_IN,		///< 【データセット】フロントメンバーイン[ ClientID, pokeIdx ]
@@ -37,6 +38,7 @@ typedef enum {
 	SC_ACT_WAZA_DMG,		///< 【ワザ発動：ダメージ】[ AtClient, DefClient, wazaIdx, Affinity ]
 	SC_ACT_RANKUP,			///< 【ランクアップ効果】 ○○の×××があがった！[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< 【ランクダウン効果】 ○○の×××がさがった！[ ClientID, statusType, volume ]
+	SC_ACT_DEAD,			///< 【ポケモンひんし】[ ClientID ]
 
 	SC_TOKWIN_IN,			///< とくせいウィンドウ表示イン [ClientID]
 	SC_TOKWIN_OUT,			///< とくせいウィンドウ表示アウト [ClientID]
@@ -188,11 +190,12 @@ static inline void SCQUE_READ_DATA_MemberIn( BTL_SERVER_CMD_QUE* que, int* args 
 }
 
 //---------------------------------------------
-static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 atClientID, u8 defClientID, u8 wazaIdx, u8 affinity )
+static inline void SCQUE_PUT_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, u8 atClientID, u8 defClientID, u16 damage, u8 wazaIdx, u8 affinity )
 {
 	scque_put2byte( que, SC_ACT_WAZA_DMG );
 	scque_put1byte( que, atClientID );
 	scque_put1byte( que, defClientID );
+	scque_put2byte( que, damage );
 	scque_put1byte( que, wazaIdx );
 	scque_put1byte( que, affinity );
 }
@@ -200,8 +203,9 @@ static inline void SCQUE_READ_ACT_WazaDamage( BTL_SERVER_CMD_QUE* que, int* args
 {
 	args[0] = scque_read1byte( que );
 	args[1] = scque_read1byte( que );
-	args[2] = scque_read1byte( que );
+	args[2] = scque_read2byte( que );
 	args[3] = scque_read1byte( que );
+	args[4] = scque_read1byte( que );
 }
 static inline void SCQUE_PUT_ACT_RankUp( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 statusType, u8 volume )
 {
@@ -230,7 +234,15 @@ static inline void SCQUE_READ_ACT_RankDown( BTL_SERVER_CMD_QUE* que, int* args )
 	args[2] = scque_read1byte( que );
 }
 
-
+static inline void SCQUE_PUT_ACT_Dead( BTL_SERVER_CMD_QUE* que, u8 clientID )
+{
+	scque_put2byte( que, SC_ACT_DEAD );
+	scque_put1byte( que, clientID );
+}
+static inline void SCQUE_READ_ACT_Dead( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+}
 
 static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 clientID )
 {
@@ -294,6 +306,7 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_ACT_WAZA_DMG:		SCQUE_READ_ACT_WazaDamage( que, args ); break;
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
+	case SC_ACT_DEAD:			SCQUE_READ_ACT_Dead( que, args ); break;
 	case SC_TOKWIN_IN:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_TOKWIN_OUT:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_MSG_STD:			SCQUE_READ_Msg( que, args ); break;

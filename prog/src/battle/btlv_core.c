@@ -12,12 +12,13 @@
 #include "print/gf_font.h"
 
 #include "arc_def.h"
-#include "test_graphic\d_taya.naix"
+#include "font/font.naix"
 
 #include "btl_common.h"
 #include "btl_main.h"
 #include "btl_action.h"
 #include "btl_calc.h"
+#include "btl_util.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -51,6 +52,7 @@ struct _BTLV_CORE {
 	BtlvCmd		processingCmd;
 	pCmdProc	mainProc;
 	int			mainSeq;
+	BTL_PROC	subProc;
 	u8			genericWork[ GENERIC_WORK_SIZE ];
 
 	BTL_ACTION_PARAM	actionParam;
@@ -68,25 +70,13 @@ struct _BTLV_CORE {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static int getch_upr( void );
+static void* getGenericWork( BTLV_CORE* core, u32 size );
 static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
-static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
+static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
+static BOOL subprocWazaAct( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 
-
-//---------------------------------------
-// getch を全部大文字にして返す
-//---------------------------------------
-static int getch_upr( void )
-{
-	int key = getchar();
-	if( key >= 'a' && key <= 'z' )
-	{
-		key = 'A' + (key - 'a');
-	}
-	return key;
-}
 
 
 //=============================================================================================
@@ -109,13 +99,13 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 	core->processingCmd = BTLV_CMD_NULL;
 	core->heapID = heapID;
 	core->strBuf = GFL_STR_CreateBuffer( STR_BUFFER_SIZE, heapID );
-	core->fontHandle = GFL_FONT_Create( ARCID_D_TAYA, NARC_d_taya_lc12_2bit_nftr,
+	core->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
 						GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
 
 	core->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
 	core->scrnU = BTLV_SCU_Create( core, core->mainModule, core->tcbl, core->fontHandle, heapID );
-	core->scrnD = BTLV_SCD_Create( core, core->tcbl, core->fontHandle, heapID );
+	core->scrnD = BTLV_SCD_Create( core, core->mainModule, core->tcbl, core->fontHandle, heapID );
 
 	core->mainProc = NULL;
 	core->mainSeq = 0;
@@ -182,7 +172,7 @@ void BTLV_StartCommand( BTLV_CORE* core, BtlvCmd cmd )
 		}procTbl[] = {
 			{ BTLV_CMD_SETUP,			CmdProc_Setup },
 			{ BTLV_CMD_SELECT_ACTION,	CmdProc_SelectAction },
-			{ BTLV_CMD_SELECT_POKEMON,	CmcProc_SelectPokemon },
+			{ BTLV_CMD_SELECT_POKEMON,	CmdProc_SelectPokemon },
 		};
 
 		int i;
@@ -237,6 +227,13 @@ BOOL BTLV_WaitCommand( BTLV_CORE* core )
 void BTLV_GetActionParam( const BTLV_CORE* core, BTL_ACTION_PARAM* dst )
 {
 	*dst = core->actionParam;
+}
+
+static void* getGenericWork( BTLV_CORE* core, u32 size )
+{
+	GF_ASSERT(size<sizeof(core->genericWork));
+
+	return core->genericWork;
 }
 
 
@@ -320,10 +317,31 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
  * @retval  BOOL		
  */
 //--------------------------------------------------------------------------
-static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
+static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
 {
+	switch( *seq ){
+	case 0:
+		BTLV_SCD_StartPokemonSelect( core->scrnD );
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_SCD_WaitPokemonSelect(core->scrnD) )
+		{
+			BTLV_SCD_GetSelectAction( core->scrnD, &core->actionParam );
+			return TRUE;
+		}
+		break;
+	}
 	return FALSE;
 }
+
+
+
+//--------------------------
+typedef struct {
+	BtlTypeAff	affinity;
+	u16			timer;
+}WAZA_ACT_WORK;
 
 
 
@@ -336,19 +354,92 @@ static BOOL CmcProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer )
  *
  */
 //=============================================================================================
-void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, WazaID waza, BtlTypeAff affinity )
+void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage, WazaID waza, BtlTypeAff affinity )
 {
 //	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
-/*
-	if( affinity < BTL_TYPEAFF_100 )
-	{
-		printf("こうかは いまひとつのようだ\n");
+
+	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
+
+	BTL_Printf("[BTLVC] StartWazaAct aff = %d\n", affinity);
+
+	BTLV_SCU_StartWazaAct( wk->scrnU, atClientID, defClientID, waza, affinity );
+
+	subwk->affinity = affinity;
+	subwk->timer = 0;
+
+	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocWazaAct );
+}
+//=============================================================================================
+/**
+ * ワザアクション終了待ち
+ *
+ * @param   wk		
+ *
+ * @retval  BOOL		
+ */
+//=============================================================================================
+BOOL BTLV_WaitWazaAct( BTLV_CORE* wk )
+{
+	return BTL_UTIL_CallProc( &wk->subProc );
+}
+
+static BOOL subprocWazaAct( int* seq, void* wk_adrs )
+{
+	BTLV_CORE* wk = wk_adrs;
+	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
+
+	switch( *seq ){
+	case 0:
+		if( ++(subwk->timer) > 30 )
+		{
+			do {
+				if( subwk->affinity < BTL_TYPEAFF_100 )
+				{
+					BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffBad );
+					BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+					break;;
+				}
+				if ( subwk->affinity > BTL_TYPEAFF_100 )
+				{
+					BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_AffGood );
+					BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+					break;
+				}
+
+			}while(0);
+
+			(*seq)++;
+		}
+		break;
+
+	case 1:
+		if(	BTLV_SCU_WaitWazaAct(wk->scrnU)
+		&&	BTLV_SCU_WaitMsg(wk->scrnU)
+		){
+			return TRUE;
+		}
+		break;
+
 	}
-	else if( affinity > BTL_TYPEAFF_100 )
-	{
-		printf("こうかは ばつぐんだ！\n");
-	}
-*/
+	return FALSE;
+}
+
+//=============================================================================================
+/**
+ * ポケモンひんしアクション開始
+ *
+ * @param   wk		
+ * @param   clientID		
+ *
+ */
+//=============================================================================================
+void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID )
+{
+	BTLV_SCU_StartDeadAct( wk->scrnU, clientID );
+}
+BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID )
+{
+	return BTLV_SCU_WaitDeadAct( wk->scrnU );
 }
 
 //=============================================================================================
@@ -431,18 +522,12 @@ BOOL BTLV_WaitMsg( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID )
 {
-	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
-	u16 tok = BTL_POKEPARAM_GetValue( pp, BPP_TOKUSEI );
-	u16 monsno = BTL_POKEPARAM_GetMonsNo( pp );
-
-//	printf("□■%sの%s！■□\n",
-//		BTRSTR_GetMonsName(monsno), BTRSTR_GetTokuseiName(tok)
-//	);
+	BTLV_SCU_DispTokWin( wk->scrnU, clientID );
 }
 
 void BTLV_QuitTokWin( BTLV_CORE* wk, u8 clientID )
 {
-	
+	BTLV_SCU_HideTokWin( wk->scrnU, clientID );
 }
 
 

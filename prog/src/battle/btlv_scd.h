@@ -20,12 +20,13 @@ typedef struct _BTLV_SCD	BTLV_SCD;
 #include <tcbl.h>
 #include "print/gf_font.h"
 
+#include "btl_main.h"
 #include "btl_pokeparam.h"
 #include "btl_action.h"
 #include "btlv_core.h"
 
 
-extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID );
+extern BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule, GFL_TCBLSYS* tcbl, GFL_FONT* font, HEAPID heapID );
 extern void BTLV_SCD_Delete( BTLV_SCD* wk );
 
 extern void BTLV_SCD_Setup( BTLV_SCD* wk );

@@ -16,6 +16,7 @@
 typedef enum {
 
 	BTLV_TASKPRI_MAIN_WINDOW = 0,
+	BTLV_TASKPRI_DAMAGE_EFFECT,
 
 
 }BtlvTaskPri;
