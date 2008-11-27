@@ -75,6 +75,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL subprocWazaAct( int* seq, void* wk_adrs );
+static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
 
 
@@ -442,6 +443,11 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID )
 	return BTLV_SCU_WaitDeadAct( wk->scrnU );
 }
 
+//------------------------------------------
+typedef struct {
+	u8 clientID;
+}MEMBER_IN_WORK;
+
 //=============================================================================================
 /**
  * ポケモン入れ替えアクション開始
@@ -454,13 +460,45 @@ BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID )
 //=============================================================================================
 void BTLV_StartMemberChangeAct( BTLV_CORE* wk, u8 clientID, u8 memberIdx )
 {
-	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
+	MEMBER_IN_WORK* subwk = getGenericWork( wk, sizeof(MEMBER_IN_WORK) );
+
+	subwk->clientID = clientID;
+	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMemberIn );
+//	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
 //	printf("ゆけっ！%s！\n", BTRSTR_GetMonsName( BTL_POKEPARAM_GetMonsNo(pp)) );
 }
 
 BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk )
 {
-	return TRUE;
+	return BTL_UTIL_CallProc( &wk->subProc );
+}
+
+static BOOL subprocMemberIn( int* seq, void* wk_adrs )
+{
+	BTLV_CORE* wk = wk_adrs;
+	MEMBER_IN_WORK* subwk = getGenericWork( wk, sizeof(MEMBER_IN_WORK) );
+
+	switch( *seq ){
+	case 0:
+		BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle );
+		BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+		(*seq)++;
+		break;
+
+	case 1:
+		if( BTLV_SCU_WaitMsg(wk->scrnU) )
+		{
+			BTLV_SCU_StartPokeIn( wk->scrnU, subwk->clientID );
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( BTLV_SCU_WaitPokeIn(wk->scrnU) )
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 //=============================================================================================

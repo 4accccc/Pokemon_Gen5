@@ -536,6 +536,8 @@ const BTL_POKEPARAM* BTL_MAIN_GetFrontPokeDataConst( const BTL_MAIN_MODULE* wk, 
 
 void BTL_MAIN_SetFrontMemberIdx( BTL_MAIN_MODULE* wk, u8 clientID, u8 memberIdx )
 {
+	BTL_Printf("[MAIN]  フロントメンバー入れ替え CLID:%d, %d -> %d\n",
+		clientID, wk->frontMemberIdx[ clientID ], memberIdx );
 	wk->frontMemberIdx[ clientID ] = memberIdx;
 }
 

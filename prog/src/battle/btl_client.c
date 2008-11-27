@@ -356,7 +356,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 				u8 clientID = wk->cmdArgs[0];
 				u8 memberIdx = wk->cmdArgs[1];
 
-//				BTL_Printf(" MEMBER CHANGE PROC .... client=%d, memberIdx=%d\n", clientID, memberIdx);
+				BTL_Printf("[CL] MEMBER IN .... client=%d, memberIdx=%d\n", clientID, memberIdx);
 
 				BTL_MAIN_SetFrontMemberIdx( wk->mainModule, clientID, memberIdx );
 				if( wk->myID == clientID )

@@ -84,7 +84,9 @@ struct _BTLV_SCU {
 static BOOL btlin_loop( int* seq, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID );
+static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static void statwin_disp( STATUS_WIN* stwin );
 static void statwin_hide( STATUS_WIN* stwin );
@@ -439,6 +441,8 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, u8 clientID )
 	twk->timer = 0;
 	twk->line = 0;
 
+	*(twk->endFlag) = FALSE;
+
 
 }
 //=============================================================================================
@@ -470,6 +474,62 @@ static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs )
 		}
 	}
 }
+//--------------------------------------------------------
+typedef struct {
+
+	STATUS_WIN*  statWin;
+	u16			seq;
+	u16			line;
+	u8*			endFlag;
+
+}POKEIN_ACT_WORK;
+
+
+//=============================================================================================
+/**
+ * ポケモン入場アクション開始
+ *
+ * @param   wk		
+ * @param   clientID		
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, u8 clientID )
+{
+	GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskPokeInEffect, sizeof(POKEIN_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+	POKEIN_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+	twk->statWin = &wk->statusWin[ clientID ];
+	twk->endFlag = &wk->taskEndFlag[0];
+	twk->seq = 0;
+
+	*(twk->endFlag) = FALSE;
+}
+
+
+BOOL BTLV_SCU_WaitPokeIn( BTLV_SCU* wk )
+{
+	return wk->taskEndFlag[0];
+}
+
+static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
+{
+	POKEIN_ACT_WORK* wk = wk_adrs;
+
+	switch( wk->seq ){
+	case 0:
+		statwin_reset_data( wk->statWin );
+		wk->seq++;
+		break;
+	case 1:
+		statwin_disp_start( wk->statWin );
+		wk->seq++;
+		break;
+	case 2:
+		*(wk->endFlag) = TRUE;
+		GFL_TCBL_Delete( tcbl );
+	}
+}
 
 
 
@@ -489,7 +549,6 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 
 	stwin->clientID = clientID;
 	stwin->parentWk = wk;
-	stwin->bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
 
 	playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 	isPlayer = !BTL_MAIN_IsOpponentClientID( wk->mainModule, playerClientID, clientID );
@@ -498,12 +557,22 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 
 	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, 10, 4, 0, GFL_BMP_CHRAREA_GET_F );
 	stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
+
+	statwin_reset_data( stwin );
+}
+
+static void statwin_reset_data( STATUS_WIN* stwin )
+{
+	BTLV_SCU* wk = stwin->parentWk;
+
+	stwin->bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, stwin->clientID );
 	stwin->hp = BTL_POKEPARAM_GetValue( stwin->bpp, BPP_HP );
 
 	GFL_BMP_Clear( stwin->bmp, TEST_STATWIN_BGCOL );
 	BTL_STR_MakeStatusWinStr( wk->strBuf, stwin->bpp, stwin->hp );
 	PRINTSYS_Print( stwin->bmp, 0, 0, wk->strBuf, wk->defaultFont );
 }
+
 
 static void statwin_disp_start( STATUS_WIN* stwin )
 {

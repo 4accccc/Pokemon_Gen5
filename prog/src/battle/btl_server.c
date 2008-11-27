@@ -1297,6 +1297,7 @@ static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 cl
 {
 //	cep->inPokeParam = BTL_MAIN_GetPokeParam
 	SCQUE_PUT_DATA_MemberIn( server->que, clientID, memberIdx );
+//	SCQUE_PUT_ACT_MemberIn( server->que, clientID, memberIdx );
 }
 
 // ƒ|ƒPƒ‚ƒ“o‚»‚ë‚Á‚½’¼Œã

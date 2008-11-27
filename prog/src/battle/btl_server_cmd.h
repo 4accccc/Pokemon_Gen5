@@ -39,6 +39,7 @@ typedef enum {
 	SC_ACT_RANKUP,			///< yƒ‰ƒ“ƒNƒAƒbƒvŒø‰Êz ››‚Ì~~~‚ª‚ ‚ª‚Á‚½I[ ClientID, statusType, volume ]
 	SC_ACT_RANKDOWN,		///< yƒ‰ƒ“ƒNƒ_ƒEƒ“Œø‰Êz ››‚Ì~~~‚ª‚³‚ª‚Á‚½I[ ClientID, statusType, volume ]
 	SC_ACT_DEAD,			///< yƒ|ƒPƒ‚ƒ“‚Ð‚ñ‚µz[ ClientID ]
+	SC_ACT_MEMBER_IN,		///< yƒ|ƒPƒ‚ƒ“ƒCƒ“z[ ClientID, pokeIdx ]
 
 	SC_TOKWIN_IN,			///< ‚Æ‚­‚¹‚¢ƒEƒBƒ“ƒhƒE•\Ž¦ƒCƒ“ [ClientID]
 	SC_TOKWIN_OUT,			///< ‚Æ‚­‚¹‚¢ƒEƒBƒ“ƒhƒE•\Ž¦ƒAƒEƒg [ClientID]
@@ -244,6 +245,20 @@ static inline void SCQUE_READ_ACT_Dead( BTL_SERVER_CMD_QUE* que, int* args )
 	args[0] = scque_read1byte( que );
 }
 
+static inline void SCQUE_PUT_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 pokeIdx )
+{
+	scque_put2byte( que, SC_ACT_MEMBER_IN );
+	scque_put1byte( que, clientID );
+	scque_put1byte( que, pokeIdx );
+}
+static inline void SCQUE_READ_ACT_MemberIn( BTL_SERVER_CMD_QUE* que, int* args )
+{
+	args[0] = scque_read1byte( que );
+	args[1] = scque_read1byte( que );
+}
+
+
+
 static inline void SCQUE_PUT_TOKWIN_IN( BTL_SERVER_CMD_QUE* que, u8 clientID )
 {
 	scque_put2byte( que, SC_TOKWIN_IN );
@@ -307,6 +322,7 @@ static inline ServerCmd SCQUE_Read( BTL_SERVER_CMD_QUE* que, int* args )
 	case SC_ACT_RANKUP:			SCQUE_READ_ACT_RankUp( que, args ); break;
 	case SC_ACT_RANKDOWN:		SCQUE_READ_ACT_RankDown( que, args ); break;
 	case SC_ACT_DEAD:			SCQUE_READ_ACT_Dead( que, args ); break;
+	case SC_ACT_MEMBER_IN:		SCQUE_READ_ACT_MemberIn( que, args ); break;
 	case SC_TOKWIN_IN:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_TOKWIN_OUT:			SCQUE_READ_TOKWIN( que, args ); break;
 	case SC_MSG_STD:			SCQUE_READ_Msg( que, args ); break;
