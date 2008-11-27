@@ -47,8 +47,8 @@ extern	GFL_BMP_DATA * GFL_BMP_Create( int sizex, int sizey, int col, HEAPID heap
  * Bitmap生成（既に確保されているキャラクタデータ領域をBitmapとして利用する）
  *
  * @param	adrs	利用するキャラクタデータ領域アドレス
- * @param	sizex	Xサイズ
- * @param	sizey	Yサイズ
+ * @param	sizex	Xサイズ（キャラ単位）
+ * @param	sizey	Yサイズ（キャラ単位）
  * @param	col		カラーコード
  * @param	heapID	ヒープID
  *
@@ -62,8 +62,8 @@ extern	GFL_BMP_DATA * GFL_BMP_CreateWithData( u8 *adrs,int sizex, int sizey, int
  * Bitmap生成（VRAM領域を直接,Bitmapとして利用する）
  *
  * @param	adrs	利用するVRAMアドレス
- * @param	sizex	Xサイズ
- * @param	sizey	Yサイズ
+ * @param	sizex	Xサイズ（キャラ単位）
+ * @param	sizey	Yサイズ（キャラ単位）
  * @param	col		カラーコード
  * @param	heapID	ヒープID
  *
@@ -101,7 +101,7 @@ extern	u8	*GFL_BMP_GetCharacterAdrs( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*
- * ビットマップサイズXを取得
+ * ビットマップサイズX（ドット単位）を取得
  *
  * @param	bmp		BMP領域へのポインタ
  */
@@ -110,7 +110,7 @@ extern	u16	GFL_BMP_GetSizeX( GFL_BMP_DATA *bmp );
 
 //--------------------------------------------------------------------------------------------
 /*
- * ビットマップサイズYを取得
+ * ビットマップサイズY（ドット単位）を取得
  *
  * @param	bmp		BMP領域へのポインタ
  */
