@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-11-05T13:33:38
+	Update:2008-11-26T18:01:31
  *****************************************************************************/
 
 #ifndef NARC_SPA_NAIX_
@@ -15,7 +15,8 @@ enum {
 	NARC_spa_tornado_spa = 1,
 	NARC_spa_w_014_spa = 2,
 	NARC_spa_w_055_spa = 3,
-	NARC_spa_w_467_spa = 4
+	NARC_spa_w_157_spa = 4,
+	NARC_spa_w_467_spa = 5
 };
 
 /* NARC_SPA_NAIX_ */
