@@ -91,5 +91,5 @@ extern u8 ZONEDATA_GetCameraID(u16 zone_id);
  * @param	BOOL	TRUEのとき、サンプルOBJを使用する
  */
 //------------------------------------------------------------------
-extern BOOL ZONEDATA_DEBUG_GetSampleObject(u16 zone_id);
+extern BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id);
 

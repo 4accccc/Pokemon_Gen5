@@ -110,7 +110,7 @@ u8 ZONEDATA_GetCameraID(u16 zone_id)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL ZONEDATA_DEBUG_GetSampleObject(u16 zone_id)
+BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 {
 	ZONEDATA zdbuf;
 	getZoneData(&zdbuf, zone_id);
