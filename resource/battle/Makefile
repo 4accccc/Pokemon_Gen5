@@ -32,17 +32,23 @@ SUBDIRS	=
 include $(PROJECT_RSCDIR)\macro_define
 
 
-#とりあえず直下の*.nmcを依存対象とする
-NMCFILE	:= $(wildcard *.nmc)
+#とりあえず直下の*.imdを依存対象とする
+IMDFILE	:= $(wildcard *.imd)
+ICAFILE	:= $(wildcard *.ica)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-.SUFFIXES:	.nmc
+.SUFFIXES:	.imd.nsbmd.ice.nsbca
 
 #nmcデータからの生成ルール
-do-build: $(NMCFILE:.nmc=.nmcr)
-%.nmcr: %.nmc %.nce %.ncg %.ncl
-	g2dcvtr $< -bmp
-	perl nce.pl $*.nce $*.NCEC
+
+do-build: $(IMDFILE:.imd=.nsbmd)
+%.nsbmd: %.imd
+	g3dcvtr $<
+
+do-build: $(ICAFILE:.ica=.nsbca)
+%.nsbca: %.ica
+	g3dcvtr $<
+
 endif
 
 .PHONY:	do-build clean subdir
@@ -56,7 +62,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 	$(COPY) $(NAIXNAME) $(TARGETDIR)
 
-$(NARCNAME):	$(NMCFILE:.nmc=.nmcr)
+$(NARCNAME):	$(IMDFILE:.imd=.nsbmd) $(ICAFILE:.ica=.nsbca)
 	nnsarc -c -l -n -i $(NARCNAME) -S battgra_wb.scr > error
 	$(NAIXCUT) $(NAIXNAME)
 
