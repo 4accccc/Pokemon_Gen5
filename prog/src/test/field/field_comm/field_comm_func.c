@@ -316,7 +316,7 @@ static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc )
 		}
 		bcnIdx++;
 	}
-		if( targetIdx != -1 )
+	if( targetIdx != -1 )
 	{
 		//ÉrÅ[ÉRÉìÇ™Ç†Ç¡ÇΩ
 		u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);

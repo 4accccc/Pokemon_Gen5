@@ -60,6 +60,7 @@ enum DLPLAY_PARENT_MODE
 	DPM_MAIN_LOOP,
 
 	DPM_START_SHARE,
+	DPM_WAIT_NEGOTIATION,
 	DPM_WAIT_CHILD,
 	DPM_WAIT_START_POST_INDEX,
 	DPM_WAIT_INDEX_DATA,
@@ -268,16 +269,16 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 	case DPM_START_SHARE:
 		DLPlayComm_InitParent( parentData->commSys_ );
 		DLPlayFunc_PutString( "Wait child......",parentData->msgSys_); 
-		//parentData->mainSeq_ = DPM_WAIT_CHILD;
-		parentData->mainSeq_ = 0xFF;
+		parentData->mainSeq_ = DPM_WAIT_NEGOTIATION;
+		parentData->subSeq_ = 0;
 		break;
-	case 0xFF:
-		if( GFL_NET_HANDLE_RequestNegotiation() == TRUE )
+
+	case DPM_WAIT_NEGOTIATION:
+		if( DLPlayComm_IsFinish_Negotiation( parentData->commSys_ ) == TRUE )
 		{
 			parentData->mainSeq_ = DPM_WAIT_CHILD;
 		}
 		break;
-
 
 	case DPM_WAIT_CHILD:
 		if ( DLPlayComm_IsConnect( parentData->commSys_ ) == TRUE ){

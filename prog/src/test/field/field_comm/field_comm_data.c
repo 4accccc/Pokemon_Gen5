@@ -286,7 +286,7 @@ static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData )
 }
 
 //--------------------------------------------------------------
-//	
+//	データ取得用　自キャラ・他キャラ管理
 //--------------------------------------------------------------
 static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx )
 {

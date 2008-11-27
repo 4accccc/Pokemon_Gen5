@@ -242,7 +242,7 @@ static GFL_PROC_RESULT DLPlayChild_ProcMain(GFL_PROC * proc, int * seq, void * p
 		}
 		break;
 	case DCS_WAIT_CONNECT:
-		if( DLPlayComm_IsFinish_ConnectParent( childData->commSys_ ) == TRUE ){
+		if( DLPlayComm_IsFinish_Negotiation( childData->commSys_ ) == TRUE ){
 			childData->mainSeq_ = DCS_LOAD_BACKUP_INIT;
 			DLPlayComm_Send_ConnectSign(childData->commSys_);
 			

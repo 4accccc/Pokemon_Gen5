@@ -32,10 +32,13 @@
 //	typedef struct
 //======================================================================
 typedef const BOOL(*FIELD_COMM_DEBUG_CALLBACK)(FIELD_COMM_DEBUG_WORK* work);
+typedef const BOOL(*FIELD_COMM_DEBUG_SUBPROC)(FIELD_COMM_DEBUG_WORK* work);
 
 struct _FIELD_COMM_DEBUG_WORK
 {
+	u8	subSeq_;
 	HEAPID heapID_;
+	GAMESYS_WORK	*gameSys_;
 	FIELD_MAIN_WORK *fieldWork_;
 	GMEVENT *event_;
 
@@ -43,17 +46,20 @@ struct _FIELD_COMM_DEBUG_WORK
 	DMENU_COMMON_WORK	*debMenuWork_;
 
 	FIELD_COMM_DEBUG_CALLBACK callback_;
+	FIELD_COMM_DEBUG_SUBPROC subProc_; 
 };
 
 //======================================================================
 //	proto
 //======================================================================
 const int FIELD_COMM_DEBUG_GetWorkSize(void);
-void	FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb );
+void	FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb );
 GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void *work );
 
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work );
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion(FIELD_COMM_DEBUG_WORK *work  );
+static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
+static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
 //--------------------------------------------------------------
 //	ワークサイズ取得
 //--------------------------------------------------------------
@@ -64,9 +70,10 @@ const int FIELD_COMM_DEBUG_GetWorkSize(void)
 //--------------------------------------------------------------
 //	ワーク初期化
 //--------------------------------------------------------------
-void	FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb )
+void	FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , GMEVENT *event , FIELD_COMM_DEBUG_WORK *commDeb )
 {
 	commDeb->heapID_ = heapID;
+	commDeb->gameSys_ = gameSys;
 	commDeb->fieldWork_ = fieldWork;
 	commDeb->event_ = event;
 }
@@ -116,16 +123,18 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 	case 0:
 		//メニューの生成
 		{
-			static const u8 itemNum = 2;
+			static const u8 itemNum = 3;
 			static const u16 itemMsgList[itemNum] = 
 			{
 				DEBUG_FIELD_C_CHOICE00 ,
 				DEBUG_FIELD_C_CHOICE01 ,
+				DEBUG_FIELD_C_CHOICE02 ,
 			};
 			static const void* itemCallProc[itemNum] =
 			{
 				FIELD_COMM_DEBUG_MenuCallback_StartComm,
 				FIELD_COMM_DEBUG_MenuCallback_StartInvasion,
+				FIELD_COMM_DEBUG_MenuCallback_ChangePartTest,
 			};
 			u8 i;
 			GFL_MSGDATA	*msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL ,
@@ -133,8 +142,8 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 			BMPMENULIST_HEADER menuHeader = FieldCommDebugMenuHeader;
 
 			commDeb->debMenuWork_ = GFL_HEAP_AllocMemory( commDeb->heapID_ , DebugMenu_GetWorkSize() );
-			commDeb->menuListData_ =
-				BmpMenuWork_ListCreate( itemNum, commDeb->heapID_ );
+			commDeb->menuListData_ = BmpMenuWork_ListCreate( itemNum, commDeb->heapID_ );
+			commDeb->subProc_ = NULL;
 			
 			for( i=0;i<itemNum;i++ )
 			{
@@ -178,16 +187,28 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 		BmpMenuWork_ListDelete( commDeb->menuListData_ );
 		DebugMenu_DeleteCommonMenu( commDeb->debMenuWork_ );
 		GFL_HEAP_FreeMemory( commDeb->debMenuWork_ );
+		*seq += 1;
 		if( commDeb->callback_(commDeb) == TRUE )
 			return GMEVENT_RES_CONTINUE;
 		else
 			return GMEVENT_RES_FINISH;
+		break;
+	case 3:
+		//SubProcが設定されていればこっちにくる
+		GF_ASSERT( commDeb->subProc_ != NULL );
+		if( commDeb->subProc_(commDeb) == TRUE )
+		{
+			return GMEVENT_RES_FINISH;
+		}
 		break;
 	}
 	//return GMEVENT_RES_FINISH;
 	return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+//	通信開始	
+//--------------------------------------------------------------
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work )
 {
 	GMEVENT *event = work->event_;
@@ -200,6 +221,9 @@ static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK
 	FIELD_COMM_EVENT_SetWorkData( commSys , eveWork );
 	return TRUE;
 }
+//--------------------------------------------------------------
+//	侵入開始
+//--------------------------------------------------------------
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBUG_WORK *work )
 {
 	GMEVENT *event = work->event_;
@@ -211,5 +235,61 @@ static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBUG_
 	eveWork = GMEVENT_GetEventWork(event);
 	FIELD_COMM_EVENT_SetWorkData( commSys , eveWork );
 	return TRUE;
+}
+//--------------------------------------------------------------
+//	パート切り替えテスト
+//--------------------------------------------------------------
+extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+//extern const GFL_PROC_DATA DebugSogabeMainProcData;
+static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBUG_WORK *work )
+{
+	work->subProc_ = FIELD_COMM_DEBUG_SubProc_ChangePartTest;
+	work->subSeq_ = 0;
+	return TRUE; 
+	
+}
+
+//--------------------------------------------------------------
+//	パート切り替えテスト
+//	フィールドが終了するのを待ってパート変更を発行する
+//	event_mapchange参照
+//--------------------------------------------------------------
+static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK *work )
+{
+	switch( work->subSeq_ )
+	{
+	case 0:
+		FIELDMAP_Close(work->fieldWork_);
+		work->subSeq_++;
+		break;
+
+	case 1:
+		if( GAMESYSTEM_IsProcExists(work->gameSys_) == FALSE )
+		{
+			work->subSeq_++;
+		}
+		break;
+
+	case 2:
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+		work->subSeq_++;
+		//ここでフィールドのProcを抜ける
+		break;
+	case 3:
+		//復帰後にここに来る
+		GAMESYSTEM_CallFieldProc(work->gameSys_);
+		work->subSeq_++;
+		break;
+	case 4:
+		//フィールドマップを開始待ち
+		if(GAMESYSTEM_IsProcExists(work->gameSys_) == TRUE )
+		{
+			work->subSeq_++;
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
 }
 

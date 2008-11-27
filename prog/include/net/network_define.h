@@ -36,6 +36,7 @@ extern u32 GFLR_NET_GetGGID(void);
 /// 汎用通信コマンドの定義
 enum NetworkServiceID_e {
   WB_NET_FIELDMOVE_SERVICEID = 1,  ///< サンプルのフィールド移動
+  WB_NET_BOX_DOWNLOAD_SERVICEID = 2,  ///< ダウンロード通信のボックス取得
   WB_NET_DEBUG_OHNO_SERVICEID = 22,
   WB_NET_SERVICEID_DEBUG_TAYA,
   WB_NET_DEBUG_MATSUDA_SERVICEID,

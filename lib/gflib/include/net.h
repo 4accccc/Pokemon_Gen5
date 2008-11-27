@@ -34,6 +34,8 @@ extern "C" {
 // デバッグ用決まり文句----------------------
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+#define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #endif

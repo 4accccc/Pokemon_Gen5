@@ -100,6 +100,7 @@ SRCS	+=		test/testmode.c \
 				test/ariizumi/ari_field_main.c \
 				test/ariizumi/ari_field_menu.c \
 				test/ariizumi/ari_comm_func.c \
+				test/ariizumi/ari_comm_card.c \
 				test/dlplay/dlplay_parent_sample.c \
 				test/dlplay/dlplay_parent_main.c \
 				test/dlplay/dlplay_func.c \

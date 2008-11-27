@@ -87,7 +87,7 @@ void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm );
 
 void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
 void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
-BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
+BOOL	DLPlayComm_IsFinish_Negotiation( DLPLAY_COMM_DATA *d_comm );
 
 void*	DLPlayComm_GetBeaconDataDummy(void* pWork);
 int		DLPlayComm_GetBeaconSizeDummy(void* pWork);
@@ -236,7 +236,7 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 		FALSE,		// MP通信＝親子型通信モードかどうか
 		GFL_NET_TYPE_WIRELESS,		//	NET通信タイプ ← wifi通信を行うかどうか
 		FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
-		1//WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
+		WB_NET_BOX_DOWNLOAD_SERVICEID//GameServiceID
 	};
 
 	aGFLNetInit.baseHeapID = d_comm->heapID_;
@@ -269,6 +269,7 @@ void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_comm )
 void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm )
 {
 	GFL_NET_InitServer();
+	d_comm->seqNo_ = 0;
 }
 
 //--------------------------------------------------------------
@@ -284,7 +285,7 @@ void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress )
 }
 
 //  親機への接続が完了し、通信ができる状態になったか？
-BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm )
+BOOL	DLPlayComm_IsFinish_Negotiation( DLPLAY_COMM_DATA *d_comm )
 {
 	switch( d_comm->seqNo_ )
 	{

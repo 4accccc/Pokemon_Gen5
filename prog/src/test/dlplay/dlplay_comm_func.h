@@ -76,7 +76,7 @@ extern void	DLPlayComm_SetMsgSys( DLPLAY_MSG_SYS *msgSys , DLPLAY_COMM_DATA *d_c
 #endif
 extern void	DLPlayComm_InitParent( DLPLAY_COMM_DATA *d_comm );
 extern void	DLPlayComm_InitChild( DLPLAY_COMM_DATA *d_comm , u8 *macAddress );
-extern BOOL	DLPlayComm_IsFinish_ConnectParent( DLPLAY_COMM_DATA *d_comm );
+extern BOOL	DLPlayComm_IsFinish_Negotiation( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_IsFinish_InitSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL	DLPlayComm_IsFinish_TermSystem( DLPLAY_COMM_DATA *d_comm );
 extern BOOL DLPlayComm_IsConnect( DLPLAY_COMM_DATA *d_comm );
