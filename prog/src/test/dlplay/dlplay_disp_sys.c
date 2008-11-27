@@ -105,7 +105,8 @@ void	DLPlayDispSys_UpdateDraw( DLPLAY_DISP_SYS *dispSys )
 		{
 			if( dispSys->isUseBoxData_[i] == TRUE )
 			{
-				GFL_CLACT_WK_SetAnmSeqDiff( dispSys->cellBox_[i] , anmFrm );
+				//アニメはオートアニメでさせるように変更
+			//	GFL_CLACT_WK_SetAnmSeqDiff( dispSys->cellBox_[i] , anmFrm );
 			}
 		}
 
@@ -175,10 +176,10 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 		GFL_ARC_UTIL_TransVramPaletteMakeProxy( ARCID_POKEICON , POKEICON_GetPalArcIndex() , 
 				NNS_G2D_VRAM_TYPE_2DMAIN , 0 , dispSys->heapID_ , &dispSys->boxPltProxy_ );
 		
-		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_Get64kCellArcIndex() , 
+		dispSys->boxCellRes_ = GFL_ARC_UTIL_LoadCellBank( ARCID_POKEICON , POKEICON_GetCellArcIndex() , 
 					FALSE , &dispSys->boxCellData_ , dispSys->heapID_ );
 	
-		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_Get64kCellAnmArcIndex() ,
+		dispSys->boxAnmRes_ = GFL_ARC_UTIL_LoadAnimeBank( ARCID_POKEICON , POKEICON_GetAnmArcIndex() ,
 					FALSE , &dispSys->boxAnmData_ , dispSys->heapID_ );
 	}
 	
@@ -212,13 +213,15 @@ static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , D
 
 			cellInitData.pos_x = (i%6) * iconSize + iconLeft;
 			cellInitData.pos_y = (i/6) * iconSize + iconTop;
-			cellInitData.anmseq = 0;
+			cellInitData.anmseq = POKEICON_ANM_HPMAX;
 			cellInitData.softpri = 0;
 			cellInitData.bgpri = 0;
 
 			dispSys->cellBox_[i] = GFL_CLACT_WK_Add( dispSys->cellUnit_ , &cellInitData ,
 						&cellRes , CLWK_SETSF_NONE , dispSys->heapID_ );
-
+			GFL_CLACT_WK_SetAutoAnmSpeed( dispSys->cellBox_[i], FX32_ONE );
+			GFL_CLACT_WK_SetAutoAnmFlag( dispSys->cellBox_[i], TRUE );
+			
 			GFL_CLACT_WK_SetPlttOffs( dispSys->cellBox_[i] , pltNo );
 			
 			loadNum++;

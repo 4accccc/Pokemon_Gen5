@@ -85,6 +85,23 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 //--------------------------------------------------------------------------------------------
 u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons, u32 form_no, BOOL egg )
 {
+#ifdef PM_DEBUG
+	{
+		if(GX_GetOBJVRamModeChar() != GX_OBJVRAMMODE_CHAR_1D_128K){
+			GF_ASSERT(0 && "非対応のマッピングモードです");
+			/*---------------
+			ポケモンアイコンのCGXは1D128Kで作られている為、このままキャラクタを転送すると
+			マッピングモードが変更されてしまいます。
+			128kマッピングモード以外でも使用したい場合は
+			NNS_G2dGetUnpackedCharacterDataでアンパックした後に
+			pCharData->mapingTypeのマッピングタイプを変更してから
+			NNS_G2dLoadImage1DMappingで転送するようにしてください
+			もしくは32k,64k用のポケモンアイコンCGXデータもアーカイブ内に持つ事も選択肢の一つです
+			-----------------*/
+		}
+	}
+#endif
+
 	if( egg == TRUE ){
 		if( mons == MONSNO_MANAFI ){
 			return NARC_poke_icon_poke_icon_mnf_NCGR;
@@ -260,35 +277,20 @@ u32 POKEICON_GetPalArcIndex(void)
 //--------------------------------------------------------------------------------------------
 u32 POKEICON_GetCellArcIndex(void)
 {
-	return NARC_poke_icon_poke_icon01_NCER;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * セルのアーカイブインデックス取得（アニメ入り）
- *
- * @param	none
- *
- * @return	アーカイブインデックス
- */
-//--------------------------------------------------------------------------------------------
-u32 POKEICON_GetAnmCellArcIndex(void)
-{
-	return NARC_poke_icon_poke_icon_anm_NCER;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * セルのアーカイブインデックス取得（64k,アニメ入り）
- *
- * @param	none
- *
- * @return	アーカイブインデックス
- */
-//--------------------------------------------------------------------------------------------
-u32 POKEICON_Get64kCellArcIndex(void)
-{
-	return NARC_poke_icon_poke_icon_64k_NCER;
+	GXOBJVRamModeChar vrammode;
+	
+	vrammode = GX_GetOBJVRamModeChar();
+	switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_poke_icon_poke_icon_32k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_poke_icon_poke_icon_64k_NCER;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_poke_icon_poke_icon_128k_NCER;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+		return NARC_poke_icon_poke_icon_128k_NCER;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -300,35 +302,21 @@ u32 POKEICON_Get64kCellArcIndex(void)
  * @return	アーカイブインデックス
  */
 //--------------------------------------------------------------------------------------------
-u32 POKEICON_GetCellAnmArcIndex(void)
+u32 POKEICON_GetAnmArcIndex(void)
 {
-	return NARC_poke_icon_poke_icon01_NANR;
+	GXOBJVRamModeChar vrammode;
+	
+	vrammode = GX_GetOBJVRamModeChar();
+	switch(vrammode){
+	case GX_OBJVRAMMODE_CHAR_1D_32K:
+		return NARC_poke_icon_poke_icon_32k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_64K:
+		return NARC_poke_icon_poke_icon_64k_NANR;
+	case GX_OBJVRAMMODE_CHAR_1D_128K:
+		return NARC_poke_icon_poke_icon_128k_NANR;
+	default:
+		GF_ASSERT(0);	//非対応のマッピングモード
+		return NARC_poke_icon_poke_icon_128k_NANR;
+	}
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * セルアニメのアーカイブインデックス取得（アニメ入り）
- *
- * @param	none
- *
- * @return	アーカイブインデックス
- */
-//--------------------------------------------------------------------------------------------
-u32 POKEICON_GetAnmCellAnmArcIndex(void)
-{
-	return NARC_poke_icon_poke_icon_anm_NANR;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * セルアニメのアーカイブインデックス取得（64k,アニメ入り）
- *
- * @param	none
- *
- * @return	アーカイブインデックス
- */
-//--------------------------------------------------------------------------------------------
-u32 POKEICON_Get64kCellAnmArcIndex(void)
-{
-	return NARC_poke_icon_poke_icon_64k_NANR;
-}

@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO NITRO-System Archiver.
 
-	Update:2008-06-12T19:01:39
+	Update:2008-11-27T16:48:51
  *****************************************************************************/
 
 #ifndef NARC_POKE_ICON_NAIX_
@@ -12,12 +12,12 @@
 
 enum {
 	NARC_poke_icon_poke_icon_NCLR = 0,
-	NARC_poke_icon_poke_icon01_NANR = 1,
-	NARC_poke_icon_poke_icon01_NCER = 2,
-	NARC_poke_icon_poke_icon_anm_NANR = 3,
-	NARC_poke_icon_poke_icon_anm_NCER = 4,
-	NARC_poke_icon_poke_icon_64k_NANR = 5,
-	NARC_poke_icon_poke_icon_64k_NCER = 6,
+	NARC_poke_icon_poke_icon_32k_NANR = 1,
+	NARC_poke_icon_poke_icon_32k_NCER = 2,
+	NARC_poke_icon_poke_icon_64k_NANR = 3,
+	NARC_poke_icon_poke_icon_64k_NCER = 4,
+	NARC_poke_icon_poke_icon_128k_NANR = 5,
+	NARC_poke_icon_poke_icon_128k_NCER = 6,
 	NARC_poke_icon_poke_icon_000_NCGR = 7,
 	NARC_poke_icon_poke_icon_001_NCGR = 8,
 	NARC_poke_icon_poke_icon_002_NCGR = 9,

@@ -42,10 +42,6 @@ extern const u8 POKEICON_GetPalNumByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u8 POKEICON_GetPalNumGetByPPP( const POKEMON_PASO_PARAM * ppp );
 extern u32 POKEICON_GetPalArcIndex(void);
 extern u32 POKEICON_GetCellArcIndex(void);
-extern u32 POKEICON_GetAnmCellArcIndex(void);
-extern u32 POKEICON_Get64kCellArcIndex(void);
-extern u32 POKEICON_GetCellAnmArcIndex(void);
-extern u32 POKEICON_GetAnmCellAnmArcIndex(void);
-extern u32 POKEICON_Get64kCellAnmArcIndex(void);
+extern u32 POKEICON_GetAnmArcIndex(void);
 
 #endif	//__POKEICON_H__
