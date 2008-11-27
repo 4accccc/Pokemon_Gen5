@@ -65,6 +65,7 @@ struct _TAG_FLD_COMM_ACTOR
 	u16 dir;
 	u16 old_dir;
 	int anm_id;
+	int next_anm_id;
 	u32 id;
 	VecFx32 pos;
 	VecFx32 old_pos;
@@ -120,7 +121,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	act->anm_id = -1;
 	act->id = id;
 	
-	actData.resID = id + 1;	//0=©‹@
+	actData.resID = 0;	//0=©‹@
 	actData.sizX = FX16_ONE*8-1;
 	actData.sizY = FX16_ONE*8-1;
 	actData.trans.x = 0;
@@ -133,7 +134,7 @@ FLD_COMM_ACTOR * FldCommActor_Init(
 	
 	act->bbdActActUnitID =
 		GFL_BBDACT_AddAct( bbdActSys, resUnitID, &actData, 1 ); 
-
+	
 	GFL_BBDACT_BindActTexResLoad(
 		bbdActSys, act->bbdActActUnitID,
 		ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
@@ -172,7 +173,7 @@ void FldCommActor_Delete( FLD_COMM_ACTOR *act )
 void FldCommActor_Update( FLD_COMM_ACTOR *act )
 {
 	u16 dir;
-	int anmBase,anmID;
+	int anmBase;
 	const VecFx32 *pos;
 	
 	pos = PLAYERWORK_getPosition( act->player );
@@ -191,13 +192,7 @@ void FldCommActor_Update( FLD_COMM_ACTOR *act )
 		anmBase = 0;
 	}
 	
-	anmID = anmBase + dir;
-	
-	if( act->anm_id != anmID ){
-		act->anm_id = anmID;
-		GFL_BBDACT_SetAnimeIdx(
-			act->bbdActSys, act->bbdActActUnitID, anmID );
-	}
+	act->next_anm_id = anmBase + dir;
 }
 
 //======================================================================
@@ -222,8 +217,13 @@ static void commActBBDActFunc(
 //	pos.z += 1;
 
 	GFL_BBD_SetObjectTrans(
-		GFL_BBDACT_GetBBDSystem(act->bbdActSys),
-		act->bbdActActUnitID, &pos );
+		GFL_BBDACT_GetBBDSystem(act->bbdActSys), actIdx, &pos );
+
+	if( act->anm_id != act->next_anm_id ){
+		act->anm_id = act->next_anm_id;
+		GFL_BBDACT_SetAnimeIdx(
+			act->bbdActSys, actIdx, act->anm_id );
+	}
 }
 
 //======================================================================
