@@ -305,6 +305,40 @@ static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
 
 }
+static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
+{
+	VecFx32 pos;
+	int i;
+	static const VecFx32 pos_array[] = {
+		{FX32_ONE * -16, 0, FX32_ONE * -16},
+		{FX32_ONE * 0, 0, FX32_ONE * -16},
+		{FX32_ONE * +16, 0, FX32_ONE * -16},
+		{FX32_ONE * -16, 0, FX32_ONE * 0},
+		{FX32_ONE * 0, 0, FX32_ONE * 0},
+		{FX32_ONE * +16, 0, FX32_ONE * 0},
+		{FX32_ONE * -16, 0, FX32_ONE * 16},
+		{FX32_ONE * 0, 0, FX32_ONE * 16},
+		{FX32_ONE * +16, 0, FX32_ONE * 16},
+	};
+	static char limit[] = "  \n  \n  \n";
+	for (i = 0; i < NELEMS(pos_array); i++) {
+		int attr = 0;
+		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		//pos = pos_array[i] + fieldWork->now_pos;
+		VEC_Add(&pos_array[i], &fieldWork->now_pos, &pos);
+		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
+			attr = gridInfo.gridData[0].attr;
+		}
+		OS_Printf("%04x%c", attr, limit[i]);
+	}
+
+
+
+	OS_Printf("X,Y,Z=%d,%d,%d\n",
+			FX_Whole(fieldWork->now_pos.x),
+			FX_Whole(fieldWork->now_pos.y),
+			FX_Whole(fieldWork->now_pos.z));
+}
 //------------------------------------------------------------------
 /**
  * @brief	イベント起動チェック（暫定）
@@ -329,10 +363,7 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT ){
-		OS_Printf("X,Y,Z=%d,%d,%d\n",
-				FX_Whole(fieldWork->now_pos.x),
-				FX_Whole(fieldWork->now_pos.y),
-				FX_Whole(fieldWork->now_pos.z));
+		PrintDebugInfo(gsys, fieldWork);
 		return DEBUG_EVENT_DebugMenu(gsys, fieldWork, 
 				fieldWork->heapID, ZONEDATA_GetMapRscID(fieldWork->map_id));
 	}
