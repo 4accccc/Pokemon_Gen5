@@ -14,7 +14,7 @@ export MAKEROM_ROMSPEED=1TROM
 # NITROSDK3.0付属ののプリコンパイルを読み込まない
 NITRO_NO_STD_PCHDR = True
 
-.PHONY : gflib
+.PHONY : source analyze overlaymap
 
 #----------------------------------------------------------------------------
 #	インクルードファイルディレクトリ
@@ -223,5 +223,20 @@ CCFLAGS +=	-thumb
 #	ソースのみのリコンパイル
 #----------------------------------------------------------------------------
 source:
+	-@$(RM) $(GDIRT_CLEAN)
 	-$(RM) $(DEPENDDIR)/*.d
 	$(MAKE)
+
+#----------------------------------------------------------------------------
+#	ソースあたりオブジェクトサイズ算出
+#----------------------------------------------------------------------------
+analyze:
+	ruby ../tools/analyze/objsize/get_objsize.rb ./bin/$(NITRO_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap|sort > analyze.result
+
+#----------------------------------------------------------------------------
+#	オーバーレイマップ可視化
+#----------------------------------------------------------------------------
+overlaymap:
+	../tools/analyze/overlaymap/overlaymap $(PROJECT_PROGDIR)/bin/$(NITRO_BUILDTYPE)/$(TARGET_BIN:.srl=.nef).xmap
+	#dot -Tpng ../tools/analyze/overlaymap/overlaymap.dot >overlaymap.png
+
