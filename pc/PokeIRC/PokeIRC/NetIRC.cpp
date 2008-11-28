@@ -96,7 +96,7 @@ void NetIRC::Init(void)
 //--------------------------------------------------------------
 void NetIRC::draw(Form^ fm)
 {
-	MainForm^ mform = dynamic_cast<MainForm^>(fm);
+	//MainForm^ mform = dynamic_cast<MainForm^>(fm);
 	unsigned char data_up[64]={0,1,2,3};
 
 
@@ -208,7 +208,7 @@ bool NetIRC::SendLoop(void)
 		delete dataArray;
 		dataArray = nullptr;
 	}
-	Debug::WriteLine("送信" + SendValue + "サイズ"+length);
+//	Debug::WriteLine("送信" + SendValue + "サイズ"+length);
 	return false;
 	
 }

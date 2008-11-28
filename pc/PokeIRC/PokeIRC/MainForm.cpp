@@ -226,6 +226,9 @@ System::Void MainForm::pictureBox3_DragDrop(System::Object^  sender, System::Win
 			FileStream^ fs = File::OpenRead( filename );
 			userReader = gcnew BinaryReader(fs);
 			SoundBarTotalSize = (int)fs->Length;
+
+			Debug::WriteLine(DateTime::Now.ToString("F")+"start");
+		
 			NetIRC::dataArray = userReader->ReadBytes((int)fs->Length);
 			NetIRC::sendData(IRC_COMMAND_SNDV);
 			fs->Close();
@@ -1479,12 +1482,16 @@ void MainForm::Draw(void)
 		if(NetIRC::dataArray == nullptr){
 			SoundBarTotalSize = 0;
 			label1->Text = "音楽を送信しました";
+
+			Debug::WriteLine(DateTime::Now.ToString("F")+"end");
+			return;
 		}
 		else{
 			int lest = NetIRC::dataArray->GetLength(0);
 			if(lest == 0){
 				SoundBarTotalSize = 0;
 				label1->Text = "音楽を送信しました";
+				Debug::WriteLine(DateTime::Now.ToString("F")+"end");
 				return;
 			}
 			lest = (lest * SoundBarSize) / SoundBarTotalSize;
@@ -1607,6 +1614,7 @@ void MainForm::FormDispChange(int mode)
 
 			int pictX = 588;
 			int pictY = 549;
+			pictureBox3->Width=236;
 			pictureBox3->Left = (this->splitContainer1->Panel2->Width - pictX) / 2 + 32;
 			pictureBox3->Top = (this->splitContainer1->Panel2->Height - pictY) / 2 + 435;
 			pictureBox3->AllowDrop = true;
