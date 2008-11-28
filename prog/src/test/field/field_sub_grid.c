@@ -143,14 +143,25 @@ static const GRID_CAMERA_DATA DATA_CameraTbl[] =
  * @brief	初期化処理（デフォルト）
  */
 //------------------------------------------------------------------
-static void GridMoveCreate( FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
+static void GridMoveCreate(
+	FIELD_MAIN_WORK * fieldWork, VecFx32 * pos, u16 dir)
 {
 	fieldWork->camera_control =
 		FLD_CreateCamera( fieldWork->gs, fieldWork->heapID );
-	fieldWork->fldActCont =
-		FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
 	
-	FLDACT_TestSetup( fieldWork->fldActCont );
+	{
+		GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+		PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+		int zone_id = PLAYERWORK_getZoneID( player );
+		
+		fieldWork->fldActCont = NULL;
+
+		if( ZONEDATA_DEBUG_IsSampleObjUse(zone_id) == TRUE ){
+			fieldWork->fldActCont =
+				FLD_CreateFieldActSys( fieldWork->gs, fieldWork->heapID );
+			FLDACT_TestSetup( fieldWork->fldActCont );
+		}
+	}
 	
 	fieldWork->pcActCont = CreatePlayerActGrid(
 			fieldWork->gs, fieldWork->heapID );
@@ -209,8 +220,11 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 	
 	DeletePlayerAct( fieldWork->pcActCont );
 	FLD_DeleteCamera( fieldWork->camera_control );
-	FLDACT_TestRelease( fieldWork->fldActCont );
-	FLD_DeleteFieldActSys( fieldWork->fldActCont );
+	
+	if( fieldWork->fldActCont != NULL ){
+		FLDACT_TestRelease( fieldWork->fldActCont );
+		FLD_DeleteFieldActSys( fieldWork->fldActCont );
+	}
 }
 
 //======================================================================
@@ -240,7 +254,10 @@ static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		OS_Printf( "テストカメラ　No.%d\n", pGridCont->debug_camera_num );
 	}
 	
-	FLD_MainFieldActSys( fieldWork->fldActCont );
+	if( fieldWork->fldActCont != NULL ){
+		FLD_MainFieldActSys( fieldWork->fldActCont );
+	}
+
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	FLD_SetCameraTransOffset( fieldWork->camera_control, &offs );
@@ -323,7 +340,10 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 	}
 
 	{
-		FLD_MainFieldActSys( fieldWork->fldActCont );
+		if( fieldWork->fldActCont != NULL ){
+			FLD_MainFieldActSys( fieldWork->fldActCont );
+		}
+
 		GetPlayerActTrans( fieldWork->pcActCont, pos );
 		FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	//	FLD_SetCameraDirection( fieldWork->camera_control, &dir );
@@ -406,7 +426,10 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 		}
 	}
 	
-	FLD_MainFieldActSys( fieldWork->fldActCont );
+	if( fieldWork->fldActCont != NULL ){
+		FLD_MainFieldActSys( fieldWork->fldActCont );
+	}
+
 	GetPlayerActTrans( fieldWork->pcActCont, pos );
 	FLD_SetCameraTrans( fieldWork->camera_control, pos );
 	FLD_MainCamera( fieldWork->camera_control, 0 );
