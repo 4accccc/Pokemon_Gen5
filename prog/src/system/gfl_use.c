@@ -58,6 +58,8 @@ static int				GFL_USE_VintrCounter;
 static	u8				sndHeap[SOUND_HEAP_SIZE];
 
 static void GFUser_PublicRandInit(void);
+static void gfluse_AssertFinish( void );
+
 //=============================================================================================
 //
 //			関数
@@ -104,6 +106,9 @@ void GFLUser_Init(void)
 
 	//UIシステム初期化
 	GFL_UI_Boot(GFL_HEAPID_SYSTEM);
+
+	// アサート停止関数の設定（コールスタック表示＆可能なら処理続行のため）
+	GFL_ASSERT_SetDisplayFunc( NULL, NULL, gfluse_AssertFinish );
 
 	//OVERLAYシステム初期化
 	GFL_OVERLAY_boot(GFL_HEAPID_SYSTEM, 8, 4, 4);
@@ -286,4 +291,34 @@ int GFUser_VIntr_GetVblankCounter( void )
 }
 
 
+
+//--------------------------------------------------------------------------
+/**
+ * ASSERT停止後に呼び出されるユーザ関数
+ *
+ * ※ デフォルトだとOS_Haltにより停止してしまい、
+ *    コールスタック表示がされないなどの問題があるため用意してあります
+ *
+ */
+//--------------------------------------------------------------------------
+static void gfluse_AssertFinish( void )
+{
+	int key_cont;
+
+	while(1){
+
+		GFL_UI_Main();
+		key_cont = GFL_UI_KEY_GetCont();
+
+		// キーが押されるまでループ
+		if( (key_cont & PAD_BUTTON_L) && (key_cont & PAD_BUTTON_R) &&
+			(key_cont & PAD_BUTTON_X) && (key_cont & PAD_BUTTON_Y) ){
+			return ;
+		}
+
+		// VBlank待ち
+		// (これを有効にすると、デバッカで停止させたときにコールスタックが表示されない)
+//		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
+	}
+}
 
