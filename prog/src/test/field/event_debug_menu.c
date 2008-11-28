@@ -20,6 +20,7 @@
 
 #include "field/zonedata.h"
 #include "field_comm/field_comm_main.h"
+#include "arc/fieldmap/zone_id.h"
 
 #include "event_debug_menu.h"
 #include "event_mapchange.h"
@@ -171,8 +172,12 @@ static BOOL DMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 
-static void DEBUG_SetMenuWorkZoneIDName(
+static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk );
+
+static void DEBUG_SetMenuWorkZoneIDNameAll(
 		BMP_MENULIST_DATA *list, HEAPID heapID );
+static void DEBUG_SetMenuWorkZoneIDName(
+		BMP_MENULIST_DATA *list, HEAPID heapID, u32 zoneID );
 
 void DebugMenu_InitCommonMenu(
 	DMENU_COMMON_WORK *work,
@@ -208,7 +213,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuListGrid[] =
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
 	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
-	{ DEBUG_FIELD_STR01, NULL },
+	{ DEBUG_FIELD_STR06, DMenuCallProc_MapSeasonSelect},
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_STR01, NULL },
 	{ DEBUG_FIELD_C_CHOICE00, DMenuCallProc_OpenCommDebugMenu },
@@ -798,7 +803,7 @@ static BOOL DMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
 //	デバッグメニュー どこでもジャンプ
 //======================================================================
 //--------------------------------------------------------------
-///	DEBUG_ZONSEL_EVENT_WORK どこでもジャンプ処理用ワーク
+///	DEBUG_ZONESEL_EVENT_WORK どこでもジャンプ処理用ワーク
 //--------------------------------------------------------------
 typedef struct
 {
@@ -810,7 +815,7 @@ typedef struct
 	
 	BMP_MENULIST_DATA *pMenuListData;
 	DMENU_COMMON_WORK menuCommonWork;
-}DEBUG_ZONSEL_EVENT_WORK;
+}DEBUG_ZONESEL_EVENT_WORK;
 
 //--------------------------------------------------------------
 ///	proto
@@ -865,13 +870,13 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 	GMEVENT *event = wk->gmEvent;
 	HEAPID heapID = wk->heapID;
 	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
-	DEBUG_ZONSEL_EVENT_WORK *work;
+	DEBUG_ZONESEL_EVENT_WORK *work;
 	
 	GMEVENT_Change( event,
-		DMenuZoneSelectEvent, sizeof(DEBUG_ZONSEL_EVENT_WORK) );
+		DMenuZoneSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
 	work = GMEVENT_GetEventWork( event );
-	MI_CpuClear8( work, sizeof(DEBUG_ZONSEL_EVENT_WORK) );
+	MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
 	
 	work->gmSys = gsys;
 	work->gmEvent = event;
@@ -892,7 +897,7 @@ static BOOL DMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 static GMEVENT_RESULT DMenuZoneSelectEvent(
 		GMEVENT *event, int *seq, void *wk )
 {
-	DEBUG_ZONSEL_EVENT_WORK *work = wk;
+	DEBUG_ZONESEL_EVENT_WORK *work = wk;
 	
 	switch( (*seq) ){
 	case 0:
@@ -902,7 +907,7 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 			
 			work->pMenuListData =
 				BmpMenuWork_ListCreate( max, work->heapID );
-			DEBUG_SetMenuWorkZoneIDName(
+			DEBUG_SetMenuWorkZoneIDNameAll(
 				work->pMenuListData, work->heapID );
 			
 			DebugMenu_InitCommonMenu(
@@ -935,6 +940,118 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 		break;
 	}
 
+	return( GMEVENT_RES_CONTINUE );
+}
+
+//======================================================================
+//	デバッグメニュー　四季ジャンプ
+//======================================================================
+//--------------------------------------------------------------
+//	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuSeasonSelectEvent(
+		GMEVENT *event, int *seq, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　四季マップ間移動
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static DMenuCallProc_MapSeasonSelect( DEBUG_MENU_EVENT_WORK *wk )
+{
+	HEAPID heapID = wk->heapID;
+	GMEVENT *event = wk->gmEvent;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	ZONEID zone_id = PLAYERWORK_getZoneID( player );
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	DEBUG_ZONESEL_EVENT_WORK *work;
+
+	if( zone_id == ZONE_ID_MAPSPRING || zone_id == ZONE_ID_MAPSUMMER ||
+		zone_id == ZONE_ID_MAPAUTUMN || zone_id == ZONE_ID_MAPWINTER ){
+		GMEVENT_Change( event,
+			DMenuSeasonSelectEvent, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+		work = GMEVENT_GetEventWork( event );
+		MI_CpuClear8( work, sizeof(DEBUG_ZONESEL_EVENT_WORK) );
+	
+		work->gmSys = gsys;
+		work->gmEvent = event;
+		work->heapID = heapID;
+		work->fieldWork = fieldWork;
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：四季ジャンプ
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuSeasonSelectEvent(
+		GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_ZONESEL_EVENT_WORK *work = wk;
+
+	switch( (*seq) ){
+	case 0:
+		{
+			BMPMENULIST_HEADER menuH = DATA_DebugMenuList_ZoneSel;
+			u32 i,tbl[4] = { ZONE_ID_MAPSPRING,ZONE_ID_MAPSUMMER,
+				ZONE_ID_MAPAUTUMN,ZONE_ID_MAPWINTER };
+
+			menuH.line = 4;
+			
+			work->pMenuListData =
+				BmpMenuWork_ListCreate( 4, work->heapID );
+			
+			for( i = 0; i < 4; i++ ){
+				DEBUG_SetMenuWorkZoneIDName(
+					work->pMenuListData, work->heapID, tbl[i] );
+			}
+			
+			DebugMenu_InitCommonMenu(
+				&work->menuCommonWork,
+				&menuH, work->pMenuListData, NULL, 4,
+				11, 7, NARC_message_d_field_dat, work->heapID );
+		}
+		(*seq)++;
+		break;
+	case 1:
+		{
+			u32 ret;
+			ret = DebugMenu_ProcCommonMenu( &work->menuCommonWork );
+
+			if( ret == BMPMENULIST_NULL ){	//操作無し
+				break;
+			}
+			
+			DebugMenu_DeleteCommonMenu( &work->menuCommonWork );
+			BmpMenuWork_ListDelete( work->pMenuListData );
+			
+			if( ret == BMPMENULIST_CANCEL ){
+				return( GMEVENT_RES_FINISH );
+			}else{
+				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
+				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+				const VecFx32 *pos = PLAYERWORK_getPosition( player );
+				GMEVENT *event = DEBUG_EVENT_ChangeMapPos(
+					work->gmSys, work->fieldWork, ret, pos );
+				GMEVENT_ChangeEvent( work->gmEvent, event );
+				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
+			}
+		}
+		break;
+	}
+	
 	return( GMEVENT_RES_CONTINUE );
 }
 
@@ -1048,7 +1165,7 @@ static void DEBUG_SetSTRBUF_ZoneIDName(
  * @retval	nothing
  */
 //--------------------------------------------------------------
-static void DEBUG_SetMenuWorkZoneIDName(
+static void DEBUG_SetMenuWorkZoneIDNameAll(
 		BMP_MENULIST_DATA *list, HEAPID heapID )
 {
 	int id,max = ZONEDATA_GetZoneIDMax();
@@ -1059,6 +1176,28 @@ static void DEBUG_SetMenuWorkZoneIDName(
 		DEBUG_SetSTRBUF_ZoneIDName( heapID, id, strBuf );
 		BmpMenuWork_ListAddString( list, strBuf, id, heapID );
 	}
+	
+	GFL_HEAP_FreeMemory( strBuf );
+}
+
+//--------------------------------------------------------------
+/**
+ * ZONE_ID文字列をBMP_MENULIST_DATAにセット
+ * @param	list	セット先BMP_MENULIST_DATA
+ * @param	heapID	文字列バッファ確保用HEAPID
+ * @param	zoneID	セットするZONE_ID
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetMenuWorkZoneIDName(
+		BMP_MENULIST_DATA *list, HEAPID heapID, u32 zoneID )
+{
+	int id,max = ZONEDATA_GetZoneIDMax();
+	STRBUF *strBuf = GFL_STR_CreateBuffer( 128, heapID );
+	
+	GFL_STR_ClearBuffer( strBuf );
+	DEBUG_SetSTRBUF_ZoneIDName( heapID, zoneID, strBuf );
+	BmpMenuWork_ListAddString( list, strBuf, zoneID, heapID );
 	
 	GFL_HEAP_FreeMemory( strBuf );
 }
