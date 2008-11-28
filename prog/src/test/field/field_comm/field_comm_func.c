@@ -303,8 +303,8 @@ void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 			{
 				//親機の場合は子機が来たら接続状態に
 				ARI_TPrintf("Connect!(Parent)\n");
-				//commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
-				commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
+				commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
+				//commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
 			}
 		}
 	}
