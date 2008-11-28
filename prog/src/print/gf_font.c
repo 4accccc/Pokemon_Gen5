@@ -228,6 +228,8 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 
 			GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsWidth, 
 						widthTblSize, (void*)(wk->widthTblTop) );
+
+			TAYA_Printf("[GF_FONT] WidthTableSize=%08x bytes\n", widthTblSize);
 		}
 
 		// GlyphInfo
@@ -247,6 +249,8 @@ static void load_font_header( GFL_FONT* wk, u32 datID, BOOL fixedFontFlag, HEAPI
 			wk->codeMapTop = GFL_HEAP_AllocMemory( heapID, mapTblSize );
 			GFL_ARC_LoadDataOfsByHandle( wk->fileHandle, datID, wk->fontHeader.ofsMap,
 						mapTblSize, (void*)(wk->codeMapTop) );
+
+			TAYA_Printf("[GF_FONT] MapTableSize=%08x bytes\n", mapTblSize);
 		}
 	}
 }
