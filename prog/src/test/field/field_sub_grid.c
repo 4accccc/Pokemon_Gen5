@@ -112,6 +112,8 @@ static BOOL GridVecPosMove(
 	FLD_G3D_MAPPER_INFODATA *gridInfoData,
 	VecFx32 *pos, VecFx32 *vecMove );
 static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z );
+static void FldWorkPlayerWorkPosSet(
+		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
 
 //--------------------------------------------------------------
 ///	data
@@ -641,6 +643,8 @@ static void FGridPlayer_Move(
 		pJiki->move_count.z += pJiki->move_val.z;
 		
 		PlayerActGrid_Update( pcActCont, pJiki->dir, &pJiki->vec_pos );
+		FldWorkPlayerWorkPosSet(
+			pJiki->pGridCont->pFieldWork, &pJiki->vec_pos );
 		
 		switch( pJiki->move_dir ){
 		case DIR_UP:
@@ -927,6 +931,21 @@ u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork )
 	}
 
 	return( DIR_NOT );
+}
+
+//--------------------------------------------------------------
+/**
+ * 座標をPLAYER_WORKに反映する
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FldWorkPlayerWorkPosSet(
+		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos )
+{
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	PLAYERWORK_setPosition( player, pos );
 }
 
 #if 0	//実データ利用
