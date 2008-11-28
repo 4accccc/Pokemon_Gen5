@@ -25,6 +25,7 @@
 #include "msg\msg_d_matsu.h"
 #include "test/performance.h"
 #include "font/font.naix"
+#include "pokeicon/pokeicon.h"
 
 
 //==============================================================================
@@ -49,6 +50,11 @@ enum{
 	MY_CHILD,		///<子である
 	MY_PARENT,		///<親である
 };
+
+///ポケモンアイコンのパレット展開位置
+#define D_MATSU_ICON_PALNO		(0)
+///アクター最大数
+#define D_MATSU_ACT_MAX			(64)
 
 //==============================================================================
 //	構造体定義
@@ -116,6 +122,15 @@ typedef struct {
 	STRBUF			*strbuf_entry[ENTRY_MAX];
 	GFL_TCBLSYS		*tcbl;
 	DM_MSG_DRAW_WIN drawwin[ENTRY_MAX + 1];	//+1 = メインメッセージウィンドウ
+	
+	//アクター
+	GFL_CLUNIT *clunit;
+	GFL_CLWK	*clwk[ENTRY_MAX];
+	NNSG2dImagePaletteProxy	icon_pal_proxy;
+	NNSG2dCellDataBank	*icon_cell_data;
+	NNSG2dAnimBankData	*icon_anm_data;
+	void	*icon_cell_res;
+	void	*icon_anm_res;
 }D_MATSU_WORK;
 
 
@@ -146,9 +161,29 @@ static void _RecvHugeData(const int netID, const int size, const void* pData, vo
 static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _RecvKeyData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _RecvMyProfile(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void Local_PokeIconCommonDataSet(D_MATSU_WORK *wk);
+static void Local_PokeIconCommonDataFree(D_MATSU_WORK *wk);
+static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id);
+
+
+//==============================================================================
+//	データ
+//==============================================================================
+///ポケモンアイコンのCLWK初期データ
+static const GFL_CLWK_DATA PokeIconClwkData = {
+	0, 0, 					//座標(XY)
+	POKEICON_ANM_HPMAX,		//アニメシーケンス
+	10,						//ソフトプライオリティ
+	0,						//BGプライオリティ
+};
 
 
 
+//==============================================================================
+//
+//	
+//
+//==============================================================================
 //--------------------------------------------------------------
 /**
  * @brief   
@@ -301,6 +336,25 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 	}
 
+	//アクター設定
+	{
+		GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		
+		clsys_init.oamst_main = 1;	//通信アイコンの分
+		clsys_init.oamnum_main = 128-1;
+		clsys_init.tr_cell = D_MATSU_ACT_MAX;
+		GFL_CLACT_Init(&clsys_init, HEAPID_MATSUDA_DEBUG);
+		
+		wk->clunit = GFL_CLACT_UNIT_Create(D_MATSU_ACT_MAX, HEAPID_MATSUDA_DEBUG);
+		GFL_CLACT_UNIT_SetDefaultRend(wk->clunit);
+
+		//ポケモンアイコン共通データ登録
+		Local_PokeIconCommonDataSet(wk);
+		
+		//OBJ表示ON
+		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	}
+
 	return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -348,6 +402,8 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 //		return GFL_PROC_RES_FINISH;
 	}
 
+	GFL_CLACT_UNIT_Draw(wk->clunit);
+	GFL_CLACT_Main();
 	return GFL_PROC_RES_CONTINUE;
 }
 //--------------------------------------------------------------------------
@@ -358,6 +414,11 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	D_MATSU_WORK* wk = mywk;
+
+	Local_PokeIconCommonDataFree(wk);
+
+	GFL_CLACT_UNIT_Delete(wk->clunit);
+	GFL_CLACT_Exit();
 
 	GFL_FONT_Delete(wk->fontHandle);
 	GFL_TCBL_Exit(wk->tcbl);
@@ -535,6 +596,7 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 			wk->my_profile.name_len = info.nickNameLength;
 			OS_TPrintf("名前の長さ=%d\n", wk->my_profile.name_len);
 			OS_GetMacAddress(wk->my_profile.parent_MacAddress);
+			OS_TPrintf("MAC: %d, %d, %d, %d, %d, %d\n", wk->my_profile.parent_MacAddress[0], wk->my_profile.parent_MacAddress[1], wk->my_profile.parent_MacAddress[2], wk->my_profile.parent_MacAddress[3], wk->my_profile.parent_MacAddress[4], wk->my_profile.parent_MacAddress[5]);
 		}
 
 		OS_TPrintf("親＝Aボタン、　子＝Xボタン\n");
@@ -732,6 +794,7 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 		//netID順に配列に埋め込む為、再度自分自身のプロフィールを全員に送信
 		if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_MY_PROFILE, sizeof(IRC_MATCH_ENTRY_PARAM), &wk->my_profile) == TRUE){
 			OS_TPrintf("自分のプロフィールを全てのプレイヤーに送信した\n");
+			OS_TPrintf("MAC: %d, %d, %d, %d, %d, %d\n", wk->my_profile.parent_MacAddress[0], wk->my_profile.parent_MacAddress[1], wk->my_profile.parent_MacAddress[2], wk->my_profile.parent_MacAddress[3], wk->my_profile.parent_MacAddress[4], wk->my_profile.parent_MacAddress[5]);
 			wk->seq++;
 		}
 		else{
@@ -751,7 +814,7 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 	
 	case 11:	//キーを送信しあう
 		ret = -1;
-		wk->send_key = GFL_UI_KEY_GetTrg();
+		wk->send_key = GFL_UI_KEY_GetRepeat();
 		if(wk->send_key & PAD_KEY_UP){
 			ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), NET_CMD_KEY, 4, &wk->send_key);
 		}
@@ -892,9 +955,97 @@ static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, in
 	wk->drawwin[win_index].message_req = TRUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンの共通データ登録
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void Local_PokeIconCommonDataSet(D_MATSU_WORK *wk)
+{
+	//パレット
+	NNS_G2dInitImagePaletteProxy( &wk->icon_pal_proxy );
+	GFL_ARC_UTIL_TransVramPaletteMakeProxy(ARCID_POKEICON, POKEICON_GetPalArcIndex(), 
+		NNS_G2D_VRAM_TYPE_2DMAIN, D_MATSU_ICON_PALNO, HEAPID_MATSUDA_DEBUG, &wk->icon_pal_proxy);
+	
+	//セル
+	wk->icon_cell_res = GFL_ARC_UTIL_LoadCellBank(ARCID_POKEICON, POKEICON_GetCellArcIndex(), 
+		FALSE, &wk->icon_cell_data, HEAPID_MATSUDA_DEBUG);
+	
+	//セルアニメ
+	wk->icon_anm_res = GFL_ARC_UTIL_LoadAnimeBank(ARCID_POKEICON , POKEICON_GetAnmArcIndex(),
+		FALSE, &wk->icon_anm_data, HEAPID_MATSUDA_DEBUG);
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコンの共通データ破棄
+ *
+ * @param   wk		
+ */
+//--------------------------------------------------------------
+static void Local_PokeIconCommonDataFree(D_MATSU_WORK *wk)
+{
+	int i;
+	
+	for(i = 0; i < ENTRY_MAX; i++){
+		if(wk->clwk[i] != NULL){
+			GFL_CLACT_WK_Remove(wk->clwk[i]);
+		}
+	}
+	GFL_HEAP_FreeMemory(wk->icon_cell_res);
+	GFL_HEAP_FreeMemory(wk->icon_anm_res);
+}
 
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコン登録
+ *
+ * @param   wk		
+ * @param   monsno		ポケモン番号
+ * @param   net_id		ネットID
+ */
+//--------------------------------------------------------------
+static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id)
+{
+	GFL_CLWK_DATA clwk_data;
+	GFL_CLWK_RES clwk_res;
+	NNSG2dImageProxy imgProxy;
+	u32 icon_index;
+	u32 vram_offset = 0;	//byte単位
+	
+	GF_ASSERT(wk->clwk[net_id] == NULL);
 
+	vram_offset = POKEICON_SIZE_CGX * net_id;
+	
+	OS_TPrintf("monsno = %d\n", monsno);
+	
+	//キャラクタ設定
+	NNS_G2dInitImageProxy(&imgProxy);
+	icon_index = POKEICON_GetCgxArcIndexByMonsNumber(monsno, 0, FALSE);
+	//VRAM転送&イメージプロキシ作成
+	GFL_ARC_UTIL_TransVramCharacterMakeProxy(ARCID_POKEICON, icon_index, FALSE, CHAR_MAP_1D, 0, 
+		NNS_G2D_VRAM_TYPE_2DMAIN, vram_offset, HEAPID_MATSUDA_DEBUG, &imgProxy);
+	
+	//セルアニメ用リソースデータ作成
+	GFL_CLACT_WK_SetCellResData(&clwk_res, &imgProxy, &wk->icon_pal_proxy, 
+		wk->icon_cell_data, wk->icon_anm_data);
+	
+	//アクター登録
+	clwk_data = PokeIconClwkData;
+	clwk_data.pos_x = 120;
+	clwk_data.pos_y = 24 + net_id*32;
+	wk->clwk[net_id] = GFL_CLACT_WK_Add(
+		wk->clunit, &clwk_data, &clwk_res, CLWK_SETSF_NONE, HEAPID_MATSUDA_DEBUG);
+	
+	//アニメオート設定
+	GFL_CLACT_WK_SetAutoAnmSpeed(wk->clwk[net_id], FX32_ONE);
+	GFL_CLACT_WK_SetAutoAnmFlag(wk->clwk[net_id], TRUE);
+	
+	//パレットNo設定
+	GFL_CLACT_WK_SetPlttOffs(wk->clwk[net_id], POKEICON_GetPalNum(monsno, 0, FALSE));
+}
 
 
 //==============================================================================
@@ -1049,6 +1200,7 @@ static void _RecvKeyData(const int netID, const int size, const void* pData, voi
 {
 	D_MATSU_WORK *wk = pWork;
 	int key_data;
+	int dx = 0, dy = 0;
 	
 	if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
 		return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
@@ -1058,21 +1210,24 @@ static void _RecvKeyData(const int netID, const int size, const void* pData, voi
 	OS_TPrintf("データ受信：netID=%d, size=%d, data=%d\n", netID, size, key_data);
 	if(key_data & PAD_KEY_UP){
 		OS_TPrintf("受信：上\n");
-		wk->msg_pos_y[netID] -= 2;
+		dy -= 4;
 	}
 	if(key_data & PAD_KEY_DOWN){
 		OS_TPrintf("受信：下\n");
-		wk->msg_pos_y[netID] += 2;
+		dy += 4;
 	}
 	if(key_data & PAD_KEY_LEFT){
 		OS_TPrintf("受信：左\n");
-		wk->msg_pos_x[netID] -= 2;
+		dx -= 4;
 	}
 	if(key_data & PAD_KEY_RIGHT){
 		OS_TPrintf("受信：右\n");
-		wk->msg_pos_x[netID] += 2;
+		dx += 4;
 	}
-	
+
+#if 0	//名前ではなくポケモンアイコンを動かすように変更
+	wk->msg_pos_x[netID] += dx;
+	wk->msg_pos_y[netID] += dy;
 	if(netID == 0){
 		if(wk->oya == MY_PARENT){
 			GFL_STR_SetStringCodeOrderLength(wk->strbuf_entry[netID], wk->my_profile.name, wk->my_profile.name_len+1);
@@ -1084,7 +1239,17 @@ static void _RecvKeyData(const int netID, const int size, const void* pData, voi
 	else{
 		GFL_STR_SetStringCodeOrderLength(wk->strbuf_entry[netID], wk->child_profile[netID-1].name, wk->child_profile[netID-1].name_len+1);
 	}
-	Local_MessagePut(wk, netID, wk->strbuf_entry[netID], wk->msg_pos_x[netID], wk->msg_pos_y[netID]);
+	Local_MessagePut(wk, netID, 
+		wk->strbuf_entry[netID], wk->msg_pos_x[netID], wk->msg_pos_y[netID])
+#else
+	if(wk->clwk[netID] != NULL){
+		GFL_CLACTPOS pos;
+		GFL_CLACT_WK_GetPos(wk->clwk[netID], &pos, CLWK_SETSF_NONE);
+		pos.x += dx;
+		pos.y += dy;
+		GFL_CLACT_WK_SetPos(wk->clwk[netID], &pos, CLWK_SETSF_NONE);
+	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1119,7 +1284,8 @@ static void _RecvMyProfile(const int netID, const int size, const void* pData, v
 	GFL_STR_SetStringCodeOrderLength(
 		wk->strbuf_entry[netID], recv->name, recv->name_len+1);
 	Local_MessagePut(wk, netID, wk->strbuf_entry[netID], 0, 0);
-	GFL_STD_MemCopy(&recv[netID], &wk->child_profile[netID], sizeof(IRC_MATCH_ENTRY_PARAM));
+
+	Local_PokeIconAdd(wk, recv->parent_MacAddress[5], netID);
 }
 
 

@@ -25,10 +25,16 @@ enum {
 	POKEICON_ANM_STCHG,			// 状態異常
 };
 
-#define	POKEICON_PAL_MAX	( 3 )	// アイコンで使用するパレット数
+///アイコンで使用するパレット数
+#define	POKEICON_PAL_MAX	( 3 )
 
-#define POKEICON_SIZE_X		(32)	// アイコンの横サイズ
-#define POKEICON_SIZE_Y		(32)	// アイコンの縦サイズ
+/// アイコンの横サイズ
+#define POKEICON_SIZE_X		(32)
+/// アイコンの縦サイズ
+#define POKEICON_SIZE_Y		(32)
+
+///ポケモンアイコンのCGXデータサイズ(1体分) ※アニメ込み
+#define POKEICON_SIZE_CGX	(0x20*16 * 2)
 
 
 //==============================================================================
