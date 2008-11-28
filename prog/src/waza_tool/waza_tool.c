@@ -321,7 +321,7 @@ static const WAZA_DATA* getData( WazaID id )
 
 s8   WAZADATA_GetPriority( WazaID id )
 {
-	return 0;
+	return WT_WazaDataParaGet( id, ID_WTD_attackpri );
 }
 
 
@@ -333,53 +333,53 @@ WazaCategory  WAZADATA_GetCategory( WazaID id )
 
 PokeType WAZADATA_GetType( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->type;
+	return WT_WazaDataParaGet( id, ID_WTD_wazatype );
 }
 
 u16 WAZADATA_GetPower( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->power;
+	return WT_WazaDataParaGet( id, ID_WTD_damage );
 }
 
 WazaDamageType WAZADATA_GetDamageType( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->dmgType;
+	return WT_WazaDataParaGet( id, ID_WTD_kind );
 }
+
 // 命中率
 u8 WAZADATA_GetHitRatio( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->hitRatio;
+	u8 ret = WT_WazaDataParaGet( id, ID_WTD_hitprobability );
+	TAYA_Printf("[WAZATL] GetHitRatio : waza=%d, ratio=%d\n", id, ret);
+	if( ret == 0 )
+	{
+		ret = 100;
+	}
+	return ret;
 }
 
 // 必中フラグ。つばめがえしなどがTRUEを返す。
 BOOL WAZADATA_IsAleadyHit( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->hitRatio == HITRATIO_MUST;
+	return FALSE;
 }
+
 // ダメージワザかどうか
 BOOL WAZADATA_IsDamage( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->dmgType != WAZADATA_DMG_NONE;
+	return WAZADATA_GetPower(id) != 0;
 }
 
 // クリティカルランク
 u8 WAZADATA_GetCriticalRank( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->dmgType != WAZADATA_DMG_NONE;
+	return 0;
 }
 
 // 最高ヒット回数
 u8 WAZADATA_GetMaxHitCount( WazaID id )
 {
-	const WAZA_DATA* dat = getData( id );
-	return dat->numMaxHit;
+	return 1;
 }
 
 #if 0
