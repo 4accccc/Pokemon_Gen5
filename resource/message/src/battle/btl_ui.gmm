@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-21T17:36:24"/>
+	<create user="taya" host="W00146" date="2008-11-28T20:32:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,7 +386,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="870"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -436,9 +436,9 @@
 
 	<row id="BTLSTR_UI_StatWinForm">
 		<language name="JPN" space="100" width="216">[1:00:ポケモン名:0]
-[BD:02:右寄せ][1:34:数字３桁:1]/[1:34:数字３桁:2]</language>
+[1:34:数字３桁:1]/[1:34:数字３桁:2]</language>
 		<language name="JPN_KANJI" width="1" line="100">[1:00:ポケモン名:0]
-[BD:02:右寄せ][1:34:数字３桁:1]/[1:34:数字３桁:2]</language>
+[1:34:数字３桁:1]/[1:34:数字３桁:2]</language>
 	</row>
 
 	<row id="BTLSTR_UI_StatWinForm0002">
