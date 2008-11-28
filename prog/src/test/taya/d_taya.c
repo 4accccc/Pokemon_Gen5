@@ -802,13 +802,9 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 		break;
 	case 2:
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
-		TAYA_Printf("‚Ù‚¤\n");
 		initGraphicSystems( wk );
-		TAYA_Printf("‚Í‚ ‚ \n");
 		createTemporaryModules( wk );
-		TAYA_Printf("‚Þ‚Ê‚¤\n");
 		startView( wk );
-		TAYA_Printf("‚°‚Ó‚§\n");
 		return TRUE;
 	}
 
