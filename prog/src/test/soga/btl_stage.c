@@ -142,11 +142,11 @@ BTL_STAGE_WORK	*BTL_STAGE_Init( int index, HEAPID heapID )
 //============================================================================================
 void	BTL_STAGE_Exit( BTL_STAGE_WORK *bsw )
 {
+	GFL_G3D_OBJECT_Delete( bsw->stage_obj );
+	GFL_G3D_ANIME_Delete( bsw->stage_anm );
+	GFL_G3D_RENDER_Delete( bsw->stage_render );
 	GFL_G3D_DeleteResource( bsw->stage_resource );
 	GFL_G3D_DeleteResource( bsw->stage_anm_resource );
-	GFL_G3D_RENDER_Delete( bsw->stage_render );
-	GFL_G3D_ANIME_Delete( bsw->stage_anm );
-	GFL_G3D_OBJECT_Delete( bsw->stage_obj );
 
 	GFL_HEAP_FreeMemory( bsw );
 }

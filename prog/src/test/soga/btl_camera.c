@@ -109,6 +109,7 @@ BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 //============================================================================================
 void	BTL_CAMERA_Exit( BTL_CAMERA_WORK *bcw )
 {
+	GFL_G3D_CAMERA_Delete( bcw->camera );
 	GFL_HEAP_FreeMemory( bcw );
 }
 

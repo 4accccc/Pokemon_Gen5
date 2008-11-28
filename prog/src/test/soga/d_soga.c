@@ -31,6 +31,8 @@
 
 //#define MCS_ENABLE		//MCSを使用する
 
+#define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
+
 #define	 NIN_SPL_MAX	(3)
 
 #define	CAMERA_SPEED		( FX32_ONE * 2 )
@@ -93,12 +95,8 @@ typedef struct
 typedef struct
 {
 	int					seq_no;
-	POKE_MCSS_WORK		*pmw;
-	BTL_STAGE_WORK		*bsw;
-	BTL_FIELD_WORK		*bfw;
 	BTL_CAMERA_WORK		*bcw;
 	BTL_EFFECT_WORK		*bew;
-	GFL_PTC_PTR			ptc;
 	HEAPID				heapID;
 	NNSSndStrm			strm;
 	u8					FS_strmBuffer[STRM_BUF_SIZE];
@@ -191,7 +189,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_DISP_SetBank( &dispvramBank );
 	}	
 
-	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
+//	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
 	
 	G2_BlendNone();
 	GFL_BG_Init( wk->heapID );
@@ -239,15 +237,26 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		//POKEMON_PARAM生成
 		wk->pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
 		PP_Clear( wk->pp );
-
+	
 		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
 		PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
+#if 0
+//1vs1
 		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_AA );
 		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
 		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_BB );
-//		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-//		POKE_MCSS_Add( wk->pmw, wk->pp, POKE_MCSS_POS_C );
-//		POKE_MCSS_Add( wk->pmw, wk->pp, POKE_MCSS_POS_D );
+#else
+//2vs2
+		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+		PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
+		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_A );
+		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_B );
+		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
+		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_C );
+		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_D );
+//		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_E );
+//		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_F );
+#endif
 	}
 
 	//2D画面初期化
@@ -303,7 +312,10 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 	
 	//キャプチャセット
-	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
+//	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
+
+	//フェードイン
+	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -388,7 +400,14 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 
 	BTL_EFFECT_Main( wk->bew );
 
-	return GFL_PROC_RES_CONTINUE;	
+	if( pad == PAD_BUTTON_EXIT ){
+		NNS_SndStrmStop(&wk->strm);
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
+		return GFL_PROC_RES_FINISH;	
+	}
+	else{
+		return GFL_PROC_RES_CONTINUE;	
+	}
 }
 //--------------------------------------------------------------------------
 /**
@@ -397,6 +416,26 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	SOGA_WORK* wk = mywk;
+
+	if( GFL_FADE_CheckFade() == TRUE ){
+		return GFL_PROC_RES_CONTINUE;	
+	}
+
+	BTL_EFFECT_Exit( wk->bew );
+
+    NNS_SndStrmFreeChannel( &wk->strm );
+
+	GFL_G3D_Exit();
+
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
+
+	GFL_HEAP_FreeMemory( wk->pp );
+	GFL_PROC_FreeWork( proc );
+
+	GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
+
 	return GFL_PROC_RES_FINISH;
 }
 

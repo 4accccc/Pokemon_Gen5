@@ -57,10 +57,8 @@ extern	MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx
 extern	void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 extern	void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-extern	fx32			MCSS_GetScaleX( MCSS_WORK *mcss );
-extern	void			MCSS_SetScaleX( MCSS_WORK *mcss, fx32 scale_x );
-extern	fx32			MCSS_GetScaleY( MCSS_WORK *mcss );
-extern	void			MCSS_SetScaleY( MCSS_WORK *mcss, fx32 scale_y );
+extern	void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
+extern	void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
 extern	void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
 extern	void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );

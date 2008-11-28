@@ -62,6 +62,7 @@ extern	void			POKE_MCSS_GetPokeDefaultPos( VecFx32 *pos, int position );
 extern	fx32			POKE_MCSS_GetPokeDefaultScale( int position );
 extern	void			POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
 extern	void			POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
-extern	void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int vec, int count );
+extern	void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count );
+extern	void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count );
 
 #endif	//__POKE_MCSS_H_

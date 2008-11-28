@@ -28,25 +28,6 @@
  * 構造体定義
  */
 //--------------------------------------------------------------------------
-#ifndef MCSS_DRAW_CALC_FAST
-struct _MCSS_NCEC
-{
-
-	u16		char_no;	//セルで使用するキャラクタNo
-	u8		size_x;		//セルサイズX
-	u8		size_y;		//セルサイズY
-	s32		pos_x;		//セル描画X座標
-	s32		pos_y;		//セル描画Y座標
-
-	//以下、メパチ用キャラ
-	u16		mepachi_char_no;	//セルで使用するキャラクタNo
-	u8		mepachi_size_x;		//セルサイズX
-	u8		mepachi_size_y;		//セルサイズY
-	s32		mepachi_pos_x;		//セル描画X座標
-	s32		mepachi_pos_y;		//セル描画Y座標
-
-};
-#else
 struct _MCSS_NCEC
 {
 
@@ -65,7 +46,6 @@ struct _MCSS_NCEC
 	fx32	mepachi_tex_s;		//テクスチャs値
 	fx32	mepachi_tex_t;		//テクスチャt値
 };
-#endif
 
 struct _MCSS_NCEC_WORK
 {
@@ -89,8 +69,7 @@ struct _MCSS_WORK
 	NNSG2dImageProxy			mcss_image_proxy;		//テクスチャプロキシ
 	NNSG2dImagePaletteProxy		mcss_palette_proxy;		//パレットプロキシ
 	VecFx32						pos;					//マルチセルのポジション
-	fx32						scale_x;
-	fx32						scale_y;
+	VecFx32						scale;					//マルチセルのスケール
 	u32							mepachi_flag	:1;		//メパチフラグ
 	u32							anm_stop_flag	:1;		//アニメストップフラグ
 	u32							vanish_flag		:1;		//バニッシュフラグ

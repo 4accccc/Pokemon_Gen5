@@ -56,12 +56,13 @@ fx32			POKE_MCSS_GetPokeDefaultScale( int position );
 void			POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
 void			POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
 
-void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int vec, int count );
-void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
+void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count );
+void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count );
 
 static	void	POKE_MCSS_MakeMAW( POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 
 static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work );
+static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work );
 
 //============================================================================================
 /**
@@ -72,9 +73,9 @@ static	const	VecFx32	poke_pos_table[]={
 	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
 	{ FX_F32_TO_FX32( -3.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
-	{ FX_F32_TO_FX32(  6.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -7.0f ) },		//POS_B
+	{ FX_F32_TO_FX32(  6.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_B
 	{ FX_F32_TO_FX32( -1.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
-	{ FX_F32_TO_FX32(  3.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_D
+	{ FX_F32_TO_FX32(  3.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },		//POS_D
 	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
 };
@@ -86,11 +87,11 @@ static	const	VecFx32	poke_pos_table[]={
 //============================================================================================
 static	const	fx32	poke_scale_table[]={
 	FX_F32_TO_FX32( 0.75f ),	//POS_AA
-	FX_F32_TO_FX32( 1.30f ),	//POS_BB
+	FX_F32_TO_FX32( 1.35f ),	//POS_BB
 	FX_F32_TO_FX32( 0.8f ),		//POS_A
-	FX_F32_TO_FX32( 1.2f ),		//POS_B
+	FX_F32_TO_FX32( 1.30f ),	//POS_B
 	FX_F32_TO_FX32( 0.8f ),		//POS_C
-	FX_F32_TO_FX32( 1.3f ),		//POS_D
+	FX_F32_TO_FX32( 1.40f ),	//POS_D
 	FX_F32_TO_FX32( 0.8f ),		//POS_E
 	FX_F32_TO_FX32( 1.4f ),		//POS_F
 };
@@ -161,7 +162,8 @@ void	POKE_MCSS_Draw( POKE_MCSS_WORK *pmw )
 //============================================================================================
 void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position )
 {
-	MCSS_ADD_WORK maw;
+	MCSS_ADD_WORK	maw;
+	VecFx32			scale;
 
 	GF_ASSERT( position < POKE_MCSS_POS_MAX );
 	GF_ASSERT( pmw->mcss[ position ] == NULL );
@@ -172,8 +174,9 @@ void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position )
 									  poke_pos_table[ position ].y,
 									  poke_pos_table[ position ].z,
 									  &maw );
-	MCSS_SetScaleX( pmw->mcss[ position ], poke_scale_table[ position ] );
-	MCSS_SetScaleY( pmw->mcss[ position ], poke_scale_table[ position ] );
+	VEC_Set( &scale, poke_scale_table[ position ], poke_scale_table[ position ], FX32_ONE );
+
+	MCSS_SetScale( pmw->mcss[ position ], &scale );
 }
 
 //============================================================================================
@@ -268,8 +271,7 @@ fx32	POKE_MCSS_GetPokeDefaultScale( int position )
 //============================================================================================
 void	POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
 {
-	scale->x = MCSS_GetScaleX( pmw->mcss[ position ] );
-	scale->y = MCSS_GetScaleY( pmw->mcss[ position ] );
+	MCSS_GetScale( pmw->mcss[ position ], scale );
 }
 
 //============================================================================================
@@ -283,8 +285,7 @@ void	POKE_MCSS_GetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
 //============================================================================================
 void	POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
 {
-	MCSS_SetScaleX( pmw->mcss[ position ], scale->x );
-	MCSS_SetScaleY( pmw->mcss[ position ], scale->y );
+	MCSS_SetScale( pmw->mcss[ position ], scale );
 }
 
 //============================================================================================
@@ -292,45 +293,100 @@ void	POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale )
  *	ポケモン移動
  *
  * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
- * @param[in]	position	格納するポケモンの立ち位置
+ * @param[in]	position	移動するポケモンの立ち位置
  * @param[in]	move_type	移動タイプ
  * @param[in]	pos			移動タイプにより意味が変化
- *							POKE_MCSS_MOVETYPE_DIRECT POKE_MCSS_MOVETYPE_INTERPOLATION	移動先
- *							POKE_MCSS_MOVETYPE_ROUNDTRIP　往復の長さ
- * @param[in]	vec			移動スピード
- * @param[in]	count		往復カウント（POKEMCSS_MOVEYUPE_ROUNDTRIPでしか意味のないパラメータ）
+ *							EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	移動先
+ *							EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in]	speed		移動スピード
+ * @param[in]	count		往復カウント（POKEMCSS_CALCYUPE_ROUNDTRIPでしか意味のないパラメータ）
  */
 //============================================================================================
-void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int vec, int count )
+void	POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count )
 {
 	POKE_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( pmw->heapID, sizeof( POKE_MCSS_TCB_WORK ) );
 
 	pmtw->pmw				= pmw;
 	pmtw->emw.position		= position;
 	pmtw->emw.move_type		= move_type;
-	pmtw->emw.vec_time		= vec;
-	pmtw->emw.vec_time_tmp	= vec * 2;
+	pmtw->emw.vec_time		= speed;
+	pmtw->emw.vec_time_tmp	= speed;
+	pmtw->emw.wait			= 0;
+	pmtw->emw.wait_tmp		= wait;
 	pmtw->emw.count			= count;
-	pmtw->emw.end_pos.x		= pos->x;
-	pmtw->emw.end_pos.y		= pos->y;
-	pmtw->emw.end_pos.z		= pos->z;
+	pmtw->emw.end_value.x	= pos->x;
+	pmtw->emw.end_value.y	= pos->y;
+	pmtw->emw.end_value.z	= pos->z;
 
-	MCSS_GetPosition( pmw->mcss[ position ], &pmtw->emw.start_pos );
+	MCSS_GetPosition( pmw->mcss[ position ], &pmtw->emw.start_value );
 
 	switch( move_type ){
-	case EFFTOOL_MOVETYPE_DIRECT:			//直接ポジションに移動
+	case EFFTOOL_CALCTYPE_DIRECT:			//直接ポジションに移動
 		break;
-	case EFFTOOL_MOVETYPE_INTERPOLATION:	//移動先までを補間しながら移動
-		BTL_EFFTOOL_CalcMoveVector( &pmtw->emw.start_pos, pos, &pmtw->emw.vector, FX32_CONST( vec ) );
+	case EFFTOOL_CALCTYPE_INTERPOLATION:	//移動先までを補間しながら移動
+		BTL_EFFTOOL_CalcMoveVector( &pmtw->emw.start_value, pos, &pmtw->emw.vector, FX32_CONST( speed ) );
 		break;
-	case EFFTOOL_MOVETYPE_ROUNDTRIP:		//指定した区間を往復移動
-		pmtw->emw.vector.x = FX_Div( pos->x, FX32_CONST( vec ) );
-		pmtw->emw.vector.y = FX_Div( pos->y, FX32_CONST( vec ) );
-		pmtw->emw.vector.z = FX_Div( pos->z, FX32_CONST( vec ) );
+	case EFFTOOL_CALCTYPE_ROUNDTRIP_LONG:	//指定した区間を往復移動
+		pmtw->emw.vec_time_tmp	*= 2;
+	case EFFTOOL_CALCTYPE_ROUNDTRIP:		//指定した区間を往復移動
+		pmtw->emw.vector.x = FX_Div( pos->x, FX32_CONST( speed ) );
+		pmtw->emw.vector.y = FX_Div( pos->y, FX32_CONST( speed ) );
+		pmtw->emw.vector.z = FX_Div( pos->z, FX32_CONST( speed ) );
 		break;
 	}
 
 	GFL_TCB_AddTask( pmw->tcb_sys, TCB_POKE_MCSS_Move, pmtw, 0 );
+}
+
+//============================================================================================
+/**
+ *	ポケモン拡縮
+ *
+ * @param[in]	pmw			POKE_MCSS管理ワークへのポインタ
+ * @param[in]	position	拡縮するポケモンの立ち位置
+ * @param[in]	scale_type	拡縮タイプ
+ * @param[in]	scale		拡縮タイプにより意味が変化
+ *							EFFTOOL_CALCTYPE_DIRECT EFFTOOL_CALCTYPE_INTERPOLATION	最終的なスケール値
+ *							EFFTOOL_CALCTYPE_ROUNDTRIP　往復の長さ
+ * @param[in]	speed		拡縮スピード
+ * @param[in]	wait		拡縮ウエイト
+ * @param[in]	count		往復カウント（EFFTOOL_CALCTYPE_ROUNDTRIPでしか意味のないパラメータ）
+ */
+//============================================================================================
+void	POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count )
+{
+	POKE_MCSS_TCB_WORK	*pmtw = GFL_HEAP_AllocMemory( pmw->heapID, sizeof( POKE_MCSS_TCB_WORK ) );
+
+	pmtw->pmw				= pmw;
+	pmtw->emw.position		= position;
+	pmtw->emw.move_type		= move_type;
+	pmtw->emw.vec_time		= speed;
+	pmtw->emw.vec_time_tmp	= speed;
+	pmtw->emw.wait			= 0;
+	pmtw->emw.wait_tmp		= wait;
+	pmtw->emw.count			= count;
+	pmtw->emw.end_value.x	= scale->x;
+	pmtw->emw.end_value.y	= scale->y;
+	pmtw->emw.end_value.z	= scale->z;
+
+	MCSS_GetScale( pmw->mcss[ position ], &pmtw->emw.start_value );
+
+	switch( move_type ){
+	case EFFTOOL_CALCTYPE_DIRECT:			//直接拡縮
+		break;
+	case EFFTOOL_CALCTYPE_INTERPOLATION:	//最終的なスケール値までを補間しながら拡縮
+		BTL_EFFTOOL_CalcMoveVector( &pmtw->emw.start_value, scale, &pmtw->emw.vector, FX32_CONST( speed ) );
+		break;
+	case EFFTOOL_CALCTYPE_ROUNDTRIP_LONG:	//指定した区間を往復拡縮
+		pmtw->emw.vec_time_tmp	*= 2;
+	case EFFTOOL_CALCTYPE_ROUNDTRIP:		//指定した区間を往復拡縮
+		pmtw->emw.vector.x = FX_Div( scale->x, FX32_CONST( speed ) );
+		pmtw->emw.vector.y = FX_Div( scale->y, FX32_CONST( speed ) );
+		pmtw->emw.vector.z = FX_Div( scale->z, FX32_CONST( speed ) );
+		break;
+	}
+
+	GFL_TCB_AddTask( pmw->tcb_sys, TCB_POKE_MCSS_Scale, pmtw, 0 );
 }
 
 //============================================================================================
@@ -396,8 +452,29 @@ static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work )
 	BOOL	ret;
 
 	MCSS_GetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
-	ret = BTL_EFFTOOL_CalcMove( &pmtw->emw, &now_pos );
+	ret = BTL_EFFTOOL_CalcParam( &pmtw->emw, &now_pos );
 	MCSS_SetPosition( pmw->mcss[ pmtw->emw.position ], &now_pos );
+	if( ret == TRUE ){
+		GFL_HEAP_FreeMemory( work );
+		GFL_TCB_DeleteTask( tcb );
+	}
+}
+
+//============================================================================================
+/**
+ *	ポケモン拡縮タスク
+ */
+//============================================================================================
+static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work )
+{
+	POKE_MCSS_TCB_WORK	*pmtw = ( POKE_MCSS_TCB_WORK * )work;
+	POKE_MCSS_WORK *pmw = pmtw->pmw;
+	VecFx32	now_scale;
+	BOOL	ret;
+
+	MCSS_GetScale( pmw->mcss[ pmtw->emw.position ], &now_scale );
+	ret = BTL_EFFTOOL_CalcParam( &pmtw->emw, &now_scale );
+	MCSS_SetScale( pmw->mcss[ pmtw->emw.position ], &now_scale );
 	if( ret == TRUE ){
 		GFL_HEAP_FreeMemory( work );
 		GFL_TCB_DeleteTask( tcb );
