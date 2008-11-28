@@ -314,16 +314,14 @@ void VMCompare(VMHANDLE * core, VM_VALUE r1, VM_VALUE r2 )
  * @retval	"1 = ƒGƒ‰["
  */
 //------------------------------------------------------------------
-u8 VMCMD_Push( VMHANDLE * core, VM_VALUE value)
+void VMCMD_Push( VMHANDLE * core, VM_VALUE value)
 {
 	if( core->stackcount + 1 >= core->init_value.stack_size ){
 		VM_ERROR("vm stack overflow(%d)\n",core->stackcount);
-		return 1;
+		return;
 	}
 	core->stack[core->stackcount] = value;
 	core->stackcount ++;
-
-	return 0;
 }
 
 //------------------------------------------------------------------

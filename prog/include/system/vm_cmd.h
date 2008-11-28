@@ -48,13 +48,11 @@ struct VM_HANDLE_STRUCT{
  * 仮想マシンスタックプッシュ
  *
  * @param	core		仮想マシン制御構造体へのポインタ
- * @param	val
+ * @param	value		プッシュする値
  *
- * @retval	"0 = 正常"
- * @retval	"1 = エラー"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 VMCMD_Push( VMHANDLE * core, VM_VALUE value);
+extern void VMCMD_Push( VMHANDLE * core, VM_VALUE value);
 
 //--------------------------------------------------------------------------------------------
 /**
