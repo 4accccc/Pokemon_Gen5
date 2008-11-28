@@ -117,7 +117,7 @@ u32		POKETOOL_GetWorkSize( void )
 //=============================================================================================
 POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u32 id, HEAPID heapID )
 {
-	POKEMON_PARAM* pp = GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
+	POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
 
 	if( pp )
 	{
@@ -759,6 +759,15 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 	level = PPP_CalcLevel( ppp );
 	POKE_PERSONAL_LoadWazaOboeTable( mons_no, form_no, wot );
 
+// 最初に全クリアしておく
+	for(i=0; i<PTL_WAZA_MAX; i++)
+	{
+		// @@@ ワザナンバー無効値=0 という前提の記述。いずれシンボル化する。
+		PPP_Put( ppp, ID_PARA_waza1 + i,	 	0 );
+		PPP_Put( ppp, ID_PARA_pp1 + i,			0 );
+		PPP_Put( ppp, ID_PARA_pp_count1 + i,	0 );
+	}
+
 	i = 0;
 	while( wot[i] != 0xffff ){
 		if( ( wot[i] & 0xfe00 ) <= ( level << 9 ) ){
@@ -775,6 +784,7 @@ void	PPP_SetWazaDefault( POKEMON_PASO_PARAM *ppp )
 		}
 		i++;
 	}
+
 
 	PPP_FastModeOff( ppp, flag );
 }
@@ -920,13 +930,12 @@ void	PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
 	GF_ASSERT(pos<PTL_WAZA_MAX);
 
 	{
-		u8	pp;
-		u8	pp_count;
+		u8	pp = WT_PPMaxGet( wazano, 0 );
+
+		TAYA_Printf("[POKETL] SetWazaPos: pos=%d, waza=%d, pp=%d\n", pos, wazano, pp);
 
 		PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
-		pp_count = 0;
-		PPP_Put( ppp, ID_PARA_pp_count1 + pos, pp_count );
-		pp = WT_PPMaxGet( wazano, 0 );
+		PPP_Put( ppp, ID_PARA_pp_count1 + pos, 0 );
 		PPP_Put( ppp, ID_PARA_pp1 + pos, pp );
 	}
 }
@@ -1362,7 +1371,7 @@ static	u32	pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
 static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 {
 	u32	ret = 0;
-	u64	bit;
+
 	POKEMON_PASO_PARAM1	*ppp1;
 	POKEMON_PASO_PARAM2	*ppp2;
 	POKEMON_PASO_PARAM3	*ppp3;
@@ -1511,8 +1520,10 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_sinou_classic_ribbon:				//シンオウクラシックリボン
 		case ID_PARA_sinou_premiere_ribbon:				//シンオウプレミアリボン
 		case ID_PARA_sinou_amari_ribbon:				//あまり
-			bit = 1;
-			ret = ( ( ppp1->sinou_ribbon & ( bit << id - ID_PARA_sinou_champ_ribbon ) ) != 0 );
+			{
+				u64 bit = 1;
+				ret = ( ( ppp1->sinou_ribbon & ( bit << id - ID_PARA_sinou_champ_ribbon ) ) != 0 );
+			}
 			break;
 //PARAM2
 		case ID_PARA_waza1:
@@ -1537,7 +1548,7 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_pp_max2:
 		case ID_PARA_pp_max3:
 		case ID_PARA_pp_max4:
-			ret = WT_PPMaxGet( ppp2->waza[ id-ID_PARA_pp_max1 ], ppp2->pp_count[ id - ID_PARA_pp_max1 ] );
+			ret = WT_PPMaxGet( ppp2->waza[ id-ID_PARA_pp_max1 ], ppp2->pp_count[ id-ID_PARA_pp_max1 ] );
 			break;
 		case ID_PARA_hp_rnd:
 			ret = ppp2->hp_rnd;
@@ -1600,8 +1611,10 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_national_ribbon:
 		case ID_PARA_earth_ribbon:
 		case ID_PARA_world_ribbon:
-			bit = 1;
-			ret = ( ( ppp2->old_ribbon & ( bit << id - ID_PARA_stylemedal_normal ) ) !=0 );
+			{
+				u64 bit = 1;
+				ret = ( ( ppp2->old_ribbon & ( bit << id - ID_PARA_stylemedal_normal ) ) !=0 );
+			}
 			break;
 		case ID_PARA_event_get_flag:
 			ret = ppp2->event_get_flag;
@@ -1669,8 +1682,10 @@ static	u32	ppp_getAct( POKEMON_PASO_PARAM *ppp, int id, void *buf )
 		case ID_PARA_trial_strongmedal_hyper:
 		case ID_PARA_trial_strongmedal_master:
 		case ID_PARA_amari_ribbon:
-			bit = 1;
-			ret = ( ( ppp3->new_ribbon & ( bit << id - ID_PARA_trial_stylemedal_normal ) ) != 0 );
+			{
+				u64 bit = 1;
+				ret = ( ( ppp3->new_ribbon & ( bit << id - ID_PARA_trial_stylemedal_normal ) ) != 0 );
+			}
 			break;
 //PARAM4
 		case ID_PARA_oyaname:
@@ -1850,9 +1865,6 @@ static	void	pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
 //--------------------------------------------------------------------------
 static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
 {
-	int	i;
-	u64	bit;
-	u16	sum;
 	POKEMON_PASO_PARAM1	*ppp1;
 	POKEMON_PASO_PARAM2	*ppp2;
 	POKEMON_PASO_PARAM3	*ppp3;
@@ -1972,12 +1984,14 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
 		case ID_PARA_sinou_classic_ribbon:				//シンオウクラシックリボン
 		case ID_PARA_sinou_premiere_ribbon:				//シンオウプレミアリボン
 		case ID_PARA_sinou_amari_ribbon:				//あまり
-			bit = 1 << ( paramID - ID_PARA_sinou_champ_ribbon );
-			if( arg ){
-				ppp1->sinou_ribbon |= bit;
-			}
-			else{
-				ppp1->sinou_ribbon &= ( bit ^ 0xffffffff );
+			{
+				u64 bit = 1 << ( paramID - ID_PARA_sinou_champ_ribbon );
+				if( arg ){
+					ppp1->sinou_ribbon |= bit;
+				}
+				else{
+					ppp1->sinou_ribbon &= ( bit ^ 0xffffffff );
+				}
 			}
 			break;
 //PARAM2
@@ -2058,12 +2072,14 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
 		case ID_PARA_national_ribbon:
 		case ID_PARA_earth_ribbon:
 		case ID_PARA_world_ribbon:
-			bit = 1 << ( paramID - ID_PARA_stylemedal_normal );
-			if( arg ){
-				ppp2->old_ribbon |= bit;
-			}
-			else{
-				ppp2->old_ribbon &= ( bit ^ 0xffffffff );
+			{
+				u64 bit = 1 << ( paramID - ID_PARA_stylemedal_normal );
+				if( arg ){
+					ppp2->old_ribbon |= bit;
+				}
+				else{
+					ppp2->old_ribbon &= ( bit ^ 0xffffffff );
+				}
 			}
 			break;
 		case ID_PARA_event_get_flag:
@@ -2125,12 +2141,14 @@ static	void	ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
 		case ID_PARA_trial_strongmedal_hyper:
 		case ID_PARA_trial_strongmedal_master:
 		case ID_PARA_amari_ribbon:
-			bit = 1 << ( paramID - ID_PARA_trial_stylemedal_normal );
-			if( arg ){
-				ppp3->new_ribbon |= bit;
-			}
-			else{
-				ppp3->new_ribbon &= ( bit ^ 0xffffffffffffffff );
+			{
+				u64 bit = 1 << ( paramID - ID_PARA_trial_stylemedal_normal );
+				if( arg ){
+					ppp3->new_ribbon |= bit;
+				}
+				else{
+					ppp3->new_ribbon &= ( bit ^ 0xffffffffffffffff );
+				}
 			}
 			break;
 //PARAM4
@@ -2292,8 +2310,6 @@ static	void	pp_addAct( POKEMON_PARAM *pp, int id, int value )
 //============================================================================================
 static	void	ppp_addAct( POKEMON_PASO_PARAM *ppp, int id, int value )
 {
-	int	i;
-	u16	sum;
 	POKEMON_PASO_PARAM1	*ppp1;
 	POKEMON_PASO_PARAM2	*ppp2;
 	POKEMON_PASO_PARAM3	*ppp3;
