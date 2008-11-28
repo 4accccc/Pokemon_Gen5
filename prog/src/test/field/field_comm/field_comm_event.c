@@ -123,9 +123,9 @@ GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , voi
 GMEVENT* FIELD_COMM_EVENT_Start_StartCommInvasion( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
 GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work );
 
-GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , void *work );
-GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys );
+GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys ,FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEventPartner( GMEVENT *event , int *seq , void *work );
 static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *seq , FIELD_COMM_EVENT *evtWork , BOOL isParent );
 
@@ -214,7 +214,7 @@ GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , v
 //--------------------------------------------------------------
 //	話しかけるイベント開始	
 //--------------------------------------------------------------
-GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
+GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys ,FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_EVENT *evtWork;
 	GMEVENT *event;
@@ -222,6 +222,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalk( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *co
 	evtWork = GMEVENT_GetEventWork(event);
 	evtWork->commSys_ = commSys;
 	evtWork->gameSys_ = gameSys;
+	evtWork->fieldWork_ = fieldWork;
 	evtWork->isInitMenu_ = FALSE;
 
 	//最初のパケット送信をすでにしてしまう
@@ -361,7 +362,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkEvent( GMEVENT *event , int *seq , vo
 //--------------------------------------------------------------
 //	話しかけられるイベント開始	
 //--------------------------------------------------------------
-GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_MAIN *commSys )
+GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_MAIN_WORK *fieldWork ,FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_EVENT *evtWork;
 	GMEVENT *event;
@@ -369,6 +370,7 @@ GMEVENT* FIELD_COMM_EVENT_StartTalkPartner( GAMESYS_WORK *gameSys , FIELD_COMM_M
 	evtWork = GMEVENT_GetEventWork(event);
 	evtWork->commSys_ = commSys;
 	evtWork->gameSys_ = gameSys;
+	evtWork->fieldWork_ = fieldWork;
 	evtWork->isInitMenu_ = FALSE;
 
 	FIELD_COMM_MAIN_StartTalkPartner( commSys );

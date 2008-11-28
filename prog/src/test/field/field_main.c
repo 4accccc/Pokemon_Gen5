@@ -371,12 +371,12 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	//話しかける側
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A ){
 		if( FIELD_COMM_MAIN_CanTalk( fieldWork->commSys ) == TRUE ){
-			return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork->commSys );
+			return FIELD_COMM_EVENT_StartTalk( gsys , fieldWork , fieldWork->commSys );
 		}
 	}
 	//話しかけられる側(中で一緒に話せる状態かのチェックもしてしまう
 	if( FIELD_COMM_MAIN_CheckReserveTalk( fieldWork->commSys ) == TRUE ){
-		return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork->commSys );
+		return FIELD_COMM_EVENT_StartTalkPartner( gsys , fieldWork , fieldWork->commSys );
 	}
 
 	return NULL;
