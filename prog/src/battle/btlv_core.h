@@ -136,7 +136,7 @@ extern BOOL BTLV_WaitMsg( BTLV_CORE* wk );
 extern void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage, WazaID waza, BtlTypeAff affinity );
 extern BOOL BTLV_WaitWazaAct( BTLV_CORE* wk );
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID );
-extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID );
+extern BOOL BTLV_WaitDeadAct( BTLV_CORE* wk );
 
 
 extern void BTLV_StartTokWin( BTLV_CORE* wk, u8 clientID );

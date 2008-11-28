@@ -54,12 +54,14 @@ typedef enum {
 
 //--------------------------------------------------------------------------------------
 /**
- * システム初期化（バトルシステム起動直後に１回だけ呼び出し）
+ * システム初期化，終了（バトルシステム起動直後，終了直前に１回だけ呼び出し）
  */
 //--------------------------------------------------------------------------------------
 extern void BTL_ADAPTER_InitSystem( void );
+extern void BTL_ADAPTER_QuitSystem( void );
 
 extern BTL_ADAPTER*  BTL_ADAPTER_Create( BtlCommMode commMode, GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID );
+extern void BTL_ADAPTER_Delete( BTL_ADAPTER* wk );
 
 
 // for server

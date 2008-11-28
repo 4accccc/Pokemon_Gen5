@@ -54,6 +54,7 @@ typedef enum {
 
 
 extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
+extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );
 
 extern u8 BTL_POKEPARAM_GetID( const BTL_POKEPARAM* pp );
 extern const POKEMON_PARAM* BTL_POKEPARAM_GetSrcData( const BTL_POKEPARAM* bpp );

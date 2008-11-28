@@ -77,6 +77,7 @@ static BOOL CmdProc_SelectPokemon( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL subprocWazaAct( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void setup_core( BTLV_CORE* wk, HEAPID heapID );
+static void cleanup_core( BTLV_CORE* wk );
 
 
 
@@ -128,9 +129,13 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 void BTLV_Delete( BTLV_CORE* core )
 {
 	GFL_UI_TP_Exit();
+	BTL_STR_QuitSystem();
+
 
 	BTLV_SCD_Delete( core->scrnD );
 	BTLV_SCU_Delete( core->scrnU );
+	cleanup_core( core );
+
 	GFL_TCBL_Exit( core->tcbl );
 	GFL_STR_DeleteBuffer( core->strBuf );
 	GFL_FONT_Delete( core->fontHandle );
@@ -438,7 +443,7 @@ void BTLV_StartDeadAct( BTLV_CORE* wk, u8 clientID )
 {
 	BTLV_SCU_StartDeadAct( wk->scrnU, clientID );
 }
-BOOL BTLV_WaitDeadAct( BTLV_CORE* wk, u8 clientID )
+BOOL BTLV_WaitDeadAct( BTLV_CORE* wk )
 {
 	return BTLV_SCU_WaitDeadAct( wk->scrnU );
 }
@@ -617,7 +622,12 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GFL_BG_SetBGMode( &sysHeader );
 	}
 
-	GFL_BMPWIN_Init( heapID );
+}
+
+static void cleanup_core( BTLV_CORE* wk )
+{
+	GFL_BMPWIN_Exit();
+	GFL_BG_Exit();
 }
 
 

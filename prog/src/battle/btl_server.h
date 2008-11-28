@@ -29,6 +29,9 @@ typedef enum {
 
 
 extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, HEAPID heapID );
+extern void BTL_SERVER_Delete( BTL_SERVER* wk );
+
+
 extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL_PARTY* party, u16 clientID );
 extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID );
 extern BOOL BTL_SERVER_Main( BTL_SERVER* server );

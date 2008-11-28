@@ -108,19 +108,27 @@ BTL_CLIENT* BTL_CLIENT_Create(
 	BTL_MAIN_MODULE* mainModule, BtlCommMode commMode, GFL_NETHANDLE* netHandle,
 	u16 clientID, BtlThinkerType clientType, HEAPID heapID )
 {
-	BTL_CLIENT* cl = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
+	BTL_CLIENT* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_CLIENT) );
 
-	cl->myID = clientID;
-	cl->myType = clientType;
-	cl->adapter = BTL_ADAPTER_Create( commMode, netHandle, heapID, clientID );
-	cl->myParty = BTL_MAIN_GetPartyDataConst( mainModule, clientID );
-	cl->mainModule = mainModule;
-	cl->frontPokeIdx = 0;
-	cl->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
+	wk->myID = clientID;
+	wk->myType = clientType;
+	wk->adapter = BTL_ADAPTER_Create( commMode, netHandle, heapID, clientID );
+	wk->myParty = BTL_MAIN_GetPartyDataConst( mainModule, clientID );
+	wk->mainModule = mainModule;
+	wk->frontPokeIdx = 0;
+	wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
 
-	cl->myState = 0;
+	wk->myState = 0;
 
-	return cl;
+	return wk;
+}
+
+void BTL_CLIENT_Delete( BTL_CLIENT* wk )
+{
+	GFL_HEAP_FreeMemory( wk->cmdQue );
+	BTL_ADAPTER_Delete( wk->adapter );
+
+	GFL_HEAP_FreeMemory( wk );
 }
 
 void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore )
@@ -225,7 +233,10 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-	BTL_ACTION_SetFightParam( &wk->actionParam, GFL_STD_MtRand(4), 0 );
+	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, wk->myID );
+	u8 wazaCount = BTL_POKEPARAM_GetWazaCount( pp );
+
+	BTL_ACTION_SetFightParam( &wk->actionParam, GFL_STD_MtRand(wazaCount), 0 );
 	wk->returnDataPtr = &(wk->actionParam);
 	wk->returnDataSize = sizeof(wk->actionParam);
 
@@ -414,6 +425,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 			else if( wk->serverCmd == SC_ACT_DEAD )
 			{
 				BTLV_StartDeadAct( wk->viewCore, wk->cmdArgs[0] );
+				(*seq)=6;
 			}
 			else if( wk->serverCmd == SC_TOKWIN_IN )
 			{
@@ -484,6 +496,13 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 			{
 				(*seq)=1;
 			}
+		}
+		break;
+
+	case 6:
+		if( BTLV_WaitDeadAct(wk->viewCore) )
+		{
+			(*seq)=1;
 		}
 		break;
 

@@ -85,7 +85,12 @@ static BOOL btlin_loop( int* seq, void* wk_adrs );
 static void taskDamageEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskDeadEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
+static void statwin_setupAll( BTLV_SCU* wk );
+static void statwin_cleanupAll( BTLV_SCU* wk );
+static void tokwin_setupAll( BTLV_SCU* wk );
+static void tokwin_cleanupAll( BTLV_SCU* wk );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID );
+static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static void statwin_disp( STATUS_WIN* stwin );
@@ -93,6 +98,7 @@ static void statwin_hide( STATUS_WIN* stwin );
 static BOOL statwin_erase( STATUS_WIN* stwin, u8 line );
 static void statwin_update( STATUS_WIN* stwin, u16 hp, u8 col );
 static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID );
+static void tokwin_cleanup( TOK_WIN* tokwin );
 static void tokwin_disp( TOK_WIN* tokwin );
 static void tokwin_hide( TOK_WIN* tokwin );
 
@@ -118,14 +124,6 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 	return wk;
 }
-
-void BTLV_SCU_Delete( BTLV_SCU* wk )
-{
-	PRINTSYS_QUE_Delete( wk->printQue );
-	GFL_STR_DeleteBuffer( wk->strBuf );
-	GFL_HEAP_FreeMemory( wk );
-}
-
 
 void BTLV_SCU_Setup( BTLV_SCU* wk )
 {
@@ -174,6 +172,9 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BMP_Clear( wk->bmp, 0x0f );
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 
+	statwin_setupAll( wk );
+	tokwin_setupAll( wk );
+
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
@@ -183,6 +184,22 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON  );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
 }
+
+void BTLV_SCU_Delete( BTLV_SCU* wk )
+{
+	tokwin_cleanupAll( wk );
+	statwin_cleanupAll( wk );
+
+	GFL_BMPWIN_Delete( wk->win );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
+
+	PRINTSYS_QUE_Delete( wk->printQue );
+	GFL_STR_DeleteBuffer( wk->strBuf );
+	GFL_HEAP_FreeMemory( wk );
+}
+
 
 
 void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
@@ -212,11 +229,6 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 
 			plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 			enClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, plClientID, 0 );
-			statwin_setup( &wk->statusWin[ plClientID ], wk, plClientID );
-			statwin_setup( &wk->statusWin[ enClientID ], wk, enClientID );
-
-			tokwin_setup( &wk->tokWin[ plClientID ], wk, plClientID );
-			tokwin_setup( &wk->tokWin[ enClientID ], wk, enClientID );
 
 			statwin_disp_start( &wk->statusWin[ enClientID ] );
 			(*seq)++;
@@ -535,6 +547,65 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 
 //----------------------------
 
+static void statwin_setupAll( BTLV_SCU* wk )
+{
+	u8 plClientID, enClientID, i;
+
+	for(i=0; i<BTL_CLIENT_MAX; i++)
+	{
+		wk->statusWin[i].win = NULL;
+	}
+
+	plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
+	enClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, plClientID, 0 );
+
+	statwin_setup( &wk->statusWin[ plClientID ], wk, plClientID );
+	statwin_setup( &wk->statusWin[ enClientID ], wk, enClientID );
+}
+
+static void statwin_cleanupAll( BTLV_SCU* wk )
+{
+	int i;
+	for(i=0; i<BTL_CLIENT_MAX; i++)
+	{
+		if( wk->statusWin[i].win != NULL)
+		{
+			statwin_cleanup( &wk->statusWin[i] );
+		}
+	}
+}
+
+static void tokwin_setupAll( BTLV_SCU* wk )
+{
+	u8 plClientID, enClientID, i;
+
+	for(i=0; i<BTL_CLIENT_MAX; i++)
+	{
+		wk->tokWin[i].win = NULL;
+	}
+
+	plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
+	enClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, plClientID, 0 );
+
+	tokwin_setup( &wk->tokWin[ plClientID ], wk, plClientID );
+	tokwin_setup( &wk->tokWin[ enClientID ], wk, enClientID );
+}
+
+static void tokwin_cleanupAll( BTLV_SCU* wk )
+{
+	int i;
+	for(i=0; i<BTL_CLIENT_MAX; i++)
+	{
+		if( wk->tokWin[i].win != NULL)
+		{
+			tokwin_cleanup( &wk->tokWin[i] );
+		}
+	}
+}
+
+
+
+
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 {
 	static const struct {
@@ -559,6 +630,11 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 	stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
 
 	statwin_reset_data( stwin );
+}
+
+static void statwin_cleanup( STATUS_WIN* stwin )
+{
+	GFL_BMPWIN_Delete( stwin->win );
 }
 
 static void statwin_reset_data( STATUS_WIN* stwin )
@@ -668,6 +744,11 @@ static void tokwin_setup( TOK_WIN* tokwin, BTLV_SCU* wk, u8 clientID )
 	}
 
 	GFL_BMPWIN_TransVramCharacter( tokwin->win );
+}
+
+static void tokwin_cleanup( TOK_WIN* tokwin )
+{
+	GFL_BMPWIN_Delete( tokwin->win );
 }
 
 static void tokwin_disp( TOK_WIN* tokwin )

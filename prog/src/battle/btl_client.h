@@ -38,6 +38,8 @@ extern BTL_CLIENT* BTL_CLIENT_Create(
 	BTL_MAIN_MODULE* mainModule, BtlCommMode commMode,
 	GFL_NETHANDLE* netHandle, u16 clientID, BtlThinkerType clientType, HEAPID heapID );
 
+extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
+
 
 extern BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* client );
 

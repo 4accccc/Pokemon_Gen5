@@ -82,14 +82,18 @@ struct _BTL_MAIN_MODULE {
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
-static void setupInitializeProc( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
+static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
+static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
+static BOOL setup_alone_single( int* seq, void* work );
+static BOOL cleanup_alone_single( int* seq, void* work );
+static BOOL setup_comm_single( int* seq, void* work );
 static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, const POKEPARTY* party, u8 pokeID_Origin );
-static BOOL initialize_alone_single( int* seq, void* work );
-static BOOL initialize_comm_single( int* seq, void* work );
+static void cleanupPokeParams( BTL_PARTY* party );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static u8 expandClientID_single( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
 static u8 expandClientID_double( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
+static void BTL_PARTY_Cleanup( BTL_PARTY* party );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
 
 
@@ -112,7 +116,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
 			BTL_ADAPTER_InitSystem();
 
-			setupInitializeProc( &wk->subProc, wk, setup_param );
+			setSubProcForSetup( &wk->subProc, wk, setup_param );
 			(*seq)++;
 		}
 		break;
@@ -136,7 +140,6 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 {
 	BTL_MAIN_MODULE* wk = mywk;
 
-
 	if( wk->mainLoop( wk ) )
 	{
 		return GFL_PROC_RES_FINISH;
@@ -144,75 +147,68 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
 	return GFL_PROC_RES_CONTINUE;
 
-	#if 0
-	BTL_MAIN_MODULE* wk = GFL_HEAP_AllocMemory( 0, sizeof(BTL_MAIN_MODULE) );
-
-
-	// 
-	// 必要なパラメータ解析
-	// 
-
-	
-
-	while( 1 )
-	{
-		if( wk->mainLoop( wk ) )
-		{
-			break;
-		}
-	}
-
-	return 0;
-	return GFL_PROC_RES_FINISH;
-	#endif
 }
 
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
-//	BTL_Printf("btl quit called\n");
-	GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
-	GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
-	GFL_HEAP_DeleteHeap( HEAPID_BTL_SYSTEM );
-	return GFL_PROC_RES_FINISH;
+	BTL_MAIN_MODULE* wk = mywk;
+
+	switch( *seq ){
+	case 0:
+		setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
+		(*seq)++;
+		break;
+
+	case 1:
+		if( BTL_UTIL_CallProc(&wk->subProc) )
+		{
+			BTL_ADAPTER_QuitSystem();
+			BTL_NET_QuitSystem();
+			(*seq)++;
+		}
+		break;
+
+	case 2:
+		GFL_PROC_FreeWork( proc );
+		GFL_HEAP_DeleteHeap( HEAPID_BTL_VIEW );
+		GFL_HEAP_DeleteHeap( HEAPID_BTL_NET );
+		GFL_HEAP_DeleteHeap( HEAPID_BTL_SYSTEM );
+		return GFL_PROC_RES_FINISH;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //======================================================================================================
 //======================================================================================================
 
-
-static void setupInitializeProc( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
+// 各種モジュール生成＆関連付けルーチンを設定
+static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
 {
 	// @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
 	if( setup_param->commMode == BTL_COMM_NONE )
 	{
-		BTL_UTIL_SetupProc( bp, wk, initialize_alone_single, NULL );
+		BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
 	}
 	else
 	{
-		BTL_UTIL_SetupProc( bp, wk, initialize_comm_single, NULL );
+		BTL_UTIL_SetupProc( bp, wk, setup_comm_single, NULL );
 	}
 }
 
-//--------------------------------------------------------------------------
-/**
- * バトル用ポケモンパラメータ＆パーティデータを生成
- *
- * @param   dstParty		[out] パーティデータ生成先アドレス
- * @param   dstParams		[out] ポケモンパラメータ生成先配列アドレス
- * @param   party			[in] 生成元のフィールド用ポケモンパーティデータ
- *
- */
-//--------------------------------------------------------------------------
-static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, const POKEPARTY* party, u8 pokeID_Origin )
+// 各種モジュール解放＆削除処理ルーチンを設定
+static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
 {
-	int i, max = PokeParty_GetPokeCount( party );
-
-	BTL_PARTY_Initialize( dstParty );
-	for(i=0; i<max; i++)
+	// @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
+	if( setup_param->commMode == BTL_COMM_NONE )
 	{
-		dstParams[i] = BTL_POKEPARAM_Create( PokeParty_GetMemberPointer(party, i), pokeID_Origin+i, HEAPID_BTL_SYSTEM );
-		BTL_PARTY_AddMember( dstParty, dstParams[i] );
+		BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
 	}
+	else
+	{
+		BTL_UTIL_SetupProc( bp, wk, cleanup_alone_single, NULL );
+	}
+
 }
 
 //--------------------------------------------------------------------------
@@ -220,7 +216,7 @@ static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, con
  * スタンドアローン／シングルバトル
  */
 //--------------------------------------------------------------------------
-static BOOL initialize_alone_single( int* seq, void* work )
+static BOOL setup_alone_single( int* seq, void* work )
 {
 	// server*1, client*2
 	BTL_MAIN_MODULE* wk = work;
@@ -258,13 +254,33 @@ static BOOL initialize_alone_single( int* seq, void* work )
 
 	return TRUE;
 }
+static BOOL cleanup_alone_single( int* seq, void* work )
+{
+	BTL_MAIN_MODULE* wk = work;
+	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+	BTLV_Delete( wk->viewCore );
+
+	BTL_CLIENT_Delete( wk->client[0] );
+	BTL_CLIENT_Delete( wk->client[1] );
+	BTL_SERVER_Delete( wk->server );
+
+	cleanupPokeParams( &wk->party[0] );
+	cleanupPokeParams( &wk->party[1] );
+	cleanupPokeParams( &wk->partyForServerCalc[0] );
+	cleanupPokeParams( &wk->partyForServerCalc[1] );
+
+
+	return TRUE;
+}
+
 
 //--------------------------------------------------------------------------
 /**
  * 通信／シングルバトル
  */
 //--------------------------------------------------------------------------
-static BOOL initialize_comm_single( int* seq, void* work )
+static BOOL setup_comm_single( int* seq, void* work )
 {
 //	BTL_MAIN_MODULE* wk = work;
 //	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
@@ -283,6 +299,33 @@ static BOOL initialize_comm_single( int* seq, void* work )
 		break;
 	}
 	return FALSE;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * バトル用ポケモンパラメータ＆パーティデータを生成
+ *
+ * @param   dstParty		[out] パーティデータ生成先アドレス
+ * @param   dstParams		[out] ポケモンパラメータ生成先配列アドレス
+ * @param   party			[in] 生成元のフィールド用ポケモンパーティデータ
+ *
+ */
+//--------------------------------------------------------------------------
+static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, const POKEPARTY* party, u8 pokeID_Origin )
+{
+	int i, max = PokeParty_GetPokeCount( party );
+
+	BTL_PARTY_Initialize( dstParty );
+	for(i=0; i<max; i++)
+	{
+		dstParams[i] = BTL_POKEPARAM_Create( PokeParty_GetMemberPointer(party, i), pokeID_Origin+i, HEAPID_BTL_SYSTEM );
+		BTL_PARTY_AddMember( dstParty, dstParams[i] );
+	}
+}
+
+static void cleanupPokeParams( BTL_PARTY* party )
+{
+	BTL_PARTY_Cleanup( party );
 }
 
 
@@ -556,6 +599,16 @@ static void BTL_PARTY_Initialize( BTL_PARTY* party )
 	{
 		party->member[i] = NULL;
 	}
+}
+
+static void BTL_PARTY_Cleanup( BTL_PARTY* party )
+{
+	int i;
+	for(i=0; i<party->memberCount; i++)
+	{
+		BTL_POKEPARAM_Delete( party->member[i] );
+	}
+	BTL_PARTY_Initialize( party );
 }
 
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )

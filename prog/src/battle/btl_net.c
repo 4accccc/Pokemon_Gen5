@@ -29,6 +29,11 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 	Sys.heapID = heapID;
 }
 
+void BTL_NET_QuitSystem( void )
+{
+	
+}
+
 
 void BTL_NET_StartCommand( BtlNetCommand cmd )
 {

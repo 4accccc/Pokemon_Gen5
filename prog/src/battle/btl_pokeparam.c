@@ -168,11 +168,11 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->wazaCnt = 0;
 	for(i=0; i<PTL_WAZA_MAX; i++)
 	{
-		bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1 + i, 0 );
+		bpp->waza[i].number = PP_Get( pp, ID_PARA_waza1+i, 0 );
 		if( bpp->waza[i].number )
 		{
-			bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1 + 1, 0 );
-			bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1 + 1, 0 );
+			bpp->waza[i].pp = PP_Get( pp, ID_PARA_pp1+i, 0 );
+			bpp->waza[i].ppMax = PP_Get( pp, ID_PARA_pp_max1+i, 0 );
 			bpp->wazaCnt++;
 		}
 		else
@@ -191,6 +191,19 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	bpp->ppSrc = pp;
 
 	return bpp;
+}
+
+//=============================================================================================
+/**
+ * バトル用ポケモンパラメータ削除
+ *
+ * @param   bpp		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp )
+{
+	GFL_HEAP_FreeMemory( bpp );
 }
 
 
@@ -241,6 +254,7 @@ WazaID BTL_POKEPARAM_GetWazaParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP,
 	GF_ASSERT(idx < pp->wazaCnt);
 	*PP = pp->waza[idx].pp;
 	*PPMax = pp->waza[idx].ppMax;
+
 	return pp->waza[idx].number;
 }
 

@@ -13,6 +13,7 @@
 
 
 extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID );
+extern void BTL_NET_QuitSystem( void );
 
 
 

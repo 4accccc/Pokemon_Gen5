@@ -107,14 +107,6 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 	return wk;
 }
 
-void BTLV_SCD_Delete( BTLV_SCD* wk )
-{
-	PRINTSYS_QUE_Delete( wk->printQue );
-	GFL_STR_DeleteBuffer( wk->strbuf );
-	GFL_HEAP_FreeMemory( wk );
-}
-
-
 
 void BTLV_SCD_Setup( BTLV_SCD* wk )
 {
@@ -145,6 +137,17 @@ void BTLV_SCD_Setup( BTLV_SCD* wk )
 	GFL_BMPWIN_MakeScreen( wk->win );
 	GFL_BMPWIN_TransVramCharacter( wk->win );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+}
+
+
+void BTLV_SCD_Delete( BTLV_SCD* wk )
+{
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
+	GFL_BMPWIN_Delete( wk->win );
+
+	PRINTSYS_QUE_Delete( wk->printQue );
+	GFL_STR_DeleteBuffer( wk->strbuf );
+	GFL_HEAP_FreeMemory( wk );
 }
 
 
