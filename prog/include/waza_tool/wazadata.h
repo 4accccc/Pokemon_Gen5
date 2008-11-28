@@ -42,9 +42,9 @@ typedef enum {
 
 typedef enum {
 
-	WAZADATA_DMG_NONE,
 	WAZADATA_DMG_PHYSIC,	///< 物理ダメージ
 	WAZADATA_DMG_SPECIAL,	///< 特殊ダメージ
+	WAZADATA_DMG_NONE,
 
 }WazaDamageType;
 
