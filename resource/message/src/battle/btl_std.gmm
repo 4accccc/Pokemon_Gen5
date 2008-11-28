@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-26T23:02:16"/>
+	<create user="taya" host="W00146" date="2008-11-28T20:20:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,6 +427,13 @@
 	<row id="BTL_STRID_STD_PutSingle" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">ゆけっ！　[1:00:ポケモン名:0]！</language>
 		<language name="JPN_KANJI">行けっ！　[1:00:ポケモン名:0]！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_PutSingle_Enemy" back-color="#00ff00,#00ff00,,,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<language name="JPN" width="216">あいてのトレーナーは
+[1:00:ポケモン名:0]を　くりだした！</language>
+		<language name="JPN_KANJI">相手のトレーナーは
+[1:00:ポケモン名:0]を　繰り出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_SelectAction" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
