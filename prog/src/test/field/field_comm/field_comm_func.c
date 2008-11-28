@@ -33,6 +33,7 @@ enum FIELD_COMM_COMMAND_TYPE
 	FC_CMD_REQUEST_DATA,	//データ要求
 	FC_CMD_SELF_PROFILE,	//キャラの基本情報
 	FC_CMD_COMMON_FLG,		//汎用フラグ
+	FC_CMD_USERDATA,		//行動用ユーザーデータ
 };
 
 //パケットバッファの送信タイプ
@@ -57,14 +58,14 @@ typedef struct
 	u16	zoneID_;	//ここは通信用のIDとして変換して抑えられる
 	u8	talkState_;
 }FIELD_COMM_PLAYER_PACKET;
-
+/*
 typedef struct
 {
 	u8	type_;
 	u8	id_;
 	u16	value_;
 }FIELD_COMM_PACKET_BUFF_DATA;
-
+*/
 struct _FIELD_COMM_FUNC
 {
 	HEAPID	heapID_;
@@ -75,14 +76,23 @@ struct _FIELD_COMM_FUNC
 	
 	//送受信サポート関係
 	FIELD_COMM_PLAYER_PACKET plPkt_;
-	u8	pktBuffPos_;
-	FIELD_COMM_PACKET_BUFF_DATA pktBuff_[F_COMM_PACKET_BUFF_NUM];
+
+	F_COMM_SYNC_TYPE	sendSyncType_;
+	F_COMM_SYNC_TYPE	postSyncType_[FIELD_COMM_MEMBER_MAX];	//同期通信用
+//	u8	pktBuffPos_;
+//	FIELD_COMM_PACKET_BUFF_DATA pktBuff_[F_COMM_PACKET_BUFF_NUM];
 
 	//会話関係
 	u8		talkID_;		//会話対象
 	u8		talkPosX_;
 	u8		talkPosZ_;		//会話対象位置
-	
+
+	//行動選択系
+	u8		selectAction_;		//親が選んだ行動
+	BOOL	isActionReturn_;	//行動選択の返事が届いたか？
+	BOOL	actionReturn_;		//行動選択の結果
+
+	BOOL	isGetUserData_;
 };
 //ビーコン
 typedef struct
@@ -107,6 +117,7 @@ static	u8	FIELD_COMM_FUNC_CompareBeacon( const FIELD_COMM_BEACON *firstBcn , con
 void	FIELD_COMM_FUNC_StartCommWait( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_StartCommSearch( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_StartCommChangeover( FIELD_COMM_FUNC *commFunc );
+void	FIELD_COMM_FUNC_InitCommData_StartTalk( FIELD_COMM_FUNC *commFunc );
 
 //各種チェック関数
 const BOOL FIELD_COMM_FUNC_IsFinishInitCommSystem( FIELD_COMM_FUNC *commFunc );
@@ -118,7 +129,11 @@ const BOOL FIELD_COMM_FUNC_IsReserveTalk( FIELD_COMM_FUNC *commFunc );
 void FIELD_COMM_FUNC_ResetReserveTalk( FIELD_COMM_FUNC *commFunc );
 void FIELD_COMM_FUNC_GetTalkParterData_ID( u8 *ID , FIELD_COMM_FUNC *commFunc );
 void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUNC *commFunc );
-
+const F_COMM_ACTION_LIST FIELD_COMM_FUNC_GetSelectAction( FIELD_COMM_FUNC *commFunc );
+const BOOL FIELD_COMM_FUNC_IsActionReturn( FIELD_COMM_FUNC *commFunc );
+const BOOL FIELD_COMM_FUNC_GetActionReturn( FIELD_COMM_FUNC *commFunc );
+void FIELD_COMM_FUNC_ResetGetUserData( FIELD_COMM_FUNC *commFunc );
+const BOOL FIELD_COMM_FUNC_IsGetUserData( FIELD_COMM_FUNC *commFunc );
 //送受信関数
 const BOOL	FIELD_COMM_FUNC_Send_SelfData( FIELD_COMM_FUNC *commFunc );
 void	FIELD_COMM_FUNC_Post_SelfData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
@@ -128,6 +143,15 @@ const BOOL	FIELD_COMM_FUNC_Send_SelfProfile( const int sendNetID ,FIELD_COMM_FUN
 void	FIELD_COMM_FUNC_Post_SelfProfile( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 const BOOL	FIELD_COMM_FUNC_Send_CommonFlg( const F_COMM_COMMON_FLG flg , const u16 val , const u8 sendID );
 void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+const BOOL	FIELD_COMM_FUNC_Send_UserData( F_COMM_USERDATA_TYPE type , const u8 sendID );
+void	FIELD_COMM_FUNC_Post_UserData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+u8*		FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size );
+
+
+//同期用コマンド
+void FIELD_COMM_FUNC_Send_SyncCommand( const F_COMM_SYNC_TYPE type , FIELD_COMM_FUNC *commFunc );
+const BOOL FIELD_COMM_FUNC_CheckSyncFinish( const F_COMM_SYNC_TYPE type , const u8 checkBit , FIELD_COMM_FUNC *commFunc );
+const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc );
 
 //各種コールバック
 void	FIELD_COMM_FUNC_FinishInitCallback( void* pWork );
@@ -143,7 +167,10 @@ static const NetRecvFuncTable FieldCommRecvTable[] = {
 	{ FIELD_COMM_FUNC_Post_RequestData	,NULL },
 	{ FIELD_COMM_FUNC_Post_SelfProfile	,NULL },
 	{ FIELD_COMM_FUNC_Post_CommonFlg	,NULL },
+	{ FIELD_COMM_FUNC_Post_UserData		,FIELD_COMM_FUNC_Post_UserData_Buff	 },
 };
+
+static FIELD_COMM_FUNC	*commFunc_ = NULL;
 
 //--------------------------------------------------------------
 //	システム初期化
@@ -151,6 +178,25 @@ static const NetRecvFuncTable FieldCommRecvTable[] = {
 //--------------------------------------------------------------
 FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 {
+	if( commFunc_ == NULL )
+	{
+		u8 i;
+		commFunc_ = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_FUNC) );
+		commFunc_->heapID_ = heapID;
+		commFunc_->commMode_ = FIELD_COMM_MODE_NONE;
+		commFunc_->sendSyncType_ = FCST_MAX;
+		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+		{
+			commFunc_->postSyncType_[i] = FCST_MAX;
+		}
+	}
+	commFunc_->isInitCommSystem_ = GFL_NET_IsInit();
+	//通信が初期化されていたならアイコンをリロードする
+	if( commFunc_->isInitCommSystem_ == TRUE )
+		GFL_NET_ReloadIcon();
+	return commFunc_;
+	
+#if 0
 	FIELD_COMM_FUNC	*commFunc;
 	
 	commFunc = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_FUNC) );
@@ -165,6 +211,7 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 	if( commFunc->isInitCommSystem_ == TRUE )
 		GFL_NET_ReloadIcon();
 	return commFunc;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -172,10 +219,13 @@ FIELD_COMM_FUNC* FIELD_COMM_FUNC_InitSystem( HEAPID heapID )
 //--------------------------------------------------------------
 void	FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc )
 {
+	
+#if 0
 	//通信のステートを保存
 	if( FIELD_COMM_DATA_IsExistSystem() == TRUE )
 		FIELD_COMM_DATA_SetFieldCommMode(commFunc->commMode_);
 	GFL_HEAP_FreeMemory( commFunc );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -212,7 +262,11 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 		FALSE,		// MP通信＝親子型通信モードかどうか
 		GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
 		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+#if DEB_ARI
+		30//GameServiceID
+#else
 		WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
+#endif
 	};
 
 	GFL_NET_Init( &aGFLNetInit , FIELD_COMM_FUNC_FinishInitCallback , (void*)commFunc );
@@ -249,7 +303,8 @@ void	FIELD_COMM_FUNC_UpdateSystem( FIELD_COMM_FUNC *commFunc )
 			{
 				//親機の場合は子機が来たら接続状態に
 				ARI_TPrintf("Connect!(Parent)\n");
-				commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
+				//commFunc->commMode_ = FIELD_COMM_MODE_CONNECT;
+				commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
 			}
 		}
 	}
@@ -388,6 +443,16 @@ void	FIELD_COMM_FUNC_StartCommChangeover( FIELD_COMM_FUNC *commFunc )
 	//GFL_NET_ChangeoverConnect(NULL);
 }
 
+//--------------------------------------------------------------
+//	会話開始時に初期化するもの
+//--------------------------------------------------------------
+void	FIELD_COMM_FUNC_InitCommData_StartTalk( FIELD_COMM_FUNC *commFunc )
+{
+	commFunc->selectAction_ = FCAL_SELECT;
+	commFunc->isActionReturn_ = FALSE;
+	commFunc->actionReturn_ = FALSE;
+}
+
 
 //======================================================================
 //	各種チェック関数
@@ -449,6 +514,37 @@ void FIELD_COMM_FUNC_GetTalkParterData_Pos( u8 *posX , u8 *posZ , FIELD_COMM_FUN
 {
 	*posX = commFunc->talkPosX_;
 	*posZ = commFunc->talkPosZ_;
+}
+
+//--------------------------------------------------------------
+// 親の選んだ行動の取得  (FCAL_SELECT は未着
+//--------------------------------------------------------------
+const F_COMM_ACTION_LIST FIELD_COMM_FUNC_GetSelectAction( FIELD_COMM_FUNC *commFunc )
+{
+	return (F_COMM_ACTION_LIST)commFunc->selectAction_;
+}
+//--------------------------------------------------------------
+// 子が行動をOKしたかの返事と着信確認  
+//--------------------------------------------------------------
+const BOOL FIELD_COMM_FUNC_IsActionReturn( FIELD_COMM_FUNC *commFunc )
+{
+	return commFunc->isActionReturn_;
+}
+const BOOL FIELD_COMM_FUNC_GetActionReturn( FIELD_COMM_FUNC *commFunc )
+{
+	return commFunc->actionReturn_;
+}
+
+//--------------------------------------------------------------
+// ユーザーデータ系  
+//--------------------------------------------------------------
+void FIELD_COMM_FUNC_ResetGetUserData( FIELD_COMM_FUNC *commFunc )
+{
+	commFunc->isGetUserData_ = FALSE;
+}
+const BOOL FIELD_COMM_FUNC_IsGetUserData( FIELD_COMM_FUNC *commFunc )
+{
+	return commFunc->isGetUserData_;
 }
 
 //======================================================================
@@ -661,11 +757,109 @@ void	FIELD_COMM_FUNC_Post_CommonFlg( const int netID, const int size , const voi
 		commFunc->talkID_ = netID;
 		break;
 
+	case FCCF_ACTION_SELECT:	//親が選んだ行動
+		GF_ASSERT( pkt->value_ < FCAL_MAX );
+		commFunc->selectAction_ = pkt->value_;
+		break;
+	
+	case FCCF_ACTION_RETURN:	//親の選んだ行動に対する子の返事
+		commFunc->isActionReturn_ = TRUE;
+		commFunc->actionReturn_ = pkt->value_;
+		break;
+
+	case FCCF_SYNC_TYPE:
+		commFunc->postSyncType_[netID] = pkt->value_;
+		break;
+
 	default:
 		OS_TPrintf("Invalid flg[%d]!\n!",pkt->flg_);
 		GF_ASSERT( NULL );
 		break;
 	}
+}
+
+//--------------------------------------------------------------
+// 行動用ユーザーデータ
+//--------------------------------------------------------------
+const BOOL	FIELD_COMM_FUNC_Send_UserData( F_COMM_USERDATA_TYPE type , const u8 sendID )
+{
+	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	void* selfUserData = FIELD_COMM_DATA_GetSelfUserData( type );
+	const u32 dataSize = FIELD_COMM_DATA_GetUserDataSize( type );
+	
+	{
+		const BOOL ret = GFL_NET_SendDataEx( selfHandle , sendID , 
+				FC_CMD_USERDATA , dataSize , 
+				selfUserData , FALSE , FALSE , TRUE );
+		ARI_TPrintf("FieldComm Send UserData[%d:%d:%d].\n",sendID,type,dataSize);
+		if( ret == FALSE ){
+			ARI_TPrintf("FieldComm Send UserData is failue!\n");
+		}
+		return ret;
+	}
+}
+void	FIELD_COMM_FUNC_Post_UserData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
+	commFunc->isGetUserData_ = TRUE;
+	ARI_TPrintf("FieldComm PostUserData[%d:%d]\n",netID,size);
+
+}
+u8*		FIELD_COMM_FUNC_Post_UserData_Buff( int netID, void* pWork , int size )
+{
+	void* userData = FIELD_COMM_DATA_GetSelfUserData( FCUT_MAX );
+	return (u8*)userData;
+}
+
+//======================================================================
+//同期用コマンド
+//======================================================================
+void FIELD_COMM_FUNC_Send_SyncCommand( const F_COMM_SYNC_TYPE type , FIELD_COMM_FUNC *commFunc )
+{
+	commFunc->sendSyncType_ = type;
+	FIELD_COMM_FUNC_Send_CommonFlg( FCCF_SYNC_TYPE , type , GFL_NET_SENDID_ALLUSER );
+//	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+//	GFL_NET_TimingSyncStart( selfHandle , type );
+}
+const BOOL FIELD_COMM_FUNC_CheckSyncFinish( const F_COMM_SYNC_TYPE type , const u8 checkBit , FIELD_COMM_FUNC *commFunc )
+{
+	u8 i;
+	ARI_TPrintf("SYNC CHECK [%d:%x]",type ,checkBit);
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		if( (1<<i)&checkBit )
+		{
+			ARI_TPrintf("[%d]",i);
+			if( commFunc->sendSyncType_ != commFunc->postSyncType_[i] )
+			{
+				ARI_TPrintf("_FALSE_E\n");
+				return FALSE;
+			}
+		}
+	}
+
+	commFunc->sendSyncType_ = FCST_MAX;
+	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
+	{
+		if( (1<<i)&checkBit )
+		{
+			commFunc->postSyncType_[i] = FCST_MAX;
+		}
+	}
+	ARI_TPrintf("_TRUE_E\n");
+	return TRUE;
+//	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+//	return GFL_NET_IsTimingSync( selfHandle , type );
+}
+
+//--------------------------------------------------------------
+// 自分と会話相手のIDのbitを取得  
+//--------------------------------------------------------------
+const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc )
+{
+	GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+	const u8 selfID = GFL_NET_GetNetID( selfHandle );
+	return (1<<selfID)|(1<<commFunc->talkID_);
 }
 
 //======================================================================

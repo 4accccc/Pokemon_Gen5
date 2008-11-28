@@ -9,7 +9,7 @@
 #ifndef FIELD_COMM_EVENT_H__
 #define FIELD_COMM_EVENT_H__
 
-#include "field_comm_main.h"
+#include "field_comm_def.h"
 
 //======================================================================
 //	define
@@ -24,13 +24,12 @@
 //======================================================================
 //	typedef struct
 //======================================================================
-typedef struct _FIELD_COMM_EVENT FIELD_COMM_EVENT;
 
 //======================================================================
 //	proto
 //======================================================================
 extern const int FIELD_COMM_EVENT_GetWorkSize(void);
-extern void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_COMM_EVENT *commEvent );
+extern void FIELD_COMM_EVENT_SetWorkData( FIELD_COMM_MAIN *commSys , FIELD_MAIN_WORK *fieldWork , FIELD_COMM_EVENT *commEvent );
 
 extern GMEVENT_RESULT FIELD_COMM_EVENT_StartCommNormal( GMEVENT *event , int *seq , void *work );
 extern GMEVENT_RESULT FIELD_COMM_EVENT_StartCommInvasion( GMEVENT *event , int *seq , void *work );

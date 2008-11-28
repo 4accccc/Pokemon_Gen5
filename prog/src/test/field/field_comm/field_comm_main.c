@@ -79,7 +79,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 	FIELD_COMM_MAIN *commSys;
 	commSys = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_MAIN) );
 	commSys->heapID_ = heapID;
-	commSys->commFunc_ = FIELD_COMM_FUNC_InitSystem( heapID );
+	commSys->commFunc_ = FIELD_COMM_FUNC_InitSystem( commHeapID );
 	
 	FIELD_COMM_DATA_InitSystem( commHeapID );
 #if DEB_ARI
@@ -88,6 +88,7 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 	return commSys;
 }
 
+const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc );
 //--------------------------------------------------------------
 // フィールド通信システム開放
 // @param isTermAll TRUEでデータ領域のヒープも開放
@@ -124,12 +125,12 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 			FIELD_COMM_MAIN_UpdateSelfData( fieldWork , gameSys , pcActor , commSys );
 			FIELD_COMM_MAIN_UpdateCharaData( fieldWork , gameSys , commSys );
 		}
-#if DEB_ARI
-		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X )
-			FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW );
-		FIELD_COMM_MENU_UpdateDebugWindow( );
-#endif	//DEB_ARI
 	}
+#if DEB_ARI
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_L )
+		FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW );
+	FIELD_COMM_MENU_UpdateDebugWindow( );
+#endif	//DEB_ARI
 }
 
 //--------------------------------------------------------------
@@ -161,7 +162,7 @@ static void	FIELD_COMM_MAIN_UpdateCharaData( FIELD_MAIN_WORK *fieldWork ,
 	//届いたデータのチェック
 	for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 	{
-#if DEB_ARI
+#if DEB_ARI&0
 		if(	FIELD_COMM_DATA_GetCharaData_IsValid(i) == TRUE )
 #else
 		if( i != FIELD_COMM_FUNC_GetSelfIndex(commSys->commFunc_) &&
@@ -294,6 +295,7 @@ void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys )
 	selfX += FCM_dirOfsArr[selfDir][0];
 	selfZ += FCM_dirOfsArr[selfDir][1];
 	sendValue = selfX + (selfZ<<8);
+	FIELD_COMM_FUNC_InitCommData_StartTalk( commSys->commFunc_ );
 	FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_REQUEST , sendValue , commSys->talkTrgChara_ );
 	FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_WAIT_TALK );
 }
@@ -303,6 +305,7 @@ void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys )
 void	FIELD_COMM_MAIN_StartTalkPartner( FIELD_COMM_MAIN *commSys )
 {
 	u8	postID;
+	FIELD_COMM_FUNC_InitCommData_StartTalk( commSys->commFunc_ );
 	FIELD_COMM_FUNC_GetTalkParterData_ID( &postID , commSys->commFunc_ );
 	FIELD_COMM_FUNC_Send_CommonFlg( FCCF_TALK_ACCEPT , 0 , postID );
 	FIELD_COMM_DATA_SetTalkState( FCD_SELF_INDEX , FCTS_REPLY_TALK );

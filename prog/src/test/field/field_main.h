@@ -31,6 +31,8 @@ extern void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork );
 extern void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
 extern void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork);
+extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
+extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 
 extern u16 FieldMainGrid_GetPlayerDir( const FIELD_MAIN_WORK *fieldWork );
 

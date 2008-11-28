@@ -35,12 +35,22 @@ typedef struct
 	PLAYER_WORK plWork_;
 }FIELD_COMM_CHARA_DATA;
 
+//会話後の行動用のデータ管理
+typedef struct
+{
+	F_COMM_USERDATA_TYPE type_;
+	void*	selfData_;		//自身のデータ(送信バッファ
+	void*	partnerData_;	//相手のデータ(受信バッファ
+}FIELD_COMM_USERDATA;
 
 typedef struct 
 {
+	HEAPID heapID_;
 	u8	backupCommState_;	//FieldCommFuncのステートのバックアップ
 	FIELD_COMM_CHARA_DATA selfData_;	//自身のデータ。
 	FIELD_COMM_CHARA_DATA charaData_[FIELD_COMM_MEMBER_MAX];
+
+	FIELD_COMM_USERDATA userData_;
 }FIELD_COMM_DATA;
 
 //あえて独立して確保させる
@@ -75,6 +85,14 @@ PLAYER_WORK* FIELD_COMM_DATA_GetCharaData_PlayerWork( const u8 idx);
 static void FIELD_COMM_DATA_InitOneCharaData( FIELD_COMM_CHARA_DATA *charaData );
 static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx );
 
+//ユーザーデータ関連
+void	FIELD_COMM_DATA_CreateUserData( const F_COMM_USERDATA_TYPE type );
+void	FIELD_COMM_DATA_DeleteUserData(void);
+const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type );
+const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action );
+void*	FIELD_COMM_DATA_GetSelfUserData( const F_COMM_USERDATA_TYPE type );
+void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type );
+
 //--------------------------------------------------------------
 //	通信用データ管理初期化
 //--------------------------------------------------------------
@@ -86,10 +104,14 @@ void FIELD_COMM_DATA_InitSystem( HEAPID heapID )
 	{
 		//最初はヒープの確保と全初期化
 		commData = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_DATA) );
+		commData->heapID_ = heapID;
 		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 		{
 			FIELD_COMM_DATA_InitOneCharaData( &commData->charaData_[i] );
 		}
+		commData->userData_.type_ = FCUT_NO_INIT;
+		commData->userData_.selfData_ = NULL;
+		commData->userData_.partnerData_ = NULL;
 	}
 	else
 	{
@@ -296,4 +318,62 @@ static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx )
 	GF_ASSERT( idx < FIELD_COMM_MEMBER_MAX );
 	return &commData->charaData_[idx];
 }
+
+//ユーザーデータ関連
+void	FIELD_COMM_DATA_CreateUserData( const F_COMM_USERDATA_TYPE type )
+{
+	GF_ASSERT( commData != NULL );
+	GF_ASSERT( commData->userData_.type_ == FCUT_NO_INIT );
+
+	commData->userData_.type_ = type;
+	commData->userData_.selfData_ = GFL_HEAP_AllocMemory( commData->heapID_ , FIELD_COMM_DATA_GetUserDataSize( type ));
+	commData->userData_.partnerData_ = GFL_HEAP_AllocMemory( commData->heapID_ , FIELD_COMM_DATA_GetUserDataSize( type ));
+}
+
+void	FIELD_COMM_DATA_DeleteUserData(void)
+{
+	GF_ASSERT( commData != NULL );
+	GF_ASSERT( commData->userData_.type_ < FCUT_MAX );
+	
+	GFL_HEAP_FreeMemory( commData->userData_.selfData_ );
+	GFL_HEAP_FreeMemory( commData->userData_.partnerData_ );
+	commData->userData_.type_ = FCUT_NO_INIT;
+}
+
+const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type )
+{
+	static const u32 UserDataSizeTable[FCUT_MAX] =
+	{
+		0x100,
+		0x400,
+	};
+	return UserDataSizeTable[type];
+}
+const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action )
+{
+	static const F_COMM_USERDATA_TYPE UserDataTypeTable[FCAL_MAX] =
+	{
+		FCUT_TRAINERCARD,
+		FCUT_BATTLE,
+		FCUT_MAX
+	};
+	return UserDataTypeTable[action];
+}
+
+void*	FIELD_COMM_DATA_GetSelfUserData( const F_COMM_USERDATA_TYPE type )
+{
+	GF_ASSERT( commData != NULL );
+	//受信バッファでタイプの指定ができないのでFCUT_MAXで処置。
+	GF_ASSERT( commData->userData_.type_ == type || type == FCUT_MAX );
+	return commData->userData_.selfData_;
+}
+
+void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type )
+{
+	GF_ASSERT( commData != NULL );
+	//受信バッファでタイプの指定ができないのでFCUT_MAXで処置。
+	GF_ASSERT( commData->userData_.type_ == type || type == FCUT_MAX );
+	return commData->userData_.partnerData_;
+}
+
 

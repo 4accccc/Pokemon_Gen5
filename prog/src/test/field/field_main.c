@@ -887,6 +887,8 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 #include "field_sub_nogrid.c"
 #include "field_sub_grid.c"
 
+extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
+extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 const DEPEND_FUNCTIONS FieldBaseFunctions = {
 	NormalCreate,
 	NormalMain,
@@ -906,6 +908,8 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 };
 
 //======================================================================
+extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
+extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 //	comm actor
 //======================================================================
 //--------------------------------------------------------------
@@ -919,6 +923,8 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player )
 {
+extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
+extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 	int i;
 	FIELD_SETUP *fup;
 	GFL_BBDACT_SYS *bbdActSys;
@@ -965,4 +971,29 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 		}
 	}
 }
+
+//--------------------------------------------------------------
+///	フィールドが更新可能状態に入ったか？
+//--------------------------------------------------------------
+const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork )
+{
+	return (fieldWork->seq==2);
+}
+
+//--------------------------------------------------------------
+///	フィールドを強制的に更新する
+//--------------------------------------------------------------
+void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork )
+{
+	//キー入力は無いものとする
+	fieldWork->key_cont = 0;
+	
+	//登録テーブルごとに個別のメイン処理を呼び出し
+	fieldWork->ftbl->main_func( fieldWork, &fieldWork->now_pos );
+	
+	//Mapシステムに位置を渡している。
+	//これがないとマップ移動しないので注意
+	SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+}
+
 

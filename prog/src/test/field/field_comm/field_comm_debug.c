@@ -213,12 +213,13 @@ static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK
 {
 	GMEVENT *event = work->event_;
 	FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+	FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
 	FIELD_COMM_EVENT *eveWork;
 	
 	GMEVENT_Change( event , FIELD_COMM_EVENT_StartCommNormal , FIELD_COMM_EVENT_GetWorkSize() );
 			
 	eveWork = GMEVENT_GetEventWork(event);
-	FIELD_COMM_EVENT_SetWorkData( commSys , eveWork );
+	FIELD_COMM_EVENT_SetWorkData( commSys , fieldWork , eveWork );
 	return TRUE;
 }
 //--------------------------------------------------------------
@@ -228,12 +229,13 @@ static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBUG_
 {
 	GMEVENT *event = work->event_;
 	FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+	FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
 	FIELD_COMM_EVENT *eveWork;
 	
 	GMEVENT_Change( event , FIELD_COMM_EVENT_StartCommInvasion , FIELD_COMM_EVENT_GetWorkSize() );
 	
 	eveWork = GMEVENT_GetEventWork(event);
-	FIELD_COMM_EVENT_SetWorkData( commSys , eveWork );
+	FIELD_COMM_EVENT_SetWorkData( commSys , fieldWork , eveWork );
 	return TRUE;
 }
 //--------------------------------------------------------------
@@ -261,6 +263,8 @@ static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK 
 	case 0:
 		FIELDMAP_Close(work->fieldWork_);
 		work->subSeq_++;
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+									 0 ,16 ,-1 );
 		break;
 
 	case 1:
@@ -285,6 +289,8 @@ static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK 
 		//フィールドマップを開始待ち
 		if(GAMESYSTEM_IsProcExists(work->gameSys_) == TRUE )
 		{
+			GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+										 16 ,0 ,-1 );
 			work->subSeq_++;
 			return TRUE;
 		}

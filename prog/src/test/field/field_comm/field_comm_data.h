@@ -7,42 +7,19 @@
  */
 //======================================================================
 
-#include "gamesystem/playerwork.h"
-
 #ifndef FIELD_COMM_DATA_H__
 #define FIELD_COMM_DATA_H__
+
+#include "gamesystem/playerwork.h"
+#include "field_comm_def.h"
 
 //======================================================================
 //	define
 //======================================================================
-//自キャラのデータ用インデックス
-#define FCD_SELF_INDEX (0xFF)
 
 //======================================================================
 //	enum
 //======================================================================
-typedef enum
-{
-	FCCS_NONE,		//存在なし
-	FCCS_CONNECT,	//接続直後
-	FCCS_REQ_DATA,	//キャラ個別データ受信中
-	FCCS_EXIST_DATA,	//キャラ個別データ受信後
-	FCCS_FIELD,		//フィールド中
-}F_COMM_CHARA_STATE;
-
-//会話管理用
-typedef enum
-{
-	FCTS_NONE,
-	FCTS_REPLY_TALK,	//会話の返事
-	FCTS_WAIT_TALK,		//会話相手の停止待ち
-	FCTS_UNPOSSIBLE,	//↑の返事(無理
-	FCTS_ACCEPT,		//↑の返事(OK
-	FCTS_RESERVE_TALK,	//会話予約
-	FCTS_TALKING,		//会話中
-	FCTS_WAIT_END,		//会話終了待ち
-}F_COMM_TALK_STATE;
-
 //方向定義
 //field_actor.cのACTWALK_に合わせる事
 typedef enum
@@ -77,10 +54,18 @@ extern void	FIELD_COMM_DATA_SetTalkState( const u8 idx , const F_COMM_TALK_STATE
 extern const F_COMM_TALK_STATE FIELD_COMM_DATA_GetTalkState( const u8 idx );
 extern const BOOL	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int *posZ );
 
-
 extern const F_COMM_CHARA_STATE FIELD_COMM_DATA_GetCharaData_State( const u8 idx );
 extern void FIELD_COMM_DATA_SetCharaData_State( const u8 idx , const F_COMM_CHARA_STATE state );
 extern PLAYER_WORK*	FIELD_COMM_DATA_GetCharaData_PlayerWork( const u8 idx );
+
+//ユーザーデータ関連
+extern void	FIELD_COMM_DATA_CreateUserData( const F_COMM_USERDATA_TYPE type );
+extern void	FIELD_COMM_DATA_DeleteUserData(void);
+extern const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type );
+extern const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action );
+extern void*	FIELD_COMM_DATA_GetSelfUserData( const F_COMM_USERDATA_TYPE type );
+extern void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type );
+
 
 
 

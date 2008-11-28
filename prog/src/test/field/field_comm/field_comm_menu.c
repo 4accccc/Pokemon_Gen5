@@ -39,6 +39,12 @@
 #define F_COMM_YNWIN_WIDTH	( 6)	
 #define F_COMM_YNWIN_HEIGHT	( 4)	
 
+//はい・いいえウィンドウサイズ
+#define F_COMM_ACTLIST_TOP	(17-(FCAL_MAX*2))
+#define F_COMM_ACTLIST_LEFT	(21)
+#define F_COMM_ACTLIST_WIDTH	( 10)	
+#define F_COMM_ACTLIST_HEIGHT	(FCAL_MAX*2)	
+
 //メッセージウィンドウサイズ
 #define F_COMM_MSGWIN_TOP		(19)
 #define F_COMM_MSGWIN_LEFT		( 1)
@@ -55,7 +61,7 @@ struct _FIELD_COMM_MENU
 	GFL_MSGDATA	*msgData_;
 	GFL_FONT	*fontHandle_;
 
-	//はい・いいえ用
+	//選択肢用(はい・いいえ と 会話後兼用
 //	u8				ynMenuPlane_;
 	GFL_BMP_DATA	*ynMenuBmp_;
 	GFL_BMPWIN		*ynMenuBmpWin_;
@@ -95,6 +101,10 @@ void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 const u8 FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
 void	FIELD_COMM_MENU_CloseYesNoMenu( FIELD_COMM_MENU *commMenu );
 
+void	FIELD_COMM_MENU_OpenActionList( u8 bgPlane , FIELD_COMM_MENU *commMenu );
+const F_COMM_ACTION_LIST FIELD_COMM_MENU_UpdateActionList( FIELD_COMM_MENU *commMenu );
+void	FIELD_COMM_MENU_CloseActionList( FIELD_COMM_MENU *commMenu );
+
 void	FIELD_COMM_MENU_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu );
 void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu );
@@ -123,6 +133,12 @@ FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID )
 	commMenu->fontHandle_ = GFL_FONT_Create( ARCID_D_TAYA ,
 			NARC_d_taya_lc12_2bit_nftr , GFL_FONT_LOADTYPE_FILE ,
 			FALSE , commMenu->heapID_ );
+
+	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
+
+	GFL_ARC_UTIL_TransVramPalette(
+		ARCID_D_TAYA, NARC_d_taya_default_nclr,
+		PALTYPE_MAIN_BG, (15)*32, 32, heapID );
 #if DEB_ARI
 	commMenu->isOpenDebugWin_ = FALSE;
 #endif
@@ -157,7 +173,7 @@ void	FIELD_COMM_MENU_InitBG_MsgPlane( FIELD_COMM_MENU *commMenu )
 		msgBgFrame, &msgBgcntText, GFL_BG_MODE_TEXT );
 	GFL_BG_SetVisible( msgBgFrame, VISIBLE_ON );
 	
-	GFL_BG_SetPriority( msgBgFrame, 1 );
+	GFL_BG_SetPriority( msgBgFrame, 0 );
 	GFL_BG_FillCharacter( msgBgFrame, 0x00, 1, 0 );
 	GFL_BG_FillScreen( msgBgFrame,
 		0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
@@ -324,6 +340,129 @@ const u8	FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
 }
 
 //--------------------------------------------------------------
+//	接続後行動選択　開く
+//--------------------------------------------------------------
+void	FIELD_COMM_MENU_OpenActionList( u8 bgPlane , FIELD_COMM_MENU *commMenu )
+{
+	{	//bmpwin
+		commMenu->ynMenuBmpWin_ = GFL_BMPWIN_Create( bgPlane,
+			F_COMM_ACTLIST_LEFT, F_COMM_ACTLIST_TOP, F_COMM_ACTLIST_WIDTH, F_COMM_ACTLIST_HEIGHT,
+			F_COMM_FONT_PALETTE, F_COMM_BG_AREA );
+		commMenu->ynMenuBmp_ = GFL_BMPWIN_GetBmp( commMenu->ynMenuBmpWin_ );
+		
+		GFL_BMP_Clear( commMenu->ynMenuBmp_, 0xff );
+		GFL_BMPWIN_MakeScreen( commMenu->ynMenuBmpWin_ );
+		
+		GFL_BMPWIN_TransVramCharacter( commMenu->ynMenuBmpWin_ );
+		GFL_BG_LoadScreenReq( bgPlane );
+	}
+	commMenu->ynMenuPrintQue_ = PRINTSYS_QUE_Create( commMenu->heapID_ );
+	PRINT_UTIL_Setup( commMenu->ynMenuPrintUtil_, commMenu->ynMenuBmpWin_ );
+
+	{	//window frame
+		BmpWinFrame_GraphicSet( bgPlane , 1 , F_COMM_MENU_PALETTE ,
+				MENU_TYPE_SYSTEM , commMenu->heapID_ );
+		BmpWinFrame_Write( commMenu->ynMenuBmpWin_,
+			WINDOW_TRANS_ON, 1, F_COMM_MENU_PALETTE );
+	}
+		
+	{	//menu create
+		u32 i;
+		BMPMENU_HEADER head;
+		const u16 lmax = FCAL_MAX;
+		static const u16 listMsgIDArr[FCAL_MAX]=
+		{
+			DEBUG_FIELD_C_CHOICE04,
+			DEBUG_FIELD_C_CHOICE05,
+			DEBUG_FIELD_C_CHOICE06,
+		};
+
+		head.x_max	= 1;
+		head.y_max	= lmax;
+		head.line_spc	= 4;
+		head.c_disp_f	= 0;
+		head.loop_f		= 1;
+		head.font_size_x = 12;
+		head.font_size_y = 12;
+		head.msgdata		= commMenu->msgData_;
+		head.font_handle	= commMenu->fontHandle_;
+		head.print_util		= commMenu->ynMenuPrintUtil_;
+		head.print_que		= commMenu->ynMenuPrintQue_;
+		head.win			= commMenu->ynMenuBmpWin_;
+
+		commMenu->ynMenuList_ =
+			BmpMenuWork_ListCreate( lmax, commMenu->heapID_ );
+		
+		for( i=0;i<lmax;i++ )
+		{
+			BmpMenuWork_ListAddArchiveString(
+				commMenu->ynMenuList_, commMenu->msgData_,
+				listMsgIDArr[i], NULL, commMenu->heapID_ );
+		}
+			
+		head.menu = commMenu->ynMenuList_;
+		
+		commMenu->ynMenuWork_ = BmpMenu_Add( &head, 0, commMenu->heapID_ );
+		BmpMenu_SetCursorString( commMenu->ynMenuWork_ , DEBUG_FIELD_STR00 );
+	}
+}
+
+//--------------------------------------------------------------
+//	接続後行動選択 閉じる
+//--------------------------------------------------------------
+void	FIELD_COMM_MENU_CloseActionList( FIELD_COMM_MENU *commMenu )
+{
+	PRINTSYS_QUE_Delete( commMenu->ynMenuPrintQue_ );
+	//クリア周り
+	//終了コマンドの受付後に呼んでたけど、ここに移動
+	GFL_BMP_Clear( commMenu->ynMenuBmp_, 0x00 );
+	GFL_BMPWIN_MakeScreen( commMenu->ynMenuBmpWin_ );
+	GFL_BMPWIN_TransVramCharacter( commMenu->ynMenuBmpWin_ );
+	BmpWinFrame_Clear( commMenu->ynMenuBmpWin_, 0 );
+	
+	//開放周り
+	BmpMenu_Exit( commMenu->ynMenuWork_ , NULL );
+	BmpMenuWork_ListDelete( commMenu->ynMenuList_ );
+		
+	GFL_BMPWIN_Delete( commMenu->ynMenuBmpWin_ );
+}
+
+//--------------------------------------------------------------
+//	接続後行動選択　更新
+//--------------------------------------------------------------
+const F_COMM_ACTION_LIST	FIELD_COMM_MENU_UpdateActionList( FIELD_COMM_MENU *commMenu )
+{
+	const u32 ret = BmpMenu_Main( commMenu->ynMenuWork_ );
+
+	PRINTSYS_QUE_Main( commMenu->ynMenuPrintQue_ );
+	if( PRINT_UTIL_Trans(commMenu->ynMenuPrintUtil_ ,commMenu->ynMenuPrintQue_ ) ){
+	}
+	
+	switch( ret )
+	{
+	case BMPMENU_NULL:
+		break;
+	case BMPMENU_CANCEL:
+		return FCAL_END;
+		break;
+	default:
+		{
+			static const F_COMM_ACTION_LIST retListArr[FCAL_MAX] =
+			{
+				FCAL_TRAINERCARD,
+				FCAL_BATTLE,
+				FCAL_END,
+			};
+			const u8 pos = BmpMenu_CursorPosGet(commMenu->ynMenuWork_);
+			GF_ASSERT_MSG( pos<FCAL_MAX , "Invalid return value!\n");
+			return retListArr[pos];
+		}
+	}
+
+	return FCAL_SELECT;
+}
+
+//--------------------------------------------------------------
 //	メッセージウィンドウ　開く
 //		初期メッセージの設定は各自で。
 //--------------------------------------------------------------
@@ -393,6 +532,13 @@ void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu )
 	//文字列をメッセージデータから引き出すためのバッファ
 	STRBUF *strTemp;
 
+	//FIXME 本来はキューの中身を強制クリアするような機能がほしい
+	//キューに文字が残っているなら消化してしまう
+	while( PRINTSYS_QUE_IsFinished( commMenu->msgWinPrintQue_ ) == FALSE )
+	{
+		PRINTSYS_QUE_Main( commMenu->msgWinPrintQue_ );
+		PRINT_UTIL_Trans(commMenu->msgWinPrintUtil_ ,commMenu->msgWinPrintQue_ );
+	}
 	//前回文字列の消去
 	GFL_BMP_Fill( commMenu->msgWinBmp_,
 				0, 0,

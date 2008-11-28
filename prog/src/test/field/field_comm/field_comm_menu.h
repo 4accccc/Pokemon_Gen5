@@ -10,6 +10,8 @@
 #ifndef FIELD_COMM_MENU_H__
 #define FIELD_COMM_MENU_H__
 
+#include "field_comm_def.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -29,7 +31,6 @@ enum FIELD_COMM_MENU_YES_NO_RETURN
 //======================================================================
 //	typedef struct
 //======================================================================
-typedef struct _FIELD_COMM_MENU FIELD_COMM_MENU;
 
 
 //======================================================================
@@ -44,6 +45,9 @@ extern void	FIELD_COMM_MENU_TermBG_MenuPlane( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 extern const u8	FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_CloseYesNoMenu( FIELD_COMM_MENU *commMenu );
+extern void	FIELD_COMM_MENU_OpenActionList( u8 bgPlane , FIELD_COMM_MENU *commMenu );
+extern const F_COMM_ACTION_LIST FIELD_COMM_MENU_UpdateActionList( FIELD_COMM_MENU *commMenu );
+extern void	FIELD_COMM_MENU_CloseActionList( FIELD_COMM_MENU *commMenu );
 
 extern void	FIELD_COMM_MENU_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu );
 extern void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu );

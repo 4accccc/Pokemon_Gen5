@@ -10,6 +10,7 @@
 #ifndef FIELD_COMM_MAIN__
 #define FIELD_COMM_MAIN__
 
+#include "field_comm_def.h"
 #include "../field_main.h"
 #include "../field_player.h"
 #include "gamesystem/gamesystem.h"
@@ -17,9 +18,6 @@
 //======================================================================
 //	define
 //======================================================================
-#define FIELD_COMM_MEMBER_MAX (4)
-#define FCM_BGPLANE_YESNO_WINDOW (GFL_BG_FRAME1_M)	//使用フレーム(DEBUG_BGFRAME_MENU 
-#define FCM_BGPLANE_MSG_WINDOW (GFL_BG_FRAME2_M)	//使用フレーム(DEBUG_BGFRAME_MENU 
 
 //======================================================================
 //	enum
@@ -28,7 +26,6 @@
 //======================================================================
 //	typedef struct
 //======================================================================
-typedef struct _FIELD_COMM_MAIN FIELD_COMM_MAIN;
 
 //======================================================================
 //	proto

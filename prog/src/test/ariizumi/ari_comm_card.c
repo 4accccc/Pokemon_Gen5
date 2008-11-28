@@ -11,6 +11,7 @@
 #include "system/gfl_use.h"
 
 #include "ari_comm_card.h"
+#include "ari_debug.h"
 #include "print/printsys.h"
 
 #include "arc_def.h"
@@ -45,6 +46,7 @@ typedef enum
 }CARD_MESSAGE_INDEX;
 
 //座標テーブル(右側に来る分は右上の座標を指定
+//X座標・Y座標・右寄せフラグ
 //キャラ単位(8)の数値で微調整は後で
 static const u8 CARD_MESSAGE_POSITION[CMI_MAX][3] ={
 	{8*2 ,8* 4+2,0},
@@ -70,6 +72,7 @@ static const u8 CARD_MESSAGE_POSITION[CMI_MAX][3] ={
 struct _ARI_COMM_CARD_WORK
 {
 	HEAPID heapID_;
+	u8	seq_;
 
 	GFL_BMPWIN	*bmpWinFont_;
 	PRINT_QUE	*printQue_;		
@@ -92,6 +95,7 @@ ARI_COMM_CARD_WORK* ARI_COMM_CARD_Init( HEAPID heapID )
 	ARI_COMM_CARD_WORK *work;
 	work = GFL_HEAP_AllocMemory( heapID , sizeof( ARI_COMM_CARD_WORK ) );
 	work->heapID_ = heapID;
+	work->seq_ = 0;
 
 	ARI_COMM_CARD_InitGraphic( work );
 	return work;
@@ -114,9 +118,34 @@ const BOOL ARI_COMM_CARD_Loop( ARI_COMM_CARD_WORK *work )
 	PRINTSYS_QUE_Main( work->printQue_ );
 	if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) )
 	{}
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+	switch( work->seq_ )
 	{
-		return TRUE;
+	case 0:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+									 16 ,0 ,ARI_FADE_SPD );
+		work->seq_++;
+		break;
+	case 1:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
+			work->seq_++;
+		}
+		break;
+	case 2:
+		if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+		{
+			GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+										 0 ,16 ,ARI_FADE_SPD );
+			work->seq_++;
+		}
+		break;
+	case 3:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
+			return TRUE;
+		}
+		break;
+
 	}
 	return FALSE;
 }
@@ -215,8 +244,7 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 	//ビットマップウインドウシステムの起動
 	GFL_BMPWIN_Init( work->heapID_ );
 	
-	//フォント用BMPWIN系	GFL_FONTSYS_SetColor(4, 0xb, 7);
-	
+	//フォント用BMPWIN系
 	work->bmpWinFont_= GFL_BMPWIN_Create( ACC_BGPLANE_FONT ,0, 0,32,24,0,GFL_BG_CHRAREA_GET_F );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->bmpWinFont_ ), 0x0000 );
 	GFL_BMPWIN_MakeScreen( work->bmpWinFont_ );
@@ -248,6 +276,7 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 		}
 	}
 
+	//無理やり全描画
 	while( PRINTSYS_QUE_IsFinished(work->printQue_) == FALSE )
 	{
 		PRINTSYS_QUE_Main( work->printQue_ );
