@@ -21,7 +21,7 @@ extern GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK *
 
 //------------------------------------------------------------------
 /**
- * @brief	マップ遷移イベント生成
+ * @brief	マップ遷移イベント生成（出入口指定）
  * @param	gsys		ゲームシステムへのポインタ
  * @param	fieldmap	フィールドシステムへのポインタ
  * @param	zone_id		遷移するマップのZONE指定
@@ -34,6 +34,12 @@ extern GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fi
 
 //------------------------------------------------------------------
 /**
+ * @brief	マップ遷移イベント生成（座標指定）
+ * @param	gsys		ゲームシステムへのポインタ
+ * @param	fieldmap	フィールドシステムへのポインタ
+ * @param	zone_id		遷移するマップのZONE指定
+ * @param	pos			遷移するマップでの座標指定
+ * @return	GMEVENT		生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,

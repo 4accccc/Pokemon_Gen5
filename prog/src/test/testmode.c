@@ -986,6 +986,7 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 }
 	
 //------------------------------------------------------------------
+FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeMainProcData;
 extern const GFL_PROC_DATA TestProg1MainProcData;
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
@@ -1008,7 +1009,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	switch( TestModeSelectPosGet(testmode) ) {
 	case SELECT_WATANABE:
 		//‚í‚½‚È‚×
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugWatanabeMainProcData, NULL);
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeMainProcData, NULL);
 		break;
 	case SELECT_TAMADA:
 		//‚½‚Ü‚¾

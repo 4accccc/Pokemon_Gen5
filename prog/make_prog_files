@@ -9,25 +9,6 @@ SRCS	+=		test/testmode.c \
 				test/ohno/fatal_error.c \
 				test/ohno/net_icondata.c \
 				test/ohno/test_layout.c \
-				test/tetsu/game/gamemain.c \
-				test/tetsu/game/setup.c \
-				test/tetsu/game/act3d.c \
-				test/tetsu/game/map3d.c \
-				test/tetsu/game/game_cont.c \
-				test/tetsu/game/map_cont.c \
-				test/tetsu/game/team_cont.c \
-				test/tetsu/game/player_cont.c \
-				test/tetsu/game/camera_cont.c \
-				test/tetsu/game/game_net.c \
-				test/tetsu/game/mouse_event.c \
-				test/tetsu/game/fld_act.c \
-				test/tetsu/sample/samplemain.c \
-				test/tetsu/sample/g3d_mapper.c \
-				test/tetsu/sample/sample_net.c \
-				test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
-				test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
-				test/tetsu/test_prog1.c \
-				test/tetsu/debug_watanabe.c \
 				test/taya/d_taya.c \
 				test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
@@ -180,4 +161,26 @@ SRCS	+=		test/testmode.c \
 ##xx## #LIB=>					libwm.a
 ##xx## SRCS_OVERLAY_WIRELESS		=  test/ohno/debug_field.c
 
+
+# マッパーサンプル
+#===> main
+SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
+				test/tetsu/game/setup.c \
+				test/tetsu/game/act3d.c \
+				test/tetsu/game/map3d.c \
+				test/tetsu/game/game_cont.c \
+				test/tetsu/game/map_cont.c \
+				test/tetsu/game/team_cont.c \
+				test/tetsu/game/player_cont.c \
+				test/tetsu/game/camera_cont.c \
+				test/tetsu/game/game_net.c \
+				test/tetsu/game/mouse_event.c \
+				test/tetsu/game/fld_act.c \
+				test/tetsu/sample/samplemain.c \
+				test/tetsu/sample/g3d_mapper.c \
+				test/tetsu/sample/sample_net.c \
+				test/tetsu/sample/g3dmapfunc/func_mapeditor_file.c \
+				test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
+				test/tetsu/test_prog1.c \
+				test/tetsu/debug_watanabe.c
 

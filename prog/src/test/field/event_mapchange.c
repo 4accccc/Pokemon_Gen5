@@ -191,6 +191,7 @@ void DEBUG_EVENT_ChangeEventMapChange(
 //	イベント：別画面呼び出し
 //
 //============================================================================================
+FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -215,7 +216,8 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 		(*seq) ++;
 		break;
 	case 2:
-		GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		//GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(watanabe_sample), &TestProg1MainProcData, NULL);
 		(*seq) ++;
 		break;
 	case 3:
