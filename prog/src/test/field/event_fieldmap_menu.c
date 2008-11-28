@@ -140,6 +140,8 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk );
 static void FMenuMsgWinChgEvent( GMEVENT *event, u32 heapID, u32 strID );
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 
+static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk );
+
 static void FldMapMenu_InitCommon(
 	FMENU_COMMON_WORK *work,
 	const BMPMENULIST_HEADER *pMenuHead,
@@ -375,7 +377,16 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 {
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR11 );
+	//Ari 仮へ飛ばします
+	GMEVENT *event = mwk->gmEvent;
+	FMENU_EVENT_WORK tempWork = *mwk;
+	FMENU_EVENT_WORK *newWork;
+	GMEVENT_Change( event , FMenuProcChangeEvent , sizeof(FMENU_EVENT_WORK) );
+		
+	newWork = GMEVENT_GetEventWork(event);
+	*newWork = tempWork;
+
+	//FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR11 );
 	return( TRUE );
 }
 
@@ -787,5 +798,75 @@ static BOOL FldMapMsgWin_Draw( FLDMAP_MSGWIN_WORK *work )
 		return( FALSE );
 	}
 	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * Proc変更イベント(現在トレーナーカードのみ対応
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk )
+{
+	FMENU_EVENT_WORK *work = GMEVENT_GetEventWork(event);
+	switch( *seq )
+	{
+	case 0:
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+									 0 ,16 ,0 );
+		*seq += 1;
+		break;
+	case 1:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
+			FIELDMAP_Close(work->fieldWork);
+			*seq += 1;
+		}
+		break;
+
+	case 2:
+		if( GAMESYSTEM_IsProcExists(work->gmSys) == FALSE )
+		{
+			*seq += 1;
+		}
+		break;
+
+	case 3:
+		//ワークに値保存して、Procを変えるだけで対応できると思います
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		*seq += 1;
+		//ここでフィールドのProcを抜ける
+		break;
+	case 4:
+		//復帰後にここに来る
+		GAMESYSTEM_CallFieldProc(work->gmSys);
+		*seq += 1;
+		break;
+	case 5:
+		//フィールドマップを開始待ち
+		if(GAMESYSTEM_IsProcExists(work->gmSys) == TRUE )
+		{
+			//この時点ではまだフィールドの初期化は完全ではない
+			if( FieldMain_IsFieldUpdate( work->fieldWork ) == TRUE )
+			{
+				//一回更新をまわして、MAP座標をキャラの位置にあわせる
+				FieldMain_UpdateFieldFunc( work->fieldWork );
+				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+										 16 ,0 ,0);
+				*seq += 1;
+			}
+		}
+		break;
+	case 6:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
+			return GMEVENT_RES_FINISH;
+		}
+		break;
+	}
+	return GMEVENT_RES_CONTINUE;
+
 }
 

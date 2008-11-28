@@ -103,6 +103,14 @@ typedef struct _FIELD_COMM_MENU FIELD_COMM_MENU;
 typedef struct _FIELD_COMM_FUNC FIELD_COMM_FUNC;
 typedef struct _FIELD_COMM_DEBUG_WORK FIELD_COMM_DEBUG_WORK;
 
+//通信時のユーザーデータ
+typedef struct
+{
+	char	name_[128];
+	char	id_[128];
+	char	pad_[768];
+}FIELD_COMM_USERDATA_TRAINERCARD;
+
 //======================================================================
 //	proto
 //======================================================================

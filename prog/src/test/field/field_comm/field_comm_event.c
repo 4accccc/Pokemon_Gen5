@@ -717,9 +717,14 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 }
 
 //ユーザーデータ初期化用関数(仮
+#include "test/ariizumi/ari_comm_card.h"
 static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
 {
+	FIELD_COMM_USERDATA_TRAINERCARD *cardData;
 	FIELD_COMM_DATA_CreateUserData( FCUT_TRAINERCARD );
+	cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
+	ARI_COMM_CARD_GetCardString( cardData->id_ , CMI_ID_USER , NULL );
+	ARI_COMM_CARD_GetCardString( cardData->name_ , CMI_NAME_USER , NULL );
 }
 static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys )
 {

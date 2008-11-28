@@ -13,6 +13,7 @@
 #include "ari_comm_card.h"
 #include "ari_debug.h"
 #include "print/printsys.h"
+#include "test/field/field_comm/field_comm_data.h"
 
 #include "arc_def.h"
 #include "test_graphic/d_taya.naix"
@@ -24,27 +25,6 @@
 //======================================================================
 //	enum
 //======================================================================
-typedef enum
-{
-	CMI_ID_TITLE,		//ID
-	CMI_ID_USER,
-	CMI_NAME_TITLE,		//名前
-	CMI_NAME_USER,
-	CMI_MONEY_TITLE,	//所持金
-	CMI_MONEY_USER,
-	CMI_BOOK_TITLE,		//図鑑匹数
-	CMI_BOOK_USER,
-	CMI_SCORE_TITLE,	//スコア
-	CMI_SCORE_USER,	
-	CMI_TIME_TITLE,		//プレイ時間
-	CMI_TIME_USER,
-	CMI_DAY_TITLE,		//プレイ開始日
-	CMI_DAY_USER_YEAR,		//年
-	CMI_DAY_USER_MONTH,		//月
-	CMI_DAY_USER_DAY,		//日
-	CMI_MAX,
-}CARD_MESSAGE_INDEX;
-
 //座標テーブル(右側に来る分は右上の座標を指定
 //X座標・Y座標・右寄せフラグ
 //キャラ単位(8)の数値で微調整は後で
@@ -86,7 +66,7 @@ struct _ARI_COMM_CARD_WORK
 static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work );
 static void ARI_COMM_CARD_TermGraphic( ARI_COMM_CARD_WORK *work );
 static void ARI_COMM_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , ARI_COMM_CARD_WORK *work );
-static void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK *work );
+static void ARI_COMM_CARD_GetCardString_Partner( char* str , const u8 idx , ARI_COMM_CARD_WORK *work );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
@@ -266,12 +246,24 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 
 	//文字列表示テスト
 	{
+		BOOL isCommMode = FALSE;
 		u8 i;
+		if( FIELD_COMM_DATA_GetUserDataType() == FCUT_TRAINERCARD )
+		{
+			isCommMode = TRUE;
+		}
 		for( i=0;i<CMI_MAX;i++ )
 		{
 			char str[128];
 			const BOOL isRight = (CARD_MESSAGE_POSITION[i][2]==0?FALSE:TRUE);
-			ARI_COMM_CARD_GetCardString( str , i , work );
+			if( isCommMode == TRUE )
+			{
+				ARI_COMM_CARD_GetCardString_Partner( str , i , work );
+			}
+			else
+			{
+				ARI_COMM_CARD_GetCardString( str , i , work );
+			}
 			ARI_COMM_CARD_DrawString( str , CARD_MESSAGE_POSITION[i][0] , CARD_MESSAGE_POSITION[i][1], isRight , work );
 		}
 	}
@@ -331,9 +323,9 @@ static void ARI_COMM_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isR
 }
  
 //--------------------------------------------------------------
-//	文字列取得
+//	文字列取得(自分
 //--------------------------------------------------------------
-static void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK *work )
+void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK *work )
 {
 	switch( idx )
 	{
@@ -341,13 +333,27 @@ static void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CAR
 		STD_CopyString( str , "IDNo." );
 		break;
 	case CMI_ID_USER:
-		STD_CopyString( str , "012345" );
+		{
+			u8	macAdd[6];
+			OS_GetMacAddress( macAdd );
+			STD_TSPrintf(str,"%02x%02x%02x%02x%02x%02x",macAdd[0],macAdd[1],macAdd[2],macAdd[3],macAdd[4],macAdd[5]);
+			//STD_CopyString( str , "012345" );
+		}
 		break;
 	case CMI_NAME_TITLE:	//名前
 		STD_CopyString( str , "なまえ" );
 		break;
 	case CMI_NAME_USER:
-		STD_CopyString( str , "テスト" );
+		{
+			OSOwnerInfo info;
+			int uLen,sLen;
+			OS_GetOwnerInfo( &info );
+			uLen = info.nickNameLength;
+			sLen = 128;
+			STD_ConvertStringUnicodeToSjis( str , &sLen , info.nickName , &uLen ,NULL );
+			str[sLen] = '\0';
+			//STD_CopyString( str , "テスト" );
+		}
 		break;
 	case CMI_MONEY_TITLE:	//所持金
 		STD_CopyString( str , "おこづかい" );
@@ -384,6 +390,47 @@ static void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CAR
 		break;
 	case CMI_DAY_USER_DAY:	//日
 		STD_CopyString( str , "26" );
+		break;
+	}
+}
+
+//--------------------------------------------------------------
+//	文字列取得(通信相手
+//--------------------------------------------------------------
+static void ARI_COMM_CARD_GetCardString_Partner( char* str , const u8 idx , ARI_COMM_CARD_WORK *work )
+{
+	switch( idx )
+	{
+	case CMI_ID_USER:
+		{
+			FIELD_COMM_USERDATA_TRAINERCARD *cardData;
+			cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
+			STD_CopyString( str , cardData->id_ );
+		}
+		break;
+	case CMI_NAME_USER:
+		{
+			FIELD_COMM_USERDATA_TRAINERCARD *cardData;
+			cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
+			STD_CopyString( str , cardData->name_ );
+			//STD_CopyString( str , "テスト" );
+		}
+		break;
+	case CMI_ID_TITLE:		//ID
+	case CMI_NAME_TITLE:	//名前
+	case CMI_MONEY_TITLE:	//所持金
+	case CMI_MONEY_USER:
+	case CMI_BOOK_TITLE:	//図鑑匹数
+	case CMI_BOOK_USER:
+	case CMI_SCORE_TITLE:	//スコア
+	case CMI_SCORE_USER:	
+	case CMI_TIME_TITLE:	//プレイ時間
+	case CMI_TIME_USER:
+	case CMI_DAY_TITLE:		//プレイ開始日
+	case CMI_DAY_USER_YEAR:	//年
+	case CMI_DAY_USER_MONTH://月
+	case CMI_DAY_USER_DAY:	//日
+		ARI_COMM_CARD_GetCardString( str , idx , work );
 		break;
 	}
 }

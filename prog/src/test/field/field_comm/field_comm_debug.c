@@ -261,37 +261,53 @@ static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK 
 	switch( work->subSeq_ )
 	{
 	case 0:
-		FIELDMAP_Close(work->fieldWork_);
-		work->subSeq_++;
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-									 0 ,16 ,-1 );
+									 0 ,16 ,ARI_FADE_SPD );
+		work->subSeq_++;
+		break;
+	case 1:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
+			FIELDMAP_Close(work->fieldWork_);
+			work->subSeq_++;
+		}
 		break;
 
-	case 1:
+	case 2:
 		if( GAMESYSTEM_IsProcExists(work->gameSys_) == FALSE )
 		{
 			work->subSeq_++;
 		}
 		break;
 
-	case 2:
+	case 3:
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
 		//GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
 		work->subSeq_++;
 		//ここでフィールドのProcを抜ける
 		break;
-	case 3:
+	case 4:
 		//復帰後にここに来る
 		GAMESYSTEM_CallFieldProc(work->gameSys_);
 		work->subSeq_++;
 		break;
-	case 4:
+	case 5:
 		//フィールドマップを開始待ち
 		if(GAMESYSTEM_IsProcExists(work->gameSys_) == TRUE )
 		{
-			GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-										 16 ,0 ,-1 );
-			work->subSeq_++;
+			//この時点ではまだフィールドの初期化は完全ではない
+			if( FieldMain_IsFieldUpdate( work->fieldWork_ ) == TRUE )
+			{
+				FieldMain_UpdateFieldFunc( work->fieldWork_ );
+				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
+										 16 ,0 ,ARI_FADE_SPD );
+				work->subSeq_++;
+			}
+		}
+		break;
+	case 6:
+		if( GFL_FADE_CheckFade() == FALSE )
+		{
 			return TRUE;
 		}
 		break;

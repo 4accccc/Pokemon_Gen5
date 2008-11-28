@@ -65,6 +65,7 @@ extern const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE typ
 extern const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action );
 extern void*	FIELD_COMM_DATA_GetSelfUserData( const F_COMM_USERDATA_TYPE type );
 extern void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type );
+extern F_COMM_USERDATA_TYPE FIELD_COMM_DATA_GetUserDataType( void );
 
 
 

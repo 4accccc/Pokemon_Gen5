@@ -92,6 +92,7 @@ const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type );
 const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action );
 void*	FIELD_COMM_DATA_GetSelfUserData( const F_COMM_USERDATA_TYPE type );
 void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type );
+F_COMM_USERDATA_TYPE FIELD_COMM_DATA_GetUserDataType( void );
 
 //--------------------------------------------------------------
 //	通信用データ管理初期化
@@ -319,7 +320,9 @@ static FIELD_COMM_CHARA_DATA* FIELD_COMM_DATA_GetCharaDataWork( const u8 idx )
 	return &commData->charaData_[idx];
 }
 
+//--------------------------------------------------------------
 //ユーザーデータ関連
+//--------------------------------------------------------------
 void	FIELD_COMM_DATA_CreateUserData( const F_COMM_USERDATA_TYPE type )
 {
 	GF_ASSERT( commData != NULL );
@@ -344,11 +347,14 @@ const u32 FIELD_COMM_DATA_GetUserDataSize( const F_COMM_USERDATA_TYPE type )
 {
 	static const u32 UserDataSizeTable[FCUT_MAX] =
 	{
-		0x100,
+		sizeof(FIELD_COMM_USERDATA_TRAINERCARD),
 		0x400,
 	};
 	return UserDataSizeTable[type];
 }
+//--------------------------------------------------------------
+//	行動に対応したデータの型を返す
+//--------------------------------------------------------------
 const F_COMM_USERDATA_TYPE	FIELD_COMM_DATA_GetUserDataType_From_Action( const F_COMM_ACTION_LIST action )
 {
 	static const F_COMM_USERDATA_TYPE UserDataTypeTable[FCAL_MAX] =
@@ -376,4 +382,11 @@ void*	FIELD_COMM_DATA_GetPartnerUserData( const F_COMM_USERDATA_TYPE type )
 	return commData->userData_.partnerData_;
 }
 
-
+F_COMM_USERDATA_TYPE FIELD_COMM_DATA_GetUserDataType( void )
+{
+	if( commData == NULL )
+	{
+		return FCUT_NO_INIT;
+	}
+	return commData->userData_.type_;
+}
