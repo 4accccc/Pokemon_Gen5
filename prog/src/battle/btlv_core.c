@@ -485,9 +485,13 @@ static BOOL subprocMemberIn( int* seq, void* wk_adrs )
 
 	switch( *seq ){
 	case 0:
-		BTL_STR_MakeStringStd( wk->strBuf, BTL_STRID_STD_PutSingle );
-		BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
-		(*seq)++;
+		{
+			u16 strID = BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myClientID, subwk->clientID)?
+					BTL_STRID_STD_PutSingle_Enemy : BTL_STRID_STD_PutSingle;
+			BTL_STR_MakeStringStd( wk->strBuf, strID );
+			BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
+			(*seq)++;
+		}
 		break;
 
 	case 1:

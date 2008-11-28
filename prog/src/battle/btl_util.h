@@ -27,6 +27,19 @@ typedef struct {
 }BTL_PROC;
 
 
+static inline void BTL_UTIL_ClearProc( BTL_PROC* proc )
+{
+	proc->initFunc	= NULL;
+	proc->loopFunc	= NULL;
+	proc->work		= NULL;
+	proc->seq		= 0;
+}
+
+static inline BOOL BTL_UTIL_ProcIsCleared( const BTL_PROC* proc )
+{
+	return (proc->initFunc==NULL) && (proc->loopFunc==NULL);
+}
+
 static inline void BTL_UTIL_SetupProc( BTL_PROC* proc, void* work, BPFunc init, BPFunc loop )
 {
 	proc->initFunc = init;

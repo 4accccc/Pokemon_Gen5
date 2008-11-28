@@ -49,6 +49,8 @@ enum {
 	POKEWIN_5_Y = POKEWIN_3_Y+POKEWIN_HEIGHT+8,
 	POKEWIN_6_X = 256-POKEWIN_WIDTH,
 	POKEWIN_6_Y = POKEWIN_5_Y,
+
+	SUBPROC_STACK_DEPTH = 4,
 };
 
 //--------------------------------------------------------------
@@ -67,6 +69,8 @@ struct _BTLV_SCD {
 	PRINT_UTIL			printUtil;
 
 	BTL_PROC			subProc;
+	BTL_PROC			subProcStack[ SUBPROC_STACK_DEPTH ];
+	u32					subProcStackPtr;
 
 	const BTL_POKEPARAM*	bpp;
 	BTL_ACTION_PARAM		selAction;
@@ -80,6 +84,9 @@ struct _BTLV_SCD {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static void spstack_init( BTLV_SCD* wk );
+static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc );
+static BOOL spstack_call( BTLV_SCD* wk );
 static void printBtn( BTLV_SCD* wk, u16 posx, u16 posy, u16 sizx, u16 sizy, u16 col, u16 strID );
 static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str );
 static BOOL selectAction_init( int* seq, void* wk_adrs );
@@ -103,6 +110,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 	wk->strbuf = GFL_STR_CreateBuffer( 128, heapID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+
+	spstack_init( wk );
 
 	return wk;
 }
@@ -148,6 +157,48 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
 	PRINTSYS_QUE_Delete( wk->printQue );
 	GFL_STR_DeleteBuffer( wk->strbuf );
 	GFL_HEAP_FreeMemory( wk );
+}
+
+//-------------------------------------------------
+// サブプロセススタック管理
+
+static void spstack_init( BTLV_SCD* wk )
+{
+	int i;
+	for(i=0; i<SUBPROC_STACK_DEPTH; i++)
+	{
+		BTL_UTIL_ClearProc( &wk->subProcStack[i] );
+	}
+	wk->subProcStackPtr = 0;
+}
+
+static void spstack_push( BTLV_SCD* wk, BPFunc initFunc, BPFunc loopFunc )
+{
+	GF_ASSERT(wk->subProcStackPtr < SUBPROC_STACK_DEPTH);
+
+	{
+		BTL_PROC* proc = &wk->subProcStack[wk->subProcStackPtr++];
+		BTL_UTIL_SetupProc( proc, wk, initFunc, loopFunc );
+	}
+}
+
+static BOOL spstack_call( BTLV_SCD* wk )
+{
+	if( wk->subProcStackPtr > 0 )
+	{
+		BTL_PROC* proc = &wk->subProcStack[ wk->subProcStackPtr - 1 ];
+
+		if( BTL_UTIL_CallProc(proc) )
+		{
+			BTL_UTIL_ClearProc( proc );
+			wk->subProcStackPtr--;
+		}
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;
+	}
 }
 
 
@@ -354,16 +405,13 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
 void BTLV_SCD_StartActionSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp )
 {
 	wk->bpp = bpp;
-	BTL_UTIL_SetupProc( &wk->subProc, wk, selectAction_init, selectAction_loop );
+	spstack_push( wk, selectAction_init, selectAction_loop );
+//	BTL_UTIL_SetupProc( &wk->subProc, wk, selectAction_init, selectAction_loop );
 }
 
 BOOL BTLV_SCD_WaitActionSelect( BTLV_SCD* wk )
 {
-	if( BTL_UTIL_CallProc( &wk->subProc ) )
-	{
-		return TRUE;
-	}
-	return FALSE;
+	return spstack_call( wk );
 }
 
 static const GFL_UI_TP_HITTBL TP_HitTbl[] = {
@@ -465,7 +513,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 					(*seq) = SEQ_SEL_FIGHT;
 					break;
 				case BTL_ACTION_ITEM:
-					(*seq) = SEQ_SEL_FIGHT;
+//					(*seq) = SEQ_SEL_FIGHT;
 					break;
 				case BTL_ACTION_CHANGE:
 					(*seq) = SEQ_SEL_POKEMON;
@@ -509,6 +557,19 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 			}
 		}
 		break;
+
+
+	case SEQ_SEL_POKEMON:
+		spstack_push( wk, selectPokemon_init, selectPokemon_loop );
+		(*seq)++;
+		break;
+	case SEQ_SEL_POKEMON+1:
+		return TRUE;
+
+
+	case SEQ_SEL_ESCAPE:
+		BTL_ACTION_SetEscapeParam( &wk->selAction );
+		break;
 	}
 	return FALSE;
 }
@@ -529,12 +590,14 @@ void BTLV_SCD_GetSelectAction( BTLV_SCD* wk, BTL_ACTION_PARAM* action )
 //=============================================================================================
 void BTLV_SCD_StartPokemonSelect( BTLV_SCD* wk )
 {
-	BTL_UTIL_SetupProc( &wk->subProc, wk, selectPokemon_init, selectPokemon_loop );
+//	BTL_UTIL_SetupProc( &wk->subProc, wk, selectPokemon_init, selectPokemon_loop );
+	spstack_push( wk, selectPokemon_init, selectPokemon_loop );
 }
 
 BOOL BTLV_SCD_WaitPokemonSelect( BTLV_SCD* wk )
 {
-	return BTL_UTIL_CallProc( &wk->subProc );
+//	return BTL_UTIL_CallProc( &wk->subProc );
+	return spstack_call( wk );
 }
 
 static BOOL selectPokemon_init( int* seq, void* wk_adrs )
@@ -626,8 +689,12 @@ static BOOL selectPokemon_loop( int* seq, void* wk_adrs )
 
 		if( hitpos < BTL_PARTY_GetMemberCount(party) )
 		{
-			BTL_ACTION_SetChangeParam( &wk->selAction, hitpos );
-			return TRUE;
+			const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, hitpos );
+			if( BTL_POKEPARAM_GetValue(bpp, BPP_HP) )
+			{
+				BTL_ACTION_SetChangeParam( &wk->selAction, hitpos );
+				return TRUE;
+			}
 		}
 	}
 

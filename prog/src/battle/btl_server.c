@@ -145,6 +145,7 @@ static void sortClientAction( BTL_SERVER* server, u8* order );
 static u8 countAlivePokemon( const BTL_SERVER* server );
 static BOOL createServerCommand( BTL_SERVER* server );
 static BOOL createServerCommandPokeSelect( BTL_SERVER* server );
+static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 pokeIdx );
 static void scput_Fight( BTL_SERVER* server, u8 attackClientID, const BTL_ACTION_PARAM* action );
 static inline int roundValue( int val, int min, int max );
 static void initFightEventParams( FIGHT_EVENT_PARAM* fep );
@@ -174,6 +175,8 @@ static PokeTypePair scEvent_getDefenderPokeType( BTL_SERVER* server, FIGHT_EVENT
 static void scEvent_MemberOut( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID );
 static void scEvent_MemberIn( BTL_SERVER* server, CHANGE_EVENT_PARAM* cep, u8 clientID, u8 memberIdx );
 static void scEvent_PokeComp( BTL_SERVER* server );
+static void scEvent_RankDown( BTL_SERVER* server, u8 targetClientID, BppValueID statusType, u8 volume );
+static inline u8 pokeID_to_clientID( const BTL_SERVER* sv, u8 pokeID );
 
 
 
@@ -546,7 +549,7 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 		素早さ      ... 16BIT
 	*/
 	#define MakePriValue( actPri, wazaPri, agility )	\
-						( ((actPri)<<24) | ((wazaPri)<<22) | (agility) )
+						( ((actPri)<<22) | ((wazaPri)<<16) | (agility) )
 
 	CLIENT_WORK* client;
 	const BTL_ACTION_PARAM* actParam;
@@ -571,7 +574,6 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 			actionPri = 0;
 			break;
 		}
-		BTL_Printf("Client[%d]'s actionPri=%d\n", i, actionPri);
 
 		// ワザによる優先順
 		if( actParam->gen.cmd == BTL_ACTION_FIGHT )
@@ -587,10 +589,13 @@ static void sortClientAction( BTL_SERVER* server, u8* order )
 		// すばやさ
 		agility = BTL_POKEPARAM_GetValue( client->frontMember, BPP_AGILITY );
 
+		BTL_Printf("[SV] Client[%d]'s actionPri=%d, wazaPri=%d, agility=%d\n",
+				i, actionPri, wazaPri, agility );
+
 		// プライオリティ値とクライアントIDを対にして配列に保存
 		pri[i] = MakePriValue( actionPri, wazaPri, agility );
 		order[i] = i;
-		BTL_Printf("Client[%d] PriValue=%8x\n", i, pri[i]);
+		BTL_Printf("[SV] Client[%d] PriValue=%8x\n", i, pri[i]);
 	}
  
 // プライオリティ値ソートに伴ってクライアントID配列もソート
@@ -664,6 +669,7 @@ static BOOL createServerCommand( BTL_SERVER* server )
 				break;
 			case BTL_ACTION_CHANGE:
 				BTL_Printf("【ポケモン】を処理。%d番の相手と。\n", action->change.memberIdx);
+				scput_ChangePokemon( server, clientID, action->change.memberIdx );
 				break;
 			case BTL_ACTION_ESCAPE:
 				BTL_Printf("【にげる】を処理。\n");
@@ -704,16 +710,21 @@ static BOOL createServerCommandPokeSelect( BTL_SERVER* server )
 
 			GF_ASSERT(action->gen.cmd == BTL_ACTION_CHANGE);
 
-			server->client[i].frontMemberIdx = action->change.memberIdx;
-			server->client[i].frontMember = server->client[i].member[ action->change.memberIdx ];
-			scEvent_MemberIn( server, &server->changeEventParams, i, action->change.memberIdx );
-//			SCQUE_PUT_DATA_MemberIn( server->que, i, action->change.memberIdx );
+			scput_ChangePokemon( server, i, action->change.memberIdx );
 		}
 	}
 
 	// @@@ 今は確実にFALSEだが、入れ替えた時にまきびしとかで死ぬこともある
 	return FALSE;
 }
+
+static void scput_ChangePokemon( BTL_SERVER* server, u8 clientID, u8 pokeIdx )
+{
+	server->client[clientID].frontMemberIdx = pokeIdx;
+	server->client[clientID].frontMember = server->client[clientID].member[ pokeIdx ];
+	scEvent_MemberIn( server, &server->changeEventParams, clientID, pokeIdx );
+}
+
 
 
 

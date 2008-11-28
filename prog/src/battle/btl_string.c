@@ -106,12 +106,12 @@ static inline u16 get_setPtnStrID( u8 targetClientID, u16 originStrID, u8 ptnNum
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID );
+static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID );
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args );
 static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args );
-static void ms_sp_waza_announce( STRBUF* dst, u16 strID, const int* args );
 
 
 
@@ -238,6 +238,7 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 
 		ms_encount,
 		ms_put_single,
+		ms_put_single_enemy,
 		ms_select_action_ready,
 
 		ms_std_simple,
@@ -279,6 +280,16 @@ static void ms_encount( STRBUF* dst, BtlStrID_STD strID )
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID )
 {
 	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
+
+	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+
+static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
+{
+	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
+	clientID = BTL_MAIN_GetOpponentClientID( SysWork.mainModule, clientID, 0 );
 
 	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
@@ -411,8 +422,6 @@ void BTL_STR_MakeStringWaza( STRBUF* dst, u8 clientID, u16 waza )
 	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
 
 	strID = get_setStrID( clientID, waza * SETTYPE_MAX );
-	TAYA_Printf(" MAKE STRING WAZA ... client=%d, waza=%d, strID=%d\n", clientID, waza, strID );
-
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_ATK], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
@@ -433,8 +442,6 @@ void BTL_STR_MakeStringWaza( STRBUF* dst, u8 clientID, u16 waza )
 //=============================================================================================
 void BTL_STR_GetUIString( STRBUF* dst, u16 strID )
 {
-	TAYA_Printf("GetUI str=%d\n", strID);
-
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, dst );
 }
 
