@@ -592,11 +592,11 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
 
 	case CTRL_GENERAL_X_RIGHTFIT:
 		{
-			int bmpWidth, strWidth;
+			int areaWidth, strWidth;
 
-			bmpWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
+			areaWidth = GFL_BMP_GetSizeX( wk->dst ) - wk->org_x;
 			strWidth = get_line_width( sp, wk->fontHandle, 0, NULL );
-			wk->write_x = wk->org_x + (bmpWidth - strWidth) - 1;
+			wk->write_x = wk->org_x + (areaWidth - strWidth) - 1;
 		}
 		break;
 
