@@ -34,8 +34,6 @@ extern "C" {
 // デバッグ用決まり文句----------------------
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
-#elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #endif
@@ -190,7 +188,8 @@ typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID Ga
 
 typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される関数 
 
-typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+typedef void (*NetErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信エラーが起こった場合呼ばれる 通信切断するしかない
+typedef void (*NetFatalErrorFunc)(GFL_NETHANDLE* pNet,int errNo, void* pWork);    ///< 通信不能なエラーが起こった場合呼ばれる 電源切断するしかない
 typedef void (*NetConnectEndFunc)(void* pWork);  ///< 通信切断時に呼ばれる関数
 
 typedef u8* (*NetGetSSID)(void);  ///< 親子接続時に認証する為のバイト列 24byte
@@ -226,7 +225,8 @@ typedef struct{
   NetBeaconGetFunc beaconGetFunc;    ///< ビーコンデータ取得関数
   NetBeaconGetSizeFunc beaconGetSizeFunc;   ///< ビーコンデータサイズ取得関数
   NetBeaconCompFunc beaconCompFunc;  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
-  NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+  NetErrorFunc errorFunc;            ///< 通信不能なエラーが起こった場合呼ばれる 通信を終了させる必要がある
+  NetFatalErrorFunc fatalErrorFunc;      ///< 通信不能エラーが発生。 電源切断する必要がある
   NetConnectEndFunc connectEndFunc;  ///< 通信切断時に呼ばれる関数
   NetAutoParentConnect autoParentConnect; ///< 自動接続したときに親になったマシンで呼び出される
 #if GFL_NET_WIFI

@@ -79,6 +79,7 @@ static GFLNetInitializeStruct aGFLNetInit = {
     _netBeaconGetFunc,  // ビーコンデータ取得関数
     _netBeaconGetSizeFunc,  // ビーコンデータサイズ取得関数
     _netBeaconCompFunc,  // ビーコンのサービスを比較して繋いで良いかどうか判断する
+    NULL,            // 普通のエラーが起こった場合 通信終了
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     NULL,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合

@@ -217,7 +217,8 @@ BOOL	DLPlayComm_InitSystem( DLPLAY_COMM_DATA *d_comm)
 		DLPlayComm_GetBeaconDataDummy,	// ビーコンデータ取得関数  
 		DLPlayComm_GetBeaconSizeDummy,	// ビーコンデータサイズ取得関数 
 		NULL,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-		DLPlayComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+		DLPlayComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 
+        NULL,  //Fatalエラーが起こった場合
 		DLPlayComm_DisconnectCallBack,	// 通信切断時に呼ばれる関数
 		NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI

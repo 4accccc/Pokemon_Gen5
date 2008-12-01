@@ -33,7 +33,7 @@ enum NetDebugOhnoCommand_e {
 
 
 #define _MAXNUM   (4)         // 最大接続人数
-#define _MAXSIZE  (84)        // 最大送信バイト数
+#define _MAXSIZE  (80)        // 最大送信バイト数
 #define _BCON_GET_NUM (16)    // 最大ビーコン収集数
 
 extern void DebugOhnoInit(HEAPID heap_id);

@@ -203,7 +203,8 @@ BOOL	FieldComm_InitSystem()
 		FieldComm_GetBeaconData,	// ビーコンデータ取得関数  
 		FieldComm_GetBeaconSize,	// ビーコンデータサイズ取得関数 
 		FieldComm_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-		FieldComm_ErrorCallBack,	// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+		FieldComm_ErrorCallBack,   ///< 通信不能なエラーが起こった場合呼ばれる 通信を終了させる必要がある
+        NULL,  ///< 通信不能エラーが発生。 電源切断する必要がある
 		FieldComm_DisconnectCallBack,	// 通信切断時に呼ばれる関数
 		NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI

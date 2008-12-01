@@ -253,8 +253,9 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 		FIELD_COMM_FUNC_GetBeaconData,		// ビーコンデータ取得関数  
 		FIELD_COMM_FUNC_GetBeaconSize,		// ビーコンデータサイズ取得関数 
 		FIELD_COMM_FUNC_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-		FIELD_COMM_FUNC_ErrorCallBack,		// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
-		FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
+		FIELD_COMM_FUNC_ErrorCallBack,		// 通信不能なエラーが起こった場合呼ばれる
+        NULL,  //FatalError
+        FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
 		NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI
 		NULL,NULL,NULL,NULL,

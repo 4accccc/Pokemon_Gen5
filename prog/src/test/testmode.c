@@ -1026,9 +1026,9 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_OHNO:
 		//‚¨‚¨‚Ì
-	//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
+	//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
         break;
 	case SELECT_TAYA:
 		//‚½‚â

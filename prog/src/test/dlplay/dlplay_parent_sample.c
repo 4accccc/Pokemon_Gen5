@@ -281,11 +281,16 @@ static GFL_PROC_RESULT DebugDLPlayMainProcMain(GFL_PROC * proc, int * seq, void 
 		break;
 
 	case DPM_WAIT_CHILD:
-		if ( DLPlayComm_IsConnect( parentData->commSys_ ) == TRUE ){
-			DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_PROC , parentData->msgSys_ );
+        if(GFL_NET_HANDLE_GetNumNegotiation() != 0){
+            if(GFL_NET_HANDLE_RequestNegotiation()){
+                if ( DLPlayComm_IsConnect( parentData->commSys_ ) == TRUE ){
+
+                    DLPlayFunc_ChangeBgMsg( MSG_WAIT_CHILD_PROC , parentData->msgSys_ );
 			
-			DLPlayFunc_PutString( "Child connect.",parentData->msgSys_); 
-			parentData->mainSeq_ = DPM_WAIT_START_POST_INDEX;
+                    DLPlayFunc_PutString( "Child connect.",parentData->msgSys_); 
+                    parentData->mainSeq_ = DPM_WAIT_START_POST_INDEX;
+                }
+            }
 		}
 		break;
 	case DPM_WAIT_START_POST_INDEX:
