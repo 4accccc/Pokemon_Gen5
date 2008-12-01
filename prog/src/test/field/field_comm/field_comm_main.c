@@ -37,6 +37,7 @@ struct _FIELD_COMM_MAIN
 	u8	talkTrgChara_;
 	FIELD_COMM_MENU *commMenu_;
 	FIELD_COMM_FUNC *commFunc_;
+	u8	commActorIndex_[FIELD_COMM_MEMBER_MAX];
 };
 
 //上下左右に対応したグリッドでのオフセット
@@ -69,6 +70,7 @@ void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 
+void	FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys );
 //--------------------------------------------------------------
 //	フィールド通信システム初期化
 //	@param	commHeapID 通信用に常駐するヒープID
@@ -88,7 +90,6 @@ FIELD_COMM_MAIN* FIELD_COMM_MAIN_InitSystem( HEAPID heapID , HEAPID commHeapID )
 	return commSys;
 }
 
-const u8 FIELD_COMM_FUNC_GetBit_TalkMember( FIELD_COMM_FUNC *commFunc );
 //--------------------------------------------------------------
 // フィールド通信システム開放
 // @param isTermAll TRUEでデータ領域のヒープも開放
@@ -98,8 +99,8 @@ void FIELD_COMM_MAIN_TermSystem( FIELD_COMM_MAIN *commSys , BOOL isTermAll )
 	if( isTermAll == TRUE )
 	{
 		FIELD_COMM_DATA_TermSystem();
+		FIELD_COMM_FUNC_TermSystem( commSys->commFunc_ );
 	}
-	FIELD_COMM_FUNC_TermSystem( commSys->commFunc_ );
 	GFL_HEAP_FreeMemory( commSys );
 }
 
@@ -439,6 +440,11 @@ const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys )
 	return (FALSE);
 }
 
+void	FIELD_COMM_MAIN_Disconnect( FIELD_MAIN_WORK *fieldWork , FIELD_COMM_MAIN *commSys )
+{
+	//FieldMain_CommActorFreeAll( fieldWork );
+	FIELD_COMM_FUNC_TermCommSystem( commSys->commFunc_ );
+}
 
 //======================================================================
 //	以下 field_comm_event 用。extern定義も該当ソースに書く

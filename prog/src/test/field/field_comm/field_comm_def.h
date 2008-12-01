@@ -69,6 +69,8 @@ typedef enum
 	FCCF_ACTION_RETURN,		//行動に対する返事
 
 	FCCF_SYNC_TYPE,			//同期処理用関数
+
+	FCCF_TEST,				//実験用
 	
 	FCCF_FLG_MAX,			//不正値として使う
 }F_COMM_COMMON_FLG;

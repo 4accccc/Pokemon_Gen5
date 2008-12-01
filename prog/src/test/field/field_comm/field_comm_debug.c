@@ -16,6 +16,7 @@
 #include "../event_debug_menu.h"
 #include "field_comm_debug.h"
 #include "field_comm_event.h"
+#include "field_comm_main.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -58,6 +59,7 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartComm( FIELD_COMM_DEBUG_WORK *work );
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion(FIELD_COMM_DEBUG_WORK *work  );
+static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_EndComm(FIELD_COMM_DEBUG_WORK *work  );
 static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
 static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK *work );
 //--------------------------------------------------------------
@@ -128,13 +130,13 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 			{
 				DEBUG_FIELD_C_CHOICE00 ,
 				DEBUG_FIELD_C_CHOICE01 ,
-				DEBUG_FIELD_C_CHOICE02 ,
+				DEBUG_FIELD_C_CHOICE07 ,
 			};
 			static const void* itemCallProc[itemNum] =
 			{
 				FIELD_COMM_DEBUG_MenuCallback_StartComm,
 				FIELD_COMM_DEBUG_MenuCallback_StartInvasion,
-				FIELD_COMM_DEBUG_MenuCallback_ChangePartTest,
+				FIELD_COMM_DEBUG_MenuCallback_EndComm,
 			};
 			u8 i;
 			GFL_MSGDATA	*msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL ,
@@ -237,6 +239,20 @@ static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_StartInvasion( FIELD_COMM_DEBUG_
 	eveWork = GMEVENT_GetEventWork(event);
 	FIELD_COMM_EVENT_SetWorkData( commSys , fieldWork , eveWork );
 	return TRUE;
+}
+//--------------------------------------------------------------
+//	通信終了
+//--------------------------------------------------------------
+static	const BOOL	FIELD_COMM_DEBUG_MenuCallback_EndComm( FIELD_COMM_DEBUG_WORK *work )
+{
+	GMEVENT *event = work->event_;
+	FIELD_COMM_MAIN *commSys = FieldMain_GetCommSys(work->fieldWork_);
+	FIELD_MAIN_WORK *fieldWork = work->fieldWork_;
+	FIELD_COMM_EVENT *eveWork;
+	
+	FIELD_COMM_MAIN_Disconnect( fieldWork , commSys );
+
+	return FALSE;
 }
 //--------------------------------------------------------------
 //	パート切り替えテスト

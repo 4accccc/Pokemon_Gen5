@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2008-11-28T19:24:33"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2008-12-01T15:46:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="277" top="176" right="982" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="145" top="176" right="850" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="933" top="204" right="1280" bottom="602" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -190,6 +190,11 @@
 
 	<row id="DEBUG_FIELD_C_CHOICE06">
 		<language name="JPN" font=" 2:lcfont12" width="80">やめる</language>
+		<language name="JPN_KANJI" width="80"></language>
+	</row>
+
+	<row id="DEBUG_FIELD_C_CHOICE07">
+		<language name="JPN" font=" 2:lcfont12" width="80">通信終了</language>
 		<language name="JPN_KANJI" width="80"></language>
 	</row>
 
