@@ -1,0 +1,2479 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="taya" host="W00146" date="2008-11-21T11:59:05"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="FF" b="00" a="FF"/>
+		<list entry="3" r="00" g="00" b="FF" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="文字列" english="文字列">
+			<tag entry="00" japanese="プレイヤー名" english="プレイヤー名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="1" japanese="数字" english="数字">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="117"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="1" width="100"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="2" width="274"/>
+			<font default=" 0:lc12_2bit" position="4" width="109">
+				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="3" width="246"/>
+			<font default=" 0:lc12_2bit" position="5" width="106">
+				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="933" top="204" right="1280" bottom="602" visible="yes"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+	<row id="ITEMNAME_000">
+		<language name="JPN" width="256">なし</language>
+		<language name="JPN_KANJI" width="256">なし</language>
+	</row>
+
+	<row id="ITEMNAME_001">
+		<language name="JPN" width="256">マスターボール</language>
+		<language name="JPN_KANJI" width="256">マスターボール</language>
+	</row>
+
+	<row id="ITEMNAME_002">
+		<language name="JPN" width="256">ハイパーボール</language>
+		<language name="JPN_KANJI" width="256">ハイパーボール</language>
+	</row>
+
+	<row id="ITEMNAME_003">
+		<language name="JPN" width="256">スーパーボール</language>
+		<language name="JPN_KANJI" width="256">スーパーボール</language>
+	</row>
+
+	<row id="ITEMNAME_004">
+		<language name="JPN" width="256">モンスターボール</language>
+		<language name="JPN_KANJI" width="256">モンスターボール</language>
+	</row>
+
+	<row id="ITEMNAME_005">
+		<language name="JPN" width="256">サファリボール</language>
+		<language name="JPN_KANJI" width="256">サファリボール</language>
+	</row>
+
+	<row id="ITEMNAME_006">
+		<language name="JPN" width="256">ネットボール</language>
+		<language name="JPN_KANJI" width="256">ネットボール</language>
+	</row>
+
+	<row id="ITEMNAME_007">
+		<language name="JPN" width="256">ダイブボール</language>
+		<language name="JPN_KANJI" width="256">ダイブボール</language>
+	</row>
+
+	<row id="ITEMNAME_008">
+		<language name="JPN" width="256">ネストボール</language>
+		<language name="JPN_KANJI" width="256">ネストボール</language>
+	</row>
+
+	<row id="ITEMNAME_009">
+		<language name="JPN" width="256">リピートボール</language>
+		<language name="JPN_KANJI" width="256">リピートボール</language>
+	</row>
+
+	<row id="ITEMNAME_010">
+		<language name="JPN" width="256">タイマーボール</language>
+		<language name="JPN_KANJI" width="256">タイマーボール</language>
+	</row>
+
+	<row id="ITEMNAME_011">
+		<language name="JPN" width="256">ゴージャスボール</language>
+		<language name="JPN_KANJI" width="256">ゴージャスボール</language>
+	</row>
+
+	<row id="ITEMNAME_012">
+		<language name="JPN" width="256">プレミアボール</language>
+		<language name="JPN_KANJI" width="256">プレミアボール</language>
+	</row>
+
+	<row id="ITEMNAME_013">
+		<language name="JPN" width="256">ダークボール</language>
+		<language name="JPN_KANJI" width="256">ダークボール</language>
+	</row>
+
+	<row id="ITEMNAME_014">
+		<language name="JPN" width="256">ヒールボール</language>
+		<language name="JPN_KANJI" width="256">ヒールボール</language>
+	</row>
+
+	<row id="ITEMNAME_015">
+		<language name="JPN" width="256">クイックボール</language>
+		<language name="JPN_KANJI" width="256">クイックボール</language>
+	</row>
+
+	<row id="ITEMNAME_016">
+		<language name="JPN" width="256">プレシャスボール</language>
+		<language name="JPN_KANJI" width="256">プレシャスボール</language>
+	</row>
+
+	<row id="ITEMNAME_017">
+		<language name="JPN" width="256">キズぐすり</language>
+		<language name="JPN_KANJI" width="256">傷薬</language>
+	</row>
+
+	<row id="ITEMNAME_018">
+		<language name="JPN" width="256">どくけし</language>
+		<language name="JPN_KANJI" width="256">毒消し</language>
+	</row>
+
+	<row id="ITEMNAME_019">
+		<language name="JPN" width="256">やけどなおし</language>
+		<language name="JPN_KANJI" width="256">焼けど直し</language>
+	</row>
+
+	<row id="ITEMNAME_020">
+		<language name="JPN" width="256">こおりなおし</language>
+		<language name="JPN_KANJI" width="256">氷り直し</language>
+	</row>
+
+	<row id="ITEMNAME_021">
+		<language name="JPN" width="256">ねむけざまし</language>
+		<language name="JPN_KANJI" width="256">眠気覚まし</language>
+	</row>
+
+	<row id="ITEMNAME_022">
+		<language name="JPN" width="256">まひなおし</language>
+		<language name="JPN_KANJI" width="256">麻痺直し</language>
+	</row>
+
+	<row id="ITEMNAME_023">
+		<language name="JPN" width="256">かいふくのくすり</language>
+		<language name="JPN_KANJI" width="256">回復の薬</language>
+	</row>
+
+	<row id="ITEMNAME_024">
+		<language name="JPN" width="256">まんたんのくすり</language>
+		<language name="JPN_KANJI" width="256">満タンの薬</language>
+	</row>
+
+	<row id="ITEMNAME_025">
+		<language name="JPN" width="256">すごいキズぐすり</language>
+		<language name="JPN_KANJI" width="256">凄い傷薬</language>
+	</row>
+
+	<row id="ITEMNAME_026">
+		<language name="JPN" width="256">いいキズぐすり</language>
+		<language name="JPN_KANJI" width="256">いい傷薬</language>
+	</row>
+
+	<row id="ITEMNAME_027">
+		<language name="JPN" width="256">なんでもなおし</language>
+		<language name="JPN_KANJI" width="256">何でも直し</language>
+	</row>
+
+	<row id="ITEMNAME_028">
+		<language name="JPN" width="256">げんきのかけら</language>
+		<language name="JPN_KANJI" width="256">げんきのかけら</language>
+	</row>
+
+	<row id="ITEMNAME_029">
+		<language name="JPN" width="256">げんきのかたまり</language>
+		<language name="JPN_KANJI" width="256">げんきのかたまり</language>
+	</row>
+
+	<row id="ITEMNAME_030">
+		<language name="JPN" width="256">おいしいみず</language>
+		<language name="JPN_KANJI" width="256">おいしいみず</language>
+	</row>
+
+	<row id="ITEMNAME_031">
+		<language name="JPN" width="256">サイコソーダ</language>
+		<language name="JPN_KANJI" width="256">サイコソーダ</language>
+	</row>
+
+	<row id="ITEMNAME_032">
+		<language name="JPN" width="256">ミックスオレ</language>
+		<language name="JPN_KANJI" width="256">ミックスオレ</language>
+	</row>
+
+	<row id="ITEMNAME_033">
+		<language name="JPN" width="256">モーモーミルク</language>
+		<language name="JPN_KANJI" width="256">モーモーミルク</language>
+	</row>
+
+	<row id="ITEMNAME_034">
+		<language name="JPN" width="256">ちからのこな</language>
+		<language name="JPN_KANJI" width="256">ちからのこな</language>
+	</row>
+
+	<row id="ITEMNAME_035">
+		<language name="JPN" width="256">ちからのねっこ</language>
+		<language name="JPN_KANJI" width="256">ちからのねっこ</language>
+	</row>
+
+	<row id="ITEMNAME_036">
+		<language name="JPN" width="256">ばんのうごな</language>
+		<language name="JPN_KANJI" width="256">ばんのうごな</language>
+	</row>
+
+	<row id="ITEMNAME_037">
+		<language name="JPN" width="256">ふっかつそう</language>
+		<language name="JPN_KANJI" width="256">ふっかつそう</language>
+	</row>
+
+	<row id="ITEMNAME_038">
+		<language name="JPN" width="256">ピーピーエイド</language>
+		<language name="JPN_KANJI" width="256">ピーピーエイド</language>
+	</row>
+
+	<row id="ITEMNAME_039">
+		<language name="JPN" width="256">ピーピーリカバー</language>
+		<language name="JPN_KANJI" width="256">ピーピーリカバー</language>
+	</row>
+
+	<row id="ITEMNAME_040">
+		<language name="JPN" width="256">ピーピーエイダー</language>
+		<language name="JPN_KANJI" width="256">ピーピーエイダー</language>
+	</row>
+
+	<row id="ITEMNAME_041">
+		<language name="JPN" width="256">ピーピーマックス</language>
+		<language name="JPN_KANJI" width="256">ピーピーマックス</language>
+	</row>
+
+	<row id="ITEMNAME_042">
+		<language name="JPN" width="256">フエンせんべい</language>
+		<language name="JPN_KANJI" width="256">フエンせんべい</language>
+	</row>
+
+	<row id="ITEMNAME_043">
+		<language name="JPN" width="256">きのみジュース</language>
+		<language name="JPN_KANJI" width="256">きのみジュース</language>
+	</row>
+
+	<row id="ITEMNAME_044">
+		<language name="JPN" width="256">せいなるはい</language>
+		<language name="JPN_KANJI" width="256">せいなるはい</language>
+	</row>
+
+	<row id="ITEMNAME_045">
+		<language name="JPN" width="256">マックスアップ</language>
+		<language name="JPN_KANJI" width="256">マックスアップ</language>
+	</row>
+
+	<row id="ITEMNAME_046">
+		<language name="JPN" width="256">タウリン</language>
+		<language name="JPN_KANJI" width="256">タウリン</language>
+	</row>
+
+	<row id="ITEMNAME_047">
+		<language name="JPN" width="256">ブロムヘキシン</language>
+		<language name="JPN_KANJI" width="256">ブロムヘキシン</language>
+	</row>
+
+	<row id="ITEMNAME_048">
+		<language name="JPN" width="256">インドメタシン</language>
+		<language name="JPN_KANJI" width="256">インドメタシン</language>
+	</row>
+
+	<row id="ITEMNAME_049">
+		<language name="JPN" width="256">リゾチウム</language>
+		<language name="JPN_KANJI" width="256">リゾチウム</language>
+	</row>
+
+	<row id="ITEMNAME_050">
+		<language name="JPN" width="256">ふしぎなアメ</language>
+		<language name="JPN_KANJI" width="256">ふしぎなアメ</language>
+	</row>
+
+	<row id="ITEMNAME_051">
+		<language name="JPN" width="256">ポイントアップ</language>
+		<language name="JPN_KANJI" width="256">ポイントアップ</language>
+	</row>
+
+	<row id="ITEMNAME_052">
+		<language name="JPN" width="256">キトサン</language>
+		<language name="JPN_KANJI" width="256">キトサン</language>
+	</row>
+
+	<row id="ITEMNAME_053">
+		<language name="JPN" width="256">ポイントマックス</language>
+		<language name="JPN_KANJI" width="256">ポイントマックス</language>
+	</row>
+
+	<row id="ITEMNAME_054">
+		<language name="JPN" width="256">もりのヨウカン</language>
+		<language name="JPN_KANJI" width="256">もりのヨウカン</language>
+	</row>
+
+	<row id="ITEMNAME_055">
+		<language name="JPN" width="256">エフェクトガード</language>
+		<language name="JPN_KANJI" width="256">エフェクトガード</language>
+	</row>
+
+	<row id="ITEMNAME_056">
+		<language name="JPN" width="256">クリティカッター</language>
+		<language name="JPN_KANJI" width="256">クリティカッター</language>
+	</row>
+
+	<row id="ITEMNAME_057">
+		<language name="JPN" width="256">プラスパワー</language>
+		<language name="JPN_KANJI" width="256">プラスパワー</language>
+	</row>
+
+	<row id="ITEMNAME_058">
+		<language name="JPN" width="256">ディフェンダー</language>
+		<language name="JPN_KANJI" width="256">ディフェンダー</language>
+	</row>
+
+	<row id="ITEMNAME_059">
+		<language name="JPN" width="256">スピーダー</language>
+		<language name="JPN_KANJI" width="256">スピーダー</language>
+	</row>
+
+	<row id="ITEMNAME_060">
+		<language name="JPN" width="256">ヨクアタール</language>
+		<language name="JPN_KANJI" width="256">ヨクアタール</language>
+	</row>
+
+	<row id="ITEMNAME_061">
+		<language name="JPN" width="256">スペシャルアップ</language>
+		<language name="JPN_KANJI" width="256">スペシャルアップ</language>
+	</row>
+
+	<row id="ITEMNAME_062">
+		<language name="JPN" width="256">スペシャルガード</language>
+		<language name="JPN_KANJI" width="256">スペシャルガード</language>
+	</row>
+
+	<row id="ITEMNAME_063">
+		<language name="JPN" width="256">ピッピにんぎょう</language>
+		<language name="JPN_KANJI" width="256">ピッピにんぎょう</language>
+	</row>
+
+	<row id="ITEMNAME_064">
+		<language name="JPN" width="256">エネコのシッポ</language>
+		<language name="JPN_KANJI" width="256">エネコのシッポ</language>
+	</row>
+
+	<row id="ITEMNAME_065">
+		<language name="JPN" width="256">あおいビードロ</language>
+		<language name="JPN_KANJI" width="256">あおいビードロ</language>
+	</row>
+
+	<row id="ITEMNAME_066">
+		<language name="JPN" width="256">きいろビードロ</language>
+		<language name="JPN_KANJI" width="256">きいろビードロ</language>
+	</row>
+
+	<row id="ITEMNAME_067">
+		<language name="JPN" width="256">あかいビードロ</language>
+		<language name="JPN_KANJI" width="256">あかいビードロ</language>
+	</row>
+
+	<row id="ITEMNAME_068">
+		<language name="JPN" width="256">くろいビードロ</language>
+		<language name="JPN_KANJI" width="256">くろいビードロ</language>
+	</row>
+
+	<row id="ITEMNAME_069">
+		<language name="JPN" width="256">しろいビードロ</language>
+		<language name="JPN_KANJI" width="256">しろいビードロ</language>
+	</row>
+
+	<row id="ITEMNAME_070">
+		<language name="JPN" width="256">あさせのしお</language>
+		<language name="JPN_KANJI" width="256">あさせのしお</language>
+	</row>
+
+	<row id="ITEMNAME_071">
+		<language name="JPN" width="256">あさせのかいがら</language>
+		<language name="JPN_KANJI" width="256">あさせのかいがら</language>
+	</row>
+
+	<row id="ITEMNAME_072">
+		<language name="JPN" width="256">あかいかけら</language>
+		<language name="JPN_KANJI" width="256">あかいかけら</language>
+	</row>
+
+	<row id="ITEMNAME_073">
+		<language name="JPN" width="256">あおいかけら</language>
+		<language name="JPN_KANJI" width="256">あおいかけら</language>
+	</row>
+
+	<row id="ITEMNAME_074">
+		<language name="JPN" width="256">きいろいかけら</language>
+		<language name="JPN_KANJI" width="256">きいろいかけら</language>
+	</row>
+
+	<row id="ITEMNAME_075">
+		<language name="JPN" width="256">みどりのかけら</language>
+		<language name="JPN_KANJI" width="256">みどりのかけら</language>
+	</row>
+
+	<row id="ITEMNAME_076">
+		<language name="JPN" width="256">シルバースプレー</language>
+		<language name="JPN_KANJI" width="256">シルバースプレー</language>
+	</row>
+
+	<row id="ITEMNAME_077">
+		<language name="JPN" width="256">ゴールドスプレー</language>
+		<language name="JPN_KANJI" width="256">ゴールドスプレー</language>
+	</row>
+
+	<row id="ITEMNAME_078">
+		<language name="JPN" width="256">あなぬけのヒモ</language>
+		<language name="JPN_KANJI" width="256">あなぬけのヒモ</language>
+	</row>
+
+	<row id="ITEMNAME_079">
+		<language name="JPN" width="256">むしよけスプレー</language>
+		<language name="JPN_KANJI" width="256">むしよけスプレー</language>
+	</row>
+
+	<row id="ITEMNAME_080">
+		<language name="JPN" width="256">たいようのいし</language>
+		<language name="JPN_KANJI" width="256">たいようのいし</language>
+	</row>
+
+	<row id="ITEMNAME_081">
+		<language name="JPN" width="256">つきのいし</language>
+		<language name="JPN_KANJI" width="256">つきのいし</language>
+	</row>
+
+	<row id="ITEMNAME_082">
+		<language name="JPN" width="256">ほのおのいし</language>
+		<language name="JPN_KANJI" width="256">ほのおのいし</language>
+	</row>
+
+	<row id="ITEMNAME_083">
+		<language name="JPN" width="256">かみなりのいし</language>
+		<language name="JPN_KANJI" width="256">かみなりのいし</language>
+	</row>
+
+	<row id="ITEMNAME_084">
+		<language name="JPN" width="256">みずのいし</language>
+		<language name="JPN_KANJI" width="256">みずのいし</language>
+	</row>
+
+	<row id="ITEMNAME_085">
+		<language name="JPN" width="256">リーフのいし</language>
+		<language name="JPN_KANJI" width="256">リーフのいし</language>
+	</row>
+
+	<row id="ITEMNAME_086">
+		<language name="JPN" width="256">ちいさなキノコ</language>
+		<language name="JPN_KANJI" width="256">ちいさなキノコ</language>
+	</row>
+
+	<row id="ITEMNAME_087">
+		<language name="JPN" width="256">おおきなキノコ</language>
+		<language name="JPN_KANJI" width="256">おおきなキノコ</language>
+	</row>
+
+	<row id="ITEMNAME_088">
+		<language name="JPN" width="256">しんじゅ</language>
+		<language name="JPN_KANJI" width="256">しんじゅ</language>
+	</row>
+
+	<row id="ITEMNAME_089">
+		<language name="JPN" width="256">おおきなしんじゅ</language>
+		<language name="JPN_KANJI" width="256">おおきなしんじゅ</language>
+	</row>
+
+	<row id="ITEMNAME_090">
+		<language name="JPN" width="256">ほしのすな</language>
+		<language name="JPN_KANJI" width="256">ほしのすな</language>
+	</row>
+
+	<row id="ITEMNAME_091">
+		<language name="JPN" width="256">ほしのかけら</language>
+		<language name="JPN_KANJI" width="256">ほしのかけら</language>
+	</row>
+
+	<row id="ITEMNAME_092">
+		<language name="JPN" width="256">きんのたま</language>
+		<language name="JPN_KANJI" width="256">きんのたま</language>
+	</row>
+
+	<row id="ITEMNAME_093">
+		<language name="JPN" width="256">ハートのウロコ</language>
+		<language name="JPN_KANJI" width="256">ハートのウロコ</language>
+	</row>
+
+	<row id="ITEMNAME_094">
+		<language name="JPN" width="256">あまいミツ</language>
+		<language name="JPN_KANJI" width="256">あまいミツ</language>
+	</row>
+
+	<row id="ITEMNAME_095">
+		<language name="JPN" width="256">すくすくこやし</language>
+		<language name="JPN_KANJI" width="256">すくすくこやし</language>
+	</row>
+
+	<row id="ITEMNAME_096">
+		<language name="JPN" width="256">じめじめこやし</language>
+		<language name="JPN_KANJI" width="256">じめじめこやし</language>
+	</row>
+
+	<row id="ITEMNAME_097">
+		<language name="JPN" width="256">ながながこやし</language>
+		<language name="JPN_KANJI" width="256">ながながこやし</language>
+	</row>
+
+	<row id="ITEMNAME_098">
+		<language name="JPN" width="256">ねばねばこやし</language>
+		<language name="JPN_KANJI" width="256">ねばねばこやし</language>
+	</row>
+
+	<row id="ITEMNAME_099">
+		<language name="JPN" width="256">ねっこのカセキ</language>
+		<language name="JPN_KANJI" width="256">ねっこのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_100">
+		<language name="JPN" width="256">ツメのカセキ</language>
+		<language name="JPN_KANJI" width="256">ツメのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_101">
+		<language name="JPN" width="256">かいのカセキ</language>
+		<language name="JPN_KANJI" width="256">かいのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_102">
+		<language name="JPN" width="256">こうらのカセキ</language>
+		<language name="JPN_KANJI" width="256">こうらのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_103">
+		<language name="JPN" width="256">ひみつのコハク</language>
+		<language name="JPN_KANJI" width="256">ひみつのコハク</language>
+	</row>
+
+	<row id="ITEMNAME_104">
+		<language name="JPN" width="256">たてのカセキ</language>
+		<language name="JPN_KANJI" width="256">たてのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_105">
+		<language name="JPN" width="256">ずがいのカセキ</language>
+		<language name="JPN_KANJI" width="256">ずがいのカセキ</language>
+	</row>
+
+	<row id="ITEMNAME_106">
+		<language name="JPN" width="256">きちょうなホネ</language>
+		<language name="JPN_KANJI" width="256">きちょうなホネ</language>
+	</row>
+
+	<row id="ITEMNAME_107">
+		<language name="JPN" width="256">ひかりのいし</language>
+		<language name="JPN_KANJI" width="256">ひかりのいし</language>
+	</row>
+
+	<row id="ITEMNAME_108">
+		<language name="JPN" width="256">やみのいし</language>
+		<language name="JPN_KANJI" width="256">やみのいし</language>
+	</row>
+
+	<row id="ITEMNAME_109">
+		<language name="JPN" width="256">めざめいし</language>
+		<language name="JPN_KANJI" width="256">めざめいし</language>
+	</row>
+
+	<row id="ITEMNAME_110">
+		<language name="JPN" width="256">まんまるいし</language>
+		<language name="JPN_KANJI" width="256">まんまるいし</language>
+	</row>
+
+	<row id="ITEMNAME_111">
+		<language name="JPN" width="256">かなめいし</language>
+		<language name="JPN_KANJI" width="256">かなめいし</language>
+	</row>
+
+	<row id="ITEMNAME_112">
+		<language name="JPN" width="256">はっきんだま</language>
+		<language name="JPN_KANJI" width="256">はっきんだま</language>
+	</row>
+
+	<row id="ITEMNAME_113">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_114">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_115">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_116">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_117">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_118">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_119">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_120">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_121">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_122">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_123">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_124">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_125">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_126">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_127">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_128">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_129">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_130">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_131">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_132">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_133">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_134">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_135">
+		<language name="JPN" width="256">こんごうだま</language>
+		<language name="JPN_KANJI" width="256">こんごうだま</language>
+	</row>
+
+	<row id="ITEMNAME_136">
+		<language name="JPN" width="256">しらたま</language>
+		<language name="JPN_KANJI" width="256">しらたま</language>
+	</row>
+
+	<row id="ITEMNAME_137">
+		<language name="JPN" width="256">グラスメール</language>
+		<language name="JPN_KANJI" width="256">グラスメール</language>
+	</row>
+
+	<row id="ITEMNAME_138">
+		<language name="JPN" width="256">フレイムメール</language>
+		<language name="JPN_KANJI" width="256">フレイムメール</language>
+	</row>
+
+	<row id="ITEMNAME_139">
+		<language name="JPN" width="256">ブルーメール</language>
+		<language name="JPN_KANJI" width="256">ブルーメール</language>
+	</row>
+
+	<row id="ITEMNAME_140">
+		<language name="JPN" width="256">ブルームメール</language>
+		<language name="JPN_KANJI" width="256">ブルームメール</language>
+	</row>
+
+	<row id="ITEMNAME_141">
+		<language name="JPN" width="256">トンネルメール</language>
+		<language name="JPN_KANJI" width="256">トンネルメール</language>
+	</row>
+
+	<row id="ITEMNAME_142">
+		<language name="JPN" width="256">スチールメール</language>
+		<language name="JPN_KANJI" width="256">スチールメール</language>
+	</row>
+
+	<row id="ITEMNAME_143">
+		<language name="JPN" width="256">ラブラブメール</language>
+		<language name="JPN_KANJI" width="256">ラブラブメール</language>
+	</row>
+
+	<row id="ITEMNAME_144">
+		<language name="JPN" width="256">ブリザードメール</language>
+		<language name="JPN_KANJI" width="256">ブリザードメール</language>
+	</row>
+
+	<row id="ITEMNAME_145">
+		<language name="JPN" width="256">スペースメール</language>
+		<language name="JPN_KANJI" width="256">スペースメール</language>
+	</row>
+
+	<row id="ITEMNAME_146">
+		<language name="JPN" width="256">エアメール</language>
+		<language name="JPN_KANJI" width="256">エアメール</language>
+	</row>
+
+	<row id="ITEMNAME_147">
+		<language name="JPN" width="256">モザイクメール</language>
+		<language name="JPN_KANJI" width="256">モザイクメール</language>
+	</row>
+
+	<row id="ITEMNAME_148">
+		<language name="JPN" width="256">ブリックメール</language>
+		<language name="JPN_KANJI" width="256">ブリックメール</language>
+	</row>
+
+	<row id="ITEMNAME_149">
+		<language name="JPN" width="256">クラボのみ</language>
+		<language name="JPN_KANJI" width="256">クラボのみ</language>
+	</row>
+
+	<row id="ITEMNAME_150">
+		<language name="JPN" width="256">カゴのみ</language>
+		<language name="JPN_KANJI" width="256">カゴのみ</language>
+	</row>
+
+	<row id="ITEMNAME_151">
+		<language name="JPN" width="256">モモンのみ</language>
+		<language name="JPN_KANJI" width="256">モモンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_152">
+		<language name="JPN" width="256">チーゴのみ</language>
+		<language name="JPN_KANJI" width="256">チーゴのみ</language>
+	</row>
+
+	<row id="ITEMNAME_153">
+		<language name="JPN" width="256">ナナシのみ</language>
+		<language name="JPN_KANJI" width="256">ナナシのみ</language>
+	</row>
+
+	<row id="ITEMNAME_154">
+		<language name="JPN" width="256">ヒメリのみ</language>
+		<language name="JPN_KANJI" width="256">ヒメリのみ</language>
+	</row>
+
+	<row id="ITEMNAME_155">
+		<language name="JPN" width="256">オレンのみ</language>
+		<language name="JPN_KANJI" width="256">オレンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_156">
+		<language name="JPN" width="256">キーのみ</language>
+		<language name="JPN_KANJI" width="256">キーのみ</language>
+	</row>
+
+	<row id="ITEMNAME_157">
+		<language name="JPN" width="256">ラムのみ</language>
+		<language name="JPN_KANJI" width="256">ラムのみ</language>
+	</row>
+
+	<row id="ITEMNAME_158">
+		<language name="JPN" width="256">オボンのみ</language>
+		<language name="JPN_KANJI" width="256">オボンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_159">
+		<language name="JPN" width="256">フィラのみ</language>
+		<language name="JPN_KANJI" width="256">フィラのみ</language>
+	</row>
+
+	<row id="ITEMNAME_160">
+		<language name="JPN" width="256">ウイのみ</language>
+		<language name="JPN_KANJI" width="256">ウイのみ</language>
+	</row>
+
+	<row id="ITEMNAME_161">
+		<language name="JPN" width="256">マゴのみ</language>
+		<language name="JPN_KANJI" width="256">マゴのみ</language>
+	</row>
+
+	<row id="ITEMNAME_162">
+		<language name="JPN" width="256">バンジのみ</language>
+		<language name="JPN_KANJI" width="256">バンジのみ</language>
+	</row>
+
+	<row id="ITEMNAME_163">
+		<language name="JPN" width="256">イアのみ</language>
+		<language name="JPN_KANJI" width="256">イアのみ</language>
+	</row>
+
+	<row id="ITEMNAME_164">
+		<language name="JPN" width="256">ズリのみ</language>
+		<language name="JPN_KANJI" width="256">ズリのみ</language>
+	</row>
+
+	<row id="ITEMNAME_165">
+		<language name="JPN" width="256">ブリーのみ</language>
+		<language name="JPN_KANJI" width="256">ブリーのみ</language>
+	</row>
+
+	<row id="ITEMNAME_166">
+		<language name="JPN" width="256">ナナのみ</language>
+		<language name="JPN_KANJI" width="256">ナナのみ</language>
+	</row>
+
+	<row id="ITEMNAME_167">
+		<language name="JPN" width="256">セシナのみ</language>
+		<language name="JPN_KANJI" width="256">セシナのみ</language>
+	</row>
+
+	<row id="ITEMNAME_168">
+		<language name="JPN" width="256">パイルのみ</language>
+		<language name="JPN_KANJI" width="256">パイルのみ</language>
+	</row>
+
+	<row id="ITEMNAME_169">
+		<language name="JPN" width="256">ザロクのみ</language>
+		<language name="JPN_KANJI" width="256">ザロクのみ</language>
+	</row>
+
+	<row id="ITEMNAME_170">
+		<language name="JPN" width="256">ネコブのみ</language>
+		<language name="JPN_KANJI" width="256">ネコブのみ</language>
+	</row>
+
+	<row id="ITEMNAME_171">
+		<language name="JPN" width="256">タポルのみ</language>
+		<language name="JPN_KANJI" width="256">タポルのみ</language>
+	</row>
+
+	<row id="ITEMNAME_172">
+		<language name="JPN" width="256">ロメのみ</language>
+		<language name="JPN_KANJI" width="256">ロメのみ</language>
+	</row>
+
+	<row id="ITEMNAME_173">
+		<language name="JPN" width="256">ウブのみ</language>
+		<language name="JPN_KANJI" width="256">ウブのみ</language>
+	</row>
+
+	<row id="ITEMNAME_174">
+		<language name="JPN" width="256">マトマのみ</language>
+		<language name="JPN_KANJI" width="256">マトマのみ</language>
+	</row>
+
+	<row id="ITEMNAME_175">
+		<language name="JPN" width="256">モコシのみ</language>
+		<language name="JPN_KANJI" width="256">モコシのみ</language>
+	</row>
+
+	<row id="ITEMNAME_176">
+		<language name="JPN" width="256">ゴスのみ</language>
+		<language name="JPN_KANJI" width="256">ゴスのみ</language>
+	</row>
+
+	<row id="ITEMNAME_177">
+		<language name="JPN" width="256">ラブタのみ</language>
+		<language name="JPN_KANJI" width="256">ラブタのみ</language>
+	</row>
+
+	<row id="ITEMNAME_178">
+		<language name="JPN" width="256">ノメルのみ</language>
+		<language name="JPN_KANJI" width="256">ノメルのみ</language>
+	</row>
+
+	<row id="ITEMNAME_179">
+		<language name="JPN" width="256">ノワキのみ</language>
+		<language name="JPN_KANJI" width="256">ノワキのみ</language>
+	</row>
+
+	<row id="ITEMNAME_180">
+		<language name="JPN" width="256">シーヤのみ</language>
+		<language name="JPN_KANJI" width="256">シーヤのみ</language>
+	</row>
+
+	<row id="ITEMNAME_181">
+		<language name="JPN" width="256">カイスのみ</language>
+		<language name="JPN_KANJI" width="256">カイスのみ</language>
+	</row>
+
+	<row id="ITEMNAME_182">
+		<language name="JPN" width="256">ドリのみ</language>
+		<language name="JPN_KANJI" width="256">ドリのみ</language>
+	</row>
+
+	<row id="ITEMNAME_183">
+		<language name="JPN" width="256">ベリブのみ</language>
+		<language name="JPN_KANJI" width="256">ベリブのみ</language>
+	</row>
+
+	<row id="ITEMNAME_184">
+		<language name="JPN" width="256">オッカのみ</language>
+		<language name="JPN_KANJI" width="256">オッカのみ</language>
+	</row>
+
+	<row id="ITEMNAME_185">
+		<language name="JPN" width="256">イトケのみ</language>
+		<language name="JPN_KANJI" width="256">イトケのみ</language>
+	</row>
+
+	<row id="ITEMNAME_186">
+		<language name="JPN" width="256">ソクノのみ</language>
+		<language name="JPN_KANJI" width="256">ソクノのみ</language>
+	</row>
+
+	<row id="ITEMNAME_187">
+		<language name="JPN" width="256">リンドのみ</language>
+		<language name="JPN_KANJI" width="256">リンドのみ</language>
+	</row>
+
+	<row id="ITEMNAME_188">
+		<language name="JPN" width="256">ヤチェのみ</language>
+		<language name="JPN_KANJI" width="256">ヤチェのみ</language>
+	</row>
+
+	<row id="ITEMNAME_189">
+		<language name="JPN" width="256">ヨプのみ</language>
+		<language name="JPN_KANJI" width="256">ヨプのみ</language>
+	</row>
+
+	<row id="ITEMNAME_190">
+		<language name="JPN" width="256">ビアーのみ</language>
+		<language name="JPN_KANJI" width="256">ビアーのみ</language>
+	</row>
+
+	<row id="ITEMNAME_191">
+		<language name="JPN" width="256">シュカのみ</language>
+		<language name="JPN_KANJI" width="256">シュカのみ</language>
+	</row>
+
+	<row id="ITEMNAME_192">
+		<language name="JPN" width="256">バコウのみ</language>
+		<language name="JPN_KANJI" width="256">バコウのみ</language>
+	</row>
+
+	<row id="ITEMNAME_193">
+		<language name="JPN" width="256">ウタンのみ</language>
+		<language name="JPN_KANJI" width="256">ウタンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_194">
+		<language name="JPN" width="256">タンガのみ</language>
+		<language name="JPN_KANJI" width="256">タンガのみ</language>
+	</row>
+
+	<row id="ITEMNAME_195">
+		<language name="JPN" width="256">ヨロギのみ</language>
+		<language name="JPN_KANJI" width="256">ヨロギのみ</language>
+	</row>
+
+	<row id="ITEMNAME_196">
+		<language name="JPN" width="256">カシブのみ</language>
+		<language name="JPN_KANJI" width="256">カシブのみ</language>
+	</row>
+
+	<row id="ITEMNAME_197">
+		<language name="JPN" width="256">ハバンのみ</language>
+		<language name="JPN_KANJI" width="256">ハバンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_198">
+		<language name="JPN" width="256">ナモのみ</language>
+		<language name="JPN_KANJI" width="256">ナモのみ</language>
+	</row>
+
+	<row id="ITEMNAME_199">
+		<language name="JPN" width="256">リリバのみ</language>
+		<language name="JPN_KANJI" width="256">リリバのみ</language>
+	</row>
+
+	<row id="ITEMNAME_200">
+		<language name="JPN" width="256">ホズのみ</language>
+		<language name="JPN_KANJI" width="256">ホズのみ</language>
+	</row>
+
+	<row id="ITEMNAME_201">
+		<language name="JPN" width="256">チイラのみ</language>
+		<language name="JPN_KANJI" width="256">チイラのみ</language>
+	</row>
+
+	<row id="ITEMNAME_202">
+		<language name="JPN" width="256">リュガのみ</language>
+		<language name="JPN_KANJI" width="256">リュガのみ</language>
+	</row>
+
+	<row id="ITEMNAME_203">
+		<language name="JPN" width="256">カムラのみ</language>
+		<language name="JPN_KANJI" width="256">カムラのみ</language>
+	</row>
+
+	<row id="ITEMNAME_204">
+		<language name="JPN" width="256">ヤタピのみ</language>
+		<language name="JPN_KANJI" width="256">ヤタピのみ</language>
+	</row>
+
+	<row id="ITEMNAME_205">
+		<language name="JPN" width="256">ズアのみ</language>
+		<language name="JPN_KANJI" width="256">ズアのみ</language>
+	</row>
+
+	<row id="ITEMNAME_206">
+		<language name="JPN" width="256">サンのみ</language>
+		<language name="JPN_KANJI" width="256">サンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_207">
+		<language name="JPN" width="256">スターのみ</language>
+		<language name="JPN_KANJI" width="256">スターのみ</language>
+	</row>
+
+	<row id="ITEMNAME_208">
+		<language name="JPN" width="256">ナゾのみ</language>
+		<language name="JPN_KANJI" width="256">ナゾのみ</language>
+	</row>
+
+	<row id="ITEMNAME_209">
+		<language name="JPN" width="256">ミクルのみ</language>
+		<language name="JPN_KANJI" width="256">ミクルのみ</language>
+	</row>
+
+	<row id="ITEMNAME_210">
+		<language name="JPN" width="256">イバンのみ</language>
+		<language name="JPN_KANJI" width="256">イバンのみ</language>
+	</row>
+
+	<row id="ITEMNAME_211">
+		<language name="JPN" width="256">ジャポのみ</language>
+		<language name="JPN_KANJI" width="256">ジャポのみ</language>
+	</row>
+
+	<row id="ITEMNAME_212">
+		<language name="JPN" width="256">レンブのみ</language>
+		<language name="JPN_KANJI" width="256">レンブのみ</language>
+	</row>
+
+	<row id="ITEMNAME_213">
+		<language name="JPN" width="256">ひかりのこな</language>
+		<language name="JPN_KANJI" width="256">ひかりのこな</language>
+	</row>
+
+	<row id="ITEMNAME_214">
+		<language name="JPN" width="256">しろいハーブ</language>
+		<language name="JPN_KANJI" width="256">しろいハーブ</language>
+	</row>
+
+	<row id="ITEMNAME_215">
+		<language name="JPN" width="256">きょうせいギプス</language>
+		<language name="JPN_KANJI" width="256">きょうせいギプス</language>
+	</row>
+
+	<row id="ITEMNAME_216">
+		<language name="JPN" width="256">がくしゅうそうち</language>
+		<language name="JPN_KANJI" width="256">がくしゅうそうち</language>
+	</row>
+
+	<row id="ITEMNAME_217">
+		<language name="JPN" width="256">せんせいのツメ</language>
+		<language name="JPN_KANJI" width="256">せんせいのツメ</language>
+	</row>
+
+	<row id="ITEMNAME_218">
+		<language name="JPN" width="256">やすらぎのすず</language>
+		<language name="JPN_KANJI" width="256">やすらぎのすず</language>
+	</row>
+
+	<row id="ITEMNAME_219">
+		<language name="JPN" width="256">メンタルハーブ</language>
+		<language name="JPN_KANJI" width="256">メンタルハーブ</language>
+	</row>
+
+	<row id="ITEMNAME_220">
+		<language name="JPN" width="256">こだわりハチマキ</language>
+		<language name="JPN_KANJI" width="256">こだわりハチマキ</language>
+	</row>
+
+	<row id="ITEMNAME_221">
+		<language name="JPN" width="256">おうじゃのしるし</language>
+		<language name="JPN_KANJI" width="256">おうじゃのしるし</language>
+	</row>
+
+	<row id="ITEMNAME_222">
+		<language name="JPN" width="256">ぎんのこな</language>
+		<language name="JPN_KANJI" width="256">ぎんのこな</language>
+	</row>
+
+	<row id="ITEMNAME_223">
+		<language name="JPN" width="256">おまもりこばん</language>
+		<language name="JPN_KANJI" width="256">おまもりこばん</language>
+	</row>
+
+	<row id="ITEMNAME_224">
+		<language name="JPN" width="256">きよめのおふだ</language>
+		<language name="JPN_KANJI" width="256">きよめのおふだ</language>
+	</row>
+
+	<row id="ITEMNAME_225">
+		<language name="JPN" width="256">こころのしずく</language>
+		<language name="JPN_KANJI" width="256">こころのしずく</language>
+	</row>
+
+	<row id="ITEMNAME_226">
+		<language name="JPN" width="256">しんかいのキバ</language>
+		<language name="JPN_KANJI" width="256">しんかいのキバ</language>
+	</row>
+
+	<row id="ITEMNAME_227">
+		<language name="JPN" width="256">しんかいのウロコ</language>
+		<language name="JPN_KANJI" width="256">しんかいのウロコ</language>
+	</row>
+
+	<row id="ITEMNAME_228">
+		<language name="JPN" width="256">けむりだま</language>
+		<language name="JPN_KANJI" width="256">けむりだま</language>
+	</row>
+
+	<row id="ITEMNAME_229">
+		<language name="JPN" width="256">かわらずのいし</language>
+		<language name="JPN_KANJI" width="256">かわらずのいし</language>
+	</row>
+
+	<row id="ITEMNAME_230">
+		<language name="JPN" width="256">きあいのハチマキ</language>
+		<language name="JPN_KANJI" width="256">きあいのハチマキ</language>
+	</row>
+
+	<row id="ITEMNAME_231">
+		<language name="JPN" width="256">しあわせタマゴ</language>
+		<language name="JPN_KANJI" width="256">しあわせタマゴ</language>
+	</row>
+
+	<row id="ITEMNAME_232">
+		<language name="JPN" width="256">ピントレンズ</language>
+		<language name="JPN_KANJI" width="256">ピントレンズ</language>
+	</row>
+
+	<row id="ITEMNAME_233">
+		<language name="JPN" width="256">メタルコート</language>
+		<language name="JPN_KANJI" width="256">メタルコート</language>
+	</row>
+
+	<row id="ITEMNAME_234">
+		<language name="JPN" width="256">たべのこし</language>
+		<language name="JPN_KANJI" width="256">たべのこし</language>
+	</row>
+
+	<row id="ITEMNAME_235">
+		<language name="JPN" width="256">りゅうのウロコ</language>
+		<language name="JPN_KANJI" width="256">りゅうのウロコ</language>
+	</row>
+
+	<row id="ITEMNAME_236">
+		<language name="JPN" width="256">でんきだま</language>
+		<language name="JPN_KANJI" width="256">でんきだま</language>
+	</row>
+
+	<row id="ITEMNAME_237">
+		<language name="JPN" width="256">やわらかいすな</language>
+		<language name="JPN_KANJI" width="256">やわらかいすな</language>
+	</row>
+
+	<row id="ITEMNAME_238">
+		<language name="JPN" width="256">かたいいし</language>
+		<language name="JPN_KANJI" width="256">かたいいし</language>
+	</row>
+
+	<row id="ITEMNAME_239">
+		<language name="JPN" width="256">きせきのタネ</language>
+		<language name="JPN_KANJI" width="256">きせきのタネ</language>
+	</row>
+
+	<row id="ITEMNAME_240">
+		<language name="JPN" width="256">くろいメガネ</language>
+		<language name="JPN_KANJI" width="256">くろいメガネ</language>
+	</row>
+
+	<row id="ITEMNAME_241">
+		<language name="JPN" width="256">くろおび</language>
+		<language name="JPN_KANJI" width="256">くろおび</language>
+	</row>
+
+	<row id="ITEMNAME_242">
+		<language name="JPN" width="256">じしゃく</language>
+		<language name="JPN_KANJI" width="256">じしゃく</language>
+	</row>
+
+	<row id="ITEMNAME_243">
+		<language name="JPN" width="256">しんぴのしずく</language>
+		<language name="JPN_KANJI" width="256">しんぴのしずく</language>
+	</row>
+
+	<row id="ITEMNAME_244">
+		<language name="JPN" width="256">するどいくちばし</language>
+		<language name="JPN_KANJI" width="256">するどいくちばし</language>
+	</row>
+
+	<row id="ITEMNAME_245">
+		<language name="JPN" width="256">どくバリ</language>
+		<language name="JPN_KANJI" width="256">どくバリ</language>
+	</row>
+
+	<row id="ITEMNAME_246">
+		<language name="JPN" width="256">とけないこおり</language>
+		<language name="JPN_KANJI" width="256">とけないこおり</language>
+	</row>
+
+	<row id="ITEMNAME_247">
+		<language name="JPN" width="256">のろいのおふだ</language>
+		<language name="JPN_KANJI" width="256">のろいのおふだ</language>
+	</row>
+
+	<row id="ITEMNAME_248">
+		<language name="JPN" width="256">まがったスプーン</language>
+		<language name="JPN_KANJI" width="256">まがったスプーン</language>
+	</row>
+
+	<row id="ITEMNAME_249">
+		<language name="JPN" width="256">もくたん</language>
+		<language name="JPN_KANJI" width="256">もくたん</language>
+	</row>
+
+	<row id="ITEMNAME_250">
+		<language name="JPN" width="256">りゅうのキバ</language>
+		<language name="JPN_KANJI" width="256">りゅうのキバ</language>
+	</row>
+
+	<row id="ITEMNAME_251">
+		<language name="JPN" width="256">シルクのスカーフ</language>
+		<language name="JPN_KANJI" width="256">シルクのスカーフ</language>
+	</row>
+
+	<row id="ITEMNAME_252">
+		<language name="JPN" width="256">アップグレード</language>
+		<language name="JPN_KANJI" width="256">アップグレード</language>
+	</row>
+
+	<row id="ITEMNAME_253">
+		<language name="JPN" width="256">かいがらのすず</language>
+		<language name="JPN_KANJI" width="256">かいがらのすず</language>
+	</row>
+
+	<row id="ITEMNAME_254">
+		<language name="JPN" width="256">うしおのおこう</language>
+		<language name="JPN_KANJI" width="256">うしおのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_255">
+		<language name="JPN" width="256">のんきのおこう</language>
+		<language name="JPN_KANJI" width="256">のんきのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_256">
+		<language name="JPN" width="256">ラッキーパンチ</language>
+		<language name="JPN_KANJI" width="256">ラッキーパンチ</language>
+	</row>
+
+	<row id="ITEMNAME_257">
+		<language name="JPN" width="256">メタルパウダー</language>
+		<language name="JPN_KANJI" width="256">メタルパウダー</language>
+	</row>
+
+	<row id="ITEMNAME_258">
+		<language name="JPN" width="256">ふといホネ</language>
+		<language name="JPN_KANJI" width="256">ふといホネ</language>
+	</row>
+
+	<row id="ITEMNAME_259">
+		<language name="JPN" width="256">ながねぎ</language>
+		<language name="JPN_KANJI" width="256">ながねぎ</language>
+	</row>
+
+	<row id="ITEMNAME_260">
+		<language name="JPN" width="256">あかいバンダナ</language>
+		<language name="JPN_KANJI" width="256">あかいバンダナ</language>
+	</row>
+
+	<row id="ITEMNAME_261">
+		<language name="JPN" width="256">あおいバンダナ</language>
+		<language name="JPN_KANJI" width="256">あおいバンダナ</language>
+	</row>
+
+	<row id="ITEMNAME_262">
+		<language name="JPN" width="256">ピンクのバンダナ</language>
+		<language name="JPN_KANJI" width="256">ピンクのバンダナ</language>
+	</row>
+
+	<row id="ITEMNAME_263">
+		<language name="JPN" width="256">みどりのバンダナ</language>
+		<language name="JPN_KANJI" width="256">みどりのバンダナ</language>
+	</row>
+
+	<row id="ITEMNAME_264">
+		<language name="JPN" width="256">きいろのバンダナ</language>
+		<language name="JPN_KANJI" width="256">きいろのバンダナ</language>
+	</row>
+
+	<row id="ITEMNAME_265">
+		<language name="JPN" width="256">こうかくレンズ</language>
+		<language name="JPN_KANJI" width="256">こうかくレンズ</language>
+	</row>
+
+	<row id="ITEMNAME_266">
+		<language name="JPN" width="256">ちからのハチマキ</language>
+		<language name="JPN_KANJI" width="256">ちからのハチマキ</language>
+	</row>
+
+	<row id="ITEMNAME_267">
+		<language name="JPN" width="256">ものしりメガネ</language>
+		<language name="JPN_KANJI" width="256">ものしりメガネ</language>
+	</row>
+
+	<row id="ITEMNAME_268">
+		<language name="JPN" width="256">たつじんのおび</language>
+		<language name="JPN_KANJI" width="256">たつじんのおび</language>
+	</row>
+
+	<row id="ITEMNAME_269">
+		<language name="JPN" width="256">ひかりのねんど</language>
+		<language name="JPN_KANJI" width="256">ひかりのねんど</language>
+	</row>
+
+	<row id="ITEMNAME_270">
+		<language name="JPN" width="256">いのちのたま</language>
+		<language name="JPN_KANJI" width="256">いのちのたま</language>
+	</row>
+
+	<row id="ITEMNAME_271">
+		<language name="JPN" width="256">パワフルハーブ</language>
+		<language name="JPN_KANJI" width="256">パワフルハーブ</language>
+	</row>
+
+	<row id="ITEMNAME_272">
+		<language name="JPN" width="256">どくどくだま</language>
+		<language name="JPN_KANJI" width="256">どくどくだま</language>
+	</row>
+
+	<row id="ITEMNAME_273">
+		<language name="JPN" width="256">かえんだま</language>
+		<language name="JPN_KANJI" width="256">かえんだま</language>
+	</row>
+
+	<row id="ITEMNAME_274">
+		<language name="JPN" width="256">スピードパウダー</language>
+		<language name="JPN_KANJI" width="256">スピードパウダー</language>
+	</row>
+
+	<row id="ITEMNAME_275">
+		<language name="JPN" width="256">きあいのタスキ</language>
+		<language name="JPN_KANJI" width="256">きあいのタスキ</language>
+	</row>
+
+	<row id="ITEMNAME_276">
+		<language name="JPN" width="256">フォーカスレンズ</language>
+		<language name="JPN_KANJI" width="256">フォーカスレンズ</language>
+	</row>
+
+	<row id="ITEMNAME_277">
+		<language name="JPN" width="256">メトロノーム</language>
+		<language name="JPN_KANJI" width="256">メトロノーム</language>
+	</row>
+
+	<row id="ITEMNAME_278">
+		<language name="JPN" width="256">くろいてっきゅう</language>
+		<language name="JPN_KANJI" width="256">くろいてっきゅう</language>
+	</row>
+
+	<row id="ITEMNAME_279">
+		<language name="JPN" width="256">こうこうのしっぽ</language>
+		<language name="JPN_KANJI" width="256">こうこうのしっぽ</language>
+	</row>
+
+	<row id="ITEMNAME_280">
+		<language name="JPN" width="256">あかいいと</language>
+		<language name="JPN_KANJI" width="256">あかいいと</language>
+	</row>
+
+	<row id="ITEMNAME_281">
+		<language name="JPN" width="256">くろいヘドロ</language>
+		<language name="JPN_KANJI" width="256">くろいヘドロ</language>
+	</row>
+
+	<row id="ITEMNAME_282">
+		<language name="JPN" width="256">つめたいいわ</language>
+		<language name="JPN_KANJI" width="256">つめたいいわ</language>
+	</row>
+
+	<row id="ITEMNAME_283">
+		<language name="JPN" width="256">さらさらいわ</language>
+		<language name="JPN_KANJI" width="256">さらさらいわ</language>
+	</row>
+
+	<row id="ITEMNAME_284">
+		<language name="JPN" width="256">あついいわ</language>
+		<language name="JPN_KANJI" width="256">あついいわ</language>
+	</row>
+
+	<row id="ITEMNAME_285">
+		<language name="JPN" width="256">しめったいわ</language>
+		<language name="JPN_KANJI" width="256">しめったいわ</language>
+	</row>
+
+	<row id="ITEMNAME_286">
+		<language name="JPN" width="256">ねばりのかぎづめ</language>
+		<language name="JPN_KANJI" width="256">ねばりのかぎづめ</language>
+	</row>
+
+	<row id="ITEMNAME_287">
+		<language name="JPN" width="256">こだわりスカーフ</language>
+		<language name="JPN_KANJI" width="256">こだわりスカーフ</language>
+	</row>
+
+	<row id="ITEMNAME_288">
+		<language name="JPN" width="256">くっつきバリ</language>
+		<language name="JPN_KANJI" width="256">くっつきバリ</language>
+	</row>
+
+	<row id="ITEMNAME_289">
+		<language name="JPN" width="256">パワーリスト</language>
+		<language name="JPN_KANJI" width="256">パワーリスト</language>
+	</row>
+
+	<row id="ITEMNAME_290">
+		<language name="JPN" width="256">パワーベルト</language>
+		<language name="JPN_KANJI" width="256">パワーベルト</language>
+	</row>
+
+	<row id="ITEMNAME_291">
+		<language name="JPN" width="256">パワーレンズ</language>
+		<language name="JPN_KANJI" width="256">パワーレンズ</language>
+	</row>
+
+	<row id="ITEMNAME_292">
+		<language name="JPN" width="256">パワーバンド</language>
+		<language name="JPN_KANJI" width="256">パワーバンド</language>
+	</row>
+
+	<row id="ITEMNAME_293">
+		<language name="JPN" width="256">パワーアンクル</language>
+		<language name="JPN_KANJI" width="256">パワーアンクル</language>
+	</row>
+
+	<row id="ITEMNAME_294">
+		<language name="JPN" width="256">パワーウエイト</language>
+		<language name="JPN_KANJI" width="256">パワーウエイト</language>
+	</row>
+
+	<row id="ITEMNAME_295">
+		<language name="JPN" width="256">きれいなぬけがら</language>
+		<language name="JPN_KANJI" width="256">きれいなぬけがら</language>
+	</row>
+
+	<row id="ITEMNAME_296">
+		<language name="JPN" width="256">おおきなねっこ</language>
+		<language name="JPN_KANJI" width="256">おおきなねっこ</language>
+	</row>
+
+	<row id="ITEMNAME_297">
+		<language name="JPN" width="256">こだわりメガネ</language>
+		<language name="JPN_KANJI" width="256">こだわりメガネ</language>
+	</row>
+
+	<row id="ITEMNAME_298">
+		<language name="JPN" width="256">ひのたまプレート</language>
+		<language name="JPN_KANJI" width="256">ひのたまプレート</language>
+	</row>
+
+	<row id="ITEMNAME_299">
+		<language name="JPN" width="256">しずくプレート</language>
+		<language name="JPN_KANJI" width="256">しずくプレート</language>
+	</row>
+
+	<row id="ITEMNAME_300">
+		<language name="JPN" width="256">いかずちプレート</language>
+		<language name="JPN_KANJI" width="256">いかずちプレート</language>
+	</row>
+
+	<row id="ITEMNAME_301">
+		<language name="JPN" width="256">みどりのプレート</language>
+		<language name="JPN_KANJI" width="256">みどりのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_302">
+		<language name="JPN" width="256">つららのプレート</language>
+		<language name="JPN_KANJI" width="256">つららのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_303">
+		<language name="JPN" width="256">こぶしのプレート</language>
+		<language name="JPN_KANJI" width="256">こぶしのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_304">
+		<language name="JPN" width="256">もうどくプレート</language>
+		<language name="JPN_KANJI" width="256">もうどくプレート</language>
+	</row>
+
+	<row id="ITEMNAME_305">
+		<language name="JPN" width="256">だいちのプレート</language>
+		<language name="JPN_KANJI" width="256">だいちのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_306">
+		<language name="JPN" width="256">あおぞらプレート</language>
+		<language name="JPN_KANJI" width="256">あおぞらプレート</language>
+	</row>
+
+	<row id="ITEMNAME_307">
+		<language name="JPN" width="256">ふしぎのプレート</language>
+		<language name="JPN_KANJI" width="256">ふしぎのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_308">
+		<language name="JPN" width="256">たまむしプレート</language>
+		<language name="JPN_KANJI" width="256">たまむしプレート</language>
+	</row>
+
+	<row id="ITEMNAME_309">
+		<language name="JPN" width="256">がんせきプレート</language>
+		<language name="JPN_KANJI" width="256">がんせきプレート</language>
+	</row>
+
+	<row id="ITEMNAME_310">
+		<language name="JPN" width="256">もののけプレート</language>
+		<language name="JPN_KANJI" width="256">もののけプレート</language>
+	</row>
+
+	<row id="ITEMNAME_311">
+		<language name="JPN" width="256">りゅうのプレート</language>
+		<language name="JPN_KANJI" width="256">りゅうのプレート</language>
+	</row>
+
+	<row id="ITEMNAME_312">
+		<language name="JPN" width="256">こわもてプレート</language>
+		<language name="JPN_KANJI" width="256">こわもてプレート</language>
+	</row>
+
+	<row id="ITEMNAME_313">
+		<language name="JPN" width="256">こうてつプレート</language>
+		<language name="JPN_KANJI" width="256">こうてつプレート</language>
+	</row>
+
+	<row id="ITEMNAME_314">
+		<language name="JPN" width="256">あやしいおこう</language>
+		<language name="JPN_KANJI" width="256">あやしいおこう</language>
+	</row>
+
+	<row id="ITEMNAME_315">
+		<language name="JPN" width="256">がんせきおこう</language>
+		<language name="JPN_KANJI" width="256">がんせきおこう</language>
+	</row>
+
+	<row id="ITEMNAME_316">
+		<language name="JPN" width="256">まんぷくおこう</language>
+		<language name="JPN_KANJI" width="256">まんぷくおこう</language>
+	</row>
+
+	<row id="ITEMNAME_317">
+		<language name="JPN" width="256">さざなみのおこう</language>
+		<language name="JPN_KANJI" width="256">さざなみのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_318">
+		<language name="JPN" width="256">おはなのおこう</language>
+		<language name="JPN_KANJI" width="256">おはなのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_319">
+		<language name="JPN" width="256">こううんのおこう</language>
+		<language name="JPN_KANJI" width="256">こううんのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_320">
+		<language name="JPN" width="256">きよめのおこう</language>
+		<language name="JPN_KANJI" width="256">きよめのおこう</language>
+	</row>
+
+	<row id="ITEMNAME_321">
+		<language name="JPN" width="256">プロテクター</language>
+		<language name="JPN_KANJI" width="256">プロテクター</language>
+	</row>
+
+	<row id="ITEMNAME_322">
+		<language name="JPN" width="256">エレキブースター</language>
+		<language name="JPN_KANJI" width="256">エレキブースター</language>
+	</row>
+
+	<row id="ITEMNAME_323">
+		<language name="JPN" width="256">マグマブースター</language>
+		<language name="JPN_KANJI" width="256">マグマブースター</language>
+	</row>
+
+	<row id="ITEMNAME_324">
+		<language name="JPN" width="256">あやしいパッチ</language>
+		<language name="JPN_KANJI" width="256">あやしいパッチ</language>
+	</row>
+
+	<row id="ITEMNAME_325">
+		<language name="JPN" width="256">れいかいのぬの</language>
+		<language name="JPN_KANJI" width="256">れいかいのぬの</language>
+	</row>
+
+	<row id="ITEMNAME_326">
+		<language name="JPN" width="256">するどいツメ</language>
+		<language name="JPN_KANJI" width="256">するどいツメ</language>
+	</row>
+
+	<row id="ITEMNAME_327">
+		<language name="JPN" width="256">するどいキバ</language>
+		<language name="JPN_KANJI" width="256">するどいキバ</language>
+	</row>
+
+	<row id="ITEMNAME_328">
+		<language name="JPN" width="256">わざマシン０１</language>
+		<language name="JPN_KANJI" width="256">わざマシン０１</language>
+	</row>
+
+	<row id="ITEMNAME_329">
+		<language name="JPN" width="256">わざマシン０２</language>
+		<language name="JPN_KANJI" width="256">わざマシン０２</language>
+	</row>
+
+	<row id="ITEMNAME_330">
+		<language name="JPN" width="256">わざマシン０３</language>
+		<language name="JPN_KANJI" width="256">わざマシン０３</language>
+	</row>
+
+	<row id="ITEMNAME_331">
+		<language name="JPN" width="256">わざマシン０４</language>
+		<language name="JPN_KANJI" width="256">わざマシン０４</language>
+	</row>
+
+	<row id="ITEMNAME_332">
+		<language name="JPN" width="256">わざマシン０５</language>
+		<language name="JPN_KANJI" width="256">わざマシン０５</language>
+	</row>
+
+	<row id="ITEMNAME_333">
+		<language name="JPN" width="256">わざマシン０６</language>
+		<language name="JPN_KANJI" width="256">わざマシン０６</language>
+	</row>
+
+	<row id="ITEMNAME_334">
+		<language name="JPN" width="256">わざマシン０７</language>
+		<language name="JPN_KANJI" width="256">わざマシン０７</language>
+	</row>
+
+	<row id="ITEMNAME_335">
+		<language name="JPN" width="256">わざマシン０８</language>
+		<language name="JPN_KANJI" width="256">わざマシン０８</language>
+	</row>
+
+	<row id="ITEMNAME_336">
+		<language name="JPN" width="256">わざマシン０９</language>
+		<language name="JPN_KANJI" width="256">わざマシン０９</language>
+	</row>
+
+	<row id="ITEMNAME_337">
+		<language name="JPN" width="256">わざマシン１０</language>
+		<language name="JPN_KANJI" width="256">わざマシン１０</language>
+	</row>
+
+	<row id="ITEMNAME_338">
+		<language name="JPN" width="256">わざマシン１１</language>
+		<language name="JPN_KANJI" width="256">わざマシン１１</language>
+	</row>
+
+	<row id="ITEMNAME_339">
+		<language name="JPN" width="256">わざマシン１２</language>
+		<language name="JPN_KANJI" width="256">わざマシン１２</language>
+	</row>
+
+	<row id="ITEMNAME_340">
+		<language name="JPN" width="256">わざマシン１３</language>
+		<language name="JPN_KANJI" width="256">わざマシン１３</language>
+	</row>
+
+	<row id="ITEMNAME_341">
+		<language name="JPN" width="256">わざマシン１４</language>
+		<language name="JPN_KANJI" width="256">わざマシン１４</language>
+	</row>
+
+	<row id="ITEMNAME_342">
+		<language name="JPN" width="256">わざマシン１５</language>
+		<language name="JPN_KANJI" width="256">わざマシン１５</language>
+	</row>
+
+	<row id="ITEMNAME_343">
+		<language name="JPN" width="256">わざマシン１６</language>
+		<language name="JPN_KANJI" width="256">わざマシン１６</language>
+	</row>
+
+	<row id="ITEMNAME_344">
+		<language name="JPN" width="256">わざマシン１７</language>
+		<language name="JPN_KANJI" width="256">わざマシン１７</language>
+	</row>
+
+	<row id="ITEMNAME_345">
+		<language name="JPN" width="256">わざマシン１８</language>
+		<language name="JPN_KANJI" width="256">わざマシン１８</language>
+	</row>
+
+	<row id="ITEMNAME_346">
+		<language name="JPN" width="256">わざマシン１９</language>
+		<language name="JPN_KANJI" width="256">わざマシン１９</language>
+	</row>
+
+	<row id="ITEMNAME_347">
+		<language name="JPN" width="256">わざマシン２０</language>
+		<language name="JPN_KANJI" width="256">わざマシン２０</language>
+	</row>
+
+	<row id="ITEMNAME_348">
+		<language name="JPN" width="256">わざマシン２１</language>
+		<language name="JPN_KANJI" width="256">わざマシン２１</language>
+	</row>
+
+	<row id="ITEMNAME_349">
+		<language name="JPN" width="256">わざマシン２２</language>
+		<language name="JPN_KANJI" width="256">わざマシン２２</language>
+	</row>
+
+	<row id="ITEMNAME_350">
+		<language name="JPN" width="256">わざマシン２３</language>
+		<language name="JPN_KANJI" width="256">わざマシン２３</language>
+	</row>
+
+	<row id="ITEMNAME_351">
+		<language name="JPN" width="256">わざマシン２４</language>
+		<language name="JPN_KANJI" width="256">わざマシン２４</language>
+	</row>
+
+	<row id="ITEMNAME_352">
+		<language name="JPN" width="256">わざマシン２５</language>
+		<language name="JPN_KANJI" width="256">わざマシン２５</language>
+	</row>
+
+	<row id="ITEMNAME_353">
+		<language name="JPN" width="256">わざマシン２６</language>
+		<language name="JPN_KANJI" width="256">わざマシン２６</language>
+	</row>
+
+	<row id="ITEMNAME_354">
+		<language name="JPN" width="256">わざマシン２７</language>
+		<language name="JPN_KANJI" width="256">わざマシン２７</language>
+	</row>
+
+	<row id="ITEMNAME_355">
+		<language name="JPN" width="256">わざマシン２８</language>
+		<language name="JPN_KANJI" width="256">わざマシン２８</language>
+	</row>
+
+	<row id="ITEMNAME_356">
+		<language name="JPN" width="256">わざマシン２９</language>
+		<language name="JPN_KANJI" width="256">わざマシン２９</language>
+	</row>
+
+	<row id="ITEMNAME_357">
+		<language name="JPN" width="256">わざマシン３０</language>
+		<language name="JPN_KANJI" width="256">わざマシン３０</language>
+	</row>
+
+	<row id="ITEMNAME_358">
+		<language name="JPN" width="256">わざマシン３１</language>
+		<language name="JPN_KANJI" width="256">わざマシン３１</language>
+	</row>
+
+	<row id="ITEMNAME_359">
+		<language name="JPN" width="256">わざマシン３２</language>
+		<language name="JPN_KANJI" width="256">わざマシン３２</language>
+	</row>
+
+	<row id="ITEMNAME_360">
+		<language name="JPN" width="256">わざマシン３３</language>
+		<language name="JPN_KANJI" width="256">わざマシン３３</language>
+	</row>
+
+	<row id="ITEMNAME_361">
+		<language name="JPN" width="256">わざマシン３４</language>
+		<language name="JPN_KANJI" width="256">わざマシン３４</language>
+	</row>
+
+	<row id="ITEMNAME_362">
+		<language name="JPN" width="256">わざマシン３５</language>
+		<language name="JPN_KANJI" width="256">わざマシン３５</language>
+	</row>
+
+	<row id="ITEMNAME_363">
+		<language name="JPN" width="256">わざマシン３６</language>
+		<language name="JPN_KANJI" width="256">わざマシン３６</language>
+	</row>
+
+	<row id="ITEMNAME_364">
+		<language name="JPN" width="256">わざマシン３７</language>
+		<language name="JPN_KANJI" width="256">わざマシン３７</language>
+	</row>
+
+	<row id="ITEMNAME_365">
+		<language name="JPN" width="256">わざマシン３８</language>
+		<language name="JPN_KANJI" width="256">わざマシン３８</language>
+	</row>
+
+	<row id="ITEMNAME_366">
+		<language name="JPN" width="256">わざマシン３９</language>
+		<language name="JPN_KANJI" width="256">わざマシン３９</language>
+	</row>
+
+	<row id="ITEMNAME_367">
+		<language name="JPN" width="256">わざマシン４０</language>
+		<language name="JPN_KANJI" width="256">わざマシン４０</language>
+	</row>
+
+	<row id="ITEMNAME_368">
+		<language name="JPN" width="256">わざマシン４１</language>
+		<language name="JPN_KANJI" width="256">わざマシン４１</language>
+	</row>
+
+	<row id="ITEMNAME_369">
+		<language name="JPN" width="256">わざマシン４２</language>
+		<language name="JPN_KANJI" width="256">わざマシン４２</language>
+	</row>
+
+	<row id="ITEMNAME_370">
+		<language name="JPN" width="256">わざマシン４３</language>
+		<language name="JPN_KANJI" width="256">わざマシン４３</language>
+	</row>
+
+	<row id="ITEMNAME_371">
+		<language name="JPN" width="256">わざマシン４４</language>
+		<language name="JPN_KANJI" width="256">わざマシン４４</language>
+	</row>
+
+	<row id="ITEMNAME_372">
+		<language name="JPN" width="256">わざマシン４５</language>
+		<language name="JPN_KANJI" width="256">わざマシン４５</language>
+	</row>
+
+	<row id="ITEMNAME_373">
+		<language name="JPN" width="256">わざマシン４６</language>
+		<language name="JPN_KANJI" width="256">わざマシン４６</language>
+	</row>
+
+	<row id="ITEMNAME_374">
+		<language name="JPN" width="256">わざマシン４７</language>
+		<language name="JPN_KANJI" width="256">わざマシン４７</language>
+	</row>
+
+	<row id="ITEMNAME_375">
+		<language name="JPN" width="256">わざマシン４８</language>
+		<language name="JPN_KANJI" width="256">わざマシン４８</language>
+	</row>
+
+	<row id="ITEMNAME_376">
+		<language name="JPN" width="256">わざマシン４９</language>
+		<language name="JPN_KANJI" width="256">わざマシン４９</language>
+	</row>
+
+	<row id="ITEMNAME_377">
+		<language name="JPN" width="256">わざマシン５０</language>
+		<language name="JPN_KANJI" width="256">わざマシン５０</language>
+	</row>
+
+	<row id="ITEMNAME_378">
+		<language name="JPN" width="256">わざマシン５１</language>
+		<language name="JPN_KANJI" width="256">わざマシン５１</language>
+	</row>
+
+	<row id="ITEMNAME_379">
+		<language name="JPN" width="256">わざマシン５２</language>
+		<language name="JPN_KANJI" width="256">わざマシン５２</language>
+	</row>
+
+	<row id="ITEMNAME_380">
+		<language name="JPN" width="256">わざマシン５３</language>
+		<language name="JPN_KANJI" width="256">わざマシン５３</language>
+	</row>
+
+	<row id="ITEMNAME_381">
+		<language name="JPN" width="256">わざマシン５４</language>
+		<language name="JPN_KANJI" width="256">わざマシン５４</language>
+	</row>
+
+	<row id="ITEMNAME_382">
+		<language name="JPN" width="256">わざマシン５５</language>
+		<language name="JPN_KANJI" width="256">わざマシン５５</language>
+	</row>
+
+	<row id="ITEMNAME_383">
+		<language name="JPN" width="256">わざマシン５６</language>
+		<language name="JPN_KANJI" width="256">わざマシン５６</language>
+	</row>
+
+	<row id="ITEMNAME_384">
+		<language name="JPN" width="256">わざマシン５７</language>
+		<language name="JPN_KANJI" width="256">わざマシン５７</language>
+	</row>
+
+	<row id="ITEMNAME_385">
+		<language name="JPN" width="256">わざマシン５８</language>
+		<language name="JPN_KANJI" width="256">わざマシン５８</language>
+	</row>
+
+	<row id="ITEMNAME_386">
+		<language name="JPN" width="256">わざマシン５９</language>
+		<language name="JPN_KANJI" width="256">わざマシン５９</language>
+	</row>
+
+	<row id="ITEMNAME_387">
+		<language name="JPN" width="256">わざマシン６０</language>
+		<language name="JPN_KANJI" width="256">わざマシン６０</language>
+	</row>
+
+	<row id="ITEMNAME_388">
+		<language name="JPN" width="256">わざマシン６１</language>
+		<language name="JPN_KANJI" width="256">わざマシン６１</language>
+	</row>
+
+	<row id="ITEMNAME_389">
+		<language name="JPN" width="256">わざマシン６２</language>
+		<language name="JPN_KANJI" width="256">わざマシン６２</language>
+	</row>
+
+	<row id="ITEMNAME_390">
+		<language name="JPN" width="256">わざマシン６３</language>
+		<language name="JPN_KANJI" width="256">わざマシン６３</language>
+	</row>
+
+	<row id="ITEMNAME_391">
+		<language name="JPN" width="256">わざマシン６４</language>
+		<language name="JPN_KANJI" width="256">わざマシン６４</language>
+	</row>
+
+	<row id="ITEMNAME_392">
+		<language name="JPN" width="256">わざマシン６５</language>
+		<language name="JPN_KANJI" width="256">わざマシン６５</language>
+	</row>
+
+	<row id="ITEMNAME_393">
+		<language name="JPN" width="256">わざマシン６６</language>
+		<language name="JPN_KANJI" width="256">わざマシン６６</language>
+	</row>
+
+	<row id="ITEMNAME_394">
+		<language name="JPN" width="256">わざマシン６７</language>
+		<language name="JPN_KANJI" width="256">わざマシン６７</language>
+	</row>
+
+	<row id="ITEMNAME_395">
+		<language name="JPN" width="256">わざマシン６８</language>
+		<language name="JPN_KANJI" width="256">わざマシン６８</language>
+	</row>
+
+	<row id="ITEMNAME_396">
+		<language name="JPN" width="256">わざマシン６９</language>
+		<language name="JPN_KANJI" width="256">わざマシン６９</language>
+	</row>
+
+	<row id="ITEMNAME_397">
+		<language name="JPN" width="256">わざマシン７０</language>
+		<language name="JPN_KANJI" width="256">わざマシン７０</language>
+	</row>
+
+	<row id="ITEMNAME_398">
+		<language name="JPN" width="256">わざマシン７１</language>
+		<language name="JPN_KANJI" width="256">わざマシン７１</language>
+	</row>
+
+	<row id="ITEMNAME_399">
+		<language name="JPN" width="256">わざマシン７２</language>
+		<language name="JPN_KANJI" width="256">わざマシン７２</language>
+	</row>
+
+	<row id="ITEMNAME_400">
+		<language name="JPN" width="256">わざマシン７３</language>
+		<language name="JPN_KANJI" width="256">わざマシン７３</language>
+	</row>
+
+	<row id="ITEMNAME_401">
+		<language name="JPN" width="256">わざマシン７４</language>
+		<language name="JPN_KANJI" width="256">わざマシン７４</language>
+	</row>
+
+	<row id="ITEMNAME_402">
+		<language name="JPN" width="256">わざマシン７５</language>
+		<language name="JPN_KANJI" width="256">わざマシン７５</language>
+	</row>
+
+	<row id="ITEMNAME_403">
+		<language name="JPN" width="256">わざマシン７６</language>
+		<language name="JPN_KANJI" width="256">わざマシン７６</language>
+	</row>
+
+	<row id="ITEMNAME_404">
+		<language name="JPN" width="256">わざマシン７７</language>
+		<language name="JPN_KANJI" width="256">わざマシン７７</language>
+	</row>
+
+	<row id="ITEMNAME_405">
+		<language name="JPN" width="256">わざマシン７８</language>
+		<language name="JPN_KANJI" width="256">わざマシン７８</language>
+	</row>
+
+	<row id="ITEMNAME_406">
+		<language name="JPN" width="256">わざマシン７９</language>
+		<language name="JPN_KANJI" width="256">わざマシン７９</language>
+	</row>
+
+	<row id="ITEMNAME_407">
+		<language name="JPN" width="256">わざマシン８０</language>
+		<language name="JPN_KANJI" width="256">わざマシン８０</language>
+	</row>
+
+	<row id="ITEMNAME_408">
+		<language name="JPN" width="256">わざマシン８１</language>
+		<language name="JPN_KANJI" width="256">わざマシン８１</language>
+	</row>
+
+	<row id="ITEMNAME_409">
+		<language name="JPN" width="256">わざマシン８２</language>
+		<language name="JPN_KANJI" width="256">わざマシン８２</language>
+	</row>
+
+	<row id="ITEMNAME_410">
+		<language name="JPN" width="256">わざマシン８３</language>
+		<language name="JPN_KANJI" width="256">わざマシン８３</language>
+	</row>
+
+	<row id="ITEMNAME_411">
+		<language name="JPN" width="256">わざマシン８４</language>
+		<language name="JPN_KANJI" width="256">わざマシン８４</language>
+	</row>
+
+	<row id="ITEMNAME_412">
+		<language name="JPN" width="256">わざマシン８５</language>
+		<language name="JPN_KANJI" width="256">わざマシン８５</language>
+	</row>
+
+	<row id="ITEMNAME_413">
+		<language name="JPN" width="256">わざマシン８６</language>
+		<language name="JPN_KANJI" width="256">わざマシン８６</language>
+	</row>
+
+	<row id="ITEMNAME_414">
+		<language name="JPN" width="256">わざマシン８７</language>
+		<language name="JPN_KANJI" width="256">わざマシン８７</language>
+	</row>
+
+	<row id="ITEMNAME_415">
+		<language name="JPN" width="256">わざマシン８８</language>
+		<language name="JPN_KANJI" width="256">わざマシン８８</language>
+	</row>
+
+	<row id="ITEMNAME_416">
+		<language name="JPN" width="256">わざマシン８９</language>
+		<language name="JPN_KANJI" width="256">わざマシン８９</language>
+	</row>
+
+	<row id="ITEMNAME_417">
+		<language name="JPN" width="256">わざマシン９０</language>
+		<language name="JPN_KANJI" width="256">わざマシン９０</language>
+	</row>
+
+	<row id="ITEMNAME_418">
+		<language name="JPN" width="256">わざマシン９１</language>
+		<language name="JPN_KANJI" width="256">わざマシン９１</language>
+	</row>
+
+	<row id="ITEMNAME_419">
+		<language name="JPN" width="256">わざマシン９２</language>
+		<language name="JPN_KANJI" width="256">わざマシン９２</language>
+	</row>
+
+	<row id="ITEMNAME_420">
+		<language name="JPN" width="256">ひでんマシン０１</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０１</language>
+	</row>
+
+	<row id="ITEMNAME_421">
+		<language name="JPN" width="256">ひでんマシン０２</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０２</language>
+	</row>
+
+	<row id="ITEMNAME_422">
+		<language name="JPN" width="256">ひでんマシン０３</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０３</language>
+	</row>
+
+	<row id="ITEMNAME_423">
+		<language name="JPN" width="256">ひでんマシン０４</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０４</language>
+	</row>
+
+	<row id="ITEMNAME_424">
+		<language name="JPN" width="256">ひでんマシン０５</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０５</language>
+	</row>
+
+	<row id="ITEMNAME_425">
+		<language name="JPN" width="256">ひでんマシン０６</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０６</language>
+	</row>
+
+	<row id="ITEMNAME_426">
+		<language name="JPN" width="256">ひでんマシン０７</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０７</language>
+	</row>
+
+	<row id="ITEMNAME_427">
+		<language name="JPN" width="256">ひでんマシン０８</language>
+		<language name="JPN_KANJI" width="256">ひでんマシン０８</language>
+	</row>
+
+	<row id="ITEMNAME_428">
+		<language name="JPN" width="256">たんけんセット</language>
+		<language name="JPN_KANJI" width="256">たんけんセット</language>
+	</row>
+
+	<row id="ITEMNAME_429">
+		<language name="JPN" width="256">たからぶくろ</language>
+		<language name="JPN_KANJI" width="256">たからぶくろ</language>
+	</row>
+
+	<row id="ITEMNAME_430">
+		<language name="JPN" width="256">ルールブック</language>
+		<language name="JPN_KANJI" width="256">ルールブック</language>
+	</row>
+
+	<row id="ITEMNAME_431">
+		<language name="JPN" width="256">ポケトレ</language>
+		<language name="JPN_KANJI" width="256">ポケトレ</language>
+	</row>
+
+	<row id="ITEMNAME_432">
+		<language name="JPN" width="256">ポイントカード</language>
+		<language name="JPN_KANJI" width="256">ポイントカード</language>
+	</row>
+
+	<row id="ITEMNAME_433">
+		<language name="JPN" width="256">ぼうけんノート</language>
+		<language name="JPN_KANJI" width="256">ぼうけんノート</language>
+	</row>
+
+	<row id="ITEMNAME_434">
+		<language name="JPN" width="256">シールいれ</language>
+		<language name="JPN_KANJI" width="256">シールいれ</language>
+	</row>
+
+	<row id="ITEMNAME_435">
+		<language name="JPN" width="256">アクセサリーいれ</language>
+		<language name="JPN_KANJI" width="256">アクセサリーいれ</language>
+	</row>
+
+	<row id="ITEMNAME_436">
+		<language name="JPN" width="256">シールぶくろ</language>
+		<language name="JPN_KANJI" width="256">シールぶくろ</language>
+	</row>
+
+	<row id="ITEMNAME_437">
+		<language name="JPN" width="256">ともだちてちょう</language>
+		<language name="JPN_KANJI" width="256">ともだちてちょう</language>
+	</row>
+
+	<row id="ITEMNAME_438">
+		<language name="JPN" width="256">はつでんしょキー</language>
+		<language name="JPN_KANJI" width="256">はつでんしょキー</language>
+	</row>
+
+	<row id="ITEMNAME_439">
+		<language name="JPN" width="256">こだいのおまもり</language>
+		<language name="JPN_KANJI" width="256">こだいのおまもり</language>
+	</row>
+
+	<row id="ITEMNAME_440">
+		<language name="JPN" width="256">ギンガだんのカギ</language>
+		<language name="JPN_KANJI" width="256">ギンガだんのカギ</language>
+	</row>
+
+	<row id="ITEMNAME_441">
+		<language name="JPN" width="256">あかいくさり</language>
+		<language name="JPN_KANJI" width="256">あかいくさり</language>
+	</row>
+
+	<row id="ITEMNAME_442">
+		<language name="JPN" width="256">タウンマップ</language>
+		<language name="JPN_KANJI" width="256">タウンマップ</language>
+	</row>
+
+	<row id="ITEMNAME_443">
+		<language name="JPN" width="256">バトルサーチャー</language>
+		<language name="JPN_KANJI" width="256">バトルサーチャー</language>
+	</row>
+
+	<row id="ITEMNAME_444">
+		<language name="JPN" width="256">コインケース</language>
+		<language name="JPN_KANJI" width="256">コインケース</language>
+	</row>
+
+	<row id="ITEMNAME_445">
+		<language name="JPN" width="256">ボロのつりざお</language>
+		<language name="JPN_KANJI" width="256">ボロのつりざお</language>
+	</row>
+
+	<row id="ITEMNAME_446">
+		<language name="JPN" width="256">いいつりざお</language>
+		<language name="JPN_KANJI" width="256">いいつりざお</language>
+	</row>
+
+	<row id="ITEMNAME_447">
+		<language name="JPN" width="256">すごいつりざお</language>
+		<language name="JPN_KANJI" width="256">すごいつりざお</language>
+	</row>
+
+	<row id="ITEMNAME_448">
+		<language name="JPN" width="256">コダックじょうろ</language>
+		<language name="JPN_KANJI" width="256">コダックじょうろ</language>
+	</row>
+
+	<row id="ITEMNAME_449">
+		<language name="JPN" width="256">ポフィンケース</language>
+		<language name="JPN_KANJI" width="256">ポフィンケース</language>
+	</row>
+
+	<row id="ITEMNAME_450">
+		<language name="JPN" width="256">じてんしゃ</language>
+		<language name="JPN_KANJI" width="256">じてんしゃ</language>
+	</row>
+
+	<row id="ITEMNAME_451">
+		<language name="JPN" width="256">ルームキー</language>
+		<language name="JPN_KANJI" width="256">ルームキー</language>
+	</row>
+
+	<row id="ITEMNAME_452">
+		<language name="JPN" width="256">オーキドのてがみ</language>
+		<language name="JPN_KANJI" width="256">オーキドのてがみ</language>
+	</row>
+
+	<row id="ITEMNAME_453">
+		<language name="JPN" width="256">みかづきのはね</language>
+		<language name="JPN_KANJI" width="256">みかづきのはね</language>
+	</row>
+
+	<row id="ITEMNAME_454">
+		<language name="JPN" width="256">メンバーズカード</language>
+		<language name="JPN_KANJI" width="256">メンバーズカード</language>
+	</row>
+
+	<row id="ITEMNAME_455">
+		<language name="JPN" width="256">てんかいのふえ</language>
+		<language name="JPN_KANJI" width="256">てんかいのふえ</language>
+	</row>
+
+	<row id="ITEMNAME_456">
+		<language name="JPN" width="256">ふねのチケット</language>
+		<language name="JPN_KANJI" width="256">ふねのチケット</language>
+	</row>
+
+	<row id="ITEMNAME_457">
+		<language name="JPN" width="256">コンテストパス</language>
+		<language name="JPN_KANJI" width="256">コンテストパス</language>
+	</row>
+
+	<row id="ITEMNAME_458">
+		<language name="JPN" width="256">かざんのおきいし</language>
+		<language name="JPN_KANJI" width="256">かざんのおきいし</language>
+	</row>
+
+	<row id="ITEMNAME_459">
+		<language name="JPN" width="256">おとどけもの</language>
+		<language name="JPN_KANJI" width="256">おとどけもの</language>
+	</row>
+
+	<row id="ITEMNAME_460">
+		<language name="JPN" width="256">ひきかえけん１</language>
+		<language name="JPN_KANJI" width="256">ひきかえけん１</language>
+	</row>
+
+	<row id="ITEMNAME_461">
+		<language name="JPN" width="256">ひきかえけん２</language>
+		<language name="JPN_KANJI" width="256">ひきかえけん２</language>
+	</row>
+
+	<row id="ITEMNAME_462">
+		<language name="JPN" width="256">ひきかえけん３</language>
+		<language name="JPN_KANJI" width="256">ひきかえけん３</language>
+	</row>
+
+	<row id="ITEMNAME_463">
+		<language name="JPN" width="256">そうこのカギ</language>
+		<language name="JPN_KANJI" width="256">そうこのカギ</language>
+	</row>
+
+	<row id="ITEMNAME_464">
+		<language name="JPN" width="256">ひでんのくすり</language>
+		<language name="JPN_KANJI" width="256">ひでんのくすり</language>
+	</row>
+
+	<row id="ITEMNAME_465">
+		<language name="JPN" width="256">バトルレコーダー</language>
+		<language name="JPN_KANJI" width="256">バトルレコーダー</language>
+	</row>
+
+	<row id="ITEMNAME_466">
+		<language name="JPN" width="256">グラシデアのはな</language>
+		<language name="JPN_KANJI" width="256">グラシデアのはな</language>
+	</row>
+
+	<row id="ITEMNAME_467">
+		<language name="JPN" width="256">ひみつのカギ</language>
+		<language name="JPN_KANJI" width="256">ひみつのカギ</language>
+	</row>
+
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
