@@ -100,7 +100,7 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->connect_count = SampleConnectDataCount_testpc;
 		evdata->connect_data = SampleConnectData_testpc;
 		break;
-	case ZONE_ID_MAPSUMMER:
+	case ZONE_ID_PLANNERTEST:
 	//case ZONE_ID_MAPSPRING:
 		evdata->connect_count = SampleConnectDataCount;
 		evdata->connect_data = SampleConnectData;
@@ -176,12 +176,12 @@ BOOL DEBUG_EVENT_GetConnectEvent(GAMESYS_WORK * gsys, const EVENTDATA_SYSTEM * e
 const CONNECT_DATA SampleConnectData[] = {
 	{
 		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 0},
-		ZONE_ID_MAPSUMMER,	1,
+		ZONE_ID_PLANNERTEST,	1,
 		EXIT_TYPE_DOWN,
 	},
 	{
 		{FX32_ONE * 48, FX32_ONE * 0, FX32_ONE * 96 },
-		ZONE_ID_MAPSUMMER,	0,
+		ZONE_ID_PLANNERTEST,	0,
 		EXIT_TYPE_RIGHT,
 	},
 	{
@@ -193,17 +193,17 @@ const CONNECT_DATA SampleConnectData[] = {
 const CONNECT_DATA SampleConnectData_testpc[] = {
 	{
 		{FX32_ONE * 128, FX32_ONE * 0, FX32_ONE * 224 },
-		ZONE_ID_MAPSUMMER,	2,
+		ZONE_ID_PLANNERTEST,	2,
 		EXIT_TYPE_UP,
 	},
 	{
 		{FX32_ONE * 144, FX32_ONE * 0, FX32_ONE * 224 },
-		ZONE_ID_MAPSUMMER,	2,
+		ZONE_ID_PLANNERTEST,	2,
 		EXIT_TYPE_UP,
 	},
 	{
 		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 224 },
-		ZONE_ID_MAPSUMMER,	2,
+		ZONE_ID_PLANNERTEST,	2,
 		EXIT_TYPE_UP,
 	},
 };
