@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2008-11-18T18:20:53"/>
+	<create user="matsuda" host="W00142" date="2008-12-02T17:12:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,14 +105,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="396" top="285" right="1101" bottom="905" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="933" top="204" right="1280" bottom="602" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -210,6 +210,26 @@
 
 テストメッセージです
 　　エラー番号　ｘｘｘｘ</language>
+	</row>
+
+	<row id="DM_MSG_MENU001">
+		<language name="JPN" font=" 2:lcfont12" width="256">セーブテスト</language>
+		<language name="JPN_KANJI" width="80">セーブテスト</language>
+	</row>
+
+	<row id="DM_MSG_MENU002">
+		<language name="JPN" font=" 2:lcfont12" width="256">ワイヤレスつうしんテスト</language>
+		<language name="JPN_KANJI" width="80">ワイヤレス通信テスト</language>
+	</row>
+
+	<row id="DM_MSG_MENU003">
+		<language name="JPN" font=" 2:lcfont12" width="256">せきがいせん　ふくすう　マッチング</language>
+		<language name="JPN_KANJI" width="80">赤外線複数マッチング</language>
+	</row>
+
+	<row id="DM_MSG_MENU004">
+		<language name="JPN" font=" 2:lcfont12" width="256">アイテム</language>
+		<language name="JPN_KANJI" width="80">アイテム</language>
 	</row>
 
 	<flowchart-group-list>
