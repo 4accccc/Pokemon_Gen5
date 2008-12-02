@@ -996,6 +996,7 @@ extern const GFL_PROC_DATA DebugMatsudaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaNetProcData;
 extern const GFL_PROC_DATA DebugMatsudaIrcMatchProcData;
 extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
+extern const GFL_PROC_DATA DebugMatsudaItemProcData;
 extern const GFL_PROC_DATA DebugGotoMainProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
@@ -1041,8 +1042,9 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		//‚Ü‚Â‚¾
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaMainProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaNetProcData, NULL);
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
+//		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaIrcMatchProcData, NULL);
 //		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaErrorProcData, NULL);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaItemProcData, NULL);
 		break;		
 	case SELECT_KAGAYA:
 		//‚©‚ª‚â

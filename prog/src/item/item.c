@@ -114,7 +114,7 @@ void ItemPutIn( void * item, u16 pos1, u16 pos2 )
  * @li	type = ITEM_GET_AGB_NUM		: AGBのアイテム番号
  */
 //--------------------------------------------------------------------------------------------
-u16 GetItemIndex( u16 item, u16 type )
+u16 ITEM_GetIndex( u16 item, u16 type )
 {
 	switch( type ){
 	case ITEM_GET_DATA:		// アイテムデータ
@@ -148,7 +148,7 @@ u16 GetItemIndex( u16 item, u16 type )
  * @retval	"ITEM_DUMMY_ID != DPのアイテム番号"
  */
 //--------------------------------------------------------------------------------------------
-u16	ITEM_AgbItemCnv( u16 agb )
+u16	ITEM_CnvAgbItem( u16 agb )
 {
 	u16	i;
 
@@ -160,6 +160,18 @@ u16	ITEM_AgbItemCnv( u16 agb )
 	return ITEM_DUMMY_ID;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   アイテムアイコンのアーカイブID取得
+ *
+ * @retval  アイテムアイコンのアーカイブID
+ */
+//--------------------------------------------------------------
+u16 ITEM_GetIconArcID(void)
+{
+	return ARCID_ITEMICON;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * アイテムアイコンのセルアーカイブインデックス取得
@@ -169,7 +181,7 @@ u16	ITEM_AgbItemCnv( u16 agb )
  * @return	セルアーカイブインデックス
  */
 //--------------------------------------------------------------------------------------------
-u16	ItemIconCellGet(void)
+u16	ITEM_GetIconCell(void)
 {
 	return NARC_item_icon_itemicon_NCER;
 }
@@ -183,7 +195,7 @@ u16	ItemIconCellGet(void)
  * @return	セルアニメアーカイブインデックス
  */
 //--------------------------------------------------------------------------------------------
-u16	ItemIconCAnmGet(void)
+u16	ITEM_GetIconCellAnm(void)
 {
 	return NARC_item_icon_itemicon_NANR;
 }
@@ -203,7 +215,7 @@ u16	ItemIconCAnmGet(void)
  * @li	type = ITEM_GET_ICON_PAL	: アイコンのパレットデータ
  */
 //--------------------------------------------------------------------------------------------
-void * GetItemArcData( u16 item, u16 type, u32 heap_id )
+void * ITEM_GetItemArcData( u16 item, u16 type, u32 heap_id )
 {
 	if( item > ITEM_DATA_MAX ){ item = 0; }
 
@@ -228,7 +240,7 @@ void * GetItemArcData( u16 item, u16 type, u32 heap_id )
  *
  */
 //--------------------------------------------------------------------------------------------
-void GetItemName( STRBUF* buf, u16 item, u32 heap_id )
+void ITEM_GetItemName( STRBUF* buf, u16 item, u32 heap_id )
 {
 	GFL_MSGDATA *man;
 	
@@ -248,7 +260,7 @@ void GetItemName( STRBUF* buf, u16 item, u32 heap_id )
  * @return	説明
  */
 //--------------------------------------------------------------------------------------------
-void ItemInfoGet( STRBUF * buf, u16 item, u16 heap_id )
+void ITEM_GetInfo( STRBUF * buf, u16 item, u16 heap_id )
 {
 	GFL_MSGDATA *man;
 
@@ -268,13 +280,13 @@ void ItemInfoGet( STRBUF * buf, u16 item, u16 heap_id )
  * @return	指定パラメータ
  */
 //--------------------------------------------------------------------------------------------
-s32	ItemParamGet( u16 item, u16 param, u32 heap_id )
+s32	ITEM_GetParam( u16 item, u16 param, u32 heap_id )
 {
 	ITEMDATA * dat;
 	s32	ret;
 	
-	dat = (ITEMDATA *)GetItemArcData( item, ITEM_GET_DATA, heap_id );
-	ret = ItemBufParamGet( dat, param );
+	dat = (ITEMDATA *)ITEM_GetItemArcData( item, ITEM_GET_DATA, heap_id );
+	ret = ITEM_GetBufParam( dat, param );
 	GFL_HEAP_FreeMemory(dat);
 
 	return ret;
@@ -290,7 +302,7 @@ s32	ItemParamGet( u16 item, u16 param, u32 heap_id )
  * @return	指定パラメータ
  */
 //--------------------------------------------------------------------------------------------
-s32 ItemBufParamGet( ITEMDATA * item, u16 param )
+s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
 {
 	switch( param ){
 	case ITEM_PRM_PRICE:				// 買値
@@ -457,7 +469,7 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
  * @return	技番号
  */
 //--------------------------------------------------------------------------------------------
-const u16 GetWazaNoItem( u16 item )
+const u16 ITEM_GetWazaNo( u16 item )
 {
 	if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
 		return 0;
@@ -476,7 +488,7 @@ const u16 GetWazaNoItem( u16 item )
  * @retval	"FALSE = 秘伝技以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 HidenWazaCheck( u16 waza )
+u8 ITEM_CheckHidenWaza( u16 waza )
 {
 	u8	i;
 
@@ -497,7 +509,7 @@ u8 HidenWazaCheck( u16 waza )
  * @return	技マシン番号
  */
 //--------------------------------------------------------------------------------------------
-u8 WazaMashineNoGet( u16 item )
+u8 ITEM_GetWazaMashineNo( u16 item )
 {
 	if( item < ITEM_WAZAMASIN01 || item > ITEM_HIDENMASIN08 ){
 		return 0;
@@ -520,7 +532,7 @@ u8 WazaMashineNoGet( u16 item )
  * @retval	"FALSE = メール以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 ItemMailCheck( u16 item )
+u8 ITEM_CheckMail( u16 item )
 {
 	u32	i;
 
@@ -541,7 +553,7 @@ u8 ItemMailCheck( u16 item )
  * @return	デザインID
  */
 //--------------------------------------------------------------------------------------------
-u8 ItemMailDesignGet( u16 item )
+u8 ITEM_GetMailDesign( u16 item )
 {
 	u32	i;
 
@@ -562,7 +574,7 @@ u8 ItemMailDesignGet( u16 item )
  * @return	アイテム番号
  */
 //--------------------------------------------------------------------------------------------
-u16 MailItemNumGet( u8 design )
+u16 ITEM_MailNumGet( u8 design )
 {
 	if( design >= ITEM_MAIL_MAX ){
 		return 0;
@@ -585,7 +597,7 @@ u16 MailItemNumGet( u8 design )
  * @retval	"FALSE = 木の実以外"
  */
 //--------------------------------------------------------------------------------------------
-u8 ItemNutsCheck( u16 item )
+u8 ITEM_CheckNuts( u16 item )
 {
 	u32	i;
 
@@ -606,7 +618,7 @@ u8 ItemNutsCheck( u16 item )
  * @return	木の実番号
  */
 //--------------------------------------------------------------------------------------------
-u8 NutsNoGet( u16 item )
+u8 ITEM_GetNutsNo( u16 item )
 {
 	if( item < ITEM_KURABONOMI ){
 		return 0xff;
@@ -623,7 +635,7 @@ u8 NutsNoGet( u16 item )
  * @return	アイテム番号
  */
 //--------------------------------------------------------------------------------------------
-u16 NutsIDItemGet( u8 id )
+u16 ITEM_GetNutsID( u8 id )
 {
 	u32	i;
 
@@ -647,7 +659,7 @@ u16 NutsIDItemGet( u8 id )
  * @retval	"FALSE = 漢方薬"
  */
 //--------------------------------------------------------------------------------------------
-u8 ItemKanpouyakuCheck( u16 item )
+u8 ITEM_CheckKanpouyaku( u16 item )
 {
 	u32	i;
 
@@ -668,11 +680,11 @@ u8 ItemKanpouyakuCheck( u16 item )
  * @retval	確保したメモリのアドレス
  */
 //--------------------------------------------------------------------------------------------
-void	*ItemDataTableLoad(int heapID)
+void	*ITEM_LoadDataTable(int heapID)
 {
 	int	max;
 
-	max=GetItemIndex(ITEM_DATA_MAX,ITEM_GET_DATA);
+	max=ITEM_GetIndex(ITEM_DATA_MAX,ITEM_GET_DATA);
 	return GFL_ARC_LoadDataAllocOfs(ARCID_ITEMDATA, 0, heapID, 0, sizeof(ITEMDATA)*ITEM_DATA_MAX);
 }
 
@@ -686,7 +698,7 @@ void	*ItemDataTableLoad(int heapID)
  * @retval	取得したアドレス
  */
 //--------------------------------------------------------------------------------------------
-ITEMDATA	*GetItemDataPointer(ITEMDATA *item,u16 index)
+ITEMDATA	*ITEM_GetDataPointer(ITEMDATA *item,u16 index)
 {
 	u8 *ret_item;
 

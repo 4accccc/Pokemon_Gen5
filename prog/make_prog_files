@@ -14,6 +14,7 @@ SRCS	+=		test/testmode.c \
 				test/matsuda/d_matsu_net.c \
 				test/matsuda/d_matsu_match.c \
 				test/matsuda/d_matsu_error.c \
+				test/matsuda/d_matsu_item.c \
 				system/vm.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
