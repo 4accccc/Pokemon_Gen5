@@ -48,7 +48,7 @@ GMEVENT * GMEVENT_Create(GAMESYS_WORK * gsys, GMEVENT * parent, GMEVENT_FUNC eve
 {
 	GMEVENT * event;
 	event = GFL_HEAP_AllocMemory(HEAPID_LOCAL, sizeof(GMEVENT));
-	event->parent = NULL;
+	event->parent = parent;
 	event->func = event_func;
 	event->seq = 0;
 	event->work = GFL_HEAP_AllocMemory(HEAPID_LOCAL, work_size);
