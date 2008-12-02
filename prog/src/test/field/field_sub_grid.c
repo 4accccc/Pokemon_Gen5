@@ -601,7 +601,7 @@ static void FGridPlayer_Move(
 		DEBUG_PrintAttr( pJiki );
 	}
 	#else
-		#ifdef DEBUG_ONLY_FOR_nakatui
+		#ifdef DEBUG_ONLY_FOR_nakatsui
 		if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
 			DEBUG_PrintAttr( pJiki );
 		}
