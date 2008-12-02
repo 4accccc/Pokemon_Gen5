@@ -114,7 +114,7 @@ void PlayerActGrid_AnimeSet(
 	anmID = anmBase + dir;
 	
 	if( pcActCont->anmSetID != anmID ){
-		OS_Printf( "自機アニメセット dir=%d, anmID=%d\n", dir, anmID );
+//		OS_Printf( "自機アニメセット dir=%d, anmID=%d\n", dir, anmID );
 		pcActCont->anmSetID = anmID;
 		GFL_BBDACT_SetAnimeIdx(
 			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );

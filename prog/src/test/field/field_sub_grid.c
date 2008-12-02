@@ -111,6 +111,8 @@ static BOOL GridVecPosMove(
 	const FLD_G3D_MAPPER *g3Dmapper,
 	FLD_G3D_MAPPER_INFODATA *gridInfoData,
 	VecFx32 *pos, VecFx32 *vecMove );
+static BOOL GetMapAttr(
+	const FLD_G3D_MAPPER *g3Dmapper, fx32 x, fx32 z, u32 *attr );
 static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z );
 static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
@@ -547,6 +549,40 @@ static void FGridPlayer_Delete( FGRID_CONT *pGridCont )
 	pGridCont->pGridPlayer = NULL;
 }
 
+static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
+{
+	const FLD_G3D_MAPPER *mapper = 
+		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
+	fx32 now_x = pJiki->vec_pos.x;
+	fx32 now_z = pJiki->vec_pos.z;
+	int now_gx = SIZE_GRID_FX32( now_x );
+	int now_gz = SIZE_GRID_FX32( now_z );
+	int gx,gz;
+	fx32 x,z;
+		
+	OS_Printf( "アトリビュート 現在位置 %d,%d\n", now_gx, now_gz );
+
+	for( gz = now_gz-1; gz < (now_gz+2); gz++ ){
+		for( gx = now_gx-1; gx < (now_gx+2); gx++ ){
+			u32 attr = 0;
+		
+			if( gx < 0 || gz < 0 ){
+				OS_Printf( "OVER " );
+			}else{
+				x = GRID_SIZE_FX32( gx );
+				z = GRID_SIZE_FX32( gz );
+			
+				if( GetMapAttr(mapper,x,z,&attr) == TRUE ){
+					OS_Printf( "%04d ", attr );
+				}else{
+					OS_Printf( "OVER  " ); 
+				}
+			}
+		}
+		OS_Printf( "\n" );
+	}
+}
+
 //--------------------------------------------------------------
 /**
  * グリッド自機　移動処理
@@ -558,7 +594,21 @@ static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont )
 {
 	PC_ACTCONT *pcActCont = pJiki->pGridCont->pFieldWork->pcActCont;
-
+	
+	//----とりあえず
+	#ifdef DEBUG_ONLY_FOR_kagaya
+	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
+		DEBUG_PrintAttr( pJiki );
+	}
+	#else
+		#ifdef DEBUG_ONLY_FOR_nakatui
+		if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
+			DEBUG_PrintAttr( pJiki );
+		}
+		#endif
+	#endif
+	//----
+	
 	if( pJiki->move_flag == FALSE && (key_cont&PAD_KEY_BIT) ){
 		int dir = DIR_NOT;
 
@@ -614,7 +664,7 @@ static void FGridPlayer_Move(
 			}
 		}
 	}
-
+	
 	{
 		int dir = 0;
 		switch( pJiki->dir ){
@@ -838,11 +888,18 @@ static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 		if( GetMapAttr(mapper,x,z,&attr) == FALSE ){
 			return( TRUE );
 		}
-		
-		/*	attrチェック
-		if( attr ){
+
+		#ifdef DEBUG_ONLY_FOR_kagaya
+		if( attr != 0 ){
+			return( TRUE );
 		}
-		*/
+		#else
+			#ifdef DEBUG_ONLY_FOR_nakatsui
+			if( attr != 0 ){
+				return( TRUE );
+			}
+			#endif
+		#endif
 	}
 	
 	return( FALSE );
