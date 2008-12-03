@@ -157,10 +157,10 @@ static const FLD_G3D_MAPPER_DATA fldmap3dp_test[] = {
 
 #include "fieldmap/all_build_model.naix"
 static const FLD_G3D_MAPPEROBJ_DATA resistObjTbl2[] = {
-	{ NARC_all_build_model_pc_01_nsbmd, NON_LOWQ},
-	{ NARC_all_build_model_t2_house01_nsbmd, NON_LOWQ},
-	{ NARC_all_build_model_t2_build01_nsbmd, NON_LOWQ},
 	{ NARC_all_build_model_gate_01_nsbmd, NON_LOWQ},
+	{ NARC_all_build_model_pc_01_nsbmd, NON_LOWQ},
+	{ NARC_all_build_model_t2_build01_nsbmd, NON_LOWQ},
+	{ NARC_all_build_model_t2_house01_nsbmd, NON_LOWQ},
 };
 #include "test_graphic/fieldmap_sample.naix"
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
