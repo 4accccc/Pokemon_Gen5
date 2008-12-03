@@ -322,7 +322,7 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	};
 	static char limit[] = "  \n  \n  \n";
 	for (i = 0; i < NELEMS(pos_array); i++) {
-		int attr = 0;
+		u32 attr = 0;
 		FLD_G3D_MAPPER_GRIDINFO gridInfo;
 		//pos = pos_array[i] + fieldWork->now_pos;
 		VEC_Add(&pos_array[i], &fieldWork->now_pos, &pos);
@@ -610,7 +610,7 @@ static void	bg_init( FIELD_SETUP* gs )
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
 }
 
