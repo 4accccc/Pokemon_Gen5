@@ -31,6 +31,9 @@
 ///アイテムアイコンのパレット展開位置
 #define D_MATSU_ICON_PALNO		(0)
 
+///[PUSH START BUTTON]の点滅間隔
+#define PUSH_TIMER_WAIT			(45)
+
 ///BMPウィンドウ
 enum{
 	WIN_PUSH_JPN,			//「スタートボタンを押してください」
@@ -79,10 +82,11 @@ typedef struct {
 	GFL_MSGDATA		*mm;
 	STRBUF			*strbuf_push_jpn;
 	STRBUF			*strbuf_push_eng;
-	STRBUF			*strbuf_info;
-	STRBUF			*strbuf_info_kanji;
 	GFL_TCBLSYS		*tcbl;
 	DM_MSG_DRAW_WIN drawwin[WIN_MAX];
+	
+	int push_timer;				//[PUSH START BUTTON]の点滅間隔をカウント
+	int push_visible;
 	
 	//アクター
 	GFL_CLUNIT *clunit;
@@ -93,7 +97,6 @@ typedef struct {
 	void	*icon_cell_res;
 	void	*icon_anm_res;
 	
-	int item_no;
 }TITLE_WORK;
 
 
@@ -106,6 +109,8 @@ static void Local_MessageSetting(TITLE_WORK *tw);
 static void Local_ActorSetting(TITLE_WORK *tw);
 static void Local_MessagePrintMain(TITLE_WORK *tw);
 static void Local_BGGraphicLoad(TITLE_WORK *tw);
+static void Local_MessagePut(TITLE_WORK *tw, int win_index, STRBUF *strbuf, int x, int y);
+static void Local_MsgLoadPushStart(TITLE_WORK *tw);
 
 //==============================================================================
 //	外部関数宣言
@@ -165,6 +170,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 	GFL_BMPWIN_Init( HEAPID_TITLE_DEMO );
 	GFL_FONTSYS_Init();
 	Local_MessageSetting(tw);
+	Local_MsgLoadPushStart(tw);
 
 	//アクター設定
 	Local_ActorSetting(tw);
@@ -204,6 +210,13 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		return GFL_PROC_RES_FINISH;
 	}
 
+	tw->push_timer++;
+	if(tw->push_timer > PUSH_TIMER_WAIT){
+		tw->push_timer = 0;
+		tw->push_visible ^= 1;
+		GFL_BG_SetVisible(FRAME_MSG_S, tw->push_visible);
+	}
+	
 	GFL_CLACT_UNIT_Draw(tw->clunit);
 	GFL_CLACT_Main();
 	return GFL_PROC_RES_CONTINUE;
@@ -219,9 +232,12 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	TITLE_WORK* tw = mywk;
 	int i;
 	
+	GFL_STR_DeleteBuffer(tw->strbuf_push_jpn);
+	GFL_STR_DeleteBuffer(tw->strbuf_push_eng);
 	for(i = 0; i < WIN_MAX; i++){
 		GFL_BMPWIN_Delete(tw->drawwin[i].win);
 	}
+
 	PRINTSYS_QUE_Delete(tw->printQue);
 	GFL_MSG_Delete(tw->mm);
 
@@ -405,6 +421,10 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 
 	tw->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_title_dat, HEAPID_TITLE_DEMO );
 
+	//STRBUF作成
+	tw->strbuf_push_jpn = GFL_STR_CreateBuffer( 64, tw->heapID );
+	tw->strbuf_push_eng = GFL_STR_CreateBuffer( 64, tw->heapID );
+
 	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 }
 
@@ -434,3 +454,36 @@ static void Local_MessagePrintMain(TITLE_WORK *tw)
 	}
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   メッセージを表示する
+ *
+ * @param   tw			
+ * @param   strbuf		表示するメッセージデータ
+ * @param   x			X座標(dot)
+ * @param   y			Y座標(dot)
+ */
+//--------------------------------------------------------------
+static void Local_MessagePut(TITLE_WORK *tw, int win_index, STRBUF *strbuf, int x, int y)
+{
+	GFL_BMP_Clear( tw->drawwin[win_index].bmp, 0x00 );
+	PRINTSYS_PrintQue(tw->printQue, tw->drawwin[win_index].bmp, x, y, strbuf, tw->fontHandle);
+	tw->drawwin[win_index].message_req = TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   [PUSH START BUTTON]の文字を描画
+ *
+ * @param   tw		タイトルワークへのポインタ
+ */
+//--------------------------------------------------------------
+static void Local_MsgLoadPushStart(TITLE_WORK *tw)
+{
+	STRBUF *strbuf;
+	
+	GFL_MSG_GetString(tw->mm, TITLE_STR_000, tw->strbuf_push_jpn);
+	GFL_MSG_GetString(tw->mm, TITLE_STR_001, tw->strbuf_push_eng);
+	Local_MessagePut(tw, WIN_PUSH_JPN, tw->strbuf_push_jpn, 6*8, 0);
+	Local_MessagePut(tw, WIN_PUSH_ENG, tw->strbuf_push_eng, 10*8, 0);
+}
