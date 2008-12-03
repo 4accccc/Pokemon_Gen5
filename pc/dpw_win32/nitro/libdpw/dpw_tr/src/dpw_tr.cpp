@@ -311,7 +311,7 @@ void Dpw_Tr_Main(void) {
 					dpw_tr.last_result = DPW_TR_ERROR_SERVER_TIMEOUT;
 					break;
 				default:
-					DPW_TASSERTMSG(FALSE, "illigal response: %d", dpw_tr.user_recv_buf[0]);
+					//DPW_TASSERTMSG(FALSE, "illigal response: %d", dpw_tr.user_recv_buf[0]);
 					dpw_tr.last_result = DPW_TR_ERROR_FATAL;
 					break;
 				}
