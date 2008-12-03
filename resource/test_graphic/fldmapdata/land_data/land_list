@@ -24,4 +24,8 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/testpc00_00c.bin $(DIR_LANDRES)/testpc00_00c.imd \
 	$(DIR_LANDRES)/map_outgrassc.bin $(DIR_LANDRES)/map_outgrassc.imd \
 	$(DIR_LANDRES)/map_outtreec.bin $(DIR_LANDRES)/map_outtreec.imd \
-	$(DIR_LANDRES)/testroom00_00c.bin $(DIR_LANDRES)/testroom00_00c.imd
+	$(DIR_LANDRES)/testroom00_00c.bin $(DIR_LANDRES)/testroom00_00c.imd \
+	$(DIR_LANDRES)/map_outtree_spc.bin $(DIR_LANDRES)/map_outtree_spc.imd \
+	$(DIR_LANDRES)/map_outtree_smc.bin $(DIR_LANDRES)/map_outtree_smc.imd \
+	$(DIR_LANDRES)/map_outtree_auc.bin $(DIR_LANDRES)/map_outtree_auc.imd \
+	$(DIR_LANDRES)/map_outtree_wic.bin $(DIR_LANDRES)/map_outtree_wic.imd
