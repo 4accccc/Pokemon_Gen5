@@ -5,22 +5,22 @@ G3D_IMD = \
 	$(DIR_LANDRES)/map00_01c.imd \
 	$(DIR_LANDRES)/map01_02c.imd \
 	$(DIR_LANDRES)/map01_03c.imd \
-	$(DIR_LANDRES)/mapspring00_00c.imd \
-	$(DIR_LANDRES)/mapspring01_00c.imd \
 	$(DIR_LANDRES)/mapspring01_01c.imd \
-	$(DIR_LANDRES)/mapspring00_01c.imd \
-	$(DIR_LANDRES)/mapsummer00_00c.imd \
-	$(DIR_LANDRES)/mapsummer01_00c.imd \
+	$(DIR_LANDRES)/mapspring02_01c.imd \
+	$(DIR_LANDRES)/mapspring01_02c.imd \
+	$(DIR_LANDRES)/mapspring02_02c.imd \
 	$(DIR_LANDRES)/mapsummer01_01c.imd \
-	$(DIR_LANDRES)/mapsummer00_01c.imd \
-	$(DIR_LANDRES)/mapautumn00_00c.imd \
-	$(DIR_LANDRES)/mapautumn01_00c.imd \
+	$(DIR_LANDRES)/mapsummer02_01c.imd \
+	$(DIR_LANDRES)/mapsummer01_02c.imd \
+	$(DIR_LANDRES)/mapsummer02_02c.imd \
 	$(DIR_LANDRES)/mapautumn01_01c.imd \
-	$(DIR_LANDRES)/mapautumn00_01c.imd \
-	$(DIR_LANDRES)/mapwinter00_00c.imd \
-	$(DIR_LANDRES)/mapwinter00_01c.imd \
-	$(DIR_LANDRES)/mapwinter01_00c.imd \
+	$(DIR_LANDRES)/mapautumn02_01c.imd \
+	$(DIR_LANDRES)/mapautumn01_02c.imd \
+	$(DIR_LANDRES)/mapautumn02_02c.imd \
 	$(DIR_LANDRES)/mapwinter01_01c.imd \
+	$(DIR_LANDRES)/mapwinter02_01c.imd \
+	$(DIR_LANDRES)/mapwinter01_02c.imd \
+	$(DIR_LANDRES)/mapwinter02_02c.imd \
 	$(DIR_LANDRES)/testpc00_00c.imd \
 	$(DIR_LANDRES)/map_outgrassc.imd \
 	$(DIR_LANDRES)/map_outtreec.imd \
