@@ -167,6 +167,8 @@ namespace PokeIRC {
 private: System::Windows::Forms::ToolStripMenuItem^  debugToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  pokemonDisukiClubDToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolStripMenuItem;
+private: System::Windows::Forms::ToolStripMenuItem^  disConnectDToolStripMenuItem;
+private: System::Windows::Forms::ToolStripMenuItem^  soundStopSToolStripMenuItem;
 
 
 
@@ -197,6 +199,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileFToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->disConnectDToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sendDataDToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->gTSTestGToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->gTSResetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -224,6 +227,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			this->handHToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->infoIToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->sendGTSSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->soundStopSToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->statusStrip1->SuspendLayout();
 			this->menuStrip1->SuspendLayout();
 			this->toolStripContainer1->BottomToolStripPanel->SuspendLayout();
@@ -286,9 +290,9 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			// 
 			// fileFToolStripMenuItem
 			// 
-			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(7) {this->sToolStripMenuItem, 
-				this->sendDataDToolStripMenuItem, this->gTSTestGToolStripMenuItem, this->gTSResetToolStripMenuItem, this->dSGTSSyncTToolStripMenuItem, 
-				this->pokemonToolStripMenuItem, this->exitEToolStripMenuItem});
+			this->fileFToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {this->sToolStripMenuItem, 
+				this->disConnectDToolStripMenuItem, this->sendDataDToolStripMenuItem, this->gTSTestGToolStripMenuItem, this->gTSResetToolStripMenuItem, 
+				this->dSGTSSyncTToolStripMenuItem, this->pokemonToolStripMenuItem, this->exitEToolStripMenuItem});
 			this->fileFToolStripMenuItem->Name = L"fileFToolStripMenuItem";
 			this->fileFToolStripMenuItem->Size = System::Drawing::Size(51, 20);
 			this->fileFToolStripMenuItem->Text = L"File(&F)";
@@ -299,6 +303,13 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			this->sToolStripMenuItem->Size = System::Drawing::Size(153, 22);
 			this->sToolStripMenuItem->Text = L"DS‚ÆÚ‘±(&S)";
 			this->sToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::sToolStripMenuItem_Click);
+			// 
+			// disConnectDToolStripMenuItem
+			// 
+			this->disConnectDToolStripMenuItem->Name = L"disConnectDToolStripMenuItem";
+			this->disConnectDToolStripMenuItem->Size = System::Drawing::Size(153, 22);
+			this->disConnectDToolStripMenuItem->Text = L"DisConnect(&D)";
+			this->disConnectDToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::disConnectDToolStripMenuItem_Click);
 			// 
 			// sendDataDToolStripMenuItem
 			// 
@@ -344,8 +355,8 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			// 
 			// debugToolStripMenuItem
 			// 
-			this->debugToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->pokemonDisukiClubDToolStripMenuItem, 
-				this->globalPokemonFanClubGToolStripMenuItem});
+			this->debugToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->pokemonDisukiClubDToolStripMenuItem, 
+				this->globalPokemonFanClubGToolStripMenuItem, this->soundStopSToolStripMenuItem});
 			this->debugToolStripMenuItem->Name = L"debugToolStripMenuItem";
 			this->debugToolStripMenuItem->Size = System::Drawing::Size(65, 20);
 			this->debugToolStripMenuItem->Text = L"Debug(&D)";
@@ -488,6 +499,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			this->pictureBox4->Size = System::Drawing::Size(37, 30);
 			this->pictureBox4->TabIndex = 4;
 			this->pictureBox4->TabStop = false;
+			this->pictureBox4->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox4_MouseDown);
 			// 
 			// pictureBox3
 			// 
@@ -531,6 +543,7 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 				this->infoIToolStripMenuItem, this->sendGTSSToolStripMenuItem});
 			this->contextMenuStrip1->Name = L"contextMenuStrip1";
 			this->contextMenuStrip1->Size = System::Drawing::Size(161, 70);
+			this->contextMenuStrip1->Opened += gcnew System::EventHandler(this, &MainForm::contextMenuStrip1_Opened);
 			// 
 			// handHToolStripMenuItem
 			// 
@@ -551,6 +564,13 @@ private: System::Windows::Forms::ToolStripMenuItem^  globalPokemonFanClubGToolSt
 			this->sendGTSSToolStripMenuItem->Name = L"sendGTSSToolStripMenuItem";
 			this->sendGTSSToolStripMenuItem->Size = System::Drawing::Size(160, 22);
 			this->sendGTSSToolStripMenuItem->Text = L"‚f‚o‚e‚Ö‚ ‚¸‚¯‚é(&S)";
+			// 
+			// soundStopSToolStripMenuItem
+			// 
+			this->soundStopSToolStripMenuItem->Name = L"soundStopSToolStripMenuItem";
+			this->soundStopSToolStripMenuItem->Size = System::Drawing::Size(206, 22);
+			this->soundStopSToolStripMenuItem->Text = L"SoundStop(&S)";
+			this->soundStopSToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::soundStopSToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -603,7 +623,7 @@ private: static void SetProxy(String^ proxy);
 private: static bool RequestCheckServerState(void);
 private: static int WaitForAsync(void);
 private: static bool RequestSetProfile(void);
-private: static void RequestUpload(void);
+private: void RequestUpload(void);
 private: static void SetTrData(Dpw_Tr_Data* upload_data, int pokeNo);
 private: static void SetProfile(Dpw_Common_Profile* profile);
 private: void TestDownload(int pid,  String^ proxy);
@@ -669,17 +689,16 @@ private: System::Void pictureBox3_DragEnter(System::Object^  sender, System::Win
 private: System::Void pictureBox3_DragDrop(System::Object^  sender, System::Windows::Forms::DragEventArgs^  e);
 private: System::Void handHToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 private: System::Void infoIToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
-
 private: System::Void pictureBox5_Click(System::Object^  sender, System::EventArgs^  e);
-
 private: System::Void pictureBox5_MouseEnter(System::Object^  sender, System::EventArgs^  e);
-
 private: System::Void pictureBox5_MouseLeave(System::Object^  sender, System::EventArgs^  e);
-
 private: System::Void pokemonDisukiClubDToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 private: System::Void globalPokemonFanClubGToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
-
 private: System::Void webBrowser1_NewWindow(System::Object^  sender, System::ComponentModel::CancelEventArgs^  e);
+private: System::Void contextMenuStrip1_Opened(System::Object^  sender, System::EventArgs^  e);
+private: System::Void pictureBox4_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+private: System::Void disConnectDToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+private: System::Void soundStopSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }
 

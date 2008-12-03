@@ -66,6 +66,12 @@ namespace PokeIRC {
 		IRC_COMMAND_BOXNOEND,
 	    IRC_COMMAND_HAND,
 	    IRC_COMMAND_HANDEND,
+	    IRC_COMMAND_HANDCHANGE,
+	    IRC_COMMAND_HANDCHANGEEND,
+	    IRC_COMMAND_HANDDOWN,
+	    IRC_COMMAND_HANDDOWNEND,
+	    IRC_COMMAND_SNDSTOP,
+	    IRC_COMMAND_SNDSTOPEND,
 	} IRC_COMMAND_e;
 
 
@@ -78,10 +84,12 @@ namespace PokeIRC {
 		static const unsigned long long TEST_KEY = 0x100000000UL;
 
 
+		static bool isLock;
 		static bool isSend;
 		static bool isDataSend;
 
 		static int URLNo;
+		static int ConnectCount;
 		static String^ s_currentProxy;
 		static u8 SendValue;   //通信コマンド
 
@@ -92,7 +100,7 @@ namespace PokeIRC {
 		static void draw(Form^ fm);
 		static bool connect(void);
 		static void shutdown(void);
-		static bool sendData(u8 value);
+		static bool sendData(u8 value, array<unsigned char>^ localarray);
 		static bool SendLoop(void);
 		static array<unsigned char>^ dataArray;
 
@@ -107,6 +115,11 @@ namespace PokeIRC {
 
 		static void RecvURLCOMMAND(unsigned char * data,int size,unsigned char value);
 		static int WaitForAsync(void);
+
+		static bool CheckDataSending(void){ return isDataSend; }
+		static void sendLock(void){ isLock = true; }
+		static void sendUnLock(void){ isLock = false; }
+		static void ResetDataSend(void){ isDataSend = false; }
 
 	private:
 		static void RequestUpload(void);

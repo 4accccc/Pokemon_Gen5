@@ -96,6 +96,7 @@ System::Void MainForm::sToolStripMenuItem_Click(System::Object^  sender, System:
 System::Void MainForm::Form1_Load(System::Object^  sender, System::EventArgs^  e)
 {
 	NetIRC::Init();
+
 	webBrowser1->Url= gcnew Uri("http://wb.gamefreak.co.jp/ando/world/index.php");
 
 
@@ -203,8 +204,8 @@ System::Void MainForm::sendDataDToolStripMenuItem_Click(System::Object^  sender,
 		if ( (myStream = openFileDialog1->OpenFile()) != nullptr )
 		{
 			userReader = gcnew BinaryReader(myStream);
-			NetIRC::dataArray = userReader->ReadBytes((int)myStream->Length);
-			NetIRC::sendData('A');
+//			NetIRC::dataArray = userReader->ReadBytes((int)myStream->Length);
+			NetIRC::sendData('A',userReader->ReadBytes((int)myStream->Length));
 			myStream->Close();
 		}
 	}
@@ -229,8 +230,8 @@ System::Void MainForm::pictureBox3_DragDrop(System::Object^  sender, System::Win
 
 			Debug::WriteLine(DateTime::Now.ToString("F")+"start");
 		
-			NetIRC::dataArray = userReader->ReadBytes((int)fs->Length);
-			NetIRC::sendData(IRC_COMMAND_SNDV);
+//			NetIRC::dataArray = userReader->ReadBytes((int)fs->Length);
+			NetIRC::sendData(IRC_COMMAND_SNDV,userReader->ReadBytes((int)fs->Length));
 			fs->Close();
 			label1->Text = "音楽を送信しています";
 			break;
@@ -238,6 +239,21 @@ System::Void MainForm::pictureBox3_DragDrop(System::Object^  sender, System::Win
 	}
 }
 
+//--------------------------------------------------------------
+/**
+ * @breif   サウンド転送の中断を送る
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::soundStopSToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = IRC_COMMAND_SNDSTOP;
+	NetIRC::ResetDataSend();
+	NetIRC::sendData(IRC_COMMAND_SNDSTOP, localarray);
+}
 
 
 //--------------------------------------------------------------
@@ -251,8 +267,8 @@ System::Void MainForm::pictureBox3_DragDrop(System::Object^  sender, System::Win
 System::Void MainForm::DoWork( System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e )
 {
     // ここに、処理を書く
-	NetIRC::draw(this);
-	Thread::Sleep(1); //2msec待つ 
+	//NetIRC::draw(this);
+	//Thread::Sleep(1); //2msec待つ 
 }
 
 //--------------------------------------------------------------
@@ -327,7 +343,7 @@ void MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
 
 //--------------------------------------------------------------
 /**
- * @breif   非同期関数が終了するまで待つ
+ * @breif   預ける
  * @param   none
  * @retval  none
  */
@@ -339,19 +355,31 @@ void MainForm::RequestUpload(void)
 	String^ proxy = "";
 
 
+	NetIRC::sendLock();
+	Sleep(100);
 
+	{
+		// 赤外線コマンド発行
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = sendBoxNo;
+		localarray[1] = sendBoxPoke;
+		NetIRC::sendUnLock();
+		NetIRC::sendData(IRC_COMMAND_BOXPOKE, localarray);
+		NetIRC::sendLock();
+	}
 
 	while(!NetIRC::isRecvFlg()){
 		Sleep(10);
 	}
-
-
+	Debug::WriteLine("ポケモン受け取り");
 
 	SetProxy(proxy);
 	if(!RequestCheckServerState()){
+		Debug::WriteLine("サーバがおかしかった");
 		return;
 	}
 	if(!RequestSetProfile()){
+		Debug::WriteLine("プロファイル設定に失敗");
 		return;
 	}
 	if(!RequestPickupTraded()){
@@ -366,17 +394,20 @@ void MainForm::RequestUpload(void)
 		result = WaitForAsync();
 		if(result == 0 )
 		{
+			Debug::WriteLine("預け完了　確定へ");
 			// 預けるのを確定
 			Dpw_Tr_UploadFinishAsync();
-			if(WaitForAsync() != 0 )
+			result = WaitForAsync();
+			if(result != 0 )
 			{
-				Debug::WriteLine("Failed to uploadFinish.");
+				Debug::WriteLine("Failed to uploadFinish."+result);
 				return;
 			}
 		}
 		else if(result == DPW_TR_ERROR_ILLIGAL_REQUEST)
 		{
 			Debug::WriteLine("Already uploaded.");
+			return;
 		}
 		else
 		{
@@ -385,13 +416,31 @@ void MainForm::RequestUpload(void)
 		}
 	}
 	//DS側を消す
-	NetIRC::dataArray = gcnew array<unsigned char>(2);
-	NetIRC::dataArray[0] = sendBoxNo;
-	NetIRC::dataArray[1] = sendBoxPoke;
-	NetIRC::sendData(IRC_COMMAND_BOXPOKEDEL);
+	{
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = sendBoxNo;
+		localarray[1] = sendBoxPoke;
+		NetIRC::sendUnLock();
+		NetIRC::sendData(IRC_COMMAND_BOXPOKEDEL, localarray);
+	}
+	NetIRC::sendLock();
+
+	while(!NetIRC::isRecvFlg()){
+		Sleep(10);
+	}
+
+	GetPokeBoxList();
+
+
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = sendBoxNo;
+	NetIRC::sendData(IRC_COMMAND_BOXNO,localarray);
 
 	MessageBox::Show("あずけました" + sendBoxNo + " " + sendBoxPoke);
-	return;
+
+	NetIRC::sendUnLock();
+
+
 }
 
 
@@ -448,14 +497,15 @@ void MainForm::RequestChange(void)
 		
 		//DSに交換したポケモンを送る
 
-		NetIRC::dataArray = gcnew array<unsigned char>(2+sizeof(Dpw_Tr_PokemonData));
-		NetIRC::dataArray[0] = sendBoxNo;
-		NetIRC::dataArray[1] = sendBoxPoke;
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2+sizeof(Dpw_Tr_PokemonData));
+//		NetIRC::dataArray = gcnew array<unsigned char>(2+sizeof(Dpw_Tr_PokemonData));
+		localarray[0] = sendBoxNo;
+		localarray[1] = sendBoxPoke;
 
-		pin_ptr<unsigned char> wptr = &NetIRC::dataArray[2];
+		pin_ptr<unsigned char> wptr = &localarray[2];
 		memcpy(wptr, &download_buf.postData, sizeof(Dpw_Tr_PokemonData));
 
-		NetIRC::sendData(IRC_COMMAND_CHANGEPOKE_SEND);
+		NetIRC::sendData(IRC_COMMAND_CHANGEPOKE_SEND, localarray);
 
 		Dpw_Tr_TradeFinishAsync();
 		if(WaitForAsync() != 0 )
@@ -465,7 +515,6 @@ void MainForm::RequestChange(void)
 		}
 
 	}
-
 
 
 	MessageBox::Show("こうかんしました" + sendBoxNo + " " + sendBoxPoke);
@@ -502,9 +551,13 @@ bool MainForm::RequestPickupTraded(void)
 		{
 			Debug::WriteLine("Traded.");
 		}
+		else if(result == DPW_TR_ERROR_NO_DATA){
+			Debug::WriteLine("データは無い");
+			return true;
+		}
 		else
 		{
-			Debug::WriteLine("Failed to upload result.");
+			Debug::WriteLine("Failed to upload result." + result);
 			return false;
 		}
 
@@ -731,9 +784,9 @@ System::Void MainForm::gTSTestGToolStripMenuItem_Click(System::Object^  sender, 
 
 System::Void MainForm::dSGTSSyncTToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	NetIRC::dataArray = gcnew array<unsigned char>(1);
-	NetIRC::dataArray[0] = 'W';
-	NetIRC::sendData('W');
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = 'W';
+	NetIRC::sendData('W',localarray);
 }
 
 //--------------------------------------------------------------
@@ -779,6 +832,7 @@ void MainForm::CallProg(String^ message)
 		threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
 	    threadB->Start(); // 
 		threadB->Join();
+		threadB=nullptr;
 		FormDispChange(FORM_DISPMODE_BOX);
 		GTSDispMode = MODE_BOXDISP;
 		pokemonListDisp(0);
@@ -799,6 +853,7 @@ void MainForm::CallProg(String^ message)
 			threadB->Priority = ThreadPriority::Highest; //優先度を「最優先」にする
 		    threadB->Start(); // 
 			threadB->Join();
+			threadB=nullptr;
 			FormDispChange(FORM_DISPMODE_BOX);
 			pokemonSearchDisp();
 		}
@@ -850,6 +905,8 @@ void MainForm::pokemonSearchDisp(void)
 	}
 	pictureBox1->Image = bmp;
 
+
+	//@@OO
 
 }
 
@@ -935,9 +992,11 @@ void MainForm::pokemonMouse(int pokeNo)
 	int tno = pokeNo;
 
 	if(tno == 0){
+		pictureBox4->Visible = false;
 		return;
 	}
 	if(tno >= POKEMON_MAX ){
+		pictureBox4->Visible = false;
 		return;
 	}
 	int no = PokemonDataTable::getPokemonNo(tno);
@@ -971,9 +1030,9 @@ void MainForm::RequestSearch(void)
 
 
 	{
-		NetIRC::dataArray = gcnew array<unsigned char>(1);
-		NetIRC::dataArray[0] = IRC_COMMAND_POKEBOX_MOVE;
-		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE);
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+		localarray[0] = IRC_COMMAND_POKEBOX_MOVE;
+		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE, localarray);
 	}
 
 	//Dpw_Tr_Data match_data_buf[DPW_TR_DOWNLOADMATCHDATA_MAX];	// データの検索結果を入れるバッファ。
@@ -1156,6 +1215,23 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 		return;
 	}
 
+	if(BackupPosNo != no){
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = IRC_COMMAND_MOUSE;
+		localarray[1] = no;
+		NetIRC::sendData(IRC_COMMAND_MOUSE, localarray);
+		mouseBoxPoke = no;
+		BackupPosNo = no;
+		if(no!=-1){
+			pictureBox4->Top = 80*(no/6)+140;
+			pictureBox4->Left = 80*(no%6)+80;
+			pictureBox4->Refresh();
+		}
+
+	}
+	else{
+		//mouseBoxPoke = -1;
+	}
 
 	if(pokeno != 0){
 		switch(pokesex){
@@ -1174,14 +1250,6 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 		return;
 	}
 
-	if(BackupPosNo != no){
-		NetIRC::dataArray = gcnew array<unsigned char>(2);
-		NetIRC::dataArray[0] = IRC_COMMAND_MOUSE;
-		NetIRC::dataArray[1] = no;
-		NetIRC::sendData(IRC_COMMAND_MOUSE);
-		mouseBoxPoke = no;
-		BackupPosNo = no;
-	}
 
 	if(BackupToolTipMsg != pknm){
 		toolTip1->Show(pknm, this, e->X, e->Y+20, 3000);
@@ -1189,8 +1257,8 @@ System::Void MainForm::pictureBox1_MouseMove(System::Object^  sender, System::Wi
 	}
 
 
-	pictureBox4->Top = e->Y + 2;
-	pictureBox4->Left = e->X + 2;
+//	pictureBox4->Top = e->Y + 2;
+//	pictureBox4->Left = e->X + 2;
 
 
 }
@@ -1209,6 +1277,14 @@ System::Void MainForm::pictureBox1_MouseDown(System::Object^  sender, System::Wi
 		contextMenuStrip1->Show(Control::MousePosition::get());
 	}
 }
+
+
+System::Void MainForm::pictureBox4_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	pictureBox1_MouseDown(sender, e);
+}
+
+
 
 //--------------------------------------------------------------
 /**
@@ -1237,19 +1313,14 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 				 MessageBoxButtons::OKCancel,
 				 MessageBoxIcon::Question )
 					 == System::Windows::Forms::DialogResult::OK ) {
+
 					targetPoke = pokeno;
 					sendBoxNo = dispBoxNo;
 					sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
 					sendPokeSex = getPokemonSexFromThePlace(e->X,e->Y);
 					sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
 
-					// 赤外線コマンド発行
-					NetIRC::dataArray = gcnew array<unsigned char>(2);
-					NetIRC::dataArray[0] = sendBoxNo;
-					NetIRC::dataArray[1] = sendBoxPoke;
-					NetIRC::sendData(IRC_COMMAND_BOXPOKE);
-
-					threadB = gcnew Thread(gcnew ThreadStart(&RequestUpload));  //
+					threadB = gcnew Thread(gcnew ThreadStart(this,&MainForm::RequestUpload));  //
 					threadB->IsBackground = true;                // バックグラウンド・スレッドとする
 					threadB->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
 				    threadB->Start(); // 
@@ -1305,10 +1376,10 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 					sendPokeLv = getPokemonLvFromThePlace(e->X,e->Y);
 
 					// 赤外線コマンド発行
-					NetIRC::dataArray = gcnew array<unsigned char>(2);
-					NetIRC::dataArray[0] = sendBoxNo;
-					NetIRC::dataArray[1] = sendBoxPoke;
-					NetIRC::sendData(IRC_COMMAND_CHANGE_BOXPOKE);
+					array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+					localarray[0] = sendBoxNo;
+					localarray[1] = sendBoxPoke;
+					NetIRC::sendData(IRC_COMMAND_CHANGE_BOXPOKE, localarray);
 
 					threadB = gcnew Thread(gcnew ThreadStart(&RequestChange));  //
 					threadB->IsBackground = true;                // バックグラウンド・スレッドとする
@@ -1360,9 +1431,9 @@ System::Void MainForm::button3_Click(System::Object^  sender, System::EventArgs^
 		dispBoxNo = 0;
 	}
 	
-	NetIRC::dataArray = gcnew array<unsigned char>(1);
-	NetIRC::dataArray[0] = dispBoxNo;
-	NetIRC::sendData(IRC_COMMAND_BOXNO);
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = dispBoxNo;
+	NetIRC::sendData(IRC_COMMAND_BOXNO, localarray);
 
 
 	pokemonListDisp(dispBoxNo);
@@ -1382,9 +1453,9 @@ System::Void MainForm::button1_Click(System::Object^  sender, System::EventArgs^
 		dispBoxNo = POKMEON_BOX_NUM;
 	}
 	dispBoxNo--;
-	NetIRC::dataArray = gcnew array<unsigned char>(1);
-	NetIRC::dataArray[0] = dispBoxNo;
-	NetIRC::sendData(IRC_COMMAND_BOXNO);
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = dispBoxNo;
+	NetIRC::sendData(IRC_COMMAND_BOXNO,localarray);
 
 	pokemonListDisp(dispBoxNo);
 }
@@ -1402,20 +1473,24 @@ void MainForm::GetPokeBoxList(void)
 {
 	//isRecv = false;
 	int i,j,k=0;
+	
 
 	{
-		NetIRC::dataArray = gcnew array<unsigned char>(1);
-		NetIRC::dataArray[0] = IRC_COMMAND_POKEBOX_MOVE;
-		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE);
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+		localarray[0] = IRC_COMMAND_POKEBOX_MOVE;
+		NetIRC::sendData(IRC_COMMAND_POKEBOX_MOVE, localarray);
+		NetIRC::sendLock();
 	}
 	while(!NetIRC::isRecvFlg()){
 		Sleep(10);
 	}
 
 
-	NetIRC::dataArray = gcnew array<unsigned char>(1);
-	NetIRC::dataArray[0] = IRC_COMMAND_BOXLIST;
-	NetIRC::sendData(IRC_COMMAND_BOXLIST);
+	NetIRC::sendUnLock();
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = IRC_COMMAND_BOXLIST;
+	NetIRC::sendData(IRC_COMMAND_BOXLIST,localarray);
+	NetIRC::sendLock();
 
 
 	while(!NetIRC::isRecvFlg()){
@@ -1442,6 +1517,7 @@ void MainForm::GetPokeBoxList(void)
 			k+=2;
 		}
 	}
+		NetIRC::sendUnLock();
 	bBoxListRecv = true;
 }
 
@@ -1510,6 +1586,13 @@ void MainForm::Draw(void)
 		}
 	}
 
+
+	if(threadB!=nullptr){
+		threadB->Join();
+		pokemonListDisp(sendBoxNo);
+		threadB=nullptr;
+	}
+
 	//else if(NetIRC::dataArray == nullptr){
 	//	label1->Text = "音楽を送信しました";
 	//}
@@ -1525,7 +1608,10 @@ void MainForm::Draw(void)
 
 System::Void MainForm::handHToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	if((GPokeBoxList[handBoxNo].poke[handBoxPoke].pokeno!=0) && (handPoke.pokeno==0)){
+	int groundpoke = GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno;
+	int curpoke = handPoke.pokeno;
+
+	if((groundpoke!=0) && (curpoke==0)){ //つかむ
 		pictureBox1->Cursor = System::Windows::Forms::Cursors::Cross;
 		handBoxNo = dispBoxNo;
 		handBoxPoke = mouseBoxPoke;
@@ -1535,12 +1621,80 @@ System::Void MainForm::handHToolStripMenuItem_Click(System::Object^  sender, Sys
 		GPokeBoxList[handBoxNo].poke[handBoxPoke].pokeno = 0;
 		GPokeBoxList[handBoxNo].poke[handBoxPoke].pokelv = 0;
 		GPokeBoxList[handBoxNo].poke[handBoxPoke].pokesex = 0;
-		NetIRC::dataArray = gcnew array<unsigned char>(2);
-		NetIRC::dataArray[0] = handBoxNo;
-		NetIRC::dataArray[1] = handBoxPoke;
-		NetIRC::sendData(IRC_COMMAND_HAND);
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = handBoxNo;
+		localarray[1] = handBoxPoke;
+		NetIRC::sendData(IRC_COMMAND_HAND, localarray);
 		pokemonListDisp(handBoxNo);
 	}
+	else if((groundpoke!=0) && (curpoke!=0)){ //入れ替え
+
+
+		pictureBox1->Cursor = System::Windows::Forms::Cursors::Cross;
+		handBoxNo = dispBoxNo;
+		handBoxPoke = mouseBoxPoke;
+		PokemonData temp;
+
+		temp.pokeno = GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno;
+		temp.pokelv = GPokeBoxList[handBoxNo].poke[BackupPosNo].pokelv;
+		temp.pokesex = GPokeBoxList[handBoxNo].poke[BackupPosNo].pokesex;
+
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno = handPoke.pokeno;
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokelv = handPoke.pokelv;
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokesex = handPoke.pokesex;
+
+		handPoke.pokeno = temp.pokeno;
+		handPoke.pokelv = temp.pokelv;
+		handPoke.pokesex = temp.pokesex;
+
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = handBoxNo;
+		localarray[1] = handBoxPoke;
+		NetIRC::sendData(IRC_COMMAND_HANDCHANGE, localarray);
+		pokemonListDisp(handBoxNo);
+
+	}
+	else if((groundpoke==0) && (curpoke!=0)){ // 置く
+		pictureBox1->Cursor = System::Windows::Forms::Cursors::Default;
+		handBoxNo = 0;
+		handBoxPoke = 0;
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno = handPoke.pokeno;
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokelv = handPoke.pokelv;
+		GPokeBoxList[handBoxNo].poke[BackupPosNo].pokesex = handPoke.pokesex;
+		handPoke.pokeno = 0;
+		handPoke.pokelv = 0;
+		handPoke.pokesex = 0;
+		array<unsigned char>^ localarray = gcnew array<unsigned char>(2);
+		localarray[0] = dispBoxNo;
+		localarray[1] = mouseBoxPoke;
+		Debug::WriteLine("手を下ろす");
+		NetIRC::sendData(IRC_COMMAND_HANDDOWN, localarray);
+		pokemonListDisp(handBoxNo);
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   右メニューが開いた時に発生
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+
+System::Void MainForm::contextMenuStrip1_Opened(System::Object^  sender, System::EventArgs^  e)
+{
+	if((GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno!=0) && (handPoke.pokeno==0)){
+		contextMenuStrip1->Items[0]->Text = "つかむ";
+	}
+	else if((GPokeBoxList[handBoxNo].poke[BackupPosNo].pokeno==0) && (handPoke.pokeno!=0)){
+		contextMenuStrip1->Items[0]->Text = "ここにおく";
+	}
+	else if (handPoke.pokeno!=0){
+		contextMenuStrip1->Items[0]->Text = "いれかえ";
+	}
+
+
 }
 
 //--------------------------------------------------------------
@@ -1602,7 +1756,9 @@ void MainForm::FormDispChange(int mode)
 			pictureBox3->Visible = false;
 			pictureBox4->Visible = false;
 			pictureBox5->Visible = true;
-			label1->Visible = false;
+			label1->Visible = false;	
+			pictureBox5->Top = 600;
+			pictureBox5->Left = 700;
 			break;
 		case FORM_DISPMODE_SOUND:
 			GTSDispMode = MODE_NONE;
@@ -1662,5 +1818,24 @@ System::Void MainForm::webBrowser1_NewWindow(System::Object^  sender, System::Co
 	e->Cancel=true;
 //	webBrowser1->Url();
 //	webBrowser1->
+
+}
+
+//--------------------------------------------------------------
+/**
+ * @breif   切断
+ * @param   none
+ * @retval  none
+ */
+//--------------------------------------------------------------
+
+System::Void MainForm::disConnectDToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	if(threadA!=nullptr){
+		threadA->Abort();
+		threadA->Join();
+		threadA=nullptr;
+		NetIRC::shutdown();
+	}
 
 }

@@ -21,9 +21,10 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="0"
 			CharacterSet="1"
 			ManagedExtensions="1"
-			EnableManagedIncrementalBuild="0"
+			EnableManagedIncrementalBuild="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -65,6 +66,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="C:\home\wb\pokemon_wb\pc\PokeIRC\PokeIRC\lib"
 				IgnoreAllDefaultLibraries="false"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				SubSystem="2"

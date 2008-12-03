@@ -23,6 +23,8 @@ typedef unsigned char u8;
 
 #pragma comment(lib,"libpokemon.lib") // libpokemon.libをリンクする
 
+extern u8 dhc_read(u8 *buf); // ユーザは呼ばなくてよいはず
+
 using namespace PokeIRC;
 using namespace System::Windows::Forms;
 using namespace System::Threading;
@@ -82,6 +84,8 @@ void NetIRC::Init(void)
 	isEmulate = false;
 	isDataSend = false;
 	isSend = false;
+	isLock = false;
+
 	IRC_Init();
 	IRC_SetRecvCallback(callback);
 	IRC_SetDisconnectTime(500);
@@ -103,19 +107,31 @@ void NetIRC::draw(Form^ fm)
 	{
 		bool tmp;
 		tmp = ( IRC_IsConnect() == TRUE ) ? true : false;
+/*		{
+			u8 buf[132];
+			int size = (u32)dhc_read(buf);
+			if(size!=0){
+				Debug::WriteLine(buf[0]);
+				Debug::WriteLine(size);
+			}
+		}*/
 		IRC_Move();
 
 		if(IRC_IsConnect() && (tmp == false)){ // つながった瞬間のみ
 			Debug::WriteLine("最初のコマンド(2)発信" + IRC_IsSender());
 			if(!IRC_IsSender()){  // つながった瞬間のみ子が最初のパケットを投げる
-				IRC_Send((u8*)NULL, 0, 0x02, 0);
+				IRC_Send(data_up, 4, 0x02, 0);
 				isSend = true;
 			}
 		}
 	}
-	if((!IRC_IsConnect()) && isEmulate){
-		IRC_Connect();
+	//if((!IRC_IsConnect()) && isEmulate && (ConnectCount%300==0)){
+	if((!IRC_IsConnect()) && isEmulate ){
+	//	Debug::WriteLine("IRC_Connect");
+//		isEmulate=false;
+	//	IRC_Connect();
 	} // 自動再接続処理
+//	ConnectCount++;
 }
 
 
@@ -128,7 +144,7 @@ void NetIRC::draw(Form^ fm)
 //--------------------------------------------------------------
 bool NetIRC::connect(void)
 {
-	if(isEmulate){
+	if(isEmulate || IRC_IsConnect()){
 		return false;
 	}
 	isEmulate = true;
@@ -155,15 +171,21 @@ void NetIRC::shutdown(void)
  * @retval  none
  */
 //--------------------------------------------------------------
-bool NetIRC::sendData(u8 value)
+bool NetIRC::sendData(u8 value, array<unsigned char>^ localarray)
 {
 	if(isDataSend){
+		Debug::WriteLine("前のがあって送れなかった"+value);
+		return false;
+	}
+	if(isLock){
+		Debug::WriteLine("LOCK中で送れなかった"+value);
 		return false;
 	}
 	recvDataSize=0;
 	isRecv = false;
 	SendValue = value;
 	isDataSend = true;
+	dataArray = localarray;
 	connect();
 	return true;
 }
@@ -207,6 +229,7 @@ bool NetIRC::SendLoop(void)
 		isDataSend=false;
 		delete dataArray;
 		dataArray = nullptr;
+		Debug::WriteLine("送信完了" + SendValue);
 	}
 //	Debug::WriteLine("送信" + SendValue + "サイズ"+length);
 	return false;
@@ -327,9 +350,9 @@ void NetIRC::RequestPickupTraded(void)
 		result = WaitForAsync();
 		if( result == 0 )
 		{
-			Debug::WriteLine("Not traded.");
-			_resultSend( result );
-			return ;
+			Debug::WriteLine("Not traded."); //消す
+		//	_resultSend( result );
+		//	return ;
 		}
 		else if(result == 1)
 		{
@@ -450,7 +473,7 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 		}
 		recvDataSize+=size;
 
-		if((value == IRC_COMMAND_BOXLISTEND) || (value == IRC_COMMAND_BOXPOKEEND) || (value == IRC_COMMAND_POKEBOX_MOVEEND)){
+		if((value == IRC_COMMAND_BOXLISTEND) || (value == IRC_COMMAND_BOXPOKEEND) || (value == IRC_COMMAND_POKEBOX_MOVEEND) || (value == IRC_COMMAND_BOXPOKEDELEND)){
 			isRecv = true;
 		}
 	}
@@ -518,9 +541,9 @@ void NetIRC::RecvURLCOMMAND(unsigned char * data,int size,unsigned char value)
 
 void NetIRC::_resultSend(int value)
 {
-	NetIRC::dataArray = gcnew array<unsigned char>(1);
-	NetIRC::dataArray[0] = (unsigned char)value;
-	NetIRC::sendData('R');
+	array<unsigned char>^ localarray = gcnew array<unsigned char>(1);
+	localarray[0] = (unsigned char)value;
+	NetIRC::sendData('R', localarray);
 }
 
 
