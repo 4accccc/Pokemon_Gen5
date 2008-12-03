@@ -2,8 +2,9 @@
 #	mapmatcv.rb
 #	マップマトリクスコンバート
 #
-#	呼び出し mapmapcv FilePath LandPath BinPath
+#	呼び出し mapmapcv.rb BlockPath FilePath LandPath BinPath
 #	FilePath マップマトリクスファイルパス
+#	BlockPath 地形ブロック番号ファイルパス
 #	LandPath 地形モデルアーカイブインデックスファイルパス
 #	BinPath  バイナリファイル作成先パス
 #
@@ -43,9 +44,14 @@ IDX_NON		= (0xffffffff)
 RET_ERROR	= (-1)
 RET_TRUE	= (1)
 RET_FALSE	= (0)
+
+#固定文字列
 STR_NULL	= ""
 STR_END		= "#END"
 
+#==============================================================
+#	表データ
+#==============================================================
 #--------------------------------------------------------------
 #	表データの指定位置の数値を取得
 #	listfile	リストファイル
@@ -85,14 +91,17 @@ def table_posdata_get( listfile, x, y )
 	return num
 end
 
+#==============================================================
+#	地形ブロックnaix
+#==============================================================
 #--------------------------------------------------------------
 #	地形ブロックnaixファイルから指定インデックスの数値を取得
 #--------------------------------------------------------------
-def landnaix_number_get( naixfile, str )
-	naixfile.pos = 0			#先頭に
+def landnaix_number_get( naix_file, str )
+	naix_file.pos = 0			#先頭に
 	
 	loop{
-		line = naixfile.gets
+		line = naix_file.gets
 		
 		if( line == @nil || line.include?("}") )
 			return RET_ERROR
@@ -106,7 +115,7 @@ def landnaix_number_get( naixfile, str )
 	num = 0
 
 	loop{
-		line = naixfile.gets
+		line = naix_file.gets
 		
 		if( line == @nil || line.include?("}") )
 			return RET_ERROR
@@ -122,6 +131,43 @@ def landnaix_number_get( naixfile, str )
 	return RET_ERROR
 end
 
+#==============================================================
+#	地形ブロック番号ファイル
+#==============================================================
+#--------------------------------------------------------------
+#	指定ブロック番号から地形データインデックス番号を取得
+#--------------------------------------------------------------
+def blocknum_landidx_get( idx, blocknum_file, naix_file )
+	naix_file.pos = 0			#先頭に
+	blocknum_file.pos = 0
+	line = blocknum_file.gets	#一行飛ばし
+	
+	loop{
+		line = blocknum_file.gets
+		
+		if( line == @nil || line.include?(STR_END) )
+			return RET_ERROR
+		end
+		
+		str = split( "\t" )		#タブ単位
+		num = str[0].to_i		#番号
+		
+		if( idx == num )		#一致
+			ret = landnaix_number_get( naix_file, str[1] )
+			
+			if( ret == RET_ERROR )
+				printf( "mapmatcv ERROR " )
+				printf( "%sのブロックが見つかりません\n", str[1] )
+			end
+			
+			return ret
+		end
+	}
+end
+
+#==============================================================
+#	マトリクスファイル
+#==============================================================
 #--------------------------------------------------------------
 #	マトリクス文字列からマトリックスID取得
 #--------------------------------------------------------------
@@ -221,7 +267,7 @@ end
 #	一行コンバート
 #	return RET_TRUE == 終端
 #--------------------------------------------------------------
-def mtxline_convert( line, cr_dir_path, naixfile )
+def mtxline_convert( line, cr_dir_path, naix_file, blocknum_file )
 	if( line == @nil || line.include?(STR_END) )
 		return RET_TRUE
 	end
@@ -277,14 +323,20 @@ def mtxline_convert( line, cr_dir_path, naixfile )
 				idx = IDX_NON
 			when 1					#マップ存在有り
 				binname = prefixname_get( prefix, x, y )
-				idx = landnaix_number_get( naixfile, binname )
+				idx = landnaix_number_get( naix_file, binname )
 				
 				if( idx == RET_ERROR )
 					printf( "map_matconv ERROR 地形%sが無い\n", binname )
 					exit 1
 				end
-			else					#その他の指定
-				#特になし
+			else					#ブロック番号指定
+				idx = blocknum_landidx_get( idx, blocknum_file, naix_file )
+				
+				if( idx == RET_ERROR )
+					printf( "map_matconv ERROR ブロック番号異常 X=%d,Y=%d\n",
+						  x, y )
+					exit 1
+				end
 			end
 
 			ary = Array( idx )
@@ -303,41 +355,52 @@ def mtxline_convert( line, cr_dir_path, naixfile )
 	return RET_FALSE
 end
 
+#==============================================================
+#	コンバートメイン
+#==============================================================
 #--------------------------------------------------------------
 #	マップマトリクスコンバート
 #--------------------------------------------------------------
-mtxfile_path = ARGV[0]		#マップマトリクスファイルパス
-landnaix_path = ARGV[1]		#地形モデルアーカイブインデックスファイルパス
-dirbin_path = ARGV[2]		#バイナリファイル作成先パス
+mtx_path = ARGV[0]		#マップマトリクスファイルパス
+blocknum_path = ARGV[1]		#ブロック番号ファイルパス
+landnaix_path = ARGV[2]		#地形モデルアーカイブインデックスファイルパス
+dirbin_path = ARGV[3]		#バイナリファイル作成先パス
 
-if( mtxfile_path == @nil || landnaix_path == @nil || dirbin_path == @nil )
+if( mtx_path == @nil || landnaix_path == @nil || dirbin_path == @nil )
 	printf( "mat_matconv ERROR 引数異常\n" )
 	exit 1
 end
 
-printf( "mat_matconv %s %s %s\n", mtxfile_path, landnaix_path, dirbin_path )
+printf( "mat_matconv %s %s %s\n", mtx_path, landnaix_path, dirbin_path )
 
-mtxfile = File.open( mtxfile_path, "r" )
-if( mtxfile == @nil )
-	printf( "mat_matconv ERROR %s作成失敗\n", mtxfile_path )
+mtx_file = File.open( mtx_path, "r" )
+if( mtx_file == @nil )
+	printf( "mat_matconv ERROR %sが開けません\n", mtx_path )
 	exit 1
 end
 
-naixfile = File.open( landnaix_path, "r" )
-if( naixfile == @nil )
-	printf( "mat_matconv ERROR %s作成失敗\n", landnaix_path )
+blocknum_file = File.open( blocknum_path, "r" )
+if( blocknum_file == @nil )
+	printf( "mat_matconv ERROR %sが開けません\n", blocknum_path )
 	exit 1
 end
 
-mtxfile.gets				#一行飛ばし
+naix_file = File.open( landnaix_path, "r" )
+if( naix_file == @nil )
+	printf( "mat_matconv ERROR %sが開けません\n", landnaix_path )
+	exit 1
+end
+
+mtx_file.gets				#一行飛ばし
 
 loop{
-	line = mtxfile.gets
-	ret = mtxline_convert( line, dirbin_path, naixfile )
+	line = mtx_file.gets
+	ret = mtxline_convert( line, dirbin_path, naix_file, blocknum_file )
 	if( ret == RET_TRUE )
 		break
 	end
 }
 
-mtxfile.close
-naixfile.close
+mtx_file.close
+blocknum_file.close
+naix_file.close

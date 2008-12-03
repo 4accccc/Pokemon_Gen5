@@ -17,6 +17,7 @@ TARGET_ARC		= map_matrix.narc
 TARGET_ARCIDX	= map_matrix.naix
 MAPMATRIX_XLS	= map_matrix.xls
 MAPMATRIXTXT	= map_matrix.txt
+MAPBLOCKNUMTXT	= blocknum.txt
 ARCLIST			= arclist
 XLS				= *.xls
 BINDATA			= *.bin
@@ -68,8 +69,9 @@ mklandlst:
 #エクセルコンバート
 convxls:
 	$(CSV_CVTR) -p 1 map_matrix.xls
-	$(CSV_CVTR) -o field_zone.txt -p 2 map_matrix.xls
-	$(CSV_CVTR) -o field_land.txt -p 3 map_matrix.xls
+	$(CSV_CVTR) -o blocknum.txt -p 2 map_matrix.xls
+	$(CSV_CVTR) -o field_zone.txt -p 3 map_matrix.xls
+	$(CSV_CVTR) -o field_land.txt -p 4 map_matrix.xls
 
 #対象ソース一覧作成
 mklst:
@@ -77,7 +79,7 @@ mklst:
 
 #コンバート
 convert:
-	ruby mapmatcv.rb $(MAPMATRIXTXT) $(LAND_NAIX_PATH) $(TMPDIR_PATH)
+	ruby mapmatcv.rb $(MAPMATRIXTXT) $(MAPBLOCKNUMTXT) $(LAND_NAIX_PATH) $(TMPDIR_PATH)
 
 #アーカイブ作成
 makearc:
