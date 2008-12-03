@@ -21,4 +21,6 @@ CONCAT_TARGET = \
 	$(DIR_LANDRES)/mapwinter00_01c.bin $(DIR_LANDRES)/mapwinter00_01c.imd \
 	$(DIR_LANDRES)/mapwinter01_00c.bin $(DIR_LANDRES)/mapwinter01_00c.imd \
 	$(DIR_LANDRES)/mapwinter01_01c.bin $(DIR_LANDRES)/mapwinter01_01c.imd \
-	$(DIR_LANDRES)/testpc00_00c.bin $(DIR_LANDRES)/testpc00_00c.imd
+	$(DIR_LANDRES)/testpc00_00c.bin $(DIR_LANDRES)/testpc00_00c.imd \
+	$(DIR_LANDRES)/map_outgrassc.bin $(DIR_LANDRES)/map_outgrassc.imd \
+	$(DIR_LANDRES)/map_outtreec.bin $(DIR_LANDRES)/map_outtreec.imd
