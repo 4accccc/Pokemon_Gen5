@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: title.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TITLE_NAIX_
+#define NARC_TITLE_NAIX_
+
+enum {
+	NARC_title_wb_logo_bk_NCGR = 0,
+	NARC_title_wb_logo_bk_NSCR = 1,
+	NARC_title_wb_logo_bk_NCLR = 2
+};
+
+/* NARC_TITLE_NAIX_ */
+#endif

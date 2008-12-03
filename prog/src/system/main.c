@@ -22,16 +22,27 @@
 #include "poke_tool/poke_tool.h"
 #include "system/net_err.h"
 
-
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/goto/comm_error.h"
 #endif //PM_DEBUG
 
+#include "title/title.h"
+
 static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
+
+//==============================================================================
+//	タイトル画面PROC呼び出しようのデータ
+//==============================================================================
+const GFL_PROC_DATA TitleProcData = {
+	TitleProcInit,
+	TitleProcMain,
+	TitleProcEnd,
+};
+
 
 //------------------------------------------------------------------
 /**
@@ -144,7 +155,11 @@ static	void	GameInit(void)
     // 通信ブート処理 VBlank割り込み後に行うためここに記述、第二引数は表示用関数ポインタ
     GFL_NET_Boot( GFL_HEAPID_APP, NULL );
 	/* 起動プロセスの設定 */
+#if 0
 	TestModeSet();	//←サンプルデバッグモード
+#else
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleProcData, NULL);
+#endif
 
 	/* 文字描画システム初期化 */
 	PRINTSYS_Init( GFL_HEAPID_SYSTEM );

@@ -87,4 +87,5 @@
 	ARCID_WB_TRAINERCARD		"test_graphic/wb_trainercard.narc"			#通信テスト用・WBトレーナカード
 	ARCID_ITEMDATA		"item_data.narc"		# アイテムデータ
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
+	ARCID_TITLE	"title.narc"	#ブラック版タイトル
 

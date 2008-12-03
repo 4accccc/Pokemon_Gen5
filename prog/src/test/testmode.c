@@ -62,6 +62,8 @@ typedef struct {
 	u16						work[16];
 	GFL_PTC_PTR				ptc;
 	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];
+	
+	BOOL					first_touch;
 }TESTMODE_WORK;
 
 typedef struct {
@@ -132,6 +134,7 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 	
 	switch( testmode->seq ){
 	case 0:
+		testmode->first_touch = TRUE;
 		bg_init( testmode->heapID );
 		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
 						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
@@ -159,6 +162,11 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 				testmode->select_mode = NUM_TITLESELECT_START;
 				testmode->seq++;
 			}else if( pad == PAD_BUTTON_SELECT ){
+				testmode->select_mode = NUM_TITLESELECT_DEBUG;
+				testmode->seq++;
+			}
+			else if(testmode->first_touch == TRUE){
+				testmode->first_touch = FALSE;
 				testmode->select_mode = NUM_TITLESELECT_DEBUG;
 				testmode->seq++;
 			}
@@ -480,6 +488,9 @@ static void	bg_init( HEAPID heapID )
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
+
+	GX_SetMasterBrightness(0);
+	GXS_SetMasterBrightness(0);
 }
 
 static void	bg_exit( void )
@@ -1076,7 +1087,8 @@ static const	GFL_PROC_DATA TestMainProcData;
 //------------------------------------------------------------------
 void	TestModeSet(void)
 {
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
 }
 
 //------------------------------------------------------------------

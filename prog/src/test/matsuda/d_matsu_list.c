@@ -156,6 +156,9 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 
 	GFL_DISP_SetBank( &vramBank );
 
+	//バックグラウンドの色を入れておく
+	GFL_STD_MemFill16((void*)HW_BG_PLTT, 0x5ad6, 2);
+	
 	// 各種効果レジスタ初期化
 	G2_BlendNone();
 
