@@ -101,7 +101,8 @@ typedef struct {
 	u16		seq;
 	HEAPID	heapID;
 	int debug_mode;
-	int timer;
+	int wait;
+	int master_bright;
 	
 	GFL_FONT		*fontHandle;
 	PRINT_QUE		*printQue;
@@ -270,8 +271,6 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 //	GFL_BG_SetVisible(FRAME_MIST_M, VISIBLE_ON);
 //	GFL_BG_SetVisible(FRAME_LOGO_S, VISIBLE_ON);
 //	GFL_BG_SetVisible(FRAME_MSG_S, VISIBLE_ON);
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -284,29 +283,54 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TITLE_WORK* tw = mywk;
-	BOOL ret = 0;
+	enum{
+		SEQ_WAIT,
+		SEQ_FADEIN,
+		SEQ_MAIN,
+		SEQ_FADEOUT,
+	};
 	
 	GFL_TCBL_Main( tw->tcbl );
 	Local_MessagePrintMain(tw);
 	
-	if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A | PAD_BUTTON_B)){
-		return GFL_PROC_RES_FINISH;
+	if(tw->seq == SEQ_MAIN){
+		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A | PAD_BUTTON_B)){
+			tw->seq = SEQ_FADEOUT;
+		}
 	}
 	
 	switch(tw->seq){
-	case 0:
+	case SEQ_WAIT:
+		tw->wait++;
+		if(tw->wait > 30){
+			tw->master_bright = -16;
+			tw->seq++;
+		}
 		break;
-	}
-	
-	if(ret == TRUE){
-		return GFL_PROC_RES_FINISH;
-	}
-
-	tw->push_timer++;
-	if(tw->push_timer > PUSH_TIMER_WAIT){
-		tw->push_timer = 0;
-		tw->push_visible ^= 1;
-		GFL_BG_SetVisible(FRAME_MSG_S, tw->push_visible);
+	case SEQ_FADEIN:
+		tw->master_bright++;
+		GX_SetMasterBrightness(tw->master_bright);
+		GXS_SetMasterBrightness(tw->master_bright);
+		if(tw->master_bright >= 0){
+			tw->seq++;
+		}
+		break;
+	case SEQ_MAIN:
+		tw->push_timer++;
+		if(tw->push_timer > PUSH_TIMER_WAIT){
+			tw->push_timer = 0;
+			tw->push_visible ^= 1;
+			GFL_BG_SetVisible(FRAME_MSG_S, tw->push_visible);
+		}
+		break;
+	case SEQ_FADEOUT:
+		tw->master_bright--;
+		GX_SetMasterBrightness(tw->master_bright);
+		GXS_SetMasterBrightness(tw->master_bright);
+		if(tw->master_bright <= -16){
+			return GFL_PROC_RES_FINISH;
+		}
+		break;
 	}
 	
 	Local_Draw3D(tw);

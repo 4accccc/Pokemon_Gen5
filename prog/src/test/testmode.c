@@ -64,6 +64,7 @@ typedef struct {
 	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];
 	
 	BOOL					first_touch;
+	BOOL					first_draw;
 }TESTMODE_WORK;
 
 typedef struct {
@@ -135,6 +136,7 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 	switch( testmode->seq ){
 	case 0:
 		testmode->first_touch = TRUE;
+		testmode->first_draw = FALSE;
 		bg_init( testmode->heapID );
 		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
 						( GFL_G3D_DOUBLE3D_VblankIntrTCB, NULL, 0 );
@@ -156,6 +158,10 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 		testmode->seq++;
 		break;
 	case 3:
+		if(testmode->first_draw == TRUE){	//一度drawを通ってからONにする
+			GX_SetMasterBrightness(0);
+			GXS_SetMasterBrightness(0);
+		}
 		{
 			int pad = GFL_UI_KEY_GetTrg();
 			if( pad == PAD_BUTTON_A || pad == PAD_BUTTON_START ){
@@ -182,7 +188,7 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 		g3d_control_effect(testmode);
 		g2d_draw_title(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
-		
+		testmode->first_draw = TRUE;
 		break;
 	case 4:
 		//タイトル抜け
@@ -203,6 +209,7 @@ static int StartSelectControl( TESTMODE_WORK * testmode )
 	switch( testmode->seq ){
 	case 0:
 		//初期化
+		testmode->first_draw = FALSE;
 		testmode->seq++;
 		break;
 	case 1:
@@ -229,6 +236,11 @@ static int StartSelectControl( TESTMODE_WORK * testmode )
 		g3d_draw(testmode);		//３Ｄデータ描画
 		break;
 	case 3:
+		if(testmode->first_draw == TRUE){	//一度drawを通ってからONにする
+			GX_SetMasterBrightness(0);
+			GXS_SetMasterBrightness(0);
+		}
+
 		{	//キー判定
 			int trg = GFL_UI_KEY_GetTrg();
 			
@@ -252,6 +264,7 @@ static int StartSelectControl( TESTMODE_WORK * testmode )
 		g3d_control_effect(testmode);
 		g2d_draw_startsel(testmode);		//２Ｄデータ描画
 		g3d_draw(testmode);		//３Ｄデータ描画
+		testmode->first_draw = TRUE;
 		break;
 	case 4:
 		//終了
@@ -282,6 +295,7 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 	switch( testmode->seq ){
 	case 0:
 		//初期化
+		testmode->first_draw = FALSE;
 		testmode->seq++;
 		break;
 	case 1:
@@ -310,6 +324,11 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 		break;
 
 	case 3:
+		if(testmode->first_draw == TRUE){	//一度drawを通ってからONにする
+			GX_SetMasterBrightness(0);
+			GXS_SetMasterBrightness(0);
+		}
+
 		//キー判定
 		{
 			int trg = GFL_UI_KEY_GetTrg();
@@ -337,6 +356,7 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 //			VecFx32	pos={0,0,0};
 //			GFL_PTC_CreateEmitter(testmode->ptc,0,&pos);
 //		}
+		testmode->first_draw = TRUE;
 		break;
 
 	case 4:
@@ -488,9 +508,6 @@ static void	bg_init( HEAPID heapID )
 	//ディスプレイ面の選択
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
-
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
 }
 
 static void	bg_exit( void )
@@ -1230,6 +1247,9 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 
 	GFL_PROC_FreeWork(mywk);
 	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+
+	GX_SetMasterBrightness(0);
+	GXS_SetMasterBrightness(0);
 
 	return GFL_PROC_RES_FINISH;
 }
