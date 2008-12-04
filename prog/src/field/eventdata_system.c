@@ -53,6 +53,10 @@ extern const CONNECT_DATA SampleConnectData[];
 extern const int SampleConnectDataCount;
 extern const CONNECT_DATA SampleConnectData_testpc[];
 extern const int SampleConnectDataCount_testpc;
+extern const CONNECT_DATA SampleConnectData_testroom[];
+extern const int SampleConnectDataCount_testroom;
+extern const CONNECT_DATA SampleConnectData_4season[];
+extern const int SampleConnectDataCount_4season;
 //============================================================================================
 //
 //	イベント起動データシステム関連
@@ -100,11 +104,22 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 		evdata->connect_count = SampleConnectDataCount_testpc;
 		evdata->connect_data = SampleConnectData_testpc;
 		break;
+	case ZONE_ID_TESTROOM:
+		evdata->connect_count = SampleConnectDataCount_testroom;
+		evdata->connect_data = SampleConnectData_testroom;
+		break;
 	case ZONE_ID_PLANNERTEST:
-	//case ZONE_ID_MAPSPRING:
 		evdata->connect_count = SampleConnectDataCount;
 		evdata->connect_data = SampleConnectData;
 		break;
+	case ZONE_ID_MAPSPRING:
+	case ZONE_ID_MAPSUMMER:
+	case ZONE_ID_MAPAUTUMN:
+	case ZONE_ID_MAPWINTER:
+		evdata->connect_count = SampleConnectDataCount_4season;
+		evdata->connect_data = SampleConnectData_4season;
+		break;
+
 	}
 }
 
@@ -200,6 +215,28 @@ const CONNECT_DATA SampleConnectData[] = {
 		EXIT_TYPE_DOWN,
 	},
 };
+const int SampleConnectDataCount = NELEMS(SampleConnectData);
+
+const CONNECT_DATA SampleConnectData_4season[] = {
+	{
+		{FX32_ONE * (1432 - 8), FX32_ONE * 0, FX32_ONE * (1288 - 8)},
+		ZONE_ID_TESTPC, 1,
+		EXIT_TYPE_DOWN,
+	},
+	{
+		{FX32_ONE * (1160 - 8), FX32_ONE * 0, FX32_ONE * (1352 - 8)},
+		ZONE_ID_TESTROOM, 0,
+		EXIT_TYPE_DOWN,
+	},
+	{
+		{FX32_ONE * (1268 - 8), FX32_ONE * 0, FX32_ONE * (1160 - 8)},
+		ZONE_ID_TESTROOM, 0,
+		EXIT_TYPE_DOWN,
+	},
+
+};
+const int SampleConnectDataCount_4season = NELEMS(SampleConnectData_4season);
+
 const CONNECT_DATA SampleConnectData_testpc[] = {
 	{
 		{FX32_ONE * 128, FX32_ONE * 0, FX32_ONE * 224 },
@@ -220,9 +257,21 @@ const CONNECT_DATA SampleConnectData_testpc[] = {
 		EXIT_TYPE_UP,
 	},
 };
-
-const int SampleConnectDataCount = NELEMS(SampleConnectData);
 const int SampleConnectDataCount_testpc = NELEMS(SampleConnectData_testpc);
+
+const CONNECT_DATA SampleConnectData_testroom[] = {
+	{
+		{FX32_ONE * (72 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
+		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
+		EXIT_TYPE_UP,
+	},
+	{
+		{FX32_ONE * (88 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
+		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
+		EXIT_TYPE_UP,
+	},
+};
+const int SampleConnectDataCount_testroom = NELEMS(SampleConnectData_testroom);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
