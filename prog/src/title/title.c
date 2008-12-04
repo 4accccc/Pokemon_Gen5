@@ -243,6 +243,8 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 	// 各種効果レジスタ初期化
 	GX_SetMasterBrightness(-16);
 	GXS_SetMasterBrightness(-16);
+	GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+	GFL_DISP_GXS_SetVisibleControlDirect(0);
 	G2_BlendNone();
 	G2S_BlendNone();
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
