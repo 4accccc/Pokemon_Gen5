@@ -103,6 +103,7 @@ typedef struct {
 	int debug_mode;
 	int wait;
 	int master_bright;
+	int mode;			///<次のメニュー画面へ引き渡すモード
 	
 	GFL_FONT		*fontHandle;
 	PRINT_QUE		*printQue;
@@ -153,7 +154,7 @@ static void Local_GirathinaFree(TITLE_WORK *tw);
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern void	TestModeSet(void);
+extern void	TestModeSet(int mode);
 
 
 //==============================================================================
@@ -304,7 +305,9 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 	Local_MessagePrintMain(tw);
 	
 	if(tw->seq == SEQ_MAIN){
-		if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A | PAD_BUTTON_B)){
+		int trg = GFL_UI_KEY_GetTrg();
+		if(trg & (PAD_BUTTON_START | PAD_BUTTON_SELECT | PAD_BUTTON_A)){
+			tw->mode = trg;
 			tw->seq = SEQ_FADEOUT;
 		}
 	}
@@ -358,7 +361,9 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TITLE_WORK* tw = mywk;
-	int i;
+	int i, mode;
+	
+	mode = tw->mode;
 	
 	GFL_STR_DeleteBuffer(tw->strbuf_push_jpn);
 	GFL_STR_DeleteBuffer(tw->strbuf_push_eng);
@@ -384,7 +389,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 	
-	TestModeSet();	//次のPROCとしてテスト画面を設定
+	TestModeSet(mode);	//次のPROCとしてテスト画面を設定
 	return GFL_PROC_RES_FINISH;
 }
 

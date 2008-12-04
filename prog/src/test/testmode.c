@@ -12,8 +12,9 @@
 #include "test\testmode.h"
 
 #include "gamesystem/game_init.h"
+#include "title/title.h"
 
-void	TestModeSet(void);
+void	TestModeSet(int mode);
 
 //============================================================================================
 //
@@ -63,8 +64,10 @@ typedef struct {
 	GFL_PTC_PTR				ptc;
 	u8						spa_work[PARTICLE_LIB_HEAP_SIZE];
 	
-	BOOL					first_touch;
+	int						first_touch;
 	BOOL					first_draw;
+	BOOL					return_title;
+	BOOL					next_start_proc;
 }TESTMODE_WORK;
 
 typedef struct {
@@ -135,7 +138,6 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 	
 	switch( testmode->seq ){
 	case 0:
-		testmode->first_touch = TRUE;
 		testmode->first_draw = FALSE;
 		bg_init( testmode->heapID );
 		testmode->dbl3DdispVintr = GFUser_VIntr_CreateTCB
@@ -164,15 +166,15 @@ static BOOL TitleControl( TESTMODE_WORK *testmode )
 		}
 		{
 			int pad = GFL_UI_KEY_GetTrg();
+			if(testmode->first_touch != 0){
+				pad = testmode->first_touch;
+				testmode->first_touch = 0;
+			}
+			
 			if( pad == PAD_BUTTON_A || pad == PAD_BUTTON_START ){
 				testmode->select_mode = NUM_TITLESELECT_START;
 				testmode->seq++;
 			}else if( pad == PAD_BUTTON_SELECT ){
-				testmode->select_mode = NUM_TITLESELECT_DEBUG;
-				testmode->seq++;
-			}
-			else if(testmode->first_touch == TRUE){
-				testmode->first_touch = FALSE;
 				testmode->select_mode = NUM_TITLESELECT_DEBUG;
 				testmode->seq++;
 			}
@@ -247,7 +249,9 @@ static int StartSelectControl( TESTMODE_WORK * testmode )
 			if( trg == PAD_BUTTON_A ){
 				testmode->seq++;
 			}else if( trg == PAD_BUTTON_B ){
-				testmode->seq = 5;
+//				testmode->seq = 5;
+				testmode->seq++;
+				testmode->return_title = TRUE;
 			}else if( trg == PAD_KEY_UP ){
 				if( testmode->listPosition > 0 ){
 					testmode->listPosition--;
@@ -336,7 +340,9 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 			if( trg == PAD_BUTTON_A ) {
 				testmode->seq++;
 			}else if( trg == PAD_BUTTON_B ){
-				testmode->seq = 5;
+				//testmode->seq = 5;
+				testmode->seq++;
+				testmode->return_title = TRUE;
 			}else if( trg == PAD_KEY_UP ){
 				if( testmode->listPosition > 0 ){
 					testmode->listPosition--;
@@ -1031,56 +1037,68 @@ extern const GFL_PROC_DATA DebugFieldProcData;
 //------------------------------------------------------------------
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
+	if(testmode->return_title == TRUE){
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TitleProcData, NULL);
+		return;
+	}
+
+	if(testmode->next_start_proc == TRUE){
+		GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0);
+		GFL_PROC_SysSetNextProc(
+			NO_OVERLAY_ID, &GameMainProcData, init_param);
+		return;
+	}
+	
 	switch( TestModeSelectPosGet(testmode) ) {
 	case SELECT_WATANABE:
 		//わたなべ
-		GFL_PROC_SysCallProc(FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(watanabe_sample), &DebugWatanabeMainProcData, NULL);
 		break;
 	case SELECT_TAMADA:
 		//たまだ
-		//GFL_PROC_SysCallProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
+		//GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 		{
 			GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 1);
-			GFL_PROC_SysCallProc(
+			GFL_PROC_SysSetNextProc(
 				NO_OVERLAY_ID, &GameMainProcData, init_param);
 		}
 		break;
 	case SELECT_SOGABE:
 		//そがべ
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
 		break;
 	case SELECT_OHNO:
 		//おおの
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
-//		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
-	//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
+//		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
+	//	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
         break;
 	case SELECT_TAYA:
 		//たや
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugTayaMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugTayaMainProcData, NULL);
 		break;
 	case SELECT_TEST1:
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
 		break;
 	case SELECT_MATSUDA:
 		//まつだ
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugMatsudaListProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugMatsudaListProcData, NULL);
 		break;		
 	case SELECT_KAGAYA:
 		//かがや
 		{
 			GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 2);
-			GFL_PROC_SysCallProc(
+			GFL_PROC_SysSetNextProc(
 				NO_OVERLAY_ID, &GameMainProcData, init_param);
 		}
 		break;
 	case SELECT_ARIIZUMI:
 		//ありいずみ
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
 		break;
 	case SELECT_DLPLAY:
 		//DownloadPlay
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugDLPlayMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugDLPlayMainProcData, NULL);
 		break;
 	default:
 		break;
@@ -1102,10 +1120,10 @@ static const	GFL_PROC_DATA TestMainProcData;
  * @brief		プロセス設定
  */
 //------------------------------------------------------------------
-void	TestModeSet(void)
+void	TestModeSet(int mode)
 {
 //	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
+	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, (void*)mode);
 }
 
 //------------------------------------------------------------------
@@ -1135,9 +1153,13 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK * testmode = mywk;
+	int title_trg;
+	
+	title_trg = (int)pwk;	//タイトル画面から最後に何のボタンを押したかをポインタではなく数値で渡されている
 	
 	switch( *seq ) {
 	case 0:
+		testmode->first_touch = title_trg;
 		(*seq) ++;
 		break;
 	case 1:	//タイトル制御
@@ -1158,9 +1180,7 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 				case NUM_STARTSEL_CONTINUE:
 				case NUM_STARTSEL_START:
 					{
-						GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0);
-						GFL_PROC_SysCallProc(
-							NO_OVERLAY_ID, &GameMainProcData, init_param);
+						testmode->next_start_proc = TRUE;
 					}
 					(*seq) = 4;
 					break;
@@ -1177,7 +1197,7 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 			int ret = TestModeControl( testmode );
 			
 			if( ret == TESTMODE_RET_FIX ){
-				CallSelectProc(testmode);
+//				CallSelectProc(testmode);
 				(*seq) ++;
 				//return GFL_PROC_RES_FINISH;
 			}else if( ret == TESTMODE_RET_BACK ){	//タイトルへ戻る
@@ -1191,13 +1211,13 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 			HEAPID heapID_backup = testmode->heapID;
 			u16 pos_backup = testmode->listPosition;
 
-			GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
+		//	GFL_STD_MemClear(testmode, sizeof(TESTMODE_WORK));
 
 			testmode->listPosition = pos_backup;
 			testmode->heapID = heapID_backup;
 		}
 		*seq = 0;
-		break;
+		return GFL_PROC_RES_FINISH;
 	}
 	
 	return GFL_PROC_RES_CONTINUE;
@@ -1245,8 +1265,10 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 {
 	TESTMODE_WORK * testmode = mywk;
 
-	GFL_PROC_FreeWork(mywk);
-	GFL_HEAP_DeleteHeap( HEAPID_WATANABE_DEBUG );
+	CallSelectProc(testmode);
+
+	GFL_PROC_FreeWork(proc);
+	GFL_HEAP_DeleteHeap( HEAPID_TITLE );
 
 	GX_SetMasterBrightness(0);
 	GXS_SetMasterBrightness(0);

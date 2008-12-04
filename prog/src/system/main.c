@@ -135,8 +135,6 @@ static	void	SkeltonVBlankFunc(void)
  * @brief		ゲームごとの初期化処理
  */
 //------------------------------------------------------------------
-extern void TestModeSet( void );	//←サンプルデバッグモード
-
 static	void	GameInit(void)
 {
 	/* ユーザーレベルで必要な初期化をここに記述する */

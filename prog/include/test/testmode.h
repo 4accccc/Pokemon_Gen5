@@ -6,7 +6,7 @@
  */
 //============================================================================================
 
-extern void TestModeSet(void);
+extern void TestModeSet(int mode);
 extern const GFL_PROC_DATA TestMainProcData;
 //------------------------------------------------------------------
 //
