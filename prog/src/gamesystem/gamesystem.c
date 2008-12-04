@@ -152,6 +152,7 @@ struct _GAMESYS_WORK {
 	GMEVENT * event;
 
 	GAMEDATA * gamedata;
+	void * fieldmap;
 };
 
 //------------------------------------------------------------------
@@ -174,6 +175,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->event = NULL;
 
 	gsys->gamedata = GAMEDATA_Create(gsys->heapID);
+	gsys->fieldmap = NULL;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -303,4 +305,21 @@ void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event)
 {
 	gsys->event = event;
 }
+
+//------------------------------------------------------------------
+//	フィールドマップワークへのポインタ取得
+//------------------------------------------------------------------
+void * GAMESYSTEM_GetFieldMapWork(GAMESYS_WORK * gsys)
+{
+	GF_ASSERT(gsys->fieldmap != NULL);
+	return gsys->fieldmap;
+}
+//------------------------------------------------------------------
+//	フィールドマップワークのポインタセット
+//------------------------------------------------------------------
+void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
+{
+	gsys->fieldmap = fieldmap;
+}
+
 

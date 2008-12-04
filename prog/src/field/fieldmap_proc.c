@@ -42,6 +42,7 @@ static GFL_PROC_RESULT FieldMapProcInit
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x200000 );
 	fpwk = GFL_PROC_AllocWork(proc, sizeof(FPROC_WORK), HEAPID_FIELDMAP);
 	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
+	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -75,8 +76,11 @@ static GFL_PROC_RESULT FieldMapProcMain
 static GFL_PROC_RESULT FieldMapProcEnd
 				( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+	GAMESYS_WORK * gsys = pwk;
 	FPROC_WORK * fpwk = mywk;
+
 	FIELDMAP_Delete(fpwk->fieldWork);
+	GAMESYSTEM_SetFieldMapWork(gsys, NULL);
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap( HEAPID_FIELDMAP );
 
