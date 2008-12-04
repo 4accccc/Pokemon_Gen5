@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-12-01T15:46:47"/>
+	<create user="kagaya" host="W00143" date="2008-12-04T13:02:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -135,140 +135,143 @@
 
 	<row id="DEBUG_FIELD_STR00">
 		<language name="JPN" font=" 2:lcfont12" width="80">▲</language>
-		<language name="JPN_KANJI" width="80">テスト</language>
+		<language name="JPN_KANJI" width="80">▲</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR01">
 		<language name="JPN" font=" 2:lcfont12" width="80">テスト</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">テスト</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR02">
 		<language name="JPN" font=" 2:lcfont12" width="80">カメラ操作</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">カメラ操作</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR03">
 		<language name="JPN" font=" 2:lcfont12" width="80">スケール切替</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">スケール切替</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR04">
 		<language name="JPN" font=" 2:lcfont12" width="80">スケール調節</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">スケール調節</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE00">
 		<language name="JPN" font=" 2:lcfont12" width="80">通信開始</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">通信開始</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE01">
 		<language name="JPN" font=" 2:lcfont12" width="80">侵入開始</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">侵入開始</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE02">
 		<language name="JPN" font=" 2:lcfont12" width="80">はい</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">はい</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE03">
 		<language name="JPN" font=" 2:lcfont12" width="80">いいえ</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">いいえ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE04">
 		<language name="JPN" font=" 2:lcfont12" width="80">カード</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">カード</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE05">
 		<language name="JPN" font=" 2:lcfont12" width="80">バトル</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">バトル</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE06">
 		<language name="JPN" font=" 2:lcfont12" width="80">やめる</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">やめる</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_CHOICE07">
 		<language name="JPN" font=" 2:lcfont12" width="80">通信終了</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">通信終了</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR00">
 		<language name="JPN" font=" 2:lcfont12" width="80">通信を開始します。
 よろしいですか？</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">通信を開始します。
+よろしいですか？</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR01">
 		<language name="JPN" font=" 2:lcfont12" width="80">侵入を開始します。
 よろしいですか？</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">侵入を開始します。
+よろしいですか？</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR02">
 		<language name="JPN" font=" 2:lcfont12" width="80">話しかけました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">話しかけました。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR03">
 		<language name="JPN" font=" 2:lcfont12" width="80">話しかけられました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">話しかけられました。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR04">
 		<language name="JPN" font=" 2:lcfont12" width="80">相手の終了を待っています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">相手の終了を待っています。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR05">
 		<language name="JPN" font=" 2:lcfont12" width="80">トレーナーカードを
 見せてくれないか？</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">トレーナーカードを
+見せてくれないか？</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR06">
 		<language name="JPN" font=" 2:lcfont12" width="80">バトルを　しないか？</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">バトルを　しないか？</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR07">
 		<language name="JPN" font=" 2:lcfont12" width="80">相手の返事を　待っています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">相手の返事を　待っています。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR08">
 		<language name="JPN" font=" 2:lcfont12" width="80">何をしますか？</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">何をしますか？</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR09">
 		<language name="JPN" font=" 2:lcfont12" width="80">相手が終了しました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">相手が終了しました。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR10">
 		<language name="JPN" font=" 2:lcfont12" width="80">しばらくお待ちください</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">しばらくお待ちください</language>
 	</row>
 
 	<row id="DEBUG_FIELD_C_STR11">
 		<language name="JPN" font=" 2:lcfont12" width="80">断られました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">断られました。</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR05">
 		<language name="JPN" font=" 2:lcfont12" width="80">マップ遷移</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">マップ遷移</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR06">
 		<language name="JPN" font=" 2:lcfont12" width="80">四季ジャンプ</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">四季ジャンプ</language>
 	</row>
 
 	<flowchart-group-list>
