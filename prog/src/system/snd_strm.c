@@ -93,7 +93,9 @@ typedef struct
 	BOOL				snddata_in;
 	u32					arcid;
 	u32					dataid;
-	FSFile				file;
+	ARCHANDLE*			p_handle;
+	u32					data_siz;
+	u32					seek_top;
 }STRM_WORK;
 
 //ワーク
@@ -174,9 +176,10 @@ void SND_STRM_Main( void )
  *	@param	dataid		データID
  *	@param	type		データタイプ
  *	@param	hz			サンプリング周期
+ *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz )
+void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, u32 heapID )
 {
 	GF_ASSERT( sp_STRM_WORK );
 
@@ -198,7 +201,10 @@ void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz )
 	sp_STRM_WORK->snddata_in = TRUE;
 	sp_STRM_WORK->arcid		= arcid;
 	sp_STRM_WORK->dataid	= dataid;
-	GFL_ARC_OpenFileTopPosWrite( sp_STRM_WORK->arcid, sp_STRM_WORK->dataid, &sp_STRM_WORK->file );
+	sp_STRM_WORK->p_handle	= GFL_ARC_OpenDataHandle( sp_STRM_WORK->arcid, heapID );
+	sp_STRM_WORK->data_siz	= GFL_ARC_GetDataSizeByHandle( sp_STRM_WORK->p_handle, sp_STRM_WORK->dataid );
+	sp_STRM_WORK->seek_top	= GFL_ARC_GetDataOfsByHandle( sp_STRM_WORK->p_handle, sp_STRM_WORK->dataid );
+	sp_STRM_WORK->seek_top	+= SWAV_HEAD_SIZE;
 
 	
 	SND_STRM_CopyBuffer( sp_STRM_WORK, STRM_BUF_SIZE );
@@ -218,7 +224,7 @@ void SND_STRM_Release( void )
 	NNS_SndStrmStop( &sp_STRM_WORK->strm );
 
 	// 破棄
-	FS_CloseFile(&sp_STRM_WORK->file);
+	GFL_ARC_CloseDataHandle( sp_STRM_WORK->p_handle );
 
 	sp_STRM_WORK->snddata_in = FALSE;
 }
@@ -326,21 +332,23 @@ static void SND_STRM_CopyBuffer( STRM_WORK* p_wk,int size )
 	GF_ASSERT( p_wk->snddata_in );
 
 	if(size){
-		ret=FS_ReadFile(&p_wk->file,&p_wk->FS_strmBuffer[0],size);
+		GFL_ARC_LoadDataOfsByHandle( p_wk->p_handle, p_wk->dataid, p_wk->FSReadPos, size, &p_wk->FS_strmBuffer[0] );
 		p_wk->FSReadPos+=size;
 	}
 	else{
 		while(p_wk->strmReadPos!=p_wk->strmWritePos){
-			ret=FS_ReadFile(&p_wk->file,&p_wk->FS_strmBuffer[p_wk->strmWritePos],32);
-			if(ret==0){
-				p_wk->FSReadPos=SWAV_HEAD_SIZE;
-				FS_SeekFile(&p_wk->file,p_wk->FSReadPos,FS_SEEK_SET);
-				continue;
-			}
+
+
+			GFL_ARC_LoadDataByHandleContinue( p_wk->p_handle, 32, &p_wk->FS_strmBuffer[p_wk->strmWritePos] );
+
 			p_wk->FSReadPos+=32;
 			p_wk->strmWritePos+=32;
 			if(p_wk->strmWritePos>=STRM_BUF_SIZE){
 				p_wk->strmWritePos=0;
+			}
+			if( p_wk->FSReadPos >= sp_STRM_WORK->data_siz ){
+				p_wk->FSReadPos=SWAV_HEAD_SIZE;
+				GFL_ARC_SeekDataByHandle( p_wk->p_handle, sp_STRM_WORK->seek_top );
 			}
 		}
 	}
