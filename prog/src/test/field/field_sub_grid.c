@@ -926,15 +926,9 @@ static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 			hit |= MAPHITBIT_DATA;
 		}
 
-		#ifdef DEBUG_ONLY_FOR_kagaya
 		if( attr != 0 ){
 			hit |= MAPHITBIT_ATTR;
 		}
-		#elif defined DEBUG_ONLY_FOR_nakatsui
-		if( attr != 0 ){
-			hit |= MAPHITBIT_ATTR;
-		}
-		#endif
 	}
 	
 	return( hit );
