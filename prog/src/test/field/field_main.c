@@ -333,12 +333,12 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
+static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, const VecFx32 * now_pos)
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData(gamedata);
 	const CONNECT_DATA * cnct;
-	cnct = EVENTDATA_SearchConnectByPos(evdata, &fieldWork->now_pos);
+	cnct = EVENTDATA_SearchConnectByPos(evdata, now_pos);
 	if (cnct == NULL) return NULL;
 	if (cnct->link_exit_id == EXIT_ID_SPECIAL) {
 		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
@@ -349,13 +349,39 @@ static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 		u16 exit_id;
 		exit_id = EVENTDATA_GetConnectIDByData(evdata, cnct);
 		LOCATION_Set(&ent_loc, fieldWork->map_id, exit_id, 0,
-				fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z);
+				now_pos->x, now_pos->y, now_pos->z);
 		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
 	}
 
 	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
 
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
+{
+	VecFx32 now_pos = fieldWork->now_pos;
+	switch (GFL_UI_KEY_GetCont()) {
+	case PAD_KEY_UP:	now_pos.z -= FX32_ONE * 16; break;
+	case PAD_KEY_DOWN:	now_pos.z += FX32_ONE * 16; break;
+	case PAD_KEY_LEFT:	now_pos.x -= FX32_ONE * 16; break;
+	case PAD_KEY_RIGHT:	now_pos.x += FX32_ONE * 16; break;
+	default:
+		return NULL;
+	}
+	{
+		u32 attr = 0;
+		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
+		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &now_pos, &gridInfo ) == TRUE ){
+			attr = gridInfo.gridData[0].attr;
+		}
+		if (attr == 0) return NULL;
+	}
+
+	return ConnectCheck(gsys, fieldWork, &now_pos);
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	イベント起動チェック（暫定）
@@ -367,7 +393,10 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	FIELD_MAIN_WORK * fieldWork = work;
 	GMEVENT * event;
 
-	event = ConnectCheck(gsys, fieldWork);
+	event = ConnectCheck(gsys, fieldWork, &fieldWork->now_pos);
+	if (event != NULL) return event;
+
+	event = PushConnectCheck(gsys, fieldWork);
 	if (event != NULL) return event;
 
 	if( ( GFL_UI_KEY_GetCont() & resetCont ) == resetCont ){
