@@ -457,6 +457,10 @@ static void printBtnWaza( BTLV_SCD* wk, u16 btnIdx, u16 col, const STRBUF* str )
 	sizy = BtlPos[btnIdx].h;
 
 	GFL_BMP_Fill( wk->bmp, posx, posy, sizx, sizy, col );
+
+	// soga
+	if( str == NULL ) return;
+
 	strWidth = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
 	drawX = posx + (sizx - strWidth) / 2;
 	drawY = posy + (sizy - 32) / 2;
@@ -538,6 +542,10 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 				BTL_STR_MakeWazaUIString( wk->strbuf, wazaID, PP, PPMax );
 				printBtnWaza( wk, i, 0x0a, wk->strbuf );
 			}
+			// soga
+			for( ; i<4; i++){
+				printBtnWaza( wk, i, 0x0f, NULL );
+			}
 			(*seq)++;
 		}
 		break;
@@ -550,7 +558,9 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 	case SEQ_SEL_FIGHT+2:
 		{
 			int hit = GFL_UI_TP_HitTrg( TP_HitTbl );
-			if( hit != GFL_UI_TP_HIT_NONE )
+			// soga
+//			if( hit != GFL_UI_TP_HIT_NONE )
+			if( ( hit != GFL_UI_TP_HIT_NONE ) && ( hit <= BTL_POKEPARAM_GetWazaCount( wk->bpp ) - 1 ) )
 			{
 				BTL_ACTION_SetFightParam( &wk->selAction, hit, 0 );
 				return TRUE;

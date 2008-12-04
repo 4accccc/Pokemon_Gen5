@@ -22,6 +22,9 @@
 #include "message.naix"
 #include "font/font.naix"
 
+#include "../test/soga/btl_effect.h"	//soga
+#include "poke_tool/monsno_def.h"
+
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
 /*--------------------------------------------------------------------------*/
@@ -162,7 +165,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0x00, 1, 0 );
 	GFL_BG_FillCharacter( GFL_BG_FRAME3_M, 0xff, 1, 1 );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0001, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0001, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
 
 	wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME1_M, 1, 19, 30, 4, 0, GFL_BMP_CHRAREA_GET_F );
@@ -179,7 +183,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
 
-	GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
+//	GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_OFF );
+	GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON  );
 	GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON  );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
@@ -232,6 +237,12 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 
 			statwin_disp_start( &wk->statusWin[ enClientID ] );
 			(*seq)++;
+
+			//soga
+			{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, enClientID );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_BB );
+			}
 		}
 		break;
 	case 2:
@@ -248,6 +259,12 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 			u8 plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 			statwin_disp_start( &wk->statusWin[ plClientID ] );
 			(*seq)++;
+
+			//soga
+			{
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, plClientID );
+				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_AA );
+			}
 		}
 		break;
 	case 4:
@@ -455,6 +472,8 @@ void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, u8 clientID )
 
 	*(twk->endFlag) = FALSE;
 
+	//soga
+	BTL_EFFECT_DelPokemon( clientID );
 
 }
 //=============================================================================================
@@ -516,6 +535,12 @@ void BTLV_SCU_StartPokeIn( BTLV_SCU* wk, u8 clientID )
 	twk->seq = 0;
 
 	*(twk->endFlag) = FALSE;
+
+	//soga
+	{
+		const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
+		BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), clientID );
+	}
 }
 
 
@@ -612,8 +637,11 @@ static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
 		u8 x;
 		u8 y;
 	} winpos[2] = {
-		{ 20,  2 },
-		{  2, 13 },
+//		{ 20,  2 },
+//		{  2, 13 },
+// soga
+		{  4,  2 },
+		{ 18, 13 },
 	};
 
 	u8 isPlayer, playerClientID, px, py;

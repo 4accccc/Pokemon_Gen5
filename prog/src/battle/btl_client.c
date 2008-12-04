@@ -413,8 +413,9 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 				wazaIdx		= wk->cmdArgs[3];
 				affinity	= wk->cmdArgs[4];
 
-				party = BTL_MAIN_GetPartyDataConst( wk->mainModule, atClientID );
-				poke = BTL_PARTY_GetMemberDataConst( party, 0 );
+				//party = BTL_MAIN_GetPartyDataConst( wk->mainModule, atClientID );
+				//poke = BTL_PARTY_GetMemberDataConst( party, 0 );
+				poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
 				waza = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
 
 				BTL_Printf("[CL] WazaAct aff=%d, damage=%d\n", affinity, damage);

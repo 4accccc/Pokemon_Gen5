@@ -25,6 +25,8 @@
 
 #include "btlv_core.h"
 
+#include "../test/soga/btl_effect.h"	//soga
+#include "waza_tool/wazano_def.h"		//soga
 
 
 /*--------------------------------------------------------------------------*/
@@ -62,7 +64,6 @@ struct _BTLV_CORE {
 	GFL_TCBLSYS*	tcbl;
 	BTLV_SCU*		scrnU;
 	BTLV_SCD*		scrnD;
-
 
 	HEAPID	heapID;
 };
@@ -115,6 +116,7 @@ BTLV_CORE*  BTLV_Create( BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* client, 
 	BTL_STR_InitSystem( mainModule, client, heapID );
 	GFL_UI_TP_Init( heapID );
 
+
 	return core;
 }
 
@@ -131,6 +133,8 @@ void BTLV_Delete( BTLV_CORE* core )
 	GFL_UI_TP_Exit();
 	BTL_STR_QuitSystem();
 
+	//エフェクト削除 soga
+	BTL_EFFECT_Exit();
 
 	BTLV_SCD_Delete( core->scrnD );
 	BTLV_SCU_Delete( core->scrnU );
@@ -154,6 +158,7 @@ void BTLV_CORE_Main( BTLV_CORE* core )
 {
 	GFL_UI_TP_Main();
 	GFL_TCBL_Main( core->tcbl );
+	BTL_EFFECT_Main();		//soga
 }
 
 
@@ -250,6 +255,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
 		setup_core( core, core->heapID );
 		BTLV_SCU_Setup( core->scrnU );
 		BTLV_SCD_Setup( core->scrnD );
+		BTL_EFFECT_Init( 0, core->heapID );		//soga
 		(*seq)++;
 		break;
 
@@ -374,6 +380,24 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage
 	subwk->timer = 0;
 
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocWazaAct );
+
+	//技エフェクト出してみる soga
+	if( atClientID ){
+		if( waza == WAZANO_MIZUDEPPOU ){
+			BTL_EFFECT_Add( BTL_EFFECT_BB2AAMIZUDEPPOU );
+		}
+		else{
+			BTL_EFFECT_Add( BTL_EFFECT_BB2AAGANSEKI );
+		}
+	}
+	else{
+		if( waza == WAZANO_MIZUDEPPOU ){
+			BTL_EFFECT_Add( BTL_EFFECT_AA2BBMIZUDEPPOU );
+		}
+		else{
+			BTL_EFFECT_Add( BTL_EFFECT_AA2BBGANSEKI );
+		}
+	}
 }
 //=============================================================================================
 /**
@@ -396,7 +420,11 @@ static BOOL subprocWazaAct( int* seq, void* wk_adrs )
 
 	switch( *seq ){
 	case 0:
+		//soga
+		if( BTL_EFFECT_CheckExecute() == FALSE )
+#if 0
 		if( ++(subwk->timer) > 30 )
+#endif
 		{
 			do {
 				if( subwk->affinity < BTL_TYPEAFF_100 )
@@ -588,6 +616,8 @@ void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 clientID, BppValueID statusType
 
 static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 {
+//soga
+#if 0
 	static const GFL_DISP_VRAM vramBank = {
 		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
@@ -602,6 +632,22 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
+#else
+	static const GFL_DISP_VRAM vramBank = {
+		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	};		
+#endif
 
 	// BGsystem初期化
 	GFL_BG_Init( heapID );
@@ -626,12 +672,35 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GFL_BG_SetBGMode( &sysHeader );
 	}
 
+	//3D関連初期化 soga
+	{
+		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
+		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+		G3X_AlphaBlend( TRUE );
+		G3X_EdgeMarking( TRUE );
+		G2_SetBG0Priority( 1 );
+	}
+	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
+	{
+		G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
+							   GX_WND_PLANEMASK_BG1 |
+							   GX_WND_PLANEMASK_BG2 |
+							   GX_WND_PLANEMASK_BG3 |
+							   GX_WND_PLANEMASK_OBJ,
+							   FALSE );
+		G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+		G2_SetWnd0Position( 1, 0, 255, 192 );
+		GX_SetVisibleWnd( GX_WNDMASK_W0 );
+	}
 }
 
 static void cleanup_core( BTLV_CORE* wk )
 {
 	GFL_BMPWIN_Exit();
 	GFL_BG_Exit();
+
+	//3D関連削除 soga
+	GFL_G3D_Exit();
 }
 
 
