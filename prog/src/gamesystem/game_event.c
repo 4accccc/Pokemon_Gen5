@@ -101,22 +101,11 @@ void GMEVENT_ChangeEvent(GMEVENT * now_event, GMEVENT * next_event)
 }
 
 //------------------------------------------------------------------
-/**
- * @brief	サブイベント呼び出し
- * @param	parent		親イベントへのポインタ
- * @param	event_func	イベント制御関数へのポインタ
- * @param	work_size	イベント制御関数の使用するワークへのポインタ
- * @return	GMEVENT	生成したイベント
- *
- * イベントからサブイベントのコールを呼び出す
- */
 //------------------------------------------------------------------
-GMEVENT * GMEVENT_CallSubEvent(GMEVENT * parent, GMEVENT_FUNC sub_func, u32 work_size)
+void GMEVENT_CallEvent(GMEVENT * parent, GMEVENT * child)
 {
-	GMEVENT * event;
-	event = GMEVENT_Create(parent->gsys, parent, sub_func, work_size);
-	GAMESYSTEM_SetEvent(parent->gsys, event);
-	return event;
+	child->parent = parent;
+	GAMESYSTEM_SetEvent(parent->gsys, child);
 }
 
 //=============================================================================
@@ -139,6 +128,7 @@ BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 		GMEVENT * parent = GMEVENT_GetParentEvent(event);
 		GMEVENT_Delete(event);
 		GAMESYSTEM_SetEvent(gsys, parent);
+		event = parent;
 		if (parent == NULL) {
 			return TRUE;
 		}
