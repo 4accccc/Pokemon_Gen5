@@ -106,3 +106,20 @@ extern const LOCATION * GAMEDATA_GetStartLocation(const GAMEDATA * gamedata);
 //------------------------------------------------------------------
 extern void GAMEDATA_SetStartLocation(GAMEDATA * gamedata, const LOCATION * loc);
 
+//------------------------------------------------------------------
+/**
+ * @brief	直前の出入口情報の取得
+ * @param	gamedata			GAMEDATAへのポインタ
+ * @return	LOCATION		直前の出入口情報へのポインタ
+ */
+//------------------------------------------------------------------
+extern const LOCATION * GAMEDATA_GetEntranceLocation(const GAMEDATA * gamedata);
+//------------------------------------------------------------------
+/**
+ * @brief	直前の出入口情報のセット
+ * @param	gamedata
+ * @param	loc
+ */
+//------------------------------------------------------------------
+extern void GAMEDATA_SetEntranceLocation(GAMEDATA * gamedata, const LOCATION * loc);
+
