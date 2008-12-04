@@ -154,9 +154,9 @@ typedef enum {
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_Init
-		( GFL_G3D_VMAN_MODE texmanMode, GFL_G3D_VMAN_TEXSIZE texmanSize, 
-			GFL_G3D_VMAN_MODE pltmanMode, GFL_G3D_VMAN_PLTSIZE pltmanSize,
-				u16 GeBufSize, HEAPID heapID, GFL_G3D_SETUP_FUNC setup );
+		( const GFL_G3D_VMAN_MODE texmanMode, const GFL_G3D_VMAN_TEXSIZE texmanSize, 
+			const GFL_G3D_VMAN_MODE pltmanMode, const GFL_G3D_VMAN_PLTSIZE pltmanSize,
+				const u16 GeBufSize, const HEAPID heapID, const GFL_G3D_SETUP_FUNC setup );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -273,7 +273,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_SetDrawFlushMode
-		( GFL_G3D_DRAWFLUSH_TYPE type );
+		( const GFL_G3D_DRAWFLUSH_TYPE type );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -357,7 +357,7 @@ extern u32
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_CreateResource
-		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE resType, void* header );
+		( GFL_G3D_RES* g3Dres, const GFL_G3D_RES_CHKTYPE resType, void* header );
 
 extern void
 	GFL_G3D_CreateResourceAuto
@@ -377,12 +377,12 @@ extern void
 // アーカイブＩＤによる読み込み
 extern GFL_G3D_RES*
 	GFL_G3D_CreateResourceArc
-		( int arcID, int datID );
+		( const int arcID, const int datID );
 
 // アーカイブファイルパスによる読み込み
 extern GFL_G3D_RES*
 	GFL_G3D_CreateResourcePath
-		( const char* path, int datID ); 
+		( const char* path, const int datID ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -407,7 +407,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_LoadResourceArc
-		( int arcID, int datID, GFL_G3D_RES* g3Dres );
+		( const int arcID, const int datID, GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -422,7 +422,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern NNSG3dResFileHeader*
 	GFL_G3D_GetResourceFileHeader
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 	
 //--------------------------------------------------------------------------------------------
 /**
@@ -436,7 +436,7 @@ extern NNSG3dResFileHeader*
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_CheckResourceType
-		( GFL_G3D_RES* g3Dres, GFL_G3D_RES_CHKTYPE checkType ); 
+		( const GFL_G3D_RES* g3Dres, const GFL_G3D_RES_CHKTYPE checkType ); 
 
 
 //=============================================================================================
@@ -459,7 +459,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL 
 	GFL_G3D_TransVramTexture
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -478,7 +478,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL 
 	GFL_G3D_TransVramTextureDataOnly
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -497,7 +497,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL 
 	GFL_G3D_TransVramTexturePlttOnly
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -510,7 +510,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL 
 	GFL_G3D_FreeVramTexture
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -522,7 +522,7 @@ extern BOOL
 //-----------------------------------------------------------------------------
 NNSG3dResTex*
 	GFL_G3D_GetResTex
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -536,7 +536,7 @@ NNSG3dResTex*
 //-----------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_CheckTextureKeyLive
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -548,7 +548,7 @@ extern BOOL
 //-----------------------------------------------------------------------------
 extern NNSG3dTexKey
 	GFL_G3D_GetTextureDataVramKey
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -560,7 +560,7 @@ extern NNSG3dTexKey
 //-----------------------------------------------------------------------------
 extern NNSG3dPlttKey
 	GFL_G3D_GetTexturePlttVramKey
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -572,7 +572,7 @@ extern NNSG3dPlttKey
 //-----------------------------------------------------------------------------
 extern u32
 	GFL_G3D_GetAdrsTextureData
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 //----------------------------------------------------------------------------
 /**
@@ -584,7 +584,7 @@ extern u32
 //-----------------------------------------------------------------------------
 extern u32
 	GFL_G3D_GetAdrsTexturePltt
-		( GFL_G3D_RES* g3Dres );
+		( const GFL_G3D_RES* g3Dres );
 
 
 //=============================================================================================
@@ -615,7 +615,7 @@ typedef struct _GFL_G3D_RND	GFL_G3D_RND;
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RND*
 	GFL_G3D_RENDER_Create
-		( GFL_G3D_RES* mdl, int mdlidx, GFL_G3D_RES* tex );
+		( const GFL_G3D_RES* mdl, const int mdlidx, const GFL_G3D_RES* tex );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -639,7 +639,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
 	GFL_G3D_RENDER_GetG3DresMdl
-		( GFL_G3D_RND* g3Drnd ); 
+		( const GFL_G3D_RND* g3Drnd ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -652,7 +652,7 @@ extern GFL_G3D_RES*
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
 	GFL_G3D_RENDER_GetG3DresTex
-		( GFL_G3D_RND* g3Drnd ); 
+		( const GFL_G3D_RND* g3Drnd ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -667,7 +667,7 @@ extern GFL_G3D_RES*
 //--------------------------------------------------------------------------------------------
 extern NNSG3dRenderObj*
 	GFL_G3D_RENDER_GetRenderObj
-		( GFL_G3D_RND* g3Drnd );
+		( const GFL_G3D_RND* g3Drnd );
 
 
 //=============================================================================================
@@ -700,7 +700,7 @@ typedef struct _GFL_G3D_ANM	GFL_G3D_ANM;
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_ANM*
 	GFL_G3D_ANIME_Create
-		( GFL_G3D_RND* g3Drnd, GFL_G3D_RES* anm, int anmidx ); 
+		( const GFL_G3D_RND* g3Drnd, const GFL_G3D_RES* anm, const int anmidx ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -724,7 +724,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RES*
 	GFL_G3D_ANIME_GetG3Dres
-		( GFL_G3D_ANM* g3Danm ); 
+		( const GFL_G3D_ANM* g3Danm ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -739,7 +739,7 @@ extern GFL_G3D_RES*
 //--------------------------------------------------------------------------------------------
 extern NNSG3dAnmObj*
 	GFL_G3D_ANIME_GetAnmObj
-		( GFL_G3D_ANM* g3Danm );
+		( const GFL_G3D_ANM* g3Danm );
 
 
 //=============================================================================================
@@ -774,7 +774,7 @@ typedef struct _GFL_G3D_OBJ	GFL_G3D_OBJ;
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_OBJ*
 	GFL_G3D_OBJECT_Create
-		( GFL_G3D_RND* g3Drnd, GFL_G3D_ANM** anmTbl, u16 anmCount );
+		( const GFL_G3D_RND* g3Drnd, GFL_G3D_ANM** anmTbl, const u16 anmCount );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -798,7 +798,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_RND*
 	GFL_G3D_OBJECT_GetG3Drnd
-		( GFL_G3D_OBJ* g3Dobj ); 
+		( const GFL_G3D_OBJ* g3Dobj ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -812,7 +812,7 @@ extern GFL_G3D_RND*
 //--------------------------------------------------------------------------------------------
 extern GFL_G3D_ANM*
 	GFL_G3D_OBJECT_GetG3Danm
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -825,7 +825,7 @@ extern GFL_G3D_ANM*
 //--------------------------------------------------------------------------------------------
 extern u16
 	GFL_G3D_OBJECT_GetAnimeCount
-		( GFL_G3D_OBJ* g3Dobj ); 
+		( const GFL_G3D_OBJ* g3Dobj ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -837,7 +837,7 @@ extern u16
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_EnableAnime
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -849,7 +849,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_DisableAnime
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx ); 
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -863,7 +863,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern u16
 	GFL_G3D_OBJECT_AddAnime
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_ANM* g3Danm );
+		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_ANM* g3Danm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -875,7 +875,7 @@ extern u16
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_OBJECT_RemoveAnime
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -887,7 +887,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx );
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -900,11 +900,11 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_GetAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, int* anmFrm );
 
 extern BOOL
 	GFL_G3D_OBJECT_SetAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, int* anmFrm );
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const int* anmFrm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -919,7 +919,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_IncAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count ); 
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -934,7 +934,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_LoopAnimeFrame
-		( GFL_G3D_OBJ* g3Dobj, u16 anmIdx, const fx32 count );
+		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count );
 
 
 //=============================================================================================
@@ -1005,11 +1005,11 @@ extern void
 //カリングなし
 extern void
 	GFL_G3D_DRAW_DrawObject
-		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
+		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 //カリングあり
 extern BOOL
 	GFL_G3D_DRAW_DrawObjectCullingON
-		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
+		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJSTATUS* status );
 //アクセサリー用
 //	対象GFL_G3D_OBJのレンダリングリソース(imd)はg3dcvtr -s で出力されている必要がある。
 //	※これにより各Node行列が行列スタックに格納された状態で描画を終えるため、
@@ -1019,12 +1019,12 @@ extern BOOL
 //　　カリングＯＮについては本体に依存していいかなと思っているのでとりあえず作らない。
 extern void
 	GFL_G3D_DRAW_DrawAccesory
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJ* g3Dobj_Accesory,
 			const GFL_G3D_OBJSTATUS* status, const int jntID );
 
 extern void
 	GFL_G3D_DRAW_DrawAccesoryByName
-		( GFL_G3D_OBJ* g3Dobj, GFL_G3D_OBJ* g3Dobj_Accesory,
+		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_OBJ* g3Dobj_Accesory,
 			const GFL_G3D_OBJSTATUS* status, const char* jntName );
 
 //--------------------------------------------------------------------------------
@@ -1036,12 +1036,12 @@ extern void
 //カリングなし
 extern void
 	GFL_G3D_DRAW_DrawObject1mat1shp
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
+		( const GFL_G3D_OBJ* g3Dobj, const u32 matID, const u32 shpID, const BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 //カリングあり
 extern BOOL
 	GFL_G3D_DRAW_DrawObject1mat1shpCullingON
-		( GFL_G3D_OBJ* g3Dobj, u32 matID, u32 shpID, BOOL sendMat, 
+		( const GFL_G3D_OBJ* g3Dobj, const u32 matID, const u32 shpID, const BOOL sendMat, 
 			const GFL_G3D_OBJSTATUS* status );
 
 

@@ -187,7 +187,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_CAMERA_Switching
-		( GFL_G3D_CAMERA* g3Dcamera );
+		( const GFL_G3D_CAMERA* g3Dcamera );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -197,8 +197,8 @@ extern void
  * @param	pos			座標ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CAMERA_GetPos( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
-extern void GFL_G3D_CAMERA_SetPos( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
+extern void GFL_G3D_CAMERA_GetPos( const GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
+extern void GFL_G3D_CAMERA_SetPos( GFL_G3D_CAMERA* g3Dcamera, const VecFx32* camPos );
 //--------------------------------------------------------------------------------------------
 /**
  * カメラ上方向の取得と変更
@@ -207,8 +207,8 @@ extern void GFL_G3D_CAMERA_SetPos( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camPos );
  * @param	pos			上方向ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CAMERA_GetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
-extern void GFL_G3D_CAMERA_SetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
+extern void GFL_G3D_CAMERA_GetCamUp( const GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp );
+extern void GFL_G3D_CAMERA_SetCamUp( GFL_G3D_CAMERA* g3Dcamera, const VecFx32* camUp );
 //--------------------------------------------------------------------------------------------
 /**
  * カメラ注視点の取得と変更
@@ -217,8 +217,8 @@ extern void GFL_G3D_CAMERA_SetCamUp( GFL_G3D_CAMERA* g3Dcamera, VecFx32* camUp )
  * @param	target		注視点ベクトルの格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CAMERA_GetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
-extern void GFL_G3D_CAMERA_SetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
+extern void GFL_G3D_CAMERA_GetTarget( const GFL_G3D_CAMERA* g3Dcamera, VecFx32* target );
+extern void GFL_G3D_CAMERA_SetTarget( GFL_G3D_CAMERA* g3Dcamera, const VecFx32* target );
 //--------------------------------------------------------------------------------------------
 /**
  * ニアファークリップの取得と変更
@@ -227,10 +227,10 @@ extern void GFL_G3D_CAMERA_SetTarget( GFL_G3D_CAMERA* g3Dcamera, VecFx32* target
  * @param	near or far	ニアファー値の格納もしくは参照ワークポインタ	
  */
 //--------------------------------------------------------------------------------------------
-extern void GFL_G3D_CAMERA_GetNear( GFL_G3D_CAMERA* g3Dcamera, fx32* near );
-extern void GFL_G3D_CAMERA_SetNear( GFL_G3D_CAMERA* g3Dcamera, fx32* near );
-extern void GFL_G3D_CAMERA_GetFar( GFL_G3D_CAMERA* g3Dcamera, fx32* far );
-extern void GFL_G3D_CAMERA_SetFar( GFL_G3D_CAMERA* g3Dcamera, fx32* far );
+extern void GFL_G3D_CAMERA_GetNear( const GFL_G3D_CAMERA* g3Dcamera, fx32* near );
+extern void GFL_G3D_CAMERA_SetNear( GFL_G3D_CAMERA* g3Dcamera, const fx32* near );
+extern void GFL_G3D_CAMERA_GetFar( const GFL_G3D_CAMERA* g3Dcamera, fx32* far );
+extern void GFL_G3D_CAMERA_SetFar( GFL_G3D_CAMERA* g3Dcamera, const fx32* far );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -248,12 +248,12 @@ extern void GFL_G3D_CAMERA_SetFar( GFL_G3D_CAMERA* g3Dcamera, fx32* far );
 //正規版
 extern fx32
 	GFL_G3D_CAMERA_GetDotProduct
-		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos );
+		( const GFL_G3D_CAMERA* g3Dcamera, const VecFx32* objPos );
 
 //簡易版　※２Ｄ（ＸＺ座標）専用。スカラー精度は落ちるがやや高速
 extern int
 	GFL_G3D_CAMERA_GetDotProductXZfast
-		( GFL_G3D_CAMERA* g3Dcamera, VecFx32* objPos );
+		( const GFL_G3D_CAMERA* g3Dcamera, const VecFx32* objPos );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -264,7 +264,7 @@ extern int
 //--------------------------------------------------------------------------------------------
 extern u16
 	GFL_G3D_CAMERA_GetRadianXZ
-		( GFL_G3D_CAMERA* g3Dcamera );
+		( const GFL_G3D_CAMERA* g3Dcamera );
 
 #endif
 
