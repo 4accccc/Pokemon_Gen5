@@ -22,6 +22,167 @@
 
 static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id);
 static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc);
+
+typedef enum {
+	FIELD_FADE_BLACK = 0,
+	FIELD_FADE_WHITE,
+}FIELD_FADE_TYPE;
+
+GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type);
+GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type);
+GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys);
+GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap);
+
+//============================================================================================
+//
+//		サブイベント
+//
+//============================================================================================
+typedef struct {
+	FIELD_FADE_TYPE fade_type;
+}FADE_EVENT_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldFadeOutEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK * few = work;
+	switch (*seq) {
+	case 0:
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				0, 16, 0);
+		(*seq) ++;
+		break;
+	case 1:
+		if (GFL_FADE_CheckFade() == FALSE) {
+			return GMEVENT_RES_FINISH;
+		}
+		break;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldFadeOut(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeOutEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+	few->fade_type = type;
+
+	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldFadeInEvent(GMEVENT * event, int *seq, void * work)
+{
+	FADE_EVENT_WORK * few = work;
+	switch (*seq) {
+	case 0:
+		GFL_FADE_SetMasterBrightReq(
+				GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+				16, 0, 0);
+		(*seq) ++;
+		break;
+	case 1:
+		if (GFL_FADE_CheckFade() == FALSE) {
+			return GMEVENT_RES_FINISH;
+		}
+		break;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldFadeIn(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap, FIELD_FADE_TYPE type)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldFadeInEvent, sizeof(FADE_EVENT_WORK));
+	FADE_EVENT_WORK * few = GMEVENT_GetEventWork(event);
+	few->fade_type = type;
+
+	return event;
+}
+
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct {
+	GAMESYS_WORK * gsys;
+	FIELD_MAIN_WORK * fieldmap;
+	GAMEDATA * gamedata;
+}FIELD_OPENCLOSE_WORK;
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldCloseEvent(GMEVENT * event, int * seq, void *work)
+{
+	FIELD_OPENCLOSE_WORK * focw = work;
+	GAMESYS_WORK * gsys = focw->gsys;
+	FIELD_MAIN_WORK * fieldmap = focw->fieldmap;
+	switch (*seq) {
+	case 0:
+		FIELDMAP_Close(fieldmap);
+		(*seq) ++;
+		break;
+	case 1:
+		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldClose(GAMESYS_WORK *gsys, FIELD_MAIN_WORK * fieldmap)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldCloseEvent, sizeof(FIELD_OPENCLOSE_WORK));
+	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
+	focw->gsys = gsys;
+	focw->fieldmap = fieldmap;
+	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+	return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT FieldOpenEvent(GMEVENT * event, int *seq, void*work)
+{
+	FIELD_OPENCLOSE_WORK * focw = work;
+	GAMESYS_WORK * gsys = focw->gsys;
+	FIELD_MAIN_WORK * fieldmap;	// = focw->fieldmap;
+	switch(*seq) {
+	case 0:
+		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		GAMESYSTEM_CallFieldProc(gsys);
+		(*seq) ++;
+		break;
+	case 1:
+		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+		if (FieldMain_IsFieldUpdate(fieldmap) == FALSE) break;
+		FieldMain_UpdateFieldFunc(fieldmap);
+		(*seq) ++;
+		break;
+	case 2:
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_FieldOpen(GAMESYS_WORK *gsys)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, FieldOpenEvent, sizeof(FIELD_OPENCLOSE_WORK));
+	FIELD_OPENCLOSE_WORK * focw = GMEVENT_GetEventWork(event);
+	focw->gsys = gsys;
+	focw->fieldmap = NULL;
+	focw->gamedata = GAMESYSTEM_GetGameData(gsys);
+	return event;
+}
+
 //============================================================================================
 //
 //	イベント：ゲーム開始
@@ -42,18 +203,22 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	FIRST_MAPIN_WORK * fmw = work;
 	GAMESYS_WORK * gsys = fmw->gsys;
 	GAME_INIT_WORK * game_init_work = fmw->game_init_work;
+	FIELD_MAIN_WORK * fieldmap;
 	switch (*seq) {
 	case 0:
 		UpdateMapParams(gsys, &fmw->new_loc);
 		(*seq)++;
 		break;
 	case 1:
-		GAMESYSTEM_CallFieldProc(gsys);
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
 		(*seq)++;
 		break;
 	case 2:
-		if (!GAMESYSTEM_IsProcExists(gsys)) break;
-
+		fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+		GMEVENT_CallEvent(event,EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		(*seq) ++;
+		break;
+	case 3:
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
@@ -87,35 +252,42 @@ typedef struct {
 	FIELD_MAIN_WORK * fieldmap;
 	LOCATION new_loc;
 }MAPCHANGE_WORK;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 {
 	MAPCHANGE_WORK * mcw = work;
 	GAMESYS_WORK  * gsys = mcw->gsys;
+	FIELD_MAIN_WORK * fieldmap = mcw->fieldmap;
 	GAMEDATA * gamedata = mcw->gamedata;
 	switch (*seq) {
 	case 0:
-		//フィールドマップを終了する
-		FIELDMAP_Close(mcw->fieldmap);
+		//フィールドマップをフェードアウト
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, fieldmap, 0));
 		(*seq)++;
 		break;
 	case 1:
 		//フィールドマップを終了待ち
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
 		(*seq)++;
 		break;
 	case 2:
 		//新しいマップID、初期位置をセット
 		UpdateMapParams(gsys, &mcw->new_loc);
-		//フィールドマップを開始リクエスト
-		GAMESYSTEM_CallFieldProc(gsys);
 		(*seq)++;
 		break;
 	case 3:
 		//フィールドマップを開始待ち
-		if (!GAMESYSTEM_IsProcExists(gsys)) break;
-
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case 4:
+		//フィールドマップをフェードイン
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, fieldmap, 0));
+		(*seq) ++;
+		break;
+	case 5:
 		return GMEVENT_RES_FINISH;
 
 	}
@@ -191,13 +363,14 @@ void DEBUG_EVENT_ChangeEventMapChange(
 //	イベント：別画面呼び出し
 //
 //============================================================================================
-FS_EXTERN_OVERLAY(watanabe_sample);
-extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct {
 	GAMESYS_WORK * gsys;
 	FIELD_MAIN_WORK * fieldmap;
+	FSOverlayID ov_id;
+	const GFL_PROC_DATA * proc_data;
+	void * proc_work;
 }CHANGE_SAMPLE_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -208,16 +381,15 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 
 	switch(*seq) {
 	case 0:
-		FIELDMAP_Close(csw->fieldmap);
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gsys, csw->fieldmap, 0));
 		(*seq) ++;
 		break;
 	case 1:
-		if (GAMESYSTEM_IsProcExists(gsys)) break;
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, csw->fieldmap));
 		(*seq) ++;
 		break;
 	case 2:
-		//GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &TestProg1MainProcData, NULL);
-		GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(watanabe_sample), &TestProg1MainProcData, NULL);
+		GAMESYSTEM_CallProc(gsys, csw->ov_id, csw->proc_data, csw->proc_work);
 		(*seq) ++;
 		break;
 	case 3:
@@ -225,21 +397,35 @@ static GMEVENT_RESULT GameChangeEvent(GMEVENT * event, int * seq, void * work)
 		(*seq) ++;
 		break;
 	case 4:
-		GAMESYSTEM_CallFieldProc(gsys);
+		GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+		(*seq) ++;
+		break;
+	case 5:
+		GMEVENT_CallEvent(event, EVENT_FieldFadeIn(gsys, csw->fieldmap, 0));
+		(*seq) ++;
+		break;
+	case 6:
 		return GMEVENT_RES_FINISH;
 		
 	}
 	return GMEVENT_RES_CONTINUE;
 }
 
+FS_EXTERN_OVERLAY(watanabe_sample);
+extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 {
+#if 1
 	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameChangeEvent, sizeof(CHANGE_SAMPLE_WORK));
 	CHANGE_SAMPLE_WORK * csw = GMEVENT_GetEventWork(event);
 	csw->gsys = gsys;
 	csw->fieldmap = fieldmap;
+	csw->ov_id = FS_OVERLAY_ID(watanabe_sample);
+	csw->proc_data = & TestProg1MainProcData;
+	csw->proc_work = NULL;
+#endif
 	return event;
 }
 
@@ -298,6 +484,7 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
 	u16 zone_id = new_loc->zone_id;
+	u16 direction;
 
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, zone_id);
@@ -307,7 +494,14 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
 
 	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
 	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);
-	PLAYERWORK_setDirection(mywork, loc_tmp.dir_id);
+	switch (loc_tmp.dir_id) {
+	default:
+	case EXIT_TYPE_UP:		direction = 0x0000; break;
+	case EXIT_TYPE_LEFT:	direction = 0x4000; break;
+	case EXIT_TYPE_DOWN:	direction = 0x8000; break;
+	case EXIT_TYPE_RIGHT:	direction = 0xc000; break;
+	}
+	PLAYERWORK_setDirection(mywork, direction);
 	//開始位置を記憶しておく
 	GAMEDATA_SetStartLocation(gamedata, &loc_tmp);
 }
