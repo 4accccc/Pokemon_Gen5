@@ -34,6 +34,7 @@ struct _GAMEDATA{
 	EVENTDATA_SYSTEM * evdata;
 	LOCATION start_loc;
 	LOCATION entrance_loc;
+	LOCATION special_loc;
 };
 
 //============================================================================================
@@ -120,6 +121,19 @@ const LOCATION * GAMEDATA_GetEntranceLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetEntranceLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
 	gamedata->entrance_loc = *loc;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata)
+{
+	return &gamedata->special_loc;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
+{
+	gamedata->special_loc = *loc;
 }
 
 
