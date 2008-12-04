@@ -439,23 +439,31 @@ static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * loc_prep,
-		LOCATION * loc_tmp)
+static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * loc_new,
+		LOCATION * loc_tmp, BOOL * sp_exit_flag)
 {
+	*sp_exit_flag = FALSE;
 	//開始位置セット
-	if (loc_prep->exit_id == DOOR_ID_JUMP_CODE) {
-		*loc_tmp = *loc_prep;
+	if (loc_new->exit_id == DOOR_ID_JUMP_CODE) {
+		*loc_tmp = *loc_new;
 	} else {
-		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_prep->exit_id);
+		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_new->exit_id);
 		if (cnct == NULL) {
 			//本当はexit_idからデータを引っ張る
 			OS_Printf("connect: debug default position\n");
-			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_prep->zone_id);
+			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_new->zone_id);
 		} else {
 			CONNECTDATA_SetLocation(cnct, loc_tmp);
-			loc_tmp->zone_id = loc_prep->zone_id;
-			loc_tmp->exit_id = loc_prep->exit_id;
-			switch (cnct->exit_type) {
+			if (loc_tmp->exit_id == EXIT_ID_SPECIAL) {
+				*sp_exit_flag = TRUE;
+			}
+				//loc->zone_id = connect->link_zone_id;
+				//loc->exit_id = connect->link_exit_id;
+				//loc->pos = connect->pos;
+				//loc->dir_id = connect->exit_type;
+			loc_tmp->zone_id = loc_new->zone_id;
+			loc_tmp->exit_id = loc_new->exit_id;
+			switch (loc_tmp->dir_id) {
 			case EXIT_TYPE_UP:
 				loc_tmp->pos.z -= FX32_ONE * 16;
 				break;
@@ -485,12 +493,17 @@ static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
 	u16 zone_id = new_loc->zone_id;
 	u16 direction;
+	BOOL sp_exit_flag;
 
 	//イベント起動データの読み込み
 	EVENTDATA_SYS_Load(evdata, zone_id);
 
 	//開始位置セット
-	MakeNewLocation(evdata, new_loc, &loc_tmp);
+	MakeNewLocation(evdata, new_loc, &loc_tmp, &sp_exit_flag);
+	if (sp_exit_flag) {
+		//special_location = entrance_location;
+		GAMEDATA_SetSpecialLocation(gamedata, GAMEDATA_GetEntranceLocation(gamedata));
+	}
 
 	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
 	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);

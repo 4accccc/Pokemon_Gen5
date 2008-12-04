@@ -134,6 +134,14 @@ static const VecFx32 * GetStartPos(GAMESYS_WORK * gsys)
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+static const u16 GetStartDirection(GAMESYS_WORK * gsys)
+{
+	PLAYER_WORK * pw = GAMESYSTEM_GetMyPlayerWork(gsys);
+	OS_Printf("Start Dir = %d\n",pw->direction);
+	return pw->direction;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static void SetMapperData(FIELD_MAIN_WORK * fieldWork)
 {
 	FIELDDATA_SetMapperData(fieldWork->map_id,
@@ -217,7 +225,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			u16		dir;
 
 			pos = *GetStartPos(gsys);
-			dir = 0;
+			dir = GetStartDirection(gsys);
 			fieldWork->ftbl->create_func( fieldWork, &pos, dir );
 		}
 
@@ -291,7 +299,38 @@ void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork )
 	fieldWork->seq = 3;
 }
 
+//============================================================================================
+//============================================================================================
 #include "field/eventdata_sxy.h"
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
+{
+	VecFx32 pos;
+	int i;
+	static const VecFx32 pos_array[] = {
+		{-1, 0, -1},	{ 0,  0, -1},	{+1, 0, -1},
+		{-1, 0,  0},	{ 0,  0,  0},	{+1, 0,  0},
+		{-1, 0, +1},	{ 0,  0, +1},	{+1, 0, +1},
+	};
+	static char limit[] = "  \n  \n  \n";
+	for (i = 0; i < NELEMS(pos_array); i++) {
+		u32 attr = 0;
+		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
+		VEC_MultAdd(16 * FX32_ONE, &pos_array[i], &fieldWork->now_pos, &pos);
+		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
+			attr = gridInfo.gridData[0].attr;
+		}
+		OS_Printf("%04x%c", attr, limit[i]);
+	}
+	OS_Printf("X,Y,Z=%d,%d,%d\n",
+			FX_Whole(fieldWork->now_pos.x),
+			FX_Whole(fieldWork->now_pos.y),
+			FX_Whole(fieldWork->now_pos.z));
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
@@ -301,43 +340,21 @@ static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	const CONNECT_DATA * cnct;
 	cnct = EVENTDATA_SearchConnectByPos(evdata, &fieldWork->now_pos);
 	if (cnct == NULL) return NULL;
-	//return DEBUG_EVENT_ChangeMapPos(gsys, fieldWork, cnct->link_zone_id, &cnct->pos);
-	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
-
-}
-static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
-{
-	VecFx32 pos;
-	int i;
-	static const VecFx32 pos_array[] = {
-		{FX32_ONE * -16, 0, FX32_ONE * -16},
-		{FX32_ONE * 0, 0, FX32_ONE * -16},
-		{FX32_ONE * +16, 0, FX32_ONE * -16},
-		{FX32_ONE * -16, 0, FX32_ONE * 0},
-		{FX32_ONE * 0, 0, FX32_ONE * 0},
-		{FX32_ONE * +16, 0, FX32_ONE * 0},
-		{FX32_ONE * -16, 0, FX32_ONE * 16},
-		{FX32_ONE * 0, 0, FX32_ONE * 16},
-		{FX32_ONE * +16, 0, FX32_ONE * 16},
-	};
-	static char limit[] = "  \n  \n  \n";
-	for (i = 0; i < NELEMS(pos_array); i++) {
-		u32 attr = 0;
-		FLD_G3D_MAPPER_GRIDINFO gridInfo;
-		//pos = pos_array[i] + fieldWork->now_pos;
-		VEC_Add(&pos_array[i], &fieldWork->now_pos, &pos);
-		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
-			attr = gridInfo.gridData[0].attr;
-		}
-		OS_Printf("%04x%c", attr, limit[i]);
+	if (cnct->link_exit_id == EXIT_ID_SPECIAL) {
+		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
+		return DEBUG_EVENT_ChangeMap(gsys, fieldWork, sp->zone_id, sp->exit_id);
+	}
+	{
+		LOCATION ent_loc;
+		u16 exit_id;
+		exit_id = EVENTDATA_GetConnectIDByData(evdata, cnct);
+		LOCATION_Set(&ent_loc, fieldWork->map_id, exit_id, 0,
+				fieldWork->now_pos.x, fieldWork->now_pos.y, fieldWork->now_pos.z);
+		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
 	}
 
+	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
 
-
-	OS_Printf("X,Y,Z=%d,%d,%d\n",
-			FX_Whole(fieldWork->now_pos.x),
-			FX_Whole(fieldWork->now_pos.y),
-			FX_Whole(fieldWork->now_pos.z));
 }
 //------------------------------------------------------------------
 /**
@@ -887,8 +904,6 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 #include "field_sub_nogrid.c"
 #include "field_sub_grid.c"
 
-extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
-extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 const DEPEND_FUNCTIONS FieldBaseFunctions = {
 	NormalCreate,
 	NormalMain,
@@ -908,8 +923,6 @@ const DEPEND_FUNCTIONS FieldNoGridFunctions = {
 };
 
 //======================================================================
-extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
-extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 //	comm actor
 //======================================================================
 //--------------------------------------------------------------
@@ -923,8 +936,6 @@ extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player )
 {
-extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
-extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
 	int i;
 	FIELD_SETUP *fup;
 	GFL_BBDACT_SYS *bbdActSys;
