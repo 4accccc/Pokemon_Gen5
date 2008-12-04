@@ -182,6 +182,7 @@ static inline u32 GFL_STD_MtRand(u32 max)
     }
 }
 
+#define GFL_STD_MTRAND_MAX	(0xffffffff)
 
 /**
  *  @brief   線形合同法乱数の構造体
@@ -214,7 +215,7 @@ static inline void GFL_STD_RandInit(GFL_STD_RandContext *context, u64 seed)
  *  @brief  線形合同法による32bit乱数取得関数
  *  @param  context 乱数構造体のポインタ
  *  @param  max     取得数値の範囲を指定 0 ～ max-1 の範囲の値が取得できます。
- *                  0を指定した場合にはすべての範囲の32bit値となります。
+ *                  GFL_STD_MTRAND_MAXを指定した場合にはすべての範囲の32bit値となります。
  *                  % や / を使用せずにここのmax値を変更してください
  *  @return 32bitのランダム値
  */
@@ -224,7 +225,7 @@ static inline u32 GFL_STD_Rand(GFL_STD_RandContext *context, u32 max)
     context->x = context->mul * context->x + context->add;
 
     // 引数maxが定数ならばコンパイラにより最適化される。
-    if (max == 0)
+    if (max == GFL_STD_MTRAND_MAX)
     {
         return (u32)(context->x >> 32);
     }
