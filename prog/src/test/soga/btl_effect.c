@@ -205,7 +205,12 @@ void	BTL_EFFECT_Add( int eff_no )
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
 	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
-	bew->execute_flag = 1;
+	if( eff_no < BTL_EFFECT_A2BGANSEKI){
+		bew->execute_flag = 1;
+	}
+	else{
+		bew->execute_flag = 2;
+	}
 }
 
 //============================================================================================
@@ -993,8 +998,10 @@ static	void	BTL_EFFECT_InitPTCB( GFL_EMIT_PTR emit )
 
 static	void	BTL_EFFECT_TCB_End( GFL_TCB *tcb, BTL_EFFECT_TCB *bet )
 {
-	GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
-	GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+	if( bew->execute_flag == 1 ){
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+	}
 	bew->execute_flag = 0;
 	GFL_HEAP_FreeMemory( bet );
 	GFL_TCB_DeleteTask( tcb );

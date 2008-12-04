@@ -30,6 +30,7 @@
 #include "poke_tool/monsno_def.h"
 
 //#define MCS_ENABLE		//MCSを使用する
+//#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -80,6 +81,18 @@ enum{
 #define	MCS_CH_MAX		( MCS_CHANNEL_END )
 #define	MCS_SEND_SIZE	( 0x1800 )
 
+#define G2D_BACKGROUND_COL	(0x0000)
+#define G2D_FONT_COL		(0x7fff)
+#define G2D_FONTSELECT_COL	(0x001f)
+
+enum{
+	BMPWIN_MONSNO = 0,
+	BMPWIN_SCALE_E,
+	BMPWIN_SCALE_M,
+
+	BMPWIN_MAX
+};
+
 //32バイトアライメントでヒープからの取り方がわからないので、とりあえず静的に
 static	u8				strmBuffer[STRM_BUF_SIZE] ATTRIBUTE_ALIGN(32);
 
@@ -118,9 +131,16 @@ typedef struct
 	MCS_WORK			mw;
 	POKEMON_PARAM		*pp;
 	int					mons_no;
-	GFL_BMPWIN			*bmpwin;
+	GFL_BMPWIN			*bmpwin[ BMPWIN_MAX ];
 	GFL_TEXT_PRINTPARAM	*textParam;
+	int					position;
+	POKE_MCSS_WORK		*pmw;
+	int					key_repeat_speed;
+	int					key_repeat_wait;
 }SOGA_WORK;
+
+static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num );
+static	void	Num16Print( SOGA_WORK *wk, int num, int bmpwin_num );
 
 //ストリーム再生
 static	void	StrmSetUp(SOGA_WORK *sw);
@@ -159,7 +179,33 @@ int	emit_angle;
 
 static	void	MoveCamera( SOGA_WORK *wk );
 
-static	void	set_pokemon( int mons_no, int flag, HEAPID heapID );
+static	void	set_pokemon( SOGA_WORK *wk );
+static	void	del_pokemon( SOGA_WORK *wk );
+
+static	const	int	pokemon_pos_table[][2]={ 
+	{ POKE_MCSS_POS_AA, POKE_MCSS_POS_BB },
+	{ POKE_MCSS_POS_A, POKE_MCSS_POS_B },
+	{ POKE_MCSS_POS_C, POKE_MCSS_POS_D }
+};
+
+static	const	char	num_char_table[][1]={
+	"0",
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F"
+};
 
 //--------------------------------------------------------------------------
 /**
@@ -192,6 +238,14 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};		
 		GFL_DISP_SetBank( &dispvramBank );
+
+		//VRAMクリア
+		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+		MI_CpuFill16((void*)HW_BG_PLTT, 0x0000, HW_BG_PLTT_SIZE);
+
 	}	
 
 //	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
@@ -213,7 +267,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
 		///< sub
 		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
@@ -230,6 +284,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 		G3X_AlphaBlend( TRUE );
 		G3X_EdgeMarking( TRUE );
+		GFL_BG_SetBGControl3D( 1 );
 	}
 
 	wk->seq_no = 0;
@@ -239,7 +294,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		wk->bcw = BTL_EFFECT_GetCameraWork();
 	}
 
-	set_pokemon( 0, 0, wk->heapID );
+	set_pokemon( wk );
 
 #else
 	{
@@ -247,7 +302,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		wk->bcw = BTL_EFFECT_GetCameraWork( wk->bew );
 	}
 
-	set_pokemon( 0, 0, wk->heapID );
+	set_pokemon( wk );
 
 #endif
 
@@ -280,27 +335,34 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
 
+#ifndef	POKEGRA_CHECK
 		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NCGR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NSCR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NCGR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NSCR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramPalette(ARCID_BATTGRA,NARC_battgra_wb_batt_bg_NCLR,PALTYPE_MAIN_BG,0,0x100,wk->heapID);
+#endif
 	}
 
+#ifdef	POKEGRA_CHECK
 	{
 		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
-		wk->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, 1, 1, 5, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_MONSNO ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 1, 5, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_SCALE_E ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 3, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_SCALE_M ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 4, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
 
 		wk->textParam = GFL_HEAP_AllocMemory( wk->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
 		*wk->textParam = default_param;
-		wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin );
-		wk->textParam->writex = 0;
-		wk->textParam->writey = 0;
-		GFL_TEXT_PrintSjisCode( "012", wk->textParam );
-		GFL_BMPWIN_TransVramCharacter( wk->bmpwin );
-		GFL_BMPWIN_MakeScreen( wk->bmpwin );
-		GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
+
+		//フォントパレット作成＆転送
+		{
+			static	u16 plt[16] = { G2D_BACKGROUND_COL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+			GFL_BG_LoadPalette( GFL_BG_FRAME2_M, &plt, 16*2, 0 );
+		}
+
+		wk->pmw = POKE_MCSS_Init( NULL, wk->heapID );
 	}
+#endif
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
 	{
@@ -332,6 +394,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	//フェードイン
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
 
+	GFL_UI_KEY_GetRepeatSpeed( &wk->key_repeat_speed, &wk->key_repeat_wait );
+	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed / 4, wk->key_repeat_wait );
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -344,6 +409,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 {
 	int pad = GFL_UI_KEY_GetCont();
 	int trg = GFL_UI_KEY_GetTrg();
+	int rep = GFL_UI_KEY_GetRepeat();
 	SOGA_WORK* wk = mywk;
 
 #ifdef MCS_ENABLE
@@ -354,7 +420,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	}
 #endif
 
-#if 0
+#ifndef	POKEGRA_CHECK
 	//画面切り替え実験
 	if( wk->timer_flag ){
 		wk->timer++;
@@ -396,8 +462,16 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	}
 #endif
 
+#ifdef	POKEGRA_CHECK
 	if( wk->timer_flag ){
+		BOOL draw = FALSE;
+		BOOL pos = FALSE;
 		int	mons_no = wk->mons_no;
+		int	position = wk->position;
+		VecFx32 scale_m, scale_e;
+
+		POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+		POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 
 		if( trg & PAD_BUTTON_R ){
 			if( mons_no + 100 <= MONSNO_MAX ){
@@ -453,11 +527,66 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 				mons_no += MONSNO_MAX;
 			}
 		}
-		if( mons_no != wk->mons_no ){
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
-			wk->mons_no = mons_no;
-			set_pokemon( wk->mons_no, wk->timer_flag, wk->heapID );
+		if( trg & PAD_KEY_LEFT ){
+			position--;
+			if( position < 0 ){
+				position = 2;
+			}
+			pos = TRUE;
+		}
+		if( trg & PAD_KEY_RIGHT ){
+			position++;
+			if( position > 2 ){
+				position = 0;
+			}
+			pos = TRUE;
+		}
+		if( rep & PAD_KEY_UP ){
+			scale_m.x--;
+			scale_m.y--;
+			scale_m.z--;
+			scale_e.x--;
+			scale_e.y--;
+			scale_e.z--;
+			draw = TRUE;
+			if( scale_m.x < 0 ){
+				scale_m.x = 0;
+				scale_m.y = 0;
+				scale_m.z = 0;
+			}
+			if( scale_e.x < 0 ){
+				scale_e.x = 0;
+				scale_e.y = 0;
+				scale_e.z = 0;
+			}
+		}
+		if( rep & PAD_KEY_DOWN ){
+			scale_m.x++;
+			scale_m.y++;
+			scale_m.z++;
+			scale_e.x++;
+			scale_e.y++;
+			scale_e.z++;
+			draw = TRUE;
+		}
+		if( ( mons_no != wk->mons_no ) ||
+			( draw == TRUE ) ||
+			( position != wk->position ) ){
+			if( draw == FALSE ){
+				del_pokemon( wk );
+				wk->mons_no = mons_no;
+				wk->position = position;
+				set_pokemon( wk );
+				if( pos == TRUE ){
+					POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+					POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+				}
+			}
+			POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+			POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+			NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
+			Num16Print( wk, scale_m.x, BMPWIN_SCALE_M );
+			Num16Print( wk, scale_e.x, BMPWIN_SCALE_E );
 		}
 	}
 	else{
@@ -479,19 +608,54 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	if( trg & PAD_BUTTON_SELECT ){
 		wk->timer_flag ^= 1;
 		if( wk->timer_flag ){
+			VecFx32	scale;
+
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_A );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_B );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_C );
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_D );
 			wk->mons_no = MONSNO_HUSIGIDANE;
-			set_pokemon( wk->mons_no, wk->timer_flag, wk->heapID );
+			wk->position = 0;
+			set_pokemon( wk );
+			NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
+			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_BB, &scale );
+			Num16Print( wk, scale.x, BMPWIN_SCALE_E );
+			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_AA, &scale );
+			Num16Print( wk, scale.x, BMPWIN_SCALE_M );
+			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON );
 		}
 		else{
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
-			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
-			set_pokemon( 0, wk->timer_flag, wk->heapID );
+			del_pokemon( wk );
+			set_pokemon( wk );
+			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 		}
 	}
+#else
+	MoveCamera( wk );
+
+	if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+		BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
+	}
+	if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+		BTL_EFFECT_Add( BTL_EFFECT_B2AGANSEKI );
+	}
+	if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+		BTL_EFFECT_Add( BTL_EFFECT_A2BMIZUDEPPOU );
+	}
+	if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+		BTL_EFFECT_Add( BTL_EFFECT_B2AMIZUDEPPOU );
+	}
+	if( trg & PAD_BUTTON_SELECT ){
+		wk->timer_flag ^= 1;
+	}
+#endif
+
+#ifdef	POKEGRA_CHECK
+	if( wk->timer_flag ){
+		POKE_MCSS_Main( wk->pmw );
+		POKE_MCSS_Draw( wk->pmw );
+	}
+#endif
 
 	BTL_EFFECT_Main();
 
@@ -516,6 +680,19 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 	if( GFL_FADE_CheckFade() == TRUE ){
 		return GFL_PROC_RES_CONTINUE;	
 	}
+
+	GFL_UI_KEY_SetRepeatSpeed( wk->key_repeat_speed, wk->key_repeat_wait );
+
+#ifdef	POKEGRA_CHECK
+	{
+		int	i;
+
+		for( i = 0 ; i < BMPWIN_MAX ; i++ ){
+			GFL_BMPWIN_Delete( wk->bmpwin[ i ] );
+		}
+	}
+	GFL_HEAP_FreeMemory( wk->textParam );
+#endif
 
 	BTL_EFFECT_Exit();
 //	BTL_EFFECT_Exit( wk->bew );
@@ -544,6 +721,51 @@ const GFL_PROC_DATA		DebugSogabeMainProcData = {
 	DebugSogabeMainProcMain,
 	DebugSogabeMainProcExit,
 };
+
+//======================================================================
+//	数字表示
+//======================================================================
+static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num )
+{
+	char	num_char[ 4 ] = "\0\0\0\0";
+	int		num_100,num_10,num_1;
+
+	num_100 = num / 100;
+	num_10  = ( num - ( num_100 * 100 ) ) / 10;
+	num_1   = num - ( num_100 * 100 ) - (num_10 * 10 );
+
+	num_char[ 0 ] = num_char_table[ num_100 ][ 0 ];
+	num_char[ 1 ] = num_char_table[ num_10  ][ 0 ];
+	num_char[ 2 ] = num_char_table[ num_1   ][ 0 ];
+
+	wk->textParam->writex = 0;
+	wk->textParam->writey = 0;
+	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] ), 0 );
+	GFL_TEXT_PrintSjisCode( &num_char[0], wk->textParam );
+	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmpwin_num ] );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+}
+
+static	void	Num16Print( SOGA_WORK *wk, int num, int bmpwin_num )
+{
+	int		i;
+	char	num_char[ 9 ] = "\0\0\0\0\0\0\0\0\0";
+
+	for( i = 0 ; i < 8 ; i++ ){
+		num_char[ i ] = num_char_table[ ( num >> ( 28 - 4 * i ) ) & 0x0000000f ][ 0 ];
+	}
+
+	wk->textParam->writex = 0;
+	wk->textParam->writey = 0;
+	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] ), 0 );
+	GFL_TEXT_PrintSjisCode( &num_char[0], wk->textParam );
+	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmpwin_num ] );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+}
 
 //======================================================================
 //	カメラの制御
@@ -619,17 +841,17 @@ static	void	MoveCamera( SOGA_WORK *wk )
 
 }
  
-static	void	set_pokemon( int mons_no, int flag, HEAPID heapID )
+static	void	set_pokemon( SOGA_WORK *wk )
 {
 	//POKEMON_PARAM生成
-	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
+	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
 	PP_Clear( pp );
 	
-	if( flag ){
-		PP_Put( pp, ID_PARA_monsno, mons_no );
+	if( wk->timer_flag ){
+		PP_Put( pp, ID_PARA_monsno, wk->mons_no );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_AA );
-		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_BB );
+		POKE_MCSS_Add( wk->pmw, pp, pokemon_pos_table[ wk->position ][ 0 ] );
+		POKE_MCSS_Add( wk->pmw, pp, pokemon_pos_table[ wk->position ][ 1 ] );
 	}
 	else{
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
@@ -653,6 +875,12 @@ static	void	set_pokemon( int mons_no, int flag, HEAPID heapID )
 	}
 #endif
 	GFL_HEAP_FreeMemory( pp );
+}
+
+static	void	del_pokemon( SOGA_WORK *wk )
+{
+	POKE_MCSS_Del( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ] );
+	POKE_MCSS_Del( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ] );
 }
 
 #if 0

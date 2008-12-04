@@ -419,7 +419,7 @@ static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int 
 		break;
 	case PTL_SEX_FEMALE:
 		//オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
-		sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
+		sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA, file_start + file_offset + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
 		break;
 	case PTL_SEX_UNKNOWN:
 		//性別なしは、オス扱いにする
