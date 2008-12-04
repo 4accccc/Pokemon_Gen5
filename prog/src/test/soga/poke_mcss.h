@@ -54,7 +54,7 @@ extern	POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
 extern	void			POKE_MCSS_Exit( POKE_MCSS_WORK *pmw );
 extern	void			POKE_MCSS_Main( POKE_MCSS_WORK *pmw );
 extern	void			POKE_MCSS_Draw( POKE_MCSS_WORK *pmw );
-extern	void			POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position );
+extern	void			POKE_MCSS_Add( POKE_MCSS_WORK *pmw, const POKEMON_PARAM *pp, int position );
 extern	void			POKE_MCSS_Del( POKE_MCSS_WORK *pmw, int position );
 extern	void			POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 extern	void			POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag );

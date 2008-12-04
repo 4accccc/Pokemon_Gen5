@@ -10,6 +10,8 @@
 
 #include <gflib.h>
 
+#include "system/gfl_use.h"
+
 #include "btl_efftool.h"
 #include "poke_mcss.h"
 #include "poke_mcss_def.h"
@@ -47,7 +49,7 @@ POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID );
 void			POKE_MCSS_Exit( POKE_MCSS_WORK *pmw );
 void			POKE_MCSS_Main( POKE_MCSS_WORK *pmw );
 void			POKE_MCSS_Draw( POKE_MCSS_WORK *pmw );
-void			POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position );
+void			POKE_MCSS_Add( POKE_MCSS_WORK *pmw, const POKEMON_PARAM *pp, int position );
 void			POKE_MCSS_Del( POKE_MCSS_WORK *pmw, int position );
 void			POKE_MCSS_SetMepachiFlag( POKE_MCSS_WORK *pmw, int position, int flag );
 void			POKE_MCSS_SetAnmStopFlag( POKE_MCSS_WORK *pmw, int position, int flag );
@@ -59,7 +61,7 @@ void			POKE_MCSS_SetScale( POKE_MCSS_WORK *pmw, int position, VecFx32 *scale );
 void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *pos, int speed, int wait, int count );
 void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count );
 
-static	void	POKE_MCSS_MakeMAW( POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
+static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 
 static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work );
 static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work );
@@ -108,7 +110,7 @@ POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS	*tcb_sys, HEAPID heapID )
 {
 	POKE_MCSS_WORK *pmw = GFL_HEAP_AllocClearMemory( heapID, sizeof( POKE_MCSS_WORK ) );
 
-	pmw->mcss_sys = MCSS_Init( POKE_MCSS_MAX, NULL, heapID );
+	pmw->mcss_sys = MCSS_Init( POKE_MCSS_MAX, GFUser_VIntr_GetTCBSYS(), heapID );
 	pmw->tcb_sys  = tcb_sys;
 
 	return pmw;
@@ -160,7 +162,7 @@ void	POKE_MCSS_Draw( POKE_MCSS_WORK *pmw )
  * @param[in]	position	ポケモンの立ち位置
  */
 //============================================================================================
-void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, POKEMON_PARAM *pp, int position )
+void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, const POKEMON_PARAM *pp, int position )
 {
 	MCSS_ADD_WORK	maw;
 	VecFx32			scale;
@@ -398,7 +400,7 @@ void	POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecF
  * @param[in]	position	ポケモンの立ち位置
  */
 //============================================================================================
-static	void	POKE_MCSS_MakeMAW( POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
+static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position )
 {
 	int	mons_no = PP_Get( pp, ID_PARA_monsno,	NULL ) - 1;
 	int	form_no = PP_Get( pp, ID_PARA_form_no, NULL );

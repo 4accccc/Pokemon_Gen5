@@ -20,9 +20,6 @@
 #define	MCSS_DEFAULT_Z		( 1 << 6 )
 #define	MCSS_TEX_OFS		( FX32_ONE >> 4 )
 
-//#define MCSS_CONST(x)	((fx32)(((x) > 0) ? \
-						((x) * (1 << MCSS_DEFAULT_SHIFT) + 0.5f ) : \
-						((x) * (1 << MCSS_DEFAULT_SHIFT) - 0.5f )))
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
 
 #define	MCSS_TEX_ADRS	(0x8000)
@@ -32,26 +29,42 @@
 
 //--------------------------------------------------------------------------
 /**
+ * 構造体宣言
+ */
+//--------------------------------------------------------------------------
+typedef struct	
+{
+	NNSG2dCharacterData*	pCharData;			//テクスチャキャラ
+	NNSG2dPaletteData*		pPlttData;			//テクスチャパレット
+	void					*pBufChar;			//テクスチャキャラバッファ
+	void					*pBufPltt;			//テクスチャパレットバッファ
+	int						chr_ofs;
+	int						pal_ofs;
+	MCSS_WORK				*mcss;
+}TCB_LOADRESOURCE_WORK;
+
+//--------------------------------------------------------------------------
+/**
  * プロトタイプ宣言
  */
 //--------------------------------------------------------------------------
-MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera, HEAPID heapID );
-void		MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
-void		MCSS_Main( MCSS_SYS_WORK *mcss_sys );
-void		MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
-MCSS_WORK*	MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
-void		MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+MCSS_SYS_WORK*	MCSS_Init( int max, GFL_TCBSYS *mcss_tcb_sys, HEAPID heapID );
+void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
+void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
+void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
+MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
+void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
 
-void		MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-void		MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
-void		MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
-void		MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
-void		MCSS_SetMepachiFlag( MCSS_WORK *mcss );
-void		MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
-void		MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
-void		MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
-void		MCSS_SetVanishFlag( MCSS_WORK *mcss );
-void		MCSS_ResetVanishFlag( MCSS_WORK *mcss );
+void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
+void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
+void			MCSS_SetScale( MCSS_WORK *mcss, VecFx32 *scale );
+void			MCSS_SetMepachiFlag( MCSS_WORK *mcss );
+void			MCSS_ResetMepachiFlag( MCSS_WORK *mcss );
+void			MCSS_SetAnmStopFlag( MCSS_WORK *mcss );
+void			MCSS_ResetAnmStopFlag( MCSS_WORK *mcss );
+void			MCSS_SetVanishFlag( MCSS_WORK *mcss );
+void			MCSS_ResetVanishFlag( MCSS_WORK *mcss );
 
 static	void	MCSS_DrawAct( MCSS_WORK *mcss, 
 							  MtxFx44 inv_camera,
@@ -68,10 +81,12 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  int cell,
 							  fx32 *pos_z_default );
 
-static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys, int count, MCSS_ADD_WORK *maw );
+static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
+
+static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 
 #ifdef USE_RENDER
 static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
@@ -82,15 +97,15 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
  * システム初期化
  */
 //--------------------------------------------------------------------------
-MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera,HEAPID heapID )
+MCSS_SYS_WORK*	MCSS_Init( int max, GFL_TCBSYS *mcss_tcb_sys,HEAPID heapID )
 {
 	MCSS_SYS_WORK	*mcss_sys;
 
 	mcss_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_SYS_WORK) );
 
-	mcss_sys->mcss_max = max;
-	mcss_sys->camera = camera;
-	mcss_sys->heapID = heapID;
+	mcss_sys->mcss_max		= max;
+	mcss_sys->mcss_tcb_sys	= mcss_tcb_sys;
+	mcss_sys->heapID		= heapID;
 
 	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_WORK *) * max );
 
@@ -189,6 +204,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
 		if( ( mcss_sys->mcss[index] != NULL ) && ( mcss_sys->mcss[index]->vanish_flag == 0 ) ){
+
 			G3_PushMtx();
 
 			mcss		= mcss_sys->mcss[index];
@@ -243,11 +259,10 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				MTX_Concat44( &mc_mtx, &trans, &mc_mtx );
 			}
 
+			//前もって、普遍なマルチセルデータをカレント行列にかけておく
 			G3_MultMtx44( &trans );
-
 			//カメラの逆行列を掛け合わせる（ビルボード処理）
 			G3_MultMtx44( &inv_camera );
-
 			G3_MultMtx44( &mc_mtx );
 
 			MCSS_MaterialSetup();
@@ -603,11 +618,11 @@ void	MCSS_ResetVanishFlag( MCSS_WORK *mcss )
  * リソースロード
  */
 //--------------------------------------------------------------------------
-static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys, int count, MCSS_ADD_WORK	*maw )
+static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw )
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
-	int			chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
-	int			pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * count;
+
+	mcss->vanish_flag = 1;
 
 	//プロキシ初期化
 	NNS_G2dInitImageProxy( &mcss->mcss_image_proxy );
@@ -648,74 +663,57 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK	*mcss_sys, int count, MCSS_ADD_WORK
     // VRAM 関連の初期化
     //
     {
-		void* pBuf;
-
-//当面、OAMでの表示はしないのでコメントアウト
-#if 0
-		// load character data for 2D
-		{
-			NNSG2dCharacterData*	pCharData = NULL;
-
-			pBuf = GFL_ARC_UTIL_LoadBGCharacter( arcID, ncgr, FALSE, &pCharData, mcss->heapID );
-			GF_ASSERT( pBuf != NULL);
-
-			// Loading For 2D Graphics Engine.（本来は、VRAMマネージャを使用したい）
-			NNS_G2dLoadImage2DMapping(
-				pCharData,
-				CHARA_BASE,
-				NNS_G2D_VRAM_TYPE_2DMAIN,
-				&mcss_sys->mcss_image_proxy );
-
-			// キャラクタデータを VRAM にコピーしたので
-			// この pBuf は開放します。以下同じ。
-			GFL_HEAP_FreeMemory( pBuf );
-		}
-#endif
-
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
+		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * count;
+		tlw->mcss	 = mcss;
 		// load character data for 3D (software sprite)
 		{
-			NNSG2dCharacterData* pCharData;
-
-			pBuf = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &pCharData, mcss->heapID );
-			GF_ASSERT( pBuf != NULL);
-
-			// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
-			NNS_G2dLoadImage2DMapping(
-				pCharData,
-				chr_ofs,
-				NNS_G2D_VRAM_TYPE_3DMAIN,
-				&mcss->mcss_image_proxy );
-
-			GFL_HEAP_FreeMemory( pBuf );
+			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData, mcss->heapID );
+			GF_ASSERT( tlw->pBufChar != NULL);
         }
 
 		// load palette data
 		{
-			NNSG2dPaletteData* pPlttData;
+			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
+			GF_ASSERT( tlw->pBufPltt != NULL);
 
-			pBuf = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &pPlttData, mcss->heapID );
-			GF_ASSERT( pBuf != NULL);
-
-//当面、OAMでの表示はしないのでコメントアウト
-#if 0
-			// Loading For 2D Graphics Engine.
-			NNS_G2dLoadPalette(
-				pPlttData,
-				PLTT_BASE,
-				NNS_G2D_VRAM_TYPE_2DMAIN,
-				&mcss_sys->mcss_palette_proxy );
-#endif
-
-            // Loading For 3D Graphics Engine.
-			NNS_G2dLoadPalette(
-				pPlttData,
-				pal_ofs,
-				NNS_G2D_VRAM_TYPE_3DMAIN,
-				&mcss->mcss_palette_proxy );
-
-			GFL_HEAP_FreeMemory( pBuf );
         }
+		GFL_TCB_AddTask( mcss_sys->mcss_tcb_sys, TCB_LoadResource, tlw, 0 );
     }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * リソースをVRAMに転送
+ */
+//--------------------------------------------------------------------------
+static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
+{
+	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+
+	tlw->mcss->vanish_flag = 0;
+
+	// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
+	NNS_G2dLoadImage2DMapping(
+		tlw->pCharData,
+		tlw->chr_ofs,
+		NNS_G2D_VRAM_TYPE_3DMAIN,
+		&tlw->mcss->mcss_image_proxy );
+
+	GFL_HEAP_FreeMemory( tlw->pBufChar );
+
+	// Loading For 3D Graphics Engine.
+	NNS_G2dLoadPalette(
+		tlw->pPlttData,
+		tlw->pal_ofs,
+		NNS_G2D_VRAM_TYPE_3DMAIN,
+		&tlw->mcss->mcss_palette_proxy );
+
+	GFL_HEAP_FreeMemory( tlw->pBufPltt );
+
+	GFL_HEAP_FreeMemory( work );
+	GFL_TCB_DeleteTask( tcb );
 }
 
 /*---------------------------------------------------------------------------*

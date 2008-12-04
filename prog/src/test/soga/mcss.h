@@ -49,7 +49,7 @@ typedef struct _MCSS_NCEC_WORK	MCSS_NCEC_WORK;
 typedef struct _MCSS_WORK		MCSS_WORK;
 typedef struct _MCSS_SYS_WORK	MCSS_SYS_WORK;
 
-extern	MCSS_SYS_WORK*	MCSS_Init( int max, GFL_G3D_CAMERA *camera, HEAPID heapID );
+extern	MCSS_SYS_WORK*	MCSS_Init( int max, GFL_TCBSYS *mcss_tcb_sys, HEAPID heapID );
 extern	void			MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );

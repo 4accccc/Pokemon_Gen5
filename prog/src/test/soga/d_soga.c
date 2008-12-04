@@ -48,8 +48,8 @@
 #define	SWITCH_TIME			( 60 * 5 )
 
 #define	INTERVAL		(16)
-#define	CH_MAX			(1)
-#define	STRM_BUF_SIZE	(INTERVAL*2*CH_MAX*32)
+#define	CH_MAX			(1)			//1:モノラル 2:ステレオ
+#define	STRM_BUF_SIZE	( INTERVAL * 2 * CH_MAX * 32 )
 #define	SWAV_HEAD_SIZE	(18)
 
 // Windowsアプリケーションとの識別で使用するチャンネル値です
@@ -96,7 +96,7 @@ typedef struct
 {
 	int					seq_no;
 	BTL_CAMERA_WORK		*bcw;
-	BTL_EFFECT_WORK		*bew;
+//	BTL_EFFECT_WORK		*bew;
 	HEAPID				heapID;
 	NNSSndStrm			strm;
 	u8					FS_strmBuffer[STRM_BUF_SIZE];
@@ -117,6 +117,9 @@ typedef struct
 	int					mcs_enable;
 	MCS_WORK			mw;
 	POKEMON_PARAM		*pp;
+	int					mons_no;
+	GFL_BMPWIN			*bmpwin;
+	GFL_TEXT_PRINTPARAM	*textParam;
 }SOGA_WORK;
 
 //ストリーム再生
@@ -155,6 +158,8 @@ static	void	EmitScaleSet(GFL_EMIT_PTR emit);
 int	emit_angle;
 
 static	void	MoveCamera( SOGA_WORK *wk );
+
+static	void	set_pokemon( int mons_no, int flag, HEAPID heapID );
 
 //--------------------------------------------------------------------------
 /**
@@ -208,7 +213,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_ON );
 
 		///< sub
 		GFL_BG_SetVisible( GFL_BG_FRAME0_S,   VISIBLE_OFF );
@@ -228,36 +233,23 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	}
 
 	wk->seq_no = 0;
+#if 1
+	{
+		BTL_EFFECT_Init( 0, wk->heapID );
+		wk->bcw = BTL_EFFECT_GetCameraWork();
+	}
+
+	set_pokemon( 0, 0, wk->heapID );
+
+#else
 	{
 		wk->bew = BTL_EFFECT_Init( 0, wk->heapID );
 		wk->bcw = BTL_EFFECT_GetCameraWork( wk->bew );
 	}
 
-	{
-		//POKEMON_PARAM生成
-		wk->pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
-		PP_Clear( wk->pp );
-	
-		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
-		PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
-#if 0
-//1vs1
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_AA );
-		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_BB );
-#else
-//2vs2
-		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
-		PP_Put( wk->pp, ID_PARA_id_no, 0x10 );
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_A );
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_B );
-		PP_Put( wk->pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_C );
-		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_D );
-//		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_E );
-//		BTL_EFFECT_SetPokemon( wk->bew, wk->pp, POKE_MCSS_POS_F );
+	set_pokemon( 0, 0, wk->heapID );
+
 #endif
-	}
 
 	//2D画面初期化
 	{
@@ -265,13 +257,19 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			///<FRAME1_M
 			{
 				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 			///<FRAME2_M
 			{
 				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+			},
+			///<FRAME3_M
+			{
+				0, 0, 0x0800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GFL_BG_CHRSIZ_256x256,
 				GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 			},
 		};
@@ -279,12 +277,29 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GFL_BG_ClearScreen(GFL_BG_FRAME1_M );
 		GFL_BG_SetBGControl(GFL_BG_FRAME2_M, &TextBgCntDat[1], GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen(GFL_BG_FRAME2_M );
+		GFL_BG_SetBGControl(GFL_BG_FRAME3_M, &TextBgCntDat[2], GFL_BG_MODE_TEXT );
+		GFL_BG_ClearScreen(GFL_BG_FRAME3_M );
 
 		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NCGR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg1_NSCR,GFL_BG_FRAME1_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramBgCharacter(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NCGR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramScreen(ARCID_BATTGRA,NARC_battgra_wb_batt_bg2_NSCR,GFL_BG_FRAME2_M,0,0,0,wk->heapID);
 		GFL_ARC_UTIL_TransVramPalette(ARCID_BATTGRA,NARC_battgra_wb_batt_bg_NCLR,PALTYPE_MAIN_BG,0,0x100,wk->heapID);
+	}
+
+	{
+		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
+		wk->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, 1, 1, 5, 1, 0, GFL_BG_CHRAREA_GET_B );
+
+		wk->textParam = GFL_HEAP_AllocMemory( wk->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
+		*wk->textParam = default_param;
+		wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin );
+		wk->textParam->writex = 0;
+		wk->textParam->writey = 0;
+		GFL_TEXT_PrintSjisCode( "012", wk->textParam );
+		GFL_BMPWIN_TransVramCharacter( wk->bmpwin );
+		GFL_BMPWIN_MakeScreen( wk->bmpwin );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
 	}
 
 	//ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）
@@ -339,6 +354,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	}
 #endif
 
+#if 0
 	//画面切り替え実験
 	if( wk->timer_flag ){
 		wk->timer++;
@@ -357,6 +373,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
 		}
 	}
+#endif
 
 	StrmBufferCopy(wk,0);
 
@@ -379,26 +396,104 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	}
 #endif
 
-	MoveCamera( wk );
+	if( wk->timer_flag ){
+		int	mons_no = wk->mons_no;
 
-	if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute( wk->bew ) == FALSE ) ){
-		BTL_EFFECT_Add( wk->bew, BTL_EFFECT_AA2BBGANSEKI );
+		if( trg & PAD_BUTTON_R ){
+			if( mons_no + 100 <= MONSNO_MAX ){
+				mons_no += 100;
+			}
+			else{
+				mons_no += 100;
+				mons_no -= MONSNO_MAX;
+			}
+		}
+		if( trg & PAD_BUTTON_X ){
+			if( mons_no + 10 <= MONSNO_MAX ){
+				mons_no += 10;
+			}
+			else{
+				mons_no += 10;
+				mons_no -= MONSNO_MAX;
+			}
+		}
+		if( trg & PAD_BUTTON_A ){
+			if( mons_no + 1 <= MONSNO_MAX ){
+				mons_no += 1;
+			}
+			else{
+				mons_no += 1;
+				mons_no -= MONSNO_MAX;
+			}
+		}
+		if( trg & PAD_BUTTON_L ){
+			if( mons_no - 100 > 0 ){
+				mons_no -= 100;
+			}
+			else{
+				mons_no -= 100;
+				mons_no += MONSNO_MAX;
+			}
+		}
+		if( trg & PAD_BUTTON_Y ){
+			if( mons_no - 10 > 0 ){
+				mons_no -= 10;
+			}
+			else{
+				mons_no -= 10;
+				mons_no += MONSNO_MAX;
+			}
+		}
+		if( trg & PAD_BUTTON_B ){
+			if( mons_no - 1 > 0 ){
+				mons_no -= 1;
+			}
+			else{
+				mons_no -= 1;
+				mons_no += MONSNO_MAX;
+			}
+		}
+		if( mons_no != wk->mons_no ){
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
+			wk->mons_no = mons_no;
+			set_pokemon( wk->mons_no, wk->timer_flag, wk->heapID );
+		}
 	}
-	if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute( wk->bew ) == FALSE ) ){
-		BTL_EFFECT_Add( wk->bew, BTL_EFFECT_BB2AAGANSEKI );
-	}
-	if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute( wk->bew ) == FALSE ) ){
-		BTL_EFFECT_Add( wk->bew, BTL_EFFECT_AA2BBMIZUDEPPOU );
-	}
-	if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute( wk->bew ) == FALSE ) ){
-		BTL_EFFECT_Add( wk->bew, BTL_EFFECT_BB2AAMIZUDEPPOU );
-	}
+	else{
+		MoveCamera( wk );
 
+		if( (trg & PAD_BUTTON_X ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+			BTL_EFFECT_Add( BTL_EFFECT_A2BGANSEKI );
+		}
+		if( (trg & PAD_BUTTON_Y ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+			BTL_EFFECT_Add( BTL_EFFECT_B2AGANSEKI );
+		}
+		if( (trg & PAD_BUTTON_A ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+			BTL_EFFECT_Add( BTL_EFFECT_A2BMIZUDEPPOU );
+		}
+		if( (trg & PAD_BUTTON_B ) && ( BTL_EFFECT_CheckExecute() == FALSE ) ){
+			BTL_EFFECT_Add( BTL_EFFECT_B2AMIZUDEPPOU );
+		}
+	}
 	if( trg & PAD_BUTTON_SELECT ){
 		wk->timer_flag ^= 1;
+		if( wk->timer_flag ){
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_A );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_B );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_C );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_D );
+			wk->mons_no = MONSNO_HUSIGIDANE;
+			set_pokemon( wk->mons_no, wk->timer_flag, wk->heapID );
+		}
+		else{
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_AA );
+			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_BB );
+			set_pokemon( 0, wk->timer_flag, wk->heapID );
+		}
 	}
 
-	BTL_EFFECT_Main( wk->bew );
+	BTL_EFFECT_Main();
 
 	if( pad == PAD_BUTTON_EXIT ){
 		NNS_SndStrmStop(&wk->strm);
@@ -422,7 +517,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 		return GFL_PROC_RES_CONTINUE;	
 	}
 
-	BTL_EFFECT_Exit( wk->bew );
+	BTL_EFFECT_Exit();
+//	BTL_EFFECT_Exit( wk->bew );
 
     NNS_SndStrmFreeChannel( &wk->strm );
 
@@ -431,7 +527,6 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
-	GFL_HEAP_FreeMemory( wk->pp );
 	GFL_PROC_FreeWork( proc );
 
 	GFL_HEAP_DeleteHeap( HEAPID_SOGABE_DEBUG );
@@ -524,6 +619,42 @@ static	void	MoveCamera( SOGA_WORK *wk )
 
 }
  
+static	void	set_pokemon( int mons_no, int flag, HEAPID heapID )
+{
+	//POKEMON_PARAM生成
+	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( heapID, POKETOOL_GetWorkSize() );
+	PP_Clear( pp );
+	
+	if( flag ){
+		PP_Put( pp, ID_PARA_monsno, mons_no );
+		PP_Put( pp, ID_PARA_id_no, 0x10 );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_AA );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_BB );
+	}
+	else{
+		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+		PP_Put( pp, ID_PARA_id_no, 0x10 );
+#if 0
+//1vs1
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_AA );
+		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_BB );
+#else
+//2vs2
+		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+		PP_Put( pp, ID_PARA_id_no, 0x10 );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_A );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_B );
+		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_C );
+		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_D );
+//		BTL_EFFECT_SetPokemon( wk->pp, POKE_MCSS_POS_E );
+//		BTL_EFFECT_SetPokemon( wk->pp, POKE_MCSS_POS_F );
+	}
+#endif
+	GFL_HEAP_FreeMemory( pp );
+}
+
 #if 0
 //======================================================================
 //	カメラの初期化
@@ -703,7 +834,8 @@ static	void	StrmSetUp(SOGA_WORK *sw)
 	sw->FSReadPos=SWAV_HEAD_SIZE;
 	sw->strmReadPos=0;
 	sw->strmWritePos=0;
-	StrmBufferCopy(sw,STRM_BUF_SIZE);
+
+	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
     
 	NNS_SndStrmSetup( &sw->strm,
 					  NNS_SND_STRM_FORMAT_PCM8,
