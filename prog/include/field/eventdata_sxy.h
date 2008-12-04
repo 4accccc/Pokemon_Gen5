@@ -21,7 +21,7 @@
 ///ì¡éÍê⁄ë±éwíËópID
 //------------------------------------------------------------------
 #define	ZONE_ID_SPECIAL		(0x0fff)
-#define	SPECIAL_SPEXIT01	(0x0100)
+#define	EXIT_ID_SPECIAL		(0x0100)
 
 enum {
 	EXIT_TYPE_NONE = 0,
@@ -88,6 +88,7 @@ struct _POS_EVENT_DATA{
 //------------------------------------------------------------------
 extern const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
 extern const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id);
+extern s16 EVENTDATA_GetConnectIDByData(const EVENTDATA_SYSTEM * evdata, const CONNECT_DATA * connect);
 extern void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc);
 
 
