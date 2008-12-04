@@ -100,18 +100,11 @@ void PlayerActGrid_Update(
 }
 
 void PlayerActGrid_AnimeSet(
-	PC_ACTCONT *pcActCont, int dir , int move )
+	PC_ACTCONT *pcActCont, int dir , PLAYER_ANIME_FLAG flag )
 {
-	int anmBase,anmID;
-//	VecFx32	trans = pcActCont->trans;
-	
-	if( move == FALSE ){
-		anmBase = PCACTSTOP_UP;
-	}else{
-		anmBase = PCACTWALK_UP;
-	}
-	
-	anmID = anmBase + dir;
+	int tbl[PLAYER_ANIME_FLAG_MAX] =
+		{PCACTSTOP_UP,PCACTWALK_UP,PCACTRUN_UP};
+	int anmID = tbl[flag] + dir;
 	
 	if( pcActCont->anmSetID != anmID ){
 //		OS_Printf( "自機アニメセット dir=%d, anmID=%d\n", dir, anmID );

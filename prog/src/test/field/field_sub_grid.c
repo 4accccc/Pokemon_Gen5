@@ -82,7 +82,8 @@ struct _FGRID_PLAYER
 	s16 move_dir;
 	VecFx32 move_val;
 	VecFx32 move_count;
-	
+	PLAYER_ANIME_FLAG anime_flag;
+
 	const FGRID_CONT *pGridCont;
 	PC_ACTCONT *pActCont;
 };
@@ -557,6 +558,8 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pJiki->scale_size = FX16_ONE*8-1;
 	
 	SetPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
+		
+	pJiki->anime_flag = PLAYER_ANIME_FLAG_STOP;
 	return( pJiki );
 }
 
@@ -664,7 +667,8 @@ static void FGridPlayer_Move(
 				pJiki->move_flag = TRUE;
 				pJiki->dir = dir;
 				pJiki->move_dir = dir;
-				
+				pJiki->anime_flag = PLAYER_ANIME_FLAG_WALK;
+
 				switch( dir ){
 				case DIR_UP:	pJiki->move_val.z = NUM_FX32( -2 ); break;
 				case DIR_DOWN:	pJiki->move_val.z = NUM_FX32( 2 ); break;
@@ -682,11 +686,16 @@ static void FGridPlayer_Move(
 					pJiki->move_val.x <<= 1;
 					pJiki->move_val.y <<= 1;
 					pJiki->move_val.z <<= 1;
+					pJiki->anime_flag = PLAYER_ANIME_FLAG_RUN;
 				}else if( (key_cont & PAD_BUTTON_R) ){
 					pJiki->move_val.x <<= 2;
 					pJiki->move_val.y <<= 2;
 					pJiki->move_val.z <<= 2;
 				}
+			}else{	//áŠQ•¨ƒqƒbƒg
+				pJiki->dir = dir;
+				pJiki->move_dir = dir;
+				pJiki->anime_flag = PLAYER_ANIME_FLAG_STOP;
 			}
 		}
 	}
@@ -699,7 +708,7 @@ static void FGridPlayer_Move(
 		case DIR_LEFT:	dir = 2; break;
 		case DIR_RIGHT:	dir = 3; break;
 		}
-		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->move_flag );
+		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->anime_flag );
 	}
 	
 	if( pJiki->move_flag == TRUE ){
@@ -748,6 +757,7 @@ static void FGridPlayer_Move(
 			pJiki->move_count.x = 0;
 			pJiki->move_count.y = 0;
 			pJiki->move_count.z = 0;
+			pJiki->anime_flag = PLAYER_ANIME_FLAG_STOP;
 		}
 	}
 	
