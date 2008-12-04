@@ -35,12 +35,19 @@ enum
 #define SIZE_GRID_FX32(a) (FX32_NUM(SIZE_GRID(a)))
 #define GRID_SIZE_FX32(a) (NUM_FX32(GRID_SIZE(a)))
 
-#define MAPHITBIT_NON (0)
-#define MAPHITBIT_ATTR (1<<0)	//アトリビュートヒット
-#define MAPHITBIT_DATA (1<<1)	//データエラーヒット
-#define MAPHITBIT_OUT (1<<2)	//範囲外エラービット
+///マップヒットチェックビット
+typedef enum
+{
+	MAPHITBIT_NON		= (0),		///<無し
+	MAPHITBIT_ATTR		= (1<<0),	///<アトリビュートヒット
+	MAPHITBIT_DATA		= (1<<1),	///<データエラーヒット
+	MAPHITBIT_OUT		= (1<<2),	///<範囲外エラービット
+	MAPHITBIT_HEIGHT	= (1<<3),	///<高さヒット
+}MAPHITBIT;
+
 #define MAPHITBIT_MASK_ERROR (MAPHITBIT_DATA|MAPHITBIT_OUT)
-#define MAPHITBIT_MASK_ATTR  (MAPHITBIT_ATTR)
+
+#define MAPHIT_HEIGHT_OVER (FX32_ONE*17)
 
 //======================================================================
 //	typedef struct
@@ -121,8 +128,11 @@ static BOOL GridVecPosMove(
 	FLD_G3D_MAPPER_INFODATA *gridInfoData,
 	VecFx32 *pos, VecFx32 *vecMove );
 static BOOL GetMapAttr(
-	const FLD_G3D_MAPPER *g3Dmapper, fx32 x, fx32 z, u32 *attr );
-static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z );
+	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr );
+static fx32 GetMapHeight(
+	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos );
+static MAPHITBIT MapHitCheck(
+	const FGRID_CONT *pGridCont, const VecFx32 *now, const VecFx32 *next );
 static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
 
@@ -577,19 +587,26 @@ static void FGridPlayer_Delete( FGRID_CONT *pGridCont )
 	pGridCont->pGridPlayer = NULL;
 }
 
+///デバッグプリント
 static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 {
 	const FLD_G3D_MAPPER *mapper = 
 		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
 	fx32 now_x = pJiki->vec_pos.x;
+	fx32 now_y = pJiki->vec_pos.y;
 	fx32 now_z = pJiki->vec_pos.z;
-	int now_gx = SIZE_GRID_FX32( now_x );
-	int now_gz = SIZE_GRID_FX32( now_z );
+	u32 now_gx = SIZE_GRID_FX32( now_x );
+	u32 now_gy = SIZE_GRID_FX32( now_y );
+	u32 now_gz = SIZE_GRID_FX32( now_z );
 	int gx,gz;
-	fx32 x,z;
-		
-	OS_Printf( "アトリビュート 現在位置 %d(0x%xH),%d(0x%xH)\n", now_gx, now_x, now_gz, now_z );
-
+	VecFx32 pos;
+	
+	OS_Printf(
+		"アトリビュート 現在位置 X=%d(0x%xH),Y=%d(0x%xH),Z=%d(0x%xH)\n",
+		now_gx, (now_x>>(4*3)),
+		now_gy, (now_y>>(4*3)),
+		now_gz, (now_z>>(4*3)) );
+	
 	for( gz = now_gz-1; gz < (now_gz+2); gz++ ){
 		for( gx = now_gx-1; gx < (now_gx+2); gx++ ){
 			u32 attr = 0;
@@ -597,10 +614,11 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 			if( gx < 0 || gz < 0 ){
 				OS_Printf( "OVER " );
 			}else{
-				x = GRID_SIZE_FX32( gx );
-				z = GRID_SIZE_FX32( gz );
+				pos.x = GRID_SIZE_FX32( gx );
+				pos.y = now_y;
+				pos.z = GRID_SIZE_FX32( gz );
 			
-				if( GetMapAttr(mapper,x,z,&attr) == TRUE ){
+				if( GetMapAttr(mapper,&pos,&attr) == TRUE ){
 					OS_Printf( "%04d ", attr );
 				}else{
 					OS_Printf( "OVER  " ); 
@@ -644,23 +662,22 @@ static void FGridPlayer_Move(
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir != DIR_NOT ){
-			u32 hit;
+			MAPHITBIT hit;
 			fx32 val = GRID_VALUE_FX32;
-			fx32 nx = pJiki->vec_pos.x;
-			fx32 nz = pJiki->vec_pos.z;
+			VecFx32 next = pJiki->vec_pos;
 
 			if( pJiki->pGridCont->scale_num != 0 ){
 				val >>= 1;
 			}
 			
 			switch( dir ){
-			case DIR_UP:	nz -= val; break;
-			case DIR_DOWN:	nz += val; break;
-			case DIR_LEFT:	nx -= val; break;
-			case DIR_RIGHT:	nx += val; break;
+			case DIR_UP:	next.z -= val; break;
+			case DIR_DOWN:	next.z += val; break;
+			case DIR_LEFT:	next.x -= val; break;
+			case DIR_RIGHT:	next.x += val; break;
 			}
 			
-			hit = MapHitCheck( pJiki->pGridCont, nx, nz );
+			hit = MapHitCheck( pJiki->pGridCont, &pJiki->vec_pos, &next );
 			
 			if( hit == MAPHITBIT_NON ||
 				((key_cont&PAD_BUTTON_R) && !(hit&MAPHITBIT_MASK_ERROR)) ){
@@ -873,20 +890,15 @@ static BOOL GridVecPosMove(
 /**
  * アトリビュート取得
  * @param
- * @retval
+ * @retval	BOOL	TRUE=正常に取得出来た
  */
 //--------------------------------------------------------------
 static BOOL GetMapAttr(
-	const FLD_G3D_MAPPER *g3Dmapper, fx32 x, fx32 z, u32 *attr )
+	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr )
 {
-	VecFx32 pos;
 	FLD_G3D_MAPPER_GRIDINFO gridInfo;
 	
-	pos.x = x;
-	pos.y = 0;
-	pos.z = z;
-	
-	if( GetFieldG3DmapperGridInfo(g3Dmapper,&pos,&gridInfo) == TRUE ){
+	if( GetFieldG3DmapperGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
 		*attr = gridInfo.gridData[0].attr;
 		return( TRUE );
 	}
@@ -896,12 +908,52 @@ static BOOL GetMapAttr(
 
 //--------------------------------------------------------------
 /**
- * マップヒットチェック
+ * 高さ取得
  * @param
- * @retval	BOOL	TRUE=ヒット
+ * @retval	fx32	高さ
  */
 //--------------------------------------------------------------
-static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
+static fx32 GetMapHeight(
+	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos )
+{
+	FLD_G3D_MAPPER_GRIDINFO gridInfo;
+	
+	if( GetFieldG3DmapperGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
+		if( gridInfo.count ){
+			int		i = 0,p = 0;
+			fx32	h_tmp,diff1,diff2;
+			fx32	height = 0;
+			
+			height = gridInfo.gridData[i].height;
+			i++;
+			
+			for( ; i < gridInfo.count; i++ ){
+				h_tmp = gridInfo.gridData[i].height;
+				diff1 = height - pos->y;
+				diff2 = h_tmp - pos->y;
+				
+				if( FX_Mul( diff2, diff2 ) < FX_Mul( diff1, diff1 ) ){
+					height = h_tmp;
+					p = i;
+				}
+			}
+
+			return( height );
+		}
+	}	
+	
+	return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * マップヒットチェック
+ * @param
+ * @retval	
+ */
+//--------------------------------------------------------------
+static MAPHITBIT MapHitCheck(
+	const FGRID_CONT *pGridCont, const VecFx32 *now, const VecFx32 *next )
 {
 	u32 hit;
 	VecFx32 pos;
@@ -910,11 +962,7 @@ static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 	hit = MAPHITBIT_NON;
 	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
 	
-	pos.x = x;
-	pos.y = 0;
-	pos.z = z;
-	
-	if( CheckFieldG3DmapperOutRange(mapper,&pos) == TRUE ){
+	if( CheckFieldG3DmapperOutRange(mapper,next) == TRUE ){
 		hit |= MAPHITBIT_OUT;
 		return( hit );
 	}
@@ -922,7 +970,7 @@ static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 	if( GetFieldG3DmapperFileType(mapper) == FILE_CUSTOM_DATA ){
 		u16 attr = 0;
 		
-		if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
+		if( GetFieldG3DmapperGridAttr(mapper,next,&attr) == FALSE ){
 			hit |= MAPHITBIT_DATA;
 		}
 		
@@ -931,13 +979,25 @@ static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 		}
 	}else{
 		u32 attr;
-		
-		if( GetMapAttr(mapper,x,z,&attr) == FALSE ){
+		fx32 height,diff;
+
+		if( GetMapAttr(mapper,next,&attr) == FALSE ){
 			hit |= MAPHITBIT_DATA;
 		}
-
+		
 		if( attr != 0 ){
 			hit |= MAPHITBIT_ATTR;
+		}
+		
+		height = GetMapHeight( mapper, next );
+		diff = now->y - height;
+		
+		if( diff < 0 ){
+			diff = -diff;
+		}
+		
+		if( diff >= MAPHIT_HEIGHT_OVER ){
+			hit |= MAPHITBIT_HEIGHT;
 		}
 	}
 	
