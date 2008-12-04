@@ -625,7 +625,7 @@ static void FGridPlayer_Move(
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
 		DEBUG_PrintAttr( pJiki );
 	}
-	#elif define DEBUG_ONLY_FOR_nakatsui
+	#elif defined DEBUG_ONLY_FOR_nakatsui
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
 		DEBUG_PrintAttr( pJiki );
 	}
@@ -930,7 +930,7 @@ static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 		if( attr != 0 ){
 			hit |= MAPHITBIT_ATTR;
 		}
-		#elif define DEBUG_ONLY_FOR_nakatsui
+		#elif defined DEBUG_ONLY_FOR_nakatsui
 		if( attr != 0 ){
 			hit |= MAPHITBIT_ATTR;
 		}
