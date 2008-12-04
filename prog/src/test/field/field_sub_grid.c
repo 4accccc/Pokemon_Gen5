@@ -28,11 +28,19 @@ enum
 
 #define GRID_VALUE	(16)
 #define GRID_VALUE_FX32 (GRID_VALUE*FX32_ONE)
+#define GRID_VALUE_HALF_FX32 (GRID_VALUE_FX32/2)
 
 #define SIZE_GRID(a)((a)/GRID_VALUE)
 #define GRID_SIZE(a) ((a)*GRID_VALUE)
 #define SIZE_GRID_FX32(a) (FX32_NUM(SIZE_GRID(a)))
 #define GRID_SIZE_FX32(a) (NUM_FX32(GRID_SIZE(a)))
+
+#define MAPHITBIT_NON (0)
+#define MAPHITBIT_ATTR (1<<0)	//アトリビュートヒット
+#define MAPHITBIT_DATA (1<<1)	//データエラーヒット
+#define MAPHITBIT_OUT (1<<2)	//範囲外エラービット
+#define MAPHITBIT_MASK_ERROR (MAPHITBIT_DATA|MAPHITBIT_OUT)
+#define MAPHITBIT_MASK_ATTR  (MAPHITBIT_ATTR)
 
 //======================================================================
 //	typedef struct
@@ -113,7 +121,7 @@ static BOOL GridVecPosMove(
 	VecFx32 *pos, VecFx32 *vecMove );
 static BOOL GetMapAttr(
 	const FLD_G3D_MAPPER *g3Dmapper, fx32 x, fx32 z, u32 *attr );
-static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z );
+static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z );
 static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
 
@@ -189,6 +197,13 @@ static void GridMoveCreate(
 		GFL_BBD_SetScale(
 			GFL_BBDACT_GetBBDSystem(fieldWork->gs->bbdActSys), &scale );
 	}
+
+	//マップ描画オフセット
+	{
+		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
+		SetFieldG3DmapperDrawOffset(
+			GetFieldG3Dmapper(fieldWork->gs), &offs );
+	}
 }
 
 //------------------------------------------------------------------
@@ -241,7 +256,8 @@ static void GridMoveDelete( FIELD_MAIN_WORK* fieldWork )
 //--------------------------------------------------------------
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
 {
-	VecFx32 offs = { FX32_ONE*16, 0, 0 };
+//	VecFx32 offs = { FX32_ONE*16, 0, 0 };
+	VecFx32 offs = { 0, 0, 0 };
 	
 	FGRID_CONT *pGridCont = fieldWork->pGridCont;
 	FGRID_PLAYER *pGridPlayer = pGridCont->pGridPlayer;
@@ -516,10 +532,11 @@ static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork )
  */
 //--------------------------------------------------------------
 static FGRID_PLAYER * FGridPlayer_Init(
-	FGRID_CONT *pGridCont, const VecFx32 *pos )
+	FGRID_CONT *pGridCont, const VecFx32 *org_pos )
 {
+	VecFx32 pos;
+	int gx,gy,gz;
 	FGRID_PLAYER *pJiki;
-//	VecFx32 orig_pos = { GRID_SIZE_FX32(16), 0x30000, GRID_SIZE_FX32(16) };
 	
 	pJiki = GFL_HEAP_AllocClearMemory(
 			pGridCont->heapID, sizeof(FGRID_PLAYER) );
@@ -528,7 +545,15 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pJiki->pGridCont = pGridCont;
 	pJiki->pActCont = pGridCont->pFieldWork->pcActCont;
 	
-	pJiki->vec_pos = *pos;
+	//グリッド単位に直す
+	gx = SIZE_GRID_FX32( org_pos->x );
+	gy = SIZE_GRID_FX32( org_pos->y );
+	gz = SIZE_GRID_FX32( org_pos->z );
+	pos.x = GRID_SIZE_FX32( gx ) + GRID_VALUE_HALF_FX32;
+	pos.y = GRID_SIZE_FX32( gy );
+	pos.z = GRID_SIZE_FX32( gz ) + GRID_VALUE_HALF_FX32;
+	
+	pJiki->vec_pos = pos;
 	pJiki->scale_size = FX16_ONE*8-1;
 	
 	SetPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
@@ -560,7 +585,7 @@ static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 	int gx,gz;
 	fx32 x,z;
 		
-	OS_Printf( "アトリビュート 現在位置 %d,%d\n", now_gx, now_gz );
+	OS_Printf( "アトリビュート 現在位置 %d(0x%xH),%d(0x%xH)\n", now_gx, now_x, now_gz, now_z );
 
 	for( gz = now_gz-1; gz < (now_gz+2); gz++ ){
 		for( gx = now_gx-1; gx < (now_gx+2); gx++ ){
@@ -600,24 +625,23 @@ static void FGridPlayer_Move(
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
 		DEBUG_PrintAttr( pJiki );
 	}
-	#else
-		#ifdef DEBUG_ONLY_FOR_nakatsui
-		if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
-			DEBUG_PrintAttr( pJiki );
-		}
-		#endif
+	#elif define DEBUG_ONLY_FOR_nakatsui
+	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_Y) ){
+		DEBUG_PrintAttr( pJiki );
+	}
 	#endif
 	//----
 	
 	if( pJiki->move_flag == FALSE && (key_cont&PAD_KEY_BIT) ){
 		int dir = DIR_NOT;
-
+		
 		if( (key_cont&PAD_KEY_UP) ){ dir = DIR_UP; }
 		else if( (key_cont&PAD_KEY_DOWN) ){ dir = DIR_DOWN; }
 		else if( (key_cont&PAD_KEY_LEFT) ){ dir = DIR_LEFT; }
 		else if( (key_cont&PAD_KEY_RIGHT) ){ dir = DIR_RIGHT; }
 		
 		if( dir != DIR_NOT ){
+			u32 hit;
 			fx32 val = GRID_VALUE_FX32;
 			fx32 nx = pJiki->vec_pos.x;
 			fx32 nz = pJiki->vec_pos.z;
@@ -633,8 +657,10 @@ static void FGridPlayer_Move(
 			case DIR_RIGHT:	nx += val; break;
 			}
 			
-			if( (key_cont&PAD_BUTTON_R) ||
-				MapHitCheck(pJiki->pGridCont,nx,nz) == FALSE ){
+			hit = MapHitCheck( pJiki->pGridCont, nx, nz );
+			
+			if( hit == MAPHITBIT_NON ||
+				((key_cont&PAD_BUTTON_R) && !(hit&MAPHITBIT_MASK_ERROR)) ){
 				pJiki->move_flag = TRUE;
 				pJiki->dir = dir;
 				pJiki->move_dir = dir;
@@ -725,6 +751,7 @@ static void FGridPlayer_Move(
 		}
 	}
 	
+	#if 0
 	if( (GFL_UI_KEY_GetTrg()&PAD_BUTTON_X) ){
 		fx32 x = pJiki->vec_pos.x;
 		fx32 z = pJiki->vec_pos.z;
@@ -741,6 +768,7 @@ static void FGridPlayer_Move(
 			OS_Printf( "\n" );
 		}
 	}
+	#endif
 }
 
 //--------------------------------------------------------------
@@ -797,11 +825,11 @@ static BOOL GridVecPosMove(
 	}
 	
 	if( CheckFieldG3DmapperOutRange(g3Dmapper,&posNext) == TRUE ){
-		return FALSE;
+		return FALSE;	//範囲外
 	}
 	
 	if( GetFieldG3DmapperGridInfo(g3Dmapper,&posNext,&gridInfo) == FALSE ){
-		return FALSE;
+		return FALSE;	//マップデータが取得できない
 	}
 	
 	if( gridInfo.count ){
@@ -863,46 +891,53 @@ static BOOL GetMapAttr(
  * @retval	BOOL	TRUE=ヒット
  */
 //--------------------------------------------------------------
-static BOOL MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
+static u32 MapHitCheck( const FGRID_CONT *pGridCont, fx32 x, fx32 z )
 {
+	u32 hit;
+	VecFx32 pos;
 	const FLD_G3D_MAPPER *mapper;
+	
+	hit = MAPHITBIT_NON;
 	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
 	
+	pos.x = x;
+	pos.y = 0;
+	pos.z = z;
+	
+	if( CheckFieldG3DmapperOutRange(mapper,&pos) == TRUE ){
+		hit |= MAPHITBIT_OUT;
+		return( hit );
+	}
+	
 	if( GetFieldG3DmapperFileType(mapper) == FILE_CUSTOM_DATA ){
-		VecFx32 pos;
 		u16 attr = 0;
-		pos.x = x;
-		pos.y = 0;
-		pos.z = z;
 		
 		if( GetFieldG3DmapperGridAttr(mapper,&pos,&attr) == FALSE ){
-			return( TRUE );
+			hit |= MAPHITBIT_DATA;
 		}
 		
 		if( ((attr&0x8000)>>15) ){
-			return( TRUE );
+			hit |= MAPHITBIT_ATTR;
 		}
 	}else{
 		u32 attr;
 		
 		if( GetMapAttr(mapper,x,z,&attr) == FALSE ){
-			return( TRUE );
+			hit |= MAPHITBIT_DATA;
 		}
 
 		#ifdef DEBUG_ONLY_FOR_kagaya
 		if( attr != 0 ){
-			return( TRUE );
+			hit |= MAPHITBIT_ATTR;
 		}
-		#else
-			#ifdef DEBUG_ONLY_FOR_nakatsui
-			if( attr != 0 ){
-				return( TRUE );
-			}
-			#endif
+		#elif define DEBUG_ONLY_FOR_nakatsui
+		if( attr != 0 ){
+			hit |= MAPHITBIT_ATTR;
+		}
 		#endif
 	}
 	
-	return( FALSE );
+	return( hit );
 }
 
 //--------------------------------------------------------------

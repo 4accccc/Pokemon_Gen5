@@ -180,4 +180,5 @@ extern BOOL CheckFieldG3DmapperOutRange( const FLD_G3D_MAPPER* g3Dmapper, const 
 //------------------------------------------------------------------
 extern void GetFieldG3DmapperSize( FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z );
 
-
+extern void SetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *offs );
+extern void GetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, VecFx32 *offs );

@@ -17,11 +17,11 @@ static void playerBBDactFuncGrid(
 	GFL_BBDACT_SetAnimeIdxContinue(
 		GetBbdActSys( pcActCont->gs ), actIdx, anmID );
 	#endif
-
+	
 	//à íuï‚ê≥
-	trans.x = pcActCont->trans.x + (FX32_ONE*8) + (FX32_ONE*8);	//ï‚ê≥
-	trans.y = pcActCont->trans.y + FX32_ONE*10;	//ï‚ê≥
-	trans.z = pcActCont->trans.z;
+	trans.x = pcActCont->trans.x;
+	trans.y = pcActCont->trans.y + FX32_ONE*12;	//ï‚ê≥
+	trans.z = pcActCont->trans.z;// + -FX32_ONE*4; //ï‚ê≥
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
 }
 

@@ -69,6 +69,8 @@ struct _FLD_G3D_MAPPER {
 	FLD_G3D_MAPPER_MODE		mode;		//動作モード
 	u32					arcID;		//グラフィックアーカイブＩＤ
 	const FLD_G3D_MAPPER_DATA*	data;	//実マップデータ
+	
+	VecFx32 globalDrawOffset;		//共通座標オフセット
 
 	GFL_G3D_RES*			globalTexture;					//共通地形テクスチャ
 	GLOBALOBJ_RES*			globalObjRes;					//共通オブジェクト
@@ -147,7 +149,7 @@ FLD_G3D_MAPPER*	CreateFieldG3Dmapper( HEAPID heapID )
 			g3Dmapper->g3Dmap[i] = GFL_G3D_MAP_Create( &setup, g3Dmapper->heapID );
 		}
 	}
-
+	
 	VEC_Set( &g3Dmapper->posCont, 0, 0, 0 );
 	g3Dmapper->sizex = 0;
 	g3Dmapper->sizez = 0;
@@ -157,7 +159,7 @@ FLD_G3D_MAPPER*	CreateFieldG3Dmapper( HEAPID heapID )
 	g3Dmapper->mode = FLD_G3D_MAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
 	g3Dmapper->data = NULL;
-
+	
 	g3Dmapper->globalObjRes = NULL;
 	g3Dmapper->globalObjResCount = 0;
 
@@ -266,13 +268,20 @@ void	MainFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper )
 void	DrawFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 {
 	int i;
-
+	VecFx32 org_pos,draw_pos;
+	
 	GF_ASSERT( g3Dmapper );
-
+	
 	GFL_G3D_MAP_StartDraw();
 
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		GFL_G3D_MAP_GetTrans( g3Dmapper->g3Dmap[i], &org_pos );
+		draw_pos.x = org_pos.x + g3Dmapper->globalDrawOffset.x;
+		draw_pos.y = org_pos.y + g3Dmapper->globalDrawOffset.y;
+		draw_pos.z = org_pos.z + g3Dmapper->globalDrawOffset.z;
+		GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[i], &draw_pos );
 		GFL_G3D_MAP_Draw( g3Dmapper->g3Dmap[i], g3Dcamera );
+		GFL_G3D_MAP_SetTrans( g3Dmapper->g3Dmap[i], &org_pos );
 	}
 	GFL_G3D_MAP_EndDraw();
 }
@@ -1224,6 +1233,16 @@ static void CreateGrobalObj_forBin( FLD_G3D_MAPPER* g3Dmapper, const void* resis
 	GFL_HEAP_FreeMemory( gobjListHeader );
 }
 
+//--------------------------------------------------------------
+//	描画オフセット
+//--------------------------------------------------------------
+void SetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *offs )
+{
+	g3Dmapper->globalDrawOffset = *offs;
+}
 
-
+void GetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, VecFx32 *offs )
+{
+	*offs = g3Dmapper->globalDrawOffset;
+}
 
