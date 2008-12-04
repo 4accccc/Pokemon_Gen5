@@ -34,14 +34,6 @@ static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
 
-//==============================================================================
-//	タイトル画面PROC呼び出しようのデータ
-//==============================================================================
-const GFL_PROC_DATA TitleProcData = {
-	TitleProcInit,
-	TitleProcMain,
-	TitleProcEnd,
-};
 
 
 //------------------------------------------------------------------

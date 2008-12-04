@@ -134,6 +134,9 @@ typedef struct {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
+GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void Local_VramSetting(TITLE_WORK *tw);
 static void Local_BGFrameSetting(TITLE_WORK *tw);
 static void Local_MessageSetting(TITLE_WORK *tw);
@@ -156,6 +159,13 @@ extern void	TestModeSet(void);
 //==============================================================================
 //	データ
 //==============================================================================
+///タイトル画面呼び出しようのPROCデータ
+const GFL_PROC_DATA TitleProcData = {
+	TitleProcInit,
+	TitleProcMain,
+	TitleProcEnd,
+};
+
 //--------------------------------------------------------------
 //	3D
 //--------------------------------------------------------------
@@ -707,3 +717,4 @@ static void Local_MsgLoadPushStart(TITLE_WORK *tw)
 	Local_MessagePut(tw, WIN_PUSH_JPN, tw->strbuf_push_jpn, 6*8, 0);
 	Local_MessagePut(tw, WIN_PUSH_ENG, tw->strbuf_push_eng, 10*8, 0);
 }
+

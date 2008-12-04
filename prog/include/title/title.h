@@ -10,11 +10,9 @@
 #define __TITLE_H__
 
 //==============================================================================
-//	外部関数宣言
+//	外部データ
 //==============================================================================
-extern GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-extern GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-extern GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern const GFL_PROC_DATA TitleProcData;
 
 
 #endif	//__TITLE_H__
