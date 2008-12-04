@@ -16,6 +16,8 @@ extern "C" {
 
 #include "heap.h"
 
+#define GFL_STD_MTRAND_MAX	(0xffffffff)
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	標準ライブラリの初期化関数
@@ -163,7 +165,7 @@ extern void GFL_STD_MtRandInit(u32 s);
 /**
  *  @brief   メルセンヌツイスターで符号なし３２ビット長の乱数を取得
  *  @param   max    取得数値の範囲を指定 0 ～ max-1 の範囲の値が取得できます。
- *                  0を指定した場合にはすべての範囲の32bit値となります。
+ *                  GFL_STD_MTRAND_MAXを指定した場合にはすべての範囲の32bit値となります。
  *                  % や / を使用せずにここのmax値を変更してください
  *	@return  生成された乱数
  */
@@ -174,15 +176,13 @@ static inline u32 GFL_STD_MtRand(u32 max)
     u64 x = (u64)__GFL_STD_MtRand();
 
     // 引数maxが定数ならばコンパイラにより最適化される。
-    if (max == 0) {
+    if (max == GFL_STD_MTRAND_MAX) {
         return (u32)x;
     }
     else {
         return (u32)((x * max) >> 32);
     }
 }
-
-#define GFL_STD_MTRAND_MAX	(0xffffffff)
 
 /**
  *  @brief   線形合同法乱数の構造体
