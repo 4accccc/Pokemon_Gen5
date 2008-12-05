@@ -20,6 +20,13 @@ use File::Basename;
 	if( $size ){
 		$cmd = "g2dcvtr @ARGV[0] -bmp -bg -cr/0_0_32_16 -o/@ARGV[1]";
 		system $cmd;
+
+		$filename = basename( @ARGV[0], '.nmc' );
+		$filename =~ s/pfwb/pmwb/g;
+		$cmd = "rm " . $filename . "_n.NCLR";
+		system $cmd;
+		$cmd = "rm " . $filename . "_r.NCLR";
+		system $cmd;
 	}
 	else{
 		$file_name = basename( @ARGV[0], '.ncg' );

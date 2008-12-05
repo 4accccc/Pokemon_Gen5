@@ -56,7 +56,7 @@ do-build: $(notdir $(NCGFILE:.ncg=.NCGR))
 
 do-build: $(notdir $(NMCFILE:.nmc=.NMCR))
 %.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
-	g2dcvtr $< -bmp -cr/0_0_32_16 -o/$(CNV_DIR)
+	perl nmc.pl $< $(CNV_DIR)
 
 do-build: $(notdir $(NMCFILE:.nmc=.NCEC))
 %.NCEC: $(RES_DIR)%.nce
@@ -68,11 +68,11 @@ do-build: $(notdir $(NCGCFILE:.ncg=.NCBR))
 
 do-build: $(notdir $(NCLNFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
-	g2dcvtr $< -o/$(CNV_DIR)
+	perl ncl.pl $< $(CNV_DIR)
 
 do-build: $(notdir $(NCLRFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
-	g2dcvtr $< -o/$(CNV_DIR)
+	perl ncl.pl $< $(CNV_DIR)
 endif
 
 #------------------------------------------------------------------------------
