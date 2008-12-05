@@ -13,6 +13,7 @@
 #include "savedata/test_savedata.h"
 #include "savedata/box_savedata.h"
 #include "savedata/myitem_savedata.h"
+#include "poke_tool/pokeparty.h"
 
 
 //==============================================================================
@@ -130,6 +131,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MYITEM,
 		(FUNC_GET_SIZE)MYITEM_GetWorkSize,
 		(FUNC_INIT_WORK)MYITEM_Init,
+	},
+	{	//éËéùÇøÉ|ÉPÉÇÉì
+		GMDATA_ID_MYPOKE,
+		(FUNC_GET_SIZE)PokeParty_GetWorkSize,
+		(FUNC_INIT_WORK)PokeParty_InitWork,
 	},
 };
 
