@@ -108,7 +108,7 @@ typedef struct
 //	proto
 //======================================================================
 static FGRID_CONT * FGridCont_Init(
-	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
+	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, u16 dir );
 static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork );
 
 static void GridProc_Main( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
@@ -116,7 +116,7 @@ static void GridProc_DEBUG00( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos );
 
 static FGRID_PLAYER * FGridPlayer_Init(
-	FGRID_CONT *pGridCont, const VecFx32 *pos );
+	FGRID_CONT *pGridCont, const VecFx32 *pos, u16 dir );
 static void FGridPlayer_Delete( FGRID_CONT *pGridCont );
 static void FGridPlayer_Move(
 	FGRID_PLAYER *pJiki, u32 key_trg, u32 key_cont );
@@ -135,6 +135,8 @@ static MAPHITBIT MapHitCheck(
 	const FGRID_CONT *pGridCont, const VecFx32 *now, const VecFx32 *next );
 static void FldWorkPlayerWorkPosSet(
 		FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos );
+static void FldWorkPlayerWorkDirSet(
+	FIELD_MAIN_WORK *fieldWork, u16 dir );
 
 //--------------------------------------------------------------
 ///	data
@@ -192,7 +194,7 @@ static void GridMoveCreate(
 	SetPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	
-	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos );
+	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
 	
 	//カメラ設定
 	FLD_SetCameraLength( fieldWork->camera_control, DATA_CameraTbl[0].len );
@@ -477,7 +479,7 @@ static void GridProc_DEBUG01( FIELD_MAIN_WORK *fieldWork, VecFx32 *pos )
  */
 //--------------------------------------------------------------
 static FGRID_CONT * FGridCont_Init(
-	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos )
+	FIELD_MAIN_WORK *fieldWork, const VecFx32 *pos, u16 dir )
 {
 	FGRID_CONT *pGridCont;
 	
@@ -486,7 +488,20 @@ static FGRID_CONT * FGridCont_Init(
 	
 	pGridCont->heapID = fieldWork->heapID;
 	pGridCont->pFieldWork = fieldWork;
-	pGridCont->pGridPlayer = FGridPlayer_Init( pGridCont, pos );
+	
+	{
+		if( (dir>0x2000) && (dir<0x6000) ){
+			dir = DIR_LEFT;
+		}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
+			dir = DIR_DOWN;
+		} else if( (dir > 0xa000)&&(dir < 0xe000)){
+			dir = DIR_RIGHT;
+		} else {
+			dir = DIR_UP;
+		}
+		
+		pGridCont->pGridPlayer = FGridPlayer_Init( pGridCont, pos, dir );
+	}
 	
 	{
 		u32 size;
@@ -543,7 +558,7 @@ static void FGridCont_Delete( FIELD_MAIN_WORK *fieldWork )
  */
 //--------------------------------------------------------------
 static FGRID_PLAYER * FGridPlayer_Init(
-	FGRID_CONT *pGridCont, const VecFx32 *org_pos )
+	FGRID_CONT *pGridCont, const VecFx32 *org_pos, u16 dir )
 {
 	VecFx32 pos;
 	int gx,gy,gz;
@@ -556,6 +571,9 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pJiki->pGridCont = pGridCont;
 	pJiki->pActCont = pGridCont->pFieldWork->pcActCont;
 	
+	pJiki->dir = dir;
+	pJiki->move_dir = dir;
+
 	//グリッド単位に直す
 	gx = SIZE_GRID_FX32( org_pos->x );
 	gy = SIZE_GRID_FX32( org_pos->y );
@@ -726,6 +744,9 @@ static void FGridPlayer_Move(
 		case DIR_RIGHT:	dir = 3; break;
 		}
 		PlayerActGrid_AnimeSet( pcActCont, dir, pJiki->anime_flag );
+		
+		FldWorkPlayerWorkDirSet(
+			pJiki->pGridCont->pFieldWork, pJiki->dir );
 	}
 	
 	if( pJiki->move_flag == TRUE ){
@@ -1102,6 +1123,23 @@ static void FldWorkPlayerWorkPosSet(
 	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
 	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 	PLAYERWORK_setPosition( player, pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 方向をPLAYER_WORKに反映する
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void FldWorkPlayerWorkDirSet(
+	FIELD_MAIN_WORK *fieldWork, u16 dir )
+{
+	GAMEDATA *gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
+	PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+	u16 tbl[DIR_MAX4] = { 0x0000, 0x8000, 0x4000, 0xb000 };
+	GF_ASSERT( dir < DIR_MAX4 );
+	PLAYERWORK_setDirection( player, tbl[dir] );
 }
 
 #if 0	//実データ利用

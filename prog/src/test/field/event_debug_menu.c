@@ -21,6 +21,7 @@
 #include "field/zonedata.h"
 #include "field_comm/field_comm_main.h"
 #include "arc/fieldmap/zone_id.h"
+#include "field/eventdata_sxy.h"
 
 #include "event_debug_menu.h"
 #include "event_mapchange.h"
@@ -1040,11 +1041,24 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 			if( ret == BMPMENULIST_CANCEL ){
 				return( GMEVENT_RES_FINISH );
 			}else{
+				GMEVENT *event;
 				GAMEDATA *gdata = GAMESYSTEM_GetGameData( work->gmSys );
 				PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
 				const VecFx32 *pos = PLAYERWORK_getPosition( player );
-				GMEVENT *event = DEBUG_EVENT_ChangeMapPos(
-					work->gmSys, work->fieldWork, ret, pos );
+				u16 dir = PLAYERWORK_getDirection( player );
+				
+				if( (dir>0x2000) && (dir<0x6000) ){
+					dir = EXIT_TYPE_LEFT;
+				}else if( (dir >= 0x6000) && (dir <= 0xa000) ){
+					dir = EXIT_TYPE_DOWN;
+				}else if( (dir > 0xa000) && (dir < 0xe000) ){
+					dir = EXIT_TYPE_RIGHT;
+				}else{
+					dir = EXIT_TYPE_UP;
+				}
+
+				event = DEBUG_EVENT_ChangeMapPos(
+					work->gmSys, work->fieldWork, ret, pos, dir );
 				GMEVENT_ChangeEvent( work->gmEvent, event );
 				OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
 			}

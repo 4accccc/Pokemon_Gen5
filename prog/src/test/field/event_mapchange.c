@@ -295,7 +295,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		u16 zone_id, const VecFx32 * pos)
+		u16 zone_id, const VecFx32 * pos, u16 dir )
 {
 	MAPCHANGE_WORK * mcw;
 	GMEVENT * event;
@@ -305,8 +305,8 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	LOCATION_SetDirect(&mcw->loc_req, zone_id, 0/* DIR */,
-			pos->x, pos->y, pos->z);
+	
+	LOCATION_SetDirect(&mcw->loc_req, zone_id, dir, pos->x, pos->y, pos->z);
 	
 	return event;
 }

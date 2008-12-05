@@ -45,11 +45,12 @@ extern GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fi
  * @param	fieldmap	フィールドシステムへのポインタ
  * @param	zone_id		遷移するマップのZONE指定
  * @param	pos			遷移するマップでの座標指定
+ * @param	dir			遷移するマップでの方向指定
  * @return	GMEVENT		生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
-		u16 zone_id, const VecFx32 * pos);
+		u16 zone_id, const VecFx32 * pos, u16 dir );
 
 //------------------------------------------------------------------
 /**
