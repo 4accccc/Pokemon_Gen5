@@ -106,7 +106,8 @@ SRCS	+=		test/testmode.c \
 				test/field/event_fieldmap_menu.c \
 				item/item.c \
 				title/title.c \
-				title/title_control.c
+				title/title_control.c \
+				savedata/myitem_savedata.c
 
 
 

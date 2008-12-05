@@ -21,6 +21,9 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
+#include "savedata/save_control.h"
+#include "savedata/save_tbl.h"
+#include "savedata/myitem_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -35,6 +38,7 @@ struct _GAMEDATA{
 	LOCATION start_loc;
 	LOCATION entrance_loc;
 	LOCATION special_loc;
+	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 };
 
 //============================================================================================
@@ -60,6 +64,8 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	gd->evdata = EVENTDATA_SYS_Create(heapID);
 	EVENTDATA_SYS_Clear(gd->evdata);
 
+	gd->myitem = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_MYITEM);
+	
 	return gd;
 }
 //------------------------------------------------------------------
@@ -134,6 +140,18 @@ const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata)
 void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
 	gamedata->special_loc = *loc;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   手持ちアイテムへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  手持ちアイテムへのポインタ
+ */
+//--------------------------------------------------------------
+MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata)
+{
+	return gamedata->myitem;
 }
 
 

@@ -12,6 +12,7 @@
 #include "savedata/contest_savedata.h"
 #include "savedata/test_savedata.h"
 #include "savedata/box_savedata.h"
+#include "savedata/myitem_savedata.h"
 
 
 //==============================================================================
@@ -124,6 +125,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_BOXDATA,
 		(FUNC_GET_SIZE)BOXDAT_GetTotalSize,
 		(FUNC_INIT_WORK)BOXDAT_Init,
+	},
+	{	//éËéùÇøÉAÉCÉeÉÄ
+		GMDATA_ID_MYITEM,
+		(FUNC_GET_SIZE)MYITEM_GetWorkSize,
+		(FUNC_INIT_WORK)MYITEM_Init,
 	},
 };
 

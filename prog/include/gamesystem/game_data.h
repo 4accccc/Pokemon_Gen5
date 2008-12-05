@@ -19,6 +19,7 @@
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
 #include "field/location.h"
+#include "savedata/myitem_savedata.h"
 
 //============================================================================================
 //============================================================================================
@@ -140,3 +141,11 @@ extern const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata);
 //------------------------------------------------------------------
 extern void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc);
 
+//--------------------------------------------------------------
+/**
+ * @brief   手持ちアイテムへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  手持ちアイテムへのポインタ
+ */
+//--------------------------------------------------------------
+extern MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata);

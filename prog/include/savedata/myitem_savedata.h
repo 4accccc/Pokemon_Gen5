@@ -1,0 +1,123 @@
+//=============================================================================
+/**
+ * @file	myitem.h
+ * @brief	手持ちアイテム操作用ヘッダ
+ * @author	tamada
+ * @author	hiroyuki nakamura
+ * @date	2005.10.13
+ */
+//=============================================================================
+#ifndef	__MYITEM_SAVEDATA_H__
+#define	__MYITEM_SAVEDATA_H__
+
+//============================================================================================
+//============================================================================================
+// バッグのカーソル位置
+typedef struct _BAG_CURSOR	BAG_CURSOR;
+
+//------------------------------------------------------------------------
+//	アイテムデータ
+//------------------------------------------------------------------------
+typedef	struct {
+	u16	id;		// アイテム番号
+	u16	no;		// 個数
+}ITEM_ST;
+
+#define	BAG_NORMAL_ITEM_MAX		( 165 )		// 道具ポケット最大数
+#define	BAG_EVENT_ITEM_MAX		( 50 )		// 大切な物ポケット最大数
+#define	BAG_WAZA_ITEM_MAX		( 100 )		// 技マシンポケット最大数
+#define	BAG_SEAL_ITEM_MAX		( 12 )		// シールポケット最大数
+#define	BAG_DRUG_ITEM_MAX		( 40 )		// 薬ポケット最大数
+#define	BAG_NUTS_ITEM_MAX		( 64 )		// 木の実ポケット最大数
+#define	BAG_BALL_ITEM_MAX		( 15 )		// モンスターボールポケット最大数
+#define	BAG_BATTLE_ITEM_MAX		( 30 )		// 戦闘用アイテムポケット最大数
+
+
+//--------------------------------------------------------------
+//	
+//--------------------------------------------------------------
+// ポケットID
+#define	BAG_POKE_NORMAL		( 0 )		// 道具
+#define	BAG_POKE_DRUG		( 1 )		// 薬
+#define	BAG_POKE_BALL		( 2 )		// ボール
+#define	BAG_POKE_WAZA		( 3 )		// 技マシン
+#define	BAG_POKE_NUTS		( 4 )		// 木の実
+#define	BAG_POKE_SEAL		( 5 )		// シール
+#define	BAG_POKE_BATTLE		( 6 )		// 戦闘用
+#define	BAG_POKE_EVENT		( 7 )		// 大切な物
+
+#define	BAG_POKE_MAX		( 8 )		// ポケット最大数
+
+
+//==============================================================================
+//	型定義
+//==============================================================================
+///手持ちアイテムの不定形アクセス型
+typedef struct _MYITEM MYITEM;
+///手持ちアイテムの不定形ポインタ
+typedef struct _MYITEM * MYITEM_PTR;
+
+
+//============================================================================================
+//============================================================================================
+//----------------------------------------------------------
+//	セーブデータシステムが依存する関数
+//----------------------------------------------------------
+extern int MYITEM_GetWorkSize(void);
+extern MYITEM_PTR MYITEM_AllocWork(int heapID);
+extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
+
+//----------------------------------------------------------
+//	MYITEM操作のための関数
+//----------------------------------------------------------
+extern void MYITEM_Init(MYITEM_PTR item);
+extern BOOL MYITEM_AddCheck( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
+extern BOOL MYITEM_AddItem(MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap);
+extern BOOL MYITEM_SubItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
+extern BOOL MYITEM_SubItemDirect( ITEM_ST * myitem, u32 max, u16 item_no, u16 num, u32 heap );
+extern BOOL MYITEM_CheckItem( MYITEM_PTR myitem, u16 item_no, u16 num, u32 heap );
+extern u16 MYITEM_GetItemNum( MYITEM_PTR myitem, u16 item_no, u32 heap );
+extern u16 MYITEM_GetItemNumDirect( ITEM_ST * myitem, u32 max, u16 item_no, u32 heap );
+extern void MYITEM_SortSpace( ITEM_ST * item, const u32 max );
+extern void MYITEM_SortNumber( ITEM_ST * item, const u32 max );
+extern BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket );
+extern ITEM_ST * MYITEM_PosItemGet( MYITEM_PTR myitem, u16 pocket, u16 pos );
+extern void MYITEM_BattlePocketItemMake( MYITEM_PTR myitem, ITEM_ST * make[], u32 heap );
+extern u32 MYITEM_CnvButtonItemGet( const MYITEM_PTR myitem );
+extern void MYITEM_CnvButtonItemSet( MYITEM_PTR myitem, u32 item );
+
+
+//----------------------------------------------------------
+//	バッグ作成関数
+//----------------------------------------------------------
+#if 0
+extern void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, u32 heap );
+#endif
+
+//------------------------------------------------------------------
+//	バッグのカーソル位置データ
+//------------------------------------------------------------------
+extern BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID );
+
+extern void MYITEM_FieldBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr );
+extern u16 MYITEM_FieldBagPocketGet( BAG_CURSOR * wk );
+extern void MYITEM_FieldBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr );
+extern void MYITEM_FieldBagPocketSet( BAG_CURSOR * wk, u16 pocket );
+
+extern void MYITEM_BattleBagCursorGet( BAG_CURSOR * wk, u32 pocket, u8 * pos, u8 * scr );
+extern u16 MYITEM_BattleBagLastItemGet( BAG_CURSOR * wk );
+extern u16 MYITEM_BattleBagLastPageGet( BAG_CURSOR * wk );
+extern u16 MYITEM_BattleBagPocketPagePosGet( BAG_CURSOR * wk );
+extern void MYITEM_BattleBagCursorSet( BAG_CURSOR * wk, u32 pocket, u8 pos, u8 scr );
+extern void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page );
+extern void MYITEM_BattleBagPocketPagePosSet( BAG_CURSOR * wk, u16 pocket );
+extern void MYITEM_BattleBagCursorPosInit( BAG_CURSOR * wk );
+
+
+//	デバッグ用適当に手持ちアイテム生成関数
+extern void Debug_MYITEM_MakeBag(MYITEM_PTR myitem, int heapID);
+
+#ifdef CREATE_INDEX
+extern void *Index_Get_Myitem_Offset(MYITEM_PTRitem, int type);
+#endif
+#endif	/* __MYITEM_SAVEDATA_H__ */
