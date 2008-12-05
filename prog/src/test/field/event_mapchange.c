@@ -235,7 +235,7 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
-	MakeNextLocation(&fmw->new_loc, game_init_work->mapid, 0);
+	LOCATION_DEBUG_SetDefaultPos(&fmw->new_loc, game_init_work->mapid);
 	return event;
 }
 
