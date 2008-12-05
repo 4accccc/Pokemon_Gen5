@@ -240,6 +240,53 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 
 //============================================================================================
 //
+//		イベント：ゲーム終了
+//
+//============================================================================================
+typedef struct {
+	GAMESYS_WORK * gsys;
+	FIELD_MAIN_WORK * fieldmap;
+}GAME_END_WORK;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
+{
+	GAME_END_WORK * gew = work;
+	switch (*seq) {
+	case 0:
+		//フィールドマップをフェードアウト
+		GMEVENT_CallEvent(event, EVENT_FieldFadeOut(gew->gsys, gew->fieldmap, 0));
+		(*seq)++;
+		break;
+	case 1:
+		//フィールドマップを終了待ち
+		GMEVENT_CallEvent(event, EVENT_FieldClose(gew->gsys, gew->fieldmap));
+		(*seq)++;
+		break;
+	case 2:
+		//プロセスを終了し、イベントも終了させるとゲームを終わる
+		return GMEVENT_RES_FINISH;
+	}
+	return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	デバッグ用：ゲーム終了
+ */
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
+{
+	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameEndEvent, sizeof(GAME_END_WORK));
+	GAME_END_WORK * gew = GMEVENT_GetEventWork(event);
+	gew->gsys = gsys;
+	gew->fieldmap = fieldmap;
+	return event;
+}
+
+//============================================================================================
+//
 //	イベント：デバッグ用マップ切り替え
 //
 //============================================================================================

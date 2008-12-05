@@ -21,6 +21,13 @@ extern GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK *
 
 //------------------------------------------------------------------
 /**
+ * @brief	デバッグ用：ゲーム終了
+ */
+//------------------------------------------------------------------
+extern GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap);
+
+//------------------------------------------------------------------
+/**
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,

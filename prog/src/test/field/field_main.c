@@ -415,7 +415,8 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 	if (event != NULL) return event;
 
 	if( ( GFL_UI_KEY_GetCont() & resetCont ) == resetCont ){
-		return DEBUG_EVENT_FieldSample(gsys, fieldWork);
+		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
+		//return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
