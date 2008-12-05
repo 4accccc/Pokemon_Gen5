@@ -692,6 +692,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 		}
 	}
 	GFL_HEAP_FreeMemory( wk->textParam );
+	POKE_MCSS_Exit( wk->pmw );
 #endif
 
 	BTL_EFFECT_Exit();
