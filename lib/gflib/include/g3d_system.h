@@ -837,7 +837,7 @@ extern u16
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_EnableAnime
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -849,7 +849,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_DisableAnime
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx ); 
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -863,7 +863,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern u16
 	GFL_G3D_OBJECT_AddAnime
-		( const GFL_G3D_OBJ* g3Dobj, const GFL_G3D_ANM* g3Danm );
+		( GFL_G3D_OBJ* g3Dobj, const GFL_G3D_ANM* g3Danm );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -875,7 +875,7 @@ extern u16
 //--------------------------------------------------------------------------------------------
 extern void
 	GFL_G3D_OBJECT_RemoveAnime
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -887,7 +887,7 @@ extern void
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_ResetAnimeFrame
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -919,7 +919,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_IncAnimeFrame
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count ); 
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count ); 
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -934,7 +934,7 @@ extern BOOL
 //--------------------------------------------------------------------------------------------
 extern BOOL
 	GFL_G3D_OBJECT_LoopAnimeFrame
-		( const GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count );
+		( GFL_G3D_OBJ* g3Dobj, const u16 anmIdx, const fx32 count );
 
 
 //=============================================================================================
