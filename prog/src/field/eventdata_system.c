@@ -229,7 +229,12 @@ const CONNECT_DATA SampleConnectData_4season[] = {
 		EXIT_TYPE_DOWN,
 	},
 	{
-		{FX32_ONE * (1268 - 8), FX32_ONE * 0, FX32_ONE * (1160 - 8)},
+		{FX32_ONE * (1192 - 8), FX32_ONE * 0, FX32_ONE * (1160 - 8)},
+		ZONE_ID_TESTROOM, 0,
+		EXIT_TYPE_DOWN,
+	},
+	{
+		{FX32_ONE * (1432 - 8), FX32_ONE * 48, FX32_ONE * (1144 - 8 - 16)},
 		ZONE_ID_TESTROOM, 0,
 		EXIT_TYPE_DOWN,
 	},
