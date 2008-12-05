@@ -24,10 +24,77 @@
 
 //===========================================================================
 //===========================================================================
+enum {
+	ZONE_ID_GAMESTART = 0,		//とりあえず
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#define DOOR_ID_JUMP_CODE	(-1)
+
+
+//===========================================================================
+//===========================================================================
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONの初期化
+ */
+//--------------------------------------------------------------
+void LOCATION_Init(LOCATION * loc)
+{
+	loc->type = LOCATION_TYPE_INIT;
+	loc->zone_id = 0;
+	loc->exit_id = 0;
+	loc->dir_id = 0;
+	loc->pos.x = 0;
+	loc->pos.y = 0;
+	loc->pos.z = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONのセット
+ */
+//--------------------------------------------------------------
+void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z)
+{
+	loc->type = LOCATION_TYPE_INIT;
+	loc->zone_id = zone;
+	loc->exit_id = door;
+	loc->dir_id = dir;
+	loc->pos.x = x;
+	loc->pos.y = y;
+	loc->pos.z = z;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id)
+{
+	LOCATION_Init(loc);
+	loc->zone_id = zone_id;
+	loc->exit_id = exit_id;
+}
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONのセット（直接位置指定）
+ */
+//--------------------------------------------------------------
+void LOCATION_SetDirect(LOCATION * loc, int zone, s16 dir, fx32 x, fx32 y, fx32 z)
+{
+	loc->type = LOCATION_TYPE_DIRECT;
+	loc->zone_id = zone;
+	loc->exit_id = DOOR_ID_JUMP_CODE;
+	loc->dir_id = dir;
+	loc->pos.x = x;
+	loc->pos.y = y;
+	loc->pos.z = z;
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 {
+	LOCATION_Init(loc);
+	loc->type = LOCATION_TYPE_DIRECT;
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
@@ -38,7 +105,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 //------------------------------------------------------------------
 void LOCATION_SetGameStart(LOCATION * loc)
 {
-	LOCATION_DEBUG_SetDefaultPos(loc, 0);
+	LOCATION_DEBUG_SetDefaultPos(loc, ZONE_ID_GAMESTART);
 }
 
 #if 0

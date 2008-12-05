@@ -20,8 +20,7 @@
 
 #include "event_mapchange.h"
 
-static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id);
-static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc);
+static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req);
 
 typedef enum {
 	FIELD_FADE_BLACK = 0,
@@ -194,7 +193,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
 	GAME_INIT_WORK * game_init_work;
-	LOCATION new_loc;
+	LOCATION loc_req;
 }FIRST_MAPIN_WORK;
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -206,7 +205,7 @@ static GMEVENT_RESULT EVENT_FirstMapIn(GMEVENT * event, int *seq, void *work)
 	FIELD_MAIN_WORK * fieldmap;
 	switch (*seq) {
 	case 0:
-		UpdateMapParams(gsys, &fmw->new_loc);
+		UpdateMapParams(gsys, &fmw->loc_req);
 		(*seq)++;
 		break;
 	case 1:
@@ -235,7 +234,7 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
-	LOCATION_DEBUG_SetDefaultPos(&fmw->new_loc, game_init_work->mapid);
+	LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
 	return event;
 }
 
@@ -250,7 +249,7 @@ typedef struct {
 	GAMESYS_WORK * gsys;
 	GAMEDATA * gamedata;
 	FIELD_MAIN_WORK * fieldmap;
-	LOCATION new_loc;
+	LOCATION loc_req;
 }MAPCHANGE_WORK;
 
 //------------------------------------------------------------------
@@ -274,7 +273,7 @@ static GMEVENT_RESULT EVENT_MapChange(GMEVENT * event, int *seq, void*work)
 		break;
 	case 2:
 		//新しいマップID、初期位置をセット
-		UpdateMapParams(gsys, &mcw->new_loc);
+		UpdateMapParams(gsys, &mcw->loc_req);
 		(*seq)++;
 		break;
 	case 3:
@@ -306,7 +305,7 @@ GMEVENT * DEBUG_EVENT_ChangeMapPos(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldm
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	LOCATION_Set(&mcw->new_loc, zone_id, DOOR_ID_JUMP_CODE, 0/* DIR */,
+	LOCATION_SetDirect(&mcw->loc_req, zone_id, 0/* DIR */,
 			pos->x, pos->y, pos->z);
 	
 	return event;
@@ -325,10 +324,25 @@ GMEVENT * DEBUG_EVENT_ChangeMap(GAMESYS_WORK * gsys,
 	mcw->gsys = gsys;
 	mcw->fieldmap = fieldmap;
 	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
-	MakeNextLocation(&mcw->new_loc, zone_id, exit_id);
+	LOCATION_SetID(&mcw->loc_req, zone_id, exit_id);
 	return event;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMap(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap,
+		const LOCATION * loc_req)
+{
+	MAPCHANGE_WORK * mcw;
+	GMEVENT * event;
 
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK));
+	mcw = GMEVENT_GetEventWork(event);
+	mcw->gsys = gsys;
+	mcw->fieldmap = fieldmap;
+	mcw->gamedata = GAMESYSTEM_GetGameData(gsys);
+	mcw->loc_req = *loc_req;
+	return event;
+}
 //------------------------------------------------------------------
 //	※マップIDをインクリメントしている。最大値になったら先頭に戻る
 //------------------------------------------------------------------
@@ -433,90 +447,85 @@ GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldma
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNextLocation(LOCATION * loc, u16 zone_id, s16 exit_id)
+static void AddOffsetByDirection(EXIT_DIR dir_id, VecFx32 * pos)
 {
-	LOCATION_Set(loc, zone_id, exit_id, 0, 0, 0, 0);
+	switch (dir_id) {
+	case EXIT_DIR_UP:	pos->z -= FX32_ONE * 16; break;
+	case EXIT_DIR_DOWN:	pos->z += FX32_ONE * 16; break;
+	case EXIT_DIR_LEFT:	pos->x -= FX32_ONE * 16; break;
+	case EXIT_DIR_RIGHT:pos->x += FX32_ONE * 16; break;
+	default:
+		break;
+	}
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * loc_new,
-		LOCATION * loc_tmp, BOOL * sp_exit_flag)
+static u16 GetDirValueByDirID(EXIT_DIR dir_id)
 {
-	*sp_exit_flag = FALSE;
-	//開始位置セット
-	if (loc_new->exit_id == DOOR_ID_JUMP_CODE) {
-		*loc_tmp = *loc_new;
-	} else {
-		const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(evdata, loc_new->exit_id);
-		if (cnct == NULL) {
-			//本当はexit_idからデータを引っ張る
-			OS_Printf("connect: debug default position\n");
-			LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_new->zone_id);
-		} else {
-			CONNECTDATA_SetLocation(cnct, loc_tmp);
-			if (loc_tmp->exit_id == EXIT_ID_SPECIAL) {
-				*sp_exit_flag = TRUE;
-			}
-				//loc->zone_id = connect->link_zone_id;
-				//loc->exit_id = connect->link_exit_id;
-				//loc->pos = connect->pos;
-				//loc->dir_id = connect->exit_type;
-			loc_tmp->zone_id = loc_new->zone_id;
-			loc_tmp->exit_id = loc_new->exit_id;
-			switch (loc_tmp->dir_id) {
-			case EXIT_TYPE_UP:
-				loc_tmp->pos.z -= FX32_ONE * 16;
-				break;
-			case EXIT_TYPE_DOWN:
-				loc_tmp->pos.z += FX32_ONE * 16;
-				break;
-			case EXIT_TYPE_LEFT:
-				loc_tmp->pos.x -= FX32_ONE * 16;
-				break;
-			case EXIT_TYPE_RIGHT:
-				loc_tmp->pos.x += FX32_ONE * 16;
-				break;
-			default:
-				break;
-			}
-		}
+	switch (dir_id) {
+	default:
+	case EXIT_DIR_UP:	return 0x0000;
+	case EXIT_DIR_LEFT:	return 0x4000;
+	case EXIT_DIR_DOWN:	return 0x8000;
+	case EXIT_DIR_RIGHT:return 0xc000;
 	}
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * new_loc)
+static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * loc_req,
+		LOCATION * loc_tmp)
 {
-	LOCATION loc_tmp;
+	BOOL result;
+
+	//直接指定の場合はコピーするだけ
+	if (loc_req->type == LOCATION_TYPE_DIRECT) {
+		*loc_tmp = *loc_req;
+		return;
+	}
+	//開始位置セット
+	result = EVENTDATA_SetLocationByExitID(evdata, loc_tmp, loc_req->exit_id);
+	AddOffsetByDirection(loc_tmp->dir_id, &loc_tmp->pos);
+	if (!result) {
+		//デバッグ用処理：本来は不要なはず
+		OS_Printf("connect: debug default position\n");
+		GF_ASSERT(0);
+		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
+	}
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static void UpdateMapParams(GAMESYS_WORK * gsys, const LOCATION * loc_req)
+{
+	LOCATION loc;
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	PLAYER_WORK * mywork = GAMEDATA_GetMyPlayerWork(gamedata);
 	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-	u16 zone_id = new_loc->zone_id;
-	u16 direction;
-	BOOL sp_exit_flag;
 
 	//イベント起動データの読み込み
-	EVENTDATA_SYS_Load(evdata, zone_id);
+	EVENTDATA_SYS_Load(evdata, loc_req->zone_id);
 
 	//開始位置セット
-	MakeNewLocation(evdata, new_loc, &loc_tmp, &sp_exit_flag);
-	if (sp_exit_flag) {
+	MakeNewLocation(evdata, loc_req, &loc);
+
+	//特殊接続出入口に出た場合は、前のマップの出入口位置を記憶しておく
+	if (loc.type == LOCATION_TYPE_SPID) {
 		//special_location = entrance_location;
 		GAMEDATA_SetSpecialLocation(gamedata, GAMEDATA_GetEntranceLocation(gamedata));
 	}
 
-	PLAYERWORK_setZoneID(mywork, loc_tmp.zone_id);
-	PLAYERWORK_setPosition(mywork, &loc_tmp.pos);
-	switch (loc_tmp.dir_id) {
-	default:
-	case EXIT_TYPE_UP:		direction = 0x0000; break;
-	case EXIT_TYPE_LEFT:	direction = 0x4000; break;
-	case EXIT_TYPE_DOWN:	direction = 0x8000; break;
-	case EXIT_TYPE_RIGHT:	direction = 0xc000; break;
+	//取得したLOCATION情報を自機へ反映
+	{
+		u16 direction;
+		PLAYERWORK_setZoneID(mywork, loc.zone_id);
+		PLAYERWORK_setPosition(mywork, &loc.pos);
+		direction = GetDirValueByDirID(loc.dir_id);
+		PLAYERWORK_setDirection(mywork, direction);
 	}
-	PLAYERWORK_setDirection(mywork, direction);
+
 	//開始位置を記憶しておく
-	GAMEDATA_SetStartLocation(gamedata, &loc_tmp);
+	GAMEDATA_SetStartLocation(gamedata, &loc);
 }
 
 

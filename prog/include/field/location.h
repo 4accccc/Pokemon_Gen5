@@ -12,18 +12,23 @@
 #pragma once
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef enum {
+	LOCATION_TYPE_INIT = 0,
+	LOCATION_TYPE_DIRECT,
+	LOCATION_TYPE_EXITID,
+	LOCATION_TYPE_SPID,
+}LOCATION_TYPE;
+//--------------------------------------------------------------
 ///	LOCATION構造体
 //--------------------------------------------------------------
 typedef struct {
-	int zone_id;
+	LOCATION_TYPE type;
+	s16 zone_id;
 	s16 exit_id;
 	s16 dir_id;
 	VecFx32 pos;
 }LOCATION;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-#define DOOR_ID_JUMP_CODE	(-1)
 
 //=============================================================================
 //=============================================================================
@@ -40,17 +45,28 @@ extern void LOCATION_SetGameStart(LOCATION * loc);
 
 //--------------------------------------------------------------
 /**
+ * @brief	LOCATIONの初期化
+ */
+//--------------------------------------------------------------
+extern void LOCATION_Init(LOCATION * loc);
+
+//--------------------------------------------------------------
+/**
  * @brief	LOCATIONのセット
  */
 //--------------------------------------------------------------
-static inline void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z)
-{
-	loc->zone_id = zone;
-	loc->exit_id = door;
-	loc->dir_id = dir;
-	loc->pos.x = x;
-	loc->pos.y = y;
-	loc->pos.z = z;
-}
+extern void LOCATION_Set(LOCATION * loc, int zone, s16 door, s16 dir, fx32 x, fx32 y, fx32 z);
 
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONのセット（zone_id,exit_idのみ)
+ */
+//--------------------------------------------------------------
+extern void LOCATION_SetID(LOCATION * loc, u16 zone_id, u16 exit_id);
+//--------------------------------------------------------------
+/**
+ * @brief	LOCATIONのセット（直接位置指定）
+ */
+//--------------------------------------------------------------
+extern void LOCATION_SetDirect(LOCATION * loc, int zone, s16 dir, fx32 x, fx32 y, fx32 z);
 

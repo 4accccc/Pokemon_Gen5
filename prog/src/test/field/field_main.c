@@ -338,24 +338,30 @@ static GMEVENT * ConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork, 
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
 	EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData(gamedata);
 	const CONNECT_DATA * cnct;
-	cnct = EVENTDATA_SearchConnectByPos(evdata, now_pos);
-	if (cnct == NULL) return NULL;
-	if (cnct->link_exit_id == EXIT_ID_SPECIAL) {
-		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
-		return DEBUG_EVENT_ChangeMap(gsys, fieldWork, sp->zone_id, sp->exit_id);
-	}
+	int idx;
+	idx = EVENTDATA_SearchConnectIDByPos(evdata, now_pos);
+	if (idx == EXIT_ID_NONE) return NULL;
+
+	//マップ遷移発生の場合、出入口を記憶しておく
 	{
 		LOCATION ent_loc;
-		u16 exit_id;
-		exit_id = EVENTDATA_GetConnectIDByData(evdata, cnct);
-		LOCATION_Set(&ent_loc, fieldWork->map_id, exit_id, 0,
-				now_pos->x, now_pos->y, now_pos->z);
+		LOCATION_Set(&ent_loc, fieldWork->map_id, idx, 0, now_pos->x, now_pos->y, now_pos->z);
 		GAMEDATA_SetEntranceLocation(gamedata, &ent_loc);
 	}
 
-	return DEBUG_EVENT_ChangeMap(gsys, fieldWork, cnct->link_zone_id, cnct->link_exit_id);
-
+	cnct = EVENTDATA_GetConnectByID(evdata, idx);
+	if (CONNECTDATA_IsSpecialExit(cnct)) {
+		//特殊接続先が指定されている場合、記憶しておいた場所に飛ぶ
+		const LOCATION * sp = GAMEDATA_GetSpecialLocation(gamedata);
+		return EVENT_ChangeMap(gsys, fieldWork, sp);
+	} else {
+		LOCATION loc_req;
+		GMEVENT * event;
+		CONNECTDATA_SetNextLocation(cnct, &loc_req);
+		return EVENT_ChangeMap(gsys, fieldWork, &loc_req);
+	}
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)

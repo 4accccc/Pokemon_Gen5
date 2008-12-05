@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 
+#include "eventdata_local.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
@@ -34,6 +35,7 @@ enum {
 struct _EVDATA_SYS {
 	HEAPID heapID;
 
+	u16 now_zone_id;
 	u16 bg_count;
 	//u16 npc_count;
 	u16 connect_count;
@@ -97,6 +99,7 @@ void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 {
 	EVENTDATA_SYS_Clear(evdata);
+	evdata->now_zone_id = zone_id;
 
 	/* テスト的に接続データを設定 */
 	switch (zone_id) {
@@ -129,9 +132,11 @@ void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 zone_id)
 //	出入口接続データ関連
 //
 //============================================================================================
+#define	ZONE_ID_SPECIAL		(0x0fff)
+#define	EXIT_ID_SPECIAL		(0x0100)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
+int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
 {
 	int i;
 	int x,y,z;
@@ -153,10 +158,20 @@ const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdat
 		if (FX_Whole(cnct->pos.y) + OFS_Y != y) continue;
 		if (FX_Whole(cnct->pos.z) + OFS_Z != z) continue;
 		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
-		return cnct;
+		return i;
 	}
-	return NULL;
+	return EXIT_ID_NONE;
 }
+#if 0
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos)
+{
+	int idx = EVENTDATA_SearchConnectIDByPos(evdata, pos);
+	if (idx == EXIT_ID_NONE) return NULL;
+	return evdata->connect_data + idx;
+}
+#endif
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id)
@@ -171,48 +186,68 @@ const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u
 	}
 	return &cnct[exit_id];
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-s16 EVENTDATA_GetConnectIDByData(const EVENTDATA_SYSTEM * evdata, const CONNECT_DATA * connect)
+BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect)
 {
-	const CONNECT_DATA * base = evdata->connect_data;
-	int i;
-	for (i = 0; i < evdata->connect_count; i++) {
-		if (connect == base+i) {
-			return i;
-		}
+	return (connect->link_exit_id == EXIT_ID_SPECIAL);
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id)
+{
+	const CONNECT_DATA * connect = EVENTDATA_GetConnectByID(evdata, exit_id);
+	if (connect == NULL) {
+		return FALSE;
 	}
-	return -1;
-}
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc)
-{
-	GF_ASSERT(connect != NULL);
-	loc->zone_id = connect->link_zone_id;
-	loc->exit_id = connect->link_exit_id;
+	//CONNECTDATA_SetLocation(connect, loc);
+	LOCATION_Init(loc);
+	if (connect->link_exit_id == EXIT_ID_SPECIAL) {
+		loc->type = LOCATION_TYPE_SPID;
+	} else {
+		loc->type = LOCATION_TYPE_EXITID;
+	}
+	//loc->zone_id = connect->link_zone_id;
+	//loc->exit_id = connect->link_exit_id;
 	loc->pos = connect->pos;
-	loc->dir_id = connect->exit_type;
+	loc->dir_id = connect->exit_dir;
+	loc->zone_id = evdata->now_zone_id;
+	loc->exit_id = exit_id;
+
+	return TRUE;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
+{
+	LOCATION_SetID(loc, connect->link_zone_id, connect->link_exit_id);
 }
 
+//============================================================================================
+//
+//		サンプルデータ
+//		※実際には外部でコンバートされたものをファイルから読み込む
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const CONNECT_DATA SampleConnectData[] = {
 	{
 		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 0},
 		ZONE_ID_PLANNERTEST,	1,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * 48, FX32_ONE * 0, FX32_ONE * 96 },
 		ZONE_ID_PLANNERTEST,	0,
-		EXIT_TYPE_RIGHT,
+		EXIT_DIR_RIGHT, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * 704, FX32_ONE * 16, FX32_ONE * 112 },
 		ZONE_ID_TESTPC,	1,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 };
 const int SampleConnectDataCount = NELEMS(SampleConnectData);
@@ -221,22 +256,22 @@ const CONNECT_DATA SampleConnectData_4season[] = {
 	{
 		{FX32_ONE * (1432 - 8), FX32_ONE * 0, FX32_ONE * (1288 - 8)},
 		ZONE_ID_TESTPC, 1,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * (1160 - 8), FX32_ONE * 0, FX32_ONE * (1352 - 8)},
 		ZONE_ID_TESTROOM, 0,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * (1192 - 8), FX32_ONE * 0, FX32_ONE * (1160 - 8)},
 		ZONE_ID_TESTROOM, 0,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * (1432 - 8), FX32_ONE * 48, FX32_ONE * (1144 - 8 - 16)},
 		ZONE_ID_TESTROOM, 0,
-		EXIT_TYPE_DOWN,
+		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 
 };
@@ -247,19 +282,19 @@ const CONNECT_DATA SampleConnectData_testpc[] = {
 		{FX32_ONE * 128, FX32_ONE * 0, FX32_ONE * 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_TYPE_UP,
+		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * 144, FX32_ONE * 0, FX32_ONE * 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_TYPE_UP,
+		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
-		EXIT_TYPE_UP,
+		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 };
 const int SampleConnectDataCount_testpc = NELEMS(SampleConnectData_testpc);
@@ -268,12 +303,12 @@ const CONNECT_DATA SampleConnectData_testroom[] = {
 	{
 		{FX32_ONE * (72 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		EXIT_TYPE_UP,
+		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
 		{FX32_ONE * (88 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
-		EXIT_TYPE_UP,
+		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 };
 const int SampleConnectDataCount_testroom = NELEMS(SampleConnectData_testroom);

@@ -20,9 +20,10 @@
 //------------------------------------------------------------------
 ///特殊接続指定用ID
 //------------------------------------------------------------------
-#define	ZONE_ID_SPECIAL		(0x0fff)
-#define	EXIT_ID_SPECIAL		(0x0100)
+#define EXIT_ID_NONE		(0xffff)
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 enum {
 	EXIT_TYPE_NONE = 0,
 	EXIT_TYPE_UP,
@@ -30,65 +31,85 @@ enum {
 	EXIT_TYPE_LEFT,
 	EXIT_TYPE_RIGHT,
 };
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum {
+	EXIT_DIR_NON = 0,
+	EXIT_DIR_UP,
+	EXIT_DIR_DOWN,
+	EXIT_DIR_LEFT,
+	EXIT_DIR_RIGHT,
+
+	EXIT_DIR_MAX
+}EXIT_DIR;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 typedef struct _EVENTDATA_HEADER EVENTDATA_HEADER;
 
-struct _EVENTDATA_HEADER {
-	u32 bg_count;
-	u32 obj_count;
-	u32 connect_count;
-	u32 pos_count;
-};
 //------------------------------------------------------------------
 ///ドアリンク用データ構造体
 //------------------------------------------------------------------
 typedef struct _CONNECT_DATA CONNECT_DATA;
-
-struct _CONNECT_DATA{
-	VecFx32 pos;
-	u16	link_zone_id;
-	u16	link_exit_id;
-	s16	exit_type;
-};
 
 //------------------------------------------------------------------
 ///BG話かけデータ構造体
 //------------------------------------------------------------------
 typedef struct _BG_TALK_DATA BG_TALK_DATA;
 
-struct _BG_TALK_DATA{
-	u16	id;			// ID
-	u16	type;		// データタイプ
-	int	gx;			// X座標
-	int	gz;			// Y座標
-	int	height;		// 高さ
-	u16	dir;		// 話しかけ方向タイプ
-};
-
 //------------------------------------------------------------------
 ///POS発動イベントデータ構造体
 //------------------------------------------------------------------
 typedef struct _POS_EVENT_DATA POS_EVENT_DATA;
 
-struct _POS_EVENT_DATA{
-	u16	id;			//ID
-	u16	gx;			//x
-	u16	gz;			//z
-	u16	sx;			//sizeX
-	u16	sz;			//sizeZ
-	u16	height;		//height
-	u16 param;
-	u16 workID;
-};
+//============================================================================================
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief	出入口情報を探す
+ * @param	evdata	イベントデータへのポインタ
+ * @param	pos		探す位置
+ * @return	int	出入口データのインデックスEXIT_ID_NONEのとき、出入口は存在しない
+ */
+//------------------------------------------------------------------
+extern int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
 
-//============================================================================================
-//============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief	出入口情報をインデックス指定で取得する
+ * @param	evdata			イベントデータへのポインタ
+ * @param	exit_id			出入口情報のインデックス
+ * @return	CONNECT_DATA	出入口情報へのポインタ
+ */
 //------------------------------------------------------------------
-extern const CONNECT_DATA * EVENTDATA_SearchConnectByPos(const EVENTDATA_SYSTEM * evdata, const VecFx32 * pos);
 extern const CONNECT_DATA * EVENTDATA_GetConnectByID(const EVENTDATA_SYSTEM * evdata, u16 exit_id);
-extern s16 EVENTDATA_GetConnectIDByData(const EVENTDATA_SYSTEM * evdata, const CONNECT_DATA * connect);
-extern void CONNECTDATA_SetLocation(const CONNECT_DATA * connect, LOCATION * loc);
+
+//------------------------------------------------------------------
+/**
+ * @brief	出入口情報指定からLOCATIONをセットする
+ * @param	evdata		イベントデータへのポインタ
+ * @param	loc			セットするLOCATIONへのポインタ
+ * @param	exit_id		出入口情報のインデックス
+ * @return	BOOL		FALSEのとき、出入口情報が存在しない
+ */
+//------------------------------------------------------------------
+extern BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * loc, u16 exit_id);
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+extern const CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc);
+
+//------------------------------------------------------------------
+/**
+ * @brief	出入口情報が特殊で入り口かどうかの判定
+ * @param	connect		参照する出入口情報
+ * @return	BOOL		TRUEのとき、特殊接続出入口
+ */
+//------------------------------------------------------------------
+extern BOOL CONNECTDATA_IsSpecialExit(const CONNECT_DATA * connect);
 
 
