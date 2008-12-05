@@ -263,9 +263,11 @@ const CONNECT_DATA SampleConnectData_4season[] = {
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
-		{(1160 - 8), 0, (1352 - 8)},
+		//{(1160 - 8), 0, (1352 - 8)},
+		{(1240 - 8), 0, (1336 - 8)},
 		ZONE_ID_TESTROOM, 0,
-		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
+		//EXIT_DIR_DOWN, EXIT_TYPE_NONE,
+		EXIT_DIR_RIGHT, EXIT_TYPE_NONE,
 	},
 	{
 		{(1192 - 8), 0, (1160 - 8)},
