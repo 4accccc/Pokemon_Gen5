@@ -129,6 +129,12 @@ extern void	DrawFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dca
 //------------------------------------------------------------------
 extern void	DeleteFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
 
+//------------------------------------------------------------------
+/**
+ * @brief	‚R‚cƒ}ƒbƒv“]‘—‘Ò‚¿
+ */
+//------------------------------------------------------------------
+extern BOOL CheckTransFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper );
 
 //------------------------------------------------------------------
 /**

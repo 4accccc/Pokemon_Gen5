@@ -287,6 +287,21 @@ void	DrawFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+BOOL CheckTransFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper )
+{
+	int i;
+	for ( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		GFL_G3D_MAP_LOAD_STATUS *ldst;
+		GFL_G3D_MAP_GetLoadStatusPointer( g3Dmapper->g3Dmap[i], &ldst );
+		if (ldst->seq != GFL_G3D_MAP_LOAD_IDLING) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief	マップデータ登録
  */

@@ -221,12 +221,21 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 		//登録テーブルごとに個別の初期化処理を呼び出し
 		{
-			VecFx32 pos;
 			u16		dir;
 
-			pos = *GetStartPos(gsys);
+			fieldWork->now_pos = *GetStartPos(gsys);
 			dir = GetStartDirection(gsys);
-			fieldWork->ftbl->create_func( fieldWork, &pos, dir );
+			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
+			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+		}
+
+		fieldWork->seq++;
+		break;
+
+	case 2:
+		MainGameSystem( fieldWork->gs );
+		if (CheckTransFieldG3Dmapper(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
+			break;
 		}
 
 		//フィールドマップ用イベント起動チェックをセットする
@@ -235,7 +244,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->seq++;
 		break;
 
-	case 2:
+	case 3:
 		if( GAMESYSTEM_GetEvent(gsys) == FALSE) {
 		
 			fieldWork->key_cont = GFL_UI_KEY_GetCont();
@@ -259,7 +268,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork->gs );
 		break;
 
-	case 3:
+	case 4:
 		//イベント起動チェックを停止する
 		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, NULL, NULL);
 		{
@@ -280,7 +289,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->seq ++;
 		break;
 
-	case 4:
+	case 5:
 		RemoveGameSystem( fieldWork->gs );
 		return_flag = TRUE;
 		break;
@@ -296,7 +305,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork )
 {
 	fieldWork->gamemode = GAMEMODE_FINISH;
-	fieldWork->seq = 3;
+	fieldWork->seq = 4;
 }
 
 //============================================================================================
@@ -1023,7 +1032,7 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 //--------------------------------------------------------------
 const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork )
 {
-	return (fieldWork->seq==2);
+	return (fieldWork->seq==3);
 }
 
 //--------------------------------------------------------------
