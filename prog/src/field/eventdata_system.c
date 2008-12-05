@@ -146,17 +146,17 @@ int EVENTDATA_SearchConnectIDByPos(const EVENTDATA_SYSTEM * evdata, const VecFx3
 		OFS_Z = 8,
 	};
 	const CONNECT_DATA * cnct = evdata->connect_data;
-	x = FX_Whole(pos->x);
-	y = FX_Whole(pos->y);
-	z = FX_Whole(pos->z);
+	x = FX_Whole(pos->x) - OFS_X;
+	y = FX_Whole(pos->y) - OFS_Y;
+	z = FX_Whole(pos->z) - OFS_Z;
 	for (i = 0; i < evdata->connect_count; i++, cnct++ ) {
 #if 0
 		OS_Printf("CNCT:x,y,z=%d,%d,%d\n",
 				FX_Whole(cnct->pos.x),FX_Whole(cnct->pos.y),FX_Whole(cnct->pos.z));
 #endif
-		if (FX_Whole(cnct->pos.x) + OFS_X != x) continue;
-		if (FX_Whole(cnct->pos.y) + OFS_Y != y) continue;
-		if (FX_Whole(cnct->pos.z) + OFS_Z != z) continue;
+		if (cnct->pos.x != x) continue;
+		if (cnct->pos.y != y) continue;
+		if (cnct->pos.z != z) continue;
 		OS_Printf("CNCT:zone,exit,type=%d,%d,%d\n",cnct->link_zone_id,cnct->link_exit_id,cnct->exit_type);
 		return i;
 	}
@@ -211,7 +211,11 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 	}
 	//loc->zone_id = connect->link_zone_id;
 	//loc->exit_id = connect->link_exit_id;
-	loc->pos = connect->pos;
+	//loc->pos = connect->pos;
+	VEC_Set(&loc->pos,
+			connect->pos.x * FX32_ONE,
+			connect->pos.y * FX32_ONE,
+			connect->pos.z * FX32_ONE);
 	loc->dir_id = connect->exit_dir;
 	loc->zone_id = evdata->now_zone_id;
 	loc->exit_id = exit_id;
@@ -220,7 +224,7 @@ BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCATION * l
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
+void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
 {
 	LOCATION_SetID(loc, connect->link_zone_id, connect->link_exit_id);
 }
@@ -235,17 +239,17 @@ const CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc)
 //------------------------------------------------------------------
 const CONNECT_DATA SampleConnectData[] = {
 	{
-		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 0},
+		{160, 0, 0},
 		ZONE_ID_PLANNERTEST,	1,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * 48, FX32_ONE * 0, FX32_ONE * 96 },
+		{48, 0, 96 },
 		ZONE_ID_PLANNERTEST,	0,
 		EXIT_DIR_RIGHT, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * 704, FX32_ONE * 16, FX32_ONE * 112 },
+		{704, 16, 112 },
 		ZONE_ID_TESTPC,	1,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
@@ -254,22 +258,22 @@ const int SampleConnectDataCount = NELEMS(SampleConnectData);
 
 const CONNECT_DATA SampleConnectData_4season[] = {
 	{
-		{FX32_ONE * (1432 - 8), FX32_ONE * 0, FX32_ONE * (1288 - 8)},
+		{(1432 - 8), 0, (1288 - 8)},
 		ZONE_ID_TESTPC, 1,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * (1160 - 8), FX32_ONE * 0, FX32_ONE * (1352 - 8)},
+		{(1160 - 8), 0, (1352 - 8)},
 		ZONE_ID_TESTROOM, 0,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * (1192 - 8), FX32_ONE * 0, FX32_ONE * (1160 - 8)},
+		{(1192 - 8), 0, (1160 - 8)},
 		ZONE_ID_TESTROOM, 0,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * (1432 - 8), FX32_ONE * 48, FX32_ONE * (1144 - 8 - 16)},
+		{(1432 - 8), 48, (1144 - 8 - 16)},
 		ZONE_ID_TESTROOM, 0,
 		EXIT_DIR_DOWN, EXIT_TYPE_NONE,
 	},
@@ -279,19 +283,19 @@ const int SampleConnectDataCount_4season = NELEMS(SampleConnectData_4season);
 
 const CONNECT_DATA SampleConnectData_testpc[] = {
 	{
-		{FX32_ONE * 128, FX32_ONE * 0, FX32_ONE * 224 },
+		{128, 0, 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
 		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * 144, FX32_ONE * 0, FX32_ONE * 224 },
+		{144, 0, 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
 		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * 160, FX32_ONE * 0, FX32_ONE * 224 },
+		{160, 0, 224 },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		//ZONE_ID_PLANNERTEST,	2,
 		EXIT_DIR_UP, EXIT_TYPE_NONE,
@@ -301,12 +305,12 @@ const int SampleConnectDataCount_testpc = NELEMS(SampleConnectData_testpc);
 
 const CONNECT_DATA SampleConnectData_testroom[] = {
 	{
-		{FX32_ONE * (72 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
+		{(72 - 8), 0, (88 - 8) },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},
 	{
-		{FX32_ONE * (88 - 8), FX32_ONE * 0, FX32_ONE * (88 - 8) },
+		{(88 - 8), 0, (88 - 8) },
 		ZONE_ID_PLANNERTEST,	EXIT_ID_SPECIAL,
 		EXIT_DIR_UP, EXIT_TYPE_NONE,
 	},

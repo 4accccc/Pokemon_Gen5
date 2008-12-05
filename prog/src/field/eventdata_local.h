@@ -22,7 +22,10 @@ struct _EVENTDATA_HEADER {
 ///ドアリンク用データ構造体
 //------------------------------------------------------------------
 struct _CONNECT_DATA{
-	VecFx32 pos;
+	struct {
+		s16 x, y, z;
+	}pos;
+	//VecFx32 pos;
 	u16	link_zone_id;
 	u16	link_exit_id;
 	u8	exit_dir;

@@ -101,7 +101,7 @@ extern BOOL EVENTDATA_SetLocationByExitID(const EVENTDATA_SYSTEM * evdata, LOCAT
  * @brief
  */
 //------------------------------------------------------------------
-extern const CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc);
+extern void CONNECTDATA_SetNextLocation(const CONNECT_DATA * connect, LOCATION * loc);
 
 //------------------------------------------------------------------
 /**
