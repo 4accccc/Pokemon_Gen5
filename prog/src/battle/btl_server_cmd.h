@@ -47,6 +47,8 @@ typedef enum {
 	SC_MSG_SET,				///< メッセージ表示 [MsgID, ClientID, numArgs, arg1, arg2, ... ]
 	SC_MSG_WAZA,			///< ワザメッセージ表示[ ClientID, wazaIdx ]
 
+	SC_NULL,
+
 }ServerCmd;
 
 //--------------------------------------------------------------

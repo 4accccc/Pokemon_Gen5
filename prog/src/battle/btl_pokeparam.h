@@ -76,5 +76,8 @@ extern BOOL BTL_POKEPARAM_CheckSick( const BTL_POKEPARAM* pp, WazaSick sickType 
 extern BOOL BTL_POKEPARAM_RankUp( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern BOOL BTL_POKEPARAM_RankDown( BTL_POKEPARAM* pp, BppValueID rankType, u8 volume );
 extern void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value );
+extern void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value );
+extern void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
+extern void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 
 #endif

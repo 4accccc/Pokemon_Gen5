@@ -24,11 +24,12 @@
 /*--------------------------------------------------------------------------*/
 
 
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
 typedef BOOL (*ClientSubProc)( BTL_CLIENT*, int* );
-
+typedef BOOL (*ServerCmdProc)( BTL_CLIENT*, int*, const int* );
 
 /*--------------------------------------------------------------------------*/
 /* Structures                                                               */
@@ -75,6 +76,10 @@ struct _BTL_CLIENT {
 	BTL_SERVER_CMD_QUE*	cmdQue;
 	int					cmdArgs[ BTL_SERVERCMD_ARG_MAX ];
 	ServerCmd			serverCmd;
+	ServerCmdProc		scProc;
+	int					scSeq;
+
+
 
 	BTL_WAZA_EXE_PARAM	wazaExeParam[ BTL_CLIENT_MAX ];
 
@@ -88,6 +93,7 @@ struct _BTL_CLIENT {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
 static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_NotifyPokeData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq );
@@ -96,11 +102,23 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
-static void BTL_ACTION_SetEscapeParam( BTL_ACTION_PARAM* p );
-static void BTL_ACTION_SetNULL( BTL_ACTION_PARAM* p );
-static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq );
-static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd );
+static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
+static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 
 
 
@@ -175,6 +193,37 @@ void BTL_CLIENT_Main( BTL_CLIENT* wk )
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
+
+
+static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
+{
+	static const struct {
+		BtlAdapterCmd   cmd;
+		ClientSubProc   procs[ BTL_THINKER_TYPE_MAX ];
+	}procTbl[] = {
+
+		{ BTL_ACMD_NOTIFY_POKEDATA,	{ SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },
+		{ BTL_ACMD_WAIT_INITIALIZE,	{ SubProc_UI_Initialize, SubProc_AI_Initialize } },
+		{ BTL_ACMD_SELECT_ACTION,	{ SubProc_UI_SelectAction, SubProc_AI_SelectAction } },
+		{ BTL_ACMD_SELECT_POKEMON,	{ SubProc_UI_SelectPokemon,SubProc_AI_SelectPokemon } },
+		{ BTL_ACMD_SERVER_CMD,		{ SubProc_UI_ServerCmd, SubProc_AI_ServerCmd } },
+
+	};
+
+	int i;
+
+	for(i=0; i<NELEMS(procTbl); i++)
+	{
+		if( procTbl[i].cmd == cmd )
+		{
+			return procTbl[i].procs[ wk->myType ];
+		}
+	}
+
+	GF_ASSERT(0);
+	return NULL;
+}
+
 
 static BOOL SubProc_UI_NotifyPokeData( BTL_CLIENT* wk, int* seq )
 {
@@ -322,8 +371,40 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 // サーバコマンド処理
 //---------------------------------------------------
+
+static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq )
+{
+	return TRUE;
+}
+
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 {
+	static const struct {
+		u32				cmd;
+		ServerCmdProc	proc;
+	}scprocTbl[] = {
+		{	SC_DATA_WAZA_EXE,	scProc_DATA_WazaExe			},
+		{	SC_DATA_MEMBER_IN,	scProc_DATA_MemberIn		},
+		{	SC_MSG_STD,			scProc_MSG_Std				},
+		{	SC_MSG_SET,			scProc_MSG_Set				},
+		{	SC_MSG_WAZA,		scProc_MSG_Waza				},
+		{	SC_ACT_WAZA_DMG,	scProc_ACT_WazaDmg			},
+		{	SC_ACT_DEAD,		scProc_ACT_Dead				},
+		{	SC_ACT_RANKDOWN,	scProc_ACT_RankDownEffect	},
+		{	SC_TOKWIN_IN,		scProc_TOKWIN_In			},
+		{	SC_TOKWIN_OUT,		scProc_TOKWIN_Out			},
+		{	SC_OP_HP_MINUS,		scProc_OP_HpMinus			},
+		{	SC_OP_HP_PLUS,		scProc_OP_HpPlus			},
+		{	SC_OP_PP_MINUS,		scProc_OP_PPMinus			},
+		{	SC_OP_PP_PLUS,		scProc_OP_PPPlus			},
+		{	SC_OP_RANK_DOWN,	scProc_OP_RankDown			},
+	};
+
+
+
+
+restart:
+
 	switch( *seq ){
 	case 0:
 		{
@@ -336,225 +417,290 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
 		}
 		/* fallthru */
 	case 1:
-		if( !SCQUE_IsFinishRead(wk->cmdQue) )
-		{
-			wk->serverCmd = SCQUE_Read( wk->cmdQue, wk->cmdArgs );
-
-			BTL_Printf( "[CL] serverCmd=%d\n", wk->serverCmd );
-
-			if( wk->serverCmd == SC_DATA_WAZA_EXE )
-			{
-				BTL_WAZA_EXE_PARAM* wep;
-				const BTL_POKEPARAM* poke;
-				int i;
-				u8 userClientID;
-
-//				BTL_Printf(" WAZADATA PROC .... client=%d\n", wk->cmdArgs[0]);
-
-				userClientID = wk->cmdArgs[0];
-				wep = &wk->wazaExeParam[ userClientID ];
-				wep->userPokeParam = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, userClientID );
-				poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, userClientID );
-				wep->waza = BTL_POKEPARAM_GetWazaNumber( poke, wk->cmdArgs[1] );
-				wep->numTargetClients = wk->cmdArgs[2];
-				for(i=0; i<wep->numTargetClients; i++)
-				{
-					wep->targetClientID[i] = wk->cmdArgs[3 + i];
-				}
-			}
-			else if( wk->serverCmd == SC_DATA_MEMBER_IN )
-			{
-				u8 clientID = wk->cmdArgs[0];
-				u8 memberIdx = wk->cmdArgs[1];
-
-				BTL_Printf("[CL] MEMBER IN .... client=%d, memberIdx=%d\n", clientID, memberIdx);
-
-				BTL_MAIN_SetFrontMemberIdx( wk->mainModule, clientID, memberIdx );
-				if( wk->myID == clientID )
-				{
-					wk->frontPokeIdx = memberIdx;
-				}
-
-				BTLV_StartMemberChangeAct( wk->viewCore, clientID, memberIdx );
-				(*seq) = 10;
-			}
-			else if( wk->serverCmd == SC_MSG_STD )
-			{
-				u16 msgID = wk->cmdArgs[0];
-				BTLV_StartMsgStd( wk->viewCore, msgID, wk->cmdArgs );
-				(*seq) = 2;
-			}
-			else if( wk->serverCmd == SC_MSG_SET )
-			{
-				u16 msgID = wk->cmdArgs[0];
-				BTLV_StartMsgSet( wk->viewCore, msgID, &wk->cmdArgs[1] );
-				(*seq) = 2;
-			}
-			else if( wk->serverCmd == SC_MSG_WAZA )
-			{
-				u8 clientID = wk->cmdArgs[0];
-				u16 wazaIdx = wk->cmdArgs[1];
-				const BTL_POKEPARAM* poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
-				wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
-				BTLV_StartMsgWaza( wk->viewCore, clientID, wazaIdx );
-				(*seq) = 4;
-			}
-			else if( wk->serverCmd == SC_ACT_WAZA_DMG )
-			{
-				WazaID waza;
-				u8 atClientID, defClientID, affinity, wazaIdx;
-				u16 damage;
-				const BTL_PARTY* party;
-				const BTL_POKEPARAM* poke;
-
-				atClientID	= wk->cmdArgs[0];
-				defClientID	= wk->cmdArgs[1];
-				damage		= wk->cmdArgs[2];
-				wazaIdx		= wk->cmdArgs[3];
-				affinity	= wk->cmdArgs[4];
-
-				//party = BTL_MAIN_GetPartyDataConst( wk->mainModule, atClientID );
-				//poke = BTL_PARTY_GetMemberDataConst( party, 0 );
-				poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
-				waza = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
-
-				BTL_Printf("[CL] WazaAct aff=%d, damage=%d\n", affinity, damage);
-
-				BTLV_StartWazaAct( wk->viewCore, atClientID, defClientID, damage, waza, affinity );
-				(*seq) = 5;
-			}
-			else if( wk->serverCmd == SC_ACT_DEAD )
-			{
-				BTLV_StartDeadAct( wk->viewCore, wk->cmdArgs[0] );
-				(*seq)=6;
-			}
-			else if( wk->serverCmd == SC_TOKWIN_IN )
-			{
-				BTLV_StartTokWin( wk->viewCore, wk->cmdArgs[0] );
-			}
-			else if( wk->serverCmd == SC_TOKWIN_OUT )
-			{
-				BTLV_QuitTokWin( wk->viewCore, wk->cmdArgs[0] );
-			}
-			else if( wk->serverCmd == SC_ACT_RANKDOWN )
-			{
-				BTLV_StartRankDownEffect( wk->viewCore, wk->cmdArgs[0], wk->cmdArgs[1] );
-			}
-			else
-			{
-				BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, wk->cmdArgs[0] );
-
-				BTL_Printf(" OP PROC .... cl=%d, val=%d\n", wk->cmdArgs[0], wk->cmdArgs[1] );
-
-				switch( wk->serverCmd ){
-				case SC_OP_HP_MINUS:		///< 【計算】HPマイナス  [ClientID, マイナス量]
-					BTL_POKEPARAM_HpMinus( pp, wk->cmdArgs[1] );
-					break;
-				case SC_OP_HP_PLUS:			///< 【計算】HPプラス    [ClientID, プラス量]
-				case SC_OP_PP_MINUS:		///< 【計算】PPマイナス  [ClientID, マイナス量]
-				case SC_OP_PP_PLUS:			///< 【計算】PPプラス    [ClientID, プラス量]
-					break;
-				case SC_OP_RANK_DOWN:
-					BTL_POKEPARAM_RankDown( pp, wk->cmdArgs[1], wk->cmdArgs[2] );
-					break;
-				default:
-					GF_ASSERT(0);
-					break;
-				}
-			}
-		}
-		else
+		if( SCQUE_IsFinishRead(wk->cmdQue) )
 		{
 			BTL_Printf("[CL] サーバーコマンド読み終わりましたよっと\n");
 			return TRUE;
 		}
-		break;
-
+		(*seq)++;
+		/* fallthru */
 	case 2:
-		if( BTLV_WaitMsg(wk->viewCore) )
 		{
+			int i;
+
+			wk->serverCmd = SCQUE_Read( wk->cmdQue, wk->cmdArgs );
+
+			for(i=0; i<NELEMS(scprocTbl); i++)
+			{
+				if( scprocTbl[i].cmd == wk->serverCmd ){ break; }
+			}
+
+			if( i == NELEMS(scprocTbl) )
+			{
+				BTL_Printf("[CL] 用意されていないコマンド処理！\n");
+				return TRUE;
+			}
+
+			BTL_Printf( "[CL] serverCmd=%d\n", wk->serverCmd );
+			wk->scProc = scprocTbl[i].proc;
+			wk->scSeq = 0;
 			(*seq)++;
 		}
-		break;
+		/* fallthru */
 	case 3:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-		{
-			(*seq)=1;
-		}
-		break;
-
-	case 4:
-		if( BTLV_WaitMsg(wk->viewCore) )
+		if( wk->scProc(wk, &wk->scSeq, wk->cmdArgs) )
 		{
 			(*seq) = 1;
+			goto restart;
 		}
 		break;
-
-	case 5:
-		if( BTLV_WaitWazaAct(wk->viewCore) )
-		{
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-			{
-				(*seq)=1;
-			}
-		}
-		break;
-
-	case 6:
-		if( BTLV_WaitDeadAct(wk->viewCore) )
-		{
-			(*seq)=1;
-		}
-		break;
-
-	case 10:
-		if( BTLV_WaitMemberChangeAct(wk->viewCore) )
-		{
-			(*seq)=1;
-		}
-		break;
-
-	default:
-		BTL_Printf("[CL] サーバーコマンド不正処理しましたよっと\n");
-		return TRUE;
 	}
 
 	return FALSE;
 }
 
-static BOOL SubProc_AI_ServerCmd( BTL_CLIENT* wk, int* seq )
+
+// データ設定：ワザ発動
+static BOOL scProc_DATA_WazaExe( BTL_CLIENT* wk, int* seq, const int* args )
 {
+	BTL_WAZA_EXE_PARAM* wep;
+	const BTL_POKEPARAM* poke;
+	int i;
+	u8 userClientID;
+
+	userClientID = args[0];
+	wep = &wk->wazaExeParam[ userClientID ];
+	wep->userPokeParam = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, userClientID );
+	poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, userClientID );
+	wep->waza = BTL_POKEPARAM_GetWazaNumber( poke, args[1] );
+	wep->numTargetClients = args[2];
+
+	for(i=0; i<wep->numTargetClients; i++)
+	{
+		wep->targetClientID[i] = args[3 + i];
+	}
+
 	return TRUE;
 }
 
-static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
+static BOOL scProc_DATA_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
 {
-	static const struct {
-		BtlAdapterCmd   cmd;
-		ClientSubProc   procs[ BTL_THINKER_TYPE_MAX ];
-	}procTbl[] = {
-
-		{ BTL_ACMD_NOTIFY_POKEDATA,	{ SubProc_UI_NotifyPokeData, SubProc_AI_NotifyPokeData }, },
-		{ BTL_ACMD_WAIT_INITIALIZE,	{ SubProc_UI_Initialize, SubProc_AI_Initialize } },
-		{ BTL_ACMD_SELECT_ACTION,	{ SubProc_UI_SelectAction, SubProc_AI_SelectAction } },
-		{ BTL_ACMD_SELECT_POKEMON,	{ SubProc_UI_SelectPokemon,SubProc_AI_SelectPokemon } },
-		{ BTL_ACMD_SERVER_CMD,		{ SubProc_UI_ServerCmd, SubProc_AI_ServerCmd } },
-
-	};
-
-	int i;
-
-	for(i=0; i<NELEMS(procTbl); i++)
-	{
-		if( procTbl[i].cmd == cmd )
+	switch( *seq ){
+	case 0:
 		{
-			return procTbl[i].procs[ wk->myType ];
+			u8 clientID = wk->cmdArgs[0];
+			u8 memberIdx = wk->cmdArgs[1];
+
+			BTL_Printf("[CL] MEMBER IN .... client=%d, memberIdx=%d\n", clientID, memberIdx);
+
+			BTL_MAIN_SetFrontMemberIdx( wk->mainModule, clientID, memberIdx );
+			if( wk->myID == clientID )
+			{
+				wk->frontPokeIdx = memberIdx;
+			}
+
+			BTLV_StartMemberChangeAct( wk->viewCore, clientID, memberIdx );
+			(*seq)++;
+		}
+		break;
+	case 1:
+		if( BTLV_WaitMemberChangeAct(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static BOOL scProc_MSG_Std( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		BTLV_StartMsgStd( wk->viewCore, args[0], &args[1] );
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		BTLV_StartMsgSet( wk->viewCore, args[0], &args[1] );
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		{
+			u8  clientID = args[0];
+			u16 wazaIdx  = args[1];
+			const BTL_POKEPARAM* poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, clientID );
+			wazaIdx = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
+			BTLV_StartMsgWaza( wk->viewCore, clientID, wazaIdx );
+		}
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_WaitMsg(wk->viewCore) )
+		{
+			return TRUE;
 		}
 	}
-
-	GF_ASSERT(0);
-	return NULL;
+	return FALSE;
 }
+
+static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ) {
+	case 0:
+	{
+		WazaID waza;
+		u8 atClientID, defClientID, affinity, wazaIdx;
+		u16 damage;
+		const BTL_PARTY* party;
+		const BTL_POKEPARAM* poke;
+
+		atClientID	= args[0];
+		defClientID	= args[1];
+		damage		= args[2];
+		wazaIdx		= args[3];
+		affinity	= args[4];
+
+		poke = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
+		waza = BTL_POKEPARAM_GetWazaNumber( poke, wazaIdx );
+
+		BTL_Printf("[CL] WazaAct aff=%d, damage=%d\n", affinity, damage);
+
+		BTLV_StartWazaAct( wk->viewCore, atClientID, defClientID, damage, waza, affinity );
+		(*seq)++;
+	}
+	break;
+
+	case 1:
+		if( BTLV_WaitWazaAct(wk->viewCore) )
+		{
+			(*seq)++;
+		}
+		break;
+
+	case 2:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+		{
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
+}
+
+static BOOL scProc_ACT_Dead( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	switch( *seq ){
+	case 0:
+		BTLV_StartDeadAct( wk->viewCore, args[0] );
+		(*seq)++;
+		break;
+	case 1:
+		if( BTLV_WaitDeadAct(wk->viewCore) )
+		{
+			return TRUE;
+		}
+		break;
+	}
+	return FALSE;
+}
+
+static BOOL scProc_ACT_RankDownEffect( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTLV_StartRankDownEffect( wk->viewCore, args[0], args[1] );
+	return TRUE;
+}
+
+
+static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTLV_StartTokWin( wk->viewCore, args[0] );
+	return TRUE;
+}
+
+static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTLV_QuitTokWin( wk->viewCore, args[0] );
+	return TRUE;
+}
+
+static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM_HpMinus( pp, args[1] );
+	return TRUE;
+}
+static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM_HpPlus( pp, args[1] );
+	return TRUE;
+}
+static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM_PPMinus( pp, args[1], args[2] );
+	return TRUE;
+}
+static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM_PPPlus( pp, args[1], args[2] );
+	return TRUE;
+}
+static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
+{
+	BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeData( wk->mainModule, args[0] );
+	BTL_POKEPARAM_RankDown( pp, args[1], args[2] );
+	return TRUE;
+}
+
+
+
+
+
+
+
+
+
 
 
 

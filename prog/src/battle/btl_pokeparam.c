@@ -467,6 +467,66 @@ void BTL_POKEPARAM_HpMinus( BTL_POKEPARAM* pp, u16 value )
 		pp->hp = 0;
 	}
 }
+//=============================================================================================
+/**
+ * HP値を増加
+ *
+ * @param   pp		
+ * @param   value		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_HpPlus( BTL_POKEPARAM* pp, u16 value )
+{
+	pp->hp += value;
+	if( pp->hp > pp->baseParam.hpMax )
+	{
+		pp->hp = pp->baseParam.hpMax;
+	}
+}
+//=============================================================================================
+/**
+ * ワザPP値を減少
+ *
+ * @param   pp		
+ * @param   wazaIdx		
+ * @param   value		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+{
+	GF_ASSERT(wazaIdx < pp->wazaCnt);
+
+	if( pp->waza[wazaIdx].pp >= value )
+	{
+		pp->waza[wazaIdx].pp -= value;
+	}
+	else
+	{
+		pp->waza[wazaIdx].pp = 0;
+	}
+}
+//=============================================================================================
+/**
+ * ワザPP値を増加
+ *
+ * @param   pp		
+ * @param   wazaIdx		
+ * @param   value		
+ *
+ */
+//=============================================================================================
+void BTL_POKEPARAM_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+{
+	GF_ASSERT(wazaIdx < pp->wazaCnt);
+
+	pp->waza[wazaIdx].pp += value;
+	if( pp->waza[wazaIdx].pp > pp->waza[wazaIdx].ppMax )
+	{
+		pp->waza[wazaIdx].pp = pp->waza[wazaIdx].ppMax;
+	}
+}
 
 
 //--------------------------------------------------------------------------
