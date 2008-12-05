@@ -13,6 +13,7 @@
 //	外部データ
 //==============================================================================
 extern const GFL_PROC_DATA TitleProcData;
+extern const GFL_PROC_DATA TitleControlProcData;
 
 
 #endif	//__TITLE_H__

@@ -148,7 +148,7 @@ static	void	GameInit(void)
 #if 0
 	TestModeSet();	//←サンプルデバッグモード
 #else
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleProcData, NULL);
+	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
 #endif
 
 	/* 文字描画システム初期化 */
