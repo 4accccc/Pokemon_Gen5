@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-17T13:24:58"/>
+	<create user="sogabe" host="W00140" date="2008-12-05T15:03:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2062,11 +2062,11 @@
 	</row>
 
 	<row id="MONSNAME_494">
-		<language name="JPN">タマゴ</language>
+		<language name="JPN">アワネズミ</language>
 	</row>
 
 	<row id="MONSNAME_495">
-		<language name="JPN">ダメタマゴ</language>
+		<language name="JPN">ガーロック</language>
 	</row>
 
 	<flowchart-group-list>
