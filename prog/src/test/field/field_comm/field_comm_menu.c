@@ -18,7 +18,7 @@
 
 #include "arc_def.h"
 #include "message.naix"
-#include "test_graphic/d_taya.naix"
+#include "font/font.naix"
 #include "msg/msg_d_field.h"
 
 //======================================================================
@@ -130,14 +130,14 @@ FIELD_COMM_MENU* FIELD_COMM_MENU_InitCommMenu( HEAPID heapID )
 	commMenu->msgData_ = GFL_MSG_Create( 
 			GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE ,
 			NARC_message_d_field_dat , commMenu->heapID_ );
-	commMenu->fontHandle_ = GFL_FONT_Create( ARCID_D_TAYA ,
-			NARC_d_taya_lc12_2bit_nftr , GFL_FONT_LOADTYPE_FILE ,
+	commMenu->fontHandle_ = GFL_FONT_Create( ARCID_FONT ,
+			NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE ,
 			FALSE , commMenu->heapID_ );
 
 	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 2 );
 
 	GFL_ARC_UTIL_TransVramPalette(
-		ARCID_D_TAYA, NARC_d_taya_default_nclr,
+		ARCID_FONT, NARC_font_default_nclr,
 		PALTYPE_MAIN_BG, (15)*32, 32, heapID );
 #if DEB_ARI
 	commMenu->isOpenDebugWin_ = FALSE;

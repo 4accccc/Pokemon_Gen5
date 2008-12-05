@@ -260,7 +260,11 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 #if GFL_NET_WIFI
 		NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
+#if DEB_ARI
+		0x346,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
+#else
 		0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
+#endif
 		GFL_HEAPID_APP,  //Œ³‚É‚È‚éheapid
 		HEAPID_NETWORK,  //’ÊM—p‚Écreate‚³‚ê‚éHEAPID
 		HEAPID_WIFI,  //wifi—p‚Écreate‚³‚ê‚éHEAPID
@@ -1071,7 +1075,10 @@ BOOL	FIELD_COMM_FUNC_CheckConnectService(GameServiceID GameServiceID1 , GameServ
 //--------------------------------------------------------------
 void	FIELD_COMM_FUNC_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 {
+	FIELD_COMM_FUNC *commFunc = (FIELD_COMM_FUNC*)pWork;
 	NetErr_ErrorSet();
+	FIELD_COMM_FUNC_TermCommSystem(commFunc);
+	commFunc->isInitCommSystem_ = FALSE;
 }
 
 //--------------------------------------------------------------
