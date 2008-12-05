@@ -93,7 +93,9 @@ BOOL FieldLoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 					status.id = objStatus[i].resourceID;
 					VEC_Set( &status.trans, 
 							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
-					status.rotate = objStatus[i].rotate;
+					//DirectX‚ÆDS‚ÅÀ•WŒn‚ª‹t‚¾‚©‚çH‚Æ‚è‚ ‚¦‚¸•ÏŠ·
+					status.rotate = 0x10000 - objStatus[i].rotate;
+					OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
 					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
 				}
 			//===========
