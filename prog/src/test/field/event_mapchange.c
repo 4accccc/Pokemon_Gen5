@@ -489,7 +489,6 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
 	if (!result) {
 		//デバッグ用処理：本来は不要なはず
 		OS_Printf("connect: debug default position\n");
-		GF_ASSERT(0);
 		LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
 	}
 }
