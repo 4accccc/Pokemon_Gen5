@@ -313,22 +313,37 @@ void MainForm::SetProfile(Dpw_Common_Profile* profile)
 }
 
 // Dpw_Tr_Dataをセットする
-void MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
+bool MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
 {
 	int i;
-	memset(upload_data, 0, sizeof(*upload_data));
+	memset(upload_data, 0, sizeof(Dpw_Tr_Data));
 
-	for(i=0;i < 0x88;i++){
-		upload_data->postData.data[i] = NetIRC::recvdataArray[i+2];
-	}
+	Debug::WriteLine("こうかん性別"+sendPokeSex);
 
 	upload_data->postSimple.characterNo = pokeNo;
 	upload_data->postSimple.gender = sendPokeSex;
 	upload_data->postSimple.level = sendPokeLv;
-	upload_data->wantSimple.characterNo = 101;
-	upload_data->wantSimple.gender = DPW_TR_GENDER_MALE;
-	upload_data->wantSimple.level_min = 0;
-	upload_data->wantSimple.level_max = 0;
+
+	PokemonSearch^ psForm = gcnew PokemonSearch();
+
+	psForm->label1->Text="交換するポケモンを決めてね";
+	psForm->button1->Text = "きめた";
+		psForm->listBox1->SelectedIndex = 2;
+	if(psForm->ShowDialog() == System::Windows::Forms::DialogResult::OK){
+	}
+	else{
+		return false;
+	}
+
+
+	for(i=0;i < sizeof(upload_data->postData.data);i++){
+		upload_data->postData.data[i] = NetIRC::recvdataArray[i+2];
+	}
+
+	upload_data->wantSimple.characterNo = PokemonName2No(psForm->textBox1->Text);
+	upload_data->wantSimple.gender = psForm->listBox1->SelectedIndex + 1;
+	upload_data->wantSimple.level_min = 0;//System::Decimal::ToInt32(psForm->numericUpDown2->Value);
+	upload_data->wantSimple.level_max = 0;//System::Decimal::ToInt32(psForm->numericUpDown3->Value);
 	upload_data->name[0] = 0x30;
 	upload_data->name[1] = 0x31;
 	upload_data->name[2] = 0xffff;
@@ -339,6 +354,7 @@ void MainForm::SetTrData(Dpw_Tr_Data* upload_data, int pokeNo)
 	upload_data->trainerType = 3;
 	upload_data->versionCode = 12;
 	upload_data->gender = 1;
+	return true;
 }
 
 //--------------------------------------------------------------
@@ -376,42 +392,56 @@ void MainForm::RequestUpload(void)
 	SetProxy(proxy);
 	if(!RequestCheckServerState()){
 		Debug::WriteLine("サーバがおかしかった");
+		_errDisp(0);
 		return;
 	}
 	if(!RequestSetProfile()){
 		Debug::WriteLine("プロファイル設定に失敗");
+		_errDisp(0);
 		return;
 	}
 	if(!RequestPickupTraded()){
 		Debug::WriteLine("引取りに失敗");
+		_errDisp(0);
 		return;
 	}
 
 	{	// 預ける
 		Dpw_Tr_Data data;
-		SetTrData(&data, targetPoke);
+								 Debug::WriteLine(targetPoke);
+		if(SetTrData(&data, targetPoke)==false){
+			_errDisp(0);
+			return;
+		}
+		Debug::WriteLine("預け開始");
+		Sleep(1000);
+
 		Dpw_Tr_UploadAsync(&data);
 		result = WaitForAsync();
 		if(result == 0 )
 		{
 			Debug::WriteLine("預け完了　確定へ");
+			Sleep(10);
 			// 預けるのを確定
 			Dpw_Tr_UploadFinishAsync();
 			result = WaitForAsync();
 			if(result != 0 )
 			{
 				Debug::WriteLine("Failed to uploadFinish."+result);
+			_errDisp(0);
 				return;
 			}
 		}
 		else if(result == DPW_TR_ERROR_ILLIGAL_REQUEST)
 		{
 			Debug::WriteLine("Already uploaded.");
+			_errDisp(0);
 			return;
 		}
 		else
 		{
 			Debug::WriteLine("Failed to upload.");
+			_errDisp(0);
 			return;
 		}
 	}
@@ -436,7 +466,7 @@ void MainForm::RequestUpload(void)
 	localarray[0] = sendBoxNo;
 	NetIRC::sendData(IRC_COMMAND_BOXNO,localarray);
 
-	MessageBox::Show("あずけました" + sendBoxNo + " " + sendBoxPoke);
+	MessageBox::Show("あずけました");
 
 	NetIRC::sendUnLock();
 
@@ -444,6 +474,11 @@ void MainForm::RequestUpload(void)
 }
 
 
+void MainForm::_errDisp(int errno)
+{
+	MessageBox::Show("しっぱいしました");
+	NetIRC::sendUnLock();
+}
 
 //--------------------------------------------------------------
 /**
@@ -468,10 +503,10 @@ void MainForm::RequestChange(void)
 	if(!RequestSetProfile()){
 		return;
 	}
-//	if(!RequestPickupTraded()){
-//		Debug::WriteLine("引取りに失敗");
-//		return;
-//	}
+	if(!RequestPickupTraded()){
+		Debug::WriteLine("引取りに失敗");
+		return;
+	}
 
 
 
@@ -545,11 +580,12 @@ bool MainForm::RequestPickupTraded(void)
 		if(result == 0 )
 		{
 			Debug::WriteLine("Not traded.");
-		//	return true;
+			Dpw_Tr_ReturnAsync();
 		}
 		else if(result == 1)
 		{
 			Debug::WriteLine("Traded.");
+			Dpw_Tr_DeleteAsync();
 		}
 		else if(result == DPW_TR_ERROR_NO_DATA){
 			Debug::WriteLine("データは無い");
@@ -558,24 +594,9 @@ bool MainForm::RequestPickupTraded(void)
 		else
 		{
 			Debug::WriteLine("Failed to upload result." + result);
-			return false;
-		}
-
-//		Dpw_Tr_DownloadAsync(&data);
-
-//		if(WaitForAsync() != 0 )
-//		{
-//			puts("Failed to delete.");
-//			return false;
-//		}
-
-		if(result == 1){
-			Dpw_Tr_DeleteAsync();
-		}
-		else{
-			Debug::WriteLine("RETURN ");
 			Dpw_Tr_ReturnAsync();
 		}
+
 		if(WaitForAsync() != 0 )
 		{
 			Debug::WriteLine("Failed to delete.");
@@ -675,6 +696,7 @@ void MainForm::SetProxy(String^ proxy)
 
 void MainForm::TestUploadDownload(int pid,  String^ proxy)
 {
+#if 0	
 	static int count = 1;
 	//Dpw_Tr_Init(pid, TEST_KEY | pid);
 
@@ -701,6 +723,7 @@ void MainForm::TestUploadDownload(int pid,  String^ proxy)
 	Dpw_Tr_End();
 
 	Debug::WriteLine("Finished Test\n");
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1313,7 +1336,7 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 				 MessageBoxButtons::OKCancel,
 				 MessageBoxIcon::Question )
 					 == System::Windows::Forms::DialogResult::OK ) {
-
+						 Debug::WriteLine(pokeno);
 					targetPoke = pokeno;
 					sendBoxNo = dispBoxNo;
 					sendBoxPoke = getBoxPositionFromThePlace(e->X,e->Y);
@@ -1381,7 +1404,7 @@ System::Void MainForm::pictureBox1_MouseClick(System::Object^  sender, System::W
 					localarray[1] = sendBoxPoke;
 					NetIRC::sendData(IRC_COMMAND_CHANGE_BOXPOKE, localarray);
 
-					threadB = gcnew Thread(gcnew ThreadStart(&RequestChange));  //
+					threadB = gcnew Thread(gcnew ThreadStart(this, &MainForm::RequestChange));  //
 					threadB->IsBackground = true;                // バックグラウンド・スレッドとする
 					threadB->Priority = ThreadPriority::Highest; // 優先度を「最優先」にする
 				    threadB->Start(); // 

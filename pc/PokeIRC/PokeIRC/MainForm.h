@@ -624,7 +624,7 @@ private: static bool RequestCheckServerState(void);
 private: static int WaitForAsync(void);
 private: static bool RequestSetProfile(void);
 private: void RequestUpload(void);
-private: static void SetTrData(Dpw_Tr_Data* upload_data, int pokeNo);
+private:  bool SetTrData(Dpw_Tr_Data* upload_data, int pokeNo);
 private: static void SetProfile(Dpw_Common_Profile* profile);
 private: void TestDownload(int pid,  String^ proxy);
 private: static bool RequestPickupTraded(void);
@@ -637,9 +637,10 @@ private: void connectIRC(void);
 private: void RequestSearch(void);
 private: void pokemonSearchDisp(void);
 private: int PokemonName2No(String^ name);
-private: static void RequestChange(void);
+private:  void RequestChange(void);
 public: void Draw(void);
 private: void FormDispChange(int mode);
+private: void _errDisp(int errno);
 
 
 

@@ -41,7 +41,7 @@ namespace PokeIRC {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^  label1;
+	public: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  label4;
@@ -52,7 +52,7 @@ namespace PokeIRC {
 	public: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::ComboBox^  comboBox1;
 	private: System::Windows::Forms::Button^  button2;
-	private: System::Windows::Forms::Button^  button1;
+	public: System::Windows::Forms::Button^  button1;
 
 	private: System::Windows::Forms::NumericUpDown^  numericUpDown1;
 	private: System::Windows::Forms::Label^  label6;
