@@ -234,8 +234,8 @@ const BOOL	FIELD_COMM_DATA_GetGridPos_AfterMove( const u8 idx , int *posX , int 
 		PLAYER_WORK	*plWork = &pData->plWork_;
 		//FIXME:正しいグリッドサイズ取得する？
 		const u8 gridSize = 16;
-		const int gridX = F32_CONST( plWork->position.x );
-		const int gridZ = F32_CONST( plWork->position.z );
+		const int gridX = F32_CONST( plWork->position.x )+8;
+		const int gridZ = F32_CONST( plWork->position.z )+8;
 		u8	modSize;	//あまりの量
 		*posX = gridX/gridSize;
 		*posZ = gridZ/gridSize;
