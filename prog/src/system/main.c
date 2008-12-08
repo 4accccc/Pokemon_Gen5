@@ -183,7 +183,7 @@ static	void	GameMain(void)
 
 	NetErr_Main();
 	NetErr_App_ErrorCheck();
-	if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DEBUG){
+	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG)){
 		NetErr_ErrorSet();
 	}
 }
