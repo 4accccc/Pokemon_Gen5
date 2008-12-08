@@ -20,6 +20,7 @@
 #include "field/eventdata_system.h"
 #include "field/location.h"
 #include "savedata/myitem_savedata.h"
+#include "poke_tool/pokeparty.h"
 
 //============================================================================================
 //============================================================================================
@@ -149,3 +150,12 @@ extern void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * lo
  */
 //--------------------------------------------------------------
 extern MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   手持ちポケモンへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  手持ちアイテムへのポインタ
+ */
+//--------------------------------------------------------------
+extern POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata);

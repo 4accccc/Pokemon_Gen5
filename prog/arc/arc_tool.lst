@@ -88,4 +88,5 @@
 	ARCID_ITEMDATA		"item_data.narc"		# アイテムデータ
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
 	ARCID_TITLE	"title.narc"	#ブラック版タイトル
+	ARCID_EASYPOKELIST	"test_graphic/easy_pokelist.narc"	#簡易ポケモンリスト
 

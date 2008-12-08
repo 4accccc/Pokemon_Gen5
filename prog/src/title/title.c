@@ -28,6 +28,9 @@
 ///アクター最大数
 #define ACT_MAX			(64)
 
+///フォントが使用するパレット番号
+#define D_FONT_PALNO	(14)
+
 ///アイテムアイコンのパレット展開位置
 #define D_MATSU_ICON_PALNO		(0)
 
@@ -238,7 +241,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 {
 	TITLE_WORK *tw;
 	
-	DEBUG_PerformanceSetActive(FALSE);	//デバッグ：パフォーマンスメーター無効
+	DEBUG_PerformanceSetActive(TRUE);	//デバッグ：パフォーマンスメーター有効
 	
 	// 各種効果レジスタ初期化
 	GX_SetMasterBrightness(-16);
@@ -638,9 +641,9 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 
 	//BMPWIN作成
 	tw->drawwin[WIN_PUSH_JPN].win 
-		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 10, 32, 2, 0, GFL_BMP_CHRAREA_GET_F);
+		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 10, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
 	tw->drawwin[WIN_PUSH_ENG].win 
-		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 12, 32, 2, 0, GFL_BMP_CHRAREA_GET_F);
+		= GFL_BMPWIN_Create(FRAME_MSG_S, 0, 12, 32, 2, D_FONT_PALNO, GFL_BMP_CHRAREA_GET_F);
 	for(i = 0; i < WIN_MAX; i++){
 		tw->drawwin[i].bmp = GFL_BMPWIN_GetBmp(tw->drawwin[i].win);
 		GFL_BMP_Clear( tw->drawwin[i].bmp, 0x00 );
@@ -662,6 +665,17 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 	tw->strbuf_push_jpn = GFL_STR_CreateBuffer( 64, tw->heapID );
 	tw->strbuf_push_eng = GFL_STR_CreateBuffer( 64, tw->heapID );
 
+	//フォントパレット転送
+#if 0
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+		0x20*D_FONT_PALNO, 0x20, HEAPID_TITLE_DEMO);
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
+		0x20*D_FONT_PALNO, 0x20, HEAPID_TITLE_DEMO);
+#else	//白字にする
+	GFL_STD_MemFill16((void*)(HW_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
+	GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT + D_FONT_PALNO*0x20+2), 0x7fff, 0x20-2);
+#endif
+	
 	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 }
 

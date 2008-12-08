@@ -97,6 +97,7 @@ extern const GFL_PROC_DATA DebugMatsudaNetProcData;
 extern const GFL_PROC_DATA DebugMatsudaIrcMatchProcData;
 extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
 extern const GFL_PROC_DATA DebugMatsudaItemProcData;
+extern const GFL_PROC_DATA EasyPokeListData;
 
 //==============================================================================
 //	データ
@@ -107,6 +108,7 @@ static const D_MENULIST DebugMenuList[] = {
 	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData},	//赤外線複数マッチング
 	{DM_MSG_MENU002, &DebugMatsudaNetProcData},	//ワイヤレス通信テスト
 	{DM_MSG_MENU001, &DebugMatsudaMainProcData},	//セーブテスト
+	{DM_MSG_MENU005, &EasyPokeListData},	//簡易ポケモンリスト
 };
 
 

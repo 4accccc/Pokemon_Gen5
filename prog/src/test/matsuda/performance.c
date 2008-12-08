@@ -266,6 +266,7 @@ void DEBUG_PerformanceMain(void)
 		for(id = 0; id < PERFORMANCE_ID_MAX; id++){
 			pfm_sys.app[id].peek_num = -1000;
 		}
+		DEBUG_PerformanceSetActive(TRUE);
 	}
 }
 

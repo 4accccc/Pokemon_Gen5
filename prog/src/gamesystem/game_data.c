@@ -24,6 +24,7 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/myitem_savedata.h"
+#include "poke_tool/pokeparty.h"
 
 //============================================================================================
 //============================================================================================
@@ -39,6 +40,7 @@ struct _GAMEDATA{
 	LOCATION entrance_loc;
 	LOCATION special_loc;
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
+	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
 };
 
 //============================================================================================
@@ -65,6 +67,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	EVENTDATA_SYS_Clear(gd->evdata);
 
 	gd->myitem = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_MYITEM);
+	gd->my_pokeparty = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_MYPOKE);
 	
 	return gd;
 }
@@ -152,6 +155,18 @@ void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
 MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata)
 {
 	return gamedata->myitem;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   手持ちポケモンへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  手持ちポケモンへのポインタ
+ */
+//--------------------------------------------------------------
+POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata)
+{
+	return gamedata->my_pokeparty;
 }
 
 
