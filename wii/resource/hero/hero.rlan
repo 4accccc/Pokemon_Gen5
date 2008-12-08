@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nw4r_layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.2.0" xmlns="http://www.nintendo.co.jp/NW4R/LayoutEditor">
+  <head>
+    <create user="ariizumi_nobuhiko" host="W00147" date="2008-12-05T12:19:10.7606742+09:00" source="" />
+    <title />
+    <comment />
+    <generator name="" version="1.0.0" />
+  </head>
+  <body>
+    <animTag name="stop_d" startFrame="0" endFrame="9" fileName="stop_d" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="walk_d" startFrame="140" endFrame="179" fileName="walk_d" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="stop_l" startFrame="30" endFrame="39" fileName="stop_l" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="walk_l" startFrame="180" endFrame="219" fileName="walk_l" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="stop_r" startFrame="60" endFrame="69" fileName="stop_r" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="walk_r" startFrame="220" endFrame="259" fileName="walk_r" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="stop_u" startFrame="90" endFrame="99" fileName="stop_u" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <animTag name="walk_u" startFrame="260" endFrame="299" fileName="walk_u" outputPaneSRT="false" outputVisibility="false" outputVertexColor="false" outputMaterialColor="false" outputTextureSRT="false">
+      <comment />
+    </animTag>
+    <rlan animType="TextureSRT" startFrame="104" endFrame="300" convertStartFrame="140" convertEndFrame="300">
+      <animContent name="Picture_00">
+        <animTexSRTTarget id="1" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="1" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="1" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="1" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="1" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="2" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="2" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="2" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="2" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="2" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="3" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="3" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="3" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="3" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="3" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="4" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="4" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="4" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="4" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="4" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="5" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="5" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="5" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="5" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="5" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="6" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="6" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="6" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="6" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="6" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="7" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="7" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="7" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="7" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="7" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="8" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="8" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="8" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="8" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="8" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="9" target="TranslateS">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="9" target="TranslateT">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="9" target="ScaleS">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="9" target="ScaleT">
+          <key frame="20" value="1" slopeType="Smooth" />
+        </animTexSRTTarget>
+        <animTexSRTTarget id="9" target="Rotate">
+          <key frame="20" value="0" slopeType="Smooth" />
+        </animTexSRTTarget>
+      </animContent>
+    </rlan>
+    <rlan animType="TexturePattern" startFrame="104" endFrame="300" convertStartFrame="140" convertEndFrame="300">
+      <animContent name="Picture_00">
+        <animTexPatternTarget target="Image">
+          <refRes name="hero_d_0" />
+          <refRes name="hero_d_1" />
+          <refRes name="hero_d_2" />
+          <refRes name="hero_l_0" />
+          <refRes name="hero_l_1" />
+          <refRes name="hero_l_2" />
+          <refRes name="hero_r_0" />
+          <refRes name="hero_r_1" />
+          <refRes name="hero_r_2" />
+          <refRes name="hero_u_0" />
+          <refRes name="hero_u_1" />
+          <refRes name="hero_u_2" />
+          <key xsi:type="StepU16" frame="0" value="0" slopeType="Step" />
+          <key xsi:type="StepU16" frame="10" value="1" slopeType="Step" />
+          <key xsi:type="StepU16" frame="20" value="2" slopeType="Step" />
+          <key xsi:type="StepU16" frame="30" value="3" slopeType="Step" />
+          <key xsi:type="StepU16" frame="40" value="4" slopeType="Step" />
+          <key xsi:type="StepU16" frame="50" value="5" slopeType="Step" />
+          <key xsi:type="StepU16" frame="60" value="6" slopeType="Step" />
+          <key xsi:type="StepU16" frame="70" value="7" slopeType="Step" />
+          <key xsi:type="StepU16" frame="80" value="8" slopeType="Step" />
+          <key xsi:type="StepU16" frame="90" value="9" slopeType="Step" />
+          <key xsi:type="StepU16" frame="100" value="10" slopeType="Step" />
+          <key xsi:type="StepU16" frame="110" value="11" slopeType="Step" />
+          <key xsi:type="StepU16" frame="140" value="0" slopeType="Step" />
+          <key xsi:type="StepU16" frame="150" value="1" slopeType="Step" />
+          <key xsi:type="StepU16" frame="160" value="0" slopeType="Step" />
+          <key xsi:type="StepU16" frame="170" value="2" slopeType="Step" />
+          <key xsi:type="StepU16" frame="180" value="3" slopeType="Step" />
+          <key xsi:type="StepU16" frame="190" value="4" slopeType="Step" />
+          <key xsi:type="StepU16" frame="200" value="3" slopeType="Step" />
+          <key xsi:type="StepU16" frame="210" value="5" slopeType="Step" />
+          <key xsi:type="StepU16" frame="220" value="6" slopeType="Step" />
+          <key xsi:type="StepU16" frame="230" value="7" slopeType="Step" />
+          <key xsi:type="StepU16" frame="240" value="6" slopeType="Step" />
+          <key xsi:type="StepU16" frame="250" value="8" slopeType="Step" />
+          <key xsi:type="StepU16" frame="260" value="9" slopeType="Step" />
+          <key xsi:type="StepU16" frame="270" value="10" slopeType="Step" />
+          <key xsi:type="StepU16" frame="280" value="9" slopeType="Step" />
+          <key xsi:type="StepU16" frame="290" value="11" slopeType="Step" />
+        </animTexPatternTarget>
+      </animContent>
+    </rlan>
+  </body>
+</nw4r_layout>
