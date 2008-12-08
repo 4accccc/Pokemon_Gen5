@@ -17,8 +17,10 @@
 #include "message.naix"
 #include "msg/msg_fldmapmenu.h"
 #include "test_graphic/d_taya.naix"
+#include "test/easy_pokelist.h"
 
 #include "event_fieldmap_menu.h"
+#include "system/main.h"
 
 //======================================================================
 //	define
@@ -123,6 +125,7 @@ struct _TAG_FMENU_EVENT_WORK
 	int menu_num;
 	FMENU_CALLPROC call_proc;
 	FMENU_COMMON_WORK menu_common_work;
+	void *sub_proc_parent;
 };
 
 //======================================================================
@@ -351,7 +354,17 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 {
+#if 1
+	GMEVENT *event = mwk->gmEvent;
+	FMENU_EVENT_WORK tempWork = *mwk;
+	FMENU_EVENT_WORK *newWork;
+	GMEVENT_Change( event , FMenuProcChangeEvent , sizeof(FMENU_EVENT_WORK) );
+		
+	newWork = GMEVENT_GetEventWork(event);
+	*newWork = tempWork;
+#else
 	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR09 );
+#endif
 	return( TRUE );
 }
 
@@ -835,12 +848,27 @@ static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk )
 
 	case 3:
 		//ワークに値保存して、Procを変えるだけで対応できると思います
-		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		if(work->call_proc == (FMENU_CALLPROC)FMenuCallProc_PokeStatus){	//ポケモン
+			EASY_POKELIST_PARENT *epp;
+			
+			GF_ASSERT(work->sub_proc_parent == NULL);
+			epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EASY_POKELIST_PARENT));
+			epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(work->gmSys));
+			work->sub_proc_parent = epp;
+			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &EasyPokeListData, epp);
+		}
+		else{	//トレーナーカード
+			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		}
 		*seq += 1;
 		//ここでフィールドのProcを抜ける
 		break;
 	case 4:
 		//復帰後にここに来る
+		if(work->sub_proc_parent != NULL){
+			GFL_HEAP_FreeMemory(work->sub_proc_parent);
+			work->sub_proc_parent = NULL;
+		}
 		GAMESYSTEM_CallFieldProc(work->gmSys);
 		*seq += 1;
 		break;

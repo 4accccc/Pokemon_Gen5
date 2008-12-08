@@ -96,6 +96,7 @@ typedef struct {
 	EASY_POKELIST_PARENT *epp;
 	
 	int cursor_y;
+	int poke_num;
 }EASY_POKELIST_WORK;
 
 
@@ -183,6 +184,7 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 		GFL_HEAP_FreeMemory(pp);
 	}
 	ew->epp = epp;
+	ew->poke_num = PokeParty_GetPokeCount(ew->epp->party);
 	
 	// ã‰º‰æ–ÊÝ’è
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -261,13 +263,13 @@ GFL_PROC_RESULT EasyPokeListMain( GFL_PROC * proc, int * seq, void * pwk, void *
 		case PAD_KEY_UP:
 			ew->cursor_y--;
 			if(ew->cursor_y < 0){
-				ew->cursor_y = TEMOTI_POKEMAX - 1;
+				ew->cursor_y = ew->poke_num - 1;
 			}
 			Local_MsgLoadPokeNameAll(ew, ew->epp->party);
 			break;
 		case PAD_KEY_DOWN:
 			ew->cursor_y++;
-			if(ew->cursor_y >= TEMOTI_POKEMAX){
+			if(ew->cursor_y >= ew->poke_num){
 				ew->cursor_y = 0;
 			}
 			Local_MsgLoadPokeNameAll(ew, ew->epp->party);

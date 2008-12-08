@@ -54,6 +54,7 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
+static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys);
 
 
 //============================================================================================
@@ -82,6 +83,8 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	{
 		GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
 		GAMESYSTEM_SetEvent(gsys, event);
+		//適当に手持ちポケモンをAdd
+		DEBUG_MyPokeAdd(gsys);
 	}
 #endif
 	return GFL_PROC_RES_FINISH;
@@ -323,3 +326,28 @@ void GAMESYSTEM_SetFieldMapWork(GAMESYS_WORK * gsys, void * fieldmap)
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ用に適当に手持ちポケモンをAdd
+ * @param   gsys		
+ */
+//--------------------------------------------------------------
+static void DEBUG_MyPokeAdd(GAMESYS_WORK * gsys)
+{
+	POKEPARTY *party;
+	POKEMON_PARAM *pp;
+	
+	party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys));
+
+	pp = PP_Create(150, 50, 123456, GFL_HEAPID_APP);
+	
+	PokeParty_Add(party, pp);
+	PP_Setup(pp, 250, 100, 123456);
+	PokeParty_Add(party, pp);
+	PP_Setup(pp, 350, 100, 123456);
+	PokeParty_Add(party, pp);
+	PP_Setup(pp, 400, 100, 123456);
+	PokeParty_Add(party, pp);
+	
+	GFL_HEAP_FreeMemory(pp);
+}
