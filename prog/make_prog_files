@@ -24,8 +24,8 @@ SRCS	+=		test/testmode.c \
 				field/location.c \
 				field/fieldmap_proc.c \
 				field/eventdata_system.c \
-				test/field/event_mapchange.c \
-				test/field/event_debug_menu.c \
+				field/event_mapchange.c \
+				field/event_debug_menu.c \
 				savedata/save_tbl.c \
 				savedata/save_control.c \
 				savedata/contest_savedata.c \
@@ -33,16 +33,16 @@ SRCS	+=		test/testmode.c \
 				savedata/box_savedata.c \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
-				test/field/field_main.c \
-				test/field/field_actor.c \
-				test/field/field_player.c \
-				test/field/field_camera.c \
-				test/field/field_data.c \
-				test/field/field_g3d_mapper.c \
-				test/field/mapdatafunc/field_func_mapeditor_file.c \
-				test/field/mapdatafunc/field_func_pmcustom_file.c \
-				test/field/mapdatafunc/field_func_bridge_file.c \
-				test/field/field_net.c	\
+				field/field_main.c \
+				field/field_actor.c \
+				field/field_player.c \
+				field/field_camera.c \
+				field/field_data.c \
+				field/field_g3d_mapper.c \
+				field/mapdatafunc/field_func_mapeditor_file.c \
+				field/mapdatafunc/field_func_pmcustom_file.c \
+				field/mapdatafunc/field_func_bridge_file.c \
+				field/field_net.c	\
 				test/soga/d_soga.c \
 				system/mcss.c \
 				battle/poke_mcss.c \
@@ -84,7 +84,7 @@ SRCS	+=		test/testmode.c \
 				battle/handler/hand_tokusei.c \
 				battle/handler/tokusei/hand_tok_ikaku.c \
 				battle/handler/tokusei/hand_tok_clearbody.c \
-				test/field/field_easytp.c \
+				field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \
 				test/ariizumi/ari_field_main.c \
 				test/ariizumi/ari_field_menu.c \
@@ -96,14 +96,14 @@ SRCS	+=		test/testmode.c \
 				test/dlplay/mbp.c \
 				test/dlplay/dlplay_comm_func.c \
 				test/dlplay/dlplay_disp_sys.c \
-				test/field/field_comm_actor.c \
-				test/field/field_comm/field_comm_main.c \
-				test/field/field_comm/field_comm_menu.c \
-				test/field/field_comm/field_comm_data.c \
-				test/field/field_comm/field_comm_func.c \
-				test/field/field_comm/field_comm_event.c \
-				test/field/field_comm/field_comm_debug.c \
-				test/field/event_fieldmap_menu.c \
+				field/field_comm_actor.c \
+				field/field_comm/field_comm_main.c \
+				field/field_comm/field_comm_menu.c \
+				field/field_comm/field_comm_data.c \
+				field/field_comm/field_comm_func.c \
+				field/field_comm/field_comm_event.c \
+				field/field_comm/field_comm_debug.c \
+				field/event_fieldmap_menu.c \
 				item/item.c \
 				title/title.c \
 				title/title_control.c \

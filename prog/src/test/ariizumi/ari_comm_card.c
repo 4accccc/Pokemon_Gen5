@@ -13,7 +13,7 @@
 #include "ari_comm_card.h"
 #include "ari_debug.h"
 #include "print/printsys.h"
-#include "test/field/field_comm/field_comm_data.h"
+#include "field/field_comm/field_comm_data.h"
 
 #include "arc_def.h"
 #include "test_graphic/d_taya.naix"

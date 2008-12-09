@@ -15,15 +15,15 @@
 #include "arc_def.h"
 
 
-#include "test/field/field_g3d_mapper.h"
-#include "test/field/field_net.h"
+#include "field/field_g3d_mapper.h"
+#include "field/field_net.h"
 
-#include "test/field/field_main.h"
-#include "test/field/field_common.h"
-#include "test/field/field_actor.h"
-#include "test/field/field_player.h"
-#include "test/field/field_camera.h"
-#include "test/field/field_data.h"
+#include "field/field_main.h"
+#include "field/field_common.h"
+#include "field/field_actor.h"
+#include "field/field_player.h"
+#include "field/field_camera.h"
+#include "field/field_data.h"
 
 #include "field/zonedata.h"
 
@@ -775,9 +775,9 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 //============================================================================================
 //============================================================================================
 #if 0
-#include "test/field/field_sub_normal.c"
-#include "test/field/field_sub_nogrid.c"
-#include "test/field/field_sub_grid.c"
+#include "field/field_sub_normal.c"
+#include "field/field_sub_nogrid.c"
+#include "field/field_sub_grid.c"
 #endif
 
 #if 0
