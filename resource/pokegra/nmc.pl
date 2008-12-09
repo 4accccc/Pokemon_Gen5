@@ -15,6 +15,9 @@ use File::Basename;
 
 	$cmd = "g2dcvtr @ARGV[0] -bg -cr/0_0_32_16 -o/@ARGV[1]";
 	system $cmd;
+	if( $? >> 8 != 0 ){
+		exit(1);
+	}
 
 	$filename = basename( @ARGV[0] );
 	$filename = basename( $filename, '.nmc' );
