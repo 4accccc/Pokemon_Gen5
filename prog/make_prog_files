@@ -44,13 +44,13 @@ SRCS	+=		test/testmode.c \
 				test/field/mapdatafunc/field_func_bridge_file.c \
 				test/field/field_net.c	\
 				test/soga/d_soga.c \
-				test/soga/mcss.c \
-				test/soga/poke_mcss.c \
-				test/soga/btl_stage.c \
-				test/soga/btl_field.c \
-				test/soga/btl_camera.c \
-				test/soga/btl_effect.c \
-				test/soga/btl_efftool.c \
+				system/mcss.c \
+				battle/poke_mcss.c \
+				battle/btl_stage.c \
+				battle/btl_field.c \
+				battle/btl_camera.c \
+				battle/btl_effect.c \
+				battle/btl_efftool.c \
 				poke_tool/poke_tool.c \
 				poke_tool/pokeparty.c \
 				poke_tool/poke_personal.c \
