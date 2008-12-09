@@ -18,7 +18,7 @@
 
 #include "field_net.h"
 
-#include "field_main.h"
+#include "fieldmap_local.h"
 #include "field_common.h"
 #include "field_actor.h"
 #include "field_player.h"

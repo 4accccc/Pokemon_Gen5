@@ -13,7 +13,7 @@
 #include "net/network_define.h"
 #include "arc_def.h"
 
-#include "field_main.h"
+#include "fieldmap_local.h"
 #include "field_common.h"
 #include "field_actor.h"
 

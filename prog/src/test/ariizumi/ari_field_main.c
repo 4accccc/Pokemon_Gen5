@@ -15,15 +15,15 @@
 #include "arc_def.h"
 
 
-#include "field/field_g3d_mapper.h"
-#include "field/field_net.h"
+#include "src/field/field_g3d_mapper.h"
+#include "src/field/field_net.h"
 
-#include "field/field_main.h"
-#include "field/field_common.h"
-#include "field/field_actor.h"
-#include "field/field_player.h"
-#include "field/field_camera.h"
-#include "field/field_data.h"
+#include "src/field/fieldmap_local.h"
+#include "src/field/field_common.h"
+#include "src/field/field_actor.h"
+#include "src/field/field_player.h"
+#include "src/field/field_camera.h"
+#include "src/field/field_data.h"
 
 #include "field/zonedata.h"
 

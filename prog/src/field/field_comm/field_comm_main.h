@@ -11,7 +11,7 @@
 #define FIELD_COMM_MAIN__
 
 #include "field_comm_def.h"
-#include "../field_main.h"
+#include "../fieldmap_local.h"
 #include "../field_player.h"
 #include "gamesystem/gamesystem.h"
 

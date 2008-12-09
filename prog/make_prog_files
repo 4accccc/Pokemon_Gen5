@@ -33,7 +33,7 @@ SRCS	+=		test/testmode.c \
 				savedata/box_savedata.c \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
-				field/field_main.c \
+				field/fieldmap.c \
 				field/field_actor.c \
 				field/field_player.c \
 				field/field_camera.c \
