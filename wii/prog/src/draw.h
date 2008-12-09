@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef DRAW_H__
 #define DRAW_H__
 
@@ -22,3 +26,7 @@ enum
 
 
 #endif	DRAW_H__
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

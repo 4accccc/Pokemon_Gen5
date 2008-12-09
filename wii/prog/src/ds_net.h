@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef DS_NET_H__
 #define DS_NET_H__
 
@@ -21,3 +25,7 @@ extern PLAYER_STATE*	MPDS_GetPlayerState( const u8 idx );
 extern void		MPDS_InitPlayerState( const u8 idx );
 
 #endif //DS_NET_H__
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

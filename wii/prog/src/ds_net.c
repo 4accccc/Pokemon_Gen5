@@ -1,7 +1,7 @@
 
 #include "common_def.h"
 #include "ds_net.h"
-#include "net_system.h"
+#include "network/net_system.h"
 #include "draw.h"
 //#include "net_command.h"
 //DS‚©‚ç‚Ì‰ğÍ‚Æ‚©E•Ô–‚Æ‚©‚ğs‚¤

@@ -8,7 +8,7 @@
 //=============================================================================
 
 #include "../net_def.h"
-#include "net_command.h"
+#include "../net_command.h"
 #include "net_ring_buff.h"
 #include "net_queue.h"
 

@@ -82,7 +82,7 @@
 #include "mpdsmodel.h"
 #include "ds_net.h"
 #include "common_def.h"
-#include "net_system.h"
+#include "network/net_system.h"
 
 #define	 USERHEAP_SIZE ( 0x20000 )
 
@@ -186,7 +186,7 @@ static void IndicationCallback( s32 type, MPIndicationInfo* info );
 
 static u16 ConvKPadKeyToDSPad(u32 mixedKey);
 
-inline void EnterCriticalSection( void )
+void EnterCriticalSection( void )
 {
 	(void)OSLockMutex( &sGlobalMutex );
 }
