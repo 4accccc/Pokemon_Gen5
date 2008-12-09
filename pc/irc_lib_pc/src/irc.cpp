@@ -255,7 +255,7 @@ extern void IRC_Move(void)
 	_update_tick();
 	switch(buf[0]){
 	case 0xFC: // 接続コマンド
-	  if(isTry){ break; } ACCESS(isTry, TRUE, 3);//isTry = TRUE;
+//	  if(isTry){ break; } ACCESS(isTry, TRUE, 3);//isTry = TRUE;
 	  isSender = FALSE;
 	  if((size > 1) && (flg_connect == 0)){ break; } // 切断中の再接続コマンドは無視
 	  dhci_write(NULL, 0, 0xFA, myUnitNumber); // コマンドのみ送る場合はサイズを0にすること！
