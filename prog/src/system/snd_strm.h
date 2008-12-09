@@ -39,6 +39,11 @@ typedef enum {
 	SND_STRM_HZMAX,		// システム内で使用
 } SND_STRM_HZ;
 
+//-------------------------------------
+///	ボリューム
+//=====================================
+#define SND_STRM_VOLUME_MIN	(-1023)
+#define SND_STRM_VOLUME_MAX	(0)
 
 
 //-----------------------------------------------------------------------------
@@ -65,6 +70,10 @@ extern BOOL SND_STRM_CheckSetUp( void );
 // 再生、停止処理
 extern void SND_STRM_Play( void );
 extern void SND_STRM_Stop( void );
+extern BOOL SND_STRM_CheckPlay( void );
+
+// ボリューム操作
+extern void SND_STRM_Volume( int volume );
 
 #endif		// __SND_STRM_H__
 

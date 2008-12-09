@@ -88,6 +88,7 @@ typedef struct
 	int					FSReadPos;
 	u32					strmReadPos;
 	u32					strmWritePos;
+	BOOL				playing;
 
 	// 音楽情報
 	BOOL				snddata_in;
@@ -96,6 +97,8 @@ typedef struct
 	ARCHANDLE*			p_handle;
 	u32					data_siz;
 	u32					seek_top;
+	u32					type;
+	u32					hz;
 }STRM_WORK;
 
 //ワーク
@@ -183,20 +186,6 @@ void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, 
 {
 	GF_ASSERT( sp_STRM_WORK );
 
-	sp_STRM_WORK->FSReadPos=SWAV_HEAD_SIZE;
-	sp_STRM_WORK->strmReadPos=0;
-	sp_STRM_WORK->strmWritePos=0;
-
-	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
-    
-	NNS_SndStrmSetup( &sp_STRM_WORK->strm,
-					  sc_SND_STRM_DATATYPE[type],
-					  &strmBuffer[0],
-					  STRM_BUF_SIZE,
-					  sc_SND_STRM_HZ_TBL[hz],
-					  INTERVAL,
-					  SND_STRM_StockWaveData,
-					  sp_STRM_WORK);
 
 	sp_STRM_WORK->snddata_in = TRUE;
 	sp_STRM_WORK->arcid		= arcid;
@@ -205,9 +194,8 @@ void SND_STRM_SetUp( u32 arcid, u32 dataid, SND_STRM_TYPE type, SND_STRM_HZ hz, 
 	sp_STRM_WORK->data_siz	= GFL_ARC_GetDataSizeByHandle( sp_STRM_WORK->p_handle, sp_STRM_WORK->dataid );
 	sp_STRM_WORK->seek_top	= GFL_ARC_GetDataOfsByHandle( sp_STRM_WORK->p_handle, sp_STRM_WORK->dataid );
 	sp_STRM_WORK->seek_top	+= SWAV_HEAD_SIZE;
-
-	
-	SND_STRM_CopyBuffer( sp_STRM_WORK, STRM_BUF_SIZE );
+	sp_STRM_WORK->type		= type;
+	sp_STRM_WORK->hz		= hz;
 }
 
 //----------------------------------------------------------------------------
@@ -222,6 +210,7 @@ void SND_STRM_Release( void )
 
 	// 停止
 	NNS_SndStrmStop( &sp_STRM_WORK->strm );
+	sp_STRM_WORK->playing = FALSE;
 
 	// 破棄
 	GFL_ARC_CloseDataHandle( sp_STRM_WORK->p_handle );
@@ -257,7 +246,31 @@ void SND_STRM_Play( void )
 {
 	GF_ASSERT( sp_STRM_WORK );
 	GF_ASSERT( sp_STRM_WORK->snddata_in );
+
+	// パラメータ初期化
+	sp_STRM_WORK->FSReadPos=SWAV_HEAD_SIZE;
+	sp_STRM_WORK->strmReadPos=0;
+	sp_STRM_WORK->strmWritePos=0;
+
+	// セットアップ
+	NNS_SndStrmSetup( &sp_STRM_WORK->strm,
+					  sc_SND_STRM_DATATYPE[sp_STRM_WORK->type],
+					  &strmBuffer[0],
+					  STRM_BUF_SIZE,
+					  sc_SND_STRM_HZ_TBL[sp_STRM_WORK->hz],
+					  INTERVAL,
+					  SND_STRM_StockWaveData,
+					  sp_STRM_WORK);
+
+	// バッファ状態をクリア
+	MI_CpuClearFast( &strmBuffer[0], STRM_BUF_SIZE );
+
+	// データ補充
+	SND_STRM_CopyBuffer( sp_STRM_WORK, STRM_BUF_SIZE );
+	
 	NNS_SndStrmStart( &sp_STRM_WORK->strm );
+
+	sp_STRM_WORK->playing = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -269,7 +282,40 @@ void SND_STRM_Stop( void )
 {
 	GF_ASSERT( sp_STRM_WORK );
 	GF_ASSERT( sp_STRM_WORK->snddata_in );
-	NNS_SndStrmStop( &sp_STRM_WORK->strm );
+	if( sp_STRM_WORK->playing ){
+		NNS_SndStrmStop( &sp_STRM_WORK->strm );
+		sp_STRM_WORK->playing = FALSE;
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	再生中かチェックする
+ *
+ *	@retval	TRUE	再生中
+ *	@retval	FALSE	停止中
+ */
+//-----------------------------------------------------------------------------
+BOOL SND_STRM_CheckPlay( void )
+{
+	GF_ASSERT( sp_STRM_WORK );
+	GF_ASSERT( sp_STRM_WORK->snddata_in );
+	return sp_STRM_WORK->playing;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボリューム設定
+ *
+ *	@param	volume	ボリューム
+ */
+//-----------------------------------------------------------------------------
+void SND_STRM_Volume( int volume )
+{
+	GF_ASSERT( sp_STRM_WORK );
+	GF_ASSERT( sp_STRM_WORK->snddata_in );
+
+	NNS_SndStrmSetVolume( &sp_STRM_WORK->strm, volume );
 }
 
 
