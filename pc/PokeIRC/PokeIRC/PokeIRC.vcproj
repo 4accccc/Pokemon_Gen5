@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="&quot;libpokemon.lib&quot; &quot;dpw_pc.lib&quot;"
+				AdditionalDependencies="&quot;dpw_pc.lib&quot;"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="C:\home\wb\pokemon_wb\pc\PokeIRC\PokeIRC\lib"
 				IgnoreAllDefaultLibraries="false"
@@ -211,6 +211,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\com.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FileBase.cpp"
 				>
 			</File>
@@ -220,6 +224,14 @@
 			</File>
 			<File
 				RelativePath=".\FileNgc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\internal.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\irc.cpp"
 				>
 			</File>
 			<File
@@ -269,6 +281,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\com.h"
+				>
+			</File>
+			<File
 				RelativePath=".\lib\dpw_bt.h"
 				>
 			</File>
@@ -290,6 +306,10 @@
 			</File>
 			<File
 				RelativePath=".\irc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\irc_internal.h"
 				>
 			</File>
 			<File
@@ -326,6 +346,10 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\system.h"
 				>
 			</File>
 		</Filter>

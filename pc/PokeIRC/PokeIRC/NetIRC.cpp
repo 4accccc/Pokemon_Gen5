@@ -21,7 +21,7 @@ typedef unsigned char u8;
 
 #include "irc.h"
 
-#pragma comment(lib,"libpokemon.lib") // libpokemon.libをリンクする
+//#pragma comment(lib,"libpokemon.lib") // libpokemon.libをリンクする
 
 extern u8 dhc_read(u8 *buf); // ユーザは呼ばなくてよいはず
 
@@ -60,6 +60,7 @@ static void callback(u8 *data, u8 size, u8 command, u8 value)
 	case 0x04: // レシーバー は4を受け取る
 		NetIRC::RecvURLCOMMAND(data,size-4,value);
 		if(NetIRC::SendLoop()){
+			Debug::WriteLine("2おくる");
 			IRC_Send(data_up, 64, 2, (u8)1 ); 
 		}
 		flgsend=true;
@@ -107,14 +108,7 @@ void NetIRC::draw(Form^ fm)
 	{
 		bool tmp;
 		tmp = ( IRC_IsConnect() == TRUE ) ? true : false;
-/*		{
-			u8 buf[132];
-			int size = (u32)dhc_read(buf);
-			if(size!=0){
-				Debug::WriteLine(buf[0]);
-				Debug::WriteLine(size);
-			}
-		}*/
+
 		IRC_Move();
 
 		if(IRC_IsConnect() && (tmp == false)){ // つながった瞬間のみ
