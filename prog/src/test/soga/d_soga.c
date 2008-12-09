@@ -30,7 +30,7 @@
 #include "poke_tool/monsno_def.h"
 
 //#define MCS_ENABLE		//MCSを使用する
-//#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
+#define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
