@@ -22,7 +22,7 @@
 #include "message.naix"
 #include "font/font.naix"
 
-#include "../test/soga/btl_effect.h"	//soga
+#include "btl_effect.h"	//soga
 #include "poke_tool/monsno_def.h"
 
 /*--------------------------------------------------------------------------*/

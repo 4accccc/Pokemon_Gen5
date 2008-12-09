@@ -11,7 +11,6 @@
 #include <gflib.h>
 
 #include "btl_field.h"
-#include "btl_field_def.h"
 
 #include "arc_def.h"
 #include "battgra/battgra_wb.naix"

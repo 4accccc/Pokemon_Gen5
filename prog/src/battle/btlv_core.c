@@ -25,7 +25,7 @@
 
 #include "btlv_core.h"
 
-#include "../test/soga/btl_effect.h"	//soga
+#include "btl_effect.h"	//soga
 #include "waza_tool/wazano_def.h"		//soga
 
 
