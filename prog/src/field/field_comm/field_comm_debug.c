@@ -312,9 +312,9 @@ static	const BOOL	FIELD_COMM_DEBUG_SubProc_ChangePartTest(FIELD_COMM_DEBUG_WORK 
 		if(GAMESYSTEM_IsProcExists(work->gameSys_) == TRUE )
 		{
 			//この時点ではまだフィールドの初期化は完全ではない
-			if( FieldMain_IsFieldUpdate( work->fieldWork_ ) == TRUE )
+			if( FIELDMAP_IsReady( work->fieldWork_ ) == TRUE )
 			{
-				FieldMain_UpdateFieldFunc( work->fieldWork_ );
+				FIELDMAP_ForceUpdate( work->fieldWork_ );
 				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
 										 16 ,0 ,ARI_FADE_SPD );
 				work->subSeq_++;

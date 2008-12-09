@@ -47,15 +47,19 @@ extern void FIELDMAP_Close( FIELD_MAIN_WORK * fieldWork );
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief	フィールドマップの準備状態取得
+ * @param	fieldWork
+ * @return	BOOL	TRUEのとき、表示可能状態
  */
 //--------------------------------------------------------------
-extern const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork );
+extern const BOOL FIELDMAP_IsReady( const FIELD_MAIN_WORK *fieldWork );
 
 //--------------------------------------------------------------
 /**
- * @brief
+ * @brief	フィールドマップの強制更新
+ * @param	fieldWork
  */
 //--------------------------------------------------------------
-extern void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork );
+extern void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork );
+
 

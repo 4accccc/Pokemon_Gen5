@@ -1,6 +1,6 @@
 //============================================================================================
 /**
- * @file	field_main.c
+ * @file	fieldmap.c
  * @brief	フィールドマップ描画メイン
  * @author	
  * @date	
@@ -60,7 +60,8 @@ static void				MainGameSystem( FIELD_SETUP* gs );
 
 
 typedef enum {
-	GAMEMODE_NORMAL = 0,
+	GAMEMODE_BOOT = 0,
+	GAMEMODE_NORMAL,
 	GAMEMODE_FINISH,
 }GAMEMODE;
 
@@ -159,7 +160,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 {
 	fieldWork = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_MAIN_WORK) );
 	fieldWork->heapID = heapID;
-	fieldWork->gamemode = GAMEMODE_NORMAL;
+	fieldWork->gamemode = GAMEMODE_BOOT;
 	fieldWork->gsys = gsys;
 	fieldWork->map_id = GetSceneID(gsys);
 	//サイズは暫定。DPでの最大サイズは30x30
@@ -241,6 +242,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//フィールドマップ用イベント起動チェックをセットする
 		GAMESYSTEM_EVENT_EntryCheckFunc(gsys, FieldEventCheck, fieldWork);
 		
+		fieldWork->gamemode = GAMEMODE_NORMAL;
 		fieldWork->seq++;
 		break;
 
@@ -1031,15 +1033,16 @@ static void fieldMainCommActorProc( FIELD_MAIN_WORK *fieldWork )
 //--------------------------------------------------------------
 ///	フィールドが更新可能状態に入ったか？
 //--------------------------------------------------------------
-const BOOL FieldMain_IsFieldUpdate( const FIELD_MAIN_WORK *fieldWork )
+const BOOL FIELDMAP_IsReady( const FIELD_MAIN_WORK *fieldWork )
 {
-	return (fieldWork->seq==3);
+	return (fieldWork->gamemode == GAMEMODE_NORMAL);
+	//return (fieldWork->seq==3);
 }
 
 //--------------------------------------------------------------
 ///	フィールドを強制的に更新する
 //--------------------------------------------------------------
-void FieldMain_UpdateFieldFunc( FIELD_MAIN_WORK *fieldWork )
+void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 {
 	//キー入力は無いものとする
 	fieldWork->key_cont = 0;

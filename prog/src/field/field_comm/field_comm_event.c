@@ -697,7 +697,7 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 		if(GAMESYSTEM_IsProcExists( evtWork->gameSys_ ) == TRUE )
 		{
 			//この時点ではまだフィールドの初期化は完全ではない
-			if( FieldMain_IsFieldUpdate( evtWork->fieldWork_ ) == TRUE )
+			if( FIELDMAP_IsReady( evtWork->fieldWork_ ) == TRUE )
 			{
 				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
 											 16 ,0 ,ARI_FADE_SPD );
@@ -708,7 +708,7 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 	case 6:
 		if( GFL_FADE_CheckFade() == FALSE )
 		{
-			FieldMain_UpdateFieldFunc( evtWork->fieldWork_ );
+			FIELDMAP_ForceUpdate( evtWork->fieldWork_ );
 			evtWork->subSeq_++;
 			return TRUE;
 		}

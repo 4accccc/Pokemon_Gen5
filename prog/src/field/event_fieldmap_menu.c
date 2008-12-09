@@ -877,10 +877,10 @@ static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk )
 		if(GAMESYSTEM_IsProcExists(work->gmSys) == TRUE )
 		{
 			//この時点ではまだフィールドの初期化は完全ではない
-			if( FieldMain_IsFieldUpdate( work->fieldWork ) == TRUE )
+			if( FIELDMAP_IsReady( work->fieldWork ) == TRUE )
 			{
 				//一回更新をまわして、MAP座標をキャラの位置にあわせる
-				FieldMain_UpdateFieldFunc( work->fieldWork );
+				FIELDMAP_ForceUpdate( work->fieldWork );
 				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
 										 16 ,0 ,0);
 				*seq += 1;
