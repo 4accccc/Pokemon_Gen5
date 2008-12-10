@@ -268,7 +268,7 @@ void DLPlayFunc_DispMsgID( u16 msgID , DLPLAY_MSG_SYS *msgSys )
 void DLPlayFunc_UpdateFont( DLPLAY_MSG_SYS *msgSys )
 {
   	PRINTSYS_QUE_Main( msgSys->printQue_ );
-	if( PRINT_UTIL_Trans( msgSys->printUtil_ , msgSys->printQue_ ) )
+	if( PRINT_UTIL_Trans( msgSys->printUtil_ , msgSys->printQue_ ) == FALSE )
 	{}
 }
 

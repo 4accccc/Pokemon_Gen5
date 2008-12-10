@@ -260,7 +260,7 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 #if GFL_NET_WIFI
 		NULL,NULL,NULL,NULL,
 #endif //GFL_NET_WIFI
-#if DEB_ARI
+#if DEB_ARI&0
 		0x346,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
 #else
 		0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
@@ -277,7 +277,7 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 		FALSE,		// MP通信＝親子型通信モードかどうか
 		GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
 		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
-#if DEB_ARI
+#if DEB_ARI&0
 		30//GameServiceID
 #else
 		WB_NET_FIELDMOVE_SERVICEID	//GameServiceID

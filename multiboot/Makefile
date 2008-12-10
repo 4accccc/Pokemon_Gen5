@@ -48,7 +48,7 @@ LLIBRARIES		=  	gflib.a
 #パーティクル＋イクニューモンコンポーネントのためのライブラリを追加
 #----------------------------------------------------------------------------
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
-LLIBRARIES		+= ./libjn_spl.a libwvr$(CODEGEN).a
+LLIBRARIES		+= ./libjn_spl.a
 #LLIBRARIES		+= libwvr$(CODEGEN).a
 # 任天堂Cryptライブラリを追加 by mituhara 2006.07.05
 LLIBRARY_DIRS	+= ./library/crypto/$(NITRO_BUILDTYPE)
@@ -83,12 +83,6 @@ endif
 # コンパイル時の警告抑止
 CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimplicit,\
 				nostructclass,nopadding,nonotused,noanyptrintconv,nofilecaps,nosysfilecaps
-
-#------------------------------------------------------#
-# イクニューモンコンポーネントを追加 by Mori 2005.7.27
-# VRAM内に無線ライブラリが配置されるコンポーネント定義 #
-MY_COMPONENT_NAME	= ichneumon
-MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定

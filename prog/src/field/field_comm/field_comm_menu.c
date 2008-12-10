@@ -311,7 +311,7 @@ const u8	FIELD_COMM_MENU_UpdateYesNoMenu( FIELD_COMM_MENU *commMenu )
 	const u32 ret = BmpMenu_Main( commMenu->ynMenuWork_ );
 
 	PRINTSYS_QUE_Main( commMenu->ynMenuPrintQue_ );
-	if( PRINT_UTIL_Trans(commMenu->ynMenuPrintUtil_ ,commMenu->ynMenuPrintQue_ ) ){
+	if( PRINT_UTIL_Trans(commMenu->ynMenuPrintUtil_ ,commMenu->ynMenuPrintQue_ ) == FALSE ){
 	}
 	
 	switch( ret )
@@ -435,7 +435,7 @@ const F_COMM_ACTION_LIST	FIELD_COMM_MENU_UpdateActionList( FIELD_COMM_MENU *comm
 	const u32 ret = BmpMenu_Main( commMenu->ynMenuWork_ );
 
 	PRINTSYS_QUE_Main( commMenu->ynMenuPrintQue_ );
-	if( PRINT_UTIL_Trans(commMenu->ynMenuPrintUtil_ ,commMenu->ynMenuPrintQue_ ) ){
+	if( PRINT_UTIL_Trans(commMenu->ynMenuPrintUtil_ ,commMenu->ynMenuPrintQue_ ) == FALSE ){
 	}
 	
 	switch( ret )
@@ -561,7 +561,7 @@ void	FIELD_COMM_MENU_UpdateMessageWindow( FIELD_COMM_MENU *commMenu )
 	if( commMenu->isInitMsgWin_ == TRUE )
 	{
 		PRINTSYS_QUE_Main( commMenu->msgWinPrintQue_ );
-		if( PRINT_UTIL_Trans(commMenu->msgWinPrintUtil_ ,commMenu->msgWinPrintQue_ ) ){
+		if( PRINT_UTIL_Trans(commMenu->msgWinPrintUtil_ ,commMenu->msgWinPrintQue_ ) == FALSE){
 		}
 	}
 }

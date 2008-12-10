@@ -96,7 +96,7 @@ void ARI_COMM_CARD_Term( ARI_COMM_CARD_WORK *work )
 const BOOL ARI_COMM_CARD_Loop( ARI_COMM_CARD_WORK *work )
 {
 	PRINTSYS_QUE_Main( work->printQue_ );
-	if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) )
+	if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) == FALSE )
 	{}
 	switch( work->seq_ )
 	{
@@ -272,7 +272,7 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 	while( PRINTSYS_QUE_IsFinished(work->printQue_) == FALSE )
 	{
 		PRINTSYS_QUE_Main( work->printQue_ );
-		if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) )
+		if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) == FALSE )
 		{}
 	}
 }
