@@ -37,7 +37,6 @@ extern void DEBUG_PerformanceInit(void);
 extern void DEBUG_PerformanceMain(void);
 extern void DEBUG_PerformanceStartLine(PERFORMANCE_ID id);
 extern void DEBUG_PerformanceEndLine(PERFORMANCE_ID id);
-//’Ç‰Á Ari081104
 extern void DEBUG_PerformanceSetActive( BOOL isActive );
 
 

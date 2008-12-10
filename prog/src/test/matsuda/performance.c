@@ -226,6 +226,7 @@ static void Performance_CGXTrans(void);
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset);
 static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count);
 static void Performance_NumTrans(s32 num, int peek_oam);
+static void Performance_AllOffOam(void);
 
 
 
@@ -322,7 +323,6 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	}
 }
 
-//追加 Ari081104
 //--------------------------------------------------------------
 /**
  * @brief   パフォーマンスメーターのON/OFF切り替え
@@ -333,6 +333,9 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
 	pfm_sys.on_off = isActive;
+	if(isActive == FALSE){
+		Performance_AllOffOam();
+	}
 }
 
 
@@ -700,6 +703,35 @@ static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 		break;
 	}
 	*offset -= (*anm_offset) * METER_ANM_PATERN;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   パフォーマンスメーターで使用しているOAMを全てOFFする
+ */
+//--------------------------------------------------------------
+static void Performance_AllOffOam(void)
+{
+	int i;
+	GXOamAttr *meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - NUM_HISTORY]);
+	
+	for(i = 127 - PERFORMANCE_ID_MAX*2 - 1 - NUM_HISTORY; i <= 127; i++){
+		G2_SetOBJAttr(
+			meter_oam,
+			0,						//x
+			0,						//y
+			0,							//priority
+			GX_OAM_MODE_NORMAL,			//mode
+			0,							//mosaic
+			GX_OAM_EFFECT_NODISPLAY,	//effect
+			GX_OAM_SHAPE_32x8,			//shape
+			GX_OAM_COLORMODE_16,		//color
+			0,				//charName
+			0,				//cParam
+			0							//rsParam
+		);
+		meter_oam++;
+	}
 }
 
 #endif //PM_DEBUG
