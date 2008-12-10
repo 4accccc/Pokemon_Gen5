@@ -25,8 +25,8 @@ ENUM_HEADER		= map_matrix_id.h
 FLDCSV_FOR_MAT	= field_list_for_mat.csv
 LAND_XLS_DATA	= ../land_data/map_list.xls
 
-LAND_NAIX_PATH  = $(PROJECT_RSCDIR)/test_graphic/fldmapdata/land_data/map_land_data.naix
-TMPDIR_PATH		= $(PROJECT_RSCDIR)/test_graphic/fldmapdata/map_matrix/tmp
+LAND_NAIX_PATH  = $(PROJECT_RSCDIR)fldmapdata/land_data/map_land_data.naix
+TMPDIR_PATH		= $(PROJECT_RSCDIR)fldmapdata/map_matrix/tmp
 
 #---------------------------------------------------------------
 #	Ｃソース→バイナリ変換を可能にするための設定
