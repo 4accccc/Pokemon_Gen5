@@ -448,7 +448,7 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 };
 
 enum{
-	NET_CMD_MOVE = GFL_NET_CMD_COMMAND_MAX,
+	NET_CMD_MOVE = GFL_NET_CMD_DEBUG_MATSUDA,
 	NET_CMD_HUGE,
 	NET_CMD_KEY,
 	NET_CMD_MY_PROFILE,

@@ -11,8 +11,7 @@
 #ifndef __DEBUG_OHNO_H__
 #define __DEBUG_OHNO_H__
 
-
-//#include "map/dp3format.h"
+#include "net/network_define.h"
 
 typedef BOOL (*NetTestFunc)(void* pCtl);
 
@@ -27,7 +26,7 @@ typedef struct {
 
 
 enum NetDebugOhnoCommand_e {
-  NET_CMD_MOVE = GFL_NET_CMD_COMMAND_MAX,
+  NET_CMD_MOVE = GFL_NET_CMD_DEBUG_OHNO,
   NET_CMD_TALK,
 };
 

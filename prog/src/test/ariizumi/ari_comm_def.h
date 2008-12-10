@@ -35,7 +35,7 @@
 //送受信関数用
 enum FIELD_COMM_COMMAND_TYPE
 {
-    FC_CMD_FIRST_BEACON = GFL_NET_CMD_COMMAND_MAX,    //接続直後に子→親へ送るビーコン
+    FC_CMD_FIRST_BEACON = GFL_NET_CMD_FIELD,    //接続直後に子→親へ送るビーコン
     FC_CMD_START_MODE,	    //フリー移動開始
     FC_CMD_PLAYER_DATA,	    //プレイヤー情報
 

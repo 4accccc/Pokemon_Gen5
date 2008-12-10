@@ -247,11 +247,7 @@ typedef struct{
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
   u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
   u8 bMPMode;               ///< MP通信モードかどうか
-#if 0
-  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
-#else
   u8 bNetType;              ///< 使用する通信を指定(GFL_NET_TYPE_???)	※check
-#endif
   u8 bTGIDChange;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
   GameServiceID gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
 } GFLNetInitializeStruct;
@@ -528,7 +524,7 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
+extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
 
 
 //==============================================================================

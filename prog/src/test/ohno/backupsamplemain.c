@@ -1648,7 +1648,7 @@ static void _initRecvBuffer( void )
 //------------------------------------------------------------------
 // ローカル通信コマンドの定義
 enum _gameCommand_e {
-	_GAME_COM_PLAY = GFL_NET_CMD_COMMAND_MAX,
+	_GAME_COM_PLAY = GFL_NET_CMD_DEBUG_OHNO,
 };
 
 //------------------------------------------------------------------

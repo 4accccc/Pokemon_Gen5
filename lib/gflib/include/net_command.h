@@ -25,11 +25,13 @@ extern "C" {
 
 //#define   _SET(callfunc, getSize, name)       {callfunc,  getSize},
 
+///-------------------------------------------------------------------------
+///-------------------------------------------------------------------------
 
 /// 汎用通信コマンドの定義
 enum CommCommand_e {
   GFL_NET_CMD_NONE = 0,                ///< なにもしない
-  GFL_NET_CMD_FREE = 0,                   ///< 空コマンド
+  GFL_NET_CMD_FREE = GFL_NET_CMD_NONE,                   ///< 空コマンド
   GFL_NET_CMD_COMMAND_MIN = 1,             ///< 最小値
   GFL_NET_CMD_EXIT_REQ = GFL_NET_CMD_COMMAND_MIN,            ///< 終了
   GFL_NET_CMD_EXIT,            ///< 自動終了
@@ -46,17 +48,41 @@ enum CommCommand_e {
 };
 
 
+//
 
 //--------------------------------------------------------------
 /**
  * @brief   コマンドテーブルの初期化  コマンドテーブルの変更
+ * @param   cokind               コマンド体系番号 NetStartCommand_e
  * @param   pCommPacketLocal 呼び出しモジュール専用のコマンド体系テーブル
  * @param   listNum          コマンド数
  * @param   pWork            呼び出しモジュール専用のワークエリア
  * @retval  none
  */
 //--------------------------------------------------------------
-extern void GFL_NET_COMMAND_Init(const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
+extern void GFL_NET_COMMAND_Init(const int cokind, const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドテーブルの追加
+ * @param   cokind          コマンド体系番号 NetStartCommand_e
+ * @param   pCommPacketLocal 呼び出しモジュール専用のコマンド体系テーブル
+ * @param   listNum          コマンド数
+ * @param   pWork            呼び出しモジュール専用のワークエリア
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_AddCommandTable(const int cokind,const NetRecvFuncTable* pCommPacketLocal,int listNum,void* pWork);
+
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドテーブルの削除
+ * @param   cokind          コマンド体系番号 NetStartCommand_e
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GFL_NET_DelCommandTable(const int cokind);
 
 //--------------------------------------------------------------
 /**
@@ -70,14 +96,6 @@ extern void GFL_NET_COMMAND_Exit( void );
 
 
 // ここから下はライブラリ専用 GFI関数
-//--------------------------------------------------------------
-/**
- * @brief   定義があったコマンドのサイズを返します
- * @param   command         コマンド
- * @retval  データのサイズ   可変なら COMM_VARIABLE_SIZEを返します
- */
-//--------------------------------------------------------------
-//extern int GFI_NET_COMMAND_GetPacketSize(int command);
 
 //--------------------------------------------------------------
 /**

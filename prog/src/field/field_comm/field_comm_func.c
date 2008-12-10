@@ -30,7 +30,7 @@
 //送受信関数用
 typedef enum 
 {
-    FC_CMD_SELFDATA = GFL_NET_CMD_COMMAND_MAX,	//自機データ
+    FC_CMD_SELFDATA = GFL_NET_CMD_FIELD,	//自機データ
 	FC_CMD_REQUEST_DATA,	//データ要求
 	FC_CMD_SELF_PROFILE,	//キャラの基本情報
 	FC_CMD_COMMON_FLG,		//汎用フラグ

@@ -25,7 +25,7 @@
 //送受信関数用
 enum DLPLAY_COMM_COMMAND_TYPE
 {
-    DC_CMD_LARGE_PACKET = GFL_NET_CMD_COMMAND_MAX,	//大容量データ(ボックスデータを想定
+    DC_CMD_LARGE_PACKET = GFL_NET_CMD_BOX_DOWNLOAD,	//大容量データ(ボックスデータを想定
 	DC_CMD_CONNET_SIGN,		//子機が接続したときに送る
 	DC_CMD_BOX_INDEX,		//最初に送るやつ。名前とポケモンNoのみ？
 	DC_CMD_POST_INDEX,		//↑の受信完了確認
