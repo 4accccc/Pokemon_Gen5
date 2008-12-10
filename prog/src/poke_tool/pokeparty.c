@@ -108,7 +108,7 @@ void PokeParty_Init( POKEPARTY * party, int max )
  * @retval	FALSE	¸”s
  */
 //----------------------------------------------------------
-BOOL PokeParty_Add( POKEPARTY * party, POKEMON_PARAM * poke )
+BOOL PokeParty_Add( POKEPARTY * party, const POKEMON_PARAM * poke )
 {
 	if ( party->PokeCount >= party->PokeCountMax ) {
 		//è‚¿‚ª‚¢‚Á‚Ï‚¢

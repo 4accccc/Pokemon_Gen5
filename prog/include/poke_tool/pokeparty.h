@@ -42,7 +42,7 @@ extern void PokeParty_InitWork(POKEPARTY * party);
 //----------------------------------------------------------
 extern void PokeParty_Init(POKEPARTY * party, int max);
 extern POKEMON_PARAM * PokeParty_GetMemberPointer(const POKEPARTY * party, int pos);
-extern BOOL PokeParty_Add(POKEPARTY * party, POKEMON_PARAM * poke);
+extern BOOL PokeParty_Add(POKEPARTY * party, const POKEMON_PARAM * poke);
 extern BOOL PokeParty_Delete(POKEPARTY * party, int pos);
 extern BOOL PokeParty_ExchangePosition(POKEPARTY * party, int pos1, int pos2, HEAPID heapID );
 extern void PokeParty_Copy(const POKEPARTY * src, POKEPARTY * dst);
