@@ -624,7 +624,8 @@ static DMENURET FldDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			ret = BmpMenu_Main( d_menu->bmpmenu );
 			PRINTSYS_QUE_Main( d_menu->printQue );
 			
-			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
+			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) == FALSE ){
+				//•¶š•\¦ˆ—’†
 			}
 			
 			switch( ret ){
@@ -1386,7 +1387,8 @@ u32 DebugMenu_ProcCommonMenu( DMENU_COMMON_WORK *work )
 	
 	PRINTSYS_QUE_Main( work->printQue );
 	
-	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
+	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) == FALSE ){
+		//•¶š•\¦ˆ—’†
 	}
 
 	return( ret );

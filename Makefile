@@ -53,11 +53,10 @@ test:
 	$(MAKE) CONVERTUSER=false clean
 	$(MAKE) CONVERTUSER=false
 
-# フィールドマップ　地形データのみclean
+# フィールドマップ　地形データのみclean make
 #--------------------------------------------------------------------
-FLD_LAND_DATA_DIR = $(RESOURCE_DIR)/test_graphic/fldmapdata/land_data/
+FLD_LAND_DATA_DIR = $(RESOURCE_DIR)/fldmapdata/land_data/
 
-landlist:
+landdata:
 	$(MAKE) -C $(FLD_LAND_DATA_DIR) clean
-	$(MAKE) -C $(FLD_LAND_DATA_DIR) landlist
 	$(MAKE) -C $(FLD_LAND_DATA_DIR)

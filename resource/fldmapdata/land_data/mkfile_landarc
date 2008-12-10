@@ -1,0 +1,110 @@
+#----------------------------------------------------------------------------
+# Project:  地形関連データ->バイナリー>アーカイブ
+# File:     mkfile_landarc
+# Copyright 2005 GameFreak.inc  All rights reserved.
+#----------------------------------------------------------------------------
+
+#---------------------------------------------------------------
+#	共通ルールファイルのインクルード
+#---------------------------------------------------------------
+include $(PROJECT_RSCDIR)/macro_define
+
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+TARGET_ORG_NAME		= map_land_data
+TARGET_ORG_ARC		= $(TARGET_ORG_NAME).narc
+TARGET_ORG_ARCIDX	= $(TARGET_ORG_NAME).naix
+TARGET_DIR			= $(PROJECT_ARCDIR)/test_graphic/
+TARGET_ARC			= $(TARGET_DIR)/$(TARGET_ORG_ARC)
+TARGET_ARCIDX		= $(TARGET_DIR)/$(TARGET_ORG_ARCIDX)
+
+#---------------------------------------------------------------
+#	各要素
+#---------------------------------------------------------------
+LAND_LIST		= land_list
+LAND_MODEL_LIST = land_model_list
+LAND_ARCLIST	= land_arc_list
+XLS_DATA		= map_list.xls
+FLDCSV			= field_list.csv
+
+DIR_G3DCVTR		= land_g3dcvtr/
+DIR_3DPPACK		= land_3dppack/
+DIR_LANDRES		= ../land_res/
+DIR_MATRIX		= ../map_matrix
+
+#CONCAT_TARGET
+include land_list
+#G3D_IMD
+include land_model_list
+
+G3D_NSBMD = $(G3D_IMD:.imd=.nsbmd)
+G3D_NSBMD := $(subst $(DIR_LANDRES)/,$(DIR_G3DCVTR),$(G3D_NSBMD))
+G3D_NSBTX = $(G3D_IMD:.imd=.nsbtx)
+G3D_NSBTX := $(subst $(DIR_LANDRES)/,$(DIR_G3DCVTR),$(G3D_NSBTX))
+G3D_BIN = $(G3D_IMD:.imd=.bin)
+G3D_3DMD = $(DIR_LANDRES)/*.3dmd
+G3D_3DPPACK = $(G3D_IMD:.imd=.3dppack)
+G3D_3DPPACK := $(subst $(DIR_LANDRES)/,$(DIR_3DPPACK),$(G3D_3DPPACK))
+
+G3DCV_TARGET = $(G3D_NSBMD) $(G3D_NSBTX)
+G3D3DPP_TARGET = $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_BIN) $(G3D_3DMD)
+
+#---------------------------------------------------------------
+#	ツールへのパス指定
+#---------------------------------------------------------------
+G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
+MK_GROUNDTOOL = mkmapdmy.rb
+
+#---------------------------------------------------------------
+#	データ生成ルール
+#---------------------------------------------------------------
+.SUFFIXES: .3dppack .nsbmd .nsbtx .3dmd .bin
+
+#nsbmd
+%.nsbmd: ../$(DIR_LANDRES)/%.imd
+	@echo create nsbmd $@
+	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbmd=.imd)) -o $@
+
+#nsbtx
+%.nsbtx: ../$(DIR_LANDRES)/%.imd
+	@echo create nsbtx $@
+	$(G3DCVTR) $(subst $(DIR_G3DCVTR),$(DIR_LANDRES)/,$(@:.nsbtx=.imd)) -o $@ -etex
+
+#3dppack 3dmd
+%.3dppack: ../$(DIR_LANDRES)/%.3dmd
+	@echo create 3dppack $@
+	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
+
+#3dppack imd,bin
+%.3dppack: ../$(DIR_LANDRES)/%.imd ../$(DIR_LANDRES)/%.bin
+	@echo create 3dppack $@
+	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
+
+.PHONY: do-build clean landlist
+
+#---------------------------------------------------------------
+#	buildルール
+#---------------------------------------------------------------
+do-build: $(TARGET_ARC)
+
+#対象コピー
+$(TARGET_ARC): $(LAND_ARCLIST) $(TARGET_ORG_ARC)
+	$(COPY) $(TARGET_ORG_ARC) $(TARGET_DIR)
+	$(COPY) $(TARGET_ORG_ARCIDX) $(TARGET_DIR)
+
+#コンバート
+$(TARGET_ORG_ARC): $(G3D_NSBMD) $(G3D_NSBTX) $(G3D_3DMD) $(G3D_3DPPACK)
+	nnsarc -i -c -l -n $(TARGET_ORG_ARC) -S $(LAND_ARCLIST) > arc_result.txt
+
+#---------------------------------------------------------------
+#	clean
+#---------------------------------------------------------------
+clean:
+	-rm -f $(TARGET_ARC)
+	-rm -f $(TARGET_ARCIDX)
+	-rm -f $(TARGET_ORG_ARC)
+	-rm -f $(TARGET_ORG_ARCIDX)
+	-rm -f $(G3D_NSBMD)
+	-rm -f $(G3D_NSBTX)
+	-rm -f $(G3D_3DPPACK)

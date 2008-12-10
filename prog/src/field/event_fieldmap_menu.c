@@ -672,7 +672,8 @@ static u32 FldMapMenu_ProcCommon( FMENU_COMMON_WORK *work )
 	
 	PRINTSYS_QUE_Main( work->printQue );
 	
-	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
+	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) == FALSE ){
+		//•¶š•\¦ˆ—’†
 	}
 
 	return( ret );
@@ -807,8 +808,8 @@ static void FldMapMsgWin_SetPrint( FLDMAP_MSGWIN_WORK *work, u32 strID )
 static BOOL FldMapMsgWin_Draw( FLDMAP_MSGWIN_WORK *work )
 {
 	PRINTSYS_QUE_Main( work->printQue );
-	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) ){
-		return( FALSE );
+	if( PRINT_UTIL_Trans(work->printUtil,work->printQue) == FALSE ){
+		return( FALSE );	//•¶š•\¦ˆ—’†
 	}
 	return( TRUE );
 }
