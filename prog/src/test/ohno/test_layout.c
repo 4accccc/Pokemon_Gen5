@@ -629,8 +629,9 @@ BOOL LayoutDebugMenu_Main( DEBUG_FLDMENU *d_menu )
 			ret = BmpMenu_Main( d_menu->bmpmenu );
 			PRINTSYS_QUE_Main( d_menu->printQue );
 			
-			if( PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue) ){
-			}
+            if(!PRINT_UTIL_Trans(d_menu->printUtil,d_menu->printQue)){
+                return( FALSE );
+            }
 			
 			switch( ret ){
 			case BMPMENU_NULL:
