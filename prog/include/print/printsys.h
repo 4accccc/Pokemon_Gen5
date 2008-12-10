@@ -358,7 +358,7 @@ inline void PRINT_UTIL_Print( PRINT_UTIL* wk, PRINT_QUE* que, u16 xpos, u16 ypos
  * @param   wk		
  * @param   que		
  *
- * @retval  BOOL	‚Ü‚¾“]‘—‚ªI‚í‚Á‚Ä‚¢‚È‚¢ê‡‚ÍTRUE^‚»‚êˆÈŠOFALSE
+ * @retval  BOOL	“]‘—‚ªI‚í‚Á‚Ä‚¢‚éê‡‚ÍTRUE^I‚í‚Á‚Ä‚¢‚È‚¢ê‡‚ÍFALSE
  */
 //--------------------------------------------------------------------------------------
 inline BOOL PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
@@ -371,7 +371,7 @@ inline BOOL PRINT_UTIL_Trans( PRINT_UTIL* wk, PRINT_QUE* que )
 			wk->transReq = FALSE;
 		}
 	}
-	return wk->transReq;
+	return !(wk->transReq);
 }
 
 
