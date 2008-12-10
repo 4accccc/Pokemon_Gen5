@@ -466,137 +466,145 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 
 #ifdef	POKEGRA_CHECK
 	if( wk->timer_flag ){
-		BOOL draw = FALSE;
-		BOOL pos = FALSE;
-		int	mons_no = wk->mons_no;
-		int	position = wk->position;
-		VecFx32 scale_m, scale_e;
-
-		POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-		POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
-
-		if( trg & PAD_BUTTON_R ){
-			if( mons_no + 100 <= MONSNO_MAX ){
-				mons_no += 100;
-			}
-			else{
-				mons_no += 100;
-				mons_no -= MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_BUTTON_X ){
-			if( mons_no + 10 <= MONSNO_MAX ){
-				mons_no += 10;
-			}
-			else{
-				mons_no += 10;
-				mons_no -= MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_BUTTON_A ){
-			if( mons_no + 1 <= MONSNO_MAX ){
-				mons_no += 1;
-			}
-			else{
-				mons_no += 1;
-				mons_no -= MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_BUTTON_L ){
-			if( mons_no - 100 > 0 ){
-				mons_no -= 100;
-			}
-			else{
-				mons_no -= 100;
-				mons_no += MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_BUTTON_Y ){
-			if( mons_no - 10 > 0 ){
-				mons_no -= 10;
-			}
-			else{
-				mons_no -= 10;
-				mons_no += MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_BUTTON_B ){
-			if( mons_no - 1 > 0 ){
-				mons_no -= 1;
-			}
-			else{
-				mons_no -= 1;
-				mons_no += MONSNO_MAX;
-			}
-		}
-		if( trg & PAD_KEY_LEFT ){
-			position--;
-			if( position < 0 ){
-				position = 2;
-			}
-			pos = TRUE;
-		}
-		if( trg & PAD_KEY_RIGHT ){
-			position++;
-			if( position > 2 ){
-				position = 0;
-			}
-			pos = TRUE;
-		}
-		if( rep & PAD_KEY_UP ){
-			scale_m.x--;
-			scale_m.y--;
-			scale_m.z--;
-			scale_e.x--;
-			scale_e.y--;
-			scale_e.z--;
-			draw = TRUE;
-			if( scale_m.x < 0 ){
-				scale_m.x = 0;
-				scale_m.y = 0;
-				scale_m.z = 0;
-			}
-			if( scale_e.x < 0 ){
-				scale_e.x = 0;
-				scale_e.y = 0;
-				scale_e.z = 0;
-			}
-		}
-		if( rep & PAD_KEY_DOWN ){
-			scale_m.x++;
-			scale_m.y++;
-			scale_m.z++;
-			scale_e.x++;
-			scale_e.y++;
-			scale_e.z++;
-			draw = TRUE;
-		}
-		if( pad & PAD_BUTTON_START ){
-			POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
-			POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
+		if( wk->timer_flag & 2){
+			MoveCamera( wk );
 		}
 		else{
-			POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
-			POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
-		}
-		if( ( mons_no != wk->mons_no ) ||
-			( draw == TRUE ) ||
-			( position != wk->position ) ){
-			if( draw == FALSE ){
-				del_pokemon( wk );
-				wk->mons_no = mons_no;
-				wk->position = position;
-				set_pokemon( wk );
-				if( pos == TRUE ){
-					POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-					POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+			BOOL draw = FALSE;
+			BOOL pos = FALSE;
+			int	mons_no = wk->mons_no;
+			int	position = wk->position;
+			VecFx32 scale_m, scale_e;
+	
+			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+	
+			if( trg & PAD_BUTTON_R ){
+				if( mons_no + 100 <= MONSNO_MAX ){
+					mons_no += 100;
+				}
+				else{
+					mons_no += 100;
+					mons_no -= MONSNO_MAX;
 				}
 			}
-			POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
-			POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
-			NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
-			Num16Print( wk, scale_m.x, BMPWIN_SCALE_M );
-			Num16Print( wk, scale_e.x, BMPWIN_SCALE_E );
+			if( trg & PAD_BUTTON_X ){
+				if( mons_no + 10 <= MONSNO_MAX ){
+					mons_no += 10;
+				}
+				else{
+					mons_no += 10;
+					mons_no -= MONSNO_MAX;
+				}
+			}
+			if( trg & PAD_BUTTON_A ){
+				if( mons_no + 1 <= MONSNO_MAX ){
+					mons_no += 1;
+				}
+				else{
+					mons_no += 1;
+					mons_no -= MONSNO_MAX;
+				}
+			}
+			if( trg & PAD_BUTTON_L ){
+				if( mons_no - 100 > 0 ){
+					mons_no -= 100;
+				}
+				else{
+					mons_no -= 100;
+					mons_no += MONSNO_MAX;
+				}
+			}
+			if( trg & PAD_BUTTON_Y ){
+				if( mons_no - 10 > 0 ){
+					mons_no -= 10;
+				}
+				else{
+					mons_no -= 10;
+					mons_no += MONSNO_MAX;
+				}
+			}
+			if( trg & PAD_BUTTON_B ){
+				if( mons_no - 1 > 0 ){
+					mons_no -= 1;
+				}
+				else{
+					mons_no -= 1;
+					mons_no += MONSNO_MAX;
+				}
+			}
+			if( trg & PAD_KEY_LEFT ){
+				position--;
+				if( position < 0 ){
+					position = 2;
+				}
+				pos = TRUE;
+			}
+			if( trg & PAD_KEY_RIGHT ){
+				position++;
+				if( position > 2 ){
+					position = 0;
+				}
+				pos = TRUE;
+			}
+			if( rep & PAD_KEY_UP ){
+				scale_m.x--;
+				scale_m.y--;
+				scale_m.z--;
+				scale_e.x--;
+				scale_e.y--;
+				scale_e.z--;
+				draw = TRUE;
+				if( scale_m.x < 0 ){
+					scale_m.x = 0;
+					scale_m.y = 0;
+					scale_m.z = 0;
+				}
+				if( scale_e.x < 0 ){
+					scale_e.x = 0;
+					scale_e.y = 0;
+					scale_e.z = 0;
+				}
+			}
+			if( rep & PAD_KEY_DOWN ){
+				scale_m.x++;
+				scale_m.y++;
+				scale_m.z++;
+				scale_e.x++;
+				scale_e.y++;
+				scale_e.z++;
+				draw = TRUE;
+			}
+			if( pad & PAD_BUTTON_START ){
+				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
+				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
+			}
+			else{
+				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
+				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
+			}
+			if( ( mons_no != wk->mons_no ) ||
+				( draw == TRUE ) ||
+				( position != wk->position ) ){
+				if( draw == FALSE ){
+					del_pokemon( wk );
+					wk->mons_no = mons_no;
+					wk->position = position;
+					set_pokemon( wk );
+					if( pos == TRUE ){
+						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+					}
+				}
+				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
+				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+				NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
+				Num16Print( wk, scale_m.x, BMPWIN_SCALE_M );
+				Num16Print( wk, scale_e.x, BMPWIN_SCALE_E );
+			}
+		}
+		if( trg & PAD_BUTTON_DEBUG ){
+			wk->timer_flag ^= 2;
 		}
 	}
 	else{

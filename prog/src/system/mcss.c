@@ -27,6 +27,11 @@
 #define	MCSS_PAL_ADRS	(0x0100)
 #define	MCSS_PAL_SIZE	(0x0020)
 
+#define	MCSS_NORMAL_MTX	( 29 )
+#define	MCSS_SHADOW_MTX	( 30 )
+
+//#define BILLBORAD_ON	//ビルボード処理をONにする
+
 //--------------------------------------------------------------------------
 /**
  * 構造体宣言
@@ -178,7 +183,9 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	NNSG2dAnimDataT				*anim_T_p;
 	NNSG2dAnimDataSRT			anim_SRT;
 	NNSG2dMCNodeCellAnimArray	*MC_Array;
-//	MtxFx44						inv_camera;
+#ifdef BILLBORAD_ON
+	MtxFx44						inv_camera;
+#endif
 
 	G3_PushMtx();
 
@@ -188,7 +195,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 
 	G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
 
-#if 0
+#ifdef BILLBORAD_ON
 	//ビルボード回転行列を求める
 	{
 		MtxFx43						camera;
@@ -240,12 +247,27 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			//前もって、普遍なマルチセルデータをカレント行列にかけておく
 			G3_Translate( mcss->pos.x, mcss->pos.y, mcss->pos.z );
 			//カメラの逆行列を掛け合わせる（ビルボード処理）
-//			if( shadow_flag == 0 ){
-//				G3_MultMtx44( &inv_camera );
-//			}
+#ifdef BILLBORAD_ON
+			G3_MultMtx44( &inv_camera );
+#endif
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
+
+			G3_StoreMtx( MCSS_NORMAL_MTX );
+
+			G3_PopMtx(1);
+			G3_PushMtx();
+
+			//前もって、普遍なマルチセルデータをカレント行列にかけておく
+			G3_Translate( mcss->pos.x, mcss->pos.y, mcss->pos.z );
+			//影用の回転
+			G3_RotX( FX_SinIdx( 65536 / 4 * 3 ), FX_CosIdx( 65536 / 4 * 3 ) );
+			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
+			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
+			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
+
+			G3_StoreMtx( MCSS_SHADOW_MTX );
 
 			MCSS_MaterialSetup();
 
@@ -321,7 +343,6 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			G3_PopMtx(1);
 		}
 	}
-//	}
 	G3_PopMtx(1);
 }
 #else
@@ -382,10 +403,17 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 {
 	VecFx32						pos;
 
-	G3_PushMtx();
-
+	G3_RestoreMtx( MCSS_NORMAL_MTX );
+	
 	G3_TexPlttBase(mcss->mcss_palette_proxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
 				   mcss->mcss_palette_proxy.fmt);
+	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
+				   GX_POLYGONMODE_MODULATE,			// modulation mode
+				   GX_CULL_NONE,					// cull back
+				   0,								// polygon ID(0 - 63)
+				   31,								// alpha(0 - 31)
+				   0								// OR of GXPolygonAttrMisc's value
+				   );
 
 	//マルチセルデータから取得した位置で書き出し
 	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posX );
@@ -416,13 +444,18 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
-	G3_PopMtx(1);
-	G3_PushMtx();
+	G3_RestoreMtx( MCSS_SHADOW_MTX );
 
 	G3_TexPlttBase(shadow_palette.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
 				   shadow_palette.fmt);
+	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
+				   GX_POLYGONMODE_MODULATE,			// modulation mode
+				   GX_CULL_NONE,					// cull back
+				   1,								// polygon ID(0 - 63)
+				   15,								// alpha(0 - 31)
+				   0								// OR of GXPolygonAttrMisc's value
+				   );
 
-	G3_RotX( FX_SinIdx( 65536 / 4 * 3 ), FX_CosIdx( 65536 / 4 * 3 ) );
 	G3_Translate( 0, 0, 0x0200 - *pos_z_default );
 
 	//マルチセルデータから取得した位置で書き出し
@@ -455,8 +488,6 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_End();
 
 	*pos_z_default -= MCSS_DEFAULT_Z;
-
-	G3_PopMtx(1);
 }
 
 //--------------------------------------------------------------------------
