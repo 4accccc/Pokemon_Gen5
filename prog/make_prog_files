@@ -25,7 +25,9 @@ SRCS	+=		test/testmode.c \
 				field/location.c \
 				field/fieldmap_proc.c \
 				field/eventdata_system.c \
+				field/event_fieldmap_control.c \
 				field/event_mapchange.c \
+				field/event_fieldmap_menu.c \
 				field/event_debug_menu.c \
 				savedata/save_tbl.c \
 				savedata/save_control.c \
@@ -104,7 +106,6 @@ SRCS	+=		test/testmode.c \
 				field/field_comm/field_comm_func.c \
 				field/field_comm/field_comm_event.c \
 				field/field_comm/field_comm_debug.c \
-				field/event_fieldmap_menu.c \
 				item/item.c \
 				title/title.c \
 				title/title_control.c \

@@ -13,6 +13,7 @@
 #include "net/network_define.h"
 #include "textprint.h"
 #include "arc_def.h"
+#include "system/g3d_tool.h"
 
 #include "print/gf_font.h"
 
@@ -671,6 +672,7 @@ static void	bg_init( FIELD_SETUP* gs )
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
+	DEBUG_GFL_G3D_SetVManSize( GFL_G3D_TEX384K, GFL_G3D_PLT64K );
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
@@ -763,6 +765,8 @@ static void g3d_load( FIELD_SETUP* gs )
 	//カメラライト0反映
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
+	OS_Printf("TEX:%06x PLT:%04x\n",
+			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetBlankPaletteSize());
 }
 	
 //動作
