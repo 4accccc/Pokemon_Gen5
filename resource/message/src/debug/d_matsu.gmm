@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2008-12-05T18:03:13"/>
+	<create user="matsuda" host="W00142" date="2008-12-10T18:00:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -113,7 +113,7 @@
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -235,6 +235,59 @@
 	<row id="DM_MSG_MENU005">
 		<language name="JPN" font=" 2:lcfont12" width="256">ポケモンリスト</language>
 		<language name="JPN_KANJI" width="80">ポケモンリスト</language>
+	</row>
+
+	<row id="DM_MSG_MENU006">
+		<language name="JPN" font=" 2:lcfont12" width="256">ポケモンこうかん</language>
+		<language name="JPN_KANJI" width="80">ポケモン交換</language>
+	</row>
+
+	<row id="DM_MSG_TRADE000">
+		<language name="JPN" font=" 2:lcfont12" width="256">こうかんする　ポケモンを　えらんでください
+
+Aボタン　ポケモンリストへ
+Bボタン　キャンセル</language>
+		<language name="JPN_KANJI" width="80">交換するポケモンを選んでください
+
+Aボタン　ポケモンリストへ
+Bボタン　キャンセル</language>
+	</row>
+
+	<row id="DM_MSG_TRADE001">
+		<language name="JPN" font=" 2:lcfont12" width="256">[0:00:プレイヤー名:0]を　こうかんに　だします
+あいての　せんたくを　まっています</language>
+		<language name="JPN_KANJI" width="80">[0:00:プレイヤー名:0]を交換に出します
+相手の選択を待っています</language>
+	</row>
+
+	<row id="DM_MSG_TRADE002">
+		<language name="JPN" font=" 2:lcfont12" width="256">つうしん　しています</language>
+		<language name="JPN_KANJI" width="80">通信しています</language>
+	</row>
+
+	<row id="DM_MSG_TRADE003">
+		<language name="JPN" font=" 2:lcfont12" width="256">セーブしています</language>
+		<language name="JPN_KANJI" width="80">セーブしています</language>
+	</row>
+
+	<row id="DM_MSG_TRADE004">
+		<language name="JPN" font=" 2:lcfont12" width="256">こうかん　せいりつ</language>
+		<language name="JPN_KANJI" width="80">交換成立</language>
+	</row>
+
+	<row id="DM_MSG_TRADE005">
+		<language name="JPN" font=" 2:lcfont12" width="256">つうしんあいてを　さがしています</language>
+		<language name="JPN_KANJI" width="80">通信相手を探しています</language>
+	</row>
+
+	<row id="DM_MSG_TRADE006">
+		<language name="JPN" font=" 2:lcfont12" width="256">せつだん　しています</language>
+		<language name="JPN_KANJI" width="80">切断しています</language>
+	</row>
+
+	<row id="DM_MSG_TRADE007">
+		<language name="JPN" font=" 2:lcfont12" width="256">あいての　せんたくを　まっています</language>
+		<language name="JPN_KANJI" width="80">相手の選択を待っています</language>
 	</row>
 
 	<flowchart-group-list>

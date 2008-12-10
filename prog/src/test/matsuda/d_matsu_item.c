@@ -277,15 +277,16 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 	D_MATSU_WORK* wk = mywk;
 	BOOL ret = 0;
 	int i;
+	BOOL que_ret;
 	
 	GFL_TCBL_Main( wk->tcbl );
-	PRINTSYS_QUE_Main( wk->printQue );
+	que_ret = PRINTSYS_QUE_Main( wk->printQue );
 	for(i = 0; i < D_WIN_MAX; i++){
-		if( PRINT_UTIL_Trans( wk->drawwin[i].printUtil, wk->printQue ) == TRUE){
+		if( PRINT_UTIL_Trans( wk->drawwin[i].printUtil, wk->printQue ) == FALSE){
 			//return GFL_PROC_RES_CONTINUE;
 		}
 		else{
-			if(wk->drawwin[i].message_req == TRUE){
+			if(que_ret == TRUE && wk->drawwin[i].message_req == TRUE){
 	//			GFL_BMP_Clear( wk->bmp, 0xff );
 				GFL_BMPWIN_TransVramCharacter( wk->drawwin[i].win );
 				wk->drawwin[i].message_req = FALSE;

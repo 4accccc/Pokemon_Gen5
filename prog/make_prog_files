@@ -110,7 +110,9 @@ SRCS	+=		test/testmode.c \
 				title/title.c \
 				title/title_control.c \
 				savedata/myitem_savedata.c \
-				test/matsuda/easy_pokelist.c
+				test/matsuda/easy_pokelist.c \
+				trade/trade.c \
+				trade/trade_main.c
 
 
 

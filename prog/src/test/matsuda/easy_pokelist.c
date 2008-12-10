@@ -160,8 +160,8 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MATSUDA_DEBUG, 0x70000 );
-	ew = GFL_PROC_AllocWork( proc, sizeof(EASY_POKELIST_WORK), HEAPID_MATSUDA_DEBUG );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_POKELIST, 0x40000 );
+	ew = GFL_PROC_AllocWork( proc, sizeof(EASY_POKELIST_WORK), HEAPID_POKELIST );
 	GFL_STD_MemClear(ew, sizeof(EASY_POKELIST_WORK));
 
 	if(epp == NULL){	//NULLの時はデバッグでの使用なのでここで作成してしまう
@@ -169,12 +169,12 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 		int i, monsno;
 		u8 mac_address[6];
 		
-		epp = GFL_HEAP_AllocClearMemory(HEAPID_MATSUDA_DEBUG, sizeof(EASY_POKELIST_PARENT));
-		epp->party = PokeParty_AllocPartyWork(HEAPID_MATSUDA_DEBUG);
+		epp = GFL_HEAP_AllocClearMemory(HEAPID_POKELIST, sizeof(EASY_POKELIST_PARENT));
+		epp->party = PokeParty_AllocPartyWork(HEAPID_POKELIST);
 		
 		//適当にポケモンを作成
 		OS_GetMacAddress(mac_address);
-		pp = PP_Create(1, 50, 123456, HEAPID_MATSUDA_DEBUG);
+		pp = PP_Create(1, 50, 123456, HEAPID_POKELIST);
 		for(i = 0; i < TEMOTI_POKEMAX; i++){
 			OS_TPrintf("monsno = %d\n", mac_address[i]);
 			monsno = (mac_address[i] == 0) ? 1 : mac_address[i];
@@ -191,7 +191,7 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 	GFL_DISP_SetDispOn();
 
 	//TCB作成
-	ew->tcbl = GFL_TCBL_Init( HEAPID_MATSUDA_DEBUG, HEAPID_MATSUDA_DEBUG, 4, 32 );
+	ew->tcbl = GFL_TCBL_Init( HEAPID_POKELIST, HEAPID_POKELIST, 4, 32 );
 
 	//VRAM設定 & BGフレーム設定
 	Local_VramSetting(ew);
@@ -199,7 +199,7 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 	Local_BGGraphicLoad(ew);
 	
 	//メッセージ関連作成
-	GFL_BMPWIN_Init( HEAPID_MATSUDA_DEBUG );
+	GFL_BMPWIN_Init( HEAPID_POKELIST );
 	GFL_FONTSYS_Init();
 	Local_MessageSetting(ew);
 	Local_MsgLoadPokeNameAll(ew, epp->party);
@@ -331,7 +331,7 @@ GFL_PROC_RESULT EasyPokeListEnd( GFL_PROC * proc, int * seq, void * pwk, void * 
 	GFL_BMPWIN_Exit();
 
 	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap(HEAPID_MATSUDA_DEBUG);
+	GFL_HEAP_DeleteHeap(HEAPID_POKELIST);
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -368,7 +368,7 @@ static void Local_VramSetting(EASY_POKELIST_WORK *ew)
 	};
 	
 	GFL_DISP_SetBank( &vramBank );
-	GFL_BG_Init( HEAPID_MATSUDA_DEBUG );
+	GFL_BG_Init( HEAPID_POKELIST );
 	GFL_BG_SetBGMode( &sysHeader );
 }
 
@@ -432,24 +432,24 @@ static void Local_BGGraphicLoad(EASY_POKELIST_WORK *ew)
 	//メイン画面
 	GFL_ARC_UTIL_TransVramBgCharacter(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NCGR, 
-		FRAME_WALL_M, 0, 0x8000, 0, HEAPID_MATSUDA_DEBUG);
+		FRAME_WALL_M, 0, 0x8000, 0, HEAPID_POKELIST);
 	GFL_ARC_UTIL_TransVramScreen(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NSCR, 
-		FRAME_WALL_M, 0, 0, 0, HEAPID_MATSUDA_DEBUG);
+		FRAME_WALL_M, 0, 0, 0, HEAPID_POKELIST);
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NCLR, 
-		PALTYPE_MAIN_BG, 0, 0, HEAPID_MATSUDA_DEBUG);
+		PALTYPE_MAIN_BG, 0, 0, HEAPID_POKELIST);
 
 	//サブ画面
 	GFL_ARC_UTIL_TransVramBgCharacter(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NCGR, 
-		FRAME_WALL_S, 0, 0x8000, 0, HEAPID_MATSUDA_DEBUG);
+		FRAME_WALL_S, 0, 0x8000, 0, HEAPID_POKELIST);
 	GFL_ARC_UTIL_TransVramScreen(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NSCR, 
-		FRAME_WALL_S, 0, 0, 0, HEAPID_MATSUDA_DEBUG);
+		FRAME_WALL_S, 0, 0, 0, HEAPID_POKELIST);
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_EASYPOKELIST, NARC_easy_pokelist_list_sub_NCLR, 
-		PALTYPE_SUB_BG, 0, 0, HEAPID_MATSUDA_DEBUG);
+		PALTYPE_SUB_BG, 0, 0, HEAPID_POKELIST);
 }
 
 //--------------------------------------------------------------
@@ -465,9 +465,9 @@ static void Local_ActorSetting(EASY_POKELIST_WORK *ew)
 	clsys_init.oamst_main = 1;	//通信アイコンの分
 	clsys_init.oamnum_main = 128-1;
 	clsys_init.tr_cell = ACT_MAX;
-	GFL_CLACT_Init(&clsys_init, HEAPID_MATSUDA_DEBUG);
+	GFL_CLACT_Init(&clsys_init, HEAPID_POKELIST);
 	
-	ew->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, HEAPID_MATSUDA_DEBUG);
+	ew->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, HEAPID_POKELIST);
 	GFL_CLACT_UNIT_SetDefaultRend(ew->clunit);
 
 	//OBJ表示ON
@@ -498,11 +498,11 @@ static void Local_MessageSetting(EASY_POKELIST_WORK *ew)
 
 	//フォント作成
 	ew->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_nftr,
-		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_MATSUDA_DEBUG );
+		GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_POKELIST );
 
-	ew->printQue = PRINTSYS_QUE_Create( HEAPID_MATSUDA_DEBUG );
+	ew->printQue = PRINTSYS_QUE_Create( HEAPID_POKELIST );
 
-	ew->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_MATSUDA_DEBUG );
+	ew->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, HEAPID_POKELIST );
 
 	//STRBUF作成
 	for(i = 0; i < TEMOTI_POKEMAX; i++){
@@ -511,7 +511,7 @@ static void Local_MessageSetting(EASY_POKELIST_WORK *ew)
 
 	//フォントパレット転送
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
-		0x20*D_FONT_PALNO, 0x20, HEAPID_MATSUDA_DEBUG);
+		0x20*D_FONT_PALNO, 0x20, HEAPID_POKELIST);
 	
 	GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 }
@@ -525,15 +525,16 @@ static void Local_MessageSetting(EASY_POKELIST_WORK *ew)
 static void Local_MessagePrintMain(EASY_POKELIST_WORK *ew)
 {
 	int i;
+	BOOL que_ret;
 	
-	PRINTSYS_QUE_Main( ew->printQue );
+	que_ret = PRINTSYS_QUE_Main( ew->printQue );
 
 	for(i = 0; i < TEMOTI_POKEMAX; i++){
-		if( PRINT_UTIL_Trans( ew->drawwin_poke[i].printUtil, ew->printQue ) == TRUE){
+		if( PRINT_UTIL_Trans( ew->drawwin_poke[i].printUtil, ew->printQue ) == FALSE){
 			//return GFL_PROC_RES_CONTINUE;
 		}
 		else{
-			if(ew->drawwin_poke[i].message_req == TRUE){
+			if(que_ret == TRUE && ew->drawwin_poke[i].message_req == TRUE){
 	//			GFL_BMP_Clear( ew->bmp, 0xff );
 				GFL_BMPWIN_TransVramCharacter( ew->drawwin_poke[i].win );
 				ew->drawwin_poke[i].message_req = FALSE;

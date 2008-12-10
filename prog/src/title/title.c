@@ -688,15 +688,16 @@ static void Local_MessageSetting(TITLE_WORK *tw)
 static void Local_MessagePrintMain(TITLE_WORK *tw)
 {
 	int i;
+	BOOL que_ret;
 	
-	PRINTSYS_QUE_Main( tw->printQue );
+	que_ret = PRINTSYS_QUE_Main( tw->printQue );
 
 	for(i = 0; i < WIN_MAX; i++){
-		if( PRINT_UTIL_Trans( tw->drawwin[i].printUtil, tw->printQue ) == TRUE){
+		if( PRINT_UTIL_Trans( tw->drawwin[i].printUtil, tw->printQue ) == FALSE){
 			//return GFL_PROC_RES_CONTINUE;
 		}
 		else{
-			if(tw->drawwin[i].message_req == TRUE){
+			if(que_ret == TRUE && tw->drawwin[i].message_req == TRUE){
 	//			GFL_BMP_Clear( tw->bmp, 0xff );
 				GFL_BMPWIN_TransVramCharacter( tw->drawwin[i].win );
 				tw->drawwin[i].message_req = FALSE;

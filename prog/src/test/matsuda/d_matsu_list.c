@@ -28,6 +28,8 @@
 #include "pokeicon/pokeicon.h"
 
 #include "item/item.h"
+#include "poke_tool/pokeparty.h"
+#include "trade/trade_main.h"
 
 
 //==============================================================================
@@ -109,6 +111,7 @@ static const D_MENULIST DebugMenuList[] = {
 	{DM_MSG_MENU002, &DebugMatsudaNetProcData},	//ワイヤレス通信テスト
 	{DM_MSG_MENU001, &DebugMatsudaMainProcData},	//セーブテスト
 	{DM_MSG_MENU005, &EasyPokeListData},	//簡易ポケモンリスト
+	{DM_MSG_MENU006, &TradeMainProcData},	//簡易ポケモンリスト
 };
 
 
@@ -250,14 +253,15 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 	D_MATSU_WORK* wk = mywk;
 	BOOL ret = 0;
 	int i;
+	BOOL que_ret;
 	
 	GFL_TCBL_Main( wk->tcbl );
-	PRINTSYS_QUE_Main( wk->printQue );
-	if( PRINT_UTIL_Trans( wk->drawwin.printUtil, wk->printQue ) == TRUE){
+	que_ret = PRINTSYS_QUE_Main( wk->printQue );
+	if( PRINT_UTIL_Trans( wk->drawwin.printUtil, wk->printQue ) == FALSE){
 		//return GFL_PROC_RES_CONTINUE;
 	}
 	else{
-		if(wk->drawwin.message_req == TRUE){
+		if(que_ret == TRUE && wk->drawwin.message_req == TRUE){
 //			GFL_BMP_Clear( wk->bmp, 0xff );
 			GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
 			wk->drawwin.message_req = FALSE;
