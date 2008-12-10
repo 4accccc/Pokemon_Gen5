@@ -934,7 +934,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 			{
-				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, sizeof(TEST_PACKET), &(wk->packet) );
+				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
 				(*seq)++;
 				break;
 			}
