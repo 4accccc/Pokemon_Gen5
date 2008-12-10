@@ -29,6 +29,8 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
+#include "test/performance.h"
+
 //#define MCS_ENABLE		//MCSを使用する
 #define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 
@@ -631,11 +633,13 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_AA, &scale );
 			Num16Print( wk, scale.x, BMPWIN_SCALE_M );
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_ON );
+			DEBUG_PerformanceSetActive( FALSE );
 		}
 		else{
 			del_pokemon( wk );
 			set_pokemon( wk );
 			GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
+			DEBUG_PerformanceSetActive( TRUE );
 		}
 	}
 #else

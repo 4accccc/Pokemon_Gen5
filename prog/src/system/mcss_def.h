@@ -86,7 +86,6 @@ struct _MCSS_SYS_WORK
 	NNSG2dRendererInstance	mcss_render;		//描画用 Render　
 	NNSG2dRenderSurface		mcss_surface;		//メイン画面 Surface
 #endif //USE_RENDER
-	GFL_TCBSYS				*mcss_tcb_sys;		//テクスチャ転送のためのVBlankで呼ばれるタスクのシステムポインタ
 	int						texAdrs;			//テクスチャ転送開始アドレス
 	int						palAdrs;			//テクスチャパレット転送開始アドレス
 	int						heapID;				//使用するヒープID

@@ -17,6 +17,9 @@
 
 #include "arc_def.h"
 #include "pokegra/pokegra_wb.naix"
+#include "battgra/battgra_wb.naix"
+
+extern	NNSG2dImagePaletteProxy		shadow_palette;
 
 //============================================================================================
 /**
@@ -25,6 +28,9 @@
 //============================================================================================
 
 #define	POKE_MCSS_MAX	( 6 )	//POKE_MCSSで管理するMCSSのMAX値
+
+#define	POKE_MCSS_DEFAULT_SHIFT	( FX32_SHIFT - 4 )					//ポリゴン１辺の基準の長さにするシフト値
+#define	POKE_MCSS_DEFAULT_LINE	( 1 << POKE_MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
 
 //ポケモン一体を構成するMCSS用ファイルの構成
 enum{
@@ -70,10 +76,12 @@ enum{
 
 struct _POKE_MCSS_WORK
 {
-	GFL_TCBSYS		*tcb_sys;
-	MCSS_SYS_WORK	*mcss_sys;
-	MCSS_WORK		*mcss[ POKE_MCSS_POS_MAX ];
-	HEAPID			heapID;
+	GFL_TCBSYS				*tcb_sys;
+	MCSS_SYS_WORK			*mcss_sys;
+	MCSS_WORK				*mcss[ POKE_MCSS_POS_MAX ];
+	NNSG2dImageProxy		image_proxy;		//影のテクスチャプロキシ
+	NNSG2dImagePaletteProxy	palette_proxy;		//影のパレットプロキシ
+	HEAPID					heapID;
 };
 
 typedef struct
@@ -81,6 +89,17 @@ typedef struct
 	POKE_MCSS_WORK		*pmw;
 	EFFTOOL_MOVE_WORK	emw;
 }POKE_MCSS_TCB_WORK;
+
+typedef struct	
+{
+	NNSG2dCharacterData*	pCharData;			//テクスチャキャラ
+	NNSG2dPaletteData*		pPlttData;			//テクスチャパレット
+	void					*pBufChar;			//テクスチャキャラバッファ
+	void					*pBufPltt;			//テクスチャパレットバッファ
+	int						chr_ofs;
+	int						pal_ofs;
+	POKE_MCSS_WORK			*pmw;
+}TCB_LOADRESOURCE_WORK;
 
 //============================================================================================
 /**
@@ -105,9 +124,13 @@ void			POKE_MCSS_MovePosition( POKE_MCSS_WORK *pmw, int position, int move_type,
 void			POKE_MCSS_MoveScale( POKE_MCSS_WORK *pmw, int position, int move_type, VecFx32 *scale, int speed, int wait, int count );
 
 static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
+static	void	POKE_MCSS_LoadShadowResource( POKE_MCSS_WORK *pmw );
+static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 
 static	void	TCB_POKE_MCSS_Move( GFL_TCB *tcb, void *work );
 static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work );
+
+static	void	POKE_MCSS_DrawShadow( POKE_MCSS_WORK *pmw );
 
 //============================================================================================
 /**
@@ -153,8 +176,10 @@ POKE_MCSS_WORK	*POKE_MCSS_Init( GFL_TCBSYS	*tcb_sys, HEAPID heapID )
 {
 	POKE_MCSS_WORK *pmw = GFL_HEAP_AllocClearMemory( heapID, sizeof( POKE_MCSS_WORK ) );
 
-	pmw->mcss_sys = MCSS_Init( POKE_MCSS_MAX, GFUser_VIntr_GetTCBSYS(), heapID );
+	pmw->mcss_sys = MCSS_Init( POKE_MCSS_MAX, heapID );
 	pmw->tcb_sys  = tcb_sys;
+
+	POKE_MCSS_LoadShadowResource( pmw );
 
 	return pmw;
 }
@@ -194,6 +219,7 @@ void	POKE_MCSS_Main( POKE_MCSS_WORK *pmw )
 void	POKE_MCSS_Draw( POKE_MCSS_WORK *pmw )
 {
 	MCSS_Draw( pmw->mcss_sys );
+//	POKE_MCSS_DrawShadow( pmw );
 }
 
 //============================================================================================
@@ -219,7 +245,10 @@ void	POKE_MCSS_Add( POKE_MCSS_WORK *pmw, const POKEMON_PARAM *pp, int position )
 									  poke_pos_table[ position ].y,
 									  poke_pos_table[ position ].z,
 									  &maw );
-	VEC_Set( &scale, poke_scale_table[ position ], poke_scale_table[ position ], FX32_ONE );
+	VEC_Set( &scale, 
+			 poke_scale_table[ position ], 
+			 poke_scale_table[ position ],
+			 FX32_ONE );
 
 	MCSS_SetScale( pmw->mcss[ position ], &scale );
 }
@@ -486,6 +515,72 @@ static	void	POKE_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int 
 
 //============================================================================================
 /**
+ *	影リソース読み込み
+ */
+//============================================================================================
+static	void	POKE_MCSS_LoadShadowResource( POKE_MCSS_WORK *pmw )
+{
+	NNS_G2dInitImageProxy( &pmw->image_proxy );
+//	NNS_G2dInitImagePaletteProxy( &pmw->palette_proxy );
+	NNS_G2dInitImagePaletteProxy( &shadow_palette );
+    //
+    // VRAM 関連の初期化
+    //
+    {
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( pmw->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->chr_ofs = 0x18000;
+		tlw->pal_ofs = 0x200;
+		tlw->pmw	 = pmw;
+		// load character data for 3D (software sprite)
+		{
+			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCBR, FALSE, &tlw->pCharData, pmw->heapID );
+			GF_ASSERT( tlw->pBufChar != NULL);
+        }
+
+		// load palette data
+		{
+			tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData, pmw->heapID );
+			GF_ASSERT( tlw->pBufPltt != NULL);
+
+        }
+		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * リソースをVRAMに転送
+ */
+//--------------------------------------------------------------------------
+static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
+{
+	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
+
+	// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
+	NNS_G2dLoadImage2DMapping(
+		tlw->pCharData,
+		tlw->chr_ofs,
+		NNS_G2D_VRAM_TYPE_3DMAIN,
+		&tlw->pmw->image_proxy );
+
+	GFL_HEAP_FreeMemory( tlw->pBufChar );
+
+	// Loading For 3D Graphics Engine.
+	NNS_G2dLoadPalette(
+		tlw->pPlttData,
+		tlw->pal_ofs,
+		NNS_G2D_VRAM_TYPE_3DMAIN,
+//		&tlw->pmw->palette_proxy );
+		&shadow_palette );
+
+	GFL_HEAP_FreeMemory( tlw->pBufPltt );
+
+	GFL_HEAP_FreeMemory( work );
+	GFL_TCB_DeleteTask( tcb );
+}
+
+//============================================================================================
+/**
  *	ポケモン移動タスク
  */
 //============================================================================================
@@ -525,4 +620,82 @@ static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work )
 		GFL_TCB_DeleteTask( tcb );
 	}
 }
+
+//============================================================================================
+/**
+ *	ポケモンの影描画
+ */
+//============================================================================================
+static	void	POKE_MCSS_DrawShadow( POKE_MCSS_WORK *pmw )
+{
+    NNSG2dImageProxy		*image_p	= &pmw->image_proxy;
+    NNSG2dImagePaletteProxy	*palette_p	= &pmw->palette_proxy;
+	int	i;
+
+	G3_PushMtx();
+
+	G3_MtxMode( GX_MTXMODE_TEXTURE );
+	G3_Identity();
+	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+
+	G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
+
+	// for software sprite-setting
+	{
+		G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31),		// diffuse
+								GX_RGB(16, 16, 16),		// ambient
+								TRUE					// use diffuse as vtx color if TRUE
+								);
+
+		G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16),		// specular
+								GX_RGB( 0,  0,  0),		// emission
+                                FALSE					// use shininess table if TRUE
+                                );
+
+		G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
+					   GX_POLYGONMODE_MODULATE,			// modulation mode
+					   GX_CULL_NONE,					// cull back
+					   0,								// polygon ID(0 - 63)
+					   31,								// alpha(0 - 31)
+					   0								// OR of GXPolygonAttrMisc's value
+					   );
+	}
+	G3_TexImageParam( image_p->attr.fmt,
+					  GX_TEXGEN_TEXCOORD,
+					  image_p->attr.sizeS,
+					  image_p->attr.sizeT,
+					  GX_TEXREPEAT_ST,
+					  GX_TEXFLIP_NONE,
+					  image_p->attr.plttUse,
+					  image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
+	G3_TexPlttBase( palette_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
+				    palette_p->fmt);
+
+	for( i = 0 ; i < POKE_MCSS_MAX ; i++ ){
+		if( pmw->mcss[ i ] == NULL ) continue;
+
+		G3_PushMtx();
+
+		G3_Translate( poke_pos_table[ i ].x - POKE_MCSS_DEFAULT_LINE * 40, 
+					  poke_pos_table[ i ].y,
+					  poke_pos_table[ i ].z + POKE_MCSS_DEFAULT_LINE * 20 );
+		G3_Scale( FX32_ONE * 80, FX32_ONE, FX32_ONE * 40 );
+
+		G3_Begin(GX_BEGIN_QUADS);
+		G3_TexCoord( 0, 0 );
+		G3_Vtx( 0, 0, 0 );
+		G3_TexCoord( FX32_ONE * 80,	0 );
+		G3_Vtx( POKE_MCSS_DEFAULT_LINE, 0, 0 );
+		G3_TexCoord( FX32_ONE * 80,	FX32_ONE * 40 );
+		G3_Vtx( POKE_MCSS_DEFAULT_LINE, 0, -POKE_MCSS_DEFAULT_LINE );
+		G3_TexCoord( 0,	FX32_ONE * 40 );
+		G3_Vtx( 0, 0, -POKE_MCSS_DEFAULT_LINE );
+		G3_End();
+
+		G3_PopMtx(1);
+	}
+
+	G3_PopMtx(1);
+}
+
 
