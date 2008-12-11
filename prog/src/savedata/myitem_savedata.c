@@ -825,7 +825,7 @@ BAG_CURSOR * MYITEM_BagCursorAlloc( u32 heapID )
 	BAG_CURSOR * cursor;
 
 	cursor = GFL_HEAP_AllocMemory( heapID, sizeof(BAG_CURSOR) );
-	MI_CpuClear16( cursor, sizeof(BAG_CURSOR) );
+	GFL_STD_MemClear16( cursor, sizeof(BAG_CURSOR) );
 	return cursor;
 }
 

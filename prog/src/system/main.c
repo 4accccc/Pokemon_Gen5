@@ -22,6 +22,7 @@
 #include "print/global_msg.h"
 #include "poke_tool/poke_tool.h"
 #include "system/net_err.h"
+#include "savedata/config.h"
 
 #ifdef PM_DEBUG
 #include "test/performance.h"
@@ -171,6 +172,9 @@ static	void	GameInit(void)
 
 	//サウンドストリーミング再生システム
 	SND_STRM_Init(GFL_HEAPID_SYSTEM);
+
+	//キーコントロールモード設定
+	CONFIG_SYSTEM_KyeControlTblSetting();
 }
 
 //------------------------------------------------------------------

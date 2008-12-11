@@ -8,12 +8,14 @@
 //==============================================================================
 #include <gflib.h>
 #include <backup_system.h>
+#include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/contest_savedata.h"
 #include "savedata/test_savedata.h"
 #include "savedata/box_savedata.h"
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
+#include "playerdata_local.h"
 
 
 //==============================================================================
@@ -136,6 +138,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_MYPOKE,
 		(FUNC_GET_SIZE)PokeParty_GetWorkSize,
 		(FUNC_INIT_WORK)PokeParty_InitWork,
+	},
+	{	//プレイヤーデータ
+		GMDATA_ID_PLAYER_DATA,
+		(FUNC_GET_SIZE)PLAYERDATA_GetWorkSize,
+		(FUNC_INIT_WORK)PLAYERDATA_Init,
 	},
 };
 
