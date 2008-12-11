@@ -70,6 +70,7 @@ SRCS	+=		test/testmode.c \
 				system/bmp_menu.c \
 				system/bmp_menulist.c \
 				system/bmp_cursor.c \
+				system/snd_strm.c \
 				battle/btl_main.c \
 				battle/btl_server.c \
 				battle/btl_server_cmd.c \

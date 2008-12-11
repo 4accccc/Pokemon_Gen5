@@ -14,6 +14,8 @@
 #include "textprint.h"
 #include "arc_def.h"
 #include "system/g3d_tool.h"
+#include "system/snd_strm.h"
+#include "arc/snd_strm.naix"
 
 #include "print/gf_font.h"
 
@@ -169,7 +171,9 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 			heapID, sizeof(FLD_G3D_MAPPER_DATA) * 32 * 32);
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
-
+    //サウンド用処理
+	SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_Firestarter_swav, SND_STRM_PCM8, SND_STRM_8KHZ, GFL_HEAPID_APP );
+    SND_STRM_Play();
 	return fieldWork;
 }
 
@@ -185,7 +189,9 @@ void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )
 {
-	GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
+    SND_STRM_Stop();
+    SND_STRM_Release();
+    GFL_HEAP_FreeMemory( fldWork->pMapMatrixBuf );
 
 	//FIXME:フィールドを抜けるときだけ、Commのデータ領域の開放をしたい
 	FIELD_COMM_MAIN_TermSystem( fldWork->commSys , FALSE );

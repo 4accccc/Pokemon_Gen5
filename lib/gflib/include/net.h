@@ -9,8 +9,8 @@ extern "C" {
  * @date    2006.11.4
  */
 //=============================================================================
-#ifndef __NET_H__
-#define __NET_H__
+#ifndef __GFL_NET_H__
+#define __GFL_NET_H__
 
 #include "ui.h"
 
@@ -791,7 +791,7 @@ extern void debugcheck(u32* data,int size );
 #include "net_handle.h"
 #include "net_icondata.h"
 
-#endif // __NET_H__
+#endif // __GFL_NET_H__
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -10,7 +10,8 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
+#include <gflib.h>
+//#include "common.h"
 
 #include "system/snd_strm.h"
 

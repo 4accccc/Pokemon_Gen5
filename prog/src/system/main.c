@@ -15,6 +15,7 @@
 #include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
+#include "system\snd_strm.h"
 #include "savedata/save_control.h"
 #include "print/printsys.h"
 #include "print/global_font.h"
@@ -33,6 +34,7 @@ static	void	SkeltonHBlankFunc(void);
 static	void	SkeltonVBlankFunc(void);
 static	void	GameInit(void);
 static	void	GameMain(void);
+static	void	GameExit(void);
 
 
 
@@ -95,6 +97,9 @@ void NitroMain(void)
 		// ※gflibに適切な関数が出来たら置き換えてください
 		OS_WaitIrq(TRUE,OS_IE_V_BLANK);
 	}
+
+    GameExit();
+    
 }
 
 //------------------------------------------------------------------
@@ -164,6 +169,8 @@ static	void	GameInit(void)
 	/* poketoolシステム初期化 */
 	POKETOOL_InitSystem( GFL_HEAPID_SYSTEM );
 
+	//サウンドストリーミング再生システム
+	SND_STRM_Init(GFL_HEAPID_SYSTEM);
 }
 
 //------------------------------------------------------------------
@@ -186,4 +193,15 @@ static	void	GameMain(void)
 	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG)){
 		NetErr_ErrorSet();
 	}
+	SND_STRM_Main();
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief		ゲームごとの終了処理
+ */
+//------------------------------------------------------------------
+static	void	GameExit(void)
+{
+	SND_STRM_Exit();
 }
