@@ -198,11 +198,6 @@ void LeaveCriticalSection( void )
 
 /*===========================================================================*/
 
-// GGID はアプリケーション毎に割り当てられる MP 通信用のユニーク ID
-//   実アプリケーションでは、任天堂からの GGID の割り当てを受ける必要があります。
-//   ここでは NITRO-SDK の dataShare-Model デモと同一の GGID を使用します。
-#define MY_GGID	 (0x346)//0x003fff13
-
 // MP 通信の設定
 static MPConfig sMpConfig =
 {
@@ -707,7 +702,7 @@ s32 TransToLobby( void )
 	
 	(void)NETMemSet(&sMyGameInfo,0,sizeof(DS_COMM_USERDATAINFO));
 	NETMemCpy(sMyGameInfo.FixHead, "POKEWB", _BEACON_FIXHEAD_SIZE*sizeof(u8));
-	sMyGameInfo.serviceNo = 30;
+	sMyGameInfo.serviceNo = WB_NET_FIELDMOVE_SERVICEID;
 	sMyGameInfo.connectNum = 0;
 	(void)NETMemCpy( sMpConfig.userGameInfo, &sMyGameInfo, sizeof(DS_COMM_USERDATAINFO) );
 	sMpConfig.userGameInfoLength = sizeof(DS_COMM_USERDATAINFO);

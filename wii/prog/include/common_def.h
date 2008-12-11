@@ -11,6 +11,13 @@ extern "C" {
 #include <revolution/enc.h>
 #include "crc.h"
 
+
+// GGID はアプリケーション毎に割り当てられる MP 通信用のユニーク ID
+//   実アプリケーションでは、任天堂からの GGID の割り当てを受ける必要があります。
+//   ここでは NITRO-SDK の dataShare-Model デモと同一の GGID を使用します。
+#define MY_GGID	 (0x444)//0x003fff13
+#define WB_NET_FIELDMOVE_SERVICEID	(2)//GameServiceID
+
 #define	 MY_NICKNAME		 L"Wii" // 子機の親機選択画面で表示するニックネーム
 #define	 MY_NICKNAME_LENGTH  3	  // MY_NICKNAME の UTF16BE での文字数 (最大10文字)
 

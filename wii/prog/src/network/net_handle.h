@@ -1,6 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 //=============================================================================
 /**
  * @file	net_handle.h
@@ -9,10 +6,13 @@ extern "C" {
  * @date    2008.2.26
  */
 //=============================================================================
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __NET_HANDLE_H__
 #define __NET_HANDLE_H__
 
-#include "net.h"
 typedef struct _GFL_NETHANDLE2 GFL_NETHANDLE2;
 
 
@@ -24,6 +24,8 @@ struct _GFL_NETHANDLE2{
     void* pInfomation;       ///<ユーザー同士が交換するデータのポインタ
     FUNC2* pCallback;
 };
+
+
 
 
 

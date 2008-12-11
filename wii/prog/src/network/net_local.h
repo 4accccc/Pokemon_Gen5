@@ -6,6 +6,10 @@
  * @date    2008.3.4
  */
 //=============================================================================
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __NET_LOCAL_H__
 #define __NET_LOCAL_H__
 
@@ -56,3 +60,7 @@ extern void GFI_NET_HANDLE_DeleteAll(GFL_NETSYS* pNet);
 
 #endif //__NET_LOCAL_H__
 
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

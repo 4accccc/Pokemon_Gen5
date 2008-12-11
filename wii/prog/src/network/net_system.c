@@ -331,9 +331,8 @@ static void _endCallBack(int command,int size,void* pTemp, _RECV_COMMAND_PACK* p
 static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV_COMMAND_PACK* pRecvComm)
 {
 	int mcSize = _getUserMaxSendByte();
-	u8 sizeByte;
 	int size;
-	u8 command;
+	u16 command;
 	int bkPos;
 	int realbyte;
 	int sendID;
@@ -348,8 +347,12 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
 			command = pRecvComm->valCommand;
 		}
 		else{
-			command = GFL_NET_RingGetByte(pRing);
-			if(command == GFL_NET_CMD_NONE){
+            if( GFL_NET_RingDataSize(pRing) < 2 ){  // 残りデータが無い場合消す
+                GFL_NET_RingGetByte(pRing);
+                break;
+            }
+            command = GFL_NET_RingGetShort(pRing);
+            if(command == GFL_NET_CMD_NONE){
 				continue;
 			}
 		}
@@ -362,16 +365,11 @@ static void _recvDataFuncSingle(RingBuffWork* pRing, int netID, u8* pTemp, _RECV
 			if(_pComm->bError){
 				return;
 			}
-			if( GFL_NET_RingDataSize(pRing) < 4 ){  // 残りデータが4以下だったら次回
+            if( GFL_NET_RingDataSize(pRing) < _GFL_NET_QUEUE_HEADERBYTE ){  // 残りデータがヘッダーだけだったら次回
 				pRing->startPos = bkPos;
 				break;
 			}
-			size = GFL_NET_RingGetByte(pRing);
-			if(size & 0x80){   //１２７以上は最上位BITを立てて２バイトで格納
-				size = (size & 0x7f);
-				size *= 0x100;
-				size += GFL_NET_RingGetByte(pRing);
-			}
+			size = GFL_NET_RingGetShort(pRing);
 			pRecvComm->realSize = size;
 			pRecvComm->tblSize = size;
 			pRecvComm->sendID = netID;

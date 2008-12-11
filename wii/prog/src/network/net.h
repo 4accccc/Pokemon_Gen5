@@ -6,22 +6,47 @@
  * @date    2006.11.4
  */
 //=============================================================================
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 #ifndef GFL_NET_H__
 #define GFL_NET_H__
+
 #include "common_def.h"
 
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
-#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
+#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
+
+//#if defined(DEBUG_ONLY_FOR_ohno)
+//#define BEACON_TEST (0)
+//#else
+//#define BEACON_TEST    (0) 
+//#endif
 
 // デバッグ用決まり文句----------------------
+#if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#else
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
 //#undef GFL_NET_DEBUG
 //#define GFL_NET_DEBUG   (1)
 //#endif  //DEBUG_ONLY_FOR_ohno
 
+#ifndef NET_PRINT
+#if GFL_NET_DEBUG
+#define NET_PRINT(...) \
+  (void) ((OS_TPrintf(__VA_ARGS__)))
+#else   //GFL_NET_DEBUG
+#define NET_PRINT(...)           ((void) 0)
+#endif  // GFL_NET_DEBUG
+#endif  //GFL_NET_PRINT
 // デバッグ用決まり文句----------------------
 // データダンプ
 #ifdef GFL_NET_DEBUG
@@ -30,6 +55,19 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 #else
 #define DEBUG_DUMP(a,l,s)       ((void) 0)
 #endif
+
+// デバッグ用決まり文句----------------------
+#define GFL_IRC_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+
+#ifndef IRC_PRINT
+#if GFL_IRC_DEBUG
+#define IRC_PRINT(...) \
+  (void) ((OS_TPrintf(__VA_ARGS__)))
+#else   //GFL_IRC_DEBUG
+#define IRC_PRINT(...)           ((void) 0)
+#endif  // GFL_IRC_DEBUG
+#endif
+
 
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
@@ -205,11 +243,7 @@ typedef struct{
   u8 maxBeaconNum;          ///< 最大ビーコン収集数  = wifiフレンドリスト数
   u8 bCRC;                  ///< CRCを自動計算するかどうか TRUEの場合すべて計算する
   u8 bMPMode;               ///< MP通信モードかどうか
-#if 0
-  u8 bWiFi;                 ///< Wi-Fi通信をするかどうか
-#else
   u8 bNetType;              ///< 使用する通信を指定(GFL_NET_TYPE_???)	※check
-#endif
   u8 bTGIDChange;           ///< 親が再度初期化した場合、つながらないようにする場合TRUE
   GameServiceID gsid;                 ///< ゲームサービスID  通信の種類  バトルやユニオンとかで変更する値
 } GFLNetInitializeStruct;
@@ -486,7 +520,7 @@ extern BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
+extern BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock);
 
 
 //==============================================================================
@@ -751,7 +785,9 @@ extern void debugcheck(u32* data,int size );
 
 #include "net_command.h"
 #include "net_handle.h"
-#include "net_icondata.h"
 
 #endif // GFL_NET_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

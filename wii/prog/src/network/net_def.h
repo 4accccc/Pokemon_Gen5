@@ -7,6 +7,10 @@
  */
 //*****************************************************************************
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __NET_DEF_H__
 #define	__NET_DEF_H__
 
@@ -72,32 +76,6 @@ enum _negotiationType {
 };
 
 
-
-// 個人的なデバッグの為のプリント
-#ifndef OHNO_PRINT
-#if 0 //defined(DEBUG_ONLY_FOR_ohno)
-//#ifdef  SDK_DEBUG
-
-#if 0
-#define OHNO_SP_PRINT(...) \
-  (void) ((OS_Printf(__VA_ARGS__)))
-#define OHNO_PRINT(...)           ((void) 0)
-
-#else
-#define OHNO_PRINT(...) \
-  (void) ((OS_Printf(__VA_ARGS__)))
-#define OHNO_SP_PRINT(...)           ((void) 0)
-#endif
-
-#else   //DEBUG_ONLY_FOR_ohno
-
-#define OHNO_PRINT(...)           ((void) 0)
-#define OHNO_SP_PRINT(...)           ((void) 0)
-
-#endif  // DEBUG_ONLY_FOR_ohno
-#endif  //OHNO_PRINT
-
-
 // pNetHandleを受け取る
 extern GFL_NETHANDLE* _NETHANDLE_GetSYS(void);
 // pNetHandleからToolsysを受け取る
@@ -135,3 +113,7 @@ extern int GFI_NET_GetFriendNumMax(void);
 #endif //GFL_NET_WIFI
  
 #endif	//__NET_DEF_H__
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

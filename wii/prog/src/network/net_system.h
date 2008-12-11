@@ -6,6 +6,9 @@
  * @date    2005.07.08
  */
 //=============================================================================
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef _NET_SYSTEM_H_
 #define _NET_SYSTEM_H_
@@ -512,3 +515,6 @@ typedef struct{
 
 #endif // _NET_SYSTEM_H_
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

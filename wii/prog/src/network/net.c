@@ -11,7 +11,6 @@
 #include "net_local.h"
 #include "net_system.h"
 #include "net_command.h"
-#include "net_state.h"
 
 #include "tool/net_ring_buff.h"
 #include "tool/net_queue.h"
@@ -59,7 +58,8 @@ void GFL_NET_Init(const GFLNetInitializeStruct* pNetInit, NetStepEndCallback cal
         pNet->pWork = pWork;
         //GFL_NET_StateDeviceInitialize(pNetInit->netHeapID, callback);
         GFI_NET_HANDLE_InitAll(pNet);
-        GFL_NET_COMMAND_Init( pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNet->pWork);
+        const int cokind = (int)pNetInit->gsid*0x100;
+        GFL_NET_COMMAND_Init(cokind , pNetInit->recvFuncTable, pNetInit->recvFuncTableNum, pNet->pWork);
     }
     OS_TPrintf("GFL_NET_Init 通信開始\n");
 }
@@ -145,7 +145,7 @@ BOOL GFL_NET_SendData(GFL_NETHANDLE* pNet,const u16 sendCommand,const u16 size,c
  * @retval  FALSE  失敗の場合
  */
 //==============================================================================
-BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock)
+BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u16 sendCommand, const u32 size,const void* data, const BOOL bFast, const BOOL bRepeat, const BOOL bSendBuffLock)
 {
     if((GFL_NET_IsSendEnable(pNet)==FALSE) && (sendCommand >= GFL_NET_CMD_COMMAND_MAX)){
         // 認証が終わらないのに、メイン以外のコマンドを送ることはできない
@@ -154,7 +154,7 @@ BOOL GFL_NET_SendDataEx(GFL_NETHANDLE* pNet,const NetID sendID,const u8 sendComm
     if(bRepeat && GFL_NET_SystemIsSendCommand(sendCommand,GFL_NET_HANDLE_GetNetHandleID(pNet))){
         return FALSE;
     }
-    return GFL_NET_SystemSendData(sendCommand, data, size, bFast, GFL_NET_HANDLE_GetNetHandleID(pNet) , sendID, bSendBuffLock);
+    return GFL_NET_SystemSendData((int)sendCommand, data, size, bFast, GFL_NET_HANDLE_GetNetHandleID(pNet) , sendID, bSendBuffLock);
 }
 
 //==============================================================================
