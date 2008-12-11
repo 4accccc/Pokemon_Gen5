@@ -59,7 +59,7 @@ MK_GROUNDTOOL = mkmapdmy.rb
 #---------------------------------------------------------------
 #	データ生成ルール
 #---------------------------------------------------------------
-.SUFFIXES: .3dppack .nsbmd .nsbtx .3dmd .bin
+.SUFFIXES: .3dppack .nsbmd .nsbtx
 
 #nsbmd
 %.nsbmd: ../$(DIR_LANDRES)/%.imd
@@ -76,12 +76,15 @@ MK_GROUNDTOOL = mkmapdmy.rb
 	@echo create 3dppack $@
 	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
 
-#3dppack imd,bin
-%.3dppack: ../$(DIR_LANDRES)/%.imd ../$(DIR_LANDRES)/%.bin
+#3dppack nsbmd,nsbtx,bin
+%.3dppack: ../$(DIR_G3DCVTR)/%.nsbmd ../$(DIR_G3DCVTR)/%.nsbtx ../$(DIR_LANDRES)/%.bin
 	@echo create 3dppack $@
 	$(BINLINKER) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbmd) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtx) $(subst $(DIR_3DPPACK),$(DIR_G3DCVTR)/,$*.nsbtp) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.bin) $(subst $(DIR_3DPPACK),$(DIR_LANDRES)/,$*.3dmd) $*.3dppack 3D
 
-.PHONY: do-build clean landlist
+#---------------------------------------------------------------
+#	ターゲット
+#---------------------------------------------------------------
+.PHONY: do-build clean
 
 #---------------------------------------------------------------
 #	buildルール
