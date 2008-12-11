@@ -89,13 +89,13 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
 
 #ifdef PM_DEBUG
-extern GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
 #endif
 
 #endif		// __WFLBY_ROOM_H__

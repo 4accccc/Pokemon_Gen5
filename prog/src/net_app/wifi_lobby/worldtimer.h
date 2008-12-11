@@ -43,13 +43,13 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
 
 #ifdef  PM_DEBUG
-extern GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
 #endif
 
 

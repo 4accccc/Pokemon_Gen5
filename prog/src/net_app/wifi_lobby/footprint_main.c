@@ -567,7 +567,7 @@ static struct{
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	FOOTPRINT_SYS *fps;
 	
@@ -587,7 +587,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq )
 
 	fps = GFL_PROC_AllocWork(proc, sizeof(FOOTPRINT_SYS), HEAPID_FOOTPRINT );
 	GFL_STD_MemClear(fps, sizeof(FOOTPRINT_SYS));
-	fps->parent_work = PROC_GetParentWork(proc);
+	fps->parent_work = pwk;
 #ifdef PM_DEBUG
 	if(fps->parent_work->wflby_sys == NULL){
 		fps->sv = fps->parent_work->debug_sv;
@@ -736,9 +736,9 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	FOOTPRINT_SYS * fps  = PROC_GetWork( proc );
+	FOOTPRINT_SYS * fps  = mywk;
 	enum{
 		SEQ_INIT,
 		SEQ_IN_WIPE_WAIT,
@@ -1000,9 +1000,9 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	FOOTPRINT_SYS * fps  = PROC_GetWork( proc );
+	FOOTPRINT_SYS * fps  = mywk;
 
 	TCB_Delete(fps->update_tcb);
 
@@ -1173,10 +1173,10 @@ static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
 		GF_Disp_SetBank( &vramSetTable );
 
 		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 	}
 
 	// BG SYSTEM
@@ -1326,8 +1326,8 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, fps->bgl, 
 		FOOT_SUBFRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
 	panel_scrn = GF_BGL_ScreenAdrsGet(fps->bgl, FOOT_SUBFRAME_PLATE);
-	MI_CpuCopy16(panel_scrn, fps->namelist_scrn, NAMELIST_SCRN_SIZE);
-	MI_CpuClear16(panel_scrn, NAMELIST_SCRN_SIZE);
+	GFL_STD_MemCopy16(panel_scrn, fps->namelist_scrn, NAMELIST_SCRN_SIZE);
+	GFL_STD_MemClear16(panel_scrn, NAMELIST_SCRN_SIZE);
 	
 	{
 		int win_type;
@@ -1704,10 +1704,10 @@ static BOOL OBJFootCharRewrite(int monsno, int form_no, CATS_ACT_PTR cap, ARCHAN
 	image = CLACT_ImageProxyGet(cap->act);
 	
 	//書き込み
-	MI_CpuCopy16(read_up, (void*)((u32)obj_vram
+	GFL_STD_MemCopy16(read_up, (void*)((u32)obj_vram
 		+ image->vramLocation.baseAddrOfVram[vram_type]), 
 		0x20 * 2);
-	MI_CpuCopy16(read_bottom, (void*)((u32)obj_vram + 0x20*2
+	GFL_STD_MemCopy16(read_bottom, (void*)((u32)obj_vram + 0x20*2
 		+ image->vramLocation.baseAddrOfVram[vram_type]), 
 		0x20 * 2);
 	
@@ -2151,7 +2151,7 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 					
 					panel_scrn = GF_BGL_ScreenAdrsGet(fps->bgl, FOOT_SUBFRAME_PLATE);
 					for(y = Sub_ListScrnRange[i][1]; y < Sub_ListScrnRange[i][1] + Sub_ListScrnRange[i][3]; y++){
-						MI_CpuCopy16(&fps->namelist_scrn[y*32 + Sub_ListScrnRange[i][0]], 
+						GFL_STD_MemCopy16(&fps->namelist_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							&panel_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							Sub_ListScrnRange[i][2] * 2);
 					}
@@ -2277,7 +2277,7 @@ static void Footprint_SelectInkPaletteFade(FOOTPRINT_SYS_PTR fps, int hit_pos)
 	def_pal = PaletteWorkDefaultWorkGet(fps->pfd, FADE_MAIN_OBJ);
 	trans_pal = PaletteWorkTransWorkGet(fps->pfd, FADE_MAIN_OBJ);
 	//パレットをまず元通りにする
-	MI_CpuCopy16(&def_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], 
+	GFL_STD_MemCopy16(&def_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], 
 		&trans_pal[PALOFS_INK * 16 + COLOR_NO_INK_START], POKEMON_TEMOTI_MAX * 2);
 	//対象位置のパレットを暗くする
 	SoftFade(&def_pal[PALOFS_INK * 16 + COLOR_NO_INK_START + hit_pos],

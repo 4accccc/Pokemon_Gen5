@@ -13,9 +13,9 @@
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq );
-extern GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq );
-extern GFL_PROC_RESULT BalloonEntryProc_End(GFL_PROC *proc, int *seq);
+extern GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalloonEntryProc_End(GFL_PROC *proc, int *seq, void * pwk, void * mywk);
 
 
 #endif	//__BALLOON_ENTRY_H__

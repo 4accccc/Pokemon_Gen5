@@ -289,7 +289,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void * mywk )
 {
 	BB_WORK* wk;
 	
@@ -298,7 +298,7 @@ GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq )
 	wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
 	memset( wk, 0, sizeof( BB_WORK ) );
 	
-	wk->parent_wk = PROC_GetParentWork( proc );
+	wk->parent_wk = pwk;
 	
 	{
 			
@@ -444,9 +444,9 @@ static BOOL PenDemo( BB_CLIENT* wk )
  *
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void * mywk )
 {
-	BB_WORK* wk = PROC_GetWork( proc );
+	BB_WORK* wk = mywk;
 	BOOL bEnd = FALSE;
 	u32 dis_error;
 
@@ -836,13 +836,13 @@ static void Reset_GameData( BB_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void * mywk )
 {	
 	switch ( *seq ){
 	case 0:
 		{
 			u32 dis_error;
-			BB_WORK* wk = PROC_GetWork( proc );
+			BB_WORK* wk = mywk;
 			dis_error = BB_DIS_ERROR_Check( wk );	// 切断エラーチェック
 	
 			GFL_PROC_FreeWork( proc );
@@ -1011,10 +1011,10 @@ static void BB_VramBankSet( GF_BGL_INI* bgl )
 		GF_Disp_SetBank( &vramSetTable );
 
 		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 	}
 	
 	//メイン画面フレーム設定

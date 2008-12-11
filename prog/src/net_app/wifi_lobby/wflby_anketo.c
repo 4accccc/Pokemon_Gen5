@@ -701,13 +701,13 @@ static void (*p_Exit[ ANKETO_MOVE_TYPE_NUM ])( ANKETO_LOCAL_WK* p_wk, ANKETO_MSG
  *	@brief	アンケートプロセス	初期化
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	ANKETO_WORK*	p_wk;
 	ANKETO_PARAM*	p_param;
 
 
-	p_param = PROC_GetParentWork( p_proc );
+	p_param = pwk;
 
 	//ヒープエリア作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ANKETO, 0x50000 );
@@ -743,14 +743,14 @@ GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	アンケートプロセス	メイン
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	ANKETO_WORK* p_wk;
 	ANKETO_PARAM* p_param;
 	BOOL result;
 
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	switch( (*p_seq) ){
 	case 0:
@@ -826,13 +826,13 @@ GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	アンケートプロセス	破棄
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	ANKETO_WORK* p_wk;
 	ANKETO_PARAM* p_param;
 
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	// 割り込み設定
 	sys_VBlankFuncChange( NULL, NULL );

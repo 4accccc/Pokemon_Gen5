@@ -3945,7 +3945,7 @@ static void MNGM_PLAYER_PLATE_HBLANK_BGSCR_Init( MNGM_HBLANK_PLATEBGSCR* p_wk, M
 
 	// buffer‚Ì’l‚ð‰Šú‰»
 	for( i=0; i<2; i++ ){
-		MI_CpuFill16( &p_wk->scrll_x[i], MNGM_PLATE_MOVE_START, sizeof(s16)*WFLBY_HBLANK_BGSCR_BUFNUM );
+		GFL_STD_MemFill16( &p_wk->scrll_x[i], MNGM_PLATE_MOVE_START, sizeof(s16)*WFLBY_HBLANK_BGSCR_BUFNUM );
 	}
 
 	p_wk->p_laster = LASTER_Init( heapID, &p_wk->scrll_x[0], &p_wk->scrll_x[1] );

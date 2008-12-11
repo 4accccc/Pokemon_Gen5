@@ -6,7 +6,12 @@
  * @date	2007.11.01(木)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
+#include <procsys.h>
+#include <tcbl.h>
+#include "system\main.h"
+#include <dwc.h>
+
 #include "system/clact_tool.h"
 #include "system/palanm.h"
 #include "system/pmfprint.h"
@@ -22,12 +27,10 @@
 #include "system/wipe.h"
 #include "communication/wm_icon.h"
 #include "system/msgdata_util.h"
-#include <dwc.h>
 #include "libdpw/dpw_tr.h"
-#include "system/procsys.h"
 
 #include "balloon_common.h"
-#include "application/balloon.h"
+#include "net_app/balloon.h"
 #include "balloon_game.h"
 #include "balloon_entry.h"
 
@@ -59,7 +62,6 @@ static const GFL_PROC_DATA BalloonGameProcData = {
 	BalloonGameProc_Init,
 	BalloonGameProc_Main,
 	BalloonGameProc_End,
-	NO_OVERLAY_ID,//FS_OVERLAY_ID(balloon),
 };
 
 ///風船割りエントリー画面＆結果発表画面プロセス定義データ
@@ -67,7 +69,6 @@ static const GFL_PROC_DATA BalloonEntryProcData = {
 	BalloonEntryProc_Init,
 	BalloonEntryProc_Main,
 	BalloonEntryProc_End,
-	NO_OVERLAY_ID,//FS_OVERLAY_ID(balloon),
 };
 
 
@@ -93,9 +94,9 @@ static BOOL Ballon_DisconnectErrorCheck( BALLOON_SYSTEM_WORK *bsw );
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	BALLOON_PROC_WORK *parent = PROC_GetParentWork(proc);
+	BALLOON_PROC_WORK *parent = pwk;
 	BALLOON_SYSTEM_WORK *bsw;
 
 	//Eメール管理用ヒープ作成
@@ -121,10 +122,10 @@ GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq )
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	BALLOON_SYSTEM_WORK * bsw  = PROC_GetWork( proc );
-	BALLOON_PROC_WORK *parent = PROC_GetParentWork(proc);
+	BALLOON_SYSTEM_WORK * bsw  = mywk;
+	BALLOON_PROC_WORK *parent = pwk;
 
 	// 通信エラー終了チェック
 	if( Ballon_DisconnectErrorCheck( bsw ) == TRUE ){
@@ -224,9 +225,9 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq )
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonProc_End(GFL_PROC *proc, int *seq)
+GFL_PROC_RESULT BalloonProc_End(GFL_PROC *proc, int *seq, void * pwk, void * mywk)
 {
-	BALLOON_SYSTEM_WORK * bsw  = PROC_GetWork( proc );
+	BALLOON_SYSTEM_WORK * bsw  = mywk;
 
 	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
 

@@ -1112,7 +1112,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_BttnLockClear( WFLBY_GADGET_BTTN* p_wk );
 
 
 #ifdef PM_DEBUG
-GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	FS_EXTERN_OVERLAY(wifilobby_common);
 	FS_EXTERN_OVERLAY(wifi_2dmapsys);
@@ -1123,7 +1123,7 @@ GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq)
 	return WFLBY_ROOM_Init( p_proc, p_seq );
 }
 
-GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	BOOL result;
 	
@@ -1151,7 +1151,7 @@ GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq)
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
@@ -1169,7 +1169,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq)
 	OS_TPrintf( "sub char max %d\n", WFLBY_TRCARD_WIN_VIPAIKOTOBA_CGX );
 
 	// パラメータ取得
-	p_param = PROC_GetParentWork( p_proc );
+	p_param = pwk;
 
 	// ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x3a000 );
@@ -1275,14 +1275,14 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	部屋システム	メイン
  */	
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
 	BOOL result;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	switch( *p_seq ){
 	case WFLBY_ROOM_MAINSEQ_FADEIN:
@@ -1559,13 +1559,13 @@ GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	部屋システム	サブ
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	// 終了データの設定
 	{

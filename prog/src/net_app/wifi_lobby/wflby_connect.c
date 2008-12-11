@@ -381,7 +381,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_CONNECT_PARAM* p_param;
@@ -394,7 +394,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq)
 	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// パラメータ取得
-	p_param	= PROC_GetParentWork( p_proc );
+	p_param	= pwk;
 	p_wk->p_save		= p_param->p_save;
 
 
@@ -444,13 +444,13 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	ログインメイン
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_CONNECT_PARAM* p_param;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param	= PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param	= pwk;
 
 
 	switch( *p_seq ){
@@ -794,11 +794,11 @@ GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	ログイン　終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	
-	p_wk	= PROC_GetWork( p_proc );
+	p_wk	= mywk;
 
 	// 割り込み設定
 	sys_VBlankFuncChange( NULL, NULL );
@@ -834,7 +834,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq)
  *	@brief	切断処理	初期化
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_DISCONNECT_PARAM* p_param;
@@ -847,7 +847,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq)
 	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// パラメータ取得
-	p_param	= PROC_GetParentWork( p_proc );
+	p_param	= pwk;
 	p_wk->p_save		= p_param->p_save;
 
 	// グラフィック初期化
@@ -890,13 +890,13 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	切断処理	メイン
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_DISCONNECT_PARAM* p_param;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param	= PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param	= pwk;
 
 	switch( *p_seq ){
 	// フェードイン
@@ -1032,11 +1032,11 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	切断処理	破棄
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WFLBY_CONNECTWK* p_wk;
 	
-	p_wk	= PROC_GetWork( p_proc );
+	p_wk	= mywk;
 
 	// 割り込み設定
 	sys_VBlankFuncChange( NULL, NULL );

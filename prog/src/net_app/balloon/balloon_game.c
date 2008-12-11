@@ -447,7 +447,7 @@ static const struct{
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	BALLOON_GAME_WORK *game;
 
@@ -472,7 +472,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq )
 //	simple_3DBGInit(HEAPID_BALLOON);
 	game->g3Dman = Balloon_3D_Init(HEAPID_BALLOON);
 
-	game->bsw = PROC_GetParentWork(proc);
+	game->bsw = pwk;
 #ifdef PM_DEBUG
 	if(game->bsw->debug_offline == FALSE){
 		CommCommandBalloonInitialize(game);
@@ -635,9 +635,9 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	BALLOON_GAME_WORK * game  = PROC_GetWork( proc );
+	BALLOON_GAME_WORK * game  = mywk;
 	int ret;
 	enum{
 		SEQ_IN,
@@ -833,9 +833,9 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	BALLOON_GAME_WORK * game = PROC_GetWork( proc );
+	BALLOON_GAME_WORK * game = mywk;
 	int i;
 
 	//割った数を結果画面用ワークへセット
@@ -1206,10 +1206,10 @@ static void BalloonSys_VramBankSet(GF_BGL_INI *bgl)
 		GF_Disp_SetBank( &vramSetTable );	//H32が余り。サブBG面の拡張パレットとして当てられる
 
 		//VRAMクリア
-		MI_CpuClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
-		MI_CpuClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_BG_VRAM, HW_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_BG_VRAM, HW_DB_BG_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_OBJ_VRAM, HW_OBJ_VRAM_SIZE);
+		GFL_STD_MemClear32((void*)HW_DB_OBJ_VRAM, HW_DB_OBJ_VRAM_SIZE);
 	}
 
 	// BG SYSTEM

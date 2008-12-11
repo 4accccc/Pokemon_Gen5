@@ -72,14 +72,14 @@ typedef struct{
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	BALLOON_ENTRY_PROC_WORK *entry;
 
 	entry = GFL_PROC_AllocWork(proc, sizeof(BALLOON_ENTRY_PROC_WORK), HEAPID_BALLOON );
 	GFL_STD_MemClear(entry, sizeof(BALLOON_ENTRY_PROC_WORK));
 	
-	entry->bsw = PROC_GetParentWork(proc);
+	entry->bsw = pwk;
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -94,9 +94,9 @@ GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq )
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	BALLOON_ENTRY_PROC_WORK * entry  = PROC_GetWork( proc );
+	BALLOON_ENTRY_PROC_WORK * entry  = mywk;
 
 	// 通信エラーチェック
 	if( entry->bsw->dis_error == TRUE ){
@@ -194,9 +194,9 @@ GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq )
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonEntryProc_End(GFL_PROC *proc, int *seq)
+GFL_PROC_RESULT BalloonEntryProc_End(GFL_PROC *proc, int *seq, void * pwk, void * mywk)
 {
-	BALLOON_ENTRY_PROC_WORK * entry  = PROC_GetWork( proc );
+	BALLOON_ENTRY_PROC_WORK * entry  = mywk;
 
 	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
 

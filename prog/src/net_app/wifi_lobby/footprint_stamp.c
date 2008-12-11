@@ -1006,7 +1006,7 @@ static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE 
 	}
 	
 	//テクスチャ領域を全てクリア(あらかじめ入っているダミーの足跡データをクリアしている)
-	MI_CpuClear16(pDest, FOOTMARK_TEXTURE_SIZE);
+	GFL_STD_MemClear16(pDest, FOOTMARK_TEXTURE_SIZE);
 
 	OS_TPrintf("スタンプのmonsno = %d\n", param->monsno);
 	//2Dグラフィックを変換しながらテクスチャ領域にデータを入れる
@@ -1136,8 +1136,8 @@ static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type)
 	
 	pDest = (u32*)((u8*)pTex + pTex->texInfo.ofsTex);	//テクスチャ領域
 	pSrc = sys_AllocMemory(HEAPID_FOOTPRINT, FOOTMARK_TEXTURE_SIZE);
-	MI_CpuCopy16(pDest, pSrc, FOOTMARK_TEXTURE_SIZE);
-	MI_CpuClear16(pDest, FOOTMARK_TEXTURE_SIZE);
+	GFL_STD_MemCopy16(pDest, pSrc, FOOTMARK_TEXTURE_SIZE);
+	GFL_STD_MemClear16(pDest, FOOTMARK_TEXTURE_SIZE);
 	
 	switch(move_type){
 	case MOVE_TYPE_ZIGZAG:

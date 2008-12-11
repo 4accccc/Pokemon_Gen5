@@ -55,9 +55,9 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 
-extern GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq);
-extern GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
+extern GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk);
 
 #endif		// __WFLBY_ANKETO_H__
 

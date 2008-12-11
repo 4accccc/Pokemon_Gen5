@@ -845,8 +845,8 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 		GF_ASSERT(sns->palette_work_src == NULL);
 		sns->palette_work_src = sys_AllocMemory(HEAPID_BALLOON, sz);
 		sns->palette_work_dest = sys_AllocMemory(HEAPID_BALLOON, sz);
-		MI_CpuCopy8(pData, sns->palette_work_src, sz);
-		MI_CpuCopy8(pData, sns->palette_work_dest, sz);
+		GFL_STD_MemCopy8(pData, sns->palette_work_src, sz);
+		GFL_STD_MemCopy8(pData, sns->palette_work_dest, sz);
 		DC_FlushRange(sns->palette_work_dest, sz);
 		OS_TPrintf("ソーナンスのパレットサイズ＝%d\n", sz);
 		sns->palette_trans_adrs = from;

@@ -696,12 +696,12 @@ static void NEWSDRAW_DEBUG_TopicMake( NEWSDRAW_WK* p_wk, WFLBY_SYSTEM* p_system,
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
 	
-	p_param = PROC_GetParentWork( p_proc );
+	p_param = pwk;
 
 	//ヒープエリア作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NEWSDRAW, 0x50000 );
@@ -745,14 +745,14 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	ロビーニュース	メイン
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
 	BOOL result;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 #ifdef WFLBY_DEBUG_ROOM_WLDTIMER_AUTO
 	WFLBY_DEBUG_ROOM_WFLBY_TIMER_AUTO = TRUE;
@@ -849,13 +849,13 @@ GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	ロビーニュース	破棄
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	// タイトル破棄
 	NEWSDRAW_TitleWinExit( &p_wk->title );

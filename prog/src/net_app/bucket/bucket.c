@@ -155,10 +155,10 @@ static BOOL BCT_GAMESendData( BUCKET_WK* p_wk, int command, const void* data, in
  *	@retval	GFL_PROC_RES_FINISH,			///<“®ìI—¹
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq )
+GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq, void * pwk, void * mywk )
 {
 	BUCKET_WK* p_wk;
-	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
+	BUCKET_PROC_WORK* pp = pwk;
 	BOOL result;
 
 #ifdef BCT_DEBUG_TIMESELECT
@@ -216,10 +216,10 @@ GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq )
  *	@retval	GFL_PROC_RES_FINISH,			///<“®ìI—¹
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk )
 {
-	BUCKET_WK* p_wk = PROC_GetWork( p_proc );
-	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
+	BUCKET_WK* p_wk = mywk;
+	BUCKET_PROC_WORK* pp = pwk;
 	BOOL result;
 	u32 check;
 
@@ -630,10 +630,10 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq )
  *	@retval	GFL_PROC_RES_FINISH,			///<“®ìI—¹
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk )
 {
-	BUCKET_WK* p_wk = PROC_GetWork( p_proc );
-	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
+	BUCKET_WK* p_wk = mywk;
+	BUCKET_PROC_WORK* pp = pwk;
 	BOOL dis_error;
 
 	switch( *p_seq ){

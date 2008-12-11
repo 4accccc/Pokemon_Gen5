@@ -88,7 +88,7 @@ static void WFLBY_VBlankFunc( TCB_PTR p_tcb, void* p_work );
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void * mywk)
 {
 	WFLBY_WK* p_wk;
 	WFLBY_PROC_PARAM* p_param;
@@ -113,7 +113,7 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq )
 	memset( p_wk, 0, sizeof(WFLBY_WK) );
 
 	// パラメータワーク取得
-	p_param = PROC_GetParentWork( p_proc );
+	p_param = pwk;
 
 	// セーブデータ取得
 	p_wk->p_save = p_param->p_save;
@@ -148,12 +148,12 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq )
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBYProc_Main( GFL_PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk )
 {
 	WFLBY_WK* p_wk;
 	WFLBY_APL_RET apl_ret;
 
-	p_wk = PROC_GetWork( p_proc );
+	p_wk = mywk;
 
 	// アプリメイン
 	apl_ret = WFLBY_APL_Main( p_wk->p_apl );
@@ -180,11 +180,11 @@ GFL_PROC_RESULT WFLBYProc_Main( GFL_PROC* p_proc, int* p_seq )
  *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk )
 {
 	WFLBY_WK* p_wk;
 
-	p_wk = PROC_GetWork( p_proc );
+	p_wk = mywk;
 
 	// 常時動作VブランクTCB破棄
 	TCB_Delete( p_wk->p_vtcb );

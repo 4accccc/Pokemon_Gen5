@@ -1350,7 +1350,7 @@ static u32 WLDTIMER_WFLBYDATA_GetFirst( const WFLBY_WLDTIMER* cp_data );
  *	@retval	GFL_PROC_RES_FINISH,			///<“®ìI—¹
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
@@ -1364,7 +1364,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq)
 	}
 #endif
 	
-	p_param = PROC_GetParentWork( p_proc );
+	p_param = pwk;
 
 	OS_TPrintf( "end cgx %d\n", WLDTIMER_MAIN_SUBBTTN_CGXEND );
 
@@ -1431,14 +1431,14 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq)
  *	@brief	¢ŠEŽžŒv	ƒƒCƒ“
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
 	BOOL result;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 
 
@@ -1515,13 +1515,13 @@ GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq)
  *	@brief	¢ŠEŽžŒv	”jŠü
  */
 //-----------------------------------------------------------------------------
-GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
 	
-	p_wk	= PROC_GetWork( p_proc );
-	p_param = PROC_GetParentWork( p_proc );
+	p_wk	= mywk;
+	p_param = pwk;
 
 	// Š„‚èž‚ÝÝ’è
 	sys_VBlankFuncChange( NULL, NULL );
@@ -1564,13 +1564,13 @@ GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq)
 
 
 #ifdef  PM_DEBUG
-GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 
 	return WLDTIMER_Init( p_proc, p_seq );
 }
 
-GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, void * mywk)
 {
 	GFL_PROC_RESULT result;
 

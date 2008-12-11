@@ -1467,7 +1467,7 @@ void WFLBY_SYSTEM_MG_SetErrorEnd( WFLBY_SYSTEM* p_wk, BOOL flag )
 //-----------------------------------------------------------------------------
 void WFLBY_SYSTEM_PLIDX_Clear( WFLBY_SYSTEM* p_wk )
 {
-	MI_CpuClear32( &p_wk->mg_plidx, sizeof(WFLBY_MINIGAME_PLIDX) );
+	GFL_STD_MemClear32( &p_wk->mg_plidx, sizeof(WFLBY_MINIGAME_PLIDX) );
 }
 
 //----------------------------------------------------------------------------
@@ -1520,7 +1520,7 @@ void WFLBY_SYSTEM_PLIDX_SetMyData( WFLBY_SYSTEM* p_wk, u32 netid )
 //-----------------------------------------------------------------------------
 void WFLBY_SYSTEM_PLIDX_Get( const WFLBY_SYSTEM* cp_wk, WFLBY_MINIGAME_PLIDX* p_buff )
 {
-	MI_CpuCopy8( &cp_wk->mg_plidx, p_buff, sizeof(WFLBY_MINIGAME_PLIDX) );
+	GFL_STD_MemCopy8( &cp_wk->mg_plidx, p_buff, sizeof(WFLBY_MINIGAME_PLIDX) );
 }
 
 
@@ -2536,7 +2536,7 @@ void WFLBY_SYSTEM_GetVipFlagWk( const WFLBY_SYSTEM* cp_wk, WFLBY_VIPFLAG* p_buff
 {
 	WFLBY_VIPFLAG* p_vip;
 
-	MI_CpuCopy8( &cp_wk->vipflag, p_buff, sizeof(WFLBY_VIPFLAG) );
+	GFL_STD_MemCopy8( &cp_wk->vipflag, p_buff, sizeof(WFLBY_VIPFLAG) );
 }
 
 
@@ -4660,12 +4660,12 @@ static void WFLBY_SYSTEM_DWC_SetMyProfile( WFLBY_SYSTEM* p_wk )
 	}
 
 	// 名前をライブラリのデータにある物に書き換えてから送る
-	MI_CpuCopy8( p_wk->myprofile.comm_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
+	GFL_STD_MemCopy8( p_wk->myprofile.comm_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 	
 	DWC_LOBBY_SetMyProfile( &p_wk->myprofile.profile );	// 更新
 
 	// 書き換えた名前を元に戻す
-	MI_CpuCopy8( p_wk->myprofile.def_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
+	GFL_STD_MemCopy8( p_wk->myprofile.def_name, p_wk->myprofile.profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 
 	//  CRC計算
 	WFLBY_SYSTEM_MyProfile_SetCrc( &p_wk->myprofile, p_wk->p_save );
@@ -4725,18 +4725,18 @@ static void WFLBY_SYSTEM_MyProfileCopy_CheckData( WFLBY_USER_MYPROFILE* p_myprof
 
 	// ローカル内のプロフィールサイズと、置換後のプロフィールサイズが同じか小さいとき
 	if( sizeof(WFLBY_USER_PROFILE) >= profile_size ){
-		MI_CpuCopy8( cp_userdata, &p_myprofile->profile, profile_size );
+		GFL_STD_MemCopy8( cp_userdata, &p_myprofile->profile, profile_size );
 	}else{
 		// 置換ごのプロフィールのほうがでかいとき
-		MI_CpuCopy8( cp_userdata, &p_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
+		GFL_STD_MemCopy8( cp_userdata, &p_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
 	}
 	
 
 	// 通信用の自分の名前を取得する
-	MI_CpuCopy8( cp_userdata->name, p_myprofile->comm_name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
+	GFL_STD_MemCopy8( cp_userdata->name, p_myprofile->comm_name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 
 	//  名前は自分の名前
-	MI_CpuCopy8( p_myprofile->def_name, p_myprofile->profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
+	GFL_STD_MemCopy8( p_myprofile->def_name, p_myprofile->profile.name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 }
 
 
@@ -5031,10 +5031,10 @@ static void WFLBY_SYSTEM_MG_SetMyStatus( WFLBY_SYSTEM_MG* p_wk, const WFLBY_USER
 
 	// バッファ作成
 	p_buff = sys_AllocMemory( heapID,  sizeof(WFLBY_USER_PROFILE) );
-	MI_CpuCopyFast( &cp_profile->profile, p_buff, sizeof(WFLBY_USER_PROFILE) );
+	GFL_STD_MemCopyFast( &cp_profile->profile, p_buff, sizeof(WFLBY_USER_PROFILE) );
 
 	// 名前をライブラリのデータにある物に書き換えてからMYSTATUSを取得する
-	MI_CpuCopy8( cp_profile->comm_name, p_buff->name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
+	GFL_STD_MemCopy8( cp_profile->comm_name, p_buff->name, sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) );
 	
 	// MYSTATUSを取得
 	WFLBY_SYSTEM_GetProfileMyStatus( p_buff, p_wk->p_mystatus, heapID );
@@ -5684,7 +5684,7 @@ static void WFLBY_SYSTEM_TOPIC_SetEvent( WFLBY_SYSTEM* p_wk, WFLBY_EVENTTYPE eve
 static void WFLBY_SYSTEM_FLOAT_Init( WFLBY_FLOAT_DATA* p_float )
 {
 	memset( p_float, 0, sizeof(WFLBY_FLOAT_DATA) );
-	MI_CpuFill32( p_float->reserve, DWC_LOBBY_USERIDTBL_IDX_NONE, sizeof(u32)*(WFLBY_FLOAT_MAX*WFLBY_FLOAT_ON_NUM) );
+	GFL_STD_MemFill32( p_float->reserve, DWC_LOBBY_USERIDTBL_IDX_NONE, sizeof(u32)*(WFLBY_FLOAT_MAX*WFLBY_FLOAT_ON_NUM) );
 }
 
 //----------------------------------------------------------------------------
