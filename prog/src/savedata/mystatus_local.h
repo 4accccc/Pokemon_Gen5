@@ -11,7 +11,7 @@
 #ifndef	__MYSTATUS_LOCAL_H__
 #define	__MYSTATUS_LOCAL_H__
 
-#include "system/buflen.h"
+#include "buflen.h"
 
 //----------------------------------------------------------
 /**

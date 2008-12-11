@@ -13,7 +13,7 @@
 #define __WFLBY_DEF_H__
 
 #include <nitro.h>
-#include "system/buflen.h"
+#include "buflen.h"
 #include "system/pms_word.h"
 
 #include "battle/battle_common.h"

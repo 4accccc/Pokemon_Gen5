@@ -14,7 +14,7 @@
 
 #include "gflib/strbuf.h"
 
-#include "system/buflen.h"
+#include "buflen.h"
 #include "system/wordset.h"
 #include "system/msgdata.h"
 
