@@ -6553,7 +6553,7 @@ static BOOL WFLBY_SYSTEM_VIPFLAG_Get( const WFLBY_VIPFLAG* cp_wk, u32 idx )
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_AIKOTOBABUFF_Init( WFLBY_SYSTEM_AIKOTOBA* p_wk, u32 heapID )
 {
-	MI_CpuClear8( p_wk, sizeof(WFLBY_SYSTEM_AIKOTOBA) );
+	GFL_STD_MemClear( p_wk, sizeof(WFLBY_SYSTEM_AIKOTOBA) );
 
 	// 簡易会話単語テーブル取得
 	p_wk->p_wordtbl = PMSW_AIKOTOBATBL_Init( heapID );

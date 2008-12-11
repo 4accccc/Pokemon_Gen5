@@ -476,7 +476,7 @@ static u8 debug_sp_eff = 0;
 //--------------------------------------------------------------
 void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg)
 {
-	MI_CpuClear8(ssw, sizeof(STAMP_SYSTEM_WORK));
+	GFL_STD_MemClear(ssw, sizeof(STAMP_SYSTEM_WORK));
 
 #ifdef PM_DEBUG
 	{
@@ -574,7 +574,7 @@ void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GF_CAMERA_PTR camera_ptr, int game_
 	
 #ifdef PM_DEBUG		//サウンドチェック用
 	if((sys.trg & PAD_BUTTON_A) && ssw->special_effect_type == 0){
-		MI_CpuClear8(&ssw->special_work, sizeof(STAMP_SPECIAL_WORK));
+		GFL_STD_MemClear(&ssw->special_work, sizeof(STAMP_SPECIAL_WORK));
 		debug_sp_eff++;
 		debug_sp_eff %= NELEMS(SpecialEffectDataTbl);
 		ssw->special_effect_type = debug_sp_eff;
@@ -769,7 +769,7 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 	BOOL mdl_ret;
 	
 	move = sys_AllocMemory(HEAPID_FOOTPRINT, sizeof(STAMP_MOVE_WORK));
-	MI_CpuClear8(move, sizeof(STAMP_MOVE_WORK));
+	GFL_STD_MemClear(move, sizeof(STAMP_MOVE_WORK));
 	move->chain_work_no = CHAIN_WORK_NULL;
 	
 	move->param = *param;
@@ -1442,7 +1442,7 @@ static int Stamp_ChainAdd(STAMP_SYSTEM_WORK *ssw, int chain_work_no, int move_ty
 	if(ssw->special_effect_type == 0 && ssw->special_effect_req == 0 
 			&& ssw->chain_work[chain_work_no].chain >= SpecialChainNum[ssw->player_max]){
 		ssw->special_effect_req = move_type;
-		MI_CpuClear8(&ssw->flash_work, sizeof(SPECIAL_FLASH_WORK));
+		GFL_STD_MemClear(&ssw->flash_work, sizeof(SPECIAL_FLASH_WORK));
 		return TRUE;
 	}
 	return FALSE;
@@ -1483,7 +1483,7 @@ static void Stamp_ChainSub(STAMP_SYSTEM_WORK *ssw, int chain_work_no)
 //--------------------------------------------------------------
 static void Special_EffectSet(STAMP_SYSTEM_WORK *ssw)
 {
-	MI_CpuClear8(&ssw->special_work, sizeof(STAMP_SPECIAL_WORK));
+	GFL_STD_MemClear(&ssw->special_work, sizeof(STAMP_SPECIAL_WORK));
 	ssw->special_effect_type = ssw->special_effect_req;
 	ssw->special_effect_req = 0;
 	ssw->special_effect_start_effect_end = 0;
@@ -1510,7 +1510,7 @@ static BOOL StampMoveTool_MoveTypeSet(STAMP_MOVE_PTR move, int move_type)
 		return FALSE;	//既に他のエフェクト動作をしている
 	}
 	move->next_move_type = move_type;
-	MI_CpuClear8(&move->erase_eff, sizeof(ERASE_EFF_WORK));
+	GFL_STD_MemClear(&move->erase_eff, sizeof(ERASE_EFF_WORK));
 	return TRUE;
 }
 

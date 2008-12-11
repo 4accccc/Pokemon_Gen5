@@ -95,7 +95,7 @@ BOOL RecvBalloon_FuncCall(BALLOON_GAME_PTR game, BALLOON_SIO_PLAY_WORK *recv)
 {
 	if(BalloonRecvTbl[recv->order_code] != NULL){
 		BalloonRecvTbl[recv->order_code](game, recv);
-		MI_CpuClear8(recv, sizeof(BALLOON_SIO_PLAY_WORK));
+		GFL_STD_MemClear(recv, sizeof(BALLOON_SIO_PLAY_WORK));
 		return TRUE;
 	}
 	return FALSE;
@@ -117,7 +117,7 @@ void SendBalloon_Air(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA *air_data)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_AIR;
 	data.air_data = *air_data;
@@ -157,7 +157,7 @@ void SendBalloon_Exploded(BALLOON_GAME_PTR game, int balloon_no, u8 timing_no)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_EXPLODED;
 	data.exploded.no = balloon_no;
@@ -202,7 +202,7 @@ void SendBalloon_Appear(BALLOON_GAME_PTR game, int balloon_no, int level, u8 tim
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_APPEAR;
 	data.appear.no = balloon_no;
@@ -246,7 +246,7 @@ void SendBalloon_Start(BALLOON_GAME_PTR game, u8 timing_no)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_START;
 	data.timing.timing_req = TIMING_REQ_START_AFTER;
@@ -285,7 +285,7 @@ void SendBalloon_Finish(BALLOON_GAME_PTR game, u8 timing_no)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_FINISH;
 	data.finish.timing_req = TIMING_REQ_FINISH_AFTER;
@@ -325,7 +325,7 @@ void SendBalloon_Timing(BALLOON_GAME_PTR game, int timing_req, u8 timing_no)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_TIMING;
 	data.timing.timing_req = timing_req;
@@ -363,7 +363,7 @@ void SendBalloon_TouchPenDemo(BALLOON_GAME_PTR game, u8 timing_no)
 {
 	BALLOON_SIO_PLAY_WORK data;
 	
-	MI_CpuClear8(&data, sizeof(BALLOON_SIO_PLAY_WORK));
+	GFL_STD_MemClear(&data, sizeof(BALLOON_SIO_PLAY_WORK));
 	
 	data.order_code = ORDER_CODE_TOUCHPEN_DEMO;
 	data.timing.timing_req = TIMING_REQ_TOUCHPEN_DEMO_AFTER;

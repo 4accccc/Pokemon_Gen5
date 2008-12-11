@@ -447,7 +447,7 @@ static const struct{
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonGameProc_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq )
 {
 	BALLOON_GAME_WORK *game;
 
@@ -463,8 +463,8 @@ PROC_RESULT BalloonGameProc_Init( PROC * proc, int * seq )
 	G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0, GX_BLEND_ALL, 16, 16);
 	G2S_SetBlendAlpha(BLD_PLANE_1, BLD_PLANE_2, BLD_ALPHA_1, BLD_ALPHA_2);
 	
-	game = PROC_AllocWork(proc, sizeof(BALLOON_GAME_WORK), HEAPID_BALLOON );
-	MI_CpuClear8(game, sizeof(BALLOON_GAME_WORK));
+	game = GFL_PROC_AllocWork(proc, sizeof(BALLOON_GAME_WORK), HEAPID_BALLOON );
+	GFL_STD_MemClear(game, sizeof(BALLOON_GAME_WORK));
     
     // アロケータ作成
 	sys_InitAllocator(&game->allocator, HEAPID_BALLOON, 32 );
@@ -622,7 +622,7 @@ PROC_RESULT BalloonGameProc_Init( PROC * proc, int * seq )
 		mydwc_startvchat( HEAPID_BALLOON );
 	}
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
@@ -635,7 +635,7 @@ PROC_RESULT BalloonGameProc_Init( PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq )
 {
 	BALLOON_GAME_WORK * game  = PROC_GetWork( proc );
 	int ret;
@@ -672,12 +672,12 @@ PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq )
 			// まづは通信切断
 			if( MNGM_ERROR_DisconnectWait( &game->bsw->entry_param ) == TRUE ){
 				// 終了処理へ
-				return PROC_RES_FINISH;
+				return GFL_PROC_RES_FINISH;
 			}
 			break;
 		}
 
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 	}
 	
 	switch( *seq ){
@@ -812,7 +812,7 @@ PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq )
 
 	case SEQ_OUT:
 		if(WIPE_SYS_EndCheck() == TRUE){
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
@@ -820,7 +820,7 @@ PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq )
 	Debug_CameraMove(game->camera);
 	game->main_frame++;
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -833,7 +833,7 @@ PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonGameProc_End( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq )
 {
 	BALLOON_GAME_WORK * game = PROC_GetWork( proc );
 	int i;
@@ -919,7 +919,7 @@ PROC_RESULT BalloonGameProc_End( PROC * proc, int * seq )
 
 	StopTP();		//タッチパネルの終了
 
-	PROC_FreeWork(proc);				// ワーク開放
+	GFL_PROC_FreeWork(proc);				// ワーク開放
 	
 	MsgPrintSkipFlagSet(MSG_SKIP_OFF);
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
@@ -927,7 +927,7 @@ PROC_RESULT BalloonGameProc_End( PROC * proc, int * seq )
 
 	WirelessIconEasyEnd();
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------

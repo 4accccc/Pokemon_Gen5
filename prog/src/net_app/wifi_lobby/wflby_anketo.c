@@ -701,7 +701,7 @@ static void (*p_Exit[ ANKETO_MOVE_TYPE_NUM ])( ANKETO_LOCAL_WK* p_wk, ANKETO_MSG
  *	@brief	アンケートプロセス	初期化
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT ANKETO_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	ANKETO_WORK*	p_wk;
 	ANKETO_PARAM*	p_param;
@@ -714,7 +714,7 @@ PROC_RESULT ANKETO_Init(PROC* p_proc, int* p_seq)
 
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(ANKETO_WORK), HEAPID_ANKETO );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(ANKETO_WORK), HEAPID_ANKETO );
 	memset( p_wk, 0, sizeof(ANKETO_WORK) );
 
 
@@ -735,7 +735,7 @@ PROC_RESULT ANKETO_Init(PROC* p_proc, int* p_seq)
 	sys_VBlankFuncChange( ANKETO_VBlank, p_wk );
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	return	PROC_RES_FINISH;
+	return	GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -743,7 +743,7 @@ PROC_RESULT ANKETO_Init(PROC* p_proc, int* p_seq)
  *	@brief	アンケートプロセス	メイン
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT ANKETO_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	ANKETO_WORK* p_wk;
 	ANKETO_PARAM* p_param;
@@ -811,14 +811,14 @@ PROC_RESULT ANKETO_Main(PROC* p_proc, int* p_seq)
 			// BTS通信549バグの修正
 			// TimeWaitIconの停止
 			ANKETO_TalkWin_StopTimeWait( &p_wk->talkwin );
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
 
 	// 描画システム
 	ANKETO_MainGraphic( &p_wk->drawsys );
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -826,7 +826,7 @@ PROC_RESULT ANKETO_Main(PROC* p_proc, int* p_seq)
  *	@brief	アンケートプロセス	破棄
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT ANKETO_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT ANKETO_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	ANKETO_WORK* p_wk;
 	ANKETO_PARAM* p_param;
@@ -852,15 +852,15 @@ PROC_RESULT ANKETO_Exit(PROC* p_proc, int* p_seq)
 	ANKETO_ExitGraphic( &p_wk->drawsys );
 
 	//ワーク破棄
-	PROC_FreeWork( p_proc );
+	GFL_PROC_FreeWork( p_proc );
 	
 	//ヒープ破棄
-	sys_DeleteHeap( HEAPID_ANKETO );
+	GFL_HEAP_DeleteHeap( HEAPID_ANKETO );
 
 	// SEストップ
 	Snd_SeStopAll(0);
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 

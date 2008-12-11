@@ -567,7 +567,7 @@ static struct{
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT FootPrintProc_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq )
 {
 	FOOTPRINT_SYS *fps;
 	
@@ -585,8 +585,8 @@ PROC_RESULT FootPrintProc_Init( PROC * proc, int * seq )
 
 	GFL_HEAP_CreateHeap(GFL_HEAPID_APP, HEAPID_FOOTPRINT, FOOTPRINT_HEAP_SIZE);
 
-	fps = PROC_AllocWork(proc, sizeof(FOOTPRINT_SYS), HEAPID_FOOTPRINT );
-	MI_CpuClear8(fps, sizeof(FOOTPRINT_SYS));
+	fps = GFL_PROC_AllocWork(proc, sizeof(FOOTPRINT_SYS), HEAPID_FOOTPRINT );
+	GFL_STD_MemClear(fps, sizeof(FOOTPRINT_SYS));
 	fps->parent_work = PROC_GetParentWork(proc);
 #ifdef PM_DEBUG
 	if(fps->parent_work->wflby_sys == NULL){
@@ -723,7 +723,7 @@ PROC_RESULT FootPrintProc_Init( PROC * proc, int * seq )
 	sys_VBlankFuncChange(VBlankFunc, fps);
 
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
@@ -736,7 +736,7 @@ PROC_RESULT FootPrintProc_Init( PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT FootPrintProc_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq )
 {
 	FOOTPRINT_SYS * fps  = PROC_GetWork( proc );
 	enum{
@@ -932,7 +932,7 @@ PROC_RESULT FootPrintProc_Main( PROC * proc, int * seq )
 		break;
 	default:
 		DWC_LOBBY_SUBCHAN_CleanMsgCmd();	//コマンドクリーン
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 	}
 
 	Footprint_TouchEffUpdate(fps);
@@ -987,7 +987,7 @@ PROC_RESULT FootPrintProc_Main( PROC * proc, int * seq )
 	}
 #endif
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -1000,7 +1000,7 @@ PROC_RESULT FootPrintProc_Main( PROC * proc, int * seq )
  * @retval  処理状況
  */
 //--------------------------------------------------------------
-PROC_RESULT FootPrintProc_End( PROC * proc, int * seq )
+GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq )
 {
 	FOOTPRINT_SYS * fps  = PROC_GetWork( proc );
 
@@ -1077,10 +1077,10 @@ PROC_RESULT FootPrintProc_End( PROC * proc, int * seq )
 	}
 #endif
 
-	PROC_FreeWork( proc );				// PROCワーク開放
-	sys_DeleteHeap( HEAPID_FOOTPRINT );
+	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
+	GFL_HEAP_DeleteHeap( HEAPID_FOOTPRINT );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 
@@ -1998,7 +1998,7 @@ static void Footprint_InParamCreate(FOOTPRINT_SYS_PTR fps, FOOTPRINT_IN_PARAM *i
 {
 	STAMP_PARAM *stamp;
 	
-	MI_CpuClear8(in_para, sizeof(FOOTPRINT_IN_PARAM));
+	GFL_STD_MemClear(in_para, sizeof(FOOTPRINT_IN_PARAM));
 	stamp = &in_para->stamp;
 	
 	//最初に名前の横に表示させる足跡の状態をセットする
@@ -2038,7 +2038,7 @@ static void Footprint_Temoti_to_StampParam(int board_type, SAVEDATA * sv, STAMP_
 	POKEMON_PARAM *pp;
 	int i;
 	
-	MI_CpuClear8(stamp_array, sizeof(STAMP_PARAM) * POKEMON_TEMOTI_MAX);
+	GFL_STD_MemClear(stamp_array, sizeof(STAMP_PARAM) * POKEMON_TEMOTI_MAX);
 	
 	party = SaveData_GetTemotiPokemon(sv);
 	poke_max = PokeParty_GetPokeCount(party);

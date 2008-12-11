@@ -377,11 +377,11 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
  *	@param	p_proc		プロックワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_CONNECT_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_CONNECT_PARAM* p_param;
@@ -390,7 +390,7 @@ PROC_RESULT WFLBY_CONNECT_Init(PROC* p_proc, int* p_seq)
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x20000 );
 	
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
 	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// パラメータ取得
@@ -436,7 +436,7 @@ PROC_RESULT WFLBY_CONNECT_Init(PROC* p_proc, int* p_seq)
 	sys_VBlankFuncChange( WFLBY_CONNECT_VBlank, p_wk );
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -444,7 +444,7 @@ PROC_RESULT WFLBY_CONNECT_Init(PROC* p_proc, int* p_seq)
  *	@brief	ログインメイン
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_CONNECT_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_CONNECT_PARAM* p_param;
@@ -775,7 +775,7 @@ PROC_RESULT WFLBY_CONNECT_Main(PROC* p_proc, int* p_seq)
 	// フェードアウト待ち
 	case WFLBY_CONNECT_SEQ_FADEOUTWAIT:
 		if( WIPE_SYS_EndCheck() ){
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 
@@ -786,7 +786,7 @@ PROC_RESULT WFLBY_CONNECT_Main(PROC* p_proc, int* p_seq)
 
 	ConnectBGPalAnm_Main(&p_wk->cbp);
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -794,7 +794,7 @@ PROC_RESULT WFLBY_CONNECT_Main(PROC* p_proc, int* p_seq)
  *	@brief	ログイン　終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_CONNECT_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	
@@ -821,9 +821,9 @@ PROC_RESULT WFLBY_CONNECT_Exit(PROC* p_proc, int* p_seq)
 	sys_FreeMemoryEz( p_wk );
 
 	// ヒープ破棄
-	sys_DeleteHeap( HEAPID_WFLBY_ROOM );
+	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 
@@ -834,7 +834,7 @@ PROC_RESULT WFLBY_CONNECT_Exit(PROC* p_proc, int* p_seq)
  *	@brief	切断処理	初期化
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_DISCONNECT_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_DISCONNECT_PARAM* p_param;
@@ -843,7 +843,7 @@ PROC_RESULT WFLBY_DISCONNECT_Init(PROC* p_proc, int* p_seq)
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x20000 );
 	
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
 	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// パラメータ取得
@@ -882,7 +882,7 @@ PROC_RESULT WFLBY_DISCONNECT_Init(PROC* p_proc, int* p_seq)
 	sys_VBlankFuncChange( WFLBY_CONNECT_VBlank, p_wk );
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -890,7 +890,7 @@ PROC_RESULT WFLBY_DISCONNECT_Init(PROC* p_proc, int* p_seq)
  *	@brief	切断処理	メイン
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_DISCONNECT_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	WFLBY_DISCONNECT_PARAM* p_param;
@@ -1016,7 +1016,7 @@ PROC_RESULT WFLBY_DISCONNECT_Main(PROC* p_proc, int* p_seq)
 	case WFLBY_DISCONNECT_SEQ_FADEOUTWAIT:
 		if( WIPE_SYS_EndCheck() ){
 			WFLBY_CONNECT_WIN_EndTimeWait( &p_wk->talk );
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 
@@ -1024,7 +1024,7 @@ PROC_RESULT WFLBY_DISCONNECT_Main(PROC* p_proc, int* p_seq)
 
 	ConnectBGPalAnm_Main(&p_wk->cbp);
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1032,7 +1032,7 @@ PROC_RESULT WFLBY_DISCONNECT_Main(PROC* p_proc, int* p_seq)
  *	@brief	切断処理	破棄
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_DISCONNECT_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_CONNECTWK* p_wk;
 	
@@ -1058,9 +1058,9 @@ PROC_RESULT WFLBY_DISCONNECT_Exit(PROC* p_proc, int* p_seq)
 	sys_FreeMemoryEz( p_wk );
 
 	// ヒープ破棄
-	sys_DeleteHeap( HEAPID_WFLBY_ROOM );
+	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 

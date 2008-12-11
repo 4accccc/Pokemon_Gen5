@@ -151,11 +151,11 @@ static BOOL BCT_GAMESendData( BUCKET_WK* p_wk, int command, const void* data, in
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
+GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq )
 {
 	BUCKET_WK* p_wk;
 	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
@@ -183,7 +183,7 @@ PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
 		OS_Printf( "55秒モード\n" );
 	}
 	if( result == FALSE ){
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 	}
 #endif
 
@@ -191,7 +191,7 @@ PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BUCKET, 0x60000 );
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(BUCKET_WK), HEAPID_BUCKET );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(BUCKET_WK), HEAPID_BUCKET );
 	memset( p_wk, 0, sizeof(BUCKET_WK) );
 
 
@@ -202,7 +202,7 @@ PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
 	BCT_GAMEDATA_Load( p_wk, HEAPID_BUCKET );
 
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -212,11 +212,11 @@ PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq )
 {
 	BUCKET_WK* p_wk = PROC_GetWork( p_proc );
 	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
@@ -247,13 +247,13 @@ PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
 			// ワーク破棄
 			// 全システム停止＆破棄
 			BCT_ErrAllSysEnd( p_wk, pp );
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 
 		defalut:
 			GF_ASSERT(0);
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 	}
 
 	
@@ -531,7 +531,7 @@ PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
 		// 同期が完了するまで待つ
 		if(!CommIsTimingSync(BCT_SYNCID_END)){
 			TOMOYA_PRINT( "sync_wait\n" );
-			return PROC_RES_CONTINUE;
+			return GFL_PROC_RES_CONTINUE;
 		}
 
 		// VChatOff
@@ -607,7 +607,7 @@ PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
 				MNGM_RESULT_Exit( p_wk->p_result );
 				p_wk->p_result = NULL;
 				if( replay == FALSE ){
-					return PROC_RES_FINISH;
+					return GFL_PROC_RES_FINISH;
 				}else{
 					(*p_seq) = BCT_MAINSEQ_ENTRY_INIT;
 				}
@@ -616,7 +616,7 @@ PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -626,11 +626,11 @@ PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq )
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq )
 {
 	BUCKET_WK* p_wk = PROC_GetWork( p_proc );
 	BUCKET_PROC_WORK* pp = PROC_GetParentWork(p_proc);
@@ -646,16 +646,16 @@ PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq )
 		BCT_GAMEDATA_Release( p_wk );
 
 		// ワーク破棄
-		PROC_FreeWork( p_proc );
+		GFL_PROC_FreeWork( p_proc );
 
 		// ヒープ破棄
-		sys_DeleteHeap( HEAPID_BUCKET );
+		GFL_HEAP_DeleteHeap( HEAPID_BUCKET );
 
 		CommStateSetErrorCheck(FALSE,TRUE);
 
 		// 切断エラーが発生しているならそのまま終わる
 		if( dis_error == TRUE ){
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		
 
@@ -667,7 +667,7 @@ PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq )
 	case 1:
 		if(	CommIsTimingSync(BCT_SYNCID_ERR_END) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 人数が少なくなったらそのまま抜ける
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 
@@ -676,7 +676,7 @@ PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq )
 	}
 	
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------

@@ -23,9 +23,9 @@ typedef struct _BALLOON_GAME_WORK * BALLOON_GAME_PTR;
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern PROC_RESULT BalloonGameProc_Init( PROC * proc, int * seq );
-extern PROC_RESULT BalloonGameProc_Main( PROC * proc, int * seq );
-extern PROC_RESULT BalloonGameProc_End(PROC *proc, int *seq);
+extern GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq );
+extern GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq );
+extern GFL_PROC_RESULT BalloonGameProc_End(GFL_PROC *proc, int *seq);
 
 extern int Balloon_NetID_to_PlayerPos(BALLOON_GAME_PTR game, int net_id);
 extern int Balloon_NetID_to_EntryNo(BALLOON_GAME_PTR game, int net_id);

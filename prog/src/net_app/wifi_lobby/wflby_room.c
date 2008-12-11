@@ -1112,7 +1112,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_BttnLockClear( WFLBY_GADGET_BTTN* p_wk );
 
 
 #ifdef PM_DEBUG
-PROC_RESULT WFLBY_ROOM_InitDebug(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq)
 {
 	FS_EXTERN_OVERLAY(wifilobby_common);
 	FS_EXTERN_OVERLAY(wifi_2dmapsys);
@@ -1123,7 +1123,7 @@ PROC_RESULT WFLBY_ROOM_InitDebug(PROC* p_proc, int* p_seq)
 	return WFLBY_ROOM_Init( p_proc, p_seq );
 }
 
-PROC_RESULT WFLBY_ROOM_ExitDebug(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq)
 {
 	BOOL result;
 	
@@ -1147,11 +1147,11 @@ PROC_RESULT WFLBY_ROOM_ExitDebug(PROC* p_proc, int* p_seq)
  *	@param	p_proc		プロセスワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
@@ -1176,7 +1176,7 @@ PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq)
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOMGRA, 0x3d000 );
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_ROOMWK), HEAPID_WFLBY_ROOM );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_ROOMWK), HEAPID_WFLBY_ROOM );
 	memset( p_wk, 0, sizeof(WFLBY_ROOMWK) );
 
 	// 部屋保存データ設定先を保存
@@ -1267,7 +1267,7 @@ PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq)
 	sys_VBlankFuncChange( WFLBY_ROOM_VBlank, p_wk );
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 	
-	return	PROC_RES_FINISH;
+	return	GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -1275,7 +1275,7 @@ PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq)
  *	@brief	部屋システム	メイン
  */	
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
@@ -1475,7 +1475,7 @@ PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq)
 		result = WIPE_SYS_EndCheck();
 		if( result == TRUE ){
 			p_wk->fade_flag = FALSE;
-			return	PROC_RES_FINISH;
+			return	GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
@@ -1551,7 +1551,7 @@ PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq)
 #endif
 
 	
-	return	PROC_RES_CONTINUE;
+	return	GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1559,7 +1559,7 @@ PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq)
  *	@brief	部屋システム	サブ
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBY_ROOM_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	WFLBY_ROOMWK* p_wk;
 	WFLBY_ROOM_PARAM* p_param;
@@ -1618,15 +1618,15 @@ PROC_RESULT WFLBY_ROOM_Exit(PROC* p_proc, int* p_seq)
 	sys_FreeMemoryEz( p_wk );
 
 	// ヒープ破棄
-	sys_DeleteHeap( HEAPID_WFLBY_ROOM );
-	sys_DeleteHeap( HEAPID_WFLBY_ROOMGRA );
+	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
+	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOMGRA );
 
 
 	// Seを全停止
 	Snd_SeStopAll( 0 );
 	Snd_PMVoiceStop( 0 );
 
-	return	PROC_RES_FINISH;
+	return	GFL_PROC_RES_FINISH;
 }
 
 

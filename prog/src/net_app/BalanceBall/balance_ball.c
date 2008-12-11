@@ -83,7 +83,7 @@ enum {
 
 static void BalanceBall_MainInit( BB_WORK* wk )
 {
-//	BB_WORK* wk = PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
+//	BB_WORK* wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
 //	memset( wk, 0, sizeof( BB_WORK ) );
 
 	wk->seed_tmp = gf_get_seed();		///< 乱数のタネ退避
@@ -285,17 +285,17 @@ static void BalanceBall_MainInit( BB_WORK* wk )
  * @param	proc	
  * @param	seq	
  *
- * @retval	PROC_RESULT	
+ * @retval	GFL_PROC_RESULT	
  *
  */
 //--------------------------------------------------------------
-PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq )
 {
 	BB_WORK* wk;
 	
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BB, HEAP_SIZE_BB );
 	
-	wk = PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
+	wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
 	memset( wk, 0, sizeof( BB_WORK ) );
 	
 	wk->parent_wk = PROC_GetParentWork( proc );
@@ -317,7 +317,7 @@ PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq )
 
 	MNGM_ENRES_PARAM_Init( &wk->entry_param, wk->parent_wk->wifi_lobby, wk->parent_wk->p_save, wk->parent_wk->vchat, &wk->parent_wk->lobby_wk );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 static void BB_PenDemo( BB_CLIENT* wk, u32 x, u32 y )
@@ -440,11 +440,11 @@ static BOOL PenDemo( BB_CLIENT* wk )
  * @param	proc	
  * @param	seq	
  *
- * @retval	PROC_RESULT	
+ * @retval	GFL_PROC_RESULT	
  *
  */
 //--------------------------------------------------------------
-PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq )
 {
 	BB_WORK* wk = PROC_GetWork( proc );
 	BOOL bEnd = FALSE;
@@ -454,10 +454,10 @@ PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq )
 	dis_error = BB_DIS_ERROR_Check( wk );
 	switch( dis_error ){
 	case BB_DIS_ERROR_CLOSEING:		// 切断エラー	終了中
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 
 	case BB_DIS_ERROR_CLOSED:		// 切断エラー	終了
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 
 	case BB_DIS_ERROR_NONE:			// エラーなし
 	default:
@@ -513,7 +513,7 @@ PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq )
 			
 			BOOL bSetup = Debug_GameSetup( wk );
 			
-			if ( bSetup == FALSE ){ return PROC_RES_CONTINUE; }
+			if ( bSetup == FALSE ){ return GFL_PROC_RES_CONTINUE; }
 		}
 	#endif
 	#endif
@@ -725,7 +725,7 @@ PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq )
 	case eBB_SEQ_END_WAIT:
 	default:
 		bEnd = CommIsTimingSync( CCMD_BB_CONNECT_END );
-		return ( bEnd == TRUE ) ? PROC_RES_FINISH : PROC_RES_CONTINUE;
+		return ( bEnd == TRUE ) ? GFL_PROC_RES_FINISH : GFL_PROC_RES_CONTINUE;
 		break;
 	}
 	
@@ -735,7 +735,7 @@ PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq )
 		BB_disp_Draw( wk );
 	}
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 static void MainResource_Delete( BB_WORK* wk )
@@ -832,11 +832,11 @@ static void Reset_GameData( BB_WORK* wk )
  * @param	proc	
  * @param	seq	
  *
- * @retval	PROC_RESULT	
+ * @retval	GFL_PROC_RESULT	
  *
  */
 //--------------------------------------------------------------
-PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq )
+GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq )
 {	
 	switch ( *seq ){
 	case 0:
@@ -845,12 +845,12 @@ PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq )
 			BB_WORK* wk = PROC_GetWork( proc );
 			dis_error = BB_DIS_ERROR_Check( wk );	// 切断エラーチェック
 	
-			PROC_FreeWork( proc );
-			sys_DeleteHeap( HEAPID_BB );
+			GFL_PROC_FreeWork( proc );
+			GFL_HEAP_DeleteHeap( HEAPID_BB );
 			CommStateSetErrorCheck( FALSE, TRUE );
 
 			if( dis_error != BB_DIS_ERROR_NONE ){
-				return PROC_RES_FINISH;
+				return GFL_PROC_RES_FINISH;
 			}
 
 			CommTimingSyncStart( BB_COMM_END_CMD );
@@ -861,12 +861,12 @@ PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq )
 	default:
 		if( (CommIsTimingSync( BB_COMM_END_CMD ) == TRUE) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 人数が少なくなったらそのまま抜ける
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 

@@ -89,13 +89,13 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq);
-extern PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq);
-extern PROC_RESULT WFLBY_ROOM_Exit(PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_Main(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq);
 
 #ifdef PM_DEBUG
-extern PROC_RESULT WFLBY_ROOM_InitDebug(PROC* p_proc, int* p_seq);
-extern PROC_RESULT WFLBY_ROOM_ExitDebug(PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_InitDebug(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT WFLBY_ROOM_ExitDebug(GFL_PROC* p_proc, int* p_seq);
 #endif
 
 #endif		// __WFLBY_ROOM_H__

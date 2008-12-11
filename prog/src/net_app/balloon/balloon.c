@@ -52,10 +52,10 @@ enum{
 #define BALLOON_END_TIMING_NO		(222)
 
 //==============================================================================
-//	PROCデータ
+//	GFL_PROCデータ
 //==============================================================================
 ///風船割りゲーム画面プロセス定義データ
-static const PROC_DATA BalloonGameProcData = {
+static const GFL_PROC_DATA BalloonGameProcData = {
 	BalloonGameProc_Init,
 	BalloonGameProc_Main,
 	BalloonGameProc_End,
@@ -63,7 +63,7 @@ static const PROC_DATA BalloonGameProcData = {
 };
 
 ///風船割りエントリー画面＆結果発表画面プロセス定義データ
-static const PROC_DATA BalloonEntryProcData = {
+static const GFL_PROC_DATA BalloonEntryProcData = {
 	BalloonEntryProc_Init,
 	BalloonEntryProc_Main,
 	BalloonEntryProc_End,
@@ -87,13 +87,13 @@ static BOOL Ballon_DisconnectErrorCheck( BALLOON_SYSTEM_WORK *bsw );
 /**
  * @brief   風船割り：初期化
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonProc_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq )
 {
 	BALLOON_PROC_WORK *parent = PROC_GetParentWork(proc);
 	BALLOON_SYSTEM_WORK *bsw;
@@ -101,34 +101,34 @@ PROC_RESULT BalloonProc_Init( PROC * proc, int * seq )
 	//Eメール管理用ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BALLOON, 0x60000 );
 
-	bsw = PROC_AllocWork(proc, sizeof(BALLOON_SYSTEM_WORK), HEAPID_BALLOON );
-	MI_CpuClear8(bsw, sizeof(BALLOON_SYSTEM_WORK));
+	bsw = GFL_PROC_AllocWork(proc, sizeof(BALLOON_SYSTEM_WORK), HEAPID_BALLOON );
+	GFL_STD_MemClear(bsw, sizeof(BALLOON_SYSTEM_WORK));
 #ifdef PM_DEBUG
 	bsw->debug_offline = parent->debug_offline;
 #endif
 	Ballon_ProcWorkInit(bsw, parent);
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   風船割り：メイン
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonProc_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq )
 {
 	BALLOON_SYSTEM_WORK * bsw  = PROC_GetWork( proc );
 	BALLOON_PROC_WORK *parent = PROC_GetParentWork(proc);
 
 	// 通信エラー終了チェック
 	if( Ballon_DisconnectErrorCheck( bsw ) == TRUE ){
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 	}
 	
 	
@@ -208,31 +208,31 @@ PROC_RESULT BalloonProc_Main( PROC * proc, int * seq )
 
 	case MAINSEQ_END:
 	default:
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 	}
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   風船割り：終了処理
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonProc_End(PROC *proc, int *seq)
+GFL_PROC_RESULT BalloonProc_End(GFL_PROC *proc, int *seq)
 {
 	BALLOON_SYSTEM_WORK * bsw  = PROC_GetWork( proc );
 
-	PROC_FreeWork( proc );				// PROCワーク開放
+	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
 
-	sys_DeleteHeap( HEAPID_BALLOON );
+	GFL_HEAP_DeleteHeap( HEAPID_BALLOON );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 
@@ -241,8 +241,8 @@ PROC_RESULT BalloonProc_End(PROC *proc, int *seq)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   PROCワークの初期値設定
- * @param   bsw		PROCワークへのポインタ
+ * @brief   GFL_PROCワークの初期値設定
+ * @param   bsw		GFL_PROCワークへのポインタ
  * @param   parent	BALLOON_PROC_WORKへのポインタ
  */
 //--------------------------------------------------------------

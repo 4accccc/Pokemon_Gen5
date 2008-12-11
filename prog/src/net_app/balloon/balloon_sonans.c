@@ -403,7 +403,7 @@ SONANS_SYS_PTR Sonas_Init(BALLOON_GAME_PTR game)
 	SONANS_SYS_PTR sns;
 	
 	sns = sys_AllocMemory(HEAPID_BALLOON, sizeof(SONANS_SYS));
-	MI_CpuClear8(sns, sizeof(SONANS_SYS));
+	GFL_STD_MemClear(sns, sizeof(SONANS_SYS));
 	sns->rare_type = game->bsw->raregame_type;
 	
 	//テクスチャロード

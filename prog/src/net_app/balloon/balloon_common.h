@@ -109,7 +109,7 @@ typedef struct{
 	MNGM_ENRES_PARAM entry_param;		///<エントリー画面呼び出しパラメータ
 	MNGM_RESULT_PARAM result_param;		///<結果発表画面呼び出しパラメータ
 
-	PROC *sub_proc;						///<実行中のサブプロセス
+	GFL_PROC *sub_proc;						///<実行中のサブプロセス
 
 	u8 player_netid[WFLBY_MINIGAME_MAX];	///<参加しているプレイヤーのnetID
 	u8 player_max;							///<参加人数

@@ -692,11 +692,11 @@ static void NEWSDRAW_DEBUG_TopicMake( NEWSDRAW_WK* p_wk, WFLBY_SYSTEM* p_system,
  *	@param	p_proc		プロックワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
@@ -707,7 +707,7 @@ PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq)
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NEWSDRAW, 0x50000 );
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(NEWSDRAW_WK), HEAPID_NEWSDRAW );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(NEWSDRAW_WK), HEAPID_NEWSDRAW );
 	memset( p_wk, 0, sizeof(NEWSDRAW_WK) );
 
 	// データ格納
@@ -737,7 +737,7 @@ PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq)
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -745,7 +745,7 @@ PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq)
  *	@brief	ロビーニュース	メイン
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT NEWS_DRAW_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
@@ -832,7 +832,7 @@ PROC_RESULT NEWS_DRAW_Main(PROC* p_proc, int* p_seq)
 	case NEWSDRAW_SEQ_FADEOUTWAIT:
 		result = WIPE_SYS_EndCheck();
 		if( result == TRUE ){
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
@@ -841,7 +841,7 @@ PROC_RESULT NEWS_DRAW_Main(PROC* p_proc, int* p_seq)
 	// 描画
 	NEWSDRAW_WkDraw( p_wk, p_param->p_system );
 
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -849,7 +849,7 @@ PROC_RESULT NEWS_DRAW_Main(PROC* p_proc, int* p_seq)
  *	@brief	ロビーニュース	破棄
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT NEWS_DRAW_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	NEWSDRAW_WK* p_wk;
 	NEWS_DRAW_DATA* p_param;
@@ -881,12 +881,12 @@ PROC_RESULT NEWS_DRAW_Exit(PROC* p_proc, int* p_seq)
 	NEWSDRAW_DrawSysExit( &p_wk->draw );
 
 	//ワーク破棄
-	PROC_FreeWork( p_proc );
+	GFL_PROC_FreeWork( p_proc );
 	
 	//ヒープ破棄
-	sys_DeleteHeap( HEAPID_NEWSDRAW );
+	GFL_HEAP_DeleteHeap( HEAPID_NEWSDRAW );
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 

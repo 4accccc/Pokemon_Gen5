@@ -48,9 +48,9 @@ typedef struct{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq);
-extern PROC_RESULT NEWS_DRAW_Main(PROC* p_proc, int* p_seq);
-extern PROC_RESULT NEWS_DRAW_Exit(PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT NEWS_DRAW_Main(GFL_PROC* p_proc, int* p_seq);
+extern GFL_PROC_RESULT NEWS_DRAW_Exit(GFL_PROC* p_proc, int* p_seq);
 
 
 #endif		// __LOBBY_NEWS_H__

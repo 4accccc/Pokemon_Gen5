@@ -851,7 +851,7 @@ void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, int level, BALLOO
 	
 	
 	//ステータスパラメータセット
-	MI_CpuClear8(bst, sizeof(BALLOON_STATUS));
+	GFL_STD_MemClear(bst, sizeof(BALLOON_STATUS));
 	bst->max_air = BalloonParicipationData[player_max].max_air[level];
 	bst->level = level;
 	bst->occ = TRUE;
@@ -1151,7 +1151,7 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 	
 	GF_ASSERT(air_param->occ == FALSE);
 	
-	MI_CpuClear8(air_param, sizeof(PLAYER_AIR_PARAM));
+	GFL_STD_MemClear(air_param, sizeof(PLAYER_AIR_PARAM));
 	
 	player_pos = Balloon_NetID_to_PlayerPos(game, air_data->net_id);
 	air_posdata = &AirPositionDataTbl[game->bsw->player_max][player_pos];
@@ -1659,7 +1659,7 @@ BOOL BalloonTool_ExplodedParamAdd(BALLOON_GAME_PTR game)
 		return FALSE;
 	}
 	
-	MI_CpuClear8(exploded, sizeof(EXPLODED_PARAM));
+	GFL_STD_MemClear(exploded, sizeof(EXPLODED_PARAM));
 	
 	//爆発アクター生成　自分の画面状況を反映させる為bstは個々のローカルのを使用
 	Exploded_ActorCreate(game, &game->exploded_param, &game->bst);
@@ -1787,7 +1787,7 @@ BOOL IconBalloon_Update(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 static BOOL BalloonTool_IconBalloonParamAdd(BALLOON_GAME_PTR game, ICONBALLOON_PARAM *ibp, int pos, int balloon_no)
 {
-	MI_CpuClear8(ibp, sizeof(ICONBALLOON_PARAM));
+	GFL_STD_MemClear(ibp, sizeof(ICONBALLOON_PARAM));
 	
 	ibp->type = IconBalloon_TypeGet(balloon_no);
 	ibp->status = ICON_BALLOON_STATUS_NORMAL;
@@ -2090,7 +2090,7 @@ void BalloonTool_PaletteSwap_Storm(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void BalloonTool_AirDataCreate(BALLOON_GAME_PTR game, int balloon_no, s32 air, BALLOON_AIR_DATA *air_data)
 {
-	MI_CpuClear8(air_data, sizeof(BALLOON_AIR_DATA));
+	GFL_STD_MemClear(air_data, sizeof(BALLOON_AIR_DATA));
 	air_data->net_id = CommGetCurrentID();
 	air_data->no = balloon_no;
 	air_data->air = air;

@@ -84,11 +84,11 @@ static void WFLBY_VBlankFunc( TCB_PTR p_tcb, void* p_work );
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq )
 {
 	WFLBY_WK* p_wk;
 	WFLBY_PROC_PARAM* p_param;
@@ -109,7 +109,7 @@ PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq )
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLOBBY, 0x5000 );
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_WK), HEAPID_WFLOBBY );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_WK), HEAPID_WFLOBBY );
 	memset( p_wk, 0, sizeof(WFLBY_WK) );
 
 	// パラメータワーク取得
@@ -134,7 +134,7 @@ PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq )
 	// プロック開始
 	WFLBY_APL_Start( p_wk->p_apl );
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -144,11 +144,11 @@ PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq )
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Main( GFL_PROC* p_proc, int* p_seq )
 {
 	WFLBY_WK* p_wk;
 	WFLBY_APL_RET apl_ret;
@@ -164,9 +164,9 @@ PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq )
 
 	// 終了チェック
 	if( apl_ret == WFLBY_APL_RET_END ){
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 	}
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -176,11 +176,11 @@ PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq )
  *	@param	p_proc		ワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq )
+GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq )
 {
 	WFLBY_WK* p_wk;
 
@@ -200,10 +200,10 @@ PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq )
 	WFLBY_SYSTEM_Exit( p_wk->p_commsys );
 
 	// ワーク破棄
-	PROC_FreeWork( p_proc );
+	GFL_PROC_FreeWork( p_proc );
 
 	// ヒープ破棄
-	sys_DeleteHeap( HEAPID_WFLOBBY );
+	GFL_HEAP_DeleteHeap( HEAPID_WFLOBBY );
 
 	// ２Dマップシステムをオーバーレイを破棄
 	{
@@ -217,7 +217,7 @@ PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq )
 		DwcOverlayEnd();
 	}
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 

@@ -66,35 +66,35 @@ typedef struct{
 /**
  * @brief   風船割りエントリー画面：初期化
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonEntryProc_Init( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonEntryProc_Init( GFL_PROC * proc, int * seq )
 {
 	BALLOON_ENTRY_PROC_WORK *entry;
 
-	entry = PROC_AllocWork(proc, sizeof(BALLOON_ENTRY_PROC_WORK), HEAPID_BALLOON );
-	MI_CpuClear8(entry, sizeof(BALLOON_ENTRY_PROC_WORK));
+	entry = GFL_PROC_AllocWork(proc, sizeof(BALLOON_ENTRY_PROC_WORK), HEAPID_BALLOON );
+	GFL_STD_MemClear(entry, sizeof(BALLOON_ENTRY_PROC_WORK));
 	
 	entry->bsw = PROC_GetParentWork(proc);
 	
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   風船割りエントリー画面：メイン
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonEntryProc_Main( PROC * proc, int * seq )
+GFL_PROC_RESULT BalloonEntryProc_Main( GFL_PROC * proc, int * seq )
 {
 	BALLOON_ENTRY_PROC_WORK * entry  = PROC_GetWork( proc );
 
@@ -129,10 +129,10 @@ PROC_RESULT BalloonEntryProc_Main( PROC * proc, int * seq )
 				MNGM_RESULT_Exit(entry->mngm_result);
 				entry->mngm_result = NULL;
 			} 
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		
-		return PROC_RES_CONTINUE;
+		return GFL_PROC_RES_CONTINUE;
 	}
 	
 	// メインシーケンス
@@ -178,28 +178,28 @@ PROC_RESULT BalloonEntryProc_Main( PROC * proc, int * seq )
 	//終了
 	case MAINSEQ_END:
 	default:
-		return PROC_RES_FINISH;
+		return GFL_PROC_RES_FINISH;
 	}
 	
-	return PROC_RES_CONTINUE;
+	return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   風船割りエントリー画面：終了処理
  *
- * @param   proc		PROCへのポインタ
+ * @param   proc		GFL_PROCへのポインタ
  * @param   seq			シーケンスワーク
  *
  * @retval  
  */
 //--------------------------------------------------------------
-PROC_RESULT BalloonEntryProc_End(PROC *proc, int *seq)
+GFL_PROC_RESULT BalloonEntryProc_End(GFL_PROC *proc, int *seq)
 {
 	BALLOON_ENTRY_PROC_WORK * entry  = PROC_GetWork( proc );
 
-	PROC_FreeWork( proc );				// PROCワーク開放
+	GFL_PROC_FreeWork( proc );				// GFL_PROCワーク開放
 
-	return PROC_RES_FINISH;
+	return GFL_PROC_RES_FINISH;
 }
 

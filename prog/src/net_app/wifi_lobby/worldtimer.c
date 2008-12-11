@@ -1346,11 +1346,11 @@ static u32 WLDTIMER_WFLBYDATA_GetFirst( const WFLBY_WLDTIMER* cp_data );
  *	@param	p_proc		プロックワーク
  *	@param	p_seq		シーケンス
  *
- *	@retval	PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval	PROC_RES_FINISH,			///<動作終了
+ *	@retval	GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
+ *	@retval	GFL_PROC_RES_FINISH,			///<動作終了
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WLDTIMER_Init(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
@@ -1372,7 +1372,7 @@ PROC_RESULT WLDTIMER_Init(PROC* p_proc, int* p_seq)
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WLDTIMER, 0x50000 );
 
 	// ワーク作成
-	p_wk = PROC_AllocWork( p_proc, sizeof(WLDTIMER_WK), HEAPID_WLDTIMER );
+	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WLDTIMER_WK), HEAPID_WLDTIMER );
 	memset( p_wk, 0, sizeof(WLDTIMER_WK) );
 
 	// セーブデータ取得
@@ -1423,7 +1423,7 @@ PROC_RESULT WLDTIMER_Init(PROC* p_proc, int* p_seq)
 	sys_VBlankFuncChange( WLDTIMER_WkVBlank, p_wk );
 	sys_HBlankIntrStop();	//HBlank割り込み停止
 
-	return	PROC_RES_FINISH;
+	return	GFL_PROC_RES_FINISH;
 }
 
 //----------------------------------------------------------------------------
@@ -1431,7 +1431,7 @@ PROC_RESULT WLDTIMER_Init(PROC* p_proc, int* p_seq)
  *	@brief	世界時計	メイン
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WLDTIMER_Main(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Main(GFL_PROC* p_proc, int* p_seq)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
@@ -1499,7 +1499,7 @@ PROC_RESULT WLDTIMER_Main(PROC* p_proc, int* p_seq)
 	case WLDTIMER_SEQ_FADEOUTWAIT:
 		result = WIPE_SYS_EndCheck();
 		if( result == TRUE ){
-			return PROC_RES_FINISH;
+			return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
@@ -1507,7 +1507,7 @@ PROC_RESULT WLDTIMER_Main(PROC* p_proc, int* p_seq)
 	// 描画
 	WLDTIMER_WkDraw( p_wk );
 
-	return	PROC_RES_CONTINUE;
+	return	GFL_PROC_RES_CONTINUE;
 }
 
 //----------------------------------------------------------------------------
@@ -1515,7 +1515,7 @@ PROC_RESULT WLDTIMER_Main(PROC* p_proc, int* p_seq)
  *	@brief	世界時計	破棄
  */
 //-----------------------------------------------------------------------------
-PROC_RESULT WLDTIMER_Exit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_Exit(GFL_PROC* p_proc, int* p_seq)
 {
 	WLDTIMER_WK* p_wk;
 	WLDTIMER_PARAM* p_param;
@@ -1552,27 +1552,27 @@ PROC_RESULT WLDTIMER_Exit(PROC* p_proc, int* p_seq)
 	WLDTIMER_DrawSysExit( &p_wk->drawsys );
 
 	//ワーク破棄
-	PROC_FreeWork( p_proc );
+	GFL_PROC_FreeWork( p_proc );
 	
 	//ヒープ破棄
-	sys_DeleteHeap( HEAPID_WLDTIMER );
+	GFL_HEAP_DeleteHeap( HEAPID_WLDTIMER );
 
-	return	PROC_RES_FINISH;
+	return	GFL_PROC_RES_FINISH;
 }
 
 
 
 
 #ifdef  PM_DEBUG
-PROC_RESULT WLDTIMER_DebugInit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_DebugInit(GFL_PROC* p_proc, int* p_seq)
 {
 
 	return WLDTIMER_Init( p_proc, p_seq );
 }
 
-PROC_RESULT WLDTIMER_DebugExit(PROC* p_proc, int* p_seq)
+GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq)
 {
-	PROC_RESULT result;
+	GFL_PROC_RESULT result;
 
 	result = WLDTIMER_Exit( p_proc, p_seq );
 
