@@ -106,7 +106,7 @@ PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq )
 	}
 	
 	// ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WFLOBBY, 0x5000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLOBBY, 0x5000 );
 
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_WK), HEAPID_WFLOBBY );

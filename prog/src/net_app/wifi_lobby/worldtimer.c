@@ -1369,7 +1369,7 @@ PROC_RESULT WLDTIMER_Init(PROC* p_proc, int* p_seq)
 	OS_TPrintf( "end cgx %d\n", WLDTIMER_MAIN_SUBBTTN_CGXEND );
 
 	//ヒープエリア作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WLDTIMER, 0x50000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WLDTIMER, 0x50000 );
 
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(WLDTIMER_WK), HEAPID_WLDTIMER );

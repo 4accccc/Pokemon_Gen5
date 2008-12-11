@@ -1172,8 +1172,8 @@ PROC_RESULT WFLBY_ROOM_Init(PROC* p_proc, int* p_seq)
 	p_param = PROC_GetParentWork( p_proc );
 
 	// ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WFLBY_ROOM, 0x3a000 );
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WFLBY_ROOMGRA, 0x3d000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x3a000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOMGRA, 0x3d000 );
 
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_ROOMWK), HEAPID_WFLBY_ROOM );
@@ -1545,7 +1545,7 @@ PROC_RESULT WFLBY_ROOM_Main(PROC* p_proc, int* p_seq)
 		OS_TPrintf( "HEAPID_WFLBY_ROOMGRA free size 0x%x\n", sys_GetHeapFreeSize( HEAPID_WFLBY_ROOMGRA ) );
 		OS_TPrintf( "HEAPID_CONN free size 0x%x\n", sys_GetHeapFreeSize( HEAPID_COMMUNICATION ) );
 		OS_TPrintf( "HEAPID_WIFIMENU free size size 0x%x\n", sys_GetHeapFreeSize( HEAPID_WIFIMENU ) );
-		OS_TPrintf( "HEAPID_APP free size size 0x%x\n", sys_GetHeapFreeSize( HEAPID_BASE_APP ) );
+		OS_TPrintf( "HEAPID_APP free size size 0x%x\n", sys_GetHeapFreeSize( GFL_HEAPID_APP ) );
 
 	}
 #endif

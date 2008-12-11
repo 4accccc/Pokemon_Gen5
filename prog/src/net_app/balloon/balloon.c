@@ -99,7 +99,7 @@ PROC_RESULT BalloonProc_Init( PROC * proc, int * seq )
 	BALLOON_SYSTEM_WORK *bsw;
 
 	//Eメール管理用ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_BALLOON, 0x60000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BALLOON, 0x60000 );
 
 	bsw = PROC_AllocWork(proc, sizeof(BALLOON_SYSTEM_WORK), HEAPID_BALLOON );
 	MI_CpuClear8(bsw, sizeof(BALLOON_SYSTEM_WORK));

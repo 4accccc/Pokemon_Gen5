@@ -710,7 +710,7 @@ PROC_RESULT ANKETO_Init(PROC* p_proc, int* p_seq)
 	p_param = PROC_GetParentWork( p_proc );
 
 	//ヒープエリア作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_ANKETO, 0x50000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ANKETO, 0x50000 );
 
 
 	// ワーク作成

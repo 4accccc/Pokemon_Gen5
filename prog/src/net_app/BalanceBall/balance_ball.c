@@ -293,7 +293,7 @@ PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq )
 {
 	BB_WORK* wk;
 	
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_BB, HEAP_SIZE_BB );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BB, HEAP_SIZE_BB );
 	
 	wk = PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
 	memset( wk, 0, sizeof( BB_WORK ) );

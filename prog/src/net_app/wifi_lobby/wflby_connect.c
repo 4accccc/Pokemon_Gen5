@@ -387,7 +387,7 @@ PROC_RESULT WFLBY_CONNECT_Init(PROC* p_proc, int* p_seq)
 	WFLBY_CONNECT_PARAM* p_param;
 
 	// ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WFLBY_ROOM, 0x20000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x20000 );
 	
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
@@ -840,7 +840,7 @@ PROC_RESULT WFLBY_DISCONNECT_Init(PROC* p_proc, int* p_seq)
 	WFLBY_DISCONNECT_PARAM* p_param;
 
 	// ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_WFLBY_ROOM, 0x20000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WFLBY_ROOM, 0x20000 );
 	
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );

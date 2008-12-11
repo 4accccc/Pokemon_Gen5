@@ -704,7 +704,7 @@ PROC_RESULT NEWS_DRAW_Init(PROC* p_proc, int* p_seq)
 	p_param = PROC_GetParentWork( p_proc );
 
 	//ヒープエリア作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_NEWSDRAW, 0x50000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NEWSDRAW, 0x50000 );
 
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(NEWSDRAW_WK), HEAPID_NEWSDRAW );

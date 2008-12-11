@@ -188,7 +188,7 @@ PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq )
 #endif
 
 	// ヒープ作成
-	sys_CreateHeap( HEAPID_BASE_APP, HEAPID_BUCKET, 0x60000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BUCKET, 0x60000 );
 
 	// ワーク作成
 	p_wk = PROC_AllocWork( p_proc, sizeof(BUCKET_WK), HEAPID_BUCKET );

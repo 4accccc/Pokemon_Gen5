@@ -583,7 +583,7 @@ PROC_RESULT FootPrintProc_Init( PROC * proc, int * seq )
 	G2_BlendNone();
 	G2S_BlendNone();
 
-	sys_CreateHeap(HEAPID_BASE_APP, HEAPID_FOOTPRINT, FOOTPRINT_HEAP_SIZE);
+	GFL_HEAP_CreateHeap(GFL_HEAPID_APP, HEAPID_FOOTPRINT, FOOTPRINT_HEAP_SIZE);
 
 	fps = PROC_AllocWork(proc, sizeof(FOOTPRINT_SYS), HEAPID_FOOTPRINT );
 	MI_CpuClear8(fps, sizeof(FOOTPRINT_SYS));
