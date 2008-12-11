@@ -65,6 +65,14 @@ ifeq	($(PM_DEBUG),yes)
 MACRO_FLAGS	+=	-DPM_DEBUG
 endif
 
+ifdef	PM_VERSION
+MACRO_FLAGS	+=	-DPM_VERSION=$(PM_VERSION)
+endif
+
+ifdef	PM_LANG
+MACRO_FLAGS	+=	-DPM_LANG=$(PM_LANG)
+endif
+
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
 #----------------------------------------------------------------------------
