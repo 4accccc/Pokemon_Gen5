@@ -159,3 +159,12 @@ extern MYITEM_PTR GAMEDATA_GetMyItem(const GAMEDATA * gamedata);
  */
 //--------------------------------------------------------------
 extern POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   MYSTATUSへのポインタ取得
+ * @param   gamedata		GAMEDATAへのポインタ
+ * @retval  MYSTATUSへのポインタ
+ */
+//--------------------------------------------------------------
+extern MYSTATUS * GAMEDATA_GetMyStatus(const GAMEDATA * gamedata);
