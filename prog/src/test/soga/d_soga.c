@@ -379,6 +379,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		GX_SetVisibleWnd( GX_WNDMASK_W0 );
 	}
 
+#if 0
 	//ƒXƒgƒŠ[ƒ€Ä¶‰Šú‰»
     NNS_SndInit();
     NNS_SndStrmInit( &wk->strm );
@@ -387,6 +388,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	StrmSetUp(wk);
 
 	NNS_SndStrmStart(&wk->strm);
+#endif
 
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 	
@@ -443,7 +445,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	}
 #endif
 
+#if 0
 	StrmBufferCopy(wk,0);
+#endif
 
 #ifdef MCS_ENABLE
 	if( ( trg & PAD_BUTTON_START ) ||
@@ -680,7 +684,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	BTL_EFFECT_Main();
 
 	if( pad == PAD_BUTTON_EXIT ){
-		NNS_SndStrmStop(&wk->strm);
+//		NNS_SndStrmStop(&wk->strm);
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 2 );
 		return GFL_PROC_RES_FINISH;	
 	}
@@ -718,7 +722,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcExit( GFL_PROC * proc, int * seq, void
 	BTL_EFFECT_Exit();
 //	BTL_EFFECT_Exit( wk->bew );
 
-    NNS_SndStrmFreeChannel( &wk->strm );
+//    NNS_SndStrmFreeChannel( &wk->strm );
 
 	GFL_G3D_Exit();
 
@@ -866,7 +870,7 @@ static	void	set_pokemon( SOGA_WORK *wk )
 {
 	//POKEMON_PARAM¶¬
 	POKEMON_PARAM	*pp = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
-	PP_Clear( pp );
+	PP_SetupEx( pp, 0, 0, 0, 0, 255 );
 	
 	if( wk->timer_flag ){
 		PP_Put( pp, ID_PARA_monsno, wk->mons_no );
