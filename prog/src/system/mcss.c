@@ -80,7 +80,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 tex_t,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
-							  int cell,
+							  int node,
 							  fx32 *pos_z_default );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw );
@@ -97,6 +97,8 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
 //影実験
 int	shadow_flag;
 NNSG2dImagePaletteProxy		shadow_palette;
+
+NNSG2dAnimController		*anim_ctrl_c;
 
 //--------------------------------------------------------------------------
 /**
@@ -175,14 +177,15 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
     NNSG2dImageProxy			*image_p;
     NNSG2dImagePaletteProxy		*palette_p;
 	int							index;
-	int							cell;
+	int							node,cell;
 	fx32						pos_z_default;
 	NNSG2dAnimController		*anim_ctrl_mc;
 	NNSG2dAnimDataSRT			anim_SRT_mc;
-	NNSG2dAnimController		*anim_ctrl_c;
+//	NNSG2dAnimController		*anim_ctrl_c;
 	NNSG2dAnimDataT				*anim_T_p;
 	NNSG2dAnimDataSRT			anim_SRT;
 	NNSG2dMCNodeCellAnimArray	*MC_Array;
+	NNSG2dAnimSequenceData		*anim;
 #ifdef BILLBORAD_ON
 	MtxFx44						inv_camera;
 #endif
@@ -279,7 +282,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							 GX_TEXFLIP_NONE,
 							 image_p->attr.plttUse,
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
-			for( cell = 0 ; cell < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; cell++ ){
+			for( node = 0 ; node < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; node++ ){
+				cell = (mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].pHierDataArray[node].nodeAttr & 0xff00 ) >> 8;
 				anim_ctrl_c = NNS_G2dGetCellAnimAnimCtrl(&MC_Array->cellAnimArray[cell].cellAnim);
 				switch( anim_ctrl_c->pAnimSequence->animType & 0xffff ){
 				case NNS_G2D_ANIMELEMENT_INDEX:		// Index のみ
@@ -306,6 +310,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 					GF_ASSERT(0);
 					break;
 				}
+
 				ncec = &mcss->mcss_ncec->ncec[anim_SRT.index];
 
 				//メパチ処理
@@ -318,7 +323,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
-									  &anim_SRT, &anim_SRT_mc, cell, &pos_z_default );
+									  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
 					}
 					else{
 						MCSS_DrawAct( mcss, 
@@ -328,7 +333,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t,
-									  &anim_SRT, &anim_SRT_mc, cell, &pos_z_default );
+									  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
 					}
 				}
 				MCSS_DrawAct( mcss, 
@@ -338,7 +343,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->size_y,
 							  ncec->tex_s,
 							  ncec->tex_t,
-							  &anim_SRT, &anim_SRT_mc, cell, &pos_z_default );
+							  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
 			}
 			G3_PopMtx(1);
 		}
@@ -398,7 +403,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  fx32 tex_t,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
-							  int cell,
+							  int node,
 							  fx32 *pos_z_default )
 {
 	VecFx32						pos;
@@ -416,8 +421,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   );
 
 	//マルチセルデータから取得した位置で書き出し
-	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posX );
-	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posY );
+	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX );
+	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posY );
 
 	G3_Translate( pos.x, pos.y, 0 );
 
@@ -456,11 +461,11 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   0								// OR of GXPolygonAttrMisc's value
 				   );
 
-	G3_Translate( 0, 0, 0x0200 - *pos_z_default );
+	G3_Translate( 0, -*pos_z_default, 0x0200 - *pos_z_default );
 
 	//マルチセルデータから取得した位置で書き出し
-	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posX );
-	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[cell].posY );
+	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX );
+	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posY );
 
 	G3_Translate( pos.x, pos.y, 0 );
 
