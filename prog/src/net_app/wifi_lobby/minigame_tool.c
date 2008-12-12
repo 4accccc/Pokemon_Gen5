@@ -48,7 +48,7 @@
 #include "graphic/wlmngm_tool.naix"
 
 #include "minigame_tool_snd.h"
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 #include "minigame_tool_local.h"
 #include "minigame_commcomand.h"
 #include "minigame_commcomand_func.h"
@@ -1186,7 +1186,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, STRB
 static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col );
 
 // 会話ウィンドウ
-static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVEDATA* p_save, BOOL vip, u32 heapID );
+static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL_WORK* p_save, BOOL vip, u32 heapID );
 static void MNGM_TALKWIN_Exit( MNGM_TALKWIN* p_wk );
 static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgidx, u32 idx );
 static void MNGM_TALKWIN_MsgOff( MNGM_TALKWIN* p_wk, u32 idx );
@@ -1334,7 +1334,7 @@ static void MNGM_COUNT_TimeUpTcb( TCB_PTR tcb, void* p_work );
  *	@param	p_lobby_wk	ロビーワーク
  */
 //-----------------------------------------------------------------------------
-void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVEDATA* p_save, BOOL vchat, WFLBY_MINIGAME_WK* p_lobby_wk )
+void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVE_CONTROL_WORK* p_save, BOOL vchat, WFLBY_MINIGAME_WK* p_lobby_wk )
 {
 	int i;
 	int count;
@@ -1344,7 +1344,7 @@ void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVEDATA
 	memset( p_param,  0, sizeof(MNGM_ENRES_PARAM) );
 	
 	p_param->num = CommInfoGetEntryNum();
-	netid = CommGetCurrentID();
+	netid = GFL_NET_SystemGetCurrentID();
 
 	// PLNO順のNETIDテーブルを作成
 	count = 0;
@@ -2840,7 +2840,7 @@ static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u
  *	@param	heapID		ヒープ
  */
 //-----------------------------------------------------------------------------
-static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVEDATA* p_save, BOOL vip, u32 heapID )
+static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL_WORK* p_save, BOOL vip, u32 heapID )
 {
 	u32 type = CONFIG_GetWindowType(SaveData_GetConfig(p_save)); 
 	u32 frame;
@@ -3324,7 +3324,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 #ifdef DEBUG_SYNCSTART_A
 		if( sys.trg & PAD_BUTTON_A ){
 			p_wk->seq ++;
-			CommTimingSyncStart( MNGM_SYNC_END );
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_END );
 
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
@@ -3337,7 +3337,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 		p_wk->wait --;
 		if( p_wk->wait == 0 ){
 			p_wk->seq ++;
-			CommTimingSyncStart( MNGM_SYNC_END );
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_END );
 
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
@@ -3349,7 +3349,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 		break;
 
 	case MNGM_ENTRY_SEQ_BGMOVE_SYNC:
-		if( CommIsTimingSync( MNGM_SYNC_END ) ){
+		if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_END ) ){
 			p_wk->seq ++;
 		}
 		break;
@@ -5136,7 +5136,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 #ifdef DEBUG_SYNCSTART_A
 		if( sys.trg & PAD_BUTTON_A ){
 			p_wk->seq ++;
-			CommTimingSyncStart( MNGM_SYNC_RESULT_END );
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
 
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
@@ -5150,7 +5150,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 			p_wk->wait--;
 		}else{
 		
-			CommTimingSyncStart( MNGM_SYNC_RESULT_END );
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
 
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
@@ -5164,7 +5164,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 		break;
 		
 	case MNGM_RESULT_BALLSLOW_SEQ_SYNCWAIT:
-		if( CommIsTimingSync( MNGM_SYNC_RESULT_END ) ){
+		if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_RESULT_END ) ){
 
 			// リトライを聞くならリトライへ
 			if( p_wk->comm_param.replay ){
@@ -5477,12 +5477,12 @@ static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work )
 			// ボイスチャット終了
 			mydwc_stopvchat();
 		}
-		CommTimingSyncStart( MNGM_SYNC_RESULT_END );
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
 		p_wk->seq ++;
 		break;
 		
 	case MNGM_RESULT_BALLOON_SEQ_SYNCWAIT:
-		if( CommIsTimingSync( MNGM_SYNC_RESULT_END ) ){
+		if( GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), MNGM_SYNC_RESULT_END ) ){
 
 			// リトライを聞くp_wk->draw_nationならリトライへ
 			if( p_wk->comm_param.replay ){

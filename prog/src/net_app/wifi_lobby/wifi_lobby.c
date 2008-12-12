@@ -16,7 +16,7 @@
 
 #include "savedata/savedata_def.h"
 
-#include "application/wifi_lobby.h"
+#include "net_app/wifi_lobby.h"
 
 #include "communication/communication.h"
 
@@ -61,7 +61,7 @@
 ///	WiFiロビーメインワーク
 //=====================================
 typedef struct {
-	SAVEDATA*		p_save;		// セーブデータ
+	SAVE_CONTROL_WORK*		p_save;		// セーブデータ
 	WFLBY_SYSTEM*	p_commsys;	// WiFiロビー共通処理システム
 	WFLBY_APL*		p_apl;		// WiFiロビーアプリ管理システム
 	TCB_PTR p_vtcb;				// VBLANKTCB

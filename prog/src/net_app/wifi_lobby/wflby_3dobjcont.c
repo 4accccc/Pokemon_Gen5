@@ -13,9 +13,9 @@
 
 #include "common.h"
 
-#include "application/wifi_2dmap/wf2dmap_obj.h"
-#include "application/wifi_2dmap/wf2dmap_cmdq.h"
-#include "application/wifi_2dmap/wf2dmap_judge.h"
+#include "net_app/wifi_2dmap/wf2dmap_obj.h"
+#include "net_app/wifi_2dmap/wf2dmap_cmdq.h"
+#include "net_app/wifi_2dmap/wf2dmap_judge.h"
 
 #include "wflby_def.h"
 #include "wflby_3dobjcont.h"

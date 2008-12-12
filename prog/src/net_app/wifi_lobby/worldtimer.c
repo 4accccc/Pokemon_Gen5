@@ -35,13 +35,13 @@
 #include "msgdata/msg_wifi_place_msg_world.h"
 #include "msgdata/msg_wifi_place_msg_GBR.h"
 
-#include "application/wifi_lobby/worldtimer.h"
-#include "application/wifi_lobby/wldtimer_snd.h"
-#include "application/wifi_earth/wifi_earth_place.naix"
-#include "application/wifi_earth/wifi_earth.naix"
-#include "application/wifi_country.h"
+#include "net_app/wifi_lobby/worldtimer.h"
+#include "net_app/wifi_lobby/wldtimer_snd.h"
+#include "net_app/wifi_earth/wifi_earth_place.naix"
+#include "net_app/wifi_earth/wifi_earth.naix"
+#include "net_app/wifi_country.h"
 
-#include "application/wifi_lobby/worldtimer_place.h"
+#include "net_app/wifi_lobby/worldtimer_place.h"
 
 #include "wflby_snd.h"
 
@@ -86,7 +86,7 @@ static BOOL s_WLDTIMER_DEBUG_ALLPLACEOPEN_FLAG = FALSE;
 
 
 //-----------------------------------------------------------------------------
-//	src/application/wifi_earth/wifi_earthからコピー
+//	src/net_app/wifi_earth/wifi_earthからコピー
 //-----------------------------------------------------------------------------
 
 //地点登録最大数
@@ -1157,7 +1157,7 @@ typedef struct {
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-//	src/application/wifi_earth/wifi_earthからコピー
+//	src/net_app/wifi_earth/wifi_earthからコピー
 //	ただ、完全なコピーではなく、構造体の構成など変更してあります。
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* cp_data, u32 heapID );
@@ -1245,7 +1245,7 @@ static void WLDTIMER_TouchBttnOff( WLDTIMER_TOUCH* p_wk );
 static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk );
 
 // 終了チェック管理
-static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVEDATA* p_save, u32 heapID );
+static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk );
 static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk );
 static u32 WLDTIMER_EndMsgMain( WLDTIMER_END_MSG* p_wk );
@@ -1588,7 +1588,7 @@ GFL_PROC_RESULT WLDTIMER_DebugExit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
  */
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//	src/application/wifi_earth/wifi_earthからコピー
+//	src/net_app/wifi_earth/wifi_earthからコピー
 //-----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 /**
@@ -3601,7 +3601,7 @@ static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
  *	@param	heapID			ヒープ
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVEDATA* p_save, u32 heapID )
+static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	memset( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
 

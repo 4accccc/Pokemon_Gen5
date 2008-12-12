@@ -43,7 +43,7 @@ typedef struct _WFLBY_APL	WFLBY_APL;
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVEDATA* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID );
+extern WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID );
 extern void WFLBY_APL_Exit( WFLBY_APL* p_wk );
 extern void WFLBY_APL_Start( WFLBY_APL* p_wk );
 extern WFLBY_APL_RET WFLBY_APL_Main( WFLBY_APL* p_wk );

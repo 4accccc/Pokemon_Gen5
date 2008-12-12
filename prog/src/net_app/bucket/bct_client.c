@@ -32,7 +32,7 @@
 
 #include "communication/communication.h"
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "src/graphic/bucket.naix"
 #include "src/graphic/wlmngm_tool.naix"
@@ -1713,14 +1713,14 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
 			p_wk->graphic.start.seq ++;
 
 			// “¯ŠúŠJŽn
-			CommTimingSyncStart(BCT_SYNCID_CLIENT_TOUCHPEN_END);
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_CLIENT_TOUCHPEN_END);
 		}
 		break;
 
 	case BCT_STARTSEQ_MARUNOMU_SND:   // ‰¹‚ð–Â‚ç‚·
 
 		// “¯Šú‚ªŠ®—¹‚·‚é‚Ü‚Å‘Ò‚Â
-		if(!CommIsTimingSync(BCT_SYNCID_CLIENT_TOUCHPEN_END)){
+		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_CLIENT_TOUCHPEN_END)){
 			break;
 		}
 

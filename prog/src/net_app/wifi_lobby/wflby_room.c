@@ -950,7 +950,7 @@ static const BMPLIST_HEADER sc_WFLBY_ROOM_YESNO_HEADER = {
 //-----------------------------------------------------------------------------
 static void WFLBY_ROOM_VBlank( void* p_work );
 
-static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID );
+static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_ROOM_GraphicMain( WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_GraphicVblank( WFLBY_GRAPHICCONT* p_sys );
@@ -961,7 +961,7 @@ static void WFLBY_ROOM_RoomDraw( WFLBY_ROOMWK* p_wk );
 
 static void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk );
 
-static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID );
+static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk );
 static void WFLBY_ROOM_TalkWin_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str );
 static void WFLBY_ROOM_TalkWin_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str );
@@ -972,7 +972,7 @@ static BOOL WFLBY_ROOM_TalkWin_CheckTimeWait( const WFLBY_ROOM_TALKMSG* cp_wk );
 static BOOL WFLBY_ROOM_TalkWin_EndWait( const WFLBY_ROOM_TALKMSG* cp_wk );
 static void WFLBY_ROOM_TalkWin_Off( WFLBY_ROOM_TALKMSG* p_wk );
 
-static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID );
+static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_ROOM_TalkWin_Board_Exit( WFLBY_ROOM_TALKMSG* p_wk );
 static void WFLBY_ROOM_TalkWin_Board_Print( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str );
 static void WFLBY_ROOM_TalkWin_Board_PrintAll( WFLBY_ROOM_TALKMSG* p_wk, const STRBUF* cp_str );
@@ -2888,7 +2888,7 @@ static void WFLBY_ROOM_VBlank( void* p_work )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID )
+static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 
 	// 半透明レジスタOFF
@@ -3390,7 +3390,7 @@ static  void WFLBY_ROOM_MapAnmCont( WFLBY_ROOMWK* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID )
+static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 
 	//  ビットマップ確保
@@ -3608,7 +3608,7 @@ static void WFLBY_ROOM_TalkWin_Off( WFLBY_ROOM_TALKMSG* p_wk )
  *	@param	heapID			ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVEDATA* p_save, u32 heapID )
+static void WFLBY_ROOM_TalkWin_Board_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	WFLBY_ROOM_TalkWin_Init( p_wk, p_sys, p_save, heapID );
 	// パレットナンバーだけ変更

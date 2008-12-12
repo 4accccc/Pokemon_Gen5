@@ -7,7 +7,6 @@
  */
 //==============================================================================
 #include "common.h"
-#include "system/clact_tool.h"
 #include "system/palanm.h"
 #include "system/pmfprint.h"
 #include "system/arc_tool.h"
@@ -30,7 +29,7 @@
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
 #include "balloon_game_types.h"
-#include "application/balloon.h"
+#include "net_app/balloon.h"
 #include "balloon_game.h"
 #include "balloon_tcb_pri.h"
 #include "balloon_sonans.h"
@@ -135,7 +134,7 @@ void SendBalloon_Air(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA *air_data)
 //--------------------------------------------------------------
 static void RecvBalloon_Air(BALLOON_GAME_PTR game, const BALLOON_SIO_PLAY_WORK *recv)
 {
-	if(recv->air_data.net_id == CommGetCurrentID()){
+	if(recv->air_data.net_id == GFL_NET_SystemGetCurrentID()){
 		return;	//©•ª‚Ìƒf[ƒ^‚Íó‚¯æ‚ç‚È‚¢
 	}
 	BalloonTool_PlayerAirParamAdd(game, &recv->air_data);

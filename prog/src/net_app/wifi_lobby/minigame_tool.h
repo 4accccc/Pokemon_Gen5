@@ -12,12 +12,10 @@
 #ifndef __MINIGAME_TOOL_H__
 #define __MINIGAME_TOOL_H__
 
-#include "gflib/clact.h"
-
 #include "savedata/mystatus.h"
 #include "savedata/savedata_def.h"
 
-#include "application/wifi_lobby/wflby_system.h"
+#include "net_app/wifi_lobby/wflby_system.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -104,7 +102,7 @@ typedef struct {
 //  配列の中身はすべてプレイヤーnoで参照します
 //=====================================
 typedef struct {
-	SAVEDATA*				p_save;		// セーブデータ
+	SAVE_CONTROL_WORK*				p_save;		// セーブデータ
 	u8	pnetid[WFLBY_MINIGAME_MAX];		// プレイヤーに対応するNETID
 	u8	num;							// エントリー人数
 	u8	my_playerid;					// 自分のプレイヤーID
@@ -152,7 +150,7 @@ typedef struct _MNGM_COUNTWK MNGM_COUNTWK;
 //-------------------------------------
 ///	エントリー画面、結果画面共通パラメータツール
 //=====================================
-extern void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVEDATA* p_save, BOOL vchat, WFLBY_MINIGAME_WK* p_lobby_wk );
+extern void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVE_CONTROL_WORK* p_save, BOOL vchat, WFLBY_MINIGAME_WK* p_lobby_wk );
 extern u32 MNGM_ENRES_PARAM_GetNetIDtoPlNO( const MNGM_ENRES_PARAM* cp_param, u32 netid );
 extern u32 MNGM_ENRES_PARAM_GetPlNOtoNetID( const MNGM_ENRES_PARAM* cp_param, u32 plno );
 extern BOOL MNGM_ENRES_PARAM_GetVipFlag( const MNGM_ENRES_PARAM* cp_param, u32 netid );

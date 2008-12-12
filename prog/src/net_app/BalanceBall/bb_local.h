@@ -13,9 +13,8 @@
 #ifndef __BB_LOCAL_H__
 #define __BB_LOCAL_H__
 
-#include "application/balance_ball.h"
+#include "net_app/balance_ball.h"
 
-#include "system/clact_tool.h"
 #include "system/snd_tool.h"
 #include "system/d3dobj.h"
 #include "system\font_arc.h"
@@ -35,11 +34,11 @@
 #include "manene.naix"
 
 #include "system/quaternion.h"
-#include "src/application/wifi_lobby/minigame_tool.h"
+#include "src/net_app/wifi_lobby/minigame_tool.h"
 
 #include "system/wipe.h"
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "bb_snd.h"
 

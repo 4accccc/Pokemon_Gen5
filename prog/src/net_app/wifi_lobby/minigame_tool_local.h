@@ -12,7 +12,7 @@
 #ifndef __MINIGAME_TOOL_LOCAL_H__
 #define __MINIGAME_TOOL_LOCAL_H__
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 //-----------------------------------------------------------------------------
 /**

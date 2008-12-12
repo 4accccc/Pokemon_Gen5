@@ -15,7 +15,7 @@
 #include "system/d3dobj.h"
 #include "system/arc_util.h"
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
+#include "net_app/wifi_2dmap/wf2dmap_common.h"
 
 
 //-----------------------------------------------------------------------------

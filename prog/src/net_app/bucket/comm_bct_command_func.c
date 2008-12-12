@@ -123,7 +123,7 @@ void CommBCTNuts( int netID, int size, void* pBuff, void* pWork )
 
 	Bucket_ClientNutsSet( p_wk, pBuff, netID );
 
-	if( CommGetCurrentID() == COMM_PARENT_ID ){
+	if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
 		Bucket_SurverNutsSet( p_wk, pBuff, netID );
 	}
 }
@@ -220,7 +220,7 @@ void CommBCTGameDataIdx( int netID, int size, void* pBuff, void* pWork )
 
 	idx = *((u32*)pBuff);
 	// 親からかチェック
-	if( netID == COMM_PARENT_ID ){
+	if( netID == GFL_NET_NO_PARENTMACHINE ){
 		Bucket_ClientGameDataIdxSet( p_wk, idx );
 		OS_Printf( "game level get[%d] level[%d]\n", netID, idx );
 	}

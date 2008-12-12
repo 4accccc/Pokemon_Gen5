@@ -12,23 +12,6 @@
 #include "system\main.h"
 #include <dwc.h>
 
-#include "system/clact_tool.h"
-#include "system/palanm.h"
-#include "system/pmfprint.h"
-#include "system/arc_tool.h"
-#include "system/arc_util.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/particle.h"
-#include "system/brightness.h"
-#include "system/snd_tool.h"
-#include "communication/communication.h"
-#include "msgdata/msg.naix"
-#include "system/wipe.h"
-#include "communication/wm_icon.h"
-#include "system/msgdata_util.h"
-#include "libdpw/dpw_tr.h"
-
 #include "balloon_common.h"
 #include "net_app/balloon.h"
 #include "balloon_game.h"
@@ -142,28 +125,20 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
 		}
 	#endif
 		bsw->mode = BALLOON_MODE_ENTRY;
-		bsw->sub_proc = PROC_Create(&BalloonEntryProcData, bsw, HEAPID_BALLOON);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &BalloonEntryProcData, bsw);
 		(*seq)++;
 		break;
 	case MAINSEQ_ENTRY_WAIT:
-		if(ProcMain(bsw->sub_proc) == TRUE){
-			PROC_Delete(bsw->sub_proc);
-			bsw->sub_proc = NULL;
-			(*seq)++;	//ゲーム画面へ
-		}
+		(*seq)++;	//ゲーム画面へ
 		break;
 
 	case MAINSEQ_GAME_PROC:
 		bsw->mode = BALLOON_MODE_GAME;
-		bsw->sub_proc = PROC_Create(&BalloonGameProcData, bsw, HEAPID_BALLOON);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &BalloonGameProcData, bsw);
 		(*seq)++;
 		break;
 	case MAINSEQ_GAME_WAIT:
-		if(ProcMain(bsw->sub_proc) == TRUE){
-			PROC_Delete(bsw->sub_proc);
-			bsw->sub_proc = NULL;
-			(*seq)++;
-		}
+		(*seq)++;
 		break;
 
 	case MAINSEQ_RESULT_PROC:
@@ -177,32 +152,34 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
 			mydwc_stopvchat();
 		}
 		bsw->mode = BALLOON_MODE_RESULT;
-		bsw->sub_proc = PROC_Create(&BalloonEntryProcData, bsw, HEAPID_BALLOON);
+		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &BalloonEntryProcData, bsw);
 		(*seq)++;
 		break;
 	case MAINSEQ_RESULT_WAIT:
-		if(ProcMain(bsw->sub_proc) == TRUE){
-			PROC_Delete(bsw->sub_proc);
-			bsw->sub_proc = NULL;
-			if(bsw->replay == TRUE){
-				(*seq) = MAINSEQ_ENTRY_PROC;	//MAINSEQ_GAME_PROC;
-			}
-			else{
-				(*seq)++;
-			}
+		if(bsw->replay == TRUE){
+			(*seq) = MAINSEQ_ENTRY_PROC;	//MAINSEQ_GAME_PROC;
+		}
+		else{
+			(*seq)++;
 		}
 		break;
 	
 	case MAINSEQ_END_BEFORE_TIMING:	//ゲーム終了前の最後の同期取りを行う
+	#if WB_FIX
 		// 切断エラーを無視する（ブルースクリーンにも飛ばなくなる）
 		CommStateSetErrorCheck(FALSE,TRUE);
+	#endif
 		//同期命令送信
-		CommTimingSyncStart(BALLOON_END_TIMING_NO);
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BALLOON_END_TIMING_NO);
 		(*seq)++;
 		break;
 	case MAINSEQ_END_BEFORE_TIMING_WAIT:
-		if((CommIsTimingSync(BALLOON_END_TIMING_NO) == TRUE) ||
-			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 人数が少なくなったらそのまま抜ける
+	#if WB_FIX
+		if((GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BALLOON_END_TIMING_NO) == TRUE) 
+				|| (CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 同期が取れるか、人数が少なくなったらそのまま抜ける
+	#else
+		if((GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BALLOON_END_TIMING_NO) == TRUE)){
+	#endif
 			(*seq)++;
 		}
 		break;
@@ -253,11 +230,12 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 	
 //	bsw->result_param.p_gadget = &parent->gadget;	// GADGETなくしました tomoya
 	
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 	my_no = 0;
 	
 	//参加しているnetIDのリストを作成
 	index = 0;
+#if WB_FIX
 	for(i = 0; i < WFLBY_MINIGAME_MAX; i++){
 		if(CommInfoGetMyStatus(i) != NULL){
 			bsw->player_netid[index] = i;
@@ -271,15 +249,14 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 		}
 	}
 	bsw->player_max = index;
-	
+#endif
+
 	bsw->vchat = parent->vchat;
 	
 #ifdef PM_DEBUG
 	if(bsw->debug_offline == TRUE){
-		if(bsw->debug_offline == TRUE){
-			bsw->player_netid[0] = 0;
-			bsw->player_max = 1;
-		}
+		bsw->player_netid[0] = 0;
+		bsw->player_max = 1;
 	}
 	else{
 		//エントリー画面＆結果発表画面用の値セット

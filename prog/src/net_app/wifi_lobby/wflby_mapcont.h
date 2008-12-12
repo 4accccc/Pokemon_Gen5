@@ -12,7 +12,7 @@
 #ifndef __WFLBY_MAPCONT_H__
 #define __WFLBY_MAPCONT_H__
 
-#include "application/wifi_2dmap/wf2dmap_map.h"
+#include "net_app/wifi_2dmap/wf2dmap_map.h"
 #include "map_conv/wflby_mapdata.h"
 
 //-----------------------------------------------------------------------------

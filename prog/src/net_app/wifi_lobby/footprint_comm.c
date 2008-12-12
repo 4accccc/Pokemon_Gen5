@@ -8,7 +8,7 @@
 //==============================================================================
 #include "common.h"
 #include "system/arc_tool.h"
-#include "application/wifi_lobby/wflby_system_def.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"
 #include "footprint_stamp.h"
 #include "include/wifi/dwc_lobbylib.h"

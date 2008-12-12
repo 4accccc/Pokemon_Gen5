@@ -35,7 +35,7 @@
 
 #include "wifi/dwc_lobbylib.h"
 
-#include "application/wifi_country.h"
+#include "net_app/wifi_country.h"
 
 #include "wflby_system.h"
 #include "worldtimer_place.h"
@@ -359,7 +359,7 @@ typedef struct {
 
 	// CRCチェック用パラメータは下側に入れとくこと
 	//WFLBY_LASTACTION_CUE_CRC_DATASIZEからこのサイズは排除する
-	const SAVEDATA* cp_save;
+	const SAVE_CONTROL_WORK* cp_save;
 	u16 crc_check;
 	u16 error;
 } WFLBY_LASTACTION_CUE;
@@ -391,7 +391,7 @@ typedef struct {
 ///	WiFiロビー共通システムワーク
 //=====================================
 typedef struct _WFLBY_SYSTEM{
-	SAVEDATA*				p_save;			// セーブデータ
+	SAVE_CONTROL_WORK*				p_save;			// セーブデータ
 	WFLBY_SYSTEM_GLB		glbdata;		// グローバルデータ
 	WFLBY_SYSTEM_FLAG		flag;			// フラグ郡
 	WFLBY_USER_MYPROFILE	myprofile;		// 自分のローカルプロフィール
@@ -571,10 +571,10 @@ static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFL
 static void WFLBY_SYSTEM_ContEndTime( WFLBY_SYSTEM* p_wk );
 
 // プロフィールデータ初期化
-static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVEDATA* p_save, u32 heapID );
+static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_SYSTEM_DWC_SetMyProfile( WFLBY_SYSTEM* p_wk );
-static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, const SAVEDATA* cp_save );
-static BOOL WFLBY_SYSTEM_MyProfile_CheckCrc( const WFLBY_USER_MYPROFILE* cp_myprofile, const SAVEDATA* cp_save );
+static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, const SAVE_CONTROL_WORK* cp_save );
+static BOOL WFLBY_SYSTEM_MyProfile_CheckCrc( const WFLBY_USER_MYPROFILE* cp_myprofile, const SAVE_CONTROL_WORK* cp_save );
 static void WFLBY_SYSTEM_MyProfileCopy_CheckData( WFLBY_USER_MYPROFILE* p_myprofile, const WFLBY_USER_PROFILE* cp_userdata, u32 profile_size );
 
 static void WFLBY_SYSTEM_OSPrint_Profile( const WFLBY_USER_PROFILE* cp_profile );
@@ -697,7 +697,7 @@ static WFLBY_FIRE_TYPE WFLBY_SYSTEM_FIREDATA_GetType( const WFLBY_FIRE_DATA* cp_
 
 
 // 最後にしたことキュー
-static void WFLBY_SYSTEM_LASTACTQ_Init( WFLBY_LASTACTION_CUE* p_wk, const SAVEDATA* cp_save );
+static void WFLBY_SYSTEM_LASTACTQ_Init( WFLBY_LASTACTION_CUE* p_wk, const SAVE_CONTROL_WORK* cp_save );
 static void WFLBY_SYSTEM_LASTACTQ_Push( WFLBY_LASTACTION_CUE* p_wk, WFLBY_LASTACTION_TYPE data, s32 userid );
 static BOOL WFLBY_SYSTEM_LASTACTQ_ResetUserID( WFLBY_LASTACTION_CUE* p_wk, s32 before_id, s32 after_id );
 static WFLBY_LASTACTION_TYPE WFLBY_SYSTEM_LASTACTQ_Pop( WFLBY_LASTACTION_CUE* p_wk );
@@ -747,7 +747,7 @@ static const DWC_LOBBY_MSGCOMMAND	sc_WFLBY_SYSTEM_COMMCMD[ WFLBY_SYSTEM_MAIN_COM
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVEDATA* p_save, u32 heapID )
+WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	WFLBY_SYSTEM* p_wk;
 
@@ -1160,7 +1160,7 @@ BOOL WFLBY_SYSTEM_FLAG_GetUserProfileUpdate( WFLBY_SYSTEM* p_wk, u32 idx )
  *	@return	セーブデータ
  */
 //-----------------------------------------------------------------------------
-SAVEDATA* WFLBY_SYSTEM_GetSaveData( WFLBY_SYSTEM* p_wk )
+SAVE_CONTROL_WORK* WFLBY_SYSTEM_GetSaveData( WFLBY_SYSTEM* p_wk )
 {
 	return p_wk->p_save;
 }
@@ -4549,7 +4549,7 @@ static void WFLBY_SYSTEM_ContEndTime( WFLBY_SYSTEM* p_wk )
  *	@param	heapID			ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVEDATA* p_save, u32 heapID )
+static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	MYSTATUS* p_mystatus;
 	POKEPARTY* p_pokeparty;
@@ -4679,7 +4679,7 @@ static void WFLBY_SYSTEM_DWC_SetMyProfile( WFLBY_SYSTEM* p_wk )
  *	@param	cp_save			セーブデータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, const SAVEDATA* cp_save )
+static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, const SAVE_CONTROL_WORK* cp_save )
 {
 	p_myprofile->crc_check = SaveData_CalcCRC( cp_save, &p_myprofile->profile, sizeof(WFLBY_USER_PROFILE) );
 //	OS_TPrintf( "crc set %d\n", p_myprofile->crc_check );
@@ -4696,7 +4696,7 @@ static void WFLBY_SYSTEM_MyProfile_SetCrc( WFLBY_USER_MYPROFILE* p_myprofile, co
  *	@retval	FALSE	不正データ
  */
 //-----------------------------------------------------------------------------
-static BOOL WFLBY_SYSTEM_MyProfile_CheckCrc( const WFLBY_USER_MYPROFILE* cp_myprofile, const SAVEDATA* cp_save )
+static BOOL WFLBY_SYSTEM_MyProfile_CheckCrc( const WFLBY_USER_MYPROFILE* cp_myprofile, const SAVE_CONTROL_WORK* cp_save )
 {
 	u32 check_crc;
 
@@ -6831,7 +6831,7 @@ static WFLBY_FIRE_TYPE WFLBY_SYSTEM_FIREDATA_GetType( const WFLBY_FIRE_DATA* cp_
  *	@param	cp_save	セーブデータ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_SYSTEM_LASTACTQ_Init( WFLBY_LASTACTION_CUE* p_wk, const SAVEDATA* cp_save )
+static void WFLBY_SYSTEM_LASTACTQ_Init( WFLBY_LASTACTION_CUE* p_wk, const SAVE_CONTROL_WORK* cp_save )
 {
 	int i;
 

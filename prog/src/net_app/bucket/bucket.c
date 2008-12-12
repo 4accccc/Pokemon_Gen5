@@ -18,15 +18,15 @@
 
 #include "ballslow_data.naix"
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "bct_common.h"
-#include "application/bucket/comm_bct_command.h"
-#include "application/bucket/comm_bct_command_func.h"
-#include "application/bucket/bct_surver.h"
-#include "application/bucket/bct_client.h"
-#include "application/bucket/bct_local.h"
-#include "application/bucket.h"
+#include "net_app/bucket/comm_bct_command.h"
+#include "net_app/bucket/comm_bct_command_func.h"
+#include "net_app/bucket/bct_surver.h"
+#include "net_app/bucket/bct_client.h"
+#include "net_app/bucket/bct_local.h"
+#include "net_app/bucket.h"
 
 
 //-----------------------------------------------------------------------------
@@ -321,11 +321,11 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		GF_ASSERT( p_wk->comm_num > 1 );
 
 		// 通信ID取得
-		p_wk->netid = CommGetCurrentID();
+		p_wk->netid = GFL_NET_SystemGetCurrentID();
 		p_wk->plno = MNGM_ENRES_PARAM_GetNetIDtoPlNO( &p_wk->enres_param, p_wk->netid );
 
 		// サーバー初期化
-		if( p_wk->netid == COMM_PARENT_ID ){
+		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 			p_wk->p_surver = BCT_SURVER_Init( HEAPID_BUCKET, BCT_TIME_LIMIT, p_wk->comm_num, &p_wk->gamedata );
 
 			// 途中経過スコア　カウンタ値を設定
@@ -377,7 +377,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 //		Snd_DataSetByScene( SND_SCENE_BCT, SEQ_KINOMI1, 1 );
 
 
-		CommTimingSyncStart(BCT_SYNCID_GAMESTART);
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_GAMESTART);
 
 		TOMOYA_PRINT( "init\n" );
 		(*p_seq) ++;
@@ -386,7 +386,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 	case BCT_MAINSEQ_WIPE_IN:
 
 		// 同期が完了するまで待つ
-		if(!CommIsTimingSync(BCT_SYNCID_GAMESTART)){
+		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_GAMESTART)){
 			break;
 		}
 
@@ -400,7 +400,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		BCT_CLIENT_StartMain( p_wk->p_client, BCT_CLIENT_STARTEVENT_NONE );	// マルノームをまわしておく
 		if( WIPE_SYS_EndCheck() ){
 			// 親ならゲームスタートを送信
-			if( p_wk->netid == COMM_PARENT_ID ){
+			if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 				result = CommSendData( CNM_BCT_START, NULL,  0 );
 				if( result ){
 					(*p_seq) ++;
@@ -439,7 +439,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		}
 
 		
-		if( p_wk->netid == COMM_PARENT_ID ){
+		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 			result = BCT_SURVER_Main( p_wk->p_surver );
 
 			// ゲームレベルの変更を送信
@@ -477,7 +477,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 
 	case BCT_MAINSEQ_SCORECOMM:
 		BCT_CLIENT_EndMain( p_wk->p_client, BCT_CLIENT_STARTEVENT_NONE );	
-		if( p_wk->netid == COMM_PARENT_ID ){
+		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 			// 親はみんなから得点を収集してみんなに送る
 			result = BCT_SURVER_ScoreAllUserGetCheck( p_wk->p_surver );
 			if( result == TRUE ){
@@ -522,14 +522,14 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		if( WIPE_SYS_EndCheck() ){
 
 			// 終了同期開始
-			CommTimingSyncStart(BCT_SYNCID_END);
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_END);
 			(*p_seq) ++;
 		}
 		break;
 
 	case BCT_MAINSEQ_DELETE:
 		// 同期が完了するまで待つ
-		if(!CommIsTimingSync(BCT_SYNCID_END)){
+		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_END)){
 			TOMOYA_PRINT( "sync_wait\n" );
 			return GFL_PROC_RES_CONTINUE;
 		}
@@ -541,7 +541,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 			TOMOYA_PRINT( "vct off\n" );
 		}
 
-		if( p_wk->netid == COMM_PARENT_ID ){
+		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 			BCT_SURVER_Delete( p_wk->p_surver );
 			p_wk->p_surver = NULL;
 		}
@@ -660,12 +660,12 @@ GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 		
 
 		// 通信同期
-		CommTimingSyncStart(BCT_SYNCID_ERR_END);
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BCT_SYNCID_ERR_END);
 		(*p_seq)++;
 		break;
 
 	case 1:
-		if(	CommIsTimingSync(BCT_SYNCID_ERR_END) || 
+		if(	GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_ERR_END) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// 人数が少なくなったらそのまま抜ける
 			return GFL_PROC_RES_FINISH;
 		}
@@ -810,7 +810,7 @@ void Bucket_ClientMiddleScoreSet( BUCKET_WK* p_wk, u32 score, u32 netid )
 	p_wk->middle_score_get_count[ pl_no ] ++;
 
 	// 親なら全員から途中経過がきたら子機に通信許可を出す
-	if( p_wk->netid == COMM_PARENT_ID ){
+	if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 		BOOL send_ok = TRUE;
 
 		for( i=0; i<p_wk->comm_num; i++ ){
@@ -843,7 +843,7 @@ void Bucket_ClientMiddleScoreOkSet( BUCKET_WK* p_wk )
 	// クライアントシステムのタイムカウントを進める
 	// OFF
 /*	BCT_CLIENT_TimeCountFlagSet( p_wk->p_client, TRUE );
-	if( p_wk->netid == COMM_PARENT_ID ){
+	if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 		BCT_SURVER_SetCountDown( p_wk->p_surver, TRUE );
 	}//*/
 }
@@ -948,7 +948,7 @@ static void BCT_ClientMiddleScoreSend( BUCKET_WK* p_wk )
 			// OFF
 /*			// クライアントシステムのタイムカウントを停止
 			BCT_CLIENT_TimeCountFlagSet( p_wk->p_client, FALSE );
-			if( p_wk->netid == COMM_PARENT_ID ){
+			if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 				BCT_SURVER_SetCountDown( p_wk->p_surver, FALSE );
 			}
 //*/
@@ -1017,7 +1017,7 @@ static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 		p_wk->p_entry = NULL;
 	}
 	if( p_wk->p_client ){
-		if( p_wk->netid == COMM_PARENT_ID ){
+		if( p_wk->netid == GFL_NET_NO_PARENTMACHINE ){
 			BCT_SURVER_Delete( p_wk->p_surver );
 		}
 		BCT_CLIENT_Delete( p_wk->p_client );

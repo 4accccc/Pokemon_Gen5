@@ -13,7 +13,7 @@
 #include "common.h"
 #include "system/wipe.h"
 
-#include "application/balance_ball.h"
+#include "net_app/balance_ball.h"
 
 #include "bb_common.h"
 #include "bb_comm_cmd.h"
@@ -113,7 +113,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	///< ’ÊM•”•ª
 	{
 		int comm_num = CommInfoGetEntryNum();		
-		wk->netid = CommGetCurrentID();		
+		wk->netid = GFL_NET_SystemGetCurrentID();		
 		BB_CommCommandInit( wk );		
 		if ( IsParentID( wk ) == TRUE ){			
 			wk->p_server = BB_Server_AllocMemory( comm_num, &wk->sys );
@@ -713,7 +713,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	case eBB_SEQ_END:
 		bEnd = TRUE;
 		
-		CommTimingSyncStart( CCMD_BB_CONNECT_END );
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  CCMD_BB_CONNECT_END );
 			
 		if ( wk->parent_wk->vchat ){
 			mydwc_stopvchat();
@@ -724,7 +724,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		
 	case eBB_SEQ_END_WAIT:
 	default:
-		bEnd = CommIsTimingSync( CCMD_BB_CONNECT_END );
+		bEnd = GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), CCMD_BB_CONNECT_END );
 		return ( bEnd == TRUE ) ? GFL_PROC_RES_FINISH : GFL_PROC_RES_CONTINUE;
 		break;
 	}
@@ -853,13 +853,13 @@ GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void
 				return GFL_PROC_RES_FINISH;
 			}
 
-			CommTimingSyncStart( BB_COMM_END_CMD );
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  BB_COMM_END_CMD );
 			(*seq)++;
 		}
 		break;
 
 	default:
-		if( (CommIsTimingSync( BB_COMM_END_CMD ) == TRUE) || 
+		if( (GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), BB_COMM_END_CMD ) == TRUE) || 
 			(CommGetConnectNum() < CommInfoGetEntryNum()) ){	// l”‚ª­‚È‚­‚È‚Á‚½‚ç‚»‚Ì‚Ü‚Ü”²‚¯‚é
 			return GFL_PROC_RES_FINISH;
 		}
@@ -1274,7 +1274,7 @@ static void BB_VBlank( void* work )
 //--------------------------------------------------------------
 BOOL IsParentID( BB_WORK* wk )
 {	
-	return ( wk->netid == COMM_PARENT_ID ) ? TRUE : FALSE;
+	return ( wk->netid == GFL_NET_NO_PARENTMACHINE ) ? TRUE : FALSE;
 }
 
 

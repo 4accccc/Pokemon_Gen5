@@ -15,11 +15,11 @@
 #include "system/procsys.h"
 #include "system/pm_overlay.h"
 
-#include "application/bucket.h"
-#include "application/balloon.h"
-#include "application/balance_ball.h"
-#include "application/footprint_main.h"
-#include "application/wifi_lobby/wflby_anketo.h"
+#include "net_app/bucket.h"
+#include "net_app/balloon.h"
+#include "net_app/balance_ball.h"
+#include "net_app/footprint_main.h"
+#include "net_app/wifi_lobby/wflby_anketo.h"
 
 #include "wflby_apl.h"
 
@@ -99,7 +99,7 @@ typedef struct _WFLBY_APL{
 
 	// データ関連
 	WFLBY_SYSTEM*		p_system;
-	SAVEDATA*			p_savedata;
+	SAVE_CONTROL_WORK*			p_savedata;
 	WFLBY_COUNTER_TIME* p_wflby_counter;
 }WFLBY_APL;
 
@@ -200,7 +200,7 @@ static WFLBY_APL_RET WFLBY_APLDATA_ANKETO_End( WFLBY_APL* p_sys, WFLBY_APLDATA* 
  *	@return	システムワーク
  */
 //-----------------------------------------------------------------------------
-WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVEDATA* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID )
+WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COUNTER_TIME* p_wflby_counter, WFLBY_SYSTEM* p_system, u32 heapID )
 {
 	WFLBY_APL* p_wk;
 

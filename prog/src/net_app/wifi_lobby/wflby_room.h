@@ -13,9 +13,9 @@
 #define __WFLBY_ROOM_H__
 
 #include "savedata/savedata_def.h"
-#include "application/wifi_lobby/wflby_def.h"
+#include "net_app/wifi_lobby/wflby_def.h"
 #include "system/procsys.h"
-#include "application/wifi_lobby/wflby_system_def.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
 
 
 //-----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	// Ç∏Ç¡Ç∆àÍèèÇÃÉfÅ[É^
-	SAVEDATA*			p_save;
+	SAVE_CONTROL_WORK*			p_save;
 	WFLBY_SEASON_TYPE	season;
 	WFLBY_ROOM_TYPE		room;
 

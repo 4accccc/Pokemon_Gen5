@@ -4,7 +4,7 @@
 #include "common.h"
 #include "system/wipe.h"
 
-#include "application/balance_ball.h"
+#include "net_app/balance_ball.h"
 
 #include "bb_common.h"
 #include "bb_comm_cmd.h"

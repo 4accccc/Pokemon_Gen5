@@ -347,7 +347,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		// タイムアウトチェック
 		p_evwk->match_timeout --;
 		if( p_evwk->match_timeout < 0 ){
-			OS_TPrintf( "application timeout\n" );
+			OS_TPrintf( "net_app timeout\n" );
 			p_param->in_ok = WFLBY_EV_MG_RET_NG_DISCON;
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_ERREND );
 			break;
@@ -797,7 +797,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		WFLBY_SYSTEM_SetMyStatus( WFLBY_ROOM_GetSystemData(p_rmwk), p_param->wflby_mg_status );
 		
 
-		OS_TPrintf( "matchok netid%d\n", CommGetCurrentID() );
+		OS_TPrintf( "matchok netid%d\n", GFL_NET_SystemGetCurrentID() );
 
 		// 4人接続モードにする
 		CommStateChangeWiFiLobbyMinigame();
@@ -827,7 +827,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		CommInfoSendPokeData();
 
 		// 自分はエントリー
-		CommInfoSetEntry( CommGetCurrentID() );
+		CommInfoSetEntry( GFL_NET_SystemGetCurrentID() );
 
 		// 通信開始命令待ちへ
 		WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_STARTWAIT );
@@ -851,7 +851,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 
 		/*
-        if( CommGetCurrentID() == 0 ){
+        if( GFL_NET_SystemGetCurrentID() == 0 ){
             // 新規POKEDATAを受信したらみんなに送信
 			CommInfoSendArray_ServerSide();	// みんなからもらったPOKEDATAを送信
         }
@@ -903,7 +903,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 
 
 			p_evwk->tmp_userid = WFLBY_SYSTEM_GetMyUserID( p_system );
-			result = CommToolSetTempData( CommGetCurrentID(), &p_evwk->tmp_userid );
+			result = CommToolSetTempData( GFL_NET_SystemGetCurrentID(), &p_evwk->tmp_userid );
 			if( result == TRUE ){
 				WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_PLIDX_CHECK );
 			}
@@ -930,7 +930,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 			// エントリー数を取得
 			con_num = CommInfoGetEntryNum();
 
-			current_id = CommGetCurrentID();
+			current_id = GFL_NET_SystemGetCurrentID();
 
 			ok_num = 0;
 
@@ -1199,7 +1199,7 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		}
 		if( p_evwk->msg_wait == 0 ){
 			// 同期開始
-			CommTimingSyncStart(p_evwk->msg_sync);
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), p_evwk->msg_sync);
 			WFLBY_EVENTWK_SetSeq( p_wk, WFLBY_EV_MG_MSG_SYNCWAIT );
 		}
 		break;
@@ -1210,12 +1210,12 @@ BOOL WFLBY_EV_MG_Start( WFLBY_EVENTWK* p_wk, WFLBY_ROOMWK* p_rmwk, u32 plno )
 		p_evwk->sync_count ++;
 		if( p_evwk->sync_count >= WFLBY_EV_MG_SYNC_RETRANS_TIMING ){
 			OS_TPrintf( "re sync start \n" );
-			CommTimingSyncStart(p_evwk->msg_sync);
+			GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), p_evwk->msg_sync);
 			p_evwk->sync_count = 0;
 		}
 		
 		// 同期完了待ち
-		if(CommIsTimingSync(p_evwk->msg_sync)){
+		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),p_evwk->msg_sync)){
 			WFLBY_EVENTWK_SetSeq( p_wk, p_evwk->msg_ret_seq );
 		}
 		break;

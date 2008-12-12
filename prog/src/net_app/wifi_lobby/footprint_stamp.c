@@ -11,14 +11,14 @@
 #include "system/arc_tool.h"
 #include "system/arc_util.h"
 #include "system/d3dobj.h"
-#include "application/wifi_lobby/wflby_system_def.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
 #include "footprint_common.h"
 #include "graphic/footprint_board.naix"
 #include "footprint_stamp.h"
 #include "poketool/monsno.h"
 #include "poketool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY’è‹`‚Ìˆ×
 #include "system/procsys.h"
-#include "application/footprint_main.h"
+#include "net_app/footprint_main.h"
 #include "system/wipe.h"
 #include "system/wipe_def.h"
 

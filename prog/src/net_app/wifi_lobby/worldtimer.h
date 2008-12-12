@@ -13,9 +13,9 @@
 #define __WORLDTIMER_H__
 
 #include "savedata/savedata_def.h"
-#include "application/wifi_lobby/wflby_def.h"
+#include "net_app/wifi_lobby/wflby_def.h"
 #include "system/procsys.h"
-#include "application/wifi_lobby/wflby_system_def.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -33,7 +33,7 @@
 //=====================================
 typedef struct {
 	const WFLBY_WLDTIMER*	cp_data;	// 表示データ
-	SAVEDATA*				p_save;		// セーブデータ
+	SAVE_CONTROL_WORK*				p_save;		// セーブデータ
 	WFLBY_TIME				worldtime;	// 世界時間
 	WFLBY_SYSTEM*			p_system;
 } WLDTIMER_PARAM;

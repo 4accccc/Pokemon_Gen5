@@ -14,7 +14,7 @@
 
 #include "system/arc_tool.h"
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
+#include "net_app/wifi_2dmap/wf2dmap_common.h"
 #include "wflby_def.h"
 #include "system/d3dobj.h"
 

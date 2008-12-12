@@ -7,7 +7,6 @@
  */
 //==============================================================================
 #include "common.h"
-#include "system/clact_tool.h"
 #include "system/palanm.h"
 #include "system/pmfprint.h"
 #include "system/arc_tool.h"
@@ -30,7 +29,7 @@
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
 #include "balloon_game_types.h"
-#include "application/balloon.h"
+#include "net_app/balloon.h"
 #include "balloon_game.h"
 #include "balloon_tcb_pri.h"
 #include "balloon_sonans.h"
@@ -696,11 +695,11 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 		break;
 	
 	case SEQ_INIT_TIMING:			//サーバーバージョン取得前の同期取り
-		CommTimingSyncStart(BALLOON_INIT_TIMING_NO);
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), BALLOON_INIT_TIMING_NO);
 		(*seq)++;
 		break;
 	case SEQ_INIT_TIMING_WAIT:
-		if(CommIsTimingSync(BALLOON_INIT_TIMING_NO) == TRUE){
+		if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BALLOON_INIT_TIMING_NO) == TRUE){
 			(*seq)++;
 		}
 		break;
@@ -1396,7 +1395,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 	}
 #endif
 
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 	for(i = 0; i < game->bsw->player_max; i++){
 		if(current_id != game->bsw->player_netid[i]){
 		//	mystatus = CommInfoGetMyStatus(game->bsw->player_netid[i]);
@@ -1428,7 +1427,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 	STRBUF *name;
 	int current_id;
 
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 //	for(i = 0; i < game->bsw->player_max; i++){
 	for(i = 1; i < 4; i++){
 //		if(current_id != game->bsw->player_netid[i]){
@@ -1868,7 +1867,7 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	int entry_pos;
 	void *anm_resource = NULL;
 	
-	entry_pos = Balloon_NetID_to_EntryNo(game, CommGetCurrentID());
+	entry_pos = Balloon_NetID_to_EntryNo(game, GFL_NET_SystemGetCurrentID());
 
 	
 	//-- パイプ --//
@@ -2085,7 +2084,7 @@ BOOL Balloon_ServerCheck(BALLOON_GAME_PTR game)
 	}
 #endif
 
-	if(game->server_netid == CommGetCurrentID()){
+	if(game->server_netid == GFL_NET_SystemGetCurrentID()){
 		return TRUE;
 	}
 	return FALSE;
@@ -2462,7 +2461,7 @@ int Balloon_NetID_to_PlayerPos(BALLOON_GAME_PTR game, int net_id)
 	}
 #endif
 
-	current_id = CommGetCurrentID();
+	current_id = GFL_NET_SystemGetCurrentID();
 	target_index = 0xff;
 	my_index = 0xff;
 	
@@ -2607,7 +2606,7 @@ static BOOL Timing_AnswerSend(BALLOON_GAME_PTR game)
 			}
 		#endif
 
-		CommTimingSyncStart(game->timing_no);
+		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), game->timing_no);
 		if(Balloon_ServerCheck(game) == TRUE){
 			//サーバーは受信確認でNULL化する為、WAIT
 			game->timing_req = TIMING_REQ_WAIT;
@@ -2649,7 +2648,7 @@ static int Timing_Recv(BALLOON_GAME_PTR game, int server_timing_no)
 		return FALSE;	//サーバーの求めている同期番号と違う
 	}
 	
-	if(CommIsTimingSync(game->timing_no) == TRUE){
+	if(GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),game->timing_no) == TRUE){
 		OS_TPrintf("同期した no = %d\n", game->timing_no);
 		game->timing_req = TIMING_REQ_NULL;
 		return TRUE;

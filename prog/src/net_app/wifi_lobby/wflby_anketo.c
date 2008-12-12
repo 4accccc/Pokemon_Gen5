@@ -523,7 +523,7 @@ static void ANKETO_VBlank( void* p_work );
 //-------------------------------------
 ///	描画システム
 //=====================================
-static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVEDATA* p_save, u32 heapID );
+static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void ANKETO_ExitGraphic( ANKETO_DRAWSYS* p_wk );
 static void ANKETO_MainGraphic( ANKETO_DRAWSYS* p_wk );
 static void ANKETO_VBlankGraphic( ANKETO_DRAWSYS* p_wk );
@@ -597,7 +597,7 @@ static void ANKETO_OUTPUT_SetLastWeekGraphic( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN
 //-------------------------------------
 ///	会話ウィンドウ
 //=====================================
-static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SAVEDATA* p_save, u32 heapID );
+static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void ANKETO_TalkWin_Exit( ANKETO_TALKWIN* p_wk, u32 heapID );
 static void ANKETO_TalkWin_Print( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str );
 static void ANKETO_TalkWin_PrintAll( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str );
@@ -898,7 +898,7 @@ static void ANKETO_VBlank( void* p_work )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVEDATA* p_save, u32 heapID )
+static void ANKETO_InitGraphic( ANKETO_DRAWSYS* p_wk, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	CONFIG*			p_config;
 	
@@ -1738,7 +1738,7 @@ static void ANKETO_INPUT_AnmCursor( ANKETO_INPUT* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SAVEDATA* p_save, u32 heapID )
+static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	//  ビットマップ確保
 	GF_BGL_BmpWinAdd(

@@ -7,7 +7,6 @@
  */
 //==============================================================================
 #include "common.h"
-#include "system/clact_tool.h"
 #include "system/palanm.h"
 #include "system/pmfprint.h"
 #include "system/arc_tool.h"
@@ -30,7 +29,7 @@
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
 #include "balloon_game_types.h"
-#include "application/balloon.h"
+#include "net_app/balloon.h"
 #include "balloon_game.h"
 #include "balloon_tcb_pri.h"
 #include "balloon_sonans.h"

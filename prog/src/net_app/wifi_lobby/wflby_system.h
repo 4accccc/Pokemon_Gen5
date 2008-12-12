@@ -33,7 +33,7 @@
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVEDATA* p_save, u32 heapID );
+extern WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVE_CONTROL_WORK* p_save, u32 heapID );
 extern void WFLBY_SYSTEM_Exit( WFLBY_SYSTEM* p_wk );
 extern void WFLBY_SYSTEM_Main( WFLBY_SYSTEM* p_wk );
 extern void WFLBY_SYSTEM_VBlank( WFLBY_SYSTEM* p_wk );

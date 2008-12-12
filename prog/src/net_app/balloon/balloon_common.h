@@ -9,7 +9,11 @@
 #ifndef __BALLOON_COMMON_H__
 #define __BALLOON_COMMON_H__
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
+
+///デバッグ用定義
+//WB移植にあたって暫定的に無効化する部分を囲う
+#define WB_FIX		0	//0で無効化する
 
 
 //==============================================================================

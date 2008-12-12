@@ -12,7 +12,7 @@
 #ifndef __WFLBY_3DOBJ_H__
 #define __WFLBY_3DOBJ_H__
 
-#include "application/wifi_2dmap/wf2dmap_obj.h"
+#include "net_app/wifi_2dmap/wf2dmap_obj.h"
 
 //-----------------------------------------------------------------------------
 /**

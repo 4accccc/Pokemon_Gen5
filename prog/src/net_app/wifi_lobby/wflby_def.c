@@ -17,7 +17,7 @@
 
 #include "msgdata/msg_wifi_system.h"
 
-#include "application/wifi_country.h"
+#include "net_app/wifi_country.h"
 
 #include "communication/comm_state.h"
 #include "wifi/dwc_rap.h"

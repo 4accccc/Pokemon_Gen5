@@ -19,7 +19,7 @@
 
 #include "wifi/dwc_lobbylib.h"
 
-#include "application/wifi_p2pmatch_tool.h"
+#include "net_app/wifi_p2pmatch_tool.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -208,7 +208,7 @@ extern BOOL WFLBY_SYSTEM_FLAG_GetUserIn( WFLBY_SYSTEM* p_wk, u32 idx );	// V‚µ‚
 extern BOOL WFLBY_SYSTEM_FLAG_GetUserOut( WFLBY_SYSTEM* p_wk, u32 idx );// ƒ†[ƒU‚ª‘ŞÈ‚µ‚½‚©
 extern BOOL WFLBY_SYSTEM_FLAG_GetEventStart( WFLBY_SYSTEM* p_wk, WFLBY_EVENT_CHG_TYPE type );// ƒCƒxƒ“ƒg‚ªŠJn‚µ‚½‚©
 extern BOOL WFLBY_SYSTEM_FLAG_GetUserProfileUpdate( WFLBY_SYSTEM* p_wk, u32 idx );// ƒ†[ƒUƒvƒƒtƒB[ƒ‹‚ğXV‚µ‚½‚©
-extern SAVEDATA* WFLBY_SYSTEM_GetSaveData( WFLBY_SYSTEM* p_wk );	// ƒZ[ƒuƒf[ƒ^æ“¾
+extern SAVE_CONTROL_WORK* WFLBY_SYSTEM_GetSaveData( WFLBY_SYSTEM* p_wk );	// ƒZ[ƒuƒf[ƒ^æ“¾
 extern BOOL WFLBY_SYSTEM_FLAG_GetArceus( const WFLBY_SYSTEM* cp_wk );	// ƒAƒ‹ƒZƒEƒX•\¦‹–‰Âƒtƒ‰ƒO	TRUEF‹–‰Â
 extern BOOL WFLBY_SYSTEM_FLAG_GetAnketoInput( const WFLBY_SYSTEM* cp_wk );	// ƒAƒ“ƒP[ƒg‚É“š‚¦‚½‚©‚Ç‚¤‚©
 extern BOOL WFLBY_SYSTEM_FLAG_GetAnketoView( const WFLBY_SYSTEM* cp_wk );	// ƒAƒ“ƒP[ƒg‚ÌŒ‹‰Ê‚ğŒ©‚½‚©‚Ç‚¤‚©

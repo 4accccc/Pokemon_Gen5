@@ -35,7 +35,7 @@
 ///	パラメータ
 //=====================================
 typedef struct {
-	SAVEDATA* p_save;
+	SAVE_CONTROL_WORK* p_save;
 	WFLBY_SYSTEM* p_system;	
 	BOOL	check_skip;
 	WFLBY_COUNTER_TIME* p_wflby_counter;	// WiFiひろば入室時間格納先
@@ -49,7 +49,7 @@ typedef struct {
 ///	退室パラメータ
 //=====================================
 typedef struct {
-	SAVEDATA* p_save;
+	SAVE_CONTROL_WORK* p_save;
 	WFLBY_SYSTEM* p_system;	
 	BOOL timeout;
 

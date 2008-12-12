@@ -41,10 +41,10 @@
 #include "wflby_def.h"
 #include "wflby_snd.h"
 
-#include "application/connect_anm.h"
+#include "net_app/connect_anm.h"
 
 // ダミーグラフィックです
-#include "application/wifi_p2pmatch/wifip2pmatch.naix"
+#include "net_app/wifi_p2pmatch/wifip2pmatch.naix"
 
 //-----------------------------------------------------------------------------
 /**
@@ -258,7 +258,7 @@ typedef struct {
 ///	ログ引用ワーク
 //=====================================
 typedef struct {
-	SAVEDATA*			p_save;		// セーブデータ
+	SAVE_CONTROL_WORK*			p_save;		// セーブデータ
 	u32					seq;		// シーケンス
 	u32					wait;		// 汎用ウエイト
 	GF_BGL_INI*			p_bgl;		// bglコントロール
@@ -350,7 +350,7 @@ static void WFLBY_CONNECT_GraphicInit( WFLBY_CONNECTWK* p_wk, u32 heapID );
 static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk );
 static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk );
 
-static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVEDATA* p_save, u32 heapID );
+static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID );
 static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid );
 static void WFLBY_CONNECT_WIN_Off( WFLBY_WINWK* p_wk );
 static void WFLBY_CONNECT_WIN_StartTimeWait( WFLBY_WINWK* p_wk );
@@ -1245,7 +1245,7 @@ static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
  *	@param	heapID		ヒープ
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVEDATA* p_save, u32 heapID )
+static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	p_wk->p_wordset = WORDSET_Create( heapID );
 	p_wk->p_msgman	= MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, msgid, heapID );

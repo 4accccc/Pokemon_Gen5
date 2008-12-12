@@ -28,10 +28,9 @@
 #include "communication/wm_icon.h"
 #include "system/fontoam.h"
 #include "system/d3dobj.h"
-#include "system/clact_tool.h"
 
-#include "application/wifi_lobby/wflby_system_def.h"
-#include "application/footprint_main.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
+#include "net_app/footprint_main.h"
 #include "footprint_common.h"
 #include "graphic/footprint_board.naix"
 #include "footprint_stamp.h"
@@ -235,7 +234,7 @@ typedef struct{
 ///足跡ボード制御構造体
 typedef struct _FOOTPRINT_SYS{
 	FOOTPRINT_PARAM *parent_work;		///<parent_work
-	SAVEDATA *sv;						///<セーブデータへのポインタ
+	SAVE_CONTROL_WORK *sv;						///<セーブデータへのポインタ
 	
 	GF_BGL_INI		*bgl;				///<BGシステムへのポインタ
 	PALETTE_FADE_PTR pfd;				///<パレットシステム
@@ -516,7 +515,7 @@ static void Model3D_Update(FOOTPRINT_SYS *fps);
 static void Debug_CameraMove(FOOTPRINT_SYS *fps);
 static void Footprint_MyCommStatusSet(FOOTPRINT_SYS *fps);
 static void Footprint_InParamCreate(FOOTPRINT_SYS_PTR fps, FOOTPRINT_IN_PARAM *in_para);
-static void Footprint_Temoti_to_StampParam(int board_type,SAVEDATA * sv, STAMP_PARAM *stamp_array);
+static void Footprint_Temoti_to_StampParam(int board_type,SAVE_CONTROL_WORK * sv, STAMP_PARAM *stamp_array);
 static void DefaultResourceSet_Main(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main);
 static void DefaultResourceSet_Sub(FOOTPRINT_SYS *fps, ARCHANDLE *hdl_main);
 static void DefaultActorSet_Main(FOOTPRINT_SYS *fps);
@@ -2031,7 +2030,7 @@ FOOTPRINT_MY_COMM_STATUS * Footprint_MyCommStatusGet(FOOTPRINT_SYS_PTR fps)
  * @param   stamp_array		代入先(スタンプパラメータの配列へのポインタ)
  */
 //--------------------------------------------------------------
-static void Footprint_Temoti_to_StampParam(int board_type, SAVEDATA * sv, STAMP_PARAM *stamp_array)
+static void Footprint_Temoti_to_StampParam(int board_type, SAVE_CONTROL_WORK * sv, STAMP_PARAM *stamp_array)
 {
 	POKEPARTY *party;
 	int poke_max;

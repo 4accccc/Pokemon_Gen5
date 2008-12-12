@@ -13,8 +13,8 @@
 #ifndef __WFLBY_3DOBJCONT_H__
 #define __WFLBY_3DOBJCONT_H__
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
-#include "application/wifi_2dmap/wf2dmap_obj.h"
+#include "net_app/wifi_2dmap/wf2dmap_common.h"
+#include "net_app/wifi_2dmap/wf2dmap_obj.h"
 #include "wflby_mapcont.h"
 #include "wflby_def.h"
 

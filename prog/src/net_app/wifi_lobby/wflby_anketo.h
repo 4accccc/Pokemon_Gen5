@@ -17,8 +17,8 @@
 
 #include "system/procsys.h"
 
-#include "application/wifi_lobby/wflby_def.h"
-#include "application/wifi_lobby/wflby_system_def.h"
+#include "net_app/wifi_lobby/wflby_def.h"
+#include "net_app/wifi_lobby/wflby_system_def.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -44,7 +44,7 @@ typedef enum{
 ///	アンケートデータ
 //=====================================
 typedef struct {
-	SAVEDATA*				p_save;		// セーブデータ
+	SAVE_CONTROL_WORK*				p_save;		// セーブデータ
 	WFLBY_SYSTEM*			p_system;
 	ANKETO_MOVE_TYPE		move_type;	// 動作タイプ
 } ANKETO_PARAM;
