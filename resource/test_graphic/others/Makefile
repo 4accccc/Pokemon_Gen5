@@ -32,7 +32,9 @@ TARGET_NAMES	= \
 	area_build.narc \
 	areabm_texset.narc \
 	d_goto.naix \
-	d_goto.narc
+	d_goto.narc \
+	config_gra.narc \
+	config_gra.naix
 
 TARGETS	= $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))
 
