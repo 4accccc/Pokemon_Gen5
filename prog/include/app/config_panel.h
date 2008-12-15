@@ -15,21 +15,7 @@
 #include "savedata/config.h"
 
 //-----------------------------------------------------------------------------
-//外部公開ワーク
-//-----------------------------------------------------------------------------
-typedef struct _CONFIG_PARAM
-{
-	u16 msg_spd:4;
-	u16 sound:2;
-	u16 btl_eff:1;
-	u16 btl_rule:1;
-	u16 input_mode:2;
-	u16 win_type:5;
-	u16 pad_dmy:1;
-}CONFIG_PARAM;
-
-//-----------------------------------------------------------------------------
 //	コンフィグ画面用プロセスデータ
 //-----------------------------------------------------------------------------
-extern const GFL_PROC_DATA ConfigProcData;
+extern const GFL_PROC_DATA ConfigPanelProcData;
 

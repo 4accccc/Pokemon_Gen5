@@ -13,6 +13,7 @@
 
 #include "gamesystem/game_init.h"
 #include "title/title.h"
+#include "app/config_panel.h"		//ConfigPanelProcDataéQè∆
 
 void	TestModeSet(int mode);
 
@@ -1056,12 +1057,15 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_TAMADA:
 		//ÇΩÇ‹Çæ
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &ConfigPanelProcData, NULL);
 		//GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
+#if 0
 		{
 			GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 1);
 			GFL_PROC_SysSetNextProc(
 				NO_OVERLAY_ID, &GameMainProcData, init_param);
 		}
+#endif
 		break;
 	case SELECT_SOGABE:
 		//ÇªÇ™Ç◊

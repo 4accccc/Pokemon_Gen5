@@ -115,7 +115,7 @@ enum{
  MENU_MAX,
 };
 
-enum{
+typedef enum{
 	CONFIG_SEQ_INITFADEIN,			// 画面の初期化とフェードイン
 	CONFIG_SEQ_INITFADEINWAIT,		// フェードインまち
 	CONFIG_SEQ_MAIN,				// メイン
@@ -125,7 +125,21 @@ enum{
 	CONFIG_SEQ_FADEOUT,				// フェードアウト
 	CONFIG_SEQ_FADEOUTWAIT,			// フェードアウトまち
 	CONFIG_SEQ_RELEASE,				// 画面の開放
-};
+}CONFIG_SEQUENCE;
+
+//-----------------------------------------------------------------------------
+//外部公開ワーク
+//-----------------------------------------------------------------------------
+typedef struct _CONFIG_PARAM
+{
+	u16 msg_spd:4;
+	u16 sound:2;
+	u16 btl_eff:1;
+	u16 btl_rule:1;
+	u16 input_mode:2;
+	u16 win_type:5;
+	u16 pad_dmy:1;
+}CONFIG_PARAM;
 
 typedef struct _CONFIG_MENU{
 	u16	num;
@@ -136,7 +150,7 @@ typedef struct _CONFIG_MENU{
 typedef struct _CONFIG_MAIN_DAT
 {
 	int	heapID;
-	int	seq;
+	CONFIG_SEQUENCE	seq;
 	int	sub_seq;
 	int	wipe_f;
 	u32	end_f:2;
@@ -206,7 +220,7 @@ static GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void 
 //================================================================
 ///データ定義エリア
 //================================================================
-const GFL_PROC_DATA ConfigProcData = {
+const GFL_PROC_DATA ConfigPanelProcData = {
 	ConfigProc_Init,
 	ConfigProc_Main,
 	ConfigProc_End
@@ -247,9 +261,11 @@ GFL_PROC_RESULT ConfigProc_Init( GFL_PROC *proc,int *seq, void *pwk, void *work)
 	
 	
 	wk->heapID = HEAPID_CONFIG;
-	//とりあえず
-	sp = CONFIG_AllocWork(wk->heapID);
-	CONFIG_Init(sp);
+	if (sp == NULL) {
+		//とりあえず
+		sp = CONFIG_AllocWork(wk->heapID);
+		CONFIG_Init(sp);
+	}
 
 	wk->save = sp;
 	//パラメータ引継ぎ
@@ -304,7 +320,9 @@ GFL_PROC_RESULT ConfigProc_End( GFL_PROC *proc,int *seq, void *pwk, void *work)
 	// メッセージ表示関係を設定
 	MsgPrintSkipFlagSet(MSG_SKIP_ON);	// スキップできる
 
-	GFL_HEAP_FreeMemory(wk->save);
+	if (pwk == NULL) {
+		GFL_HEAP_FreeMemory(wk->save);
+	}
 	//ワークエリア解放
 	GFL_PROC_FreeWork(proc);
 
@@ -330,7 +348,7 @@ GFL_PROC_RESULT ConfigProc_Main( GFL_PROC *proc,int *seq, void *pwk, void *work)
 	BOOL result;
 	u32 yesno_res;
 
-	switch(wk->seq){
+	switch((CONFIG_SEQUENCE)wk->seq){
 	case CONFIG_SEQ_INITFADEIN:
 		if(!ConfigInitCommon(wk)){
 			return GFL_PROC_RES_CONTINUE;
