@@ -105,6 +105,7 @@ SRCS	+=		test/testmode.c \
 				field/field_comm/field_comm_event.c \
 				field/field_comm/field_comm_debug.c \
 				item/item.c \
+				src/app/config_panel/config_panel.c \
 				title/title.c \
 				title/title_control.c \
 				savedata/myitem_savedata.c \
