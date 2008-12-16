@@ -281,6 +281,7 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 //-----------------------------------------------------------------------------
 static BOOL Ballon_DisconnectErrorCheck( BALLOON_SYSTEM_WORK *bsw )
 {
+#if WB_FIX
 	if( bsw->dis_error == FALSE ){
 		if( MNGM_ERROR_CheckDisconnect( &bsw->entry_param ) == TRUE ){
 			bsw->dis_error = TRUE;	// Ø’fƒGƒ‰[”­¶
@@ -295,5 +296,6 @@ static BOOL Ballon_DisconnectErrorCheck( BALLOON_SYSTEM_WORK *bsw )
 			return TRUE;
 		}
 	}
+#endif
 	return FALSE;
 }

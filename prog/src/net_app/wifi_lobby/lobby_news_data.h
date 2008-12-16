@@ -12,7 +12,7 @@
 #ifndef __LOBBY_NEWS_DATA_H__
 #define __LOBBY_NEWS_DATA_H__
 
-#include "gflib/strbuf.h"
+#include "strbuf.h"
 
 #include "savedata/mystatus.h"
 

@@ -16,6 +16,7 @@
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
 #include "playerdata_local.h"
+#include "savedata/wifihistory.h"
 
 
 //==============================================================================
@@ -143,6 +144,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_PLAYER_DATA,
 		(FUNC_GET_SIZE)PLAYERDATA_GetWorkSize,
 		(FUNC_INIT_WORK)PLAYERDATA_Init,
+	},
+	{	//WiFi通信履歴データ
+		GMDATA_ID_WIFIHISTORY,
+		(FUNC_GET_SIZE)WIFIHISTORY_GetWorkSize,
+		(FUNC_INIT_WORK)WIFIHISTORY_Init,
 	},
 };
 

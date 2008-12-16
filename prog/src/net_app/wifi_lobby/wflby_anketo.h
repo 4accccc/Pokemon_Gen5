@@ -13,7 +13,7 @@
 #define __WFLBY_ANKETO_H__
 
 
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 
 #include "system/procsys.h"
 

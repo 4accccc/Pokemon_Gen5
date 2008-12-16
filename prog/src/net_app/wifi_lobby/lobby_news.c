@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "gflib/strbuf.h"
+#include "strbuf.h"
 #include "gflib/msg_print.h"
 
 #include "system/clact_util.h"

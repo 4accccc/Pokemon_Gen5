@@ -11,10 +11,7 @@
 
 #include <dwc.h>
 
-#include "savedata/savedata_def.h"	//SAVEDATA参照のため
-
-#include "gflib/msg_print.h"		//STRCODE参照のため
-#include "gflib/strbuf.h"			//STRBUF参照のため
+#include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
 
 
 #define WIFILIST_FRIEND_MAX	( 32 )	// WIFIリストが持つフレンドの数
@@ -87,6 +84,6 @@ extern void WifiList_SetCountStopNum( WIFI_LIST *list, int no );
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
-extern WIFI_LIST* SaveData_GetWifiListData(SAVEDATA* pSave);
+extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK* pSave);
 
 #endif

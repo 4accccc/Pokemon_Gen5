@@ -12,7 +12,7 @@
 #ifndef __WFLBY_ROOM_H__
 #define __WFLBY_ROOM_H__
 
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 #include "net_app/wifi_lobby/wflby_def.h"
 #include "system/procsys.h"
 #include "net_app/wifi_lobby/wflby_system_def.h"

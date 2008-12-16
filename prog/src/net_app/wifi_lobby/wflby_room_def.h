@@ -12,7 +12,7 @@
 #ifndef __WFLBY_ROOM_DEF_H__
 #define __WFLBY_ROOM_DEF_H__
 
-#include "gflib/strbuf.h"
+#include "strbuf.h"
 
 #include "system/clact_util.h"
 #include "system/render_oam.h"

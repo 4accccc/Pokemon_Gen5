@@ -13,7 +13,7 @@
 #define __MINIGAME_TOOL_H__
 
 #include "savedata/mystatus.h"
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 
 #include "net_app/wifi_lobby/wflby_system.h"
 

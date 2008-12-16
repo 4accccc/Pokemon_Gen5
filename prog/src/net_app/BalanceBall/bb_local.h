@@ -19,7 +19,7 @@
 #include "system/d3dobj.h"
 #include "system\font_arc.h"
 
-#include "include/gflib/strbuf.h"
+#include "strbuf.h"
 #include "include/gflib/msg_print.h"
 #include "system/fontproc.h"
 #include "system/window.h"

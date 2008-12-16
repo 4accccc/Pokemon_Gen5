@@ -16,9 +16,9 @@
 #include "buflen.h"
 #include "system/pms_word.h"
 
-#include "battle/battle_common.h"
+//#include "battle/battle_common.h"	*****
 
-#include "msgdata/msg_wifi_place_msg_world.h"
+#include "msg/msg_wifi_place_msg_world.h"
 
 
 //-----------------------------------------------------------------------------

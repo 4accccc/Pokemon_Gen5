@@ -7,7 +7,7 @@
  */
 //============================================================================================
 
-#include "savedata/savedata_def.h"	//SAVEDATA参照のため
+#include "savedata/savedata_def.h"	//SAVE_CONTROL_WORK参照のため
 
 #include "common.h"
 #include <dwc.h>
@@ -74,7 +74,7 @@ WIFI_LIST * WifiList_AllocWork(u32 heapID)
 //----------------------------------------------------------
 void WifiList_Copy(const WIFI_LIST * from, WIFI_LIST * to)
 {
-	MI_CpuCopy8(from, to, sizeof(WIFI_LIST));
+	GFL_STD_MemCopy(from, to, sizeof(WIFI_LIST));
 }
 
 //============================================================================================
@@ -92,7 +92,7 @@ void WifiList_Init(WIFI_LIST * list)
 {
 	int i;
 	
-	MI_CpuClearFast(list, sizeof(WIFI_LIST));
+	GFL_STD_MemClearFast(list, sizeof(WIFI_LIST));
 
 	for(i=0;i<WIFILIST_FRIEND_MAX;i++){
 		list->friend[i].name[0] = EOM_;
@@ -398,12 +398,12 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
 
     GF_ASSERT_RETURN( no < WIFILIST_FRIEND_MAX, );
     for(i = no; i < (WIFILIST_FRIEND_MAX-1); i++){
-        MI_CpuCopy8(&list->friend[i+1], &list->friend[i], sizeof(WIFI_FRIEND));
-        MI_CpuCopy8(&list->friend_dwc[i+1], &list->friend_dwc[i], sizeof(DWCFriendData));
+        GFL_STD_MemCopy(&list->friend[i+1], &list->friend[i], sizeof(WIFI_FRIEND));
+        GFL_STD_MemCopy(&list->friend_dwc[i+1], &list->friend_dwc[i], sizeof(DWCFriendData));
     }
     i = WIFILIST_FRIEND_MAX-1;
-	MI_CpuClearFast(&list->friend[i], sizeof(WIFI_FRIEND));
-	MI_CpuClearFast(&list->friend_dwc[i],sizeof(DWCFriendData));
+	GFL_STD_MemClearFast(&list->friend[i], sizeof(WIFI_FRIEND));
+	GFL_STD_MemClearFast(&list->friend_dwc[i],sizeof(DWCFriendData));
     list->friend[i].name[0] = EOM_;
     list->friend[i].groupName[0] = EOM_;
     list->friend[i].sex = PM_NEUTRAL;
@@ -426,10 +426,10 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 {
     int i;
 
-    MI_CpuCopy8(&list->friend[moveNo], &list->friend[no], sizeof(WIFI_FRIEND));
-    MI_CpuCopy8(&list->friend_dwc[moveNo], &list->friend_dwc[no], sizeof(DWCFriendData));
-	MI_CpuClearFast(&list->friend[moveNo], sizeof(WIFI_FRIEND));
-	MI_CpuClearFast(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
+    GFL_STD_MemCopy(&list->friend[moveNo], &list->friend[no], sizeof(WIFI_FRIEND));
+    GFL_STD_MemCopy(&list->friend_dwc[moveNo], &list->friend_dwc[no], sizeof(DWCFriendData));
+	GFL_STD_MemClearFast(&list->friend[moveNo], sizeof(WIFI_FRIEND));
+	GFL_STD_MemClearFast(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
     list->friend[moveNo].name[0] = EOM_;
     list->friend[moveNo].groupName[0] = EOM_;
     list->friend[moveNo].sex = PM_NEUTRAL;
@@ -447,8 +447,8 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 #ifdef PM_DEBUG
 void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo)
 {
-    MI_CpuCopy8(&list->friend[copyNo], &list->friend[no], sizeof(WIFI_FRIEND));
-    MI_CpuCopy8(&list->friend_dwc[copyNo], &list->friend_dwc[no], sizeof(DWCFriendData));
+    GFL_STD_MemCopy(&list->friend[copyNo], &list->friend[no], sizeof(WIFI_FRIEND));
+    GFL_STD_MemCopy(&list->friend_dwc[copyNo], &list->friend_dwc[no], sizeof(DWCFriendData));
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
 	SVLD_SetCrc(GMDATA_ID_WIFILIST);
 #endif //CRC_LOADCHECK
@@ -664,9 +664,9 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 
 	// delNoのほうが最新の情報なので、グループ名は最新のほうを残す
 	// データとして残るのは大本のほう（古いほう）なので、名前は、取っておく。
-	MI_CpuCopyFast( list->friend[delNo].groupName, list->friend[no].groupName, ( sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) ) );
+	GFL_STD_MemCopyFast( list->friend[delNo].groupName, list->friend[no].groupName, ( sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) ) );
 	
-	MI_CpuClearFast(&list->friend[delNo], sizeof(WIFI_FRIEND));
+	GFL_STD_MemClearFast(&list->friend[delNo], sizeof(WIFI_FRIEND));
     list->friend[delNo].name[0] = EOM_;
     list->friend[delNo].groupName[0] = EOM_;
     list->friend[delNo].sex = PM_NEUTRAL;
@@ -684,7 +684,7 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
  * @return	WIFI_LIST	WIFIリスト
  */
 //---------------------------------------------------------------------------
-WIFI_LIST* SaveData_GetWifiListData(SAVEDATA * sv)
+WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
 {
 	WIFI_LIST* pData;
 	pData = SaveData_Get(sv, GMDATA_ID_WIFILIST);

@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "gflib/strbuf.h"
+#include "strbuf.h"
 
 #include "buflen.h"
 #include "system/wordset.h"

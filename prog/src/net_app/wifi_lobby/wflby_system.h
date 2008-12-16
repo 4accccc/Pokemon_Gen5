@@ -14,7 +14,7 @@
 #define __WFLBY_SYSTEM_H__
 
 #include "wflby_system_def.h"
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 
 //-----------------------------------------------------------------------------
 /**

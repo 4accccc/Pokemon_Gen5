@@ -14,7 +14,7 @@
 
 #include "system/pm_overlay.h"
 
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 
 #include "net_app/wifi_lobby.h"
 

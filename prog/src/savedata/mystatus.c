@@ -62,7 +62,7 @@ MYSTATUS * MyStatus_AllocWork(u32 heapID)
 //----------------------------------------------------------
 void MyStatus_Copy(const MYSTATUS * from, MYSTATUS * to)
 {
-	MI_CpuCopy8(from, to, sizeof(MYSTATUS));
+	GFL_STD_MemCopy(from, to, sizeof(MYSTATUS));
 }
 
 //============================================================================================

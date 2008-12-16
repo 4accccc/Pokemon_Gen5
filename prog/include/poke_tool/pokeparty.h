@@ -16,7 +16,7 @@
 #define	__POKEPARTY_H__
 
 //セーブ系ないです
-//#include "system/savedata_def.h"	//SAVEDATA参照のため
+//#include "system/save_control.h"	//SAVEDATA参照のため
 #include "poke_tool.h"
 
 //============================================================================================

@@ -12,7 +12,7 @@
 #ifndef __WFLBY_SYSTEM_DEF_H__
 #define __WFLBY_SYSTEM_DEF_H__
 
-#include "system/gamedata.h"
+#include "pm_define.h"
 
 #include "lobby_news_data.h"
 #include "wflby_def.h"

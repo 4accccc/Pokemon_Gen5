@@ -14,7 +14,7 @@
 
 #include "system/procsys.h"
 
-#include "savedata/savedata_def.h"
+#include "savedata/save_control.h"
 
 #include "field/wflby_counter.h"
 
