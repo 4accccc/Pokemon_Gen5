@@ -23,6 +23,7 @@
 #include "poke_tool/poke_tool.h"
 #include "system/net_err.h"
 #include "savedata/config.h"
+#include "system/wipe.h"
 
 #ifdef PM_DEBUG
 #include "test/performance.h"
@@ -186,6 +187,7 @@ static	void	GameMain(void)
 {
 	/* ユーザーレベルで必要なメイン処理をここに記述する */
 
+	WIPE_SYS_Main();
 #ifdef PM_DEBUG
 
 	CommErrorSys_SampleView();
