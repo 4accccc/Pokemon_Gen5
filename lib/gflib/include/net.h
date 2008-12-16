@@ -22,7 +22,7 @@ extern "C" {
 #define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #elif defined(DEBUG_ONLY_FOR_matsuda)
-#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #else
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
