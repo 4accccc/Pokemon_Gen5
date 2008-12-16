@@ -21,6 +21,7 @@ SRCS	+=		test/testmode.c \
 				gamesystem/gamesystem.c \
 				gamesystem/game_event.c \
 				gamesystem/game_data.c \
+				map/dp3format.c \
 				field/zonedata.c \
 				field/location.c \
 				field/fieldmap_proc.c \

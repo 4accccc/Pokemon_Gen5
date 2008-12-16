@@ -67,4 +67,135 @@ typedef struct {
 } Dp3packHeaderSt;
 
 
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief      index番目の法線ベクトル構造体ポインタを得る
+ * @param[in]  index    
+ * @param[in]  LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval     PositionSt
+ */
+//-----------------------------------------------------------------------------
+extern NormalVtxSt* DP3MAP_GetNormalVtxSt(const int index,const NormalVtxFormat* pNormalVtx);
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目の法線ベクトルを得る
+ * @param[in]   index    
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @param[out]  VecFx32* 返す VecFx32
+ * @param[out]  VecFx32* 返す VecFx32
+ * @retval      none
+ */
+//-----------------------------------------------------------------------------
+extern void DP3MAP_GetNormalVtxPosition(const int index,const NormalVtxFormat* pNormalVtx,VecFx16* vc1 ,VecFx16* vc2);
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目の内積値を得る
+ * @param[in]   index    
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @param[out]  内積１
+ * @param[out]  内積２
+ * @retval      none
+ */
+//-----------------------------------------------------------------------------
+extern void DP3MAP_GetNormalVtxInnerProduct(const int index,const NormalVtxFormat* pNormalVtx,fx16* ip1 ,fx16* ip2);
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目のアトリビュートBITを得る
+ * @param[in]   index    
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @param[out]  内積１
+ * @param[out]  内積２
+ * @retval      none
+ */
+//-----------------------------------------------------------------------------
+extern u32 DP3MAP_GetNormalVtxAttrBit(const int index,const NormalVtxFormat* pNormalVtx);
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目のtryangleTypeを得る
+ * @param[in]   index    
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval      三角形の形のタイプ  ＼ = 0  ／ = 1
+ */
+//-----------------------------------------------------------------------------
+extern u32 DP3MAP_GetNormalVtxTriangleType(const int index,const NormalVtxFormat* pNormalVtx);
+
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       与えられた位置の法線ベクトルと内積を返す
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @param[in]   posInBlock*   いる座標
+ * @param[in]   map_width     ＭＡＰの長さ
+ * @param[in]   map_height    ＭＡＰの高さ
+ * @param[out]  nomalOut      法線ベクトル
+ * @retval      内積
+ */
+//-----------------------------------------------------------------------------
+
+extern fx32 DP3MAP_GetNormalVector( const NormalVtxFormat* pNormalVtx, const VecFx32* posInBlock,
+                             const fx32 map_width, const fx32 map_height, VecFx32* normalOut );
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief      index番目の配置データ構造体ポインタを得る
+ * @param[in]  index    
+ * @param[in]  LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval     PositionSt
+ */
+//-----------------------------------------------------------------------------
+extern PositionSt* DP3MAP_GetLayoutPositionSt(const int index,const LayoutFormat* pLayout);
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief      index番目の配置を得る
+ * @param[in]  index    
+ * @param[in]  LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @param[out]  VecFx32* 返す VecFx32
+ * @retval  none
+ */
+//-----------------------------------------------------------------------------
+
+extern void DP3MAP_GetLayoutPosition(const int index,const LayoutFormat* pLayout,VecFx32* vc );
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief      index番目の角度を得る
+ * @param[in]  index    
+ * @param[in]  LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval      角度
+ */
+//-----------------------------------------------------------------------------
+
+extern u16 DP3MAP_GetLayoutRotate(const int index,const LayoutFormat* pLayout );
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目のビルボードフラグを得る
+ * @param[in]   index
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval      TRUEならビルボード
+ */
+//-----------------------------------------------------------------------------
+
+extern BOOL DP3MAP_GetLayoutBillboard(const int index,const LayoutFormat* pLayout );
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief       index番目の配置物IDを得る
+ * @param[in]   index
+ * @param[in]   LayoutFormat* レイアウトバイナリの先頭ポインタ
+ * @retval      配置物ID
+ */
+//-----------------------------------------------------------------------------
+
+extern u8 DP3MAP_GetLayoutResourceID(const int index,const LayoutFormat* pLayout );
+
+
 #endif //_DP3FORMAT_H_

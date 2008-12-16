@@ -258,8 +258,13 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
         FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
 		NULL,	// オート接続で親になった場合
 #if GFL_NET_WIFI
-		NULL,NULL,NULL,NULL,
-#endif //GFL_NET_WIFI
+    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    NULL,  ///< wifiフレンドリスト削除コールバック
+    NULL,   ///< DWC形式の友達リスト	
+    NULL,  ///< DWCのユーザデータ（自分のデータ）
+    TRUE,        ///< デバック用サーバにつなぐかどうか
+#endif  //GFL_NET_WIFI
 #if DEB_ARI&0
 		0x346,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
 #else

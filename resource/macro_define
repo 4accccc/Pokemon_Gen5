@@ -25,7 +25,7 @@ endef
 #------------------------------------------------------------------------------
 # コピーの方法を記述
 #------------------------------------------------------------------------------
-DIFFCOPY = ruby $(PROJECT_ROOT)/tools/diffcopy.rb
+DIFFCOPY = ruby $(PROJECT_ROOT)tools/diffcopy.rb
 COPY = cp
 
 # naixの時間部分を消去する

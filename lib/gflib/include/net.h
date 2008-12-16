@@ -14,8 +14,12 @@ extern "C" {
 
 #include "ui.h"
 
-#if defined(DEBUG_ONLY_FOR_ohno)
+
+#if defined(MULTI_BOOT_MAKE)   // マルチブートmake
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
+#elif defined(DEBUG_ONLY_FOR_ohno)
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #elif defined(DEBUG_ONLY_FOR_matsuda)
 #define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
@@ -98,7 +102,7 @@ typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
 // 無線で使用するDMA番号
 #define _NETWORK_DMA_NO                 (1)
-//WMのパワーモード
+//WMのパワーモード 必ず1を指定する
 #define _NETWORK_POWERMODE       (1)
 //SSL処理のスレッド優先順位
 #define _NETWORK_SSL_PRIORITY     (20)
@@ -207,6 +211,8 @@ typedef void (*NetStepEndCallback)(void* pWork);   ///< 通信の区切りに呼ばれる汎
 typedef void (*NetConnectHardware)(void* pWork,int hardID);  ///< 機械的に接続した時に呼ばれる
 typedef void (*NetConnectNegotiation)(void* pWork,int netID); ///< ネゴシエーションがすんだら呼ばれる
 
+typedef void (*NetDeleteFriendListCallback)(int deletedIndex, int srcIndex, void* pWork); ///< フレンドリスト削除コールバック
+
 
 
 
@@ -232,8 +238,10 @@ typedef struct{
 #if GFL_NET_WIFI
   NetWifiSaveUserDataFunc wifiSaveFunc;     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
   NetWifiMargeFrinedDataFunc wifiMargeFunc; ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+  NetDeleteFriendListCallback friendDeleteFunc;  ///< wifiフレンドリスト削除コールバック
   DWCFriendData *keyList;   ///< DWC形式の友達リスト	
   DWCUserData *myUserData;  ///< DWCのユーザデータ（自分のデータ）
+  u16 bDebugServer;        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
   u32 ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう
   HEAPID baseHeapID;        ///< 元となるHEAPID
@@ -406,7 +414,7 @@ extern void GFL_NET_WifiLogin(void);
  * @retval   FALSE   まだ接続していない
  */
 //==============================================================================
-extern BOOL GFL_NET_IsWifiLobby(GFL_NETHANDLE* pNetHandle);
+extern BOOL GFL_NET_IsWifiLobby(void);
 
 
 
@@ -647,7 +655,7 @@ extern BOOL GFL_NET_WIFI_IsNewPlayer(void);
  * @retval  FALSE 失敗
  */
 //==============================================================================
-extern BOOL GFL_NET_StartRandomMatch(GFL_NETHANDLE* pNetHandle);
+extern BOOL GFL_NET_StartRandomMatch(void);
 //==============================================================================
 /**
  * @brief   物理的なWIFIコネクション番号を得る

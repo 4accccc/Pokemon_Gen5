@@ -474,6 +474,14 @@ static const GFLNetInitializeStruct aGFLNetInit = {
     FatalError_Disp,  // 通信不能なエラーが起こった場合呼ばれる 切断するしかない
     _endCallBack,  // 通信切断時に呼ばれる関数
     NULL,  // オート接続で親になった場合
+#if GFL_NET_WIFI
+    NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+    NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+    NULL,  ///< wifiフレンドリスト削除コールバック
+    NULL,   ///< DWC形式の友達リスト	
+    NULL,  ///< DWCのユーザデータ（自分のデータ）
+    TRUE,        ///< デバック用サーバにつなぐかどうか
+#endif  //GFL_NET_WIFI
     0x532,//0x444,  //ggid  DP=0x333,RANGER=0x178,WII=0x346
     GFL_HEAPID_APP,  //元になるheapid
     HEAPID_NETWORK,  //通信用にcreateされるHEAPID
