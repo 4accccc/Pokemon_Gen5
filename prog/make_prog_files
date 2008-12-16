@@ -115,7 +115,9 @@ SRCS	+=		test/testmode.c \
 				savedata/config.c \
 				savedata/mystatus.c \
 				savedata/playtime.c \
-				savedata/player_data.c
+				savedata/player_data.c \
+				system/palanm.c \
+				savedata/wifihistory.c
 
 
 
