@@ -79,6 +79,17 @@ extern void GFL_NET_DWC_SetConnectCallback( MYDWCConnectFunc pFunc, void* pWork 
  */
 //==============================================================================
 extern int GFL_NET_DWC_AnybodyEvalNum(void);
+//==============================================================================
+/**
+ * 切断を検知した時に呼ばれる関数をセットする
+ * @param 	pFunc  切断時に呼ばれる関数
+ * @param 	pWork  ワークエリア
+ * @retval  none
+ */
+//==============================================================================
+// 切断コールバック型
+typedef void (*MYDWCDisconnectFunc) (u16 aid,void* pWork);
+extern void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* pWork );
 
 
 #endif //__NET_WIFI_H__
