@@ -21,7 +21,10 @@
 
 #include "event_fieldmap_menu.h"
 #include "system/main.h"
+#include "event_fieldmap_control.h"	//EVENT_FieldSubProc
+#include "app/config_panel.h"		//ConfigPanelProcData
 
+extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 //======================================================================
 //	define
 //======================================================================
@@ -140,10 +143,8 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk );
 static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk );
 
-static void FMenuMsgWinChgEvent( GMEVENT *event, u32 heapID, u32 strID );
+static GMEVENT * createFMenuMsgWinEvent(GAMESYS_WORK *gsys, u32 heapID, u32 strID );
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
-
-static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk );
 
 static void FldMapMenu_InitCommon(
 	FMENU_COMMON_WORK *work,
@@ -316,13 +317,24 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 			FldMapMenu_DeleteCommon( &mwk->menu_common_work );
 
 			if( mwk->call_proc != NULL ){
+				GF_ASSERT(mwk->sub_proc_parent == NULL);
 				if( mwk->call_proc(mwk) == TRUE ){
+					mwk->call_proc = NULL;
+					(*seq)++;
 					return( GMEVENT_RES_CONTINUE );
 				}
 			}
 			
 			return( GMEVENT_RES_FINISH );
 		}
+		break;
+	case 3:
+		/* sub event 終了待ち */
+		if(mwk->sub_proc_parent != NULL){
+			GFL_HEAP_FreeMemory(mwk->sub_proc_parent);
+			mwk->sub_proc_parent = NULL;
+		}
+		(*seq) = 0;
 		break;
 	}
 
@@ -341,7 +353,8 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
 {
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR08 );
+	GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR08);
+	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
 }
 
@@ -354,17 +367,17 @@ static BOOL FMenuCallProc_Zukan( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 {
-#if 1
-	GMEVENT *event = mwk->gmEvent;
-	FMENU_EVENT_WORK tempWork = *mwk;
-	FMENU_EVENT_WORK *newWork;
-	GMEVENT_Change( event , FMenuProcChangeEvent , sizeof(FMENU_EVENT_WORK) );
-		
-	newWork = GMEVENT_GetEventWork(event);
-	*newWork = tempWork;
-#else
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR09 );
-#endif
+	//GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR09);
+	//GMEVENT_CallEvent(mwk->gmEvent, subevent);
+	GMEVENT * newEvent;
+	EASY_POKELIST_PARENT *epp;
+	
+	epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EASY_POKELIST_PARENT));
+	epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
+	mwk->sub_proc_parent = epp;
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+			NO_OVERLAY_ID, &EasyPokeListData, epp);
+	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 	return( TRUE );
 }
 
@@ -377,7 +390,8 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 {
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR10 );
+	GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR10);
+	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
 }
 
@@ -390,17 +404,13 @@ static BOOL FMenuCallProc_Bag( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 {
-	//Ari 仮へ飛ばします
-	GMEVENT *event = mwk->gmEvent;
-	FMENU_EVENT_WORK tempWork = *mwk;
-	FMENU_EVENT_WORK *newWork;
-	GMEVENT_Change( event , FMenuProcChangeEvent , sizeof(FMENU_EVENT_WORK) );
-		
-	newWork = GMEVENT_GetEventWork(event);
-	*newWork = tempWork;
-
-	//FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR11 );
-	return( TRUE );
+	//GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR11);
+	//GMEVENT_CallEvent(mwk->gmEvent, subevent);
+	GMEVENT * newEvent;
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+			NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+	return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -412,7 +422,8 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 {
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR12 );
+	GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR12);
+	GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	return( TRUE );
 }
 
@@ -425,8 +436,13 @@ static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
 {
-	FMenuMsgWinChgEvent( mwk->gmEvent, mwk->heapID, FLDMAPMENU_STR13 );
-	return( TRUE );
+	//GMEVENT * subevent = createFMenuMsgWinEvent(mwk->gmSys, mwk->heapID, FLDMAPMENU_STR13);
+	//GMEVENT_CallEvent(mwk->gmEvent, subevent);
+	GMEVENT * newEvent;
+	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
+			NO_OVERLAY_ID, &ConfigPanelProcData, NULL);
+	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
+	return TRUE;
 }
 
 //======================================================================
@@ -443,23 +459,19 @@ typedef struct
 }FMENU_MSGWIN_EVENT_WORK;
 
 //--------------------------------------------------------------
-/**
- * @param
- * @retval
- */
 //--------------------------------------------------------------
-static void FMenuMsgWinChgEvent( GMEVENT *event, u32 heapID, u32 strID )
+static GMEVENT * createFMenuMsgWinEvent(GAMESYS_WORK *gsys, u32 heapID, u32 strID )
 {
+	GMEVENT * msgEvent;
 	FMENU_MSGWIN_EVENT_WORK *work;
 
-	GMEVENT_Change(
-		event, FMenuMsgWinEvent, sizeof(FMENU_MSGWIN_EVENT_WORK) );
-	work = GMEVENT_GetEventWork( event );
+	msgEvent = GMEVENT_Create(gsys, NULL, FMenuMsgWinEvent, sizeof(FMENU_MSGWIN_EVENT_WORK));
+	work = GMEVENT_GetEventWork( msgEvent );
 	MI_CpuClear8( work, sizeof(FMENU_MSGWIN_EVENT_WORK) );
 	work->heapID = heapID;
 	work->strID = strID;
+	return msgEvent;
 }
-
 //--------------------------------------------------------------
 /**
  * @param
@@ -812,90 +824,5 @@ static BOOL FldMapMsgWin_Draw( FLDMAP_MSGWIN_WORK *work )
 		return( FALSE );	//文字表示処理中
 	}
 	return( TRUE );
-}
-
-//--------------------------------------------------------------
-/**
- * Proc変更イベント(現在トレーナーカードのみ対応
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-extern const GFL_PROC_DATA DebugAriizumiMainProcData;
-static GMEVENT_RESULT FMenuProcChangeEvent( GMEVENT *event, int *seq, void *wk )
-{
-	FMENU_EVENT_WORK *work = GMEVENT_GetEventWork(event);
-	switch( *seq )
-	{
-	case 0:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-									 0 ,16 ,0 );
-		*seq += 1;
-		break;
-	case 1:
-		if( GFL_FADE_CheckFade() == FALSE )
-		{
-			FIELDMAP_Close(work->fieldWork);
-			*seq += 1;
-		}
-		break;
-
-	case 2:
-		if( GAMESYSTEM_IsProcExists(work->gmSys) == FALSE )
-		{
-			*seq += 1;
-		}
-		break;
-
-	case 3:
-		//ワークに値保存して、Procを変えるだけで対応できると思います
-		if(work->call_proc == (FMENU_CALLPROC)FMenuCallProc_PokeStatus){	//ポケモン
-			EASY_POKELIST_PARENT *epp;
-			
-			GF_ASSERT(work->sub_proc_parent == NULL);
-			epp = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EASY_POKELIST_PARENT));
-			epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(work->gmSys));
-			work->sub_proc_parent = epp;
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &EasyPokeListData, epp);
-		}
-		else{	//トレーナーカード
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
-		}
-		*seq += 1;
-		//ここでフィールドのProcを抜ける
-		break;
-	case 4:
-		//復帰後にここに来る
-		if(work->sub_proc_parent != NULL){
-			GFL_HEAP_FreeMemory(work->sub_proc_parent);
-			work->sub_proc_parent = NULL;
-		}
-		GAMESYSTEM_CallFieldProc(work->gmSys);
-		*seq += 1;
-		break;
-	case 5:
-		//フィールドマップを開始待ち
-		if(GAMESYSTEM_IsProcExists(work->gmSys) == TRUE )
-		{
-			//この時点ではまだフィールドの初期化は完全ではない
-			if( FIELDMAP_IsReady( work->fieldWork ) == TRUE )
-			{
-				//一回更新をまわして、MAP座標をキャラの位置にあわせる
-				FIELDMAP_ForceUpdate( work->fieldWork );
-				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB ,
-										 16 ,0 ,0);
-				*seq += 1;
-			}
-		}
-		break;
-	case 6:
-		if( GFL_FADE_CheckFade() == FALSE )
-		{
-			return GMEVENT_RES_FINISH;
-		}
-		break;
-	}
-	return GMEVENT_RES_CONTINUE;
-
 }
 
