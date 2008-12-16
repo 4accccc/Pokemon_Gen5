@@ -440,7 +440,7 @@ static BOOL FMenuCallProc_Config( FMENU_EVENT_WORK *mwk )
 	//GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	GMEVENT * newEvent;
 	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-			NO_OVERLAY_ID, &ConfigPanelProcData, NULL);
+			FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL);
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 	return TRUE;
 }

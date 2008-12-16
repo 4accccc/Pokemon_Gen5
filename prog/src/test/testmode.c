@@ -1057,7 +1057,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_TAMADA:
 		//‚½‚Ü‚¾
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &ConfigPanelProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(config_panel), &ConfigPanelProcData, NULL);
 		//GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 #if 0
 		{

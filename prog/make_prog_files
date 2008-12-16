@@ -106,7 +106,6 @@ SRCS	+=		test/testmode.c \
 				field/field_comm/field_comm_event.c \
 				field/field_comm/field_comm_debug.c \
 				item/item.c \
-				src/app/config_panel/config_panel.c \
 				title/title.c \
 				title/title_control.c \
 				savedata/myitem_savedata.c \
@@ -200,4 +199,8 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 				test/tetsu/sample/g3dmapfunc/func_pmcustom_file.c \
 				test/tetsu/test_prog1.c \
 				test/tetsu/debug_watanabe.c
+
+# コンフィグ画面
+#===> main
+SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
 
