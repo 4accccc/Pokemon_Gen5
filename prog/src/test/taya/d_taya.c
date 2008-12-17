@@ -13,6 +13,7 @@
 #include <procsys.h>
 #include <tcbl.h>
 #include <msgdata.h>
+#include <net.h>
 
 #include <npBphImporter.h>
 #include <npBpcImporter.h>
@@ -26,6 +27,7 @@
 #include "poke_tool\pokeparty.h"
 #include "poke_tool\poke_tool.h"
 #include "net\network_define.h"
+#include "battle\battle.h"
 
 // local includes ---------------------
 #include "msg\msg_d_taya.h"
@@ -131,6 +133,8 @@ static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL SUBPROC_CommBattleChild( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void setup_party( HEAPID heapID, POKEPARTY* party, ... );
 static BOOL SUBPROC_KanjiMode( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -157,11 +161,13 @@ static const struct {
 	u32			strID;
 	pSubProc	subProc;
 }MainMenuTbl[] = {
-	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle },
-	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode },
-	{ DEBUG_TAYA_MENU3,		SUBPROC_NetPrintTest },
-	{ DEBUG_TAYA_MENU4,		SUBPROC_BlendMagic   },
-	{ DEBUG_TAYA_MENU5,		SUBPROC_PrintTest    },
+	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle		},
+	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode		},
+	{ DEBUG_TAYA_MENU3,		SUBPROC_CommBattleParent},
+	{ DEBUG_TAYA_MENU4,		SUBPROC_CommBattleChild	},
+	{ DEBUG_TAYA_MENU5,		SUBPROC_NetPrintTest	},
+	{ DEBUG_TAYA_MENU6,		SUBPROC_BlendMagic		},
+	{ DEBUG_TAYA_MENU7,		SUBPROC_PrintTest		},
 };
 
 enum {
@@ -658,7 +664,7 @@ const GFL_PROC_DATA		DebugTayaMainProcData = {
 enum {
 	TEST_GGID				= 0x3594,
 	TEST_COMM_MEMBER_MAX	= 2,
-	TEST_COMM_SEND_SIZE_MAX	= 128,
+	TEST_COMM_SEND_SIZE_MAX	= 100,
 	TEST_COMM_BCON_MAX		= 1,
 
 	TEST_TIMINGID_INIT		= 11,
@@ -705,10 +711,11 @@ static const GFLNetInitializeStruct testNetInitParam = {
 	GFL_HEAPID_APP,				//元になるheapid
 	HEAPID_NETWORK,				//通信用にcreateされるHEAPID
 	HEAPID_WIFI,				//wifi用にcreateされるHEAPID
+	HEAPID_NETWORK,				//IRC用にcreateされるHEAPID
 	GFL_WICON_POSX,				// 通信アイコンXY位置
 	GFL_WICON_POSY,
 	TEST_COMM_MEMBER_MAX,		// 最大接続人数
-	TEST_COMM_SEND_SIZE_MAX,	//最大送信バイト数
+	TEST_COMM_SEND_SIZE_MAX,	// １フレームあたりの最大送信バイト数
 	TEST_COMM_BCON_MAX,			// 最大ビーコン収集数
 	TRUE,						// CRC計算
 	FALSE,						// MP通信＝親子型通信モードかどうか
@@ -772,6 +779,10 @@ static void autoConnectCallBack( void* pWork )
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 
+
+//----------------------------------
+// スタンドアロン
+//----------------------------------
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
 	MAIN_WORK* wk = mywk;
@@ -825,6 +836,163 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 	return FALSE;
 
 }
+
+// バトル用受信関数テーブル
+extern const NetRecvFuncTable BtlRecvFuncTable[];
+
+typedef struct{
+    int gameNo;   ///< ゲーム種類
+}BTL_BCON;
+
+static BTL_BCON btlBcon = { WB_NET_BATTLE_SERVICEID };
+
+///< ビーコンデータ取得関数
+static void* btlBeaconGetFunc( void* pWork )
+{
+    TAYA_Printf("Btl Beacon Adrs Get\n");
+	return &btlBcon;
+}
+///< ビーコンデータサイズ取得関数
+static int btlBeaconGetSizeFunc( void* pWork )
+{
+    TAYA_Printf("Btl Beacon Size Get\n");
+	return sizeof(btlBcon);
+}
+
+///< ビーコンデータ比較関数
+static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
+{
+    if( myNo != beaconNo ){
+	    TAYA_Printf("Btl Beacon Comp FALSE!\n");
+        return FALSE;
+    }
+    TAYA_Printf("Btl Beacon Comp TRUE!\n");
+    return TRUE;
+}
+
+static const GFLNetInitializeStruct btlNetInitParam = {
+	BtlRecvFuncTable,			// 受信関数テーブル
+	5,							// 受信テーブル要素数
+    NULL,						///< ハードで接続した時に呼ばれる
+    NULL,						///< ネゴシエーション完了時にコール
+	NULL,						// ユーザー同士が交換するデータのポインタ取得関数
+	NULL,						// ユーザー同士が交換するデータのサイズ取得関数
+	btlBeaconGetFunc,			// ビーコンデータ取得関数
+	btlBeaconGetSizeFunc,		// ビーコンデータサイズ取得関数
+	btlBeaconCompFunc,			// ビーコンのサービスを比較して繋いで良いかどうか判断する
+    NULL,            // 普通のエラーが起こった場合 通信終了
+	FatalError_Disp,			// 通信不能なエラーが起こった場合呼ばれる 切断するしかない
+	NULL,						// 通信切断時に呼ばれる関数
+	NULL,						// オート接続で親になった場合
+	TEST_GGID,					// ggid  DP=0x333,RANGER=0x178,WII=0x346
+	GFL_HEAPID_APP,				//元になるheapid
+	HEAPID_NETWORK,				//通信用にcreateされるHEAPID
+	HEAPID_WIFI,				//wifi用にcreateされるHEAPID
+	HEAPID_NETWORK,				//IRC用にcreateされるHEAPID
+	GFL_WICON_POSX,				// 通信アイコンXY位置
+	GFL_WICON_POSY,
+	TEST_COMM_MEMBER_MAX,		// 最大接続人数
+	TEST_COMM_SEND_SIZE_MAX,	// 最大送信バイト数
+	TEST_COMM_BCON_MAX,			// 最大ビーコン収集数
+	TRUE,						// CRC計算
+	FALSE,						// MP通信＝親子型通信モードかどうか
+	GFL_NET_TYPE_WIRELESS,		/// 使用する通信を指定
+	TRUE,						// 親が再度初期化した場合、つながらないようにする場合TRUE
+	WB_NET_BATTLE_SERVICEID,	//GameServiceID
+};
+
+static void btlAutoConnectCallback( void* pWork )
+{
+	MAIN_WORK* wk = pWork;
+
+	wk->netTestSeq = 1;
+	TAYA_Printf("GFL_NET AutoConnCallBack\n");
+}
+
+
+//----------------------------------
+// 通信（親）
+//----------------------------------
+static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+	MAIN_WORK* wk = mywk;
+
+	switch( *seq ){
+	case 0:
+		deleteTemporaryModules( wk );
+		quitGraphicSystems( wk );
+		GFL_HEAP_DeleteHeap( HEAPID_TEMP );
+		(*seq)++;
+		break;
+	case 1:
+		TAYA_Printf("GFL_NET Init start A\n");
+		GFL_NET_Init( &btlNetInitParam, testCallBack, (void*)wk );
+		TAYA_Printf("GFL_NET Init start B\n");
+		(*seq)++;
+		break;
+	case 2:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			TAYA_Printf("GFL_NET Initi wait ...\n");
+		}
+		if( GFL_NET_IsInit() )
+		{
+			TAYA_Printf("GFL_NET Initialized A\n");
+			GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
+			TAYA_Printf("GFL_NET Initialized B\n");
+			(*seq)++;
+		}
+		break;
+	case 3:
+		if( wk->netTestSeq )
+		{
+			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
+
+			para->engine = BTL_ENGINE_ALONE;
+			para->rule = BTL_RULE_SINGLE;
+			para->competitor = BTL_COMPETITOR_COMM;
+
+			para->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+			para->netID = GFL_NET_GetNetID( para->netHandle );
+			para->commMode = BTL_COMM_DS;
+			para->commPos = para->netID;
+
+			para->partyPlayer = PokeParty_AllocPartyWork( HEAPID_CORE );	///< プレイヤーのパーティ
+			para->partyEnemy1 = NULL;	///< 1vs1時の敵AI, 2vs2時の１番目敵AI用
+			para->partyPartner = NULL;	///< 2vs2時の味方AI（不要ならnull）
+			para->partyEnemy2 = NULL;	///< 2vs2時の２番目敵AI用（不要ならnull）
+
+			if( para->netID == 0 )
+			{
+				setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_GYARADOSU, MONSNO_PIKATYUU, MONSNO_RIZAADON, 0 );
+			}
+			else
+			{
+				setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
+			}
+
+			GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, para );
+			(*seq)++;
+		}
+		break;
+	case 4:
+		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
+		initGraphicSystems( wk );
+		createTemporaryModules( wk );
+		startView( wk );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+//----------------------------------
+// 通信（子）
+//----------------------------------
+static BOOL SUBPROC_CommBattleChild( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+	return TRUE;
+}
+
 
 static void setup_party( HEAPID heapID, POKEPARTY* party, ... )
 {
@@ -899,7 +1067,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		wk->packet.kanjiMode = 0;
 		GFL_NET_Init(&(wk->netInitWork), testCallBack, (void*)wk);
 		(*seq)++;
-	    break;
+		break;
 
 	case 1:
 		if( GFL_NET_IsInit() )
@@ -1016,7 +1184,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 			{
 				wk->packet.kanjiMode = !(wk->packet.kanjiMode);
 			}
-			GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX,sizeof(TEST_PACKET), &(wk->packet) );
+			GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA,sizeof(TEST_PACKET), &(wk->packet) );
 		}
 		(*seq)++;
 		break;
@@ -1054,7 +1222,7 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
 		{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
 			{
-				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_COMMAND_MAX, sizeof(TEST_PACKET), &(wk->packet) );
+				GFL_NET_SendData( wk->netHandle, GFL_NET_CMD_DEBUG_TAYA, sizeof(TEST_PACKET), &(wk->packet) );
 				(*seq)++;
 			}
 			break;
