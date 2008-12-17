@@ -161,13 +161,12 @@ static const struct {
 	u32			strID;
 	pSubProc	subProc;
 }MainMenuTbl[] = {
-	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle		},
-	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode		},
-	{ DEBUG_TAYA_MENU3,		SUBPROC_CommBattleParent},
-	{ DEBUG_TAYA_MENU4,		SUBPROC_CommBattleChild	},
-	{ DEBUG_TAYA_MENU5,		SUBPROC_NetPrintTest	},
-	{ DEBUG_TAYA_MENU6,		SUBPROC_BlendMagic		},
-	{ DEBUG_TAYA_MENU7,		SUBPROC_PrintTest		},
+	{ DEBUG_TAYA_MENU1,		SUBPROC_GoBattle			},
+	{ DEBUG_TAYA_MENU2,		SUBPROC_KanjiMode			},
+	{ DEBUG_TAYA_MENU3,		SUBPROC_CommBattleParent	},
+	{ DEBUG_TAYA_MENU4,		SUBPROC_NetPrintTest		},
+	{ DEBUG_TAYA_MENU5,		SUBPROC_BlendMagic			},
+	{ DEBUG_TAYA_MENU6,		SUBPROC_PrintTest			},
 };
 
 enum {
@@ -849,13 +848,11 @@ static BTL_BCON btlBcon = { WB_NET_BATTLE_SERVICEID };
 ///< ビーコンデータ取得関数
 static void* btlBeaconGetFunc( void* pWork )
 {
-    TAYA_Printf("Btl Beacon Adrs Get\n");
 	return &btlBcon;
 }
 ///< ビーコンデータサイズ取得関数
 static int btlBeaconGetSizeFunc( void* pWork )
 {
-    TAYA_Printf("Btl Beacon Size Get\n");
 	return sizeof(btlBcon);
 }
 
@@ -863,10 +860,8 @@ static int btlBeaconGetSizeFunc( void* pWork )
 static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
 {
     if( myNo != beaconNo ){
-	    TAYA_Printf("Btl Beacon Comp FALSE!\n");
         return FALSE;
     }
-    TAYA_Printf("Btl Beacon Comp TRUE!\n");
     return TRUE;
 }
 
@@ -925,9 +920,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 		(*seq)++;
 		break;
 	case 1:
-		TAYA_Printf("GFL_NET Init start A\n");
 		GFL_NET_Init( &btlNetInitParam, testCallBack, (void*)wk );
-		TAYA_Printf("GFL_NET Init start B\n");
 		(*seq)++;
 		break;
 	case 2:
@@ -937,14 +930,19 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 		}
 		if( GFL_NET_IsInit() )
 		{
-			TAYA_Printf("GFL_NET Initialized A\n");
 			GFL_NET_ChangeoverConnect( btlAutoConnectCallback ); // 自動接続
-			TAYA_Printf("GFL_NET Initialized B\n");
 			(*seq)++;
 		}
 		break;
 	case 3:
 		if( wk->netTestSeq )
+		{
+			GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), 0 );
+			(*seq)++;
+		}
+		break;
+	case 4:
+		if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), 0) )
 		{
 			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
@@ -975,7 +973,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 			(*seq)++;
 		}
 		break;
-	case 4:
+	case 5:
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TEMP,   0xb0000 );
 		initGraphicSystems( wk );
 		createTemporaryModules( wk );
