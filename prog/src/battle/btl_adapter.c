@@ -25,7 +25,7 @@ typedef enum {
 	AS_FREE = 0,
 	AS_CMD_RECEIVED,
 	AS_WAIT_SEND_TO_CLIENT,
-	AS_RECEPTION_CLIENT,
+	AS_WAIT_RECV_FROM_CLIENT,
 	AS_DONE,
 
 }AdapterState;
@@ -193,18 +193,12 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
 	switch( wk->myState ){
 	case AS_CMD_RECEIVED:
 		_StartToReception( wk );
-		wk->myState = AS_WAIT_SEND_TO_CLIENT;
+		wk->myState = AS_WAIT_RECV_FROM_CLIENT;
 		/* fallthru */
-	case AS_WAIT_SEND_TO_CLIENT:
-		if( !_WaitToReception(wk) )
-		{
-			break;
-		}
-		wk->myState = AS_RECEPTION_CLIENT;
-		/* fallthru */
-	case AS_RECEPTION_CLIENT:
+	case AS_WAIT_RECV_FROM_CLIENT:
 		if( !_ReceptionClient(wk) )
 		{
+			BTL_Printf("[BTLADP] 全クライアントからの返信待ちです\n");
 			break;
 		}
 		wk->myState = AS_DONE;
@@ -257,6 +251,7 @@ void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 {
 	GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
 	wk->myState = AS_FREE;
+	BTL_NET_ClearRecvData();
 }
 
 //-----------------------------------------------------------------------------------------------------
@@ -320,7 +315,6 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 		}
 		else
 		{
-			BTL_Printf("[BTLADP] サーバコマンド受信待ちでーす\n");
 			return BTL_ACMD_NONE;
 		}
 	}
