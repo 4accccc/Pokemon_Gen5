@@ -1,7 +1,7 @@
 //======================================================================
 /**
- * @file	ari_comm_card.c
- * @brief	フィールド通信テスト用パート
+ * @file	trainercard.c
+ * @brief	トレーナーカード仮
  * @author	ariizumi
  * @data	08/11/25
  */
@@ -9,9 +9,12 @@
 #include <gflib.h>
 #include <textprint.h>
 #include "system/gfl_use.h"
+#include "procsys.h"
+#include "system/main.h"
+#include "gamesystem/game_init.h"
 
-#include "ari_comm_card.h"
-#include "ari_debug.h"
+#include "trainercard.h"
+#include "test/ariizumi/ari_debug.h"
 #include "print/printsys.h"
 #include "field/field_comm/field_comm_data.h"
 
@@ -49,7 +52,7 @@ static const u8 CARD_MESSAGE_POSITION[CMI_MAX][3] ={
 //======================================================================
 //	typedef struct
 //======================================================================
-struct _ARI_COMM_CARD_WORK
+struct _TRAINER_CARD_WORK
 {
 	HEAPID heapID_;
 	u8	seq_;
@@ -63,37 +66,40 @@ struct _ARI_COMM_CARD_WORK
 //======================================================================
 //	proto
 //======================================================================
-static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work );
-static void ARI_COMM_CARD_TermGraphic( ARI_COMM_CARD_WORK *work );
-static void ARI_COMM_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , ARI_COMM_CARD_WORK *work );
-static void ARI_COMM_CARD_GetCardString_Partner( char* str , const u8 idx , ARI_COMM_CARD_WORK *work );
+TRAINER_CARD_WORK* TRAINER_CARD_Init( HEAPID heapID );
+void TRAINER_CARD_Term( TRAINER_CARD_WORK *work );
+const BOOL TRAINER_CARD_Loop( TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_TermGraphic( TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_GetCardString_Partner( char* str , const u8 idx , TRAINER_CARD_WORK *work );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-ARI_COMM_CARD_WORK* ARI_COMM_CARD_Init( HEAPID heapID )
+TRAINER_CARD_WORK* TRAINER_CARD_Init( HEAPID heapID )
 {
-	ARI_COMM_CARD_WORK *work;
-	work = GFL_HEAP_AllocMemory( heapID , sizeof( ARI_COMM_CARD_WORK ) );
+	TRAINER_CARD_WORK *work;
+	work = GFL_HEAP_AllocMemory( heapID , sizeof( TRAINER_CARD_WORK ) );
 	work->heapID_ = heapID;
 	work->seq_ = 0;
 
-	ARI_COMM_CARD_InitGraphic( work );
+	TRAINER_CARD_InitGraphic( work );
 	return work;
 }
 
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-void ARI_COMM_CARD_Term( ARI_COMM_CARD_WORK *work )
+void TRAINER_CARD_Term( TRAINER_CARD_WORK *work )
 {
-	ARI_COMM_CARD_TermGraphic( work );
+	TRAINER_CARD_TermGraphic( work );
 	GFL_HEAP_FreeMemory( work );
 }
 
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
-const BOOL ARI_COMM_CARD_Loop( ARI_COMM_CARD_WORK *work )
+const BOOL TRAINER_CARD_Loop( TRAINER_CARD_WORK *work )
 {
 	PRINTSYS_QUE_Main( work->printQue_ );
 	if( PRINT_UTIL_Trans( work->printUtil_ , work->printQue_ ) == FALSE )
@@ -170,7 +176,7 @@ static const GFL_BG_BGCNT_HEADER bgCont_CardDown = {
 //--------------------------------------------------------------
 //	描画回り初期化
 //--------------------------------------------------------------
-static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
+static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work )
 {
 	u8 i;
 	//VRAM系初期化
@@ -258,13 +264,13 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 			const BOOL isRight = (CARD_MESSAGE_POSITION[i][2]==0?FALSE:TRUE);
 			if( isCommMode == TRUE )
 			{
-				ARI_COMM_CARD_GetCardString_Partner( str , i , work );
+				TRAINER_CARD_GetCardString_Partner( str , i , work );
 			}
 			else
 			{
-				ARI_COMM_CARD_GetCardString( str , i , work );
+				TRAINER_CARD_GetCardString( str , i , work );
 			}
-			ARI_COMM_CARD_DrawString( str , CARD_MESSAGE_POSITION[i][0] , CARD_MESSAGE_POSITION[i][1], isRight , work );
+			TRAINER_CARD_DrawString( str , CARD_MESSAGE_POSITION[i][0] , CARD_MESSAGE_POSITION[i][1], isRight , work );
 		}
 	}
 
@@ -280,7 +286,7 @@ static void ARI_COMM_CARD_InitGraphic( ARI_COMM_CARD_WORK *work )
 //--------------------------------------------------------------
 //	描画回り開放
 //--------------------------------------------------------------
-static void ARI_COMM_CARD_TermGraphic( ARI_COMM_CARD_WORK *work )
+static void TRAINER_CARD_TermGraphic( TRAINER_CARD_WORK *work )
 {
 	u8 i;
 	GFL_FONT_Delete( work->fontHandle_ );
@@ -299,7 +305,7 @@ static void ARI_COMM_CARD_TermGraphic( ARI_COMM_CARD_WORK *work )
 //--------------------------------------------------------------
 //	文字列描画
 //--------------------------------------------------------------
-static void ARI_COMM_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , ARI_COMM_CARD_WORK *work )
+static void TRAINER_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work )
 {
 	STRBUF *strBuf;
 	u16	strArr[128];
@@ -325,7 +331,7 @@ static void ARI_COMM_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isR
 //--------------------------------------------------------------
 //	文字列取得(自分
 //--------------------------------------------------------------
-void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK *work )
+void TRAINER_CARD_GetCardString( char* str , const u8 idx , TRAINER_CARD_WORK *work )
 {
 	switch( idx )
 	{
@@ -397,7 +403,7 @@ void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK 
 //--------------------------------------------------------------
 //	文字列取得(通信相手
 //--------------------------------------------------------------
-static void ARI_COMM_CARD_GetCardString_Partner( char* str , const u8 idx , ARI_COMM_CARD_WORK *work )
+static void TRAINER_CARD_GetCardString_Partner( char* str , const u8 idx , TRAINER_CARD_WORK *work )
 {
 	switch( idx )
 	{
@@ -430,8 +436,65 @@ static void ARI_COMM_CARD_GetCardString_Partner( char* str , const u8 idx , ARI_
 	case CMI_DAY_USER_YEAR:	//年
 	case CMI_DAY_USER_MONTH://月
 	case CMI_DAY_USER_DAY:	//日
-		ARI_COMM_CARD_GetCardString( str , idx , work );
+		TRAINER_CARD_GetCardString( str , idx , work );
 		break;
 	}
 }
+//---------------------------------------------------------------
+//
+//	以下Proc系
+//
+//---------------------------------------------------------------
+TRAINER_CARD_WORK *trainerCardWork = NULL;
+
+//------------------------------------------------------------------
+//  デバッグ用初期化関数
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TrainerCardProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x200000 );
+
+	trainerCardWork = GFL_HEAP_AllocMemory( HEAPID_ARIIZUMI_DEBUG , sizeof(TRAINER_CARD_WORK));
+	trainerCardWork = TRAINER_CARD_Init( HEAPID_ARIIZUMI_DEBUG );
+	
+	return GFL_PROC_RES_FINISH;
+}
+
+
+//------------------------------------------------------------------
+/**  デバッグ用Exit
+ */
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TrainerCardProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+	TRAINER_CARD_Term( trainerCardWork );
+	GFL_HEAP_FreeMemory( trainerCardWork );
+	trainerCardWork = NULL;
+
+	GFL_HEAP_DeleteHeap( HEAPID_ARIIZUMI_DEBUG );
+	
+	return GFL_PROC_RES_FINISH;
+}
+
+//------------------------------------------------------------------
+/**   デバッグ用メイン
+ */  
+//------------------------------------------------------------------
+static GFL_PROC_RESULT TrainerCardProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+
+	if( TRAINER_CARD_Loop( trainerCardWork ) == TRUE ){
+		return GFL_PROC_RES_FINISH;
+	}
+
+	return GFL_PROC_RES_CONTINUE;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const GFL_PROC_DATA TrainerCardProcData = {
+	TrainerCardProcInit,
+	TrainerCardProcMain,
+	TrainerCardProcEnd,
+};
+
 

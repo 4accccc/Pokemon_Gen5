@@ -24,7 +24,7 @@
 #include "event_fieldmap_control.h"	//EVENT_FieldSubProc
 #include "app/config_panel.h"		//ConfigPanelProcData
 
-extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+extern const GFL_PROC_DATA TrainerCardProcData;
 //======================================================================
 //	define
 //======================================================================
@@ -408,7 +408,7 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 	//GMEVENT_CallEvent(mwk->gmEvent, subevent);
 	GMEVENT * newEvent;
 	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-			NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+			NO_OVERLAY_ID, &TrainerCardProcData, NULL);
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 	return TRUE;
 }

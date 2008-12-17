@@ -1,14 +1,14 @@
 //======================================================================
 /**
- * @file	ari_comm_trade.h
- * @brief	フィールド通信テスト用パート
+ * @file	trainercard.h
+ * @brief	トレーナーカード
  * @author	ariizumi
  * @data	08/11/25
  */
 //======================================================================
 
-#ifndef ARI_COMM_CARD_H__
-#define ARI_COMM_CARD_H__
+#ifndef TRAINERCARD_H__
+#define TRAINERCARD_H__
 
 //======================================================================
 //	define
@@ -42,16 +42,13 @@ typedef enum
 //======================================================================
 //	typedef struct
 //======================================================================
-typedef struct _ARI_COMM_CARD_WORK ARI_COMM_CARD_WORK;
+typedef struct _TRAINER_CARD_WORK TRAINER_CARD_WORK;
 
 //======================================================================
 //	proto
 //======================================================================
-extern ARI_COMM_CARD_WORK* ARI_COMM_CARD_Init( HEAPID heapID );
-extern const BOOL ARI_COMM_CARD_Loop( ARI_COMM_CARD_WORK *work );
-extern void ARI_COMM_CARD_Term( ARI_COMM_CARD_WORK *work );
-
-extern void ARI_COMM_CARD_GetCardString( char* str , const u8 idx , ARI_COMM_CARD_WORK *work );
+extern void TRAINER_CARD_GetCardString( char* str , const u8 idx , TRAINER_CARD_WORK *work );
 
 
-#endif //ARI_COMM_CARD_H__
+#endif //TRAINERCARD_H__
+

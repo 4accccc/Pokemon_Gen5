@@ -91,7 +91,6 @@ SRCS	+=		test/testmode.c \
 				battle/handler/tokusei/hand_tok_clearbody.c \
 				field/field_easytp.c \
 				test/ariizumi/debug_ariizumi.c \
-				test/ariizumi/ari_comm_card.c \
 				test/dlplay/dlplay_parent_sample.c \
 				test/dlplay/dlplay_parent_main.c \
 				test/dlplay/dlplay_func.c \
@@ -120,7 +119,8 @@ SRCS	+=		test/testmode.c \
 				system/wipe.c \
 				system/wipe_sub.c \
 				system/wipe_wnd.c \
-				savedata/wifihistory.c
+				savedata/wifihistory.c \
+				application/trainercard/trainercard.c
 
 
 
@@ -206,4 +206,9 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 # コンフィグ画面
 #===> main
 SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
+
+
+# 有泉デバッグ
+#===> main
+SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 

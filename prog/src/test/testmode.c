@@ -1030,6 +1030,7 @@ extern const GFL_PROC_DATA DebugTayaMainProcData;
 extern const GFL_PROC_DATA DebugMatsudaListProcData;
 extern const GFL_PROC_DATA DebugGotoMainProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
+FS_EXTERN_OVERLAY(ariizumi_debug);
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
 extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 
@@ -1098,7 +1099,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_ARIIZUMI:
 		//‚ ‚è‚¢‚¸‚Ý
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ariizumi_debug), &DebugAriizumiMainProcData, NULL);
 		break;
 	case SELECT_DLPLAY:
 		//DownloadPlay

@@ -649,7 +649,7 @@ static GMEVENT_RESULT FIELD_COMM_EVENT_TalkCommonEvent( GMEVENT *event , int *se
 //--------------------------------------------------------------
 //	パート切り替え
 //--------------------------------------------------------------
-extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+extern const GFL_PROC_DATA TrainerCardProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 {
@@ -678,7 +678,7 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 	case 3:
 		if( evtWork->selectAction_ == FCAL_TRAINERCARD )
 		{
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &DebugAriizumiMainProcData, NULL);
+			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TrainerCardProcData, NULL);
 		}
 		else if( evtWork->selectAction_ == FCAL_BATTLE )
 		{
@@ -719,14 +719,14 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 }
 
 //ユーザーデータ初期化用関数(仮
-#include "test/ariizumi/ari_comm_card.h"
+#include "application/trainercard/trainercard.h"
 static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_USERDATA_TRAINERCARD *cardData;
 	FIELD_COMM_DATA_CreateUserData( FCUT_TRAINERCARD );
 	cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
-	ARI_COMM_CARD_GetCardString( cardData->id_ , CMI_ID_USER , NULL );
-	ARI_COMM_CARD_GetCardString( cardData->name_ , CMI_NAME_USER , NULL );
+	TRAINER_CARD_GetCardString( cardData->id_ , CMI_ID_USER , NULL );
+	TRAINER_CARD_GetCardString( cardData->name_ , CMI_NAME_USER , NULL );
 }
 static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys )
 {
