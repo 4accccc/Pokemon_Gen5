@@ -25,7 +25,7 @@ extern "C" {
 #define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #else
-#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
 #endif
 
@@ -38,6 +38,8 @@ extern "C" {
 // デバッグ用決まり文句----------------------
 #if defined(DEBUG_ONLY_FOR_ohno)
 #define GFL_NET_DEBUG   (1)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
+#elif defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+#define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #else
 #define GFL_NET_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 #endif
