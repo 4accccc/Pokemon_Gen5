@@ -1,16 +1,9 @@
 #こんな感じで各自のソースを追加してください
-SRCS	+=		test/testmode.c \
-				test/tetsu/game/calc_ph.c \
+SRCS	+=		test/tetsu/game/calc_ph.c \
 				test/matsuda/performance.c \
 				system/net_err.c \
 				system/debug_print.c \
 				test/taya/d_taya.c \
-				test/matsuda/d_matsu.c \
-				test/matsuda/d_matsu_net.c \
-				test/matsuda/d_matsu_match.c \
-				test/matsuda/d_matsu_error.c \
-				test/matsuda/d_matsu_item.c \
-				test/matsuda/d_matsu_list.c \
 				system/vm.c \
 				system/g3d_tool.c \
 				gamesystem/gamesystem.c \
@@ -100,12 +93,8 @@ SRCS	+=		test/testmode.c \
 				field/field_comm/field_comm_event.c \
 				field/field_comm/field_comm_debug.c \
 				item/item.c \
-				title/title.c \
 				title/title_control.c \
 				savedata/myitem_savedata.c \
-				test/matsuda/easy_pokelist.c \
-				trade/trade.c \
-				trade/trade_main.c \
 				savedata/config.c \
 				savedata/mystatus.c \
 				savedata/playtime.c \
@@ -214,3 +203,32 @@ SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
 #===> main
 SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 
+
+# 松田デバッグ
+#===> main
+SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
+				test/matsuda/d_matsu_net.c \
+				test/matsuda/d_matsu_match.c \
+				test/matsuda/d_matsu_error.c \
+				test/matsuda/d_matsu_item.c \
+				test/matsuda/d_matsu_list.c
+
+# タイトル
+#===> main
+SRCS_OVERLAY_TITLE	= title/title.c
+
+
+# testmode
+#===> main
+SRCS_OVERLAY_TESTMODE	= test/testmode.c
+
+
+#ポケモンリスト
+#===> main
+SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
+
+
+# 交換画面
+#===> SRCS_OVERLAY_POKELIST
+SRCS_OVERLAY_TRADE	= trade/trade.c \
+				trade/trade_main.c

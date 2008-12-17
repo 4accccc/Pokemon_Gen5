@@ -30,6 +30,7 @@
 #include "item/item.h"
 #include "poke_tool/pokeparty.h"
 #include "trade/trade_main.h"
+#include "test/easy_pokelist.h"
 
 
 //==============================================================================
@@ -83,6 +84,7 @@ typedef struct {
 typedef struct{
 	u32 str_id;
 	const GFL_PROC_DATA *next_proc;
+	u32 ov_id;
 }D_MENULIST;
 
 //==============================================================================
@@ -99,19 +101,18 @@ extern const GFL_PROC_DATA DebugMatsudaNetProcData;
 extern const GFL_PROC_DATA DebugMatsudaIrcMatchProcData;
 extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
 extern const GFL_PROC_DATA DebugMatsudaItemProcData;
-extern const GFL_PROC_DATA EasyPokeListData;
 
 //==============================================================================
 //	データ
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-	{DM_MSG_MENU004, &DebugMatsudaItemProcData},	//アイテム
-	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData},	//赤外線複数マッチング
-	{DM_MSG_MENU002, &DebugMatsudaNetProcData},	//ワイヤレス通信テスト
-	{DM_MSG_MENU001, &DebugMatsudaMainProcData},	//セーブテスト
-	{DM_MSG_MENU005, &EasyPokeListData},	//簡易ポケモンリスト
-	{DM_MSG_MENU006, &TradeMainProcData},	//簡易ポケモンリスト
+	{DM_MSG_MENU004, &DebugMatsudaItemProcData,		NO_OVERLAY_ID},	//アイテム
+	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData,	NO_OVERLAY_ID},	//赤外線複数マッチング
+	{DM_MSG_MENU002, &DebugMatsudaNetProcData,		NO_OVERLAY_ID},	//ワイヤレス通信テスト
+	{DM_MSG_MENU001, &DebugMatsudaMainProcData,		NO_OVERLAY_ID},	//セーブテスト
+	{DM_MSG_MENU005, &EasyPokeListData,				FS_OVERLAY_ID(pokelist)},//簡易ポケモンリスト
+	{DM_MSG_MENU006, &TradeMainProcData,			FS_OVERLAY_ID(trade)},	//簡易ポケモン交換
 };
 
 
@@ -298,7 +299,8 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 	int i;
 	
 	//次のPROC予約
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, DebugMenuList[wk->cursor_y].next_proc, NULL);
+	GFL_PROC_SysSetNextProc(
+		DebugMenuList[wk->cursor_y].ov_id, DebugMenuList[wk->cursor_y].next_proc, NULL);
 
 	GFL_BMPWIN_Delete(wk->drawwin.win);
 	for(i = 0; i < D_STRBUF_NUM; i++){

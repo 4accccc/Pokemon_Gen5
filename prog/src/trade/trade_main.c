@@ -141,7 +141,7 @@ static GFL_PROC_RESULT TradeMainProcMain( GFL_PROC * proc, int * seq, void * pwk
 		case TRADE_MENU_CANCEL:
 			return GFL_PROC_RES_FINISH;
 		default:
-			GFL_PROC_SysCallProc(NO_OVERLAY_ID, &EasyPokeListData, &tmw->epp);
+			GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &EasyPokeListData, &tmw->epp);
 			tmw->seq++;
 			break;
 		}

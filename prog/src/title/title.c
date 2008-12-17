@@ -158,6 +158,8 @@ static void Local_GirathinaFree(TITLE_WORK *tw);
 //	外部関数宣言
 //==============================================================================
 extern void	TestModeSet(int mode);
+extern const	GFL_PROC_DATA TestMainProcData;
+FS_EXTERN_OVERLAY(testmode);
 
 
 //==============================================================================
@@ -394,7 +396,8 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
 	
-	TestModeSet(mode);	//次のPROCとしてテスト画面を設定
+//	TestModeSet(mode);	//次のPROCとしてテスト画面を設定
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
 	return GFL_PROC_RES_FINISH;
 }
 

@@ -376,7 +376,7 @@ static BOOL FMenuCallProc_PokeStatus( FMENU_EVENT_WORK *mwk )
 	epp->party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(mwk->gmSys));
 	mwk->sub_proc_parent = epp;
 	newEvent = EVENT_FieldSubProc(mwk->gmSys, mwk->fieldWork,
-			NO_OVERLAY_ID, &EasyPokeListData, epp);
+			FS_OVERLAY_ID(pokelist), &EasyPokeListData, epp);
 	GMEVENT_CallEvent(mwk->gmEvent, newEvent);
 	return( TRUE );
 }

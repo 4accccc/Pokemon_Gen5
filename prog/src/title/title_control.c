@@ -60,7 +60,7 @@ static GFL_PROC_RESULT TitleControlProcInit( GFL_PROC * proc, int * seq, void * 
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT TitleControlProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleProcData, NULL);
+	GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
 	return GFL_PROC_RES_CONTINUE;
 }
 

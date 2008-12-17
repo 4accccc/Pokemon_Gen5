@@ -1022,6 +1022,7 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 	
 //------------------------------------------------------------------
 FS_EXTERN_OVERLAY(watanabe_sample);
+FS_EXTERN_OVERLAY(matsuda_debug);
 extern const GFL_PROC_DATA DebugWatanabeMainProcData;
 extern const GFL_PROC_DATA TestProg1MainProcData;
 FS_EXTERN_OVERLAY(ohno_debug);
@@ -1041,7 +1042,7 @@ extern const GFL_PROC_DATA DebugFieldProcData;
 static void CallSelectProc( TESTMODE_WORK * testmode )
 {
 	if(testmode->return_title == TRUE){
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TitleProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
 		return;
 	}
 
@@ -1088,7 +1089,7 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_MATSUDA:
 		//Ç‹Ç¬Çæ
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugMatsudaListProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(matsuda_debug), &DebugMatsudaListProcData, NULL);
 		break;		
 	case SELECT_KAGAYA:
 		//Ç©Ç™Ç‚
@@ -1119,8 +1120,8 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 //
 //
 //============================================================================================
-static const	GFL_PROC_DATA TestMainProcData;
-
+const	GFL_PROC_DATA TestMainProcData;
+FS_EXTERN_OVERLAY(testmode);
 //------------------------------------------------------------------
 /**
  * @brief		ÉvÉçÉZÉXê›íË
@@ -1129,7 +1130,7 @@ static const	GFL_PROC_DATA TestMainProcData;
 void	TestModeSet(int mode)
 {
 //	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
-	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &TestMainProcData, (void*)mode);
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
 }
 
 //------------------------------------------------------------------
