@@ -90,6 +90,8 @@ static BOOL setup_comm_single( int* seq, void* work );
 static void setupPokeParams( BTL_PARTY* dstParty, BTL_POKEPARAM** dstParams, const POKEPARTY* party, u8 pokeID_Origin );
 static void cleanupPokeParams( BTL_PARTY* party );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
+static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
+static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
 static u8 expandClientID_single( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
 static u8 expandClientID_double( const BTL_MAIN_MODULE* wk, BtlExClientType exType, u8 clientID, u8* dst );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
@@ -126,6 +128,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_MAIN_MODULE* wk = mywk;
 			if( BTL_UTIL_CallProc(&wk->subProc) )
 			{
+				BTL_Printf("hogehoge\n");
 				return GFL_PROC_RES_FINISH;
 			}
 		}
@@ -327,6 +330,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 	case 2:
 		if( BTL_NET_IsTimingSync(BTL_NET_TIMING_CLIENTID_DETERMINE) )
 		{
+			BTL_Printf("タイミングシンクロしました。\n");
 			BTL_NET_StartNotifyPartyData( sp->partyPlayer );
 			(*seq)++;
 		}
@@ -335,36 +339,69 @@ static BOOL setup_comm_single( int* seq, void* work )
 		// パーティデータ相互受信を完了
 		if( BTL_NET_IsCompleteNotifyPartyData() )
 		{
-			BTL_Printf("パーティデータ変換するよ\n");
+			BTL_Printf("パーティデータ相互受信できました。\n");
 			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
-			BTL_Printf("次のパーティデータだよ\n");
 			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
 			wk->frontMemberIdx[0] = 0;
 			wk->frontMemberIdx[1] = 0;
-
-			BTL_NET_EndNotifyPartyData();
 			(*seq)++;
 		}
 		break;
 	case 4:
 		if( BTL_NET_IsServer() )
 		{
-			wk->server = BTL_SERVER_Create( wk, wk->heapID );
-		}
-		// 自分がサーバではない
-		else
-		{
-			BTL_Printf("ワシ、サーバーではない。\n");
+			setupPokeParams( &wk->partyForServerCalc[0], &wk->pokeParamForServerCalc[0], BTL_NET_GetPartyData(0), 0 );
+			setupPokeParams( &wk->partyForServerCalc[1], &wk->pokeParamForServerCalc[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
 		}
 		(*seq)++;
 		break;
 	case 5:
-		if( BTL_NET_WaitCommand() )
-		{
-			// @@@ あとまわし
-			return TRUE;
-		}
+		BTL_NET_EndNotifyPartyData();
+		(*seq)++;
 		break;
+	case 6:
+		wk->numClients = 2;
+
+		// 自分がサーバ
+		if( BTL_NET_IsServer() )
+		{
+			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+			BTL_Printf("わし、サーバです\n");
+
+			wk->server = BTL_SERVER_Create( wk, wk->heapID );
+			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, BTL_THINKER_UI, wk->heapID );
+			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID );
+
+			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID );
+
+			// 描画エンジン生成
+			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
+			BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+
+			wk->mainLoop = MainLoop_Comm_Server;
+
+		}
+		// 自分がサーバではない
+		else
+		{
+			u8 netID = GFL_NET_GetNetID( sp->netHandle );
+
+			BTL_Printf("わし、サーバではない\n");
+
+			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, BTL_THINKER_UI, wk->heapID );
+
+			// 描画エンジン生成
+			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
+			BTL_CLIENT_AttachViewCore( wk->client[netID], wk->viewCore );
+
+			wk->mainLoop = MainLoop_Comm_NotServer;
+		}
+		(*seq)++;
+		break;
+	case 7:
+		BTL_Printf("セットアップ完了\n");
+		return TRUE;
 	}
 	return FALSE;
 }
@@ -420,6 +457,52 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 
 	return FALSE;
 }
+
+
+static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
+{
+	int i;
+
+	BTL_Printf("comm server main called\n");
+
+	if( BTL_SERVER_Main( wk->server ) )
+	{
+		BTL_Printf("server end msg recved\n");
+		return TRUE;
+	}
+
+	for(i=0; i<2; i++)
+	{
+		if( wk->client[i] )
+		{
+			BTL_CLIENT_Main( wk->client[i] );
+		}
+	}
+
+	BTLV_CORE_Main( wk->viewCore );
+
+	return FALSE;
+}
+
+static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
+{
+	int i;
+
+	BTL_Printf("comm not-server main called\n");
+
+	for(i=0; i<2; i++)
+	{
+		if( wk->client[i] )
+		{
+			BTL_CLIENT_Main( wk->client[i] );
+		}
+	}
+
+	BTLV_CORE_Main( wk->viewCore );
+
+	return FALSE;
+}
+
 
 //--------------------------------------------------------------
 /**

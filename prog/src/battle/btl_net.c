@@ -103,6 +103,7 @@ typedef struct {
 
 	// 一時利用バッファ
 	void*	tmpLargeBuf[ BTL_NET_CONNECT_MACHINE_MAX ];
+	u32		tmpLargeBufUsedSize[ BTL_NET_CONNECT_MACHINE_MAX ];
 
 	TMP_SEND_BUFFER	sendBuf[ BTL_NET_CONNECT_MACHINE_MAX ];
 
@@ -169,6 +170,7 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, HEAPID heapID )
 		for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
 		{
 			Sys->tmpLargeBuf[i] = NULL;
+			Sys->tmpLargeBufUsedSize[i] = 0;
 		}
 
 		BTL_Printf("[BTLNET] 自分のネットID=%d, 接続メンバー数=%d\n", Sys->myNetID, Sys->memberCount);
@@ -244,6 +246,7 @@ BOOL BTL_NET_IsServer( void )
 {
 	return ( Sys->serverNetID == Sys->myNetID );
 }
+
 
 // 各マシンにクライアントIDを通知する（サーバからのみ呼び出し）
 void BTL_NET_NotifyClientID( NetID netID, const u8* clientID, u8 numClients )
@@ -323,6 +326,8 @@ void BTL_NET_StartNotifyPartyData( const POKEPARTY* party )
 {
 	u32 size = PokeParty_GetWorkSize();
 
+	BTL_Printf("パーティデータサイズ=%dbytes\n", size);
+
 	GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
 				size,
 				party,
@@ -343,9 +348,10 @@ static u8* getbuf_partyData( int netID, void* pWork, int size )
 
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-	// バッファを渡してあるので何もしない
+	Sys->tmpLargeBufUsedSize[ netID ] = size;
 	BTL_Printf("netID=%dのパーティデータ受信完了, pData=%p, buf=%p\n", 
 			netID, pData, Sys->tmpLargeBuf[netID] );
+
 }
 
 // パーティデータの相互受信が完了したか？
@@ -357,7 +363,7 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 
 	for(i=0; i<max; i++)
 	{
-		if( Sys->tmpLargeBuf[i] == NULL )
+		if( Sys->tmpLargeBufUsedSize[i] == 0 )
 		{
 			return FALSE;
 		}
@@ -369,6 +375,8 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 const POKEPARTY* BTL_NET_GetPartyData( int netID )
 {
 	GF_ASSERT(Sys->tmpLargeBuf[netID] != NULL);
+	GF_ASSERT(Sys->tmpLargeBufUsedSize[netID] != 0);
+
 	return Sys->tmpLargeBuf[netID];
 }
 
@@ -382,6 +390,7 @@ void BTL_NET_EndNotifyPartyData( void )
 		if( Sys->tmpLargeBuf[i] != NULL )
 		{
 			GFL_HEAP_FreeMemory( Sys->tmpLargeBuf[i] );
+			Sys->tmpLargeBufUsedSize[i] = 0;
 		}
 	}
 }
