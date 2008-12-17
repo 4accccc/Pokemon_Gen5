@@ -282,15 +282,83 @@ static BOOL cleanup_alone_single( int* seq, void* work )
 //--------------------------------------------------------------------------
 static BOOL setup_comm_single( int* seq, void* work )
 {
-//	BTL_MAIN_MODULE* wk = work;
-//	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+	BTL_MAIN_MODULE* wk = work;
+	const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
 	switch( *seq ){
 	case 0:
-		BTL_NET_StartCommand( BTL_NETCMD_SUPPLY_POKEDATA );
-		(*seq)++;
+		if( BTL_NET_IsServerDetermained() )
+		{
+			BTL_Printf("サーバ決定しましたよ\n");
+			if( BTL_NET_IsServer() )
+			{
+				// サーバーマシンが、各参加者にクライアントIDを割り振る
+				u8 clientID_0, clientID_1;
+
+				clientID_0 = 0;
+				clientID_1 = 1;
+
+				BTL_Printf("ワシ、サーバーです。\n");
+
+				BTL_NET_NotifyClientID( clientID_1, &clientID_1, 1 );
+				BTL_NET_NotifyClientID( clientID_0, &clientID_0, 1 );
+
+			}
+			else
+			{
+				BTL_Printf("ワシ、サーバーではない。\n");
+			}
+			(*seq)++;
+		}
 		break;
 	case 1:
+		// 自分のクライアントIDが確定
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			BTL_Printf("クライアントIDの確定待ちでーす\n");
+		}
+		if( BTL_NET_IsClientIdDetermined() )
+		{
+			BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
+			BTL_NET_TimingSyncStart( BTL_NET_TIMING_CLIENTID_DETERMINE );
+			(*seq)++;
+		}
+		break;
+	case 2:
+		if( BTL_NET_IsTimingSync(BTL_NET_TIMING_CLIENTID_DETERMINE) )
+		{
+			BTL_NET_StartNotifyPartyData( sp->partyPlayer );
+			(*seq)++;
+		}
+		break;
+	case 3:
+		// パーティデータ相互受信を完了
+		if( BTL_NET_IsCompleteNotifyPartyData() )
+		{
+			BTL_Printf("パーティデータ変換するよ\n");
+			setupPokeParams( &wk->party[0], &wk->pokeParam[0], BTL_NET_GetPartyData(0), 0 );
+			BTL_Printf("次のパーティデータだよ\n");
+			setupPokeParams( &wk->party[1], &wk->pokeParam[TEMOTI_POKEMAX], BTL_NET_GetPartyData(1), TEMOTI_POKEMAX );
+			wk->frontMemberIdx[0] = 0;
+			wk->frontMemberIdx[1] = 0;
+
+			BTL_NET_EndNotifyPartyData();
+			(*seq)++;
+		}
+		break;
+	case 4:
+		if( BTL_NET_IsServer() )
+		{
+			wk->server = BTL_SERVER_Create( wk, wk->heapID );
+		}
+		// 自分がサーバではない
+		else
+		{
+			BTL_Printf("ワシ、サーバーではない。\n");
+		}
+		(*seq)++;
+		break;
+	case 5:
 		if( BTL_NET_WaitCommand() )
 		{
 			// @@@ あとまわし

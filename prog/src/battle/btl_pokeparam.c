@@ -142,7 +142,11 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
 	u16 monsno;
 
 	// Šî–{ƒpƒ‰ƒƒ^‰Šú‰»
+
 	monsno = PP_Get( pp, ID_PARA_monsno, 0 );
+
+	BTL_Printf("[BPP] Create Monsno=%d\n", monsno);
+
 	bpp->baseParam.monsno = monsno;
 	bpp->baseParam.level = PP_Get( pp, ID_PARA_level, 0 );
 	bpp->baseParam.hpMax = PP_Get( pp, ID_PARA_hpmax, 0 );

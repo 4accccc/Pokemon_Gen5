@@ -80,3 +80,4 @@ extern void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 
 
 #endif
+
