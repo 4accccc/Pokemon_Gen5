@@ -112,6 +112,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xa0000 );
 
 			wk = GFL_PROC_AllocWork( proc, sizeof(BTL_MAIN_MODULE), HEAPID_BTL_SYSTEM );
+			GFL_STD_MemClear32( wk, sizeof(BTL_MAIN_MODULE) );
+
 			wk->heapID = HEAPID_BTL_SYSTEM;
 			wk->setupParam = setup_param;
 
@@ -128,7 +130,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			BTL_MAIN_MODULE* wk = mywk;
 			if( BTL_UTIL_CallProc(&wk->subProc) )
 			{
-				BTL_Printf("hogehoge\n");
 				return GFL_PROC_RES_FINISH;
 			}
 		}
@@ -303,9 +304,8 @@ static BOOL setup_comm_single( int* seq, void* work )
 
 				BTL_Printf("ワシ、サーバーです。\n");
 
-				BTL_NET_NotifyClientID( clientID_1, &clientID_1, 1 );
 				BTL_NET_NotifyClientID( clientID_0, &clientID_0, 1 );
-
+				BTL_NET_NotifyClientID( clientID_1, &clientID_1, 1 );
 			}
 			else
 			{
@@ -315,11 +315,13 @@ static BOOL setup_comm_single( int* seq, void* work )
 		}
 		break;
 	case 1:
-		// 自分のクライアントIDが確定
+		#ifdef PM_DEBUG
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
 		{
 			BTL_Printf("クライアントIDの確定待ちでーす\n");
 		}
+		#endif
+		// 自分のクライアントIDが確定
 		if( BTL_NET_IsClientIdDetermined() )
 		{
 			BTL_Printf("クライアントIDが確定した→タイミングシンクロ\n");
@@ -367,13 +369,13 @@ static BOOL setup_comm_single( int* seq, void* work )
 		{
 			u8 netID = GFL_NET_GetNetID( sp->netHandle );
 
-			BTL_Printf("わし、サーバです\n");
+			BTL_Printf("サーバ用のパーティデータセット\n");
 
 			wk->server = BTL_SERVER_Create( wk, wk->heapID );
 			wk->client[netID] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, BTL_THINKER_UI, wk->heapID );
 			BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[netID]), &wk->partyForServerCalc[netID], netID );
 
-			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !netID );
+			BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, &wk->partyForServerCalc[!netID], !netID );
 
 			// 描画エンジン生成
 			wk->viewCore = BTLV_Create( wk, wk->client[netID], HEAPID_BTL_VIEW );
@@ -387,7 +389,7 @@ static BOOL setup_comm_single( int* seq, void* work )
 		{
 			u8 netID = GFL_NET_GetNetID( sp->netHandle );
 
-			BTL_Printf("わし、サーバではない\n");
+			BTL_Printf("サーバではない用のパーティデータセット\n");
 
 			wk->client[ netID ] = BTL_CLIENT_Create( wk, sp->commMode, sp->netHandle, netID, BTL_THINKER_UI, wk->heapID );
 
@@ -463,8 +465,6 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 {
 	int i;
 
-	BTL_Printf("comm server main called\n");
-
 	if( BTL_SERVER_Main( wk->server ) )
 	{
 		BTL_Printf("server end msg recved\n");
@@ -487,8 +487,6 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 {
 	int i;
-
-	BTL_Printf("comm not-server main called\n");
 
 	for(i=0; i<2; i++)
 	{

@@ -197,7 +197,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 	const TMP_SEND_BUFFER* tsb = (const TMP_SEND_BUFFER*)pData;
 	SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
 
-	BTL_Printf("サーババージョン受信 ... netID=%d, version=%d\n", netID, tsb->val32);
+	BTL_Printf("[BTLNET]サーババージョン受信 ... netID=%d, version=%d\n", netID, tsb->val32);
 
 	if( swk->recvTable[netID].recvedFlag == FALSE )
 	{
@@ -225,7 +225,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 				if( swk->recvTable[i].version == swk->maxVersion )
 				{
 					Sys->serverNetID = i;
-					BTL_Printf("サーバは netID=%d のマシンに決定\n", i);
+					BTL_Printf("[BTLNET]サーバは netID=%d のマシンに決定\n", i);
 					break;
 				}
 			}
@@ -415,7 +415,7 @@ void BTL_NET_SendToClient( const void* adrs, u32 size )
 {
 	BTL_NET_ClearRecvData();
 
-	GFL_NET_SendDataEx( Sys->netHandle, Sys->serverNetID, GFL_NET_CMD_BATTLE, size, adrs,
+	GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_TO_CLIENT, size, adrs,
 				FALSE,		// 優先度を高くする
 				TRUE,		// 同一コマンドがキューに無い場合のみ送信する
 				TRUE		// GFL_NETライブラリの外で保持するバッファを使用
@@ -472,7 +472,7 @@ u32 BTL_NET_GetReceivedCmdData( const void** ppDest )
 
 void BTL_NET_ReturnToServer( const void* data, u32 size )
 {
-	GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_TO_SERVER, size, data,
+	GFL_NET_SendDataEx( Sys->netHandle, Sys->serverNetID, CMD_TO_SERVER, size, data,
 				FALSE,		// 優先度を高くする
 				TRUE,		// 同一コマンドがキューに無い場合のみ送信する
 				TRUE		// GFL_NETライブラリの外で保持するバッファを使用

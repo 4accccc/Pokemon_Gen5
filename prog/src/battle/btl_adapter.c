@@ -315,10 +315,12 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 		{
 			u32* p;
 			BTL_NET_GetReceivedCmdData( (const void**)&p );
+			BTL_Printf("[BTLADP] サーバコマンド[%d]受信しました\n", *p);
 			return *p;
 		}
 		else
 		{
+			BTL_Printf("[BTLADP] サーバコマンド受信待ちでーす\n");
 			return BTL_ACMD_NONE;
 		}
 	}

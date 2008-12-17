@@ -264,11 +264,29 @@ void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, BTL
  *
  */
 //--------------------------------------------------------------------------------------
-void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID )
+void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, BTL_PARTY* party, u16 clientID )
 {
 	GF_ASSERT(server->client[clientID].adapter==NULL);
 
-	server->client[clientID].adapter = BTL_ADAPTER_Create( commMode, netHandle, server->heapID, clientID );
+	{
+		CLIENT_WORK* client;
+		int i;
+
+		client = &server->client[ clientID ];
+
+		client->adapter = BTL_ADAPTER_Create( commMode, netHandle, server->heapID, clientID );
+		client->party = party;
+		client->memberCount = BTL_PARTY_GetMemberCount( client->party );
+		for(i=0; i<client->memberCount; i++)
+		{
+			client->member[i] = BTL_PARTY_GetMemberData( client->party, i );
+		}
+		client->frontMemberIdx = 0;
+		client->frontMember = client->member[0];
+		client->myID = clientID;
+	}
+
+	server->numClient++;
 }
 
 
@@ -312,6 +330,12 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 		(*seq)++;
 		break;
 	case 1:
+		#ifdef PM_DEBUG
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			TAYA_Printf("Ç±Ç±Ç≈é~Ç‹Ç¡ÇƒÇ‹Å[Ç∑\n");
+		}
+		#endif
 		if( WaitAdapterCmd(server) )
 		{
 			ResetAdapterCmd( server );
