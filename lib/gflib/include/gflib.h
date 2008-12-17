@@ -18,6 +18,7 @@ extern "C" {
 #include "gf_macro.h"
 #include "gf_standard.h"
 #include "assert.h"
+#include "gf_rtc.h"
 
 #include "initialize.h"
 #include "heapsys.h"

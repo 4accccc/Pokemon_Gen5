@@ -4,11 +4,6 @@ SRCS	+=		test/testmode.c \
 				test/matsuda/performance.c \
 				system/net_err.c \
 				system/debug_print.c \
-				test/ohno/debug_ohno.c \
-				test/ohno/debug_field.c \
-				test/ohno/fatal_error.c \
-				test/ohno/net_icondata.c \
-				test/ohno/test_layout.c \
 				test/taya/d_taya.c \
 				test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
@@ -207,6 +202,13 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 #===> main
 SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
 
+# 大野デバッグ
+#===> main
+SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
+				test/ohno/debug_field.c \
+				test/ohno/fatal_error.c \
+				test/ohno/net_icondata.c \
+				test/ohno/test_layout.c
 
 # 有泉デバッグ
 #===> main

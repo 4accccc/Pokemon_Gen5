@@ -91,6 +91,23 @@ extern int GFL_NET_DWC_AnybodyEvalNum(void);
 typedef void (*MYDWCDisconnectFunc) (u16 aid,void* pWork);
 extern void GFL_NET_DWC_SetDisconnectCallback( MYDWCDisconnectFunc pFunc, void* pWork );
 
+//==============================================================================
+/**
+ * DWC通信処理更新を行う
+ * @param none
+ * @retval 0…正常, 負…エラー発生
+ */
+//==============================================================================
+extern void GFL_NET_DWC_StartVChat(int heapID);
+//==============================================================================
+/**
+ * @brief   ボイスチャットを停止します
+ * @param   void
+ * @retval  void
+ */
+//==============================================================================
+extern void GFL_NET_DWC_StopVChat(void);
+
 
 #endif //__NET_WIFI_H__
 #ifdef __cplusplus

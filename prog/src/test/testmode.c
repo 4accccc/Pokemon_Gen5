@@ -1024,6 +1024,7 @@ static void g3d_control_effect( TESTMODE_WORK * testmode )
 FS_EXTERN_OVERLAY(watanabe_sample);
 extern const GFL_PROC_DATA DebugWatanabeMainProcData;
 extern const GFL_PROC_DATA TestProg1MainProcData;
+FS_EXTERN_OVERLAY(ohno_debug);
 extern const GFL_PROC_DATA DebugOhnoMainProcData;
 extern const GFL_PROC_DATA DebugLayoutMainProcData;
 extern const GFL_PROC_DATA DebugTayaMainProcData;
@@ -1074,9 +1075,9 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_OHNO:
 		//‚¨‚¨‚Ì
-		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugOhnoMainProcData, NULL);
-//		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugGotoMainProcData, NULL);
-	//	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &DebugLayoutMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ohno_debug) , &DebugOhnoMainProcData, NULL);
+//		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ohno_debug), &DebugGotoMainProcData, NULL);
+	//	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ohno_debug), &DebugLayoutMainProcData, NULL);
         break;
 	case SELECT_TAYA:
 		//‚½‚â

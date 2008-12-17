@@ -11,8 +11,8 @@
 #ifndef __OBJ_GRAPHIC_MAN_H__
 #define __OBJ_GRAPHIC_MAN_H__
 
-#include "clact.h"
-#include "arc_tool.h"
+#include <clact.h>
+#include <arc_tool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,25 +62,25 @@ extern u32 GFL_OBJGRP_CopyCGR_VramTransfer( u32 srcCgrIdx, u32 cellAnimIdx, GFL_
 extern void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx, BOOL compressedFlag, HEAPID heapID );
 extern void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index );
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
-extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, u16 heapID );
+extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
 extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
-extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, u16 heapID );
+extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, HEAPID heapID );
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
 extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
 extern void GFL_OBJGRP_GetPlttProxy( u32 index, NNSG2dImagePaletteProxy* proxy );
 
 extern GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
+	  const GFL_CLWK_DATA* param, u16 setSerface, HEAPID heapID );
 
 extern GFL_CLWK* GFL_OBJGRP_CreateClActVT( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_CLWK_DATA* param, u16 setSerface, u16 heapID );
+	  const GFL_CLWK_DATA* param, u16 setSerface, HEAPID heapID );
 
 extern GFL_CLWK* GFL_OBJGRP_CreateClActAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex,
 	const GFL_CLWK_AFFINEDATA* param, u16 setSerface, HEAPID heapID );
 
 extern GFL_CLWK* GFL_OBJGRP_CreateClActVTAffine( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
-	  const GFL_CLWK_AFFINEDATA* param, u16 setSerface, u16 heapID );
+	  const GFL_CLWK_AFFINEDATA* param, u16 setSerface, HEAPID heapID );
 
 
 

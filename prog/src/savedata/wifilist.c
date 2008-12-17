@@ -7,23 +7,14 @@
  */
 //============================================================================================
 
-#include "savedata/savedata_def.h"	//SAVE_CONTROL_WORK参照のため
+//#include "savedata/savedata_def.h"	//SAVE_CONTROL_WORK参照のため
 
-#include "common.h"
+#include "gflib.h"
 #include <dwc.h>
 
-#include "system/gamedata.h"
-#include "savedata/savedata.h"
-#include "system/pm_rtc.h"
-#include "battle/battle_common.h"
-
+#include "system/rtc_tool.h"
 #include "savedata/wifilist.h"
 #include "wifilist_local.h"
-
-#include "system/pm_str.h"
-
-#include "gflib/strbuf_family.h"
-#include "wifi/dwc_rap.h"
 
 //============================================================================================
 //============================================================================================
@@ -58,7 +49,7 @@ WIFI_LIST * WifiList_AllocWork(u32 heapID)
 {
 	int i;
 	WIFI_LIST * list;
-	list = sys_AllocMemory(heapID, sizeof(WIFI_LIST));
+	list = GFL_HEAP_AllocMemory(heapID, sizeof(WIFI_LIST));
 	
 	WifiList_Init( list );
 
@@ -92,17 +83,8 @@ void WifiList_Init(WIFI_LIST * list)
 {
 	int i;
 	
-	GFL_STD_MemClearFast(list, sizeof(WIFI_LIST));
-
-	for(i=0;i<WIFILIST_FRIEND_MAX;i++){
-		list->friend[i].name[0] = EOM_;
-		list->friend[i].groupName[0] = EOM_;
-        list->friend[i].sex = PM_NEUTRAL;
-	}
-    mydwc_createUserData(list);  //GameSpyログイン用仮userコードの作成(絶対必要）
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+	GFL_STD_MemClear(list, sizeof(WIFI_LIST));
+    GFL_NET_WIFI_InitUserData(list);  //GameSpyログイン用仮userコードの作成(絶対必要）
 }
 
 
