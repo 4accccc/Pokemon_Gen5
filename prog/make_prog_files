@@ -105,6 +105,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/wipe_wnd.c \
 				net/net_icondata.c \
 				savedata/wifihistory.c \
+				savedata/wifilist.c \
 				app/trainercard/trainercard.c
 
 

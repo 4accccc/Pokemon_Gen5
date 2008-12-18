@@ -17,6 +17,7 @@
 #include "poke_tool/pokeparty.h"
 #include "playerdata_local.h"
 #include "savedata/wifihistory.h"
+#include "savedata/wifilist.h"
 
 
 //==============================================================================
@@ -149,6 +150,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_WIFIHISTORY,
 		(FUNC_GET_SIZE)WIFIHISTORY_GetWorkSize,
 		(FUNC_INIT_WORK)WIFIHISTORY_Init,
+	},
+	{	//WiFi友達コードデータ
+		GMDATA_ID_WIFILIST,
+		(FUNC_GET_SIZE)WifiList_GetWorkSize,
+		(FUNC_INIT_WORK)WifiList_Init,
 	},
 };
 

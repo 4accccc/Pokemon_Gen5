@@ -13,6 +13,7 @@
 #include <dwc.h>
 
 #include "system/rtc_tool.h"
+#include "savedata/save_tbl.h"
 #include "savedata/wifilist.h"
 #include "wifilist_local.h"
 
@@ -84,7 +85,7 @@ void WifiList_Init(WIFI_LIST * list)
 	int i;
 	
 	GFL_STD_MemClear(list, sizeof(WIFI_LIST));
-    GFL_NET_WIFI_InitUserData(list);  //GameSpyログイン用仮userコードの作成(絶対必要）
+    GFL_NET_WIFI_InitUserData(&list->my_dwcuser);  //GameSpyログイン用仮userコードの作成(絶対必要）
 }
 
 
@@ -123,43 +124,43 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
 	
 	switch(type){
       case WIFILIST_FRIEND_ID:
-        result = list->friend[no].id;
+        result = list->friendData[no].id;
         break;
       case WIFILIST_FRIEND_BATTLE_WIN:
-        result = list->friend[no].battle_win;
+        result = list->friendData[no].battle_win;
         break;
       case WIFILIST_FRIEND_BATTLE_LOSE:
-        result = list->friend[no].battle_lose;
+        result = list->friendData[no].battle_lose;
         break;
       case WIFILIST_FRIEND_TRADE_NUM:
-        result = list->friend[no].trade_num;
+        result = list->friendData[no].trade_num;
         break;
       case WIFILIST_FRIEND_LASTBT_YEAR:
-        result = list->friend[no].year;
+        result = list->friendData[no].year;
         break;
       case WIFILIST_FRIEND_LASTBT_MONTH:
-        result = list->friend[no].month;
+        result = list->friendData[no].month;
         break;
       case WIFILIST_FRIEND_LASTBT_DAY:
-        result = list->friend[no].day;
+        result = list->friendData[no].day;
         break;
       case WIFILIST_FRIEND_SEX:
-        result = list->friend[no].sex;
+        result = list->friendData[no].sex;
         break;
       case WIFILIST_FRIEND_UNION_GRA:
-        result = list->friend[no].unionGra;
+        result = list->friendData[no].unionGra;
         break;
 	  case WIFILIST_FRIEND_POFIN_NUM:
-		result = list->friend[no].pofin_num;
+		result = list->friendData[no].pofin_num;
 		break;
 	  case WIFILIST_FRIEND_BALLSLOW_NUM:
-		result = list->friend[no].minigame_ballslow;
+		result = list->friendData[no].minigame_ballslow;
 		break;
 	  case WIFILIST_FRIEND_BALANCEBALL_NUM:
-		result = list->friend[no].minigame_balanceball;
+		result = list->friendData[no].minigame_balanceball;
 		break;
 	  case WIFILIST_FRIEND_BALLOON_NUM:
-		result = list->friend[no].minigame_balloon;
+		result = list->friendData[no].minigame_balloon;
 		break;
 	}
 	return result;
@@ -184,7 +185,7 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
 
     switch(type){
       case WIFILIST_FRIEND_ID:
-        list->friend[no].id = value;
+        list->friendData[no].id = value;
         break;
       case WIFILIST_FRIEND_BATTLE_WIN:
         GF_ASSERT(0);
@@ -196,27 +197,24 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
         GF_ASSERT(0);
         break;
       case WIFILIST_FRIEND_LASTBT_YEAR:
-        list->friend[no].year = value;
+        list->friendData[no].year = value;
         break;
       case WIFILIST_FRIEND_LASTBT_MONTH:
-        list->friend[no].month = value;
+        list->friendData[no].month = value;
         break;
       case WIFILIST_FRIEND_LASTBT_DAY:
-        list->friend[no].day = value;
+        list->friendData[no].day = value;
         break;
       case WIFILIST_FRIEND_SEX:
-        list->friend[no].sex = value;
+        list->friendData[no].sex = value;
         break;
       case WIFILIST_FRIEND_UNION_GRA:
-        list->friend[no].unionGra = value;
+        list->friendData[no].unionGra = value;
         break;
       case WIFILIST_FRIEND_POFIN_NUM:
         GF_ASSERT(0);
 		break;
     }
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 
@@ -252,7 +250,7 @@ STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
-	return list->friend[no].name;
+	return list->friendData[no].name;
 }
 
 //==============================================================================
@@ -269,10 +267,7 @@ void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
-    STRBUF_GetStringCode(pBuf, list->friend[no].name, sizeof(list->friend[no].name));
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+    GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
 }
 
 //==============================================================================
@@ -289,7 +284,7 @@ STRCODE *WifiList_GetFriendGroupNamePtr( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
-	return list->friend[no].groupName;
+	return list->friendData[no].groupName;
 }
 
 //==============================================================================
@@ -304,10 +299,7 @@ void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
-    STRBUF_GetStringCode(pBuf, list->friend[no].groupName, sizeof(list->friend[no].groupName));
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+    GFL_STR_GetStringCode(pBuf, list->friendData[no].groupName, sizeof(list->friendData[no].groupName));
 }
 
 //==============================================================================
@@ -321,6 +313,9 @@ void WifiList_SetFriendGroupName( WIFI_LIST *list, int no, STRBUF* pBuf )
 BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
 {
 	GF_ASSERT( no < WIFILIST_FRIEND_MAX );
+    if(no >= WIFILIST_FRIEND_MAX){
+        return FALSE;
+    }
     // フレンドコードが正しいかどうかで判断
     return DWC_IsValidFriendData(&list->friend_dwc[no]);
 }
@@ -378,20 +373,16 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
 {
     int i;
 
-    GF_ASSERT_RETURN( no < WIFILIST_FRIEND_MAX, );
-    for(i = no; i < (WIFILIST_FRIEND_MAX-1); i++){
-        GFL_STD_MemCopy(&list->friend[i+1], &list->friend[i], sizeof(WIFI_FRIEND));
-        GFL_STD_MemCopy(&list->friend_dwc[i+1], &list->friend_dwc[i], sizeof(DWCFriendData));
+    GF_ASSERT( no < WIFILIST_FRIEND_MAX);
+    if(no < WIFILIST_FRIEND_MAX){
+        for(i = no; i < (WIFILIST_FRIEND_MAX-1); i++){
+            GFL_STD_MemCopy(&list->friendData[i+1], &list->friendData[i], sizeof(WIFI_FRIEND));
+            GFL_STD_MemCopy(&list->friend_dwc[i+1], &list->friend_dwc[i], sizeof(DWCFriendData));
+        }
+        i = WIFILIST_FRIEND_MAX-1;
+        GFL_STD_MemClear(&list->friendData[i], sizeof(WIFI_FRIEND));
+        GFL_STD_MemClear(&list->friend_dwc[i],sizeof(DWCFriendData));
     }
-    i = WIFILIST_FRIEND_MAX-1;
-	GFL_STD_MemClearFast(&list->friend[i], sizeof(WIFI_FRIEND));
-	GFL_STD_MemClearFast(&list->friend_dwc[i],sizeof(DWCFriendData));
-    list->friend[i].name[0] = EOM_;
-    list->friend[i].groupName[0] = EOM_;
-    list->friend[i].sex = PM_NEUTRAL;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 
@@ -408,13 +399,10 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 {
     int i;
 
-    GFL_STD_MemCopy(&list->friend[moveNo], &list->friend[no], sizeof(WIFI_FRIEND));
+    GFL_STD_MemCopy(&list->friendData[moveNo], &list->friendData[no], sizeof(WIFI_FRIEND));
     GFL_STD_MemCopy(&list->friend_dwc[moveNo], &list->friend_dwc[no], sizeof(DWCFriendData));
-	GFL_STD_MemClearFast(&list->friend[moveNo], sizeof(WIFI_FRIEND));
-	GFL_STD_MemClearFast(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
-    list->friend[moveNo].name[0] = EOM_;
-    list->friend[moveNo].groupName[0] = EOM_;
-    list->friend[moveNo].sex = PM_NEUTRAL;
+	GFL_STD_MemClear(&list->friendData[moveNo], sizeof(WIFI_FRIEND));
+	GFL_STD_MemClear(&list->friend_dwc[moveNo],sizeof(DWCFriendData));
 }
 
 //==============================================================================
@@ -429,28 +417,22 @@ static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
 #ifdef PM_DEBUG
 void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo)
 {
-    GFL_STD_MemCopy(&list->friend[copyNo], &list->friend[no], sizeof(WIFI_FRIEND));
+    GFL_STD_MemCopy(&list->friendData[copyNo], &list->friendData[no], sizeof(WIFI_FRIEND));
     GFL_STD_MemCopy(&list->friend_dwc[copyNo], &list->friend_dwc[no], sizeof(DWCFriendData));
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 void WifiList_SetCountStopNum( WIFI_LIST *list, int no )
 {
-    list->friend[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
-    list->friend[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
 
     WifiList_SetLastPlayDate(list, no);
 
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 #endif
@@ -482,9 +464,6 @@ void WifiList_FormUpData( WIFI_LIST *list)
             }
         }
     }
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 //==============================================================================
@@ -498,13 +477,10 @@ void WifiList_FormUpData( WIFI_LIST *list)
 void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
 {
     RTCDate	rtc;
-    GF_RTC_GetDate(&rtc);
-    list->friend[no].year = rtc.year+2000;
-    list->friend[no].month = rtc.month;
-    list->friend[no].day = rtc.day;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+    GFL_RTC_GetDate(&rtc);
+    list->friendData[no].year = rtc.year+2000;
+    list->friendData[no].month = rtc.month;
+    list->friendData[no].day = rtc.day;
 }
 
 //==============================================================================
@@ -520,19 +496,19 @@ void WifiList_SetLastPlayDate( WIFI_LIST *list, int no)
 //==============================================================================
 void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int trade)
 {
-    list->friend[no].battle_win += winNum;
-    if(list->friend[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_win += winNum;
+    if(list->friendData[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].battle_lose += loseNum;
-    if(list->friend[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_lose += loseNum;
+    if(list->friendData[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].trade_num += trade;
-    if(list->friend[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].trade_num += trade;
+    if(list->friendData[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
     }
-    OS_TPrintf("list->friend[  %d ].trade_num  %d\n",no,list->friend[no].trade_num);
+    OS_TPrintf("list->friendData[  %d ].trade_num  %d\n",no,list->friendData[no].trade_num);
     WifiList_SetLastPlayDate(list, no);
 }
 
@@ -547,14 +523,11 @@ void WifiList_SetResult( WIFI_LIST *list, int no, int winNum, int loseNum,int tr
 //-----------------------------------------------------------------------------
 void WifiList_AddPorin( WIFI_LIST *list, int no, int pofin )
 {
-    list->friend[no].pofin_num += pofin;
-    if(list->friend[no].pofin_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].pofin_num += pofin;
+    if(list->friendData[no].pofin_num > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
     }
     WifiList_SetLastPlayDate(list, no);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 //----------------------------------------------------------------------------
@@ -568,36 +541,27 @@ void WifiList_AddPorin( WIFI_LIST *list, int no, int pofin )
 //-----------------------------------------------------------------------------
 void WifiList_AddMinigameBallSlow( WIFI_LIST *list, int no, int addnum )
 {
-    list->friend[no].minigame_ballslow += addnum;
-    if(list->friend[no].minigame_ballslow > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_ballslow += addnum;
+    if(list->friendData[no].minigame_ballslow > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
     }
     WifiList_SetLastPlayDate(list, no);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 void WifiList_AddMinigameBalanceBall( WIFI_LIST *list, int no, int addnum )
 {
-    list->friend[no].minigame_balanceball += addnum;
-    if(list->friend[no].minigame_balanceball > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balanceball += addnum;
+    if(list->friendData[no].minigame_balanceball > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
     }
     WifiList_SetLastPlayDate(list, no);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum )
 {
-    list->friend[no].minigame_balloon += addnum;
-    if(list->friend[no].minigame_balloon > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balloon += addnum;
+    if(list->friendData[no].minigame_balloon > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
     }
     WifiList_SetLastPlayDate(list, no);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
 }
 
 
@@ -615,46 +579,40 @@ void WifiList_AddMinigameBalloon( WIFI_LIST *list, int no, int addnum )
 //==============================================================================
 void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 {
-    list->friend[no].battle_win += list->friend[delNo].battle_win;
-    if(list->friend[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_win += list->friendData[delNo].battle_win;
+    if(list->friendData[no].battle_win > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].battle_win = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].battle_lose += list->friend[delNo].battle_lose;
-    if(list->friend[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].battle_lose += list->friendData[delNo].battle_lose;
+    if(list->friendData[no].battle_lose > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].battle_lose = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].trade_num += list->friend[delNo].trade_num;
-    if(list->friend[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].trade_num += list->friendData[delNo].trade_num;
+    if(list->friendData[no].trade_num > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].trade_num = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].pofin_num += list->friend[delNo].pofin_num;
-    if(list->friend[no].pofin_num > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].pofin_num += list->friendData[delNo].pofin_num;
+    if(list->friendData[no].pofin_num > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].pofin_num = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].minigame_ballslow += list->friend[delNo].minigame_ballslow;
-    if(list->friend[no].minigame_ballslow > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_ballslow += list->friendData[delNo].minigame_ballslow;
+    if(list->friendData[no].minigame_ballslow > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_ballslow = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].minigame_balanceball += list->friend[delNo].minigame_balanceball;
-    if(list->friend[no].minigame_balanceball > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balanceball += list->friendData[delNo].minigame_balanceball;
+    if(list->friendData[no].minigame_balanceball > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_balanceball = WIFILIST_COUNT_RANGE_MAX;
     }
-    list->friend[no].minigame_balloon += list->friend[delNo].minigame_balloon;
-    if(list->friend[no].minigame_balloon > WIFILIST_COUNT_RANGE_MAX){
-        list->friend[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
+    list->friendData[no].minigame_balloon += list->friendData[delNo].minigame_balloon;
+    if(list->friendData[no].minigame_balloon > WIFILIST_COUNT_RANGE_MAX){
+        list->friendData[no].minigame_balloon = WIFILIST_COUNT_RANGE_MAX;
     }
 
 	// delNoのほうが最新の情報なので、グループ名は最新のほうを残す
 	// データとして残るのは大本のほう（古いほう）なので、名前は、取っておく。
-	GFL_STD_MemCopyFast( list->friend[delNo].groupName, list->friend[no].groupName, ( sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) ) );
+	GFL_STD_MemCopy( list->friendData[delNo].groupName, list->friendData[no].groupName, ( sizeof(STRCODE)*(PERSON_NAME_SIZE + EOM_SIZE) ) );
 	
-	GFL_STD_MemClearFast(&list->friend[delNo], sizeof(WIFI_FRIEND));
-    list->friend[delNo].name[0] = EOM_;
-    list->friend[delNo].groupName[0] = EOM_;
-    list->friend[delNo].sex = PM_NEUTRAL;
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_SetCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+	GFL_STD_MemClear(&list->friendData[delNo], sizeof(WIFI_FRIEND));
 }
 
 
@@ -669,10 +627,7 @@ void WifiList_DataMarge( WIFI_LIST *list, int delNo, int no)
 WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
 {
 	WIFI_LIST* pData;
-	pData = SaveData_Get(sv, GMDATA_ID_WIFILIST);
-#if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_WIFILIST)
-	SVLD_CheckCrc(GMDATA_ID_WIFILIST);
-#endif //CRC_LOADCHECK
+	pData = SaveControl_DataPtrGet(sv, GMDATA_ID_WIFILIST);
 	return pData;
 }
 
