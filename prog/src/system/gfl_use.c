@@ -138,6 +138,9 @@ void GFLUser_Init(void)
 	//システムフォント初期化
 	GFL_TEXT_CreateSystem( NULL );
 
+	//OBJグラフィック管理システム初期化
+	GFL_OBJGRP_Init();
+
 	GFL_USE_VintrCounter = 0;
 }
 

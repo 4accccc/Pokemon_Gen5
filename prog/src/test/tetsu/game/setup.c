@@ -676,7 +676,6 @@ static void	g2d_load( GAME_SYSTEM* gs )
 
 		//ƒVƒXƒeƒ€‰Šú‰»
 		GFL_CLACT_Init( &clactIni, gs->heapID );
-		GFL_OBJGRP_Init();
 		GFL_OBJGRP_sysStart( gs->heapID, &dispVram, &objgrpIni );
 
 		i = 0;
