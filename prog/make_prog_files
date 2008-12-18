@@ -103,10 +103,9 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/wipe.c \
 				system/wipe_sub.c \
 				system/wipe_wnd.c \
-				test/ohno/fatal_error.c \
-				test/ohno/net_icondata.c \
+				net/net_icondata.c \
 				savedata/wifihistory.c \
-				application/trainercard/trainercard.c
+				app/trainercard/trainercard.c
 
 
 
@@ -196,6 +195,7 @@ SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
 # 大野デバッグ
 #===> main
 SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
+				test/ohno/fatal_error.c \
 				test/ohno/debug_field.c \
 				test/ohno/test_layout.c
 

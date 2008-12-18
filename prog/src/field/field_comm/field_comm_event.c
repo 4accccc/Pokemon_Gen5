@@ -719,7 +719,7 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 }
 
 //ユーザーデータ初期化用関数(仮
-#include "application/trainercard/trainercard.h"
+#include "app/trainercard/trainercard.h"
 static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
 {
 	FIELD_COMM_USERDATA_TRAINERCARD *cardData;
