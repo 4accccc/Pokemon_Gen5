@@ -411,22 +411,33 @@ BOOL BTL_NET_IsTimingSync( u8 timingID )
 
 
 
-void BTL_NET_SendToClient( const void* adrs, u32 size )
+//=============================================================================================
+/**
+ * 特定クライアントにデータ送信
+ *
+ * @param   netID		
+ * @param   adrs		
+ * @param   size		
+ *
+ */
+//=============================================================================================
+void BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size )
 {
-	BTL_NET_ClearRecvData();
-
-	GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_TO_CLIENT, size, adrs,
+	GFL_NET_SendDataEx( Sys->netHandle, netID, CMD_TO_CLIENT, size, adrs,
 				FALSE,		// 優先度を高くする
-				TRUE,		// 同一コマンドがキューに無い場合のみ送信する
+				FALSE,		// 同一コマンドがキューに無い場合のみ送信する
 				TRUE		// GFL_NETライブラリの外で保持するバッファを使用
 	);
+	BTL_Printf("[BTLNET] マシン(%d) に %d bytes 送信開始\n", netID, size);
 }
 
-BOOL BTL_NET_CheckSendToClient( void )
-{
-	return GFL_NET_IsEmptySendData( Sys->netHandle );
-}
-
+//=============================================================================================
+/**
+ * 全クライアントから返信があったかチェック
+ *
+ * @retval  BOOL		あったらTRUE
+ */
+//=============================================================================================
 BOOL BTL_NET_CheckReturnFromClient( void )
 {
 	int i;
@@ -443,6 +454,31 @@ BOOL BTL_NET_CheckReturnFromClient( void )
 
 	return TRUE;
 }
+
+u32 BTL_NET_GetRecvClientData( u8 netID, const void** pptr )
+{
+	return recvBuf_getData( &Sys->recvClient[netID], pptr );
+}
+
+
+static u8* getbuf_clientData( int netID, void* pWork, int size )
+{
+	return recvBuf_getBufAdrs( &Sys->recvClient[netID] );
+}
+
+static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+	GF_ASSERT(size<BTL_SERVER_CMD_QUE_SIZE);
+
+	Sys->recvClient[ netID ].size = size;
+	if( Sys->recvClient[netID].size == 0 )
+	{
+		Sys->recvClient[netID].size = 1;
+	}
+	BTL_Printf("[BTLNET] クライアント(NETID=%d)からの受信完了, サイズ=%d\n", netID, size);
+}
+
+
 
 void BTL_NET_ClearRecvData( void )
 {
@@ -481,38 +517,13 @@ void BTL_NET_ReturnToServer( const void* data, u32 size )
 	);
 
 	Sys->serverCmdReceived = FALSE;
-}
+	BTL_Printf("[BTLNET]  サーバへ返信, フラグオフ\n");
 
-static u8* getbuf_clientData( int netID, void* pWork, int size )
-{
-	return recvBuf_getBufAdrs( &Sys->recvClient[netID] );
-}
-
-static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
-{
-	GF_ASSERT(size<BTL_SERVER_CMD_QUE_SIZE);
-
-	Sys->recvClient[ netID ].size = size;
-	if( Sys->recvClient[netID].size == 0 )
-	{
-		Sys->recvClient[netID].size = 1;
-	}
-	BTL_Printf("[BTLNET] クライアント(NETID=%d)からの受信完了, サイズ=%d\n", netID, size);
 }
 
 
 
-void BTL_NET_StartCommand( BtlNetCommand cmd )
-{
-	// @@@はりぼて
-}
 
-
-BOOL BTL_NET_WaitCommand( void )
-{
-	// @@@はりぼて
-	return TRUE;
-}
 
 
 
@@ -526,8 +537,10 @@ static void recv_serverCmd( const int netID, const int size, const void* pData, 
 	GF_ASSERT(size<BTL_SERVER_CMD_QUE_SIZE);
 	if( Sys->serverCmdReceived == FALSE )
 	{
-		recvBuf_Store( &Sys->recvServer, pData, size );
+//		recvBuf_Store( &Sys->recvServer, pData, size );
+		Sys->recvServer.size = size;
 		Sys->serverCmdReceived = TRUE;
+		BTL_Printf("[BTLNET]  サーバコマンド受信, フラグオン\n");
 	}
 }
 
@@ -552,6 +565,7 @@ static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf )
 
 static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData )
 {
+	GF_ASSERT(buf->size);
 	*ppData = buf->data;
 	return buf->size;
 }

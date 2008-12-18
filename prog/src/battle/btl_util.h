@@ -117,5 +117,7 @@ static inline BOOL PokeTypePair_IsMatch( PokeTypePair pair, PokeType type )
 extern void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... );
 #define BTL_Printf( ... )	BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
 
+extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
+#define BTL_DUMP_Printf( cap, dat, siz )	BTL_UTIL_DumpPrintf( cap, dat, siz );
 
 #endif

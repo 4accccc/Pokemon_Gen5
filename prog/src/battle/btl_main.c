@@ -118,7 +118,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 			wk->setupParam = setup_param;
 
 			BTL_NET_InitSystem( setup_param->netHandle, HEAPID_BTL_NET );
-			BTL_ADAPTER_InitSystem();
+			BTL_ADAPTERSYS_Init( setup_param->commMode );
 
 			setSubProcForSetup( &wk->subProc, wk, setup_param );
 			(*seq)++;
@@ -166,7 +166,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 	case 1:
 		if( BTL_UTIL_CallProc(&wk->subProc) )
 		{
-			BTL_ADAPTER_QuitSystem();
+			BTL_ADAPTERSYS_Quit();
 			BTL_NET_QuitSystem();
 			(*seq)++;
 		}

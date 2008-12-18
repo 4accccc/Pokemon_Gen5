@@ -484,6 +484,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 		break;
 
 	case 1:
+		PRINTSYS_QUE_Main( wk->printQue );
 		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			return TRUE;
@@ -550,6 +551,7 @@ static BOOL selectAction_loop( int* seq, void* wk_adrs )
 		}
 		break;
 	case SEQ_SEL_FIGHT+1:
+		PRINTSYS_QUE_Main( wk->printQue );
 		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			(*seq)++;
@@ -653,6 +655,7 @@ static BOOL selectPokemon_init( int* seq, void* wk_adrs )
 		break;
 
 	case 1:
+		PRINTSYS_QUE_Main( wk->printQue );
 		if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
 		{
 			return TRUE;

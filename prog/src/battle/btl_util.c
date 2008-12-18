@@ -24,3 +24,20 @@ void BTL_UTIL_Printf( const char* filename, int line, const char* fmt, ... )
 
 }
 
+void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size )
+{
+	OS_TPrintf( "[DUMP] %s (%dbytes)\n", caption, size );
+
+	if( size > 8 ){ size = 8; }
+
+	{
+		const u8* p = data;
+		u32 i;
+		for(i=0; i<size; i++)
+		{
+			OS_TPrintf("%02x ", p[i]);
+		}
+		OS_TPrintf("\n");
+	}
+}
+

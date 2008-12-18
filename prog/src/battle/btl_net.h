@@ -67,20 +67,18 @@ extern void BTL_NET_EndNotifyPartyData( void );
 extern void BTL_NET_TimingSyncStart( u8 timingID );
 extern BOOL BTL_NET_IsTimingSync( u8 timingID );
 
-extern void BTL_NET_SendToClient( const void* adrs, u32 size );
-extern BOOL BTL_NET_CheckSendToClient( void );
+extern void BTL_NET_SendToClient( u8 netID, const void* adrs, u32 size );
 
 extern BOOL BTL_NET_IsServerCmdReceived( void );
 extern u32 BTL_NET_GetReceivedCmdData( const void** ppDest );
 
 extern void BTL_NET_ReturnToServer( const void* data, u32 size );
 extern BOOL BTL_NET_CheckReturnFromClient( void );
+extern u32 BTL_NET_GetRecvClientData( u8 netID, const void** pptr );
 extern void BTL_NET_ClearRecvData( void );
 
 
 
-extern void BTL_NET_StartCommand( BtlNetCommand cmd );
-extern BOOL BTL_NET_WaitCommand( void );
 
 
 #endif

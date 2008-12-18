@@ -31,6 +31,17 @@ typedef enum {
 }AdapterState;
 
 
+typedef struct {
+
+	struct {
+		u16   cmd;
+		u16   size;
+	}	header;
+
+	u8    data[ DATA_BUFFER_SIZE ];
+
+}SEND_DATA_BUFFER;
+
 /**
  *
  */
@@ -41,16 +52,11 @@ struct _BTL_ADAPTER {
 	u32			returnDataSize;
 	u8			returnDataPreparedFlag;
 
-	const void*	sendDataAdrs;
-	u32			sendDataSize;
-
 	u8	myID;
 	u8	myState;
 	u8	processingCmd;
-	u8	commMode;
 
-	u32	dataBufPtr;
-	u8	dataBuffer[ DATA_BUFFER_SIZE ];
+	SEND_DATA_BUFFER   sendDataBuffer;
 };
 
 
@@ -62,16 +68,17 @@ struct _BTL_ADAPTER {
  */
 //-------------------------------------------------------------------------
 static BTL_ADAPTER* AdappterTable[ BTL_CLIENT_MAX ];
-
+static u8 CommMode;
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void _StartToReception( BTL_ADAPTER* wk );
-static BOOL _WaitToReception(  BTL_ADAPTER* wk );
 static BOOL _ReceptionClient( BTL_ADAPTER* wk );
-static void datBuf_init( BTL_ADAPTER* wk );
-static void datBuf_write( BTL_ADAPTER* wk, const void* src, u32 size );
+static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize );
+static inline u32 sendBuf_calcSize( const SEND_DATA_BUFFER* buf );
+static inline BtlAdapterCmd sendBuf_getCmd( const SEND_DATA_BUFFER* buf );
+static inline u32 sendBuf_getData( const SEND_DATA_BUFFER* buf, const void** pptr );
 
 
 
@@ -80,26 +87,29 @@ static void datBuf_write( BTL_ADAPTER* wk, const void* src, u32 size );
  * システム初期化（バトルシステム起動直後に１回だけ呼び出し）
  */
 //=============================================================================================
-void BTL_ADAPTER_InitSystem( void )
+void BTL_ADAPTERSYS_Init( BtlCommMode mode )
 {
 	int i;
+
 	for(i=0; i<BTL_CLIENT_MAX; i++)
 	{
 		AdappterTable[i] = NULL;
 	}
+
+	CommMode = mode;
 }
 //=============================================================================================
 /**
  * 	システム終了（バトルシステム終了時に１回だけ呼び出し）
  */
 //=============================================================================================
-void BTL_ADAPTER_QuitSystem( void )
+void BTL_ADAPTERSYS_Quit( void )
 {
 	// とくになにも
 }
 
 
-BTL_ADAPTER*  BTL_ADAPTER_Create( BtlCommMode commMode, GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID )
+BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID )
 {
 	BTL_ADAPTER* wk = NULL;
 
@@ -111,17 +121,10 @@ BTL_ADAPTER*  BTL_ADAPTER_Create( BtlCommMode commMode, GFL_NETHANDLE* netHandle
 		wk->myState = AS_FREE;
 		wk->processingCmd = BTL_ACMD_NONE;
 		wk->returnDataPreparedFlag = FALSE;
-		wk->commMode = commMode;
-
-		wk->sendDataAdrs = NULL;
-		wk->sendDataSize = 0;
-
-		wk->dataBufPtr = 0;
 	}
 
-
 	// 非通信モード：同一IDは１つだけ作ってサーバ・クライアント双方から使い回し
-	if( commMode == BTL_COMM_NONE )
+	if( CommMode == BTL_COMM_NONE )
 	{
 		if( AdappterTable[adapterID] == NULL )
 		{
@@ -148,6 +151,32 @@ void BTL_ADAPTER_Delete( BTL_ADAPTER* wk )
 
 //--------------------------------------------------------------------------------------
 /**
+ * [SERVER用] BTL_ADAPTER_SetCmd の前に呼び出し
+ */
+//--------------------------------------------------------------------------------------
+void BTL_ADAPTERSYS_BeginSetCmd( void )
+{
+	if( CommMode != BTL_COMM_NONE )
+	{
+		BTL_NET_ClearRecvData();
+	}
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ * [SERVER用] BTL_ADAPTER_SetCmd の後に呼び出し
+ */
+//--------------------------------------------------------------------------------------
+void BTL_ADAPTERSYS_EndSetCmd( void )
+{
+	if( CommMode != BTL_COMM_NONE )
+	{
+		
+	}
+}
+
+//--------------------------------------------------------------------------------------
+/**
  * [SERVER用]	クライアントに対するコマンド送信を開始する
  *
  * @param   wk				アダプタモジュール
@@ -164,18 +193,13 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
 	wk->myState = AS_CMD_RECEIVED;
 	wk->processingCmd = cmd;
 
-	datBuf_init( wk );
-	datBuf_write( wk, &cmd, sizeof(cmd) );
-	datBuf_write( wk, sendData, sendDataSize );
-
-	wk->sendDataAdrs = sendData;
-	wk->sendDataSize = sendDataSize;
+	sendBuf_store( &wk->sendDataBuffer, cmd, sendData, sendDataSize );
 
 	wk->returnDataAdrs = NULL;
 	wk->returnDataSize = 0;
 	wk->returnDataPreparedFlag = FALSE;
 
-//	BTL_Printf(" [AD] %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd);
+	BTL_Printf(" [AD] %d, コマンド %d を送信開始します\n", wk->myID, wk->processingCmd );
 }
 
 
@@ -198,7 +222,6 @@ BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk )
 	case AS_WAIT_RECV_FROM_CLIENT:
 		if( !_ReceptionClient(wk) )
 		{
-			BTL_Printf("[BTLADP] 全クライアントからの返信待ちです\n");
 			break;
 		}
 		wk->myState = AS_DONE;
@@ -252,7 +275,7 @@ void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 	GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
 	wk->myState = AS_FREE;
 
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
 		BTL_NET_ClearRecvData();
 	}
@@ -265,29 +288,24 @@ void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 static void _StartToReception( BTL_ADAPTER* wk )
 {
 	// スタンドアロンなら処理不要
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
-		BTL_NET_SendToClient( wk->dataBuffer, wk->dataBufPtr );
-	}
-}
-static BOOL _WaitToReception(  BTL_ADAPTER* wk )
-{
-	// スタンドアロンなら処理不要
-	if( wk->commMode != BTL_COMM_NONE )
-	{
-		return BTL_NET_CheckSendToClient();
-	}
-	else
-	{
-		return TRUE;
+		SEND_DATA_BUFFER* sendBuf = &wk->sendDataBuffer;
+		BTL_NET_SendToClient( wk->myID, sendBuf, sendBuf_calcSize(sendBuf) );
 	}
 }
 
 static BOOL _ReceptionClient( BTL_ADAPTER* wk )
 {
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
-		return BTL_NET_CheckReturnFromClient();
+		if( BTL_NET_CheckReturnFromClient() )
+		{
+			wk->returnDataSize = BTL_NET_GetRecvClientData( wk->myID, &wk->returnDataAdrs );
+			wk->returnDataPreparedFlag = TRUE;
+			return TRUE;
+		}
+		return FALSE;
 	}
 	else
 	{
@@ -308,14 +326,19 @@ static BOOL _ReceptionClient( BTL_ADAPTER* wk )
 BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 {
 	// 通信時
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
 		if( BTL_NET_IsServerCmdReceived() )
 		{
-			u32* p;
-			BTL_NET_GetReceivedCmdData( (const void**)&p );
-			BTL_Printf("[BTLADP] サーバコマンド[%d]受信しました\n", *p);
-			return *p;
+			SEND_DATA_BUFFER* sendBuf;
+			BtlAdapterCmd cmd;
+
+			BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
+			cmd = sendBuf_getCmd( sendBuf );
+
+			BTL_Printf("[BTLADP] サーバコマンド[%d]受信しました\n", cmd);
+
+			return cmd;
 		}
 		else
 		{
@@ -327,7 +350,7 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 	{
 		if( wk->returnDataPreparedFlag == FALSE )
 		{
-			return wk->processingCmd;
+			return sendBuf_getCmd( &wk->sendDataBuffer );
 		}
 		else
 		{
@@ -349,15 +372,17 @@ BtlAdapterCmd BTL_ADAPTER_RecvCmd( BTL_ADAPTER* wk )
 u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
 {
 	// 通信時
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
-		return BTL_NET_GetReceivedCmdData( ppRecv );
+		SEND_DATA_BUFFER* sendBuf;
+
+		BTL_NET_GetReceivedCmdData( (const void**)&sendBuf );
+		return sendBuf_getData( sendBuf, ppRecv );
 	}
 	// 非通信時
 	else
 	{
-		*ppRecv = wk->sendDataAdrs;
-		return wk->sendDataSize;
+		return sendBuf_getData( &wk->sendDataBuffer, ppRecv );
 	}
 }
 
@@ -375,7 +400,7 @@ u32 BTL_ADAPTER_GetRecvData( BTL_ADAPTER* wk, const void** ppRecv )
 void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 {
 	// 通信時
-	if( wk->commMode != BTL_COMM_NONE )
+	if( CommMode != BTL_COMM_NONE )
 	{
 		BTL_NET_ReturnToServer( data, size );
 	}
@@ -394,38 +419,28 @@ void BTL_ADAPTER_ReturnCmd( BTL_ADAPTER* wk, const void* data, u32 size )
 
 
 
-
-
-//--------------------------------------------------------------------------
-/**
- * データバッファ初期化
- *
- * @param   wk		
- *
- */
-//--------------------------------------------------------------------------
-static void datBuf_init( BTL_ADAPTER* wk )
+static inline void sendBuf_store( SEND_DATA_BUFFER* buf, BtlAdapterCmd cmd, const void* data, u32 dataSize )
 {
-	wk->dataBufPtr = 0;
+	GF_ASSERT(dataSize < sizeof(buf->data));
+
+	buf->header.cmd = cmd;
+	buf->header.size = dataSize;
+	GFL_STD_MemCopy( data, buf->data, dataSize );
 }
 
-//--------------------------------------------------------------------------
-/**
- * データバッファ書き込み
- *
- * @param   wk			
- * @param   src			
- * @param   size		
- *
- */
-//--------------------------------------------------------------------------
-static void datBuf_write( BTL_ADAPTER* wk, const void* src, u32 size )
+static inline u32 sendBuf_calcSize( const SEND_DATA_BUFFER* buf )
 {
-	GF_ASSERT_MSG( (wk->dataBufPtr+size) <= DATA_BUFFER_SIZE, "data buffer size over : dataBufPtr=%d, size=%d",
-				wk->dataBufPtr, size );
-
-	GFL_STD_MemCopy( src, &wk->dataBuffer[wk->dataBufPtr], size );
-	wk->dataBufPtr += size;
+	return sizeof(buf->header) + buf->header.size;
 }
 
+static inline BtlAdapterCmd sendBuf_getCmd( const SEND_DATA_BUFFER* buf )
+{
+	return buf->header.cmd;
+}
+
+static inline u32 sendBuf_getData( const SEND_DATA_BUFFER* buf, const void** pptr )
+{
+	*pptr = buf->data;
+	return buf->header.size;
+}
 

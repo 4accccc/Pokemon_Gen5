@@ -274,7 +274,7 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
 
 		client = &server->client[ clientID ];
 
-		client->adapter = BTL_ADAPTER_Create( commMode, netHandle, server->heapID, clientID );
+		client->adapter = BTL_ADAPTER_Create( netHandle, server->heapID, clientID );
 		client->party = party;
 		client->memberCount = BTL_PARTY_GetMemberCount( client->party );
 		for(i=0; i<client->memberCount; i++)
@@ -326,24 +326,10 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 	switch( *seq ){
 	case 0:
 		BTL_EVENT_InitSystem();
-		SetAdapterCmd( server, BTL_ACMD_NOTIFY_POKEDATA );
+		BTL_Printf("[SV] イニシャライズコマンド発行\n");
+		SetAdapterCmd( server, BTL_ACMD_WAIT_INITIALIZE );
 		(*seq)++;
-		break;
 	case 1:
-		#ifdef PM_DEBUG
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-		{
-			TAYA_Printf("ここで止まってまーす\n");
-		}
-		#endif
-		if( WaitAdapterCmd(server) )
-		{
-			ResetAdapterCmd( server );
-			SetAdapterCmd( server, BTL_ACMD_WAIT_INITIALIZE );
-			(*seq)++;
-		}
-		break;
-	case 2:
 		if( WaitAdapterCmd(server) )
 		{
 			int i;
@@ -370,6 +356,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		scEvent_PokeComp( server );
 		if( server->que->writePtr )
 		{
+			BTL_Printf("[SV] 再生コマンド発行\n");
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
 			(*seq) = 1;
 		}
@@ -388,7 +375,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 		break;
 
 	case 2:
-		BTL_Printf("Start to Action Select\n");
+		BTL_Printf(" [SV] アクション選択コマンド発行\n");
 		SetAdapterCmd( server, BTL_ACMD_SELECT_ACTION );
 		server->endFlag = FALSE;
 		(*seq)++;
@@ -483,7 +470,9 @@ static BOOL ServerMain_SelectPokemon( BTL_SERVER* server, int* seq )
 			ResetAdapterCmd( server );
 			SCQUE_Init( server->que );
 			server->pokeDeadFlag = createServerCommandPokeSelect( server );
+			BTL_DUMP_Printf( "[SV]コマンド発信", server->que->buffer, server->que->writePtr );
 			SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+
 			(*seq)++;
 		}
 		break;
@@ -524,23 +513,29 @@ static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd )
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize )
 {
 	int i;
+
+	BTL_ADAPTERSYS_BeginSetCmd();
+
 	for(i=0; i<server->numClient; i++)
 	{
 		BTL_ADAPTER_SetCmd( server->client[i].adapter, cmd, sendData, dataSize );
 	}
+
+	BTL_ADAPTERSYS_EndSetCmd();
 }
 
 static BOOL WaitAdapterCmd( BTL_SERVER* server )
 {
 	int i;
+	BOOL ret = TRUE;
 	for(i=0; i<server->numClient; i++)
 	{
 		if( !BTL_ADAPTER_WaitCmd( server->client[i].adapter ) )
 		{
-			return FALSE;
+			ret = FALSE;
 		}
 	}
-	return TRUE;
+	return ret;
 }
 
 static void ResetAdapterCmd( BTL_SERVER* server )

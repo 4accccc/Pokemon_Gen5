@@ -299,12 +299,14 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	case 0:
 		BTL_STR_MakeStringStd( core->strBuf, BTL_STRID_STD_SelectAction );
 		BTLV_SCU_StartMsg( core->scrnU, core->strBuf );
+		BTL_Printf("[BTLV_CORE] 上画面へアクション選択うながすメッセージ\n");
 		(*seq)++;
 		break;
 	case 1:
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
 			const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
+			BTL_Printf("[BTLV_CORE] 下画面へアクション選択処理命令\n");
 			BTLV_SCD_StartActionSelect( core->scrnD, bpp );
 			(*seq)++;
 		}
@@ -643,10 +645,10 @@ static void setup_core( BTLV_CORE* wk, HEAPID heapID )
 		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
 		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-	};		
+	};
 #endif
 
 	// BGsystem初期化

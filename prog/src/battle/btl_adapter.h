@@ -57,14 +57,16 @@ typedef enum {
  * システム初期化，終了（バトルシステム起動直後，終了直前に１回だけ呼び出し）
  */
 //--------------------------------------------------------------------------------------
-extern void BTL_ADAPTER_InitSystem( void );
-extern void BTL_ADAPTER_QuitSystem( void );
+extern void BTL_ADAPTERSYS_Init( BtlCommMode mode );
+extern void BTL_ADAPTERSYS_Quit( void );
 
-extern BTL_ADAPTER*  BTL_ADAPTER_Create( BtlCommMode commMode, GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID );
+extern BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, HEAPID heapID, u16 adapterID );
 extern void BTL_ADAPTER_Delete( BTL_ADAPTER* wk );
 
 
 // for server
+extern void BTL_ADAPTERSYS_BeginSetCmd( void );
+extern void BTL_ADAPTERSYS_EndSetCmd( void );
 extern void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendData, u32 sendDataSize );
 extern BOOL BTL_ADAPTER_WaitCmd( BTL_ADAPTER* wk );
 extern void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk );

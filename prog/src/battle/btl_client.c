@@ -130,7 +130,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
 
 	wk->myID = clientID;
 	wk->myType = clientType;
-	wk->adapter = BTL_ADAPTER_Create( commMode, netHandle, heapID, clientID );
+	wk->adapter = BTL_ADAPTER_Create( netHandle, heapID, clientID );
 	wk->myParty = BTL_MAIN_GetPartyDataConst( mainModule, clientID );
 	wk->mainModule = mainModule;
 	wk->frontPokeIdx = 0;
@@ -238,12 +238,14 @@ static BOOL SubProc_UI_Initialize( BTL_CLIENT* wk, int* seq )
 {
 	switch( *seq ){
 	case 0:
+		BTL_Printf(" [CL] 画面構築します\n");
 		BTLV_StartCommand( wk->viewCore, BTLV_CMD_SETUP );
 		(*seq)++;
 		break;
 	case 1:
 		if( BTLV_WaitCommand(wk->viewCore) )
 		{
+			BTL_Printf(" [CL] 画面構築おわりました\n");
 			return TRUE;
 		}
 		break;
@@ -262,11 +264,18 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
 	switch( *seq ){
 	case 0:
+		BTL_Printf(" [CL] アクション選択開始します\n");
 		BTLV_StartCommand( wk->viewCore, BTLV_CMD_SELECT_ACTION );
 		(*seq)++;
 		break;
 
 	case 1:
+		#ifdef PM_DEBUG
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+		{
+			BTL_Printf(" [CL] アクション選択待ちである\n");
+		}
+		#endif
 		if( BTLV_WaitCommand(wk->viewCore) )
 		{
 			BTLV_GetActionParam( wk->viewCore, &wk->actionParam );

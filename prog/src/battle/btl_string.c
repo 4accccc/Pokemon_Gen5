@@ -250,8 +250,6 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 		ms_std_simple,
 	};
 
-	TAYA_Printf("MakeStrSTD str=%d\n", strID);
-
 	if( strID && strID < NELEMS(funcTbl) )
 	{
 		funcTbl[strID]( buf, strID );
@@ -331,8 +329,6 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 	};
 
 	int i;
-
-	TAYA_Printf("MakeStrSpecific str=%d\n", strID);
 
 	for(i=0; i<NELEMS(funcTbl); i++)
 	{
