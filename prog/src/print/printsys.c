@@ -76,7 +76,7 @@ typedef u16		STRCODE;
  *  Bitmapへの描画処理ワーク
  */
 //--------------------------------------------------------------------------
-		typedef struct {
+typedef struct {
 	u16   org_x;		///< 書き込み開始Ｘ座標
 	u16   org_y;		///< 書き込み開始Ｙ座標
 	u16   write_x;		///< 書き込み中のＸ座標
@@ -248,12 +248,13 @@ PRINT_QUE* PRINTSYS_QUE_CreateEx( u16 buf_size, HEAPID heapID )
 
 	que = GFL_HEAP_AllocMemory( heapID, sizeof(PRINT_QUE) + real_size );
 
-	que->bufTopPos = 0;
-	que->bufEndPos = buf_size;
 	que->bufSize = buf_size;		// 終端判定は指定のサイズ値で行う
 	que->limitPerFrame = QUE_DEFAULT_TICK;
 	que->runningJob = NULL;
 	que->sp = NULL;
+
+	que->bufTopPos = 0;
+	que->bufEndPos = buf_size;
 
 //	GFL_STD_MemClear( que->buf, size );
 
@@ -380,6 +381,22 @@ BOOL PRINTSYS_QUE_IsExistTarget( const PRINT_QUE* que, const GFL_BMP_DATA* targe
 	return FALSE;
 }
 
+//=============================================================================================
+/**
+ * プリントキューに貯まっている処理を全てクリアする
+ *
+ * @param   que		プリントキュー
+ *
+ */
+//=============================================================================================
+void PRINTSYS_QUE_Clear( PRINT_QUE* que )
+{
+	que->bufTopPos = 0;
+	que->bufEndPos = que->bufSize;
+	que->sp = NULL;
+	que->runningJob = NULL;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 通信中（描画処理を分割する必要がある）かどうか判定
@@ -435,7 +452,7 @@ void PRINTSYS_PrintQue( PRINT_QUE* que, GFL_BMP_DATA* dst, u16 xpos, u16 ypos, c
 			}
 			else
 			{
-				GF_ASSERT_MSG(0, "[PRINT ACM] not enough buffer ... strsize = %d\n", size);
+				GF_ASSERT_MSG(0, "[PRINT_QUE] buffer over ... strsize = %d\n", size);
 			}
 		}
 	}
