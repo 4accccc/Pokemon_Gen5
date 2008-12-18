@@ -122,8 +122,7 @@ extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
 extern FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
 
 //ÉÅÉjÉÖÅ[
-extern FLDMENUFUNC * FLDMENUFUNC_AddMenu(
-	FLDMSGBG *fmb, GFL_MSGDATA *msgData,
+extern FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData );
 extern void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc );

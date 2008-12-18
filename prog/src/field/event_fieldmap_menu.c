@@ -226,8 +226,8 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 			FLDMENUFUNC_InputHeaderListSize( &head, fmenu_listdata->max,
 				23, 1, fmenu_listdata->charsize_x, fmenu_listdata->charsize_y );
 			
-			mwk->menuFunc = FLDMENUFUNC_AddMenu(
-				msgBG, mwk->msgData, &head, listdata );
+			mwk->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &head, listdata );
+			GFL_MSG_Delete( mwk->msgData );
 		}
 		
 		(*seq)++;
@@ -250,7 +250,6 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk )
 	case 2:
 		{
 			FLDMENUFUNC_DeleteMenu( mwk->menuFunc );
-			GFL_MSG_Delete( mwk->msgData );
 			
 			if( mwk->call_proc != NULL ){
 				GF_ASSERT(mwk->sub_proc_parent == NULL);

@@ -25,7 +25,6 @@
 #define FLDMSGBG_PANO_MENU (14) 			///<メニューパレットNo
 #define FLDMSGBG_PANO_FONT (15)				///<フォントパレットNo
 #define FLDMSGBG_PRINT_MAX (4)				///<PRINT関連要素数最大
-
 #define FLDMSGBG_STRLEN (48)				///<文字列長さ標準
 
 //======================================================================
@@ -340,6 +339,7 @@ void FLDMSGPRINT_Delete( FLDMSGPRINT *msgPrint )
 //--------------------------------------------------------------
 void FLDMSGPRINT_Print( FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID )
 {
+	GF_ASSERT( msgPrint->msgData != NULL );
 	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
 	PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
 		x, y, msgPrint->strBuf, msgPrint->fontHandle );		
@@ -581,14 +581,12 @@ FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData )
 /**
  * FLDMENUFUNC メニュー追加
  * @param	fmb	FLDMSGBG
- * @param	msgData	GFL_MSGDATA
  * @param	pMenuHead FLDMENUFUNC_HEADER
  * @param	pMenuListData  FLDMENUFUNC_LISTDATA* Delete時に自動開放される
  * @retval	FLDMENUFUNC*
  */
 //--------------------------------------------------------------
-FLDMENUFUNC * FLDMENUFUNC_AddMenu(
-	FLDMSGBG *fmb, GFL_MSGDATA *msgData,
+FLDMENUFUNC * FLDMENUFUNC_AddMenu( FLDMSGBG *fmb,
 	const FLDMENUFUNC_HEADER *pMenuHead,
 	FLDMENUFUNC_LISTDATA *pMenuListData )
 {
@@ -607,9 +605,9 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu(
 		pMenuHead->bmpsize_x, pMenuHead->bmpsize_y );
 	
 	menuFunc->msgPrint = FLDMSGPRINT_SetupPrint(
-			fmb, msgData, menuFunc->bmpwin );
+			fmb, NULL, menuFunc->bmpwin );
 	
-	menuH.msgdata = msgData;
+	menuH.msgdata = NULL;
 	menuH.print_util = FLDMSGPRINT_GetPrintUtil( menuFunc->msgPrint );
 	menuH.print_que = FLDMSGPRINT_GetPrintQue( menuFunc->msgPrint );
 	menuH.font_handle = fmb->fontHandle;
@@ -618,7 +616,8 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu(
 	
 	menuFunc->pMenuListWork =
 		BmpMenuList_Set( &menuH, 0, 0, fmb->heapID );
-	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
+//	BmpMenuList_SetCursorString( menuFunc->pMenuListWork, 0 );
+	BmpMenuList_SetCursorBmp( menuFunc->pMenuListWork, fmb->heapID );
 	
 	return( menuFunc );
 }
@@ -626,7 +625,6 @@ FLDMENUFUNC * FLDMENUFUNC_AddMenu(
 //--------------------------------------------------------------
 /**
  * FLDMENUFUNC	削除
- * FLDMENUFUNC_AddMenu()で指定したmsgDataの削除は各自で行う事。
  * @param	menuFunc	FLDMENUFUNC*
  * @retval	nothing
  */

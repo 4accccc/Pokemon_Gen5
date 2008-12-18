@@ -280,8 +280,8 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 				&head, d_menu_listdata->max, 1, 1,
 				d_menu_listdata->charsize_x, d_menu_listdata->charsize_y );
 			
-			work->menuFunc = FLDMENUFUNC_AddMenu(
-				msgBG, work->msgData, &head, listdata );
+			work->menuFunc = FLDMENUFUNC_AddMenu( msgBG, &head, listdata );
+			GFL_MSG_Delete( work->msgData );
 		}
 		
 		(*seq)++;
@@ -304,7 +304,6 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 	case 2:
 		{
 			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			GFL_MSG_Delete( work->msgData );
 			
 			if( work->call_proc != NULL ){
 				if( work->call_proc(work) == TRUE ){
@@ -497,13 +496,13 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 			msgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
 			work->msgData = FLDMSGBG_CreateMSGDATA(
 					msgBG, NARC_message_d_field_dat );
-
 			pMenuListData = FLDMENUFUNC_CreateListData( max, work->heapID );
 			DEBUG_SetMenuWorkZoneIDNameAll( pMenuListData, work->heapID );
 			FLDMENUFUNC_InputHeaderListSize( &menuH, max, 1, 1, 11, 16 );
 			
 			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, work->msgData, &menuH, pMenuListData );
+					msgBG, &menuH, pMenuListData );
+			GFL_MSG_Delete( work->msgData );
 		}
 		
 		(*seq)++;
@@ -518,7 +517,6 @@ static GMEVENT_RESULT DMenuZoneSelectEvent(
 			}
 			
 			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			GFL_MSG_Delete( work->msgData );
 			
 			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
 				return( GMEVENT_RES_FINISH );
@@ -613,7 +611,8 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 			
 			FLDMENUFUNC_InputHeaderListSize( &menuH, 4, 1, 1, 11, 7 );
 			work->menuFunc = FLDMENUFUNC_AddMenu(
-					msgBG, work->msgData, &menuH, pMenuListData );
+					msgBG, &menuH, pMenuListData );
+			GFL_MSG_Delete( work->msgData );
 		}
 		(*seq)++;
 		break;
@@ -627,7 +626,6 @@ static GMEVENT_RESULT DMenuSeasonSelectEvent(
 			}
 			
 			FLDMENUFUNC_DeleteMenu( work->menuFunc );
-			GFL_MSG_Delete( work->msgData );
 
 			if( ret == FLDMENUFUNC_CANCEL ){	//キャンセル
 				return( GMEVENT_RES_FINISH );

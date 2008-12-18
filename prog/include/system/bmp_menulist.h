@@ -405,4 +405,11 @@ extern void BmpMenuList_ParamSet( BMPMENULIST_WORK * lw, u8 mode, u32 param );
 //--------------------------------------------------------------
 extern void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID );
 
+//--------------------------------------------------------------
+/**
+ * カーソルビットマップセット
+ */
+//--------------------------------------------------------------
+extern void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID );
+
 #endif //__BMP_LIST_H__

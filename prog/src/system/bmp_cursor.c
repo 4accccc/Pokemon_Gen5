@@ -33,6 +33,7 @@ struct _BMPCURSOR {
 struct _BMPCURSOR {
 	int font_init;
 	STRBUF*        strbuf;
+	GFL_BMP_DATA *bmp;
 };
 #endif
 
@@ -55,7 +56,7 @@ BMPCURSOR * BmpCursor_Create( u32 heapID )
 	}
 	return bmpCursor;
 #else
-	BMPCURSOR *bmpCursor = GFL_HEAP_AllocMemory( heapID, sizeof(BMPCURSOR) );
+	BMPCURSOR *bmpCursor = GFL_HEAP_AllocClearMemory( heapID, sizeof(BMPCURSOR) );
 	
 	if( bmpCursor ){
 //		static STRCODE code[] = {'A'};
@@ -83,7 +84,12 @@ void BmpCursor_Delete( BMPCURSOR* bmpCursor )
 	}
 #else
 	GF_ASSERT(bmpCursor!=NULL);
-	GFL_STR_DeleteBuffer( bmpCursor->strbuf );
+	if( bmpCursor->strbuf != NULL ){
+		GFL_STR_DeleteBuffer( bmpCursor->strbuf );
+	}
+	if( bmpCursor->bmp != NULL ){
+		GFL_BMP_Delete( bmpCursor->bmp );
+	}
 	GFL_HEAP_FreeMemory( bmpCursor );
 #endif
 }
@@ -113,6 +119,10 @@ void BmpCursor_Print( const BMPCURSOR *bmpCursor, u32 x, u32 y,
 	if( bmpCursor->font_init == TRUE ){
 		PRINT_UTIL_Print( printUtil, printQue, x, y,
 			bmpCursor->strbuf, fontHandle );
+	}else if( bmpCursor->bmp != NULL ){
+		GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( printUtil->win );
+		GFL_BMP_Print( bmpCursor->bmp, bmp, 0, 0, x+2, y+2, 8, 8, 0x0f );
+		GFL_BMPWIN_TransVramCharacter( printUtil->win );
 	}
 }
 
@@ -134,3 +144,23 @@ void BmpCursor_SetCursorFontMsg(
 	bmpCursor->strbuf = GFL_MSG_CreateString( msgdata, strID );
 	bmpCursor->font_init = TRUE;
 }
+
+static const u8 DATA_BmpCursor16[32] =
+{
+	0xff,0xff,0xff,0xff,
+	0xf1,0x11,0xff,0xff,
+	0xf1,0x11,0x11,0xff,
+	0xf1,0x11,0x11,0x1f,
+	0xf1,0x11,0x11,0x1f,
+	0xf1,0x11,0x11,0xff,
+	0xf1,0x11,0xff,0xff,
+	0xff,0xff,0xff,0xff,
+};
+
+void BmpCursor_SetCursorBitmap( BMPCURSOR *bmpCursor, u32 heap_id )
+{
+	GFL_BMP_DATA *bmp = GFL_BMP_CreateWithData( (u8*)DATA_BmpCursor16,
+			1, 1, GFL_BMP_16_COLOR, heap_id );
+	bmpCursor->bmp = bmp;
+}
+

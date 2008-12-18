@@ -129,7 +129,7 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 			listdata = FLDMENUFUNC_CreateMakeListData(
 				itemMenuList, itemNum, msgData, commDeb->heapID_ );
 			FLDMENUFUNC_InputHeaderListSize( &head, itemNum, 1, 1, 11, 16 );
-			commDeb->menuFunc_ = FLDMENUFUNC_AddMenu( msgBG, msgData, &head, listdata );
+			commDeb->menuFunc_ = FLDMENUFUNC_AddMenu( msgBG, &head, listdata );
 			commDeb->subProc_ = NULL;
 			GFL_MSG_Delete( msgData );
 		}

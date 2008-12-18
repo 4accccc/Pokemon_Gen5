@@ -1282,3 +1282,13 @@ void BmpMenuList_SetCursorString( BMPMENULIST_WORK *lw, u32 strID )
 	ListCursorPut( lw );
 }
 
+//--------------------------------------------------------------
+/**
+ * カーソルビットマップセット
+ */
+//--------------------------------------------------------------
+void BmpMenuList_SetCursorBmp( BMPMENULIST_WORK *lw, u32 heapID )
+{
+	BmpCursor_SetCursorBitmap( lw->cursor, heapID );
+	ListCursorPut( lw );
+}

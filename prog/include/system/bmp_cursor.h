@@ -73,5 +73,6 @@ extern void BmpCursor_SetCursorFont(
 	BMPCURSOR *bmpCursor, const STRBUF *str, u32 heap_id );
 extern void BmpCursor_SetCursorFontMsg(
 	BMPCURSOR *bmpCursor, GFL_MSGDATA *msgdata, u32 strID );
+extern void BmpCursor_SetCursorBitmap( BMPCURSOR *bmpCursor, u32 heap_id );
 
 #endif	//__BMP_CURSOR_H__

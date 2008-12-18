@@ -337,8 +337,7 @@ void FIELD_COMM_MENU_OpenYesNoMenu( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 			F_COMM_YNWIN_LEFT, F_COMM_YNWIN_TOP,
 			F_COMM_YNWIN_WIDTH, F_COMM_YNWIN_HEIGHT );
 		
-		commMenu->ynMenuFunc_ = FLDMENUFUNC_AddMenu(
-			commMenu->fldMsgBG_, commMenu->msgData_, &head, ynMenuList );
+		commMenu->ynMenuFunc_ = FLDMENUFUNC_AddMenu( commMenu->fldMsgBG_, &head, ynMenuList );
 	}
 }
 
@@ -520,8 +519,7 @@ void	FIELD_COMM_MENU_OpenActionList( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 			F_COMM_ACTLIST_LEFT, F_COMM_ACTLIST_TOP,
 			F_COMM_ACTLIST_WIDTH, F_COMM_ACTLIST_HEIGHT );
 		
-		commMenu->ynMenuFunc_ = FLDMENUFUNC_AddMenu(
-			commMenu->fldMsgBG_, commMenu->msgData_, &head, MenuList );
+		commMenu->ynMenuFunc_ = FLDMENUFUNC_AddMenu( commMenu->fldMsgBG_, &head, MenuList );
 	}
 }
 
