@@ -11,9 +11,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
-#include "system/bmp_menu.h"
-#include "system/bmp_menulist.h"
-#include "../event_debug_menu.h"
+#include "field/field_msgbg.h"
+
 #include "field_comm_debug.h"
 #include "field_comm_event.h"
 #include "field_comm_main.h"
@@ -21,6 +20,9 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_d_field.h"
+
+#define NULL_OLD_FLDMSG (0)	//FLDMSGBG置き換え前
+
 //======================================================================
 //	define
 //======================================================================
@@ -42,10 +44,8 @@ struct _FIELD_COMM_DEBUG_WORK
 	GAMESYS_WORK	*gameSys_;
 	FIELD_MAIN_WORK *fieldWork_;
 	GMEVENT *event_;
-
-	BMP_MENULIST_DATA	*menuListData_;
-	DMENU_COMMON_WORK	*debMenuWork_;
-
+	FLDMENUFUNC *menuFunc_;
+	
 	FIELD_COMM_DEBUG_CALLBACK callback_;
 	FIELD_COMM_DEBUG_SUBPROC subProc_; 
 };
@@ -84,13 +84,8 @@ void	FIELD_COMM_DEBUG_InitWork( const HEAPID heapID , GAMESYS_WORK *gameSys , FI
 //	イベントメイン
 //--------------------------------------------------------------
 ///	メニューヘッダー
-static const BMPMENULIST_HEADER FieldCommDebugMenuHeader =
+static const FLDMENUFUNC_HEADER FieldCommDebugMenuHeader =
 {
-	NULL,	//表示文字データポインタ
-	NULL,	//カーソル移動ごとのコールバック関数
-	NULL,	//一列表示ごとのコールバック関数
-	NULL,	//GFL_BMPWIN
-
 	1,		//リスト項目数
 	12,		//表示最大項目数
 	0,		//ラベル表示Ｘ座標
@@ -102,21 +97,86 @@ static const BMPMENULIST_HEADER FieldCommDebugMenuHeader =
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
 	1,		//文字間隔Ｙ
-	BMPMENULIST_LRKEY_SKIP,	//ページスキップタイプ
-	0,		//文字指定(本来はu8だけどそんなに作らないと思うので)
-	0,		//ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
-	
-	NULL,	//ワークポインタ
-	
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	12,		//文字サイズY(ドット
-	
-	NULL,	//表示に使用するメッセージバッファ
-	NULL,	//表示に使用するプリントユーティリティ
-	NULL,	//表示に使用するプリントキュー
-	NULL,	//表示に使用するフォントハンドル
+	0,		//表示座標X キャラ単位
+	0,		//表示座標Y キャラ単位
+	0,		//表示サイズX キャラ単位
+	0,		//表示サイズY キャラ単位
 };
 
+GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void *work )
+{
+	FIELD_COMM_DEBUG_WORK *commDeb = work;
+	switch( *seq )
+	{
+	case 0:
+		//メニューの生成
+		{
+			static const u8 itemNum = 3;
+			static const FLDMENUFUNC_LIST itemMenuList[itemNum] =
+			{
+				{DEBUG_FIELD_C_CHOICE00,FIELD_COMM_DEBUG_MenuCallback_StartComm},
+				{DEBUG_FIELD_C_CHOICE01,FIELD_COMM_DEBUG_MenuCallback_StartInvasion},
+				{DEBUG_FIELD_C_CHOICE07,FIELD_COMM_DEBUG_MenuCallback_EndComm},
+			};
+			FLDMENUFUNC_HEADER head = FieldCommDebugMenuHeader;
+			FLDMSGBG *msgBG = FIELDMAP_GetFLDMSGBG( commDeb->fieldWork_ );
+			GFL_MSGDATA	*msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+			FLDMENUFUNC_LISTDATA *listdata;
+			
+			listdata = FLDMENUFUNC_CreateMakeListData(
+				itemMenuList, itemNum, msgData, commDeb->heapID_ );
+			FLDMENUFUNC_InputHeaderListSize( &head, itemNum, 1, 1, 11, 16 );
+			commDeb->menuFunc_ = FLDMENUFUNC_AddMenu( msgBG, msgData, &head, listdata );
+			commDeb->subProc_ = NULL;
+			GFL_MSG_Delete( msgData );
+		}
+		*seq += 1;
+		break;
+	case 1:
+		{
+			const u32 ret = FLDMENUFUNC_ProcMenu( commDeb->menuFunc_ );
+			switch( ret )
+			{
+			case FLDMENUFUNC_NULL:
+				break;
+			
+			case FLDMENUFUNC_CANCEL:
+				FLDMENUFUNC_DeleteMenu( commDeb->menuFunc_ );
+				return GMEVENT_RES_FINISH;
+				break;
+
+			default:
+				commDeb->callback_ = (FIELD_COMM_DEBUG_CALLBACK)ret;
+				*seq += 1;
+				break;
+			}
+		}
+		break;
+	case 2:
+		FLDMENUFUNC_DeleteMenu( commDeb->menuFunc_ );
+		*seq += 1;
+		if( commDeb->callback_(commDeb) == TRUE )
+			return GMEVENT_RES_CONTINUE;
+		else
+			return GMEVENT_RES_FINISH;
+		break;
+	case 3:
+		//SubProcが設定されていればこっちにくる
+		GF_ASSERT( commDeb->subProc_ != NULL );
+		if( commDeb->subProc_(commDeb) == TRUE )
+		{
+			return GMEVENT_RES_FINISH;
+		}
+		break;
+	}
+	//return GMEVENT_RES_FINISH;
+	return GMEVENT_RES_CONTINUE;
+}
+
+#if NULL_OLD_FLDMSG
 GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void *work )
 {
 	FIELD_COMM_DEBUG_WORK *commDeb = work;
@@ -207,6 +267,7 @@ GMEVENT_RESULT FIELD_COMM_DEBUG_CommDebugMenu( GMEVENT *event , int *seq , void 
 	//return GMEVENT_RES_FINISH;
 	return GMEVENT_RES_CONTINUE;
 }
+#endif
 
 //--------------------------------------------------------------
 //	通信開始	

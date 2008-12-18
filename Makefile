@@ -60,3 +60,4 @@ FLD_LAND_DATA_DIR = $(RESOURCE_DIR)/fldmapdata/land_data/
 landdata:
 	$(MAKE) -C $(FLD_LAND_DATA_DIR) clean
 	$(MAKE) -C $(FLD_LAND_DATA_DIR)
+	$(MAKE)

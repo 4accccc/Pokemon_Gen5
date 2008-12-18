@@ -27,6 +27,7 @@
 #include "field_player.h"
 #include "field_camera.h"
 #include "field_data.h"
+#include "field/field_msgbg.h"
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/playerwork.h"
@@ -98,6 +99,8 @@ struct _FIELD_MAIN_WORK
 	
 	FIELD_COMM_MAIN *commSys;
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
+	
+	FLDMSGBG *fldMsgBG;
 };
 
 //------------------------------------------------------------------
@@ -174,6 +177,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
     //サウンド用処理
 	SND_STRM_SetUp( ARCID_SNDSTRM, NARC_snd_strm_Firestarter_swav, SND_STRM_PCM8, SND_STRM_8KHZ, GFL_HEAPID_APP );
     SND_STRM_Play();
+	
 	return fieldWork;
 }
 
@@ -184,6 +188,10 @@ void* FieldMain_GetCommSys( const FIELD_MAIN_WORK *fieldWork )
 	return (void*)fieldWork->commSys;
 }
 
+FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork )
+{
+	return( fieldWork->fldMsgBG );
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -223,6 +231,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 	case 1:
 
 		//セットアップ
+		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
+
 		SetMapperData(fieldWork);
 		ResistDataFieldG3Dmapper(
 			 GetFieldG3Dmapper(fieldWork->gs), &fieldWork->map_res );
@@ -242,6 +252,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 	case 2:
 		MainGameSystem( fieldWork->gs );
+		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
+
 		if (CheckTransFieldG3Dmapper(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
 			break;
 		}
@@ -275,6 +287,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		FIELD_COMM_MAIN_UpdateCommSystem( fieldWork , fieldWork->gsys , fieldWork->pcActCont , fieldWork->commSys );
 
 		MainGameSystem( fieldWork->gs );
+		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 		break;
 
 	case 4:
@@ -294,6 +307,8 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->ftbl->delete_func(fieldWork);
 
         ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
+		
+		FLDMSGBG_Delete( fieldWork->fldMsgBG );
 		
 		fieldWork->seq ++;
 		break;
@@ -674,7 +689,7 @@ static void	bg_init( FIELD_SETUP* gs )
 
 	//ＢＧコントロール設定
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
-
+	
 	//３Ｄシステム起動
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );

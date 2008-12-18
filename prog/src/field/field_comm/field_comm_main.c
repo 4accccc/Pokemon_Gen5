@@ -62,11 +62,11 @@ void	FIELD_COMM_MAIN_StartTalk( FIELD_COMM_MAIN *commSys );
 const BOOL	FIELD_COMM_MAIN_CheckReserveTalk( FIELD_COMM_MAIN *commSys );
 //接続開始用メニュー処理
 //開始時
-void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys, FLDMSGBG *fldMsgBG );
 void	FIELD_COMM_MAIN_TermStartCommMenu( FIELD_COMM_MAIN *commSys );
 const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys );
 //橋の時
-void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys );
+void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys, FLDMSGBG *fldMsgBG );
 void	FIELD_COMM_MAIN_TermStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 const BOOL	FIELD_COMM_MAIN_LoopStartInvasionMenu( FIELD_COMM_MAIN *commSys );
 
@@ -129,7 +129,7 @@ void	FIELD_COMM_MAIN_UpdateCommSystem( FIELD_MAIN_WORK *fieldWork ,
 	}
 #if DEB_ARI
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_L )
-		FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW );
+		FIELD_COMM_MENU_SwitchDebugWindow( FCM_BGPLANE_MSG_WINDOW, FIELDMAP_GetFLDMSGBG(fieldWork) );
 	FIELD_COMM_MENU_UpdateDebugWindow( );
 #endif	//DEB_ARI
 }
@@ -315,9 +315,9 @@ void	FIELD_COMM_MAIN_StartTalkPartner( FIELD_COMM_MAIN *commSys )
 //--------------------------------------------------------------
 // 通信開始メニュー初期化
 //--------------------------------------------------------------
-void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_InitStartCommMenu( FIELD_COMM_MAIN *commSys, FLDMSGBG *fldMsgBG )
 {
-	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_, fldMsgBG );
 	FIELD_COMM_MENU_InitBG_MsgPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_InitBG_MenuPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );
@@ -379,9 +379,9 @@ const BOOL	FIELD_COMM_MAIN_LoopStartCommMenu( FIELD_COMM_MAIN *commSys )
 //--------------------------------------------------------------
 // 侵入開始メニュー 初期化
 //--------------------------------------------------------------
-void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys )
+void	FIELD_COMM_MAIN_InitStartInvasionMenu( FIELD_COMM_MAIN *commSys, FLDMSGBG *fldMsgBG )
 {
-	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_ );
+	commSys->commMenu_ = FIELD_COMM_MENU_InitCommMenu( commSys->heapID_, fldMsgBG );
 	FIELD_COMM_MENU_InitBG_MsgPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_InitBG_MenuPlane( commSys->commMenu_ );
 	FIELD_COMM_MENU_OpenMessageWindow( FCM_BGPLANE_MSG_WINDOW , commSys->commMenu_ );

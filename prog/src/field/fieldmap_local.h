@@ -6,6 +6,7 @@
 #include "field_player.h"			//PC_ACT_FUNC
 
 #include "field/fieldmap.h"
+#include "field/field_msgbg.h"
 
 #define FLD_COMM_PLAYER_MAX (4)
 #define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
@@ -21,12 +22,12 @@ enum
 };
 
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
+extern FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork );
 
 //field_sub_grid.c
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleChange( FIELD_MAIN_WORK *fieldWork );
 extern void DEBUG_FldGridProc_ScaleControl( FIELD_MAIN_WORK *fieldWork );
-
 
 extern void FieldMain_AddCommActor(
 	FIELD_MAIN_WORK *fieldWork, const PLAYER_WORK *player );
