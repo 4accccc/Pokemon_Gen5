@@ -251,7 +251,11 @@ void BTL_ADAPTER_ResetCmd( BTL_ADAPTER *wk )
 {
 	GF_ASSERT(wk->myState == AS_FREE || wk->myState == AS_DONE);
 	wk->myState = AS_FREE;
-	BTL_NET_ClearRecvData();
+
+	if( wk->commMode != BTL_COMM_NONE )
+	{
+		BTL_NET_ClearRecvData();
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------
