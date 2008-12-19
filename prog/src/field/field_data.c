@@ -58,14 +58,14 @@ void FIELDDATA_SetMapperData(
 		map_res->sizex = matH->size_h;
 		map_res->sizez = matH->size_v;
 		map_res->totalSize = matH->size_h * matH->size_v;
-		map_res->data = (const FLD_G3D_MAPPER_DATA *)tbl;
+		map_res->blocks = (const FLD_G3D_MAPPER_DATA *)tbl;
 	}
 #if 0
 	{
 		int x,z;
 		for (z = 0; z < map_res->sizez; z++) {
 			for (x = 0; x < map_res->sizex; x++) {
-				OS_Printf("%08x ",map_res->data[map_res->sizex * z + x]);
+				OS_Printf("%08x ",map_res->blocks[map_res->sizex * z + x]);
 			}
 			OS_Printf("\n");
 		}

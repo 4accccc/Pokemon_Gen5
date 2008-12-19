@@ -69,7 +69,7 @@ struct _FLD_G3D_MAPPER {
 	fx32				height;		//ÉuÉçÉbÉNçÇÇ≥
 	FLD_G3D_MAPPER_MODE		mode;		//ìÆçÏÉÇÅ[Éh
 	u32					arcID;		//ÉOÉâÉtÉBÉbÉNÉAÅ[ÉJÉCÉuÇhÇc
-	const FLD_G3D_MAPPER_DATA*	data;	//é¿É}ÉbÉvÉfÅ[É^
+	const FLD_G3D_MAPPER_DATA*	blocks;	//é¿É}ÉbÉvÉfÅ[É^
 	
 	VecFx32 globalDrawOffset;		//ã§í ç¿ïWÉIÉtÉZÉbÉg
 
@@ -103,15 +103,15 @@ static void DeleteGlobalObject( FLD_G3D_MAPPER* g3Dmapper );
 static void CreateGrobalObj_forTbl( FLD_G3D_MAPPER* g3Dmapper, const void* resistData );
 static void CreateGrobalObj_forBin( FLD_G3D_MAPPER* g3Dmapper, const void* resistData );
 
-static void CreateGlobalObj( GLOBALOBJ_RES* objRes, MAKE_OBJ_PARAM* param );
+static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param );
 static void DeleteGlobalObj( GLOBALOBJ_RES* objRes );
 
 static void CreateGlobalDDobj( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPER_RESIST_DDOBJ* resistData );
 static void DeleteGlobalDDobj( FLD_G3D_MAPPER* g3Dmapper );
 
-static void GetMapperBlockIdxAll( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
-static void GetMapperBlockIdxXZ( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
-static void GetMapperBlockIdxY( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxAll( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxXZ( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
+static void GetMapperBlockIdxY( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx );
 static BOOL	ReloadMapperBlock( FLD_G3D_MAPPER* g3Dmapper, BLOCK_IDX* new );
 
 static const GFL_G3D_MAP_DDOBJ_DATA drawTreeData;
@@ -159,7 +159,7 @@ FLD_G3D_MAPPER*	CreateFieldG3Dmapper( HEAPID heapID )
 	g3Dmapper->height = 0;
 	g3Dmapper->mode = FLD_G3D_MAPPER_MODE_SCROLL_XZ;
 	g3Dmapper->arcID = MAPARC_NULL;
-	g3Dmapper->data = NULL;
+	g3Dmapper->blocks = NULL;
 	
 	g3Dmapper->globalObjRes = NULL;
 	g3Dmapper->globalObjResCount = 0;
@@ -207,7 +207,7 @@ void	MainFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper )
 
 	GF_ASSERT( g3Dmapper );
 
-	if( g3Dmapper->data == NULL ){
+	if( g3Dmapper->blocks == NULL ){
 		return;
 	}
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -289,7 +289,7 @@ void	DrawFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera )
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL CheckTransFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper )
+BOOL CheckTransFieldG3Dmapper( const FLD_G3D_MAPPER* g3Dmapper )
 {
 	int i;
 	for ( i=0; i<MAP_BLOCK_COUNT; i++ ){
@@ -334,7 +334,7 @@ void ResistDataFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const FLD_G3D_MAPPER_R
 		break;
 	}
 	g3Dmapper->arcID = resistData->arcID;
-	g3Dmapper->data = resistData->data;
+	g3Dmapper->blocks = resistData->blocks;
 
 	//ÉOÉçÅ[ÉoÉãÉeÉNÉXÉ`ÉÉçÏê¨
 	CreateGlobalTexture( g3Dmapper, resistData );
@@ -460,7 +460,7 @@ static void DeleteGlobalObject( FLD_G3D_MAPPER* g3Dmapper )
 //------------------------------------------------------------------
 // ÉIÉuÉWÉFÉNÉgÉäÉ\Å[ÉXÇçÏê¨
 //í èÌMDL
-static void CreateGlobalObj( GLOBALOBJ_RES* objRes, MAKE_OBJ_PARAM* param )
+static void CreateGlobalObj( GLOBALOBJ_RES* objRes, const MAKE_OBJ_PARAM* param )
 {
 	GFL_G3D_RND* g3Drnd;
 	GFL_G3D_ANM* g3Danm;
@@ -599,7 +599,7 @@ void SetPosFieldG3Dmapper( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos )
  * @brief	É}ÉbÉvçXêVÉuÉçÉbÉNéÊìæ
  */
 //------------------------------------------------------------------
-static void GetMapperBlockIdxAll( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxAll( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
 {
 	u32		idx, county, countxz;
 	fx32	width, height;
@@ -642,7 +642,7 @@ static const BLOCK_OFFS blockPat_Around[] = {//é©ï™ÇÃÇ¢ÇÈÉuÉçÉbÉNÇ©ÇÁé¸àÕï˚å¸Ç…Ç
 	{-1,-1},{-1, 0},{-1, 1},{ 0,-1},{ 0, 0},{ 0, 1},{ 1,-1},{ 1, 0},{ 1, 1},
 };
 
-static void GetMapperBlockIdxXZ( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxXZ( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
 {
 	u16		sizex, sizez;
 	u32		idx, idxmax, blockx, blockz;
@@ -678,7 +678,7 @@ static void GetMapperBlockIdxXZ( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, 
 }
 
 //------------------------------------------------------------------
-static void GetMapperBlockIdxY( FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
+static void GetMapperBlockIdxY( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32* pos, BLOCK_IDX* blockIdx )
 {
 	u16		sizex, sizez;
 	u32		idx, blocky, countxz;
@@ -769,7 +769,7 @@ static BOOL	ReloadMapperBlock( FLD_G3D_MAPPER* g3Dmapper, BLOCK_IDX* new )
 			addFlag = FALSE;
 			for( j=0; j<MAP_BLOCK_COUNT; j++ ){
 				if(( g3Dmapper->blockIdx[j].blockIdx == MAPID_NULL )&&(addFlag == FALSE )){
-					u32 mapdatID = g3Dmapper->data[new[i].blockIdx].datID;
+					u32 mapdatID = g3Dmapper->blocks[new[i].blockIdx].datID;
 
 					if( mapdatID != FLD_G3D_MAPPER_NOMAP ){
 						GFL_G3D_MAP_SetLoadReq( g3Dmapper->g3Dmap[j], mapdatID );
@@ -840,7 +840,7 @@ BOOL GetFieldG3DmapperGridInfo
 	int		i, p;
 
 	GF_ASSERT( g3Dmapper );
-	if( g3Dmapper->data == NULL ){
+	if( g3Dmapper->blocks == NULL ){
 		OS_Printf("ÉfÅ[É^Ç™ì«Ç›çûÇ‹ÇÍÇƒÇ¢Ç»Ç¢\n");
 		return FALSE;
 	}
@@ -898,7 +898,7 @@ BOOL CheckFieldG3DmapperOutRange( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32
 	fx32 widthx, widthz;
 
 	GF_ASSERT( g3Dmapper );
-	if( g3Dmapper->data == NULL ){
+	if( g3Dmapper->blocks == NULL ){
 		return TRUE;
 	}
 
@@ -916,10 +916,10 @@ BOOL CheckFieldG3DmapperOutRange( const FLD_G3D_MAPPER* g3Dmapper, const VecFx32
  * @brief	ÉTÉCÉYéÊìæ
  */
 //------------------------------------------------------------------
-void GetFieldG3DmapperSize( FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z )
+void GetFieldG3DmapperSize( const FLD_G3D_MAPPER* g3Dmapper, fx32* x, fx32* z )
 {
 	GF_ASSERT( g3Dmapper );
-	if( g3Dmapper->data == NULL ){
+	if( g3Dmapper->blocks == NULL ){
 		*x = 0;
 		*z = 0;
 		return;
@@ -954,7 +954,7 @@ BOOL GetFieldG3DmapperGridAttr(
 	
 	GF_ASSERT( g3Dmapper );
 	
-	if( g3Dmapper->data == NULL ){
+	if( g3Dmapper->blocks == NULL ){
 		OS_Printf( "G3DMapper ERROR: Nothing GridAttributeData\n" );
 		return FALSE;
 	}
@@ -1257,7 +1257,7 @@ void SetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *offs
 	g3Dmapper->globalDrawOffset = *offs;
 }
 
-void GetFieldG3DmapperDrawOffset( FLD_G3D_MAPPER *g3Dmapper, VecFx32 *offs )
+void GetFieldG3DmapperDrawOffset( const FLD_G3D_MAPPER *g3Dmapper, VecFx32 *offs )
 {
 	*offs = g3Dmapper->globalDrawOffset;
 }

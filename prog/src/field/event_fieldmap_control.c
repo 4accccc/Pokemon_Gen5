@@ -229,16 +229,6 @@ extern const GFL_PROC_DATA TestProg1MainProcData;
 //------------------------------------------------------------------
 GMEVENT * DEBUG_EVENT_FieldSample(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldmap)
 {
-#if 1
-	GMEVENT * event = GMEVENT_Create(gsys, NULL, GameChangeEvent, sizeof(CHANGE_SAMPLE_WORK));
-	CHANGE_SAMPLE_WORK * csw = GMEVENT_GetEventWork(event);
-	csw->gsys = gsys;
-	csw->fieldmap = fieldmap;
-	csw->ov_id = FS_OVERLAY_ID(watanabe_sample);
-	csw->proc_data = & TestProg1MainProcData;
-	csw->proc_work = NULL;
-	return event;
-#endif
 	return EVENT_FieldSubProc(gsys, fieldmap,
 			FS_OVERLAY_ID(watanabe_sample), &TestProg1MainProcData, NULL);
 }
