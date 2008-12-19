@@ -50,9 +50,26 @@ typedef enum {
 
 
 
+//-----------------------------------------------------------------------------------------------------------
+/**
+ *	システム初期化＆終了処理
+ *
+ *	プログラム起動後に１回だけコールします。
+ *	アプリケーションレベルでは呼び出す必要がありません。
+ */
+//-----------------------------------------------------------------------------------------------------------
 extern void GFL_OBJGRP_Init( void );
 extern void GFL_OBJGRP_Exit( void );
-extern void GFL_OBJGRP_sysStart( u16 heapID, const GFL_DISP_VRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
+
+//-----------------------------------------------------------------------------------------------------------
+/**
+ *	アプリケーション単位の初期化＆終了処理
+ *
+ *	アプリケーションごとに呼び出してください。
+ *	内部で必要なメモリを確保／解放します。
+ */
+//-----------------------------------------------------------------------------------------------------------
+extern void GFL_OBJGRP_sysStart( HEAPID heapID, const GFL_DISP_VRAM* vramBank, const GFL_OBJGRP_INIT_PARAM* initParam );
 extern void GFL_OBJGRP_sysEnd( void );
 
 
@@ -62,14 +79,42 @@ extern u32 GFL_OBJGRP_CopyCGR_VramTransfer( u32 srcCgrIdx, u32 cellAnimIdx, GFL_
 extern void GFL_OBJGRP_ReloadCGR_VramTransfer( u32 index, ARCHANDLE* arc, u32 cgrDatIdx, BOOL compressedFlag, HEAPID heapID );
 extern void* GFL_OBJGRP_GetVramTransCGRPointer( u32 index );
 extern void GFL_OBJGRP_ReleaseCGR( u32 index );
+
 extern u32 GFL_OBJGRP_RegisterCellAnim( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
 extern void GFL_OBJGRP_ReleaseCellAnim( u32 index );
 extern BOOL GFL_OBJGRP_CellBankHasVramTransferData( u32 index );
-extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u32 byteOffs, HEAPID heapID );
+
+//-----------------------------------------------------------------------------------------------------------
+//
+//	パレット登録関数
+//
+//・GFL_OBJGRP_RegisterPltt
+//		非圧縮パレットデータを転送。全転送します。
+//
+//・GFL_OBJGRP_RegisterPlttEx
+//		非圧縮パレットデータを転送。
+//		転送先バイトオフセット、転送元読み込み開始位置、転送本数を指定できます。
+//
+//・GFL_OBJGRP_RegisterCompPltt
+//		圧縮パレットデータを転送。
+//		NitroCharacterで編集した通りの位置に転送します。
+//		転送先バイトオフセットを指定してずらすことも出来ます。
+//
+//-----------------------------------------------------------------------------------------------------------
+extern u32 GFL_OBJGRP_RegisterPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u16 byteOffs, HEAPID heapID );
+extern u32 GFL_OBJGRP_RegisterPlttEx( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u16 byteOffs, u16 srcStartLine, u16 numTransLines, HEAPID heapID );
+extern u32 GFL_OBJGRP_RegisterCompPltt( ARCHANDLE* arcHandle, u32 plttDataID, GFL_VRAM_TYPE vramType, u16 byteOffs, HEAPID heapID );
+
 extern void GFL_OBJGRP_ReleasePltt( u32 index );
+
 extern void GFL_OBJGRP_GetCGRProxy( u32 index, NNSG2dImageProxy* proxy );
 extern void GFL_OBJGRP_GetPlttProxy( u32 index, NNSG2dImagePaletteProxy* proxy );
 
+//-----------------------------------------------------------------------------------------------------------
+//
+//	セルアクター生成関数
+//
+//-----------------------------------------------------------------------------------------------------------
 extern GFL_CLWK* GFL_OBJGRP_CreateClAct( GFL_CLUNIT* actUnit, u32 cgrIndex, u32 plttIndex, u32 cellAnimIndex, 
 	  const GFL_CLWK_DATA* param, u16 setSerface, HEAPID heapID );
 

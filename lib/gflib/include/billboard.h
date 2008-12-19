@@ -105,10 +105,13 @@ extern void	GFL_BBD_SetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
  */
 //------------------------------------------------------------------
 //	ビルボードリソース追加
-//		１）アーカイブＩＤによる読み込み(return resIdx)
+//		１）読み込み済みのリソースを登録(return resIdx)
+extern int GFL_BBD_AddResource( GFL_BBD_SYS* billboardSys, GFL_G3D_RES* g3DresTex,
+									u8 texFmt, u8 texSiz, u8 celSizX, u8 celSizY ); 
+//		２）アーカイブＩＤによる読み込み(return resIdx)
 extern int GFL_BBD_AddResourceArc( GFL_BBD_SYS* billboardSys, int arcID, int datID,
 									u8 texFmt, u8 texSiz, u8 celSizX, u8 celSizY ); 
-//		２）アーカイブファイルパスによる読み込み(return resIdx)
+//		３）アーカイブファイルパスによる読み込み(return resIdx)
 extern int GFL_BBD_AddResourcePath( GFL_BBD_SYS* billboardSys, const char* path, int datID,
 									u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
 //	ビルボードリソース破棄
