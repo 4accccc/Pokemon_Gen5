@@ -5,28 +5,40 @@
 #pragma once
 
 //------------------------------------------------------------------
+/**
+ * @brief	マッパー制御構造体の不完全型定義
+ */
 //------------------------------------------------------------------
 typedef struct _FLD_G3D_MAPPER FLDMAPPER;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#define FLDMAPPER_ATTR_MAX	(16)
 typedef enum {
-	FILE_MAPEDITER_DATA = 0,
-	FILE_CUSTOM_DATA = 1,
+	FLDMAPPER_FILETYPE_NORMAL = 0,
+	FLDMAPPER_FILETYPE_PKGS = 1,
 }FLDMAPPER_FILETYPE;
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 typedef struct {
 	VecFx16 vecN;
 	u32		attr;
 	fx32	height;
 }FLDMAPPER_GRIDINFODATA;
 
+#define FLDMAPPER_GRIDINFO_MAX	(16)
+
 typedef struct {
-	FLDMAPPER_GRIDINFODATA		gridData[FLDMAPPER_ATTR_MAX];	//グリッドデータ取得ワーク
+	FLDMAPPER_GRIDINFODATA	gridData[FLDMAPPER_GRIDINFO_MAX];	//グリッドデータ取得ワーク
 	u16						count;
 }FLDMAPPER_GRIDINFO;
 
+//============================================================================================
+//
+//
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム作成

@@ -988,7 +988,7 @@ static MAPHITBIT MapHitCheck(
 		return( hit );
 	}
 	
-	if( FLDMAPPER_GetFileType(mapper) == FILE_CUSTOM_DATA ){
+	if( FLDMAPPER_GetFileType(mapper) == FLDMAPPER_FILETYPE_PKGS ){
 		u16 attr = 0;
 		
 		if( FLDMAPPER_GetGridAttr(mapper,next,&attr) == FALSE ){

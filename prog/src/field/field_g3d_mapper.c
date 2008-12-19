@@ -834,7 +834,7 @@ void FLDMAPPER_GRIDINFO_Init( FLDMAPPER_GRIDINFO* gridInfo )
 {
 	int i;
 
-	for( i=0; i<FLDMAPPER_ATTR_MAX; i++ ){
+	for( i=0; i<FLDMAPPER_GRIDINFO_MAX; i++ ){
 		FLDMAPPER_GRIDINFODATA_Init( &gridInfo->gridData[i] );
 	}
 	gridInfo->count = 0;
@@ -881,7 +881,7 @@ BOOL FLDMAPPER_GetGridInfo
 				if( attrInfo.mapAttrCount ){
 					int j;
 
-					if( (p + attrInfo.mapAttrCount) >= FLDMAPPER_ATTR_MAX ){
+					if( (p + attrInfo.mapAttrCount) >= FLDMAPPER_GRIDINFO_MAX ){
 						GF_ASSERT("height count over\n");
 					}
 					for( j=0; j<attrInfo.mapAttrCount; j++ ){
