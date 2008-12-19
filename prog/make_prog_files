@@ -60,6 +60,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/bmp_menulist.c \
 				system/bmp_cursor.c \
 				system/snd_strm.c \
+				system/file_util.c \
 				battle/btl_main.c \
 				battle/btl_server.c \
 				battle/btl_server_cmd.c \
