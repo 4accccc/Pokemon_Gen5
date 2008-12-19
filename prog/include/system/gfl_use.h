@@ -46,4 +46,7 @@ extern int GFUser_VIntr_GetVblankCounter( void );
 // 汎用乱数を得る
 extern u32 GFUser_GetPublicRand(u32 max);
 
+//	アーカイブIDでファイル名を取得
+extern const char * GFUser_GetFileNameByArcID(ARCID arcID);
+
 #endif	__GFL_USE_H__

@@ -293,7 +293,16 @@ int GFUser_VIntr_GetVblankCounter( void )
 	return GFL_USE_VintrCounter;
 }
 
-
+//--------------------------------------------------------------------------
+/**
+ * @brief	ArchiveID‚Åƒtƒ@ƒCƒ‹–¼‚ðŽæ“¾‚·‚é
+ */
+//--------------------------------------------------------------------------
+const char * GFUser_GetFileNameByArcID(ARCID arcID)
+{
+	GF_ASSERT(arcID < ARCID_TABLE_MAX);
+	return ArchiveFileTable[arcID];
+}
 
 //--------------------------------------------------------------------------
 /**
