@@ -13,7 +13,7 @@
 #ifndef __BB_COMM_CMD_H__
 #define __BB_COMM_CMD_H__
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "bb_common.h"
 
@@ -28,7 +28,7 @@ enum CommCommandBB {
 	CCMD_BB_CONNECT_END,	
 };
 
-extern const CommPacketTbl* BB_CommCommandTclGet( void );
+extern const NetRecvFuncTable* BB_CommCommandTclGet( void );
 extern int BB_CommCommandTblNumGet( void );
 extern void  BB_CommCommandInit( BB_WORK* wk );
 

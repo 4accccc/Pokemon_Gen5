@@ -6,7 +6,7 @@
  * @date	2007.11.01(木)
  */
 //==============================================================================
-#include "common.h"
+#include <gflib.h>
 #include "system/palanm.h"
 #include "system/pmfprint.h"
 #include "system/arc_tool.h"
@@ -16,7 +16,7 @@
 #include "system/particle.h"
 #include "system/brightness.h"
 #include "system/snd_tool.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "communication/wm_icon.h"
 #include "msgdata/msg.naix"
 #include "system/wipe.h"
@@ -46,7 +46,7 @@
 #include "../../particledata/pl_etc/pl_etc_particle_def.h"
 #include "../../particledata/pl_etc/pl_etc_particle_lst.h"
 #include "msgdata/msg_balloon.h"
-#include "graphic/wlmngm_tool.naix"		//タッチペングラフィック
+#include "wlmngm_tool.naix"		//タッチペングラフィック
 #include "system/window.h"
 
 
@@ -618,7 +618,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	sys_VBlankFuncChange(BalloonVBlank, game);
 	
 	if ( game->bsw->vchat ){
-		mydwc_startvchat( HEAPID_BALLOON );
+		GFL_NET_DWC_StartVChat( HEAPID_BALLOON );
 	}
 	
 	return GFL_PROC_RES_FINISH;
@@ -903,7 +903,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	MSGMAN_Delete(game->msgman);
 
 	//BGL開放
-	sys_FreeMemoryEz(game->bgl);
+	GFL_HEAP_FreeMemory(game->bgl);
 
 	//カメラ削除
 	Balloon_CameraExit(game);
@@ -1418,7 +1418,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 			GF_STR_PrintColor(
 				&game->win[BalloonPlayerSortBmpNamePosTbl[game->bsw->player_max][bmp_pos]], 
 				FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
-			sys_FreeMemoryEz(name);
+			GFL_HEAP_FreeMemory(name);
 		}
 	}
 #else
@@ -1437,7 +1437,7 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 			bmp_pos = i;//Balloon_NetID_to_PlayerPos(game, game->bsw->player_netid[i]);
 			GF_STR_PrintColor(&game->win[BALLOON_BMPWIN_NAME_1 + bmp_pos -1], FONT_SYSTEM, 
 				name, 0, 0, MSG_ALLPUT, BMPWIN_SUB_STR_PRINTCOLOR, NULL);
-			sys_FreeMemoryEz(name);
+			GFL_HEAP_FreeMemory(name);
 //		}
 	}
 #endif
@@ -1496,7 +1496,7 @@ static void BalloonParticleInit(BALLOON_GAME_PTR game)
 	//パーティクルシステムワーク初期化
 	Particle_SystemWorkInit();
 	
-	heap = sys_AllocMemory(HEAPID_BALLOON, PARTICLE_LIB_HEAP_SIZE);
+	heap = GFL_HEAP_AllocMemory(HEAPID_BALLOON, PARTICLE_LIB_HEAP_SIZE);
 	game->ptc = Particle_SystemCreate(sAllocTex, sAllocTexPalette, heap, 
 		PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_BALLOON);
 	camera_ptr = Particle_GetCameraPtr(game->ptc);
@@ -1521,7 +1521,7 @@ static void BalloonParticleExit(BALLOON_GAME_PTR game)
 	
 	heap = Particle_HeapPtrGet(game->ptc);
 	Particle_SystemExit(game->ptc);
-	sys_FreeMemoryEz(heap);
+	GFL_HEAP_FreeMemory(heap);
 }
 
 //--------------------------------------------------------------

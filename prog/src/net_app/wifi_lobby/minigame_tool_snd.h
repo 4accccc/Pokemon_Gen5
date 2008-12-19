@@ -12,6 +12,7 @@
 #ifndef __MINIGAME_TOOL_SND_H__
 #define __MINIGAME_TOOL_SND_H__
 
+#if PM_VERSION == VERSION_WHITE
 #include "system/snd_tool.h"
 
 #define MNGM_SND_COUNT				( SEQ_SE_DP_DECIDE )		// ３・２・１
@@ -31,6 +32,7 @@
 #define MNGM_SND_BAR_OUT			( SEQ_SE_PL_MNGM_OUT )		// バー(タッチペン)がアウトする動き
 #define MNGM_SND_BAR_FLASH			( SEQ_SE_PL_FVSDEMO06 )		// 1位のバーが点滅 
 //SEQ_PL_WINMINI2(MEを当てることに変更予定 08.03.18)
+#endif
 
 #endif		// __MINIGAME_TOOL_SND_H__
 

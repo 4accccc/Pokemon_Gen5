@@ -11,7 +11,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include "common.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "minigame_commcomand_func.h"
 #include "minigame_commcomand.h"
 
@@ -51,7 +51,7 @@
 //-----------------------------------------------------------------------------
 
 // 対応するコールバック関数
-static const CommPacketTbl _CommBucketTbl[] = {
+static const NetRecvFuncTable _CommBucketTbl[] = {
 	//-------------------------------------
 	//　ゲーム用
 	//=====================================
@@ -67,7 +67,7 @@ static const CommPacketTbl _CommBucketTbl[] = {
  *	@brief		コマンドテーブルを取得
  */
 //-----------------------------------------------------------------------------
-const CommPacketTbl* MNGM_CommCommandTclGet( void )
+const NetRecvFuncTable* MNGM_CommCommandTclGet( void )
 {
 	return _CommBucketTbl;
 }
@@ -79,7 +79,7 @@ const CommPacketTbl* MNGM_CommCommandTclGet( void )
 //-----------------------------------------------------------------------------
 int MNGM_CommCommandTblNumGet( void )
 {
-    return sizeof(_CommBucketTbl)/sizeof(CommPacketTbl);
+    return sizeof(_CommBucketTbl)/sizeof(NetRecvFuncTable);
 }
 
 

@@ -30,12 +30,12 @@
 #include "system/fontoam.h"
 #include "system/font_arc.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "net_app/wifi_lobby/minigame_tool.h"
 
 #include "src/graphic/bucket.naix"
-#include "src/graphic/wlmngm_tool.naix"
+#include "wlmngm_tool.naix"
 #include "system/d3dobj.h"
 
 #include "gflib/calctool.h"
@@ -1207,7 +1207,7 @@ typedef struct {
 
 	GF_G3DMAN* p_3dman;
 
-    CLACT_SET_PTR           clactSet;                       // セルアクターセット
+    GFL_CLUNIT*           clactSet;                       // セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;                       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR resMan[BCT_GRA_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
     CLACT_HEADER            mainoamheader;      // アクター作成用ヘッダー
@@ -1606,8 +1606,8 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
     BCT_CLIENT* p_wk;
 	u32 check;
 
-    p_wk = sys_AllocMemory( heapID, sizeof(BCT_CLIENT) );
-    memset( p_wk, 0, sizeof(BCT_CLIENT) );
+    p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BCT_CLIENT) );
+    GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT) );
 
 	p_wk->time_count_flag	= TRUE;
     p_wk->time				= 0;
@@ -1657,7 +1657,7 @@ void BCT_CLIENT_Delete( BCT_CLIENT* p_wk )
     // グラフィック破棄
     BCT_CLIENT_GraphicDelete( p_wk );
     
-    sys_FreeMemoryEz( p_wk );
+    GFL_HEAP_FreeMemory( p_wk );
 
 #ifdef PM_DEBUG
 	// 食った数を表示
@@ -2770,7 +2770,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     STRBUF* p_str;
     CLACT_ADD add;
 
-    memset( p_graphic, 0, sizeof(BCT_COUNTDOWN_DRAW) );
+    GFL_STD_MemFill( p_graphic, 0, sizeof(BCT_COUNTDOWN_DRAW) );
 
     // メッセージウィンドウ作成
     GF_BGL_BmpWinAdd( p_drawsys->p_bgl , &p_graphic->helpwin, GF_BGL_FRAME1_M,
@@ -4050,7 +4050,7 @@ static void BCT_CLIENT_NutsDel( BCT_CLIENT_NUTS* p_data )
     BCT_DEBUG_NutsSetNum--;
     OS_Printf( "NutsSetNum %d\n", BCT_DEBUG_NutsSetNum );
 #endif
-    memset( p_data, 0, sizeof(BCT_CLIENT_NUTS) );
+    GFL_STD_MemFill( p_data, 0, sizeof(BCT_CLIENT_NUTS) );
 }
 
 //----------------------------------------------------------------------------
@@ -4971,7 +4971,7 @@ static BOOL BCT_CLIENT_NutsSlowStartCheck( BCT_CLIENT* p_wk )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_NutsSlowQInit( BCT_CLIENT_SLOW* p_wk )
 {
-    memset( p_wk->tp_q, 0, sizeof(NNSG2dSVec2)*BCT_NUTS_SLOW_Q);
+    GFL_STD_MemFill( p_wk->tp_q, 0, sizeof(NNSG2dSVec2)*BCT_NUTS_SLOW_Q);
     p_wk->top = 0;
     p_wk->tail = 0;
 }
@@ -5309,7 +5309,7 @@ static void BCT_CLIENT_TOUCHPEN_Init( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	ARCHANDLE* p_handle;
 	BOOL result;
 
-	memset( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
 
 	p_handle = ArchiveDataHandleOpen( ARC_WLMNGM_TOOL_GRA, heapID );
 	
@@ -5407,7 +5407,7 @@ static void BCT_CLIENT_TOUCHPEN_Exit( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 	}
 
 	//クリア
-	memset( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_TOUCHPEN_MOVE) );
 }
  
 //----------------------------------------------------------------------------
@@ -5541,7 +5541,7 @@ static BOOL BCT_CLIENT_TOUCHPEN_Main( BCT_CLIENT_TOUCHPEN_MOVE* p_wk, BCT_CLIENT
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_MDLSCR_Init( BCT_CLIENT_MIDDLE_SCORE* p_wk )
 {
-	memset( p_wk, 0, sizeof(BCT_CLIENT_MIDDLE_SCORE) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_MIDDLE_SCORE) );
 	p_wk->top_idx = BCT_MDLSCR_TOP_DEF;
 }
 
@@ -6089,7 +6089,7 @@ static void BCT_CLIENT_BgExit( BCT_CLIENT_GRAPHIC* p_wk )
     GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME2_S );
     GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME3_S );
 
-    sys_FreeMemoryEz( p_wk->p_bgl );
+    GFL_HEAP_FreeMemory( p_wk->p_bgl );
 }
 
 //----------------------------------------------------------------------------
@@ -6450,7 +6450,7 @@ static void BCT_CLIENT_MarunomuDrawInit( BCT_MARUNOMU_DRAW* p_wk, ARCHANDLE* p_h
 	const NNSG3dResName* cp_node_name;
 	const NNSG3dResNodeInfo* cp_nodeinfo;
 
-	memset( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );
     
     // モデルﾃﾞｰﾀ読み込み
 	for( i=0; i<BCT_MARUNOMU_MDL_NUM; i++ ){
@@ -6547,7 +6547,7 @@ static void BCT_CLIENT_MarunomuDrawExit( BCT_MARUNOMU_DRAW* p_wk, NNSFndAllocato
 	}
 
 
-    memset( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );   
+    GFL_STD_MemFill( p_wk, 0, sizeof(BCT_MARUNOMU_DRAW) );   
 }
 
 //----------------------------------------------------------------------------
@@ -7066,8 +7066,8 @@ static void BCT_CLIENT_NutsDrawSysExit( BCT_CLIENT_GRAPHIC* p_wk )
     D3DOBJ_MdlDelete( &p_wk->nutsres.shadowmdl );
 
     // 全データ破棄
-    memset( &p_wk->nutsres, 0, sizeof(BCT_CLIENT_NUTS_RES) );
-    memset( &p_wk->nuts, 0, sizeof(BCT_CLIENT_NUTS_DRAW)*BCT_NUTSBUFFOAM_NUM );
+    GFL_STD_MemFill( &p_wk->nutsres, 0, sizeof(BCT_CLIENT_NUTS_RES) );
+    GFL_STD_MemFill( &p_wk->nuts, 0, sizeof(BCT_CLIENT_NUTS_DRAW)*BCT_NUTSBUFFOAM_NUM );
 }
 
 //----------------------------------------------------------------------------
@@ -7177,7 +7177,7 @@ static void BCT_CLIENT_NutsDrawInit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_D
 static void BCT_CLIENT_NutsDrawExit( BCT_CLIENT_GRAPHIC* p_wk, BCT_CLIENT_NUTS_DRAW* p_data )
 {
     CLACT_Delete( p_data->p_clwk );
-    memset( p_data, 0, sizeof(BCT_CLIENT_NUTS_DRAW) );
+    GFL_STD_MemFill( p_data, 0, sizeof(BCT_CLIENT_NUTS_DRAW) );
 }
 
 //----------------------------------------------------------------------------
@@ -8134,7 +8134,7 @@ static void BCT_CLIENT_CameraAngleXSet( BCT_CLIENT_GRAPHIC* p_gra, u16 angle )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BGPRISCRL_Init( BCT_CLIENT_BGPRI_SCRL* p_wk, u8 plno )
 {
-	memset( p_wk, 0, sizeof(BCT_CLIENT_BGPRI_SCRL) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_CLIENT_BGPRI_SCRL) );
 	p_wk->most_back = BCT_BGPRI_SCRL_START_MOSTBACK;
 	p_wk->plno		= plno;
 }

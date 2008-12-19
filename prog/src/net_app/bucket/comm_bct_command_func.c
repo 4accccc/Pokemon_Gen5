@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "comm_bct_command.h"
 
 #include "comm_bct_command_func.h"

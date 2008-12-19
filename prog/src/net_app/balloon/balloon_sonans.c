@@ -16,7 +16,7 @@
 #include "system/particle.h"
 #include "system/brightness.h"
 #include "system/snd_tool.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "communication/wm_icon.h"
 #include "msgdata/msg.naix"
 #include "system/wipe.h"
@@ -401,7 +401,7 @@ SONANS_SYS_PTR Sonas_Init(BALLOON_GAME_PTR game)
 {
 	SONANS_SYS_PTR sns;
 	
-	sns = sys_AllocMemory(HEAPID_BALLOON, sizeof(SONANS_SYS));
+	sns = GFL_HEAP_AllocMemory(HEAPID_BALLOON, sizeof(SONANS_SYS));
 	GFL_STD_MemClear(sns, sizeof(SONANS_SYS));
 	sns->rare_type = game->bsw->raregame_type;
 	
@@ -451,11 +451,11 @@ void Sonans_Exit(BALLOON_GAME_PTR game, SONANS_SYS_PTR sns)
 	Aim_ActorDelete(sns->aim_cap);
 	Aim_ResourceFree(game);
 
-	sys_FreeMemoryEz(sns->tex_file);
-	sys_FreeMemoryEz(sns->palette_work_src);
-	sys_FreeMemoryEz(sns->palette_work_dest);
+	GFL_HEAP_FreeMemory(sns->tex_file);
+	GFL_HEAP_FreeMemory(sns->palette_work_src);
+	GFL_HEAP_FreeMemory(sns->palette_work_dest);
 	
-	sys_FreeMemoryEz(sns);
+	GFL_HEAP_FreeMemory(sns);
 }
 
 //--------------------------------------------------------------
@@ -842,8 +842,8 @@ static void Sonas_TexLoad(SONANS_SYS *sns)
 		from = (sns->texture->plttInfo.vramKey & 0xffff) << 3;
 		
 		GF_ASSERT(sns->palette_work_src == NULL);
-		sns->palette_work_src = sys_AllocMemory(HEAPID_BALLOON, sz);
-		sns->palette_work_dest = sys_AllocMemory(HEAPID_BALLOON, sz);
+		sns->palette_work_src = GFL_HEAP_AllocMemory(HEAPID_BALLOON, sz);
+		sns->palette_work_dest = GFL_HEAP_AllocMemory(HEAPID_BALLOON, sz);
 		GFL_STD_MemCopy8(pData, sns->palette_work_src, sz);
 		GFL_STD_MemCopy8(pData, sns->palette_work_dest, sz);
 		DC_FlushRange(sns->palette_work_dest, sz);

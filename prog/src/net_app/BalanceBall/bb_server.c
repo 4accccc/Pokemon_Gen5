@@ -25,9 +25,9 @@
 //--------------------------------------------------------------
 BB_SERVER* BB_Server_AllocMemory( int comm_num, BB_SYS* sys )
 {
-	BB_SERVER* wk = sys_AllocMemory( HEAPID_BB, sizeof( BB_SERVER ) );
+	BB_SERVER* wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_SERVER ) );
 	
-	memset( wk, 0, sizeof( BB_SERVER ) );
+	GFL_STD_MemFill( wk, 0, sizeof( BB_SERVER ) );
 	
 	wk->comm_num = comm_num;
 	wk->timer	 = BB_GAME_TIMER;
@@ -49,7 +49,7 @@ BB_SERVER* BB_Server_AllocMemory( int comm_num, BB_SYS* sys )
 //--------------------------------------------------------------
 void BB_Server_FreeMemory( BB_SERVER* wk )
 {
-	sys_FreeMemoryEz( wk );
+	GFL_HEAP_FreeMemory( wk );
 }
 
 

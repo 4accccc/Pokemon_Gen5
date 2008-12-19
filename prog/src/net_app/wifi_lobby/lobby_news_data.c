@@ -245,8 +245,8 @@ NEWS_DATA* NEWS_DSET_Init( u32 heapID )
 {
 	NEWS_DATA* p_data;
 
-	p_data = sys_AllocMemory( heapID, sizeof( NEWS_DATA ) );
-	memset( p_data, 0, sizeof(NEWS_DATA) );
+	p_data = GFL_HEAP_AllocMemory( heapID, sizeof( NEWS_DATA ) );
+	GFL_STD_MemFill( p_data, 0, sizeof(NEWS_DATA) );
 
 	// 接続プレイヤー　初期化
 	NEWS_ROOMPLAYER_Init( &p_data->player );
@@ -271,7 +271,7 @@ void NEWS_DSET_Exit( NEWS_DATA* p_data )
 	// トピックバッファ破棄
 	NEWS_TOPIC_Exit( &p_data->topic );
 	
-	sys_FreeMemoryEz( p_data );
+	GFL_HEAP_FreeMemory( p_data );
 }
 
 //----------------------------------------------------------------------------
@@ -1183,7 +1183,7 @@ static void NEWS_TOPIC_Init( NEWS_TOPICBUF* p_wk, u32 heapID )
 {
 	int i, j;
 
-	memset( p_wk, 0, sizeof(NEWS_TOPICBUF) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWS_TOPICBUF) );
 
 	// トピックス格納バッファ初期化
 	for( i=0; i<NEWS_TOPIC_MAX; i++ ){
@@ -1215,7 +1215,7 @@ static void NEWS_TOPIC_Exit( NEWS_TOPICBUF* p_wk )
 		}
 	}
 
-	memset( p_wk, 0, sizeof(NEWS_TOPICBUF) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWS_TOPICBUF) );
 }
 
 //----------------------------------------------------------------------------

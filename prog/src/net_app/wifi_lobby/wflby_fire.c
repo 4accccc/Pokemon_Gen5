@@ -238,8 +238,8 @@ WFLBY_FIRE_CONT* WFLBY_FIRECONT_Init( const WFLBY_SYSTEM* cp_system, WFLBY_3DMAP
 	WFLBY_FIRE_CONT* p_wk;
 	u32 move_type;
 	
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_FIRE_CONT) );
-	memset( p_wk, 0, sizeof(WFLBY_FIRE_CONT) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_FIRE_CONT) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_FIRE_CONT) );
 
 	p_wk->cp_system		= cp_system;
 	p_wk->p_mapobjcont	= p_mapobjcont;
@@ -275,7 +275,7 @@ WFLBY_FIRE_CONT* WFLBY_FIRECONT_Init( const WFLBY_SYSTEM* cp_system, WFLBY_3DMAP
 void WFLBY_FIRECONT_Exit( WFLBY_FIRE_CONT* p_wk )
 {
 	WFLBY_FIRE_CONT_StopFireSe( p_wk );
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -564,7 +564,7 @@ static void WFLBY_FIRE_CONT_Init( WFLBY_FIRE_CONT* p_sys, u32 move_type, u32 cou
 	if( move_type < WFLBY_FIRE_NUM ){
 
 		// ワークのクリア
-		memset( &p_sys->move_wk, 0, sizeof(WFLBY_FIRECONT_WK) );
+		GFL_STD_MemFill( &p_sys->move_wk, 0, sizeof(WFLBY_FIRECONT_WK) );
 		
 		pFunc[ move_type ]( p_sys, count );
 		p_sys->now_move_type = move_type;

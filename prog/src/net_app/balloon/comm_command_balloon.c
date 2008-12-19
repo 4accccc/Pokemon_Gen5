@@ -18,7 +18,7 @@
 #include "system/particle.h"
 #include "system/brightness.h"
 #include "system/snd_tool.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "communication/wm_icon.h"
 #include "msgdata/msg.naix"
 #include "system/wipe.h"
@@ -64,7 +64,7 @@ static int _getServerVersionSize(void);
 //  コマンドのサイズを返す関数を書いてもらえると通信が軽くなります
 //  _getZeroはサイズなしを返します。_getVariableは可変データ使用時に使います
 //==============================================================================
-static const CommPacketTbl _CommPacketTbl[] = {
+static const NetRecvFuncTable _CommPacketTbl[] = {
     {NULL,                      _getZero, 			NULL},	// CB_EXIT_BALLOON
 	{Recv_CommServerVersion,	_getServerVersionSize,	NULL},	// CB_SERVER_VERSION
 	{Recv_CommBalloonPlayData, 	_getGamePlaySize,	NULL},	// CB_PLAY_PARAM
@@ -80,7 +80,7 @@ static const CommPacketTbl _CommPacketTbl[] = {
 //--------------------------------------------------------------
 void CommCommandBalloonInitialize(void* pWork)
 {
-    int length = sizeof(_CommPacketTbl)/sizeof(CommPacketTbl);
+    int length = sizeof(_CommPacketTbl)/sizeof(NetRecvFuncTable);
     CommCommandInitialize(_CommPacketTbl, length, pWork);
     
     GF_ASSERT(sizeof(BALLOON_SIO_PLAY_WORK) < 256);	//このサイズを超えたらHugeBuffにする必要がある

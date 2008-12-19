@@ -768,7 +768,7 @@ static STAMP_MOVE_PTR Stamp_Create(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw
 	fx32 x, y;
 	BOOL mdl_ret;
 	
-	move = sys_AllocMemory(HEAPID_FOOTPRINT, sizeof(STAMP_MOVE_WORK));
+	move = GFL_HEAP_AllocMemory(HEAPID_FOOTPRINT, sizeof(STAMP_MOVE_WORK));
 	GFL_STD_MemClear(move, sizeof(STAMP_MOVE_WORK));
 	move->chain_work_no = CHAIN_WORK_NULL;
 	
@@ -855,9 +855,9 @@ static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, D3DOBJ_MDL *p_mdl, ARCHANDLE 
 				
 				// 全リソース破棄
 				if(p_mdl->pResMdl){
-					sys_FreeMemoryEz( p_mdl->pResMdl );
+					GFL_HEAP_FreeMemory( p_mdl->pResMdl );
 				}
-				memset( p_mdl, 0, sizeof(D3DOBJ_MDL) );
+				GFL_STD_MemFill( p_mdl, 0, sizeof(D3DOBJ_MDL) );
 
 				OS_TPrintf("!!!!!VRAM or TCBの確保失敗!!!!!! vram_ret = %d\n", vram_ret);
 				return FALSE;
@@ -1087,7 +1087,7 @@ static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE 
 	pPalDest = (u16*)((u8*)pTex + pTex->plttInfo.ofsPlttData);
 	pPalDest[1] = param->color;
 
-	sys_FreeMemoryEz(pSrc);
+	GFL_HEAP_FreeMemory(pSrc);
 }
 
 //--------------------------------------------------------------
@@ -1135,7 +1135,7 @@ static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type)
 	int x, y, dest_x, dest_y, data;
 	
 	pDest = (u32*)((u8*)pTex + pTex->texInfo.ofsTex);	//テクスチャ領域
-	pSrc = sys_AllocMemory(HEAPID_FOOTPRINT, FOOTMARK_TEXTURE_SIZE);
+	pSrc = GFL_HEAP_AllocMemory(HEAPID_FOOTPRINT, FOOTMARK_TEXTURE_SIZE);
 	GFL_STD_MemCopy16(pDest, pSrc, FOOTMARK_TEXTURE_SIZE);
 	GFL_STD_MemClear16(pDest, FOOTMARK_TEXTURE_SIZE);
 	
@@ -1166,7 +1166,7 @@ static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type)
 		break;
 	}
 	
-	sys_FreeMemoryEz(pSrc);
+	GFL_HEAP_FreeMemory(pSrc);
 }
 
 //--------------------------------------------------------------
@@ -1179,7 +1179,7 @@ static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type)
 static void Stamp_Free(STAMP_MOVE_PTR move)
 {
 	D3DOBJ_MdlDelete( &move->mdl );
-	sys_FreeMemoryEz(move);
+	GFL_HEAP_FreeMemory(move);
 }
 
 //--------------------------------------------------------------

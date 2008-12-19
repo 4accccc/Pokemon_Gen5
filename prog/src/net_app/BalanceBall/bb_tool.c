@@ -521,7 +521,7 @@ static void BB_Client_Effect_TCB( TCB_PTR tcb, void* work )
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (sys->comm_err_data.dis_err == TRUE) ){
 		*wk->flag = FALSE;		
 		TCB_Delete( tcb );
-		sys_FreeMemoryEz( wk );
+		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
 	
@@ -668,7 +668,7 @@ static void BB_Client_Effect_TCB( TCB_PTR tcb, void* work )
 
 	default:
 		BB_disp_Hanabi_OAM_Enable( wk->client, FALSE, 0 );		
-		sys_FreeMemoryEz( wk );
+		GFL_HEAP_FreeMemory( wk );
 		TCB_Delete( tcb );
 		break;
 	}	
@@ -688,7 +688,7 @@ static void BB_Client_Effect_TCB( TCB_PTR tcb, void* work )
 //--------------------------------------------------------------
 void BB_Client_EffectStart( BB_CLIENT* wk, BOOL* flag )
 {
-	EFFECT_WORK* sub_wk = sys_AllocMemory( HEAPID_BB, sizeof( EFFECT_WORK ) );
+	EFFECT_WORK* sub_wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( EFFECT_WORK ) );
 	
 	sub_wk->client	= wk;
 	sub_wk->seq		= 0;

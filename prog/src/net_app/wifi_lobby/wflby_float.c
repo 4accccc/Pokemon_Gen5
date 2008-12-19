@@ -247,8 +247,8 @@ WFLBY_FLOAT_CONT* WFLBY_FLOAT_CONT_Init( WFLBY_ROOMWK* p_rmwk, u32 heapID )
 		WFLBY_MAPOBJID_FLOAT00_IN,
 	};
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_FLOAT_CONT) );
-	memset( p_sys, 0, sizeof(WFLBY_FLOAT_CONT) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_FLOAT_CONT) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_FLOAT_CONT) );
 
 	p_sys->p_rmwk		= p_rmwk;
 	p_sys->p_system		= WFLBY_ROOM_GetSystemData( p_rmwk );
@@ -298,7 +298,7 @@ WFLBY_FLOAT_CONT* WFLBY_FLOAT_CONT_Init( WFLBY_ROOMWK* p_rmwk, u32 heapID )
 //-----------------------------------------------------------------------------
 void WFLBY_FLOAT_CONT_Exit( WFLBY_FLOAT_CONT* p_sys )
 {
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -665,7 +665,7 @@ static BOOL WFLBY_FLOAT_CONT_MainShake( WFLBY_FLOAT_SHAKE* p_wk, WFLBY_3DMAPOBJ_
 		result = pFunc[ p_wk->anm_type ]( p_wk, p_mapobjcont, idx );
 		if( result == TRUE ){
 			// èIóπ
-			memset( p_wk, 0, sizeof(WFLBY_FLOAT_SHAKE) );
+			GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_FLOAT_SHAKE) );
 		}
 		return TRUE;
 	}

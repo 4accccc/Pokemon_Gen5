@@ -192,7 +192,7 @@ GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq, void * pwk, voi
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(BUCKET_WK), HEAPID_BUCKET );
-	memset( p_wk, 0, sizeof(BUCKET_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BUCKET_WK) );
 
 
 	// エントリー・結果画面パラメータ作成
@@ -305,7 +305,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		p_wk->start		= FALSE;
 		p_wk->end		= FALSE;
 		p_wk->score_get = FALSE;
-		memset( p_wk->middle_score_get_count, 0, sizeof(u8)*BCT_PLAYER_NUM );
+		GFL_STD_MemFill( p_wk->middle_score_get_count, 0, sizeof(u8)*BCT_PLAYER_NUM );
 
 		// VramTransferManager初期化
 		initVramTransferManagerHeap( BCT_VRAMTR_MAN_NUM, HEAPID_BUCKET );
@@ -338,7 +338,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		// VChatOn
 		if( pp->vchat ){
 			// ボイスチャット開始
-			mydwc_startvchat( HEAPID_BUCKET );
+			GFL_NET_DWC_StartVChat( HEAPID_BUCKET );
 			TOMOYA_PRINT( "vct on\n" );
 		}
 
@@ -537,7 +537,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		// VChatOff
 		if( pp->vchat ){
 			// ボイスチャット終了
-			mydwc_stopvchat();
+			GFL_NET_DWC_StopVChat();
 			TOMOYA_PRINT( "vct off\n" );
 		}
 
@@ -993,7 +993,7 @@ static void BCT_GAMEDATA_Load( BUCKET_WK* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void BCT_GAMEDATA_Release( BUCKET_WK* p_wk )
 {
-	sys_FreeMemoryEz( p_wk->gamedata.p_tbl );
+	GFL_HEAP_FreeMemory( p_wk->gamedata.p_tbl );
 	p_wk->gamedata.p_tbl	= NULL;
 	p_wk->gamedata.tblnum	= 0;
 }
@@ -1026,7 +1026,7 @@ static void BCT_ErrAllSysEnd( BUCKET_WK* p_wk, BUCKET_PROC_WORK* pp )
 	}
 	if( pp->vchat ){
 		// ボイスチャット終了
-		mydwc_stopvchat();
+		GFL_NET_DWC_StopVChat();
 	}
 	if( p_wk->p_result != NULL ){
 		MNGM_RESULT_Exit( p_wk->p_result );

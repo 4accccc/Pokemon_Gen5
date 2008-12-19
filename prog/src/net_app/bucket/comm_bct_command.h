@@ -11,7 +11,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #ifndef __COMM_BCT_COMMAND_H__
 #define __COMM_BCT_COMMAND_H__
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 enum CommCommandBCT {
 
@@ -36,7 +36,7 @@ enum CommCommandBCT {
 	CNM_COMMAND_MAX   // èIí[--------------Ç±ÇÍÇÕà⁄ìÆÇ≥ÇπÇ»Ç¢Ç≈Ç≠ÇæÇ≥Ç¢
 };
 
-extern const CommPacketTbl* BCT_CommCommandTclGet( void );
+extern const NetRecvFuncTable* BCT_CommCommandTclGet( void );
 extern int BCT_CommCommandTblNumGet( void );
 
 #endif		// __COMM_BCT_COMMAND_H__

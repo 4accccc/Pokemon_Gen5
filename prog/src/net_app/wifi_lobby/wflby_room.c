@@ -29,7 +29,7 @@
 
 #include "savedata/config.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "battle/trtype_def.h"
 #include "battle/wazatype_icon.h"
@@ -43,7 +43,7 @@
 #include "graphic/wifi_lobby_other.naix"
 #include "graphic/unionobj2d_onlyfront.naix"
 
-#include "wifi/dwc_lobbylib.h"
+#include "net_app/dwc_lobbylib.h"
 
 #include "wflby_room_def.h"
 #include "wflby_event.h"
@@ -607,7 +607,7 @@ typedef struct {
 	GF_BGL_INI*				p_bgl;
 
 	// OAM
-    CLACT_SET_PTR           p_clactset;		// セルアクターセット
+    GFL_CLUNIT*           p_clactset;		// セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[WFLBY_ROOM_OAM_RESNUM]; // キャラ・パレットリソースマネージャ
 	NNSG2dCellTransferState*	p_celltransarray;		///< セルVram転送マネージャー領域
@@ -1177,7 +1177,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_ROOMWK), HEAPID_WFLBY_ROOM );
-	memset( p_wk, 0, sizeof(WFLBY_ROOMWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_ROOMWK) );
 
 	// 部屋保存データ設定先を保存
 	p_wk->p_save = &p_param->save;
@@ -1615,7 +1615,7 @@ GFL_PROC_RESULT WFLBY_ROOM_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 	WFLBY_ROOM_GraphicExit( &p_wk->graphic );
 
 	// ワーク破棄
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 
 	// ヒープ破棄
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -2474,7 +2474,7 @@ void WFLBY_ROOM_MSG_SetIdxPlayerName( WFLBY_ROOMWK* p_wk, u32 idx, u32 bufid )
 	WFLBY_SYSTEM_GetProfileMyStatus( cp_profile, p_status, HEAPID_WFLBY_ROOM );
 	WFLBY_ROOM_Msg_SetPlayerName( &p_wk->def_msg, p_status, bufid );
 
-	sys_FreeMemoryEz( p_status );
+	GFL_HEAP_FreeMemory( p_status );
 }
 
 //----------------------------------------------------------------------------
@@ -3056,7 +3056,7 @@ static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 		}
 
 		// BGL破棄
-		sys_FreeMemoryEz( p_sys->p_bgl );
+		GFL_HEAP_FreeMemory( p_sys->p_bgl );
 	}
 
 	// OAMの破棄
@@ -5500,7 +5500,7 @@ static void WFLBY_ROOM_UNDERWIN_Common_LoadScrn( WFLBY_GRAPHICCONT* p_sys, ARCHA
 	// 転送フラグを立てる
 	GF_BGL_LoadScreenV_Req( p_sys->p_bgl, bg_frame );
 
-	sys_FreeMemoryEz( p_buff );
+	GFL_HEAP_FreeMemory( p_buff );
 }
 
 //----------------------------------------------------------------------------
@@ -5830,7 +5830,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_Start( WFLBY_UNDER_WIN* p_ugwk, WFLBY_ROO
 	WFLBY_ROOM_UNDERWIN_TrCard_WriteWazaType( p_ugwk, p_wk, p_sys, heapID, cp_profile );
 
 	// MyStatus破棄
-	sys_FreeMemoryEz( p_mystatus );
+	GFL_HEAP_FreeMemory( p_mystatus );
 }
 
 //----------------------------------------------------------------------------
@@ -5871,7 +5871,7 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_WriteWazaType( WFLBY_UNDER_WIN* p_ugwk, W
 					p_chardata->pRawData, 
 					WFLBY_TRCARD_WIN_WAZATYPE1_SIZEX*WFLBY_TRCARD_WIN_WAZATYPE1_SIZEY*32,
 					sc_WFLBY_TRCARD_WAZATYPE_CGX[i] );
-			sys_FreeMemoryEz( p_char );
+			GFL_HEAP_FreeMemory( p_char );
 
 			// スクリーン書き込み
 			GF_BGL_ScrWriteExpand( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
@@ -6662,7 +6662,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_Exit( WFLBY_GADGET_BTTN* p_wk )
 	
 	// 全リソース破棄
 	for( i=0; i<WFLBY_ROOM_UNDERWIN_BTTN_ANM_NUM; i++ ){
-		sys_FreeMemoryEz( p_wk->p_scrnbuff[i] );
+		GFL_HEAP_FreeMemory( p_wk->p_scrnbuff[i] );
 	}
 	p_wk->seq = WFLBY_ROOM_UNDERWIN_BTTN_STATUS_ON;
 }

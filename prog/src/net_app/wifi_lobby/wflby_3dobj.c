@@ -414,14 +414,14 @@ WFLBY_3DOBJSYS* WFLBY_3DOBJSYS_Init( u32 objnum, u32 hero_sex, u32 heapID, u32 g
 	WFLBY_3DOBJSYS* p_sys;
 
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_3DOBJSYS) );
-	memset( p_sys, 0, sizeof(WFLBY_3DOBJSYS) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DOBJSYS) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_3DOBJSYS) );
 
 	// オブジェクトテーブル作成
 	{
 		int i;
 		
-		p_sys->p_obj	= sys_AllocMemory( heapID, sizeof(WFLBY_3DOBJWK)*objnum );
+		p_sys->p_obj	= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DOBJWK)*objnum );
 		p_sys->objnum	= objnum;
 	
 		for( i=0; i<p_sys->objnum; i++ ){
@@ -555,10 +555,10 @@ void WFLBY_3DOBJSYS_Exit( WFLBY_3DOBJSYS* p_sys )
 	RESM_Delete( p_sys->p_anmresman );
 
 	// モデルデータ破棄
-	sys_FreeMemoryEz( p_sys->p_obj );
+	GFL_HEAP_FreeMemory( p_sys->p_obj );
 
 	// システム自体を破棄
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -807,7 +807,7 @@ WFLBY_3DOBJWK* WFLBY_3DOBJWK_New( WFLBY_3DOBJSYS* p_sys, const WF2DMAP_OBJWK* cp
 void WFLBY_3DOBJWK_Del( WFLBY_3DOBJWK* p_wk )
 {
 	BLACT_Delete( p_wk->p_act );
-	memset( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
 }
 
 
@@ -1227,7 +1227,7 @@ static BOOL WFLBY_3DOBJWK_CheckMove( const WFLBY_3DOBJWK* cp_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_3DOBJWK_CleanWk( WFLBY_3DOBJWK* p_wk )
 {
-	memset( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_3DOBJWK) );
 }
 
 //----------------------------------------------------------------------------

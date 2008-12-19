@@ -149,7 +149,7 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
 		}
 	#endif
 		if(parent->vchat){
-			mydwc_stopvchat();
+			GFL_NET_DWC_StopVChat();
 		}
 		bsw->mode = BALLOON_MODE_RESULT;
 		GFL_PROC_SysCallProc(NO_OVERLAY_ID, &BalloonEntryProcData, bsw);

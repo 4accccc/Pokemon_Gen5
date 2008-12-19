@@ -22,7 +22,7 @@
 #include "system/msgdata.h"
 #include "system/wordset.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "src/graphic/lobby_news.naix"
 
@@ -564,7 +564,7 @@ typedef struct {
 	GF_BGL_INI*				p_bgl;
 
 	// OAM
-    CLACT_SET_PTR           p_clactset;		// セルアクターセット
+    GFL_CLUNIT*           p_clactset;		// セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[NEWSDRAW_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
 
@@ -708,7 +708,7 @@ GFL_PROC_RESULT NEWS_DRAW_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * 
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(NEWSDRAW_WK), HEAPID_NEWSDRAW );
-	memset( p_wk, 0, sizeof(NEWSDRAW_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWSDRAW_WK) );
 
 	// データ格納
 	p_wk->p_data		= p_param->p_data;
@@ -1103,7 +1103,7 @@ static void NEWSDRAW_DrawSysBgExit( NEWSDRAW_DRAWSYS* p_wk )
 	}
 	
 	// BGL破棄
-	sys_FreeMemoryEz( p_wk->p_bgl );
+	GFL_HEAP_FreeMemory( p_wk->p_bgl );
 
 	// メインとサブを元に戻す
 	sys.disp3DSW = DISP_3D_TO_MAIN;
@@ -1208,7 +1208,7 @@ static void NEWSDRAW_ScrnSetInit( NEWSDRAW_SCRNSET* p_wk, NEWSDRAW_DRAWSYS* p_dr
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_ScrnSetExit( NEWSDRAW_SCRNSET* p_wk )
 {
-	sys_FreeMemoryEz( p_wk->p_buff );
+	GFL_HEAP_FreeMemory( p_wk->p_buff );
 }
 
 //----------------------------------------------------------------------------
@@ -1951,7 +1951,7 @@ static void NEWSDRAW_TopicWinExit( NEWSDRAW_TOPICWIN* p_wk )
 	int i;
 	
 	// パレットデータ破棄
-	sys_FreeMemoryEz( p_wk->p_plttbuff );
+	GFL_HEAP_FreeMemory( p_wk->p_plttbuff );
 	
 	// 文字列破棄
 	STRBUF_Delete( p_wk->p_str );
@@ -2234,7 +2234,7 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 	MSGDATA_MANAGER*	p_msgman;
 	STRBUF*				p_str;
 
-	memset( p_wk, 0, sizeof(NEWSDRAW_TITLEWIN) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWSDRAW_TITLEWIN) );
 
 	// メッセージデータ初期化
 	p_msgman	= MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,NARC_msg_wflby_news_dat,heapID );
@@ -2360,7 +2360,7 @@ static void NEWSDRAW_TitleWinEffectStart( NEWSDRAW_TITLEWIN* p_wk, u32 title_no 
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_TitleEffInit( NEWSDRAW_TITLEEFF* p_wk, u16 offs, u32 snd )
 {
-	memset( p_wk, 0, sizeof(NEWSDRAW_TITLEEFF) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWSDRAW_TITLEEFF) );
 	p_wk->offs = offs;
 	p_wk->sound  = snd;
 }
@@ -2374,7 +2374,7 @@ static void NEWSDRAW_TitleEffInit( NEWSDRAW_TITLEEFF* p_wk, u16 offs, u32 snd )
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_TitleEffExit( NEWSDRAW_TITLEEFF* p_wk )
 {
-	memset( p_wk, 0, sizeof(NEWSDRAW_TITLEEFF) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(NEWSDRAW_TITLEEFF) );
 }
 
 //----------------------------------------------------------------------------
@@ -2564,6 +2564,6 @@ static void NEWSDRAW_DEBUG_TopicMake( NEWSDRAW_WK* p_wk, WFLBY_SYSTEM* p_system,
 
 	sc_WFLBY_DEBUG_LOBBY_NEWS_TOPIC_MAKE_TOPIC = (sc_WFLBY_DEBUG_LOBBY_NEWS_TOPIC_MAKE_TOPIC + 1) % NEWS_TOPICTYPE_NUM;
 
-	sys_FreeMemoryEz( p_status );
+	GFL_HEAP_FreeMemory( p_status );
 }
 #endif

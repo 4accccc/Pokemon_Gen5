@@ -17,6 +17,8 @@
 
 #include "net_app/wifi_lobby/wflby_system.h"
 
+#include "net_app/net_bugfix.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -199,7 +201,7 @@ extern BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam );
 ///	START	TIMEUP	ワーク
 //	Hブランク使用します。
 //=====================================
-extern MNGM_COUNTWK* MNGM_COUNT_Init( CLACT_SET_PTR p_clset, u32 heapID );
+extern MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID );
 extern void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk );
 extern void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk );
 extern void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk );

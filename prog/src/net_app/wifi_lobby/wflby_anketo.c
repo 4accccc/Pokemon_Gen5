@@ -495,7 +495,7 @@ typedef struct {
 	GF_BGL_INI*				p_bgl;
 
 	// OAM
-    CLACT_SET_PTR           p_clactset;		// セルアクターセット
+    GFL_CLUNIT*           p_clactset;		// セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[ANKETO_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
 	// アーカイブ
@@ -715,7 +715,7 @@ GFL_PROC_RESULT ANKETO_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * myw
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(ANKETO_WORK), HEAPID_ANKETO );
-	memset( p_wk, 0, sizeof(ANKETO_WORK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(ANKETO_WORK) );
 
 
 	// 描画システム初期化
@@ -1055,7 +1055,7 @@ static void ANKETO_BgExit( ANKETO_DRAWSYS* p_wk )
 	}
 	
 	// BGL破棄
-	sys_FreeMemoryEz( p_wk->p_bgl );
+	GFL_HEAP_FreeMemory( p_wk->p_bgl );
 }
 
 //----------------------------------------------------------------------------
@@ -1293,7 +1293,7 @@ static void ANKETO_MsgManSetMyName( ANKETO_MSGMAN* p_wk, u32 bufno, u32 heapID )
 	// 名前を設定
 	WORDSET_RegisterPlayerName( p_wk->p_wordset, bufno, p_mystatus );
 
-	sys_FreeMemoryEz( p_mystatus );
+	GFL_HEAP_FreeMemory( p_mystatus );
 }
 
 
@@ -2425,7 +2425,7 @@ static void ANKETO_OUTPUT_Exit( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 	}
 	
 	// キャラクタデータ破棄
-	sys_FreeMemoryEz( p_wk->p_charres );
+	GFL_HEAP_FreeMemory( p_wk->p_charres );
 	p_wk->p_charres = NULL;
 	
 	// ウィンドウ破棄
@@ -2856,7 +2856,7 @@ static void ANKETO_QUESTION_RESULT_CalcHirobaResult( ANKETO_QUESTION_RESULT* p_w
 	u32 lang;
 	BOOL sum;
 
-	memset( p_wk, 0, sizeof(ANKETO_QUESTION_RESULT) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(ANKETO_QUESTION_RESULT) );
 
 	for( i=0; i<WFLBY_PLAYER_MAX; i++ ){
 		cp_profile = WFLBY_SYSTEM_GetUserProfile( cp_system, i );

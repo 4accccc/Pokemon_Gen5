@@ -32,7 +32,7 @@
 //=====================================
 typedef struct {
 	WFLBY_COUNTER_TIME* p_wflby_counter;	// WiFiひろば入室時間格納先
-	SAVEDATA*			p_save;				// セーブデータ
+	SAVE_CONTROL_WORK*			p_save;				// セーブデータ
 	BOOL				check_skip;			// 接続確認をスキップする　TRUE：スキップ	FALSE：通常
 } WFLBY_PROC_PARAM;
 

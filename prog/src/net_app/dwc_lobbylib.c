@@ -18,7 +18,8 @@
 #include "msg/msg_wifi_place_msg_world.h"
 
 #include "net_app/dwc_lobbylib.h"
-#include "wifi/dwc_rap.h"
+//#include "wifi/dwc_rap.h"
+#include "net/network_define.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -227,7 +228,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	//  セーブデータ
-	SAVEDATA*		p_save;	
+	SAVE_CONTROL_WORK*		p_save;	
 	WIFI_LIST*		p_wifilist;
 	WIFI_HISTORY*	p_wifihistory;
 
@@ -426,6 +427,7 @@ static void DWC_LOBBY_ANKETO_Set( DWC_ANKETO_DATA* p_wk, const PPW_LobbyQuestion
 static void DWC_LOBBY_DEBUG_Printf( const PPW_LobbyQuestionnaireRecord* cp_data );
 
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	DWC	ロビーライブラリ管理システム	初期化
@@ -437,14 +439,14 @@ static void DWC_LOBBY_DEBUG_Printf( const PPW_LobbyQuestionnaireRecord* cp_data 
  *	@param	p_callbackwork	コールバックワーク
  */
 //-----------------------------------------------------------------------------
-void DWC_LOBBY_Init( u32 heapID, SAVEDATA* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork )
+void DWC_LOBBY_Init( u32 heapID, SAVE_CONTROL_WORK* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork )
 {
 	GF_ASSERT( p_DWC_LOBBYLIB_WK == NULL );
 	GF_ASSERT( profilesize < PPW_LOBBY_MAX_BINARY_SIZE );	// プロフィールサイズ最大数チェック
 
 	// ワーク確保
-	p_DWC_LOBBYLIB_WK = sys_AllocMemory( heapID, sizeof(DWC_LOBBYLIB_WK) );
-	memset( p_DWC_LOBBYLIB_WK, 0, sizeof(DWC_LOBBYLIB_WK) );
+	p_DWC_LOBBYLIB_WK = GFL_HEAP_AllocMemory( heapID, sizeof(DWC_LOBBYLIB_WK) );
+	GFL_STD_MemFill( p_DWC_LOBBYLIB_WK, 0, sizeof(DWC_LOBBYLIB_WK) );
 	
 	// セーブデータ保存
 	p_DWC_LOBBYLIB_WK->p_save			= p_save;
@@ -487,7 +489,7 @@ void DWC_LOBBY_Exit( void )
 	DWC_LOBBY_Profile_Exit( p_DWC_LOBBYLIB_WK );
 
 	// 大本を破棄
-	sys_FreeMemoryEz( p_DWC_LOBBYLIB_WK );
+	GFL_HEAP_FreeMemory( p_DWC_LOBBYLIB_WK );
 	p_DWC_LOBBYLIB_WK = NULL;
 }
 
@@ -1500,12 +1502,12 @@ void DWC_LOBBY_SUBCHAN_SetMsgCmd( const DWC_LOBBY_MSGCOMMAND* cp_tbl, u32 tblnum
 void DWC_LOBBY_CleanMsgCmd( void )
 {
 	GF_ASSERT( p_DWC_LOBBYLIB_WK != NULL );
-	memset( &p_DWC_LOBBYLIB_WK->msgcmd[ DWC_LOBBY_LOCALCHANNEL_TYPE_MAIN ], 0, sizeof(DWC_LOBBY_MSGCMD) );
+	GFL_STD_MemFill( &p_DWC_LOBBYLIB_WK->msgcmd[ DWC_LOBBY_LOCALCHANNEL_TYPE_MAIN ], 0, sizeof(DWC_LOBBY_MSGCMD) );
 }
 void DWC_LOBBY_SUBCHAN_CleanMsgCmd( void )
 {
 	GF_ASSERT( p_DWC_LOBBYLIB_WK != NULL );
-	memset( &p_DWC_LOBBYLIB_WK->msgcmd[ DWC_LOBBY_LOCALCHANNEL_TYPE_SUB ], 0, sizeof(DWC_LOBBY_MSGCMD) );
+	GFL_STD_MemFill( &p_DWC_LOBBYLIB_WK->msgcmd[ DWC_LOBBY_LOCALCHANNEL_TYPE_SUB ], 0, sizeof(DWC_LOBBY_MSGCMD) );
 }
 
 //----------------------------------------------------------------------------
@@ -1653,14 +1655,14 @@ BOOL DWC_LOBBY_MG_StartRecruit( DWC_LOBBY_MG_TYPE type, u32 maxnum )
 
     
 	// マッチング指標を取得してマッチング開始
-    if(mydwc_startmatch( (u8*)p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.matchMakingString, 
+    if(GFL_NET_DWC_StartMatch( (u8*)p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.matchMakingString, 
 				maxnum, TRUE, 
 				(p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_timelimit / DWC_LOBBY_MG_TIMELIMIT_SEC) )){
 
     }
 
-	mydwc_setConnectCallback( DWC_LOBBY_MG_ConnectCallBack, p_DWC_LOBBYLIB_WK );
-	mydwc_setDisconnectCallback( DWC_LOBBY_MG_DisConnectCallBack, p_DWC_LOBBYLIB_WK );
+	GFL_NET_DWC_SetConnectCallback( DWC_LOBBY_MG_ConnectCallBack, p_DWC_LOBBYLIB_WK );
+	GFL_NET_DWC_SetDisconnectCallback( DWC_LOBBY_MG_DisConnectCallBack, p_DWC_LOBBYLIB_WK );
 //----#endif	// TESTOHNO
 
 	return TRUE;
@@ -1895,13 +1897,13 @@ BOOL DWC_LOBBY_MG_Entry( DWC_LOBBY_MG_TYPE type )
 //----#if TESTOHNO
 		
     DWC_LOBBY_PRINT("match entry %s\ntimelimit = %d\n",p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.matchMakingString, p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_timelimit / DWC_LOBBY_MG_TIMELIMIT_SEC);
-    if(mydwc_startmatch( (u8*)p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.matchMakingString,
+    if(GFL_NET_DWC_StartMatch( (u8*)p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.matchMakingString,
                          p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_data.maxNum, FALSE,
 						 (p_DWC_LOBBYLIB_WK->mg_data[ type ].mg_timelimit / DWC_LOBBY_MG_TIMELIMIT_SEC))){
     }
 
-	mydwc_setConnectCallback( DWC_LOBBY_MG_ConnectCallBack, p_DWC_LOBBYLIB_WK );
-	mydwc_setDisconnectCallback( DWC_LOBBY_MG_DisConnectCallBack, p_DWC_LOBBYLIB_WK );
+	GFL_NET_DWC_SetConnectCallback( DWC_LOBBY_MG_ConnectCallBack, p_DWC_LOBBYLIB_WK );
+	GFL_NET_DWC_SetDisconnectCallback( DWC_LOBBY_MG_DisConnectCallBack, p_DWC_LOBBYLIB_WK );
 //----#endif //TESTOHNO
 
 	return TRUE;
@@ -1949,7 +1951,7 @@ DWC_LOBBY_MG_ENTRYRET DWC_LOBBY_MG_EntryWait( void )
 	}
 
 	// エントリー完了を待つ
-    if(mydwc_getaid() == MYDWC_NONE_AID){
+    if(GFL_NET_DWC_GetAid() == MYDWC_NONE_AID){
         return DWC_LOBBY_MG_ENTRYWAIT;
     }
 	
@@ -2022,7 +2024,7 @@ BOOL DWC_LOBBY_MG_CheckConnect( void )
 	}
 
 	// 接続中かチェック
-    if(mydwc_getaid() != MYDWC_NONE_AID){
+    if(GFL_NET_DWC_GetAid() != MYDWC_NONE_AID){
         return TRUE;
     }
 	
@@ -2300,8 +2302,8 @@ void DWC_LOBBY_MG_EndConnect( void )
 {
 	GF_ASSERT( p_DWC_LOBBYLIB_WK != NULL );
 
-	mydwc_setConnectCallback( NULL, NULL );
-	mydwc_setDisconnectCallback( NULL, NULL );
+	GFL_NET_DWC_SetConnectCallback( NULL, NULL );
+	GFL_NET_DWC_SetDisconnectCallback( NULL, NULL );
 
 	// Lobby内状態も切断へ
 	p_DWC_LOBBYLIB_WK->mg_myentry	= DWC_LOBBY_MG_NUM;
@@ -2615,8 +2617,8 @@ static BOOL DWC_LOBBY_WLDDATA_SetMyData( DWC_LOBBYLIB_WK* p_sys )
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_Profile_Init( DWC_LOBBYLIB_WK* p_sys, u32 size, u32 heapID )
 {
-	p_DWC_LOBBYLIB_WK->p_profile	= sys_AllocMemory( heapID, size*PPW_LOBBY_MAX_PLAYER_NUM_MAIN );
-	memset( p_DWC_LOBBYLIB_WK->p_profile, 0, size*PPW_LOBBY_MAX_PLAYER_NUM_MAIN );
+	p_DWC_LOBBYLIB_WK->p_profile	= GFL_HEAP_AllocMemory( heapID, size*PPW_LOBBY_MAX_PLAYER_NUM_MAIN );
+	GFL_STD_MemFill( p_DWC_LOBBYLIB_WK->p_profile, 0, size*PPW_LOBBY_MAX_PLAYER_NUM_MAIN );
 	p_DWC_LOBBYLIB_WK->profilesize	= size;
 }
 
@@ -2629,7 +2631,7 @@ static void DWC_LOBBY_Profile_Init( DWC_LOBBYLIB_WK* p_sys, u32 size, u32 heapID
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_Profile_Exit( DWC_LOBBYLIB_WK* p_sys )
 {
-	sys_FreeMemoryEz( p_DWC_LOBBYLIB_WK->p_profile );
+	GFL_HEAP_FreeMemory( p_DWC_LOBBYLIB_WK->p_profile );
 }
 
 //----------------------------------------------------------------------------
@@ -2678,7 +2680,7 @@ static void DWC_LOBBY_Profile_SetDataEx( DWC_LOBBYLIB_WK* p_sys, s32 userid, con
 	// そのサイズでコピーする＆コピーする前に０クリア
 	if( p_sys->profilesize > datasize ){
 		copy_size = datasize;
-		memset( p_buff, 0, p_sys->profilesize );
+		GFL_STD_MemFill( p_buff, 0, p_sys->profilesize );
 	}else{
 		copy_size = p_sys->profilesize;
 	}
@@ -2730,7 +2732,7 @@ static void DWC_LOBBY_Profile_CleanData( DWC_LOBBYLIB_WK* p_sys, s32 userid )
 	// インデックス先のバッファをクリア
 	p_buff = p_sys->p_profile;
 	p_buff = &p_buff[ p_sys->profilesize*idx ];
-	memset( p_buff, 0, p_sys->profilesize );
+	GFL_STD_MemFill( p_buff, 0, p_sys->profilesize );
 }
 
 
@@ -2794,7 +2796,7 @@ static void DWC_LOBBY_SysProfile_CleanData( DWC_LOBBYLIB_WK* p_sys, s32 userid )
 	GF_ASSERT( idx != DWC_LOBBY_USERIDTBL_IDX_NONE );
 
 	// インデックス先のバッファにコピー
-	memset( &p_sys->sysprofile[ idx ], 0, sizeof(PPW_LobbySystemProfile) );
+	GFL_STD_MemFill( &p_sys->sysprofile[ idx ], 0, sizeof(PPW_LobbySystemProfile) );
 }
 
 
@@ -2823,7 +2825,7 @@ static void DWC_LOBBY_UserIDTbl_Init( DWC_LOBBYLIB_WK* p_sys, u32 maintblnum, u3
 			tblnum = subtblnum;
 		}
 		p_sys->useridtbl[ i ].num			= 0;
-		p_sys->useridtbl[ i ].p_tbl			= sys_AllocMemory( heapID, sizeof(s32)*tblnum );
+		p_sys->useridtbl[ i ].p_tbl			= GFL_HEAP_AllocMemory( heapID, sizeof(s32)*tblnum );
 		p_sys->useridtbl[ i ].tblnum		= tblnum;
 
 		DWC_LOBBY_UserIDTbl_Clear( p_sys, i );
@@ -2843,7 +2845,7 @@ static void DWC_LOBBY_UserIDTbl_Exit( DWC_LOBBYLIB_WK* p_sys )
 
 	for( i=0; i<DWC_LOBBY_LOCALCHANNEL_TYPE_NUM; i++ ){
 		GF_ASSERT( p_sys->useridtbl[ i ].p_tbl != NULL );
-		sys_FreeMemoryEz( p_sys->useridtbl[ i ].p_tbl );
+		GFL_HEAP_FreeMemory( p_sys->useridtbl[ i ].p_tbl );
 		p_sys->useridtbl[ i ].p_tbl = NULL;
 	}
 }
@@ -3645,7 +3647,7 @@ static void DWC_LOBBY_CallBack_ExcessFlood( u32 floodWeight )
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_MG_Init( DWC_LOBBYLIB_WK* p_sys )
 {
-	memset( p_sys->mg_data, 0, sizeof(DWC_LOBBY_MGDATA)*DWC_LOBBY_MG_NUM );
+	GFL_STD_MemFill( p_sys->mg_data, 0, sizeof(DWC_LOBBY_MGDATA)*DWC_LOBBY_MG_NUM );
 	p_sys->mg_myentry = DWC_LOBBY_MG_NUM;
 }
 
@@ -3807,7 +3809,7 @@ static void DWC_LOBBY_MG_Update( DWC_LOBBYLIB_WK* p_sys )
 		u32 connect_num;
 
 		// 通信人数を取得
-		connect_num = mydwc_AnybodyEvalNum();
+		connect_num = GFL_NET_DWC_AnybodyEvalNum();
 
 		GF_ASSERT( connect_num <= 4 );
 		
@@ -3953,7 +3955,7 @@ static u32 DWC_LOBBY_SCHEDULE_GetEventTime( const PPW_LobbySchedule* cp_schedule
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_VIPDATA_Init( DWC_LOBBY_VIP* p_vip, u32 buffnum, u32 heapID )
 {
-	p_vip->p_vipbuff = sys_AllocMemory( heapID, sizeof(PPW_LobbyVipRecord)*buffnum );
+	p_vip->p_vipbuff = GFL_HEAP_AllocMemory( heapID, sizeof(PPW_LobbyVipRecord)*buffnum );
 	p_vip->num		 = buffnum;
 	p_vip->datanum	 = 0;
 }
@@ -3968,7 +3970,7 @@ static void DWC_LOBBY_VIPDATA_Init( DWC_LOBBY_VIP* p_vip, u32 buffnum, u32 heapI
 //-----------------------------------------------------------------------------
 static void DWC_LOBBY_VIPDATA_Exit( DWC_LOBBY_VIP* p_vip )
 {
-	sys_FreeMemoryEz( p_vip->p_vipbuff );
+	GFL_HEAP_FreeMemory( p_vip->p_vipbuff );
 	p_vip->p_vipbuff = NULL;
 }
 

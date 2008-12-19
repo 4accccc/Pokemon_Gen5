@@ -24,28 +24,15 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
-
-#include "system/fontproc.h"
-#include "system/clact_util.h"
-#include "system/wipe.h"
-#include "system/msgdata.h"
-#include "system/wordset.h"
-#include "system/particle.h"
-#include "system/window.h"
-#include "system/touch_subwindow.h"
-#include "system/laster.h"
-
-#include "savedata/config.h"
+#include <gflib.h>
+#include <procsys.h>
+#include <tcbl.h>
 #include "savedata/wifilist.h"
+#include "message.naix"
+#include "msg/msg_minigame_tool.h"
+#include "msg/msg_wifi_place_msg_world.h"
 
-#include "contest/con_tool.h"
-
-#include "msgdata/msg.naix"
-#include "msgdata/msg_minigame_tool.h"
-#include "msgdata/msg_wifi_place_msg_world.h"
-
-#include "graphic/wlmngm_tool.naix"
+#include "wlmngm_tool.naix"
 
 #include "minigame_tool_snd.h"
 #include "net_app/wifi_lobby/minigame_tool.h"
@@ -54,8 +41,7 @@
 #include "minigame_commcomand_func.h"
 #include "wflby_def.h"
 
-#include "communication/communication.h"
-#include "wifi/dwc_rapfriend.h"
+#include "net\network_define.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -592,19 +578,25 @@ typedef struct {
 // セルアクターリソース管理
 typedef struct {
 	BOOL				data;		// データがあるか
+#if WB_FIX
 	CLACT_U_RES_OBJ_PTR	p_resobj[ MNGM_CLACTRES_RESMAN_NUM ];
 	CLACT_HEADER		header;
+#else
+	u32					p_resobj_index[MNGM_CLACTRES_RESMAN_NUM];	//aaaa
+#endif
 } MNGM_CLACTRESOBJ;
 
 typedef struct {
+#if WB_FIX
 	CLACT_U_RES_MANAGER_PTR	p_resman[MNGM_CLACTRES_RESMAN_NUM];
+#endif
 	MNGM_CLACTRESOBJ*		p_obj;
 	u32						objnum;
 } MNGM_CLACTRES;
 
 // セルアクター管理
 typedef struct{
-    CLACT_SET_PTR           p_clactset;		// セルアクターセット
+    GFL_CLUNIT*           p_clactset;		// セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
 } MNGM_CLACT;
 
@@ -647,8 +639,8 @@ typedef struct {
 // そのうち動いたりするだろうから分けとく
 typedef struct {
 	GF_BGL_BMPWIN		win;
-	CLACT_WORK_PTR		p_clwk;			// アクター
-	CLACT_WORK_PTR		p_rank;			// 順位アクター
+	GFL_CLWK*		p_clwk;			// アクター
+	GFL_CLWK*		p_rank;			// 順位アクター
 	u16					playernum;		// ユーザ数
 	u8					idx;			// ユーザのテーブルインデックス
 	u8					plidx;			// 自分から見たそのユーザのテーブルインデックス
@@ -754,7 +746,7 @@ typedef struct {
 //	GF_BGL_BMPWIN		win;
 	void*				p_scrnbuff;
 	NNSG2dScreenData*	p_scrn;
-	CLACT_WORK_PTR		p_clwk[MNGM_RESULT_BALLOON_CLACT_NUM];
+	GFL_CLWK*		p_clwk[MNGM_RESULT_BALLOON_CLACT_NUM];
 	MNGM_CLACTRESOBJ*	p_resobj;
 	u8					seq;
 	u8					count;
@@ -813,7 +805,7 @@ typedef struct _MNGM_RESULTWK{
 //=====================================
 // OAMマスクシステム
 typedef struct {
-	CLACT_WORK_PTR	p_msk[MNGM_COUNT_MSK_OAM_NUM];
+	GFL_CLWK*	p_msk[MNGM_COUNT_MSK_OAM_NUM];
 	s16				count;
 	s16				move_y;
 	u8				mskon[MNGM_COUNT_MSK_HBUF_NUM][192];
@@ -827,13 +819,13 @@ typedef struct _MNGM_COUNTWK{
 	u32						heapID;		// heap
 	u16						seq;		// シーケンス
 	s16						count;		// カウント
-	CLACT_SET_PTR			p_clset;	// セルアクターセット
+	GFL_CLUNIT*			p_clset;	// セルアクターセット
 	ARCHANDLE*				p_handle;	// ハンドル
 	MNGM_CLACTRES			resman;		// リソースマネージャ
 	MNGM_CLACTRESOBJ*		p_resobj;	// リソースオブジェ
 	TCB_PTR					p_tcb;		// 動作タスク
 
-	CLACT_WORK_PTR			p_anm;		// アニメOAM
+	GFL_CLWK*			p_anm;		// アニメOAM
 	MNGM_COUNT_MSKWK		msk;		// マスクシステム
 }MNGM_COUNTWK;
 
@@ -1131,8 +1123,6 @@ static const MNGM_MSG_DATA sc_MNGM_MSG_DATA[] = {
 
 
 
-
-
 //-----------------------------------------------------------------------------
 /**
  *					プロトタイプ宣言
@@ -1152,7 +1142,7 @@ static void MNGM_SCRN_AddCharOfs( NNSG2dScreenData* p_scrn, u32 char_offs );
 static void MNGM_CLACTRES_Init( MNGM_CLACTRES* p_wk, u32 objnum, u32 heapID );
 static void MNGM_CLACTRES_Exit( MNGM_CLACTRES* p_wk );
 static MNGM_CLACTRESOBJ* MNGM_CLACTRES_Load( MNGM_CLACTRES* p_wk, ARCHANDLE* p_handle, u32 pal_idx, u32 palnum, u32 cg_idx, u32 cell_idx, u32 anm_idx, u32 contid, u32 heapID );
-static CLACT_WORK_PTR MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, CLACT_SET_PTR p_clset, s16 x, s16 y, u16 pri, u32 heapID );
+static GFL_CLWK* MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, GFL_CLUNIT* p_clset, s16 x, s16 y, u16 pri, u32 heapID );
 static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj, ARCHANDLE* p_handle, u32 pal_idx, u32 palnum, u32 cg_idx, u32 cell_idx, u32 anm_idx, u32 contid, u32 heapID );
 static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj );
 
@@ -1306,7 +1296,7 @@ static void MNGM_RESULT_SetPlayNum( MNGM_RESULTWK* p_wk );
 //-------------------------------------
 ///	START	TIMEUP	ワーク
 //=====================================
-static void MNGM_COUNT_MskInit( MNGM_COUNT_MSKWK* p_wk, MNGM_CLACTRESOBJ* p_resobj, CLACT_SET_PTR p_clset, u32 heapID );
+static void MNGM_COUNT_MskInit( MNGM_COUNT_MSKWK* p_wk, MNGM_CLACTRESOBJ* p_resobj, GFL_CLUNIT* p_clset, u32 heapID );
 static BOOL MNGM_COUNT_MskMain( MNGM_COUNT_MSKWK* p_wk );
 static BOOL MNGM_COUNT_MskReMain( MNGM_COUNT_MSKWK* p_wk );
 static void MNGM_COUNT_MskCommon( MNGM_COUNT_MSKWK* p_wk, s32 add );
@@ -1341,7 +1331,7 @@ void MNGM_ENRES_PARAM_Init( MNGM_ENRES_PARAM* p_param, BOOL lobby_flag, SAVE_CON
 	u32 netid;
 	MYSTATUS* p_status;
 
-	memset( p_param,  0, sizeof(MNGM_ENRES_PARAM) );
+	GFL_STD_MemFill( p_param,  0, sizeof(MNGM_ENRES_PARAM) );
 	
 	p_param->num = CommInfoGetEntryNum();
 	netid = GFL_NET_SystemGetCurrentID();
@@ -1566,7 +1556,7 @@ void MNGM_ENTRY_Exit( MNGM_ENTRYWK* p_wk )
 	MNGM_BGL_Exit( &p_wk->bgl );
 
 	// ワーク破棄
-	sys_FreeMemoryEz( p_wk );	
+	GFL_HEAP_FreeMemory( p_wk );	
 }
 
 //----------------------------------------------------------------------------
@@ -1683,7 +1673,7 @@ void MNGM_RESULT_Exit( MNGM_RESULTWK* p_wk )
 
 
 	// ワーク破棄
-	sys_FreeMemoryEz( p_wk );	
+	GFL_HEAP_FreeMemory( p_wk );	
 }
 
 //----------------------------------------------------------------------------
@@ -1922,12 +1912,12 @@ BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam )
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-MNGM_COUNTWK* MNGM_COUNT_Init( CLACT_SET_PTR p_clset, u32 heapID )
+MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID )
 {
 	MNGM_COUNTWK* p_wk;
 
-	p_wk = sys_AllocMemory( heapID, sizeof( MNGM_COUNTWK ) );
-	memset( p_wk, 0, sizeof( MNGM_COUNTWK ) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof( MNGM_COUNTWK ) );
+	GFL_STD_MemFill( p_wk, 0, sizeof( MNGM_COUNTWK ) );
 
 	p_wk->p_clset = p_clset;
 	
@@ -1982,7 +1972,7 @@ void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk )
 	ArchiveDataHandleClose( p_wk->p_handle );
 
 	// ワーク破棄
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -1997,9 +1987,13 @@ void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk )
 //--------------------------------------------------------------
 int MNGM_PalNoGet( MNGM_COUNTWK* p_wk )
 {
+#if WB_FIX
 	CLACT_U_RES_OBJ_PTR res 
 		= CLACT_U_ResManagerGetIDResObjPtr( p_wk->resman.p_resman[1], MNGM_RESCONTID );
 	return CLACT_U_PlttManagerGetPlttNo(res, NNS_G2D_VRAM_TYPE_2DMAIN );
+#else
+	return PLTTSLOT_GetPalNo(pssp, p_wk->p_resobj->p_resobj_index[1], GFL_VRAM_2D_MAIN);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2166,14 +2160,16 @@ static void MNGM_CLACTRES_Init( MNGM_CLACTRES* p_wk, u32 objnum, u32 heapID )
 {
 	int i;
 
+#if WB_FIX
 	// リソースマネージャ作成
 	for( i=0; i<MNGM_CLACTRES_RESMAN_NUM; i++ ){
 		p_wk->p_resman[i] = CLACT_U_ResManagerInit(objnum, i, heapID);
 	}
+#endif
 
 	// リソースオブジェクト作成
-	p_wk->p_obj = sys_AllocMemory( heapID, sizeof(MNGM_CLACTRESOBJ)* objnum );
-	memset( p_wk->p_obj, 0, sizeof(MNGM_CLACTRESOBJ)* objnum );
+	p_wk->p_obj = GFL_HEAP_AllocMemory( heapID, sizeof(MNGM_CLACTRESOBJ)* objnum );
+	GFL_STD_MemFill( p_wk->p_obj, 0, sizeof(MNGM_CLACTRESOBJ)* objnum );
 	p_wk->objnum = objnum;
 }
 
@@ -2195,13 +2191,15 @@ static void MNGM_CLACTRES_Exit( MNGM_CLACTRES* p_wk )
 		}
 	}
 
+#if WB_FIX
 	// リソースオブジェを破棄
 	for( i=0; i<MNGM_CLACTRES_RESMAN_NUM; i++ ){
 		CLACT_U_ResManagerDelete( p_wk->p_resman[i] );
 	}
+#endif
 
 	// リソースオブジェ破棄
-	sys_FreeMemoryEz( p_wk->p_obj );
+	GFL_HEAP_FreeMemory( p_wk->p_obj );
 }
 
 //----------------------------------------------------------------------------
@@ -2252,8 +2250,9 @@ static MNGM_CLACTRESOBJ* MNGM_CLACTRES_Load( MNGM_CLACTRES* p_wk, ARCHANDLE* p_h
  *	@return	アクター
  */
 //-----------------------------------------------------------------------------
-static CLACT_WORK_PTR MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, CLACT_SET_PTR p_clset, s16 x, s16 y, u16 pri, u32 heapID )
+static GFL_CLWK* MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, GFL_CLUNIT* p_clset, s16 x, s16 y, u16 pri, u32 heapID )
 {
+#if WB_FIX
 	CLACT_ADD_SIMPLE add;
 
 
@@ -2266,6 +2265,18 @@ static CLACT_WORK_PTR MNGM_CLACTRES_Add( MNGM_CLACTRESOBJ* p_obj, CLACT_SET_PTR 
 	add.heap			= heapID;
 
 	return CLACT_AddSimple( &add );
+#else
+	const GFL_CLWK_DATA HeadClwkData = {
+		x, y, 							//座標(XY)
+		0,								//アニメシーケンス
+		pri,							//ソフトプライオリティ
+		MNGM_CLACTRES_DEF_BG_PRI,		//BGプライオリティ
+	};
+
+	return GFL_OBJGRP_CreateClAct(clunit, p_obj->p_resobj_index[0], 
+		p_obj->p_resobj_index[1], p_obj->p_resobj_index[2], 
+		&HeadClwkData, CLWK_SETSF_NONE, heapID);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2294,18 +2305,29 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 	
 	
 	// キャラクタ読み込み
+#if WB_FIX
 	p_obj->p_resobj[0] = CLACT_U_ResManagerResAddArcChar_ArcHandle( 
 				p_wk->p_resman[0], p_handle,
 				cg_idx,
 				FALSE, contid, NNS_G2D_VRAM_TYPE_2DMAIN, heapID );
+#else
+	p_obj->p_resobj_index[0] = GFL_OBJGRP_RegisterCGR(
+		p_handle, cg_idx, FALSE, GFL_VRAM_2D_MAIN, heapID);
+#endif
 
 	// パレット読み込み
+#if WB_FIX
 	p_obj->p_resobj[1] = CLACT_U_ResManagerResAddArcPltt_ArcHandle( 
 			p_wk->p_resman[1], p_handle,
 			pal_idx,
 			FALSE, contid, 
 			NNS_G2D_VRAM_TYPE_2DMAIN, palnum, heapID );
+#else
+	p_obj->p_resobj_index[1] = 
+		PLTTSLOT_ResourceSet(pssp, p_handle, pal_idx, palnum, GFL_VRAM_2D_MAIN, heapID);
+#endif
 
+#if WB_FIX
 	// セル読み込み
 	p_obj->p_resobj[2] = CLACT_U_ResManagerResAddArcKindCell_ArcHandle( 
 				p_wk->p_resman[2], p_handle,
@@ -2317,8 +2339,12 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 				p_wk->p_resman[3], p_handle,
 				anm_idx,
 				FALSE, contid, CLACT_U_CELLANM_RES, heapID );
+#else
+	//セル＆アニメ読み込み
+	p_obj->p_resobj_index[2] = GFL_OBJGRP_RegisterCellAnim(p_handle, cell_idx, anm_idx, heapID);
+#endif
 
-
+#if WB_FIX
 	// VRAM展開
 	result =CLACT_U_CharManagerSetAreaCont( p_obj->p_resobj[ 0 ] );
 	GF_ASSERT( result );
@@ -2336,6 +2362,7 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 					p_wk->p_resman[2],
 					p_wk->p_resman[3],
 					NULL, NULL );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -2354,6 +2381,7 @@ static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 
 	p_obj->data = FALSE;
 	
+#if WB_FIX
 	// VRAMから破棄
 	CLACT_U_CharManagerDelete( p_obj->p_resobj[0] );
 	CLACT_U_PlttManagerDelete( p_obj->p_resobj[1] );
@@ -2363,6 +2391,12 @@ static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 		CLACT_U_ResManagerResDelete( p_wk->p_resman[i], 
 				p_obj->p_resobj[i] );
 	}
+#else
+	//リソース解放
+	GFL_OBJGRP_ReleaseCGR(p_obj->p_resobj_index[0]);
+	PLTTSLOT_ResourceFree(pssp, p_obj->p_resobj_index[1], GFL_VRAM_2D_MAIN);
+	GFL_OBJGRP_ReleaseCellAnim(p_obj->p_resobj_index[2]);
+#endif
 }
 
 
@@ -2433,7 +2467,7 @@ static void MNGM_BGL_Exit( MNGM_BGL* p_wk )
 	}
 	
 	// BGL破棄
-	sys_FreeMemoryEz( p_wk->p_bgl );
+	GFL_HEAP_FreeMemory( p_wk->p_bgl );
 }
 
 //----------------------------------------------------------------------------
@@ -3058,8 +3092,8 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 	// BGM再生
 	Snd_DataSetByScene( SND_SCENE_WIFI_LOBBY_GAME, SEQ_PL_WIFIGAME, 0 );
 
-	p_wk = sys_AllocMemory( heapID, sizeof(MNGM_ENTRYWK) );
-	memset( p_wk, 0, sizeof(MNGM_ENTRYWK) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(MNGM_ENTRYWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(MNGM_ENTRYWK) );
 
 	// パラメータをコピー
 	memcpy( &p_wk->comm_param, cp_commparam, sizeof(MNGM_ENRES_PARAM) );
@@ -3119,7 +3153,7 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 	// VCHAT ON
 	if( p_wk->comm_param.vchat ){
 		// ボイスチャット開始
-		mydwc_startvchat( heapID );
+		GFL_NET_DWC_StartVChat( heapID );
 	}
 	
 	return p_wk;
@@ -3184,7 +3218,7 @@ static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID )
 static void MNGM_ENTRY_GraphicDelete( MNGM_ENTRYWK* p_wk )
 {
 	// スクリーンを破棄
-	sys_FreeMemoryEz( p_wk->p_scrnbuf );
+	GFL_HEAP_FreeMemory( p_wk->p_scrnbuf );
 }
 
 //----------------------------------------------------------------------------
@@ -3329,7 +3363,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
 				// ボイスチャット終了
-				mydwc_stopvchat();
+				GFL_NET_DWC_StopVChat();
 			}
 
 		}
@@ -3342,7 +3376,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
 				// ボイスチャット終了
-				mydwc_stopvchat();
+				GFL_NET_DWC_StopVChat();
 			}
 		}
 #endif
@@ -4474,8 +4508,8 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 	MNGM_RESULTWK* p_wk;
 	int i;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(MNGM_RESULTWK) );
-	memset( p_wk, 0, sizeof(MNGM_RESULTWK) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(MNGM_RESULTWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(MNGM_RESULTWK) );
 
 	// パラメータをコピー
 	memcpy( &p_wk->param, cp_param, sizeof(MNGM_RESULT_PARAM) );
@@ -4569,7 +4603,7 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 	// VCHAT ON
 	if( p_wk->comm_param.vchat ){
 		// ボイスチャット開始
-		mydwc_startvchat( heapID );
+		GFL_NET_DWC_StartVChat( heapID );
 	}
 	
 	return p_wk;
@@ -4651,7 +4685,7 @@ static void MNGM_RESULT_3DAnmLoad( MNGM_3DSYS* p_wk, ARCHANDLE* p_handle, u32 da
 	GF_CAMERA_PTR p_camera;
 
 	// パーティクルワーク作成
-	p_wk->p_ptc_work = sys_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );
+	p_wk->p_ptc_work = GFL_HEAP_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );
 	p_wk->p_ptc = Particle_SystemCreate( 
 			NULL, NULL, 
 			p_wk->p_ptc_work, PARTICLE_LIB_HEAP_SIZE, 
@@ -4679,7 +4713,7 @@ static void MNGM_RESULT_3DAnmLoad( MNGM_3DSYS* p_wk, ARCHANDLE* p_handle, u32 da
 static void MNGM_RESULT_3DAnmRelease( MNGM_3DSYS* p_wk )
 {
 	Particle_SystemExit( p_wk->p_ptc );
-	sys_FreeMemoryEz( p_wk->p_ptc_work );
+	GFL_HEAP_FreeMemory( p_wk->p_ptc_work );
 	p_wk->p_ptc			= NULL;
 	p_wk->p_ptc_work	= NULL;
 }
@@ -4803,7 +4837,7 @@ static void MNGM_RESULT_GraphicDelete( MNGM_RESULTWK* p_wk )
 	{
 		int i;
 		for( i=0; i<MNGM_RESULT_SCRN_NUM; i++ ){
-			sys_FreeMemoryEz( p_wk->p_scrnbuf[i] );
+			GFL_HEAP_FreeMemory( p_wk->p_scrnbuf[i] );
 		}
 	}
 
@@ -5141,7 +5175,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
 				// ボイスチャット終了
-				mydwc_stopvchat();
+				GFL_NET_DWC_StopVChat();
 			}
 		}
 #else
@@ -5155,7 +5189,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 			// VCHAT OFF
 			if( p_wk->comm_param.vchat ){
 				// ボイスチャット終了
-				mydwc_stopvchat();
+				GFL_NET_DWC_StopVChat();
 			}
 			p_wk->seq ++;
 		}	
@@ -5475,7 +5509,7 @@ static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work )
 		// VCHAT OFF
 		if( p_wk->comm_param.vchat ){
 			// ボイスチャット終了
-			mydwc_stopvchat();
+			GFL_NET_DWC_StopVChat();
 		}
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  MNGM_SYNC_RESULT_END );
 		p_wk->seq ++;
@@ -5669,7 +5703,7 @@ static void MNGM_RESULT_PalTrEffect( MNGM_RESULTWK* p_wk )
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_PalTrEffectExit( MNGM_RESULTWK* p_wk )
 {
-	sys_FreeMemoryEz( p_wk->p_plttbuf );
+	GFL_HEAP_FreeMemory( p_wk->p_plttbuf );
 }
 
 //----------------------------------------------------------------------------
@@ -5683,7 +5717,7 @@ static void MNGM_RESULT_PalTrEffectExit( MNGM_RESULTWK* p_wk )
 static void MNGM_RESULT_Retry_Init( MNGM_RETRY_WK* p_wk, MNGM_BGL* p_bgl, u32 vchat, u32 heapID )
 {
 
-	memset( p_wk, 0, sizeof(MNGM_RETRY_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(MNGM_RETRY_WK) );
 	
 	p_wk->param.p_bgl		= p_bgl->p_bgl;
 	p_wk->param.bg_frame	= GF_BGL_FRAME0_S;
@@ -5735,7 +5769,7 @@ static BOOL MNGM_RESULT_Retry_Main( MNGM_RETRY_WK* p_wk, MNGM_TALKWIN* p_talkwin
 		// VCHAT ON
 		if( p_wk->vchat ){
 			// ボイスチャット開始
-			mydwc_startvchat( heapID );
+			GFL_NET_DWC_StartVChat( heapID );
 		}
 		p_wk->seq++;
 		break;
@@ -5836,7 +5870,7 @@ static BOOL MNGM_RESULT_Retry_Main( MNGM_RETRY_WK* p_wk, MNGM_TALKWIN* p_talkwin
 			// VCHAT OFF
 			if( p_wk->vchat ){
 				// ボイスチャット終了
-				mydwc_stopvchat();
+				GFL_NET_DWC_StopVChat();
 			}
 			p_wk->seq ++;
 		}
@@ -5938,7 +5972,7 @@ static void MNGM_RESULT_RetryKoRecv( MNGM_RETRY_WK* p_wk, BOOL replay )
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_Balloon_GraphicInit( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_bgl, MNGM_CLACT* p_clact, MNGM_CLACTRES* p_clres, ARCHANDLE* p_handle, u32 heapID )
 {
-	memset( p_wk, 0, sizeof(MNGM_BALLOON_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(MNGM_BALLOON_WK) );
 
 /*
 	//	システムウィンドウ
@@ -6025,7 +6059,7 @@ static void MNGM_RESULT_Balloon_GraphicExit( MNGM_BALLOON_WK* p_wk )
 
 	// システムウィンドウ破棄
 	{
-		sys_FreeMemoryEz( p_wk->p_scrnbuff );
+		GFL_HEAP_FreeMemory( p_wk->p_scrnbuff );
 		// ウィンドウ作成
 //		GF_BGL_BmpWinDel( &p_wk->win ); 
 	}
@@ -6399,13 +6433,13 @@ static void MNGM_RESULT_Balloon_SendMinigameTopResult( MNGM_RESULTWK* p_wk )
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MNGM_COUNT_MskInit( MNGM_COUNT_MSKWK* p_wk, MNGM_CLACTRESOBJ* p_resobj, CLACT_SET_PTR p_clset, u32 heapID )
+static void MNGM_COUNT_MskInit( MNGM_COUNT_MSKWK* p_wk, MNGM_CLACTRESOBJ* p_resobj, GFL_CLUNIT* p_clset, u32 heapID )
 {
 	int i;
 	int wnd_draw;
 
-	memset( p_wk->mskon[MNGM_COUNT_MSK_HBUF_READ], 0, 192 );
-	memset( p_wk->mskon[MNGM_COUNT_MSK_HBUF_WRITE], 0, 192 );
+	GFL_STD_MemFill( p_wk->mskon[MNGM_COUNT_MSK_HBUF_READ], 0, 192 );
+	GFL_STD_MemFill( p_wk->mskon[MNGM_COUNT_MSK_HBUF_WRITE], 0, 192 );
 	p_wk->count		= 0;
 	p_wk->move_y	= 0;
 	p_wk->p_tcb		= NULL;
@@ -6560,7 +6594,7 @@ static void MNGM_COUNT_MskSetMsk( MNGM_COUNT_MSKWK* p_wk )
 {
 	int i;
 
-	memset( p_wk->mskon[MNGM_COUNT_MSK_HBUF_WRITE], 0, 192 );
+	GFL_STD_MemFill( p_wk->mskon[MNGM_COUNT_MSK_HBUF_WRITE], 0, 192 );
 	// マスク設定バッファを作成する
 	// 上側
 	for( i=0; i<MNGM_COUNT_MSK_MY-p_wk->move_y; i++ ){

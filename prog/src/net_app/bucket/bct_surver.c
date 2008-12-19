@@ -81,8 +81,8 @@ BCT_SURVER* BCT_SURVER_Init( u32 heapID, u32 timeover, u32 comm_num, const BCT_G
 {
 	BCT_SURVER* p_wk;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(BCT_SURVER) );
-	memset( p_wk, 0, sizeof(BCT_SURVER) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BCT_SURVER) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(BCT_SURVER) );
 
 	p_wk->time			= timeover;
 	p_wk->comm_num		= comm_num;
@@ -101,7 +101,7 @@ BCT_SURVER* BCT_SURVER_Init( u32 heapID, u32 timeover, u32 comm_num, const BCT_G
 //-----------------------------------------------------------------------------
 void BCT_SURVER_Delete( BCT_SURVER* p_wk )
 {
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------

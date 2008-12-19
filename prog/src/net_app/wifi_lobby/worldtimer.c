@@ -23,7 +23,7 @@
 #include "system/wordset.h"
 #include "system/touch_subwindow.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "savedata/wifihistory.h"
 #include "savedata/config.h"
@@ -866,7 +866,7 @@ typedef struct {
 	GF_BGL_INI*				p_bgl;
 
 	// OAM
-    CLACT_SET_PTR           p_clactset;		// セルアクターセット
+    GFL_CLUNIT*           p_clactset;		// セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[WLDTIMER_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
 	
@@ -1373,7 +1373,7 @@ GFL_PROC_RESULT WLDTIMER_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, void * m
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WLDTIMER_WK), HEAPID_WLDTIMER );
-	memset( p_wk, 0, sizeof(WLDTIMER_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_WK) );
 
 	// セーブデータ取得
 	p_wk->p_wifisv = SaveData_GetWifiHistory( p_param->p_save );
@@ -1627,7 +1627,7 @@ static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* 
 			}
 			listp++;
 		}
-		sys_FreeMemoryEz(filep);
+		GFL_HEAP_FreeMemory(filep);
 	}
 	{//地点マーク回転初期化（地域データバイナリデータロード）
 		void* filep;
@@ -1654,7 +1654,7 @@ static void WLDTIMER_EarthListLoad( WLDTIMER_PLACE* p_wk, const WFLBY_WLDTIMER* 
 				p_wk->placelist.listcount++;
 				listp++;
 			}
-			sys_FreeMemoryEz(filep);
+			GFL_HEAP_FreeMemory(filep);
 			index++;
 		}
 	}
@@ -2728,7 +2728,7 @@ static void WLDTIMER_DrawSysBgExit( WLDTIMER_DRAWSYS* p_wk )
 	}
 	
 	// BGL破棄
-	sys_FreeMemoryEz( p_wk->p_bgl );
+	GFL_HEAP_FreeMemory( p_wk->p_bgl );
 
 	// メインとサブを元に戻す
 	sys.disp3DSW = DISP_3D_TO_MAIN;
@@ -3427,7 +3427,7 @@ static u32	WLDTIMER_CameraGetStatus( const WLDTIMER_CAMERA* cp_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, u32 heapID )
 {
-	memset( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
 
 	// ボタンビットマップ作成
 	GF_BGL_BmpWinAdd(
@@ -3603,7 +3603,7 @@ static void WLDTIMER_TouchBttnOn( WLDTIMER_TOUCH* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_drawsys, WLDTIMER_MSGMAN* p_msgman, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
-	memset( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
 
 	// メッセージスピード
 	{
@@ -3806,7 +3806,7 @@ static void WLDTIMER_ViewerExit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 	WLDTIMER_PokeBaloon_Exit( &p_wk->poke, p_drawsys );
 
 	// フェードスクリーンデータ破棄
-	sys_FreeMemoryEz( p_wk->p_fadescrnbuff );
+	GFL_HEAP_FreeMemory( p_wk->p_fadescrnbuff );
 
 	// 地域メッセージ破棄
 	WLDTIMER_ViewerMsgExit( p_wk );
@@ -4089,7 +4089,7 @@ static void WLDTIMER_ViewerAnmCont( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 static void WLDTIMER_ViewerFadeInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_MSGMAN* p_msgman, WLDTIMER_DRAWSYS* p_drawsys )
 {
 	// フェードワーク初期化
-	memset( p_wk->fade, 0, sizeof(WLDTIMER_VIEWER_FADE)*WLDTIMER_VIEWER_FADE_DIV );
+	GFL_STD_MemFill( p_wk->fade, 0, sizeof(WLDTIMER_VIEWER_FADE)*WLDTIMER_VIEWER_FADE_DIV );
 	p_wk->fadecount = 0;
 	p_wk->fade_divnum = 0;
 	
@@ -4722,7 +4722,7 @@ static void WLDTIMER_TimeZoneAnm_Init( WLDTIMER_TIMEZONEANM* p_wk, WLDTIMER_DRAW
 {
 	int i;
 	
-	memset( p_wk, 0, sizeof(WLDTIMER_TIMEZONEANM) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TIMEZONEANM) );
 
 	// カウントデータ
 	p_wk->count_max = count_max;
@@ -4764,13 +4764,13 @@ static void WLDTIMER_TimeZoneAnm_Exit( WLDTIMER_TIMEZONEANM* p_wk )
 	// スクリーン破棄
 	if( p_wk->scrnframe > 0 ){
 		for( i=0; i<p_wk->scrnframe; i++ ){
-			sys_FreeMemoryEz( p_wk->p_scrnbuff[i] );
+			GFL_HEAP_FreeMemory( p_wk->p_scrnbuff[i] );
 		}
 	}
 
 	// パレット読み込み
 	if( p_wk->plttframe > 0 ){
-		sys_FreeMemoryEz( p_wk->p_plttbuff );
+		GFL_HEAP_FreeMemory( p_wk->p_plttbuff );
 	}
 }
 
@@ -4863,7 +4863,7 @@ static void WLDTIMER_TimeZoneAnm_SetFlag( WLDTIMER_TIMEZONEANM* p_wk, u32 drawty
 //-----------------------------------------------------------------------------
 static void WLDTIMER_TimeZoneAnm_ResetFlag( WLDTIMER_TIMEZONEANM* p_wk )
 {
-	memset( p_wk->drawflag, 0, sizeof(u8)*4 );
+	GFL_STD_MemFill( p_wk->drawflag, 0, sizeof(u8)*4 );
 }
 
 //----------------------------------------------------------------------------
@@ -4915,7 +4915,7 @@ static void WLDTIMER_PokeBaloon_Init( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 	CLACT_ADD_SIMPLE add = {NULL};
 
 	// 0クリア
-	memset( p_wk, 0, sizeof(WLDTIMER_POKEBALLOON) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_POKEBALLOON) );
 
 	// データ初期化
 	p_wk->drawtype	= WLDTIMER_VIEWER_DRAW_UND;	//  下から表示
@@ -5037,8 +5037,8 @@ static void WLDTIMER_PokeBaloon_Exit( WLDTIMER_POKEBALLOON* p_wk, WLDTIMER_DRAWS
 //-----------------------------------------------------------------------------
 static void WLDTIMER_PokeBaloon_Reset( WLDTIMER_POKEBALLOON* p_wk )
 {
-	memset( p_wk->drawflag, 0, sizeof(u8)*4 );
-	memset( p_wk->pokegra, 0, sizeof(u8)*4 );
+	GFL_STD_MemFill( p_wk->drawflag, 0, sizeof(u8)*4 );
+	GFL_STD_MemFill( p_wk->pokegra, 0, sizeof(u8)*4 );
 
 	p_wk->drawtype	= WLDTIMER_VIEWER_DRAW_UND;
 	p_wk->wait		= WLDTIMER_VIEWER_POKEBLN_WAIT;

@@ -16,7 +16,7 @@
 #include "system/particle.h"
 #include "system/brightness.h"
 #include "system/snd_tool.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 #include "communication/wm_icon.h"
 #include "msgdata/msg.naix"
 #include "system/wipe.h"

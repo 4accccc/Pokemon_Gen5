@@ -101,7 +101,7 @@ WFLBY_TIME WFLBY_WORLDTIMER_PLACE_GetPlaceTime( u16 nation, u8 area, WFLBY_TIME 
 	}
 
 	// 時間を求める
-	memset( &time, 0, sizeof(WFLBY_TIME) );
+	GFL_STD_MemFill( &time, 0, sizeof(WFLBY_TIME) );
 	time.hour = hour_dif;
 	WFLBY_TIME_Add( &time, &gmt, &time );
 
@@ -154,7 +154,7 @@ static void WLDTIMER_EarthListGetNationData( ARCHANDLE* p_handle, u32 heapID, u1
 			set_ok = TRUE;
 		}
 		
-		sys_FreeMemoryEz(filep);
+		GFL_HEAP_FreeMemory(filep);
 	}
 	
 	if( set_ok == FALSE ){//地点マーク回転初期化（地域データバイナリデータロード）
@@ -179,7 +179,7 @@ static void WLDTIMER_EarthListGetNationData( ARCHANDLE* p_handle, u32 heapID, u1
 			*p_y = listp[ 0 ].y;
 		}
 
-		sys_FreeMemoryEz(filep);
+		GFL_HEAP_FreeMemory(filep);
 	}
 }
 

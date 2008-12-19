@@ -391,7 +391,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	
 	// ƒ[ƒNì¬
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
-	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// ƒpƒ‰ƒ[ƒ^æ“¾
 	p_param	= pwk;
@@ -818,7 +818,7 @@ GFL_PROC_RESULT WFLBY_CONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	ConnectBGPalAnm_OccSet(&p_wk->cbp, FALSE);
 
 	// ƒ[ƒN”jŠü
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 
 	// ƒq[ƒv”jŠü
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -844,7 +844,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	
 	// ƒ[ƒNì¬
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_CONNECTWK), HEAPID_WFLBY_ROOM );
-	memset( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CONNECTWK) );
 
 	// ƒpƒ‰ƒ[ƒ^æ“¾
 	p_param	= pwk;
@@ -1055,7 +1055,7 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Exit(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	ConnectBGPalAnm_OccSet(&p_wk->cbp, FALSE);
 
 	// ƒ[ƒN”jŠü
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 
 	// ƒq[ƒv”jŠü
 	GFL_HEAP_DeleteHeap( HEAPID_WFLBY_ROOM );
@@ -1210,7 +1210,7 @@ static void WFLBY_CONNECT_GraphicExit( WFLBY_CONNECTWK* p_wk )
 		}
 
 		// BGL”jŠü
-		sys_FreeMemoryEz( p_wk->p_bgl );
+		GFL_HEAP_FreeMemory( p_wk->p_bgl );
 	}
 }
 

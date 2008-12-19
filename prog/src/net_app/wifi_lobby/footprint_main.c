@@ -1030,7 +1030,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	
 	// BG_SYSTEM解放
 	BgExit( fps->bgl );
-	sys_FreeMemoryEz( fps->bgl );
+	GFL_HEAP_FreeMemory( fps->bgl );
 
 	//アクターシステム削除
 	CATS_ResourceDestructor_S(fps->csp,fps->crp);
@@ -1072,7 +1072,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 #ifdef PM_DEBUG
 	if(fps->parent_work->wflby_sys == NULL){
 		//デバッグ呼び出しの場合はparent_workの解放も行う
-		sys_FreeMemoryEz(fps->parent_work);
+		GFL_HEAP_FreeMemory(fps->parent_work);
 	}
 #endif
 
@@ -1710,7 +1710,7 @@ static BOOL OBJFootCharRewrite(int monsno, int form_no, CATS_ACT_PTR cap, ARCHAN
 		+ image->vramLocation.baseAddrOfVram[vram_type]), 
 		0x20 * 2);
 	
-	sys_FreeMemoryEz(pSrc);
+	GFL_HEAP_FreeMemory(pSrc);
 	return TRUE;
 }
 

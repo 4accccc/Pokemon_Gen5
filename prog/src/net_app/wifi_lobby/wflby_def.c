@@ -397,7 +397,7 @@ int WFLBY_ERR_GetStrID( int errno,int errtype )
 	int err_type;
 	int msgno;
 
-	err_type = mydwc_errorType( errno,errtype );
+	err_type = GFL_NET_DWC_ErrorType( errno,errtype );
 	
     if((err_type == 11) || (errno == ERRORCODE_0)){
         msgno = dwc_error_0015;
@@ -430,7 +430,7 @@ WFLBY_ERR_TYPE WFLBY_ERR_GetErrType( int errno,int errtype )
 	int err_type;
 	int ret;
 
-	err_type = mydwc_errorType( errno, errtype );
+	err_type = GFL_NET_DWC_ErrorType( errno, errtype );
 	
     if( errno == ERRORCODE_0 ){
 		err_type = 11;

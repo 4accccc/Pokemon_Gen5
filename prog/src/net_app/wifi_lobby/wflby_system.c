@@ -33,7 +33,7 @@
 
 #include "poketool/pokeparty.h"
 
-#include "wifi/dwc_lobbylib.h"
+#include "net_app/dwc_lobbylib.h"
 
 #include "net_app/wifi_country.h"
 
@@ -751,8 +751,8 @@ WFLBY_SYSTEM* WFLBY_SYSTEM_Init( SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	WFLBY_SYSTEM* p_wk;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_SYSTEM) );
-	memset( p_wk, 0, sizeof(WFLBY_SYSTEM) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_SYSTEM) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_SYSTEM) );
 
 	// セーブデータ保存
 	p_wk->p_save = p_save;
@@ -861,14 +861,14 @@ void WFLBY_SYSTEM_Exit( WFLBY_SYSTEM* p_wk )
 		NEWS_DSET_Exit( p_wk->glbdata.p_lobbynews );
 
 		for( i=0; i<NEWS_TOPICNAME_NUM; i++ ){
-			sys_FreeMemoryEz( p_wk->glbdata.p_mystatus[i] );
+			GFL_HEAP_FreeMemory( p_wk->glbdata.p_mystatus[i] );
 		}
 	}
 
 	// WiFiロビーライブラリ破棄
 	DWC_LOBBY_Exit();
 	
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -3548,7 +3548,7 @@ void WFLBY_SYSTEM_FNOTE_SetTalk( WFLBY_SYSTEM* p_wk, u32 plidx )
 				HEAPID_WFLBY_ROOM, FNOTE_ID_PL_LOBBY_CHAT );
 		FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
 
-		sys_FreeMemoryEz( p_mystatus );
+		GFL_HEAP_FreeMemory( p_mystatus );
 	}
 }
 
@@ -3579,7 +3579,7 @@ void WFLBY_SYSTEM_FNOTE_SetGetGadget( WFLBY_SYSTEM* p_wk, u32 plidx )
 				HEAPID_WFLBY_ROOM, FNOTE_ID_PL_LOBBY_TOY_GET );
 		FNOTE_DataSave( p_fnote, p_buf, FNOTE_TYPE_SIO );
 
-		sys_FreeMemoryEz( p_mystatus );
+		GFL_HEAP_FreeMemory( p_mystatus );
 	}
 }
 
@@ -4466,7 +4466,7 @@ static void WFLBY_SYSTEM_SetWldTimerData( WFLBY_USER_MYPROFILE* p_myprofile, WFL
 	u8 area;
 
 	// メモリクリア
-	memset( p_wk, 0, sizeof(WFLBY_WLDTIMER) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_WLDTIMER) );
 
 	// ユーザテーブル取得
 	DWC_LOBBY_GetUserIDTbl( &usertbl );
@@ -5013,7 +5013,7 @@ static void WFLBY_SYSTEM_MG_Init( WFLBY_SYSTEM_MG* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_MG_Exit( WFLBY_SYSTEM_MG* p_wk )
 {
-	sys_FreeMemoryEz( p_wk->p_mystatus );
+	GFL_HEAP_FreeMemory( p_wk->p_mystatus );
 }
 
 //----------------------------------------------------------------------------
@@ -5030,7 +5030,7 @@ static void WFLBY_SYSTEM_MG_SetMyStatus( WFLBY_SYSTEM_MG* p_wk, const WFLBY_USER
 	WFLBY_USER_PROFILE* p_buff;
 
 	// バッファ作成
-	p_buff = sys_AllocMemory( heapID,  sizeof(WFLBY_USER_PROFILE) );
+	p_buff = GFL_HEAP_AllocMemory( heapID,  sizeof(WFLBY_USER_PROFILE) );
 	GFL_STD_MemCopyFast( &cp_profile->profile, p_buff, sizeof(WFLBY_USER_PROFILE) );
 
 	// 名前をライブラリのデータにある物に書き換えてからMYSTATUSを取得する
@@ -5040,7 +5040,7 @@ static void WFLBY_SYSTEM_MG_SetMyStatus( WFLBY_SYSTEM_MG* p_wk, const WFLBY_USER
 	WFLBY_SYSTEM_GetProfileMyStatus( p_buff, p_wk->p_mystatus, heapID );
 
 	// バッファ破棄
-	sys_FreeMemoryEz( p_buff );
+	GFL_HEAP_FreeMemory( p_buff );
 }
 
 
@@ -5082,7 +5082,7 @@ static BOOL WFLBY_SYSTEM_AplFlag_GetForceEnd( const WFLBY_SYSTEM_APLFLAG* cp_wk 
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_GadGetClear( WFLBY_SYSTEM_GADGET* p_wk )
 {
-	memset( p_wk, 0, sizeof(WFLBY_SYSTEM_GADGET) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_SYSTEM_GADGET) );
 }
 
 
@@ -5097,7 +5097,7 @@ static void WFLBY_SYSTEM_GadGetClear( WFLBY_SYSTEM_GADGET* p_wk )
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_TALK_Init( WFLBY_SYSTEM_TALK* p_wk )
 {
-	memset( p_wk, 0, sizeof(WFLBY_SYSTEM_TALK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_SYSTEM_TALK) );
 }
 
 //----------------------------------------------------------------------------
@@ -5683,7 +5683,7 @@ static void WFLBY_SYSTEM_TOPIC_SetEvent( WFLBY_SYSTEM* p_wk, WFLBY_EVENTTYPE eve
 //-----------------------------------------------------------------------------
 static void WFLBY_SYSTEM_FLOAT_Init( WFLBY_FLOAT_DATA* p_float )
 {
-	memset( p_float, 0, sizeof(WFLBY_FLOAT_DATA) );
+	GFL_STD_MemFill( p_float, 0, sizeof(WFLBY_FLOAT_DATA) );
 	GFL_STD_MemFill32( p_float->reserve, DWC_LOBBY_USERIDTBL_IDX_NONE, sizeof(u32)*(WFLBY_FLOAT_MAX*WFLBY_FLOAT_ON_NUM) );
 }
 
@@ -6430,7 +6430,7 @@ static void WFLBY_SYSTEM_GADGETRATE_Init( WFLBY_SYSTEM_GADGETRATE* p_wk )
 {
 	int i;
 	
-	memset( p_wk, 0, sizeof(WFLBY_SYSTEM_GADGETRATE) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_SYSTEM_GADGETRATE) );
 	
 	// 初期レートを設定
 	for( i=0; i<WFLBY_ITEM_GROUPNUM; i++ ){

@@ -15,7 +15,7 @@
 #include "system/msgdata.h"
 #include "system/fontproc.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "msgdata/msg_wifi_h_info.h"
 
@@ -1611,7 +1611,7 @@ static void WFLBY_EV_MG_MINIGAME_PrintInit( WFLBY_EV_MG_KANBANWK* p_evwk, WFLBY_
 	
 	GF_ASSERT( kanban_mode < WFLBY_EV_MG_KANBAN_MODE_NUM );
 
-	memset( p_evwk, 0, sizeof(WFLBY_EV_MG_KANBANWK) );
+	GFL_STD_MemFill( p_evwk, 0, sizeof(WFLBY_EV_MG_KANBANWK) );
 
 	p_evwk->mode			= kanban_mode;
 	p_evwk->minigame_type	= minigame_type;
@@ -1634,7 +1634,7 @@ static void WFLBY_EV_MG_MINIGAME_PrintInit( WFLBY_EV_MG_KANBANWK* p_evwk, WFLBY_
 //-----------------------------------------------------------------------------
 static void WFLBY_EV_MG_MINIGAME_PrintExit( WFLBY_EV_MG_KANBANWK* p_evwk, WFLBY_ROOMWK* p_rmwk )
 {
-	memset( p_evwk, 0, sizeof(WFLBY_EV_MG_KANBANWK) );
+	GFL_STD_MemFill( p_evwk, 0, sizeof(WFLBY_EV_MG_KANBANWK) );
 	WFLBY_ROOM_SUBWIN_End( p_rmwk );
 }
 

@@ -95,9 +95,9 @@ s16 Action_MoveValue_2Y( void )
 //--------------------------------------------------------------
 BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys )
 {
-	BB_CLIENT* wk = sys_AllocMemory( HEAPID_BB, sizeof( BB_CLIENT ) );
+	BB_CLIENT* wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_CLIENT ) );
 	
-	memset( wk, 0, sizeof( BB_CLIENT ) );
+	GFL_STD_MemFill( wk, 0, sizeof( BB_CLIENT ) );
 	
 	wk->comm_num = comm_num;
 	wk->netid	 = netid;
@@ -180,7 +180,7 @@ void BB_Client_3D_PosInit( BB_CLIENT* wk )
 //--------------------------------------------------------------
 void BB_Client_FreeMemory( BB_CLIENT* wk )
 {
-	sys_FreeMemoryEz( wk );
+	GFL_HEAP_FreeMemory( wk );
 }
 
 
@@ -288,9 +288,9 @@ void BB_ManeneAnime_CheckSet( BB_CLIENT* wk ){
 //--------------------------------------------------------------
 static void BB_Client_Manene_Action_Call( BB_CLIENT* wk, int netid )
 {
-	BB_MANENE_ACTION* sub_wk = sys_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_ACTION ) );
+	BB_MANENE_ACTION* sub_wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_ACTION ) );
 	
-	memset( sub_wk, 0, sizeof( BB_MANENE_ACTION ) );
+	GFL_STD_MemFill( sub_wk, 0, sizeof( BB_MANENE_ACTION ) );
 	
 	sub_wk->cap_mane = wk->cap_mane[ wk->netid_to_capid[ netid ] ];
 	sub_wk->cap_ball = wk->cap_ball[ wk->netid_to_capid[ netid ] ];
@@ -367,9 +367,9 @@ static void BB_Client_3D_LevelUp_Action_Call( BB_CLIENT* wk, int netid )
 //--------------------------------------------------------------
 static void BB_Manene_3D_Fall_Call( BB_CLIENT* wk )
 {
-	BB_MANENE_3D_ACTION* sub_wk = sys_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_3D_ACTION ) );
+	BB_MANENE_3D_ACTION* sub_wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_3D_ACTION ) );
 
-	memset( sub_wk, 0, sizeof( BB_MANENE_3D_ACTION ) );
+	GFL_STD_MemFill( sub_wk, 0, sizeof( BB_MANENE_3D_ACTION ) );
 
 	sub_wk->anime_type = &wk->anime_type;
 	sub_wk->model	   = &wk->bb3d_mane[ 0 ];
@@ -402,9 +402,9 @@ static void BB_Manene_3D_Fall_Call( BB_CLIENT* wk )
 //--------------------------------------------------------------
 static void BB_Client_Manene_3D_RecoverAction_Call( BB_CLIENT* wk )
 {
-	BB_MANENE_3D_ACTION* sub_wk = sys_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_3D_ACTION ) );
+	BB_MANENE_3D_ACTION* sub_wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_MANENE_3D_ACTION ) );
 	
-	memset( sub_wk, 0, sizeof( BB_MANENE_3D_ACTION ) );
+	GFL_STD_MemFill( sub_wk, 0, sizeof( BB_MANENE_3D_ACTION ) );
 	
 	sub_wk->model	   = &wk->bb3d_mane[ 0 ];
 	sub_wk->model_ball = &wk->bb3d_ball;
@@ -457,7 +457,7 @@ void BB_Manene_3D_Fall_TCB( TCB_PTR tcb, void* work )
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		TCB_Delete( tcb );
-		sys_FreeMemoryEz( wk );
+		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
 	
@@ -575,7 +575,7 @@ void BB_Manene_3D_Fall_TCB( TCB_PTR tcb, void* work )
 				}
 				wk->model->pos.z = BB_MODEL_OFS_Z;			
 				TCB_Delete( tcb );
-				sys_FreeMemoryEz( wk );
+				GFL_HEAP_FreeMemory( wk );
 			}
 		}
 		break;
@@ -595,7 +595,7 @@ void BB_Client_Manene_3D_Recover_Action_TCB( TCB_PTR tcb, void* work )
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		TCB_Delete( tcb );
-		sys_FreeMemoryEz( wk );
+		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
 
@@ -631,7 +631,7 @@ void BB_Client_Manene_3D_Recover_Action_TCB( TCB_PTR tcb, void* work )
 		wk->model->pos.z = BB_MODEL_OFS_Z;
 		
 		TCB_Delete( tcb );
-		sys_FreeMemoryEz( wk );	
+		GFL_HEAP_FreeMemory( wk );	
 		return;	
 	}
 			
@@ -660,7 +660,7 @@ void BB_Client_Manene_Action_TCB( TCB_PTR tcb, void* work )
 	
 	if ( (WIPE_SYS_EndCheck() == FALSE) || (wk->sys->comm_err_data.dis_err == TRUE) ){
 		TCB_Delete( tcb );
-		sys_FreeMemoryEz( wk );
+		GFL_HEAP_FreeMemory( wk );
 		return;
 	}
 	
@@ -708,7 +708,7 @@ void BB_Client_Manene_Action_TCB( TCB_PTR tcb, void* work )
 		else {
 			if ( (++wk->wait) >= 10 ){
 				TCB_Delete( tcb );
-				sys_FreeMemoryEz( wk );
+				GFL_HEAP_FreeMemory( wk );
 			}
 		}
 		break;
@@ -818,7 +818,7 @@ static void BB_Client_LevelUp_Action_TCB( TCB_PTR tcb, void* work )
 		CATS_ObjectAffineSetCap( wk->cap_kage, CLACT_AFFINE_NONE );
 		wk->bStart = FALSE;
 		TCB_Delete( tcb );
-	//	sys_FreeMemoryEz( wk );
+	//	GFL_HEAP_FreeMemory( wk );
 		break;
 	}
 }
@@ -950,7 +950,7 @@ static void BB_Client_3D_LevelUp_Action_TCB( TCB_PTR tcb, void* work )
 		D3DOBJ_AnmDelete( &up->anm[ 1 ], &wk->sys->allocator );
 		wk->bStart = FALSE;
 		TCB_Delete( tcb );
-	//	sys_FreeMemoryEz( wk );
+	//	GFL_HEAP_FreeMemory( wk );
 		break;
 	}
 }

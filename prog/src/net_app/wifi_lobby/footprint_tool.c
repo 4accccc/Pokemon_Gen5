@@ -132,7 +132,7 @@ void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GF_BGL_BM
 	STRBUF_Delete(message_src);
 	STRBUF_Delete(expand_src);
 	
-	sys_FreeMemoryEz(my_status);
+	GFL_HEAP_FreeMemory(my_status);
 }
 
 //--------------------------------------------------------------

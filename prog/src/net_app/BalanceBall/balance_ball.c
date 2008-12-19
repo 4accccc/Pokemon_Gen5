@@ -84,7 +84,7 @@ enum {
 static void BalanceBall_MainInit( BB_WORK* wk )
 {
 //	BB_WORK* wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
-//	memset( wk, 0, sizeof( BB_WORK ) );
+//	GFL_STD_MemFill( wk, 0, sizeof( BB_WORK ) );
 
 	wk->seed_tmp = gf_get_seed();		///< —”‚Ìƒ^ƒl‘Þ”ð
 
@@ -107,7 +107,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 		PaletteWorkSet( wk->sys.pfd, palData->pRawData, FADE_MAIN_OBJ,
 						BB_WIRE_RESS_ICON_PAL * 16, BB_WIRE_RESS_ICON_PAL_SIZ );
 
-		sys_FreeMemoryEz( dat );
+		GFL_HEAP_FreeMemory( dat );
 	}
 
 	///< ’ÊM•”•ª
@@ -273,7 +273,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 	PaletteWorkSet_VramCopy( wk->sys.pfd, FADE_MAIN_OBJ, 0 * 16, 16 * 0x20 );
 	
 	if ( wk->parent_wk->vchat ){
-		mydwc_startvchat( HEAPID_BB );
+		GFL_NET_DWC_StartVChat( HEAPID_BB );
 	}
 }
 
@@ -296,7 +296,7 @@ GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BB, HEAP_SIZE_BB );
 	
 	wk = GFL_PROC_AllocWork( proc, sizeof( BB_WORK ), HEAPID_BB );
-	memset( wk, 0, sizeof( BB_WORK ) );
+	GFL_STD_MemFill( wk, 0, sizeof( BB_WORK ) );
 	
 	wk->parent_wk = pwk;
 	
@@ -702,7 +702,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 				Reset_GameData( wk );				
 				BB_MainSeq_Change( wk, bEnd, eBB_SEQ_ENTRY_INIT, seq );
 				if ( wk->parent_wk->vchat ){
-					mydwc_stopvchat();
+					GFL_NET_DWC_StopVChat();
 				}
 				break;
 			}
@@ -716,7 +716,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		GFL_NET_HANDLE_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  CCMD_BB_CONNECT_END );
 			
 		if ( wk->parent_wk->vchat ){
-			mydwc_stopvchat();
+			GFL_NET_DWC_StopVChat();
 		}
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_END_WAIT, seq );
 		break;
@@ -820,8 +820,8 @@ static void Reset_GameData( BB_WORK* wk )
 	wk->bStart	= FALSE;
 	wk->bResult = FALSE;
 	
-	memset( &wk->result, 0, sizeof( BB_RESULT_COMM ) );
-	memset( &wk->mem_result, 0, sizeof( BB_MENBER_RESULT_COMM ) );
+	GFL_STD_MemFill( &wk->result, 0, sizeof( BB_RESULT_COMM ) );
+	GFL_STD_MemFill( &wk->mem_result, 0, sizeof( BB_MENBER_RESULT_COMM ) );
 }
 
 
@@ -949,7 +949,7 @@ void BB_SystemExit( BB_WORK* wk )
 	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME1_S );
 	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME2_S );
 	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME3_S );
-	sys_FreeMemoryEz( wk->sys.bgl );
+	GFL_HEAP_FreeMemory( wk->sys.bgl );
 
 	PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_MAIN_BG );
 	PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_SUB_BG );

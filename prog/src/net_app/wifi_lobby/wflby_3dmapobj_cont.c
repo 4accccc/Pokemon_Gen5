@@ -310,8 +310,8 @@ WFLBY_3DMAPOBJ_CONT* WFLBY_3DMAPOBJCONT_Init( WFLBY_SEASON_TYPE season, WFLBY_RO
 	WFLBY_3DMAPOBJ_CONT* p_sys;
 	int i;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_CONT) );
-	memset( p_sys, 0, sizeof(WFLBY_3DMAPOBJ_CONT) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_CONT) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_3DMAPOBJ_CONT) );
 
 	// マップデータ保存
 	p_sys->cp_mapdata = cp_map;
@@ -511,7 +511,7 @@ void WFLBY_3DMAPOBJCONT_Exit( WFLBY_3DMAPOBJ_CONT* p_sys )
 	WFLBY_3DMAPOBJ_Exit( p_sys->p_mapobjsys );
 
 	// 自分自身を破棄
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------

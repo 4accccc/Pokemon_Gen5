@@ -165,8 +165,8 @@ WFLBY_EVENT* WFLBY_EVENT_Init( WFLBY_ROOMWK* p_rmwk, u32 heapID )
 {
 	WFLBY_EVENT* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_EVENT) );
-	memset( p_sys, 0, sizeof(WFLBY_EVENT) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_EVENT) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_EVENT) );
 
 	// ヒープ保存
 	p_sys->heapID = heapID;
@@ -210,7 +210,7 @@ void WFLBY_EVENT_Exit( WFLBY_EVENT* p_sys )
 
 
 	// システム破棄
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //-------------------------------------
@@ -266,8 +266,8 @@ void* WFLBY_EVENTWK_GetParam( WFLBY_EVENTWK* p_wk )
 void* WFLBY_EVENTWK_AllocWk( WFLBY_EVENTWK* p_wk, u32 size )
 {
 	GF_ASSERT( p_wk->data.p_wk == NULL );
-	p_wk->data.p_wk = sys_AllocMemory( p_wk->heapID, size );
-	memset( p_wk->data.p_wk, 0, size );
+	p_wk->data.p_wk = GFL_HEAP_AllocMemory( p_wk->heapID, size );
+	GFL_STD_MemFill( p_wk->data.p_wk, 0, size );
 	return p_wk->data.p_wk;
 }
 
@@ -282,7 +282,7 @@ void* WFLBY_EVENTWK_AllocWk( WFLBY_EVENTWK* p_wk, u32 size )
 void WFLBY_EVENTWK_DeleteWk( WFLBY_EVENTWK* p_wk )
 {
 	GF_ASSERT( p_wk->data.p_wk != NULL );
-	sys_FreeMemoryEz( p_wk->data.p_wk );
+	GFL_HEAP_FreeMemory( p_wk->data.p_wk );
 	p_wk->data.p_wk = NULL;
 }
 
@@ -532,12 +532,12 @@ static void WFLBY_EVENTWK_Exit( WFLBY_EVENTWK* p_wk )
 {
 	//  実行データ破棄
 	if( p_wk->data.p_wk != NULL ){
-		sys_FreeMemoryEz( p_wk->data.p_wk );
+		GFL_HEAP_FreeMemory( p_wk->data.p_wk );
 	}
 	if( p_wk->tmp.p_wk != NULL ){
-		sys_FreeMemoryEz( p_wk->tmp.p_wk );
+		GFL_HEAP_FreeMemory( p_wk->tmp.p_wk );
 	}
-	memset( p_wk, 0, sizeof(WFLBY_EVENTWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_EVENTWK) );
 }
 
 //----------------------------------------------------------------------------

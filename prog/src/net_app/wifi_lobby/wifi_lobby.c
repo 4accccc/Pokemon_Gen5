@@ -18,7 +18,7 @@
 
 #include "net_app/wifi_lobby.h"
 
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 #include "wifi/dwc_overlay.h"
 
@@ -110,7 +110,7 @@ GFL_PROC_RESULT WFLBYProc_Init( GFL_PROC* p_proc, int* p_seq , void * pwk, void 
 
 	// ワーク作成
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(WFLBY_WK), HEAPID_WFLOBBY );
-	memset( p_wk, 0, sizeof(WFLBY_WK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_WK) );
 
 	// パラメータワーク取得
 	p_param = pwk;

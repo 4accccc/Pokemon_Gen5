@@ -76,7 +76,7 @@ WFLBY_MAPCONT* WFLBY_MAPCONT_Init( u32 heapID )
 	WFLBY_MAPCONT* p_sys;
 	void* p_mapdata;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_MAPCONT) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_MAPCONT) );
 	
 	// システム作成
 	p_sys->p_map = WF2DMAP_MAPSysInit( WFLBY_MAPSIZE_X,  WFLBY_MAPSIZE_Y, heapID );
@@ -85,7 +85,7 @@ WFLBY_MAPCONT* WFLBY_MAPCONT_Init( u32 heapID )
 	p_mapdata = ArcUtil_Load( ARC_WFLBY_MAP, NARC_wflby_map_wflby_map_dat, FALSE, heapID, ALLOC_BOTTOM);
 	WF2DMAP_MAPSysDataSet( p_sys->p_map, p_mapdata );
 
-	sys_FreeMemoryEz( p_mapdata );
+	GFL_HEAP_FreeMemory( p_mapdata );
 
 	return p_sys;
 }
@@ -100,7 +100,7 @@ WFLBY_MAPCONT* WFLBY_MAPCONT_Init( u32 heapID )
 void WFLBY_MAPCONT_Exit( WFLBY_MAPCONT* p_sys )
 {
 	WF2DMAP_MAPSysExit( p_sys->p_map );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 // マップの大きさ取得

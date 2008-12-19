@@ -384,8 +384,8 @@ WFLBY_3DOBJCONT* WFLBY_3DOBJCONT_Init( u32 objnum, u32 hero_sex, const WFLBY_MAP
 {
 	WFLBY_3DOBJCONT* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_3DOBJCONT) );
-	memset( p_sys, 0, sizeof(WFLBY_3DOBJCONT) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DOBJCONT) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_3DOBJCONT) );
 
 	// システム作成
 	p_sys->p_objsys		= WF2DMAP_OBJSysInit( objnum, heapID );
@@ -394,8 +394,8 @@ WFLBY_3DOBJCONT* WFLBY_3DOBJCONT_Init( u32 objnum, u32 hero_sex, const WFLBY_MAP
 
 	// オブジェクトワーク作成
 	p_sys->objnum		= objnum;
-	p_sys->p_objbuf		= sys_AllocMemory( heapID, sizeof(WFLBY_3DPERSON)*objnum );
-	memset( p_sys->p_objbuf, 0, sizeof(WFLBY_3DPERSON)*objnum );
+	p_sys->p_objbuf		= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DPERSON)*objnum );
+	GFL_STD_MemFill( p_sys->p_objbuf, 0, sizeof(WFLBY_3DPERSON)*objnum );
 
 	// マップシステムを保存しておく
 	p_sys->cp_mapsys = cp_map;
@@ -420,7 +420,7 @@ void WFLBY_3DOBJCONT_Exit( WFLBY_3DOBJCONT* p_sys )
 {
 	
 	//  オブジェクトワーク破棄
-	sys_FreeMemoryEz( p_sys->p_objbuf );
+	GFL_HEAP_FreeMemory( p_sys->p_objbuf );
 	
 	// システム破棄
 	WF2DMAP_REQCMDQSysExit( p_sys->p_reqQ );
@@ -428,7 +428,7 @@ void WFLBY_3DOBJCONT_Exit( WFLBY_3DOBJCONT* p_sys )
 	WF2DMAP_OBJSysExit( p_sys->p_objsys );
 
 	// システム自体を破棄
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -712,7 +712,7 @@ void WFLBY_3DOBJCONT_Delete( WFLBY_3DPERSON* p_wk )
 	WFLBY_3DOBJWK_Del( p_wk->p_draw );
 	WF2DMAP_OBJWkDel( p_wk->p_obj );
 
-	memset( p_wk, 0, sizeof(WFLBY_3DPERSON) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_3DPERSON) );
 }
 
 //----------------------------------------------------------------------------
@@ -909,7 +909,7 @@ void WFLBY_3DOBJCONT_SetWkMove( WFLBY_3DOBJCONT* p_sys, WFLBY_3DPERSON* p_wk, WF
 	p_wk->seq		= 0;
 	p_wk->moveend	= FALSE;
 	p_wk->movetype	= movetype;
-	memset( &p_wk->work, 0, sizeof(WFLBY_3DPARSON_MOVEWK) );
+	GFL_STD_MemFill( &p_wk->work, 0, sizeof(WFLBY_3DPARSON_MOVEWK) );
 	p_wk->p_func	= sc_WFLBY_3DPARSON_FUNC[ movetype ];
 }
 

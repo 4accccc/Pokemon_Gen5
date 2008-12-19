@@ -11,7 +11,7 @@
 //==============================================================================
 
 #include "common.h"
-#include "communication/communication.h"
+#include "net\network_define.h"
 
 
 #include "bb_common.h"
@@ -124,7 +124,7 @@ static int CommBB_SizeMemberResult_Get( void )
 //
 //
 // -----------------------------------------
-static const CommPacketTbl _CommBBTbl[] = {	
+static const NetRecvFuncTable _CommBBTbl[] = {	
 	{ CommBB_Start,			CommBB_SizeRule_Get,		 NULL },
 	{ CommBB_End,			CommBB_SizeZero_Get,		 NULL },
 	{ CommBB_State,			CommBB_SizeState_Get,		 NULL },
@@ -138,11 +138,11 @@ static const CommPacketTbl _CommBBTbl[] = {
  *
  * @param	none	
  *
- * @retval	const CommPacketTbl*	
+ * @retval	const NetRecvFuncTable*	
  *
  */
 //--------------------------------------------------------------
-const CommPacketTbl* BB_CommCommandTclGet( void )
+const NetRecvFuncTable* BB_CommCommandTclGet( void )
 {
 	return _CommBBTbl;
 }
@@ -160,7 +160,7 @@ const CommPacketTbl* BB_CommCommandTclGet( void )
 //--------------------------------------------------------------
 int BB_CommCommandTblNumGet( void )
 {
-	return sizeof( _CommBBTbl ) / sizeof( CommPacketTbl );
+	return sizeof( _CommBBTbl ) / sizeof( NetRecvFuncTable );
 }
 
 

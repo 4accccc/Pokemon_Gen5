@@ -83,8 +83,8 @@ WFLBY_CAMERA* WFLBY_CAMERA_Init( u32 heapID )
 	WFLBY_CAMERA* p_wk;
 	VecFx32 target;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
-	memset( p_wk, 0, sizeof(WFLBY_CAMERA) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CAMERA) );
 
 	// ƒƒ‚ƒŠŠm•Û
 	p_wk->p_camera = GFC_AllocCamera( heapID );
@@ -123,7 +123,7 @@ void WFLBY_CAMERA_Exit( WFLBY_CAMERA* p_sys )
 		
 	GFC_FreeCamera( p_sys->p_camera );
 
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -252,8 +252,8 @@ WFLBY_CAMERA* WFLBY_CAMERA_DEBUG_CameraInit( u32 heapID )
 	WFLBY_CAMERA* p_wk;
 	VecFx32 target;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
-	memset( p_wk, 0, sizeof(WFLBY_CAMERA) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_CAMERA) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_CAMERA) );
 
 	// ƒƒ‚ƒŠŠm•Û
 	p_wk->p_camera = GFC_AllocCamera( heapID );

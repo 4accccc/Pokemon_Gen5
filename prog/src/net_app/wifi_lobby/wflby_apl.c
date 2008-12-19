@@ -204,8 +204,8 @@ WFLBY_APL* WFLBY_APL_Init( BOOL check_skip, SAVE_CONTROL_WORK* p_save, WFLBY_COU
 {
 	WFLBY_APL* p_wk;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_APL) );
-	memset( p_wk, 0, sizeof(WFLBY_APL) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_APL) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_APL) );
 
 	// ƒf[ƒ^•Û‘¶
 	p_wk->p_system			= p_system;
@@ -247,7 +247,7 @@ void WFLBY_APL_Exit( WFLBY_APL* p_wk )
 		}
 	}
 	
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -477,7 +477,7 @@ static void WFLBY_APL_MINIGAME_FreeWk( WFLBY_MINIGAME_WK* p_wk )
 	int i;
 	
 	for( i=0; i<WFLBY_MINIGAME_MAX; i++ ){
-		sys_FreeMemoryEz( p_wk->p_mystate[i] );
+		GFL_HEAP_FreeMemory( p_wk->p_mystate[i] );
 		p_wk->p_mystate[i] = NULL;
 	}
 }
@@ -529,8 +529,8 @@ static void WFLBY_APLDATA_ROOM_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u
 {
 	WFLBY_ROOM_PARAM* p_param;
 	
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(WFLBY_ROOM_PARAM) );
-	memset( p_data->p_param, 0, sizeof(WFLBY_ROOM_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_ROOM_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(WFLBY_ROOM_PARAM) );
 
 	p_param = p_data->p_param;
 
@@ -548,7 +548,7 @@ static void WFLBY_APLDATA_ROOM_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u
 static void WFLBY_APLDATA_ROOM_Exit( WFLBY_APLDATA* p_data )
 {
 	GF_ASSERT(p_data->p_param);
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 	p_data->p_param = NULL;
 }
 
@@ -670,8 +670,8 @@ static void WFLBY_APLDATA_WORLDTIMER_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 {
 	WLDTIMER_PARAM* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(WLDTIMER_PARAM) );
-	memset( p_data->p_param, 0, sizeof(WLDTIMER_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WLDTIMER_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(WLDTIMER_PARAM) );
 
 	p_param = p_data->p_param;
 
@@ -689,7 +689,7 @@ static void WFLBY_APLDATA_WORLDTIMER_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_da
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_WORLDTIMER_Exit( WFLBY_APLDATA* p_data )
 {
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -761,8 +761,8 @@ static void WFLBY_APLDATA_TOPIC_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  
 {
 	NEWS_DRAW_DATA* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(NEWS_DRAW_DATA) );
-	memset( p_data->p_param, 0, sizeof(NEWS_DRAW_DATA) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(NEWS_DRAW_DATA) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(NEWS_DRAW_DATA) );
 	
 	p_param = p_data->p_param;
 
@@ -781,7 +781,7 @@ static void WFLBY_APLDATA_TOPIC_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_TOPIC_Exit( WFLBY_APLDATA* p_data )
 {
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -845,8 +845,8 @@ static void WFLBY_APLDATA_LOGIN_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  
 {
 	WFLBY_CONNECT_PARAM* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(WFLBY_CONNECT_PARAM) );
-	memset( p_data->p_param, 0, sizeof(WFLBY_CONNECT_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_CONNECT_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(WFLBY_CONNECT_PARAM) );
 	
 	p_param = p_data->p_param;
 
@@ -868,7 +868,7 @@ static void WFLBY_APLDATA_LOGIN_Exit( WFLBY_APLDATA* p_data )
 {
 	WFLBY_CONNECT_PARAM* p_param;
 	p_param = p_data->p_param;
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -939,8 +939,8 @@ static void WFLBY_APLDATA_BS_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u32
 {
 	BUCKET_PROC_WORK* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(BUCKET_PROC_WORK) );
-	memset( p_data->p_param, 0, sizeof(BUCKET_PROC_WORK) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(BUCKET_PROC_WORK) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(BUCKET_PROC_WORK) );
 	
 	p_param = p_data->p_param;
 
@@ -969,7 +969,7 @@ static void WFLBY_APLDATA_BS_Exit( WFLBY_APLDATA* p_data )
 	p_param = p_data->p_param;
 	WFLBY_APL_MINIGAME_FreeWk( &p_param->lobby_wk );
 	
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -1050,8 +1050,8 @@ static void WFLBY_APLDATA_BB_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u32
 {
 	BB_PROC_WORK* p_param;
 	
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(BB_PROC_WORK) );
-	memset( p_data->p_param, 0, sizeof(BB_PROC_WORK) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(BB_PROC_WORK) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(BB_PROC_WORK) );
 
 	p_param = p_data->p_param;
 	
@@ -1078,7 +1078,7 @@ static void WFLBY_APLDATA_BB_Exit( WFLBY_APLDATA* p_data )
 	p_param = p_data->p_param;
 	WFLBY_APL_MINIGAME_FreeWk( &p_param->lobby_wk );
 
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -1155,8 +1155,8 @@ static void WFLBY_APLDATA_BL_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u32
 {
 	BALLOON_PROC_WORK* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(BALLOON_PROC_WORK) );
-	memset( p_data->p_param, 0, sizeof(BALLOON_PROC_WORK) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(BALLOON_PROC_WORK) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(BALLOON_PROC_WORK) );
 	
 	p_param = p_data->p_param;
 
@@ -1183,7 +1183,7 @@ static void WFLBY_APLDATA_BL_Exit( WFLBY_APLDATA* p_data )
 	p_param = p_data->p_param;
 	WFLBY_APL_MINIGAME_FreeWk( &p_param->lobby_wk );
 	
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -1263,8 +1263,8 @@ static void WFLBY_APLDATA_FOOT_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u
 {
 	FOOTPRINT_PARAM* p_param;
 	
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(FOOTPRINT_PARAM) );
-	memset( p_data->p_param, 0, sizeof(FOOTPRINT_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(FOOTPRINT_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(FOOTPRINT_PARAM) );
 
 	p_param = p_data->p_param;
 
@@ -1280,7 +1280,7 @@ static void WFLBY_APLDATA_FOOT_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data,  u
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_FOOT_Exit( WFLBY_APLDATA* p_data )
 {
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -1373,8 +1373,8 @@ static void WFLBY_APLDATA_LOGOUT_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, 
 {
 	WFLBY_DISCONNECT_PARAM* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(WFLBY_DISCONNECT_PARAM) );
-	memset( p_data->p_param, 0, sizeof(WFLBY_DISCONNECT_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_DISCONNECT_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(WFLBY_DISCONNECT_PARAM) );
 
 	p_param = p_data->p_param;
 
@@ -1392,7 +1392,7 @@ static void WFLBY_APLDATA_LOGOUT_Init( WFLBY_APL* p_sys, WFLBY_APLDATA* p_data, 
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_LOGOUT_Exit( WFLBY_APLDATA* p_data )
 {
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------
@@ -1480,8 +1480,8 @@ static void WFLBY_APLDATA_ANKETO_InitInput( WFLBY_APL* p_sys, WFLBY_APLDATA* p_d
 {
 	ANKETO_PARAM* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(ANKETO_PARAM) );
-	memset( p_data->p_param, 0, sizeof(ANKETO_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(ANKETO_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(ANKETO_PARAM) );
 	
 	p_param = p_data->p_param;
 
@@ -1494,8 +1494,8 @@ static void WFLBY_APLDATA_ANKETO_InitOutput( WFLBY_APL* p_sys, WFLBY_APLDATA* p_
 {
 	ANKETO_PARAM* p_param;
 
-	p_data->p_param = sys_AllocMemory( heapID, sizeof(ANKETO_PARAM) );
-	memset( p_data->p_param, 0, sizeof(ANKETO_PARAM) );
+	p_data->p_param = GFL_HEAP_AllocMemory( heapID, sizeof(ANKETO_PARAM) );
+	GFL_STD_MemFill( p_data->p_param, 0, sizeof(ANKETO_PARAM) );
 	
 	p_param = p_data->p_param;
 
@@ -1514,7 +1514,7 @@ static void WFLBY_APLDATA_ANKETO_InitOutput( WFLBY_APL* p_sys, WFLBY_APLDATA* p_
 //-----------------------------------------------------------------------------
 static void WFLBY_APLDATA_ANKETO_Exit( WFLBY_APLDATA* p_data )
 {
-	sys_FreeMemoryEz( p_data->p_param );
+	GFL_HEAP_FreeMemory( p_data->p_param );
 }
 
 //----------------------------------------------------------------------------

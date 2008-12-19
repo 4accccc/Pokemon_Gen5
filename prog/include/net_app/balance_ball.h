@@ -20,7 +20,7 @@ typedef struct {
 	WFLBY_MINIGAME_WK lobby_wk;
 
 //	u8 voice_chat;
-	SAVEDATA*	p_save;
+	SAVE_CONTROL_WORK*	p_save;
 	BOOL		wifi_lobby;
 	u32			vchat;			///< voice_chat
 	

@@ -121,7 +121,7 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_
 	// テクスチャ部分を破棄する
 	{
 		tex_cut_size		= TEXRESM_TOOL_CutTexDataSizeGet( p_file );	// テクスチャを破棄した分のサイズを取得
-		*pp_in		= sys_AllocMemory( gheapID, tex_cut_size );	// テクスチャを破棄したサイズのメモリを確保
+		*pp_in		= GFL_HEAP_AllocMemory( gheapID, tex_cut_size );	// テクスチャを破棄したサイズのメモリを確保
 		memcpy( *pp_in, p_file, tex_cut_size );	// メモリをコピー
 	}
 
@@ -134,7 +134,7 @@ void WFLBY_3DMAPOBJ_TEX_LoatCutTex( void** pp_in, ARCHANDLE* p_handle, u32 data_
 
 
 	// 一時ファイルを破棄
-	sys_FreeMemoryEz( p_file );
+	GFL_HEAP_FreeMemory( p_file );
 }
 
 

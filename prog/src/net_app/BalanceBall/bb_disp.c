@@ -13,7 +13,7 @@
 #include "common.h"
 #include "bb_common.h"
 
-#include "graphic/wlmngm_tool.naix"
+#include "wlmngm_tool.naix"
 
 #include "communication/comm_info.h"
 #define BB_PRINT_COL		( GF_PRINTCOLOR_MAKE( 1,  2, 15 ) )

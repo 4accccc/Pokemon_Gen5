@@ -240,8 +240,8 @@ WFLBY_LIGHTWK* WFLBY_LIGHT_Init( u32 heapID, WFLBY_LIGHT_NEON_ROOMTYPE roomtype,
 	WFLBY_LIGHTWK* p_wk;
 	int i;
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_LIGHTWK) );
-	memset( p_wk, 0, sizeof(WFLBY_LIGHTWK) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_LIGHTWK) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_LIGHTWK) );
 
 	WFLBY_LIGHT_Ful_SetLIGHTDATA_ROOM( &p_wk->now, &sc_WFLBY_LIGHTDATA_ROOM[ roomtype ] );
 	WFLBY_LIGHT_Ful_SetLIGHTDATA_FLOOR( &p_wk->now, &sc_WFLBY_LIGHTDATA_FLOOR[ floor ] );
@@ -267,7 +267,7 @@ WFLBY_LIGHTWK* WFLBY_LIGHT_Init( u32 heapID, WFLBY_LIGHT_NEON_ROOMTYPE roomtype,
 //-----------------------------------------------------------------------------
 void WFLBY_LIGHT_Exit( WFLBY_LIGHTWK* p_wk )
 {
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------

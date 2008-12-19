@@ -238,14 +238,14 @@ WFLBY_3DMAPOBJ* WFLBY_3DMAPOBJ_Init( u32 float_num, u32 objwk_num, u32 heapID, u
 {
 	WFLBY_3DMAPOBJ* p_sys;
 
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ) );
-	memset( p_sys,  0, sizeof(WFLBY_3DMAPOBJ) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ) );
+	GFL_STD_MemFill( p_sys,  0, sizeof(WFLBY_3DMAPOBJ) );
 
 	// Šeƒ[ƒN‚ðì¬
-	p_sys->p_float	= sys_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_FLOAT)*float_num );
-	p_sys->p_obj	= sys_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
-	memset( p_sys->p_float, 0, sizeof(WFLBY_3DMAPOBJ_FLOAT)*float_num );
-	memset( p_sys->p_obj, 0, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
+	p_sys->p_float	= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_FLOAT)*float_num );
+	p_sys->p_obj	= GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
+	GFL_STD_MemFill( p_sys->p_float, 0, sizeof(WFLBY_3DMAPOBJ_FLOAT)*float_num );
+	GFL_STD_MemFill( p_sys->p_obj, 0, sizeof(WFLBY_3DMAPOBJ_WK)*objwk_num );
 	p_sys->floatnum	= float_num;
 	p_sys->objnum	= objwk_num;
 	
@@ -268,9 +268,9 @@ void WFLBY_3DMAPOBJ_Exit( WFLBY_3DMAPOBJ* p_sys )
 	}
 
 	// ‘Sƒƒ‚ƒŠ‚ð”jŠü
-	sys_FreeMemoryEz( p_sys->p_float );
-	sys_FreeMemoryEz( p_sys->p_obj );
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys->p_float );
+	GFL_HEAP_FreeMemory( p_sys->p_obj );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -1193,7 +1193,7 @@ static WFLBY_3DMAPOBJ_MDL_DATA* WFLBY_3DMAPOBJ_MDLRES_DATA_Init( WFLBY_ROOM_TYPE
 //-----------------------------------------------------------------------------
 static void WFLBY_3DMAPOBJ_MDLRES_DATA_Exit( WFLBY_3DMAPOBJ_MDL_DATA* p_data )
 {
-	sys_FreeMemoryEz( p_data );
+	GFL_HEAP_FreeMemory( p_data );
 }
 
 
@@ -1665,7 +1665,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndA
 	// ƒ‚ƒfƒ‹”jŠü
 	{
 		for( i=0; i<WFLBY_3DMAPOBJ_FLOAT_NUM; i++ ){
-			sys_FreeMemoryEz( p_wk->mdl[i].pResMdl );
+			GFL_HEAP_FreeMemory( p_wk->mdl[i].pResMdl );
 		}
 	}
 
@@ -1689,7 +1689,7 @@ static void WFLBY_3DMAPOBJ_FLOAT_Release( WFLBY_3DMAPOBJ_FLOATRES* p_wk, NNSFndA
 				NNS_GfdFreePlttVram( plttKey );
 
 				// ƒƒ‚ƒŠ”jŠü
-				sys_FreeMemoryEz( p_wk->p_texres[i][j] );
+				GFL_HEAP_FreeMemory( p_wk->p_texres[i][j] );
 			}
 		}
 	}
@@ -1881,7 +1881,7 @@ static void WFLBY_3DMAPOBJ_WK_Release( WFLBY_3DMAPOBJ_WKRES* p_wk, NNSFndAllocat
 			}//*/
 
 			if( p_wk->p_anm[i][j] != NULL ){
-				sys_FreeMemoryEz( p_wk->p_anm[i][j] );
+				GFL_HEAP_FreeMemory( p_wk->p_anm[i][j] );
 				p_wk->p_anm[i][j] = NULL;
 			}
 

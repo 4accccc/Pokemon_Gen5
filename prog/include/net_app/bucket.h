@@ -35,7 +35,7 @@
 //=====================================
 typedef struct {
 	WFLBY_MINIGAME_WK	lobby_wk;		//  ここにガジェットの状態が入っています。ゲーム後はこの値を基本情報に設定します。
-	SAVEDATA*		p_save;
+	SAVE_CONTROL_WORK*		p_save;
 	u8 vchat;
 	u8 wifi_lobby;
 	u8 pad[2];

@@ -1420,8 +1420,8 @@ WFLBY_GADGET* WFLBY_GADGET_Init( WFLBY_SYSTEM* p_system, WFLBY_MAPCONT* p_mapcon
 	WFLBY_GADGET* p_sys;
 
 	// システムワーク作成
-	p_sys = sys_AllocMemory( heapID, sizeof(WFLBY_GADGET) );
-	memset( p_sys, 0, sizeof(WFLBY_GADGET) );
+	p_sys = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_GADGET) );
+	GFL_STD_MemFill( p_sys, 0, sizeof(WFLBY_GADGET) );
 
 	// オブジェ管理システム保存
 	p_sys->p_system		= p_system;
@@ -1474,7 +1474,7 @@ void WFLBY_GADGET_Exit( WFLBY_GADGET* p_sys )
 	}
 
 	// 実態の破棄
-	sys_FreeMemoryEz( p_sys );
+	GFL_HEAP_FreeMemory( p_sys );
 }
 
 //----------------------------------------------------------------------------
@@ -1773,7 +1773,7 @@ static void WFLBY_GADGET_DeleteMdl( WFLBY_GADGET* p_sys )
 	int i;
 
 	for( i=0; i<WFLBY_GADGET_MDL_NUM; i++ ){
-		sys_FreeMemoryEz( p_sys->mdl[i].pResMdl );
+		GFL_HEAP_FreeMemory( p_sys->mdl[i].pResMdl );
 	}
 }
 
@@ -1822,7 +1822,7 @@ static void WFLBY_GADGET_DeleteTex( WFLBY_GADGET* p_sys )
 		plttKey = NNS_G3dPlttReleasePlttKey( p_tex );
 		NNS_GfdFreePlttVram( plttKey );
 
-		sys_FreeMemoryEz( p_sys->p_texres[i] );
+		GFL_HEAP_FreeMemory( p_sys->p_texres[i] );
 	}
 }
 
@@ -2090,7 +2090,7 @@ static BOOL WFLBY_GADGET_OBJ_Draw( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
 static void WFLBY_GADGET_OBJ_End( WFLBY_GADGET* p_sys, WFLBY_GADGET_OBJ* p_wk )
 {
 	// 全ワークの初期化
-	memset( p_wk, 0, sizeof(WFLBY_GADGET_OBJ) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_GADGET_OBJ) );
 }
 
 //----------------------------------------------------------------------------

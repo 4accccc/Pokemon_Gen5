@@ -15,6 +15,41 @@
 
 
 //==============================================================================
+//	サーバー接続先定義
+//==============================================================================
+///認証サーバーの開発用サーバー、製品版サーバーの切り替え
+#ifdef PM_DEBUG	//--
+///有効にしているとデバッグサーバーへ接続
+#define DEBUG_SERVER
+#endif	//-- PM_DEBUG
+
+
+#ifdef DEBUG_SERVER
+//開発用サーバー
+#define GF_DWC_CONNECTINET_AUTH_TYPE	(DWC_CONNECTINET_AUTH_TEST)
+//不思議な贈り物　定義を有効にすると本番サーバへ接続
+//#define USE_AUTHSERVER_RELEASE			// 本番サーバへ接続
+// dpw_common.h のDPW_SERVER_PUBLICの定義は直接ファイル内で変更する必要があります。
+//DPW_SERVER_PUBLIC
+
+//Wi-Fiロビーサーバ
+#define GF_DWC_LOBBY_CHANNEL_PREFIX		(PPW_LOBBY_CHANNEL_PREFIX_DEBUG)
+
+#else	//---------- DEBUG_SERVER
+
+//製品版用サーバー
+#define GF_DWC_CONNECTINET_AUTH_TYPE	(DWC_CONNECTINET_AUTH_RELEASE)
+//不思議な贈り物　定義を有効にすると本番サーバへ接続
+#define USE_AUTHSERVER_RELEASE			// 本番サーバへ接続
+// dpw_common.h のDPW_SERVER_PUBLICの定義は直接ファイル内で変更する必要があります。
+//DPW_SERVER_PUBLIC
+//Wi-Fiロビーサーバ
+#define GF_DWC_LOBBY_CHANNEL_PREFIX		(DWC_LOBBY_CHANNEL_PREFIX_RELEASE)
+
+#endif	//---------- DEBUG_SERVER
+
+
+//==============================================================================
 //	定義
 //==============================================================================
 
@@ -35,6 +70,7 @@ enum NetworkServiceID_e {
   WB_NET_SERVICEID_DEBUG_TAYA,
   WB_NET_DEBUG_MATSUDA_SERVICEID,
   WB_NET_TRADE_SERVICEID,			///<ポケモン交換
+  WB_NET_MINIGAME_TOOL,				///<WIFI広場ミニゲームツール
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -49,6 +85,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_DEBUG_TAYA = (WB_NET_SERVICEID_DEBUG_TAYA<<8),
   GFL_NET_CMD_DEBUG_MATSUDA = (WB_NET_DEBUG_MATSUDA_SERVICEID<<8),
   GFL_NET_CMD_TRADE = (WB_NET_TRADE_SERVICEID<<8),		///<ポケモン交換の開始番号
+  GFL_NET_CMD_MINIGAME_TOOL = (WB_NET_MINIGAME_TOOL<<8),	///<WIFI広場ミニゲームツール
 };
 
 

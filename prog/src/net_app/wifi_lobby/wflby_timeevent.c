@@ -96,8 +96,8 @@ WFLBY_TIMEEVENT* WFLBY_TIMEEVENT_Init( u32 heapID, WFLBY_ROOMWK* p_rmwk )
 	u32 hanabi, lock, parade, neon, close, minigame;
 	
 
-	p_wk = sys_AllocMemory( heapID, sizeof(WFLBY_TIMEEVENT) );
-	memset( p_wk, 0, sizeof(WFLBY_TIMEEVENT) );
+	p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(WFLBY_TIMEEVENT) );
+	GFL_STD_MemFill( p_wk, 0, sizeof(WFLBY_TIMEEVENT) );
 
 	p_wk->p_rmwk		= p_rmwk;
 	p_wk->p_system		= WFLBY_ROOM_GetSystemData( p_rmwk );
@@ -188,7 +188,7 @@ void WFLBY_TIMEEVENT_Exit( WFLBY_TIMEEVENT* p_wk )
 	WFLBY_LIGHT_Exit( p_wk->p_light );
 
 	// ÉèÅ[ÉNîjä¸
-	sys_FreeMemoryEz( p_wk );
+	GFL_HEAP_FreeMemory( p_wk );
 }
 
 //----------------------------------------------------------------------------

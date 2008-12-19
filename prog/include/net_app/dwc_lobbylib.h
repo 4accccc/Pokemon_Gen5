@@ -298,7 +298,7 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 // メインチャンネル
-extern void DWC_LOBBY_Init( u32 heapID, SAVEDATA* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork );	// ワークの初期化
+extern void DWC_LOBBY_Init( u32 heapID, SAVE_CONTROL_WORK* p_save, u32 profilesize, const DWC_LOBBY_CALLBACK* cp_callback,  void* p_callbackwork );	// ワークの初期化
 extern void DWC_LOBBY_Exit( void );												// ワークの破棄
 extern DWC_LOBBY_CHANNEL_STATE DWC_LOBBY_Update( void );						// ロビーの更新関数
 extern PPW_LOBBY_ERROR DWC_LOBBY_GetErr( void );								// ロビーエラー状態取得
