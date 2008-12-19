@@ -29,7 +29,7 @@ struct _PC_ACTCONT {
 	int						anmSetID;
 	BOOL					anmSetReq;			
 
-	FLD_G3D_MAPPER_INFODATA		gridInfoData;
+	FLDMAPPER_GRIDINFODATA		gridInfoData;
 };
 
 enum {
@@ -250,7 +250,7 @@ PC_ACTCONT*	CreatePlayerAct( FIELD_SETUP*	gs, HEAPID heapID )
 
 	pcActCont->gs = gs;
 	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	InitGetFieldG3DmapperGridInfoData( &pcActCont->gridInfoData );
+	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
 	//リソースセットアップ
 	pcActCont->bbdActResUnitID = GFL_BBDACT_AddResourceUnit( bbdActSys, playerBBDactResTable,

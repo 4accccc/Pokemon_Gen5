@@ -40,7 +40,7 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 
 	pcActCont->gs = gs;
 	SetPlayerActAnm( pcActCont, ANMTYPE_STOP );
-	InitGetFieldG3DmapperGridInfoData( &pcActCont->gridInfoData );
+	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
 	
 	//リソースセットアップ
 	pcActCont->bbdActResUnitID =
@@ -124,7 +124,7 @@ void PlayerActGrid_AnimeSet(
 #endif
 }
 
-FLD_G3D_MAPPER_INFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
+FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
 {
 	return( &pcActCont->gridInfoData );
 }

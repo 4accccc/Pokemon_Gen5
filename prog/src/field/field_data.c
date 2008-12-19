@@ -15,7 +15,7 @@
 
 typedef struct {
 	//横ブロック数, 縦ブロック数, ブロック１辺の幅, グラフィックアーカイブＩＤ, 実マップデータ
-	FLD_G3D_MAPPER_RESIST	mapperData;
+	FLDMAPPER_RESISTDATA	mapperData;
 	const DEPEND_FUNCTIONS * dep_funcs;
 	BOOL isMatrixMapFlag;
 }SCENE_DATA;
@@ -39,7 +39,7 @@ static int MapID2ResistID(u16 mapid)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void FIELDDATA_SetMapperData(
-	u16 mapid, FLD_G3D_MAPPER_RESIST * map_res, void * matrix_buf)
+	u16 mapid, FLDMAPPER_RESISTDATA * map_res, void * matrix_buf)
 {
 	u16 resid = MapID2ResistID(mapid);
 	*map_res = resistMapTbl[resid].mapperData;
@@ -58,7 +58,7 @@ void FIELDDATA_SetMapperData(
 		map_res->sizex = matH->size_h;
 		map_res->sizez = matH->size_v;
 		map_res->totalSize = matH->size_h * matH->size_v;
-		map_res->blocks = (const FLD_G3D_MAPPER_DATA *)tbl;
+		map_res->blocks = (const FLDMAPPER_MAPDATA *)tbl;
 	}
 #if 0
 	{
@@ -75,7 +75,7 @@ void FIELDDATA_SetMapperData(
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-const FLD_G3D_MAPPER_RESIST * FIELDDATA_GetMapperData(u16 mapid)
+const FLDMAPPER_RESISTDATA * FIELDDATA_GetMapperData(u16 mapid)
 {
 	u16 resid = MapID2ResistID(mapid);
 	return &resistMapTbl[resid].mapperData;
@@ -100,7 +100,7 @@ u16 FIELDDATA_GetMapIDMax(void)
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "test_graphic/test3dp.naix"
-static const FLD_G3D_MAPPER_DATA sampleMap[] = {
+static const FLDMAPPER_MAPDATA sampleMap[] = {
 	{ NARC_test3dp_map_a1_3dppack },
 	{ NARC_test3dp_map_a2_3dppack },
 	{ NARC_test3dp_map_a3_3dppack },
@@ -123,7 +123,7 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 //------------------------------------------------------------------
 #include "test_graphic/test3dp2.naix"
 
-static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
+static const FLDMAPPER_MAPDATA sampleMap2[] = {
 	{ NARC_test3dp2_m_test_01_01c_3dppack },
 	{ NARC_test3dp2_m_test_02_01c_3dppack },
 	{ NARC_test3dp2_m_test_01_02c_3dppack },
@@ -142,7 +142,7 @@ static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 //------------------------------------------------------------------
 #include "test_graphic/loopbridge.naix"
 
-static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
+static const FLDMAPPER_MAPDATA loopbridgemap[] = {
 	{ NARC_loopbridge_m_test2_01_01c_3dppack },
 	{ NARC_loopbridge_m_test2_02_01c_3dppack },
 	{ NARC_loopbridge_m_test2_03_01c_3dppack },
@@ -163,14 +163,14 @@ static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const FLD_G3D_MAPPER_DATA fldmap3dp_test[] = {
+static const FLDMAPPER_MAPDATA fldmap3dp_test[] = {
 	{ 0 },
 };
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "fieldmap/all_build_model.naix"
-static const FLD_G3D_MAPPEROBJ_DATA resistObjTbl2[] = {
+static const FLDMAPPER_RESISTOBJDATA resistObjTbl2[] = {
 	{ NARC_all_build_model_gate_01_nsbmd, NON_LOWQ},
 	{ NARC_all_build_model_pc_01_nsbmd, NON_LOWQ},
 	{ NARC_all_build_model_t2_build01_nsbmd, NON_LOWQ},
@@ -178,7 +178,7 @@ static const FLD_G3D_MAPPEROBJ_DATA resistObjTbl2[] = {
 };
 
 #include "test_graphic/fieldmap_sample.naix"
-static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
+static const FLDMAPPER_RESISTOBJDATA	resistObjTbl[] = {
 	// high quality model, low quality model のセットを登録する
 	// high quality model, NON_LOWQでもOKらしい
 	{ NARC_fieldmap_sample_pc_01_h_nsbmd, NARC_fieldmap_sample_pc_01_l_nsbmd },
@@ -191,7 +191,7 @@ static const u16	resistDDobjTbl[] = {
 	NARC_fieldmap_sample_sample_tree_nsbtx,
 };
 
-static const FLD_G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
+static const FLDMAPPER_RESISTDATA_OBJTBL	gobjData_Tbl = {
 	ARCID_ALLBUILDMODEL, resistObjTbl2, NELEMS(resistObjTbl2), 
 	//ARCID_FLDMAP_SAMPLE, resistObjTbl, NELEMS(resistObjTbl), 
 	ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
@@ -201,7 +201,7 @@ static const FLD_G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
 //------------------------------------------------------------------
 //金銀形式バイナリデータサンプル
 #define DATID_GSMAP_GOBJ (2)
-static const FLD_G3D_MAPPER_GLOBAL_OBJSET_BIN	gobjData_Bin = {
+static const FLDMAPPER_RESISTDATA_OBJBIN	gobjData_Bin = {
 	ARCID_GSAREAOBJ,
 	ARCID_GSOBJANMTBL,
 	DATID_GSMAP_GOBJ, 
@@ -213,17 +213,17 @@ static const FLD_G3D_MAPPER_GLOBAL_OBJSET_BIN	gobjData_Bin = {
 
 //グローバルテクスチャサンプル（金銀マップテクスチャ）
 #define DATID_GSMAP_GTEX (3)
-static const FLD_G3D_MAPPER_GLOBAL_TEXTURE	gtexData = {
+static const FLDMAPPER_RESIST_TEX	gtexData = {
 	ARCID_GSTEX, DATID_GSMAP_GTEX, 
 };
 
-static const FLD_G3D_MAPPER_DATA GSMap[] = {
+static const FLDMAPPER_MAPDATA GSMap[] = {
 	{ 21 }, { 22 },
 	{ 23 }, { 24 },
 	{ 25 }, { 26 },
-	{ FLD_G3D_MAPPER_NOMAP }, { 27 },
-	{ FLD_G3D_MAPPER_NOMAP }, { 28 },
-	{ FLD_G3D_MAPPER_NOMAP }, { 29 },
+	{ FLDMAPPER_MAPDATA_NULL }, { 27 },
+	{ FLDMAPPER_MAPDATA_NULL }, { 28 },
+	{ FLDMAPPER_MAPDATA_NULL }, { 29 },
 };
 
 //------------------------------------------------------------------
@@ -235,7 +235,7 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{
 			FILE_MAPEDITER_DATA,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_LOOPBRIDGE,
 			NON_GLOBAL_TEX, NULL,
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
@@ -249,7 +249,7 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ グリッド移動
 		{
 			FILE_MAPEDITER_DATA,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_FLDMAP_LANDDATA,
 			NON_GLOBAL_TEX, NULL,
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
@@ -263,7 +263,7 @@ const SCENE_DATA resistMapTbl[] = {
 	{	//実験マップ　橋
 		{	
 			FILE_MAPEDITER_DATA,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_TEST3DP2,
 			NON_GLOBAL_TEX, NULL,
 			USE_GLOBAL_OBJSET_TBL, (void*)&gobjData_Tbl,
@@ -278,7 +278,7 @@ const SCENE_DATA resistMapTbl[] = {
 		//実験マップ　グリッド移動 金銀
 		{	
 			FILE_CUSTOM_DATA,
-			MAP_XZ_SIZE, 1024*FX32_ONE, FLD_G3D_MAPPER_MODE_SCROLL_XZ, 
+			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
 			ARCID_GSMAP, 
 			USE_GLOBAL_TEX,	(void*)&gtexData, 
 			USE_GLOBAL_OBJSET_BIN, (void*)&gobjData_Bin,

@@ -68,10 +68,10 @@ static void NoGridMain( FIELD_MAIN_WORK* fieldWork, VecFx32 * pos )
 #endif
 	if (FieldEasyTP_TouchDirGet() == FLDEASYTP_TCHDIR_DOWN) {
 		VecFx32 trans;
-		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		FLDMAPPER_GRIDINFO gridInfo;
 		int i;
 		GetPlayerActTrans(fieldWork->pcActCont, &trans);
-		GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &trans, &gridInfo);
+		FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &trans, &gridInfo);
 		OS_Printf("gridInfo.count = %d\n", gridInfo.count);
 		for (i = 0; i < gridInfo.count; i++) {
 			OS_Printf("[%02d]%08x\n",i, gridInfo.gridData[i].height);

@@ -124,13 +124,13 @@ static void FGridPlayer_ScaleSet( FGRID_PLAYER *pJiki, fx16 scale );
 static fx16 FGridPlayer_ScaleGet( FGRID_PLAYER *pJiki );
 
 static BOOL GridVecPosMove(
-	const FLD_G3D_MAPPER *g3Dmapper,
-	FLD_G3D_MAPPER_INFODATA *gridInfoData,
+	const FLDMAPPER *g3Dmapper,
+	FLDMAPPER_GRIDINFODATA *gridInfoData,
 	VecFx32 *pos, VecFx32 *vecMove );
 static BOOL GetMapAttr(
-	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr );
+	const FLDMAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr );
 static fx32 GetMapHeight(
-	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos );
+	const FLDMAPPER *g3Dmapper, const VecFx32 *pos );
 static MAPHITBIT MapHitCheck(
 	const FGRID_CONT *pGridCont, const VecFx32 *now, const VecFx32 *next );
 static void FldWorkPlayerWorkPosSet(
@@ -214,7 +214,7 @@ static void GridMoveCreate(
 	//マップ描画オフセット
 	{
 		VecFx32 offs = { -FX32_ONE*8, 0, FX32_ONE*8 };
-		SetFieldG3DmapperDrawOffset(
+		FLDMAPPER_SetDrawOffset(
 			GetFieldG3Dmapper(fieldWork->gs), &offs );
 	}
 }
@@ -608,7 +608,7 @@ static void FGridPlayer_Delete( FGRID_CONT *pGridCont )
 ///デバッグプリント
 static void DEBUG_PrintAttr( FGRID_PLAYER *pJiki )
 {
-	const FLD_G3D_MAPPER *mapper = 
+	const FLDMAPPER *mapper = 
 		GetFieldG3Dmapper( pJiki->pGridCont->pFieldWork->gs );
 	fx32 now_x = pJiki->vec_pos.x;
 	fx32 now_y = pJiki->vec_pos.y;
@@ -857,13 +857,13 @@ static fx16 FGridPlayer_ScaleGet( FGRID_PLAYER *pJiki )
  */
 //--------------------------------------------------------------
 static BOOL GridVecPosMove(
-	const FLD_G3D_MAPPER *g3Dmapper,
-	FLD_G3D_MAPPER_INFODATA *gridInfoData,
+	const FLDMAPPER *g3Dmapper,
+	FLDMAPPER_GRIDINFODATA *gridInfoData,
 	VecFx32 *pos, VecFx32 *vecMove )
 {
 	fx32	height = 0;
 	BOOL	initSw = FALSE;
-	FLD_G3D_MAPPER_GRIDINFO gridInfo;
+	FLDMAPPER_GRIDINFO gridInfo;
 	VecFx32	posNext, vecGround;
 	
 	VEC_Add( pos, vecMove, &posNext );
@@ -872,11 +872,11 @@ static BOOL GridVecPosMove(
 		posNext.y = 0;	//ベースライン
 	}
 	
-	if( CheckFieldG3DmapperOutRange(g3Dmapper,&posNext) == TRUE ){
+	if( FLDMAPPER_CheckOutRange(g3Dmapper,&posNext) == TRUE ){
 		return FALSE;	//範囲外
 	}
 	
-	if( GetFieldG3DmapperGridInfo(g3Dmapper,&posNext,&gridInfo) == FALSE ){
+	if( FLDMAPPER_GetGridInfo(g3Dmapper,&posNext,&gridInfo) == FALSE ){
 		return FALSE;	//マップデータが取得できない
 	}
 	
@@ -915,11 +915,11 @@ static BOOL GridVecPosMove(
  */
 //--------------------------------------------------------------
 static BOOL GetMapAttr(
-	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr )
+	const FLDMAPPER *g3Dmapper, const VecFx32 *pos, u32 *attr )
 {
-	FLD_G3D_MAPPER_GRIDINFO gridInfo;
+	FLDMAPPER_GRIDINFO gridInfo;
 	
-	if( GetFieldG3DmapperGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
+	if( FLDMAPPER_GetGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
 		*attr = gridInfo.gridData[0].attr;
 		return( TRUE );
 	}
@@ -935,11 +935,11 @@ static BOOL GetMapAttr(
  */
 //--------------------------------------------------------------
 static fx32 GetMapHeight(
-	const FLD_G3D_MAPPER *g3Dmapper, const VecFx32 *pos )
+	const FLDMAPPER *g3Dmapper, const VecFx32 *pos )
 {
-	FLD_G3D_MAPPER_GRIDINFO gridInfo;
+	FLDMAPPER_GRIDINFO gridInfo;
 	
-	if( GetFieldG3DmapperGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
+	if( FLDMAPPER_GetGridInfo(g3Dmapper,pos,&gridInfo) == TRUE ){
 		if( gridInfo.count ){
 			int		i = 0,p = 0;
 			fx32	h_tmp,diff1,diff2;
@@ -978,20 +978,20 @@ static MAPHITBIT MapHitCheck(
 {
 	u32 hit;
 	VecFx32 pos;
-	const FLD_G3D_MAPPER *mapper;
+	const FLDMAPPER *mapper;
 	
 	hit = MAPHITBIT_NON;
 	mapper = GetFieldG3Dmapper( pGridCont->pFieldWork->gs );
 	
-	if( CheckFieldG3DmapperOutRange(mapper,next) == TRUE ){
+	if( FLDMAPPER_CheckOutRange(mapper,next) == TRUE ){
 		hit |= MAPHITBIT_OUT;
 		return( hit );
 	}
 	
-	if( GetFieldG3DmapperFileType(mapper) == FILE_CUSTOM_DATA ){
+	if( FLDMAPPER_GetFileType(mapper) == FILE_CUSTOM_DATA ){
 		u16 attr = 0;
 		
-		if( GetFieldG3DmapperGridAttr(mapper,next,&attr) == FALSE ){
+		if( FLDMAPPER_GetGridAttr(mapper,next,&attr) == FALSE ){
 			hit |= MAPHITBIT_DATA;
 		}
 		
@@ -1250,7 +1250,7 @@ static void GridAct_ActWorkCreate(
 				setActNum *s izeof(GFL_BBDACT_ACTDATA) );
 		fx32 mapSizex, mapSizez;
 
-		GetFieldG3DmapperSize(
+		FLDMAPPER_GetSize(
 			GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
 		
 		for( i=0; i<setActNum; i++ ){

@@ -13,7 +13,7 @@ extern void PlayerActGrid_Update(
 	PC_ACTCONT *pcActCont, u16 dir, const VecFx32 *pos );
 extern void PlayerActGrid_AnimeSet(
 	PC_ACTCONT *pcActCont, int dir , PLAYER_ANIME_FLAG flag );
-extern FLD_G3D_MAPPER_INFODATA * PlayerActGrid_GridInfoGet(
+extern FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet(
 		PC_ACTCONT *pcActCont );
 extern void PlayerActGrid_ScaleSizeSet(
 	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY );

@@ -95,7 +95,7 @@ struct _FIELD_MAIN_WORK
 	
 	void *pGridCont;
 	void *pMapMatrixBuf;
-	FLD_G3D_MAPPER_RESIST map_res;
+	FLDMAPPER_RESISTDATA map_res;
 	
 	FIELD_COMM_MAIN *commSys;
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
@@ -171,7 +171,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->map_id = GetSceneID(gsys);
 	//サイズは暫定。DPでの最大サイズは30x30
 	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
-			heapID, sizeof(FLD_G3D_MAPPER_DATA) * 32 * 32);
+			heapID, sizeof(FLDMAPPER_MAPDATA) * 32 * 32);
 	//通信用処理
 	fieldWork->commSys = FIELD_COMM_MAIN_InitSystem( heapID , GFL_HEAPID_APP );
     //サウンド用処理
@@ -234,7 +234,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		fieldWork->fldMsgBG = FLDMSGBG_Setup( fieldWork->heapID );
 
 		SetMapperData(fieldWork);
-		ResistDataFieldG3Dmapper(
+		FLDMAPPER_ResistData(
 			 GetFieldG3Dmapper(fieldWork->gs), &fieldWork->map_res );
 
 		//登録テーブルごとに個別の初期化処理を呼び出し
@@ -244,7 +244,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 			fieldWork->now_pos = *GetStartPos(gsys);
 			dir = GetStartDirection(gsys);
 			fieldWork->ftbl->create_func( fieldWork, &fieldWork->now_pos, dir );
-			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
 
 		fieldWork->seq++;
@@ -254,7 +254,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		MainGameSystem( fieldWork->gs );
 		FLDMSGBG_PrintMain( fieldWork->fldMsgBG );
 
-		if (CheckTransFieldG3Dmapper(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
+		if (FLDMAPPER_CheckTrans(GetFieldG3Dmapper(fieldWork->gs)) == FALSE) {
 			break;
 		}
 
@@ -278,7 +278,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 
 			//Mapシステムに位置を渡している。
 			//これがないとマップ移動しないので注意
-			SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+			FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 		}
 		//通信用アクター更新
 		fieldMainCommActorProc( fieldWork );
@@ -306,7 +306,7 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 		//登録テーブルごとに個別の終了処理を呼び出し
 		fieldWork->ftbl->delete_func(fieldWork);
 
-        ReleaseDataFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs) );
+        FLDMAPPER_ReleaseData( GetFieldG3Dmapper(fieldWork->gs) );
 		
 		FLDMSGBG_Delete( fieldWork->fldMsgBG );
 		
@@ -350,10 +350,10 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 	static char limit[] = "  \n  \n  \n";
 	for (i = 0; i < NELEMS(pos_array); i++) {
 		u32 attr = 0;
-		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		FLDMAPPER_GRIDINFO gridInfo;
 		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
 		VEC_MultAdd(16 * FX32_ONE, &pos_array[i], &fieldWork->now_pos, &pos);
-		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
+		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
 		OS_Printf("%04x%c", attr, limit[i]);
@@ -410,9 +410,9 @@ static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWo
 	}
 	{
 		u32 attr = 0;
-		FLD_G3D_MAPPER_GRIDINFO gridInfo;
+		FLDMAPPER_GRIDINFO gridInfo;
 		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
-		if( GetFieldG3DmapperGridInfo( GetFieldG3Dmapper(fieldWork->gs), &now_pos, &gridInfo ) == TRUE ){
+		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &now_pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
 		if (attr == 0) return NULL;
@@ -504,7 +504,7 @@ struct _FIELD_SETUP {
 	GFL_TCB*				g3dVintr;		//3D用vIntrTaskハンドル
 	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
-	FLD_G3D_MAPPER*				g3Dmapper;
+	FLDMAPPER*				g3Dmapper;
 
 	HEAPID					heapID;
 };
@@ -767,7 +767,7 @@ static void g3d_load( FIELD_SETUP* gs )
 	gs->g3Dscene = GFL_G3D_SCENE_Create( gs->g3Dutil, 
 						G3D_SCENE_OBJCOUNT, G3D_OBJWORK_SZ, G3D_ACC_COUNT, TRUE, gs->heapID );
 
-	gs->g3Dmapper = CreateFieldG3Dmapper( gs->heapID );
+	gs->g3Dmapper = FLDMAPPER_Create( gs->heapID );
 	gs->bbdActSys = GFL_BBDACT_CreateSys
 					( G3D_BBDACT_RESMAX, G3D_BBDACT_ACTMAX, g3d_trans_BBD, gs->heapID );
 
@@ -794,7 +794,7 @@ static void g3d_load( FIELD_SETUP* gs )
 static void g3d_control( FIELD_SETUP* gs )
 {
 	GFL_G3D_SCENE_Main( gs->g3Dscene ); 
-	MainFieldG3Dmapper( gs->g3Dmapper );
+	FLDMAPPER_Main( gs->g3Dmapper );
 	GFL_BBDACT_Main( gs->bbdActSys );
 }
 
@@ -803,7 +803,7 @@ static void g3d_draw( FIELD_SETUP* gs )
 {
 	GFL_G3D_CAMERA_Switching( gs->g3Dcamera );
 	GFL_G3D_LIGHT_Switching( gs->g3Dlightset );
-	DrawFieldG3Dmapper( gs->g3Dmapper, gs->g3Dcamera );
+	FLDMAPPER_Draw( gs->g3Dmapper, gs->g3Dcamera );
 	GFL_BBDACT_Draw( gs->bbdActSys, gs->g3Dcamera, gs->g3Dlightset );
 	GFL_G3D_SCENE_Draw( gs->g3Dscene );  
 }
@@ -815,7 +815,7 @@ static void g3d_unload( FIELD_SETUP* gs )
 	GFL_G3D_CAMERA_Delete( gs->g3Dcamera );
 
 	GFL_BBDACT_DeleteSys( gs->bbdActSys );
-	DeleteFieldG3Dmapper( gs->g3Dmapper );
+	FLDMAPPER_Delete( gs->g3Dmapper );
 
 	GFL_G3D_SCENE_Delete( gs->g3Dscene );  
 	GFL_G3D_UTIL_Delete( gs->g3Dutil );
@@ -849,7 +849,7 @@ GFL_G3D_CAMERA* GetG3Dcamera( FIELD_SETUP* gs )
 	return gs->g3Dcamera;
 }
 
-FLD_G3D_MAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
+FLDMAPPER* GetFieldG3Dmapper( FIELD_SETUP* gs )
 {
 	return gs->g3Dmapper;
 }
@@ -902,10 +902,10 @@ static void GetGroundMoveVec
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA* gridInfoData, 
+BOOL CalcSetGroundMove( const FLDMAPPER* g3Dmapper, FLDMAPPER_GRIDINFODATA* gridInfoData, 
 								VecFx32* pos, VecFx32* vecMove, fx32 speed )
 {
-	FLD_G3D_MAPPER_GRIDINFO gridInfo;
+	FLDMAPPER_GRIDINFO gridInfo;
 	VecFx32	posNext, vecGround;
 	fx32	height = 0;
 	BOOL	initSw = FALSE;
@@ -925,13 +925,13 @@ BOOL CalcSetGroundMove( const FLD_G3D_MAPPER* g3Dmapper, FLD_G3D_MAPPER_INFODATA
 	if( posNext.y < 0 ){
 		posNext.y = 0;	//ベースライン
 	}
-	if( CheckFieldG3DmapperOutRange( g3Dmapper, &posNext ) == TRUE ){
+	if( FLDMAPPER_CheckOutRange( g3Dmapper, &posNext ) == TRUE ){
 	//	OS_Printf("マップ範囲外で移動不可\n");
 		return FALSE;
 	}
 
 	//プレーヤー用動作。この位置中心に高さデータが存在するため、すべて取得して設定
-	if( GetFieldG3DmapperGridInfo( g3Dmapper, &posNext, &gridInfo ) == FALSE ){
+	if( FLDMAPPER_GetGridInfo( g3Dmapper, &posNext, &gridInfo ) == FALSE ){
 		return FALSE;
 	}
 
@@ -1077,7 +1077,7 @@ void FIELDMAP_ForceUpdate( FIELD_MAIN_WORK *fieldWork )
 	
 	//Mapシステムに位置を渡している。
 	//これがないとマップ移動しないので注意
-	SetPosFieldG3Dmapper( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
+	FLDMAPPER_SetPos( GetFieldG3Dmapper(fieldWork->gs), &fieldWork->now_pos );
 }
 
 

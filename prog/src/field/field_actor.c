@@ -35,7 +35,7 @@
 
 typedef struct {
 	//FLD_ACTCONT*			fldActCont;
-	FLD_G3D_MAPPER_INFODATA		gridInfoData;
+	FLDMAPPER_GRIDINFODATA		gridInfoData;
 	u16						work[WORK_SIZ];
 }FLD_ACTWORK;
 
@@ -241,7 +241,7 @@ void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 													setActNum*sizeof(GFL_BBDACT_ACTDATA) );
 		fx32 mapSizex, mapSizez;
 
-		GetFieldG3DmapperSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
+		FLDMAPPER_GetSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
 
 		for( i=0; i<setActNum; i++ ){
 			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
@@ -340,7 +340,7 @@ static void	initActWork( FLD_ACTCONT* fldActCont, FLD_ACTWORK* actWork )
 	int i;
 
 	//actWork->fldActCont = fldActCont;
-	InitGetFieldG3DmapperGridInfoData( &actWork->gridInfoData );
+	FLDMAPPER_GRIDINFODATA_Init( &actWork->gridInfoData );
 
 	for( i=0; i<WORK_SIZ; i++ ){
 		actWork->work[i] = 0;
