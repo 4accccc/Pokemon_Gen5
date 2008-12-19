@@ -735,7 +735,7 @@ void	FIELD_COMM_MENU_OpenMessageWindow( u8 bgPlane , FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu )
 {
-	FLDMSGBG_ClearPrintQue( commMenu->fldMsgBG_ );
+	FLDMSGBG_AllPrint( commMenu->fldMsgBG_ );
 	FLDMSGWIN_Delete( commMenu->msgWin_ );
 	commMenu->isInitMsgWin_ = FALSE;
 }
@@ -768,7 +768,7 @@ void	FIELD_COMM_MENU_CloseMessageWindow( FIELD_COMM_MENU *commMenu )
 //--------------------------------------------------------------
 void	FIELD_COMM_MENU_SetMessage( u16 msgID , FIELD_COMM_MENU *commMenu )
 {
-	FLDMSGBG_ClearPrintQue( commMenu->fldMsgBG_ );
+	FLDMSGBG_AllPrint( commMenu->fldMsgBG_ );
 	FLDMSGWIN_ClearWindow( commMenu->msgWin_ );	//‘O‰ñ•¶Žš—ñ‚ÌÁ‹Ž
 	FLDMSGWIN_Print( commMenu->msgWin_, 0, 0, msgID );
 }
@@ -849,7 +849,7 @@ void	FIELD_COMM_MENU_SwitchDebugWindow( u8 bgPlane, FLDMSGBG *fldMsgBG )
 	}
 	else
 	{
-		FLDMSGBG_ClearPrintQue( fldMsgBG );
+		FLDMSGBG_AllPrint( fldMsgBG );
 		commMenu->isOpenDebugWin_ = FALSE;
 		FIELD_COMM_MENU_CloseMessageWindow( commMenu );
 		FIELD_COMM_MENU_TermCommMenu( commMenu );

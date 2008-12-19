@@ -198,6 +198,7 @@ void BmpWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw )
 		0 );
 
 	if( trans_sw == WINDOW_TRANS_ON ){
-		GFL_BG_ClearScreen( frm );
+//		GFL_BG_ClearScreen( frm );
+		GFL_BG_LoadScreenReq( frm );
 	}
 }

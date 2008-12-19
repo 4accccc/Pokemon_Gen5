@@ -225,6 +225,20 @@ void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb )
 
 //--------------------------------------------------------------
 /**
+ * FLDMSGBG プリントキューに貯まっている処理を全て実行
+ * @param	fmb	FLDMSGBG
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_AllPrint( FLDMSGBG *fmb )
+{
+	while( FLDMSGBG_CheckFinishPrint(fmb) != TRUE ){
+		FLDMSGBG_PrintMain( fmb );
+	}
+}
+
+//--------------------------------------------------------------
+/**
  * FLDMSGBG プリントキューの処理が全て完了しているかチェック
  * @param	fmb	FLDMSGBG
  * @retval	BOOL TRUE=完了
@@ -247,7 +261,6 @@ PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb )
 	return( fmb->printQue );
 }
 
-//--------------------------------------------------------------
 /**
  * FLDMSGBG GFL_MSGDATA初期化 戻り値GFL_MSGDATAの削除は各自で行う事。
  * @param	fmb	FLDMSGBG
@@ -339,7 +352,6 @@ void FLDMSGPRINT_Delete( FLDMSGPRINT *msgPrint )
 //--------------------------------------------------------------
 void FLDMSGPRINT_Print( FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID )
 {
-	GF_ASSERT( msgPrint->msgData != NULL );
 	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
 	PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
 		x, y, msgPrint->strBuf, msgPrint->fontHandle );		
@@ -520,6 +532,7 @@ void FLDMSGWIN_Delete( FLDMSGWIN *msgWin )
 void FLDMSGWIN_Print( FLDMSGWIN *msgWin, u16 x, u16 y, u32 strID )
 {
 	FLDMSGPRINT_Print( msgWin->msgPrint, x, y, strID );
+	GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
 }
 
 //--------------------------------------------------------------
