@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "system/arc_util.h"
+//#include "system/arc_util.h"
 
 #include "net_app/wifi_country.h"
 #include "net_app/wifi_earth/wifi_earth_place.naix"

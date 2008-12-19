@@ -14,9 +14,9 @@
 
 #include "savedata/save_control.h"
 
-#include "system/procsys.h"
+#include <procsys.h>
 
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 
 //-----------------------------------------------------------------------------
@@ -48,9 +48,9 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 
-extern PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq );
-extern PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq );
-extern PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT BucketProc_Init( PROC * p_proc, int * p_seq );
+extern GFL_PROC_RESULT BucketProc_Main( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT BucketProc_End( PROC* p_proc, int* p_seq );
 
 
 #endif		// __BUCKET_H__

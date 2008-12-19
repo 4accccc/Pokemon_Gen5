@@ -12,9 +12,9 @@
 #ifndef __BALANCE_BALL_H__
 #define __BALANCE_BALL_H__
 
-#include "system/procsys.h"
+#include <procsys.h>
 #include "savedata/savedata_local.h"
-#include "application/wifi_lobby/minigame_tool.h"
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 typedef struct {
 	WFLBY_MINIGAME_WK lobby_wk;
@@ -27,9 +27,9 @@ typedef struct {
 } BB_PROC_WORK;
 
 
-extern PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq );
-extern PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq );
-extern PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Init( PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Main( PROC* proc, int* seq );
+extern GFL_PROC_RESULT BalanceBallProc_Exit( PROC* proc, int* seq );
 
 
 #endif		// __BUCKET_H__

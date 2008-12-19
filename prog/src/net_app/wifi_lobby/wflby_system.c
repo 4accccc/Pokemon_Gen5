@@ -15,10 +15,10 @@
 
 #include "gflib/strbuf_family.h"
 
-#include "system/msgdata.h"
-#include "system/fontproc.h"
+#include "print\gf_font.h"
+//#include "system/fontproc.h"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wifi_hiroba.h"
 
 #include "savedata/mystatus.h"

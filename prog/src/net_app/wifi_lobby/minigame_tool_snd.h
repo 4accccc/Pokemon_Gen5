@@ -13,7 +13,7 @@
 #define __MINIGAME_TOOL_SND_H__
 
 #if PM_VERSION == VERSION_WHITE
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 #define MNGM_SND_COUNT				( SEQ_SE_DP_DECIDE )		// ÇRÅEÇQÅEÇP
 #define MNGM_SND_START				( SEQ_SE_DP_CON_016 )		// ÉXÉ^Å[Ég

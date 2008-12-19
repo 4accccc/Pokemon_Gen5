@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "system/procsys.h"
+#include <procsys.h>
 #include "system/pm_overlay.h"
 
 #include "net_app/bucket.h"

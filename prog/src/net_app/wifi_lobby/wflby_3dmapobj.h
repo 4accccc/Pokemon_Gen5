@@ -12,11 +12,11 @@
 #ifndef __WFLBY_3DMAPOBJ_H__
 #define __WFLBY_3DMAPOBJ_H__
 
-#include "system/arc_tool.h"
+#include <arc_tool.h>
 
 #include "net_app/wifi_2dmap/wf2dmap_common.h"
 #include "wflby_def.h"
-#include "system/d3dobj.h"
+//#include "system/d3dobj.h"
 
 //-----------------------------------------------------------------------------
 /**

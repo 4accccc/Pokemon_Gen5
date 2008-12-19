@@ -17,8 +17,8 @@
 #include "gflib/texanm_sys.h"
 #include "gflib/bounding_box.h"
 
-#include "system/arc_util.h"
-#include "system/d3dobj.h"
+//#include "system/arc_util.h"
+//#include "system/d3dobj.h"
 
 #include "field/fieldobj_code.h"
 

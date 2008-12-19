@@ -12,8 +12,8 @@
 
 #include "common.h"
 
-#include "system/arc_util.h"
-#include "system/d3dobj.h"
+//#include "system/arc_util.h"
+//#include "system/d3dobj.h"
 
 #include "graphic/wifi_lobby_other.naix"
 

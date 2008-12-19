@@ -202,7 +202,7 @@ GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
  * @retval  
  */
 //--------------------------------------------------------------
-GFL_PROC_RESULT BalloonProc_End(GFL_PROC *proc, int *seq, void * pwk, void * mywk)
+GFL_PROC_RESULT BalloonProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	BALLOON_SYSTEM_WORK * bsw  = mywk;
 
@@ -230,7 +230,11 @@ static void Ballon_ProcWorkInit(BALLOON_SYSTEM_WORK *bsw, BALLOON_PROC_WORK *par
 	
 //	bsw->result_param.p_gadget = &parent->gadget;	// GADGET‚È‚­‚µ‚Ü‚µ‚½ tomoya
 	
+#if WB_TEMP_FIX
 	current_id = GFL_NET_SystemGetCurrentID();
+#else
+	current_id = 0;
+#endif
 	my_no = 0;
 	
 	//Q‰Á‚µ‚Ä‚¢‚énetID‚ÌƒŠƒXƒg‚ğì¬

@@ -13,10 +13,10 @@
 #include "common.h"
 
 #include "system/wordset.h"
-#include "system/msgdata.h"
-#include "system/fontproc.h"
+#include "print\gf_font.h"
+//#include "system/fontproc.h"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wifi_aisatu.h"
 #include "msgdata/msg_wifi_aisatu_japan.h"
 #include "msgdata/msg_wifi_aisatu_english.h"

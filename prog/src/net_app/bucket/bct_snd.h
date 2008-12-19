@@ -12,7 +12,7 @@
 #ifndef __BCT_SND_H__
 #define __BCT_SND_H__
 
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 #define BCT_SND_MARUIN				( SEQ_SE_DP_ELEBETA )		// マルノーム登場
 //#define BCT_SND_MARUIN2			( SEQ_SE_DP_JIHANKI )		// マルノーム登場ガシャン

@@ -16,9 +16,9 @@
 
 #include "buflen.h"
 #include "system/wordset.h"
-#include "system/msgdata.h"
+#include "print\gf_font.h"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wflby_news.h"
 
 #include "lobby_news_data.h"

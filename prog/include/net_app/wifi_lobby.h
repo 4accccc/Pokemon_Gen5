@@ -12,7 +12,7 @@
 #ifndef __WIFI_LOBBY_H__
 #define __WIFI_LOBBY_H__
 
-#include "system/procsys.h"
+#include <procsys.h>
 #include "savedata/save_control.h"
 #include "field/wflby_counter.h"
 
@@ -42,9 +42,9 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq );
-extern PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq );
-extern PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT WFLBYProc_Init( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT WFLBYProc_Main( PROC* p_proc, int* p_seq );
+extern GFL_PROC_RESULT WFLBYProc_Exit( PROC* p_proc, int* p_seq );
 
 
 

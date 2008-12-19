@@ -15,7 +15,7 @@
 
 #include "savedata/save_control.h"
 
-#include "system/procsys.h"
+#include <procsys.h>
 
 #include "net_app/wifi_lobby/wflby_def.h"
 #include "net_app/wifi_lobby/wflby_system_def.h"

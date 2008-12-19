@@ -12,8 +12,8 @@
 #ifndef __WFLBY_3DMATRIX_H__
 #define __WFLBY_3DMATRIX_H__
 
-#include "system/d3dobj.h"
-#include "system/arc_util.h"
+//#include "system/d3dobj.h"
+//#include "system/arc_util.h"
 
 #include "net_app/wifi_2dmap/wf2dmap_common.h"
 

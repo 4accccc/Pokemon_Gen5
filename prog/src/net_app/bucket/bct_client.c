@@ -21,13 +21,13 @@
 #include "gflib/g3d_system.h"
 
 #include "system/wordset.h"
-#include "system/msgdata.h"
+#include "print\gf_font.h"
 #include "system/clact_util.h"
 #include "system/render_oam.h"
 #include "system/window.h"
-#include "system/fontproc.h"
-#include "system/brightness.h"
-#include "system/fontoam.h"
+//#include "system/fontproc.h"
+//#include "system/brightness.h"
+//#include "system/fontoam.h"
 #include "system/font_arc.h"
 
 #include "net\network_define.h"
@@ -36,14 +36,14 @@
 
 #include "src/graphic/bucket.naix"
 #include "wlmngm_tool.naix"
-#include "system/d3dobj.h"
+//#include "system/d3dobj.h"
 
 #include "gflib/calctool.h"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_debug_tomoya.h"
 #include "msgdata/msg_lobby_minigame1.h"
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 //-----------------------------------------------------------------------------
 /**

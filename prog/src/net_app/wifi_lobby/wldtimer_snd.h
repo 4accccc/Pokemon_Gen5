@@ -12,7 +12,7 @@
 #ifndef __WLDTIMER_SND_H__
 #define __WLDTIMER_SND_H__
 
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 //#define WLDTIMER_SND_ZOMEIN			( SEQ_SE_PL_TIMER01 )		// ズームイン
 #define WLDTIMER_SND_ZOMEIN				( SEQ_SE_PL_TIMER03 )		// ズームイン

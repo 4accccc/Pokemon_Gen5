@@ -15,17 +15,17 @@
 
 #include "net_app/balance_ball.h"
 
-#include "system/snd_tool.h"
-#include "system/d3dobj.h"
+//#include "system/snd_tool.h"
+//#include "system/d3dobj.h"
 #include "system\font_arc.h"
 
 #include "strbuf.h"
 #include "include/gflib/msg_print.h"
-#include "system/fontproc.h"
+//#include "system/fontproc.h"
 #include "system/window.h"
-#include "include/system/fontproc.h"
-#include "include/system/msgdata.h"
-#include "include/msgdata/msg.naix"
+//#include "include/system/fontproc.h"
+#include "print\gf_font.h"
+#include "message.naix"
 
 #include "gflib/button_man.h"
 

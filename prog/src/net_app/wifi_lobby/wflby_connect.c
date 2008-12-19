@@ -15,12 +15,12 @@
 #include "gflib/msg_print.h"
 
 #include "system/wordset.h"
-#include "system/msgdata.h"
+#include "print\gf_font.h"
 #include "system/arc_tool.dat"
 #include "system/wipe.h"
 #include "system/bmp_menu.h"
 #include "system/window.h"
-#include "system/fontproc.h"
+//#include "system/fontproc.h"
 #include "system/pm_rtc.h"
 
 #include "communication/comm_state.h"
@@ -29,13 +29,13 @@
 #include "savedata/record.h"
 
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wifi_lobby.h"
 #include "msgdata/msg_wifi_hiroba.h"
 #include "msgdata/msg_wifi_system.h"
 #include "msgdata/msg_debug_tomoya.h"
 
-#include "communication/wm_icon.h"
+//#include  "communication/wm_icon.h"
 
 #include "wflby_connect.h"
 #include "wflby_def.h"

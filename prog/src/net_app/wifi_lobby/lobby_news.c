@@ -18,15 +18,15 @@
 #include "system/clact_util.h"
 #include "system/wipe.h"
 #include "system/render_oam.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
+//#include "system/fontproc.h"
+#include "print\gf_font.h"
 #include "system/wordset.h"
 
 #include "net\network_define.h"
 
 #include "src/graphic/lobby_news.naix"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wflby_news.h"
 
 #include "lobby_news.h"

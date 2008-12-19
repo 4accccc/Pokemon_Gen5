@@ -12,13 +12,13 @@
 
 #include "common.h"
 
-#include "system/d3dobj.h"
+//#include "system/d3dobj.h"
 #include "system/clact_util.h"
 #include "system/wipe.h"
 #include "system/render_oam.h"
 #include "system/pm_overlay.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
+//#include "system/fontproc.h"
+#include "print\gf_font.h"
 #include "system/window.h"
 #include "system/wordset.h"
 #include "system/touch_subwindow.h"
@@ -30,7 +30,7 @@
 
 #include "graphic/worldtimer.naix"
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_worldtimer.h"
 #include "msgdata/msg_wifi_place_msg_world.h"
 #include "msgdata/msg_wifi_place_msg_GBR.h"

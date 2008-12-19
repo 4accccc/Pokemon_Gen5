@@ -8,23 +8,23 @@
 //==============================================================================
 #include <gflib.h>
 #include "system/palanm.h"
-#include "system/pmfprint.h"
-#include "system/arc_tool.h"
-#include "system/arc_util.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/particle.h"
-#include "system/brightness.h"
-#include "system/snd_tool.h"
+#include "print\printsys.h"
+#include <arc_tool.h>
+//#include "system/arc_util.h"
+//#include "system/fontproc.h"
+#include "print\gf_font.h"
+//#include "system/particle.h"
+//#include "system/brightness.h"
+//#include "system/snd_tool.h"
 #include "net\network_define.h"
-#include "communication/wm_icon.h"
-#include "msgdata/msg.naix"
+//#include  "communication/wm_icon.h"
+#include "message.naix"
 #include "system/wipe.h"
-#include "communication/wm_icon.h"
-#include "system/msgdata_util.h"
-#include "system/procsys.h"
-#include "system/d3dobj.h"
-#include "system/fontoam.h"
+//#include  "communication/wm_icon.h"
+//#include "system/msgdata_util.h"
+#include <procsys.h>
+//#include "system/d3dobj.h"
+//#include "system/fontoam.h"
 
 #include "balloon_common.h"
 #include "balloon_comm_types.h"
@@ -606,6 +606,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
 	}
 	
+#if WB_TEMP_FIX
 	//ミニゲーム共通カウントダウンシステム
 	game->mgcount = MNGM_COUNT_Init(CATS_GetClactSetPtr(game->crp), HEAPID_BALLOON);
 	//ミニゲーム共通カウントダウンシステムで使用しているパレットをPFDにも展開
@@ -614,6 +615,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 		pal_pos = MNGM_PalNoGet(game->mgcount);
 		PaletteWorkSet_VramCopy(game->pfd, FADE_MAIN_OBJ, pal_pos*16, MNGM_COUNT_PALNUM*0x20);
 	}
+#endif
 
 	sys_VBlankFuncChange(BalloonVBlank, game);
 	
@@ -668,8 +670,12 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 
 		default:
 		case 1:
-			// まづは通信切断
+			// まずは通信切断
+		#if WB_TEMP_FIX
 			if( MNGM_ERROR_DisconnectWait( &game->bsw->entry_param ) == TRUE ){
+		#else
+			if(TRUE){
+		#endif
 				// 終了処理へ
 				return GFL_PROC_RES_FINISH;
 			}
@@ -750,11 +756,17 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 			break;
 			
 		case BALLOON_COUNTDOWN_START:
+		#if WB_TEMP_FIX
 			MNGM_COUNT_StartStart(game->mgcount);
+		#endif
 			game->countdown_eff = BALLOON_COUNTDOWN_START_WAIT;
 			break;
 		case BALLOON_COUNTDOWN_START_WAIT:
+		#if WB_TEMP_FIX
 			if(MNGM_COUNT_Wait(game->mgcount) == TRUE){
+		#else
+			if(TRUE){
+		#endif
 				game->game_start = TRUE;
 				game->booster.stop = FALSE;
 				game->countdown_eff = BALLOON_COUNTDOWN_START_END;
@@ -764,12 +776,18 @@ GFL_PROC_RESULT BalloonGameProc_Main( GFL_PROC * proc, int * seq, void * pwk, vo
 			}
 			break;
 		case BALLOON_COUNTDOWN_TIMEUP:
+		#if WB_TEMP_FIX
 			MNGM_COUNT_StartTimeUp(game->mgcount);
+		#endif
 			OS_TPrintf("自分の入れた空気の合計 = %d\n", game->my_total_air);
 			game->countdown_eff = BALLOON_COUNTDOWN_TIMEUP_WAIT;
 			break;
 		case BALLOON_COUNTDOWN_TIMEUP_WAIT:
+		#if WB_TEMP_FIX
 			if(MNGM_COUNT_Wait(game->mgcount) == TRUE){
+		#else
+			if(TRUE){
+		#endif
 				game->countdown_eff = BALLOON_COUNTDOWN_TIMEUP_END;
 			}
 			break;
@@ -841,8 +859,10 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	game->bsw->result_param.balloon = game->exploded_count;
 	
 	//ミニゲーム共通カウントダウンシステム削除
+#if WB_TEMP_FIX
 	MNGM_COUNT_Exit(game->mgcount);
-	
+#endif
+
 	Air_ActorAllDelete(game);
 	Exploded_AllDelete(game);
 	
@@ -1382,7 +1402,7 @@ static void GameStartMessageErase(BALLOON_GAME_WORK *game)
 //--------------------------------------------------------------
 static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 {
-#if 1
+#if WB_TEMP_FIX
 	int i, bmp_pos;
 	MYSTATUS *mystatus;
 	STRBUF *name;
@@ -1420,25 +1440,6 @@ static void PlayerName_Draw(BALLOON_GAME_WORK *game)
 				FONT_SYSTEM, name, draw_x_offset, 0, MSG_ALLPUT, print_color, NULL);
 			GFL_HEAP_FreeMemory(name);
 		}
-	}
-#else
-	int i, bmp_pos;
-	MYSTATUS *mystatus;
-	STRBUF *name;
-	int current_id;
-
-	current_id = GFL_NET_SystemGetCurrentID();
-//	for(i = 0; i < game->bsw->player_max; i++){
-	for(i = 1; i < 4; i++){
-//		if(current_id != game->bsw->player_netid[i]){
-//			mystatus = CommInfoGetMyStatus(game->bsw->player_netid[i]);
-//			name = MyStatus_CreateNameString(mystatus, HEAPID_BALLOON);
-			name = MSGMAN_AllocString(game->msgman, 10);
-			bmp_pos = i;//Balloon_NetID_to_PlayerPos(game, game->bsw->player_netid[i]);
-			GF_STR_PrintColor(&game->win[BALLOON_BMPWIN_NAME_1 + bmp_pos -1], FONT_SYSTEM, 
-				name, 0, 0, MSG_ALLPUT, BMPWIN_SUB_STR_PRINTCOLOR, NULL);
-			GFL_HEAP_FreeMemory(name);
-//		}
 	}
 #endif
 }

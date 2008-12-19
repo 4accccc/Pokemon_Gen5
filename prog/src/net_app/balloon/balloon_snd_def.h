@@ -9,7 +9,7 @@
 #ifndef __BALLOON_SND_DEF_H__
 #define __BALLOON_SND_DEF_H__
 
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 
 ///ソーナンスを押す音

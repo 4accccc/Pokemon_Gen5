@@ -16,7 +16,7 @@
 #include "msgdata/msg_wifi_hiroba.h"
 #include "msgdata/msg_wifi_system.h"
 
-#include "system/fontproc.h"
+//#include "system/fontproc.h"
 
 #include "wflby_ev_def.h"
 #include "wflby_ev_talk.h"

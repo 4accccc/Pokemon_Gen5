@@ -9,8 +9,8 @@
 #ifndef __BALLOON_H__
 #define __BALLOON_H__
 
-// とりあえずここに入れます、松田さんの書き方じゃないなら消してください。
-#include "application/wifi_lobby/minigame_tool.h"
+#include <procsys.h>
+#include "net_app/wifi_lobby/minigame_tool.h"
 
 //==============================================================================
 //	構造体定義
@@ -36,9 +36,9 @@ typedef struct {
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
-extern PROC_RESULT BalloonProc_Init( PROC * proc, int * seq );
-extern PROC_RESULT BalloonProc_Main( PROC * proc, int * seq );
-extern PROC_RESULT BalloonProc_End(PROC *proc, int *seq);
+extern GFL_PROC_RESULT BalloonProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalloonProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+extern GFL_PROC_RESULT BalloonProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 
 #endif		// __BALLOON_H__

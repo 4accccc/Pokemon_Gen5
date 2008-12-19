@@ -12,7 +12,7 @@
 #ifndef __LOBBY_NEWS_SND_H__
 #define __LOBBY_NEWS_SND_H__
 
-#include "system/snd_tool.h"
+//#include "system/snd_tool.h"
 
 //-----------------------------------------------------------------------------
 /**

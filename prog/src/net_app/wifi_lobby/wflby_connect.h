@@ -12,7 +12,7 @@
 #ifndef __WFLBY_CONNECT_H__
 #define __WFLBY_CONNECT_H__
 
-#include "system/procsys.h"
+#include <procsys.h>
 
 #include "savedata/save_control.h"
 

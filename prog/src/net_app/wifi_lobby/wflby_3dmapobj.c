@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-#include "system/arc_tool.h"
+#include <arc_tool.h>
 
 #include "graphic/wifi_lobby.naix"
 

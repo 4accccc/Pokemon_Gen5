@@ -20,16 +20,16 @@
 #include "system/wipe.h"
 #include "system/render_oam.h"
 #include "system/pm_overlay.h"
-#include "system/fontproc.h"
-#include "system/msgdata.h"
+//#include "system/fontproc.h"
+#include "print\gf_font.h"
 #include "system/window.h"
 #include "system/wordset.h"
 #include "system/bmp_menu.h"
 
-#include "communication/wm_icon.h"
+//#include  "communication/wm_icon.h"
 
 
-#include "msgdata/msg.naix"
+#include "message.naix"
 #include "msgdata/msg_wifi_hiroba.h"
 #include "msgdata/msg_wifi_50_answers_a.h"
 #include "msgdata/msg_wifi_50_answers_b.h"

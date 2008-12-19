@@ -9,7 +9,7 @@
 #ifndef __BALLOON_GAME_H__
 #define __BALLOON_GAME_H__
 
-#include "system/procsys.h"
+#include <procsys.h>
 #include "balloon_comm_types.h"
 
 

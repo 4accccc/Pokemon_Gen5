@@ -15,7 +15,7 @@
 #include "lobby_news_data.h"
 #include "wflby_system_def.h"
 
-#include "system/procsys.h"
+#include <procsys.h>
 
 
 //-----------------------------------------------------------------------------

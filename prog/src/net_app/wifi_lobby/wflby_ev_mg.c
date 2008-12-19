@@ -12,8 +12,8 @@
 
 #include "common.h"
 
-#include "system/msgdata.h"
-#include "system/fontproc.h"
+#include "print\gf_font.h"
+//#include "system/fontproc.h"
 
 #include "net\network_define.h"
 
