@@ -261,8 +261,10 @@ PRINT_QUE * FLDMSGBG_GetPrintQue( FLDMSGBG *fmb )
 	return( fmb->printQue );
 }
 
+//--------------------------------------------------------------
 /**
- * FLDMSGBG GFL_MSGDATA初期化 戻り値GFL_MSGDATAの削除は各自で行う事。
+ * FLDMSGBG FLDMSGBGで使用しているHEAPIDでGFL_MSGDATA初期化。
+ * 戻り値GFL_MSGDATAの削除は各自で行う事。
  * @param	fmb	FLDMSGBG
  * @param	arcDatIDMsg	メッセージが含まれるアーカイブデータID
  * @retval	GFL_MSGDATA*
@@ -352,6 +354,7 @@ void FLDMSGPRINT_Delete( FLDMSGPRINT *msgPrint )
 //--------------------------------------------------------------
 void FLDMSGPRINT_Print( FLDMSGPRINT *msgPrint, u32 x, u32 y, u32 strID )
 {
+	GF_ASSERT( msgPrint->msgData );
 	GFL_MSG_GetString( msgPrint->msgData, strID, msgPrint->strBuf );
 	PRINT_UTIL_Print( &msgPrint->printUtil, msgPrint->printQue,
 		x, y, msgPrint->strBuf, msgPrint->fontHandle );		
@@ -389,10 +392,10 @@ BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint )
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT 表示するビットマップウィンドウを変更する
+ * 以前に指定したbmpwinの削除は各自で行う事。
  * @param	msgPrint	FLDMSGPRINT
  * @param	bmpwin	表示する初期化済みのGFL_BMPWIN
  * @retval	nothing
- * 以前に指定したbmpwinの削除は各自で行う事。
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_ChangeBmpWin( FLDMSGPRINT *msgPrint, GFL_BMPWIN *bmpwin )
