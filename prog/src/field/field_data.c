@@ -1,10 +1,13 @@
 //============================================================================================
+/**
+ */
 //============================================================================================
 #include <gflib.h>
 #include "./fieldmap_local.h"
 #include "arc_def.h"
 #include "field_data.h"
 
+#include "./fieldmap_resist.h"
 #include "field/zonedata.h"
 #include "map_matrix.h"
 
@@ -91,8 +94,11 @@ u16 FIELDDATA_GetMapIDMax(void)
 	return resistMapTblCount;
 }
 
+
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 #include "test_graphic/test3dp.naix"
 static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_a1_3dppack },
@@ -113,6 +119,8 @@ static const FLD_G3D_MAPPER_DATA sampleMap[] = {
 	{ NARC_test3dp_map_d4_3dppack },
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 #include "test_graphic/test3dp2.naix"
 
 static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
@@ -130,6 +138,8 @@ static const FLD_G3D_MAPPER_DATA sampleMap2[] = {
 	{ NARC_test3dp2_m_test_02_06c_3dppack },
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 #include "test_graphic/loopbridge.naix"
 
 static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
@@ -151,10 +161,14 @@ static const FLD_G3D_MAPPER_DATA loopbridgemap[] = {
 	{ NARC_loopbridge_m_test2_04_04c_3dppack },
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static const FLD_G3D_MAPPER_DATA fldmap3dp_test[] = {
 	{ 0 },
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 #include "fieldmap/all_build_model.naix"
 static const FLD_G3D_MAPPEROBJ_DATA resistObjTbl2[] = {
 	{ NARC_all_build_model_gate_01_nsbmd, NON_LOWQ},
@@ -162,6 +176,7 @@ static const FLD_G3D_MAPPEROBJ_DATA resistObjTbl2[] = {
 	{ NARC_all_build_model_t2_build01_nsbmd, NON_LOWQ},
 	{ NARC_all_build_model_t2_house01_nsbmd, NON_LOWQ},
 };
+
 #include "test_graphic/fieldmap_sample.naix"
 static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
 	// high quality model, low quality model のセットを登録する
@@ -170,6 +185,8 @@ static const FLD_G3D_MAPPEROBJ_DATA	resistObjTbl[] = {
 	{ NARC_fieldmap_sample_buil_01_h_nsbmd, NARC_fieldmap_sample_buil_01_l_nsbmd },
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static const u16	resistDDobjTbl[] = {
 	NARC_fieldmap_sample_sample_tree_nsbtx,
 };
@@ -180,11 +197,18 @@ static const FLD_G3D_MAPPER_GLOBAL_OBJSET_TBL	gobjData_Tbl = {
 	ARCID_FLDMAP_ACTOR, resistDDobjTbl, NELEMS(resistDDobjTbl),
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 //金銀形式バイナリデータサンプル
 #define DATID_GSMAP_GOBJ (2)
 static const FLD_G3D_MAPPER_GLOBAL_OBJSET_BIN	gobjData_Bin = {
-	ARCID_GSAREAOBJ, ARCID_GSOBJANMTBL, DATID_GSMAP_GOBJ, 
-	ARCID_GSOBJ, ARCID_GSOBJTEX, ARCID_GSOBJANM,
+	ARCID_GSAREAOBJ,
+	ARCID_GSOBJANMTBL,
+	DATID_GSMAP_GOBJ, 
+
+	ARCID_GSOBJ,
+	ARCID_GSOBJTEX,
+	ARCID_GSOBJANM,
 };
 
 //グローバルテクスチャサンプル（金銀マップテクスチャ）
@@ -202,7 +226,9 @@ static const FLD_G3D_MAPPER_DATA GSMap[] = {
 	{ FLD_G3D_MAPPER_NOMAP }, { 29 },
 };
 
-#define MAP_XZ_SIZE (512 * FX32_ONE)	//16 * 32 grid
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+#define MAP_XZ_SIZE (512 * FX32_ONE)	//16 unit * 32 grid
 #define MAP_HEIGHT (128 * FX32_ONE)
 
 const SCENE_DATA resistMapTbl[] = {

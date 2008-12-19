@@ -14,6 +14,7 @@
 #include "mapdatafunc\field_func_bridge_file.h"
 
 #include "field_g3d_mapper.h"
+#include "fieldmap_resist.h"
 
 //============================================================================================
 /**
