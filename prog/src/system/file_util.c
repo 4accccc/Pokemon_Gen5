@@ -177,3 +177,15 @@ void* GFL_FILE_LoadDataAllocOfs(ARCID arcID, HEAPID heapID, u32 ofs, u32 size)
 	return buffer;
 }
 
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+void GFL_FILE_LoadDataOfs(void * buffer, ARCID arcID, u32 ofs, u32 size)
+{
+	FSFile p_file;
+	OpenFile(&p_file, arcID);
+	FS_SeekFile(&p_file, ofs, FS_SEEK_SET);
+	FS_ReadFile(&p_file, buffer, size);
+	FS_CloseFile(&p_file);
+}
+
+
