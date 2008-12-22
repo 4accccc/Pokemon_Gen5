@@ -33,7 +33,6 @@ enum {
 };
 
 enum {
-	AREA_ID_FIELD	=	0,
 	BG_ID_FOREST	=	3,
 
 	MMLID_NOENTRY	=	0,
@@ -57,6 +56,8 @@ enum {
 	MATRIX_ID_TEST8 =	8,
 	MATRIX_ID_TEST9 =	9,
 	MATRIX_ID_TEST10 =	10,
+
+	DUMMY_DEFINE_END
 };
 
 enum {
@@ -65,4 +66,5 @@ enum {
 	//NO_GRID_SAMPLE = 2,
 	GRID_GS_SAMPLE = 3
 };
+#include "../area_data/area_id.h"
 

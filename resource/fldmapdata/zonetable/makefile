@@ -42,8 +42,9 @@ ELF2BIN		= $(PROJECT_ROOT)/tools/celf2bin.exe
 
 CONVERTER	= ruby zonetable.rb
 
-CONVSRCS	= zonetable.c
 DATAFILE	= zonetable.xls
+CONVSRCS	= zonetable.c
+DEPFILES	= ../area_data/area_id.h
 
 #コンバート結果のテキストファイル一覧（比較対象となるもの）
 OUTPUT		= zonetable.c zone_id.h #eventlist.txt
@@ -63,7 +64,6 @@ ifeq	($(CONVERTUSER),true)
 #コンバート対象者のみ、中間ファイル削除
 LDIRT_CLEAN	+= $(OUTPUT) $(CONVSRCS:.c=.bin) $(CONVSRCS) $(RESULTS)
 endif
-#Makeで生成される*.binはmake cleanの削除対象にする
 
 LINCLUDES	= $(NITROSDK_ROOT)/include
 LINCLUDES	+= $(dir $<)
@@ -73,9 +73,6 @@ LINCLUDES	+= $(dir $<)
 #----------------------------------------------------------------------------
 include	$(NITROSDK_ROOT)/build/buildtools/commondefs.cctype.CW
 include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
-
-#共通変数定義
-#include $(DP_ROOT)/commondefs.GF
 
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
@@ -109,9 +106,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #	--(zonetable.rb)-->	zonetable.c（＋その他）
 #	--(コンパイル＆elf2bin)-->	zonetable.bin
 #	--(nnsarc)-->	zonedata.narc/.naix
-$(NARCNAME): $(DATAFILE)
+$(NARCNAME): $(DATAFILE) $(DEPFILES)
 	$(EXCEL2TAB) $(DATAFILE)
-	#$(MAKE) convert
 	$(CONVERTER) $(DATAFILE:.xls=.txt)
 	$(MAKE) makebin				#Ｃソース→バイナリ変換して
 	nnsarc -i -c -l -n $(NARCNAME) *.bin > arc_result.txt	#アーカイブ作成
@@ -124,14 +120,6 @@ endif
 makebin: $(CONVSRCS:.c=.bin)
 
 
-
-
-#----------------------------------------------------------------------------
-#----------------------------------------------------------------------------
-test:
-	echo $(LDIRT_CLEAN)
-
-#echo $(foreach types,$(FILETYPES),$(wildcard *$(types)*))
 
 
 #----------------------------------------------------------------------------
