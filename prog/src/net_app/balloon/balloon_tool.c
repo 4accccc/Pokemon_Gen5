@@ -3028,6 +3028,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
  * @param   y_char_len		BMPのYサイズ(キャラ単位)
  */
 //--------------------------------------------------------------
+#if WB_TEMP_FIX
 void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
 	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
@@ -3094,6 +3095,7 @@ void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp,
 	fontact->cma = cma;
 	fontact->len = font_len;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -3103,10 +3105,12 @@ void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp,
 //--------------------------------------------------------------
 void Balloon_FontOamDelete(BALLOON_FONTACT *fontact)
 {
+#if WB_TEMP_FIX
 	FONTOAM_Delete(fontact->fontoam);
 	CharVramAreaFree(&fontact->cma);
 	
 	fontact->fontoam = NULL;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3140,9 +3144,11 @@ void Balloon_CounterPosUpdate(BALLOON_COUNTER *counter)
 			y0 = act_len - 16 - (dot_pos - 160);
 			y1 = y0 - act_len;
 		}
+	#if WB_TEMP_FIX
 		FONTOAM_GetMat(counter->fontact[i][BALLOON_COUNTER_0].fontoam, &x, &y);
 		FONTOAM_SetMat(counter->fontact[i][BALLOON_COUNTER_0].fontoam, x, COUNTER_Y - y0);
 		FONTOAM_SetMat(counter->fontact[i][BALLOON_COUNTER_1].fontoam, x, COUNTER_Y - y1);
+	#endif
 	}
 }
 
@@ -3341,6 +3347,7 @@ CATS_ACT_PTR CounterWindow_ActorCreate(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 {
+#if WB_TEMP_FIX
 	//-- カウンター --//
 	STRBUF *str0;
 	int i;
@@ -3358,6 +3365,7 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 			COUNTER_Y, FALSE, BALLOON_BGPRI_DUMMY_COUNTER, BALLOON_SOFTPRI_COUNTER, 2*1);
 		STRBUF_Delete(str0);
 	}
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3369,6 +3377,7 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 //--------------------------------------------------------------
 void CounterDummyNumber_ActorDelete(BALLOON_GAME_PTR game)
 {
+#if WB_TEMP_FIX
 	int i;
 	
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
@@ -3376,6 +3385,7 @@ void CounterDummyNumber_ActorDelete(BALLOON_GAME_PTR game)
 			Balloon_FontOamDelete(&game->counter.fontact_dummy[i]);
 		}
 	}
+#endif
 }
 
 //--------------------------------------------------------------

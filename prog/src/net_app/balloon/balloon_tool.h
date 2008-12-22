@@ -45,10 +45,12 @@ extern void SioBooster_ActorDeleteAll(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *s
 extern void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster, 
 	int booster_type, int net_id, int arrival_frame);
 extern void SioBooster_Update(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster);
+#if WB_TEMP_FIX
 extern void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
 	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len);
+#endif
 extern void Balloon_FontOamDelete(BALLOON_FONTACT *fontact);
 extern void Balloon_CounterUpdate(BALLOON_GAME_PTR game, BALLOON_COUNTER *counter);
 extern void Balloon_CounterNextNumberSet(BALLOON_COUNTER *counter, int next_number);

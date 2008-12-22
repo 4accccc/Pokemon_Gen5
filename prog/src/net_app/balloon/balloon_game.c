@@ -536,8 +536,10 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	game->msg_buf = STRBUF_Create(BALLOON_MESSAGE_BUF_SIZE, HEAPID_BALLOON);//文字列バッファ作成
 
 	//フォントOAMシステム作成
+#if WB_TEMP_FIX
 	game->fontoam_sys = FONTOAM_SysInit(BALLOON_FONTOAM_MAX_MAIN, HEAPID_BALLOON);
-	
+#endif
+
 	Booster_Init(game, &game->booster);
 
 	{
@@ -901,7 +903,9 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GF_BGL_BGControlExit(game->bgl, GF_BGL_FRAME3_S );
 
 	//フォントOAMシステム削除
+#if WB_TEMP_FIX
 	FONTOAM_SysDelete(game->fontoam_sys);
+#endif
 
 	//アクターシステム削除
 	CATS_ResourceDestructor_S(game->csp,game->crp);
@@ -1616,6 +1620,7 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 			hdl, MINI_FUSEN_CCOBJ_NCLR, 0, 
 			1, NNS_G2D_VRAM_TYPE_2DMAIN, PLTTID_COUNTER);
 
+	#if WB_TEMP_FIX
 		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_counter001);
 		str1 = MSGMAN_AllocString(game->msgman, msg_balloon_counter002);
 		for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
@@ -1641,7 +1646,8 @@ static void BalloonDefaultOBJSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 			COUNTER_BASE_X + COUNTER_X_SPACE * BALLOON_COUNTER_KETA_MAX, COUNTER_Y, FALSE, 
 			BALLOON_BGPRI_DUMMY_COUNTER, BALLOON_SOFTPRI_COUNTER, 2);
 		STRBUF_Delete(str0);
-
+	#endif
+	
 		Balloon_CounterPosUpdate(&game->counter);
 		
 		//カウンターダミーアクター(WIPEがウィンドウ機能を使っているので一時的に生成)
@@ -1684,11 +1690,13 @@ static void BalloonDefaultOBJDel(BALLOON_GAME_WORK *game)
 {
 	int i;
 	
+#if WB_TEMP_FIX
 	for(i = 0; i < BALLOON_COUNTER_KETA_MAX; i++){
 		Balloon_FontOamDelete(&game->counter.fontact[i][BALLOON_COUNTER_0]);
 		Balloon_FontOamDelete(&game->counter.fontact[i][BALLOON_COUNTER_1]);
 	}
 	Balloon_FontOamDelete(&game->counter.fontact_cc);
+#endif
 	CounterDummyNumber_ActorDelete(game);
 
 	CounterWindow_ActorDelete(game, game->counter.win_cap);

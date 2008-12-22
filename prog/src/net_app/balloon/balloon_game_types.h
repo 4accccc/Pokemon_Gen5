@@ -375,9 +375,13 @@ typedef struct{
 
 ///フォントOAM用の構造体定義
 typedef struct{
+#if WB_TEMP_FIX
 	FONTOAM_OBJ_PTR fontoam;		///<フォントOAM
 	CHAR_MANAGER_ALLOCDATA cma;		///<フォントOAMキャラ領域データ
 	u16 len;						///<フォントのドット長
+#else
+	u32 temp;
+#endif
 }BALLOON_FONTACT;
 
 ///カウンター制御構造体定義
@@ -478,7 +482,9 @@ typedef struct _BALLOON_GAME_WORK{
 	WORDSET *wordset;				///<Allocしたメッセージ用単語バッファへのポインタ
 	STRBUF *msg_buf;				///<Allocした文字列バッファへのポインタ
 	PALETTE_FADE_PTR pfd;			///<パレットフェードシステムへのポインタ
+#if WB_TEMP_FIX
 	FONTOAM_SYS_PTR fontoam_sys;	///<FONTOAMシステム
+#endif
 
 	TCB_PTR update_tcb;
 	GF_G3DMAN *g3Dman;
