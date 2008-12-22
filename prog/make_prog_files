@@ -11,6 +11,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				gamesystem/game_data.c \
 				map/dp3format.c \
 				field/zonedata.c \
+				field/areadata.c \
 				field/location.c \
 				field/fieldmap_proc.c \
 				field/eventdata_system.c \
