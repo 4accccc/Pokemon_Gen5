@@ -399,12 +399,15 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 //------------------------------------------------------------------
 static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData )
 {
-	if( resistData->gtexType != NON_GLOBAL_TEX ){
-		FLDMAPPER_RESIST_TEX* gtexData = (FLDMAPPER_RESIST_TEX*)resistData->gtexData;
-
-		g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
-		GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
-	} else {
+	switch (resistData->gtexType) {
+	case FLDMAPPER_RESIST_TEXTYPE_USE:
+		{
+			const FLDMAPPER_RESIST_TEX* gtexData = (FLDMAPPER_RESIST_TEX*)resistData->gtexData;
+			g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
+			GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
+		}
+		break;
+	case FLDMAPPER_RESIST_TEXTYPE_NONE:
 		g3Dmapper->globalTexture = NULL;
 	}
 }
@@ -425,15 +428,18 @@ static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper )
 //------------------------------------------------------------------
 static void CreateGlobalObject( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData )
 {
-	int i;
-
-	if( (resistData->gobjType != NON_GLOBAL_OBJ)&&(resistData->gobjData != NULL) ){
-
-		if( resistData->gobjType != USE_GLOBAL_OBJSET_BIN ){
-			CreateGrobalObj_forTbl( g3Dmapper, resistData->gobjData );
-		} else {
-			CreateGrobalObj_forBin( g3Dmapper, resistData->gobjData );
-		}
+	switch (resistData->gobjType) {
+	case FLDMAPPER_RESIST_OBJTYPE_BIN:
+		GF_ASSERT(resistData->gobjData);
+		CreateGrobalObj_forBin( g3Dmapper, resistData->gobjData );
+		break;
+	case FLDMAPPER_RESIST_OBJTYPE_TBL:
+		GF_ASSERT(resistData->gobjData);
+		CreateGrobalObj_forTbl( g3Dmapper, resistData->gobjData );
+		break;
+	case FLDMAPPER_RESIST_OBJTYPE_NONE:
+		/* do nothing */
+		break;
 	}
 }
 

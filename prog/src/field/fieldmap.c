@@ -169,6 +169,7 @@ FIELD_MAIN_WORK *	FIELDMAP_Create(GAMESYS_WORK * gsys, HEAPID heapID )
 	fieldWork->gamemode = GAMEMODE_BOOT;
 	fieldWork->gsys = gsys;
 	fieldWork->map_id = GetSceneID(gsys);
+	fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
 	//サイズは暫定。DPでの最大サイズは30x30
 	fieldWork->pMapMatrixBuf = GFL_HEAP_AllocClearMemory(
 			heapID, sizeof(FLDMAPPER_MAPDATA) * 32 * 32);
@@ -224,7 +225,6 @@ BOOL	FIELDMAP_Main( GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork )
 	case 0:
 		//基本システムセットアップ
 		fieldWork->gs = SetupGameSystem( fieldWork->heapID );
-		fieldWork->ftbl = FIELDDATA_GetFieldFunctions(fieldWork->map_id);
 		fieldWork->seq++;
         break;
 

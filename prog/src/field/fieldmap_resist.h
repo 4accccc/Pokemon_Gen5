@@ -5,7 +5,11 @@
  */
 //============================================================================================
 #pragma once
+
 //------------------------------------------------------------------
+//
+//	マップデータ
+//
 //------------------------------------------------------------------
 
 #define FLDMAPPER_MAPDATA_NULL	(0xffffffff)
@@ -13,6 +17,9 @@ typedef struct {
 	u32 datID;
 }FLDMAPPER_MAPDATA;
 
+//------------------------------------------------------------------
+///	動作タイプの指定
+//------------------------------------------------------------------
 typedef enum {
 	FLDMAPPER_MODE_SCROLL_NONE = 0,
 	FLDMAPPER_MODE_SCROLL_XZ,
@@ -20,6 +27,9 @@ typedef enum {
 }FLDMAPPER_MODE;
 
 //------------------------------------------------------------------
+//
+//		登録モデリングデータ
+//
 //------------------------------------------------------------------
 #define	NON_LOWQ	(0xffff)
 #define	NON_TEX		(0xffff)
@@ -42,9 +52,11 @@ typedef struct {
 
 }FLDMAPPER_RESISTDATA_DDOBJ;
 
-#define NON_GLOBAL_OBJ	(0xffffffff)
-#define USE_GLOBAL_OBJSET_TBL	(0)
-#define USE_GLOBAL_OBJSET_BIN	(1)
+typedef enum {
+	FLDMAPPER_RESIST_OBJTYPE_NONE	= 0xffffffff,
+	FLDMAPPER_RESIST_OBJTYPE_TBL	= 0,
+	FLDMAPPER_RESIST_OBJTYPE_BIN	= 1,
+}FLDMAPPER_RESIST_OBJTYPE;
 typedef struct {
 	u32							objArcID;	//アーカイブＩＤ
 	const FLDMAPPER_RESISTOBJDATA*	objData;	//実データ
@@ -65,8 +77,11 @@ typedef struct {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-#define	NON_GLOBAL_TEX	(0xffffffff)
-#define	USE_GLOBAL_TEX	(0)
+typedef enum {
+	FLDMAPPER_RESIST_TEXTYPE_NONE = 0xffffffff,
+	FLDMAPPER_RESIST_TEXTYPE_USE = 0,
+}FLDMAPPER_RESIST_TEXTYPE;
+
 typedef struct {
 	u32 arcID;
 	u32 datID;
@@ -80,10 +95,10 @@ typedef struct {
 	fx32					height;			//ブロック高さ
 	FLDMAPPER_MODE			mode;			//動作モード
 	u32						arcID;			//グラフィックアーカイブＩＤ
-	u32						gtexType;		//グローバルテクスチャタイプ
-	FLDMAPPER_RESIST_TEX*	gtexData;		//グローバルテクスチャ
-	u32						gobjType;		//グローバルオブジェクトタイプ
-	void*					gobjData;		//グローバルオブジェクト
+	FLDMAPPER_RESIST_TEXTYPE	gtexType;		//グローバルテクスチャタイプ
+	const FLDMAPPER_RESIST_TEX*	gtexData;		//グローバルテクスチャ
+	FLDMAPPER_RESIST_OBJTYPE	gobjType;		//グローバルオブジェクトタイプ
+	void *						gobjData;		//グローバルオブジェクト
 
 	u16						sizex;			//横ブロック数
 	u16						sizez;			//縦ブロック数
