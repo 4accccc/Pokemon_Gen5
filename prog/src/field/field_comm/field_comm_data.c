@@ -106,6 +106,7 @@ void FIELD_COMM_DATA_InitSystem( HEAPID heapID )
 		//最初はヒープの確保と全初期化
 		commData = GFL_HEAP_AllocMemory( heapID , sizeof(FIELD_COMM_DATA) );
 		commData->heapID_ = heapID;
+		FIELD_COMM_DATA_InitOneCharaData( &commData->selfData_ );
 		for( i=0;i<FIELD_COMM_MEMBER_MAX;i++ )
 		{
 			FIELD_COMM_DATA_InitOneCharaData( &commData->charaData_[i] );
