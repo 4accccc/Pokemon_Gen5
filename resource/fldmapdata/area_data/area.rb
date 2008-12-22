@@ -155,6 +155,7 @@ end
 
 total_bin_file.close
 #テイル作成
+area_id_h.printf("\tAREA_ID_MAX\n");
 area_id_h.printf("};")
 
 #ベクタを使用して、アーカイブ用スクリプトファイルを作成
