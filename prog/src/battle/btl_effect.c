@@ -129,6 +129,8 @@ void	BTL_EFFECT_Init( int index, HEAPID heapID )
 	bew->bfw = BTL_FIELD_Init( index, heapID );
 	bew->bcw = BTL_CAMERA_Init( bew->tcb_sys, heapID );
 
+	POKE_MCSS_SetOrthoMode( bew->pmw );
+
 	//パーティクル初期化
 	GFL_PTC_Init( heapID );
 }
@@ -291,6 +293,7 @@ static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -350,6 +353,7 @@ static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 	case 7:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -370,6 +374,7 @@ static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -428,6 +433,7 @@ static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 	case 7:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -448,6 +454,7 @@ static	void	BTL_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -518,6 +525,7 @@ static	void	BTL_EFFECT_TCB_A2BMizudeppou( GFL_TCB *tcb, void *work )
 	case 8:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -538,6 +546,7 @@ static	void	BTL_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -608,6 +617,7 @@ static	void	BTL_EFFECT_TCB_B2AMizudeppou( GFL_TCB *tcb, void *work )
 	case 8:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -635,6 +645,7 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -735,8 +746,8 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		break;
 	case 5:
 		bet->wait++;
-		scale.x = POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_POS_AA );
-		scale.y = POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_POS_AA );
+		scale.x = POKE_MCSS_GetPokeDefaultScale( bew->pmw, POKE_MCSS_POS_AA );
+		scale.y = POKE_MCSS_GetPokeDefaultScale( bew->pmw, POKE_MCSS_POS_AA );
 
 		if( bet->wait < 60 ){
 			if( bet->wait == 10 ){
@@ -763,6 +774,7 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 	//カメラデフォルト位置に移動
 	case 7:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 			BTL_EFFECT_TCB_End( tcb, bet );
 		}
 		break;
@@ -784,6 +796,7 @@ static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 7;
 		pos.z = target.z + FX32_ONE * 16;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -849,6 +862,7 @@ static	void	BTL_EFFECT_TCB_AA2BBMizudeppou( GFL_TCB *tcb, void *work )
 	case 8:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -869,6 +883,7 @@ static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 		pos.y = target.y + FX32_ONE * 8;
 		pos.z = target.z + FX32_ONE * 30;
 		BTL_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, 10, 8 );
+		POKE_MCSS_ResetOrthoMode( bew->pmw );
 		bet->seq_no++;
 		break;
 	case 1:
@@ -934,6 +949,7 @@ static	void	BTL_EFFECT_TCB_BB2AAMizudeppou( GFL_TCB *tcb, void *work )
 	case 8:
 		if( BTL_CAMERA_CheckExecute( bew->bcw ) == FALSE ){
 			BTL_EFFECT_TCB_End( tcb, bet );
+			POKE_MCSS_SetOrthoMode( bew->pmw );
 		}
 		break;
 	}
@@ -980,7 +996,13 @@ static	void	BTL_EFFECT_InitPTCA( GFL_EMIT_PTR emit )
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_BB );
 	src.y += FX32_ONE * 2;
 	src.z -= 0x1600;
+#if 0
 	dst.y += FX32_ONE * 2;
+#else
+	dst.x = FX_CosIdx( 0xd480 );
+	dst.y = FX_SinIdx( 0x0a00 );
+	dst.z = FX_SinIdx( 0xd480 );
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
@@ -995,8 +1017,14 @@ static	void	BTL_EFFECT_InitPTCB( GFL_EMIT_PTR emit )
 	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_B );
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_AA );
 	src.y += FX32_ONE * 2;
+#if 0
 	dst.x -= FX32_ONE * 2;
 	dst.y += FX32_ONE + FX32_HALF;
+#else
+	dst.x = FX_CosIdx( 0x5500 );
+	dst.y = FX_SinIdx( 0x0800 );
+	dst.z = FX_SinIdx( 0x5500 );
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
@@ -1596,9 +1624,17 @@ static	void	BTL_EFFECT_InitPTCAA( GFL_EMIT_PTR emit )
 
 	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_A );
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_BB );
+#if 0
 	src.y += FX32_ONE * 2;
 	src.z -= 0x1600;
 	dst.y += FX32_ONE * 2;
+#else
+	src.y += FX32_ONE * 2;
+	src.z -= 0x1600;
+	dst.x = FX_SinIdx( 0 );
+	dst.y = 0;
+	dst.z = FX_CosIdx( 0 );
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
@@ -1612,9 +1648,16 @@ static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 
 	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_B );
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_AA );
+#if 0
 	src.y += FX32_ONE * 2;
 	dst.x -= FX32_ONE * 2;
 	dst.y += FX32_ONE + FX32_HALF;
+#else
+	src.y += FX32_ONE * 2;
+	dst.x = FX_SinIdx( 0 );
+	dst.y = 0;
+	dst.z = FX_CosIdx( 0 );
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
@@ -1746,8 +1789,8 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		break;
 	case 5:
 		bet->wait++;
-		scale.x = POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_POS_AA );
-		scale.y = POKE_MCSS_GetPokeDefaultScale( POKE_MCSS_POS_AA );
+		scale.x = POKE_MCSS_GetPokeDefaultScale( bew->pmw, POKE_MCSS_POS_AA );
+		scale.y = POKE_MCSS_GetPokeDefaultScale( bew->pmw, POKE_MCSS_POS_AA );
 
 		if( bet->wait < 60 ){
 			if( bet->wait == 10 ){
@@ -1966,9 +2009,17 @@ static	void	BTL_EFFECT_InitPTCAA( GFL_EMIT_PTR emit )
 
 	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_AA );
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_BB );
+#if 0
 	src.y += FX32_ONE * 2;
 	src.z -= 0x1600;
 	dst.y += FX32_ONE * 2;
+#else
+	src.y += FX32_ONE * 2;
+	src.z -= 0x1600;
+	dst.x -= src.x;
+	dst.y -= src.y;
+	dst.z -= src.z;
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );
@@ -1982,9 +2033,16 @@ static	void	BTL_EFFECT_InitPTCBB( GFL_EMIT_PTR emit )
 
 	POKE_MCSS_GetPokeDefaultPos( &src, POKE_MCSS_POS_BB );
 	POKE_MCSS_GetPokeDefaultPos( &dst, POKE_MCSS_POS_AA );
+#if 0
 	src.y += FX32_ONE * 4;
 	dst.x -= FX32_ONE * 1;
 	dst.y += FX32_HALF;
+#else
+	src.y += FX32_ONE * 4;
+	dst.x -= src.x;
+	dst.y -= src.y;
+	dst.z -= src.z;
+#endif
 	VEC_Normalize( &dst, &dst );
 	VEC_Fx16Set( &dir, dst.x, dst.y, dst.z );
 	GFL_PTC_SetEmitterPosition( emit, &src );

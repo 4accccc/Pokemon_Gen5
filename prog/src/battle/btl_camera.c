@@ -98,7 +98,7 @@ BTL_CAMERA_WORK	*BTL_CAMERA_Init( GFL_TCBSYS *tcb_sys, HEAPID heapID )
 										 FX32_COS13,
 										 FX_F32_TO_FX32( 1.33f ),
 										 NULL,
-										 0,
+										 FX32_ONE,
 										 FX32_ONE * 180,
 										 NULL,
 										 &cam_pos,
