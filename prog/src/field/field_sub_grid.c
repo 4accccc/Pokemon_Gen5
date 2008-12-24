@@ -988,17 +988,7 @@ static MAPHITBIT MapHitCheck(
 		return( hit );
 	}
 	
-	if( FLDMAPPER_GetFileType(mapper) == FLDMAPPER_FILETYPE_PKGS ){
-		u16 attr = 0;
-		
-		if( FLDMAPPER_GetGridAttr(mapper,next,&attr) == FALSE ){
-			hit |= MAPHITBIT_DATA;
-		}
-		
-		if( ((attr&0x8000)>>15) ){
-			hit |= MAPHITBIT_ATTR;
-		}
-	}else{
+	{
 		u32 attr;
 		fx32 height,diff;
 

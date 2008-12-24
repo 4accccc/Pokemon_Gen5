@@ -13,13 +13,6 @@ typedef struct _FLD_G3D_MAPPER FLDMAPPER;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-typedef enum {
-	FLDMAPPER_FILETYPE_NORMAL = 0,
-	FLDMAPPER_FILETYPE_PKGS = 1,
-}FLDMAPPER_FILETYPE;
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 typedef struct {
 	VecFx16 vecN;
 	u32		attr;
@@ -97,12 +90,6 @@ extern void FLDMAPPER_GRIDINFO_Init( FLDMAPPER_GRIDINFO* gridInfo );
 extern BOOL FLDMAPPER_GetGridInfo
 	( const FLDMAPPER* g3Dmapper, const VecFx32* pos, FLDMAPPER_GRIDINFO* gridInfo );
 
-extern BOOL FLDMAPPER_GetGridAttr(
-	const FLDMAPPER* g3Dmapper, const VecFx32* pos, u16 *attr );
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern FLDMAPPER_FILETYPE FLDMAPPER_GetFileType( const FLDMAPPER *g3Dmapper );
 
 //------------------------------------------------------------------
 /**

@@ -99,6 +99,9 @@ typedef struct {
 
 }MAP_DATA_INFO;
 
+#define GRID_SIZE (16)
+#define GRID_DATASIZE (sizeof(u16))
+#define	GRIDBLOCKW	(32)
 //============================================================================================
 /**
  *
@@ -308,6 +311,39 @@ void FieldGetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo, const void* mapd
 			}
 		}
 	}
+	{
+		int bx,bz;
+		int attrmax;
+		int x,z,num;
+		const u16 *buf;
+		const MAP_FILE_HEADER *header;
+		
+		buf = (u16*)mapdataInfo->attrAdrs;
+		
+		header = (MAP_FILE_HEADER*)((u32)mapdata + sizeof(MAP_DATA_INFO));
+		attrmax = header->attrSize / GRID_DATASIZE;	//最大要素数
+		//TAMADA_Printf("attrAdrs = %08x\n",mapdataInfo->attrAdrs);
+		//TAMADA_Printf("attrSize = %04x\n",header->attrSize);
+		//TAMADA_Printf("objSize = %04x\n",header->objSize);
+		//TAMADA_Printf("mapSize = %04x\n",header->mapSize);
+		//TAMADA_Printf("heightSize = %04x\n",header->heightSize);
+		
+		//ブロック中心の座標を左上からの座標に補正
+		x = (posInBlock->x + map_width/2);
+		z = (posInBlock->z + map_width/2);
+		//グリッド単位に補正
+		x /= FX32_ONE * GRID_SIZE;
+		z /= FX32_ONE * GRID_SIZE;
+		num = x + (z * GRIDBLOCKW);
+		
+		if( num >= attrmax ){
+			//TAMADA_Printf( "GetAttrData GX=%d,GZ=%d, ERROR!!\n", x, z );
+			attrInfo->mapAttr[0].attr = 0xffff;
+		} else {
+			//TAMADA_Printf( "GetAttrData GX=%d,GZ=%d, Attr=%xH\n", x, z,  buf[num] );
+			attrInfo->mapAttr[0].attr = (buf[num] &0x8000) >> 15;
+		}
+	}
 }
 
 //------------------------------------------------------------------
@@ -474,9 +510,7 @@ void M3DO_LoadArc3DObjData(	ARCHANDLE *ioHandle,
 #endif
 
 
-#define GRID_SIZE (16)
-#define GRID_DATASIZE (sizeof(u16))
-
+#if 0
 //==============================================================================
 /**
  * マップアトリビュート取得
@@ -523,3 +557,4 @@ u16 FieldGetAttrData_PMcustomFile(
 #endif
 	return( buf[num] );
 }
+#endif

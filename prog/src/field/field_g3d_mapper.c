@@ -949,6 +949,7 @@ void FLDMAPPER_GetSize( const FLDMAPPER* g3Dmapper, fx32* x, fx32* z )
 	return;
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * マップデータファイルタイプを取得
@@ -960,46 +961,7 @@ FLDMAPPER_FILETYPE FLDMAPPER_GetFileType( const FLDMAPPER *g3Dmapper )
 {
 	return( g3Dmapper->g3DmapFileType );
 }
-
-//------------------------------------------------------------------
-/**
- * @brief	グリッドマップ　アトリビュート情報取得
- */
-//------------------------------------------------------------------
-BOOL FLDMAPPER_GetGridAttr(
-	const FLDMAPPER* g3Dmapper, const VecFx32* pos, u16 *attr )
-{
-	int	i;
-	VecFx32 trans;
-	
-	GF_ASSERT( g3Dmapper );
-	
-	if( g3Dmapper->blocks == NULL ){
-		OS_Printf( "G3DMapper ERROR: Nothing GridAttributeData\n" );
-		return FALSE;
-	}
-	
-	for( i = 0; i < MAP_BLOCK_COUNT; i++ ){
-		if( GFL_G3D_MAP_GetDrawSw( g3Dmapper->g3Dmap[i] ) == TRUE ){
-			fx32 min_x, min_z, max_x, max_z;
-			GFL_G3D_MAP_GetTrans( g3Dmapper->g3Dmap[i], &trans );
-			min_x = trans.x - g3Dmapper->width/2;
-			min_z = trans.z - g3Dmapper->width/2;
-			max_x = trans.x + g3Dmapper->width/2;
-			max_z = trans.z + g3Dmapper->width/2;
-			
-			//ブロック範囲内チェック（マップブロックのＸＺ平面上地点）
-			if(	(pos->x >= min_x) && (pos->x < max_x) &&
-				(pos->z >= min_z) && (pos->z < max_z) ){
-				*attr = FieldGetAttrData_PMcustomFile(
-						g3Dmapper->g3Dmap[i], pos, 32 );
-				return( TRUE );
-			}
-		}
-	}
-	
-	return FALSE;
-}
+#endif
 
 //============================================================================================
 /**

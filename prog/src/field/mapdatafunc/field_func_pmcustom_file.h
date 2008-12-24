@@ -24,5 +24,3 @@ extern void FieldGetAttr_PMcustomFile( GFL_G3D_MAP_ATTRINFO* attrInfo,
 									const void* mapdata, const VecFx32* posInBlock, 
 									const fx32 map_width, const fx32 map_height );
 
-extern u16 FieldGetAttrData_PMcustomFile(
-	GFL_G3D_MAP *g3Dmap, const VecFx32 *pos, int gridBlockW );
