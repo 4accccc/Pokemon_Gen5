@@ -361,12 +361,14 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
-		OS_Printf("%04x%c", attr, limit[i]);
+		TAMADA_Printf("%04x%c", attr, limit[i]);
 	}
-	OS_Printf("X,Y,Z=%d,%d,%d\n",
+	TAMADA_Printf("X,Y,Z=%d,%d,%d\n",
 			FX_Whole(fieldWork->now_pos.x),
 			FX_Whole(fieldWork->now_pos.y),
 			FX_Whole(fieldWork->now_pos.z));
+	TAMADA_Printf("TEX:%06x PLT:%04x\n",
+			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetBlankPaletteSize());
 }
 
 //------------------------------------------------------------------
