@@ -12,6 +12,7 @@
 #include "field/areadata.h"
 #include "map_matrix.h"
 
+#include "fieldmap/area_id.h"
 //#include "test_graphic/fieldmap_map.naix"
 
 typedef struct {
@@ -24,6 +25,8 @@ typedef struct {
 
 const SCENE_DATA	resistMapTbl[];
 const unsigned int resistMapTblCount;
+
+static FLDMAPPER_RESIST_TEX	gTexBuffer;
 
 //============================================================================================
 //============================================================================================
@@ -42,6 +45,7 @@ static int MapID2ResistID(u16 mapid)
 void FIELDDATA_SetMapperData(
 	u16 mapid, FLDMAPPER_RESISTDATA * map_res, void * matrix_buf)
 {
+	u16 area_id = ZONEDATA_GetAreaID(mapid);
 	u16 resid = MapID2ResistID(mapid);
 	*map_res = resistMapTbl[resid].mapperData;
 
@@ -60,9 +64,16 @@ void FIELDDATA_SetMapperData(
 		map_res->sizez = matH->size_v;
 		map_res->totalSize = matH->size_h * matH->size_v;
 		map_res->blocks = (const FLDMAPPER_MAPDATA *)tbl;
+
+		//部屋のときだけテクスチャをグローバルにしてみる
+		if (area_id == AREA_ID_ROOM) {
+			gTexBuffer.arcID = ARCID_AREA_MAPTEX;
+			gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
+			map_res->gtexType = FLDMAPPER_RESIST_TEXTYPE_USE;
+			map_res->gtexData = &gTexBuffer;
+		}
 	}
 	{
-		u16 area_id = ZONEDATA_GetAreaID(mapid);
 		TAMADA_Printf("ZONE_ID:%d AREA_ID:%d\n",mapid, area_id);
 		TAMADA_Printf("ModelSet=%d, TexSet=%d, AnmSet=%d, ",
 				AREADATA_GetModelSetID(area_id),
