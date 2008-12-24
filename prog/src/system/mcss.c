@@ -11,14 +11,19 @@
 #include <procsys.h>
 #include <tcbl.h>
 
+#include "arc_def.h"
+#include "battgra/battgra_wb.naix"
+
 //#define	USE_RENDER		//有効にすることでNNSのレンダラを使用して描画する
 #include "system/mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
 #include "mcss_def.h"
 
-#define	MCSS_DEFAULT_SHIFT	( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
-#define	MCSS_DEFAULT_LINE	( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
-#define	MCSS_DEFAULT_Z		( 1 << 6 )
-#define	MCSS_TEX_OFS		( FX32_ONE >> 4 )
+#define	MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
+#define	MCSS_DEFAULT_LINE		( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
+#define	MCSS_DEFAULT_Z			( 1 << 6 )
+#define	MCSS_DEFAULT_Z_ORTHO	( 1 << 10 )
+//#define	MCSS_TEX_OFS		( FX32_ONE >> 4 )
+#define	MCSS_TEX_OFS		( 0 )
 
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
 
@@ -30,7 +35,9 @@
 #define	MCSS_NORMAL_MTX	( 29 )
 #define	MCSS_SHADOW_MTX	( 30 )
 
-//#define BILLBORAD_ON	//ビルボード処理をONにする
+#define BILLBORAD_ON	//ビルボード処理をONにする
+
+#define	SCALE_SHIFT	( FX32_ONE >> 1 ) 
 
 //--------------------------------------------------------------------------
 /**
@@ -41,6 +48,8 @@ typedef struct
 {
 	NNSG2dCharacterData*	pCharData;			//テクスチャキャラ
 	NNSG2dPaletteData*		pPlttData;			//テクスチャパレット
+    NNSG2dImageProxy		*image_p;
+    NNSG2dImagePaletteProxy	*palette_p;
 	void					*pBufChar;			//テクスチャキャラバッファ
 	void					*pBufPltt;			//テクスチャパレットバッファ
 	int						chr_ofs;
@@ -59,6 +68,9 @@ void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
 MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
 void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+
+void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
+void			MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 
 void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
@@ -81,6 +93,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
 							  int node,
+							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK *maw );
@@ -94,11 +107,10 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work );
 static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys );
 #endif //USE_RENDER
 
-//影実験
-int	shadow_flag;
-NNSG2dImagePaletteProxy		shadow_palette;
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w );
 
-NNSG2dAnimController		*anim_ctrl_c;
+//影実験
+NNSG2dImagePaletteProxy		shadow_palette;
 
 //--------------------------------------------------------------------------
 /**
@@ -124,6 +136,21 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 #warning MCSS TEX PAL ADRS Not Changeability
 	mcss_sys->texAdrs = MCSS_TEX_ADRS;
 	mcss_sys->palAdrs = MCSS_PAL_ADRS;
+
+	//影リソースロード
+	NNS_G2dInitImagePaletteProxy( &shadow_palette );
+
+	// load palette data
+	{
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+
+		tlw->palette_p = &shadow_palette;
+		tlw->pal_ofs = MCSS_PAL_ADRS + 0x100;
+		tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_shadow_NCLR, &tlw->pPlttData, heapID );
+		GF_ASSERT( tlw->pBufPltt != NULL);
+
+		GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+	}
 	
 	return mcss_sys;
 }
@@ -181,11 +208,12 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	fx32						pos_z_default;
 	NNSG2dAnimController		*anim_ctrl_mc;
 	NNSG2dAnimDataSRT			anim_SRT_mc;
-//	NNSG2dAnimController		*anim_ctrl_c;
+	NNSG2dAnimController		*anim_ctrl_c;
 	NNSG2dAnimDataT				*anim_T_p;
 	NNSG2dAnimDataSRT			anim_SRT;
 	NNSG2dMCNodeCellAnimArray	*MC_Array;
 	NNSG2dAnimSequenceData		*anim;
+	VecFx32						pos;
 #ifdef BILLBORAD_ON
 	MtxFx44						inv_camera;
 #endif
@@ -196,7 +224,27 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	G3_Identity();
 	G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
 
-	G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
+	if( mcss_sys->mcss_ortho_mode == 0 ){
+		G3_LookAt( NNS_G3dGlbGetCameraPos(), NNS_G3dGlbGetCameraUp(), NNS_G3dGlbGetCameraTarget(), NULL );
+	}
+	else{
+		// カメラ行列を設定します。
+		// 単位行列と等価
+		VecFx32 Eye    = { 0, 0, 0 };          // Eye position
+		VecFx32 vUp    = { 0, FX32_ONE, 0 };  // Up
+		VecFx32 at     = { 0, 0, -FX32_ONE }; // Viewpoint
+
+		G3_OrthoW( FX32_ONE * 96,
+				   FX32_ONE * -96,
+				   FX32_ONE * -128,
+				   FX32_ONE * 128,
+				   FX32_ONE * -1024,
+				   FX32_ONE * 1024,
+				   FX32_ONE,
+				   NULL );
+
+		G3_LookAt( &Eye, &vUp, &at, NULL );
+	}
 
 #ifdef BILLBORAD_ON
 	//ビルボード回転行列を求める
@@ -247,11 +295,49 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				break;
 			}
 
+			pos.x = mcss->pos.x;
+			pos.y = mcss->pos.y;
+			pos.z = mcss->pos.z;
+
+			if( mcss_sys->mcss_ortho_mode ){
+				MtxFx44	mtx,vp;
+				fx32	w;
+
+				vp._00 = 128 * FX32_ONE;
+				vp._01 = 0;
+				vp._02 = 0;
+				vp._03 = 128 * FX32_ONE;
+				vp._10 = 0;
+				vp._11 = 96 * FX32_ONE;
+				vp._12 = 0;
+				vp._13 = -96 * FX32_ONE;
+				vp._20 = 0;
+				vp._21 = 0;
+				vp._22 = -FX32_ONE;
+				vp._23 = FX32_ONE;
+				vp._30 = 0;
+				vp._31 = 0;
+				vp._32 = 0;
+				vp._33 = -FX32_ONE;
+
+				MTX_Copy43To44( NNS_G3dGlbGetCameraMtx(), &mtx );
+				MTX_Concat44( &mtx, NNS_G3dGlbGetProjectionMtx(), &mtx );
+
+				MTX_MultVec44( &pos, &mtx, &pos, &w );
+
+				pos.x = FX_Div( pos.x, w );
+				pos.y = FX_Div( pos.y, w );
+
+				MTX_MultVec44( &pos, &vp, &pos, &w );
+			}
+
 			//前もって、普遍なマルチセルデータをカレント行列にかけておく
-			G3_Translate( mcss->pos.x, mcss->pos.y, mcss->pos.z );
+			G3_Translate( pos.x, pos.y, pos.z );
 			//カメラの逆行列を掛け合わせる（ビルボード処理）
 #ifdef BILLBORAD_ON
-			G3_MultMtx44( &inv_camera );
+			if( mcss_sys->mcss_ortho_mode == 0 ){
+				G3_MultMtx44( &inv_camera );
+			}
 #endif
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
@@ -263,9 +349,20 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			G3_PushMtx();
 
 			//前もって、普遍なマルチセルデータをカレント行列にかけておく
-			G3_Translate( mcss->pos.x, mcss->pos.y, mcss->pos.z );
+			if( mcss_sys->mcss_ortho_mode == 0 ){
+				G3_Translate( pos.x, pos.y, pos.z );
+			}
+			else{
+				G3_Translate( pos.x, pos.y, pos.z - FX32_ONE * 120 );
+			}
 			//影用の回転
-			G3_RotX( FX_SinIdx( 65536 / 4 * 3 ), FX_CosIdx( 65536 / 4 * 3 ) );
+			if( mcss_sys->mcss_ortho_mode == 0 ){
+				G3_RotX( FX_SinIdx( 65536 / 32 * 25 ), FX_CosIdx( 65536 / 32 * 25 ) );
+			}
+			else{
+				G3_RotX( FX_SinIdx( 0xce00 ), FX_CosIdx( 0xce00 ) );
+				G3_RotZ( FX_SinIdx( 0x0380 ), FX_CosIdx( 0x0380 ) );
+			}
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
 			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
 			G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
@@ -316,34 +413,40 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				//メパチ処理
 				if( ncec->mepachi_size_x ){
 					if( mcss->mepachi_flag ){
-						MCSS_DrawAct( mcss, 
+						MCSS_DrawAct( mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
-									  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
+									  &anim_SRT, &anim_SRT_mc, node,
+									  mcss_sys->mcss_ortho_mode,
+									  &pos_z_default );
 					}
 					else{
-						MCSS_DrawAct( mcss, 
+						MCSS_DrawAct( mcss,
 									  ncec->mepachi_pos_x,
 									  ncec->mepachi_pos_y,
 									  ncec->mepachi_size_x,
 									  ncec->mepachi_size_y,
 									  ncec->mepachi_tex_s,
 									  ncec->mepachi_tex_t,
-									  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
+									  &anim_SRT, &anim_SRT_mc, node,
+									  mcss_sys->mcss_ortho_mode,
+									  &pos_z_default );
 					}
 				}
-				MCSS_DrawAct( mcss, 
+				MCSS_DrawAct( mcss,
 							  ncec->pos_x,
 							  ncec->pos_y,
 							  ncec->size_x,
 							  ncec->size_y,
 							  ncec->tex_s,
 							  ncec->tex_t,
-							  &anim_SRT, &anim_SRT_mc, node, &pos_z_default );
+							  &anim_SRT, &anim_SRT_mc, node,
+							  mcss_sys->mcss_ortho_mode,
+							  &pos_z_default );
 			}
 			G3_PopMtx(1);
 		}
@@ -404,12 +507,13 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dAnimDataSRT *anim_SRT_c,
 							  NNSG2dAnimDataSRT *anim_SRT_mc,
 							  int node,
+							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default )
 {
 	VecFx32						pos;
 
 	G3_RestoreMtx( MCSS_NORMAL_MTX );
-	
+
 	G3_TexPlttBase(mcss->mcss_palette_proxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN],
 				   mcss->mcss_palette_proxy.fmt);
 	G3_PolygonAttr(GX_LIGHTMASK_NONE,				// no lights
@@ -461,8 +565,6 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 				   0								// OR of GXPolygonAttrMisc's value
 				   );
 
-	G3_Translate( 0, -*pos_z_default, 0x0200 - *pos_z_default );
-
 	//マルチセルデータから取得した位置で書き出し
 	pos.x = MCSS_CONST( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posX );
 	pos.y = MCSS_CONST( -mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc->index].pHierDataArray[node].posY );
@@ -471,7 +573,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 	pos.x = MCSS_CONST( anim_SRT_c->px );
 	pos.y = MCSS_CONST( -anim_SRT_c->py );
-	G3_Translate( pos.x, pos.y, *pos_z_default );
+	G3_Translate( pos.x, pos.y, 0 );
 
 	G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
@@ -492,7 +594,12 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 	G3_Vtx( 0, -MCSS_DEFAULT_LINE, 0 );
 	G3_End();
 
-	*pos_z_default -= MCSS_DEFAULT_Z;
+	if( mcss_ortho_mode == 0 ){
+		*pos_z_default -= MCSS_DEFAULT_Z;
+	}
+	else{
+		*pos_z_default -= MCSS_DEFAULT_Z_ORTHO;
+	}
 }
 
 //--------------------------------------------------------------------------
@@ -541,6 +648,26 @@ void	MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss )
 
 	mcss_sys->mcss[ mcss->index ] = NULL;
 	GFL_HEAP_FreeMemory( mcss );
+}
+
+//--------------------------------------------------------------------------
+/**
+ * 正射影描画モードをセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys )
+{
+	mcss_sys->mcss_ortho_mode = 1;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * 正射影描画モードをリセット
+ */
+//--------------------------------------------------------------------------
+void	MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys )
+{
+	mcss_sys->mcss_ortho_mode = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -705,6 +832,8 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, MCSS_ADD_WORK
     //
     {
 		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( mcss->heapID, sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->image_p = &mcss->mcss_image_proxy;
+		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
 		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * count;
 		tlw->mcss	 = mcss;
@@ -733,25 +862,31 @@ static	void	TCB_LoadResource( GFL_TCB *tcb, void *work )
 {
 	TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)work;
 
-	tlw->mcss->vanish_flag = 0;
+	if( tlw->mcss ){
+		tlw->mcss->vanish_flag = 0;
+	}
 
-	// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
-	NNS_G2dLoadImage2DMapping(
-		tlw->pCharData,
-		tlw->chr_ofs,
-		NNS_G2D_VRAM_TYPE_3DMAIN,
-		&tlw->mcss->mcss_image_proxy );
+	if( tlw->pBufChar ){
+		// Loading For 3D Graphics Engine.（本来は、VRAMマネージャを使用したい）
+		NNS_G2dLoadImage2DMapping(
+			tlw->pCharData,
+			tlw->chr_ofs,
+			NNS_G2D_VRAM_TYPE_3DMAIN,
+			tlw->image_p );
+	
+		GFL_HEAP_FreeMemory( tlw->pBufChar );
+	}
 
-	GFL_HEAP_FreeMemory( tlw->pBufChar );
+	if( tlw->pPlttData ){
+		// Loading For 3D Graphics Engine.
+		NNS_G2dLoadPalette(
+			tlw->pPlttData,
+			tlw->pal_ofs,
+			NNS_G2D_VRAM_TYPE_3DMAIN,
+			tlw->palette_p );
 
-	// Loading For 3D Graphics Engine.
-	NNS_G2dLoadPalette(
-		tlw->pPlttData,
-		tlw->pal_ofs,
-		NNS_G2D_VRAM_TYPE_3DMAIN,
-		&tlw->mcss->mcss_palette_proxy );
-
-	GFL_HEAP_FreeMemory( tlw->pBufPltt );
+		GFL_HEAP_FreeMemory( tlw->pBufPltt );
+	}
 
 	GFL_HEAP_FreeMemory( work );
 	GFL_TCB_DeleteTask( tcb );
@@ -850,4 +985,44 @@ static	void	MCSS_InitRenderer( MCSS_SYS_WORK *mcss_sys )
 	mcss_sys->mcss_surface.type = NNS_G2D_SURFACETYPE_MAIN3D;
 }
 #endif //USE_RENDER
+
+//神王蟲からいただき
+//----------------------------------------------------------------------------
+/**
+ *	@brief	4x4行列に座標を掛け合わせる
+ *			Vecをx,y,z,1として計算し、計算後のVecとwを返します。
+ *
+ *	@param	*cp_src	Vector座標
+ *	@param	*cp_m	4*4行列
+ *	@param	*p_dst	Vecror計算結果
+ *	@param	*p_w	4つ目の要素の値
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *p_dst, fx32 *p_w )
+{
+
+	fx32 x = cp_src->x;
+    fx32 y = cp_src->y;
+    fx32 z = cp_src->z;
+	fx32 w = FX32_ONE;
+
+	GF_ASSERT( cp_src );
+	GF_ASSERT( cp_m );
+	GF_ASSERT( p_dst );
+	GF_ASSERT( p_w );
+
+    p_dst->x = (fx32)(((fx64)x * cp_m->_00 + (fx64)y * cp_m->_10 + (fx64)z * cp_m->_20) >> FX32_SHIFT);
+    p_dst->x += cp_m->_30;	//	W=1なので足すだけ
+
+    p_dst->y = (fx32)(((fx64)x * cp_m->_01 + (fx64)y * cp_m->_11 + (fx64)z * cp_m->_21) >> FX32_SHIFT);
+    p_dst->y += cp_m->_31;//	W=1なので足すだけ
+
+    p_dst->z = (fx32)(((fx64)x * cp_m->_02 + (fx64)y * cp_m->_12 + (fx64)z * cp_m->_22) >> FX32_SHIFT);
+    p_dst->z += cp_m->_32;//	W=1なので足すだけ
+
+	*p_w	= (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
+    *p_w	+= cp_m->_33;//	W=1なので足すだけ
+}
 

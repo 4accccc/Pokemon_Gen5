@@ -86,6 +86,8 @@ struct _MCSS_SYS_WORK
 	NNSG2dRendererInstance	mcss_render;		//描画用 Render　
 	NNSG2dRenderSurface		mcss_surface;		//メイン画面 Surface
 #endif //USE_RENDER
+	u32						mcss_ortho_mode	:1;	//正射影描画モードフラグ
+	u32										:31;
 	int						texAdrs;			//テクスチャ転送開始アドレス
 	int						palAdrs;			//テクスチャパレット転送開始アドレス
 	int						heapID;				//使用するヒープID
