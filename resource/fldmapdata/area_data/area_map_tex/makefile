@@ -63,7 +63,7 @@ CONVERT_TEX_LIST	=	g3list
 
 #DEPEND_TEX_FILESの定義
 #	素材となる全imdが対象
-include g3_texset
+-include g3_texset
 #----------------------------------------------------------------------------
 #
 #----------------------------------------------------------------------------
@@ -98,7 +98,6 @@ $(TARGET_ARC): $(DEPEND_TEX_FILES) $(ARCLIST)
 	$(MAKE) texset_cmb			#常駐|非常駐テクスチャセットマージ
 	$(MAKE) imdconv				#IMD変換
 	$(MAKE) texsetarc			#テクスチャセットアーカイブ
-endif
 
 #NSBTX変換用リスト作成
 mkg3list:	$(CONVERT_TEX_LIST) $(ARC_NSBTX_LIST)
@@ -121,6 +120,7 @@ texsetarc:
 	ruby make_nnsarc_script.rb $(ARCLIST) $(NSBTXFILESDIR)/ > $(ARC_NSBTX_LIST)
 	nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARC_NSBTX_LIST)  > arc_result.txt
 	#nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARCLIST)  > arc_result.txt
+endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------

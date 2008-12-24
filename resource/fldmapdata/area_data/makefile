@@ -168,11 +168,11 @@ mktexsetlst:
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	@$(MAKE_SUBDIR)
-	-@rm $(CLEANFILES)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ削除
 	-@rm $(TARGET) $(TARGET_HEADER)
 endif
+	-@rm $(CLEANFILES)
+	@$(MAKE_SUBDIR)
 
 test:
 	echo $(TEXSET_LIST)
