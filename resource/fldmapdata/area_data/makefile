@@ -5,7 +5,41 @@
 #
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #
+#	2008.12.18	WB環境へ移植開始
 #----------------------------------------------------------------------------
+
+include area_common.def
+
+DQ		="
+#"
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#area_table.xls
+SRC_XLS_FILE	= $(subst $(DQ),,$(SRC_XLS_FILENAME))
+#area_table.txt
+SRC_TXT_FILE	= $(subst .xls,.txt,$(SRC_XLS_FILE))
+TEX_IMD_LIST	= $(subst $(DQ),,$(TEX_SRC_LIST_FILENAME))
+BUILDXLSLIST	=	build_xls_list.txt
+ORGAREAXLS	= org_areaxxo.xls
+ORGTEXSET	= org_tex_set.imd
+XLS	=	*.xls
+TXTDATA	=	*.txt
+TARGET_HEADER	=	$(subst $(DQ),,$(TARGET_HEADER_FILENAME))
+
+#"area_build_model
+BUILD_DIR		:= $(subst $(DQ),,$(BM_ARCHIVER_DIR))
+#AREABUILD_ARC	:= $(BUILD_DIR)/area_build.narc
+#"area_map_tex
+TEXSET_DIR		:= $(subst $(DQ),,$(TEX_ARCHIVER_DIR))
+#AREATEX_ARC		:= $(TEXSET_DIR)/map_tex_set.narc
+TEXSET_LIST		:= $(subst $(DQ),,$(TEXSET_DIR)/$(DEPEND_IMD_FILENAME))
+#TEXSET_LIST		:= $(TEXSET_DIR)/g3_texset
+#TEX_IMD_DIR		:= $(TEXSET_DIR)/imd_files
+
+#NSBTXFILES_DIR	= nsbtx_files
+
+#AREA_TABLE	= area_table.txt
+AREABM_LIST = abmlst_files
 
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
@@ -15,7 +49,7 @@ USERS	=	tamada
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-TARGET		=	area_data.bin
+TARGET		=	$(subst $(DQ),,$(TARGET_BIN_FILENAME))		#"area_data.bin
 TARGET_ARC	=	area_data.narc
 
 #------------------------------------------------------------------------------
@@ -26,7 +60,7 @@ TARGETDIR	= $(PROJECT_ARCDIR)fieldmap
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS		=
+SUBDIRS		=	area_map_tex
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)\macro_define
@@ -34,36 +68,13 @@ include $(PROJECT_RSCDIR)\macro_define
 EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 
 
-ARCLIST	=	area_list.txt
-BUILDXLSLIST	=	build_xls_list.txt
-TEX_IMD_LIST	= tex_imd_list.txt
-ORGAREAXLS	= org_areaxxo.xls
-ORGTEXSET	= org_tex_set.imd
-XLS	=	*.xls
-BINDATA	=	*.bin
-TXTDATA	=	*.txt
-ENUMHEADER	=	area_id.h
-
-BUILD_DIR		:= area_build_model
-AREABUILD_ARC	:= $(BUILD_DIR)/area_build.narc
-TEXSET_DIR		:= area_map_tex
-AREATEX_ARC		:= $(TEXSET_DIR)/map_tex_set.narc
-TEXSET_LIST		:= $(TEXSET_DIR)/g3_texset
-TEX_IMD_DIR		:= $(TEXSET_DIR)/imd_files
-
-NSBTXFILES_DIR	= nsbtx_files
-
-AREA_TABLE	= area_table.txt
-AREABM_LIST = abmlst_files
-
-
 #----------------------------------------------------------------------------
 #
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
-#CLEANFILES	= $(TARGET_ARC) $(ENUMHEADER) $(BINDATA) $(TXTDATA) $(AREABUILD_ARC) $(AREATEX_ARC) $(AREABM_LIST)
+#CLEANFILES	= $(TARGET_ARC) $(TARGET_HEADER) $(BINDATA) $(TXTDATA) $(AREABUILD_ARC) $(AREATEX_ARC) $(AREABM_LIST)
 CLEANFILES	=  $(AREABM_LIST) $(TXTDATA)
-CLEANFILES	+= $(TARGETDIR)/$(ENUMHEADER) $(TARGETDIR)/$(TARGET)
+CLEANFILES	+= $(TARGETDIR)/$(TARGET_HEADER) $(TARGETDIR)/$(TARGET)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
@@ -77,8 +88,8 @@ TEXSET_MK	 = ruby mklst_texset.rb
 #	リスト作成時の読み込み元ファイル
 #----------------------------------------------------------------------------
 BUILD_LIST	=	build_list.txt
-TEX_LIST	=	tex_list.txt
-G_ANM_LIST	=	g_anm_list.txt
+TEX_LIST	=	$(subst $(DQ),,$(ARC_TEX_LIST_FILENAME))
+G_ANM_LIST	=	$(subst $(DQ),,$(ARC_ANM_LIST_FILENAME))
 
 #----------------------------------------------------------------------------
 #	中間ファイル
@@ -97,39 +108,40 @@ G_ANM_LIST	=	g_anm_list.txt
 #	make do-build ルール
 #------------------------------------------------------------------------------
 #do-build: subdir $(TARGET_ARC) $(AREABM_LIST)
-do-build:	subdir	$(TARGETDIR)/$(TARGET)
+do-build:	$(TARGETDIR)/$(TARGET) subdir
+
+subdir:
+	$(MAKE_SUBDIR)
 
 $(TARGETDIR)/$(TARGET):	$(TARGET)
-	$(COPY)	$(TARGET) $(TARGETDIR)
-	$(COPY) $(ENUMHEADER) $(TARGETDIR)
+	$(COPY) $(TARGET) $(TARGETDIR)
+	$(COPY) $(TARGET_HEADER) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-$(TARGET):	area_table.xls
+$(TARGET):	$(SRC_XLS_FILE)
 	#エクセルコンバート
-	$(EXCEL2TAB) area_table.xls
-	#$(MAKE) convert				#コンバート
-	ruby area.rb $(AREA_TABLE)
+	$(EXCEL2TAB) $(SRC_XLS_FILE)
+	#エリアデータコンバート＋各種定義リスト生成
+	ruby area.rb $(SRC_TXT_FILE)
+	#配置モデル用依存リスト生成
+	ruby abmlstmk.rb $(SRC_TXT_FILE) $(AREABM_LIST)
+	#地形モデルテクスチャ依存リスト生成
+	ruby mklst_texset.rb $(SRC_TXT_FILE) > $(TEXSET_LIST)
 endif
 
 
 $(TARGET_ARC): $(XLS)
 	#エクセルコンバート
-	$(EXCEL2TAB) area_table.xls
+	$(EXCEL2TAB) $(SRC_XLS_FILE)
 	#$(MAKE) convert				#コンバート
-	ruby area.rb $(AREA_TABLE)
+	ruby area.rb $(SRC_TXT_FILE)
 	#$(MAKE) mkabmlst			#エリア配置モデルファイルリスト作成
-	ruby abmlstmk.rb $(AREA_TABLE) $(AREABM_LIST)
-#	$(MAKE) mktexsetlst			#テクスチャセット元データリスト作成
-	#$(MAKE) makearc				#エリアデータアーカイブ
-	#nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARCLIST)  > arc_result.txt
+	ruby abmlstmk.rb $(SRC_TXT_FILE) $(AREABM_LIST)
+	$(MAKE) mktexsetlst			#テクスチャセット元データリスト作成
 	$(MAKE) addnew				#新規空データ追加
 	$(MAKE) movelist			#リストファイル移動
 	$(MAKE) -C $(BUILD_DIR)		#配置データアーカイブ
 	$(MAKE) -C $(TEXSET_DIR)
-
-#アーカイブ作成
-makearc:
-	nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARCLIST)  > arc_result.txt
 
 #新規に空データをディレクトリに追加
 addnew:
@@ -147,17 +159,21 @@ movelist:
 
 #area build list作成
 mkabmlst:
-	$(ABMLIST_MK) $(AREA_TABLE) $(AREABM_LIST)
+	$(ABMLIST_MK) $(SRC_TXT_FILE) $(AREABM_LIST)
 
 #マップテクスチャセットリスト作成
 mktexsetlst:
-	$(TEXSET_MK) $(AREA_TABLE) $(TEXSET_LIST)
+	$(TEXSET_MK) $(SRC_TXT_FILE) $(TEXSET_LIST)
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
+	@$(MAKE_SUBDIR)
 	-@rm $(CLEANFILES)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ削除
-	-@rm $(TARGET) $(ENUMHEADER)
+	-@rm $(TARGET) $(TARGET_HEADER)
 endif
 
+test:
+	echo $(TEXSET_LIST)
+	echo $(TEX_LIST)

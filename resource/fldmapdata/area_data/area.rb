@@ -1,21 +1,21 @@
+#------------------------------------------------------------------------------
 #	//エリア管理表を開く
-#	//2行読み飛ばし
+#	//ヘッダ行読み飛ばし
 #	//エリアコード、配置モデルデータ、テクスチャセット、人物データ、ライトフラグをリード
 #	//それぞれをベクタ登録
 #	//登録の際、登録インデックスを返すようにする
 #	//返ってきたインデックスをエリアデータとして保存
 #	//ライトフラグ保存
-#	//1行ごとにバイナリを作成
 #	//エリアID分繰り返し、終了したら、各ベクタをアーカイブ用スクリプトファイルとして出力
+#
+#
+#	2008.12.18	tamada	wb環境に移植開始
+#
+#------------------------------------------------------------------------------
 
-COL_AREANAME	=	0
-COL_BMNAME		=	1
-COL_TEXNAME		=	2
-COL_TEXPART1	=	3
-COL_TEXPART2	=	4
-COL_ANMNAME		=	5
-COL_INOUT		=	6
-COL_LIGHTTYPE	=	7
+load 'area_common.def'
+require 'area_common.rb'	#COL_～の定義など
+
 #配列へのエントリ
 def EntryVec(vec, item)
 	#すでにあるか調べる
@@ -96,9 +96,12 @@ def FileWrite(bin_file, data, code)
 	bin_file.write(pack_str)
 end
 
-#area_tbl_file = File.open("area_table.txt","r")
+#------------------------------------------------------------------------------
+#	コンバート本体
+#------------------------------------------------------------------------------
+
 area_tbl_file = File.open(ARGV[0],"r")
-area_id_h = File.open("area_id.h","w")
+area_id_h = File.open(TARGET_HEADER_FILENAME, "w")
 
 area_id_h.printf("//このファイルはコンバータにより生成されます\n")
 area_id_h.printf("enum {\n")
@@ -109,39 +112,35 @@ tex_vec = []
 g_anm_vec = []
 marge_tex_before = []
 
-total_bin_file = File.open("area_data.bin","wb")
+total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
 
 #1行読み飛ばし
-line = area_tbl_file.gets
+#line = area_tbl_file.gets
+read_through area_tbl_file
+
+area_count = 0
 while line = area_tbl_file.gets
 	column = line.split "\t"
 
 	#エリアＩＤ列挙
-	area_id_h.printf("\t%s,\n",column[COL_AREANAME])
+	area_id_h.printf("\t%-24s = %3d,\n",column[COL_AREANAME].upcase, area_count)
+	area_count += 1
 
-	#エリアバイナリ作成
-	bin_file_name = "#{column[COL_AREANAME]}.bin"
 	#小文字化
-	bin_file_name.downcase!
+	bin_file_name = "#{column[COL_AREANAME]}.bin".downcase
 	#エントリ
 	EntryVec(area_vec, bin_file_name)
 	#binファイル作成
-#	bin_file = File.open(bin_file_name,"wb")
 	#データ書き込み
 	data = EntryVec(build_vec,column[COL_BMNAME])	#モデル
-#	FileWrite(bin_file,data, "S")
 	FileWrite(total_bin_file,data, "S")
 	data = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
-#	FileWrite(bin_file,data, "S")
 	FileWrite(total_bin_file,data, "S")
 	data = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
-#	FileWrite(bin_file,data, "S")
 	FileWrite(total_bin_file,data, "S")
 	data = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
-#	FileWrite(bin_file,data, "C")
 	FileWrite(total_bin_file,data, "C")
 	data = Getlight(column[COL_LIGHTTYPE])				#ライト
-#	FileWrite(bin_file,data, "C")
 	FileWrite(total_bin_file,data, "C")
 
 	#マージ前テクスチャを収集
@@ -158,18 +157,15 @@ total_bin_file.close
 area_id_h.printf("\tAREA_ID_MAX\n");
 area_id_h.printf("};")
 
-#ベクタを使用して、アーカイブ用スクリプトファイルを作成
-#	//エリア
-MakeScript(area_vec, "area_list.txt", "bin" );
 #	//配置
 MakeScript(build_vec, "build_list.txt", "dat" );
 MakeScript(build_vec, "build_xls_list.txt", "xls" );
-#	//テクスチャ
-MakeScript(tex_vec, "tex_list.txt", "nsbtx" );
+#	//アーカイブ元テクスチャファイル名リスト
+MakeScript(tex_vec, ARC_TEX_LIST_FILENAME, "nsbtx" );
 #	//マージ前テクスチャ
-MakeScript(marge_tex_before, "tex_imd_list.txt", "imd" );
+MakeScript(marge_tex_before, TEX_SRC_LIST_FILENAME, "imd" );
 #	//地形アニメ
-MakeScript(g_anm_vec, "g_anm_list.txt", "nsbta" );
+MakeScript(g_anm_vec, ARC_ANM_LIST_FILENAME, "nsbta" );
 
 
 

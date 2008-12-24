@@ -27,6 +27,16 @@ TARGET_HEADER_FILENAME = "area_id.h"
 #地形テクスチャ依存定義ファイル
 DEPEND_IMD_FILENAME	= "g3_texset"
 
+#アーカイブ元地形テクスチャファイル名リスト
+ARC_TEX_LIST_FILENAME	= "tex_list.txt"
+#マージ元地形テクスチャファイルリスト
+TEX_SRC_LIST_FILENAME	= "tex_imd_list.txt"
+#アーカイブ元地形アニメファイルリスト
+ARC_ANM_LIST_FILENAME	= "g_anm_list.txt"
+
+#
+TEX_ARCHIVER_DIR		= "area_map_tex"
+BM_ARCHIVER_DIR			= "area_build_model"
 #------------------------------------------------------------------------------
 #カラム名の定義
 #------------------------------------------------------------------------------
