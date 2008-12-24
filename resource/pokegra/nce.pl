@@ -223,6 +223,15 @@ use constant OBJ_SIZE		=>	OAM_POS_X +		OAM_POS_Y +			 OAM_RS_MODE +		OAM_RS_PARA
 		print WRITE_NCE $write;
 =cut
 
+#デバッグ表示
+#=pod
+		print "cell:$cell\n";
+		print "pos_x:$min_x\n";
+		print "pos_y:$min_y\n";
+		print "size_x:$size_x\n";
+		print "size_y:$size_y\n";
+#=cut
+
 #前もって計算をしておくコンバート処理
 #=pod
 		$min_x = $min_x << 8;
@@ -231,6 +240,14 @@ use constant OBJ_SIZE		=>	OAM_POS_X +		OAM_POS_Y +			 OAM_RS_MODE +		OAM_RS_PARA
 		$size_y = $size_y << 12;
 		$tex_s = ( ( $char_name % 32 ) * 8 ) << 12;
 		$tex_t = ( ( $char_name >> 5 ) * 8 ) << 12;
+
+#デバッグ表示
+#=pod
+		$tex_ss = ( ( $char_name % 32 ) * 8 );
+		$tex_tt = ( ( $char_name >> 5 ) * 8 );
+		print "tex_s:$tex_ss\n";
+		print "tex_t:$tex_tt\n\n";
+#=cut
 
 		$mepachi_min_x = $mepachi_min_x << 8;
 		$mepachi_min_y = $mepachi_min_y << 8;

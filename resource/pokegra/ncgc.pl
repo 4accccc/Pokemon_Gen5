@@ -21,8 +21,9 @@ use File::Basename;
 		$cmd = "g2dcvtr @ARGV[0] -bmp -bg -cr/0_0_32_16 -o/@ARGV[1]";
 		system $cmd;
 
-		$filename = basename( @ARGV[0], '.nmc' );
+		$filename = basename( @ARGV[0], '.ncg' );
 		$filename =~ s/pfwb/pmwb/g;
+		$filename =~ s/c_m//g;
 		$cmd = "rm " . $filename . "_n.NCLR";
 		system $cmd;
 		$cmd = "rm " . $filename . "_r.NCLR";
