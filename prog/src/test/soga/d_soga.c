@@ -139,6 +139,7 @@ typedef struct
 	POKE_MCSS_WORK		*pmw;
 	int					key_repeat_speed;
 	int					key_repeat_wait;
+	int					ortho_mode;
 }SOGA_WORK;
 
 static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num );
@@ -283,7 +284,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	//3DŠÖ˜A‰Šú‰»
 	{
 		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, wk->heapID, NULL );
-		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
+		GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
 		G3X_AlphaBlend( TRUE );
 		G3X_EdgeMarking( TRUE );
 		GFL_BG_SetBGControl3D( 1 );
@@ -363,6 +364,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 		}
 
 		wk->pmw = POKE_MCSS_Init( NULL, wk->heapID );
+		POKE_MCSS_SetOrthoMode( wk->pmw );
+		wk->ortho_mode = 1;
 	}
 #endif
 
@@ -414,6 +417,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 	int pad = GFL_UI_KEY_GetCont();
 	int trg = GFL_UI_KEY_GetTrg();
 	int rep = GFL_UI_KEY_GetRepeat();
+	int tp = GFL_UI_TP_GetTrg();
 	SOGA_WORK* wk = mywk;
 
 #ifdef MCS_ENABLE
@@ -586,6 +590,15 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			else{
 				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_OFF );
 				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_OFF );
+			}
+			if( tp == TRUE ){
+				wk->ortho_mode ^= 1;
+				if( wk->ortho_mode ){
+					POKE_MCSS_SetOrthoMode( wk->pmw );
+				}
+				else{
+					POKE_MCSS_ResetOrthoMode( wk->pmw );
+				}
 			}
 			if( ( mons_no != wk->mons_no ) ||
 				( draw == TRUE ) ||
