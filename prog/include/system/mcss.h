@@ -57,6 +57,8 @@ extern	void			MCSS_Main( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_Draw( MCSS_SYS_WORK *mcss_sys );
 extern	MCSS_WORK*		MCSS_Add( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, MCSS_ADD_WORK *maw );
 extern	void			MCSS_Del( MCSS_SYS_WORK *mcss_sys, MCSS_WORK *mcss );
+extern	void			MCSS_SetOrthoMode( MCSS_SYS_WORK *mcss_sys );
+extern	void			MCSS_ResetOrthoMode( MCSS_SYS_WORK *mcss_sys );
 extern	void			MCSS_GetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MCSS_SetPosition( MCSS_WORK *mcss, VecFx32 *pos );
 extern	void			MCSS_GetScale( MCSS_WORK *mcss, VecFx32 *scale );
