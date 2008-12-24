@@ -29,17 +29,13 @@ TARGET_HEADER	=	$(subst $(DQ),,$(TARGET_HEADER_FILENAME))
 #"area_build_model
 BUILD_DIR		:= $(subst $(DQ),,$(BM_ARCHIVER_DIR))
 #AREABUILD_ARC	:= $(BUILD_DIR)/area_build.narc
-#"area_map_tex
-TEXSET_DIR		:= $(subst $(DQ),,$(TEX_ARCHIVER_DIR))
-#AREATEX_ARC		:= $(TEXSET_DIR)/map_tex_set.narc
-TEXSET_LIST		:= $(subst $(DQ),,$(TEXSET_DIR)/$(DEPEND_IMD_FILENAME))
-#TEXSET_LIST		:= $(TEXSET_DIR)/g3_texset
-#TEX_IMD_DIR		:= $(TEXSET_DIR)/imd_files
 
 #NSBTXFILES_DIR	= nsbtx_files
 
 #AREA_TABLE	= area_table.txt
 AREABM_LIST = abmlst_files
+
+TEX_DEPEND_FILES	= $(NSBTX_DEPEND_FILENAME) $(NNSARC_DEPEND_FILENAME) $(NNSARC_TEXLIST_FILENAME)
 
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
@@ -72,9 +68,8 @@ EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 #
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
-#CLEANFILES	= $(TARGET_ARC) $(TARGET_HEADER) $(BINDATA) $(TXTDATA) $(AREABUILD_ARC) $(AREATEX_ARC) $(AREABM_LIST)
-CLEANFILES	=  $(AREABM_LIST) $(TXTDATA)
-CLEANFILES	+= $(TARGETDIR)/$(TARGET_HEADER) $(TARGETDIR)/$(TARGET)
+CLEANFILES	= $(TARGETDIR)/$(TARGET_HEADER) $(TARGETDIR)/$(TARGET)
+CLEANFILES	+=  $(AREABM_LIST) $(TXTDATA)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
@@ -82,7 +77,7 @@ CLEANFILES	+= $(TARGETDIR)/$(TARGET_HEADER) $(TARGETDIR)/$(TARGET)
 LISTMK		= listmk.rb
 NEWFILE	= make_new_file.exe
 ABMLIST_MK	= ruby abmlstmk.rb
-TEXSET_MK	 = ruby mklst_texset.rb
+#TEXSET_MK	 = ruby mklst_texset.rb
 
 #----------------------------------------------------------------------------
 #	リスト作成時の読み込み元ファイル
@@ -123,10 +118,10 @@ $(TARGET):	$(SRC_XLS_FILE)
 	$(EXCEL2TAB) $(SRC_XLS_FILE)
 	#エリアデータコンバート＋各種定義リスト生成
 	ruby area.rb $(SRC_TXT_FILE)
+	#地形モデルテクスチャコンバート用定義生成
+	ruby area_map_tex.rb $(SRC_TXT_FILE)
 	#配置モデル用依存リスト生成
 	ruby abmlstmk.rb $(SRC_TXT_FILE) $(AREABM_LIST)
-	#地形モデルテクスチャ依存リスト生成
-	ruby mklst_texset.rb $(SRC_TXT_FILE) > $(TEXSET_LIST)
 endif
 
 
@@ -141,7 +136,7 @@ $(TARGET_ARC): $(XLS)
 	$(MAKE) addnew				#新規空データ追加
 	$(MAKE) movelist			#リストファイル移動
 	$(MAKE) -C $(BUILD_DIR)		#配置データアーカイブ
-	$(MAKE) -C $(TEXSET_DIR)
+	#$(MAKE) -C $(TEXSET_DIR)
 
 #新規に空データをディレクトリに追加
 addnew:
@@ -170,9 +165,10 @@ mktexsetlst:
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ削除
 	-@rm $(TARGET) $(TARGET_HEADER)
+	-@rm $(subst $(DQ),,$(TEX_DEPEND_FILES))
 endif
-	-@rm $(CLEANFILES)
 	@$(MAKE_SUBDIR)
+	-@rm $(CLEANFILES)
 
 test:
 	echo $(TEXSET_LIST)

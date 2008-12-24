@@ -24,21 +24,29 @@ TARGET_BIN_FILENAME	= "area_data.bin"
 #エリアシンボル定義ヘッダファイル
 TARGET_HEADER_FILENAME = "area_id.h"
 
-#地形テクスチャ依存定義ファイル
-DEPEND_IMD_FILENAME	= "g3_texset"
-
-#アーカイブ元地形テクスチャファイル名リスト
-ARC_TEX_LIST_FILENAME	= "tex_list.txt"
-#マージ元地形テクスチャファイルリスト
-TEX_SRC_LIST_FILENAME	= "tex_imd_list.txt"
 #アーカイブ元地形アニメファイルリスト
 ARC_ANM_LIST_FILENAME	= "g_anm_list.txt"
 
 #
 TEX_ARCHIVER_DIR		= "area_map_tex"
 BM_ARCHIVER_DIR			= "area_build_model"
+
 #------------------------------------------------------------------------------
-#カラム名の定義
+#	サブディレクトリ：area_map_tex用の定義
+#------------------------------------------------------------------------------
+#コンバート後テクスチャデータを保存するディレクトリ
+NSBTXFILESDIR	= "nsbtx_files"
+#マージ前元テクスチャIMDデータを保存するディレクトリ
+SRC_TEXIMD_DIR	= "src_imd_files"
+#マージ後テクスチャIMDデータを保存するディレクトリ
+MARGED_TEXIMD_DIR	= "marged_imd_files"
+
+NSBTX_DEPEND_FILENAME	= "area_map_tex.d"
+NNSARC_DEPEND_FILENAME	= "area_map_tex_narc.d"
+NNSARC_TEXLIST_FILENAME = "area_map_tex_narc.list"
+
+#------------------------------------------------------------------------------
+#エリアデータのカラム名定義
 #------------------------------------------------------------------------------
 COL_AREANAME	=	0	#エリア名定義
 COL_BMNAME		=	1	#配置モデル指定ファイル名

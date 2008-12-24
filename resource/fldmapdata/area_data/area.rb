@@ -88,6 +88,14 @@ def MakeScript(vec, inFileName, inExt)
 		script_file.printf("\"%s\"\n",file_name)
 	end
 end
+def MakeDependFile(vec, inFileName, inExt, symbolName)
+	dep_file = File.open(inFileName, "w")
+	dep_file.printf("%s = \\\n", symbolName)
+	vec.each do |item|
+		file_name = ChangeExtend(item, inExt)
+		dep_file.printf("\t%s \\\n", file_name)
+	end
+end
 
 #ファイルパックライト
 def FileWrite(bin_file, data, code)
@@ -144,7 +152,7 @@ while line = area_tbl_file.gets
 	FileWrite(total_bin_file,data, "C")
 
 	#マージ前テクスチャを収集
-	EntryVec(marge_tex_before,column[COL_TEXPART2])	#マージ前テクスチャ1
+	EntryVec(marge_tex_before,column[COL_TEXPART1])	#マージ前テクスチャ1
 	EntryVec(marge_tex_before,column[COL_TEXPART2])	#マージ前テクスチャ2
 	#"dummy"は省く
 	marge_tex_before.delete("dummy")
@@ -160,10 +168,6 @@ area_id_h.printf("};")
 #	//配置
 MakeScript(build_vec, "build_list.txt", "dat" );
 MakeScript(build_vec, "build_xls_list.txt", "xls" );
-#	//アーカイブ元テクスチャファイル名リスト
-MakeScript(tex_vec, ARC_TEX_LIST_FILENAME, "nsbtx" );
-#	//マージ前テクスチャ
-MakeScript(marge_tex_before, TEX_SRC_LIST_FILENAME, "imd" );
 #	//地形アニメ
 MakeScript(g_anm_vec, ARC_ANM_LIST_FILENAME, "nsbta" );
 

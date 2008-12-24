@@ -8,8 +8,8 @@
 # 2008.12.18	WB環境へ移植
 #
 #----------------------------------------------------------------------------
-#pkgsでは少し複雑なことをしているが、とりあえず単純に
-#area_table.xlsから生成するべきimdとそれの元となるimdの関係を導き出す
+#pkgsでは少し複雑なことをしているが、とりあえず単純に...
+#上位のMakefileが、area_table.xlsから生成するべきテクスチャと元となるimdの関係を導き出す
 #	imdをマージする。
 #	imdをコンバートし、nsbtxを生成する
 #	生成したnsbtxをまとめてnarcを生成する
@@ -48,38 +48,17 @@ EXCEL2TAB	= $(PROJECT_ROOT)/tools/exceltool/exceltabconv.exe
 DQ		="
 #↑subst構文で"を使うとVimのコメント自動認識に狂いがでるので定義している
 
-#DATABIN			= ../../../data/
-#DATASRC			= $(DATABIN)rsc
-TEXSETIMDDIR		= imd_files
-NSBTXFILESDIR		= nsbtx_files
-AREA_TABLE			= ../$(subst $(DQ),,$(SRC_TXT_FILENAME))
-ARCLIST				= ../$(subst $(DQ),,$(ARC_TEX_LIST_FILENAME))
-
-ARC_NSBTX_LIST		=	tex_arc_list.txt
-CONVERT_TEX_LIST	=	g3list
-#G3D_TEX_IMDの定義
-#include g3list
--include $(CONVERT_TEX_LIST)
-
-#DEPEND_TEX_FILESの定義
-#	素材となる全imdが対象
--include g3_texset
 #----------------------------------------------------------------------------
 #
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
-LDIRT_CLEAN	= $(NSBTXFILESDIR)/*.nsbtx
+LDIRT_CLEAN	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
-G3LISTMK	= g3listmk.rb
 G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
-TEXIMD_CMB = texset_cmb.rb
 TEX_MAG = $(PROJECT_ROOT)tools/imdtools/tex_mag/tex_mag.exe
-
-%.nsbtx: $(@:.nsbtx=.imd) $(subst $(TEXSETIMDDIR)/,$(NSBTXFILESDIR/),$@)
-	$(G3DCVTR) $(@:.nsbtx=.imd) -o $(subst $(TEXSETIMDDIR)/,$(NSBTXFILESDIR)/,$@) -etex
 
 .PHONY:	do-build clean
 #----------------------------------------------------------------------------
@@ -93,41 +72,29 @@ $(TARGETDIR)/$(TARGET_ARC): $(TARGET_ARC)
 	$(COPY) $(TARGET_ARC) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-$(TARGET_ARC): $(DEPEND_TEX_FILES) $(ARCLIST)
-	$(MAKE) mkg3list			#NSBTX変換リスト
-	$(MAKE) texset_cmb			#常駐|非常駐テクスチャセットマージ
-	$(MAKE) imdconv				#IMD変換
-	$(MAKE) texsetarc			#テクスチャセットアーカイブ
 
-#NSBTX変換用リスト作成
-mkg3list:	$(CONVERT_TEX_LIST) $(ARC_NSBTX_LIST)
+# source imd --> marged imd --> nsbtxの依存関係＆コンパイルルール定義
+NSBTX_DEPEND_FILE	= $(subst $(DQ),,$(NSBTX_DEPEND_FILENAME))
+-include ../$(NSBTX_DEPEND_FILE)
 
-$(CONVERT_TEX_LIST): $(ARCLIST)
-	#G3D_TEX_IMD定義ファイルの生成
-	ruby $(G3LISTMK) $(ARCLIST) $(NSBTXFILESDIR)/ > $(CONVERT_TEX_LIST)
-	sed -e 's/^"/"$(NSBTXFILESDIR)\//' $(ARCLIST) > $(ARC_NSBTX_LIST)
+# NNSARC_DEPEND_FILES（nsbtx --> narcの依存関係）定義
+NNSARC_DEPEND_FILE	= $(subst $(DQ),,$(NNSARC_DEPEND_FILENAME))
+-include ../$(NNSARC_DEPEND_FILE)
 
-#常駐|非常駐テクスチャセットをマージ
-texset_cmb:
-	ruby $(TEXIMD_CMB) $(AREA_TABLE) $(TEXSETIMDDIR)/ $(TEX_MAG)
+# nnsarcで固めるデータ指定リスト
+NNSARC_LIST_FILE	= ../$(subst $(DQ),,$(NNSARC_TEXLIST_FILENAME))
 
-#IMDをNSBTXに変換
-imdconv:$(G3D_TEX_IMD:.imd=.nsbtx)
+$(TARGET_ARC): $(NNSARC_DEPEND_FILES)
+	nnsarc -i -c -l -n $(TARGET_ARC) -S $(NNSARC_LIST_FILE)  > arc_result.txt
 
-#テクスチャセットのアーカイブ
-texsetarc:
-	#アーカイブにまとめるコンバート後テクスチャファイル名リストの生成
-	ruby make_nnsarc_script.rb $(ARCLIST) $(NSBTXFILESDIR)/ > $(ARC_NSBTX_LIST)
-	nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARC_NSBTX_LIST)  > arc_result.txt
-	#nnsarc -i -c -l -n $(TARGET_ARC) -S $(ARCLIST)  > arc_result.txt
 endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	-rm $(LDIRT_CLEAN)
-	-rm $(TARGETDIR)/$(TARGET_ARC)
+	@-rm $(TARGETDIR)/$(TARGET_ARC)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-	-rm $(TARGET_ARC)
+	@-rm $(TARGET_ARC)
+	@-rm $(LDIRT_CLEAN)
 endif
 
