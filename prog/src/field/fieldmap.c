@@ -352,7 +352,12 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 		u32 attr = 0;
 		FLDMAPPER_GRIDINFO gridInfo;
 		//pos = pos_array[i] * FX32_ONE * 16 + fieldWork->now_pos;
-		VEC_MultAdd(16 * FX32_ONE, &pos_array[i], &fieldWork->now_pos, &pos);
+		VEC_Set(&pos,
+				pos_array[i].x * 16 * FX32_ONE,
+				pos_array[i].y * 16 * FX32_ONE,
+				pos_array[i].z * 16 * FX32_ONE);
+		VEC_Add(&pos, &fieldWork->now_pos, &pos);
+		TAMADA_Printf("(x=%08x, z=%08x)",pos.x,pos.z);
 		if( FLDMAPPER_GetGridInfo( GetFieldG3Dmapper(fieldWork->gs), &pos, &gridInfo ) == TRUE ){
 			attr = gridInfo.gridData[0].attr;
 		}
