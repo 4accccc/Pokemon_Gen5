@@ -278,12 +278,12 @@ typedef struct _FOOTPRINT_SYS{
 	u8 select_no;						///<選択している足跡スタンプの番号
 	u8 yameru_pal_pos;					///<「やめる」フォントOAMのパレット番号
 	
-	CATS_ACT_PTR cap_ink[POKEMON_TEMOTI_MAX];	///<インクアクター
-	CATS_ACT_PTR cap_ink_foundation[POKEMON_TEMOTI_MAX];	///<インクの下地アクター
-	CATS_ACT_PTR cap_ink_foot[POKEMON_TEMOTI_MAX];	///<インクの上に配置する足跡アクター
-	CATS_ACT_PTR cap_name_frame;				///<名前を囲む枠アクター
-	CATS_ACT_PTR cap_name_foot[FOOTPRINT_ENTRY_MAX];	///<名前の横の足跡アクター
-	CATS_ACT_PTR cap_touch_eff[TOUCH_EFF_MAX];	///<タッチエフェクトアクター
+	GFL_CLWK cap_ink[POKEMON_TEMOTI_MAX];	///<インクアクター
+	GFL_CLWK cap_ink_foundation[POKEMON_TEMOTI_MAX];	///<インクの下地アクター
+	GFL_CLWK cap_ink_foot[POKEMON_TEMOTI_MAX];	///<インクの上に配置する足跡アクター
+	GFL_CLWK cap_name_frame;				///<名前を囲む枠アクター
+	GFL_CLWK cap_name_foot[FOOTPRINT_ENTRY_MAX];	///<名前の横の足跡アクター
+	GFL_CLWK cap_touch_eff[TOUCH_EFF_MAX];	///<タッチエフェクトアクター
 	
 	u16 name_foot_monsno[FOOTPRINT_ENTRY_MAX];	///<名前の横に出しているポケモン番号
 	u16 name_foot_color[FOOTPRINT_ENTRY_MAX];	///<名前の横に出しているカラー
@@ -523,7 +523,7 @@ static void DefaultActorDel_Main(FOOTPRINT_SYS *fps);
 static void DefaultActorSet_Sub(FOOTPRINT_SYS *fps);
 static void DefaultActorDel_Sub(FOOTPRINT_SYS *fps);
 static void MyInkPaletteSettings(FOOTPRINT_SYS *fps);
-static BOOL OBJFootCharRewrite(int monsno, int form_no, CATS_ACT_PTR cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg);
+static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg);
 static void Footprint_TouchEffAdd(FOOTPRINT_SYS_PTR fps, int hit_pos);
 static void Footprint_SelectInkPaletteFade(FOOTPRINT_SYS_PTR fps, int hit_pos);
 static void Footprint_TouchEffUpdate(FOOTPRINT_SYS_PTR fps);
@@ -616,7 +616,8 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	PaletteFadeWorkAllocSet(fps->pfd, FADE_SUB_OBJ, 0x200, HEAPID_FOOTPRINT);
 	PaletteTrans_AutoSet(fps->pfd, TRUE);
 	
-	fps->bgl = GF_BGL_BglIniAlloc(HEAPID_FOOTPRINT);
+	GFL_BG_Init(HEAPID_FOOTPRINT);
+	GFL_BMPWIN_Init(HEAPID_FOOTPRINT);
 
 	initVramTransferManagerHeap(64, HEAPID_FOOTPRINT);
 
@@ -1030,7 +1031,8 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	
 	// BG_SYSTEM解放
 	BgExit( fps->bgl );
-	GFL_HEAP_FreeMemory( fps->bgl );
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
 
 	//アクターシステム削除
 	CATS_ResourceDestructor_S(fps->csp,fps->crp);
@@ -1153,7 +1155,7 @@ static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
 	
 	//VRAM設定
 	{
-		GF_BGL_DISPVRAM vramSetTable = {
+		GFL_DISP_VRAM vramSetTable = {
 			GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 
@@ -1168,6 +1170,9 @@ static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
 
 			GX_VRAM_TEX_01_AB,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
+
+			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};
 		GF_Disp_SetBank( &vramSetTable );
 
@@ -1180,48 +1185,48 @@ static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
 
 	// BG SYSTEM
 	{
-		GF_BGL_SYS_HEADER BGsys_data = {
+		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
-		GF_BGL_InitBG( &BGsys_data );
+		GFL_BG_SetBGMode( &BGsys_data );
 	}
 
 	//メイン画面フレーム設定
 	{
-		GF_BGL_BGCNT_HEADER TextBgCntDat[] = {
+		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FOOT_FRAME_WIN	ウィンドウ面
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_WIN, 0, 0, FALSE
 			},
 			///<FOOT_FRAME_PANEL	パネル面
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_PANEL, 0, 0, FALSE
 			},
 			///<FOOT_FRAME_BG	背景
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 				FOOT_BGPRI_BG, 0, 0, FALSE
 			},
 		};
-		GF_BGL_BGControlSet(bgl, FOOT_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_FRAME_WIN );
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_WIN, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_WIN, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_FRAME_WIN );
+		GFL_BG_SetScroll(FOOT_FRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_FRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
 
-		GF_BGL_BGControlSet(bgl, FOOT_FRAME_PANEL, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_FRAME_PANEL );
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_PANEL, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_PANEL, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_FRAME_PANEL, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_FRAME_PANEL );
+		GFL_BG_SetScroll(FOOT_FRAME_PANEL, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_FRAME_PANEL, GFL_BG_SCROLL_Y_SET, 0);
 		
-		GF_BGL_BGControlSet(bgl, FOOT_FRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_FRAME_BG );
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_BG, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_FRAME_BG, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_FRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_FRAME_BG );
+		GFL_BG_SetScroll(FOOT_FRAME_BG, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_FRAME_BG, GFL_BG_SCROLL_Y_SET, 0);
 
 		//3D面
 		G2_SetBG0Priority(FOOT_BGPRI_3D);
@@ -1229,40 +1234,40 @@ static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
 	}
 	//サブ画面フレーム設定
 	{
-		GF_BGL_BGCNT_HEADER TextBgCntDat[] = {
+		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FOOT_SUBFRAME_WIN	テキスト面
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_WIN, 0, 0, FALSE
 			},
 			///<FOOT_SUBFRAME_PLATE	プレート
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_PLATE, 0, 0, FALSE
 			},
 			///<FOOT_SUBFRAME_BG	背景
 			{
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+				GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 				FOOT_SUBBGPRI_BG, 0, 0, FALSE
 			},
 		};
-		GF_BGL_BGControlSet(bgl, FOOT_SUBFRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_SUBFRAME_WIN );
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_WIN, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_WIN, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_SUBFRAME_WIN );
+		GFL_BG_SetScroll(FOOT_SUBFRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_SUBFRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
 		
-		GF_BGL_BGControlSet(bgl, FOOT_SUBFRAME_PLATE, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_SUBFRAME_PLATE );
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_PLATE, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_PLATE, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_PLATE, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_SUBFRAME_PLATE );
+		GFL_BG_SetScroll(FOOT_SUBFRAME_PLATE, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_SUBFRAME_PLATE, GFL_BG_SCROLL_Y_SET, 0);
 
-		GF_BGL_BGControlSet(bgl, FOOT_SUBFRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, FOOT_SUBFRAME_BG );
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_BG, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, FOOT_SUBFRAME_BG, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(FOOT_SUBFRAME_BG, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen( FOOT_SUBFRAME_BG );
+		GFL_BG_SetScroll(FOOT_SUBFRAME_BG, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(FOOT_SUBFRAME_BG, GFL_BG_SCROLL_Y_SET, 0);
 	}
 
 	GF_BGL_ClearCharSet( FOOT_SUBFRAME_WIN, 32, 0, HEAPID_FOOTPRINT );
@@ -1664,7 +1669,7 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
  * @retval  FALSE:書き換えなかった
  */
 //--------------------------------------------------------------
-static BOOL OBJFootCharRewrite(int monsno, int form_no, CATS_ACT_PTR cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg)
+static BOOL OBJFootCharRewrite(int monsno, int form_no, GFL_CLWK cap, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, NNS_G2D_VRAM_TYPE vram_type, BOOL arceus_flg)
 {
 	void *obj_vram;
 	NNSG2dImageProxy * image;

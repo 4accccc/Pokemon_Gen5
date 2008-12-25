@@ -9,6 +9,8 @@
 #ifndef __BALLOON_GAME_TYPES_H__
 #define __BALLOON_GAME_TYPES_H__
 
+#include "system/actor_tool.h"
+
 
 //==============================================================================
 //	定数定義
@@ -268,13 +270,13 @@ typedef struct{
 	u8 booster_type;	///<BOOSTER_TYPE_???
 	u8 dummy[1];
 	
-	CATS_ACT_PTR cap;
+	GFL_CLWK *cap;
 	const AIR_POSITION_DATA *apd;
 }PLAYER_AIR_PARAM; 
 
 ///紙ふぶきワーク
 typedef struct{
-	CATS_ACT_PTR cap;
+	GFL_CLWK *cap;
 	fx32 furihaba;
 	fx32 add_furihaba;
 	fx32 sec;
@@ -294,7 +296,7 @@ typedef struct{
 
 ///風船アイコンアクターパラメータ
 typedef struct{
-	CATS_ACT_PTR cap;
+	GFL_CLWK *cap;
 	u8 type;			///<アイコンの種類(BALLOON_LEVEL_???)
 	u8 status;			///<現在の状態(ICON_BALLOON_STATUS_???)
 	u8 pos;				///<表示位置(一番右端からのオフセット番号)
@@ -306,12 +308,12 @@ typedef struct{
 
 ///ジョイント動作制御
 typedef struct{
-	CATS_ACT_PTR cap[JOINT_ACTOR_MAX];
+	GFL_CLWK *cap[JOINT_ACTOR_MAX];
 }JOINT_WORK;
 
 ///ブースター着地時の煙アクター動作制御構造体
 typedef struct{
-	CATS_ACT_PTR cap[BOOSTER_LAND_SMOKE_NUM];
+	GFL_CLWK *cap[BOOSTER_LAND_SMOKE_NUM];
 	fx32 add_x[BOOSTER_LAND_SMOKE_NUM];
 	fx32 add_y[BOOSTER_LAND_SMOKE_NUM];
 	u8 seq;
@@ -320,9 +322,9 @@ typedef struct{
 
 ///ブースターの動作ワーク
 typedef struct{
-	CATS_ACT_PTR cap;
-	CATS_ACT_PTR hit_cap;		///<ヒットした時に出すエフェクトアクター
-	CATS_ACT_PTR shadow_cap;	///<影アクター
+	GFL_CLWK *cap;
+	GFL_CLWK *hit_cap;		///<ヒットした時に出すエフェクトアクター
+	GFL_CLWK *shadow_cap;	///<影アクター
 	fx32 start_theta;		///<スタート角度
 	u8 mode;				///<BOOSTER_MODE_???
 	u8 seq;
@@ -356,8 +358,8 @@ typedef struct{
 
 ///SIOブースターの動作ワーク
 typedef struct{
-	CATS_ACT_PTR cap;
-	CATS_ACT_PTR hit_cap;	///<ヒットした時に出すエフェクトアクター
+	GFL_CLWK *cap;
+	GFL_CLWK *hit_cap;	///<ヒットした時に出すエフェクトアクター
 	fx32 local_fx_x;
 	fx32 local_fx_y;
 	s16 end_y;
@@ -386,7 +388,7 @@ typedef struct{
 
 ///カウンター制御構造体定義
 typedef struct{
-	CATS_ACT_PTR win_cap;			///<ウィンドウアクターのポインタ
+	GFL_CLWK *win_cap;			///<ウィンドウアクターのポインタ
 	BALLOON_FONTACT fontact[BALLOON_COUNTER_KETA_MAX][BALLOON_COUNTER_MAX];	///<フォントアクター(カウンター)
 	BALLOON_FONTACT fontact_cc;		///<フォントアクター(CC)
 	BALLOON_FONTACT fontact_dummy[BALLOON_COUNTER_KETA_MAX];	///<フォントアクター(カウンターダミー)
@@ -403,7 +405,7 @@ typedef struct{
 
 ///タッチペン制御構造体定義
 typedef struct{
-	CATS_ACT_PTR cap;				///<タッチペンアクターのポインタ
+	GFL_CLWK *cap;				///<タッチペンアクターのポインタ
 	s16 seq;
 	s16 wait;
 	s16 x;
@@ -421,14 +423,25 @@ typedef struct{
  */
 //--------------------------------------------------------------
 typedef struct{
+#if WB_FIX
 	D3DOBJ_MDL	pipe_mdl;		///<パイプモデル
    	D3DOBJ		pipe_obj;		///<パイプOBJ
+#endif
+	GFL_G3D_OBJ *g3dobj;		///<G3Dオブジェハンドルへのポインタ
+	GFL_G3D_OBJSTATUS status;	///<OBJステータス
    	
+#if WB_FIX
 	D3DOBJ_MDL	air_mdl[PIPE_3D_AIR_TYPE_MAX];	///<空気モデル
+#endif
 	struct{
 		int occ;				///<TRUE:データが生成されている
+#if WB_FIX
 		D3DOBJ obj;				///<空気OBJ
 		D3DOBJ_ANM	anm;		///<空気アニメ
+#endif
+		int enable_anm_index;	///<実行中のアニメindex
+		GFL_G3D_OBJSTATUS status;	///<OBJステータス
+		GFL_G3D_OBJ *g3dobj;		///<G3Dオブジェハンドルへのポインタ
 	}air[PIPE_AIR_AIR_MAX][PIPE_3D_AIR_TYPE_MAX];
 }PIPE_AIR_WORK;
 
@@ -438,8 +451,12 @@ typedef struct{
  */
 //--------------------------------------------------------------
 typedef struct{
+#if WB_FIX
 	D3DOBJ_MDL	mdl;		///<台座モデル
    	D3DOBJ		obj;		///<台座OBJ
+#endif
+	GFL_G3D_OBJ *g3dobj;		///<G3Dオブジェハンドルへのポインタ
+	GFL_G3D_OBJSTATUS status;	///<OBJステータス
 }DAIZA_WORK;
 
 //--------------------------------------------------------------
@@ -474,8 +491,12 @@ typedef struct _BALLOON_GAME_WORK{
 	MNGM_COUNTWK *mgcount;			///<ミニゲーム共通カウントダウンエフェクトシステムへのポインタ
 	int countdown_eff;				///<カウントダウンエフェクトの現在の状態
 	
+	GFL_CLUNIT			*clunit;	///<セルユニット
+	PLTTSLOT_SYS_PTR	plttslot;	///<パレットスロット管理ワークへのポインタ
+#if WB_FIX
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
+#endif
 	GF_BGL_INI *bgl;
 	GF_BGL_BMPWIN win[BALLOON_BMPWIN_MAX];
 	MSGDATA_MANAGER *msgman;		///<メッセージデータマネージャのポインタ

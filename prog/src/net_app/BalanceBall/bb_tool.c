@@ -25,7 +25,7 @@
 
 typedef struct {
 	
-	CATS_ACT_PTR cap;
+	GFL_CLWK cap;
 	
 	fx32 x;
 	fx32 y;
@@ -774,7 +774,7 @@ static void EFF_2( BB_EFF_WORK* wk )
 	s16 x, y;
 	s16 pos_in[] = { 188, 188, 180, 180 };
 	BOOL bEnd[ 4 ] = { TRUE,TRUE,TRUE,TRUE };
-	CATS_ACT_PTR cap;
+	GFL_CLWK cap;
 	
 	if ( wk->active == FALSE ){ return; }
 	
@@ -1096,11 +1096,11 @@ static void BB_Fever_Open( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GF_BGL_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GF_BGL_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GF_BGL_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GF_BGL_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GF_BGL_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1146,11 +1146,11 @@ static void BB_Fever_Close( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GF_BGL_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GF_BGL_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GF_BGL_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GF_BGL_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GF_BGL_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}

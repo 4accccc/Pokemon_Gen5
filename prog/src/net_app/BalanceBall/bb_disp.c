@@ -487,7 +487,7 @@ void BB_disp_Hanabi_OAM_Del( BB_CLIENT* wk )
 	}
 }
 
-void BB_disp_Manene_OAM_AnimeChangeCap( CATS_ACT_PTR cap, int type, int anime )
+void BB_disp_Manene_OAM_AnimeChangeCap( GFL_CLWK cap, int type, int anime )
 {
 	int anime_seq[][2] = {
 		{ eANM_MANENE_ARUKU,  eANM_BALL_STOP },
@@ -988,9 +988,9 @@ void BB_disp_Manene_Add( BB_WORK* bb_wk, BB_CLIENT* wk )
  *
  */
 //--------------------------------------------------------------
-CATS_ACT_PTR BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y )
+GFL_CLWK BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y )
 {	
-	CATS_ACT_PTR			 cap;
+	GFL_CLWK			 cap;
 	TCATS_OBJECT_ADD_PARAM_S coap;
 	CATS_SYS_PTR			 csp = wk->sys->csp;
 	CATS_RES_PTR			 crp = wk->sys->crp;
@@ -1020,7 +1020,7 @@ CATS_ACT_PTR BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y )
 void BB_disp_Light_Add( BB_CLIENT* wk )
 {
 	int i;
-	CATS_ACT_PTR			 cap;
+	GFL_CLWK			 cap;
 	TCATS_OBJECT_ADD_PARAM_S coap;
 	CATS_SYS_PTR			 csp = wk->sys->csp;
 	CATS_RES_PTR			 crp = wk->sys->crp;
@@ -1084,7 +1084,7 @@ void BB_disp_Light_Del( BB_CLIENT* wk )
 void BB_disp_Pen_Add( BB_CLIENT* wk )
 {
 	int i;
-	CATS_ACT_PTR			 cap;
+	GFL_CLWK			 cap;
 	TCATS_OBJECT_ADD_PARAM_S coap;
 	CATS_SYS_PTR			 csp = wk->sys->csp;
 	CATS_RES_PTR			 crp = wk->sys->crp;

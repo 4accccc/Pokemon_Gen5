@@ -7,59 +7,21 @@
  */
 //==============================================================================
 #include <gflib.h>
+#include "system/actor_tool.h"
 
-
-///ＶＲＡＭバンク設定構造体
-static const GFL_DISP_VRAM dispVram = {
-	GX_VRAM_BG_16_F,				//メイン2DエンジンのBGに割り当て 
-	GX_VRAM_BGEXTPLTT_NONE,			//メイン2DエンジンのBG拡張パレットに割り当て
-	GX_VRAM_SUB_BG_128_C,			//サブ2DエンジンのBGに割り当て
-	GX_VRAM_SUB_BGEXTPLTT_NONE,		//サブ2DエンジンのBG拡張パレットに割り当て
-	GX_VRAM_OBJ_64_E,				//メイン2DエンジンのOBJに割り当て
-	GX_VRAM_OBJEXTPLTT_NONE,		//メイン2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_SUB_OBJ_16_I,			//サブ2DエンジンのOBJに割り当て
-	GX_VRAM_SUB_OBJEXTPLTT_NONE,	//サブ2DエンジンのOBJ拡張パレットにに割り当て
-	GX_VRAM_TEX_01_AB,				//テクスチャイメージスロットに割り当て
-	GX_VRAM_TEXPLTT_0_G,			//テクスチャパレットスロットに割り当て
-	GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
-	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-};
-
-static const GFL_CLSYS_INIT clactIni = {
-	0,0,	// メイン　サーフェースの左上座標
-	0,1000,	// サブ　サーフェースの左上座標
-	0,128,	// メイン画面OAM管理開始位置、管理数
-	0,128,	// サブ画面OAM管理開始位置、管理数
-	64,		// セルVram転送管理数
-};
-
-static const GFL_OBJGRP_INIT_PARAM objgrpIni = {
-	64,			///< 登録できるキャラデータ数
-	64,			///< 登録できるパレットデータ数
-	64,			///< 登録できるセルアニメパターン数
-	16,			///< 登録できるマルチセルアニメパターン数（※現状未対応）
-};
-
-
-//==============================================================================
-//	構造体定義
-//==============================================================================
-typedef struct{
-	u32 data_id;			///<登録データID
-	u32 entry_index;		///<登録INDEX
-	
 
 //==============================================================================
 //
 //	
 //
 //==============================================================================
+#if 0
 void ACTORTOOL_Init(int heap_id, const GFL_CLSYS_INIT *clsysinit, const GFL_DISP_VRAM *dispvram, const GFL_OBJGRP_INIT_PARAM *objparam)
 {
 	GFL_CLACT_Init(clsysinit, heap_id);
 	GFL_OBJGRP_sysStart(heap_id, dispvram, objparam);
 }
-
+#endif
 
 
 //==============================================================================
@@ -81,9 +43,9 @@ void ACTORTOOL_Init(int heap_id, const GFL_CLSYS_INIT *clsysinit, const GFL_DISP
 //==============================================================================
 //	構造体定義
 //==============================================================================
-typedef struct{
+typedef struct _PLTTSLOT_SYSTEM{
 	u32 entry_index;	//GFL_OBJGRP_RegisterPlttで取得した登録index
-	u8 pltt_num_max;	///<管理するパレット最大登録本数
+	u8 pltt_num_max[2];	///<管理するパレット最大登録本数
 	u8 slot[VRAM_TBL_MAX][16];
 }PLTTSLOT_SYSTEM;
 
@@ -100,25 +62,30 @@ typedef struct{
  * @brief   パレットスロット管理システム作成
  *
  * @param   heap_id				ヒープID
- * @param   pltt_num_max		パレット管理本数
+ * @param   main_num			パレット管理本数:メイン画面
+ * @param   sub_num				パレット管理本数:メイン画面
  *
  * @retval  パレットスロットへのポインタ
  */
 //--------------------------------------------------------------
-PLTTSLOT_SYS_PTR PLTTSLOT_Init(int heap_id, int pltt_num_max)
+PLTTSLOT_SYS_PTR PLTTSLOT_Init(int heap_id, int main_num, int sub_num)
 {
 	PLTTSLOT_SYS_PTR pssp;
-	int i;
+	int tbl, i;
 	
-	GF_ASSERT(pltt_num_max <= PLTT_NUM_MAX);
+	GF_ASSERT(main_num <= PLTT_NUM_MAX);
+	GF_ASSERT(sub_num <= PLTT_NUM_MAX);
 	
 	pssp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(PLTTSLOT_SYSTEM));
-	pssp->pltt_num_max = pltt_num_max;
+	pssp->pltt_num_max[0] = main_num;
+	pssp->pltt_num_max[1] = sub_num;
 	for(tbl = 0; tbl < VRAM_TBL_MAX; tbl++){
 		for(i = 0; i < PLTT_NUM_MAX; i++){
-			pssp->slot[tb][i] = PLTT_SLOT_FREE;
+			pssp->slot[tbl][i] = PLTT_SLOT_FREE;
 		}
 	}
+	
+	return pssp;
 }
 
 //--------------------------------------------------------------
@@ -149,7 +116,7 @@ static u32 PLTTSLOT_Get(PLTTSLOT_SYS_PTR pssp, int pltt_num, GFL_VRAM_TYPE vram_
 	int i, s, tbl;
 	
 	tbl = VRAMTBL(vram_type);
-	for(i = 0; i < pssp->pltt_num_max; i++){
+	for(i = 0; i < pssp->pltt_num_max[tbl]; i++){
 		if(pssp->slot[tbl][i] == PLTT_SLOT_FREE){
 			for(s = i; s < i+pltt_num; s++){
 				if(pssp->slot[tbl][s] != PLTT_SLOT_FREE){
@@ -160,7 +127,7 @@ static u32 PLTTSLOT_Get(PLTTSLOT_SYS_PTR pssp, int pltt_num, GFL_VRAM_TYPE vram_
 			if(s == i+pltt_num){
 				//確保成功
 				for(s = i; s < i+pltt_num; s++){
-					pspp->slot[tbl][s] = i;
+					pssp->slot[tbl][s] = i;
 				}
 				return i;
 			}
@@ -206,9 +173,9 @@ static void PLTTSLOT_Free(PLTTSLOT_SYS_PTR pssp, u32 pal_no, GFL_VRAM_TYPE vram_
 //--------------------------------------------------------------
 u32 PLTTSLOT_ResourceSet(PLTTSLOT_SYS_PTR pssp, ARCHANDLE *handle, u32 data_id, int pltt_num, GFL_VRAM_TYPE vram_type, int heap_id)
 {
-	int pal_no;
+	int pal_no, index;
 	
-	pal_no = PLTTSLOT_Get(pssp, pltt_num);
+	pal_no = PLTTSLOT_Get(pssp, pltt_num, vram_type);
 	index = GFL_OBJGRP_RegisterPlttEx(
 		handle, data_id, vram_type, pal_no * 0x20, 0, pltt_num, heap_id);
 	return index;

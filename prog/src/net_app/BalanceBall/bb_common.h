@@ -194,8 +194,8 @@ typedef struct {
 	int				seq;
 	int				type;
 	int				wait;
-	CATS_ACT_PTR	cap_mane;		///< 影ワークにも使う
-	CATS_ACT_PTR	cap_ball;
+	GFL_CLWK	cap_mane;		///< 影ワークにも使う
+	GFL_CLWK	cap_ball;
 
 	BB_ADDMOVE_WORK_FX data;
 
@@ -208,7 +208,7 @@ typedef struct {
 	int				seq;
 	int				type;
 	int				wait;
-	CATS_ACT_PTR	cap_kage;		///< 影ワークにも使う
+	GFL_CLWK	cap_kage;		///< 影ワークにも使う
 
 	BB_ADDMOVE_WORK_FX data;
 	
@@ -296,7 +296,7 @@ typedef struct {
 ///< ライトのワーク
 typedef struct {
 	
-	CATS_ACT_PTR	cap;
+	GFL_CLWK	cap;
 	
 	int seq;
 	s16 rad;
@@ -381,7 +381,7 @@ typedef struct {
 
 	BOOL				active;
 	int					seq;
-	CATS_ACT_PTR		cap[ STAR_DUST_MAX ];
+	GFL_CLWK		cap[ STAR_DUST_MAX ];
 	BB_ADDMOVE_WORK_FX	data[ STAR_DUST_MAX ][ 2 ];
 	
 	BB_SYS*				sys;
@@ -413,18 +413,18 @@ typedef struct {
 	
 	BB_SYS*	sys;
 	
-	CATS_ACT_PTR	cap_cd;
-	CATS_ACT_PTR	cap_mane[ BB_PLAYER_NUM - 1 ];
-	CATS_ACT_PTR	cap_ball[ BB_PLAYER_NUM - 1 ];
-	CATS_ACT_PTR	cap_kage[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK	cap_cd;
+	GFL_CLWK	cap_mane[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK	cap_ball[ BB_PLAYER_NUM - 1 ];
+	GFL_CLWK	cap_kage[ BB_PLAYER_NUM - 1 ];
 
-	CATS_ACT_PTR	cap_hanabi[ BB_KAMI_MAX ];
-	CATS_ACT_PTR	cap_hand[ BB_HAND_MAX ];
+	GFL_CLWK	cap_hanabi[ BB_KAMI_MAX ];
+	GFL_CLWK	cap_hand[ BB_HAND_MAX ];
 	
-	CATS_ACT_PTR	cap_light_s[ BB_LIGHT_MAX ];
-	CATS_ACT_PTR	cap_light_m[ BB_LIGHT_MAX ];
+	GFL_CLWK	cap_light_s[ BB_LIGHT_MAX ];
+	GFL_CLWK	cap_light_m[ BB_LIGHT_MAX ];
 	
-	CATS_ACT_PTR	cap_pen;
+	GFL_CLWK	cap_pen;
 
 	u16				netid_to_capid[ BB_PLAYER_NUM ];
 	int				direc[ BB_PLAYER_NUM - 1 ];	
@@ -526,7 +526,7 @@ extern void BB_disp_Hanabi_OAM_Add( BB_CLIENT* wk );
 extern void BB_disp_Hanabi_OAM_Enable( BB_CLIENT* wk, BOOL flag, int mode );
 extern void BB_disp_Hanabi_OAM_Update( BB_CLIENT* wk );
 extern void BB_disp_Hanabi_OAM_Del( BB_CLIENT* wk );
-extern void BB_disp_Manene_OAM_AnimeChangeCap( CATS_ACT_PTR cap, int type, int anime );
+extern void BB_disp_Manene_OAM_AnimeChangeCap( GFL_CLWK cap, int type, int anime );
 extern void BB_disp_Manene_OAM_AnimeChange( BB_CLIENT* wk, int netid, int anime );
 extern int BB_disp_Manene_OAM_AnimeCheck( BB_CLIENT* wk, int netid );
 extern void BB_disp_Manene_OAM_Update( BB_CLIENT* wk );
@@ -552,7 +552,7 @@ extern BOOL BB_AddMoveMainFx( BB_ADDMOVE_WORK_FX* p_work );
 extern void BB_MoveInit_FX( BB_ADDMOVE_WORK_FX* p_data, fx32 s_num, fx32 e_num, s32 count );
 extern BOOL BB_MoveMain_FX( BB_ADDMOVE_WORK_FX* p_data );
 
-extern CATS_ACT_PTR BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y );
+extern GFL_CLWK BB_disp_Stardust_Add( BB_CLIENT* wk, s16 x, s16 y );
 extern void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y );
 
 extern void BB_Effect_Call( BB_CLIENT* wk );

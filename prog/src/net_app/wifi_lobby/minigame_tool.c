@@ -603,7 +603,7 @@ typedef struct{
 // BGL管理
 typedef struct{
 	u32					frame;
-	GF_BGL_BGCNT_HEADER	cnt;
+	GFL_BG_BGCNT_HEADER	cnt;
 } MNGM_BGL_DATA;
 typedef struct {
 	GF_BGL_INI*				p_bgl;	// bgl
@@ -875,7 +875,7 @@ static const CHAR_MANAGER_MAKE sc_MNGM_CHARMAN_INIT = {
 ///	エントリー画面ワーク
 //=====================================
 // バンク設定
-static const GF_BGL_DISPVRAM sc_MNGM_ENTRY_BANK = {
+static const GFL_DISP_VRAM sc_MNGM_ENTRY_BANK = {
 	GX_VRAM_BG_256_AB,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
@@ -886,9 +886,11 @@ static const GF_BGL_DISPVRAM sc_MNGM_ENTRY_BANK = {
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 // BGL設定
-static const GF_BGL_SYS_HEADER sc_MNGM_ENTRY_BGINIT = {
+static const GFL_BG_SYS_HEADER sc_MNGM_ENTRY_BGINIT = {
 	GX_DISPMODE_GRAPHICS,
 	GX_BGMODE_0,
 	GX_BGMODE_0,
@@ -1008,7 +1010,7 @@ static const u8	sc_MNGM_PLAYER_PLATE_BBIDX_DATA[ WFLBY_MINIGAME_MAX ][ WFLBY_MIN
 ///	リザルト画面ワーク
 //=====================================
 // バンク設定
-static const GF_BGL_DISPVRAM sc_MNGM_RESULT_BANK = {
+static const GFL_DISP_VRAM sc_MNGM_RESULT_BANK = {
 	GX_VRAM_BG_256_AB,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_32_H,			// サブ2DエンジンのBG
@@ -1019,9 +1021,11 @@ static const GF_BGL_DISPVRAM sc_MNGM_RESULT_BANK = {
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 // BGL設定
-static const GF_BGL_SYS_HEADER sc_MNGM_RESULT_BGINIT = {
+static const GFL_BG_SYS_HEADER sc_MNGM_RESULT_BGINIT = {
 	GX_DISPMODE_GRAPHICS,
 	GX_BGMODE_0,
 	GX_BGMODE_0,
@@ -1147,7 +1151,7 @@ static void MNGM_CLACTRES_OBJ_Init( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
 static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj );
 
 // BGL管理
-static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GF_BGL_SYS_HEADER* cp_sys, const MNGM_BGL_DATA* cp_cnt, u32 cnt_num, u32 heapID );
+static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GFL_BG_SYS_HEADER* cp_sys, const MNGM_BGL_DATA* cp_cnt, u32 cnt_num, u32 heapID );
 static void MNGM_BGL_Exit( MNGM_BGL* p_wk );
 static void MNGM_BGL_VBlank( MNGM_BGL* p_wk );
 
@@ -2411,13 +2415,14 @@ static void MNGM_CLACTRES_OBJ_Exit( MNGM_CLACTRES* p_wk, MNGM_CLACTRESOBJ* p_obj
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GF_BGL_SYS_HEADER* cp_sys, const MNGM_BGL_DATA* cp_cnt, u32 cnt_num, u32 heapID )
+static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GFL_BG_SYS_HEADER* cp_sys, const MNGM_BGL_DATA* cp_cnt, u32 cnt_num, u32 heapID )
 {
 	
 	// BG設定
-	GF_BGL_InitBG(cp_sys);
+	GFL_BG_SetBGMode(cp_sys);
 
-	p_wk->p_bgl = GF_BGL_BglIniAlloc( heapID );
+	GFL_BG_Init( heapID );
+	GFL_BMPWIN_Init(heapID);
 	p_wk->cp_tbl = cp_cnt;
 	p_wk->tblnum = cnt_num;
 
@@ -2431,15 +2436,15 @@ static void MNGM_BGL_Init( MNGM_BGL* p_wk, const GF_BGL_SYS_HEADER* cp_sys, cons
 		int i;
 
 		for( i=0; i<cnt_num; i++ ){
-			GF_BGL_BGControlSet( p_wk->p_bgl, 
+			GFL_BG_SetBGControl( 
 					cp_cnt[i].frame, &cp_cnt[i].cnt,
 					GF_BGL_MODE_TEXT );
 			GF_BGL_ClearCharSet( cp_cnt[i].frame, 32, 0, heapID);
-			GF_BGL_ScrClear( p_wk->p_bgl, cp_cnt[i].frame );
+			GFL_BG_ClearScreen( cp_cnt[i].frame );
 
 			// スクロール位置初期化
-			GF_BGL_ScrollSet( p_wk->p_bgl, cp_cnt[i].frame, GF_BGL_SCROLL_X_SET, 0 );
-			GF_BGL_ScrollSet( p_wk->p_bgl, cp_cnt[i].frame, GF_BGL_SCROLL_Y_SET, 0 );
+			GFL_BG_SetScroll( cp_cnt[i].frame, GFL_BG_SCROLL_X_SET, 0 );
+			GFL_BG_SetScroll( cp_cnt[i].frame, GFL_BG_SCROLL_Y_SET, 0 );
 		}
 	}
 }
@@ -2455,7 +2460,7 @@ static void MNGM_BGL_Exit( MNGM_BGL* p_wk )
 {
 
 	// スクロールクリーン
-	GF_BGL_ScrollSet( p_wk->p_bgl, GF_BGL_FRAME3_M, GF_BGL_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( GF_BGL_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
 
 	// ＢＧコントロール破棄
 	{
@@ -2467,7 +2472,8 @@ static void MNGM_BGL_Exit( MNGM_BGL* p_wk )
 	}
 	
 	// BGL破棄
-	GFL_HEAP_FreeMemory( p_wk->p_bgl );
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
 }
 
 //----------------------------------------------------------------------------
@@ -3466,9 +3472,9 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
 
 	// スクリーン面をスクロールさせる
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME3_M, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME1_S, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
 //----------------------------------------------------------------------------
@@ -3974,8 +3980,8 @@ static void MNGM_PLAYER_PLATE_HBLANK_BGSCR_Init( MNGM_HBLANK_PLATEBGSCR* p_wk, M
 	p_wk->p_bgl = p_bgl;
 
 	// 初期スクロール座標設定
-	GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME0_M, GF_BGL_SCROLL_X_SET, MNGM_PLATE_MOVE_START );
-	GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME1_M, GF_BGL_SCROLL_X_SET, MNGM_PLATE_MOVE_START );
+	GFL_BG_SetScroll( GF_BGL_FRAME0_M, GFL_BG_SCROLL_X_SET, MNGM_PLATE_MOVE_START );
+	GFL_BG_SetScroll( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, MNGM_PLATE_MOVE_START );
 
 	// bufferの値を初期化
 	for( i=0; i<2; i++ ){
@@ -4082,12 +4088,12 @@ static void MNGM_PLAYER_PLATE_HBLANK_BGSCR_HBlank( void* p_work )
 
 #if PL_T0849_080709_FIX
 	if( GX_IsHBlank() ){
-		GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME0_M, GF_BGL_SCROLL_X_SET, cp_buff[v_count] );
-		GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME1_M, GF_BGL_SCROLL_X_SET, cp_buff[v_count] );
+		GFL_BG_SetScroll( GF_BGL_FRAME0_M, GFL_BG_SCROLL_X_SET, cp_buff[v_count] );
+		GFL_BG_SetScroll( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, cp_buff[v_count] );
 	}
 #else
-	GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME0_M, GF_BGL_SCROLL_X_SET, cp_buff[v_count] );
-	GF_BGL_ScrollSet( p_wk->p_bgl->p_bgl, GF_BGL_FRAME1_M, GF_BGL_SCROLL_X_SET, cp_buff[v_count] );
+	GFL_BG_SetScroll( GF_BGL_FRAME0_M, GFL_BG_SCROLL_X_SET, cp_buff[v_count] );
+	GFL_BG_SetScroll( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, cp_buff[v_count] );
 #endif
 }
 
@@ -4387,8 +4393,8 @@ static BOOL MNGM_TITLELOGO_OutMain( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk )
 		MNGM_TITLELOGO_SetMoveMatrix( p_wk, p_bglwk, 0 );
 
 		// BG面をクリーン
-		GF_BGL_ScrClear( p_bglwk->p_bgl, GF_BGL_FRAME0_M );
-		GF_BGL_ScrClear( p_bglwk->p_bgl, GF_BGL_FRAME1_M );
+		GFL_BG_ClearScreen( GF_BGL_FRAME0_M );
+		GFL_BG_ClearScreen( GF_BGL_FRAME1_M );
 
 		// 描画ON
 		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );	
@@ -4410,17 +4416,17 @@ static void MNGM_TITLELOGO_SetMoveMatrix( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bgl
 
 	case WFLBY_GAME_BALLSLOW:	// 玉投げ
 	case WFLBY_GAME_BALANCEBALL:	// 玉乗り
-		GF_BGL_ScrollSet( p_bglwk->p_bgl, GF_BGL_FRAME0_M, 
-				GF_BGL_SCROLL_X_SET, num );
-		GF_BGL_ScrollSet( p_bglwk->p_bgl, GF_BGL_FRAME1_M, 
-				GF_BGL_SCROLL_X_SET, num );
+		GFL_BG_SetScroll( GF_BGL_FRAME0_M, 
+				GFL_BG_SCROLL_X_SET, num );
+		GFL_BG_SetScroll( GF_BGL_FRAME1_M, 
+				GFL_BG_SCROLL_X_SET, num );
 		break;
 
 	case WFLBY_GAME_BALLOON:		// ふうせんわり
-		GF_BGL_ScrollSet( p_bglwk->p_bgl, GF_BGL_FRAME0_M, 
-				GF_BGL_SCROLL_Y_SET, num );
-		GF_BGL_ScrollSet( p_bglwk->p_bgl, GF_BGL_FRAME1_M, 
-				GF_BGL_SCROLL_Y_SET, num );
+		GFL_BG_SetScroll( GF_BGL_FRAME0_M, 
+				GFL_BG_SCROLL_Y_SET, num );
+		GFL_BG_SetScroll( GF_BGL_FRAME1_M, 
+				GFL_BG_SCROLL_Y_SET, num );
 		break;
 
 	default:
@@ -4435,16 +4441,16 @@ static void MNGM_TITLELOGO_SetMoveMatrixVReq( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p
 	case WFLBY_GAME_BALLSLOW:	// 玉投げ
 	case WFLBY_GAME_BALANCEBALL:	// 玉乗り
 		GF_BGL_ScrollReq( p_bglwk->p_bgl, GF_BGL_FRAME0_M, 
-				GF_BGL_SCROLL_X_SET, num );
+				GFL_BG_SCROLL_X_SET, num );
 		GF_BGL_ScrollReq( p_bglwk->p_bgl, GF_BGL_FRAME1_M, 
-				GF_BGL_SCROLL_X_SET, num );
+				GFL_BG_SCROLL_X_SET, num );
 		break;
 
 	case WFLBY_GAME_BALLOON:		// ふうせんわり
 		GF_BGL_ScrollReq( p_bglwk->p_bgl, GF_BGL_FRAME0_M, 
-				GF_BGL_SCROLL_Y_SET, num );
+				GFL_BG_SCROLL_Y_SET, num );
 		GF_BGL_ScrollReq( p_bglwk->p_bgl, GF_BGL_FRAME1_M, 
-				GF_BGL_SCROLL_Y_SET, num );
+				GFL_BG_SCROLL_Y_SET, num );
 		break;
 
 	default:
@@ -5286,9 +5292,9 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
 
 	// スクリーン面をスクロールさせる
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME3_M, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME1_S, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
 
@@ -5576,9 +5582,9 @@ static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work )
 
 	// スクリーン面をスクロールさせる
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME3_M, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 	GF_BGL_ScrollReq( p_wk->bgl.p_bgl, GF_BGL_FRAME1_S, 
-			GF_BGL_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
+			GFL_BG_SCROLL_Y_INC, MNGM_BGSCROLL_SPEED );
 }
 
 //----------------------------------------------------------------------------

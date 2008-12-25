@@ -48,6 +48,7 @@
 #include "msgdata/msg_balloon.h"
 #include "wlmngm_tool.naix"		//タッチペングラフィック
 #include "system/window.h"
+#include "system/actor_tool.h"
 
 
 
@@ -243,7 +244,7 @@ static GF_G3DMAN * Balloon_3D_Init(int heap_id);
 static void BalloonSimpleSetUp(void);
 static void Balloon_3D_Exit(GF_G3DMAN *g3Dman);
 static void BalloonUpdate(TCB_PTR tcb, void *work);
-static void BalloonSys_VramBankSet(GF_BGL_INI *bgl);
+static void BalloonSys_VramBankSet(void);
 static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game);
 static void BalloonParticleInit(BALLOON_GAME_PTR game);
 static void BalloonParticleExit(BALLOON_GAME_PTR game);
@@ -398,6 +399,7 @@ static const TCATS_RESOURCE_NUM_LIST BalloonResourceList = {
 //--------------------------------------------------------------
 //	プレイヤー位置によって変えるグラフィックデータ
 //--------------------------------------------------------------
+#if WB_FIX
 static const struct{
 	u32 pipe_mdl_id;
 	u32 air_s_mdl_id;
@@ -434,6 +436,302 @@ static const struct{
 		SONANS_BALL4G_NSBMD,
 	},
 };
+#else
+enum{
+	G3DRES_BALL1R_BMD,
+	G3DRES_BALL2R_BMD,
+	G3DRES_BALL3R_BMD,
+	G3DRES_BALL4R_BMD,
+
+	G3DRES_BALL1B_BMD,
+	G3DRES_BALL2B_BMD,
+	G3DRES_BALL3B_BMD,
+	G3DRES_BALL4B_BMD,
+
+	G3DRES_BALL1Y_BMD,
+	G3DRES_BALL2Y_BMD,
+	G3DRES_BALL3Y_BMD,
+	G3DRES_BALL4Y_BMD,
+
+	G3DRES_BALL1G_BMD,
+	G3DRES_BALL2G_BMD,
+	G3DRES_BALL3G_BMD,
+	G3DRES_BALL4G_BMD,
+
+	G3DRES_BALL1_BCA,
+	G3DRES_BALL2_BCA,
+	G3DRES_BALL3_BCA,
+	G3DRES_BALL4_BCA,
+
+	G3DRES_DAIZA,
+};
+
+//読み込む3Dリソース
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+	//1P
+	{ ARCID_BALLOON_GRA, SONANS_BALL1R_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL2R_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL3R_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL4R_NSBMD, GFL_G3D_UTIL_RESARC },
+
+	//2P
+	{ ARCID_BALLOON_GRA, SONANS_BALL1B_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL2B_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL3B_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL4B_NSBMD, GFL_G3D_UTIL_RESARC },
+
+	//3P
+	{ ARCID_BALLOON_GRA, SONANS_BALL1Y_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL2Y_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL3Y_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL4Y_NSBMD, GFL_G3D_UTIL_RESARC },
+
+	//4P
+	{ ARCID_BALLOON_GRA, SONANS_BALL1G_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL2G_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL3G_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL4G_NSBMD, GFL_G3D_UTIL_RESARC },
+
+	//ボールアニメ
+	{ ARCID_BALLOON_GRA, SONANS_BALL1_NSBCA, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL2_NSBCA, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL3_NSBCA, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_BALL4_NSBCA, GFL_G3D_UTIL_RESARC },
+
+	//台座
+	{ ARCID_BALLOON_GRA, SONANS_DAIZA_NSBMD, GFL_G3D_UTIL_RESARC },
+};
+
+//3Dアニメ
+static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
+	{
+		SONANS_BALL1_NSBCA, 	//アニメリソースID
+		0,					//アニメデータID(リソース内部INDEX)
+	},
+	{
+		SONANS_BALL2_NSBCA, 	//アニメリソースID
+		0,					//アニメデータID(リソース内部INDEX)
+	},
+	{
+		SONANS_BALL3_NSBCA, 	//アニメリソースID
+		0,					//アニメデータID(リソース内部INDEX)
+	},
+	{
+		SONANS_BALL4_NSBCA, 	//アニメリソースID
+		0,					//アニメデータID(リソース内部INDEX)
+	},
+};
+
+///オブジェインデックス	※g3Dutil_objTblと並びを同じにしておくこと！
+enum{
+	G3DOBJ_BALL1R_BMD,
+	G3DOBJ_BALL2R_BMD,
+	G3DOBJ_BALL3R_BMD,
+	G3DOBJ_BALL4R_BMD,
+	G3DOBJ_BALL1B_BMD,
+	G3DOBJ_BALL2B_BMD,
+	G3DOBJ_BALL3B_BMD,
+	G3DOBJ_BALL4B_BMD,
+	G3DOBJ_BALL1Y_BMD,
+	G3DOBJ_BALL2Y_BMD,
+	G3DOBJ_BALL3Y_BMD,
+	G3DOBJ_BALL4Y_BMD,
+	G3DOBJ_BALL1G_BMD,
+	G3DOBJ_BALL2G_BMD,
+	G3DOBJ_BALL3G_BMD,
+	G3DOBJ_BALL4G_BMD,
+	G3DOBJ_DAIZA,
+};
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
+	//1P
+	{
+		G3DRES_BALL1R_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL1R_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL2R_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL2R_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL3R_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL3R_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL4R_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL4R_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	
+	//2P
+	{
+		G3DRES_BALL1B_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL1B_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL2B_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL2B_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL3B_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL3B_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL4B_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL4B_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+
+	//3P
+	{
+		G3DRES_BALL1Y_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL1Y_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL2Y_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL2Y_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL3Y_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL3Y_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL4Y_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL4Y_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+
+	//4P
+	{
+		G3DRES_BALL1G_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL1G_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL2G_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL2G_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL3G_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL3G_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+	{
+		G3DRES_BALL4G_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_BALL4G_BMD, 			//テクスチャリソースID
+		g3Dutil_anm1Tbl,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anm1Tbl),	//アニメリソース数
+	},
+
+	//台座
+	{
+		G3DRES_DAIZA, 				//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_DAIZA, 				//テクスチャリソースID
+		NULL,						//アニメテーブル(複数指定のため)
+		0,							//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
+	g3Dutil_resTbl,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl),		//リソース数
+	g3Dutil_objTbl,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl),		//オブジェクト数
+};
+
+#define G3DUTIL_RESCOUNT	(NELEMS(g3Dutil_resTbl))
+#define G3DUTIL_OBJCOUNT	(NELEMS(g3Dutil_objTbl))
+
+//読み込む3Dリソース　パイプモデルのみ(プレイヤーの位置によって読み込むものを変えるので別個に用意
+static const GFL_G3D_UTIL_RES g3Dutil_Pipe_resTbl[] = {
+	{ ARCID_BALLOON_GRA, SONANS_PIPE_R_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_PIPE_B_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_PIPE_Y_NSBMD, GFL_G3D_UTIL_RESARC },
+	{ ARCID_BALLOON_GRA, SONANS_PIPE_G_NSBMD, GFL_G3D_UTIL_RESARC },
+};
+
+//3Dオブジェクト設定テーブル　パイプのみ
+static const GFL_G3D_UTIL_OBJ g3Dutil_Pipe_objTbl[] = {
+	{
+		G3DRES_PIPE_R_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_PIPE_R_BMD, 			//テクスチャリソースID
+		NULL, 						//アニメテーブル(複数指定のため)
+		0,							//アニメリソース数
+	},
+	{
+		G3DRES_PIPE_B_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_PIPE_B_BMD, 			//テクスチャリソースID
+		NULL, 						//アニメテーブル(複数指定のため)
+		0,							//アニメリソース数
+	},
+	{
+		G3DRES_PIPE_Y_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_PIPE_Y_BMD, 			//テクスチャリソースID
+		NULL, 						//アニメテーブル(複数指定のため)
+		0,							//アニメリソース数
+	},
+	{
+		G3DRES_PIPE_G_BMD, 			//モデルリソースID
+		0, 							//モデルデータID(リソース内部INDEX)
+		G3DRES_PIPE_G_BMD, 			//テクスチャリソースID
+		NULL, 						//アニメテーブル(複数指定のため)
+		0,							//アニメリソース数
+	},
+};
+
+static const GFL_G3D_UTIL_SETUP g3Dutil_Pipe_setup = {
+	g3Dutil_Pipe_resTbl,		//リソーステーブル
+	1,							//リソース数
+	g3Dutil_Pipe_objTbl,		//オブジェクト設定テーブル
+	1,							//オブジェクト数
+};
+
+#endif
 
 
 //--------------------------------------------------------------
@@ -464,12 +762,20 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	
 	game = GFL_PROC_AllocWork(proc, sizeof(BALLOON_GAME_WORK), HEAPID_BALLOON );
 	GFL_STD_MemClear(game, sizeof(BALLOON_GAME_WORK));
+	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
+		for(s = 0;s < PIPE_3D_AIR_TYPE_MAX; s++){
+			game->pipe_air.air[i][s].enable_anm_index = 0xffff;
+		}
+	}
     
     // アロケータ作成
 	sys_InitAllocator(&game->allocator, HEAPID_BALLOON, 32 );
 
-//	simple_3DBGInit(HEAPID_BALLOON);
+#if WB_FIX
 	game->g3Dman = Balloon_3D_Init(HEAPID_BALLOON);
+#else
+	game->g3Dutil = GFL_G3D_UTIL_Create(G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, HEAPID_BALLOON);
+#endif
 
 	game->bsw = pwk;
 #ifdef PM_DEBUG
@@ -499,14 +805,15 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	PaletteFadeWorkAllocSet(game->pfd, FADE_MAIN_OBJ, BALLOON_MAIN_OBJPAL_SIZE, HEAPID_BALLOON);
 	PaletteFadeWorkAllocSet(game->pfd, FADE_SUB_OBJ, 0x200, HEAPID_BALLOON);
 	
-	game->bgl = GF_BGL_BglIniAlloc(HEAPID_BALLOON);
+	GFL_BG_Init(HEAPID_BALLOON);
+	GFL_BMPWIN_Init(HEAPID_BALLOON);
 
 	initVramTransferManagerHeap(BALLOON_VRAM_TRANSFER_TASK_NUM, HEAPID_BALLOON);
 
 	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
 
 	//VRAM割り当て設定
-	BalloonSys_VramBankSet(game->bgl);
+	BalloonSys_VramBankSet();
 
 	// タッチパネルシステム初期化
 	InitTPSystem();
@@ -516,6 +823,7 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	Balloon_CameraInit(game);
 	
 	//アクターシステム作成
+#if WB_FIX
 	game->csp=CATS_AllocMemory(HEAPID_BALLOON);
 	CATS_SystemInit(game->csp,&BalloonTcats,&BalloonCcmm,BALLOON_OAM_PLTT_MAX);
 	//通信アイコン用にキャラ＆パレット制限
@@ -525,6 +833,22 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	CATS_ClactSetInit(game->csp, game->crp, BALLOON_ACTOR_MAX);
 	CATS_ResourceManagerInit(game->csp,game->crp,&BalloonResourceList);
 	CLACT_U_SetSubSurfaceMatrix(CATS_EasyRenderGet(game->csp), 0, BALLOON_SUB_ACTOR_DISTANCE);
+#else
+	{
+		GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		
+		clsys_init.oamst_main = 1;	//通信アイコンの分
+		clsys_init.oamnum_main = 128-1;
+		clsys_init.tr_cell = 32;	//セルVram転送管理数
+		GFL_CLACT_Init(&clsys_init, HEAPID_BALLOON);
+		
+		game->clunit = GFL_CLACT_UNIT_Create(128+128, HEAPID_BALLOON);
+		GFL_CLACT_UNIT_SetDefaultRend(game->clunit);
+
+		//パレットマネージャ
+		wk->plttslot = PLTTSLOT_Init(HEAPID_BALLOON, 15, 16);	//15=通信アイコン用
+	}
+#endif
 
 	BalloonParticleInit(game);	//パーティクル初期化
 
@@ -927,7 +1251,8 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	MSGMAN_Delete(game->msgman);
 
 	//BGL開放
-	GFL_HEAP_FreeMemory(game->bgl);
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
 
 	//カメラ削除
 	Balloon_CameraExit(game);
@@ -974,11 +1299,11 @@ static void BalloonVBlank(void *work)
 	PaletteFadeTrans(game->pfd);
 	
 	if(game->bst.bg_on_req == TRUE){
-		GF_BGL_VisibleSet(BALLOON_SUBFRAME_BALLOON, VISIBLE_ON);
+		GFL_BG_SetVisible(BALLOON_SUBFRAME_BALLOON, VISIBLE_ON);
 		game->bst.bg_on_req = 0;
 	}
 	else if(game->bst.bg_off_req == TRUE){
-		GF_BGL_VisibleSet(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
+		GFL_BG_SetVisible(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
 		game->bst.bg_off_req = 0;
 	}
 	
@@ -1158,10 +1483,17 @@ static void BalloonUpdate(TCB_PTR tcb, void *work)
 		// 描画
 		NNS_G3dGePushMtx();
 		{
+		#if WB_FIX
 			//台座
 			D3DOBJ_Draw( &game->daiza.obj );
 			//パイプ＆空気描画
 			D3DOBJ_Draw( &game->pipe_air.pipe_obj );
+		#else
+			//台座
+			GFL_G3D_DRAW_DrawObject(game->daiza.g3dobj, &game->daiza.status);
+			//パイプ＆空気描画
+			GFL_G3D_DRAW_DrawObject(game->pipe_air.g3dobj, &game->pipe_air.status);
+		#endif
 			Air3D_Draw(game);
 		}
 		NNS_G3dGePopMtx(1);
@@ -1204,17 +1536,15 @@ static void BalloonUpdate(TCB_PTR tcb, void *work)
 //--------------------------------------------------------------
 /**
  * @brief   Vramバンク設定を行う
- *
- * @param   bgl		BGLデータへのポインタ
  */
 //--------------------------------------------------------------
-static void BalloonSys_VramBankSet(GF_BGL_INI *bgl)
+static void BalloonSys_VramBankSet(void)
 {
 	GF_Disp_GX_VisibleControlInit();
 
 	//VRAM設定
 	{
-		GF_BGL_DISPVRAM vramSetTable = {
+		GFL_DISP_VRAM vramSetTable = {
 			GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
 			GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 			GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -1225,6 +1555,8 @@ static void BalloonSys_VramBankSet(GF_BGL_INI *bgl)
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 			GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
+			GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 		};
 		GF_Disp_SetBank( &vramSetTable );	//H32が余り。サブBG面の拡張パレットとして当てられる
 
@@ -1237,47 +1569,47 @@ static void BalloonSys_VramBankSet(GF_BGL_INI *bgl)
 
 	// BG SYSTEM
 	{
-		GF_BGL_SYS_HEADER BGsys_data = {
+		GFL_BG_SYS_HEADER BGsys_data = {
 			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_1, GX_BG0_AS_3D,
 		};
-		GF_BGL_InitBG( &BGsys_data );
+		GFL_BG_SetBGMode( &BGsys_data );
 	}
 
 	//メイン画面フレーム設定
 	{
-		GF_BGL_BGCNT_HEADER TextBgCntDat[] = {
+		GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
 			///<FRAME1_M	ウィンドウ
 			{
 				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
 //				0, 0, 0x0800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
-				BALLOON_BGPRI_WINDOW, 0, 0, FALSE
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x8000,
+				GX_BG_EXTPLTT_01, BALLOON_BGPRI_WINDOW, 0, 0, FALSE
 			},
 			///<FRAME2_M	エフェクト
 			{
 				0, 0, 0x2000, 0, GF_BGL_SCRSIZ_512x512, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, GX_BG_EXTPLTT_01,
-				BALLOON_BGPRI_EFFECT, 0, 0, FALSE
+				GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000, 0x4000,
+				GX_BG_EXTPLTT_01, BALLOON_BGPRI_EFFECT, 0, 0, FALSE
 			},
 			///<FRAME3_M	背景
 			{
 				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
-				BALLOON_BGPRI_BACKGROUND, 0, 0, FALSE
+				GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x10000, 0x8000,
+				GX_BG_EXTPLTT_01, BALLOON_BGPRI_BACKGROUND, 0, 0, FALSE
 			},
 		};
-		GF_BGL_BGControlSet(bgl, BALLOON_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, BALLOON_FRAME_WIN );
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_WIN, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_WIN, GF_BGL_SCROLL_Y_SET, 0);
-		GF_BGL_BGControlSet(bgl, BALLOON_FRAME_EFF, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, BALLOON_FRAME_EFF );
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_EFF, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_EFF, GF_BGL_SCROLL_Y_SET, 0);
-		GF_BGL_BGControlSet(bgl, BALLOON_FRAME_BACK, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
-		GF_BGL_ScrClear(bgl, BALLOON_FRAME_BACK );
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_BACK, GF_BGL_SCROLL_X_SET, 0);
-		GF_BGL_ScrollSet(bgl, BALLOON_FRAME_BACK, GF_BGL_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(BALLOON_FRAME_WIN, &TextBgCntDat[0], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen(BALLOON_FRAME_WIN );
+		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(BALLOON_FRAME_WIN, GFL_BG_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(BALLOON_FRAME_EFF, &TextBgCntDat[1], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen(BALLOON_FRAME_EFF );
+		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(BALLOON_FRAME_EFF, GFL_BG_SCROLL_Y_SET, 0);
+		GFL_BG_SetBGControl(BALLOON_FRAME_BACK, &TextBgCntDat[2], GF_BGL_MODE_TEXT );
+		GFL_BG_ClearScreen(BALLOON_FRAME_BACK );
+		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_X_SET, 0);
+		GFL_BG_SetScroll(BALLOON_FRAME_BACK, GFL_BG_SCROLL_Y_SET, 0);
 
 		G2_SetBG0Priority(BALLOON_3DBG_PRIORITY);
 		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
@@ -1286,43 +1618,43 @@ static void BalloonSys_VramBankSet(GF_BGL_INI *bgl)
 	//サブ画面フレーム設定
 	{
 		int i;
-		static const GF_BGL_BGCNT_HEADER SubBgCntDat[] = {
+		static const GFL_BG_BGCNT_HEADER SubBgCntDat[] = {
 			{//GF_BGL_FRAME0_S	ウィンドウ
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, GX_BG_EXTPLTT_01,
-				BALLOON_SUBBG_WIN_PRI, 0, 0, FALSE
+				GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x08000, 0x8000,
+				GX_BG_EXTPLTT_01, BALLOON_SUBBG_WIN_PRI, 0, 0, FALSE
 			},
 			{//GF_BGL_FRAME1_S	パイプ
 				0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
-				BALLOON_SUBBG_PIPE_PRI, 0, 0, FALSE
+				GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000, 0x4000,
+				GX_BG_EXTPLTT_01, BALLOON_SUBBG_PIPE_PRI, 0, 0, FALSE
 			},
 			{//GF_BGL_FRAME2_S	背景
 				0, 0, 0x1000, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x14000, GX_BG_EXTPLTT_01,
-				BALLOON_SUBBG_BACK_PRI, 0, 0, FALSE
+				GX_BG_SCRBASE_0x4000, GX_BG_CHARBASE_0x14000, 0x4000,
+				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BACK_PRI, 0, 0, FALSE
 			},
 			{//GF_BGL_FRAME3_S	風船
 				0, 0, 0x400, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-				GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000, GX_BG_EXTPLTT_01,
-				BALLOON_SUBBG_BALLOON_PRI, 0, 0, FALSE
+				GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x18000, 0x8000,
+				GX_BG_EXTPLTT_01, BALLOON_SUBBG_BALLOON_PRI, 0, 0, FALSE
 			},
 		};
 		
 		for(i = 0; i < NELEMS(SubBgCntDat); i++){
 			if(i < 3){
-				GF_BGL_BGControlSet(bgl, GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_TEXT);
+				GFL_BG_SetBGControl(GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_TEXT);
 			}
 			else{
-				GF_BGL_BGControlSet(bgl, GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_AFFINE);
+				GFL_BG_SetBGControl(GF_BGL_FRAME0_S + i, &SubBgCntDat[i], GF_BGL_MODE_AFFINE);
 			}
 			GF_BGL_ClearCharSet( GF_BGL_FRAME0_S + i, 0x20, 0, HEAPID_BALLOON);
-			GF_BGL_ScrClear(bgl, GF_BGL_FRAME0_S + i);
-			GF_BGL_ScrollSet(bgl, GF_BGL_FRAME0_S + i, GF_BGL_SCROLL_X_SET, 0);
-			GF_BGL_ScrollSet(bgl, GF_BGL_FRAME0_S + i, GF_BGL_SCROLL_Y_SET, 0);
+			GFL_BG_ClearScreen(GF_BGL_FRAME0_S + i);
+			GFL_BG_SetScroll(GF_BGL_FRAME0_S + i, GFL_BG_SCROLL_X_SET, 0);
+			GFL_BG_SetScroll(GF_BGL_FRAME0_S + i, GFL_BG_SCROLL_Y_SET, 0);
 		}
 		//最初は風船BG非表示
-		GF_BGL_VisibleSet(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
+		GFL_BG_SetVisible(BALLOON_SUBFRAME_BALLOON, VISIBLE_OFF);
 	}
 }
 
@@ -1875,10 +2207,22 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
 	DAIZA_WORK *daiza = &game->daiza;
 	int entry_pos;
 	void *anm_resource = NULL;
+#if (WB_FIX == 0)
+	u16 objIdx, objIdx_pipe;
+	const u32 AirObjIndexTbl[] = {
+		G3DOBJ_BALL1R_BMD,
+		G3DOBJ_BALL1B_BMD,
+		G3DOBJ_BALL1Y_BMD,
+		G3DOBJ_BALL1G_BMD,
+	};
 	
+	GF_ASSERT(NELEMS(AirObjIndexTbl) == PIPE_AIR_AIR_MAX);
+#endif
+
 	entry_pos = Balloon_NetID_to_EntryNo(game, GFL_NET_SystemGetCurrentID());
 
 	
+#if WB_FIX
 	//-- パイプ --//
     //モデルﾃﾞｰﾀ読み込み
 	D3DOBJ_MdlLoadH(&pa->pipe_mdl, hdl, PlayerPosGraphicID[entry_pos].pipe_mdl_id, HEAPID_BALLOON);
@@ -1927,6 +2271,39 @@ static void BalloonDefault3DSet(BALLOON_GAME_WORK *game, ARCHANDLE *hdl)
     D3DOBJ_SetMatrix( &daiza->obj, DAIZA_X, DAIZA_Y, DAIZA_Z);
     D3DOBJ_SetScale(&daiza->obj, DAIZA_SCALE, DAIZA_SCALE, DAIZA_SCALE);
     D3DOBJ_SetDraw( &daiza->obj, TRUE );
+#else
+	game->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( game->g3Dutil, &g3Dutil_setup );
+	{//パイプ
+		GFL_G3D_UTIL_SETUP pipe_setup;
+		
+		pipe_setup = g3Dutil_Pipe_setup;
+		pipe_setup.resTbl = &g3Dutil_Pipe_resTbl[entry_pos];
+		pipe_setup.objTbl = &g3Dutil_Pipe_objTbl[entry_pos];
+		game->g3DutilUnitIdx_Pipe = GFL_G3D_UTIL_AddUnit( game->g3Dutil, &pipe_setup );
+	}
+
+	objIdx = GFL_G3D_UTIL_GetUnitObjIdx(game->g3Dutil, game->g3DutilUnitIdx );
+	objIdx_pipe = GFL_G3D_UTIL_GetUnitObjIdx(game->g3Dutil, game->g3DutilUnitIdx_Pipe );
+
+	//空気それぞれのOBJINDEXを取得
+	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
+		for(s = 0; s < PIPE_3D_AIR_TYPE_MAX; s++){
+			pa->air[i][s].g3dobj 
+				= GFL_G3D_UTIL_GetObjHandle(game->g3Dutil, objIdx + AirObjIndexTbl[i] + s);
+		}
+	}
+
+	//-- パイプ --//
+	pa->g3dobj = GFL_G3D_UTIL_GetObjHandle(game->g3Dutil, objIdx_pipe + 0);
+	VEC_Set(&pa->status.trans, PIPE_AIR_X, PIPE_AIR_Y, PIPE_AIR_Z);
+	VEC_Set(&pa->status.scale, PIPE_AIR_SCALE, PIPE_AIR_SCALE, PIPE_AIR_SCALE);
+	MTX_Identity33(&pa->status.rotate);
+
+	//-- 台座 --//
+	VEC_Set(&daiza->status.trans, DAIZA_X, DAIZA_Y, DAIZA_Z);
+	VEC_Set(&daiza->status.scale, DAIZA_SCALE, DAIZA_SCALE, DAIZA_SCALE);
+	MTX_Identity33(&daiza->status.rotate);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1941,6 +2318,7 @@ static void BalloonDefault3DDel(BALLOON_GAME_WORK *game)
 	int i, s;
 	PIPE_AIR_WORK *pa = &game->pipe_air;
 
+#if WB_FIX
     D3DOBJ_MdlDelete( &pa->pipe_mdl );
     for(i = 0; i < PIPE_3D_AIR_TYPE_MAX; i++){
 		D3DOBJ_MdlDelete( &pa->air_mdl[i] );
@@ -1951,6 +2329,10 @@ static void BalloonDefault3DDel(BALLOON_GAME_WORK *game)
 		}
 	}
     D3DOBJ_MdlDelete( &game->daiza.mdl );
+#else
+	GFL_G3D_UTIL_DelUnit( game->g3Dutil, game->g3DutilUnitIdx );
+	GFL_G3D_UTIL_Delete( game->g3Dutil );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1966,8 +2348,13 @@ static void BalloonDefault3DDel(BALLOON_GAME_WORK *game)
 BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air)
 {
 	PIPE_AIR_WORK *pa = &game->pipe_air;
-	D3DOBJ_MDL *mdl;
 	int i, air_size;
+#if WB_FIX
+	D3DOBJ_MDL *mdl;
+#else
+	u16 objIdx = GFL_G3D_UTIL_GetUnitObjIdx(game->g3Dutil, game->g3DutilUnitIdx );
+	int anmframe = 0;
+#endif
 	
 	if(air > SONANS_POMP_MAX_AIR){	//赤くなっている時 or レア太い
 		air_size = PIPE_3D_AIR_TYPE_SPECIAL;
@@ -1982,11 +2369,13 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air)
 		air_size = PIPE_3D_AIR_TYPE_SMALL;
 	}
 	
-	mdl = &pa->air_mdl[air_size];
 #ifdef OSP_BALLOON_ON
 	OS_TPrintf("空気サイズ＝%d\n", air_size);
 #endif
 	
+#if WB_FIX
+	mdl = &pa->air_mdl[air_size];
+
 	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
 		if(pa->air[i][air_size].occ == FALSE){
 			//レンダーオブジェクトに登録
@@ -2005,7 +2394,30 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air)
 			return TRUE;
 		}
 	}
-	
+#else
+	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
+		if(pa->air[i][air_size].occ == FALSE){
+			//レンダーオブジェクト初期化
+			if(pa->air[i][air_size].enable_anm_index != 0xffff){
+				GFL_G3D_OBJECT_DisableAnime(g3dobj, pa->air[i][air_size].enable_anm_index);
+			}
+			//座標設定
+			VEC_Set(&pa->air[i][air_size].status.trans, PIPE_AIR_X, PIPE_AIR_Y, PIPE_AIR_Z);
+			VEC_Set(&pa->air[i][air_size].status.scale, 
+				PIPE_AIR_SCALE, PIPE_AIR_SCALE, PIPE_AIR_SCALE);
+			MTX_Identity(&pa->air[i][air_size].status.rotate);
+			//アニメ関連付け
+			GFL_G3D_OBJECT_SetAnimeFrame(g3dobj, air_size, &anmframe);
+			GFL_G3D_OBJECT_EnableAnime(g3dobj, air_size);
+			
+			pa->air[i][air_size].enable_anm_index = air_size;
+			pa->air[i][air_size].occ = TRUE;
+			Snd_SePlay(SE_BALLOON_POMP_AIR);
+			return TRUE;
+		}
+	}
+#endif
+
 	//GF_ASSERT(0);	//レンダーオブジェクトに空きがない
 #ifdef OSP_BALLOON_ON
 	OS_TPrintf("空気3Dのレンダーオブジェクトに空きがありません\n");
@@ -2027,8 +2439,16 @@ void Air3D_Delete(BALLOON_GAME_PTR game, int air_no, int air_size)
 	PIPE_AIR_WORK *pa = &game->pipe_air;
 	
 	//アニメの関連付けを切る
+#if WB_FIX
 	D3DOBJ_DelAnm(&pa->air[air_no][air_size].obj, &pa->air[air_no][air_size].anm);
-	
+#else
+	u16 objIdx = GFL_G3D_UTIL_GetUnitObjIdx(game->g3Dutil, game->g3DutilUnitIdx );
+
+	GFL_G3D_OBJECT_DisableAnime(pa->air[air_no][air_size].g3dobj,
+		pa->air[air_no][air_size].enable_anm_index);
+	pa->air[air_no][air_size].enable_anm_index = 0xffff;
+#endif
+
 	pa->air[air_no][air_size].occ = FALSE;
 }
 
@@ -2046,14 +2466,21 @@ void Air3D_Update(BALLOON_GAME_PTR game)
 	
 	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
 		for(s = 0; s < PIPE_3D_AIR_TYPE_MAX; s++){
+		#if WB_FIX
 			if(pa->air[i][s].occ == TRUE){
 				if(D3DOBJ_AnmNoLoop(&pa->air[i][s].anm, FX32_ONE) == TRUE){
+		#else
+			if(pa->air[i][s].occ == TRUE && pa->air[i][s].enable_anm_index != 0xffff){
+				if(GFL_G3D_OBJECT_LoopAnimeFrame(
+					pa->air[i][s].g3dobj, &pa->air[i][s].enable_anm_index, FX32_ONE) == FALSE){
+		#endif
 					Air3D_Delete(game, i, s);
 				}
 			}
 		}
 	}
 }
+		( GFL_G3D_OBJ* g3dobj, const u16 anmIdx, const fx32 count ) 
 
 //--------------------------------------------------------------
 /**
@@ -2070,7 +2497,11 @@ void Air3D_Draw(BALLOON_GAME_PTR game)
 	for(i = 0; i < PIPE_AIR_AIR_MAX; i++){
 		for(s = 0; s < PIPE_3D_AIR_TYPE_MAX; s++){
 			if(pa->air[i][s].occ == TRUE){
+			#if WB_FIX
 				D3DOBJ_Draw( &pa->air[i][s].obj );
+			#else
+				GFL_G3D_DRAW_DrawObject(pa->air[i][s].g3dobj, &pa->air[i][s].status);
+			#endif
 			}
 		}
 	}

@@ -851,7 +851,7 @@ static const GXRgb sc_WFLBY_ROOM_EDGECOLOR[8] = {
     GX_RGB(4, 4, 4)
 };
 // バンク設定
-static const GF_BGL_DISPVRAM sc_WFLBY_ROOM_BANK = {
+static const GFL_DISP_VRAM sc_WFLBY_ROOM_BANK = {
 //	GX_VRAM_BG_32_FG,				// メイン2DエンジンのBG
 	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
@@ -864,10 +864,12 @@ static const GF_BGL_DISPVRAM sc_WFLBY_ROOM_BANK = {
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_01_AC,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_0123_E			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_64K,		// サブOBJマッピングモード
 };
 
 // BG設定
-static const GF_BGL_SYS_HEADER sc_BGINIT = {
+static const GFL_BG_SYS_HEADER sc_BGINIT = {
 	GX_DISPMODE_GRAPHICS,
 	GX_BGMODE_0,
 	GX_BGMODE_0,
@@ -881,28 +883,28 @@ static const u32 sc_WFLBY_ROOM_BGCNT_FRM[ WFLBY_ROOM_BGCNT_NUM ] = {
 	GF_BGL_FRAME1_S,
 	GF_BGL_FRAME2_S,
 };
-static const GF_BGL_BGCNT_HEADER sc_WFLBY_ROOM_BGCNT_DATA[ WFLBY_ROOM_BGCNT_NUM ] = {
+static const GFL_BG_BGCNT_HEADER sc_WFLBY_ROOM_BGCNT_DATA[ WFLBY_ROOM_BGCNT_NUM ] = {
 	// メイン画面
 	{	// GF_BGL_FRAME1_M
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x7800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 
 	// サブ画面
 	{	// GF_BGL_FRAME0_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
 	{	// GF_BGL_FRAME1_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
 	{	// GF_BGL_FRAME2_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x6800, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 };
@@ -2915,16 +2917,17 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 	{
 		int i;
 
-		GF_BGL_InitBG(&sc_BGINIT);
+		GFL_BG_SetBGMode(&sc_BGINIT);
 
-		p_sys->p_bgl = GF_BGL_BglIniAlloc( heapID );
+		GFL_BG_Init( heapID );
+		GFL_BMPWIN_Init(heapID);
 
 		for( i=0; i<WFLBY_ROOM_BGCNT_NUM; i++ ){
-			GF_BGL_BGControlSet( p_sys->p_bgl, 
+			GFL_BG_SetBGControl( 
 					sc_WFLBY_ROOM_BGCNT_FRM[i], &sc_WFLBY_ROOM_BGCNT_DATA[i],
 					GF_BGL_MODE_TEXT );
 			GF_BGL_ClearCharSet( sc_WFLBY_ROOM_BGCNT_FRM[i], 32, 0, heapID);
-			GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[i] );
+			GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[i] );
 		}
 	}
 
@@ -3056,7 +3059,8 @@ static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 		}
 
 		// BGL破棄
-		GFL_HEAP_FreeMemory( p_sys->p_bgl );
+		GFL_BG_Exit();
+		GFL_BMPWIN_Exit();
 	}
 
 	// OAMの破棄
@@ -5614,9 +5618,9 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_Start( WFLBY_UNDER_WIN* p_ugwk, WFLBY_ROO
 	}
 
 	// 描画スクリーンクリア
-	GF_BGL_ScrClearCodeVReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK], 0 );
-	GF_BGL_ScrClearCodeVReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR], 0 );
-	GF_BGL_ScrClearCodeVReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG], 0 );
+	GF_BGL_ScrClearCodeVReq( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK], 0 );
+	GF_BGL_ScrClearCodeVReq( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR], 0 );
+	GF_BGL_ScrClearCodeVReq( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG], 0 );
 	WFLBY_ROOM_UNDERWIN_TrCard_WinClear( p_wk );
 	
 	// スクリーン転送
@@ -5923,9 +5927,9 @@ static void WFLBY_ROOM_UNDERWIN_TrCard_End( WFLBY_TR_CARD* p_wk, WFLBY_ROOM_TALK
 	WFLBY_ROOM_UNDERWIN_TrCard_TrView_Exit( p_wk, p_sys );
 	
 	// 描画スクリーンクリア
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK] );
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG] );
 }
 
 //----------------------------------------------------------------------------
@@ -6837,13 +6841,13 @@ static void WFLBY_ROOM_UNDERWIN_Button_StartFloat( WFLBY_GADGET_BTTN* p_wk, WFLB
 static void WFLBY_ROOM_UNDERWIN_Button_End( WFLBY_GADGET_BTTN* p_wk, WFLBY_GRAPHICCONT* p_sys )
 {
 	// スクリーンクリア
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK] );
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
-	GF_BGL_ScrClear( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BACK] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN_TR] );
+	GFL_BG_ClearScreen( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG] );
 
 	// スクロール座標設定
-	GF_BGL_ScrollSet( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
-			GF_BGL_SCROLL_Y_SET, 0 );
+	GFL_BG_SetScroll( sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
+			GFL_BG_SCROLL_Y_SET, 0 );
 }
 
 
@@ -6895,7 +6899,7 @@ static void WFLBY_ROOM_UNDERWIN_Button_DrawButton( WFLBY_GADGET_BTTN* p_wk, WFLB
 	// idxによって。sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG]面の
 	// Y座標を調整
 	GF_BGL_ScrollReq( p_sys->p_bgl, sc_WFLBY_ROOM_BGCNT_FRM[WFLBY_ROOM_BGCNT_SUB_BTTN2_MSG],
-			GF_BGL_SCROLL_Y_SET, sc_BUTTON_Y[idx] );
+			GFL_BG_SCROLL_Y_SET, sc_BUTTON_Y[idx] );
 }
 
 //----------------------------------------------------------------------------

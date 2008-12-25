@@ -90,7 +90,7 @@ static const CHAR_MANAGER_MAKE sc_NEWSDRAW_CHARMAN_INIT = {
 //-------------------------------------
 ///	BANK設定
 //=====================================
-static const GF_BGL_DISPVRAM sc_NEWSDRAW_BANK = {
+static const GFL_DISP_VRAM sc_NEWSDRAW_BANK = {
 	GX_VRAM_BG_256_AB,				// メイン2DエンジンのBG
 	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
@@ -101,12 +101,14 @@ static const GF_BGL_DISPVRAM sc_NEWSDRAW_BANK = {
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 };
 
 //-------------------------------------
 ///	BG設定
 //=====================================
-static const GF_BGL_SYS_HEADER sc_BGINIT = {
+static const GFL_BG_SYS_HEADER sc_BGINIT = {
 	GX_DISPMODE_GRAPHICS,
 	GX_BGMODE_0,
 	GX_BGMODE_0,
@@ -125,32 +127,32 @@ static const u32 sc_NEWSDRAW_BGCNT_FRM[ NEWSDRAW_BGCNT_NUM ] = {
 	GF_BGL_FRAME3_M,
 	GF_BGL_FRAME0_S,
 };
-static const GF_BGL_BGCNT_HEADER sc_NEWSDRAW_BGCNT_DATA[ NEWSDRAW_BGCNT_NUM ] = {
+static const GFL_BG_BGCNT_HEADER sc_NEWSDRAW_BGCNT_DATA[ NEWSDRAW_BGCNT_NUM ] = {
 	{	// GF_BGL_FRAME0_M	メッセージ面
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0xd00, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 	{	// GF_BGL_FRAME1_M	フレーム面
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		1, 0, 0, FALSE
 	},
 	{	// GF_BGL_FRAME2_M	背景
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		3, 0, 0, FALSE
 	},
 	{	// GF_BGL_FRAME3_M	いろいろデータ表示
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x10000, 0x8000, GX_BG_EXTPLTT_01,
 		2, 0, 0, FALSE
 	},
 	
 	// サブ
 	{	// GF_BGL_FRAME0_S
 		0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
+		GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
 		0, 0, 0, FALSE
 	},
 };
@@ -1023,10 +1025,11 @@ static void NEWSDRAW_DrawSysVBlank( NEWSDRAW_DRAWSYS* p_wk )
 static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 {
 	// BG設定
-	GF_BGL_InitBG(&sc_BGINIT);
+	GFL_BG_SetBGMode(&sc_BGINIT);
 	
 	// BGL作成
-	p_wk->p_bgl = GF_BGL_BglIniAlloc( heapID );
+	GFL_BG_Init( heapID );
+	GFL_BMPWIN_Init(heapID);
 
 	// メインとサブを切り替える
 	sys.disp3DSW = DISP_3D_TO_MAIN;
@@ -1038,11 +1041,11 @@ static void NEWSDRAW_DrawSysBgInit( NEWSDRAW_DRAWSYS* p_wk, u32 heapID )
 		int i;
 
 		for( i=0; i<NEWSDRAW_BGCNT_NUM; i++ ){
-			GF_BGL_BGControlSet( p_wk->p_bgl, 
+			GFL_BG_SetBGControl( 
 					sc_NEWSDRAW_BGCNT_FRM[i], &sc_NEWSDRAW_BGCNT_DATA[i],
 					GF_BGL_MODE_TEXT );
 			GF_BGL_ClearCharSet( sc_NEWSDRAW_BGCNT_FRM[i], 32, 0, heapID);
-			GF_BGL_ScrClear( p_wk->p_bgl, sc_NEWSDRAW_BGCNT_FRM[i] );
+			GFL_BG_ClearScreen( sc_NEWSDRAW_BGCNT_FRM[i] );
 		}
 	}
 
@@ -1103,7 +1106,8 @@ static void NEWSDRAW_DrawSysBgExit( NEWSDRAW_DRAWSYS* p_wk )
 	}
 	
 	// BGL破棄
-	GFL_HEAP_FreeMemory( p_wk->p_bgl );
+	GFL_BG_Exit();
+	GFL_BMPWIN_Exit();
 
 	// メインとサブを元に戻す
 	sys.disp3DSW = DISP_3D_TO_MAIN;

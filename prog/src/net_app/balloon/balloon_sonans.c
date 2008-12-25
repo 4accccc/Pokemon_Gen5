@@ -189,7 +189,7 @@ typedef struct _SONANS_SYS{
 	int aim_hit_y;
 	int aim_hit_y_zure;				///<照準の中心からいくつずれてタッチしたかを保持(Y座標)
 	fx32 aim_hit_center_y_fx;
-	CATS_ACT_PTR aim_cap;			///<照準アクターへのポインタ
+	GFL_CLWK aim_cap;			///<照準アクターへのポインタ
 	
 	int push_mode;
 	int backup_tp_y;
@@ -352,9 +352,9 @@ void DEMO_Set3DDefaultShininessTable();
 
 static void Aim_ResourceLoad(BALLOON_GAME_PTR game);
 static void Aim_ResourceFree(BALLOON_GAME_PTR game);
-static CATS_ACT_PTR Aim_ActorCreate(BALLOON_GAME_PTR game);
-static void Aim_Update(SONANS_SYS_PTR sns, CATS_ACT_PTR cap);
-static void Aim_ActorDelete(CATS_ACT_PTR cap);
+static GFL_CLWK Aim_ActorCreate(BALLOON_GAME_PTR game);
+static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap);
+static void Aim_ActorDelete(GFL_CLWK cap);
 
 
 //==============================================================================
@@ -1707,9 +1707,9 @@ static void Aim_ResourceFree(BALLOON_GAME_PTR game)
  * @retval  生成した照準アクターへのポインタ
  */
 //--------------------------------------------------------------
-static CATS_ACT_PTR Aim_ActorCreate(BALLOON_GAME_PTR game)
+static GFL_CLWK Aim_ActorCreate(BALLOON_GAME_PTR game)
 {
-	CATS_ACT_PTR cap;
+	GFL_CLWK cap;
 	TCATS_OBJECT_ADD_PARAM_S act_head;
 	
 	//-- アクター生成 --//
@@ -1731,7 +1731,7 @@ static CATS_ACT_PTR Aim_ActorCreate(BALLOON_GAME_PTR game)
  * @param   anmseq	アニメシーケンス番号
  */
 //--------------------------------------------------------------
-static void Aim_Update(SONANS_SYS_PTR sns, CATS_ACT_PTR cap)
+static void Aim_Update(SONANS_SYS_PTR sns, GFL_CLWK cap)
 {
 	int anmseq;
 	
@@ -1759,7 +1759,7 @@ static void Aim_Update(SONANS_SYS_PTR sns, CATS_ACT_PTR cap)
  * @param   cap		照準アクターへのポインタ
  */
 //--------------------------------------------------------------
-static void Aim_ActorDelete(CATS_ACT_PTR cap)
+static void Aim_ActorDelete(GFL_CLWK cap)
 {
 	CATS_ActorPointerDelete_S(cap);
 }

@@ -5644,7 +5644,7 @@ static BOOL BCT_CLIENT_MDLSCR_CheckInNum( const BCT_CLIENT_MIDDLE_SCORE* cp_wk, 
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BankSet( void )
 {
-    GF_BGL_DISPVRAM vramSetTable = {
+    GFL_DISP_VRAM vramSetTable = {
         GX_VRAM_BG_32_FG,               // メイン2DエンジンのBG
         GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
         GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
@@ -5655,6 +5655,8 @@ static void BCT_CLIENT_BankSet( void )
         GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
         GX_VRAM_TEX_0_A,                // テクスチャイメージスロット
         GX_VRAM_TEXPLTT_0123_E          // テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_128K,	// サブOBJマッピングモード
     };
     GF_Disp_SetBank( &vramSetTable );
 }
@@ -5968,86 +5970,87 @@ static void BCT_CLIENT_GraphicDrawCore( const BCT_CLIENT* cp_wk, BCT_CLIENT_GRAP
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_BgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 {
-    p_wk->p_bgl = GF_BGL_BglIniAlloc( heapID );
+    GFL_BG_Init( heapID );
+    GFL_BMPWIN_Init(heapID);
 
     // BG SYSTEM
     {
-        GF_BGL_SYS_HEADER BGsys_data = {
+        GFL_BG_SYS_HEADER BGsys_data = {
             GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
         };
-        GF_BGL_InitBG( &BGsys_data );
+        GFL_BG_SetBGMode( &BGsys_data );
     }
 
     // メイン画面1
     {   // ウィンドウ
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-            0, 0, 0, FALSE
+            GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x00000, 0x4000,
+            GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
             };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME1_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME1_M, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME1_M );
+        GFL_BG_ClearScreen( GF_BGL_FRAME1_M );
     }
 
     // メイン画面2
     {   // ウィンドウ
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, GX_BG_EXTPLTT_01,
-            1, 0, 0, FALSE
+            GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x04000, 0x3000,
+            GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
             };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME2_M, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME2_M, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME2_M );
+        GFL_BG_ClearScreen( GF_BGL_FRAME2_M );
     }
 
     // サブ画面0
     {
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-            0, 0, 0, FALSE
+            GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
+            GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
         };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME0_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME0_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME0_S, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME0_S );
+        GFL_BG_ClearScreen( GF_BGL_FRAME0_S );
     }
 
     // サブ画面1   
     {
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-            1, 0, 0, FALSE
+            GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000,
+            GX_BG_EXTPLTT_01,1, 0, 0, FALSE
         };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME1_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME1_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME1_S, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME1_S );
+        GFL_BG_ClearScreen( GF_BGL_FRAME1_S );
     }
 
 	// サブ画面2	
 	{
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-            2, 0, 0, FALSE
+            GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
+            GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
         };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME2_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME2_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME2_S, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME2_S );
+        GFL_BG_ClearScreen( GF_BGL_FRAME2_S );
 	}
 
 	// サブ画面3	
 	{
-        GF_BGL_BGCNT_HEADER TextBgCntDat = {
+        GFL_BG_BGCNT_HEADER TextBgCntDat = {
             0, 0, 0x800, 0, GF_BGL_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-            GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, GX_BG_EXTPLTT_01,
-            3, 0, 0, FALSE
+            GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
+            GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
         };
-        GF_BGL_BGControlSet( p_wk->p_bgl, GF_BGL_FRAME3_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
+        GFL_BG_SetBGControl( GF_BGL_FRAME3_S, &TextBgCntDat, GF_BGL_MODE_TEXT );
         GF_BGL_ClearCharSet( GF_BGL_FRAME3_S, 32, 0, heapID);
-        GF_BGL_ScrClear( p_wk->p_bgl, GF_BGL_FRAME3_S );
+        GFL_BG_ClearScreen( GF_BGL_FRAME3_S );
 	}
 
 
@@ -6089,7 +6092,8 @@ static void BCT_CLIENT_BgExit( BCT_CLIENT_GRAPHIC* p_wk )
     GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME2_S );
     GF_BGL_BGControlExit( p_wk->p_bgl, GF_BGL_FRAME3_S );
 
-    GFL_HEAP_FreeMemory( p_wk->p_bgl );
+    GFL_BG_Exit();
+    GFL_BMPWIN_Exit();
 }
 
 //----------------------------------------------------------------------------
