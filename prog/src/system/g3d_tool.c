@@ -49,14 +49,14 @@ static DEBUG_GFL_G3D_INFO DebugVManConfigValue;
 //=============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static inline u32 DEBUG_GFL_G3D_GetVManTextureSize(void)
+u32 DEBUG_GFL_G3D_GetVManTextureSize(void)
 {
 	return DebugVManConfigValue.texsize * TEX_SLOTSIZ;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static inline u32 DEBUG_GFL_G3D_GetVManPaletteSize(void)
+u32 DEBUG_GFL_G3D_GetVManPaletteSize(void)
 {
 	return DebugVManConfigValue.pltsize * PLT_SLOTSIZ;
 }
