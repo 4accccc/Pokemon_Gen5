@@ -16,6 +16,6 @@ enum {
 	AREA_ID_DUNGEON02        =  13,
 	AREA_ID_DUNGEON03        =  14,
 	AREA_ID_DUNGEON04        =  15,
-	AREA_ID_DUNGEON05        =  16,
+	AREA_ID_LOOPBRIDGE       =  16,
 	AREA_ID_MAX
 };

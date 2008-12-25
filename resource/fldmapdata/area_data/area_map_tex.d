@@ -83,9 +83,8 @@ nsbtx_files/tex_set_dun04.nsbtx: src_imd_files/dun04_tex_set.imd
 	@$(COPY) src_imd_files/dun04_tex_set.imd marged_imd_files/tex_set_dun04.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_dun04.imd -o nsbtx_files/tex_set_dun04.nsbtx -etex
 
-nsbtx_files/tex_set_dun05.nsbtx: src_imd_files/dun05_tex_set.imd src_imd_files/tex_winter.imd src_imd_files/tex_griddmy.imd
-	@echo src_imd_files/dun05_tex_set.imd + src_imd_files/tex_winter.imd Å® nsbtx_files/tex_set_dun05.nsbtx
-	@-rm marged_imd_files/tex_set_dun05.imd
-	@-$(TEX_MAG) -q -o marged_imd_files/tex_set_dun05.imd src_imd_files/dun05_tex_set.imd src_imd_files/tex_winter.imd src_imd_files/tex_griddmy.imd
-	@$(G3DCVTR) marged_imd_files/tex_set_dun05.imd -o nsbtx_files/tex_set_dun05.nsbtx -etex
+nsbtx_files/tex_set_loopbridge.nsbtx: src_imd_files/loopbridge.imd
+	@echo src_imd_files/loopbridge.imd Å® nsbtx_files/tex_set_loopbridge.nsbtx
+	@$(COPY) src_imd_files/loopbridge.imd marged_imd_files/tex_set_loopbridge.imd
+	@$(G3DCVTR) marged_imd_files/tex_set_loopbridge.imd -o nsbtx_files/tex_set_loopbridge.nsbtx -etex
 
