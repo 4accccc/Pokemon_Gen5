@@ -70,6 +70,7 @@ struct _MCSS_WORK
 	NNSG2dImagePaletteProxy		mcss_palette_proxy;		//パレットプロキシ
 	VecFx32						pos;					//マルチセルのポジション
 	VecFx32						scale;					//マルチセルのスケール
+	VecFx32						shadow_scale;			//影のスケール
 	u32							mepachi_flag	:1;		//メパチフラグ
 	u32							anm_stop_flag	:1;		//アニメストップフラグ
 	u32							vanish_flag		:1;		//バニッシュフラグ
