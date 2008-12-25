@@ -137,11 +137,11 @@ static	void	TCB_POKE_MCSS_Scale( GFL_TCB *tcb, void *work );
 static	const	VecFx32	poke_pos_table[]={
 	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.0f ) },		//POS_AA
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_BB
-	{ FX_F32_TO_FX32( -3.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
+	{ FX_F32_TO_FX32( -3.5f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   8.5f ) },		//POS_A
 	{ FX_F32_TO_FX32(  6.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  -9.0f ) },		//POS_B
-	{ FX_F32_TO_FX32( -1.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
-	{ FX_F32_TO_FX32(  3.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },		//POS_D
-	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
+	{ FX_F32_TO_FX32( -0.5f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(   9.0f ) },		//POS_C
+	{ FX_F32_TO_FX32(  2.0f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -11.0f ) },		//POS_D
+	{ FX_F32_TO_FX32( -2.5f ),	FX_F32_TO_FX32( 1.2f ), FX_F32_TO_FX32(  10.0f ) },		//POS_E
 	{ FX_F32_TO_FX32(  4.5f ),	FX_F32_TO_FX32( 0.7f ), FX_F32_TO_FX32( -10.0f ) },		//POS_F
 };
 
@@ -152,14 +152,14 @@ static	const	VecFx32	poke_pos_table[]={
 //============================================================================================
 static	const	fx32	poke_scale_table[2][POKE_MCSS_POS_MAX]={
 	{
-		FX_F32_TO_FX32( 0.75f ),	//POS_AA
-		0x1380,						//POS_BB
-		FX_F32_TO_FX32( 0.8f ),		//POS_A
-		0x1300,						//POS_B
-		FX_F32_TO_FX32( 0.8f ),		//POS_C
-		0x1400,						//POS_D
-		FX_F32_TO_FX32( 0.8f ),		//POS_E
-		FX_F32_TO_FX32( 1.4f ),		//POS_F
+		0x08c4,	//POS_AA
+		0x1386,	//POS_BB
+		0x0873,	//POS_A
+		0x1322,	//POS_B
+		0x0831,	//POS_C
+		0x141e,	//POS_D
+		0x1000,	//POS_E
+		0x1000,	//POS_F
 	},
 	{
 		FX32_ONE * 16,
@@ -576,6 +576,13 @@ static	void	POKE_MCSS_SetDefaultScale( POKE_MCSS_WORK *pmw, int position )
 			 FX32_ONE );
 
 	MCSS_SetScale( pmw->mcss[ position ], &scale );
+
+	VEC_Set( &scale, 
+			 poke_scale_table[ 0 ][ position ], 
+			 poke_scale_table[ 0 ][ position ],
+			 FX32_ONE );
+
+	MCSS_SetShadowScale( pmw->mcss[ position ], &scale );
 }
 
 //============================================================================================
