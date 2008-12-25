@@ -498,7 +498,7 @@ typedef struct _BALLOON_GAME_WORK{
 	CATS_RES_PTR		crp;
 #endif
 	GF_BGL_INI *bgl;
-	GF_BGL_BMPWIN win[BALLOON_BMPWIN_MAX];
+	GFL_BMPWIN* win[BALLOON_BMPWIN_MAX];
 	MSGDATA_MANAGER *msgman;		///<メッセージデータマネージャのポインタ
 	WORDSET *wordset;				///<Allocしたメッセージ用単語バッファへのポインタ
 	STRBUF *msg_buf;				///<Allocした文字列バッファへのポインタ

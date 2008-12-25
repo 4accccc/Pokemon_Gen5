@@ -443,8 +443,8 @@ typedef struct {
 	
 	BB_CONTROL		control;					///< コントロール（タッチパネル）
 	
-	GF_BGL_BMPWIN	win;						///< ウィンドウ
-	GF_BGL_BMPWIN	win_name[ BB_PLAYER_NUM ];	///< ウィンドウ
+	GFL_BMPWIN*	win;						///< ウィンドウ
+	GFL_BMPWIN*	win_name[ BB_PLAYER_NUM ];	///< ウィンドウ
 
 	BB_FEVER		fever_sys;					///< シンクロ
 	BB_EFFECT		eff_sys;					///< 個人エフェクト管理

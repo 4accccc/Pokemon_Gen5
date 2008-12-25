@@ -591,8 +591,9 @@ void BB_disp_Manene_OAM_Del( BB_CLIENT* wk )
 void BB_disp_InfoWinAdd( BB_CLIENT* wk )
 {
 	GF_BGL_BmpWinInit( &wk->win );
-	GF_BGL_BmpWinAdd( wk->sys->bgl, &wk->win, GF_BGL_FRAME3_S, 2, 19, 28, 4, 14, BB_CGX_OFS + ( 16 * 3 ) );
-	GF_BGL_BmpWinDataFill( &wk->win, 0xFF );	
+	wk->win = GFL_BMPWIN_Create( GF_BGL_FRAME3_S, 2, 19, 28, 4, 14, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen(wk->win);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );	
 	{
 		MSGDATA_MANAGER* man;
 		STRBUF* str;
@@ -686,7 +687,7 @@ void BR_ColorChange( BB_WORK* wk, int id )
 	}
 }
 
-static int BR_print_x_Get( GF_BGL_BMPWIN* win, STRBUF* str )
+static int BR_print_x_Get( GFL_BMPWIN* win, STRBUF* str )
 {
 	int len = FontProc_GetPrintStrWidth( FONT_SYSTEM, str, 0 );
 	int x	= ( GF_BGL_BmpWinGet_SizeX( win ) * 8 - len ) / 2;
@@ -698,7 +699,6 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 	int i;
 	int no = 0;
 	int ofs = BB_CGX_OFS;
-	GF_BGL_BMPWIN* win;
 	
 	s16 win_dat[][ 3 ][ 4 ] = {
 		{ 
@@ -741,19 +741,19 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 		
 		bVip = MNGM_ENRES_PARAM_GetVipFlag( &bwk->entry_param, i );
 		
-		win = &wk->win_name[ no ];
 		//ms  = CommInfoGetMyStatus( i );
 		ms = MNGM_ENRES_PARAM_GetMystatus( &bwk->entry_param, i );
-		GF_BGL_BmpWinInit( win );
+		GF_BGL_BmpWinInit( wk->win_name[ no ] );
 		
 		x = win_dat[ wk->comm_num - 2 ][ no ][ 0 ];
 		y = win_dat[ wk->comm_num - 2 ][ no ][ 1 ];
 		w = win_dat[ wk->comm_num - 2 ][ no ][ 2 ];
 		h = win_dat[ wk->comm_num - 2 ][ no ][ 3 ];
-		GF_BGL_BmpWinAdd( wk->sys->bgl, win, GF_BGL_FRAME3_S, x, y, w, h, 14, ofs );
+		wk->win_name[ no ] = GFL_BMPWIN_Create( GF_BGL_FRAME3_S, x, y, w, h, 14, GFL_BMP_CHRAREA_GET_B );
+		GFL_BMPWIN_MakeScreen(wk->win_name[no]);
 		ofs += ( w * h );
 
-		GF_BGL_BmpWinDataFill( win, 0xFF );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win_name[ no ]), 0xFF );
 		
 		{
 			STRBUF* str;
@@ -761,20 +761,20 @@ void BB_disp_NameWinAdd( BB_WORK* bwk, BB_CLIENT* wk )
 
 			str	= MyStatus_CreateNameString( ms, HEAPID_BB );
 			
-			px = BR_print_x_Get( win, str );
+			px = BR_print_x_Get( wk->win_name[ no ], str );
 			
-		//	GF_STR_PrintSimple( win, FONT_SYSTEM, str, 0, 0, 0, NULL );
+		//	GF_STR_PrintSimple( wk->win_name[ no ], FONT_SYSTEM, str, 0, 0, 0, NULL );
 			if ( bVip ){
-				GF_STR_PrintExpand( win, FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL_VIP, 0, 0, NULL );
+				GF_STR_PrintExpand( wk->win_name[ no ], FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL_VIP, 0, 0, NULL );
 			}
 			else {
-				GF_STR_PrintExpand( win, FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL, 0, 0, NULL );
+				GF_STR_PrintExpand( wk->win_name[ no ], FONT_SYSTEM, str, px, 0, 0, BB_PRINT_COL, 0, 0, NULL );
 			}
 
 			STRBUF_Delete( str );
 		}
 
-		GF_BGL_BmpWinOn( win );
+		GF_BGL_BmpWinOn( wk->win_name[ no ] );
 		
 		no++;
 	}
@@ -784,7 +784,6 @@ void BB_disp_NameWinDel( BB_CLIENT* wk )
 {
 	int i;
 	int no = 0;
-	GF_BGL_BMPWIN* win;
 	
 	for ( i = 0; i < wk->comm_num; i++ ){
 		

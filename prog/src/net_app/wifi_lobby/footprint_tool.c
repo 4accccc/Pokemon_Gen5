@@ -73,7 +73,7 @@ static const RECT_HIT_TBL InkPaletteTouchData[] = {
  * @param   user_index		サブチャンネルのユーザーID
  */
 //--------------------------------------------------------------
-void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GF_BGL_BMPWIN win[], WFLBY_SYSTEM *wflby_sys, s32 user_id)
+void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id)
 {
 	const WFLBY_USER_PROFILE* wup;
 	MYSTATUS *my_status;
@@ -117,7 +117,7 @@ void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GF_BGL_BM
 	expand_src = STRBUF_Create(expand_len, HEAPID_FOOTPRINT);
 	WORDSET_ExpandStr(wordset, expand_src, message_src);
 
-	GF_BGL_BmpWinDataFill(&win[user_index], 0x00);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win[user_index]), 0x00);
 	if(WFLBY_SYSTEM_GetUserVipFlag(wflby_sys, main_idx) == TRUE){
 		print_color = GF_PRINTCOLOR_MAKE(7,8,0);
 	}
@@ -143,7 +143,7 @@ void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GF_BGL_BM
  * @param   user_index		ユーザーindex
  */
 //--------------------------------------------------------------
-void FootPrintTool_NameErase(GF_BGL_BMPWIN win[], u32 user_index)
+void FootPrintTool_NameErase(GFL_BMPWIN *win[], u32 user_index)
 {
 	if(user_index >= FOOTPRINT_BMPWIN_NAME_MAX){
 		GF_ASSERT(0);

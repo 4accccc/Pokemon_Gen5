@@ -16,7 +16,7 @@
 
 typedef struct {
 	
-	GF_BGL_BMPWIN	win;
+	GFL_BMPWIN*	win;
 	BB_SYS*			sys;
 	int				seq;
 	
@@ -37,16 +37,15 @@ static DEBUG_WORK*  wk = &dwk;
 //--------------------------------------------------------------
 BOOL Debug_GameSetup( BB_WORK* work )
 {
-	GF_BGL_BMPWIN* win = &wk->win;
-		
 	wk->sys = &work->sys;
 	
 	if ( wk->seq == 0 ) {
 		
-		GF_BGL_BmpWinInit( win );
-		GF_BGL_BmpWinAdd( wk->sys->bgl, win, GF_BGL_FRAME3_M, 1, 1, 30, 22, 14, 1 );
-		GF_BGL_BmpWinDataFill( win, 0xFF );
-		GF_BGL_BmpWinOn( win );
+		GF_BGL_BmpWinInit( wk->win );
+		wk->win = GFL_BMPWIN_Create( GF_BGL_FRAME3_M, 1, 1, 30, 22, 14, GFL_BMP_CHRAREA_GET_B );
+		GFL_BMPWIN_MakeScreen(wk->win);
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win), 0xFF );
+		GF_BGL_BmpWinOn( wk->win );
 		
 		GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		
@@ -57,8 +56,8 @@ BOOL Debug_GameSetup( BB_WORK* work )
 		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, wk->sys->bgl, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );	
 		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, wk->sys->bgl, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );
 		
-	    GF_BGL_BmpWinOff( win );
-		GF_BGL_BmpWinDel( win );		
+	    GF_BGL_BmpWinOff( wk->win );
+		GF_BGL_BmpWinDel( wk->win );
 		return TRUE;
 	}
 	

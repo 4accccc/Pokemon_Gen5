@@ -416,7 +416,7 @@ typedef struct {
 ///	アンケート入力画面の初期化
 //=====================================
 typedef struct {
-	GF_BGL_BMPWIN win[ ANKETO_INPUT_BMP_NUM ];
+	GFL_BMPWIN* win[ ANKETO_INPUT_BMP_NUM ];
 	s32 cursor;
 	CLACT_WORK_PTR		p_cursor_act;
 	CLACT_U_RES_OBJ_PTR	p_cursor_res[ANKETO_RESMAN_NUM];
@@ -430,7 +430,7 @@ typedef struct {
 ///	アンケート出力画面の初期化
 //=====================================
 typedef struct {
-	GF_BGL_BMPWIN win[ ANKETO_OUTPUT_BMP_NUM ];
+	GFL_BMPWIN* win[ ANKETO_OUTPUT_BMP_NUM ];
 	u16 seq;
 	u16 ret_seq;
 
@@ -465,7 +465,7 @@ typedef union{
 typedef struct {
 	u32 msgno;
 	s32 msgwait;
-	GF_BGL_BMPWIN win;
+	GFL_BMPWIN* win;
 	STRBUF*			p_str;
 	void*			p_timewait;
 
@@ -1412,8 +1412,11 @@ static void ANKETO_INPUT_Init( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKETO_
 		int i;
 
 		for( i=0; i<ANKETO_INPUT_BMP_NUM; i++ ){
-			GF_BGL_BmpWinAddEx( p_drawsys->p_bgl, &p_wk->win[i], 
-					&sc_ANKETO_INPUT_BMPDAT[i] );
+			p_wk->win[i] = GFL_BMPWIN_Create( sc_ANKETO_INPUT_BMPDAT[i].frm_num,
+				sc_ANKETO_INPUT_BMPDAT[i].pos_x, sc_ANKETO_INPUT_BMPDAT[i].pos_y,
+				sc_ANKETO_INPUT_BMPDAT[i].siz_x, sc_ANKETO_INPUT_BMPDAT[i].siz_y,
+				sc_ANKETO_INPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_B);
+			GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 		}
 	}
 
@@ -1692,7 +1695,7 @@ static void ANKETO_INPUT_DrawAnswer( ANKETO_INPUT* p_wk, ANKETO_MSGMAN* p_msg, A
 {
 	STRBUF* p_str;
 
-	GF_BGL_BmpWinDataFill( &p_wk->win[ANKETO_INPUT_BMP_ANS], 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_INPUT_BMP_ANS]), 0 );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( &p_wk->question_now, p_msg, ANKETO_ANSWER_A );
 	GF_STR_PrintColor( &p_wk->win[ANKETO_INPUT_BMP_ANS], 
@@ -1745,16 +1748,16 @@ static void ANKETO_INPUT_AnmCursor( ANKETO_INPUT* p_wk )
 static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	//  ビットマップ確保
-	GF_BGL_BmpWinAdd(
-				p_sys->p_bgl, &p_wk->win, 
+	p_wk->win = GFL_BMPWIN_Create(
 				GF_BGL_FRAME1_M,
 				ANKETO_TALK_TALKWIN_X, ANKETO_TALK_TALKWIN_Y,
 				ANKETO_TALK_TALKWIN_SIZX, ANKETO_TALK_TALKWIN_SIZY,
 				ANKETO_PLTT_MAIN_TALKFONT,
-				ANKETO_TALK_TALKWIN_CGX );
+				GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen(p_wk->win);
 
 	// クリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 文字列バッファ作成
 	p_wk->p_str = STRBUF_Create( ANKETO_MSGMAN_STRBUFNUM, heapID );
@@ -1808,7 +1811,7 @@ static void ANKETO_TalkWin_Print( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str )
 	}
 
 	// ビットマップのクリア
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
@@ -1835,7 +1838,7 @@ static void ANKETO_TalkWin_PrintAll( ANKETO_TALKWIN* p_wk, const STRBUF* cp_str 
 	}
 
 	// ビットマップのクリア
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	
 	// 文字列コピー
 	STRBUF_Copy( p_wk->p_str, cp_str );
@@ -2036,8 +2039,11 @@ static void ANKETO_OUTPUT_Init( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, ANKET
 		int i;
 
 		for( i=0; i<ANKETO_OUTPUT_BMP_NUM; i++ ){
-			GF_BGL_BmpWinAddEx( p_drawsys->p_bgl, &p_wk->win[i], 
-					&sc_ANKETO_OUTPUT_BMPDAT[i] );
+			p_wk->win[i] = GFL_BMPWIN_Create( sc_ANKETO_OUTPUT_BMPDAT[i].frm_num,
+				sc_ANKETO_OUTPUT_BMPDAT[i].pos_x, sc_ANKETO_OUTPUT_BMPDAT[i].pos_y, 
+				sc_ANKETO_OUTPUT_BMPDAT[i].siz_x, sc_ANKETO_OUTPUT_BMPDAT[i].siz_y,
+				sc_ANKETO_OUTPUT_BMPDAT[i].palnum, GFL_BMP_CHRAREA_GET_B);
+			GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 		}
 	}
 
@@ -2459,7 +2465,7 @@ static void ANKETO_OUTPUT_DrawTitle( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN* p_msg, 
 	s32 x;
 	
 
-	GF_BGL_BmpWinDataFill( &p_wk->win[ANKETO_OUTPUT_BMP_TITLE], 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_OUTPUT_BMP_TITLE]), 0 );
 
 	p_str = ANKETO_MsgManGetStr( p_msg, ANKETO_MSGMAN_MSG, msgidx );
 
@@ -2491,9 +2497,9 @@ static void ANKETO_OUTPUT_DrawAnswer( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTION
 {
 	STRBUF* p_str;
 
-	GF_BGL_BmpWinDataFill( &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_OUTPUT_BMP_ANS]), 0 );
 
-	GF_BGL_BmpWinDataFill( &p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY], 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ANKETO_OUTPUT_BMP_ANS_MY]), 0 );
 
 	p_str = ANKETO_QUESTION_DATA_GetAnswerStr( cp_data, p_msg, ANKETO_ANSWER_A );
 	GF_STR_PrintColor( &p_wk->win[ANKETO_OUTPUT_BMP_ANS], 
@@ -2565,7 +2571,7 @@ static void ANKETO_OUTPUT_DrawBarStart( ANKETO_OUTPUT* p_wk, const ANKETO_QUESTI
 		p_wk->drawend_width[ i ] = ANKETO_QUESTION_RESULT_GetBerWidth( cp_data, i, ANKETO_BAR_100WIDTH ); 
 		GF_BGL_BmpWinSet_Pal( &p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ], palno );
 
-		GF_BGL_BmpWinDataFill( &p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ], 0 );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[ ANKETO_OUTPUT_BMP_ANS_BAR00+i ]), 0 );
 	}
 }
 
@@ -2662,7 +2668,7 @@ static void ANKETO_OUTPUT_SetLastWeekGraphic( ANKETO_OUTPUT* p_wk, ANKETO_MSGMAN
 		int i;
 
 		for( i=0; i<ANKETO_OUTPUT_BMP_NUM; i++ ){
-			GF_BGL_BmpWinDataFill( &p_wk->win[i], 0 );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[i]), 0 );
 			GF_BGL_BmpWinOn( &p_wk->win[i] );
 		}
 	}

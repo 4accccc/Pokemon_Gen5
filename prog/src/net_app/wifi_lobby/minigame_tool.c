@@ -621,7 +621,7 @@ typedef struct {
 
 // トークウィンドウシステム
 typedef struct {
-	GF_BGL_BMPWIN	win[MNGM_TALKWIN_IDX_NUM];
+	GFL_BMPWIN	*win[MNGM_TALKWIN_IDX_NUM];
 	u16				msg_no[MNGM_TALKWIN_IDX_NUM];
 	STRBUF*			p_str[MNGM_TALKWIN_IDX_NUM];
 	void*			p_timewait[MNGM_TALKWIN_IDX_NUM];
@@ -638,7 +638,7 @@ typedef struct {
 // エントリープレイヤー名テーブルオブジェ
 // そのうち動いたりするだろうから分けとく
 typedef struct {
-	GF_BGL_BMPWIN		win;
+	GFL_BMPWIN		*win;
 	GFL_CLWK*		p_clwk;			// アクター
 	GFL_CLWK*		p_rank;			// 順位アクター
 	u16					playernum;		// ユーザ数
@@ -660,7 +660,7 @@ typedef struct{
 
 // タイトルロゴ
 typedef struct {
-	GF_BGL_BMPWIN		bmp;
+	GFL_BMPWIN		*bmp;
 	u32					gametype;
 	STRBUF*				p_str;
 
@@ -743,7 +743,7 @@ typedef struct {
 ///	風船アニメワーク
 //=====================================
 typedef struct {
-//	GF_BGL_BMPWIN		win;
+//	GFL_BMPWIN		*win;
 	void*				p_scrnbuff;
 	NNSG2dScreenData*	p_scrn;
 	GFL_CLWK*		p_clwk[MNGM_RESULT_BALLOON_CLACT_NUM];
@@ -1174,10 +1174,10 @@ static void MNGM_MSG_SetTime( MNGM_MSG* p_wk, u32 time );
 static void MNGM_MSG_SetGadget( MNGM_MSG* p_wk, u32 gadget );
 static void MNGM_MSG_SetGameName( MNGM_MSG* p_wk, u32 game );
 static void MNGM_MSG_GetStr( MNGM_MSG* p_wk, STRBUF* p_str, u32 msgidx );
-static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y );
-static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y );
-static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, STRBUF* p_str, u32 wait );
-static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col );
+static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
+static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y );
+static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait );
+static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col );
 
 // 会話ウィンドウ
 static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL_WORK* p_save, BOOL vip, u32 heapID );
@@ -2791,7 +2791,7 @@ static void MNGM_MSG_GetStr( MNGM_MSG* p_wk, STRBUF* p_str, u32 msgidx )
  *	@param	y			ｙ座標
  */
 //-----------------------------------------------------------------------------
-static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y )
+static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y )
 {
 	MNGM_MSG_PrintColor( p_wk, no, p_win, x, y, MNGM_MSG_COLOR );
 }
@@ -2807,7 +2807,7 @@ static void MNGM_MSG_Print( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, 
  *	@param	y			ｙ座標
  */
 //-----------------------------------------------------------------------------
-static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y )
+static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y )
 {
 	u32 strsize;
 	s32 draw_x;
@@ -2839,7 +2839,7 @@ static void MNGM_MSG_PrintRightSide( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_wi
  *	@retval	メッセージナンバー
  */
 //-----------------------------------------------------------------------------
-static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, STRBUF* p_str, u32 wait )
+static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, STRBUF* p_str, u32 wait )
 {
 	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_str, p_wk->p_tmp );
@@ -2860,7 +2860,7 @@ static u32 MNGM_MSG_PrintScr( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, STRB
  *	@param	col			色
  */
 //-----------------------------------------------------------------------------
-static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GF_BGL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col )
+static void MNGM_MSG_PrintColor( MNGM_MSG* p_wk, u32 no, GFL_BMPWIN* p_win, u8 x, u8 y, GF_PRINTCOLOR col )
 {
 	MSGMAN_GetString( p_wk->p_msgman, no, p_wk->p_tmp );
 	WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_tmp );
@@ -2907,11 +2907,12 @@ static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL
 			frame = GF_BGL_FRAME0_S;
 			y = MNGM_TALKWIN_BMP_Y_SUB;
 		}
-		GF_BGL_BmpWinAdd( p_bgl->p_bgl, &p_wk->win[i], frame,
+		p_wk->win[i] = GFL_BMPWIN_Create( frame,
 				MNGM_TALKWIN_BMP_X, y,
 				MNGM_TALKWIN_BMP_SIZX, MNGM_TALKWIN_BMP_SIZY,
-				MNGM_TALKWIN_BMP_PAL, MNGM_TALKWIN_BMP_CGX);
-		GF_BGL_BmpWinDataFill( &p_wk->win[i], 0 );
+				MNGM_TALKWIN_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[i]), 0 );
+		GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 
 		// メッセージ用文字列バッファ作成
 		p_wk->p_str[i] = STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
@@ -2974,8 +2975,8 @@ static void MNGM_TALKWIN_MsgPrint( MNGM_TALKWIN* p_wk, MNGM_MSG* p_msg, u32 msgi
 	// 時間ウィンドウも止める
 	MNGM_TALKWIN_CleanTimeWork( p_wk, idx );
 	
-	GF_BGL_BmpWinDataFill( &p_wk->win[idx], 15 );
-	p_wk->msg_no[idx] = MNGM_MSG_PrintScr( p_msg, msgidx, &p_wk->win[idx],
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win[idx]), 15 );
+	p_wk->msg_no[idx] = MNGM_MSG_PrintScr( p_msg, msgidx, p_wk->win[idx],
 			p_wk->p_str[idx], MNGM_TALKWIN_MSG_SPEED );
 
 	// ウインドウを書き込む
@@ -3618,13 +3619,14 @@ static void MNGM_PLATE_PLAYERTBL_Init( MNGM_PLATE_PLAYER* p_player, u32 player_n
 	GF_BGL_PrioritySet( GF_BGL_FRAME0_M, 1 );
 	
 	// とりあえずその人の領域を作成して、データを書き込む
-	GF_BGL_BmpWinAdd(
-				p_bgl->p_bgl, &p_player->win, GF_BGL_FRAME0_M,
+	p_player->win = GFL_BMPWIN_Create(
+				GF_BGL_FRAME0_M,
 				MNGM_ENTRY_BMP_X, 
 				MNGM_ENTRY_BMP_Y + sc_MNGM_PLAYER_PLATE_DATA[ player_num-1 ].top[ player_idx ], 
 				MNGM_ENTRY_BMP_SIZX, MNGM_ENTRY_BMP_SIZY, MNGM_ENTRY_BMP_PAL,
-				MNGM_ENTRY_BMP_CGX + ((MNGM_ENTRY_BMP_SIZX*MNGM_ENTRY_BMP_SIZY)*idx) );
-	GF_BGL_BmpWinDataFill( &p_player->win, 0 );
+				GFL_BMP_CHRAREA_GET_B);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_player->win), 0 );
+	GFL_BMPWIN_MakeScreen(p_player->win);
 
 
 	// スクリーンを書き込む
@@ -3685,9 +3687,9 @@ static void MNGM_PLATE_PLAYERTBL_DrawName( MNGM_PLATE_PLAYER* p_player, MNGM_MSG
 {
 	MNGM_MSG_SetPlayerName( p_msg, cp_status );
 	if( vip == TRUE ){
-		MNGM_MSG_PrintColor( p_msg, msg_10, &p_player->win, x, y, MNGM_MSG_VIP_COLOR );
+		MNGM_MSG_PrintColor( p_msg, msg_10, p_player->win, x, y, MNGM_MSG_VIP_COLOR );
 	}else{
-		MNGM_MSG_Print( p_msg, msg_10, &p_player->win, x, y );
+		MNGM_MSG_Print( p_msg, msg_10, p_player->win, x, y );
 	}
 }
 
@@ -3709,13 +3711,13 @@ static void MNGM_PLATE_PLAYERTBL_DrawNation( MNGM_PLATE_PLAYER* p_player, MNGM_M
 		if( nation != country000 ){
 			MNGM_MSG_ClearStrBuff( p_msg );
 			MNGM_MSG_SetNationName( p_msg, nation );
-			MNGM_MSG_Print( p_msg, msg_11, &p_player->win, x,16 );
+			MNGM_MSG_Print( p_msg, msg_11, p_player->win, x,16 );
 		}
 	}else{
 		if( nation != country000 ){
 			MNGM_MSG_ClearStrBuff( p_msg );
 			MNGM_MSG_SetAreaName( p_msg, nation, area );
-			MNGM_MSG_Print( p_msg, msg_12, &p_player->win, x,16 );
+			MNGM_MSG_Print( p_msg, msg_12, p_player->win, x,16 );
 		}
 	}
 }
@@ -3752,9 +3754,9 @@ static void MNGM_PLATE_PLAYERTBL_DrawScore( MNGM_PLATE_PLAYER* p_player, MNGM_MS
 {
 	MNGM_MSG_SetScore( p_msg, score, keta );
 	if( keta == 5 ){
-		MNGM_MSG_PrintRightSide( p_msg, msg_14, &p_player->win, x, y );
+		MNGM_MSG_PrintRightSide( p_msg, msg_14, p_player->win, x, y );
 	}else{
-		MNGM_MSG_PrintRightSide( p_msg, msg_13, &p_player->win, x, y );
+		MNGM_MSG_PrintRightSide( p_msg, msg_13, p_player->win, x, y );
 	}
 }
 
@@ -3772,7 +3774,7 @@ static void MNGM_PLATE_PLAYERTBL_DrawScore( MNGM_PLATE_PLAYER* p_player, MNGM_MS
 static void MNGM_PLATE_PLAYERTBL_DrawTime( MNGM_PLATE_PLAYER* p_player, MNGM_MSG* p_msg, u32 frame, s16 x, s16 y )
 {
 	MNGM_MSG_SetTime( p_msg, frame );
-	MNGM_MSG_PrintRightSide( p_msg, msg_13, &p_player->win, x, y );
+	MNGM_MSG_PrintRightSide( p_msg, msg_13, p_player->win, x, y );
 }
 
 //----------------------------------------------------------------------------
@@ -4187,11 +4189,12 @@ WFLBY_ITEMTYPE MNGM_ITEM_Update( WFLBY_ITEMTYPE data )
 //-----------------------------------------------------------------------------
 static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_MSG* p_msg, u32 gametype, ARCHANDLE* p_handle, u32 heapID )
 {
-	GF_BGL_BmpWinAdd( p_bglwk->p_bgl, &p_wk->bmp, GF_BGL_FRAME1_M,
+	p_wk->bmp = GFL_BMPWIN_Create( GF_BGL_FRAME1_M,
 			MNGM_TITLELOGO_BMP_X, MNGM_TITLELOGO_BMP_Y,
 			MNGM_TITLELOGO_BMP_SIZX, MNGM_TITLELOGO_BMP_SIZY,
-			MNGM_TITLELOGO_BMP_PAL, MNGM_TITLELOGO_BMP_CGX);
-	GF_BGL_BmpWinDataFill( &p_wk->bmp, 0 );
+			MNGM_TITLELOGO_BMP_PAL, GFL_BMP_CHRAREA_GET_B);
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp), 0 );
+	GFL_BMPWIN_MakeScreen(p_wk->bmp);
 
 	// メッセージを生成
 	p_wk->p_str = STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
@@ -5992,7 +5995,7 @@ static void MNGM_RESULT_Balloon_GraphicInit( MNGM_BALLOON_WK* p_wk, MNGM_BGL* p_
 				MNGM_RESULT_BALLOON_BMP_X, MNGM_RESULT_BALLOON_BMP_Y,
 				MNGM_RESULT_BALLOON_BMP_SIZX, MNGM_RESULT_BALLOON_BMP_SIZY,
 				MNGM_RESULT_BALLOON_BMP_PAL, MNGM_RESULT_BALLOON_BMP_CGX);
-		GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	}
 //*/
 

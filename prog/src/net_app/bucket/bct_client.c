@@ -910,7 +910,7 @@ typedef struct {
     u32 seq;
     s32 count;
 	s32 wait;
-    GF_BGL_BMPWIN   helpwin;    // ゲーム説明ウィンドウ
+    GFL_BMPWIN*   helpwin;    // ゲーム説明ウィンドウ
 } BCT_COUNTDOWN_DRAW;
 
 
@@ -1162,7 +1162,7 @@ typedef struct {
     CLACT_HEADER            header;				// アクター作成用ヘッダー
 	CLACT_WORK_PTR			p_tblwk;			// テーブルワーク
 	
-	GF_BGL_BMPWIN			objbmp;				// 文字列ビットマップデータ
+	GFL_BMPWIN*			objbmp;				// 文字列ビットマップデータ
 	FONTOAM_OBJ_PTR			p_fontoam;			// フォントOAMワーク
 	FONTOAM_OAM_DATA_PTR	p_fontoam_data;		// フォントOAM構成データ
 	CHAR_MANAGER_ALLOCDATA	fontoam_chardata;	// キャラクタ確保データ
@@ -2773,11 +2773,12 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
     GFL_STD_MemFill( p_graphic, 0, sizeof(BCT_COUNTDOWN_DRAW) );
 
     // メッセージウィンドウ作成
-    GF_BGL_BmpWinAdd( p_drawsys->p_bgl , &p_graphic->helpwin, GF_BGL_FRAME1_M,
+    p_graphic->helpwin = GFL_BMPWIN_Create( GF_BGL_FRAME1_M,
             BCT_GRA_STARTWIN_X, BCT_GRA_STARTWIN_Y,
             BCT_GRA_STARTWIN_SIZX, BCT_GRA_STARTWIN_SIZY, 
-            BCT_GRA_BGMAIN_PAL_FONT, BCT_GRA_STARTWIN_CGX );
+            BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
 
+    GFL_BMPWIN_MakeScreen(p_graphic->helpwin);
     GF_BGL_BmpWinFill( &p_graphic->helpwin, 15, 0, 0, 
             BCT_GRA_STARTWIN_SIZX*8, BCT_GRA_STARTWIN_SIZY*8 );
 
@@ -2804,17 +2805,17 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 	{
 		int i;
 		s32 name_x, name_y;
-		GF_BGL_BMPWIN namebmpwin;
+		GFL_BMPWIN* namebmpwin;
 		u32 namebmp_cgx;
 		STRBUF* p_namestr;
 		u32 col;
 		u32 namestrsize;
 		u32 draw_x;
 
-		GF_BGL_BmpWinInit( &namebmpwin );
-		GF_BGL_BmpWinAdd( p_drawsys->p_bgl, &namebmpwin, GF_BGL_FRAME2_M,
+		namebmpwin = GFL_BMPWIN_Create( GF_BGL_FRAME2_M,
 						0, 0, BCT_START_NAME_BMP_WINSIZ_X, BCT_START_NAME_BMP_WINSIZ_Y, 
-						BCT_GRA_BGMAIN_PAL_FONT, BCT_START_NAME_BMP_WINCGX_START );
+						BCT_GRA_BGMAIN_PAL_FONT, GFL_BMP_CHRAREA_GET_B );
+		GFL_BMPWIN_MakeScreen(namebmpwin);
 		namebmp_cgx = BCT_START_NAME_BMP_WINCGX_START;
 
 		p_namestr = STRBUF_Create( BCT_START_NAME_STRBUF_NUM, heapID );
@@ -2830,7 +2831,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 						BCT_START_NAME_FRAMESIZ_X, BCT_START_NAME_FRAMESIZ_Y, BCT_GRA_BGMAIN_PAL_NAME_PL00+i );
 
 				// 名前書き込み
-				GF_BGL_BmpWinDataFill( &namebmpwin, 15 );
+				GFL_BMP_Clear( GFL_BMPWIN_GetBmp(namebmpwin), 15 );
 				if( cp_param->vip[i] == TRUE ){	// 文字列カラー決定
 					col = BCT_COL_N_BLUE;
 				}else{

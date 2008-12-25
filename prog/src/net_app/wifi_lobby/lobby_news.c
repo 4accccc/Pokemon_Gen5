@@ -519,7 +519,7 @@ typedef struct {
 	u16				count_max;
 	u16				str_siz;
 	STRBUF*			p_str;
-	GF_BGL_BMPWIN	bmp;
+	GFL_BMPWIN	*bmp;
 
 	// トピックカラーデータ
 	NEWSDRAW_TOPIC_TRCOL trcol;
@@ -529,7 +529,7 @@ typedef struct {
 	NEWSDRAW_TOPIC			topic[NEWSDRAW_TOPIC_NUM];	// トピックデータ
 
 	// 描画データ
-	GF_BGL_BMPWIN	bmp[NEWSDRAW_TOPIC_NUM];
+	GFL_BMPWIN	*bmp[NEWSDRAW_TOPIC_NUM];
 	STRBUF*			p_str;
 
 	//  パレットデータ
@@ -551,7 +551,7 @@ typedef struct {
 } NEWSDRAW_TITLEEFF;
 // ワーク
 typedef struct {
-	GF_BGL_BMPWIN		bmp[ NEWSDRAW_TITLEWIN_NUM ];
+	GFL_BMPWIN		*bmp[ NEWSDRAW_TITLEWIN_NUM ];
 	NEWSDRAW_TITLEEFF	eff[ NEWSDRAW_TITLEWIN_NUM ];	// エフェクトワーク
 } NEWSDRAW_TITLEWIN;
 
@@ -665,7 +665,7 @@ static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk );
 static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32 speed, const NEWSDRAW_TOPIC_TRCOL* cp_trcol, const NNSG2dPaletteData* cp_pltt );
 static void NEWSDRAW_TopicEnd( NEWSDRAW_TOPIC* p_wk );
 static BOOL NEWSDRAW_TopicMain( NEWSDRAW_TOPIC* p_wk );
-static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GF_BGL_BMPWIN* p_bmp );
+static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp );
 
 
 // タイトルウィンドウ
@@ -1907,14 +1907,15 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 		NEWSDRAW_TopicInit( &p_wk->topic[i], p_draw, i, heapID );
 
 		// ビットマップ初期化
-		GF_BGL_BmpWinAdd(
-					p_draw->p_bgl, &p_wk->bmp[i], GF_BGL_FRAME3_M,
+		p_wk->bmp[i] = GFL_BMPWIN_Create(
+					GF_BGL_FRAME3_M,
 					NEWSDRAW_TOPIC_BMP_X, NEWSDRAW_TOPIC_DRAW_Y[i],
 					NEWSDRAW_TOPIC_BMP_SX, NEWSDRAW_TOPIC_BMP_SY,
 					NEWSDRAW_TOPIC_BMP_PAL+i, 
-					NEWSDRAW_TOPIC_BMP_CGX+(NEWSDRAW_TOPIC_BMP_CGXSIZ*i) );
+					GFL_BMP_CHRAREA_GET_B );
 
-		GF_BGL_BmpWinDataFill( &p_wk->bmp[i], 0 );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
+		GFL_BMPWIN_MakeScreen(p_wk->bmp[i]);
 		
 		GF_BGL_BmpWinOnVReq( &p_wk->bmp[i] );
 	}
@@ -2049,7 +2050,7 @@ static void NEWSDRAW_TopicWinDraw( NEWSDRAW_TOPICWIN* p_wk )
 	for( i=0; i<NEWSDRAW_TOPIC_NUM; i++ ){
 		if( p_wk->topic[i].move == TRUE ){
 			// 書き込む
-			NEWSDRAW_TopicDraw( &p_wk->topic[i], &p_wk->bmp[i] );
+			NEWSDRAW_TopicDraw( &p_wk->topic[i], p_wk->bmp[i] );
 		} 
 	}
 }
@@ -2073,11 +2074,12 @@ static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, 
 	p_wk->pal	= NEWS_PLTT_FONT + idx;
 
 	// ダミーBMPWIN作成
-	GF_BGL_BmpWinAdd(
-				p_draw->p_bgl, &p_wk->bmp, GF_BGL_FRAME3_M,
+	p_wk->bmp = GFL_BMPWIN_Create(
+				GF_BGL_FRAME3_M,
 				0, 0,
 				NEWSDRAW_TOPIC_DMBMP_SX, NEWSDRAW_TOPIC_DMBMP_SY,
-				NEWSDRAW_TOPIC_BMP_PAL, 0 );
+				NEWSDRAW_TOPIC_BMP_PAL, GFL_BMP_CHRAREA_GET_F );
+	GFL_BMPWIN_MakeScreen(p_wk->bmp);
 }
 
 //----------------------------------------------------------------------------
@@ -2122,7 +2124,7 @@ static void NEWSDRAW_TopicStart( NEWSDRAW_TOPIC* p_wk, const STRBUF* cp_str, u32
 	GF_ASSERT( (NEWSDRAW_TOPIC_DMBMP_SX*8) >= p_wk->str_siz );
 
 	// ダミービットマップに書き込む
-	GF_BGL_BmpWinDataFill( &p_wk->bmp, 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp), 0 );
 
 	// 文字を書き込む
 	GF_STR_PrintSimple( &p_wk->bmp, FONT_TALK, p_wk->p_str,
@@ -2176,7 +2178,7 @@ static BOOL NEWSDRAW_TopicMain( NEWSDRAW_TOPIC* p_wk )
  *	@param	p_bmp	描画先ビットマップ
  */
 //-----------------------------------------------------------------------------
-static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GF_BGL_BMPWIN* p_bmp )
+static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 {
 	s32	x;	// 基準となるｘ座標
 	s32 wx;	// 書き込み先ｘ
@@ -2250,13 +2252,14 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 		NEWSDRAW_TitleEffInit( &p_wk->eff[i], NEWSDRAW_TITLEWIN_PLTT_OFFS[i], NEWSDRAW_TITLEWIN_SND_TBL[i] );
 
 		// メッセージ
-		GF_BGL_BmpWinAdd(
-				p_draw->p_bgl, &p_wk->bmp[i], GF_BGL_FRAME0_M,
+		p_wk->bmp[i] = GFL_BMPWIN_Create(
+				GF_BGL_FRAME0_M,
 				NEWSDRAW_TITLE_BMPDATA[i].x, NEWSDRAW_TITLE_BMPDATA[i].y,
 				NEWSDRAW_TITLE_BMPDATA[i].sizx, NEWSDRAW_TITLE_BMPDATA[i].sizy,
-				NEWSDRAW_TITLE_BMPDATA[i].pal, NEWSDRAW_TITLE_BMPDATA[i].cgx );
-
-		GF_BGL_BmpWinDataFill( &p_wk->bmp[i], 0 );
+				NEWSDRAW_TITLE_BMPDATA[i].pal, GFL_BMP_CHRAREA_GET_B );
+		
+		GFL_BMPWIN_MakeScreen(p_wk->bmp[i]);
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bmp[i]), 0 );
 
 		// タイトルを書き込む
 		MSGMAN_GetString( p_msgman, wflby_news_00+i, p_str );

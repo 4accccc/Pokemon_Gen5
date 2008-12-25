@@ -1047,9 +1047,9 @@ typedef struct {
 	u16						msg_now;						// 今のメッセージ
 	u16						pad;							// アニメカウンタ
 	WLDTIMER_TIMEZONEANM	anm[ WLDTIMER_ZONETYPE_NUM ];	// タイムゾーンアニメデータ
-	GF_BGL_BMPWIN			msg[ WLDTIMER_VIEWER_DRAWNUM ];	// メッセージデータ
-	GF_BGL_BMPWIN			dummy;							// フェード用メッセージ
-	GF_BGL_BMPWIN			talkwin;						// 会話メッセージデータ
+	GFL_BMPWIN*			msg[ WLDTIMER_VIEWER_DRAWNUM ];	// メッセージデータ
+	GFL_BMPWIN*			dummy;							// フェード用メッセージ
+	GFL_BMPWIN*			talkwin;						// 会話メッセージデータ
 	WLDTIMER_POKEBALLOON	poke;							// ポケモンBALLOON
 	WLDTIMER_VWND			wnd;							// ウィンドウ
 } WLDTIMER_VIEWER;
@@ -1069,7 +1069,7 @@ typedef struct {
 	int tp_count;	// ホールドカウント
 
 	// ボタン表示
-	GF_BGL_BMPWIN bttn;
+	GFL_BMPWIN *bttn;
 
 } WLDTIMER_TOUCH;
 
@@ -1082,7 +1082,7 @@ typedef struct {
 	u32				msg_no;
 	u32				msg_wait;
 	STRBUF*			p_str;
-	GF_BGL_BMPWIN	win;
+	GFL_BMPWIN	*win;
 	TOUCH_SW_SYS*	p_touch_sw;
 } WLDTIMER_END_MSG;
 
@@ -3434,14 +3434,15 @@ static void WLDTIMER_TouchInit( WLDTIMER_TOUCH* p_wk, WLDTIMER_DRAWSYS* p_drawsy
 	GFL_STD_MemFill( p_wk, 0, sizeof(WLDTIMER_TOUCH) );
 
 	// ボタンビットマップ作成
-	GF_BGL_BmpWinAdd(
-				p_drawsys->p_bgl, &p_wk->bttn, GF_BGL_FRAME1_M,
+	p_wk->bttn = GFL_BMPWIN_Create(
+				GF_BGL_FRAME1_M,
 				WLDTIMER_MAIN_BTTNBMP_X, WLDTIMER_MAIN_BTTNBMP_Y,
 				WLDTIMER_MAIN_BTTNBMP_SIZX, WLDTIMER_MAIN_BTTNBMP_SIZY, 
-				WLDTIMER_MAIN_BTTNBMP_PAL, WLDTIMER_MAIN_BTTNBMP_CGX );
+				WLDTIMER_MAIN_BTTNBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 	
-	GF_BGL_BmpWinDataFill( &p_wk->bttn, 15 );
-
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->bttn), 15 );
+	GFL_BMPWIN_MakeScreen(p_wk->bttn);
+	
 	// やめる描画
 	{
 		STRBUF* p_str;
@@ -3620,14 +3621,15 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 	p_wk->p_str = STRBUF_Create( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
 
 	// ボタンビットマップ作成
-	GF_BGL_BmpWinAdd(
-				p_drawsys->p_bgl, &p_wk->win, GF_BGL_FRAME1_M,
+	p_wk->win = GFL_BMPWIN_Create(
+				GF_BGL_FRAME1_M,
 				WLDTIMER_MAIN_TALKBMP_X, WLDTIMER_MAIN_TALKBMP_Y,
 				WLDTIMER_MAIN_TALKBMP_SIZX, WLDTIMER_MAIN_TALKBMP_SIZY, 
-				WLDTIMER_MAIN_TALKBMP_PAL, WLDTIMER_MAIN_TALKBMP_CGX );
+				WLDTIMER_MAIN_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 	
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
-
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
+	GFL_BMPWIN_MakeScreen(p_wk->win);
+	
 	// 描画
 	WLDTIMER_MsgManGetStrBuff( p_msgman, msg_05, p_wk->p_str );
 
@@ -3668,7 +3670,7 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 //-----------------------------------------------------------------------------
 static void WLDTIMER_EndMsgStart( WLDTIMER_END_MSG* p_wk )
 {
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 	// ボタンとメッセージ表示
 	BmpTalkWinWrite( &p_wk->win, WINDOW_TRANS_OFF, 
 			WLDTIMER_MAIN_TALKWIN_CGX, WLDTIMER_MAIN_TALKWIN_PAL );
@@ -3760,13 +3762,14 @@ static void WLDTIMER_ViewerInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_draw
 	{
 		STRBUF* p_str;
 
-		GF_BGL_BmpWinAdd(
-					p_drawsys->p_bgl, &p_wk->talkwin, GF_BGL_FRAME0_S,
+		p_wk->talkwin = GFL_BMPWIN_Create(
+					GF_BGL_FRAME0_S,
 					WLDTIMER_SUB_TALKBMP_X, WLDTIMER_SUB_TALKBMP_Y,
 					WLDTIMER_SUB_TALKBMP_SIZX, WLDTIMER_SUB_TALKBMP_SIZY, 
-					WLDTIMER_SUB_TALKBMP_PAL, WLDTIMER_SUB_TALKBMP_CGX );
-		GF_BGL_BmpWinDataFill( &p_wk->talkwin, 15 );
-
+					WLDTIMER_SUB_TALKBMP_PAL, GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->talkwin), 15 );
+		GFL_BMPWIN_MakeScreen(p_wk->talkwin);
+		
 		p_str = WLDTIMER_MsgManGetStr( p_msgman, msg_00 );
 		GF_STR_PrintSimple(&p_wk->talkwin,FONT_TALK,p_str,0,0,MSG_NO_PUT,NULL);
 
@@ -4551,27 +4554,29 @@ static void WLDTIMER_ViewerMsgInit( WLDTIMER_VIEWER* p_wk, WLDTIMER_DRAWSYS* p_d
 	cgx = WLDTIMER_VIEWER_MSGBMP_CGX;
 	for( i=0; i<WLDTIMER_VIEWER_DRAWNUM; i++ ){
 
-		GF_BGL_BmpWinAdd(
-			p_drawsys->p_bgl, &p_wk->msg[i], GF_BGL_FRAME1_S,
+		p_wk->msg[i] = GFL_BMPWIN_Create(
+			GF_BGL_FRAME1_S,
 			WLDTIMER_VIEWER_MSGBMP_X, 
 			WLDTIMER_VIEWER_MSGBMP_Y + (WLDTIMER_VIEWER_MSGBMP_SIZY*i),
 			WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
-			WLDTIMER_VIEWER_MSGBMP_PAL, cgx );
+			WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_B );
 
 		cgx += WLDTIMER_VIEWER_MSGBMP_CGSIZ;
 
-		GF_BGL_BmpWinDataFill( &p_wk->msg[i], 0 );
-
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->msg[i]), 0 );
+		GFL_BMPWIN_MakeScreen(p_wk->msg[i]);
+		
 		GF_BGL_BmpWinOn( &p_wk->msg[i] );
 	}
 
-	GF_BGL_BmpWinAdd(
-		p_drawsys->p_bgl, &p_wk->dummy, GF_BGL_FRAME1_S,
+	p_wk->dummy = GFL_BMPWIN_Create(
+		GF_BGL_FRAME1_S,
 		WLDTIMER_VIEWER_MSGBMP_X, 
 		WLDTIMER_VIEWER_MSGBMP_Y,
 		WLDTIMER_VIEWER_MSGBMP_SIZX, WLDTIMER_VIEWER_MSGBMP_SIZY,
-		WLDTIMER_VIEWER_MSGBMP_PAL, WLDTIMER_VIEWER_MSGBMP_CGX );
-	GF_BGL_BmpWinDataFill( &p_wk->dummy, 0 );
+		WLDTIMER_VIEWER_MSGBMP_PAL, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->dummy), 0 );
+	GFL_BMPWIN_MakeScreen(p_wk->dummy);
 }
 
 //----------------------------------------------------------------------------
@@ -4604,7 +4609,7 @@ static void WLDTIMER_ViewerMsgExit( WLDTIMER_VIEWER* p_wk )
 static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const WLDTIMER_POINTDATA* cp_data, WLDTIMER_MSGMAN* p_msgman )
 {
 	STRBUF* p_str;
-	GF_BGL_BMPWIN* p_bmp;
+	GFL_BMPWIN* p_bmp;
 	u32 zonetype;
 	
 	GF_ASSERT( drawtype < WLDTIMER_VIEWER_DRAWNUM );
@@ -4612,7 +4617,7 @@ static void WLDTIMER_ViewerMsgWrite( WLDTIMER_VIEWER* p_wk, u32 drawtype, const 
 	p_bmp = &p_wk->msg[drawtype];
 	
 	// クリアカラーで初期化
-	GF_BGL_BmpWinDataFill( p_bmp, 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_bmp), 0 );
 
 	// ゾーンタイプ取得
 	zonetype = WLDTIMER_TIMEZONE_GetZoneType( cp_data->timezone );

@@ -253,8 +253,8 @@ typedef struct _FOOTPRINT_SYS{
 	MSGDATA_MANAGER *msgman;						// 名前入力メッセージデータマネージャー
 
 	// BMPWIN描画周り
-	GF_BGL_BMPWIN		name_win[FOOTPRINT_BMPWIN_NAME_MAX]; //名前表示用のBMPWIN
-	GF_BGL_BMPWIN		talk_win;					 //会話メッセージ用のBMPWIN
+	GFL_BMPWIN*		name_win[FOOTPRINT_BMPWIN_NAME_MAX]; //名前表示用のBMPWIN
+	GFL_BMPWIN*		talk_win;					 //会話メッセージ用のBMPWIN
 	STRBUF *talk_strbuf;				///<会話メッセージ用バッファ
 	u8 msg_index;						///<メッセージインデックス
 
@@ -828,7 +828,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		break;
 	case SEQ_EXIT_SELECT_INIT:
 		//会話ウィンドウ描画
-		GF_BGL_BmpWinDataFill(&fps->talk_win, 0xf);
+		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
 		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
@@ -890,7 +890,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 		break;
 	case SEQ_TIMEUP_INIT:
 		//会話ウィンドウ描画
-		GF_BGL_BmpWinDataFill(&fps->talk_win, 0xf);
+		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
 		BmpTalkWinWrite(&fps->talk_win, WINDOW_TRANS_ON, 
 			WINCGX_TALKWIN_START, FOOT_MAINBG_TALKWIN_PAL);
 		//メッセージ表示
@@ -1887,19 +1887,20 @@ static void BmpWinInit( FOOTPRINT_SYS *fps )
 	int i;
 	
 	//-- メイン画面 --//
-	GF_BGL_BmpWinAdd(fps->bgl, &fps->talk_win, FOOT_FRAME_WIN,
-		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, WINCGX_MESSAGE_START);
-	GF_BGL_BmpWinDataFill(&fps->talk_win, 0xf);
+	fps->talk_win = GFL_BMPWIN_Create(FOOT_FRAME_WIN,
+		2, 1, 27, 4, FOOT_MAINBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->talk_win), 0xf);
+	GFL_BMPWIN_MakeScreen(fps->talk_win);
 	
 	//-- サブ画面 --//
 	//参加者の名前表示
 	for(i = 0; i < FOOTPRINT_BMPWIN_NAME_MAX; i++){
-		GF_BGL_BmpWinAdd(fps->bgl, &fps->name_win[i], FOOT_SUBFRAME_WIN,
+		fps->name_win[i] = GFL_BMPWIN_Create(FOOT_SUBFRAME_WIN,
 			NameBmpwinPos[i][0], NameBmpwinPos[i][1], 
 			WINCGX_SUB_NAME_SIZE_X, WINCGX_SUB_NAME_SIZE_Y,
-			FOOT_SUBBG_TALKFONT_PAL, 
-			WINCGX_SUB_NAME_START + (WINCGX_SUB_NAME_SIZE_X * WINCGX_SUB_NAME_SIZE_Y) * i);
-		GF_BGL_BmpWinDataFill(&fps->name_win[i], 0x00);
+			FOOT_SUBBG_TALKFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+		GFL_BMP_Clear(GFL_BMPWIN_GetBmp(fps->name_win[i]), 0x00);
+		GFL_BMPWIN_MakeScreen(fps->name_win[i]);
 	}
 }
 
@@ -2334,7 +2335,7 @@ static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, con
 	int x, int y, int pos_center)
 {
 	FONTOAM_INIT finit;
-	GF_BGL_BMPWIN bmpwin;
+	GFL_BMPWIN* bmpwin;
 	CHAR_MANAGER_ALLOCDATA cma;
 	int vram_size;
 	FONTOAM_OBJ_PTR fontoam;

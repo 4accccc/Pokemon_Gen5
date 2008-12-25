@@ -240,7 +240,7 @@ enum{
 typedef struct {
 	WORDSET*			p_wordset;	// ワードセット
 	MSGDATA_MANAGER*	p_msgman;	// ワードセット
-	GF_BGL_BMPWIN		win;		// 会話ウィンドウ
+	GFL_BMPWIN*		win;		// 会話ウィンドウ
 	STRBUF*				p_str;		// 文字列バッファ
 	STRBUF*				p_tmp;		// 文字列バッファ
 	u32					fontid;		// メッセージのフォントID	
@@ -1263,8 +1263,9 @@ static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fo
 	p_wk->p_debug_msgman	= MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_debug_tomoya_dat, heapID );;	// ワードセット
 #endif
 
-	GF_BGL_BmpWinAdd( p_bgl, &p_wk->win, 
-			sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], x, y, sizx, sizy, WFLBY_MAIN_PLTT_TALKFONT, cgx );
+	p_wk->win = GFL_BMPWIN_Create( 
+			sc_WFLBY_BGCNT_FRM[WFLBY_BGCNT_MAIN_WIN], x, y, sizx, sizy, WFLBY_MAIN_PLTT_TALKFONT, GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen(p_wk->win);
 }
 
 //----------------------------------------------------------------------------
@@ -1283,7 +1284,7 @@ static void WFLBY_CONNECT_WIN_Print( WFLBY_WINWK* p_wk, u32 strid )
 	}
 	
 	// ウィンドウのクリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
 	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
@@ -1406,7 +1407,7 @@ static void WFLBY_CONNECT_WIN_PrintWait( WFLBY_WINWK* p_wk, u32 strid )
 	}
 	
 	// ウィンドウのクリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
 	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
@@ -1454,7 +1455,7 @@ static BOOL WFLBY_CONNECT_WIN_PrintEndWait( const WFLBY_WINWK* cp_wk )
 static void WFLBY_CONNECT_WIN_PrintTitle( WFLBY_WINWK* p_wk, u32 strid )
 {
 	// ウィンドウのクリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 0 );
 
 	// 表示
 	MSGMAN_GetString( p_wk->p_msgman, strid, p_wk->p_tmp );
@@ -1482,7 +1483,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG( WFLBY_WINWK* p_wk, u32 strid, u32 num 
 	WORDSET_RegisterNumber( p_wk->p_wordset, 0, num, 2, NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
 
 	// ウィンドウのクリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
 	MSGMAN_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );
@@ -1507,7 +1508,7 @@ static void WFLBY_CONNECT_WIN_PrintDEBUG2( WFLBY_WINWK* p_wk, u32 strid, u32 ite
 	WORDSET_RegisterWiFiLobbyItemName( p_wk->p_wordset, 0, item );
 
 	// ウィンドウのクリーン
-	GF_BGL_BmpWinDataFill( &p_wk->win, 15 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 表示
 	MSGMAN_GetString( p_wk->p_debug_msgman, strid, p_wk->p_tmp );

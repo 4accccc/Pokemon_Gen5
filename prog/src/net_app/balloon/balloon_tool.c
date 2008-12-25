@@ -3035,7 +3035,7 @@ void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp,
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len)
 {
 	FONTOAM_INIT finit;
-	GF_BGL_BMPWIN bmpwin;
+	GFL_BMPWIN* bmpwin;
 	CHAR_MANAGER_ALLOCDATA cma;
 	int vram_size;
 	FONTOAM_OBJ_PTR fontoam;
