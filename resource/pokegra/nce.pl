@@ -43,6 +43,8 @@ use constant OBJ_SIZE		=>	OAM_POS_X +		OAM_POS_Y +			 OAM_RS_MODE +		OAM_RS_PARA
 								OAM_MOSAIC +	OAM_COLOR_MODE +	 OAM_SHAPE +		OAM_SIZE +
 								OAM_PRIORITY +	OAM_COLOR_PARAM +	OAM_CHAR_NAME +		PADDING;
 
+use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
+
 #====================================================================================
 #
 #	OBJ形状とOBJサイズから導く縦横サイズテーブル
@@ -224,33 +226,33 @@ use constant OBJ_SIZE		=>	OAM_POS_X +		OAM_POS_Y +			 OAM_RS_MODE +		OAM_RS_PARA
 =cut
 
 #デバッグ表示
-#=pod
+=pod
 		print "cell:$cell\n";
 		print "pos_x:$min_x\n";
 		print "pos_y:$min_y\n";
 		print "size_x:$size_x\n";
 		print "size_y:$size_y\n";
-#=cut
+=cut
 
 #前もって計算をしておくコンバート処理
 #=pod
-		$min_x = $min_x << 8;
-		$min_y = $min_y << 8;
+		$min_x = $min_x << MCSS_SHIFT;
+		$min_y = $min_y << MCSS_SHIFT;
 		$size_x = $size_x << 12;
 		$size_y = $size_y << 12;
 		$tex_s = ( ( $char_name % 32 ) * 8 ) << 12;
 		$tex_t = ( ( $char_name >> 5 ) * 8 ) << 12;
 
 #デバッグ表示
-#=pod
+=pod
 		$tex_ss = ( ( $char_name % 32 ) * 8 );
 		$tex_tt = ( ( $char_name >> 5 ) * 8 );
 		print "tex_s:$tex_ss\n";
 		print "tex_t:$tex_tt\n\n";
-#=cut
+=cut
 
-		$mepachi_min_x = $mepachi_min_x << 8;
-		$mepachi_min_y = $mepachi_min_y << 8;
+		$mepachi_min_x = $mepachi_min_x << MCSS_SHIFT;
+		$mepachi_min_y = $mepachi_min_y << MCSS_SHIFT;
 		$mepachi_size_x = $mepachi_size_x << 12;
 		$mepachi_size_y = $mepachi_size_y << 12;
 		$mepachi_tex_s = ( ( $mepachi_char % 32 ) * 8 ) << 12;
