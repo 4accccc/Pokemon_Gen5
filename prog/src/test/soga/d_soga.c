@@ -33,6 +33,7 @@
 
 //#define MCS_ENABLE		//MCSを使用する
 #define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
+//#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
 
 #define	PAD_BUTTON_EXIT	( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
@@ -89,6 +90,7 @@ enum{
 
 enum{
 	BMPWIN_MONSNO = 0,
+	BMPWIN_PROJECTION,
 	BMPWIN_SCALE_E,
 	BMPWIN_SCALE_M,
 
@@ -140,8 +142,10 @@ typedef struct
 	int					key_repeat_speed;
 	int					key_repeat_wait;
 	int					ortho_mode;
+	VecFx32				scale;
 }SOGA_WORK;
 
+static	void	TextPrint( SOGA_WORK *wk, int num, int bmpwin_num );
 static	void	NumPrint( SOGA_WORK *wk, int num, int bmpwin_num );
 static	void	Num16Print( SOGA_WORK *wk, int num, int bmpwin_num );
 
@@ -210,6 +214,11 @@ static	const	char	num_char_table[][1]={
 	"F"
 };
 
+static	const	char	ProjectionText[2][12]={
+	"Perspective",
+	"Ortho",
+};
+
 //--------------------------------------------------------------------------
 /**
  * PROC Init
@@ -235,7 +244,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 			GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
 			GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
 			GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-			GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
+			GX_VRAM_TEX_01_BC,				// テクスチャイメージスロット
 			GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット			
 			GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
 			GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
@@ -350,9 +359,10 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 #ifdef	POKEGRA_CHECK
 	{
 		static const GFL_TEXT_PRINTPARAM default_param = { NULL, 0, 0, 1, 1, 1, 0, GFL_TEXT_WRITE_16 };
-		wk->bmpwin[ BMPWIN_MONSNO ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 1, 5, 1, 0, GFL_BG_CHRAREA_GET_B );
-		wk->bmpwin[ BMPWIN_SCALE_E ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 3, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
-		wk->bmpwin[ BMPWIN_SCALE_M ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 4, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_PROJECTION ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 1, 7, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_MONSNO ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 2, 5, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_SCALE_E ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 4, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
+		wk->bmpwin[ BMPWIN_SCALE_M ] = GFL_BMPWIN_Create( GFL_BG_FRAME2_M, 1, 5, 8, 1, 0, GFL_BG_CHRAREA_GET_B );
 
 		wk->textParam = GFL_HEAP_AllocMemory( wk->heapID, sizeof( GFL_TEXT_PRINTPARAM ) );
 		*wk->textParam = default_param;
@@ -482,10 +492,12 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			BOOL pos = FALSE;
 			int	mons_no = wk->mons_no;
 			int	position = wk->position;
+#ifndef SCALE_CHECK
 			VecFx32 scale_m, scale_e;
 	
 			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
 			POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
+#endif
 	
 			if( trg & PAD_BUTTON_R ){
 				if( mons_no + 100 <= MONSNO_MAX ){
@@ -555,6 +567,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 				}
 				pos = TRUE;
 			}
+#ifndef SCALE_CHECK
 			if( rep & PAD_KEY_UP ){
 				scale_m.x--;
 				scale_m.y--;
@@ -583,6 +596,25 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 				scale_e.z++;
 				draw = TRUE;
 			}
+#else
+			if( rep & PAD_KEY_UP ){
+				wk->scale.x--;
+				wk->scale.y--;
+				wk->scale.z--;
+				draw = TRUE;
+				if( wk->scale.x < 0 ){
+					wk->scale.x = 0;
+					wk->scale.y = 0;
+					wk->scale.z = 0;
+				}
+			}
+			if( rep & PAD_KEY_DOWN ){
+				wk->scale.x++;
+				wk->scale.y++;
+				wk->scale.z++;
+				draw = TRUE;
+			}
+#endif
 			if( pad & PAD_BUTTON_START ){
 				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], POKE_MCSS_MEPACHI_ON );
 				POKE_MCSS_SetMepachiFlag( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], POKE_MCSS_MEPACHI_ON );
@@ -593,11 +625,16 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			}
 			if( tp == TRUE ){
 				wk->ortho_mode ^= 1;
+				TextPrint( wk, wk->ortho_mode, BMPWIN_PROJECTION );
 				if( wk->ortho_mode ){
 					POKE_MCSS_SetOrthoMode( wk->pmw );
 				}
 				else{
 					POKE_MCSS_ResetOrthoMode( wk->pmw );
+#ifdef SCALE_CHECK
+//					POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
+//					POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
+#endif
 				}
 			}
 			if( ( mons_no != wk->mons_no ) ||
@@ -608,16 +645,26 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 					wk->mons_no = mons_no;
 					wk->position = position;
 					set_pokemon( wk );
+#ifndef SCALE_CHECK
 					if( pos == TRUE ){
 						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
 						POKE_MCSS_GetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 					}
+#endif
 				}
+#ifndef SCALE_CHECK
 				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &scale_m );
 				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &scale_e );
 				NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
 				Num16Print( wk, scale_m.x, BMPWIN_SCALE_M );
 				Num16Print( wk, scale_e.x, BMPWIN_SCALE_E );
+#else
+				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 0 ], &wk->scale );
+				POKE_MCSS_SetScale( wk->pmw, pokemon_pos_table[ wk->position ][ 1 ], &wk->scale );
+				NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
+				Num16Print( wk, wk->scale.x, BMPWIN_SCALE_M );
+				Num16Print( wk, wk->scale.x, BMPWIN_SCALE_E );
+#endif
 			}
 		}
 		if( trg & PAD_BUTTON_DEBUG ){
@@ -651,7 +698,11 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 			BTL_EFFECT_DelPokemon( POKE_MCSS_POS_D );
 			wk->mons_no = MONSNO_HUSIGIDANE;
 			wk->position = 0;
+			wk->scale.x = 0x0800;
+			wk->scale.y = 0x0800;
+			wk->scale.z = 0x0800;
 			set_pokemon( wk );
+			TextPrint( wk, wk->ortho_mode, BMPWIN_PROJECTION );
 			NumPrint( wk, wk->mons_no, BMPWIN_MONSNO );
 			POKE_MCSS_GetScale( wk->pmw, POKE_MCSS_POS_BB, &scale );
 			Num16Print( wk, scale.x, BMPWIN_SCALE_E );
@@ -759,6 +810,21 @@ const GFL_PROC_DATA		DebugSogabeMainProcData = {
 	DebugSogabeMainProcMain,
 	DebugSogabeMainProcExit,
 };
+
+//======================================================================
+//	テキスト表示
+//======================================================================
+static	void	TextPrint( SOGA_WORK *wk, int num, int bmpwin_num )
+{
+	wk->textParam->writex = 0;
+	wk->textParam->writey = 0;
+	wk->textParam->bmp = GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmpwin[ bmpwin_num ] ), 0 );
+	GFL_TEXT_PrintSjisCode( &ProjectionText[ num ][ 0 ], wk->textParam );
+	GFL_BMPWIN_TransVramCharacter( wk->bmpwin[ bmpwin_num ] );
+	GFL_BMPWIN_MakeScreen( wk->bmpwin[ bmpwin_num ] );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+}
 
 //======================================================================
 //	数字表示
@@ -902,10 +968,12 @@ static	void	set_pokemon( SOGA_WORK *wk )
 #else
 //2vs2
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 1 );
+//		PP_Put( pp, ID_PARA_monsno, MONSNO_RIZAADO );
 		PP_Put( pp, ID_PARA_id_no, 0x10 );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_A );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_B );
 		PP_Put( pp, ID_PARA_monsno, MONSNO_AUSU + 2 );
+//		PP_Put( pp, ID_PARA_monsno, MONSNO_KAMEERU );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_C );
 		BTL_EFFECT_SetPokemon( pp, POKE_MCSS_POS_D );
 //		BTL_EFFECT_SetPokemon( wk->pp, POKE_MCSS_POS_E );
