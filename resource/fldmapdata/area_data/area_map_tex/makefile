@@ -25,7 +25,8 @@ USERS	=	tamada
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-TARGET_ARC	=	area_map_tex.narc
+NARCNAME	=	area_map_tex.narc
+NAIXNAME	=	area_map_tex.naix
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -52,7 +53,7 @@ DQ		="
 #
 #----------------------------------------------------------------------------
 #Makeで生成される*.binはmake cleanの削除対象にする
-LDIRT_CLEAN	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx)
+CLEANFILES	= $(subst $(DQ),,$(NSBTXFILESDIR)/*.nsbtx $(MARGED_TEXIMD_DIR)/*.imd)
 
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
@@ -66,10 +67,10 @@ TEX_MAG = $(PROJECT_ROOT)tools/imdtools/tex_mag/tex_mag.exe
 #	ルール定義
 #
 #----------------------------------------------------------------------------
-do-build: $(TARGETDIR)/$(TARGET_ARC)
+do-build: $(TARGETDIR)/$(NARCNAME)
 
-$(TARGETDIR)/$(TARGET_ARC): $(TARGET_ARC)
-	$(COPY) $(TARGET_ARC) $(TARGETDIR)
+$(TARGETDIR)/$(NARCNAME): $(NARCNAME)
+	$(COPY) $(NARCNAME) $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
 
@@ -84,17 +85,17 @@ NNSARC_DEPEND_FILE	= $(subst $(DQ),,$(NNSARC_DEPEND_FILENAME))
 # nnsarcで固めるデータ指定リスト
 NNSARC_LIST_FILE	= ../$(subst $(DQ),,$(NNSARC_TEXLIST_FILENAME))
 
-$(TARGET_ARC): $(NNSARC_DEPEND_FILES)
-	nnsarc -i -c -l -n $(TARGET_ARC) -S $(NNSARC_LIST_FILE)  > arc_result.txt
+$(NARCNAME): $(NNSARC_DEPEND_FILES)
+	nnsarc -i -c -l -n $(NARCNAME) -S $(NNSARC_LIST_FILE)  > arc_result.txt
 
 endif
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 clean:
-	@-rm $(TARGETDIR)/$(TARGET_ARC)
+	@-rm $(TARGETDIR)/$(NARCNAME)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、バイナリ生成
-	@-rm $(TARGET_ARC)
-	@-rm $(LDIRT_CLEAN)
+	@-rm $(NARCNAME) $(NAIXNAME)
+	@-rm $(CLEANFILES)
 endif
 
