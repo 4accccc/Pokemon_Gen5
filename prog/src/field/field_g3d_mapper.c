@@ -143,24 +143,18 @@ static const GFL_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
 //------------------------------------------------------------------
 FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 {
-	FLDMAPPER* g3Dmapper = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMAPPER) );
 	int i;
+	FLDMAPPER* g3Dmapper = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMAPPER) );
 
 	g3Dmapper->heapID = heapID;
 
-	{
-		GFL_G3D_MAP_SETUP setup;
-
-		setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
-		setup.texVramSize = MAPTEX_SIZE;
-		setup.mapFileFunc = mapFileFuncTbl;
-
-		//ブロック制御ハンドル作成
-		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-			g3Dmapper->g3Dmap[i] = GFL_G3D_MAP_Create( &setup, g3Dmapper->heapID );
-		}
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
+		VEC_Set( &g3Dmapper->blockIdx[i].trans, 0, 0, 0 );
 	}
-	
+	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+		g3Dmapper->g3Dmap[i] = NULL;
+	}
 	VEC_Set( &g3Dmapper->posCont, 0, 0, 0 );
 	g3Dmapper->sizex = 0;
 	g3Dmapper->sizez = 0;
@@ -351,8 +345,28 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	//グローバルテクスチャ作成
 	CreateGlobalTexture( g3Dmapper, resistData );
 	//グローバルオブジェクト作成
-	CreateGlobalObject( g3Dmapper, resistData );
+	//CreateGlobalObject( g3Dmapper, resistData );
 
+	{
+		int i;
+		GFL_G3D_MAP_SETUP setup;
+
+		if (g3Dmapper->globalTexture == NULL) {
+			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
+			setup.texVramSize = 0;
+			setup.mapFileFunc = mapFileFuncTbl;
+		} else {
+			setup.mapDataHeapSize = MAPMDL_SIZE + MAPTEX_SIZE + MAPATTR_SIZE;
+			setup.texVramSize = MAPTEX_SIZE;
+			setup.mapFileFunc = mapFileFuncTbl;
+		}
+
+		//ブロック制御ハンドル作成
+		for( i=0; i<MAP_BLOCK_COUNT; i++ ){
+			g3Dmapper->g3Dmap[i] = GFL_G3D_MAP_Create( &setup, g3Dmapper->heapID );
+		}
+	}
+	
 	//マップブロック制御設定
 	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
 		//新アーカイブＩＤを登録
@@ -370,10 +384,8 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 		GFL_G3D_MAP_ResistFileType( g3Dmapper->g3Dmap[i], resistData->g3DmapFileType );
 		g3Dmapper->g3DmapFileType = resistData->g3DmapFileType;
 	}
-	for( i=0; i<MAP_BLOCK_COUNT; i++ ){
-		g3Dmapper->blockIdx[i].blockIdx = MAPID_NULL;
-		VEC_Set( &g3Dmapper->blockIdx[i].trans, 0, 0, 0 );
-	}
+	//グローバルオブジェクト作成
+	CreateGlobalObject( g3Dmapper, resistData );
 }
 
 void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
