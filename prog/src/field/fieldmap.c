@@ -367,8 +367,9 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 			FX_Whole(fieldWork->now_pos.x),
 			FX_Whole(fieldWork->now_pos.y),
 			FX_Whole(fieldWork->now_pos.z));
-	TAMADA_Printf("TEX:%06x PLT:%04x\n",
-			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetBlankPaletteSize());
+	TAMADA_Printf("TEX:%06x/%06x PLT:%04x/%04x\n",
+			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetVManTextureSize(),
+			DEBUG_GFL_G3D_GetBlankPaletteSize(), DEBUG_GFL_G3D_GetVManPaletteSize());
 }
 
 //------------------------------------------------------------------
@@ -698,9 +699,9 @@ static void	bg_init( FIELD_SETUP* gs )
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 16, 8 );
 	
 	//３Ｄシステム起動
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX384K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						DTCM_SIZE, gs->heapID, G3DsysSetup );
-	DEBUG_GFL_G3D_SetVManSize( GFL_G3D_TEX384K, GFL_G3D_PLT64K );
+	DEBUG_GFL_G3D_SetVManSize( GFL_G3D_TEX256K, GFL_G3D_PLT64K );
 	GFL_BG_SetBGControl3D( G3D_FRM_PRI );
 
 	//ディスプレイ面の選択
