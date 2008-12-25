@@ -300,6 +300,7 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 	switch( testmode->seq ){
 	case 0:
 		//‰Šú‰»
+		testmode->listPosition = 8;
 		testmode->first_draw = FALSE;
 		testmode->seq++;
 		break;
@@ -1034,6 +1035,7 @@ extern const GFL_PROC_DATA DebugGotoMainProcData;
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
 FS_EXTERN_OVERLAY(ariizumi_debug);
 extern const GFL_PROC_DATA DebugAriizumiMainProcData;
+extern const GFL_PROC_DATA MysteryGiftProcData;
 extern const GFL_PROC_DATA DebugDLPlayMainProcData;
 
 extern const GFL_PROC_DATA DebugFieldProcData;
@@ -1101,7 +1103,8 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 		break;
 	case SELECT_ARIIZUMI:
 		//‚ ‚è‚¢‚¸‚Ý
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ariizumi_debug), &DebugAriizumiMainProcData, NULL);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &MysteryGiftProcData, NULL);
+		//GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(ariizumi_debug), &DebugAriizumiMainProcData, NULL);
 		break;
 	case SELECT_DLPLAY:
 		//DownloadPlay
