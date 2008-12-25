@@ -56,7 +56,7 @@ enum {
 
 	// プリントキュー関連定数
 	QUE_DEFAULT_BUFSIZE = 1024,
-	QUE_DEFAULT_TICK = 2200,		///< 通信時、１度の描画処理に使う時間の目安（Tick）デフォルト値
+	QUE_DEFAULT_TICK = 4400,		///< 通信時、１度の描画処理に使う時間の目安（Tick）デフォルト値
 
 };
 
@@ -273,6 +273,20 @@ void PRINTSYS_QUE_Delete( PRINT_QUE* que )
 {
 	GF_ASSERT(que->runningJob==NULL);
 	GFL_HEAP_FreeMemory( que );
+}
+
+//=============================================================================================
+/**
+ * プリントキューが通信中、一度の処理に使う時間（Tick）を設定する
+ *
+ * @param   que			
+ * @param   tick		
+ *
+ */
+//=============================================================================================
+void PRINTSYS_QUE_SetLimitTick( PRINT_QUE* que, OSTick tick )
+{
+	que->limitPerFrame = tick;
 }
 
 //==============================================================================================
