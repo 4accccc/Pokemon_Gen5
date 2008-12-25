@@ -179,6 +179,27 @@ u32  DEBUG_GFL_G3D_GetUsePaletteSize(void)
 	// PALマネージャーが保存しているのは「使用していない量」なので総量から引いて返す
 	return DEBUG_GFL_G3D_GetVManPaletteSize() - size;	
 }
+//==============================================================================
+/**
+ * @brief	VRAM情報をデバッガのコンソールに表示する
+ */
+//==============================================================================
+void DEBUG_GFL_G3D_DumpVramInfo(void)
+{
+	switch (GFL_G3D_GetTextureManagerMode()) {
+	case GFL_G3D_VMANLNK:	OS_Printf("TEX MAN=LNK "); break;
+	case GFL_G3D_VMANFRM:	OS_Printf("TEX MAN=FRM "); break;
+	default:				OS_Printf("TEX MAN=ERR "); break;
+	}
+	switch (GFL_G3D_GetPaletteManagerMode()) {
+	case GFL_G3D_VMANLNK:	OS_Printf("PLT MAN=LNK "); break;
+	case GFL_G3D_VMANFRM:	OS_Printf("PLT MAN=FRM "); break;
+	default:				OS_Printf("PLT MAN=ERR "); break;
+	}
+	OS_Printf("TEX USE:%06x/%06x PLT USE:%04x/%04x\n",
+			DEBUG_GFL_G3D_GetUseTextureSize(), DEBUG_GFL_G3D_GetVManTextureSize(),
+			DEBUG_GFL_G3D_GetUsePaletteSize(), DEBUG_GFL_G3D_GetVManPaletteSize());
+}
 
 #endif	//PM_DEBUG
 
