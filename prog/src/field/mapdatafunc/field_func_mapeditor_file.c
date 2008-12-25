@@ -95,13 +95,9 @@ BOOL FieldLoadMapData_MapEditorFile( GFL_G3D_MAP* g3Dmap )
 							objStatus[i].xpos, objStatus[i].ypos, -objStatus[i].zpos );
 					//DirectXとDSで座標系が逆だから？とりあえず変換
 					status.rotate = 0x10000 - objStatus[i].rotate;
-					OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
+					//OS_Printf("bm id = %d, rotate = %04x\n",i, status.rotate);
 					GFL_G3D_MAP_ResistGlobalObj( g3Dmap, &status, i );
 				}
-			//===========
-			} else {
-				//GFL_G3D_MAP_MakeTestPos( g3Dmap );
-			//===========
 			}
 		}
 		GFL_G3D_MAP_SetTransVramParam( g3Dmap );	//テクスチャ転送設定

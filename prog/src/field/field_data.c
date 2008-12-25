@@ -65,13 +65,14 @@ void FIELDDATA_SetMapperData(
 		map_res->totalSize = matH->size_h * matH->size_v;
 		map_res->blocks = (const FLDMAPPER_MAPDATA *)tbl;
 
-		//部屋のときだけテクスチャをグローバルにしてみる
-		if (area_id == AREA_ID_ROOM) {
-			gTexBuffer.arcID = ARCID_AREA_MAPTEX;
-			gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
-			map_res->gtexType = FLDMAPPER_RESIST_TEXTYPE_USE;
-			map_res->gtexData = &gTexBuffer;
-		}
+	}
+	//標準フィールド以外のときだけテクスチャをグローバルにしてみる
+	if (map_res->g3DmapFileType != FLDMAPPER_FILETYPE_PKGS && area_id != AREA_ID_FIELD) {
+		gTexBuffer.arcID = ARCID_AREA_MAPTEX;
+		gTexBuffer.datID = AREADATA_GetTextureSetID(area_id);
+		TAMADA_Printf("Load Area Texture %d\n", gTexBuffer.datID);
+		map_res->gtexType = FLDMAPPER_RESIST_TEXTYPE_USE;
+		map_res->gtexData = &gTexBuffer;
 	}
 	{
 		TAMADA_Printf("ZONE_ID:%d AREA_ID:%d\n",mapid, area_id);
@@ -186,12 +187,6 @@ static const FLDMAPPER_MAPDATA loopbridgemap[] = {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static const FLDMAPPER_MAPDATA fldmap3dp_test[] = {
-	{ 0 },
-};
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
 #include "fieldmap/all_build_model.naix"
 static const FLDMAPPER_RESISTOBJDATA resistObjTbl2[] = {
 	{ NARC_all_build_model_gate_01_nsbmd, NON_LOWQ},
@@ -277,7 +272,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
 			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
 
-			1,  1, NELEMS(fldmap3dp_test),
+			1,  1, 1,		//dummy map matrix data
 			NULL, 
 		},
 		&FieldGridFunctions,
