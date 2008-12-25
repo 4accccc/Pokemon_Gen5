@@ -85,7 +85,7 @@ u16 AREADATA_GetTextureSetID(u16 area_id)
 {
 	AREADATA adbuf;
 	getAreaData(&adbuf, area_id);
-	return adbuf.model_set_index;
+	return adbuf.tex_set_index;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -93,7 +93,7 @@ u16 AREADATA_GetAnimeSetID(u16 area_id)
 {
 	AREADATA adbuf;
 	getAreaData(&adbuf, area_id);
-	return adbuf.model_set_index;
+	return adbuf.anm_set_index;
 }
 
 //------------------------------------------------------------------
