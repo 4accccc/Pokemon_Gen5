@@ -34,6 +34,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				field/field_g3d_mapper.c \
 				field/mapdatafunc/field_func_mapeditor_file.c \
 				field/mapdatafunc/field_func_pmcustom_file.c \
+				field/mapdatafunc/field_func_wbnormal_file.c \
 				field/mapdatafunc/field_func_bridge_file.c \
 				field/field_net.c	\
 				test/soga/d_soga.c \
