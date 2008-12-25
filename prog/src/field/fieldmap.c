@@ -367,9 +367,7 @@ static void PrintDebugInfo(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWork)
 			FX_Whole(fieldWork->now_pos.x),
 			FX_Whole(fieldWork->now_pos.y),
 			FX_Whole(fieldWork->now_pos.z));
-	TAMADA_Printf("TEX:%06x/%06x PLT:%04x/%04x\n",
-			DEBUG_GFL_G3D_GetBlankTextureSize(), DEBUG_GFL_G3D_GetVManTextureSize(),
-			DEBUG_GFL_G3D_GetBlankPaletteSize(), DEBUG_GFL_G3D_GetVManPaletteSize());
+	DEBUG_GFL_G3D_DumpVramInfo();
 }
 
 //------------------------------------------------------------------
