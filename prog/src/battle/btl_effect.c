@@ -303,7 +303,7 @@ static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -312,9 +312,15 @@ static	void	BTL_EFFECT_TCB_A2BGanseki( GFL_TCB *tcb, void *work )
 		bet->seq_no++;
 		break;
 	case 4:
+		target.y += FX32_ONE * 3;
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -384,7 +390,7 @@ static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -396,6 +402,11 @@ static	void	BTL_EFFECT_TCB_B2AGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -655,7 +666,7 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -667,6 +678,11 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -729,7 +745,7 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -741,6 +757,11 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -1294,7 +1315,7 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1306,6 +1327,11 @@ static	void	BTL_EFFECT_TCB_AA2BBGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
@@ -1374,7 +1400,7 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		}
 		break;
 	case 2:
-		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_w_157_spa, bew->heapID );
+		bet->resource = GFL_PTC_LoadArcResource( ARCID_PTC, NARC_spa_waza_126_spa, bew->heapID );
 		bet->seq_no++;
 		break;
 	//パーティクルセット
@@ -1386,6 +1412,11 @@ static	void	BTL_EFFECT_TCB_BB2AAGanseki( GFL_TCB *tcb, void *work )
 		GFL_PTC_CreateEmitter( bew->ptc, 0, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 1, &target );
 		GFL_PTC_CreateEmitter( bew->ptc, 2, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 3, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 4, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 5, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 6, &target );
+		GFL_PTC_CreateEmitter( bew->ptc, 7, &target );
 		bet->seq_no++;
 		bet->wait = 0;
 		break;
