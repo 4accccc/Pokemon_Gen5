@@ -121,6 +121,7 @@ g_anm_vec = []
 marge_tex_before = []
 
 total_bin_file = File.open(TARGET_BIN_FILENAME, "wb")
+total_txt_file = File.open("area_data.txt", "w")
 
 #1行読み飛ばし
 #line = area_tbl_file.gets
@@ -132,7 +133,6 @@ while line = area_tbl_file.gets
 
 	#エリアＩＤ列挙
 	area_id_h.printf("\t%-24s = %3d,\n",column[COL_AREANAME].upcase, area_count)
-	area_count += 1
 
 	#小文字化
 	bin_file_name = "#{column[COL_AREANAME]}.bin".downcase
@@ -140,16 +140,18 @@ while line = area_tbl_file.gets
 	EntryVec(area_vec, bin_file_name)
 	#binファイル作成
 	#データ書き込み
-	data = EntryVec(build_vec,column[COL_BMNAME])	#モデル
-	FileWrite(total_bin_file,data, "S")
-	data = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
-	FileWrite(total_bin_file,data, "S")
-	data = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
-	FileWrite(total_bin_file,data, "S")
-	data = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
-	FileWrite(total_bin_file,data, "C")
-	data = Getlight(column[COL_LIGHTTYPE])				#ライト
-	FileWrite(total_bin_file,data, "C")
+	bm_id = EntryVec(build_vec,column[COL_BMNAME])	#モデル
+	FileWrite(total_bin_file,bm_id, "S")
+	tex_id = EntryVec(tex_vec,column[COL_TEXNAME])		#テクスチャセット
+	FileWrite(total_bin_file,tex_id, "S")
+	anm_id = EntryVec2(g_anm_vec,column[COL_ANMNAME],"none")	#地形アニメファイル
+	FileWrite(total_bin_file,anm_id, "S")
+	inout = GetInnerOuter(column[COL_INOUT])			#INNER/OUTER
+	FileWrite(total_bin_file,inout, "C")
+	light = Getlight(column[COL_LIGHTTYPE])				#ライト
+	FileWrite(total_bin_file,light, "C")
+	total_txt_file.printf("AREA:%3d BM:%2d TEX:%2d ANM:%2d IO:%d LIGHT:%d\n",
+						  area_count, bm_id, tex_id, anm_id, inout, light);
 
 	#マージ前テクスチャを収集
 	EntryVec(marge_tex_before,column[COL_TEXPART1])	#マージ前テクスチャ1
@@ -157,10 +159,12 @@ while line = area_tbl_file.gets
 	#"dummy"は省く
 	marge_tex_before.delete("dummy")
 	
+	area_count += 1
 	
 end
 
 total_bin_file.close
+total_txt_file.close
 #テイル作成
 area_id_h.printf("\tAREA_ID_MAX\n");
 area_id_h.printf("};")

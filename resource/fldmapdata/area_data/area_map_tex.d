@@ -46,9 +46,9 @@ nsbtx_files/tex_set_room02.nsbtx: src_imd_files/testroom00_00c.imd
 	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_room02.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_room02.imd -o nsbtx_files/tex_set_room02.nsbtx -etex
 
-nsbtx_files/tex_set_room03.nsbtx: src_imd_files/testroom00_00c.imd
-	@echo src_imd_files/testroom00_00c.imd Å® nsbtx_files/tex_set_room03.nsbtx
-	@$(COPY) src_imd_files/testroom00_00c.imd marged_imd_files/tex_set_room03.imd
+nsbtx_files/tex_set_room03.nsbtx: src_imd_files/testpc00_00c.imd
+	@echo src_imd_files/testpc00_00c.imd Å® nsbtx_files/tex_set_room03.nsbtx
+	@$(COPY) src_imd_files/testpc00_00c.imd marged_imd_files/tex_set_room03.imd
 	@$(G3DCVTR) marged_imd_files/tex_set_room03.imd -o nsbtx_files/tex_set_room03.nsbtx -etex
 
 nsbtx_files/tex_set_room04.nsbtx: src_imd_files/testroom00_00c.imd
