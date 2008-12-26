@@ -467,6 +467,9 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 //		wk->clact.resObjTbl[screen][CLACT_U_CHAR_RES] =
 //			CLACT_U_ResManagerResAddArcChar(wk->clact.resMan[CLACT_U_CHAR_RES],
 //							arcfile, arcchar, comp, screen, hwscreen, wk->heapid);
+
+		GFL_ARC_UTIL_TransVramObjCharacter( arcfile, arcchar, screen ,0x800 , 0 , comp , wk->heapid );
+		/*
 		void* arcData;
 		NNSG2dCharacterData* charData;
 		NNS_G2dInitImageProxy( &wk->clact.imgProxy[screen] );
@@ -481,6 +484,7 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 		//オフセットはとりあえず通信アイコン分(0x800
 		NNS_G2dLoadImage1DMapping( charData, 0x800, hwscreen, &wk->clact.imgProxy[screen] );
 		GFL_HEAP_FreeMemory( arcData );
+		*/
 	}
 	//pal読み込み
 	if(arcpal != -1)
