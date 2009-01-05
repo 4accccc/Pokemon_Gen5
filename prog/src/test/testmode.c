@@ -300,7 +300,6 @@ static int TestModeControl( TESTMODE_WORK * testmode )
 	switch( testmode->seq ){
 	case 0:
 		//‰Šú‰»
-		testmode->listPosition = 8;
 		testmode->first_draw = FALSE;
 		testmode->seq++;
 		break;
