@@ -91,7 +91,7 @@ typedef void ( *STAMP_DRAW_FUNC )(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move);
 typedef BOOL (* STAMP_HITCHECK)(STAMP_SYSTEM_WORK *ssw, STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
 
 ///スペシャルエフェクトの動作関数の型
-typedef BOOL (* SPECIAL_EFF_FUNC)(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
+typedef BOOL (* SPECIAL_EFF_FUNC)(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
 
 //==============================================================================
 //	構造体定義
@@ -309,16 +309,16 @@ static BOOL StampHitcheck_BrarX(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP
 static BOOL StampHitcheck_BrarY(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
 static BOOL StampHitcheck_Tare(STAMP_SYSTEM_WORK *ssw,STAMP_MOVE_PTR move,STAMP_MOVE_PTR target);
 
-static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
-static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera);
+static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
+static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera);
 
 //==============================================================================
 //	シーケンステーブル
@@ -565,7 +565,7 @@ BOOL StampSys_Add(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw, const STAMP_PAR
  * @param   ssw		スタンプシステムワークへのポインタ
  */
 //--------------------------------------------------------------
-void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GF_CAMERA_PTR camera_ptr, int game_status, int board_type)
+void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GFL_G3D_CAMERA camera_ptr, int game_status, int board_type)
 {
 	int i;
 	STAMP_MOVE_PTR move;
@@ -2591,7 +2591,7 @@ static BOOL SpecialFlashEff(STAMP_SYSTEM_WORK *ssw, SPECIAL_FLASH_WORK *flash_wo
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_NIJIMI *sp_nijimi = &sp->sp_nijimi;
 	
@@ -2639,7 +2639,7 @@ static BOOL SpecialMove_Nijimi(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_HAJIKE *sp_hajike = &sp->sp_hajike;
 	fx32 value;
@@ -2702,7 +2702,7 @@ static BOOL SpecialMove_Hajike(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_ZIGZAG *sp_zigzag = &sp->sp_zigzag;
 	CAMERA_ANGLE angle = {0,0,0,0};
@@ -2753,7 +2753,7 @@ static BOOL SpecialMove_Zigzag(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_DAKOU *sp_dakou = &sp->sp_dakou;
 	CAMERA_ANGLE angle = {0,0,0,0};
@@ -2804,7 +2804,7 @@ static BOOL SpecialMove_Dakou(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_KISEKI *sp_kiseki = &sp->sp_kiseki;
 	CAMERA_ANGLE angle = {0,0,0,0};
@@ -2855,7 +2855,7 @@ static BOOL SpecialMove_Kiseki(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, G
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_YURE *sp_yure = &sp->sp_yure;
 	fx32 offset;
@@ -2899,7 +2899,7 @@ static BOOL SpecialMove_Yure(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_KAKUDAI *sp_kakudai = &sp->sp_kakudai;
 	
@@ -2947,7 +2947,7 @@ static BOOL SpecialMove_Kakudai(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, 
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_BRAR_X *sp_brar_x = &sp->sp_brar_x;
 	VecFx32 move = {0,0,0};
@@ -2993,7 +2993,7 @@ static BOOL SpecialMove_BrarX(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_BRAR_Y *sp_brar_y = &sp->sp_brar_y;
 	VecFx32 move = {0,0,0};
@@ -3039,7 +3039,7 @@ static BOOL SpecialMove_BrarY(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF
  * @retval  TRUE:終了。　FALSE:エフェクト中
  */
 //--------------------------------------------------------------
-static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GF_CAMERA_PTR camera_ptr)
+static BOOL SpecialMove_Tare(STAMP_SYSTEM_WORK *ssw, STAMP_SPECIAL_WORK *sp, GFL_G3D_CAMERA camera_ptr)
 {
 	SPECIAL_EFF_TARE *sp_tare = &sp->sp_tare;
 	CAMERA_ANGLE angle = {0,0,0,0};

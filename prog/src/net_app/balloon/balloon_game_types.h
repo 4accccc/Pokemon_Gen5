@@ -511,11 +511,12 @@ typedef struct _BALLOON_GAME_WORK{
 #endif
 
 	GFL_TCB* update_tcb;
-	GF_G3DMAN *g3Dman;
 
-	GF_CAMERA_PTR camera;			///<カメラへのポインタ
-	GF_CAMERA_PTR camera_3d;		///<3Dモデル用カメラへのポインタ
-	
+	GFL_G3D_CAMERA camera;			///<カメラへのポインタ
+#if WB_FIX
+	GFL_G3D_CAMERA camera_3d;		///<3Dモデル用カメラへのポインタ
+#endif
+
 	PTC_PTR ptc;					///<パーティクルシステムへのポインタ
 
     // アロケータ

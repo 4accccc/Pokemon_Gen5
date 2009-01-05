@@ -928,8 +928,9 @@ static void BB_SystemInit( BB_WORK* wk )
 	GFL_BG_Init( HEAPID_BB );
 	GFL_BMPWIN_Init( HEAPID_BB );
 	wk->sys.pfd			= PaletteFadeInit( HEAPID_BB );
-	wk->sys.g3Dman		= GF_G3DMAN_Init( HEAPID_BB, GF_G3DMAN_LNK, GF_G3DTEX_128K, GF_G3DMAN_LNK, GF_G3DPLT_64K, NULL );
-	
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+						0x1000, HEAPID_BB, NULL);
+
 	wk->sys.camera_p	= GFC_AllocCamera( HEAPID_BB );
 	BB_disp_CameraSet( wk );
 	
@@ -997,8 +998,8 @@ void BB_SystemExit( BB_WORK* wk )
 	ArchiveDataHandleClose( wk->sys.p_handle_bb );
 	ArchiveDataHandleClose( wk->sys.p_handle_cr );
 	
-	GF_G3D_Exit( wk->sys.g3Dman );
-	GFC_FreeCamera( wk->sys.camera_p );
+	GF_G3D_Exit();
+	GFL_G3D_CAMERA_Delete( wk->sys.camera_p );
 	
 	
 	CATS_ResourceDestructor_S( wk->sys.csp, wk->sys.crp );

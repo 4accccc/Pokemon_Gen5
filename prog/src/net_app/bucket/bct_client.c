@@ -1205,8 +1205,6 @@ typedef struct {
     u16                 msg_no;             // メッセージ完了検査ナンバー
     u16                 msg_speed;          // メッセージスピード
 
-	GF_G3DMAN* p_3dman;
-
     GFL_CLUNIT*           clactSet;                       // セルアクターセット
     CLACT_U_EASYRENDER_DATA renddata;                       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR resMan[BCT_GRA_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
@@ -1215,7 +1213,7 @@ typedef struct {
 
 	FONTOAM_SYS_PTR	p_fontoam_sys;	// FONTOAMのシステム
 
-    GF_CAMERA_PTR p_camera;
+    GFL_G3D_CAMERA p_camera;
     VecFx32 target;
 
 	// メイン画面背景
@@ -5699,8 +5697,8 @@ static void BCT_CLIENT_3DSetUp( void )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_3DInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 plno, u32 heapID )
 {
-	p_wk->p_3dman = GF_G3DMAN_Init( heapID, GF_G3DMAN_LNK, GF_G3DTEX_128K, 
-			GF_G3DMAN_LNK, GF_G3DPLT_64K, BCT_CLIENT_3DSetUp );
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+						0x1000, heapID, BCT_CLIENT_3DSetUp);
 	
     // カメラ設定
     BCT_CLIENT_CameraInit( p_wk, comm_num, plno, heapID );
@@ -5716,7 +5714,7 @@ static void BCT_CLIENT_3DExit( BCT_CLIENT_GRAPHIC* p_wk )
     // カメラ破棄
     BCT_CLIENT_CameraExit( p_wk );
     
-    GF_G3D_Exit( p_wk->p_3dman );
+    GF_G3D_Exit();
 }
 
 //----------------------------------------------------------------------------
@@ -6361,7 +6359,7 @@ static void BCT_CLIENT_CameraInit( BCT_CLIENT_GRAPHIC* p_wk, u32 comm_num, u32 p
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_CameraExit( BCT_CLIENT_GRAPHIC* p_wk )
 {
-    GFC_FreeCamera( p_wk->p_camera );
+    GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 }
 
 //----------------------------------------------------------------------------

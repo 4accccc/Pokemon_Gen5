@@ -611,9 +611,6 @@ typedef struct {
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[WFLBY_ROOM_OAM_RESNUM]; // キャラ・パレットリソースマネージャ
 	NNSG2dCellTransferState*	p_celltransarray;		///< セルVram転送マネージャー領域
-
-	// 3D
-	GF_G3DMAN*		p_3dman;
 } WFLBY_GRAPHICCONT;
 
 
@@ -3019,8 +3016,8 @@ static void WFLBY_ROOM_GraphicInit( WFLBY_GRAPHICCONT* p_sys, SAVE_CONTROL_WORK*
 
 	// 3D設定
 	{
-		p_sys->p_3dman = GF_G3DMAN_Init( heapID, GF_G3DMAN_LNK, GF_G3DTEX_256K, 
-				GF_G3DMAN_LNK, GF_G3DPLT_64K, WFLBY_ROOM_DrawSys3DSetUp );
+		GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+						0x1000, heapID, WFLBY_ROOM_DrawSys3DSetUp);
 	}
 }
 
@@ -3089,7 +3086,7 @@ static void WFLBY_ROOM_GraphicExit( WFLBY_GRAPHICCONT* p_sys )
 
 	// BGの破棄
 	{
-		GF_G3D_Exit( p_sys->p_3dman );
+		GF_G3D_Exit();
 	}
 	
 }

@@ -872,10 +872,6 @@ typedef struct {
     CLACT_U_EASYRENDER_DATA renddata;       // 簡易レンダーデータ
     CLACT_U_RES_MANAGER_PTR p_resman[WLDTIMER_RESMAN_NUM]; // キャラ・パレットリソースマネージャ
 	
-
-	// 3D
-	GF_G3DMAN* p_3dman;
-
 	// アーカイブ
 	ARCHANDLE* p_handle;
 } WLDTIMER_DRAWSYS;
@@ -914,7 +910,7 @@ typedef struct {
 ///	カメラワーク
 //=====================================
 typedef struct {
-	GF_CAMERA_PTR	p_camera;	// カメラオブジェ
+	GFL_G3D_CAMERA	p_camera;	// カメラオブジェ
 	CAMERA_ANGLE	angle;		// カメラアングル
 	fx32			dist;		// カメラ距離
 	u16				status;		// カメラ状態
@@ -2814,8 +2810,8 @@ static void WLDTIMER_DrawSysOamExit( WLDTIMER_DRAWSYS* p_wk )
 static void WLDTIMER_DrawSys3DInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 {
 	// ３D設定
-	p_wk->p_3dman = GF_G3DMAN_Init( heapID, GF_G3DMAN_LNK, GF_G3DTEX_256K, 
-			GF_G3DMAN_LNK, GF_G3DPLT_64K, WLDTIMER_DrawSys3DSetUp );
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+						0x1000, heapID, WLDTIMER_DrawSys3DSetUp);
 
 	// ライト初期化
 	NNS_G3dGlbLightVector(USE_LIGHT_NUM,
@@ -2823,7 +2819,7 @@ static void WLDTIMER_DrawSys3DInit( WLDTIMER_DRAWSYS* p_wk, u32 heapID )
 }
 static void WLDTIMER_DrawSys3DExit( WLDTIMER_DRAWSYS* p_wk )
 {
-    GF_G3D_Exit( p_wk->p_3dman );
+    GF_G3D_Exit();
 }
 static void WLDTIMER_DrawSys3DSetUp( void )
 {
@@ -3327,7 +3323,7 @@ static void WLDTIMER_CameraInit( WLDTIMER_CAMERA* p_wk, WLDTIMER_FLAG flag, u32 
 //-----------------------------------------------------------------------------
 static void WLDTIMER_CameraExit( WLDTIMER_CAMERA* p_wk )
 {
-	GFC_FreeCamera( p_wk->p_camera );
+	GFL_G3D_CAMERA_Delete( p_wk->p_camera );
 }
 
 //----------------------------------------------------------------------------

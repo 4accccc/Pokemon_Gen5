@@ -242,7 +242,6 @@ typedef struct _FOOTPRINT_SYS{
 	
 	PALETTE_FADE_PTR pfd;				///<パレットシステム
 	FONTOAM_SYS_PTR fontoam_sys;		///<フォントOAMシステムへのポインタ
-	GF_G3DMAN *g3Dman;
 	GFL_TCB* update_tcb;					///<Update用TCBへのポインタ
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
@@ -261,7 +260,7 @@ typedef struct _FOOTPRINT_SYS{
 	STRBUF *talk_strbuf;				///<会話メッセージ用バッファ
 	u8 msg_index;						///<メッセージインデックス
 
-	GF_CAMERA_PTR camera;				///<カメラへのポインタ
+	GFL_G3D_CAMERA camera;				///<カメラへのポインタ
 	fx32 world_width;					///<設置されているカメラに表示されているワールド座標の幅
 	fx32 world_height;					///<設置されているカメラに表示されているワールド座標の高さ
 	
@@ -507,9 +506,9 @@ static void BgExit( GF_BGL_INI * ini );
 static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
 static void BmpWinInit( FOOTPRINT_SYS *fps );
 static void BmpWinDelete( FOOTPRINT_SYS *fps );
-static GF_G3DMAN * Footprint_3D_Init(int heap_id);
+static void Footprint_3D_Init(int heap_id);
 static void FootprintSimpleSetUp(void);
-static void Footprint_3D_Exit(GF_G3DMAN *g3Dman);
+static void Footprint_3D_Exit(void);
 static void Footprint_CameraInit(FOOTPRINT_SYS *fps);
 static void Footprint_CameraExit(FOOTPRINT_SYS *fps);
 static void Model3DSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
@@ -612,7 +611,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	fps->ink_calc = fps->ink_now;
 	
 //	simple_3DBGInit(HEAPID_FOOTPRINT);
-	fps->g3Dman = Footprint_3D_Init(HEAPID_FOOTPRINT);
+	Footprint_3D_Init(HEAPID_FOOTPRINT);
 
 	//パレットフェードシステム作成
 	fps->pfd = PaletteFadeInit(HEAPID_FOOTPRINT);
@@ -1059,7 +1058,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	Footprint_CameraExit(fps);
 
 	//simple_3DBGExit();
-	Footprint_3D_Exit(fps->g3Dman);
+	Footprint_3D_Exit();
 
 	//ハンドル閉じる
 	ArchiveDataHandleClose( fps->handle_footprint );
@@ -1776,7 +1775,7 @@ static void Footprint_CameraInit(FOOTPRINT_SYS *fps)
 //--------------------------------------------------------------
 static void Footprint_CameraExit(FOOTPRINT_SYS *fps)
 {
-	GFC_FreeCamera(fps->camera);
+	GFL_G3D_CAMERA_Delete(fps->camera);
 }
 
 //--------------------------------------------------------------
@@ -1945,13 +1944,10 @@ static void BmpWinDelete( FOOTPRINT_SYS *fps )
  * @param   ヒープID
  */
 //--------------------------------------------------------------
-static GF_G3DMAN * Footprint_3D_Init(int heap_id)
+static void Footprint_3D_Init(int heap_id)
 {
-	GF_G3DMAN *g3Dman;
-	
-	g3Dman = GF_G3DMAN_Init(heap_id, GF_G3DMAN_LNK, GF_G3DTEX_256K, 
-		GF_G3DMAN_LNK, GF_G3DPLT_32K, FootprintSimpleSetUp);
-	return g3Dman;
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+						0x1000, heap_id, FootprintSimpleSetUp);
 }
 
 static void FootprintSimpleSetUp(void)
@@ -1978,13 +1974,11 @@ static void FootprintSimpleSetUp(void)
 //--------------------------------------------------------------
 /**
  * @brief   足跡ボード用3DBG終了処理
- *
- * @param   g3Dman		
  */
 //--------------------------------------------------------------
-static void Footprint_3D_Exit(GF_G3DMAN *g3Dman)
+static void Footprint_3D_Exit(void)
 {
-	GF_G3D_Exit(g3Dman);
+	GF_G3D_Exit();
 }
 
 //--------------------------------------------------------------

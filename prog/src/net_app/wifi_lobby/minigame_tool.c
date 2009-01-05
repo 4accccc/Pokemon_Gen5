@@ -718,7 +718,6 @@ typedef struct _MNGM_ENTRYWK{
 ///	3Dシステムワーク
 //=====================================
 typedef struct {
-	GF_G3DMAN*	p_3dman;
 	PTC_PTR		p_ptc;
 	void*		p_ptc_work;
 } MNGM_3DSYS;
@@ -4644,8 +4643,8 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_3DInit( MNGM_3DSYS* p_wk, u32 heapID )
 {
-	p_wk->p_3dman = GF_G3DMAN_Init( heapID, GF_G3DMAN_LNK, GF_G3DTEX_128K, 
-				GF_G3DMAN_LNK, GF_G3DPLT_64K, NULL );
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+						0x1000, heapID, NULL);
 	Particle_SystemWorkInit();		// パーティクル初期化
 }
 
@@ -4660,7 +4659,7 @@ static void MNGM_RESULT_3DExit( MNGM_3DSYS* p_wk )
 {
 	Particle_SystemExitAll();		//  パーティクル破棄
 
-    GF_G3D_Exit( p_wk->p_3dman );
+    GF_G3D_Exit();
 }
 
 //----------------------------------------------------------------------------
@@ -4707,7 +4706,7 @@ static void MNGM_RESULT_3DDraw( MNGM_3DSYS* p_wk )
 static void MNGM_RESULT_3DAnmLoad( MNGM_3DSYS* p_wk, ARCHANDLE* p_handle, u32 dataidx, u32 heapID )
 {
 	void* p_res;
-	GF_CAMERA_PTR p_camera;
+	GFL_G3D_CAMERA p_camera;
 
 	// パーティクルワーク作成
 	p_wk->p_ptc_work = GFL_HEAP_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );

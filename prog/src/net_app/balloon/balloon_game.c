@@ -240,9 +240,9 @@ static const CAMERA_ANGLE BalloonCameraAngle = {
 //	プロトタイプ宣言
 //==============================================================================
 static void BalloonVBlank(void *work);
-static GF_G3DMAN * Balloon_3D_Init(int heap_id);
+static void Balloon_3D_Init(int heap_id);
 static void BalloonSimpleSetUp(void);
-static void Balloon_3D_Exit(GF_G3DMAN *g3Dman);
+static void Balloon_3D_Exit(void);
 static void BalloonUpdate(GFL_TCB* tcb, void *work);
 static void BalloonSys_VramBankSet(void);
 static void BalloonSys_DefaultBmpWinAdd(BALLOON_GAME_WORK *game);
@@ -287,7 +287,7 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air);
 void Air3D_Delete(BALLOON_GAME_PTR game, int air_no, int air_size);
 void Air3D_Update(BALLOON_GAME_PTR game);
 void Air3D_Draw(BALLOON_GAME_PTR game);
-static void Debug_CameraMove(GF_CAMERA_PTR camera);
+static void Debug_CameraMove(GFL_G3D_CAMERA camera);
 static u32 sAllocTex(u32 size, BOOL is4x4comp);
 static u32 sAllocTexPalette(u32 size, BOOL is4pltt);
 
@@ -775,11 +775,8 @@ GFL_PROC_RESULT BalloonGameProc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
     // アロケータ作成
 	sys_InitAllocator(&game->allocator, HEAPID_BALLOON, 32 );
 
-#if WB_FIX
-	game->g3Dman = Balloon_3D_Init(HEAPID_BALLOON);
-#else
+	Balloon_3D_Init(HEAPID_BALLOON);
 	game->g3Dutil = GFL_G3D_UTIL_Create(G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, HEAPID_BALLOON);
-#endif
 
 	game->bsw = pwk;
 #ifdef PM_DEBUG
@@ -1269,7 +1266,7 @@ GFL_PROC_RESULT BalloonGameProc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 
 	//simple_3DBGExit();
-	Balloon_3D_Exit(game->g3Dman);
+	Balloon_3D_Exit();
 	
 	//TCBシステム削除
 	GFL_TCB_Exit( game->tcbsys );
@@ -1329,13 +1326,10 @@ static void BalloonVBlank(void *work)
  * @param   ヒープID
  */
 //--------------------------------------------------------------
-static GF_G3DMAN * Balloon_3D_Init(int heap_id)
+static void Balloon_3D_Init(int heap_id)
 {
-	GF_G3DMAN *g3Dman;
-	
-	g3Dman = GF_G3DMAN_Init(heap_id, GF_G3DMAN_LNK, GF_G3DTEX_128K, 
-		GF_G3DMAN_LNK, GF_G3DPLT_32K, BalloonSimpleSetUp);
-	return g3Dman;
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+						0x1000, heap_id, BalloonSimpleSetUp);
 }
 
 static void BalloonSimpleSetUp(void)
@@ -1362,13 +1356,11 @@ static void BalloonSimpleSetUp(void)
 //--------------------------------------------------------------
 /**
  * @brief   コンテスト用3DBG終了処理
- *
- * @param   g3Dman		
  */
 //--------------------------------------------------------------
-static void Balloon_3D_Exit(GF_G3DMAN *g3Dman)
+static void Balloon_3D_Exit(void)
 {
-	GF_G3D_Exit(g3Dman);
+	GF_G3D_Exit();
 }
 
 //--------------------------------------------------------------
@@ -1382,7 +1374,13 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 {
 	VecFx32	target = { BALLOON_CAMERA_TX, BALLOON_CAMERA_TY, BALLOON_CAMERA_TZ };
 	VecFx32	pos	   = { BALLOON_CAMERA_PX, BALLOON_CAMERA_PY, BALLOON_CAMERA_PZ };
-
+	VecFx32	camup  = { 0, FX32_ONE, 0 };
+	fx32		fovySin;			// 視野角/2の正弦をとった値
+    fx32		fovyCos;			// 視野角/2の余弦をとった値
+	fx32	height, width;			// 高さと幅
+	fx32 aspect;
+	
+#if WB_FIX
 	game->camera = GFC_AllocCamera( HEAPID_BALLOON );
 
 //	GFC_InitCameraTC( &target, &pos, 
@@ -1391,15 +1389,24 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 						BALLOON_CAMERA_PERSPWAY, GF_CAMERA_ORTHO, FALSE, game->camera);
 
 	GFC_SetCameraClip( BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, game->camera);
-	
-	GFC_AttachCamera(game->camera);
 
+	GFC_AttachCamera(game->camera);
 
 	//3Dモデル用カメラ
 	game->camera_3d = GFC_AllocCamera( HEAPID_BALLOON );
 	GFC_InitCameraTDA(&target, MODEL_3D_CAMERA_DISTANCE, &BalloonCameraAngle,
 						BALLOON_CAMERA_PERSPWAY, GF_CAMERA_ORTHO, FALSE, game->camera_3d);
 	GFC_SetCameraClip( BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, game->camera_3d);
+#else
+	fovySin  = FX_SinIdx( BALLOON_CAMERA_PERSPWAY );
+	fovyCos  = FX_CosIdx( BALLOON_CAMERA_PERSPWAY );
+	aspect = FX32_ONE * 4 / 3;
+	height = FX_Mul(FX_Div(fovySin, fovyCos), BALLOON_CAMERA_DISTANCE);
+	width  = FX_Mul(height, aspect);
+	game->camera = GFL_G3D_CAMERA_CreateOrtho(height, -height, -width, width, 
+			BALLOON_CAMERA_NEAR, BALLOON_CAMERA_FAR, 0, 
+			&pos, &camup, &target, HEAPID_BALLOON);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1411,8 +1418,12 @@ static void Balloon_CameraInit(BALLOON_GAME_WORK *game)
 //--------------------------------------------------------------
 static void Balloon_CameraExit(BALLOON_GAME_WORK *game)
 {
+#if WB_FIX
 	GFC_FreeCamera(game->camera);
 	GFC_FreeCamera(game->camera_3d);
+#else
+	GFL_G3D_CAMERA_Delete(game->camera);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -1842,7 +1853,7 @@ static void PlayerName_Erase(BALLOON_GAME_PTR game, int all_erase)
 static void BalloonParticleInit(BALLOON_GAME_PTR game)
 {
 	void *heap;
-	GF_CAMERA_PTR camera_ptr;
+	GFL_G3D_CAMERA camera_ptr;
 	void *resource;
 
 	//パーティクルシステムワーク初期化
@@ -3350,7 +3361,7 @@ static BOOL Server_GamePlayingManage(BALLOON_GAME_PTR game)
  * @param   camera
  */
 //--------------------------------------------------------------
-static void Debug_CameraMove(GF_CAMERA_PTR camera)
+static void Debug_CameraMove(GFL_G3D_CAMERA camera)
 {
 #ifdef PM_DEBUG
 	VecFx32 move = {0,0,0};
