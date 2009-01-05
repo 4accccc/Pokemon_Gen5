@@ -1018,7 +1018,7 @@ typedef struct {
 	s16 wnd1_sy;
 	s16 wnd1_ey;
 
-	TCB_PTR p_tcb;	// Vブランクタスク
+	GFL_TCB* p_tcb;	// Vブランクタスク
 } WLDTIMER_VWND;
 
 
@@ -1091,7 +1091,7 @@ typedef struct {
 ///	メッセージシステム
 //=====================================
 typedef struct {
-	MSGDATA_MANAGER*	p_msgman;		// 基本メッセージ
+	GFL_MSGDATA*	p_msgman;		// 基本メッセージ
 	WORDSET*			p_wordset;		// ワードセット
 	STRBUF*				p_msgstr;		// メッセージバッファ
 	STRBUF*				p_msgtmp;		// メッセージバッファ
@@ -1282,7 +1282,7 @@ static void WLDTIMER_ViewerWndInit( WLDTIMER_VWND* p_wk );
 static void WLDTIMER_ViewerWndExit( WLDTIMER_VWND* p_wk );
 static void WLDTIMER_ViewerWnd0SetPos( WLDTIMER_VWND* p_wk, s16 sy, s16 ey );
 static void WLDTIMER_ViewerWnd1SetPos( WLDTIMER_VWND* p_wk, s16 sy, s16 ey );
-static void WLDTIMER_ViewerWndTcb( TCB_PTR p_tcb, void* p_work );
+static void WLDTIMER_ViewerWndTcb( GFL_TCB* p_tcb, void* p_work );
 
 
 // 国文字列書き込み
@@ -3618,7 +3618,7 @@ static void WLDTIMER_EndMsgInit( WLDTIMER_END_MSG* p_wk, WLDTIMER_DRAWSYS* p_dra
 	}
 
 	// メッセージバッファ
-	p_wk->p_str = STRBUF_Create( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
 
 	// ボタンビットマップ作成
 	p_wk->win = GFL_BMPWIN_Create(
@@ -3652,7 +3652,7 @@ static void WLDTIMER_EndMsgExit( WLDTIMER_END_MSG* p_wk )
 	}
 	
 	// メッセージバッファ破棄
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 	
 	// サブウィンドウタッチワーク破棄
 	TOUCH_SW_FreeWork( p_wk->p_touch_sw );
@@ -4520,7 +4520,7 @@ static void WLDTIMER_ViewerWnd1SetPos( WLDTIMER_VWND* p_wk, s16 sy, s16 ey )
  *	@param	p_work	ワーク
  */
 //-----------------------------------------------------------------------------
-static void WLDTIMER_ViewerWndTcb( TCB_PTR p_tcb, void* p_work )
+static void WLDTIMER_ViewerWndTcb( GFL_TCB* p_tcb, void* p_work )
 {
 	WLDTIMER_VWND* p_wk = p_work;
 
@@ -5447,7 +5447,7 @@ static void WLDTIMER_MsgManInit( WLDTIMER_MSGMAN* p_wk, u32 heapID )
 {
 	// 基本マネージャ作成
 	{
-		p_wk->p_msgman = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,NARC_msg_worldtimer_dat,heapID );
+		p_wk->p_msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_MESSAGE,NARC_message_worldtimer_dat,heapID );
 	}
 
 	// 地域メッセージ
@@ -5456,8 +5456,8 @@ static void WLDTIMER_MsgManInit( WLDTIMER_MSGMAN* p_wk, u32 heapID )
 	}
 
 	// 共有メッセージ領域確保
-	p_wk->p_msgstr = STRBUF_Create( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
-	p_wk->p_msgtmp = STRBUF_Create( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_msgstr = GFL_STR_CreateBuffer( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_msgtmp = GFL_STR_CreateBuffer( WLDTIMER_MSGMAN_STRBUFNUM, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -5471,7 +5471,7 @@ static void WLDTIMER_MsgManExit( WLDTIMER_MSGMAN* p_wk )
 {
 	// 基本マネージャ
 	{
-		MSGMAN_Delete(p_wk->p_msgman);
+		GFL_MSG_Delete(p_wk->p_msgman);
 	}
 
 	// 地域マネージャ
@@ -5480,8 +5480,8 @@ static void WLDTIMER_MsgManExit( WLDTIMER_MSGMAN* p_wk )
 	}
 
 	// 共有メッセージバッファ
-	STRBUF_Delete( p_wk->p_msgstr );
-	STRBUF_Delete( p_wk->p_msgtmp );
+	GFL_STR_DeleteBuffer( p_wk->p_msgstr );
+	GFL_STR_DeleteBuffer( p_wk->p_msgtmp );
 }
 
 //----------------------------------------------------------------------------

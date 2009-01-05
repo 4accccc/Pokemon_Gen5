@@ -764,7 +764,7 @@ static const u8 PlayerNoJointNo_SioBooster[][WFLBY_MINIGAME_MAX] = {
 //	プロトタイプ宣言
 //==============================================================================
 static void BalloonTool_BalloonAffineScaleUpdate(
-	GF_BGL_INI *bgl, BALLOON_STATUS *bst, int player_max);
+	BALLOON_STATUS *bst, int player_max);
 int BalloonTool_AirParcentGet(BALLOON_GAME_PTR game);
 static void BalloonTool_BalloonAffineParamGet(
 	int player_max, int balloon_lv, int air, fx32 *scale_x, fx32 *scale_y);
@@ -774,7 +774,7 @@ static int Air_ParamCreate(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA * air_d
 static BOOL Air_Move(BALLOON_GAME_PTR game, PLAYER_AIR_PARAM *air_param);
 static GFL_CLWK Air_ActorCreate(BALLOON_GAME_PTR game, const AIR_POSITION_DATA *air_posdata);
 static void Exploded_ActorCreate(BALLOON_GAME_PTR game, EXPLODED_PARAM *exploded, BALLOON_STATUS *bst);
-static void BalloonTool_BalloonBGErase(GF_BGL_INI *bgl, BALLOON_STATUS *bst);
+static void BalloonTool_BalloonBGErase(BALLOON_STATUS *bst);
 static GFL_CLWK IconBalloon_ActorCreate(BALLOON_GAME_PTR game, int icon_type, int pos);
 void IconBalloon_AllCreate(BALLOON_GAME_PTR game);
 BOOL IconBalloon_Update(BALLOON_GAME_PTR game);
@@ -825,13 +825,13 @@ static int (* const BoosterMoveSeqTbl[])(BALLOON_GAME_PTR, BOOSTER_WORK *, BOOST
 /**
  * @brief   風船BGを展開する
  *
- * @param   bgl				BGシステムへのポインタ
+ * @param   none
  * @param   player_max		参加人数
  * @param   level			風船のレベル(BALLOON_LEVEL_???)
  * @param   bst				展開した風船のパラメータセット先
  */
 //--------------------------------------------------------------
-void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, int level, BALLOON_STATUS *bst)
+void BalloonTool_BalloonBGSet(int player_max, int level, BALLOON_STATUS *bst)
 {
 	ARCHANDLE* hdl;
 
@@ -840,9 +840,9 @@ void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, int level, BALLOO
 	//ハンドルオープン
 	hdl  = ArchiveDataHandleOpen(ARC_BALLOON_GRA,  HEAPID_BALLOON); 
 
-	ArcUtil_HDL_BgCharSet(hdl, BalloonLevelData[level].ncgr_id, bgl, 
+	ArcUtil_HDL_BgCharSet(hdl, BalloonLevelData[level].ncgr_id, 
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
-	ArcUtil_HDL_ScrnSet(hdl, BalloonLevelData[level].nscr_id, bgl, 
+	ArcUtil_HDL_ScrnSet(hdl, BalloonLevelData[level].nscr_id, 
 		BALLOON_SUBFRAME_BALLOON, 0, 0, 0, HEAPID_BALLOON);
 
 	//ハンドル閉じる
@@ -857,7 +857,7 @@ void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, int level, BALLOO
 	bst->bg_on_req = TRUE;
 	
 	//拡縮率設定
-	BalloonTool_BalloonAffineScaleUpdate(bgl, bst, player_max);
+	BalloonTool_BalloonAffineScaleUpdate(bst, player_max);
 	
 	Snd_SePlay(SE_BALLOON_APPEAR);
 }
@@ -866,11 +866,11 @@ void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, int level, BALLOO
 /**
  * @brief   風船BGを消去する
  *
- * @param   bgl		BGシステムへのポインタ
+ * @param   none
  * @param   bst		風船パラメータへのポインタ
  */
 //--------------------------------------------------------------
-static void BalloonTool_BalloonBGErase(GF_BGL_INI *bgl, BALLOON_STATUS *bst)
+static void BalloonTool_BalloonBGErase(BALLOON_STATUS *bst)
 {
 	GFL_BG_ClearScreen(BALLOON_SUBFRAME_BALLOON);
 	bst->occ = FALSE;
@@ -881,12 +881,12 @@ static void BalloonTool_BalloonBGErase(GF_BGL_INI *bgl, BALLOON_STATUS *bst)
 /**
  * @brief   風船の拡縮率を現在の空気量で更新
  *
- * @param   bgl			BGシステムへのポインタ
+ * @param   none
  * @param   bst			風船パラメータへのポインタ
  * @param   player_max	参加人数
  */
 //--------------------------------------------------------------
-static void BalloonTool_BalloonAffineScaleUpdate(GF_BGL_INI *bgl, BALLOON_STATUS *bst, int player_max)
+static void BalloonTool_BalloonAffineScaleUpdate(BALLOON_STATUS *bst, int player_max)
 {
 	fx32 scale_x, scale_y;
 	int x_offset, y_offset;
@@ -941,11 +941,11 @@ static void BalloonTool_BalloonAffineScaleUpdate(GF_BGL_INI *bgl, BALLOON_STATUS
 		rScale_x = FX_Inv(scale_x);
 		rScale_y = FX_Inv(scale_y);
 
-		GF_BGL_ScaleSetReq(bgl, BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_X_SET, rScale_x);
-		GF_BGL_ScaleSetReq(bgl, BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_Y_SET, rScale_y);
+		GF_BGL_ScaleSetReq(BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_X_SET, rScale_x);
+		GF_BGL_ScaleSetReq(BALLOON_SUBFRAME_BALLOON, GF_BGL_SCALE_Y_SET, rScale_y);
 
-		GF_BGL_ScrollReq(bgl, BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0-x_offset + shake_x);
-		GF_BGL_ScrollReq(bgl, BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 + 7 - y_offset);
+		GF_BGL_ScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0-x_offset + shake_x);
+		GF_BGL_ScrollReq(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 + 7 - y_offset);
 	}
 #else
 	{
@@ -959,8 +959,8 @@ static void BalloonTool_BalloonAffineScaleUpdate(GF_BGL_INI *bgl, BALLOON_STATUS
 	    mtx22._10 = 0;
 	    mtx22._11 = rScale_y;
 		
-		GF_BGL_AffineScrollSet(bgl, BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0 - x_offset, &mtx22, 0, 0);
-		GF_BGL_AffineScrollSet(bgl, BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 - y_offset, &mtx22, 0, 0);
+		GF_BGL_AffineScrollSet(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_X_SET, 0 - x_offset, &mtx22, 0, 0);
+		GF_BGL_AffineScrollSet(BALLOON_SUBFRAME_BALLOON, GFL_BG_SCROLL_Y_SET, (256-192)/2 - y_offset, &mtx22, 0, 0);
 	}
 #endif
 }
@@ -1068,17 +1068,17 @@ static int BalloonTool_AirUpdate(BALLOON_STATUS *bst)
 /**
  * @brief   風船更新処理
  *
- * @param   bgl		BGシステムへのポインタ
+ * @param   none
  * @param   bst		風船パラメータへのポインタ
  */
 //--------------------------------------------------------------
-void BalloonTool_BalloonUpdate(BALLOON_GAME_PTR game, GF_BGL_INI *bgl, BALLOON_STATUS *bst)
+void BalloonTool_BalloonUpdate(BALLOON_GAME_PTR game, BALLOON_STATUS *bst)
 {
 	if(game->balloon_occ == FALSE){
 		return;
 	}
 	BalloonTool_AirUpdate(bst);
-	BalloonTool_BalloonAffineScaleUpdate(bgl, bst, game->bsw->player_max);
+	BalloonTool_BalloonAffineScaleUpdate(bst, game->bsw->player_max);
 }
 
 //--------------------------------------------------------------
@@ -1664,7 +1664,7 @@ BOOL BalloonTool_ExplodedParamAdd(BALLOON_GAME_PTR game)
 	Exploded_ActorCreate(game, &game->exploded_param, &game->bst);
 	
 	//風船BG消去
-	BalloonTool_BalloonBGErase(game->bgl, &game->bst);
+	BalloonTool_BalloonBGErase(&game->bst);
 	
 	//風船アイコン爆発アニメ
 	IconBalloon_ExplodedReq(game);
@@ -1930,8 +1930,8 @@ void BalloonTool_NameWindowPalNoSwap(BALLOON_GAME_PTR game)
 	
 	switch(game->bsw->player_max){
 	case 3:	//問題があるのは3人の時だけ。(2人、4人は元データのままでOK)
-		GF_BGL_ScrPalChange(game->bgl, BALLOON_SUBFRAME_WIN, 0, 13, 12, 4, NAME_WIN_PALNO_YELLOW);
-		GF_BGL_ScrPalChange(game->bgl, BALLOON_SUBFRAME_WIN, 0x14, 13, 12, 4, NAME_WIN_PALNO_BLUE);
+		GF_BGL_ScrPalChange(BALLOON_SUBFRAME_WIN, 0, 13, 12, 4, NAME_WIN_PALNO_YELLOW);
+		GF_BGL_ScrPalChange(BALLOON_SUBFRAME_WIN, 0x14, 13, 12, 4, NAME_WIN_PALNO_BLUE);
 		break;
 	}
 }
@@ -3010,7 +3010,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
 /**
  * @brief   メイン画面のフォントOAMを作成する
  *
- * @param   bgl				BGLへのポインタ
+ * @param   none
  * @param   crp				crpへのポインタ
  * @param   fontoam_sys		フォントシステムへのポインタ
  * @param   ret_fontoam		生成したフォントOAM代入先
@@ -3029,7 +3029,7 @@ static BOOL SioBoosterMove_Appear(SIO_BOOSTER_WORK *sio_booster, SIO_BOOSTER_MOV
  */
 //--------------------------------------------------------------
 #if WB_TEMP_FIX
-void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp, 
+void BalloonTool_FontOamCreate(CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
 	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len)
@@ -3054,7 +3054,7 @@ void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp,
 	//BMP作成
 	{
 		GF_BGL_BmpWinInit(&bmpwin);
-		GF_BGL_BmpWinObjAdd(bgl, &bmpwin, char_len, y_char_len, 0, 0);
+		GF_BGL_BmpWinObjAdd(&bmpwin, char_len, y_char_len, 0, 0);
 		GF_STR_PrintExpand(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, 
 			margin, 0, NULL);
 //		GF_STR_PrintColor(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, NULL );
@@ -3358,12 +3358,12 @@ void CounterDummyNumber_ActorCreate(BALLOON_GAME_PTR game)
 		GF_ASSERT(game->counter.fontact_dummy[i].fontoam == NULL);
 		str0 = MSGMAN_AllocString(game->msgman, msg_balloon_num0 + (number % 10));
 		number /= 10;
-		BalloonTool_FontOamCreate(game->bgl, game->crp, game->fontoam_sys,
+		BalloonTool_FontOamCreate(game->crp, game->fontoam_sys,
 			&game->counter.fontact_dummy[i], str0, FONT_SYSTEM, 
 			COUNTER_FONT_COLOR, 0, PLTTID_COUNTER, 
 			(COUNTER_BASE_X + COUNTER_X_SPACE * (BALLOON_COUNTER_KETA_MAX-1)) - i*COUNTER_X_SPACE,
 			COUNTER_Y, FALSE, BALLOON_BGPRI_DUMMY_COUNTER, BALLOON_SOFTPRI_COUNTER, 2*1);
-		STRBUF_Delete(str0);
+		GFL_STR_DeleteBuffer(str0);
 	}
 #endif
 }

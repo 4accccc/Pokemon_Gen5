@@ -203,8 +203,8 @@ extern BOOL MNGM_ERROR_DisconnectWait( const MNGM_ENRES_PARAM* cp_commparam );
 //=====================================
 extern MNGM_COUNTWK* MNGM_COUNT_Init( GFL_CLUNIT* p_clset, u32 heapID );
 extern void MNGM_COUNT_Exit( MNGM_COUNTWK* p_wk );
-extern void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk );
-extern void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk );
+extern void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys );
+extern void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys );
 extern BOOL MNGM_COUNT_Wait( const MNGM_COUNTWK* p_wk );
 extern int MNGM_PalNoGet( MNGM_COUNTWK* p_wk );
 

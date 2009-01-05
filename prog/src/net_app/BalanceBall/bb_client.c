@@ -25,8 +25,8 @@ static void BB_Client_LevelUp_Action_Call( BB_CLIENT* wk, int netid );
 static void BB_Client_3D_LevelUp_Action_Call( BB_CLIENT* wk, int netid );
 static void BB_Manene_3D_Fall_Call( BB_CLIENT* wk );
 static void BB_Client_Manene_3D_RecoverAction_Call( BB_CLIENT* wk );
-static void BB_Client_LevelUp_Action_TCB( TCB_PTR tcb, void* work );
-static void BB_Client_3D_LevelUp_Action_TCB( TCB_PTR tcb, void* work );
+static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work );
+static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work );
 static void BB_Client_ScoreUpMain( BB_CLIENT* wk );
 static void BB_Client_BonusPoint( BB_CLIENT* wk );
 static BOOL BB_Client_LevelUpMain( BB_CLIENT* wk );
@@ -93,7 +93,7 @@ s16 Action_MoveValue_2Y( void )
  *
  */
 //--------------------------------------------------------------
-BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys )
+BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys, GFL_TCBSYS *tcbsys )
 {
 	BB_CLIENT* wk = GFL_HEAP_AllocMemory( HEAPID_BB, sizeof( BB_CLIENT ) );
 	
@@ -105,7 +105,8 @@ BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys )
 	wk->seq2	 = 0;
 	wk->sys		 = sys;
 	wk->bAction	 = FALSE;
-
+	wk->tcbsys = tcbsys;
+	
 	///< 個人エフェクト管理ワーク作成
 	{
 		wk->eff_sys.old_level = wk->game_sys.level;
@@ -299,7 +300,7 @@ static void BB_Client_Manene_Action_Call( BB_CLIENT* wk, int netid )
 
 	sub_wk->sys = wk->sys;	//  切断終了のため追加	tomoya 
 
-	TCB_Add( BB_Client_Manene_Action_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Client_Manene_Action_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 
@@ -332,7 +333,7 @@ static void BB_Client_LevelUp_Action_Call( BB_CLIENT* wk, int netid )
 
 	sub_wk->sys = wk->sys;	// 切断エラーチェック用
 	
-	TCB_Add( BB_Client_LevelUp_Action_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Client_LevelUp_Action_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 static void BB_Client_3D_LevelUp_Action_Call( BB_CLIENT* wk, int netid )
@@ -352,7 +353,7 @@ static void BB_Client_3D_LevelUp_Action_Call( BB_CLIENT* wk, int netid )
 	sub_wk->seq = 0;
 	sub_wk->type = 0;	
 	sub_wk->sys	= wk->sys;
-	TCB_Add( BB_Client_3D_LevelUp_Action_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Client_3D_LevelUp_Action_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 //--------------------------------------------------------------
@@ -386,7 +387,7 @@ static void BB_Manene_3D_Fall_Call( BB_CLIENT* wk )
 	D3DOBJ_AnmSet( &wk->bb3d_mane[ 1 ].anm[ 0 ], 0 );
 	D3DOBJ_AnmSet( &wk->bb3d_mane[ 2 ].anm[ 0 ], 0 );
 	
-	TCB_Add( BB_Manene_3D_Fall_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Manene_3D_Fall_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 
@@ -413,7 +414,7 @@ static void BB_Client_Manene_3D_RecoverAction_Call( BB_CLIENT* wk )
 
 	sub_wk->sys = wk->sys;	//  切断終了のため追加	tomoya 
 	
-	TCB_Add( BB_Client_Manene_3D_Recover_Action_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( wk->tcbsys, BB_Client_Manene_3D_Recover_Action_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 
@@ -428,7 +429,7 @@ static void BB_Client_Manene_3D_RecoverAction_Call( BB_CLIENT* wk )
  *
  */
 //--------------------------------------------------------------
-void BB_Manene_3D_Fall_TCB( TCB_PTR tcb, void* work )
+void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_MANENE_3D_ACTION* wk = work;	
 
@@ -583,7 +584,7 @@ void BB_Manene_3D_Fall_TCB( TCB_PTR tcb, void* work )
 }
 
 
-void BB_Client_Manene_3D_Recover_Action_TCB( TCB_PTR tcb, void* work )
+void BB_Client_Manene_3D_Recover_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_MANENE_3D_ACTION* wk = work;	
 
@@ -652,7 +653,7 @@ void BB_Client_Manene_3D_Recover_Action_TCB( TCB_PTR tcb, void* work )
  *
  */
 //--------------------------------------------------------------
-void BB_Client_Manene_Action_TCB( TCB_PTR tcb, void* work )
+void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_MANENE_ACTION* wk = work;
 	
@@ -727,7 +728,7 @@ void BB_Client_Manene_Action_TCB( TCB_PTR tcb, void* work )
  *
  */
 //--------------------------------------------------------------
-static void BB_Client_LevelUp_Action_TCB( TCB_PTR tcb, void* work )
+static void BB_Client_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_LEVEL_UP* wk = work;
 
@@ -835,7 +836,7 @@ static const int anime[ ][ 2 ] = {
 	{ NARC_manene_hikari_josho_nsbca, NARC_manene_hikari_josho_nsbta },
 	{ NARC_manene_hikari_josho_nsbca, NARC_manene_hikari_josho_nsbta },
 };
-static void BB_Client_3D_LevelUp_Action_TCB( TCB_PTR tcb, void* work )
+static void BB_Client_3D_LevelUp_Action_TCB( GFL_TCB* tcb, void* work )
 {
 	int level_tmp;
 	BB_LEVEL_UP* wk = work;

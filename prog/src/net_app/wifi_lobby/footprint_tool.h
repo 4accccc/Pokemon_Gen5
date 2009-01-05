@@ -23,7 +23,7 @@ enum{
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id);
+extern void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id);
 extern void FootPrintTool_NameErase(GFL_BMPWIN *win[], u32 user_index);
 extern u16 FootprintTool_StampColorGet(int board_type, u32 oya_id);
 extern int FootprintTool_InkPalTouchUpdate(STAMP_PARAM *my_stamp_array, int now_select_no);

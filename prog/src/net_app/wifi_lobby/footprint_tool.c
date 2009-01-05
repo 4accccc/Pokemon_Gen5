@@ -73,7 +73,7 @@ static const RECT_HIT_TBL InkPaletteTouchData[] = {
  * @param   user_index		サブチャンネルのユーザーID
  */
 //--------------------------------------------------------------
-void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id)
+void FootPrintTool_NameDraw(GFL_MSGDATA *msgman, WORDSET *wordset, GFL_BMPWIN *win[], WFLBY_SYSTEM *wflby_sys, s32 user_id)
 {
 	const WFLBY_USER_PROFILE* wup;
 	MYSTATUS *my_status;
@@ -114,7 +114,7 @@ void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GFL_BMPWI
 	
 	WORDSET_RegisterWord(wordset, 0, name_src, sex, TRUE, PM_LANG);
 	message_src = MSGMAN_AllocString(msgman, msg_footprint_name);
-	expand_src = STRBUF_Create(expand_len, HEAPID_FOOTPRINT);
+	expand_src = GFL_STR_CreateBuffer(expand_len, HEAPID_FOOTPRINT);
 	WORDSET_ExpandStr(wordset, expand_src, message_src);
 
 	GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win[user_index]), 0x00);
@@ -128,9 +128,9 @@ void FootPrintTool_NameDraw(MSGDATA_MANAGER *msgman, WORDSET *wordset, GFL_BMPWI
 		MSG_ALLPUT, print_color, NULL);
 	GF_BGL_BmpWinOn(&win[user_index]);
 	
-	STRBUF_Delete(name_src);
-	STRBUF_Delete(message_src);
-	STRBUF_Delete(expand_src);
+	GFL_STR_DeleteBuffer(name_src);
+	GFL_STR_DeleteBuffer(message_src);
+	GFL_STR_DeleteBuffer(expand_src);
 	
 	GFL_HEAP_FreeMemory(my_status);
 }

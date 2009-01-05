@@ -1199,7 +1199,7 @@ typedef struct {
 typedef struct {
     GF_BGL_INI*         p_bgl;              // GF_BGL_INI
     WORDSET*            p_wordset;          // メッセージ展開用ワークマネージャー
-    MSGDATA_MANAGER*    p_msgman;           // メッセージデータマネージャー
+    GFL_MSGDATA*    p_msgman;           // メッセージデータマネージャー
     STRBUF*             p_msgstr;           // メッセージ用文字列バッファ
     STRBUF*             p_msgtmp;           // メッセージ用文字列バッファ
     u16                 msg_no;             // メッセージ完了検査ナンバー
@@ -1288,10 +1288,10 @@ typedef struct _BCT_CLIENT{
 
 	BCT_CLIENT_MIDDLE_SCORE	middle_score;		// 途中の得点管理システム
 
-	
 	// FEVERエフェクト
 	BCT_CLIENT_FEVER_EFF_WK fever_eff;
 
+	GFL_TCBSYS *tcbsys;							//BUCKET_WKが持つtcbsysのポインタ
 } ;
 
 
@@ -1362,7 +1362,7 @@ static void BCT_CLIENT_ScoreEffectWkEnd( BCT_CLIENT_SCORE_EFFECT_WK* p_wk, u32 i
 // 開始ワーク
 static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, const BCT_GAMEDATA* cp_param, u32 commnum, u32 myplno, ARCHANDLE* p_handle, u32 heapID );
 static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
-static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
+static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, GFL_TCBSYS *tcbsys );
 static BOOL BCT_CLIENT_StartSysCountDown( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
 static void BCT_CLIENT_StartSysDrawOff( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
 static void BCT_CLIENT_StartSysMarunomuChange( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys );
@@ -1601,7 +1601,7 @@ static void BCT_CLIENT_FEVER_EFF_Reset( BCT_CLIENT_FEVER_EFF_WK* p_wk );
  *  @return 作成したワーク
  */
 //-----------------------------------------------------------------------------
-BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, BCT_GAMEDATA* cp_gamedata )
+BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, BCT_GAMEDATA* cp_gamedata, GFL_TCBSYS *tcbsys )
 {
     BCT_CLIENT* p_wk;
 	u32 check;
@@ -1615,7 +1615,7 @@ BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, B
     p_wk->comm_num			= comm_num;
 	p_wk->plno				= plno;
 	p_wk->cp_gamedata		= cp_gamedata;
-    
+    p_wk->tcbsys			= tcbsys;
 
     // マルノーム初期化
     BCT_CLIENT_MarunomuInit( p_wk, &p_wk->marunomu );
@@ -1753,7 +1753,7 @@ BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event )
         break;
 
     case BCT_STARTSEQ_TEXTINIT:     // テキストの準備
-        BCT_CLIENT_StartSysCountDownInit( &p_wk->graphic.start, &p_wk->graphic );
+        BCT_CLIENT_StartSysCountDownInit( &p_wk->graphic.start, &p_wk->graphic, p_wk->tcbsys );
 		Snd_SePlay( BCT_SND_COUNT );
         p_wk->graphic.start.seq = BCT_STARTSEQ_COUNTDOWNWAIT;
         break;
@@ -1818,7 +1818,7 @@ BOOL BCT_CLIENT_EndMain( BCT_CLIENT* p_wk, u32 event )
 		BCT_CLIENT_EndSysMarunomuAnmChg( &p_wk->graphic );
 
 		// タイムアップ
-		MNGM_COUNT_StartTimeUp( p_wk->graphic.p_countwk );
+		MNGM_COUNT_StartTimeUp( p_wk->graphic.p_countwk, p_wk->tcbsys );
 
 		// BGMを元に戻す
 		BCT_CLIENT_FEVER_EFF_Reset( &p_wk->fever_eff );
@@ -2783,12 +2783,12 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
             BCT_GRA_STARTWIN_SIZX*8, BCT_GRA_STARTWIN_SIZY*8 );
 
     // メッセージを書き込む
-    p_str = STRBUF_Create( BCT_STRBUF_NUM, heapID );
+    p_str = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
     MSGMAN_GetString( p_drawsys->p_msgman, msg_a_001, p_str );
     GF_STR_PrintColor( &p_graphic->helpwin, FONT_SYSTEM, p_str, 
             BCT_GRA_STARTWIN_MSGX, BCT_GRA_STARTWIN_MSGY,
             MSG_NO_PUT, BCT_COL_N_BLACK, NULL);
-    STRBUF_Delete( p_str );
+    GFL_STR_DeleteBuffer( p_str );
 
 
 	// 名前スクリーン読み込み
@@ -2818,7 +2818,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 		GFL_BMPWIN_MakeScreen(namebmpwin);
 		namebmp_cgx = BCT_START_NAME_BMP_WINCGX_START;
 
-		p_namestr = STRBUF_Create( BCT_START_NAME_STRBUF_NUM, heapID );
+		p_namestr = GFL_STR_CreateBuffer( BCT_START_NAME_STRBUF_NUM, heapID );
 
 		for( i=0; i<commnum; i++ ){
 			// 自分の名前はださない
@@ -2852,7 +2852,7 @@ static void BCT_CLIENT_StartSysInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
 			}
 		}
 
-		STRBUF_Delete( p_namestr );
+		GFL_STR_DeleteBuffer( p_namestr );
 
 		GF_BGL_BmpWinDel( &namebmpwin );
 	}
@@ -2892,7 +2892,7 @@ static void BCT_CLIENT_StartSysExit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_G
  *  @param  p_drawsys       描画システム
  */
 //-----------------------------------------------------------------------------
-static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys )
+static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT_CLIENT_GRAPHIC* p_drawsys, GFL_TCBSYS *tcbsys )
 {
     // グラフィックの表示ON
     BmpMenuWinWrite(&p_graphic->helpwin, WINDOW_TRANS_ON,
@@ -2902,7 +2902,7 @@ static void BCT_CLIENT_StartSysCountDownInit( BCT_COUNTDOWN_DRAW* p_graphic, BCT
     GF_Disp_GX_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 
 	//  カウントダウン開始
-	MNGM_COUNT_StartStart( p_drawsys->p_countwk );
+	MNGM_COUNT_StartStart( p_drawsys->p_countwk, tcbsys );
 }
 
 //----------------------------------------------------------------------------
@@ -6285,10 +6285,10 @@ static void BCT_CLIENT_MainOamExit( BCT_CLIENT_GRAPHIC* p_wk )
 static void BCT_CLIENT_MsgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 {
     p_wk->p_wordset = WORDSET_Create( heapID );
-    p_wk->p_msgman = MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_lobby_minigame1_dat, heapID );
+    p_wk->p_msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_lobby_minigame1_dat, heapID );
 
-    p_wk->p_msgstr = STRBUF_Create( BCT_STRBUF_NUM, heapID );
-    p_wk->p_msgtmp = STRBUF_Create( BCT_STRBUF_NUM, heapID );
+    p_wk->p_msgstr = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
+    p_wk->p_msgtmp = GFL_STR_CreateBuffer( BCT_STRBUF_NUM, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -6300,9 +6300,9 @@ static void BCT_CLIENT_MsgInit( BCT_CLIENT_GRAPHIC* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void BCT_CLIENT_MsgExit( BCT_CLIENT_GRAPHIC* p_wk )
 {
-    STRBUF_Delete( p_wk->p_msgtmp );
-    STRBUF_Delete( p_wk->p_msgstr );
-    MSGMAN_Delete( p_wk->p_msgman );
+    GFL_STR_DeleteBuffer( p_wk->p_msgtmp );
+    GFL_STR_DeleteBuffer( p_wk->p_msgstr );
+    GFL_MSG_Delete( p_wk->p_msgman );
     WORDSET_Delete( p_wk->p_wordset );
 }
 
@@ -8381,7 +8381,7 @@ static void BCT_CLIENT_NUTS_COUNT_Init( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 		FONTOAM_INIT fontoam_init;
 
 		// 文字列バッファ作成
-		p_wk->p_str = STRBUF_Create( 16, heapID );
+		p_wk->p_str = GFL_STR_CreateBuffer( 16, heapID );
 		
 		// ビットマップ
 		GF_BGL_BmpWinObjAdd( p_gra->p_bgl, 
@@ -8477,7 +8477,7 @@ static void BCT_CLIENT_NUTS_COUNT_Exit( BCT_CLIENT_NUTS_COUNT* p_wk, BCT_CLIENT_
 		FONTOAM_OAMDATA_Free( p_wk->p_fontoam_data );
 		
 		// 文字列バッファ破棄
-		STRBUF_Delete( p_wk->p_str );
+		GFL_STR_DeleteBuffer( p_wk->p_str );
 	}
 
 	// テーブル破棄

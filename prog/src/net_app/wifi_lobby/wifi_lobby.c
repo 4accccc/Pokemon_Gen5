@@ -64,7 +64,7 @@ typedef struct {
 	SAVE_CONTROL_WORK*		p_save;		// セーブデータ
 	WFLBY_SYSTEM*	p_commsys;	// WiFiロビー共通処理システム
 	WFLBY_APL*		p_apl;		// WiFiロビーアプリ管理システム
-	TCB_PTR p_vtcb;				// VBLANKTCB
+	GFL_TCB* p_vtcb;				// VBLANKTCB
 } WFLBY_WK;
 
 
@@ -74,7 +74,7 @@ typedef struct {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static void WFLBY_VBlankFunc( TCB_PTR p_tcb, void* p_work );
+static void WFLBY_VBlankFunc( GFL_TCB* p_tcb, void* p_work );
 
 
 //----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ GFL_PROC_RESULT WFLBYProc_Exit( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_VBlankFunc( TCB_PTR p_tcb, void* p_work )
+static void WFLBY_VBlankFunc( GFL_TCB* p_tcb, void* p_work )
 {
 	WFLBY_WK* p_wk;
 	p_wk = p_work;

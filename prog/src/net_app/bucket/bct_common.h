@@ -13,6 +13,7 @@
 #define __BCT_COMMON_H__
 
 #include "savedata/mystatus.h"
+#include <tcb.h>
 
 // デバック定数
 #ifdef PM_DEBUG

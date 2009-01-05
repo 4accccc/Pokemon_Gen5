@@ -1974,16 +1974,16 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 			STRBUF* p_name;
 			STRBUF* p_name_tmp;
 
-			p_name_tmp	= STRBUF_Create( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
-			p_name		= STRBUF_Create( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
+			p_name_tmp	= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
+			p_name		= GFL_STR_CreateBuffer( (PERSON_NAME_SIZE + EOM_SIZE)*4, heapID );
 			MyStatus_CopyNameString( p_buff, p_name );
 			result = FontProc_ErrorStrCheck( FONT_SYSTEM, p_name, p_name_tmp );
 			if( result == FALSE ){
 				set_dummy = TRUE;
 			}
 			
-			STRBUF_Delete( p_name_tmp );
-			STRBUF_Delete( p_name );
+			GFL_STR_DeleteBuffer( p_name_tmp );
+			GFL_STR_DeleteBuffer( p_name );
 		}
 		
 	}else{
@@ -1994,13 +1994,13 @@ void WFLBY_SYSTEM_GetProfileMyStatus( const WFLBY_USER_PROFILE* cp_profile, MYST
 
 	// ダミーの名前を設定
 	if( set_dummy ){
-		MSGDATA_MANAGER*  p_msgman;
+		GFL_MSGDATA*  p_msgman;
 		STRBUF* p_str;
-		p_msgman	= MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, NARC_msg_wifi_hiroba_dat, heapID );
+		p_msgman	= GFL_MSG_Create( MSGMAN_TYPE_DIRECT, ARCID_MESSAGE, NARC_message_wifi_hiroba_dat, heapID );
 		p_str		= MSGMAN_AllocString( p_msgman, msg_hiroba_profile_15 );
 		MyStatus_SetMyNameFromString( p_buff, p_str );
-		STRBUF_Delete( p_str );
-		MSGMAN_Delete( p_msgman );
+		GFL_STR_DeleteBuffer( p_str );
+		GFL_MSG_Delete( p_msgman );
 	}
 
 	
@@ -4573,7 +4573,7 @@ static void WFLBY_SYSTEM_InitProfile( WFLBY_USER_MYPROFILE* p_myprofile, SAVE_CO
 		// 送受信するプロフィールの名前
 		STRBUF_GetStringCode( p_name, p_myprofile->profile.name, PERSON_NAME_SIZE + EOM_SIZE );
 		STRBUF_GetStringCode( p_name, p_myprofile->def_name, PERSON_NAME_SIZE + EOM_SIZE );
-		STRBUF_Delete( p_name );
+		GFL_STR_DeleteBuffer( p_name );
 	}
 	p_myprofile->profile.userid		= DWC_LOBBY_INVALID_USER_ID;
 	p_myprofile->profile.trainerid	= MyStatus_GetID( p_mystatus );

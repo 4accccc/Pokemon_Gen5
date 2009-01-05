@@ -63,29 +63,29 @@ typedef struct {
 //==============================================================
 // Prototype
 //==============================================================
-static void BB_Stardust_TCB( TCB_PTR tcb, void* work );
+static void BB_Stardust_TCB( GFL_TCB* tcb, void* work );
 static inline void BB_Client_HanabiRadSet( EFFECT_ONE* wk );
 static inline void BB_Client_HanabiPosUpdate( EFFECT_ONE* wk, fx32 x, fx32 y );
-static void BB_Client_Effect_TCB( TCB_PTR tcb, void* work );
+static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work );
 static void EFF_1( BB_EFF_WORK* wk );
 static void EFF_2( BB_EFF_WORK* wk );
 static void EFF_3( BB_EFF_WORK* wk );
 static void EFF_5( BB_EFF_WORK* wk );
-static void BB_Effect_Main_TCB( TCB_PTR tcb, void* work );
+static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work );
 static void BB_Fever_Open( BB_FEVER* wk );
 static void BB_Fever_Close( BB_FEVER* wk );
 static int BB_MOVE_SPEED_GET( int speed );
-static void BB_Fever_Main_TCB( TCB_PTR tcb, void* work );
-static void Fever01_TCB( TCB_PTR tcb, void* work );
+static void BB_Fever_Main_TCB( GFL_TCB* tcb, void* work );
+static void Fever01_TCB( GFL_TCB* tcb, void* work );
 static void MoveInit( BB_LIGHT* wk );
 static BOOL FrameOut( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
 static BOOL FrameIn( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
 static BOOL FrameInM( BB_LIGHT* wk, int speed, int dir_lr, int dir_ud );
 static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num );
-static void Fever02_TCB( TCB_PTR tcb, void* work );
-static void Fever03_TCB( TCB_PTR tcb, void* work );
-static void Fever04_TCB( TCB_PTR tcb, void* work );
-static void Fever05_TCB( TCB_PTR tcb, void* work );
+static void Fever02_TCB( GFL_TCB* tcb, void* work );
+static void Fever03_TCB( GFL_TCB* tcb, void* work );
+static void Fever04_TCB( GFL_TCB* tcb, void* work );
+static void Fever05_TCB( GFL_TCB* tcb, void* work );
 extern BOOL Quaternion_Rotation( BB_3D_MODEL* wk, int x, int y, int ox, int oy, f32 pow, BOOL pow_get_set );
 extern BOOL Quaternion_Rotation_Pow( BB_3D_MODEL* wk, f32 pow );
 extern int NetID_To_PlayerNo( BB_WORK* wk, int net_id );
@@ -407,7 +407,7 @@ BOOL BB_MoveMain_FX( BB_ADDMOVE_WORK_FX* p_data )
  *
  */
 //--------------------------------------------------------------
-static void BB_Stardust_TCB( TCB_PTR tcb, void* work )
+static void BB_Stardust_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_STARDUST* wk = work;
 
@@ -493,7 +493,7 @@ void BB_Stardust_Call( BB_CLIENT* wk, s16 x, s16 y )
 			CATS_ObjectAnimeSeqSetCap( wk->star[ i ].cap[ j ], ( ( x * ( i + 1 ) ) + ( y * ( j + 1 ) ) ) % 3 );
 		}
 		
-		TCB_Add( BB_Stardust_TCB, &wk->star[ i ], BB_TCB_PRI_1 );
+		GFL_TCB_AddTask( BB_Stardust_TCB, &wk->star[ i ], BB_TCB_PRI_1 );
 		break;
 	}
 }
@@ -513,7 +513,7 @@ static inline void BB_Client_HanabiPosUpdate( EFFECT_ONE* wk, fx32 x, fx32 y )
 }
 
 
-static void BB_Client_Effect_TCB( TCB_PTR tcb, void* work )
+static void BB_Client_Effect_TCB( GFL_TCB* tcb, void* work )
 {
 	EFFECT_WORK* wk = work;
 	BB_SYS* sys = wk->client->sys;
@@ -695,7 +695,7 @@ void BB_Client_EffectStart( BB_CLIENT* wk, BOOL* flag )
 	sub_wk->wait	= 0;
 	sub_wk->flag	= flag;
 	
-	TCB_Add( BB_Client_Effect_TCB, sub_wk, BB_TCB_PRI_1 );
+	GFL_TCB_AddTask( BB_Client_Effect_TCB, sub_wk, BB_TCB_PRI_1 );
 }
 
 #define TEMP_WAIT	( 15 )
@@ -917,7 +917,7 @@ static void EFF_5( BB_EFF_WORK* wk )
  *
  */
 //--------------------------------------------------------------
-static void BB_Effect_Main_TCB( TCB_PTR tcb, void* work )
+static void BB_Effect_Main_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_EFFECT* wk = work;
 	BB_SYS* sys = wk->sys;
@@ -1058,7 +1058,7 @@ void BB_Effect_Call( BB_CLIENT* wk )
 		}
 	}
 	
-	wk->eff_sys.tcb = TCB_Add( BB_Effect_Main_TCB, &wk->eff_sys, BB_TCB_PRI_1 );
+	wk->eff_sys.tcb = GFL_TCB_AddTask( BB_Effect_Main_TCB, &wk->eff_sys, BB_TCB_PRI_1 );
 }
 
 
@@ -1096,11 +1096,11 @@ static void BB_Fever_Open( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1146,11 +1146,11 @@ static void BB_Fever_Close( BB_FEVER* wk )
 			for ( i = 0; i < 3; i++ ){
 				bEnd[ i ] = BB_MoveMain_FX( &wk->scr_move[ i ] );
 			}
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
-			GF_BGL_ScrollReq( wk->sys->bgl, GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME3_S, GFL_BG_SCROLL_Y_SET, wk->scr_move[ 0 ].x >> FX32_SHIFT );						
+			GF_BGL_ScrollReq( GF_BGL_FRAME1_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME2_S, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );
+			GF_BGL_ScrollReq( GF_BGL_FRAME1_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 1 ].x >> FX32_SHIFT );			
+			GF_BGL_ScrollReq( GF_BGL_FRAME2_M, GFL_BG_SCROLL_X_SET, wk->scr_move[ 2 ].x >> FX32_SHIFT );			
 			if ( bEnd[ 0 ] && bEnd[ 1 ] && bEnd[ 2 ] ){
 				wk->seq++;
 			}
@@ -1236,7 +1236,7 @@ static const FEVER_PARAM fever_para[] = {
 	{ BB_FEVER_EFFECT_WAIT, 3, 5, { 2, 1, 0 }, { 2, 0, 0 }, Fever05_TCB },
 };
 
-static void BB_Fever_Main_TCB( TCB_PTR tcb, void* work )
+static void BB_Fever_Main_TCB( GFL_TCB* tcb, void* work )
 {
 	int i;
 	int col;
@@ -1270,7 +1270,7 @@ static void BB_Fever_Main_TCB( TCB_PTR tcb, void* work )
 					CATS_ObjectPaletteOffsetSetCap( mvwk->sub[ i ].cap,  eBB_OAM_PAL_TD_MANENE + col ); 
 				}
 				
-				TCB_Add( fever_para[ level ].tcb_func, wk, BB_TCB_PRI_2 );
+				GFL_TCB_AddTask( fever_para[ level ].tcb_func, wk, BB_TCB_PRI_2 );
 //				OS_Printf( " level %d の エフェクトを登録\n ", level );
 			}
 		}
@@ -1312,7 +1312,7 @@ void BB_Fever_Call( BB_CLIENT* wk )
 		}
 	}
 
-	wk->fever_sys.tcb	= TCB_Add( BB_Fever_Main_TCB, &wk->fever_sys, BB_TCB_PRI_1 );
+	wk->fever_sys.tcb	= GFL_TCB_AddTask( BB_Fever_Main_TCB, &wk->fever_sys, BB_TCB_PRI_1 );
 }
 
 enum {
@@ -1337,7 +1337,7 @@ enum {
  *
  */
 //--------------------------------------------------------------
-static void Fever01_TCB( TCB_PTR tcb, void* work )
+static void Fever01_TCB( GFL_TCB* tcb, void* work )
 {
 	BB_FEVER* wk = work;
 	BB_LIGHT_MOVE* mvwk = &wk->mvwk;
@@ -1597,7 +1597,7 @@ static BOOL Roll( BB_LIGHT* wk, int speed, int dir_lr, int num )
 	return FALSE;
 }
 
-static void Fever02_TCB( TCB_PTR tcb, void* work )
+static void Fever02_TCB( GFL_TCB* tcb, void* work )
 {
 	int i;
 	BB_FEVER* wk = work;
@@ -1726,7 +1726,7 @@ static void Fever02_TCB( TCB_PTR tcb, void* work )
 	}
 }
 
-static void Fever03_TCB( TCB_PTR tcb, void* work )
+static void Fever03_TCB( GFL_TCB* tcb, void* work )
 {
 	int i;
 	BB_FEVER* wk = work;
@@ -1855,7 +1855,7 @@ static void Fever03_TCB( TCB_PTR tcb, void* work )
 	}
 }
 
-static void Fever04_TCB( TCB_PTR tcb, void* work )
+static void Fever04_TCB( GFL_TCB* tcb, void* work )
 {
 	int i;
 	BB_FEVER* wk = work;
@@ -2003,7 +2003,7 @@ static void Fever04_TCB( TCB_PTR tcb, void* work )
 	}
 }
 
-static void Fever05_TCB( TCB_PTR tcb, void* work )
+static void Fever05_TCB( GFL_TCB* tcb, void* work )
 {
 	int i;
 	BB_FEVER* wk = work;

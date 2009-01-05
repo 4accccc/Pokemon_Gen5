@@ -478,7 +478,7 @@ typedef struct {
 ///	メッセージシステムの初期化
 //=====================================
 typedef struct {
-	MSGDATA_MANAGER*	p_msgman[ANKETO_MSGMAN_NUM];		// 基本メッセージ
+	GFL_MSGDATA*	p_msgman[ANKETO_MSGMAN_NUM];		// 基本メッセージ
 	WORDSET*			p_wordset;							// ワードセット
 	STRBUF*				p_msgstr;							// メッセージバッファ
 	STRBUF*				p_msgtmp;							// メッセージバッファ
@@ -1158,22 +1158,22 @@ static void ANKETO_MsgManInit( ANKETO_MSGMAN* p_wk, WFLBY_SYSTEM* p_system, u32 
 {
 	int i;
 	static const sc_ANKETO_MSGMANTBL[ ANKETO_MSGMAN_NUM ] = {
-		NARC_msg_wifi_hiroba_dat,
-		NARC_msg_wifi_50_questions_dat,
-		NARC_msg_wifi_Special_questions_dat,
-		NARC_msg_wifi_50_answers_a_dat,
-		NARC_msg_wifi_50_answers_b_dat,
-		NARC_msg_wifi_50_answers_c_dat,
-		NARC_msg_wifi_Special_answers_a_dat,
-		NARC_msg_wifi_Special_answers_b_dat,
-		NARC_msg_wifi_Special_answers_c_dat,
+		NARC_message_wifi_hiroba_dat,
+		NARC_message_wifi_50_questions_dat,
+		NARC_message_wifi_Special_questions_dat,
+		NARC_message_wifi_50_answers_a_dat,
+		NARC_message_wifi_50_answers_b_dat,
+		NARC_message_wifi_50_answers_c_dat,
+		NARC_message_wifi_Special_answers_a_dat,
+		NARC_message_wifi_Special_answers_b_dat,
+		NARC_message_wifi_Special_answers_c_dat,
 	};
 
 	p_wk->p_system = p_system;
 
 	// メッセージマネージャ
 	for( i=0; i<ANKETO_MSGMAN_NUM; i++ ){
-		p_wk->p_msgman[i] = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
+		p_wk->p_msgman[i] = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_MESSAGE,
 				sc_ANKETO_MSGMANTBL[i],heapID );
 	}
 
@@ -1181,8 +1181,8 @@ static void ANKETO_MsgManInit( ANKETO_MSGMAN* p_wk, WFLBY_SYSTEM* p_system, u32 
 	p_wk->p_wordset = WORDSET_Create( heapID );
 
 	// 共有メッセージ領域確保
-	p_wk->p_msgstr = STRBUF_Create( ANKETO_MSGMAN_STRBUFNUM, heapID );
-	p_wk->p_msgtmp = STRBUF_Create( ANKETO_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_msgstr = GFL_STR_CreateBuffer( ANKETO_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_msgtmp = GFL_STR_CreateBuffer( ANKETO_MSGMAN_STRBUFNUM, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -1197,14 +1197,14 @@ static void ANKETO_MsgManExit( ANKETO_MSGMAN* p_wk )
 	int i;
 
 	for( i=0; i<ANKETO_MSGMAN_NUM; i++ ){
-		MSGMAN_Delete(p_wk->p_msgman[i]);
+		GFL_MSG_Delete(p_wk->p_msgman[i]);
 	}
 
 	WORDSET_Delete( p_wk->p_wordset );
 
 	// 共有メッセージバッファ
-	STRBUF_Delete( p_wk->p_msgstr );
-	STRBUF_Delete( p_wk->p_msgtmp );
+	GFL_STR_DeleteBuffer( p_wk->p_msgstr );
+	GFL_STR_DeleteBuffer( p_wk->p_msgtmp );
 }
 
 //----------------------------------------------------------------------------
@@ -1760,7 +1760,7 @@ static void ANKETO_TalkWin_Init( ANKETO_TALKWIN* p_wk, ANKETO_DRAWSYS* p_sys, SA
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->win), 15 );
 
 	// 文字列バッファ作成
-	p_wk->p_str = STRBUF_Create( ANKETO_MSGMAN_STRBUFNUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer( ANKETO_MSGMAN_STRBUFNUM, heapID );
 
 	// メッセージ表示ウエイトを設定
 	{
@@ -1786,7 +1786,7 @@ static void ANKETO_TalkWin_Exit( ANKETO_TALKWIN* p_wk, u32 heapID )
 	ANKETO_TalkWin_StopTimeWait( p_wk );
 	
 	// 文字列バッファ破棄
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	// ビットマップ破棄
 	GF_BGL_BmpWinDel( &p_wk->win );
@@ -2712,9 +2712,9 @@ static void ANKETO_QUESTION_DATA_Init( ANKETO_QUESTION_DATA* p_wk, BOOL now, u32
 	int i;
 	
 	// メッセージバッファ作成
-	p_wk->p_question = STRBUF_Create( ANKETO_MESSAGE_BUFFNUM, heapID );
+	p_wk->p_question = GFL_STR_CreateBuffer( ANKETO_MESSAGE_BUFFNUM, heapID );
 	for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
-		p_wk->p_ans[i] = STRBUF_Create( ANKETO_MESSAGE_BUFFNUM, heapID );
+		p_wk->p_ans[i] = GFL_STR_CreateBuffer( ANKETO_MESSAGE_BUFFNUM, heapID );
 	}
 	
 	if( now == TRUE ){
@@ -2755,9 +2755,9 @@ static void ANKETO_QUESTION_DATA_Exit( ANKETO_QUESTION_DATA* p_wk )
 	int i;
 	
 	// メッセージバッファ破棄
-	STRBUF_Delete( p_wk->p_question );
+	GFL_STR_DeleteBuffer( p_wk->p_question );
 	for( i=0; i<ANKETO_ANSWER_NUM; i++ ){
-		STRBUF_Delete( p_wk->p_ans[i] );
+		GFL_STR_DeleteBuffer( p_wk->p_ans[i] );
 	}
 }
 

@@ -331,9 +331,7 @@ typedef struct {
 	
 	BB_LIGHT_MOVE	mvwk;
 
-	GF_BGL_INI* bgl;
-
-	TCB_PTR	 tcb;
+	GFL_TCB*	 tcb;
 	int*	 level;			///< Level
 	int*	 col1;			///< 個人エフェクトの明度
 	int*	 col2;			///< フィーバー時の明度
@@ -370,7 +368,7 @@ typedef struct {
 	int* 		level;		///< ゲームシステムが管理してるレベル
 
 	BB_EFF_WORK work[ BB_EFFECT_MAX ];
-	TCB_PTR		tcb;
+	GFL_TCB*		tcb;
 	
 	BB_SYS*		sys;
 
@@ -460,6 +458,7 @@ typedef struct {
 	
 	BOOL			bAction;
 	
+	GFL_TCBSYS		*tcbsys;		///<TCBシステム(BB_WORKが持つポインタをもらっている)
 } BB_CLIENT;
 
 
@@ -497,6 +496,8 @@ typedef struct {
 	
 	BOOL			bRePlay;
 	
+	void				*tcb_work;		///<TCBシステムで使用するワーク
+	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 } BB_WORK;
 
 

@@ -223,7 +223,7 @@ void SendBalloon_Appear(BALLOON_GAME_PTR game, int balloon_no, int level, u8 tim
 static void RecvBalloon_Appear(BALLOON_GAME_PTR game, const BALLOON_SIO_PLAY_WORK *recv)
 {
 	game->balloon_no = recv->appear.no;
-	BalloonTool_BalloonBGSet(game->bgl, game->bsw->player_max, recv->appear.level, &game->bst);
+	BalloonTool_BalloonBGSet(game->bsw->player_max, recv->appear.level, &game->bst);
 	game->balloon_occ = TRUE;
 
 	Timing_AnswerReqParamSet(game, recv->appear.timing_req, recv->appear.timing_no);

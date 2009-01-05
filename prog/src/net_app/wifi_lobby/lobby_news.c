@@ -1921,7 +1921,7 @@ static void NEWSDRAW_TopicWinInit( NEWSDRAW_TOPICWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 	}
 
 	// 文字列取得
-	p_wk->p_str = STRBUF_Create( NEWSDRAW_TOPIC_STRNUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer( NEWSDRAW_TOPIC_STRNUM, heapID );
 	
 
 	// パレットデータ
@@ -1959,7 +1959,7 @@ static void NEWSDRAW_TopicWinExit( NEWSDRAW_TOPICWIN* p_wk )
 	GFL_HEAP_FreeMemory( p_wk->p_plttbuff );
 	
 	// 文字列破棄
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	// トピックデータ破棄
 	for( i=0; i<NEWSDRAW_TOPIC_NUM; i++ ){
@@ -2069,7 +2069,7 @@ static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, 
 {
 	p_wk->move	= FALSE;
 	p_wk->count	= 0;
-	p_wk->p_str = STRBUF_Create(NEWSDRAW_TOPIC_STRNUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer(NEWSDRAW_TOPIC_STRNUM, heapID );
 
 	p_wk->pal	= NEWS_PLTT_FONT + idx;
 
@@ -2091,7 +2091,7 @@ static void NEWSDRAW_TopicInit( NEWSDRAW_TOPIC* p_wk, NEWSDRAW_DRAWSYS* p_draw, 
 //-----------------------------------------------------------------------------
 static void NEWSDRAW_TopicExit( NEWSDRAW_TOPIC* p_wk )
 {
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	//  ダミーBMPWIN破棄
 	GF_BGL_BmpWinDel( &p_wk->bmp );
@@ -2237,14 +2237,14 @@ static void NEWSDRAW_TopicDraw( const NEWSDRAW_TOPIC* cp_wk, GFL_BMPWIN* p_bmp )
 static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_draw, u32 heapID )
 {
 	int i;
-	MSGDATA_MANAGER*	p_msgman;
+	GFL_MSGDATA*	p_msgman;
 	STRBUF*				p_str;
 
 	GFL_STD_MemFill( p_wk, 0, sizeof(NEWSDRAW_TITLEWIN) );
 
 	// メッセージデータ初期化
-	p_msgman	= MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,NARC_msg_wflby_news_dat,heapID );
-	p_str		= STRBUF_Create( NEWSDRAW_TITLEWIN_STRNUM, heapID );
+	p_msgman	= GFL_MSG_Create(GFL_MSG_LOAD_NORMAL,ARCID_MESSAGE,NARC_message_wflby_news_dat,heapID );
+	p_str		= GFL_STR_CreateBuffer( NEWSDRAW_TITLEWIN_STRNUM, heapID );
 
 	for( i=0; i<NEWSDRAW_TITLEWIN_NUM; i++ ){
 
@@ -2297,8 +2297,8 @@ static void NEWSDRAW_TitleWinInit( NEWSDRAW_TITLEWIN* p_wk, NEWSDRAW_DRAWSYS* p_
 	}
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_str );
-	MSGMAN_Delete( p_msgman );
+	GFL_STR_DeleteBuffer( p_str );
+	GFL_MSG_Delete( p_msgman );
 }
 
 //----------------------------------------------------------------------------

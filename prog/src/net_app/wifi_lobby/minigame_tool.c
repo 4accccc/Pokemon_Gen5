@@ -613,7 +613,7 @@ typedef struct {
 
 //  メッセージデータ管理
 typedef struct {
-	MSGDATA_MANAGER*	p_msgman;
+	GFL_MSGDATA*	p_msgman;
 	WORDSET*			p_wordset;
 	STRBUF*				p_str;
 	STRBUF*				p_tmp;
@@ -704,8 +704,10 @@ typedef struct _MNGM_ENTRYWK{
 	NNSG2dScreenData*		p_scrn;							// スクリーンデータ
 	MNGM_PLATE_PLAYER		playertbl[WFLBY_MINIGAME_MAX];	// プレイヤーテーブル
 	MNGM_HBLANK_PLATEBGSCR	bgscrl;							// BGスクロールシステム
-	TCB_PTR					tcb;							// タスク
-	TCB_PTR					tcb_vwait;						// VBlankタスク
+	GFL_TCB*				tcb;							// タスク
+	GFL_TCB*				tcb_vwait;						// VBlankタスク
+	void					*tcb_work;						///<TCBシステムで使用するワーク
+	GFL_TCBSYS				*tcbsys;						///<TCBシステム
 }MNGM_ENTRYWK;
 
 
@@ -780,8 +782,8 @@ typedef struct _MNGM_RESULTWK{
 	NNSG2dScreenData*		p_scrn[MNGM_RESULT_SCRN_NUM];	// スクリーンデータ
 	MNGM_PLATE_PLAYER		playertbl[WFLBY_MINIGAME_MAX];	// プレイヤーテーブル
 	MNGM_HBLANK_PLATEBGSCR	bgscrl;							// BGスクロールシステム
-	TCB_PTR					tcb;							// タスク
-	TCB_PTR					tcb_vwait;						// タスク
+	GFL_TCB*					tcb;							// タスク
+	GFL_TCB*					tcb_vwait;						// タスク
 	WFLBY_ITEMTYPE			last_gadget;					// アップデート前のガジェット
 
 	// 順位表示システム用
@@ -809,7 +811,7 @@ typedef struct {
 	s16				count;
 	s16				move_y;
 	u8				mskon[MNGM_COUNT_MSK_HBUF_NUM][192];
-	TCB_PTR			p_tcb;
+	GFL_TCB*			p_tcb;
 	GXWndPlane		off_outplane;
 	GXWndPlane		on_outplane;
 	int				def_wnd1;
@@ -823,7 +825,7 @@ typedef struct _MNGM_COUNTWK{
 	ARCHANDLE*				p_handle;	// ハンドル
 	MNGM_CLACTRES			resman;		// リソースマネージャ
 	MNGM_CLACTRESOBJ*		p_resobj;	// リソースオブジェ
-	TCB_PTR					p_tcb;		// 動作タスク
+	GFL_TCB*					p_tcb;		// 動作タスク
 
 	GFL_CLWK*			p_anm;		// アニメOAM
 	MNGM_COUNT_MSKWK		msk;		// マスクシステム
@@ -1245,8 +1247,8 @@ static void MNGM_BACKPLTT_Trans( ARCHANDLE* p_handle, u32 gametype, u32 heapID )
 static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam, u32 gametype, u32 heapID );
 static void MNGM_ENTRY_GraphicLoad( MNGM_ENTRYWK* p_wk, u32 heapID );
 static void MNGM_ENTRY_GraphicDelete( MNGM_ENTRYWK* p_wk );
-static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work );
-static void MNGM_ENTRY_VWaitTcb( TCB_PTR tcb, void* p_work );
+static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work );
+static void MNGM_ENTRY_VWaitTcb( GFL_TCB* tcb, void* p_work );
 static MNGM_RAREGAME_TYPE MNGM_ENTRY_RareGameSelect( const u8* cp_ParTbl, u32 num );
 static BOOL MNGM_ENTRY_PLATE_ALLMove( MNGM_ENTRYWK* p_wk );
 
@@ -1265,9 +1267,9 @@ static void MNGM_RESULT_3DAnmStart( MNGM_3DSYS* p_wk, u32 emitnum );
 static BOOL MNGM_RESULT_3DAnmEndCheck( const MNGM_3DSYS* cp_wk );
 static void MNGM_RESULT_GraphicLoad( MNGM_RESULTWK* p_wk, u32 heapID );
 static void MNGM_RESULT_GraphicDelete( MNGM_RESULTWK* p_wk );
-static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work );
-static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work );
-static void MNGM_RESULT_VWaitTcb( TCB_PTR tcb, void* p_work );
+static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work );
+static void MNGM_RESULT_Tcb_Balloon( GFL_TCB* tcb, void* p_work );
+static void MNGM_RESULT_VWaitTcb( GFL_TCB* tcb, void* p_work );
 static void MNGM_RESULT_PalTrEffectInit( MNGM_RESULTWK* p_wk, ARCHANDLE* p_handle, u32 heapID );
 static void MNGM_RESULT_PalTrEffectStart( MNGM_RESULTWK* p_wk );
 static void MNGM_RESULT_PalTrEffect( MNGM_RESULTWK* p_wk );
@@ -1306,11 +1308,11 @@ static BOOL MNGM_COUNT_MskReMain( MNGM_COUNT_MSKWK* p_wk );
 static void MNGM_COUNT_MskCommon( MNGM_COUNT_MSKWK* p_wk, s32 add );
 static void MNGM_COUNT_MskExit( MNGM_COUNT_MSKWK* p_wk );
 static void MNGM_COUNT_MskSetMsk( MNGM_COUNT_MSKWK* p_wk );
-static void MNGM_COUNT_MskSetMskVBlank( TCB_PTR tcb, void* p_work );
+static void MNGM_COUNT_MskSetMskVBlank( GFL_TCB* tcb, void* p_work );
 static void MNGM_COUNT_MskSetMskHBlank( void* p_work );
 
-static void MNGM_COUNT_StartTcb( TCB_PTR tcb, void* p_work );
-static void MNGM_COUNT_TimeUpTcb( TCB_PTR tcb, void* p_work );
+static void MNGM_COUNT_StartTcb( GFL_TCB* tcb, void* p_work );
+static void MNGM_COUNT_TimeUpTcb( GFL_TCB* tcb, void* p_work );
 
 
 
@@ -1559,6 +1561,10 @@ void MNGM_ENTRY_Exit( MNGM_ENTRYWK* p_wk )
 	MNGM_CLACT_Exit( &p_wk->clact );
 	MNGM_BGL_Exit( &p_wk->bgl );
 
+	//TCBシステム削除
+	GFL_TCB_Exit( p_wk->tcbsys );
+	GFL_HEAP_FreeMemory(p_wk->tcb_work);
+
 	// ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );	
 }
@@ -1575,6 +1581,7 @@ void MNGM_ENTRY_Exit( MNGM_ENTRYWK* p_wk )
 //-----------------------------------------------------------------------------
 BOOL MNGM_ENTRY_Wait( const MNGM_ENTRYWK* cp_wk )
 {
+	GFL_TCB_Main(cp_wk->tcbsys);
 	if( cp_wk->seq >= MNGM_ENTRY_SEQ_END ){
 		return TRUE;
 	}
@@ -1634,8 +1641,6 @@ MNGM_RESULTWK* MNGM_RESULT_InitBalloon( const MNGM_ENRES_PARAM* cp_commparam, co
 //-----------------------------------------------------------------------------
 void MNGM_RESULT_Exit( MNGM_RESULTWK* p_wk )
 {
-	
-
 	// TCB破棄
 	TCB_Delete( p_wk->tcb );
 	TCB_Delete( p_wk->tcb_vwait );
@@ -1675,6 +1680,9 @@ void MNGM_RESULT_Exit( MNGM_RESULTWK* p_wk )
 	//
 	DellVramTransferManager();
 
+	//TCBシステム削除
+	GFL_TCB_Exit( p_wk->tcbsys );
+	GFL_HEAP_FreeMemory(p_wk->tcb_work);
 
 	// ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );	
@@ -1692,6 +1700,7 @@ void MNGM_RESULT_Exit( MNGM_RESULTWK* p_wk )
 //-----------------------------------------------------------------------------
 BOOL MNGM_RESULT_Wait( const MNGM_RESULTWK* cp_wk )
 {
+	GFL_TCB_Main(cp_wk->tcbsys);
 	return cp_wk->end_flag;
 }
 
@@ -2007,16 +2016,16 @@ int MNGM_PalNoGet( MNGM_COUNTWK* p_wk )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk )
+void MNGM_COUNT_StartStart( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys )
 {
 	GF_ASSERT( p_wk->p_tcb == NULL );
-	p_wk->p_tcb = TCB_Add( MNGM_COUNT_StartTcb, p_wk, 0 );
+	p_wk->p_tcb = GFL_TCB_AddTask(tcbsys, MNGM_COUNT_StartTcb, p_wk, 0 );
 	p_wk->seq = MNGM_COUNT_START_SEQ_INIT;
 }
-void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk )
+void MNGM_COUNT_StartTimeUp( MNGM_COUNTWK* p_wk, GFL_TCBSYS *tcbsys )
 {
 	GF_ASSERT( p_wk->p_tcb == NULL );
-	p_wk->p_tcb = TCB_Add( MNGM_COUNT_TimeUpTcb, p_wk, 0 );
+	p_wk->p_tcb = GFL_TCB_AddTask(tcbsys, MNGM_COUNT_TimeUpTcb, p_wk, 0 );
 	p_wk->seq = MNGM_COUNT_TIMEUP_SEQ_INIT;
 
 	Snd_SePlay( MNGM_SND_TIMEUP ); 
@@ -2608,10 +2617,10 @@ static void MNGM_CLACT_VBlank( MNGM_CLACT* p_wk )
 //-----------------------------------------------------------------------------
 static void MNGM_MSG_Init( MNGM_MSG* p_wk, u32 heapID )
 {
-	p_wk->p_msgman	= MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_minigame_tool_dat, heapID );
+	p_wk->p_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_minigame_tool_dat, heapID );
 	p_wk->p_wordset	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
-	p_wk->p_str		= STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
-	p_wk->p_tmp		= STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
+	p_wk->p_str		= GFL_STR_CreateBuffer( MNGM_MSG_STRBUF_NUM, heapID );
+	p_wk->p_tmp		= GFL_STR_CreateBuffer( MNGM_MSG_STRBUF_NUM, heapID );
 
 	// メッセージパレットを転送する
     TalkFontPaletteLoad( PALTYPE_MAIN_BG, MNGM_MSG_PLTT*0x20, heapID );
@@ -2627,10 +2636,10 @@ static void MNGM_MSG_Init( MNGM_MSG* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void MNGM_MSG_Exit( MNGM_MSG* p_wk )
 {
-	STRBUF_Delete( p_wk->p_tmp );
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_tmp );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 	WORDSET_Delete( p_wk->p_wordset );
-	MSGMAN_Delete( p_wk->p_msgman );
+	GFL_MSG_Delete( p_wk->p_msgman );
 }
 
 //----------------------------------------------------------------------------
@@ -2915,7 +2924,7 @@ static void MNGM_TALKWIN_Init( MNGM_TALKWIN* p_wk, MNGM_BGL* p_bgl, SAVE_CONTROL
 		GFL_BMPWIN_MakeScreen(p_wk->win[i]);
 
 		// メッセージ用文字列バッファ作成
-		p_wk->p_str[i] = STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
+		p_wk->p_str[i] = GFL_STR_CreateBuffer( MNGM_MSG_STRBUF_NUM, heapID );
 	}
 
 	p_wk->vip = vip;
@@ -2935,7 +2944,7 @@ static void MNGM_TALKWIN_Exit( MNGM_TALKWIN* p_wk )
 	// ウィンドウと文字列バッファを破棄
 	for( i=0; i<MNGM_TALKWIN_IDX_NUM; i++ ){
 		MNGM_TALKWIN_MsgOff( p_wk, i );
-		STRBUF_Delete( p_wk->p_str[i] );
+		GFL_STR_DeleteBuffer( p_wk->p_str[i] );
 		GF_BGL_BmpWinDel( &p_wk->win[i] );
 	}
 
@@ -3113,6 +3122,10 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 	GX_SetVisibleWnd(0);
 	GXS_SetVisibleWnd(0);
 
+    //TCBシステム作成
+    p_wk->tcb_work = GFL_HEAP_AllocClearMemory(heapID, GFL_TCB_CalcSystemWorkSize( 64 ));
+    p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
+
 	// バンク設定
 	GF_Disp_SetBank( &sc_MNGM_ENTRY_BANK );
 
@@ -3154,7 +3167,7 @@ static MNGM_ENTRYWK* MNGM_ENTRY_CommonInit( const MNGM_ENRES_PARAM* cp_commparam
 
 
 	// タスク生成
-	p_wk->tcb		= TCB_Add( MNGM_ENTRY_Tcb, p_wk, 0 );
+	p_wk->tcb		= GFL_TCB_AddTask( p_wk->tcbsys, MNGM_ENTRY_Tcb, p_wk, 0 );
 	p_wk->tcb_vwait = VWaitTCB_Add( MNGM_ENTRY_VWaitTcb, p_wk, 0 );
 
 	// VCHAT ON
@@ -3236,7 +3249,7 @@ static void MNGM_ENTRY_GraphicDelete( MNGM_ENTRYWK* p_wk )
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
+static void MNGM_ENTRY_Tcb( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_ENTRYWK* p_wk = p_work;
 	BOOL  result;
@@ -3483,7 +3496,7 @@ static void MNGM_ENTRY_Tcb( TCB_PTR tcb, void* p_work )
  *	@brief	VBlankタスク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_ENTRY_VWaitTcb( TCB_PTR tcb, void* p_work )
+static void MNGM_ENTRY_VWaitTcb( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_ENTRYWK* p_wk = p_work;
 
@@ -4197,7 +4210,7 @@ static void MNGM_TITLELOGO_Init( MNGM_TITLE_LOGO* p_wk, MNGM_BGL* p_bglwk, MNGM_
 	GFL_BMPWIN_MakeScreen(p_wk->bmp);
 
 	// メッセージを生成
-	p_wk->p_str = STRBUF_Create( MNGM_MSG_STRBUF_NUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer( MNGM_MSG_STRBUF_NUM, heapID );
 	MNGM_MSG_SetGameName( p_msg, gametype );
 	MNGM_MSG_GetStr( p_msg, p_wk->p_str, msg_16 );
 
@@ -4226,7 +4239,7 @@ static void MNGM_TITLELOGO_Exit( MNGM_TITLE_LOGO* p_wk )
 {
 	GF_BGL_BmpWinDel( &p_wk->bmp );
 
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 }
 
 //----------------------------------------------------------------------------
@@ -4536,6 +4549,9 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 	GX_SetVisibleWnd(0);
 	GXS_SetVisibleWnd(0);
 	
+    //TCBシステム作成
+    p_wk->tcb_work = GFL_HEAP_AllocClearMemory(heapID, GFL_TCB_CalcSystemWorkSize( 64 ));
+    p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
 
 	// バンク設定
 	GF_Disp_SetBank( &sc_MNGM_RESULT_BANK );
@@ -4594,16 +4610,16 @@ static MNGM_RESULTWK* MNGM_RESULT_CommonInit( const MNGM_ENRES_PARAM* cp_commpar
 	switch( p_wk->gametype ){
 	case WFLBY_GAME_BALLSLOW:	// 玉投げ
 	case WFLBY_GAME_BALANCEBALL:	// 玉乗り
-		p_wk->tcb			 = TCB_Add( MNGM_RESULT_Tcb_BallSlowBalanceBall, p_wk, 0 );
+		p_wk->tcb			 = GFL_TCB_AddTask( p_wk->tcbsys, MNGM_RESULT_Tcb_BallSlowBalanceBall, p_wk, 0 );
 		break;
 		
 	case WFLBY_GAME_BALLOON:		// ふうせんわり
-		p_wk->tcb			 = TCB_Add( MNGM_RESULT_Tcb_Balloon, p_wk, 0 );
+		p_wk->tcb			 = GFL_TCB_AddTask( p_wk->tcbsys, MNGM_RESULT_Tcb_Balloon, p_wk, 0 );
 		break;
 
 	default:
 		GF_ASSERT(0);	// おかしい
-		p_wk->tcb			 = TCB_Add( MNGM_RESULT_Tcb_BallSlowBalanceBall, p_wk, 0 );
+		p_wk->tcb			 = GFL_TCB_AddTask( p_wk->tcbsys, MNGM_RESULT_Tcb_BallSlowBalanceBall, p_wk, 0 );
 		break;
 	}
 		
@@ -4862,7 +4878,7 @@ static void MNGM_RESULT_GraphicDelete( MNGM_RESULTWK* p_wk )
  *	@param	p_work 
  */
 //-----------------------------------------------------------------------------
-static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
+static void MNGM_RESULT_Tcb_BallSlowBalanceBall( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_RESULTWK* p_wk = p_work;
 	BOOL result;
@@ -5306,7 +5322,7 @@ static void MNGM_RESULT_Tcb_BallSlowBalanceBall( TCB_PTR tcb, void* p_work )
  *	@brief	風船わり用タスク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work )
+static void MNGM_RESULT_Tcb_Balloon( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_RESULTWK* p_wk = p_work;
 	BOOL result;
@@ -5595,7 +5611,7 @@ static void MNGM_RESULT_Tcb_Balloon( TCB_PTR tcb, void* p_work )
  *	@brief	結果画面VWaitタスク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_RESULT_VWaitTcb( TCB_PTR tcb, void* p_work )
+static void MNGM_RESULT_VWaitTcb( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_RESULTWK* p_wk = p_work;
 
@@ -6625,7 +6641,7 @@ static void MNGM_COUNT_MskSetMsk( MNGM_COUNT_MSKWK* p_wk )
  *	@param	p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_COUNT_MskSetMskVBlank( TCB_PTR tcb, void* p_work )
+static void MNGM_COUNT_MskSetMskVBlank( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_COUNT_MSKWK* p_wk = p_work;
 
@@ -6705,7 +6721,7 @@ static void MNGM_COUNT_MskSetMskHBlank( void* p_work )
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_COUNT_StartTcb( TCB_PTR tcb, void* p_work )
+static void MNGM_COUNT_StartTcb( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_COUNTWK* p_wk = p_work;
 	BOOL result;
@@ -6841,7 +6857,7 @@ static void MNGM_COUNT_StartTcb( TCB_PTR tcb, void* p_work )
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void MNGM_COUNT_TimeUpTcb( TCB_PTR tcb, void* p_work )
+static void MNGM_COUNT_TimeUpTcb( GFL_TCB* tcb, void* p_work )
 {
 	MNGM_COUNTWK* p_wk = p_work;
 	BOOL result;

@@ -10,6 +10,8 @@
 #define __BALLOON_GAME_TYPES_H__
 
 #include "system/actor_tool.h"
+#include "print/wordset.h"
+#include <tcb.h>
 
 
 //==============================================================================
@@ -491,15 +493,16 @@ typedef struct _BALLOON_GAME_WORK{
 	MNGM_COUNTWK *mgcount;			///<ミニゲーム共通カウントダウンエフェクトシステムへのポインタ
 	int countdown_eff;				///<カウントダウンエフェクトの現在の状態
 	
+	void				*tcb_work;		///<TCBシステムで使用するワーク
+	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 	GFL_CLUNIT			*clunit;	///<セルユニット
 	PLTTSLOT_SYS_PTR	plttslot;	///<パレットスロット管理ワークへのポインタ
 #if WB_FIX
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
 #endif
-	GF_BGL_INI *bgl;
 	GFL_BMPWIN* win[BALLOON_BMPWIN_MAX];
-	MSGDATA_MANAGER *msgman;		///<メッセージデータマネージャのポインタ
+	GFL_MSGDATA *msgman;		///<メッセージデータマネージャのポインタ
 	WORDSET *wordset;				///<Allocしたメッセージ用単語バッファへのポインタ
 	STRBUF *msg_buf;				///<Allocした文字列バッファへのポインタ
 	PALETTE_FADE_PTR pfd;			///<パレットフェードシステムへのポインタ
@@ -507,7 +510,7 @@ typedef struct _BALLOON_GAME_WORK{
 	FONTOAM_SYS_PTR fontoam_sys;	///<FONTOAMシステム
 #endif
 
-	TCB_PTR update_tcb;
+	GFL_TCB* update_tcb;
 	GF_G3DMAN *g3Dman;
 
 	GF_CAMERA_PTR camera;			///<カメラへのポインタ

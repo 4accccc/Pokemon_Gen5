@@ -13,9 +13,9 @@
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern void BalloonTool_BalloonBGSet(GF_BGL_INI *bgl, int player_max, 
+extern void BalloonTool_BalloonBGSet(int player_max, 
 	int level, BALLOON_STATUS *bst);
-extern void BalloonTool_BalloonUpdate(BALLOON_GAME_PTR game, GF_BGL_INI *bgl, BALLOON_STATUS *bst);
+extern void BalloonTool_BalloonUpdate(BALLOON_GAME_PTR game, BALLOON_STATUS *bst);
 extern BOOL BalloonTool_PlayerAirParamAdd(BALLOON_GAME_PTR game, const BALLOON_AIR_DATA *air_data);
 extern void Air_Update(BALLOON_GAME_PTR game);
 extern void Air_ActorAllDelete(BALLOON_GAME_PTR game);
@@ -46,7 +46,7 @@ extern void SioBooster_Appear(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_boost
 	int booster_type, int net_id, int arrival_frame);
 extern void SioBooster_Update(BALLOON_GAME_PTR game, SIO_BOOSTER_WORK *sio_booster);
 #if WB_TEMP_FIX
-extern void BalloonTool_FontOamCreate(GF_BGL_INI *bgl, CATS_RES_PTR crp, 
+extern void BalloonTool_FontOamCreate(CATS_RES_PTR crp, 
 	FONTOAM_SYS_PTR fontoam_sys, BALLOON_FONTACT *fontact, const STRBUF *str, 
 	FONT_TYPE font_type, GF_PRINTCOLOR color, int pal_offset, int pal_id, 
 	int x, int y, int pos_center, int bg_pri, int soft_pri, int y_char_len);

@@ -263,7 +263,7 @@ static BOOL Stamp_MdlLoadH(STAMP_SYSTEM_WORK *ssw, D3DOBJ_MDL *p_mdl, ARCHANDLE 
 static void Stamp_TexRewrite(NNSG3dResTex *pTex, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, const STAMP_PARAM *param, BOOL arceus_flg);
 static void Stamp_TexDotErase(NNSG3dResTex *pTex, int move_type);
 static void Stamp_TexDotFlip(NNSG3dResTex *pTex, int move_type);
-static void VWaitTCB_MdlLoad(TCB_PTR tcb, void *work);
+static void VWaitTCB_MdlLoad(GFL_TCB* tcb, void *work);
 static BOOL Stamp_MdlTexKeyAreaSecure(NNSG3dResTex* tex);
 static BOOL Stamp_LoadTexDataSet(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex);
 static void Stamp_LoadTexDataFree(STAMP_SYSTEM_WORK *ssw, NNSG3dResTex *tex);

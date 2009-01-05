@@ -53,8 +53,8 @@ BOOL Debug_GameSetup( BB_WORK* work )
 	}
 	
 	if ( sys.trg & PAD_BUTTON_B ){
-		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, wk->sys->bgl, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );	
-		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, wk->sys->bgl, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );
+		ArcUtil_HDL_BgCharSet( wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NCGR, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );	
+		ArcUtil_HDL_ScrnSet(   wk->sys->p_handle_bb, NARC_balance_ball_gra_manene_bottom_NSCR, GF_BGL_FRAME1_M, 0, 0, 0, HEAPID_BB );
 		
 	    GF_BGL_BmpWinOff( wk->win );
 		GF_BGL_BmpWinDel( wk->win );

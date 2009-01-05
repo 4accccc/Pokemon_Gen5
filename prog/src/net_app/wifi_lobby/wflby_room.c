@@ -673,7 +673,7 @@ typedef struct {
 //=====================================
 typedef struct {
 	WORDSET*			p_wordset;
-	MSGDATA_MANAGER*	p_msgman[WFLBY_DEFMSG_TYPE_NUM];
+	GFL_MSGDATA*	p_msgman[WFLBY_DEFMSG_TYPE_NUM];
 	STRBUF*				p_str;
 	STRBUF*				p_tmp;
 } WFLBY_ROOM_DEFMSG;
@@ -1068,7 +1068,7 @@ static void WFLBY_ROOM_UNDERWIN_StartBttnFloat( WFLBY_UNDER_WIN* p_wk, WFLBY_GRA
 static void WFLBY_ROOM_UNDERWIN_EndBttn( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCONT* p_sys );
 static void WFLBY_ROOM_UNDERWIN_SetBttnStop( WFLBY_UNDER_WIN* p_wk, BOOL stop );
 static void WFLBY_ROOM_UNDERWIN_PalTrans( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCONT* p_sys, u32 dataidx, u32 heapID );
-static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( TCB_PTR p_tcb, void* p_work );
+static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( GFL_TCB* p_tcb, void* p_work );
 
 // common
 static void WFLBY_ROOM_UNDERWIN_Common_Init( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCONT* p_sys, ARCHANDLE* p_handle, u32 sex, u32 heapID );
@@ -3409,7 +3409,7 @@ static void WFLBY_ROOM_TalkWin_Init( WFLBY_ROOM_TALKMSG* p_wk, WFLBY_GRAPHICCONT
 	GFL_BMPWIN_MakeScreen(p_wk->win);
 
 	// 文字列バッファ作成
-	p_wk->p_str = STRBUF_Create( WFLBY_TALKWIN_STRBUFNUM, heapID );
+	p_wk->p_str = GFL_STR_CreateBuffer( WFLBY_TALKWIN_STRBUFNUM, heapID );
 
 	// メッセージ表示ウエイトを設定
 	{
@@ -3435,7 +3435,7 @@ static void WFLBY_ROOM_TalkWin_Exit( WFLBY_ROOM_TALKMSG* p_wk )
 	WFLBY_ROOM_TalkWin_StopTimeWait_NoTrans( p_wk );
 	
 	// 文字列バッファ破棄
-	STRBUF_Delete( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
 
 	// ビットマップ破棄
 	GF_BGL_BmpWinDel( &p_wk->win );
@@ -4493,18 +4493,18 @@ static void WFLBY_ROOM_Msg_Init( WFLBY_ROOM_DEFMSG* p_wk, u32 heapID )
 {
 	int i;
 	static const u32 sc_DEFMSG_INX[ WFLBY_DEFMSG_TYPE_NUM ] = {
-		NARC_msg_wifi_h_info_dat,
-		NARC_msg_wifi_hiroba_dat,
-		NARC_msg_wifi_system_dat,
-		NARC_msg_wifi_aisatu_dat
+		NARC_message_wifi_h_info_dat,
+		NARC_message_wifi_hiroba_dat,
+		NARC_message_wifi_system_dat,
+		NARC_message_wifi_aisatu_dat
 	};
 	
 	p_wk->p_wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, heapID );
 	for( i=0; i<WFLBY_DEFMSG_TYPE_NUM; i++ ){
-		p_wk->p_msgman[i]	= MSGMAN_Create( MSGMAN_TYPE_DIRECT, ARC_MSG, sc_DEFMSG_INX[i], heapID );
+		p_wk->p_msgman[i]	= GFL_MSG_Create( MSGMAN_TYPE_DIRECT, ARCID_MESSAGE, sc_DEFMSG_INX[i], heapID );
 	}
-	p_wk->p_str		= STRBUF_Create( WFLBY_DEFMSG_STRNUM, heapID );
-	p_wk->p_tmp		= STRBUF_Create( WFLBY_DEFMSG_STRNUM, heapID );
+	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );
+	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_DEFMSG_STRNUM, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -4519,10 +4519,10 @@ static void WFLBY_ROOM_Msg_Exit( WFLBY_ROOM_DEFMSG* p_wk )
 	int i;
 	WORDSET_Delete( p_wk->p_wordset );
 	for( i=0; i<WFLBY_DEFMSG_TYPE_NUM; i++ ){
-		MSGMAN_Delete( p_wk->p_msgman[i] );
+		GFL_MSG_Delete( p_wk->p_msgman[i] );
 	}
-	STRBUF_Delete( p_wk->p_str );
-	STRBUF_Delete( p_wk->p_tmp );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
+	GFL_STR_DeleteBuffer( p_wk->p_tmp );
 }
 
 //----------------------------------------------------------------------------
@@ -5380,7 +5380,7 @@ static void WFLBY_ROOM_UNDERWIN_PalTrans( WFLBY_UNDER_WIN* p_wk, WFLBY_GRAPHICCO
  *	@param	p_work		ワーク
  */
 //-----------------------------------------------------------------------------
-static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( TCB_PTR p_tcb, void* p_work )
+static void WFLBY_ROOM_UNDERWIN_PalTransVTcb( GFL_TCB* p_tcb, void* p_work )
 {
 	WFLBY_UNDER_WIN* p_wk = p_work;
 	

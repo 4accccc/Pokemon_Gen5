@@ -15,14 +15,14 @@
 
 #include "bb_common.h"
 
-extern BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys );
+extern BB_CLIENT* BB_Client_AllocMemory( int comm_num, u32 netid, BB_SYS* sys, GFL_TCBSYS *tcbsys);
 extern void BB_Client_3D_PosInit( BB_CLIENT* wk );
 extern void BB_Client_FreeMemory( BB_CLIENT* wk );
 extern BOOL BB_Client_CountDown_Main( BB_CLIENT* wk );
 extern BOOL BB_Client_IsSafety( BB_CLIENT* wk, int* state );
-extern void BB_Manene_3D_Fall_TCB( TCB_PTR tcb, void* work );
-extern void BB_Client_Manene_Action_TCB( TCB_PTR tcb, void* work );
-extern void BB_Client_Manene_3D_Recover_Action_TCB( TCB_PTR tcb, void* work );
+extern void BB_Manene_3D_Fall_TCB( GFL_TCB* tcb, void* work );
+extern void BB_Client_Manene_Action_TCB( GFL_TCB* tcb, void* work );
+extern void BB_Client_Manene_3D_Recover_Action_TCB( GFL_TCB* tcb, void* work );
 
 extern void BB_Client_GameCore( BB_CLIENT* wk );
 extern void BB_Client_TouchPanel_Main( BB_CLIENT* wk );

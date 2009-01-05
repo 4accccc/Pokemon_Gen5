@@ -53,7 +53,7 @@ typedef struct _BCT_CLIENT BCT_CLIENT;
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-extern BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, BCT_GAMEDATA* cp_gamedata );
+extern BCT_CLIENT* BCT_CLIENT_Init( u32 heapID, u32 timeover, u32 comm_num, u32 plno, BCT_GAMEDATA* cp_gamedata, GFL_TCBSYS *tcbsys );
 extern void BCT_CLIENT_Delete( BCT_CLIENT* p_wk );
 
 extern BOOL BCT_CLIENT_StartMain( BCT_CLIENT* p_wk, u32 event );

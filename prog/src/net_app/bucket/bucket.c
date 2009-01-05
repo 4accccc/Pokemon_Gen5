@@ -120,12 +120,13 @@ typedef struct _BUCKET_WK{
 
 	u32 err_seq;	// 途中中断シーケンス
 	 
-
-
 	u32 check_middle_score_count;
 	BOOL all_middle_count_ok;		// 親から子に通信許可がきたか
 
 	u8 middle_score_get_count[ BCT_PLAYER_NUM ];	// みんなの途中得点を受信したか
+
+	void				*tcb_work;		///<TCBシステムで使用するワーク
+	GFL_TCBSYS			*tcbsys;		///<TCBシステム
 } ;
 
 //-----------------------------------------------------------------------------
@@ -194,6 +195,9 @@ GFL_PROC_RESULT BucketProc_Init( GFL_PROC * p_proc, int * p_seq, void * pwk, voi
 	p_wk = GFL_PROC_AllocWork( p_proc, sizeof(BUCKET_WK), HEAPID_BUCKET );
 	GFL_STD_MemFill( p_wk, 0, sizeof(BUCKET_WK) );
 
+    //TCBシステム作成
+    p_wk->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_BALLOON, GFL_TCB_CalcSystemWorkSize( 64 ));
+    p_wk->tcbsys = GFL_TCB_Init(64, p_wk->tcb_work);
 
 	// エントリー・結果画面パラメータ作成
 	MNGM_ENRES_PARAM_Init( &p_wk->enres_param, pp->wifi_lobby, pp->p_save, pp->vchat, &pp->lobby_wk );
@@ -253,6 +257,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 			GF_ASSERT(0);
 			return GFL_PROC_RES_FINISH;
 		}
+		GFL_TCB_Main(p_wk->tcbsys);
 		return GFL_PROC_RES_CONTINUE;
 	}
 
@@ -331,7 +336,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 			// 途中経過スコア　カウンタ値を設定
 			p_wk->check_middle_score_count = 1;
 		}
-		p_wk->p_client = BCT_CLIENT_Init( HEAPID_BUCKET, BCT_TIME_LIMIT, p_wk->comm_num, p_wk->plno, &p_wk->gamedata );
+		p_wk->p_client = BCT_CLIENT_Init( HEAPID_BUCKET, BCT_TIME_LIMIT, p_wk->comm_num, p_wk->plno, &p_wk->gamedata, p_wk->tcbsys );
 
 		WirelessIconEasy();  // 接続中なのでアイコン表示
 
@@ -531,6 +536,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		// 同期が完了するまで待つ
 		if(!GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),BCT_SYNCID_END)){
 			TOMOYA_PRINT( "sync_wait\n" );
+			GFL_TCB_Main(p_wk->tcbsys);
 			return GFL_PROC_RES_CONTINUE;
 		}
 
@@ -616,6 +622,7 @@ GFL_PROC_RESULT BucketProc_Main( GFL_PROC* p_proc, int* p_seq, void * pwk, void 
 		break;
 	}
 
+	GFL_TCB_Main(p_wk->tcbsys);
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -641,6 +648,10 @@ GFL_PROC_RESULT BucketProc_End( GFL_PROC* p_proc, int* p_seq, void * pwk, void *
 
 
 		dis_error = MNGM_ERROR_CheckDisconnect( &p_wk->enres_param );
+
+		//TCBシステム削除
+		GFL_TCB_Exit( p_wk->tcbsys );
+		GFL_HEAP_FreeMemory(p_wk->tcb_work);
 		
 		// ゲーム構成データ破棄
 		BCT_GAMEDATA_Release( p_wk );

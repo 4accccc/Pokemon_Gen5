@@ -239,7 +239,7 @@ enum{
 //=====================================
 typedef struct {
 	WORDSET*			p_wordset;	// ワードセット
-	MSGDATA_MANAGER*	p_msgman;	// ワードセット
+	GFL_MSGDATA*	p_msgman;	// ワードセット
 	GFL_BMPWIN*		win;		// 会話ウィンドウ
 	STRBUF*				p_str;		// 文字列バッファ
 	STRBUF*				p_tmp;		// 文字列バッファ
@@ -249,7 +249,7 @@ typedef struct {
 	u32					msgno;
 
 #ifdef WFLBY_CONNECT_DEBUG_START
-	MSGDATA_MANAGER*	p_debug_msgman;	// ワードセット
+	GFL_MSGDATA*	p_debug_msgman;	// ワードセット
 #endif
 } WFLBY_WINWK;
 
@@ -411,20 +411,20 @@ GFL_PROC_RESULT WFLBY_CONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, voi
 	WFLBY_CONNECT_GraphicInit( p_wk, HEAPID_WFLBY_ROOM );
 
 	// ウィンドウシステム初期化
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_msg_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk_system, p_wk->p_bgl, FONT_TALK, NARC_msg_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk_system, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_system_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_msg_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_message_wifi_system_dat,
 			WFLBY_SYSTEMWIN_X, WFLBY_SYSTEMWIN_Y,
 			WFLBY_SYSTEMWIN_SIZX, WFLBY_SYSTEMWIN_SIZY,
 			WFLBY_SYSTEMWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
 
-	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_msg_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TITLEWIN_X, WFLBY_TITLEWIN_Y, 
 			WFLBY_TITLEWIN_SIZX, WFLBY_TITLEWIN_SIZY,
 			WFLBY_TITLEWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
@@ -856,17 +856,17 @@ GFL_PROC_RESULT WFLBY_DISCONNECT_Init(GFL_PROC* p_proc, int* p_seq, void * pwk, 
 	WFLBY_CONNECT_GraphicInit( p_wk, HEAPID_WFLBY_ROOM );
 
 	// ウィンドウシステム初期化
-	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_msg_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->talk, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_system_dat,
 			WFLBY_TALKWIN_X, WFLBY_TALKWIN_Y, 
 			WFLBY_TALKWIN_SIZX, WFLBY_TALKWIN_SIZY,
 			WFLBY_TALKWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
-	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_msg_wifi_system_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->system, p_wk->p_bgl, FONT_SYSTEM, NARC_message_wifi_system_dat,
 			WFLBY_SYSTEMWIN_X, WFLBY_SYSTEMWIN_Y,
 			WFLBY_SYSTEMWIN_SIZX, WFLBY_SYSTEMWIN_SIZY,
 			WFLBY_SYSTEMWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
 
 
-	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_msg_wifi_lobby_dat,
+	WFLBY_CONNECT_WIN_Init( &p_wk->title, p_wk->p_bgl, FONT_TALK, NARC_message_wifi_lobby_dat,
 			WFLBY_TITLEWIN_X, WFLBY_TITLEWIN_Y, 
 			WFLBY_TITLEWIN_SIZX, WFLBY_TITLEWIN_SIZY,
 			WFLBY_TITLEWIN_CGX, p_wk->p_save, HEAPID_WFLBY_ROOM );
@@ -1252,15 +1252,15 @@ static void WFLBY_CONNECT_GraphicVBlank( WFLBY_CONNECTWK* p_wk )
 static void WFLBY_CONNECT_WIN_Init( WFLBY_WINWK* p_wk, GF_BGL_INI* p_bgl, u32 fontid, u32 msgid, u32 x, u32 y, u32 sizx, u32 sizy, u32 cgx, SAVE_CONTROL_WORK* p_save, u32 heapID )
 {
 	p_wk->p_wordset = WORDSET_Create( heapID );
-	p_wk->p_msgman	= MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, msgid, heapID );
-	p_wk->p_str		= STRBUF_Create( WFLBY_WINSYS_STRBUFNUM, heapID );
-	p_wk->p_tmp		= STRBUF_Create( WFLBY_WINSYS_STRBUFNUM, heapID );
+	p_wk->p_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
+	p_wk->p_str		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
+	p_wk->p_tmp		= GFL_STR_CreateBuffer( WFLBY_WINSYS_STRBUFNUM, heapID );
 	p_wk->fontid	= fontid;
 	p_wk->msgspeed	= CONFIG_GetMsgPrintSpeed( SaveData_GetConfig( p_save ) );
 	p_wk->msgno		= 0;
 
 #ifdef WFLBY_CONNECT_DEBUG_START
-	p_wk->p_debug_msgman	= MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_debug_tomoya_dat, heapID );;	// ワードセット
+	p_wk->p_debug_msgman	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_tomoya_dat, heapID );;	// ワードセット
 #endif
 
 	p_wk->win = GFL_BMPWIN_Create( 
@@ -1381,13 +1381,13 @@ static void WFLBY_CONNECT_WIN_Exit( WFLBY_WINWK* p_wk )
 	
 	GF_BGL_BmpWinDel( &p_wk->win );
 
-	STRBUF_Delete( p_wk->p_tmp );
-	STRBUF_Delete( p_wk->p_str );
-	MSGMAN_Delete( p_wk->p_msgman );
+	GFL_STR_DeleteBuffer( p_wk->p_tmp );
+	GFL_STR_DeleteBuffer( p_wk->p_str );
+	GFL_MSG_Delete( p_wk->p_msgman );
 	WORDSET_Delete( p_wk->p_wordset );
 
 #ifdef WFLBY_CONNECT_DEBUG_START
-	MSGMAN_Delete( p_wk->p_debug_msgman );
+	GFL_MSG_Delete( p_wk->p_debug_msgman );
 #endif
 }
 

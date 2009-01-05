@@ -211,14 +211,14 @@ static void NEWS_TOPIC_Add( NEWS_TOPICBUF* p_wk, NEWS_TOPIC* p_obj );
 static void NEWS_TOPIC_Remove( NEWS_TOPICBUF* p_wk, NEWS_TOPIC* p_obj );
 static void NEWS_TOPIC_SetData( NEWS_TOPIC* p_obj, u32 data0, u32 data1, u32 data2, const MYSTATUS* cp_p1, const MYSTATUS* cp_p2, const MYSTATUS* cp_p3, const MYSTATUS* cp_p4, u16 idx_p1, u16 idx_p2, u16 idx_p3, u16 idx_p4, u32 dest, u32 pri, u32 type );
 
-static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
-static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
+static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID );
 
 static u32 NEWS_TOPIC_GetUserIdxConnect( const NEWS_TOPIC* cp_obj, u32 count );
 static u32 NEWS_TOPIC_GetUserIdxItem( const NEWS_TOPIC* cp_obj, u32 count );
@@ -834,10 +834,10 @@ NEWS_TOPICTYPE NEWS_DSET_GetTopicType( const NEWS_DATA* cp_wk )
 BOOL NEWS_DSET_GetTopicData( const NEWS_DATA* cp_wk, const WFLBY_VIPFLAG* cp_vip, NEWS_TOPICTYPE type, STRBUF* p_str, u32 heapID )
 {
 	WORDSET*			p_wordset;
-	MSGDATA_MANAGER*	p_msgman;
+	GFL_MSGDATA*	p_msgman;
 	NEWS_TOPIC*			p_obj;
 	BOOL				result;
-	static BOOL (* const p_func[])( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID ) = {
+	static BOOL (* const p_func[])( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID ) = {
 		NEWS_TOPIC_GetSTRConnect,
 		NEWS_TOPIC_GetSTRItem,
 		NEWS_TOPIC_GetSTRMiniGame,
@@ -855,7 +855,7 @@ BOOL NEWS_DSET_GetTopicData( const NEWS_DATA* cp_wk, const WFLBY_VIPFLAG* cp_vip
 	p_obj = cp_wk->topic.topic_top.p_next;
 
 	// メッセージデータ初期化
-	p_msgman	= MSGMAN_Create(MSGMAN_TYPE_DIRECT,ARC_MSG,NARC_msg_wflby_news_dat,heapID );
+	p_msgman	= GFL_MSG_Create(MSGMAN_TYPE_DIRECT,ARCID_MESSAGE,NARC_message_wflby_news_dat,heapID );
 	p_wordset	= WORDSET_Create( heapID );
 
 	// 文字列作成
@@ -865,7 +865,7 @@ BOOL NEWS_DSET_GetTopicData( const NEWS_DATA* cp_wk, const WFLBY_VIPFLAG* cp_vip
 		result = FALSE;
 	}
 	
-	MSGMAN_Delete( p_msgman );
+	GFL_MSG_Delete( p_msgman );
 	WORDSET_Delete( p_wordset );
 
 	return result;
@@ -1188,7 +1188,7 @@ static void NEWS_TOPIC_Init( NEWS_TOPICBUF* p_wk, u32 heapID )
 	// トピックス格納バッファ初期化
 	for( i=0; i<NEWS_TOPIC_MAX; i++ ){
 		for( j=0; j<NEWS_TOPICNAME_NUM; j++ ){
-			p_wk->topic_buf[ i ].p_name[j] = STRBUF_Create( NEWS_TOPICNAME_LEN, heapID );
+			p_wk->topic_buf[ i ].p_name[j] = GFL_STR_CreateBuffer( NEWS_TOPICNAME_LEN, heapID );
 		}
 	}
 
@@ -1211,7 +1211,7 @@ static void NEWS_TOPIC_Exit( NEWS_TOPICBUF* p_wk )
 	// トピックス格納バッファ破棄
 	for( i=0; i<NEWS_TOPIC_MAX; i++ ){
 		for( j=0; j<NEWS_TOPICNAME_NUM; j++ ){
-			STRBUF_Delete( p_wk->topic_buf[ i ].p_name[j] );
+			GFL_STR_DeleteBuffer( p_wk->topic_buf[ i ].p_name[j] );
 		}
 	}
 
@@ -1441,7 +1441,7 @@ static void NEWS_TOPIC_SetName( NEWS_TOPIC* p_obj, u32 no, const MYSTATUS* cp_pl
  *	@param	heapID			ヒープＩＤ
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 
@@ -1455,7 +1455,7 @@ static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 	return TRUE;
 }
@@ -1465,7 +1465,7 @@ static BOOL NEWS_TOPIC_GetSTRConnect( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp
  *	@brief	アイテム交換
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 
@@ -1480,7 +1480,7 @@ static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 
 	return TRUE;
@@ -1491,7 +1491,7 @@ static BOOL NEWS_TOPIC_GetSTRItem( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
  *	@brief	ミニゲーム募集
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 
@@ -1544,7 +1544,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 
 	return TRUE;
@@ -1555,7 +1555,7 @@ static BOOL NEWS_TOPIC_GetSTRMiniGame( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
  *	@brief		足跡ボード
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 
@@ -1571,7 +1571,7 @@ static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 
 	return TRUE;
@@ -1582,7 +1582,7 @@ static BOOL NEWS_TOPIC_GetSTRFoot( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vi
  *	@brief	世界時計
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 	int i;
@@ -1607,7 +1607,7 @@ static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 
 	return TRUE;
@@ -1618,7 +1618,7 @@ static BOOL NEWS_TOPIC_GetSTRWldTimer( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* c
  *	@brief	イベント設定
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 	u32 stridx;
@@ -1652,7 +1652,7 @@ static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_v
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 
 	return TRUE;
@@ -1663,7 +1663,7 @@ static BOOL NEWS_TOPIC_GetSTREvent( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_v
  *	@brief	VIPが入ってきた設定
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	// ユーザIDが信用できるかチェック
 	if( p_obj->work[NEWS_TOPIC_WK_VIPIN_IDX] >= WFLBY_PLAYER_MAX ){
@@ -1685,7 +1685,7 @@ static BOOL NEWS_TOPIC_GetSTRVipIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_v
  *	@brief	ミニゲーム結果
  */
 //-----------------------------------------------------------------------------
-static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, MSGDATA_MANAGER* p_msgman, STRBUF* p_str, u32 heapID )
+static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG* cp_vip, WORDSET* p_wordset, GFL_MSGDATA* p_msgman, STRBUF* p_str, u32 heapID )
 {
 	STRBUF*				p_tmpstr;
 	u32 msgidx;
@@ -1730,7 +1730,7 @@ static BOOL NEWS_TOPIC_GetSTRMgResultIn( NEWS_TOPIC* p_obj, const WFLBY_VIPFLAG*
 	WORDSET_ExpandStr( p_wordset, p_str, p_tmpstr );
 
 	// メッセージデータ破棄
-	STRBUF_Delete( p_tmpstr );
+	GFL_STR_DeleteBuffer( p_tmpstr );
 
 	return TRUE;
 }

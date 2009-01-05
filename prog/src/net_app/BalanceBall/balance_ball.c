@@ -33,7 +33,7 @@ enum{
 // Prototype
 //==============================================================
 static void BB_SystemInit( BB_WORK* wk );
-static void BB_VramBankSet( GF_BGL_INI* bgl );
+static void BB_VramBankSet( void );
 static void BB_CATS_Init( BB_WORK* wk );
 static BOOL BB_WipeStart( int type );
 static void BB_MainSeq_Change( BB_WORK* wk, BOOL bEnd, int next_seq, int* seq );
@@ -42,6 +42,8 @@ static void MainResource_Delete( BB_WORK* wk );
 static void Reset_GameData( BB_WORK* wk );
 
 static u32 BB_DIS_ERROR_Check( BB_WORK* wk );
+
+static void BB_TcbMain(BB_WORK *wk);
 
 #define BB_TRANSFER_NUM				( 32 )
 #define BB_WIRE_RESS_ICON_PAL		( 14 )
@@ -118,7 +120,7 @@ static void BalanceBall_MainInit( BB_WORK* wk )
 		if ( IsParentID( wk ) == TRUE ){			
 			wk->p_server = BB_Server_AllocMemory( comm_num, &wk->sys );
 		}
-		wk->p_client = BB_Client_AllocMemory( comm_num, wk->netid, &wk->sys );		
+		wk->p_client = BB_Client_AllocMemory( comm_num, wk->netid, &wk->sys, wk->tcbsys );
 		wk->p_client->rare_game = wk->rule.ball_type;
 		wk->p_client->seed_use = wk->seed_tmp;
 	}
@@ -300,6 +302,10 @@ GFL_PROC_RESULT BalanceBallProc_Init( GFL_PROC* proc, int* seq, void * pwk, void
 	
 	wk->parent_wk = pwk;
 	
+    //TCBシステム作成
+    wk->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_BB, GFL_TCB_CalcSystemWorkSize( 64 ));
+    wk->tcbsys = GFL_TCB_Init(64, wk->tcb_work);
+	
 	{
 			
 		int i;
@@ -454,6 +460,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	dis_error = BB_DIS_ERROR_Check( wk );
 	switch( dis_error ){
 	case BB_DIS_ERROR_CLOSEING:		// 切断エラー	終了中
+		BB_TcbMain(wk);
 		return GFL_PROC_RES_CONTINUE;
 
 	case BB_DIS_ERROR_CLOSED:		// 切断エラー	終了
@@ -513,7 +520,10 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 			
 			BOOL bSetup = Debug_GameSetup( wk );
 			
-			if ( bSetup == FALSE ){ return GFL_PROC_RES_CONTINUE; }
+			if ( bSetup == FALSE ){ 
+				BB_TcbMain(wk);
+				return GFL_PROC_RES_CONTINUE;
+			}
 		}
 	#endif
 	#endif
@@ -554,7 +564,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	case eBB_SEQ_COUNT_DOWN:
 		///< カウントダウン
 		bEnd = TRUE;		
-		MNGM_COUNT_StartStart( wk->count_down );		
+		MNGM_COUNT_StartStart( wk->count_down, wk->tcbsys );		
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_COUNT_DOWN_WAIT, seq );
 		break;
 	
@@ -603,7 +613,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		bEnd = TRUE;
 		Snd_SeStopBySeqNo( BB_SND_HANABI, 0 );			///< 花火どがーん停止
 		Snd_SeStopBySeqNo( BB_SND_HAND, 0 );			///< 拍手も停止
-		MNGM_COUNT_StartTimeUp( wk->count_down );	
+		MNGM_COUNT_StartTimeUp( wk->count_down, wk->tcbsys );
 		BB_MainSeq_Change( wk, bEnd, eBB_SEQ_MAIN_END, seq );
 		break;
 		
@@ -725,7 +735,13 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 	case eBB_SEQ_END_WAIT:
 	default:
 		bEnd = GFL_NET_HANDLE_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), CCMD_BB_CONNECT_END );
-		return ( bEnd == TRUE ) ? GFL_PROC_RES_FINISH : GFL_PROC_RES_CONTINUE;
+		if(bEnd == TRUE){
+			return GFL_PROC_RES_FINISH;
+		}
+		else{
+			BB_TcbMain(wk);
+			return GFL_PROC_RES_CONTINUE;
+		}
 		break;
 	}
 	
@@ -735,6 +751,7 @@ GFL_PROC_RESULT BalanceBallProc_Main( GFL_PROC* proc, int* seq, void * pwk, void
 		BB_disp_Draw( wk );
 	}
 	
+	BB_TcbMain(wk);
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -844,6 +861,11 @@ GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void
 			u32 dis_error;
 			BB_WORK* wk = mywk;
 			dis_error = BB_DIS_ERROR_Check( wk );	// 切断エラーチェック
+
+			//TCBシステム削除
+			GFL_TCB_Exit( wk->tcbsys );
+			GFL_HEAP_FreeMemory(wk->tcb_work);
+			wk->tcbsys = NULL;
 	
 			GFL_PROC_FreeWork( proc );
 			GFL_HEAP_DeleteHeap( HEAPID_BB );
@@ -869,6 +891,19 @@ GFL_PROC_RESULT BalanceBallProc_Exit( GFL_PROC* proc, int* seq, void * pwk, void
 	return GFL_PROC_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   TCBメイン
+ *
+ * @param   tcbsys		
+ */
+//--------------------------------------------------------------
+static void BB_TcbMain(BB_WORK *wk)
+{
+	if(wk != NULL && wk->tcbsys != NULL){
+		GFL_TCB_Main(wk->tcbsys);
+	}
+}
 
 
 
@@ -904,7 +939,7 @@ static void BB_SystemInit( BB_WORK* wk )
 	PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_MAIN_OBJ, 0x200, HEAPID_BB );
 	PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_SUB_OBJ,	 0x200, HEAPID_BB );
 
-	BB_VramBankSet( wk->sys.bgl );
+	BB_VramBankSet( );
 	BB_CATS_Init( wk );
 	
 	G3X_AlphaBlend( TRUE );
@@ -942,14 +977,14 @@ void BB_SystemExit( BB_WORK* wk )
 	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
 	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
 	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME0_M );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME1_M );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME2_M );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME3_M );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME0_S );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME1_S );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME2_S );
-	GF_BGL_BGControlExit( wk->sys.bgl, GF_BGL_FRAME3_S );
+	GF_BGL_BGControlExit( GF_BGL_FRAME0_M );
+	GF_BGL_BGControlExit( GF_BGL_FRAME1_M );
+	GF_BGL_BGControlExit( GF_BGL_FRAME2_M );
+	GF_BGL_BGControlExit( GF_BGL_FRAME3_M );
+	GF_BGL_BGControlExit( GF_BGL_FRAME0_S );
+	GF_BGL_BGControlExit( GF_BGL_FRAME1_S );
+	GF_BGL_BGControlExit( GF_BGL_FRAME2_S );
+	GF_BGL_BGControlExit( GF_BGL_FRAME3_S );
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
@@ -979,13 +1014,13 @@ void BB_SystemExit( BB_WORK* wk )
 /**
  * @brief	VRAM 設定
  *
- * @param	bgl	
+ * @param	none	
  *
  * @retval	none	
  *
  */
 //--------------------------------------------------------------
-static void BB_VramBankSet( GF_BGL_INI* bgl )
+static void BB_VramBankSet( void )
 {
 	GF_Disp_GX_VisibleControlInit();
 	
@@ -1239,7 +1274,7 @@ static void BB_VBlank( void* work )
 
 	PaletteFadeTrans( wk->sys.pfd );
 	
-	GF_BGL_VBlankFunc( wk->sys.bgl );
+	GF_BGL_VBlankFunc(  );
 	
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }

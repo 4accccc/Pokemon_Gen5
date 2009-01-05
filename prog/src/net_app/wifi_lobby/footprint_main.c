@@ -45,6 +45,7 @@
 #include "poketool/pokeparty.h"
 #include "poketool/pokefoot.h"	//POKEFOOT_ARC_CHAR_DMMY定義の為
 #include "system/touch_subwindow.h"
+#include <tcb.h>
 
 
 //==============================================================================
@@ -236,21 +237,23 @@ typedef struct _FOOTPRINT_SYS{
 	FOOTPRINT_PARAM *parent_work;		///<parent_work
 	SAVE_CONTROL_WORK *sv;						///<セーブデータへのポインタ
 	
-	GF_BGL_INI		*bgl;				///<BGシステムへのポインタ
+	void				*tcb_work;		///<TCBシステムで使用するワーク
+	GFL_TCBSYS			*tcbsys;		///<TCBシステム
+	
 	PALETTE_FADE_PTR pfd;				///<パレットシステム
 	FONTOAM_SYS_PTR fontoam_sys;		///<フォントOAMシステムへのポインタ
 	GF_G3DMAN *g3Dman;
-	TCB_PTR update_tcb;					///<Update用TCBへのポインタ
+	GFL_TCB* update_tcb;					///<Update用TCBへのポインタ
 	CATS_SYS_PTR		csp;
 	CATS_RES_PTR		crp;
 	
 	TOUCH_SW_SYS *yesno_button;			///<ボタンの「はい・いいえ」システム
 	u8 yesno_button_use;				///<TRUE:「はい・いいえ」ボタンを使用中
 	u8 timeup_wait;						///<タイムアップしてから終了までの待ち時間
-	
+
 	// 描画まわりのワーク（主にBMP用の文字列周り）
 	WORDSET			*wordset;							// メッセージ展開用ワークマネージャー
-	MSGDATA_MANAGER *msgman;						// 名前入力メッセージデータマネージャー
+	GFL_MSGDATA *msgman;						// 名前入力メッセージデータマネージャー
 
 	// BMPWIN描画周り
 	GFL_BMPWIN*		name_win[FOOTPRINT_BMPWIN_NAME_MAX]; //名前表示用のBMPWIN
@@ -497,9 +500,9 @@ static const TCATS_OBJECT_ADD_PARAM_S NameFootObjParam = {
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static void Footprint_Update(TCB_PTR tcb, void *work);
+static void Footprint_Update(GFL_TCB* tcb, void *work);
 static void VBlankFunc( void * work );
-static void FootPrint_VramBankSet(GF_BGL_INI *bgl);
+static void FootPrint_VramBankSet(void);
 static void BgExit( GF_BGL_INI * ini );
 static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle );
 static void BmpWinInit( FOOTPRINT_SYS *fps );
@@ -597,6 +600,10 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 #else
 	fps->sv = WFLBY_SYSTEM_GetSaveData(fps->parent_work->wflby_sys);
 #endif
+
+    //TCBシステム作成
+    fps->tcb_work = GFL_HEAP_AllocClearMemory(HEAPID_FOOTPRINT, GFL_TCB_CalcSystemWorkSize( 64 ));
+    fps->tcbsys = GFL_TCB_Init(64, fps->tcb_work);
 	
 	fps->arceus_flg = WFLBY_SYSTEM_FLAG_GetArceus(fps->parent_work->wflby_sys);
 	Footprint_MyCommStatusSet(fps);
@@ -624,7 +631,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	sys_KeyRepeatSpeedSet( SYS_KEYREPEAT_SPEED_DEF, SYS_KEYREPEAT_WAIT_DEF );
 
 	//VRAM割り当て設定
-	FootPrint_VramBankSet(fps->bgl);
+	FootPrint_VramBankSet();
 
 	// タッチパネルシステム初期化
 	InitTPSystem();
@@ -635,7 +642,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 
 	//メッセージマネージャ作成
 	fps->wordset		 = WORDSET_Create(HEAPID_FOOTPRINT);
-	fps->msgman       = MSGMAN_Create( MSGMAN_TYPE_NORMAL, ARC_MSG, NARC_msg_wflby_footprint_dat, HEAPID_FOOTPRINT );
+	fps->msgman       = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wflby_footprint_dat, HEAPID_FOOTPRINT );
 
 	//フォントOAMシステム作成
 	fps->fontoam_sys = FONTOAM_SysInit(FOOT_FONTOAM_MAX, HEAPID_FOOTPRINT);
@@ -655,7 +662,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	// BMPWIN確保
 	BmpWinInit( fps );
 	
-	fps->talk_strbuf = STRBUF_Create(256, HEAPID_FOOTPRINT);
+	fps->talk_strbuf = GFL_STR_CreateBuffer(256, HEAPID_FOOTPRINT);
 	
 	//アクターシステム作成
 	fps->csp=CATS_AllocMemory(HEAPID_FOOTPRINT);
@@ -718,7 +725,7 @@ GFL_PROC_RESULT FootPrintProc_Init( GFL_PROC * proc, int * seq, void * pwk, void
 	MsgPrintAutoFlagSet(MSG_AUTO_OFF);
 	MsgPrintTouchPanelFlagSet(MSG_TP_OFF);
 
-	fps->update_tcb = TCB_Add(Footprint_Update, fps, 60000);
+	fps->update_tcb = GFL_TCB_AddTask(fps->tcbsys, Footprint_Update, fps, 60000);
 
 	sys_VBlankFuncChange(VBlankFunc, fps);
 
@@ -843,7 +850,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 			//「はい・いいえ」ボタンを出す
 			TOUCH_SW_PARAM tsp;
 			
-			tsp.p_bgl	  = fps->bgl;
+			
 			tsp.bg_frame  = FOOT_FRAME_WIN;
 			tsp.char_offs = WINCGX_BUTTON_YESNO_START;
 			tsp.pltt_offs = FOOT_MAINBG_BUTTON_YESNO_PAL;
@@ -987,6 +994,7 @@ GFL_PROC_RESULT FootPrintProc_Main( GFL_PROC * proc, int * seq, void * pwk, void
 	}
 #endif
 
+	GFL_TCB_Main(fps->tcbsys);
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -1004,7 +1012,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 {
 	FOOTPRINT_SYS * fps  = mywk;
 
-	TCB_Delete(fps->update_tcb);
+	TCB_Delete(fps->tcbsys, fps->update_tcb);
 
 	DefaultActorDel_Main(fps);
 	DefaultActorDel_Sub(fps);
@@ -1015,7 +1023,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	//スタンプシステム破棄
 	StampSys_Exit(&fps->ssw);
 
-	STRBUF_Delete(fps->talk_strbuf);
+	GFL_STR_DeleteBuffer(fps->talk_strbuf);
 	
 	//フォント削除
 	FontProc_UnloadFont(FONT_BUTTON);
@@ -1024,13 +1032,13 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	FONTOAM_SysDelete(fps->fontoam_sys);
 
 	// メッセージマネージャー・ワードセットマネージャー解放
-	MSGMAN_Delete( fps->msgman );
+	GFL_MSG_Delete( fps->msgman );
 	WORDSET_Delete( fps->wordset );
 	
 	BmpWinDelete( fps );
 	
 	// BG_SYSTEM解放
-	BgExit( fps->bgl );
+	BgExit(  );
 	GFL_BG_Exit();
 	GFL_BMPWIN_Exit();
 
@@ -1063,6 +1071,10 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 	//Vram転送マネージャー削除
 	DellVramTransferManager();
 
+	//TCBシステム削除
+	GFL_TCB_Exit( fps->tcbsys );
+	GFL_HEAP_FreeMemory(fps->tcb_work);
+
 	StopTP();		//タッチパネルの終了
 
 	MsgPrintSkipFlagSet(MSG_SKIP_OFF);
@@ -1088,7 +1100,7 @@ GFL_PROC_RESULT FootPrintProc_End( GFL_PROC * proc, int * seq, void * pwk, void 
 //==============================================================================
 //	
 //==============================================================================
-static void Footprint_Update(TCB_PTR tcb, void *work)
+static void Footprint_Update(GFL_TCB* tcb, void *work)
 {
 	FOOTPRINT_SYS *fps = work;
 	
@@ -1136,7 +1148,7 @@ static void VBlankFunc( void * work )
 	CATS_RenderOamTrans();
 	PaletteFadeTrans(fps->pfd);
 	
-	GF_BGL_VBlankFunc(fps->bgl);
+	GF_BGL_VBlankFunc();
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -1145,10 +1157,10 @@ static void VBlankFunc( void * work )
 /**
  * @brief   Vramバンク設定を行う
  *
- * @param   bgl		BGLデータへのポインタ
+ * @param   none
  */
 //--------------------------------------------------------------
-static void FootPrint_VramBankSet(GF_BGL_INI *bgl)
+static void FootPrint_VramBankSet(void)
 {
 	GF_Disp_GX_VisibleControlInit();
 	GF_Disp_GXS_VisibleControlInit();
@@ -1304,17 +1316,17 @@ static void BgExit( GF_BGL_INI * ini )
 //--------------------------------------------------------------------------------------------
 static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 {
-	GF_BGL_INI *bgl = fps->bgl;
+	
 	u16 *panel_scrn;
 	
 	//-- メイン画面 --//
 	PaletteWorkSet_Arc(fps->pfd, ARC_FOOTPRINT_GRA, NARC_footprint_board_a_board_sita_NCLR, 
 		HEAPID_FOOTPRINT, FADE_MAIN_BG, 0x200-0x40, 0);
-	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_a_board_sita_NCGR, fps->bgl, 
+	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_a_board_sita_NCGR, 
 		FOOT_FRAME_PANEL, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_NSCR, fps->bgl, 
+	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_NSCR, 
 		FOOT_FRAME_PANEL, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_bg_NSCR, fps->bgl, 
+	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_a_board_sita_bg_NSCR, 
 		FOOT_FRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
 
 	//-- サブ画面 --//
@@ -1323,13 +1335,13 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 	if(fps->parent_work->board_type == FOOTPRINT_BOARD_TYPE_WHITE){
 		PaletteWorkCopy(fps->pfd, FADE_SUB_BG, 16*1, FADE_SUB_BG, 16*0, 0x20);
 	}
-	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_ashiato_board_NCGR, fps->bgl, 
+	ArcUtil_HDL_BgCharSet(p_handle, NARC_footprint_board_ashiato_board_NCGR, 
 		FOOT_SUBFRAME_PLATE, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_NSCR, fps->bgl, 
+	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_NSCR, 
 		FOOT_SUBFRAME_PLATE, 0, 0, 0, HEAPID_FOOTPRINT);
-	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, fps->bgl, 
+	ArcUtil_HDL_ScrnSet(p_handle, NARC_footprint_board_ashiato_board_bg_NSCR, 
 		FOOT_SUBFRAME_BG, 0, 0, 0, HEAPID_FOOTPRINT);
-	panel_scrn = GF_BGL_ScreenAdrsGet(fps->bgl, FOOT_SUBFRAME_PLATE);
+	panel_scrn = GF_BGL_ScreenAdrsGet(FOOT_SUBFRAME_PLATE);
 	GFL_STD_MemCopy16(panel_scrn, fps->namelist_scrn, NAMELIST_SCRN_SIZE);
 	GFL_STD_MemClear16(panel_scrn, NAMELIST_SCRN_SIZE);
 	
@@ -1342,7 +1354,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		PaletteWorkSet_Arc(fps->pfd, ARC_WINFRAME, TalkWinPalArcGet(win_type), HEAPID_FOOTPRINT, 
 			FADE_MAIN_BG, 0x20, FOOT_MAINBG_TALKWIN_PAL * 16);
 		// 会話ウインドウグラフィック転送
-		TalkWinGraphicSet(fps->bgl, FOOT_FRAME_WIN, WINCGX_TALKWIN_START, 
+		TalkWinGraphicSet(FOOT_FRAME_WIN, WINCGX_TALKWIN_START, 
 			FOOT_MAINBG_TALKWIN_PAL,  win_type, HEAPID_FOOTPRINT);
 
 		//システムフォントパレット転送
@@ -1359,7 +1371,7 @@ static void BgGraphicSet( FOOTPRINT_SYS * fps, ARCHANDLE* p_handle )
 		}
 	}
 
-	GF_BGL_LoadScreenV_Req(fps->bgl, FOOT_SUBFRAME_PLATE);
+	GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 }
 
 //--------------------------------------------------------------
@@ -1480,7 +1492,7 @@ static void DefaultActorSet_Main(FOOTPRINT_SYS *fps)
 			PLTTID_OBJ_FONTOAM, 0x1c * 8, 176, FONTOAM_CENTER);
 		FONTOAM_SetDrawFlag(fps->fontoam_exit.fontoam, TRUE);
 		
-		STRBUF_Delete(str_ptr);
+		GFL_STR_DeleteBuffer(str_ptr);
 	}
 }
 
@@ -1624,7 +1636,7 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 
 			//BGのインクの枠を消す
 			for(y = 0; y < SCRN_INK_POS_SIZE_Y; y++){
-				GF_BGL_ScrFill(fps->bgl, FOOT_FRAME_PANEL, MyInkPaletteEraseScrnCode[y], 
+				GF_BGL_ScrFill(FOOT_FRAME_PANEL, MyInkPaletteEraseScrnCode[y], 
 					SCRN_INK_POS_START_X + SCRN_INK_POS_SIZE_X * i, SCRN_INK_POS_Y + y,
 					SCRN_INK_POS_SIZE_X, 1, GF_BGL_SCRWRT_PALIN);
 			}
@@ -1652,7 +1664,7 @@ static void MyInkPaletteSettings(FOOTPRINT_SYS *fps)
 		}
 	}
 	Footprint_SelectInkPaletteFade(fps, 0);
-	GF_BGL_LoadScreenV_Req(fps->bgl, FOOT_FRAME_PANEL);
+	GF_BGL_LoadScreenV_Req(FOOT_FRAME_PANEL);
 }
 
 //--------------------------------------------------------------
@@ -2154,13 +2166,13 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 					u16 *panel_scrn;
 					int x, y;
 					
-					panel_scrn = GF_BGL_ScreenAdrsGet(fps->bgl, FOOT_SUBFRAME_PLATE);
+					panel_scrn = GF_BGL_ScreenAdrsGet(FOOT_SUBFRAME_PLATE);
 					for(y = Sub_ListScrnRange[i][1]; y < Sub_ListScrnRange[i][1] + Sub_ListScrnRange[i][3]; y++){
 						GFL_STD_MemCopy16(&fps->namelist_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							&panel_scrn[y*32 + Sub_ListScrnRange[i][0]], 
 							Sub_ListScrnRange[i][2] * 2);
 					}
-					GF_BGL_LoadScreenV_Req(fps->bgl, FOOT_SUBFRAME_PLATE);
+					GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 				}
 
 				entry_num++;
@@ -2171,10 +2183,10 @@ static FOOTPRINT_NAME_UPDATE_STATUS FootPrintTool_NameAllUpdate(FOOTPRINT_SYS *f
 				fps->name_foot_monsno[i] = 0;
 				fps->name_foot_color[i] = 0;
 				CATS_ObjectEnableCap(fps->cap_name_foot[i], CATS_ENABLE_FALSE);	//足跡非表示
-				GF_BGL_ScrFill(fps->bgl, FOOT_SUBFRAME_PLATE, 0, 
+				GF_BGL_ScrFill(FOOT_SUBFRAME_PLATE, 0, 
 					Sub_ListScrnRange[i][0], Sub_ListScrnRange[i][1],
 					Sub_ListScrnRange[i][2], Sub_ListScrnRange[i][3], GF_BGL_SCRWRT_PALNL);
-				GF_BGL_LoadScreenV_Req(fps->bgl, FOOT_SUBFRAME_PLATE);
+				GF_BGL_LoadScreenV_Req(FOOT_SUBFRAME_PLATE);
 				out_num++;
 			}
 			
@@ -2339,13 +2351,13 @@ static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, con
 	CHAR_MANAGER_ALLOCDATA cma;
 	int vram_size;
 	FONTOAM_OBJ_PTR fontoam;
-	GF_BGL_INI *bgl;
+	
 	CATS_RES_PTR crp;
 	int font_len, char_len;
 	
 	GF_ASSERT(font_actor->fontoam == NULL);
 	
-	bgl = fps->bgl;
+	
 	crp = fps->crp;
 	
 	//文字列のドット幅から、使用するキャラ数を算出する
@@ -2353,7 +2365,7 @@ static void Sub_FontOamCreate(FOOTPRINT_SYS_PTR fps, FONT_ACTOR *font_actor, con
 
 	//BMP作成
 	GF_BGL_BmpWinInit(&bmpwin);
-	GF_BGL_BmpWinObjAdd(bgl, &bmpwin, char_len, 16 / 8, 0, 0);
+	GF_BGL_BmpWinObjAdd(&bmpwin, char_len, 16 / 8, 0, 0);
 	GF_STR_PrintExpand(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, 
 		0, 0, NULL);
 //	GF_STR_PrintColor(&bmpwin, font_type, str, 0, 0, MSG_NO_PUT, color, NULL );

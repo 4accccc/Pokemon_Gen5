@@ -132,7 +132,7 @@ typedef struct {
 	CATS_SYS_PTR		csp;				///< OAMシステム
 	CATS_RES_PTR		crp;				///< リソース一括管理
 
-	GF_BGL_INI*			bgl;				///< BGL
+	
 	PALETTE_FADE_PTR	pfd;				///< パレットフェード
 	
 	GF_G3DMAN*			g3Dman;				///< 3D
@@ -142,7 +142,7 @@ typedef struct {
 	
 //	BUTTON_MAN*			btn;				///< ボタン	
 //	RECT_HIT_TBL		rht[ eHRT_MAX ];	///< 当たり判定(managerに登録する)
-//	MSGDATA_MANAGER*	man;
+//	GFL_MSGDATA*	man;
 //	FONTOAM_SYS_PTR		fontoam_sys;
 //	int					logo_color;
 	NNSFndAllocator		allocator;
