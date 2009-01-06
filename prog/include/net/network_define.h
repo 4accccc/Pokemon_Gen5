@@ -72,6 +72,9 @@ enum NetworkServiceID_e {
   WB_NET_TRADE_SERVICEID,			///<ポケモン交換
   WB_NET_MINIGAME_TOOL,				///<WIFI広場ミニゲームツール
   WB_NET_MYSTERY,					///<不思議な贈り物
+  WB_NET_BALLOON,					///<風船割り(ソーナンス)
+  WB_NET_BUCKET,					///<球入れ(マルノーム)
+  WB_NET_BALANCEBALL,				///<バランスボール(マネネ)
   WB_NET_SERVICEID_MAX   // 終端
 };
 
@@ -88,6 +91,9 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_TRADE = (WB_NET_TRADE_SERVICEID<<8),			///<ポケモン交換の開始番号
   GFL_NET_CMD_MINIGAME_TOOL = (WB_NET_MINIGAME_TOOL<<8),	///<WIFI広場ミニゲームツール
   GFL_NET_CMD_MYSTERY = (WB_NET_MYSTERY<<8),				///<不思議な贈り物
+  GFL_NET_CMD_BALLOON = (WB_NET_BALLOON<<8),				///<風船割り
+  GFL_NET_CMD_BUCKET = (WB_NET_BUCKET<<8),					///<球入れ
+  GFL_NET_CMD_BALANCEBALL = (WB_NET_BALANCEBALL<<8),		///<バランスボール
 };
 
 
