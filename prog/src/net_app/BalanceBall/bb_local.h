@@ -135,7 +135,7 @@ typedef struct {
 	
 	PALETTE_FADE_PTR	pfd;				///< パレットフェード
 	
-	GFL_G3D_CAMERA		camera_p;			///< カメラ
+	GFL_G3D_CAMERA *		camera_p;			///< カメラ
 	
 	BUTTON_MAN*			btn;				///< ボタン
 	

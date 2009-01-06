@@ -718,7 +718,7 @@ typedef struct _MNGM_ENTRYWK{
 ///	3Dシステムワーク
 //=====================================
 typedef struct {
-	PTC_PTR		p_ptc;
+	GFL_PTC_PTR		p_ptc;
 	void*		p_ptc_work;
 } MNGM_3DSYS;
 
@@ -4645,7 +4645,7 @@ static void MNGM_RESULT_3DInit( MNGM_3DSYS* p_wk, u32 heapID )
 {
 	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
 						0x1000, heapID, NULL);
-	Particle_SystemWorkInit();		// パーティクル初期化
+	GFL_PTC_Init(heapID);		// パーティクル初期化
 }
 
 //----------------------------------------------------------------------------
@@ -4657,7 +4657,7 @@ static void MNGM_RESULT_3DInit( MNGM_3DSYS* p_wk, u32 heapID )
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_3DExit( MNGM_3DSYS* p_wk )
 {
-	Particle_SystemExitAll();		//  パーティクル破棄
+	GFL_PTC_Exit();
 
     GF_G3D_Exit();
 }
@@ -4706,25 +4706,24 @@ static void MNGM_RESULT_3DDraw( MNGM_3DSYS* p_wk )
 static void MNGM_RESULT_3DAnmLoad( MNGM_3DSYS* p_wk, ARCHANDLE* p_handle, u32 dataidx, u32 heapID )
 {
 	void* p_res;
-	GFL_G3D_CAMERA p_camera;
+	GFL_G3D_CAMERA * p_camera;
 
 	// パーティクルワーク作成
 	p_wk->p_ptc_work = GFL_HEAP_AllocMemory( heapID, PARTICLE_LIB_HEAP_SIZE );
-	p_wk->p_ptc = Particle_SystemCreate( 
-			NULL, NULL, 
-			p_wk->p_ptc_work, PARTICLE_LIB_HEAP_SIZE, 
-			TRUE, heapID );
+	p_wk->ptc = GFL_PTC_Create(p_wk->p_ptc_work, PARTICLE_LIB_HEAP_SIZE, TRUE, heapID);
 	GF_ASSERT( p_wk->p_ptc );
 
 
 	// カメラ設定
 	Particle_CameraTypeSet(p_wk->p_ptc, GF_CAMERA_ORTHO);
-	p_camera = Particle_GetCameraPtr( p_wk->p_ptc );
-	GFC_SetCameraClip(FX32_ONE, FX32_ONE * 900, p_camera);
+	p_camera = GFL_PTC_GetCameraPtr( p_wk->p_ptc );
+	GFL_G3D_CAMERA_SetNear(camera_ptr, FX32_ONE);
+	GFL_G3D_CAMERA_GetFar(camera_ptr, FX32_ONE * 900);
 
 	// リソース読み込み＆設定
 	p_res = ArcUtil_HDL_Load(p_handle, dataidx, FALSE, heapID, ALLOC_TOP);
 	Particle_ResourceSet(p_wk->p_ptc, p_res, PTC_AUTOTEX_LNK|PTC_AUTOPLTT_LNK, FALSE);
+	GFL_PTC_SetResource(p_wk->p_ptc, p_res, FALSE, GFUser_VIntr_GetTCBSYS());
 }
 
 //----------------------------------------------------------------------------
@@ -4736,7 +4735,7 @@ static void MNGM_RESULT_3DAnmLoad( MNGM_3DSYS* p_wk, ARCHANDLE* p_handle, u32 da
 //-----------------------------------------------------------------------------
 static void MNGM_RESULT_3DAnmRelease( MNGM_3DSYS* p_wk )
 {
-	Particle_SystemExit( p_wk->p_ptc );
+	GFL_PTC_Delete(p_wk->p_ptc);
 	GFL_HEAP_FreeMemory( p_wk->p_ptc_work );
 	p_wk->p_ptc			= NULL;
 	p_wk->p_ptc_work	= NULL;
@@ -4757,7 +4756,7 @@ static void MNGM_RESULT_3DAnmStart( MNGM_3DSYS* p_wk, u32 emitnum )
 	VecFx32 pos = {0,0,0};
 
 	// エミッタの登録
-	Particle_CreateEmitter( p_wk->p_ptc, emitnum, &pos );
+	GFL_PTC_CreateEmitter( p_wk->p_ptc, emitnum, &pos );
 }
 
 //----------------------------------------------------------------------------

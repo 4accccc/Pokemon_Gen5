@@ -12,6 +12,7 @@
 #include "system/actor_tool.h"
 #include "print/wordset.h"
 #include <tcb.h>
+#include <g3d_camera.h>
 
 
 //==============================================================================
@@ -512,12 +513,12 @@ typedef struct _BALLOON_GAME_WORK{
 
 	GFL_TCB* update_tcb;
 
-	GFL_G3D_CAMERA camera;			///<カメラへのポインタ
+	GFL_G3D_CAMERA * camera;			///<カメラへのポインタ
 #if WB_FIX
-	GFL_G3D_CAMERA camera_3d;		///<3Dモデル用カメラへのポインタ
+	GFL_G3D_CAMERA * camera_3d;		///<3Dモデル用カメラへのポインタ
 #endif
 
-	PTC_PTR ptc;					///<パーティクルシステムへのポインタ
+	GFL_PTC_PTR ptc;					///<パーティクルシステムへのポインタ
 
     // アロケータ
     NNSFndAllocator allocator;

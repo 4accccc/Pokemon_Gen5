@@ -287,7 +287,7 @@ BOOL Air3D_EntryAdd(BALLOON_GAME_PTR game, int air);
 void Air3D_Delete(BALLOON_GAME_PTR game, int air_no, int air_size);
 void Air3D_Update(BALLOON_GAME_PTR game);
 void Air3D_Draw(BALLOON_GAME_PTR game);
-static void Debug_CameraMove(GFL_G3D_CAMERA camera);
+static void Debug_CameraMove(GFL_G3D_CAMERA * camera);
 static u32 sAllocTex(u32 size, BOOL is4x4comp);
 static u32 sAllocTexPalette(u32 size, BOOL is4pltt);
 
@@ -1853,22 +1853,21 @@ static void PlayerName_Erase(BALLOON_GAME_PTR game, int all_erase)
 static void BalloonParticleInit(BALLOON_GAME_PTR game)
 {
 	void *heap;
-	GFL_G3D_CAMERA camera_ptr;
+	GFL_G3D_CAMERA * camera_ptr;
 	void *resource;
 
 	//パーティクルシステムワーク初期化
-	Particle_SystemWorkInit();
+	GFL_PTC_Init(HEAPID_BALLOON);
 	
 	heap = GFL_HEAP_AllocMemory(HEAPID_BALLOON, PARTICLE_LIB_HEAP_SIZE);
-	game->ptc = Particle_SystemCreate(sAllocTex, sAllocTexPalette, heap, 
-		PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_BALLOON);
-	camera_ptr = Particle_GetCameraPtr(game->ptc);
-	GFC_SetCameraClip(BP_NEAR, BP_FAR, camera_ptr);
+	game->ptc = GFL_PTC_Create(heap, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_BALLOON);
+	camera_ptr = GFL_PTC_GetCameraPtr(game->ptc);
+	GFL_G3D_CAMERA_SetNear(camera_ptr, BP_NEAR);
+	GFL_G3D_CAMERA_GetFar(camera_ptr, BP_FAR);
 
 	//リソース読み込み＆登録
-	resource = Particle_ArcResourceLoad(
-		ARC_PL_ETC_PARTICLE, BALLOON_SPA, HEAPID_BALLOON);
-	Particle_ResourceSet(game->ptc, resource, PTC_AUTOTEX_LNK | PTC_AUTOPLTT_LNK, TRUE);
+	resource = GFL_PTC_LoadArcResource(ARC_PL_ETC_PARTICLE, BALLOON_SPA, HEAPID_BALLOON);
+	GFL_PTC_SetResource(ptc, resource, TRUE, NULL);
 }
 
 //--------------------------------------------------------------
@@ -1882,8 +1881,8 @@ static void BalloonParticleExit(BALLOON_GAME_PTR game)
 {
 	void *heap;
 	
-	heap = Particle_HeapPtrGet(game->ptc);
-	Particle_SystemExit(game->ptc);
+	heap = GFL_PTC_GetHeapPtr(game->ptc);
+	GFL_PTC_Exit();
 	GFL_HEAP_FreeMemory(heap);
 }
 
@@ -1901,13 +1900,13 @@ void BalloonParticle_EmitAdd(BALLOON_GAME_PTR game, int emit_no)
 {
 	switch(emit_no){
 	case BALLOON_HINOMARU:
-		Particle_CreateEmitterCallback(game->ptc, BALLOON_HINOMARU, NULL, game);
+		GFL_PTC_CreateEmitterCallback(game->ptc, BALLOON_HINOMARU, NULL, game);
 		break;
 	case BALLOON_PUSYU:
-		Particle_CreateEmitterCallback(game->ptc, BALLOON_PUSYU, NULL, game);
+		GFL_PTC_CreateEmitterCallback(game->ptc, BALLOON_PUSYU, NULL, game);
 		break;
 	case BALLOON_PUSYU2:
-		Particle_CreateEmitterCallback(game->ptc, BALLOON_PUSYU2, NULL, game);
+		GFL_PTC_CreateEmitterCallback(game->ptc, BALLOON_PUSYU2, NULL, game);
 		break;
 	default:
 		GF_ASSERT(0);
@@ -3361,7 +3360,7 @@ static BOOL Server_GamePlayingManage(BALLOON_GAME_PTR game)
  * @param   camera
  */
 //--------------------------------------------------------------
-static void Debug_CameraMove(GFL_G3D_CAMERA camera)
+static void Debug_CameraMove(GFL_G3D_CAMERA * camera)
 {
 #ifdef PM_DEBUG
 	VecFx32 move = {0,0,0};

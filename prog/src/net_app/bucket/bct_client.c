@@ -1213,7 +1213,7 @@ typedef struct {
 
 	FONTOAM_SYS_PTR	p_fontoam_sys;	// FONTOAMのシステム
 
-    GFL_G3D_CAMERA p_camera;
+    GFL_G3D_CAMERA * p_camera;
     VecFx32 target;
 
 	// メイン画面背景

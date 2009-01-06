@@ -16,7 +16,7 @@
 extern void StampSys_Init(STAMP_SYSTEM_WORK *ssw, BOOL arceus_flg);
 extern void StampSys_Exit(STAMP_SYSTEM_WORK *ssw);
 extern BOOL StampSys_Add(FOOTPRINT_SYS_PTR fps, STAMP_SYSTEM_WORK *ssw, const STAMP_PARAM *param, ARCHANDLE *hdl_main, ARCHANDLE *hdl_mark, BOOL arceus_flg);
-extern void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GFL_G3D_CAMERA camera_ptr, 
+extern void StampSys_Update(STAMP_SYSTEM_WORK *ssw, GFL_G3D_CAMERA * camera_ptr, 
 	int game_status, int board_type);
 extern void StampSys_ObjDraw(STAMP_SYSTEM_WORK *ssw);
 extern void StampSys_HitCheck(STAMP_SYSTEM_WORK *ssw);

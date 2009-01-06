@@ -57,7 +57,7 @@ static const CAMERA_ANGLE sc_WFLBY_CAMERA_ANGLE = {		// アングル
 ///	カメラシステム
 //=====================================
 typedef struct _WFLBY_CAMERA {
-	GFL_G3D_CAMERA			p_camera;
+	GFL_G3D_CAMERA *			p_camera;
 	const WFLBY_3DPERSON*	cp_person;
 	VecFx32					target;
 }WFLBY_CAMERA;

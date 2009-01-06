@@ -260,7 +260,7 @@ typedef struct _FOOTPRINT_SYS{
 	STRBUF *talk_strbuf;				///<会話メッセージ用バッファ
 	u8 msg_index;						///<メッセージインデックス
 
-	GFL_G3D_CAMERA camera;				///<カメラへのポインタ
+	GFL_G3D_CAMERA * camera;				///<カメラへのポインタ
 	fx32 world_width;					///<設置されているカメラに表示されているワールド座標の幅
 	fx32 world_height;					///<設置されているカメラに表示されているワールド座標の高さ
 	

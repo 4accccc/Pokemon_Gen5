@@ -910,7 +910,7 @@ typedef struct {
 ///	カメラワーク
 //=====================================
 typedef struct {
-	GFL_G3D_CAMERA	p_camera;	// カメラオブジェ
+	GFL_G3D_CAMERA *	p_camera;	// カメラオブジェ
 	CAMERA_ANGLE	angle;		// カメラアングル
 	fx32			dist;		// カメラ距離
 	u16				status;		// カメラ状態
