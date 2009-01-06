@@ -238,7 +238,8 @@ static void _mysteryParentWaiting(void)
 	int i;
 	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
 		const GFL_NETHANDLE *handle = GFL_NET_HANDLE_Get(i);
-		if( _pCommStateM->status[i] == NULL && GFL_NET_HANDLE_IsConnect(handle) == TRUE)
+			//FIXME const‘Î‰žŒã
+//		if( _pCommStateM->status[i] == NULL && GFL_NET_HANDLE_IsNegotiation(handle) == TRUE)
 			{
 			//FIXME Ž©‘O‚ÅŽóMŠÖ”‚ª—v‚é
 			//_pCommStateM->status[i] = CommInfoGetMyStatus(i);
