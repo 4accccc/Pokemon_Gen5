@@ -147,6 +147,7 @@ static void _commStateInitialize(MYSTERYGIFT_WORK *pMSys)
 			NULL,  ///< wifiフレンドリスト削除コールバック
 			NULL,   ///< DWC形式の友達リスト	
 			NULL,  ///< DWCのユーザデータ（自分のデータ）
+            0,   ///< DWCへのHEAPサイズ
 			TRUE,        ///< デバック用サーバにつなぐかどうか
 	#endif  //GFL_NET_WIFI
 			0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346

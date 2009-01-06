@@ -37,7 +37,7 @@ LINCLUDES	=	./include \
 GFLIB_DIR		=	../lib/gflib
 LINCLUDES		+= 	$(GFLIB_DIR)/include
 LLIBRARY_DIRS	=	$(GFLIB_DIR)/install/$(NITRO_BUILDTYPE)
-LLIBRARIES		=  	gflibmulti.a
+LLIBRARIES		=  	gflib.a
 
 # wifiを使用する場合のLibrary定義
 #LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
@@ -45,14 +45,15 @@ LLIBRARIES		=  	gflibmulti.a
 #NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
 
 #----------------------------------------------------------------------------
-#パーティクル＋イクニューモンコンポーネントのためのライブラリを追加
+#パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
-#LLIBRARIES		+= libwvr$(CODEGEN).a
-# 任天堂Cryptライブラリを追加 by mituhara 2006.07.05
-LLIBRARY_DIRS	+= ./library/crypto/$(NITRO_BUILDTYPE)
-LLIBRARIES	+= ./libcrypto.a
+
+#----------------------------------------------------------------------------
+# 任天堂Cryptライブラリを追加
+#----------------------------------------------------------------------------
+LLIBARIES += libcrypto$(NITRO_LIBSUFFIX).a
 
 #----------------------------------------------------------------------------
 #	NitroのデフォルトLCFファイルでなく、作成したものを読み込む	
@@ -128,8 +129,8 @@ include $(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #----------------------------------------------------------------------------
 #include	$(NITRODWC_ROOT)/build/buildtools/commondefs
 #include	$(NITRODWC_ROOT)/build/buildtools/modulerules
-#include	$(NITROVCT_ROOT)/build/buildtools/commondefs
-#include	$(NITROVCT_ROOT)/build/buildtools/modulerules
+include	$(NITROVCT_ROOT)/build/buildtools/commondefs
+include	$(NITROVCT_ROOT)/build/buildtools/modulerules
 
 #----------------------------------------------------------------------------
 #	makefileがインクルードするファイルが更新されたらmakelcfが動作するようにした

@@ -26,6 +26,7 @@ typedef enum
 	FIELD_COMM_MODE_SEARCH,		//侵入先探し中
 	FIELD_COMM_MODE_CONNECT,	//侵入後
 	FIELD_COMM_MODE_TRY_CONNECT,	//子機となり親へ接続を試みる
+	FIELD_COMM_MODE_CONNECTING,	//子機接続
 }FIELD_COMM_MODE;
 
 typedef enum

@@ -238,6 +238,18 @@ void	FIELD_COMM_FUNC_TermSystem( FIELD_COMM_FUNC *commFunc )
 	GFL_HEAP_FreeMemory( commFunc );
 }
 
+
+static void FIELD_COMM_FUNC_Connect(void* pWork,int hardID)
+{
+    if(GFL_NET_IsParentMachine()==FALSE){
+        FIELD_COMM_FUNC *commFunc = pWork;
+        commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
+        commFunc->seqNo_ = 0;
+        ARI_TPrintf("Connect!(Child)\n");
+    }
+}
+
+
 //--------------------------------------------------------------
 //	通信開始
 //--------------------------------------------------------------
@@ -246,7 +258,7 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
 	GFLNetInitializeStruct aGFLNetInit = {
 		FieldCommRecvTable,	//NetSamplePacketTbl,  // 受信関数テーブル
 		NELEMS(FieldCommRecvTable), // 受信テーブル要素数
-        NULL,    ///< ハードで接続した時に呼ばれる
+        FIELD_COMM_FUNC_Connect,    ///< ハードで接続した時に呼ばれる
         NULL,    ///< ネゴシエーション完了時にコール
         NULL,	// ユーザー同士が交換するデータのポインタ取得関数
 		NULL,	// ユーザー同士が交換するデータのサイズ取得関数
@@ -263,6 +275,7 @@ void	FIELD_COMM_FUNC_InitCommSystem( FIELD_COMM_FUNC *commFunc )
     NULL,  ///< wifiフレンドリスト削除コールバック
     NULL,   ///< DWC形式の友達リスト	
     NULL,  ///< DWCのユーザデータ（自分のデータ）
+    0,   ///< DWCへのHEAPサイズ
     TRUE,        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
 #if DEB_ARI&0
@@ -411,18 +424,19 @@ static	void FIELD_COMM_FUNC_UpdateSearchParent( FIELD_COMM_FUNC *commFunc )
 		}
 		bcnIdx++;
 	}
-	if( targetIdx != -1 )
+	if( targetIdx != -1 && commFunc->commMode_ != FIELD_COMM_MODE_TRY_CONNECT)
 	{
 		//ビーコンがあった
 		u8 *macAdr = GFL_NET_GetBeaconMacAddress(targetIdx);
 		if( macAdr != NULL )
 		{
 			GFL_NET_ConnectToParent( macAdr ); 
-			commFunc->commMode_ = FIELD_COMM_MODE_TRY_CONNECT;
-			commFunc->seqNo_ = 0;
-			ARI_TPrintf("Connect!(Child)\n");
+			commFunc->commMode_ = FIELD_COMM_MODE_CONNECTING;
+		//	commFunc->seqNo_ = 0;
+		//	ARI_TPrintf("Connect!(Child)\n");
 		}
 	}
+
 }
 	
 //--------------------------------------------------------------
@@ -470,7 +484,8 @@ void	FIELD_COMM_FUNC_StartCommSearch( FIELD_COMM_FUNC *commFunc )
 {
 	if( commFunc->commMode_ == FIELD_COMM_MODE_NONE )
 	{
-		GFL_NET_Changeover(NULL);
+		//GFL_NET_Changeover(NULL);
+        GFL_NET_StartBeaconScan();
 	}
 	commFunc->commMode_ = FIELD_COMM_MODE_SEARCH;
 }

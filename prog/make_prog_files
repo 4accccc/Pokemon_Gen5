@@ -106,6 +106,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/wipe_sub.c \
 				system/wipe_wnd.c \
 				net/net_icondata.c \
+				net/net_dev.c \
 				savedata/wifihistory.c \
 				savedata/wifilist.c \
 				app/trainercard/trainercard.c \
@@ -169,13 +170,42 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 # 要望・質問は森にお願いします。
 # 
 
+# wifiプログラム
+#===> main
+#LIB=>					libdwcauth.a
+#LIB=>					libdwcbase.a
+#LIB=>					libdwcac.a
+#LIB=>					libdwcgscommon.a
+#LIB=>					libdwcgsgp.a
+#LIB=>					libdwcgsgstats.a
+#LIB=>					libdwcgsgt2.a
+#LIB=>					libdwcgsnatneg.a
+#LIB=>					libdwcgsqr2.a
+#LIB=>					libdwcgsserverbrowsing.a
+#LIB=>					libvct.a
+#LIB=>					libsoc.a
+#LIB=>					libcps.a
+#LIB=>					libssl.a
+#LIB=>					libwcm.a
+#LIB=>					libstubsmd5.a
+SRCS_OVERLAY_DEV_WIFI		= net/net_devwifi.c \
+								net/dwc_rapinitialize.c \
+								net/dwc_rapcommon.c \
+								net/dwc_rapfriend.c \
+								net/dwc_rap.c \
+								net/vchat.c
 
 
-##xx## #WIRELESS MAINプログラム
-##xx## #===> main
-##xx## #LIB=>					libwm.a
-##xx## SRCS_OVERLAY_WIRELESS		=  test/ohno/debug_field.c
+# wirelessプログラム
+#===> main
+SRCS_OVERLAY_DEV_WIRELESS		=   net/net_devwireless.c \
+									net/net_whpipe.c \
+									net/wih.c
 
+
+# ircプログラム
+#===> main
+SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c
 
 # マッパーサンプル
 #===> main
@@ -204,7 +234,7 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
 
 # 大野デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
 				test/ohno/fatal_error.c \
 				test/ohno/debug_field.c \

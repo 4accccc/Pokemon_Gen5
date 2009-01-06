@@ -17,6 +17,8 @@
 #include "savedata/wifilist.h"
 #include "wifilist_local.h"
 
+FS_EXTERN_OVERLAY(dev_wifi);
+
 //============================================================================================
 //============================================================================================
 
@@ -85,7 +87,11 @@ void WifiList_Init(WIFI_LIST * list)
 	int i;
 	
 	GFL_STD_MemClear(list, sizeof(WIFI_LIST));
+
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_wifi ) );
     GFL_NET_WIFI_InitUserData(&list->my_dwcuser);  //GameSpyログイン用仮userコードの作成(絶対必要）
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_wifi ) );
+
 }
 
 

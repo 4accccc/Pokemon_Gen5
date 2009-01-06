@@ -37,11 +37,10 @@ NITRODWC_LIB_MODULES_   = base auth ac bm account
 NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
 
 #----------------------------------------------------------------------------
-#パーティクル＋イクニューモンコンポーネントのためのライブラリを追加
+#パーティクルのためのライブラリを追加
 #----------------------------------------------------------------------------
 LLIBRARY_DIRS	+= ./library/spl/$(NITRO_BUILDTYPE)
 LLIBRARIES		+= ./libjn_spl.a
-## libwvr$(CODEGEN).a
 
 #----------------------------------------------------------------------------
 # BlendMagic ライブラリ追加  taya
@@ -113,9 +112,10 @@ CCFLAGS_WARNING		=	-w all,nocmdline,noerr,nounused,noextracomma,nopedantic,noimp
 #MY_COMPONENT_NAME	= ichneumon
 #MAKEROM_ARM7	= $(NITRO_COMPONENTSDIR)/$(MY_COMPONENT_NAME)/$(NITRO_BUILDTYPE_ARM7)/$(MY_COMPONENT_NAME)_sub$(TS_VERSION).nef
 
-# 任天堂Cryptライブラリを追加 by mituhara 2006.07.05
-LLIBRARY_DIRS	+= ./library/crypto/$(NITRO_BUILDTYPE)
-LLIBRARIES	+= ./libcrypto.a
+#----------------------------------------------------------------------------
+# 任天堂Cryptライブラリを追加
+#----------------------------------------------------------------------------
+LLIBARIES += libcrypto$(NITRO_LIBSUFFIX).a
 
 #----------------------------------------------------------------------------
 #	ロムに含まれるファイルの指定  default.rsfファイルで使用している

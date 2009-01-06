@@ -15,19 +15,13 @@ extern "C" {
 #include "ui.h"
 
 
-#if defined(MULTI_BOOT_MAKE)   // マルチブートmake
-#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
-#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
-#elif defined(DEBUG_ONLY_FOR_ohno)
+//#if defined(MULTI_BOOT_MAKE)   // マルチブートmake
+//#define GFL_NET_WIFI    (0)   ///< WIFIをゲームで使用する場合 ON
+//#define GFL_NET_IRC     (0)   ///< IRCをゲームで使用する場合 ON
+//#else
 #define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
 #define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
-#elif defined(DEBUG_ONLY_FOR_matsuda)
-#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
-#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
-#else
-#define GFL_NET_WIFI    (1)   ///< WIFIをゲームで使用する場合 ON
-#define GFL_NET_IRC     (1)   ///< IRCをゲームで使用する場合 ON
-#endif
+//#endif
 
 //#if defined(DEBUG_ONLY_FOR_ohno)
 //#define BEACON_TEST (0)
@@ -82,6 +76,8 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
 
+///< @brief 通信管理構造体
+typedef struct _GFL_NETSYS GFL_NETSYS;
 
 // define 
 #define GFL_NET_NETID_SERVER (0xff)    ///< NetID:サーバーの場合これ 後は0からClientID
@@ -243,6 +239,7 @@ typedef struct{
   NetDeleteFriendListCallback friendDeleteFunc;  ///< wifiフレンドリスト削除コールバック
   DWCFriendData *keyList;   ///< DWC形式の友達リスト	
   DWCUserData *myUserData;  ///< DWCのユーザデータ（自分のデータ）
+  int heapSize;           ///< DWCへのヒープサイズ
   u16 bDebugServer;        ///< デバック用サーバにつなぐかどうか
 #endif  //GFL_NET_WIFI
   u32 ggid;                 ///< ＤＳでゲームソフトを区別する為のID 任天堂からもらう
@@ -441,24 +438,6 @@ extern GFL_NETHANDLE* GFL_NET_HANDLE_GetCurrentHandle(void);
 
 //==============================================================================
 /**
- * @brief   通信可能状態かどうか
- * @param   GFL_NET_HANDLE  ハンドル
- * @return  BOOL 通信可能ならTRUE
- */
-//==============================================================================
-extern BOOL GFL_NET_HANDLE_IsConnect(const GFL_NETHANDLE* pHandle);
-
-//==============================================================================
-/**
- * @brief       自分のネゴシエーションがすんでいるかどうか
- * @param       pHandle   通信ハンドル
- * @return      すんでいる場合TRUE   まだの場合FALSE
- */
-//==============================================================================
-extern BOOL GFL_NET_IsNegotiation(GFL_NETHANDLE* pHandle);
-
-//==============================================================================
-/**
  * @brief 現在の接続台数を得る
  * @retval  int  接続数
  */
@@ -552,6 +531,27 @@ extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
 //--------その他、ツール類
 //==============================================================================
 /**
+ * @brief    接続可能なマシンの台数＝自分含む数を返す
+ * @return   接続人数
+ */
+//==============================================================================
+extern int GFL_NET_GetConnectNumMax(void);
+//==============================================================================
+/**
+ * @brief    送信最大サイズを得る
+ * @return   送信サイズ
+ */
+//==============================================================================
+extern int GFL_NET_GetSendSizeMax(void);
+//==============================================================================
+/**
+ * @brief    初期化構造体を得る
+ * @return   初期化構造体
+ */
+//==============================================================================
+extern GFLNetInitializeStruct* GFL_NET_GetNETInitStruct(void);
+//==============================================================================
+/**
  * @brief   タイミングコマンドを発行する
  * @param   NetHandle* pNet  通信ハンドル
  * @param   u8 no   タイミング取りたい番号
@@ -629,6 +629,33 @@ extern BOOL GFL_NET_IsParentMachine(void);
 //==============================================================================
 extern BOOL GFL_NET_IsParentHandle(GFL_NETHANDLE* pNetHandle);
 
+//==============================================================================
+/**
+ * @brief    FatalError実行
+ * @param    pNetHandle  ネットハンドル
+ * @param    errorNo     エラー番号
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_FatalErrorFunc(int errorNo);
+//==============================================================================
+/**
+ * @brief    通信不能なエラーが起こった場合呼ばれる 通信を終了させる必要がある
+ * @param    pNetHandle  ネットハンドル
+ * @param    errorNo     エラー番号
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_ErrorFunc(int errorNo);
+
+//==============================================================================
+/**
+ * @brief   エラーにする場合この関数を呼ぶとエラーになります
+ * @param   エラー種類
+ * @retval  受け付けた場合TRUE
+ */
+//==============================================================================
+extern BOOL GFL_NET_StateSetError(int no);
 
 #if GFL_NET_WIFI
 //==============================================================================
@@ -765,6 +792,16 @@ extern void GFL_NET_BG1PosGet(int *x, int *y);
 
 extern void debugcheck(u32* data,int size );
 
+//==============================================================================
+/**
+ * @brief       GFL_NETSYS構造体のにあるpWorkを得る
+ * @param       none
+ * @return      GFL_NETSYS
+ */
+//==============================================================================
+extern void* GFI_NET_GetWork(void);
+
+#include "net_devicetbl.h"
 
 #if GFL_NET_WIFI
 #include "net_wifi.h"

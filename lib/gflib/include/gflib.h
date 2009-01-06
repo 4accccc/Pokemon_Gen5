@@ -45,6 +45,7 @@ extern "C" {
 #include "arc_util.h"
 #include "fade.h"
 #include "net.h"
+#include "net_devicetbl.h"
 #include "ui.h"
 
 #include "clact.h"

@@ -43,12 +43,12 @@ extern int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 ti
 
 //==============================================================================
 /**
- * aidを返します。接続するまでは-1を返します。
- * @retval  aid。ただし接続前は-1
+ * aidを返します。接続するまではMYDWC_NONE_AIDを返します。
+ * @retval  aid。ただし接続前はMYDWC_NONE_AID
  */
 //==============================================================================
-extern int GFL_NET_DWC_GetAid(void);
-#define MYDWC_NONE_AID (-1)
+extern u32 GFL_NET_DWC_GetAid(void);
+#define MYDWC_NONE_AID (0xffffffff)
 
 //==============================================================================
 /**
@@ -130,6 +130,69 @@ extern void GFL_NET_DWC_StopVChat(void);
  */
 //==============================================================================
 extern int GFL_NET_DWC_CheckFriendByToken(DWCFriendData *data, int *index);
+
+//==============================================================================
+/**
+ * エラーコードを保持する
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_StateSetWifiError(int code, int type, int ret);
+
+typedef struct{
+  int errorCode;
+  int errorType;
+  int errorRet;
+} GFL_NETSTATE_DWCERROR;
+
+//==============================================================================
+/**
+ * エラーコードを引き出す
+ * @param   none
+ * @retval  none
+ */
+//==============================================================================
+extern GFL_NETSTATE_DWCERROR* GFL_NET_StateGetWifiError(void);
+
+
+
+/// WiFiで使うHeapのサイズ
+#define MYDWC_HEAPSIZE (0x30000)
+
+// 受信コールバック型。WHReceiverFuncと同形
+typedef void (*MYDWCReceiverFunc) (u16 aid, u16 *data, u16 size);
+
+//接続検査 フレンドコードリストインデックス
+typedef BOOL (*MYDWCConnectModeCheckFunc) (int index);
+
+#define DWCRAP_STARTGAME_OK (0)
+#define DWCRAP_STARTGAME_NOTSTATE  (-1)
+#define DWCRAP_STARTGAME_RETRY  (-2)
+#define DWCRAP_STARTGAME_FAILED  (-3)
+#define DWCRAP_STARTGAME_FIRSTSAVE (-4)
+
+#define STEPMATCH_CONTINUE 0
+#define STEPMATCH_SUCCESS  (DWC_ERROR_NUM)
+#define STEPMATCH_CANCEL (STEPMATCH_SUCCESS+1)
+#define STEPMATCH_FAIL (STEPMATCH_SUCCESS+2)
+#define STEPMATCH_TIMEOUT (STEPMATCH_SUCCESS+3)
+#define STEPMATCH_DISCONNECT (STEPMATCH_SUCCESS+4)
+#define ERRORCODE_0 (STEPMATCH_SUCCESS+5)
+#define ERRORCODE_HEAP (STEPMATCH_SUCCESS+6)
+#define STEPMATCH_CONNECT (STEPMATCH_SUCCESS+7)
+
+
+#if GFL_NET_WIFI //wifi
+// ここから下はデバイスが逆アクセスする為に必要なものなので使用しないでください
+extern void GFI_NET_NetWifiSaveUserDataFunc(void);
+extern void GFI_NET_NetWifiMargeFrinedDataFunc(int deletedIndex,int srcIndex);
+extern DWCUserData* GFI_NET_GetMyDWCUserData(void);
+extern DWCFriendData* GFI_NET_GetMyDWCFriendData(void);
+extern int GFI_NET_GetFriendNumMax(void);
+
+#endif //GFL_NET_WIFI
+
 
 #endif //__NET_WIFI_H__
 #ifdef __cplusplus
