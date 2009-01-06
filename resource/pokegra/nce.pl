@@ -120,6 +120,11 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		$mepachi_size_x = 0;
 		$mepachi_size_y = 0;
 		$mepachi_char = 0;
+		$min_x		= 256;
+		$max_x		= -256;
+		$min_y		= 256;
+		$max_y		= -256;
+		$min_max_flag = 0;
 		for( $obj = 0 ; $obj < $objs ; $obj++ ){
 			#OBJデータ読み込み
 			read READ_NCE, $obj_data, OBJ_SIZE;
@@ -185,33 +190,36 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 			}
 			else{
 				#OBJのサイズを見て各座標の最小値と最大値を求めておく
-				if( $obj == 0 ){
+				if( $min_x > $x1 ){
 					$min_x		= $x1;
-					$max_x		= $x2;
-					$min_y		= $y1;
-					$max_y		= $y2;
 					$char_name	= $oam_char_name;
 				}
-				else{
-					if( $min_x > $x1 ){
-						$min_x		= $x1;
-						$char_name	= $oam_char_name;
-					}
-					if( $max_x < $x2 ){
-						$max_x = $x2;
-					}
-					if( $min_y > $y1 ){
-						$min_y		= $y1;
-						$char_name	= $oam_char_name;
-					}
-					if( $max_y < $y2 ){
-						$max_y = $y2;
-					}
+				if( $max_x < $x2 ){
+					$max_x = $x2;
 				}
+				if( $min_y > $y1 ){
+					$min_y		= $y1;
+					$char_name	= $oam_char_name;
+				}
+				if( $max_y < $y2 ){
+					$max_y = $y2;
+				}
+				$min_max_flag = 1;
 			}
 		}
-		$size_x = $max_x - $min_x;
-		$size_y = $max_y - $min_y;
+		if( $min_max_flag ){
+			$size_x = $max_x - $min_x;
+			$size_y = $max_y - $min_y;
+		}
+		else{
+			$size_x = 0;
+			$size_y = 0;
+		}
+
+=pod
+		print "cell:$cell min_x:$min_x min_y:$min_y max_x:$max_x max_y:$max_y\n";
+		print "size_x:$size_x size_y:$size_y char_name:$char_name\n";
+=cut
 
 		$mepachi_size_x = $mepachi_max_x - $mepachi_min_x;
 		$mepachi_size_y = $mepachi_max_y - $mepachi_min_y;
@@ -223,15 +231,6 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		#セルの情報を書き出す
 		$write = pack "S C C l l S C C l l", $char_name, $size_x, $size_y, $min_x, $min_y, $mepachi_char, $mepachi_size_x, $mepachi_size_y, $mepachi_min_x, $mepachi_min_y;
 		print WRITE_NCE $write;
-=cut
-
-#デバッグ表示
-=pod
-		print "cell:$cell\n";
-		print "pos_x:$min_x\n";
-		print "pos_y:$min_y\n";
-		print "size_x:$size_x\n";
-		print "size_y:$size_y\n";
 =cut
 
 #前もって計算をしておくコンバート処理

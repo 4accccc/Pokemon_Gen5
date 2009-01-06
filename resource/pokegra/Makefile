@@ -20,7 +20,7 @@ NAIXNAME	= $(targetname).naix
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
-TARGETDIR	= $(PROJECT_ARCDIR)/pokegra/
+TARGETDIR	= $(PROJECT_ARCDIR)pokegra
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -86,7 +86,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(notdir $(NMCFILE:.nmc=.NCEC)) $(notdir $(NCGCFILE:.ncg=.NCBR)) $(notdir $(NCLNFILE:.ncl=.NCLR)) $(notdir $(NCLRFILE:.ncl=.NCLR))
-	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr > error
+	nnsarc -c -l -n -i $(NARCNAME) -S pokegra_wb.scr
 	$(NAIXCUT) $(NAIXNAME)
 endif
 
@@ -94,6 +94,10 @@ endif
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+	-rm -f *.N*R
+	-rm -f *.N*C
+	-rm -f $(NARCNAME)
+	-rm -f $(NAIXNAME)
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
