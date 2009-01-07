@@ -47,8 +47,8 @@ enum {
 
 	// タグ開始コード
 	SPCODE_TAG_START_	= 0xf000,
-	TAGTYPE_WORD = 0,				///< 文字列挿入
-	TAGTYPE_NUMBER = 1,				///< 数値挿入
+	TAGTYPE_WORD = 1,				///< 文字列挿入
+	TAGTYPE_NUMBER = 2,				///< 数値挿入
 	TAGTYPE_GENERAL_CTRL = 0xbd,	///< 汎用コントロール処理
 	TAGTYPE_STREAM_CTRL = 0xbe,		///< 流れるメッセージ用コントロール処理
 	TAGTYPE_SYSTEM = 0xff,			///< エディタシステムタグ用コントロール処理
