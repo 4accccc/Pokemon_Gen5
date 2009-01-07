@@ -22,12 +22,8 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				field/field_player.c \
 				field/field_net.c	\
 				field/field_comm_actor.c \
-				field/field_comm/field_comm_main.c \
-				field/field_comm/field_comm_menu.c \
 				field/field_comm/field_comm_data.c \
 				field/field_comm/field_comm_func.c \
-				field/field_comm/field_comm_event.c \
-				field/field_comm/field_comm_debug.c \
 				savedata/save_tbl.c \
 				savedata/save_control.c \
 				savedata/contest_savedata.c \
@@ -198,7 +194,7 @@ SRCS_OVERLAY_DEV_WIRELESS		=   net/net_devwireless.c \
 SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c
 
 # field
-#===> main
+#===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/fieldmap.c \
 				field/field_g3d_mapper.c \
@@ -209,7 +205,11 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/mapdatafunc/field_func_pmcustom_file.c \
 				field/mapdatafunc/field_func_wbnormal_file.c \
 				field/mapdatafunc/field_func_bridge_file.c \
-				field/field_easytp.c
+				field/field_easytp.c \
+				field/field_comm/field_comm_main.c \
+				field/field_comm/field_comm_menu.c \
+				field/field_comm/field_comm_event.c \
+				field/field_comm/field_comm_debug.c 
 
 # マッパーサンプル
 #===> main
@@ -260,7 +260,8 @@ SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 
 # タイトル
 #===> main
-SRCS_OVERLAY_TITLE	= title/title.c
+SRCS_OVERLAY_TITLE	= title/title.c \
+				title/startmenu.c
 
 
 # testmode
