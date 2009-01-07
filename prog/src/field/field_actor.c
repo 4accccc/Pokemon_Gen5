@@ -12,7 +12,6 @@
 #include "arc_def.h"
 
 #include "field_g3d_mapper.h"
-#include "field_net.h"
 
 #include "field_actor.h"
 

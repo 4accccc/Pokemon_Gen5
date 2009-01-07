@@ -19,7 +19,6 @@
 
 #include "print/gf_font.h"
 
-#include "field_net.h"
 
 #include "fieldmap_local.h"
 #include "field_common.h"
