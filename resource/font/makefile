@@ -41,7 +41,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #bmpデータからの生成ルール
 do-build: $(IMGFILE:.bmp=.nftr)
 %.nftr: %.bmp
-	fontcvtrc -i bmp -if $< -io JIS_X0201_X0208_01.xlor -ib 2 -o nitro -of $@
+	fontcvtrc -i bmp -if $< -io pokemon_wb.xlor -ib 2 -o nitro -of $@
 
 do-build: $(COLFILE:.ncl=.nclr)
 %.nclr: %.ncl
