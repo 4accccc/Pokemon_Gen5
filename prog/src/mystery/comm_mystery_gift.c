@@ -33,6 +33,9 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
 
+//PTからの文字列変換に使用
+#include "test/dlplay/dlplay_func.h"
+
 #include "comm_mystery_func.h"
 #include "comm_mystery_state.h"
 #include "comm_mystery_gift.h"
@@ -171,10 +174,13 @@ typedef struct {
 #define	FONT_PALNO_SELECT	1	/* 選択時パレット */
 #define WAKU_PALETTE_NUMBER1	2
 #define WAKU_PALETTE_NUMBER2	3
-#define	MYSTERYGIFT_BLACK	(GF_PRINTCOLOR_MAKE(1, 2, 15))
-#define	MYSTERYGIFT_WHITE	(GF_PRINTCOLOR_MAKE(15, 2, 0))
+#define	MYSTERYGIFT_BLACK	1,2,15
+#define	MYSTERYGIFT_WHITE	(15, 2, 0)
 
 #define MYSTERY_MSG_PRI 1
+
+#define MYSTERY_FONT_TOP  2
+#define MYSTERY_FONT_LEFT 2
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -203,12 +209,19 @@ static void CreateMenuWindow(MYSTERYGIFT_WORK *wk, int base, u32 msg);
 
 static void DisplaySequence(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid);
 static void DisplaySequenceWiFi(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid);
+static void DisplaySequenceFunc(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid , u32 arcID );
 
 static void MysteryGift_BeaconCancel(void);
 static void MysteryGiftBeaconProc_Main(MYSTERYGIFT_WORK *wk);
 static void MysteryGift_BeaconMainLoop(MYSTERYGIFT_WORK *wk);
 static int MysteryGif_DisplayMessage(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, int msgid, int seq);
 
+//移植用簡易関数群↓
+#pragma mark TransFunc
+static void MysteryTransFunc_InitBmpWin( GFL_BMPWIN* win );
+static void MysteryTransFunc_ClearBmpWin( GFL_BMPWIN* win );
+
+//移植用簡易関数群↑
 
 //============================================================================================
 //	グローバル変数
@@ -286,20 +299,20 @@ static BMPMENULIST_HEADER MenuListHeader = {
 	0,/* 後で埋める */			/* リスト項目数 */
 	3,							/* 表示最大項目数 */
 	0,							/* ラベル表示Ｘ座標 */
-	12,							/* 項目表示Ｘ座標 */
+	12+MYSTERY_FONT_TOP+2,		/* 項目表示Ｘ座標 */
 	0,							/* カーソル表示Ｘ座標 */
-	0,							/* 表示Ｙ座標 */
+	MYSTERY_FONT_LEFT,			/* 表示Ｙ座標 */
 	1,							/*文字色 */
 	15,							/*背景色 */
 	2,							/*文字影色 */
 	0,							/* 文字間隔Ｘ */
-	16,							/* 文字間隔Ｙ */
+	0,							/* 文字間隔Ｙ */
 	BMPMENULIST_LRKEY_SKIP,		/*ページスキップタイプ */
 	0,			 				/* 文字指定(本来は u8 だけど、そんなに作らないと思うので) */
 	0,							/* ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF) */
 	NULL,						//ワーク
-	0,			//文字サイズX
-	0,			//文字サイズY
+	16,			//文字サイズX
+	16,			//文字サイズY
 	NULL,		//メッセージバッファ
 	NULL,		//プリントユーティリティ
 	NULL,		//プリントキュー
@@ -477,6 +490,8 @@ static GIFT_COMM_PACK *DecchiCreateGiftData(MYSTERYGIFT_WORK *wk)
 
 #endif	//通信でっち上げは保留
 
+
+
 //------------------------------------------------------------------
 /**
  * @brief	タイムアイコンのON/OFF
@@ -521,6 +536,7 @@ static void TopMainMenuFinish(MYSTERYGIFT_WORK *wk)
 	if(wk->lw)		BmpMenuList_Exit(wk->lw, NULL, NULL);
 	GFL_BMPWIN_Delete( wk->msgwin);
 	wk->msgwin = NULL;
+	wk->msgwin = NULL;
 	if( wk->upwin != NULL ){
 		GFL_BMPWIN_Delete(wk->upwin);
 		wk->upwin = NULL;
@@ -535,7 +551,7 @@ static void TopMainMenuFinish(MYSTERYGIFT_WORK *wk)
 	GFL_BG_FreeBGControl(GFL_BG_FRAME1_M);
 	GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
 	GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
-	GFL_HEAP_FreeMemory(wk->bgl);
+//	GFL_HEAP_FreeMemory(wk->bgl);
 }
 
 // *******************************************************************************************
@@ -639,12 +655,8 @@ static void CMG_BmpMenuWinClear(GFL_BMPWIN * win, u8 trans_sw)
 {
 	if(win != NULL)
 	{
-		GFL_BMPWIN_ClearScreen( win );
-		if( trans_sw == WINDOW_TRANS_ON )
-		{
-			GFL_BMPWIN_TransVramCharacter( win );
-		}
 //		BmpMenuWinClear(win, trans_sw);
+		BmpWinFrame_Clear( win, trans_sw );
 	}
 }
 
@@ -652,12 +664,8 @@ static void CMG_BmpTalkWinClear(GFL_BMPWIN * win, BOOL trans_sw)
 {
 	if(win != NULL)
 	{
-		GFL_BMPWIN_ClearScreen( win );
-		if( trans_sw == TRUE )
-		{
-			GFL_BMPWIN_TransVramCharacter( win );
-		}
 //		BmpTalkWinClear(win, trans_sw);
+		BmpWinFrame_Clear( win, trans_sw );
 	}
 }
 
@@ -933,7 +941,7 @@ static void CreateDirectCommYesNoMenu(MYSTERYGIFT_WORK *wk, int flag)
 	if(win == NULL)
 	{
 		wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO] =
-				GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+				GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 23, 10, 6, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMDIRCHR);
 	}
 	CreateWindowMenuData(wk, CommDirectCommYesNoMenu_MenuData, NELEMS(CommDirectCommYesNoMenu_MenuData), win, msg);
@@ -975,26 +983,25 @@ static int CommDirectMenuNo(MYSTERYGIFT_WORK *wk)
 //--------------------------------------------------------------------------------------------
 static int CommDirectMenuYesNo(MYSTERYGIFT_WORK *wk)
 {
-	GFL_BMPWIN *win;
+	GFL_BMPWIN **win;
 
-//#if !AFTERMASTER_070213_MISTERY_AGBCARTRIDGE_FIX
-//	if(wk->comm_type != MYSTERYCOMM_TYPE_AGBCARTRIDGE)
-//		wk->comm_type = MYSTERYCOMM_TYPE_DIRECT;
-//#else
 //	if(GetAgbCartridgeDataSize())
 //		wk->comm_type = MYSTERYCOMM_TYPE_AGBCARTRIDGE;
 //	else
 		wk->comm_type = MYSTERYCOMM_TYPE_DIRECT;
-//#endif
+
 	/* 今のメニューウィンドウを表示させない */
 	CMG_BmpMenuWinClear(wk->selwin[MYSTERYGIFT_WIN_COMM_TYPE], WINDOW_TRANS_ON);
 	/* メニューをすげかえる */
-	win = wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
-	if(win == NULL)
-		GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	win = &wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
+	if(*win == NULL)
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 23, 10, 6, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMDIRCHR);
-	CreateWindowMenuData(wk, CommDirectYesNoMenu_MenuData, NELEMS(CommDirectYesNoMenu_MenuData), win, mystery_01_003);
-	BmpWinFrame_Write(win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin(*win);
+	CreateWindowMenuData(wk, CommDirectYesNoMenu_MenuData, NELEMS(CommDirectYesNoMenu_MenuData), *win, mystery_01_003);
+	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
 	
 	return MYSTERYGIFT_SEQ_DIRECT_YESNO;
 }
@@ -1009,18 +1016,21 @@ static int CommDirectMenuYesNo(MYSTERYGIFT_WORK *wk)
 //--------------------------------------------------------------------------------------------
 static int CommWiFiMenuYesNo(MYSTERYGIFT_WORK *wk)
 {
-	GFL_BMPWIN *win;
+	GFL_BMPWIN **win;
 
 	wk->comm_type = MYSTERYCOMM_TYPE_WIFI;
 	/* 今のメニューウィンドウを表示させない */
 	CMG_BmpMenuWinClear(wk->selwin[MYSTERYGIFT_WIN_COMM_TYPE], WINDOW_TRANS_ON);
 	/* メニューをすげかえる */
-	win = wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
-	if(win == NULL)
-		GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	win = &wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
+	if(*win == NULL)
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 23, 10, 6, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMDIRCHR);
-	CreateWindowMenuDataWiFi(wk, CommWiFiYesNoMenu_MenuData, NELEMS(CommWiFiYesNoMenu_MenuData), win, dwc_message_0002);
-	BmpWinFrame_Write(win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin(*win);
+	CreateWindowMenuDataWiFi(wk, CommWiFiYesNoMenu_MenuData, NELEMS(CommWiFiYesNoMenu_MenuData), *win, dwc_message_0002);
+	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
 	
 	return MYSTERYGIFT_SEQ_DIRECT_YESNO;
 }
@@ -1038,18 +1048,21 @@ static int CommWiFiMenuYesNo(MYSTERYGIFT_WORK *wk)
 //--------------------------------------------------------------------------------------------
 static int CommBeaconMenuYesNo(MYSTERYGIFT_WORK *wk)
 {
-	GFL_BMPWIN *win;
+	GFL_BMPWIN **win;
 
 	wk->comm_type = MYSTERYCOMM_TYPE_BEACON;
 	/* 今のメニューウィンドウを表示させない */
 	CMG_BmpMenuWinClear(wk->selwin[MYSTERYGIFT_WIN_COMM_TYPE], WINDOW_TRANS_ON);
 	/* メニューをすげかえる */
-	win = wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
-	if(win == NULL)
-		GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	win = &wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
+	if(*win == NULL)
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 23, 10, 6, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMDIRCHR);
-	CreateWindowMenuData(wk, CommBeaconYesNoMenu_MenuData, NELEMS(CommBeaconYesNoMenu_MenuData), win, mystery_broadcast_001);
-	BmpWinFrame_Write(win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin(*win);
+	CreateWindowMenuData(wk, CommBeaconYesNoMenu_MenuData, NELEMS(CommBeaconYesNoMenu_MenuData), *win, mystery_broadcast_001);
+	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
 	
 	return MYSTERYGIFT_SEQ_DIRECT_YESNO;
 }
@@ -1063,14 +1076,17 @@ static int CommBeaconMenuYesNo(MYSTERYGIFT_WORK *wk)
 //--------------------------------------------------------------------------------------------
 static void CreateBeaconCommYesNoMenu(MYSTERYGIFT_WORK *wk)
 {
-	GFL_BMPWIN *win;
+	GFL_BMPWIN **win;
 
-	win = wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
+	win = &wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO];
 	if(win == NULL)
-		GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 23, 10, 6, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMDIRCHR);
-	CreateWindowMenuData(wk, CommBeaconCommYesNoMenu_MenuData, NELEMS(CommBeaconCommYesNoMenu_MenuData), win, mystery_01_005);
-	BmpWinFrame_Write(win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 23,10,6,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin(*win);
+	CreateWindowMenuData(wk, CommBeaconCommYesNoMenu_MenuData, NELEMS(CommBeaconCommYesNoMenu_MenuData), *win, mystery_01_005);
+	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
 }
 
 
@@ -1160,14 +1176,11 @@ static int CommChildRecvBeaconStart(MYSTERYGIFT_WORK *wk)
 //------------------------------------------------------------------
 static int CommChildRecvBeaconCancel(MYSTERYGIFT_WORK *wk)
 {
-	GF_ASSERT(FALSE);
-	#if 0 //FIXME
 	if(s_state == BEACON_STATE_SCANNING || s_state == BEACON_STATE_DOWNLOAD || s_state == BEACON_STATE_ERROR){
 		if(bsdown_end()){
 			s_state = BEACON_STATE_CANCELING;	
 		}
 	}
-	#endif
 	return MYSTERYGIFT_BEACON_DOWNLOAD_CANCEL;
 }
 
@@ -1245,9 +1258,7 @@ static int CommTypeMenuRetire(MYSTERYGIFT_WORK *wk)
 //--------------------------------------------------------------------------------------------
 static int TopMainMenuRecvGift(MYSTERYGIFT_WORK *wk)
 {
-	GFL_BMPWIN *win;
-	//  LISTDATA ld[4];
-	//  int width, max = 0;
+	GFL_BMPWIN **win;
 	MYSTERY_DATA *fdata = SaveControl_DataPtrGet( wk->sv , GMDATA_ID_MYSTERYDATA );
 
 	/* ビーコン取得処理を停止 */
@@ -1259,24 +1270,16 @@ static int TopMainMenuRecvGift(MYSTERYGIFT_WORK *wk)
 	/* 今のメニューウィンドウを表示させない */
 	CMG_BmpMenuWinClear(wk->selwin[MYSTERYGIFT_WIN_MAIN], WINDOW_TRANS_ON);
 	/* メニューをすげかえる */
-	win = wk->selwin[MYSTERYGIFT_WIN_COMM_TYPE];
-#if 0
-	// 状態によってメニューの項目と大きさを変化させるタイプ(変わらなくなった…)
-	width = 16;
-	// 最初のメニューは必須
-	ld[max++] = CommTypeMenu_MenuData[0];
-	// ふしぎなおくりものが開いたらフルオープンとなりました
-	ld[max++] = CommTypeMenu_MenuData[1];
-	ld[max++] = CommTypeMenu_MenuData[2];
+	win = &wk->selwin[MYSTERYGIFT_WIN_COMM_TYPE];
 
-	// 最後も必須
-	ld[max++] = CommTypeMenu_MenuData[3];
-#endif
-	if(win == NULL)
-		GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 15,9,16,8,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	if(*win == NULL)
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 15, 9, 16, 8, FONT_PALNO_NORMAL, MYSTERYGIFT_COMMTYPECHR);
-	CreateWindowMenuData(wk, CommTypeMenu_MenuData, 4, win, mystery_01_002);
-	BmpWinFrame_Write(win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 15,9,16,8,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin( *win );
+	CreateWindowMenuData(wk, CommTypeMenu_MenuData, 4, *win, mystery_01_002);
+	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
 	
 	return MYSTERYGIFT_SEQ_RECV;
 }
@@ -1347,7 +1350,9 @@ static void BgInitSub(GFL_BG_INI *ini, int frame, u32 scrbase, u32 scrchar, u32 
 	MBg_Data.charBase = scrchar / 0x4000;
 	MBg_Data.charSize = charSize;
 	GFL_BG_SetBGControl( frame, &MBg_Data, GFL_BG_MODE_TEXT );
-	GFL_BG_ClearScreen(frame);
+	GFL_BG_ClearFrame( frame );
+	GFL_BG_LoadScreenReq( frame );
+	GFL_BG_SetVisible( frame, VISIBLE_ON );
 }
 static void BgInit( GFL_BG_INI * ini )
 {
@@ -1355,8 +1360,8 @@ static void BgInit( GFL_BG_INI * ini )
 	GFL_BG_SYS_HEADER BGsys_data = { GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D };
 	GFL_BG_Init( HEAPID_MYSTERYGIFT );
 	GFL_BG_SetBGMode( &BGsys_data );
-	BgInitSub(ini, GFL_BG_FRAME0_M, 0xF000, 0x0000, 0x8000); /* MAIN DISP BG0 */
-	BgInitSub(ini, GFL_BG_FRAME1_M, 0xF800, 0x8000, 0x8000); /* MAIN DISP BG1 */
+	BgInitSub(ini, GFL_BG_FRAME0_M, 0x1000, 0x4000, 0x8000); /* MAIN DISP BG0 */
+	BgInitSub(ini, GFL_BG_FRAME1_M, 0x1800, 0xC000, 0x8000); /* MAIN DISP BG1 */
 	BgInitSub(ini, GFL_BG_FRAME0_S, 0x3800, 0x0000, 0x4000); /* SUB DISP BG0 */
 	BgInitSub(ini, GFL_BG_FRAME1_S, 0x7800, 0x4000, 0x4000); /* SUB DISP BG1 */
 }
@@ -1404,7 +1409,7 @@ static void CreateBgScreen(GFL_BG_INI * ini)
 //	ArcUtil_ScrnSet(ARC_MYSTERY_GRA, NARC_mystery_fusigi_bg_00_lz_cscr, ini,
 //			GF_BGL_FRAME1_M, 0, 32*24*2, 1, HEAPID_MYSTERYGIFT);
 	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_M , 0,0,32,24,8);
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
 
 	// ↓↓画面の格子模様
 	CreateBgScreenSub(ini);
@@ -1422,6 +1427,8 @@ static void CreateWindowMenuData(MYSTERYGIFT_WORK *wk, LISTDATA *ld, int num, GF
 {
 	int i;
 	BMPMENULIST_HEADER list_h;
+	
+	MysteryTransFunc_ClearBmpWin(win);
 
 	if(wk->bmd)	BmpMenuWork_ListDelete(wk->bmd);
 	/* メニューの文字列を登録 */
@@ -1435,12 +1442,13 @@ static void CreateWindowMenuData(MYSTERYGIFT_WORK *wk, LISTDATA *ld, int num, GF
 	list_h.list = wk->bmd;
 	list_h.count = list_h.line = num;
 	list_h.win = win;
-	list_h.print_que = wk->printQue;
-	PRINT_UTIL_Setup( &wk->printUtil , win );
-	list_h.print_util = &wk->printUtil;
+	list_h.print_que = wk->printQueMenu;
+	PRINT_UTIL_Setup( &wk->printUtilMenu , win );
+	list_h.print_util = &wk->printUtilMenu;
 	list_h.font_handle = wk->fontHandle;
 	if(wk->lw) 	BmpMenuList_Exit(wk->lw, NULL, NULL);
 	wk->lw = BmpMenuList_Set( &list_h, 0, 0, HEAPID_MYSTERYGIFT);
+	BmpMenuList_SetCursorBmp( wk->lw , HEAPID_MYSTERYGIFT);
 	/* メッセージウィンドウにメッセージ表示 */
 	if(msg != -1)
 		DisplaySequence(wk, wk->msgwin, msg);
@@ -1465,12 +1473,13 @@ static void CreateWindowMenuDataWiFi(MYSTERYGIFT_WORK *wk, LISTDATA *ld, int num
 	list_h.list = wk->bmd;
 	list_h.count = list_h.line = num;
 	list_h.win = win;
-	list_h.print_que = wk->printQue;
-	PRINT_UTIL_Setup( &wk->printUtil , win );
-	list_h.print_util = &wk->printUtil;
+	list_h.print_que = wk->printQueMenu;
+	PRINT_UTIL_Setup( &wk->printUtilMenu , win );
+	list_h.print_util = &wk->printUtilMenu;
 	list_h.font_handle = wk->fontHandle;
 	if(wk->lw) 	BmpMenuList_Exit(wk->lw, NULL, NULL);
 	wk->lw = BmpMenuList_Set( &list_h, 0, 0, HEAPID_MYSTERYGIFT);
+	BmpMenuList_SetCursorBmp( wk->lw , HEAPID_MYSTERYGIFT);
 	/* メッセージウィンドウにメッセージ表示 */
 	if(msg != -1)
 		DisplaySequenceWiFi(wk, wk->msgwin, msg);
@@ -1498,12 +1507,16 @@ static void CreateMenuWindow(MYSTERYGIFT_WORK *wk, int base, u32 msg)
 	ld[index++] = TopMainMenu_MenuData1[2];
 	// ウィンドウ登録
 	if(*win == NULL)
-		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 15,9,16,8,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	{
 		//GFL_BG_BmpWinAdd(wk->bgl, win, GF_BGL_FRAME0_M, 8,  7, 16, index*2, FONT_PALNO_NORMAL, base);
+		*win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 8,7,16,index*2,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+	}
+	MysteryTransFunc_InitBmpWin(*win);
 	// メニュー作成
 	CreateWindowMenuData(wk, ld, index, *win, msg);
 	// ウィンドウ表示
 	BmpWinFrame_Write(*win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR2, WAKU_PALETTE_NUMBER2);
+
 }
 
 
@@ -1516,47 +1529,25 @@ static void CreateMenuWindow(MYSTERYGIFT_WORK *wk, int base, u32 msg)
 //--------------------------------------------------------------------------------------------
 static void DisplaySequence(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid)
 {
-	STRBUF * msg;
-
-	wk->msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mystery_dat, HEAPID_MYSTERYGIFT);
-	wk->word = WORDSET_Create(HEAPID_MYSTERYGIFT);
-
-	/*ウィンドウ枠内を塗りつぶす(透明色) */
-	//GF_BGL_BmpWinDataFill(win, FontHeaderGet(FONT_TALK, FONT_HEADER_B_COLOR));
-	GFL_BMPWIN_ClearScreen( win );
-	if(wk->msg)
-		msg = wk->msg;
-	else
-	{
-		STRBUF  *baseStr = GFL_STR_CreateBuffer( 96 , HEAPID_MYSTERYGIFT );
-		msg = GFL_STR_CreateBuffer( 96 , HEAPID_MYSTERYGIFT );
-		GFL_MSG_GetString( wk->msgman , msgid , baseStr );
-		WORDSET_ExpandStr( wk->word , msg , baseStr );
-//		msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, msgid, HEAPID_MYSTERYGIFT);
-		GFL_STR_DeleteBuffer( baseStr );
-	}
-
-//	wk->m_id = GF_STR_PrintColor(win, FONT_TALK, msg, 0, 0, wk->msg_wait, MYSTERYGIFT_BLACK, NULL);
-	wk->printStream = PRINTSYS_PrintStream( win , 0,0, msg , wk->fontHandle , wk->msg_wait , wk->tcblSys , MYSTERY_MSG_PRI , HEAPID_MYSTERYGIFT , 0 );
-	if(wk->msg == NULL)
-		GFL_STR_DeleteBuffer(msg);
-	/*ウィンドウ枠描画(会話用ウィンドウを使用) */
-	BmpWinFrame_Write( win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR1, WAKU_PALETTE_NUMBER1);
-	GFL_MSG_Delete(wk->msgman);
-	WORDSET_Delete(wk->word);
-	wk->msg_wait = MSG_NO_PUT;
+	//開くメッセージArcが違うだけなので統一処理化！
+	DisplaySequenceFunc( wk,win,msgid,NARC_message_mystery_dat );
 }
 
 static void DisplaySequenceWiFi(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid)
 {
+	//開くメッセージArcが違うだけなので統一処理化！
+	DisplaySequenceFunc( wk,win,msgid,NARC_message_wifi_system_dat );
+}
+static void DisplaySequenceFunc(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid , u32 arcID )
+{
 	STRBUF * msg;
-	
-	wk->msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_system_dat, HEAPID_MYSTERYGIFT);
+
+	wk->msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arcID, HEAPID_MYSTERYGIFT);
 	wk->word = WORDSET_Create(HEAPID_MYSTERYGIFT);
 
 	/*ウィンドウ枠内を塗りつぶす(透明色) */
 	//GF_BGL_BmpWinDataFill(win, FontHeaderGet(FONT_TALK, FONT_HEADER_B_COLOR));
-	GFL_BMPWIN_ClearScreen( win );
+	MysteryTransFunc_ClearBmpWin(win);
 	if(wk->msg)
 		msg = wk->msg;
 	else
@@ -1567,12 +1558,14 @@ static void DisplaySequenceWiFi(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, u32 msgid
 		WORDSET_ExpandStr( wk->word , msg , baseStr );
 //		msg = MSGDAT_UTIL_AllocExpandString(wk->word, wk->msgman, msgid, HEAPID_MYSTERYGIFT);
 		GFL_STR_DeleteBuffer( baseStr );
+//		wk->streamMsg = msg;
 	}
 
 //	wk->m_id = GF_STR_PrintColor(win, FONT_TALK, msg, 0, 0, wk->msg_wait, MYSTERYGIFT_BLACK, NULL);
-	wk->printStream = PRINTSYS_PrintStream( win , 0,0, msg , wk->fontHandle , wk->msg_wait , wk->tcblSys , MYSTERY_MSG_PRI , HEAPID_MYSTERYGIFT , 0 );
+	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);
+	PRINT_UTIL_Print( &wk->printUtilMsg , wk->printQueMsg , MYSTERY_FONT_TOP,MYSTERY_FONT_LEFT, msg , wk->fontHandle );
 	if(wk->msg == NULL)
-		GFL_STR_DeleteBuffer(msg);
+		GFL_STR_DeleteBuffer( msg );
 	/*ウィンドウ枠描画(会話用ウィンドウを使用) */
 	BmpWinFrame_Write( win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR1, WAKU_PALETTE_NUMBER1);
 	GFL_MSG_Delete(wk->msgman);
@@ -1584,19 +1577,18 @@ static void DisplaySequenceDirect(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, STRCODE
 {
 	STRBUF *msg;
 
+	MysteryTransFunc_ClearBmpWin(win);
 	msg = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, HEAPID_MYSTERYGIFT );
 	GFL_STR_SetStringCodeOrderLength(msg, msgcode, GIFT_DATA_CARD_TITLE_MAX);
-	GFL_BMPWIN_ClearScreen( win );
-	//GF_BGL_BmpWinDataFill(win, FontHeaderGet(FONT_SYSTEM, FONT_HEADER_B_COLOR));
-	wk->printStream = PRINTSYS_PrintStream( win , 0,0, msg , wk->fontHandle , 0 , wk->tcblSys , MYSTERY_MSG_PRI , HEAPID_MYSTERYGIFT , 0 );
-	//GF_STR_PrintColor(win, FONT_SYSTEM, msg, 0, 0, MSG_NO_PUT, MYSTERYGIFT_BLACK, NULL);
+	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);
+	PRINT_UTIL_Print( &wk->printUtilUp , wk->printQueUp , MYSTERY_FONT_TOP,MYSTERY_FONT_LEFT, msg , wk->fontHandle );
 	BmpWinFrame_Write( win, WINDOW_TRANS_ON, MYSTERYGIFT_FRAMECHR1, WAKU_PALETTE_NUMBER1);
 	GFL_STR_DeleteBuffer(msg);
 }
 static BOOL DisplaySequenceEndCheck(MYSTERYGIFT_WORK *wk)
 {
 //	if(GF_MSG_PrintEndCheck(wk->m_id) == 0)
-	if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+	if( PRINTSYS_QUE_IsFinished( wk->printQueMsg ) == TRUE )
 			return TRUE;
 	return FALSE;
 }
@@ -1662,8 +1654,8 @@ static BOOL MysteryGift_InitGraphicsData( MYSTERYGIFT_WORK *wk)
 	/* メッセージのフォントカラーを設定 */
 //	SystemFontPaletteLoad( PALTYPE_MAIN_BG, FONT_PALNO_NORMAL * 32, HEAPID_MYSTERYGIFT);
 //	SystemFontPaletteLoad( PALTYPE_MAIN_BG, FONT_PALNO_SELECT * 32, HEAPID_MYSTERYGIFT);
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FONT_PALNO_NORMAL * 32, 16*2, HEAPID_MYSTERYGIFT );
-	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FONT_PALNO_SELECT * 32, 16*2, HEAPID_MYSTERYGIFT );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , FONT_PALNO_NORMAL * 32, 16*2, HEAPID_MYSTERYGIFT );
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , FONT_PALNO_SELECT * 32, 16*2, HEAPID_MYSTERYGIFT );
 
 	/*ウィンドウ枠キャラ、パレットをセット */
 	type = CONFIG_GetWindowType(wk->cfg);
@@ -1676,9 +1668,14 @@ static BOOL MysteryGift_InitGraphicsData( MYSTERYGIFT_WORK *wk)
 	/* ↓メッセージを表示するウィンドウ */
 //	if(!GF_BGL_BmpWinAddCheck(wk->msgwin))
 	if( wk->msgwin == NULL )
+	{
 //		GF_BGL_BmpWinAdd(wk->bgl, wk->msgwin, GF_BGL_FRAME0_M, 2, 19, 27, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_WINDOWCHR);
-		wk->msgwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 2,19,27,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
-	DisplaySequence(wk, wk->msgwin, mystery_01_001); /* 「ふしぎな　おくりもの　へ　ようこそ！」 */
+		wk->msgwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 2,19,27,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+		MysteryTransFunc_InitBmpWin(wk->msgwin);
+		PRINT_UTIL_Setup( &wk->printUtilMsg , wk->msgwin );
+	}
+	//CreateMenuWindowでやっていて２重処理
+//	DisplaySequence(wk, wk->msgwin, mystery_01_001); /* 「ふしぎな　おくりもの　へ　ようこそ！」 */
 	/* メニューを表示するウィンドウ 「ふしぎな　おくりもの　へ　ようこそ！」 */
 	CreateMenuWindow(wk, MYSTERYGIFT_TOPMENUCHR, mystery_01_001);
 	CreateBgScreen(wk->bgl);
@@ -1723,6 +1720,7 @@ static void WiFi_MysteryGitft_Main(MYSTERYGIFT_WORK *wk, int *seq)
 //		GF_BGL_BmpWinOff(&wk->wifiwin);
 		GFL_BMPWIN_ClearScreen(wk->wifiwin);
 		GFL_BMPWIN_Delete(wk->wifiwin);
+		wk->wifiwin = NULL;
 		GFL_BG_ClearScreen(GFL_BG_FRAME0_M);
 		/* メインメニューを表示 */
 #if MYSTERY_SND_ON
@@ -1829,7 +1827,7 @@ static int MysteryGif_DisplayMessage(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, int 
 
 	} else {
 //		if(GF_MSG_PrintEndCheck(wk->m_id) == 0)
-		if( PRINTSYS_PrintStreamGetState(wk->printStream) == PRINTSTREAM_STATE_DONE )
+		if( PRINTSYS_QUE_IsFinished( wk->printQueMsg ) == TRUE )
 		{
 			// 表示が終わったら開放
 			GFL_STR_DeleteBuffer(wk->msg);
@@ -1940,9 +1938,14 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	//追加した初期化とか
 	//TODO ワークサイズは随時取るようにしてみる
 	wk->tcblSys = GFL_TCBL_Init( HEAPID_MYSTERYGIFT,HEAPID_MYSTERYGIFT,2,0);
-	wk->printQue = PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
-	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , TRUE , HEAPID_MYSTERYGIFT );
+	wk->printQueMsg = PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
+	wk->printQueMenu = PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
+	wk->printQueUp 	= PRINTSYS_QUE_Create( HEAPID_MYSTERYGIFT );
+	wk->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_nftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_MYSTERYGIFT );
+	wk->streamMsg = NULL;
 	
+	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -3141,14 +3144,20 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 	*seq = MYSTERYGIFT_ERROR_FULL;
 			} else {
 
-	if( wk->upwin != NULL )
-		wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+	if( wk->upwin == NULL )
+	{
 		//GF_BGL_BmpWinAdd(wk->bgl, &wk->upwin, GF_BGL_FRAME0_M, 3, 2, 26, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_UPWINCHR);
-
+		wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+		PRINT_UTIL_Setup( &wk->printUtilUp , wk->upwin );
+	}
+	MysteryTransFunc_InitBmpWin(wk->upwin);
+	
 	// ここで受信したタイトルを表示
-	// FIXME
-	GF_ASSERT(FALSE);
-	//DisplaySequenceDirect(wk, wk->upwin, bsdown_c_fileheader());
+	{
+		STRCODE str[GIFT_DATA_CARD_TITLE_MAX];
+		DLPlayFunc_DPTStrCode_To_UTF16( bsdown_c_fileheader() , str , GIFT_DATA_CARD_TITLE_MAX );
+		DisplaySequenceDirect(wk, wk->upwin, str);
+	}
 	DisplaySequence(wk, wk->msgwin, mystery_01_005);
 	/* 「はい／いいえ」メニューの作成 */
 	CreateBeaconCommYesNoMenu(wk);
@@ -3370,7 +3379,8 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 			// ビーコン内に埋め込まれているタイトルを表示する
 			if( wk->upwin == NULL )
 			{
-				wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_F );
+				wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+				PRINT_UTIL_Setup( &wk->printUtilUp , wk->upwin );
 				//GF_BGL_BmpWinAdd(wk->bgl, &wk->upwin, GF_BGL_FRAME0_M, 3, 2, 26, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_UPWINCHR);
 			}
 			DisplaySequenceDirect(wk, wk->upwin, wk->gift_data.beacon.event_name);
@@ -3781,8 +3791,36 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 	// 常時ではないけれど実行した関数はここで実行
 	if(wk->func_hook)
 		wk->func_hook(wk);
+		
+	GFL_TCBL_Main( wk->tcblSys );
+/*	
+	if( wk->printStream )
+	{
+		if( PRINTSYS_PrintStreamGetState( wk->printStream ) == PRINTSTREAM_STATE_DONE )
+		{
+			PRINTSYS_PrintStreamDelete( wk->printStream );
+			wk->printStream = NULL;
+			if( wk->streamMsg != NULL )
+			{
+				GFL_STR_DeleteBuffer(wk->streamMsg);
+				wk->streamMsg = NULL;
+			}
+		}
+	}
+*/
+	PRINTSYS_QUE_Main( wk->printQueMenu );
+	if( PRINT_UTIL_Trans( &wk->printUtilMenu ,wk->printQueMenu ) == FALSE )
+	{
+	}
+	PRINTSYS_QUE_Main( wk->printQueMsg );
+	if( PRINT_UTIL_Trans( &wk->printUtilMsg ,wk->printQueMsg ) == FALSE )
+	{
+	}
+	PRINTSYS_QUE_Main( wk->printQueUp );
+	if( PRINT_UTIL_Trans( &wk->printUtilUp ,wk->printQueUp ) == FALSE )
+	{
+	}
 
-	
 	//FIXME:QueとPrintUtilの初期化
 	// アイコンを表示するために必要な駆動処理
 	MysteryLib_DoClact_Ex( wk->demo_state );
@@ -3838,12 +3876,24 @@ static GFL_PROC_RESULT MysteryGiftProc_End(GFL_PROC * proc, int * seq, void *pwk
 #endif
 	}
 */
-	//FIXME:QueとPrintUtilの初期化
+	//QueとPrintUtilの初期化
 	GFL_TCBL_Exit( wk->tcblSys ); 
-	PRINTSYS_QUE_Clear( wk->printQue );
-	PRINTSYS_QUE_Delete( wk->printQue );
+	PRINTSYS_QUE_Clear( wk->printQueMenu );
+	PRINTSYS_QUE_Delete( wk->printQueMenu );
+	PRINTSYS_QUE_Clear( wk->printQueMsg );
+	PRINTSYS_QUE_Delete( wk->printQueMsg );
+	PRINTSYS_QUE_Clear( wk->printQueUp );
+	PRINTSYS_QUE_Delete( wk->printQueUp );
+	
+	GFL_FONTSYS_SetDefaultColor();
+
+	GFL_TCBL_Exit( wk->tcblSys );
+
+	GFL_FONT_Delete( wk->fontHandle );
 
 	GFL_BMPWIN_Exit();
+	
+	GFL_BG_Exit();
 
 	GFL_PROC_FreeWork(proc);
 	GFL_HEAP_DeleteHeap(HEAPID_MYSTERYGIFT);
@@ -3950,7 +4000,6 @@ static void MysteryGift_BeaconCancel(void)
 
 static void MysteryGift_BeaconMainLoop(MYSTERYGIFT_WORK *wk)
 {
-#if 0 //FIXME
 	if( s_state == BEACON_STATE_FINISH ){
 		MysteryGift_BeaconCancel();
 
@@ -3972,11 +4021,11 @@ static void MysteryGift_BeaconMainLoop(MYSTERYGIFT_WORK *wk)
 	switch( s_state ){
 	case BEACON_STATE_INIT1:				// 初期状態(通信ライブラリ初期化)
 		//CommVRAMDInitialize();
-		//GFL_NET_Init(NULL,NULL,wk);	//FIXME:とりあえず初期化構造体はNULL・というか初期化は違う場所で
+//		CommMysteryInitNetLib( (void*)wk );
 		s_state = BEACON_STATE_INIT2;
 		break;			
 	case BEACON_STATE_INIT2:				// 初期状態
-		if(GFL_NET_IsInit() == TRUE)
+//		if(GFL_NET_IsInit() == TRUE)
 		{
 			progress_time = 0;
 			buffer = GFL_HEAP_AllocMemory(HEAPID_MYSTERYGIFT, bsdown_c_worksize());
@@ -4047,7 +4096,6 @@ static void MysteryGift_BeaconMainLoop(MYSTERYGIFT_WORK *wk)
 			break;
 		}				
 	}
-#endif
 }
 
 //------------------------------------------------------------------
@@ -4060,3 +4108,19 @@ const GFL_PROC_DATA MysteryGiftProcData = {
 };
 	
 /*  */
+#pragma mark TransFunc
+//生成したBmpWinに行う処理
+static void MysteryTransFunc_InitBmpWin( GFL_BMPWIN* win )
+{
+	GFL_BMPWIN_MakeScreen( win );
+	GFL_BMPWIN_TransVramCharacter( win );
+	MysteryTransFunc_ClearBmpWin( win );
+}
+//生成したBmpWinをフォントのBackColorで初期化する処理
+static void MysteryTransFunc_ClearBmpWin( GFL_BMPWIN* win )
+{
+	u8 lCol,sCol,bCol;
+	GFL_FONTSYS_GetColor( &lCol,&sCol,&bCol );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), bCol );
+	GFL_BMPWIN_TransVramCharacter( win );
+}

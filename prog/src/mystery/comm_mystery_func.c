@@ -49,6 +49,9 @@ void CommMysteryFunc_VramBankSet(void)
 		GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
 	};
 	GFL_DISP_SetBank( &vramSetTable );
+
+	GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
+	GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 }
 
 

@@ -97,9 +97,14 @@ typedef struct {
 	int msg_wait;					// メッセージ表示速度
 //	int m_id;		//↓に
 	PRINT_STREAM	*printStream;
+	STRBUF 			*streamMsg;					// 文字表示でID指定だったとき
 	GFL_FONT		*fontHandle;
-	PRINT_UTIL		printUtil;	//メニュー表示に使用
-	PRINT_QUE		*printQue;	//メニュー表示に使用
+	PRINT_UTIL		printUtilMenu;	//メニュー表示に使用
+	PRINT_QUE		*printQueMenu;	//メニュー表示に使用
+	PRINT_UTIL		printUtilMsg;	//メッセージ表示に使用
+	PRINT_QUE		*printQueMsg;	//メッセージ表示に使用
+	PRINT_UTIL		printUtilUp;	//受信タイトルに使用
+	PRINT_QUE		*printQueUp;	//受信タイトルに使用
 	int msg_seq;					// メッセージ表示中のシーケンス
 	int msg_next_seq;				// メッセージを表示し終えたら進むべきシーケンス
 

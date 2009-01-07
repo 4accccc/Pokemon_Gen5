@@ -116,6 +116,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				mystery/comm_mystery_state.c \
 				mystery/comm_mystery_card.c \
 				mystery/mysterylib.c \
+				mystery/beacondownload.c \
 				savedata/mystery_data.c \
 				system/laster.c 
 

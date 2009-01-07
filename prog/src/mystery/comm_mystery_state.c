@@ -33,7 +33,6 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
 
-#include "comm_command_mystery.h"
 #include "comm_mystery_state.h"
 #include "comm_mystery_gift.h"
 
@@ -106,6 +105,31 @@ static const NetRecvFuncTable _CommPacketTbl[] = {
 
 #define   _CHANGE_STATE(state, time)  _changeState(state, time)
 
+
+//NET_Init用構造体に渡す機能関数
+BOOL CommMysteryBeaconCheck(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
+void* CommMysteryGetBeaconData(void* pWork);
+int CommMysteryGetBeaconSize(void* pWork);
+//	ビーコン比較関数
+BOOL CommMysteryBeaconCheck(GameServiceID GameServiceID1, GameServiceID GameServiceID2)
+{
+	return TRUE;
+}
+//	ビーコンデータ取得関数
+static GIFT_DATA beaconTemp; 
+void* CommMysteryGetBeaconData(void* pWork)
+{
+	return (void*)&beaconTemp;
+}
+
+//	ビーコンデータサイズ取得関数
+int CommMysteryGetBeaconSize(void* pWork)
+{
+	return sizeof(GIFT_DATA);
+}
+
+
+
 //==============================================================================
 /**
  * 通信管理ステートの初期化処理
@@ -127,47 +151,7 @@ static void _commStateInitialize(MYSTERYGIFT_WORK *pMSys)
 	_pCommStateM->pMSys = pMSys;
 
 	{
-		GFLNetInitializeStruct mysteryGiftNetInit = {
-			_CommPacketTbl,		//NetSamplePacketTbl,  // 受信関数テーブル
-			CM_COMMAND_MAX,		// 受信テーブル要素数
-	        NULL,		///< ハードで接続した時に呼ばれる
-	        NULL,		///< ネゴシエーション完了時にコール
-	        NULL,		// ユーザー同士が交換するデータのポインタ取得関数
-			NULL,		// ユーザー同士が交換するデータのサイズ取得関数
-			NULL,//FIELD_COMM_FUNC_GetBeaconData,			// ビーコンデータ取得関数  
-			NULL,//FIELD_COMM_FUNC_GetBeaconSize,			// ビーコンデータサイズ取得関数 
-			NULL,//FIELD_COMM_FUNC_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
-			NULL,//FIELD_COMM_FUNC_ErrorCallBack,			// 通信不能なエラーが起こった場合呼ばれる
-	        NULL,  //FatalError
-	        NULL,//FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
-			NULL,	// オート接続で親になった場合
-	#if GFL_NET_WIFI
-			NULL,     ///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
-			NULL, ///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
-			NULL,  ///< wifiフレンドリスト削除コールバック
-			NULL,   ///< DWC形式の友達リスト	
-			NULL,  ///< DWCのユーザデータ（自分のデータ）
-            0,   ///< DWCへのHEAPサイズ
-			TRUE,        ///< デバック用サーバにつなぐかどうか
-	#endif  //GFL_NET_WIFI
-			0x444,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
-			GFL_HEAPID_APP,  //元になるheapid
-			HEAPID_NETWORK,  //通信用にcreateされるHEAPID
-			HEAPID_WIFI,  //wifi用にcreateされるHEAPID
-			HEAPID_NETWORK,	//
-			GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
-			4,//_MAXNUM,	//最大接続人数
-			48,//_MAXSIZE,	//最大送信バイト数
-			4,//_BCON_GET_NUM,  // 最大ビーコン収集数
-			TRUE,		// CRC計算
-			FALSE,		// MP通信＝親子型通信モードかどうか
-			GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
-			TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
-			WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
-		};
-	
-	GFL_NET_Init( &mysteryGiftNetInit , NULL , (void*)_pCommStateM ); 
-
+	CommMysteryInitNetLib( (void*)_pCommStateM );
 	}
 
 
@@ -181,6 +165,52 @@ static void _commStateInitialize(MYSTERYGIFT_WORK *pMSys)
 	_pCommStateM->pMSys = pMSys;
 	CommRandSeedInitialize(&_pCommStateM->sRand);
 #endif
+}
+
+//他の場所でライブラリだけ初期化する必要が出てきたので
+void CommMysteryInitNetLib(void* pWork)
+{
+	GFLNetInitializeStruct mysteryGiftNetInit = {
+		_CommPacketTbl,		//NetSamplePacketTbl,  // 受信関数テーブル
+		CM_COMMAND_MAX,		// 受信テーブル要素数
+        NULL,		///< ハードで接続した時に呼ばれる
+        NULL,		///< ネゴシエーション完了時にコール
+        CommMysteryGetBeaconData,	// ユーザー同士が交換するデータのポインタ取得関数
+		CommMysteryGetBeaconSize,	// ユーザー同士が交換するデータのサイズ取得関数
+		CommMysteryGetBeaconData,	//FIELD_COMM_FUNC_GetBeaconData,			// ビーコンデータ取得関数  
+		CommMysteryGetBeaconSize,	//FIELD_COMM_FUNC_GetBeaconSize,			// ビーコンデータサイズ取得関数 
+		CommMysteryBeaconCheck,//FIELD_COMM_FUNC_CheckConnectService,	// ビーコンのサービスを比較して繋いで良いかどうか判断する
+		NULL,//FIELD_COMM_FUNC_ErrorCallBack,			// 通信不能なエラーが起こった場合呼ばれる
+        NULL,  //FatalError
+        NULL,//FIELD_COMM_FUNC_DisconnectCallBack,	// 通信切断時に呼ばれる関数(終了時
+		NULL,	// オート接続で親になった場合
+#if GFL_NET_WIFI
+		NULL,		///< wifi接続時に自分のデータをセーブする必要がある場合に呼ばれる関数
+		NULL,		///< wifi接続時にフレンドコードの入れ替えを行う必要がある場合呼ばれる関数
+		NULL,		///< wifiフレンドリスト削除コールバック
+		NULL,		///< DWC形式の友達リスト	
+		NULL,		///< DWCのユーザデータ（自分のデータ）
+		0,			///< DWCのヒープサイズ
+		TRUE,        ///< デバック用サーバにつなぐかどうか
+#endif  //GFL_NET_WIFI
+		0x333,	//ggid  DP=0x333,RANGER=0x178,WII=0x346
+		GFL_HEAPID_APP,  //元になるheapid
+		HEAPID_NETWORK,  //通信用にcreateされるHEAPID
+		HEAPID_WIFI,  //wifi用にcreateされるHEAPID
+		HEAPID_NETWORK,	//
+		GFL_WICON_POSX,GFL_WICON_POSY,	// 通信アイコンXY位置
+		4,//_MAXNUM,	//最大接続人数
+		48,//_MAXSIZE,	//最大送信バイト数
+		4,//_BCON_GET_NUM,  // 最大ビーコン収集数
+		TRUE,		// CRC計算
+		FALSE,		// MP通信＝親子型通信モードかどうか
+		GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
+		TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+		WB_NET_FIELDMOVE_SERVICEID	//GameServiceID
+	};
+	
+	GFL_NET_Init( &mysteryGiftNetInit , NULL , pWork ); 
+
 }
 
 
@@ -267,6 +297,7 @@ static void _mysteryChildInit(void)
 	if(GFL_NET_IsInit() == FALSE){
 		return;
 	}
+	GFL_NET_StartBeaconScan();
 	_CHANGE_STATE(_mysteryChildBconScanning, 0);
 }
 
@@ -435,7 +466,6 @@ void CommMysteryStateEnterGiftChild(MYSTERYGIFT_WORK *pMSys, int serviceNo)
 	sv = SaveControl_GetPointer();
 //	CommStateEnterMysteryChild(sv, serviceNo);
 	_commStateInitialize(pMSys);
-	GFL_NET_StartBeaconScan();
 	_CHANGE_STATE(_mysteryChildInit, 0);
 }
 
@@ -466,10 +496,14 @@ int CommMysteryCheckParentBeacon(MYSTERYGIFT_WORK *wk)
 	int i;
 	GIFT_BEACON *p;
 
-	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
+	for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++)
+	{
 		p = (GIFT_BEACON *)GFL_NET_GetBeaconData(i);
-		if(p){
-			if(p->event_id){
+		if(p)
+		{
+			
+			if(p->event_id)
+			{
 #if 0
 	memcpy(&wk->gift_data.gd2.b, p, sizeof(GIFT_DATA2_B));
 #endif

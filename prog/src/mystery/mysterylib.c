@@ -721,6 +721,9 @@ void MysteryLib_RemoveClact(void)
 	}
 #endif
 
+	GFL_CLACT_UNIT_Delete( wk->clact.cellUnit );
+	GFL_CLACT_Exit();
+
 /* old
 	// セルアクターセット破棄
 	CLACT_DestSet(act->clactSet);

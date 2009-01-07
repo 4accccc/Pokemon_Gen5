@@ -13,6 +13,7 @@
 #define __COMM_MYSTERY_STATE_H__
 
 #include "comm_mystery_gift.h"
+#include "net/network_define.h"
 
 
 extern void CommMysteryStateEnterGiftParent(MYSTERYGIFT_WORK *pMSys, SAVE_CONTROL_WORK *sv, int serviceNo);
@@ -30,6 +31,19 @@ extern int CommMysteryGetRecvPlaceSize(void);
 extern u8* CommGetMysteryGiftRecvBuff( int netID, void* pWork, int size);
 extern int CommMysteryGiftGetRecvCheck(void);
 extern void CommMysteryExitGift(void);
+
+//他の場所でライブラリだけ初期化する必要が出てきたので
+extern void CommMysteryInitNetLib(void* pWork);
+
+/// ふしぎなおくりもの専用通信コマンドの定義。
+enum CommCommandField_e {
+	CM_GIFT_DATA = GFL_NET_CMD_MYSTERY,	// プレゼントのデータを送る
+	CM_RECV_RESULT,						// ちゃんと受け取りましたよ返答
+	//------------------------------------------------ここまで
+	CM_COMMAND_MAX   // 終端--------------これは移動させないでください
+};
+
+extern void CommCommandMysteryInitialize(void* pWork);
 
 #endif	// __COMM_MYSTERY_STATE_H__
 /*  */

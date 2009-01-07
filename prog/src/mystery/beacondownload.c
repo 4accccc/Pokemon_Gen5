@@ -385,6 +385,7 @@ static void mywh_ChangeSysState(int state)
         "mywh_SYSSTATE_MEASURECHANNEL",
         "mywh_SYSSTATE_CONNECT_FAIL",
         "mywh_SYSSTATE_ERROR",
+        "mywh_SYSSTATE_FATAL!!!!!",
     };
     
     WH_TRACE("%s -> ", statenames[s_work.SysState]);
