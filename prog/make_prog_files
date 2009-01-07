@@ -30,11 +30,6 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				test/soga/d_soga.c \
 				system/mcss.c \
 				battle/poke_mcss.c \
-				battle/btl_stage.c \
-				battle/btl_field.c \
-				battle/btl_camera.c \
-				battle/btl_effect.c \
-				battle/btl_efftool.c \
 				poke_tool/poke_tool.c \
 				poke_tool/pokeparty.c \
 				poke_tool/poke_personal.c \
@@ -53,23 +48,6 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/bmp_cursor.c \
 				system/snd_strm.c \
 				system/file_util.c \
-				battle/btl_main.c \
-				battle/btl_server.c \
-				battle/btl_server_cmd.c \
-				battle/btl_client.c \
-				battle/btl_adapter.c \
-				battle/btl_pokeparam.c \
-				battle/btl_event.c \
-				battle/btl_calc.c \
-				battle/btl_net.c \
-				battle/btl_string.c \
-				battle/btl_util.c \
-				battle/btlv_core.c \
-				battle/btlv_scu.c \
-				battle/btlv_scd.c \
-				battle/handler/hand_tokusei.c \
-				battle/handler/tokusei/hand_tok_ikaku.c \
-				battle/handler/tokusei/hand_tok_clearbody.c \
 				test/dlplay/dlplay_parent_sample.c \
 				test/dlplay/dlplay_parent_main.c \
 				test/dlplay/dlplay_func.c \
@@ -281,3 +259,30 @@ SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
 #===> SRCS_OVERLAY_POKELIST
 SRCS_OVERLAY_TRADE	= trade/trade.c \
 				trade/trade_main.c
+
+# ƒoƒgƒ‹
+#===> SRCS_OVERLAY_DEV_WIRELESS
+SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
+			battle/btl_server.c \
+			battle/btl_server_cmd.c \
+			battle/btl_client.c \
+			battle/btl_adapter.c \
+			battle/btl_pokeparam.c \
+			battle/btl_event.c \
+			battle/btl_calc.c \
+			battle/btl_net.c \
+			battle/btl_string.c \
+			battle/btl_util.c \
+			battle/btlv_core.c \
+			battle/btlv_scu.c \
+			battle/btlv_scd.c \
+			battle/btl_stage.c \
+			battle/btl_field.c \
+			battle/btl_camera.c \
+			battle/btl_effect.c \
+			battle/btl_efftool.c \
+			battle/handler/hand_tokusei.c \
+			battle/handler/tokusei/hand_tok_ikaku.c \
+			battle/handler/tokusei/hand_tok_clearbody.c
+
+

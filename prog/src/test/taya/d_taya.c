@@ -776,6 +776,8 @@ static void autoConnectCallBack( void* pWork )
 // ƒoƒgƒ‹‰æ–Ê‚Ö                  
 //------------------------------------------------------------------------------------------------------
 
+FS_EXTERN_OVERLAY(battle);
+
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 
@@ -821,7 +823,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			setup_party( HEAPID_CORE, para->partyEnemy1, MONSNO_AUSU + 1, MONSNO_AUSU + 2, 0 );
 		#endif
 
-			GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, para );
+			GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
 			(*seq)++;
 		}
 		break;
@@ -979,7 +981,7 @@ static BOOL SUBPROC_CommBattleParent( GFL_PROC* proc, int* seq, void* pwk, void*
 				setup_party( HEAPID_CORE, para->partyPlayer, MONSNO_YADOKINGU, MONSNO_METAGUROSU, MONSNO_SUTAAMII, 0 );
 			}
 
-			GFL_PROC_SysCallProc( NO_OVERLAY_ID, &BtlProcData, para );
+			GFL_PROC_SysCallProc( FS_OVERLAY_ID(battle), &BtlProcData, para );
 			(*seq)++;
 		}
 		break;
