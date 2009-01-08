@@ -14,6 +14,9 @@
 #include "playtime_local.h"
 #include "savedata/playtime.h"
 #include "savedata/save_tbl.h"
+#include "gamesystem/playerwork.h"
+#include "savedata/player_data.h"
+
 
 //============================================================================================
 //============================================================================================
@@ -106,3 +109,37 @@ PLAYTIME * SaveData_GetPlayTime(SAVE_CONTROL_WORK * sv)
 	return &pd->playtime;
 }
 
+
+
+//==============================================================================
+//	
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   PLAYER_WORK構造体のデータを元にPLAYER_DATAを更新する
+ *
+ * @param   pw		PLAYER_DATA構造体
+ *
+ * フィールドのセーブ前などにこれを呼び出す必要がある
+ */
+//--------------------------------------------------------------
+void SaveData_PlayerDataUpdate(SAVE_CONTROL_WORK * sv, const PLAYER_WORK *pw)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+
+	pd->mystatus = pw->mystatus;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   セーブデータからPLAYER_WORK構造体の情報をロードする
+ *
+ * @param   pw		PLAYER_DATA構造体
+ */
+//--------------------------------------------------------------
+void SaveData_PlayerDataLoad(SAVE_CONTROL_WORK * sv, PLAYER_WORK *pw)
+{
+	PLAYER_DATA * pd = SaveControl_DataPtrGet(sv, GMDATA_ID_PLAYER_DATA);
+
+	pw->mystatus = pd->mystatus;
+}

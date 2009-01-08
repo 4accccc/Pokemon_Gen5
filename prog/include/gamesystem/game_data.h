@@ -167,4 +167,15 @@ extern POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata);
  * @retval  MYSTATUSへのポインタ
  */
 //--------------------------------------------------------------
-extern MYSTATUS * GAMEDATA_GetMyStatus(const GAMEDATA * gamedata);
+extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元にセーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_Save(GAMEDATA *gamedata);

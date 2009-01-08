@@ -19,6 +19,7 @@
 #include "savedata/wifihistory.h"
 #include "savedata/wifilist.h"
 #include "savedata/mystery_data.h"
+#include "savedata/situation.h"
 
 
 //==============================================================================
@@ -146,6 +147,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
 		GMDATA_ID_PLAYER_DATA,
 		(FUNC_GET_SIZE)PLAYERDATA_GetWorkSize,
 		(FUNC_INIT_WORK)PLAYERDATA_Init,
+	},
+	{	//状況データ
+		GMDATA_ID_SITUATION,
+		(FUNC_GET_SIZE)Situation_GetWorkSize,
+		(FUNC_INIT_WORK)Situation_Init,
 	},
 	{	//WiFi通信履歴データ
 		GMDATA_ID_WIFIHISTORY,

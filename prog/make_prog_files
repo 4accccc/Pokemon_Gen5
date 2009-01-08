@@ -61,6 +61,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				savedata/mystatus.c \
 				savedata/playtime.c \
 				savedata/player_data.c \
+				savedata/situation.c \
 				system/palanm.c \
 				system/wipe.c \
 				system/wipe_sub.c \

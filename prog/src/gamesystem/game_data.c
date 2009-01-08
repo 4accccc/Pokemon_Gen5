@@ -26,6 +26,8 @@
 #include "savedata/myitem_savedata.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/mystatus.h"
+#include "savedata/situation.h"
+#include "savedata/player_data.h"
 
 //============================================================================================
 //============================================================================================
@@ -35,15 +37,22 @@
  */
 //------------------------------------------------------------------
 struct _GAMEDATA{
+	SAVE_CONTROL_WORK *sv_control_ptr;		///<セーブデータ管理ワークへのポインタ
 	PLAYER_WORK playerWork[PLAYER_MAX];
 	EVENTDATA_SYSTEM * evdata;
-	LOCATION start_loc;
-	LOCATION entrance_loc;
-	LOCATION special_loc;
+	LOCATION *start_loc;
+	LOCATION *entrance_loc;
+	LOCATION *special_loc;
 	MYITEM_PTR myitem;			///<手持ちアイテムセーブデータへのポインタ
 	POKEPARTY *my_pokeparty;	///<手持ちポケモンセーブデータへのポインタ
-	MYSTATUS *mystatus;
 };
+
+//==============================================================================
+//	プロトタイプ宣言
+//==============================================================================
+static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata);
+static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata);
+
 
 //============================================================================================
 //
@@ -58,22 +67,39 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 {
 	int i;
 	GAMEDATA * gd;
+	SITUATION *st;
 	
 	gd = GFL_HEAP_AllocMemory(heapID, sizeof(GAMEDATA));
 	GFL_STD_MemClear(gd, sizeof(GAMEDATA));
-
+	
+	gd->sv_control_ptr = SaveControl_GetPointer();
+	
+	//状況データ
+	st = SaveData_GetSituation(gd->sv_control_ptr);
+	gd->start_loc = Situation_GetStartLocation(st);
+	gd->entrance_loc = Situation_GetStartLocation(st);
+	gd->special_loc = Situation_GetStartLocation(st);
+	
+	//プレイヤーワーク
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gd->playerWork[i]);
 	}
+	
+	//イベントデータ
 	gd->evdata = EVENTDATA_SYS_Create(heapID);
 	EVENTDATA_SYS_Clear(gd->evdata);
 
-	gd->myitem = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_MYITEM);
-	gd->my_pokeparty = SaveControl_DataPtrGet(SaveControl_GetPointer(), GMDATA_ID_MYPOKE);
-	gd->mystatus = SaveData_GetMyStatus(SaveControl_GetPointer());
+	//
+	gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
+	gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
 	
+	if(SaveControl_NewDataFlagGet(gd->sv_control_ptr) == FALSE){
+	}
+	
+	GAMEDATA_SaveDataLoad(gd);	//セーブデータから必要なものをロードしてくる
 	return gd;
 }
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
@@ -113,39 +139,39 @@ EVENTDATA_SYSTEM * GAMEDATA_GetEventData(GAMEDATA * gamedata)
 //------------------------------------------------------------------
 const LOCATION * GAMEDATA_GetStartLocation(const GAMEDATA * gamedata)
 {
-	return &gamedata->start_loc;
+	return gamedata->start_loc;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GAMEDATA_SetStartLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
-	gamedata->start_loc = *loc;
+	*(gamedata->start_loc) = *loc;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const LOCATION * GAMEDATA_GetEntranceLocation(const GAMEDATA * gamedata)
 {
-	return &gamedata->entrance_loc;
+	return gamedata->entrance_loc;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GAMEDATA_SetEntranceLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
-	gamedata->entrance_loc = *loc;
+	*(gamedata->entrance_loc) = *loc;
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 const LOCATION * GAMEDATA_GetSpecialLocation(const GAMEDATA * gamedata)
 {
-	return &gamedata->special_loc;
+	return gamedata->special_loc;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void GAMEDATA_SetSpecialLocation(GAMEDATA * gamedata, const LOCATION * loc)
 {
-	gamedata->special_loc = *loc;
+	*(gamedata->special_loc) = *loc;
 }
 
 //--------------------------------------------------------------
@@ -179,9 +205,9 @@ POKEPARTY * GAMEDATA_GetMyPokemon(const GAMEDATA * gamedata)
  * @retval  MYSTATUSへのポインタ
  */
 //--------------------------------------------------------------
-MYSTATUS * GAMEDATA_GetMyStatus(const GAMEDATA * gamedata)
+MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata)
 {
-	return gamedata->mystatus;
+	return &((GAMEDATA_GetMyPlayerWork(gamedata))->mystatus);
 }
 
 
@@ -252,3 +278,60 @@ u16 PLAYERWORK_getDirection(const PLAYER_WORK * player)
 	return player->direction;
 }
 
+
+
+//==============================================================================
+//	ゲームデータが持つ情報を元にセーブ
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   セーブデータワークからゲームデータが持つ情報をロードする
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ */
+//--------------------------------------------------------------
+static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
+{
+	PLAYER_WORK *pw;
+
+	if(SaveControl_NewDataFlagGet(gamedata->sv_control_ptr) == TRUE){
+		return;	//セーブデータが無いので何も読み込まない
+	}
+	
+	pw = GAMEDATA_GetMyPlayerWork(gamedata);
+	SaveData_PlayerDataLoad(gamedata->sv_control_ptr, pw);
+	SaveData_SituationDataLoad(gamedata->sv_control_ptr, pw);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元にセーブデータのワークを更新する
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ */
+//--------------------------------------------------------------
+static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
+{
+	PLAYER_WORK *pw = GAMEDATA_GetMyPlayerWork(gamedata);
+	
+	SaveData_PlayerDataUpdate(gamedata->sv_control_ptr, pw);
+	SaveData_SituationDataUpdate(gamedata->sv_control_ptr, pw);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ゲームデータが持つ情報を元にセーブを実行
+ *
+ * @param   gamedata		ゲームデータへのポインタ
+ *
+ * @retval  
+ */
+//--------------------------------------------------------------
+void GAMEDATA_Save(GAMEDATA *gamedata)
+{
+	//セーブワークの情報を更新
+	GAMEDATA_SaveDataUpdate(gamedata);
+	
+	//セーブ実行
+	
+}

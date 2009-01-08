@@ -205,3 +205,17 @@ void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id)
 {
 	return GFL_SAVEDATA_Get(ctrl->sv_normal, gmdata_id);
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   新規データフラグを取得する
+ *
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ *
+ * @retval  TRUE:新規データである
+ */
+//--------------------------------------------------------------
+BOOL SaveControl_NewDataFlagGet(SAVE_CONTROL_WORK *ctrl)
+{
+	return ctrl->new_data_flag;
+}
