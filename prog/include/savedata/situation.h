@@ -20,6 +20,16 @@
 ///状況データの不定形アクセス型
 typedef struct _SITUATION SITUATION;
 
+//==============================================================================
+//	構造体定義
+//==============================================================================
+///PLAYER_WORK構造体からセーブに必要なものだけをまとめた構造体
+typedef struct{
+	ZONEID zoneID;
+	VecFx32 position;
+	s16 direction;
+}PLAYERWORK_SAVE;
+
 
 //==============================================================================
 //	外部関数宣言
@@ -32,6 +42,7 @@ extern LOCATION * Situation_GetSpecialLocation(SITUATION * st);
 extern SITUATION * SaveData_GetSituation(SAVE_CONTROL_WORK * sv);
 extern void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw);
 extern void SaveData_SituationDataLoad(SAVE_CONTROL_WORK *sv, PLAYER_WORK *pw);
+extern void SaveData_SituationLoad_PlayerWorkSave(SAVE_CONTROL_WORK *sv, PLAYERWORK_SAVE *plsv);
 
 
 #endif	//__SITUATION_H__

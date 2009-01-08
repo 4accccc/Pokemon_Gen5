@@ -25,11 +25,14 @@ typedef enum {
 typedef struct {
 	GAMEINIT_MODE mode;
 	u16 mapid;
+	VecFx32 pos;
+	s16 dir;
 }GAME_INIT_WORK;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid);
+extern GAME_INIT_WORK * DEBUG_GetGameInitWork(
+	GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir);
 
 #ifdef	__cplusplus
 }	//extern "C" {

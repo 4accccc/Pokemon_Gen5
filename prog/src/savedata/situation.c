@@ -25,9 +25,7 @@ struct _SITUATION {
 	LOCATION special_loc;
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
-	ZONEID zoneID;
-	VecFx32 position;
-	u16 direction;
+	PLAYERWORK_SAVE plsv;
 };
 
 
@@ -133,9 +131,9 @@ void SaveData_SituationDataUpdate(SAVE_CONTROL_WORK *sv, const PLAYER_WORK *pw)
 {
 	SITUATION *st = SaveData_GetSituation(sv);
 	
-	st->zoneID = pw->zoneID;
-	st->position = pw->position;
-	st->direction = pw->direction;
+	st->plsv.zoneID = pw->zoneID;
+	st->plsv.position = pw->position;
+	st->plsv.direction = pw->direction;
 }
 
 //--------------------------------------------------------------
@@ -150,7 +148,22 @@ void SaveData_SituationDataLoad(SAVE_CONTROL_WORK *sv, PLAYER_WORK *pw)
 {
 	SITUATION *st = SaveData_GetSituation(sv);
 	
-	pw->zoneID = st->zoneID;
-	pw->position = st->position;
-	pw->direction = st->direction;
+	pw->zoneID = st->plsv.zoneID;
+	pw->position = st->plsv.position;
+	pw->direction = st->plsv.direction;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   SITUATIONセーブデータからPLAYERWORK_SAVEのみロードする
+ *
+ * @param   sv			
+ * @param   plsv		代入先
+ */
+//--------------------------------------------------------------
+void SaveData_SituationLoad_PlayerWorkSave(SAVE_CONTROL_WORK *sv, PLAYERWORK_SAVE *plsv)
+{
+	SITUATION *st = SaveData_GetSituation(sv);
+	
+	*plsv = st->plsv;
 }

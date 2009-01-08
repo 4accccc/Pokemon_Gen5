@@ -18,6 +18,7 @@
 ///セーブデータ管理ワーク構造体
 struct _SAVE_CONTROL_WORK{
 	BOOL new_data_flag;			///<TRUE:新規データ
+	BOOL data_exists;			///<データが存在するかどうか
 	BOOL total_save_flag;		///<TRUE:全体セーブ
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
@@ -46,6 +47,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 	SaveControlWork = ctrl;
 	ctrl->new_data_flag = TRUE;			//新規データ
 	ctrl->total_save_flag = TRUE;		//全体セーブ
+	ctrl->data_exists = FALSE;			//データは存在しない
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal);
 
 
@@ -61,8 +63,9 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 	case LOAD_RESULT_NG:				///<データ異常
 		//まともなデータがあるようなので読み込む　OK or NG(正常読み出しかミラー読み出しが出来た)
 		ctrl->new_data_flag = FALSE;		//新規データではない
+		ctrl->data_exists = TRUE;			//データは存在する
 		if(load_ret == LOAD_RESULT_NG){	//OKもNGも両方ここを通るので改めてチェック
-			ctrl->first_status |= NORMAL_NG_BIT;
+			ctrl->first_status |= FST_NORMAL_NG_BIT;
 		}
 
 	#if 0	//※check　外部が出来るまで後回し
@@ -72,23 +75,23 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(int heap_id)
 			
 			ExtraNewCheckLoadData(sv, &frontier_result, &video_result);
 			if(frontier_result == LOAD_RESULT_BREAK){
-				ctrl->first_status |= FRONTIER_BREAK_BIT;
+				ctrl->first_status |= FST_FRONTIER_BREAK_BIT;
 			}
 			else if(frontier_result == LOAD_RESULT_NG){
-				ctrl->first_status |= FRONTIER_NG_BIT;
+				ctrl->first_status |= FST_FRONTIER_NG_BIT;
 			}
 			if(video_result == LOAD_RESULT_BREAK){
-				ctrl->first_status |= VIDEO_BREAK_BIT;
+				ctrl->first_status |= FST_VIDEO_BREAK_BIT;
 			}
 			else if(video_result == LOAD_RESULT_NG){
-				ctrl->first_status |= VIDEO_NG_BIT;
+				ctrl->first_status |= FST_VIDEO_NG_BIT;
 			}
 		}
 	#endif
 		break;
 	case LOAD_RESULT_BREAK:			///<破壊、復旧不能
 		OS_TPrintf("LOAD:データ破壊\n");
-		ctrl->first_status |= NORMAL_BREAK_BIT;
+		ctrl->first_status |= FST_NORMAL_BREAK_BIT;
 		//break;
 		/* FALL THROUGH */
 	case LOAD_RESULT_NULL:		///<データなし
@@ -152,7 +155,15 @@ SAVE_CONTROL_WORK * SaveControl_GetPointer(void)
 //--------------------------------------------------------------
 LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 {
-	return GFL_BACKUP_Load(ctrl->sv_normal);
+	LOAD_RESULT result = GFL_BACKUP_Load(ctrl->sv_normal);
+	
+	switch(result){
+	case LOAD_RESULT_OK:
+	case LOAD_RESULT_NG:
+		ctrl->data_exists = TRUE;
+		break;
+	}
+	return result;
 }
 
 //--------------------------------------------------------------
@@ -164,7 +175,14 @@ LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl)
 //--------------------------------------------------------------
 SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl)
 {
-	return GFL_BACKUP_Save(ctrl->sv_normal);
+	SAVE_RESULT result;
+	
+	result = GFL_BACKUP_Save(ctrl->sv_normal);
+	if(result == SAVE_RESULT_OK){
+		ctrl->new_data_flag = FALSE;
+		ctrl->data_exists = TRUE;
+	}
+	return result;
 }
 
 //--------------------------------------------------------------
@@ -188,7 +206,14 @@ void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl)
 //--------------------------------------------------------------
 SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 {
-	return GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
+	SAVE_RESULT result;
+	
+	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
+	if(result == SAVE_RESULT_OK){
+		ctrl->new_data_flag = FALSE;
+		ctrl->data_exists = TRUE;
+	}
+	return result;
 }
 
 //--------------------------------------------------------------
@@ -218,4 +243,44 @@ void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id)
 BOOL SaveControl_NewDataFlagGet(SAVE_CONTROL_WORK *ctrl)
 {
 	return ctrl->new_data_flag;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	最初の読み込み結果を返す
+ * @param	sv			セーブデータ構造へのポインタ
+ * @return	LOAD_RESULT	読み込み結果（savedata_def.h参照）
+ */
+//---------------------------------------------------------------------------
+u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv)
+{
+	return sv->first_status;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータ存在フラグを取得
+ * @param	sv			セーブデータ構造へのポインタ
+ * @return	BOOL		TRUEのとき、セーブデータが存在する
+ */
+//---------------------------------------------------------------------------
+BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv)
+{
+	return sv->data_exists;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	セーブデータの初期化
+ * @param	sv			セーブデータ構造へのポインタ
+ *
+ * SaveControl_Eraseと違い、フラッシュに書き込まない。
+ * セーブデータがある状態で「さいしょから」遊ぶ場合などの初期化処理
+ */
+//---------------------------------------------------------------------------
+void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
+{
+	ctrl->new_data_flag = TRUE;				//新規データである
+	ctrl->total_save_flag = TRUE;			//全体セーブする必要がある
+	GFL_SAVEDATA_Clear(ctrl->sv_normal);
 }

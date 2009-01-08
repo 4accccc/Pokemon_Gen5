@@ -175,7 +175,7 @@ extern MYSTATUS * GAMEDATA_GetMyStatus(GAMEDATA * gamedata);
  *
  * @param   gamedata		ゲームデータへのポインタ
  *
- * @retval  
+ * @retval  セーブ結果
  */
 //--------------------------------------------------------------
-extern void GAMEDATA_Save(GAMEDATA *gamedata);
+extern SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata);

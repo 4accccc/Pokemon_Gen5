@@ -76,16 +76,29 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 {
 	GAMESYS_WORK * gsys;
 	u32 work_size = GAMESYS_WORK_GetSize();
+	GAME_INIT_WORK *game_init = pwk;
+	
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMESYS, HEAPSIZE_GAMESYS );
 	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_GAMESYS);
 	GameSysWork = gsys;
 	GameSystem_Init(gsys, HEAPID_GAMESYS, pwk);
 #if 1		/* 暫定的にプロセス登録 */
-	{
-		GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
-		GAMESYSTEM_SetEvent(gsys, event);
-		//適当に手持ちポケモンをAdd
-		DEBUG_MyPokeAdd(gsys);
+	switch(game_init->mode){
+	case GAMEINIT_MODE_CONTINUE:
+		{
+			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+			GAMESYSTEM_SetEvent(gsys, event);
+		}
+		break;
+	case GAMEINIT_MODE_FIRST:
+	case GAMEINIT_MODE_DEBUG:
+		{
+			GMEVENT * event = DEBUG_EVENT_SetFirstMapIn(gsys, pwk);
+			GAMESYSTEM_SetEvent(gsys, event);
+			//適当に手持ちポケモンをAdd
+			DEBUG_MyPokeAdd(gsys);
+		}
+		break;
 	}
 #endif
 	return GFL_PROC_RES_FINISH;
@@ -128,10 +141,12 @@ const GFL_PROC_DATA GameMainProcData = {
  * @file	ゲーム開始初期化用ワーク取得
  */
 //------------------------------------------------------------------
-GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid)
+GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir)
 {
 	TestGameInitWork.mode = mode;
 	TestGameInitWork.mapid = mapid;
+	TestGameInitWork.pos = *pos;
+	TestGameInitWork.dir = dir;
 	return &TestGameInitWork;
 }
 

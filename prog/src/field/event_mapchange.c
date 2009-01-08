@@ -75,7 +75,18 @@ GMEVENT * DEBUG_EVENT_SetFirstMapIn(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_i
 	fmw->gsys = gsys;
 	fmw->gamedata = GAMESYSTEM_GetGameData(gsys);
 	fmw->game_init_work = game_init_work;
-	LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
+	switch(game_init_work->mode){
+	case GAMEINIT_MODE_CONTINUE:
+		LOCATION_SetDirect(&fmw->loc_req, game_init_work->mapid, game_init_work->dir, 
+			game_init_work->pos.x, game_init_work->pos.y, game_init_work->pos.z);
+		break;
+	case GAMEINIT_MODE_FIRST:
+		LOCATION_SetGameStart(&fmw->loc_req);
+		break;
+	case GAMEINIT_MODE_DEBUG:
+		LOCATION_DEBUG_SetDefaultPos(&fmw->loc_req, game_init_work->mapid);
+		break;
+	}
 	return event;
 }
 

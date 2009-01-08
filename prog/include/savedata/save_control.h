@@ -18,12 +18,12 @@
 //--------------------------------------------------------------
 //	first_statusの結果BIT
 //--------------------------------------------------------------
-#define NORMAL_NG_BIT			(1<<0)		//通常セーブ：ミラーリングNG
-#define NORMAL_BREAK_BIT		(1<<1)		//通常セーブ：破壊
-#define FRONTIER_NG_BIT			(1<<2)		//外部フロンティアセーブ：ミラーリングNG
-#define FRONTIER_BREAK_BIT		(1<<3)		//外部フロンティアセーブ：破壊
-#define VIDEO_NG_BIT			(1<<4)		//外部ビデオセーブ：ミラーリングNG
-#define VIDEO_BREAK_BIT			(1<<5)		//外部ビデオセーブ：破壊
+#define FST_NORMAL_NG_BIT			(1<<0)		//通常セーブ：ミラーリングNG
+#define FST_NORMAL_BREAK_BIT		(1<<1)		//通常セーブ：破壊
+#define FST_FRONTIER_NG_BIT			(1<<2)		//外部フロンティアセーブ：ミラーリングNG
+#define FST_FRONTIER_BREAK_BIT		(1<<3)		//外部フロンティアセーブ：破壊
+#define FST_VIDEO_NG_BIT			(1<<4)		//外部ビデオセーブ：ミラーリングNG
+#define FST_VIDEO_BREAK_BIT			(1<<5)		//外部ビデオセーブ：破壊
 
 //==============================================================================
 //	型定義
@@ -43,6 +43,9 @@ extern void SaveControl_SaveAsyncInit(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl);
 extern void * SaveControl_DataPtrGet(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdata_id);
 extern BOOL SaveControl_NewDataFlagGet(SAVE_CONTROL_WORK *ctrl);
+extern u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv);
+extern BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv);
+extern void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl);
 
 
 

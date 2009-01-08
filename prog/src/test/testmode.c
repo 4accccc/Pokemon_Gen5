@@ -14,6 +14,7 @@
 #include "gamesystem/game_init.h"
 #include "title/title.h"
 #include "app/config_panel.h"		//ConfigPanelProcDataŽQÆ
+#include "title/game_start.h"
 
 void	TestModeSet(int mode);
 
@@ -1050,9 +1051,10 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	}
 
 	if(testmode->next_start_proc == TRUE){
-		GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0);
-		GFL_PROC_SysSetNextProc(
-			NO_OVERLAY_ID, &GameMainProcData, init_param);
+		FS_EXTERN_OVERLAY(title);
+		GFL_OVERLAY_Load(FS_OVERLAY_ID(title));
+		GameStart_Debug();
+		GFL_OVERLAY_Unload(FS_OVERLAY_ID(title));
 		return;
 	}
 	
@@ -1097,9 +1099,10 @@ static void CallSelectProc( TESTMODE_WORK * testmode )
 	case SELECT_KAGAYA:
 		//‚©‚ª‚â
 		{
-			GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 2);
-			GFL_PROC_SysSetNextProc(
-				NO_OVERLAY_ID, &GameMainProcData, init_param);
+			FS_EXTERN_OVERLAY(title);
+			GFL_OVERLAY_Load(FS_OVERLAY_ID(title));
+			GameStart_Debug();
+			GFL_OVERLAY_Unload(FS_OVERLAY_ID(title));
 		}
 		break;
 	case SELECT_ARIIZUMI:

@@ -308,6 +308,8 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
  * @brief   ゲームデータが持つ情報を元にセーブデータのワークを更新する
  *
  * @param   gamedata		ゲームデータへのポインタ
+ *
+ * セーブするデータを、セーブワークから直接使用せずに、別ワークにコピーして使用しているものが対象
  */
 //--------------------------------------------------------------
 static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
@@ -324,14 +326,14 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
  *
  * @param   gamedata		ゲームデータへのポインタ
  *
- * @retval  
+ * @retval  セーブ結果
  */
 //--------------------------------------------------------------
-void GAMEDATA_Save(GAMEDATA *gamedata)
+SAVE_RESULT GAMEDATA_Save(GAMEDATA *gamedata)
 {
 	//セーブワークの情報を更新
 	GAMEDATA_SaveDataUpdate(gamedata);
 	
 	//セーブ実行
-	
+	return SaveControl_Save(gamedata->sv_control_ptr);
 }

@@ -363,6 +363,7 @@ static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 	GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
 			FLDMAPMENU_STR12, FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
+	GAMEDATA_Save(GAMESYSTEM_GetGameData(mwk->gmSys));
 	return( TRUE );
 }
 
