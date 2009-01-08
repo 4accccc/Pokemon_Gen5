@@ -402,7 +402,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	if( mode & PAD_BUTTON_SELECT )
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
 	else
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, (void*)mode);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
 	return GFL_PROC_RES_FINISH;
 }
 

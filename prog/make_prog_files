@@ -71,6 +71,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				savedata/wifihistory.c \
 				savedata/wifilist.c \
 				app/trainercard/trainercard.c \
+				app/name_input/name_input.c \
 				mystery/comm_mystery_gift.c \
 				mystery/comm_mystery_func.c \
 				mystery/comm_mystery_state.c \
