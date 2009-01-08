@@ -42,7 +42,7 @@ void GameStart_Beginning(void)
 	GAME_INIT_WORK * init_param;
 	VecFx32 pos = {0,0,0};
 	
-	SaveControl_ClearData(SaveControl_GetPointer());
+//	SaveControl_ClearData(SaveControl_GetPointer());
 	init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0);
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 }

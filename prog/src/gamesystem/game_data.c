@@ -295,6 +295,7 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 	PLAYER_WORK *pw;
 
 	if(SaveControl_NewDataFlagGet(gamedata->sv_control_ptr) == TRUE){
+		GFL_STD_MemCopy(SaveData_GetMyStatus(gamedata->sv_control_ptr), GAMEDATA_GetMyStatus(gamedata), MyStatus_GetWorkSize());	//※check　暫定
 		return;	//セーブデータが無いので何も読み込まない
 	}
 	
