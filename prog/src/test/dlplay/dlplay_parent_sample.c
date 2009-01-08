@@ -28,7 +28,7 @@
 
 #include "test_graphic/mb_test.naix"
 #include "message.naix"
-#include "test_graphic/d_taya.naix"
+#include "font/font.naix"
 
 //------------------------------------------------------------------
 //	typedef struct
@@ -133,9 +133,9 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	parentData->commSys_ = DLPlayComm_InitData( heapID );
 	parentData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
 	parentData->dispSys_ = DLPlayDispSys_InitSystem( heapID );
-	DLPlayFunc_FontInit( ARCID_D_TAYA , NARC_d_taya_lc12_2bit_nftr ,
+	DLPlayFunc_FontInit( ARCID_FONT , NARC_font_large_nftr ,
 					ARCID_MESSAGE , NARC_message_d_dlplay_dat ,
-					ARCID_D_TAYA , NARC_d_taya_default_nclr , 
+					ARCID_FONT , NARC_font_default_nclr , 
 					DLPLAY_FONT_MSG_PLANE , parentData->msgSys_ );
 	GFL_HEAP_DEBUG_PrintExistMemoryBlocks(heapID);
 

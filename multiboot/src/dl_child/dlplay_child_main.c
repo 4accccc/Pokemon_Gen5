@@ -19,7 +19,7 @@
 
 #include "mb_test.naix"
 #include "message_dl.naix"
-#include "d_taya.naix"
+#include "../../pokemon_wb/prog/arc/font/font.naix"
 //======================================================================
 //	define
 //======================================================================
@@ -159,9 +159,9 @@ static GFL_PROC_RESULT DLPlayChild_ProcInit(GFL_PROC * proc, int * seq, void * p
 	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 	childData->dataSys_ = DLPlayData_InitSystem( childData->heapID_ , childData->msgSys_ );
 	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
-	DLPlayFunc_FontInit( ARCID_FONT_DL , NARC_d_taya_lc12_2bit_nftr ,
+	DLPlayFunc_FontInit( ARCID_FONT_DL , NARC_font_large_nftr ,
 						ARCID_MESSAGE_DL , NARC_message_dl_d_dlplay_dat ,
-						ARCID_FONT_DL , NARC_d_taya_default_nclr , 
+						ARCID_FONT_DL , NARC_font_default_nclr , 
 						DLPLAY_FONT_MSG_PLANE , childData->msgSys_ );
 	GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_ARIIZUMI_DEBUG );
 

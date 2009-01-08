@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2008-11-10T19:33:43"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2009-01-08T19:54:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -105,7 +105,7 @@
 		</language>
 	</columns>
 
-	<dialog left="126" top="351" right="831" bottom="979" maximized="no" rayout="Vertical2">
+	<dialog left="-6" top="351" right="699" bottom="979" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="888" top="194" right="1235" bottom="592" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -135,101 +135,105 @@
 
 	<row id="DLPLAY_MSG_SEARCH_CHILD">
 		<language name="JPN" font=" 2:lcfont12" width="80">通信相手を探しています</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">通信相手を探しています</language>
 	</row>
 
 	<row id="DLPLAY_MSG_FIND_CHILD">
 		<language name="JPN" font=" 2:lcfont12" width="80">子機が見つかりました。
 ROMを送信しています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">子機が見つかりました。
+ROMを送信しています。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_WAIT_CHILD_CONNECT">
 		<language name="JPN" font=" 2:lcfont12" width="80">子機の再接続を待っています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">子機の再接続を待っています。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONNECT_PARENT">
 		<language name="JPN" font=" 2:lcfont12" width="80">親機に接続しています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">親機に接続しています。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONNECTED_CHILD">
 		<language name="JPN" font=" 2:lcfont12" width="80">子機が接続しました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">子機が接続しました。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_WAIT_CHILD_PROC">
 		<language name="JPN" font=" 2:lcfont12" width="80">子機の処理中です。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">子機の処理中です。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONNECTED_PARENT">
 		<language name="JPN" font=" 2:lcfont12" width="80">データの種類を選んでください。
 Y:DP　X:PT</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">データの種類を選んでください。
+Y:DP　X:PT</language>
 	</row>
 
 	<row id="DLPLAY_MSG_WAIT_LOAD">
 		<language name="JPN" font=" 2:lcfont12" width="80">データを読み込んでいます。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">データを読み込んでいます。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_WAIT_SEND_DATA">
 		<language name="JPN" font=" 2:lcfont12" width="80">Aボタンを押すと親機にデータを送ります。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">Aボタンを押すと親機にデータを送ります。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_SEND_DATA_PARENT">
 		<language name="JPN" font=" 2:lcfont12" width="80">親機にデータを送信しています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">親機にデータを送信しています。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_POST_DATA_CHILD">
 		<language name="JPN" font=" 2:lcfont12" width="80">子機からデータを受信しています。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">子機からデータを受信しています。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_SELECT_BOX">
 		<language name="JPN" font=" 2:lcfont12" width="80">左右でボックスを切り替えて、
 Aボタンで決定します。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">左右でボックスを切り替えて、
+Aボタンで決定します。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_SAVE">
 		<language name="JPN" font=" 2:lcfont12" width="80">レポートに書き込んでいます。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">レポートに書き込んでいます。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_SAVE_END">
 		<language name="JPN" font=" 2:lcfont12" width="80">レポートに書き込みました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">レポートに書き込みました。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_PARENT_SELECT_BOX">
 		<language name="JPN" font=" 2:lcfont12" width="80">親機がボックスを選んでいます。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">親機がボックスを選んでいます。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_MISS_LOAD_BACKUP">
 		<language name="JPN" font=" 2:lcfont12" width="80">データの読み込みに失敗しました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">データの読み込みに失敗しました。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_ERROR">
 		<language name="JPN" font=" 2:lcfont12" width="80">エラーが発生しました。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">エラーが発生しました。</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CONFIRM">
 		<language name="JPN" font=" 2:lcfont12" width="80">このボックスを取得しますか？
 A:はい　B:いいえ</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">このボックスを取得しますか？
+A:はい　B:いいえ</language>
 	</row>
 
 	<row id="DLPLAY_MSG_CHILD_END">
 		<language name="JPN" font=" 2:lcfont12" width="80">電源を切って終了してください。</language>
-		<language name="JPN_KANJI" width="80"></language>
+		<language name="JPN_KANJI" width="80">電源を切って終了してください。</language>
 	</row>
 
 	<flowchart-group-list>
