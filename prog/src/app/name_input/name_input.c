@@ -69,6 +69,7 @@ const GFL_PROC_DATA NameInputProcData = {
 };
 
 //文字列長テーブル
+//文字バッファ作るときはEOM分足すこと
 static const NAME_INPUT_STR_LENGTH[NAMEIN_MAX] =
 {
 	PERSON_NAME_SIZE,	// 自分の名前
@@ -105,7 +106,7 @@ static GFL_PROC_RESULT NAME_INPUT_ProcInit( GFL_PROC * proc, int * seq, void * p
 
 	//SKBの初期化
 	skbData.strlen = NAME_INPUT_STR_LENGTH[work->inputMode_];
-	work->inputStr_ = GFL_STR_CreateBuffer( NAME_INPUT_STR_LENGTH[work->inputMode_],work->heapId_ );
+	work->inputStr_ = GFL_STR_CreateBuffer( NAME_INPUT_STR_LENGTH[work->inputMode_] + EOM_SIZE,work->heapId_ );
 	work->gflSkb_ = GFL_SKB_Create( work->inputStr_, &skbData, work->heapId_ );
 	
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB , 16 , 0 , ARI_FADE_SPD );

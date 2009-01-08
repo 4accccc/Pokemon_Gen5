@@ -47,7 +47,7 @@ typedef struct _TRAINER_CARD_WORK TRAINER_CARD_WORK;
 //======================================================================
 //	proto
 //======================================================================
-extern void TRAINER_CARD_GetCardString( char* str , const u8 idx , TRAINER_CARD_WORK *work );
+extern void TRAINER_CARD_GetCardString( STRBUF* str , const u8 idx , TRAINER_CARD_WORK *work );
 
 
 #endif //TRAINERCARD_H__

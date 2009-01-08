@@ -17,6 +17,8 @@
 #include "test/ariizumi/ari_debug.h"
 #include "print/printsys.h"
 #include "field/field_comm/field_comm_data.h"
+#include "savedata/save_control.h"
+#include "savedata/mystatus.h"
 
 #include "arc_def.h"
 #include "test_graphic/d_taya.naix"
@@ -71,8 +73,8 @@ void TRAINER_CARD_Term( TRAINER_CARD_WORK *work );
 const BOOL TRAINER_CARD_Loop( TRAINER_CARD_WORK *work );
 static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work );
 static void TRAINER_CARD_TermGraphic( TRAINER_CARD_WORK *work );
-static void TRAINER_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work );
-static void TRAINER_CARD_GetCardString_Partner( char* str , const u8 idx , TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_DrawString( STRBUF* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work );
+static void TRAINER_CARD_GetCardString_Partner( STRBUF* str , const u8 idx , TRAINER_CARD_WORK *work );
 //--------------------------------------------------------------
 //	
 //--------------------------------------------------------------
@@ -260,8 +262,10 @@ static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work )
 		}
 		for( i=0;i<CMI_MAX;i++ )
 		{
-			char str[128];
+			STRBUF *str;
 			const BOOL isRight = (CARD_MESSAGE_POSITION[i][2]==0?FALSE:TRUE);
+
+			str = GFL_STR_CreateBuffer( 128 , work->heapID_ );
 			if( isCommMode == TRUE )
 			{
 				TRAINER_CARD_GetCardString_Partner( str , i , work );
@@ -271,6 +275,8 @@ static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work )
 				TRAINER_CARD_GetCardString( str , i , work );
 			}
 			TRAINER_CARD_DrawString( str , CARD_MESSAGE_POSITION[i][0] , CARD_MESSAGE_POSITION[i][1], isRight , work );
+			
+			GFL_STR_DeleteBuffer( str );
 		}
 	}
 
@@ -305,97 +311,103 @@ static void TRAINER_CARD_TermGraphic( TRAINER_CARD_WORK *work )
 //--------------------------------------------------------------
 //	文字列描画
 //--------------------------------------------------------------
-static void TRAINER_CARD_DrawString( char* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work )
+static void TRAINER_CARD_DrawString( STRBUF* str , u16 posX , u16 posY , BOOL isRight , TRAINER_CARD_WORK *work )
 {
-	STRBUF *strBuf;
-	u16	strArr[128];
-	int arrLen = 128;
-	int	strBaseLen = STD_StrLen( str );
 	int	workPosX = posX;
-	strBuf = GFL_STR_CreateBuffer( 128 , work->heapID_ );
-	STD_ConvertStringSjisToUnicode( strArr , &arrLen , str , &strBaseLen , NULL );
-	
-	GFL_STR_SetStringCodeOrderLength( strBuf , strArr , arrLen+1 );
 	
 	if( isRight == TRUE )
 	{
-		workPosX -= PRINTSYS_GetStrWidth( strBuf , work->fontHandle_ , 1 );
+		workPosX -= PRINTSYS_GetStrWidth( str , work->fontHandle_ , 1 );
 	}
 
 	PRINT_UTIL_Print( work->printUtil_ , work->printQue_ , workPosX , posY ,
-					(void*)strBuf , work->fontHandle_ );
+					(void*)str , work->fontHandle_ );
 
-	GFL_STR_DeleteBuffer( strBuf );
 }
  
 //--------------------------------------------------------------
 //	文字列取得(自分
 //--------------------------------------------------------------
-void TRAINER_CARD_GetCardString( char* str , const u8 idx , TRAINER_CARD_WORK *work )
+void TRAINER_CARD_GetCardString( STRBUF* str , const u8 idx , TRAINER_CARD_WORK *work )
 {
+	SAVE_CONTROL_WORK *saveWork = SaveControl_GetPointer();
+	
 	switch( idx )
 	{
 	case CMI_ID_TITLE:		//ID
-		STD_CopyString( str , "IDNo." );
+		GFL_STR_SetStringCodeOrderLength( str , L"IDNo.\0" , 6 );
+//		STD_CopyString( str , "IDNo." );
 		break;
 	case CMI_ID_USER:
 		{
-			u8	macAdd[6];
-			OS_GetMacAddress( macAdd );
-			STD_TSPrintf(str,"%02x%02x%02x%02x%02x%02x",macAdd[0],macAdd[1],macAdd[2],macAdd[3],macAdd[4],macAdd[5]);
-			//STD_CopyString( str , "012345" );
+			GFL_STR_SetStringCodeOrderLength( str , L"65535\0" , 6 );
 		}
 		break;
 	case CMI_NAME_TITLE:	//名前
-		STD_CopyString( str , "なまえ" );
+		GFL_STR_SetStringCodeOrderLength( str , L"なまえ\0" , 4 );
+//		STD_CopyString( str , "なまえ" );
 		break;
 	case CMI_NAME_USER:
 		{
-			OSOwnerInfo info;
-			int uLen,sLen;
-			OS_GetOwnerInfo( &info );
-			uLen = info.nickNameLength;
-			sLen = 128;
-			STD_ConvertStringUnicodeToSjis( str , &sLen , info.nickName , &uLen ,NULL );
-			str[sLen] = '\0';
-			//STD_CopyString( str , "テスト" );
+			MYSTATUS *mystatus = SaveData_GetMyStatus( saveWork );
+			if( MyStatus_CheckNameClear( mystatus ) == FALSE )
+			{
+				MyStatus_CopyNameString( mystatus , str );
+			}
+			else
+			{
+				//TODO 念のため名前が入ってないときに落ちないようにしておく
+				GFL_STR_SetStringCodeOrderLength( str , L"NoName\0" , 6 );
+			}
 		}
 		break;
 	case CMI_MONEY_TITLE:	//所持金
-		STD_CopyString( str , "おこづかい" );
+		GFL_STR_SetStringCodeOrderLength( str , L"おこづかい\0" , 6 );
+//		STD_CopyString( str , "おこづかい" );
 		break;
 	case CMI_MONEY_USER:
-		STD_CopyString( str , "12980" );
+		GFL_STR_SetStringCodeOrderLength( str , L"12980\0" , 6 );
+//		STD_CopyString( str , "12980" );
 		break;
 	case CMI_BOOK_TITLE:	//図鑑匹数
-		STD_CopyString( str , "ポケモンずかん" );
+		GFL_STR_SetStringCodeOrderLength( str , L"ポケモンずかん\0" , 8 );
+//		STD_CopyString( str , "ポケモンずかん" );
 		break;
 	case CMI_BOOK_USER:
-		STD_CopyString( str , "255" );
+		GFL_STR_SetStringCodeOrderLength( str , L"255\0" , 4 );
+//		STD_CopyString( str , "255" );
 		break;
 	case CMI_SCORE_TITLE:	//スコア
-		STD_CopyString( str , "SCORE" );
+		GFL_STR_SetStringCodeOrderLength( str , L"SCORE\0" , 6 );
+//		STD_CopyString( str , "SCORE" );
 		break;
 	case CMI_SCORE_USER:	
-		STD_CopyString( str , "98765" );
+		GFL_STR_SetStringCodeOrderLength( str , L"98765\0" , 6 );
+//		STD_CopyString( str , "98765" );
 		break;
 	case CMI_TIME_TITLE:	//プレイ時間
-		STD_CopyString( str , "プレイじかん" );
+		GFL_STR_SetStringCodeOrderLength( str , L"プレイじかん\0" , 7 );
+//		STD_CopyString( str , "プレイじかん" );
 		break;
 	case CMI_TIME_USER:
-		STD_CopyString( str , "10:10" );
+		GFL_STR_SetStringCodeOrderLength( str , L"10:10\0" , 6 );
+//		STD_CopyString( str , "10:10" );
 		break;
 	case CMI_DAY_TITLE:		//プレイ開始日
-		STD_CopyString( str , "ぼうけんを　はじめたとき" );
+		GFL_STR_SetStringCodeOrderLength( str , L"ぼうけんを　はじめたとき\0" , 13 );
+//		STD_CopyString( str , "ぼうけんを　はじめたとき" );
 		break;
 	case CMI_DAY_USER_YEAR:	//年
-		STD_CopyString( str , "08" );
+		GFL_STR_SetStringCodeOrderLength( str , L"08\0" , 3 );
+//		STD_CopyString( str , "08" );
 		break;
 	case CMI_DAY_USER_MONTH://月
-		STD_CopyString( str , "11" );
+		GFL_STR_SetStringCodeOrderLength( str , L"11\0" , 3 );
+//		STD_CopyString( str , "11" );
 		break;
 	case CMI_DAY_USER_DAY:	//日
-		STD_CopyString( str , "26" );
+		GFL_STR_SetStringCodeOrderLength( str , L"26\0" , 3 );
+//		STD_CopyString( str , "26" );
 		break;
 	}
 }
@@ -403,7 +415,7 @@ void TRAINER_CARD_GetCardString( char* str , const u8 idx , TRAINER_CARD_WORK *w
 //--------------------------------------------------------------
 //	文字列取得(通信相手
 //--------------------------------------------------------------
-static void TRAINER_CARD_GetCardString_Partner( char* str , const u8 idx , TRAINER_CARD_WORK *work )
+static void TRAINER_CARD_GetCardString_Partner( STRBUF* str , const u8 idx , TRAINER_CARD_WORK *work )
 {
 	switch( idx )
 	{
@@ -411,15 +423,14 @@ static void TRAINER_CARD_GetCardString_Partner( char* str , const u8 idx , TRAIN
 		{
 			FIELD_COMM_USERDATA_TRAINERCARD *cardData;
 			cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
-			STD_CopyString( str , cardData->id_ );
+			GFL_STR_SetStringCode( str , cardData->id_ );
 		}
 		break;
 	case CMI_NAME_USER:
 		{
 			FIELD_COMM_USERDATA_TRAINERCARD *cardData;
 			cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
-			STD_CopyString( str , cardData->name_ );
-			//STD_CopyString( str , "テスト" );
+			GFL_STR_SetStringCode( str , cardData->name_ );
 		}
 		break;
 	case CMI_ID_TITLE:		//ID

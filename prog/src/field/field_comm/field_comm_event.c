@@ -722,11 +722,20 @@ static	const BOOL	FIELD_COMM_EVENT_ChangePartFunc( FIELD_COMM_EVENT *evtWork )
 #include "app/trainercard/trainercard.h"
 static void FIELD_COMM_EVENT_InitUserData_TrainerCard( FIELD_COMM_MAIN *commSys )
 {
+	STRBUF *workStr;
 	FIELD_COMM_USERDATA_TRAINERCARD *cardData;
 	FIELD_COMM_DATA_CreateUserData( FCUT_TRAINERCARD );
 	cardData = FIELD_COMM_DATA_GetSelfUserData( FCUT_TRAINERCARD );
-	TRAINER_CARD_GetCardString( cardData->id_ , CMI_ID_USER , NULL );
-	TRAINER_CARD_GetCardString( cardData->name_ , CMI_NAME_USER , NULL );
+	
+	workStr = GFL_STR_CreateBuffer( 128 , FIELD_COMM_MAIN_GetHeapID( commSys ) );
+
+	TRAINER_CARD_GetCardString( workStr , CMI_ID_USER , NULL );
+	GFL_STR_GetStringCode( workStr , cardData->id_ , 128 );
+	GFL_STR_ClearBuffer( workStr );
+	
+	TRAINER_CARD_GetCardString( workStr , CMI_NAME_USER , NULL );
+	GFL_STR_GetStringCode( workStr , cardData->name_ , 128 );
+	GFL_STR_DeleteBuffer( workStr );
 }
 static void FIELD_COMM_EVENT_InitUserData_Battle( FIELD_COMM_MAIN *commSys )
 {

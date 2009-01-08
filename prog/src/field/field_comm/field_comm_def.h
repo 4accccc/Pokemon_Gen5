@@ -108,9 +108,9 @@ typedef struct _FIELD_COMM_DEBUG_WORK FIELD_COMM_DEBUG_WORK;
 //通信時のユーザーデータ
 typedef struct
 {
-	char	name_[128];
-	char	id_[128];
-	char	pad_[768];
+	STRCODE		name_[128];
+	STRCODE		id_[128];
+	STRCODE		pad_[768];
 }FIELD_COMM_USERDATA_TRAINERCARD;
 
 //======================================================================
