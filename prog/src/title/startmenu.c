@@ -23,6 +23,7 @@
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
 #include "title/startmenu.h"
+#include "title/title.h"
 #include "title/game_start.h"
 #include "test/ariizumi/ari_debug.h"
 //======================================================================
@@ -65,6 +66,8 @@ enum START_MENU_ITEM
 	SMI_EMAIL_SETTING,	//E-MailÝ’è
 	
 	SMI_MAX,
+	
+	SMI_RETURN_TITLE = 0xFF,	//B‚Å–ß‚é
 };
 
 //======================================================================
@@ -229,7 +232,10 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		case SMI_MYSTERY_GIFT:	//•sŽv‹c‚È‘¡‚è•¨
 			GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &MysteryGiftProcData, NULL);
 			break;
-
+		
+		case SMI_RETURN_TITLE:
+			GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+			break;
 		defalut:
 			//Proc‚Ì•ÏX‚ð’†‚Å‚â‚Á‚Ä‚é
 			GameStart_Beginning();
@@ -304,6 +310,13 @@ static GFL_PROC_RESULT START_MENU_ProcMain( GFL_PROC * proc, int * seq, void * p
 				GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
 				work->state_ = SMS_FADE_OUT;
 			}
+		}
+		else
+		if( keyTrg & PAD_BUTTON_B )
+		{
+			GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 0 , 16 , ARI_FADE_SPD );
+			work->selectItem_ = SMI_RETURN_TITLE;
+			work->state_ = SMS_FADE_OUT;
 		}
 		break;
 		
