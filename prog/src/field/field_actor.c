@@ -63,8 +63,10 @@ static const GFL_BBDACT_RESDATA testResTable[] = {
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_achamo_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+#if 0	
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_artist_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+#endif
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_badman_nsbtx, 
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_beachgirl_nsbtx,
@@ -77,10 +79,12 @@ static const GFL_BBDACT_RESDATA testResTable[] = {
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_policeman_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+#if 0
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_rivel_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
 	{ ARCID_FLDMAP_ACTOR, NARC_fld_act_waiter_nsbtx,
 		GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x512, 32, 32, GFL_BBDACT_RESTYPE_DATACUT },
+#endif
 };
 
  
@@ -243,7 +247,8 @@ void FLDACT_TestSetup( FLD_ACTCONT* fldActCont )
 		FLDMAPPER_GetSize( GetFieldG3Dmapper( fldActCont->gs ), &mapSizex, &mapSizez );
 
 		for( i=0; i<setActNum; i++ ){
-			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
+//			actData[i].resID = GFUser_GetPublicRand( 10 )+1;
+			actData[i].resID = GFUser_GetPublicRand( 7 )+1;
 			actData[i].sizX = FX16_ONE*8-1;
 			actData[i].sizY = FX16_ONE*8-1;
 	
