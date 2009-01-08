@@ -623,8 +623,7 @@ static BOOL START_MENU_ITEM_TempCheckFalse( START_MENU_WORK *work )
 }
 static BOOL START_MENU_ITEM_CheckContinue( START_MENU_WORK *work )
 {
-	//FALSE‚È‚ç–¼‘O‚ª“ü‚Á‚Ä‚¢‚é‚Ì‚Å‘±‚«‚©‚ç‚ª‚ ‚é
-	return !MyStatus_CheckNameClear( work->mystatus_ );
+	return SaveData_GetExistFlag( SaveControl_GetPointer() );
 }
 
 //--------------------------------------------------------------------------
