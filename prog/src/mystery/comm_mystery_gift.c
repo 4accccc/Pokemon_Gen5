@@ -4113,7 +4113,7 @@ const GFL_PROC_DATA MysteryGiftProcData = {
 static void MysteryTransFunc_InitBmpWin( GFL_BMPWIN* win )
 {
 	GFL_BMPWIN_MakeScreen( win );
-	GFL_BMPWIN_TransVramCharacter( win );
+//	GFL_BMPWIN_TransVramCharacter( win );
 	MysteryTransFunc_ClearBmpWin( win );
 }
 //¶¬‚µ‚½BmpWin‚ğƒtƒHƒ“ƒg‚ÌBackColor‚Å‰Šú‰»‚·‚éˆ—

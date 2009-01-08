@@ -399,10 +399,10 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	
 //	TestModeSet(mode);	//Ÿ‚ÌPROC‚Æ‚µ‚ÄƒeƒXƒg‰æ–Ê‚ğİ’è
 	//StartMenu‚Ö‚Ì•ªŠò‚ğì¬‚µ‚Ü‚µ‚½ Ari090107
-//	if( mode & PAD_BUTTON_SELECT )
+	if( mode & PAD_BUTTON_SELECT )
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
-//	else
-//		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, (void*)mode);
+	else
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, (void*)mode);
 	return GFL_PROC_RES_FINISH;
 }
 

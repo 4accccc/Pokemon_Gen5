@@ -95,4 +95,5 @@
 	ARCID_EASYPOKELIST	"test_graphic/easy_pokelist.narc"	#簡易ポケモンリスト
 	ARCID_CONFIG_GRA	"test_graphic/config_gra.narc"		#設定画面用データ
 	ARCID_MYSTERY		"mystery.narc"			#不思議な贈り物
+	ARCID_STARTMENU		"startmenu.narc"		#スタートメニュー
 
