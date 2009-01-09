@@ -227,9 +227,9 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 			break;
 		case SMI_NEWGAME:		//最初から
 			//Procの変更を中でやってる
-			//GameStart_Beginning();
+			GameStart_Beginning();
 			//名前入力へ
-			GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &NameInputProcData,(void*)NAMEIN_MYNAME);
+			//GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &NameInputProcData,(void*)NAMEIN_MYNAME);
 			break;
 			
 		case SMI_MYSTERY_GIFT:	//不思議な贈り物

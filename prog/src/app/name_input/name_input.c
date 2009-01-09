@@ -139,7 +139,7 @@ static GFL_PROC_RESULT NAME_INPUT_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 	GFL_HEAP_DeleteHeap( HEAPID_NAME_INPUT );
 
 	//Procの変更を中でやってる
-	GameStart_Beginning();
+//	GameStart_Beginning();
 	//入力されてるか確認用にスタートメニューへ
 //	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
 	return GFL_PROC_RES_FINISH;

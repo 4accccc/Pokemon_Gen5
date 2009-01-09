@@ -84,6 +84,11 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 	for (i = 0; i < PLAYER_MAX; i++) {
 		PLAYERWORK_init(&gd->playerWork[i]);
 	}
+	//自分自身のプレイヤーワークのマイステータスにセーブデータのマイステータスをコピーしてくる
+	//「最初から」で始めたときでもここに来るまでに名前入力がされているので
+	//セーブの有無に関係なくコピー
+	GFL_STD_MemCopy(SaveData_GetMyStatus(gd->sv_control_ptr), 
+		GAMEDATA_GetMyStatus(gd), MyStatus_GetWorkSize());
 	
 	//イベントデータ
 	gd->evdata = EVENTDATA_SYS_Create(heapID);
@@ -295,7 +300,6 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
 	PLAYER_WORK *pw;
 
 	if(SaveControl_NewDataFlagGet(gamedata->sv_control_ptr) == TRUE){
-		GFL_STD_MemCopy(SaveData_GetMyStatus(gamedata->sv_control_ptr), GAMEDATA_GetMyStatus(gamedata), MyStatus_GetWorkSize());	//※check　暫定
 		return;	//セーブデータが無いので何も読み込まない
 	}
 	
