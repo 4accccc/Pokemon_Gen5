@@ -193,6 +193,11 @@ FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork )
 	return( fieldWork->fldMsgBG );
 }
 
+FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELD_MAIN_WORK *fieldWork )
+{
+	return( fieldWork->camera_control );
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void	FIELDMAP_Delete( FIELD_MAIN_WORK * fldWork )

@@ -392,10 +392,10 @@ BOOL FLDMSGPRINT_CheckPrintTrans( FLDMSGPRINT *msgPrint )
 //--------------------------------------------------------------
 /**
  * FLDMSGPRINT 表示するビットマップウィンドウを変更する
- * 以前に指定したbmpwinの削除は各自で行う事。
  * @param	msgPrint	FLDMSGPRINT
  * @param	bmpwin	表示する初期化済みのGFL_BMPWIN
  * @retval	nothing
+ * 以前に指定したbmpwinの削除は各自で行う事。
  */
 //--------------------------------------------------------------
 void FLDMSGPRINT_ChangeBmpWin( FLDMSGPRINT *msgPrint, GFL_BMPWIN *bmpwin )

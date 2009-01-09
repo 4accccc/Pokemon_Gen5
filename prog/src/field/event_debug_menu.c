@@ -111,6 +111,8 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
 static void DEBUG_SetMenuWorkZoneIDName(
 		FLDMENUFUNC_LISTDATA *list, HEAPID heapID, u32 zoneID );
 
+static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
+
 //--------------------------------------------------------------
 ///	デバッグメニューリスト　汎用
 //--------------------------------------------------------------
@@ -131,7 +133,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST DATA_DebugMenuListGrid[] =
 {
-	{ DEBUG_FIELD_STR02, DMenuCallProc_GridCamera },
+	{ DEBUG_FIELD_STR02, DMenuCallProc_ControlCamera },
 	{ DEBUG_FIELD_STR03, DMenuCallProc_GridScaleSwitch },
 	{ DEBUG_FIELD_STR04, DMenuCallProc_GridScaleControl },
 	{ DEBUG_FIELD_STR05, DMenuCallProc_MapZoneSelect },
@@ -322,6 +324,7 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 //======================================================================
 //	デバッグメニュー呼び出し
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　グリッド用カメラ
@@ -338,6 +341,7 @@ static BOOL DMenuCallProc_GridCamera( DEBUG_MENU_EVENT_WORK *wk )
 	DEBUG_FldGridProc_Camera( fieldWork );
 	return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -803,3 +807,177 @@ static void DEBUG_SetMenuWorkZoneIDName(
 	FLDMENUFUNC_AddStringListData( list, strBuf, zoneID, heapID );
 	GFL_HEAP_FreeMemory( strBuf );
 }
+
+//======================================================================
+//	デバッグメニュー　カメラ操作
+//======================================================================
+#define CM_RT_SPEED (FX32_ONE/8)
+#define CM_HEIGHT_MV (FX32_ONE*2)
+
+//--------------------------------------------------------------
+///	DEBUG_CTLCAMERA_WORK カメラ操作ワーク1
+//--------------------------------------------------------------
+typedef struct
+{
+	int vanish;
+	GAMESYS_WORK *gsys;
+	GMEVENT *event;
+	HEAPID heapID;
+	FIELD_MAIN_WORK *fieldWork;
+	FLDMSGBG *pMsgBG;
+	FLDMSGWIN *pMsgWin;
+	STRBUF *pStrBuf;
+}DEBUG_CTLCAMERA_WORK;
+
+//--------------------------------------------------------------
+///	proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlCamera(
+		GMEVENT *event, int *seq, void *wk );
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　カメラ操作
+ * @param	wk	DEBUG_MENU_EVENT_WORK*
+ * @retval	BOOL	TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL DMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk )
+{
+	DEBUG_CTLCAMERA_WORK *work;
+	GAMESYS_WORK *gsys = wk->gmSys;
+	GMEVENT *event = wk->gmEvent;
+	HEAPID heapID = wk->heapID;
+	FIELD_MAIN_WORK *fieldWork = wk->fieldWork;
+	
+	GMEVENT_Change( event, DMenuControlCamera, sizeof(DEBUG_CTLCAMERA_WORK) );
+	work = GMEVENT_GetEventWork( event );
+	MI_CpuClear8( work, sizeof(DEBUG_CTLCAMERA_WORK) );
+	
+	work->gsys = gsys;
+	work->event = event;
+	work->heapID = heapID;
+	work->fieldWork = fieldWork;
+	work->pMsgBG = FIELDMAP_GetFLDMSGBG( work->fieldWork );
+	work->pStrBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：カメラ操作
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event work
+ * @retval	GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT DMenuControlCamera(
+		GMEVENT *event, int *seq, void *wk )
+{
+	int update = FALSE;
+	DEBUG_CTLCAMERA_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		work->pMsgWin = FLDMSGWIN_Add( work->pMsgBG, NULL, 21, 1, 10, 5 );
+		update = TRUE;
+		(*seq)++;
+	case 1:
+		{
+			fx32 height;
+			u16 dir,length;
+			int trg = GFL_UI_KEY_GetTrg();
+			int cont = GFL_UI_KEY_GetCont();
+			FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( work->fieldWork );
+			
+			if( trg & PAD_BUTTON_B ){
+				(*seq)++;
+				break;
+			}
+			
+			FLD_GetCameraDirection( camera, &dir );
+			FLD_GetCameraLength( camera, &length );
+			FLD_GetCameraHeight( camera, &height );
+
+			if( cont & PAD_BUTTON_R ){
+				dir -= CM_RT_SPEED;
+				update = TRUE;
+			}
+	
+			if( cont & PAD_BUTTON_L ){
+				dir += CM_RT_SPEED;
+				update = TRUE;
+			}
+	
+			if( cont & PAD_KEY_LEFT ){
+				if( length > 8 ){
+					length -= 8;
+					update = TRUE;
+				}
+			}
+
+			if( cont & PAD_KEY_RIGHT ){
+				if( length < 4096 ){
+					length += 8;
+					update = TRUE;
+				}
+			}
+		
+			if( cont & PAD_KEY_UP ){
+				height -= CM_HEIGHT_MV;
+				update = TRUE;
+			}
+	
+			if( cont & PAD_KEY_DOWN ){
+				height += CM_HEIGHT_MV;
+				update = TRUE;
+			}	
+
+			FLD_SetCameraDirection( camera, &dir );
+			FLD_SetCameraLength( camera, length );
+			FLD_SetCameraHeight( camera, height );
+			
+			if( update == TRUE && work->vanish == FALSE ){
+				int len = 128;
+				char sjis[128];
+				u16 ucode[128];
+				
+				FLDMSGWIN_ClearWindow( work->pMsgWin );
+
+				sprintf( sjis, "LENGTH:%xH \0", length );
+				STD_ConvertStringSjisToUnicode(
+						ucode, &len, sjis, NULL, NULL );
+				GFL_STR_SetStringCodeOrderLength( 
+						work->pStrBuf, ucode, len );
+				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 1, work->pStrBuf );
+				
+				len = 128;
+				sprintf( sjis, "HEIGHT:%xH \0", height );
+				STD_ConvertStringSjisToUnicode(
+						ucode, &len, sjis, NULL, NULL );
+				GFL_STR_SetStringCodeOrderLength(
+						work->pStrBuf, ucode, len );
+				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 12, work->pStrBuf );
+				
+				len = 128;
+				sprintf( sjis, "DIR:%xH \0", dir );
+				STD_ConvertStringSjisToUnicode(
+						ucode, &len, sjis, NULL, NULL );
+				GFL_STR_SetStringCodeOrderLength(
+						work->pStrBuf, ucode, len );
+				FLDMSGWIN_PrintStrBuf( work->pMsgWin, 1, 23, work->pStrBuf );
+				
+				FLD_MainCamera( camera, 0 );
+			}
+		}
+		break;
+	case 2:
+		FLDMSGWIN_Delete( work->pMsgWin );
+		GFL_STR_DeleteBuffer( work->pStrBuf );
+		return( GMEVENT_RES_FINISH );
+	}
+	
+	return( GMEVENT_RES_CONTINUE );
+}
+

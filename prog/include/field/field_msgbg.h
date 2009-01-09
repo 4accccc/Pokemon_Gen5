@@ -25,9 +25,12 @@
 //--------------------------------------------------------------
 ///	メニュースキップ操作
 //--------------------------------------------------------------
-#define FLDMENUFUNC_SKIP_NON	(0)			///<スキップ無し
-#define FLDMENUFUNC_SKIP_LRKEY	(1)			///<LRキースキップ
-#define FLDMENUFUNC_SKIP_LRBTN	(2)			///<LRボタンスキップ
+typedef enum
+{
+	FLDMENUFUNC_SKIP_NON =		(0),			///<スキップ無し
+	FLDMENUFUNC_SKIP_LRKEY =	(1),			///<LRキースキップ
+	FLDMENUFUNC_SKIP_LRBTN = 	(2),			///<LRボタンスキップ
+}FLDMENUFUNC_SKIP;
 
 //======================================================================
 //	struct
@@ -71,7 +74,7 @@ typedef struct
 	u8		s_col:4;			//表示文字影色
 	u16		msg_spc:3;			//文字間隔Ｘ
 	u16		line_spc:4;			//文字間隔Ｙ
-	u16		page_skip:2; //ページスキップタイプ:FLDMENUFUNC_SKIP_NON等
+	FLDMENUFUNC_SKIP page_skip:2; //ページスキップタイプ
 	u16		font_size_x;		//文字サイズX(ドット
 	u16		font_size_y;		//文字サイズY(ドット
 	

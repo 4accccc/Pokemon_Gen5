@@ -8,6 +8,8 @@
 #include "field/fieldmap.h"
 #include "field/field_msgbg.h"
 
+#include "field_camera.h"
+
 #define FLD_COMM_PLAYER_MAX (4)
 #define FLD_COMM_ACTOR_MAX (FLD_COMM_PLAYER_MAX-1)
 
@@ -23,6 +25,7 @@ enum
 
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
 extern FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork );
+extern FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELD_MAIN_WORK *fieldWork );
 
 //field_sub_grid.c
 extern void DEBUG_FldGridProc_Camera( FIELD_MAIN_WORK *fieldWork );
