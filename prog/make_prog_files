@@ -228,7 +228,7 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 
 
 # 松田デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
 				test/matsuda/d_matsu_match.c \
@@ -254,7 +254,7 @@ SRCS_OVERLAY_TESTMODE	= test/testmode.c
 
 
 #ポケモンリスト
-#===> main
+#===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
 
 

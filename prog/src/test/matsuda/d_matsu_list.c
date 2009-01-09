@@ -39,6 +39,8 @@
 ///STRBUFポインタの数(メニューの配列より多く持っておく事)
 #define D_STRBUF_NUM			(10)
 
+FS_EXTERN_OVERLAY(matsuda_debug);
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -107,10 +109,10 @@ extern const GFL_PROC_DATA DebugMatsudaItemProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-	{DM_MSG_MENU004, &DebugMatsudaItemProcData,		NO_OVERLAY_ID},	//アイテム
-	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData,	NO_OVERLAY_ID},	//赤外線複数マッチング
-	{DM_MSG_MENU002, &DebugMatsudaNetProcData,		NO_OVERLAY_ID},	//ワイヤレス通信テスト
-	{DM_MSG_MENU001, &DebugMatsudaMainProcData,		NO_OVERLAY_ID},	//セーブテスト
+	{DM_MSG_MENU004, &DebugMatsudaItemProcData,		FS_OVERLAY_ID(matsuda_debug)},	//アイテム
+	{DM_MSG_MENU003, &DebugMatsudaIrcMatchProcData,	FS_OVERLAY_ID(matsuda_debug)},	//赤外線複数マッチング
+	{DM_MSG_MENU002, &DebugMatsudaNetProcData,		FS_OVERLAY_ID(matsuda_debug)},	//ワイヤレス通信テスト
+	{DM_MSG_MENU001, &DebugMatsudaMainProcData,		FS_OVERLAY_ID(matsuda_debug)},	//セーブテスト
 	{DM_MSG_MENU005, &EasyPokeListData,				FS_OVERLAY_ID(pokelist)},//簡易ポケモンリスト
 	{DM_MSG_MENU006, &TradeMainProcData,			FS_OVERLAY_ID(trade)},	//簡易ポケモン交換
 };
@@ -241,6 +243,10 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 
 		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 	}
+
+	//フォントパレット転送
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+		0, 0x20, HEAPID_MATSUDA_DEBUG);
 
 	return GFL_PROC_RES_FINISH;
 }

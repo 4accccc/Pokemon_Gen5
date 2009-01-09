@@ -244,6 +244,10 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
 	}
 
+	//フォントパレット転送
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
+		0, 0x20, HEAPID_MATSUDA_DEBUG);
+
 	//アクター設定
 	{
 		GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
