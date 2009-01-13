@@ -6,6 +6,18 @@
  */
 //============================================================================================
 
+//テストモードの開始種類
+enum
+{
+	TESTMODE_NAMESELECT,	//人名選択
+};
+
+typedef struct
+{
+	u8 startMode_;	//上のenum
+	void*	work_;	//ワーク
+}TESTMODE_PROC_WORK;
+
 extern void TestModeSet(int mode);
 extern const GFL_PROC_DATA TestMainProcData;
 //------------------------------------------------------------------

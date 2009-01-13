@@ -12,8 +12,10 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_init.h"
 #include "title/game_start.h"
+#include "title/title.h"
 #include "savedata/situation.h"
 #include "app/name_input.h"
+#include "test/testmode.h"
 
 
 //==============================================================================
@@ -33,6 +35,9 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
 static GFL_PROC_RESULT GameStart_DebugProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameStart_DebugProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 
 //==============================================================================
@@ -57,6 +62,13 @@ static const GFL_PROC_DATA GameStart_DebugProcData = {
 	GameStart_DebugProcInit,
 	GameStart_DebugProcMain,
 	GameStart_DebugProcEnd,
+};
+
+///じんめいせんたく開始
+static const GFL_PROC_DATA GameStart_DebugSelectNameProcData = {
+	GameStart_DebugSelectNameProcInit,
+	GameStart_DebugSelectNameProcMain,
+	GameStart_DebugSelectNameProcEnd,
 };
 
 
@@ -94,6 +106,18 @@ void GameStart_Debug(void)
 {
 #ifdef PM_DEBUG
 	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, NULL);
+#endif
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   testmenuの「じんめいせんたく」を選択
+ */
+//--------------------------------------------------------------
+void GameStart_Debug_SelectName(void)
+{
+#ifdef PM_DEBUG
+	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugSelectNameProcData, NULL);
 #endif
 }
 
@@ -241,5 +265,77 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 	GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
+	return GFL_PROC_RES_FINISH;
+}
+
+
+//==============================================================================
+//
+//	じんめいせんたくでスタート
+//
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   
+ */
+//--------------------------------------------------------------
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+#ifdef PM_DEBUG
+	TESTMODE_PROC_WORK *work;
+	work = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_PROC_WORK), GFL_HEAPID_APP );
+	work->startMode_ = TESTMODE_NAMESELECT;
+	work->work_ = (void*)0;
+	SaveControl_ClearData(SaveControl_GetPointer());	//セーブデータクリア
+#endif
+	return GFL_PROC_RES_FINISH;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * PROC Main
+ */
+//--------------------------------------------------------------------------
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+#ifdef PM_DEBUG
+	FS_EXTERN_OVERLAY(testmode);
+
+	switch(*seq){
+	case 0:
+		GFL_PROC_SysCallProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mywk);
+		(*seq)++;
+		break;
+	case 1:
+		return GFL_PROC_RES_FINISH;
+	}
+#endif
+	return GFL_PROC_RES_CONTINUE;
+
+}
+
+//--------------------------------------------------------------------------
+/**
+ * PROC Quit
+ */
+//--------------------------------------------------------------------------
+static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+#ifdef PM_DEBUG
+	TESTMODE_PROC_WORK *work = mywk;
+	if( (int)work->work_ == 0 )
+	{
+		GAME_INIT_WORK * init_param;
+		VecFx32 pos = {0,0,0};
+		
+		init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0);
+		GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
+	}
+	else
+	{
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+	}
+	GFL_PROC_FreeWork(proc);
+#endif
 	return GFL_PROC_RES_FINISH;
 }

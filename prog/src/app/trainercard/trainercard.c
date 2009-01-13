@@ -357,7 +357,7 @@ void TRAINER_CARD_GetCardString( STRBUF* str , const u8 idx , TRAINER_CARD_WORK 
 			else
 			{
 				//TODO ”O‚Ì‚½‚ß–¼‘O‚ª“ü‚Á‚Ä‚È‚¢‚Æ‚«‚É—Ž‚¿‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­
-				GFL_STR_SetStringCodeOrderLength( str , L"NoName\0" , 6 );
+				GFL_STR_SetStringCodeOrderLength( str , L"NoName\0" , 7 );
 			}
 		}
 		break;

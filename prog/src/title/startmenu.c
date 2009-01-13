@@ -672,9 +672,19 @@ static void START_MENU_ITEM_ContinueDraw( START_MENU_WORK *work , GFL_BMPWIN *wi
 
 	//名前	
 	nameStr = 	GFL_STR_CreateBuffer( 16, work->heapId_ );
-	GFL_STR_SetStringCode( nameStr , myname );
+	if( MyStatus_CheckNameClear( work->mystatus_ ) == FALSE )
+	{
+		GFL_STR_SetStringCode( nameStr , myname );
+	}
+	else
+	{
+		//TODO 念のため名前が入ってないときに落ちないようにしておく
+		u16 tempName[7] = { L'N',L'o',L'N',L'a',L'm',L'e',0xFFFF };
+		GFL_STR_SetStringCode( nameStr , tempName );
+	}
 	WORDSET_RegisterWord( word, 0, nameStr, 0, TRUE , 0 );
 	START_MENU_ITEM_WordMsgDrawFunc( work , win ,192,16, START_MENU_STR_ITEM_01_06 , word);
+
 	//プレイ時間
 	WORDSET_RegisterNumber( word, 0, 9, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
 	WORDSET_RegisterNumber( word, 1, 2, 2, STR_NUM_DISP_ZERO , STR_NUM_CODE_HANKAKU );

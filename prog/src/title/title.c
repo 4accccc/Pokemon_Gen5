@@ -16,6 +16,7 @@
 #include "message.naix"
 #include "msg\msg_title.h"
 #include "test/performance.h"
+#include "test/testmode.h"
 #include "font/font.naix"
 #include "title.naix"
 #include "title/title.h"
@@ -400,7 +401,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 //	TestModeSet(mode);	//Ÿ‚ÌPROC‚Æ‚µ‚ÄƒeƒXƒg‰æ–Ê‚ğİ’è
 	//StartMenu‚Ö‚Ì•ªŠò‚ğì¬‚µ‚Ü‚µ‚½ Ari090107
 	if( mode & PAD_BUTTON_SELECT )
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
 	else
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &StartMenuProcData, NULL);
 	return GFL_PROC_RES_FINISH;
