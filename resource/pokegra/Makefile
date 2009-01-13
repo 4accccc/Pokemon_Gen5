@@ -94,10 +94,12 @@ endif
 #	make cleanルール
 #------------------------------------------------------------------------------
 clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *.N*R
 	-rm -f *.N*C
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
+endif
 	-rm -f $(TARGETDIR)/$(NARCNAME)
 	-rm -f $(TARGETDIR)/$(NAIXNAME)
 
