@@ -78,8 +78,12 @@ typedef struct _TESTMODE_MENU_LIST TESTMODE_MENU_LIST;
 typedef struct
 {
 	HEAPID heapId_;
+	void	*parentWork_;
 	TESTMODE_STATE state_;
 	TESTMODE_NEXTACT nextAction_;
+	u8	refreshCount_;
+	RTCDate	rtcDate_;
+	RTCTime	rtcTime_;
 	
 	TESTMODE_MENU_LIST *currentMenu_;
 	u16	currentItemNum_;
@@ -89,9 +93,12 @@ typedef struct
 	BMP_MENULIST_DATA	*menuList_;
 	BMPMENULIST_WORK	*menuWork_;
 	PRINT_UTIL			printUtil_;
+	PRINT_UTIL			printUtilSub_;
 	PRINT_QUE			*printQue_;
+	PRINT_QUE			*printQueSub_;
 	GFL_FONT 			*fontHandle_;
 	GFL_BMPWIN			*bmpWin_;
+	GFL_BMPWIN			*bmpWinSub_;	//下の情報画面
 	
 	//Proc切り替え用
 	FSOverlayID overlayId_;
@@ -123,6 +130,8 @@ static void	TESTMODE_InitBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane 
 static void TESTMODE_CreateMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIST *menuList , const u16 itemNum );
 static BOOL TESTMODE_UpdateMenu( TESTMODE_WORK *work );
 
+static void TESTMODE_RefreshSubWindow( TESTMODE_WORK *work );
+
 //メニュー決定時の各種処理設定関数
 static void TESTMODE_COMMAND_ChangeProc( TESTMODE_WORK *work ,FSOverlayID ov_id, const GFL_PROC_DATA *procdata, void *pwork );
 static void TESTMODE_COMMAND_ChangeMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIST *menuList , const u16 itemNum );
@@ -142,6 +151,10 @@ static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
+
+static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
 
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 
@@ -151,6 +164,7 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"デバッグ開始"		,TESTMODE_ITEM_SelectFuncDebugStart },
 	{L"続きから"			,TESTMODE_ITEM_SelectFuncContinue },
 	{L"名前を選んで開始"	,TESTMODE_ITEM_SelectFuncChangeSelectName },
+	{L"RTC調整"				,TESTMODE_ITEM_SelectFuncRTCEdit },
 
 	//個人
 	{L"わたなべ　てつや"	,TESTMODE_ITEM_SelectFuncWatanabe },
@@ -163,6 +177,22 @@ static TESTMODE_MENU_LIST topMenu[] =
 	{L"かがや　けいた"		,TESTMODE_ITEM_SelectFuncKagaya  },
 	{L"ありいずみ　のぶひこ",TESTMODE_ITEM_SelectFuncAri },
 	{L"DlPlay Sample"		,TESTMODE_ITEM_SelectFuncDlPlay },
+};
+
+static TESTMODE_MENU_LIST menuRTCEdit[] = 
+{
+	{L"月　ふやす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"月　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"日　ふやす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"日　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"時　ふやす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"時　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"分　ふやす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"分　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"秒　ふやす"			,TESTMODE_ITEM_ChangeRTC },
+	{L"秒　へらす"			,TESTMODE_ITEM_ChangeRTC },
+	
+	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
 
 static TESTMODE_MENU_LIST nameListMax[DEBUG_NAME_MAX];
@@ -316,20 +346,71 @@ static BOOL TESTMODE_UpdateMenu( TESTMODE_WORK *work )
 	case BMPMENULIST_NULL:	/* 何も選択されていない */
 		break;
 	case BMPMENULIST_CANCEL:	/* キャンセルされた */
-		work->nextAction_ = TMN_CANCEL_MENU;
+		if( work->currentMenu_ != topMenu && work->parentWork_ == NULL )
+		{
+			//Proc直予備でTopMenuではないときはTopMenuに戻る
+			TESTMODE_ITEM_BackTopMenu(work,0);
+		}
+		else
+		{
+			work->nextAction_ = TMN_CANCEL_MENU;
+		}
 		return TRUE;
 		break;
 	default:		/* 何かが決定された */
 		{
 			u16 topPos,curPos;
 			BmpMenuList_PosGet( work->menuWork_ , &topPos , &curPos );
-			OS_TPrintf("[%d]\n",topPos+curPos);
 			return work->currentMenu_[topPos+curPos].selectFunc_( work , topPos+curPos );
 		}
 		break;
 	}
 	return FALSE;
 }
+
+//--------------------------------------------------------------------------
+//	下のウィンドウの時間更新
+//--------------------------------------------------------------------------
+static const char BuildDate[]=__DATE__;
+static const char BuildTime[]=__TIME__;
+static void TESTMODE_RefreshSubWindow( TESTMODE_WORK *work )
+{
+	//文字列取得用
+	const u16 strLen = 64;
+	STRBUF *strbuf;
+	u16		workStr[strLen];
+	
+	RTC_GetDateTime( &work->rtcDate_ , &work->rtcTime_ );
+	
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->bmpWinSub_), 15 );
+	
+	strbuf = GFL_STR_CreateBuffer( strLen , work->heapId_ );
+	
+//	swprintf( workStr , "%2dがつ%2dにち %2じ%2ふん",
+	swprintf( workStr ,strLen, L"ROM作成　　　%s　　　%s",BuildDate,BuildTime );
+	workStr[wcslen(workStr)] = GFL_STR_GetEOMCode();
+	GFL_STR_SetStringCode( strbuf , workStr );
+	
+	PRINT_UTIL_Print( &work->printUtilSub_ , work->printQueSub_ ,
+				2 , 2 , strbuf , work->fontHandle_ );
+	GFL_STR_ClearBuffer( strbuf );
+	
+	swprintf( workStr ,strLen, L"RTC時刻　　　%4d/%02d/%02d　　　%2d:%2d:%2d"
+		,work->rtcDate_.year+2000 , work->rtcDate_.month , work->rtcDate_.day 
+		,work->rtcTime_.hour , work->rtcTime_.minute , work->rtcTime_.second );
+
+	workStr[wcslen(workStr)] = GFL_STR_GetEOMCode();
+	GFL_STR_SetStringCode( strbuf , workStr );
+	
+	PRINT_UTIL_Print( &work->printUtilSub_ , work->printQueSub_ ,
+				2 , 18 , strbuf , work->fontHandle_ );
+	
+	GFL_STR_DeleteBuffer( strbuf );
+	
+	GFL_BG_LoadScreenReq( BG_PLANE_MENU );
+	work->refreshCount_ = 0;
+}
+
 
 //--------------------------------------------------------------------------
 //	Procの切り替え予約
@@ -379,16 +460,6 @@ static void TESTMODE_COMMAND_StartGame( TESTMODE_WORK *work , TESTMODE_INITGAME_
 //============================================================================================
 const	GFL_PROC_DATA TestMainProcData;
 FS_EXTERN_OVERLAY(testmode);
-//------------------------------------------------------------------
-/**
- * @brief		プロセス設定
- */
-//------------------------------------------------------------------
-void	TestModeSet(int mode)
-{
-//	GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TestMainProcData, NULL);
-	GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, (void*)mode);
-}
 
 //------------------------------------------------------------------
 /**
@@ -405,9 +476,11 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	work = GFL_PROC_AllocWork( proc, sizeof(TESTMODE_WORK), heapID );
 	GFL_STD_MemClear(work, sizeof(TESTMODE_WORK));
 	work->heapId_	= heapID;
+	work->parentWork_ = pwk;
 	work->nextMenu_ = NULL;
 	work->state_	= TMS_INIT_MENU;
 	work->nextAction_ = TMN_MAX;
+	work->refreshCount_ = 15;
 
 	TESTMODE_InitGraphic( work );
 
@@ -420,9 +493,16 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 	GFL_BMPWIN_TransVramCharacter( work->bmpWin_ );
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->bmpWin_), 15 );
 	GFL_BG_LoadScreenReq( BG_PLANE_MENU );
-
 	work->printQue_ = PRINTSYS_QUE_Create( work->heapId_ );
 	PRINT_UTIL_Setup( &work->printUtil_ , work->bmpWin_ );
+
+	work->bmpWinSub_ = GFL_BMPWIN_Create( BG_PLANE_MENU , 1,18,30,4,TESTMODE_PLT_FONT,GFL_BMP_CHRAREA_GET_B );
+	GFL_BMPWIN_MakeScreen( work->bmpWinSub_ );
+	GFL_BMPWIN_TransVramCharacter( work->bmpWinSub_ );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->bmpWinSub_), 15 );
+	GFL_BG_LoadScreenReq( BG_PLANE_MENU );
+	work->printQueSub_ = PRINTSYS_QUE_Create( work->heapId_ );
+	PRINT_UTIL_Setup( &work->printUtilSub_ , work->bmpWinSub_ );
 
 	//背景色
 	*((u16 *)HW_BG_PLTT) = 0x7d8c;//RGB(12, 12, 31);
@@ -474,6 +554,9 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK *work = mywk;
+
+	work->refreshCount_++;
+	if( work->refreshCount_ > 15 )TESTMODE_RefreshSubWindow(work);
 	
 	switch( work->state_ )
 	{
@@ -521,9 +604,9 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 	}
 	
 	PRINTSYS_QUE_Main( work->printQue_ );
-	if( PRINT_UTIL_Trans( &work->printUtil_ ,work->printQue_ ) == FALSE )
-	{
-	}
+	PRINT_UTIL_Trans( &work->printUtil_ ,work->printQue_ );
+	PRINTSYS_QUE_Main( work->printQueSub_ );
+	PRINT_UTIL_Trans( &work->printUtilSub_ ,work->printQueSub_ );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -536,7 +619,6 @@ static GFL_PROC_RESULT TestModeProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	TESTMODE_WORK *work = mywk;
-	const int startMode = (int)pwk;
 	
 	//処理分岐
 	switch( work->nextAction_ )
@@ -596,8 +678,11 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
 	//開放処理
 	PRINTSYS_QUE_Clear( work->printQue_ );
 	PRINTSYS_QUE_Delete( work->printQue_ );
+	PRINTSYS_QUE_Clear( work->printQueSub_ );
+	PRINTSYS_QUE_Delete( work->printQueSub_ );
 
 	GFL_BMPWIN_Delete( work->bmpWin_ );
+	GFL_BMPWIN_Delete( work->bmpWinSub_ );
 
 	GFL_FONT_Delete( work->fontHandle_ );
 	GFL_BMPWIN_Exit();
@@ -767,6 +852,56 @@ static BOOL TESTMODE_ITEM_SelectFuncDlPlay( TESTMODE_WORK *work , const int idx 
 {
 	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &DebugDLPlayMainProcData, NULL);
 	return TRUE;
+}
+
+static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
+	return TRUE;
+}
+
+//RTC調整
+static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeMenu( work , menuRTCEdit , NELEMS(menuRTCEdit) );
+	return TRUE;
+}
+
+//
+static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx )
+{
+	const int addValue = (idx%2==0 ? 1 : -1 );
+	
+	switch( idx )
+	{
+	case 0:	//月
+	case 1:
+		work->rtcDate_.month += addValue;
+		RTC_SetDate( &work->rtcDate_ );
+		break;
+	case 2:	//日
+	case 3:
+		work->rtcDate_.day += addValue;
+		RTC_SetDate( &work->rtcDate_ );
+		break;
+	case 4:	//時
+	case 5:
+		work->rtcTime_.hour += addValue;
+		RTC_SetTime( &work->rtcTime_ );
+		break;
+	case 6:	//分
+	case 7:
+		work->rtcTime_.minute += addValue;
+		RTC_SetTime( &work->rtcTime_ );
+		break;
+	case 8:	//秒
+	case 9:
+		work->rtcTime_.second += addValue;
+		RTC_SetTime( &work->rtcTime_ );
+		break;
+	}
+	TESTMODE_RefreshSubWindow(work);
+	return FALSE;
 }
 
 //人名選択決定時

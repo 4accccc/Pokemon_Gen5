@@ -18,8 +18,8 @@ typedef struct
 	void*	work_;	//ワーク
 }TESTMODE_PROC_WORK;
 
-extern void TestModeSet(int mode);
 extern const GFL_PROC_DATA TestMainProcData;
+FS_EXTERN_OVERLAY(testmode);
 //------------------------------------------------------------------
 //
 //	各ユーザー毎のプロセスデータの外部参照宣言

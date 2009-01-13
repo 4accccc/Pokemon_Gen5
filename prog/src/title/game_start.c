@@ -333,7 +333,7 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
 	}
 	else
 	{
-		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(testmode), &TestMainProcData, NULL );
 	}
 	GFL_PROC_FreeWork(proc);
 #endif

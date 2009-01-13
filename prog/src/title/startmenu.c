@@ -368,7 +368,7 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
 
@@ -411,6 +411,8 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		GFL_CLWK_DATA	cellInitData;
 
 		GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
+		cellSysInitData.oamst_main = 0x10;	//デバッグメータの分
+		cellSysInitData.oamnum_main = 128-0x10;
 		GFL_CLACT_Init( &cellSysInitData , work->heapId_ );
 		work->cellUnit_  = GFL_CLACT_UNIT_Create( 2 , work->heapId_ );
 		GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit_ );
