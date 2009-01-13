@@ -234,6 +234,14 @@ extern const void * GFL_SAVEDATA_GetReadOnly(const GFL_SAVEDATA * sv, GFL_SVDT_I
 extern u16 GFL_BACKUP_BlockCRC_Set(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid);
 
 
+//==============================================================================
+//	デバッグ用関数
+//==============================================================================
+#ifdef PM_DEBUG
+extern void DEBUG_GFL_BACKUP_BlockSaveFlagGet(const GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, BOOL crctable, BOOL footer, BOOL *ret_a, BOOL *ret_b);
+#endif
+
+
 #ifdef __cplusplus
 }/* extern "C" */
 #endif

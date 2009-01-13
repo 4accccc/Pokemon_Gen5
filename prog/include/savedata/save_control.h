@@ -47,6 +47,9 @@ extern u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv);
 extern BOOL SaveData_GetExistFlag(const SAVE_CONTROL_WORK * sv);
 extern void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl);
 
+#ifdef PM_DEBUG
+extern GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void);
+#endif
 
 
 #endif	//__SAVE_CONTROL_H__

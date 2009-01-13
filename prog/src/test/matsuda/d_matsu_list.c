@@ -103,6 +103,7 @@ extern const GFL_PROC_DATA DebugMatsudaNetProcData;
 extern const GFL_PROC_DATA DebugMatsudaIrcMatchProcData;
 extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
 extern const GFL_PROC_DATA DebugMatsudaItemProcData;
+extern const GFL_PROC_DATA DebugSaveProcData;
 
 //==============================================================================
 //	データ
@@ -115,6 +116,7 @@ static const D_MENULIST DebugMenuList[] = {
 	{DM_MSG_MENU001, &DebugMatsudaMainProcData,		FS_OVERLAY_ID(matsuda_debug)},	//セーブテスト
 	{DM_MSG_MENU005, &EasyPokeListData,				FS_OVERLAY_ID(pokelist)},//簡易ポケモンリスト
 	{DM_MSG_MENU006, &TradeMainProcData,			FS_OVERLAY_ID(trade)},	//簡易ポケモン交換
+	{DM_MSG_MENU007, &DebugSaveProcData,			FS_OVERLAY_ID(matsuda_debug)},	//セーブ破壊
 };
 
 

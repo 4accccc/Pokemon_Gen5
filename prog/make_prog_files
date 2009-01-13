@@ -234,7 +234,8 @@ SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_match.c \
 				test/matsuda/d_matsu_error.c \
 				test/matsuda/d_matsu_item.c \
-				test/matsuda/d_matsu_list.c
+				test/matsuda/d_matsu_list.c \
+				test/matsuda/d_save.c
 
 # 田谷デバッグ
 #===> main

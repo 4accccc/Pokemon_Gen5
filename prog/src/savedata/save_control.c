@@ -284,3 +284,16 @@ void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
 	ctrl->total_save_flag = TRUE;			//全体セーブする必要がある
 	GFL_SAVEDATA_Clear(ctrl->sv_normal);
 }
+
+
+//==============================================================================
+//	デバッグ用関数
+//==============================================================================
+#ifdef PM_DEBUG
+GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void)
+{
+	SAVE_CONTROL_WORK *ctrl = SaveControl_GetPointer();
+	return ctrl->sv_normal;
+}
+#endif
+
