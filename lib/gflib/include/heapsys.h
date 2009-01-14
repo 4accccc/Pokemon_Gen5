@@ -156,16 +156,13 @@ extern void*
 #endif
 
 inline  void*
-	GFL_HEAP_AllocClearMemoryInline
-		( HEAPID heapID, u32 size, const char* filename, u16 linenum )
+	GFL_HEAP_AllocClearMemory
+		( HEAPID heapID, u32 size )
 {
-	void* memory = GFL_HEAP_AllocMemoryblock( heapID, size,filename, linenum );
+	void* memory = GFL_HEAP_AllocMemory( heapID, size );
 	GFL_STD_MemClear32( memory, size );
 	return memory;
 }
-
-#define GFL_HEAP_AllocClearMemory( heapID, size )	\
-			GFL_HEAP_AllocClearMemoryInline( heapID, size, __FILE__, __LINE__)
 
 inline  void*
 	GFL_HEAP_AllocClearMemoryLo
