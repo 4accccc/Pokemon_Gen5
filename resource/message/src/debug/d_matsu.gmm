@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-01-13T18:02:03"/>
+	<create user="matsuda" host="W00142" date="2009-01-14T15:56:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,12 +394,12 @@
 
 	<row id="DM_MSG_MENU006">
 		<language name="JPN" font=" 2:lcfont12" width="256">ポケモンこうかん</language>
-		<language name="JPN_KANJI" width="80">ポケモン交換</language>
+		<language name="JPN_KANJI" width="80">ポケモンこうかん</language>
 	</row>
 
 	<row id="DM_MSG_MENU007">
 		<language name="JPN" font=" 2:lcfont12" width="256">セーブはかい</language>
-		<language name="JPN_KANJI" width="80">セーブ破壊</language>
+		<language name="JPN_KANJI" width="80">セーブはかい</language>
 	</row>
 
 	<row id="DM_MSG_TRADE000">
@@ -488,6 +488,24 @@ Bボタン　キャンセル</language>
 	<row id="DM_MSG_SAVE007">
 		<language name="JPN" font=" 2:lcfont12" width="256">FOOTER　[1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="80">FOOTER　[1:00:トレーナー名:1]</language>
+	</row>
+
+	<row id="DM_MSG_SAVE008">
+		<language name="JPN" font=" 2:lcfont12" width="256">Aボタンで　
+Aめん　はかい
+
+Rボタンを
+おしながら
+Aボタンで　
+Bめん　はかい
+</language>
+		<language name="JPN_KANJI" width="80">Aボタンで
+A面はかい
+
+Rボタンを
+おしながら
+Aボタンで
+B面はかい</language>
 	</row>
 
 	<flowchart-group-list>

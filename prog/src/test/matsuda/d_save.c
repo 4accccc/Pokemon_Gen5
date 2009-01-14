@@ -35,10 +35,14 @@
 //==============================================================================
 //	定数定義
 //==============================================================================
-///STRBUFポインタの数(メニューの配列より多く持っておく事)
-#define D_STRBUF_NUM			(10)
-
 #define D_SAVE_CRC_FOOTER_CLEAR	(3)		///CRC + FOOTER + clear
+
+enum{
+	WIN_MENU,
+	WIN_INFO,
+	
+	WIN_MAX,
+};
 
 //==============================================================================
 //	構造体定義
@@ -56,12 +60,13 @@ typedef struct {
 	PRINT_STREAM	*printStream;
 	GFL_MSGDATA		*mm;
 	GFL_TCBLSYS		*tcbl;
-	DM_MSG_DRAW_WIN drawwin;
+	DM_MSG_DRAW_WIN drawwin[2];
 	
 	WORDSET			*wordset;
 	BMPMENULIST_HEADER	bmphead;
 	BMPMENULIST_WORK *bmpmenu_list;
 	BMP_MENULIST_DATA *list_data;
+	STRBUF 			*info_str;
 }D_MATSU_WORK;
 
 
@@ -71,6 +76,7 @@ typedef struct {
 static void DebugMenuHeadCreate(D_MATSU_WORK *wk, BMPMENULIST_HEADER *bmphead);
 static void DebugMenuListCreate(D_MATSU_WORK *wk);
 static void DebugMenuListDelete(D_MATSU_WORK *wk);
+static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, int x, int y);
 
 
 //==============================================================================
@@ -209,12 +215,15 @@ static GFL_PROC_RESULT DebugSaveProcInit( GFL_PROC * proc, int * seq, void * pwk
 	{//メッセージ描画の為の準備
 		int i;
 
-		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 20, 24, 0, GFL_BMP_CHRAREA_GET_F );
-		wk->drawwin.bmp = GFL_BMPWIN_GetBmp(wk->drawwin.win);
-		GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( wk->drawwin.win );
-		GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
-		PRINT_UTIL_Setup( wk->drawwin.printUtil, wk->drawwin.win );
+		wk->drawwin[WIN_MENU].win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 3, 0, 14, 24, 0, GFL_BMP_CHRAREA_GET_F );
+		wk->drawwin[WIN_INFO].win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 18, 0, 10, 20, 0, GFL_BMP_CHRAREA_GET_F );
+		for(i = 0; i < WIN_MAX; i++){
+			wk->drawwin[i].bmp = GFL_BMPWIN_GetBmp(wk->drawwin[i].win);
+			GFL_BMP_Clear( wk->drawwin[i].bmp, 0xff );
+			GFL_BMPWIN_MakeScreen( wk->drawwin[i].win );
+			GFL_BMPWIN_TransVramCharacter( wk->drawwin[i].win );
+			PRINT_UTIL_Setup( wk->drawwin[i].printUtil, wk->drawwin[i].win );
+		}
 
 		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
@@ -243,6 +252,10 @@ static GFL_PROC_RESULT DebugSaveProcInit( GFL_PROC * proc, int * seq, void * pwk
 	wk->bmpmenu_list = BmpMenuList_Set(&wk->bmphead, 0, 0, HEAPID_MATSUDA_DEBUG);
 	BmpMenuList_SetCursorBmp(wk->bmpmenu_list, HEAPID_MATSUDA_DEBUG);
 
+	//説明文表示
+	wk->info_str = GFL_MSG_CreateString(wk->mm, DM_MSG_SAVE008);
+	Local_MessagePut(wk, WIN_INFO, wk->info_str, 0,0);
+
 	return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -257,22 +270,35 @@ static GFL_PROC_RESULT DebugSaveProcMain( GFL_PROC * proc, int * seq, void * pwk
 	int i;
 	BOOL que_ret;
 	u32 bmp_ret;
+	u32 write_data = 0x94a1;
+	int save_a, save_b;
 	
 	GFL_TCBL_Main( wk->tcbl );
 #if 1
 	que_ret = PRINTSYS_QUE_Main( wk->printQue );
-	if( PRINT_UTIL_Trans( wk->drawwin.printUtil, wk->printQue ) == FALSE){
-		//return GFL_PROC_RES_CONTINUE;
-	}
-	else{
-		if(1){//que_ret == TRUE && wk->drawwin.message_req == TRUE){
-//			GFL_BMP_Clear( wk->bmp, 0xff );
-			GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
-			wk->drawwin.message_req = FALSE;
+	for(i = 0; i < WIN_MAX; i++){
+		if( PRINT_UTIL_Trans( wk->drawwin[i].printUtil, wk->printQue ) == FALSE){
+			//return GFL_PROC_RES_CONTINUE;
+		}
+		else{
+			if(1){//que_ret == TRUE && wk->drawwin[i].message_req == TRUE){
+	//			GFL_BMP_Clear( wk->bmp, 0xff );
+				GFL_BMPWIN_TransVramCharacter( wk->drawwin[i].win );
+				wk->drawwin[i].message_req = FALSE;
+			}
 		}
 	}
 #endif
 
+	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+		save_a = FALSE;
+		save_b = TRUE;
+	}
+	else{
+		save_a = TRUE;
+		save_b = FALSE;
+	}
+	
 	bmp_ret = BmpMenuList_Main(wk->bmpmenu_list);
 	switch(bmp_ret){
 	case BMPMENU_NULL:
@@ -280,12 +306,35 @@ static GFL_PROC_RESULT DebugSaveProcMain( GFL_PROC * proc, int * seq, void * pwk
 	case BMPMENU_CANCEL:
 		return GFL_PROC_RES_FINISH;
 	default:
-		OS_TPrintf("ボタンが押された %d\n", bmp_ret);
+		if(SaveParam_Normal.table_max > bmp_ret){
+			DEBUG_BACKUP_DataWrite(
+				DEBUG_SaveData_PtrGet(), bmp_ret, &write_data, 0, sizeof(write_data),
+				save_a, save_b, FALSE, FALSE);
+		}
+		else if(bmp_ret == SaveParam_Normal.table_max){
+			//CRC
+			DEBUG_BACKUP_DataWrite(
+				DEBUG_SaveData_PtrGet(), bmp_ret, &write_data, 0, sizeof(write_data),
+				save_a, save_b, TRUE, FALSE);
+		}
+		else if(bmp_ret == SaveParam_Normal.table_max + 1){
+			//FOOTER
+			DEBUG_BACKUP_DataWrite(
+				DEBUG_SaveData_PtrGet(), bmp_ret, &write_data, 0, sizeof(write_data),
+				save_a, save_b, FALSE, TRUE);
+		}
+		else{
+			//セーブクリア
+			OS_TPrintf("セーブを消去しています\n");
+			SaveControl_Erase(SaveControl_GetPointer());
+			return GFL_PROC_RES_FINISH;
+		}
 		break;
 	}
 	
 	return GFL_PROC_RES_CONTINUE;
 }
+
 //--------------------------------------------------------------------------
 /**
  * PROC Quit
@@ -296,9 +345,17 @@ static GFL_PROC_RESULT DebugSaveProcEnd( GFL_PROC * proc, int * seq, void * pwk,
 	D_MATSU_WORK* wk = mywk;
 	int i;
 	
+	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
+	
+	
+	
 	BmpMenuList_Exit(wk->bmpmenu_list, NULL, NULL);
 	
-	GFL_BMPWIN_Delete(wk->drawwin.win);
+	for(i = 0; i < WIN_MAX; i++){
+		GFL_BMPWIN_Delete(wk->drawwin[i].win);
+	}
+	
+	GFL_STR_DeleteBuffer(wk->info_str);
 	
 	PRINTSYS_QUE_Delete(wk->printQue);
 	GFL_MSG_Delete(wk->mm);
@@ -338,10 +395,10 @@ static void DebugMenuHeadCreate(D_MATSU_WORK *wk, BMPMENULIST_HEADER *bmphead)
 	
 	*bmphead = DebugSaveBmpMenuHead;
 	bmphead->list = wk->list_data;
-	bmphead->win = wk->drawwin.win;
+	bmphead->win = wk->drawwin[WIN_MENU].win;
 	bmphead->count = SaveParam_Normal.table_max + D_SAVE_CRC_FOOTER_CLEAR;
 	bmphead->msgdata = wk->mm;
-	bmphead->print_util = wk->drawwin.printUtil;
+	bmphead->print_util = wk->drawwin[WIN_MENU].printUtil;
 	bmphead->print_que = wk->printQue;
 	bmphead->font_handle = wk->fontHandle;
 }
@@ -451,6 +508,22 @@ static void DebugMenuListDelete(D_MATSU_WORK *wk)
 	BmpMenuWork_ListDelete(wk->list_data);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   メッセージを表示する
+ *
+ * @param   wk			
+ * @param   strbuf		表示するメッセージデータ
+ * @param   x			X座標
+ * @param   y			Y座標
+ */
+//--------------------------------------------------------------
+static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, int x, int y)
+{
+	GFL_BMP_Clear( wk->drawwin[win_index].bmp, 0xff );
+	PRINTSYS_PrintQue(wk->printQue, wk->drawwin[win_index].bmp, x, y, strbuf, wk->fontHandle);
+	wk->drawwin[win_index].message_req = TRUE;
+}
 
 
 

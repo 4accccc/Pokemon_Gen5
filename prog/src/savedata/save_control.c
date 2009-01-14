@@ -285,6 +285,17 @@ void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl)
 	GFL_SAVEDATA_Clear(ctrl->sv_normal);
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   セーブデータの消去
+ * @param   ctrl		セーブデータ管理ワークへのポインタ
+ */
+//--------------------------------------------------------------
+void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl)
+{
+	GFL_BACKUP_Erase(ctrl->sv_normal);
+}
+
 
 //==============================================================================
 //	デバッグ用関数
