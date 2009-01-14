@@ -25,7 +25,8 @@ SUBDIRS	=	wmi \
 			snd_strm\
 			wifi_lobby_minigame\
 			mystery\
-			startmenu
+			startmenu \
+			palace
 
 include $(RESOURCE_MACRO)
 
