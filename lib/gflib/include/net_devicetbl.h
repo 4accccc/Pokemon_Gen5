@@ -58,7 +58,7 @@ typedef BOOL (*DevIsStepDSFunc)(void);  ///< ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO•ûŽ®‘—Mo—ˆ‚éó‘
 typedef BOOL (*DevStepDSFunc)(void* pSendData);  ///< ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO•ûŽ®‘—M
 typedef void* (*DevGetSharedDataAdrFunc)(int index);  ///<ƒf[ƒ^ƒVƒFƒAƒŠƒ“ƒO•ûŽ®ƒf[ƒ^‚ð“¾‚é
 
-typedef BOOL (*DevSendDataFunc)(void* data,int size,NetDevEndCallback callback); ///<DevSendData                ‘—MŠÖ”                   
+typedef BOOL (*DevSendDataFunc)(void* data,int size,int no,NetDevEndCallback callback); ///<DevSendData                ‘—MŠÖ”                   
 typedef BOOL (*DevRecvCallbackFunc)(PTRCommRecvLocalFunc recvCallback); ///<DevRecvCallback            ŽóMƒR[ƒ‹ƒoƒbƒN
 
 typedef BOOL (*DevIsStartFunc)(void); ///<DevIsStart                 ’ÊMÚ‘±‚µ‚Ä‚é‚©‚Ç‚¤‚©
@@ -72,7 +72,12 @@ typedef void (*DevSetNoChildErrorFunc)(BOOL bOn);  ///< Žq‹@‚ª‚¢‚È‚¢ê‡‚ÉƒGƒ‰[
 typedef BOOL (*DevIsConnectableFunc)(int index); ///< ‘ŠŽè‚ª‚Â‚È‚¢‚Å‚æ‚¢ó‘Ô‚©‚Ç‚¤‚© (‚Ù‚ÚfriendWifi—p)
 typedef BOOL (*DevIsVChatFunc)(void);  ///< VChat‚©‚Ç‚¤‚©
 typedef BOOL (*DevIsNewPlayerFunc)(void);  ///< Ú‘±‚µ‚Ä‚«‚½‚©‚Ç‚¤‚©‚ð•Ô‚µ‚Ü‚·
-
+typedef void (*DevIrcMoveFunc)(void);   ///< IRCˆÚ“®ŠÖ”
+typedef BOOL (*DevIsSendDataFunc)(void);  ///< ƒf[ƒ^‚ð‘—‚Á‚Ä‚æ‚¢‚©‚Ç‚¤‚©
+typedef BOOL (*DevGetSendTurnFunc)(void);  ///< ‘—M‰Â”\ƒ^[ƒ“ƒtƒ‰ƒO‚ðŽæ“¾
+typedef BOOL (*DevIsConnectSystemFunc)(void);  ///< ÄÚ‘±’†‚È‚ÇŠÖŒW‚È‚­Aƒˆ‚É¡AŒq‚ª‚Á‚Ä‚¢‚é‚©
+typedef BOOL (*DevGetSendLockFlagFunc)(void); ///< ‘—MƒƒbƒNƒtƒ‰ƒO‚ðŽæ“¾
+typedef void (*DevConnectWorkInitFunc)(void); ///< ‰‚ß‚Ä‚ÌÚ‘±Œã‚Ìƒ[ƒNÝ’è
 
 /// @brief ƒfƒoƒCƒXƒAƒNƒZƒX—p\‘¢‘Ì
 typedef struct{
@@ -119,6 +124,13 @@ typedef struct{
   DevIsConnectableFunc DevIsConnectable;   ///< ‘ŠŽè‚ª‚Â‚È‚¢‚Å‚æ‚¢ó‘Ô‚©‚Ç‚¤‚© (‚Ù‚ÚfriendWifi—p)
   DevIsVChatFunc DevIsVChat;   ///< VChat‚©‚Ç‚¤‚©
   DevIsNewPlayerFunc DevIsNewPlayer; ///< Ú‘±‚µ‚Ä‚«‚½‚©‚Ç‚¤‚©‚ð•Ô‚µ‚Ü‚·
+  DevIrcMoveFunc DevIrcMove;  ///< IRCˆÚ“®ŠÖ”
+  DevIsSendDataFunc DevIsSendData; ///< ƒf[ƒ^‚ð‘—‚Á‚Ä‚æ‚¢‚©‚Ç‚¤‚©
+  DevGetSendTurnFunc DevGetSendTurn; ///< ‘—M‰Â”\ƒ^[ƒ“ƒtƒ‰ƒO‚ðŽæ“¾
+  DevIsConnectSystemFunc DevIsConnectSystem;  ///< ÄÚ‘±’†‚È‚ÇŠÖŒW‚È‚­Aƒˆ‚É¡AŒq‚ª‚Á‚Ä‚¢‚é‚©
+  DevGetSendLockFlagFunc DevGetSendLockFlag;  ///< ‘—MƒƒbƒNƒtƒ‰ƒO‚ðŽæ“¾
+  DevConnectWorkInitFunc DevConnectWorkInit;           ///<‰‚ß‚Ä‚ÌÚ‘±Œã‚Ìƒ[ƒNÝ’è
+
 
 } GFLNetDevTable;
 

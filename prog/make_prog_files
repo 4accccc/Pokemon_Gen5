@@ -167,7 +167,9 @@ SRCS_OVERLAY_DEV_WIRELESS		=   net/net_devwireless.c \
 
 # ircƒvƒƒOƒ‰ƒ€
 #===> main
-SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c
+SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c \
+								net/net_irc.c \
+								net/irc.c
 
 # field
 #===> SRCS_OVERLAY_DEV_WIRELESS

@@ -41,7 +41,7 @@ static BOOL _DevIsStepDSFunc(void);  ///< データシェアリング方式送信出来る状態か
 static BOOL _DevStepDSFunc(void* pSendData);  ///< データシェアリング方式送信
 static void* _DevGetSharedDataAdrFunc(int index);
 
-static BOOL _DevSendDataFunc(void* data,int size,NetDevEndCallback callback); ///<DevSendData                送信関数                   
+static BOOL _DevSendDataFunc(void* data,int size,int no,NetDevEndCallback callback); ///<DevSendData                送信関数                   
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback); ///<DevRecvCallback            受信コールバック
 
 static BOOL _DevIsStartFunc(void); ///<DevIsStart                 通信接続してるかどうか
@@ -97,7 +97,7 @@ static GFLNetDevTable netDevTbl={
     NULL, //_DevIsConnectable
     NULL, //_DevIsVChat
     NULL, //_DevIsNewPlayer
-
+    NULL, //_DevIrcMoveFunc
 };
 
 //--------------------------------------------
@@ -428,7 +428,7 @@ static void* _DevGetSharedDataAdrFunc(int index)
  */
 //------------------------------------------------------------------------------
 
-static BOOL _DevSendDataFunc(void* data,int size,NetDevEndCallback callback)
+static BOOL _DevSendDataFunc(void* data,int size,int no, NetDevEndCallback callback)
 {
     return GFL_NET_WL_SendData( data, size, callback);
 }

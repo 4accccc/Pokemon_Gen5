@@ -34,6 +34,7 @@ typedef void (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 extern void GFL_NET_IRC_Init(void);
+extern void GFL_NET_IRC_Exit(void);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
 extern void GFL_NET_IRC_InitializeFlagSet(void);
 extern BOOL GFL_NET_IRC_InitializeFlagGet(void);

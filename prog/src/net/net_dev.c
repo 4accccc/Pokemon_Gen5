@@ -59,6 +59,7 @@ GFLNetDevTable* NET_DeviceLoad(int deviceNo)
 #endif
 #if SUPPORT_IRC_
       case GFL_NET_TYPE_IRC:
+      case GFL_NET_TYPE_IRC_WIRELESS:
 #if SUPPORT_OVERLAY_
         GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 #endif
@@ -96,6 +97,7 @@ void NET_DeviceUnload(int deviceNo)
 #endif
 #if SUPPORT_IRC_
       case GFL_NET_TYPE_IRC:
+      case GFL_NET_TYPE_IRC_WIRELESS:
 #if SUPPORT_OVERLAY_
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( dev_irc ) );
 #endif

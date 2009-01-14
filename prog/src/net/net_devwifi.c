@@ -25,7 +25,7 @@ static BOOL _DevExitFunc(NetDevEndCallback callback);
 static BOOL _DevChangeOverModeConnectFunc(u8* keyStr,int numEntry, BOOL bParent, u32 timelimit,NetDevEndCallback callback);
 static BOOL _DevWifiConnectFunc(int index, int maxnum, BOOL bVCT);
 static BOOL _DevModeDisconnectFunc(BOOL bForce, NetDevEndCallback callback);
-static BOOL _DevSendDataFunc(void* data,int size,NetDevEndCallback callback);
+static BOOL _DevSendDataFunc(void* data,int size, int no,NetDevEndCallback callback);
 static BOOL _DevSetRecvCallbackFunc(PTRCommRecvLocalFunc recvCallback);
 static BOOL _DevIsStartFunc(void);
 static BOOL _DevIsConnectFunc(void);
@@ -83,6 +83,7 @@ static GFLNetDevTable netDevTbl={
     _DevIsConnectable,
     _DevIsVChat,
     _DevIsNewPlayer,
+    NULL, //_DevIrcMoveFunc
 };
 
 //--------------------------------------------
@@ -233,7 +234,7 @@ static BOOL _DevModeDisconnectFunc(BOOL bForce, NetDevEndCallback callback)
  */
 //------------------------------------------------------------------------------
 
-static BOOL _DevSendDataFunc(void* data,int size,NetDevEndCallback callback)
+static BOOL _DevSendDataFunc(void* data, int size, int no, NetDevEndCallback callback)
 {
     if(GFL_NET_DWC_SendToOther(data, size)){
         if(callback){

@@ -582,9 +582,16 @@ static BOOL DM_IrcMain(D_MATSU_WORK *wk, DM_IRC_WORK *irc)
 	return ret;
 }
 
+
+static void _endCallBackSeq(void* vwk)
+{
+    D_MATSU_WORK *wk = vwk;
+    wk->seq++;
+}
+
 //--------------------------------------------------------------
 /**
- * @brief   ワイヤレス通信テスト
+ * @brief   赤外線通信テスト
  *
  * @param   wk		
  *
@@ -598,8 +605,19 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 	
 	GF_ASSERT(wk);
 
+    OS_TPrintf("-- %d --\n",wk->seq);
 	switch(wk->seq){
-	case 0:
+    case 0:
+		{
+			GFLNetInitializeStruct net_ini_data;
+			
+			net_ini_data = aGFLNetInit;
+            net_ini_data.bNetType = GFL_NET_TYPE_IRC_WIRELESS;
+			GFL_NET_Init(&net_ini_data, _initCallBack, wk);	//通信初期化
+		}
+		wk->seq++;
+        break;
+	case 1:
 		{
 			OSOwnerInfo info;
 			int i;
@@ -621,14 +639,14 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 
 		wk->seq++;
 		break;
-	case 1:
+	case 2:
 		if( PRINTSYS_PrintStreamGetState(wk->printStream) == PRINTSTREAM_STATE_DONE ){
 			PRINTSYS_PrintStreamDelete( wk->printStream );
 			wk->seq++;
 		}
 		break;
 
-	case 2:
+	case 3:
 		switch(GFL_UI_KEY_GetTrg()){
 		case PAD_BUTTON_A:
 			wk->oya = MY_PARENT;
@@ -650,7 +668,7 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 			break;
 		}
 		break;
-	case 3:
+	case 4:
 		if(wk->oya == MY_PARENT && ((GFL_UI_KEY_GetTrg() & PAD_BUTTON_START) || wk->connect_max == TRUE)){
 			IRC_Shutdown();
 			wk->seq++;
@@ -660,6 +678,7 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 		if((wk->oya == MY_CHILD && wk->irc.success == FALSE) 
 				|| (wk->oya == MY_PARENT && wk->connect_max == FALSE)){
 			irc_ret = DM_IrcMain(wk, &wk->irc);
+            OS_TPrintf("DM_IrcMain%d \n",irc_ret);
 			if(irc_ret == TRUE && wk->entry_num >= CHILD_MAX){
 				wk->connect_max = TRUE;
 			}
@@ -670,6 +689,7 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 				OS_TPrintf("子：ワイヤレス通信開始\n");
 				GFL_STR_SetStringCodeOrderLength(wk->strbuf, wk->parent_profile.name, wk->parent_profile.name_len+1);
 				Local_MessagePut(wk, 0, wk->strbuf, 0, 0);
+                GFL_NET_Exit(_endCallBackSeq);	//通信終了
 				wk->seq++;
 			}
 			else{
@@ -680,6 +700,9 @@ static BOOL DebugMatsuda_IrcMatch(D_MATSU_WORK *wk)
 			break;
 		}
 		break;
+      case 5:
+        //_endCallBackSeq待ち
+        break;
 	default:
 		return TRUE;	//ワイヤレス通信処理へ
 	}
@@ -717,6 +740,7 @@ static BOOL DebugMatsuda_Wireless(D_MATSU_WORK *wk)
 			GFLNetInitializeStruct net_ini_data;
 			
 			net_ini_data = aGFLNetInit;
+            
 			GFL_NET_Init(&net_ini_data, _initCallBack, wk);	//通信初期化
 		}
 		wk->seq++;
