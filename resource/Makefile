@@ -26,7 +26,8 @@ SUBDIRS	=	wmi \
 			wifi_lobby_minigame\
 			mystery\
 			startmenu \
-			palace
+			palace \
+			wificlub
 
 include $(RESOURCE_MACRO)
 
