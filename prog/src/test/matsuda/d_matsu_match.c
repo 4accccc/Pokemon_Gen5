@@ -26,6 +26,7 @@
 #include "test/performance.h"
 #include "font/font.naix"
 #include "pokeicon/pokeicon.h"
+#include "system\gfl_use.h"
 
 
 //==============================================================================
@@ -131,6 +132,7 @@ typedef struct {
 	NNSG2dAnimBankData	*icon_anm_data;
 	void	*icon_cell_res;
 	void	*icon_anm_res;
+	GFL_TCB *vintr_tcb;
 }D_MATSU_WORK;
 
 
@@ -164,6 +166,7 @@ static void _RecvMyProfile(const int netID, const int size, const void* pData, v
 static void Local_PokeIconCommonDataSet(D_MATSU_WORK *wk);
 static void Local_PokeIconCommonDataFree(D_MATSU_WORK *wk);
 static void Local_PokeIconAdd(D_MATSU_WORK *wk, int monsno, int net_id);
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 
 //==============================================================================
@@ -359,6 +362,8 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 	}
 
+	wk->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, wk, 5);
+
 	return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
@@ -420,6 +425,8 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 {
 	D_MATSU_WORK* wk = mywk;
 
+	GFL_TCB_DeleteTask(wk->vintr_tcb);
+	
 	Local_PokeIconCommonDataFree(wk);
 
 	GFL_CLACT_UNIT_Delete(wk->clunit);
@@ -437,6 +444,10 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 	return GFL_PROC_RES_FINISH;
 }
 
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
+{
+	GFL_CLACT_VBlankFunc();
+}
 
 
 //==============================================================================

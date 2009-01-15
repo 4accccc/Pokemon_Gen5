@@ -23,6 +23,7 @@
 #include "test_graphic/easy_pokelist.naix"
 #include "pm_define.h"
 #include "test/easy_pokelist.h"
+#include "system\gfl_use.h"
 
 
 
@@ -97,6 +98,7 @@ typedef struct {
 	
 	int cursor_y;
 	int poke_num;
+	GFL_TCB *vintr_tcb;
 }EASY_POKELIST_WORK;
 
 
@@ -114,6 +116,7 @@ static void Local_MessagePrintMain(EASY_POKELIST_WORK *ew);
 static void Local_BGGraphicLoad(EASY_POKELIST_WORK *ew);
 static void Local_MessagePut(EASY_POKELIST_WORK *ew, int win_index, STRBUF *strbuf, int x, int y);
 static void Local_MsgLoadPokeNameAll(EASY_POKELIST_WORK *ew, POKEPARTY *party);
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 
 //==============================================================================
@@ -211,6 +214,8 @@ GFL_PROC_RESULT EasyPokeListInit( GFL_PROC * proc, int * seq, void * pwk, void *
 	GFL_BG_SetVisible(FRAME_MSG_M, VISIBLE_ON);
 //	GFL_BG_SetVisible(FRAME_WALL_S, VISIBLE_ON);
 
+	ew->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, ew, 5);
+	
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -303,6 +308,8 @@ GFL_PROC_RESULT EasyPokeListEnd( GFL_PROC * proc, int * seq, void * pwk, void * 
 	int i, mode;
 	
 	mode = ew->mode;
+
+	GFL_TCB_DeleteTask(ew->vintr_tcb);
 	
 	if(pwk == NULL){
 		GFL_HEAP_FreeMemory(ew->epp->party);
@@ -336,6 +343,10 @@ GFL_PROC_RESULT EasyPokeListEnd( GFL_PROC * proc, int * seq, void * pwk, void * 
 	return GFL_PROC_RES_FINISH;
 }
 
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
+{
+	GFL_CLACT_VBlankFunc();
+}
 
 //==============================================================================
 //	

@@ -21,6 +21,7 @@
 #include "title.naix"
 #include "title/title.h"
 #include "title/startmenu.h"
+#include "system\gfl_use.h"
 
 
 
@@ -134,6 +135,7 @@ typedef struct {
 	GFL_G3D_UTIL*			g3Dutil;
 	u16						g3DutilUnitIdx;
 	GFL_G3D_OBJSTATUS		gira_status;
+	GFL_TCB *vintr_tcb;
 }TITLE_WORK;
 
 
@@ -155,6 +157,7 @@ static void Local_3DSetting(TITLE_WORK *tw);
 static void Local_GirathinaLoad(TITLE_WORK *tw);
 static void Local_Draw3D(TITLE_WORK *tw);
 static void Local_GirathinaFree(TITLE_WORK *tw);
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 //==============================================================================
 //	ŠO•”ŠÖ”éŒ¾
@@ -292,6 +295,8 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 //	GFL_BG_SetVisible(FRAME_LOGO_S, VISIBLE_ON);
 //	GFL_BG_SetVisible(FRAME_MSG_S, VISIBLE_ON);
 
+	tw->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, tw, 5);
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -374,6 +379,8 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	
 	mode = tw->mode;
 	
+	GFL_TCB_DeleteTask(tw->vintr_tcb);
+	
 	GFL_STR_DeleteBuffer(tw->strbuf_push_jpn);
 	GFL_STR_DeleteBuffer(tw->strbuf_push_eng);
 	for(i = 0; i < WIN_MAX; i++){
@@ -407,6 +414,10 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	return GFL_PROC_RES_FINISH;
 }
 
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
+{
+	GFL_CLACT_VBlankFunc();
+}
 
 //==============================================================================
 //	

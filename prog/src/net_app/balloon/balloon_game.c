@@ -1301,6 +1301,8 @@ static void BalloonVBlank(void *work)
 	
 	Sonans_VBlank(game, game->sns);
 	
+	GFL_CLACT_VBlankFunc();
+	
 	DoVramTransferManager();	// Vram転送マネージャー実行
 	CATS_RenderOamTrans();
 	PaletteFadeTrans(game->pfd);

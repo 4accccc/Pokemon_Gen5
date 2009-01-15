@@ -26,6 +26,7 @@
 #include "test/performance.h"
 #include "font/font.naix"
 #include "pokeicon/pokeicon.h"
+#include "system\gfl_use.h"
 
 #include "item/item.h"
 
@@ -87,6 +88,7 @@ typedef struct {
 	void	*icon_anm_res;
 	
 	int item_no;
+	GFL_TCB *vintr_tcb;
 }D_MATSU_WORK;
 
 
@@ -98,6 +100,7 @@ static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, in
 static void Local_ItemIconCommonDataSet(D_MATSU_WORK *wk);
 static void Local_ItemIconCommonDataFree(D_MATSU_WORK *wk);
 static void Local_ItemIconAdd(D_MATSU_WORK *wk, int item_no);
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 
 //==============================================================================
@@ -266,11 +269,14 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		//OBJ•\Ž¦ON
 		GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 	}
+
+	wk->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, wk, 5);
 	
 	wk->item_no = 1;
 	
 	return GFL_PROC_RES_FINISH;
 }
+
 //--------------------------------------------------------------------------
 /**
  * PROC Main
@@ -328,6 +334,8 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 {
 	D_MATSU_WORK* wk = mywk;
 
+	GFL_TCB_DeleteTask(wk->vintr_tcb);
+	
 	Local_ItemIconCommonDataFree(wk);
 
 	GFL_CLACT_UNIT_Delete(wk->clunit);
@@ -345,6 +353,10 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 	return GFL_PROC_RES_FINISH;
 }
 
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
+{
+	GFL_CLACT_VBlankFunc();
+}
 
 
 //==============================================================================
