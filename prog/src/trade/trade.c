@@ -22,6 +22,7 @@
 #include "net\network_define.h"
 #include "trade.h"
 #include "backup_system.h"
+#include "system\gfl_use.h"
 
 
 //==============================================================================
@@ -80,6 +81,7 @@ typedef struct {
 	
 	//アクター
 	GFL_CLUNIT *clunit;
+	GFL_TCB *vintr_tcb;
 }TRADE_WORK;
 
 
@@ -99,6 +101,7 @@ static void Local_MsgLoadPokeNameAll(TRADE_WORK *tw, POKEPARTY *party);
 static void _connectCallBack(void* pWork, int netID);
 static void _endCallBack(void* pWork);
 static void _RecvPokemon(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work);
 
 
 //==============================================================================
@@ -228,6 +231,8 @@ GFL_PROC_RESULT TradeProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 	GFL_FADE_SetMasterBrightReq(
 		GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0);
+
+	tw->vintr_tcb = GFUser_VIntr_CreateTCB(VintrTCB_VblankFunc, tw, 5);
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -445,6 +450,8 @@ GFL_PROC_RESULT TradeProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 GFL_PROC_RESULT TradeProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 	TRADE_WORK* tw = mywk;
+
+	GFL_TCB_DeleteTask(tw->vintr_tcb);
 	
 	GFL_STR_DeleteBuffer(tw->strbuf);
 	GFL_BMPWIN_Delete(tw->drawwin.win);
@@ -467,6 +474,10 @@ GFL_PROC_RESULT TradeProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	return GFL_PROC_RES_FINISH;
 }
 
+static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
+{
+	GFL_CLACT_VBlankFunc();
+}
 
 //==============================================================================
 //	
