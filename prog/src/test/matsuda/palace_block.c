@@ -39,17 +39,24 @@ static const GFL_G3D_OBJSTATUS status0 = {
 //==============================================================================
 typedef struct{
 	VecFx32				trans;
+	fx32				distance;
 	fx32				cameraHeight;
 	u16					cameraLength;
 	u16					direction;
 	VecFx32				transOffset;
+	struct{
+		u16 x;
+		u16 y;
+		u16 z;
+		u16 padding;
+	}angle;
 }PB_CAMERA;
 
 typedef struct {
 	u16		seq;
 	int debug_mode;
 	int mode;			///<次のメニュー画面へ引き渡すモード
-	
+
 	GFL_G3D_UTIL*			g3Dutil;
 	u16						g3DutilUnitIdx;
 	GFL_G3D_OBJSTATUS		gira_status;
@@ -58,6 +65,7 @@ typedef struct {
 	PB_CAMERA camera;
 	
 	int block_max;
+	int base_size;		//8x8 12x12 16x16
 }TITLE_WORK;
 
 
@@ -74,7 +82,7 @@ static void Local_GirathinaLoad(TITLE_WORK *tw);
 static void Local_Draw3D(TITLE_WORK *tw);
 static void Local_GirathinaFree(TITLE_WORK *tw);
 static void _PB_CameraMove(TITLE_WORK *tw);
-static VecFx32 _BlockPosGet(int block_no);
+static VecFx32 _BlockPosGet(TITLE_WORK *tw, int block_no);
 
 
 //==============================================================================
@@ -159,7 +167,8 @@ GFL_PROC_RESULT PalaceBlockProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 	tw = GFL_PROC_AllocWork( proc, sizeof(TITLE_WORK), HEAPID_PALACE );
 	GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
 	tw->block_max = 1;
-
+	tw->base_size = 16;
+	
 	// 上下画面設定
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
@@ -172,7 +181,8 @@ GFL_PROC_RESULT PalaceBlockProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 	Local_3DSetting(tw);
 	Local_GirathinaLoad(tw);
 
-	//パフォーマンスメーターの為OBJ表示ON	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+	//パフォーマンスメーターの為OBJ表示ON
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 	
 	return GFL_PROC_RES_FINISH;
 }
@@ -193,12 +203,25 @@ GFL_PROC_RESULT PalaceBlockProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		int trg = GFL_UI_KEY_GetTrg();
 		if(trg & PAD_BUTTON_START){
 			tw->mode = trg;
-			return GFL_PROC_RES_FINISH;
+//			return GFL_PROC_RES_FINISH;
 		}
 	}
 	
 	switch(tw->seq){
 	case SEQ_MAIN:
+		if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DEBUG){
+			switch(tw->base_size){
+			case 16:
+				tw->base_size = 8;
+				break;
+			case 8:
+				tw->base_size = 12;
+				break;
+			default:
+				tw->base_size = 16;
+				break;
+			}
+		}
 		break;
 	}
 	
@@ -407,10 +430,12 @@ static void Local_Draw3D(TITLE_WORK *tw)
 	GFL_G3D_DRAW_SetLookAt();
 	{
 		GFL_G3D_OBJSTATUS status = status0;
-		
-		for(i = 0; i < tw->block_max; i++){
-			status.trans = _BlockPosGet(i);
-			GFL_G3D_DRAW_DrawObject( g3Dobj, &status );
+		int send_mat = TRUE;
+		for(i = tw->block_max-1; i > -1; i--){
+			status.trans = _BlockPosGet(tw, i);
+//			GFL_G3D_DRAW_DrawObject( g3Dobj, &status );
+			GFL_G3D_DRAW_DrawObject1mat1shpCullingON(g3Dobj, 0, 0, TRUE, &status);
+//			GFL_G3D_DRAW_DrawObject1mat1shp(g3Dobj, 0, 0, TRUE, &status);
 		}
 	}
 	GFL_G3D_DRAW_End();
@@ -454,7 +479,9 @@ static void _PB_CameraMove(TITLE_WORK *tw)
 	VecFx32	vecUD = { 0, 0, 0 };
 	BOOL	mvFlag = FALSE;
 	int key = GFL_UI_KEY_GetCont();
+	s32 length = 1;
 	
+#if 0
 	if( key & PAD_BUTTON_R ){
 		camera->direction -= ROTATE_SPEED;
 	}
@@ -494,8 +521,77 @@ static void _PB_CameraMove(TITLE_WORK *tw)
 	pos.y = trans.y + camera->cameraHeight;
 	pos.z = trans.z + camera->cameraLength * FX_CosIdx(camera->direction);
 
-//	GFL_G3D_CAMERA_SetTarget( g3Dcamera, &target );
-//	GFL_G3D_CAMERA_SetPos( g3Dcamera, &pos );
+	GFL_G3D_CAMERA_SetTarget( g3Dcamera, &target );
+	GFL_G3D_CAMERA_SetPos( g3Dcamera, &pos );
+#else
+	GFL_G3D_CAMERA_GetTarget(g3Dcamera, &target);
+	GFL_G3D_CAMERA_GetPos(g3Dcamera, &pos);
+
+	//回転
+	if(key & (PAD_BUTTON_R|PAD_BUTTON_L|PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START|PAD_BUTTON_SELECT)){
+		if( key & PAD_BUTTON_R ){
+			camera->angle.y -= ROTATE_SPEED;
+			camera->direction -= ROTATE_SPEED;
+			length = 1;
+		}
+		if( key & PAD_BUTTON_L ){
+			camera->angle.y += ROTATE_SPEED;
+			camera->direction += ROTATE_SPEED;
+			length = 1;
+		}
+		if(key & PAD_BUTTON_START){
+			camera->angle.x -= ROTATE_SPEED;
+			length = 1;
+		}
+		if(key & PAD_BUTTON_SELECT){
+			camera->angle.x += ROTATE_SPEED;
+			length = 1;
+		}
+
+		//距離
+		if( key & PAD_BUTTON_A ){
+			camera->distance += FX32_ONE;
+			length = 8;
+			if( camera->cameraLength < 4096 ){
+				camera->cameraLength += 8;
+			}
+		}
+		if( key & PAD_BUTTON_B ){
+			camera->distance -= FX32_ONE;
+			length = -8;
+			if( camera->cameraLength > 8 ){
+				camera->cameraLength -= 8;
+			}
+		}
+
+		pos.x = FX_Mul( FX_Mul( FX_SinIdx( camera->angle.y ), camera->distance ), FX_CosIdx( camera->angle.x ) );
+		pos.y = FX_Mul( FX_SinIdx( camera->angle.x ), camera->distance );
+		pos.z = FX_Mul(FX_Mul(FX_CosIdx(camera->angle.y), camera->distance), FX_CosIdx(camera->angle.x));
+		VEC_Add(&pos, &camera->transOffset, &pos);
+		OS_TPrintf("pos.x = %x(%d), pos.y = %x(%d), pos.z = %x(%d)\n", pos.x, pos.x, pos.y, pos.y, pos.z, pos.z);
+	}
+	else{
+		//平行移動
+		if(key & PAD_KEY_UP){
+			vecMove.y = FX32_ONE;
+		}
+		if(key & PAD_KEY_DOWN){
+			vecMove.y = -FX32_ONE;
+		}
+		if(key & PAD_KEY_LEFT){
+			vecMove.x = -FX32_ONE;
+		}
+		if(key & PAD_KEY_RIGHT){
+			vecMove.x = FX32_ONE;
+		}
+		VEC_Add(&camera->transOffset, &vecMove, &camera->transOffset);
+		VEC_Add(&pos, &vecMove, &pos);
+		VEC_Add(&target, &vecMove, &target);
+	}
+
+	GFL_G3D_CAMERA_SetTarget(g3Dcamera, &target);
+	GFL_G3D_CAMERA_SetPos(g3Dcamera, &pos);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -507,12 +603,13 @@ static void _PB_CameraMove(TITLE_WORK *tw)
  * @retval  座標
  */
 //--------------------------------------------------------------
-static VecFx32 _BlockPosGet(int block_no)
+static VecFx32 _BlockPosGet(TITLE_WORK *tw, int block_no)
 {
 	VecFx32 pos;
+	int base_size = tw->base_size;
 	
-	pos.x = (block_no % 16) * ONE_GRID;
-	pos.y = (block_no / 256) * ONE_GRID;
-	pos.z = ((block_no / 16) % 16) * ONE_GRID;
+	pos.x = (block_no % base_size) * ONE_GRID;
+	pos.y = (block_no / (base_size*base_size)) * ONE_GRID;
+	pos.z = ((block_no / base_size) % base_size) * ONE_GRID;
 	return pos;
 }

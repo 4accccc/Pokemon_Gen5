@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-01-14T16:53:13"/>
+	<create user="matsuda" host="W00142" date="2009-01-15T16:51:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -405,6 +405,11 @@
 	<row id="DM_MSG_MENU008">
 		<language name="JPN" font=" 2:lcfont12" width="256">パレス</language>
 		<language name="JPN_KANJI" width="80">パレス</language>
+	</row>
+
+	<row id="DM_MSG_MENU009">
+		<language name="JPN" font=" 2:lcfont12" width="256">パレスしゅどう</language>
+		<language name="JPN_KANJI" width="80">パレス手動</language>
 	</row>
 
 	<row id="DM_MSG_TRADE000">

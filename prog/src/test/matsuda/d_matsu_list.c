@@ -105,6 +105,7 @@ extern const GFL_PROC_DATA DebugMatsudaErrorProcData;
 extern const GFL_PROC_DATA DebugMatsudaItemProcData;
 extern const GFL_PROC_DATA DebugSaveProcData;
 extern const GFL_PROC_DATA PalaceBlockProcData;
+extern const GFL_PROC_DATA PalaceHandProcData;
 
 //==============================================================================
 //	データ
@@ -119,6 +120,7 @@ static const D_MENULIST DebugMenuList[] = {
 	{DM_MSG_MENU006, &TradeMainProcData,			FS_OVERLAY_ID(trade)},	//簡易ポケモン交換
 	{DM_MSG_MENU007, &DebugSaveProcData,			FS_OVERLAY_ID(matsuda_debug)},	//セーブ破壊
 	{DM_MSG_MENU008, &PalaceBlockProcData,			FS_OVERLAY_ID(matsuda_debug)},	//パレス
+	{DM_MSG_MENU009, &PalaceHandProcData,			FS_OVERLAY_ID(matsuda_debug)},	//パレス
 };
 
 
