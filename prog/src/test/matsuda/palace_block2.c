@@ -20,7 +20,8 @@
 ///アクター最大数
 #define ACT_MAX			(64)
 
-#define ONE_GRID		(FX32_ONE * 8)
+#define ONE_GRID		(0x100)	//fx16
+#define HALF_GRID		(ONE_GRID/2)	//fx16
 
 //--------------------------------------------------------------
 //	3D
@@ -82,7 +83,8 @@ static void Local_GirathinaLoad(TITLE_WORK *tw);
 static void Local_Draw3D(TITLE_WORK *tw);
 static void Local_GirathinaFree(TITLE_WORK *tw);
 static void _PB_CameraMove(TITLE_WORK *tw);
-static VecFx32 _BlockPosGet(TITLE_WORK *tw, int block_no);
+static VecFx16 _BlockPosGet(TITLE_WORK *tw, int block_no);
+static void drawCube(const VecFx16 *add_pos);
 
 
 //==============================================================================
@@ -420,6 +422,7 @@ static void Local_Draw3D(TITLE_WORK *tw)
 	GFL_G3D_OBJ* g3Dobj;
 	u16				objIdx;
 	int i;
+	VecFx16 add_pos;
 	
 	GFL_G3D_CAMERA_Switching(tw->g3d_camera);
 	
@@ -429,14 +432,19 @@ static void Local_Draw3D(TITLE_WORK *tw)
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 	{
+	#if 0
 		GFL_G3D_OBJSTATUS status = status0;
 		int send_mat = TRUE;
 		for(i = tw->block_max-1; i > -1; i--){
 			status.trans = _BlockPosGet(tw, i);
-//			GFL_G3D_DRAW_DrawObject( g3Dobj, &status );
 			GFL_G3D_DRAW_DrawObject1mat1shpCullingON(g3Dobj, 0, 0, TRUE, &status);
-//			GFL_G3D_DRAW_DrawObject1mat1shp(g3Dobj, 0, 0, TRUE, &status);
 		}
+	#else
+		for(i = tw->block_max-1; i > -1; i--){
+			add_pos = _BlockPosGet(tw, i);
+			drawCube(&add_pos);
+		}
+	#endif
 	}
 	GFL_G3D_DRAW_End();
 
@@ -468,8 +476,10 @@ static void Local_GirathinaFree(TITLE_WORK *tw)
  * @param   tw		
  */
 //--------------------------------------------------------------
-#define ROTATE_SPEED		(FX32_ONE/8)
-#define MOVE_SPEED		(FX32_ONE*2)
+#define ROTATE_SPEED		(FX32_ONE/16)
+#define MOVE_SPEED			(FX32_ONE/2)
+#define DISTANCE_SPEED		(FX32_ONE / 8)
+#define HEIKOU_SPEED		(FX32_ONE / 16)
 static void _PB_CameraMove(TITLE_WORK *tw)
 {
 	GFL_G3D_CAMERA * g3Dcamera = tw->g3d_camera;
@@ -550,14 +560,14 @@ static void _PB_CameraMove(TITLE_WORK *tw)
 
 		//距離
 		if( key & PAD_BUTTON_A ){
-			camera->distance += FX32_ONE;
+			camera->distance += DISTANCE_SPEED;
 			length = 8;
 			if( camera->cameraLength < 4096 ){
 				camera->cameraLength += 8;
 			}
 		}
 		if( key & PAD_BUTTON_B ){
-			camera->distance -= FX32_ONE;
+			camera->distance -= DISTANCE_SPEED;
 			length = -8;
 			if( camera->cameraLength > 8 ){
 				camera->cameraLength -= 8;
@@ -573,16 +583,16 @@ static void _PB_CameraMove(TITLE_WORK *tw)
 	else{
 		//平行移動
 		if(key & PAD_KEY_UP){
-			vecMove.y = FX32_ONE;
+			vecMove.y = HEIKOU_SPEED;
 		}
 		if(key & PAD_KEY_DOWN){
-			vecMove.y = -FX32_ONE;
+			vecMove.y = -HEIKOU_SPEED;
 		}
 		if(key & PAD_KEY_LEFT){
-			vecMove.x = -FX32_ONE;
+			vecMove.x = -HEIKOU_SPEED;
 		}
 		if(key & PAD_KEY_RIGHT){
-			vecMove.x = FX32_ONE;
+			vecMove.x = HEIKOU_SPEED;
 		}
 		VEC_Add(&camera->transOffset, &vecMove, &camera->transOffset);
 		VEC_Add(&pos, &vecMove, &pos);
@@ -603,13 +613,122 @@ static void _PB_CameraMove(TITLE_WORK *tw)
  * @retval  座標
  */
 //--------------------------------------------------------------
-static VecFx32 _BlockPosGet(TITLE_WORK *tw, int block_no)
+static VecFx16 _BlockPosGet(TITLE_WORK *tw, int block_no)
 {
-	VecFx32 pos;
+	VecFx16 pos;
 	int base_size = tw->base_size;
 	
 	pos.x = (block_no % base_size) * ONE_GRID;
 	pos.y = (block_no / (base_size*base_size)) * ONE_GRID;
 	pos.z = ((block_no / base_size) % base_size) * ONE_GRID;
 	return pos;
+}
+
+
+s16 	gCubeGeometry[3 * 8] = {
+	ONE_GRID, ONE_GRID, ONE_GRID,
+	ONE_GRID, ONE_GRID, -ONE_GRID,
+	ONE_GRID, -ONE_GRID, ONE_GRID,
+	ONE_GRID, -ONE_GRID, -ONE_GRID,
+	-ONE_GRID, ONE_GRID, ONE_GRID,
+	-ONE_GRID, ONE_GRID, -ONE_GRID,
+	-ONE_GRID, -ONE_GRID, ONE_GRID,
+	-ONE_GRID, -ONE_GRID, -ONE_GRID
+};
+
+GXRgb	gCubeColor[8] = {
+	GX_RGB(31, 31, 31),
+	GX_RGB(31, 31, 0),
+	GX_RGB(31, 0, 31),
+	GX_RGB(31, 0, 0),
+	GX_RGB(0, 31, 31),
+	GX_RGB(0, 31, 0),
+	GX_RGB(0, 0, 31),
+	GX_RGB(0, 0, 0)
+};
+
+static void Color(int idx)
+{
+#if 1
+	G3_Color(gCubeColor[idx]);
+#else
+	if(idx & 1){
+		G3_Color(GX_RGB(16, 16, 16));
+	}
+	else{
+		G3_Color(GX_RGB(24, 8, 16));
+	}
+#endif
+}
+
+static void Vtx(int idx, const VecFx16 *add_pos)
+{
+	G3_Vtx(gCubeGeometry[idx * 3] + add_pos->x, 
+		gCubeGeometry[idx * 3 + 1] + add_pos->y, gCubeGeometry[idx * 3 + 2] + add_pos->z);
+}
+
+static void ColVtxQuad(int idx0, int idx1, int idx2, int idx3, const VecFx16 *add_pos)
+{
+	Color(idx0);
+	Vtx(idx0, add_pos);
+	Color(idx1);
+	Vtx(idx1, add_pos);
+	Color(idx2);
+	Vtx(idx2, add_pos);
+	Color(idx3);
+	Vtx(idx3, add_pos);
+}
+
+static void drawCube(const VecFx16 *add_pos)
+{
+	G3_PushMtx();
+
+	// Rotate and translate
+	G3_Translate(3 << (FX32_SHIFT - 1), 0, 0);
+
+	{
+	//	fx16	s = FX_SinIdx(Rotate);
+	//	fx16	c = FX_CosIdx(Rotate);
+
+	//	G3_RotX(s, c);
+	//	G3_RotY(s, c);
+	//	G3_RotZ(s, c);
+		G3_Scale(FX32_ONE, FX32_ONE, FX32_ONE);
+	}
+
+	G3_MaterialColorDiffAmb(GX_RGB(31, 31, 31), // diffuse
+							GX_RGB(16, 16, 16), // ambient
+							FALSE	   // use diffuse as vtx color if TRUE
+		);
+
+	G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), // specular
+							GX_RGB(0, 0, 0),	// emission
+							FALSE	   // use shininess table if TRUE
+		);
+
+	G3_PolygonAttr(GX_LIGHTMASK_NONE,  // disable lights
+				   GX_POLYGONMODE_MODULATE, 	// modulation mode
+				   GX_CULL_BACK,	   // cull back
+				   0,				   // polygon ID(0 - 63)
+				   31,				   // alpha(0 - 31)
+				   0				   // OR of GXPolygonAttrMisc's value
+		);
+
+	//---------------------------------------------------------------------------
+	// Draw a cube:
+	// Specify different colors for the vertices.
+	//---------------------------------------------------------------------------
+	G3_Begin(GX_BEGIN_QUADS);
+	{
+		ColVtxQuad(2, 0, 4, 6, add_pos);
+		ColVtxQuad(7, 5, 1, 3, add_pos);
+		ColVtxQuad(6, 4, 5, 7, add_pos);
+		ColVtxQuad(3, 1, 0, 2, add_pos);
+		ColVtxQuad(5, 4, 0, 1, add_pos);
+		ColVtxQuad(6, 7, 3, 2, add_pos);
+	}
+	G3_End();
+
+	G3_PopMtx(1);
+
 }
