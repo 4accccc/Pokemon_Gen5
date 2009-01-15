@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================
 /**
  * @file	dwc_rapcommon.h
@@ -53,3 +56,6 @@ extern BOOL mydwc_checkMyGSID(void);
 #endif //
 #endif //
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

@@ -20,6 +20,7 @@
 #include "startmenu.naix"
 #include "msg/msg_startmenu.h"
 
+#include "net/dwc_raputil.h"
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
 #include "app/name_input.h"
@@ -235,7 +236,11 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		case SMI_MYSTERY_GIFT:	//ïsévãcÇ»ë°ÇËï®
 			GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &MysteryGiftProcData, NULL);
 			break;
-		
+
+        case SMI_WIFI_SETTING: //WIFIê›íË
+			GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(wifi_util), &WifiUtilProcData, NULL);
+            break;
+            
 		case SMI_RETURN_TITLE:
 			GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
 			break;

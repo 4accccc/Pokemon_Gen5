@@ -82,6 +82,8 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/laster.c 
 
 
+#				net_app/wificlub/wifi_p2pevent.c \
+
 
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -137,13 +139,17 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 #LIB=>					libdwcauth.a
 #LIB=>					libdwcbase.a
 #LIB=>					libdwcac.a
+#LIB=>					libdwcaccount.a
+#LIB=>					libdwcbm.a
 #LIB=>					libdwcgscommon.a
+#LIB=>					libdwcgsghttp.a
 #LIB=>					libdwcgsgp.a
 #LIB=>					libdwcgsgstats.a
 #LIB=>					libdwcgsgt2.a
 #LIB=>					libdwcgsnatneg.a
 #LIB=>					libdwcgsqr2.a
 #LIB=>					libdwcgsserverbrowsing.a
+#LIB=>					libdwcgschat.a
 #LIB=>					libvct.a
 #LIB=>					libsoc.a
 #LIB=>					libcps.a
@@ -170,6 +176,13 @@ SRCS_OVERLAY_DEV_WIRELESS		=   net/net_devwireless.c \
 SRCS_OVERLAY_DEV_IRC		=   net/net_devirc.c \
 								net/net_irc.c \
 								net/irc.c
+
+#wifi設定画面
+#===> SRCS_OVERLAY_DEV_WIFI
+#LIB=>					libmb.a
+#LIB=>					libdwcutil.a
+SRCS_OVERLAY_WIFI_UTIL	= net/dwc_raputil.c
+
 
 # field
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -246,7 +259,7 @@ SRCS_OVERLAY_TAYA_DEBUG		= test/taya/d_taya.c
 
 
 # タイトル
-#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_WIFI_UTIL
 SRCS_OVERLAY_TITLE	= title/title.c \
 				title/startmenu.c \
 				title/game_start.c
@@ -292,4 +305,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/tokusei/hand_tok_ikaku.c \
 			battle/handler/tokusei/hand_tok_clearbody.c
 
+### WIFICLUB
+###===> SRCS_OVERLAY_DEV_WIFI
+###SRCS_OVERLAY_WIFICLUB	= net_app/wificlub/wifi_p2pmatch.c
 

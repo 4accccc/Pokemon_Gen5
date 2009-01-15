@@ -15,9 +15,12 @@
 #include "debug_field.h"
 #include "system/main.h"
 #include "net\network_define.h"
+#include "net\dwc_raputil.h"
 #include "wmi.naix"
 
 static DEBUG_OHNO_CONTROL * DebugOhnoControl;
+
+FS_EXTERN_OVERLAY(dev_wifi);
 
 
 //------------------------------------------------------------------
@@ -406,7 +409,8 @@ BOOL NetTestEnd(void* pCtl)
 
 static GFL_PROC_RESULT DebugOhnoMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
-	DEBUG_OHNO_CONTROL * testmode;
+
+    DEBUG_OHNO_CONTROL * testmode;
 	HEAPID			heapID = HEAPID_OHNO_DEBUG;
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, heapID, 0x30000 );
