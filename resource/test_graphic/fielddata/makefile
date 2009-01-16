@@ -17,8 +17,12 @@ TARGET_NAMES = \
 	winframe.naix \
 	winframe.narc \
 	testgridmap_a.narc \
-	testgridmap_a.naix
-
+	testgridmap_a.naix \
+	fldmmdl_btx.narc \
+	fldmmdl_btx.naix \
+	mmodel.naix \
+	mmodel.narc
+	
 TARGET_DIR = $(PROJECT_ARCDIR)/test_graphic
 
 TARGETS = $(addprefix $(TARGET_DIR)/,$(TARGET_NAMES))

@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fldmmdl_btx.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+	Update:2009-01-08T16:02:32
+ *****************************************************************************/
+
+#ifndef NARC_FLDMMDL_BTX_NAIX_
+#define NARC_FLDMMDL_BTX_NAIX_
+
+enum {
+	NARC_fldmmdl_btx_obj_kabi32_nsbtx = 0
+};
+
+/* NARC_FLDMMDL_BTX_NAIX_ */
+#endif
