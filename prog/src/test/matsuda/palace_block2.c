@@ -257,7 +257,49 @@ GFL_PROC_RESULT PalaceHandProcMain( GFL_PROC * proc, int * seq, void * pwk, void
 		if(tw->block_max < 16*16*16){
 			tw->block_now_z = (tw->block_max / tw->base_size) % tw->base_size;
 			tw->block_now_dansuu = tw->block_max / (tw->base_size * tw->base_size);
+		#if 0
 			block_box[tw->block_now_dansuu][tw->block_now_z][tw->block_max % tw->base_size] = TRUE;
+		#elif 1	//１つ飛び
+			{
+				int x, y, z;
+				int block_no = tw->block_max + 1;
+				int base_size = tw->base_size;
+				
+				x = block_no % base_size;
+				y = block_no / (base_size*base_size);
+				z = (block_no / base_size) % base_size;
+				if(z & 1){
+					if(x & 1){
+						block_box[y][z][x] = TRUE;
+					}
+				}
+				else{
+					if((x & 1) == 0){
+						block_box[y][z][x] = TRUE;
+					}
+				}
+			}
+		#else
+			{
+				int x, y, z;
+				int block_no = tw->block_max + 1;
+				int base_size = tw->base_size;
+				
+				x = block_no % base_size;
+				y = block_no / (base_size*base_size);
+				z = (block_no / base_size) % base_size;
+				if(z & 1){
+					if((x & 1) == 0){
+						block_box[y][z][x] = TRUE;
+					}
+				}
+				else{
+					if((y & 1)){
+						block_box[y][z][x] = TRUE;
+					}
+				}
+			}
+		#endif
 			tw->block_max++;
 			OS_TPrintf("ブロックの数 = %d, 段数 = %d\n", tw->block_max, tw->block_now_dansuu);
 		}
