@@ -64,7 +64,7 @@ extern void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* a
  *
  */
 //=============================================================================================
-extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 clientID, u16 waza );
+extern void BTL_STR_MakeStringWaza( STRBUF* buf, BtlPokePos pokePos, u16 waza );
 
 
 

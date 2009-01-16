@@ -45,7 +45,7 @@ typedef struct {
 	const BTL_POKEPARAM*	bpp;
 	BTLV_SCU*				parentWk;
 	u16						hp;
-	u8						clientID;
+	u8						pokePos;
 }STATUS_WIN;
 
 typedef struct {
@@ -72,8 +72,8 @@ struct _BTLV_SCU {
 	STRBUF*				strBuf;
 	u8					taskEndFlag[32];
 
-	STATUS_WIN			statusWin[ BTL_CLIENT_MAX ];
-	TOK_WIN				tokWin[ BTL_CLIENT_MAX ];
+	STATUS_WIN		statusWin[ BTL_POS_MAX ];
+	TOK_WIN				tokWin[ BTL_POS_MAX ];
 
 	BTL_PROC			proc;
 	const BTLV_CORE*	vcore;
@@ -92,7 +92,7 @@ static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void tokwin_setupAll( BTLV_SCU* wk );
 static void tokwin_cleanupAll( BTLV_SCU* wk );
-static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID );
+static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos );
 static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_reset_data( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
@@ -209,6 +209,7 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
 
 void BTLV_SCU_StartBtlIn( BTLV_SCU* wk )
 {
+	
 	BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_loop );
 }
 
@@ -240,7 +241,7 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 
 			//soga
 			{
-				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, enClientID );
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_2ND_0 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_BB );
 			}
 		}
@@ -262,7 +263,7 @@ static BOOL btlin_loop( int* seq, void* wk_adrs )
 
 			//soga
 			{
-				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, plClientID );
+				const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, BTL_POS_1ST_0 );
 				BTL_EFFECT_SetPokemon( BTL_POKEPARAM_GetSrcData( bpp ), POKE_MCSS_POS_AA );
 			}
 		}
@@ -574,24 +575,35 @@ static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs )
 
 static void statwin_setupAll( BTLV_SCU* wk )
 {
-	u8 plClientID, enClientID, i;
+	int i;
+//	u8 plClientID, enClientID, i;
 
-	for(i=0; i<BTL_CLIENT_MAX; i++)
+	for(i=0; i<NELEMS(wk->statusWin); i++)
 	{
 		wk->statusWin[i].win = NULL;
 	}
 
+/*
 	plClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
 	enClientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, plClientID, 0 );
 
 	statwin_setup( &wk->statusWin[ plClientID ], wk, plClientID );
 	statwin_setup( &wk->statusWin[ enClientID ], wk, enClientID );
+*/
+	statwin_setup( &wk->statusWin[ BTL_POS_1ST_0 ], wk, BTL_POS_1ST_0 );
+	statwin_setup( &wk->statusWin[ BTL_POS_2ND_0 ], wk, BTL_POS_2ND_0 );
+
+	if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
+	{
+		statwin_setup( &wk->statusWin[ BTL_POS_1ST_1 ], wk, BTL_POS_1ST_1 );
+		statwin_setup( &wk->statusWin[ BTL_POS_2ND_1 ], wk, BTL_POS_2ND_1 );
+	}
 }
 
 static void statwin_cleanupAll( BTLV_SCU* wk )
 {
 	int i;
-	for(i=0; i<BTL_CLIENT_MAX; i++)
+	for(i=0; i<NELEMS(wk->statusWin); i++)
 	{
 		if( wk->statusWin[i].win != NULL)
 		{
@@ -631,28 +643,30 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
 
 
 
-static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, u8 clientID )
+static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos )
 {
 	static const struct {
 		u8 x;
 		u8 y;
-	} winpos[2] = {
-//		{ 20,  2 },
-//		{  2, 13 },
-// soga
+	} winpos[] = {
 		{  4,  2 },
 		{ 18, 13 },
+
+		{ 11,  3 },
+		{ 10, 13 },
+		{  0,  2 },
+		{ 21, 14 },
 	};
 
-	u8 isPlayer, playerClientID, px, py;
+	u8 viewPos, px, py;
 
-	stwin->clientID = clientID;
+	TAYA_Printf("[STATWIN Setup] pokePos=%d\n", pokePos);
+	stwin->pokePos = pokePos;
 	stwin->parentWk = wk;
 
-	playerClientID = BTLV_CORE_GetPlayerClientID( wk->vcore );
-	isPlayer = !BTL_MAIN_IsOpponentClientID( wk->mainModule, playerClientID, clientID );
-	px = winpos[isPlayer].x;
-	py = winpos[isPlayer].y;
+	viewPos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pokePos );
+	px = winpos[viewPos].x;
+	py = winpos[viewPos].y;
 
 	stwin->win = GFL_BMPWIN_Create( GFL_BG_FRAME3_M, px, py, 10, 4, 0, GFL_BMP_CHRAREA_GET_F );
 	stwin->bmp = GFL_BMPWIN_GetBmp( stwin->win );
@@ -669,7 +683,7 @@ static void statwin_reset_data( STATUS_WIN* stwin )
 {
 	BTLV_SCU* wk = stwin->parentWk;
 
-	stwin->bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, stwin->clientID );
+	stwin->bpp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, stwin->pokePos );
 	stwin->hp = BTL_POKEPARAM_GetValue( stwin->bpp, BPP_HP );
 
 	GFL_BMP_Clear( stwin->bmp, TEST_STATWIN_BGCOL );

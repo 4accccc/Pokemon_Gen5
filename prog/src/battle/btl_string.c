@@ -98,14 +98,16 @@ static struct {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static inline void register_PokeNickname( u8 clientID, WordBufID bufID );
-static inline SetStrFormat get_strFormat( u8 targetClientID );
-static inline u16 get_atkStrID( u8 userClientID, WazaID wazaID );
-static inline u16 get_setStrID( u8 targetClientID, u16 defaultStrID );
-static inline u16 get_setPtnStrID( u8 targetClientID, u16 originStrID, u8 ptnNum );
+static inline void register_PokeNickname( BtlPokePos pos, WordBufID bufID );
+static inline SetStrFormat get_strFormat( BtlPokePos pokePos );
+static inline u16 get_atkStrID( BtlPokePos pos, WazaID wazaID );
+static inline u16 get_setStrID( BtlPokePos pos, u16 defaultStrID );
+static inline u16 get_setPtnStrID( BtlPokePos pos, u16 originStrID, u8 ptnNum );
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID );
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID );
+static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID );
+static void ms_put_double( STRBUF* dst, BtlStrID_STD strID );
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID );
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID );
 static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args );
@@ -173,19 +175,21 @@ void BTL_STR_QuitSystem( void )
 
 //--------------------------------------------------------------------------------------
 
-static inline void register_PokeNickname( u8 clientID, WordBufID bufID )
+static inline void register_PokeNickname( BtlPokePos pos, WordBufID bufID )
 {
 	const BTL_POKEPARAM* bpp;
 	const POKEMON_PARAM* pp;
 
-	bpp = BTL_MAIN_GetFrontPokeDataConst( SysWork.mainModule, clientID );
+	bpp = BTL_MAIN_GetFrontPokeDataConst( SysWork.mainModule, pos );
 	pp = BTL_POKEPARAM_GetSrcData( bpp );
 
 	WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
 
-static inline SetStrFormat get_strFormat( u8 targetClientID )
+static inline SetStrFormat get_strFormat( BtlPokePos pokePos )
 {
+	u8 targetClientID = BTL_MAIN_BtlPosToClientID( SysWork.mainModule, pokePos );
+
 	if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
 	{
 		if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
@@ -200,19 +204,19 @@ static inline SetStrFormat get_strFormat( u8 targetClientID )
 	return SETTYPE_MINE;
 }
 
-static inline u16 get_atkStrID( u8 userClientID, WazaID wazaID )
+static inline u16 get_atkStrID( BtlPokePos pos, WazaID wazaID )
 {
-	return (wazaID * SETTYPE_MAX) + get_strFormat( userClientID );
+	return (wazaID * SETTYPE_MAX) + get_strFormat( pos );
 }
 
-static inline u16 get_setStrID( u8 targetClientID, u16 defaultStrID )
+static inline u16 get_setStrID( BtlPokePos pos, u16 defaultStrID )
 {
-	return defaultStrID + get_strFormat( targetClientID );
+	return defaultStrID + get_strFormat( pos );
 }
 
-static inline u16 get_setPtnStrID( u8 targetClientID, u16 originStrID, u8 ptnNum )
+static inline u16 get_setPtnStrID( BtlPokePos pos, u16 originStrID, u8 ptnNum )
 {
-	return originStrID + (ptnNum * SETTYPE_MAX) + get_strFormat(targetClientID);
+	return originStrID + (ptnNum * SETTYPE_MAX) + get_strFormat(pos);
 }
 
 //--------------------------------------------------------------------------------------
@@ -237,7 +241,9 @@ void BTL_STR_MakeStringStd( STRBUF* buf, BtlStrID_STD strID )
 		NULL,
 
 		ms_encount,
+		ms_encount_double,
 		ms_put_single,
+		ms_put_double,
 		ms_put_single_enemy,
 		ms_select_action_ready,
 
@@ -266,24 +272,39 @@ static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, dst );
 }
 
+// 野生エンカウントシングル
 static void ms_encount( STRBUF* dst, BtlStrID_STD strID )
 {
-	u8 clientID = BTL_CLIENT_GetOpponentClientID( SysWork.client, 0 );
-
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	register_PokeNickname( BTL_POS_2ND_0, BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+// 野生エンカウントダブル
+static void ms_encount_double( STRBUF* dst, BtlStrID_STD strID )
+{
+	register_PokeNickname( BTL_POS_2ND_0, BUFIDX_POKE_1ST );
+	register_PokeNickname( BTL_POS_2ND_1, BUFIDX_POKE_2ND );
 
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+// ゆけっ！シングル
 static void ms_put_single( STRBUF* dst, BtlStrID_STD strID )
 {
-	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
-
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	register_PokeNickname( BTL_POS_1ST_0, BUFIDX_POKE_1ST );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
+// ゆけっ！ダブル
+static void ms_put_double( STRBUF* dst, BtlStrID_STD strID )
+{
+	register_PokeNickname( BTL_POS_1ST_0, BUFIDX_POKE_1ST );
+	register_PokeNickname( BTL_POS_1ST_1, BUFIDX_POKE_2ND );
 
+	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
+}
+// あいてがくりだしたシングル
 static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
 {
 	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
@@ -293,7 +314,7 @@ static void ms_put_single_enemy( STRBUF* dst, BtlStrID_STD strID )
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
-
+// ○○はどうする？
 static void ms_select_action_ready( STRBUF* dst, BtlStrID_STD strID )
 {
 	u8 clientID = BTL_CLIENT_GetClientID( SysWork.client );
@@ -362,11 +383,11 @@ static void ms_sp_waza_dead( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 {
-	u8 clientID = args[0];
+	u8 pokePos = args[0];
 	u8 statusType = args[1];
 
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
-	strID = get_setPtnStrID( args[0], strID, statusType );
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setPtnStrID( pokePos, strID, statusType );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
@@ -377,11 +398,11 @@ static void ms_set_rankup( STRBUF* dst, u16 strID, const int* args )
 //--------------------------------------------------------------
 static void ms_set_rankdown( STRBUF* dst, u16 strID, const int* args )
 {
-	u8 clientID = args[0];
+	u8 pokePos = args[0];
 	u8 statusType = args[1];
 
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
-	strID = get_setPtnStrID( args[0], strID, statusType );
+	register_PokeNickname( pokePos, BUFIDX_POKE_1ST );
+	strID = get_setPtnStrID( pokePos, strID, statusType );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_SET], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
@@ -411,13 +432,13 @@ static void ms_set_rankdown_fail( STRBUF* dst, u16 strID, const int* args )
  *
  */
 //=============================================================================================
-void BTL_STR_MakeStringWaza( STRBUF* dst, u8 clientID, u16 waza )
+void BTL_STR_MakeStringWaza( STRBUF* dst, BtlPokePos pos, u16 waza )
 {
 	u16 strID;
 
-	register_PokeNickname( clientID, BUFIDX_POKE_1ST );
+	register_PokeNickname( pos, BUFIDX_POKE_1ST );
 
-	strID = get_setStrID( clientID, waza * SETTYPE_MAX );
+	strID = get_setStrID( pos, waza * SETTYPE_MAX );
 	GFL_MSG_GetString( SysWork.msg[MSGSRC_ATK], strID, SysWork.tmpBuf );
 	WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

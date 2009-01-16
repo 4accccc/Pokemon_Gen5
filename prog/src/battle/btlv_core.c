@@ -305,7 +305,7 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
 	case 1:
 		if( BTLV_SCU_WaitMsg(core->scrnU) )
 		{
-			const BTL_POKEPARAM* bpp = BTL_MAIN_GetFrontPokeDataConst( core->mainModule, core->myClientID );
+			const BTL_POKEPARAM* bpp = BTL_CLIENT_GetFrontPokeData( core->myClient, 0 );
 			BTL_Printf("[BTLV_CORE] 下画面へアクション選択処理命令\n");
 			BTLV_SCD_StartActionSelect( core->scrnD, bpp );
 			(*seq)++;
@@ -368,15 +368,15 @@ typedef struct {
  *
  */
 //=============================================================================================
-void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage, WazaID waza, BtlTypeAff affinity )
+void BTLV_StartWazaAct( BTLV_CORE* wk, BtlPokePos atPokePos, BtlPokePos defPokePos, u16 damage, WazaID waza, BtlTypeAff affinity )
 {
-//	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atClientID );
+//	const BTL_POKEPARAM* pp = BTL_MAIN_GetFrontPokeDataConst( wk->mainModule, atPokePos );
 
 	WAZA_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_ACT_WORK));
 
 	BTL_Printf("[BTLVC] StartWazaAct aff = %d\n", affinity);
 
-	BTLV_SCU_StartWazaAct( wk->scrnU, atClientID, defClientID, waza, affinity );
+	BTLV_SCU_StartWazaAct( wk->scrnU, atPokePos, defPokePos, waza, affinity );
 
 	subwk->affinity = affinity;
 	subwk->timer = 0;
@@ -384,7 +384,7 @@ void BTLV_StartWazaAct( BTLV_CORE* wk, u8 atClientID, u8 defClientID, u16 damage
 	BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocWazaAct );
 
 	//技エフェクト出してみる soga
-	if( atClientID ){
+	if( atPokePos ){
 		if( waza == WAZANO_MIZUDEPPOU ){
 			BTL_EFFECT_Add( BTL_EFFECT_BB2AAMIZUDEPPOU );
 		}
@@ -575,9 +575,9 @@ void BTLV_StartMsgSet( BTLV_CORE* wk, u16 strID, const int* args )
 //	printf( wk->strBuf );
 }
 
-void BTLV_StartMsgWaza( BTLV_CORE* wk, u8 clientID, u16 waza )
+void BTLV_StartMsgWaza( BTLV_CORE* wk, BtlPokePos pokePos, u16 waza )
 {
-	BTL_STR_MakeStringWaza( wk->strBuf, clientID, waza );
+	BTL_STR_MakeStringWaza( wk->strBuf, pokePos, waza );
 	BTLV_SCU_StartMsg( wk->scrnU, wk->strBuf );
 }
 
