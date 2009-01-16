@@ -79,8 +79,9 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				mystery/mysterylib.c \
 				mystery/beacondownload.c \
 				savedata/mystery_data.c \
-				system/laster.c 
-
+				system/laster.c \
+				field/fldmmdl.c \
+				field/fldmmdl_move.c
 
 #				net_app/wificlub/wifi_p2pevent.c \
 
@@ -202,7 +203,14 @@ SRCS_OVERLAY_FIELDMAP		=	field/fieldmap_proc.c \
 				field/field_comm/field_comm_main.c \
 				field/field_comm/field_comm_menu.c \
 				field/field_comm/field_comm_event.c \
-				field/field_comm/field_comm_debug.c 
+				field/field_comm/field_comm_debug.c \
+				field/fldmmdl_draw.c \
+				field/fldmmdl_acmd.c \
+				field/fldmmdl_move_0.c \
+				field/fldmmdl_move_1.c \
+				field/fldmmdl_move_2.c \
+				field/fldmmdl_movedata.c \
+				field/fldmmdl_drawdata.c
 
 # マッパーサンプル
 #===> main
