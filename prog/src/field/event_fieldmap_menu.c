@@ -103,6 +103,10 @@ static GMEVENT * createFMenuMsgWinEvent(
 	GAMESYS_WORK *gsys, u32 heapID, u32 strID, FLDMSGBG *msgBG );
 static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk );
 
+static GMEVENT * createFMenuReportEvent(
+	GAMESYS_WORK *gsys, u32 heapID, FLDMSGBG *msgBG );
+static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk );
+
 //--------------------------------------------------------------
 ///	フィールドマップメニューリスト
 //--------------------------------------------------------------
@@ -360,10 +364,9 @@ static BOOL FMenuCallProc_MyTrainerCard( FMENU_EVENT_WORK *mwk )
 //--------------------------------------------------------------
 static BOOL FMenuCallProc_Report( FMENU_EVENT_WORK *mwk )
 {
-	GMEVENT * subevent = createFMenuMsgWinEvent( mwk->gmSys, mwk->heapID,
-			FLDMAPMENU_STR12, FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
+	GMEVENT * subevent = createFMenuReportEvent( mwk->gmSys, mwk->heapID,
+			FIELDMAP_GetFLDMSGBG(mwk->fieldWork) );
 	GMEVENT_CallEvent(mwk->gmEvent, subevent);
-	GAMEDATA_Save(GAMESYSTEM_GetGameData(mwk->gmSys));
 	return( TRUE );
 }
 
@@ -450,6 +453,93 @@ static GMEVENT_RESULT FMenuMsgWinEvent( GMEVENT *event, int *seq, void *wk )
 		}
 		break;
 	case 3:
+		FLDMSGWIN_Delete( work->msgWin );
+		GFL_MSG_Delete( work->msgData );
+		return( GMEVENT_RES_FINISH );
+	}
+
+	return( GMEVENT_RES_CONTINUE );
+}
+
+//======================================================================
+//	レポート表示イベント
+//======================================================================
+//--------------------------------------------------------------
+///	FMENU_REPORT_EVENT_WORK
+//--------------------------------------------------------------
+typedef struct
+{
+	u32 heapID;
+	FLDMSGBG *msgBG;
+	GFL_MSGDATA *msgData;
+	FLDMSGWIN *msgWin;
+}FMENU_REPORT_EVENT_WORK;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT * createFMenuReportEvent(GAMESYS_WORK *gsys, u32 heapID, FLDMSGBG *msgBG )
+{
+	GMEVENT * msgEvent;
+	FMENU_REPORT_EVENT_WORK *work;
+	
+	msgEvent = GMEVENT_Create(
+		gsys, NULL, FMenuReportEvent, sizeof(FMENU_REPORT_EVENT_WORK));
+	work = GMEVENT_GetEventWork( msgEvent );
+	MI_CpuClear8( work, sizeof(FMENU_REPORT_EVENT_WORK) );
+	work->msgBG = msgBG;
+	work->heapID = heapID;
+	return msgEvent;
+}
+
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT FMenuReportEvent( GMEVENT *event, int *seq, void *wk )
+{
+	FMENU_REPORT_EVENT_WORK *work = wk;
+	
+	switch( (*seq) ){
+	case 0:
+		work->msgData = FLDMSGBG_CreateMSGDATA(
+			work->msgBG, NARC_message_fldmapmenu_dat );
+		
+		work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
+		FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR14 );
+		(*seq)++;
+		break;
+	case 1:
+		if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
+			(*seq)++;
+		}	
+		break;
+	case 2:
+		GAMEDATA_Save(GAMESYSTEM_GetGameData(GMEVENT_GetGameSysWork(event)));
+		(*seq)++;
+		break;
+	case 3:
+		FLDMSGWIN_Delete( work->msgWin );
+		
+		work->msgWin = FLDMSGWIN_AddTalkWin( work->msgBG, work->msgData );
+		FLDMSGWIN_Print( work->msgWin, 0, 0, FLDMAPMENU_STR15 );
+		(*seq)++;
+		break;
+	case 4:
+		if( FLDMSGWIN_CheckPrintTrans(work->msgWin) == TRUE ){
+			(*seq)++;
+		}	
+		break;
+	case 5:
+		{
+			int trg = GFL_UI_KEY_GetTrg();
+			if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+				(*seq)++;
+			}
+		}
+		break;
+	case 6:
 		FLDMSGWIN_Delete( work->msgWin );
 		GFL_MSG_Delete( work->msgData );
 		return( GMEVENT_RES_FINISH );
