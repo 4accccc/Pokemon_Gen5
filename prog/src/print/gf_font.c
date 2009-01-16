@@ -502,7 +502,7 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
 				break;
 			}
 
-			return 461;
+			return 31;
 		}
 		else if( pMap->nextOfs )
 		{
