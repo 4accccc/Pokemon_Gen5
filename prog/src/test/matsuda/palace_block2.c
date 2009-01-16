@@ -67,8 +67,11 @@ typedef struct {
 	
 	int block_max;
 	int base_size;		//8x8 12x12 16x16
+	int block_now_z;
+	int block_now_dansuu;
 }TITLE_WORK;
 
+static u8 block_box[16][16][16];	//段数(Y) x 奥行き(Z) x 横(X)
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -83,7 +86,7 @@ static void Local_GirathinaLoad(TITLE_WORK *tw);
 static void Local_Draw3D(TITLE_WORK *tw);
 static void Local_GirathinaFree(TITLE_WORK *tw);
 static void _PB_CameraMove(TITLE_WORK *tw);
-static VecFx16 _BlockPosGet(TITLE_WORK *tw, int block_no);
+static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos);
 static void drawCube(const VecFx16 *add_pos);
 
 
@@ -186,6 +189,9 @@ GFL_PROC_RESULT PalaceHandProcInit( GFL_PROC * proc, int * seq, void * pwk, void
 	//パフォーマンスメーターの為OBJ表示ON
 	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 	
+	GFL_STD_MemClear(block_box, sizeof(block_box));
+	block_box[0][0][0] = TRUE;
+	
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -228,12 +234,36 @@ GFL_PROC_RESULT PalaceHandProcMain( GFL_PROC * proc, int * seq, void * pwk, void
 	}
 	
 	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
-		tw->block_max++;
-		OS_TPrintf("ブロックの数 = %d\n", tw->block_max);
+		if(tw->block_max < 16*16*16){
+			tw->block_max++;
+			tw->block_now_z = (tw->block_max / tw->base_size) % tw->base_size;
+			tw->block_now_dansuu = tw->block_max / (tw->base_size * tw->base_size);
+			block_box[tw->block_now_dansuu][tw->block_now_z][tw->block_max % tw->base_size] = TRUE;
+			OS_TPrintf("ブロックの数 = %d, 段数 = %d\n", tw->block_max, tw->block_now_dansuu);
+		}
 	}
 	else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){
-		tw->block_max--;
-		OS_TPrintf("ブロックの数 = %d\n", tw->block_max);
+		if(tw->block_max > 1){
+			block_box[tw->block_now_dansuu][tw->block_now_z][tw->block_max % tw->base_size] = 0;
+			tw->block_max--;
+			tw->block_now_z = (tw->block_max / tw->base_size) % tw->base_size;
+			tw->block_now_dansuu = tw->block_max / (tw->base_size * tw->base_size);
+			OS_TPrintf("ブロックの数 = %d, 段数 = %d\n", tw->block_max, tw->block_now_dansuu);
+		}
+	}
+	
+	if(GFL_UI_KEY_GetCont() == (PAD_BUTTON_X|PAD_BUTTON_Y)){
+		int i;
+		u8 *bb = &block_box[0][0][0];
+		for(i = 0; i < tw->block_max; i++){
+			OS_TPrintf("%d, ", bb[i]);
+			if((i % tw->base_size) == tw->base_size-1){
+				OS_TPrintf("\n");
+			}
+			if((i % (tw->base_size*tw->base_size)) == tw->base_size*tw->base_size-1){
+				OS_TPrintf("\n-----\n");
+			}
+		}
 	}
 	
 	_PB_CameraMove(tw);
@@ -441,8 +471,9 @@ static void Local_Draw3D(TITLE_WORK *tw)
 		}
 	#else
 		for(i = tw->block_max-1; i > -1; i--){
-			add_pos = _BlockPosGet(tw, i);
-			drawCube(&add_pos);
+			if(_BlockPosGet(tw, i, &add_pos)){
+				drawCube(&add_pos);
+			}
 		}
 	#endif
 	}
@@ -610,19 +641,37 @@ static void _PB_CameraMove(TITLE_WORK *tw)
  *
  * @param   block_no		ブロック番号
  *
- * @retval  座標
+ * @retval  TRUE:描画の必要有。　FALSE:描画しなくてよい
  */
 //--------------------------------------------------------------
-static VecFx16 _BlockPosGet(TITLE_WORK *tw, int block_no)
+static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos)
 {
 	VecFx16 pos;
 	int base_size = tw->base_size;
+	int x, y, z;
 	
-	pos.x = (block_no % base_size) * ONE_GRID;
-	pos.y = (block_no / (base_size*base_size)) * ONE_GRID;
-	pos.z = ((block_no / base_size) % base_size) * ONE_GRID;
-	return pos;
+	x = block_no % base_size;
+	y = block_no / (base_size*base_size);
+	z = (block_no / base_size) % base_size;
+	add_pos->x = x * ONE_GRID;
+	add_pos->y = y * ONE_GRID;
+	add_pos->z = z * ONE_GRID;
+	
+	//ブロックの描画必要判定
+	if(x != 0 && block_box[y][z][x - 1]){	//左OK
+		if(x != (base_size-1) && block_box[y][z][x + 1]){	//右OK
+			if(z != 0 && block_box[y][z - 1][x]){	//後ろOK
+				if(z != (base_size-1) && block_box[y][z + 1][x]){	//前OK
+					if(y != (base_size-1) && block_box[y + 1][z][x]){	//上OK
+						return FALSE;	//描画の必要なし
+					}
+				}
+			}
+		}
+	}
+	return TRUE;
 }
+
 
 
 s16 	gCubeGeometry[3 * 8] = {
