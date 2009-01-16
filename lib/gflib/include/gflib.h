@@ -47,6 +47,7 @@ extern "C" {
 #include "net.h"
 #include "net_devicetbl.h"
 #include "ui.h"
+#include "button_man.h"
 
 #include "clact.h"
 #include "obj_graphic_man.h"

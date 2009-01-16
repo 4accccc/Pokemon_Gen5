@@ -5,12 +5,13 @@
  *	@brief		セルアクターシステム
  *	@author		tomoya takahashi
  *	@data		2006.11.28
- *	@data		2008.12.24		4点変更
- *								　1.Init ExitをCreate Deleteに変更
- *								　2.DrawFlagをDrawEnableに変更
- *								　3.CLUNITの描画関数を廃止し、GFL_CLACT_MainSys関数ないで、いっせいに描画するように変更
- *								　4.VBlankでの転送関数を１つにまとる。
- *								　**3.4.は、VBlank期間での処理をまとめるための変更*
+ *	@data		2008.12.24		5点変更
+ *								　1.大本のシステムの関数にSysを入れるように変更
+ *								　2.Init ExitをCreate Deleteに変更
+ *								　3.DrawFlagをDrawEnableに変更
+ *								　4.CLUNITの描画関数を廃止し、GFL_CLACT_MainSys関数ないで、いっせいに描画するように変更
+ *								　5.VBlankでの転送関数を１つにまとる。
+ *								　**4.5.は、VBlank期間での処理をまとめるための変更*
  *
  *	@data		2009.01.07		obj_graphic_man.hの内容を統合
  *
@@ -290,7 +291,7 @@ extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN;
  *		32,32,32,32
  *	};
  */
-extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_DIVSCREEN;
+extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_CONSCREEN;
 
 //-----------------------------------------------------------------------------
 /**
