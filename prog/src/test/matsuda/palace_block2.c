@@ -38,6 +38,16 @@ static const GFL_G3D_OBJSTATUS status0 = {
 //==============================================================================
 //	構造体定義
 //==============================================================================
+///ボックスの描画する面
+typedef struct{
+	BOOL front;		///<TRUE:前面を描画
+	BOOL back;
+	BOOL left;
+	BOOL right;
+	BOOL up;
+	BOOL down;
+}WRITE_BOX_STATUS;
+
 typedef struct{
 	VecFx32				trans;
 	fx32				distance;
@@ -69,7 +79,9 @@ typedef struct {
 	int base_size;		//8x8 12x12 16x16
 	int block_now_z;
 	int block_now_dansuu;
+	WRITE_BOX_STATUS wbs;
 }TITLE_WORK;
+
 
 static u8 block_box[16][16][16];	//段数(Y) x 奥行き(Z) x 横(X)
 
@@ -86,8 +98,9 @@ static void Local_GirathinaLoad(TITLE_WORK *tw);
 static void Local_Draw3D(TITLE_WORK *tw);
 static void Local_GirathinaFree(TITLE_WORK *tw);
 static void _PB_CameraMove(TITLE_WORK *tw);
-static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos);
-static void drawCube(const VecFx16 *add_pos);
+static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos, WRITE_BOX_STATUS *wbs);
+static void drawCube(const VecFx16 *add_pos, const WRITE_BOX_STATUS *wbs, GXRgb rgb);
+static void _BoxNaisekiCheck(TITLE_WORK *tw, WRITE_BOX_STATUS *wbs);
 
 
 //==============================================================================
@@ -98,6 +111,13 @@ const GFL_PROC_DATA PalaceHandProcData = {
 	PalaceHandProcInit,
 	PalaceHandProcMain,
 	PalaceHandProcEnd,
+};
+
+static const GXRgb CubeColor[] = {
+	GX_RGB(31, 0, 0),
+	GX_RGB(0, 31, 0),
+	GX_RGB(0, 0, 31),
+	GX_RGB(15, 15, 15),
 };
 
 //--------------------------------------------------------------
@@ -173,7 +193,7 @@ GFL_PROC_RESULT PalaceHandProcInit( GFL_PROC * proc, int * seq, void * pwk, void
 	GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
 	tw->block_max = 1;
 	tw->base_size = 16;
-	
+
 	// 上下画面設定
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 	GFL_DISP_SetDispOn();
@@ -235,10 +255,10 @@ GFL_PROC_RESULT PalaceHandProcMain( GFL_PROC * proc, int * seq, void * pwk, void
 	
 	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){
 		if(tw->block_max < 16*16*16){
-			tw->block_max++;
 			tw->block_now_z = (tw->block_max / tw->base_size) % tw->base_size;
 			tw->block_now_dansuu = tw->block_max / (tw->base_size * tw->base_size);
 			block_box[tw->block_now_dansuu][tw->block_now_z][tw->block_max % tw->base_size] = TRUE;
+			tw->block_max++;
 			OS_TPrintf("ブロックの数 = %d, 段数 = %d\n", tw->block_max, tw->block_now_dansuu);
 		}
 	}
@@ -267,6 +287,7 @@ GFL_PROC_RESULT PalaceHandProcMain( GFL_PROC * proc, int * seq, void * pwk, void
 	}
 	
 	_PB_CameraMove(tw);
+	_BoxNaisekiCheck(tw, &tw->wbs);
 	Local_Draw3D(tw);
 	
 	return GFL_PROC_RES_CONTINUE;
@@ -453,6 +474,7 @@ static void Local_Draw3D(TITLE_WORK *tw)
 	u16				objIdx;
 	int i;
 	VecFx16 add_pos;
+	WRITE_BOX_STATUS wbs;
 	
 	GFL_G3D_CAMERA_Switching(tw->g3d_camera);
 	
@@ -471,8 +493,9 @@ static void Local_Draw3D(TITLE_WORK *tw)
 		}
 	#else
 		for(i = tw->block_max-1; i > -1; i--){
-			if(_BlockPosGet(tw, i, &add_pos)){
-				drawCube(&add_pos);
+			wbs = tw->wbs;
+			if(_BlockPosGet(tw, i, &add_pos, &wbs)){
+				drawCube(&add_pos, &wbs, CubeColor[i&3]);
 			}
 		}
 	#endif
@@ -644,11 +667,12 @@ static void _PB_CameraMove(TITLE_WORK *tw)
  * @retval  TRUE:描画の必要有。　FALSE:描画しなくてよい
  */
 //--------------------------------------------------------------
-static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos)
+static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos, WRITE_BOX_STATUS *wbs)
 {
 	VecFx16 pos;
 	int base_size = tw->base_size;
 	int x, y, z;
+	int l,r,f,b,u;
 	
 	x = block_no % base_size;
 	y = block_no / (base_size*base_size);
@@ -657,17 +681,35 @@ static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos)
 	add_pos->y = y * ONE_GRID;
 	add_pos->z = z * ONE_GRID;
 	
+	if(block_box[y][z][x] == 0){
+		return FALSE;
+	}
+	
+	l=0;r=0;f=0;b=0;u=0;
 	//ブロックの描画必要判定
 	if(x != 0 && block_box[y][z][x - 1]){	//左OK
-		if(x != (base_size-1) && block_box[y][z][x + 1]){	//右OK
-			if(z != 0 && block_box[y][z - 1][x]){	//後ろOK
-				if(z != (base_size-1) && block_box[y][z + 1][x]){	//前OK
-					if(y != (base_size-1) && block_box[y + 1][z][x]){	//上OK
-						return FALSE;	//描画の必要なし
-					}
-				}
-			}
-		}
+		l++;
+		wbs->left=0;
+	}
+	if(x != (base_size-1) && block_box[y][z][x + 1]){	//右OK
+		r++;
+		wbs->right=0;
+	}
+	if(z != 0 && block_box[y][z - 1][x]){	//後ろOK
+		b++;
+		wbs->back=0;
+	}
+	if(z != (base_size-1) && block_box[y][z + 1][x]){	//前OK
+		f++;
+		wbs->front=0;
+	}
+	if(y != (base_size-1) && block_box[y + 1][z][x]){	//上OK
+		u++;
+		wbs->up=0;
+	}
+	
+	if(l && r && f && b && u){
+		return FALSE;	//描画の必要なし
 	}
 	return TRUE;
 }
@@ -675,14 +717,14 @@ static BOOL _BlockPosGet(TITLE_WORK *tw, int block_no, VecFx16 *add_pos)
 
 
 s16 	gCubeGeometry[3 * 8] = {
-	ONE_GRID, ONE_GRID, ONE_GRID,
-	ONE_GRID, ONE_GRID, -ONE_GRID,
-	ONE_GRID, -ONE_GRID, ONE_GRID,
-	ONE_GRID, -ONE_GRID, -ONE_GRID,
-	-ONE_GRID, ONE_GRID, ONE_GRID,
-	-ONE_GRID, ONE_GRID, -ONE_GRID,
-	-ONE_GRID, -ONE_GRID, ONE_GRID,
-	-ONE_GRID, -ONE_GRID, -ONE_GRID
+	HALF_GRID, HALF_GRID, HALF_GRID,
+	HALF_GRID, HALF_GRID, -HALF_GRID,
+	HALF_GRID, -HALF_GRID, HALF_GRID,
+	HALF_GRID, -HALF_GRID, -HALF_GRID,
+	-HALF_GRID, HALF_GRID, HALF_GRID,
+	-HALF_GRID, HALF_GRID, -HALF_GRID,
+	-HALF_GRID, -HALF_GRID, HALF_GRID,
+	-HALF_GRID, -HALF_GRID, -HALF_GRID
 };
 
 GXRgb	gCubeColor[8] = {
@@ -696,10 +738,10 @@ GXRgb	gCubeColor[8] = {
 	GX_RGB(0, 0, 0)
 };
 
-static void Color(int idx)
+static void Color(GXRgb rgb)
 {
 #if 1
-	G3_Color(gCubeColor[idx]);
+	G3_Color(rgb);
 #else
 	if(idx & 1){
 		G3_Color(GX_RGB(16, 16, 16));
@@ -716,19 +758,19 @@ static void Vtx(int idx, const VecFx16 *add_pos)
 		gCubeGeometry[idx * 3 + 1] + add_pos->y, gCubeGeometry[idx * 3 + 2] + add_pos->z);
 }
 
-static void ColVtxQuad(int idx0, int idx1, int idx2, int idx3, const VecFx16 *add_pos)
+static void ColVtxQuad(int idx0, int idx1, int idx2, int idx3, const VecFx16 *add_pos, GXRgb rgb)
 {
-	Color(idx0);
+	Color(rgb);
 	Vtx(idx0, add_pos);
-	Color(idx1);
+	Color(rgb);
 	Vtx(idx1, add_pos);
-	Color(idx2);
+	Color(rgb);
 	Vtx(idx2, add_pos);
-	Color(idx3);
+	Color(rgb);
 	Vtx(idx3, add_pos);
 }
 
-static void drawCube(const VecFx16 *add_pos)
+static void drawCube(const VecFx16 *add_pos, const WRITE_BOX_STATUS *wbs, GXRgb rgb)
 {
 	G3_PushMtx();
 
@@ -769,15 +811,88 @@ static void drawCube(const VecFx16 *add_pos)
 	//---------------------------------------------------------------------------
 	G3_Begin(GX_BEGIN_QUADS);
 	{
-		ColVtxQuad(2, 0, 4, 6, add_pos);
-		ColVtxQuad(7, 5, 1, 3, add_pos);
-		ColVtxQuad(6, 4, 5, 7, add_pos);
-		ColVtxQuad(3, 1, 0, 2, add_pos);
-		ColVtxQuad(5, 4, 0, 1, add_pos);
-		ColVtxQuad(6, 7, 3, 2, add_pos);
+	#if 0
+		ColVtxQuad(2, 0, 4, 6, add_pos, rgb);	//前
+		ColVtxQuad(7, 5, 1, 3, add_pos, rgb);	//後
+		ColVtxQuad(6, 4, 5, 7, add_pos, rgb);	//左(カメラから見て)
+		ColVtxQuad(3, 1, 0, 2, add_pos, rgb);	//右(カメラから見て)
+		ColVtxQuad(5, 4, 0, 1, add_pos, rgb);	//上
+		ColVtxQuad(6, 7, 3, 2, add_pos, rgb);	//下
+	#else
+		if(wbs->front){
+			ColVtxQuad(2, 0, 4, 6, add_pos, rgb);	//前
+		}
+		if(wbs->back){
+			ColVtxQuad(7, 5, 1, 3, add_pos, rgb);	//後
+		}
+		if(wbs->left){
+			ColVtxQuad(6, 4, 5, 7, add_pos, rgb);	//左(カメラから見て)
+		}
+		if(wbs->right){
+			ColVtxQuad(3, 1, 0, 2, add_pos, rgb);	//右(カメラから見て)
+		}
+		if(wbs->up){
+			ColVtxQuad(5, 4, 0, 1, add_pos, rgb);	//上
+		}
+		if(wbs->down){
+			ColVtxQuad(6, 7, 3, 2, add_pos, rgb);	//下
+		}
+	#endif
 	}
 	G3_End();
 
 	G3_PopMtx(1);
 
 }
+
+///ボックスの法線ベクトル
+static const VecFx32 BoxHousenVec[] = {
+	{0, 0, -FX32_ONE},	//前
+	{FX32_ONE, 0, 0},	//左
+	{0, -FX32_ONE, 0},	//上
+};
+
+static void _BoxNaisekiCheck(TITLE_WORK *tw, WRITE_BOX_STATUS *wbs)
+{
+	fx32 ret_vec;
+	int i = 0;
+	VecFx32 target, campos, camera_housen;
+	
+	GFL_G3D_CAMERA_GetTarget(tw->g3d_camera, &target);
+	GFL_G3D_CAMERA_GetPos(tw->g3d_camera, &campos);
+	VEC_Subtract(&target, &campos, &camera_housen);
+	
+	GFL_STD_MemClear(wbs, sizeof(WRITE_BOX_STATUS));
+	if(VEC_DotProduct(&camera_housen, &BoxHousenVec[0]) >= 0){
+		wbs->front = TRUE;
+	}
+	else{
+		wbs->back = TRUE;
+	}
+	if(VEC_DotProduct(&camera_housen, &BoxHousenVec[1]) >= 0){
+		wbs->left = TRUE;
+	}
+	else{
+		wbs->right = TRUE;
+	}
+	if(VEC_DotProduct(&camera_housen, &BoxHousenVec[2]) >= 0){
+		wbs->up = TRUE;
+	}
+	else{
+		wbs->down = TRUE;
+	}
+
+	wbs->front = 1;
+	wbs->left = 0;
+	wbs->up = 1;
+#if 0
+	OS_TPrintf("内積 = ");
+	for(i = 0; i < NELEMS(BoxHousenVec); i++){
+	//	ret_vec = GFL_G3D_CAMERA_GetDotProduct(tw->g3d_camera, &BoxHousenVec[i]);
+		ret_vec = VEC_DotProduct(&camera_housen, &BoxHousenVec[i]);
+		OS_TPrintf("%d, ", ret_vec);
+	}
+	OS_TPrintf("\n");
+#endif
+}
+
