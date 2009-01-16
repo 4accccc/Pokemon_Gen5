@@ -1,3 +1,9 @@
+#----------------------------------------------------------------------------
+#  overlaytool.rb
+#  afetrを複数指定できるようにパッチ修正  2009.01.16 k.ohno
+#----------------------------------------------------------------------------
+
+
 #DEFAULT_LSFFILE		= "default.lsf"
 OVERLAY_DIR			= "overlay"
 MAKE_PROG_FILE  	= "make_prog_files"
@@ -65,6 +71,9 @@ line_get_flag     = 0
 
 line_count        = 1
 
+afterList = []
+afteroverlaycnt = 0
+
 
 File.open(OUTPUT_LSFFILE,"w"){|file|
 	file.puts(default_lsf)
@@ -85,18 +94,26 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 
 
 	#オーバーレイ定義の取得
-	if line.match(MATCH_KEYWORD) then
-		overlay_flag = 1
-		m = MATCH_KEYWORD.match(line)
-		_str = m.post_match.split(nil)[0].sub(/[\s\t]/,"")
-		if overlay_hash.key?(_str) then
-			overlay_target << _str
-			overlay_count = overlay_count+1
-		else
-			printf "「%s」 というオーバーレイソ\ースは定義されていません\n",_str
-			exit 1
-		end
-	end
+  if line.match(MATCH_KEYWORD) then
+    if afteroverlaycnt != 0 then
+      m = MATCH_KEYWORD.match(line)
+      afterList[afteroverlaycnt-1] = m.post_match.split(nil)[0].sub(/[\s\t]/,"")
+      afteroverlaycnt = afteroverlaycnt + 1
+    else
+      afteroverlaycnt = 1   ##ohno
+      overlay_flag = 1
+      m = MATCH_KEYWORD.match(line)
+      _str = m.post_match.split(nil)[0].sub(/[\s\t]/,"")
+      
+      if overlay_hash.key?(_str) then
+        overlay_target << _str
+        overlay_count = overlay_count+1
+      else
+        printf "「%s」 というオーバーレイソ\ースは定義されていません\n",_str
+        exit 1
+      end
+    end
+  end
 
 	#「SRCS_OVERLAY」の後はソースコード行なので「\」がなくなるまで
 	# 保存し続ける
@@ -124,7 +141,13 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 				file.printf("Overlay %s\n{\n\tAfter\t%s\n",
 						overlay_name[overlay_table_num+2].downcase.sub(/srcs_overlay_/,""),
 						_targetname
-				)
+        )
+                if afteroverlaycnt != 0 then
+          afterList.each { |afline|
+            p afline
+                      file.printf("\tAfter\t%s\n",afline.downcase.sub(/srcs_overlay_/,""))
+                  }
+                end
 				file.printf("\tObject")
 				source_name.each{ |name|
 					filename = name.slice(/[a-zA-Z_0-9]+\./)
@@ -153,7 +176,9 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 					}
 					lib_name.clear
 				end
-				file.puts("}\n\n")
+                  file.puts("}\n\n")
+                  afteroverlaycnt = 0   ##ohno
+                  afterList = []
 			}
 		end
 	end
