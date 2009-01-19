@@ -784,9 +784,10 @@ static BOOL TESTMODE_ITEM_SelectFuncTamada( TESTMODE_WORK *work , const int idx 
 }
 
 extern const GFL_PROC_DATA DebugSogabeMainProcData;
+FS_EXTERN_OVERLAY(battle);
 static BOOL TESTMODE_ITEM_SelectFuncSogabe( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,NO_OVERLAY_ID, &DebugSogabeMainProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(battle), &DebugSogabeMainProcData, NULL);
 	return TRUE;
 }
 
