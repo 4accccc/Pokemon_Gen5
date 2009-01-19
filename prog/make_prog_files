@@ -17,6 +17,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				field/event_mapchange.c \
 				field/event_fieldmap_menu.c \
 				field/event_debug_menu.c \
+				field/event_battle.c \
 				field/field_player.c \
 				field/field_comm/field_comm_data.c \
 				field/field_comm/field_comm_func.c \
