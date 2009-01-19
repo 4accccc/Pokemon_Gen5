@@ -36,6 +36,7 @@
 #include "event_mapchange.h"
 #include "event_debug_menu.h"
 #include "event_fieldmap_menu.h"
+#include "event_battle.h"
 
 #include "field_comm_actor.h"
 #include "field_comm/field_comm_main.h"
@@ -438,7 +439,10 @@ static GMEVENT * PushConnectCheck(GAMESYS_WORK * gsys, FIELD_MAIN_WORK * fieldWo
 //------------------------------------------------------------------
 static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 {
-	enum { resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START };
+	enum {
+		resetCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START,
+		chgCont = PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_SELECT
+	};
 	FIELD_MAIN_WORK * fieldWork = work;
 	GMEVENT * event;
 
@@ -452,8 +456,11 @@ static GMEVENT * FieldEventCheck(GAMESYS_WORK * gsys, void * work)
 		return DEBUG_EVENT_GameEnd(gsys, fieldWork);
 		//return DEBUG_EVENT_FieldSample(gsys, fieldWork);
 	}
-	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
+	if( ( GFL_UI_KEY_GetCont() & chgCont ) == chgCont ){
 		return DEBUG_EVENT_ChangeToNextMap(gsys, fieldWork);
+	}
+	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_START ){
+		return DEBUG_EVENT_Battle(gsys, fieldWork);
 	}
 	if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_X ){
 		return EVENT_FieldMapMenu( gsys, fieldWork, fieldWork->heapID );
