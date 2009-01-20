@@ -64,7 +64,8 @@ enum {
 	NO_GRID_SAMPLE = 0,
 	GRID_DEFAULT = 1,
 	//NO_GRID_SAMPLE = 2,
-	GRID_GS_SAMPLE = 3
+	GRID_GS_SAMPLE = 3,
+	TEST_C3_SAMPLE = 4,
 };
 #include "../area_data/area_id.h"
 
