@@ -184,6 +184,15 @@ static const FLDMAPPER_MAPDATA loopbridgemap[] = {
 	{ NARC_loopbridge_m_test2_03_04c_3dppack },
 	{ NARC_loopbridge_m_test2_04_04c_3dppack },
 };
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+#include "test_graphic/test_c3.naix"
+static const FLDMAPPER_MAPDATA test_c3map[] = {
+	{ NARC_test_c3_C3_00_01_3dppack },
+	{ NARC_test_c3_C3_00_02_3dppack },
+	{ NARC_test_c3_C3_01_01_3dppack },
+	{ NARC_test_c3_C3_01_02_3dppack },
+};
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -305,6 +314,20 @@ const SCENE_DATA resistMapTbl[] = {
 			GSMap, 
 		},
 		&FieldGridFunctions,
+		FALSE,
+	},
+	{	//実験マップ　C3
+		{	
+			FLDMAPPER_FILETYPE_NORMAL,
+			MAP_XZ_SIZE, 1024*FX32_ONE, FLDMAPPER_MODE_SCROLL_XZ, 
+			ARCID_TEST_C3,
+			FLDMAPPER_RESIST_TEXTYPE_NONE,	NULL,
+			FLDMAPPER_RESIST_OBJTYPE_TBL,	(void*)&gobjData_Tbl,
+
+			2,  2, NELEMS(test_c3map),
+			test_c3map, 
+		}, 
+		&FieldNoGridFunctions,
 		FALSE,
 	},
 };
