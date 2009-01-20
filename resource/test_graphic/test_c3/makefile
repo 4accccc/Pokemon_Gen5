@@ -81,6 +81,7 @@ clean:
 	-rm -f $(TARGETNAME).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	-rm -f arcfilelist dependfile heightlist
+	-rm -f *.nsbtx *.nsbmd
 	-rm -f *.$(EXTNAME)
 endif
 
