@@ -83,7 +83,7 @@ DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vra
 
 	DLPlayDispSys_InitObj( dispSys ,vramBank );
 	
-	GFUser_HIntr_CreateTCB( DLPlaySys_UpdateDraw , (void*)dispSys , 0 );
+	dispSys->vblankTcb_ = GFUser_VIntr_CreateTCB( DLPlaySys_UpdateDraw , (void*)dispSys , 0 );
 	
 	return dispSys;
 }
@@ -91,6 +91,7 @@ DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vra
 void	DLPlayDispSys_TermSystem( DLPLAY_DISP_SYS *dispSys )
 {
 	DLPlayDispSys_TermObj( dispSys );
+	GFL_TCB_DeleteTask( dispSys->vblankTcb_ );
 	GFL_HEAP_FreeMemory( dispSys );
 }
 
@@ -250,6 +251,9 @@ static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys )
 			dispSys->isUseBoxData_[i] = FALSE;
 		}
 	}
+	//ごみが出るのを防ぐため一回OAMをクリア
+	//本来は1ループ間を空けるべき
+	GFL_CLACT_SYS_ClearAllOamBuffer();
 }
 
 //ポケモンの番号とフォルムからファイル名を識別し、イメージプロキシを設定。
