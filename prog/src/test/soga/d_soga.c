@@ -17,7 +17,7 @@
 #include "arc_def.h"
 
 #include "system\gfl_use.h"
-#include "battle/poke_mcss.h"
+#include "system/poke_mcss.h"
 #include "battle/btl_stage.h"
 #include "battle/btl_field.h"
 #include "battle/btl_camera.h"
@@ -31,7 +31,7 @@
 
 #include "test/performance.h"
 
-//#define MCS_ENABLE		//MCSを使用する
+#define MCS_ENABLE		//MCSを使用する
 #define POKEGRA_CHECK		//ポケモングラフィックチェックモード実装
 //#define	SCALE_CHECK		//透視射影と正射影でスケールの誤差を修正するテストモードの起動
 
@@ -180,10 +180,6 @@ typedef struct
 
 extern	PERFORMANCE_PARAM	per_para;
 
-static	void	EmitScaleSet(GFL_EMIT_PTR emit);
-
-int	emit_angle;
-
 static	void	MoveCamera( SOGA_WORK *wk );
 
 static	void	set_pokemon( SOGA_WORK *wk );
@@ -219,6 +215,8 @@ static	const	char	ProjectionText[2][12]={
 	"Ortho",
 };
 
+FS_EXTERN_OVERLAY(battle);
+
 //--------------------------------------------------------------------------
 /**
  * PROC Init
@@ -228,6 +226,8 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 {
 	SOGA_WORK* wk;
 	u8 chNoList[1]={0};
+
+	GFL_OVERLAY_Load(FS_OVERLAY_ID(battle));
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SOGABE_DEBUG, 0xc0000 );
 	wk = GFL_PROC_AllocWork( proc, sizeof( SOGA_WORK ), HEAPID_SOGABE_DEBUG );
@@ -260,7 +260,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 
 	}	
 
-//	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
+	GX_SetBankForLCDC( GX_VRAM_LCDC_D );
 	
 	G2_BlendNone();
 	GFL_BG_Init( wk->heapID );
@@ -406,7 +406,7 @@ static GFL_PROC_RESULT DebugSogabeMainProcInit( GFL_PROC * proc, int * seq, void
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
 	
 	//キャプチャセット
-//	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
+	GFUser_VIntr_CreateTCB( Capture_VBlankIntr, NULL, 0 );
 
 	//フェードイン
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 2 );
@@ -1424,9 +1424,5 @@ static void Capture_VBlankIntr( GFL_TCB *tcb, void *work )
 				  16,								// Blend parameter for src A
 				  16);								// Blend parameter for src B
 	//---------------------------------------------------------------------------
-}
-
-static	void	EmitScaleSet(GFL_EMIT_PTR emit)
-{
 }
 
