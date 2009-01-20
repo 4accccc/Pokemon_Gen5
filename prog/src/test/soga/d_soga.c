@@ -17,7 +17,7 @@
 #include "arc_def.h"
 
 #include "system\gfl_use.h"
-#include "system/poke_mcss.h"
+#include "battle/poke_mcss.h"
 #include "battle/btl_stage.h"
 #include "battle/btl_field.h"
 #include "battle/btl_camera.h"
