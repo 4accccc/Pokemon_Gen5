@@ -7,70 +7,27 @@
  */
 //============================================================================================
 
-#include "common.h"
-#include "system/procsys.h"
-#include "system/arc_tool.h"
-#include "system/arc_util.h"
-#include "system/pm_str.h"
-#include "system/clact_tool.h"
-#include "system/msgdata_util.h"
-#include "system/wordset.h"
-#include "msgdata/msg.naix"
-#include "msgdata/msg_wifi_lobby.h"
-#include "msgdata/msg_wifi_system.h"
-#include "application\namein.h"
-#include "system/wipe.h"
-#include "system/fontproc.h"
-#include "system/lib_pack.h"
-#include "system/fontoam.h"
-#include "system/window.h"
-#include "gflib/msg_print.h"
-#include "gflib/touchpanel.h"
-#include "poketool/monsno.h"
-#include "system/bmp_menu.h"
-#include "system/bmp_list.h"
-#include "application/wifi_p2pmatch.h"
-#include "application/wifi_lobby/wflby_def.h"
-#include "system/snd_tool.h"
-#include "gflib/strbuf_family.h"
-#include "msgdata/msg_opening_name.h"
-#include "itemtool/itemsym.h"
-#include "system/brightness.h"
-#include "system/pmfprint.h"
-#include "system/pm_overlay.h"
-#include "system/pm_rtc.h"
+#include <gflib.h>
 
-#include "wifi/dwc_rap.h"
-#include "wifi_p2pmatch_local.h"
+#include "net/dwc_rap.h"
+#include "net/dwc_rapfriend.h"
+#include "net_app/wificlub/wifi_p2pmatch.h"
+#include "net_app/wificlub/wifi_p2pmatch_local.h"
 #include "wifi_p2pmatch_se.h"
-#include "wifi/dwc_rapfriend.h"
+#include "wifi_p2pmatchroom.h"
 
-#include "field/sysflag.h"
+#if 0   //clact説明後
 
-#include "communication/communication.h"
-#include "communication/comm_state.h"
-#include "msgdata/msg_ev_win.h"
-#include "savedata/zukanwork.h"
 #include "savedata/wifihistory.h"
 #include "savedata/config.h"
-#include "savedata/poruto.h"
-#include "savedata/frontier_savedata.h"
-#include "itemtool/myitem.h"
-#include "poketool/poke_tool.h"
-#include "poketool/pokeparty.h"
-#include "system/snd_tool.h"  //sndTOOL
-#include "savedata/email_savedata.h"
 
 #include "wifip2pmatch.naix"			// グラフィックアーカイブ定義
+//#include "comm_command_wfp2pmf_func.h"  //２Ｄフィールド 
+#endif    //clact説明後
 
-#include "include/system/pm_debug_wifi.h"
-
-#include "application/connect_anm.h"
-
-#include "comm_command_wfp2pmf_func.h"
 
 // WIFI2DMAPシステムオーバーレイ
-FS_EXTERN_OVERLAY(wifi_2dmapsys);
+FS_EXTERN_OVERLAY(wifi2dmap);
 
 // WIFI　対戦AUTOﾓｰﾄﾞデバック
 #ifdef _WIFI_DEBUG_TUUSHIN
@@ -82,7 +39,6 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 ///	マッチング用拡張ヒープサイズ
 //=====================================
 #define WIFI_P2PMATCH_EXHEAP_SIZE	( 0x10000 )
-//#define WIFI_P2PMATCH_EXHEAP_SIZE	( 0x5000 )
 
 
 
@@ -8525,7 +8481,7 @@ static void MCVSys_Init( WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle, u32 heapID 
 	GF_Disp_GXS_VisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
 	
 	// ボタンデータ初期化
-	wk->view.p_bttnman = BMN_Create( bttndata, WCR_MAPDATA_1BLOCKOBJNUM, MCVSys_BttnCallBack, wk, heapID );
+	wk->view.p_bttnman = GFL_BMN_Create( bttndata, WCR_MAPDATA_1BLOCKOBJNUM, MCVSys_BttnCallBack, wk, heapID );
 
 	// ワードセット初期化
 	wk->view.p_wordset = WORDSET_Create( heapID );
@@ -10674,3 +10630,4 @@ const GFL_PROC_DATA WifiP2PMatchProcData = {
 	WifiP2PMatchProc_Main,
 	WifiP2PMatchProc_End,
 };
+

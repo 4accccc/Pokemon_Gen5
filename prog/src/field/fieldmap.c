@@ -14,7 +14,7 @@
 #include "textprint.h"
 #include "arc_def.h"
 #include "system/g3d_tool.h"
-#include "system/snd_strm.h"
+#include "sound/snd_strm.h"
 #include "arc/snd_strm.naix"
 
 #include "print/gf_font.h"

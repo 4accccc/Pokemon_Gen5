@@ -12,7 +12,7 @@
 #define __WIFI_P2PMATCHFOUR_H__
 
 #include <gflib.h>
-//#include "net_app/wificlub/wificlub_proc.h"
+#include "net_app/wificlub/wifi_p2pmatch.h"
 
 #undef GLOBAL
 #ifdef	__WIFI_P2PMATCHFOUR_H_GLOBAL

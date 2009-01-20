@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -11,15 +14,9 @@
 #ifndef __WIFI_P2PMATCHROOM_MAP_H__
 #define __WIFI_P2PMATCHROOM_MAP_H__
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
-#include "application/wifi_2dmap/wf2dmap_map.h"
+#include "net_app/wifi2dmap/wf2dmap_common.h"
+#include "net_app/wifi2dmap/wf2dmap_map.h"
 
-#undef GLOBAL
-#ifdef	__WIFI_P2PMATCHROOM_MAP_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -77,10 +74,12 @@ enum {
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-GLOBAL WF2DMAP_POS WcrMapGridSizGet( u32 no );
-GLOBAL const WF2DMAP_MAP* WcrMapDataGet( u32 no );
+extern WF2DMAP_POS WcrMapGridSizGet( u32 no );
+extern const WF2DMAP_MAP* WcrMapDataGet( u32 no );
 
 
-#undef	GLOBAL
 #endif		// __WIFI_P2PMATCHROOM_MAP_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

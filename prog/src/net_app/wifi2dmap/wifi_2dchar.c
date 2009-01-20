@@ -9,15 +9,14 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#include "common.h"
-#include "include/system/arc_util.h"
-#include "include/system/clact_util.h"
-#include "src/graphic/wifi2dchar.naix"
-#include "src/graphic/wifi_unionobj.naix"
-#include "src/field/fieldobj_code.h"
+#include <gflib.h>
+//#include "include/system/arc_util.h"
+//#include "include/system/clact_util.h"
+#include "wifi2dchar.naix"
+#include "wifi_unionobj.naix"
+//#include "src/field/fieldobj_code.h"
 
-#define __WIFI_2DCHAR_H_GLOBAL
-#include "application/wifi_2dmap/wifi_2dchar.h"
+#include "net_app/wifi2dmap/wifi_2dchar.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -406,7 +405,8 @@ typedef struct {
 ///	2Dキャラクタ管理システム
 //=====================================
 typedef struct _WF_2DCSYS {
-	CLACT_SET_PTR p_clset;
+    GFL_CLUNIT* p_unit
+//    CLACT_SET_PTR p_clset;
 	PALETTE_FADE_PTR p_pfd;
 	WF_2DCWK*		p_wk;
 	u32 objnum;
@@ -730,7 +730,7 @@ static void WF_2DC_WkPatAnmHighWalk4Main( WF_2DCWK* p_wk );
  *	@return	作成したシステムポインタ
  */
 //-----------------------------------------------------------------------------
-WF_2DCSYS* WF_2DC_SysInit( CLACT_SET_PTR p_clset, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap )
+WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap )
 {
 	WF_2DCSYS* p_sys;
 	int i;
@@ -740,7 +740,7 @@ WF_2DCSYS* WF_2DC_SysInit( CLACT_SET_PTR p_clset, PALETTE_FADE_PTR p_pfd, u32 ob
 	memset( p_sys, 0, sizeof(WF_2DCSYS) );
 
 	// アクターセットは上からもらう
-	p_sys->p_clset = p_clset;
+	p_sys->p_unit = p_unit;
 
 	// パレットフェードシステム
 	p_sys->p_pfd = p_pfd;
@@ -1017,7 +1017,7 @@ void WF_2DC_ShadowResDel( WF_2DCSYS* p_sys )
 WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view_type, u32 heap )
 {
 	WF_2DCWK* p_wk;
-	CLACT_ADD add;
+	GFL_CLWK_DATA add;
 	u32 char_no;
 	
 	// 空のワーク取得
@@ -1030,7 +1030,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	GF_ASSERT( WF_2DC_CharResCheck( p_sys, char_no ) == TRUE );
 	
 	memset( &add, 0, sizeof(CLACT_ADD) );
-	add.ClActSet = p_sys->p_clset;
+	add.ClActSet = p_sys->p_unit;
 	add.ClActHeader = &p_sys->res[ char_no ].header;
 	add.mat.x	= cp_data->x << FX32_SHIFT;
 	add.mat.y	= cp_data->y << FX32_SHIFT;
@@ -1073,7 +1073,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 	if( WF_2DC_ShResCheck( &p_sys->shadowres ) ){
 
 		memset( &add, 0, sizeof(CLACT_ADD) );
-		add.ClActSet = p_sys->p_clset;
+		add.ClActSet = p_sys->p_unit;
 		add.ClActHeader = &p_sys->shadowres.header;
 		add.mat.x	= cp_data->x << FX32_SHIFT;
 		add.mat.y	= cp_data->y << FX32_SHIFT;
@@ -1091,7 +1091,7 @@ WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u32 view
 			add.DrawArea = NNS_G2D_VRAM_TYPE_2DSUB;
 		}
 
-		p_wk->p_shadow = CLACT_Add( &add );
+		p_wk->p_shadow = GFL_CLACT_WK_Add( p_wk->p_unit ,&add , ,CLWK_SETSF_NONE, heap);
 
 		CLACT_BGPriorityChg( p_wk->p_shadow, cp_data->bgpri );
 	}else{

@@ -33,16 +33,15 @@ LLIBRARIES		=  	gflib.a
 
 # wifiを使用する場合のLibrary定義
 LDEPENDS_NEF = $(NITRODWC_LIB_DEPENDS)
-NITRODWC_LIB_MODULES_   = base auth ac bm account
-NITRODWC_LIB_GSMODULES_ = common ghttp gp gstats gt2 natneg qr2 serverbrowsing chat
+NITRODWC_LIB_MODULES_   = bm account
+NITRODWC_LIB_GSMODULES_ = 
 
-#NitroSystemライブラリ定義
-NITROSYSTEM_LIBS = \
-		libnnsfnd$(NITRO_LIBSUFFIX).a \
-		libnnsgfd$(NITRO_LIBSUFFIX).a \
-		libnnsg2d$(NITRO_LIBSUFFIX).a \
-		libnnsg3d$(NITRO_LIBSUFFIX).a \
-		libnnssnd$(NITRO_LIBSUFFIX).a
+##NITROSYSTEM_LIBS = \
+##		libnnsfnd$(NITRO_LIBSUFFIX).a \
+##		libnnsgfd$(NITRO_LIBSUFFIX).a \
+##		libnnsg2d$(NITRO_LIBSUFFIX).a \
+##		libnnsg3d$(NITRO_LIBSUFFIX).a \
+##		libnnssnd$(NITRO_LIBSUFFIX).a
 
 #----------------------------------------------------------------------------
 #パーティクルのためのライブラリを追加

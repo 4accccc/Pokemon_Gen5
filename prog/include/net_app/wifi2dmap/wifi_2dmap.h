@@ -11,7 +11,7 @@
 #ifndef __WIFI_2DMAP_H__
 #define __WIFI_2DMAP_H__
 
-#include "application/wifi_2dmap/wifi_2dcommon.h"
+#include "net_app/wifi2dmap/wifi_2dcommon.h"
 
 #undef GLOBAL
 #ifdef	__WIFI_2DMAP_H_GLOBAL

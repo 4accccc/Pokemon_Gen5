@@ -39,7 +39,7 @@ static GFL_PROC_RESULT FieldMapProcInit
 	FIELD_MAIN_WORK * fieldWork;
 	FPROC_WORK * fpwk;
 	GAMESYS_WORK * gsys = pwk;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x200000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_FIELDMAP, 0x140000 );
 	fpwk = GFL_PROC_AllocWork(proc, sizeof(FPROC_WORK), HEAPID_FIELDMAP);
 	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
 	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);

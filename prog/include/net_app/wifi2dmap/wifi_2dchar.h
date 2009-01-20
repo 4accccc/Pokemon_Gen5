@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -11,11 +14,9 @@
 #ifndef __WIFI_2DCHAR_H__
 #define __WIFI_2DCHAR_H__
 
+#include <gflib.h>
 #include "wifi_2dcharcon.h"
-#include "application/wifi_2dmap/wifi_2dcommon.h"
-#include "include/gflib/clact.h"
-#include "src/field/fieldobj_code.h"
-#include "system/palanm.h"
+#include "net_app/wifi2dmap/wifi_2dcommon.h"
 
 #undef GLOBAL
 #ifdef	__WIFI_2DCHAR_H_GLOBAL
@@ -116,7 +117,7 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 // システムの生成
-GLOBAL WF_2DCSYS* WF_2DC_SysInit( CLACT_SET_PTR p_clset, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap );
+GLOBAL WF_2DCSYS* WF_2DC_SysInit( GFL_CLUNIT* p_unit, PALETTE_FADE_PTR p_pfd, u32 objnum, u32 heap );
 GLOBAL void WF_2DC_SysExit( WF_2DCSYS* p_sys );
 
 // リソース登録
@@ -142,8 +143,8 @@ GLOBAL WF_2DCWK* WF_2DC_WkAdd( WF_2DCSYS* p_sys, const WF_2DC_WKDATA* cp_data, u
 GLOBAL void WF_2DC_WkDel( WF_2DCWK* p_wk );
 
 // ワーク操作系
-GLOBAL CLACT_WORK_PTR WF_2DC_WkClWkGet( WF_2DCWK* p_wk );
-GLOBAL CONST_CLACT_WORK_PTR WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk );
+GLOBAL GFL_CLWK* WF_2DC_WkClWkGet( WF_2DCWK* p_wk );
+GLOBAL const GFL_CLWK* WF_2DC_WkConstClWkGet( const WF_2DCWK* cp_wk );
 GLOBAL void WF_2DC_WkMatrixSet( WF_2DCWK* p_wk, s16 x, s16 y );
 GLOBAL s16 WF_2DC_WkMatrixGet( WF_2DCWK* p_wk, WF_2DC_MAT x_y );
 GLOBAL void WF_2DC_WkDrawPriSet( WF_2DCWK* p_wk, u16 pri );
@@ -167,3 +168,6 @@ GLOBAL void WF_2DC_WkPatAnmAddFrame( WF_2DCWK* p_wk );// Patternアニメ更新処理
 #undef	GLOBAL
 #endif		// __WIFI_2DCHAR_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

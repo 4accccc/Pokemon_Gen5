@@ -143,9 +143,8 @@ File.readlines(MAKE_PROG_FILE).each{ |line|
 						_targetname
         )
                 if afteroverlaycnt != 0 then
-          afterList.each { |afline|
-            p afline
-                      file.printf("\tAfter\t%s\n",afline.downcase.sub(/srcs_overlay_/,""))
+                  afterList.each { |afline|
+                    file.printf("\tAfter\t%s\n",afline.downcase.sub(/srcs_overlay_/,""))
                   }
                 end
 				file.printf("\tObject")

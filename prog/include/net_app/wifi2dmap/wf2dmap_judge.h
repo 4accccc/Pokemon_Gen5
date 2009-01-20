@@ -11,9 +11,9 @@
 #ifndef __WF2DMAP_JUDGE_H__
 #define __WF2DMAP_JUDGE_H__
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
-#include "application/wifi_2dmap/wf2dmap_obj.h"
-#include "application/wifi_2dmap/wf2dmap_map.h"
+#include "net_app/wifi2dmap/wf2dmap_common.h"
+#include "net_app/wifi2dmap/wf2dmap_obj.h"
+#include "net_app/wifi2dmap/wf2dmap_map.h"
 
 #undef GLOBAL
 #ifdef	__WF2DMAP_JUDGE_H_GLOBAL

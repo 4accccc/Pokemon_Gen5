@@ -1,7 +1,7 @@
 //=============================================================================
 /**
- * @file	wifi_note_local.h
- * @brief	WIFI手帳ローカル定義
+ * @file	wifi_p2pmatch_local.h
+ * @brief	WIFICLUBローカル定義
  * @author	k.ohno
  * @date    2006.4.5
  */
@@ -11,18 +11,11 @@
 #ifndef __WIFI_P2PMATCH_LOCAL_H__
 #define __WIFI_P2PMATCH_LOCAL_H__
 
+#include <gflib.h>
 #include "savedata/wifilist.h"
+#include "print/wordset.h"
 #include "wifi_p2pmatchroom.h"
-#include "gflib/button_man.h"
-#include "system/fontoam.h"
-#include "application/connect_anm_types.h"
 
-#include "system/bmp_menu.h"
-#include "system/bmp_list.h"
-#include "system/wordset.h"
-#include "system/procsys.h"
-
-#include "savedata/mystatus.h"
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
 #define WIFIP2PMATCH_DISP_MEMBER_MAX  (5)
@@ -191,11 +184,11 @@ typedef enum{
 
   WIFI_STATUS_PLAY_OTHER,	// WiFiクラブに以外で遊び中
   WIFI_STATUS_UNKNOWN,   // 新たに作ったらこの番号以上になる
-};
+} WIFI_STATUS_e;
 
 typedef enum{
   _REGULATION_BATTLE_TOWER     // バトルタワー対戦方式
-};
+} REGULATION_BATTLE_e;
 
 
 //トータル189バイト送信できるがとりあえず下位プログラムは範囲分だけ送る
@@ -208,7 +201,7 @@ enum{
 	WF_VIEW_STATUS,
 	WF_VIEW_VCHAT,
 	WF_VIEW_STATUS_NUM,
-};
+} WF_VIEW_STATUS_e;
 
 enum{
 	WF_USERDISPTYPE_NRML,	// 通常
@@ -219,7 +212,7 @@ enum{
 	WF_USERDISPTYPE_BTST,	// バトルステージ
 	WF_USERDISPTYPE_BTRT,	// バトルルーレット
 	WF_USERDISPTYPE_NUM,
-};
+} WF_USERDISPTYPE__e;
 
 // ユーザ表示ボタン数
 enum{
@@ -227,7 +220,7 @@ enum{
 	MCV_USERD_BTTN_BACK,
 	MCV_USERD_BTTN_RIGHT,
 	MCV_USERD_BTTN_NUM,
-};
+} MCV_USERD_BTTN_e;
 
 typedef struct _WIFI_MACH_STATUS_tag{
   u16 pokemonType[_POKEMON_NUM];
@@ -286,7 +279,7 @@ typedef struct {
 	void* p_useretcbuff;
 	NNSG2dScreenData* p_useretcscrn;
 	
-	BUTTON_MAN* p_bttnman;	// ボタン管理システム
+	GFL_BUTTON_MAN* p_bttnman;	// ボタン管理システム
 	u8 bttnfriendNo[ MATCHROOM_IN_NPCNUM ];
 	u8 frame_no;	// 今表示している床のナンバー
 	u8 touch_friendNo;	// 触れている友達番号+1
@@ -299,9 +292,9 @@ typedef struct {
 	BOOL bttn_allchg;	// ボタンすべてを更新するか 
 
 	// 表示ビットマップ面
-	GF_BGL_BMPWIN	  nameWin[ WCR_MAPDATA_1BLOCKOBJNUM ];
-	GF_BGL_BMPWIN	  statusWin[ WCR_MAPDATA_1BLOCKOBJNUM ][ WF_VIEW_STATUS_NUM ];
-	GF_BGL_BMPWIN	  userWin;
+	GFL_BMPWIN*	  nameWin[ WCR_MAPDATA_1BLOCKOBJNUM ];
+	GFL_BMPWIN*	  statusWin[ WCR_MAPDATA_1BLOCKOBJNUM ][ WF_VIEW_STATUS_NUM ];
+	GFL_BMPWIN*	  userWin;
 
 	// ボタン
 	CLACT_U_RES_OBJ_PTR	button_res[ 4 ];

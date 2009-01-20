@@ -11,8 +11,8 @@
 #ifndef __WIFI_2DMAP_COMMON_H__
 #define __WIFI_2DMAP_COMMON_H__
 
-#include "src/field/fieldobj_code.h"
-#include "application/wifi_2dmap/wf2dmap_common_c.h"
+//#include "src/field/fieldobj_code.h"
+#include "net_app/wifi2dmap/wf2dmap_common_c.h"
 
 #undef GLOBAL
 #ifdef	__WIFI_2DMAP_COMMON_H_GLOBAL

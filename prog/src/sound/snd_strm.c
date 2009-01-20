@@ -13,7 +13,7 @@
 #include <gflib.h>
 //#include "common.h"
 
-#include "system/snd_strm.h"
+#include "sound/snd_strm.h"
 
 //-----------------------------------------------------------------------------
 /**

@@ -28,6 +28,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				savedata/box_savedata.c \
 				test/goto/d_goto.c \
 				test/goto/comm_error.c \
+				test/soga/d_soga.c \
 				system/mcss.c \
 				battle/poke_mcss.c \
 				poke_tool/poke_tool.c \
@@ -46,7 +47,6 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/bmp_menu.c \
 				system/bmp_menulist.c \
 				system/bmp_cursor.c \
-				system/snd_strm.c \
 				system/file_util.c \
 				test/dlplay/dlplay_parent_sample.c \
 				test/dlplay/dlplay_parent_main.c \
@@ -66,6 +66,8 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				system/wipe.c \
 				system/wipe_sub.c \
 				system/wipe_wnd.c \
+				sound/snd_strm.c \
+				sound/snd_dummy.c \
 				net/net_icondata.c \
 				net/net_dev.c \
 				savedata/wifihistory.c \
@@ -83,7 +85,6 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				field/fldmmdl.c \
 				field/fldmmdl_move.c
 
-#				net_app/wificlub/wifi_p2pevent.c \
 
 
 #================================================
@@ -239,7 +240,9 @@ SRCS_OVERLAY_WATANABE_SAMPLE	= test/tetsu/game/gamemain.c \
 SRCS_OVERLAY_CONFIG_PANEL	= app/config_panel/config_panel.c
 
 # 大野デバッグ
+#===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_OHNO_DEBUG	= test/ohno/debug_ohno.c \
 				test/ohno/fatal_error.c \
 				test/ohno/debug_field.c \
@@ -252,6 +255,8 @@ SRCS_OVERLAY_ARIIZUMI_DEBUG	= test/ariizumi/debug_ariizumi.c
 
 # 松田デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
 SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 				test/matsuda/d_matsu_net.c \
 				test/matsuda/d_matsu_match.c \
@@ -263,16 +268,16 @@ SRCS_OVERLAY_MATSUDA_DEBUG	= test/matsuda/d_matsu.c \
 				test/matsuda/palace_block2.c
 
 # 田谷デバッグ
-#===> main
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_TAYA_DEBUG		= test/taya/d_taya.c
 
-# 曽我部デバッグ
-#===> main
-#LIB=>					libnnsmcs.a
-SRCS_OVERLAY_SOGABE_DEBUG	= test/soga/d_soga.c
 
 # タイトル
-#===> SRCS_OVERLAY_WIFI_UTIL
+#===> SRCS_OVERLAY_DEV_IRC
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_TITLE	= title/title.c \
 				title/startmenu.c \
 				title/game_start.c
@@ -284,7 +289,9 @@ SRCS_OVERLAY_TESTMODE	= test/testmode.c
 
 
 #ポケモンリスト
+#===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_POKELIST	= test/matsuda/easy_pokelist.c
 
 
@@ -294,8 +301,9 @@ SRCS_OVERLAY_TRADE	= trade/trade.c \
 				trade/trade_main.c
 
 # バトル
+#===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
 			battle/btl_server_cmd.c \
@@ -319,7 +327,22 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/tokusei/hand_tok_ikaku.c \
 			battle/handler/tokusei/hand_tok_clearbody.c
 
-### WIFICLUB
-###===> SRCS_OVERLAY_DEV_WIFI
-###SRCS_OVERLAY_WIFICLUB	= net_app/wificlub/wifi_p2pmatch.c
+# WIFICLUB
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_IRC
+SRCS_OVERLAY_WIFICLUB	= net_app/wificlub/wifi_p2pevent.c
 
+
+
+## WIFI2DMAP
+##===> SRCS_OVERLAY_WIFICLUB
+#SRCS_OVERLAY_WIFI2DMAP  = net_app/wifi2dmap/wifi_2dchar.c \
+#							net_app/wifi2dmap/wf2dmap_map.c \
+#							net_app/wifi2dmap/wf2dmap_obj.c \
+#							net_app/wifi2dmap/wf2dmap_judge.c \
+#							net_app/wifi2dmap/wf2dmap_objdraw.c \
+#							net_app/wifi2dmap/wf2dmap_scroll.c \
+#							net_app/wifi2dmap/wf2dmap_scrdraw.c \
+#							net_app/wifi2dmap/wf2dmap_cmdq.c
+#

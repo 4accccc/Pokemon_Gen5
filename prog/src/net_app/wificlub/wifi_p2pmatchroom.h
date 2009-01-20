@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -11,26 +14,17 @@
 #ifndef __WIFI_P2PMATCHROOM_H__
 #define __WIFI_P2PMATCHROOM_H__
 
-#include "clact.h"
-#include "bg_system.h"
-#include "system/arc_util.h"
-#include "application/wifi_2dmap/wf2dmap_map.h"
-#include "application/wifi_2dmap/wf2dmap_obj.h"
-#include "application/wifi_2dmap/wf2dmap_judge.h"
-#include "application/wifi_2dmap/wf2dmap_objdraw.h"
-#include "application/wifi_2dmap/wf2dmap_scroll.h"
-#include "application/wifi_2dmap/wf2dmap_scrdraw.h"
-#include "application/wifi_2dmap/wf2dmap_cmdq.h"
+#include <gflib.h>
+#include "net_app/wifi2dmap/wf2dmap_map.h"
+#include "net_app/wifi2dmap/wf2dmap_obj.h"
+#include "net_app/wifi2dmap/wf2dmap_judge.h"
+#include "net_app/wifi2dmap/wf2dmap_objdraw.h"
+#include "net_app/wifi2dmap/wf2dmap_scroll.h"
+#include "net_app/wifi2dmap/wf2dmap_scrdraw.h"
+#include "net_app/wifi2dmap/wf2dmap_cmdq.h"
 
 #include "wifi_p2pmatchroom_map.h"
 
-
-#undef GLOBAL
-#ifdef	__WIFI_P2PMATCHROOM_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -150,7 +144,7 @@ typedef struct _WIFI_MATCHROOM{
 	u32 use_heap;			// 使用するヒープ
 	u32 seq;				// シーケンス
 	BOOL player_pause;		// プレイヤーの移動を停止させる
-	GF_BGL_INI*	p_bgl;		// BGL
+	GFL_BG_INI*	p_bgl;		// BGL
 	MCR_CLACT				clact;		// アクター情報
 	MCR_MOVEOBJ				moveObj[MCR_MOVEOBJNUM];		// 動作オブジェクト
 	MCR_MOVEOBJ*			p_player;	// 主人公は特別に取っておく		
@@ -171,44 +165,46 @@ typedef struct _WIFI_MATCHROOM{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-GLOBAL void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GF_BGL_INI* p_bgl, u32 hero_view, u32 friendNum );
-GLOBAL void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr );
-GLOBAL BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr );
+extern void WIFI_MCR_Init( WIFI_MATCHROOM* p_mcr, u32 heapID, ARCHANDLE* p_handle, GF_BGL_INI* p_bgl, u32 hero_view, u32 friendNum );
+extern void WIFI_MCR_Dest( WIFI_MATCHROOM* p_mcr );
+extern BOOL WIFI_MCR_GetInitFlag( const WIFI_MATCHROOM* cp_mcr );
 
-GLOBAL u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr );
-GLOBAL void WIFI_MCR_Draw( WIFI_MATCHROOM* p_mcr );
-GLOBAL u8 WIFI_MCR_PlayerSelect( const WIFI_MATCHROOM* cp_mcr );
-GLOBAL u32 WIFI_MCR_GetPlayerOnMapParam( const WIFI_MATCHROOM* cp_mcr );
-GLOBAL u32 WIFI_MCR_GetPlayerOnUnderMapParam( const WIFI_MATCHROOM* cp_mcr );
-GLOBAL void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj );
-GLOBAL void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr );
-GLOBAL void WIFI_MCR_PlayerMovePause( WIFI_MATCHROOM* p_mcr, BOOL flag );
-GLOBAL BOOL WIFI_MCR_PlayerMovePauseGet( const WIFI_MATCHROOM* cp_mcr );
+extern u32 WIFI_MCR_Main( WIFI_MATCHROOM* p_mcr );
+extern void WIFI_MCR_Draw( WIFI_MATCHROOM* p_mcr );
+extern u8 WIFI_MCR_PlayerSelect( const WIFI_MATCHROOM* cp_mcr );
+extern u32 WIFI_MCR_GetPlayerOnMapParam( const WIFI_MATCHROOM* cp_mcr );
+extern u32 WIFI_MCR_GetPlayerOnUnderMapParam( const WIFI_MATCHROOM* cp_mcr );
+extern void WIFI_MCR_CursorOn( WIFI_MATCHROOM* p_mcr, const MCR_MOVEOBJ* cp_obj );
+extern void WIFI_MCR_CursorOff( WIFI_MATCHROOM* p_mcr );
+extern void WIFI_MCR_PlayerMovePause( WIFI_MATCHROOM* p_mcr, BOOL flag );
+extern BOOL WIFI_MCR_PlayerMovePauseGet( const WIFI_MATCHROOM* cp_mcr );
 
 
 // オブジェクト関連
-GLOBAL MCR_MOVEOBJ* WIFI_MCR_SetPlayer( WIFI_MATCHROOM* p_mcr, u32 view );
-GLOBAL MCR_MOVEOBJ* WIFI_MCR_SetNpc( WIFI_MATCHROOM* p_mcr, u32 view, u8 friendNo );
-GLOBAL void WIFI_MCR_DelPeopleReq( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj );
-GLOBAL void WIFI_MCR_DelPeople( MCR_MOVEOBJ* p_obj );
+extern MCR_MOVEOBJ* WIFI_MCR_SetPlayer( WIFI_MATCHROOM* p_mcr, u32 view );
+extern MCR_MOVEOBJ* WIFI_MCR_SetNpc( WIFI_MATCHROOM* p_mcr, u32 view, u8 friendNo );
+extern void WIFI_MCR_DelPeopleReq( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj );
+extern void WIFI_MCR_DelPeople( MCR_MOVEOBJ* p_obj );
 
-GLOBAL u8	WIFI_MCR_GetFriendNo( const MCR_MOVEOBJ* cp_obj );
-GLOBAL u32	WIFI_MCR_GetView( const MCR_MOVEOBJ* cp_obj );
-GLOBAL WF2DMAP_WAY	WIFI_MCR_GetWay( const MCR_MOVEOBJ* cp_obj );
-GLOBAL WF2DMAP_WAY	WIFI_MCR_GetRetWay( const MCR_MOVEOBJ* cp_obj );
+extern u8	WIFI_MCR_GetFriendNo( const MCR_MOVEOBJ* cp_obj );
+extern u32	WIFI_MCR_GetView( const MCR_MOVEOBJ* cp_obj );
+extern WF2DMAP_WAY	WIFI_MCR_GetWay( const MCR_MOVEOBJ* cp_obj );
+extern WF2DMAP_WAY	WIFI_MCR_GetRetWay( const MCR_MOVEOBJ* cp_obj );
 
 // NPC操作
-GLOBAL void WIFI_MCR_NpcPauseOn( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, WF2DMAP_WAY way );
-GLOBAL void WIFI_MCR_NpcPauseOff( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj );
+extern void WIFI_MCR_NpcPauseOn( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, WF2DMAP_WAY way );
+extern void WIFI_MCR_NpcPauseOff( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj );
 
 // NPC動作設定
-GLOBAL void WIFI_MCR_NpcMoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOVETYPE moveID );
+extern void WIFI_MCR_NpcMoveSet( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj, MCR_NPC_MOVETYPE moveID );
 
 // PCアニメ設定
-GLOBAL void WIFI_MCR_PCAnmStart( WIFI_MATCHROOM* p_mcr );
-GLOBAL void WIFI_MCR_PCAnmOff( WIFI_MATCHROOM* p_mcr );
-GLOBAL void WIFI_MCR_PCAnmMain( WIFI_MATCHROOM* p_mcr );
+extern void WIFI_MCR_PCAnmStart( WIFI_MATCHROOM* p_mcr );
+extern void WIFI_MCR_PCAnmOff( WIFI_MATCHROOM* p_mcr );
+extern void WIFI_MCR_PCAnmMain( WIFI_MATCHROOM* p_mcr );
 
-#undef	GLOBAL
 #endif		// __WIFI_P2PMATCHROOM_H__
 
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

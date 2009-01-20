@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //=============================================================================
 /**
  * @file	wifi_p2pmatch_se.h
@@ -10,12 +13,11 @@
 #ifndef __WIFI_P2PMATCH_SE_H__
 #define __WIFI_P2PMATCH_SE_H__
 
-#include "system/snd_tool.h"
-
 
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
+#if 0 //SEはまだ無いので封印 2009.01.19
 #define _SE_CURSOR			(SEQ_SE_DP_SELECT)		// カーソル
 #define _SE_DESIDE   		(SEQ_SE_DP_DECIDE)		// 決定&キャンセル
 #define _SE_OFFER       	(SEQ_SE_DP_UG_020)		// もうしこみ
@@ -26,6 +28,11 @@
 #define _SE_INOUT			(SEQ_SE_DP_TELE2)		// 入退室
 
 #define _BGM_MAIN           (SEQ_WIFILOBBY)			// BGM
+#endif //if 0
 
 
 #endif  //__WIFI_P2PMATCH_SE_H__
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif

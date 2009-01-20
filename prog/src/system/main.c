@@ -15,7 +15,7 @@
 #include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
-#include "system\snd_strm.h"
+#include "sound\snd_strm.h"
 #include "savedata/save_control.h"
 #include "print/printsys.h"
 #include "print/global_font.h"
@@ -28,6 +28,7 @@
 #ifdef PM_DEBUG
 #include "test/performance.h"
 #include "test/goto/comm_error.h"
+extern void SoundDummyInit(void);
 #endif //PM_DEBUG
 
 #include "title/title.h"
@@ -176,6 +177,12 @@ static	void	GameInit(void)
 
 	//キーコントロールモード設定
 	CONFIG_SYSTEM_KyeControlTblSetting();
+
+#ifdef PM_DEBUG
+    //メモリーを予約する為の一時的な措置
+    SoundDummyInit();
+#endif //PM_DEBUG
+
 }
 
 //------------------------------------------------------------------

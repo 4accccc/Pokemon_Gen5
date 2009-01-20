@@ -1,3 +1,6 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
@@ -11,18 +14,11 @@
 #ifndef __WF2DMAP_SCRDRAW_H__
 #define __WF2DMAP_SCRDRAW_H__
 
-#include "application/wifi_2dmap/wf2dmap_common.h"
-#include "application/wifi_2dmap/wf2dmap_map.h"
-#include "application/wifi_2dmap/wf2dmap_scroll.h"
-#include "system/clact_util.h"
-#include "gflib/bg_system.h"
+#include <gflib.h>
+#include "net_app/wifi2dmap/wf2dmap_common.h"
+#include "net_app/wifi2dmap/wf2dmap_map.h"
+#include "net_app/wifi2dmap/wf2dmap_scroll.h"
 
-#undef GLOBAL
-#ifdef	__WF2DMAP_SCRDRAW_H_GLOBAL
-#define	GLOBAL	/* */
-#else
-#define	GLOBAL	extern
-#endif
 
 
 //-----------------------------------------------------------------------------
@@ -82,12 +78,15 @@ typedef struct {
 */
 //-----------------------------------------------------------------------------
 // システム作成
-GLOBAL WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GF_BGL_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID );
-GLOBAL void WF2DMAP_SCRDrawSysExit( WF2DMAP_SCRDRAW* p_sys );
+extern WF2DMAP_SCRDRAW* WF2DMAP_SCRDrawSysInit( CLACT_U_EASYRENDER_DATA* p_render, GFL_BG_INI* p_bgl, const WF2DMAP_SCRDRAWINIT* cp_init, u32 heapID );
+extern void WF2DMAP_SCRDrawSysExit( WF2DMAP_SCRDRAW* p_sys );
 
 // スクロール反映
-GLOBAL void WF2DMAP_SCRDrawSysMain( WF2DMAP_SCRDRAW* p_sys, const WF2DMAP_SCROLL* cp_scroll );
+extern void WF2DMAP_SCRDrawSysMain( WF2DMAP_SCRDRAW* p_sys, const WF2DMAP_SCROLL* cp_scroll );
 
-#undef	GLOBAL
 #endif		// __WF2DMAP_SCRDRAW_H__
 
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
