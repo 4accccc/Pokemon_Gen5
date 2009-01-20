@@ -221,7 +221,7 @@ void GFLUser_VIntr(void)
 	// この関数を実行すると、描画しているOBJが消えてしまうため
 	// 割り込みないで呼ばないほうが良いかもしれません。
 	//GFL_CLACT_VBlankFuncTransOnly();
-	GFL_CLACT_VBlankFunc();
+	//GFL_CLACT_VBlankFunc();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     //GFL_NET_VBlankFunc();
 

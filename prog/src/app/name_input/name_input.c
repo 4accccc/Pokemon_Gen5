@@ -72,7 +72,8 @@ const GFL_PROC_DATA NameInputProcData = {
 //文字バッファ作るときはEOM分足すこと
 static const NAME_INPUT_STR_LENGTH[NAMEIN_MAX] =
 {
-	PERSON_NAME_SIZE,	// 自分の名前
+	//FIXME 海外版は名前の長さが違うのでdefineで切り替える
+	5,	// 自分の名前
 	MONS_NAME_SIZE,		// ポケモンの名前
 	8,					// ボックスの名前
 	PERSON_NAME_SIZE,	// ライバルネーム

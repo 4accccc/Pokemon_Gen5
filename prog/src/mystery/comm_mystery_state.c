@@ -116,7 +116,7 @@ BOOL CommMysteryBeaconCheck(GameServiceID GameServiceID1, GameServiceID GameServ
 	return TRUE;
 }
 //	ビーコンデータ取得関数
-static GIFT_DATA beaconTemp; 
+static GIFT_BEACON beaconTemp; 
 void* CommMysteryGetBeaconData(void* pWork)
 {
 	return (void*)&beaconTemp;
@@ -125,7 +125,7 @@ void* CommMysteryGetBeaconData(void* pWork)
 //	ビーコンデータサイズ取得関数
 int CommMysteryGetBeaconSize(void* pWork)
 {
-	return sizeof(GIFT_DATA);
+	return sizeof(GIFT_BEACON);
 }
 
 

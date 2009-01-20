@@ -12,6 +12,7 @@
 #include "arc_def.h"
 
 #include "system/main.h"
+#include "system/gfl_use.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 #include "system/wipe.h"
@@ -55,6 +56,11 @@ typedef struct {
 //	SOFT_SPRITE_ARC PokeGraSsa;
 
 	void (*vfunc)(void *);
+	GFL_TCB*	vblankFuncTcb;
+
+	//パレットのVBlank読み込みで、読み込みは普通で、転送をblankタイミングで
+	void	*pltRes;	
+	NNSG2dPaletteData *pltData;
 	
 	BOOL	isInitClact;
 	
@@ -75,7 +81,7 @@ static MYSTERYLIB_WORK MysteryLibWork;
 
 #define GetMysteryLibWorkPtr()	&MysteryLibWork
 
-static void MysteryLib_VBlankFunc(void *work);
+static void MysteryLib_VBlankFunc(GFL_TCB *tcb,void *work);
 
 //------------------------------------------------------------------
 /**
@@ -93,6 +99,7 @@ void MysteryLib_Init(int heapid)
 	wk->init_flag = TRUE;
 	wk->heapid = heapid;
 	wk->isInitClact = FALSE;
+	wk->vblankFuncTcb = NULL;
 }
 
 
@@ -379,6 +386,20 @@ BOOL MysteryLib_isInitClact(void)
 //------------------------------------------------------------------
 void MysteryLib_InitClactSystem(void)
 {
+	const GFL_DISP_VRAM vramSetTable = {
+		GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
+		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BG_32_H,			/* サブ2DエンジンのBG */
+		GX_VRAM_SUB_BGEXTPLTT_NONE,		/* サブ2DエンジンのBG拡張パレット */
+		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+		GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+		GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+	};
 	const u8 CELL_MAX = 16;
 	int i;
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
@@ -408,11 +429,13 @@ void MysteryLib_InitClactSystem(void)
 	*/
 	
 	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
-	cellSysInitData.oamst_main = 0x10; //通信アイコンの分
-	cellSysInitData.oamnum_main = 128-0x10;
+	cellSysInitData.oamst_main = 1; //通信アイコンの分
+	cellSysInitData.oamnum_main = 64-1;
+	cellSysInitData.oamst_sub = 16; 
+	cellSysInitData.oamnum_sub = 128-16;
 	
-	GFL_CLACT_Init( &cellSysInitData , wk->heapid );
-	wk->clact.cellUnit  = GFL_CLACT_UNIT_Create( CELL_MAX , wk->heapid );
+	GFL_CLACT_SYS_Create( &cellSysInitData , &vramSetTable, wk->heapid );
+	wk->clact.cellUnit  = GFL_CLACT_UNIT_Create( CELL_MAX , 0,wk->heapid );
 	GFL_CLACT_UNIT_SetDefaultRend( wk->clact.cellUnit );
 
 	wk->isInitClact = TRUE;
@@ -452,7 +475,7 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 {
 	
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
-	int hwscreen = screen == GFL_BG_MAIN_DISP ? NNS_G2D_VRAM_TYPE_2DMAIN : NNS_G2D_VRAM_TYPE_2DSUB;
+	int hwscreen = (screen == GFL_BG_MAIN_DISP ? NNS_G2D_VRAM_TYPE_2DMAIN : NNS_G2D_VRAM_TYPE_2DSUB);
 	int comp;
 
 	//  OS_TPrintf("%d, %d, %d, %d, %d, %d\n", arcfile, arcchar, arcpal, arccell, arcanim, screen);
@@ -468,7 +491,9 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 //			CLACT_U_ResManagerResAddArcChar(wk->clact.resMan[CLACT_U_CHAR_RES],
 //							arcfile, arcchar, comp, screen, hwscreen, wk->heapid);
 
-		GFL_ARC_UTIL_TransVramObjCharacter( arcfile, arcchar, screen ,0x800 , 0 , comp , wk->heapid );
+		NNS_G2dInitImageProxy( &wk->clact.imgProxy[screen] );
+		GFL_ARC_UTIL_TransVramCharacterMakeProxy( arcfile , arcchar , 
+					FALSE , 0 , 0 , hwscreen , 0 , wk->heapid , &wk->clact.imgProxy[screen] );
 		/*
 		void* arcData;
 		NNSG2dCharacterData* charData;
@@ -494,7 +519,7 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 //							arcfile, arcpal, 0, screen, hwscreen, 3, wk->heapid);
 		NNS_G2dInitImagePaletteProxy( &wk->clact.pltProxy[screen] );
 		GFL_ARC_UTIL_TransVramPaletteMakeProxy( arcfile , arcpal , 
-				hwscreen , 3 , wk->heapid , &wk->clact.pltProxy[screen] );
+				hwscreen , 0 , wk->heapid , &wk->clact.pltProxy[screen] );
 
 
 	}
@@ -539,6 +564,8 @@ void MysteryLib_InitClact(int arcfile, int arcchar, int arcpal, int arccell, int
 		GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON );	//サブ画面OBJ面ＯＮ
 
 //	sys_VBlankFuncChange(MysteryLib_VBlankFunc, NULL);
+	wk->vblankFuncTcb = GFUser_VIntr_CreateTCB( MysteryLib_VBlankFunc , (void*)wk , 0 );
+
 	
 }
 
@@ -561,6 +588,9 @@ void MysteryLib_SetVBlank( void )
 	sys_VBlankFuncChange( MysteryLib_VBlankFunc, NULL );
 }
 
+#endif
+#pragma mark [>start edit
+
 //------------------------------------------------------------------
 /**
  * @brief	サブ画面のサーフェイス変更
@@ -572,13 +602,10 @@ void MysteryLib_SetSubSurfaceMatrix(fx32 x, fx32 y)
 {
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
 
-	CLACT_U_SetSubSurfaceMatrix(&wk->clact.renddata, x, y);
+//	CLACT_U_SetSubSurfaceMatrix(&wk->clact.renddata, x, y);
 	wk->sub_add = y;
 }
 
-
-#endif
-#pragma mark [>start edit
 
 //------------------------------------------------------------------
 /**
@@ -601,8 +628,8 @@ void MysteryLib_DoClact_Ex( int state )
 		VecFx32 *vec;
 		if( wk->giftact_wait == 0 )
 		{
-			if( GFL_CLACT_WK_GetDrawFlag( wk->giftact ) == FALSE && state == 0 ){
-				GFL_CLACT_WK_SetDrawFlag( wk->giftact, 1 );
+			if( GFL_CLACT_WK_GetDrawEnable( wk->giftact ) == FALSE && state == 0 ){
+				GFL_CLACT_WK_SetDrawEnable( wk->giftact, 1 );
 			}
 			//FIXME 処理の意味は？
 //			vec = ( VecFx32 * )CLACT_GetMatrix( wk->giftact );
@@ -616,13 +643,11 @@ void MysteryLib_DoClact_Ex( int state )
 			wk->giftact_wait--;
 		}
 	}
-	//FIXME CLACT_UNIT処理
-#if 0
-	if( wk->clact.clactSet != NULL )
+	if( wk->clact.cellUnit != NULL )
 	{
-		CLACT_Draw(wk->clact.clactSet);
+		//OBJの更新
+		GFL_CLACT_SYS_Main();
 	}
-#endif
 }
 
 //------------------------------------------------------------------
@@ -668,19 +693,18 @@ GFL_CLWK* MysteryLib_MakeCLACT(int screen, GFL_CLWK *anim, int sx, int sy, int a
 		cellInitData.softpri = 0;
 		cellInitData.bgpri = 0;
 		cellWork = GFL_CLACT_WK_Add( wk->clact.cellUnit , &cellInitData ,
-					&cellRes , CLWK_SETSF_NONE , wk->heapid );
+					&cellRes , (screen==GFL_BG_MAIN_DISP?CLSYS_DEFREND_MAIN:CLSYS_DEFREND_SUB) , wk->heapid );
 	}
 	else
 	{
 		cellWork = anim;
 	}
 
-	GFL_CLACT_WK_SetAutoAnmFlag(anim, 1);
-	GFL_CLACT_WK_SetBgPri(anim, 0);
-	GFL_CLACT_WK_SetAnmSeq(anim, anum);
-	GFL_CLACT_WK_SetDrawFlag(anim, 1);
+	GFL_CLACT_WK_SetAutoAnmFlag(cellWork, 1);
+	GFL_CLACT_WK_SetAnmSeq(cellWork, anum);
+	GFL_CLACT_WK_SetDrawEnable(cellWork, 1);
 
-	return anim;
+	return cellWork;
 }
 
 //------------------------------------------------------------------
@@ -722,7 +746,12 @@ void MysteryLib_RemoveClact(void)
 #endif
 
 	GFL_CLACT_UNIT_Delete( wk->clact.cellUnit );
-	GFL_CLACT_Exit();
+	GFL_CLACT_SYS_Delete();
+	
+	if( wk->vblankFuncTcb != NULL )
+	{
+		GFL_TCB_DeleteTask( wk->vblankFuncTcb );
+	}
 
 /* old
 	// セルアクターセット破棄
@@ -757,6 +786,10 @@ u32 MysteryLib_GetCasetteCode(int cas)
 
 //------------------------------------------------------------------
 
+#pragma mark [start Edit
+#endif 
+
+
 
 //------------------------------------------------------------------
 /**
@@ -765,7 +798,7 @@ u32 MysteryLib_GetCasetteCode(int cas)
  * @return	NONE
  */
 //------------------------------------------------------------------
-static void MysteryLib_VBlankFunc(void *work)
+static void MysteryLib_VBlankFunc(GFL_TCB *tcb,void *work)
 {
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
 
@@ -773,24 +806,22 @@ static void MysteryLib_VBlankFunc(void *work)
 		wk->vfunc(wk);
 		wk->vfunc = NULL;
 	}
-	// セルアクターVram転送マネージャー実行
-	DoVramTransferManager();
+	
+	//多分いらない
+	/*
 	// レンダラ共有OAMマネージャVram転送
 	REND_OAMTrans();
 		if(wk->bgl)
 				GF_BGL_VBlankFunc( wk->bgl );
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
-
+	*/
+	GFL_CLACT_SYS_VBlankFunc();
 #if 0
 	// 必要があればThreadをたたき起こす
 	if(OS_IsThreadTerminated(&wk->thread) == FALSE)
 		OS_WakeupThreadDirect(&wk->thread);
 #endif
 }
-
-
-#pragma mark [start Edit
-#endif 
 
 //------------------------------------------------------------------
 /**
@@ -881,6 +912,9 @@ static void MysteryLib_LoadPokeGra(CLACT_WORK_PTR clwk, POKEMON_PARAM *pp, int m
 }
 
 
+#pragma mark [start Edit
+#endif 
+
 //------------------------------------------------------------------
 /**
  * @brief	プレゼントボックス
@@ -888,15 +922,19 @@ static void MysteryLib_LoadPokeGra(CLACT_WORK_PTR clwk, POKEMON_PARAM *pp, int m
 //------------------------------------------------------------------
 static void MysteryLib_SetGraPresent(MYSTERYLIB_WORK *wk, int type, GIFT_DELIVERY *deli)
 {
-	MysteryLib_InitClact(ARC_MYSTERY_GRA,
-					 NARC_mystery_fushigi_box_lz_cngr,
-					 NARC_mystery_fushigi_box_nclr,
-					 NARC_mystery_fushigi_box_lz_ccer,
-					 NARC_mystery_fushigi_box_lz_canr,
-					 GF_BGL_SUB_DISP);
+	MysteryLib_InitClact(ARCID_MYSTERY,
+					 NARC_mystery_fushigi_box_NCGR,
+					 NARC_mystery_fushigi_box_NCLR,
+					 NARC_mystery_fushigi_box_NCER,
+					 NARC_mystery_fushigi_box_NANR,
+					 GFL_BG_SUB_DISP);
 	MysteryLib_SetSubSurfaceMatrix(SUBSURFACEX, SUBSURFACEY);
-	wk->giftact = MysteryLib_MakeCLACT(GF_BGL_SUB_DISP, wk->giftact, HW_LCD_WIDTH/2, 0, 0);
+	wk->giftact = MysteryLib_MakeCLACT(GFL_BG_SUB_DISP, wk->giftact, HW_LCD_WIDTH/2, 0, 0);
 }
+
+#pragma mark [end Edit
+#if 0 
+
 
 //------------------------------------------------------------------
 /**
@@ -981,13 +1019,23 @@ static void MysteryLib_SetGraItem(MYSTERYLIB_WORK *wk, int type, GIFT_DELIVERY *
  * @return	NONE
  */
 //------------------------------------------------------------------
-static void MysteryLib_InitGiftPal(void *p)
+static void MysteryLib_InitGiftPal( void *p)
 {
 	MYSTERYLIB_WORK *wk = (MYSTERYLIB_WORK *)p;
-
+#if 0
 	// サブ画面ＢＧパレット転送
 	GFL_ARC_UTIL_TransVramPalette( ARCID_MYSTERY , NARC_mystery_fushigi_back_NCLR , PALTYPE_SUB_BG ,16*2*8,16*2*6,wk->heapid );
 	//ArcUtil_PalSet(ARC_MYSTERY_GRA, NARC_mystery_fushigi_back_nclr, PALTYPE_SUB_BG, 16*2*8, 16*2*6, wk->heapid);
+#endif
+	//VBlankタイミングでパレットの読み込みができない(IRQ割り込み)
+	//なので転送だけ行う
+	GFL_BG_LoadPalette( GFL_BG_FRAME1_S , wk->pltData->pRawData , 16*2*6 , 16*2*8 );
+	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+	
+	GFL_HEAP_FreeMemory( wk->pltRes );
+	wk->pltRes = NULL;
+	wk->pltData = NULL;
+
 }
 
 //------------------------------------------------------------------
@@ -1003,10 +1051,15 @@ static void MysteryLib_InitGiftPal(void *p)
 //------------------------------------------------------------------
 void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli)
 {
+	//FIXME パレット番号が無駄にかぶっているので、必要分だけ転送など、
+	//		パレットがかぶらないようにしてチラツキを抑えること！
+	
+	
 	int palno, type;
 	MYSTERYLIB_WORK *wk = GetMysteryLibWorkPtr();
 
 	type = deli->gift_type;
+
 
 #if 0
 	//  type = MYSTERYGIFT_TYPE_POKEMON;
@@ -1016,11 +1069,17 @@ void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli)
 #endif  
 
 	palno = MysteryLib_GetGiftPalno(type);
+	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+
 
 #if 0
+	//VBlankタイミングでパレットの読み込みができない(IRQ割り込み)
+	//なので転送だけ行う
 	// サブ画面ＢＧパレット転送
 	ArcUtil_PalSet(ARC_MYSTERY_GRA, NARC_mystery_fushigi_back_nclr, PALTYPE_SUB_BG, 16*2*8, 16*2*6, wk->heapid);
 #endif
+	wk->pltRes = GFL_ARC_UTIL_LoadPalette( ARCID_MYSTERY, NARC_mystery_fushigi_back_NCLR, &wk->pltData , wk->heapid );
+	
 	// サブ画面BG1キャラ転送
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MYSTERY , NARC_mystery_fushigi_back_NCGR , 
 				GFL_BG_FRAME1_S, 0, 10*16*0x20 , 0 ,wk->heapid );
@@ -1032,18 +1091,18 @@ void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli)
 	GFL_ARC_UTIL_TransVramScreen( ARCID_MYSTERY , NARC_mystery_fushigi_back_NSCR , GFL_BG_FRAME1_S , 0 , 32*24*2 , 0 , wk->heapid);
 //	ArcUtil_ScrnSet(ARC_MYSTERY_GRA, NARC_mystery_fushigi_back_lz_cscr, ini, GF_BGL_FRAME1_S, 0, 32*24*2, 1, wk->heapid);
 #else
- {
+	{
 	 // ArcUtil_ScrnSetだと非垂直期間中にVRAM転送されてしまうので、修正
 	 NNSG2dScreenData* scrnData;
 	 void *arcData = ArcUtil_Load(ARC_MYSTERY_GRA, NARC_mystery_fushigi_back_lz_cscr, 1, wk->heapid, ALLOC_BOTTOM);
 	 NNS_G2dGetUnpackedScreenData( arcData, &scrnData );
 	 GF_BGL_ScreenBufSet(ini, GF_BGL_FRAME1_S, scrnData->rawData, 32*24*2 );
 	 sys_FreeMemoryEz( arcData );
- }
+	}
 #endif
 	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME1_S , 0,0,32,24,8 + palno );
 //	GF_BGL_ScrPalChange(ini, GF_BGL_FRAME1_S, 0, 0, 32, 24, 8 + palno);
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M);
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S);
 //	GF_BGL_LoadScreenV_Req(ini, GF_BGL_FRAME1_S);
 	wk->vfunc = MysteryLib_InitGiftPal;
 	wk->bgl=ini;
@@ -1051,6 +1110,7 @@ void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli)
 	
 	// 上から降ってくるアクターの設定
 	//FIXME とりあえず保留
+	MysteryLib_SetGraPresent(wk, MYSTERYGIFT_TYPE_RULE, deli);
 	switch(type){
 	case MYSTERYGIFT_TYPE_RULE:		// ルール
 	case MYSTERYGIFT_TYPE_GOODS:		// グッズ
@@ -1074,7 +1134,7 @@ void MysteryLib_InitGift(GFL_BG_INI *ini, GIFT_DELIVERY *deli)
 		break;
 	}
 	// 最初は非表示
-	GFL_CLACT_WK_SetDrawFlag(wk->giftact, 0);
+//	GFL_CLACT_WK_SetDrawFlag(wk->giftact, 0);
 }
 
 
@@ -1325,15 +1385,16 @@ int MysteryLib_SaveDSCard(void)
 	case MYSTERYLIB_SEQ_SAVE_INIT:
 		//FIXME ソフリ
 		//sys_SoftResetNG(SOFTRESET_TYPE_SAVELOAD);
-		// FIXME DS側のセーブ、初期設定
+		
 		//SaveData_DivSave_Init(wk->sv, SVBLK_ID_MAX);
+		SaveControl_SaveAsyncInit( wk->sv );
 		wk->save_seq++;
 		break;
 
 	case MYSTERYLIB_SEQ_SAVE_MAIN:
-		//FIXME セーブメイン
 		//    OS_TPrintf("分割セーブ中...\n");
 		//result = SaveData_DivSave_Main(wk->sv);
+		result = SaveControl_SaveAsyncMain( wk->sv );
 		if(result == SAVE_RESULT_NG){
 			wk->save_seq = MYSTERYLIB_SEQ_SAVE_NG;
 		} else if(result == SAVE_RESULT_OK){

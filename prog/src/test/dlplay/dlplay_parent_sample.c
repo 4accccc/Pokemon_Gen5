@@ -114,13 +114,28 @@ static const GFL_BG_BGCNT_HEADER bgContFontMsg = {
 	GX_BG_EXTPLTT_01, DLPLAY_FONT_MSG_PLANE_PRI, 0, 0, FALSE
 };
 
+static const GFL_DISP_VRAM vramBank = {
+	GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
+
 //------------------------------------------------------------------
 //  デバッグ用初期化関数
 //------------------------------------------------------------------
 static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
 	static const HEAPID heapID = HEAPID_ARIIZUMI_DEBUG;
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x200000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ARIIZUMI_DEBUG, 0x100000 );
 
 	parentData = GFL_HEAP_AllocClearMemory( HEAPID_ARIIZUMI_DEBUG, sizeof( DLPLAY_PARENT_DATA ) );
 	parentData->heapID_ = HEAPID_ARIIZUMI_DEBUG;
@@ -132,7 +147,7 @@ static GFL_PROC_RESULT DebugDLPlayMainProcInit(GFL_PROC * proc, int * seq, void 
 	parentData->dlData_ = DLPlaySend_Init( heapID );
 	parentData->commSys_ = DLPlayComm_InitData( heapID );
 	parentData->msgSys_ = DLPlayFunc_MsgInit( heapID , DLPLAY_MSG_PLANE );
-	parentData->dispSys_ = DLPlayDispSys_InitSystem( heapID );
+	parentData->dispSys_ = DLPlayDispSys_InitSystem( heapID , &vramBank);
 	DLPlayFunc_FontInit( ARCID_FONT , NARC_font_large_nftr ,
 					ARCID_MESSAGE , NARC_message_d_dlplay_dat ,
 					ARCID_FONT , NARC_font_default_nclr , 
@@ -161,11 +176,7 @@ static void DLPlayMain_InitBg(void)
 	GFL_BG_Init( parentData->heapID_ );
 
 	//VRAM設定
-	GX_SetBankForBG( GX_VRAM_BG_128_A );
-	GX_SetBankForOBJ( GX_VRAM_OBJ_128_B );
-	GX_SetBankForSubBG( GX_VRAM_BG_128_C );
-	GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_128K );
-	GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
+	GFL_DISP_SetBank( &vramBank );
 
 	//BGモード設定
 	GFL_BG_SetBGMode( &bgsysHeader );

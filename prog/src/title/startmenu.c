@@ -100,6 +100,7 @@ typedef struct
 	
 	GFL_FONT *fontHandle_;
 	GFL_MSGDATA *msgMng_;	//メニュー作成のところでだけ有効
+	GFL_TCB		*vblankFuncTcb_;
 
 	GFL_CLUNIT	*cellUnit_;
 	GFL_CLWK	*cellCursor_[2];
@@ -132,6 +133,8 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
+
+static void START_MENU_VBlankFunc(GFL_TCB *tcb,void *work);
 
 static void	START_MENU_InitGraphic( START_MENU_WORK *work );
 static void	START_MENU_InitBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane );
@@ -207,11 +210,14 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 	
 	START_MENU_CreateMenuItem( work );
 	
+	work->vblankFuncTcb_ = GFUser_VIntr_CreateTCB( START_MENU_VBlankFunc , (void*)work , 0 );
+
 	GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN , 16 , 0 , ARI_FADE_SPD );
 	
 	return GFL_PROC_RES_FINISH;
 }
 
+FS_EXTERN_OVERLAY(mystery);
 extern const GFL_PROC_DATA MysteryGiftProcData;
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
@@ -234,7 +240,7 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 			break;
 			
 		case SMI_MYSTERY_GIFT:	//不思議な贈り物
-			GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &MysteryGiftProcData, NULL);
+			GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(mystery), &MysteryGiftProcData, NULL);
 			break;
 
         case SMI_WIFI_SETTING: //WIFI設定
@@ -254,12 +260,14 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 	//開放処理
 	{
 		u8 i;
+		GFL_TCB_DeleteTask( work->vblankFuncTcb_ );
+
 		GFL_CLACT_WK_Remove( work->cellCursor_[0] );
 		GFL_CLACT_WK_Remove( work->cellCursor_[1] );
 		GFL_HEAP_FreeMemory( work->cursorCellRes_ );
 		GFL_HEAP_FreeMemory( work->cursorAnmRes_ );
 		GFL_CLACT_UNIT_Delete( work->cellUnit_ );
-		GFL_CLACT_Exit();
+		GFL_CLACT_SYS_Delete();
 
 		for( i=0;i<SMI_MAX;i++ )
 		{
@@ -351,10 +359,21 @@ static GFL_PROC_RESULT START_MENU_ProcMain( GFL_PROC * proc, int * seq, void * p
 	}
 
 	//OBJの更新
-	GFL_CLACT_UNIT_Draw( work->cellUnit_ );
-	GFL_CLACT_Main();
+	GFL_CLACT_SYS_Main();
 
 	return GFL_PROC_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	VBLank Function
+ * @param	NONE
+ * @return	NONE
+ */
+//------------------------------------------------------------------
+static void START_MENU_VBlankFunc(GFL_TCB *tcb,void *work)
+{
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //--------------------------------------------------------------------------
@@ -373,7 +392,7 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
 		GX_VRAM_TEXPLTT_NONE,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_64K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
 		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
 
@@ -418,8 +437,8 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
 		cellSysInitData.oamst_main = 0x10;	//デバッグメータの分
 		cellSysInitData.oamnum_main = 128-0x10;
-		GFL_CLACT_Init( &cellSysInitData , work->heapId_ );
-		work->cellUnit_  = GFL_CLACT_UNIT_Create( 2 , work->heapId_ );
+		GFL_CLACT_SYS_Create( &cellSysInitData , &vramBank ,work->heapId_ );
+		work->cellUnit_  = GFL_CLACT_UNIT_Create( 2 , 0, work->heapId_ );
 		GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit_ );
 
 		NNS_G2dInitImagePaletteProxy( &work->cursorPltProxy_ );
@@ -448,19 +467,19 @@ static void	START_MENU_InitGraphic( START_MENU_WORK *work )
 		cellInitData.bgpri = 0;
 		//↑矢印
 		work->cellCursor_[0] = GFL_CLACT_WK_Add( work->cellUnit_ , &cellInitData ,
-					&cellRes , CLWK_SETSF_NONE , work->heapId_ );
+					&cellRes , CLSYS_DEFREND_MAIN , work->heapId_ );
 		GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor_[0], FX32_ONE );
 		GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor_[0], TRUE );
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[0], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[0], FALSE );
 		
 		//↓矢印
 		cellInitData.pos_y =  192-8;
 		cellInitData.anmseq = 1;
 		work->cellCursor_[1] = GFL_CLACT_WK_Add( work->cellUnit_ , &cellInitData ,
-					&cellRes , CLWK_SETSF_NONE , work->heapId_ );
+					&cellRes , CLSYS_DEFREND_MAIN , work->heapId_ );
 		GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor_[1], FX32_ONE );
 		GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor_[1], TRUE );
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[1], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[1], FALSE );
 				
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 	}
@@ -527,7 +546,7 @@ static void	START_MENU_CreateMenuItem( START_MENU_WORK *work )
 	
 	//最初の下カーソルの表示チェック
 	if( work->length_ > 24 )
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[1], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[1], TRUE );
 
 }
 
@@ -584,15 +603,15 @@ static BOOL START_MENU_MoveSelectItem( START_MENU_WORK *work , BOOL isDown )
 	//カーソル表示のチェック
 	//上
 	if( work->targetPos_ > 0 )
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[0], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[0], TRUE );
 	else
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[0], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[0], FALSE );
 
 	//下
 	if( work->targetPos_ + 192 < work->length_*8 )
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[1], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[1], TRUE );
 	else
-		GFL_CLACT_WK_SetDrawFlag( work->cellCursor_[1], FALSE );
+		GFL_CLACT_WK_SetDrawEnable( work->cellCursor_[1], FALSE );
 	
 	return TRUE;
 }

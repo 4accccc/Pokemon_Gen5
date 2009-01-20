@@ -647,8 +647,8 @@ static void	g2d_unload( SAMPLE_SETUP* gs )
 static void	g2d_vblank( GFL_TCB* tcb, void* work )
 {
 	SAMPLE_SETUP* gs =  (SAMPLE_SETUP*)work;
+	GFL_CLACT_SYS_VBlankFunc();
 
-	GFL_CLACT_VBlankFuncTransOnly();
 }
 
 //------------------------------------------------------------------

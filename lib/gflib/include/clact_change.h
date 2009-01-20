@@ -310,7 +310,7 @@ extern const GFL_CLSYS_INIT GFL_CLSYSINIT_DEF_CONSCREEN;
  *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_CreateSys( const GFL_CLSYS_INIT* cp_data, const GFL_DISP_VRAM* cp_vramBank, HEAPID heapID );
+extern void GFL_CLACT_SYS_Create( const GFL_CLSYS_INIT* cp_data, const GFL_DISP_VRAM* cp_vramBank, HEAPID heapID );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム	破棄
@@ -318,7 +318,7 @@ extern void GFL_CLACT_CreateSys( const GFL_CLSYS_INIT* cp_data, const GFL_DISP_V
  *	@param	none
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_DeleteSys( void );
+extern void GFL_CLACT_SYS_Delete( void );
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム　メイン処理
@@ -327,14 +327,14 @@ extern void GFL_CLACT_DeleteSys( void );
  *	VRAM転送アニメの場合はキャラクタ情報を転送タスクへの登録します。
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_MainSys( void );
+extern void GFL_CLACT_SYS_Main( void );
 
 //----------------------------------------------------------------------------
 /**
  *	@brief	セルアクターシステム　Vブランク処理
  */
 //-----------------------------------------------------------------------------
-extern void GFL_CLACT_VBlankFunc( void );
+extern void GFL_CLACT_SYS_VBlankFunc( void );
 
 
 //-------------------------------------

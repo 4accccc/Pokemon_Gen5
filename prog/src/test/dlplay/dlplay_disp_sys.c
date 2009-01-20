@@ -38,6 +38,8 @@ struct _DLPLAY_DISP_SYS
 
 	GFL_CLUNIT	*cellUnit_;
 	GFL_CLWK	*cellBox_[BOX_MONS_NUM];
+	
+	GFL_TCB		*vblankTcb_;
 	BOOL		isUseBoxData_[BOX_MONS_NUM];
 
 	NNSG2dImagePaletteProxy	boxPltProxy_;
@@ -50,19 +52,20 @@ struct _DLPLAY_DISP_SYS
 //======================================================================
 //	proto
 //======================================================================
-DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID );
+DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vramSet );
 void	DLPlayDispSys_TermSystem( DLPLAY_DISP_SYS *dispSys );
 void	DLPlayDispSys_UpdateDraw( DLPLAY_DISP_SYS *dispSys );
 void	DLPlayDispSys_DispBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );
 
-static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys );
+static	void	DLPlaySys_UpdateDraw( GFL_TCB *tcb, void *work );
+static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys , const GFL_DISP_VRAM *vramSet );
 static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_InitBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );
 static	void	DLPlayDispSys_TermBoxIcon( DLPLAY_DISP_SYS *dispSys );
 static	u8		DLPlayDispSys_SetPokemonImgProxy( NNSG2dImageProxy *imgProxy , u32 offs , HEAPID heapID , const u16 pokeNo , const u8 formNo ,const u8 isEgg);
 
 //======================================================================
-DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID )
+DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vramBank )
 {
 	u8	i;
 	DLPLAY_DISP_SYS *dispSys;
@@ -78,8 +81,10 @@ DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID )
 		dispSys->isUseBoxData_[i] = FALSE;
 	}
 
-	DLPlayDispSys_InitObj( dispSys );
-
+	DLPlayDispSys_InitObj( dispSys ,vramBank );
+	
+	GFUser_HIntr_CreateTCB( DLPlaySys_UpdateDraw , (void*)dispSys , 0 );
+	
 	return dispSys;
 }
 
@@ -110,22 +115,26 @@ void	DLPlayDispSys_UpdateDraw( DLPLAY_DISP_SYS *dispSys )
 			}
 		}
 
-		GFL_CLACT_UNIT_Draw( dispSys->cellUnit_ );
-		GFL_CLACT_Main();
+		GFL_CLACT_SYS_Main();
 	}
+}
+
+static void DLPlaySys_UpdateDraw( GFL_TCB *tcb, void *work )
+{
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //======================================================================
 //	Cell周り初期化
 //======================================================================
-static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys )
+static	void	DLPlayDispSys_InitObj( DLPLAY_DISP_SYS *dispSys , const GFL_DISP_VRAM *vramBank )
 {
 	GFL_CLSYS_INIT cellSysInitData = GFL_CLSYSINIT_DEF_DIVSCREEN;
 	cellSysInitData.oamst_main = 0x10;	//通信アイコンの分
 	cellSysInitData.oamnum_main = 128-0x10;
 
-	GFL_CLACT_Init( &cellSysInitData , dispSys->heapID_ );
-	dispSys->cellUnit_  = GFL_CLACT_UNIT_Create( DLPLAY_DISPSYS_CELL_MAX , dispSys->heapID_ );
+	GFL_CLACT_SYS_Create( &cellSysInitData , vramBank , dispSys->heapID_ );
+	dispSys->cellUnit_  = GFL_CLACT_UNIT_Create( DLPLAY_DISPSYS_CELL_MAX , 0,dispSys->heapID_ );
 	GFL_CLACT_UNIT_SetDefaultRend( dispSys->cellUnit_ );
 
 	dispSys->isInit_ = TRUE;
@@ -144,7 +153,7 @@ static	void	DLPlayDispSys_TermObj( DLPLAY_DISP_SYS *dispSys )
 		}
 		
 		GFL_CLACT_UNIT_Delete( dispSys->cellUnit_ );
-		GFL_CLACT_Exit();
+		GFL_CLACT_SYS_Delete();
 
 		dispSys->isInit_ = FALSE;
 	}

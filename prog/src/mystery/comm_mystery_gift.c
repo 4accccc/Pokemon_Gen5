@@ -35,6 +35,7 @@
 
 //PTからの文字列変換に使用
 #include "test/dlplay/dlplay_func.h"
+#include "test/ariizumi/ari_debug.h"
 
 #include "comm_mystery_func.h"
 #include "comm_mystery_state.h"
@@ -583,16 +584,27 @@ static void VBlankFunc( void * work )
  * @return	NONE
  */
 //------------------------------------------------------------------
+#include "startmenu.naix"
 static void InitCellActor(MYSTERYGIFT_WORK *wk)
 {
 	MysteryLib_InitCPManager();
 	MysteryLib_InitClactSystem();
+	
 	MysteryLib_InitClact(ARCID_MYSTERY,
 					 NARC_mystery_fusigi_cur_00_NCGR,
 					 NARC_mystery_fusigi_cur_NCLR,
 					 NARC_mystery_fusigi_cur_00_NCER,
 					 NARC_mystery_fusigi_cur_00_NANR,
 					 GFL_BG_MAIN_DISP);
+	
+	/*
+	MysteryLib_InitClact(ARCID_STARTMENU,
+				 NARC_startmenu_title_cursor_NCGR,
+				 NARC_startmenu_title_cursor_NCLR,
+				 NARC_startmenu_title_cursor_NCER,
+				 NARC_startmenu_title_cursor_NANR,
+				 GFL_BG_MAIN_DISP);
+	*/
 }
 
 //------------------------------------------------------------------
@@ -607,7 +619,7 @@ static void SetBaseIcon(MYSTERYGIFT_WORK *wk, int anum)
 	if(anum != -1){
 		wk->arrow = MysteryLib_MakeCLACT(GFL_BG_MAIN_DISP, wk->arrow, HW_LCD_WIDTH/2, 100, anum);
 	} else {
-		GFL_CLACT_WK_SetDrawFlag(wk->arrow, 0);
+		GFL_CLACT_WK_SetDrawEnable(wk->arrow, 0);
 	}
 }
 
@@ -849,7 +861,9 @@ static void SaveSequence(void *p)
 	ret = MysteryLib_SaveDSCard();
 	if(ret == SAVE_RESULT_OK || ret == SAVE_RESULT_NG){
 	if(MovieEffectModeCheck(&wk->gift_data.data.deli) == TRUE){
-//			Snd_SePlay(SEQ_SE_DP_SAVE);
+#if MYSTERY_SND_ON
+			Snd_SePlay(SEQ_SE_DP_SAVE);
+#endif
 	}
 	else
 	{
@@ -1159,7 +1173,7 @@ static int CommChildRecvBeaconStart(MYSTERYGIFT_WORK *wk)
 	CMG_BmpMenuWinClear(wk->selwin[MYSTERYGIFT_WIN_COMM_DIRECT_YESNO], WINDOW_TRANS_ON);
 
 	// 受け取りオブジェクトの表示		--- goto この時点では、出さない
- // SetBaseIcon(wk, 1);
+	SetBaseIcon(wk, 1);
 
 	/* おくりもの　を　じゅしんちゅう　です\nでんげんを　きらないで　ください…… */
 	DisplaySequence(wk, wk->msgwin, mystery_01_008);
@@ -1810,6 +1824,7 @@ static int MysteryGif_DisplayMessage(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, int 
 
 	if(win && msgid){
 		STRBUF  *baseStr = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
+		wk->msg = GFL_STR_CreateBuffer( 192 , HEAPID_MYSTERYGIFT );
 		// 表示が終了するまでmsgバッファを保障せねばならない
 		msgman = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_mystery_dat, HEAPID_MYSTERYGIFT);
 		word = WORDSET_Create(HEAPID_MYSTERYGIFT);
@@ -1818,6 +1833,7 @@ static int MysteryGif_DisplayMessage(MYSTERYGIFT_WORK *wk, GFL_BMPWIN *win, int 
 //		wk->msg = MSGDAT_UTIL_AllocExpandString(word, msgman, msgid, HEAPID_MYSTERYGIFT);
 		wk->msg_wait = 1;
 		// 表示
+		MysteryTransFunc_InitBmpWin( win );
 		DisplaySequence(wk, win, msgid);
 		wk->msg_next_seq = next_seq;
 		// 使わなくなったバッファは開放
@@ -1887,7 +1903,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	
 	MysteryGiftSetProcp(proc);
 	/* ワークエリアはTITLE_STARTMENUの上に作成する(抹消の順番は問題ないはず) */
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP , HEAPID_MYSTERYGIFT, 0x200000);
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP , HEAPID_MYSTERYGIFT, 0x100000);
 	wk = GFL_PROC_AllocWork(proc, sizeof(MYSTERYGIFT_WORK), HEAPID_MYSTERYGIFT);
 	/* 初期化不良が怖いのでワークはゼロクリア */
 	memset(wk, 0, sizeof(MYSTERYGIFT_WORK));
@@ -1945,6 +1961,8 @@ static GFL_PROC_RESULT MysteryGiftProc_Init(GFL_PROC *proc, int * seq, void *pwk
 	wk->streamMsg = NULL;
 	
 	GFL_FONTSYS_SetColor(MYSTERYGIFT_BLACK);
+	
+	GFL_RTC_Init();
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -3081,7 +3099,6 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 		/* 画面作成 */
 		MysteryGift_InitGraphicsData(wk);
 		InitCellActor(wk);
-//    SetBaseIcon( wk, 1 );
 		/* フェードイン */
 		MysteryLib_RequestFade(WIPE_TYPE_FADEIN, MYSTERYGIFT_SEQ_MAIN, seq, MYSTERYGIFT_SEQ_WAIT_FADE);
 #if 0
@@ -3140,28 +3157,28 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 			wk->gift_error = CommMysteryFunc_CheckGetGift(wk->sv, &wk->gift_data);
 			// 受け取り許可のＲＯＭバージョンと異なっていたら受け取れない
 			if(wk->gift_error == COMMMYSTERYFUNC_ERROR_VERSION){
-	SetTimeWaitIcon(wk, FALSE);	// 	タイムアイコンを消去
-	*seq = MYSTERYGIFT_ERROR_FULL;
-			} else {
+				SetTimeWaitIcon(wk, FALSE);	// 	タイムアイコンを消去
+				*seq = MYSTERYGIFT_ERROR_FULL;
+						} else {
 
-	if( wk->upwin == NULL )
-	{
-		//GF_BGL_BmpWinAdd(wk->bgl, &wk->upwin, GF_BGL_FRAME0_M, 3, 2, 26, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_UPWINCHR);
-		wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
-		PRINT_UTIL_Setup( &wk->printUtilUp , wk->upwin );
-	}
-	MysteryTransFunc_InitBmpWin(wk->upwin);
-	
-	// ここで受信したタイトルを表示
-	{
-		STRCODE str[GIFT_DATA_CARD_TITLE_MAX];
-		DLPlayFunc_DPTStrCode_To_UTF16( bsdown_c_fileheader() , str , GIFT_DATA_CARD_TITLE_MAX );
-		DisplaySequenceDirect(wk, wk->upwin, str);
-	}
-	DisplaySequence(wk, wk->msgwin, mystery_01_005);
-	/* 「はい／いいえ」メニューの作成 */
-	CreateBeaconCommYesNoMenu(wk);
-	*seq = MYSTERYGIFT_BEACON_DOWNLOAD_YESNO;
+				if( wk->upwin == NULL )
+				{
+					//GF_BGL_BmpWinAdd(wk->bgl, &wk->upwin, GF_BGL_FRAME0_M, 3, 2, 26, 4, FONT_PALNO_NORMAL, MYSTERYGIFT_UPWINCHR);
+					wk->upwin = GFL_BMPWIN_Create( GFL_BG_FRAME0_M , 3,2,26,4,FONT_PALNO_NORMAL,GFL_BMP_CHRAREA_GET_B );
+					PRINT_UTIL_Setup( &wk->printUtilUp , wk->upwin );
+				}
+				MysteryTransFunc_InitBmpWin(wk->upwin);
+				
+				// ここで受信したタイトルを表示
+				{
+					STRCODE str[GIFT_DATA_CARD_TITLE_MAX];
+					DLPlayFunc_DPTStrCode_To_UTF16( bsdown_c_fileheader() , str , GIFT_DATA_CARD_TITLE_MAX );
+					DisplaySequenceDirect(wk, wk->upwin, str);
+				}
+				DisplaySequence(wk, wk->msgwin, mystery_01_005);
+				/* 「はい／いいえ」メニューの作成 */
+				CreateBeaconCommYesNoMenu(wk);
+				*seq = MYSTERYGIFT_BEACON_DOWNLOAD_YESNO;
 			}
 		}
 		// キャンセル処理
@@ -3184,8 +3201,9 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 		SetTimeWaitIcon( wk, TRUE );
 		SetBaseIcon( wk, 1 );
 // FIXME デモ処理
-/*
+
 		if(MovieEffectModeCheck(deli) == TRUE){
+/*
 		// 映画の場合はデモを出す
 #ifndef DEMO_SAVE_OFF
 		CommChildSaveRecvData( wk );
@@ -3206,6 +3224,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 			TCB_Add( Demo_TCB, demo_wk, 5 );
 		}		
 		OS_Printf( "----- 映画館の配布\n " );
+*/
 	}
 	else 
 	{
@@ -3213,7 +3232,7 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 		MysteryLib_InitGift( wk->bgl, deli );
 		CommChildSaveRecvData( wk );
 	}
-*/
+
 	*seq = MYSTERYGIFT_BEACON_DOWNLOAD_WAITSAVE;
 		break;
 
@@ -3230,9 +3249,9 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 
 	case MYSTERYGIFT_BEACON_DOWNLOAD_WAITSAVE:
 		{
-		int save_info;
+			int save_info;
 		
-		save_info = MysteryLib_GetSaveStatus();
+			save_info = MysteryLib_GetSaveStatus();
 			
 			if ( save_info == MYSTERYLIB_SEQ_SAVE_LAST )
 			{
@@ -3753,21 +3772,29 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 		/* カード画面へ行く */
 		TopMainMenuFinish(wk);
 		wk->to_seq = 1;
+		wk->to_seq = 1;
 		return GFL_PROC_RES_FINISH;
 		break;
 		
 
 	case MYSTERYGIFT_SEQ_LOOP:
 		/* 電源をＯＦＦにする／カード情報があれば表示する */
-		if(GFL_UI_KEY_GetTrg()){
+		if(GFL_UI_KEY_GetTrg())
+		{
 #if MYSTERY_SND_ON
 			Snd_SePlay(SEQ_SE_DP_SELECT);
 #endif
-			if(wk->gift_data.beacon.have_card == 1){
-	MysteryLib_RequestFade(WIPE_TYPE_FADEOUT, MYSTERYGIFT_SEQ_DISP_CARD, wk->seq, MYSTERYGIFT_SEQ_WAIT_FADE);
-			} else {
-	MysteryLib_ChangeFadeType(1);
-	MysteryLib_RequestFade(WIPE_TYPE_FADEOUT, MYSTERYGIFT_SEQ_FADEOUT_RESET, wk->seq, MYSTERYGIFT_SEQ_WAIT_FADE);
+#if 0	//FIXME カードが出るようになったら戻す！
+			if(wk->gift_data.beacon.have_card == 1)
+			{
+				MysteryLib_RequestFade(WIPE_TYPE_FADEOUT, MYSTERYGIFT_SEQ_DISP_CARD, wk->seq, MYSTERYGIFT_SEQ_WAIT_FADE);
+			}
+			else
+#endif
+			{
+				ARI_TPrintf("無理やりカードは出ない！\n");
+				MysteryLib_ChangeFadeType(1);
+				MysteryLib_RequestFade(WIPE_TYPE_FADEOUT, MYSTERYGIFT_SEQ_FADEOUT_RESET, wk->seq, MYSTERYGIFT_SEQ_WAIT_FADE);
 			}	
 		}
 		break;
@@ -3821,10 +3848,11 @@ static GFL_PROC_RESULT MysteryGiftProc_Main(GFL_PROC * proc, int * seq , void *p
 	{
 	}
 
-	//FIXME:QueとPrintUtilの初期化
 	// アイコンを表示するために必要な駆動処理
 	MysteryLib_DoClact_Ex( wk->demo_state );
 
+	GFL_RTC_Main();
+	
 	return GFL_PROC_RES_CONTINUE;
 }
 

@@ -61,6 +61,7 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				savedata/playtime.c \
 				savedata/player_data.c \
 				savedata/situation.c \
+				savedata/trainercard_data.c \
 				system/palanm.c \
 				system/wipe.c \
 				system/wipe_sub.c \
@@ -71,14 +72,10 @@ SRCS	+=		test/tetsu/game/calc_ph.c \
 				net/net_dev.c \
 				savedata/wifihistory.c \
 				savedata/wifilist.c \
+				system/touch_subwindow.c \
 				app/trainercard/trainercard.c \
 				app/name_input/name_input.c \
 				mystery/comm_mystery_gift.c \
-				mystery/comm_mystery_func.c \
-				mystery/comm_mystery_state.c \
-				mystery/comm_mystery_card.c \
-				mystery/mysterylib.c \
-				mystery/beacondownload.c \
 				savedata/mystery_data.c \
 				system/laster.c \
 				field/fldmmdl.c \
@@ -350,4 +347,13 @@ SRCS_OVERLAY_WIFICLUB	= net_app/wificlub/wifi_p2pevent.c
 #							net_app/wifi2dmap/wf2dmap_scroll.c \
 #							net_app/wifi2dmap/wf2dmap_scrdraw.c \
 #							net_app/wifi2dmap/wf2dmap_cmdq.c
+#
+# •sŽv‹c‚È‘¡‚è•¨
+#===> SRCS_OVERLAY_DEV_WIRELESS
+SRCS_OVERLAY_MYSTERY = mystery/comm_mystery_func.c \
+			mystery/comm_mystery_state.c \
+			mystery/comm_mystery_card.c \
+			mystery/mysterylib.c \
+			mystery/beacondownload.c 
+
 #

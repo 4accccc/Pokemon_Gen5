@@ -22,8 +22,9 @@
 #include "savedata/config.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
-
+#include "test/ariizumi/ari_debug.h"
 #include "comm_mystery_func.h"
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -36,22 +37,22 @@
 //--------------------------------------------------------------------------------------------
 void CommMysteryFunc_VramBankSet(void)
 {
-	GFL_DISP_VRAM vramSetTable = {
+	//CLACT の初期化も変えること
+	const GFL_DISP_VRAM vramSetTable = {
 		GX_VRAM_BG_128_C,				// メイン2DエンジンのBG
 		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
 		GX_VRAM_SUB_BG_32_H,			/* サブ2DエンジンのBG */
 		GX_VRAM_SUB_BGEXTPLTT_NONE,		/* サブ2DエンジンのBG拡張パレット */
 		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+		GX_VRAM_SUB_OBJ_128_D,			// サブ2DエンジンのOBJ
 		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 		GX_VRAM_TEX_0_B,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG			// テクスチャパレットスロット
+		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// メインOBJマッピングモード
+		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
 	};
 	GFL_DISP_SetBank( &vramSetTable );
-
-	GX_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
-	GXS_SetOBJVRamModeChar( GX_OBJVRAMMODE_CHAR_1D_32K );
 }
 
 
@@ -173,16 +174,26 @@ int CommMysteryFunc_CheckGetGift(SAVE_CONTROL_WORK *sv, GIFT_COMM_PACK *gcp)
 		return COMMMYSTERYFUNC_ERROR_HAVE;
 
 	// カード付きおくりものは
-	if(gcp->beacon.have_card == TRUE &&
+	if( gcp->beacon.have_card == TRUE &&
 		 // カード情報がセーブできるかチェック
 		MYSTERYDATA_CheckCardDataSpace(fdata) == FALSE)
+	{
+#if DEB_ARI
+		OS_TPrintf("本当はいっぱいで受け取れない！！\n");
+#else
 		return COMMMYSTERYFUNC_ERROR_FULLCARD;
+#endif
+	}
 
 	// さらに配達員情報が含まれているおくりものは
 	// 配達員のスロットもチェックする
+#if DEB_ARI
+	if(MYSTERYDATA_CheckDeliDataSpace(fdata) == FALSE)
+		OS_TPrintf("本当はいっぱいで受け取れない！！\n");
+#else
 	if(MYSTERYDATA_CheckDeliDataSpace(fdata) == FALSE)
 		return COMMMYSTERYFUNC_ERROR_FULLGIFT;
-
+#endif
 	// 孫配布のチェック
 	if(gcp->beacon.groundchild_flag == 1)
 		return COMMMYSTERYFUNC_ERROR_GROUNDCHILD;

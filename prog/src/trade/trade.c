@@ -437,8 +437,7 @@ GFL_PROC_RESULT TradeProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 		break;
 	}
 	
-	GFL_CLACT_UNIT_Draw(tw->clunit);
-	GFL_CLACT_Main();
+	GFL_CLACT_SYS_Main();
 	return GFL_PROC_RES_CONTINUE;
 }
 
@@ -460,7 +459,7 @@ GFL_PROC_RESULT TradeProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 	GFL_MSG_Delete(tw->mm);
 
 	GFL_CLACT_UNIT_Delete(tw->clunit);
-	GFL_CLACT_Exit();
+	GFL_CLACT_SYS_Delete();
 
 	GFL_FONT_Delete(tw->fontHandle);
 	GFL_TCBL_Exit(tw->tcbl);
@@ -476,12 +475,26 @@ GFL_PROC_RESULT TradeProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 
 static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
 {
-	GFL_CLACT_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //==============================================================================
 //	
 //==============================================================================
+static const GFL_DISP_VRAM vramBank = {
+	GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
+	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
+	GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+	GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+};
 //--------------------------------------------------------------
 /**
  * @brief   VRAMバンク＆モード設定
@@ -490,20 +503,6 @@ static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
 //--------------------------------------------------------------
 static void Local_VramSetting(TRADE_WORK *tw)
 {
-	static const GFL_DISP_VRAM vramBank = {
-		GX_VRAM_BG_128_B,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_64_E,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_0_A,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_01_FG,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-	};
 
 	static const GFL_BG_SYS_HEADER sysHeader = {
 		GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
@@ -580,9 +579,9 @@ static void Local_ActorSetting(TRADE_WORK *tw)
 	clsys_init.oamst_main = 1;	//通信アイコンの分
 	clsys_init.oamnum_main = 128-1;
 	clsys_init.tr_cell = ACT_MAX;
-	GFL_CLACT_Init(&clsys_init, HEAPID_TRADE);
+	GFL_CLACT_SYS_Create(&clsys_init, &vramBank, HEAPID_TRADE);
 	
-	tw->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, HEAPID_TRADE);
+	tw->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, 0, HEAPID_TRADE);
 	GFL_CLACT_UNIT_SetDefaultRend(tw->clunit);
 
 	//OBJ表示ON

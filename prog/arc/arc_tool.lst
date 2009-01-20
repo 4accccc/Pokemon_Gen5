@@ -87,7 +87,6 @@
 	ARCID_WAZA_TBL		"waza_tbl/waza_tbl.narc"			#技テーブル
 	ARCID_NET_ERR		"net_err.narc"					#通信エラー画面
 	ARCID_FONT			"font/font.narc"		# フォントデータ
-	ARCID_WB_TRAINERCARD		"test_graphic/wb_trainercard.narc"			#通信テスト用・WBトレーナカード
 	ARCID_ITEMDATA		"item_data.narc"		# アイテムデータ
 	ARCID_ITEMICON		"item_icon.narc"		# アイテムアイコン
 	$VERSION_BLACK	ARCID_TITLE	"title.narc"	#ブラック版タイトル
@@ -99,3 +98,7 @@
 	ARCID_FLDMMDL_BTX	"test_graphic/fldmmdl_btx.narc" #動作モデル
 	ARCID_PALACE		"palace.narc"			#パレス
 	ARCID_FLDMMLD		"test_graphic/mmodel.narc"
+	ARCID_YN_TOUCH		"yn_touch.narc"			#YesNoボタン
+	ARCID_TRAINERCARD	"trainer_case.narc"		#トレーナーカード
+	ARCID_TRC_UNION		"trc_union.narc"		#ユニオンルーム トレーナーカード キャラ絵
+

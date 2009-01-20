@@ -22,7 +22,7 @@ struct DLPLAY_BOX_INDEX;
 //======================================================================
 //	typedef struct
 //======================================================================
-extern DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID );
+extern DLPLAY_DISP_SYS*	DLPlayDispSys_InitSystem( int heapID , const GFL_DISP_VRAM *vramBank );
 extern void	DLPlayDispSys_TermSystem( DLPLAY_DISP_SYS *dispSys );
 extern void	DLPlayDispSys_UpdateDraw( DLPLAY_DISP_SYS *dispSys );
 extern void DLPlayDispSys_DispBoxIcon( DLPLAY_BOX_INDEX *boxData , u8 trayNo , DLPLAY_DISP_SYS *dispSys );

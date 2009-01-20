@@ -350,9 +350,9 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 		clsys_init.oamst_main = 1;	//通信アイコンの分
 		clsys_init.oamnum_main = 128-1;
 		clsys_init.tr_cell = D_MATSU_ACT_MAX;
-		GFL_CLACT_Init(&clsys_init, HEAPID_MATSUDA_DEBUG);
+		GFL_CLACT_SYS_Create(&clsys_init, &vramBank, HEAPID_MATSUDA_DEBUG);
 		
-		wk->clunit = GFL_CLACT_UNIT_Create(D_MATSU_ACT_MAX, HEAPID_MATSUDA_DEBUG);
+		wk->clunit = GFL_CLACT_UNIT_Create(D_MATSU_ACT_MAX, 0, HEAPID_MATSUDA_DEBUG);
 		GFL_CLACT_UNIT_SetDefaultRend(wk->clunit);
 
 		//ポケモンアイコン共通データ登録
@@ -412,8 +412,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcMain( GFL_PROC * proc, int * seq, voi
 //		return GFL_PROC_RES_FINISH;
 	}
 
-	GFL_CLACT_UNIT_Draw(wk->clunit);
-	GFL_CLACT_Main();
+	GFL_CLACT_SYS_Main();
 	return GFL_PROC_RES_CONTINUE;
 }
 //--------------------------------------------------------------------------
@@ -430,7 +429,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 	Local_PokeIconCommonDataFree(wk);
 
 	GFL_CLACT_UNIT_Delete(wk->clunit);
-	GFL_CLACT_Exit();
+	GFL_CLACT_SYS_Delete();
 
 	GFL_FONT_Delete(wk->fontHandle);
 	GFL_TCBL_Exit(wk->tcbl);
@@ -446,7 +445,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcEnd( GFL_PROC * proc, int * seq, void
 
 static void VintrTCB_VblankFunc(GFL_TCB *tcb, void *work)
 {
-	GFL_CLACT_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 

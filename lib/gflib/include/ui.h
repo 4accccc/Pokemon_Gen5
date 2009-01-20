@@ -89,7 +89,6 @@ typedef enum {
 #define	PAD_BUTTON_CANCEL	( PAD_BUTTON_B )	///< キャンセルボタン定義
 #define PAD_BUTTON_SOFTRESET   (PAD_BUTTON_START|PAD_BUTTON_SELECT|PAD_BUTTON_L|PAD_BUTTON_R) //ソフトリセットボタン定義
 
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief 構造体宣言
@@ -572,6 +571,40 @@ extern u32 GFL_UI_TP_AutoStartNoBuff(u32 sync);
 //-----------------------------------------------------------------------------
 extern u32 GFL_UI_TP_AutoStop( void );
 
+
+
+//----------------------------------------------------------------------------
+//キーとタッチパネル同時使用時判定用
+//----------------------------------------------------------------------------
+
+// GSのcommon.hから移植 090116Ariizumi
+// アプリケーションの終了をキーで行ったか、タッチで行ったかを保持するための定義
+#define GFL_APP_END_KEY			( 0 )		// キーで終了
+#define GFL_APP_END_TOUCH		( 1 )		// タッチで終了
+#define GFL_APP_KTST_KEY		(GFL_APP_END_KEY)	//キーモードで動作中
+#define GFL_APP_KTST_TOUCH		(GFL_APP_END_TOUCH)	//タッチモードで動作中
+
+//タッチからキー操作への切り替わりの対象になるキー
+#define GFL_PAD_BUTTON_KTST_CHG	( PAD_BUTTON_A | PAD_BUTTON_B | \
+	PAD_BUTTON_X | PAD_BUTTON_Y | \
+	PAD_KEY_LEFT | PAD_KEY_RIGHT | PAD_KEY_UP | PAD_KEY_DOWN )
+
+// インターフェース
+//==============================================================================
+/**
+ * @brief   アプリケーション終了の制御をキーとタッチのどっちでで行ったか？取得
+ * @retval  BOOL		GFL_APP_END_KEY(=0) か GFL_APP_END_TOUCH(=1) (common.hなのでインクルード無し）
+ */
+//==============================================================================
+extern int  GFL_UI_CheckTouchOrKey(void);
+
+//------------------------------------------------------------------
+/**
+ * @brief	アプリケーション終了の制御をキーとタッチのどっちでで行ったか？設定
+ * @param   param		GFL_APP_END_KEY(=0) か　GFL_APP_END_TOUCH(=1)
+ */
+//------------------------------------------------------------------
+extern void GFL_UI_SetTouchOrKey(int param);
 
 
 

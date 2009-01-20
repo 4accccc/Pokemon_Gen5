@@ -29,7 +29,9 @@ SUBDIRS	=	wmi \
 			palace \
 			wificlub \
 			wifi_union_obj \
-			wifi_2dchar
+			wifi_2dchar \
+			trainer_case \
+			yn_touch
 
 include $(RESOURCE_MACRO)
 

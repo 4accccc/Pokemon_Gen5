@@ -215,13 +215,6 @@ static const GFL_CLSYS_INIT clactIni = {
 	64,		// セルVram転送管理数
 };
 
-static const GFL_OBJGRP_INIT_PARAM objgrpIni = {
-	64,			///< 登録できるキャラデータ数
-	64,			///< 登録できるパレットデータ数
-	64,			///< 登録できるセルアニメパターン数
-	16,			///< 登録できるマルチセルアニメパターン数（※現状未対応）
-};
-
 enum {
 	CLACT_RESLOAD_END = 0xffffffff,
 	CLACT_RESLOAD_CGX = 0xfffffffe,
@@ -233,14 +226,14 @@ enum {
 
 static const u32 clactResList[] = {
 	//マップアイコン
-	CLACT_RESLOAD_CGX, NARC_mapobj_icon_NCGR, (u32)GFL_VRAM_2D_SUB,
-	CLACT_RESLOAD_PLT, NARC_mapobj_icon_NCLR, (u32)GFL_VRAM_2D_SUB, PLTT_DATSIZ * 0,
-	CLACT_RESLOAD_PLT, NARC_mapobj_icon2_NCLR, (u32)GFL_VRAM_2D_SUB, PLTT_DATSIZ * 1,
+	CLACT_RESLOAD_CGX, NARC_mapobj_icon_NCGR, (u32)CLSYS_DRAW_SUB,
+	CLACT_RESLOAD_PLT, NARC_mapobj_icon_NCLR, (u32)CLSYS_DRAW_SUB, PLTT_DATSIZ * 0,
+	CLACT_RESLOAD_PLT, NARC_mapobj_icon2_NCLR, (u32)CLSYS_DRAW_SUB, PLTT_DATSIZ * 1,
 	CLACT_RESLOAD_CEL, NARC_mapobj_icon_NCER, NARC_mapobj_icon_NANR,
 	//ステータスアイコン
 	CLACT_RESLOAD_CEL, NARC_mapobj_status_NCER, NARC_mapobj_status_NANR,
-	CLACT_RESLOAD_CGX_TRANS_LOOP, NARC_mapobj_status_NCGR, (u32)GFL_VRAM_2D_MAIN, STATUS_SETUP_NUM,
-	CLACT_RESLOAD_PLT, NARC_mapobj_status_NCLR, (u32)GFL_VRAM_2D_MAIN, PLTT_DATSIZ * 0,
+	CLACT_RESLOAD_CGX_TRANS_LOOP, NARC_mapobj_status_NCGR, (u32)CLSYS_DRAW_MAIN, STATUS_SETUP_NUM,
+	CLACT_RESLOAD_PLT, NARC_mapobj_status_NCLR, (u32)CLSYS_DRAW_MAIN, PLTT_DATSIZ * 0,
 	//終了コマンド
 	CLACT_RESLOAD_END,
 };
@@ -675,8 +668,7 @@ static void	g2d_load( GAME_SYSTEM* gs )
 		u32	celIDtmp;
 
 		//システム初期化
-		GFL_CLACT_Init( &clactIni, gs->heapID );
-		GFL_OBJGRP_sysStart( gs->heapID, &dispVram, &objgrpIni );
+		GFL_CLACT_SYS_Create( &clactIni, &dispVram, gs->heapID );
 
 		i = 0;
 		gs->clactResCount = 0;	//clact リソース数
@@ -687,9 +679,9 @@ static void	g2d_load( GAME_SYSTEM* gs )
 			case CLACT_RESLOAD_CGX:
 				{
 					u32 cgxID = clactResList[++i];
-					GFL_VRAM_TYPE vtype = clactResList[++i];
+					CLSYS_DRAW_TYPE vtype = clactResList[++i];
 					gs->clactRes[gs->clactResCount][0] = comm;
-					gs->clactRes[gs->clactResCount][1] = GFL_OBJGRP_RegisterCGR
+					gs->clactRes[gs->clactResCount][1] = GFL_CLGRP_CGR_Register
 										( clactArc, cgxID, FALSE, vtype, gs->heapID );
 					gs->clactResCount++;
 				}
@@ -699,7 +691,7 @@ static void	g2d_load( GAME_SYSTEM* gs )
 					u32 celID = clactResList[++i];
 					u32 anmID = clactResList[++i];
 					gs->clactRes[gs->clactResCount][0] = comm;
-					gs->clactRes[gs->clactResCount][1] = GFL_OBJGRP_RegisterCellAnim
+					gs->clactRes[gs->clactResCount][1] = GFL_CLGRP_CELLANIM_Register
 										( clactArc, celID, anmID, gs->heapID );
 					celIDtmp = gs->clactRes[gs->clactResCount][1];
 					gs->clactResCount++;
@@ -708,10 +700,10 @@ static void	g2d_load( GAME_SYSTEM* gs )
 			case CLACT_RESLOAD_PLT:
 				{
 					u32	palID = clactResList[++i];
-					GFL_VRAM_TYPE vtype = clactResList[++i];
+					CLSYS_DRAW_TYPE vtype = clactResList[++i];
 					u16	poffs  = clactResList[++i];
 					gs->clactRes[gs->clactResCount][0] = comm;
-					gs->clactRes[gs->clactResCount][1] = GFL_OBJGRP_RegisterPltt
+					gs->clactRes[gs->clactResCount][1] = GFL_CLGRP_PLTT_Register
 										( clactArc, palID, vtype, poffs, gs->heapID );
 					gs->clactResCount++;
 				}
@@ -719,9 +711,9 @@ static void	g2d_load( GAME_SYSTEM* gs )
 			case CLACT_RESLOAD_CGX_TRANS:
 				{	//転送ＣＧＸ用。直前に対応セルを登録すること
 					u32 cgxID = clactResList[++i];
-					GFL_VRAM_TYPE vtype = clactResList[++i];
+					CLSYS_DRAW_TYPE vtype = clactResList[++i];
 					gs->clactRes[gs->clactResCount][0] = comm;
-					gs->clactRes[gs->clactResCount][1] = GFL_OBJGRP_RegisterCGR_VramTransfer
+					gs->clactRes[gs->clactResCount][1] = GFL_CLGRP_CGR_Register_VramTransfer
 										( clactArc, cgxID, FALSE, vtype, celIDtmp, gs->heapID );
 					gs->clactResCount++;
 				}
@@ -729,13 +721,13 @@ static void	g2d_load( GAME_SYSTEM* gs )
 			case CLACT_RESLOAD_CGX_TRANS_LOOP:
 				{	//転送ＣＧＸ用。直前に対応セルを登録すること
 					u32 cgxID = clactResList[++i];
-					GFL_VRAM_TYPE vtype = clactResList[++i];
+					CLSYS_DRAW_TYPE vtype = clactResList[++i];
 					int loopCount = clactResList[++i];
 					int j;
 
 					for( j=0; j<loopCount; j++ ){
 						gs->clactRes[gs->clactResCount][0] = comm;
-						gs->clactRes[gs->clactResCount][1] = GFL_OBJGRP_RegisterCGR_VramTransfer
+						gs->clactRes[gs->clactResCount][1] = GFL_CLGRP_CGR_Register_VramTransfer
 											( clactArc, cgxID, FALSE, vtype, celIDtmp, gs->heapID );
 						gs->clactResCount++;
 					}
@@ -746,7 +738,7 @@ static void	g2d_load( GAME_SYSTEM* gs )
 		}
 		//ＣＬＡＣＴユニット作成
 		for( i=0; i<NELEMS(clactUnitList); i++ ){
-			gs->clactUnit[i] = GFL_CLACT_UNIT_Create( clactUnitList[i], gs->heapID );
+			gs->clactUnit[i] = GFL_CLACT_UNIT_Create( clactUnitList[i], 0,gs->heapID );
 		}
 
 		GFL_ARC_CloseDataHandle( clactArc );
@@ -755,17 +747,19 @@ static void	g2d_load( GAME_SYSTEM* gs )
 
 static void g2d_control( GAME_SYSTEM* gs )
 {
+#if 0
 	int i;
 
 	GFL_CLACT_ClearOamBuff();
 	for( i=0; i<NELEMS(clactUnitList); i++ ){
 		GFL_CLACT_UNIT_Draw( gs->clactUnit[i] );
 	}
+#endif
 }
 
 static void g2d_draw( GAME_SYSTEM* gs )
 {
-	GFL_CLACT_Main();
+	GFL_CLACT_SYS_Main();
 }
 
 static void	g2d_unload( GAME_SYSTEM* gs )
@@ -779,19 +773,17 @@ static void	g2d_unload( GAME_SYSTEM* gs )
 		for( i=0; i<gs->clactResCount; i++ ){
 			switch( gs->clactRes[i][0] ){
 			case CLACT_RESLOAD_CGX:
-				GFL_OBJGRP_ReleaseCGR( gs->clactRes[i][1] );
+				GFL_CLGRP_CGR_Release( gs->clactRes[i][1] );
 				break;
 			case CLACT_RESLOAD_CEL:
-				GFL_OBJGRP_ReleaseCellAnim( gs->clactRes[i][1] );
+				GFL_CLGRP_CELLANIM_Release( gs->clactRes[i][1] );
 				break;
 			case CLACT_RESLOAD_PLT:
-				GFL_OBJGRP_ReleasePltt( gs->clactRes[i][1] );
+				GFL_CLGRP_PLTT_Release( gs->clactRes[i][1] );
 				break;
 			}
 		}
-		GFL_OBJGRP_sysEnd();
-		GFL_OBJGRP_Exit();
-		GFL_CLACT_Exit();
+		GFL_CLACT_SYS_Delete();
 	}
 	{
 		//破棄
@@ -807,7 +799,7 @@ static void	g2d_vblank( GFL_TCB* tcb, void* work )
 {
 	GAME_SYSTEM* gs =  (GAME_SYSTEM*)work;
 
-	GFL_CLACT_VBlankFuncTransOnly();
+	GFL_CLACT_SYS_VBlankFunc();
 }
 
 //------------------------------------------------------------------

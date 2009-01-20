@@ -1,0 +1,64 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: trainer_case.naix
+
+	This file was created by NINTENDO NITRO-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TRAINER_CASE_NAIX_
+#define NARC_TRAINER_CASE_NAIX_
+
+enum {
+	NARC_trainer_case_card_0_NCLR = 0,
+	NARC_trainer_case_card_1_NCLR = 1,
+	NARC_trainer_case_card_2_NCLR = 2,
+	NARC_trainer_case_card_3_NCLR = 3,
+	NARC_trainer_case_card_4_NCLR = 4,
+	NARC_trainer_case_card_5_NCLR = 5,
+	NARC_trainer_case_card_6_NCLR = 6,
+	NARC_trainer_case_card_badge_NCLR = 7,
+	NARC_trainer_case_card_badge2_NCLR = 8,
+	NARC_trainer_case_card_badge2_0_NCLR = 9,
+	NARC_trainer_case_card_badge2_1_NCLR = 10,
+	NARC_trainer_case_card_badge2_2_NCLR = 11,
+	NARC_trainer_case_card_badge2_3_NCLR = 12,
+	NARC_trainer_case_card_badge2_4_NCLR = 13,
+	NARC_trainer_case_card_badge2_5_NCLR = 14,
+	NARC_trainer_case_card_badge2_6_NCLR = 15,
+	NARC_trainer_case_card_badge2_7_NCLR = 16,
+	NARC_trainer_case_card_button_NCLR = 17,
+	NARC_trainer_case_card_case_d_NCLR = 18,
+	NARC_trainer_case_card_case_g_NCLR = 19,
+	NARC_trainer_case_card_case_p_NCLR = 20,
+	NARC_trainer_case_card_case_x_NCLR = 21,
+	NARC_trainer_case_card_futa_NCLR = 22,
+	NARC_trainer_case_card_trainer_NCLR = 23,
+	NARC_trainer_case_touch_ef_NCLR = 24,
+	NARC_trainer_case_card_NCGR = 25,
+	NARC_trainer_case_card_badge_NCGR = 26,
+	NARC_trainer_case_card_button_NCGR = 27,
+	NARC_trainer_case_card_case_NCGR = 28,
+	NARC_trainer_case_card_case2_NCGR = 29,
+	NARC_trainer_case_card_trainer_NCGR = 30,
+	NARC_trainer_case_touch_ef_NCGR = 31,
+	NARC_trainer_case_card_back_NSCR = 32,
+	NARC_trainer_case_card_case_NSCR = 33,
+	NARC_trainer_case_card_case2_NSCR = 34,
+	NARC_trainer_case_card_case2bg_NSCR = 35,
+	NARC_trainer_case_card_case3_NSCR = 36,
+	NARC_trainer_case_card_case4_NSCR = 37,
+	NARC_trainer_case_card_faca_NSCR = 38,
+	NARC_trainer_case_card_trainer01_NSCR = 39,
+	NARC_trainer_case_card_trainer02_NSCR = 40,
+	NARC_trainer_case_card_badge_NCER = 41,
+	NARC_trainer_case_card_button_NCER = 42,
+	NARC_trainer_case_touch_ef_NCER = 43,
+	NARC_trainer_case_card_badge_NANR = 44,
+	NARC_trainer_case_card_button_NANR = 45,
+	NARC_trainer_case_touch_ef_NANR = 46
+};
+
+/* NARC_TRAINER_CASE_NAIX_ */
+#endif

@@ -206,7 +206,7 @@ static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work )
 	GFL_BG_FillCharacter( ACC_BGPLANE_FONT, 0x00, 1, 0 );
 	GFL_BG_FillScreen( ACC_BGPLANE_FONT ,0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_LoadScreenReq( ACC_BGPLANE_FONT );
-	
+/*	
 	//BG読み込み開始
 	//背景
 	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WB_TRAINERCARD , NARC_wb_trainercard_card_NCGR ,
@@ -238,7 +238,7 @@ static void TRAINER_CARD_InitGraphic( TRAINER_CARD_WORK *work )
 	GFL_BMPWIN_MakeScreen( work->bmpWinFont_ );
 	GFL_BMPWIN_TransVramCharacter( work->bmpWinFont_ );
 	GFL_BG_LoadScreenReq( ACC_BGPLANE_FONT );
-
+*/
 	//フォント読み込み
 	work->fontHandle_ = GFL_FONT_Create( ARCID_D_TAYA , 
 					NARC_d_taya_lc12_2bit_nftr , GFL_FONT_LOADTYPE_FILE ,

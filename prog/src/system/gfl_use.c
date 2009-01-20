@@ -138,9 +138,6 @@ void GFLUser_Init(void)
 	//システムフォント初期化
 	GFL_TEXT_CreateSystem( NULL );
 
-	//OBJグラフィック管理システム初期化
-	GFL_OBJGRP_Init();
-
 	GFL_USE_VintrCounter = 0;
 }
 
@@ -230,7 +227,7 @@ void GFLUser_VIntr(void)
 	// この関数を実行すると、描画しているOBJが消えてしまうため
 	// 割り込みないで呼ばないほうが良いかもしれません。
 		//開放しました Ariizumi1031
-	GFL_CLACT_VBlankFunc();
+	//GFL_CLACT_VBlankFunc();
     // 通信アイコンの描画のためにあります。通信自体は行っていません
     //GFL_NET_VBlankFunc();
 

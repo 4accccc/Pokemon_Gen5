@@ -50,7 +50,6 @@ extern "C" {
 #include "button_man.h"
 
 #include "clact.h"
-#include "obj_graphic_man.h"
 #include "tcb.h"
 
 #include "double3Ddisp.h"

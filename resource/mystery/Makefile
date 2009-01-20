@@ -90,6 +90,9 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f *.NSCR
+	rm -f *.NANR
+	rm -f *.NCER
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc
