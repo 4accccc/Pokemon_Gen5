@@ -464,8 +464,9 @@ static GFL_PROC_RESULT DebugSogabeMainProcMain( GFL_PROC * proc, int * seq, void
 #endif
 
 #ifdef MCS_ENABLE
-	if( ( trg & PAD_BUTTON_START ) ||
-		wk->mcs_idle ){
+	if( ( ( trg & PAD_BUTTON_START ) ||
+		  ( wk->mcs_idle ) ) &&
+		  ( wk->timer_flag == 0 ) ){
 		if( wk->mcs_enable ){
 			MCS_Exit( wk );
 		}
