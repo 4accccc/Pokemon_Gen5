@@ -8,7 +8,7 @@
 //=============================================================================
 
 #include <gflib.h>
-#include "map/dp3format.h"
+#include "app_system/map_editor/dp3format.h"
 
 
 //-----------------------------------------------------------------------------
@@ -42,8 +42,11 @@ void DP3MAP_GetNormalVtxPosition(const int index,const NormalVtxFormat* pNormalV
     NormalVtxSt* norVtxSt = DP3MAP_GetNormalVtxSt(index, pNormalVtx);
 
     GF_ASSERT((pNormalVtx->width*pNormalVtx->height) > index );
-    VEC_Fx16Set( vc1, norVtxSt[index].vecN1_x, norVtxSt[index].vecN1_y, -norVtxSt[index].vecN1_z);
-    VEC_Fx16Set( vc2, norVtxSt[index].vecN2_x, norVtxSt[index].vecN2_y, -norVtxSt[index].vecN2_z);
+    VEC_Fx16Set( vc1, norVtxSt->vecN1_x, norVtxSt->vecN1_y, -norVtxSt->vecN1_z);
+    VEC_Fx16Set( vc2, norVtxSt->vecN2_x, norVtxSt->vecN2_y, -norVtxSt->vecN2_z);
+
+//    VEC_Fx16Set( vc1, norVtxSt[index].vecN1_x, norVtxSt[index].vecN1_y, -norVtxSt[index].vecN1_z);
+//    VEC_Fx16Set( vc2, norVtxSt[index].vecN2_x, norVtxSt[index].vecN2_y, -norVtxSt[index].vecN2_z);
 }
 
 //-----------------------------------------------------------------------------
@@ -62,8 +65,11 @@ void DP3MAP_GetNormalVtxInnerProduct(const int index,const NormalVtxFormat* pNor
     NormalVtxSt* norVtxSt = DP3MAP_GetNormalVtxSt(index, pNormalVtx);
 
     GF_ASSERT((pNormalVtx->width*pNormalVtx->height) > index );
-    *ip1 = norVtxSt[index].vecN1_D;
-    *ip2 = norVtxSt[index].vecN2_D;
+    *ip1 = norVtxSt->vecN1_D;
+    *ip2 = norVtxSt->vecN2_D;
+
+//    *ip1 = norVtxSt[index].vecN1_D;
+//	  *ip2 = norVtxSt[index].vecN2_D;
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +88,8 @@ u32 DP3MAP_GetNormalVtxAttrBit(const int index,const NormalVtxFormat* pNormalVtx
     NormalVtxSt* norVtxSt = DP3MAP_GetNormalVtxSt(index, pNormalVtx);
 
     GF_ASSERT((pNormalVtx->width*pNormalVtx->height) > index );
-    return norVtxSt[index].attr;
+	return norVtxSt->attr;	
+//    return norVtxSt[index].attr;
 }
 
 //-----------------------------------------------------------------------------
@@ -99,7 +106,9 @@ u32 DP3MAP_GetNormalVtxTriangleType(const int index,const NormalVtxFormat* pNorm
     NormalVtxSt* norVtxSt = DP3MAP_GetNormalVtxSt(index, pNormalVtx);
 
     GF_ASSERT((pNormalVtx->width*pNormalVtx->height) > index );
-    return norVtxSt[index].tryangleType;
+    return norVtxSt->tryangleType;
+
+//    return norVtxSt[index].tryangleType;
 }
 
 //-----------------------------------------------------------------------------
