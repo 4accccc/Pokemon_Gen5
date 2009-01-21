@@ -11,10 +11,10 @@
 #define ARI_DEBUG_H__
 
 //デバッグ有無のフラグ
-#if DEBUG_ONLY_FOR_ariizumi_nobuhiko
+#if DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_ohno
 #define DEB_ARI 1
 #else
-#define DEB_ARI 1
+#define DEB_ARI 0
 #endif
 
 //デバッグ用マクロ
