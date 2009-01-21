@@ -801,7 +801,11 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 			BATTLE_SETUP_PARAM* para = getGenericWork( wk, sizeof(BATTLE_SETUP_PARAM) );
 
 			para->engine = BTL_ENGINE_ALONE;
-			para->rule = BTL_RULE_SINGLE;
+			para->rule = BTL_RULE_DOUBLE;
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+			{
+				para->rule = BTL_RULE_SINGLE;
+			}
 			para->competitor = BTL_COMPETITOR_WILD;
 
 			para->netHandle = NULL;
