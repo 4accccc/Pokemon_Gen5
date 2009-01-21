@@ -35,21 +35,21 @@ typedef struct _TAG_FLDMMDL_SAVE_DATA * FLDMMDL_SAVE_DATA_PTR;
 //--------------------------------------------------------------
 struct _TAG_FLDMMDL_H
 {
-	unsigned short id;										///<識別ID
-	unsigned short obj_code;								///<表示するOBJコード
-	unsigned short move_code;								///<動作コード
-	unsigned short event_type;								///<イベントタイプ
-	unsigned short event_flag;								///<イベントフラグ
-	unsigned short event_id;								///<イベントID
-	short dir;												///<指定方向
-	unsigned short param0;									///<指定パラメタ 0
-	unsigned short param1;									///<指定パラメタ 1
-	unsigned short param2;									///<指定パラメタ 2
-	short move_limit_x;										///<X方向移動制限
-	short move_limit_z;										///<Z方向移動制限
-	unsigned short gx;										///<グリッドX
-	unsigned short gz;										///<グリッドZ
-	int gy;													///<Y値 fx32型
+	unsigned short id;						///<識別ID
+	unsigned short obj_code;				///<表示するOBJコード
+	unsigned short move_code;				///<動作コード
+	unsigned short event_type;				///<イベントタイプ
+	unsigned short event_flag;				///<イベントフラグ
+	unsigned short event_id;				///<イベントID
+	short dir;								///<指定方向
+	unsigned short param0;					///<指定パラメタ 0
+	unsigned short param1;					///<指定パラメタ 1
+	unsigned short param2;					///<指定パラメタ 2
+	short move_limit_x;						///<X方向移動制限
+	short move_limit_z;						///<Z方向移動制限
+	unsigned short gx;						///<グリッドX
+	unsigned short gz;						///<グリッドZ
+	int gy;									///<Y値 fx32型
 };
 
 #define FLDMMDL_H_SIZE (sizeof(FLDMMDL_H))				///<FLDMMDL_Hサイズ

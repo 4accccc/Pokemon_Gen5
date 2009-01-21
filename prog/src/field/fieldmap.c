@@ -42,6 +42,8 @@
 #include "field_comm/field_comm_main.h"
 #include "field_comm/field_comm_event.h"
 
+#include "fldmmdl.h"
+
 //============================================================================================
 /**
  *
@@ -101,6 +103,8 @@ struct _FIELD_MAIN_WORK
 	FLD_COMM_ACTOR *commActorTbl[FLD_COMM_ACTOR_MAX];
 	
 	FLDMSGBG *fldMsgBG;
+	
+	FLDMMDLSYS *fldMMdlSys;
 };
 
 //------------------------------------------------------------------
@@ -197,6 +201,20 @@ FLDMSGBG * FIELDMAP_GetFLDMSGBG( FIELD_MAIN_WORK *fieldWork )
 FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELD_MAIN_WORK *fieldWork )
 {
 	return( fieldWork->camera_control );
+}
+
+FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
+
+FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork )
+{
+	return fieldWork->gs;
+}
+
+FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
+
+FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork )
+{
+	return fieldWork->fldMMdlSys;
 }
 
 //------------------------------------------------------------------
@@ -522,7 +540,7 @@ struct _FIELD_SETUP {
 	GFL_BBDACT_SYS*			bbdActSys;		//ビルボードアクトシステム設定ハンドル
 
 	FLDMAPPER*				g3Dmapper;
-
+	
 	HEAPID					heapID;
 };
 
@@ -876,8 +894,6 @@ GFL_BBDACT_SYS* GetBbdActSys( FIELD_SETUP* gs )
 	return gs->bbdActSys;
 }
 	
-
-
 //============================================================================================
 /**
  *

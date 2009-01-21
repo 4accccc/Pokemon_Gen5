@@ -1,4 +1,96 @@
+#include "test_graphic/fldmmdl_btx.naix"
+
+extern FIELD_SETUP * FIELDMAP_GetFieldSetup( FIELD_MAIN_WORK *fieldWork );
+extern FLDMMDLSYS * FIELDMAP_GetFldMMdlSys( FIELD_MAIN_WORK *fieldWork );
+
 //field_player_grid.c
+static const GFL_BBDACT_RESDATA playerGridBBDactResTable[] = {
+	{ ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx,
+	GFL_BBD_TEXFMT_PAL16, GFL_BBD_TEXSIZ_32x32, 32, 32,
+	GFL_BBDACT_RESTYPE_DATACUT },
+};
+
+static const GFL_BBDACT_ANM PCGridstopLAnm[] = {
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridstopRAnm[] = {
+	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridstopUAnm[] = {
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridstopDAnm[] = {
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+
+static const GFL_BBDACT_ANM PCGridwalkLAnm[] = {
+	{ 1, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 3, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 2, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridwalkRAnm[] = {
+	{ 5, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 6, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 4, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridwalkUAnm[] = {
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 0, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridwalkDAnm[] = {
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 9, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridrunLAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 16, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridrunRAnm[] = {
+	{ 15, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 16, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 14, GFL_BBDACT_ANMFLIP_ON, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridrunUAnm[] = {
+	{ 8, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 10, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 7, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM PCGridrunDAnm[] = {
+	{ 12, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 13, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ 11, GFL_BBDACT_ANMFLIP_OFF, GFL_BBDACT_ANMFLIP_OFF, 4 },
+	{ GFL_BBDACT_ANMCOM_JMP, 0, 0, 0 },
+};
+static const GFL_BBDACT_ANM* playerGridBBDactAnmTable[] = { 
+	PCGridstopUAnm, PCGridstopDAnm, PCGridstopLAnm, PCGridstopRAnm,
+	PCGridwalkUAnm, PCGridwalkDAnm, PCGridwalkLAnm, PCGridwalkRAnm,
+	PCGridwalkUAnm, PCGridwalkDAnm, PCGridwalkLAnm, PCGridwalkRAnm,
+	PCjumpUAnm, PCjumpDAnm, PCjumpLAnm, PCjumpRAnm,
+};
+
+#if 0
 static void playerBBDactFuncGrid(
 	GFL_BBDACT_SYS* bbdActSys, int actIdx, void* work )
 {
@@ -24,7 +116,10 @@ static void playerBBDactFuncGrid(
 	trans.z = pcActCont->trans.z;// + -FX32_ONE*4; //補正
 	GFL_BBD_SetObjectTrans( bbdSys, actIdx, &trans );
 }
+#else
+#endif
 
+#if 0
 PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 {
 	PC_ACTCONT*	pcActCont =
@@ -67,10 +162,10 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 	//GFL_BBDACT_BindActTexRes
 	//		( bbdActSys, pcActCont->bbdActActUnitID, pcActCont->bbdActResUnitID+1 );
 	GFL_BBDACT_BindActTexResLoad
-		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMAP_ACTOR, NARC_fld_act_hero_nsbtx );
+		( bbdActSys, pcActCont->bbdActActUnitID, ARCID_FLDMMDL_BTX, NARC_fldmmdl_btx_obj_kabi32_nsbtx );
 
 	GFL_BBDACT_SetAnimeTable( bbdActSys, pcActCont->bbdActActUnitID, 
-					playerBBDactAnmTable, NELEMS(playerBBDactAnmTable) );
+					playerGridBBDactAnmTable, NELEMS(playerGridBBDactAnmTable) );
 	GFL_BBDACT_SetAnimeIdxOn( bbdActSys, pcActCont->bbdActActUnitID, 0 );
 	
 	//サイズ変更
@@ -91,14 +186,66 @@ PC_ACTCONT * CreatePlayerActGrid( FIELD_SETUP*	gs, HEAPID heapID )
 
 	return pcActCont;
 }
+#else
+static const FLDMMDL_H DATA_JikiHeader =
+{
+	0xff,	///<識別ID
+	0,	///<表示するOBJコード
+	0,	///<動作コード
+	0,	///<イベントタイプ
+	0,	///<イベントフラグ
+	0,	///<イベントID
+	0,	///<指定方向
+	0,	///<指定パラメタ 0
+	0,	///<指定パラメタ 1
+	0,	///<指定パラメタ 2
+	0,	///<X方向移動制限
+	0,	///<Z方向移動制限
+	0,	///<グリッドX
+	0,	///<グリッドZ
+	0,	///<Y値 fx32型
+};
+
+PC_ACTCONT * CreatePlayerActGrid(
+		FIELD_MAIN_WORK *fieldWork, HEAPID heapID )
+{
+	PC_ACTCONT *pcActCont;
+	FLDMMDLSYS *pFldMMdlSys;
+	
+	pFldMMdlSys = FIELDMAP_GetFldMMdlSys( fieldWork );
+	pcActCont = GFL_HEAP_AllocClearMemory( heapID, sizeof(PC_ACTCONT) );
+	
+	pcActCont->gs = FIELDMAP_GetFieldSetup( fieldWork );
+	FLDMAPPER_GRIDINFODATA_Init( &pcActCont->gridInfoData );
+	
+	//FLDMMDLセットアップ
+	pcActCont->pFldMMdl = FLDMMDL_AddH( pFldMMdlSys, &DATA_JikiHeader, 0 );
+	
+	//BLACTセットアップ
+	pcActCont->bbdActActUnitID =
+		FLDMMDL_BLACTCONT_AddActor( pcActCont->pFldMMdl, 0 );
+	FLDMMDL_SetBlActID( pcActCont->pFldMMdl, pcActCont->bbdActActUnitID );
+	return pcActCont;
+}
+#endif
+
+void DeletePlayerActGrid( PC_ACTCONT* pcActCont )
+{
+	FLDMMDL_BLACTCONT_DeleteActor(
+		pcActCont->pFldMMdl, FLDMMDL_GetBlActID(pcActCont->pFldMMdl) );
+	GFL_HEAP_FreeMemory( pcActCont );
+}
 
 void PlayerActGrid_Update(
 	PC_ACTCONT *pcActCont, u16 dir, const VecFx32 *pos )
 {
 	VecFx32 trans;
 	pcActCont->trans = *pos;
+	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, pos );	//add
+	FLDMMDL_DirDispSetForce( pcActCont->pFldMMdl, dir );
 }
 
+#if 0
 void PlayerActGrid_AnimeSet(
 	PC_ACTCONT *pcActCont, int dir , PLAYER_ANIME_FLAG flag )
 {
@@ -123,6 +270,35 @@ void PlayerActGrid_AnimeSet(
 		pcActCont->bbdActActUnitID, &trans );
 #endif
 }
+#else
+void PlayerActGrid_AnimeSet(
+	PC_ACTCONT *pcActCont, int dir, PLAYER_ANIME_FLAG flag )
+{
+#if 0
+	int tbl[PLAYER_ANIME_FLAG_MAX] =
+		{PCACTSTOP_UP,PCACTWALK_UP,PCACTRUN_UP};
+	int anmID = tbl[flag] + dir;
+	
+	if( pcActCont->anmSetID != anmID ){
+		pcActCont->anmSetID = anmID;
+		GFL_BBDACT_SetAnimeIdx(
+			GetBbdActSys(pcActCont->gs), pcActCont->bbdActActUnitID, anmID );
+	}
+#else	
+	switch( flag ){
+	case PLAYER_ANIME_FLAG_STOP:
+		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_STOP );
+		break;
+	case PLAYER_ANIME_FLAG_WALK:
+		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_WALK_8F );
+		break;
+	default:
+		FLDMMDL_DrawStatusSet( pcActCont->pFldMMdl, DRAW_STA_WALK_4F );
+		break;
+	}
+#endif
+}
+#endif
 
 FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet( PC_ACTCONT *pcActCont )
 {

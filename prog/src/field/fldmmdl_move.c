@@ -216,7 +216,7 @@ static int fmmdl_MoveStartCheck( const FLDMMDL * fmmdl )
 	}else if( FLDMMDL_MoveCodeGet(fmmdl) == MV_TR_PAIR ){ //親の行動に従う
 		return( TRUE );
 	}
-	
+#if 0	
 	{	//移動禁止フラグ相殺チェック
 		u32 st = FLDMMDL_StatusBit_Get( fmmdl );
 		
@@ -232,7 +232,7 @@ static int fmmdl_MoveStartCheck( const FLDMMDL * fmmdl )
 			return( FALSE );
 		}
 	}
-	
+#endif	
 	return( TRUE );
 }
 
@@ -1188,7 +1188,7 @@ u32 FLDMMDL_MoveHitCheck(
 		s8 flag;
 		FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
 		
-		if( MPTL_CheckHitWall(fsys,vec,x,z,&flag) == TRUE ){
+
 			ret |= FLDMMDL_MOVE_HIT_BIT_ATTR;
 			
 			if( flag != HIT_RES_EQUAL ){
@@ -1499,7 +1499,7 @@ int FLDMMDL_MapAttrKindCheck_Snow( FLDMMDL * fmmdl, u32 attr )
 	}else if( MATR_IsSnow(attr) ){
 		return( TRUE );
 	}
-#endif	
+#endif
 	return( FALSE );
 }
 
@@ -1583,6 +1583,87 @@ int FLDMMDL_MapAttrKindCheck_BridgeH( FLDMMDL * fmmdl, u32 attr )
 			return( TRUE );
 		}
 #endif
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * マップグリッド情報を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL fldmmdl_GetMapGridInfo(
+	const FLDMMDL *fmmdl, const VecFx32 *pos, FLDMAPPER_GRIDINFO *pGridInfo )
+{
+	const FLDMAPPER *pG3DMapper =
+		FLDMMDLSYS_GetG3DMapper( FLDMMDL_GetFldMMdlSys(fmmdl) );
+	
+	if( FLDMAPPER_GetGridInfo(pG3DMapper,pos,pGridInfo) == TRUE ){
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * マップアトリビュート取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_GetMapAttr(
+	FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr )
+{
+	FLDMAPPER_GRIDINFO GridInfo;
+	*attr = 0;
+
+	if( fldmmdl_GetMapGridInfo(fmmdl,pos,&GridInfo) == TRUE ){
+		*attr = GridInfo.gridData[0].attr;
+		return( TRUE );
+	}
+	
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * マップ高さ取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL FLDMMDL_GetMapHeight(
+	FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height )
+{
+	FLDMAPPER_GRIDINFO GridInfo;
+	
+	*height = 0;
+	
+	if( fldmmdl_GetMapGridInfo(fmmdl,pos,&GridInfo) == TRUE ){
+		if( GridInfo.count ){
+			int		i = 0;
+			fx32	h_tmp,diff1,diff2;
+			
+			*height = GridInfo.gridData[i].height;
+			i++;
+			
+			while( i < GridInfo.count ){
+				h_tmp = GridInfo.gridData[i].height;
+				diff1 = *height - pos->y;
+				diff2 = h_tmp - pos->y;
+				
+				if( FX_Mul(diff2,diff2) < FX_Mul(diff1,diff1) ){
+					*height = h_tmp;
+				}
+				i++;
+			}
+			
+			return( TRUE );
+		}
 	}
 	
 	return( FALSE );
@@ -1750,7 +1831,7 @@ int FLDMMDL_VecPosNowHeightGetSet( FLDMMDL * fmmdl )
 	
 	FLDMMDL_VecPosGet( fmmdl, &vec_pos );
 	vec_pos_h = vec_pos;
-
+	
 	if( FLDMMDL_HeightOFFCheck(fmmdl) == TRUE ){
 		FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_HEIGHT_GET_ERROR );
 		return( FALSE );
@@ -1772,7 +1853,16 @@ int FLDMMDL_VecPosNowHeightGetSet( FLDMMDL * fmmdl )
 			FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_HEIGHT_GET_ERROR );
 		}
 #else
-		int ret = FALSE;
+		fx32 height;
+		int ret = FLDMMDL_GetMapHeight( fmmdl, &vec_pos_h, &height );
+		
+		if( ret == TRUE ){
+			vec_pos.y = height;
+			FLDMMDL_VecPosSet( fmmdl, &vec_pos );
+			FLDMMDL_StatusBit_OFF( fmmdl, FLDMMDL_STABIT_HEIGHT_GET_ERROR );
+		}else{
+			FLDMMDL_StatusBit_ON( fmmdl, FLDMMDL_STABIT_HEIGHT_GET_ERROR );
+		}
 #endif
 		return( ret );
 	}

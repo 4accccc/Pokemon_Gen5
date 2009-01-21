@@ -2,6 +2,8 @@
 #define __FIELD_MAIN_H__
 
 #include "gamesystem/gamesystem.h"
+#include "gamesystem/game_event.h"
+
 #include "field_g3d_mapper.h"
 #include "field_player.h"			//PC_ACT_FUNC
 

@@ -18,6 +18,8 @@
 
 #include "fieldmap_local.h"
 
+#define FIELDMAP_TEST_FLDMMDL
+
 //==============================================================================
 //	debug
 //==============================================================================
@@ -43,16 +45,16 @@
 //--------------------------------------------------------------
 //	グリッド
 //--------------------------------------------------------------
-#define GRID_ONE	(1)										///<1グリッド
-#define GRID		(16)									///<1グリッド単位。実座標16
-#define GRID_HALF	(GRID>>1)								///<1/2グリッド
-#define GRID_SHIFT	(4)									///<グリッド実座標変換に必要なシフト数
-#define GRID_SIZE(a) ((a)<<GRID_SHIFT)						///<グリッド実サイズ変換
-#define SIZE_GRID(a) ((a)>>GRID_SHIFT)						///<実サイズグリッド変換
-#define GRID_SIZE_FX32(a) (GRID_SIZE(a)*FX32_ONE)			///<グリッド実サイズFX32変換
-#define SIZE_GRID_FX32(a) (SIZE_GRID(a)/FX32_ONE)			///<実サイズグリッドFX32変換
-#define GRID_FX32 (GRID*FX32_ONE)							///<1グリッド実数
-#define GRID_HALF_FX32 (GRID_FX32>>1)						///<1/2グリッド実数
+#define GRID_ONE	(1)				///<1グリッド
+#define GRID		(16)			///<1グリッド単位。実座標16
+#define GRID_HALF	(GRID>>1)		///<1/2グリッド
+#define GRID_SHIFT	(4)				///<グリッド実座標変換に必要なシフト数
+#define GRID_SIZE(a) ((a)<<GRID_SHIFT)		///<グリッド実サイズ変換
+#define SIZE_GRID(a) ((a)>>GRID_SHIFT)		///<実サイズグリッド変換
+#define GRID_SIZE_FX32(a) (GRID_SIZE(a)*FX32_ONE) ///<グリッド実サイズFX32変換
+#define SIZE_GRID_FX32(a) (SIZE_GRID(a)/FX32_ONE) ///<実サイズグリッドFX32変換
+#define GRID_FX32 (GRID*FX32_ONE) ///<1グリッド実数
+#define GRID_HALF_FX32 (GRID_FX32>>1) ///<1/2グリッド実数
 
 //--------------------------------------------------------------
 //	高さグリッド
@@ -363,6 +365,11 @@ typedef struct _TAG_FLDMMDLSYS FLDMMDLSYS;
 typedef struct _TAG_FLDMMDL FLDMMDL;
 
 //--------------------------------------------------------------
+///	FLDMMDL_BLACTCONT
+//--------------------------------------------------------------
+typedef struct _TAG_FLDMMDL_BLACTCONT FLDMMDL_BLACTCONT;
+
+//--------------------------------------------------------------
 ///	関数定義
 //--------------------------------------------------------------
 typedef void (*FLDMMDL_MOVE_PROC_INIT)( FLDMMDL * );		///<動作初期化関数
@@ -633,16 +640,42 @@ typedef u32 MATR;
 //	extern
 //==============================================================================
 //--------------------------------------------------------------
+///	fldmmdl_blact.c
+//--------------------------------------------------------------
+extern FLDMMDL_BLACTCONT * FLDMMDL_BLACTCONT_Setup(
+	FLDMMDLSYS *pFldMMdlSys, GFL_BBDACT_SYS *pBbdActSys, HEAPID heapID );
+extern void FLDMMDL_BLACTCONT_Release(
+	FLDMMDLSYS *pFldMMdlSys, FLDMMDL_BLACTCONT *pBlActCont );
+extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_BLACTCONT_AddActor(
+	FLDMMDL *pFldMMdl, u32 id );
+extern void FLDMMDL_BLACTCONT_DeleteActor(
+	FLDMMDL *pFldMMdl, GFL_BBDACT_ACTUNIT_ID actID );
+
+//--------------------------------------------------------------
 //	fldmmdl.c
 //--------------------------------------------------------------
 extern HEAPID FLDMMDLSYS_GetHeapID( const FLDMMDLSYS *fos );
 extern HEAPID FLDMMDL_GetHeapID( const FLDMMDL *fmmdl );
 extern GFL_TCBSYS * FLDMMDLSYS_GetTCBSYS( const FLDMMDLSYS *fos );
 extern GFL_TCBSYS * FLDMMDL_GetTCBSYS( FLDMMDL *fmmdl );
+extern FIELD_MAIN_WORK * FLDMMDLSYS_GetFieldMainWork( FLDMMDLSYS *fldmmdlsys );
+extern void FLDMMDLSYS_SetBlActCont( FLDMMDLSYS *fldmmdlsys, FLDMMDL_BLACTCONT *pBlActCont );
+extern FLDMMDL_BLACTCONT * FLDMMDLSYS_GetBlActCont( FLDMMDLSYS *fldmmdlsys );
+
+extern void FLDMMDLSYS_UpdateMove( FLDMMDLSYS *fos );
+
+extern FLDMMDLSYS * FLDMMDL_GetFldMMdlSys( const FLDMMDL *fmmdl );
+
+extern void FLDMMDL_SetBlActID(
+	FLDMMDL *fldmmdl, GFL_BBDACT_ACTUNIT_ID blActID );
+extern GFL_BBDACT_ACTUNIT_ID FLDMMDL_GetBlActID( FLDMMDL *fldmmdl );
+extern const FLDMAPPER * FLDMMDLSYS_GetG3DMapper( const FLDMMDLSYS *fos );
 
 extern FLDMMDLSYS * FLDMMDLSYS_Init(
-	FIELD_MAIN_WORK *pFldMainWork, HEAPID heapID, int max );
-void FLDMMDLSYS_DrawInit( FLDMMDLSYS *fos,
+	FIELD_MAIN_WORK *pFldMainWork,
+	const FLDMAPPER *pG3DMapper, HEAPID heapID, int max );
+
+extern void FLDMMDLSYS_DrawInit( FLDMMDLSYS *fos,
 		int tex_max, int reg_tex_max,
 		const int *tex_tbl, int frm_trans_max );
 extern void FLDMMDLSYS_Delete( FLDMMDLSYS *sys );
@@ -961,7 +994,9 @@ const int * const DATA_AcmdCodeDirChangeTbl[];
 //--------------------------------------------------------------
 extern const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_Non;
 
+#if 0
 extern const FLDMMDL_DRAW_PROC_LIST_REG DATA_FieldOBJDrawProcListRegTbl[];
+#endif
 
 extern const FLDMMDL_RESMNARC DATA_FLDMMDL_ResmNArcTbl_RenderOBJ[];
 extern const int DATA_FIELDOBJ_RenderOBJMax;
@@ -1069,6 +1104,11 @@ extern BLACT_WORK_PTR FLDMMDL_BlActDummyDrawReset(
 //--------------------------------------------------------------
 //	fieldobj_move.c
 //--------------------------------------------------------------
+extern BOOL FLDMMDL_GetMapAttr(
+	FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr );
+extern BOOL FLDMMDL_GetMapHeight(
+	FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height );
+
 extern void FLDMMDL_MoveInit( FLDMMDL * fmmdl );
 extern void FLDMMDL_Move( FLDMMDL * fmmdl );
 

@@ -92,7 +92,12 @@ void FLDMMDLSYS_DrawDelete( FLDMMDLSYS *fos )
 	int ret;
 	
 	ret = FLDMMDLSYS_DrawInitCompCheck( fos );
+#if 0
 	GF_ASSERT( ret == TRUE && "フィールド動作モデル 描画処理削除が二重に呼び出されています\n" );
+#else
+	if( ret == TRUE ){
+	}
+#endif
 
 #if 0
 	FLDMMDL_BlActCont_Delete( FLDMMDLSYS_BlActContGet(fos) );

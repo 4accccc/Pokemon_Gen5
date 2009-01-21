@@ -369,6 +369,7 @@ const FLDMMDL_DRAW_PROC_LIST DATA_FieldOBJDraw_BlActTw7SpPoke =
 //--------------------------------------------------------------
 ///	描画関数まとめ　並びはOBJコードと一致->不順にした
 //--------------------------------------------------------------
+#if 0
 const FLDMMDL_DRAW_PROC_LIST_REG DATA_FieldOBJDrawProcListRegTbl[] =
 {
 	{ HERO,			&DATA_FieldOBJDraw_Hero },
@@ -636,6 +637,7 @@ const FLDMMDL_DRAW_PROC_LIST_REG DATA_FieldOBJDrawProcListRegTbl[] =
 	
 	{ OBJCODEMAX, NULL },	//終端
 };
+#endif
 
 //==============================================================================
 //	フィールド動作モデル レンダOBJまとめ
