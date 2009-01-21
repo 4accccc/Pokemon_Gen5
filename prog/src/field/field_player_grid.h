@@ -25,4 +25,6 @@ extern FLDMAPPER_GRIDINFODATA * PlayerActGrid_GridInfoGet(
 extern void PlayerActGrid_ScaleSizeSet(
 	PC_ACTCONT *pcActCont, fx16 sizeX, fx16 sizeY );
 
+extern void SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans );
+
 #endif //__FIELD_PLAYER_GRID_H__

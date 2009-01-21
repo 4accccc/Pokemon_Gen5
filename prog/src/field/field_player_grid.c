@@ -245,6 +245,18 @@ void PlayerActGrid_Update(
 	FLDMMDL_DirDispSetForce( pcActCont->pFldMMdl, dir );
 }
 
+void	SetGridPlayerActTrans( PC_ACTCONT* pcActCont, const VecFx32* trans )
+{
+	int gx = SIZE_GRID_FX32( trans->x );
+	int gy = SIZE_GRID_FX32( trans->y );
+	int gz = SIZE_GRID_FX32( trans->z );
+	VEC_Set( &pcActCont->trans, trans->x, trans->y, trans->z );
+	FLDMMDL_NowPosGX_Set( pcActCont->pFldMMdl, gx );
+	FLDMMDL_NowPosGY_Set( pcActCont->pFldMMdl, gy );
+	FLDMMDL_NowPosGZ_Set( pcActCont->pFldMMdl, gz );
+	FLDMMDL_VecPosSet( pcActCont->pFldMMdl, trans );
+}
+
 #if 0
 void PlayerActGrid_AnimeSet(
 	PC_ACTCONT *pcActCont, int dir , PLAYER_ANIME_FLAG flag )

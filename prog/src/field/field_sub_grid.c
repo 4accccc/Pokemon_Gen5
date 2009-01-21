@@ -202,7 +202,7 @@ static void GridMoveCreate(
 	fieldWork->pcActCont = CreatePlayerActGrid(
 			fieldWork, fieldWork->heapID );
 	
-	SetPlayerActTrans( fieldWork->pcActCont, pos );
+	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
@@ -254,7 +254,7 @@ static void GridMoveCreate(
 	fieldWork->pcActCont = CreatePlayerActGrid(
 			fieldWork->gs, fieldWork->heapID );
 	
-	SetPlayerActTrans( fieldWork->pcActCont, pos );
+	SetGridPlayerActTrans( fieldWork->pcActCont, pos );
 	SetPlayerActDirection( fieldWork->pcActCont, &dir );
 	
 	fieldWork->pGridCont = FGridCont_Init( fieldWork, pos, dir );
@@ -667,7 +667,7 @@ static FGRID_PLAYER * FGridPlayer_Init(
 	pJiki->vec_pos = pos;
 	pJiki->scale_size = FX16_ONE*8-1;
 	
-	SetPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
+	SetGridPlayerActTrans( pJiki->pActCont, &pJiki->vec_pos );
 		
 	pJiki->anime_flag = PLAYER_ANIME_FLAG_STOP;
 	return( pJiki );
