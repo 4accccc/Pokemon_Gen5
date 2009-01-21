@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-28T20:32:32"/>
+	<create user="taya" host="W00146" date="2009-01-20T21:31:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,8 +359,9 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="351"/>
-			<font default=" 0:lc12_2bit" position="4" width="100">
-				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			<font default=" 0:large" position="4" width="100">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="6" width="100"/>
@@ -369,8 +370,9 @@
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="323"/>
-			<font default=" 0:lc12_2bit" position="5" width="100">
-				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			<font default=" 0:large" position="5" width="100">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="9" width="100"/>
 			<space position="10" width="100"/>
@@ -414,7 +416,7 @@
 
 	<row id="BTLMSG_UI_SEL_ESCAPE" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">にげる</language>
-		<language name="JPN_KANJI">逃げる</language>
+		<language name="JPN_KANJI">にげる</language>
 	</row>
 
 	<row id="BTLMSG_UI_SEL_POKEMON" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">

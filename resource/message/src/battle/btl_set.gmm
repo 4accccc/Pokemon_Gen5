@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2008-11-21T20:48:06"/>
+	<create user="taya" host="W00146" date="2009-01-20T21:34:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,8 +311,9 @@
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="380"/>
-			<font default=" 0:lc12_2bit" position="4" width="100">
-				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			<font default=" 0:large" position="4" width="100">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="5" width="100"/>
 			<space position="6" width="100"/>
@@ -321,8 +322,9 @@
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="382"/>
-			<font default=" 0:lc12_2bit" position="9" width="100">
-				<list entry="0" file="W:\font\lc12_2bit.nftr"/>
+			<font default=" 0:large" position="9" width="100">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
 			</font>
 			<size position="10" width="100"/>
 			<space position="11" width="100"/>
@@ -338,7 +340,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="673"/>
 		<band id="3" index="3" style="0000" width="673"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -361,7 +363,7 @@
 
 	<row id="BTL_STRID_SET_Dead">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]は　たおれた！</language>
-		<language name="JPN_KANJI">[1:01:ニックネーム:0]は　倒れた！</language>
+		<language name="JPN_KANJI">[1:01:ニックネーム:0]は　たおれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Dead_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -378,21 +380,21 @@
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-攻撃　が　上がった！</language>
+こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-攻撃　が　上がった！</language>
+こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_ATK_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 こうげき　が　あがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-攻撃　が　上がった！</language>
+こうげき　が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_DEF" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -420,21 +422,21 @@
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-特攻が上がった！</language>
+とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-特攻が上がった！</language>
+とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPATK_E" back-color="#ffff00,#ffff00,,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくこう　が　あがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-特攻が上がった！</language>
+とくこうが上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_SPDEF">
@@ -504,42 +506,42 @@
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-回避率が上がった！</language>
+かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-回避率が上がった！</language>
+かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankup_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 かいひりつ　が　あがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-回避率が上がった！</language>
+かいひ率が上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-攻撃　が　下がった！</language>
+こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-攻撃　が　下がった！</language>
+こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_ATK_E" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 こうげき　が　さがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-攻撃　が　下がった！</language>
+こうげき　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_DEF" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
@@ -567,21 +569,21 @@
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-特攻　が　下がった！</language>
+とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPATK_Y" back-color="#00ff00,#00ff00,,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-特攻　が　下がった！</language>
+とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPATK_E" back-color="#ffff00,#ffff00,,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 とくこう　が　さがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-特攻　が　下がった！</language>
+とくこう　が　下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_SPDEF">
@@ -651,21 +653,21 @@
 		<language name="JPN" width="216">[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
 		<language name="JPN_KANJI">[1:01:ニックネーム:0]　の
-回避率が下がった！</language>
+かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID_Y">
 		<language name="JPN" width="216">やせいの　[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
 		<language name="JPN_KANJI">野生の　[1:01:ニックネーム:0]　の
-回避率が下がった！</language>
+かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Rankdown_AVOID_E">
 		<language name="JPN" width="216">あいての　[1:01:ニックネーム:0]　の
 かいひりつ　が　さがった！</language>
 		<language name="JPN_KANJI">相手の　[1:01:ニックネーム:0]　の
-回避率が下がった！</language>
+かいひ率が下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownFail">
