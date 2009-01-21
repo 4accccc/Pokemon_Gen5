@@ -1105,9 +1105,9 @@ extern BLACT_WORK_PTR FLDMMDL_BlActDummyDrawReset(
 //	fieldobj_move.c
 //--------------------------------------------------------------
 extern BOOL FLDMMDL_GetMapAttr(
-	FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr );
+	const FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr );
 extern BOOL FLDMMDL_GetMapHeight(
-	FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height );
+	const FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height );
 
 extern void FLDMMDL_MoveInit( FLDMMDL * fmmdl );
 extern void FLDMMDL_Move( FLDMMDL * fmmdl );

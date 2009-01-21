@@ -216,7 +216,8 @@ static int fmmdl_MoveStartCheck( const FLDMMDL * fmmdl )
 	}else if( FLDMMDL_MoveCodeGet(fmmdl) == MV_TR_PAIR ){ //親の行動に従う
 		return( TRUE );
 	}
-#if 0	
+	
+#if 0
 	{	//移動禁止フラグ相殺チェック
 		u32 st = FLDMMDL_StatusBit_Get( fmmdl );
 		
@@ -500,7 +501,6 @@ static void fmmdl_MapAttrHeight_02(
 			FLDMMDL_VecAttrOffsSet( fmmdl, &vec );
 			return;
 		}
-		
 		
 		if( MATR_IsShallowSnow(now) == TRUE ){
 			VecFx32 vec = { 0, ATTROFFS_Y_YUKI, 0 };
@@ -1148,11 +1148,13 @@ u32 FLDMMDL_PosHitCheck( const FLDMMDLSYS *fos, int x, int z )
 	u32 ret;
 	
 	ret = FLDMMDL_MOVE_HIT_BIT_NON;
+	
 #if 0	
 	if(	GetHitAttr(FLDMMDLSYS_FieldSysWorkGet(fos),x,z) == TRUE ){
 		ret |= FLDMMDL_MOVE_HIT_BIT_ATTR;
 	}
-#endif	
+#endif
+	
 	if( FLDMMDL_SearchGridPos(fos,x,z,FALSE) != NULL ){
 		ret |= FLDMMDL_MOVE_HIT_BIT_OBJ;
 	}
@@ -1183,19 +1185,17 @@ u32 FLDMMDL_MoveHitCheck(
 		ret |= FLDMMDL_MOVE_HIT_BIT_LIM;
 	}
 	
-	{
 #if 0
+	{
 		s8 flag;
 		FIELDSYS_WORK *fsys = FLDMMDL_FieldSysWorkGet( fmmdl );
-		
-
+		if( MPTL_CheckHitWall(fsys,vec,x,z,&flag) == TRUE ){
 			ret |= FLDMMDL_MOVE_HIT_BIT_ATTR;
 			
 			if( flag != HIT_RES_EQUAL ){
 				ret |= FLDMMDL_MOVE_HIT_BIT_HEIGHT;
 			}
 		}
-#endif
 	}
 	
 	if( FLDMMDL_MoveHitCheckAttr(fmmdl,x,z,dir) == TRUE ){
@@ -1205,7 +1205,39 @@ u32 FLDMMDL_MoveHitCheck(
 	if( FLDMMDL_MoveHitCheckFellow(fmmdl,x,y,z) == TRUE ){
 		ret |= FLDMMDL_MOVE_HIT_BIT_OBJ;
 	}
+#else
+	{
+		u32 attr;
+		fx32 height;
+		VecFx32 pos;
+		
+		pos.x = GRID_SIZE_FX32( x );
+		pos.y = 0;
+		pos.z = GRID_SIZE_FX32( z );
+		
+		if( FLDMMDL_GetMapAttr(fmmdl,&pos,&attr) == TRUE ){
+			if( attr != 0 ){
+				ret |= FLDMMDL_MOVE_HIT_BIT_ATTR;
+			}
+		}else{
+			ret |= FLDMMDL_MOVE_HIT_BIT_ATTR;
+		}
+		
+		if( FLDMMDL_GetMapHeight(fmmdl,&pos,&height) == TRUE ){
+			fx32 diff = vec->y - height;
+			if( diff < 0 ){ diff = -diff; }
+			if( diff >= (FX32_ONE*17) ){
+				ret |= FLDMMDL_MOVE_HIT_BIT_HEIGHT;
+			}
+		}else{
+			ret |= FLDMMDL_MOVE_HIT_BIT_HEIGHT;
+		}
+	}
 	
+	if( FLDMMDL_MoveHitCheckFellow(fmmdl,x,y,z) == TRUE ){
+		ret |= FLDMMDL_MOVE_HIT_BIT_OBJ;
+	}
+#endif
 	return( ret );
 }
 
@@ -1374,8 +1406,22 @@ int FLDMMDL_MoveHitCheckAttr(
 			return( TRUE );
 		}
 	}
+#else
+	if( FLDMMDL_MoveBitCheck_AttrGetOFF(fmmdl) == FALSE ){
+		u32 attr;
+		VecFx32 pos;
+		pos.x = GRID_SIZE_FX32( x );
+		pos.y = 0;
+		pos.z = GRID_SIZE_FX32( z );
+		
+		if( FLDMMDL_GetMapAttr(fmmdl,&pos,&attr) == TRUE ){
+			if( attr == 0 ){
+				return( FALSE );
+			}
+		}
+	}
 #endif
-	return( FALSE );
+	return( TRUE );
 }
 
 #if 0
@@ -1616,7 +1662,7 @@ static BOOL fldmmdl_GetMapGridInfo(
  */
 //--------------------------------------------------------------
 BOOL FLDMMDL_GetMapAttr(
-	FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr )
+	const FLDMMDL *fmmdl, const VecFx32 *pos, u32 *attr )
 {
 	FLDMAPPER_GRIDINFO GridInfo;
 	*attr = 0;
@@ -1637,7 +1683,7 @@ BOOL FLDMMDL_GetMapAttr(
  */
 //--------------------------------------------------------------
 BOOL FLDMMDL_GetMapHeight(
-	FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height )
+	const FLDMMDL *fmmdl, const VecFx32 *pos, fx32 *height )
 {
 	FLDMAPPER_GRIDINFO GridInfo;
 	
